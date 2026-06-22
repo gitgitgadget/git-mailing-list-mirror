@@ -1,212 +1,167 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173C931195B
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 15:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782143388; cv=pass; b=FrMVfpW/XQP6xJ9xLNbx152HMrpsdVoLBU3nPmX1zyQ71oYcppxPt7HrV3RyWSLp/txVCrJSHI/5Zld6bps7lKrF06sEJMAWMf78CVhXkwGtngBK3W04kuH1QqpUA5XmnXUEZsRvtcsgLom0u0617jaRaSTFaQZvIpzf3Vv+NZs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782143388; c=relaxed/simple;
-	bh=phf4C4/JxtPTlnAW29Nn9qid5coR7LSl+xNGu5oId4c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P/DMtqijeuaznBKNAc0/OV+dxeldOSCVDab4VMp4V86HVykZdfzxZQvd+weIBa1I0uld7sz1Xf+kNQTVGaWPvt+snntyN9tJjWJ7fUdaaeWF+OoVb4Q/e2+nBkloXTul5c98D6bwCxZS9PhEmJnLjtgJVwfRffKrv8dNNxI+Zc4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WIPMEyWQ; arc=pass smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECC73B813E
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 16:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782144189; cv=none; b=VxRRMXag/Za/boisxNol1j1kmnG3uE05YIYkKmfaGVv+z9R5tAD/pqNtsqfPeg32S36wQTJwp4UybYxGqXF6rm8WHjguUK9q7A4K4pe85EP1a6EAYV62sNDyy6K6rTwDdr2zmppWyVgFuu29nh0ZE3WoY1JKgHtaSgItxZ/BdyI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782144189; c=relaxed/simple;
+	bh=03iYF7Mg36PiLTONk9iUu+UivQ34dWxc7QZCs+l6WYU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s/rLJN/JRhUOCmsKtbCRPHn1W9XwIKcq3VoMlTR5AdVk1VcZFI6KlvqwW9rHQHm8bfRfr62Pz9UJO23DGptBUoT0Jved9iFWrGg0QfCIOwRg6CN1OPrW80ELHRyiIt3nmVmcZcnkROXl/7OBbYeZZCMAYD65gXRWEvsiY0tTCnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kOgof9rG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I1oSG293; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WIPMEyWQ"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2c6bc87f4d5so17571035ad.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:49:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782143386; cv=none;
-        d=google.com; s=arc-20240605;
-        b=aZf2odwRdFIVxyLZrhqZUI0rl8L+o67nhWrJB+sIt/QE9it+SkqI1ZSVYJXkzCvK06
-         NErI2uYKoOaIIswqnAfLrHCZSljD6TcFfFnzYYnhXkGv9QqegN6KhskJpudp9Zz0qHIx
-         I89w0+Hm+4jPsVwwIWZ/pmhSRQAB4OcgL16IIJJSH1vLmiD8T5rvlan3BC7yvcVmZBMQ
-         Vu6viG6ncUAWhZE8U0DOLXUjlYIcaD5aeKqsVp/zIn6zS6ch6zbGBQKKZ1QmndApLAkO
-         hqnj/FSZtM/bY76FoeAVvaeJvQ/6OFp5miSKNATDPEKSG63c+PkIyQ9zjDLFqWu429DP
-         j0sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=x8OgCkhntIjTfqK9b1Ujnf90//07Aq4dCRH1JkLaiVM=;
-        fh=j9Ml2IaXs4fZf8Py46bch+05yHnLW38wPhTS0Lg3+sA=;
-        b=IPM9zJIdiDV1WUrnwj3nXrotkk/1/uMtb1DVxf8jfDOBsz+h5nyhcljzruZLVZTEXy
-         V9hHX1Fez46MxRbcXQZgp2VDO3AhagnqSpr97voF34Gl/cRb5oY0h/QLef8e1xjINiE8
-         8N0EP3UvMNjuAssh9XSQq0EaMLbJ/Pqmma7rO5oHfipvWAbRstdJgUqm61wfXd1g/Ak0
-         1LOPb2853Q2hctFT61qsnv+0gfFNb3ctBXlmoMAu92iOgaahFDkc8KxQ0UBZzAISL3kv
-         FDhWh0kxUXQB8l+7x65AGGDtOEocX8E/BReTD2blWYUbYShUyH0ey/QhFADtU8wHzNum
-         Ke+A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782143386; x=1782748186; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x8OgCkhntIjTfqK9b1Ujnf90//07Aq4dCRH1JkLaiVM=;
-        b=WIPMEyWQKN6NgTKQyUcatSknvwkLw49QhPHj+71vwhhI//3kmAnukHE96T0cmK0KBx
-         TL28DcK8H/YAqJn217LPpK5yeayq1TfHd79VxG+2rdnXPYrvNX5mMGUoKdxDiYvYSMgd
-         vdHlm5KrLfjKERMaeKu1SIOE7iwrm60/7PocIVDSZRHhG8tvXzr99TyWfAZ3VS1dHFAx
-         oM6IGEREyRPZ1USAJ60JqVHiVtuoq7uGNgYaVrUQVxey+0H8UXwVXF6K3kCatDkAkIMW
-         dxgbpRl9n6QD7nGURWFm/deczghcQJNGYSkVI/DZVzbmnFxhJpFpu1m8F35dxUZKlJc3
-         qEVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782143386; x=1782748186;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=x8OgCkhntIjTfqK9b1Ujnf90//07Aq4dCRH1JkLaiVM=;
-        b=NZA2d9qOjYA8iG5j0G2JhKH4w+S0e33mhMJlIp4Y+mqVEoG0uF6nC9VhgGOpYiJMuy
-         ELVoe4TarW510ie2wYINCd22XJ9Y098IyOmlcXo0FmrzBVcBNeJ4TdIyd7NCq2L/zN8F
-         6nJbBEbARWuLGBqScT75Q35q+b4gDeusOMyBaR+I+CklvIoSwWDG7pAxwpxTzuv/obpo
-         NLlZcJe5PE+ZPULCZisCzmItJK8SZjzwUqpOxzP8xou+/E8njXMQAQEH2Lj8kGV0INzh
-         oKUugqMzE7iB3UG87Md+CDao8NYC4Vc/2cMIECoEPDA6TboOTYy0stWex3v9aTjKGuME
-         RSVw==
-X-Forwarded-Encrypted: i=1; AHgh+RpXkZrJKyzIqNnBaB5I6roZ7DHUzCzIz/Ac1P0rYkvuF4MotSsrxR2TrEDDhXIhPCf7JtM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHtA4PPBGT7AL7/m11SHVNtlYqoOgcXKg6q4cgR24sB9Eczmmc
-	1MVGrgoSl1KoRjMEumBBWWQ0hSMlXf5qt87piUA/tz5vud8o/ehefXnPsE8NAOQAATN/QBtgeqN
-	7YTLeOV4VgwKk5v6xix68y0DX8XMu+Po=
-X-Gm-Gg: AfdE7ckH6BCYenHPA6F+VT4a5k7FwD9IKVABSOaxcvjXY7MrDiWF2cjSTTn2eW9ETKf
-	kWIQQtkXb9+mlV62lEC4ux1aCk3D2ZxWjOEs7TjVZuVCkJqFN3viTugTcovxeP+D08qiE9/2s49
-	WUNQMyXk2DCPGHzgPQNPnplbPGNntmrLG3PYfnVJp+DNTfq35go6CYNyQtdozYFA15WtXjzU3dp
-	znWm+nCplJLgMnSUTao/hNx5tiEwqy7Bx9hOMfrwrzY5GYfoHKV1d1qnY/wUJ5Ogj4X0pd+yMCV
-	49zsMe29KUPWwypV4wxkhM7viKOgz30byNqGDui9o9EcNjmYTlUqSoIZI3m7oDMRIpf5J3cwWUg
-	ejKkU++gSHcUOoqct
-X-Received: by 2002:a17:902:f688:b0:2c6:6926:8968 with SMTP id
- d9443c01a7336-2c742b1c878mr105138595ad.20.1782143386233; Mon, 22 Jun 2026
- 08:49:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kOgof9rG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I1oSG293"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C9EB140008C;
+	Mon, 22 Jun 2026 12:03:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 12:03:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782144187; x=1782230587; bh=S+PMnDJKwB
+	J9v/xc3YxPdgEJucYD7lcpIUbiP6BKh6o=; b=kOgof9rG9W2ODu/y59DYK9NDld
+	2OAwVFcZu4FjDxJ6yWwWHJU6R/BLKG2SrE4UmPCLBQ+OHB9g/pFbJBtxW7d5/0px
+	MTB9pnqb8aK+aO6iKvvou7Bwq5aliV7GLFmt1P9bTxuNGkb8Q/0/DPhWKoKyEOta
+	CBYCPLhK/CYOWE69a5ETFQTO5DjanhKDacSIHw32N26rYWn3U4flKht8B0jQ666Q
+	sZplb9xBOnnhb8XruUs1krOeLEzGpaaVexM3yRuIeOpf18+jDjDqcAMpMGBZnHoQ
+	ce5ausZAdRYb2rBbrIEZMTxSFzv2qh255iBGZrATnidbl0ke8s3dMVd+Pu2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782144187; x=1782230587; bh=S+PMnDJKwBJ9v/xc3YxPdgEJucYD7lcpIUb
+	iP6BKh6o=; b=I1oSG293ibPFgBVEgnB+gL7ZchX/17d7OMooi7zTwP/4RVT/Ecj
+	zrB4dUs4XoaIdacqZW2ZfA/lZq7KjQ8ibAPZ97IKG5D4VzsUJQryqH58AUjsMUO1
+	soFpF8sFF9XJExEV5uhCg90P/TUa1yELiHjGGJITSHU+r9GzHHDZEWPz5RpfrJJS
+	71pvaWlHXjAgcYBwKNlbptAip4v3sgHk8GdhAPzwjcr76dMimTDt0sddxpjmN03a
+	jIsx2qw0/cgN7+dSlaBLPbUoGy7z0Bt217epgn26IFl6c9InxXEa8u8IQtENxO7k
+	2vtJVkBXhek5iIEgJvUd+jhVTeCd0ut5S3Q==
+X-ME-Sender: <xms:ulw5alji7NuhT5y8kMm21p76rv_4A5O9VBD-ne8Yj-67KSxIOOdKlw>
+    <xme:ulw5au8k5H04gDNdvAve7FeKmxWSmVVK3aC4TKVnvePf0suFpwbcJZ0zVj24ORbn1
+    zDEMNq9XZTv8MYM0qOgqXJuN6gxOIYWiWRbxKsAMgIvhRho_YdkOg>
+X-ME-Received: <xmr:ulw5apWjJmN3xaC5YGbur8ikWetNpjQwVEDr39a_SjRmK6pbDIJ7dL3iQIYsPHVo6L_slRVAovAqVafYzw9ncvimpf0Ie1ylvUsF65Q>
+X-ME-Proxy-Cause: dmFkZTFvuGXu/WARgqhgCkOH/4ot+68mRCwqv7Wj7IswJ8jG+Z8FJVD51M9+CIyvfttuYg
+    wKYb6OtmZhuXOlbyBq5R+GHaQHjXikuCfHJruXFQTp1l98SEk1ITHib2ii6ayOAmbbNi11
+    0YR0gCHueJywNTMB5J8wJpUcp82zB8yKYCOYuWaznr+lrZ/Xgc7DpBEIMsiycjSdEofqAv
+    UU78E+kiv6U0O7y0wKah2SOnPKKHwdGxVRMBN8n12cDoAEx9sCRBJE7SPzJfIsjgEgKN+G
+    KTg7VZq/XmssBMeYP0n/Fdj+5ym69i58ZOAMVtQSnMa2CmsWOZxp57u/finqQRsJtAWwgF
+    WYUg9no0ruAkX6ci9pJS0kfFC6xGtfGE6W4DC6ajEzIM4DfuxMNjBkgiBAp3U1kQeYw/kU
+    Jgxdpn8LIQLMyhnmJQpYsIOSuUT0+JAOE2vR+mVexPixzzGyIUi+k2uNpy8HAgevXTPIqC
+    ZWKtm1/lo58JDX7R+obvo/rvFqi0Ib3bLrMQP1tE6sgaEayCBk9l0kRUdm92fPp8RNGbHd
+    +5T3lrlblE+YZUGySbawFZJM53XEHW0vzYOfdCl3lLJQq1Y2pxRKrk65M0K+7HsdJcesfK
+    qlwZ3llqOPiOJXPAMdW6hu6AVIjOcEDpuSA77spI0x4UeIJ52iUTyB7KpAmg
+X-ME-Proxy: <xmx:ulw5aqA6aQP8f4ioXPf_S5RSb3PSd9RctupaycbxTms1hffbzqZ6Uw>
+    <xmx:ulw5amGyAJOSYL6bCtZTsb-jt_gmKrefO1C4B5_4pSdUp6u-he49wg>
+    <xmx:ulw5aj4Axz6rFBl3EY5oFtjS6aJr2QdttS8AGr-e3YIoibIjEX6zvQ>
+    <xmx:ulw5akkHwfUME9hbhLciFPQ6bVw4X_ZNS0ZGUie3qA3pOL8sjrUB6w>
+    <xmx:u1w5akfLTM53SD1uyJutE99jNavLft28jOl0YDa5ypMtGJ7LS8q1GIur>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Jun 2026 12:03:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: a3205153416@gmail.com,  git@vger.kernel.org,  jltobler@gmail.com,
+  kumarayushjha123@gmail.com,  lucasseikioshiro@gmail.com,
+  phillip.wood@dunelm.org.uk,  sandals@crustytoothpaste.net
+Subject: Re: [GSoC Patch v7 1/3] path: extract append_formatted_path() and
+ use in rev-parse
+In-Reply-To: <xmqqtsqv6204.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+	21 Jun 2026 14:02:19 -0700")
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+	<20260621055534.46798-1-jayatheerthkulkarni2005@gmail.com>
+	<20260621055534.46798-2-jayatheerthkulkarni2005@gmail.com>
+	<xmqqtsqv6204.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Mon, 22 Jun 2026 09:03:05 -0700
+Message-ID: <xmqq1pdy36me.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2314.v2.git.git.1780610623006.gitgitgadget@gmail.com>
- <pull.2314.v3.git.git.1781901127385.gitgitgadget@gmail.com>
- <xmqqv7bei2tf.fsf@gitster.g> <CALnO6CAgNdkg0PnN9Zy=zLurLUSb2hUXYAGe_qB0oceZNy_=gg@mail.gmail.com>
-In-Reply-To: <CALnO6CAgNdkg0PnN9Zy=zLurLUSb2hUXYAGe_qB0oceZNy_=gg@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 22 Jun 2026 11:49:34 -0400
-X-Gm-Features: AVVi8CciP217NHjDMYBZE8N1UIaVomq0X9I9Xfk-KFzIOrXeGg6BxUaFrOjvrGY
-Message-ID: <CALnO6CCcBdmPniu3wOtktygZ4TFdz3Bp+CXNqJ9nx4_qw=to+A@mail.gmail.com>
-Subject: Re: [PATCH v3] config.mak.uname: avoid macOS dup-library warning
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Harald Nordgren <haraldnordgren@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	"pbonzini@redhat.com" <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Jun 20, 2026 at 4:58=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+> ...
+> It is a minor point, but wouldn't it make it simpler to handle
+> format_default first?  I.e.,
 >
-> On Fri, Jun 19, 2026 at 6:27=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> >
-> > "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > > From: Harald Nordgren <haraldnordgren@gmail.com>
-> > >
-> > > Building on macOS with Xcode 15 or newer emits:
-> > >
-> > >     ld: warning: ignoring duplicate libraries: 'libgit.a',
-> > >     'target/release/libgitcore.a'
-> > >
-> > > Some link recipes list the same archive twice, which is harmless.
-> > > Quiet the warning instead.
-> > >
-> > > Pass -Wl,-no_warn_duplicate_libraries on Xcode 15 and newer, whose
-> > > linkers added both the warning and the suppression flag (ld64-907
-> > > and dyld-1009). Earlier linkers reject the flag, so gate on the
-> > > linker version. Broaden the existing -fno-common version probe to
-> > > also match the "ld64-NNN" and "dyld-NNN" forms Xcode 15 reports.
-> > >
-> > > Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> > > ---
-> >
-> > Yeah, this looks like what I expected.
-> >
-> > A few things to note.
-> >
-> >  * Can folks with different versions of Xcode (or is 15 sufficiently
-> >    old that practically nobody is expected to have anything older?)
-> >    test this patch?
-> >
-> >  * We only patch Makefile here; can folks who use meson report how
-> >    well your build goes?
-> >
-> > Thanks.
+> 	if (format == FORMAT_DEFAULT)
+> 		switch (def) {
+> 		case DEFAULT_RELATIVE:
+> 			format = DEFAULT_RELATIVE;
+> 			break;
+> 		...
+> 		case DEFAULT_UNMODIFIED:
+> 		default:
+> 			format = DEFAULT_UNMODIFIED; 
+> 			break;
+> 	}
+> 	switch (format) {
+>         case FORMAT_RELATIVE: fmt = PATH_FORMAT_RELATIVE; break;
+> 	case FORMAT_CANONICAL: fmt = PATH_FORMAT_CANONICAL; break;
+> 	...
+> 	}
 >
-> On one (old) machine I have available:
+> Perhaps yes, perhaps not.  I dunno.
+
+I do not consider the above an blocker, but it might make a
+difference if we are going to acquire more modes and formats, so
+once somebody tries to rewrite the logic and finds the resulting
+code harder to follow (or not easier to follow), I would be happy to
+see the above discarded ;-)
+
+>> +/**
+>> + * Format a path according to the specified formatting strategy and append
+>> + * the result to the given strbuf.
+>> + *
+>> + * `dest`   : The string buffer to append the formatted path to.
+>> + * `path`   : The path string that needs to be formatted.
+>> + * `prefix` : The directory prefix to calculate relative offsets against.
+>> + * Pass NULL to default to the current working directory where applicable.
+>> + * `format` : The formatting behavior rule to execute.
+>> + */
+>> +void append_formatted_path(struct strbuf *dest, const char *path,
+>> +			   const char *prefix, enum path_format format);
+>> +
 >
->     $ pkgutil --pkg-info=3Dcom.apple.pkg.CLTools_Executables
->     [trimmed]
->     version: 14.2.0.0.1.1668646533
->
-> On said machine, I don't get the duplicate warnings on a Meson build.
-> No issues with the patch when running make.
+> It is slightly unsatisfying that this function is defined to
+> "append" to any existing value in the dest strbuf, rather than
+> storing the result in the dest strbuf.  The original caller
+> print_path() passes an empty strbuf to this helper, so it can let
+> strbuf_realpath_*() functions to strbuf_reset() it (e.g.,
+> abspath.c:get_root_part() called by strbuf_realpath_1(), wihch in
+> turn is called by strbuf_realpath() and strbuf_realpath_forgiving())
+> it freely, which means that use of temporary strbuf like
+> canonical_buf only to copy it out to dest is wasteful and unneeded.
+> But other callers we will have for this helper later may want to
+> append to what they already have, so perhaps it is OK (on the other
+> hand, we could say that preserving and appending is what these
+> callers can do themselves).
 
-That old machine has "ld -v":
+This one we may want to consider a bit more seriously, but it is
+entirely up to the future callers of the helper.  If it would make
+the callers much easier to write for this helper to have "append"
+semantics, I'd be happy to accept the semantics of the above as-is,
+but otherwise, I suspect it would be simpler to use if the helper is
+defined to replase dest with the result, instead of appending the
+result to dest.
 
-    @(#)PROGRAM:ld  PROJECT:ld64-711
-    BUILD 21:57:11 Nov 17 2021
-    [trimmed]
-    LTO support using: LLVM version 13.0.0, (clang-1300.0.29.30)
-(static support for 27, runtime is 27)
-    TAPI support using: Apple TAPI version 13.0.0 (tapi-1300.0.6.5)
+> Otherwise, looking good as a no-op bug-to-bug compatible rewrite,
+> with a slight optimization (to skip xgetcwd()).
 
-> I think I have seen this on my other machine, which is much newer.
-> When I get around to trying it there, I'll report back as well.
+This part of the review does not change in any case.  The
+refactoring looks good.
 
-Here's those results:
-
-    $ pkgutil --pkg-info=3Dcom.apple.pkg.CLTools_Executables
-    [trimmed]
-    version: 26.1.0.0.1.1761104275
-
-sans patch:
-- Meson: duplicate warning
-- Make: duplicate warning
-
-w/ patch:
-- Meson: (unchanged, obviously)
-- Make: no duplicate warning
-
-Under Meson + Ninja the warning I get is (status line may not be
-helpful given parallelism)
-
-    [705/708] Linking target t/helper/test-tool
-    ld: warning: ignoring duplicate libraries: '-lexpat', '-liconv',
-'-lresolv', '-lz'
-
-That's in addition to a dozen or so
-
-    ld: warning: reducing alignment of section __DATA,__common from
-0x8000 to 0x4000 because it exceeds segment maximum alignment
-
-Under Make I get (surrounding info may not be helpful given parallelism)
-
-        LINK git
-    ld: warning: ignoring duplicate libraries: 'libgit.a',
-'target/release/libgitcore.a'
-        MKDIR -p t/unit-tests/bin
-        LINK git-sh-i18n--envsubst
-        LINK t/helper/test-tool
-        LINK git-remote-http
-    ld: warning: ignoring duplicate libraries: 'libgit.a',
-'target/release/libgitcore.a'
-
-(No alignment warnings this time.)
-
-Linker version (ld -v) on this machine:
-
-    @(#)PROGRAM:ld PROJECT:ld-1230.1
-    BUILD 16:18:08 Oct 17 2025
-    [trimmed]
-    LTO support using: LLVM version 17.0.0 (static support for 29,
-runtime is 29)
-    TAPI support using: Apple TAPI version 17.0.0 (tapi-1700.3.8)
-
---=20
-D. Ben Knoble
+Thanks.
