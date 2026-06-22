@@ -1,223 +1,174 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5123A545E
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 10:30:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782124202; cv=none; b=J3ucGFz4MG1kP2o669OFg2AVgmVzXiu0oSnPJdWkTyFhzH0mDz6pSk3gzSc2BFnsCsSUKysyUxdk1UE8jz7vt8E5d6jGyYupVLKGIQUptVi+ku5CHwNTzywkjNMEvjl7+uQRojwv1/9dNEaBz82TADOiDjHu2QziqTLZjKo70hM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782124202; c=relaxed/simple;
-	bh=fOFh0SC17mJ9IOnjNDX3C9CnVtk+QMKPTWV1+V9BNuI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=phsj72iowae30ie0L06hOuIK6l4MaUBZaxuVgro76zjTAOWjCaDXK2buXM7YPktUeSOap6vq4U6yUms56LDtMO30ZAYQZJKzLwjDhiWKQN5NUQzVMbC/wQoEGkO6+g3FhA4+H1+1R1nTqTmVnjHF29ZWVP9X6Txlm9ENHde4ox0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kZri1DxH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wq3IeWxK; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AFA18CC13
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 10:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782124216; cv=pass; b=ZiW8ssfUsn/CB+weAQLDxXrUhVNFIxQfVX11jfzUX3Ns0y2Ow8Q/1YMfDSc/S0MkcdtASHzcS/IWTNlgrVyvX3UH3n2n/rQeYYmiORiU8ZSNGP0K873RE0yVg/r/ol3UiBAaqxePvUPjnNj0df3scugL9laSGYRAX//tnxKGla0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782124216; c=relaxed/simple;
+	bh=qjHH/Cnfgp4mJoTM3eWnHuQalC7Qa49odfGnFDbpUtg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gf71EXHs/JMEFYKBs2lW1cn+gfQZ2T3J6N5TN7tTWh6F0Z478PdRPz7ZhsaK+bF/REOFyq7l0U8aOabbY0VgX1JZl0i0k5t8eIBqh5axJme6srJhHVA4H4wycGTidjxeMeItOJVXB/V3ejkWcNzUKovps/CyDMaZ6bQPonXiqro=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kexzSgOZ; arc=pass smtp.client-ip=209.85.217.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kZri1DxH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wq3IeWxK"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2364D1D000E2;
-	Mon, 22 Jun 2026 06:29:59 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 06:30:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782124199; x=1782210599; bh=IRsK0YdGnq
-	0cQLEVAli4U/3SN3dn6nY+/alsvUn+mZg=; b=kZri1DxHJa2kgQirmxHC0E1yox
-	z7/x3MUaVQf2uSvVm/RZeEUXi+zMPoZiWuFITD85IvbLR7LMRRdv945TJXAwu4WU
-	9ljJZqsDP6m0s9Cjl4OurOrzO/4Pw8HRUucgWdfz7xQNLKB3jDcbYaXCY5X9/NVT
-	HqhBeo/GmuPIZpL0f3OctN7gaGEApzmgLqYLOB6DmrHq4zc5dJpenS3SmJI8Sz/n
-	BIX6sYhf932/LbOoredqCJXaydpIA7HJmFe3/7a+Kdcdt1O4G9SMAVl5zJ5P85uq
-	D4ZCP4EYBxw2RQoI5GaRnxSQhpNj6YOQxrC4K0UENuuzP2cCxtD0XEpR4V6w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782124199; x=1782210599; bh=IRsK0YdGnq0cQLEVAli4U/3SN3dn6nY+/al
-	svUn+mZg=; b=Wq3IeWxKlNRuEv2breUql45PFp4A4I08mtD9gnx/CO9kc/lvaux
-	TxoxEJUnMulUngjnY9dye439tkEWXRWWfChl0MMlnGD+mc5x5x88R5CIx2TKCQQu
-	fP/24w2r+2fd7f+GtLrOLzkMiVhTF5pIjLn0f59n8euMqWpGryTuw3sPPZCa8iUQ
-	wtr/Br48JcPab1kHsEB0nVCaJjGObu6Vn5AoNejDe3mCXTCL9YrfxKiFha4m2FHE
-	Vl0PLXGhdiQ6pbEvsKwwrgt/8YNst8pbiggIeZcwXRIvhxyQJdams2R9Ktw1VEKk
-	OSrppc7/SYVgchANXCCLaXmRePZDYhOzHuA==
-X-ME-Sender: <xms:pw45alo6zW4jwAhEx1CQXke8R5ZVPvNrOt3OykUN3OWGVGusAI5gGA>
-    <xme:pw45aup09cn-cil0pf5VbJjByB-BaSUft5P_UEXpy_Z97RmCn0FGHj7jnqXBdEMP2
-    6p3DGQFdkdyTdmLd17I9GIFvQ25F4XVzT9UuPFQK3VJJC6-jp_LzA>
-X-ME-Received: <xmr:pw45anMRL6ZooT0Z8hYjIPCxLsVHEzQG7LIaZ20Gmz8Kv7Q6KYQkuoydw0XVP9NFM-Qq58gltB3LXuafUAZ2PlNSnuUVNknl8a1G3r0a3g>
-X-ME-Proxy-Cause: dmFkZTGQuQ/Fk7Mdr6tsh9i1yDVO/UzL3YHkpdziIB3RaN/G4K9zVa6FnwmsEqakgTbgf6
-    03X4M4SjKUKSPdQYy5xjOF74fuL4qvtqvFi0p6Xa1RwCB2a+cvly67ue7krnkK8n1hrWJb
-    3X7Iw4P3863dIwBMN6yT9jBnxi5HANvZGKtuBESDw2HbQt4Sxcb4tZFrzKEptRfZyf3QaY
-    1P0Irjo/0sMmBBG12oI7+NMB2Uu1ilI1+wRxKfdxv+xHBlOmLhSVbQGk9W7aYrhZJITPfw
-    9M1TQWfPhutGGxZn1mBsagoK+gD91Z/PtjdP/XNPhhWvRHTL4cOkZXNlGrtOQNZohy8ZL7
-    Lpe1e+AyPsBJ3mIhQnwBuwwNfSNvw+vGOKB/SBaKZBK4IOWD0I+eYfASUppoyufV9fpFqO
-    euj4vTDFbGjhHwT5sumOhkC44RGupQHwQZTtLkC7gpUt3hKT53AjkCNcx9SXmGqMFmQmR1
-    Ca0W9RPm2Q1gtYgTeXx4GiXu0FwsRXtLGXwRwL+OYPMMoVf+cIvOo98ALInxCeo4O1lxxS
-    b0bdxvK/It7gNuxPDtp74RPJ7yTm/uudjtm+n4IdrPvAYkmOB+bLtBlN7VPyX2Pm3vOXYx
-    EJk5KhhhTL/HHtYAFTKmG03W/c+yICLc7kO6IXhor/vymp/MF8ph/YGT64cA
-X-ME-Proxy: <xmx:pw45avzN27T-dy1AWUfBb0l0zKKtPipxH5bke4MyQAE09JPnsiP_Ww>
-    <xmx:pw45agtSOJZubP5GLqOzRG34M3iK9XgxxM8d8kiBKwTqlYzAdcbptw>
-    <xmx:pw45ao4eawrn2u3PpdTMZRkmLUZbMvd1_2XmsAKfIKR5cFU339kXHA>
-    <xmx:pw45avSp4oMQgeyjtOhWVqU1VRCkDE6Fm4j_CucMxRd3AX7OXW34hw>
-    <xmx:pw45ah6mqPe7y8cTkemWHFoajMyR62uboiLGlkUWyObY0GIe3MUvJ2PJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 06:29:58 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8200a8c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jun 2026 10:29:56 +0000 (UTC)
-Date: Mon, 22 Jun 2026 12:29:53 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] Why do osx CI jobs so unreliable?
-Message-ID: <ajkOoRhqaAcy6gBg@pks.im>
-References: <CAC2Qwm+9sh=ks1fuux415JGdDJ38Jq6eZrSH7-qzQxYCoy+Aug@mail.gmail.com>
- <20260621213407.GC2297179@coredump.intra.peff.net>
- <aji9MOE-NTHKXYqn@pks.im>
- <ajkEzhdqzmAePk_P@pks.im>
- <ajkGkB2ckf3p43QR@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kexzSgOZ"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-72686746814so2422483137.3
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 03:30:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782124214; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LYvfvFDqjv7G6p0ie1V4T3y5JW/V/TLiKC5oVOZxLF4q2HLnKFPP2o25Y8xVuk+94X
+         SE4cAT0Ybj+BotWZOos9DGHkpsZvJTrpT7nbUW9tO9fvcQ9i6LE9/6uVQYX5OgBj9Azs
+         gmXDoN68I7R9HpA+PVcyaIcqWHtGLh8N3OP90YyckIoXniAU/yxSglsPXtdZf2+8EpG4
+         P/sgsOT1opbuh3/m1OvBTa9MlqmI+0NSfmqor5SfuZgMOp8TSJa1zfAjAiedJYJ7vCp+
+         85/yXzGeiob01AYm1WJ7xJskYHF2QbK5kQd2KyzsuXZdLFYjSBFBBRMFRDZpdY1HMACK
+         Tz+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=wNwWaJ6HGeTfud+5xGJhSIeFiOHA3CcaeShlBUC/Pys=;
+        fh=sSn8nDWfZVekDe2BIpF4/2O6NUljQKWwefSzWv8I8dM=;
+        b=PVCG++LCzkgS36g6hy/zWBhBmSpk2lqDDtkeAavc0WcI1ySrx/CKCiM8hBBrb1h3ae
+         y0TCAQASAQjDqp3bMq4SOH/0fTBLOCa+gMwSluUoUGdtu7aMvPE4V8fCA0pDSirkeJlI
+         UGZyEy+r8BVIvfPIh2JV+vPyWOPyqitOKV6RGEVjzYjJTDK17+33/rl8gA2sJuNlVXfZ
+         b2Hap7WcTbpdG3VMH1OIW3O3iMke4bMu5/TMRXCrCdP5L46JYLO1091KKpAnRbYJNXme
+         f4/S6Gxekzo0XJAWMyLZZnsc3ohnYbMmghyMmsiuE35iejGNFmUNENZMPiOeBHStT3Ja
+         dThQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782124214; x=1782729014; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wNwWaJ6HGeTfud+5xGJhSIeFiOHA3CcaeShlBUC/Pys=;
+        b=kexzSgOZHSRmJLXxSGPfXQHH6nYSuEOseTIEqK4qJiWfSfXAGL8bFn04MmHNiAz42f
+         b+z4Ria3cAlo2BQ91lLEQxNGGRNpS2gwDwiF2KfwGexVsPyetvK5JUnz971DzaPK6/tn
+         ZyYx7XG4ge7zNFQ64FWrTb4Ar2y3QUDMt9e3o7PApH1bM1TgAq03q3P+kqw0i6Tfg7SA
+         ITxC6ud6sjzr8l9nNrrLz9kRh1LETs5Skw+mtCcnWtkrVm2fawYS4jBx1ML407geDlXL
+         QlX5FSlqSHjzm1OYP8MvMEBNfPgfzHcO62FTvi+0rTs9SBcKDLsE/k6woAk75BpV0v7s
+         iiaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782124214; x=1782729014;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wNwWaJ6HGeTfud+5xGJhSIeFiOHA3CcaeShlBUC/Pys=;
+        b=eG/SWiZ79BF6a4bPG+jZzD/j1K5jjMH7WMKD7sxbsqS/Hu6pR8vVYW8QiNXm++wSDG
+         adnS+Q8Zsrp/P3CUQVq3hO83SRLuQJuO/x3ALKyjvfBPRSImoddq9M906GFH+CzX/E5Z
+         MNI5CzWvezjk8s99SqOy6fieOZczeX8xTXEF/BRFdn5E2dA2ymrqy95+5zaPluaHHTtn
+         y6z9hVFqbw9zHwY4t27uAADG1aVfEFVl8E4dXCun9JmjjPBgSyw+EQOrZexW97g8kFrh
+         1zo8K/FkVNY9Ri/Zx12vuCaCBV86TkOkOIDFpRUNTvkftuv9KlbEbwShF8XJ70+JWKwg
+         OPDQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/rHcODre5DYBuiGNaFFUr7sD4TMhHLW+a95q12Mubu3IQhro+GeF91UuwGWj3dmLfo3WI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8rg4FyHMMyhPMskMcnKHmUY9DQR4LhVeyZWnMWuDoPwe0o2cM
+	awfPRsgPSCsFvf6D4jWgD/kOkfJvMHEfxOPg2OgwCxNf7h9M1Uxxd9XAGlcD3Kjz/C9xdKCSQry
+	kTLLBTPytkMGRe6mz+G/TCDxqyWNq57k=
+X-Gm-Gg: AfdE7cm5iLis05j57USJZVMD+yJTPF9WejjX38NjOZYEhWq/2ynWesN3i85ftdx0b2v
+	geP63YR87TB7iNugHGFnSq8ef7fj7lXj6aNUylIz/IIGSZguPlS0AM0/WGhSifnfst/5pmCrbw0
+	Ni2eQQ8B9tE1iJWICAKW0BbTzBQvQ2cJLLnqhbihPCfjiTbqxX6BYXYv/AK44IlSmpOx2ALlugd
+	y8+rlGSg9TCLdaOeP8d0hXthYa5apiin4MxA0p9Jfsept2ca3Kmb4IzQvLoZIU738HjyC6IFQAA
+	qT1r93Q6tYLA24/l9HRtjBiCMQjyn5l7F+KF5aKOMwYnfvpgdm8hcgQkHY8f0lM=
+X-Received: by 2002:a05:6102:2909:b0:631:81d6:e152 with SMTP id
+ ada2fe7eead31-72a1a5d0718mr7867408137.0.1782124213819; Mon, 22 Jun 2026
+ 03:30:13 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 22 Jun 2026 03:30:13 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 22 Jun 2026 03:30:13 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260619-ps-eric-work-rebase-v13-5-3d4c7315d2f8@gmail.com>
+References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com> <20260619-ps-eric-work-rebase-v13-5-3d4c7315d2f8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ajkGkB2ckf3p43QR@pks.im>
+Date: Mon, 22 Jun 2026 03:30:13 -0700
+X-Gm-Features: AVVi8CeLM82Wfa5zff41KrdROrvaqJJo22mPGYiOZa_idFUvzpO3UhOTifB3vqY
+Message-ID: <CAOLa=ZRUoBKPAjh6He0qgdZdzAzMxmeS9RMRi-czpHEfKG6EKw@mail.gmail.com>
+Subject: Re: [PATCH GSoC RFC v13 05/12] fetch-pack: move function to connect.c
+To: Pablo Sabater <pabloosabaterr@gmail.com>, gitster@pobox.com
+Cc: peff@peff.net, eric.peijian@gmail.com, chriscool@tuxfamily.org, 
+	git@vger.kernel.org, jltobler@gmail.com, toon@iotcl.com, 
+	chandrapratap3519@gmail.com, Jonathan Tan <jonathantanmy@google.com>, 
+	Calvin Wan <calvinwan@google.com>
+Content-Type: multipart/mixed; boundary="000000000000b6164c0654d520e8"
 
-On Mon, Jun 22, 2026 at 11:55:31AM +0200, Patrick Steinhardt wrote:
-> On Mon, Jun 22, 2026 at 11:48:01AM +0200, Patrick Steinhardt wrote:
-> > On Mon, Jun 22, 2026 at 06:42:24AM +0200, Patrick Steinhardt wrote:
-> > > On Sun, Jun 21, 2026 at 05:34:07PM -0400, Jeff King wrote:
-> > > > On Sat, Jun 20, 2026 at 08:33:13AM -0700, Michael Montalbo wrote:
-> > [snip]
-> > > > > When it is wedged the whole chain sits at 0% CPU. upload-pack is
-> > > > > blocked in write() on the ls-refs advertisement, curl blocked in
-> > > > > select(). So it looks like an HTTP/2 flow-control stall on the
-> > > > > response side. The same stall resets itself after ~60-85s on my Linux
-> > > > > box and on a bare-metal Mac, but not on the GitHub runner; I haven't
-> > > > > pinned down why yet.
-> > > > 
-> > > > We had some HTTP/2 stalls/deadlocks in the past, and they were dependent
-> > > > on libcurl and apache (actually h2_mod) versions. IIRC some of the
-> > > > non-TLS code paths for HTTP/2 were not well tested, which led to
-> > > > 8f2146dbf1 (t5559: make SSL/TLS the default, 2023-02-23). Of course
-> > > > after that commit those cleartext code paths should not be a problem, so
-> > > > that is probably not exactly the issue now.
-> > > > 
-> > > > But it might be worth checking the versions you're running locally
-> > > > versus what's in the GitHub runner.
-> > > 
-> > > I didn't observe any similar hangs in GitLab's CI systems, so I wonder
-> > > whether this is because of different versions of curl. And indeed we use
-> > > different versions:
-> > > 
-> > >   - On GitHub we use 8.6.0.
-> > > 
-> > >   - On GitLab we use 8.7.1.
-> > > 
-> > > Now this of course doesn't mean that updating the curl version is the
-> > > fix to this whole issue, as there's a ton of other factors that could
-> > > play a role in whether or not the test hangs. So while we could just
-> > > upgrade parts of the stack and cross our fingers, but that feels rather
-> > > unsatisfactory. Still, one place to start could be to update our build
-> > > images to macOS 15.
-> > > 
-> > > But the big question to me is whether the hang is because of a bug in
-> > > Git with how we drive curl, a bug in curl itself, or a bug in Apache.
-> > 
-> > I noticed that a osx-clang job failed today in t5551 [1]. This time it
-> > didn't hang, but produced an actual error:
-> > 
-> >     2026-06-22T09:25:45.1984230Z ++ git -C too-many-refs fetch -q --tags
-> >     2026-06-22T09:25:45.1984420Z error: RPC failed; curl 18 transfer closed with outstanding read data remaining
-> >     2026-06-22T09:25:45.1984520Z fatal: expected flush after ref listing
-> >     2026-06-22T09:25:45.1984610Z error: last command exited with $?=128
-> >     2026-06-22T09:25:45.1984660Z ++ rm -f tags
-> >     2026-06-22T09:25:45.1984710Z ++ :
-> >     2026-06-22T09:25:45.1984830Z not ok 35 - http can handle enormous ref negotiation
-> > 
-> > There was a second test failing similarly.
-> 
-> Oh, and Linux is also failing in the same test suite [1], even though
-> the job logs are truncated, so it's hard to say whether it's the same
-> failure or not.
-> 
-> There certainly seems to be a deeper issue here. We could of course just
-> disable the test again, but by now I do wonder whether this would paper
-> over an actual bug.
-> 
-> Patrick
-> 
-> [1]: https://github.com/git/git/actions/runs/27940620478/job/82672854864
+--000000000000b6164c0654d520e8
+Content-Type: text/plain; charset="UTF-8"
 
-Sorry for the repeated spam.
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-I think the issue is rather simple: we're hitting timeouts in Apache. If
-you apply the following diff:
+> write_fetch_command_and_capabilities will be refactored in a subsequent
+> commit where it will become a more general-purpose function, making it
+> more accessible to additional commands in the future.
 
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 40a690b0bb..4054fe008f 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -302,3 +302,5 @@ RewriteRule ^/half-auth-complete/ - [E=AUTHREQUIRED:yes]
- 		SVNPath "${LIB_HTTPD_SVNPATH}"
- 	</Location>
- </IfDefine>
-+
-+Timeout 1
+Okay.
 
-Then you'll see the same errors locally:
+> To move `write_fetch_command_and_capabilities()` to `connect.c`, we need
+> to adjust how `advertise_sid` is managed. Previously in `fetch_pack.c`,
+> `advertise_sid` was a static variable, modified using
+> `repo_config_get_bool()`.
 
-    $ GIT_TEST_LONG=Yes meson test t5551-http-fetch-smart --test-args=-ix -i
-    Failed to clone 'sub'. Retry scheduled
-    Cloning into '/home/pks/Development/git/build/test-output/trash directory.t5551-http-fetch-smart/sub'...
-    error: RPC failed; curl 18 transfer closed with outstanding read data remaining
-    fatal: early EOF
-    fatal: fetch-pack: invalid index-pack output
-    fatal: clone of 'http://127.0.0.1:5551/smart_headers/repo.git' into submodule path '/home/pks/Development/git/build/test-output/trash directory.t5551-http-fetch-smart/sub' failed
-    Failed to clone 'sub' a second time, aborting
-    error: last command exited with $?=1
-    not ok 36 - custom http headers
-    #	
-    #		test_must_fail git -c http.extraheader="x-magic-two: cadabra" \
-    #			fetch "$HTTPD_URL/smart_headers/repo.git" &&
-    #		git -c http.extraheader="x-magic-one: abra" \
-    #		    -c http.extraheader="x-magic-two: cadabra" \
-    #		    fetch "$HTTPD_URL/smart_headers/repo.git" &&
-    #		git update-index --add --cacheinfo 160000,$(git rev-parse HEAD),sub &&
-    #		git config -f .gitmodules submodule.sub.path sub &&
-    #		git config -f .gitmodules submodule.sub.url \
-    #			"$HTTPD_URL/smart_headers/repo.git" &&
-    #		git submodule init sub &&
-    #		test_must_fail git submodule update sub &&
-    #		git -c http.extraheader="x-magic-one: abra" \
-    #		    -c http.extraheader="x-magic-two: cadabra" \
-    #			submodule update sub
-    #	
-    1..36
+Nit: What's missing is why do we need to move it to 'connect.c', I
+assume this is because it being generic means its better placed in
+connect.c over 'fetch-pack.c'. Would be nice to explicitly mention that
+perhaps?
 
-And Apache also logs this as a timeout:
+>
+> In `connect.c`, we now initialize `advertise_sid` at the begining by
+> directly using `repo_config_get_bool()`. This change is safe because:
+>
+> In the original `fetch-pack.c` code, there are only two places that write
+> `advertise_sid`:
+>
+> 1. In function `do_fetch_pack()`:
+>         if (!sever_supports("session_id"))
+>                advertise_sid = 0;
+> 2. In function `fetch_pack_config()`:
+>         repo_config_get_bool("transfer.advertisesid", &advertise_sid);
+>
+> About 1, since `do_fetch_pack()` is only relevant for protocol v1, this
+> assignment can be ignored, as `write_fetch_command_and_capabilities()`
+> is only used in v2.
+>
+> About 2, `repo_config_get_bool()` is from `config.h` and it's an out-of-box
+> dependency of `connect.c`, so we can reuse it directly.
+>
+> Move `write_fetch_command_and_capabilities()` to `connect.c`
+>
 
-    [Mon Jun 22 10:26:52.115717 2026] [cgi:warn] [pid 3686957:tid 3686957] [client 127.0.0.1:55114] AH01220: Timeout waiting for output from CGI script /home/pks/Development/git/build/git-http-backend
-    [Mon Jun 22 10:26:52.115748 2026] [core:error] [pid 3686957:tid 3686957] (70007)The timeout specified has expired: [client 127.0.0.1:55114] AH00574: ap_content_length_filter: apr_bucket_read() failed
-    [Mon Jun 22 10:27:01.567533 2026] [cgi:warn] [pid 3686958:tid 3686958] [client 127.0.0.1:54384] AH01220: Timeout waiting for output from CGI script /home/pks/Development/git/build/git-http-backend
-    [Mon Jun 22 10:27:01.567559 2026] [core:error] [pid 3686958:tid 3686958] (70007)The timeout specified has expired: [client 127.0.0.1:54384] AH00574: ap_content_length_filter: apr_bucket_read() failed
+Nit: Wouldn't it then make sense to split this into two?
+1. Drop usage of the static `advertise_sid` within
+`write_fetch_command_and_capabilities()`.
+2. Move `write_fetch_command_and_capabilities()` to `connect.c`
 
-This is because our keepalive mechanisms aren't helping:
+That way the second patch is simply a move?
 
-  - The TCP-level keepalives don't help with Apache.
+[snip]
 
-  - The application-level sideband keepalives don't apply to the
-    "ls-refs" endpoint.
+--000000000000b6164c0654d520e8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: abce60a707184e25_0.1
 
-Whether that's the same issue like we see in macOS sometimes is a
-different question.
-
-Patrick
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vNURyTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnpDQy80bndKaStSVGdCT3hEZ0dYNTE4S2NKWnhpVwo1c1dWWjVYUmU2
+VHB4YWhpV2t2NnlGRkRObDllNmI2UStWcG5WMUxFK214U2d2RkNmNGxaTWs2eTRHWkVFN3hwCi9J
+OGdNMW1yaExtdTg4K3FKV2UxREdRcFQ5WUg2a2ZtMERqWXUzWkpmeWJNWEpGbUU4UHQzQkxVR0Qv
+K1ExMjUKU21QY1RlL2lqbWFiSlZTMmU1TkVFTlhOSTFsdi85WDJMWldkN2NzaC91RkZLc2ZZTG10
+OXU2Ri8xeEhFeTZTQgo3blVzb0l5UEJ4WTJ4enFMc3U0L0dmQTVXMm4zVDU3UGlVNVVJQ2NDdlN0
+a3QvNldxWGE1b1FISndoczJpZWIwCmVxYmF0bkRWa0lVY3BsN3dFbmV4eVdFNlNmbkJCQU1yZU5y
+Zm1Ga29aclppYjUzKytTWU83b1VMQnU0Rkk1Z0cKaGd2UzA4a01yaW8rNE5aVlhsUTlWdUI2MHZQ
+dml4VTI1QWI1c3JqYmhwZzI2WnhDekdpWE5iNEs3TWtCODI5Mgo4UGZHeml3QlFTbUhIZ05la2ZN
+NjJBNmNKSjNkUWt5bzBLZHlYTWFvNUk4Y1N0OUd0ZnBYWWQ3d0hBSFRHSkNoCjRJN1FiaHhSUW1N
+Zmk2NnRiMTVCNld0Q0doalNBQ0tHbG00LzRIND0KPUF1NHEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000b6164c0654d520e8--
