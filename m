@@ -1,82 +1,83 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66AE36EA98
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 21:35:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3455A346E60
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 21:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782164137; cv=none; b=MSzAyROu/WnY903yjuvMGGDTho5zmw+7q7czO5K55/1HkuN03DxWQNp+uu2BLGMz7KwCmbX8G1XvccZuoPBAeoNO+dK0v6QejkYekq3dJqPZnsylAV0kFijR1ht5JnT0uqNeYCRAJ4XmMVoX96+a+mAUxh+4oQela9PAbvf6mpo=
+	t=1782164624; cv=none; b=flh4q5BdjHIwP86u19ftZsKeAVekboQU2YoEOuvFErbshDWC+KDdSr+BsCrokI+zrin1QNAHHuX5pedMpi6i2/2ixuV3ehEWRgSvA/47NFS1B9xeK7rr0hbTKQLxhxhQRLTfqAQwyiaB6IOzijLuwiW9jbiq/xLmUoBS9Vbd5CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782164137; c=relaxed/simple;
-	bh=LzZCKXFPjkumQPpS7wnA2ucOI9hIAwhdGy/jZaKA8dI=;
+	s=arc-20240116; t=1782164624; c=relaxed/simple;
+	bh=7t4AwX0lcT/X0dbOx/vYCzyxiEtrLex+m7/pwZSKbGk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nqhrWTRctr4L8OihTJV55ucWmEuHmZQfCN7+19gy4XqefxwZ4VRWopmD78MysUT4gM+W29sUi62AIhjmstXb+OYmI7g4P5fZfeZl0Aa0XqrwaKjLgST9tMuONn8jWmCNy1w7+1yq2/RebbhEe9FajL+yNKvtRCdLEKHH2ijcjCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HOZm63kg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZNP2X2dZ; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=ShnR7oigzom+ZeeSQPiU+ciRww8rowU+h4Y3YSUnbl2lCP5UJmHjnLPKgRsYf4lf/c40tCK56M7r+q0/GlxSfm37KnAq4rTAAEBYx20NxAoVIUKeRa4JxvBQfaGrzz1HMObfnL06xr9OTjW4511IBmjzg/vPY4Q5tq+vpG+F/fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ot93lsvu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ETouDd48; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HOZm63kg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZNP2X2dZ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 102C67A00E6;
-	Mon, 22 Jun 2026 17:35:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 22 Jun 2026 17:35:35 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ot93lsvu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ETouDd48"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7C4311D00125;
+	Mon, 22 Jun 2026 17:43:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 22 Jun 2026 17:43:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782164134; x=1782250534; bh=jW1XqWyW0A
-	RrS1fyqCUHK4B7QMtZqUb26ccc257jMUw=; b=HOZm63kgBXlv7Eq2+GTHvURORP
-	N/5ag8VS4wKGEfxU/Dq9JxhwZIdTKEBS2Ai/DcyS84+fm1s9Tvbfb9Qjt+0s0PZD
-	G222alvJp7/J8Dd5+mvmsdZpFXOSS1BBzWHOJt1Ue11dD3/qXkd0yaRHNsYIua+v
-	/0HkwaSFqB7wAG/m76kNmYcH4iG4SISBHetavmRvPsYI6udHdbsGXVizUZ2hhRRS
-	0fgyODE2hsx+WwviSFsQ0O8DxUW9rWw2xfsuFtdb/TUPQDo2dLETcdYR6C6ZK61t
-	WTRcprlPksJMmIVfbH1XcWgOUcqxImQlZQbOM67memuesiEbEPKkNzF8YPKw==
+	:subject:to:to; s=fm3; t=1782164622; x=1782251022; bh=qhW66xjuGr
+	dZvIOLssy8hTrrbca87lIxiBG/9kE3TNY=; b=Ot93lsvulP4aP4+e/AILf0ujpz
+	TVKJMhupFCOrxUBR6xOFsoSg7gM/tW6cenSB9OFvmS+O4tCbBfWbh+sL7T1VixRx
+	4k1BMmKPvdjPbXTfe0BlrnJQMlLTs78dWlkLOLanzidQDxrRZEVZ9bKAFcKLkR6D
+	fJT00bkzGgAiChLYCc/PJrfLXo2KiI6+04F9FX2xz1uKjFmW3wZF+SLtfnWbkiP/
+	jD3pdUx8FdKsTwnw8j9Sm2Eu3x8e5E3Tyoe3+EvOngkPehNmEIWsbnnVKTXnY768
+	pvW1+HzKegdjoJJ+cjUYd1cwEd3s6uYQBAyei00Pqdd7HjJkkZeHqKPDpplg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782164134; x=1782250534; bh=jW1XqWyW0ARrS1fyqCUHK4B7QMtZqUb26cc
-	c257jMUw=; b=ZNP2X2dZxwA1J6WWiR5731muDRTEchLAY6m3qOvCnb78I73GHw1
-	seOiZjyv6CIG2VTUCf2kRh6UZRjH4ZrwZDHHownhJdQbIty1wxcnzsVubt+mI5xU
-	Px/UKraSGCkQ1TTCx3jc/dGoq7Ck+cglgeGWOoGaeq8xNhODJ9Kh1TwPEeYVcS5v
-	RaeidRffposv69Dn6kgoZWmH0FBa9kXq5E/SgE2HDJfk214/TnOgYx7dGQFvMGxl
-	1VSpRF+XdGC3sKVdIm/mp5fEwEzLR+f3MQX7M88dH3VUgJgv2239tp5mjO/wjCAX
-	xECctZPbBbMgIcXAmulveAPOVru3adGizBA==
-X-ME-Sender: <xms:pqo5avfzWHXv_dHgyQK4EWUtCOeW-L5Wo8_Ly-tTG3WpoqWzBOzLRA>
-    <xme:pqo5asOK8l7sfH_pDRmF9onnLytTpFeUVuggWHDMjmXi_wC6yXA_f2oxLH1RwEih-
-    GxZFApfOvrhOqkIHCVr1OvfkiNqTvzmmBBv_XGLcm2QG-rlG1dyAw>
-X-ME-Received: <xmr:pqo5athUnskgt6Wco2xefkqtlYagn67hOAkVXzNWQVW1KasSyVszQ5eDBYamsjMFAKb8QYMaJpNfAvDaghVXqfLtPCCnc0Flmir6WRQ>
-X-ME-Proxy-Cause: dmFkZTFJJUmCJJbPVnExFEoMI31OY9PWCPA7Vywzezb15p2j4PqpJTGnhxPr3JFYkMYzA7
-    +8MN6jyU5U1QQ4opMbW/+fM6C6vSSsENpS9y0GyJBBL89AIAYR4DoidWE/1KgOSlXVYZHm
-    bEYuLtt9hz/+nenOfJdFGzf7L7Kg/R+oBMe1MgaJISeqtRmnlMQMG3ZUu6VEswV90FFOOf
-    wMxYPJLDEmxH52LUtl8lr/+8XOWNf7U8aEIemB4qLDhEcr4g5bB+L5s41ghj3cmhsANFxp
-    o7p88nvPtmUGcNtaF7Qy5ZoJKbN7Z7txdp0H3fD4tVvqGlUDnG5o6c+q46yg8O1dydTdX5
-    FcidpFwYqHDYW2YtXhiTJ+i0EaYgwGG9x+FXlLgL8Ri0BzdwBghETzgSLjkRBjLMzPnhNM
-    rt+0X7cOobL/WPKpjRMaTIfL+9ftvnaDJlRPwJkHIAJORPtVzUy6O4YEXFWyHeKlqqiyXI
-    SjkbdMTiqNHochuESHhHBAeaFRe0sTld8gU3qN7Ya5run3sK0zbn756xhGpmRgTBVYWu/b
-    HGQhzKFY1j/ulKQ9Mlq19zIAkA7IfMb2TlFlMqtE2IDU4A3plju2bimQUG+Gt+ytfX+G35
-    H7nssJQ/WidLn1yCvf5Ed4D8SjSJTCrNi285UagwOLYI7DDvbuHijKs93QWQ
-X-ME-Proxy: <xmx:pqo5av095HgzzHQqZddAWzTvcR-W1NnLPNHEVfRTfosaTC37V6sDRQ>
-    <xmx:pqo5anjoXMF09-QmoSyPPyjMqkqMVLGHw2Z1a3TYK_v65w145RvBGg>
-    <xmx:pqo5avcYoXqP6hMBC_Oyqy6S6XAH29ijb3b7QBqMpo1znTkcd6ADXA>
-    <xmx:pqo5aqmepLDGAVZE7arLevQyj9HEk2Q9nK3KHwwwQOhuwrMM6-lTUA>
-    <xmx:pqo5ahD50u2RGABlNg51OgoqwL2KgUCrjMnhwHQ4MIFX21pNnCmV68QN>
+	1782164622; x=1782251022; bh=qhW66xjuGrdZvIOLssy8hTrrbca87lIxiBG
+	/9kE3TNY=; b=ETouDd48MZoGvSegplEintIYn/BUeWOz58PNV7dfInVe/SsHACG
+	lZ4iEf/E9Pm0ULWoYdbKsF6F10w/vmdvMvJKUoTKeC4SCEZ7gVPa+tlAgaqeLbzA
+	qimK4eTq2P9UpJ/c5NMoIc/Ny0ip5hiSCs4C6JCjFMpSBQYbqynV543OMX3yGdtH
+	knMZ9floU9iibbL2Z1G+Mjz3gysHMIHzv1EG7nbnZKgnEDWC5ldxxb8t/SHXQbso
+	SuB9pOY8YdS0FklggjiehSSh2XjXZ9t7JsZ+re5mlW3bQtR1zmn69l02wHleG4LJ
+	K/x0JQ4AZlzWvADIDA5AiyHnncG638djUYA==
+X-ME-Sender: <xms:jqw5aiumxDfya_vJmqfh41rR7ApDoLehlr869IeRH2QlhX1jaVTKYw>
+    <xme:jqw5auVI1gCeonRtD_snpn5OK_HexzhraoHiPzE8KDHwv9vHHzYnmZ9Bdot93Q_Uc
+    ULmhvDgnFlF9H_3E1XgZVmk2ctPlDjqlK1bZIS-IjET1Z0s8sndn7I>
+X-ME-Received: <xmr:jqw5amFa6UxcMVl1dBThtw_9nte1ChvkIzuLDA6SMGI4KCkwYsAlxhF1DLq6xHpaXnndSVtvkkjExPswX-_ojv9NP89YXWXw0NNlRDc>
+X-ME-Proxy-Cause: dmFkZTG4kzkhnwivcMDf2D08tW+LibW8KZIUzE+QSJFOUgHUJevGcJfpAy1KABDoK2Fw76
+    ujZe5buUteTMscMm0RWlLvRv90umo9WW9SSG03a8gw6B4xd6YVCgZX+dkUkmEJECd5d/1Z
+    O+AekFjvHm/ge6Dn9FOxUDIejnoCpCGdgQjrWH0sjbnyiBKMtT7TMuQeBg66xSYzY/LxRb
+    Xs40PV20QBuaHVRMPN2yMSMW1XsQtkZ8DEyzRNKWGurwvnl/VovujVCUXGUsX/3Xo6Hgrx
+    I2p1R3X0kIdaXxGzKdqAMLaFqWBFyZ3rb5cA0gA66+8fxgGFgw6lv1hvDZftxW9seaSYmR
+    zYXgHFltG4U7DZTz9K9t16fsniCiW5hO6QSumcP4exwyMRjSN5HrfOIqCmHgPyq6Xhogso
+    TbhxyrYQXa1nBHaiIUOCzqqdx8YlpfijsMseeQ93rkt7KQR7lS3IdKN7Z4V2E/jI+yXzMH
+    mgpZYYRkixssjbYhuSVCQtqyhPUa5YeHavcLcc3Z7jzofSug8l4tiHg8ZIiLIEEX+DY3vp
+    gsQIB7XcpZPDp1o840NUHyXsdGkD5CYkTLzsnLS5AproRRMvC/slUOAIW9Z3PloK4dwvAM
+    KwXAaY6kGA0hmW7IHMB8tQAZ32GHM7iAY4MBxvVrDm/uajWMwe8Z7cygb96A
+X-ME-Proxy: <xmx:jqw5ao3Lm1uWttAqIB7geMqamjh_FjTYPImxRkj3-6tPLlUKySbDsw>
+    <xmx:jqw5agMWSBuTOIawy6nSrN3bPfcYRseBjBiMTsToky9czGOY5R5ilw>
+    <xmx:jqw5av5qOEqYEJBDJBnpaOhQN0P0DyrZ5CB49nK11V3vZkACFFJuiw>
+    <xmx:jqw5ai0Kh4bx_jX6NsVOnD8D8Ot5OP812PeGfk7DAYnvA9iGGqN-Aw>
+    <xmx:jqw5agFAakX7dxkRF2Tu_fLJWy1W3gKqOSs99OTqY_RrQDR36ai342VL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 17:35:34 -0400 (EDT)
+ 22 Jun 2026 17:43:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH 1/2] branch: suggest <remote>/<branch> on upstream slip
-In-Reply-To: <xmqq1pdytkmj.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	22 Jun 2026 12:56:04 -0700")
-References: <pull.2331.git.git.1781262619.gitgitgadget@gmail.com>
-	<21684539debaf433b6b63404e1a7622a5cc33283.1781262619.git.gitgitgadget@gmail.com>
-	<xmqq1pdytkmj.fsf@gitster.g>
-Date: Mon, 22 Jun 2026 14:35:33 -0700
-Message-ID: <xmqqh5mus1ga.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 2/2] status: improve rebase todo list parsing
+In-Reply-To: <b3514e9b1c9515bf1a7f7983b9f120d63edba97f.1782117361.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Mon, 22 Jun 2026 09:36:04 +0100")
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+	<cover.1782117361.git.phillip.wood@dunelm.org.uk>
+	<b3514e9b1c9515bf1a7f7983b9f120d63edba97f.1782117361.git.phillip.wood@dunelm.org.uk>
+Date: Mon, 22 Jun 2026 14:43:40 -0700
+Message-ID: <xmqq8q86s12r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,56 +87,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Harald Nordgren <haraldnordgren@gmail.com>
->>
->> "git branch --set-upstream-to origin main" reads the trailing word as
->> the local branch to operate on and dies with "branch 'main' does not
->> exist", pointing at the wrong problem.
->
-> When 'main' does not exist locally,
->
->     $ git branch --set-upstream-to "$anything" main
->
-> would fail before even looking at the "$anything" (which is supposed
-> to specify the new_upstream for the named local branch 'main').  The
-> operation is to set the upstream for 'main', and if 'main' does not
-> exist, doesn't the user deserve the error that says 'main' does not
-> exist, no matter what "$anything" is, whether it is a well-formed or
-> ill-formed remote tracking branch name?
->
-> So it is unclear, at least to me, why "branch 'main' does not exist"
-> is an inappropriate message, mostly because these three lines does
-> not clearly tell me what the user _expected_ the command line to do.
+> +	if (!sequencer_parse_todo_command((const char**)&p, &cmd))
 
-After pondering on this a bit, I _think_ (but I am guessing, and
-your job as an author of proposed commit log message is to make sure
-your readers do not have to guess) what the user expected was to set
-the upstream for the currrent branch.
+Style.  Missing SP between "char" and "**".
 
-    When trying to set the upstream for the current branch to "main"
-    branch of the remote "origin", i.e.,
-
-        $ git branch --set-upstream-to origin/main
-
-    it is easy for some users to mistakenly say
-
-        $ git branch --set-upstream-to origin main
-
-    But it is a request to set the upstream for the local branch
-    "main" to "origin", which is not expected to work as the
-    upstream most likely would look like <remote>/<branch> (e.g.,
-    "origin/main").  The user would get either one of these errors:
-
-        fatal: branch 'main' does not exist
-        fatal: the requested upstream branch 'origin' does not exist
-
-    Give a hint that we _suspect_ the user may have meant to set the
-    upstream of the current branch to 'origin/main' (but do so only
-    when 'origin/main' does exist), and tell them the right way to
-    spell that request.
-
-or something perhaps?
