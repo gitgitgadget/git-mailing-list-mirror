@@ -1,80 +1,78 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D491335201B
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCB53385BC
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782118091; cv=none; b=VEIX946GyUeqDoLEZxz/C7EhGx20KTZXN81HWiX16H6OwgL7WrNjL+X8wNxKfeDC5yc5XCxHLMdFJlzfNJ6Z/21jBoKwK8hjMxplBBgBnZcLn1TVb8+dsxEsobeIoyHTJYRTji6KWy101eDRn8Q1BinYmZgxgfCwyK20oHgjU4w=
+	t=1782118178; cv=none; b=JH1pWLtqHoPT4Rj7l/E1YuYQ8A70c6F45rYujdQfuY0MIgTy82MtlzgO5wkygPT3KVXyIOgWPnpHobde9OAauZkW68IRRUKyIsJKF35ZTmu4Tfrn5/tRfWjk+DX/zKw9Y9W8qfQj34NfNlFHZk7DbVw0bvIRvm8GptDdXQV3lqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782118091; c=relaxed/simple;
-	bh=vrO9e9SYrUBnkK5Tu9JCFjsk2c+9eIdTwUNhSyUA4AM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p9FE07/xlTwXXCb4kpPux9oIW0kgRXB8s69z9A7GLAeF4QLGUF2is3prZd01ehbEHeDVKTr6yeR6bYSdKcxoEWmgfLJqDYZHE4W05CdQA2Ss+PAZQPmvF1/JbMnpcgvHdLvbz6oTnw/GNMFsCvGPIGKCwVmuvuAxB7euZmkKimY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W94JengO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VF669fhQ; arc=none smtp.client-ip=202.12.124.150
+	s=arc-20240116; t=1782118178; c=relaxed/simple;
+	bh=JgMowCngLtANlCL/ZBjiQLSc1Idhwxzod2TUCDvkQZI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mY7rGcJh3rNEMAxiD6446dMrv8tyhIZTqOY3HcTjbm1S2cARy8w2nbNSPP72rpZODB6nFcR0fSAF86J5xbRVyG6X/ARdGNukg2rpf4Y9fpxLWew4UvypO/V0Mfp9m8xSvbLJf/bW8GX3Fp4rrG2OIp/w21+ZM4iWlDJhPvsnGz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NVbCwx3z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OCdmfKg0; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W94JengO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VF669fhQ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3B86E1D00099
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 04:48:09 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 22 Jun 2026 04:48:09 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NVbCwx3z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OCdmfKg0"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A04FF7A0187
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 04:49:36 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 22 Jun 2026 04:49:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782118089;
-	 x=1782204489; bh=VGiQBO0RKo+8CKUz2Uw99iayMmgyUNrjCU5D+MURcEw=; b=
-	W94JengON35Qr+0JNtsFcA+Yd1hjGdnNKYO/926CwGgc6Uj17IQEfQOXj3uavLIe
-	BaPBKcdGopmII+pTTDUaknURLx16o+ZT5Cg5q22c6cKj061HTkazLEsuHaQBQGUK
-	/scxCW5F74rOqqXoPtgu8y3EaIh8VA90H1r/SYzbZsRHta+5CCGnNiMXlVek6vNs
-	DvblSbRkRe+TliHmnsRvAAaFKhSDuGH3pcyS+YF5AkkMay8JrChGCQvHIgUdbZMX
-	F8bbxVElHMDP3zAp5C8EZoWofjwZOZvXFGTwviNnUPN0gCPsoig+rbZmuzyRUxqa
-	6AMPLUtLu1Cd2YmGv7LLtQ==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1782118176; x=1782204576; bh=ciEFoEBr9+
+	BxCwF9kBa4YjeRhxrbgMTtLQJyz2sh2xY=; b=NVbCwx3z9jv9NmoIJuSDKbgCd6
+	u4N3Q0fiTBveH02VE5zfPTfmgALJlQTafT3D0G6MPAuQU5CdEJARMNUSW3vsXnkZ
+	YEaNuhSLqvXJWl75wTvJYZiUaOXDu/KumSpPXHfugdodbU+UQdWSQ0V4yYXTK2bI
+	pWLBSE8wvrouBGAeNRZx2iHzJusFunyVqn2iuqryhFuyR4GSaYgRgTzEjbJgAe2W
+	zv/VarFQSzcvZ+EoH+0unWm5YDMeMu6bbI+FKN2zQsFIum+WqSzR8TU3JR2rocpP
+	X7QgWn5nBBylLwYtiEwSkjQEAzh7ATwngRRnC+hX/J9lrpXKg0KEl14UKW7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782118089; x=
-	1782204489; bh=VGiQBO0RKo+8CKUz2Uw99iayMmgyUNrjCU5D+MURcEw=; b=V
-	F669fhQ+qF7h58s1RGB+28s1+SBr/TMClF3iGa7YzYfXB6gIDOcSpBkUNoqp2SmO
-	AewPBzGh2jt2FKCCe/ivlc5+GlIJ1osKEya6qSc20VAcWDMXUxHJgnjaVZZA+jFF
-	4a+zF6rDrPZ3+H9RTsy42e6Kozg5GUniS0K7DWKRQ4VN900Y293FUiGiEKBHSkKK
-	CO9WqYBKCQrCHJOJYu2KhFLRXqu4TpTeicvvlTYObPOL/Lj+uY9PDy65NZniyPyX
-	3/PrFjLGkbX1/4E7eEcj2YJ8CspUgfKgNwO4TEG++4DB680iXiV4Lllen107UeEf
-	cCmhY12Jg0KulLy/AR03g==
-X-ME-Sender: <xms:yfY4agv_uCQ9Iww2b0FSDteQoBKmORYTjem1rXwL4IeNKOhAC-8Vcw>
-    <xme:yfY4akaOrCbkOz_Rv2PDHT11wJEqzy3lyc-qcAyoFOuKhxx8N_oU19HaafHb2pqK6
-    N8SY7yOqCcgIfmVrS8ORM55ZsLeqEYuFuGn7wylvwejhq6IAjnxtQ>
-X-ME-Received: <xmr:yfY4ahbj9de-ZdgnOpqwgcpBUWSjui1kVnvcjLpIDIBuBblgZT6rG1BzfK-COTQ1i5_ULUOG4UKl6IiEY9jird-PXYsBFCbF_8Nen8d5Ng>
-X-ME-Proxy-Cause: dmFkZTEOnajbKOjPDvzPIuSD6qi/CT4lxSKsp/grLoo+rkJBbIcbiK4GoLKyEODVuxYFKg
-    Ua9MbapOYi58Bwzv0rDKaK6aGXCi6K3Uz/d7bTlu9te/pFqeZJ5TRoWQGRmLd1dVxgWmZn
-    Vgb5EZZVJvJ7qbDwBkxlUt+c3nBAZJfAOe1r5YwrQDC5mIEpZTlaU1wiLGLBIVUJjiNYCX
-    2PYvpXpc1EhP64Lnq4+sbRWpC+xDeUMiWDfLVCnHJN89DHIvNVfAIOZrKlZEA9lL6kicKx
-    eUU1+iMrHMbXepB5nnaTwyeDj8GM+uEqMUbUnRU83HO6B8ETa8cKoDaUfnYHdN+vdmxeM0
-    Gssrkm+no5PQJh8K2hnx0thehKj5PaV/ArppWfCLf4QBs31Zw/4V+/JpSurpEmFgt5IZhH
-    lwP5qiSRQn1mknzqXjKgcxfJxgPtRDb4Cp0iJI917PycIMIQR2Z067Sv4Hi7Skof6StNtQ
-    iLZXdLQUug/f7WWf26lV4ERtKcTOgOEBfasVhURzBNzWNyjOfCWK1WpTz4iz5sU4/3cuQW
-    5dw59v/7UDr5CAfSmuwaqFYKz5JYT2p94eStC60faWJ04wYfMakEGmLhDS8tUE2x5hAPIq
-    uwVdBlZ0XpNQ1eo4+CK/xgfbxQFWqeuJhd1+G7CEdTY9n4ohwfqiuZwgZP6A
-X-ME-Proxy: <xmx:yfY4aoX1dLKobmkh-yFvaA7KmJ6Y7I9VfIbaXQUWqHCv10GYZUS-9w>
-    <xmx:yfY4ag39Il4gN-NvOqcGaBf-SPPpx6J4lt-LZEeCel8P0713NZgjng>
-    <xmx:yfY4anZZ5tP0fct1DJNd8pYb3hqWmCFsfgfwzh8hwiXKodWHr1t1Eg>
-    <xmx:yfY4arokOwlfbGvcU7bOiDdhso-CsuRw7cLKsw1iSAwyK2XDs1ik7w>
-    <xmx:yfY4ajew1bvBcslHwNQ--Cfj8-ZjudrzklRmMFW9-3LFQq9uYgpPHiPi>
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1782118176; x=1782204576; bh=ciEFoEBr9+BxCwF9kBa4YjeRhxrb
+	gMTtLQJyz2sh2xY=; b=OCdmfKg0nwaJMixxK2RoJIRACVi0Bg/vM3Qd+OvxdteN
+	RqGN+p+IIJAJNhTgtqt5uPhd3oWDeIb/zVDLvQ7pLn4/BB1JrqFd1O1LWecTIxrd
+	CpYW9v5gNobWpH+oqVQ8YZN9nAUsOtBERu2ABtcqoF/tTfAu9k2PWkLVRe4Oy4og
+	g66J+303/PSD0KGxih4+0KbuSW1GrQ2BNDxxoXW+RVDNkY5dlwY7WuG33cyfC3Ds
+	KZQ0EyPUnGDGEAW4TGojlNMRz5X0JDuCRqlIOds79k46z3Ri+melJcX+AUbZ1OAX
+	mOxqDnapnV13JEzoXaMXVYfziUaux/9MVmaRJ2My6g==
+X-ME-Sender: <xms:IPc4ajwe1rCBPOcoCxXk8oKGcZwz5aRCDC3IkdTOg4JsWBaVkB4wiw>
+    <xme:IPc4aiPcRDjACPcr5jPFMCRdLOVtSwQ-lUrlf5zEwzAUlV2gVQ6UYJf_mtY2cBnVj
+    Kd5VB4LJzXO7jdoICjXBM9BqWwiMw_NjpxlAoOoGndTOEqGleAX3A>
+X-ME-Received: <xmr:IPc4ai-Yf5lAca8nXEoMpUVdipS4nNcb8_2TW0WaidsQUmqm8rwxtZZPWKRCqmkE265Cjn_BnPDWmO5SYzOdS9W2gjGlR58ombZ7WSFXLA>
+X-ME-Proxy-Cause: dmFkZTFjITzjsLpYR4jKkyODniOJETRjZ4PsAW5HOeXh8n0x/6wMd7c/zk0vbyaJr5f45p
+    EhmTjJyoI4Bc/zuKl1cb5cdDknqeKY0Afqo1L+SNwCwusVoNX5wYDI4mSZW2OANO1LNhGa
+    drYp9Hd9DZ+M6HG74twQk5qaQ1r2RZ53kUnQOXwaokmG3PQeizYA8j47vYUz0sSxD2xEPk
+    e3n9/jD/LJCSIP9NZhD0+COitGQ925ULI30RfOUNOlTNa3R7WemRAciLsuYj4CYfCiP6oX
+    Aegua+WeFAzIWkHFVALWlWv+0EyfUrmxA9E/nz1nwTJgQPzPFkXU8Gp8kDbWZnVCJa4tTp
+    gibsmKdRgIots8ky7+vHZBFbYsnWm0960KsPJ3V7CfemxH4Ti8O1UJ2EioPxGg4UFItqMn
+    6BeUNWb5927M2tFkhnyCr/Jp68fXumzRCt82t+Ns5CajHGDluPcS0kjU9XmCj9ocCM1yxk
+    jry3vTwavXL012mpj9Mm2smpN0RQ9/ELHcJ5zYMZfZysnVRIgZzlqjbtF3LiV4rTybsDwN
+    gu8afPIGx2+EsnNegpMdFCFinPOqWaJoi1+iI3qMzs1ImYjVOeJnPiv99oS7W6fKhM6AbJ
+    PS6JiOIBI9t1z4FhKwFTx0zHiJjZBYjw8xSsSN9RWvpJBLydpzmgVKC7wZ8w
+X-ME-Proxy: <xmx:IPc4aiqH13N6_1J9pycUiQ5BGFcvvHHZ4CYvNno3hF0_mhgtB28-rQ>
+    <xmx:IPc4ak4-EZ4NHCcfe55-1foOaFvxgWvyjJdHWjfONaPVfM1m0FmV7g>
+    <xmx:IPc4aiOI5KD5_U9FHIvTQY9QG8s1RlNNFHJhr0r2_2dm3LzkrLf-rQ>
+    <xmx:IPc4amNy4LzLby1QO-H2IHnGY5rvTnk8tFlHm8k2-TmxeBKL3BVplg>
+    <xmx:IPc4ahz1w3kNvHmBUe5Ic1q9OKXMbXc6lIaqx73GkuOUPTqGw89Gyzvs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 22 Jun 2026 04:48:08 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 22 Jun 2026 04:49:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 25c773da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 6ffae3f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 22 Jun 2026 08:48:07 +0000 (UTC)
+	Mon, 22 Jun 2026 08:49:34 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 22 Jun 2026 10:47:55 +0200
-Subject: [PATCH 2/2] odb: introduce `odb_prepare()`
+Subject: [PATCH 0/3] connected: search promisor objects generically
+Date: Mon, 22 Jun 2026 10:49:26 +0200
+Message-Id: <20260622-pks-connected-generic-promisor-checks-v1-0-25eba2698202@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,102 +81,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260622-b4-pks-odb-generalize-prepare-v1-2-d2a5c5d13144@pks.im>
-References: <20260622-b4-pks-odb-generalize-prepare-v1-0-d2a5c5d13144@pks.im>
-In-Reply-To: <20260622-b4-pks-odb-generalize-prepare-v1-0-d2a5c5d13144@pks.im>
+X-B4-Tracking: v=1; b=H4sIABb3OGoC/yWN0QrCMAxFf2Xk2UDXwpj+ivjg0nSLYlsaFWHs3
+ 43u8cC5566g3IQVTt0Kjd+iUrJBf+iAlmueGSUag3d+cEPvsd4VqeTM9OSIM2fbE9ZWHqKlIS1
+ MZvhjCFNKwfkxgrVq4ySf/8/5srO+pptFfnHYti+b8M67iQAAAA==
+X-Change-ID: 20260612-pks-connected-generic-promisor-checks-2933bff3028d
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Introduce `odb_prepare()` as a simple wrapper to prepare alternates and
-then prepare each individual source. Adapt git-grep(1) to use it.
+Hi,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+this patch series refactors "connected.c" so that we search for promisor
+objects in a generic way instead of reaching into internal of the object
+database. As a result, the connectivity checks will work properly in
+repos that don't use packfiles in the first place.
+
+The series is built on top of 8d96f09e92 (Merge branch
+'js/objects-larger-than-4gb-on-windows', 2026-06-19) with
+ps/odb-source-packed at 1bba3c035d (odb/source-packed: drop pointer to
+"files" parent source, 2026-06-17) merged into it.
+
+Thanks!
+
+Patrick
+
 ---
- builtin/grep.c |  9 ++-------
- odb.c          | 18 ++++++++++++------
- odb.h          |  8 ++++++--
- 3 files changed, 20 insertions(+), 15 deletions(-)
+Patrick Steinhardt (3):
+      odb/source-packed: extract logic to skip certain packs
+      odb/source-packed: support flags when iterating an object prefix
+      connected: search promisor objects generically
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 7361bf071e..a7252d56a1 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1356,13 +1356,8 @@ int cmd_grep(int argc,
- 		if (recurse_submodules)
- 			repo_read_gitmodules(the_repository, 1);
- 
--		if (startup_info->have_repository) {
--			struct odb_source *source;
--
--			odb_prepare_alternates(the_repository->objects);
--			for (source = the_repository->objects->sources; source; source = source->next)
--				odb_source_prepare(source, 0);
--		}
-+		if (startup_info->have_repository)
-+			odb_prepare(the_repository->objects, 0);
- 
- 		start_threads(&opt);
- 	} else {
-diff --git a/odb.c b/odb.c
-index 7b45390e12..11414c49a8 100644
---- a/odb.c
-+++ b/odb.c
-@@ -1070,7 +1070,7 @@ void odb_free(struct object_database *o)
- 	free(o);
- }
- 
--void odb_reprepare(struct object_database *o)
-+void odb_prepare(struct object_database *o, enum odb_prepare_flags flags)
- {
- 	struct odb_source *source;
- 
-@@ -1082,13 +1082,19 @@ void odb_reprepare(struct object_database *o)
- 	 * the linked list, so existing odbs will continue to exist for
- 	 * the lifetime of the process.
- 	 */
--	o->loaded_alternates = 0;
--	odb_prepare_alternates(o);
-+	if (flags & ODB_PREPARE_FLUSH_CACHES) {
-+		o->loaded_alternates = 0;
-+		o->object_count_valid = 0;
-+	}
- 
-+	odb_prepare_alternates(o);
- 	for (source = o->sources; source; source = source->next)
--		odb_source_prepare(source, ODB_PREPARE_FLUSH_CACHES);
--
--	o->object_count_valid = 0;
-+		odb_source_prepare(source, flags);
- 
- 	obj_read_unlock();
- }
-+
-+void odb_reprepare(struct object_database *o)
-+{
-+	odb_prepare(o, ODB_PREPARE_FLUSH_CACHES);
-+}
-diff --git a/odb.h b/odb.h
-index c14c9030e4..b1c0f3767b 100644
---- a/odb.h
-+++ b/odb.h
-@@ -133,9 +133,13 @@ enum odb_prepare_flags {
- };
- 
- /*
-- * Clear caches, reload alternates and then reload object sources so that new
-- * objects may become accessible.
-+ * Prepare the object database for use. Calling this function is generally not
-+ * needed, but can be useful in case the caller wants to pre-open individual
-+ * sources.
-  */
-+void odb_prepare(struct object_database *o, enum odb_prepare_flags flags);
-+
-+/* Equivalent to `odb_prepare(o, ODB_PREPARE_FLUSH_CACHES)`. */
- void odb_reprepare(struct object_database *o);
- 
- /*
+ connected.c         | 39 +++++++++++++++++++++++++--------------
+ odb/source-packed.c | 50 +++++++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 62 insertions(+), 27 deletions(-)
 
--- 
-2.55.0.rc1.745.g43192e7977.dirty
+
+---
+base-commit: 4a8e7a446f41435e157131162dfe901eca9250fe
+change-id: 20260612-pks-connected-generic-promisor-checks-2933bff3028d
 
