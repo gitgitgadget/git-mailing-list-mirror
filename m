@@ -1,75 +1,75 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF0C346E7A
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 18:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE2D25A645
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 19:15:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782154404; cv=pass; b=kmqmVyRz1fMEzxiDkaOFZJdju7f6mb3eogVUATeueF/rlWqiN6BC28PhWepNTeiW6/NJZPP00ytC7alg99Epo7C5QLNuPHmUBxgGTlA0JQlfqrMvAWJ5oQF/ZeNbI0bkZWOEysLYf713bOK2XCsUOrU60htMGu+9ERC+Cqyg7hQ=
+	t=1782155714; cv=pass; b=FFfTapjBqRE6fmD0dPlD3qMqHw0JW185iAX7FtzWoxhyIH6P2I0EwmIFWyMye8AYhkDJvdD1QrX94n7JtgsFRvZe+922fyEA0t1ldGsjx+9K0rY2imjIcm4+sMrw60Wi0DgzGx05udhedjNeeuxDgyurqNNLwztHSb+28ZjM+8o=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782154404; c=relaxed/simple;
-	bh=mPnpFFKrG2yZxkbc1fGFaHpA1FTxWlJcmvpf85rTbvM=;
+	s=arc-20240116; t=1782155714; c=relaxed/simple;
+	bh=cR/ZJjBnC9PHYox2LCcXncMewNd9jToPXX48rDUrR/c=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q4IIyK7v67rQ4jC1P2tpFhd3QImsHTn5lmOphOqrfuwcaE0eITdEYDHc6XU6deVNVy6d2HmFbfB6X2kbUEXDTnOA3AtpgeogHIj7rSzoF0NyRiMRPIZIFrGk4MJxli/Vm1hwXJGlKU3hZCbqgNXGs4k129c770oDVnSk/T49OnM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=FdHO+2xx; arc=pass smtp.client-ip=74.125.224.44
+	 To:Cc:Content-Type; b=pau6xrbLPSukq2Nm+Buvp5clKIjCRcIYQK9jg3C/zhTve16tapHXjcN16WvU8tq+yQYJ17WbmkgltPAMk+jqNNiFwFkCHy6oLE1Fu4nn0Im9CCJKHrEZ1P8c/B8Idn+GMI4Axj33Xst2GqNjz28OzaoS0cpUbjsmtLdg1tdXubc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=bAYH6ZqD; arc=pass smtp.client-ip=74.125.224.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="FdHO+2xx"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-662dd616cdbso4952302d50.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2026 11:53:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782154401; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SGSILUo8DEIQkM8CWJf2jwu3JpUpBvWU/BrR1tC0S1JIbkv0X95Q6s7ejMHKLfCQiR
-         K04IxSUyWhMx9rjqUywHZk2FRUVcb579x93Z1yStzJlLzxlBFjq6IL0tUak7bH4lWAxJ
-         2uzBekZiEVPgU/qnGUSVcs09Z5dAZ3QJPbmYFSwMDh+zxzfqaZhTM2Anrn1nRFfhmgDr
-         7AFXlfQNypAt99CRO5epBxGzsMOq9lnEAA9OXolWAZaA3099h9Dp8pYucIxj4zm+Lxnz
-         CP7LOd6PIpWGxv91FXf65QUNd4d1WUlqOnxJzxFuCPbeW0zgS3LdhbITHek0hAfQXEhV
-         F8/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="bAYH6ZqD"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6626b5ace23so299054d50.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 12:15:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782155711; cv=none;
+        d=google.com; s=arc-20260327;
+        b=RoXQ04CzthE5RxXKfJUvvvd1CX8ASVDqYIpd2A2I91YEhyZI4WLSIptk8unRyvtLAR
+         yVOkazkXtUXdFilY6GN1l5JhjFl/lDMn7iij30Vtm8/1XZEolfQme8TlZHKFH2dtimHM
+         v97ZqeW0mK1sT+QdeE5GeB7A+v6mzfWiKlXbEldTkLdfmuHzrVlgWTKuHNoBrdtjy9F8
+         hmEMR3B9z428CqHICMPS3miNTK3aekkns27ZhPdC9brD+HVPUgydfK+F3y+GW9jZXye4
+         vz/MvAxKv4CO+P0i1z7d47keARF8zd9ef91Z4BV75mPlvVyrYn8P0DADupYAWG+ymQNw
+         4LMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=mPnpFFKrG2yZxkbc1fGFaHpA1FTxWlJcmvpf85rTbvM=;
-        fh=dR3pU/XLzbScAjm7LXJKg1ZPAkGzQjgu306KjUZbl9w=;
-        b=fLTCui3PuUyUSbVi6NZHLQ4d8q960FvVHp+2GamDI3+7xhF8PvWl5OAzujX85tle6t
-         v0jXJGZssXaUiIhGqWOyQbA9XQPbI51hSU6LvsorIm6NzaOqTc0T7TOgKr6i0Ad6dKci
-         0/Jy9AmXMyZP+uiweJ5ojc4B3YTkZWCQx//1TEU5HSa34zevoiAw15lGsSAO8AELaP5k
-         cLWow9w/wn/vkyJ39vwkxF3tSBMoG/YKrWB8DLR3oXm7MssMSEKuYloEtgYGYHtzc3hJ
-         UxF6BryzFR8tpsTTe1vytAb7mPU6YAopq5V+IsOIelPz8ZJv7w3W6TovBHvq8bc0Bt6h
-         x5tQ==;
+        bh=sq4HeJEckZRANPzvlQxfvqIQ+VD6JzP3lHINL/231DQ=;
+        fh=S8vLEE7hdkVMS7CDGuTbmIQI7WgG/qgvFenwtvloN0I=;
+        b=Oa0F0W6w8Aan9YiqMTSbyI2PdtycM0fdpXFO7NeGvQvaNOFopTD7Us1YUKqrx73Zj9
+         4q6Akuy5klzdiDSti1ZxFrNbC83Bb4LJPGL8SUA8Yk5zE6Wj1ZPqxmx7jtE3FwZIHqJs
+         rJnftIkquDpJiQQThAAQ0cKF/SSz1PT+xf1BRJ0xi5NUHoj1926iBvS28E6IafD3UcvG
+         5FSXugRrGw8XVvSctNnJaeO7upCGZHs7s5L1RTI3N12I2pfdij1Dgm9EHcY5sVHNf+KE
+         ZMyO9TCUSi6LPOi8b/cz+6dbFEizFlyCCAsuQhToc8UM1poCAHgCR7HxG19ejTvou8IU
+         M1jg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1782154401; x=1782759201; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1782155711; x=1782760511; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mPnpFFKrG2yZxkbc1fGFaHpA1FTxWlJcmvpf85rTbvM=;
-        b=FdHO+2xxoZCdAjPzQ7zWrjDa7qcIgWDVnQH8zqJi3oKuu/R4XGn494QED80hlvG8mQ
-         mT4GNN1NNWCxGoeYcsAXyO+67cCrIf7FjKicHw+JnbdyTuaNS67dtkrbO5lRjlANjn7z
-         3izXvBo947/wZ9a2WtNa9YpRSlB+ChFzB96hY=
+        bh=sq4HeJEckZRANPzvlQxfvqIQ+VD6JzP3lHINL/231DQ=;
+        b=bAYH6ZqDcTYIN0DYIzxZTjiAS6+iewthDOe1CETvtuWrCWKsSYYUC8qqzapvLMYwQB
+         nJLZENMa+bPu0wSvjQkbg/i/syi00MVetDZvrZxiMbNAags+F+1JzZuv1lwugO1ULi2/
+         7z0lilnBYfF1TTbvpsCAif9QX2D/2xD5I5YXc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782154401; x=1782759201;
+        d=1e100.net; s=20251104; t=1782155711; x=1782760511;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mPnpFFKrG2yZxkbc1fGFaHpA1FTxWlJcmvpf85rTbvM=;
-        b=BxoHFt5j5gRRQCi0rEI3ty3iCc/o0tLV37Car38AVEdusKIz6C2pO2uO0ShAn4GFW6
-         DAq/HwvQtvAOxw1KX+42dAb9qILJeL8WWz0XDmeSZ7shudgWdD/c2EgAKPIZLInq39IC
-         sfiZQBcNjjeBzGWF6DvW5Eqc/rM1ERVpOQIYPVb0ySHsGIQQk87JMaxyNggOd3pmF5Rc
-         PcwAhaW8emhlhqYEIhRunhRN38qftl5/QrArxsJulvfokC3bp5EPq87Iv1bojL4jtxCt
-         KCAKsc+uYwIlpBeCqzm5lrE/8z64AJ6Ms5WOep9rULgXRTmih47anUawh95B14HI20cK
-         /bkw==
-X-Forwarded-Encrypted: i=1; AHgh+Rrr+LU5bp+kEhC4o5kaOgg2oNwkK99Swxo0AkzBZxVwUyK4ezNr8ecuN1RfjsdAFWABC3Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+beDdkVGwUo3BXAfHvhYXCVFFYQWcrL8tkvmKkAggV+sOedYb
-	iHfTjdr38SlvqqhvODejIMAyOEVNmAiYfhxfMyROajNS8Z/Bt2zgyLntMAYBlpYynjlMFLI0u1o
-	/R+CeUANV5YVqlJPVwEMcRG2H/DjRYDKlglmHSpRCng==
-X-Gm-Gg: AfdE7cl24lItN6a7FLi1wn+epcW3W7cuUgCu3F2+3oYvRyQI2bDKajyCjobc2s7XU1L
-	ik3hN/uTQ5hdXzGXLQECI9gKvCVLpdY0Lnx858y6E1tUFymuTANeY3DIkT2KY2zj/QIyLFom6Ei
-	V84K3Gd/aIDiQPujAh7vyUx6vxuCyC/0po06eJoLzvvin8rxJFnmsv2NDXGHfvcdZJqYQav6UxB
-	WGwQQZoDVrpN0Zi7J0mljIgELvyeJIe3jE0XnaUEEdCd3E5n+xDoA+TuL8D/dAZ6v94zMxoMg==
-X-Received: by 2002:a05:690e:12cb:b0:662:a4ee:104b with SMTP id
- 956f58d0204a3-662ffe593c4mr14319580d50.48.1782154401174; Mon, 22 Jun 2026
- 11:53:21 -0700 (PDT)
+        bh=sq4HeJEckZRANPzvlQxfvqIQ+VD6JzP3lHINL/231DQ=;
+        b=cPT7sAMi5qqUk1wBce1iDHJC06lkpVRdG0aYRdD9mKtdcCrcjQqmZgEebF2jXeRhyq
+         BT6y+tFoIZ3bwYlfZjlt3nl+r24MWs9mbR1pvhApDIj/uLD8AUU2NnzTN/kO2lFbocnu
+         cIT3X66MN8Kki90m2tID3tfwL0rU9fxmnuTBEI9UtCBxyN24BjnRvrzICqSNOKM63CIt
+         tZrfASFlJnLHxhl7NyUiQsQNsI5+bOQJaJSoPnl3XiQK7WkZpIe9YPsm8Zc3Urg+krD6
+         xHT0GGnef060p8cbg8WIoPo6BOmkzySyX6OGiG8jRopzEtPXkghPkV7yXOoDY96vnHj4
+         YBXQ==
+X-Forwarded-Encrypted: i=1; AHgh+Ro74Zsdrt/45LBX0HmklyA0xunBXahc/+lVh1TX5Hk5JB/wVS1vmwHySd4TCyxBrJBL+yA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQp5l08GGOIUnxQs7OvIqu5Bz/R8PKwIscB5c2YMMc1ErTQbkY
+	pqIFPeiO7gPn4sQpXq371MNYpI7FMTjwMb/DI5Uf2kWjiD7NctX53TTS61cIW6IWrhWy/7eIhsR
+	hAZuz0eiDvjVY5Ijibc6aGB/DuLpFiuWTSwqnHYpsxQ==
+X-Gm-Gg: AfdE7cl9YAeGQImECzm2mIeHQ1ldPwrNcxOx65RO/7I0kBY9iEijIQnPrkxtwCkE7yD
+	arMKqFRdZna0RPi2d3sZvKaU5+DiU2QHLvpA36TY2BeEmPvoA6CkoaZoB3eVDuConEmFVrPBY4u
+	6CYmmwFvRmOOGmISAoCqzLR7a+2DjVB6KN+j7wU53W6LSVNFRZzAFErYllC60kQkXZSDSm0Xz3f
+	hhjj2luoxHKJDDQ5De9cDURRtmX7RgwcER5LFUKz/BJs7cJT5rauxBCshtql+v20/9OFZKnoA==
+X-Received: by 2002:a05:690e:241b:b0:651:bd7e:c04c with SMTP id
+ 956f58d0204a3-6635553aea8mr618330d50.21.1782155711426; Mon, 22 Jun 2026
+ 12:15:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,36 +77,164 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <5492acda0ad05eab67198880a5262e84a3f22ba6.1781951820.git.gitgitgadget@gmail.com>
- <001e8da6-3232-4cfa-ba6b-35d3489e4779@gmail.com>
-In-Reply-To: <001e8da6-3232-4cfa-ba6b-35d3489e4779@gmail.com>
+ <316e4dfe261043730c77142639f86f5c3cabe370.1781951820.git.gitgitgadget@gmail.com>
+ <f0c9eb6e-60b1-4eb6-86be-3af4d87afe85@gmail.com>
+In-Reply-To: <f0c9eb6e-60b1-4eb6-86be-3af4d87afe85@gmail.com>
 From: Kristofer Karlsson <krka@spotify.com>
-Date: Mon, 22 Jun 2026 20:53:09 +0200
-X-Gm-Features: AVVi8CfvlnhL_-EK7UUf4WevKbyGVMewOHlYoCtyxOnDlcwX3sOEtXkRDBE7odY
-Message-ID: <CAL71e4MuRXDs_vB7UWq7kXmUVhDHOCv2jKM0NeAj3Cofbt5hcA@mail.gmail.com>
-Subject: Re: [PATCH/RFC 1/6] commit-reach: decouple ahead_behind from nonstale_queue
+Date: Mon, 22 Jun 2026 21:14:57 +0200
+X-Gm-Features: AVVi8CcvOgCCFnkuv68VMNkz4FU4aZDDhhIFSSocl1Hsnbnk2--Qhq2YF-4WEic
+Message-ID: <CAL71e4Pcw-UUbHBw_j6PFx2bXmxZ93VLMWG+3Qap=RmCJa_ZgA@mail.gmail.com>
+Subject: Re: [PATCH/RFC 2/6] commit-reach: introduce struct paint_queue with
+ per-side counters
 To: Derrick Stolee <stolee@gmail.com>
 Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 22 Jun 2026 at 20:00, Derrick Stolee <stolee@gmail.com> wrote:
+On Mon, 22 Jun 2026 at 20:10, Derrick Stolee <stolee@gmail.com> wrote:
 >
-> This change is only needed if we are intending to delete the nonstale
-> queue struct, which is currently happening in your patch 2. But we
-> are essentially recreating its logic in a more disjointed way here,
-> leaving this code in a worse state.
+> On 6/20/2026 6:36 AM, Kristofer Karlsson via GitGitGadget wrote:
+> > From: Kristofer Karlsson <krka@spotify.com>
 >
-> I'd rather see patch 2 create a _new_ data structure instead of
-> _replacing_ one that already works for multiple callers. (It does
-> drop to only one caller, but that seems cleaner to me right now.)
+> > +     if (!(old_paint & STALE)) {
+> > +             switch (old_paint & (PARENT1 | PARENT2)) {
+> > +             case 0:                  break;
+> > +             case PARENT1:            queue->p1_count--; break;
+> > +             case PARENT2:            queue->p2_count--; break;
+> > +             case PARENT1 | PARENT2:  queue->pending_merge_bases--; break;
+> > +             default:                 BUG("unexpected paint state");
+> > +             }
+> > +     }
+> > +     if (!(new_paint & STALE)) {
+> > +             switch (new_paint & (PARENT1 | PARENT2)) {
+> > +             case 0:                  break;
+> > +             case PARENT1:            queue->p1_count++; break;
+> > +             case PARENT2:            queue->p2_count++; break;
+> > +             case PARENT1 | PARENT2:  queue->pending_merge_bases++; break;
+> > +             default:                 BUG("unexpected paint state");
+> > +             }
+> > +     }
+>
+> While correct and compact, I don't believe that these switch
+> statements follow the coding guidelines. We should split the
+> lines appropriately so they are more standard, such as:
+>
+> if (!(new_paint & STALE)) {
+>         switch (new_paint & (PARENT1 | PARENT2)) {
+>         case 0:
+>                 break;
+>
+>         case PARENT1:
+>                 queue->p1_count++;
+>                 break;
+>
+>         case PARENT2:
+>                 queue->p2_count++;
+>                 break;
+>
+>         case PARENT1 | PARENT2:
+>                 queue->pending_merge_bases++;
+>                 break;
+>
+>         default:
+>                 BUG("unexpected paint state");
+>         }
+> }
 
-I can definitely do that and leave ahead_behind unchanged for v2.
-I was thinking that with only a single caller, and ahead_behind
-being simpler than paint_down in this respect, it would be
-worthwhile to simplify it, but if so I could instead do that as
-a standalone follow up (though it may prove to be not enough
-value for the win).
+Agreed, I will change to that style. I did try to look for style guidelines
+but I missed the .clang-format file (I was only looking through text files).
+Apologies, will remember clang-format for next time (and v2)
 
-Thanks,
+> Also: technically "case 0" should be a BUG() state, right? We
+> shouldn't be walking any commit that isn't reachable from at
+> least one side. (case 0 does happen for old_paint, though.)
+
+No, this is actually intended - initially I started with skipping
+case 0 and let it fall through, but that would hide _other_ bugs.
+I use 0 as a marker for "not in the queue" so we have this:
+Enqueuing: 0 -> flags
+Dequeueing: flags -> 0
+Only the case with the modified commit being in the queue
+will have non-zero flags. I tried to document this, but perhaps
+it is not clear enough, I will see if I can rephrase it, or add an
+inline comment around the case itself.
+
+> > -static void clear_nonstale_queue(struct nonstale_queue *queue)
+> > +static void paint_queue_put(struct paint_queue *queue,
+> > +                         struct commit *c, unsigned add_flags)
+> >  {
+> > -     clear_prio_queue(&queue->pq);
+> > -     queue->max_nonstale = NULL;
+> > -}
+> > +     unsigned old_flags = c->object.flags;
+> > +     c->object.flags |= add_flags;
+>
+> Diffs like this are part of the reason I'd like to see a _new_
+> data structure instead of replacing the old one. Keeping the
+> old one for ahead_behind seems like a good idea to me, but even
+> if we don't land on that end state then deleting the old code
+> _after_ adding the new code will make the diff more readable.
+
+Agreed, will address that.
+
+> > -     struct nonstale_queue queue = {
+> > -             { compare_commits_by_gen_then_commit_date }
+> > +     struct paint_queue queue = {
+> > +             .pq = { compare_commits_by_gen_then_commit_date }
+> >       };
+>
+> I didn't notice when reading the struct definition, but looking at
+> 'pq' here makes me think that we shouldn't be using that abbreviation
+> as it could stand for "prio_queue" or "paint_queue".
+
+Good point, I should pick a longer name for the field. Perhaps simply queue
+(I want to avoid prio_queue since it exactly matches the name of the struct
+which could be confusing.)
+
+> > +     while ((commit = paint_queue_get(&queue))) {
+> ...> +
+> > +             if (queue.p1_count + queue.p2_count +
+> > +                 queue.pending_merge_bases == 0)
+> > +                     break;
+> >       }
+> When possible, I like to try to make loops only have one terminating
+> condition. Should we have paint_queue_get() return NULL when it sees
+> this internal state condition?
+
+Possibly, but that would couple the paint_queue struct very tightly with
+the usage. Not a problem in practice since it only has one call site, and
+it's unlikely that we want to add more of them but it may feel more natural
+to let the paint_queue purely have the queue semantics and counters,
+and keep the halt condition within the function itself. I don't feel
+super-strongly about this and can change it if needed, I will just need to
+verify that nothing else gets complex as a result, I have not fully thought
+through the effects.
+
+> Also, I'd rather see it of the form of (!count) instead of using
+> addition to make it clear that we care about each value being zero.
+
+I did consider that, and most of the code in commit-reach.c at least
+prefers x and !x over x != 0 and x == 0, but my thinking was that
+other code in the repo did use comparison operators specifically
+for things like counters. Happy to change it to conform better though!
+
+> Finally, I think we actually want this case to get the benefit:
+>
+>         if ((!queue.p1_count || !queue.p2_count) &&
+>             !queue.pending_merge_bases)
+>
+> I do see that you have this condition in patch 3 with the extra
+> detail that the max generation in the queue is finite. I think this
+> is more reason to include this in the data structure method and not
+> in the loop.
+
+Yes, but just to be clear, you don't want to merge together patch 2 and 3
+here, just grouping the halt conditions closer together
+(within paint_queue_get)? Keeping patch 2 and 3 separate would be nice
+to make it easier to show that introducing this extra counter bookkeeping
+does not negatively impact the overall performance too much.
+
+Thanks! I appreciate the thorough review of this patch
+(which I feared was the most annoying one to look at).
+
 Kristofer
