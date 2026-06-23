@@ -1,185 +1,149 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849AF2D7393
-	for <git@vger.kernel.org>; Tue, 23 Jun 2026 15:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EFB2D7393
+	for <git@vger.kernel.org>; Tue, 23 Jun 2026 15:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782230007; cv=none; b=Cup1DRRQchS+rQa1A9Ushpc46OE7/Q8Ea5PvpmzBf2A6eioMWFoKkKj3hen8s+9z1cACwGqWWeZtD3rD63NZKVpfNRByXkwd2xL0u7tAPIEOcoRG9xuguejo7golWdZ2Pr6jZqMbi214wFq5ONjLYVaGVD02ifIJZH+PaFlNWoM=
+	t=1782230051; cv=none; b=eq5rPT3NVaJCZAVe13qYM4LU/+4yhKrQK2miHUeRfo50U4KuKEnqKRUiY/7XPcBGA7c4FB8jZ0WfDTpegqPmSPRY8pdtuVVMAS0fSAeV/k4TqlWADO8XbBEE+RPg6SKToYzJrFbD1GDfAGIf8DLBnZya/gQoV7lP5n0bqQliIHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782230007; c=relaxed/simple;
-	bh=Z2GAB0/bkdhdyn6akt98nApJPgBGvGQkEKzxSvFQNKI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MbpyR1g/FdNtKihS1oS/vKJHi+FTv4KdfhTG4kjbNZ2oWb2r4S/4AYF7SwSY6ghQwaq2PJiERgRkZD9Jzwlg6IyemLv/Ky3N+/wnHbFdY06FTzP0A+TvW8zNL8jBRc+FzJAbGm8qTHKsIcyMY+PFVlWkcDJc3RXiRLIOENrHBOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fIgHFk2i; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1782230051; c=relaxed/simple;
+	bh=KNElVpsv5s2YsH61yo8e+EoFGpYeVYGS70O46A6advM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZdmuxPpRCw4qcNBq5Y33MIwlcoNyPlDx1ZsR95YSJ9PGR8HNexVSCcHVaCVLUo7N3wDxogjAmOtAtpQ3em1EIKK5Hf+TtzAy/KNbE/f84wubaSSL3yoGhTZVaM6n/JhxEmeHN8mP+aQqwiHZUar6SVmXcK/eDZnx04gu0Kqzk38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AWwPUncP; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fIgHFk2i"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-491609cdd8fso240745e9.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2026 08:53:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AWwPUncP"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4924593f45dso635125e9.1
+        for <git@vger.kernel.org>; Tue, 23 Jun 2026 08:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782230004; x=1782834804; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yirARN1dkJCFDeCmPg/TR2KVXJmgGbgOHOXnyV3SuDA=;
-        b=fIgHFk2iF4ZygXIgNZ/dsNtQh5fLm+lMafk0VmWBcRpulVYWTaKQBZZLqIn11YireC
-         TQ/cBXH9yPqGbPuyj/QwQJVr2S7fJzCLCGQZDu/PSrK8f2BoBkEGlMD4xNIwbefqnW5b
-         ALzE0KwH9SFL8YJXrrVePBUuCG2a2S0oXhYGpyWd0EdvfTPDpbiIHyxfPyJPi/EEzW/Y
-         8/cHEVZlIGGXoPqb0QEbtYUH7h5DM3P/wc33Va/eTPw24CR/nh3tTnJaM1O9uikPZdXb
-         wMTrUh4x5Uhco3sK7B61z/2YBSXRmTI/AHAEoQ6Ii/3HHyChj26BV2JH9c/7G1AoYCzX
-         Qf1A==
+        d=gmail.com; s=20251104; t=1782230049; x=1782834849; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=EtJ5dxWl7Ixrqa2mP34NolhKsIoNoGNcKmEqb381lLA=;
+        b=AWwPUncPuwZsNG3Uire2KV+bZg2DYgtiv9EYvzYGPDOLD8M+QtQRWxTi/d2qVjXgjK
+         ZE8duSbnb2B/RREcpA/bY7Wl+VqTH4pbI6/lmq+eF622wARo/r0XYAeaWpxrFNf33adJ
+         1sBX1J8JywjBPJHBj4YeZjWJJENxq4pvWP5HsS+h2gkHj6jz6XxAUIsZvU00rqzsaAyV
+         ddh8Bc2EYP25+dZ3Py0fnsf+QtVDS9MY6SW4M3hjrKC7iWoci/s8W9FF34JvWvZTwVRs
+         ozJjDqplYc1j9tKvVXhACWbV0NLixNS2gqsGBKkpFXP9SnPpss+CxBtEILZQrp2pSegI
+         yVLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782230004; x=1782834804;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yirARN1dkJCFDeCmPg/TR2KVXJmgGbgOHOXnyV3SuDA=;
-        b=jrD5fFL54FlASaPn3NWFFkM3/70GBRaUdMlr6Hxy0MIuOj0Iu0zbPfPs80phSPNH2J
-         IU6bEHztQiCOyToOc2azt0byebENfPCO7dyEjCrnUDD+dd1v9dTLK/JPCA107T9GE+19
-         85pdYqr24FhJebgi4g3X4GYfDcQlEnpKgZE1wj/zOxrAoIJgt/dUNRY/Uf58uu7KuV36
-         DGvCZuqs+iKWqb3Z6wxQPDmeqTR+U9DLoij0TWAub/Os3pJI4ayxAXKXhMB4wE1fqCI9
-         K3h0umUaDWipGHaU9fnO6vr71SQj6DxIbEGdGvKfIHV5vAXGDVWs1u5ezsuDwom0w8C7
-         UmHw==
-X-Gm-Message-State: AOJu0YxQM9bw21IzqEb/oK8okUbmBPbgGQgT4P2yMR0PKJ5ZbrRaOykS
-	oOEGrY+m0p1o2K1huDgFZO79dFdrlyb+chrghXRBvRVtvlSsrGHA7pxdmkGG5w==
-X-Gm-Gg: AfdE7cmPy9xLyyhOr79s/2YBGCDc0YWTIT/De+BHrpG6zoPRUpbbMZbmwtsmLJRV5Vt
-	Ra+4H4AsDKvyAfJrAaTe4GZwk+uqa8mLn2liZB84WwQ6WvClK8FtKnAhThXYrtzEteOy9PcG/GA
-	rHIUIK1wx6yux5irQxcbwQr3ZLIxsAaIFUvbIiNlH28dlMQwZfuPD0mMya5QQpSk2aAHyVNH6Y2
-	kpuzpJk7mE3uad4a23OK3FjGviqCWY8uBlo1kL65kkprS8LQlHAV3OD2unEpMFMN0F2R2UMlhMy
-	sKsfA7DWOuVNJTytYHl9hwQjmytZPsb5mP607k3i0tAk/aaHIliFbTj4aibFjYix3Rj1jheeWCU
-	A0BPMUVx10Uj1rRrtIah93W0YIwweTHO1Cn7K3D38hFYQe9qv/HhBLEgeqTlUijgt3Ht7ipOWIR
-	9HdFU68ASmOJmrVPBJZYa1M4aZG2LZSeoHo/ONwlfK1nWuq5WUcw9b7nfFR0ECbQqNUsk=
-X-Received: by 2002:a05:600c:628f:b0:490:bd66:e522 with SMTP id 5b1f17b1804b1-49240e72434mr314466825e9.29.1782230003698;
-        Tue, 23 Jun 2026 08:53:23 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49240f1f330sm240915975e9.2.2026.06.23.08.53.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jun 2026 08:53:23 -0700 (PDT)
-Message-ID: <65d38915-019e-4e2c-838f-980023e0c2af@gmail.com>
-Date: Tue, 23 Jun 2026 16:53:22 +0100
+        d=1e100.net; s=20251104; t=1782230049; x=1782834849;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EtJ5dxWl7Ixrqa2mP34NolhKsIoNoGNcKmEqb381lLA=;
+        b=Wt4nwNO55AoMrkQgAixxZzALR2SA5F3WZjp4tSa4OS8aVRKTkPvi4mWLZzxsggkehk
+         u8QLPLBua7pID0Y/NBk+w5kzfQ10Sly88uZ2sxQGqOH/CfH2SaUpobVECVWqZojlxTqx
+         QiFnS/wb/rd19iF3XlQLsSEfnQuzDagSO4DTSowzIB9kXdyvw1Bx5K40yEuobO5oimFZ
+         KgXcdsnJN7kTgP/EtHKX1yOm5qUR2a8e0TwDngWeaIa/AO2OFdog8VTB3AdmVrgHNKu/
+         sdl/3H1WgtUlPcXsa1yzETYSrGhNLbWKNotCG0havJr51GQ9031intrdN21C06G8LM+6
+         E0RQ==
+X-Gm-Message-State: AOJu0YzhazppEPR7LSrKB07x8yeNe6lJ1XWgzKt4eoo6EZRpF16nWLgv
+	O1TGCytHSkW4/jwdvlwKHzh3qs+c8j2pMtMfHxFBRl0z3aC4vHGXirmfXg6Jcg==
+X-Gm-Gg: AfdE7cnhQ79ftcCo1J/cP09Omb7KYUd3acvWm6nNK9+eCt+H3wXDF1yyLbgMt9tXHTI
+	165i3CPOATUGtV0z41G0TBunftEGhr+IwzC1LTF+ExQCIO39t/d8N1G5+RPrB+5eWHMHE/ZJqzp
+	40ClYVmz1sLxV2KYLdSftsT+u6K7blzhZT5v/KKtbGox9ZisAbGDHAnZK+xsXFR+eEN2LeOX1+J
+	4QdHRfiID3Lmpv7MzZcJ2ypDg1+FIUTGOOOwvBktkbmtz/fD6t5pBUt200FxzWCT1DOE05oZVxJ
+	2lRUGHr5o0shTaid65EhDB3vv9BagU45tAU1jNJODpXTTgN3jmeiF/UOU3TuJM7z9LdD58wOwt8
+	TXgdEszuP0SndOj0XZIioAkCTFQ3xWqYuTd2K5C7MHg2woSApHE1t1OucsvV40t1j5JsyBT61sK
+	JgjP7H76Rz9MdxpCEf
+X-Received: by 2002:a05:600d:6443:10b0:492:4e6f:d994 with SMTP id 5b1f17b1804b1-4925b3b7be2mr39375565e9.32.1782230048819;
+        Tue, 23 Jun 2026 08:54:08 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923fe7b9e5sm371729505e9.10.2026.06.23.08.54.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2026 08:54:08 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v4 0/2] status: improve rebase todo list parsing
+Date: Tue, 23 Jun 2026 16:53:55 +0100
+Message-ID: <cover.1782230024.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
+In-Reply-To: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/2] sequencer: factor out parsing of todo commands
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
- <cover.1782117361.git.phillip.wood@dunelm.org.uk>
- <d27dddff93144f7b6d7fc89719bdf53b6856c9fc.1782117361.git.phillip.wood@dunelm.org.uk>
- <xmqqpl1i1pef.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqpl1i1pef.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/06/2026 18:00, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Move the code that parses todo commands into a separate function so
->> that it can be shared with "git status" in the next commit. As we
->> know the input is NUL terminated we do not pass a pointer to the end
->> of the line and instead test for a blank line by looking for NUL, CR
->> LF, or LF. We use starts_with() instead of starts_with_mem() for the
->> same reason. This results in slightly different behavior when there
->> a CR at the start of the line that is not followed by LF. Previously
->> such a line was treated as a comment rather than an invalid line.
-> 
-> Meaning that the input validation is tighter than before? 
+When there is rebase in progress "git status" displays the last couple
+of completed and the next couple of pending commands from the todo
+list. When it does this is tries to abbreviate the object ids of
+the commits to be picked. Unfortunately it does not abbreviate the
+object ids when the line starts with "fixup -C" or "merge -C". It
+also mistakenly replaces the refname in "reset main" and "update-ref
+refs/heads/main" with the object id that the ref points to.
 
-Yes
+This series fixes that. The first patch factors out the sequencer
+code that parses the command names in the todo list. The second patch
+uses that function in "git status" to parse the command names so that
+it knows whether the line may contain "-C" and whether there is an
+object id that should be abbreviated.
 
-> I think
-> it is fine in this case, as I do not see a reason why anybody wants
-> to use a lone CR as comment introducer.
+Thanks to Junio for his comments on V3.
 
-Agreed. In the unlikely event that core.commentChar starts with a CR we 
-still treat the line as a comment, but we don't treat lines starting 
-with a CR as a comment anymore. I think that behavior was a lazy way of 
-handling empty lines with CR LF line endings.
+Changes since V3:
 
-Thanks
+Patch 2 - Style fix for cast.
 
-Phillip
->> +bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd)
->> +{
->> +	const char *s = *p;
->> +
->> +	for (int i = 0; i < TODO_COMMENT; i++)
->> +		if (is_command(i, p)) {
->> +			*cmd = i;
->> +			return true;
->> +		}
->> +
->> +	if (starts_with(s, comment_line_str)) {
->> +		*cmd = TODO_COMMENT;
->> +		return true;
->> +	} else if (s[0] == '\n' || (s[0] == '\r' && s[1] == '\n') || !s[0]) {
->> +		*cmd = TODO_COMMENT;
->> +		return true;
->> +	}
->> +
->> +	return false;
->>   }
-> 
-> I notice that the order of noticing concrete comments and comment
-> lines are swapped relative to the original.  There is no inherently
-> "natural" order between them, so the change is perfectly OK.  I just
-> got confused slightly while reading it until I realized that is what
-> you did.
-> 
->>   static int check_label_or_ref_arg(enum todo_command command, const char *arg)
->> @@ -2716,29 +2737,23 @@ static int parse_insn_line(struct repository *r, struct replay_opts *opts,
->>   {
->>   	struct object_id commit_oid;
->>   	char *end_of_object_name;
->> -	int i, saved, status, padding;
->> +	int saved, status, padding;
->>   
->>   	item->flags = 0;
->>   
->>   	/* left-trim */
->>   	bol += strspn(bol, " \t");
->>   
->> -	if (bol == eol || *bol == '\r' || starts_with_mem(bol, eol - bol, comment_line_str)) {
->> -		item->command = TODO_COMMENT;
->> -		item->commit = NULL;
->> -		item->arg_offset = bol - buf;
->> -		item->arg_len = eol - bol;
->> -		return 0;
->> -	}
->> -
->> -	for (i = 0; i < TODO_COMMENT; i++)
->> -		if (is_command(i, &bol)) {
->> -			item->command = i;
->> -			break;
->> -		}
->> -	if (i >= TODO_COMMENT)
->> +	if (!sequencer_parse_todo_command(&bol, &item->command))
->>   		return error(_("invalid command '%.*s'"),
->>   			     (int)strcspn(bol, " \t\r\n"), bol);
->> +
->> +	if (item->command == TODO_COMMENT) {
->> +		item->commit = NULL;
->> +		item->arg_offset = bol - buf;
->> +		item->arg_len = eol - bol;
->> +		return 0;
->> +	}
-> 
-> And the extra stuff that are only relevant to a comment line is
-> naturally processed by the caller.  OK.
-> 
-> Thanks.  Looking good so far.
-> 
+Changes since V2:
+
+Patch 2 - Check if the object name is a label before trying to
+          abbreviate it.
+
+Note that a number of the CI jobs fail[1] due to the rather old base,
+but a test merge of this branch with "master" passes[2]
+
+[1] https://github.com/phillipwood/git/actions/runs/27906115900
+[2] https://github.com/phillipwood/git/actions/runs/27908204055
+
+Changes since V1:
+
+Patch 1 - Expanded commit message and added a code comment.
+
+Patch 2 - Fixed some typos, added a code comment and clarified that -Wswitch
+          is included by -Wall.
+
+Base-Commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fimprove-status-todo-list-parsing%2Fv4
+View-Changes-At: https://github.com/phillipwood/git/compare/8c9303b1f...90c4659b8
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/improve-status-todo-list-parsing/v4
+
+
+Phillip Wood (2):
+  sequencer: factor out parsing of todo commands
+  status: improve rebase todo list parsing
+
+ sequencer.c            |  45 ++++++++----
+ sequencer.h            |   8 +++
+ t/t7512-status-help.sh |  74 +++++++++++++-------
+ wt-status.c            | 154 +++++++++++++++++++++++++++++++++--------
+ 4 files changed, 213 insertions(+), 68 deletions(-)
+
+Range-diff against v3:
+1:  d27dddff931 = 1:  d27dddff931 sequencer: factor out parsing of todo commands
+2:  b3514e9b1c9 ! 2:  90c4659b87e status: improve rebase todo list parsing
+    @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
+     +	struct strbuf scratch = STRBUF_INIT;
+     +	char *p = line->buf;
+     +
+    -+	if (!sequencer_parse_todo_command((const char**)&p, &cmd))
+    ++	if (!sequencer_parse_todo_command((const char **)&p, &cmd))
+     +		return true; /* keep invalid lines */
+     +
+     +	switch (cmd) {
+-- 
+2.54.0.200.gfd8d68259e3
 
