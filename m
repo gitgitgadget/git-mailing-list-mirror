@@ -1,322 +1,268 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728953090C2
-	for <git@vger.kernel.org>; Tue, 23 Jun 2026 15:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037213090F5
+	for <git@vger.kernel.org>; Tue, 23 Jun 2026 16:09:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782230234; cv=none; b=RQ0FEc2RUyYNJQkiW8GrecXv6Il9vuPh+f1P4U6LTee0v4gTgZTgfrhlosiCKJC/1Onvp0jpvvm4iYU0jMWqrYbXRGfgFfhJEjY1q66LvFvnK/L6SH+gyi3bdwA94JRwm0aRDjUPLgjgNCJwKSvO+iJJqts/ie+KxXwlZ9UDcL4=
+	t=1782230983; cv=none; b=HjaQT9DkZI8Pa+HhW5qiQ6UrfZS2RbTRAtYeNJzvXiNbq9kcdOC7TD6iKkNS8lqz/4fWsVOyHAjlwQnTD2FSi3XfqkckC7K3S9CLYEumrs+5NEsjgGURRGUdgJ9j6ACGcrw1XcPeLrBq1oz17nP7lmQZENz5KlFLm+RuUnIpfj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782230234; c=relaxed/simple;
-	bh=/iXRsqAICroiUJ3rBpfGH5U9KP/Zgh5SEJnhF7o9pgg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=blCCYeQVUpFDJ9W8JosjgIVIi+fIe65br8arcaO/a4LOZtREjnO9FIW02CpCkA/5ZZenFMsZpOwzSZhAduaIcxeTnajhLqwWRcALENS754kqYzQbm1COob2l3FWa/78CBqFlUHA7aUvdInSOfOAN4q6247n1sE2MwdEW8YYnnHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oNJwDnnG; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782230983; c=relaxed/simple;
+	bh=IOyX+3uFvWjkMJEk70c0ejAxiekhQlTa5qKyJIMShPA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aWB1hcmkZjGTdQk7GnX1GaDINfnabz9o6uB3b1RqweAn7OGS2sRDTISkGNqlw5r8A7Ic+JXUbTTTCYtLZp6vqaX7o4XttNl33VXU7DHGDhK74KEAKxdShoKX6cYDslN1WI/E/9LJ8ZNuqE6CucycbQdEa4qkhSXXVNiiM3GjKqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BqFf5InW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VopER5zS; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oNJwDnnG"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so536945e9.0
-        for <git@vger.kernel.org>; Tue, 23 Jun 2026 08:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782230231; x=1782835031; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=X7EssYEJC+e0V8IEvykplgTo76G9Tx/yxTJAYcaazdg=;
-        b=oNJwDnnG3/AdRFd8vhOzeW2iYvjmdJ0QOS2AnezeLxbV5YvRTL3A68SpzGE7Brq5kW
-         rGdiEboIZ81mGQB7pJ0QE91s/lF+QqkuJy0gZNO5zpesxVDu7m3ianPtUjDXGgiXV0Ju
-         OxaHS5c4hCiqBsxpYaN7El1ys2IfOAKCbfJLRq0+346T1IAAfrJ4Al/BsPn/PqH4wgYM
-         aUpgKkrMtBYkxUMi+GxM7jdgrnJ1yHD9Ymrq/4uztYTy++SUhwNvdRFAONFHNmXI/s3X
-         Bb3DOITb3xve9cuppqgrxim8gp6TNuLN3TKod6+5mfe02qILNmsGPJIeiyRglj4gnlDf
-         Z6dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782230231; x=1782835031;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X7EssYEJC+e0V8IEvykplgTo76G9Tx/yxTJAYcaazdg=;
-        b=cS51IBtQyKhk4jtsehZNUOEMbEnqyHftCtlXe/XHIfHzp9y5e1VlnwV9Y0GvYJPBY7
-         FBgdBvRpormP5Hw9Bl3TS71tz/y7ikRZW3TSfF8E/Q3jWB0WP6HHUfrvo36/36bh1hPv
-         39FOSbIcMgaU0MTZzzGRd4hergzLYgQYk+FdHnb17lwUhpnHndWNXvhbdPULly5Fl3/w
-         Uev+E+ZfWurrgMOZ8w+1gzGSemIcTxLzwz8rRgL1KX9aqfu7DIxQQd/cd92+Zypxn68g
-         3TzRuNde4FHoeWirtHk0zrq7MW5yifM/x4uc+wdw/rYZZx7NNUSir7LOjNrpTOghM6Ou
-         y/Lg==
-X-Forwarded-Encrypted: i=1; AFNElJ+HTFyVpVzZmuaftpbVSxZybcephc6n3dmLJBVcTaZnWQrBtmnQyvbbpU1qey1YCjggz98=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSQSwE89FdXm3iU0pO4yL6UZNxiwNOxtEX9S9X+a7CJq1O1sQD
-	czZJwp/TeQgvO6R/lo5sqpddj4Iac/g/GF3GFE7i5e8Xy3JR4cLZJlFG
-X-Gm-Gg: AfdE7ckKeoFh4blCMfVS4UNWSb1w6gl3WEToDRkt2wgQaotxzn+0RTJKqvFfgHcsUbm
-	ZnxRAt8n9u6qs5EnuAS86Gjpu3EEv/sEiWw2lU8AnpMcwCNIf39ZpMmA6AL6HwdHbI2OJfopmcu
-	caPZSjShEzqc1E0msscknqgnRKK0e0ZTaNp7lvvdMUhczTazcMFP/3xraDiFWbN9WvtSzvXhLWI
-	JulXngA3OMuzpBr3wphFxAM1AWozCU6xrksXk1qJVILiVv58a71riXQi4urkpj+SqeiZ8uOBNer
-	Ni6q2goVFFQiXZUlZkPUYwmH4PIvHGMXSjc0m07dBUu5Pa48fhodzEcRRbTfK51oxctjsy0w69m
-	8M02fwzramLEQd/Odgo4vX1PnlWivCBZUvXJ5n0nWOLjJIFUvub3EKh4oyVSYycNJa0ueAH03HN
-	GOjK/1FzDDMDV7bcbwHlhny+CG6tmyxBAeahjJ4PZb7ndz9uTn2krIvzEnnL5c3ZPK28k=
-X-Received: by 2002:a05:600c:8b71:b0:492:59a0:4a65 with SMTP id 5b1f17b1804b1-4925b3802a0mr54247835e9.27.1782230230794;
-        Tue, 23 Jun 2026 08:57:10 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46667221de7sm35809544f8f.33.2026.06.23.08.57.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jun 2026 08:57:10 -0700 (PDT)
-Message-ID: <084ad4d0-d872-4c7f-94a8-ec2383c7a8ca@gmail.com>
-Date: Tue, 23 Jun 2026 16:57:09 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BqFf5InW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VopER5zS"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 568CD1D00187;
+	Tue, 23 Jun 2026 12:09:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Tue, 23 Jun 2026 12:09:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782230981; x=1782317381; bh=Hifz033Bkt
+	Y7isg4Yg2W4RWM/KhnqxebS8gG+qlo2Fk=; b=BqFf5InWYOcFRDyy/X+qiDjLW1
+	DREO77DjosI2Q295AzYT6P0cRKY6KYwhRzx2EYWXgJY7BGs9TGVPM+BLskCgXgK4
+	c6/KLFsD8iHjq6HUe7WdpRtOalsRYpwdZhNv5dq6XO1Cpdy45Qyk8gkGht7+JQTy
+	pp9e8cCljTmfoZ86ULK8ahdwhss2Fl+oQJIrCwEhYNvurutXCDfW8gi6d0IWX9iw
+	kk/jD71l0XeZ6s4sHPmOBybWSYqPVVXEnut6TuYDu53S/lZvRP6zVi2YkrDBhABo
+	KR+ZJBUgqt9JDThxf/3WaYboUQt/nMgM4hmaYXng3J0bIB/Lqbc2HA+bzwHA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782230981; x=1782317381; bh=Hifz033BktY7isg4Yg2W4RWM/KhnqxebS8g
+	G+qlo2Fk=; b=VopER5zSKqpkCfSV2tG+uqMLB+KQ2B1ENhMTRWSKzX5frv9hzLt
+	R2je3ydt/H22uUVi5UF+yFZj6tMIPsMdPQoeLAHvGTjXYDNcIvcDcpaUuTqaD4s/
+	SEML0y1syJkz9Al4dv5PCvMkKMjRWjtF+8aJ36jqCeAT4l+mbHl7k0sVzVX+fTrv
+	sSmfP7Z3mGhDLnttwb5cpKm/7skcgzV9238og/IEdL9f077bXd6plF2qFnVNKzz9
+	Zz0O2wAKtYOTFHAYilCybbbLCnClMm5j9nakuffqLHIGHnZx6D361PrOtnIM9fYF
+	Uvmw3I0QmVR4XnzUFNiSLt8fVYfq+LJ7onA==
+X-ME-Sender: <xms:xa86ak-hXUw-chxi_Qp5FaUcppP7I2r7dTH4ILPPbZIRSmlLxaE8yg>
+    <xme:xa86ajtpzTxo7ybqGIlo33z2zyoVab7XdHxCyAZmJvLxUQPtOVcGMK0hXSlWtXrkB
+    0CbGYW0nCYhOw2MDzKXUTJCBp7ezCvAa1WoR1X7Uv3mD2TcWCHRzQ>
+X-ME-Received: <xmr:xa86avDdTgpW3nBjRnIb74F7IBt3mAXmNOfgEVpLcKGGEmL3VR-u6O2oXI2SutIDVdI6MVQQPnNXTEtKbpzh-iTdu7CBYfRbqDApZAs>
+X-ME-Proxy-Cause: dmFkZTELepvKbUr2zGpngoYAo2gVVKrlCV1e3sVvqtTtsR4v6GYbRDLox6QdAzspLvnWKM
+    sh6BQnLIE/FqmVrmOlPUEEVYjPLnnpp+fn4GwxS4mcYa1HHsyNIZA6UY+TqAbmJFjP/yXZ
+    4LxJ1rWid+M1X5Inn8o3q9qyD78e1X4RVTn/yEqXvrRU0ZuRFHHdErSbIi7ryr4/Lzz0st
+    CQD+if1Bd2wMgNN3OzgxHchnb3jkkdpKklyvwGSjkuMeVrzXxKGNEGpW6yQbHY0m0PLkz5
+    t5BUqooj9TnXkJJQRq0R/OC0Tf5CH0AsD6VTTPwSVms1ehRyHMbGcU/GurZdadO/q5C9Of
+    rRl6c2OdksdISyjlbOePntzw9wU0k9jrt3Eta76jvCClxo0PGcmUc3xUMxij1+bjUKzszL
+    1970QJZLqlMjnvS7VvJIF964U7nv8jwuz/vvmPDIfrJ4azH2/XXIUchUai6apsj7zJHMPT
+    SfERK33uHJATXtR9Gk+w9DCfaalsypHjNLokt8yYQDB9t0df2HMKMP4rZdAydBu4GU00Of
+    fSACgDbO0s7COCdvcjMWsYqRRhFHJxQs3wp6bWyK/+huO8zzF0PVYysKHhVuHQBauh8IML
+    /QdR5gOgSh5sL7YSbs1r0vQJAF7fHytRlqWe4b9PrpbPh+a0dBAxpkrx3V4w
+X-ME-Proxy: <xmx:xa86ajUtWtEDmh7VKnt5K3ke2R3mqlBJT4zBkdGnddt63L2olofL3w>
+    <xmx:xa86alATIHisOh-85r4yU_AQ4DMOiqezkl9sY8nkRbrJ3VjSOL8ECw>
+    <xmx:xa86au9mWHP4p_G_ywMYOByyxY-eBMoC6LFA34dEEdIk1YKqGmqZlw>
+    <xmx:xa86akGhXTfbIdkGQEEygGb-7legHYSXEzDn_i0ClAXxXee-7R93Rw>
+    <xmx:xa86aijQCFXAchYPnsRCitEgCjymfSx3b74rQOzTwLSAl-RIVGkXTMal>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Jun 2026 12:09:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jishnu C K <jishnuck26@gmail.com>
+Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2] help: include arguments in autocorrect=prompt message
+In-Reply-To: <6a357689.0f9b68c4.317a5d.1919@mx.google.com> (Jishnu C. K.'s
+	message of "Fri, 19 Jun 2026 10:04:09 -0700 (PDT)")
+References: <20260618142033.15216-1-jishnuck26@gmail.com>
+	<ajQuqTB580gqNP8D@denethor>
+	<6a357689.0f9b68c4.317a5d.1919@mx.google.com>
+Date: Tue, 23 Jun 2026 09:09:39 -0700
+Message-ID: <xmqqcxxhnsqk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC Patch v7 1/3] path: extract append_formatted_path() and use
- in rev-parse
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: a3205153416@gmail.com, git@vger.kernel.org, gitster@pobox.com,
- jltobler@gmail.com, kumarayushjha123@gmail.com, lucasseikioshiro@gmail.com,
- phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260621055534.46798-1-jayatheerthkulkarni2005@gmail.com>
- <20260621055534.46798-2-jayatheerthkulkarni2005@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260621055534.46798-2-jayatheerthkulkarni2005@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 21/06/2026 06:55, K Jayatheerth wrote:
-> Path formatting logic in builtin/rev-parse.c writes directly to
-> stdout. Other builtins cannot reuse it.
-> 
-> Extract this logic into append_formatted_path() in path.c and expose
-> a path_format enum in path.h.
-> 
-> Convert rev-parse to use the new helper in the same step to validate
-> the API against existing tests and avoid introducing dead code.
+Jishnu C K <jishnuck26@gmail.com> writes:
 
-The new API looks good now, and so does the conversion of the existing 
-code. I'm very happy with this version and don't have anything to add to 
-Junio's comments
-
-Thanks
-
-Phillip
-
-> Mentored-by: Justin Tobler <jltobler@gmail.com>
-> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> v2: Reworked as an incremental improvement to the existing
+> autocorrect=prompt code path rather than a parallel reimplementation,
+> per feedback from Junio and Justin.
+>
 > ---
->   builtin/rev-parse.c | 73 ++++++++++++++++++---------------------------
->   path.c              | 69 ++++++++++++++++++++++++++++++++++++++++++
->   path.h              | 30 +++++++++++++++++++
->   3 files changed, 128 insertions(+), 44 deletions(-)
-> 
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index bb882678fe..6de01466db 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -653,53 +653,38 @@ enum default_type {
->   	DEFAULT_UNMODIFIED,
->   };
->   
-> -static void print_path(const char *path, const char *prefix, enum format_type format, enum default_type def)
-> +static void print_path(const char *path, const char *prefix,
-> +		       enum format_type format, enum default_type def)
->   {
-> -	char *cwd = NULL;
-> -	/*
-> -	 * We don't ever produce a relative path if prefix is NULL, so set the
-> -	 * prefix to the current directory so that we can produce a relative
-> -	 * path whenever possible.  If we're using RELATIVE_IF_SHARED mode, then
-> -	 * we want an absolute path unless the two share a common prefix, so don't
-> -	 * set it in that case, since doing so causes a relative path to always
-> -	 * be produced if possible.
-> -	 */
-> -	if (!prefix && (format != FORMAT_DEFAULT || def != DEFAULT_RELATIVE_IF_SHARED))
-> -		prefix = cwd = xgetcwd();
-> -	if (format == FORMAT_DEFAULT && def == DEFAULT_UNMODIFIED) {
-> -		puts(path);
-> -	} else if (format == FORMAT_RELATIVE ||
-> -		  (format == FORMAT_DEFAULT && def == DEFAULT_RELATIVE)) {
-> -		/*
-> -		 * In order for relative_path to work as expected, we need to
-> -		 * make sure that both paths are absolute paths.  If we don't,
-> -		 * we can end up with an unexpected absolute path that the user
-> -		 * didn't want.
-> -		 */
-> -		struct strbuf buf = STRBUF_INIT, realbuf = STRBUF_INIT, prefixbuf = STRBUF_INIT;
-> -		if (!is_absolute_path(path)) {
-> -			strbuf_realpath_forgiving(&realbuf, path,  1);
-> -			path = realbuf.buf;
-> -		}
-> -		if (!is_absolute_path(prefix)) {
-> -			strbuf_realpath_forgiving(&prefixbuf, prefix, 1);
-> -			prefix = prefixbuf.buf;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	enum path_format fmt;
-> +
-> +	if (format == FORMAT_RELATIVE) {
-> +		fmt = PATH_FORMAT_RELATIVE;
-> +	} else if (format == FORMAT_CANONICAL) {
-> +		fmt = PATH_FORMAT_CANONICAL;
-> +	} else /* FORMAT_DEFAULT */ {
-> +		switch (def) {
-> +		case DEFAULT_RELATIVE:
-> +			fmt = PATH_FORMAT_RELATIVE;
-> +			break;
-> +		case DEFAULT_RELATIVE_IF_SHARED:
-> +			fmt = PATH_FORMAT_RELATIVE_IF_SHARED;
-> +			break;
-> +		case DEFAULT_CANONICAL:
-> +			fmt = PATH_FORMAT_CANONICAL;
-> +			break;
-> +		case DEFAULT_UNMODIFIED:
-> +		default:
-> +			fmt = PATH_FORMAT_UNMODIFIED;
-> +			break;
->   		}
-> -		puts(relative_path(path, prefix, &buf));
-> -		strbuf_release(&buf);
-> -		strbuf_release(&realbuf);
-> -		strbuf_release(&prefixbuf);
-> -	} else if (format == FORMAT_DEFAULT && def == DEFAULT_RELATIVE_IF_SHARED) {
-> -		struct strbuf buf = STRBUF_INIT;
-> -		puts(relative_path(path, prefix, &buf));
-> -		strbuf_release(&buf);
-> -	} else {
-> -		struct strbuf buf = STRBUF_INIT;
-> -		strbuf_realpath_forgiving(&buf, path, 1);
-> -		puts(buf.buf);
-> -		strbuf_release(&buf);
->   	}
-> -	free(cwd);
-> +
-> +	append_formatted_path(&sb, path, prefix, fmt);
-> +	puts(sb.buf);
-> +
-> +	strbuf_release(&sb);
->   }
->   
->   int cmd_rev_parse(int argc,
-> diff --git a/path.c b/path.c
-> index d7e17bf174..6d8e892ada 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -1579,6 +1579,75 @@ char *xdg_cache_home(const char *filename)
->   	return NULL;
->   }
->   
-> +void append_formatted_path(struct strbuf *dest, const char *path,
-> +			   const char *prefix, enum path_format format)
-> +{
-> +	switch (format) {
-> +	case PATH_FORMAT_UNMODIFIED:
-> +		strbuf_addstr(dest, path);
-> +		break;
-> +
-> +	case PATH_FORMAT_RELATIVE: {
-> +		struct strbuf relative_buf = STRBUF_INIT;
-> +		struct strbuf real_path = STRBUF_INIT;
-> +		struct strbuf real_prefix = STRBUF_INIT;
-> +		char *cwd = NULL;
-> +
-> +		/*
-> +		 * We don't ever produce a relative path if prefix is NULL,
-> +		 * so set the prefix to the current directory so that we can
-> +		 * produce a relative path whenever possible.
-> +		 */
-> +		if (!prefix)
-> +			prefix = cwd = xgetcwd();
-> +
-> +		if (!is_absolute_path(path)) {
-> +			strbuf_realpath_forgiving(&real_path, path, 1);
-> +			path = real_path.buf;
-> +		}
-> +		if (!is_absolute_path(prefix)) {
-> +			strbuf_realpath_forgiving(&real_prefix, prefix, 1);
-> +			prefix = real_prefix.buf;
-> +		}
-> +
-> +		strbuf_addstr(dest, relative_path(path, prefix, &relative_buf));
-> +
-> +		strbuf_release(&relative_buf);
-> +		strbuf_release(&real_path);
-> +		strbuf_release(&real_prefix);
-> +		free(cwd);
-> +		break;
-> +	}
-> +
-> +	case PATH_FORMAT_RELATIVE_IF_SHARED: {
-> +		struct strbuf relative_buf = STRBUF_INIT;
-> +
-> +		/*
-> +		 * If we're using RELATIVE_IF_SHARED mode, then we want an
-> +		 * absolute path unless the two share a common prefix, so don't
-> +		 * default the prefix to the current working directory. Doing so
-> +		 * would cause a relative path to always be produced if possible.
-> +		 */
-> +		strbuf_addstr(dest, relative_path(path, prefix, &relative_buf));
-> +		strbuf_release(&relative_buf);
-> +		break;
-> +	}
-> +
-> +	case PATH_FORMAT_CANONICAL: {
-> +		struct strbuf canonical_buf = STRBUF_INIT;
-> +
-> +		strbuf_realpath_forgiving(&canonical_buf, path, 1);
-> +		strbuf_addbuf(dest, &canonical_buf);
-> +
-> +		strbuf_release(&canonical_buf);
-> +		break;
-> +	}
-> +
-> +	default:
-> +		BUG("unknown path_format value %d", format);
-> +	}
-> +}
-> +
->   REPO_GIT_PATH_FUNC(squash_msg, "SQUASH_MSG")
->   REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
->   REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
-> diff --git a/path.h b/path.h
-> index 4c2958a903..4d982a2c8e 100644
-> --- a/path.h
-> +++ b/path.h
-> @@ -262,6 +262,36 @@ enum scld_error safe_create_leading_directories_no_share(char *path);
->   int safe_create_file_with_leading_directories(struct repository *repo,
->   					      const char *path);
->   
-> +/**
-> + * The formatting strategy to apply when writing a path into a buffer.
-> + */
-> +enum path_format {
-> +	/* Output the path exactly as-is without any modifications. */
-> +	PATH_FORMAT_UNMODIFIED,
-> +
-> +	/* Output a path relative to the provided directory prefix. */
-> +	PATH_FORMAT_RELATIVE,
-> +
-> +	/* Output a relative path only if the path shares a root with the prefix. */
-> +	PATH_FORMAT_RELATIVE_IF_SHARED,
-> +
-> +	/* Output a fully resolved, absolute canonical path. */
-> +	PATH_FORMAT_CANONICAL
-> +};
-> +
-> +/**
-> + * Format a path according to the specified formatting strategy and append
-> + * the result to the given strbuf.
-> + *
-> + * `dest`   : The string buffer to append the formatted path to.
-> + * `path`   : The path string that needs to be formatted.
-> + * `prefix` : The directory prefix to calculate relative offsets against.
-> + * Pass NULL to default to the current working directory where applicable.
-> + * `format` : The formatting behavior rule to execute.
-> + */
-> +void append_formatted_path(struct strbuf *dest, const char *path,
-> +			   const char *prefix, enum path_format format);
-> +
->   # ifdef USE_THE_REPOSITORY_VARIABLE
->   #  include "strbuf.h"
->   #  include "repository.h"
+> From a4e8fb6fd6dd6a501e565c7500cbf927d7cb0b42 Mon Sep 17 00:00:00 2001
+> From: calicomills <jishnuck26@gmail.com>
+> Date: Fri, 19 Jun 2026 13:01:40 +0530
+> Subject: [PATCH v2 v2] help: include arguments in autocorrect=prompt message
 
+To learn what a typical v2 of a single-patch topic should look like,
+see
+
+  https://lore.kernel.org/git/aipTOsH8LKTSwglj@collabora.com/
+
+for an example.
+
+ - Having auxiliary comments explaining why there is this v2,
+   including description of the difference since v1, is good, but
+   have it below the three-dash line after your sign off, not at the
+   beginning.
+
+ - Please do not include "From a4e8fb6f..." line, which is meant as
+   a separator in multi-patch output from the git format-patch
+   command; knowing the exact commit object name you took the patch
+   from in your repository would not help anybody.
+
+ - Do not include "From:" in the body of the message either, unless
+   you are relaying somebody else's patch, i.e., when the From
+   e-mail header (you) does not name the person who wrote the patch
+   (somebody else).
+
+ - Do not include "Date:" in the body of the message either, as that
+   is the timestamp you wrote the change, but we care more about the
+   time when the general public first saw the patch, which is in the
+   e-mail header already.
+
+ - Do not include "Subject:" in the body of the message either, as
+   that should be on the Subject e-mail header.
+
+> When 'help.autocorrect=prompt' is configured and the user mistypes
+> a git command, the prompt currently shows only the corrected command
+> name:
+>
+>   Run 'checkout' instead [y/N]?
+>
+> This leaves the user unsure whether their original arguments will be
+> preserved. Update the prompt to include the full corrected invocation:
+>
+>   Run 'git checkout neo' instead [y/N]?
+>
+> The help_unknown_cmd() signature is updated to accept the args vector
+> so the prompt can show the original arguments alongside the corrected
+> command name. Callers that do not have access to the args (e.g.
+> builtin/help.c) pass NULL, which is handled gracefully.
+>
+> Signed-off-by: calicomills <jishnuck26@gmail.com>
+
+Documentation/SubmittingPatches[[real-name]] prefers to see us
+interacting with humans with real-sounding names, not handles.
+
+> ---
+>  help.c                      | 49 +++++++++++++----------------------
+>  t/t9003-help-autocorrect.sh | 51 +++++--------------------------------
+>  2 files changed, 23 insertions(+), 77 deletions(-)
+>
+> diff --git a/help.c b/help.c
+> index 30f32a7206..9ea4c076e1 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -739,7 +739,16 @@ char *help_unknown_cmd(const char *cmd, const struct strvec *args)
+>  		else if (cfg.autocorrect == AUTOCORRECT_PROMPT) {
+>  			char *answer;
+>  			struct strbuf msg = STRBUF_INIT;
+> -			strbuf_addf(&msg, _("Run '%s' instead [y/N]? "), assumed);
+> +			struct strbuf full_cmd = STRBUF_INIT;
+> +			strbuf_addstr(&full_cmd, assumed);
+> +			if (args) {
+> +				for (size_t j = 1; j < args->nr; j++) {
+> +					strbuf_addch(&full_cmd, ' ');
+> +					strbuf_addstr(&full_cmd, args->v[j]);
+> +				}
+> +			}
+> +			strbuf_addf(&msg, _("Run 'git %s' instead [y/N]? "), full_cmd.buf);
+> +			strbuf_release(&full_cmd);
+
+This change seems to match what is explained in the proposed log
+message.  Instead of giving the "assumed" command without its
+arguments, the full command line is gprepared to be given in 'msg'.
+
+But if we really wanted to let these be cut-and-paste, don't you
+need to shell-quote the command line?  If the user typed
+
+	$ git comit -m "Hello world"
+
+the above makes
+
+	Run 'git commit -m hello world' instead [y/N]?
+
+which would record the change made only to the file "world" with log
+message "hello", which is not what the user wanted to do.
+
+> @@ -762,37 +771,13 @@ char *help_unknown_cmd(const char *cmd, const struct strvec *args)
+>  	fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
+>  
+>  	if (SIMILAR_ENOUGH(best_similarity)) {
+> -		if (n == 1 && isatty(0) && isatty(2)) {
+> -			char *answer;
+> -			struct strbuf msg = STRBUF_INIT;
+> -			struct strbuf full_cmd = STRBUF_INIT;
+> -			strbuf_addstr(&full_cmd, main_cmds.names[0]->name);
+> -			if (args) {
+> -				for (size_t j = 1; j < args->nr; j++) {
+> -					strbuf_addch(&full_cmd, ' ');
+> -					strbuf_addstr(&full_cmd, args->v[j]);
+> -				}
+> -			}
+> -			strbuf_addf(&msg, _("\nDid you mean 'git %s'? [y/N] "),
+> -				    full_cmd.buf);
+> -			strbuf_release(&full_cmd);
+> -			answer = git_prompt(msg.buf, PROMPT_ECHO);
+> -			strbuf_release(&msg);
+> -			if (starts_with(answer, "y") || starts_with(answer, "Y")) {
+> -				char *assumed = xstrdup(main_cmds.names[0]->name);
+> -				cmdnames_release(&cfg.aliases);
+> -				cmdnames_release(&main_cmds);
+> -				cmdnames_release(&other_cmds);
+> -				return assumed;
+> -			}
+
+What is this removal about?  The original used to give interactive
+prompt to let the user say "Yes", but with this part removed, it no
+longer offers the "well we have only one candidate, do you want to
+run that one?", and you instead ...
+
+> -		} else {
+> -			fprintf_ln(stderr,
+> -				   Q_("\nThe most similar command is",
+> -				      "\nThe most similar commands are",
+> -				   n));
+> -			for (i = 0; i < n; i++)
+> -				fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
+> -		}
+
+... only give "these are the possible candidates?"
+
+> +		fprintf_ln(stderr,
+> +			   Q_("\nThe most similar command is",
+> +			      "\nThe most similar commands are",
+> +			   n));
+> +
+> +		for (i = 0; i < n; i++)
+> +			fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
+>  	}
+
+Puzzled.
+
+Worse, this [v2] does not even apply cleanly to any of the trees we
+have.
+
+Aha!  Is the removal I see above a mere "oops, this was wrong, so
+remove it" done on top of a previous iteration of the patch?
+
+Please do not do that.  It would mean we will keep unwanted code
+that went into a wrong direction (which is v1) in our history.
+
+The development may wander around in different directions like a
+drunken man, changing course every time patches are updated, until
+it finally gets right, but the name of the game around here, before
+your change is merged to 'next', is to "pretend to be a more perfect
+developer than you actually are" ;-).  You can pretend that you
+never made a design mistake you made in [v1], and instead directly
+arrived at a good state from the state of our public tree.  That
+means [v2] (and any subsequent rerolls, until your seires gets
+merged to 'next') must apply directly without any of the older
+iterations to 'master' (or if it is a bugfix, 'maint') branch.
+
+Thanks.
