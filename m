@@ -1,242 +1,133 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D01B33E346
-	for <git@vger.kernel.org>; Tue, 23 Jun 2026 07:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782200758; cv=pass; b=l0yBMyjRWA2YhX3o/cuq9KoOpEl5t3We6n15PF7SZ2EatUHtxcmI5fObDmDviXz/xKFtPZp6HBosEABkFX+yVkZhzrrTPSEgcAmW87amzd+RE3anPt2ohnmFyS4CDhEPLevHlVIQ9CloilDdZOijjZ01c94ih/b9CjRrLWmqvsQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782200758; c=relaxed/simple;
-	bh=r6/uaVOfm1XFUUY/imqzQVJ2PGVk0xGswiMyt8nwuLo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eJKSiMylwbcIjdWf6viV3pvhQhfeK3yOTZLxJP6CPywCUMovVRCb8++G+ibbNZCJACbUZbgrLGsDWKofXH51Ni9Hcui9aoGglGtW7bQsMcxU/9re94pTNXHvoLy98pdW/GtyrruDaKcCGHXcGfe6nrIuYJPQX1IIKcrCspyou5o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bv74Q9DN; arc=pass smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5E5351C1E
+	for <git@vger.kernel.org>; Tue, 23 Jun 2026 08:45:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782204344; cv=none; b=R1MSsOSp8N313vlqNA8MDAM1nAPU/jl3XK58bm5r3B7q/avvohEadRKGpks/Bakl0cTcxECh0wnt7AI92y5oHZexSJr2XuSn8H5iOCLv/3BlipWN8Qc0kpJj2mW4pvfXwRMt9k6MxMkbm1RNq9DkRb845v6RFB5cMetwzzKtf/8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782204344; c=relaxed/simple;
+	bh=fntHSo/NL5VUv8EwKpWC4xhWKbLFkB4VYVLL1eaAgB4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gmcccwMVcQCz3707/5urz9H4pJg2E0vUoH7BPXe7EIgPHREtZ2wFlWiNWoTQuLP97etrvijcz+Duui5pIZsFnVtaAlbzksICX3WbXMN5ZiVW3VDtO7cjXF1Q4F/od42qsLewmJUn1VNqXyzqmY79735VviD5SHZfDLVfcMpX3pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=esu6CXeS; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bv74Q9DN"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-13988680a69so12208474c88.0
-        for <git@vger.kernel.org>; Tue, 23 Jun 2026 00:45:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782200756; cv=none;
-        d=google.com; s=arc-20240605;
-        b=LxC0aXGnko69ot/epldN7aLM4m0fARmrFJPJXcAB+Jxpzx2UuDmVQ/DhOs1kyCmQre
-         2C/aqyB9nsQNP5TY+yMAEIHGsZtZXM332tQ2n74x/CXpBraix8TpKv0i4xiap4D8W+Sx
-         1vCkNMzxroELvajr6IbSU0J6XOTlFe9Xfx1+/J6reDFmCscGvG34c4xUG+J8IgXDJYrO
-         LBZ+neX7q+n7qsLt4iGR8N8CKtQCDVjfWbXAI4Pbe80+L4IwKS6i7ZYsT7PwTdrgjS4Q
-         m1QxAb4nWUljjUxuWJjIHc9fPXAw03OnUUgDbEIes1tc1FvgxXljxulIvkJz6IGGAHOz
-         ofhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=SkaX833jn30Z9fwg8rx569NWwdQCG2ETNSyqxyOkuj0=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=RXBlKoOXE2XsJUagZX6QTb9y+kPLFlSeX4NJb8ScsNB1fWg7+boIaSRcaCtVT8h+jo
-         FNVVEZlUzJUdfUouyQ4XcDnHTTfXiiZfn/jWtHKNYzctXXn6tJry8oCLzKgVzlFTZxku
-         epdunohplZbISb0yq25C2h8JhpWUqyHlyZ/Irx+uFdQW0zCdSvqFQ18nvqTL5MqBfHyc
-         hupx0BM6nVDACK5NFEMiod7wVLib+jdRQ8892yk3org6LXMDNQJylDMTBE8y8qLBxEQ+
-         E85qR9QiucCLXh9Nbub1ZuZyHeC6M7ZLUDdAndoQyZfBP+JV6Qdiazj4YVkbHkvKlG5/
-         HDcg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="esu6CXeS"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c029505b389so137395966b.1
+        for <git@vger.kernel.org>; Tue, 23 Jun 2026 01:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782200756; x=1782805556; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SkaX833jn30Z9fwg8rx569NWwdQCG2ETNSyqxyOkuj0=;
-        b=bv74Q9DNF3jPI9bVB4tymKKNzh7jEyZNItshA7YbUuHbtGpdxoM7wOAIz42WmhDgHy
-         LKqAY+rdEzv/DEppapEwCyQE65gipRg9qX/yu1WAGivy44nvv2ZGG4ZqiOvxVD72dotH
-         NV/aVHQxWLHuRM92N7m85WH82xs2ixouI0eKrfmDuedWanyLJKFiK5kqKmv0I+wSjsWi
-         X0st5aWSjs80gUI/Le49RKo8YAFf36YFI4tlXBpAl6wnZ9ML7h2NOFrlz2jPnmrA8G6r
-         5hpTpp7uFqV4p5PPTGvUWgIDHnDub2jIEYxg9ImhS2N6lO+dzjP3PAk063sNB5uSABTn
-         zalw==
+        d=gmail.com; s=20251104; t=1782204342; x=1782809142; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=f48tQZT5fXVhwVeTVZYq3IVdJhaPeiQaK+Vs7UZptDQ=;
+        b=esu6CXeSSihFivTA250Fo3b65OuJ0fv/KrU6HON0WsYrsDkFRUAZUEOaglpmaxdiSG
+         d/tG6s4FpadsFYTx5bwrhmsSl0J1O58JfYaInm5WG1wj/3dS9a+WdL6LnELMVS7mLKBQ
+         sex7RrsEsgH9+0eGtW0nyFCN4RQd8MynokuZ2zYpmEt11o9C5qGGfiY9UlcoopVA92qe
+         0lpnvomPFhlP4KcNZGDg+Gt5akEvMZjPoWJu7Py6B93zdFUoNmizm6ic5TzCXErry4Vk
+         8OplTLw1HY/ubErbWZxvCr7yijQ/3Iv4RhzUm5oEx3Uv6WE8rohPahZSqk37W0tPEzYR
+         rkzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782200756; x=1782805556;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=SkaX833jn30Z9fwg8rx569NWwdQCG2ETNSyqxyOkuj0=;
-        b=YO5VP3GldWSaAm54UXR7qwnc8yGOB1hVeWElDGIjhCgQxuzj/QbiBBvbLoSTLMdo3L
-         KHCQ/rlRp/juUpne+jwSDWQq/sbe+CPblV/o7ZplcTO1TKx6ASEQXj4dzVVGDmaLYaHN
-         bg2eVWufkEsrG2AlqeUrzRGmJXlCBECmfqe53Go/JRyIU3qXiHEfsAkS7YtP/FCcmVD5
-         7Snk3+DeWFGwre88iGLLqc98/mCk3NICI6VLToJ55i4b6a1TvmqOsz1A+wJred8If+aO
-         Rz3Cnr9+blYjfr8TQqNsRmdtOhRrPVyEkrcI/HWnUmY2djZtTpkucPCKGGbubvvSn0i5
-         dZwQ==
-X-Gm-Message-State: AOJu0YwvOlin4+rSPRRiPsTzz7M2v27s5iKlSQu4V2DFQmCTfsVpDJbI
-	/x8ekYeAVruRczKwghX+j3QT/QHDaTxpRVfaGtNdu4w2lLFYq32YIlxa37rgeFJmmCcRuLgQq5i
-	AcEclUwyAw69BVQQwIr36JcW4pFahGELxbH9O
-X-Gm-Gg: AfdE7clKCCR8hwVwcoiKESDwjLzmc3hJnK/jJY/LQrpigL/3bmt4GsWGexOIIrl8c+9
-	zyPAoiJGPlTvNbMK0ytp6UJLRlD+6QyiNiduwiDIqgI0zfl9q0P04W0jcCkdH7PMKI/VmOy+th1
-	hPsudK7ZeAjg4tZW+XC33h544E+B+4ZEu9M86YoOHpTvGcveUxXH+93wYVfEAIktE/bZY8ZH7Hr
-	K43ChL3D/WzWwXTKgrtLb616Nn/BdD3CbljdUScPLDa0xTKhGig5oWG+NP5y/7ZM73kCl7prOjZ
-	x9fUnjHqJLSdJEygNsZhzEQwMHuQjzhywC1z1i6VUw0WFgcEv4h3yQVS/g==
-X-Received: by 2002:a05:7022:326:b0:137:fad9:397c with SMTP id
- a92af1059eb24-139c6ef75femr1144350c88.12.1782200756204; Tue, 23 Jun 2026
- 00:45:56 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782204342; x=1782809142;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f48tQZT5fXVhwVeTVZYq3IVdJhaPeiQaK+Vs7UZptDQ=;
+        b=RNbpstElVCoxZ+Xfmm54ZNn0MXKeiu0V7SJZBdzdESJS27ofPICVrk9dJfkJD5IJLK
+         A14mkJko87HBcl925FsU/l4B2Q3dYyxAdR+mTe8TZqXdBcWsjVkpX332RZKZEMTvWbeI
+         XVYTaoUvcmNv1BHMTsC7/eH/YzDbVlAwsWK72DM+o5u34TWQSfG1bq7czid4fkC7AF84
+         ekbHBh6aPX6621HXyb6PgKgdzKOuTIBDTPt39iM+dZ0vfMeaEV1rOBhL9vd+P7RFhDP4
+         R+hiVKbLIKp6IyJY/ShVkZZCrrL4EiAuP+Y1sN0JJmcgl4RqUulzl1e0Dscyr3pURtNp
+         U1aw==
+X-Gm-Message-State: AOJu0Yy+OEUTwHHs9+PU9GV/mUvNhrGoKwG2zhDLmvcIGsiilMkVEKsO
+	xZ48k0oMotwfLybRdJX6onLw5QyJjNqJ+IRlQv/+mz32fUU6s0OiLs5utXvqaQ==
+X-Gm-Gg: AfdE7clhqnrrNOz4OeDRu4Cov01MUQoB/uw2x2lH660m2JOl8lP19qj3zbf0td9pz8T
+	8nlCElN5JMgCavrcLHjdhVlQyRgBCHaP4MRCdtqdAvingeGj75qCzO2kRF9ArgVEwUWAGa8PuON
+	cZecPsLKIOE2z62oBhj0LuCDdqSLiNlnq73uMhRp679QkKUsqURVJT9I4hqL0uJqDBrU5+RiCJQ
+	QoOgQcgiDUNhzh305v4uQ6+27+Y3R3OPAxRBFA0KaYepNG0kALeyELkbsglmalox5YkkPsozcIr
+	TgifuZ6ys2CH6Mqgp/iYsOZm/h7BOdFpMMMUPriZy82isKczx/tzxgJTrQHpDxZ3Nwt46CCXBVE
+	oFnKZ4A7GMBqlMn7BcQde/sx1R9hudsbLG+IxG2MwJGnEGaWiEBJ1sxid+f/ytg0T3mCcj5LXiv
+	Psrx2nYBy7g4Z/IoVWZrk1cgTWBpcQcr6ym6CMusc=
+X-Received: by 2002:a17:907:72c7:b0:c0e:7f2a:ee96 with SMTP id a640c23a62f3a-c103158cdd0mr147156766b.29.1782204341241;
+        Tue, 23 Jun 2026 01:45:41 -0700 (PDT)
+Received: from aartix.localdomain ([2a02:b121:8f26:12a7:759a:c0f7:6fdb:5565])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c0c60ee6a85sm480151166b.43.2026.06.23.01.45.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2026 01:45:40 -0700 (PDT)
+From: DSAntonio08 <antonio.destefani08@gmail.com>
+To: git@vger.kernel.org
+Cc: DSAntonio08 <antonio.destefani08@gmail.com>
+Subject: [PATCH] gpg-interface: fix strip_cr_before_lf to only remove CR before LF
+Date: Tue, 23 Jun 2026 10:45:20 +0200
+Message-ID: <20260623084520.9015-1-antonio.destefani08@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260622-pks-connected-generic-promisor-checks-v1-0-25eba2698202@pks.im>
- <20260622-pks-connected-generic-promisor-checks-v1-3-25eba2698202@pks.im>
-In-Reply-To: <20260622-pks-connected-generic-promisor-checks-v1-3-25eba2698202@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 23 Jun 2026 09:45:44 +0200
-X-Gm-Features: AVVi8CeJJGsPwtY3aarSR5MizeP9fU9FQ9h5MWfj5Jn4E78caI-ybmb1_LyeMo4
-Message-ID: <CAP8UFD1tqBBRiJV18xBMcDDT4Q7xCkqOLrtJGAO7o4oA=-Vr=w@mail.gmail.com>
-Subject: Re: [PATCH 3/3] connected: search promisor objects generically
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 22, 2026 at 10:50=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
->
-> When performing connectivity checks we have to figure out whether any of
-> the new objects are promisor objects, as we cannot assume full
-> connectivity if so.
->
-> This check is performed by iterating through all packfiles in the
-> repository and searching each of them for the given object. Of course,
-> this mechanism is quite specific to implementation details of the object
-> database, as we assume that it uses packfiles in the first place.
->
-> Refactor the logic so that we instead use `odb_for_each_object_ext()`
-> with an object prefix filter and the `ODB_FOR_EACH_OBJECT_PROMISOR_ONLY`
-> flag. This will yield all objects that have the exact object name and
-> that are part of a promisor pack in a generic way.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  connected.c | 39 +++++++++++++++++++++++++--------------
->  1 file changed, 25 insertions(+), 14 deletions(-)
->
-> diff --git a/connected.c b/connected.c
-> index 7e26976832..9a666f0cdf 100644
-> --- a/connected.c
-> +++ b/connected.c
-> @@ -11,6 +11,13 @@
->  #include "packfile.h"
->  #include "promisor-remote.h"
->
-> +static int promised_object_cb(const struct object_id *oid UNUSED,
-> +                             struct object_info *oi UNUSED,
-> +                             void *payload UNUSED)
-> +{
-> +       return 1;
-> +}
-> +
->  /*
->   * If we feed all the commits we want to verify to this command
->   *
-> @@ -46,6 +53,11 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->         }
->
->         if (repo_has_promisor_remote(the_repository)) {
-> +               struct odb_for_each_object_options opts =3D {
-> +                       .flags =3D ODB_FOR_EACH_OBJECT_PROMISOR_ONLY,
-> +                       .prefix_hex_len =3D the_repository->hash_algo->he=
-xsz,
-> +               };
-> +
->                 /*
->                  * For partial clones, we don't want to have to do a regu=
-lar
->                  * connectivity check because we have to enumerate and ex=
-clude
-> @@ -54,31 +66,30 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->                  * object is a promisor object. Instead, just make sure w=
-e
->                  * received, in a promisor packfile, the objects pointed =
-to by
->                  * each wanted ref.
-> -                *
-> -                * Before checking for promisor packs, be sure we have th=
-e
-> -                * latest pack-files loaded into memory.
->                  */
-> -               odb_reprepare(the_repository->objects);
+The remove_cr_after() function was stripping all CR characters
+unconditionally, even lone \r not followed by \n. This is incorrect
+as only \r\n sequences (Windows line endings) should be normalized.
 
-Like Junio, I am not sure it's correct to remove the
-`odb_reprepare(the_repository->objects)` call.
+Fix the loop condition to skip \r only when immediately followed by
+\n, and rename the function to strip_cr_before_lf to reflect its
+actual behavior. Update both call sites and their comments accordingly.
+---
+ gpg-interface.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-I think it was added for good reasons in b739d971 (connected.c:
-reprepare packs for corner cases, 2020-03-13) and I am not sure
-odb_for_each_object_ext() is performing something similar.
+diff --git a/gpg-interface.c b/gpg-interface.c
+index dafd5371fa..87ae6503da 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -989,17 +989,13 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
+ 	free(keyid_to_free);
+ 	return ret;
+ }
+-
+-/*
+- * Strip CR from the line endings, in case we are on Windows.
+- * NEEDSWORK: make it trim only CRs before LFs and rename
+- */
+-static void remove_cr_after(struct strbuf *buffer, size_t offset)
++/* Strip CR before LF from the line endings, in case we are on Windows. */
++static void strip_cr_before_lf(struct strbuf *buffer, size_t offset)
+ {
+ 	size_t i, j;
+ 
+ 	for (i = j = offset; i < buffer->len; i++) {
+-		if (buffer->buf[i] != '\r') {
++		if (buffer->buf[i] != '\r' || (i + 1 < buffer->len && buffer->buf[i + 1] != '\n')) {
+ 			if (i != j)
+ 				buffer->buf[j] = buffer->buf[i];
+ 			j++;
+@@ -1049,8 +1045,8 @@ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
+ 	}
+ 	strbuf_release(&gpg_status);
+ 
+-	/* Strip CR from the line endings, in case we are on Windows. */
+-	remove_cr_after(signature, bottom);
++	/* Strip CR before LF from the line endings, in case we are on Windows. */
++	strip_cr_before_lf(signature, bottom);
+ 
+ 	return 0;
+ }
+@@ -1136,8 +1132,8 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+ 			ssh_signature_filename.buf);
+ 		goto out;
+ 	}
+-	/* Strip CR from the line endings, in case we are on Windows. */
+-	remove_cr_after(signature, bottom);
++	/* Strip CR before LF from the line endings, in case we are on Windows. */
++	strip_cr_before_lf(signature, bottom);
+ 
+ out:
+ 	if (key_file)
+-- 
+2.54.0
 
-At least the commit message should mention this change and explain a
-bit why the reasons the call was added are not valid anymore.
-
->                 do {
-> -                       struct packed_git *p;
-> -
-> -                       repo_for_each_pack(the_repository, p) {
-> -                               if (!p->pack_promisor)
-> -                                       continue;
-> -                               if (find_pack_entry_one(oid, p))
-> -                                       goto promisor_pack_found;
-> +                       opts.prefix =3D oid;
-> +
-> +                       err =3D odb_for_each_object_ext(the_repository->o=
-bjects,
-> +                                                     NULL, promised_obje=
-ct_cb,
-> +                                                     NULL, &opts);
-> +                       if (err < 0)
-> +                               break;
-> +                       if (err > 0) {
-> +                               err =3D 0;
-> +                               continue;
->                         }
-> +
->                         /*
->                          * Fallback to rev-list with oid and the rest of =
-the
->                          * object IDs provided by fn.
->                          */
->                         goto no_promisor_pack_found;
-> -promisor_pack_found:
-> -                       ;
->                 } while ((oid =3D fn(cb_data)) !=3D NULL);
-> +
->                 if (opt->err_fd)
->                         close(opt->err_fd);
-> -               return 0;
-> +               return err;
->         }
->
->  no_promisor_pack_found:
-
-These changes are difficult to understand as there are a number of
-`goto`, `break`, `return`, etc involved.
-
-I think it comes in the first place from check_connected() doing too
-many things, and adding a preparatory commit to refactor it would
-help.
-
-For example the preparatory commit could move a lot of code from
-check_connected() to the following new functions:
-
-/*
- * Returns:
- *   1  =3D all wanted OIDs found in promisor packs: connected, done.
- *   0  =3D at least one OID not found: caller must fall back to rev-list.
- *  <0  =3D error.
- * On the fallback (0) return, *oid is left pointing at the first
- * not-found OID so the rev-list path can resume the iteration.
- */
-static int check_connected_promisor(oid_iterate_fn fn, void *cb_data,
-                                     const struct object_id **oid);
-
-/*
- * In a non-promisor repo, pass the first OID as `oid`.
- * Otherwise pass the first not-found OID resumed from
- * check_connected_promisor() as `oid`.
- */
-static int check_connected_rev_list(oid_iterate_fn fn, void *cb_data,
-                                     struct check_connected_options *opt,
-                                     const struct object_id *oid);
