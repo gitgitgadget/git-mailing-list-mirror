@@ -1,271 +1,185 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E033D7D69
-	for <git@vger.kernel.org>; Tue, 23 Jun 2026 15:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849AF2D7393
+	for <git@vger.kernel.org>; Tue, 23 Jun 2026 15:53:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782228170; cv=none; b=a2EK6x1aZuFUYmUBJp7KBRnuiE7F8IcOMjLSifsZPqOZ0yP80tMnI7AJ4ZfcJEefRU6do1286NS2lGKtJeIh/gcbQvMNM/MzXclmZbgHdLxACLw5BXQP9LECvKv+oQCkFi5D3G5KYgc/jdmxsoH0PFSn4nBV7JwmvQfIaz+7SGk=
+	t=1782230007; cv=none; b=Cup1DRRQchS+rQa1A9Ushpc46OE7/Q8Ea5PvpmzBf2A6eioMWFoKkKj3hen8s+9z1cACwGqWWeZtD3rD63NZKVpfNRByXkwd2xL0u7tAPIEOcoRG9xuguejo7golWdZ2Pr6jZqMbi214wFq5ONjLYVaGVD02ifIJZH+PaFlNWoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782228170; c=relaxed/simple;
-	bh=/QCjbDSaVebXcBpp0SAACP2cVPkvC79OUP1GKqCBPsE=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=HDaUAK3pJjm5RMKuoJ22JosQ6C+G72T+Fqk6xhdSof2Dr9rzU+zRinILKrM9vqDsoEilp0x88NFsnSu0Bua7uGqjiYyfkaA1ax5OPVfE2msONQ3hf8WDQ16q3sR2KsRTbZ06Len//apN1g3KWEHoABpuyP7QRB7J883pLyW6ZI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qObPV+j+; arc=none smtp.client-ip=209.85.216.49
+	s=arc-20240116; t=1782230007; c=relaxed/simple;
+	bh=Z2GAB0/bkdhdyn6akt98nApJPgBGvGQkEKzxSvFQNKI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MbpyR1g/FdNtKihS1oS/vKJHi+FTv4KdfhTG4kjbNZ2oWb2r4S/4AYF7SwSY6ghQwaq2PJiERgRkZD9Jzwlg6IyemLv/Ky3N+/wnHbFdY06FTzP0A+TvW8zNL8jBRc+FzJAbGm8qTHKsIcyMY+PFVlWkcDJc3RXiRLIOENrHBOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fIgHFk2i; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qObPV+j+"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-37c8e7c8137so61007a91.1
-        for <git@vger.kernel.org>; Tue, 23 Jun 2026 08:22:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fIgHFk2i"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-491609cdd8fso240745e9.2
+        for <git@vger.kernel.org>; Tue, 23 Jun 2026 08:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782228168; x=1782832968; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AeAT8AkIpUvQLt3k6PmxlXjziK/XjBXputAgaefFDTU=;
-        b=qObPV+j++Pv481RcKfayC+hG1MWThtkmj/QUYehfDN6BVjl6RVcJZSNSRfARQL9LBZ
-         1PjzEfQNLVyJ0syMRMvFamZxa/WEoCqMpn1pWuzyxXdXv/LB51l4Dg5zBbGOThgEORwi
-         Fz3T+u2y5rwKgc4OPhsomeLutkAm+wVB+CGUnQsor4vNuah/zMhomQw9lgKdrquzvnZ/
-         xMfdvnH61fUeIvAZWFcNS3QGLKU8ratb0IfzPE83Bkf+ojIniiKE75himjjAB4fr+a9x
-         kV1zTBuyPz+I7yJtdPKWV4+FnG5/M5FeIhlCK8/hxWa/X/ZkMq+AZIEgtpALqGc5aQhz
-         xQfA==
+        d=gmail.com; s=20251104; t=1782230004; x=1782834804; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yirARN1dkJCFDeCmPg/TR2KVXJmgGbgOHOXnyV3SuDA=;
+        b=fIgHFk2iF4ZygXIgNZ/dsNtQh5fLm+lMafk0VmWBcRpulVYWTaKQBZZLqIn11YireC
+         TQ/cBXH9yPqGbPuyj/QwQJVr2S7fJzCLCGQZDu/PSrK8f2BoBkEGlMD4xNIwbefqnW5b
+         ALzE0KwH9SFL8YJXrrVePBUuCG2a2S0oXhYGpyWd0EdvfTPDpbiIHyxfPyJPi/EEzW/Y
+         8/cHEVZlIGGXoPqb0QEbtYUH7h5DM3P/wc33Va/eTPw24CR/nh3tTnJaM1O9uikPZdXb
+         wMTrUh4x5Uhco3sK7B61z/2YBSXRmTI/AHAEoQ6Ii/3HHyChj26BV2JH9c/7G1AoYCzX
+         Qf1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782228168; x=1782832968;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=AeAT8AkIpUvQLt3k6PmxlXjziK/XjBXputAgaefFDTU=;
-        b=FUhXznsV6FKpFHtYnBAHfAPdTrdyNhMP80rHb83NaxDDpsVTya1faGZ6+dVXBibMgi
-         pM9Q6c5hs4Hs0MGPArpkSDri7qf7BOq90FTv+9gaogeDwkfLpMgW2iNfp8Hi1e6QKj80
-         MFmQXXGMmMS6kY+7Uy+3neVX2gKtRHSxc86/gV0Q5GR6EPAEq5dHRFqt91Y5I9cOTvWC
-         PnLKT/4aRdab3q1OsFWQVwEJS/uEaMZBMsKD6RPc65yqA/joU+qKRc08tzQk9U2F2baS
-         n0q/nv4HwjQoXrhEhjqy5EcGbRYcZh9mcaHUCUAnxlQkkjMRkCmiT4dsQTZ9AbHvpdJA
-         Q2wQ==
-X-Gm-Message-State: AOJu0Yz7/mtMnkoM3bgqxBjPE2P4WwefYFQQaxKpjlGcv7ysIrz5h77T
-	oEKUXYSO3+1PxS13jIOrFh2BTPK0SpWqHK7iEZuDW0rSmEbKrvqhtwI+
-X-Gm-Gg: AfdE7clM0KzRFaKBkZidBgL122UUByzj+5XNz9JGi4tuhC0HaogZ3eqSGbar15pG3Of
-	c9LnwcjEoSs3O98Aj65bEkqTRA3ed0PU1vdRVq9/09K6SG4T3EJK9apFaXpGAC0RTRYAE9W6G6Q
-	ZkzSzMcl359epy6Ag24mDoIJVU4SEPTRX/Ozx/I80tc/ef295jU2L8Bo5NA6/f3eY6sbEizTNy9
-	W7IAxZYN1EHNNP9/K7HjX3aJCDf+ez9ev07a7DzGE41J8kZRUEimG1DX1FW9ObCMXiC+ymdtN5O
-	CeE8/mD3jTdoG1GPTWGSEs4LqrurwezowVXXtQ23q3jT8WjL1sIRwwyzqaY4Sf1TDLhrZUZz6OL
-	p1dc6sMUbxq6Y5cOhgvBwRBQGhSH0CfzAjAsqzDTObsM2PAlGBASEpUssq6TQU3ONXqrf6ed8/P
-	+iwz0ZE8Pf1J+s4+FZJJH+g1zbxKe8VOx73g==
-X-Received: by 2002:a17:90b:4a42:b0:36d:f28a:c5ee with SMTP id 98e67ed59e1d1-37dd0e341abmr3570787a91.25.1782228167991;
-        Tue, 23 Jun 2026 08:22:47 -0700 (PDT)
-Received: from smtpclient.apple ([111.92.66.172])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37d15e0b1d4sm14469403a91.17.2026.06.23.08.22.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2026 08:22:47 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Jishnu C K <jishnuck26@gmail.com>
+        d=1e100.net; s=20251104; t=1782230004; x=1782834804;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yirARN1dkJCFDeCmPg/TR2KVXJmgGbgOHOXnyV3SuDA=;
+        b=jrD5fFL54FlASaPn3NWFFkM3/70GBRaUdMlr6Hxy0MIuOj0Iu0zbPfPs80phSPNH2J
+         IU6bEHztQiCOyToOc2azt0byebENfPCO7dyEjCrnUDD+dd1v9dTLK/JPCA107T9GE+19
+         85pdYqr24FhJebgi4g3X4GYfDcQlEnpKgZE1wj/zOxrAoIJgt/dUNRY/Uf58uu7KuV36
+         DGvCZuqs+iKWqb3Z6wxQPDmeqTR+U9DLoij0TWAub/Os3pJI4ayxAXKXhMB4wE1fqCI9
+         K3h0umUaDWipGHaU9fnO6vr71SQj6DxIbEGdGvKfIHV5vAXGDVWs1u5ezsuDwom0w8C7
+         UmHw==
+X-Gm-Message-State: AOJu0YxQM9bw21IzqEb/oK8okUbmBPbgGQgT4P2yMR0PKJ5ZbrRaOykS
+	oOEGrY+m0p1o2K1huDgFZO79dFdrlyb+chrghXRBvRVtvlSsrGHA7pxdmkGG5w==
+X-Gm-Gg: AfdE7cmPy9xLyyhOr79s/2YBGCDc0YWTIT/De+BHrpG6zoPRUpbbMZbmwtsmLJRV5Vt
+	Ra+4H4AsDKvyAfJrAaTe4GZwk+uqa8mLn2liZB84WwQ6WvClK8FtKnAhThXYrtzEteOy9PcG/GA
+	rHIUIK1wx6yux5irQxcbwQr3ZLIxsAaIFUvbIiNlH28dlMQwZfuPD0mMya5QQpSk2aAHyVNH6Y2
+	kpuzpJk7mE3uad4a23OK3FjGviqCWY8uBlo1kL65kkprS8LQlHAV3OD2unEpMFMN0F2R2UMlhMy
+	sKsfA7DWOuVNJTytYHl9hwQjmytZPsb5mP607k3i0tAk/aaHIliFbTj4aibFjYix3Rj1jheeWCU
+	A0BPMUVx10Uj1rRrtIah93W0YIwweTHO1Cn7K3D38hFYQe9qv/HhBLEgeqTlUijgt3Ht7ipOWIR
+	9HdFU68ASmOJmrVPBJZYa1M4aZG2LZSeoHo/ONwlfK1nWuq5WUcw9b7nfFR0ECbQqNUsk=
+X-Received: by 2002:a05:600c:628f:b0:490:bd66:e522 with SMTP id 5b1f17b1804b1-49240e72434mr314466825e9.29.1782230003698;
+        Tue, 23 Jun 2026 08:53:23 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49240f1f330sm240915975e9.2.2026.06.23.08.53.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Jun 2026 08:53:23 -0700 (PDT)
+Message-ID: <65d38915-019e-4e2c-838f-980023e0c2af@gmail.com>
+Date: Tue, 23 Jun 2026 16:53:22 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2] help: include arguments in autocorrect=prompt message
-Date: Tue, 23 Jun 2026 20:51:34 +0530
-Message-Id: <9D9B615B-3B80-4F97-9DDC-4B043519F26D@gmail.com>
-References: <6a357689.0f9b68c4.317a5d.1919@mx.google.com>
-Cc: gitster@pobox.com, Justin Tobler <jltobler@gmail.com>
-In-Reply-To: <6a357689.0f9b68c4.317a5d.1919@mx.google.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (23F77)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/2] sequencer: factor out parsing of todo commands
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+ <cover.1782117361.git.phillip.wood@dunelm.org.uk>
+ <d27dddff93144f7b6d7fc89719bdf53b6856c9fc.1782117361.git.phillip.wood@dunelm.org.uk>
+ <xmqqpl1i1pef.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqpl1i1pef.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Any review comments?
-Sent from my iPhone
+On 22/06/2026 18:00, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> Move the code that parses todo commands into a separate function so
+>> that it can be shared with "git status" in the next commit. As we
+>> know the input is NUL terminated we do not pass a pointer to the end
+>> of the line and instead test for a blank line by looking for NUL, CR
+>> LF, or LF. We use starts_with() instead of starts_with_mem() for the
+>> same reason. This results in slightly different behavior when there
+>> a CR at the start of the line that is not followed by LF. Previously
+>> such a line was treated as a comment rather than an invalid line.
+> 
+> Meaning that the input validation is tighter than before? 
 
-> On 19 Jun 2026, at 10:34=E2=80=AFPM, Jishnu C K <jishnuck26@gmail.com> wro=
-te:
->=20
-> =EF=BB=BFv2: Reworked as an incremental improvement to the existing
-> autocorrect=3Dprompt code path rather than a parallel reimplementation,
-> per feedback from Junio and Justin.
->=20
-> ---
-> =46rom a4e8fb6fd6dd6a501e565c7500cbf927d7cb0b42 Mon Sep 17 00:00:00 2001
-> From: calicomills <jishnuck26@gmail.com>
-> Date: Fri, 19 Jun 2026 13:01:40 +0530
-> Subject: [PATCH v2 v2] help: include arguments in autocorrect=3Dprompt mes=
-sage
->=20
-> When 'help.autocorrect=3Dprompt' is configured and the user mistypes
-> a git command, the prompt currently shows only the corrected command
-> name:
->=20
->  Run 'checkout' instead [y/N]?
->=20
-> This leaves the user unsure whether their original arguments will be
-> preserved. Update the prompt to include the full corrected invocation:
->=20
->  Run 'git checkout neo' instead [y/N]?
->=20
-> The help_unknown_cmd() signature is updated to accept the args vector
-> so the prompt can show the original arguments alongside the corrected
-> command name. Callers that do not have access to the args (e.g.
-> builtin/help.c) pass NULL, which is handled gracefully.
->=20
-> Signed-off-by: calicomills <jishnuck26@gmail.com>
-> ---
-> help.c                      | 49 +++++++++++++----------------------
-> t/t9003-help-autocorrect.sh | 51 +++++--------------------------------
-> 2 files changed, 23 insertions(+), 77 deletions(-)
->=20
-> diff --git a/help.c b/help.c
-> index 30f32a7206..9ea4c076e1 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -739,7 +739,16 @@ char *help_unknown_cmd(const char *cmd, const struct s=
-trvec *args)
->        else if (cfg.autocorrect =3D=3D AUTOCORRECT_PROMPT) {
->            char *answer;
->            struct strbuf msg =3D STRBUF_INIT;
-> -            strbuf_addf(&msg, _("Run '%s' instead [y/N]? "), assumed);
-> +            struct strbuf full_cmd =3D STRBUF_INIT;
-> +            strbuf_addstr(&full_cmd, assumed);
-> +            if (args) {
-> +                for (size_t j =3D 1; j < args->nr; j++) {
-> +                    strbuf_addch(&full_cmd, ' ');
-> +                    strbuf_addstr(&full_cmd, args->v[j]);
-> +                }
-> +            }
-> +            strbuf_addf(&msg, _("Run 'git %s' instead [y/N]? "), full_cmd=
-.buf);
-> +            strbuf_release(&full_cmd);
->            answer =3D git_prompt(msg.buf, PROMPT_ECHO);
->            strbuf_release(&msg);
->            if (!(starts_with(answer, "y") ||
-> @@ -762,37 +771,13 @@ char *help_unknown_cmd(const char *cmd, const struct=
- strvec *args)
->    fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'.=
-"), cmd);
->=20
->    if (SIMILAR_ENOUGH(best_similarity)) {
-> -        if (n =3D=3D 1 && isatty(0) && isatty(2)) {
-> -            char *answer;
-> -            struct strbuf msg =3D STRBUF_INIT;
-> -            struct strbuf full_cmd =3D STRBUF_INIT;
-> -            strbuf_addstr(&full_cmd, main_cmds.names[0]->name);
-> -            if (args) {
-> -                for (size_t j =3D 1; j < args->nr; j++) {
-> -                    strbuf_addch(&full_cmd, ' ');
-> -                    strbuf_addstr(&full_cmd, args->v[j]);
-> -                }
-> -            }
-> -            strbuf_addf(&msg, _("\nDid you mean 'git %s'? [y/N] "),
-> -                    full_cmd.buf);
-> -            strbuf_release(&full_cmd);
-> -            answer =3D git_prompt(msg.buf, PROMPT_ECHO);
-> -            strbuf_release(&msg);
-> -            if (starts_with(answer, "y") || starts_with(answer, "Y")) {
-> -                char *assumed =3D xstrdup(main_cmds.names[0]->name);
-> -                cmdnames_release(&cfg.aliases);
-> -                cmdnames_release(&main_cmds);
-> -                cmdnames_release(&other_cmds);
-> -                return assumed;
-> -            }
-> -        } else {
-> -            fprintf_ln(stderr,
-> -                   Q_("\nThe most similar command is",
-> -                      "\nThe most similar commands are",
-> -                   n));
-> -            for (i =3D 0; i < n; i++)
-> -                fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
-> -        }
-> +        fprintf_ln(stderr,
-> +               Q_("\nThe most similar command is",
-> +                  "\nThe most similar commands are",
-> +               n));
-> +
-> +        for (i =3D 0; i < n; i++)
-> +            fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
->    }
->=20
->    exit(1);
-> diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.sh
-> index 6fe2da1595..75821d63e1 100755
-> --- a/t/t9003-help-autocorrect.sh
-> +++ b/t/t9003-help-autocorrect.sh
-> @@ -70,57 +70,18 @@ test_expect_success 'autocorrect works in work tree cr=
-eated from bare repo' '
->    git -C worktree -c help.autocorrect=3Dimmediate status
-> '
->=20
-> -# Default behaviour (no help.autocorrect set): when there is exactly one
-> -# similar command but the session is non-interactive, fall back to printi=
-ng
-> -# the suggestion list and exiting rather than showing a prompt.
-> -test_expect_success 'default: single match non-interactive shows suggesti=
-on and fails' '
-> -    test_might_fail git config --unset help.autocorrect &&
-> -
-> -    test_must_fail git lfg 2>actual &&
-> -    grep "most similar command" actual &&
-> -    grep "lgf" actual
-> -'
-> -
-> -test_expect_success 'default: multiple matches non-interactive shows list=
- and fails' '
-> -    test_might_fail git config --unset help.autocorrect &&
-> -
-> -    test_must_fail git com 2>actual &&
-> -    grep "most similar commands" actual &&
-> -    grep "commit" actual
-> -'
-> -
-> -# Interactive prompt tests require a real TTY.  On macOS the TTY prereq i=
-s
-> -# skipped due to IO::Pty reliability issues; these tests run on Linux CI.=
+Yes
 
-> -test_expect_success TTY 'default: single match interactive, answer y runs=
- command' '
-> -    git config --unset help.autocorrect &&
-> -
-> -    write_script git-typotest <<-\EOF &&
-> -        echo typotest-ran
-> -    EOF
-> -    PATH=3D"$PATH:." export PATH &&
-> -
-> -    # Feed "y" to /dev/tty via a wrapper that answers the prompt
-> -    write_script answer-prompt <<-\EOF &&
-> -        # Write the answer to the controlling terminal
-> -        printf "y\n" >/dev/tty
-> -        exec "$@"
-> -    EOF
-> -
-> -    test_terminal ./answer-prompt git typotest 2>err >out &&
-> -    grep "typotest-ran" out &&
-> -    grep "Did you mean" err
-> -'
-> -
-> -test_expect_success TTY 'default: single match interactive, answer n exit=
-s cleanly' '
-> -    git config --unset help.autocorrect &&
-> +# autocorrect=3Dprompt should include the original arguments in the promp=
-t.
-> +# Requires a TTY; skipped on macOS due to IO::Pty reliability issues.
-> +test_expect_success TTY 'autocorrect=3Dprompt includes arguments in promp=
-t' '
-> +    git config help.autocorrect prompt &&
->=20
->    write_script answer-prompt-no <<-\EOF &&
->        printf "n\n" >/dev/tty
->        exec "$@"
->    EOF
->=20
-> -    test_must_fail test_terminal ./answer-prompt-no git typotest 2>err &&=
+> I think
+> it is fine in this case, as I do not see a reason why anybody wants
+> to use a lone CR as comment introducer.
 
-> -    grep "Did you mean" err
-> +    test_must_fail test_terminal ./answer-prompt-no git lfg --oneline 2>a=
-ctual &&
-> +    grep "lgf --oneline" actual
-> '
->=20
-> test_done
-> --
-> 2.50.1
->=20
->=20
+Agreed. In the unlikely event that core.commentChar starts with a CR we 
+still treat the line as a comment, but we don't treat lines starting 
+with a CR as a comment anymore. I think that behavior was a lazy way of 
+handling empty lines with CR LF line endings.
+
+Thanks
+
+Phillip
+>> +bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd)
+>> +{
+>> +	const char *s = *p;
+>> +
+>> +	for (int i = 0; i < TODO_COMMENT; i++)
+>> +		if (is_command(i, p)) {
+>> +			*cmd = i;
+>> +			return true;
+>> +		}
+>> +
+>> +	if (starts_with(s, comment_line_str)) {
+>> +		*cmd = TODO_COMMENT;
+>> +		return true;
+>> +	} else if (s[0] == '\n' || (s[0] == '\r' && s[1] == '\n') || !s[0]) {
+>> +		*cmd = TODO_COMMENT;
+>> +		return true;
+>> +	}
+>> +
+>> +	return false;
+>>   }
+> 
+> I notice that the order of noticing concrete comments and comment
+> lines are swapped relative to the original.  There is no inherently
+> "natural" order between them, so the change is perfectly OK.  I just
+> got confused slightly while reading it until I realized that is what
+> you did.
+> 
+>>   static int check_label_or_ref_arg(enum todo_command command, const char *arg)
+>> @@ -2716,29 +2737,23 @@ static int parse_insn_line(struct repository *r, struct replay_opts *opts,
+>>   {
+>>   	struct object_id commit_oid;
+>>   	char *end_of_object_name;
+>> -	int i, saved, status, padding;
+>> +	int saved, status, padding;
+>>   
+>>   	item->flags = 0;
+>>   
+>>   	/* left-trim */
+>>   	bol += strspn(bol, " \t");
+>>   
+>> -	if (bol == eol || *bol == '\r' || starts_with_mem(bol, eol - bol, comment_line_str)) {
+>> -		item->command = TODO_COMMENT;
+>> -		item->commit = NULL;
+>> -		item->arg_offset = bol - buf;
+>> -		item->arg_len = eol - bol;
+>> -		return 0;
+>> -	}
+>> -
+>> -	for (i = 0; i < TODO_COMMENT; i++)
+>> -		if (is_command(i, &bol)) {
+>> -			item->command = i;
+>> -			break;
+>> -		}
+>> -	if (i >= TODO_COMMENT)
+>> +	if (!sequencer_parse_todo_command(&bol, &item->command))
+>>   		return error(_("invalid command '%.*s'"),
+>>   			     (int)strcspn(bol, " \t\r\n"), bol);
+>> +
+>> +	if (item->command == TODO_COMMENT) {
+>> +		item->commit = NULL;
+>> +		item->arg_offset = bol - buf;
+>> +		item->arg_len = eol - bol;
+>> +		return 0;
+>> +	}
+> 
+> And the extra stuff that are only relevant to a comment line is
+> naturally processed by the caller.  OK.
+> 
+> Thanks.  Looking good so far.
+> 
+
