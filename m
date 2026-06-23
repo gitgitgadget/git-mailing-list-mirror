@@ -1,104 +1,74 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DAC3624C9
-	for <git@vger.kernel.org>; Tue, 23 Jun 2026 10:41:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36822772D
+	for <git@vger.kernel.org>; Tue, 23 Jun 2026 11:30:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782211306; cv=pass; b=qdyNQIDyjxUTHO74ajQQFhrhaPIB6yiVaDG+aS9SzJOJu2j5V6qVlC8G7WBWzzW6saIdv+x31BJqzk3BKEHWypNkC6/RJie9a89By11xQascDJ0Zin/EIlApb8iS/18eCpitFI9r7297Zl1TivJ+zUTyyxUdOOSRBU3bv/YdiOU=
+	t=1782214250; cv=pass; b=UnlIeuegx83JBYumxLhz9InxNM1t9VXIbh15ObUDKxMjd+9gxmpchPgYRuRhR5nqseiOLceKl5KfZYo3tAW3yUHBjVNktS7foyM53FmyYUnP5zRFqEpDv9eES7vt67t/e67RXUstaYa2jGcsIx/KEHuqT2DF6j3tlAPbtwPxaMs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782211306; c=relaxed/simple;
-	bh=cmeP37IwBp2lXb4KPXoA4VMgO0U5ewu/Rz572YER4rM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YbuNyMFNfw1Va6hHgZLbR6rCn9UUxXf63G5mC3a0Tb4dMzQAANB7l6vBVJuzdZ9zZj4JCQT053/JwSUxEaQyXNsGn+F7EM/AMnCiJLcC9Th6PGVlUQMYUIJXp+K5WexPgIyGd0jcFwcT06rPqJ+Am7Whz9qx++sv/3j2RnUdCvg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=af+spKyC; arc=pass smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782214250; c=relaxed/simple;
+	bh=WA434A3yBYyHnUB5Q50HSmvzLeAZbuPXMpGgYodO9H4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=swJUC0QzOkS2OFpOitPZhgnHHJnX/+c/htBPRJJj067oE6R5pf2IvJDbNb97xZflel5w6Rgl/WIvujsmCDmyoVB0u/fJ5Y4WJ1b0BGMGegUD9//X+r2D2X7kwjuNtUd6FgvGhmRTXPovGEUEap7lB6gFcOBqCn06jkNoCVlzw4M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b=S8mu7QT1; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="af+spKyC"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6974ef0c3b1so5626714a12.1
-        for <git@vger.kernel.org>; Tue, 23 Jun 2026 03:41:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782211303; cv=none;
-        d=google.com; s=arc-20240605;
-        b=eoje1x2lddxXEOyR6zwub1Eu/bu+hgqTvvwvKYHgDVy71diS3NHewfpQmee445fCDI
-         APpAAFEc8wnEBlGwM8MiHJoFOpN8s7d00po1uZe59oxDz8wNz8j8N8OBbWnNzCO34qfO
-         WLsBaVQacYhudDQ4BLbZAxcMV9c6sw0ph4Q5G6UR0DUbUatDnmZOHI0eZL/QwlydWsCP
-         LJBq4rpo+gnTaG67KBhq/ZEN90RBwTJ0KQylCkwRfdbdlOT0B2NJrQjyTC2ksUjY1K93
-         PRg1SbVvn3Ys+gRD7HgNyAv8z9Xn8xr7MW69iOe7KoepNiCjqvCRc3J8y+PXzy9AanTh
-         r8wA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=cmeP37IwBp2lXb4KPXoA4VMgO0U5ewu/Rz572YER4rM=;
-        fh=0cdnsI/Ubgp1XYh0611s/ZxcwUEFgjrL0EoTDbBEl40=;
-        b=ZgCITg2IIYAXOd8ItCfgp1P80GsLoImpBXDbGxoLjW9psO4DUBoXilmBpgzYTOP01M
-         WZ2NQtxyjigEtqaUwBWZd9xCND55uRlPm1S86On6Z/VLDAOWHI1jtwIY3a+aB0ALH8Wh
-         fnIHOm3BAuSAv8lbrV4vKb0jreBWysWRKvfmHmwa9YgsZUh/tOf1NKXPA6r4DKYV8w5K
-         KhZXeqJ3a5nFMKoa1Bvs5eGk+O0TVHpmTDF7OO7kADjWicOa4EDzW9VKmDCdKIeQBtWY
-         qpEtJ4Fy8da9YFwbwxWQMSez+N+ZchJrsFhVKSmDZnm+APjLefYn9Bnvv8B1IXv6WNcd
-         p6YQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782211303; x=1782816103; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cmeP37IwBp2lXb4KPXoA4VMgO0U5ewu/Rz572YER4rM=;
-        b=af+spKyC1IlexDt4iSdGTnhwN7dnOrPiie9CdZy0JiP+Q3tsqL5JNX981h/Eo+Mdcw
-         olk6BpWjEI6JRybPoS8/2akcc3BAXZrq2o6njKOJPaT1mGJmHTFaAmJWs0/uyoYjvZXm
-         zzyJW8CA59avIE8j7oGI+e2n+wAv7Tr0+aLLPWKTIu0dHAZewUa1XtBYPH96gON4b3ZK
-         y/nx3DGgu0DagJmDPjd+CsYVIrR/FaKpFuUhRz06I2OdiqwXWIc03Dzs68S58Y5COMiQ
-         DOP86dYmlCIGEl8ZdrYlYsa8ufv3Dz5Jp88RjEWB2fsR/l1zwUi6iE8cNpsol2nW+LDt
-         xppQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782211303; x=1782816103;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cmeP37IwBp2lXb4KPXoA4VMgO0U5ewu/Rz572YER4rM=;
-        b=lUzJGcrnQzL6Y14jAjyS4oWLm7jnovphRqbegEXmUoxBEbUxVjFcXxTf7Hp/71w6zs
-         tQ2AatQriR74ogXvQqUOmAopB0lp+idjhowtBtb7yycLU+sEOiW216yDDgI+edDQ6bwd
-         3b5Qjg6VxzaTZuF47qu6hOC22dciA0EXjuu99iJ83B4EmwunIvJuNMaFZ7DBSXEfOUah
-         d9qdSuAS9lRdIQ/RgACDrWCyfBuc4FA3nnFRL4Ucgy7i4/1JlhYY1tPHavJevXou1XXR
-         H4o9FvX16Kq0cW9U3dUWKKPP5uuM9cVyY2wt9/0DdwTo+iyeGtEyj2G+HdoArwGy5zV0
-         SmJg==
-X-Forwarded-Encrypted: i=1; AFNElJ+zmvSOq3T0VcYm/zp6BwCT7eXhme0ROfYK31rUSMCbRQ2DbWqTM64WRrEGPaVYceMGlgQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHIlqYuzO9ydX5NeFEPKGH8WOor/bx1V5mx/cn9S0TI0QV8ry2
-	qwo5pjjNq6hBd2ftSBZUOYYm/ZLQdkHo77AkX0Ccg7NnO7a2fIM3WAcxPGvOUhDA2smNHJcm4xu
-	pS+blDVKUQjBDd7FCY7FJcTbzSqgv1kxwvw==
-X-Gm-Gg: AfdE7cngV4kt7vgnLGlSqD7grvBF33dNQvB2ywyMAWe/8Lx2Lb5oH3nycCQnmSP2iti
-	7ytmouNuIyE4Uf31Qi0tnzI/JsxpSnrNrXdDjSKaYetyNXA1wYyYmFo2kFeh04Er8TAaKO80Wu2
-	v93TZpic2GCtCaHbXMqoWWjo/LZdPSyu9G7ieSm8F8KkvNLbg8sTkCGBsFMkX7LUfpZzIU5ceBp
-	JDfpOjeYGbyFPjupbeVHmKTBHbFphLPt9/7+dmdoURYnQ1xippbGb+LvGNV4PGHFrOlDzpG0yQv
-	yO5pbNk=
-X-Received: by 2002:a05:6402:2345:b0:662:ac7e:aac9 with SMTP id
- 4fb4d7f45d1cf-697dbac9d99mr1081859a12.20.1782211303175; Tue, 23 Jun 2026
- 03:41:43 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b="S8mu7QT1"
+ARC-Seal: i=1; a=rsa-sha256; t=1782214240; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=m9D6UOMuHKXI4VecZwV7Dleck84kmBEbqFY84RVx5iGYIZ74i5ZcH01vDO5AWK4aIm29q2qLWPgTDSHZlEFZPU9GlsUsLpoDlqKfkQmAs2ALT3FuHe2+blyVldEoe+TeKcIvYQIOzDLqa5D3aekhvaCkEz4CGU3+pxqht1fYelI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1782214240; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=WA434A3yBYyHnUB5Q50HSmvzLeAZbuPXMpGgYodO9H4=; 
+	b=auRU2fxKxn5qrkIAexALk7yuA6CFRmlIXvkZn/wl0ZyBJE+qgulr1boIC4zNthDzBV9DxQ8+0K3S5PvdrLTflpLqnkmZeQDK4J2up+ON0f9N1ATB9BKt55pU1eOCaOPS7HUFAQvtFH4ekJQdTsHmY6lSSN/wiWshJOftVy7AUlY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
+	dmarc=pass header.from=<vmiklos@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1782214240;
+	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=WA434A3yBYyHnUB5Q50HSmvzLeAZbuPXMpGgYodO9H4=;
+	b=S8mu7QT1opp6liwf0m0MptyAQi7SPYPMohkUZyJo89OzsvxcoK+t02pDIccpbAVp
+	6v3Q1WpIiv0zAWye6Mb4RvubZz+lK3xksbNTg+Zi4HQ8Dm6ikVeCfRV3J27rGcoFfSE
+	ExOw+DBP1R/nIdm7iK/YEFB2PNRh7zZpjhTZw5KY=
+Received: by mx.zohomail.com with SMTPS id 1782214237733399.5010691260343;
+	Tue, 23 Jun 2026 04:30:37 -0700 (PDT)
+Date: Tue, 23 Jun 2026 13:30:33 +0200
+From: Miklos Vajna <vmiklos@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v4] log: improve --follow following renames for
+ non-linear history
+Message-ID: <ajpuWSUiQ6CRV2Kv@collabora.com>
+References: <xmqqo6hglncl.fsf@gitster.g>
+ <ai-aE83w02xPRlPr@collabora.com>
+ <ajjU4w2B0NlZffw1@collabora.com>
+ <xmqq1pdy4udg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
- <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com> <ajkijomPo_kXSXul@pks.im>
-In-Reply-To: <ajkijomPo_kXSXul@pks.im>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Tue, 23 Jun 2026 12:41:05 +0200
-X-Gm-Features: AVVi8CfDTWPeiqX6oycUU1qrUQPdz09_HfNzPv-SpBhtbW7ehPPrzjDcDszRLmQ
-Message-ID: <CAHwyqnVV8NB3Njxat8shRi3K11O=Z-kP24rUxnTF3f9wK4BFmA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] history: add squash subcommand to fold a range
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1pdy4udg.fsf@gitster.g>
+X-ZohoMailClient: External
 
-Sorry about that.
+Hi Junio,
 
-I skipped the ancestry question because I felt the implementation
-would get too complex and was hoping we could do without it. Probably
-would have been better to be explicit about that instead of just
-skipping it. I don't want to balloon the code more than necessary, but
-I'll take a look at it now.
+On Mon, Jun 22, 2026 at 05:44:43AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> went on in this patch would count), but as long as the resolution
+> that is in my tree (as a part of 'seen') exactly matches what your
+> update contains (meaning: rerere will do the same correct resolution
+> when the topic gets merged to 'master' anyway) and the conflict is
+> trivial to resolve by hand for others
 
+I see, I'll keep that in mind for the future.
 
-Harald
+Thanks,
+
+Miklos
