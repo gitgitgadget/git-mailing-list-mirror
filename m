@@ -1,83 +1,82 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8ECD22652D
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 11:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF70128816
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 11:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782301625; cv=none; b=BHa4j8K/cruwG1X+N9QOTqcwAR7ynLYJibOTbOYygF+tF6GbEAVOyKe4YDqKGK283bmIUCscJOMsGunohPOh6xpTZqkVCmYTtFnQIdHJWs8t9Tjo9Ve0e++Ncra9V62bdVok7BPTJQasOkkNq/fpXBqnyxnRcMbrZFSxHKxeIhI=
+	t=1782301631; cv=none; b=c1OAQUWjVpX3gyFNXdFKpUyYhIGq0PEHJ3AX+CIobQFuhqW/4+3alK25hgndwyRCli2r0J9SVdC3iN9F5mPri6xtBDqtoljGc5QHn2Vu6OM4YD4bkg3OZf4yzbCtGvbZVwAtEpQoivH9kJ4KSYs61zlbdYKZ/QmvCrYuf2WX7D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782301625; c=relaxed/simple;
-	bh=A2RkW/2BlzGbmnVAd40gPPjz1n4XCcD9ekDQbt2Vdi0=;
+	s=arc-20240116; t=1782301631; c=relaxed/simple;
+	bh=CTu4k3mz334Viiu0MninfoTnCkn5k0vhwhVpbG9abhY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q5JdvSsgpeOXC0uOkDSJN+iYjPLp66vwBEhDwHrYGczsEr11ENUPZeXqa3R/m4ifNYR0fufNHcij0/0A4sl0G2Mwgyh/6vt2kIhQMm0xBjK0XWhGItVMVhcHpj+O/I7UqPU8/VfuyVn8gJ0JG+1J+PYuGzoG1+06XkXhcK/TFiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=deaVIfmv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AISxc6RJ; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=py5JRc8Hq9OhlWL3Ctes6zexRIK/SCfXhen2jCYB/HTkeDCWtEaoKcvwZUMi2WxPpm78OC+Qfxqeuah6mOm1XFiq1HOW8gD3ck+ciomyqiR/JhvwwgBhWcSIyfSQSi0M7XKt0gacYX3uFdT/nuoVzr1cXJ7ukzOGyPVCxuDFiVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IwE9MpDP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lT2j+7gw; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="deaVIfmv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AISxc6RJ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IwE9MpDP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lT2j+7gw"
 Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 146B07A0104;
-	Wed, 24 Jun 2026 07:47:04 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5CE4A7A0104;
+	Wed, 24 Jun 2026 07:47:09 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 24 Jun 2026 07:47:04 -0400
+  by phl-compute-07.internal (MEProxy); Wed, 24 Jun 2026 07:47:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782301623; x=1782388023; bh=FV0ozG/v8c
-	kZMNrrgrMa/cER8PCw6vKEUdhXvOmTj7Q=; b=deaVIfmvLCAMA2vAqfDarUA+br
-	jVUKFE40/7Bl2rmd6TJ1IvTq/L+BbPPhBoYXlh2GEFtA3asUXwSXorsmSBlbh4MZ
-	uHONy3GOK5ssx3FfXC1k/zbvqahtnY4TOUFbVwcgQ7M0NpR9yyPhILqAFEgD5Z8V
-	ogDQxfbkmw/S9Kyg5iv2lbNut2uO50QRSmDDv9olD106tB/h3GPELS/gadg++LVe
-	XY+oXungnjqhjPrK1Jv2EuZkYi/ps4NNil0LA/fx6+iKPIvNyk6tNvARuqCWQoZ3
-	qJ0Zgx880ttf/4aF9yX2emyUhS9MkHmRsrbSz0Ye0NSJw2x1zP9H8rRoOhaw==
+	:subject:to:to; s=fm1; t=1782301629; x=1782388029; bh=3LtnSszgVj
+	i2vkcanRTh2FL6sP4DGnQgql3AF/by4RY=; b=IwE9MpDPFXrROZRdieL7ZJ56/P
+	4o/0G7Dmon6mwQiaB5Aqgg+SeCedUuqTuTYt3lQeSsIh0iVzqIsW2qLvF5M7GlzH
+	jubsKy4YieLC1U/kGVjir+TVz9XWIDB3zFx9Co4n08W02or9Mk31Vqkrnq/8wo85
+	JUDmIKZtnGUX/9W7Op/Zup/kF8bXiIkj4OZrvAynOyp6Hhn7P3KTY2/K3Tjo1UEy
+	I2pghhBLAvZKLwpU1af8X7ZN4Sfo0/5nLI/KBcBhE9f0w87Ci87yQ4weBcCPLc30
+	JsEW6H/sn2+YzXcupuKIKctlIIAobh4WF0iDdmsDtyT9uPOSsPNTyRpVaXVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782301623; x=1782388023; bh=FV0ozG/v8ckZMNrrgrMa/cER8PCw6vKEUdh
-	XvOmTj7Q=; b=AISxc6RJdti7DGojKX61uDRyb3dZytvTMm8/ng0YimuQr+o4cCM
-	HesMXteff0dsxq6cGBKDP6O8bGuj5y9egMQgyTYwFHJCR/EzOgRyQbm16cgVDn1H
-	+WpBYOrGXLpf4DVpEc00NRPbySGnPijjvfTatfLD7ozVkbrpg7q2yYcRXoe+KBxk
-	zt9HEXKwKPwhDWLqNPGwX1xYUSevPfJlqP8SaJy7m+SUP+NSZNSMcAPyYJ8U2hlW
-	O0wLAfxb1/tucIB9SPj20ZVzqg2MUJzJNfKcz8/hoWb44kopn1ZCHJp8DLaFs50u
-	u4SbY4yWiy6ToyfgOGaL/pwi0YF+OksmE/A==
-X-ME-Sender: <xms:t8M7amTo4vzq5U6rDPOM1Ilp0vOt9OQdF4i8aUMNMgGkX3x2ggp06w>
-    <xme:t8M7ajPCaC8Yfg3L7sBIyt9ngGmfYpp4YZ46mqEDuePLmUn1WXqdV2flLDxGc4jwa
-    azqiEqxHGXEqdJy32NbAQxm5RPFWA_7jq8T2lImg2dNhHnQKqQzVw>
-X-ME-Received: <xmr:t8M7ahOKlsM5joyCkfST-gX53-beXWyWJ1v_rmAMy90bkmko21uWnLdDNjdpHqJOYgxQNQ7ogJXNgswxTKe1iir3GPD416KrFPX6Yh6t>
-X-ME-Proxy-Cause: dmFkZTGl6/q6xYKiR5peaSJ57tqZeCZImwaTg0DWQA/murCGlmVqKfFrwAiVcTb/tfuQH5
-    bVKjIz4q0mvhRKy+c4YSl8sieZRHLiBOUZwiE6cc9Pck39dVAdI0Nw7/KmUVQ4CftHz3u+
-    maxf1XBHrvobAsxeOvdPiojLtnmJhot86I2YIko1gUlN6CWSYNSK4aFJGWe5PWChwE08ap
-    JuWiyiNpxeEpiVHTOS0GaWnQFnEyf5UPlx2KDeZIKMaLHAWUtmLui3F1lOlg1cOcPIiWZN
-    ZRD2OAiTXCuN3tSPEds5kwiFzkwvlWXPtVbWZsA04mOEa1tCj/x47U3Z9nqam+Jc2fGGHl
-    DkSVGWfCCZCz7e5uTyNNC3c4/PrRadgeRMui9Q+oUHp8ir3Mh5/sgTZV+tQpgHh/pbon9G
-    h7Gy63FSvwsadTy9uRr6jVZj7aYwIhQZBUsFIq/ipUOzc7f08f/sd4Nv8pC/CDaGEFCiYg
-    7Ly+iGKOYAAs9LxeyqrrBVqLNA1ZNVHBfH4SmwGPxK+KS/3tWCsQy4I3/bvuXfxsGVrtcB
-    dBmzstWQGZm2WTVxnCm7EJZy3l8Jm4dM3UX0WKb18TXKKaYLDfP5Yrowe/p1LejNUqUX5s
-    BJ88mC56/aJ709GgsoctzvmABy9t+vJ90ge/Sc6/mv5CD793j5jNlPz8TWMA
-X-ME-Proxy: <xmx:t8M7artfdDMhd_VvjtF6QsOmjKipBJyUn6-IEGl4LZSd1LgkaUlxXw>
-    <xmx:t8M7ajVAVEv7IMgHPQLC3jyE72hqOA16lggF4bXgjOCSj1zp_EPJHA>
-    <xmx:t8M7art1_PUHzbk2A6ws2PbaFwAykx_YVj1d3eL5nRsjNy7CksTtcA>
-    <xmx:t8M7anUse65dCQj1qZpXQTjFc9WpIWI806ILiBR90qa54GQX9VLQ3g>
-    <xmx:t8M7ah0fDKZkrLgfZIWeo1qNGKLmRdas_WgDNIG5Tcc8QJfHPuc-Ku-f>
+	1782301629; x=1782388029; bh=3LtnSszgVji2vkcanRTh2FL6sP4DGnQgql3
+	AF/by4RY=; b=lT2j+7gwd92q4DpmuzxAEmIe6UrL9LUiKsIssM6bLAdVLpYXMja
+	AUW6CIWduphz15SSdDuzBvjiuy8NQlXeVhdYzMglbcz6krO0+7HNhXEaiCKGe8GM
+	yHTP7foP/UB8t4mr0wA87E6IYluB2FcNe8s5hwQ1pVLM1AfMChv62h2k7rWcDDZN
+	33IqFrHB/uszZxPvz2MrdYQon7SPwHjBj43oX4kj3Mi92le7LQzRMXEHEzVN1aG4
+	6dIUZHCeRY932559VzhR1q+QVIO4Fg9fNPMTBYn4I7g7qiFaw/0vO1usb2yrXxrF
+	TbFbKcEu38KgyGeOHCwGFp7PdJUZsBOOd3w==
+X-ME-Sender: <xms:vcM7anKnSjSKLmeqfCdSURjIuk3a5zYJZKkdZ6jiLw85v0LD_Pk9pQ>
+    <xme:vcM7aimvI0HG31Kfz_RMvuulA0PXrdQnJQ6lSyW8TO8rH9lVxdj5REtxUMEZPOEHu
+    FUeKj8dOrLsoE_hT8EzSTpqotB64JOu2A1_OsONb325kLtYJyEJMg>
+X-ME-Received: <xmr:vcM7atFy2gefeN2kvFoDZvgDcyx01an8bXKoS6bnPfJj4hNoiGjUc7_ZXHuXHuCZjCMUmErwCQlJXfLFF5OeCBi1-ievLDFDtLrjXTzr>
+X-ME-Proxy-Cause: dmFkZTF3h79N4Qbz2Kx6KdBNFU8M9sdxIijigJ9uERzQuZTA8pO7mI53GosadT5kFezrPl
+    m91JjMMlPCjE0lz8VxCHe5R0ZiPteuIuglUMgLW2LFm6tcDL4jURHCYeHuuv2QChhi288a
+    Kx2ewxcy9OgRF7/NiZ3TUt+ZFZy5yMRJh0DsvciWDwCkudqs7pchq9Q6ZAHIHGScrFNuiU
+    /3stS+E/xQLsJ6uQMuKO8t/lV+1tO5VwLlHrRcIrGtZUKJ6zYuO/LGG/3Rf+ctbPEiNdAl
+    aylrRbVeIo0j/GnNo4y6ILh+avhV3fCDnzaNAAIDiO0Vs+w9e2hFw1NxR1xgR8suXvW1LU
+    mvx9XiHJCx686+EmJW/TAqYg6lwz+e4NMZnEyTwmh3njRZUhksdCtv29Wp91O9mj5lPEES
+    0O+NSzPknjgLn+MtS1wJ+HTU7gSEWYFFj1c8rdMRd3AMRQ18edc4Ts86/RU2DYDSjvVJNP
+    XtTnZPUZrJBXbouC44l3KngUa7/qbYZneIYYcdKKB7895j0SbWFzO7Vpy/N6lglVD7Zped
+    Cjz0YKNb+m4PGQ6cxhvgzv8junPcVpfi4Wd8DhCeNOitcHKQ6JaHMfet5aWoduuW2vyfxL
+    1GWbdEe6N7PjbnoYRn+7rzandgn0rajkAYnmPtm3PQqPHOWs1a9/WHht9yDg
+X-ME-Proxy: <xmx:vcM7aqEsoZogXVkjMeQqGpenf45FSPT7p8K1un2s3hUw770kUbFIMQ>
+    <xmx:vcM7aiMihtHpd2LEA_fUEtBOJonvD3tkPf5GP3NQf36wtVrBGa_d1Q>
+    <xmx:vcM7ahF8nZW7uI1dSybcOeJU23GSvdbFX9js7Y9ztaXk90mphVO8SQ>
+    <xmx:vcM7ahMjBL3QiKTVv6n-61lx1WFOx5URxeizPIeJ71n_EDHgcH3-sQ>
+    <xmx:vcM7ajOdxKABA_2JFHbVYx9JkoEN8bI4TYSpNr1mqR59-h80EcePYOnG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 07:47:02 -0400 (EDT)
+ 24 Jun 2026 07:47:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7f148ab8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jun 2026 11:47:02 +0000 (UTC)
-Date: Wed, 24 Jun 2026 13:46:59 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a81598dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jun 2026 11:47:07 +0000 (UTC)
+Date: Wed, 24 Jun 2026 13:47:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Weijie Yuan <wy@wyuan.org>
 Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v3 2/2] doc: advise batching patch rerolls
-Message-ID: <ajvDsy1qVCZoqiCu@pks.im>
+Subject: Re: [PATCH v3 0/2] doc: clarify review replies and reroll timing
+Message-ID: <ajvDuUiDsmyf5LnX@pks.im>
 References: <cover.1781714757.git.wy@wyuan.org>
  <cover.1782028813.git.wy@wyuan.org>
- <e1050a6ef5e26299b2c6d9743067fe3d7f4f8071.1782028813.git.wy@wyuan.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,39 +85,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e1050a6ef5e26299b2c6d9743067fe3d7f4f8071.1782028813.git.wy@wyuan.org>
+In-Reply-To: <cover.1782028813.git.wy@wyuan.org>
 
-On Sun, Jun 21, 2026 at 04:05:34PM +0800, Weijie Yuan wrote:
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-> index 00704ab91e..35105bc3b4 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -1330,6 +1330,28 @@ previous one" patches over 2 days), reviewers would strongly prefer if a
->  single polished version came 2 days later instead, and that version with
->  fewer mistakes were the only one they would need to review.
->  
-> +This consideration applies not only when going from the initial patch to v2,
-> +but also to later iterations of the same series. There is no fixed rule for how
-> +long to wait before sending a new version. A useful default is to send at most
-> +one new version of the same patch series per day. This gives multiple reviewers
-> +time to comment, gives reviewers across time zones a fair chance to
-> +participate, lets you batch feedback together, and gives you time to think
-> +through the comments you received. Knowing that you should not immediately send
-> +another version also encourages you to review the patches more carefully before
-> +sending them, catch small mistakes such as typos and off-by-one errors
-> +yourself, and let reviewers spend more of their attention on design,
-> +algorithms, and other substantial issues.
-> +
-> +The right timing depends on the topic and the feedback. Larger series usually
-> +need more review time. If the only comments so far are minor, such as typo
-> +fixes, it often makes sense to wait a little longer in case deeper reviews are
-> +still coming. If the comments call for substantial rework, do not rush out an
-> +updated version before you have reviewed the larger changes carefully. Instead,
-> +reply to the review that prompted the rewrite, say that you are preparing a
-> +substantial rework, and mention which parts of the current series will become
-> +obsolete so reviewers can avoid spending time on them until the updated series
-> +is ready.
+On Sun, Jun 21, 2026 at 04:04:36PM +0800, Weijie Yuan wrote:
+> Changes in v3:
+> 
+>   - Reworked the substantial-rework case.  Instead of suggesting that
+>     authors send a new version sooner, the text now advises authors not
+>     to rush out an updated version before reviewing the larger changes
+>     carefully.  It recommends replying to the review that prompted the
+>     rewrite, saying that a substantial rework is planned, and pointing
+>     out which parts of the current series will become obsolete.
+> 
+>   - Dropped the advice that a topic close to being accepted may justify
+>     a quicker reroll.
+> 
+>   - Removed "how close the topic is to being accepted" from the short
+>     reroll-timing guidance in Documentation/SubmittingPatches.
+> 
+>   - Updated the commit message of patch 2 accordingly.
 
-Makes sense.
+I'm happy with this version, thanks!
 
 Patrick
