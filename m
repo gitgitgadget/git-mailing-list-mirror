@@ -1,138 +1,166 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E44D37B40C
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 12:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782303586; cv=none; b=OiVuYP18nTrui7aMW52YjJUWtn9hG8EAesZW5ZttsWR+xeQXCTFBJ1+/k41C0msBlBXDFqhN/+QFMcxAF1eMap/aDCISCAFwiD/SmYUgnppfIhPUmcuA1fhZHvMX7yQPUQc5N1mGjaQLM1MHOqXO2ZAHaTdbxfRUDLpQFLyCflc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782303586; c=relaxed/simple;
-	bh=SfHtBbscjKyV9I15ryrQBRDXA07fhcIDUx6c92qtLng=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Rsjjb6my+Zbkvde1S1wE+87fHFDHxjnAZ3bzDMwCl9ygsOcSLqrruOaHzmViOLaCx728wNpc7A3m4CrKe4NMEeR5RBevTCult+mGGVXBA1haHeyn0x///J0swxaxxKqR/Rj7iquc++ovHaL2uU13vxDIbsTwQ1JiBZgdImuOZqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bCx9SVj+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NYSLq/XU; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117CB3A380C
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 12:21:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782303687; cv=pass; b=mX6m0q5tNYLtUyyo8ivvUO4sSwH902ROTVrLcz57980URq18JDNwsasiOO0thlvSL4wPVuW0sggTvRWRzAUs4crx4piX0T9CMaOFyHeUSjawYFZbACTCFypQvNf9o/Uln/5WyZ0QtqjqodeTZ6Z8TpJfqLUfaeDLW/sedsSB4Z0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782303687; c=relaxed/simple;
+	bh=0ao0Qmpp7akl6weqaoXJvAxpL+2pqdbUf0Hud6xkaaA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hIXNSbeSu9AAHdmeuKbqAGHLn5jlzjD3EKxURdY1lnOFEKi8xf5QIYr8jr42BhZzY4cPoz8dq/2RXNyYtQMBqZ/YCnFGTu+MQzynuGPiHiEHmEp/r/EmO6XebtIrF6xOA2Eflq7BVwN0omV6vAQVUz9e5c24RIBkc/tfzaQu8vA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/I1sBDp; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bCx9SVj+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NYSLq/XU"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A694F7A01F4
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:43 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 24 Jun 2026 08:19:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782303583;
-	 x=1782389983; bh=mkFVXtuGUDMdrbrDduJWEJCeSc+ch6MY2rXwENGCekg=; b=
-	bCx9SVj+/weDj/L1L7Kvy7f1MH5wIQmFLGS/YmrEkr53GM5CsNiz8G4Wq5Wm4AE1
-	suH1tBEuSCr3y51miHpcnGQY9NmtLNPi7NL3TESGq7ir4LefOMeoMUSGFa8YN/9Z
-	mxv1pCzOXxbuf+af0twuoIYF7mskg7q4+Ny8s1ogRioX9jjLD73mG6LhCUpaspxq
-	cg5EQ8PELYgXnLTzSG4z+VzVGxA+eQvwS/WnTVJtbWgmMNX3YX2Vuzk5WsFXF2a+
-	UW1RGkr3HlJjYyPNRI7gjmmor4ny9jnlQIUZJBqfvQj+dBXHMS6aUNYyjAE5IdVn
-	zC/ZJHRgl0dVviUuH76yVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782303583; x=
-	1782389983; bh=mkFVXtuGUDMdrbrDduJWEJCeSc+ch6MY2rXwENGCekg=; b=N
-	YSLq/XUp1VmQBQc68GS7Uw+aWlRQHF0waw67v8C/Pvaj/nL9xvOrBjSaj3XXKP4l
-	NYGTDpN7vRLEXwx0JoVpwUVyOdZKqMF1AHuekbXUMTg+2SqLAIHWta7bXeUF0rRy
-	vz1U1YKn5OxE0q3uvAGSf7Z9mQHAg+zTioM7DttxcMb3u98LPISySpG5ESFIQ2iN
-	GMGAhxW0X8b/EjihVEdBcyHwrlIdEOOaw8f5MOs+y6w26Rve8cgopie9hyPl1ow6
-	KTwe5fZv1rCUVyAUZrKBI134TR3wI4KSQXaeSBH6BJ9sh2uAfDer0KfLHjlczTHZ
-	UYZnkdeb0XPA6TEABVH/A==
-X-ME-Sender: <xms:X8s7atazXOodA7yxlAWBcMjllxr8NvCaELEoME9KGmupI_dETyW1sQ>
-    <xme:X8s7arXq8hbPCkKbyjmiAosWVZkdKMmscSZZAV9k54RHlC3lIh1k0TPkIkRZdoY83
-    uMeSYYRmuPw8B_vhhLS_kLVw1kPSJVk1N9dPKhu86OYEeqSZe8sEw>
-X-ME-Received: <xmr:X8s7aln4StVbPMSjukL6dVDYFYmcBiqec-FIOQas-jWovFv5HBD0KrZX894TSY-6smYe19sOpwZhrSjHais4Nm2o0o2_1eThTcRtFOJr>
-X-ME-Proxy-Cause: dmFkZTGqat1Mfn0idfGqd8wszj37GZDlcg6VdsFF/s6Lvo6E9OkC0O89HBX9mJz3ZmDJab
-    YYfNbUJLoNUxFuYbKZwJUCihCEsIVvJMyJuSfj6NgXk+02mWx4YOQW/7j/npRXrxpJDXu5
-    GAq9Sb8DveeOLclKserqF6ttViR4qGbxnIyWYvmn/5ZI2mqnc9G00OMmNisSQ4b8YHFKcU
-    o/pRDaTCPLlYCsgOwfn6nL4ncWPq5dN4oTEZmGfd8adKTUDwFurCC4SQqrnUdY5chLH2Xw
-    szBmS28CULBkcz2L47PLfbv2oDpQXdurTJeXG5LkLbx3aSkA9jiXghJSzANVVV68dXBlDl
-    PW0Xb9YXG3av+gMCAarX/RpAEROcC7Z9bIF7JMPzVUEBzymyY7w5VRt4Evypc7LoGunk9m
-    idxUdqYXXtLzcdB2+6z1L+dFwJuzb5KG1D+BihWyuv87pI3I7O9bOp2k0EmMT4wNNwp8+6
-    eHzQgGFXGU3uYmHP+yw9rAPynvX3ziqQ36fGqcL6j5GXmA2vYZo++Ii+D8OqhS7Wmsg0oG
-    Yrz9/Snjta88eViUd8xOd05T7ZWifP8l1qZ4okoY/KQq+uy1kT23LbeMpsyxkTIOxi3prh
-    U3RP60ZxGeqlYyS9nIDurKbprX0LDUWakRFOeAz9Qy/0o/KkM4GPMqZFrKog
-X-ME-Proxy: <xmx:X8s7agw1jbSILwDV5vX_go3qh_HFSJ2jXoFNpxv-MsNxDvMTgGKH5Q>
-    <xmx:X8s7aohT_a2H47yBJaekyN28wADUKkyL4jlxnnP2CnQQWwSjgSIxMg>
-    <xmx:X8s7atWt82DJDscE74NYW8MLrIuNFU1Ib67SNv8nXUyWl-bKB7zUeA>
-    <xmx:X8s7ai1rSTsQUeQoLNqlV63yPJQJ0x_mkr_E_XMWHxhyyR0ZNRxsVQ>
-    <xmx:X8s7an7fqN1mp_giaEsmQnFfMIdJMmJsQdyu38uXELoUod_ND3UNYE8v>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:42 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 980e3da1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 24 Jun 2026 12:19:42 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 24 Jun 2026 14:19:19 +0200
-Subject: [PATCH 6/6] odb: document object info fields
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/I1sBDp"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-80814edb536so6482617b3.2
+        for <git@vger.kernel.org>; Wed, 24 Jun 2026 05:21:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782303683; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bJNt/XiWQfhzycSnK5+2mcn/ECHLnPeKtgf3At3zjgHNtu79nLuJ6D1bbozkVb8E3/
+         4NiHDZWr0346/tdzNhcj4J429Yxhrbd8r1EZk9mF+feH6w2WY1p/MRGPOzcSozJ4phme
+         dsgMR+Zr7rDN/NSCgX0nlbtS1FN+ZP89wZl+7oDFtKZe7yDKWdM+1SqZ/ocPDCxUjd9e
+         6uVY6aKnfLGpjWciGnZgwCHp9PbzMRQX/iSAgo9fV5JYjGDg8O+ebCqApQPMNrUTXyTJ
+         QTpqagR6Wj7MJpc7TwYyJtCIdpuejJvapwUyFlzSEP1a47/TxE72B/X2n6rXFWL1biX2
+         DoCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=IQMz8jFreOPA8B6KC5tFxbNpgEU3QWAx+7lwwwBFMms=;
+        fh=4AAliz/opCEtliGg79cKCwetSKpXBDj9P9fZxWKFIpo=;
+        b=kM2kNWVauWd6T9xDV33K1cD7xW411UKpVU4/RyzHNBe02GQjnvubm59vm8Dy5mHFQ9
+         yGZSyoU3Ou7ouQv1yZmwQio99s8BJhh6PfiH3LTsuyqKHgXwgxDLDOREOdkLwxVDqsHl
+         F6aW2VPilGAPOc2frWom+n9lqZ2gdotQ4OtmLnOpP2kEcLlmha4eVTF2m49nGCVrbF2c
+         YZPC3fWODOD+U2cWgf8vKz3+BcEkX6yU66UDSI93SWLMOBxqmOCDYFCUdmbF3dhICu4Q
+         0M9BtAaFqwnJz7oqClTmEY1rdUxkGV2VR6UUGhjVmL6A2IosYCGOtTjaB1at22pz2zXL
+         TaQw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782303683; x=1782908483; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IQMz8jFreOPA8B6KC5tFxbNpgEU3QWAx+7lwwwBFMms=;
+        b=A/I1sBDpQePXVSo9UrwspOgtrWeNJ4VyWLWd2D3uM7IoBztx719OiHh4dSPgNE7UAd
+         H0gyjEPvNaoeZQwWOodyIHWt/4XYspStOwNy+tnjcGq8C1a8EIFI67cOHELexW/vULAy
+         8OlhD8pOSgTfxLDnM61DF5P+nrYpRk3BZbTZRxM2Ul2B4tIAArj2By9awstddtb+LJTe
+         17sxU7HChaGIp5gNGVRx+phH2A5NZ6PG8jhHSwPv33MkRfrofDmBRQIltfB+kX2SULA7
+         WtN5JoGc/jYDfh3LsWkeRnqY3HeAB3yw8bl45owW5qf7vl7R1nkeL1aDprWcAXESGwjj
+         CXSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782303683; x=1782908483;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=IQMz8jFreOPA8B6KC5tFxbNpgEU3QWAx+7lwwwBFMms=;
+        b=gZIjNZNDOpUJz3vbPa0pS16I8DaJLs1y7RdpJvN2nAhiQasdYkyDwnQZ0ildLtAdha
+         4YZI3wMR4NhfBh9DZJ07kieruJCRQjTQ4rxbd5D+2AiJBphf5hoQe0012TQUzUHGAyP4
+         a1im1tGklGITLLkwF5oYjaTi35bPR1xtSq2Wd59AEfo6dU+Q6Qsv72kMZ5dhI4IKtddu
+         V9CVManLRrgOpd6sE/k3sjJ+J3uWohmj/AX3kyoHUnx5YF9pNLCaLSkB4kXtMvJwwLbr
+         wbxJbMi1anBb9e30+vlgSoDvF9JxuolX8+ApGtMrnlKftMzHgMHjLDVm+Wpe7gzyVOis
+         laSw==
+X-Forwarded-Encrypted: i=1; AHgh+RrB9mNjHtcoLpMLaglqPPpBqYS8HTNvzkR90kEciOsJVVrVI+keCMZJDGXZmF+URk1AMxM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIelZMoZuStXx31rlFSTyw5z/tEsrRFAMBVUTTN9Ue40iZ7GZz
+	y01mf7utSUFTAPiRYTFBn3q6Ab0WjTmwKKaD6cwWiFC7NuJkfvTfEkLHWLzKDgpdPom58vEd0/J
+	/ruMApm1RZ9cJipQXus403yLowP65P90=
+X-Gm-Gg: AfdE7cn3BW31vf/O0ovm+jObklwfWlc7ifcwj+s3FIt9BccYTMUu/6aULJJt7KQBbND
+	lQXEhQFkVuoAxW1OecSClHIqykX/XuMCiFQm5nIi1IjaqymBfGcBJCAllCoqb6sSw4rDus3a4nb
+	j4dJZTM59Kj31vLM3uiyGgHjDMSlUVfMP8nhKgaAmhE9rGL7Hn9Y7WxIKHukdH1i5JsDpnHglbp
+	xHtENnSOWMp+3/+Q2EBqg50CPYMNSNSzZ/ZDvrK5vSjYfLdbXqdEbzu+floLP/G608kd9H8Oky6
+	2AC2TDxmRL3Qlrauw7LQkeTh6h1Rlj9YS7tHSt18UG6r39zawo9iv5o5+wCqqHUVaO2cn5TKO0R
+	5LbtQ6LVTD/9v8gwCchyNfzYGZ74eQfwJ8c4+3rSbbql4q9ajGPoWHOkBhNKRzW3vevjArMapym
+	JRKZeyAw==
+X-Received: by 2002:a05:690c:46c5:b0:7cf:d242:d966 with SMTP id
+ 00721157ae682-807ecbeec15mr30445597b3.15.1782303682885; Wed, 24 Jun 2026
+ 05:21:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-b4-pks-odb-drop-whence-v1-6-8d1877b790ac@pks.im>
-References: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
-In-Reply-To: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
+References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-5-3d4c7315d2f8@gmail.com> <CAOLa=ZRUoBKPAjh6He0qgdZdzAzMxmeS9RMRi-czpHEfKG6EKw@mail.gmail.com>
+In-Reply-To: <CAOLa=ZRUoBKPAjh6He0qgdZdzAzMxmeS9RMRi-czpHEfKG6EKw@mail.gmail.com>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Wed, 24 Jun 2026 14:21:11 +0200
+X-Gm-Features: AVVi8CfoZSrTttz4jKR8W4Y2kz5HnKCisgSnXp6iWDsmVeiOrhKeWAkzSRRR0CE
+Message-ID: <CAN5EUNRMZd+NoiAHd-f0Gx4CqRPs7759a4UQh=GDeUgsFKbdJg@mail.gmail.com>
+Subject: Re: [PATCH GSoC RFC v13 05/12] fetch-pack: move function to connect.c
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: gitster@pobox.com, peff@peff.net, eric.peijian@gmail.com, 
+	chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
+	toon@iotcl.com, chandrapratap3519@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Some of the fields in `struct object_info` are undocumented. Add these
-missing comments.
+El lun, 22 jun 2026 a las 12:30, Karthik Nayak
+(<karthik.188@gmail.com>) escribi=C3=B3:
+>
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>
+> > write_fetch_command_and_capabilities will be refactored in a subsequent
+> > commit where it will become a more general-purpose function, making it
+> > more accessible to additional commands in the future.
+>
+> Okay.
+>
+> > To move `write_fetch_command_and_capabilities()` to `connect.c`, we nee=
+d
+> > to adjust how `advertise_sid` is managed. Previously in `fetch_pack.c`,
+> > `advertise_sid` was a static variable, modified using
+> > `repo_config_get_bool()`.
+>
+> Nit: What's missing is why do we need to move it to 'connect.c', I
+> assume this is because it being generic means its better placed in
+> connect.c over 'fetch-pack.c'. Would be nice to explicitly mention that
+> perhaps?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- odb.h | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+True, it is for that reason, I'll write it explicitly in the next
+version, thanks!
 
-diff --git a/odb.h b/odb.h
-index e0d05eaf87..a44ec46b08 100644
---- a/odb.h
-+++ b/odb.h
-@@ -283,12 +283,28 @@ struct object_info_source {
- 	} u;
- };
- 
-+/*
-+ * The object info contains the query and response that is to be used for
-+ * functions that end up reading object information. Callers are expected to
-+ * populate pointers whose information they want to request.
-+ */
- struct object_info {
--	/* Request */
-+	/* The object type. */
- 	enum object_type *typep;
-+
-+	/* The inflated object size in bytes. */
- 	size_t *sizep;
-+
-+	/* The object size as stored on disk. */
- 	off_t *disk_sizep;
-+
-+	/*
-+	 * The base the object is deltified against, in case it is stored as a
-+	 * delta.
-+	 */
- 	struct object_id *delta_base_oid;
-+
-+	/* The object contents. Ownership of memory goes over to the caller. */
- 	void **contentp;
- 
- 	/*
+>
+> >
+> > In `connect.c`, we now initialize `advertise_sid` at the begining by
+> > directly using `repo_config_get_bool()`. This change is safe because:
+> >
+> > In the original `fetch-pack.c` code, there are only two places that wri=
+te
+> > `advertise_sid`:
+> >
+> > 1. In function `do_fetch_pack()`:
+> >         if (!sever_supports("session_id"))
+> >                advertise_sid =3D 0;
+> > 2. In function `fetch_pack_config()`:
+> >         repo_config_get_bool("transfer.advertisesid", &advertise_sid);
+> >
+> > About 1, since `do_fetch_pack()` is only relevant for protocol v1, this
+> > assignment can be ignored, as `write_fetch_command_and_capabilities()`
+> > is only used in v2.
+> >
+> > About 2, `repo_config_get_bool()` is from `config.h` and it's an out-of=
+-box
+> > dependency of `connect.c`, so we can reuse it directly.
+> >
+> > Move `write_fetch_command_and_capabilities()` to `connect.c`
+> >
+>
+> Nit: Wouldn't it then make sense to split this into two?
+> 1. Drop usage of the static `advertise_sid` within
+> `write_fetch_command_and_capabilities()`.
+> 2. Move `write_fetch_command_and_capabilities()` to `connect.c`
+>
+> That way the second patch is simply a move?
 
--- 
-2.55.0.rc1.745.g43192e7977.dirty
+Okay, seems fair, I'll do that, thanks.
 
+>
+> [snip]
+
+Thanks for the review,
+Pablo
