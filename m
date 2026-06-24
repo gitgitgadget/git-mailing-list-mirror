@@ -1,215 +1,150 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F162BEC43
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 12:14:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A954C233939
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 12:19:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782303271; cv=none; b=TS9LBhrmDKEMdmf6eLnxI2u1eZDE2YxP400n2dlFw5Bpcb8hlDR5ihrUiWTIWQANQgTGtoxGATgdSsD2aHKWrqYlC8x9YaZNjqmAUojqqbKBAYPDOEn1eZjBxANcUdrDBIp7mlriEaS6F/p5FKO3c5IMpuTJqKEW3cvvi+VRGfw=
+	t=1782303572; cv=none; b=R0zTAz0bQ7hIw+oFi9oRj9XfvQ0nduHDcF26GPNYZFqmKJ8fIL81wka8eFNrOfX/Xr5fy8wgPub6oFOLd2eokpddk62t05FDSh2uWhl75eITCIJL1yfIiFIRGZ1CAApjzfesGsh6GTeJ5kmXWmvR16jQCJhA9aF/CqNMLJY5gH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782303271; c=relaxed/simple;
-	bh=HvDCLc11wTtO6sC5Eyv4JivN/7K1wCAjLB/fV3SNHB4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KJ+NYBN0hnW5vWCqH/cHwDP/8qtuOInjIwzltaTLd/c6Z/jjgvw8mdTkUyH5uDvphdCLzInqhr15vuynqMgWKcS4dgkr9dhh3bXyl2Wa5CfwDddIbocMkyoNl87rTYNpgvcQ75VNPSdZ9QPLP3IRSO0CDuSxYookms7ejj9mzNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VgxSRlyK; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782303572; c=relaxed/simple;
+	bh=bTdao1+m0AtHVEHtle+64ibA66wNO9toK438lzWjlj4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nRFWLwDMzvisSNcD+cmVS5c98VPFjfrPRQzAovOXc0UrkHnouMKOkON7DILFCbZdoKsvBYj8DX+Hx0xZCJQfIBYBYXliF5uD/7YrSIA2jWpEJ5uRW5QHFbIqBXrP2osocHxgvLbmhg2jTCS0BO0EQ9DIFt8MBjYfhaNxXIkCFBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ql/LAKem; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xv4fqNX5; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VgxSRlyK"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-519eedc30a3so9270581cf.1
-        for <git@vger.kernel.org>; Wed, 24 Jun 2026 05:14:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782303269; x=1782908069; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jym4wQPdpjUlZF6TDZSCkYtnTM6W7Lda2iurHZercQw=;
-        b=VgxSRlyKHPcvQ63Xroe6LonUvnAauYhc4dwgn9QKfFRqqxhdBxrc9IkTvd6w5x3+5e
-         pRghD9UuBdzOlsz0iRcwMRoF//LAehoDy73GXh/WnbqWNXadhhql1uFjQzKPS2ATcVq4
-         UcOCWdVw0pMUiHrNf++sl2pBDcC4PuttJ2bol1TK2zidBykeW6rvImFkB204BIFBBMhQ
-         dOaMlD5p1iaOHLU1HR5BDDWMgSdYxme5PXkr9nfYqFZa9xa1BaIUUEcFogtQ4NzzU3CY
-         EUN2UjHAyiBH9HsdJx2TsqyTjObjUodFY0OAtacUYwLdvEEerT3y+8mDBGG7itx08Emz
-         GEZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782303269; x=1782908069;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Jym4wQPdpjUlZF6TDZSCkYtnTM6W7Lda2iurHZercQw=;
-        b=OrDqjs30aYni8TGWOuXT/4wGaXwcq5Wz8t5CLZn+w8r4Ghqwhd1EedylkGjnYdKg1o
-         Uljz5vIVm/R94eHz+oLS5a4PCsVdGPASjgxLCulaCoelLer2nFPsg90TOsbdaBsFnwHH
-         SExdjcnGk2yXIwxFN/slC7j7RcQbJdYbP/daqJJgSUc+RllvS6rcPq/0Ka+OjF5VOHuk
-         QrYSWQQV8Pd4TSZv2uS+dj8CCU0MbULwQdv/hHptKSe/ohGLirD8/M44apK89FYur4a0
-         8wtUuPLW8kkP8LyGBj6GN9tNuq850OXNLAFy1u/zkpgRenTSQ6/oFsOvlb6ZbiI6+ttT
-         8nKA==
-X-Gm-Message-State: AOJu0YxMp0f+0H8MJmY1DeoGFmEtV6x0LKbPZXM0i765kPPWxA8/waAD
-	hl6bVMOAqSxbPCe41os0SWv/Gf/a1r5q9IpIusZB+I5JTyPaanuI/OSZZiqWnNsd
-X-Gm-Gg: AfdE7cnnerwPNJVjPFzEwRoB69YDskCzXsm3OAMFRIgRgu60s83Cgh7W9KNzHNwGaPM
-	B3B4bY6Q0nQA86vjx9x11t7C6MDi0Tl64228SNVz8Wae6v2AyrTQInWybixupUS8a9t9bFKUnKK
-	fQuRJ8R8qkgUHEKxYVfd0wF7K6WrzhDFU57UKfuApvSET/+JwOsXc86p5YjdgbAot/H6TwHJvIC
-	MvWnpp8lMuMsTLNWZ/iEq5X31XR43fZ8cNi+QJcmF+FsfxwgmSPwnNwsIoAMbB+jkNz/rW37pdA
-	mguuD2suqcOKGM6TW7ZXBHxKaVRzg+SjX/vBAPefcjWdaJnfROmr2l1hWubx6MDI/kq81NY8zJB
-	Q04WhrOcxNqk06TIZwI68BFXm7IewAw8GcXWW5Nk9HxosLK8VG410p3L9u20qPz01NcGRn765+O
-	Iemp2b0fJYjZWPoJw=
-X-Received: by 2002:a05:622a:1dcf:b0:516:ce43:f4ee with SMTP id d75a77b69052e-51a61b46c76mr47026361cf.20.1782303268571;
-        Wed, 24 Jun 2026 05:14:28 -0700 (PDT)
-Received: from [127.0.0.1] ([40.116.92.119])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51a515c72c1sm47323091cf.10.2026.06.24.05.14.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 05:14:27 -0700 (PDT)
-Message-Id: <d84b932e5b078edc8255b6944ecb67fc1aa086b0.1782303254.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
-	<pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jun 2026 12:14:13 +0000
-Subject: [PATCH v2 7/7] commit-reach: terminate merge-base walk when one paint
- side is exhausted
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ql/LAKem";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xv4fqNX5"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 043871D000D8
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:29 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Wed, 24 Jun 2026 08:19:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1782303569; x=1782389969; bh=xcfH7ctvKZ
+	aztOub/5mgkooUyeKAzBljHI2Re6gsrnM=; b=ql/LAKemt8GBp9KXYWd5mR51ob
+	fH+abEn0OklIF6Kif8uisdTx0t3aMvRODTakoyoNyQX2jQHVOkSi4f1e7/rbiLTS
+	zA8RIUnaCkCyiTO4AJ7rpEHx+ry6iqzJ5pEplf8HvQgKbA0R5urjr3RChycmHYsJ
+	X8+zPHSaZcQU/SWnv8Yrb2iSrxjE0DCdFgBZUX0Iu289h2NprdcThLnsor9smZU4
+	aCntiBWstDtGPAie73t+C6QRomQdhf0Y/nYOOwXrf+LVeoxVFvVOftLcraIBri5k
+	tx7EFC61yWDVwjEqAzn6TqwQ7JnzOiZHlGWo1k9ngrbBgGmJpw9PhPVY1elQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1782303569; x=1782389969; bh=xcfH7ctvKZaztOub/5mgkooUyeKA
+	zBljHI2Re6gsrnM=; b=Xv4fqNX5+LkbovciQjwh4Afh6qpPWCUhhE5mhGQJ4tD7
+	5zOBG/ofc8Uh6WPi1UhHCTCPT91bED/FU/vNxJSKcOBNOuoT6rDaa1T9k99qd9NU
+	It5xOPWOH/P9epubRNn5IpjJ+W0oHayd9B1zi0izyetukplLshVj4sv/Q3LQnq1k
+	7FI2JevNVT2264DI7UAQCffkDr195YWOxhGf8YLB76/dW8++6z3Bf6XtaLGx8GkZ
+	L9OuiFq16jawvxWLeec3zldft82Iw3PQgIfqHTkc24m3KjC1Qe8O9YI+4MZ7VdCm
+	Bv4c3tQ2Am3jrN5LxMoYHR2c/28pBd5vqNqqjTZ+nA==
+X-ME-Sender: <xms:Ucs7anhd0ROZHx4Yv5WVXrTB1utHhEGXCxjZ1oD8utZV11o0kd0kQQ>
+    <xme:Ucs7aq-wXmtdGByGXzktCL53c4Kc4miBLUppPs7LDmPMRcgrOki6iCLa_vhMF_jz-
+    6r5HBG0ZCzWpOMZ46VfD0SEdmi1G9JAVD97EG3bbByNkqd-wRWT>
+X-ME-Received: <xmr:Ucs7asvfhOk4Pk3vOz0qFWEn7edbTNJyQTMXR96nth6DfG5pqQSANe3WtPZC88gmApmdn54KuqyGM7ncCOtHGSg5hCZ-h0jXypmkXVoN>
+X-ME-Proxy-Cause: dmFkZTE0QXX3oGX/6ms+Uk0nzzgi1bEOHKImRuojGRqkeU/ONcX5+833QNLx31STgCyabK
+    OeNn5NSY55bw/0R6Ra5ViG1f3RBpJH0hn6aO6LloH4hz+KfvoUE7kxt+C9g+nKTUFqiLXx
+    uhtn7SSXlIQk6ND4PRjbWwG3szqOHF1S3acV/i2MAUUPpFat2SSDCV277kStnGy+pXYodO
+    buQ3UDIwqaGbBf8PBwTUJUCk1U/ACYIbm642/m2Gnb1QepcoQ18japLyCE4LdXPxXH9asx
+    Zy8b25JVEb8GLEmv3iujsiCoVnjLECFOClXjQ9nJjnTEaMWaGdEOlps81OD8GRA1KoSMDw
+    EovdmKnkGNnXd9hMoP5gjpQFn5BigKaK+qZMYAxwBJTeBxxQluKHhd45bSbnHkf6K96VP2
+    dk7bNHdpWLPlqFSU1MHX6lckKBd8Rpk9te6cNL5IexZ4l/gb9HeeCPyCEYQMEIwbtd2ltk
+    H8SFqkJ1nQ2ZVNAOWhrjd7soNReqM9HOHcJVxq3JIrakWFZi4hCa6h6z4JjagN/1IsExji
+    9F7Ai0kPczXVh759jzazHwqOJTZmIHc8BMex3Gtw0RqSujYzt0kPb9pIR86IdKTIy2vcMz
+    1/GrHxVejbS33/tC0G9taiZnsATwB70DN1vdt45PUAuTXIUqY+11y8LJTsNw
+X-ME-Proxy: <xmx:Ucs7apYsPZC-P-2egHqF_YIHLYvfc9fLLoBXCwquPtOHKUHt9VsU9g>
+    <xmx:Ucs7akq1hy8TwVpy8qcV42zIDceY9RHTgDsKeNSglslFola4e_0-oQ>
+    <xmx:Ucs7am-ZizfhB-BqdIScLgvEYDjvG548Vh7h8oFvwHdfaEIDSKQvHg>
+    <xmx:Ucs7ar8XndUvyKfvT4-88fBX5WRQZOxXU7mgwLPc3bsJSS2EWnu2xQ>
+    <xmx:Ucs7aojNze9hNad8thlrzHz96t56MTH9tezOJqFUJqTHse2XnjKgiE4X>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:29 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 5ed5bfb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 24 Jun 2026 12:19:26 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/6] odb: refactor source-specific information in object
+ info
+Date: Wed, 24 Jun 2026 14:19:13 +0200
+Message-Id: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEHLO2oC/yXMwQoCIRCA4VdZ5tyAyiLUq0QHR8d2ClSc2oJl3
+ z2r43f4/w2Uu7DCadqg8yoqtQzYwwRxCeXKKGkYnHHeeOuQZmx3xZoIU68NXwuXyGjJhHwMZH2
+ eYcStc5b3b3y+/K1PunF8fG+w7x/m7Y3IegAAAA==
+X-Change-ID: 20260612-b4-pks-odb-drop-whence-1b0af9ab16f4
 To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Cc: 
+X-Mailer: b4 0.15.2
 
-From: Kristofer Karlsson <krka@spotify.com>
+Hi,
 
-Add an early termination check to paint_down_to_common() using the
-per-side counters introduced earlier. Once the walk enters the
-finite-generation region, terminate early when one side's exclusive
-count drops to zero -- no new merge-base can form without both paint
-sides meeting.
+this patch series refactors `struct object_info` to not contain the
+`whence` field anymore.
 
-The check also waits for pending_merge_bases to reach zero, ensuring
-all merge-base candidates have been dequeued and recorded before
-exiting.
+This field only gave the caller information about the type of source
+this was read from, but it didn't allow them to figure out which source
+specifically yielded the object. So instead, we replace this information
+with a new `struct object_info_source` field that both contains info
+about the source, and any backend-specific data.
 
-The INFINITY gate ensures correctness: commits without a commit-graph
-entry have GENERATION_NUMBER_INFINITY and are ordered by commit date,
-which is not topologically reliable. The optimization only fires
-once the walk enters the finite-generation region where ordering
-guarantees hold.
+With this in place we can re-query the same backend for any given
+object. More importantly though, we can eventually also use the backend-
+specific data to also uniquely identify any given object, e.g. by
+recording the packfile and offset, so that we can even yield the same
+object in case one source contains the object multiple times.
 
-Step counts measured with trace2 on git.git with commit-graph:
+Furthermore, with this change all information in `struct object_info` is
+now following the same request-response-field style.
 
-  merge-base --all v2.0.0 v2.55.0-rc1:
-    before: 72264 steps    after: 44589 steps
+The series is built on top of 26d8d94e94 (A few more topics before -rc2,
+2026-06-21) with ps/odb-source-packed at 1bba3c035d (odb/source-packed:
+drop pointer to "files" parent source, 2026-06-17) merged into it.
 
-  merge-base --all v2.55.0-rc1 v2.55.0-rc1~5:
-    before:   110 steps    after:     7 steps
+Thanks!
 
-Helped-by: Derrick Stolee <stolee@gmail.com>
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+Patrick
+
 ---
- .../technical/paint-down-to-common.adoc       | 17 ++++++++++++
- commit-reach.c                                | 27 ++++++++++++++-----
- t/t6600-test-reach.sh                         |  4 +--
- 3 files changed, 39 insertions(+), 9 deletions(-)
+Patrick Steinhardt (6):
+      packfile: thread odb_source_packed through packed_object_info()
+      odb: make backend-specific fields optional
+      odb: add `source` field to struct object_info_source
+      treewide: convert users of `whence` to the new source field
+      odb: drop `whence` field from object info
+      odb: document object info fields
 
-diff --git a/Documentation/technical/paint-down-to-common.adoc b/Documentation/technical/paint-down-to-common.adoc
-index 0f4e1892a5..983dfcf233 100644
---- a/Documentation/technical/paint-down-to-common.adoc
-+++ b/Documentation/technical/paint-down-to-common.adoc
-@@ -94,6 +94,9 @@ ends when one of the following conditions holds:
- 
-   1. The queue is empty.
-   2. The queue contains only stale entries.
-+  3. Side exhaustion: no pure PARENT1 or pure PARENT2 commits
-+     remain in the queue, no pending merge-base candidates exist,
-+     and the walk has entered the finite-generation region.
- 
- Stale entry condition
- ~~~~~~~~~~~~~~~~~~~~~
-@@ -104,6 +107,20 @@ existing candidates by proving one is an ancestor of another, but
- `remove_redundant()` handles that as a post-processing step, so it
- is safe to exit early.
- 
-+Side-exhaustion condition
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+A new merge-base requires commits from both sides to meet. When one
-+side's exclusive counter reaches zero and there are no pending
-+merge-base candidates, no future traversal step can produce a new
-+candidate.
-+
-+This optimization only activates in the finite-generation region
-+where topological ordering holds. In that region, children are
-+always visited before parents, so paint flags are final at visit
-+time and an exhausted side cannot reappear. In the INFINITY region,
-+commit-date ordering can violate this guarantee, so the check is
-+skipped.
-+
- Related documentation
- ---------------------
- 
-diff --git a/commit-reach.c b/commit-reach.c
-index e0d9874f99..f79d0b64d6 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -133,17 +133,30 @@ static void paint_queue_put(struct paint_state *state,
- 
- static struct commit *paint_queue_get(struct paint_state *state)
- {
--	struct commit *commit;
-+	struct commit *commit = prio_queue_get(&state->queue);
- 
--	if (!state->p1_count && !state->p2_count &&
--	    !state->pending_merge_bases)
-+	if (!commit)
- 		return NULL;
- 
--	commit = prio_queue_get(&state->queue);
--	if (commit) {
--		commit->object.flags &= ~ENQUEUED;
--		paint_count_update(state, commit->object.flags, -1);
-+	commit->object.flags &= ~ENQUEUED;
-+
-+	if (!state->pending_merge_bases) {
-+		if (!state->p1_count && !state->p2_count)
-+			return NULL;
-+		/*
-+		 * Side exhaustion: a new merge-base can only form
-+		 * when both PARENT1-only and PARENT2-only commits
-+		 * remain in the queue. In the finite-generation
-+		 * region the queue is ordered topologically, so
-+		 * no future step can add paint to visited commits
-+		 * and an exhausted side cannot reappear.
-+		 */
-+		if ((!state->p1_count || !state->p2_count) &&
-+		    commit_graph_generation(commit) < GENERATION_NUMBER_INFINITY)
-+			return NULL;
- 	}
-+
-+	paint_count_update(state, commit->object.flags, -1);
- 	return commit;
- }
- 
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index c1109fb42f..03175befb3 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -332,12 +332,12 @@ test_expect_success 'merge-base --all commit-walk steps' '
- 	cp commit-graph-full .git/objects/info/commit-graph &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace-full.txt" \
- 		git merge-base --all commit-9-9 commit-9-1 >actual &&
--	test_trace2_data paint_down_to_common steps 80 <trace-full.txt &&
-+	test_trace2_data paint_down_to_common steps 9 <trace-full.txt &&
- 
- 	cp commit-graph-half .git/objects/info/commit-graph &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace-half.txt" \
- 		git merge-base --all commit-9-9 commit-9-1 >actual &&
--	test_trace2_data paint_down_to_common steps 81 <trace-half.txt
-+	test_trace2_data paint_down_to_common steps 57 <trace-half.txt
- '
- 
- test_expect_success 'reduce_heads' '
--- 
-gitgitgadget
+ builtin/cat-file.c     | 12 +++++---
+ builtin/index-pack.c   |  9 ++++--
+ builtin/pack-objects.c | 19 ++++++++----
+ commit-graph.c         |  2 +-
+ odb.c                  |  4 +--
+ odb.h                  | 80 +++++++++++++++++++++++++++++++++++---------------
+ odb/source-inmemory.c  |  3 +-
+ odb/source-loose.c     |  4 +--
+ odb/source-packed.c    |  4 +--
+ pack-bitmap.c          |  2 +-
+ packfile.c             | 45 ++++++++++++++++------------
+ packfile.h             |  6 ++--
+ reachable.c            |  7 +++--
+ t/helper/test-bitmap.c |  2 +-
+ 14 files changed, 130 insertions(+), 69 deletions(-)
+
+
+---
+base-commit: 969dbd51a70f9105ee9965adec5c5a02e75ab5b3
+change-id: 20260612-b4-pks-odb-drop-whence-1b0af9ab16f4
+
