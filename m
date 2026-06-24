@@ -1,75 +1,75 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2413B3C109D
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 14:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF6B3CCFDB
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 14:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782311945; cv=pass; b=VN8K7AL7qIvS4qo9DDfzDFrxjynr/b8OlZYNchVGeorbh2k+zG7/54IFsZL6jX+vsjp9mIRmYabpGOWOWlHJeWeH01L9LA7CVo8wczCy6MbxQd5DxxNH+Y69bG3ve5FzHE899XbcpAN9Xs9TUFPmFEgcQsFMdQpBr+8t0nSQ4lg=
+	t=1782312448; cv=pass; b=lzs2S15vFoJu82YNKTqE8eeVuuMhTGR1jzk1iomdOEBCukPsGcQ7Esgd8ATZ3rGDVDcV0NoyacadSLynk9wfTljKmilSBk0MkQhUZpYkfxMA9actGnt6JZHBdEzByqoTr8uH8hHHwWNmXA/7e+a4vqRot6l9g5I2KL6KyPjk+I0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782311945; c=relaxed/simple;
-	bh=MMu4RBg4bUdQ63BtHtAoAVUk1c19RwXZ3k91dz5SGt4=;
+	s=arc-20240116; t=1782312448; c=relaxed/simple;
+	bh=ghrFOuYpdFIOBRBiiinRQWCz7SGm0ne3QJIwtZciE54=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z4qRrNt+KYlOyCZuZb3BbW7kzddLjOv8xNYTfKZerDlqy1J38jZ9P8pdZjQVbQo+jYj3cXYvddEAgHOIL+JZjbT1VU7UG8qP8mAfJCN+75PuKpD9quGtSkpF5icOeHd4lL48GGa4GCr2NPAc/3nG4yXCzcq7zVIXGMA5aGB+1B0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Fr25hlTD; arc=pass smtp.client-ip=74.125.224.48
+	 To:Cc:Content-Type; b=QHdDHSqEM3HobjvNZHX9srvXcsX6wpO5jMd+3D3QLr+q1DygP8n9Squ3ut275I0zr4W3kdxPcDrpXFelKC1fHr73V+9qs2GX9jj3R7RDx+MahNVKviZPVfQelc3QmeiwbNvv93Tl3uwQ77pDNw51NaeMhN2wAFQDps5QqNNUNrI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=bGZtpWb7; arc=pass smtp.client-ip=74.125.224.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Fr25hlTD"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-662b95934dcso1179536d50.3
-        for <git@vger.kernel.org>; Wed, 24 Jun 2026 07:39:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782311942; cv=none;
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="bGZtpWb7"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-662dd616cdbso1141288d50.1
+        for <git@vger.kernel.org>; Wed, 24 Jun 2026 07:47:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782312445; cv=none;
         d=google.com; s=arc-20240605;
-        b=NZpC/YQZ+aJufiTVHwjZCXmET7ZCRy64yDgAz+Fp6JW7flvSqi7S/KiL12aGhxBs2e
-         MpvKUsmKevCDP521cm0wiXfdlf/kRHNl59zQLMImDx74IlltJT2fKHfkLdqdQ9H09L3N
-         GAEO99jLPYIADQ6SVDzwQEuB1upXqxBw9ajioxN1zH3RBBTsWP7K+tERui/9S30NvjCY
-         eco8rirq5Hg580JkNfQumeKTAr9exLHqm38OBcV3be+UsOPdCjalGLjXcJi+g/2MOQ/E
-         gHL56l7NcdGIStokCpR7H4SJb17P/MhHF91acWG55O15ETM85xS1LwtLosDaDJA4YdSl
-         MylQ==
+        b=cghU6R7l/RPXlHRkerulqjl+PyPW4Y75YTQNGP5ZddslheQvLM7+zsRybvfwoK8+C9
+         0It7Tw2S6nkcmDGI1s1bIXiApZAHDH7T66CaOZWgYy1Vzyizmg24bKzFb720ZeBRjl//
+         AsOUye9OCh+KMJfxoZyukmui+deBHiYrTyF84bRZlOwuidYKH+csWynknDsjTLSHDJRF
+         KtO2TPZ61JR/tUJcTRdhcuf93BpJAPK47S6P2VBbe272cJOKbv3Z29SiJnyYjYdvr/oW
+         0Mk/IAOfmCBqbL1LNazzA6+cJu7gtkTLeW7lm79QhVBet9vnphv4Imbu1w8ffgzt4AXs
+         kekQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=MMu4RBg4bUdQ63BtHtAoAVUk1c19RwXZ3k91dz5SGt4=;
-        fh=7ErhVB2j18EYSFrdDT+PKT7tK87rs3hpgfkWvCFCWg4=;
-        b=QJ8MvZhtX+tkyjotsI90O7SaAy0Um+D7d4cIiq1rUEVYqBPsIq3kXTQ+pR/ny+bHAh
-         AiudYret4rNwnC7PDCSgNAL9mIm3f9gTVzS6g9Qxc0dE23wasXWVTxbkPQ2rgUz8YVrj
-         YYunJgLndMqnOI1zVVHTBaYPT2cvPJkt/fu8mjp1zmihA8F/ykbikFBtLIBxBj9L2CRp
-         6gZbre6ivyECU9LrzKIol3BWnYTilPlj3x9cmT82Beqk50e0CZn91dCOn/3y6l5u7IW4
-         wtZLlwf4Ikj4vygHZPW+zCepqnMdvqjwtXa17EMgPwj/+jkKVNrFDy32ohC5HvNhoefe
-         5z6Q==;
+        bh=+jujwTaEO0JoQF1/lj1R+NArW6P/HNH7BZaNMUQtEhU=;
+        fh=FL1Vp615hJHl2xgALHJTed7tA7wTrjiKFSJ78zFFsVc=;
+        b=TpsxU/7ReTwmYgAbXYhVEUXybuw/DNGO9z0UNvzm17rUg6S4x5M4OvoraDQJz5P8tJ
+         8Rhaj1t1Q7ALH3g6jm2w3RMjd+E24Vl3GRt27PzQ60SOxyoNfJ9XEnmdcMrx2VZW8L42
+         LpFK2FB69YM8LxfApl7eeDOV6kYDasOuUM1WeZXdkGl1sqn2J/qFb/GuIChO4pz6t7Wq
+         iho2XgiYa5ezSr4KmSuMrZfhJz8+mMxYJRgqK3ZSkF9CSTLEnUYFnuxJEj5Q5ZSck3Z6
+         Tp4Y9QsqvnLq/qOA4cW2kgUIkgsH0gt/Pgt8ZVh0Hg31GN+V23DEjSTQUC23wT8I8hNb
+         66AQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1782311942; x=1782916742; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1782312445; x=1782917245; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MMu4RBg4bUdQ63BtHtAoAVUk1c19RwXZ3k91dz5SGt4=;
-        b=Fr25hlTD7ArivpYB+4RzyrNWScOGPsQarnsS8mp5YcfLjdysW/dsIe7DIwknEVrII3
-         YUpFC7tdcbr7qaSW1TMBbcM0W46GSF4JEQSeqyun7dZDugfaZl7fFsv4gOvdkCAVFLna
-         moVQ1PUt8stWC09DsSEVywAFflTXGbbnJKBjg=
+        bh=+jujwTaEO0JoQF1/lj1R+NArW6P/HNH7BZaNMUQtEhU=;
+        b=bGZtpWb7ztBDIMAqNIRCxpzaU5vfO8Qv45zdcDDM4lx5cJunqpAIATBamPt+q1/Ak9
+         ioaIHiLwekAS5G12X02SxAlSQmXOAhX0Xoxa8hHZYo5pOpoaXLE/gVTzOhe/JP/DLSlP
+         TPhU/kUlYD7dW+inA4tu9lVn7dx6EagHZ+bMU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782311942; x=1782916742;
+        d=1e100.net; s=20251104; t=1782312445; x=1782917245;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MMu4RBg4bUdQ63BtHtAoAVUk1c19RwXZ3k91dz5SGt4=;
-        b=doLd2W+BfAFSnB5F7X/jVrzmdzhHZfs+UuNjWvf7nKrdcCfJWwcNc+FRs1sg5qZmFI
-         qK3nZuwHL5cdZooH6bDSsHhRWyQqozxGSJbZYESK7Ud/9JPu89pgszUn3OWo2QDxzLGR
-         eVWG+MroCTnLI7yvm3o2op4Ug2kpYYpogUDwMTGKf7WNQiqlZXnlFIkwTu+CUI3Nmc0C
-         ri38puQmbadfiSVPnMiIbx7luoGPXakPhUALtpQxZYK2+DwfyWg4nHzN6ux4Ggn+iYim
-         TFXTvqO+l/mwkWaIdBT33MK1+OmlttmLz+sLg1aEFbMHMD86/7Hzud22fP5kC3SPNJNk
-         jY5w==
-X-Forwarded-Encrypted: i=1; AHgh+RpwAeSJs9LxAruBbOIhYJsPLnrXLBqiFp9wM+eJ0QnTZgTVNl77p8hEu80mJYHyKayaQwo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLGrXeveSd/+28TuZrgEj002+UF5ZLXkCyrGM/IBX8fuwc0FG5
-	BL2iUdkevxii+TYwr18yXwShztLuq9G8IH34mosRoYZ2Rw5EoF5x0Idtke5aAqLPjZHrcz9FwVq
-	Qec9q9yf4VyO+uN5k+bTwy3IZ1iB1HBiiCUxHtgQnWBBaj6irEoLo9NI=
-X-Gm-Gg: AfdE7cllWjNN57jdJULmzLfNYXVcjE+rGuxqu7V1GD/7TFcJIok48MpFXx+LUIc6Zbs
-	LbK7WFC7/Sb+q3e/a38sattVxHp/f9Y3CX5OzCJir4rcWfUN2MDxDG7SEOugfknR5m9K1E3jMm/
-	aY1GFIFAcDGUfRngghkow3+3DbLfL3sCUn+2gAM9vuduPtQpYGhsS1YSEI0qNsPMfI3ZS15MtU9
-	H97oStzCQq82AUECTRDm6nM5IliYQ8aWvSwQJ71nLFmXnr9l6I+cPI0tra1yu3NbS0y5Vea/w==
-X-Received: by 2002:a05:690e:1685:b0:661:1669:b784 with SMTP id
- 956f58d0204a3-66359e1b367mr6785823d50.10.1782311941877; Wed, 24 Jun 2026
- 07:39:01 -0700 (PDT)
+        bh=+jujwTaEO0JoQF1/lj1R+NArW6P/HNH7BZaNMUQtEhU=;
+        b=pHWXjYGfWgwqmowzpBpFQ3VV242oUkOBxf0laO5ufNRQ80meW6OUcSGSCYec1lSBxn
+         g0073COWRavfVERzlRxXmma/kKX/fAp4DZW8dDb39xRnvjNmQGrBnRxTSbafy6uRiX7u
+         qUQ0Baj0UgcvUBCoIkv/n9uC0uRa/a+Qe6mmbRQiOsnEOvLDfZjhS3xW+VWz13kqSQKj
+         r3iw0FKwVr1zWbc2DJXIkMdF0n/LYSSCpa0XQnzmAGa42GDLS1uAp13I85Bb6sNGvEC6
+         ttuYwT1pobVSr1TVdR5C4zsheO3C1jTXbS5fsdRlzqWRB/5/owaUWMBw2VwB1iTXpq0n
+         9TqQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoEDYmktF54t11XOM21kVhmJ/oSaTHcg1qaYy22SW9dK4q2+1z5dhKhrcbRypgIyT4/3yA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyM8+2v6JLoSoEAr1kbybfPMGKYrfY2QDgdsE+pAMSU+C7sMN1b
+	0/MrLrOZp5pIANwSwaT/2yPEm+7hJwnkBu4gb+hR2X9nfAZSTQu9L9zkXY4QEZnWTSqLUC11Yff
+	LmiaHLqMPUP+xt5/rGFI0b0fFDlFYvtvuLv98u/A4xEJqZLdbbpdPECkrsw==
+X-Gm-Gg: AfdE7clt6MUxkQmtKyeSLlYKuyqIQZyQib+NnMUgbECE6hjEV4kuLp7wVnpPw2dRlhi
+	YEVXzpYU6swEdZkMsGdbv07h5/wJL18b8ZsHxCjKl++hxtlvSgmOXIfxRUxR0nlm7KwVsMZnzfA
+	47H34M8TpUjycKOvKReNWWX6flCKspN+oER/ZvLEr82vRolxBEuxY1dz4HfhaXjICceai59yagD
+	KeBYQPE/W+O8gUTV11kYBVCX3wqUrphGXjmRO5/QUmWrj842JQpX0HMPbpfoM+9YFRfIXN13g==
+X-Received: by 2002:a05:690e:1207:b0:662:c259:4902 with SMTP id
+ 956f58d0204a3-6636e5e156emr2864778d50.65.1782312444757; Wed, 24 Jun 2026
+ 07:47:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,58 +77,81 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com> <f24edd45f0af1da64513164d5d720fe70c1decff.1782303254.git.gitgitgadget@gmail.com>
- <19639ad3-2d16-4f3b-be79-138e00144ea3@gmail.com>
-In-Reply-To: <19639ad3-2d16-4f3b-be79-138e00144ea3@gmail.com>
+ <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com> <d84b932e5b078edc8255b6944ecb67fc1aa086b0.1782303254.git.gitgitgadget@gmail.com>
+ <6b0d81e7-7617-4fb4-9e39-cdf8bc778837@gmail.com>
+In-Reply-To: <6b0d81e7-7617-4fb4-9e39-cdf8bc778837@gmail.com>
 From: Kristofer Karlsson <krka@spotify.com>
-Date: Wed, 24 Jun 2026 16:38:50 +0200
-X-Gm-Features: AVVi8Ce19KRg3pwZwmmESGmPQfy0CpnnWyesowWGk-NwsxDEY5o8Ot37IIUYDdk
-Message-ID: <CAL71e4N88H_VLd8nNfEVGqegbjT0bjQBgRdBN-kp1Y_U8ejJYg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] commit-reach: introduce struct paint_state with
- per-side counters
+Date: Wed, 24 Jun 2026 16:47:13 +0200
+X-Gm-Features: AVVi8CdomkbxqQiWU-G9VJEB-2-hnfqK5qDx8sVsoAZLfuXAY7H0o55znTxII-8
+Message-ID: <CAL71e4N1zMz=v9umGdGPTvLP1nF-tNLVQc+vAEBnekt2L0b6zQ@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] commit-reach: terminate merge-base walk when one
+ paint side is exhausted
 To: Derrick Stolee <stolee@gmail.com>
 Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 24 Jun 2026 at 15:54, Derrick Stolee <stolee@gmail.com> wrote:
+On Wed, 24 Jun 2026 at 16:02, Derrick Stolee <stolee@gmail.com> wrote:
 >
-> I'm grateful to see these changes happening to the doc in real-
-> time. I know it was extra work, but I'm grateful right now.
+> I see how the previous implementation has a termination condition
+> before calling prio_queue_get(), which is technically more
+> efficient. It does make this initial diff a bit more complicated
+> because we are moving the prio_queue_get() line.
+
+I was thinking the efficiency here does not matter in practice -
+prio_queue_get() only returns NULL once, and all other times
+where we keep looping we do need the value.
+
+I agree it does get a bit complex though.
+
+> If the introduction of the method in patch 5/7 looked like this:
 >
-> Hopefully future historians will also benefit from this effort.
-
-It was honestly not bad at all, and I agree it felt quite nice to
-see how the doc naturally changed along with the implementation.
-
-> > +static struct commit *paint_queue_get(struct paint_state *state)
-> > +{
+> +static struct commit *paint_queue_get(struct paint_state *state)
+> +{
+> +       struct commit *commit = prio_queue_get(&state->queue);
+> +
+> +       if (!commit)
+> +               return NULL;
+> +
+> +       if (!state->p1_count && !state->p2_count &&
+> +           !state->pending_merge_bases)
+> +               return NULL;
+> +
+> +       commit->object.flags &= ~ENQUEUED;
+> +       paint_count_update(state, commit->object.flags, -1);
+> +       return commit;
+> +}
 >
-> Since we are going to make this a more complete termination
-> condition, we may want to make that very explicit with a doc-
-> comment. Something along the lines of "dequeue a commit when
-> possible, but also signal termination of the walk when we
-> conclude that no more merge bases will be discovered due to
-> internal state."
+> Then this diff would look cleaner.
+>
+> (This is the nittiest of nitpicks so feel free to ignore if this
+> doesn't bother you at all.)
 
-Yes, I'll make sure to clean that part up more, maybe also
-rename the function to be more descriptive.
+That's a good point. It doesn't technically bother me,
+but it would be cleaner. The refactor commit would effectively
+be looking into the future and prepare for it. I can change it for
+the next version - my only thinking was that the current refactor
+patch matched my original idea for how to best handle
+the halt condition, but that did indeed change after this discussion.
 
-> You mentioned in your cover letter how the min_generation value
-> can add extra termination conditions. It may be a good idea to
-> insert min_generation into the paint_queue struct and make it a
-> termination condition for paint_queue_get(). If you consider this
-> direction, then I'd make it a separate patch on top of this one
-> _before_ adding the one-sided change. The extra tests that cover
-> the exact number of walked commits can help to guarantee the same
-> behavior, assuming that some of those tests check a non-zero
-> min_generation input. (It may be good to add such trace tests in
-> an earlier patch to help confidence in this case.)
+> > -     test_trace2_data paint_down_to_common steps 81 <trace-half.txt
+> > +     test_trace2_data paint_down_to_common steps 57 <trace-half.txt
+> >  '
+> I love to see these steps change. If you take my suggestion to
+> update more tests with these checks, then this diff will get bigger
+> (but in a deserved way).
 
-I think I might wait with this - the patch series already feels
-quite big, and I think it has a natural progression and finish now.
-But I can definitely commit to following up later -- it would be a
-smaller series that is easier to reason about, likely a single commit.
+I will try to add them to some (but not all) tests since it's more
+closely related to performance than correctness and I want to
+avoid making too many tests overly fragile.
+
+> Also, when I suggested that 'test_all_modes' creates the trace
+> files on our behalf, I forgot to mention that this specific test
+> that you added in patch 4/7 simplifies by running the merge-base
+> check under 'test_all_modes' and then checking the trace2 data
+> on the three well-known files afterwards.
+
+That's a nice bonus, I will try to see if I can manage to utilize it.
 
 Thanks,
 Kristofer
