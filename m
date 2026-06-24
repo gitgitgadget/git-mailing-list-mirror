@@ -1,81 +1,81 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571371C84A6
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 16:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55CE30100E
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 16:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782318481; cv=none; b=tpoG9AqjHmyFGY2yKrRBWAgjlOWNw/R1GwO3480Ayj/W27QEYqv5oFV5RK7NuySEWn7TTzA/HRQkY4BrbpLlRsMX2+k1vlVRMsS8bP/ljTLF/8RaHzHpQpKKrGvt4FR9IpQBs3idRmefMnZoMMVtJh5ZTxovrHwgak2f4Zg0WuU=
+	t=1782320309; cv=none; b=j+6MiKXNQ8yRfKYG7ip0xtoYXbFJCIaPlrUuo6VZauCTTBW8f5HjWeNoJcXydbjtibNSJgYJ8XK0Z36kW7FDh0FcxKzFuVpKyXcSIU6D/0GlvoY1bzq4dwAL6QfBDDi9jHVEwh8ZMhJeplcTrobmkvKR+jKqh8IwjOWkHJb7M/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782318481; c=relaxed/simple;
-	bh=H94/5j0Rp1q5QkZWz6WFWo7c2v9QwDtB9s0skpGMGk4=;
+	s=arc-20240116; t=1782320309; c=relaxed/simple;
+	bh=/bYjDBDztCIJOaYbfirSakluu0QNtm8ooN2ckA0mJaA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mz2fi4SRBvqSxtEzX2hkhsz4Ih8fBifSED0MBYwCGF3IwVo0ceeFiwnSvMQTJqdfHYqIWApP+Ayt5j4xQFpy5Ue3cjG/q694K3mEB6SNoqK5HCQYHdorTGn4wc8BIMQG1l6SEan+Yp8suYSg324QWfDS5y/BF5hewHLQK5bph34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H14G78iA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ar04XNNl; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=mNmIgKHanqhJfh9+aXI+Dfg4w0PSxuVyQf1wpHCyBT7c1IBT5tfMiRYEwJAakIa6s1Sj2zQlkvqftpB6Y904KlEDMTUQrbopZ/gob6IbVUNfv1tpGgU1BhOn+Neuhej17GbwJ8zoSCJhfyeS4GoAt5UR7+aXrI4WeDgFTB3IZnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=giLB/Mmd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PMjM3D8K; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H14G78iA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ar04XNNl"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8958F14001F0;
-	Wed, 24 Jun 2026 12:27:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 24 Jun 2026 12:27:58 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="giLB/Mmd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PMjM3D8K"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 118AA1400184;
+	Wed, 24 Jun 2026 12:58:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Wed, 24 Jun 2026 12:58:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782318478; x=1782404878; bh=ZP+QAXOTTh
-	F+u4nXsnnytyj0XQaq30hoO6XVvkdJ/jU=; b=H14G78iAEKS6AUkphtJT1jcUQP
-	rH0+gHyLjwWUsv/N+McMf7i0J+S4/OMDyTeMaUPXFASSGyxlFvOTkqvAO/6F5BST
-	Qt+5OSssMeQIL4FRP/jYnmF9dC1+kkp3kvFzA36kr/0WFsPjGBamKv6xgqpNtHrZ
-	GnzNlhc7grGOsmPFwQtZr7s/81w+qsVF3XSn3dwEzEctQGGIWc32sOuaGil6Z4lJ
-	YIZePTUkIoRzTy+CG3wOEy+dtS6p1/YRWIDqrBqPH+pilZ5gPd/32/05QZaMBYZ4
-	RdR0wzoNPrgpqJN+iiGtqwKcLqTuxedj4qLDSk49H7xh3sh0vBnTal+6cD0w==
+	:subject:to:to; s=fm3; t=1782320307; x=1782406707; bh=YhfYeVQ1vu
+	PAahwGXuec/boVQiuFWO70TyPka9fYWnI=; b=giLB/Mmd5VFCSuiqh3k4B/1gdr
+	BqgGiTeUVN5uN0Ns95uK40Uqtl/bz8FRn8BtUNdqAA2WJ3efXiXOLjX7iKj4O6gl
+	dwim3YnvwLCVyqqIveJj7M0YWwasMI6wxMaXvtX6Kffynhw5TK2VE/MOOQZ+4fQc
+	EeP8xqmIoMYjdfUg3tYNdKMwoxNUNxsJYUM4qR6yMgcdx2FP1rffh6IBZVFP98Ge
+	61Ifw32OJyltRJb7Gz6t5WzLAkxUKodmylJmk7wpaLxA/uhMidA9Q7NXj+q6xzeJ
+	GVdT4IlSO581+3dN4ErsvEORzVru4gavaV1GUJNYvEsb35Ny56aQnL0txxLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782318478; x=1782404878; bh=ZP+QAXOTThF+u4nXsnnytyj0XQaq30hoO6X
-	VvkdJ/jU=; b=ar04XNNlisKpm4lOPqQJ+7fmt46DZIQW7/2dM2YG4nftsRgqQnN
-	Du16PdIdNhQkm0P0IIfizUT8MW35airNic/oQn/qA9so1EAEeCfxfuXF4J2zcGCS
-	OCJpbWjmFwod+f0KZt1iz8+juqqFgcK1Xx908eZBk2c5ikih4Ex9H+Q1Ooo6WBQT
-	VmI8mw9NKkoiXkbXeVEN8R9sHOjZMxQ/oimF2nl4bANM6oPj81wcCX07hOf/RxG4
-	+vD46RSc0gY+i/OnjD3c96wGcJ0MuuNiITSgQCmiPuWR9ZL+lSGspDI8mmxlnzHD
-	8N9HUIIDCRYGk5JVvTFg8NmCYeumg20rI4Q==
-X-ME-Sender: <xms:jgU8ardiIhFR0big9_op9lzIMS9ClcPQGmZKEMYW-w-WUJDNMe1Thg>
-    <xme:jgU8aoMyN0Z7SwoUbhck8_X7k05gmsphlN8GyIgfXu1uY9G4khDvw5ZsciR1RR50X
-    ffP3VWUurdjD13RF6s830Y1kun73biHrvdTgB7RH0s_ooT8LjXkYQ>
-X-ME-Received: <xmr:jgU8aphBkBXuO8paX3sMEdXIokVqsm8qBaP2EmgsNUIQoeOzINDNIpQg0sEqfp9_h47ch5ET3CrowyKQSbAS49fdlgU1QTbp1p9bFW8>
-X-ME-Proxy-Cause: dmFkZTFnZT6TfUfUvIWPUBBQmZghLDrecRuLgjHJl6gCenZWobECzG8rv4HDFAdtaUG73Q
-    TV/mYn76DW4IGFqcJwzveRFgI+0l4ataNfTky6GZobO6qwVdtfkg8Iwukaa6/vLuX1yLTe
-    jP/wGo295Rz2+XanTlcuR/Xcwla/Zs6+rDUkAhj6lzTxC46pNL9r0jMSs3IZZhHwTEm3iB
-    uCBFM5zMioaxM/heOawcp/xPYNVgQ0wU1fBk7rbC+7zCcXu4IvTjy2nj2/18l3aWqhsCBL
-    4AZI6u1OoI08wJBiqF2dUucXCumWOSqVez9XY9sv5o+Eol++z5Ch8MLFOa9o6PobqtNPlv
-    vMrWxMog4lJ3biMazmIrFUKyo4cMl4FOgYsXjQQTOaFPbmpGX9kOP49/GpG77d+whGjyq7
-    +2SVb4CzXrnjuOjyPglIkvo9VDZDlQ0TgcjKkd56uwGMFfnSi3T2Bn7yDqQH4A7qzy73D3
-    M7jA2YQ9KLbVu9fOXc94PV+kVQqsimIPGDywDj5SbDSdh1fhviB5LGHZ0PD4osMgGasUOc
-    9CQCk6TZbtqMjWLmrC8VrA+vnGQ+6DurGw+QeS1Fj4IeiwVNb4asKmPUX/42BA09mwJO8y
-    Phqv0uwGCRLw8Qi0LaFDO5a20YrMRVZ1vwMTSBnUnvQ3Kxa7QL7MoLNiFDfA
-X-ME-Proxy: <xmx:jgU8ar2LmupkKva4jOk14hRP5_W8TWljKxqgdIL5TGnwsyys4WQ_EA>
-    <xmx:jgU8ajiD1iK4qr3NEXhA-vQdg0p7aZ8AS3D6h8Le10V9KF6O_GS2qQ>
-    <xmx:jgU8ard8cGU4rWZtGTJ18KvMnHyyDijFOJHicn2r8TlLYu1xkXlgZQ>
-    <xmx:jgU8ammXkHPa34J2Tu-iy7eVBEIuo63v-p4rbOr96dDrkbGecSkJSQ>
-    <xmx:jgU8amck3SxwqQFZ-G8jxOrXXJkMf-XyxY9kmmNawteocmz5gW4bLEMM>
+	1782320307; x=1782406707; bh=YhfYeVQ1vuPAahwGXuec/boVQiuFWO70TyP
+	ka9fYWnI=; b=PMjM3D8KdcDdqlPy64++FR7Om9EVoR4D6aYKGeefLtMQPmi6IzN
+	Loj5y4RnKLzQfoq9wpxmMhE4JDNWI9DBTwjTR4Zm+Kq3ZNwiPECWrNxIWZQLduAc
+	G+7gzjMBeWO6+ub70pa9zkGRh61o2l6/QgDOUPjrwTODtOPzGWyVdUEciH6NkyiS
+	fZ9OPIAMCVu3DSbKx9yMfQFxkJjfVwHqTSYYdeMFrnVVSwZo+RLoEfLngUaWUESP
+	ygJfY4mrVR51aYaPBcdD5tmVMuzxeo13w22LP7b4WTCUQKlrMQ5a+Uwk+EtR3ZNA
+	1k7BoeXRqRCS1va0q0XrlPI/0GBkCl7NUDg==
+X-ME-Sender: <xms:sgw8anEUK7N_jpt75ePV3N3Bknje7gC1-jedHRelxvlAiotPmKjqcQ>
+    <xme:sgw8arwxs4X8u5mk5O0wGCL_ENJJTwsSlTmYdpjdCXzeUdZ3pQRfTvMoVLyQdp3zV
+    pcqKr6TtNKWTvqZnY_e4jO323QkSwdasxKCP0dMyg6MlmMHo6e0>
+X-ME-Received: <xmr:sgw8amgdyQGGQXYIQcWw1NbWoIY3ZvsJx_OAxks6wqc37-MF-rud01b-1oNwwJIva0eGEgIVk83OpF2GVY-GyU6Y9oigWhrI296TS5A>
+X-ME-Proxy-Cause: dmFkZTEGLentwEXhx2K96tiorO29gEjpCWC2WWvKtxo3E4n/gv3xyldye3e7d0vjul0qBy
+    HJxd6D2FC2lvZBVpAxdnS0ro/DVyEp+2TSqhzkGtMKKuuqoHQlaLPpoDUuEWAJJ0CUHqhM
+    Zt6zltU3OKykGBS7VUsXD8x4B9D8zhEbU9n5Ij2Vu06aAWdpu8WNwNP2tjdsY/hnGbJ8yL
+    Wpt1OlWZP+vh0cKry47BLvcI/tdXV8MuZA9VDJBj3XYgFFsShq2mQa8HBg+yS0Wm3vBb3p
+    EKaiS3X/e6qq3HkLJd6OqN0JgBOon00T5Tk/IgATS8tWPsn9BiYyZ34hjrZTHSudDgFVOI
+    kZs8kExkipKVfgil4VXF0gD/1nJs4qcwTOTXfh1HAdW/naf4gvnCezC9FqtAX7qiC1Jit3
+    zfjuDiPgEyyHRToBwaPQFYVrDFlrEUsnx3UFTWIQhj1hSOTWTk0JhIz2wDoFztHSvJ9oF5
+    2O4eGj9EoY6NZSkB8FYqaYvPyryDwypWfKtv9G0ysVr6VtuwaisEYLgjjNKnh5LwDYEtm9
+    OGwNg+jTutKAzN8D5VE2lvu5jysG/7tiDFp+p+eO2HEJZ/byIOI0TOl3odzpTXTpT1daiv
+    CmYVHXET/V609ITiaw/liW11VOXgHziU+deVkgDc3sJOYHwo0tbDp5Q2fXOQ
+X-ME-Proxy: <xmx:sgw8aux4t6eGX93Xez7_3tNnFCAO6H0LMvZzRPZxHjbp-MU1LC9mnQ>
+    <xmx:sgw8ahIAtMsx3d3bztVFcyZdIT2eKosEsqiWYy1T4hPUI_hESBMyRw>
+    <xmx:sgw8atS03Sr4BIE8ZYOAHPEG5YJ9jpXe6D5pE1vNn86Mko7C8F1AGw>
+    <xmx:sgw8ahqAH2rlT-SdNIp4Ppo7_CUOVXzeNDK5wVLzwm2l_hCzVY7a9A>
+    <xmx:sww8avze7QUZEFN1GnIdp3lSXe8_7vXBz7sBaa8MCzF22qhoYuE--fgy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 12:27:57 -0400 (EDT)
+ 24 Jun 2026 12:58:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 4/4] connected: search promisor objects generically
-In-Reply-To: <20260624-pks-connected-generic-promisor-checks-v2-4-132d73ee47b9@pks.im>
-	(Patrick Steinhardt's message of "Wed, 24 Jun 2026 12:37:06 +0200")
-References: <20260624-pks-connected-generic-promisor-checks-v2-0-132d73ee47b9@pks.im>
-	<20260624-pks-connected-generic-promisor-checks-v2-4-132d73ee47b9@pks.im>
-Date: Wed, 24 Jun 2026 09:27:56 -0700
-Message-ID: <xmqqjyrnkinn.fsf@gitster.g>
+To: Antonio De Stefani <antonio.destefani08@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] gpg-interface: fix strip_cr_before_lf to only remove CR
+ before LF
+In-Reply-To: <20260624093618.17456-1-antonio.destefani08@gmail.com> (Antonio
+	De Stefani's message of "Wed, 24 Jun 2026 11:36:18 +0200")
+References: <20260624093618.17456-1-antonio.destefani08@gmail.com>
+Date: Wed, 24 Jun 2026 09:58:25 -0700
+Message-ID: <xmqqfr2bkh8u.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,109 +85,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Antonio De Stefani <antonio.destefani08@gmail.com> writes:
 
-> When performing connectivity checks we have to figure out whether any of
-> the new objects are promisor objects, as we cannot assume full
-> connectivity if so.
+> c4adea82 (Convert CR/LF to LF in tag signatures, 2008-07-11)
+> introduced CR stripping for GPG output on Windows, but intentionally
+> stripped all CR characters unconditionally to "keep the code simpler",
+> even though only \r\n sequences (Windows line endings) needed to be
+> normalized. 2f47eae2 (Split GPG interface into its own helper library,
+> 2011-09-07) moved the code into gpg-interface.c, and 29b31577 (ssh
+> signing: add ssh key format and signing code, 2021-09-10) extracted
+> it into the remove_cr_after() helper when adding SSH signing support.
 >
-> This check is performed by iterating through all packfiles in the
-> repository and searching each of them for the given object. Of course,
-> this mechanism is quite specific to implementation details of the object
-> database, as we assume that it uses packfiles in the first place.
+> The original laziness was safe at the time because lone CR characters
+> are not expected in GPG signature output. However, the NEEDSWORK
+> comment left by a previous reader correctly identified that only
+> \r\n pairs should be stripped, not lone \r characters.
 >
-> Refactor the logic so that we instead use `odb_for_each_object_ext()`
-> with an object prefix filter and the `ODB_FOR_EACH_OBJECT_PROMISOR_ONLY`
-> flag. This will yield all objects that have the exact object name and
-> that are part of a promisor pack in a generic way.
+> Fix the loop to skip \r only when immediately followed by \n, keeping
+> lone trailing CR characters intact. Rename the function to
+> strip_cr_before_lf to reflect its corrected behavior, and update
+> both call sites and their comments accordingly.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Antonio De Stefani <antonio.destefani08@gmail.com>
 > ---
->  connected.c | 32 +++++++++++++++++++++-----------
->  1 file changed, 21 insertions(+), 11 deletions(-)
->
-> diff --git a/connected.c b/connected.c
-> index d2b334173f..b557ff5db9 100644
-> --- a/connected.c
-> +++ b/connected.c
-> @@ -11,6 +11,13 @@
->  #include "packfile.h"
->  #include "promisor-remote.h"
->  
-> +static int promised_object_cb(const struct object_id *oid UNUSED,
-> +			      struct object_info *oi UNUSED,
-> +			      void *payload UNUSED)
-> +{
-> +	return 1;
-> +}
-> +
->  /*
->   * For partial clones, we don't want to have to do a regular connectivity check
->   * because we have to enumerate and exclude all promisor objects (slow), and
-> @@ -30,25 +37,28 @@ static int check_connected_promisor(oid_iterate_fn fn,
->  				    void *cb_data,
->  				    const struct object_id **oid)
->  {
-> +	struct odb_for_each_object_options opts = {
-> +		.flags = ODB_FOR_EACH_OBJECT_PROMISOR_ONLY,
-> +		.prefix_hex_len = the_repository->hash_algo->hexsz,
-> +	};
-> +	int err;
-> +
->  	odb_reprepare(the_repository->objects);
->  	do {
-> -		struct packed_git *p;
-> +		opts.prefix = *oid;
->  
-> -		repo_for_each_pack(the_repository, p) {
-> -			if (!p->pack_promisor)
-> -				continue;
-> -			if (find_pack_entry_one(*oid, p))
-> -				goto promisor_pack_found;
-> -		}
-> +		err = odb_for_each_object_ext(the_repository->objects,
-> +					      NULL, promised_object_cb,
-> +					      NULL, &opts);
+>  gpg-interface.c | 25 +++++++++++--------------
+>  1 file changed, 11 insertions(+), 14 deletions(-)
 
-promised_object_cb() returns 1 without any computation since we are
-only interested in learning ODB_FOR_EACH_OBJECT_PROMISOR_ONLY finds
-any such object.
-
-odb_for_each_object_ext() returns 0 (if it iterates all the sources
-to the end), but if its call to odb_source_for_each_object() yields
-non-zero value, the returned value comes back as "err" here,
-terminating the for-each iteration immediately.
-
-odb_source_for_each_object() is implemented differently per the
-source backend, but taking an example of "packfile" backend,
-packfile_loose_for_each_object() ends up calling cb (wrapped in
-packfile_store_for_each_object_wrapper_data) via
-for_each_object_in_pack(), which stops immediately when cb returns
-non-zero and the value returned from there is the value given by cb,
-i.e., 1.  So we will have err==1 when we find any object.
-
-> +		if (err < 0)
-> +			return err;
-
-And err presumably is 1 in such a case, so this does not trigger.
-
->  		/*
->  		 * We have found an object that is not part of a promisor pack,
->  		 * and thus we cannot skip the full connectivity check.
->  		 */
-> -		return 0;
-> -
-> -promisor_pack_found:
-> -		;
-> +		if (err > 0)
-> +			return 0;
-
-And this does.
-
-I may be misreading the patch, but as we return 0 from here, do we
-cause the caller to fall back to full connectivity check?  The
-caller, check_connected(), sees a zero returned from here.
-
->  	} while ((*oid = fn(cb_data)) != NULL);
->  
->  	return 1;
+Looking good.  Will queue. Thanks.
