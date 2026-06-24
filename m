@@ -1,79 +1,80 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA3739099B
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:23:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9579F3AE6E9
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:23:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782289418; cv=none; b=Kywu2ua71P7pvqZFY8GCPg/ao20rp6F+Oz8qz62nRa7/2q0+xT8P6Lw688dJyUkHTZ0bKsA1FYshWE+Lp0MdImMvtom/Om5QPMRNVdhHJ/MxTZVKLivZDp2dIJasVkiK59PnC5SQ/KaJ4pcierlz82K2h/elaW4MkM/qyQ9htW0=
+	t=1782289420; cv=none; b=P+Sb/C2K6lcC6VfhjG1lOMA17Mh1YB9PHRY+cVvziKs7YUT4QA08krL3xb47sRvX77fH9gezCQpHPQ6+AMi/ViZqq0AYTIwDjUvWDPHnPfBQnBnVCHqfwHgiGfbC9Fkp6umDWIrrAnvKSmstP42ogoQERRVlNklBzNXG899T3rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782289418; c=relaxed/simple;
-	bh=Kd+F6RPVAQua9yV7E9ubVZd6Uswi94iKipuWv5da3E4=;
+	s=arc-20240116; t=1782289420; c=relaxed/simple;
+	bh=MuGRrCvrh4YVx3PpNV4gYT59JpqlyPAyi0970k2RMRg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a9p1XFCzq/dGCPcEFkfZG0SpDQ6d7Pygb7r2yk1dVyu6TzlCBI0uvB99H6Rr7GNbHDBhoGm7iLfBMC6PDOiA38ZrhJZPpMCWjQAbLTOiJ6v7UrUBv5/jtvSgyPv30g3KOlm6v3jJBnvRxQDUPkZDCKK9AApLwF3hWTv6ibH9bOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mZEb+2f9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cHq/mXme; arc=none smtp.client-ip=202.12.124.144
+	 In-Reply-To:To:Cc; b=BEGMeeJWXRDelSdc5EAtbWTnJLrEiknR8RTff5Fos8yyLR0Ot1KeSWRpX7r6Dp5+Fh1CnF6LOgmkjtAaqnwxLdjmKXEEgBRm3Scjuyo4z6OTlAvAi6/nuJuXf1/B5DeQK+pzMmAc5vY6zvXuAKyINCVvZSfHXUNKj12CQgnL3jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h/Ty7OrI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KMCT2ug9; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mZEb+2f9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cHq/mXme"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id ACE201D000D7;
-	Wed, 24 Jun 2026 04:23:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h/Ty7OrI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KMCT2ug9"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B78917A01D0;
+	Wed, 24 Jun 2026 04:23:36 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 24 Jun 2026 04:23:34 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 24 Jun 2026 04:23:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782289414;
-	 x=1782375814; bh=hn/c45MjfXZzTL5EaCHK0mOErnMI7jc3rbNc38T+e48=; b=
-	mZEb+2f9P+UfLQUs99jwtbtrnzxRTO62mdHWdidcTxsYRwaT9suKI84QmVVrXdfC
-	P6EGQj7bSPWtORpN2QNehDggc20w87uf1lfbxu+xYbbudz3QVp7o857q7D1wi+dn
-	P9GpkBWTTb09780LmGZ5S/LLJB+RfAyEQ/JkNf41U04vNsLKzjItsnxdf0YRFTVO
-	7ZD5JlouickcZfXS5GZtRX9DSxFwfrsJJz3McqGPjRiNNXB5wZHVJutuA/FkBgCS
-	LtaZT5TuTLP2l5eddhpZtZ4tNsQG+LN1aTepMJctPp2E2e9pXh1LePYc9Q0jMe9Y
-	tCD5SZoJcBQ9bqd186qSSg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782289416;
+	 x=1782375816; bh=b0jBmHvwlwCGUn1O9TU4nE/MPGEpjA+4wlx9mgH3uDo=; b=
+	h/Ty7OrI5n/45+nMuCK7QLj/EC8ZqiXEFG3ztKNEKkW0tkfeOxVGw+cVzR6pRPxT
+	kBySC+T99NbM7+kLSarykWOjJB1hw2/2kYCVVJnAFfIgC9Y4jyUVHHo/me1Q26NU
+	yglVwfkLVOT69fXvKMw1N+gexsrnppNBvGXJTxoIKQVo9ZP8YlYUGSkG/5g8Y8yU
+	lxj3iHLqZc4DyFBM+AE/eYeLUVzVdO91kLVS6KmKNXfPZdpmgzJxIdCvFnh/jvqq
+	cXZyvgv6DbCj8oEnZMCOFfp3JsOAPRDbiCaOpZQd4TO2/cs413OfFFzfoDojuitY
+	jQgFua6rCkS3BYkFhHvc7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782289414; x=
-	1782375814; bh=hn/c45MjfXZzTL5EaCHK0mOErnMI7jc3rbNc38T+e48=; b=c
-	Hq/mXmeG/6NnPW2SvhUKePZxkn4E/ecRbbV4zjXchzAJKMv0E8Or3ntf4m1wW1D3
-	MGp3vOt1YHPhGP4Lh5qkUVk92/XzxWZKGL3W4OmIzBez2ShWlucUWqfHHosZCG4t
-	rOmE7SoC4vWIEXCjJqt9a2TCOLO0JZXeh5BY6rozoBwiuXlMprSmRUsc0aKGR+Eh
-	e+W1J/Y6f11Sg+yioWTaW7b8tZ/0HZ+VYHtEFnhEIUc9qrHVa+b8DzyOq0DXLIgX
-	8s/m2PtGOWkBfhZm3kofmM5N+Lq1zmZicdVydwwbqHK5jtRJR5D2mmy8EWBp4Lyw
-	ZCBOgVQiiNwb1z3s6ZEKg==
-X-ME-Sender: <xms:BpQ7agfHGVhrBHxOl6r0dGxcTpn3TM1fQAjpz0_GSiBMSHmcCmZHBg>
-    <xme:BpQ7aoOn0RDaoiEw8WlWEaBa4WISNICklCeicCynbbeyfs2C5DoO6SdCvMyM1gSKv
-    w5N7QPcKj5905MRrzTNqUZL8-MiH3UeUJMx46FS8X8A32uRg6VqVQ>
-X-ME-Received: <xmr:BpQ7avL60MApBvwgrM_kSjxYB329Dmjh5B2vp_-7-loStocq9vnDnxBiZe-v5mcgpzO1SdnDTcZvAQba43bjieM0ikL8aTqPnqhfGaRK>
-X-ME-Proxy-Cause: dmFkZTGhdet2ItwvUgz4oa9q250EhFHQ9U9tz4O1dL/XkJ5ZyFJJUQRFo4JQGGhKAyPcTw
-    gaBBFW6bmgaIg9Gk2pxYRKh4o03P7cXmavet6k4nNUfWpUB5maJcrY/0k3qBdWpOihdPPW
-    VfpQakKkdUFOuVzqvKaxLNlsavE7w8EdKPcQLjjH5YGELDuEjIzSjXnjr5FtC2IYHPQgOV
-    Pyxw0OseW3D0aOlB9vgDiwjkdWIDplMKgSGEmR79G1GeadT0fMn3SS474oZ59AvPHa5Usc
-    glsBDsy91qgiZSuMvIIJLFZh79VH2GT2rRd+Sb6LxgcHl1kZui//HgFfhQc6RwVSpVAcQr
-    PKyQoaQg2WcPSsRvsBxbgWv0QoEuR66KiJdxYjhCXnCSckTtaoTbqJCbNtXJDFAcIBILNe
-    SVUsQnncIImNqS05Y7XE3oQf7M3qu2FszJCf5L7AXr9FqVenqrARKd3kw85GZp9SxVsc/a
-    g8FyD05y1y/G9tITeWnSFEfWWrmAzal9Ao82hNDadlEKWruXpf4XgL7tO+8tNtvXgT1fQe
-    HtIpCY3TGgiEyqt6z6rWIR4pK+JVwL7pQMwy+n9+WR3QILB1ea7X0aNYcmBlpd3Zts2t2r
-    wNPi1Wcr4KAgb9rbnQF7MbKWIE3AfShBUOltCyuZhFq78offGZHSSPr7KimQ
-X-ME-Proxy: <xmx:BpQ7ahGOYjVoYGAVgjKUK4tMOH2tumYcLqRY3xTSacfLpcrvt5hmJA>
-    <xmx:BpQ7avRADOYC4Qg3u61Q1TZ-Zn2scZdVTEKHG73UZwuSQ_BOGdZWXw>
-    <xmx:BpQ7alHLGgy8A-s6FrXwlEHl9K3P-I6GJYhMQi3YQ7pLo5ZNiUfjfA>
-    <xmx:BpQ7aj8KVMKiluDD-S9C9fTsXZ8Ct3BECwUxBrj0KuOjdgax2A2sbg>
-    <xmx:BpQ7aqu3-HMIq8yHDT6x5jAsJTsee5QO5r0KFcOdUlcWdQSRzOy9Yugr>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782289416; x=
+	1782375816; bh=b0jBmHvwlwCGUn1O9TU4nE/MPGEpjA+4wlx9mgH3uDo=; b=K
+	MCT2ug9x6xqAVrcx08aF1IIh6B7GvWulv9pl9u7iuaKmK+30bAQhZrl3LHw9TROp
+	kXhSoU3wZ/9BCzsmXahXFQGIL1E1vTHw1F/6kwFHUIiH+Sb7iHmVynjcTUWZ197X
+	zQNFa8Mo/j6A98gdGQopdPCdQEOXZCuQT+sjLH4Tms06h14lCvSt4U1UdovmtAIM
+	/FrdE1t53AsFEKPff9kj8+RDrRQPLxDy4PMioF22iLn4Y2jD+NmaASUCnFXeRF26
+	6DUKXVfFwyzjO6wiC42VQnwc8CVXJ12yRT//s1sZCdqYqXVRiHAEWv3NKsan/48j
+	B5CtyB9xnohNVtCsp/A4g==
+X-ME-Sender: <xms:CJQ7athQkzCenMQOONQrfMGEek9V2dRyKC0Q4E9COJV9HNQVM-6Scg>
+    <xme:CJQ7aoAbD7k9_GVdPakLfAnwJLiS1XlmnXp-djZCabYb8FVxktLBKqwywoWz87JQ2
+    SmSwR5vGA3B-2_SjDQRsWk3eMQiRNWFI2t9GRmMJwmSOFiijP2a>
+X-ME-Received: <xmr:CJQ7aqurbOwi5G5gmUqzbfTVPL4-jE6qwJHkjrhh9If6vp_3JostcvovDmAvv4G0Z5Os0hzXFtU_pFLVtmgMEJNkWFYLyxCA5UoO9Y2z>
+X-ME-Proxy-Cause: dmFkZTFBzRyZmediwmxpVIvDclFZs2oZ7aDDY+7mVx+Vm9LOdUHnrEfD2KyBBvLc8rc8BD
+    qXO+6xeB2PYgRe4y4z2oBexFFD/ZKKeyer3LAQkZy8DAfNuY80W0hqcWjpAx8oYCPSCjHC
+    Mn4kDldjyr2WyQuKoTvhLJdK3Si+8QDRVZ2oWxIJsvJAi9fQ21RlKdZfXgfn0EnmBA4Gtl
+    63sIJRWoMp7+Gq4jl9W0VtrE8KG1Fvk8sv5nfoCx6WkR8+3v/yte0+Z9DRFBNCNqz2xgW1
+    UObw2JbazdO1JTm7lit3VU06IExg130AzbZi8fPlHz17POxBiwO3W8B3qQjpTkvu0Hw+nw
+    KnmJJj+nWasLhQJA6jgv2Rt7YhGzI9JiuWh8s+Nej39TjNeOMaMDPF7iYgK9iUgfAfBlgI
+    ygBLukaiCGiImSzdTr6A1Aose+K2Kl4r6hn0LM4pXxGeJ6UJ6niYmlzehHNcuh/FeeSuEe
+    NNXzXGZ3a2bLfVxWk51xe5PpBwsrjhx5i5ZbsuigfwjW2N17HEth+ngwghxO/XJoPyeZ61
+    4F4QRpao2H6iWAYsWl8hJ4qVv9iEz95M7pOV3hpoNkA6pBPuaHQMZfCSMf3PXOCB7x7buM
+    yyronGirFSSnr9mJwKFYPd4CxhqdaFOOu6It88YB3TKZ5g1h5ODW0usjww0A
+X-ME-Proxy: <xmx:CJQ7atYC__9ruNjBD9EUvRNnyxhfQ11YgFGuUNCn2w8DiRR-Gt88xg>
+    <xmx:CJQ7atX2Ljc15KkzfgXNFCK-6JFewHrMCn3_YvbHYqslKIpNrVBHew>
+    <xmx:CJQ7ah5itpCpGnVjpPuky__JNsNZGOIWhF6upbhoEcNStqgvHbDS2w>
+    <xmx:CJQ7aohtC80gKh4Q03hlPOgCN6Gcj5LjMc7-1rWiXPoPE4veAUyoWQ>
+    <xmx:CJQ7an_cec7TYbuJlieo-bpyhBMbaD9PJr7E02MSZR7mzZvzftl2VG_9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 04:23:33 -0400 (EDT)
+ 24 Jun 2026 04:23:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9688bbdd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jun 2026 08:23:32 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 941f1593 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jun 2026 08:23:35 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 24 Jun 2026 10:23:05 +0200
-Subject: [PATCH 02/11] oss-fuzz: add fuzzer for parsing reftables
+Date: Wed, 24 Jun 2026 10:23:06 +0200
+Subject: [PATCH 03/11] reftable/basics: fix OOB read on binary search of
+ empty range
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,151 +83,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-pks-reftable-hardening-v1-2-66e4ce87c6b9@pks.im>
+Message-Id: <20260624-pks-reftable-hardening-v1-3-66e4ce87c6b9@pks.im>
 References: <20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im>
 In-Reply-To: <20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im>
 To: git@vger.kernel.org
 Cc: oxsignal <awo@kakao.com>
 X-Mailer: b4 0.15.2
 
-Add a new fuzzer that exercises our parsing of reftables. Fallout from
-this fuzzer will be fixed over subsequent commits.
+`binsearch()` performs a binary search over a range of `sz` elements by
+repeatedly calling the comparison function with indices into that range.
+When the range is empty though, there is no valid index to call the
+comparison function with. We still end up executing the comparison
+function though with an index of 0, which of course will cause an
+out-of-bounds read.
+
+Return early when the range is empty.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                            |  1 +
- ci/run-build-and-minimal-fuzzers.sh |  1 +
- oss-fuzz/.gitignore                 |  1 +
- oss-fuzz/fuzz-reftable.c            | 74 +++++++++++++++++++++++++++++++++++++
- oss-fuzz/meson.build                |  1 +
- 5 files changed, 78 insertions(+)
+ reftable/basics.c                |  3 +++
+ t/unit-tests/u-reftable-basics.c | 11 +++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 1cec251f43..89d3edd5ea 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2599,6 +2599,7 @@ FUZZ_OBJS += oss-fuzz/fuzz-date.o
- FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
- FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
- FUZZ_OBJS += oss-fuzz/fuzz-parse-attr-line.o
-+FUZZ_OBJS += oss-fuzz/fuzz-reftable.o
- FUZZ_OBJS += oss-fuzz/fuzz-url-decode-mem.o
- .PHONY: fuzz-objs
- fuzz-objs: $(FUZZ_OBJS)
-diff --git a/ci/run-build-and-minimal-fuzzers.sh b/ci/run-build-and-minimal-fuzzers.sh
-index e7b97952e7..37b24b092d 100755
---- a/ci/run-build-and-minimal-fuzzers.sh
-+++ b/ci/run-build-and-minimal-fuzzers.sh
-@@ -21,6 +21,7 @@ date
- pack-headers
- pack-idx
- parse-attr-line
-+reftable
- url-decode-mem
- "
+diff --git a/reftable/basics.c b/reftable/basics.c
+index e969927b61..f0442a46cf 100644
+--- a/reftable/basics.c
++++ b/reftable/basics.c
+@@ -152,6 +152,9 @@ size_t binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
+ 	size_t lo = 0;
+ 	size_t hi = sz;
  
-diff --git a/oss-fuzz/.gitignore b/oss-fuzz/.gitignore
-index f2d74de457..dc7a127a62 100644
---- a/oss-fuzz/.gitignore
-+++ b/oss-fuzz/.gitignore
-@@ -5,4 +5,5 @@ fuzz-date
- fuzz-pack-headers
- fuzz-pack-idx
- fuzz-parse-attr-line
-+fuzz-reftable
- fuzz-url-decode-mem
-diff --git a/oss-fuzz/fuzz-reftable.c b/oss-fuzz/fuzz-reftable.c
-new file mode 100644
-index 0000000000..c46eac2c6b
---- /dev/null
-+++ b/oss-fuzz/fuzz-reftable.c
-@@ -0,0 +1,74 @@
-+#include "git-compat-util.h"
-+#include "reftable/basics.h"
-+#include "reftable/blocksource.h"
-+#include "reftable/reftable-blocksource.h"
-+#include "reftable/reftable-error.h"
-+#include "reftable/reftable-iterator.h"
-+#include "reftable/reftable-record.h"
-+#include "reftable/reftable-table.h"
-+#include "reftable/reftable-writer.h"
++	if (!sz)
++		return 0;
 +
-+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
-+
-+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+ 	/* Invariants:
+ 	 *
+ 	 *  (hi == sz) || f(hi) == true
+diff --git a/t/unit-tests/u-reftable-basics.c b/t/unit-tests/u-reftable-basics.c
+index 73566ed0eb..c5d83b6714 100644
+--- a/t/unit-tests/u-reftable-basics.c
++++ b/t/unit-tests/u-reftable-basics.c
+@@ -60,6 +60,17 @@ void test_reftable_basics__binsearch(void)
+ 	}
+ }
+ 
++static int unreachable_lesseq(size_t i UNUSED, void *args UNUSED)
 +{
-+	struct reftable_block_source source = { 0 };
-+	struct reftable_buf buf = REFTABLE_BUF_INIT;
-+	struct reftable_table *table = NULL;
-+	int err;
-+
-+	if (reftable_buf_add(&buf, (const char *)data, size) < 0)
-+		goto out;
-+	block_source_from_buf(&source, &buf);
-+
-+	err = reftable_table_new(&table, &source, "fuzz-input");
-+	if (err < 0)
-+		goto out;
-+
-+	/*
-+	 * Exercise the ref, log and raw block iterators so that we cover as
-+	 * much of the parsing code as possible.
-+	 */
-+	{
-+		struct reftable_ref_record ref = { 0 };
-+		struct reftable_iterator it = { 0 };
-+
-+		reftable_table_init_ref_iterator(table, &it);
-+		if (!reftable_iterator_seek_ref(&it, ""))
-+			while (!reftable_iterator_next_ref(&it, &ref))
-+				;
-+
-+		reftable_ref_record_release(&ref);
-+		reftable_iterator_destroy(&it);
-+	}
-+
-+	{
-+		struct reftable_log_record log = { 0 };
-+		struct reftable_iterator it = { 0 };
-+
-+		reftable_table_init_log_iterator(table, &it);
-+		if (!reftable_iterator_seek_log(&it, ""))
-+			while (!reftable_iterator_next_log(&it, &log))
-+				;
-+
-+		reftable_log_record_release(&log);
-+		reftable_iterator_destroy(&it);
-+	}
-+
-+	{
-+		struct reftable_table_iterator it = { 0 };
-+		const struct reftable_block *block;
-+
-+		if (!reftable_table_iterator_init(&it, table))
-+			while (!reftable_table_iterator_next(&it, &block))
-+				;
-+
-+		reftable_table_iterator_release(&it);
-+	}
-+
-+out:
-+	if (table)
-+		reftable_table_decref(table);
-+	reftable_buf_release(&buf);
++	cl_fail("comparison function called for empty range");
 +	return 0;
 +}
-diff --git a/oss-fuzz/meson.build b/oss-fuzz/meson.build
-index 10bcac2f6d..5a3854256b 100644
---- a/oss-fuzz/meson.build
-+++ b/oss-fuzz/meson.build
-@@ -6,6 +6,7 @@ fuzz_programs = [
-   'fuzz-pack-headers.c',
-   'fuzz-pack-idx.c',
-   'fuzz-parse-attr-line.c',
-+  'fuzz-reftable.c',
-   'fuzz-url-decode-mem.c',
- ]
- 
++
++void test_reftable_basics__binsearch_empty(void)
++{
++	cl_assert_equal_i(binsearch(0, &unreachable_lesseq, NULL), 0);
++}
++
+ void test_reftable_basics__names_length(void)
+ {
+ 	const char *a[] = { "a", "b", NULL };
 
 -- 
 2.55.0.rc1.745.g43192e7977.dirty
