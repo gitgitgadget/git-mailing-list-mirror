@@ -1,110 +1,202 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF70128816
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 11:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782301631; cv=none; b=c1OAQUWjVpX3gyFNXdFKpUyYhIGq0PEHJ3AX+CIobQFuhqW/4+3alK25hgndwyRCli2r0J9SVdC3iN9F5mPri6xtBDqtoljGc5QHn2Vu6OM4YD4bkg3OZf4yzbCtGvbZVwAtEpQoivH9kJ4KSYs61zlbdYKZ/QmvCrYuf2WX7D4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782301631; c=relaxed/simple;
-	bh=CTu4k3mz334Viiu0MninfoTnCkn5k0vhwhVpbG9abhY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=py5JRc8Hq9OhlWL3Ctes6zexRIK/SCfXhen2jCYB/HTkeDCWtEaoKcvwZUMi2WxPpm78OC+Qfxqeuah6mOm1XFiq1HOW8gD3ck+ciomyqiR/JhvwwgBhWcSIyfSQSi0M7XKt0gacYX3uFdT/nuoVzr1cXJ7ukzOGyPVCxuDFiVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IwE9MpDP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lT2j+7gw; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773942C028F
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 12:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.179
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782302922; cv=pass; b=kO2DBX9NsHoIsiENpFq0VhGkUnLDIurJv3x9VrlIWMjy9+qI92EQt/6HaPPwOnbSmjvAyvCBSMA9gZM+BHK4TFw8iEM8C16opvP4JdDx3BrC7yoUSDpF3OmvWSz/ahs8gZ3JLYud43OsBjnJOpHx3wrRueXsgNRbnLMfM6nZvtw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782302922; c=relaxed/simple;
+	bh=/o5LgVGR9PBz/EZTsKPH6WMm36LZ90S/Oh9u24iiL4Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W3YCLykH5v+kKPEceX4jJ0YcbTnhVcj1mxM03A9KgjeMk77aI5FAw04rop0iwZmeB5caM2AUunJFAbOILOGKT7bjehyUiBsPcBor9Udo7jWU2sd0B3sONw9rXyzngLA6hvcdpkr1c5gjdbMRFKz+viKZMX8+m8FULcGTYWFeRCU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhVkc+eq; arc=pass smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IwE9MpDP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lT2j+7gw"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5CE4A7A0104;
-	Wed, 24 Jun 2026 07:47:09 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 24 Jun 2026 07:47:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782301629; x=1782388029; bh=3LtnSszgVj
-	i2vkcanRTh2FL6sP4DGnQgql3AF/by4RY=; b=IwE9MpDPFXrROZRdieL7ZJ56/P
-	4o/0G7Dmon6mwQiaB5Aqgg+SeCedUuqTuTYt3lQeSsIh0iVzqIsW2qLvF5M7GlzH
-	jubsKy4YieLC1U/kGVjir+TVz9XWIDB3zFx9Co4n08W02or9Mk31Vqkrnq/8wo85
-	JUDmIKZtnGUX/9W7Op/Zup/kF8bXiIkj4OZrvAynOyp6Hhn7P3KTY2/K3Tjo1UEy
-	I2pghhBLAvZKLwpU1af8X7ZN4Sfo0/5nLI/KBcBhE9f0w87Ci87yQ4weBcCPLc30
-	JsEW6H/sn2+YzXcupuKIKctlIIAobh4WF0iDdmsDtyT9uPOSsPNTyRpVaXVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782301629; x=1782388029; bh=3LtnSszgVji2vkcanRTh2FL6sP4DGnQgql3
-	AF/by4RY=; b=lT2j+7gwd92q4DpmuzxAEmIe6UrL9LUiKsIssM6bLAdVLpYXMja
-	AUW6CIWduphz15SSdDuzBvjiuy8NQlXeVhdYzMglbcz6krO0+7HNhXEaiCKGe8GM
-	yHTP7foP/UB8t4mr0wA87E6IYluB2FcNe8s5hwQ1pVLM1AfMChv62h2k7rWcDDZN
-	33IqFrHB/uszZxPvz2MrdYQon7SPwHjBj43oX4kj3Mi92le7LQzRMXEHEzVN1aG4
-	6dIUZHCeRY932559VzhR1q+QVIO4Fg9fNPMTBYn4I7g7qiFaw/0vO1usb2yrXxrF
-	TbFbKcEu38KgyGeOHCwGFp7PdJUZsBOOd3w==
-X-ME-Sender: <xms:vcM7anKnSjSKLmeqfCdSURjIuk3a5zYJZKkdZ6jiLw85v0LD_Pk9pQ>
-    <xme:vcM7aimvI0HG31Kfz_RMvuulA0PXrdQnJQ6lSyW8TO8rH9lVxdj5REtxUMEZPOEHu
-    FUeKj8dOrLsoE_hT8EzSTpqotB64JOu2A1_OsONb325kLtYJyEJMg>
-X-ME-Received: <xmr:vcM7atFy2gefeN2kvFoDZvgDcyx01an8bXKoS6bnPfJj4hNoiGjUc7_ZXHuXHuCZjCMUmErwCQlJXfLFF5OeCBi1-ievLDFDtLrjXTzr>
-X-ME-Proxy-Cause: dmFkZTF3h79N4Qbz2Kx6KdBNFU8M9sdxIijigJ9uERzQuZTA8pO7mI53GosadT5kFezrPl
-    m91JjMMlPCjE0lz8VxCHe5R0ZiPteuIuglUMgLW2LFm6tcDL4jURHCYeHuuv2QChhi288a
-    Kx2ewxcy9OgRF7/NiZ3TUt+ZFZy5yMRJh0DsvciWDwCkudqs7pchq9Q6ZAHIHGScrFNuiU
-    /3stS+E/xQLsJ6uQMuKO8t/lV+1tO5VwLlHrRcIrGtZUKJ6zYuO/LGG/3Rf+ctbPEiNdAl
-    aylrRbVeIo0j/GnNo4y6ILh+avhV3fCDnzaNAAIDiO0Vs+w9e2hFw1NxR1xgR8suXvW1LU
-    mvx9XiHJCx686+EmJW/TAqYg6lwz+e4NMZnEyTwmh3njRZUhksdCtv29Wp91O9mj5lPEES
-    0O+NSzPknjgLn+MtS1wJ+HTU7gSEWYFFj1c8rdMRd3AMRQ18edc4Ts86/RU2DYDSjvVJNP
-    XtTnZPUZrJBXbouC44l3KngUa7/qbYZneIYYcdKKB7895j0SbWFzO7Vpy/N6lglVD7Zped
-    Cjz0YKNb+m4PGQ6cxhvgzv8junPcVpfi4Wd8DhCeNOitcHKQ6JaHMfet5aWoduuW2vyfxL
-    1GWbdEe6N7PjbnoYRn+7rzandgn0rajkAYnmPtm3PQqPHOWs1a9/WHht9yDg
-X-ME-Proxy: <xmx:vcM7aqEsoZogXVkjMeQqGpenf45FSPT7p8K1un2s3hUw770kUbFIMQ>
-    <xmx:vcM7aiMihtHpd2LEA_fUEtBOJonvD3tkPf5GP3NQf36wtVrBGa_d1Q>
-    <xmx:vcM7ahF8nZW7uI1dSybcOeJU23GSvdbFX9js7Y9ztaXk90mphVO8SQ>
-    <xmx:vcM7ahMjBL3QiKTVv6n-61lx1WFOx5URxeizPIeJ71n_EDHgcH3-sQ>
-    <xmx:vcM7ajOdxKABA_2JFHbVYx9JkoEN8bI4TYSpNr1mqR59-h80EcePYOnG>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 07:47:08 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a81598dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jun 2026 11:47:07 +0000 (UTC)
-Date: Wed, 24 Jun 2026 13:47:05 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Weijie Yuan <wy@wyuan.org>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v3 0/2] doc: clarify review replies and reroll timing
-Message-ID: <ajvDuUiDsmyf5LnX@pks.im>
-References: <cover.1781714757.git.wy@wyuan.org>
- <cover.1782028813.git.wy@wyuan.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhVkc+eq"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-7fd5346b5e2so18623647b3.0
+        for <git@vger.kernel.org>; Wed, 24 Jun 2026 05:08:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782302920; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QdbatlBYWxo3mPmFhDO4m2juXaK1aK19bQLDR6Ff36P3zKtBNRgUB2ryrrK4PBtVwY
+         +WUDSiHHFfGln/Typ/C5z7fqvooan+w1SmChANFGTmhjAbFUSPCwbR3zpZoo6dblQSti
+         maZgKGGR9cp8esWNU3xtaJqTZQUJwe00a6H+jjL+CbxLI2to/worHmvQVIi/UAryVBZa
+         PlzPxf6k5c7UVLHFyZNzOR75TvUuElzuCBabixlI79olYzG9OwdfU4gblZTN0b9xhwJn
+         /DG+8l6Fb9U2WVybLGnbnD08MbBIMB+7VKWgl4XpCxTiL8EneS4Ndkip5zC8ceDz+clZ
+         kNaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2LqXX3F/oALvgmOFC5969kJ+nmb6GT6ttXDlPheYFAM=;
+        fh=4n2QBqFyfkxAy+4TEwg9DHTGAPY2DcUsdz4KQktWPAg=;
+        b=dQXJbnFHoEXsxa/e7uk66YuM5Vx3xY0BGyF8CkfSm/5+n+9gjQ4g7Qg9/cJ331YjfL
+         3LMhVwGbT/VemsLr75sHFXnkL6yDAeE275XNjEW8T5JhIqDI9z3/rC9gATtFxQj9EdMz
+         8favlNZejF9KtsigrMyLVMJgHcbp53nj8B+WzULfmWhBTciBu5sKbjsJC7oSI8psu/gO
+         zuYFhczBDFcNMUH/ArX3lGmsY6LbgwV6P8IKiMMJOBDmjuou0S175riGWK2VRPG8XA6J
+         KIO8XQzMhuOZKByYTI3+dgOuIBCQlxPv7I2rd2UVs3y0Dk08qUFrLmcZf3TuZYQfg0E8
+         x+XQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782302920; x=1782907720; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2LqXX3F/oALvgmOFC5969kJ+nmb6GT6ttXDlPheYFAM=;
+        b=MhVkc+eqSS1uaKWGDrMtiBa4PKDW7iDs4Cp9WfcQ9A6M7kTFGoKHH4/aB2uC2ZniHC
+         pm2dirqDO66TnznGiEu/Hn5+I0wv+CxGYgsC+CvseyJ2oYmJRqReGIheHvbnk6kSb7Kj
+         gdz5AI5jjz2430owQw6j4rG70Lt+wb+O+zVeydDJDmGwdpI/+59jJ5Xw0h79xOYYYrsG
+         JUbyR8o1KHVmIlkoN715ACYa+0tFqdvR70U1QOx7zlxi/XAjRRF4ld6hQAEWmDs2Mbt4
+         wlYHADXJJV4DuSi1LPFt35kwnCwm8zg5Zmyo7deSdx2zfYJSb9HpusmQqv3Kq+czregD
+         x5fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782302920; x=1782907720;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2LqXX3F/oALvgmOFC5969kJ+nmb6GT6ttXDlPheYFAM=;
+        b=YYy0gYx5JV5KODiSDZ9hHeWkWURjC9fRFhbQjYlBj4GAnahiZLPl5wSUb8mb/WCZNW
+         jiI3Az/EQDz2DggKzvkX0AylSg2JcRW7mQhqUsLYzetBy9AkWxHbxfzDqvXEU0gkRjj5
+         Q0DQMJwwLGcjORV9QYUZOYABae4GuBBftVgAi2t5D7E26Zg8f0I5L1lwOtjNSA+ozdrH
+         PMAH1fF1DSLmxVKdqRd/ocjGTxbgP4t8HWIXlDjDZocnpYGCLiyTyHG8r9C0wpYhDEMe
+         iQikHMvqbvWeK93UBPNAwUQVUoIluEzfWLMVPBmY6EBa1RXROCJ/nPU9D1FGuaug+1Kf
+         GxNA==
+X-Forwarded-Encrypted: i=1; AHgh+RqKbdBcZ7KXXVSO0SrZiMC3+XxDjCkrDJcEd65LplKC4YVJsoODiFCWcVMqQO8IXIVNYSs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjGO9gBcwvAGU6HRnU1vRrGRQ/iYwaYES2tEBcskT3r/TwpfMd
+	jLjlc4g3btmJ4CDXvXeuP4BEcoAPewMYWUwx8dWiTjJgE9SLT3ik/7v6sIDsarTE7GsMkUOpedB
+	fWPXVPxYzOd6CyFtUpcv4+pYuD9imPApHm8Nqwxo=
+X-Gm-Gg: AfdE7cm5qbgn8W24P5j5dnGlqyL40sPqomhh+70dnuz9aH4FAH+Mfrv2UzW0C7BK7UO
+	4pQIcGluKaX62V4kmzB11IRROcQ2r2mDy9c9vlHsXw8DEl2FlCwQxq+/1rqauhFmyhDfl2ZiagR
+	D29jOFq8Qu76z0/+kyP7Pc6mqLkK3IR5lsoxzE98aZVFB4/yBjPR1MT6nZloXucp9hxOVcNgCV9
+	HvLBaLy2UBfvwMwqfFFzP52RnVfPrbvGWD/p822ZuuI9StcT7Z4PXXp+Sw1EyfzbojGQP8402gX
+	+6n20aL++SBCr2jKwx729z5b8wA7BiJSrvGk89hvfOm2su/xYrLaBvyemPRS1s2zJBkoSK/i0T0
+	xQhI3ns/P/VWqVfGXCTkMRqmG4FVEPadEhwSUpvyisQwS35KMcHNIgdK1fdiZh+9QreH0wJo=
+X-Received: by 2002:a05:690e:4382:b0:660:431b:8a5c with SMTP id
+ 956f58d0204a3-66355446729mr5201671d50.4.1782302920546; Wed, 24 Jun 2026
+ 05:08:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1782028813.git.wy@wyuan.org>
+References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-6-3d4c7315d2f8@gmail.com> <CAOLa=ZSvxXuf_bSzKMvViNQ5MuDAqxnQdo4asF9vfMhJaDQcVw@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSvxXuf_bSzKMvViNQ5MuDAqxnQdo4asF9vfMhJaDQcVw@mail.gmail.com>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Wed, 24 Jun 2026 14:08:29 +0200
+X-Gm-Features: AVVi8CeFo4h9HujDearfZNHPKfLToouAid6dXhcjGJIfpcW9ge2yAigBexsfH7c
+Message-ID: <CAN5EUNRN4_5PS3cbQtQfpyRuwByvV=qvAVKnVbgT-pirKGnnTg@mail.gmail.com>
+Subject: Re: [PATCH GSoC RFC v13 06/12] connect: refactor packet writing
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: gitster@pobox.com, peff@peff.net, eric.peijian@gmail.com, 
+	chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
+	toon@iotcl.com, chandrapratap3519@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 21, 2026 at 04:04:36PM +0800, Weijie Yuan wrote:
-> Changes in v3:
-> 
->   - Reworked the substantial-rework case.  Instead of suggesting that
->     authors send a new version sooner, the text now advises authors not
->     to rush out an updated version before reviewing the larger changes
->     carefully.  It recommends replying to the review that prompted the
->     rewrite, saying that a substantial rework is planned, and pointing
->     out which parts of the current series will become obsolete.
-> 
->   - Dropped the advice that a topic close to being accepted may justify
->     a quicker reroll.
-> 
->   - Removed "how close the topic is to being accepted" from the short
->     reroll-timing guidance in Documentation/SubmittingPatches.
-> 
->   - Updated the commit message of patch 2 accordingly.
+El lun, 22 jun 2026 a las 22:43, Karthik Nayak
+(<karthik.188@gmail.com>) escribi=C3=B3:
+>
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>
+> [snip]
+>
+> > diff --git a/connect.c b/connect.c
+> > index 1dced8e632..78c69d4485 100644
+> > --- a/connect.c
+> > +++ b/connect.c
+> > @@ -700,16 +700,16 @@ int server_supports(const char *feature)
+> >       return !!server_feature_value(feature, NULL);
+> >  }
+> >
+> > -void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+> > -                                       const struct string_list *serve=
+r_options)
+> > +void write_command_and_capabilities(struct strbuf *req_buf, const char=
+ *command,
+> > +                                 const struct string_list *server_opti=
+ons)
+> >  {
+> >       const char *hash_name;
+> >       int advertise_sid;
+> >
+> >       repo_config_get_bool(the_repository, "transfer.advertisesid", &ad=
+vertise_sid);
+> >
+> > -     ensure_server_supports_v2("fetch");
+> > -     packet_buf_write(req_buf, "command=3Dfetch");
+> > +     ensure_server_supports_v2(command);
+> > +     packet_buf_write(req_buf, "command=3D%s", command);
+> >       if (server_supports_v2("agent"))
+> >               packet_buf_write(req_buf, "agent=3D%s", git_user_agent_sa=
+nitized());
+> >       if (advertise_sid && server_supports_v2("session-id"))
+> > @@ -727,7 +727,7 @@ void write_fetch_command_and_capabilities(struct st=
+rbuf *req_buf,
+> >                       die(_("mismatched algorithms: client %s; server %=
+s"),
+> >                           the_hash_algo->name, hash_name);
+> >               packet_buf_write(req_buf, "object-format=3D%s", the_hash_=
+algo->name);
+> > -     } else if (hash_algo_by_ptr(the_hash_algo) !=3D GIT_HASH_SHA1_LEG=
+ACY) {
+> > +     } else if (hash_algo_by_ptr(the_hash_algo) !=3D GIT_HASH_SHA1) {
+> >               die(_("the server does not support algorithm '%s'"),
+> >                   the_hash_algo->name);
+> >       }
+>
+> Why did we make this change? If the server doesn't support v2, then the
+> object format should be `GIT_HASH_SHA1_LEGACY`. While the value of it is
+> indeed `GIT_HASH_SHA1`, it indicates a scenario where there was no
+> option to select object hash, which is the scenario here.
+>
+> If there is a reason to make such a change, perhaps we should highlight
+> this in the commit message.
 
-I'm happy with this version, thanks!
+Hi!
+There should be no diff related to that line, In some point between
+Eric's last version (v11) and mine's firs (v12) the original code
+changed. On the diff from v11 [1] the object format is the same, i
+didn't notice this change and it's wrong, I'll fix it for v14, Thanks!
 
-Patrick
+>
+> > diff --git a/connect.h b/connect.h
+> > index c4f6ea4b0a..8f4c523892 100644
+> > --- a/connect.h
+> > +++ b/connect.h
+> > @@ -34,8 +34,12 @@ void check_stateless_delimiter(int stateless_rpc,
+> >                              struct packet_reader *reader,
+> >                              const char *error);
+> >
+> > +/*
+> > + * Writes a command along with the requested server capabilities/featu=
+res into a
+> > + * request buffer.
+> > + */
+> >  struct string_list;
+>
+> The comment should be above the function and not the forward
+> declaration.
+
+True, I'll fix it for v14.
+
+>
+> While we're here, why not `#include "string-list.h"` and remove the
+> forward declaration, is there a circular dependency?
+
+I believe this was right because from what I know forward declarations
+are prefered in headers when in this case, the struct is only used as
+a pointer. Investigating, this came from a review from patrick [2].
+
+[snip]
+
+[1]: https://lore.kernel.org/git/20250221190451.12536-5-eric.peijian@gmail.=
+com/
+[2]: https://lore.kernel.org/git/Z0RIqUAoEob8lGfM@pks.im/
+
+Thanks for the review,
+Pablo.
