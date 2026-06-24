@@ -1,129 +1,190 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC992517AF
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 22:18:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99AC8834
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 22:33:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782339507; cv=none; b=Y6Y5r7iN4VDeTtlbn6CeVAVhs+c4oL4STUAyuPUfp8NyYJIP5LEkmYTlQWgupjT/NTVEp2ZHOKsANQxFIHxUvN/jIw2JiJc7qwrU34o3Q0t8MjUEpbP4pPkc6pKDWYZYCGt7cF/uF16pJ4N42wgaVs1W4+XZyxpdq7cZ2RABhN0=
+	t=1782340387; cv=none; b=F1aq6Lsxw74eY47B3zy7Up1tFVpqZqhqcaQpGTc62s49oZY2Pr56H0OAYOpQXrDOu2FHZ75Xd629H967TuS3ZwT2LcYamMqU5t5IoMDrVoAIHTUF6gBLdXaqSfUzqEIx60tjzKR+hB9rN7+QZduE4At4rNP7VDWATzM1d4vfBD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782339507; c=relaxed/simple;
-	bh=UI1HE0mlIpYeB5oidHiJcZzmfV+ocERy3eYMWlJuYqE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sKUUeufo6T3Y8VpXEP0+gEVSbZk0wXVFIexe5S5AkItPdh7RM7+PWUD1/S8VYgCeSDg3XLsjgXPtUpVvLUoJBITrWVs9pE1KL4hshuxgIbrdjQCoXwLLZIRjIFAnLbs1G0zemzr+P2x31VbQmTs00iHI6dBSImXDMuEdVZ6dfrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YJz8Jjj9; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782340387; c=relaxed/simple;
+	bh=DhI3vZtWBmAte3cycNIwkXWDElZxAwF5VkiCktlx3HY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=h8Ck83rOBY5rhZYZCTv7/TwEO+HAHP5RUyjD26eIdELhzebfZIKIeIhhkKtGobDtzPpygx04eaBwz3sKnMHicx4K7m3B97kdhiGxrFilQ+IjwODM5NLd2oT9neVLpbREnvPirOGnhch7rpctKcYO1YcNrzCC6EHy/mH5LBwdwQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d+LQODNz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sra4Spdb; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YJz8Jjj9"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-43ccd4f6f6eso1419188fac.0
-        for <git@vger.kernel.org>; Wed, 24 Jun 2026 15:18:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782339505; x=1782944305; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MUBlah3ZqIr1Ufm1JLRhxilRhPIdxTH783hcIV9WntA=;
-        b=YJz8Jjj9kwxJ9ob2ByR2sETBYBlQoGcLHLengVTyRdIyIaA9hVkBE1CCXv4YzIgrkM
-         ZezxHCOAeoV05S9Pfyj2PW1T5pB8Hko6qnt7gUCxzlFwcccJzc/XktwqeyPeKDcy1zK2
-         tcWuBsbzw9TvBcFLiFnKCjo1tCGWbdhwLW7y/ec8wIu+gyifXxXMyfkRs45/k17F0tDD
-         DKJZ+Tfty02w8NilJSFRQ1/csUzcffMfpMxHUk4Qk9gFh3YLqopU0nkkwnQr16LXWtcF
-         5i/O+cxlEqBOA1qPTDSBgZCMfsAikeHRUnCovLZR8tcz0gI7vLRp0biqlvQlmGS+xfdj
-         7QhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782339505; x=1782944305;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MUBlah3ZqIr1Ufm1JLRhxilRhPIdxTH783hcIV9WntA=;
-        b=l+EyaNgTYH4Zo7JxbJIdWxYCwjPwKdBV2l58XdiGjnam4IQi7fPweCbyGzMh4+tYKJ
-         ZxprfFXUNYV7+jy9El8b/Qol/uN2+O086/AN60h229QHCQm0nA6ru/wS3uFEzWt4zLXv
-         ov1kx/vd6+ZPTgIN39MTgn54wuk7mHUlO+hj3fxsYB8KWfY35LpN7UoNnvCRurWn7fdd
-         VCBTjCHUJZYoShpBugexoIOF4oW/s3nfj7CwPoc0Z6GUIxeJuEOkrF+v161FWNuxiFMa
-         ++0O9MC+G81pmmYqdoBgSYStuhi9Q2RBh+SBY6l5+mebzPcCpcKbK2Vkk9PK3u7Dv/Pw
-         Xx8Q==
-X-Gm-Message-State: AOJu0Yy0Z9yKjD+dcTNNXCgBhtwom2hE1DK+yZLjKuEqzYOWssZZtG0M
-	TYUCyAeMd+IQjcwW505BVKPIOcafnj1Xe068jg+4v1rkj1Dw938r4QJ9
-X-Gm-Gg: AfdE7cnoJcEHRNjdPMYDrf1j7+tD7WBaXw5cG21ELDkmvCgnEb+8kxSECxPT/Z0buc3
-	J72IGwgqC6MPRo8iB8rvnHoQQwL/b+cDYOm6BzvRwo9QO14L3kOC+pjIoLudMzZW6rK7lSWtGZr
-	ED8cWMMOpfSwbniGS4vSl2DFtGUEaPnIYgNgTj123bKLto8Ti2WsSSWrc/IyljKTdtvX4KBvmU2
-	R6S/guL8BIbSVGfnn6jc7T5ni60KE3rpAysPnF4uvj8wcTg5JJ2Y1pvWG7oYnZs/cCkV0EgCoey
-	QQhhUHrWciYYpcHf+VV3Kb+BceSPt0ahNdie4QlcD/Mxc24fdDFOUsD5LQ51VSu5G57l+rkwKAc
-	Y3HYqDTNAdgREZduobve7JBsfscjgKNHq/ZBJTLO79qrjIhC+D/4KwqPJSSo9xXwmkUWuU8rHv+
-	jT5ghGiA==
-X-Received: by 2002:a05:6870:158f:b0:43c:83b9:5057 with SMTP id 586e51a60fabf-447dcbb1556mr3974239fac.30.1782339505293;
-        Wed, 24 Jun 2026 15:18:25 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4472f042517sm10322780fac.13.2026.06.24.15.18.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 15:18:24 -0700 (PDT)
-Date: Wed, 24 Jun 2026 17:18:21 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 10/11] refs/reftable: lazy-load configuration to fix
- chicken-and-egg
-Message-ID: <ajxU-McoGrfkeKTs@denethor>
-References: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-0-018475013dbc@pks.im>
- <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-10-018475013dbc@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d+LQODNz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sra4Spdb"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3AB161D00064;
+	Wed, 24 Jun 2026 18:33:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 24 Jun 2026 18:33:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782340385; x=1782426785; bh=ZW6ysUu4hi
+	hUqF4QxFnU8g1uKWH7GN5DnAorwMTRXdY=; b=d+LQODNzw8wQI6cTpASQmAlrNQ
+	LlzW7XyuSG5hvp/kDF5Scf3krvv6c221NvyjT0lyE+Myqe3FJiIFLWzDemGXx2uA
+	1Gva03DItwFsIJr8yTAvkQCwPjJyrJzpWk7CG1TGE/SxoWtZvIAxL508FDu/2nD2
+	YKOQ1jAaamUY/p5kPhd5R2GHQj4HluEE8gtV4rOgXndcuKXnjPeFulKXRrJzuWdR
+	prR0k3SY4VmeN6lDOXUp5WEXHFaWhT7GdpXO6EoUWnvKq6NG0xNt+yS003zcrdpv
+	zJoECGMgzqSWTK0B2HzrUzl3gUOnyOeieKEdwKijA0N+gj1v2umQDLrL3MDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782340385; x=1782426785; bh=ZW6ysUu4hihUqF4QxFnU8g1uKWH7GN5DnAo
+	rwMTRXdY=; b=Sra4SpdbiXNpo3cEepwfTDUeWHmSTh3GABDjns7q7jr4kX903vj
+	A2W6CQqTV13SXLa1igikInr+iXsIIXxl8m5LATkfopbuny1TN5B09EkdDDd47Al0
+	ppf8y4cBYkUG3Uy8EYSt2wa0hWAVvWCfdBBoxmoE5PTo5c2XNi7IfLkry5lTAtLn
+	2nBM5p/wAbFDpgDrfYAQmSjUhT6JDZH63rb7nfL7pRbqzq0Q1MOiDj5jCsOr4uak
+	59PHxb6U06msQYhyxPVkjsvemPhd8VjvgTAvOojGCssFz4HF9HXqdVmxiL681Bhj
+	wNdN/XtJebkhIHIZV/XgBK4C+tayurQ3ROQ==
+X-ME-Sender: <xms:IVs8aj7_or5AnJPqG8uNPv2XqxUY5rD-Kx8e3_TGJ3fdOz4Go7xw3A>
+    <xme:IVs8av4hDxEWNuev6805dapX6j_ENoWpBqa8GrLr28NNqgwwO2iotka-3O9OXFce_
+    Bcq-Kayjn788ofPmCL02CDQQlkD8i16mlwrdvkoHPURe7alMSB50w>
+X-ME-Received: <xmr:IVs8ave6DeTJkYanVKOl0ssf_emSrPtsNM8Yr-dsL1ZzjKbKtnio66F1auhpauYWpOiry-xik93UczI_lOl00g1Engoj0uq-1Xu-a5w>
+X-ME-Proxy-Cause: dmFkZTG2eoxmkzuVK9IFVlPM4JZm8kLCAhCPD162cP/GIJ6sT2l6CuCIdj3L3LY20w6Lhi
+    hhKt4r2tac1h+msaLdPfZDkOChbNKCxZs1l56K/ivf8WQjU1gdllATPtlNPGeJX+5nLGKv
+    /OnrMlMl+1mxw9GIubYOh5vgSExmBaS9ouzNZZG98604XvhjQutJDxCEfD+OpZjbDYBsIq
+    OToqWMIaOA/sj+oZeA+59vqhlJEU+8JK7BH0v2ZbArixUIGyqvsIs4+RIuaXk7UO5PyDhN
+    3ID9wz+jS3Lm62h2pzYtpAMzQ5aEXvZW21IBkAS1MjHzZtUboRJhKnA4Xf99h8g8KGBQZx
+    keWe0qaqqFlmH0huHArZl/vCyUXg08qST0F5hac5B9n1/akMiXikhkeiR9Qfos3kE13wKb
+    AUAQ83xANqP8umF7RjUVJrmwVNZTn8XC5vyzezgsEjLALb1duuO4JoxYRfoed2/CIyCZ/5
+    pQ4IuTIUol4Lo3GCEhVjc3sYiyDtJjosfdqtRtnvB2O3WpBKn+JnoDJbE3mYxNGq4nxthq
+    OqUzUOacadwDS/eNuJLyTcqkB33pCk4/TSV6UhihJUV4xT+vvl02yFqvs6Zuuwtv4xyKyo
+    Uw8HQXn9oYNdYB619+8kEwTfO71jqz5AacXPVmXipMWM7bbWNymCsOObly5A
+X-ME-Proxy: <xmx:IVs8ajCTptZOe9msr0rBXOIR-lXToa1A8r78711GMXv2uQRyruG02g>
+    <xmx:IVs8ai8BqwqY_ghVWcuB1kDpZaMKd2QRSI3tV6zaSf-ODo17X85BWA>
+    <xmx:IVs8auIIylW2WrNlWJW1XFnDtNedcoezOqcKr3sXD9KKWHLxMXc3eg>
+    <xmx:IVs8arjnQ79dsiqQighyljrXnwv_SG3n92YL2uSEqPWT4fywi021Cg>
+    <xmx:IVs8au-btI95ps41Jhd-Q_6z1PlYNFGqc24u_TuUuJZhMzVKbScg27_l>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Jun 2026 18:33:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v2 1/2] branch: suggest <remote>/<branch> on upstream slip
+In-Reply-To: <11bcecebf43797a889f08e79401370f43b2917a8.1782338114.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Wed, 24 Jun 2026
+	21:55:13 +0000")
+References: <pull.2331.git.git.1781262619.gitgitgadget@gmail.com>
+	<pull.2331.v2.git.git.1782338114.gitgitgadget@gmail.com>
+	<11bcecebf43797a889f08e79401370f43b2917a8.1782338114.git.gitgitgadget@gmail.com>
+Date: Wed, 24 Jun 2026 15:33:03 -0700
+Message-ID: <xmqqechvh8m8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-10-018475013dbc@pks.im>
+Content-Type: text/plain
 
-On 26/06/22 10:28AM, Patrick Steinhardt wrote:
-> Same as with the "files" backend, the "reftable" backend also has a
-> chicken-and-egg problem with "onbranch" conditions. Fix this issue the
-> same as we did with the "files" backend by lazy-loading configuration.
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> When setting the upstream of the current branch to the 'main' branch
+> of the remote 'origin', i.e.,
+>
+>     $ git branch --set-upstream-to origin/main
+>
+> it is easy to mistakenly write
+>
+>     $ git branch --set-upstream-to origin main
+>
+> That is parsed as a request to set the upstream of the local branch
+> 'main' to 'origin'. When 'main' does not exist, the command dies
+> with:
+>
+>     fatal: branch 'main' does not exist
+>
+> pointing at a branch the user never meant to name.
+
+It is more complete to add the other case here, something along the
+lines of ...
+
+    And then when 'main' does exist, the command would die with
+
+        fatal: the requested upstream branch 'origin' does not exist
+
+    leaving the user equally confused.
+
+... no?  In any case, this is much more nicely described than the
+previous round.  I see no room for confusion.
+
+> When the operated-on branch is missing and '<remote>/<branch>' names
+> a real remote-tracking ref, suggest the intended form:
+>
+>     $ git branch --set-upstream-to=origin/main
+>
+> The suggestion is gated on '<remote>/<branch>' existing so it only
+> appears when a slipped slash is the likely explanation.
 
 Makes sense.
 
-> Now that both the "files" and the "reftable" backend handle this
-> properly, add a generic test to t1400 that verifies that the user can
-> configure "core.logAllRefUpdates" via an "onbranch" condition. This is
-> mostly a nonsensical thing to do in the first place, but it serves as a
-> good sanity chekc.
+Do we want to do anything on a case where the operated-on branch
+does exist but '<remote>' is not a name suitable for an upstream,
+but '<remote>/<branch>' is?
 
-s/chekc/check
-
-> Note that we had to move `should_write_log()` around so that it can
-> access the new `reftable_be_write_options()` function.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/reftable-backend.c           | 146 ++++++++++++++++++++++----------------
->  t/t0613-reftable-write-options.sh |  19 +++++
->  t/t1400-update-ref.sh             |  12 ++++
->  3 files changed, 116 insertions(+), 61 deletions(-)
-> 
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 608d71cf10..d74131a5ae 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -141,10 +141,21 @@ struct reftable_ref_store {
->  	 */
->  	struct strmap worktree_backends;
->  	struct reftable_stack_options stack_options;
-> -	struct reftable_write_options write_options;
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 1572a4f9ef..cefc4519a7 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -706,6 +706,29 @@ static int edit_branch_description(const char *branch_name)
+>  	return 0;
+>  }
+>  
+> +static void die_if_upstream_looks_like_remote(const char *new_upstream, const char *branch_name)
+> +{
+> +	struct strbuf remote_ref = STRBUF_INIT;
+> +	int code;
 > +
-> +	/*
-> +	 * Options used when writing to or compacting the reftable stacks.
-> +	 * These are parsed from the configuration lazily on first use via
-> +	 * `reftable_be_write_options()` so that we don't have to access the
-> +	 * configuration when initializing the ref store. Do not access these
-> +	 * fields directly, but use the accessor instead.
-> +	 */
-> +	struct reftable_be_write_options {
-> +		struct reftable_write_options opts;
-> +		enum log_refs_config log_all_ref_updates;
+> +	if (strchr(new_upstream, '/') ||
+> +	    !remote_is_configured(remote_get(new_upstream), 0))
+> +		return;
+> +
+> +	strbuf_addf(&remote_ref, "refs/remotes/%s/%s", new_upstream, branch_name);
+> +	if (!refs_ref_exists(get_main_ref_store(the_repository), remote_ref.buf)) {
+> +		strbuf_release(&remote_ref);
+> +		return;
+> +	}
+> +
+> +	code = die_message(_("--set-upstream-to takes a single <remote>/<branch> argument"));
+> +	advise_if_enabled(ADVICE_SET_UPSTREAM_FAILURE,
+> +			  _("Did you mean to use: git branch --set-upstream-to=%s/%s?"),
+> +			  new_upstream, branch_name);
 
-Any reason in particular that `log_all_ref_updates` is the only option
-outside of `struct reftlable_write_options` here? Isn't it also only
-used during writes?
+Do we still need the _if_enabled() thing here?  Isn't the caller
+gated with the same condition in this version?
 
--Justin
+> +	strbuf_release(&remote_ref);
+> +	exit(code);
+> +}
+> +
+>  int cmd_branch(int argc,
+>  	       const char **argv,
+>  	       const char *prefix,
+> @@ -957,6 +980,9 @@ int cmd_branch(int argc,
+>  		if (!refs_ref_exists(get_main_ref_store(the_repository), branch->refname)) {
+>  			if (!argc || branch_checked_out(branch->refname))
+>  				die(_("no commit on branch '%s' yet"), branch->name);
+> +			if (argc == 1 &&
+> +			    advice_enabled(ADVICE_SET_UPSTREAM_FAILURE))
+> +				die_if_upstream_looks_like_remote(new_upstream, argv[0]);
+>  			die(_("branch '%s' does not exist"), branch->name);
+>  		}
+
+This is totally a tangent, but has anybody noticed that the web
+interface to the lore archive seems to be constipated?  I am reading
+over nntp and subscribers are reading from their inbox, so no real
+harm done, but from time to time we get reminded how heavily our
+development process relies on the services like kernel.org and feel
+grateful to have them.
