@@ -1,154 +1,110 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAE53A6F19
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 09:37:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D6E391822
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 09:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782293833; cv=none; b=Npw9rV0wzf+CRN4xYguNsw0EcGdfOrOt6m+Mvc6AHQhToXIpQZRIANYtR9v0uIK38lIxxWvyKop3rEeHX4aTVCcxtoFZK/ugnkZkLsNo6DwHzTQ8NpDtIW/1MOruOJ1llgyjS915xlZ92pV0Soy17ViY88MU9bhrVDqGMowTbUk=
+	t=1782294395; cv=none; b=i1Zx3XKGrm4qTRnSI6ZTyX2L82v0a/vWLN0Bdwt6FnGc1wOq5w1XWClQfrTPwO8cQ8CHWcZDEYDox9p9W45vJGkEj10SWp1JDlEK4dIi3SP+PkJ2oN3MxRMB/KUVhsVHioXsCxJd1HvPxnPzkUqohWGoQwBf+hG8V/HTioH5w7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782293833; c=relaxed/simple;
-	bh=no4cD+QcYicTCms+DAgkwwITG5OIAK0jWrsTvU9rCyY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SmSbziXoeMktWt+EmV2kGgU/ExepXeWcuWOQDv9FVdbda+0Xs5dcrqzgodVDU1pwH/ymX9+I8Dk3ta5gddPpT/DRQbqi3xTBMchlpZfmg1OpyYZ9XLyfuE1MYQxCAbnGiRVQDwiw3Ul7eTKbspDukS9DvTFn/zHzc9DNKShtYY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nw+/cdP7; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782294395; c=relaxed/simple;
+	bh=uQaarmNtypC6TJARxlR7u3HIUTqXu7XXjTY1GrWTbTk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PsXqpFBS5qOkuOHhWTrGJNVrvnsZg6kUsYBKfARkTeAWEJdWfmN5fQ9r+AYlZf+JrkvoEegG9OIxQPHXcpttCWNsyKphE8J/7YV3qWB76LOh1uFRzDPSbclvLCMWNeRJDGh6w5Wb5hUUA2pSgFCnMCiVz+8QzG7LuqsAb6losR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Kgx5t3OL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NhEohdM2; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nw+/cdP7"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-bec450b950dso131376766b.2
-        for <git@vger.kernel.org>; Wed, 24 Jun 2026 02:37:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782293826; x=1782898626; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=StwhdC4PjCsU2pPCRqmnHP3To5DYn/OYAFdLisMJT18=;
-        b=Nw+/cdP7BLi29i43sHICtSLEyHL7pDEG0de68Lhe3DzMyQLhZjhfnPF8vGdC5VdqZO
-         RRgPEFj521j2Vb2XdB15hNShX5snuE658plOnHtLhXwBv8gKiJi9k3V4MWIvqsIQWm0H
-         lpJwf8sJ30q4z4tmZJGFgqsDZ9WYkYaOyOe307h4fGwXilY5WU85WJwy47k4gGKRyEgC
-         ArowH+wZ6N/qULJJM6uLELH4KQ9jArH8UZT+O0ke2o21jqjuE7dGzerADZU7t/1Fy8lK
-         /YjDCJIEg2TBEZ/MeiijB8maU+xfiOestRgeVVfh7Veg2PK60ht2BaJPhE0RsOAHoXJ0
-         jC4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782293826; x=1782898626;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=StwhdC4PjCsU2pPCRqmnHP3To5DYn/OYAFdLisMJT18=;
-        b=Oyju18qbaov1QfAHgdzdL57EU8yKaK6HHLvtic6Gf7GQQgh5PmDwtUyzzcN7Khicx7
-         xGFvx1xeyKcXTQLr12dOq5HTbuhmkVCvi8Ms9OrRl9lQU2Yg3gjU6RffeHBYkwp2PwZU
-         WlWFl4tctaPl1xHhm+oEVMfjcij2fqhH6+dtFxeClMXBhr/lxgKR7/2KmPsrUvebX0ya
-         kM97zTJzxBD9ySoifZP2ibkcgy08N0Fj4NddCFbBdgm/O0ZsxSM9qWdkvXiTEnald7v2
-         uqpRQRO7KGhOO1hI1ePaD1JeXJ+5HsXUJSgH3CBnxvqSKlGHfBxun1VsekjszvbyWUnJ
-         PTUA==
-X-Gm-Message-State: AOJu0YwGLujNdeb57qlAdXeKvIHLHhIRZEgzkiY+ovF6UuWmhihtOJVz
-	RgLG9YT94vHuHk7VWRpHyY2drnEzXs4f133NZR/cH1+FOpOpFbhneOV3HBgfvxWj994=
-X-Gm-Gg: AfdE7cmKH4wARzipWMH6ggu2a8cWKNkNZZbfMZJb7fEAVPfT2sMPzIo6L8gFG9SzcxP
-	6wMbIcJQe9/XUraKeffPB7fSA2R2NGoA2OQnTLb33K9uoPv0s0m4xkaqpk3yvf2f/RgM3oVsfBq
-	aQvOFLROlXSrsG6XFoZkLCdvi9MVIcXuQtrbl5KiO12NXf8bZXsaw7ebC2l/PL1pJHOn+Zevn3K
-	x1csMC6MNQ0q2I3/Jf4I/2AHQ9QA4hoQvgIN4/M+2kvYbzGiyArb9MBpEVa1Dv8AOpf+4yg5QJy
-	6+5gOJN0MfiobruekSCaHlReQt/dyuR1okexA/ucQV5C5hd5DNhVmogdoYAw6v/z+jJnvl1Z/sS
-	m1GtGzixi3VYDf23BUM942/sD1yhKetYRVq7Wia5Gy509KRFoSZenNi7QStwrgTOlBo+7Gj//eq
-	bGy1Fn24WXNTw4Zg==
-X-Received: by 2002:a17:906:ee8a:b0:bf0:550:d9f with SMTP id a640c23a62f3a-c107eec8930mr398905466b.31.1782293825500;
-        Wed, 24 Jun 2026 02:37:05 -0700 (PDT)
-Received: from aartix.localdomain ([151.19.235.47])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-697f4bd44d0sm806906a12.29.2026.06.24.02.37.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 02:37:04 -0700 (PDT)
-From: Antonio De Stefani <antonio.destefani08@gmail.com>
-To: git@vger.kernel.org
-Cc: Antonio De Stefani <antonio.destefani08@gmail.com>
-Subject: [PATCH] gpg-interface: fix strip_cr_before_lf to only remove CR before LF
-Date: Wed, 24 Jun 2026 11:36:18 +0200
-Message-ID: <20260624093618.17456-1-antonio.destefani08@gmail.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Kgx5t3OL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NhEohdM2"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0B4281D0016F;
+	Wed, 24 Jun 2026 05:46:34 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 24 Jun 2026 05:46:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782294393; x=1782380793; bh=9e23IWkXSQ
+	fV6ZiDwuTMxD2X775wFKGgReJR6OLy55E=; b=Kgx5t3OLya3cvxED2jYbAr8t42
+	Vrr4tfRWpoSmMNIblpTDFdUMHgIwlI74comd0h9vHqYo6c+UXuG8Dtfg1N9BGbmZ
+	5JAOhL/72S/VwVxiAttpi+C3bzxBdk6MtLC7pK2+Lq/grJd4GefbIG015jTaV9sG
+	SUFzALoLK7GE0EkFn/t9s9Gqpc0au7jGK4Bo/tAAzwYkHJL20O3ZSTiFNnuUVl9A
+	jWvcPv6I9Hz5tfcmcXWMEIr6SdZqaSSs2ZkeLRYg2ONsXtVMk5BeOC32BawFF1Rn
+	Qpx0GT7G0rCJp2EXVFUSnykzQZuuBU135iXTBztddWfLRlzORTKLvGqymEjg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782294393; x=1782380793; bh=9e23IWkXSQfV6ZiDwuTMxD2X775wFKGgReJ
+	R6OLy55E=; b=NhEohdM26Hz9us40g3hr+op4h6cT6Mnfhd8lAUsYm0SQjylyp0f
+	oL7J40ARcePjYUkpmHvz7ji0kyHYLmqq22SQrT6mMHzheTIsAJ/du5UUyDMdWqB0
+	pltNc0nAvm8STE1SaTw29Mm7QEAKJcy2NJs01XVejwWr5eiplJ52ItJXCxSP75nj
+	I0W5AAwPudB05k9tMk45grPyRt8qiCbg8T9WVXZQlUX38J5U+CHMPjdRMlCthI8c
+	lZYra0F7mfgGD9Nt2G318ycdWWeqoQC2Hif2YSMUXI7LlBA6n8q2RhyJXfS9i+P9
+	NH85hlxxUq1hCmh7iPBSw1+hqij6QDZ6puw==
+X-ME-Sender: <xms:eac7agDsgOLky-KNkiOYbSn79c9dOUzJDboXqv5eBf5UT-3mjw0Mfw>
+    <xme:eac7aogbgK1fRLxOxM1O7wi6fGxOsOXs3pL9U6WG9tg1kyUxSLg6bVaC048QoXngN
+    YgQggeSdpMBBxlBfQl4jE5jbvISIQfgV8o67viLCgwWbHeivCkT-A>
+X-ME-Received: <xmr:eac7ahPf8H3IyIxPcQa2Eh_WkoIRkQ7__3vzneXo5312dMmK3k0sXpajZLvIsdnHLpFMfSIWPR47XXfUpR1SUOM0-DewDGivrukQAD6O>
+X-ME-Proxy-Cause: dmFkZTFJ1BJiRcgqg6w0Xn/gQp5SHV/8LjqDOEPYlNgDiFaX7SgCGwC2MRv804kvf1UpYC
+    co0D4v3I8t00ekj2rE6ddzs26OkU3JEdAxgpHUMc8GjNvRgfTMzfP/DPqdSA1WZPBB+Yv+
+    HUi88oBhDfSM25rOobctmzby1wTw4yRL8ldkfylkNSHloKCt0dni2POVfN5ljjpPpWQX1Z
+    Ta9pB7ngF+au842ke3aZZt42lkQcFMG4IldJ653VQLwxD5RLFuWDeEDBehYQhEtBfaIkYA
+    OrIg1J+ChVH44+sfRQ3UTunrHwMjUrh9vivfPTX8CMhUKniTopZttHOsMzyCGYeN3b2DkX
+    y2jCVNWgfkROra3jQTK5SPwu0MGikHhPPSPJ44ewgyLfhzPkTcgfyZsOVk2aoMCpRofChm
+    keTSOj9sDDp+eORQf+77kbINYC/saC0cwyi5uHh66eFVH1Bvq6LIeZyNc+AHNIXER/lBA/
+    K2ZKHjix31H97HGvxELAvS5QiQUE3tk8DtSXXc5Q8l2lfWQOwbGgu/V2PsIcUoZbmzmhk2
+    HRaRqwVwTfVl2YnC/WD/ElQ8B6+yT54wZ8C93CPZsw61byt9sESBkDAe7THmzbI0jg0qb1
+    vXUhRPrtYcHLZ52nKxJ7uv0Axgd8CsLLgxIrIRSFgx5/Wh0LXrrtvRX0zefw
+X-ME-Proxy: <xmx:eac7ah5WWE9jCzfU50lChisWVPEtGTSrvPysPocfxlSyPx6gkaIjbg>
+    <xmx:eac7an0cancMk4q2aXvO-Ak74j0lKXzHKom2sIuPo2sElrN2_DemuQ>
+    <xmx:eac7aqZamnSwwSaBW4tiGjktSo9YP3RpWLLfxYyIFaHXUNIdVDhmeQ>
+    <xmx:eac7anBvxrPn2yIPe_skusyCxLruK5TF68Jo9brnOhKj-Y8MZV4mOQ>
+    <xmx:eac7aieD25Zzhf7gVAe85sPlgzWeH0bm7UzTTW6QtZa9yLazeXqHpJ1H>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Jun 2026 05:46:32 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d3442fdd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jun 2026 09:46:30 +0000 (UTC)
+Date: Wed, 24 Jun 2026 11:46:27 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: oxsignal <awo@kakao.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 11/11] reftable/table: fix OOB read on truncated table
+Message-ID: <ajuncy95aopgDt-b@pks.im>
+References: <20260624181426.NJDNpVd1RE-qJjBVh5jtQg@awo.kakao.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260624181426.NJDNpVd1RE-qJjBVh5jtQg@awo.kakao.com>
 
-c4adea82 (Convert CR/LF to LF in tag signatures, 2008-07-11)
-introduced CR stripping for GPG output on Windows, but intentionally
-stripped all CR characters unconditionally to "keep the code simpler",
-even though only \r\n sequences (Windows line endings) needed to be
-normalized. 2f47eae2 (Split GPG interface into its own helper library,
-2011-09-07) moved the code into gpg-interface.c, and 29b31577 (ssh
-signing: add ssh key format and signing code, 2021-09-10) extracted
-it into the remove_cr_after() helper when adding SSH signing support.
+On Wed, Jun 24, 2026 at 06:14:26PM +0900, oxsignal wrote:
+> Hi Patrick,
+> 
+> Thanks for the patch series, for adding the dedicated reftable fuzzer, and for
+> the credit.
+> 
+> I reviewed the cover letter and the reftable hardening patches. Patch 05/11
+> matches the OOB write case I reported:
+> the new minimum block-size validation before handling the log block prevents
+> the bogus inflated-size underflow from reaching the inflate/copy path.
+> 
+> The rest of the series also looks like a good cleanup of the corrupted reftable
+> parser surface, especially the restart-count/restart-offset and truncated-table
+> checks.
+> If I find any remaining malformed-table case that is not covered by this
+> series, I will follow up with the reproducer.
+> 
+> Thanks again for handling this so quickly.
 
-The original laziness was safe at the time because lone CR characters
-are not expected in GPG signature output. However, the NEEDSWORK
-comment left by a previous reader correctly identified that only
-\r\n pairs should be stripped, not lone \r characters.
+Perfect, thanks for the report and reading through the patches!
 
-Fix the loop to skip \r only when immediately followed by \n, keeping
-lone trailing CR characters intact. Rename the function to
-strip_cr_before_lf to reflect its corrected behavior, and update
-both call sites and their comments accordingly.
-
-Signed-off-by: Antonio De Stefani <antonio.destefani08@gmail.com>
----
- gpg-interface.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index dafd5371fa..95abf1ef4e 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -990,21 +990,18 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
- 	return ret;
- }
- 
--/*
-- * Strip CR from the line endings, in case we are on Windows.
-- * NEEDSWORK: make it trim only CRs before LFs and rename
-- */
--static void remove_cr_after(struct strbuf *buffer, size_t offset)
-+/* Strip CR before LF from the line endings, in case we are on Windows. */
-+static void strip_cr_before_lf(struct strbuf *buffer, size_t offset)
- {
- 	size_t i, j;
- 
- 	for (i = j = offset; i < buffer->len; i++) {
--		if (buffer->buf[i] != '\r') {
--			if (i != j)
--				buffer->buf[j] = buffer->buf[i];
--			j++;
--		}
-+		if (buffer->buf[i] == '\r' &&
-+		    i + 1 < buffer->len && buffer->buf[i + 1] == '\n')
-+			continue;
-+		buffer->buf[j++] = buffer->buf[i];
- 	}
-+
- 	strbuf_setlen(buffer, j);
- }
- 
-@@ -1049,8 +1046,8 @@ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 	}
- 	strbuf_release(&gpg_status);
- 
--	/* Strip CR from the line endings, in case we are on Windows. */
--	remove_cr_after(signature, bottom);
-+	/* Strip CR before LF from the line endings, in case we are on Windows. */
-+	strip_cr_before_lf(signature, bottom);
- 
- 	return 0;
- }
-@@ -1136,8 +1133,8 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
- 			ssh_signature_filename.buf);
- 		goto out;
- 	}
--	/* Strip CR from the line endings, in case we are on Windows. */
--	remove_cr_after(signature, bottom);
-+	/* Strip CR before LF from the line endings, in case we are on Windows. */
-+	strip_cr_before_lf(signature, bottom);
- 
- out:
- 	if (key_file)
--- 
-2.54.0
-
+Patrick
