@@ -1,69 +1,69 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1DD373BEC
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 21:55:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAFC2E0902
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 21:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782338121; cv=none; b=dGE0VFPd9xTBMjTc9/CGZOPuUj0qhZaBpArbS6aBcjLDS9MUkRKH5a4kMS4D8IG3sdyVkuBfWzGriFK8xLtgk7nEZ6UFKE0uIN+0apLyZgxu146cfoKWD5DBpZgVqzrwzww7CVM0oXEYlD6pyePo6bjmI+w9JlTtZ4zQ+cSb4Yg=
+	t=1782338123; cv=none; b=hw2t87x2cY0n0rFLtJzqwpb0mXWSZxFoozymbPSOS6NIkjmiFGPkbs8VHNA0rw7EA+3psfpraO6RFh5MpNVXuOn7LEeVbPfvdUqP/F1HKqS25/Fq+J16NYLyqdjJWALgjosbGkPqMctssfWkRE+Imt+J8L1tHBeCvtQWFoYT5cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782338121; c=relaxed/simple;
-	bh=SMmoWWk/OGDVeQ0f9WkNki8oAg6xXIIW5VYkmo3uaB0=;
+	s=arc-20240116; t=1782338123; c=relaxed/simple;
+	bh=cDl4dqo3BX859WtOE/pQiGoZbJUf+QBumWsGQFnR02A=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lYtgIyEwVPBs7NO8jz7jPzJnsdaadhKNM4O86gJyhloIk6V4aLrWRXE1+FduJdfQDMmgNCn5V7TKwIgOf3zSDg9Yz1T5fQn6CUfn4wGnSNgVHCQ7GdkIBGRNf9AlOHt+d3z8rpbRgwB3RjiuNyY4+mIwxfqVFb1nw4qPUiiGoV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fpWYwZQT; arc=none smtp.client-ip=209.85.160.171
+	 MIME-Version:To:Cc; b=S+X/djz7WiZr5/bCAPwojl68eskHNxwcmMV4lqKhPORaelcI1vkHweNtImgpO9U0hwx4lOAnxBgwlGOYkznSdzehe8CQgWAnecTTmuodn+icQvoM/bJEsjkQM/OEA4dDjk7qYe7tI/zndwyBa+mlGiWdQHrDcSfUs2wl1WqGhqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=myrWeE1l; arc=none smtp.client-ip=74.125.82.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fpWYwZQT"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-5178a42caa3so2879831cf.1
-        for <git@vger.kernel.org>; Wed, 24 Jun 2026 14:55:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="myrWeE1l"
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-30bf8b2bd20so3245558eec.0
+        for <git@vger.kernel.org>; Wed, 24 Jun 2026 14:55:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782338120; x=1782942920; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782338121; x=1782942921; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HBDjgLEeckrJ8qzVeIyoFxQlMpH9ZCg6lZ5BpmWnnv0=;
-        b=fpWYwZQTVa+2FGmKs89rGWArDj0SlkUQBoPYINsXzIxmYwGM55HyMzv9NgpEeumAlF
-         gJBBsrat1v+OSh3HVN4J6L4EdfHRCP0rFSe0lFzHjPgfT7WpH5qhheAbAQId6sBpJ/AQ
-         cicwki6NxocsM1iBDessu3pvz38DSNfdDwdqrRMDoTp5jCYxJSVkJvJwxpemCTtpJFfw
-         TL84GXIPUQmZr2AnLDUIF5dS84NudLuHPgc+0mr1tDcjVSYwh52ZuRlW8xya47s514HO
-         SJp4fK15G1fFJBYfbsWuNug/QE7K/DqumfgjQKZg6jxN0D0CgObwgVlJwgpRCJxtRyGr
-         0Hxw==
+        bh=K148r5Y5uY71TgMe3WtT9kpRRiwruZGMSfEWm1WBCNs=;
+        b=myrWeE1lKMsf9WOzMyaPiZMPl2VW7EQv/uo0voCV6oeQhyEP3bx/7DA4ctgmToyd/c
+         vEqHIbke+mcEPZtSDWb1w9ojzNscJWqVo11r9hFZld2AzjauPYpVoX9TXczL8LEnzJC7
+         98+svUyNeewiSNAqJ4J2p91CVQpgyEbz1gfA2U+1Smmi3B2EIpJ/VEx8YhAI7Xhs87u7
+         DFUw9gGDWTxZHnUmE41NUve8nZctUwPnfJLu+dmijNLWB8r5xQ+SyWKgOeyEsbpwcZHJ
+         piJjr3RDZSD/PEeWGC94XDSCekj4bmiCQSiWP16wcovIowSx8APQs5EvFQJlvAQMKEBA
+         L3YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782338120; x=1782942920;
+        d=1e100.net; s=20251104; t=1782338121; x=1782942921;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=HBDjgLEeckrJ8qzVeIyoFxQlMpH9ZCg6lZ5BpmWnnv0=;
-        b=fEzh2i0vG7zg64FXtFkjm1Mn1/Z1ACoCTloXqZTHXeojs3f5yVeMoznnR33eEq1D8M
-         FrMdAsxk/IbO3zESPHcyKS5yWcr21mzZjJ6raPKCYvjNd1CFC16XdswXizIfsnHW0Lsv
-         THHcfJaU0VR2d98MWGW2OB/WkUEA9i2eiqceWM+zDNkh/UxgbGv0hZYzQiLqTGSBSKtL
-         pwJVx7dQATbUS4IxmsbkrPd+4LCVEjn8TJM+DRsh+Kb5zIW4QD5880m+QFmfuoXi7HF7
-         q6eaLgGekMNHxBZtqerxtF4NB01hV9m+//+htRlm/BnRwPLEWq4FyIZtHWXvad09mex1
-         HQRA==
-X-Gm-Message-State: AOJu0Yy3o4OEfThYcjLB+NH76iKhqSZBiHRbLLYc/2ulQdpk919WtWSU
-	tnlgoYBiHAqOIPMpI7DB+J7nFWeMqRBJ/zI1E1diZLMl8Fw7n2C5yBxjJlQgKQ==
-X-Gm-Gg: AfdE7cmvwNs/f4fDG+xvwpjt2b9imphQiqfFOIKc+zAvaohfEYDjkMhiYccHiF7dBZX
-	eskn/VRUsUd2J2LvrcUGPrpZvcistRAlKRqofclEyHeNTo3KgaxC8W93xFMguHTriXd7yRGpxLp
-	q7/ZD2E3M85meHMG+Xkp66uSMjnH74YMM9MbDDJIPxpk9UGB3mNv7qpIiTjP/kmGMFMstufule3
-	ohES+IvaomEYKB5dImQcqx/Apc+NZkRhvKYzSwyavJzBahSoa4wQ3Mqkk9ZcSniJmVQ5DkCZzK5
-	WEWmf0H6YNNHI264A54mg+BFC9o1UzLgQwwziQxwDzyvEsYOkN1jS0u/MtPvKRqCzQbEGYQaB+N
-	FdRskiQRtUTzIrs0Ovi+tlPzDUi4f8MVqANu8TvxpNlP0tdNJgu5Qlz1PVDsPz4HG5sCOZJmBFd
-	QOs1xu40hKRbEbvFg=
-X-Received: by 2002:a05:622a:1e90:b0:517:8ed5:417 with SMTP id d75a77b69052e-51a51b6d02bmr137656441cf.29.1782338119590;
+        bh=K148r5Y5uY71TgMe3WtT9kpRRiwruZGMSfEWm1WBCNs=;
+        b=Xo4W55mhdvk2vy1GR1rmNxrJ6eFsqgScstsQllNw2GSMD5p/m/pFZBZsphMhIkWRz0
+         x4vWObliuv6+am9WsEWmjCiLsoc27r7VAgG61k/eV1R12EZazLVJAwvNIXdClkVCzKaP
+         xEeUHqaWt/YTVcxwh1Mj3P1q9tJQ2ePUFVoKuluCVTGpdK0eex+1NVOIdqyuSvlMOFrn
+         duysQaZ90g/IRcewzfGWL+bfhw9yIyjMqZ+cd9T+OT4vHo2NVKpLBVRPa30Ghrsfj0CS
+         2zC3Nuf1kgWOHBWBo3VRbLVgnXjvUZCsWnzQAwdTv9qTob97WK2iglcXnTMvrDRD6Z98
+         txBg==
+X-Gm-Message-State: AOJu0Yz9T3IIlFENMIbZpgq0nvuuox/cH2INmuHlhKmazGwSCLK6M8eL
+	Md1mzA6FbGCyqKUFJPOs1jiN3suRy3EobSfG5RhEVklH2H+8UHSeYqzkdBP9Vhhj
+X-Gm-Gg: AfdE7cm0HqgEq2GyC30L0GmjJ0Jjz9EkPueIOvQjX8vJfOTLpe140amtqz8WFtKG6/S
+	+/sOnyRnWkA5NKL7iKb/ijpSO1ahZc4L43/F9/MFl8fuA99+OoUE5pfYW+gXuh6tqdZu+P0SYc1
+	FrMh0CGA5pzwlVEorvGymKmiT7d3Nu1fOCEbzQEWHohLGFrSuiDFdDA6mCuKpHrcspY37zQydMn
+	PGtFaKIxOkeq25lTnx3GtssKSwG9mYVUq12YXTnDBSuad0huELLNT93Aq4q6GjhFsdGyPd59tpi
+	2wqBW2wu00P+2jrENzSCTyV+13GRHcC/+jIaiMkMvTMnUVb3hvQnFvPR8fAqcjoy1nuRyw4w52d
+	BiwgTfzsmu3BZTSoAqxpW4FDxMxgdbhMX1ZjTOQssCKt9kf5ah2ozm9ADI1EczFABMu10iDoJIc
+	sqr5LxS+19cBWXGq1g
+X-Received: by 2002:a05:7300:1483:b0:30c:689b:c59d with SMTP id 5a478bee46e88-30c84b4f99bmr25960eec.5.1782338119976;
         Wed, 24 Jun 2026 14:55:19 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.160.20])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51a51ae9505sm61145261cf.26.2026.06.24.14.55.17
+Received: from [127.0.0.1] ([52.160.149.135])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c58831asm1816680eec.13.2026.06.24.14.55.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 14:55:18 -0700 (PDT)
-Message-Id: <49de5a925de506ed9a141eb72927b2548b73af22.1782338114.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2331.v2.git.git.1782338114.gitgitgadget@gmail.com>
-References: <pull.2331.git.git.1781262619.gitgitgadget@gmail.com>
-	<pull.2331.v2.git.git.1782338114.gitgitgadget@gmail.com>
+        Wed, 24 Jun 2026 14:55:19 -0700 (PDT)
+Message-Id: <8d0323f4b30cdfed134ff2840cc8a9ab32f9db53.1782338106.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
+	<pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jun 2026 21:55:14 +0000
-Subject: [PATCH v2 2/2] push: suggest <remote> <branch> for a slash slip
+Date: Wed, 24 Jun 2026 21:55:06 +0000
+Subject: [PATCH v18 7/7] branch: add --dry-run for --delete-merged
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,190 +74,162 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-When pushing the 'main' branch to the remote 'origin', i.e.,
+With --dry-run, --delete-merged prints the local branches it would
+delete, one "Would delete branch <name>" line each, and exits
+without touching any ref. The same filtering applies, so the output
+is exactly the set that the real run would delete.
 
-    $ git push origin main
-
-it is easy to mistakenly write
-
-    $ git push origin/main
-
-That is parsed as the repository to push to, and since 'origin/main'
-is neither a configured remote nor a path it dies with:
-
-    fatal: 'origin/main' does not appear to be a git repository
-
-Often 'origin/main' does not exist as a repository, so the command
-fails without doing any harm, but it gives no hint that a space was
-meant instead of a slash and can leave the user puzzled.
-
-When the argument is not an existing path or configured remote but
-its part before the first slash names one, suggest the intended
-'<remote> <branch>' form:
-
-    $ git push origin main
-
-The suggestion is shown as advice so it can be silenced with
-advice.pushRepoLooksLikeRef.
+--dry-run is only meaningful together with --delete-merged and is
+rejected otherwise.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/config/advice.adoc |  5 +++++
- advice.c                         |  1 +
- advice.h                         |  1 +
- builtin/push.c                   | 31 ++++++++++++++++++++++++++++++-
- t/t5529-push-errors.sh           | 31 +++++++++++++++++++++++++++++++
- 5 files changed, 68 insertions(+), 1 deletion(-)
+ Documentation/git-branch.adoc |  8 +++++++-
+ builtin/branch.c              | 22 +++++++++++++++++++---
+ t/t3200-branch.sh             | 11 ++++++++++-
+ 3 files changed, 36 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-index 257db58918..fa77a5110e 100644
---- a/Documentation/config/advice.adoc
-+++ b/Documentation/config/advice.adoc
-@@ -90,6 +90,11 @@ all advice messages.
- 		Shown when linkgit:git-push[1] rejects a forced update of
- 		a branch when its remote-tracking ref has updates that we
- 		do not have locally.
-+	pushRepoLooksLikeRef::
-+		Shown when the repository given to linkgit:git-push[1] is not
-+		a configured remote but looks like a `<remote>/<branch>` ref,
-+		suggesting that the remote and branch be given as separate
-+		arguments.
- 	pushUnqualifiedRefname::
- 		Shown when linkgit:git-push[1] gives up trying to
- 		guess based on the source and destination refs what
-diff --git a/advice.c b/advice.c
-index 0018501b7b..63bf8b0c5f 100644
---- a/advice.c
-+++ b/advice.c
-@@ -69,6 +69,7 @@ static struct {
- 	[ADVICE_PUSH_NON_FF_CURRENT]			= { "pushNonFFCurrent" },
- 	[ADVICE_PUSH_NON_FF_MATCHING]			= { "pushNonFFMatching" },
- 	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate" },
-+	[ADVICE_PUSH_REPO_LOOKS_LIKE_REF]		= { "pushRepoLooksLikeRef" },
- 	[ADVICE_PUSH_UNQUALIFIED_REF_NAME]		= { "pushUnqualifiedRefName" },
- 	[ADVICE_PUSH_UPDATE_REJECTED]			= { "pushUpdateRejected" },
- 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward" }, /* backwards compatibility */
-diff --git a/advice.h b/advice.h
-index 8def280688..66f6cd6a77 100644
---- a/advice.h
-+++ b/advice.h
-@@ -36,6 +36,7 @@ enum advice_type {
- 	ADVICE_PUSH_NON_FF_CURRENT,
- 	ADVICE_PUSH_NON_FF_MATCHING,
- 	ADVICE_PUSH_REF_NEEDS_UPDATE,
-+	ADVICE_PUSH_REPO_LOOKS_LIKE_REF,
- 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
- 	ADVICE_PUSH_UPDATE_REJECTED,
- 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
-diff --git a/builtin/push.c b/builtin/push.c
-index 6021b71d66..255556b44d 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -8,6 +8,7 @@
- #include "advice.h"
- #include "branch.h"
- #include "config.h"
-+#include "dir.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-@@ -662,6 +663,29 @@ static int push_multiple(struct string_list *list,
- 	return result;
- }
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index d482cded3d..00d6192e6a 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -25,7 +25,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
+ git branch (-c|-C) [<old-branch>] <new-branch>
+ git branch (-d|-D) [-r] <branch-name>...
+ git branch --edit-description [<branch-name>]
+-git branch --delete-merged <branch>...
++git branch [--dry-run] --delete-merged <branch>...
  
-+static void die_if_repo_looks_like_ref(const char *repo)
-+{
-+	const char *slash = strchr(repo, '/');
-+	struct strbuf name = STRBUF_INIT;
-+	int code;
-+
-+	if (!slash || !slash[1] || file_exists(repo))
-+		return;
-+
-+	strbuf_add(&name, repo, slash - repo);
-+	if (!remote_is_configured(remote_get(name.buf), 0)) {
-+		strbuf_release(&name);
-+		return;
-+	}
-+
-+	code = die_message(_("'%s' is not a valid push target"), repo);
-+	advise_if_enabled(ADVICE_PUSH_REPO_LOOKS_LIKE_REF,
-+			  _("Did you mean to use: git push %s %s?"),
-+			  name.buf, slash + 1);
-+	strbuf_release(&name);
-+	exit(code);
-+}
-+
- int cmd_push(int argc,
- 	     const char **argv,
- 	     const char *prefix,
-@@ -744,6 +768,11 @@ int cmd_push(int argc,
+ DESCRIPTION
+ -----------
+@@ -231,6 +231,12 @@ kept, so a branch is never deleted out from under one stacked on top
+ of it. If that kept branch in turn tracks a branch that is being
+ deleted, its now-stale upstream configuration is cleared.
  
- 	if (repo) {
- 		if (!add_remote_or_group(repo, &remote_group)) {
-+			struct remote *r;
++`--dry-run`::
++	With `--delete-merged`, print which branches would be
++	deleted and exit without touching any ref.  Useful for
++	sanity-checking a wide pattern like `'origin/*'` before
++	committing to the deletion.
 +
-+			if (advice_enabled(ADVICE_PUSH_REPO_LOOKS_LIKE_REF))
-+				die_if_repo_looks_like_ref(repo);
+ `-v`::
+ `-vv`::
+ `--verbose`::
+diff --git a/builtin/branch.c b/builtin/branch.c
+index bce85cb52e..e7763437fb 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -199,6 +199,7 @@ enum delete_branch_flags {
+ 	DELETE_BRANCH_QUIET = (1 << 1),
+ 	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
+ 	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
++	DELETE_BRANCH_DRY_RUN = (1 << 4),
+ };
+ 
+ static int check_branch_commit(const char *branchname, const char *refname,
+@@ -248,6 +249,7 @@ static int delete_branches(int argc, const char **argv, int kinds,
+ 	bool quiet = flags & DELETE_BRANCH_QUIET;
+ 	bool skip_unmerged = flags & DELETE_BRANCH_SKIP_UNMERGED;
+ 	bool no_head_fallback = flags & DELETE_BRANCH_NO_HEAD_FALLBACK;
++	bool dry_run = flags & DELETE_BRANCH_DRY_RUN;
+ 	struct strbuf bname = STRBUF_INIT;
+ 	enum interpret_branch_kind allowed_interpret;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+@@ -346,13 +348,20 @@ static int delete_branches(int argc, const char **argv, int kinds,
+ 		free(target);
+ 	}
+ 
+-	if (refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
++	if (!dry_run &&
++	    refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+ 		ret = 1;
+ 
+ 	for_each_string_list_item(item, &refs_to_delete) {
+ 		char *describe_ref = item->util;
+ 		char *name = item->string;
+-		if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
++		if (dry_run) {
++			if (!quiet)
++				printf(remote_branch
++					? _("Would delete remote-tracking branch %s (was %s).\n")
++					: _("Would delete branch %s (was %s).\n"),
++					name + branch_name_pos, describe_ref);
++		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+ 			char *refname = name + branch_name_pos;
+ 			if (!quiet)
+ 				printf(remote_branch
+@@ -897,6 +906,7 @@ int cmd_branch(int argc,
+ 	int delete = 0, rename = 0, copy = 0, list = 0,
+ 	    unset_upstream = 0, show_current = 0, edit_description = 0;
+ 	int delete_merged = 0;
++	int dry_run = 0;
+ 	const char *new_upstream = NULL;
+ 	int noncreate_actions = 0;
+ 	/* possible options */
+@@ -952,6 +962,8 @@ int cmd_branch(int argc,
+ 			 N_("edit the description for the branch")),
+ 		OPT_BOOL(0, "delete-merged", &delete_merged,
+ 			N_("delete local branches whose upstream matches <branch> and are merged")),
++		OPT_BOOL(0, "dry-run", &dry_run,
++			N_("with --delete-merged, only print which branches would be deleted")),
+ 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_MERGED(&filter, N_("print only branches that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
+@@ -1014,6 +1026,9 @@ int cmd_branch(int argc,
+ 	if (noncreate_actions > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
++	if (dry_run && !delete_merged)
++		die(_("--dry-run requires --delete-merged"));
 +
- 			/*
- 			 * Not a configured remote name or group name.
- 			 * Try treating it as a direct URL or path, e.g.
-@@ -753,7 +782,7 @@ int cmd_push(int argc,
- 			 * from the URL so the loop below can handle it
- 			 * identically to a named remote.
- 			 */
--			struct remote *r = pushremote_get(repo);
-+			r = pushremote_get(repo);
- 			if (!r)
- 				die(_("bad repository '%s'"), repo);
- 			string_list_append(&remote_group, r->name);
-diff --git a/t/t5529-push-errors.sh b/t/t5529-push-errors.sh
-index 80b06a0cd2..cfb294305d 100755
---- a/t/t5529-push-errors.sh
-+++ b/t/t5529-push-errors.sh
-@@ -54,6 +54,37 @@ test_expect_success 'detect empty remote with targeted refspec' '
- 	grep "fatal: bad repository ${SQ}${SQ}" stderr
+ 	if (recurse_submodules_explicit) {
+ 		if (!submodule_propagate_branches)
+ 			die(_("branch with --recurse-submodules can only be used if submodule.propagateBranches is enabled"));
+@@ -1054,7 +1069,8 @@ int cmd_branch(int argc,
+ 		goto out;
+ 	} else if (delete_merged) {
+ 		ret = delete_merged_branches(argc, argv,
+-					     quiet ? DELETE_BRANCH_QUIET : 0);
++					     (quiet ? DELETE_BRANCH_QUIET : 0) |
++					     (dry_run ? DELETE_BRANCH_DRY_RUN : 0));
+ 		goto out;
+ 	} else if (show_current) {
+ 		print_current_branch_name();
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index b7595610d9..cddcde341d 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1892,8 +1892,12 @@ test_expect_success '--delete-merged deletes merged branches and spares the rest
+ 	) &&
+ 	sha=$(git -C repo rev-parse --short merged) &&
+ 
+-	git -C repo branch --delete-merged origin/next >actual 2>&1 &&
++	git -C repo branch --dry-run --delete-merged origin/next >actual 2>&1 &&
++	echo "Would delete branch merged (was $sha)." >expect &&
++	test_cmp expect actual &&
++	git -C repo rev-parse --verify refs/heads/merged &&
+ 
++	git -C repo branch --delete-merged origin/next >actual 2>&1 &&
+ 	echo "Deleted branch merged (was $sha)." >expect &&
+ 	test_cmp expect actual &&
+ 	git -C repo for-each-ref --format="%(refname:short)" refs/heads/ >actual &&
+@@ -2050,4 +2054,9 @@ test_expect_success "branch -d still deletes a deleteMerged=false branch" '
+ 	test_must_fail git -C repo rev-parse --verify refs/heads/kept
  '
  
-+test_expect_success 'suggest <remote> <branch> for a <remote>/<branch> slip' '
-+	test_must_fail git push origin/main 2>stderr &&
-+	grep "${SQ}origin/main${SQ} is not a valid push target" stderr &&
-+	grep "hint: Did you mean to use: git push origin main?" stderr &&
-+	test_must_fail git -c advice.pushRepoLooksLikeRef=false push origin/main 2>stderr &&
-+	! grep "Did you mean" stderr
++test_expect_success '--dry-run without --delete-merged is rejected' '
++	test_must_fail git -C forked branch --dry-run 2>err &&
++	test_grep "requires --delete-merged" err
 +'
 +
-+test_expect_success 'suggest <remote> <branch> when the branch has slashes' '
-+	test_must_fail git push origin/feature/x 2>stderr &&
-+	grep "hint: Did you mean to use: git push origin feature/x?" stderr
-+'
-+
-+test_expect_success 'no suggestion when prefix is not a configured remote' '
-+	test_must_fail git push not-a-remote/main 2>stderr &&
-+	! grep "Did you mean" stderr
-+'
-+
-+test_expect_success 'no suggestion for a trailing slash with no branch' '
-+	test_must_fail git push origin/ 2>stderr &&
-+	! grep "Did you mean" stderr
-+'
-+
-+test_expect_success 'no suggestion when the argument is an existing path' '
-+	test_when_finished "rm -rf origin" &&
-+	git init --bare origin/main &&
-+	git push origin/main HEAD:refs/heads/pushed 2>stderr &&
-+	! grep "Did you mean" stderr &&
-+	git -C origin/main rev-parse --verify refs/heads/pushed
-+'
-+
- test_expect_success 'detect ambiguous refs early' '
- 	git branch foo &&
- 	git tag foo &&
+ test_done
 -- 
 gitgitgadget
