@@ -1,71 +1,71 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84221F03DE
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 21:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6106A20459A
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 21:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782336133; cv=none; b=m1hLw+X3a+2BZdY+bEUsCE82fTInm4NaXjf/vn2PSmni8J6DVofMK7evhVN4ko6v/phJg7GwzqCPAD5XhkHgoQNkhSWEYF+LGD0mJNgBplRnYQ36w717Hhxx/lA61UW6nf8NioYIRiohYDcFDasNcJMY+deLwALyZPvxpsv7lYQ=
+	t=1782336993; cv=none; b=LPXPm+7D2oTkMjIIRA6czeHtAcNq3+IrT7Lc4fGGlNuC5R8Z2l6L9P8DAe48WVkCisN6o5J/NJrLs+W+k6AmwuPM/DRTxCV2AWVg7FaCeBZEwrNyanlEA5dhatZSd/CUDIoevgmEXEjMIxFuRy+qICZM7or2buk8Dy8oF0gIAMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782336133; c=relaxed/simple;
-	bh=6xmURHX9iy4c0/zkOwJe2ZgYgJzVvDMlGJD9Oae2b0I=;
+	s=arc-20240116; t=1782336993; c=relaxed/simple;
+	bh=/V9pvbHowEpCRCk9hleLHywgRKgd3SM8/mt4kfV+xkc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ASlKi82du5sh3zOeZi7G91zRXCZh2wmHgaqRA4FUZiFSi1zQOznh5bWGzg+dOlNO7fsSwLzFAMZRQB0DfkdQq8NORoI3pX09iuyAWlRHzeYLzE0e6T7qZpU73PmleNu72PMyMWgC+DG2iekf9vq0lhwoGv4lF+ZHs6hFlpPtb2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mtD3lD/C; arc=none smtp.client-ip=209.85.160.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=XQr+mWhjDPXvAkI7HkivaJX6xyLHorwKNcH1SHD4VfX+ujBSAVT9W2gpLEZmvReJkHEGDXFI05Rvoa8p6GAWdefQkeyVMvzWlTm7JE5VchoZwPrd+OK4ZGwrrp391kYZIaJem4aSLXhPIb+29b+cygS+ll0j5zQ2vYydKo+wGJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z+mYVQ35; arc=none smtp.client-ip=209.85.210.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mtD3lD/C"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-441b5b4af7aso862325fac.3
-        for <git@vger.kernel.org>; Wed, 24 Jun 2026 14:22:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z+mYVQ35"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7e9565cc13aso621626a34.3
+        for <git@vger.kernel.org>; Wed, 24 Jun 2026 14:36:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782336131; x=1782940931; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782336991; x=1782941791; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=F0CxvkDs/SLtqXlUyIpOIi2faPuCY/grDXrq/Rr/AtE=;
-        b=mtD3lD/C/sYybRNCdeTWfXaAhewzEXDO/o+WcJ0kTa/3GKJ3AVzSxzANIKRTzChAZJ
-         vOfH/hJHsuhlWxl32xRI5LuKrRjqLd6ndSlJlLAOP4iomL8vSwOcCGioUXARt3eVPL3z
-         DJdHgzr5ktbdkeWb/u/jmnir8KPVUrAsUQEz9eravY/FwKivAb14SN6grdDL2G85adPr
-         JzjEnKGPiih1g0Xgq6BYeD+lXIgsi7cnv9xSh8CJNj0/9ssQ7KeyZoSYUCFpDs3E9s0O
-         AO6+iiwlVv4Lf5fEvb9L7AQPvwCtbfp/hXuDlk0dNqcfS6qO4k2F106oYaxCbmfS6gTN
-         iO/g==
+        bh=NnI+LXrM2QyCrokYq9KWa44fCiEdP/VldON4Epkf0b4=;
+        b=Z+mYVQ35xtMPVdiy5UApd7cvUrYFTt/3L2yt/av33UlIu7JnL7Io57bRTUsSruGBVz
+         dxZ7rkOxWEdy4kFysEuYZstlc6dE7wTPfm0A1mfgjyEa4FZLsqvj+awdQ9+cNgQFlxxq
+         9ipOMdtCqdfR1EXZn+9AZoeBnjjMSVme69lCcA4H66XS9Bno3TarWywdB4TegM8crfz4
+         3IJ1kC+G7XdyGnjYfSkXVK01hm9GSryLhsWXj5d1ZsGPX4kmpRY3UJpsl2iNlAJuQNnq
+         mcWEjvJRbiHDOZGAJ8UElEKQo7rveM7rcjk6nXTC6bQDWFFmODiuHxJhxZ+t/ucpASEh
+         L9iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782336131; x=1782940931;
+        d=1e100.net; s=20251104; t=1782336991; x=1782941791;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=F0CxvkDs/SLtqXlUyIpOIi2faPuCY/grDXrq/Rr/AtE=;
-        b=q2UX1eIkQpd95SdTquLaGv9BkHMGRlofb0ayy1JRTE76g+24Dc7qYBJEfNYfGPONP0
-         /PxMDPO5lMmx9EQRzxRB4Dkircz5fr4amq80EAECgU6BKR2MqhZX3w3tj24LeT+qzHJu
-         0U34XJFKTOqur5EW/AQDdrz2qY7ZKAspHDLZEu1yWLKFhGwLd3R4Tow/AUDv3f5najny
-         vVLwlgRRCURd2ZQG3NrDEvhX22yMszQoPZcOZis07hNBAYKlm7+moJ+hY4CytDSVNOpr
-         0AkMQWYGYdtYhgEJxw6UaWbB100oV1aCKUceK/AOdSZ0f+EI5EBvYuEsDqG8D6UBaOQ0
-         MvOw==
-X-Gm-Message-State: AOJu0Yz8Y3RL5usszxQtXB2aGS8MMexnUEYDDOWaMZ+UPmVfjs1uG2Qh
-	n9xm7cbT3blyBVT/UxxJ1cUSGdnGYVZiq5osfvfc0ymh8zTx2JPaYIvc
-X-Gm-Gg: AfdE7ckoMiJr8b0f234a5IF7prYo5LHg2MUzWS35V7pdEpaWxfFXV4E+/960pFIZ5QW
-	t65OyILBuNVi2Meff//9w9KbVwrkHrp1sfAzXM7DnF4ZlhnoLuQNMeATGCA9Qadb3BXyeA8vnzi
-	x6MF511XX5GEqIdvx41yYee9h3khcXtxWEQAV1ndmLLOLqZ+TwMl38zn3kSBqhLAHplr31lgCLm
-	+R8U68/sARSiceJV4ZC7kWkyRCTGCQIkNsQjeUAG7AlfDm2xVWmkPLhRmPHSRKH2iZX5uw7voF5
-	q+eOxxrKklfY50RwtegAUCJ5NbZGx5YmbI3F42a+RgGT2dvTWmpoaJniPivt1FLteKDcU0l+k/g
-	smnEhPHXTW8RCaJONDBS/tJsCosR7IPltrHbk7Jl8zUwSNWo7WvolPkLkXIY/JwhqtFJlpugJf8
-	0gOcMTZA==
-X-Received: by 2002:a05:6870:b3c5:b0:42c:49c7:a499 with SMTP id 586e51a60fabf-447b5ab199emr7044462fac.3.1782336130587;
-        Wed, 24 Jun 2026 14:22:10 -0700 (PDT)
+        bh=NnI+LXrM2QyCrokYq9KWa44fCiEdP/VldON4Epkf0b4=;
+        b=i/m15061eBkfPNwpu0c+LVwH7jSSIvyDNAduHOkgatHWaQESv5dZ/zw+C3zEJM4P5t
+         oCEIrOl7ZPqEz/vRK71J6Mvao3dPivA1ggQB7HZNb9MnxPV28Ao9u+yBucIjnLwF72Xz
+         vtP6dNTFwaihhBcNaRooVB+2hB4XnMQEFDnmyyTQszp7qtX/txE6SADEqyhr/MPAJ10c
+         +273lUpOkkGFK2cYJpHQxiS5X+QE3B/8MkcXopiXL5pcH9rFhIJ+1cUc1Urkch8lGA6D
+         /TPTwTvkY5zuqAaXxuCfl1eZnU6Y1EW9MTsqn5IiMK/ZWR6eEHzGHo9Yzj/ng+WtDlcq
+         mj2A==
+X-Gm-Message-State: AOJu0YxADz/3Eg8SjITgmxVRIO24Zvg8wN3i7YzBmaJPcXOdkgC575Oh
+	LuL1nqAGI1DNweu0iCH5z0oAqYoFG/0IKTms87YbxgmwGk8ooqwpAeMI
+X-Gm-Gg: AfdE7cnw0X0XBdjlLY824IXuYf7R2g8024M/9YVWjvslRtnzopyIbijERYCyTQ/mdH1
+	UETf+mBvmBxmRlbWeefsyf8ImKamyCauApUtRypU+zddfITQ9aBlrWlyn4w8tpq++bfpFSGYuVP
+	E5do9L26icH80y8+5Y66WcA7C3jK5B2byTgfzolJMYC3KNhKmrCd54M90l09d3NJhWATdYJnXcj
+	SW6RavOoqBjMhv/uaLgRpl6BkWGn82zGlaDO0AoY1f4Vr7b9hS5TUh9pSl4dZ8VzNcZJy2QbRUq
+	EpbwixMxm3x+moiNR6jopuIwCsQTDBRQEkiGsgy2XSMEJLwhgK9KvoaLFaR6Fs1Ie+Xm0dXsMPn
+	4vsgucC7/+db8K9DeYxhjFpVpaxjX0hD9rKrStPq3TXnCbgqXyaSuSqI/A+1p5o1QUuCBCqJj4g
+	XpcNGRxg==
+X-Received: by 2002:a05:6830:3697:b0:7dc:c4ae:a689 with SMTP id 46e09a7af769-7e9792ecf9bmr7632880a34.2.1782336991270;
+        Wed, 24 Jun 2026 14:36:31 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-447ec359d9csm1745655fac.12.2026.06.24.14.22.10
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e944068bb7sm11987329a34.9.2026.06.24.14.36.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 14:22:10 -0700 (PDT)
-Date: Wed, 24 Jun 2026 16:22:07 -0500
+        Wed, 24 Jun 2026 14:36:30 -0700 (PDT)
+Date: Wed, 24 Jun 2026 16:36:28 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 07/11] refs: move parsing of "core.logAllRefUpdates"
- back into ref stores
-Message-ID: <ajxEXMTBmii01dVP@denethor>
+Subject: Re: [PATCH v5 08/11] refs/files: lazy-load configuration to fix
+ chicken-and-egg
+Message-ID: <ajxKh-IrC2EPWJnW@denethor>
 References: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-0-018475013dbc@pks.im>
- <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-7-018475013dbc@pks.im>
+ <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-8-018475013dbc@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,113 +74,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-7-018475013dbc@pks.im>
+In-Reply-To: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-8-018475013dbc@pks.im>
 
 On 26/06/22 10:28AM, Patrick Steinhardt wrote:
-> In cc42c88945 (refs: extract out reflog config to generic layer,
-> 2026-05-04) we have refactored how we parse "core.logAllRefUpdates" so
-> that it happens in the generic layer. Unfortunately, this has worsened a
-> preexisting issue where we may recurse when creating the reference store
-> because of a chicken-and-egg problem between parsing the configuration
-> and evaluating "onbranch" conditions.
+> When initializing the "files" reference backend we read the repository's
+> config to parse "core.preferSymlinkRefs" and "core.logAllRefUpdates".
+> This results in a chicken-and-egg problem though, because parsing the
+> configuration may require us to have access to the reference store
+> already when an "onbranch" condition exists.
 
-Ok so IIUC, parsing "core.logAllRefUpdates" in the generic layer forces
-us to read the config earlier. This is problematic though since the
-refstore has not been initialized yet which we need to evaluate
-"onbranch" conditions.
+Ok so both of these configuration options are currently parsed at ref
+store initialization time. This is problematic because we need the ref
+store to properly handle "onbranch" conditions in the config.
 
-> Prepare for a fix by essentially reverting that change so that we handle
-> this setting in the respective backends again. The backends are already
-> parsing other configuration anyway, so by moving the logic back in there
-> we can ensure that all backend configuration is parsed the same way.
+> Luckily, all the configuration that we honor only relates to writing
+> references. Consequently, we don't strictly need that configuration to
+> be readily available at initialization time, and we can easiliy defer
+> parsing it to a later point in time.
 
-Makes sense.
+That's nice. So we don't actually need this configuration during
+initialization and can instead lazily load it when writing the first
+references. Makes sense.
 
+> Implement this fix and add tests that verify that we can indeed properly
+> parse these config knobs via an "onbranch" condition.
+> 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/checkout.c      |  7 +++++--
->  refs.c                  | 10 +++++++++-
->  refs.h                  |  9 +++++++++
->  refs/files-backend.c    | 20 +++++++++++++++++---
->  refs/refs-internal.h    |  6 ------
->  refs/reftable-backend.c | 20 +++++++++++---------
->  repo-settings.c         | 16 ----------------
->  repo-settings.h         |  9 ---------
->  setup.c                 |  7 ++++++-
->  9 files changed, 57 insertions(+), 47 deletions(-)
+>  refs/files-backend.c        | 37 ++++++++++++++++++++++++++-----------
+>  t/t0600-reffiles-backend.sh | 21 +++++++++++++++++++++
+>  2 files changed, 47 insertions(+), 11 deletions(-)
 > 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index b78b3a1d16..aee84ca897 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -952,10 +952,13 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
->  	const char *old_desc, *reflog_msg;
->  	if (opts->new_branch) {
->  		if (opts->new_orphan_branch) {
-> -			enum log_refs_config log_all_ref_updates =
-> -				repo_settings_get_log_all_ref_updates(the_repository);
-> +			enum log_refs_config log_all_ref_updates = LOG_REFS_UNSET;
-> +			const char *value;
->  			char *refname;
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 79fb6735e1..d0f379dcd6 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -84,12 +84,14 @@ struct files_ref_store {
+>  	unsigned int store_flags;
 >  
-> +			if (!repo_config_get_string_tmp(the_repository, "core.logallrefupdates", &value))
-> +				log_all_ref_updates = refs_parse_log_all_ref_updates_config(value);
+>  	char *gitcommondir;
+> -	enum log_refs_config log_all_ref_updates;
+> -	int prefer_symlink_refs;
+> -
+>  	struct ref_cache *loose;
+> -
+>  	struct ref_store *packed_ref_store;
 > +
->  			refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
->  			if (opts->new_branch_log &&
->  			    !should_autocreate_reflog(log_all_ref_updates, refname)) {
-> diff --git a/refs.c b/refs.c
-> index d3caa9a633..5b773b1c15 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1053,6 +1053,15 @@ static char *normalize_reflog_message(const char *msg)
->  	return strbuf_detach(&sb, NULL);
+> +	struct files_ref_store_write_options {
+> +		enum log_refs_config log_all_ref_updates;
+> +		int prefer_symlink_refs;
+> +		bool initialized;
+> +	} write_opts_lazy_loaded;
+
+It might be nice to leave some sort of breadcrumb comment to future
+readers to explain why we lazy load this configuration.
+
+>  };
+>  
+>  static void clear_loose_ref_cache(struct files_ref_store *refs)
+> @@ -121,17 +123,31 @@ static int files_ref_store_config(const char *var, const char *value,
+>  				  const struct config_context *ctx UNUSED,
+>  				  void *payload)
+>  {
+> -	struct files_ref_store *refs = payload;
+> +	struct files_ref_store_write_options *opts = payload;
+>  
+>  	if (!strcmp(var, "core.prefersymlinkrefs")) {
+> -		refs->prefer_symlink_refs = git_config_bool(var, value);
+> +		opts->prefer_symlink_refs = git_config_bool(var, value);
+>  	} else if (!strcmp(var, "core.logallrefupdates")) {
+> -		refs->log_all_ref_updates = refs_parse_log_all_ref_updates_config(value);
+> +		opts->log_all_ref_updates = refs_parse_log_all_ref_updates_config(value);
+>  	}
+>  
+>  	return 0;
 >  }
 >  
-> +enum log_refs_config refs_parse_log_all_ref_updates_config(const char *value)
+> +static const struct files_ref_store_write_options *files_ref_store_write_options(struct files_ref_store *refs)
 > +{
-> +	if (value && !strcasecmp(value, "always"))
-> +		return LOG_REFS_ALWAYS;
-> +	else if (git_config_bool("core.logallrefupdates", value))
-> +		return LOG_REFS_NORMAL;
-> +	return LOG_REFS_NONE;
+> +	struct files_ref_store_write_options *opts = &refs->write_opts_lazy_loaded;
+> +
+> +	if (opts->initialized)
+> +		return opts;
+> +
+> +	opts->log_all_ref_updates = LOG_REFS_UNSET;
+> +	repo_config(refs->base.repo, files_ref_store_config, opts);
+> +
+> +	opts->initialized = true;
+> +	return opts;
 > +}
-
-This function replaces `repo_settings_get_log_all_ref_updates()`. I
-assume we just wanted a slightly more simple function where the only
-concern was parsing the `core.logallrefupdates` value.
-
 > +
->  int should_autocreate_reflog(enum log_refs_config log_all_ref_updates,
->  			     const char *refname)
->  {
-> @@ -2327,7 +2336,6 @@ static struct ref_store *ref_store_init(struct repository *repo,
->  	struct ref_store *refs;
->  	struct ref_store_init_options opts = {
->  		.access_flags = flags,
-> -		.log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo),
+>  /*
+>   * Create a new submodule ref cache and add it to the internal
+>   * set of caches.
+> @@ -156,9 +172,7 @@ static struct ref_store *files_ref_store_init(struct repository *repo,
+>  	refs->packed_ref_store =
+>  		packed_ref_store_init(repo, NULL, refs->gitcommondir, opts);
+>  	refs->store_flags = opts->access_flags;
+> -	refs->log_all_ref_updates = LOG_REFS_UNSET;
+>  
+> -	repo_config(repo, files_ref_store_config, refs);
 
-This config is no longer handled in the generic layer.
+Configs are no longer read eagerly during initialization.
 
-[snip]
-> diff --git a/setup.c b/setup.c
-> index 79125db565..0c6efb0560 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -2584,10 +2584,15 @@ static int create_default_files(struct repository *repo,
->  	if (is_bare_repository())
->  		repo_config_set(repo, "core.bare", "true");
->  	else {
-> +		const char *value;
-> +
->  		repo_config_set(repo, "core.bare", "false");
-> +
->  		/* allow template config file to override the default */
-> -		if (repo_settings_get_log_all_ref_updates(repo) == LOG_REFS_UNSET)
-> +		if (repo_config_get_string_tmp(repo, "core.logallrefupdates", &value) ||
-> +		    refs_parse_log_all_ref_updates_config(value) == LOG_REFS_UNSET)
-
-Huh, can `refs_parse_log_all_ref_updates_config()` even return
-LOG_REFS_UNSET?
+The rest of this patch looks good to me.
 
 -Justin
