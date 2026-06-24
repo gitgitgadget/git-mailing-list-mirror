@@ -1,79 +1,81 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A954C233939
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 12:19:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B88B3254A8
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 12:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782303572; cv=none; b=R0zTAz0bQ7hIw+oFi9oRj9XfvQ0nduHDcF26GPNYZFqmKJ8fIL81wka8eFNrOfX/Xr5fy8wgPub6oFOLd2eokpddk62t05FDSh2uWhl75eITCIJL1yfIiFIRGZ1CAApjzfesGsh6GTeJ5kmXWmvR16jQCJhA9aF/CqNMLJY5gH8=
+	t=1782303572; cv=none; b=Vnh+Q0hMY2rflvguyP+bAsWItgixLEDRVkJh/69xKAVD4P8+FXWQR1lKuUA2NMYS/h6NVeGhU6AAb4itQNJrLsUFT/SW6kIRmZQWS0iYk76ddPIZHCSu99ZHG1ESwLYkdCjOkbbtcVoKfOdV0z9hDt0o86QzQeMyuEeYtxWtz78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1782303572; c=relaxed/simple;
-	bh=bTdao1+m0AtHVEHtle+64ibA66wNO9toK438lzWjlj4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nRFWLwDMzvisSNcD+cmVS5c98VPFjfrPRQzAovOXc0UrkHnouMKOkON7DILFCbZdoKsvBYj8DX+Hx0xZCJQfIBYBYXliF5uD/7YrSIA2jWpEJ5uRW5QHFbIqBXrP2osocHxgvLbmhg2jTCS0BO0EQ9DIFt8MBjYfhaNxXIkCFBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ql/LAKem; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xv4fqNX5; arc=none smtp.client-ip=202.12.124.150
+	bh=JWF3rag5ZlKzIPnVHNK515+6gfsF9Kb1g3weak2W6cI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=oMM5B+A5qKYZsJuW+sV8VtEKK5jxvxjOY2RZYvlgYsN4QUeLYR92TW+WIltFgRXD3fMTTra8dhZXESYfArqgViRr+bWg1dcu/sVOpK4XwTx9ooz/V7usiEN/lPM+EEVRvNoRxZLY16xFT36MvKs6UeJMYACMaUoDXzOAlocpgAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IPeeLB9b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J2BHXdqC; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ql/LAKem";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xv4fqNX5"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 043871D000D8
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IPeeLB9b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J2BHXdqC"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E79EC7A01E3
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:30 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 24 Jun 2026 08:19:30 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 24 Jun 2026 08:19:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1782303569; x=1782389969; bh=xcfH7ctvKZ
-	aztOub/5mgkooUyeKAzBljHI2Re6gsrnM=; b=ql/LAKemt8GBp9KXYWd5mR51ob
-	fH+abEn0OklIF6Kif8uisdTx0t3aMvRODTakoyoNyQX2jQHVOkSi4f1e7/rbiLTS
-	zA8RIUnaCkCyiTO4AJ7rpEHx+ry6iqzJ5pEplf8HvQgKbA0R5urjr3RChycmHYsJ
-	X8+zPHSaZcQU/SWnv8Yrb2iSrxjE0DCdFgBZUX0Iu289h2NprdcThLnsor9smZU4
-	aCntiBWstDtGPAie73t+C6QRomQdhf0Y/nYOOwXrf+LVeoxVFvVOftLcraIBri5k
-	tx7EFC61yWDVwjEqAzn6TqwQ7JnzOiZHlGWo1k9ngrbBgGmJpw9PhPVY1elQ==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782303570;
+	 x=1782389970; bh=+1J9M4kdwgxy2hkQnyHSuQh88Ccwy7DE+j9qA6QSFvE=; b=
+	IPeeLB9b7xehtk4xxe1MbafcN0HzHIM2iUFnIas3MZQVuj6rOHHySH1/liQOuPln
+	pKWzWCvfsb5UeefoEpJTf903G+VMU//fngbwFfamKBrU+EEaLacvFVhXvU2Pwpqv
+	ctiaJvHsPP/R5Os9fQhQ8HgXXNM6aqOFE7yDr/j9sf4WFfeibcH2yFuTrUqIfvjy
+	EeTBp7lnx4mF1KG4ut2MMmG2qrnsksWKoniDTSXm65nmqeXrAMK62bGY/wchc6sy
+	YAecrr+spsDTXwl8Ql5gu14iCJVYX7CHpUeW8VoZfCu2GXJoJSsuNb4jaehJAnzi
+	cABfO+fUWUoSCxPQz6Xnvw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1782303569; x=1782389969; bh=xcfH7ctvKZaztOub/5mgkooUyeKA
-	zBljHI2Re6gsrnM=; b=Xv4fqNX5+LkbovciQjwh4Afh6qpPWCUhhE5mhGQJ4tD7
-	5zOBG/ofc8Uh6WPi1UhHCTCPT91bED/FU/vNxJSKcOBNOuoT6rDaa1T9k99qd9NU
-	It5xOPWOH/P9epubRNn5IpjJ+W0oHayd9B1zi0izyetukplLshVj4sv/Q3LQnq1k
-	7FI2JevNVT2264DI7UAQCffkDr195YWOxhGf8YLB76/dW8++6z3Bf6XtaLGx8GkZ
-	L9OuiFq16jawvxWLeec3zldft82Iw3PQgIfqHTkc24m3KjC1Qe8O9YI+4MZ7VdCm
-	Bv4c3tQ2Am3jrN5LxMoYHR2c/28pBd5vqNqqjTZ+nA==
-X-ME-Sender: <xms:Ucs7anhd0ROZHx4Yv5WVXrTB1utHhEGXCxjZ1oD8utZV11o0kd0kQQ>
-    <xme:Ucs7aq-wXmtdGByGXzktCL53c4Kc4miBLUppPs7LDmPMRcgrOki6iCLa_vhMF_jz-
-    6r5HBG0ZCzWpOMZ46VfD0SEdmi1G9JAVD97EG3bbByNkqd-wRWT>
-X-ME-Received: <xmr:Ucs7asvfhOk4Pk3vOz0qFWEn7edbTNJyQTMXR96nth6DfG5pqQSANe3WtPZC88gmApmdn54KuqyGM7ncCOtHGSg5hCZ-h0jXypmkXVoN>
-X-ME-Proxy-Cause: dmFkZTE0QXX3oGX/6ms+Uk0nzzgi1bEOHKImRuojGRqkeU/ONcX5+833QNLx31STgCyabK
-    OeNn5NSY55bw/0R6Ra5ViG1f3RBpJH0hn6aO6LloH4hz+KfvoUE7kxt+C9g+nKTUFqiLXx
-    uhtn7SSXlIQk6ND4PRjbWwG3szqOHF1S3acV/i2MAUUPpFat2SSDCV277kStnGy+pXYodO
-    buQ3UDIwqaGbBf8PBwTUJUCk1U/ACYIbm642/m2Gnb1QepcoQ18japLyCE4LdXPxXH9asx
-    Zy8b25JVEb8GLEmv3iujsiCoVnjLECFOClXjQ9nJjnTEaMWaGdEOlps81OD8GRA1KoSMDw
-    EovdmKnkGNnXd9hMoP5gjpQFn5BigKaK+qZMYAxwBJTeBxxQluKHhd45bSbnHkf6K96VP2
-    dk7bNHdpWLPlqFSU1MHX6lckKBd8Rpk9te6cNL5IexZ4l/gb9HeeCPyCEYQMEIwbtd2ltk
-    H8SFqkJ1nQ2ZVNAOWhrjd7soNReqM9HOHcJVxq3JIrakWFZi4hCa6h6z4JjagN/1IsExji
-    9F7Ai0kPczXVh759jzazHwqOJTZmIHc8BMex3Gtw0RqSujYzt0kPb9pIR86IdKTIy2vcMz
-    1/GrHxVejbS33/tC0G9taiZnsATwB70DN1vdt45PUAuTXIUqY+11y8LJTsNw
-X-ME-Proxy: <xmx:Ucs7apYsPZC-P-2egHqF_YIHLYvfc9fLLoBXCwquPtOHKUHt9VsU9g>
-    <xmx:Ucs7akq1hy8TwVpy8qcV42zIDceY9RHTgDsKeNSglslFola4e_0-oQ>
-    <xmx:Ucs7am-ZizfhB-BqdIScLgvEYDjvG548Vh7h8oFvwHdfaEIDSKQvHg>
-    <xmx:Ucs7ar8XndUvyKfvT4-88fBX5WRQZOxXU7mgwLPc3bsJSS2EWnu2xQ>
-    <xmx:Ucs7aojNze9hNad8thlrzHz96t56MTH9tezOJqFUJqTHse2XnjKgiE4X>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782303570; x=
+	1782389970; bh=+1J9M4kdwgxy2hkQnyHSuQh88Ccwy7DE+j9qA6QSFvE=; b=J
+	2BHXdqCcrQiTg2wb/RuE2tz9e5sM969IBJNr+qmUaFBCT6s/SlvmD9FLf2WGBzRh
+	iXfWR2fY7M74iuZRbVzeRrhGPSGCALMYj2p0rRImyvAepyMQlN+7/wLxS4cWs92a
+	SJX5uAxpZS+OKhvnJEk9wWXJdvwrBezcyACiULNyGBevBG49QKOZtfnQDcUCRrQv
+	PyDo3zunobN4IyXIQ6HZYJdoCLlqWN00C03RLgYv+kaQU6PsFa9/MDecpL8kX23B
+	HCKTOo501aaoiRaKIb8XNMn2v05jLGMHUSXhAv38n6W8kBFB+Crv2nBsFWNvSrkk
+	dwqWbtdCDS4KAsQHSNfZg==
+X-ME-Sender: <xms:Uss7aj6FfWJQeIGsk-cpYkob3RpWYc_jF3jOzIZ4vQdc3Ez0J6rPaQ>
+    <xme:Uss7av2D7_Rg8WmBLOIaAOpdCq9cR0JsENg1sbCvK9ErOidEbWuVP97gBwYrXo0jd
+    YoYU2jerIqEnO9w-TXEDyrPvp03JrSthihO7-9iTvhfzXBF2Yr9sA>
+X-ME-Received: <xmr:Uss7agHs7gkWQVuYvU8j1Ip9F_PzgZZG5i3orBf01YEVQ_FUV4dQsT3GEdx4GJSe5HNobgcmXXjRvIbR64BtDkO_bZYBwSXNlk51MLP4>
+X-ME-Proxy-Cause: dmFkZTFVh6D862S6VBqcmVEy3LZT7X9Dr9ZcbcC/r8onMxjGBYgXIw+F7qGLbxWtDokSKW
+    36bwteS+dolUZGiHwhtiTXHExEhDcH+KBaBCil9fvQttZIR4sCOcDYkkT0XQGnpmcn00IW
+    7NYKzieVn9HUx3sKMOsnU60EphryJUs+jHV19qp+IMhJIi0tvGM70CIdqutmp14uptQxRP
+    8KzDOfcSer466MfnPRk0k5MUfMdL/nYXPsLQ5HMaS2mgW5VLpddw2xSvwepfJRkqn/IBoU
+    4uYP1/q0QT79F7b07nXu1Sw4s78EKUcbnRz0dVpvzCrOY0BrG6BEHRnAihnrK4Tx37yOAD
+    f7WQ694RFjbWZ5UCDiwOYTTfYoaXQSpj7zStAtCLlsjIRutPahHTED5Lc/LmxLU+JsTZ2I
+    VSKM4uej6lTyOHpnIADH21iaVaHkGY/7X3FXxIN2R4YGml6GqUxhUbJEwuv9JLWe6kxROD
+    dbkyYm0ng4f36auF7UwyDxVogeiOGU0V3l0cCY9R7HRBEcyO3h5LNOi4JxvN2VJWHPeDiG
+    vzggA+GzdnYEzepcrUwi5Qb/emayZlIuCde9qHF5/+0lzkPlOkHGuj3fk5L6wGWSy2s1BT
+    zXqc3xChILNfkjlb91pYdYA2EgX/lKY10b+u0dWWojGYjeP4zSeWFG+M4w4Q
+X-ME-Proxy: <xmx:Uss7apTjJLrMYV_GV0JTLhp1MVhrAtVPnm6MF9eAAT9XjoZJ9yh67Q>
+    <xmx:Uss7anDTwCvnvAuNvPnjvV3mh0QV_YJ11EDW9rUywiNMSMwlZxbh_Q>
+    <xmx:Uss7ap2T-6sxaZiDu3Z72TzuRa6qfRFRcwqhkstpCfCALB9WFQnusw>
+    <xmx:Uss7alXxd4qz8k3IcO5MkDHKLTJjKxrJhwMIfbDBJiYqR5RvV24jEA>
+    <xmx:Uss7agZAKY5YhCnCoV_8ZvEhFtqDeZlMO6eTqDEorWaUXBUrj13hXTMJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:29 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 24 Jun 2026 08:19:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5ed5bfb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id adc782f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 24 Jun 2026 12:19:26 +0000 (UTC)
+	Wed, 24 Jun 2026 12:19:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/6] odb: refactor source-specific information in object
- info
-Date: Wed, 24 Jun 2026 14:19:13 +0200
-Message-Id: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
+Date: Wed, 24 Jun 2026 14:19:14 +0200
+Subject: [PATCH 1/6] packfile: thread odb_source_packed through
+ packed_object_info()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,69 +84,178 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEHLO2oC/yXMwQoCIRCA4VdZ5tyAyiLUq0QHR8d2ClSc2oJl3
- z2r43f4/w2Uu7DCadqg8yoqtQzYwwRxCeXKKGkYnHHeeOuQZmx3xZoIU68NXwuXyGjJhHwMZH2
- eYcStc5b3b3y+/K1PunF8fG+w7x/m7Y3IegAAAA==
-X-Change-ID: 20260612-b4-pks-odb-drop-whence-1b0af9ab16f4
+Message-Id: <20260624-b4-pks-odb-drop-whence-v1-1-8d1877b790ac@pks.im>
+References: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
+In-Reply-To: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+Add an optional `struct odb_source_packed *source` parameter to
+`packed_object_info()` and `packed_object_info_with_index_pos()`. This
+parameter is unused at this point in time, but it will be used in a
+follow-up commit so that we can record the source of a specific object.
 
-this patch series refactors `struct object_info` to not contain the
-`whence` field anymore.
+Note that callers in "odb/source-packed.c" pass the already-available
+source, but all other callers pass `NULL` instead. This is fine though,
+as we only care about populating this info when called via the packed
+store.
 
-This field only gave the caller information about the type of source
-this was read from, but it didn't allow them to figure out which source
-specifically yielded the object. So instead, we replace this information
-with a new `struct object_info_source` field that both contains info
-about the source, and any backend-specific data.
-
-With this in place we can re-query the same backend for any given
-object. More importantly though, we can eventually also use the backend-
-specific data to also uniquely identify any given object, e.g. by
-recording the packfile and offset, so that we can even yield the same
-object in case one source contains the object multiple times.
-
-Furthermore, with this change all information in `struct object_info` is
-now following the same request-response-field style.
-
-The series is built on top of 26d8d94e94 (A few more topics before -rc2,
-2026-06-21) with ps/odb-source-packed at 1bba3c035d (odb/source-packed:
-drop pointer to "files" parent source, 2026-06-17) merged into it.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (6):
-      packfile: thread odb_source_packed through packed_object_info()
-      odb: make backend-specific fields optional
-      odb: add `source` field to struct object_info_source
-      treewide: convert users of `whence` to the new source field
-      odb: drop `whence` field from object info
-      odb: document object info fields
+ builtin/cat-file.c     | 2 +-
+ builtin/pack-objects.c | 4 ++--
+ commit-graph.c         | 2 +-
+ odb/source-packed.c    | 4 ++--
+ pack-bitmap.c          | 2 +-
+ packfile.c             | 8 +++++---
+ packfile.h             | 6 ++++--
+ t/helper/test-bitmap.c | 2 +-
+ 8 files changed, 17 insertions(+), 13 deletions(-)
 
- builtin/cat-file.c     | 12 +++++---
- builtin/index-pack.c   |  9 ++++--
- builtin/pack-objects.c | 19 ++++++++----
- commit-graph.c         |  2 +-
- odb.c                  |  4 +--
- odb.h                  | 80 +++++++++++++++++++++++++++++++++++---------------
- odb/source-inmemory.c  |  3 +-
- odb/source-loose.c     |  4 +--
- odb/source-packed.c    |  4 +--
- pack-bitmap.c          |  2 +-
- packfile.c             | 45 ++++++++++++++++------------
- packfile.h             |  6 ++--
- reachable.c            |  7 +++--
- t/helper/test-bitmap.c |  2 +-
- 14 files changed, 130 insertions(+), 69 deletions(-)
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 0f3dbd9850..8726485f1f 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -497,7 +497,7 @@ static void batch_object_write(const char *obj_name,
+ 			data->info.sizep = &data->size;
+ 
+ 		if (pack)
+-			ret = packed_object_info(pack, offset, &data->info);
++			ret = packed_object_info(NULL, pack, offset, &data->info);
+ 		else
+ 			ret = odb_read_object_info_extended(the_repository->objects,
+ 							    &data->oid, &data->info,
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index bc5f9ef321..620d9ce085 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2463,7 +2463,7 @@ static void drop_reused_delta(struct object_entry *entry)
+ 
+ 	oi.sizep = &size;
+ 	oi.typep = &type;
+-	if (packed_object_info(IN_PACK(entry), entry->in_pack_offset, &oi) < 0) {
++	if (packed_object_info(NULL, IN_PACK(entry), entry->in_pack_offset, &oi) < 0) {
+ 		/*
+ 		 * We failed to get the info from this pack for some reason;
+ 		 * fall back to odb_read_object_info, which may find another copy.
+@@ -3804,7 +3804,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+ 	ofs = nth_packed_object_offset(p, pos);
+ 
+ 	oi.typep = &type;
+-	if (packed_object_info(p, ofs, &oi) < 0) {
++	if (packed_object_info(NULL, p, ofs, &oi) < 0) {
+ 		die(_("could not get type of object %s in pack %s"),
+ 		    oid_to_hex(oid), p->pack_name);
+ 	} else if (type == OBJ_COMMIT) {
+diff --git a/commit-graph.c b/commit-graph.c
+index c6d9c5c740..9dc8bd5eee 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1538,7 +1538,7 @@ static int add_packed_commits(const struct object_id *oid,
+ 	struct object_info oi = OBJECT_INFO_INIT;
+ 
+ 	oi.typep = &type;
+-	if (packed_object_info(pack, offset, &oi) < 0)
++	if (packed_object_info(NULL, pack, offset, &oi) < 0)
+ 		die(_("unable to get type of object %s"), oid_to_hex(oid));
+ 
+ 	return add_packed_commits_oi(oid, &oi, data);
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 42c28fba0e..43fb53b72d 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -59,7 +59,7 @@ static int odb_source_packed_read_object_info(struct odb_source *source,
+ 	if (!oi)
+ 		return 0;
+ 
+-	ret = packed_object_info(e.p, e.offset, oi);
++	ret = packed_object_info(packed, e.p, e.offset, oi);
+ 	if (ret < 0) {
+ 		mark_bad_packed_object(e.p, oid);
+ 		return -1;
+@@ -99,7 +99,7 @@ static int odb_source_packed_for_each_object_wrapper(const struct object_id *oid
+ 		off_t offset = nth_packed_object_offset(pack, index_pos);
+ 		struct object_info oi = *data->request;
+ 
+-		if (packed_object_info_with_index_pos(pack, offset,
++		if (packed_object_info_with_index_pos(data->store, pack, offset,
+ 						      &index_pos, &oi) < 0) {
+ 			mark_bad_packed_object(pack, oid);
+ 			return -1;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 83eb47a28b..35774b6f0c 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1877,7 +1877,7 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
+ 			ofs = pack_pos_to_offset(pack, pos);
+ 		}
+ 
+-		if (packed_object_info(pack, ofs, &oi) < 0) {
++		if (packed_object_info(NULL, pack, ofs, &oi) < 0) {
+ 			struct object_id oid;
+ 			nth_bitmap_object_oid(bitmap_git, &oid,
+ 					      pack_pos_to_index(pack, pos));
+diff --git a/packfile.c b/packfile.c
+index 1d1b23b6cc..2b741d7a76 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1324,7 +1324,8 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	hashmap_add(&delta_base_cache, &ent->ent);
+ }
+ 
+-int packed_object_info_with_index_pos(struct packed_git *p, off_t obj_offset,
++int packed_object_info_with_index_pos(struct odb_source_packed *source UNUSED,
++				      struct packed_git *p, off_t obj_offset,
+ 				      uint32_t *maybe_index_pos, struct object_info *oi)
+ {
+ 	struct pack_window *w_curs = NULL;
+@@ -1446,10 +1447,11 @@ int packed_object_info_with_index_pos(struct packed_git *p, off_t obj_offset,
+ 	return ret;
+ }
+ 
+-int packed_object_info(struct packed_git *p, off_t obj_offset,
++int packed_object_info(struct odb_source_packed *source,
++		       struct packed_git *p, off_t obj_offset,
+ 		       struct object_info *oi)
+ {
+-	return packed_object_info_with_index_pos(p, obj_offset, NULL, oi);
++	return packed_object_info_with_index_pos(source, p, obj_offset, NULL, oi);
+ }
+ 
+ static void *unpack_compressed_entry(struct packed_git *p,
+diff --git a/packfile.h b/packfile.h
+index 2329a69701..e1f77152b5 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -320,9 +320,11 @@ extern int do_check_packed_object_crc;
+  * Look up the object info for a specific offset in the packfile.
+  * Returns zero on success, a negative error code otherwise.
+  */
+-int packed_object_info(struct packed_git *pack,
++int packed_object_info(struct odb_source_packed *source,
++		       struct packed_git *pack,
+ 		       off_t offset, struct object_info *);
+-int packed_object_info_with_index_pos(struct packed_git *p, off_t obj_offset,
++int packed_object_info_with_index_pos(struct odb_source_packed *source,
++				      struct packed_git *p, off_t obj_offset,
+ 				      uint32_t *maybe_index_pos, struct object_info *oi);
+ 
+ void mark_bad_packed_object(struct packed_git *, const struct object_id *);
+diff --git a/t/helper/test-bitmap.c b/t/helper/test-bitmap.c
+index b130832b81..8547ef67e2 100644
+--- a/t/helper/test-bitmap.c
++++ b/t/helper/test-bitmap.c
+@@ -52,7 +52,7 @@ static int add_packed_object(const struct object_id *oid,
+ 
+ 	entry = packlist_alloc(packed, oid);
+ 	entry->idx.offset = nth_packed_object_offset(pack, pos);
+-	if (packed_object_info(pack, entry->idx.offset, &oi) < 0)
++	if (packed_object_info(NULL, pack, entry->idx.offset, &oi) < 0)
+ 		die("could not get type of object %s",
+ 		    oid_to_hex(oid));
+ 	oe_set_type(entry, type);
 
-
----
-base-commit: 969dbd51a70f9105ee9965adec5c5a02e75ab5b3
-change-id: 20260612-b4-pks-odb-drop-whence-1b0af9ab16f4
+-- 
+2.55.0.rc1.745.g43192e7977.dirty
 
