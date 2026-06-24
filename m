@@ -1,80 +1,80 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9579F3AE6E9
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:23:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA863AE193
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782289420; cv=none; b=P+Sb/C2K6lcC6VfhjG1lOMA17Mh1YB9PHRY+cVvziKs7YUT4QA08krL3xb47sRvX77fH9gezCQpHPQ6+AMi/ViZqq0AYTIwDjUvWDPHnPfBQnBnVCHqfwHgiGfbC9Fkp6umDWIrrAnvKSmstP42ogoQERRVlNklBzNXG899T3rc=
+	t=1782289423; cv=none; b=i5Iio3duYb21iRE8UttD4r/23sLPoOC1CsvQEu8o3v1L5szhlDE9V9kMA2U05RdBPxDs2gU/QsJBkd95AhODtTj6UW1LL5caupuxbFSaAAD3JkVVywFDpR/slQ4uLq/ORva8919q9i/POt2+y+r45RKfnip9TdWsN9TyBFMyiGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782289420; c=relaxed/simple;
-	bh=MuGRrCvrh4YVx3PpNV4gYT59JpqlyPAyi0970k2RMRg=;
+	s=arc-20240116; t=1782289423; c=relaxed/simple;
+	bh=gT7s68YRAQQL31CrQ+t0Q0syoWeXFuIuC0wscCUhZRI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BEGMeeJWXRDelSdc5EAtbWTnJLrEiknR8RTff5Fos8yyLR0Ot1KeSWRpX7r6Dp5+Fh1CnF6LOgmkjtAaqnwxLdjmKXEEgBRm3Scjuyo4z6OTlAvAi6/nuJuXf1/B5DeQK+pzMmAc5vY6zvXuAKyINCVvZSfHXUNKj12CQgnL3jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h/Ty7OrI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KMCT2ug9; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=CsB+Bvi9Ui731S4SsSNGUv9/y7SRUrDkmc9T/5TO2/TuYAjDJ1xtQBBZNX2OT60L2aotJzyuYyk8cOOtKF4fSKBA53KGD7GEKmblg1SvXhYg5TGZsox1hX6MLwsYbCLY7JL6gGNL6UQrhNgulmwP003gHmxQWyE2dXuPWqKeiME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gPCMxvzG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kdnLez5h; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h/Ty7OrI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KMCT2ug9"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B78917A01D0;
-	Wed, 24 Jun 2026 04:23:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gPCMxvzG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kdnLez5h"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id D3BE11D0004E;
+	Wed, 24 Jun 2026 04:23:39 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 24 Jun 2026 04:23:36 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 24 Jun 2026 04:23:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782289416;
-	 x=1782375816; bh=b0jBmHvwlwCGUn1O9TU4nE/MPGEpjA+4wlx9mgH3uDo=; b=
-	h/Ty7OrI5n/45+nMuCK7QLj/EC8ZqiXEFG3ztKNEKkW0tkfeOxVGw+cVzR6pRPxT
-	kBySC+T99NbM7+kLSarykWOjJB1hw2/2kYCVVJnAFfIgC9Y4jyUVHHo/me1Q26NU
-	yglVwfkLVOT69fXvKMw1N+gexsrnppNBvGXJTxoIKQVo9ZP8YlYUGSkG/5g8Y8yU
-	lxj3iHLqZc4DyFBM+AE/eYeLUVzVdO91kLVS6KmKNXfPZdpmgzJxIdCvFnh/jvqq
-	cXZyvgv6DbCj8oEnZMCOFfp3JsOAPRDbiCaOpZQd4TO2/cs413OfFFzfoDojuitY
-	jQgFua6rCkS3BYkFhHvc7Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782289419;
+	 x=1782375819; bh=wQzTu7oS78frQFDKNbobN15Llzczc1GLb3fOS2U1Ziw=; b=
+	gPCMxvzGVOGjfQARHR221upOVDN5ybP/C8whY29qGwXp1kOaixfX7SCnIaGrIPu0
+	Xty+n6sq7/Ri3JJTQbOTWhc7WameESOc0buoDnw79WfHNZmPKRgj7rPrtK+TNblz
+	LZsD2DprojPVLyWbi64v6em1eFmgGO/8yt72IcMK6D6aLJmSxvVDxzWdSvdZAOXW
+	WsS5ugA1wdxYbkV0QpmCgy/OWq4NVR0lKFvs/hjYhb7Xc89GDFCPuEdo6NP7/Qzd
+	ING/g5k06G0sfejU2+VefkVF+ujUfYWvD/GoatZ+b9Ch43hHBb1MYstRyEVOq9ej
+	0ey3KsmsMnrT27Jy4Hnjfg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782289416; x=
-	1782375816; bh=b0jBmHvwlwCGUn1O9TU4nE/MPGEpjA+4wlx9mgH3uDo=; b=K
-	MCT2ug9x6xqAVrcx08aF1IIh6B7GvWulv9pl9u7iuaKmK+30bAQhZrl3LHw9TROp
-	kXhSoU3wZ/9BCzsmXahXFQGIL1E1vTHw1F/6kwFHUIiH+Sb7iHmVynjcTUWZ197X
-	zQNFa8Mo/j6A98gdGQopdPCdQEOXZCuQT+sjLH4Tms06h14lCvSt4U1UdovmtAIM
-	/FrdE1t53AsFEKPff9kj8+RDrRQPLxDy4PMioF22iLn4Y2jD+NmaASUCnFXeRF26
-	6DUKXVfFwyzjO6wiC42VQnwc8CVXJ12yRT//s1sZCdqYqXVRiHAEWv3NKsan/48j
-	B5CtyB9xnohNVtCsp/A4g==
-X-ME-Sender: <xms:CJQ7athQkzCenMQOONQrfMGEek9V2dRyKC0Q4E9COJV9HNQVM-6Scg>
-    <xme:CJQ7aoAbD7k9_GVdPakLfAnwJLiS1XlmnXp-djZCabYb8FVxktLBKqwywoWz87JQ2
-    SmSwR5vGA3B-2_SjDQRsWk3eMQiRNWFI2t9GRmMJwmSOFiijP2a>
-X-ME-Received: <xmr:CJQ7aqurbOwi5G5gmUqzbfTVPL4-jE6qwJHkjrhh9If6vp_3JostcvovDmAvv4G0Z5Os0hzXFtU_pFLVtmgMEJNkWFYLyxCA5UoO9Y2z>
-X-ME-Proxy-Cause: dmFkZTFBzRyZmediwmxpVIvDclFZs2oZ7aDDY+7mVx+Vm9LOdUHnrEfD2KyBBvLc8rc8BD
-    qXO+6xeB2PYgRe4y4z2oBexFFD/ZKKeyer3LAQkZy8DAfNuY80W0hqcWjpAx8oYCPSCjHC
-    Mn4kDldjyr2WyQuKoTvhLJdK3Si+8QDRVZ2oWxIJsvJAi9fQ21RlKdZfXgfn0EnmBA4Gtl
-    63sIJRWoMp7+Gq4jl9W0VtrE8KG1Fvk8sv5nfoCx6WkR8+3v/yte0+Z9DRFBNCNqz2xgW1
-    UObw2JbazdO1JTm7lit3VU06IExg130AzbZi8fPlHz17POxBiwO3W8B3qQjpTkvu0Hw+nw
-    KnmJJj+nWasLhQJA6jgv2Rt7YhGzI9JiuWh8s+Nej39TjNeOMaMDPF7iYgK9iUgfAfBlgI
-    ygBLukaiCGiImSzdTr6A1Aose+K2Kl4r6hn0LM4pXxGeJ6UJ6niYmlzehHNcuh/FeeSuEe
-    NNXzXGZ3a2bLfVxWk51xe5PpBwsrjhx5i5ZbsuigfwjW2N17HEth+ngwghxO/XJoPyeZ61
-    4F4QRpao2H6iWAYsWl8hJ4qVv9iEz95M7pOV3hpoNkA6pBPuaHQMZfCSMf3PXOCB7x7buM
-    yyronGirFSSnr9mJwKFYPd4CxhqdaFOOu6It88YB3TKZ5g1h5ODW0usjww0A
-X-ME-Proxy: <xmx:CJQ7atYC__9ruNjBD9EUvRNnyxhfQ11YgFGuUNCn2w8DiRR-Gt88xg>
-    <xmx:CJQ7atX2Ljc15KkzfgXNFCK-6JFewHrMCn3_YvbHYqslKIpNrVBHew>
-    <xmx:CJQ7ah5itpCpGnVjpPuky__JNsNZGOIWhF6upbhoEcNStqgvHbDS2w>
-    <xmx:CJQ7aohtC80gKh4Q03hlPOgCN6Gcj5LjMc7-1rWiXPoPE4veAUyoWQ>
-    <xmx:CJQ7an_cec7TYbuJlieo-bpyhBMbaD9PJr7E02MSZR7mzZvzftl2VG_9>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782289419; x=
+	1782375819; bh=wQzTu7oS78frQFDKNbobN15Llzczc1GLb3fOS2U1Ziw=; b=k
+	dnLez5h0hw/Ai9zzG2HwdamFfIhJQBqM33rh0sGfGrD0S0sN2vKhOX4xcgnv4z9F
+	SXi1B0OvsH4uN9zn/s2nVVMCHjixI88C32nb9aoKt5G9rX1xIieJwRyb4Ols3r0k
+	91KvdPkFN0cZhHz9+QqZqGX1HuuGvhjo5Ndcd/1bf/sZA6KaHmfIXTIZ/v/igvYg
+	s7y8Lcn8qq5cl5ldwrSQppX02tMenIAP62d/eiSegHpEoygoGdJO1prgZxyZcAIa
+	e/NbAKlAxoy5RlfwjLABk24/bXue080oMuA4TWimD3PjXa64jZfD/9XU/HtSYfhJ
+	C56wJbNpzfdn2QT6ow3xg==
+X-ME-Sender: <xms:C5Q7aht-KEXwW40d3BHpyt7WBewI2E1kx966oefslrK13fkWJ7FchQ>
+    <xme:C5Q7ageTAVd9L9gJlH4Axn8RPBCTQ2PhPBtVorBKeok5L2LOnhXgG2w8ayYOcwXj-
+    w3X8rZd1UYdZVYifO7fa25UxkrOm2F0DNHnuk-s6XSDCCYXEslNwZ0>
+X-ME-Received: <xmr:C5Q7aibagEbvW6hc1vyQ2UPWU7aKLLghxmTlLwkr-CIuWkCb4NHoCUVqgSW8zIaid6E-3MdNezeOmrKPP7oTD5P1FuZ-blaHATdRpIX1>
+X-ME-Proxy-Cause: dmFkZTGhdet2ItwvUgz4oa9q250EhFHQ9U9tz4O1dL/XkJ5ZyFJJUQRFo4JQGGhKAyPcTw
+    gaBBFW6bmgaIg9Gk2pxYRKh4o03P7cXmavet6k4nNUfWpUB5maJcrY/0k3qBdWpOihdPPW
+    VfpQakKkdUFOuVzqvKaxLNlsavE7w8EdKPcQLjjH5YGELDuEjIzSjXnjr5FtC2IYHPQgOV
+    Pyxw0OseW3D0aOlB9vgDiwjkdWIDplMKgSGEmR79G1GeadT0fMn3SS474oZ59AvPHa5Usc
+    glsBDsy91qgiZSuMvIIJLFZh79VH2GT2rRd+Sb6LxgcHl1kZui//HgFfhQc6RwVSpVAcdJ
+    Hryw3VR3BYg7+7IxL/SSnLoDGH5FPq+AEAQ5KxA6cLPvFEk+FFyiO8Fb8Mzmirm9UXWDFs
+    UX3jRUcad8VyZ0UwH/+HOG4vd06OOkTBR3+gIJi2cjEANWcK/ADZ8OH7vqkYxSvwWAbSp7
+    B85kYghl26aCBeaLtGrmnjZeUYGlfgEwxqFINiK7+jIaGFL1aLq3o/qyrbozhVHscIdBq0
+    YBWrotlt7tUHB/ANJztqT+Cy/hIRImsPgiHjDVoxpfPrO3COiufgxRgl0L4FEjdzj/X4am
+    60mYsBDcGkjg2A/xCMWduFohD2SIgzaVy/vMeXSHC8ZIZv43KTuQUeD8H5ig
+X-ME-Proxy: <xmx:C5Q7ajVPvf-mt2beyDKKUTcdNOLfb50OKggmnQfSFUrJxWVPq9YTSA>
+    <xmx:C5Q7akjVZt2QU067t6aI8tyx2F8gXV1DFCNPOzqKeNdrSc25pHAARA>
+    <xmx:C5Q7ahVrX1T6g-AWA80ZmKhU2xcdjU9ixokXvvZ5k9AOwjbCvi1F6Q>
+    <xmx:C5Q7arMoxm88dWR3j6S4YFrV08RqgULoy9chOW0ti-BxScZ9ptYRRg>
+    <xmx:C5Q7atJb3pj3VhxNXt6zIZUNuRKdRg2ONGhCPv0kyRuXpLiB8z16r1w7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 04:23:35 -0400 (EDT)
+ 24 Jun 2026 04:23:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 941f1593 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jun 2026 08:23:35 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 10615a99 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jun 2026 08:23:38 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 24 Jun 2026 10:23:06 +0200
-Subject: [PATCH 03/11] reftable/basics: fix OOB read on binary search of
- empty range
+Date: Wed, 24 Jun 2026 10:23:07 +0200
+Subject: [PATCH 04/11] reftable/record: don't abort when decoding invalid
+ ref value type
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,64 +83,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-pks-reftable-hardening-v1-3-66e4ce87c6b9@pks.im>
+Message-Id: <20260624-pks-reftable-hardening-v1-4-66e4ce87c6b9@pks.im>
 References: <20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im>
 In-Reply-To: <20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im>
 To: git@vger.kernel.org
 Cc: oxsignal <awo@kakao.com>
 X-Mailer: b4 0.15.2
 
-`binsearch()` performs a binary search over a range of `sz` elements by
-repeatedly calling the comparison function with indices into that range.
-When the range is empty though, there is no valid index to call the
-comparison function with. We still end up executing the comparison
-function though with an index of 0, which of course will cause an
-out-of-bounds read.
+When decoding a ref record we read its value type from the block. In
+case the type itself is invalid we call `abort()`. This is rather
+heavy-handed though: the data we're reading is untrusted, so we should
+treat the issue as a normal and not as a programming error.
 
-Return early when the range is empty.
+Fix this by handling the error gracefully. Note that this also requires
+us to set the value type later, as otherwise we might store an invalid
+type in the record.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c                |  3 +++
- t/unit-tests/u-reftable-basics.c | 11 +++++++++++
- 2 files changed, 14 insertions(+)
+ reftable/record.c                |  6 +++---
+ t/unit-tests/u-reftable-record.c | 24 ++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index e969927b61..f0442a46cf 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -152,6 +152,9 @@ size_t binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
- 	size_t lo = 0;
- 	size_t hi = sz;
+diff --git a/reftable/record.c b/reftable/record.c
+index fcd387ba5d..1fce441930 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -388,7 +388,6 @@ static int reftable_ref_record_decode(void *rec, struct reftable_buf key,
+ 	r->refname[key.len] = 0;
  
-+	if (!sz)
-+		return 0;
-+
- 	/* Invariants:
- 	 *
- 	 *  (hi == sz) || f(hi) == true
-diff --git a/t/unit-tests/u-reftable-basics.c b/t/unit-tests/u-reftable-basics.c
-index 73566ed0eb..c5d83b6714 100644
---- a/t/unit-tests/u-reftable-basics.c
-+++ b/t/unit-tests/u-reftable-basics.c
-@@ -60,6 +60,17 @@ void test_reftable_basics__binsearch(void)
+ 	r->update_index = update_index;
+-	r->value_type = val_type;
+ 	switch (val_type) {
+ 	case REFTABLE_REF_VAL1:
+ 		if (in.len < hash_size) {
+@@ -426,9 +425,10 @@ static int reftable_ref_record_decode(void *rec, struct reftable_buf key,
+ 	case REFTABLE_REF_DELETION:
+ 		break;
+ 	default:
+-		abort();
+-		break;
++		err = REFTABLE_FORMAT_ERROR;
++		goto done;
  	}
++	r->value_type = val_type;
+ 
+ 	return start.len - in.len;
+ 
+diff --git a/t/unit-tests/u-reftable-record.c b/t/unit-tests/u-reftable-record.c
+index 1bf2e170dc..9c95083ef4 100644
+--- a/t/unit-tests/u-reftable-record.c
++++ b/t/unit-tests/u-reftable-record.c
+@@ -11,6 +11,7 @@
+ #include "reftable/basics.h"
+ #include "reftable/constants.h"
+ #include "reftable/record.h"
++#include "reftable/reftable-error.h"
+ 
+ static void t_copy(struct reftable_record *rec)
+ {
+@@ -202,6 +203,29 @@ void test_reftable_record__ref_record_roundtrip(void)
+ 	reftable_buf_release(&scratch);
  }
  
-+static int unreachable_lesseq(size_t i UNUSED, void *args UNUSED)
++void test_reftable_record__ref_record_decode_invalid_value_type(void)
 +{
-+	cl_fail("comparison function called for empty range");
-+	return 0;
++	struct reftable_buf scratch = REFTABLE_BUF_INIT;
++	struct reftable_record out = {
++		.type = REFTABLE_BLOCK_TYPE_REF,
++	};
++	struct reftable_buf key = REFTABLE_BUF_INIT;
++	uint8_t buffer[1024] = { 0 };
++	struct string_view dest = {
++		.buf = buffer,
++		.len = sizeof(buffer),
++	};
++
++	cl_must_pass(reftable_buf_addstr(&key, "refs/heads/master"));
++	cl_assert_equal_i(reftable_record_decode(&out, key, REFTABLE_NR_REF_VALUETYPES,
++						 dest, REFTABLE_HASH_SIZE_SHA1, &scratch),
++			  REFTABLE_FORMAT_ERROR);
++
++	reftable_record_release(&out);
++	reftable_buf_release(&key);
++	reftable_buf_release(&scratch);
 +}
 +
-+void test_reftable_basics__binsearch_empty(void)
-+{
-+	cl_assert_equal_i(binsearch(0, &unreachable_lesseq, NULL), 0);
-+}
-+
- void test_reftable_basics__names_length(void)
+ void test_reftable_record__log_record_comparison(void)
  {
- 	const char *a[] = { "a", "b", NULL };
+ 	struct reftable_record in[3] = {
 
 -- 
 2.55.0.rc1.745.g43192e7977.dirty
