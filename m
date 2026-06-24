@@ -1,112 +1,147 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36623BFAE7
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 15:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183181A3165
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 16:15:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782313676; cv=none; b=fBouxY0Thc8eqcjJTyELIUJPy2yodaR+wau+DFDsaBHpXzv41BtsVAjej325+70GemQSQHIrPhLfp2eiCx5IZCDFdmQCyho41FnjSoDCmvCIKY0tXas4diddW8cCw3wdI91ODgnQKl7PkSjwg+UBY9FiOV4s13Fux2BUkZjknCo=
+	t=1782317716; cv=none; b=A5a2FSQ/02LxtTpTdGWdonxrplD/RDcR938MYWD42/BYveEqEaWnuV6AXRL/bA6k+5D6zMr7hUKszl6kSERCDWAajsou/AAmk0N74pRqxRM++ZknYtzRPFBwu4D5zCXcHq/LdYtuIy2/uIgU9qQCptJc361KV7X0MBUS8cueaJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782313676; c=relaxed/simple;
-	bh=FaY/KBlH5DiehABlJeqPemHfEEc6vKaUhvTnKxYndzw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZrW8xPkwwMf9p3s5xfxYUkYOBjOEdb4+sYyjJsNAJfjeKYf31dtGaxQcXOar8WZgF9VXXCLdq9XGy1Q5tWsit7Tmt6Y367KQH6ZZkBQNdLuQECaYfSsHHp16i3AX6XU/ZjvJFwOlm+7Z27ad3vuF42BsJtxeOHV2iMlSto1+dWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EJ1aHwPF; arc=none smtp.client-ip=209.85.222.43
+	s=arc-20240116; t=1782317716; c=relaxed/simple;
+	bh=JzzAQMMtdf5YisQ8Qg69Y+W8hYapld9W3TJnROuMrtk=;
+	h=Content-Type:Subject:Mime-Version:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=GdjArtzy9ZxmNy8vIxaLT2kfQ2AFEmVaM5eTUhpP8DpXGjTk3kdvwAkd5TwD96ClaD6+qd+/p02MtDOzDBUPtIzpGfffkA6KPWr1cWqaaEZMROGFuXZucv2v5kb/8OFGDsoyuyIojrvPHChwdSQE0Qzs7FK9SHOtxrceDRLwERg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VhZj7AXO; arc=none smtp.client-ip=74.125.224.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EJ1aHwPF"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-966801d093aso412037241.2
-        for <git@vger.kernel.org>; Wed, 24 Jun 2026 08:07:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VhZj7AXO"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-6626cd98209so1203353d50.3
+        for <git@vger.kernel.org>; Wed, 24 Jun 2026 09:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782313674; x=1782918474; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=05n/Es3bhd9BBlcPuDKCCGHmYU6qV7yEiwAmLO7FWjQ=;
-        b=EJ1aHwPFqj+defM+KVLkfXsTqxJNJlc9VxOj2X78z1bBi4zHDv4iyF79w8xTU6Q4mi
-         9GQWmdFaSTCLa5giwGAhmEEMW1C/wb61SvZ7KJieUQ9/ziZK0kuM2yg5ttzSKvQ0BG62
-         sPwFwAsBuSRV2ol9Yg8zrQMXJjN+Z7R4NR3AyVuCO+iuPDBUiDUECSkgqGQ/1gQzLJbX
-         qNlMdfBSc6afYADN0Nx7p3IvQhA6FjbO8dtNldukUwWePJHLFf2uVMcalCKbmyvPO6Jh
-         P/112FCjUo6SyeSSJYtg/gTvi1S6DLD7oQEFQGnNmAjyPfyz2aWAqIYg47D8reRNgcbj
-         xTVg==
+        d=gmail.com; s=20251104; t=1782317714; x=1782922514; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:mime-version
+         :subject:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JzzAQMMtdf5YisQ8Qg69Y+W8hYapld9W3TJnROuMrtk=;
+        b=VhZj7AXOh7kbK7TVuavgmUwc7oXQkGgtL11nIUvxkrF4caP19UDer5JrXv+MLjS7Do
+         IZVkpYHIliCj/eHypy3I0Jj0u20IBu6olIl17c7y0eNGdrUraIkHAA0dXXwCxwWDp3jS
+         68f6uLRJNENWRjYreF7jp1Jyr2E5Q/6sk3vEhf8ECgAwVCXJmJWTOnZBWKJgcTXFllAo
+         za8xezJ6AoIJ+xcia+vLhf3WP3Mq/GvyeyI1eTki3FYt929OzcXWkrnMtVs/07q0F1TE
+         uLbwFEjGp9Y9MKGFJSuGsoHFvz3JM6jN42EZ2kEbLYS8sAwWOhUQ3+lCqMW4hN2rnPez
+         87EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782313674; x=1782918474;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=05n/Es3bhd9BBlcPuDKCCGHmYU6qV7yEiwAmLO7FWjQ=;
-        b=EOmBg8dy8g2QmmVEMOcQyoGbKGh7A5R77OySzpcRTjc9DDwb3StxCzWOJnHY2x29YF
-         AY7rbXBQjUbBCBL1oFLckVF5y4X03FxGJFNafRnnrzwczUMwR5jvJFrqJWM6OFk5IS4t
-         I4tkIUOOx8Nf5t79dH2Tr9mNM4jbv8HfQ62W4TG+W+h0FmOlLolGxu2LTAVYu+nmZfmX
-         aAmOUv84umBMfX/iJKkvv744tw8pDAdbWhxj95Z4O+7Vp2MjXC5HfIFpR0fzymlGqswC
-         tqFMSyQlb/NuoRApEGLDvHfe3oYJWiNJJHQJQ4ejgnxNL+L/iWVlZG8rP645M0vw4sLm
-         2nvA==
-X-Forwarded-Encrypted: i=1; AHgh+RqjXbfbDkyTHobjr7Tou2ODpbJTnktBDJp5CRQeK5kB9qKjpBGgEpAzLIzFBAeNcqMmltA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5Qmk4wJ8vQ4kVpVbUQtyg9Ls5eAg17+GQ3fTI2FCCEzlq0vYB
-	7Iza8aOdbcfsOYLA92JXtBhMD0F2/brUSeqBn4zNtnrqgi5npzJjoHrvLKWuygpi
-X-Gm-Gg: AfdE7cmoM6uYjOSQolqC6jiaRMqoe3IV/e9RUrxTPB4AMc7wY85b6tVbxiR1xxyt4gn
-	hmglw4rM/0GElZigvP61Q7ZggqIrX3W9fkOKlpe1SsniIAKRhg+rinf+RY4PUXUP1//d1l6+dhA
-	4ISvt/O5Po3N1EwI0gTKVAfSxxUUMT/mAJZ8KPs7LBnq23eEVABCqLI2CWTXhoopnpEf+r7UdvH
-	7WezGFSv28IofdYTnkUlx0u1MF/UNNKVVPD5usRfyvnV3GdwVYQtrJfDcVk79Cwry4wr8lu+SBo
-	our8HR6xs/T8SwUhe8jhdyBmYbLnARBtS+VywMc48uybj2KWfGvXvBJK9cmQxfThezyqjRfD1Q0
-	m1Ozo7xyL/T23/CvVsX5zonCP0EDx7gSNdbJvRdDHmDi3mOdAXAa+mJPD97eqZh7NOoKntBDZVI
-	JtqR998D6zFgVQqPIxhCWcvOWwtSlcyYET1FCVdm3y6L8sSQgkRxWxbXV9oQ==
-X-Received: by 2002:a05:6102:3f8f:b0:726:f965:722b with SMTP id ada2fe7eead31-72fd7c4f568mr4312275137.21.1782313673751;
-        Wed, 24 Jun 2026 08:07:53 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-926004ac1b8sm561776185a.36.2026.06.24.08.07.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jun 2026 08:07:53 -0700 (PDT)
-Message-ID: <943b9360-68dd-404a-a129-6f857b3c16f5@gmail.com>
-Date: Wed, 24 Jun 2026 11:07:52 -0400
+        d=1e100.net; s=20251104; t=1782317714; x=1782922514;
+        h=to:references:message-id:date:cc:in-reply-to:from:mime-version
+         :subject:content-transfer-encoding:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=JzzAQMMtdf5YisQ8Qg69Y+W8hYapld9W3TJnROuMrtk=;
+        b=TNWFhO87stx3rb7ZiCnXd1ieiP+xb2lOFxHBx7bCedj7cyzoaMEfBnkEs9PYn5rnvS
+         KkarTfFjL3u7cv+buNtL/VzeqZAfm5dcSYGoeM3IyaKskzAQGo7wsu1c3xJEmsBvrEVx
+         d+z+GSkLXxNgN1bkdtKIBtW+VufeRrbjjS+mDtb93sQa4yjgDTiRm9kgXUmAcEWT1DGS
+         pOu0/GzUyfPt/gr7YVQDF8v9DKK/m3WakE5b/QwH/1e/YZinSGykgsVIKX3LdLgW0KJL
+         EkaOPNYUq4EfNRnWbNsVuOZ5GcmAdk0oEYaRVSHbYyTPuDxRRs//NQKuGe8xXleR8wRu
+         v7eg==
+X-Gm-Message-State: AOJu0YwKullKr9dwoiZObv0hOUb5tRwZi0xa3X2ZL3fEoocj3whf6yDH
+	NPoeL9VWG/djNjtojWVrrj0wd8vYimYs8lytL83X+thieSrDpjx2SgHvn7PucrA1
+X-Gm-Gg: AfdE7ckAChcTIoWxVx0G58/wwyXTTKTYSf7cUXSQHG3G+VFMx7ubyjCGLDS5YiK+ApS
+	phynHEflDS7GrJkmOFF0uh97c81wGJG1EzGqLngRnnueUjUcpgecNJRU1k2BBNSIJdF9z/dY4oA
+	Rgm3oisWj+EvA/AwRtBVUsj5a/2DpP5/NknkSgSSa4QL4KCs9xmuGPK8kHc5HBDcRDrfSEJP0WC
+	407swZf8Z6dDjHaOt5is4zqwZoIWvy0EU3wymWCahEtOysCpfRfqew0Uo54LD97TbLdtP1au/F1
+	q6eQyGcrLk2qHpdk+d7y0Ifw5kubLtOXImbh2GMTWBkcMDsWXI3OVWfgJPtmV7waBBQRYFe6moQ
+	Ux15D8iEORxnF/PLcFJTsI1zby52lXnbFt5OiqVRif2grjbieZmTsm94g+4Z1zbwsEWVtAP3bKt
+	6sLNDS0EJES3HOiVnFiJ7HALd0Ld5n/MWHP9Bn66md7dkJ7kYUAS48TTMCyVXRb9Vf3C9Ev3Gvk
+	2XSzCJKE1/LmSQL/l22L2EHAX7x5yUt2vY=
+X-Received: by 2002:a53:ac96:0:b0:662:f0e3:cc3e with SMTP id 956f58d0204a3-6636e4d795cmr3583250d50.35.1782317713802;
+        Wed, 24 Jun 2026 09:15:13 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:b42e:a656:86f5:91b0])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6647f963737sm107434d50.16.2026.06.24.09.15.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2026 09:15:13 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: Fetching missing submodule refs unnecessarily fatal
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] commit-reach: terminate merge-base walk when one
- paint side is exhausted
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
- <d84b932e5b078edc8255b6944ecb67fc1aa086b0.1782303254.git.gitgitgadget@gmail.com>
- <6b0d81e7-7617-4fb4-9e39-cdf8bc778837@gmail.com>
- <CAL71e4N1zMz=v9umGdGPTvLP1nF-tNLVQc+vAEBnekt2L0b6zQ@mail.gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CAL71e4N1zMz=v9umGdGPTvLP1nF-tNLVQc+vAEBnekt2L0b6zQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+X-Apple-Notify-Thread: NO
+X-Universally-Unique-Identifier: C41878CA-0ECD-4B33-B4DA-2E58211DED99
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <ajvouniXVAPH8nyZ@mcrowe.com>
+Cc: Git maillinglist <git@vger.kernel.org>
+Date: Wed, 24 Jun 2026 12:15:02 -0400
+X-Apple-Message-Smime-Encrypt: NO
+Message-Id: <BEBEED4A-5677-4B74-9B69-E1614158ECD4@gmail.com>
+References: <ajvouniXVAPH8nyZ@mcrowe.com>
+To: Mike Crowe <mac@mcrowe.com>
+X-Mailer: iPhone Mail (23D8133)
 
-On 6/24/2026 10:47 AM, Kristofer Karlsson wrote:
-> On Wed, 24 Jun 2026 at 16:02, Derrick Stolee <stolee@gmail.com> wrote:
+[re adding list, woops!]
 
->>> -     test_trace2_data paint_down_to_common steps 81 <trace-half.txt
->>> +     test_trace2_data paint_down_to_common steps 57 <trace-half.txt
->>>  '
->> I love to see these steps change. If you take my suggestion to
->> update more tests with these checks, then this diff will get bigger
->> (but in a deserved way).
-> 
-> I will try to add them to some (but not all) tests since it's more
-> closely related to performance than correctness and I want to
-> avoid making too many tests overly fragile.
-In this case, I think it's more about protecting all of our special-
-cased termination conditions. The rigidity means that it is hard to
-accidentally change the behavior. It does have the downside that
-more tests need to change if there is an intentional change, but it
-also gives the same _evidence_ that the change has the intended
-impact.
+> Le 24 juin 2026 =C3=A0 10:24, Mike Crowe <mac@mcrowe.com> a =C3=A9crit :
+>=20
+> =EF=BB=BFOn Wednesday 24 June 2026 at 08:39:39 -0400, Ben Knoble wrote:
+>>=20
+>>>> Le 23 juin 2026 =C3=A0 11:04, Mike Crowe <mac@mcrowe.com> a =C3=A9crit :=
 
-We are definitely leaning into personal preferences, though. There
-is no hard rule one way or another.
+>>>=20
+>>> =EF=BB=BFWhen Git fetches in a superproject with --recurse-submodules, i=
+t appears to
+>>> try to fetch the corresponding submodule repository commits for every ne=
+w
+>>> or updated superproject branch. Presumably this is so that everthing is
+>>> ready to switch to one of those branches without further fetching.
+>>>=20
+>>> Developers may create commits that contain submodules that reference
+>>> commits in the submodule repository, but those commits may not be pushed=
+ to
+>>> the submodule's remote repository. When the superproject commits are pus=
+hed
+>>> to a personal remote branch anyone else's Git fetch cannot find the
+>>> corresponding submodule commit and fails.
+>>=20
+>> This is the part that confuses me: if a (public) commit of history refers=
 
-Thanks,
--Stolee
+>> to a submodule at a particular commit, and that commit is not available
+>> anywhere, then we won=E2=80=99t be able to properly update submodules whe=
+n using
+>> that commit. That creates a problem!
+>=20
+> It does. But only for that user's personal branch. Even though it is
+> public, a personal branch is mostly only for the use of that user and it
+> doesn't matter to anyone but them. (The user is probably working
+> simultaneously on both the superproject and the submodule.)
+>=20
+>> Why not instead make sure the submodule commit is also available for fetc=
+hing?
+>=20
+> This relies on the user realising what they've done. They might even think=
 
+> that they've made the right submodule commit available but forgot that the=
+y
+> rebased it before pushing or something changing the commit hash.
+
+Yeah, the recurse-submodules option for pushing makes this easier to notice/=
+act on, too.=20
+
+> =46rom a resilience point of view it shouldn't be possible for someone who=
+
+> can push changes to their own personal branch to perform a "denial of
+> service" on anyone else fetching from the repository by making that fetch
+> fail.
+>=20
+> I hope this makes it clearer.
+
+That does make some sense: I wouldn=E2=80=99t want to get interrupted by a c=
+olleague or collaborator=E2=80=99s bad push of an unrelated branch.=20
+
+> Thanks.
+>=20
+> Mike.
+>=20
+> (Was there a reason that you didn't reply to the list?)
+
+Nope, mis-click.=20=
