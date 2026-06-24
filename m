@@ -1,145 +1,132 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9F5366562
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 04:19:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0997E31197C
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 07:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782274777; cv=none; b=dxBo9s4sxYU34eptxfnxACQdPhFusMUksXDIryFVBO0yAxuiPgwhkIK1BpeRME4C9aoBGvyQQP680zqmE4iMTsnPqYl8WK67UOUVADypu5m3T0XYg6do2cIqXCTYiXiQOsds5+YdtekFRFwifXq9Zt9uVcCEWXsG6DWiwDdxc1M=
+	t=1782287359; cv=none; b=D6MG+t87NV2nB5jI/8TFVK8hSxdkxinu6z4CxLbFQJmQFe8qcGCDoPk0ENp7yQi+9CcULnjJzYQT47/jTXiWBioKBVuqSAy6cnWX5eyK1IbZoDcQ4fjZrNZCkk1kexfghuoCoPlNHjt7d358J+T/zJAOpV7R0RHggHft9l6FSS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782274777; c=relaxed/simple;
-	bh=X5y9dmRXnPWnN0seL0479CsL6O/dRLmoPTOF9qsf+XA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUsTB+iNOAPs5Iu69TMObP2YP1ILaJhC7yev1NHIVmgbgo19tU3TGhULVH4psoasN0wt6Km1o7JNkkheRVvX0OqH3JEM2ZeKskd0wB9sLedE3V0vGjdSqFiFyI1JatMVXn77HgpjWuJCbpFv6C7PfP1trxVeNhlzGeQBJdE8a1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iSHQg0xP; arc=none smtp.client-ip=209.85.210.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782287359; c=relaxed/simple;
+	bh=zetKKk7PLXm2oq2WVmBlWyYBx9oqpT1jwmvXGVyQ4V0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=S3YNKHZxoxB90mvoqeIHKW+kVjB1D4TBBntAW9MRLztBWMiQ5X0PRJTggeYOV5VzK1hq1ekIthyEHv/DSHpJLE+fR3FdIyLotPDnp+acOX1zzEVe+ff8D1DT36G6NlYWdGl6V0UK3zJKCRTPYAfhhA1rmRdQ7046oyPI7qVhCwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=JdgMo3Ig; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iSHQg0xP"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7e9797ec365so486313a34.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2026 21:19:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782274775; x=1782879575; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pNXJKVX7a0IPKtll7nTbcU+VTiQgSyLLm+/Al0IECzg=;
-        b=iSHQg0xPeFceJLT7pnhNGTWVnWG7U9Va6IsDSnw5DtKOgOA3wxAFJl/TB5WUPFJom2
-         CC0cQ80HcvI0lP61rNUG6VWPnQH8Dk1dTTG5byeKe7tV2770sDom+LzF5xvxBSQVP9PV
-         47vvihe1hs8biaR1uJM8kR22CMr0n2bF25HUiBqrWXhih2QSD+yO7mNBEn8+AwVlngxj
-         yJhwTnG5Uc4uj2aR578v5MwLzesmezNkMrQoDTudHlkaHzG/sE/14PUFpXpQF4XfHkS6
-         A+/6ryP5ShpKSoayr3Ib9Ih5ShoKD+NZ3QGu7RVJbhpSavYAuq7di7ca7CMZIfPqiyNC
-         SNxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782274775; x=1782879575;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pNXJKVX7a0IPKtll7nTbcU+VTiQgSyLLm+/Al0IECzg=;
-        b=lgZzqyI1jFOoKhG+aBvgxoNanZf5Edf183NFDuapGdJROl9p3mBSSsL8n36wT+FSML
-         ORWa6i4CCJmkCARpR2RZkOF6GioAQYYqPpKNiGpBegixK7XTjhTjcliVyWuKMIZHrXaB
-         7Ojpzqvf4JxHSfYOWljSB+eTmEpLumeuJijXxtL2/4B85RJ2rqUlKlSHbN4Se+1PAwhX
-         0eE2niDu8+xJkHdsEXziVcBFzjCybaIL6pe4rOSmWsjRZHwAZ8hfSyr5PAM4oDCPD7FM
-         jwjq8TDVYSzoeIQfDkKcOdFWPI9fNSvyXFDEDtPbRv4xAeZFgT1033xckGDsGLCyhq6I
-         nkVw==
-X-Gm-Message-State: AOJu0YwrcdBDr+KxPmmfdwC9XmqvhfDAsHXQISEF9NsEKl96P43V52lG
-	hEVHAYT69QEKcMhY9Ds+fIaXyP74Ti0Na1bje/mitZ/dGe75zpXb7q6UHxShfg==
-X-Gm-Gg: AfdE7cnN0yONg/sm4DKJwN2MLI1Ue7vmuentztjB894slZGrnboUn4dI4KJZ9X+/WBm
-	BwM0WfGTTcCfINu36EiXYKmTI6O8BQGOtyXGU5q69tpmcZ1+p+qJXCdLpnl59z87BKINwY2Kftn
-	Q2tHCyCB0lA5I9ueYwhm3c1KgpbY0HeLqwXcapNRATSeJptIQaDkuB560KZ2VFtOdGXPr09oJ5I
-	Rgolt2yNHUUCMfhoI94YfoG3B60nfOi6+vbKiioS1kX9HdZ4KPwXVwm919Tv23+j9Z9DH97dBwQ
-	XjtOXWw0MvF8Vii2yPFAboUvxzfOTRHOh+UhKCn0sKevxK4X8XrrBYDgysOlfBFeS6YoAXu3x3s
-	xbU29aSaPP6Oe6j5+TXbQKNHU9565/ZgRcpa2AIW5/YtY6zBuEMZStFXTSZY899TqwwoHXlIJiS
-	pT2cUYRTtvAjM1gZEDRNUZ
-X-Received: by 2002:a05:6808:67c7:b0:48a:67e8:69c4 with SMTP id 5614622812f47-490796859a5mr1401470b6e.22.1782274770712;
-        Tue, 23 Jun 2026 21:19:30 -0700 (PDT)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-48aedf21f5fsm8111799b6e.12.2026.06.23.21.19.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2026 21:19:30 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 4/6] odb/transaction: propagate commit errors
-Date: Tue, 23 Jun 2026 23:19:18 -0500
-Message-ID: <20260624041920.2601961-5-jltobler@gmail.com>
-X-Mailer: git-send-email 2.54.0.105.g59ff4886a5
-In-Reply-To: <20260624041920.2601961-1-jltobler@gmail.com>
-References: <20260624041920.2601961-1-jltobler@gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="JdgMo3Ig"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1782287355;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TM47WyeF/genllMipd2EQlXoFkDyke54PbqFVlW5Rrc=;
+	b=JdgMo3IgMVsiYpqufef6i+noBn5bKVGv0O/FHA59vgNk+4r/BPwpJZDETH7HnJAhtcHiSL
+	5rFEECHX5uE64F4oaaftx8WeA44Cl/lULpxL71Pf7qLdFXRpZUIKgB+DyB4QGEWhoDmSSO
+	hPhvXWkJZXVfqGFc29oAGFxo4g64yUU=
+From: Toon Claes <toon@iotcl.com>
+To: Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] bundle-uri: drain remaining response on invalid
+ bundle-uri lines
+In-Reply-To: <adkOJLfxs8TNGRjr@denethor>
+References: <20260408-toon-bundle-uri-no-uri-v1-1-d4a0e3937eba@iotcl.com>
+ <adZ6yyGsoyjm7t0Q@denethor> <adiZTBH_70nrpiHe@pks.im>
+ <adkOJLfxs8TNGRjr@denethor>
+Date: Wed, 24 Jun 2026 09:49:06 +0200
+Message-ID: <87y0g4xtsd.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-When `odb_transaction_commit()` is invoked, the return value of the
-backend commit callback is silently discarded. A backend has no way
-to signal that committing failed, such as when the "files" backend
-cannot migrate its temporary object directory into the permanent
-ODB.
+Hi,
 
-In a subsequent commit, git-receive-pack(1) starts using ODB transaction
-to stage objects and consequently cares about such failures so it can
-handle the error appropriately. Change the commit callback signature to
-return an int error code and have `odb_transaction_commit()` forward it
-accordingly.
+My apologies for digging up this old thread, but it was suddenly brought
+back to my attention. Anyhow:
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- odb/transaction.c | 13 ++++++++++---
- odb/transaction.h |  2 +-
- 2 files changed, 11 insertions(+), 4 deletions(-)
+Justin Tobler <jltobler@gmail.com> writes:
 
-diff --git a/odb/transaction.c b/odb/transaction.c
-index d3de01db50..b20d6a16f8 100644
---- a/odb/transaction.c
-+++ b/odb/transaction.c
-@@ -18,19 +18,26 @@ int odb_transaction_begin(struct object_database *odb,
- 	return ret;
- }
- 
--void odb_transaction_commit(struct odb_transaction *transaction)
-+int odb_transaction_commit(struct odb_transaction *transaction)
- {
-+	int ret;
-+
- 	if (!transaction)
--		return;
-+		return 0;
- 
- 	/*
- 	 * Ensure the transaction ending matches the pending transaction.
- 	 */
- 	ASSERT(transaction == transaction->source->odb->transaction);
- 
--	transaction->commit(transaction);
-+	ret = transaction->commit(transaction);
-+	if (ret)
-+		return ret;
-+
- 	transaction->source->odb->transaction = NULL;
- 	free(transaction);
-+
-+	return 0;
- }
- 
- int odb_transaction_write_object_stream(struct odb_transaction *transaction,
-diff --git a/odb/transaction.h b/odb/transaction.h
-index cd6d50f2e5..7898770071 100644
---- a/odb/transaction.h
-+++ b/odb/transaction.h
-@@ -54,7 +54,7 @@ static inline void odb_transaction_begin_or_die(struct object_database *odb,
-  * Commits an ODB transaction making the written objects visible. If the
-  * specified transaction is NULL, the function is a no-op.
-  */
--void odb_transaction_commit(struct odb_transaction *transaction);
-+int odb_transaction_commit(struct odb_transaction *transaction);
- 
- /*
-  * Writes the object in the provided stream into the transaction. The resulting
+> I think it is questionable for a Git server to be sending clients
+> malformed bundle-uri configuration.
+
+I will not argue about that.
+
+> Do other Git implementations on the server-side exhibit this same
+> behavior? If so, or we reasonably think they could and just want to be
+> safe, then I agree that adjusting clients first to ignore invalid
+> bundle-uri configuration from the server is reasonable.
+>
+> Generally, I'm of the mindset that when a server is sending
+> malformed/garbage data that the client doesn't expect, the client should
+> should be more strict and error out. In this case though, since there
+> are known affected Git versions and bundle-uri is an optional feature to
+> begin with, it probably doesn't hurt to be more permissive.
+
+Yeah, that's the point I was trying to make. The use of bundle-uri is
+optional, and clone can continue without it. The code was intentionally
+written to continue when something goes wrong with bundle-uris. But
+because of some underlaying issue I was trying to fix with this patch,
+the process does not continue.
+
+> On 26/04/10 08:31AM, Patrick Steinhardt wrote:
+
+>> That being said, I also think that we should fix the server side.
+>> Whether that needs to be part of this patch series though is a different
+>> question. Based on the proposed patch you posted it seems to be trivial
+>> enough though, so maybe it's worth it to just add that in as a second
+>> patch.
+>
+> Ya, my main concern was that a client-side fix would mask its root
+> cause. As long as it gets addressed though it's fine. I think it would
+> be worth adding to this series, but if not I'm happy to send a follow up
+> patch to fix it too.
+
+I do not fully agree. My fix doesn't make the issue go away silently,
+the user gets a warning message. I think this would cause (at least
+some) users to complain to the owner of the server (especially because
+bundle-URI is an opt-in feature). But I realize now, this warning isn't
+checked in the tests, adding that would have made that more clear.
+
+I do agree though a server-side fix would be advised. But I have no idea
+how to best address this. In a previous mail you wrote:
+
+> Naively, I would assume the easiest way to fix the issue on the
+> server-side would be the following:
+> 
+> --- >8 ---
+> diff --git a/bundle-uri.c b/bundle-uri.c
+> index 3b2e347288..96d38bb80f 100644
+> --- a/bundle-uri.c
+> +++ b/bundle-uri.c
+> @@ -946,7 +946,7 @@ static int config_to_packet_line(const char *key, const char *value,
+>  {
+>         struct packet_reader *writer = data;
+> 
+> -       if (starts_with(key, "bundle."))
+> +       if (starts_with(key, "bundle.") && value && *value)
+>                 packet_write_fmt(writer->fd, "%s=%s", key, value);
+> 
+>         return 0;
+> ---- >8 ---
+>
+> A quick check using the tests provided in this patch seems to show them
+> passing with the above. If we want, we could also have the server print
+> a warning on its end regarding the missing value too.
+
+I don't like this fix, because it papers over the issue, silently. But
+then again, what is the best way to inform the server admin there's
+something wrong? Adding one line to the log files is easily to be
+missed.
+
 -- 
-2.54.0.105.g59ff4886a5
+Cheers,
+Toon
+
 
