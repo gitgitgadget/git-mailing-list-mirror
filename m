@@ -1,81 +1,81 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7FF325707
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 18:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D751A3165
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 18:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782325569; cv=none; b=gw7kvmVfkanaiLxSZVGFDR5anAcB8ex2w7ErgVKKMQ1CGNZNPNEl+tEBVcOzfLWpVYmj4HjfQ78eSsQxsPq7XyBOKxXqCWfa8NU8dDjeuUxmA/BIFIfdRuukhH0foIgn3BfjRFfsY4MOepQrAE3KBKgtTbLpPB0PlxqBFFGErXM=
+	t=1782326128; cv=none; b=IcOy4ikpGO9mtwsaMkkChwgyfQKeAQrJ/Z5zBneWEAuRfRMwqs3ZxQKimX1bXT9pT5zwbO1B+PM1mCAO7MGoVVEZ/uump1LLYw/Vop5dNVXff5yAMJ2uDi6Wfe4e9GX+wBmDkTsEizU+36tvrH8TFlvk1EPmseioRLmbF/1xa80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782325569; c=relaxed/simple;
-	bh=RjbLGli00YZrGjq+82/uRZ2E7DMYlmbKZjiim3s+mDE=;
+	s=arc-20240116; t=1782326128; c=relaxed/simple;
+	bh=tNPKrou0f8kw6OmSGVoLD3NcRfBoqdB1RVUmtcSCanY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uzWLNKiviOKoDVaHAWt2e+1koMcaeHS/v8LiOm3bqI8+DiLSrujej9n5+G4HgUCNbwUekv7uIyTgrC5NJEMcvv8iY8+OOHcbxnOn1vJdeumR9uOXBYs3LoMmrtpoR579/xasqXrZV/hgMwMNFPB26lYbIKSuG9ESHvEhOi0+SLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cxEQvqeF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sra1026Z; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=OgwiuC4L4W2e28geHSWt7YvkP1YZaEHhrYIkp2W1t+ehdkhW+G8LCKoQjwjgmjxALQfYAPUhXDXU14aJlPnpgO0URHsbMfCQe1aQPoGd7mR7zTxQg1fcyoaTtsmbVE1mtdKIgu1r3jWY8P69sYl31LxCCVE5+C9+uEWOE7pK4wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kP8isDcS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AOtSYACv; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cxEQvqeF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sra1026Z"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3FC7B1D000E3;
-	Wed, 24 Jun 2026 14:26:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 24 Jun 2026 14:26:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kP8isDcS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AOtSYACv"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 903AD1D000EC;
+	Wed, 24 Jun 2026 14:35:26 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 24 Jun 2026 14:35:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782325567; x=1782411967; bh=0WZNb01a75
-	LruS+fia6SzAydDRxGs/VpdAD7sE8Dmzo=; b=cxEQvqeFggXBTzNrWnyYp/6DpQ
-	kSleTYx6zlwq884BL8k0t6fYauXziX1U3Faa9P5swMgANqJY+91VneBIyjS+btQ8
-	H85hBVYDhHO3L66FQrPRYHn8HCKeKjBn2Z11rYviZ+V+B7+MsVOxXm3LTT2sjZLs
-	shyhYdub/tumPuhzdCFU7t3he8FewNQ1s1iZtrAGLusFdgtRF5i2XVBuNhY4rCru
-	B4DnOnG8LMKfoHbYtcqn2xdgF55sq9DGbOFrQGGsvpaEHJLIk5Puy053C4FVrDP6
-	RzhscmCB+rAWOumU8Oa5jaxuAX7MnhvUKiQHNb1yzxxQNeD1+XECL3Tg5VLw==
+	:subject:to:to; s=fm3; t=1782326126; x=1782412526; bh=dBISq3SowV
+	P1xf8zVUnwz7Hjrv+LEGMVC5dTvpGf5/g=; b=kP8isDcSixjWHJbpB5kgztHRK2
+	ZNLygvLZ2n8fTntFLDlS1hhNr8MDyZ/TSQS9Q1F83sTgRqxO2bw9HIWaLYi3zCdT
+	Kw9aWS7MOCGKhGMpdwyI8I3zE54p70dnYeEXdACQ9kWZpM5oxMU+zDyuUhFoy7Fa
+	Obc+JbkwdsTYojTJ2QB2zo8oCZenPG3ClXHID/nqalE5q//8qKfNTrkmHnkGJByJ
+	XJ23n7TYZ5k6B4di6aNDrbM9ZiBGmhUjD8bjW/SJaZx0aWn/Wg3ZQaX9ZQuJoSfL
+	U8Jb5azV2NA+KtCpiZ6NBqLGpugdTBlSY0JS6/LbPCiTQlRGQvtoX8oX7t8g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782325567; x=1782411967; bh=0WZNb01a75LruS+fia6SzAydDRxGs/VpdAD
-	7sE8Dmzo=; b=Sra1026ZJVI4OwicUS+qUAqeFaSKYnDkke4m0glr4w4lKKIr+QT
-	9suLp/E8sZkSZDdNs9eFbILTZ9wSD9/UR9BqpAU+O3gcZoDTeZRcWZRiKR+fWFb/
-	R3eGI39AqMg0KFDxarQIvMqt9i1CgyHeEhc81c5oRl/V8CTItjMGdXngHWYA+Tuo
-	BSTxYPSaTZZVqSj+Dpwc/sBTHOX9zRCGajZKnM5ue4aF2hW1GJg5ZgPc+NQw3EyE
-	btakAwJ944GH3QRFGCW77Zs5f9OSk1zWRZkxzAIqtvqwX12M9C/jNLbE+YCZQgJF
-	GHAYWBR/G/q58qlf6+NdckqZrEv5974NkMQ==
-X-ME-Sender: <xms:PiE8ajE5D44rkaj6iE9BusdQe2uoyQQYNSmR8yMld3wsRuBMLGQWOA>
-    <xme:PiE8anUgOMQ-iXnK-sqkPYgFv31hvUadizAK_8BB0B7E5TbL5bnB_19aPnIW7apsp
-    d7EluRSnfoO_td1rIoRefc-FkFYEdZwd5slgrPpoqWiEEQ3J0HDENw>
-X-ME-Received: <xmr:PiE8aqL91MjuLu40qIr-a8zmit7evSl1uiuLIXqDfWmqqgNMMcgcGez9g8ssQvSdMLr8tp2iXbApJWT5TZJaUV4SvMXopwmkI1IKq-g>
-X-ME-Proxy-Cause: dmFkZTGG4nhWi5I025kxgM9jZHW5cZMqNCVUnEHzuiZ0pgSajexoUK99RIHMDCSwCnHlsP
-    H1rKpe0B+I0uoiCCa7dRyulaCd00Ddja0dP0t5/3RD/sSHyInjiCpO7acMjHBB7cZ+2KNM
-    tZxtB/5Diz6HS8XSAV1spJUsDKv/kA5Tk3zSGVyc1rUMvoYqiktmM99AoKaDpu0nyh1vEU
-    +eLt8Mb5Qs9Kb10vV4S1GJAY2VMysEfkhFiH4EmUVeUxASUlfnn5+dmc2aOluacjLCrQPk
-    hwd6+ZUOr9bh5MF7NdLShYGIm7hVU6V9bgj3yDK6JV1C27NU76iq04ZtK5F2w5P3U7zhK3
-    9QYRmBFneUEHGWlWZQYtaZ2VK8z1OmClhkyYDZbb6zwfhU0ivwTiKzjRzfVi3OFdXH895T
-    uFki8EEL5V9xlD1h5fl52f6mSQiF9LCFS9QbwHX/5zvBav4R8WyEomdGH+mQbwzn2Zkn5O
-    OuS6z/5pvff4+JMaVmqB+9Fiof9zEmO17iayzl4Q/vvcQqKKVMugKw5z34wbDSnZNi4VJe
-    S8pUzchedG1dplPL4HWZfU7D2I72QPX36CF1m5libWtGS5iaZaGKztNANdNwWmn5BLGBtl
-    QW62Vk5a8PL92joHTRDvBfYkIbHQPbE8USVn7ofcx2+g48Fcpcqmg0vy9nvg
-X-ME-Proxy: <xmx:PiE8av-XBwXwEHSmeER4rsoeZ78q_7tNcSS7FJTvU3XCujzBS3nsPw>
-    <xmx:PiE8alIHIOVsVuctJn2AKUI8Fwt2S1wbdMVw-u-AQ9nsIYPYg0EKgA>
-    <xmx:PiE8askXZX93e-uuUjdFeHp2qDoI0J_nQfJ1Bmzm8PXwP34rpFfR5g>
-    <xmx:PiE8ahPKoNTNKgLd1OEXUd6VSeUUtEsQ8zqY2FPtJCk_Iz0OiDLw4g>
-    <xmx:PyE8aokaZv5bLm_WESYILzteUl8D6HpSMjdHH-auP0wDR5UYebq_9R97>
+	1782326126; x=1782412526; bh=dBISq3SowVP1xf8zVUnwz7Hjrv+LEGMVC5d
+	TvpGf5/g=; b=AOtSYACvYrR2uD3vBihnThA55OslW5dgrHabsO8g5wzjvucdk00
+	k1L4u9MIPpX3k3R2/lwUj/eYebsEHXyT65xzMqIc4bFe7kBVzpWNHIolPP+DPWDu
+	zDeoGVxuL1WzWaKpyV0mZ2oKf/HcqXK+IjDcCkE04W/g1cEN4uqMM4MI/xE+6702
+	K2NpQF5aD5LaNQEk1PzJ/fns/eBnQbOGddZjIOZbXzXFRAIah9FdBiKyXDSpS1/H
+	22YwXZDRy6UQbrb51shSyRwmAj9y9Ww3pDP2K/sOKRj5uHxU64KHsfrLwgbByjnG
+	Fi2zXFzoavQgeWGjHmozAtLaK6FcHLivqrg==
+X-ME-Sender: <xms:biM8agCjEVSvIpErWXd0ubqkRVCRMc1W6_lxY_uoxV5n2NJcfhpokw>
+    <xme:biM8apgnI0sbGdEtW0taihEI1RIESZqI0JChRycIzIakafy8NQSG4ZAcLGVUroQ24
+    IsDWdeYKUe3JLZwofBtqJK4ZDueqZqIRTDJGrjKMb0-7H30FIwt3DQ>
+X-ME-Received: <xmr:biM8aol5lFEZkh8rrfAEmRv0XPJYufjsF34lLahVl-49S9ZhLypg_GPL14p7pQYXkmJOf8UKorT2T1R23-6V7wf_M37U1CIXBx8UmCM>
+X-ME-Proxy-Cause: dmFkZTFabFa/F7TmEwOxCS4b6QQWjGHrqXgm9/VAerB+biA6Ji56eZHVdXarVAkoR7GHLo
+    l08MPyG5ymakfawQfjdg3AOXv/mm/DZkOC/A0gr56Sj8Si3Z6hLUxiLs+ZHh2LoveFLQQG
+    nRvWJIN+ShfLoQIBkz0GfaLP14baHI1kYkmulSaiHXrpNN0yDnNDeQduTmCEgujdZiVH6t
+    CaKmrjcB+L8yl8FCmBGzeGVrNEUkFQ83Y5KJeawFfTR+d90sxf2xtO2wIDRq8KzNt/kUH8
+    Ki9tuz2HX3puhwY3SOsot8elbSa72pjSMmi6Ob+JSsWVIBR2OkqLP+t5dmEuBrmtP3PHZc
+    rul/kW40M6m+4XWmwkV5oSzb8+GUCapaGqZlw4nH+aUswMnC5OdSzKYITdbzGLi3M/FH0F
+    104m+pc3BvY9wArFiSd4S0CDHkii+lfNCv5K5oORnJ6OhczXGF/ZIK190lNNSmofon2mNJ
+    ca3tvzZSCZGhqY5lwX7KhVF2e+l4WjfTJtfyNgvVlGzVUu9857xbIuRHRnt6kGQc35PLiE
+    8jEBiAVe5jeiVhnxbgFDmv+To1Kam5JrDXb6wgN1od9LhHrshOGTsLUwVV3Ej2J0nfc36G
+    vCmlqQdoAav34+RpqPl4uT07KjgfIBExib1ljdFUZwmIcTo763kUoz7KN+yw
+X-ME-Proxy: <xmx:biM8alrj1NLP_tTblhwsNg-BkXPjo3m2UBHYIqNznYR_dONlLLymBg>
+    <xmx:biM8ahHfIFmJl8GYhergSX7S66R3fyR7K7k3ewLI523N_BSmv6BJtA>
+    <xmx:biM8ahyOqit29Mg-hOwSaVQ1il_38BZNSwpyrf2K3s_R4URAHIf0Tg>
+    <xmx:biM8amq9BqVnecBfWz1I7nM0s4KriI-CnzAy1f__CYdWnlQFB26SOw>
+    <xmx:biM8agGF0uNS1PjaKDunmp5ueQ1uNI0k9XiYmqgNeqFW5ufzPzXKdKWo>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 14:26:06 -0400 (EDT)
+ 24 Jun 2026 14:35:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH 1/6] object-file: rename files transaction prepare function
-In-Reply-To: <20260624041920.2601961-2-jltobler@gmail.com> (Justin Tobler's
-	message of "Tue, 23 Jun 2026 23:19:15 -0500")
+Subject: Re: [PATCH 2/6] object-file: propagate files transaction errors
+In-Reply-To: <20260624041920.2601961-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Tue, 23 Jun 2026 23:19:16 -0500")
 References: <20260624041920.2601961-1-jltobler@gmail.com>
-	<20260624041920.2601961-2-jltobler@gmail.com>
-Date: Wed, 24 Jun 2026 11:26:05 -0700
-Message-ID: <xmqqse6biyma.fsf@gitster.g>
+	<20260624041920.2601961-3-jltobler@gmail.com>
+Date: Wed, 24 Jun 2026 11:35:24 -0700
+Message-ID: <xmqqjyrniy6r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,16 +87,95 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> The "files" ODB transaction backend lazily creates a temporary object
-> directory when the first loose object is written to the transaction via
-> `prepare_loose_object_transaction()`. In a subsequent commit, the
-> temporary directory is used to also write packfiles to.
->
-> Rename the function to `odb_transaction_files_prepare()` accordingly.
+> The "files" transaction backend may encounter errors related to managing
+> the temporary directory used to stage objects, but silently ignores
+> these errors. Instead return errors encountered in the
+> `odb_transaction_files_{prepare,begin,commit}()` interfaces to allow
+> callers to handle as needed.
 
-Taken by itself this renaming does make sense, but there are many
-other function that follow the historical naming convention, like
-{fsync,flush}_loose_object_transaction().  Should we rename them for
-consistency with the new naming scheme, not necessarily as part of
-this series but with a todo comment to do so once the dust settles,
-or something?
+"handle them as needed", perhaps.
+
+> -static void odb_transaction_files_prepare(struct odb_transaction *base)
+> +static int odb_transaction_files_prepare(struct odb_transaction *base)
+>  {
+>  	struct odb_transaction_files *transaction =
+>  		container_of_or_null(base, struct odb_transaction_files, base);
+> @@ -511,11 +511,15 @@ static void odb_transaction_files_prepare(struct odb_transaction *base)
+>  	 * added at the time they call odb_transaction_files_begin.
+>  	 */
+>  	if (!transaction || transaction->objdir)
+> -		return;
+> +		return 0;
+>  
+>  	transaction->objdir = tmp_objdir_create(base->source->odb->repo, "bulk-fsync");
+
+If this fails, NULL is returned, and ...
+
+> -	if (transaction->objdir)
+> -		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
+> +	if (!transaction->objdir)
+> +		return -1;
+
+... we return -1 from here to signal an error now.
+
+But callers of this function in write_loose_object(), and
+odb_source_loose_write_stream() are not prepared to react to such an
+error.
+
+I guess this is nothing new.  The callers ignored such an error from here
+in the original and proceeded writing the primary ODB anyway, and we
+continue to do so after this step.
+
+> @@ -542,13 +546,13 @@ static void fsync_loose_object_transaction(struct odb_transaction *base,
+>  /*
+>   * Cleanup after batch-mode fsync_object_files.
+>   */
+> -static void flush_loose_object_transaction(struct odb_transaction_files *transaction)
+> +static int flush_loose_object_transaction(struct odb_transaction_files *transaction)
+>  {
+>  	struct strbuf temp_path = STRBUF_INIT;
+>  	struct tempfile *temp;
+>  
+>  	if (!transaction->objdir)
+> -		return;
+> +		return 0;
+>  
+>  	/*
+>  	 * Issue a full hardware flush against a temporary file to ensure
+> @@ -570,8 +574,12 @@ static void flush_loose_object_transaction(struct odb_transaction_files *transac
+>  	 * Make the object files visible in the primary ODB after their data is
+>  	 * fully durable.
+>  	 */
+> -	tmp_objdir_migrate(transaction->objdir);
+> +	if (tmp_objdir_migrate(transaction->objdir))
+> +		return -1;
+> +
+>  	transaction->objdir = NULL;
+> +
+> +	return 0;
+>  }
+
+The caller of this function does react to a failure of it, ...
+
+> @@ -1670,27 +1678,34 @@ int read_loose_object(struct repository *repo,
+>  	return ret;
+>  }
+>  
+> -static void odb_transaction_files_commit(struct odb_transaction *base)
+> +static int odb_transaction_files_commit(struct odb_transaction *base)
+>  {
+>  	struct odb_transaction_files *transaction =
+>  		container_of(base, struct odb_transaction_files, base);
+>  
+> -	flush_loose_object_transaction(transaction);
+> +	if (flush_loose_object_transaction(transaction))
+> +		return -1;
+>  	flush_packfile_transaction(transaction);
+> +
+> +	return 0;
+>  }
+
+... like this, which is good.  Do we need an explicit "abort-transaction",
+or is that implicit?
+
+Thanks.
