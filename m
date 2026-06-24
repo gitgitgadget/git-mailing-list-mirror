@@ -1,82 +1,83 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D9833F8C5
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 11:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E55625B0AF
+	for <git@vger.kernel.org>; Wed, 24 Jun 2026 11:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782300418; cv=none; b=EeJZPNatH1T+8nX1AKUV97XPewwtTsA0chaa+chkOoiNJORbG5S7f+lpHmFeCJ89jPmuiICwcKlGGeMfsiE9EiGbrNpuUNV+olO1Sm03ghCtPNtr5OTvQ7Ml1p4M315gKAi0WSHYdZZrOt4XrifKx5xjERZMkbrN+UruWgYCcZ8=
+	t=1782300424; cv=none; b=r3njfjViCHU6sjxPjJ9GcplklbnjOVJDiEcAFu6IeUH5aNX/KMbdmpyK29mpyaC1tFmBxDcmP8yPq4x6IehLA4Rr3NqMgifAFEWZnlIP8sxMjr8/FCq36bDcTLA/+/jnQUCOtyArxI0V7WfUy6HM3FZphLM5XIxIrB6Gcdn9bQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782300418; c=relaxed/simple;
-	bh=LVd4jXbESohKInNpAh8YYfltYMMUHiUuUfOqUc5wzgs=;
+	s=arc-20240116; t=1782300424; c=relaxed/simple;
+	bh=/xOn32dhtjG2Jwq3OOGmeyiyafZ3loPnEyOlKJsVlxc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BqRklcKAeXPhMYXoh12HzY4pHMYm46wA9fCyNFB+CEZnIAECbBOMEYTRAiEaciayxzvGeoUDv3wv96jng3esDl0aqaqjvJXvDjoD5IDTcanlvhQi25mR/X6iWPyXizlmnaEKZWk/jO/HwUBnUnby0H3/abmL9AErndtCqJY5CIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Jcnizv+O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b9i8xNXZ; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=RMJ0sbp+XN9BDFZp41gs/L7k9yEmwpaKoZqaTVwfFBQtNS2SsRT5YqU/v/RhX7Y3kBgTUsxM9sVPfCqEkZa+zPQ4bBplM+k7guYSxs6c/8vskMGn9XeLQhp8Vp32BtUlgi0sG84MpuKWUmMM7xjTlqngoCWLNOrsfUvnENUscI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cotOPE5N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M79phZ0b; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Jcnizv+O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b9i8xNXZ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 849D11D00104;
-	Wed, 24 Jun 2026 07:26:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cotOPE5N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M79phZ0b"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B74C27A005F;
+	Wed, 24 Jun 2026 07:27:02 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 24 Jun 2026 07:26:56 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 24 Jun 2026 07:27:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782300416; x=1782386816; bh=/bjBJkWqGw
-	ywAxInxYrS89/cG4KLSi+9khq85ZFu6Fw=; b=Jcnizv+OpUZJfriNr28UFFpwD1
-	OEVix5XlZBqZ5awKYZfUjb+8pvjKDiLKpXXCL8Msc58ShrO/moiGfJhpsvB5N5NW
-	LBomlSTYrLLp5bGCBEmv43JbakGGxALYSBCK9GWQ3H+jKD/evLlg0Y+cm+axR+d9
-	azbUmQ487C0Ri3nZ1+MufqwUDhCuPxMziHIBCbcXV+KbpZ7CuaqrFVqY2uDsd5RD
-	tnGsfE99dCaEQNqhuz8uFgevNUN7ASpIG5N2e2m/63FF+701GE8XYDV1En14tY/R
-	mREuR4YOTzMpaQOv8Na4IoqGJCxHV+sBWLkmx55X/oN37GZdOnkcP/lBn2EA==
+	:subject:to:to; s=fm1; t=1782300422; x=1782386822; bh=kTs2xRCyee
+	uQDeae8hhWUYw51+XGpsXrPn4nvZUNWVo=; b=cotOPE5NyXxIwtR4TdmxVJDjMV
+	1pvMF58myGNB3XBExT8hWhrHK6C8VeXxA110vdNr/BLIbYBmj7FMkHvCVfpWAwHq
+	PY+BIWeIT7aEgaoUmdSFr0GgSd67jhesbVZl24kokW7JYJ05+/14qcIilWD4vami
+	WzmsrYU8r5bELXC5KDSfsA+QtuTLB7iGAR+SSgHvggf8Nz5bEmxcn1RsNCTCdndU
+	Iy5QkJTjtbUwK+KwsBlWX6+kkfG08Sva39ReyJUx6vproqsxlbxtlNsRBdBicdyH
+	fBw9cm9Rr2Fid+jXHaqcSxiolroazKu71GEaVQb0ibp62WDQbn6lgBcRfV1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782300416; x=1782386816; bh=/bjBJkWqGwywAxInxYrS89/cG4KLSi+9khq
-	85ZFu6Fw=; b=b9i8xNXZM69qOw+aaehzk2t/iLwGnoK8l2ibA5do/KVRvOoLY6s
-	8bcojukYkBXrnnEuNPsP+9YeDwTUcuteSsgrOjvZuTa09CoNqkjRHG1VwXvpeXeM
-	HmnTi0dbOiFMiEVqEvvRPomw7QKXk+HlyAZgkxPKvNDJ3xi+O3ppGdL1NXIZKRx2
-	TiUhaXjsKSjptYxHEt0PuqsI7GbgyyEUBBWzIUBkA+9Gb5S0/kpwYLBO6sD9Kx4P
-	CP0qtgDqdtCpUKAHFt4hk2fAh4jFUm/MgbtyXyuMoJ3i8Y9G+l1gA6H9A902v/cK
-	6pl1Nr9Ez7ebZWIw66l31GLPbdLoV0/dDSQ==
-X-ME-Sender: <xms:AL87ahXKRI1CXWkTJQiG0Gw4WTkK7nr8_3WuCYm6k9XuhdjSCR8TtQ>
-    <xme:AL87anmIyE1-PesBsOzOu4zvKOvT5cPKAdQvNtzI7thymxNlQutz3a1oP3-bpdYdb
-    L7DAGFyjdNImWuyz_lSixNUlEeL2Z722tpHLMVbPzJ9IOmVrkW5hg>
-X-ME-Received: <xmr:AL87arDH0zoQriuKyRo0zSwZEOPMx9UOfJgbcBMpx33af9e6PmKHKtw4UK7cIzjTQYIGdbaZjKEow6A2u_uWUKrhZfhV3YPeNyAWlTw7>
-X-ME-Proxy-Cause: dmFkZTFvMjUcyQW7PAKeKQZD6cQPbipPIgW76ipC9Y2lZ4+VoEmdPqU49QmEsLOdMEyCBS
-    K94a8OiULp5tRK1IjfwXaDTRIirJr8djENFsydjwDw4Q5X7pRMBOa1sEDMX1Lkm40Yu2+A
-    TJnqJ8AJGK3ShXU8JTTOqsVVVTWPPJcJCU5gVovag8Ses15tIaLVSQd/kMLC0fgu6VwltN
-    +8yTLLKGkuztA0WAtIeS0BcwOiqOvCzgn+X/Stv7BOVT1QHWX7I1x2rGZqly2wWiw+uKuT
-    aGl8Zs0zSycbzJ3IXffuCBJirH7Bcwa/MnO0f7NLRVxzIRXNKmyA7tcN3at8IqL+REfWWV
-    h/RFSCm0YCcnCAAlA9jr57OA5w/dBFjDqWt54ImNO1bywa9IY3SQiS3ZCq2ePLp64+auhL
-    8LepeJAMWKY6Ta7ijgYF901PADbyJCjU38wVnH2Xe/IUXYpAJcWBRxq6RERhw+fr1DuY82
-    5WyV0x76mbFgr0uiX0N82ur6IgSDc3VPUAAkigXmR/5Xtj28ui6ItLfym9denNz9JDPFxE
-    ooWS7sWPBx87J98lBGs2R2hZGwYP8j5ny2zzOSq+0Fn80n0S2Is/jXPqeAIOVV8eNGChq9
-    z3CKtrQWs21jIlxgjkAkz8qcZF/DIJEOuqnKqcTiEHTFZ45cU6IN8+L4P2Zg
-X-ME-Proxy: <xmx:AL87avduri_2Uw-uCoc0ZAI4lSk-fP3h46HcNO98m3_q4oikRDie0A>
-    <xmx:AL87auKmcWzsUKN1WH34zFQwY6DlXBCIJTmZWB7BNqkyFiQ07P9-3Q>
-    <xmx:AL87aqcFQ7oh23mCg0077svp-2uB6Wi1y_4nS2ErCC0NmGHMNrJiFA>
-    <xmx:AL87at0kJmnQEPqMOBKJT-rGRpecogK0ZpeOtEB81T_HUto6uY6s-A>
-    <xmx:AL87amGeRy1BO9DWteXrAE8wdcNK3qRViiLH4QfEJw5jtLT7dXEQynJZ>
+	1782300422; x=1782386822; bh=kTs2xRCyeeuQDeae8hhWUYw51+XGpsXrPn4
+	nvZUNWVo=; b=M79phZ0bA2gXg4FJjpIXUEO2f5ZvEy2WOhW2yN6eIpEVPSxEeaQ
+	t2dH/l59wNGJCxbi4q9VCG64L7EZ3idGGJziQurwevhsoMt2Doc2q5RJSppqJGNS
+	UnGVQIH9Zx4TvxSV1eXB9RYPiDa9x2KXmedeIVRbPgzCkMCUqvKnpGBiEmy2nkcA
+	OReXVaD8OTCJmv0uDEgt623DblOppXmNGcsGbIyRdnT3aKVVOcS7qGBxabpKNOV9
+	pBpDBmJF46iGwwJJHC8cchHaw6wWwKta3/UAyOxciGtf6VEQnt7PdkO+a8G5Eb1L
+	W7hO/VcIdgH++Ll1kLmVlPa9+92aZINgy+g==
+X-ME-Sender: <xms:Br87akUYHWjhnAd6L_migpTGctpLR-B0-gT0TXvQbUTS3S90kWalPg>
+    <xme:Br87aunyYIYLXnWKL1o1S7mU_0iIRsFsXp2qOzLO1jekVs0pgqCnHNLYNI2SLLxZT
+    AcZjMPTOPkqjPUgcqsvab_dNhaUl6dWr7-cbRz2I17U2ZRuN2vanA>
+X-ME-Received: <xmr:Br87amC5mYKlICK1ZGUfT-5P01TSwPTV3uv9IOg2_153pfxYHQboRebO5_LEYyb8xllMsiJhF95flMDQI_XZCZUa5nBTzfb3Aq13UeQ8>
+X-ME-Proxy-Cause: dmFkZTE8nadoKE78MhcMgd+5yQWfYE0kD+bQfooTkEol/2jwh+xQsSE2EvTICLpAxVc6wf
+    Mde+nLtwhCDFgylcTHk/OMcTocidOWfSjCfl1ep4tPfzxsNejPrls4ML+APBsOAX3uzheb
+    JA5MEHFKwGvkD+b/6WuDd3yQyXQ427/ILRxgyd3XU1A7aAwGy/3gEHwr1+FN5NtTpHsvce
+    YqPsamkWBANJ/ROUZROvLaY01t1XVO7syFfaNDCALE6hrnBXo62XNAv4kgX+djkM/VYmwI
+    BDkK38geuCKVXOnLz1wAfv1L1r+mzoInrQDXRoyahUbur2UGZZXpoWwgZQ+JkM10xqHIsK
+    s81p3AWpEOQH9tblAZ+uT2CrjPcWcSWLTGTxWQH9wkXiQ0UooIgCS1lBk063PqUA5qBB07
+    qcqTABYtNNN5BAl1WLJhYXfHc9c/m2qApoF4IlNnmoFmFJjzAPE/wq0qyvE85c2XYkIcMs
+    Wh2TeQsr0UItO95K5/RotfssHbfiK1ublPRSz0iaH1ceU5wHyWngTAKcCOrCUH534D3b3w
+    inF3nnq1mJkKBrkJU+zuMLMVFND6LgxTPlV+wIibvR5g/SMWM5DKiJc+6wrONgaKQ12HSk
+    d92CXBEEz6bpWDidMz2PeizHNWRLl09/qFGIez/MFp1dKEQ/nCj6LOah0HpA
+X-ME-Proxy: <xmx:Br87aud2WgT_Wk-IJVhujgiyiJSqsm7KVHLZqSm2OpLlN-XW-6oncw>
+    <xmx:Br87ahKoEvqhwEQ9RwtXwtoOuW_Hp3FCH4LZXCZwmeGjWaTh7v5Sdw>
+    <xmx:Br87ahenIWeIirhvBBxvLXNVi_fjKWfagzWBbTsmhSFmnJNgq_gKtg>
+    <xmx:Br87ao2BO_zKk_-p2z1GL1AS9As8n3yxHg40enNCD4uJUFSg-w7ZNA>
+    <xmx:Br87apFPBZrynZ8fJehRnCsM1BxvAiYPLacwqktJSQQ34ulYHxz83EuU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 07:26:55 -0400 (EDT)
+ 24 Jun 2026 07:27:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6338f7fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jun 2026 11:26:55 +0000 (UTC)
-Date: Wed, 24 Jun 2026 13:26:52 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 6444bffa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jun 2026 11:27:01 +0000 (UTC)
+Date: Wed, 24 Jun 2026 13:26:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] odb/transaction: add transaction env interface
-Message-ID: <aju-_Nf3kmoIidue@pks.im>
+Subject: Re: [PATCH 6/6] builtin/receive-pack: stage incoming objects via ODB
+ transactions
+Message-ID: <aju_AmlKVi5UZaiQ@pks.im>
 References: <20260624041920.2601961-1-jltobler@gmail.com>
- <20260624041920.2601961-6-jltobler@gmail.com>
+ <20260624041920.2601961-7-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,74 +86,175 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260624041920.2601961-6-jltobler@gmail.com>
+In-Reply-To: <20260624041920.2601961-7-jltobler@gmail.com>
 
-On Tue, Jun 23, 2026 at 11:19:19PM -0500, Justin Tobler wrote:
-> The ODB transaction backend is responsible for creating/managing its own
-> staging area for writing objects. Other child processes spawned by Git
-> may need to access to uncommitted objects or write new objects in the
-
-s/may need to access to/may need access to/
-
-> staging area though.
+On Tue, Jun 23, 2026 at 11:19:20PM -0500, Justin Tobler wrote:
+> Objects received by git-receive-pack(1) are quarantined in a temporary
+> "incoming" directory and migrated into the object database prior to the
+> reference updates. The quarantine is currently managed through
+> `tmp_objdir` directly. In a pluggable ODB future, how exactly an object
+> gets written to a transaction may vary for a given ODB source. Refactor
+> git-receive-pack(1) to use the ODB transaction interfaces to manage the
+> object staging area in a more agnostic manner accordingly.
 > 
-> Introduce `odb_transaction_env()` which is expected to provide the set
-> of environment variables needed by a child process to access the
-> transaction staging area.
+> Note that the temporary directory created for git-receive-pack(1) is
+> eagerly created and uses a different prefix name. This behavior is
 
-Possessive s is missing, I think.
+A different prefix name compared to what?
 
-> diff --git a/object-file.c b/object-file.c
-> index 696f05dc2d..14064d188a 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1691,6 +1691,16 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
->  	return 0;
+> special cased in the "files" backend by having `odb_transaction_begin()`
+> callers that require this behavior provide an `ODB_TRANSACTION_RECEIVE`
+> flag.
+
+Okay. I guess this is to retain existing behaviour where the temporary
+directory is created lazily everywhere else. Makes me wonder whether we
+should eventually change this to just unconditionally create the
+directory in all cases so that we can drop this new flag.
+
+It might've also made sense to split this commit up into two: one to
+introduce the flag parameter, and then one to do the changes to
+git-receive-pack(1).
+
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 19eb6a1b61..ee8e03e2ab 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -112,8 +112,6 @@ static enum {
+>  } use_keepalive;
+>  static int keepalive_in_sec = 5;
+>  
+> -static struct tmp_objdir *tmp_objdir;
+> -
+>  static struct proc_receive_ref {
+>  	unsigned int want_add:1,
+>  		     want_delete:1,
+
+I assume the goal is that we convert all other users of the tmp-objdir
+subsystem to also use transactions eventually, so that this becomes an
+implementation detail fo the files transaction?
+
+> @@ -2106,14 +2104,13 @@ static void execute_commands(struct command *commands,
+>  	 * Now we'll start writing out refs, which means the objects need
+>  	 * to be in their final positions so that other processes can see them.
+>  	 */
+> -	if (tmp_objdir_migrate(tmp_objdir) < 0) {
+> +	if (odb_transaction_commit(the_repository->objects->transaction)) {
+>  		for (cmd = commands; cmd; cmd = cmd->next) {
+>  			if (!cmd->error_string)
+>  				cmd->error_string = "unable to migrate objects to permanent storage";
+>  		}
+>  		return;
+>  	}
+> -	tmp_objdir = NULL;
+
+We don't need to unset the transaction because that's what
+`odb_transaction_commit()` already does for us, I assume?
+
+> @@ -2326,7 +2323,8 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
+>  		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
 >  }
 >  
-> +static const char **odb_transaction_files_env(struct odb_transaction *base)
-> +{
-> +	struct odb_transaction_files *transaction =
-> +		container_of(base, struct odb_transaction_files, base);
-> +
-> +	odb_transaction_files_prepare(&transaction->base);
-> +
-> +	return tmp_objdir_env(transaction->objdir);
-> +}
-> +
->  int odb_transaction_files_begin(struct odb_source *source,
->  				struct odb_transaction **out)
+> -static const char *unpack(int err_fd, struct shallow_info *si)
+> +static const char *unpack(int err_fd, struct shallow_info *si,
+> +			  struct odb_transaction *transaction)
 >  {
+>  	struct pack_header hdr;
+>  	const char *hdr_err;
 
-Makes sense. Transactions may have a different way to quarantine the
-write than using a quarantine directory. So making this functionality
-pluggable so that backends may expose a separate set of environment
-variables feels sensible.
+It feels a bit weird that we sometimes pass the transaction as
+parameter, whereas othertimes we access it via `the_repository`.
+
+> @@ -2351,20 +2349,7 @@ static const char *unpack(int err_fd, struct shallow_info *si)
+>  		strvec_push(&child.args, alt_shallow_file);
+>  	}
+>  
+> -	tmp_objdir = tmp_objdir_create(the_repository, "incoming");
+> -	if (!tmp_objdir) {
+> -		if (err_fd > 0)
+> -			close(err_fd);
+> -		return "unable to create temporary object directory";
+> -	}
+> -	strvec_pushv(&child.env, tmp_objdir_env(tmp_objdir));
+> -
+> -	/*
+> -	 * Normally we just pass the tmp_objdir environment to the child
+> -	 * processes that do the heavy lifting, but we may need to see these
+> -	 * objects ourselves to set up shallow information.
+> -	 */
+> -	tmp_objdir_add_as_alternate(tmp_objdir);
+> +	strvec_pushv(&child.env, odb_transaction_env(transaction));
+
+Interesting, this here seems like a change in behaviour. Previously we
+added the transactions as an alternate, but now we only propagate it via
+the environment. I didn't see this mentioned in the commit message.
+
+> @@ -2707,7 +2694,10 @@ int cmd_receive_pack(int argc,
+>  		if (!si.nr_ours && !si.nr_theirs)
+>  			shallow_update = 0;
+>  		if (!delete_only(commands)) {
+> -			unpack_status = unpack_with_sideband(&si);
+> +			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
+> +				unpack_status = "unable to start ODB transaction";
+
+s/ODB/object/
+
+This may be visible to the user, and "ODB" may mean nothing to them.
+
+> diff --git a/object-file.c b/object-file.c
+> index 14064d188a..e7958753ec 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1702,7 +1703,8 @@ static const char **odb_transaction_files_env(struct odb_transaction *base)
+>  }
+>  
+>  int odb_transaction_files_begin(struct odb_source *source,
+> -				struct odb_transaction **out)
+> +				struct odb_transaction **out,
+> +				enum odb_transaction_flags flags)
+>  {
+>  	struct odb_transaction_files *transaction;
+>  	struct object_database *odb = source->odb;
+> @@ -1717,6 +1719,20 @@ int odb_transaction_files_begin(struct odb_source *source,
+>  	transaction->base.commit = odb_transaction_files_commit;
+>  	transaction->base.write_object_stream = odb_transaction_files_write_object_stream;
+>  	transaction->base.env = odb_transaction_files_env;
+> +
+> +	transaction->prefix = "bulk-fsync";
+> +	if (flags & ODB_TRANSACTION_RECEIVE) {
+> +		/*
+> +		 * ODB transactions for git-receive-pack(1) eagerly create a
+> +		 * temporary directory and use a different prefix.
+> +		 */
+> +		transaction->prefix = "incoming";
+> +		if (odb_transaction_files_prepare(&transaction->base)) {
+> +			free(transaction);
+> +			return -1;
+> +		}
+> +	}
+> +
+
+Okay, makes sense. I really wonder whether we need to insist this much
+on the exact name used by this, but better be safe than sorry for now I
+guess.
+
+And as mentioned before, I also wonder whether it really makes sense to
+have the lazy creation of the tmp-objdir. Maybe add a NEEDSWORK item
+here that mentions we want to investigate whether this is even needed at
+all?
 
 > diff --git a/odb/transaction.h b/odb/transaction.h
-> index 7898770071..536458297b 100644
+> index 536458297b..78392ff13d 100644
 > --- a/odb/transaction.h
 > +++ b/odb/transaction.h
-> @@ -32,6 +32,16 @@ struct odb_transaction {
->  	int (*write_object_stream)(struct odb_transaction *transaction,
->  				   struct odb_write_stream *stream, size_t len,
->  				   struct object_id *oid);
-> +
-> +	/*
-> +	 * This callback is expected to return a NULL-terminated array of
-> +	 * environment variables that a child process should inherit so
-> +	 * that its object writes participate in the transaction. The
-> +	 * returned array is owned by the backend and remains valid until
-> +	 * the transaction ends. May return NULL when the backend does not
-> +	 * need to expose any state to child processes.
-> +	 */
-> +	const char **(*env)(struct odb_transaction *transaction);
+> @@ -44,6 +43,10 @@ struct odb_transaction {
+>  	const char **(*env)(struct odb_transaction *transaction);
+>  };
+>  
+> +enum odb_transaction_flags {
+> +	ODB_TRANSACTION_RECEIVE = (1 << 0),
+> +};
 
-Would it make more sense to adapt this function so that:
-
-  - It receives a `struct strvec` as input that the environment
-    variables are to be amended to.
-
-  - It returns a normal error code to indicate errors?
+It's not clear at all what this flag does based on its name, so we
+should have documentation for it.
 
 Patrick
