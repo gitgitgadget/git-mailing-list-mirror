@@ -1,74 +1,120 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828FA3C1092
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 06:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782370512; cv=none; b=Z3aEZyD2H3UvOjXkJwaqVpH60WuEtCae3pDuURdMTBGH8xIbZYiVo6QHnZfViJYweJf3Wi8VyloL4PyfSF/9n+ZYKgeApoWU9L2O7hVV4UdGM3IeDNPWFHbkCuvZsZtwJtBhyurbFv9kb4tXGWZWiBrNJOryPdS7UVNsUtfkeJA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782370512; c=relaxed/simple;
-	bh=HpPq/LfL8sVAoRrVeItdEMh0rfAMKpV+6BMwG1oCWtg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cz432NeW0IV1Jbz4lDKkj4fE2DMRPGYVlO5ZmF+IR8wkLbklX3/UyMXBIOG2meG6f/7ozbIxGk7/FHju5aqQQjsGneboxwmvXP2ec9EjXYB2rL5m99wjwuBmA12iuNUNXwqeYayDNwEOh80CJunUc8EkIdW3s4bc0sels5krDsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=nEvXOpGw; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBED26FD9B
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 07:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782373493; cv=pass; b=VlwqM1LiVkedNNQJsQIrnOzuTbrHhmj23frynIz76OVB5GkAMFPNZGS5fgHDieBQwo1bN8GyRhJmdK9frAgr4SR4VV4yPdaRqoFC1eRPIS8vuMDjnq9g38z2mhgn4Hhgvxf0e4aFVPqmOjytN/+oE8+tGRRvhKVG9HNY5gI8ds0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782373493; c=relaxed/simple;
+	bh=ESjhN3pxkMwsFOEEbY3VYjzToofTlqUZ5lpLoBtjnJk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W/aS1CHNYzfQSfjNsEzp4BJItrAPioBN12IFOd5RGoUdn3Cbj2oS6neC5pG7yrjyG/cyxhqATJQKaSFJ0NA5LrpmM+hsg7rQF0DkpnMUnOMb/nKys0yg64GOhf14mb8AOHTDkn2hZuN43K0tHWgbuyV+vcBzcjzUdW3LvhOXmaQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+fqfBqW; arc=pass smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="nEvXOpGw"
-Date: Thu, 25 Jun 2026 14:54:59 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1782370506;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=l/Zm3S6fVLOydGgZmjLPXMXrIMezexdRpoV0Q+XSmg8=;
-	b=nEvXOpGw8dKOKYj9zzGPJj/MdwHDSGRONIPq4EXY0L9/i9Oq7LYn6eXgI5W3KfphscR4fg
-	JTUhislg8wHWaqwkXOBOjdhrSjpmHDnADe4sCo1G1l0GSLTf1Pcyz/5PcdeOQhvTwnRqN5
-	arK5STRVykk04QDWUKUXcYZh/LwHFo9/VSZ2Eba61t6n1AOx3jwsmD/zqqVIJFnbyPedzu
-	ElQgRLfJR37GMo3cm43Rj1ianoLiwiZaP4doHBkQ+7tBVE6Myignpuso/TWx740dP/oQsO
-	r8tknWdtDWpxfSanwxQZHcHQIjqo9CM9+Kbyhxl7SGy+YI+jtOdCMg1kWLF5Pg==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Weijie Yuan <wy@wyuan.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v3 0/2] doc: clarify review replies and reroll timing
-Message-ID: <ajzQwzimL22iPzAN@wyuan.org>
-References: <cover.1781714757.git.wy@wyuan.org>
- <cover.1782028813.git.wy@wyuan.org>
- <ajvDuUiDsmyf5LnX@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+fqfBqW"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-bec49f7e35eso376421166b.2
+        for <git@vger.kernel.org>; Thu, 25 Jun 2026 00:44:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782373490; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Gxl/Ia8/BrGTMgG6FqMkfxZQUZ86gcLWVRnXrzpzbjgLDdrdY70w7qvwOO2W/8LgLr
+         Q4tqJvP78BVpelIdgZ4tbX4YKZE4QU2FtCxEB8QyHEISE/+dq+wh+zTEJgmzt/owyRhh
+         BW1IqgpKzPJYDC9eecNv6Q9xRlwFq/21x8cWju5v/NpdgpcVDrhnn5RdbZHzTvqA8ibl
+         Nql6Mfqk4gXWv1BaEZAYodXZj7ePAkoJ2K/Rlb/IEVou4ye/sX5IkU91K1YLb3oUjwCR
+         FY6ramfHSm9yd8JyggI2sRHi+DIAIReLlRgP4/UQe4FoTb6eyKUwaURjGKaZ6y4iv+4b
+         TsLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Q0HmryeoJ2YoV5z9Xs4fG1S4SRHFXr5Yrzac3HDSp40=;
+        fh=MEuWzNFXKZwyDprX/c1KZ/cRZNHiTRPZsM4AJ1wgX+o=;
+        b=lY4d0443EMVSGpG08Xg8NpzUoGXar7oFAP8vPLVQhyUzN9Y2iBV5w5tJKSL6d5T7qA
+         A1sM3Jd57j3MQPFybTuISCjY0juE3QKPvwv0Re19ab3TpJLxdeZBUUGZKs1o5s1LIuaS
+         bRU09hkK2Hj9WKJTLOR6XYH9C+oj2exKwJQ4lS+ii7C5vxYwOwnmi3T6O4nz9CY4ZFNA
+         0ypKxDrHJ3qc0OAL+LyXh8LBnfdpkt3BgGuyxO4eR5JWcChtVDIkPQcMLmXpYUXEyX0C
+         yT+mTRK6t18GuCLMMcTx5GH6aB7N6c9PIFWosLhIhu+314qIHmNkLHh6TRRZB7VPB10K
+         4u3A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782373490; x=1782978290; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q0HmryeoJ2YoV5z9Xs4fG1S4SRHFXr5Yrzac3HDSp40=;
+        b=B+fqfBqWH0XWSJUJ4h4KUrbFqs4NdQb4ZmZJUCeIvb76XM6bckyM/P1kePfULpYrcn
+         DxXeByEUZQ0zl8zKtK235okMqdEdSZLEO7TNDQkX/oeOmg8PYX9m2AGe+KNhl8lgh0bA
+         FBlj0rZsOagR3JqljAE3iQKXd0QsEbHZ+xc0WSSZ6YMcJhJaX868iUgx3cncPrw7S5g6
+         NGwWyo3RXziSCYBrMcNcNUhj5iXH9LIscYHXaSP3CX0+YPhIIJMqjWRjMcSRs5hFyhwQ
+         jIHbkCWJIzJkjiJT8cfFEgoZWetVmy5/A3bzXccUAxhtNetbonSUNeNLmXdkTSNboCeT
+         L8VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782373490; x=1782978290;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q0HmryeoJ2YoV5z9Xs4fG1S4SRHFXr5Yrzac3HDSp40=;
+        b=YKvOas5K2U+VMtSvTag6AxyjbnALOUz45PV2nO5NgzLHbhQ9Uf/AhxrnkZ5G0pT1gT
+         33oLsbapP00H4HypH9sX8GXO4+qxmpQBUlDkxCTFnk53vhIHgkZHvEeV01mT/wq3a2WY
+         GL+NPJCd6+KZ6/2ivwzOt/einGiupYvR4ZvjW3m/WTP+bAOJK4ZY/nnkEE0J82bWMvtu
+         7eucoGgeDQpFq5s/1H5WM+A/Ps65UV0z7gTrpOZIWy5kA6y2JSlxrp8ZrkGYE5uH/xDc
+         gakM0KorwH+21luTeQYtjfQr+A4VDuxuTN5/x2cYREKEvhcu83JVisNCY03zIHegYhhC
+         Td3w==
+X-Forwarded-Encrypted: i=1; AHgh+RqnP23yjkwrqQT7d+OHTlFwmedKtst13FEq0KHMm+G3qGF3YTQPAqAP0fYYgboaO21/9ag=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEgPeZ3FHDYcraR9r8UAZBFpAiP320eJ1QPANZ/fd/wrGtT9uS
+	5HdzV9spoM4jCkMgiKDlhPlE9XG6qwSHWHICrzzL8eSDfFv3lmFLn51ldOxq8skYYjgDZ2JvHIc
+	/CqB2QxGFgKJ4K/fReyhy7+jHXXPreEQ=
+X-Gm-Gg: AfdE7ckPU6IuiKNzHUscyOftyz2VLKHCfoVnR8oCT45PctburPxJ/YarJzLOZmmbPBq
+	xXucFLhgYlL/zakRN62GjLiOgFAjFpm+FJoby8Jig8NNnO3L2j4ADaVWh7Q3LIPhZoBfHCD2BBw
+	ZqR2yxKua3Q7f2Xtqj/i2jQ6AqCwrlm9FjDl8EfgiRELheHazJ4dxYaL/n1FuLmvfVJe9iHZPrN
+	WGlUImQWRl16vb3dlzV0pDkap78meNrcmZiHJQ+xbnUXESzbbZHEDnS8Ny587dufce8lDYG3OZF
+	pPnDpgo=
+X-Received: by 2002:a17:907:3fa7:b0:c11:cee9:1ea4 with SMTP id
+ a640c23a62f3a-c1205d97e43mr77547466b.2.1782373489713; Thu, 25 Jun 2026
+ 00:44:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ajvDuUiDsmyf5LnX@pks.im>
-X-Migadu-Flow: FLOW_OUT
+References: <pull.2331.git.git.1781262619.gitgitgadget@gmail.com>
+ <pull.2331.v2.git.git.1782338114.gitgitgadget@gmail.com> <11bcecebf43797a889f08e79401370f43b2917a8.1782338114.git.gitgitgadget@gmail.com>
+ <xmqqechvh8m8.fsf@gitster.g>
+In-Reply-To: <xmqqechvh8m8.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Thu, 25 Jun 2026 09:44:12 +0200
+X-Gm-Features: AVVi8CcztOhWdscHXRYtWVTjRwP8Qi6lkV3jDGvX5nvmIg-YyUMq1P2cf4NZs_Q
+Message-ID: <CAHwyqnXZ_eGUPOhq1hXs==uYuYbRBWw120fXRQa=apWKekxVAQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] branch: suggest <remote>/<branch> on upstream slip
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jun 24, 2026 at 01:47:05PM +0200, Patrick Steinhardt wrote:
-> On Sun, Jun 21, 2026 at 04:04:36PM +0800, Weijie Yuan wrote:
-> > Changes in v3:
-> > 
-> >   - Reworked the substantial-rework case.  Instead of suggesting that
-> >     authors send a new version sooner, the text now advises authors not
-> >     to rush out an updated version before reviewing the larger changes
-> >     carefully.  It recommends replying to the review that prompted the
-> >     rewrite, saying that a substantial rework is planned, and pointing
-> >     out which parts of the current series will become obsolete.
-> > 
-> >   - Dropped the advice that a topic close to being accepted may justify
-> >     a quicker reroll.
-> > 
-> >   - Removed "how close the topic is to being accepted" from the short
-> >     reroll-timing guidance in Documentation/SubmittingPatches.
-> > 
-> >   - Updated the commit message of patch 2 accordingly.
-> 
-> I'm happy with this version, thanks!
-> 
-> Patrick
+> Do we still need the _if_enabled() thing here?  Isn't the caller
+> gated with the same condition in this version?
+>
+> > +     strbuf_release(&remote_ref);
+> > +     exit(code);
+> > +}
+> > +
+> >  int cmd_branch(int argc,
+> >              const char **argv,
+> >              const char *prefix,
+> > @@ -957,6 +980,9 @@ int cmd_branch(int argc,
+> >               if (!refs_ref_exists(get_main_ref_store(the_repository), branch->refname)) {
+> >                       if (!argc || branch_checked_out(branch->refname))
+> >                               die(_("no commit on branch '%s' yet"), branch->name);
+> > +                     if (argc == 1 &&
+> > +                         advice_enabled(ADVICE_SET_UPSTREAM_FAILURE))
+> > +                             die_if_upstream_looks_like_remote(new_upstream, argv[0]);
+> >                       die(_("branch '%s' does not exist"), branch->name);
+> >               }
 
-Thank you very much for your review and guidance!
+I think we do, so it will give the advice and tell the user that it
+can be disabled in the standard format.
+
+
+Harald
