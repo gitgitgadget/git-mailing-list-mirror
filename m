@@ -1,138 +1,118 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9A31A9F87
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 18:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B98830E0E4
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 18:51:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782412431; cv=none; b=bDlNqMZeXQ5vcndLKGTWOa5D6MdmwKRGmIz51liwb6u2DB508HiumEm8WLlU1LTWK2OKVzItkXIA9md6qilMVX7PmfzYGXF65r1L8FmgIfb0rzghUWC2/K+QcwIb+s75KfnkwEcUkSBKe5saMaxEe38exS6eQqFx4SH10NCVlEo=
+	t=1782413477; cv=none; b=jC+NdAsh5LBVPOclNuUXiHvi6I51hjLxNVSevl+xC7LS9pg/2to3pyqfoPUVpc61DCHoP8bbT7L7zshqdqziU/IZEiTotpP+5tAx7Ym/U9ApjSyMRz5Y5wFwTWd40reAjx2wv9HxY+BXGsYb2+mv6IGR/3qEsMTk0yPt5IuPXyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782412431; c=relaxed/simple;
-	bh=t830Sf8h0552uvaqBGjQcjFln9vJ4ACdRv+n7FeRn/I=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=NrrXQACm2BJfCWohHh5izsruWi4IR+zdyLcLBUmymKW2viV9hU2wwCI4+ZPHKJ7LnqghazePTebgDtnPvRmietZ0ZRCGHJZA+Nj9ogCL+c4IUMo+T3Iv9SvSLaIkGrO1r3ZVVCWrT7/bjw0pRiZkgBJ5dLu2L2qCkyqlUULN/GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gShIkoUo; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782413477; c=relaxed/simple;
+	bh=SwFQe42NjUPhLjlrTP/hSejf/EsTn1n5XbOhjKWB5ZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CJZpwJiR37x6lQR5CH5sq5qd4udqsMhvuU7LLUnWcnEqHvAlb/o7BpUVoMOXYy8kM2vw9aS6rVUjGzPzK3JWxMkVukUfptE+JeWZWKxMfOcqPIeUzB5uY1Rn1gSH4lWXd3aWFqysygv73pFTm9K0ywGaVPcP6sZOAyH7Ot958HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TD8zG64+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jvvKqRbR; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gShIkoUo"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5bc4a1130adso66432e0c.3
-        for <git@vger.kernel.org>; Thu, 25 Jun 2026 11:33:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782412429; x=1783017229; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HK9teGEbAuqrNIy5aqNQSmg0J+9jxTnaW9l3MgprSuU=;
-        b=gShIkoUoudwsJDNDVBdsMUk941DHT9AljrQap4PuyRA0PY1IrHsdN7b+TR0awFlfeK
-         JdJrWCAMdW64ifYqTgGb7WaDXLqn1xH4/wbC7QYAxh+JNAVi9cA/TPFhBaphK9tD5z6h
-         DiR2glH42QPGg0o+KndjxUZ1QtnMBnh26nNsxr0e8bxiUkIPFZGSIQ81Mu/Kh32289wh
-         1N9zA1mVdXfmhkM/VXoKfMFeZBcGHdJWIlJUi6hDJep7lnM0aFavxwcu26GBQf3IIkSA
-         MC7iBG5b3295dLYJzN3UwivOe/a8eUmseFEGsRsEDJdFLzsOdPgWCVT36073yZ6QybFK
-         pT8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782412429; x=1783017229;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HK9teGEbAuqrNIy5aqNQSmg0J+9jxTnaW9l3MgprSuU=;
-        b=epWx03MQBRLfBCBCllICwTskxYwRyG77OLhQnDlj+eURoLqfjOqEc2je7QR3F9vV5a
-         4wGd/5tvwRH4WPo/gFGd3DjVsaJ4TvzSUpKYV8fPn3eL8uaBkbqj6QDfFIlFOUAuGn2Y
-         dZQ//n5Oky9eS3hnMGxpRXlLtCXF31OdIjXv3O7GHLwEQhRZEAD+C5GjvqOm5ZbpDxyd
-         IEumr6i/XoeTNKaF5/6UctKTvEiWVtkTABV+cDhi05kS5Gtuwny0wrQ9FVAmMm/GjX92
-         0GUBxU0DiL54QN6lsqz0GI9BpnNcXVY1Yk8JRa+tmamKLxtsBQXYWmXt/GakXnOvYTxJ
-         FRpQ==
-X-Gm-Message-State: AOJu0YyR2C2EsLX7wLChnNUVg1+DcmOG3mgDBr1n8Ppl91s01Z9xJPhz
-	CUmcLkglsHF/wHNCL0OYmwXFnZFtgfUuaHcZDm4BSwJ+KH6+x3RDdXeHNLpdng==
-X-Gm-Gg: AfdE7cmXT+PiazNOWSxNwBLjgIl4wbvWbZB29QJLDrXBFeSQP9ovGcRwhSqMVhWOOT5
-	zBeLEObIRmTcIK91SA+2oub1kbh/6A1oPvBQyg8guC6vbTNHZXImMgiXZ49i+Fs9gUXlqz+mCEu
-	uKbprUa6nJ9GU2pzS10qkhq51b1gkf26n8IFouak+bByX38RfBXS/1H5seT5aAgzOGZRLrPRDIR
-	llUzrdGKQv2kgv5qTF5Pqu7+MudiiADeWxAH+pK/GD14AOGI29iPY0LdgMxv3Zn/fRko/Aee+/Y
-	ebXvM2fYcXNZ3AzlUDh6nvlzH86qUr99xt8T8R7c5KryJ7iC4jZnAHbNv7pYGy9Z5C3d0BNSu5g
-	SUfkBQACFCLFi6kPmN58NOWbAevcPNtsVtCz7aR5QItEJXitNjcygBlSQNdWRKv5TDYA2EAaiE/
-	OiEnUBH4NAf1bApWc=
-X-Received: by 2002:a05:6122:e1ae:b0:5a2:5669:d6d7 with SMTP id 71dfb90a1353d-5bd69d8c58bmr1770083e0c.9.1782412428950;
-        Thu, 25 Jun 2026 11:33:48 -0700 (PDT)
-Received: from [127.0.0.1] ([20.55.213.119])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df7f6fa32esm187479366d6.14.2026.06.25.11.33.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 11:33:48 -0700 (PDT)
-Message-Id: <pull.2158.git.1782412427801.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 25 Jun 2026 18:33:46 +0000
-Subject: [PATCH] history: close COMMIT_EDITMSG before launching the editor
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TD8zG64+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jvvKqRbR"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4BEAF14000DA;
+	Thu, 25 Jun 2026 14:51:15 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 25 Jun 2026 14:51:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782413475; x=1782499875; bh=iDyRBNZ+4h
+	hov56c0cT84SiukIcjMugh9qgU7mbb+6I=; b=TD8zG64+21DdhPC2O9ZFnjaHGh
+	qS78/v5VXPDCPwHMF0UF7v0mto1l62iABTcNrhSoib/Jk+RavGSfmtVXhrXctlo6
+	GHSdh+bVfzGMxuiIbqnXp6bJmltbOgbe4nJOoBzfqAzUh6+FHlwdW4710nobmm1z
+	Ef3IvmGPOAiVHxyw/U8CIE0GBPUas5Dve/NpQuFBgawrDU9qhcZczJiDW8HCse4w
+	jTxKKL+v/2Z+GCAfPXR1jaK0gdRnDwwr+c4PQFIlnIxYTj84lhEVyWio7BNWG5u1
+	wCiRUJxSsNhu4LkEa9QxTTcQg1Y6jxnm22+C0+Xuk0pceO7jBATOZEP2bBvw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782413475; x=1782499875; bh=iDyRBNZ+4hhov56c0cT84SiukIcjMugh9qg
+	U7mbb+6I=; b=jvvKqRbRK602HeNix1Nxgs6kkSmVyWoLeiX5AG5ZTXs6Id5HWPW
+	YDfGR9CMCdEUjObPl1tcFnwiZ7vrh23KUdaC0RXwOIBBnePAipFj2sjx4U02BCoR
+	47qAoVwrKqPcMk8KUS7vV+g3yBO/ITa2zN9Rk/0RRrfWJB4/wSSTTCK4maOfDd86
+	l32KQ4GTXDpDhCOK/EhJPX8QW4JQcjVYFyThZyTU1zYMPrQ8XMBQsIHOY/WJvLpk
+	SHy0LM8SNcbS9GKMFiIo/ScGbYClr09VeLe03cYZ/gbHrqNUqrmL27ZO+Djtg4Pb
+	AQMN2JHESVc1qd1uZS9rZwdVKJpBuhEKStQ==
+X-ME-Sender: <xms:o3g9aqOkx8ZKAXzZSjUTuqbYNjtO-ulMZgfhMcUpIeStafMKFfPXwg>
+    <xme:o3g9av1xXDzqcQ1uWGYLtg3mk-ojirdX93WSXFSD6AlzZzOE59883CRTRZBCiP8sW
+    S-Wk-xCs6H9Q66vjtk1gulV9si_sp0mgduM8hFyFWU-SLYxo0Wzp3Y>
+X-ME-Received: <xmr:o3g9aplpFOBvlrZXnOTTRHPchx8NEcHtMIr6sVOmpRg_4wzkj0c2oiU9FObpFHMYGAM0CnhRjPS7iWZCT5Zdf6PC2uLIEcRM9Hi0bXgjtBMkecvgN0HBI4I>
+X-ME-Proxy-Cause: dmFkZTF2AJd2811jfObMekcm4NHMVEorSxHiB4DFEt+NGnu6OOBsnSNhB2t3v1gJR7GSYD
+    ujtVLAi8J8ZLa699cehT0eJRKbtdj++d9UuHLrWF+zD4v2iuiJ7XK+K5RXkeTr+9Nu90X4
+    9G095K9n5+ZjXanDF/CCfyHDnM9jpmXd2RGYmiSKNS4Qmgm9+q5Y0EFEzm9VB7PvrOwgiO
+    QSsu6DRqnwhtiC/WRwvI9l/97WC2baCtEf7gzkYdOSO5l5EEA+oam6O67iz1FK5uHlDyvU
+    knNnSD3Yp4/2UuGhR9F3iuRo5xvgxX1dKkJz6+Ot5fYEbNLe+XtAPw/iqsxUb97HqixqT4
+    mpejUjUMB+eunDX0C4Y0IJgXBQF3VJGnO4TPcPiWhfqT7/TedQktLJEaFbO8xmlKLIi4P6
+    zmLeN5MsZBdBcnO9DMEbSYNEnfTZFPIY1MD9ibH2k51D6XhxsfOBedtoBLfVYjwgUTIZWl
+    wBTLGjls2A6ddzTK23/JEt40XFPWcQHOAnvergkxt28aZPI5FNDA1fEacIwXJ0pRVUirYW
+    enhv8jH9Q2aNNqw9MHchM977mKJLxLQOW0nyw1qz+V5FNdyxMNmxx6n+8kDHAoSSaYK9A+
+    d92jaesDcVqQb4PeSaFtZZ/qE2/ZFzHYDQC8AnVj0jKidqQ+h73b7h7nclZQ
+X-ME-Proxy: <xmx:o3g9amWWPUzXX081XAWlj89JABTeBTfYNwjZHw15Wec7MimWIcDzZQ>
+    <xmx:o3g9avuDiTvLQHHEow2KX-HXEjDvsIHkZcQtju0G88vng2uZGBsBJw>
+    <xmx:o3g9apYNgT_cKnHs5ruKrNdbZbjEiV3BWAmkn39bcuIQxlETN71AiQ>
+    <xmx:o3g9auXUqOw0UoXptCRoxtlHxMVk9OqjkUC5shB50GMEb-vx0YXgSA>
+    <xmx:o3g9atkITWSLCC9Lem7CMdL3AwQ9Wvvqq9ESndXCKTyrBS3mfkiIPgnq>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Jun 2026 14:51:14 -0400 (EDT)
+Date: Thu, 25 Jun 2026 14:51:12 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t4216: fix no-op test that breaks TAP output
+Message-ID: <20260625185112.jjH0K9LI@teonanacatl.net>
+References: <20260619-pks-t4216-drop-unused-prereq-v1-1-2ce0d7bea088@pks.im>
+ <ajVMZpjTKiXc7TRe@nand.local>
+ <xmqqa4sqlchz.fsf@gitster.g>
+ <ajjBmi39IFJW5p5V@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ajjBmi39IFJW5p5V@pks.im>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Patrick Steinhardt wrote:
+> On Fri, Jun 19, 2026 at 09:29:44AM -0700, Junio C Hamano wrote:
+>> Taylor Blau <me@ttaylorr.com> writes:
+>> 
+>>> Given this and the above, I would probably err on the side of
+>>> designating this as 'test_lazy_prereq' or otherwise silencing the output
+>>> of 'test_cmp' so that this does not taint the TAP output.
+>> 
+>> We can argue the merit and demerit with a good log message.  The
+>> central issue at hand is how precious 52a9 in the script lost by
+>> this patch is (in other words, are we checking more than "is our
+>> char signed or unsigned?").
+> 
+> Ultimately, I don't mind much which way we go. But if we want to retain
+> this, would you mind sending a rewritten v2, Taylor? I feel like you're
+> in a better position to argue why we should retain it.
 
-The `git history reword` and `git history fixup` subcommands prepare the
-commit message by writing it to COMMIT_EDITMSG and then opening that same
-file a second time, in append mode, through `wt_status`'s `fp` field to
-append the status information. That second handle is never closed before
-`launch_editor()` runs, so the editor is started while git still holds
-the file open.
+Is this something which can be merged before 2.55.0 final?
+It's certainly not a grave issue, but it is a new test
+failure for anyone who diligently runs the test suite on
+many (most?) non-x86 architectures.  It seems a shame to
+punish those folks. :)
 
-Everywhere this leaks a file descriptor, but on Windows it is outright
-broken: a process cannot replace a file that another process keeps open,
-so an editor that rewrites COMMIT_EDITMSG by creating a fresh file in its
-place fails. This surfaced while running Git for Windows' test suite with
-BusyBox' `ash` as the POSIX shell: the fake editor's `cp message "$1"`
-aborts with "cp: can't create '.../COMMIT_EDITMSG': File exists" (MSYS2's
-coreutils `cp` hides the problem via its POSIX unlink emulation, BusyBox'
-native `cp` does not), making t3451-history-reword and t3453-history-fixup
-fail wholesale.
+FWIW, Tested-by: Todd Zullinger <tmz@pobox.com>
 
-Close the handle once the status has been written, before handing the
-file off to the editor.
+I tested the earlier test_lazy_prereq version as well.
 
-Assisted-by: Opus 4.8
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    history: close COMMIT_EDITMSG before launching the editor
-    
-    I noticed this problem while trying to whip MinGit-BusyBox into a better
-    shape during the -rc phase. Technically, this is not a fix for a
-    regression during the v2.55.0 period, but I figured it'd be better to
-    send it now anyway than to forget about sending it after v2.55.0 is
-    released.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2158%2Fdscho%2Ffix-fd-leak-in-history-reword-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2158/dscho/fix-fd-leak-in-history-reword-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2158
-
- builtin/history.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/builtin/history.c b/builtin/history.c
-index 9526938085..4a5d9192f3 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -74,6 +74,14 @@ static int fill_commit_message(struct repository *repo,
- 	wt_status_collect_free_buffers(&s);
- 	string_list_clear_func(&s.change, change_data_free);
- 
-+	/*
-+	 * Close the handle before launching the editor: on Windows an open
-+	 * handle would prevent the editor from replacing the file (e.g.
-+	 * BusyBox' `ash` cannot overwrite a file that another process keeps
-+	 * open), and leaving it open leaks the descriptor everywhere else.
-+	 */
-+	fclose(s.fp);
-+
- 	strbuf_reset(out);
- 	if (launch_editor(path, out, NULL)) {
- 		fprintf(stderr, _("Aborting commit as launching the editor failed.\n"));
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
 -- 
-gitgitgadget
+Todd
