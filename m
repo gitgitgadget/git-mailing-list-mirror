@@ -1,65 +1,65 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926593E0C6B
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 12:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646243E0754
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 12:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782389628; cv=none; b=gYm+fZxEor/YZbNAJ0GuDm191jX2ckeG1NOokTUw3uvHvC20RR26QlKGMRdpX9qdl6xK3jqzUgPY0atmgxJxpuQ0N3/53NKrIpD7vGRPKbmha083oq1ug+nsfosFf4SIC6UsAEnDl4MxWP/yflJr+qY8BEMB/jc6LqoMx4a2W5A=
+	t=1782389629; cv=none; b=HtFXqXlYNuQuLYxufQG+Gb3dxKyrtY4WBbLFaGDpIXE4BhXO3QU3TI1PVFhFiEgxPsBcps8UZJjLqAuesW/a4DXWk25ylH+Mjy//CTT+h6lHKqApifSuf4PneSqNriM/HansBAvppz1ns5IfvLCqe1Bdkpn/uWDJcHEihJ0eLag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782389628; c=relaxed/simple;
-	bh=2/ddVnh31QSv6UZy0Msg/7COvntD2n/JD0aE7qMc4Q8=;
+	s=arc-20240116; t=1782389629; c=relaxed/simple;
+	bh=mnD7xQzDdXg0KyGe+FLlZ59c9SYfKRn1bBoKhVWGDWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pqr0dhZqmRHcnYf0jsxjzU3OdpTXgfBLge2xzUouCgH7JnZt7LI21/7shUPlyt1e3IBva91stbDvj5PKZ93GpMIx7YM4sq8IWJ9N/xgFt1GibsL2ZeKEVdt/7VLFDpUXfdv4kb7EnlHFRvkHanRpeIgXVr5I1iKNBhDlbswkm/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rkRWYXxK; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version:Content-Type; b=qPZf8K5yyNWccH0/uuPve0n8df3WLA19vzgzFIbcIQzw2htTJZoUG4+XeLEoG/h2im2oHlvwvFV5NPj1ptvgdSbgL7JcV30e4f+mKjPWpkWgy/jSHI4StqGAyIhM4M2GoyztuGycUoJBa1Cgx2XWXsONDnQ+Pdmfpo0phsv+KPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WKDhXvto; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rkRWYXxK"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-49261a64cf4so11017985e9.2
-        for <git@vger.kernel.org>; Thu, 25 Jun 2026 05:13:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WKDhXvto"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490ac357c55so18839365e9.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2026 05:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782389626; x=1782994426; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782389627; x=1782994427; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DxAX9eDSKi1nK41uUaWlnXI9mbsHwYHUUi3XBVKQ1/o=;
-        b=rkRWYXxKR15aHd9UM+BC0OPUOg6jTNTXd+N4zBLu+rMHVMEOuJJuPsWdMEYpf4gELu
-         EiFOyvvXGTij68LDaYR+U6324RPp3gT//Ldq6gOHxV8WulA9cXkxiZQqPz/U8I2BKd2o
-         OoJlZBp5DMgzJFaPsl7sP1P/WHACn4Et7JgShciuU4pYJAukM/Bw4ekDdCRsvYFFbv8R
-         b4aVRGbk2/hI7x5WboxG4tVd0+0JJQBxAQ44qX1hVAAGJyzG67xTiPNyHK7VDFQp4HVT
-         i24qpnWrpcN1+C6hYb5I7Eu3CjCW/WrkyiCRDlkIDT2UonBJ3qmsKuk3j7E5kyOFLRiB
-         6gMQ==
+        bh=Tmym3nvwPVKK09qumprWMxgZO1CzP9FrFL+Glfxtc/w=;
+        b=WKDhXvtoVa/zwbbd7jjzCTUevnuColCZRt1tQW+fmlEdlCbWsdVATMIIMYsWCZMX1U
+         keCJE8AGYprKRssOI9v0YGSSHCsRhPV0RWuYv1VafJ96MYtgAKVNsC5t9RAPMfrqpoMb
+         f+aCZ9T9HMD3lBzEs6XXXECjNItk9chXuI+ngC27kd56nfp3/+TnJQiGuE148zUIkOQa
+         CZ9fMWs0cJruRBvG2PiavAlOrS9wft9EFmM/WEN1bx8fB9pQKVODBho+L52rPFg8/QEH
+         C+DYsAeygvX0Wa1p+FsVSxTKr1ln8be1ufZ4p/BAgNvA3NZnE1Zab2+J0ijOx/ziKHM4
+         z74w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782389626; x=1782994426;
+        d=1e100.net; s=20251104; t=1782389627; x=1782994427;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DxAX9eDSKi1nK41uUaWlnXI9mbsHwYHUUi3XBVKQ1/o=;
-        b=j7aYQZlco1wHWRwGDYxhuq5rfbzFYoRQpNviWIQcU33d3DC8IgyLOGTaMUp9MqaKHb
-         icpuCpd4z+39XSadIZTUw71sLeN0lN0nyO1PXHSvDeW6eAm16fO61tOuSdAjxPl2807W
-         Q8F/FIeAAGhUg6H8PFHhTJbO/tSFWNX6W0R8MLq0VGlTkwRCSeJJ+F9RxPIgyehkIB+b
-         Qr2WMoRaENA7A5BQk0dAXy3Qya8vVenxhBXUWPIUfMuYZeoNYPGIiF/n/gx+bTGuHLr4
-         HLYH2p2ViY+D469/Z644hwGAp8Fvv2Scx4Xiq6eYnYyRt9TVdScr779U86xk1wI4FWyQ
-         DPNQ==
-X-Gm-Message-State: AOJu0YxsuC4rSCQmvmSF6yJeazoIfoxlAaJFqvtQWK+TECxxb2lyNZTZ
-	mFF/LIWtEV1y1TsX3enBg6LlYCgcavXL7J6RtLe2HUhiPb6n79cQ0ylRYG1qA0d9
-X-Gm-Gg: AfdE7cmeIPdKbc89+YzDOWGHEDfdnS50f0yNw7FLSMWMWuDdr1LTYD3fa/4AFX1X/xe
-	KVnM4ayQ2bOW7Bx3AKcCpZgnf+8YNznjz37oRyLsybIE6AEUnoz2XUoz3+b3+9p7+vcmyK2dyqq
-	OSD+WgRKtjMxv2r89wI0pO3+1W5b3u9Z+060HW+GpjIPKdMlz26eTiJ5ojyB86Mbg+OWa0jKlVX
-	3cFm/B7iVJj1xc+zxsSrWkUzDOWDC3+p5sfiMJ3djmYu5hEJmMRyNrIcShC/3jvLBE1T9B2CTtI
-	JIPGTneqxz3tcuHUJGM0LBZJrMWseD/9Pnemso/jYyozuqqEh6obtim220ojkUCWtH1xnzJa6gi
-	aJ/7+4buKIBqpZB9+QmD6dP/XS+thyK9RMw0f75Aqsi8on1m0OINWSLwrLl/xZXZQZtsysCXPCc
-	IljtU9/3anz1qU2/WFdmoGOZjYksX2hvKsiskP6VDVK9Dfp93v1Uk6yFmASRQ7PTge1KKmkEIaM
-	FVUnLdvVZZY2vMmRWdm4R5Ox+KpGNHsnOLHI3/92qH5aRH072WU/IMIGJ4U05uyXnS25tJoTEN3
-	G1XWUraRMTjJmiowCzh98/8wSmyoraAcuKwILdLcmqQU2it/NZrhRFcG8JTzHu4GNGBsmprLK8K
-	q2q+FJBVHKQ==
-X-Received: by 2002:a05:600c:37cf:b0:492:1e36:bb04 with SMTP id 5b1f17b1804b1-492668946b9mr32944205e9.37.1782389625498;
-        Thu, 25 Jun 2026 05:13:45 -0700 (PDT)
+        bh=Tmym3nvwPVKK09qumprWMxgZO1CzP9FrFL+Glfxtc/w=;
+        b=ZWB6Y8XG2loAQ8V/0doFdcf6bDAkmC2J3oGrEakDQHTTio54OBHeeDEs+ot45M3121
+         hh0s06Q6wmaZu3+Pidi8ujLLUZ5WA7NDF77ct2cUrLQU4pzIukg6AUbCf0SRTL69VhUj
+         MM/XIkLHK9ZGxoYLyUACAUu+FMhc7JkzcfYqff1zsgJYsyAjr3RCwjMxaKb7AEPToG0m
+         Fo06Xg7WPz3eZvFIByIljz74LIUocQ4/9+GLeXcJcoRP74LdVc9C0Jv0Pkl8YpDyKImj
+         XtZPJ9k94AbDmL+5m0U5ryxWx5Zc3LFAKnaaO3EbW/sdUPBXyfJ0JMqZ99w8baRAj1HI
+         RUpA==
+X-Gm-Message-State: AOJu0YxIQA4kAT//IvS37BHgNQQsjOzXEwA5ZJoliDqvV+w66G7wBXI0
+	/A4VlRZqZg/0KohjYzl3AlPejdQDYwH2brSvCCz/BJQzRuQ7/uqYlmOXNgZN2Ly4
+X-Gm-Gg: AfdE7cmsYjQQ/kmZwygTKQ7bVKo6LCxiHNh2ManfG5tk+hsdvSdzNAOpO/zqKjvp6ar
+	oAjb1nMe5zQ9iFNSIv3v4mCCkq8K95+tOfR7L0GKdWF1Yh+ZSb5fbPAyjodV8TDQ64eshcmemS7
+	r2DdlDS+ViV9RBckvU2eAAQ7L2i61PrBlys5zEkdsMhb7eix7GtGfmoCtUlaawNts7wO45SPA3a
+	mtiDwrt4xYYyTlRtiAO9vRw8eZAjS7YLGTNVgYEczW9oENgVzlKShwokgN8PDV38s6hEHUfKRsk
+	O+97lW2SNQTuMRUU5VkV7THpJYenqhK96q9EGi4LSrOiLIlBvZZOZeYKSh8zMb66KlzO3EGZ+82
+	GTlqSISkoXvA2u74nOlcdz5WeGbqvIE+7tnVY+REYS/rn5YnHTfRYH6vCnyIA9+QBRYO/m6YAGt
+	T3FBtk6mkUDiZ9DiNko4bm+Hje21sBQfdbiu4dyjDozkW5YeWWIn370w8lcjukLM+W+2vDqI4Ch
+	5nhB676novjy/LNpMo5+xKT4lz0kFGI+4gkRgCldbkECt/mQ07pFH0rPMj1CGyIBRyC8z84LEvT
+	bag6cx6StGEgqvJB0ozYzgN9gEFFvDlu3e3vDp27mQdA+dygK6xo/kI9KgFE1oiAaHlo2MzYZal
+	m3sandRmSSA==
+X-Received: by 2002:a05:600c:3f06:b0:492:32a0:7f92 with SMTP id 5b1f17b1804b1-49266873fc0mr30982905e9.12.1782389626715;
+        Thu, 25 Jun 2026 05:13:46 -0700 (PDT)
 Received: from localhost.localdomain (62.174.236.137.static.user.ono.com. [62.174.236.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-492660adaecsm62207245e9.5.2026.06.25.05.13.44
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-492660adaecsm62207245e9.5.2026.06.25.05.13.45
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 25 Jun 2026 05:13:45 -0700 (PDT)
+        Thu, 25 Jun 2026 05:13:46 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -73,9 +73,9 @@ Cc: pabloosabaterr@gmail.com,
 	toon@iotcl.com,
 	Jonathan Tan <jonathantanmy@google.com>,
 	Calvin Wan <calvinwan@google.com>
-Subject: [PATCH GSoC v14 05/13] fetch-pack: prepare function to be moved
-Date: Thu, 25 Jun 2026 14:13:27 +0200
-Message-ID: <20260625-ps-eric-work-rebase-v14-5-09f7ffe21a53@gmail.com>
+Subject: [PATCH GSoC v14 06/13] fetch-pack: move function to connect.c
+Date: Thu, 25 Jun 2026 14:13:28 +0200
+Message-ID: <20260625-ps-eric-work-rebase-v14-6-09f7ffe21a53@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
 References: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
@@ -89,33 +89,17 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-`write_fetch_command_and_capabilities()` will be refactored and moved in
-subsequent commits where it will become a more general-purpose function,
-making it more accessible to additional commands in the future.
+write_fetch_command_and_capabilities will be refactored in a subsequent
+commit where it will become a more general-purpose function, making it
+more accessible to additional commands in the future.
 
-To move `write_fetch_command_and_capabilities()` to `connect.c`, we
-previously need to adjust how `advertise_sid` is managed. Currently in
-`fetch_pack.c`, `advertise_sid` is a static variable, modified using
-`repo_config_get_bool()`.
+Move `write_fetch_command_and_capabilities()` to `connect.c`, where
+there are similar purpose functions.
 
-Initialize `advertise_sid` at the begining by directly using
-`repo_config_get_bool()`. This change is safe because:
+Because string_list is only used as a pointer, use a forward
+declaration [1].
 
-In the original `fetch-pack.c` code, there are only two places that write
-`advertise_sid`:
-
-1. In function `do_fetch_pack()`:
-        if (!server_supports("session_id"))
-               advertise_sid = 0;
-2. In function `fetch_pack_config()`:
-        repo_config_get_bool("transfer.advertisesid", &advertise_sid);
-
-About 1, since `do_fetch_pack()` is only relevant for protocol v1, this
-assignment can be ignored, as `write_fetch_command_and_capabilities()`
-is only used in v2.
-
-About 2, `repo_config_get_bool()` is from `config.h` and it's an
-out-of-box dependency of `connect.c`, so we can reuse it directly.
+[1]: https://lore.kernel.org/git/Z0RIqUAoEob8lGfM@pks.im/
 
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
@@ -123,32 +107,114 @@ Signed-off-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- fetch-pack.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ connect.c    | 34 ++++++++++++++++++++++++++++++++++
+ connect.h    |  4 ++++
+ fetch-pack.c | 34 ----------------------------------
+ 3 files changed, 38 insertions(+), 34 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index f13951d154..ad07603755 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1380,6 +1380,9 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
- 						 const struct string_list *server_options)
- {
- 	const char *hash_name;
+diff --git a/connect.c b/connect.c
+index 47e39d2a73..1dced8e632 100644
+--- a/connect.c
++++ b/connect.c
+@@ -700,6 +700,40 @@ int server_supports(const char *feature)
+ 	return !!server_feature_value(feature, NULL);
+ }
+ 
++void write_fetch_command_and_capabilities(struct strbuf *req_buf,
++					  const struct string_list *server_options)
++{
++	const char *hash_name;
 +	int advertise_sid;
 +
 +	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
- 
- 	ensure_server_supports_v2("fetch");
- 	packet_buf_write(req_buf, "command=fetch");
-@@ -1395,7 +1398,7 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
- 	}
- 
- 	if (server_feature_v2("object-format", &hash_name)) {
--		int hash_algo = hash_algo_by_name(hash_name);
++
++	ensure_server_supports_v2("fetch");
++	packet_buf_write(req_buf, "command=fetch");
++	if (server_supports_v2("agent"))
++		packet_buf_write(req_buf, "agent=%s", git_user_agent_sanitized());
++	if (advertise_sid && server_supports_v2("session-id"))
++		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
++	if (server_options && server_options->nr) {
++		ensure_server_supports_v2("server-option");
++		for (size_t i = 0; i < server_options->nr; i++)
++			packet_buf_write(req_buf, "server-option=%s",
++					 server_options->items[i].string);
++	}
++
++	if (server_feature_v2("object-format", &hash_name)) {
 +		const unsigned int hash_algo = hash_algo_by_name(hash_name);
- 		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
- 			die(_("mismatched algorithms: client %s; server %s"),
- 			    the_hash_algo->name, hash_name);
++		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
++			die(_("mismatched algorithms: client %s; server %s"),
++			    the_hash_algo->name, hash_name);
++		packet_buf_write(req_buf, "object-format=%s", the_hash_algo->name);
++	} else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1_LEGACY) {
++		die(_("the server does not support algorithm '%s'"),
++		    the_hash_algo->name);
++	}
++	packet_buf_delim(req_buf);
++}
++
+ static const char *url_scheme_name(enum url_scheme scheme)
+ {
+ 	switch (scheme) {
+diff --git a/connect.h b/connect.h
+index aa482a37fb..c4f6ea4b0a 100644
+--- a/connect.h
++++ b/connect.h
+@@ -34,4 +34,8 @@ void check_stateless_delimiter(int stateless_rpc,
+ 			       struct packet_reader *reader,
+ 			       const char *error);
+ 
++struct string_list;
++void write_fetch_command_and_capabilities(struct strbuf *req_buf,
++					  const struct string_list *server_options);
++
+ #endif
+diff --git a/fetch-pack.c b/fetch-pack.c
+index ad07603755..4a8a70b5f3 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1376,40 +1376,6 @@ static int add_haves(struct fetch_negotiator *negotiator,
+ 	return haves_added;
+ }
+ 
+-static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+-						 const struct string_list *server_options)
+-{
+-	const char *hash_name;
+-	int advertise_sid;
+-
+-	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
+-
+-	ensure_server_supports_v2("fetch");
+-	packet_buf_write(req_buf, "command=fetch");
+-	if (server_supports_v2("agent"))
+-		packet_buf_write(req_buf, "agent=%s", git_user_agent_sanitized());
+-	if (advertise_sid && server_supports_v2("session-id"))
+-		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
+-	if (server_options && server_options->nr) {
+-		ensure_server_supports_v2("server-option");
+-		for (size_t i = 0; i < server_options->nr; i++)
+-			packet_buf_write(req_buf, "server-option=%s",
+-					 server_options->items[i].string);
+-	}
+-
+-	if (server_feature_v2("object-format", &hash_name)) {
+-		const unsigned int hash_algo = hash_algo_by_name(hash_name);
+-		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
+-			die(_("mismatched algorithms: client %s; server %s"),
+-			    the_hash_algo->name, hash_name);
+-		packet_buf_write(req_buf, "object-format=%s", the_hash_algo->name);
+-	} else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1_LEGACY) {
+-		die(_("the server does not support algorithm '%s'"),
+-		    the_hash_algo->name);
+-	}
+-	packet_buf_delim(req_buf);
+-}
+-
+ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 			      struct fetch_pack_args *args,
+ 			      const struct ref *wants, struct oidset *common,
 
 -- 
 2.54.0
