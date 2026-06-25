@@ -1,118 +1,183 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B98830E0E4
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 18:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C943D25785C
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 19:43:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782413477; cv=none; b=jC+NdAsh5LBVPOclNuUXiHvi6I51hjLxNVSevl+xC7LS9pg/2to3pyqfoPUVpc61DCHoP8bbT7L7zshqdqziU/IZEiTotpP+5tAx7Ym/U9ApjSyMRz5Y5wFwTWd40reAjx2wv9HxY+BXGsYb2+mv6IGR/3qEsMTk0yPt5IuPXyY=
+	t=1782416629; cv=none; b=D6aQvAHUpD5782iRGfd+1hv4X8BEaw/+D4hIaae1Fb0wG41PxrtfK7VB8VbkAalh/rDtg5eHMMItyiR4zAMQuK7a8ZKtox+ISMf1tfvoxOf23mHeZ0Kt/MBUcRcJSHyNbfFFJGjXKt7NLLYNGjrs5wMfSaN127MERE6nl9v4tow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782413477; c=relaxed/simple;
-	bh=SwFQe42NjUPhLjlrTP/hSejf/EsTn1n5XbOhjKWB5ZA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CJZpwJiR37x6lQR5CH5sq5qd4udqsMhvuU7LLUnWcnEqHvAlb/o7BpUVoMOXYy8kM2vw9aS6rVUjGzPzK3JWxMkVukUfptE+JeWZWKxMfOcqPIeUzB5uY1Rn1gSH4lWXd3aWFqysygv73pFTm9K0ywGaVPcP6sZOAyH7Ot958HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TD8zG64+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jvvKqRbR; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782416629; c=relaxed/simple;
+	bh=LVxFjyBwAWCHt3r4dT0PoLUMBFU9KecLOVZyUVud7fo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ljCtlRib3LxMCtynhTEY1otWfo3JMq0DYXcn/YWrk7vXeM3LCZXLVxbhnhXv+oIgC82Fq4dlwTRDKKjTnErG1IYXsjLMmG9PVBA8DTegtFm583NBREGlJDPfBTiudzj/wfS6brSkZXapl5/nwKN6ulERbvqcBPPGU/3XdCjNMRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jZnpAh3g; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TD8zG64+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jvvKqRbR"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4BEAF14000DA;
-	Thu, 25 Jun 2026 14:51:15 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 25 Jun 2026 14:51:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782413475; x=1782499875; bh=iDyRBNZ+4h
-	hov56c0cT84SiukIcjMugh9qgU7mbb+6I=; b=TD8zG64+21DdhPC2O9ZFnjaHGh
-	qS78/v5VXPDCPwHMF0UF7v0mto1l62iABTcNrhSoib/Jk+RavGSfmtVXhrXctlo6
-	GHSdh+bVfzGMxuiIbqnXp6bJmltbOgbe4nJOoBzfqAzUh6+FHlwdW4710nobmm1z
-	Ef3IvmGPOAiVHxyw/U8CIE0GBPUas5Dve/NpQuFBgawrDU9qhcZczJiDW8HCse4w
-	jTxKKL+v/2Z+GCAfPXR1jaK0gdRnDwwr+c4PQFIlnIxYTj84lhEVyWio7BNWG5u1
-	wCiRUJxSsNhu4LkEa9QxTTcQg1Y6jxnm22+C0+Xuk0pceO7jBATOZEP2bBvw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782413475; x=1782499875; bh=iDyRBNZ+4hhov56c0cT84SiukIcjMugh9qg
-	U7mbb+6I=; b=jvvKqRbRK602HeNix1Nxgs6kkSmVyWoLeiX5AG5ZTXs6Id5HWPW
-	YDfGR9CMCdEUjObPl1tcFnwiZ7vrh23KUdaC0RXwOIBBnePAipFj2sjx4U02BCoR
-	47qAoVwrKqPcMk8KUS7vV+g3yBO/ITa2zN9Rk/0RRrfWJB4/wSSTTCK4maOfDd86
-	l32KQ4GTXDpDhCOK/EhJPX8QW4JQcjVYFyThZyTU1zYMPrQ8XMBQsIHOY/WJvLpk
-	SHy0LM8SNcbS9GKMFiIo/ScGbYClr09VeLe03cYZ/gbHrqNUqrmL27ZO+Djtg4Pb
-	AQMN2JHESVc1qd1uZS9rZwdVKJpBuhEKStQ==
-X-ME-Sender: <xms:o3g9aqOkx8ZKAXzZSjUTuqbYNjtO-ulMZgfhMcUpIeStafMKFfPXwg>
-    <xme:o3g9av1xXDzqcQ1uWGYLtg3mk-ojirdX93WSXFSD6AlzZzOE59883CRTRZBCiP8sW
-    S-Wk-xCs6H9Q66vjtk1gulV9si_sp0mgduM8hFyFWU-SLYxo0Wzp3Y>
-X-ME-Received: <xmr:o3g9aplpFOBvlrZXnOTTRHPchx8NEcHtMIr6sVOmpRg_4wzkj0c2oiU9FObpFHMYGAM0CnhRjPS7iWZCT5Zdf6PC2uLIEcRM9Hi0bXgjtBMkecvgN0HBI4I>
-X-ME-Proxy-Cause: dmFkZTF2AJd2811jfObMekcm4NHMVEorSxHiB4DFEt+NGnu6OOBsnSNhB2t3v1gJR7GSYD
-    ujtVLAi8J8ZLa699cehT0eJRKbtdj++d9UuHLrWF+zD4v2iuiJ7XK+K5RXkeTr+9Nu90X4
-    9G095K9n5+ZjXanDF/CCfyHDnM9jpmXd2RGYmiSKNS4Qmgm9+q5Y0EFEzm9VB7PvrOwgiO
-    QSsu6DRqnwhtiC/WRwvI9l/97WC2baCtEf7gzkYdOSO5l5EEA+oam6O67iz1FK5uHlDyvU
-    knNnSD3Yp4/2UuGhR9F3iuRo5xvgxX1dKkJz6+Ot5fYEbNLe+XtAPw/iqsxUb97HqixqT4
-    mpejUjUMB+eunDX0C4Y0IJgXBQF3VJGnO4TPcPiWhfqT7/TedQktLJEaFbO8xmlKLIi4P6
-    zmLeN5MsZBdBcnO9DMEbSYNEnfTZFPIY1MD9ibH2k51D6XhxsfOBedtoBLfVYjwgUTIZWl
-    wBTLGjls2A6ddzTK23/JEt40XFPWcQHOAnvergkxt28aZPI5FNDA1fEacIwXJ0pRVUirYW
-    enhv8jH9Q2aNNqw9MHchM977mKJLxLQOW0nyw1qz+V5FNdyxMNmxx6n+8kDHAoSSaYK9A+
-    d92jaesDcVqQb4PeSaFtZZ/qE2/ZFzHYDQC8AnVj0jKidqQ+h73b7h7nclZQ
-X-ME-Proxy: <xmx:o3g9amWWPUzXX081XAWlj89JABTeBTfYNwjZHw15Wec7MimWIcDzZQ>
-    <xmx:o3g9avuDiTvLQHHEow2KX-HXEjDvsIHkZcQtju0G88vng2uZGBsBJw>
-    <xmx:o3g9apYNgT_cKnHs5ruKrNdbZbjEiV3BWAmkn39bcuIQxlETN71AiQ>
-    <xmx:o3g9auXUqOw0UoXptCRoxtlHxMVk9OqjkUC5shB50GMEb-vx0YXgSA>
-    <xmx:o3g9atkITWSLCC9Lem7CMdL3AwQ9Wvvqq9ESndXCKTyrBS3mfkiIPgnq>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Jun 2026 14:51:14 -0400 (EDT)
-Date: Thu, 25 Jun 2026 14:51:12 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t4216: fix no-op test that breaks TAP output
-Message-ID: <20260625185112.jjH0K9LI@teonanacatl.net>
-References: <20260619-pks-t4216-drop-unused-prereq-v1-1-2ce0d7bea088@pks.im>
- <ajVMZpjTKiXc7TRe@nand.local>
- <xmqqa4sqlchz.fsf@gitster.g>
- <ajjBmi39IFJW5p5V@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jZnpAh3g"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2c6b3f71648so3032235ad.2
+        for <git@vger.kernel.org>; Thu, 25 Jun 2026 12:43:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782416627; x=1783021427; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FEZglQG0jwFuAAVAf8iRnupfNLunTYcRJMx7Zt2zCzA=;
+        b=jZnpAh3gAXyjo4OtNZr6if6tWkr1o4FCNOwciZulj6bIbSlCo0zT/8R9mb9LcvQzph
+         zdl7l0dRa4/JK0p5la+pgcAt6bInvsUMK0BfQs60CjEP/tfZL0htrNBYkWEtGmTbh+Mh
+         +EVB6FoA62yN98aRUXFTfaKbK80Db9XfG6vS8aYZyS8nk905LgiOrDeKK2xlG+0OmVHG
+         eYn01ulAGstF04I9j9tlA0ZLBZPmiSeejd3os0r46UE5Hfx6vNY2kE9mfMjlepCHk1T1
+         xc/0ziiFf2EbJLU4qzJLms/VKGrw5zbaEuSbe00WNxHGs+d+/W2JgPeOH/7QG1/Obn0M
+         z34w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782416627; x=1783021427;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FEZglQG0jwFuAAVAf8iRnupfNLunTYcRJMx7Zt2zCzA=;
+        b=EteeSuEv/D2kFyfYnlBTOMQ00hMSieDxxk9UrFJ4D8YILyz58H7R4q0FxZJkGmrE+g
+         YoNJ24ynZ1kc4B2IObN4b70X4p/XeyRzzSBjLT/4BrWI6izIUiA4kL8uzv83FX2v7Cf0
+         KfUbydWvsKkZtpFg7/ZGY0oD3rC/B0HsVgW43fjP6FPmHDKsfr4RHjq03OwrjlID4ouq
+         Cmkb9ZG6bqyZiX5kxtr7YmhOHuPNOHx/bl2yWOMKa8rnp4HkdajxNR11bhnwUC7Gb3X7
+         x2AyPktadfhxftj1Pg/GsC8omQrs800ZgfIy40GEiAcrFEjRQhhYAJo6ViC4I+oEOV+N
+         ZPZw==
+X-Gm-Message-State: AOJu0Yz8yJTJOOpGQqK77FG62hSfeqiAwJXqeg4eyxKOHkOQvnSck4Y8
+	St2+5i5bMQ8vAO3I2hNP9xkQ+wMBOKxoUsS7EEaqVS2gHz9ycUys1LHFLO4gXQH9mfY=
+X-Gm-Gg: AfdE7ckvlY63sAOc+XfGFSXz/rvjOOWCgGFSmGcUeZsc+LQp085B5cAMmgppjJp8m48
+	G0kOWJg/Ft3EGp496c143EMEGRRMf5EA2Or0/yOwg5se16suZz3wVQ45PyY6jClN0WuRlzTva3D
+	uKZV65KGowg7TnxG4nf9MpVHwd+kKsiQRdhKV7iXPx2PkYWemEHSgRemoOpwSUiHKi74TEsFbme
+	t/uQwDaclVGh1nBFs5EVTb0mi/HDG8BDbvScgfuLwLV6RoPk8XV0p+3cHXfArleCMP2jfT84URu
+	RjAtcqejk59xKYy/sjrT3q4DEkgKoReiXiM+7r7245g9iXG3uopXC6kzO0iNtHr/C/sUWG4cCUE
+	3r2xVdwAEGfAQCvjkVDMxB7f2tHP1Dkov+HXMt6qCAp0NugqsCAW3LUOHFwQTZMYoeHYl95r8Qe
+	D9B953bvbRbyTK3hn6e2v+dep+DfZMpohkK0CCjzItfrgaAYerIg8=
+X-Received: by 2002:a17:902:ec91:b0:2c7:f7e6:99f8 with SMTP id d9443c01a7336-2c7fc9d5f54mr38344535ad.9.1782416627004;
+        Thu, 25 Jun 2026 12:43:47 -0700 (PDT)
+Received: from i7-8700k (c-24-21-189-103.hsd1.wa.comcast.net. [24.21.189.103])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7f5ae4c55sm26895675ad.19.2026.06.25.12.43.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jun 2026 12:43:46 -0700 (PDT)
+From: Grayson Tinker <graysontinker@gmail.com>
+To: git@vger.kernel.org
+Cc: Grayson Tinker <graysontinker@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Fabian Stelzer <fs@gigacodes.de>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] gpg-interface: still print ssh signatures when allowed signers file is not set
+Date: Thu, 25 Jun 2026 12:43:11 -0700
+Message-ID: <20260625194330.3711-1-graysontinker@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ajjBmi39IFJW5p5V@pks.im>
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt wrote:
-> On Fri, Jun 19, 2026 at 09:29:44AM -0700, Junio C Hamano wrote:
->> Taylor Blau <me@ttaylorr.com> writes:
->> 
->>> Given this and the above, I would probably err on the side of
->>> designating this as 'test_lazy_prereq' or otherwise silencing the output
->>> of 'test_cmp' so that this does not taint the TAP output.
->> 
->> We can argue the merit and demerit with a good log message.  The
->> central issue at hand is how precious 52a9 in the script lost by
->> this patch is (in other words, are we checking more than "is our
->> char signed or unsigned?").
-> 
-> Ultimately, I don't mind much which way we go. But if we want to retain
-> this, would you mind sending a rewritten v2, Taylor? I feel like you're
-> in a better position to argue why we should retain it.
+"show-signature" errors when the allowed signers file is not configured,
+which means that the user can't see the key that the ref was signed with
+without creating and configuring the file. Change the logic so that the file
+is only used when configured, and so the signature status is always displayed.
 
-Is this something which can be merged before 2.55.0 final?
-It's certainly not a grave issue, but it is a new test
-failure for anyone who diligently runs the test suite on
-many (most?) non-x86 architectures.  It seems a shame to
-punish those folks. :)
+Example of previous output:
+```
+error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+commit b437db5ddc38ebda223bbae2087eee90a7b1c6e2 (HEAD -> master)
+No signature
+Author: Grayson Tinker <graysontinker@gmail.com>
+```
 
-FWIW, Tested-by: Todd Zullinger <tmz@pobox.com>
+Example of new output:
+```
+commit b437db5ddc38ebda223bbae2087eee90a7b1c6e2 (HEAD -> master)
+hint: Configure gpg.ssh.allowedSignersFile for automatic principal matching
+Good "git" signature with ED25519-SK key SHA256:yTU4KFs/g6MY7biDSlVStB63Gi1rCKg7dOFDXbe0yuw
+Author: Grayson Tinker <graysontinker@gmail.com>
+```
 
-I tested the earlier test_lazy_prereq version as well.
+Signed-off-by: Grayson Tinker <graysontinker@gmail.com>
+---
+ gpg-interface.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
+diff --git a/gpg-interface.c b/gpg-interface.c
+index dafd5371fa..ef3e1a0aa0 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -1,6 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "git-compat-util.h"
++#include "advice.h"
+ #include "commit.h"
+ #include "config.h"
+ #include "date.h"
+@@ -480,11 +481,6 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		.local = 1,
+ 	};
+ 
+-	if (!ssh_allowed_signers) {
+-		error(_("gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification"));
+-		return -1;
+-	}
+-
+ 	buffer_file = mks_tempfile_t(".git_vtag_tmpXXXXXX");
+ 	if (!buffer_file)
+ 		return error_errno(_("could not create temporary file"));
+@@ -500,22 +496,26 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		strbuf_addf(&verify_time, "-Overify-time=%s",
+ 			show_date(sigc->payload_timestamp, 0, verify_date_mode));
+ 
+-	/* Find the principal from the signers */
+-	strvec_pushl(&ssh_keygen.args, fmt->program,
+-		     "-Y", "find-principals",
+-		     "-f", ssh_allowed_signers,
+-		     "-s", buffer_file->filename.buf,
+-		     verify_time.buf,
+-		     NULL);
+-	ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_principals_out, 0,
+-			   &ssh_principals_err, 0);
+-	if (ret && strstr(ssh_principals_err.buf, "usage:")) {
+-		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
+-		goto out;
++	if (ssh_allowed_signers) {
++		/* Find the principal from the signers */
++		strvec_pushl(&ssh_keygen.args, fmt->program,
++				"-Y", "find-principals",
++				"-f", ssh_allowed_signers,
++				"-s", buffer_file->filename.buf,
++				verify_time.buf,
++				NULL);
++		ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_principals_out, 0,
++				&ssh_principals_err, 0);
++		if (ret && strstr(ssh_principals_err.buf, "usage:")) {
++			error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
++			goto out;
++		}
+ 	}
+-	if (ret || !ssh_principals_out.len) {
++
++	if (!ssh_allowed_signers || ret || !ssh_principals_out.len) {
+ 		/*
+-		 * We did not find a matching principal in the allowedSigners
++		 * We did not find a matching principal in the allowedSigners,
++		 * or no allowedSigners file was configured
+ 		 * Check without validation
+ 		 */
+ 		child_process_init(&ssh_keygen);
+@@ -528,6 +528,10 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		pipe_command(&ssh_keygen, sigc->payload, sigc->payload_len,
+ 				   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
+ 
++		if (!ssh_allowed_signers) {
++			advise(_("Configure gpg.ssh.allowedSignersFile for automatic principal matching\n"));
++		}
++
+ 		/*
+ 		 * Fail on unknown keys
+ 		 * we still call check-novalidate to display the signature info
 -- 
-Todd
+2.54.0
+
