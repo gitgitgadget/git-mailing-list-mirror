@@ -1,141 +1,164 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BA765192
-	for <git@vger.kernel.org>; Wed, 24 Jun 2026 23:20:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC213672B4
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 01:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782343222; cv=none; b=qOpj8C90PojnC4hFZEXw3ICQXnMcfCtrUH0lpXDv/s4xb06zPV+FrhMFnTQUNxZNCKohq/plncLIa70ymcnwA7EQdGVVJJ1V6McKaZTCiVO0acRESH9LWD8cXtoLToPVqMTWZZxdyB5EN9wG+d84KiN9nZ7ghmnUUp85kVosJ1A=
+	t=1782350239; cv=none; b=Q6RmhabetGTOTg3ABoyTAwaZ2a/SZJrPKSk8+eQzCVnnrzOPBp2A45/3QrowQtS80To5iz7T1pj+0H5ehnYDIYvSUXbNRTvj8to9S9W6rhMOGXkaEyn2k/9xWEKshuWVcLhLXEa1hX7gT9UURqUwWyGJsf33M40FKXmWD+bKAnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782343222; c=relaxed/simple;
-	bh=6vXlSvZ62eJJ9Kt5D+7EIuzGptJpPHoVVuAAWajw64E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I8LRAIt3w55DipySEdADnLPeprnmVSrv2mkwCl59Kpg738Oo3esz0KENxV5nipKvuqOHZ0WDi3SW1WNVb7hW9qoFuZjxeG+l/i/f9I0/JUxiJ3mrf5v3OK2vlLZt/tgVfLINWCIq3uLtKuFmXASneLY99Uab9Hz9gH39Wiv14XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VSHTL0Fr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TTGhYJFO; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782350239; c=relaxed/simple;
+	bh=rPH2I0W3/t9GoQhTyUixzata/vFB7soQ8W93m8TNOzo=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=DhVxxZqvXPYajTC/4Z8ezeN0ScD1FTeqFNZZyTJQgrH9yhWFHrmO6BmhM43G/5bkyq/qo5SL+qMJxUndhITs/91BHBHt2XdjZTpD7ncVSkr+CmChW+61iIErIG1LELEyP+7tG4zELLtHurBBg9mFIaDFrY5nzGzKAh7D5bE7nk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=deB29T2G; arc=none smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VSHTL0Fr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TTGhYJFO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E0EB47A00D8;
-	Wed, 24 Jun 2026 19:20:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 24 Jun 2026 19:20:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782343219; x=1782429619; bh=fvBpWymeW+
-	w/S1mAXryw44MNPojFVzUEm4V+U0BkqaA=; b=VSHTL0Frfra3kA9p872alzg7Mw
-	ijMUwrBFiUw6Veo0KeczsRxjqOwOBznHQm5Zb17yQvh6Mlc3gXW3hkTi71awW/iq
-	ZsJPesfQsOTNVbG5PPEcctEDw4kvaomU7PbWUgAjVEoN5pFqH8pozWM8MnVYnTka
-	s3SUtT//bD3z4G1jKfVmWQraelRBHhx1LMsvbsJ7r8DjnosDh9Qsj2QrqnrId6V5
-	jQREQ/r7EhcpCZy7ybPq79LLHuCIwpObS8yEQayTYMnn1HNe/8p8+UJ3pHWGZBIn
-	fg+6tzC+11jSZL5if4exkING9HLooRY7H/2/6Vryp5GL54keqDPLKbsyqqgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782343219; x=1782429619; bh=fvBpWymeW+w/S1mAXryw44MNPojFVzUEm4V
-	+U0BkqaA=; b=TTGhYJFOnO9kMAKH07HFnvPJuen+S3629yQ+NvArwrzKElifRTe
-	WPVZVWaaIS1+GlTl2QEs9OjmNm+4V+x7GKMmEGCv7Rk3GLShs5Ug0V+gtI0oICPP
-	I6TaOrr8r9DchvFZP+vSVh5xMXgYrnTKRuqSqtvPIDLfyjjPDP5BW3D2gYHhkug9
-	pN1LYUy1PwFINWiKbS/+IStFla1iBhb6eslPM9QHdoSD7I7AXJ41wzqfkxyUhZiC
-	7SKaTBwv+mq+99hksTgysqLaYekqhpZ/N7SPV+xN1if9FtrlHlCUEtVVbFSrjkL+
-	Mc7qHBq+rUQnK2dxoTGwGOXncHP309gKGVw==
-X-ME-Sender: <xms:MmY8aonRkcrhyyHfUriNLFe9tmWuwk8yQQM6q48NOwqt9HqfoRebrA>
-    <xme:MmY8aoQDRUxDuL5Jqf5tYUtR6--Jg2ztrFXGtvjEPYKcUxkJwaaJ0MDiU0zAglAgn
-    utngsIu5hKpxHkGy7XNWEINqQCpeE6OtFlUPYEt7ZBRvhb0as5h2Q>
-X-ME-Received: <xmr:MmY8anUTQvnWJd01Lzr6spNknufD6SgLUjNPyXjp9giI5PI4M7lpm1FISdwESg1h0dt2XpIy5tTk7n6Tb8LLWybrqcsSRTYVsDK19y4>
-X-ME-Proxy-Cause: dmFkZTGdLt/Kc50T7L/iYrBLx4AXVLPIrQPw3OxcYqmP/NVP692v6uXV8yeAg7chymg4YX
-    dKP8D/bXd0PVyrDV2e1+pV6uxOVmQIW0iTOk6PDdIulp+tjnsR7GBrzOemhSSt7GYFQuDT
-    bdRfMUiNMPIbR1Za7ScdtIbREcLPlTUUKAhXf9qySdjT4EKWG0M/zypDkXRiQk3qpsdTYu
-    F2KN7iXbp+XAzEjMDtKIqAMrkbWouJJglwZZPnCqTtEC+E2/FSRIr5lIc50jL/htvN+Zyl
-    hsBxLBrs9n71r7T/5JV63CBNbvcZFGk+wwvcCUhplyCKZuDdAlxEoB7kT3j4WBqvVpyWnS
-    uQqlhB/X0KO8DcTohNMBtX8hPXPnIicp054Yr/gGguf3x9UQdm9cW74y0uk/bvBQgoS5b/
-    rKca9wnzoMW0CCAI5cFWunwA2W6LmchByA6wn0NQB28i2f7xf1MypuhGn+lVUAod1S7lHL
-    9gc/pTUVLGC7pDjyYb7d9G3FkLK8YN31LNtTeDWjnnhyKc8WJqIyJfFVHDzO9cwV7Be/Yr
-    IbWM22C2HPgur3+tEK/wzrWFy8W0xw7iRGMW3WGYNuPRZCnbxkUwAi2PNpB3ccj/bDcLdI
-    w3F6kR5mccwZsbGDoIv/GvoS5yQDcOTHvLnHHkDDwMSW+uf+Lvs/n6bWH3GA
-X-ME-Proxy: <xmx:MmY8asJNRVzUgYJ0w4n0NoatHYNDjpekqvH_vjkwL6O_EXwmUkHQMA>
-    <xmx:MmY8an2g3Osw36qO5LqS9Lg9Nq4qiUeHsl70UhwJP4Zd0XcTmPrAZA>
-    <xmx:MmY8apKk0S5h0fnTv7s0_k5W5JuzjUc2xJOxUAuE0ZbRCATf2CrzcA>
-    <xmx:MmY8aigW1PcbiAtrvQwklkT9Cu_zfNI1OT2oXM5VNUDRuMjRJRfh2w>
-    <xmx:M2Y8arYGQOlK_WmG6CuiRNOwdstxM6kfFa2hfRtzYwfuKVoPHVchtpL8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jun 2026 19:20:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Harald Nordgren via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Ramsay Jones
- <ramsay@ramsayjones.plus.com>,  "D. Ben Knoble" <ben.knoble@gmail.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Marc Branchaud
- <marcnarc@gmail.com>
-Subject: Re: [PATCH v14 2/2] checkout: extend --track with a "fetch" mode to
- refresh start-point
-In-Reply-To: <CAHwyqnWwyPHiaOW+rz-Z9ZvRf=OjXWw2T+rB3cSsxXWXkeRm=Q@mail.gmail.com>
-	(Harald Nordgren's message of "Tue, 23 Jun 2026 19:47:19 +0200")
-References: <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com>
-	<pull.2281.v14.git.git.1781786652.gitgitgadget@gmail.com>
-	<8518f090b1069a02d40c710975528ad118776b67.1781786652.git.gitgitgadget@gmail.com>
-	<12998c3a-ff69-4a98-9ed6-18aa0224e75e@gmail.com>
-	<CAHwyqnWwyPHiaOW+rz-Z9ZvRf=OjXWw2T+rB3cSsxXWXkeRm=Q@mail.gmail.com>
-Date: Wed, 24 Jun 2026 16:20:16 -0700
-Message-ID: <xmqq5x37h6fj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="deB29T2G"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-662b76dabfcso1918391d50.1
+        for <git@vger.kernel.org>; Wed, 24 Jun 2026 18:17:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782350237; x=1782955037; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D09Q3Je0FkkgrljvFxlwX1Kod7lOCQrSgAcN38tme+Y=;
+        b=deB29T2GOgR1fYpcnTzKS0A++5TtPcm6PEiO/mBKZcaaJOvEcpk+q2CjWCAZIcXFzB
+         5yPmLqhh+fbi77ueFsEviUDs0YPjgVxWGb1C3sWnFNQGBcvsMG/SxWO1UexZkkl4DSgq
+         FHC46qbs3mX/oID1yc9ZGMf28rnFn+Ur11fC374t2DwMbXkzNWW/+pH9MiBDYulXL5tU
+         hBdb/xjGBrGiWnQRBgTe2GZpjTLylNJHhQ/aeEGDNMBFA7EF0ooT3t9mjjQglpZ9yfk8
+         bIOSIWHra2gajRx72WSzwqOEP0N4l8qeRdz0DZp1w7ldy5Xrsdu/JKHQIBddrD18Gz5U
+         4kAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782350237; x=1782955037;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=D09Q3Je0FkkgrljvFxlwX1Kod7lOCQrSgAcN38tme+Y=;
+        b=Ywh2DrDyMtZb4O3O1QmR/+IoNIsfgKUInrkwAnMJ8UmJAGvXP4vGrPXFCbHqv1+S2l
+         lqTodhCYZtGGvv4gk+lQN85/MQFsuHy77CnSI6uaaJH44JvrOVX/FCJO6N7n4DMg3dEA
+         8lp55A8B+SvBdpaVvAOLZ34y5x1c3n3szLHCSLyrWf156UNpKt91BkvD5tzEHE+0dL5Y
+         rumzYmP2y/r3cN2pCNJpDGH0KMmO3NPI4JFmSTdrVGIBRm1hQVTj3KDUmf7lLi8yk2/q
+         jKhH7EKRrk93dzm8ulZHzx68aUN0S2Gf/fi16dXm6y/AOQekTcUR4+BFKKrZ/AqHZaI0
+         J9zA==
+X-Forwarded-Encrypted: i=1; AHgh+RpSR8UT/tVGt9u3eSGKhX02YLWtWjs4yx5b6eJCtbi15GifB8GScdCF+o+YiZxkMkT4T80=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxdn67QYviAis6CSl2S0gsAojveI+667FcSaDhYg+5ZnlFOp89J
+	dd7HpiKWQUGHjfigxu99jwzZB2loMz3Qqemu7cFRHpElRBZy55ihHsUs
+X-Gm-Gg: AfdE7ckAyW9jp5eFQwiy6H/cRg5+cc1V6xBPNVap0BK9mvmiuUMsa0nw8vJf6TjIkkd
+	m1Q0oN3YczDVEaJ+Hjxz7f+z5Abrg6xe3b6eoUTSC7JoW1SJ4iEDfdao4N4f1woC2Pzx02Bioep
+	LXGGBj/GXRWFY02KLgP1fmAXvGOoXNzdygfWBvBrXuSRdGrLpHbJ9DxifY79wjck4dYDs5HU/m7
+	Qv7zpmoLMbOtBjkO8ftwBiE6ZE6ogzFrujoWt1lxOVTAB5aS1TtJneyPZDiL/XmA1MP/THud6bJ
+	jNiJYrYsQGF/GWnqKb/de2rJlAZt543YiM3WHP2l9vhDgxVI/TNy1HwCT24jexDHiY2GY1wSq73
+	J8Ub9BnGw8ZYYIyQKFreA4OkNzDv2vDI/fbh5DIbjs7Vi6Rjz/U+fTL2KkkGreopSjmqEtunYe3
+	/CGR3TL6ZhhFcPJz+Ch4GuAJv0cpZxc2lx+JpPTJe8braK33YSiJYydMBMrPpEjD3PPEpLZXpea
+	t5pwioR6XNSPO5a/id/kAmg5EWiyl5MBA==
+X-Received: by 2002:a05:690e:4852:20b0:662:dbac:87cf with SMTP id 956f58d0204a3-66487e20ec1mr249634d50.37.1782350236790;
+        Wed, 24 Jun 2026 18:17:16 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:d65:3756:91dd:3987])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6647f741290sm675869d50.3.2026.06.24.18.17.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2026 18:17:16 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v14 2/2] checkout: extend --track with a "fetch" mode to refresh start-point
+Date: Wed, 24 Jun 2026 21:17:05 -0400
+Message-Id: <43C04FB5-7FE5-4535-A79A-C35449EB38C0@gmail.com>
+References: <xmqq5x37h6fj.fsf@gitster.g>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Marc Branchaud <marcnarc@gmail.com>
+In-Reply-To: <xmqq5x37h6fj.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-> Ok, let's focus on the need for the feature before talking code:
->
-> In an active project, forking from "origin/master" without refreshing
-> first often has consequences: you start work that has already been
-> done, or you build on an old version of the code which causes big
-> conflicts only later when you pull. The fix is simple ...
+> Le 24 juin 2026 =C3=A0 19:20, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFHarald Nordgren <haraldnordgren@gmail.com> writes:
+>=20
+>> Ok, let's focus on the need for the feature before talking code:
+>>=20
+>> In an active project, forking from "origin/master" without refreshing
+>> first often has consequences: you start work that has already been
+>> done, or you build on an old version of the code which causes big
+>> conflicts only later when you pull. The fix is simple ...
+>=20
+> The above only argues that contributors should not start work on top
+> of a stale codebase without looking at reasonably recent codebase.
+>=20
+> I am not sure if automated fetch immediately before forking to start
+> work will be a good fix for that, especially if the fork of a new
+> branch is done blindly _without_ looking at what the updated
+> upstream contains.
+>=20
+>> ... ("git fetch
+>> origin master && git checkout -b topic origin/master"), but it is
+>> still a mouthful. Other tools exist because this is annoying enough
+>> that people automate it.
+>=20
+> And to actually look at the recent codebase, one would probably need
+>=20
+>    git fetch
+>    git log [-p] ..origin -- your-area-of-interest/
+>    ... other inspection of the recent changes to refresh your
+>    ... understanding of the base code comes here
+>    git checkout -b topic origin
+>=20
+> or something like that.  Wouldn't folding the first and the third
+> step into one operation encourage omitting the second step?  In a
+> sense, having a tool to let people blindly fetch and fork without
+> looking at what changed recently (i.e., they had a reason to think
+> that what they had was stale, so has a fetch actually resolved that
+> staleness?  what new things did the fetch bring in?) may encourage
+> a bad workflow.
 
-The above only argues that contributors should not start work on top
-of a stale codebase without looking at reasonably recent codebase.
+I think I remain overall ambivalent, but as anecdata: when I=E2=80=99m worki=
+ng on my employer=E2=80=99scode, it is the default (90%+?) for folks to omit=
+ step 2 and have the kind of blind fetch + branch that this would facilitate=
+.
 
-I am not sure if automated fetch immediately before forking to start
-work will be a good fix for that, especially if the fork of a new
-branch is done blindly _without_ looking at what the updated
-upstream contains.
+I myself do this when I=E2=80=99m reasonably sure the other changes can=E2=80=
+=99t be of interest (common), or when I suspect the change I=E2=80=99m going=
+ to start on will conflict with recent changes I haven=E2=80=99t fetched. At=
+ other times I=E2=80=99m more interested in step 2, but generally I omit it a=
+t work.
 
-> ... ("git fetch
-> origin master && git checkout -b topic origin/master"), but it is
-> still a mouthful. Other tools exist because this is annoying enough
-> that people automate it.
+Now, as to why: I spend a lot more time reviewing PRs at work (and making su=
+re they merge quickly when they are in the right direction), and so I=E2=80=99=
+m usually fairly confident of what a fetch is going to bring! [I also fetch s=
+everal times a day to keep up to date locally, to facilitate various mainten=
+ance, admin, and archaeology tasks.] Contrast with distributed open source p=
+rojects, where I might not have fetched for weeks and can=E2=80=99t predict w=
+hat might fall out (let alone how it might it interact with local WIP).
 
-And to actually look at the recent codebase, one would probably need
+So =C2=AB bad workflow =C2=BB I agree with, but am plenty guilty of :)
 
-	git fetch
-	git log [-p] ..origin -- your-area-of-interest/
-	... other inspection of the recent changes to refresh your
-	... understanding of the base code comes here
-	git checkout -b topic origin
+To wrap up, I wonder if the convenience of this proposal is especially aimed=
+ at folks like my corporate environment (where =C2=AB build near the tip and=
+ integrate quickly =C2=BB is the norm), but less than useful for those same f=
+olks in a different situation?
 
-or something like that.  Wouldn't folding the first and the third
-step into one operation encourage omitting the second step?  In a
-sense, having a tool to let people blindly fetch and fork without
-looking at what changed recently (i.e., they had a reason to think
-that what they had was stale, so has a fetch actually resolved that
-staleness?  what new things did the fetch bring in?) may encourage
-a bad workflow.
+(OTOH, I suppose I might use something similar when starting a new topic bra=
+nch from Git=E2=80=99s master branch, since there=E2=80=99s probably no harm=
+ in working on a recent copy of master unless I already have older code that=
+ needs updated?)
 
-An obvious complaint against "update and always inspect and
-understand" would be "it would slow us down!", but that is why
-projects encourage forking your topic at a well known release tags,
-not from a random "tip of the tree of the day".
-
-I think most of the above has already been communicated earlier in
-discussions before we got to v14, but I may be wrong.  Are there any
-new arguments in support of the feature?
+> An obvious complaint against "update and always inspect and
+> understand" would be "it would slow us down!", but that is why
+> projects encourage forking your topic at a well known release tags,
+> not from a random "tip of the tree of the day".
+>=20
+> I think most of the above has already been communicated earlier in
+> discussions before we got to v14, but I may be wrong.  Are there any
+> new arguments in support of the feature?
