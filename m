@@ -1,84 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129C130AD1A
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 20:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD723451B5
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 20:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782420013; cv=none; b=Qj7hN0vOCOk+yS9FdjrM/kzoO/FYmthP+PC7TJijF+HVaDw21mpj9PoT/5Olb/Tb1xs9Gi2qtvo2mUcEEtNVXBEjB7sW4rY4fZgUXKg8zkKkqATgSF1m+a4yS8WE2TlvE0Dwx4T5EynsCzwz+i8wg56EWa68Irxu1qr1KLMpOro=
+	t=1782420608; cv=none; b=ChsD+O47WEzQpXcuA9llSx3vIRMomNr9gZHSTbHhgclFnA8fXIbvMc/9fgFSul+MeGhg9bWOpnNTRalTR67B2QQkBy2wxGVEdj3PIkSAS1k7ob9C9rZp8WhNMv/5caszOMepKln5HpX98wzmomQlN010j3IKYAFSPHabPACcWYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782420013; c=relaxed/simple;
-	bh=3g7FgUlWnlSF3+AppiyIWMedIvDwnc3pWAtepplrTEw=;
+	s=arc-20240116; t=1782420608; c=relaxed/simple;
+	bh=PoX+hlTAEd5YA6chUzIB2TiN1+tx7YtnE7N+wogOSpA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iga4r+1k11YikUYR8zsk2yAMW0xxKQSF93+xkFZp0hMOps7oO63Eyfs7BxnkTpdaxFsq3Hq9UBP9e7L3WiH0Lhrfpz7nx5BwIp48Bhu1BO7RSZNqMesZGWwQ3qL4O8xM2UZpfXWspA26KF5m5BO8P12wKhNVJTPrYUijcjrGouU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xt4FaGru; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VyERic8N; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=uSJbAiyj9CgIfWnk4VcUc4Y89qojPy/GniZBMfZ3lasyJXUNUkvJyrWjci931TupHSLanUvS5qq+B1kIbjfWk93ruT381DRBE8iYot3fnuGvr6Z6NbHhInNMKdaHL3b57jyVSyJcz/V962aFe1/87nPIAycsHrrsFVrGq588J8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KnNo0mOr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JO5UYpVn; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xt4FaGru";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VyERic8N"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 014761400090;
-	Thu, 25 Jun 2026 16:40:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KnNo0mOr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JO5UYpVn"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8CD41EC02B6;
+	Thu, 25 Jun 2026 16:50:06 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 25 Jun 2026 16:40:11 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 25 Jun 2026 16:50:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782420010; x=1782506410; bh=qeolhj16XE
-	Onlag7r+7Lx5y9b8yq9DIFbeeZWVyz3CA=; b=Xt4FaGruAsSspu8CHT65vP8KMn
-	0yChJvwT9yjjhDeJZO20zKfIsfaN1V5VXgFazdCVvoUU2oGodM0SIxnIO8ABYEmk
-	HiMwDhAz9RPovnH7Q+l00UshbrgV074dudEcR551FrT7pO0gaiv4mhO/YHQPCzvf
-	myUoRrQDAfgVHdiwQVT+2pdEM8Gydil3z/qlTYsjITXGHjzYwxxEUJZpybIMvEAk
-	Og3oYYA4sLc5sutNl6XLFnt/+3fParUJs/FyAh7TO81vp9HlY3JrSLdqUIiagWQu
-	Y3ov/4A9KtXcyFXVaoeM3J5GlBEyj4N77jW+HhV9qCaMNzrCBj4k8tBIv+VA==
+	:subject:to:to; s=fm3; t=1782420606; x=1782507006; bh=6DJVUq3oWe
+	gMfmLoroeNGY+pIUhkZoLjvN8iPe3+FcE=; b=KnNo0mOrDLvE+kdhWNAEARoCtV
+	SzWUtE8BV7uqnWTkHdE0JFOdAmRPt/huzIWU/2Oc0iiL8XbHNY/MkPq7OMIEwMIy
+	L0FU6ZZGuXHlQN7UGsVuF5UfbRwvwfzA16wzEchFDieys9WUSCqET26JuX2WdSGb
+	uW0ISnuGARrmaQwTjOhxZMMjb5Bjpg/XcbLvOXvREcdWZTYBeUdgqqdFaK7WEqMJ
+	Ra0JVhPQ2bNVQbR414jSUnDeLNIBRgu0nLdFZTPfKQPMmZwNXFfqK4Dw701TJ8EH
+	IZ3pa6howyQRZVBJANbvuH1ucuUZYtsPU/HgLD9bcff1JhMDSu1/Hcb5F07A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782420010; x=1782506410; bh=qeolhj16XEOnlag7r+7Lx5y9b8yq9DIFbee
-	ZWVyz3CA=; b=VyERic8NIlkwYyktCA3WNfeZLfc+h9Rvg6hrtVHra/e4G7FjSOj
-	jxBPX0o+AjMm2RqPg47aoU4QkeLtBGQ7BpwS6uFDeed4fq3I5bIc4nSAtXRpgdV1
-	tsnGoRQotSslKW/m50S9C1YFZnwBVNCauR+iilFCnWwh0Vw0ON3K8Fd2U7rTnyen
-	2e3f6afkNZVTYwUPpUH6c43l/nEXkMteZtKLQZY9qxHbPCDAfNzaWoLUq1mYN9wR
-	xKQ0zRPw+ZayL+p7FFHUZY/ofhOx5cfPbu0jNTFz8R3Tnl2Xd0d3YF3AqPcHNC/m
-	PE9UFjXbJIL0HqLaejDkQamdZGuudUkWtSw==
-X-ME-Sender: <xms:KpI9aiomx7CkdZvCjvm6JjrdvS8lQpsUdd-USlvrWFHcIOSl8tCiiQ>
-    <xme:KpI9ai4Am8pvaU98rvKCm4wamQmiUOI0XTBntjCK8eAF9c746xd2_aFFTH9z0tE9l
-    sVmAZKjSIQKo9_mxwYuBs7istnJpO771eqlagMXbjMZTxL0sL1f5Q>
-X-ME-Received: <xmr:KpI9apdD1H979-0cCjMotU9cBPuxulTXD3eqXqYqN_poFD2YCog9uuYegkh0Tjdf4WgQMsN1ePs_ryfrb2Vq1q83QLULPlg1gszPLbE>
-X-ME-Proxy-Cause: dmFkZTFxK3szjqyUDlQzaan54LOctyARjlDPXLMkzY4rx4vX0aS2MyDj0cKvDZwaQn+Tsm
-    IEru7Wkw/wkzf5cFwIyKa0GSfBM9vgazv9MQ4nzDQCLH2LB5yqfI6ZsZ7KiTmHxo8u9PuX
-    9rybHawba02dNX42bGcsNyVNiCyZUGU4Uu0Mfu7cAMMiOgKGu7iuP5eqKxRuaT2d7J3wrL
-    T7ceUZYIyjQSt1tOHLRsjKpOAjSTAgQDMcnCdKXXOTCAvPQqaEilWm1Hqs2GuBtjSa9obU
-    dQQ8+uM7UxbMEH1H/auC/Tpt4eQxfDsW1FeyjXJyFHmV7qJbPDU764vjXvppfN3LCS//Bh
-    p2x+u/rK/PtvMR2gt2uV3BiD4elyWMalbQBHsiJNZ5hdVa5AucUHjDP4U25QItqQCi3+7v
-    31CgpR+AWl+azv39zbHlF+qm6NuZDUEQy614xrrwxFckqkxWSQbDP5SKpGJQQHS2BbsKh/
-    ZJhzyf+k6Gc7mdAzw36GV1Z80pyUM61TYaNDV7ozBHi3GcsrRFhoPrKT3sHVs/JvYCk/jE
-    FPGGLf6HYVucVtYl0oVFVneWfT0Co/sJGv/q3IIjTgNJPuJ282EB9tvMtF/FuS+NQLKReG
-    FczX1iB2LTioorNgxHZYxZRXIKhuwplYONgdIkTdOBEYe7PoLrvqI/9POhOw
-X-ME-Proxy: <xmx:KpI9an7f_fHwfkHl8XSj0Owd7zmjJq4wsPIrGIAfzrbg-nxIdeX7DA>
-    <xmx:KpI9agsxwLM_CYG2dqWuKkS1vVfhmKCtSf0dO25SbG7fH0qovY-Yug>
-    <xmx:KpI9angjVkcZZmdA_QyCvmPGxtUbwBc2fl5-xXMiM2263WtX7HC8zA>
-    <xmx:KpI9arpFBfo2XJl00gVV4bpI95-J_lNn_kKhyqM6Kit0N4GDyQrYeA>
-    <xmx:KpI9ankCFMGGtSyS42g8dMdYKBW8M7sDROXC2FTn8eXmRb2P_Y9b3NYb>
+	1782420606; x=1782507006; bh=6DJVUq3oWegMfmLoroeNGY+pIUhkZoLjvN8
+	iPe3+FcE=; b=JO5UYpVna5414hpSVlOQfdSchPd4wRnZI/0aXyaHkIPAN7ExK8e
+	K17hA0qQ1NN/APlpwOHh9OIK98Tf9Q4KIEdXd2yf1VktQe+RabUI1XWLYeqeAMQ9
+	B6GedSmMb6d6ozRWIfqz23g4pKDGSkLajWJX9iPW4Cm3FpXNameFzM1EEuOPZxAq
+	SoGTMwLtPcdlqY1TRtlPYiCzO5m/KDTDnOqLmETiX6Gfos5FrgnztYxmkxKM8Qzl
+	K+y6EyrKlZa+jPrZkaKSdDQ1j2ctSPkJbNUibvoc6d+tsPZc9NxoUoZ5FpdJxF8s
+	aDEYR2J07wr3/fy3s7zv/9VUBqPRFqMFgGA==
+X-ME-Sender: <xms:fpQ9ajzWwkou3KmnrzUFaW0A-6L6VwpIKv_jFez-yJiKl1DLcAn93g>
+    <xme:fpQ9au9gMGD5YpRn2lrGZrAL8osVr8AWbVOKZFBCiMQzD3li49WEX1v1NcJq1s_BE
+    42HZU_LdU58YpcUuKAkmNYLBFhNNVnJ_thPsmSfV4B7m_B-W_jzHw>
+X-ME-Received: <xmr:fpQ9anJax1Itm_w06T_9hisN7N-5U99WCXimuO_OOKMDSHbPXdo1dRfk7EB9zEK9ZARat-qy9wNyqez9SLKiCr7hf8lAbaeARubNWe8>
+X-ME-Proxy-Cause: dmFkZTEzSsQgY2BeKTR5gpX0VLBBW/TIFOl5Uw/34DwNMq3TCbHdpFC7XRm+rN3Cnb7IF2
+    QdNaaQR35g1f4vwWubgImq1poWykoYQOXTI+2wVR4z1bbD+r1T1kUXtfLU0VVRdI9lo24O
+    ixXi9V/ILpHA1bRJa9XpEtSZ4oAjTDOq89n1SwmVB/m0TfxjGBUz+y9cmuUDChMt5RPJci
+    NVzNrjJgjY3Z38FGZeVivaPg5iKZ6zucJhzAK4Az6nPHNtzT1wgEJYvp25fQQxYfS1sKRn
+    Pre3RXF88rZeJ2+QxQ+30wcy3tUGFEdaSoq9BtVpVOrVnFnMB/Mm4rXo12Yswfwu/KByas
+    IokNjaY9GC8tWw7ugujvNW02ciPmn1wU7w0uOHGLl4Ihha+ghEai+pbBnjYpyPivR7XiQR
+    qGDmGX6d6mvnFawJbyIjcgKrkyuasuIg9SyPK/iqGEL+ooEsWElooB4OxNzQlVlvIDtX5S
+    FrYft2NnQBySEquQBFVlpt10UWrljRGhMObS2wjgNPPmjmY6SPOnGmlBKUf2ChSy545XND
+    g/a8Nl/2GeMiV8UOZuIpaNBf9T2NllhtGt40CXlVLzhROfkv8KyHTtMI77f6qA/JCCfYt/
+    wRCGsYWn6C+AT52Gvt5yMuOeXIjah5FoCLbhSp6im4Ig+l/cUS987UfvDHHw
+X-ME-Proxy: <xmx:fpQ9akdeKXsHCgzExb2hmOMXJYP87_5F6LAgMnS3DAapEgcaBzTUbg>
+    <xmx:fpQ9am-9On2X3TkqsLEERrb_ecNqyiclNNGxZdNbewXi0yhNgLQqjg>
+    <xmx:fpQ9ahqBuIs1v1rvz07xjxPQnYmSQsWxyQaMqcBpNvpZiNVkAVzEow>
+    <xmx:fpQ9arDKjN8PsSXuKLuQcepVDZae4sInWvdE1Y38QZw-1qB_0rWQjA>
+    <xmx:fpQ9anhJrr-vITizd0ZR13Xc3FtphDurZbquHBphFvRnw2Txe05eUmoK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Jun 2026 16:40:10 -0400 (EDT)
+ 25 Jun 2026 16:50:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  cirnovskyv@gmail.com,  Christian Couder
- <christian.couder@gmail.com>,  Ayush Chandekar <ayu.chandekar@gmail.com>,
-  Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v1 2/2] environment: move excludes_file into
- repo_config_values
-In-Reply-To: <20260625161845.7543-3-cat@malon.dev> (Tian Yuchen's message of
-	"Fri, 26 Jun 2026 00:18:45 +0800")
-References: <20260625161845.7543-1-cat@malon.dev>
-	<20260625161845.7543-3-cat@malon.dev>
-Date: Thu, 25 Jun 2026 13:40:08 -0700
-Message-ID: <xmqqwlvme4lz.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 00/11] refs: fix "onbranch" conditions
+In-Reply-To: <aj1DuUzusBUqmF_C@denethor> (Justin Tobler's message of "Thu, 25
+	Jun 2026 10:06:47 -0500")
+References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
+	<20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
+	<aj1DuUzusBUqmF_C@denethor>
+Date: Thu, 25 Jun 2026 13:50:01 -0700
+Message-ID: <xmqqse6ae45i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,83 +87,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tian Yuchen <cat@malon.dev> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> Continue the libification effor by moving the 'excludes_file' global
-
-"effort"?
-
-> variable into 'struct repo_config_values'.
+> On 26/06/25 11:19AM, Patrick Steinhardt wrote:
+>> Changes in v6:
+>>   - Drop redundant condition when setting the default for
+>>     "core.logallrefupdates".
+>>   - Leave breakcrumb for why we lazy-load write options for the "files"
+>>     backend.
+>>   - Fix commit message typo.
 >
-> Since 'excludes_file' is a dynamically allocated string (char *), it
-> requires proper memory management. Introduce repo_config_values_clear()
-> to safely free the heap memory when repository instance is destroyed.
+> Thanks. This version of the series looks good to me.
 >
-> Note: 'if (repo != the_repository)' fallback logic is temporarily added
-> in both the getter and the clear function. This prevents calling
-> repo_config_values() on uninitialized submodules, which triggers BUG().
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-> Signed-off-by: Tian Yuchen <cat@malon.dev>
-> ---
->  environment.c | 28 ++++++++++++++++++++++------
->  environment.h | 15 +++++++++++----
->  repository.c  |  1 +
->  3 files changed, 34 insertions(+), 10 deletions(-)
-> ...
-> @@ -733,3 +736,16 @@ void repo_config_values_init(struct repo_config_values *cfg)
->  	cfg->sparse_expect_files_outside_of_patterns = 0;
->  	cfg->warn_on_object_refname_ambiguity = 1;
+> -Justin
 
-Shouldn't cfg->excludes_file be explicitly initialized to NULL here
-for completeness?  There are other explicit but redundant 0 assignment
-to the members of this struct in the same function.
-
->  }
-> +
-> +void repo_config_values_clear(struct repository *repo)
-> +{
-> +	struct repo_config_values *cfg;
-> +
-> +	if (repo != the_repository)
-> +		return;
-> +
-> +	cfg = repo_config_values(repo);
-> +	if (!cfg)
-> +		return;
-> +	FREE_AND_NULL(cfg->excludes_file);
-> +}
-> diff --git a/environment.h b/environment.h
-> index 52d531e4ea..2839913551 100644
-> --- a/environment.h
-> +++ b/environment.h
-> @@ -98,6 +98,7 @@ struct repo_config_values {
->  	int precomposed_unicode;
->  	int core_sparse_checkout_cone;
->  	int warn_on_object_refname_ambiguity;
-> +	char *excludes_file;
->  
->  	/* section "sparse" config values */
->  	int sparse_expect_files_outside_of_patterns;
-> @@ -133,13 +134,20 @@ int git_default_config(const char *, const char *,
->  int git_default_core_config(const char *var, const char *value,
->  			    const struct config_context *ctx, void *cb);
->  
-> -/*
-> - * TODO: This still relies on the global state.
-> - */
->  const char *repo_excludes_file(struct repository *repo);
-
-Good.
-
-> +/*
-> + * Frees memory allocated for dynamically loaded configuration values
-> + * inside `repo_config_values`.
-> + *
-> + * Note: `excludes_file` is currently the only heap-allocated field in
-> + * this struct. As other dynamically allocated variables are migrated,
-> + * their FREE_AND_NULL() calls should be appended here.
-
-Isn't attributes_file also heap-allocated member in this struct as well?
+Thanks, both.  Let's call it ready for 'next' then.
