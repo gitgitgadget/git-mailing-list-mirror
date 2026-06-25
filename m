@@ -1,87 +1,85 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D045B3254AF
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 20:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65A930BF52
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 21:09:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782420647; cv=none; b=YZHZSn0BOoIDCCr4D4ccX87CFkeiRXDLeW0cu+T0CqIrRFVoAWiyPf9Oq+igHSN8wUkrDvB9b3FjZ8d0knRztq7iyklMnLSmiUu59QVvN7eO1RlgTLFFpkJbMJZkL0Qrkr/PqhZh7Jk4ln4FKQFTEd7zE6iXt2mGJg1dq880Gsc=
+	t=1782421773; cv=none; b=cdF8bpvdYjV8fKGlYhwxbIR+H8Wbt7lDMV7ay0xTK5UGtF77f7nODhW8bSvzb8c8bY71vpi8JIK4BbZ/7laZTK+pMufFCsZE49MlKHu3TmGbSIoIs9KvwZI22d9MmVGsdflHehAiL4ELs9uTd4V+Gh6MzYzAc0PNq7iAMhONNWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782420647; c=relaxed/simple;
-	bh=jiDDZKsGvMxIBZust9yNdrrbeCBDbFkzh/yJs+CK4/E=;
+	s=arc-20240116; t=1782421773; c=relaxed/simple;
+	bh=8V6pg/0iytj3M5FgdyIxzaB2D63qTEcOekxB15jLkL8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o/QM0jKt1+LC6Uag+muFR2k+zlyz7z0rxEWfeO/H2mowSA16Ltvdfxryct5cks08J2IU/T2D2MJwaurNKhuNSky7rDvoAl8gHEUHKyYtKnMKXe0rX/O8SEajC6Veb3jg/h49Wo8pmMmC09lCMIlB1h/s2EZ6FAiBua35ZVQPIdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j6phFKKG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EQKI9VPc; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=ERWhi1aP/QjA+cpYNBWCIE8Gb76jRwg8+4gZwuXn2GVOGXx9HwFNcWIfa2/m6f9+jPg9iPUgbDecTaBZzLb8ViM4yPgR854qSV4ByLDx3a+8kaMMpwSFqrN+jypt1Ck8qUkMqeY6oXqUgvuy4ywXtdNZz238ndU+oYwAZqYbYlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gGAtwADL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JC64Mc21; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j6phFKKG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EQKI9VPc"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EDE911400093;
-	Thu, 25 Jun 2026 16:50:44 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 25 Jun 2026 16:50:44 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gGAtwADL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JC64Mc21"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1D8A2EC02B7;
+	Thu, 25 Jun 2026 17:09:31 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 25 Jun 2026 17:09:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1782420644;
-	 x=1782507044; bh=5owX5fXSqkljE5FA1eRFlKIE4hd7ju7D59RmGhyNZjc=; b=
-	j6phFKKG5QULLxDwi27TTlvLI83i5cqB744RiizuRNPKJ7KVDpeGRkDfmvoERJx/
-	OAjjYbn+6Cqk8/rZed8dWEzrb1udMy/5ehQkAfc4wNwUGtyfNz8lHOEy03vizEB1
-	dSNII4xf6jk3So6OtEGHlhDjuf7ZWvM1BHwdz2jYC8SSXhHkyyMCyC/D+78Z2Ai1
-	WpwGMLF2vLfwKqhOSqW2i1dp4ai16zLXArAoQ8hu6QDib60Eu3Qibf1A+sQndgJe
-	00oc8zpo8rdMwq4HoO/2zaUxnPjE+zL0VOfwziE650LM2oM48xFQKASK6t05jNrE
-	lnDAOSRaZY5IGCuPZYQ8Sw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782421771; x=1782508171; bh=joHgwTFG8o
+	JdgpPxd35TkajMS52WTetVY1Oqbs1iqrU=; b=gGAtwADL8JA7aOpw2urTd9sCxZ
+	7ZvWcGxDL2fkbb+hdtqjHp7n/I7tO7BI3IlrM2nrRhojayMsFvcJvmQfjYT0dk++
+	WZd7smF91s+kv1QS2ZqH3OCMPOVtjeHPuKklX3DHols5aNHjCBHOQvBfC8LpkA50
+	AIPkSYLRwpplwINM9d0gEHPiqAh17Wr6ko90b8sQOdzi1JG6NMzpqY1pwrbyhW1Z
+	YWAa/74T13XAe5lweFg/Qu+hzKpkGvf+KdRfNLPEbKCnX2SWBkiE/TOkIcJrErMh
+	Yd5WowQqrbjYWi1LjPA1qFVX7kpSuI9ov7TBRCJ2f3tvSnTAAsc/83NXbN1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782420644; x=
-	1782507044; bh=5owX5fXSqkljE5FA1eRFlKIE4hd7ju7D59RmGhyNZjc=; b=E
-	QKI9VPcFHcfHSAjJ/GrBioRof2hTtRLIiUcbk0CMjUHcy2g4aITGrmvEdFBKJWKp
-	Zhb7wQJfEaP3vKYALIQyip5uMR7NTtHVYDb+547Yeq4zrw9x7faLPc/RzNX+w8EN
-	KQsf0OooyqqIdeex2eYcrrQzfJtrdIGwjzopVkWeL4HV8BWY7vrrC9Y+EKJqx6k5
-	U+9q3OW7tn6yV2ZPi2AIMNF6voZQpOTYeKRri+76fMw3qGO7kMV+qss5Vvm4Adqw
-	mgl8kBalSrvJ+fnuB90G3TWyiaxR8cw7wjLNw11mHUTNyWy/TEspOCgFumI3KE8M
-	mTQ9X3kmi6dlj1YtP4jPQ==
-X-ME-Sender: <xms:pJQ9ao3Js6FCuSyVmf2dnRRYmuzmRAL6G0PbEwRsjBdLnlioWKPvPw>
-    <xme:pJQ9ajztTANhMYbDdEOCwHmgqCMCjrohSmcIJXd6KRCtZliMk5QhsOt1Q6CTbfzfE
-    6XD0RlmJlLZwwdBA468UhElT5kezzvC8ME5EkCl0mTlDgDLPBPQ82Y>
-X-ME-Received: <xmr:pJQ9avG-6Yd4QCx90iYYUEKoYVWeD-ZQkOf-XI9mFnVHE05JsD4K3LoGWfdAAR_2_HAtPMtfGEsezrHP3nhlU3WwmNhO3xLsBW89ihk>
-X-ME-Proxy-Cause: dmFkZTG1qVPTt6919VZzsrDy4RwwepWmQWW/unk15CSX2yLqYO8eW21wCUjxGbX8SpCT9k
-    zJKdtxgP3tdI1rSAh2bjiE8UUvTPDchA0v3wwCs/a+BNsskilzy/EuRNADxwMNKXd23O1w
-    QM7PsOBdR4OBRcNXy4sc/O9/W6pjfvhTShL6o81NVDMcToQvCr9MJFA+jn8TZM1zgIvOq1
-    +FZb+Jl2N/S5hnhvClqP0BspNv3CcPptPVUoDdPMjKYwKaz+onx97cnHM+8+xfDYBnLVxi
-    cTCpfL0O8EX6J0muLMHxMRM/WlM0VedelAam36/GwFaUnEC2g0RGaWd9MV1uUPyxe/YpME
-    ++IdLU1yZJTuli2l9CqdqAZ5kYuF46AvtapzE3yIos1BJp4BD+X3AnEwg6hRx9K07Fz6ni
-    GyT7AejcqFEgEQFILz3MUPr/kt3/8efgRBATwvcBLIhm9BeqE/4M88KfbyPUIJoapcybp/
-    F5CNNYAA/mNkhjViw+db2TRNXNSn3CkiO8njuZJL8Ucs8+Y3PBO0/sJptfiLvOTu022eY/
-    7O75j6jgkmHPvSTKgsUSzsSCzGAC2Bp2xxUyimn+reoaX2b2oF6GFXuWRaJBUoAjU+S2Ku
-    Pg+7tNyw6M/NfxTWruFRt7b3A/WOkyvMoEiSo3WHJ9s/WVtkW4wQL9SNIUDw
-X-ME-Proxy: <xmx:pJQ9amYyjDZkM_26gVcDn4qBCZ-bU9YQPvLOd00R95ocIbVeT7fwFg>
-    <xmx:pJQ9ahB124zgW9FRD4--GjN6mC7zfrQoBOzRKhG310bFTU0B8RhAOw>
-    <xmx:pJQ9aukyxn2quSbvQWBL3R3I7_QZ9vbvXEi_nl-pVA5MQ-87Aw7sHA>
-    <xmx:pJQ9aizBeS-3z1IiVs1X51Al49oY3c71X_2MLpp0NfNxsXcHvR61MQ>
-    <xmx:pJQ9amD507UwXaGIj1h-4pmBuIkVJyAj9SVDpHLSrJ6zbPKvzRH38sfu>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782421771; x=1782508171; bh=joHgwTFG8oJdgpPxd35TkajMS52WTetVY1O
+	qbs1iqrU=; b=JC64Mc21rg3d4uTZPDN9+XEc2tOLVLB3vuF13ofZZmb+flTlatu
+	5I1qtaNPdaHIiUwzN3r1nb+cOum1cwPyC39F6xzOvd9CLO0XXt7xbGZw9im78n9X
+	Vy4ZzQ7p9f8pdt+j5ZGXFUiTW4kIvhtx4WwtNbieiCkDQ1NNmiCcuwhFuO3m/Q7S
+	jOHhQldUtiRqagJUNkDS+xh67TQXhEKD8RK+QgXx48b3TMwRBK0Tr+pYIE6v0gjq
+	RIEtyj6sdgJoXn/03LQGasTvQJ0wQbYCL2Q3qLxWnMF+qEAVthLQeVjDOgrYm/OX
+	VYBl5yPXRemoZb25sNvTU4y+DhkN8tbd8Cw==
+X-ME-Sender: <xms:Cpk9auiL6mNzFPpkty05Wd_uZ3D5tZrFQIHf85uGahE1iGh4BB4FYA>
+    <xme:Cpk9arnoO-bBrM7mLEsn9HLbVV3JFrYdBLr86mlavfrvhQXKVEG5HNZcVLBBqilx6
+    0op0OFN9WkPxtexyTm7_nvU_mX0tvLYZLMROV4P0EBC-j1w9uNMVg>
+X-ME-Received: <xmr:Cpk9aqiFykb_zwYZ07Lw3-yh9yL6BWqUpiu-dswld_prb5OtYvKHf-Q70blymq5j3ee0QakzPs1kA9uYJcsiUzP7cl7uBYr-yC_DM9I>
+X-ME-Proxy-Cause: dmFkZTGKsqVqqcPMzxsP5jzpRG2Jjd82Cf24QOXcsU6jXShVZv6ddtePIiD+3zZvVUgTrA
+    Lvq3zzSLvRec8hboBCVIj1YChv4dRTZ7gz8YdoztoZjYTHND1+u6vfkfqZgdChTpPFAaEu
+    XgQGmOtZlGK2ctuHWGIQ7SreGbijIeJX1Ls6KAauxC5oX8mp7D4CeS6HUEjbnW5607iLmv
+    nKcTtjXxYDk3vv9erWXDNvzxk/QZfiOCfzcV1UKSUTbPuGPQxC0ttO3hS2xwKwVs4Oios7
+    Ewyn2Bw+VlC+2S6LB/vUV0rOBx9TUQ/thcVnNqVifkbgLk9Y+Wpi1aQlqUd85gWDDulfl5
+    MD4vvR4nZ901OZ0hhJVROTrBHjExUpDfv5kSO3pb7J/SlIBtxTuScjIZC0+i6r3xcCu4so
+    9EDSZBurEL/rC6OBZ4EbaIdLcm+mFszUkuMcoF267cAFY2Dpv6y0ANhCeZiiyxyfPNnY3P
+    7P9VxHJqM0buSIGSulJDtxddb1ZvrbygENPfUMEFXV9nSZIxrcrRuKPyu5i/xIIqEc9qsY
+    llkcQKcLfvVl8+LJpT5y6gyFjpYILT7QsjwAnJctVpOWHSis7hKDJ78LV5Gk6/NwZAIOSI
+    +WfVIynhcOP2BLXcTadyRknccZAHJDowzdMBF7DzbNDhjLswdIXYtn05SiuQ
+X-ME-Proxy: <xmx:Cpk9auHZpC--FJ--XV8bj5BNCZxQ-8aCXanmGtAQoELKJOLhekn7WA>
+    <xmx:Cpk9asvCerq-tyGPWzFgnfcJFU4khhLvj2avlHsVGZcjblVkvixAgA>
+    <xmx:Cpk9avfJbSemR61AnTXdb3fjGqf_zUjExdw_oetHP6G3UJ7hNxTUow>
+    <xmx:Cpk9ailRp2IvpOSpYdq4LgiJtDEH3ElxrWm_Y6NocDbSadEqqPyaIg>
+    <xmx:C5k9atrKaa7V-NaMOjUvxsWZgHNlT9fhCVdOGrctFOy3V22q__u7AKFl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Jun 2026 16:50:43 -0400 (EDT)
+ 25 Jun 2026 17:09:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Pablo Sabater
- <pabloosabaterr@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v6 10/10] builtin/history: implement "drop" subcommand
-In-Reply-To: <CAP8UFD3jsepRaiHDen_CzWcse-atvBfCdzAQovk+1csaQeDxmQ@mail.gmail.com>
-	(Christian Couder's message of "Thu, 25 Jun 2026 15:51:56 +0200")
-References: <20260615-b4-pks-history-drop-v6-0-2e329e536d78@pks.im>
-	<20260615-b4-pks-history-drop-v6-10-2e329e536d78@pks.im>
-	<CAP8UFD3jsepRaiHDen_CzWcse-atvBfCdzAQovk+1csaQeDxmQ@mail.gmail.com>
-Date: Thu, 25 Jun 2026 13:50:42 -0700
-Message-ID: <xmqqo6gye44d.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,
+  chriscool@tuxfamily.org,  eric.peijian@gmail.com,  jltobler@gmail.com,
+  karthik.188@gmail.com,  peff@peff.net,  toon@iotcl.com
+Subject: Re: [PATCH GSoC v14 02/13] git-compat-util: add strtoul_szt() with
+ error handling
+In-Reply-To: <20260625-ps-eric-work-rebase-v14-2-09f7ffe21a53@gmail.com>
+	(Pablo Sabater's message of "Thu, 25 Jun 2026 14:13:24 +0200")
+References: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+	<20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
+	<20260625-ps-eric-work-rebase-v14-2-09f7ffe21a53@gmail.com>
+Date: Thu, 25 Jun 2026 14:09:28 -0700
+Message-ID: <xmqqjyrme393.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,32 +87,64 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> On Mon, Jun 15, 2026 at 3:55 PM Patrick Steinhardt <ps@pks.im> wrote:
+> From: Eric Ju <eric.peijian@gmail.com>
 >
->> +       /*
->> +        * If HEAD will move as a result of the rewrite then we'll have to
->> +        * merge in the changes into the worktree and index. This merge can of
->> +        * course conflict, which will cause the whole operation to abort.
->> +        *
->> +        * If we had already updated the refs at that point then we'd have an
->> +        * inconsistent repository state. So we first perform a dry-run merge
->> +        * here before updating refs.
->> +        */
->> +       if (!is_bare_repository()) {
->
-> When your ps/setup-drop-global-state series is merged, this will look like:
->
->       if (!is_bare_repository(repo)) {
->
-> which is nicer.
->
-> So except for perhaps the replay_result_queue_update() duplication,
-> the series looks great to me.
+> We already have strtoul_ui() and similar functions that provide proper
+> error handling using strtoul from the standard library. However,
+> there isn't currently a variant that returns an unsigned long.
 
-Thanks.  Let me mark it as "Waiting for response(s) to review
-comment(s)." then.
+But this one no longer returns an unsigned long anymore ;-)
+
+> This variant is needed in a subsequent commit to enable returning an
+> size_t with proper error handling.
+
+I think it would allow a lot of code paths that want to deal with
+size_t not to worry about "is ulong large enough?" to have a
+function like this, but for that to happen, the implementation of
+the function must carefully think through if these steps do sensible
+things on platforms with too small ulong (which often is OK when we
+are coming from decimal string to ulong and then to size_t) and too
+large ulong (which is not OK, when coming from decimal string to
+ulong which might be fine, but will bust the size of the final
+type), etc.
+
+Also, would it make sense to add yet another "static inline" like
+this?  After the dust settles, we may want to rethink these strtoX
+wrappers we have, benchmark, and possibly make them into a proper
+library function, not "static inline" that may bloat the runtime.
+
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 8809776407..7f417f1acf 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -975,6 +975,26 @@ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
+>  	return 0;
+>  }
+>  
+> +/*
+> + * Convert a string to a size_t using the standard library's strtoul, with
+> + * additional error handling to ensure robustness.
+> + */
+> +static inline int strtoul_szt(char const *s, int base, size_t *result)
+> +{
+> +	unsigned long ul;
+> +	char *p;
+> +
+> +	errno = 0;
+> +	/* negative values would be accepted by strtoul */
+> +	if (strchr(s, '-'))
+> +		return -1;
+> +	ul = strtoul(s, &p, base);
+> +	if (errno || *p || p == s)
+> +		return -1;
+> +	*result = ul;
+> +	return 0;
+> +}
+> +
+>  static inline int strtol_i(char const *s, int base, int *result)
+>  {
+>  	long ul;
