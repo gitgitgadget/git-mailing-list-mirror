@@ -1,183 +1,232 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C943D25785C
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 19:43:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A546D155757
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 20:06:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782416629; cv=none; b=D6aQvAHUpD5782iRGfd+1hv4X8BEaw/+D4hIaae1Fb0wG41PxrtfK7VB8VbkAalh/rDtg5eHMMItyiR4zAMQuK7a8ZKtox+ISMf1tfvoxOf23mHeZ0Kt/MBUcRcJSHyNbfFFJGjXKt7NLLYNGjrs5wMfSaN127MERE6nl9v4tow=
+	t=1782418017; cv=none; b=G62ItBxS6X9Gu3NbCZlugoL3ne34x202a3TBlDPwxnGIjlJkd4inyaXwpj9Gnc/Uxy9LL8w/3motLgmk5HFwUckl4EGgD0S48Zzy6Icqf8VaBKNR7ycFi5ZaD2ES1twoCc4PA/zEDGY1/BcAMaLKpHJ794+GyEJVhFAfDFefICE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782416629; c=relaxed/simple;
-	bh=LVxFjyBwAWCHt3r4dT0PoLUMBFU9KecLOVZyUVud7fo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ljCtlRib3LxMCtynhTEY1otWfo3JMq0DYXcn/YWrk7vXeM3LCZXLVxbhnhXv+oIgC82Fq4dlwTRDKKjTnErG1IYXsjLMmG9PVBA8DTegtFm583NBREGlJDPfBTiudzj/wfS6brSkZXapl5/nwKN6ulERbvqcBPPGU/3XdCjNMRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jZnpAh3g; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782418017; c=relaxed/simple;
+	bh=2xzejVBUP83x6B8pbF1bOzmQ2CrwFkxphYlV0RCdfUM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EnWiyT7lKYne3OYdbN89c18mj/Wq+EjxRm3HxFi3IDuGTKxX7jF9lohRj9C9jSV2DYbhLmnqjObJJhMs2YVPYoEeZGIF3S2WudypZUUUs7M07HPSThZhV8jCVVMDmHyREGBbcmBiNAgdNs9f9IXKi0GEZ1oBgqBuuAcC09treGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UF2ku2zo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eycA71QA; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jZnpAh3g"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2c6b3f71648so3032235ad.2
-        for <git@vger.kernel.org>; Thu, 25 Jun 2026 12:43:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782416627; x=1783021427; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FEZglQG0jwFuAAVAf8iRnupfNLunTYcRJMx7Zt2zCzA=;
-        b=jZnpAh3gAXyjo4OtNZr6if6tWkr1o4FCNOwciZulj6bIbSlCo0zT/8R9mb9LcvQzph
-         zdl7l0dRa4/JK0p5la+pgcAt6bInvsUMK0BfQs60CjEP/tfZL0htrNBYkWEtGmTbh+Mh
-         +EVB6FoA62yN98aRUXFTfaKbK80Db9XfG6vS8aYZyS8nk905LgiOrDeKK2xlG+0OmVHG
-         eYn01ulAGstF04I9j9tlA0ZLBZPmiSeejd3os0r46UE5Hfx6vNY2kE9mfMjlepCHk1T1
-         xc/0ziiFf2EbJLU4qzJLms/VKGrw5zbaEuSbe00WNxHGs+d+/W2JgPeOH/7QG1/Obn0M
-         z34w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782416627; x=1783021427;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FEZglQG0jwFuAAVAf8iRnupfNLunTYcRJMx7Zt2zCzA=;
-        b=EteeSuEv/D2kFyfYnlBTOMQ00hMSieDxxk9UrFJ4D8YILyz58H7R4q0FxZJkGmrE+g
-         YoNJ24ynZ1kc4B2IObN4b70X4p/XeyRzzSBjLT/4BrWI6izIUiA4kL8uzv83FX2v7Cf0
-         KfUbydWvsKkZtpFg7/ZGY0oD3rC/B0HsVgW43fjP6FPmHDKsfr4RHjq03OwrjlID4ouq
-         Cmkb9ZG6bqyZiX5kxtr7YmhOHuPNOHx/bl2yWOMKa8rnp4HkdajxNR11bhnwUC7Gb3X7
-         x2AyPktadfhxftj1Pg/GsC8omQrs800ZgfIy40GEiAcrFEjRQhhYAJo6ViC4I+oEOV+N
-         ZPZw==
-X-Gm-Message-State: AOJu0Yz8yJTJOOpGQqK77FG62hSfeqiAwJXqeg4eyxKOHkOQvnSck4Y8
-	St2+5i5bMQ8vAO3I2hNP9xkQ+wMBOKxoUsS7EEaqVS2gHz9ycUys1LHFLO4gXQH9mfY=
-X-Gm-Gg: AfdE7ckvlY63sAOc+XfGFSXz/rvjOOWCgGFSmGcUeZsc+LQp085B5cAMmgppjJp8m48
-	G0kOWJg/Ft3EGp496c143EMEGRRMf5EA2Or0/yOwg5se16suZz3wVQ45PyY6jClN0WuRlzTva3D
-	uKZV65KGowg7TnxG4nf9MpVHwd+kKsiQRdhKV7iXPx2PkYWemEHSgRemoOpwSUiHKi74TEsFbme
-	t/uQwDaclVGh1nBFs5EVTb0mi/HDG8BDbvScgfuLwLV6RoPk8XV0p+3cHXfArleCMP2jfT84URu
-	RjAtcqejk59xKYy/sjrT3q4DEkgKoReiXiM+7r7245g9iXG3uopXC6kzO0iNtHr/C/sUWG4cCUE
-	3r2xVdwAEGfAQCvjkVDMxB7f2tHP1Dkov+HXMt6qCAp0NugqsCAW3LUOHFwQTZMYoeHYl95r8Qe
-	D9B953bvbRbyTK3hn6e2v+dep+DfZMpohkK0CCjzItfrgaAYerIg8=
-X-Received: by 2002:a17:902:ec91:b0:2c7:f7e6:99f8 with SMTP id d9443c01a7336-2c7fc9d5f54mr38344535ad.9.1782416627004;
-        Thu, 25 Jun 2026 12:43:47 -0700 (PDT)
-Received: from i7-8700k (c-24-21-189-103.hsd1.wa.comcast.net. [24.21.189.103])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7f5ae4c55sm26895675ad.19.2026.06.25.12.43.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 12:43:46 -0700 (PDT)
-From: Grayson Tinker <graysontinker@gmail.com>
-To: git@vger.kernel.org
-Cc: Grayson Tinker <graysontinker@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>,
-	Fabian Stelzer <fs@gigacodes.de>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] gpg-interface: still print ssh signatures when allowed signers file is not set
-Date: Thu, 25 Jun 2026 12:43:11 -0700
-Message-ID: <20260625194330.3711-1-graysontinker@gmail.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UF2ku2zo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eycA71QA"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id CD6ADEC0200;
+	Thu, 25 Jun 2026 16:06:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Thu, 25 Jun 2026 16:06:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782418014; x=1782504414; bh=4cm5dyDej6
+	rKj2x5k5u5BzzsGcu7/zgTtrONAv6eE7s=; b=UF2ku2zoeaM/UvNn90DF+VGnLQ
+	73ZVX1/Fm+CIkAESKdJCVNS5KFFxmK1CK9FLaapeRwpBv/H1k5N9EfSaiPnij2yt
+	/m7JM9AF1ZNZBL8qDp81hRfCRWkNmGwJvftHIPh3NUcYTqAcq1XKLMfE4SqOSI5Z
+	0M47LvlIgTRS8/LWTpqj/Re3RWqShCDEZvEB+Pv1vtzNZFw+8fpWElyHfQ3umXUJ
+	uAFr1y5nsFSEQ22btooK+5xKwEVxVHBiaauioBmtqvQjUOug5DZrdKrHMSQo41GR
+	/1TqIlzwg148ttJ9hLRY1ILgY3RnlSiVMdk+u+MVsr2YAp+r8p1YNTZm7iEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782418014; x=1782504414; bh=4cm5dyDej6rKj2x5k5u5BzzsGcu7/zgTtrO
+	NAv6eE7s=; b=eycA71QAu4Bvj+Y/cb9LaJoC4/tN5HbaOj25UmrmUoeRnkuoO8t
+	V6mbCCEamg0FC6WBngEu2r6+Vyv1zOwcqZfSPvbLKlW8h7w0ItqDshcFBsuhjz6m
+	71+F+Pd7A+2LgJZWV6VcF6OaRoVpOxt4/yy6wE8wmdlXfz9PDhb5NlSSL4Cgxily
+	Sjbby+wevot8Jnc3WTIEbumyS4LcXmLffXqnM1QsH0W4iVLT1wUtHCBO1gYCoebI
+	AjkX29Dztm3J5M3ZCl+U9j6SZQ7rcD0TwxOUa7P7bI4kMa5Kc4jKNLa3ol6b/cDE
+	t0i26a5sEhJ+0Mns5DRnrB/egwdKEjAOAuQ==
+X-ME-Sender: <xms:Xoo9ao4EX4WIlMNJrvnqjcHQwUEhZSIgnamnPRpAH4TlbCT3DMhVsA>
+    <xme:Xoo9agxroZloHZTr3zONG5dQpWr6ieQdsGeYalVWIFEUp0yylmWW4G0oZBqKl5J9b
+    IuS1lmBzGxUxeUGEW3PRCYFxEAA7qEyJIjeI7eRPSWw9bF423r_9g>
+X-ME-Received: <xmr:Xoo9avzuCSowrgIgkbo-Z82aHgrh71RScJKXFd9ndmGbE0LdoPUVJICdLKmr7fdzAu3XG5WNc8YqgCf5-XwBmPYe4hh3c87ACMPIeuQ>
+X-ME-Proxy-Cause: dmFkZTFJM1MMY/2t/pPHm5l3bXQiSCkxmpECNR59h0YOrnFSQrrcHrAgBhbOCBP9FPeaiK
+    ofmCQy6SbKPWUoFY/H1V0QJgbNDvLk6/n3NGO93SLeyP4WiQ16y/qcQNeYmAHDv1qYOEaJ
+    a7jO/M+UYKWF26vFJE2oPH/5XrtkYA3/1FGP1pKAbkgIuv0Mw+f0qSpqlkVKbVbdnm0Kuq
+    SIRPkthKcm8PYKh82zUOBlYGy7W9Pu5lkV41/GPP8tEcfJH3T2p3WlVW3n/CI43j7qATvX
+    MF5+RzOrIzXbHTxYcb9D9qaExldflaVg9QuxCqhHjcYkKidCJdsN5Ojd6pGWw+S6AprOld
+    xJzP4YR1u48M/lES+0UuCe8/++tESFpxd2ybXed2yYwEUjLeYiRwHxE/3X77Aon33hBWga
+    lfefxoKRqg/WwMs8vJoCvfIbZNaPy1IJY0Vk4r/e9hdxKocddzjxXbaMDiBJFE5SREa13P
+    eexNzuQP9oKGZRx/7RV9ZZdQI6aSNqJIYA0rP6A2VPdThPgwMRASJcnOZc98yVRCaQFeQF
+    Qlp3giwyXShEiyPEukI/X9Ri0IC9vTCthKZuRNyy4/ypBC2LHDIbdD5TWcUGBgFpmVr71k
+    VROHm7KxigOuB6w+JojAkATTyUcyYpFb7UgjB5K8vCml5dyPmB7kPWKTYjig
+X-ME-Proxy: <xmx:Xoo9aoxT4jDCUXJaQKWTjrXQgSrVzyhCE88tPhfT-rKgsy4SUWF0BQ>
+    <xmx:Xoo9apYXk8nMNvTqvwYQdQzK8gj7hALJjiwD50J-iENop931JuSyWQ>
+    <xmx:Xoo9apUoFtFtj8e6hzKdPLaIEMlORSq61c1epFDMycDamW6eoprhdg>
+    <xmx:Xoo9anhteuShLxB_c5j5NC-O-XmzTrAZo0J06vNH_Pa375B4avW8vA>
+    <xmx:Xoo9avJfARPa2ZDtEhIrt_gh43cavont_gGdHp0_nLM0vIBHL3KlmBzu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Jun 2026 16:06:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re* [PATCH] history: close COMMIT_EDITMSG before launching the editor
+In-Reply-To: <pull.2158.git.1782412427801.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Thu, 25 Jun 2026 18:33:46
+	+0000")
+References: <pull.2158.git.1782412427801.gitgitgadget@gmail.com>
+Date: Thu, 25 Jun 2026 13:06:52 -0700
+Message-ID: <xmqqh5mqfkpv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"show-signature" errors when the allowed signers file is not configured,
-which means that the user can't see the key that the ref was signed with
-without creating and configuring the file. Change the logic so that the file
-is only used when configured, and so the signature status is always displayed.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Example of previous output:
-```
-error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
-commit b437db5ddc38ebda223bbae2087eee90a7b1c6e2 (HEAD -> master)
-No signature
-Author: Grayson Tinker <graysontinker@gmail.com>
-```
+> Close the handle once the status has been written, before handing the
+> file off to the editor.
+>
+> Assisted-by: Opus 4.8
 
-Example of new output:
-```
-commit b437db5ddc38ebda223bbae2087eee90a7b1c6e2 (HEAD -> master)
-hint: Configure gpg.ssh.allowedSignersFile for automatic principal matching
-Good "git" signature with ED25519-SK key SHA256:yTU4KFs/g6MY7biDSlVStB63Gi1rCKg7dOFDXbe0yuw
-Author: Grayson Tinker <graysontinker@gmail.com>
-```
+Do we even need this?
 
-Signed-off-by: Grayson Tinker <graysontinker@gmail.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     history: close COMMIT_EDITMSG before launching the editor
+>     
+>     I noticed this problem while trying to whip MinGit-BusyBox into a better
+>     shape during the -rc phase. Technically, this is not a fix for a
+>     regression during the v2.55.0 period, but I figured it'd be better to
+>     send it now anyway than to forget about sending it after v2.55.0 is
+>     released.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2158%2Fdscho%2Ffix-fd-leak-in-history-reword-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2158/dscho/fix-fd-leak-in-history-reword-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2158
+>
+>  builtin/history.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/builtin/history.c b/builtin/history.c
+> index 9526938085..4a5d9192f3 100644
+> --- a/builtin/history.c
+> +++ b/builtin/history.c
+> @@ -74,6 +74,14 @@ static int fill_commit_message(struct repository *repo,
+>  	wt_status_collect_free_buffers(&s);
+>  	string_list_clear_func(&s.change, change_data_free);
+>  
+> +	/*
+> +	 * Close the handle before launching the editor: on Windows an open
+> +	 * handle would prevent the editor from replacing the file (e.g.
+> +	 * BusyBox' `ash` cannot overwrite a file that another process keeps
+> +	 * open), and leaving it open leaks the descriptor everywhere else.
+> +	 */
+> +	fclose(s.fp);
+> +
+>  	strbuf_reset(out);
+>  	if (launch_editor(path, out, NULL)) {
+>  		fprintf(stderr, _("Aborting commit as launching the editor failed.\n"));
+
+The function is extremely sloppy beyond words X-<.  Thanks for
+taking the first step to clean it up.
+
+ * It calls git_path_commit_editmsg() to obtain a constant pathname
+   into "const char *path", but then the part that leads to this
+   file stream leak does not even use that "path" constant.  It
+   makes two independent calls to git_path_commit_editmsg()!
+
+ * The function first calls write_file_buf() to the file, which is a
+   convenience function when you have something you need to write
+   upfront and just want to write it and be done with it.
+
+ * And then the unclosed file stream you just fixed.
+
+What is surprising is that all of this was created in a single
+commit.  I suspected that this part that does fopen() to leak the
+file stream was a later addition than the initial write_file_buf(),
+which should have been critiqued with "once you want to do your
+custom writing that is more than "I have this block of memory, write
+it into file", you should rewrite write_file_buf() call and roll it
+into your own custom writing", but that is not the case.
+
+So taking the opportunity to clean things up, how about doing it
+this way intead?
+
+----- >8 ---------- >8 ---------- >8 -----
+
+Subject: [PATCH] history: streamline message preparation and plug file stream leak
+
+An early part of fill_commit_mmessage() function uses write_file_buf()
+to write out what was prepared in a strbuf, which is primarily meant
+for use by callers that have their own message prepared fully and
+called as the last thing to flush it to the destination file.
+
+However, the function then opens a file stream in append mode to
+further write into it.  It may have been understandable if this was
+a later addition, but it seems it came from a single commit,
+d205234c (builtin/history: implement "reword" subcommand,
+2026-01-13), which is somewhat puzzling, but anyway...
+
+Just open the file stream upfront for writing, write the message
+the function has in the strbuf, and then keep writing whatever it
+wants to write to the same open file stream.
+
+And do not forget to close the stream.  We are about to pass the
+resulting file to an external editor, and on some systems, notably
+Windows, you are not supposed to keep a file open while expecting
+another program to access it.
+
+Diagnosed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- gpg-interface.c | 42 +++++++++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+ builtin/history.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index dafd5371fa..ef3e1a0aa0 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
+diff --git a/builtin/history.c b/builtin/history.c
+index 8dcb9a6046..a882ad82e5 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -41,11 +41,6 @@ static int fill_commit_message(struct repository *repo,
+ 		  " empty message aborts the commit.\n");
+ 	struct wt_status s;
  
- #include "git-compat-util.h"
-+#include "advice.h"
- #include "commit.h"
- #include "config.h"
- #include "date.h"
-@@ -480,11 +481,6 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 		.local = 1,
- 	};
- 
--	if (!ssh_allowed_signers) {
--		error(_("gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification"));
--		return -1;
--	}
+-	strbuf_addstr(out, default_message);
+-	strbuf_addch(out, '\n');
+-	strbuf_commented_addf(out, comment_line_str, hint, action, comment_line_str);
+-	write_file_buf(path, out->buf, out->len);
 -
- 	buffer_file = mks_tempfile_t(".git_vtag_tmpXXXXXX");
- 	if (!buffer_file)
- 		return error_errno(_("could not create temporary file"));
-@@ -500,22 +496,26 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 		strbuf_addf(&verify_time, "-Overify-time=%s",
- 			show_date(sigc->payload_timestamp, 0, verify_date_mode));
+ 	wt_status_prepare(repo, &s);
+ 	FREE_AND_NULL(s.branch);
+ 	s.ahead_behind_flags = AHEAD_BEHIND_QUICK;
+@@ -57,14 +52,20 @@ static int fill_commit_message(struct repository *repo,
+ 	s.whence = FROM_COMMIT;
+ 	s.committable = 1;
  
--	/* Find the principal from the signers */
--	strvec_pushl(&ssh_keygen.args, fmt->program,
--		     "-Y", "find-principals",
--		     "-f", ssh_allowed_signers,
--		     "-s", buffer_file->filename.buf,
--		     verify_time.buf,
--		     NULL);
--	ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_principals_out, 0,
--			   &ssh_principals_err, 0);
--	if (ret && strstr(ssh_principals_err.buf, "usage:")) {
--		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
--		goto out;
-+	if (ssh_allowed_signers) {
-+		/* Find the principal from the signers */
-+		strvec_pushl(&ssh_keygen.args, fmt->program,
-+				"-Y", "find-principals",
-+				"-f", ssh_allowed_signers,
-+				"-s", buffer_file->filename.buf,
-+				verify_time.buf,
-+				NULL);
-+		ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_principals_out, 0,
-+				&ssh_principals_err, 0);
-+		if (ret && strstr(ssh_principals_err.buf, "usage:")) {
-+			error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
-+			goto out;
-+		}
- 	}
--	if (ret || !ssh_principals_out.len) {
+-	s.fp = fopen(git_path_commit_editmsg(), "a");
++	s.fp = fopen(path, "w");
+ 	if (!s.fp)
+-		return error_errno(_("could not open '%s'"), git_path_commit_editmsg());
++		return error_errno(_("could not open '%s'"), path);
 +
-+	if (!ssh_allowed_signers || ret || !ssh_principals_out.len) {
- 		/*
--		 * We did not find a matching principal in the allowedSigners
-+		 * We did not find a matching principal in the allowedSigners,
-+		 * or no allowedSigners file was configured
- 		 * Check without validation
- 		 */
- 		child_process_init(&ssh_keygen);
-@@ -528,6 +528,10 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 		pipe_command(&ssh_keygen, sigc->payload, sigc->payload_len,
- 				   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
++	strbuf_addstr(out, default_message);
++	strbuf_addch(out, '\n');
++	strbuf_commented_addf(out, comment_line_str, hint, action, comment_line_str);
++	fwrite(out.buf, 1, out.len, s.fp);
  
-+		if (!ssh_allowed_signers) {
-+			advise(_("Configure gpg.ssh.allowedSignersFile for automatic principal matching\n"));
-+		}
-+
- 		/*
- 		 * Fail on unknown keys
- 		 * we still call check-novalidate to display the signature info
+ 	wt_status_collect_changes_trees(&s, old_tree, new_tree);
+ 	wt_status_print(&s);
+ 	wt_status_collect_free_buffers(&s);
+ 	string_list_clear_func(&s.change, change_data_free);
++	fclose(s.fp);
+ 
+ 	strbuf_reset(out);
+ 	if (launch_editor(path, out, NULL)) {
 -- 
-2.54.0
+2.55.0-rc2-165-g3249676ba5
 
