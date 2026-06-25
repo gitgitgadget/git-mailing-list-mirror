@@ -1,125 +1,88 @@
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2611231AAAA
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 13:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782395530; cv=pass; b=ZXqmE3915RSSaFwp3pU3qaYMf2UlAkskFk3iap4N37IYLIZWTohh+m3/ypdJSlQNoj7CANlHAVQNWo6ZzBbzESjB+N/ZjriojJSTqiOl8hciHk26kPI7GFrqDOpuq2OqG9rSdf0FKmJYhpU9EVgIH6LYe7+2tl27K221MBKqWAg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782395530; c=relaxed/simple;
-	bh=ghhNkaYDjt/DP6yyYeAmoWTvNLw3ypacs9VU4Y97p/0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NOKFq0SNDNqY79Gkn/Q7mCCThi3Q0l3bgGZUARPgfccLSaic2iiN3H+Mr7HaySpKMCE84ZFJVFU5jzgsA11KfCCVE7zaEBIyRW10+wdpRmSFBjfUNX0wreerLcFCO24c/cAHTe1cnr5n6qi266CK1bMyD/Drd0im1tqgHMWH0zg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EeI1YmcQ; arc=pass smtp.client-ip=74.125.82.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961C32E7394
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 15:06:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782400010; cv=none; b=lBFMqqIOx4UGJhJPcJKuOEP9jmLVKk9ar55Jt4EeDdWZ0vBg3QzvKx+UrqvUkYjh+cUAulmXEWTdm8Td+WEJHuJkJRyuMdMBb82SUNMYbEsbjKAcO53qtTbQkzfEGqQNDnFghOR2LdRcYDgkILDmJS90gpTUE0g9frTpQCeL/ms=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782400010; c=relaxed/simple;
+	bh=7R6gty1HXboUEi3vuQq5f7Cxi/LnM0gQAINQDqGrgdg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D+tJKS71sqM8aiXWH2gx/jFsz4xgi9cd59+6lBIYECYI3Cc9QB8YXLxNX9V5d+IbfO/yQGf1zAK6Rw1bmtr48fV++voW0OP2LDDWe5BCS4wxvIUcoz3zuRYKT5q+Q7zBj5fd71hPp91b+h9jbWt8+IdWTb5Mxsv/pUIS6P9Tq5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LwAU+GFT; arc=none smtp.client-ip=74.125.224.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EeI1YmcQ"
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-139aff562e1so3180395c88.1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2026 06:52:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782395528; cv=none;
-        d=google.com; s=arc-20260327;
-        b=gYHd42a5YSWBycSKWWP0MVMAodn7v5WcK0aXl7T2LBj28L5oPn6nfqPSXhkGEqgzZe
-         UorDWQQG2nf0BZLbmQin+moFBpl/+BAqsznjdZIng/mP3pMEJfgQQLwelzQRdUaoYGGv
-         UZWJgd7+QU+3Pglkw/zo3GIxDwLmOkhnOSr+rvUfdT0TKIhigjpNhQqaQvAX9GTAvOHv
-         cox8RJpMqxg6Esa37eVsJvr8EalsgLe4EkZDlcPRXhYTGvJWYDue1RXg2e2iUQS+fxT6
-         a1QxJj8Zb2jVTmlGmV8Bq/7Bi8QA1bfw5Wt0lzZEcStjZRR6Xw3wLMuPsVN4wxCx79pu
-         FQ7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=iynmWNBl7lAVOJFX1yJmCvw1pMDxMGjgv2BdX3QgLxA=;
-        fh=7EF8lVoseiMbV6oSZr/p+k8C74+zhtoOjLa803uCcrU=;
-        b=SYrShnnCX1DmdCeYYqxAec8zKuQ3q4rp9Qr26Cxh95OZb1tkxvWDt/+HzSKQ5pej24
-         GK8QlS4H4H4Lw7KP7Bseojbz90lrUfHVl9huwqzEcU3a2AwD3FRvJSN5qS++kTzGPpZM
-         mZzwPDFYHU9aomsv/Lb0vxYA8o5OtNeR+PlCvGU0xur8xDb+9aGP/QphmmLhLsegRPNn
-         YEo00LFcxwnoCLfRdLwAuU+6PKffaT5jTyl1tIbQMtJH5681icDEzU87cDYRnwL3drWH
-         tBwCu5FziWO9w054LeG8Y3RHHr0JiM/OpD/j9yE4eI49Q7zXZlxiMXTJ74nvouYiUq2M
-         cnAg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LwAU+GFT"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-662dc387b7aso2674187d50.3
+        for <git@vger.kernel.org>; Thu, 25 Jun 2026 08:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782395528; x=1783000328; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iynmWNBl7lAVOJFX1yJmCvw1pMDxMGjgv2BdX3QgLxA=;
-        b=EeI1YmcQHAsoDQy6xBOmB2oys6lGtYhA7R/30WLSgH8rwJASJ8/nwOPGFo9OREnfMS
-         6zltgoeWJkgmrGrdm1RZ7DLbmH5iyIUw8O+WbH5ZBFfJxyfDnShYE/YoBEvjlru0kIEo
-         iMWkYNiDzjooiZtkvti0KLnf0nMRqINgfXHT4JMy+JeeyvqF2HAHi+cDf3iThtJ7drRd
-         CGydYmDed18ZfbiaQiL6Yf6me5yJrIsh29kA0dUtaLiPB/whsAjm2KPAmcdnFStn/QM9
-         GfRpoAThe6qMAZY8kHWXs4BcCWuJj9xz76wGe32Aa/2t6bMNkESjCiZ2tQvH55YIuHxz
-         ypaA==
+        d=gmail.com; s=20251104; t=1782400009; x=1783004809; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fFc1upYjakvJI1kXBxUXTYb/MbTvZL2VFZR0V0z5sDI=;
+        b=LwAU+GFT0WukiesUh9pa+ygRloEzuYKTA7ixaXRPgAEaX1+G9eSnfJq1xwVqXptkkD
+         0aeMI7iAiZsV6mirQz388aj62wAzxuyKgUcP11xYv5VfPLM+lYWCjcwAy7/kh601Cya3
+         7Oz/JM6k/mUEBqaPfH4yIYoVoNuEcwmD52woKlPUxoeMgv0LK6HStLdEtK+EKQqWXfEj
+         AjqYsMinAD+L3x1U8+33B/HR1z8zX3xYfq/mWTdE8fL5mXIPqmrQlpP7GB6Wd9PIjKFm
+         kilJp7nBOtTj/7JL6n1H8y4pKZda8S2CR0oczhcbk+UsihVBV0vkh5Y2+2M0BarluQyl
+         1V/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782395528; x=1783000328;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=iynmWNBl7lAVOJFX1yJmCvw1pMDxMGjgv2BdX3QgLxA=;
-        b=sVsJdAPHTHtfl1zOq6e5iooUDWFDzrXcQe13hrguYBKrePrNz0/JVMo5GnwqJOIO5C
-         Ho4jKekJ3jorRkfnlUMy+NuENiloA71xoRtMU+YCLSFA23CywmCqxR/Yy4vOzOEKj4eA
-         S/Tgl4X2/ILyhGl9uSHHKmVqks4nOhc6ROQlFuQi1OtgBYU2F+Ql3g6qcv0ug06MDSFV
-         7MixAgGoCLD07fvNE/5P5aeDgStGDUAdqwlDZBBxPUb8mg+inSCrWVJB4UlnlLqHMguC
-         xbKTy7aeWt2PWpvjCFGG5CsQUcbY+/Omy9TKC4OTwYWcIY979DmMDrOAGzXjOMH0AMFK
-         /Nuw==
-X-Gm-Message-State: AOJu0Yww+NSn1ztUeL2MWGc4HBNPnAFKcvbDd4/coMYn780VKOeObSHD
-	B7BEGZkOYJrfZVGrb6oUuiTK07Iiu7d3In1pkZebeXL8kMQ805ipSNxgfgIUNn4UHiEmRj5Y3bp
-	iZrlzBAPBjwrnvqHboDSIm+76bvZBNTM=
-X-Gm-Gg: AfdE7cnhl2/9L1mHngST1azmmprimobUptEzVnMY58EKzOcdnRsSP7M8DZfbXqLj+yM
-	SuiadKvyXJ4bvqa1hLJkp9CvH9QjZHdFVFnA3oRljdmVwomb8BsG59xObFU4maR//U6xJmCJRzK
-	0r/VB9GwE1tIlAIVwPHXcGw6VdpKXXPDiBULPvpXGbufLHadrqf0hKIF25gdHzxhzdXo9hl9aYG
-	nMzD5L+t5mSizuLim+s2mbVUbv+Hrbza0kf3eFeMk1rNlDjLJ+vnfjmC52S9k9NOIGUfMrRb+rp
-	N5IjjiR7Js9+ptzMF4vlhs4R6WQ0BHgefzW2a6c+sUgm2ysfDUIZvyD//w==
-X-Received: by 2002:a05:7022:6726:b0:137:f4ec:29ff with SMTP id
- a92af1059eb24-139dbaa660amr2125020c88.22.1782395528141; Thu, 25 Jun 2026
- 06:52:08 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782400009; x=1783004809;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fFc1upYjakvJI1kXBxUXTYb/MbTvZL2VFZR0V0z5sDI=;
+        b=JVTZJ8ROd2uD4sVxx7P6j7mEcLLYGwjkXXcMWv5u1lMARze21PCG3rt9MczZBkETAY
+         veCu0OHDwrh2Wcc/evwt0gRAcKwMRysc0eD4V2/TLl26q60z2v/qmMe+dpJ7IT6iJBsh
+         tFJcHlu1EemchgHFWAlFiaXsaQH9Vdnd1M6zXj4MVuJQDARPd+g09d0k3QVgTO3Axpvt
+         MOCuV35zv3diFTCfKP2YkcHxByw9Yq+uLuUZCKLPTnVGXd8Vt7mulL+P6sDMNzKnvU2i
+         7puLVVP+P/gsmeGwzPHVY/+ixJV+fce5VbQxhd7vgTotzv996pvVTxTqprZlBJ1C+A5g
+         oesg==
+X-Gm-Message-State: AOJu0YyA9KwEYqA0FCmwcZlVPppP3/GK23ZYarWhSsEXgGHRh0vwUbAM
+	z7s/kxKunlNkmvp3ecR4ZmuB3djclna6xO9X9N5+98HMOB0FNGcLO92ZNZEeXA==
+X-Gm-Gg: AfdE7cly+YY6dJhsHWySi22dVaJGdHYPLnaySJC2PtWDd936cOnPkBqAc90NPAaBzPO
+	MgVot/y0kzZQkaWDjjc+p6LRoKzrNZ6Z2vGIoP13BX6dJz/b76cjHUVpMITQKHldM8f9prV4utH
+	uxkjuKWCYxwC5O1/IEilv+VuNa2bD2sc5WTZ8TSR7jA8LZ4c7BTO0sFre+b9orFpplH7Hndm+Ke
+	TmXQxo8dQqX7JZVT9pKDuCuF6Wa8ecMvJ1RqEAJuEUWfJEWwkJtQaJ0Ug7f4Z9QVBnu7eEhvcjw
+	jErXgpo3Kcuo2nI6PM0jEou+wIJwl658et9k+vLVQzC5UxMIJCl3I1JjE8+0xxeclN+FYbAeiOd
+	7Zj0GCO6hT1O4TSYLy0Nv7pErmzfK1NCY6ymqMJkp5KKl8/TGEAvaWNoOVdwcxh7biRem90vYyF
+	amMnsO6g==
+X-Received: by 2002:a05:690c:c4d0:b0:809:ae5:1d2f with SMTP id 00721157ae682-80a67f00cbfmr26300447b3.9.1782400008522;
+        Thu, 25 Jun 2026 08:06:48 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-806f94bc67fsm34538547b3.27.2026.06.25.08.06.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jun 2026 08:06:48 -0700 (PDT)
+Date: Thu, 25 Jun 2026 10:06:47 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 00/11] refs: fix "onbranch" conditions
+Message-ID: <aj1DuUzusBUqmF_C@denethor>
+References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
+ <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260615-b4-pks-history-drop-v6-0-2e329e536d78@pks.im> <20260615-b4-pks-history-drop-v6-10-2e329e536d78@pks.im>
-In-Reply-To: <20260615-b4-pks-history-drop-v6-10-2e329e536d78@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 25 Jun 2026 15:51:56 +0200
-X-Gm-Features: AVVi8CdfUqL7gihXwTMAS3oiBzxTjvcjQxwYdVleI-m8wsTnWlqB667zlEwh68s
-Message-ID: <CAP8UFD3jsepRaiHDen_CzWcse-atvBfCdzAQovk+1csaQeDxmQ@mail.gmail.com>
-Subject: Re: [PATCH v6 10/10] builtin/history: implement "drop" subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Pablo Sabater <pabloosabaterr@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
 
-On Mon, Jun 15, 2026 at 3:55=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On 26/06/25 11:19AM, Patrick Steinhardt wrote:
+> Changes in v6:
+>   - Drop redundant condition when setting the default for
+>     "core.logallrefupdates".
+>   - Leave breakcrumb for why we lazy-load write options for the "files"
+>     backend.
+>   - Fix commit message typo.
 
-> +       /*
-> +        * If HEAD will move as a result of the rewrite then we'll have t=
-o
-> +        * merge in the changes into the worktree and index. This merge c=
-an of
-> +        * course conflict, which will cause the whole operation to abort=
-.
-> +        *
-> +        * If we had already updated the refs at that point then we'd hav=
-e an
-> +        * inconsistent repository state. So we first perform a dry-run m=
-erge
-> +        * here before updating refs.
-> +        */
-> +       if (!is_bare_repository()) {
+Thanks. This version of the series looks good to me.
 
-When your ps/setup-drop-global-state series is merged, this will look like:
-
-      if (!is_bare_repository(repo)) {
-
-which is nicer.
-
-So except for perhaps the replay_result_queue_update() duplication,
-the series looks great to me.
-
-Thanks.
+-Justin
