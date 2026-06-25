@@ -1,79 +1,80 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3ABD380FC4
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 09:20:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF7039B4AF
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 09:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782379239; cv=none; b=kGd7z/2liGIXZHZCntxBVV/7zjzvcwioBxFe1VAc2Ze5HxLRTdRVnS/72g/VJMCrKGVmb4qohX7fd4/IAcpOMGb15NM5EODo4Tnswcfo/9SgWZRTqO53UesF6f/o2fgowlOeCSBgiqgSPQXMRNR8v9FVBgFtQ0rmngiKRhfeP1w=
+	t=1782381472; cv=none; b=PnczTzno0M6jTFxKVmwUMNjqvUngBlKnnVzkvB8pwySYMJEdLQDL6Z+08c6Vlg50IL8AFMUIPLuf+d3MJs5pLFkCZ/YrsieVxluRzBoWGdJzcYbYLnaKNVxCr5bSkV5VIWtTW7SF3m0KOXJRZb2G/FCQVT4EyCvs5OhITQp1BkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782379239; c=relaxed/simple;
-	bh=Kr80nzQbcM8c5bi+DAsnrGWgqHTypnuEq2rCI/5E2bc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Vwi23SH9uB0b67C0u+GC1AdlpKpaZ9PCjnI8G9YnHCJsD1kOOXvxIkT8fZmtecBM9smW+rpZAze8AgmNfy8F0exJrOmzZ5oGFaNizIyAEMcxYlBJIYjpujFKBtEfdnaVxOMGy5jpvghRYu/x0U5WQgFFsfLLaaCr9XjNfxhkXeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UECCTNpi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bLJDoM36; arc=none smtp.client-ip=202.12.124.154
+	s=arc-20240116; t=1782381472; c=relaxed/simple;
+	bh=XoQu7197YZ9jnMPsioFN31YnFzdvg74ukuUSWwvJ+O0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=WyrZYpAVLEt5+KrLoS6hVee4hcdHSe6frxJ1IQfpWgG4GwIT0iyyk1FB/Ay48zYlILnGZkk2ZnaRpQE9ewlcW5lDPoSrec/kM2G/pGhg5NoUq7oe/uHBqlSG44+36ucM3JchCZ0Is8lwS5PVKKCRRkmtgYkL+7n373ngoTUnA1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N97j3JIc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ru4JMt2b; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UECCTNpi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bLJDoM36"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C64B7A0162;
-	Thu, 25 Jun 2026 05:20:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N97j3JIc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ru4JMt2b"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 226021D000B8;
+	Thu, 25 Jun 2026 05:57:50 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 25 Jun 2026 05:20:37 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 25 Jun 2026 05:57:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782379237;
-	 x=1782465637; bh=neR+tVEDYOSdy354voOiPSodt4y98BRYeSvVJ2N9lwQ=; b=
-	UECCTNpi30rzbtCeM18PNyZWlvwB46Y8sdffjASDZnJrZ8Fp4f6wdkw5U45UfiZl
-	zfq8tGtofJR7F9m3N/90z5kTwYmKCEO4VxyMzdVe2sSPEzWEenqjwPa/RQMRHLYV
-	Fo7wPOagmTAmbwcHyukXykK3p8/3cVoW4Gs4MjHvaGNX9D/j8nNXhRLSFJXZPanH
-	1Qv2YZyARQIoD3NW4EundDlNIBEJVAclaw5uQd6U9rXuyBaPRNtPd0DkgflJKbgn
-	MJVjc49lz43/zR1WG3TTRTVPYahAolgnI6F0gA796Jo5SVCT28tKcTryhYbxe4cq
-	J9pyV/NIhrq5iGmHiyJ5MQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782381469;
+	 x=1782467869; bh=7LN87OC6Bz6QiC7H2WrN8j6ZzIkac/nFWWCFZRLxhEE=; b=
+	N97j3JIcfB32MJB6G6NLAOcs5/B1eytZ7l2ilYj9XRuTWjMEo6PB47QLvlkNnEyZ
+	7ppvz/4XPm+QqZsYWaTynEHphXGjZQMOUoJ2XmJlIqQ3Z2fpIweoBUcleh9hrBkA
+	6JsnHnSqnl1nv/V6jGlrgtXfBzBgJ/nzAf8RM+gOb49igEGSDG/FYgcGhQSWCjgU
+	dz3TYB2TNEYUWroUDrVEw684V2LDYnyTZLaEpJcB6Dp+LdPBPSIiu+lw94zedd7Z
+	po7VWP7pURcWTClLYIXc54c8Xj80b0IyD70n2VcKzNKpCSBtN1G5+JX4IbbTkjx8
+	WBSV9KHTcwXA6cCTnVcBmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782379237; x=
-	1782465637; bh=neR+tVEDYOSdy354voOiPSodt4y98BRYeSvVJ2N9lwQ=; b=b
-	LJDoM36+Po0QKx3T5o/y72cNB52y+b1Z+p53I7XwKQfLXs48ywC8XQnruKVVrn2u
-	oNuuEe/UompIBHFOyeCJa5ehO6pm4UmlR91YtZIOWmvnOdgbXIdDvERZmE0RwEY9
-	Hfj0rGIR/kn7nLYa7qWuRJZj7DlKxdP4whwS02kU3VvUfXq4e7Za8fHGmYKrYswF
-	7g6dwxel7FhQMKvX2V+SznglYhiZ6zHmbVeJAwCdhFG8i9LCU1BrHN+2I5FiRAco
-	GhqAX7yYaeln+8ItaxaWauDCoU41jBsborYwxJrqs+k57YPQ7lc4cUUDeywMThaw
-	UkXQxs5fZcPtWnR5i2+ZQ==
-X-ME-Sender: <xms:5fI8amKSHhcAw5ntS_qsjxcMLzpp16epirNEqrZPUEYvUfKrfuhpHA>
-    <xme:5fI8alIgD6E4E-ouPGGGzo2kgoZKR0NdqlMkq7csQy_DbqPYhZfRjtirrw_M8YUOX
-    AnD3a7kHBFKnbKnCEi1bVM4AnQxLH7WWw6DBzWqcZNQvvxmmaPDcA>
-X-ME-Received: <xmr:5fI8art8_H--LJeN0Q9Qk6DB4TTez3CoTStQFh1mcud2QbNuZj8wlvhEVRn9clp_FZzaTHLBiuYCzZAk0zVyiPRi-nMx5wI96Io3dVCiCg>
-X-ME-Proxy-Cause: dmFkZTFDkaiEwMNfNKhUFmFqPW6+gIVtJ+TQ0x+eU1LJTAXOIoLsb/XxaWtlQqMIf9H6ak
-    vv//LcI64loNAITt4OOQHOFy9WgByvNooIhJ2XlbTwdm6xBD19WPorDKcwOiR9pFZWYeRv
-    2607fP2WCMejJ/uDjbOk+fpMEtTUZFFdt3j4ptZxyzkdYRLWbgeFFctod5KWBn8IP9fqHb
-    7n5+J4i874CRT6uVOVvLP+BfWY7Uvc/qddGmGd+VQcdNPVInko49U8Hg7Z1CxzNqHtDkwP
-    UF2JmCj+2LIZ1DRydCyM1v3SG2n9G+rp5MMnguBrnPoRL80fus1QwEoY52U10taAPz2/Fx
-    QJfwOHuZ1fRr+Ck5jWJEWAq3Yb4V58MK0id66En297fTIzKl77S5z55CEtG2WFvpPUum3M
-    g13B3DdmN2SHvhERYM6MOQK71Ueb5f16tMfKIwWlSj+trk5OTdxDWqIQVSUNGZum9Vz7G6
-    X8iVf1q24USufVza/ztGknhiASSvLLrKIuwGPhy39tBdppTXzEi0aMCLfkX4IUUZyUYGqb
-    7GwxwBcRQtcQ//K3XnytsqUwYpJ47WveCwaUJAKdqI+woruMemIvtg29Z43oMytRQGbAgJ
-    pzayXdrYpkMaR2Osd4gXxbBkAaO4DjnmIWfxhuEJuR6HrYSWki28aufc1UPQ
-X-ME-Proxy: <xmx:5fI8aqQrFVaNP3A7t94FEYFTeifY27JpixOiewPnr03JURALfvfglA>
-    <xmx:5fI8apMiqsy738NOHFlnt4EsIPgZNfVjF_OJ763GXY6aG8AbsvMG8A>
-    <xmx:5fI8anYYm6cC83ge--GAtkjn942QSgea61DkvIR0AXc_4xISSGkn5w>
-    <xmx:5fI8aryBth0aQbuRSiyc8gnCpLe6JM77c-BKQGoGh4D0hdYpoISZ2w>
-    <xmx:5fI8ahyLg9uFJgLFa_oZmbBts77hDeaePY8jEWce9HiI-1ePt1PvTDLF>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782381469; x=
+	1782467869; bh=7LN87OC6Bz6QiC7H2WrN8j6ZzIkac/nFWWCFZRLxhEE=; b=R
+	u4JMt2bBuElc93Z9guC0kSbcfSBUltQNiVWl7g9Ig6EOlLCqFxAac1N0xusIR4x8
+	3iuBOO2aTHOgKibX9npBpaxQJcAWEdWTb/0xFsK0wJ2s4Pnbe5N7Y3nB18ihqawG
+	1wHKaVNoGq31xQl8VzGdxnmi9AB5R+RlQGp/EvDiHycYFwa+gn2JuGQpLiYH1ZZH
+	q8QaKb0KFnrETZ3dwSJRvSpyuc3FNo41m4ZRqHWda71CpnWcCv7N/MRyX9t5kj0w
+	85pOqaMgzv156Qng/6vhBY8AlokhcbtezvpQjiNt3wxxtSCoOTKw8I2as6RNDNWl
+	mVLpdO4gjYjg3FeGBvFcg==
+X-ME-Sender: <xms:nfs8aiWYJQ-nUL6NB81rxMgaZ0G_z_RdkD42flcI3n418o3VYYGzog>
+    <xme:nfs8amD9oEMBylVctuYGwtpbiGBHvYTLNjLgrLsN4Cjd___9x0JGMYOc--IhnKLtB
+    dRMTt6LZeho7ta5Agksnd2Bx4stEJWcykt8l7ystwzR9EeYJOEPgw>
+X-ME-Received: <xmr:nfs8ajwqLnhH-CPDo9JFTlhvo8RjgdHXQTppeRqZC0I18VFwnrUV5yEpt8jj8DHhWYgMBR9kkhX2fISchVxaYSx27I0ZpXPqVwPg6sKl4g>
+X-ME-Proxy-Cause: dmFkZTGaRO3grUjqTW4QvA9iPsNjfUHMpS2+iZaMYwKN7z3UKWZ8qXDpMnDExPlIR/qNUo
+    KR550cA7XaupOtAoseaB7qZ4uQ7HHU+VmijRbha2W8eledO7CLSkFmmsvPqxsEjos+mFsE
+    7wKQuVBfpUs9UXWgw16lxII1T+YJq8qus1CEXYvhZzFDsODFKMuPG2zcVu9a31RsCe8/SK
+    /TPqQoKjS/8uChm13CGbYaNj/IW7oS/FxrVP/e0VPFco8pcHsx2vkQnh1MhHdb/KtKzJny
+    r1NPTH4dbo/Qra4U3IUUB4C74lMkAs1TgMTu29yQ/vVOqxmpA57yJyuTrwQbM4INpEbRmb
+    AgP1HR0zMP5B/976JjhlUBkoyQsQbjErq9DKXPxgk+aJclEOjuME5NJ+BF/mASGrLLeyzn
+    IO2ofKugASeJx9flRkIlaqKjs2Lehe1bodG4IjwmuKV2YJS+deSHTlFFGrhRQ9X4aktAdA
+    +RdsNbSWl7W8ljmGSETSpSGihtFLuBriCrS1P86k8wmcLGa5KVFFxaKLTqJhSmPfv1YgdW
+    +oSiUGA7jZ56tzu6CyJ2e5gcPs2ysEOFcU6UxcaiyXce04y4LHL3y8yWsAeKc7HmycnPqV
+    YyPTaFK1TPvrSg2VAxxQquL2R2Th2dcRW3uXRkCs8asHXt0A7vhOXaqzzkUw
+X-ME-Proxy: <xmx:nfs8ajBntIX66DFBgvfOtolSw3GfNxEOd0Wu9vlodSVFhrPcSqcDyg>
+    <xmx:nfs8agaLJi2IuRTcfvUla54BHHGSSvkgHA9yzFUHIOmU39I6lc1Mxw>
+    <xmx:nfs8argWakLEubwb6F6dD4ByUqmqAOJHgmPJKGRBep1XEPEAN0VhZQ>
+    <xmx:nfs8ai4GCIcWo_bhFPnIfcGP6qD7DiszHVZXAWpWbNRi1eFsFCdXnA>
+    <xmx:nfs8ajoVz64wkta2r2kbZs14u-vrj3_gEY8PJeIj3Q67ZzBhY5evhnHT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Jun 2026 05:20:36 -0400 (EDT)
+ 25 Jun 2026 05:57:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e483a539 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 25 Jun 2026 09:20:35 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d95c521f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 25 Jun 2026 09:57:47 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 25 Jun 2026 11:20:09 +0200
-Subject: [PATCH v6 11/11] refs: protect against chicken-and-egg recursion
+Subject: [PATCH v3 0/4] connected: search promisor objects generically
+Date: Thu, 25 Jun 2026 11:57:38 +0200
+Message-Id: <20260625-pks-connected-generic-promisor-checks-v3-0-7308f3b9dc44@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,55 +83,179 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-11-41fbca3cf5e3@pks.im>
-References: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
-In-Reply-To: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
+X-B4-Tracking: v=1; b=H4sIAJL7PGoC/42Oyw6CMBREf4V0bU25RR6u/A/jgpYLVENLWiQaw
+ r97i8a4dDnJzDmzsIDeYGDHZGEeZxOMsxTkLmG6r22H3DSUGQjIRZ4CH2+Ba2ct6gkb3qGlvea
+ jd4MJznPdo6YGVFKqtpUCyoYRa/TYmsfmOV/eOdzVlSARHhu9CZPzz+3InMbexwn/OueUCw4HV
+ DXkVUnjE+32ZmBROMMvMvsXCYRMJTSFRMwKVX2R67q+AOK+4OA8AQAA
+X-Change-ID: 20260612-pks-connected-generic-promisor-checks-2933bff3028d
+In-Reply-To: <20260622-pks-connected-generic-promisor-checks-v1-0-25eba2698202@pks.im>
+References: <20260622-pks-connected-generic-promisor-checks-v1-0-25eba2698202@pks.im>
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
- Justin Tobler <jltobler@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.15.2
 
-In the preceding commits we have fixed recursion when creating the
-reference backends due to a chicken-and-egg situation with "onbranch"
-conditions. Unfortunately, this issue has existed for a while, and we
-didn't really have a good mechanism to detect this recursion.
+Hi,
 
-Improve the status quo by detecting the recursion when creating the main
-reference store.
+this patch series refactors "connected.c" so that we search for promisor
+objects in a generic way instead of reaching into internal of the object
+database. As a result, the connectivity checks will work properly in
+repos that don't use packfiles in the first place.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+The series is built on top of 8d96f09e92 (Merge branch
+'js/objects-larger-than-4gb-on-windows', 2026-06-19) with
+ps/odb-source-packed at 1bba3c035d (odb/source-packed: drop pointer to
+"files" parent source, 2026-06-17) merged into it.
+
+Changes in v3:
+  - Fix reversed logic for whether the promised object was found, which
+    broke in v2.
+  - Add a test that verifies that we indeed use the optimized check.
+  - Match the hash before computing the flags so that we break out of
+    the loop more eagerly.
+  - Link to v2: https://patch.msgid.link/20260624-pks-connected-generic-promisor-checks-v2-0-132d73ee47b9@pks.im
+
+Changes in v2:
+  - Fix the accidentally-dropped call to `odb_reprepare()`.
+  - Add a preparatory commit that splits out `check_connected_promisor()`.
+    I think also splitting out `check_connected_rev_list()` would only
+    have diminishing returns, so I skipped that part.
+  - Link to v1: https://patch.msgid.link/20260622-pks-connected-generic-promisor-checks-v1-0-25eba2698202@pks.im
+
+Thanks!
+
+Patrick
+
 ---
- refs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Patrick Steinhardt (4):
+      odb/source-packed: extract logic to skip certain packs
+      odb/source-packed: support flags when iterating an object prefix
+      connected: split out promisor-based connectivity check
+      connected: search promisor objects generically
 
-diff --git a/refs.c b/refs.c
-index 5b773b1c15..1d24637891 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2359,15 +2359,22 @@ void ref_store_release(struct ref_store *ref_store)
- 
- struct ref_store *get_main_ref_store(struct repository *r)
- {
-+	static bool initializing;
-+
- 	if (r->refs_private)
- 		return r->refs_private;
- 
- 	if (!r->gitdir)
- 		BUG("attempting to get main_ref_store outside of repository");
-+	if (initializing)
-+		BUG("initialization of main ref store is recursing");
- 
-+	initializing = true;
- 	r->refs_private = ref_store_init(r, r->ref_storage_format,
- 					 r->gitdir, REF_STORE_ALL_CAPS);
- 	r->refs_private = maybe_debug_wrap_ref_store(r->gitdir, r->refs_private);
-+	initializing = false;
-+
- 	return r->refs_private;
- }
- 
+ connected.c              | 98 +++++++++++++++++++++++++++++++-----------------
+ odb/source-packed.c      | 50 +++++++++++++++++-------
+ t/t5616-partial-clone.sh | 24 ++++++++++++
+ 3 files changed, 125 insertions(+), 47 deletions(-)
 
--- 
-2.55.0.rc1.745.g43192e7977.dirty
+Range-diff versus v2:
+
+1:  74d1d04183 = 1:  93b7b3b4cb odb/source-packed: extract logic to skip certain packs
+2:  02aa39bf1e ! 2:  3fd0885b85 odb/source-packed: support flags when iterating an object prefix
+    @@ odb/source-packed.c: static int for_each_prefixed_object_in_midx(
+      
+      	for (; m; m = m->base_midx) {
+     @@ odb/source-packed.c: static int for_each_prefixed_object_in_midx(
+    - 			const struct object_id *current = NULL;
+    - 			struct object_id oid;
+    + 			if (!match_hash(len, opts->prefix->hash, current->hash))
+    + 				break;
+      
+     +			if (opts->flags) {
+     +				uint32_t pack_id = nth_midxed_pack_int_id(m, i);
+    @@ odb/source-packed.c: static int for_each_prefixed_object_in_midx(
+     +					continue;
+     +			}
+     +
+    - 			current = nth_midxed_object_oid(&oid, m, i);
+    + 			if (data->request) {
+    + 				struct object_info oi = *data->request;
+      
+    - 			if (!match_hash(len, opts->prefix->hash, current->hash))
+     @@ odb/source-packed.c: static int for_each_prefixed_object_in_midx(
+      	ret = 0;
+      
+3:  ff9df84f65 = 3:  47a4732daf connected: split out promisor-based connectivity check
+4:  a10d2e6a1e ! 4:  239abf2731 connected: search promisor objects generically
+    @@ Commit message
+         flag. This will yield all objects that have the exact object name and
+         that are part of a promisor pack in a generic way.
+     
+    +    Add a test to verify that we indeed use the optimization.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## connected.c ##
+    @@ connected.c
+      
+     +static int promised_object_cb(const struct object_id *oid UNUSED,
+     +			      struct object_info *oi UNUSED,
+    -+			      void *payload UNUSED)
+    ++			      void *payload)
+     +{
+    ++	bool *found = payload;
+    ++	*found = true;
+     +	return 1;
+     +}
+     +
+    @@ connected.c: static int check_connected_promisor(oid_iterate_fn fn,
+      	odb_reprepare(the_repository->objects);
+      	do {
+     -		struct packed_git *p;
+    -+		opts.prefix = *oid;
+    ++		bool found = false;
+      
+     -		repo_for_each_pack(the_repository, p) {
+     -			if (!p->pack_promisor)
+    @@ connected.c: static int check_connected_promisor(oid_iterate_fn fn,
+     -			if (find_pack_entry_one(*oid, p))
+     -				goto promisor_pack_found;
+     -		}
+    -+		err = odb_for_each_object_ext(the_repository->objects,
+    -+					      NULL, promised_object_cb,
+    -+					      NULL, &opts);
+    ++		opts.prefix = *oid;
+    ++
+    ++		err = odb_for_each_object_ext(the_repository->objects, NULL,
+    ++					      promised_object_cb, &found, &opts);
+     +		if (err < 0)
+     +			return err;
+      
+    @@ connected.c: static int check_connected_promisor(oid_iterate_fn fn,
+     -
+     -promisor_pack_found:
+     -		;
+    -+		if (err > 0)
+    ++		if (!found)
+     +			return 0;
+      	} while ((*oid = fn(cb_data)) != NULL);
+      
+      	return 1;
+    +
+    + ## t/t5616-partial-clone.sh ##
+    +@@ t/t5616-partial-clone.sh: test_expect_success 'partial fetch inherits filter settings' '
+    + 	test_line_count = 5 observed
+    + '
+    + 
+    ++test_expect_success 'partial fetch does not spawn rev-list connectivity check' '
+    ++	test_when_finished "rm -rf connectivity-remote connectivity-client" &&
+    ++	git init connectivity-remote &&
+    ++	test_commit -C connectivity-remote one &&
+    ++	git -C connectivity-remote config uploadpack.allowfilter 1 &&
+    ++	git -C connectivity-remote config uploadpack.allowanysha1inwant 1 &&
+    ++
+    ++	git clone --no-checkout --filter=blob:none \
+    ++		"file://$(pwd)/connectivity-remote" connectivity-client &&
+    ++
+    ++	# When doing a partial fetch where all tips are part of a promisor pack
+    ++	# we want to skip the connectivity check, as these objects are allowed
+    ++	# to not be fully connected.
+    ++	test_commit -C connectivity-remote two &&
+    ++	GIT_TRACE2_EVENT="$(pwd)/partial.trace" git -C connectivity-client fetch origin &&
+    ++	test_subcommand_flex ! git rev-list --objects --stdin <partial.trace &&
+    ++
+    ++	# Otherwise, when doing a fetch where any of the tips is not part of a
+    ++	# promisor pack, then we must run the connectivity check.
+    ++	test_commit -C connectivity-remote three &&
+    ++	GIT_TRACE2_EVENT="$(pwd)/full.trace" git -C connectivity-client fetch --no-filter origin &&
+    ++	test_subcommand_flex git rev-list --objects --stdin <full.trace
+    ++'
+    ++
+    + # force dynamic object fetch using diff.
+    + # we should only get 1 new blob (for the file in origin/main).
+    + test_expect_success 'verify diff causes dynamic object fetch' '
+
+---
+base-commit: 4a8e7a446f41435e157131162dfe901eca9250fe
+change-id: 20260612-pks-connected-generic-promisor-checks-2933bff3028d
 
