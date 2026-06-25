@@ -1,79 +1,80 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F25A37F00D
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 09:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FC7378D68
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 09:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782379215; cv=none; b=lGX2za0bFggA5GtV3ZzQi0gCVWIFJfG2XpzHN6uc6KtpWxlLyiGKeTSjUkVHe++pF+ddManRBlfDbJFZIcZ354odA4v5j/ut21sujY3fJwnA+X0+RROn2GTZ4mMLNiFxBEUZL+WVNjaon8SZgcTSDLm6moiu+q7npJL7hwW1eUs=
+	t=1782379218; cv=none; b=Ncxy9dAFvbB4mXC1aRvbvN1Ia8flwKldBOnY6HfVV9b0FivZkmx+oGVQqx3wYpPoTMKr4Jj7teryKQFy45TDbrBYqA8Wjg5xQi8hgwZYU06DrVBiOCNhYBMYREtLEtYGHh8xdSY+6xZiqSivdZVIFzJlLo2wzMUmG+j4UcDHIrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782379215; c=relaxed/simple;
-	bh=58YVJWT9UI8kFDdUXcQJJtdE7U+/Aj1ZmzZWBeydFbs=;
+	s=arc-20240116; t=1782379218; c=relaxed/simple;
+	bh=X2LB1y0xWiJ7Ty+tivAHzHm9RJpChefjHPp0fe0+dvg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PFPqa4JOl7Fnx11VYFBJGpsRF4NKGRsZoNIyvzbMMz1uYB3v+HoX6x64Nv3QGvxrMqd1zyCzQJSl/YZ2ScEQBcYUSJmWN9xm/XeztnfMf9dafLX/k21wu31dfrem6pDSn/XThICYBrkBTTSR0PTfPErMi/j6AcUSJ/o3m0vGG5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IPhzrlRw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lgK7eGva; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=nmhyj224x8Ti6sKuTIF2ELGyk0EhMONKNZk7d0q06YvctHe0ZrguyUILjgmZNhpz/ZFM0sk9YOxxKoFFZYkKxT+WLLczYhyejk00yRjfSk4LRq7r0fcQ1VtUgCupDpuWsr4zyNfPtvoq5ZTj+p0P1tKwiG4RNCPL9vbUDjg626w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k03EptJg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GPqaKrUQ; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IPhzrlRw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lgK7eGva"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 12F607A0150;
-	Thu, 25 Jun 2026 05:20:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k03EptJg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GPqaKrUQ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8DEE07A016E;
+	Thu, 25 Jun 2026 05:20:16 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Thu, 25 Jun 2026 05:20:14 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 25 Jun 2026 05:20:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782379213;
-	 x=1782465613; bh=CTRf5nrb36Pf8fnz9MxgWTc9+bZ4tr2L/6FfBPB20Y0=; b=
-	IPhzrlRw6kz9GinHW+tLPVHa3Ej0BD/slXR60CNU582hhbjIzBfk/hmgK7b5P0dQ
-	dzp9pj28SOnhZWc0PGLB+hOciDf3a4TWzRGYV6gyXx7Rf5EBvpj7Hg96Og0OzfoH
-	a2RTi4wBnHxtR/CxIVNoaqdnbbAwy1aqQeOupBCyrSaqeQd/AB6RTLOa7mxmEw+S
-	Up68uRlZ82eo1LfIb82B2qZSKeBfqEjGmnDWSMKJTjfpfO08txVkhMwXRDD8w/ui
-	le22/GHT2DQOilfhGaoTskVr6haGeYocrKU5iwkjwwji0rxI8IZTuYKH+1tYflWt
-	WRfD4qZk8sGBluh022QgWQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782379216;
+	 x=1782465616; bh=RuwxwOm6s3bm3AscrHXxdkVHea2PwpBh9u8xx/1zYoM=; b=
+	k03EptJgc/KRSFX2QEZ/XbbWkhlNnZ4xkvZVehugG/CR0ps/ydmQbX+jnkIwVzAk
+	bspMVdBMl5sVKtc65oBu3j/EYTX5PTKINNDgQvIgNf1q+0rdOw3qzbIyfjeasAuo
+	Avi/bPq0Ot+7eVIdCBRJtn2Yk0ouQH9cN61zOFij0mG7+zbK7gc4SaN3yMW32owe
+	+iwJwq5zc0APBLzJqDGlUpoeufbrE4nlQE78YJ5dcTVK68dlwqV+Twb9+7M0nkGf
+	L/D0goZqkotUNGdmjEtAuBrqBoRSXOj7Khm1AAHlDmq3YjVHP6T0EKuYomqKbEXL
+	bKsVy5VfoTc+sv2G+cHDJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782379213; x=
-	1782465613; bh=CTRf5nrb36Pf8fnz9MxgWTc9+bZ4tr2L/6FfBPB20Y0=; b=l
-	gK7eGvaplcpqXOHnIBK0ktQU7q7XxViGYrhCe+BEFgXTGVgGq9kmPgXVRIBVc7Zn
-	1+Ga7JMWl50RIbjVGomBNUHbrV+qFDBQQyGI1lY3ZzutP2Bjzt7nJkXkh6N78qe5
-	nB/LNwHV/JE6lE+Tp4FY12eJx1Ak28Y4IhXoNgp6G8QZOfqFnEmhCaMb8XhKturB
-	3ONM8Rrd4qT6HAY7Dl/lT0Me4wycL2ocSlPBqJBggKdWLDZjj0Wxgt5CHqXp523l
-	4qmxzvS9Ws3NKCVvQ4H5t/mofy0DOQ0hpwPWWjGMuxGIAbZoAiS5Ev2SQlpSZAgE
-	8W64aklu+E/n/VLK/Fw3w==
-X-ME-Sender: <xms:zfI8al3g5JtCvoNeU2-8w4lAtVtNoGilEkt1Fg5UvW_GH2Uixj7qfQ>
-    <xme:zfI8ajHW8eDY1R6s1Of9hv4tIS8GCLWphif3EB1MvDAY7vTm0t4S9h4Zkkl3DWh_H
-    vAjcxelfs2kuoCmBpOtn_vhF5kATuO5sRlyc2aZYeWoKKsEnqLbHw>
-X-ME-Received: <xmr:zfI8aq5Gfm73zx-wEgvhbZSLtCPm-FYjtizhweS6LkAs9QgRKCDxsK04XoqSXFQ213EPXZ436cOBIySjlMIV-NYhPK71PPFEfkw7tlldug>
-X-ME-Proxy-Cause: dmFkZTGMHA1OEOFl0e4hEURh9ZN4vsd5q1bhsCQ9u+P05s4JDAeY/wb4NOegEhe1Ptkerz
-    l6XDzTpo9rCChOz+94AHfHMeTR/Fq2vGULThLBxvLZoVsRCa/vDoE8G/d7A4FIhZi+GeRd
-    vw+2RZrD4Jlt5zROZY9cmhpPItfcI8yNiNl3SkR+RiapoupgTT7yFODOYfJD10FkKTnxuX
-    SwFeaZB6F2gBY0sRtYYGbWJbaopXLX88L4XljBFLOFSrZvwrvInbc64oU2JzH1Fjx5hBKx
-    34pRgjNn/TpL5lg6DnRLGIuhV/r8sq1NIoGqfFwPosUNm+J/ixcsbK511ozn+gm5MdenhI
-    KxoT/zJ0WdI9oFgDsUmu8ECB+sEVmesmzGLm9UngCgWk/7RxSk6vgJv8Wrz0n+LtP4xS6s
-    bPUCHIU97gt7A8kW5xAUkRP1sR9XbkF6qjLaQznFqfUmHdS5LCubLnLcOcb0sCvvz+KxEK
-    rG3AebCGznwPtSF4dML2B3D9wIsjPb906rF8sybXNMftwWhBdRKWIrsZ64zmcPnrUkht/X
-    X43m+BTv9xqrwMyU1G9tnrm157TSQ9S4BkQ+NcQqZjWyqAA4D85lUd5MHfzF9AxpvVA1/W
-    c9OYltRqzsimkCWUoOSRuxJbK9/c6QRdCHaspC8jNVoLQ2nUDzi5Znui9a2Q
-X-ME-Proxy: <xmx:zfI8aht6zGQzXXlyFOgXAfy3xFD3eU9R2k4dZFIo3Mey6dZRNrmVaA>
-    <xmx:zfI8aj516Uid77sS9b43MXjcy-aaUlsojZMyTCsWnGh4R663H9WXrA>
-    <xmx:zfI8akXtevKYv1_s-NXmqookP8un4zOYrE82wYqW1hWEL6zP5De-Nw>
-    <xmx:zfI8at8XCslKe_d_1egMdvONAHrLkkRw2fEazO07W3tyRlru44gdrA>
-    <xmx:zfI8ap9dtyjUrlWgLVnOgepJ8U2X4vj58_-Bwx1LTgEK86bLPeO7VadO>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782379216; x=
+	1782465616; bh=RuwxwOm6s3bm3AscrHXxdkVHea2PwpBh9u8xx/1zYoM=; b=G
+	PqaKrUQCU++jx5oM5jJLcUsBKzNptFm+P8eYvrjzDOuu2Y0BHquf/4//pLI0EkUI
+	XeAbdsbK+n5rA0y36CWHtSWb5G3hp0yG2WBzqaw262LDFZoOfXGEkk9/AoRECRNT
+	EdI2iPTP41Fz0RArIwO9A1JO9DZYZXJNKRNgkYvcr5g9dH7+GGe+Z3zvJa9okFe4
+	vbh1oGdR+0lcD/2OWcOLvHIiZ6phtYyI1D/av1BXMCsJ/SK5NPdN1gUA3dhwXG1a
+	NFLTN1kXhTU6801fERC/X90qtL3Q+DqepambadvddV++r8/D1w38WFbiQcQiTiDh
+	VVPESRTg5r9VymVW4O2RA==
+X-ME-Sender: <xms:0PI8al3RLnDZjfPXyby8wV-wj6ps9fA14Gm-z_HYjXMnYyfJdTyDwA>
+    <xme:0PI8ajFz8941cWYRT5elZFkG6G_pGCdG4K1m4zFgyTJsBXuUCYTFhxMMJoCqqDXaA
+    whmnFNrm79T9cJnBIgReXm7HZ6utVzOxvXo3MZfYN9QCM2ZcuI4UJE>
+X-ME-Received: <xmr:0PI8aq4fPMRHdfRN-NtYs5sTRqP0_WynWWNJFeYAcsoN9txD5UBMyw174n1hwH-_IqOBBGCQYvFAd-sH3Y7j7U53lNIhrXN4L8PRXw_PuA>
+X-ME-Proxy-Cause: dmFkZTFJny8F8bT1vobP8mT/gHA8dRfG54tdLYssF9mGrBAZ33fvzfK1eqPxa29sDtYAhN
+    5tkjpw8eG7f8oUYXwWxFvXTfK5hurMwltmfD04NzD/ZqkQDnNm5LG5e+36110BPFzMSHq2
+    HQfiw4sPCG9XizI+bbWfQ70k6NFeQGil+Q4g9AnIT5X8yKcTuUqmWhXByog3KGvZ/ni4kX
+    k9V/L/9g4/bQonvKK8Brc7cK3ZOQt+0LqTZPmn4ByHyhrpuP3EGvOEGRCSWZpe6rchkvz9
+    cVZP4E7MkYqSCORu71W7wFgpoNuZR9ZptCacni39b4NdZsabOObv28iAAOaljK7R002QSH
+    kUISDNcruUqM7T6nlNLbNucsJXOWzx0BfgVbckuVYewl2iT66HgVudoUU3nobi0mCYUBON
+    O+vCnbGLYig6PNDBFvrSjOiyaWpXyfHulGinrMc6o49rWHrqGl1k7b2TOEcSe7zaeEPQUd
+    h7Dja8f4PWSo/54WhjyZfnV9MNbWz/bgDv7fXsllDIC03q6WKuhhlsyX65tm7LV+ptv/YS
+    IMHETsDG0SS9AIakkKJY7chjFVcQxbB35V6VawQRzjBAObAvO454y1Pbjr0n8ZuBthPJj9
+    Ly/vIY4YJT3e4K7i7zswyhTH++XeOikWE0KzRQvChC1Z7vmsUNEOmntdy8OQ
+X-ME-Proxy: <xmx:0PI8ahvfl4MLmecmUJMhiFSGAd7Z2qMqi1P_pQRprL_ZgERuASc6Kw>
+    <xmx:0PI8aj52QT5t6Sa_hMjTZ4fuqyrOBXcpdDYaikEPeuzt_N9xjnwm7Q>
+    <xmx:0PI8akVa2WVtcjPBKqMcFIkJ7GoCbL8iIGumZHhO3mPGlvkxF3mhug>
+    <xmx:0PI8at-ALDpm0yO4P4RJmXaVsSccXaqLqyFhTw-cYBiv1r33vmdI3g>
+    <xmx:0PI8ap_mjgbcVGmxdQ9rLIUAr133W2O0jXchLSBlKXoX_NlOBNcfHzY2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Jun 2026 05:20:12 -0400 (EDT)
+ 25 Jun 2026 05:20:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f5ab48b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 25 Jun 2026 09:20:12 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 7fffde5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 25 Jun 2026 09:20:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 25 Jun 2026 11:20:00 +0200
-Subject: [PATCH v6 02/11] setup: stop applying repository format twice
+Date: Thu, 25 Jun 2026 11:20:01 +0200
+Subject: [PATCH v6 03/11] setup: don't apply "GIT_REFERENCE_BACKEND"
+ without a repository
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-2-41fbca3cf5e3@pks.im>
+Message-Id: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-3-41fbca3cf5e3@pks.im>
 References: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
 In-Reply-To: <20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
 To: git@vger.kernel.org
@@ -90,75 +91,90 @@ Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-When discovering the repository in "setup.c" we apply the final
-repository format multiple times:
+When discovering a repository we eventually also apply the
+"GIT_REFERENCE_BACKEND" environment variable to the repository. There's
+two problems with that:
 
-  - Once via `repository_format_configure()`, where we apply the hash
-    algorithm and ref storage format to both `struct repository_format`
-    and `struct repository`.
+  - We do this unconditionally, which is rather pointless: we really
+    only have to configure the repository when we have found one.
 
-  - And once via `apply_repository_format()`, where we apply these two
-    settings from `struct repository_format` to `struct repository`.
+  - We have already applied the repository format at that point in time,
+    so we need to manually reapply it.
 
-With the current flow both of these are in fact necessary. But this is
-only because we call `repository_format_configure()` after we have
-called `apply_repository_format()`. Consequently, if we only changed the
-repository format in `repository_format_configure()` it would never
-propagate to the repository.
-
-Refactor the code so that we first configure the repository format
-before applying it to the repository so that we can stop setting the
-hash and reference storage format multiple times.
+Move the logic around so that we only apply the environment variable
+when a repository was discovered. This also allows us to drop the
+explcit call to `repo_set_ref_storage_format()` because we now adjust
+the format before we apply it via `apply_repository_format()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- setup.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ setup.c | 39 +++++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
 diff --git a/setup.c b/setup.c
-index a9db1f2c23..2748155964 100644
+index 2748155964..79125db565 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -2710,8 +2710,7 @@ static int read_default_format_config(const char *key, const char *value,
- 	return ret;
- }
- 
--static void repository_format_configure(struct repository *repo,
--					struct repository_format *repo_fmt,
-+static void repository_format_configure(struct repository_format *repo_fmt,
- 					int hash, enum ref_storage_format ref_format)
- {
- 	struct default_format_config cfg = {
-@@ -2748,7 +2747,6 @@ static void repository_format_configure(struct repository *repo,
- 	} else if (cfg.hash != GIT_HASH_UNKNOWN) {
- 		repo_fmt->hash_algo = cfg.hash;
- 	}
--	repo_set_hash_algo(repo, repo_fmt->hash_algo);
- 
- 	env = getenv("GIT_DEFAULT_REF_FORMAT");
- 	if (repo_fmt->version >= 0 &&
-@@ -2786,9 +2784,6 @@ static void repository_format_configure(struct repository *repo,
- 
- 		free(backend);
- 	}
--
--	repo_set_ref_storage_format(repo, repo_fmt->ref_storage_format,
--				    repo_fmt->ref_storage_payload);
- }
- 
- int init_db(struct repository *repo,
-@@ -2830,10 +2825,10 @@ int init_db(struct repository *repo,
- 	 * is an attempt to reinitialize new repository with an old tool.
- 	 */
- 	check_repository_format_gently(repo_get_git_dir(repo), &repo_fmt, NULL);
-+	repository_format_configure(&repo_fmt, hash, ref_storage_format);
- 	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 		die("%s", err.buf);
- 	startup_info->have_repository = 1;
--	repository_format_configure(repo, &repo_fmt, hash, ref_storage_format);
+@@ -1906,7 +1906,6 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 	static struct strbuf cwd = STRBUF_INIT;
+ 	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT, report = STRBUF_INIT;
+ 	const char *prefix = NULL;
+-	const char *ref_backend_uri;
+ 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
  
  	/*
- 	 * Ensure `core.hidedotfiles` is processed. This must happen after we
+@@ -2032,6 +2031,25 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 
+ 		if (startup_info->have_repository) {
+ 			struct strbuf err = STRBUF_INIT;
++			const char *ref_backend_uri;
++
++			/*
++			 * The env variable should override the repository config
++			 * for 'extensions.refStorage'.
++			 */
++			ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
++			if (ref_backend_uri) {
++				char *format;
++
++				free(repo_fmt.ref_storage_payload);
++
++				parse_reference_uri(ref_backend_uri, &format, &repo_fmt.ref_storage_payload);
++				repo_fmt.ref_storage_format = ref_storage_format_by_name(format);
++				if (repo_fmt.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
++					die(_("unknown ref storage format: '%s'"), format);
++
++				free(format);
++			}
+ 
+ 			if (apply_repository_format(repo, &repo_fmt,
+ 						    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+@@ -2057,25 +2075,6 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
+ 	}
+ 
+-	/*
+-	 * The env variable should override the repository config
+-	 * for 'extensions.refStorage'.
+-	 */
+-	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
+-	if (ref_backend_uri) {
+-		char *backend, *payload;
+-		enum ref_storage_format format;
+-
+-		parse_reference_uri(ref_backend_uri, &backend, &payload);
+-		format = ref_storage_format_by_name(backend);
+-		if (format == REF_STORAGE_FORMAT_UNKNOWN)
+-			die(_("unknown ref storage format: '%s'"), backend);
+-		repo_set_ref_storage_format(repo, format, payload);
+-
+-		free(backend);
+-		free(payload);
+-	}
+-
+ 	setup_original_cwd(repo);
+ 
+ 	strbuf_release(&dir);
 
 -- 
 2.55.0.rc1.745.g43192e7977.dirty
