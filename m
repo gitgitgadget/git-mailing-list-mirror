@@ -1,171 +1,88 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65753B14D1
-	for <git@vger.kernel.org>; Thu, 25 Jun 2026 16:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049F826B08F
+	for <git@vger.kernel.org>; Thu, 25 Jun 2026 16:19:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782403295; cv=none; b=dtdQszpGMGkNE8G+bsVoDgSO5DdSAbsbtAvFJ65EOECO/6+pwi2WXlS2UTAGA4AcH0mG4LpdRTlVOFKLyOmuWXFTHv7FVH9kMEMbE96O6WohdS0aRbt3zFmvx1ADbpiwUYe07TxrJY2TYdYKAMNZH9ANcICKNYScxb4oAuWaYnk=
+	t=1782404344; cv=none; b=eZYV51k2YuGPg26Z77qj414Ffjl3D2ULnrWPnDaz3+P/ShUgZ/BwZ9fx/qvpWFZWO+9pk27KKEcQ8FgP5hFjBBox796jyMYDlMzx1I1NxDeBRtdXooiuYCD20IlryU+tkRWynLmjJFpsq4g34SmZa4NDv4SFxJ9PcRsI+pZBCbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782403295; c=relaxed/simple;
-	bh=HK5lsPyC0O1lQ2Acqg7s/xzMa1vpbMBkANNHsqLNQcE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=fUUJyyC2PNDYk+ca4o7tzBNH46qS1p6MJ8bg6B8dUyHPzve4dcA/+f1dGvEIUB5+jUc+63w5eCvp5Wm5x31XLbCDKC9dfE+7D7nWZQH2DbWerAxV9r3DaELvNyTgd/DzOwmHFyWJV4m8wOy6LVVzYx5/O3AZnV94dpQZxFfXmD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o9nUJVjq; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782404344; c=relaxed/simple;
+	bh=5wYxoxwClM7bqSnv55xItUzQ2kPawXBCvBBnjW8BgvU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=m3Svl888jhT1hrQ3KKisptgYP+Orc83FEyA2NlG7ZPp8qdoQ9ec7n/a/2i2qTROMesSnR7lYGJ/Y+sLnh0e7HjwlxW60+bro8/rwERnSdqA/nAecEIAo4gm+zy3uKXobIianIM8qiCmyy32WQQw0yCbaT4TYO94AgzTFQprSOYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=b1Otferv; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=Vk1tTS8W; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o9nUJVjq"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-69ed219d3ecso2063934eaf.2
-        for <git@vger.kernel.org>; Thu, 25 Jun 2026 09:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782403292; x=1783008092; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MtyBN0/8Lp8l09gXAfrolABTlMPgYoeTcozRjapH7NQ=;
-        b=o9nUJVjqiwANX7OIFKb3OGoPzsVfq9SUUCeHRNXjvWKB5WpT90vIz904YobG67ODZI
-         85uRpTJtGrKgRXGaZlfERQLsGRoD5UoI9x/1RxY5Us4ij19N/9xA76fCFLfsFCuhl8Uz
-         XA/1L1UYfNkydCgG1nJIEj1w0qsOtu1WV19UbiDQazq2T6hKwIL5FYUG1bgIR34FRIdn
-         A6mYW/T4uQZt9JfcdRY3l1iUZUSHGgjWLj7l76ru7K2n6al9wCihVqntwopxiou/SeLI
-         cvoLSXiSXk134QBV59v7TpkXAA/PwaOlfh2WGycGW7FsEH2sBg11Z/hOxXzNQ+nluA63
-         A4RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782403292; x=1783008092;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MtyBN0/8Lp8l09gXAfrolABTlMPgYoeTcozRjapH7NQ=;
-        b=cSe/rXVGWjB/v3PcenuBvk8S9EEcl0KNxD04o4hUU2fZHN69tH2lUKJFRQfmoU+XiV
-         ZbSjDV2XM0i9JWLW76iNccEjzaepuohL7Ho2YR4us4/+6ifibzSBtSgVkVYfHI/zj6aq
-         pTu30dBGtDUqHOK4PPj2hL+m8IzuoKToiesUQhzhLtyGZKqkcrORFYGB5Z5gE39AV5fn
-         u4sq39a6VwwX7hpP82bTPzY346woYv5rLb08fOTfYtchQTVkD/qkSCcb8vTiGhGMAYst
-         qTVILih+kIxyDWyEowRzOzF/0Ul3cMsUXPPD/LF0yzdlU1xd114wmzLMve+SQS6ROMqM
-         hUvA==
-X-Gm-Message-State: AOJu0Yxu5Cqfy5DaOIOWgleQk4ny06ggRNbvEqhT+ZKhA4bmEc0xVsD0
-	sMiI0YI1niX4eNXXXdS9m2+hqsBZpCnG65Dnp+3hrQaPqFRFTQDpA08Y6mtJsg==
-X-Gm-Gg: AfdE7clTZzkMZrRG5bYrhde9Iw4yEoI+XwQJcBM21MPVix1NQCZ9P8XiOX+VzGbMdeW
-	shVGJzl4SehgqLlkI1Q2M0KkvQhFHl5CJ1VjehF3YdQ4nXBziSoIeO/Y2Hy39yoo78pZWggWd5U
-	58YYM4W1TY7cCOh8iekHh6fXjhR9nnai1e1G9LNDxQ/gYdmmeLjcS/OwGcTm6XwaStWHA9hoh7j
-	Hz+JV0hOFiv6IF8LsAGqkGn/Qfmf8z/yearGGversLco6GRL7AtT28J1ZVQCrds1Lecc2Im+1i0
-	ZWf8YYtQQsn3Zrb3Vya/MvWrjNQ07DwR/uJKG4FKgy7R5SkeO13wHoB4FhJWHKsh7NbhLZJh+l9
-	bTgn1+AwFUIa3lUE1KsCIRw17KksZR2pKCW/CZTSOwlstvMpgTXNvNNN6z56u1QufufoPdOozq4
-	tVBtBdDatoZ5gLhnmBMhbZZGb+bfjZhY1gggep5Sp+FMf02RvLFJSCl63ZcURcIbY3S4ji5dnP1
-	ZGwOYRy7PXnC9XxdfEbeeioKe5ijnEP4zMRpXRncAIVt2oY3a92BWIlTAshv0kZG67ZmQZHKIU4
-	rxviijk9GEHMa+20mP5PV3/BpndQ/tSrvqDB2faH5G25mdg0UtCI
-X-Received: by 2002:a05:6820:188b:b0:69e:855b:5ead with SMTP id 006d021491bc7-6a1350534c2mr2720051eaf.4.1782403291179;
-        Thu, 25 Jun 2026 09:01:31 -0700 (PDT)
-Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([208.80.35.36])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51a51106a09sm71417371cf.0.2026.06.25.09.01.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 09:01:29 -0700 (PDT)
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Thu, 25 Jun 2026 12:01:18 -0400
-Subject: [PATCH v4] doc: clarify --follow and log.follow for git log
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="b1Otferv";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="Vk1tTS8W"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=b1Otferv04PPOGr7lhmURbISSkjRDIXyazJtD4r4sg6XIdBcfF9TlVnqVybwNG8O+A5iAke2n2WAzcsc83JKVRtFIObDZRnr9ZgcJ619IG+hXf3xGm5naloAp/DUx4eQAcc+338ZeSBBJUNyHPG3aOdREwjTJZ/f23BlEuV2N9Di9s15vEpV2UYYkuiecU12lZf56XHWe/3MZeOoOTRQjZdV3A5fjTmbkQqxwDcrxYPz7nd6SwXv63k9iSG3a5pCoBs14wJtHr3FsSunVWdl1AzOxbNM3JzAErnwfmHIOOQ53JMQ9D0ydh4asXb9dJHec0zNXLdNCmbiTziXHwNtRg==; s=purelymail2; d=malon.dev; v=1; bh=5wYxoxwClM7bqSnv55xItUzQ2kPawXBCvBBnjW8BgvU=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=Vk1tTS8W2nOpGbCda5uZAjrdsMOJFfgObJDNJ7UakGEcDDgZIVVbefg3e3BTwzX78gqcIEogM63r9PmNud40Kz2ihu4t+aLgGM6SuS6iFumUCBzhQoPoLojqZHgT5MukYHVqU3uK0LGmV2pkvScte7I00Z6V6SN7wRKvrXw1+o4iZGOBcoeJm9fJyxZivVxvlsVw0RJsoKYVW3nbeaHF2NVNMxEX2pJt8JuADqs/SZCSl9XvAje4gAd83U4H4+JpQKe90wdK5xjwZdBFo22QIBJOcMGWKKltNYntu9kQMYugpDOx0muzNr+JYdC0J3BfpZpX7GOHuelgHrvR/EbIlw==; s=purelymail2; d=purelymail.com; v=1; bh=5wYxoxwClM7bqSnv55xItUzQ2kPawXBCvBBnjW8BgvU=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -612697585;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Thu, 25 Jun 2026 16:18:55 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: cirnovskyv@gmail.com,
+	Tian Yuchen <cat@malon.dev>,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [PATCH v1 0/2] environment: move excludes_file into repo_config_values
+Date: Fri, 26 Jun 2026 00:18:43 +0800
+Message-ID: <20260625161845.7543-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260625-document-log-no-follow-v4-1-9bb233248b8f@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/43NTQ6CMBQE4KuYrq3pDxR15T2MC/r6gBpoDQXUE
- O5uwQ0xMbqcZOabkQRsLQZy3IykxcEG610MyXZDoMpdidSamIlgQrGUZdR46Bt0Ha19SZ2nha9
- rf6eZACkN8JTxjMTxrcXCPhb4fHnn0OsrQjdrc6OyofPtc3ke+Nz7eTJwymmiAJlIDgx1fiqb3
- NY78A2ZTwbxHyMig5hp0BoVF8UnI1cMZ18ZGRmjjJRqDyrRes1M0/QCiEwsyFwBAAA=
-X-Change-ID: 20260507-document-log-no-follow-72c33dc15017
-In-Reply-To: <20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com>
-References: <20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com>
-To: git@vger.kernel.org
-Cc: =?utf-8?q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, 
- Junio C Hamano <gitster@pobox.com>, Miklos Vajna <vmiklos@collabora.com>, 
- Tamir Duberstein <tamird@gmail.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1782403286; l=3114;
- i=tamird@gmail.com; h=from:subject:message-id;
- bh=HK5lsPyC0O1lQ2Acqg7s/xzMa1vpbMBkANNHsqLNQcE=;
- b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
- MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QFzARFWeXMJXKmk2dV89hJ/82gQtnBp4ItkRHEBS7vqobn+9BFXNDDqreN8GgKkXRNA0KDuBZeE
- 7YXMMYqVpdgM=
-X-Developer-Key: i=tamird@gmail.com; a=openssh;
- fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-aebbcf5797 (diff: accept --no-follow option, 2012-09-21) added the
---no-follow option, but git-log(1) only documents --follow.
+This series continues the libification effort by migrating the global
+string variable 'excludes_file' into 'struct repo_config_values'. Since
+this is a dynamically allocated variable, the migration requires proper
+heap memory management.
 
-Document --no-follow alongside --follow, and note that it overrides
-the log.follow configuration.
+The series is structured in two commits:
 
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
----
-Changes in v4:
-- Limit the patch to `--no-follow` and its `log.follow` override; leave
-  the existing `--follow` limitations unchanged.
-- Link to v3: https://patch.msgid.link/20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com
+ - Abstract the XDG fallback lazy-loading logic out of dir.c into a proper
+getter.
 
-This conflicts textually with `mv/log-follow-mergy` in `next`. Keep that
-topic's shorter limitation text and append the `--no-follow` override.
+ - Move the variable into the struct and introducs 'repo_config_values_clea=
+r()'.
 
-Changes in v3:
-- Retitle the patch to avoid the awkward `doc: git-log:` subject.
-- List `--no-follow` before `--follow`.
-- Clarify that `--follow` follows a single file across renames, even
-  though the option is accepted with exactly one pathspec.
-- Document the directory-pathspec case: directory renames are not
-  followed, but `--follow` still uses file-follow traversal, disabling
-  normal pathspec pruning and possibly changing which commits,
-  especially merges, are shown.
-- Link to v2: https://patch.msgid.link/20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com
+Note on Submodules: A temporary shield 'if (repo !=3D the_repository)' is
+included in both the getter and the clear function. This prevents
+uninitialized submodules from triggering the BUG() assertion.
+(Inspiration: [1])
 
-Changes in v2:
-- Document --follow as limited to a single pathspec, not a single file.
-- Adjust the log.follow documentation to use the same wording.
-- Link to v1: https://patch.msgid.link/20260507-document-log-no-follow-v1-1-46ce02490eba@gmail.com
----
- Documentation/config/log.adoc | 2 +-
- Documentation/git-log.adoc    | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+Thanks.
 
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index f20cc25cd7..58147dff9b 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -54,7 +54,7 @@ This is the same as the `--decorate` option of the `git log`.
- 	If `true`, `git log` will act as if the `--follow` option was used when
- 	a single <path> is given.  This has the same limitations as `--follow`,
- 	i.e. it cannot be used to follow multiple files and does not work well
--	on non-linear history.
-+	on non-linear history.  This can be overridden by `--no-follow`.
- 
- `log.graphColors`::
- 	A list of colors, separated by commas, that can be used to draw
-diff --git a/Documentation/git-log.adoc b/Documentation/git-log.adoc
-index fb3ac11283..64fbec0f57 100644
---- a/Documentation/git-log.adoc
-+++ b/Documentation/git-log.adoc
-@@ -27,9 +27,12 @@ each commit introduces are shown.
- OPTIONS
- -------
- 
-+`--no-follow`::
- `--follow`::
- 	Continue listing the history of a file beyond renames
--	(works only for a single file).
-+	(works only for a single file).  `--no-follow` disables this
-+	behavior, including when it was enabled by the
-+	`log.follow` configuration variable.
- 
- `--no-decorate`::
- `--decorate[=(short|full|auto|no)]`::
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+Signed-off-by: Tian Yuchen <cat@malon.dev>
 
----
-base-commit: ab776a62a78576513ee121424adb19597fbb7613
-change-id: 20260507-document-log-no-follow-72c33dc15017
+[1] https://lore.kernel.org/git/c95a7730-7b14-4be0-a4e4-861b2f5430ea@gmail.=
+com/
 
-Best regards,
---  
-Tamir Duberstein <tamird@gmail.com>
+Tian Yuchen (2):
+  dir: encapsulate excludes_file lazy-load
+  environment: move excludes_file into repo_config_values
+
+ dir.c         |  4 ++--
+ environment.c | 29 ++++++++++++++++++++++++++---
+ environment.h | 14 +++++++++++++-
+ repository.c  |  1 +
+ 4 files changed, 42 insertions(+), 6 deletions(-)
+
+--=20
+2.43.0
 
