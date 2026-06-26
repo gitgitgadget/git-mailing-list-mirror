@@ -1,109 +1,147 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171E72E7376
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782484169; cv=pass; b=QzAQ9xt0QhMENMubv9g7IaovfvU3YsSmSifnmtXCOe/zonSU0mHVddBpUEpcGDpLIJFkSF/pIICUyo3G5ppgMn8osFM8lcLnVvqr/yexzW8faSEUYmv/upic0X2fupKq7pr54uyMNl6544OxrDXoqmTuu9KBdTglXDF9QTxAwXY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782484169; c=relaxed/simple;
-	bh=IcCrkuLpZJyC2PUTFmg97Indwfix0GhoHeVguU9m8/4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mMzluV33I7xnCbL3hOEP16Xb4IP6uBzf6oc1HRB2MgC6BDOqZE4nvfz3bqh389WhGr6OBEbphEg3EUM6jvdhMmxD72D+oEsi6kzFAd3jD1rtPXBVEu2UC0EZ9dUAdqNXQ9zcFKAiAywFCR2Ipw+gRG7YC5MxSfYyP9snVYC7ppo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=ajOwM868; arc=pass smtp.client-ip=74.125.224.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200D73F4DC0
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782484273; cv=none; b=ahVCMkvDvNAv2+T+nMLra3Agw9G7h2WHq6lHFPh4OyhMboiQdlkLu31jR8/ofz28daS7m6UpKmE43ya/IwY6HtphqzaIT6afuXLc0hjLdhYMR7Cs70Xt4xesd0XUYjSFjkAigDZZ1NxLoBo4Ss10wAwGRG+g4FjPOV5VH6xblUU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782484273; c=relaxed/simple;
+	bh=6wJ9PiORBR5H1bVkdJuN7s/WCXnyeQsOAPjg3/6CDzA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j1Dhh82SN0r2wdD+K0mWCgff06N8iDQ4xmCtuZi/pjCERh65nrFlZ2GI0fBZS2RkzM63ZXhYCTkcSOSO+IdneY4IwnP4NPx4o90iI1SqQKbSgSuKxxEhKMTZXdIO0tp6CKdyXyavXp4d6eVR1KjhPviXQUNUYB3RMeL+9JNfYFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHr6C6pJ; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="ajOwM868"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-6611689dc10so1174235d50.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 07:29:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782484164; cv=none;
-        d=google.com; s=arc-20260327;
-        b=T3VHpXYHsc7FFky6g+FLgo/v2+FGs+qrQuxrBy/NbsLIPTYRgKflgVexPm5FCLVFCq
-         3EtzCZBswc/1M63b/r6a8HrXFuRJ5iJsKBF2uDVohPKejkqnEsbD/OVtDsF+CYkAmZeU
-         PbtEPCVcPTl46axetNAcCvyqrOu0jobgUfdIm14RS3UKBZeoaXyx3qTSVf7Br++pECBp
-         B9Mt0InaxVnpQX9qGky5yd4PlKQqvqQEK5P2W20ljC2QRlsFUbw8WbP5CGuPeqRqxPWU
-         RlOWIHsreqk5x/g1dRK5SzQcT+INawKB210tNGHLhoBG1jPvE++N2FqEX47rpYgPakQc
-         KRWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=28wQyVZgL4ZmLpMETFPcxxZ4Lv8n4jopqUZhaOFEblk=;
-        fh=tXwkwlp1gPdEPqYEU3wr/lfdJh4Y1HUol4Mx382jUNg=;
-        b=szVI+ZrnPI3e7iyeiMRlFy5S+qfsIDpD0XXTvS+tTGHKF13AQJo5JGgqQIosEDAutj
-         F/sl9bAE0yw0TBsd57baTERtUb9rAXXJ3V4Zv4Sd13Z7L9HiPBsBDW1M4Bz+jkZJazh9
-         Ac6Fe9Rt7nf7ulQ0U8hDt/CObsmc2Sudhqzjlk93KJFYUKkpfjPmvKSj3aJG61GqYnLs
-         B71/IgP/5mUQJS+Liv7jYxEZyM+2MLd78UEetdnoi9XGj5pEj+h3FqmMoHnONQx0eFY/
-         doKwwwLS5e77pTg51EXOyiBMQ0uChdrLbQGaaT4XxZyer2NPCs5CoA0Y8hk25x7SK9VS
-         wmSA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHr6C6pJ"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8e066990ff9so11067146d6.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 07:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1782484164; x=1783088964; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=28wQyVZgL4ZmLpMETFPcxxZ4Lv8n4jopqUZhaOFEblk=;
-        b=ajOwM868VVRxhAPIJY43p3TP4gwN2WGP2q14W7Fx6IiyNdbdUyinDE5uYqQM1sB7Ih
-         emGZmD578yXoZhNUSTalIvd4cTaknpEn9wBSveXyaz1R+ouoCgnB7hMLvRvGLtaZiBQo
-         Wx8xKhjAz2ag3oe/QZ8IC9mbG4aLLu6YY6/b0=
+        d=gmail.com; s=20251104; t=1782484271; x=1783089071; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JniGvmaIB0MHFf47TpgA6KqIyeq/N1HRdzEvAtOLJak=;
+        b=jHr6C6pJDIudBZmIaczkBO1UDghHfRaekEUXVsxTJTaSEWYBQ2lvwhj6BB6QKbc5el
+         UnA88Qt+slt6mhqwK9Fi2VZJUVP+d9vIiftfvzQb8y5CcDo42tHoqXAa6MHE8jkZlm0P
+         QhOTTajf11z5oJj3X4lxo/moK6zPpb2Eia8idFPmX5GCJFRRI9c+9cfqry46P1k2nu/d
+         OjPr7mx52M0P7WN49SdtOgI7+p37RKJ4KNPNDlOFoZvuKlHjuXzvd7KDGo5ujCklcX3t
+         W54X/2rDwpewlS5eUp9hDYvcWbLjD6Hj6h4z7pi+hqkNCVpyzPzkBtIUTFcE/3IaEgGM
+         Q0sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782484164; x=1783088964;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=28wQyVZgL4ZmLpMETFPcxxZ4Lv8n4jopqUZhaOFEblk=;
-        b=OiwTOoorMyDL1gSIcYHl5qzC/PLlwOw6bI2G4k5oJ1V7ZkbzFwpOWoUbiVStdd6oKI
-         xpdlc/m0yqhGpiL2zcPfSM1ryQZ4b+QSDDfMZqOVTfdpzuPp0wP7yQOXkAM2N5u6ygrM
-         Z6Tg+9KbZqgG65p2nraB/SzU/iu/4z6TSoETcNjWuNnjSbyJ+hpmCxLIYEsUnAOuSix5
-         OoYB9THHc28ClVAirta9VuJ+Q9CxRUrRlU+XoWd4G8wJyPGS2A5N+AVCJzLdnLjhoRwd
-         wlrD4GIne23db5z4fap+QphE4/x76CS9TCPy/7gG2T9RfX7EUMD67CRGP9U6P80XaI0d
-         N+9w==
-X-Gm-Message-State: AOJu0YxvbO2+7z3D8WACxhIsSxNm54Mjed+nl80CgzHzw7urokKTF0HQ
-	4v28FTFeUvYQ7AdyS2IHfegFxn6PtDXYa+ji0nAscIEcRrPr+r8iq0CCu7xoPKXx9mvOh2we9Ws
-	WCviz3qL/YsQzPLcrXVgObO6WBe/F4DP60ofUj5nELp4yq3ZwlAuVagslrQ==
-X-Gm-Gg: AfdE7ckOHXupEUE+W6lpgWdnmREHLwH4JgWWDuj6eK0/mozVUvBQJ3velo5jThV1I/r
-	80xSo9DzRl5rkt90eHlo50MohYoDAOjJTVoO2dJo4xtW9hFt0eytFLiXkK+18Kxb/XqOEzmAU3P
-	+iGbmr+ENvN3GEX9bRN+N6NsQE5Ncr72ECSm371VpV+K+4QnOsXbPDFhbzbZTmBNwQLNzSbYTD2
-	7eVlovXr3ttQUk8cE9BlKIr90ZsDjEoVLdnnXmr8LmwAI0hn7yZfa3/ujwIwrnQw7iz7FLhig==
-X-Received: by 2002:a05:690e:408e:b0:663:ac22:88 with SMTP id
- 956f58d0204a3-66487bdea02mr5372627d50.16.1782484163822; Fri, 26 Jun 2026
- 07:29:23 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782484271; x=1783089071;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JniGvmaIB0MHFf47TpgA6KqIyeq/N1HRdzEvAtOLJak=;
+        b=tLB+1wgbZK+Gok3UfMpE+FA/mombJQb7MBdnxbrBxov9malQnuyyesqTGD0umSrWhC
+         lECRw28NOUCz1g3BpW0HUuKwG9AnvK6JMgGrPdPf/szU/91iHq4tWOnXAO3R/2D7QogA
+         lS4K8FMfjDnh/M8lABEEtPh1MivewCHQtofPmWnxGNLXtQWPYafEo4ks3UUaolZXdHQ5
+         lhm186qj747NS6PnzOiIpnkmIq9jhklSUmZEN5mhVUCkrIH6gLh6J8jA9/B2y/Fwzi7z
+         WvO8aTUHlL0htMUFoOzIOk/Kklg98xB+jjHPdvKCicjJ54NMcik4bjG8aK0UF14XjQa4
+         thQw==
+X-Forwarded-Encrypted: i=1; AHgh+RqkJO9uvXf1v+rcgQzbyaeJjUH8lLRxsppo3LVeRFvycOSYUn0HSAT/UZ/v3ykJKfvIWCA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTQVsFx46tp8bNk9luUGaVCQhs1U7lBDohhR37S9gqbbzrRjzf
+	fOVIeMf0ZxxsA1Z5+ZfrQKMFHR33Dknf62cJeauvwytnxISw4meWoFT7
+X-Gm-Gg: AfdE7cmtgj3Gx+26IXtvVdxcEhY8l4QvEMe6QEF6UzSkhdW+1EVJFVsTEbGuytKWHc+
+	njWTwIHzoodw6hUn8x76WnCYXvfEnY/SyI/VB6ehEq5Un+3ArqequE3E7ajqB3ffPunimxOwGey
+	6vMRAR1IkTqTu21y3n+R4ds1Fd9hLlkM5HTe9jxuEX4H96XkQBAVBrKY4eOKaUePnwpISBdRul3
+	cBAtJ/CJ6KexB3lfqAqSF9ujvnTLNgfLFwEccubhb8fcRD9XkbNhdrwWWdtT/fSjM9KNFuHOWuu
+	ChcF/ikuNT0B7AHfJebCEwlws6C2ffT7se8mafb0Orl8D/pU7YZkagwJ2UmndhD8xqsdpe4hl+r
+	7KlmUT7AbB3P6r5xYRbHhYu3eVjPA83LsbvoBlEWaYItZyi1N5efRdIu4oznl/5Vgcm/2YOe5x4
+	S7SHq05T03Fx2rwoZ23TJtwJ5sol91qx5y0NTwwdNQhZus34HjdLnMc9Y5qA==
+X-Received: by 2002:a05:6214:f29:b0:8df:2612:186b with SMTP id 6a1803df08f44-8e6deb07b3fmr65590976d6.18.1782484271088;
+        Fri, 26 Jun 2026 07:31:11 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df7f018011sm220728036d6.5.2026.06.26.07.31.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Jun 2026 07:31:10 -0700 (PDT)
+Message-ID: <a74d3114-7d7f-469a-b181-60853bb82864@gmail.com>
+Date: Fri, 26 Jun 2026 10:31:09 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/8] commit-reach: add trace2 instrumentation to
+ paint_down_to_common()
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Kristofer Karlsson <krka@spotify.com>
 References: <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
- <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com> <f3572a8a89c74fad54a9e53be6f0e34daa2d50c2.1782479286.git.gitgitgadget@gmail.com>
-In-Reply-To: <f3572a8a89c74fad54a9e53be6f0e34daa2d50c2.1782479286.git.gitgitgadget@gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 26 Jun 2026 16:29:12 +0200
-X-Gm-Features: AVVi8Ccq1g0nLoU6MwGmgi315mRJWXA11AOujzhhFDjfC6f66bv3W3cMjQ8AaKY
-Message-ID: <CAL71e4N3RPHSrXscwYJUiLWc8-a172h+nE13yuUBRV7Uu3zGzw@mail.gmail.com>
-Subject: Re: [PATCH v3 7/8] commit-reach: terminate merge-base walk when one
- paint side is exhausted
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com>
+ <2592264cda543c96c4479bb4ba6368c0121e4207.1782479286.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <2592264cda543c96c4479bb4ba6368c0121e4207.1782479286.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 26 Jun 2026 at 15:08, Kristofer Karlsson via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
+On 6/26/2026 9:08 AM, Kristofer Karlsson via GitGitGadget wrote:
 > From: Kristofer Karlsson <krka@spotify.com>
->
-> -               if (min_generation && generation > last_gen)
-> +               if (generation > last_gen)
 
-I have to note that I accidentally pushed this version before noticing
-that it now fails for a subset of commit-graph modes.
-Apologies for that - I will rework the logic here later
-to preserve the behavior better.
+>  run_all_modes () {
+> -	test_when_finished rm -rf .git/objects/info/commit-graph &&
+> -	"$@" <input >actual &&
+> -	test_cmp expect actual &&
+> -	cp commit-graph-full .git/objects/info/commit-graph &&
+> -	"$@" <input >actual &&
+> -	test_cmp expect actual &&
+> -	cp commit-graph-half .git/objects/info/commit-graph &&
+> -	"$@" <input >actual &&
+> -	test_cmp expect actual &&
+> -	cp commit-graph-no-gdat .git/objects/info/commit-graph &&
+> -	"$@" <input >actual &&
+> -	test_cmp expect actual
+> +	graph=.git/objects/info/commit-graph &&
+> +	test_when_finished rm -rf "$graph" "${graph}s" &&
+> +	rm -f trace-mode-*.txt &&
+> +
+> +	for mode in none full half no-gdat
+> +	do
+> +		rm -rf "$graph" "${graph}s" &&
+> +		cp "commit-graph-${mode}" "$graph" 2>/dev/null ||
+> +		true &&
+> +		GIT_TRACE2_EVENT="$(pwd)/trace-mode-${mode}.txt" \
+> +			"$@" <input >actual &&
+> +		test_cmp expect actual || return 1
+> +	done
+>  }
 
-I think (and hope) the rest of the patch series is in good shape though
-and addressed the previous feedback, so any partial new review
-feedback would still be appreciated.
+Thank you for putting these traces into this helper AND for
+making it cleaner at the same time!
+
+> +test_paint_down_steps () {
+> +	for mode in none full half no-gdat
+> +	do
+> +		test_trace2_data paint_down_to_common steps "$1" \
+> +			<"trace-mode-${mode}.txt" || return 1
+> +		shift
+> +	done
+> +}
+> +
+>  test_expect_success 'ref_newer:miss' '
+>  	cat >input <<-\EOF &&
+>  	A:commit-5-7
+> @@ -209,7 +219,8 @@ test_expect_success 'in_merge_bases_many:self' '
+>  	X:commit-6-8
+>  	EOF
+>  	echo "in_merge_bases_many(A,X):1" >expect &&
+> -	test_all_modes in_merge_bases_many
+> +	test_all_modes in_merge_bases_many &&
+> +	test_paint_down_steps 45 2 25 3
+>  '
+
+oooh that's clean. Thanks!
+
+Way to over-achieve here. Thanks for going the extra mile with
+this patch.
 
 Thanks,
-Kristofer
+-Stolee
+
