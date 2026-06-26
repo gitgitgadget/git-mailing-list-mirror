@@ -1,231 +1,155 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701553B637E
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782484978; cv=none; b=NpD0Vg5m67RPcLC0WKV+wNbg54Ew8is4NSdjGXVKE+DWCdWAsY9tYjipgFBALsABIZNpjQB2fZ1SW42zO9dl37Dm4FsKZHnzyKX3YBbplqbr8IDMXKmXHQPI6X57T8vh/2XL+LqEVfrTLBnbqlbkCYdigxQwUMzqIShMqIx5Q4o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782484978; c=relaxed/simple;
-	bh=xq384b0++qBlmkbnav+p8o9o1EmIcfuFUZBbenLneP8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S31oSAIEjCm+MOuDDAwryOcRiDIWWorllGFW3pFHPjdrr6xzFHS/uL2TijJ3oVoyhaoj+edFDNkOoUjj40L4SwMLsCR9dbSGRODRwSoipx8U8TO3E3xK2NFx0YwuYuVA87+rlbYNUlkBUOdSabw7/TBEOMmkoowYdEwjrbYep10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rhr8YHj8; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8782282F2C
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782485597; cv=pass; b=DZyrS5c0n97nYbNfvZaHcS8jNJ5VX8RerYVWqLqMvxGClph4y6KvFaKYeRlCq8seBs1yhLvP94Ybw1XcCHiRbUQv/8vxsBLtENicmv1VaAuggapXUVwIaXKBApBr09UcMueI/2NNmqvk3RMSw9Z39KtslJjWc3U6DU/BCbJL9Iw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782485597; c=relaxed/simple;
+	bh=RXTEdy9rtd9bGwRqeJcLaF5GQtg+hgZm9KD2LCiZv7k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SzIlUUKiNTWj+mR9IqftQG8AnO7KLiQfQuXCeyetuJ8Z80kDwZkZZqhpzPfBLJm30HjFOKB3nhCt8uJB+pLyhMsnnyuOeHwUOOhCj9rj27NSlCwy/3S0HDWCQt5y2lCEmKX/gxC3wG7+/O5k5D0HPEEyCIdY6QSGO2vimQC+YeU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Tbd5LMBT; arc=pass smtp.client-ip=74.125.224.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rhr8YHj8"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-51a86916326so2824161cf.2
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 07:42:57 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Tbd5LMBT"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-662fa4a4470so1235719d50.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 07:53:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782485595; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Gsvkt6QhNJgDeblmnBN+fh7I7LM+JqHGBvwXqn128kLmmsF7Cub9FnHtHalgkZnsTP
+         9eKhhoEf5xZp/0HA/jOeW4sKq4er4HkfiLqfvbFbQ9aryr6zFF3LCz3txQVK+sO2Zc6J
+         Iy5oMccxdrW8x6N9mnoYllIlfysSe8Xe4Azpz6GyKt2WmUEfcQQS3jJ2E4hg9rhYwT2b
+         9//8a2AB8UmNgACpLB/GoX2gUhBvR44lRdmMfYw4Q3Zpi6qGgut0U55AHmcH7rlySNQf
+         G+a9Gi1Ts5kmeNYRBnP9XYJ/RU8bC5Z3IC9U9UOS8ss/MpEU+U/NYocLN5NKsSF371tv
+         eGMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=PjQDEtIx4LX/v8sQ9a7ftrWWoBv4SBI2Z4RpyHzrCJo=;
+        fh=mGdw1r4geSqKZj0eUeaHamXL+EH6MGxOJnp4uCeI8as=;
+        b=eE0yM0Y+yVl9yjh1fOTes7liZMsdUvCIvKaFquWNlZrDG5To/VUorJ7DXtlQG9ptJK
+         g/SQcwaxftwa/npTBuW6jX7zH/mhxArRNQ/2b0ifqj/+HvvgqmvapsA6Ke7DADEBXHTi
+         iHFHPYTymUp769Rv/9G5sJSosgoahNLv957OLho1ztBxu3ezYL/bHBIyPIYne6CEG97Y
+         AST+j22djNqtqLV3uhmt8CuBV7EvSo8YoZYR4rRdIb25mgBxVEU1/8pq63CbUlK/nNCU
+         EwVFP4DIJKzLQbL28jwwrKJXUU8OllyINO6IAOMYkqRIQ5NVkzYaxC44WB7TvBvoISAU
+         L5Sg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782484976; x=1783089776; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jyP2EC43N5Qw+jziqtZjxq/oRJRsQ0FxwOaqQ/pc5fg=;
-        b=Rhr8YHj8b4WKi+b6M4LblSaKVhkMTw7lW0V1leVYCpzF1i+51vdpaAHrJA5EDKIJoQ
-         8eKCN+4yk5dSnMNlpQit5ThQIIjI6/tuBqpwipqJX6idj/sUieh6mSuSuB8/ChoA5OLr
-         P4vBaDBuJsBAEHoIJCqoMWj1+SBjslgO7Oq6/9Ld+XT++aeybvYnnbQajP0CF8wr6u66
-         GQlZg3AzAGkdb0AC/koDcZQVtPyHiq+ffpVo+haq5+eOd0XApcrrZnOIvzQZQRCmBNBB
-         Xj2A1DJMWLJvxaBjaE6n8BEU72cJ+7IWj1faktQO6SIjI9sAXNZwefLmmEGApnKdaiS5
-         p/Fw==
+        d=spotify.com; s=google; t=1782485595; x=1783090395; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PjQDEtIx4LX/v8sQ9a7ftrWWoBv4SBI2Z4RpyHzrCJo=;
+        b=Tbd5LMBTMDe0d2dgifX2Yq/QFzZz/2rNenhsis8r8RP8w6IQ/AhnVoF7EmYTCw9ECQ
+         o8YY2eiErg46545LsUVRX2E73WJo5WVvsVPucf7yne/nrvPvcUr0KlcLvXkZe3yAfGsj
+         2y9LCw+Gw4EMIejDWB+2oJ0A5g6qv15Ob4cJM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782484976; x=1783089776;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jyP2EC43N5Qw+jziqtZjxq/oRJRsQ0FxwOaqQ/pc5fg=;
-        b=omIEFjLvpDYsoVk8nQDAPys/81fVM94MbsQwQ7tq/5VnBgVzjOxheMa9chgdVS8SA6
-         iRoaYQOP1wxCEjKtpYi7My32rDlTPiy0QMKHztPJU96Sgwi/tHthm3IaqHYtJCEdkAGs
-         hnR65BqdzLmu/I1Vef0nNjMFmjP3xTGcg8ZxON+NVwhFMMYwfwGMHfKEnIJyyuM1mBXL
-         PRgd2z6ASsw31gFP55xQY3dIrvcX0a8thp+/7TgKeFeCu5QSZ74uxxEYBlGDgFSu3jcS
-         7ZUNgDpTs+JsghmBrt9TUhPSjPG9LHOcweKFZ+N9FCC/deWOXis/N3Bt5IUfRBuNoq00
-         /2VA==
-X-Forwarded-Encrypted: i=1; AFNElJ8ym1PCK6QJDqb1az3sjfut1W5a+60O+l007YZl/9MENUPUsKnnzfXa/qxpdbQ/efAbiIY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGzfeBgomLrKCWX1VmHjPxvOqZeV92ols6v7UgJaj2gyuo2016
-	0LY4AOKLxwD6TbdBZtlCQv/IemwPp+f2FwQAqJ66cDpaPrJ4+cxZtyxw
-X-Gm-Gg: AfdE7clPXko8bS6CKD1xkDEHkuaeR0ZZrhw1+FGXkgfpaCI6V7kR03HhqEE08EDY1rQ
-	hWEblpKqTkpb8bhYHNPNgU/ZiWKVl5Ql3dkBKq7x1YAmsjVwB/NR7ckds1BvbF6UJ71dr5rO+Rj
-	n1Fl10rgZwp2Se7yrz527LTLh26WzPl8v5VCG9H12agNXNaO2UfKkKVuNrxvqm6uYvYzpDf+kjc
-	prwVLnjwvCc2vDCCyvgw6KrCZUA4rv2AVbIHEItyZ6O9RVQWZD9EgOl6S3T+EWM9UTeprHO/MzB
-	AA0mwNGpA76KJNGxMgpf5IIR0O5sagKTusSp8Yf4SNfIGU2rXIr1JiUAQO8AUVy3TuHdIuepQW5
-	ufRbLQ/h1xsKkTuSQ/LnX5Z78SShXCf45Jq1v7gHAFvmtgnR8rIm/F7rbOmlBT0JowfgOmKRGLX
-	cxPmLqfBRBJtX+0/IA5irrUwqek2LO+ajHMVFHK/mG4HdiWTV1TfLTzJRNvQ==
-X-Received: by 2002:a05:622a:4291:b0:517:6435:c4ce with SMTP id d75a77b69052e-51a72822e58mr100044271cf.49.1782484976191;
-        Fri, 26 Jun 2026 07:42:56 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df82c6459bsm214308266d6.46.2026.06.26.07.42.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2026 07:42:55 -0700 (PDT)
-Message-ID: <34ff8be2-1b3c-480f-ae27-9d65875e6e62@gmail.com>
-Date: Fri, 26 Jun 2026 10:42:55 -0400
+        d=1e100.net; s=20251104; t=1782485595; x=1783090395;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PjQDEtIx4LX/v8sQ9a7ftrWWoBv4SBI2Z4RpyHzrCJo=;
+        b=ijOoVBU3kIvD0b5t+2S6ceZw3mih5Q5XYpxtJmvP1oJU0yNX6dibrp850P4GOU4JXA
+         Kt8Rx2HdAys3UhXBNc3sP7cW6GhKzMaRuzc0O2CHYo+ZrKgkqm1CagM5UT2s8U0Biall
+         ioZCd2GVMtMyxcSrXorEBKXzDbFbJf3i1/z+SiCAUoYej1MrlIIG0H8S0JViOp08lAIL
+         MUqayoCEk5iDOBsx4VtjLblse9hpcaeF+7unrOnzESD1oe/uxPUMjSNAcexwuws5LXTZ
+         enrTmWQJ9kEJKffbtY7tf4K+sOnQ7aZVw0XXpky7FdJNOGuP29NKripdh7DtlNKzRD/S
+         ovcg==
+X-Forwarded-Encrypted: i=1; AHgh+RqezXKDYBs3HAf7PJwPQDDPbVNGHh3SB4G1pWQWagyY7Bog0uUM7iTCGn9FEyluC1ue/J8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxadFc/6t1dtujAfwcYgLNTfCkyaE9ZyJ2mMEGuhIsEKPZAn3pb
+	yP9AuGz4v3czpKdqQQU8JL+rjzi7yZkrY3yl6L8oHDD74pm9ML3tYNTqsTojXEF/p9p54voH3Kv
+	QYRu9RaWC6WgSC4KYRlKwVBaJmMtPd40vDNR5lZIGuw==
+X-Gm-Gg: AfdE7cn76PWn2SgT+Whx2BbzyedP8QUgUdO1XF3P3klo9GSwHSP3mRc/KVY4+U/nXI/
+	3Mp9w/3Mi512CBjhvERVDVtX5EAEi/P7/DhZcMH5IH3OAbNLYU4dfzdRX/O6PzZ6L7n8It15HnI
+	X5TnPHyiHyKjRrZcqevlcTuQLWdNutS7CloTT8CECMW8DtZF/zKE1M32DH3/4Po6V7tF+hghtXp
+	zDj2LcM1fbfw24SAhFHe1BMlESTBHouaFovXYo5/uIopHDbwzHAPDhpziXlrB18kGB5dqlzkQ==
+X-Received: by 2002:a05:690e:128c:b0:664:8d90:25db with SMTP id
+ 956f58d0204a3-6648d902b19mr5014918d50.61.1782485594675; Fri, 26 Jun 2026
+ 07:53:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] commit-reach: move min_generation check into
- paint_queue_get()
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Kristofer Karlsson <krka@spotify.com>
 References: <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
- <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com>
- <4b9f192d98b8e8f2d30eed4261a73e766eeafcc2.1782479286.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <4b9f192d98b8e8f2d30eed4261a73e766eeafcc2.1782479286.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com> <4b9f192d98b8e8f2d30eed4261a73e766eeafcc2.1782479286.git.gitgitgadget@gmail.com>
+ <34ff8be2-1b3c-480f-ae27-9d65875e6e62@gmail.com>
+In-Reply-To: <34ff8be2-1b3c-480f-ae27-9d65875e6e62@gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Fri, 26 Jun 2026 16:53:03 +0200
+X-Gm-Features: AVVi8CfcxqM41sQWIlqH00he5k5WMPArXrhaS-iWGdHUXGyaBcLgJYOivNwoPoA
+Message-ID: <CAL71e4PWmVjh5pQATGj1GrwgtWDZOeawKUXbKZ7DZX-DcWuCfw@mail.gmail.com>
+Subject: Re: [PATCH v3 8/8] commit-reach: move min_generation check into paint_queue_get()
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 6/26/2026 9:08 AM, Kristofer Karlsson via GitGitGadget wrote:
-> From: Kristofer Karlsson <krka@spotify.com>
-> 
-> Consolidate the min_generation termination condition into
-> paint_queue_get(), alongside the existing stale-entry and
-> side-exhaustion checks.
-> 
-> Move last_gen into struct paint_state so that
-> commit_graph_generation() is called exactly once per dequeued commit
-> and the result is shared across all termination checks and the
-> monotonicity BUG assertion.  The loop body in paint_down_to_common()
-> reads state.last_gen instead of recomputing the generation number.
+On Fri, 26 Jun 2026 at 16:42, Derrick Stolee <stolee@gmail.com> wrote:
+>
+> > +  4. Generation cutoff: the dequeued commit's generation is below
+> > +     a caller-supplied `min_generation` threshold.
+>
+> Technically, this was always a termination condition of the walk,
+> but now we are correcting the documentation to match. It was just
+> not part of the termination in the dequeue method until now.
 
-Thanks for incorporating this change into this version.
+You're right, I should perhaps fold it into the first patch instead,
+which would be logically more accurate. Would be an easy thing
+to fix for a v4.
 
-> +  4. Generation cutoff: the dequeued commit's generation is below
-> +     a caller-supplied `min_generation` threshold.
+> >               flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
+> >               if (flags == (PARENT1 | PARENT2)) {
+> >                       if (!(commit->object.flags & RESULT)) {
+> > @@ -219,7 +224,7 @@ static int paint_down_to_common(struct repository *r,
+> >                                * descendant of this one.
+> >                                */
+> >                               if (!(mb_flags & MERGE_BASE_FIND_ALL) &&
+> > -                                 generation < GENERATION_NUMBER_INFINITY)
+> > +                                 state.last_gen < GENERATION_NUMBER_INFINITY)
+> >                                       break;
+> >                       }
+> >                       /* Mark parents of a found merge stale */
+>
+> And here's another termination condition. We are now leaking the
+> abstraction of the 'state.last_gen' which give me some bad feelings.
 
-Technically, this was always a termination condition of the walk,
-but now we are correcting the documentation to match. It was just
-not part of the termination in the dequeue method until now.
+Yes, this is one of the minor annoyances I also noticed,
+but it's not too bad. I think a followup could be to either:
 
-> @@ -89,6 +89,8 @@ struct paint_state {
->  	int p1_count;
->  	int p2_count;
->  	int pending_merge_bases;
-> +	timestamp_t min_generation;
-> +	timestamp_t last_gen;
->  };
+1. remove this optimization entirely (though I will have to spend
+some time reasoning if there are realistic use cases where this
+would trigger much earlier than side exhaustion.
 
-I'm happy that these details are being imported into the struct.
+2. tweak the logic to instead halting on exactly this commit,
+instead halt inside paint_queue_get if:
+   generation < INFINITY && !FIND_ALL && num_results >= 1
+This would change the semantics slightly (but for the better?)
+in the the found merge-base could be in the infinite region but
+near the finite region and thus would unlock the optimization
+as soon as we pass that boundary. But I did not want to include
+that change in this series, which is perhaps already getting
+too complex.
 
-My first reaction is that last_gen shouldn't be here because we
-can see a generation from the dequeued commit. I'll read on to
-be sure.
-  
->  static void paint_count_update(struct paint_state *state,
-> @@ -138,11 +140,23 @@ static void paint_queue_put(struct paint_state *state,
->  static struct commit *paint_queue_get(struct paint_state *state)
->  {
->  	struct commit *commit = prio_queue_get(&state->queue);
-> +	timestamp_t generation;
->  
->  	if (!commit)
->  		return NULL;
->  
->  	commit->object.flags &= ~ENQUEUED;
-> +	generation = commit_graph_generation(commit);
-> +
-> +	if (generation > state->last_gen)
-> +		BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
-> +		    generation, state->last_gen,
-> +		    oid_to_hex(&commit->object.oid));
+> We are getting to the point where I'd leave such a thing for a
+> follow-up, but since you are needing to re-roll, then this is
+> another case where we can move this into the paint_queue_get(). I
+> don't think this is me "raising the bar" from earlier recommendations,
+> because I was asking for all loop termination to be in the get()
+> method, if possible.
+>
+> But also: I'm not looking at the full method right now to see if
+> terminating _at this location in the loop_ is critical. So it may
+> very well be impossible to move this into the get() call, in which
+> case please ignore this suggestion and use state.last_gen.
 
-Oh I see. It's just for this condition.
-
-Does this case still break without 'state->min_generation' in the
-condition?
-
-> +	state->last_gen = generation;
-
-This is an appropriate use of this value. My concerns are no longer
-valid. Thanks for letting me think out loud.
-
-> +	/* generation cutoff */
-> +	if (generation < state->min_generation)
-> +		return NULL;
-
-And here's the crux. Again, impossible for this to halt when
-min_generation is zero.
-
->  	if (!state->pending_merge_bases) {
->  		/* only stale entries remain */
-> @@ -151,7 +165,7 @@ static struct commit *paint_queue_get(struct paint_state *state)
->  
->  		/* one side is exhausted */
->  		if ((!state->p1_count || !state->p2_count) &&
-> -		    commit_graph_generation(commit) < GENERATION_NUMBER_INFINITY)
-> +		    generation < GENERATION_NUMBER_INFINITY)
->  			return NULL;
-
-Good reuse of the value.
-
->  	}
->  
-> @@ -177,9 +191,10 @@ static int paint_down_to_common(struct repository *r,
->  	struct commit *commit;
->  	int i;
->  	int steps = 0;
-> -	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
->  	struct commit_list **tail = result;
->  
-> +	state.min_generation = min_generation;
-> +	state.last_gen = GENERATION_NUMBER_INFINITY;
->  	if (!min_generation && !corrected_commit_dates_enabled(r))
->  		state.queue.compare = compare_commits_by_commit_date;
->  
-> @@ -196,18 +211,8 @@ static int paint_down_to_common(struct repository *r,
->  	while ((commit = paint_queue_get(&state))) {
->  		struct commit_list *parents;
->  		int flags;
-> -		timestamp_t generation = commit_graph_generation(commit);
->  		steps++;
->  
-> -		if (generation > last_gen)
-> -			BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
-> -			    generation, last_gen,
-> -			    oid_to_hex(&commit->object.oid));
-> -		last_gen = generation;
-> -
-> -		if (generation < min_generation)
-> -			break;
-> -
-
-I'm happy this is getting cleaned up.
-
->  		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
->  		if (flags == (PARENT1 | PARENT2)) {
->  			if (!(commit->object.flags & RESULT)) {
-> @@ -219,7 +224,7 @@ static int paint_down_to_common(struct repository *r,
->  				 * descendant of this one.
->  				 */
->  				if (!(mb_flags & MERGE_BASE_FIND_ALL) &&
-> -				    generation < GENERATION_NUMBER_INFINITY)
-> +				    state.last_gen < GENERATION_NUMBER_INFINITY)
->  					break;
->  			}
->  			/* Mark parents of a found merge stale */
-
-And here's another termination condition. We are now leaking the
-abstraction of the 'state.last_gen' which give me some bad feelings.
-
-We are getting to the point where I'd leave such a thing for a
-follow-up, but since you are needing to re-roll, then this is
-another case where we can move this into the paint_queue_get(). I
-don't think this is me "raising the bar" from earlier recommendations,
-because I was asking for all loop termination to be in the get()
-method, if possible.
-
-But also: I'm not looking at the full method right now to see if
-terminating _at this location in the loop_ is critical. So it may
-very well be impossible to move this into the get() call, in which
-case please ignore this suggestion and use state.last_gen.
+I think it's not critical (as I mentioned above) and I think I will
+need to follow up on this later.
 
 Thanks,
--Stolee
-
+Kristofer
