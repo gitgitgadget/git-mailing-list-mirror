@@ -1,257 +1,219 @@
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160093DB635
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 15:58:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABC3310652
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 16:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782489510; cv=none; b=Yut6DOyPrPQsmeCpWO5uBQugyv7oEnkcR/4kFC8cwUZtsLGwLEMgHQbPHFba+J5gBIchXL9xgYJj0xUwL4OnVFY0KlyFKVeLyz/u9b7dHAfy4FL0aSxjafH5EyIv+5yAHwntq/0reRlc8+mYLhS7WOgUZtljSJqRVOm3gY5dW4M=
+	t=1782489714; cv=none; b=B0G7EoLMEEDX03R6ev+c0N/UIMvq/xufK5K0zeokhF0NMagvOt3gNmxu4LbIX+IT+aS8U5yEbv899gkPcxqZQritQgopwdxFNf3waEknODCtrhuZi9Ity3/NqIWsVZB4FCAa1rvapv+ciEJSg9VCEw4sazkhR8F8kMpqgzlHDkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782489510; c=relaxed/simple;
-	bh=hHz8GQWHitq9jP4y47WIquhO+HK262GOAtc2bkpzqR4=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fTmmZgIPhe+Iw7VXINkFL07WmGMq/E2eYpJmwCcZ7iuQ4vObqsKFmZWNuSsKAw/sA0UXouStKW2dPodl8GmJBWjBRKWKuye+14b3H9/pO8qWCNT4/2eFO7BBbO9d56oKYqqlonExLUKV24nYTZE2YNx6ynH92aU3V4COcCoINyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IUjFFxYG; arc=none smtp.client-ip=74.125.82.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782489714; c=relaxed/simple;
+	bh=vS5g7N55X//1GculhDWacGqUDeHIA7kwLhJ4uUSVQG0=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=gcRvIgbwR2d8HK2JFCgqFLSPmu0iUqcoxHHe74X1JryOP7AgoVN/MEgUCTMIDOrAaSYPCxEY5RojjxGCG23SVJu1hqT53NMvQVWOB9n5zvcHpqZpyPeMU7PHIMSbF0a2KkpEZJC0okYWWfclbX6cbpw6kD8+vkjwz+ZQj50dukQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DU0C0Orp; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IUjFFxYG"
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-304f590dd91so1515074eec.0
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 08:58:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782489508; x=1783094308; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zot2AM7L/lplJhtxdwDrIR1ipyOzA3ntLAPT/zTPrWA=;
-        b=IUjFFxYGmcmZazp8t9CexAeHB7KfnLPsiMwbgWEfirHrQVoUJT67az78GbVgm7TFHZ
-         bNUFGIrT3d3cBkXE8ENhVM+pbQdUTyZzDuylty4dBI1Bff4hvOoii9Wm2ZwkixXTOYdd
-         jzr1oEaRhEKFxLQ6kN4tRzvwDAozaf0e3eJRGc0ZWOF8hg3TwGkHeloH1rWLAYdY8ewW
-         O7qY4znWQ4i2iLFjQc9L0w/GKNp+Cp10n9NWE0dNbDRL4v5NRNI+mP3Vp/EW8VSpH/w+
-         rlqjLsMNxN2yIgabfnSmflx2kPNPNDmRtZUuydA846vhHt1aGuiDFgzgsTm2o9jp5E2D
-         2MNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782489508; x=1783094308;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zot2AM7L/lplJhtxdwDrIR1ipyOzA3ntLAPT/zTPrWA=;
-        b=aQGY1f1dGDLE+qqvWGskUe2Xv+XKRvHLH7wkUcVA8zSqnJQGs3BXayWHb8mSI/B3uX
-         AbmIe/o31uYbRBwSn1YOPMpYKYYSlp1xgUoRLJRfZPZlEp65sHb/D0vJTf+mG1T8jjlg
-         HtE7N/Yt6qxQZ48gxTeWZ3eCpjwL04GPIP9zuy4K8BL2koOEjdFS2hoNBywNEh/p0Zvo
-         ylyPEV3dLoGMHVEnUy9ipaY7EjBdk7nsNnapuNucGh1xelfujFqRcaccfyHCHfErrdIM
-         Wq6HYJ/SZBGqpP8Ttl1n5+hxClkXEpNcBjOV9yeY/tLz6GrUJhVUkQCL41zQ1avrhMev
-         fwfQ==
-X-Gm-Message-State: AOJu0Yw1BQtCnHlJvZXUHtMvoRT/cBwig2xFnIUqQrT0H5gUQIBN29FI
-	EAQp+8Z+psn0a58ZduHh9zUhGLlTcuPz0Ho2HinOLeBlZMfEKczBA7FUkL9/Yw==
-X-Gm-Gg: AfdE7cnuYyFYRE208ld3T1Cw6uqsF53hovJhUZGuEeK9DSs9rudiaSVu+OzgJG44AMy
-	pmLbbuAahF6lbuUYWzMR/Mm6DPzCNe6k0m7VlWnz9gLgqlipl0rvfFIdAvEcIJQ6ZUvktW1OkEK
-	j0Q8Bq+Lu4rS8NGPsoFUMpHRfQP2HvPEwlV3IE+IUegkN7VN2Au2VbzfnyOKUBsXmtvrP+9XOgP
-	ppTLkk1/KYkcT/hXhJYiIEfUAjGiCHVdsgYlUVC30KmXY6u4rmN0wiEpGNT0xS8ZGpU1DXnA3ba
-	EU80nDoqQk3ltc6uoroc+e31O3r80wmH9wjeTF1JLeHXEy03YNXslTWw8qQZ9/0Mwwoz/5bOu46
-	XhioAWn16NReXsNsRyntb8Af8QM1rSq8hp4cWNDnNlpjuCP8V1R5H6b3PnspWD2/pNqU4dUJ5M7
-	5+WXIpAvDcrAAA36s=
-X-Received: by 2002:a05:7300:1821:b0:2ef:83d4:647f with SMTP id 5a478bee46e88-30c84f216d4mr6841149eec.25.1782489507783;
-        Fri, 26 Jun 2026 08:58:27 -0700 (PDT)
-Received: from [127.0.0.1] ([20.57.198.231])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c8b1ae5sm21420778eec.16.2026.06.26.08.58.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2026 08:58:27 -0700 (PDT)
-Message-Id: <pull.2350.git.git.1782489506255.gitgitgadget@gmail.com>
-From: "Feng Wu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 26 Jun 2026 15:58:26 +0000
-Subject: [PATCH] rust: validate object map insert algorithms
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DU0C0Orp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1782489710; x=1783094510;
+	i=johannes.schindelin@gmx.de;
+	bh=M5K3mxje48fx93uVMKT3HibqYppy/w/krPUM0VnD09M=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=DU0C0OrpQC4hiAzVvLa3IFnfApL+2bNfOQWMrvdUzw8wp7mrL4ZHUzz/4BEBgThm
+	 uxkG+A1S3Tizl82PutcCeaiqS16J+k92rL2XcCUAzL737WKTZL979HZGIDt9CLtYz
+	 9doRw2nheydsvn6u+dWHTFqCMNsUT4z3tks0OLutn+17DPAZkeyOlln6K6qDrbLGc
+	 PVMtcoO3IoCTq8WmnbwmuhJ05dqz91lhmC/uxjE7ud5eryyyjTOgkNkvXcm6Twf7i
+	 97+uia6tDbSrULayqXwieoL16NPqe0i1vw3SCuHvTwOWJp1uqpR3Iy3Y47rtSl59g
+	 pdUr0UaQBVUaiBZ4tg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2f9h-1wZa5p2IJz-009fJG; Fri, 26
+ Jun 2026 18:01:50 +0200
+Date: Fri, 26 Jun 2026 18:01:49 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+    Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+    Derrick Stolee <stolee@gmail.com>, 
+    Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH RFC v2 2/2] Move libgit.a sources into separate "lib/"
+ directory
+In-Reply-To: <20260622-pks-libgit-in-subdir-v2-2-cb946c51ee7b@pks.im>
+Message-ID: <32bb1cf6-1e37-dc0c-dfb2-e78a30763342@gmx.de>
+References: <20260622-pks-libgit-in-subdir-v2-0-cb946c51ee7b@pks.im> <20260622-pks-libgit-in-subdir-v2-2-cb946c51ee7b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Feng Wu <wufengwufengwufeng@gmail.com>,
-    Feng Wu <wufengwufengwufeng@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:cphlzdbS++R1W5Mt2f0xARRRe/yykpm8oCl+m0L8A4zyx9AVpkx
+ KbuFLaI42CmJymgePqvo69R/Q180WCM2cBMrrHs/eUf+5zUEmwRTiEau23FJYPdx3qOn/PO
+ 6wC3cSvfGacVQbUlcJ3rBHSf5K4jjHaJIXQrJCnK5VxNos4Su3ukImIIuzp8SF3VGwwI4rI
+ Fv8BznVv6fRaoBbV14tgw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:2fwiRdN1Ssg=;ZnScOVxhckDjcnX0FjT1TcJ2zmC
+ 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
+ WKDetTunM4pYTzLM8Q=
 
-From: Feng Wu <wufengwufengwufeng@gmail.com>
+Hi Patrick,
 
-The loose object map stores entries keyed by the repository's storage
-hash and the compatible hash.  ObjectMap::insert() accepts its two object
-IDs in either order, but it currently checks only whether oid1 uses the
-compatible hash algorithm.  If it does not, oid2 is assumed to be the
-compatible ID without validating oid2's algorithm.
+On Mon, 22 Jun 2026, Patrick Steinhardt wrote:
 
-That means callers can pass two IDs with the same algorithm, or an ID
-using an unknown algorithm, and have one of them silently treated as the
-storage ID.  This does not match the map invariant that each entry must
-contain exactly one storage hash and one compatible hash.
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index cf341d74db..a8402babd9 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -179,7 +179,7 @@ jobs:
+>        uses: actions/checkout@v6
+>        with:
+>          repository: 'microsoft/vcpkg'
+> -        path: 'compat/vcbuild/vcpkg'
+> +        path: 'lib/compat/vcbuild/vcpkg'
+>      - name: download vcpkg artifacts
+>        uses: git-for-windows/get-azure-pipelines-artifact@v0
+>        with:
 
-Make the invariant explicit by decoding both object ID algorithms and
-rejecting unknown or mismatched pairs before inserting anything.  Introduce
-ObjectMapInsertError with InvalidHashAlgorithm and MismatchedAlgorithms
-variants for clear error reporting.
+Please also adopt:
 
-Update the existing tests to unwrap successful insertions, and add tests
-for same-algorithm and unknown-algorithm inputs.
+-- snip --
+From 1d09a51d426bd3592e4f4b0331f7715ab3b5d502 Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Fri, 26 Jun 2026 14:39:19 +0200
+Subject: [PATCH] fixup??? Move libgit.a sources into separate "lib/" directory
 
-Signed-off-by: Feng Wu <wufengwufengwufeng@gmail.com>
+Turns out that there was one path that was forgotten to be adjusted.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-    rust: validate object map insert algorithms
-    
-    ObjectMap::insert() accepts a storage OID and a compatible OID in either
-    order, but it currently checks whether oid1 uses the compatible
-    algorithm, and if not, assumes oid2 is the compatible one without
-    validating oid2.
-    
-    That means inputs with two OIDs using the same hash algorithm, or an OID
-    using an unknown hash algorithm, are accepted and one of them is
-    silently treated as the storage OID. This breaks the object map
-    invariant that each entry must contain exactly one storage hash and one
-    compatible hash.
-    
-    Teach ObjectMap::insert() to decode and validate both OID algorithms
-    before inserting anything. The function now accepts only the two valid
-    permutations: (storage, compat) and (compat, storage). Unknown
-    algorithms and mismatched algorithm pairs are rejected via
-    ObjectMapInsertError.
-    
-    The tests cover successful insertion in either order, same-algorithm
-    input, and unknown-algorithm input.
-    
-    Tested with:
-    
-     * cargo fmt --all -- --check
-     * git diff --check
-     * cargo test
+ .github/workflows/main.yml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2350%2Fwufengwind%2Fobject-map-insert-validation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2350/wufengwind/object-map-insert-validation-v1
-Pull-Request: https://github.com/git/git/pull/2350
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 29d2057bde4b..57ad4ba64f67 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -188,6 +188,7 @@ jobs:
+       with:
+         repository: git/git
+         definitionId: 9
++        path: lib/compat
+     - name: add msbuild to PATH
+       uses: microsoft/setup-msbuild@v3
+     - name: copy dlls to root
+-- snap --
 
- src/loose.rs | 79 ++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 73 insertions(+), 6 deletions(-)
+This is needed to fix the `vs-build` job, see
+https://github.com/git-for-windows/git/actions/runs/28242360731 for proof
+that it's now working.
 
-diff --git a/src/loose.rs b/src/loose.rs
-index 24accf9c33..8f6c1fb40e 100644
---- a/src/loose.rs
-+++ b/src/loose.rs
-@@ -510,6 +510,17 @@ pub struct ObjectMap {
-     batch: Option<ObjectMemoryMap>,
- }
- 
-+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
-+pub enum ObjectMapInsertError {
-+    InvalidHashAlgorithm(u32),
-+    MismatchedAlgorithms {
-+        storage: HashAlgorithm,
-+        compat: HashAlgorithm,
-+        oid1: HashAlgorithm,
-+        oid2: HashAlgorithm,
-+    },
-+}
-+
- impl ObjectMap {
-     /// Create a new `ObjectMap` with the given hash algorithms.
-     ///
-@@ -585,19 +596,39 @@ impl ObjectMap {
-     ///
-     /// If `write` is true and there is a batch started, write the object into the batch as well as
-     /// into the memory map.
--    pub fn insert(&mut self, oid1: &ObjectID, oid2: &ObjectID, kind: MapType, write: bool) {
--        let (compat_oid, storage_oid) =
--            if HashAlgorithm::from_u32(oid1.algo) == Some(self.mem.compat) {
-+    pub fn insert(
-+        &mut self,
-+        oid1: &ObjectID,
-+        oid2: &ObjectID,
-+        kind: MapType,
-+        write: bool,
-+    ) -> Result<(), ObjectMapInsertError> {
-+        let oid1_algo = HashAlgorithm::from_u32(oid1.algo)
-+            .ok_or(ObjectMapInsertError::InvalidHashAlgorithm(oid1.algo))?;
-+        let oid2_algo = HashAlgorithm::from_u32(oid2.algo)
-+            .ok_or(ObjectMapInsertError::InvalidHashAlgorithm(oid2.algo))?;
-+
-+        let (storage_oid, compat_oid) =
-+            if oid1_algo == self.mem.storage && oid2_algo == self.mem.compat {
-                 (oid1, oid2)
--            } else {
-+            } else if oid1_algo == self.mem.compat && oid2_algo == self.mem.storage {
-                 (oid2, oid1)
-+            } else {
-+                return Err(ObjectMapInsertError::MismatchedAlgorithms {
-+                    storage: self.mem.storage,
-+                    compat: self.mem.compat,
-+                    oid1: oid1_algo,
-+                    oid2: oid2_algo,
-+                });
-             };
-+
-         Self::insert_into(&mut self.mem, storage_oid, compat_oid, kind);
-         if write {
-             if let Some(ref mut batch) = self.batch {
-                 Self::insert_into(batch, storage_oid, compat_oid, kind);
-             }
-         }
-+        Ok(())
-     }
- 
-     fn insert_into(
-@@ -729,9 +760,9 @@ mod tests {
-             if *swap {
-                 // Insert the item into the batch arbitrarily based on the type.  This tests that
-                 // we can specify either order and we'll do the right thing.
--                map.insert(&s256, &s1, *kind, write);
-+                map.insert(&s256, &s1, *kind, write).unwrap();
-             } else {
--                map.insert(&s1, &s256, *kind, write);
-+                map.insert(&s1, &s256, *kind, write).unwrap();
-             }
-         }
- 
-@@ -873,6 +904,42 @@ mod tests {
-         );
-     }
- 
-+    #[test]
-+    fn refuses_insert_with_mismatched_algorithms() {
-+        let mut map = ObjectMap::new(HashAlgorithm::SHA256, HashAlgorithm::SHA1);
-+        let entries = test_entries();
-+        let s256 = sha256_oid(entries[0].2);
-+        let s256_other = sha256_oid(entries[1].2);
-+        let s1 = sha1_oid(entries[0].1);
-+        let s1_other = sha1_oid(entries[1].1);
-+
-+        assert!(map.insert(&s256, &s1, MapType::LooseObject, false).is_ok());
-+        assert!(matches!(
-+            map.insert(&s256, &s256_other, MapType::LooseObject, false),
-+            Err(super::ObjectMapInsertError::MismatchedAlgorithms { .. })
-+        ));
-+        assert!(matches!(
-+            map.insert(&s1, &s1_other, MapType::LooseObject, false),
-+            Err(super::ObjectMapInsertError::MismatchedAlgorithms { .. })
-+        ));
-+    }
-+
-+    #[test]
-+    fn refuses_insert_with_unknown_algorithm() {
-+        let mut map = ObjectMap::new(HashAlgorithm::SHA256, HashAlgorithm::SHA1);
-+        let entries = test_entries();
-+        let s1 = sha1_oid(entries[0].1);
-+        let invalid_oid = ObjectID {
-+            hash: [0xffu8; 32],
-+            algo: 99,
-+        };
-+
-+        assert_eq!(
-+            map.insert(&invalid_oid, &s1, MapType::LooseObject, false),
-+            Err(super::ObjectMapInsertError::InvalidHashAlgorithm(99))
-+        );
-+    }
-+
-     #[test]
-     fn looks_up_known_oids_correctly() {
-         let map = test_map(false);
+Thank you,
+Johannes
 
-base-commit: ab776a62a78576513ee121424adb19597fbb7613
--- 
-gitgitgadget
+> @@ -189,11 +189,11 @@ jobs:
+>        uses: microsoft/setup-msbuild@v3
+>      - name: copy dlls to root
+>        shell: cmd
+> -      run: compat\vcbuild\vcpkg_copy_dlls.bat release
+> +      run: lib\compat\vcbuild\vcpkg_copy_dlls.bat release
+>      - name: generate Visual Studio solution
+>        shell: bash
+>        run: |
+> -        cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows \
+> +        cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/lib/compat/vcbuild/vcpkg/installed/x64-windows \
+>          -DNO_GETTEXT=YesPlease -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
+>      - name: MSBuild
+>        run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
+> @@ -201,7 +201,7 @@ jobs:
+>        shell: bash
+>        env:
+>          MSVC: 1
+> -        VCPKG_ROOT: ${{github.workspace}}\compat\vcbuild\vcpkg
+> +        VCPKG_ROOT: ${{github.workspace}}\lib\compat\vcbuild\vcpkg
+>        run: |
+>          mkdir -p artifacts &&
+>          eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts NO_GETTEXT=YesPlease 2>&1 | grep ^tar)"
+> [...]
