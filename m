@@ -1,91 +1,157 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5456E1714AA
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 05:17:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102933C5546
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 05:36:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782451021; cv=none; b=vEkv6nmQN2Z/rZipWuFq5n51GL7S9bBa49CF3sgeW7Wg8FbffACA+u+ZU/FuLHE+jZJRL5Ws+6P4O0BIu4K7UpSzyPadmxxUC/oCJKWwSCadBz3gZ1uosvXdVCE3ZxFz0UTExcHz8KVzX0yeTEzBOaVJS3vGxYzsyxhhGKK6X0Q=
+	t=1782452206; cv=none; b=NLxjmdWz9lP9EIB8pZHtCIllotuaEPcjQWkOssztNkapok7UHaPo4Oor2KSwIX+2ksKLF8DjfpExaQiSn92QJtofh3q7JfsKELZ/Z/Rx5zQ4UI7VXNQOCLB93IyB47RjYj5JeTNVMKRSHr2ekGcTCUTFHd8CWPYE90fsKNLdZ1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782451021; c=relaxed/simple;
-	bh=chTs++0f7FMNnk3ZNLRbxEgKnElNI21ZpOeX1X45wyk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RdIEgEEFx29h2vlSP+Gai/mHl5RCgNAx+RKxRjEIubRmHy7Pf30X3a1qPcXCdCj1peoqHwSN0YlpOZJjnaVWJmvQ94RamtUB78D1nmxytb2iuKw1FZYtIomsrHHXcfVyucK7eAo/JB/sB/2pXAyVldExCXUXR+hCiJgg681MQn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OwmpqcMi; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1782452206; c=relaxed/simple;
+	bh=PLGbLjcrKorTPb1dgMDsVMMV08m6fHR+l4wMikRLqk4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YAvI5oWGYQNKCnk7CXX7WcWGmZVifKoVvOOj3v8elLj5u5tenLP0dUllPtg2WViIr7Ftd3/8WIhROYZJtDF5cnCC0MkjVXacxdjPMwJ9RYvejt8teIzIVm4QfxXfqMX+sYDau2djHuv9QKZ1HdTy9myZQ3GR+8MKXbSEB/wdoKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=A5xmtesw; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OwmpqcMi"
-Received: (qmail 37342 invoked by uid 106); 26 Jun 2026 05:16:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=chTs++0f7FMNnk3ZNLRbxEgKnElNI21ZpOeX1X45wyk=; b=OwmpqcMigqZFgl8mfUajDr8F8v8ENdwqtxS4qSuy9JmcdVSB8ixhTnWGruU7MBEeSUSUqZ2FwzgCSAQXsF39qX2ETxNPonV/Doqdq7i1NdQiQy0ebvIei6oGkmrqANX4M3Ny+eX0Gn8WM847E7VwZAl2cni2GtCriB6dO1rJunmy6RY+3H02fKTCDV8mxBh/NJrU+m73TsyIPn4o16ddx8wmn31vK5jPYEQdULEuCDOuGd4Px0lUpdX8k4xuaTtceP6VlLFJX4NDVJT/Z0cJPVhP6qS/elrlcetz3XyopLFu8TCDphDG7wt2zKyAHXPwYhkovv5vfeenNhoHqpw8Vg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Jun 2026 05:16:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 78100 invoked by uid 111); 26 Jun 2026 05:16:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Jun 2026 01:16:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 26 Jun 2026 01:16:57 -0400
-From: Jeff King <peff@peff.net>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] Why do osx CI jobs so unreliable?
-Message-ID: <20260626051657.GB3138423@coredump.intra.peff.net>
-References: <CAC2Qwm+9sh=ks1fuux415JGdDJ38Jq6eZrSH7-qzQxYCoy+Aug@mail.gmail.com>
- <20260621213407.GC2297179@coredump.intra.peff.net>
- <aji9MOE-NTHKXYqn@pks.im>
- <ajkEzhdqzmAePk_P@pks.im>
- <ajkGkB2ckf3p43QR@pks.im>
- <ajkOoRhqaAcy6gBg@pks.im>
- <CAC2QwmJA2TH6BmO0O61qRYvV2pqURUk0dTXpkJtb9e-TZNZDZQ@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="A5xmtesw"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1782452200;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Is39KAlWoE692AqBU6/okkldyNjwvN6iuyHxXxpMGbU=;
+	b=A5xmtesw6wVawIjVV0rYMeHB39o/m1ytB9x1rBBK3BulsYpWTG+QQzSW0ia5MyRLY/+KIF
+	ZpUJ1j6TcPtg3P+3Ow4Ouid9YQmB2WoOO8rYNkgYXQxSuSH5P2H3Nh2k/cTlyxJEEJHU4e
+	vwJOtVEkUlzVGHgT3RYwxDDHacfpgmQ=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 3/3] replay: offer an option to linearize the commit
+ topology
+In-Reply-To: <ajk-a4a3KSJ2u7Ju@pks.im>
+References: <20260622-toon-git-replay-drop-merges-v4-0-ff257f534319@iotcl.com>
+ <20260622-toon-git-replay-drop-merges-v4-3-ff257f534319@iotcl.com>
+ <ajk-a4a3KSJ2u7Ju@pks.im>
+Date: Fri, 26 Jun 2026 07:36:31 +0200
+Message-ID: <87qzltyiao.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAC2QwmJA2TH6BmO0O61qRYvV2pqURUk0dTXpkJtb9e-TZNZDZQ@mail.gmail.com>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, Jun 25, 2026 at 08:27:35PM -0700, Michael Montalbo wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I think that is the trigger for issues we've been seeing. I spent
-> some time investigating the Apache side over the last week and maybe
-> found a mod_http2 bug, which I filed upstream with a potential fix:
-> 
->   bug:  https://bz.apache.org/bugzilla/show_bug.cgi?id=70131
->   fix:  https://github.com/mmontalbo/httpd/pull/2
+> git-rebase(1) essentially knows about three different modes:
+>
+>   - "--no-rebase-merges", which is the default and maps to your
+>     "--linearize".
+>
+>   - "--rebase-merges", which by default doesn't rebase cousins by using
+>     "--ancestry-path" internally.
+>
+>   - "--rebase-merges=rebase-cousins", which doesn't pass the above
+>     option.
+>
+> So it's not a simple boolean there, which makes me wonder whether we
+> should mirror the same interface so that all of git-rebase(1)'s modes
+> can be represented, as well.
 
-Thanks both of you for digging into this. I'm not familiar enough with
-Apache's code to pass confident judgement, but your findings certainly
-convinced me that this is just an apache bug.
+That's a valid question, although I don't know a good answer to that.
 
-> Given there could be a potential reliability issue with an upstream
-> dependency like Apache, I was considering what mitigation strategies
-> might help:
-> [...]
+Basically you're asking for what the command line options will look
+like? Allow me to think out loud.
 
-Depending on how widespread the Apache bug is, another option might just
-be: do nothing and wait for it to get fixed.
+In this series I'm adding --linearize to git-replay(1). As mentioned, I
+don't think it makes sense to add it to git-history(1) as well. Without
+this option, the process aborts when it encounters a merge.
 
-Trying to make the wedged state fail fast and loudly is mostly just
-punting on the problem. We'd still see spurious failures. We've so far
-resisted the urge to do any automatic flaky-test retries, preferring
-instead to just try to root out the flakes. I'm a little hesitant to
-start now, because I think our strategy has mostly been good so far, and
-I've seen some horrible counter-examples where flakes and retries become
-a routine drag on development (and I'm afraid that accommodating flakes
-might make them more common).
+Dscho sent a patch series to properly replay (2-way) merges. I think
+this should become the default for both git-replay(1) and
+git-history(1).
 
->   - Make slow tests faster by optimizing the test itself and/or
->     the test runner configuration (e.g., job number matching
->     cores) so wedges become less likely.
+But then, do we want to have an option that brings back the current
+behavior of aborting at merges? Maybe with --no-merges?
 
-It sounds like the bad state is triggered when Apache hits a timeout,
-and we hit that timeout because the system is slow or busy. We could try
-to make things less slow, but would it work equally well to increase
-that timeout?
+Then there's the option of rebasing cousins left. That's something that
+isn't covered by Dscho's series yet. Maybe --replay-cousins?
 
--Peff
+To reiterate what the final design could look like:
+
+ * <nothing>: replay merges preserving topology.
+ * "--linearize": flattens merges (only git-replay(1)).
+ * "--no-merges": dies when the process tries to replay a merge.
+ * "--replay-cousins": does what --rebase-merges=rebase-cousins does.
+
+Now, all these options are (I think) mutually exclusive, so we could
+consider an option "--replay-merges=<mode>", but personally I find
+"--<option>=<value>" arguments harder to use than specifying separate
+options.
+
+I think I'm avoiding your question, because the design of the command
+line parameters doesn't need tot 1-on-1 correlate to the internal
+datastructure. And I agree the mode isn't a boolean, but does that mean
+we want to use an enum internally? Well, I don't know. And I also don't
+think that matters right now. Code is easy to change, I think the
+command line options should be designed with the future in mind, which I
+believe we do with "--linearize".
+
+Sorry for this long-winded rambling, but bottom line I think it's fine
+to add --linearize and in the future add more options and see how the
+code should evolve to support those.
+
+>> diff --git a/replay.c b/replay.c
+>> index 7921d7dba3..5539daff00 100644
+>> --- a/replay.c
+>> +++ b/replay.c
+>> @@ -277,12 +277,16 @@ static struct commit *pick_regular_commit(struct repository *repo,
+>>  					  struct commit *onto,
+>>  					  struct merge_options *merge_opt,
+>>  					  struct merge_result *result,
+>> +					  struct commit *replayed_base,
+>>  					  bool reverse,
+>>  					  enum replay_empty_commit_action empty)
+>>  {
+>> -	struct commit *base, *replayed_base;
+>> +	struct commit *base;
+>>  	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+>>  
+>> +	if (replayed_base && reverse)
+>> +		BUG("Linearizing commits is not supported when replaying in reverse");
+>
+> Nit: Error messages should typically start with a lower-case letter.
+
+Thanks.
+
+>> @@ -430,12 +435,25 @@ int replay_revisions(struct rev_info *revs,
+>>  	while ((commit = get_revision(revs))) {
+>>  		const struct name_decoration *decoration;
+>>  
+>> -		if (commit->parents && commit->parents->next)
+>> -			die(_("replaying merge commits is not supported yet!"));
+>> +		if (commit->parents && commit->parents->next) {
+>> +			if (!opts->linearize)
+>> +				die(_("replaying merge commits is not supported yet!"));
+>> +			/*
+>> +			 * Drop the merge commit: do not pick it and leave
+>> +			 * last_commit unchanged, so its children (and any ref
+>> +			 * pointing at it) are reparented onto the previous
+>> +			 * non-merge commit, which the ref-update loop below uses.
+>> +			 */
+>
+> One could add a hint here that tells the user to pass the option. But I
+> guess that might be somewhat weird, as we cannot assume that we're
+> called by git-replay(1) here.
+
+Yeah, true...
+
+-- 
+Cheers,
+Toon
