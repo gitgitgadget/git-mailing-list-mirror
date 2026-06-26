@@ -1,72 +1,72 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24473BB105
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 19:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBDA35675B
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 19:02:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782500564; cv=none; b=chAP+ocZ8cqevwE94X6JbtXIK9+J20qWiTBJ7t6Ovf69LJcgJ24Mxt1py4jc1NJ2mGz2nFm5groknKHjB7FbbDuBIRioe5wlaG+uZyXF3CpLruqDbw5ioxaXTYqK0zGp1CN97SDQDbi7xRuyU6EfMCl7wwLND+DCsRYdDzMPxvA=
+	t=1782500570; cv=none; b=R65vz8mDB6hsyqczDW5Y1gW1ZwNnfb1kjkMMH8MPCeAFS45A7nFE53XELKn5U3s6gpYrPegS4gUB/zro3nmPZU46dtJz0Ao+Drvvwdd4exAx00mGWOJSq77SinV0BFTQ7YKrl0p2gcFJK6L98Uo2Wjm2nUvUvDMBkxodStNEK9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782500564; c=relaxed/simple;
-	bh=yO3BBhQAVI1DEcoq/lXm/5+aBgA1NBclug3DGkJr1AY=;
+	s=arc-20240116; t=1782500570; c=relaxed/simple;
+	bh=U8/ehwmT/qRN57bQLkphmES6Rokiq50DHBt6gIbIVg4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nbh5LBB5vE0CSD7QdAr8AvQSWuBE+oN85nspGDFpOdNdSB1byqIw5IS9OTImBCaWjgixt9674unT5wsley+KXMqJ13Yl/GseZ0Vcl6eS5/9Qz3IvVWR81ZucHQjt3QBdl2p9mpxlMHWS8vwh+dCWL4wIgLb7huRffY1ZWjzhuuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ix4ynBl9; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=HMD8LMFqipVtgEjiu1lS27mzaRJDcXyhyqG0q2UumNeJ9eW0+OiUkypDahLmndEnFmYRzXZsgzS2DXdEYITQZetL6ZR4Mbe6VZO8ljXHyYyQLHk7QLS5vn6+swi6lGHxHaHphYSteMxwTuwVzfQqbtFuHWs/+EL+0mA0fRat9qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GUxIcc0L; arc=none smtp.client-ip=74.125.224.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ix4ynBl9"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-8000e21f014so19063477b3.2
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 12:02:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GUxIcc0L"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6647bc8f900so1662126d50.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 12:02:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1782500562; x=1783105362; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1782500566; x=1783105366; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+DKC2mLoCrZDdw8xvFSip8gG4Sh9w88aOtQRaEZ9hcc=;
-        b=ix4ynBl992wXza4KZgHZajeN3wvrPQyFbwBUqOjb2+X+/WX+azrbb9P2IiRacm6CnG
-         TZf7bmExjRqX1kzUTLz9wWrpDkDhzg4Q4N7ETXEcHy4JSjh33+n9bPmGSmUeoEQWtkHl
-         HlJNzfJUzVEO2Pt+HMLqg9pcDvHVl6XA1nnALMvZ961BdnY3b8qnF+TVmVzYBteO4fyp
-         2orA78OzCXru/ZE2jmgOjJvX64zmlu31HdE0B/pOe64HYNT7l5svQkUo3DFf1wCczEL5
-         ms+2YZ+K+CLeEcw/wa4oye78cMqFBBFn6Rk5BKyQoUvK1C2ZMtcsMXzZwMWltZkie0Zw
-         IZGg==
+        bh=muiyKQ8BqzOvzpBR1ZJ5pRvOganLkwT0GNnMKTomC5g=;
+        b=GUxIcc0LsOWCR5W169944zRUnpA1CNW6CmQ4f3pyyW5lUhMdUJIus6jMbz6Gak2ZZr
+         uhIvf1QnxspkTYxWHgtWiyFaDAttarFuLYjh3Xz4hAZbPgm0gIDEAwlZhHpiwccqDG7c
+         DaoT9eLpvoHoiUHrFF7PfPHBbEOFSmWgy2ErE0/803+NkGcfMfqNy54yVjKONtH60HlN
+         Q3wdzPQFdCKyuouXWY0zw1TmT7lJUb4X4UN8mCeq0eCFAekhun+RNMBVYMOhlCIsvlWS
+         YsQi591PWmkq3QvPu/nJSgoDE1Lz80kh0VKPSrq378NVCB0fLbOetJ1auVAjuN0fodZj
+         Qwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782500562; x=1783105362;
+        d=1e100.net; s=20251104; t=1782500566; x=1783105366;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+DKC2mLoCrZDdw8xvFSip8gG4Sh9w88aOtQRaEZ9hcc=;
-        b=LW7+2If1wkMBfR1mY2Nr3LBo4KOMkzhlzkie80gSAh3PpWYlTHkJuyb2ACNFt0tPRV
-         O9DYk+Aj3iEOtbyI4XtzvPzNN+f8+XfCPMf3/Q8O5TLf6UobZQYUiYVNT4Zq0he9uL4q
-         YVsv5c2FZGGcXpL2CGkhqztusG1aoz7aVY1FSFLW2Kyvk/qu+huL1vc03xhYFuKgxCw3
-         91+lWwMRfVsfknIkWbOtNFhg12Vxg5oHv90SrFLq5HZin1abFACjB06A6+RwTmZ1thFA
-         lnDOKTyA1ENAI5cP35QB3TmXhXOGCFmUqlWAGd1lnAefgwe80C+as4+rR0bIf5cZNnVS
-         Zg/g==
-X-Gm-Message-State: AOJu0Yy7I7yQx+A1kW9tiMTMMeFFpEAVrcBgXd1LrWDHJIBeaRoEgQLq
-	5MuWh/hHAsV9MNuv/GFLMhPH9Ea7tY//e+TIth7BiQXZnH1I3dnJZ/3ZUsdfG9aXVm/dyJqNPSs
-	QCA7YOh+c0Q==
-X-Gm-Gg: AfdE7clpv6x0TGk64y1RGfk7e9a0SN0MEd5TLCHZloYE8nukQBfJl56yFypllmFJGpD
-	M4jFzfQYt8SCI/YohAsYhYvGdShTt8goWNXaIERlOngg8RpPEQPozxvnzuXI4393MyCjELaB/vW
-	me9HuD/Td1j2AtGrIGuAzBJ8YVQN16Ihpu7taBoG7GPU44cWz1cUoJxhXxkG8uCwQ3LKwMxhnWq
-	uj+Yuf2Jnhc4p4LTuUmmtKFMqJWL0wE1Crs8hU522yixaOhoeyzWx6PytSidJWLMvQP+3GKe0bk
-	w19pnzoWyU3zwJ4mGxAW0J3myiSvQqkR8EGU1Uk0VAkCK78jMB2AwL6HWA6Bj67p5u/ODUFM09B
-	5XVRxHfYdVcRkwFhP8C/VEY3Elad500YPCHDb8UzFxX0uNtSa1pETvcSRt4XWo9JZ1MVfUOj76P
-	KdmLLlOYlrFFrJ52j1L8iN0FHxNGugaHBV0X5brZQcw5bVhxpfPltQdfYLCCcloujjwfIIRLAYn
-	NJFafJPa1QJXtW99us8/wc6tQjDKD1POWCg0+0lbFXhdpIxxvZTgoYtQaUQl8atUFU0yRREb3Bh
-	LWMdHw==
-X-Received: by 2002:a05:690c:7303:b0:80c:4923:ced with SMTP id 00721157ae682-80c49231146mr23446947b3.41.1782500561710;
-        Fri, 26 Jun 2026 12:02:41 -0700 (PDT)
+        bh=muiyKQ8BqzOvzpBR1ZJ5pRvOganLkwT0GNnMKTomC5g=;
+        b=i9kZv/ZB4wQOXz/YeYOZBimS80v065FWTbrD4rRzFx58PSk8gbpW3GiKh9EphSqG/f
+         d4350Z4xuj66EBsUe5AObBtV3sdKcRH5p0++WCrg3JWNxJOJbna3GRPEM3KIeRHozq/3
+         2LR3W3DkO2sN8iU6Baui154tg1flffFUkk+6+4v3bQoxhWNU5hssjWoHnkhtjly9Pvbz
+         epXBjcNzvL6dNmuhjIR+89QtXjO39tkfJ//m1iyUxzseG6A1Vtsza350fdBWj8pyZs2M
+         s40im8OCXhIqhH3NDOgz+n9Z8jMrytmSsKmX12ySuw6Q5p+shwKvYveb37rRhxfBMppI
+         pvFQ==
+X-Gm-Message-State: AOJu0YxMIL04ErgmmpU495ZA0aVenZHTNcp0KTjn3YE/ZSyFpKQ8B4Wb
+	h5noIFcisQEPpKQrpeksvuvDuyutofyz12kMU4G3R3BMPfq3xNodyjkgoYnxrVYFILuDAGCZx24
+	/JchJpqMl4w==
+X-Gm-Gg: AfdE7cmADC2XaGATb+vfJNP7Ozg0avPcRAqHJclJeg7Lnm28NJh4rgKKf8ovIfiw+3D
+	dKTOyKYRNK+SdsqQh74K9/w4J50IjGFA2GwW9t4RLwvnCQ95D7o4W33nxnPSZoRDLQXZBHzAO7e
+	POojgMQz1Vz6NCIJRZ7E4R0T6C70t1Y8PybxWrx3DO9iHtV67+vh73qKjSdDQ4dmaFpzxwFfNaG
+	ajx5plHHCdAyLjZ8ofN1RB9aBf4s7RXIYQk2RbtZzgN3gjojOmUKfWctaY3Bqv3+w3rnPPuNtyU
+	N3YOjjf8NSDld4vFDJsRbH2sHluZCyilHbQ6ltZgBd7Fs8ZiM6fQ+605bINzigsjUnAs1MdUoM8
+	DEgTACitJCIOhg2BoTEeYfqY/CtrCDo3QCZjVLdqsg2aPF81hxTa5umhjHYmT1OkyYo4XgdiHxv
+	bag0rI9YzfPFElxGTbqlR3oRc69SU1g1WiBKIHe4CF5UJKMTAeTvhA12Mc4Exon1e3F8u7ajLgQ
+	n788KzYUbDBN+ffX5U+UnovoBsgUoTWDxExc3yDc/klEf0xaQCIltgaqxHQIwzcMDXO2h3JH9/4
+	WqEqVw==
+X-Received: by 2002:a05:690c:3682:b0:80c:85b6:765d with SMTP id 00721157ae682-80c85b6a14fmr16520827b3.66.1782500565697;
+        Fri, 26 Jun 2026 12:02:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-806f10837bfsm49362517b3.45.2026.06.26.12.02.40
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8025f9d8c57sm86692957b3.31.2026.06.26.12.02.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2026 12:02:41 -0700 (PDT)
-Date: Fri, 26 Jun 2026 15:02:40 -0400
+        Fri, 26 Jun 2026 12:02:44 -0700 (PDT)
+Date: Fri, 26 Jun 2026 15:02:43 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [RFC PATCH 09/10] pack-objects: support '--refs-snapshot' with
- 'follow-reachable'
-Message-ID: <c9efbad60c773f0def850ecf107ddfaeb2860a16.1782500507.git.me@ttaylorr.com>
+Subject: [RFC PATCH 10/10] repack: support combining '--geometric' with
+ '--cruft'
+Message-ID: <488ccd62aab9a059f82643a6ca46cd78f5b83a7e.1782500507.git.me@ttaylorr.com>
 References: <cover.1782500507.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,145 +78,463 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1782500507.git.me@ttaylorr.com>
 
-The '--stdin-packs=follow-reachable' mode walks from reference tips to
-determine which objects in included packs are reachable. Without a
-snapshot, pack-objects discovers refs by iterating live references,
-which may change between the time the repack writes the geometric pack
-and the time it writes the MIDX bitmap.
+Teach 'git repack' to accept '--geometric' and '--cruft' together. When
+both are given, the geometric repack rolls up non-cruft packs as usual,
+and a separate cruft pack is written to collect unreachable objects.
 
-If a reference is updated during that window, the set of reachable
-objects seen by pack-objects may differ from the set seen by the MIDX
-bitmap writer. This can cause reachable objects to end up in the cruft
-pack (because pack-objects did not see the reference that makes them
-reachable) rather than the geometric pack. While this does not cause
-data loss, it has two undesirable consequences:
+Previously, '--cruft' implied `ALL_INTO_ONE`, which is fundamentally
+incompatible with geometric repacking. Relax this so that '--cruft' only
+implies `ALL_INTO_ONE` when '--geometric' is not also given.
 
- - Reachable objects in the cruft pack cannot receive bitmap coverage
-   (since the cruft pack may be excluded from the MIDX when
-   'repack.midxMustContainCruft' is false).
+When combining the two modes:
 
- - Serving fetches that need those objects requires loading the cruft
-   pack, which may contain many unrelated unreachable objects.
+ - Use the new '--stdin-packs=follow-reachable' mode so that only
+   reachable objects from the rolled-up packs (and any reachable loose
+   objects) appear in the geometric pack. Unreachable objects are left
+   for the cruft writer to collect.
 
-To avoid this, teach pack-objects to accept '--refs-snapshot=<path>'
-when used with '--stdin-packs=follow-reachable'. The snapshot file uses
-the same format as the MIDX bitmap writer: one hex OID per line, with
-an optional '+' prefix for preferred bitmap commits.
+ - Plumb our `pack_geometry` into `write_cruft_pack()`, so that the
+   latter can tell 'pack-objects' which non-kept packs are below the
+   split (excluded, so their unreachable objects are candidates for the
+   cruft pack) versus above the split (included, so they are treated as
+   reachable).
 
-'pack-objects' happily ignores the '+' prefix for indicating preferred
-bitmap commits as a convenience, so that the ref-snapshot can be shared
-between the MIDX generation machinery and 'pack-objects'.
+ - Handle promisor packs in the cruft writer's geometry path, since
+   promisor packs have their own split point.
+
+ - Use the refs snapshot (when available) so that pack-objects and the
+   MIDX bitmap writer see the same set of reference tips.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-pack-objects.adoc |  8 +++++
- builtin/pack-objects.c              | 46 +++++++++++++++++++++++++++--
- 2 files changed, 52 insertions(+), 2 deletions(-)
+ Documentation/git-repack.adoc |  11 ++
+ builtin/repack.c              |  23 +++-
+ repack-cruft.c                |  23 +++-
+ repack.h                      |   3 +-
+ t/t7704-repack-cruft.sh       | 251 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 300 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
-index d7b2e39e76c..4ebe407cfaf 100644
---- a/Documentation/git-pack-objects.adoc
-+++ b/Documentation/git-pack-objects.adoc
-@@ -133,6 +133,14 @@ commits and annotated tag objects.
- Incompatible with `--revs`, or options that imply `--revs` (such as
- `--all`), with the exception of `--unpacked`, which is compatible.
+diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
+index 72c42015e23..e9df7713278 100644
+--- a/Documentation/git-repack.adoc
++++ b/Documentation/git-repack.adoc
+@@ -70,6 +70,11 @@ to the new separate pack will be written.
+ 	are packed into a separate cruft pack. Unreachable objects can
+ 	be pruned using the normal expiry rules with the next `git gc`
+ 	invocation (see linkgit:git-gc[1]). Incompatible with `-k`.
+++
++When combined with `--geometric`, `--cruft` does not imply `-a`. Instead,
++the geometric repack rolls up packs as usual, and a separate cruft pack is
++written to collect unreachable objects. Only reachable objects from the
++rolled-up packs are included in the resulting geometric pack.
  
-+--refs-snapshot=<path>::
-+	When used with `--stdin-packs=follow-reachable`, read reference
-+	tips from `<path>` instead of iterating live references. The file
-+	format is one hex object ID per line, with an optional `+` prefix
-+	(for preferred bitmap commits). This ensures a consistent view of
-+	references when the same snapshot is shared with other tools (e.g.,
-+	the MIDX bitmap writer).
-+
- --cruft::
- 	Packs unreachable objects into a separate "cruft" pack, denoted
- 	by the existence of a `.mtimes` file. Typically used by `git
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5d96757b645..082ff760abc 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -219,6 +219,7 @@ static int incremental;
- static int ignore_packed_keep_on_disk;
- static int ignore_packed_keep_in_core;
- static int ignore_packed_keep_in_core_open;
-+static const char *stdin_packs_refs_snapshot;
- static int ignore_packed_keep_in_core_has_cruft;
- static int allow_ofs_delta;
- static struct pack_idx_option pack_idx_opts;
-@@ -4009,6 +4010,38 @@ static int add_ref_to_pending(const struct reference *ref, void *cb_data)
- 	return 0;
- }
+ --cruft-expiration=<approxidate>::
+ 	Expire unreachable objects older than `<approxidate>`
+@@ -245,6 +250,12 @@ progression.
+ Loose objects are implicitly included in this "roll-up", without respect to
+ their reachability. This is subject to change in the future.
+ +
++When combined with `--cruft`, only reachable objects from rolled-up packs
++are included in the geometric pack, along with any reachable loose objects.
++Unreachable objects (both from rolled-up packs and loose) are collected
++into a separate cruft pack. Existing cruft packs are retained. See
++`--cruft` above for details.
+++
+ When writing a multi-pack bitmap, `git repack` selects the largest resulting
+ pack as the preferred pack for object selection by the MIDX (see
+ linkgit:git-multi-pack-index[1]).
+diff --git a/builtin/repack.c b/builtin/repack.c
+index dfb6fed231d..165cfff75cd 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -260,7 +260,7 @@ int cmd_repack(int argc,
+ 				  keep_unreachable, "-k/--keep-unreachable",
+ 				  pack_everything & PACK_CRUFT, "--cruft");
  
-+static void read_refs_snapshot(const char *refs_snapshot,
-+			      struct rev_info *revs)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct object_id oid;
-+	FILE *f = xfopen(refs_snapshot, "r");
+-	if (pack_everything & PACK_CRUFT)
++	if (pack_everything & PACK_CRUFT && !geometry.split_factor)
+ 		pack_everything |= ALL_INTO_ONE;
+ 
+ 	if (write_bitmaps < 0) {
+@@ -296,7 +296,8 @@ int cmd_repack(int argc,
+ 		die(_("invalid value for %s: %d"), "--midx-new-layer-threshold",
+ 		    config_ctx.midx_new_layer_threshold);
+ 
+-	if (write_midx != REPACK_WRITE_MIDX_NONE && write_bitmaps) {
++	if ((write_midx != REPACK_WRITE_MIDX_NONE && write_bitmaps) ||
++	    (geometry.split_factor && (pack_everything & PACK_CRUFT))) {
+ 		struct strbuf path = STRBUF_INIT;
+ 
+ 		strbuf_addf(&path, "%s/%s_XXXXXX",
+@@ -317,7 +318,7 @@ int cmd_repack(int argc,
+ 	existing_packs_collect(&existing, &keep_pack_list);
+ 
+ 	if (geometry.split_factor) {
+-		if (pack_everything)
++		if (pack_everything & ~PACK_CRUFT)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--geometric", "-A/-a");
+ 		if (write_midx == REPACK_WRITE_MIDX_INCREMENTAL) {
+ 			geometry.midx_layer_threshold = config_ctx.midx_new_layer_threshold;
+@@ -393,10 +394,16 @@ int cmd_repack(int argc,
+ 		pack_geometry_repack_promisors(repo, &po_args, &geometry,
+ 					       &names, packtmp);
+ 
+-		if (midx_must_contain_cruft)
++		if (pack_everything & PACK_CRUFT) {
++			strvec_push(&cmd.args, "--stdin-packs=follow-reachable");
++			if (refs_snapshot)
++				strvec_pushf(&cmd.args, "--refs-snapshot=%s",
++					     get_tempfile_path(refs_snapshot));
++		} else if (midx_must_contain_cruft)
+ 			strvec_push(&cmd.args, "--stdin-packs");
+ 		else
+ 			strvec_push(&cmd.args, "--stdin-packs=follow");
 +
-+	while (strbuf_getline(&buf, f) != EOF) {
-+		struct object *object;
-+		const char *hex = buf.buf;
-+		const char *end = NULL;
-+
-+		if (*hex == '+')
-+			hex++;
-+
-+		if (parse_oid_hex_algop(hex, &oid, &end,
-+					the_repository->hash_algo) < 0)
-+			die(_("could not parse line: %s"), buf.buf);
-+		if (*end)
-+			die(_("malformed line: %s"), buf.buf);
-+
-+		object = parse_object(the_repository, &oid);
-+		if (!object)
-+			continue;
-+
-+		add_pending_object(revs, object, "");
+ 		strvec_push(&cmd.args, "--unpacked");
+ 	} else {
+ 		strvec_push(&cmd.args, "--unpacked");
+@@ -431,7 +438,8 @@ int cmd_repack(int argc,
+ 			const char *basename = pack_basename(geometry.pack[i]);
+ 			char marker = '^';
+ 
+-			if (!midx_must_contain_cruft &&
++			if ((pack_everything & PACK_CRUFT ||
++			     !midx_must_contain_cruft) &&
+ 			    !string_list_has_string(&existing.midx_packs,
+ 						    basename)) {
+ 				/*
+@@ -505,7 +513,8 @@ int cmd_repack(int argc,
+ 
+ 		ret = write_cruft_pack(&opts, cruft_expiration,
+ 				       combine_cruft_below_size, &names,
+-				       &existing);
++				       &existing,
++				       geometry.split_factor ? &geometry : NULL);
+ 		if (ret)
+ 			goto cleanup;
+ 
+@@ -540,7 +549,7 @@ int cmd_repack(int argc,
+ 			 */
+ 			opts.destination = expire_to;
+ 			ret = write_cruft_pack(&opts, NULL, 0ul, &names,
+-					       &existing);
++					       &existing, NULL);
+ 			if (ret)
+ 				goto cleanup;
+ 		}
+diff --git a/repack-cruft.c b/repack-cruft.c
+index 6a040e98017..6c553bbb0b5 100644
+--- a/repack-cruft.c
++++ b/repack-cruft.c
+@@ -36,7 +36,8 @@ int write_cruft_pack(const struct write_pack_opts *opts,
+ 		     const char *cruft_expiration,
+ 		     unsigned long combine_cruft_below_size,
+ 		     struct string_list *names,
+-		     struct existing_packs *existing)
++		     struct existing_packs *existing,
++		     struct pack_geometry *geometry)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	struct string_list_item *item;
+@@ -81,8 +82,24 @@ int write_cruft_pack(const struct write_pack_opts *opts,
+ 	else
+ 		for_each_string_list_item(item, &existing->cruft_packs)
+ 			fprintf(in, "-%s.pack\n", item->string);
+-	for_each_string_list_item(item, &existing->non_kept_packs)
+-		fprintf(in, "-%s.pack\n", item->string);
++	if (geometry) {
++		uint32_t j;
++		for (j = 0; j < geometry->split; j++)
++			fprintf(in, "-%s\n",
++				pack_basename(geometry->pack[j]));
++		for (; j < geometry->pack_nr; j++)
++			fprintf(in, "%s\n",
++				pack_basename(geometry->pack[j]));
++		for (j = 0; j < geometry->promisor_split; j++)
++			fprintf(in, "-%s\n",
++				pack_basename(geometry->promisor_pack[j]));
++		for (; j < geometry->promisor_pack_nr; j++)
++			fprintf(in, "%s\n",
++				pack_basename(geometry->promisor_pack[j]));
++	} else {
++		for_each_string_list_item(item, &existing->non_kept_packs)
++			fprintf(in, "-%s.pack\n", item->string);
 +	}
-+
-+	fclose(f);
-+	strbuf_release(&buf);
-+}
-+
- static void stdin_packs_add_reachable_pack_entries(struct string_list *keys,
- 						   struct rev_info *revs,
- 						   int rev_list_unpacked)
-@@ -4065,8 +4098,11 @@ static void stdin_packs_add_reachable_pack_entries(struct string_list *keys,
- 	pre_walk.keep_pack_cache_flags |= KEPT_PACK_IN_CORE;
- 	pre_walk.ignore_missing_links = 1;
+ 	for_each_string_list_item(item, &existing->kept_packs)
+ 		fprintf(in, "%s.pack\n", item->string);
+ 	fclose(in);
+diff --git a/repack.h b/repack.h
+index 4295829cea0..872a503fbd1 100644
+--- a/repack.h
++++ b/repack.h
+@@ -169,6 +169,7 @@ int write_cruft_pack(const struct write_pack_opts *opts,
+ 		     const char *cruft_expiration,
+ 		     unsigned long combine_cruft_below_size,
+ 		     struct string_list *names,
+-		     struct existing_packs *existing);
++		     struct existing_packs *existing,
++		     struct pack_geometry *geometry);
  
--	refs_for_each_ref(get_main_ref_store(the_repository),
--			  add_ref_to_pending, &pre_walk);
-+	if (stdin_packs_refs_snapshot)
-+		read_refs_snapshot(stdin_packs_refs_snapshot, &pre_walk);
-+	else
-+		refs_for_each_ref(get_main_ref_store(the_repository),
-+				  add_ref_to_pending, &pre_walk);
+ #endif /* REPACK_H */
+diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
+index 9e03b04315d..5e2b776e7ba 100755
+--- a/t/t7704-repack-cruft.sh
++++ b/t/t7704-repack-cruft.sh
+@@ -891,4 +891,255 @@ test_expect_success 'repack rescues once-cruft objects above geometric split' '
+ 	git repack --geometric=2 -d --write-midx --write-bitmap-index
+ '
  
- 	if (prepare_revision_walk(&pre_walk))
- 		die(_("revision walk setup failed"));
-@@ -5267,6 +5303,8 @@ int cmd_pack_objects(int argc,
- 		OPT_CALLBACK_F(0, "stdin-packs", &stdin_packs, N_("mode"),
- 			     N_("read packs from stdin"),
- 			     PARSE_OPT_OPTARG, parse_stdin_packs_mode),
-+		OPT_FILENAME(0, "refs-snapshot", &stdin_packs_refs_snapshot,
-+			     N_("refs snapshot for follow-reachable traversal")),
- 		OPT_BOOL(0, "stdout", &pack_to_stdout,
- 			 N_("output pack to stdout")),
- 		OPT_BOOL(0, "include-tag", &include_tag,
-@@ -5484,6 +5522,10 @@ int cmd_pack_objects(int argc,
- 	if (stdin_packs && use_internal_rev_list)
- 		die(_("cannot use internal rev list with --stdin-packs"));
- 
-+	if (stdin_packs_refs_snapshot &&
-+	    stdin_packs != STDIN_PACKS_MODE_FOLLOW_REACHABLE)
-+		die(_("--refs-snapshot can only be used with --stdin-packs=follow-reachable"));
++test_expect_success 'repack --geometric --cruft combines packs and writes cruft' '
++	git init geometric-cruft-basic &&
++	(
++		cd geometric-cruft-basic &&
 +
- 	if (cruft) {
- 		if (use_internal_rev_list)
- 			die(_("cannot use internal rev list with --cruft"));
++		test_commit A &&
++		test_commit B &&
++
++		B="$(git rev-parse B)" &&
++
++		git reset --hard $B^ &&
++		git tag -d B &&
++		git reflog expire --all --expire=all &&
++
++		# Initial state: one non-cruft pack, one cruft pack.
++		git repack -d --cruft &&
++
++		ls $packdir/pack-*.mtimes >cruft.before &&
++		test_line_count = 1 cruft.before &&
++
++		test_commit C &&
++		git repack &&
++
++		# At this point we have three packs:
++		#   - the non-cruft pack from A
++		#   - the cruft pack from B
++		#   - a new non-cruft pack from C
++		#
++		# The two non-cruft packs are not in a geometric
++		# progression, so they should be rolled up.
++		git repack -d --geometric=2 --cruft &&
++
++		# The old cruft pack for B is retained, since the
++		# geometric repack does not touch cruft packs.
++		ls $packdir/pack-*.mtimes >cruft.after &&
++		test_line_count = 1 cruft.after &&
++
++		# Ensure that all reachable objects are present.
++		git fsck
++	)
++'
++
++test_expect_success 'repack --geometric --cruft writes new cruft for loose unreachable' '
++	git init geometric-cruft-new-cruft &&
++	(
++		cd geometric-cruft-new-cruft &&
++
++		git config set maintenance.auto false &&
++
++		test_commit A &&
++		git repack &&
++
++		test_commit B &&
++		git repack &&
++
++		# Create an unreachable commit whose objects are
++		# still loose (never packed).
++		test_commit C &&
++		C="$(git rev-parse C)" &&
++		git reset --hard $C^ &&
++		git tag -d C &&
++		git reflog expire --all --expire=all &&
++
++		# At this point we have two non-cruft packs of
++		# similar size that are not in geometric progression,
++		# and loose unreachable objects from commit C.
++		ls $packdir/pack-*.idx >packs.before &&
++		test_line_count = 2 packs.before &&
++
++		# Geometric+cruft repack should roll up the two
++		# non-cruft packs and write a new cruft pack for C
++		# (whose objects are loose and unreachable).
++		git repack -d --geometric=2 --cruft &&
++
++		ls $packdir/pack-*.mtimes >cruft.after &&
++		test_line_count = 1 cruft.after &&
++
++		git fsck
++	)
++'
++
++test_expect_success 'repack --geometric --cruft -d deletes rolled-up packs' '
++	git init geometric-cruft-delete &&
++	(
++		cd geometric-cruft-delete &&
++
++		test_commit A &&
++		git repack -d &&
++
++		test_commit B &&
++		git repack -d &&
++
++		ls $packdir/pack-*.idx >before &&
++
++		git repack -d --geometric=2 --cruft &&
++
++		# Two packs should have been rolled into one. No cruft
++		# pack is written because there are no unreachable objects.
++		ls $packdir/pack-*.idx >after &&
++		test_line_count = 1 after &&
++
++		# The rolled-up packs should be gone.
++		! test_cmp before after
++	)
++'
++
++test_expect_success 'repack --geometric --cruft collects loose unreachable objects' '
++	git init geometric-cruft-loose &&
++	(
++		cd geometric-cruft-loose &&
++
++		test_commit A &&
++		git repack -d &&
++
++		test_commit B &&
++		git repack &&
++
++		# Create a loose unreachable object by making it
++		# orphaned (not in any pack).
++		loose="$(echo "cruft object" | git hash-object -w --stdin)" &&
++
++		# We have two non-cruft packs and a loose unreachable
++		# object. The geometric+cruft repack should roll up
++		# the packs AND write a cruft pack for the loose
++		# unreachable object.
++		git repack -d --geometric=2 --cruft &&
++
++		ls $packdir/pack-*.mtimes >cruft.packs &&
++		test_line_count = 1 cruft.packs &&
++
++		git fsck
++	)
++'
++
++test_expect_success 'repack --geometric --cruft accumulates cruft packs' '
++	git init geometric-cruft-accumulate &&
++	(
++		cd geometric-cruft-accumulate &&
++
++		git config set maintenance.auto false &&
++
++		test_commit A &&
++		git repack &&
++
++		# First round: create unreachable objects and do a
++		# geometric+cruft repack.
++		unreachable_1="$(echo "cruft 1" | git hash-object -w --stdin)" &&
++		git repack -d --geometric=2 --cruft &&
++
++		ls $packdir/pack-*.mtimes >cruft.1 &&
++		test_line_count = 1 cruft.1 &&
++
++		test_commit B &&
++		git repack &&
++
++		# Second round: create more unreachable objects and
++		# repack again. The old cruft pack should be retained
++		# and a new one written.
++		unreachable_2="$(echo "cruft 2" | git hash-object -w --stdin)" &&
++		git repack -d --geometric=2 --cruft &&
++
++		ls $packdir/pack-*.mtimes >cruft.2 &&
++		test_line_count = 2 cruft.2 &&
++
++		git fsck
++	)
++'
++
++test_expect_success 'repack --geometric --cruft --combine-cruft-below-size' '
++	git init geometric-cruft-combine &&
++	(
++		cd geometric-cruft-combine &&
++
++		git config set maintenance.auto false &&
++
++		test_commit A &&
++		git repack &&
++
++		# Create a small cruft pack.
++		unreachable_1="$(echo "cruft 1" | git hash-object -w --stdin)" &&
++		git repack -d --geometric=2 --cruft &&
++
++		ls $packdir/pack-*.mtimes >cruft.before &&
++		test_line_count = 1 cruft.before &&
++
++		test_commit B &&
++		git repack &&
++
++		# Create another small cruft pack.
++		unreachable_2="$(echo "cruft 2" | git hash-object -w --stdin)" &&
++		git repack -d --geometric=2 --cruft &&
++
++		ls $packdir/pack-*.mtimes >cruft.mid &&
++		test_line_count = 2 cruft.mid &&
++
++		test_commit C &&
++		git repack &&
++
++		# With --combine-cruft-below-size, the two small cruft
++		# packs should be combined into one.
++		unreachable_3="$(echo "cruft 3" | git hash-object -w --stdin)" &&
++		git repack -d --geometric=2 --cruft \
++			--combine-cruft-below-size=10M &&
++
++		ls $packdir/pack-*.mtimes >cruft.after &&
++		test_line_count = 1 cruft.after &&
++
++		git fsck
++	)
++'
++
++test_expect_success 'repack --geometric --cruft --expire-to' '
++	git init geometric-cruft-expire-to &&
++	(
++		cd geometric-cruft-expire-to &&
++
++		git config set maintenance.auto false &&
++
++		test_commit A &&
++		git repack &&
++
++		test_commit B &&
++		git repack &&
++
++		# Create unreachable objects and record them.
++		test_commit C &&
++		C="$(git rev-parse C)" &&
++		git rev-list --objects --no-object-names B..C >unreachable.raw &&
++		sort unreachable.raw >unreachable.want &&
++
++		git reset --hard $C^ &&
++		git tag -d C &&
++		git reflog expire --all --expire=all &&
++
++		git init --bare expired.git &&
++		git repack -d --geometric=2 --cruft \
++			--cruft-expiration=now \
++			--expire-to="expired.git/objects/pack/pack" &&
++
++		# The expired objects should appear in the
++		# expire-to location.
++		expired="$(ls expired.git/objects/pack/pack-*.idx)" &&
++		test_path_is_file "${expired%.idx}.mtimes" &&
++		git show-index <"$expired" >expired.raw &&
++		cut -d" " -f2 expired.raw | sort >expired.objects &&
++		test_cmp unreachable.want expired.objects &&
++
++		git fsck
++	)
++'
++
+ test_done
 -- 
 2.55.0.rc2.10.g29e31820dce
-
