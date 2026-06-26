@@ -1,72 +1,71 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C50E78F2F
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 19:02:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C81078F2F
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 19:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782500548; cv=none; b=BLkQO/lZM9QWsWLvhU1STELNUhVYIFpa4lHvMr9jmy1JvFkwqW+EBvcPDqi1/8lGqRTa9/rExywzj6n6CGB0hro8nevYZJt+KhQFM6QXxOO1CDYk+pDUizeXJN7dFcvey9H98Sulp4ejWo3EbQWV9BCxjauxpc7gtx5Ncv7CM/s=
+	t=1782500551; cv=none; b=Q6IkwAMTrx8kd74Hsj2kFoJ3kpI96s2D4bPICOPFVkyCuZKchy4Ja3CISgW6AAMsngXD8oWrMUwSd274IDh9fo+k4W/2somakT3VZHCEXEHViLsS2Kph0zqWTLCPZ0gx0+tPRx1Xl0n4/9Gwre2V/j/mwXILze3idw8NDvzEu4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782500548; c=relaxed/simple;
-	bh=cxc70MEwxtw/enRXaTBXRn8mdC2HROZZCx+g9ObnsXU=;
+	s=arc-20240116; t=1782500551; c=relaxed/simple;
+	bh=eTi21tejfc+yxJbkuFR44k4um+gMjaBjNDSGRQKHiA4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b/4Re6XYw3t7vJfUWwVnb1SRyIoRf+/eMmSA3Hzw6ehqu+EjaFFSA48lA2uRrxK44BQGDFEBeGczNQfmHnQ4eTXKwFPHtmrTLWiXafE9ZUK++JWXomTJWV5Z3TaN6vZYe4LJcNTagKQ61170VqqDJrwVm6JAQNZCXwrCe0wcleA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Q3UAzlYl; arc=none smtp.client-ip=74.125.224.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=NURwNVWjfKb7WZl//kZXbhdfg+AoN0nTpaBiXtbBJRBI6wNPkzXW1d29uZhawF5FLBHcZ1nKFuyR+idtOwjV9KIgVolm/ktFDHxs6midtzOIbAsaO0qUiBKja/qiFn6BztDnaoZhdLvuryjpwTKyi0RK1HWT8OpInTsosza91fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GZqoDSqc; arc=none smtp.client-ip=74.125.224.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Q3UAzlYl"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6649fde483bso1237397d50.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 12:02:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GZqoDSqc"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-664801de06aso1469862d50.2
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 12:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1782500546; x=1783105346; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1782500549; x=1783105349; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VsEPK7AshQB+Q7F1WrAIjr76UJXi4Iw+x/oV8/reME0=;
-        b=Q3UAzlYl518bwHz5sg5zjIqPcLjKdSo/EpF1VDgX41BACKbtcVyJncW6ZV3gSMgk3j
-         DBBySiY9bVm9Y/KLMzAFlxnmaCFY2v6LSS64bKuH7L06VT1b8NtTmZB/OKK7pT6ZIfOK
-         rdfe5ax5iuTFSC+GDxdCqpqMxxaqnAGq0zdIU/hBmJrSArfP2LNOP+qa/4rr+btyjVnX
-         l+8KPQsejYhW4770v5nYWtejoWsLJn0T91vo3N9aBjsH4zcPF5ZTggJ40Y6Jyy2iFEOR
-         Mmax/TNHHXSyf8P28+s1b3PXlwjduhX9qxMmaxMaL9wGCJo90RqL//a4oY6lDf0/PDpo
-         itnA==
+        bh=W9vtFNTMk0zQgqD9VIN8sQBEastEPck8PRVcUHe9/rI=;
+        b=GZqoDSqccTeoDKWPdfkT6jdN9M23DkgVhsueQ+SeCzvcFixzO50ZwnPdw27m8tetO4
+         lerrvu44PY94cuBZw53mWKxs+AjW5mDs6A+J0wpz+bVKjvDb03BkXn/lgek/AZ/+Srsd
+         Z5PZDh3Ae/sSsg9NErDxEho92jWInfEjgvt3EmYiwfcgGJcjRSSK94kMrygY7q+KwFlc
+         h6gUR5dzMZQUXVbTQGIydI/wBs20zwiE+hde19xucJS8nc5k+m90C0qErB+f1yl/urxO
+         KwamaZ+cBZZwF48MsXm1+5cycSXp//vdSnYlzbp0+iGVzUHSRkC6fleZ9A5k2NyjTS5P
+         o1GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782500546; x=1783105346;
+        d=1e100.net; s=20251104; t=1782500549; x=1783105349;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VsEPK7AshQB+Q7F1WrAIjr76UJXi4Iw+x/oV8/reME0=;
-        b=TMmyvqUPD6YYAe7GMPgasp3nL/G5lcaidwHYpPugcbFEZ3JOqVwNTRYHekit+c1ugQ
-         qKgeyq9U3QcCGWwFMrUDFyfc02W3nejvHICH1cs9gMomOTnSM9sJcZeiotItsXGYoO69
-         tLu95HWcZfUytvD4vKhlLiWZQ9a57prilpXUL4yjJdYSaUDf3VlkC8TebTx5Sli6nk3N
-         nlbtldOjiJ2yQQjAJ93vDgD6FkpPxQgj3Zyxh3alpL78/Fm6NuQRCr38gYFtQ/ufE3mO
-         BhGqUfHOXemGyn3h/QLa5t0cGa0sYQzoDCu7wlSCn+sJ9SmiqESDWYY4uP6AXVAwsdvE
-         TZsg==
-X-Gm-Message-State: AOJu0Yyy86GkfflQxOcRWvDrCY2ZLzma3xpQWVTD1mx1wlARERQDQgcs
-	gp7euDN4wROZMPalnpvL6uNUG5xzgKOb7jWGtSrl4b3BMvoqa0QSXoLAANEOjy88Hd68YGk/RmT
-	CsV8PMkLWJA==
-X-Gm-Gg: AfdE7cmEQRCWOf7ek9C0g0Ni0QgqROUHpg51K9i6P1WejCT5Z4WKdqAK3aAPqNPFvCI
-	SJBeaMeG8VXUKAnk+B+WfIIVuwXIYDnNpp4cPZ7377GU8WlZa8bI185/JI+Zm9fsaUKBW2LTuKx
-	I43iNRfW/udcnAzF1xYIUpuLcow/F7xeth7ADKbeBZppH6xFT4oy4jxRIB3cYryFjvbNa+Sba74
-	yXNr82GuTD1egCECwAH3c6GQK0Mgip2ZD16W9hq3ncV1QFGJL7HrbCRAkvntggZNgMZDZH2m44V
-	5L/iLus8pMPRTwhie4ZL3Sd43cXSahl+qOJwr52xfhyKZ2OiN+g9dH/QXmIzW0n9RpqdulsIeKS
-	DPdm6b3yns+VwqA3F6hX45cKGU8nz8JiiM9TVYnyD2MeCyvfQ5oryua0ZSnXKXTKvoZL0vGUqDc
-	q0t6yzcWTPCEDR9YO1LDSbRYLLhlGYM2BYxNJX/AnW7R1p11XIOoY08xrBrTwTintGcO4//o2mu
-	bDlNqVWmDYIGt9CEWxVh5grIOiHYIEHoKI9ao6HI8GBR/X7ZIl9KM3vfZNztzvG+ekDXlBPiJTG
-	tj9EYxhJVkiePXgq
-X-Received: by 2002:a53:ed06:0:b0:664:ae6a:e9a5 with SMTP id 956f58d0204a3-664ae6b0d2cmr1221881d50.75.1782500545653;
-        Fri, 26 Jun 2026 12:02:25 -0700 (PDT)
+        bh=W9vtFNTMk0zQgqD9VIN8sQBEastEPck8PRVcUHe9/rI=;
+        b=jimrP1qo6bbRwbv212R4WzUyx8Brsu3vt9ezwTILCROP4zvHgQ/3J+s/RnWbxGuxoW
+         q5bmHLTElgyZincWRHdMmzqIRpEtHH/aqTZSv3loU6f2CN42oGpaTCgWNrmv9dtxI33+
+         M6W/LyqLvqSUTMnUkFHdjFLvIzPCky30xRrBXXp96L2zswfF02q08e9HXy7LRUG/Msak
+         urVZE1PMFo9OzZv/eHAgnV+zroWpshQAMO9DtFbgkIJtSOM+mFJnzr04MCX8ARxKedDM
+         NBtONsi5ZIXuO/N0XKIWNmaiYrvpEWBmVMB/4HLg6JKW++n7chfVJdtKdW+4WhqKT4GB
+         nI8w==
+X-Gm-Message-State: AOJu0YzeEZeTtI5maSc6ZiXP5maBEFXT1uX/xeursaqCZBJXn6pMLq5T
+	lF7kopVUcPrhJCjARuBDxaJ5K5zRdKedPSIgQNiBMMcr9n/phtj6VqJk9x+YUN3KIehBgD2usLf
+	vO+AwhiIh1g==
+X-Gm-Gg: AfdE7clNCtzwYIzmm5xZoWcKJnQMAaXxzg288ZA3+NQLaYtUOEA6kjU7pM2I9CQp1ni
+	fjaVIq4xXZJVNdzxWK09IXp9UKZOkSf3T6aILkVFZGNN4dMhGUoDXGXbs11tESd9F5Al16uiFUl
+	llQ53QMzc2CLWM64T7EB5M+4Ru02YnYkEaHKydDnSQFTZfBf8r3twkWWZ8cNA9RadT/jIJ9obtA
+	pIsMA553jgDv+OSpcwcjYkdTS5Ed7mnRRzdYEHXK438s0ojF00PwsYK8C0aC/ai8aum6fLk1j/R
+	aBQcfw3fexgigQXOccIdiTQWdLLHwz8VLYTHot4crUgs+GJYHbsanZ3fwgzMJIT+sbqbjnYIyyO
+	T9csOkUsSH6jh715VbDhzsnnmHmFpYk94HnT8xsAZkr+AY1Up1+NS+v2GJA+4GTqM6ExUon3hvZ
+	vtCC/pQ32Kk/ymQX2M6BrgGGobn80lWGkySQP6C/JEqHlZzuSsx28/y+Wpq3+CElozPbKd75Xa9
+	U/fSZICOJC7Azcc5vveNZwvKFHTENpo0IO+P8mipSySGmLjJwQrsQW5phXY96aGgUgPEuDqv0hn
+	ymDOEw==
+X-Received: by 2002:a53:d9c4:0:b0:664:ae68:ca0e with SMTP id 956f58d0204a3-664ae68d0d7mr1126045d50.84.1782500549034;
+        Fri, 26 Jun 2026 12:02:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6647f963737sm3316763d50.16.2026.06.26.12.02.24
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6647f74b145sm3346150d50.1.2026.06.26.12.02.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2026 12:02:24 -0700 (PDT)
-Date: Fri, 26 Jun 2026 15:02:23 -0400
+        Fri, 26 Jun 2026 12:02:28 -0700 (PDT)
+Date: Fri, 26 Jun 2026 15:02:27 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [RFC PATCH 04/10] repack: teach MIDX retention about geometric
- rollups
-Message-ID: <ad76f06fc7ed304af97c73a5931e1ebc5f2d3895.1782500507.git.me@ttaylorr.com>
+Subject: [RFC PATCH 05/10] repack: delete geometric packs via existing_packs
+Message-ID: <51752a0ef9f0ac1a4027eee67375ce0914daff28.1782500507.git.me@ttaylorr.com>
 References: <cover.1782500507.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,123 +77,88 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1782500507.git.me@ttaylorr.com>
 
-When writing an incremental MIDX, existing_packs_retain_midx_packs()
-marks packs in the existing MIDX chain as retained. This keeps them from
-being deleted by the later existing_packs deletion pass, since retained
-MIDX layers may still refer to those packs.
+Now that packs above the geometric split are marked as retained, teach
+geometric repacks to use the existing_packs deletion machinery instead of
+calling pack_geometry_remove_redundant().
 
-Geometric repacks need a narrower rule. Packs below the split are rolled
-up into the newly-written pack, and should remain eligible for deletion
-even if the old MIDX chain mentions them. Packs above the split were
-marked as retained by the previous commit.
+This lets geometric repacks share the same mark-then-remove path as
+all-into-one repacks: packs below the split are marked for deletion, and
+packs above the split are ignored because they were retained earlier.
 
-Teach existing_packs_retain_midx_packs() to skip packs which are part of
-the geometric rollup. This does not change the current caller's behavior,
-since geometric repacks do not yet use the existing_packs deletion path.
+When doing a geometric repack without --combine-cruft-below-size, retain
+all cruft packs before marking anything for deletion. Geometric repacks do
+not rewrite cruft packs in that mode, so the common deletion path must not
+remove them.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c |  2 +-
- repack.c         | 43 +++++++++++++++++++++++++++++++++++++++++--
- repack.h         |  3 ++-
- 3 files changed, 44 insertions(+), 4 deletions(-)
+ builtin/repack.c | 11 +++++------
+ repack.c         |  8 ++++++++
+ repack.h         |  1 +
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index ce979d86d96..66b46b86896 100644
+index 66b46b86896..dfb6fed231d 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -576,7 +576,7 @@ int cmd_repack(int argc,
+@@ -574,10 +574,13 @@ int cmd_repack(int argc,
+ 				       packtmp);
+ 	/* End of pack replacement. */
  
- 	if (delete_redundant && pack_everything & ALL_INTO_ONE) {
+-	if (delete_redundant && pack_everything & ALL_INTO_ONE) {
++	if (delete_redundant) {
  		if (write_midx == REPACK_WRITE_MIDX_INCREMENTAL)
--			existing_packs_retain_midx_packs(&existing);
-+			existing_packs_retain_midx_packs(&existing, &geometry);
- 		existing_packs_mark_for_deletion(&existing, &names);
+ 			existing_packs_retain_midx_packs(&existing, &geometry);
+-		existing_packs_mark_for_deletion(&existing, &names);
++		if (geometry.split_factor && !combine_cruft_below_size)
++			existing_packs_retain_all_cruft(&existing);
++		if (pack_everything & ALL_INTO_ONE || geometry.split_factor)
++			existing_packs_mark_for_deletion(&existing, &names);
  	}
  
+ 	if (write_midx != REPACK_WRITE_MIDX_NONE) {
+@@ -609,10 +612,6 @@ int cmd_repack(int argc,
+ 		existing_packs_remove_redundant(&existing, packdir,
+ 						wrote_incremental_midx);
+ 
+-		if (geometry.split_factor)
+-			pack_geometry_remove_redundant(&geometry, &names,
+-						       &existing, packdir,
+-						       wrote_incremental_midx);
+ 		if (show_progress)
+ 			opts |= PRUNE_PACKED_VERBOSE;
+ 		prune_packed_objects(opts);
 diff --git a/repack.c b/repack.c
-index 9b3cb425431..c7b79a3c113 100644
+index c7b79a3c113..90797561954 100644
 --- a/repack.c
 +++ b/repack.c
-@@ -292,6 +292,39 @@ void existing_packs_mark_for_deletion(struct existing_packs *existing,
- 					   &existing->cruft_packs);
+@@ -242,6 +242,14 @@ static struct string_list_item *locate_existing_pack(struct string_list *list,
+ 	return item;
  }
  
-+static int pack_geometry_contains_pack(struct packed_git **packs,
-+				       uint32_t packs_nr,
-+				       const char *base)
++void existing_packs_retain_all_cruft(struct existing_packs *existing)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	uint32_t i;
++	struct string_list_item *item;
 +
-+	for (i = 0; i < packs_nr; i++) {
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, pack_basename(packs[i]));
-+		strbuf_strip_suffix(&buf, ".pack");
-+
-+		if (!strcmp(buf.buf, base)) {
-+			strbuf_release(&buf);
-+			return 1;
-+		}
-+	}
-+
-+	strbuf_release(&buf);
-+	return 0;
++	for_each_string_list_item(item, &existing->cruft_packs)
++		existing_packs_mark_retained(item);
 +}
 +
-+static int pack_geometry_contains_rollup(const struct pack_geometry *geometry,
-+					 const char *base)
-+{
-+	if (!geometry || !geometry->split_factor)
-+		return 0;
-+
-+	return pack_geometry_contains_pack(geometry->pack, geometry->split, base) ||
-+	       pack_geometry_contains_pack(geometry->promisor_pack,
-+					   geometry->promisor_split, base);
-+}
-+
- /*
-  * Mark every pack that is referenced by the existing MIDX chain as
-  * retained, so that a subsequent call to
-@@ -300,9 +333,12 @@ void existing_packs_mark_for_deletion(struct existing_packs *existing,
-  * This is used when writing an incremental MIDX layer on top of an
-  * existing chain: retained layers continue to reference the same
-  * packs on disk, so those packs must not be unlinked even if the
-- * freshly-written pack supersedes them.
-+ * freshly-written pack supersedes them. When doing a geometric repack,
-+ * packs below the split are rewritten into the new MIDX tip and should
-+ * remain eligible for deletion.
-  */
--void existing_packs_retain_midx_packs(struct existing_packs *existing)
-+void existing_packs_retain_midx_packs(struct existing_packs *existing,
-+				      const struct pack_geometry *geometry)
+ void existing_packs_retain_cruft(struct existing_packs *existing,
+ 				 struct packed_git *cruft)
  {
- 	struct string_list_item *item;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -315,6 +351,9 @@ void existing_packs_retain_midx_packs(struct existing_packs *existing)
- 		strbuf_strip_suffix(&buf, ".pack");
- 		strbuf_strip_suffix(&buf, ".idx");
- 
-+		if (pack_geometry_contains_rollup(geometry, buf.buf))
-+			continue;
-+
- 		found = string_list_lookup(&existing->non_kept_packs, buf.buf);
- 		if (found)
- 			existing_packs_mark_retained(found);
 diff --git a/repack.h b/repack.h
-index bb4c944d0cb..f0d082df9e8 100644
+index f0d082df9e8..90c89630ef8 100644
 --- a/repack.h
 +++ b/repack.h
-@@ -87,7 +87,8 @@ void existing_packs_retain_from_geometry(struct existing_packs *existing,
- 					 const struct pack_geometry *geometry);
- void existing_packs_mark_for_deletion(struct existing_packs *existing,
- 				      struct string_list *names);
--void existing_packs_retain_midx_packs(struct existing_packs *existing);
-+void existing_packs_retain_midx_packs(struct existing_packs *existing,
-+				      const struct pack_geometry *geometry);
- void existing_packs_remove_redundant(struct existing_packs *existing,
- 				     const char *packdir,
- 				     bool wrote_incremental_midx);
+@@ -81,6 +81,7 @@ void existing_packs_collect(struct existing_packs *existing,
+ 			    const struct string_list *extra_keep);
+ int existing_packs_has_non_kept(const struct existing_packs *existing);
+ int existing_pack_is_marked_for_deletion(struct string_list_item *item);
++void existing_packs_retain_all_cruft(struct existing_packs *existing);
+ void existing_packs_retain_cruft(struct existing_packs *existing,
+ 				 struct packed_git *cruft);
+ void existing_packs_retain_from_geometry(struct existing_packs *existing,
 -- 
 2.55.0.rc2.10.g29e31820dce
 
