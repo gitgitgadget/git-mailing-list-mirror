@@ -1,149 +1,107 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F73333BBBA
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 21:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782511072; cv=pass; b=cRLTG1WvJY8TP2ULIboma+1J8U50nNwfjjohibQe1FR3JO7iIaPnVVZPD3Fu7ydqgAO5l8LgXHjPJoUNZCiaQymmc17unQR7h89MzAEkwBb9x3cGATRw0k/U0lKWrGgvZzl9qioHtqDtO1KCIqEMpTKQDdqOdALVtqvAmpBGUA8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782511072; c=relaxed/simple;
-	bh=uqzJvGe0OosVzmU+++G1CXfUW4ELbg+6MU06LLryvNw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mnmxmUi299owSwosQW6V3OohOIIVND5X7xkx7+Xp3zLa3jHLBllJ4kotDJSWazclVis369J6DVTuSWRy8/nXeaRr5R9nkgDb/qSYyOCxCugxWchcxe3iOQCg2mvbVHB98G2s7a/z7U+Xxs0a+SLjziNyUtKbD/QaK2wBO7ssS7E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=alnH/MqI; arc=pass smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E472A3ACF1C
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 22:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782511516; cv=none; b=r/yVyMRaObJqkmV/bGI9rUBIPXluntkgrOg30EEqVE/uVK0vtPUuCdJ/cAeffW9iSxlQ2JxlNk5Chpbo7qwzjfjkJNG9E7U7CygM1SuHvL8oP6YLe4tzeb2jXHTulFcMzy4KBkqVS2ETsY7Yj+EGbWzDitbdtpZUjPspJH8Stt4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782511516; c=relaxed/simple;
+	bh=buxmWuJrjA1CBqCI9RH0G8WxBxiY3AoskN4bZr9n51g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rWSz28MPexhhbs3Faap3gi3igIqUsIFMKUSvncxJaOj4uP5S/VjSDBYvId6heXyaLGTU8K7wjlKA/MDRsNiv4ZxA810KVLizyDDvmhBerIW2a24YCt49jtDDDexaWe+gm9gD3VqE9Km6+eNeXSDj0TL5VFJUtxloc8JN1lwhuvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WmLNxNDZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XBRKSbB2; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="alnH/MqI"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-664b2c00e12so467181d50.2
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:57:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782511069; cv=none;
-        d=google.com; s=arc-20260327;
-        b=GsnTeixtudKeyaVUMt5yIel4lxK1hX9uNNnzr6DZCm6CI543GvxuFd7AJIbdw9BU5G
-         CaWIHK7t72tXgPPkJGdWa+pPDxcvJlIp79QjURG6qwahPN1LgcTtUdiUUGglwetr8viU
-         XarPxaV2YCEWaMp7ZNbEfXA2RxhFJSmZxE7i0DJHmesk5dgmB6r36QFOGs3ST/rl6B1w
-         ytS4AD+u2Pgxs6Gx3nAAW5EwmKAGTZlj6wQA+zRQi45EaSp313LPBhl4zYGNeJ/y3DgJ
-         8KvJdvUfD6xnJzfXmZQ6RsIZ7cVixMo+QeSf2pltXeGXEYya/PZTMYZ0cpbphO+SLZOI
-         uUZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=pgJwT1lc9fybT3NbrJ+2AOv5TW7IQzxS1OLZKX8FvAQ=;
-        fh=Z9uvXJijsAy0fub3qmTL4Zr/3jejIOtjtd7oLjXcbjo=;
-        b=Kwznfs2e8XzcQbyWuOhpAcgmWHsjOxkLxOkjPrW9K4HOAH9kr3B0XBqhXBlmO4s5aE
-         GBiSteHpoagdF0+qpQPTP9HB3mCMNtITYVDEX+rjZRgi2N2I1TgQTlDf68t92FzKEZdl
-         gVHIO605q8nZPBZ7MZ7peC97HChBPtoWQkI/pCzC1g3FBZzHcB3XI9h855f6XdInvfTV
-         z8HN4Sh8+askAx0LC85/CTtGfIILSq5WU4fTf/rXgxOG38Pfkn6tOe4Z7PdmSxhQ0B/E
-         eLxm+ZYCZFzJAAGQgosWvoWDA+FdT5Fg/3fz5+DsbaLKajuefNuMlh9S0pBI7mZ56kYw
-         OYJw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1782511069; x=1783115869; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pgJwT1lc9fybT3NbrJ+2AOv5TW7IQzxS1OLZKX8FvAQ=;
-        b=alnH/MqIpaQBYu398IKVtnjF100YnmQl4uuE40vZNLpuCkAwS1oxDl70+fHovI0kVe
-         +WpGWlEFvzT3HVlZZdS9ISZw4WhNFlcORz0nrx4C7UFCedU+HB/ZMQ/K61/FCxoVfMsx
-         ikKq5uGDqrYfsVd8Gh56ZT4/ezm2KjNshHJTc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782511069; x=1783115869;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pgJwT1lc9fybT3NbrJ+2AOv5TW7IQzxS1OLZKX8FvAQ=;
-        b=BM1p4D7s5w4ZZaK/Qpn2eLicPwWQzhaGflIGQwVd6etR5gNOUJjB+dlZHJ9C9lXibL
-         ha80NKQwDT+ixj+zUovUFxjuYgotnmhT/aLAsJM62Lyt3PglBeSE42J1ixgIHpHtqIDe
-         n+J0o9szoI4mzLZ0HurD5hKm6YK7amXRTbe1QL0ycSFHAkcnv0z+411kh9DPwCjm6DAq
-         DoX/VLZgdRnRXJOTDdB6MU2VqhK/OlVmcov0Ihv/a3pvydwH3gn3SFa9QqMAkHgnY+3H
-         nf6vlLD/jc8oXBxlefamKcvQe0XtvFIPYoRvK3X7D6kFLyb7kn/PkTI1qKiXCh5c/pGC
-         9jFg==
-X-Forwarded-Encrypted: i=1; AHgh+RpuWVEDpGeT/UG9FBoXx2No9sYvnijNYyRumcOAxCkIZtByNwE29d4gcuEnrbHX0pk6aX8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwePCVd/v+5EUEBUFWa4fdB/7bAETnvhEM+fYBPWtXdPIPKj61G
-	YuK/A3gPuKZ+gy8e7dtOGh+vS7yVtyM2Tnm0o1XwoUBQSjosF0YA8NuMo5QWXwx8R+58KDVBvCd
-	SJNLqRt+hFBIpUfP+5Mdb+XKGIR/fQErJ2hfGPHsIeQ==
-X-Gm-Gg: AfdE7cmcRQdgXrGX3H3UI8jsC8G/OX7kInGyDUD5Xh2Zm6pBTZJl4LS88cK67lbKuZ1
-	PSkn7KLR2Imbtn6bIy/5lw/KmIulC2MEsAbd/bDY69EvkUTVzRJjQBwVyNfqPsVA6xPAaJYjG2p
-	Btu+laV8AwvlQLkXdgic67eoeYKr6lFXEZEUYvEamSQg4+PQWrZmNXS4UlnIQbbtoWV0iZi6iGg
-	dWstXlhLDqCCTTfbUDPzlYaFhXpDtjrx+uwecDbRjMs/G2Wc0kyZ7WCeNPUmuHFb9UJF2JiNA==
-X-Received: by 2002:a05:690e:418c:b0:64a:ce9a:ace2 with SMTP id
- 956f58d0204a3-66487e61765mr7193152d50.56.1782511069519; Fri, 26 Jun 2026
- 14:57:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WmLNxNDZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XBRKSbB2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 950ED1D000FD;
+	Fri, 26 Jun 2026 18:05:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 26 Jun 2026 18:05:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782511513; x=1782597913; bh=7PPF2/dPjY
+	/mazSncYhwQtr8I1/7SXrmWW3bgpXifT4=; b=WmLNxNDZJbnWzJUKkfsRZeB6tY
+	6/T8RRGHjZyk0jydozQ7rPoI906Hizz7PyrOmE4VnHIeikqmU01M2yG3RDXrxVCP
+	g5kBL6onW13G+ggnFx9TMwov9VraY4Nd02H1Y2JCSQzSmU/ppI0BJw4A7KdAxN42
+	F69JlwBYtERm+Ig1u+W9TeDGyepTZp+NpKK72G1bPWdYRmZGRKem9HHqWWhEhTko
+	3IBXhSYtRw3GYmUIHT4ZkKXcM7smbx3xEVvq30+I085RAizX9VboQ/n2NbcRA8lT
+	WlBOEWsWjezJhWXg/sTHGbbjxrXFGuSaYOlv/FuT1sW3bMEkXeiKzsK3IECg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782511513; x=1782597913; bh=7PPF2/dPjY/mazSncYhwQtr8I1/7SXrmWW3
+	bgpXifT4=; b=XBRKSbB2wYi6EwnSu+ESlcKrKp6OVTTFHXKk+NoEjRi+tK2GUog
+	8eNqNWMK9W907wcJLCoTjjTpsYdvdc+cm/eEnlCI/jAHpNab9/GRusOlIy17zn/K
+	jtUjfzGDF9EcDULwZjqlcGcd44Fo7Z+Wabp0LOvR0RinaK9/Jj4jN5j4IhZev+38
+	iC/bIpPvR0dlP2odetOrYGW35Fmi8TNv5XfBD/RyWMx3NEFCiZHPZvpFdOYKNCxi
+	RPBcEN0BhhPL0rzZPoLNrY2qN4hz1+cq8yNw+ms8q5shJ864H24y7gKMDDKe26h3
+	arAVUuZHmJG44+il+MkNlRkJv3r/FjGIedQ==
+X-ME-Sender: <xms:mPc-ar7MAxgUp08BoMKpVRpO4IjvBO-vIU8WhueNIescDx5nL7BKoA>
+    <xme:mPc-arT17a2U08d8cB4MJ6PEuV0CNa-p1y8GT6QNA3Jh4ykZh_xpJ2FDWxpdTS_dP
+    -0fpUrn0UPDFtBzE14GiNF4dccnglKr12LxUqHYA1B0TWq7id8>
+X-ME-Received: <xmr:mPc-aon1xx9d-LeOEZYu_t_1uoM6PtO7rsyaCqgWa3rsWesLOA1VWtoHrP14uGBl3AxAt9CpBdgAOwk-ZgvvqfZ28Z3aAHDG5BSFLv4>
+X-ME-Proxy-Cause: dmFkZTGcQZOHCTqwBplfhR0NkAQiMSiPDiMLOdbO2VEFYhXAp0h3x6g5Pyw1MdUH9r5vc2
+    N/9WOgLhv+nWAYvpD2Q9Y+gIvgg1MAU6YW0slP666sdT/0QmIeIP+KC+CDIewIcGwIgewn
+    Uvh1qZb1iaOYIOCESL+b5vuxE6SfQaPmtC31dn98a6hghkQRlpe/qVBowNbtBQgyqrBjOM
+    t03sO3mhggM/8jLVu3goeTp+62r0bqWfQ5oPcB7oBkmYAIyhX6RJwlxbdi3PjckRT1jJhh
+    SaMA5W1oc/8aPFkrgGCG6Ohmt2lswVCMiKQkhD+MuTIMzNRhnhn55bgS/CsAnhsPe+KBXZ
+    0unNOz1XtM3VlGtFLUtQ7E40Dg0LhzD9VR/zgPxlr1PfGzrCns6IPscHI3yBu6E3TLw59K
+    4A4XNtUcLMvgTdLHOhsPjEGAq/6BlT/IySZHWlepbwo3VYoBN//emIXFQRZ1mTQtVpQsIY
+    eys28BQhKjGyYmFoepH1y2VyN3inWRZyqkHoN9kDMn7Kaftb2plAt0KvetPTxO+hh4FJYV
+    CoQWEstXS4GwK+UNBwUVGM27xwW48o0jqUeuaa6hwzuMNtGTwkBGYoNjjyEYdi8DvTtcv1
+    EsjRdhS+RTQlbRPS++AW4PJ1/TmVLVrOoax6R9HEPb3mqaHxv2iCjkALNSlA
+X-ME-Proxy: <xmx:mPc-anTFb3J7X9cEMcakBOTzmtr8p2fvfNq5KnMduorjGtY3wYw23A>
+    <xmx:mPc-antPGFiTA7J4visHs74pfz0dwdmwO0lJXTcPW0-R464MIMvN0A>
+    <xmx:mPc-ao7M0Hz55FNNKRrfX7FhgA-u-JdSvI6fawbrvQ5NZ0sKIErF7w>
+    <xmx:mPc-aqgcetTeDXyZ5qPUHANwk3qWcprDycK0olY-vmXg4HvK7lPptQ>
+    <xmx:mfc-aiY0OQJVkuQtENz5nm4PSMtSyVafcHCzjTBwqeWSUJeW1oejFytF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Jun 2026 18:05:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Alexander Shopov <ash@kambanaria.org>,
+  Mikel Forcada <mikel.forcada@gmail.com>,  Ralf Thielow
+ <ralf.thielow@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>,  Bagas
+ Sanjaya <bagasdotme@gmail.com>,  Dimitriy Ryazantcev <DJm00n@mail.ru>,
+  Peter Krefting <peter@softwolves.pp.se>,  Emir SARI <bitigchi@me.com>,
+  Arkadii Yakovets <ark@cho.red>,  =?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?=
+ <newcomerminecraft@gmail.com>,  Teng Long <dyroneteng@gmail.com>,  Yi-Jyun
+ Pan <pan93412@gmail.com>
+Subject: Re: [L10N] Kickoff for Git 2.55.0 translations
+In-Reply-To: <20260613061658.1767987-1-worldhello.net@gmail.com> (Jiang Xin's
+	message of "Sat, 13 Jun 2026 14:16:56 +0800")
+References: <20260613061658.1767987-1-worldhello.net@gmail.com>
+Date: Fri, 26 Jun 2026 15:05:10 -0700
+Message-ID: <xmqqh5mp5561.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
- <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com> <e82e0c72b6fc72b214f40efa9586c77790881f93.1782479286.git.gitgitgadget@gmail.com>
- <bd37b80d-9eff-496d-8f1f-436594968678@web.de>
-In-Reply-To: <bd37b80d-9eff-496d-8f1f-436594968678@web.de>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 26 Jun 2026 23:57:37 +0200
-X-Gm-Features: AVVi8CfiuJO2Sp0ES23_u1mF4MNMMvLvZPGeTlIUydFVIaJ2tI5QTTfwTtOHRpg
-Message-ID: <CAL71e4O470P7i55C1yHyS9zjmDw2fY8J19KbywFgQkfvenBe1g@mail.gmail.com>
-Subject: Re: [PATCH v3 5/8] commit-reach: introduce struct paint_state with
- per-side counters
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, 26 Jun 2026 at 23:13, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
-> > +struct paint_state {
-> > +     struct prio_queue queue;
-> > +     int p1_count;
-> > +     int p2_count;
-> > +     int pending_merge_bases;
-> > +};
-> Can they become negative?  Wouldn't size_t be a more natural fit,
-> matching nr from struct prio_queue?
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Negative would be a clear indication of a bug though that's
-not checked right now anyway. And since it's not checked
-we might as well use size_t instead - and it would technically
-be more correct though I struggle to imagine a case where
-the number of active elements in the frontier exceeds 2^31
-or whatever a signed int would give.
+> Git v2.55.0-rc0 has been released, and we are starting a new round of
+> localization for Git 2.55.0. Since the last release, 125 catalog entries need
+> to be translated. Please open a pull request against the l10n coordinator
+> repository (URL below) before the update window closes on Sat, 27 Jun 2026.
+> ...
+> **Reminder: the update window closes on Sat, 27 Jun 2026.**
 
-I am happy to change to size_t.
+Thanks.  
 
-> And some bikeshedding:
->
-> Why abbreviate?  parent1_count and parent2_count would be slightly
-> easier to read and associate with PARENT1 and PARENT2.
->
-> And pending_merge_bases is a counter as well.  Why not call it
-> like that, pending_merge_base_count?   Well, that's pretty long.
-> both_count?  That's quite generic and nondescript.  Call the other
-> counters parents1 and parents2?  Nah.  Or parent1s and parent2s?
-> Not sure why this inconsistency bothers me to begin with.
-
-Fair point, I was thinking that the surrounding context is so small
-that the naming almost doesn't matter - the terms don't
-escape paint_down_to_common.
-
-I am happy to change to something like:
-parent1_count, parent2_count, mb_candidate_count
-to make it more consistent.
-
-It seems the mb_ prefix is already used for
-merge bases in some files - best example is perhaps builtin/diff.c
-
-I see in the codebase that we are using multiple styles,
-perhaps depending on specific context.
-
-- nr_ prefix: nr_objects, nr_paths_watching
-- num_ prefix: num_commits, num_hashes, num_workers
-- _count suffix: entry_count, max_count, skip_count
-
-so I think _count suffix is a good choice at least - it matches
-other usages where we typically just increment or decrement.
-
-Thanks,
-Kristofer
+The cut-off date will be tomorrow.  Hopefully I'll hear from you on
+28th in time for the final on 29th.
