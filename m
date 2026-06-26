@@ -1,118 +1,162 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2103E35292A
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 18:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E1A78F2F
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 19:02:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782499827; cv=none; b=sxJTyUj4wpnCc2Fw1Htg5xRORaQBfeG967DUaNCBD5s2dq2ffOZFZHwGYcGH7YlzU1vfzHHq6qzTJt1visAS2sUpv119XMXPYvm9Bs9uR1MXYFW3i4cAvXJpn3c+upDHdkkrTPVbOwCFgnuANNwT6OPC/ObNglPzhcGKL1PpKus=
+	t=1782500535; cv=none; b=HEdeLqYOCyiSJ+oyLyZsZAINzrsMc1GggSahX9bjmjN1VwscxBAdUW+tU9io6LgOPIlejkfLB3gPw8FMhAz5cDeNf5IYvb+Vp2aUBFrCPJBIFUBP3ab44rwXav1s5jUg2sUOgfS+unrG307lzrKxq5PUgfG5Ea1goBnIT2etarU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782499827; c=relaxed/simple;
-	bh=Y3wI9djBKmVsDQAUJUhp+Hg9H0iCfsDpgeqckThax/Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mSncTT3k/VH+FcyhI3JCMCuy1HZ1qNkuUIbGa9Z7aN2Vkvzl4L/nihGMTBQjpUIpZ/no6+9hhstYnunFqlrTh2pUnkqzntiP1IEIxaUJopR4qWS9VaDNlPQgGdWLcOHYJERywVJUE0N4IqX1Pa1ysjrCEthz8PF4VZiVAeQ+UK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WDZpdDx3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R6gvczWE; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782500535; c=relaxed/simple;
+	bh=mVLiOrD4OhJYEUXcFe3qF/AFplpxW9+u/NMIZjr8/7c=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=WX6yqZcdrw0uHCEU8vrEX0e7G55RUDkQUXeFYqIGnPAX7iXAWfAugPfdJn125iUR2SiFaFdTYLBW5yHKrupIbglfQ7V/rzH7WsYhOyXP+lJPsanrz21dbMFnr5FkO1ZyQEfQY/BrRll/Mn+xKlIz9xC8zAN5ZfUxf8xGyjG+N34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=NCQg+WeW; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WDZpdDx3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R6gvczWE"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 52CDC1D00165;
-	Fri, 26 Jun 2026 14:50:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 26 Jun 2026 14:50:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782499825; x=1782586225; bh=fEv9GHWG8C
-	/ihNcrJmJeQxjLL/wH75Lxjh66zmUFNDw=; b=WDZpdDx3ppNutVWo+i5ydlhKSY
-	UQ+pOeF7wyCniyYe6EKDE3lyz44yazLKfAVJ+OUm3zk+aRBj6V1r8MQuvSNr5rrC
-	WjKX0Jsq7U1ueq0l/rIldrYJiedipdaJFoDeDgfOSAD+9EtyGqyA+QAvaLMNkh1Y
-	YRjXapZiul5mdN4lRM7IfMX4Hcv3CwNxaS0tFkoI8WyUHSZ+c/j7/iFKgE/hempb
-	Qqc4wc+JmkI/SvY59RYMGGg5T/n5ZcOBaWQ6SeN/BxN+WnkTdUshf33RxMatbK4F
-	TntWDzabVNuXp+NAclScaNvPoLcKtdjsGC8ZJilCfRDD6Weer+C3gQgiUcTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782499825; x=1782586225; bh=fEv9GHWG8C/ihNcrJmJeQxjLL/wH75Lxjh6
-	6zmUFNDw=; b=R6gvczWEWOJ0FL8Mjlg0fZ0eHZzga68WoUfbQKDOuZAhwqJgn3p
-	Rf144POcXO8pE2ZRolnbhRJ1xwTtWGLtlPZgRP/VyKk071e4j6AbmUTkzTojcL3f
-	Cg5WTLDGxX+sLNjaME0sY1I+uVyy2MQqu91lGKjCHjThIWXvzlHenZXFmVx5dx3I
-	1MzFkNJqx1myVbj+6ijGgLPw2439cR/qI+UFHbkp8gZGxClp55DvecvRl17m9N6r
-	63f5R+U8QpG4el7AoWArVf3aoUP+DxfCiVUtwRM1bB9CSaLkj9B2HLqN1sj5CmEs
-	DoOx0TTVj9p8xyrcLr1yZzXtnSIpdQPHZuQ==
-X-ME-Sender: <xms:8Mk-ai59LzJo7MJ_if8pqBX8ulgWy5sQJt00zj1AWP49SqKeTZKLkg>
-    <xme:8Mk-al6-AMhzIIW4no15B1cVPhHEK4k2zplxtHaIdQit9NgH-n27GqncAokmrRyOB
-    _704ZI_fLB2Q1sYOYc56C_A3s6P5PhfOH69LivclYkPUt_DXPEOnw>
-X-ME-Received: <xmr:8Mk-aoEQQP4-5dxaIuQ3zVY6JB-8sKJZsFANhkS_zrRxURX87Ito_JbZWM0grmAlALerHcKzdpcYkxhzJBALtucYIurriApE71XLbK0>
-X-ME-Proxy-Cause: dmFkZTETRJuaHltPe0NRvf8ZmEHyvnJRNJAHkfq5mvE8xmXVCwOUKvEfXyOTo5opKTq0qK
-    dSev8A9hmCJfuVCNg5+Gx5RUt+gJfL6nLRCrOfhuC395T0YKroonW4IYZmp7HHjHjXzwmO
-    HqK1AzSY/YUQ20X9jpa73xqtENAAxcf/cvB7Qldl54vI5paLmZQnREE9FESnsy0K+oOt+S
-    ipRxlnPIEDY2I9NOsB6KxDgQC+z1gLkbS7pwF36XxV1ijMTgC/fXg4Z/bLmX+Vkhv5kuzR
-    9QivPTS5jlzzBmF7cjAw8QHUTr/LTIabLxTEBnuMFMr8sO5jbHR6XJCmo5GolssmbI91GY
-    xP9Brjb/UWugyoW+AwyyTyz3L7gFtjDoAT/9P30u/yZ7+3vk8lmRaumlHwWQBV+gZojN0n
-    fqLike07KMQHxx4dBqWdsdOJi/weyyquHbieKxRfAoZcRLF9wwssylm3c7fvIb/5RLtTHr
-    5R7ANh2r5CvYy513auwBkdPNkM1Bn/+CM583pCqJD8FuFVt2sp/THMdidd8lzsggNrLaLh
-    NHUyFNXZcFDnRRo8O1gsdNJNkTkGDEjaDpHvT707XMcsNeOcL82GbtWHPM+01aGnmFF7Gl
-    pHaTy/lA1JU7stabF0SFVk5sVskHt6acY5Yiiu22k0ABwvY9Nk+e4Nhda0Bw
-X-ME-Proxy: <xmx:8Mk-atXqvsUqUK7IinKo363MXdmnOvOWbDKWE2s0gMQnQa5o5M5GHg>
-    <xmx:8Mk-akWrZG4pv0-oKn_c0wcQ_UR9ZIyRKSj1aDs5ThmcGn2EeYo6Aw>
-    <xmx:8Mk-arLKDF-jU8TPyVwKv5OwsUCg26lVXjZBgbHR7PfjxheM6DQ65Q>
-    <xmx:8Mk-asAOxLUYe9mB0Q136wJ2DqEe-riE9Uv2761dMxW90mRDmBpr1A>
-    <xmx:8ck-aqOanPNVeE7cT7Cx0c2uVpgAq9G_S678yF-OVYpl5_WNcm4OZEjU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jun 2026 14:50:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  Elijah Newren
- <newren@gmail.com>,  Derrick Stolee <stolee@gmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH RFC v2 2/2] Move libgit.a sources into separate "lib/"
- directory
-In-Reply-To: <32bb1cf6-1e37-dc0c-dfb2-e78a30763342@gmx.de> (Johannes
-	Schindelin's message of "Fri, 26 Jun 2026 18:01:49 +0200 (CEST)")
-References: <20260622-pks-libgit-in-subdir-v2-0-cb946c51ee7b@pks.im>
-	<20260622-pks-libgit-in-subdir-v2-2-cb946c51ee7b@pks.im>
-	<32bb1cf6-1e37-dc0c-dfb2-e78a30763342@gmx.de>
-Date: Fri, 26 Jun 2026 11:50:22 -0700
-Message-ID: <xmqqwlvl6sr5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="NCQg+WeW"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-808cdfc2d34so21886667b3.3
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 12:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1782500532; x=1783105332; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2i8Gp3sHUDjcGxMSl94/i1uGkJREDNkH26qLZpTTkec=;
+        b=NCQg+WeWpGL7zYC6CfRdIX97/z4Y7cA1wf1ymvvG5skaJf9A7QA2auErGd7caXV3pN
+         ETe0mkifYYOTTrm0U1RD99OnDh0TCziy+AYuWojm1dI2OB5IRenV48p5eiWcxwXCA/Yd
+         4aoezkjwau6AJZLqkNmqKBOtKdCciBc83gjc/lFSB9AIvP+yhACZ9mQIEfz1kbseCd9+
+         L31gb++GGzpseDnwOpxndcsET20BZYaGTq06mz/c4Xxy09n8Ca+k9lgecLbfCp2Hw7Fv
+         +cGZFLcMbzG3/Rqhud+RMROfReuZN02zQWuwcc5FRCs9xea42uPPr/G881HGOvcO8qPz
+         zMIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782500532; x=1783105332;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2i8Gp3sHUDjcGxMSl94/i1uGkJREDNkH26qLZpTTkec=;
+        b=rTr6d/CTiFK4grKFLUTzsdUb5GB5a+lOwn+7YxLYhKmtTlFje1C3AemY20Pm3emlE/
+         7P2RMIf2RGblmxfz5VoYUIDU3stFbGaQOL2YibJGLuc+3d/tSDk2+3Yy+d+nK2Rh33S4
+         dVFljjFgsVKwJp3kNUVNbv9FzD3daXd/+9uUbVpuLhXbI/0AUMD+RqcC9k5jyWX3CDw0
+         9IYqKQlNhbYsQMMqNyWxTXhK1pB1FqxocnhfMNOfVuYfOgy09HPCjD3is1+xQTZ6KFLB
+         LifUW/PuCdp+iopgi61j6KNqNSBo/5HN1VvwYJNby3bxXmnNJxvP7IchkKmIau4xhYok
+         Y8Ng==
+X-Gm-Message-State: AOJu0Yy/nfehW9R6W+IMHPN1xKo944RLv+vsOu1epTD0F6YkKM7K3XgS
+	1vIhDKV7RVjvHrPmab0k2dU6W93IJ7m/VntoFlC7E4D8ZIssV7vVrIJC6yKGSUFMddyf7zoZaCl
+	jCTqgUtQsEg==
+X-Gm-Gg: AfdE7cnSNO7OWC8gwXKHcZXcf5eY3MttAT3qwDtv0mLZJNlYTvAByzUzORJ/Hi58tqF
+	25reKzebsBS0q53kl/9TXY5TflRVsqls8ggNkIWM3iUmg+ezfg9hIGMZXlNWD9EqULKzEdZ26iw
+	vvYUzGPpY4aC7Q1YX48DQlUrRCRtQyP/hlkldPFAu0SwwvrAIrHzob5AILUKnTBHCDwwRmzU2ig
+	O9JLFgdSYUFuk9qgHSLcwr1DlUgO0mLMTg27X+6APqHqYJdEA0Twvd7pMy2ABl3gT+k/R/9LxK/
+	IqhpgypJZ+yauglAriSu0lQqv0ZfNlTNuid9gbCyqaHDOfvSP+rRCHRCQfYYmzDofCLrktI7BRK
+	uCu9gbbHYzv6lM6+18l9qT7BoClBMpOGd0WcRilH0CHuAuGp+XOzMDKUF1vwXtpds0BI4B+Y89O
+	4H1s/IabK5ssBskUOWCpRh2O/rTnayNZJhMp/h2S2uOGPe+l7BPxNoKusCNX/fj4mMz+0NFzazE
+	7KIBKAZrNjkp8jB2YQP4wZGE6aipTeH44Z2GalNneXRKykYyKPJJ0shxJq/U5Dxj/ws31NCrsBI
+	V1QGxQ==
+X-Received: by 2002:a05:690c:7343:b0:7f8:7e50:638d with SMTP id 00721157ae682-80c745e84b9mr19061587b3.47.1782500531842;
+        Fri, 26 Jun 2026 12:02:11 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8096af28592sm34045707b3.22.2026.06.26.12.02.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jun 2026 12:02:10 -0700 (PDT)
+Date: Fri, 26 Jun 2026 15:02:10 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: [RFC PATCH 00/10] repack: combine '--geometric' and '--cruft'
+Message-ID: <cover.1782500507.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+First, a short note. This series is an RFC because I have not had the
+chance to review and test it as thoroughly as I normally would, and
+because we are deep in the -rc phase.
 
->> -        path: 'compat/vcbuild/vcpkg'
->> +        path: 'lib/compat/vcbuild/vcpkg'
->>      - name: download vcpkg artifacts
->>        uses: git-for-windows/get-azure-pipelines-artifact@v0
->>        with:
->
-> Please also adopt:
->
-> -- snip --
-> From 1d09a51d426bd3592e4f4b0331f7715ab3b5d502 Mon Sep 17 00:00:00 2001
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Date: Fri, 26 Jun 2026 14:39:19 +0200
-> Subject: [PATCH] fixup??? Move libgit.a sources into separate "lib/" directory
->
-> Turns out that there was one path that was forgotten to be adjusted.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .github/workflows/main.yml | 1 +
->  1 file changed, 1 insertion(+)
+I wanted to get this series off my backlog since I have decided to leave
+GitHub at the end of the month for a new role. I will still be
+contributing to Git in my new role (which I will start in the early part
+of July), but wanted to get this off my backlog nonetheless.
 
-Thanks.  Queued at the tip of the topic for now, but I trust Patrick
-will include/squash it in the next iteration.
+This series teaches `git repack` how to combine `--geometric` and
+`--cruft`.
 
+Today these two modes are mutually exclusive, since `--cruft` implies
+`-a`, and `-a` is fundamentally incompatible with `--geometric`. As a
+result, repositories have to choose between keeping reachable objects in
+a geometric progression of packs and collecting unreachable objects into
+cruft packs.
+
+The goal of this series is to to be able to do both simultaneously. When
+both options are given, 'git repack' rolls up the selected non-cruft
+packs as usual while collecting unreachable objects separately into a
+cruft pack. That means a command like
+
+    $ git repack -d --geometric=2 --cruft --combine-cruft-below-size=1G
+
+will keep reachable non-cruft packs in a geometric progression, while
+combining sufficiently-small cruft packs (along with newly-discovered
+unreachable objects) into a fresh cruft pack.
+
+The series is structured roughly as follows:
+
+ * The first two patches prepare the cruft pack machinery for the later
+   changes by making non-kept pack exclusion unconditional and
+   extracting a helper for looking up packs in an `existing_packs` list.
+
+ * The next four patches route geometric pack deletion through the
+   common `existing_packs` machinery. They mark packs above the
+   geometric split as retained, teach incremental-MIDX retention not to
+   keep packs that are being rolled up, switch geometric repacks over to
+   the common deletion path, and then remove the old geometry-specific
+   deletion helper.
+
+ * The next three patches teach `pack-objects` the new pieces needed by
+   this mode. The main addition is `--stdin-packs=follow-reachable`,
+   which walks from reference tips and includes only reachable objects
+   from the selected packs, while still allowing traversal through
+   excluded-open packs and stopping at excluded-closed ones. The
+   following patch teaches that mode to use `--refs-snapshot`, so that
+   `pack-objects` and the MIDX bitmap writer can agree on the same set
+   of tips.
+
+ * The final patch wires everything together in `git repack`, including
+   teaching the cruft writer how to interpret the geometric split when
+   choosing which packs to include or exclude.
+
+Thanks in advance for your review!
+
+Taylor Blau (10):
+  repack: unconditionally exclude non-kept packs
+  repack: extract `locate_existing_pack()` helper
+  repack: mark geometric progression of packs as retained
+  repack: teach MIDX retention about geometric rollups
+  repack: delete geometric packs via existing_packs
+  repack-geometry: drop unused redundant-pack removal
+  pack-objects: extract `stdin_packs_add_all_pack_entries()`
+  pack-objects: introduce '--stdin-packs=follow-reachable'
+  pack-objects: support '--refs-snapshot' with 'follow-reachable'
+  repack: support combining '--geometric' with '--cruft'
+
+ Documentation/git-pack-objects.adoc |  25 +++
+ Documentation/git-repack.adoc       |  11 ++
+ builtin/pack-objects.c              | 276 ++++++++++++++++++++++++----
+ builtin/repack.c                    |  38 ++--
+ repack-cruft.c                      |  29 ++-
+ repack-geometry.c                   |  44 -----
+ repack.c                            | 101 +++++++++-
+ repack.h                            |  15 +-
+ t/t5331-pack-objects-stdin.sh       | 201 ++++++++++++++++++++
+ t/t7704-repack-cruft.sh             | 251 +++++++++++++++++++++++++
+ 10 files changed, 878 insertions(+), 113 deletions(-)
+
+
+base-commit: ab776a62a78576513ee121424adb19597fbb7613
+-- 
+2.55.0.rc2.10.g29e31820dce
