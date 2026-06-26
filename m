@@ -1,125 +1,109 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C22319D07A
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782482580; cv=none; b=Z1AF9ab2mbg3w6KchA+Jb/F2sVaBPMkBMcIJ8wLgaMSfEe6TBr4isCpY+e00eFa++IronR3sLmgb4K0zc/5MQkPjhuZpk9317DEEhnDkur6I7J6et+Rfjo5Hs6xO1cUZK+HrDbVLctk3Qdjo1k79FXFKAORUTiNmp+Pg+LzoGRE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782482580; c=relaxed/simple;
-	bh=L75PnqodrQH/g6DlmebXPsYYgujNmNkt+Px7ZEH2dmA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZBoAOnUpMYBJavXgLC2mIR11OZvBDR0uUy8dvBXsz0BemDFsUvafK981xlhN1rkUWOrqNNVFM8TKHifZ3QSKJZzogLrxvcM0bu7v8KDDT7MEWuHgiNvoSldJEQuhJ53Jpt30aQ/aQAZ9tTZ9WBpXTSdxhmECRYXc4L6rcqv2mnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qorgn3hm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lzq8w6y8; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171E72E7376
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782484169; cv=pass; b=QzAQ9xt0QhMENMubv9g7IaovfvU3YsSmSifnmtXCOe/zonSU0mHVddBpUEpcGDpLIJFkSF/pIICUyo3G5ppgMn8osFM8lcLnVvqr/yexzW8faSEUYmv/upic0X2fupKq7pr54uyMNl6544OxrDXoqmTuu9KBdTglXDF9QTxAwXY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782484169; c=relaxed/simple;
+	bh=IcCrkuLpZJyC2PUTFmg97Indwfix0GhoHeVguU9m8/4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mMzluV33I7xnCbL3hOEP16Xb4IP6uBzf6oc1HRB2MgC6BDOqZE4nvfz3bqh389WhGr6OBEbphEg3EUM6jvdhMmxD72D+oEsi6kzFAd3jD1rtPXBVEu2UC0EZ9dUAdqNXQ9zcFKAiAywFCR2Ipw+gRG7YC5MxSfYyP9snVYC7ppo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=ajOwM868; arc=pass smtp.client-ip=74.125.224.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qorgn3hm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lzq8w6y8"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D9B57A012D;
-	Fri, 26 Jun 2026 10:02:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 26 Jun 2026 10:02:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1782482578;
-	 x=1782568978; bh=xFFALmIK4XXhJyzPbg12e4kOcqkXFkDIJb2w6pxjvNc=; b=
-	Qorgn3hmLmLPPFNE1MGoBlnt+pWY6AI2E5fkFQUDRbIUrQRnHwXPXTEs6Z0Amz3W
-	kdZI6DaMrAjXmq7iUuBX1VTCfa6jInWhFsunyGgnoNTYMy3I/iJYgBUC6z3hA8Y6
-	H+GI2D4UHg14x1HRdX56ClUWyUu5VYOtpbdoXzT90r19lv9fcjxhoXN6IN19OPLZ
-	MqceFB6QIzE6TtCbqWKC1sArpOfaBOP9h2qza7+gfciI7S8JbivAKDMmBSHc+szD
-	c+FTPjIlSY0HJmzX5v1or3N8UuqNcOBqV1Nwd08w33Z219MpNP+haaO2XC9lxN1f
-	1DfA4rhfGuBv88nZLwO+xw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782482578; x=
-	1782568978; bh=xFFALmIK4XXhJyzPbg12e4kOcqkXFkDIJb2w6pxjvNc=; b=L
-	zq8w6y8P8bK7qHOxtlk4X477Ndqge+HJt5UbTlqsbxEguGVFoML3cU+xh9A4ObLB
-	eBjJLAk/IxGZUr6NjFQbl0SnWQbgD4qDxWw6+Tk5kZB5o60tSX+sgxCG6jR3WgZB
-	3OgpJW75CPNCqJplwCYaNUJl/dygF7j/VyKA3rpwB9Tcqraw/vhMzoVPgr1kFmvc
-	JWJYJQdYXzU64ukz6t7vF9PiyVwXhvAB2qw8sybL/CLpXkuInJ3AwW3cASxIN1cL
-	V0l8dOa3aKuXUvn5g9XLOZDSM2tYz4hsk4K7WRp8bO2rJoBrjYBAsJujOeipR9Rx
-	ZFqOTmprCg30O+4iX6YPA==
-X-ME-Sender: <xms:kYY-ag13_mxoHQZkKue5GNiPoL6-BFjwJQj8UcijbNRBEzA9yKF-og>
-    <xme:kYY-arzM-ZsEdKr-17j1wTFWJL2u1bAbSPk1icKyCZaixewbOfsZMnfArc_ADqOFp
-    -w_NMoO7S6ekCB1vfurrAVan8PCajgqJB2Cy6-cbYWWVXzrBz2rSw>
-X-ME-Received: <xmr:kYY-anHoUeTcUoXyak-gHgVFwyflpXZjWN40FWGtfccYjFuIM8icrO1VhGo-UbHgV4I6yIPVgHgF2luPBY7f4O0sc8J9fe8jKHFeiuI>
-X-ME-Proxy-Cause: dmFkZTGAsk4eCRN2D8bgVnfui/JCf/9joYw1CAcwFCXMma3TlZ5WMmb6MFAtbAl7rrZ0eP
-    H0YWd6pmqbNgYcYoaBHsPmcQjQiOkUno5mOddViAe17PMkND/d/25g2547F1qtzBhkFDK3
-    +cfphmfkpWsxxYp54I5SgA2aw5/HotTNUqV99zqTW1U6a+En2QR2frvq0NECR/qBkE6RKh
-    GbF74BB8HLi6EpEPoZuOWtfjDoVJ+WVkwWkKN00nAAcDQnyCHt9KTv6Pn6cjnq7kiIIT1h
-    kZ7pcxJQK/CHfXuYGHQtpoUKpPNO25fnQpQHKyMhtGykVrsyD1s72UMHPdSBxz+HjF5Anc
-    2qgFAmmX+06uxYTgXlAD4e8/GTnAFQzO0nBROkCZcyyK6DYhduLukA5jcjmHq0LfrVNKjU
-    F+2k6QIVu4JJoQLNdUMQ/Q0TS5hNaKMuJGXz3aHUesbz1Y1dQhJ7nE9hLt/ScsNz44jmz6
-    Puh4AXLH7goQyGhoYC4rC6HY22XconNG3sjofUmPK7vU8TRitrG8a4oJl9C2mU2LIL47yj
-    SGb7qRi80d8fqEHSSEfWRmGnySMW7XPzqEIq3LI7qVkU1XNDbtYsS0FB/d5EVEwj77EQSi
-    1MiCEVZG+d/MgxXoXyPNfnBg6sddZ5somBfbeksr+bV8WL8oAkeZ1kAjPJag
-X-ME-Proxy: <xmx:kYY-aubdLmZsCPSYHlZO4afnww_VNYv2kcDWs_UJquA2dwGn6OTrog>
-    <xmx:kYY-apB6MxXCye4i5g86HvMBP-LiSDnT6CfusRFgorrPTg0aJMR_1A>
-    <xmx:kYY-ammKMbJ0VYlMZC1FGYQC-gF1mv1Acaew7c12vKpWgYHAYF5s_w>
-    <xmx:kYY-aqwCy5sMGFS6rDGhSR09wtGJDijwWpFjERzx_l_AgsYbWEU78Q>
-    <xmx:koY-ap3gKZUkPAg854-Lo95BxN4m46bzGfNZFmk0ylO-6wPxHWH5G-RY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jun 2026 10:02:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,  phillip.wood@dunelm.org.uk,
-  Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-In-Reply-To: <4654a3f1-bf79-4c3f-b121-16bb3ab25f07@gmail.com> (Phillip Wood's
-	message of "Fri, 26 Jun 2026 14:12:41 +0100")
-References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
-	<pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
-	<d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com>
-	<CAHwyqnWXaG1HGunztVgUdWnVogqCHRbxh8pcS5fGA6f3mB-nEA@mail.gmail.com>
-	<4654a3f1-bf79-4c3f-b121-16bb3ab25f07@gmail.com>
-Date: Fri, 26 Jun 2026 07:02:55 -0700
-Message-ID: <xmqqh5mpcsc0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="ajOwM868"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-6611689dc10so1174235d50.1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 07:29:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782484164; cv=none;
+        d=google.com; s=arc-20260327;
+        b=T3VHpXYHsc7FFky6g+FLgo/v2+FGs+qrQuxrBy/NbsLIPTYRgKflgVexPm5FCLVFCq
+         3EtzCZBswc/1M63b/r6a8HrXFuRJ5iJsKBF2uDVohPKejkqnEsbD/OVtDsF+CYkAmZeU
+         PbtEPCVcPTl46axetNAcCvyqrOu0jobgUfdIm14RS3UKBZeoaXyx3qTSVf7Br++pECBp
+         B9Mt0InaxVnpQX9qGky5yd4PlKQqvqQEK5P2W20ljC2QRlsFUbw8WbP5CGuPeqRqxPWU
+         RlOWIHsreqk5x/g1dRK5SzQcT+INawKB210tNGHLhoBG1jPvE++N2FqEX47rpYgPakQc
+         KRWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=28wQyVZgL4ZmLpMETFPcxxZ4Lv8n4jopqUZhaOFEblk=;
+        fh=tXwkwlp1gPdEPqYEU3wr/lfdJh4Y1HUol4Mx382jUNg=;
+        b=szVI+ZrnPI3e7iyeiMRlFy5S+qfsIDpD0XXTvS+tTGHKF13AQJo5JGgqQIosEDAutj
+         F/sl9bAE0yw0TBsd57baTERtUb9rAXXJ3V4Zv4Sd13Z7L9HiPBsBDW1M4Bz+jkZJazh9
+         Ac6Fe9Rt7nf7ulQ0U8hDt/CObsmc2Sudhqzjlk93KJFYUKkpfjPmvKSj3aJG61GqYnLs
+         B71/IgP/5mUQJS+Liv7jYxEZyM+2MLd78UEetdnoi9XGj5pEj+h3FqmMoHnONQx0eFY/
+         doKwwwLS5e77pTg51EXOyiBMQ0uChdrLbQGaaT4XxZyer2NPCs5CoA0Y8hk25x7SK9VS
+         wmSA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1782484164; x=1783088964; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=28wQyVZgL4ZmLpMETFPcxxZ4Lv8n4jopqUZhaOFEblk=;
+        b=ajOwM868VVRxhAPIJY43p3TP4gwN2WGP2q14W7Fx6IiyNdbdUyinDE5uYqQM1sB7Ih
+         emGZmD578yXoZhNUSTalIvd4cTaknpEn9wBSveXyaz1R+ouoCgnB7hMLvRvGLtaZiBQo
+         Wx8xKhjAz2ag3oe/QZ8IC9mbG4aLLu6YY6/b0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782484164; x=1783088964;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=28wQyVZgL4ZmLpMETFPcxxZ4Lv8n4jopqUZhaOFEblk=;
+        b=OiwTOoorMyDL1gSIcYHl5qzC/PLlwOw6bI2G4k5oJ1V7ZkbzFwpOWoUbiVStdd6oKI
+         xpdlc/m0yqhGpiL2zcPfSM1ryQZ4b+QSDDfMZqOVTfdpzuPp0wP7yQOXkAM2N5u6ygrM
+         Z6Tg+9KbZqgG65p2nraB/SzU/iu/4z6TSoETcNjWuNnjSbyJ+hpmCxLIYEsUnAOuSix5
+         OoYB9THHc28ClVAirta9VuJ+Q9CxRUrRlU+XoWd4G8wJyPGS2A5N+AVCJzLdnLjhoRwd
+         wlrD4GIne23db5z4fap+QphE4/x76CS9TCPy/7gG2T9RfX7EUMD67CRGP9U6P80XaI0d
+         N+9w==
+X-Gm-Message-State: AOJu0YxvbO2+7z3D8WACxhIsSxNm54Mjed+nl80CgzHzw7urokKTF0HQ
+	4v28FTFeUvYQ7AdyS2IHfegFxn6PtDXYa+ji0nAscIEcRrPr+r8iq0CCu7xoPKXx9mvOh2we9Ws
+	WCviz3qL/YsQzPLcrXVgObO6WBe/F4DP60ofUj5nELp4yq3ZwlAuVagslrQ==
+X-Gm-Gg: AfdE7ckOHXupEUE+W6lpgWdnmREHLwH4JgWWDuj6eK0/mozVUvBQJ3velo5jThV1I/r
+	80xSo9DzRl5rkt90eHlo50MohYoDAOjJTVoO2dJo4xtW9hFt0eytFLiXkK+18Kxb/XqOEzmAU3P
+	+iGbmr+ENvN3GEX9bRN+N6NsQE5Ncr72ECSm371VpV+K+4QnOsXbPDFhbzbZTmBNwQLNzSbYTD2
+	7eVlovXr3ttQUk8cE9BlKIr90ZsDjEoVLdnnXmr8LmwAI0hn7yZfa3/ujwIwrnQw7iz7FLhig==
+X-Received: by 2002:a05:690e:408e:b0:663:ac22:88 with SMTP id
+ 956f58d0204a3-66487bdea02mr5372627d50.16.1782484163822; Fri, 26 Jun 2026
+ 07:29:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
+ <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com> <f3572a8a89c74fad54a9e53be6f0e34daa2d50c2.1782479286.git.gitgitgadget@gmail.com>
+In-Reply-To: <f3572a8a89c74fad54a9e53be6f0e34daa2d50c2.1782479286.git.gitgitgadget@gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Fri, 26 Jun 2026 16:29:12 +0200
+X-Gm-Features: AVVi8Ccq1g0nLoU6MwGmgi315mRJWXA11AOujzhhFDjfC6f66bv3W3cMjQ8AaKY
+Message-ID: <CAL71e4N3RPHSrXscwYJUiLWc8-a172h+nE13yuUBRV7Uu3zGzw@mail.gmail.com>
+Subject: Re: [PATCH v3 7/8] commit-reach: terminate merge-base walk when one
+ paint side is exhausted
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> On 26/06/2026 10:57, Harald Nordgren wrote:
->> On Fri, Jun 26, 2026 at 10:53 AM Phillip Wood <phillip.wood123@gmail.com> wrote:>> >> Only accepting a single argument is quite limiting as one
->>> cannot say
->>>
->>>          git history squash ^:/base :/tip
->> 
->> I don't understand why this is limiting? It thought it was clear that
->> it should be one argument REF1..REF2 ? What does '^:/base :/tip'
->> achieve that '^:/base..:/tip' cannot?
+On Fri, 26 Jun 2026 at 15:08, Kristofer Karlsson via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> '^/:base..:/tip' is not a range - everything after the first '/:' is 
-> treated as a regular expression to search for.
+> From: Kristofer Karlsson <krka@spotify.com>
+>
+> -               if (min_generation && generation > last_gen)
+> +               if (generation > last_gen)
 
-This particular case you can do
+I have to note that I accidentally pushed this version before noticing
+that it now fails for a subset of commit-graph modes.
+Apologies for that - I will rework the logic here later
+to preserve the behavior better.
 
-	HEAD^{/base}..HEAD^{/tip}
+I think (and hope) the rest of the patch series is in good shape though
+and addressed the previous feedback, so any partial new review
+feedback would still be appreciated.
 
-(or even go "HEAD^{/tip}~43" and fancier other forms, the point
-being with matching {} pair, you can do more than what the lazy
-short-hand form can).
-
-But I think your point still stands, I think, as
-
-	git history squash HEAD^{/base}..:/tip ^main
-
-may be something you would want to do to express additional
-constraints, like "I want this range squashed, but I should never
-ever touch what is already in main".
+Thanks,
+Kristofer
