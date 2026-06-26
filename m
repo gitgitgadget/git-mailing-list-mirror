@@ -1,105 +1,217 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AF42C11FA
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 16:50:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782492620; cv=none; b=FRxIZpn+VCTRFgxMbKpwVIBa1KQbxLQMo81KiO44PfsHb34Tx2MqyQH8Z5ge22urAsJn5+zDPU4JbWhXUxD/tJkpYRK6MvIYXfGGZ/7IB3x+C3QzSuLpi1LA//AWkGF9Ris8oOcmlus/Iu2XgHYh4d421sVHyDhSMwQlgkPr8Zg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782492620; c=relaxed/simple;
-	bh=l9/ARszCWQacrLa1wJ3qOxEvs4y2Um0pGeNIza8J5FE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ddX44/BqaXdokjXg6AMM9lcNjltRX+DeTec6A6pqnvqsN9oaUwS90XOgZpPfY1kBkyXL4DjR2JcxItp4+oHvUcFGB/fHx9ewtsnzoxYSdvvdC37gqGmTVQYHSTf9Lxd74GhywAcuSmhI5ZBV+w1gUt87bfF8ktaKhV9AcLbeJCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IFaqCFjl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j1UIH24F; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1203FDBEA
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 16:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782492900; cv=pass; b=aOX8BMDJbeec/st8CbT8439I0nPU3ySRmLEIvdM2Lj3ApHcS1zRkG/TkSzP9kC4MuL52B5DW92+eSStAaSJtPFArMXFxnp+Xz5i3lQxwH6Auv3+4Uevlz+R/N0ns7E9ses9thxdBrECzk9Gue2d+279Msn9MbiWC8JC1aBSbj6A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782492900; c=relaxed/simple;
+	bh=QfhYn7e8L+GpJK4rmmbadZnM6CJcn5xVR5Z3wUd66YM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XMeFEevA5/dgd3SD+4BCqzJ5hGAiUFOiAeDvJlFl0dbtSTjqojJLm+FTYcgJNF4u71DOmUq//amyHbhl2hlEpea1ZYJklS9hjxD0owWX6BZTVbSQayFaG8WPhkYjlVDmfTq4aHz60C2UJLl09/g7Kdtmqp1RKuknUT+NkFL4+8A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ogqxYAxD; arc=pass smtp.client-ip=209.85.217.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IFaqCFjl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j1UIH24F"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1D1467A0195;
-	Fri, 26 Jun 2026 12:50:19 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 26 Jun 2026 12:50:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782492618; x=1782579018; bh=l60Y2WvxWw
-	wqFpwIs2BTqLcVckX44g7V5mSf9TqedOk=; b=IFaqCFjl0O5f30DJZYgo61WhjB
-	NTDJUsrsqp4IB/dlIYH2nCliQcn2vG/5wa0zpirJzPk5vWjlmHfMuPXPxKufNxln
-	OCI2I4xN1vIbmba4lUhoHxdD0QAe00wgaIcdvJw9kZREZzVAzgP+xRpctKXL1hSX
-	I597wNu/cCXTM+eBD+jNJQ+crK2u4Ylvc4QlaABkScjo3GRj9qrFw3WXCGs72l4J
-	8bDrsr4Mt1PrS6X0Hop+9grx2gNRF6pUaeX53IM2AMhZXuUoPuf7et3grDUneKxx
-	l0nohY8r42Dpj9p2rpwXmzGTZh/tl223/B6YOjDWERD8OeGuAcqVaBNDrgUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782492618; x=1782579018; bh=l60Y2WvxWwwqFpwIs2BTqLcVckX44g7V5mS
-	f9TqedOk=; b=j1UIH24FUCoXZQ+tdRlBJpUfk1PiiqW3PZrzeUSApWBbTCb2KN+
-	w1jx4yObRtPwXkYIPddm5FFwzhznR/wd6lWBae7QawUBO9sA7eh3Y+iZg35wvENu
-	gOEi7CXPPN1rL9W+wzIcT/1sphssNHQW47FxG6sDySF05A+00UnLbH6iIPOkPWBi
-	wkIVCy1RXXEVhzSEmYF7CLj3WZiGT3WeOqve6P8HVGbNxx8WcIjoIc6aSPQrRlZV
-	S+osZO6uBOVs9gKaNlYYg65TFrVV3apaTRZUF62z6z6hue/r4e+DSwgEQ/HlRSsi
-	hIh2r+yZZZTDMz040iYWra4gnqkOJ9sRDfQ==
-X-ME-Sender: <xms:yq0-ahgY5dfea5VzhL-fLIpvQ69h3KzoPje6E54HHhSK3AYEIqM7yA>
-    <xme:yq0-atCSfykgn5dJH4KK_clshiMQgtpToNfUqJw5oe2MJepai9QLPFNLB_0GxfTKb
-    xJodw8swLnuPLLg1x4DgIzxXNd5AOiJdblvaB8OdCI4W_1XhedfQX8>
-X-ME-Received: <xmr:yq0-amFw4m5Y4JNsjRzzPg-jygJxRDy2MWmEv_kIsXYFOUunSCyTZRjU-gamjWl0KghGYdYDSHMxhaQLidmm_Digwl-PKi8VO9eZZW0>
-X-ME-Proxy-Cause: dmFkZTGb1wYF/ettNBGiZZroTzU8EKVSCQd0TWgJ1HS5R9zOuojMLWNHYD20lsGgruxy5v
-    Y5dzCPytNtg1J04mSKv1U7RWmubyHWvRguaYJKEBkuRIeA/OgzVluHRNvFtMNlpi0wsOMR
-    yoS0JYJpDYn6n5ZwzXEtm1G11r076eTOlhNVffSFJCfyIGN4VmpHfvgp6Asx9DM3UTVhwv
-    smXjL6FLIDF3Us5H4VA2Vn6cZJ6/J+GiWeqBEmJbZLOUhhBwRVVjeh+21PzUpF3cwbiKzC
-    PPXYg1AitNSQGW9kRZzuSm1KFQNGH6XPQBmFGGlZte4tma30lwijK2avXDvQkI34ayz0nn
-    +ZW/As2m44eQdV3hC5e5Bc2C7YIB3LXEjlpVuSPygbaHmeDFx+b7ZBq7MiTuwCsIqvYRGn
-    LC0yOkeDqAgv77adv4KIm4rysIvHTpJ+MSkCejZ8G9zJB4Ih4H8SRJe8T6bqz+r+iMxcyb
-    QwNJz9Qi+3ADiBuFnjjD2BknDWMGCaSTiiYejQI2CUWvf3WsSTfm0XZfclesomlAIRUwHB
-    CXH3/jcZKeKRyGw5awXB7cE+rK+TEWuBw0A5fTVCClrYJ9P5HUqkGm1R81xgJR1grQI6md
-    Ksxab3ShJnlvsEXhsnSkRhTM7mmSraS8q7hPNOmixJFomGk07cnM33GAxqeA
-X-ME-Proxy: <xmx:yq0-alIN7TdOJtm09yntqf8-n-AADXyUej71t93BBuFUaCBDTk_jEw>
-    <xmx:yq0-aqmNv9rfKXJN2f9kjnjH-GSbPUAYlSed2AaYnc_la_iD9Hb-CA>
-    <xmx:yq0-atR0N7GjWhjW-oX0iq9f9VUSUwwoQ0prQGXNCEa-u6fPTG5hSg>
-    <xmx:yq0-asJJ7lq4CHYUcAJbzE44LWEJaEmjIuC0Bcbqpb7BsQZlF0uMoQ>
-    <xmx:yq0-apF4rwWbYyKj31Dag0R0UTvZ4Bdi4rVHRVRO_m9uwCZVC4wMuYwi>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jun 2026 12:50:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v5 1/3] replay: add helper to put entry into mapped_commits
-In-Reply-To: <20260626-toon-git-replay-drop-merges-v5-1-5e120738b9d0@iotcl.com>
-	(Toon Claes's message of "Fri, 26 Jun 2026 07:48:11 +0200")
-References: <20260626-toon-git-replay-drop-merges-v5-0-5e120738b9d0@iotcl.com>
-	<20260626-toon-git-replay-drop-merges-v5-1-5e120738b9d0@iotcl.com>
-Date: Fri, 26 Jun 2026 09:50:16 -0700
-Message-ID: <xmqqa4sh8cvr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ogqxYAxD"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-7276a7aefefso451235137.1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 09:54:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782492896; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PBuLzCT/EeR8UZmHoELA41oKvYGnneh0eqcdcxYRQxT20kTK5+vFpwwvouEitcBj7P
+         cVNprpzF8dZjpEKOCzsAiCk4pePr5wWej9xmMI4WfOkAWIZhR8ns8HjRPwgiqgqs08hZ
+         TjDROKaba+ghhh+oYIFaACWdKlq9woBLGI38zUASg766nVPfj2Khfn5cn8nrp7PznOei
+         Jl7bMMAqAxGeiBX1bxKGyL5GaHd6P+V3TNB7V0QGjl0FsppoGBEEWSh2ey1dj2qYFjbM
+         wGuQrYajByYbf+NA7fpot9IhAPX9OtI/9RiUx3TntvHol7pfdTmYu+yoBHgohydAMmwk
+         9UHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=oKQ5lDDJvBB2r6ziyLrWtBWZFJXfbBGxJ/xaM+xcCRM=;
+        fh=G9DjJfeljTVhMqynCUoITkM7Ps99F34iQWIBAwR2kTw=;
+        b=qEL+iYPFbEOHjhw25umy27OJyhQjEtl7WvliACKT/f6wZH2W6XXHnt8G/Vaw368zLs
+         HVn73aQ+Ws3CJbz/zkqRPOI/Uc0982kR70jaxuSBpluqZYeLpuhuPrK3PTbW9h7wQFVY
+         lZRmB3DzE+Buv8h3vrFXEGawwyFd4QCd2eGyP/r4m/wtcGWZ6aVlfMgDXjkps1t/D50b
+         NoLM1HklEg7fliC9ey+f/HvceL5uW8jIURrpu6QWPiVbwUg3/QL/LfxJ7GbG77GwPTVA
+         hQrNuArK8wnXkwLzGx+WoCwqHBTPOe60HT6vTiw6FdMxUaL+x5962SE7g/+107s7oT7P
+         TfIw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782492896; x=1783097696; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oKQ5lDDJvBB2r6ziyLrWtBWZFJXfbBGxJ/xaM+xcCRM=;
+        b=ogqxYAxDzQ7U2ugwYd+WatPS6wN95Uz+3YOh1UmJYcxNcW48qywZHZkMTA+iJXSaCt
+         H+y3KdxzcPfOp5L5fpkwdySR3Rtp1fodxLccFzj6Vxf7ZAgS1Ut7yzS3x+24/x7dbci9
+         GaHTP8s7IDYIjrZEIUrsa9QmgZaEHZkfnf+553yMMkfeV+J34O3bmyNaK6130fL4w06K
+         F/EB9jLRaTyo9IaMlGdvqxN79tIr5Q0Yfg1K+gk3UjKR3GPNFAE2Pq4cYg4R3vVnor6q
+         LJii0IJCb7iDLzBfhjuSD+UTwTG2hoCgXtKBgh469kMKonwbqsTwaOO/eLsSJyUVsTzi
+         ttVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782492896; x=1783097696;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oKQ5lDDJvBB2r6ziyLrWtBWZFJXfbBGxJ/xaM+xcCRM=;
+        b=KEWvktJDr5u1wzn6MpZBc7kQP9u86nRSS6JpL6aLbuiTrL9Al1e0yWFwcm0YSEIVcx
+         uVG3yTOv640kuwp0PZTx+ywjV2Cmx2xbsQ4QfrLTwdHO6qc5WvQ8rlAJ56+RyeQgGSNd
+         jwOvzy2pRuZOeb3+pZXKa6RYgRsvlrAwv9QdSGRNa8mSS3zCooIMVwTfN20NB4UDc8Bg
+         jOdjon7fDXyid6gA+mVt7qu2H0pYfYb73OU17YYqAPZxZf0PoW9XelebxR1GCBBiJia/
+         +IIRrLY6tweCWLEWQ7SRfEWQS7Dv4+GZBQJhigdUJaS97InRAxeSrcfF85qwUY7CRoM1
+         RaNQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rrq6spcCZB+BnN8vA+vHaVGXYpqRGbWMafvY+86iBEOjNykYFzbOCgMrEEPlqMiS5EJu1I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzncxMe6FqbuLFFqqB0ex/8ZiK+h+jXDWVmhZE3fMBtlDIZV3cV
+	CPa2gtjkNySveTUpvrMTdXur1BQoMPQkoFTDyfCfbJIQ4zhIlTqa3mKIvqdZBzhtGndEx3K221C
+	nSsT6YA+ciTybhiZpLYw2iISIgi2p5lQ=
+X-Gm-Gg: AfdE7ckg3Epd1aLsWrK3bE9xDEPlZXW7+ogDJanwMxYwWkPzvU/Ipalpb2qvuGz6lBH
+	48t8LJOKTaTKhNlq6OrjOad975e3RhcmHP45CNh9giM97BD9Z7NkhxeXiaRPbj8Y+NtIAkGCjRx
+	adzdmtPlzd4rAiIRiA1CDv5Lqbe5ovYE0KaPHeGZUco29cm1O5iHsyWF6WP8rSptUO6Xxro7Vup
+	wsxI5PVxpvG1DEL3ujsjYVJ+bd8PNMVjm5f5mUjwoTgPhGSmxNYFlKl4waepE0HdGfd59DCC6DU
+	MjskhQMiXXJfv9/bRJ4kuB4DfJ55MXGcZk10sszWs/HY8RhxSnRBgWDQYxXrD/vbRdYRRJkY7Q=
+	=
+X-Received: by 2002:a05:6102:1623:b0:729:e047:6155 with SMTP id
+ ada2fe7eead31-73434245bc3mr3479654137.10.1782492896350; Fri, 26 Jun 2026
+ 09:54:56 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 26 Jun 2026 12:54:55 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 26 Jun 2026 12:54:55 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260625-ps-eric-work-rebase-v14-5-09f7ffe21a53@gmail.com>
+References: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+ <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com> <20260625-ps-eric-work-rebase-v14-5-09f7ffe21a53@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Fri, 26 Jun 2026 12:54:55 -0400
+X-Gm-Features: AVVi8CdXTAuzc9pxwpIWRIRH5AicZoeyLV3KM5ddr26X2q42K_3-HWAEs6uWO_0
+Message-ID: <CAOLa=ZScS3Gmm5BAgJF69phpaDXGnP_j9jx+bMhn_tfF65RXEg@mail.gmail.com>
+Subject: Re: [PATCH GSoC v14 05/13] fetch-pack: prepare function to be moved
+To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
+Cc: chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
+	eric.peijian@gmail.com, gitster@pobox.com, jltobler@gmail.com, peff@peff.net, 
+	toon@iotcl.com, Jonathan Tan <jonathantanmy@google.com>, 
+	Calvin Wan <calvinwan@google.com>
+Content-Type: multipart/mixed; boundary="000000000000e6f3ae06552af717"
 
-Toon Claes <toon@iotcl.com> writes:
+--000000000000e6f3ae06552af717
+Content-Type: text/plain; charset="UTF-8"
 
-> +static void put_mapped_commit(kh_oid_map_t *replayed_commits,
-> +			      struct commit *commit,
-> +			      struct commit *new_commit)
-> +{
-> +	khint_t pos;
-> +	int ret;
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
+
+The subject doesn't really give much insight into what the patch does.
+Perhaps something like:
+
+    fetch-pack: use repo config in `write_fetch_command_and_capabilities()`
+    fetch-pack: drop static variable use in
+`write_fetch_command_and_capabilities()`
+
+> `write_fetch_command_and_capabilities()` will be refactored and moved in
+> subsequent commits where it will become a more general-purpose function,
+> making it more accessible to additional commands in the future.
+>
+> To move `write_fetch_command_and_capabilities()` to `connect.c`, we
+> previously need to adjust how `advertise_sid` is managed. Currently in
+
+I don't think 'previously' makes sense here.
+
+> `fetch_pack.c`, `advertise_sid` is a static variable, modified using
+> `repo_config_get_bool()`.
+>
+
+Perhaps:
+
+    To move `write_fetch_command_and_capabilities()` to `connect.c`,
+    drop the usage of file static variable `advertise_sid` within the
+    function. Currently, `advertise_sid` is modified...
+
+>
+> Initialize `advertise_sid` at the begining by directly using
+> `repo_config_get_bool()`. This change is safe because:
+>
+> In the original `fetch-pack.c` code, there are only two places that write
+> `advertise_sid`:
+>
+
+This needs to be modified no? This is from the prev patch, where we
+moved and refactored in the same patch, this no longer is the case.
+
+> 1. In function `do_fetch_pack()`:
+>         if (!server_supports("session_id"))
+>                advertise_sid = 0;
+> 2. In function `fetch_pack_config()`:
+>         repo_config_get_bool("transfer.advertisesid", &advertise_sid);
+>
+> About 1, since `do_fetch_pack()` is only relevant for protocol v1, this
+> assignment can be ignored, as `write_fetch_command_and_capabilities()`
+> is only used in v2.
+>
+> About 2, `repo_config_get_bool()` is from `config.h` and it's an
+> out-of-box dependency of `connect.c`, so we can reuse it directly.
+>
+> Helped-by: Jonathan Tan <jonathantanmy@google.com>
+> Helped-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> Signed-off-by: Eric Ju <eric.peijian@gmail.com>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+>  fetch-pack.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index f13951d154..ad07603755 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1380,6 +1380,9 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+>  						 const struct string_list *server_options)
+>  {
+>  	const char *hash_name;
+> +	int advertise_sid;
 > +
-> +	pos = kh_put_oid_map(replayed_commits, commit->object.oid, &ret);
-> +	if (ret == 0)
-> +		BUG("Duplicate rewritten commit: %s\n",
+> +	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
+>
+>  	ensure_server_supports_v2("fetch");
+>  	packet_buf_write(req_buf, "command=fetch");
+> @@ -1395,7 +1398,7 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+>  	}
+>
+>  	if (server_feature_v2("object-format", &hash_name)) {
+> -		int hash_algo = hash_algo_by_name(hash_name);
+> +		const unsigned int hash_algo = hash_algo_by_name(hash_name);
+>
 
-Please do not add terminating LF at the end of single-liner messages
-that use our print infrastructure, like BUG(), warning(), error(),
-and die(), as the machinery adds one for you.
+Agreed with Chandra, this needs to be assessed.
 
-Other than that, looking good.
+>  		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
+>  			die(_("mismatched algorithms: client %s; server %s"),
+>  			    the_hash_algo->name, hash_name);
+>
+> --
+> 2.54.0
+
+--000000000000e6f3ae06552af717
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c9bf294cd74369d_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vK3J0MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL0k0REFDaVMxR2tNbDZQU296Q0xZTnJsRHh1emRxaAp0OFZpbndBM1VM
+a0tidXpLRnJRQnd6cVp5MmRXNERaa0tqOWlxMUZobS9QNXNFQStSVmZ6MlBvcS9GMWNrbURHCkk3
+N2k3QUN2U25nY2FJeEZBVHJJSGluMy9vVWg1elRlczhjTGFFZHRyd004dThmYnlzb1VIdG0xanpv
+TjNIVkQKQU9zUi8vWXBJZVQxRnA5Ymh3Z1BhalJTTkNYUWtnWnBpN3Y5QlNjKzRxYWpoU0NHZTQw
+Njl0bzM1YlBua1J5QQpHS0dFckhhcExyeWFYUHA3eDZvUFZ3VWJqZTFKeVY2aEhkZ0dnMDYxWHBR
+K2tKaVVlQ2Z3TExCVUhwRWMvanVnCjZCeFVFSTQ4aGdWWG1VOEZvdFBMaW5YVFIzaldickgwTmdP
+OW1Rc1QvY2pRYTcrN1QwSGVNZTlobW1uakZndUgKeGNjazI1VVdkZFpBNzRnTG9obW96QTIzMHIy
+dUI0dk1EK0d4cGRidFFFblFkK3BLcllua2pUd3BnQWJyTm9ZdQo1dFJZMnNvRGl0Ni9JUnJkUlFJ
+MGMzQmp6ZDlmdkVFVVJsb1J0LzFYc3NwZzlSQ2dtbU94ZDR4T1dqMmxsVjBNCjlta2lYVkZ0VDds
+aytZUDkwRkhCTVlGeTZSQ2VTcmlrQU9GRXBEZz0KPUs3cjUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e6f3ae06552af717--
