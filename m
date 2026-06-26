@@ -1,135 +1,148 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F243EA947
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 09:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782467909; cv=pass; b=P+bJ3RBzERKLEY6rMkbzxii4shtS/mpu7uAIE8FZq0c6ZgeFsbl1gK9YEuNM0wo4C9/+ZAx0kTJMDyVDZvgCgK+mlecuUcXiNpFDr4ncmbvGANZj52ox8cChcMrjF/r4NT+9ygGbhWl6HmmGcne3c5X6POo7mSC+eiN5M390TLk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782467909; c=relaxed/simple;
-	bh=IvZMCezGNULFpD8iQTSXDp5yo2eymhYCbsL0WHoolO0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ftr4o14r7ppKHyMhpjGDV64S1Zc4TQ/8+xOiJqz0op5PsPioQk7JJLWjMMCqAsJ4tBqzuNqtGwpU3w+9wqB3R+R3rgq3HZ12HPVEQ4FrLg5/5JhRItkcnsLgRnkNjE6/1hLtZ46PyvGN/SWrCH7euYE2OJKlReyZY0EouQQ/6Fg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rpbv7c0e; arc=pass smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEDE3A873D
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 10:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782471031; cv=none; b=cTcdNqcDizbFyIHJEpOswVaXWR8+UC7RBdJ67y/brs1w7VvYSa9z9zxwSGKvJHWOObgzmU22PD2tilEpTLy3ujSqvPpSEMokGRntB0s+g2adaOwJAtSeZPCEpj+cwZnRONn6sK6MwViu8Wl4XyMywZT4h03Yx+8NxhvWaJBNoCg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782471031; c=relaxed/simple;
+	bh=2j+M3qK4/Mxzvy9n4/3Al2oFJ7F+7DYM/Ww3a/ZUYeQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WE307R976DgRlWoMdTHOiSOch54C/YLVDJCADi7iXGZvQiGwvmJChpEJwiv1NtU5HYh1209l3TaJTAnks7y1SqsyBtudmiU2xQATsOzRseN9Z6Gh/cByjj/KI+jg0VJ+JhyYVZr4CShdC/CnoBcSLbSlyoVf7F6425Dn+3mYcBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jqoW3DPs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EuxmQJdR; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rpbv7c0e"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-697764213d6so1300143a12.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 02:58:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782467906; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WzRu6xG1elSLYDFD6Bq6AacZ+Kvp4h6/PTEJoqAhsNQQyDrLowyCnCcJMXuDZY1ppJ
-         Ebxwajy24YiAC6s9Ca2DTi7lybOvn2fvF9a8MuHxhykFoNm0sXAFKFvVfS/6NM1EnWZ5
-         Tk6TpyLXNbHETUnZvAJeyqLwjkDWW6i3KZVKlvvw9FGLW/vYl14e/F32B4eeu9nEpds2
-         1QWLi1usSaYQp2/PrfnHATo4yLyiZIWSCA5XCKHln95SXdLxyJ2Omna8gXjFOtdueNPg
-         tYX594NuCj4zCtD9Zl2FqgKdxMe3dn1IQ4CMHISuOllWmphRpI5zoLDzbIo1oeg2Jpc4
-         6gIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=DOofzwNMso2UMmcvFSZ44yIvtmmCtIEz+Iu1cpKXOtA=;
-        fh=6VWygOYwOFzWjCdrvv+0+uWmM2l/P0mAp1XWmm+8IcU=;
-        b=BnEe8jVzahZ92i6sD+CXvYbNZFVk7EmkRU8/SX1txf7Myo5NtZREzJSGtznAmh5lzy
-         sxz9PULHugH12i5LbpBvvxOccUeZEfuR2qr0N5reHEJD+TdO1g8phnQHnYeAZ0/c8CBZ
-         0wDgqu4YjCc5mstgN8YsGu/UornSJLWscEQ/q3+n1CJiZmI6dk03acMQpj1upDk4oqou
-         5d+Ew5v9Pmzr0khVkCfp57ReD0KWIYwyr6pbprBxEQxsDSAFPSFj8JS2LIAhGWXeTXMH
-         EayVNvyTQNalPWEsL9vIfhCR6iaNcpCIzqk4MkwWBEY1JRGmdQPRTKD4JEtWfv5u6nX2
-         NHTg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782467906; x=1783072706; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DOofzwNMso2UMmcvFSZ44yIvtmmCtIEz+Iu1cpKXOtA=;
-        b=Rpbv7c0eNh5XzqA+OJwh28Cm8VYmRETrtGRP0ioZ6uClrOCOGVAZIIajWmqk+ufEkj
-         IvSCz7X4tVAOL6oBFqBhv3Yewr/iZLWSveAMwdOSL3y9H7J4MUdx6j6Mq6HgDXHVLl65
-         DgSjxtqEhkkSW/0/i/NtjXgdXl3Nf0XIb1DBhzWMY57eVjNlTYe345+QmQ5/R+DQxWuM
-         fhLMkAp8VnD1zHgeHxkGff02udWPP3pvm1eD7JpnG/0SsQfDcfck51PDgXQUyAKiBH1k
-         3FbVEocLXmRL3U/hKkuE2lRch+T/IFMMhvCmTVunELoGEqo4+6S41is0snbIajvVt8mn
-         i0Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782467906; x=1783072706;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DOofzwNMso2UMmcvFSZ44yIvtmmCtIEz+Iu1cpKXOtA=;
-        b=EYcQhwEHySvHH83BHsIGUlYUEtLC4rVRKQGNGbZKyJw+iBBus5mmrAKUHcQXS1MGJg
-         xB+AbGwAYNz0SzYOFoTU1bGJgM4YJx0iC5IjyOcHDc3oBubmNgCk1r8Ecr5s8SlAxTCD
-         FmDDKpoO0jm6jua6Djzh8m3Egs0se3Ezpuf6W8VbLHgXnyJM9uHGqxbOHSmoqrhKD+wo
-         Exaj0nA7nUuN1eOY8XJWhVWiLOEWi6VK2/A3CX2A2krCU6DqRr2gHlXjn/HlIGM4jODS
-         Co2qUGJc3IONwYY9Ia2zEk318Sau2wneC3+GAt7sITgWbkrJgP3A3WaLg8vfEPjtstw3
-         cLWQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoVFFs0OsJLWZoKiLTxeL6NbLdDdo+SH+DqAgskEZse+uSpyq7ymm99HkokgNeugsLuKXA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAszhmb6YaNqo2P2L8jMcOPG+ORTz7M/RW8IPz/gT0rmESkzdW
-	uemLJQVNtzp1IjM9iug6y7a8xhuGv0l/F7k/BcH7wx8wdp23HqzIA1VEA4fzPX0u3u63gVQh6AZ
-	ZH12yqDmvlO+NH/QFG2GDvuFHHHP9pew=
-X-Gm-Gg: AfdE7cl5VZ/6/USwNBMZpHNUBEBdLQP7BGR/4wB7Ertj1I50XD0xaFcvGoBUTd2QNZw
-	ZFI2/ymx7psm5UY7N2yChfHVLmXcBp5HGJE8fKyacuiSSJCvzg9v9dOT4+NLAPVF7JQueo9b3gE
-	y91p2UERU0eUa5rKxmgGH1NQfWftsE4be/Q4yN6tJUfG58Ufs6k3UEBAewOAb0IVdMSVzrA3JDq
-	+vhBz3H6G7yShJV+DsKTKtxmZLmbGOECEHLFkmQbDqBvfFpPPcNZN2GnbxHqqpITjMvirzIIbCF
-	QSPQlOs=
-X-Received: by 2002:a05:6402:278f:b0:697:83e1:5ed8 with SMTP id
- 4fb4d7f45d1cf-69810a46b32mr1732151a12.11.1782467906069; Fri, 26 Jun 2026
- 02:58:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jqoW3DPs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EuxmQJdR"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5CABE7A00E8;
+	Fri, 26 Jun 2026 06:50:28 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Fri, 26 Jun 2026 06:50:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782471028; x=1782557428; bh=VTfGV+x6Dk
+	3LsYiIv7QnGB3CJZLKtK96j+6buR/bUxQ=; b=jqoW3DPsNMrza/wRIp/CHIn3V2
+	px4fEqcfu11TV6fPujby9h7XsNaer4AD5264dNmINehJuLTMtd4CAE9wkzBqVqo0
+	pCMo7b3yTNHCyXTzEzmROziaMkElMV+5ezQHzzLxbCJvezdJ8y6lyo7kzgpyH2aJ
+	k0GbhnYX/qt4qTKrf1XCqurD2qq6b2hlqpMa91qxrLoOTT1XzL2uP5lm2sqW4LvM
+	HdmRKn8MDQBuHkpZDAYW2dakELFL2+AfRV4KJ54FGrnqg1zuttoXksDJwghXfSXD
+	kyathOkPl9wsP5PikfEctiAoetkmf/sTKA9002exnINqimYEbTtKqIyjuLAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782471028; x=1782557428; bh=VTfGV+x6Dk3LsYiIv7QnGB3CJZLKtK96j+6
+	buR/bUxQ=; b=EuxmQJdRqP9sCQcIDpqvP7X+vF/DCIuVSsJmg1xxEBUI5V0qUhd
+	poiAtaD/qzo36dcgOOPwscQMjjwhvbezyNeICj2y5WYsAf21fLd9DvVvbNrDdLlJ
+	CgjOfaIdMnkxbnjnCTGkTLFvP5TM8qJYjLtVlYQLyyOlsqdK4rpMhA6wvLJ237DZ
+	5GYLjgQMHhvVIukbbyHqr3U0EwNnFUa2yWo+OzrmuPp2vYJkVbirTlO69BPfWjNF
+	HFUvrf4zUNQstB1MhBW4csLbUVy2nzh4Rl0ka+i6w2ohkfV2231JqbgY+AznCWKN
+	Trnrjty9HeG+uYBl3v5MnxfHKcHK2CWplfQ==
+X-ME-Sender: <xms:c1k-ascWlz4CAK_EXjXJHhGpyi8LIOh1dPb3JlLcCjIoLibMwwyi4Q>
+    <xme:c1k-alM9blk4EmSTMWmmYktJOSquJ1eHz11N2FAXaaWTx_Ec7SIbpFeVLmU0OWZc8
+    uXXJHVH0p04FbRzJUE5VbOlLzIDhli-SRoozTnPPAPR21WPH843Xw>
+X-ME-Received: <xmr:c1k-aii8dg_GA0xf_NBferenywFrUIRlDahV1SF0ZmoOjCa2X65KceJOcpuGxFhFiiX4xZIyQhTJJuoDEynkDJGQTFxBxc5k6yJES38V0xs>
+X-ME-Proxy-Cause: dmFkZTGO9ypVA495YmJmI0CQg+/FVDSl+S8xRTRP+EcJO1Vf/FbbMMvnhcEDtcUUgYjkoJ
+    S/U51DR6HG7BaOHkcTPAT90poyh5FNLB+8K+Soy3tEubF1E+g7FPaJDXpUP1R9OYY/Z2YQ
+    h1QgnLtP5ILK/jFdpCg2wIiTh3DBApn1WlVxiGR3fZpkOmmZyEcTqR3YSnImkMt3iRkXQp
+    9K4WtsiWBhfneCsaZB/GBfA9oGqkYic67sgxNN1+uhEhnv+pX4+ZGI02Yzbtpg/dCzYbeJ
+    q6mUVhQcw/6qiAc82uCs7oTnNSfTvtjBfi4o4TnxMMMsDkmv23st7F65jJ/qo0op9YFpZo
+    oqmX8ZkBZGbv02NUs4cRdYxM4Mp5jLpj/qPdxAFEZ49NsF8x2Pz9CcTZay9aip/58jTCSt
+    If/tV1CxwlSNy0atROAKZAEL6ujPxHw+4vbVFiCYeNAfeRoJ/Kr7hZVI7MbziGIBahF6v5
+    wScu0ddpDBOLLlCqfDa/4Y2k9GuqkfFbhFu0Z9XFWWxKC1lQ5spVQuD3JgXOl8VAidNVaT
+    071Ej9nDYPdQJTSOOx13t2shXOPQRo7zXKhBDRel132Lcq/tzhlc6VjvV2j00mL9ufZ3vf
+    PgIZVtq91QvsCPzI+DcwZrxPK5yx3SBERl1DAO+ULZ3tSHRpXnpnl/Srt+Ig
+X-ME-Proxy: <xmx:c1k-ag0bmkCP5sp1e74phMWxJ5rlf_JmjQs67OvLUMF5Cts2sWXjDg>
+    <xmx:c1k-akhoKNklgv8hDuofkGzjB6VesuvwiVGYf9KlL1vt8-8f9caqhg>
+    <xmx:c1k-aodk26SJJGyg-QDr7W_9iApiwG1lRhvP1Al31hM7qIFSZQAG0Q>
+    <xmx:c1k-avkqGpTb2x9wnxIU1WT6U1WlqjSVoJKu72ninqIsayndWZpQsg>
+    <xmx:dFk-amdCcsG7mHybqv8DuKB_CZBZrPH0l6LYnBjAik-2OoL3gHV76rmt>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Jun 2026 06:50:26 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 537a315c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 26 Jun 2026 10:50:24 +0000 (UTC)
+Date: Fri, 26 Jun 2026 12:50:17 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] Why do osx CI jobs so unreliable?
+Message-ID: <aj5ZaZK7xylfs4Xw@pks.im>
+References: <CAC2Qwm+9sh=ks1fuux415JGdDJ38Jq6eZrSH7-qzQxYCoy+Aug@mail.gmail.com>
+ <20260621213407.GC2297179@coredump.intra.peff.net>
+ <aji9MOE-NTHKXYqn@pks.im>
+ <ajkEzhdqzmAePk_P@pks.im>
+ <ajkGkB2ckf3p43QR@pks.im>
+ <ajkOoRhqaAcy6gBg@pks.im>
+ <CAC2QwmJA2TH6BmO0O61qRYvV2pqURUk0dTXpkJtb9e-TZNZDZQ@mail.gmail.com>
+ <20260626051657.GB3138423@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
- <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com> <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com>
-In-Reply-To: <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Fri, 26 Jun 2026 11:57:49 +0200
-X-Gm-Features: AVVi8Ceqct45MTFaBlmjQTX9_RVFb37PXZziS2oMDFLzZZg50bocnaJfG-Rkcjs
-Message-ID: <CAHwyqnWXaG1HGunztVgUdWnVogqCHRbxh8pcS5fGA6f3mB-nEA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-To: phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260626051657.GB3138423@coredump.intra.peff.net>
 
-On Fri, Jun 26, 2026 at 10:53=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
->
-> Hi Harald
->
-> On 24/06/2026 22:54, Harald Nordgren via GitGitGadget wrote:
-> > Adds git history squash <revision-range> to fold a range of commits.
->
-> It would be helpful to give a bit more detail here about the command so
-> that the reader has an overview of what is actually being implemented.
->
->   - what does it do with fixup!, squash! and amend! commits? Can it use
->     the message from amend! commits to reword the commit?
->   - can the user reword the commit message?
->   - what happens if a merge commit inside the range has a parent outside
->     the range?
->   - what happens to branches that point to commits inside the range?
->
-> I had a quick play and found that it accepts ranges that containing a
-> single commit (e.g. @^!) where there is nothing to squash. It also
-> accepts ranges that are not ancestors of HEAD (e.g. checkout master and
-> run "git history squash --dry-run origin/seen^2^!") without printing an
-> error message.
+On Fri, Jun 26, 2026 at 01:16:57AM -0400, Jeff King wrote:
+> On Thu, Jun 25, 2026 at 08:27:35PM -0700, Michael Montalbo wrote:
+> 
+> > I think that is the trigger for issues we've been seeing. I spent
+> > some time investigating the Apache side over the last week and maybe
+> > found a mod_http2 bug, which I filed upstream with a potential fix:
+> > 
+> >   bug:  https://bz.apache.org/bugzilla/show_bug.cgi?id=70131
+> >   fix:  https://github.com/mmontalbo/httpd/pull/2
+> 
+> Thanks both of you for digging into this. I'm not familiar enough with
+> Apache's code to pass confident judgement, but your findings certainly
+> convinced me that this is just an apache bug.
 
-Good points, I will take a look at clarifying or giving an error (like
-in the case of ancestor not in history of HEAD).
+The bug manifests both with HTTP/1.1 and HTTP/2 though, so this wouldn't
+fully fix the flakes we see, right?
 
-Only accepting a single argument is quite limiting as one
-> cannot say
->
->         git history squash ^:/base :/tip
+> > Given there could be a potential reliability issue with an upstream
+> > dependency like Apache, I was considering what mitigation strategies
+> > might help:
+> > [...]
+> 
+> Depending on how widespread the Apache bug is, another option might just
+> be: do nothing and wait for it to get fixed.
+> 
+> Trying to make the wedged state fail fast and loudly is mostly just
+> punting on the problem. We'd still see spurious failures. We've so far
+> resisted the urge to do any automatic flaky-test retries, preferring
+> instead to just try to root out the flakes. I'm a little hesitant to
+> start now, because I think our strategy has mostly been good so far, and
+> I've seen some horrible counter-examples where flakes and retries become
+> a routine drag on development (and I'm afraid that accommodating flakes
+> might make them more common).
 
-I don't understand why this is limiting? It thought it was clear that
-it should be one argument REF1..REF2 ? What does '^:/base :/tip'
-achieve that '^:/base..:/tip' cannot?
+I agree. I'm not a fan of retry logic, as every flaky test may mask an
+actual bug that we haven't fully investigated yet.
 
+> >   - Make slow tests faster by optimizing the test itself and/or
+> >     the test runner configuration (e.g., job number matching
+> >     cores) so wedges become less likely.
+> 
+> It sounds like the bad state is triggered when Apache hits a timeout,
+> and we hit that timeout because the system is slow or busy. We could try
+> to make things less slow, but would it work equally well to increase
+> that timeout?
 
-Harald
+I was also wondering whether we can maybe work around the issue by
+increasing the Apache timeout value. That sounds like an easy potential
+solution to try, and from all we've discovered so far it doesn't feel
+like this is something we can address on the Git side.
+
+Patrick
