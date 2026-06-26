@@ -1,219 +1,152 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABC3310652
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 16:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280FD3FC5B7
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 16:36:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782489714; cv=none; b=B0G7EoLMEEDX03R6ev+c0N/UIMvq/xufK5K0zeokhF0NMagvOt3gNmxu4LbIX+IT+aS8U5yEbv899gkPcxqZQritQgopwdxFNf3waEknODCtrhuZi9Ity3/NqIWsVZB4FCAa1rvapv+ciEJSg9VCEw4sazkhR8F8kMpqgzlHDkA=
+	t=1782491819; cv=none; b=rT+fZ4WeneLFU6wwbpDluVP7GMMpURghRWeo/C/NoTFjn8LuP2bzEWYTz+bGOLjSG4+8bUYtd8d+uLvPCizuoOOlD64T5f5F6772BZ168EfmOImaU0J7M6JpqKwKNpUoA7YsUKI1J6riNaTat2ezTwNES2LHhrV/gKD5CvTSmE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782489714; c=relaxed/simple;
-	bh=vS5g7N55X//1GculhDWacGqUDeHIA7kwLhJ4uUSVQG0=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=gcRvIgbwR2d8HK2JFCgqFLSPmu0iUqcoxHHe74X1JryOP7AgoVN/MEgUCTMIDOrAaSYPCxEY5RojjxGCG23SVJu1hqT53NMvQVWOB9n5zvcHpqZpyPeMU7PHIMSbF0a2KkpEZJC0okYWWfclbX6cbpw6kD8+vkjwz+ZQj50dukQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DU0C0Orp; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1782491819; c=relaxed/simple;
+	bh=YDD0vMpMj/lHV40X8+CDVGRKGrAh2IV1Sn3hqBbbrgA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ndg9gphX9HL3Wo/rLcpurmw5wf8KT4I9ZMsry4PY/2Kqd/aHIynWZoVxf/3Fa8lBUWN95El+Cp2ULbzevf8f+0XF3KSeybYxDxDG+ulX6zlsUNjTWOIsaBB/TXqOfObMfTddB/So8I6AFAk6as6dd2GuguGh2ipIYrWhLXCyZg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GE6Q/m/q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hWX6LE2T; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DU0C0Orp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1782489710; x=1783094510;
-	i=johannes.schindelin@gmx.de;
-	bh=M5K3mxje48fx93uVMKT3HibqYppy/w/krPUM0VnD09M=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=DU0C0OrpQC4hiAzVvLa3IFnfApL+2bNfOQWMrvdUzw8wp7mrL4ZHUzz/4BEBgThm
-	 uxkG+A1S3Tizl82PutcCeaiqS16J+k92rL2XcCUAzL737WKTZL979HZGIDt9CLtYz
-	 9doRw2nheydsvn6u+dWHTFqCMNsUT4z3tks0OLutn+17DPAZkeyOlln6K6qDrbLGc
-	 PVMtcoO3IoCTq8WmnbwmuhJ05dqz91lhmC/uxjE7ud5eryyyjTOgkNkvXcm6Twf7i
-	 97+uia6tDbSrULayqXwieoL16NPqe0i1vw3SCuHvTwOWJp1uqpR3Iy3Y47rtSl59g
-	 pdUr0UaQBVUaiBZ4tg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2f9h-1wZa5p2IJz-009fJG; Fri, 26
- Jun 2026 18:01:50 +0200
-Date: Fri, 26 Jun 2026 18:01:49 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-    Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
-    Derrick Stolee <stolee@gmail.com>, 
-    Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH RFC v2 2/2] Move libgit.a sources into separate "lib/"
- directory
-In-Reply-To: <20260622-pks-libgit-in-subdir-v2-2-cb946c51ee7b@pks.im>
-Message-ID: <32bb1cf6-1e37-dc0c-dfb2-e78a30763342@gmx.de>
-References: <20260622-pks-libgit-in-subdir-v2-0-cb946c51ee7b@pks.im> <20260622-pks-libgit-in-subdir-v2-2-cb946c51ee7b@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GE6Q/m/q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hWX6LE2T"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5FB3C1D000E2;
+	Fri, 26 Jun 2026 12:36:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 26 Jun 2026 12:36:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782491817; x=1782578217; bh=rmP8EyN7nP
+	EyANHdGydgTZGwz97P7o7kvcNllET5zmE=; b=GE6Q/m/q7efwCam99nt3AxHJM5
+	EXv7BEKoiCknDKs//VbFNDu4tnfiELjKFCCTTDWaDLiTg/e1mdf0sNtHgoCJjrIj
+	pnJ0vsYVEyxc8UMsJCsCByud6W3Jgwdr48cp9gB57aYQ6fHohppQd+wcb6sTaN4c
+	98V3Ti86Cz9uPGaLO8fP3QSc3VUCAm9svM/6sPJC5PDmcylWaFauSoix7OznZiXY
+	UHlR/o4RHVBevHxwuux8O9Tc7pwHlaePPtXumSSj6r6WmWP+foghfe9AfXRYngQV
+	vyp3D92Px7QyEcCmx8kNrUhVrFznz9kLVDWDJA7PFu8qDT23Xproo3np+WfQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782491817; x=1782578217; bh=rmP8EyN7nPEyANHdGydgTZGwz97P7o7kvcN
+	llET5zmE=; b=hWX6LE2TTqVxP2cPhVe9z9pyywM630L9Rrk4Ztn86/5YPIzODM0
+	3+SnUwT6to4cGuEzjAoUN19eckaonZHwJYGAuFrXSsxh4Yqotdtj0bEJndaTW6m6
+	yQpR/i5NtIDZlIykuQsf1XW3QZKCD7f0eeVoSrDHIoK7nrmUPVeeLvXsZQfv7dWl
+	dfO2qwsJEyJkKBXdd0nFiLOQpYgXd0SujHiIZTiDNB79RIoKNUVV7aySz9kVi6Cz
+	h87AvOQRQgJ3DTKFSam4l22/OGY426YrrOFRy8PynKV4pwnvxKkERUtP0pOm/h94
+	Klc2H2BL1UQSzhVYJ59D0Q2qMKYHQHU5unQ==
+X-ME-Sender: <xms:qao-akg4zQPd06rNy0u-Yg72yzWLujD9EEPqLej5K89CDVQ0oykClg>
+    <xme:qao-agvowkjXauMCZvnu3twQT6PrUMGQSnLqFkiSwQTbIpVVxkp_Ii3UkvABQMNkV
+    5Ge-Qgj31_h3tC1IF4fbEIezS425fhHfKzPhI0LPii1-9ozIjpDig>
+X-ME-Received: <xmr:qao-al4JXtTwmrdxVIrucOXn98ary_lN29Hppm_ixCXyqwyIJoHQiK-TpzROeH3-iG80VAWLeOshca6r-QS0vmjSP7icINjxZ8kK7CY>
+X-ME-Proxy-Cause: dmFkZTGF5XvJXOG3wrroBb5ckLDJLHsYnsoecBfrUPx1CRQVjxbLQMTxgHdn7NHsqMY1Qt
+    BWCH//BKt7H/VB+8BifqQ4TgXenvaxoF87wfsXs0cGtGjlFDqYIDDRnBWiamvbE77+EgYz
+    SisnQrEB6TRSQ/sza0lE9CKabX9NKU5hvXY5qUYHNkZwoR8SLtt9av49vN2EX+mEtVWBzi
+    EgS5HKmRsSHbX92FmWRrsP8MQsCv/m/sQSDBV+/5eQYMRauxBiPl47mjtidCoMF0Z6JPoz
+    DJ26484Na79WBrd4KbuiW2NoPx9BNCaYtMWGGl6y5Q1uC5VfDw0nWz68jvZ5Q5561zpQHY
+    TO/SLZWmAcp9uIVDFwAVOQan1D5pV+3K3MehQgai2sRdtftpHxDFCMqqDilgQZqbaB5cPN
+    Uxn8aSpPub4VoPi6qf7+I6Vj5MXOWsngGR1usD5mOrCK/rgaCBa0Wg2bBPNEopeLe1Hi0T
+    WwVVKCqkiDxQjbj8wEUMu5AiqUHk/B4mLKZoRU0bHeiKKMKxOmhlkv3egcQbMsPAjgjqSJ
+    9fUE19IBn/x8EYLkfBAq8ox7DLEeVUTSCSWssVICLCtEXFFEv5F1ir9j26OyikCSi3G7dG
+    H7arexFa6TUu6633MuCcl08JghY2laOcD9xWoS8sihmH1sfNkq69qkzGkidA
+X-ME-Proxy: <xmx:qao-asPgCfMhwgJDqJYTQ3IK-Fqhe5lfzXpNybxtQ9Vr-aS6Uh-1QQ>
+    <xmx:qao-aju0XQ_M8P5eTMlpotm7RO6jdZ3Nm0k6hlXmDVnrkatUmoBEMA>
+    <xmx:qao-avbdZpotfQH-Y2bv1dYKd8y3HZzxVh2ZHsH8bIP8xodyao1mIA>
+    <xmx:qao-alz8ByptG6rGJKVcZha7b5L3_v_jGZg9JJ5RO2MsB-0mhsqKsg>
+    <xmx:qao-aoQnNMw0mHr10MTXPePhzjMtNjen-nvvtfEcqFMmvILHCjmg6NbE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Jun 2026 12:36:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH v3 0/8] commit-reach: terminate merge-base walk when one
+ side is exhausted
+In-Reply-To: <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com> (Kristofer
+	Karlsson via GitGitGadget's message of "Fri, 26 Jun 2026 13:07:57
+	+0000")
+References: <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
+	<pull.2149.v3.git.1782479286.gitgitgadget@gmail.com>
+Date: Fri, 26 Jun 2026 09:36:55 -0700
+Message-ID: <xmqqjyrl8di0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:cphlzdbS++R1W5Mt2f0xARRRe/yykpm8oCl+m0L8A4zyx9AVpkx
- KbuFLaI42CmJymgePqvo69R/Q180WCM2cBMrrHs/eUf+5zUEmwRTiEau23FJYPdx3qOn/PO
- 6wC3cSvfGacVQbUlcJ3rBHSf5K4jjHaJIXQrJCnK5VxNos4Su3ukImIIuzp8SF3VGwwI4rI
- Fv8BznVv6fRaoBbV14tgw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:2fwiRdN1Ssg=;ZnScOVxhckDjcnX0FjT1TcJ2zmC
- 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
- WKDetTunM4pYTzLM8Q=
+Content-Type: text/plain
 
-Hi Patrick,
+"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Mon, 22 Jun 2026, Patrick Steinhardt wrote:
+> Changes since v2:
+>
+>  * New patch 8/8: moved the min_generation termination check and the
+>    last_gen monotonicity assertion into paint_queue_get(), consolidating
+>    halt conditions. commit_graph_generation() is now called once per
+>    dequeued commit and shared across all checks.
+>
+>  * Widened the generation-monotonicity BUG assertion to fire
+>    unconditionally, not only when min_generation is set. The side-exhaustion
+>    optimization depends on correct generation ordering, so the assertion
+>    should always be active. This is a behavior change: the BUG() now fires
+>    for any generation ordering violation, regardless of the caller.
+>
+>  * Moved all halt conditions inside paint_queue_get() with the "pop first"
+>    form: pop, check, then decrement counters. This keeps the optimization
+>    commit's diff minimal (just inserting the new checks between pop and
+>    decrement).
+>
+>  * Shortened the doc comment on paint_queue_get() to describe what it does
+>    rather than how. Inline comments on each return NULL explain the specific
+>    halt condition.
+>
+>  * Replaced the manual commit-graph setup in the step-count test with
+>    run_all_modes, which now sets GIT_TRACE2_EVENT per mode and produces
+>    trace-mode-{none,full,half,no-gdat}.txt files.
+>
+>  * Added a test_paint_down_steps helper for concise 4-mode step assertions
+>    with diagnostic output on mismatch (prints "expected X, got Y" instead of
+>    a silent grep failure).
+>
+>  * Added step-count assertions to the single-walk edge-case tests:
+>    in_merge_bases_many:self, pending-stale, infinity-both-sides,
+>    mixed-finite-infinity.
+>
+>  * Included step counts alongside wall-clock times in the benchmark tables.
 
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index cf341d74db..a8402babd9 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -179,7 +179,7 @@ jobs:
->        uses: actions/checkout@v6
->        with:
->          repository: 'microsoft/vcpkg'
-> -        path: 'compat/vcbuild/vcpkg'
-> +        path: 'lib/compat/vcbuild/vcpkg'
->      - name: download vcpkg artifacts
->        uses: git-for-windows/get-azure-pipelines-artifact@v0
->        with:
+I am getting this failure standalone, when applied on the same base
+as where v2 was applied earlier.  For now I'll eject it from 'seen'.
 
-Please also adopt:
+expecting success of 6600.12 'get_merge_bases_many': 
+        cat >input <<-\EOF &&
+        A:commit-5-7
+        X:commit-4-8
+        X:commit-6-6
+        X:commit-8-3
+        EOF
+        {
+                echo "get_merge_bases_many(A,X):" &&
+                git rev-parse commit-5-6 \
+                              commit-4-7 | sort
+        } >expect &&
+        test_all_modes get_merge_bases_many
 
--- snip --
-From 1d09a51d426bd3592e4f4b0331f7715ab3b5d502 Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Fri, 26 Jun 2026 14:39:19 +0200
-Subject: [PATCH] fixup??? Move libgit.a sources into separate "lib/" directory
-
-Turns out that there was one path that was forgotten to be adjusted.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .github/workflows/main.yml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 29d2057bde4b..57ad4ba64f67 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -188,6 +188,7 @@ jobs:
-       with:
-         repository: git/git
-         definitionId: 9
-+        path: lib/compat
-     - name: add msbuild to PATH
-       uses: microsoft/setup-msbuild@v3
-     - name: copy dlls to root
--- snap --
-
-This is needed to fix the `vs-build` job, see
-https://github.com/git-for-windows/git/actions/runs/28242360731 for proof
-that it's now working.
-
-Thank you,
-Johannes
-
-> @@ -189,11 +189,11 @@ jobs:
->        uses: microsoft/setup-msbuild@v3
->      - name: copy dlls to root
->        shell: cmd
-> -      run: compat\vcbuild\vcpkg_copy_dlls.bat release
-> +      run: lib\compat\vcbuild\vcpkg_copy_dlls.bat release
->      - name: generate Visual Studio solution
->        shell: bash
->        run: |
-> -        cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows \
-> +        cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/lib/compat/vcbuild/vcpkg/installed/x64-windows \
->          -DNO_GETTEXT=YesPlease -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
->      - name: MSBuild
->        run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
-> @@ -201,7 +201,7 @@ jobs:
->        shell: bash
->        env:
->          MSVC: 1
-> -        VCPKG_ROOT: ${{github.workspace}}\compat\vcbuild\vcpkg
-> +        VCPKG_ROOT: ${{github.workspace}}\lib\compat\vcbuild\vcpkg
->        run: |
->          mkdir -p artifacts &&
->          eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts NO_GETTEXT=YesPlease 2>&1 | grep ^tar)"
-> [...]
+BUG: commit-reach.c:152: bad generation skip 9 > 8 at 772be737f220103f706a39013c0d115009feefec
+not ok 12 - get_merge_bases_many
+#
+#               cat >input <<-\EOF &&
+#               A:commit-5-7
+#               X:commit-4-8
