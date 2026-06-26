@@ -1,115 +1,257 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604CA3F23BB
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 15:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160093DB635
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 15:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782488610; cv=none; b=DLTVvKn3o2ACWrn2ImJyg3JnYry+Q9+B7qzPwfzuo9uuwfnjduBpLY9bMpt4zfvoO01ipe38ByryrSvNJEXQMun5B5rAz1c8DhpkV8PhwRDgfRnK+Z3sT5fnflL6SXGr5Uz9M99Q8OL/kFwOrTT2/m3tgZzQJhGnPvsHxlaQuM4=
+	t=1782489510; cv=none; b=Yut6DOyPrPQsmeCpWO5uBQugyv7oEnkcR/4kFC8cwUZtsLGwLEMgHQbPHFba+J5gBIchXL9xgYJj0xUwL4OnVFY0KlyFKVeLyz/u9b7dHAfy4FL0aSxjafH5EyIv+5yAHwntq/0reRlc8+mYLhS7WOgUZtljSJqRVOm3gY5dW4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782488610; c=relaxed/simple;
-	bh=3+UFlvsA1wsHO+H4oMluXZHOEBum7NPFtL0cmIkIpmg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L5+L2HDxxNF6pEWkCfqyKSDKZ7WSNOgglFs+hz7FRa6WbcjHrjTp4vY5QRd+2jDeivNXKIxLU+mMOHz0K6HkeLO6auUukCAy5vSUd9Grddn337pLBYB7POCV8MBRjPtvooXMqGKZbubj8+CrQb5g/1zOgkHhBtzuBlCmiL78hHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XZ1KdB12; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kd6sgIMQ; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782489510; c=relaxed/simple;
+	bh=hHz8GQWHitq9jP4y47WIquhO+HK262GOAtc2bkpzqR4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fTmmZgIPhe+Iw7VXINkFL07WmGMq/E2eYpJmwCcZ7iuQ4vObqsKFmZWNuSsKAw/sA0UXouStKW2dPodl8GmJBWjBRKWKuye+14b3H9/pO8qWCNT4/2eFO7BBbO9d56oKYqqlonExLUKV24nYTZE2YNx6ynH92aU3V4COcCoINyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IUjFFxYG; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XZ1KdB12";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kd6sgIMQ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7BDEB1D0015B;
-	Fri, 26 Jun 2026 11:43:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 26 Jun 2026 11:43:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782488607; x=1782575007; bh=rvrqOKbhc2
-	lHMwAoW9iQvsAbhhnByGGDy+F+ZqbsQLs=; b=XZ1KdB12rIpZ8QSDGlt5dE0S1N
-	V50gsyeEE7K5mtgY7J6hdErvJX5PM6YhbUMbkUf9t1cNPhsk3J4w3mKHZR6TwrUb
-	bzrU5IZ5oQ4WNTyQKR5L9ogeh5AenRSZ1XMxnOBSSpHEIfbDle4+1FlnsDW6jUHj
-	Hf+9dKpd1jjXYdGRleyt3kl0KdR5cfSOHCorvW7Dpht+JbxzYZOBWBD3H2w1BWC4
-	P2BjOaYdakeIjgkAr5poEX1XcwIzF+z+TspkZCZwqB/8RTrEFQdplGgC3lkeMb6w
-	nd9g1B6x+hCDPbfAimCo/vVSRt1knIyf9UeKTHygopkjcymO/0hRX0GtKC4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782488607; x=1782575007; bh=rvrqOKbhc2lHMwAoW9iQvsAbhhnByGGDy+F
-	+ZqbsQLs=; b=kd6sgIMQyah0x21jzanQEmCwB3yG1jDFaMZepkDdrO05fcHlVdt
-	9Q3jdGjP4TYCVgVujyWMXmm9hb8P6IERQMmT5y/BEHqpCiKGd9Vyr1jWp30jqt3T
-	qIxj3BLE5fI2LBKBGg7AQ+5ILoh6AbzZ1jCFf5zKE1CsRbfyDo37C8Rs8ZLTp0ef
-	vU8WmY+DtqOh+1l4B5I+rOZei5YhG/dQImVTqtSq7Iz6lZhsrheE5nR4UODiQtF6
-	FLmoP7MtBa8rqCI60Uc5dmGxHe8pvvADLCnzIdWQcsZrQQkJwng8Fuq7oMYVSKnw
-	bkEMarC9vfVnymoUzLOp0slBHPZf+yR6dJQ==
-X-ME-Sender: <xms:H54-anW_L4PGMd6EdDj_SYI_oktu9T7rOjy4gC4aydOSmn5NWBq9Ag>
-    <xme:H54-ah2nAbatfcrtm3I9_OaEMLuYQZfHERY_sNG5xm4Q6Wahgbg_rDmMxBj7E6GsF
-    gvfuNMieRdZQalUyzV9ov3hjwNsixaybLHIjzsDjiexzaOl5L7XNg>
-X-ME-Received: <xmr:H54-aloR2BpfBWl6rLi-vMa6Q_tL0wb7rVWM7BiqPuJoccjD09exvKC3MwC3KBK_kqUkCX6GVwnchoRsgrXUbjm1Qy5-mZqbnR5mFY4>
-X-ME-Proxy-Cause: dmFkZTFMsdBzL6FzoYN0Zd8ziGOnArzn2xlpTsvpFeNe4LU6v5O8d8ARpZyC67HT0/QwvD
-    OQLNCG0WPv7L6hD8BZ+OfBCRxrC6mpQWkO2UGxrZ8wY61lFfs4jzrzDG9hQk/8cP3jnQ1G
-    h1RRDtRP99zNE866q5yKtGJpTQUlNIy6b7DlqP9ZNN29dZikGKD1qfdUoNH4erwO+Ni5iU
-    MZ5prQGhzY9tllsP3xK+vyg9yHUdhKvJCA70UpGGXKPQwfuYButYZO6PiNsXfWBXHptCfp
-    BExx1VLK8SUzwuPtDkR37cx0YSuaMGob/MQYCFBi7xA9PpKllTt8Gs3wRRPKzvcwxSXVL3
-    s7lXqT0wkVw2ogBdBSXOwGmvQp2AT8IcgCStHjG/IPxMiJp8S6ZOO41H6peSDOuhVadjTB
-    Yxu3owSZbrCJUooP2V87O7sVu7//yka9lxQ1A39droT0oX4mDCqhYNjQwzzrjK9b2mJbE/
-    Uv0Qko+uiwPV1FUJ6uelXsF2X0/eRRJfOKSlULS/AcufOE3hAbmiJV5D6A8F4jX6btYldy
-    WvqNI4tlPIIKKhbBnaJHxqFL25diezCH6Q7FF3Jupba98YY0OVQKKb5FohNvsIQQUv59UD
-    sNUftgjxNAEeWZejc9TEkAHO1w9/LKATV37xBKnnw/IRSByGO3c7a/KrAFTw
-X-ME-Proxy: <xmx:H54-aoWtPScYuacYG-q41WhCa-Ftq08B2pIzfEijlQddjvkRqokeMg>
-    <xmx:H54-agY0ebNhscJR7JdTlyZbC6--_9myoXInhiNe-tfNkH5XzfW_uA>
-    <xmx:H54-alfqLctpFpOY9h6joSnh-FhwYlTABbuh-A39qzcRlpTf8S-GAg>
-    <xmx:H54-aq1MJbE-BVPNsmj131xL-SCE8fiaXoOe4Xky7swk0f0ZyMYlIw>
-    <xmx:H54-aiAxur4Le5KJaSW5EM45HmPNaNQ5ZIpW4MRTBz6cLus9PNW9H5qg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jun 2026 11:43:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  cirnovskyv@gmail.com,  Christian Couder
- <christian.couder@gmail.com>,  Ayush Chandekar <ayu.chandekar@gmail.com>,
-  Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v2 2/2] environment: move excludes_file into
- repo_config_values
-In-Reply-To: <20260626075037.532164-3-cat@malon.dev> (Tian Yuchen's message of
-	"Fri, 26 Jun 2026 15:50:37 +0800")
-References: <20260626075037.532164-1-cat@malon.dev>
-	<20260626075037.532164-3-cat@malon.dev>
-Date: Fri, 26 Jun 2026 08:43:25 -0700
-Message-ID: <xmqqbjcx9ujm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IUjFFxYG"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-304f590dd91so1515074eec.0
+        for <git@vger.kernel.org>; Fri, 26 Jun 2026 08:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782489508; x=1783094308; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zot2AM7L/lplJhtxdwDrIR1ipyOzA3ntLAPT/zTPrWA=;
+        b=IUjFFxYGmcmZazp8t9CexAeHB7KfnLPsiMwbgWEfirHrQVoUJT67az78GbVgm7TFHZ
+         bNUFGIrT3d3cBkXE8ENhVM+pbQdUTyZzDuylty4dBI1Bff4hvOoii9Wm2ZwkixXTOYdd
+         jzr1oEaRhEKFxLQ6kN4tRzvwDAozaf0e3eJRGc0ZWOF8hg3TwGkHeloH1rWLAYdY8ewW
+         O7qY4znWQ4i2iLFjQc9L0w/GKNp+Cp10n9NWE0dNbDRL4v5NRNI+mP3Vp/EW8VSpH/w+
+         rlqjLsMNxN2yIgabfnSmflx2kPNPNDmRtZUuydA846vhHt1aGuiDFgzgsTm2o9jp5E2D
+         2MNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782489508; x=1783094308;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zot2AM7L/lplJhtxdwDrIR1ipyOzA3ntLAPT/zTPrWA=;
+        b=aQGY1f1dGDLE+qqvWGskUe2Xv+XKRvHLH7wkUcVA8zSqnJQGs3BXayWHb8mSI/B3uX
+         AbmIe/o31uYbRBwSn1YOPMpYKYYSlp1xgUoRLJRfZPZlEp65sHb/D0vJTf+mG1T8jjlg
+         HtE7N/Yt6qxQZ48gxTeWZ3eCpjwL04GPIP9zuy4K8BL2koOEjdFS2hoNBywNEh/p0Zvo
+         ylyPEV3dLoGMHVEnUy9ipaY7EjBdk7nsNnapuNucGh1xelfujFqRcaccfyHCHfErrdIM
+         Wq6HYJ/SZBGqpP8Ttl1n5+hxClkXEpNcBjOV9yeY/tLz6GrUJhVUkQCL41zQ1avrhMev
+         fwfQ==
+X-Gm-Message-State: AOJu0Yw1BQtCnHlJvZXUHtMvoRT/cBwig2xFnIUqQrT0H5gUQIBN29FI
+	EAQp+8Z+psn0a58ZduHh9zUhGLlTcuPz0Ho2HinOLeBlZMfEKczBA7FUkL9/Yw==
+X-Gm-Gg: AfdE7cnuYyFYRE208ld3T1Cw6uqsF53hovJhUZGuEeK9DSs9rudiaSVu+OzgJG44AMy
+	pmLbbuAahF6lbuUYWzMR/Mm6DPzCNe6k0m7VlWnz9gLgqlipl0rvfFIdAvEcIJQ6ZUvktW1OkEK
+	j0Q8Bq+Lu4rS8NGPsoFUMpHRfQP2HvPEwlV3IE+IUegkN7VN2Au2VbzfnyOKUBsXmtvrP+9XOgP
+	ppTLkk1/KYkcT/hXhJYiIEfUAjGiCHVdsgYlUVC30KmXY6u4rmN0wiEpGNT0xS8ZGpU1DXnA3ba
+	EU80nDoqQk3ltc6uoroc+e31O3r80wmH9wjeTF1JLeHXEy03YNXslTWw8qQZ9/0Mwwoz/5bOu46
+	XhioAWn16NReXsNsRyntb8Af8QM1rSq8hp4cWNDnNlpjuCP8V1R5H6b3PnspWD2/pNqU4dUJ5M7
+	5+WXIpAvDcrAAA36s=
+X-Received: by 2002:a05:7300:1821:b0:2ef:83d4:647f with SMTP id 5a478bee46e88-30c84f216d4mr6841149eec.25.1782489507783;
+        Fri, 26 Jun 2026 08:58:27 -0700 (PDT)
+Received: from [127.0.0.1] ([20.57.198.231])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c8b1ae5sm21420778eec.16.2026.06.26.08.58.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jun 2026 08:58:27 -0700 (PDT)
+Message-Id: <pull.2350.git.git.1782489506255.gitgitgadget@gmail.com>
+From: "Feng Wu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 26 Jun 2026 15:58:26 +0000
+Subject: [PATCH] rust: validate object map insert algorithms
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Feng Wu <wufengwufengwufeng@gmail.com>,
+    Feng Wu <wufengwufengwufeng@gmail.com>
 
-Tian Yuchen <cat@malon.dev> writes:
+From: Feng Wu <wufengwufengwufeng@gmail.com>
 
-> Continue the libification effort by moving the 'excludes_file' global
-> variable into 'struct repo_config_values'.
->
-> Since 'excludes_file' is a dynamically allocated string (char *), it
-> requires proper memory management. Introduce repo_config_values_clear()
-> to safely free the heap memory when repository instance is destroyed.
->
-> Note:
->
->  - 'if (repo != the_repository)' fallback logic is temporarily added
-> in both the getter and the clear function. This prevents calling
-> repo_config_values() on uninitialized submodules, which triggers BUG().
->
->  - 'attribute_file' is another string variable that was migrated
->  earlier. Its FREE_AND_NULL() call is also added to
->  repo_config_values_clear().
+The loose object map stores entries keyed by the repository's storage
+hash and the compatible hash.  ObjectMap::insert() accepts its two object
+IDs in either order, but it currently checks only whether oid1 uses the
+compatible hash algorithm.  If it does not, oid2 is assumed to be the
+compatible ID without validating oid2's algorithm.
 
-OK.  I think the placement of the new member in repo_config_values
-in this round, moving to the spot next to existing attributes_file,
-makes more sense than the previous round, too.
+That means callers can pass two IDs with the same algorithm, or an ID
+using an unknown algorithm, and have one of them silently treated as the
+storage ID.  This does not match the map invariant that each entry must
+contain exactly one storage hash and one compatible hash.
 
-Looking good.  Shall we mark it as ready for 'next' now?
+Make the invariant explicit by decoding both object ID algorithms and
+rejecting unknown or mismatched pairs before inserting anything.  Introduce
+ObjectMapInsertError with InvalidHashAlgorithm and MismatchedAlgorithms
+variants for clear error reporting.
 
+Update the existing tests to unwrap successful insertions, and add tests
+for same-algorithm and unknown-algorithm inputs.
+
+Signed-off-by: Feng Wu <wufengwufengwufeng@gmail.com>
+---
+    rust: validate object map insert algorithms
+    
+    ObjectMap::insert() accepts a storage OID and a compatible OID in either
+    order, but it currently checks whether oid1 uses the compatible
+    algorithm, and if not, assumes oid2 is the compatible one without
+    validating oid2.
+    
+    That means inputs with two OIDs using the same hash algorithm, or an OID
+    using an unknown hash algorithm, are accepted and one of them is
+    silently treated as the storage OID. This breaks the object map
+    invariant that each entry must contain exactly one storage hash and one
+    compatible hash.
+    
+    Teach ObjectMap::insert() to decode and validate both OID algorithms
+    before inserting anything. The function now accepts only the two valid
+    permutations: (storage, compat) and (compat, storage). Unknown
+    algorithms and mismatched algorithm pairs are rejected via
+    ObjectMapInsertError.
+    
+    The tests cover successful insertion in either order, same-algorithm
+    input, and unknown-algorithm input.
+    
+    Tested with:
+    
+     * cargo fmt --all -- --check
+     * git diff --check
+     * cargo test
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2350%2Fwufengwind%2Fobject-map-insert-validation-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2350/wufengwind/object-map-insert-validation-v1
+Pull-Request: https://github.com/git/git/pull/2350
+
+ src/loose.rs | 79 ++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 73 insertions(+), 6 deletions(-)
+
+diff --git a/src/loose.rs b/src/loose.rs
+index 24accf9c33..8f6c1fb40e 100644
+--- a/src/loose.rs
++++ b/src/loose.rs
+@@ -510,6 +510,17 @@ pub struct ObjectMap {
+     batch: Option<ObjectMemoryMap>,
+ }
+ 
++#[derive(Debug, Clone, Copy, Eq, PartialEq)]
++pub enum ObjectMapInsertError {
++    InvalidHashAlgorithm(u32),
++    MismatchedAlgorithms {
++        storage: HashAlgorithm,
++        compat: HashAlgorithm,
++        oid1: HashAlgorithm,
++        oid2: HashAlgorithm,
++    },
++}
++
+ impl ObjectMap {
+     /// Create a new `ObjectMap` with the given hash algorithms.
+     ///
+@@ -585,19 +596,39 @@ impl ObjectMap {
+     ///
+     /// If `write` is true and there is a batch started, write the object into the batch as well as
+     /// into the memory map.
+-    pub fn insert(&mut self, oid1: &ObjectID, oid2: &ObjectID, kind: MapType, write: bool) {
+-        let (compat_oid, storage_oid) =
+-            if HashAlgorithm::from_u32(oid1.algo) == Some(self.mem.compat) {
++    pub fn insert(
++        &mut self,
++        oid1: &ObjectID,
++        oid2: &ObjectID,
++        kind: MapType,
++        write: bool,
++    ) -> Result<(), ObjectMapInsertError> {
++        let oid1_algo = HashAlgorithm::from_u32(oid1.algo)
++            .ok_or(ObjectMapInsertError::InvalidHashAlgorithm(oid1.algo))?;
++        let oid2_algo = HashAlgorithm::from_u32(oid2.algo)
++            .ok_or(ObjectMapInsertError::InvalidHashAlgorithm(oid2.algo))?;
++
++        let (storage_oid, compat_oid) =
++            if oid1_algo == self.mem.storage && oid2_algo == self.mem.compat {
+                 (oid1, oid2)
+-            } else {
++            } else if oid1_algo == self.mem.compat && oid2_algo == self.mem.storage {
+                 (oid2, oid1)
++            } else {
++                return Err(ObjectMapInsertError::MismatchedAlgorithms {
++                    storage: self.mem.storage,
++                    compat: self.mem.compat,
++                    oid1: oid1_algo,
++                    oid2: oid2_algo,
++                });
+             };
++
+         Self::insert_into(&mut self.mem, storage_oid, compat_oid, kind);
+         if write {
+             if let Some(ref mut batch) = self.batch {
+                 Self::insert_into(batch, storage_oid, compat_oid, kind);
+             }
+         }
++        Ok(())
+     }
+ 
+     fn insert_into(
+@@ -729,9 +760,9 @@ mod tests {
+             if *swap {
+                 // Insert the item into the batch arbitrarily based on the type.  This tests that
+                 // we can specify either order and we'll do the right thing.
+-                map.insert(&s256, &s1, *kind, write);
++                map.insert(&s256, &s1, *kind, write).unwrap();
+             } else {
+-                map.insert(&s1, &s256, *kind, write);
++                map.insert(&s1, &s256, *kind, write).unwrap();
+             }
+         }
+ 
+@@ -873,6 +904,42 @@ mod tests {
+         );
+     }
+ 
++    #[test]
++    fn refuses_insert_with_mismatched_algorithms() {
++        let mut map = ObjectMap::new(HashAlgorithm::SHA256, HashAlgorithm::SHA1);
++        let entries = test_entries();
++        let s256 = sha256_oid(entries[0].2);
++        let s256_other = sha256_oid(entries[1].2);
++        let s1 = sha1_oid(entries[0].1);
++        let s1_other = sha1_oid(entries[1].1);
++
++        assert!(map.insert(&s256, &s1, MapType::LooseObject, false).is_ok());
++        assert!(matches!(
++            map.insert(&s256, &s256_other, MapType::LooseObject, false),
++            Err(super::ObjectMapInsertError::MismatchedAlgorithms { .. })
++        ));
++        assert!(matches!(
++            map.insert(&s1, &s1_other, MapType::LooseObject, false),
++            Err(super::ObjectMapInsertError::MismatchedAlgorithms { .. })
++        ));
++    }
++
++    #[test]
++    fn refuses_insert_with_unknown_algorithm() {
++        let mut map = ObjectMap::new(HashAlgorithm::SHA256, HashAlgorithm::SHA1);
++        let entries = test_entries();
++        let s1 = sha1_oid(entries[0].1);
++        let invalid_oid = ObjectID {
++            hash: [0xffu8; 32],
++            algo: 99,
++        };
++
++        assert_eq!(
++            map.insert(&invalid_oid, &s1, MapType::LooseObject, false),
++            Err(super::ObjectMapInsertError::InvalidHashAlgorithm(99))
++        );
++    }
++
+     #[test]
+     fn looks_up_known_oids_correctly() {
+         let map = test_map(false);
+
+base-commit: ab776a62a78576513ee121424adb19597fbb7613
+-- 
+gitgitgadget
