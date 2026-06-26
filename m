@@ -1,83 +1,87 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87031C695
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 21:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B342A405F7
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 21:45:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782509953; cv=none; b=ZOD0GkyPW1+J4JYr4OWHi+G7WghtpTe3e2o+AiCibaqaVEd7SOdYQMW4YHzMHCvcd6/ZFPdy0GjdkC2ohVwE7vlsN+R7eLDmLWTfycWtLg8rtDUBgJEZJQkj35swYf4PmqAC1ZsgpBoljdYBsZ7vbE/5NcjNP29AEQIo4o/Ij5Q=
+	t=1782510308; cv=none; b=kYz+gNVSh2wS+/8hXRSORY+VVEgfIZW2ZtzU2n//7ZibZ2e4OWwvaCzibEaJ31K9YFYnZ8RKPVdMrta+ZVOKJWFJDPeCeE5xciI0V30Ai/1i2lW8gToElT+zkDSDsNMXv2QlhiFvudzJA6tIcGvEuAsxNd17WbMuLStdHsK4b+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782509953; c=relaxed/simple;
-	bh=CE5BAB1ku6sEh0RXyxL6MuO6mn/L91JpHszMXZ6+dZw=;
+	s=arc-20240116; t=1782510308; c=relaxed/simple;
+	bh=zWgLEMD/Sx4SNxY4UQL2/U0CWXD7wXiC1hu8lgOMXwE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VUvQeSgTiRwhRPKUuH3W4DtdsUFO5znuGLdU/aiUylpcI8rsp/04QPxr+usg04y+A7ge6cq+RFBAyJLh1i2sSRc0VoEiAq8fHyIa2upOPZviT4JCMKn95yNjOq7cVm0UQHN70/vQWEM3cGIpH3GFEMg68oU35JBx4GR5P+AbcM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W56W4VlO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KimPiWJd; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=bd8Gm5MRCKUUtXZf+r44D51ASSZAeR3NIeRJ7a1h2qV/3Rp1D2Uwk7VPY9587wWWy0tEJ50r1jyIAsvrOAwwghFNv8O8Gb7AqX6lGzilC9axMH9tNcoDaxb3CUr/tllVfRxr9m6z8V3SmP4q8dFMusKG1itMxWF6HQy/OxPeAw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V6X6Bouj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PfnoDDyT; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W56W4VlO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KimPiWJd"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1BD001D000E3;
-	Fri, 26 Jun 2026 17:39:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 26 Jun 2026 17:39:12 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V6X6Bouj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PfnoDDyT"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E837D7A0137;
+	Fri, 26 Jun 2026 17:45:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 26 Jun 2026 17:45:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782509951; x=1782596351; bh=VEpWr19nfd
-	HISJH6r0k5Yo6wAyLCalsAVbuAiVYCMs8=; b=W56W4VlO1n3D9Nzi7qdv1cbFCQ
-	l6bmMLT2e1MUPzuwurm22C+MJaDCFVAGIqj31AiFMh4WFxoeZtYwVy40Na41wjma
-	EWfK2XctBaPe6/jdkJDLhqeqzwt02pR7qesqqw8/9sp8jSEcjk4kLqJmmoiF7qsF
-	Anz7oNp2M4dRIhfN+UfY+f/FzUFByYH7hsvqgy8oO04cLvjDwa8ATTmT1qxV0wJM
-	/1FBkuvav/Tf0uFV95VguWrY9l5vXhhJMrAFV5f+nOy/Jd0v2f6OBHP4lxVqi1lq
-	NGbaAMFmEpvm18aB9bfHrP96HymwXP1eDwrDeo4823w4Z0Pvsj/HwRc2tlNQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1782510305;
+	 x=1782596705; bh=S41gFudXXz/kNmwWJvDAYwPSR/tWKaf+jB05sjfUYkg=; b=
+	V6X6BoujYKs2vPflTdfJOj+kiHuQnnix57nqsvNwRhEaWFEhzQOS0GFoDK+/cOoa
+	kGi3i0sygMac0nxEUUZH1dk0jH3o3Akp1A0uPH129kCzdOh/HwEagRFA8bIi5jwH
+	fBjO9vPcw/O5LdgRkPEBlUEt6JVh9FYBZzr8IHiP2FtGcm4CQ6oplJAYKSmHmMlm
+	TRKGzzccXaok1xNjScPDo8wY0oVepS9tnnOXrWeHy/lU1sPpfk1t8rH7cmVrvPAt
+	AMQHpyqYYGYEpvNaGd7n+6JoWq7dZ0Dpq5EAQc2qkmiGvQmPbpqPPtplgGNZftDW
+	r2Jp2v2L1ynvR70CVXYNTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782509951; x=1782596351; bh=VEpWr19nfdHISJH6r0k5Yo6wAyLCalsAVbu
-	AiVYCMs8=; b=KimPiWJd8yFvE5VzOpEoI/6VHfvLzZ5ouCAZJE7cuM7oOXYvlx1
-	TBjXfWqnw1G1kYVFOFSOBVlQonWEcxtCXpvaNtdna92ib8RdVlykAb9H6ITXuBgy
-	BGoyuznknLLM0VxnHeazgl8T3r0MMwmNfktffInYVH3BnEkViU8ee7UPDUe6JXki
-	+wOd1pYXXTE8DhJJc5ODd9l2fF2EMyKirgMhFCHWDeY7LweN69LWrQ/A+f1caehQ
-	MaedHz1U2LRZMR7mxKWny2PGbg1QAx0Sq/H3EAFF1QKg50yf9HOOAnsIJ96VixLx
-	S+/u4vwSiZ4+OEuWrfAm2BvzwMhoiy/hMtQ==
-X-ME-Sender: <xms:f_E-arDzDI94zmW0Ui6JOeFFCwnha499rZaqosva8t5rILYFVguzcg>
-    <xme:f_E-alMjJcnbLBCkgN0YIZmaKMlaTkQwhnQtLd03tnPgWmMgIjKRahQjCrdkwjIlj
-    rq05DfyJR-NvaR7jv5zLIgL9NOvD0ksArLim8tS77NiGBkC3Iii>
-X-ME-Received: <xmr:f_E-agb309VcQVO_9i81_yh678AkS6iFr8u1PxpajmhNpad9T0nWpEDgMNuv0WNWQHaO9h1IxlHIhLoCvCYRRSOVWtVYkDnF8UdaBHM>
-X-ME-Proxy-Cause: dmFkZTFvozzlgXjyZyPCUKzsRbIZ09lc5ujEunCGn1dSc5hNf00CCCEgQSxzTDVo9GQnth
-    ftT4oIhjXkd1nwMNHw19ZHPB+F07HEm7b3UgsLajJ7Z2DEGx0gyrmE3cctn6HmF/QRR0s3
-    Wr0JZya6czTzYUq/njpMOkgIcMbycYXEbjYsVdmZ0hJHtME6McHfJdz69WnkrRMYJUyeSd
-    NIzvk53sihB1hA0dJbGvoF/P6jhpI+gYlBoxXqVYJXoT+6dZ9gdSyivH+CCK4EYwOY77Sn
-    hzCtr/Pq8OFCMxkvpq9T3+hgZWXrPUWhDjgPv7QMntDpTomeGD9+s0LIbDThWXqnUpxbBy
-    4z02zDpoMzFr/7CJr9vC5xk2M7LLRFMZBIYjJVhVHhALWQCRY3tMzKRcQdO9zCC9wk2C+U
-    Apjhrx9cphSfpdtMqDPP37lGfF6c/Je3TF/CLSPuOUTDSfD3aT79Uk7BWj2BIUoU3vQ1qR
-    pi8kXAn7rX0vCs8Bsr50WjyNnv2x13KG6qENfecoMhaEAXO81flATgFE/FeqxitrO5cNK8
-    3vGCbt59X6w8q8KKu8c8oss1SiMj4YORzv4M1Q6uadjSu0x3bp7/NA52KtzJzAHVavnMgV
-    LXf0sTgRM2VzR9nb4KUu0aZDY2FstKFi7IK7BMf4GJbJS7uYKjPdWaPqmorg
-X-ME-Proxy: <xmx:f_E-aksBpUwfUB6jqE_SB8HMJEEMDo-tihvnN0uixT_4OL1cD3hSQg>
-    <xmx:f_E-aiO-BIPc90NjJCBRsEJJ3sOksaxDlrzlSNrzif0IWQvvLiADfA>
-    <xmx:f_E-ar6FTD3NnK2q7lJPcO6hGPnMyPjRa1nU6yQodQRt9OwNGFSN1A>
-    <xmx:f_E-aoQc7vZYqbSL8IDD2-gxnm7MJviJ24L3zOcmhNTAeSRAtqEROw>
-    <xmx:f_E-agc-JfNSFxHFfsOrpEH79C5MntbxmlSOj-xgwGXrlZs5knVZwk4A>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782510305; x=
+	1782596705; bh=S41gFudXXz/kNmwWJvDAYwPSR/tWKaf+jB05sjfUYkg=; b=P
+	fnoDDyTGGArkpWV/qsNfdpSjT5EXg+CRdvgyCPyUZPT2Nz1bY2Ak/wZrY1H1wGdU
+	+16RIyx4P1vRaKQs4wydeptAEFi4/FfAe25x+rQkrkdMzRfDguHIFrFQwIgpsLn4
+	skLxWRaLB3QwsA187e53HArF0BFqOE0fpKaAJH40JR1D1NCgdCNFaj4xlFhKtnVx
+	GBJxJ1a1dd3q4dLf45ZStVeTmGYkncQdt/DrsC9qYDubAPoiQAdCceFCc4cQNVCp
+	khTww5pU1G18YPgxlSopT1WSggnuq318PDWTNks26Gg7RBUZCuhAOUa7uWPScRh8
+	l/hNPHcl+8VglcK8dLDtQ==
+X-ME-Sender: <xms:4fI-ak_6S2hH4EvgxmJD0s7vLUKTS-5z8-2NcSDno4pZ56p5t-v2pw>
+    <xme:4fI-aryIeXxtNq1A8D_aD2WFOiGmT4qqQeCc7HL9UVplky73q6pI_1yG6VI8REr2d
+    seEFmYqgXSTcWHnFulHCjHh8f7zz-akRMI7KLsFHr0MGzu6pNfDIA>
+X-ME-Received: <xmr:4fI-agPedNl5yFac0ysh9yhlJvSgkLH7gqI9QvDBESppdkoGVUjFReyr5BrTwOTOhc4RE3PHRAHFI-hefQoAzTzVYCruLcPTaS50pwI>
+X-ME-Proxy-Cause: dmFkZTF4DIcBuIqFZ5gZdeEgHEdM0sBuX+T0Rq5nzjN8MZqkcJx6YlTknggeFn2L78UWMW
+    1v3OcLXJoY4qD775if9hH+mS9yWu2amsf/KrvLZdMiCrFXlTVyM1oIeh/6uTvHsYK4clDP
+    mo+D1ox+aPRvRbMOkvyTj+f0e5GRcJk3g4guI9aO5l3eG3e4oF7c4U/96KVPF5dQc3Enjz
+    PP54j0U3K0150hwehFUKWu04t6NtyxQ/rAdJiEf4LUK9o+ER2VSyWuAg6koOoZzhcAJh+o
+    pTz+gaBYAUDOHxSPUz88LJBeDnlrBdB7BtYV9z0yOIsGAX6O5KaD8edrbCBfZ74nrGIqnF
+    bMqwDakY28cGra6/2Hyevpierzg0XtzOzCk7/6fYknY0A05Psk3w+wQ97Tww+6XRlVLBNA
+    89zGz2IaAT6NxrLFJE5g9NuE0fpIrEpWN3PEaK/3P79PKdUIYWbVhaVmj5O3gXSQ919JDQ
+    YNnqnuJIvFfngB8iAx2+WF563a/QXE+VdBvObm8xMPx7vS/9Xk8LXqcNNy775iKpeZFFv1
+    3E1MbHQ0imN/Yby/AsEraGb7v7xmu2/pTFXaJufySiyBYZWtnaXMn9zrz2+CgfMNBRZs1I
+    CzovB9JpkOh3DEZX2gWxIpnCNHkn1Q58hCDgsYZScOQklh4Lg9SM5N5PU7FA
+X-ME-Proxy: <xmx:4fI-ag9X5k9smNKZM_cbT7q8Lyg_CpGm9dJ3Vsz2iLiL9S7f4q8yVQ>
+    <xmx:4fI-at4ZXWM1da0FkE8inXpvWh1LZ3mht11nqYVCNGT-vIAhDDQ33g>
+    <xmx:4fI-am51QTGLGXaEjOJ5Y88fBesgMlfli98JMgw2Ak5FhfO_zdq2cg>
+    <xmx:4fI-amoki_BnUBY-JgXMfn1omiyxWZAebxsap9mjogiEqLLdeVTWBw>
+    <xmx:4fI-arrnAmsdjzGX1nU4oFORe3DYsRHnfiIQj167OzjL2028KTtCN6U6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jun 2026 17:39:11 -0400 (EDT)
+ 26 Jun 2026 17:45:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [RFC PATCH 08/10] pack-objects: introduce
- '--stdin-packs=follow-reachable'
-In-Reply-To: <e3d2e46443d0b32ce29215563dde04ebcf850679.1782500507.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Fri, 26 Jun 2026 15:02:37 -0400")
-References: <cover.1782500507.git.me@ttaylorr.com>
-	<e3d2e46443d0b32ce29215563dde04ebcf850679.1782500507.git.me@ttaylorr.com>
-Date: Fri, 26 Jun 2026 14:39:10 -0700
-Message-ID: <xmqqpl1d56dd.fsf@gitster.g>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org,
+  cirnovskyv@gmail.com,  Christian Couder <christian.couder@gmail.com>,
+  Ayush Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
+ <belkid98@gmail.com>
+Subject: Re: [PATCH v2 1/2] dir: encapsulate excludes_file lazy-load
+In-Reply-To: <aj7rtj9NsejqN357@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
+ =?utf-8?Q?=22's?= message of "Fri,
+	26 Jun 2026 23:14:30 +0200")
+References: <20260626075037.532164-1-cat@malon.dev>
+	<20260626075037.532164-2-cat@malon.dev> <aj7rtj9NsejqN357@szeder.dev>
+Date: Fri, 26 Jun 2026 14:45:02 -0700
+Message-ID: <xmqqldc1563l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,60 +89,43 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> +/*
-> + * Flag bit set on commits that belong to an included pack during
-> + * '--stdin-packs=follow-reachable'. Used by the pre-walk to
-> + * identify which reachable commits should be tips for the main
-> + * object traversal.
-> + */
-> +#define IN_INCLUDED_PACK (1u<<11)
-> +
-> +static int mark_included_pack_tip(const struct object_id *oid,
-> +				  struct packed_git *p,
-> +				  uint32_t pos,
-> +				  void *data)
-> +{
-> +	struct rev_info *main_revs = data;
-> +	off_t ofs = nth_packed_object_offset(p, pos);
-> +	enum object_type type;
-> +	struct object_info oi = OBJECT_INFO_INIT;
-> +	struct object *obj;
-> +
-> +	oi.typep = &type;
-> +	if (packed_object_info(p, ofs, &oi) < 0)
-> +		return 0;
-> +	if (type != OBJ_COMMIT && type != OBJ_TAG)
-> +		return 0;
+> On Fri, Jun 26, 2026 at 03:50:36PM +0800, Tian Yuchen wrote:
+>> diff --git a/environment.c b/environment.c
+>> index ba2c60103f..8efcaeafa6 100644
+>> --- a/environment.c
+>> +++ b/environment.c
+>> @@ -134,6 +134,13 @@ int is_bare_repository(void)
+>>  	return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
+>>  }
+>>  
+>> +const char *repo_excludes_file(struct repository *repo)
+>> +{
+>> +	if (!excludes_file)
+>> +		excludes_file = xdg_config_home("ignore");
+>> +	return excludes_file;
+>> +}
+>
+> This function has a 'repo' parameter, which is not used in the
+> function at all.  This causes build failure when trying to build this
+> commit using DEVELOPER=1:
+>
+>   environment.c: In function ‘repo_excludes_file’:
+>   environment.c:137:51: error: unused parameter ‘repo’ [-Werror=unused-parameter]
+>     137 | const char *repo_excludes_file(struct repository *repo)
+>         |                                ~~~~~~~~~~~~~~~~~~~^~~~
+>   cc1: all warnings being treated as errors
+>   make: *** [Makefile:2922: environment.o] Error 1
+>
+> Please make sure that all commits can be built with 'make
+> DEVELOPER=1'.
 
-We do not care about non commits, non tags.
+Good point.  In this case, we can start with UNUSED in step 1/2 and
+then drop the UNUSED in the second step.  I wonder how harder to read
+it would become if these two patches are squashed together...
 
-> +	obj = parse_object(the_repository, oid);
-> +	if (!obj)
-> +		return 0;
-> +
-> +	obj->flags |= IN_INCLUDED_PACK;
-> +
-> +	if (type == OBJ_TAG && main_revs)
-> +		add_pending_object(main_revs, obj, "");
-
-Any tag object is added to the pending list of the second phase
-traversal here.  Doesn't this retain unreachable tags and
-(unreachable) objects that are only reachable from these unreachable
-tags found in the packfile?  Don't we want to limit this code to add
-only tags that actually are reachable from refs, or something?
-
-> +	return 0;
-> +}
-
-The other function ...
-
-> +static int mark_loose_object_tip(const struct object_id *oid,
-> +				 struct object_info *oi UNUSED,
-> +				 void *data)
-
-... is structured in a very similar way, and gives the same
-puzzlement to me.
+Thanks.
