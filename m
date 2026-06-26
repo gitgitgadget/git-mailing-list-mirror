@@ -1,160 +1,112 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9E43E3140
-	for <git@vger.kernel.org>; Fri, 26 Jun 2026 14:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0D92D5C7A
+	for <git@vger.kernel.org>; Fri, 26 Jun 2026 15:20:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782485890; cv=none; b=QdBGuumeYLYCHSCXnSfE8NYXkY9Hfw0AM3u2wxDp169V+RSYRDlrzNDvXCVgAGFxqjgsL5TS/2Od28ouZiBP/MoLhqG5Dsv4E3M77UrAXaPU0yA0aiHwaXRaxs0HwzedFw6zWuQmIvlcPZBOB96Ov5EAxd+1Uu0VY+QWJeaF84k=
+	t=1782487260; cv=none; b=dm2W/212CfA5Dyvvs2+oNwOr+uIqazu3qrVtKyKbx/aHcm664+4WDc2GFRPQTbBkDC68j//zYw2RsE0BaFOUhF89+lpA6+OTUAVA8U3emuVJVykfqTYm6KJxR10cyLV66duIVEOhFVI2uNSSauf/aRUSIjeitXo3bzgqgXR8mlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782485890; c=relaxed/simple;
-	bh=LU5yP5A6aOYRLvU143cRirxNdV9Mu65hknhrpMVENI4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WmG0vqU47bM7YkQKGaNGw9UHmEqWyMkHIGCZXhYVbObI6s4m3uoY01Ow2ThJih0mrxHr1yld7aUY1y+VPmgrqXX/kfqXnP0zZcBzxwSb6b2tK+8d36YLp5IgpA2NdX8tXIX5kehLQOSdPMaRWKBlrxozHX2Irf2Ime1qXBDtfoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VLHqVCfd; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782487260; c=relaxed/simple;
+	bh=NrS+Zj++c76a6PTYaoSxJO9L1g6fPqMG15oi+9cbXkM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=euzcq/7fs23A5w46ekIIR/v3geGc4UmESbz/dD8w7I8rcij5Df+GCXbmXo6PHSE7nvNeA4xzGVF5GEPyiuT60gT9nZ7NapGj3JNZptwDWRXPRmffsmvVh5uUwVOfPyx3ta0xgxONyNKkrgYoBsIuPCpoLoleamg5/jV1D1m3vEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aKQhgK1j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ALEhW24A; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VLHqVCfd"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5bd742ef746so365593e0c.0
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 07:58:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782485886; x=1783090686; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AsUlQBm7KijwXnFLN4FwGId4mkVTuWnFhMumzvDhmbc=;
-        b=VLHqVCfdjZZZKK3ZWQuSwXguM5vMhhip3MLofV2/+QyloUvFubjPqDwZcaW8gXTYFm
-         F4kVRb9QvV9PJz7yST7ry46xKu8NBskU/gDMFCAxLlm8jwIr5MUK//TBo/xg431djngY
-         2mXvKPNSQw3wUqOWJZwCnCGozr27XEgy/fY1gMvH4/cvFnefaH+Hu0bpFEn4T7FeDeUU
-         qDJhiUmdlkJo8Dn4cg82hX2E3AXultCpqa2fRKtFmOzYEMHZqvDRwnR12xShzaifBFoC
-         9n6lm8iX6OZi8Ib0gwocZpYwZOr/m/5Q3RenTWF+K6KJsDP12UYd6AHMXYDhdXBsFxMh
-         3E8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782485886; x=1783090686;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AsUlQBm7KijwXnFLN4FwGId4mkVTuWnFhMumzvDhmbc=;
-        b=YUPCZDzG7MTYKwNlEqlHyxutfynT1RSlbBmXz9x4GQZYbwLTRxkIv2YK/CJS7LXuga
-         X4TXaPQuOB7NfMSOJ8yJmvfGqsImqFRnq5TQ2PXPtd9srIIyuyS6Ht4qZ6P6pelbEPiI
-         81a71vi9gYwj1QlmlU0TPPxo3vQBUOzLqyrza8eJEwxpUe0CfMk5LG9RVvA1uYB9SFro
-         XM0wFXdpYjv8ni3TKSPufuxCH7u9cnG34HMXiNT3RytAqcpTszzX6GhleCT3EXT2unxy
-         XO8txeIpdma3KSgOWhVUMLkLo4RRhXmv3KtlAvzgopfHE9avN2cr35TqwMHOPGEDoKfR
-         PQ9Q==
-X-Forwarded-Encrypted: i=1; AHgh+RpQLSbIdNb6UvRexN/Ne5cwQocImCEzRTCkq5Ptwf3qMhwKAeJpZo7ag4IlQr4/iu6R0n8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8iqfYJ8oT4grX+rACpi5Rs1dZMiX81wUU38rI4uCtTzjPodu+
-	2mQ7IbRJDv667Rre9hYbAXL3SyUAMuppg8ok1pxYDjTuefY1CRnUcukL
-X-Gm-Gg: AfdE7ckpuHZ/0BeEb42k3cn7mWcw0aq0nW9xAjT7EcwldKQSwQPz/2OvHBN9vnk/xtx
-	LMEJ6goHn6LAtRY+8trgArzAzbvW2KdG3AgsIC3/kUJB0071U5pja7/0ol1OBkREUVFnj2Xu2Qa
-	NuVo8AX85+XGsEKnWkuCDadc37vrgqcDn7c3/urf62z3OqtKvaUDFcP1+nDMuR+FRnRbbo4ko9R
-	biLu+IVPkRh+Z/mc27tP71Tebv+/YrW75SKAJ4aoOQW7HQ0l25dRQPc8XJFwjp9sXjYjC4Sf+SL
-	jDCAT2A6XL94HMQB+2oRmruRwiDrcYH0coThkDcRkVYizWbDMie+1dewUiSL2AOoCopUv5AckmO
-	96YB+yc87wV+tJFrRGe169bqQr7ru7kxQNk4OsYY96FJwzCiT1nb+jNgPW32XptaKmvDaZGQ3DT
-	8h6hDwxAp4Ed7dCZTotdlY9F3DkbGA9yp+2/DdDM18sYwqoQ9SgmOw9JtHdg==
-X-Received: by 2002:a05:6122:551:b0:5a0:370:f12c with SMTP id 71dfb90a1353d-5bd69df49cdmr3132818e0c.11.1782485886183;
-        Fri, 26 Jun 2026 07:58:06 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5bd79083bf2sm1237166e0c.11.2026.06.26.07.58.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2026 07:58:05 -0700 (PDT)
-Message-ID: <7069f67b-000c-4b23-9278-e52f571ce6ed@gmail.com>
-Date: Fri, 26 Jun 2026 10:58:04 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aKQhgK1j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ALEhW24A"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id D3B961D00123;
+	Fri, 26 Jun 2026 11:20:57 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 26 Jun 2026 11:20:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782487257; x=1782573657; bh=0h9HtB4Qp6
+	55Bqu8CWuN+VTjwdLEIcaXHvPR3YLYl88=; b=aKQhgK1j9A43czWlepLO91lG52
+	v6baRyrm3rXR5gw1ary4RNkuORHBILPv/FdLt1xECAm5KQyUnAl4UYIHkSNO32w1
+	qX5njCBTb0JnYExJ3Lz9SL8aBlWsawLoCI6nm6udzgTAKunvjfz/dYuJDxvQ5TPu
+	Zx+NF+eyqlfD8b7R2ZpjNiWPI5G0UQY4cYSTyTA8q0BboWSLVd8gEP35UnljCsat
+	HL5HvTgHaAgTrG5pBXoTW0BHNph0R9/fo78ILjbZXTMqrj1D4g0VOwpX4IeJ4S7l
+	yLXCkEM6tIOSxk2mzCFdns8anYZPTdi7yjyV9419ldVEU/aolUMMNdofWnfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782487257; x=1782573657; bh=0h9HtB4Qp655Bqu8CWuN+VTjwdLEIcaXHvP
+	R3YLYl88=; b=ALEhW24ALCUe1s9X/DA7yFDseI59j8lmPcMV+0koyGBQQloJR/y
+	tWrrroizI4Ic+Bjl3SaBnca2Ffzavioean4g6Q30VLIcDdNJc7B1Nd4/LUQjVMKw
+	1mSua1C81mlaNz3lhMiJltP3lOWOgF9lW9e5A/7plo8bAlzkvvi+JHaVYNDwLRGR
+	xcnzTZBH26WBlM6hK8ds4rbz5yU9ZDJgkNyKxS5TQyNDhddVYNyZ3ROxH/Eh2Xbb
+	Ab1CS7zh/qR6Dly86kvPFSIn1Y4EAeN/eW9I6eOgQE2X4btBOhu5x4UCidE5I3cN
+	g0FDjCdoZGqn+IHYsQSwEDEJZpzfhUldbUg==
+X-ME-Sender: <xms:2Zg-atvX-6sYePYKiegXqX7BA5QEpqkSIzYDYzuF69IUVupA1CkYuA>
+    <xme:2Zg-aqLrfl2777LBk6dhKGvvok9vmmN6y0MPBedi2TDteyAqVeIqdaGD76Smi3Y7Y
+    xbJkwBeH3QuOEMyicf82OEv_IIkfPR5JOa9EDS0LrKIacsDlF-MWg>
+X-ME-Received: <xmr:2Zg-aqk62dQemjrjz2KCuS3--LpFtdoE05qO1fqO-gbmEJEhNXcuWUFA9hROe5NW5qihoop51Q7dGcpt2EXVNUkVOTWqPQsXp_I85Rw>
+X-ME-Proxy-Cause: dmFkZTGh1tMcOQPQ0/feEdNrZdF0LVBjJsa69UikE5QuIkOmVgRjJrVuHoxCvhWAIAGR6R
+    Yi2dvFToVzGNg6uCVyshNc8lJ6NOVL7n8EB6rhqFsFORQ0ZkdwLdF3G4MTQpsecXUV7sll
+    wDumWpyRZG37agjTlGtEhnPOL/pUAP9jiAGA4eCTq34SsaVADOZs2SdDrnhgPQoH3I++ns
+    gHM1eJlELPauheD7M2T+tXYkELB9SWDwl3whB7uBE1X6RyoefjaZ43S36G80JFOJZkBKvZ
+    JhZoEfOQV02lAHZc9m4NP0ugRtlv/Hmszh7N5/dLAUPYF+hObFgwBb1+6nmrWKpCR+FCYY
+    kSgtAih21by7SUGU9P1F727nSViDf+L50+T/YOGriyf0YOYH1yrVkgA8xa/PWtkRhyfTVt
+    /PGeobFkqaNVgjyhHxlC6gSgDo4T7Lne3N5Abj883a9BWl1Y/aKgsXT2nFBjlzzVjZCc7B
+    zQYKYBmJptl9xs7ivmlA4JVo9W6qxOoklVgTRNcBu6yCiJSArt38ij3g2rTR4hqfuSCnHO
+    5qIj14LwsKdXgxmBVm2dq4CSTOzldNjIJbMwSghv6KAtmqCrtAD5Go5xTna0y1F9vqPlDY
+    XYBYnmSeYr5ML1XyD9Bz7h5Ds/NKpmHeCvLW7boVYjFjdfZzy4aNCfPtvYxg
+X-ME-Proxy: <xmx:2Zg-arI_61CshKDkZeYUb2Kgfgvu62vsGSkb6i9VK14hsWDoblUg0g>
+    <xmx:2Zg-av7Z8UlMKzstaslwM3FFGr-9Jl0mErSBsAu4dBPiWldvxzsX-g>
+    <xmx:2Zg-av0jLI9E7Nmgs25ecaDT_DYnVce2TmqXg8vFSUh2g_paMeRt-Q>
+    <xmx:2Zg-alcXZT-y1Uosc5OZ4Avs9GGk4vOHWtxgtlYsVu4lzEbFETAHaw>
+    <xmx:2Zg-aqfJMVngBWRYJru40cFWceEAyUHFkz_U0Ftys7X2WIYhaksnMdvU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Jun 2026 11:20:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 00/11] refs: fix "onbranch" conditions
+In-Reply-To: <xmqqse6ae45i.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	25 Jun 2026 13:50:01 -0700")
+References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
+	<20260625-b4-pks-refs-avoid-chdir-notify-reparent-v6-0-41fbca3cf5e3@pks.im>
+	<aj1DuUzusBUqmF_C@denethor> <xmqqse6ae45i.fsf@gitster.g>
+Date: Fri, 26 Jun 2026 08:20:55 -0700
+Message-ID: <xmqqmrwh9vl4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] commit-reach: move min_generation check into
- paint_queue_get()
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-References: <pull.2149.v2.git.1782303254.gitgitgadget@gmail.com>
- <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com>
- <4b9f192d98b8e8f2d30eed4261a73e766eeafcc2.1782479286.git.gitgitgadget@gmail.com>
- <34ff8be2-1b3c-480f-ae27-9d65875e6e62@gmail.com>
- <CAL71e4PWmVjh5pQATGj1GrwgtWDZOeawKUXbKZ7DZX-DcWuCfw@mail.gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CAL71e4PWmVjh5pQATGj1GrwgtWDZOeawKUXbKZ7DZX-DcWuCfw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 6/26/2026 10:53 AM, Kristofer Karlsson wrote:
-> On Fri, 26 Jun 2026 at 16:42, Derrick Stolee <stolee@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Justin Tobler <jltobler@gmail.com> writes:
+>
+>> On 26/06/25 11:19AM, Patrick Steinhardt wrote:
+>>> Changes in v6:
+>>>   - Drop redundant condition when setting the default for
+>>>     "core.logallrefupdates".
+>>>   - Leave breakcrumb for why we lazy-load write options for the "files"
+>>>     backend.
+>>>   - Fix commit message typo.
 >>
->>> +  4. Generation cutoff: the dequeued commit's generation is below
->>> +     a caller-supplied `min_generation` threshold.
+>> Thanks. This version of the series looks good to me.
 >>
->> Technically, this was always a termination condition of the walk,
->> but now we are correcting the documentation to match. It was just
->> not part of the termination in the dequeue method until now.
-> 
-> You're right, I should perhaps fold it into the first patch instead,
-> which would be logically more accurate. Would be an easy thing
-> to fix for a v4.
+>> -Justin
+>
+> Thanks, both.  Let's call it ready for 'next' then.
 
-And the remaining condition exposed in this diff isn't included,
-either:
- 
->>>               flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
->>>               if (flags == (PARENT1 | PARENT2)) {
->>>                       if (!(commit->object.flags & RESULT)) {
->>> @@ -219,7 +224,7 @@ static int paint_down_to_common(struct repository *r,
->>>                                * descendant of this one.
->>>                                */
->>>                               if (!(mb_flags & MERGE_BASE_FIND_ALL) &&
->>> -                                 generation < GENERATION_NUMBER_INFINITY)
->>> +                                 state.last_gen < GENERATION_NUMBER_INFINITY)
->>>                                       break;
->>>                       }
->>>                       /* Mark parents of a found merge stale */
->>
->> And here's another termination condition. We are now leaking the
->> abstraction of the 'state.last_gen' which give me some bad feelings.
-> 
-> Yes, this is one of the minor annoyances I also noticed,
-> but it's not too bad. I think a followup could be to either:
-> 
-> 1. remove this optimization entirely (though I will have to spend
-> some time reasoning if there are realistic use cases where this
-> would trigger much earlier than side exhaustion.
-> 
-> 2. tweak the logic to instead halting on exactly this commit,
-> instead halt inside paint_queue_get if:
->    generation < INFINITY && !FIND_ALL && num_results >= 1
-> This would change the semantics slightly (but for the better?)
-> in the the found merge-base could be in the infinite region but
-> near the finite region and thus would unlock the optimization
-> as soon as we pass that boundary. But I did not want to include
-> that change in this series, which is perhaps already getting
-> too complex.
-
-I'm happy to keep this one out of the series. Perhaps it would
-be good for you to finish this series with the current scope
-and then for another contributor (me, probably) to do another
-round of cleanup/reaction on top. I only say "another
-contributor" because new eyes can help to see new things, outside
-of a patch diff.
-
->> We are getting to the point where I'd leave such a thing for a
->> follow-up, but since you are needing to re-roll, then this is
->> another case where we can move this into the paint_queue_get(). I
->> don't think this is me "raising the bar" from earlier recommendations,
->> because I was asking for all loop termination to be in the get()
->> method, if possible.
->>
->> But also: I'm not looking at the full method right now to see if
->> terminating _at this location in the loop_ is critical. So it may
->> very well be impossible to move this into the get() call, in which
->> case please ignore this suggestion and use state.last_gen.
-> 
-> I think it's not critical (as I mentioned above) and I think I will
-> need to follow up on this later.
-Sounds good.
--Stolee
-
+Ah, before I forget, as the focus of the topic shifted dramatically
+between v4 and v5, I think we should rename it to something like
+'ps/refs-onbranch-fixes' to reflect the fact that is no longer is
+about chdir-notify-parent but to fix "onbranch" chicken-and-egg
+situation.
