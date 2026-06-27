@@ -1,69 +1,69 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC35F227EA4
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 17:29:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D40324B20
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 17:29:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782581352; cv=none; b=reJckSKOvsfMeiZuQrAnj7Fmv+Raadk8UDYe0rowFqK7kErz8umrx2fEnzWuwqR+FN7fnYK6IBGgvluVbrUwNe0nj0QlJQ+gs7ErHirM4+MJkf0Y08rOn6xqF8sdy5JqtGIlr7wtvcZ/agkBfkVrr0+7KMObIbBu6VCyGqMhsqM=
+	t=1782581353; cv=none; b=c5pcDND+BuLGBRU9EtqGoc3LVD0DWxwlDBO+UEJe4FkEWo22Y67PvL5zAJIj7x+D/2ETRRjfDBhhiDzYM1Ka5rYiWPTrMnmO3jSwIQUkKq5M7lY+KQDfEkdFrT4aaxkIqMQuG3sWfWrvj6qEOdetVRSIGm47ownjX7C+/YrJLv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782581352; c=relaxed/simple;
-	bh=Qstzn8xZz/xw187lvI4MMhTXZ0N0to+fjKUrscjMrkI=;
+	s=arc-20240116; t=1782581353; c=relaxed/simple;
+	bh=nAbTmx7S9iauGan1pON3XDW4bbUII7NrgOZ8wSTtB2w=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ry9l/8VSR+2sxmY8lDgxW5qdg7IF3U7g7rY35iSpza/KFzMvU8PqUexWTASE2d8i6B6khih21HfjhaWQr49qP1guDHwypDJ+myebr3s60ixN0ZeOErCJngjfd1ndYVA97VQYOxJ+SoftOhnZ0pmNowYCVBsWrQGWO6LnVh3apKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C0OVCMBk; arc=none smtp.client-ip=209.85.160.169
+	 MIME-Version:To:Cc; b=tPVu2Xem3lZ6xaQZJuNlbx82nu6NC/XZUun00eANLVyOSIsrWwu8iNMOwwU+yIcHIaB8HLnN7tOBorIqJO9jdlxyMyCjhrLT7xl6zV+yU4FcP0KwRHbEasEMmceFB/6EX8IKWhkBfUYKP64U82QWr565QRzG09UeJoxqwzoh/Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G159zPOa; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C0OVCMBk"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-51a837c8618so15839741cf.1
-        for <git@vger.kernel.org>; Sat, 27 Jun 2026 10:29:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G159zPOa"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-51a8f78b1d2so4443921cf.0
+        for <git@vger.kernel.org>; Sat, 27 Jun 2026 10:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782581350; x=1783186150; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782581351; x=1783186151; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QZxT0GyT9ITmjGWylni0KaZCyFC8/y+3b2JhZEVmscE=;
-        b=C0OVCMBklu4agV9j/+uIrayTwGXa389U7Nsod1WOMh2DWbj7eCqFgYQ5FqqzjAcz1J
-         lkMriOxUEcJ9dnX+xaovfJgyd9+6qYKNwOZGoX5Nkuos6QT9HD0NYYUjVvnYheEPuztD
-         twXHXdZaJe+hFNV28+RLvu4aWg17a2hL6PccH7wEl8nSQiiiHtur/ZoofCVEghCDBAco
-         1evuV0TRT54Xb/4Z+qIq0sDKrSO+xTiwJqbuQIZZ3DpY7wiCqJMtajj7nLzh5q5G4aGY
-         Sha6g6gYXQRHo7av4N5BJkvi0SCNINZmuLmgQmt7+TA5BmJTcHSIWlX4TYDop5uG3rCm
-         R2Xw==
+        bh=J1/uc69ZBPjvi761gR5LtaXgClbo5975NI6D2zpHNok=;
+        b=G159zPOamiEAp02hC2xJWoJvgvms+m0j5LehMmEAQIvaVPMp3rmeFGzlgXOFlCAxK7
+         4jSZMWgNwlMWgyRM2aY8S7LQVfUBQHmWWVhVuYZ+7oplKUc68zihIk8IIF4cBzIfMgSr
+         I9/r0HjenwB1MvgDh3uLGfRUJIfHbHR3GEwdleYDkY4wsceaNFN/pArjMPJymj+PKO9Y
+         Kf9Vs2zwUrZPtEqaaqLHOWoUqYfZoYvrjjK0+S+OPwtGNsszUAYf99Dn1IN7cin8sjmd
+         tNhviFBX+uM9iHdnpbNLpfi/H3heWx9jNBJl1E5hj0lKTVaFXZ/BrtLdzKLtYn6IilXC
+         1hqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782581350; x=1783186150;
+        d=1e100.net; s=20251104; t=1782581351; x=1783186151;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QZxT0GyT9ITmjGWylni0KaZCyFC8/y+3b2JhZEVmscE=;
-        b=nPE3MSss6/5Pga8NpV3sYvn//iRn5fgPCUS+I0c9GcAEJZFf9MSGliLOdRShTKYG8O
-         tL1RC8rPROWFWJLdMWoeiJTGcKwdUMjbDlQNwnkTAGLISGrV9FANNJq3OcY4UPVhWQqr
-         wNXsI2xnT1FHAtJc9gw853A+jOmOnnuJWGwuFa1KruDkQ33MG9QFKPwAJvrUexjrPStk
-         okVZMCybxTdszfoEwDDihy1E1r1EmmrL0X4sJwrKahG8G02QMNkky5r/GqsMaq1+m/av
-         wV7KW/NpZRoLlMR3bCjPDX6Jw95XzwkmJtziBupe2Ddi/PB0VXmlfKffxFMUS/TMYLX+
-         RD9Q==
-X-Gm-Message-State: AOJu0YziLWx/1Fmewt/8IKOmL8msKRI8D8rJyWf3f5vkaPi79RGKnhgQ
-	aXC5VzGssrR0Ahv9yMqxCw7sbtxClajYsPgKK5UqZHwiwzC3UP4K4fKsNeIWww==
-X-Gm-Gg: AfdE7ckl3zozdffOBVqAfZh6FCS31IQN/56gdiV/Nd9VSC2tjnVL6+k7gkkZKok9kTz
-	4SgZedKhI/J3j1dPIbdIt4rn/SHMR6hmN4YtztrFdoW6AaMTwfZgGEcNGu5UNCDI1s4Ti6We9xk
-	EJVuqSm61hh63eZY3jpJL7vrYscQl23Z+ygFIUC5ppaL7ajJapi8nx/AqUmr9SxuAYid3rF4q+2
-	QkmdIj28z3cq1JfB9MMq9yqq7wlKsRQkvwte9zvCyR5t/tyBeP4cN19DzS08f5zQ4IQp/wlvX3n
-	QBC3uT4GdytLpKYtuyYeviBUUv+QKWgquM4qKJQhc1JwQJIsym8OaQBYm4p4LnYgYGeZ9Urmqkf
-	BHBxNPqugJ53vzrXyDwgWDhpwe/jakiUZ99ia12VFElsGU2cckf3ywoKv3efhTDXzDMp/s5IdUl
-	NVEoXyJWqjjBovPiu85q7Zy2qALg==
-X-Received: by 2002:a05:622a:16:b0:517:6c6f:8ee6 with SMTP id d75a77b69052e-51a8af6e1fbmr71959441cf.6.1782581349907;
-        Sat, 27 Jun 2026 10:29:09 -0700 (PDT)
+        bh=J1/uc69ZBPjvi761gR5LtaXgClbo5975NI6D2zpHNok=;
+        b=oMLyTFezwPnlgJup8OXgMfVwcYOA+mP3aUKo4QE/cV872nayiIPQuUsHqJSMSQWoYI
+         KWwUpQQYdQHQKKKzIUA4ghe433Ubj2T2GFFXoFZTpdcrAQ5r9uPRBEOFUL7vhL+NsS8U
+         9I4evdP9Sm6AwGt4LMKSrkhLG4+IpBF3Xap8MRb8+VBaH/2t6DDiaUDpX+5gAsQGwAun
+         Sx8tPmL7UUJ6xWmc2ZiDSwENlxtd0dNJuHG+GEOkZxYNOXmIQyh80evOUB8WZP3orxkv
+         o3pc3uKleuZmVEbWTqKVGp7dpRWfZXU7HIyYmmIK0DCVs/r5AUViTCBDtR3w8EVTAkjF
+         Q6BQ==
+X-Gm-Message-State: AOJu0YzhFrf8KVu3LxO4Odx+CtrSyKV4/VxzYSvmiVLRU3W/jjO5hnH6
+	mPsh8CE+FquO/h7ABCPSa0wXE9E8j0eps/nApoxg/XGeBenkuqNY/uzRfNAHWQ==
+X-Gm-Gg: AfdE7cl0BAOztHJFNRgfLJLOYkWypuOhOHxLv5SFF0lg7Uqb7MSzbp58/dpDcxUF9PO
+	0cZygm6pTnjtXlCVGFYReAPI8H3BeQRE3/euPYN2iey6Tqj6K+qrEOrZKm9ABTHmj8IigAN3Nsi
+	iI1xjIv0fEAuUeSTx3mR1sKZHDiPESxfi9R82j/ofZfMbWwRy6iRVwc7spSn1ZqEz2smbQKwHRG
+	cQp3vt9ayyea9XgL+Wl5Y+JTQ5Lk12nO+QEGrMppdXcY9PvglfX5yBVWiuHccNQdMz67OmYnUts
+	qbZtIIcYYs0VeIwRkDlfsG1dLK+ODPk91G5Ol73wRVCc1TfFLT1zU7Z5WHlR/WDuBl8T5BXOQnC
+	mvS6Gkj9cshiAWIhUj2B6PK6v6oDOP4x1pOeXBzJmgJhzbqzNXfIF5AulZZVzTSAeuQg88x+MU/
+	fuYYVNNNsegSuJK4w=
+X-Received: by 2002:ac8:6f1b:0:b0:517:76ad:8161 with SMTP id d75a77b69052e-51a8b02bce8mr75502641cf.24.1782581350840;
+        Sat, 27 Jun 2026 10:29:10 -0700 (PDT)
 Received: from [127.0.0.1] ([40.76.191.160])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51a51106a09sm121094881cf.0.2026.06.27.10.29.07
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df7f015805sm251762606d6.1.2026.06.27.10.29.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Jun 2026 10:29:08 -0700 (PDT)
-Message-Id: <d211c82e40446d1d0b33f117d817a03ad716eea0.1782581342.git.gitgitgadget@gmail.com>
+        Sat, 27 Jun 2026 10:29:10 -0700 (PDT)
+Message-Id: <b82a997359b7e1acd16151439b1dabad4cfb20ea.1782581342.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2152.v2.git.1782581342.gitgitgadget@gmail.com>
 References: <pull.2152.git.1781806593.gitgitgadget@gmail.com>
 	<pull.2152.v2.git.1782581342.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 27 Jun 2026 17:28:57 +0000
-Subject: [PATCH v2 3/7] diff: emit -L hunk headers via xdiff's formatter
+Date: Sat, 27 Jun 2026 17:28:58 +0000
+Subject: [PATCH v2 4/7] diff: extract a line-range diff helper for reuse
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,236 +80,163 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-The line-range filter builds its own "@@ -<old> +<new> @@" header for
-each range hunk.  For a side with no lines (count 0, such as the old
-side of a pure insertion), the begin should be the number of the line
-before the change, per the convention git diff and xdl_emit_hunk_hdr()
-follow.  The hand-rolled code's begin was one too high; in t4211 this
-produced
+builtin_diff() open-codes the line-range filter setup and teardown
+around its xdi_diff_outf() call: zero the struct, point it at the
+output callback, inflate ctxlen to the largest range span so each range
+yields a single xdiff hunk, run the diff, flush the trailing range
+hunk, and release the buffer.  The upcoming -L stat and check formats
+need the same sequence.
 
-	@@ -25,0 +18,9 @@
+Extract line_range_filter_init() for the setup and a
+line_range_filter_diff() helper that prepares the xdiff config the
+filter needs, runs an initialized filter through xdi_diff_outf(),
+flushes the final range hunk, and releases it, returning the latched
+error.  The helper inflates ctxlen to the largest range span so each
+range yields a single xdiff hunk, and clears XDL_EMIT_NO_HUNK_HDR so
+the hunk headers the filter seeds its position from are always emitted.
+Folding both into the helper keeps these invariants, which the filter's
+position tracking relies on, in a single place for every consumer.
+builtin_diff() now does init + line_range_filter_diff(); the next two
+patches reuse them in builtin_diffstat() and builtin_checkdiff()
+instead of repeating the boilerplate.
 
-an old begin of 25 in a 24-line file, where git diff would give 24.
-
-Stop hand-rolling the header.  flush_range_hunk() now formats it through
-xdiff's own emitter: a new xdiff_emit_hunk_header() helper wraps
-xdl_emit_hunk_hdr(), the function that produces every other diff's hunk
-headers.  The count-0 begin is then correct by construction, and as a
-side effect -L headers match git diff exactly, including its omission of
-a count of 1 ("@@ -22 +22 @@" rather than "@@ -22,1 +22,1 @@").
-
-xdiff's hunk callback already hands line_range_hunk_fn() a count-0 begin
-decremented, so undo that when seeding the cursors and let the formatter
-re-apply the convention once, at emit time.
-
-The off-by-one predates this series, and the two regenerated fixtures
-reach it from different origins: no-assertion-error has carried it since
-its test was added in ab60c693a2 (line-log: fix assertion error,
-2025-08-18), while vanishes-early acquired it when 86e986f166 (line-log:
-route -L output through the standard diff pipeline) reshaped its tracked
-line into a pure insertion.  vanishes-early also drops its count-1
-counts.
+No behavior change: builtin_diff() leaves XDL_EMIT_NO_HUNK_HDR unset,
+so clearing it is a no-op until the suppressing consumers arrive.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- diff.c                                   | 27 +++++++++++-------------
- t/t4211/sha1/expect.no-assertion-error   |  2 +-
- t/t4211/sha1/expect.vanishes-early       |  6 +++---
- t/t4211/sha256/expect.no-assertion-error |  2 +-
- t/t4211/sha256/expect.vanishes-early     |  6 +++---
- xdiff-interface.c                        | 19 +++++++++++++++++
- xdiff-interface.h                        | 15 +++++++++++++
- 7 files changed, 54 insertions(+), 23 deletions(-)
+ diff.c | 100 +++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 61 insertions(+), 39 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index ee765d7ac2..9751bb6798 100644
+index 9751bb6798..6233a96bf0 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -2636,14 +2636,9 @@ static void flush_range_hunk(struct line_range_filter *filter)
- 		return;
- 	}
- 
--	strbuf_addf(&hdr, "@@ -%ld,%ld +%ld,%ld @@",
--		    filter->hunk.old_begin, old_count,
--		    filter->hunk.new_begin, new_count);
--	if (filter->funclen > 0) {
--		strbuf_addch(&hdr, ' ');
--		strbuf_add(&hdr, filter->func, filter->funclen);
--	}
--	strbuf_addch(&hdr, '\n');
-+	xdiff_emit_hunk_header(&hdr, filter->hunk.old_begin, old_count,
-+			       filter->hunk.new_begin, new_count,
-+			       filter->func, filter->funclen);
- 
- 	filter->ret = filter->orig_line_fn(filter->orig_cb_data, hdr.buf, hdr.len);
- 	strbuf_release(&hdr);
-@@ -2668,19 +2663,21 @@ static void flush_range_hunk(struct line_range_filter *filter)
+@@ -2580,6 +2580,18 @@ static int quick_consume(void *priv, char *line UNUSED, unsigned long len UNUSED
+ 	return 1;
  }
  
- static void line_range_hunk_fn(void *data,
--			       long old_begin, long old_nr UNUSED,
--			       long new_begin, long new_nr UNUSED,
-+			       long old_begin, long old_nr,
-+			       long new_begin, long new_nr,
- 			       const char *func, long funclen)
- {
- 	struct line_range_filter *filter = data;
- 
- 	/*
--	 * When count > 0, begin is 1-based.  When count == 0, begin is
--	 * adjusted down by 1 by xdl_emit_hunk_hdr(), but no lines of
--	 * that type will arrive, so the value is unused.
-+	 * Seed the per-image line cursors from the hunk header's begins.  For
-+	 * a side with no lines (count 0), xdiff's callback has already moved
-+	 * its begin to the line before the change, so add one back to recover
-+	 * the true 1-based start.  xdiff_emit_hunk_header() reapplies that -1
-+	 * when the clipped hunk is emitted.
- 	 */
--	filter->lno_in_postimage = new_begin;
--	filter->lno_in_preimage = old_begin;
-+	filter->lno_in_postimage = new_nr ? new_begin : new_begin + 1;
-+	filter->lno_in_preimage = old_nr ? old_begin : old_begin + 1;
- 
- 	if (funclen > 0) {
- 		if (funclen > (long)sizeof(filter->func))
-diff --git a/t/t4211/sha1/expect.no-assertion-error b/t/t4211/sha1/expect.no-assertion-error
-index 54c568f273..95faf51a7b 100644
---- a/t/t4211/sha1/expect.no-assertion-error
-+++ b/t/t4211/sha1/expect.no-assertion-error
-@@ -8,7 +8,7 @@ diff --git a/b.c b/b.c
- index bf79c2f..27c829c 100644
- --- a/b.c
- +++ b/b.c
--@@ -25,0 +18,9 @@
-+@@ -24,0 +18,9 @@
- +long f(long x)
- +{
- +	int s = 0;
-diff --git a/t/t4211/sha1/expect.vanishes-early b/t/t4211/sha1/expect.vanishes-early
-index a413ad3659..e4b1a201d5 100644
---- a/t/t4211/sha1/expect.vanishes-early
-+++ b/t/t4211/sha1/expect.vanishes-early
-@@ -8,7 +8,7 @@ diff --git a/a.c b/a.c
- index 0b9cae5..5de3ea4 100644
- --- a/a.c
- +++ b/a.c
--@@ -23,0 +24,1 @@ int main ()
-+@@ -22,0 +24 @@ int main ()
- +/* incomplete lines are bad! */
- 
- commit 100b61a6f2f720f812620a9d10afb3a960ccb73c
-@@ -21,7 +21,7 @@ diff --git a/a.c b/a.c
- index 5e709a1..0b9cae5 100644
- --- a/a.c
- +++ b/a.c
--@@ -22,1 +22,1 @@ int main ()
-+@@ -22 +22 @@ int main ()
- -}
- +}
- \ No newline at end of file
-@@ -37,5 +37,5 @@ new file mode 100644
- index 0000000..444e415
- --- /dev/null
- +++ b/a.c
--@@ -0,0 +20,1 @@
-+@@ -0,0 +20 @@
- +}
-diff --git a/t/t4211/sha256/expect.no-assertion-error b/t/t4211/sha256/expect.no-assertion-error
-index c25f2ce19c..815d27f7f1 100644
---- a/t/t4211/sha256/expect.no-assertion-error
-+++ b/t/t4211/sha256/expect.no-assertion-error
-@@ -8,7 +8,7 @@ diff --git a/b.c b/b.c
- index 69cb69c..a0d566e 100644
- --- a/b.c
- +++ b/b.c
--@@ -25,0 +18,9 @@
-+@@ -24,0 +18,9 @@
- +long f(long x)
- +{
- +	int s = 0;
-diff --git a/t/t4211/sha256/expect.vanishes-early b/t/t4211/sha256/expect.vanishes-early
-index bc33b963dc..263fc9eaac 100644
---- a/t/t4211/sha256/expect.vanishes-early
-+++ b/t/t4211/sha256/expect.vanishes-early
-@@ -8,7 +8,7 @@ diff --git a/a.c b/a.c
- index e4fa1d8..62c1fc2 100644
- --- a/a.c
- +++ b/a.c
--@@ -23,0 +24,1 @@ int main ()
-+@@ -22,0 +24 @@ int main ()
- +/* incomplete lines are bad! */
- 
- commit 29f32ac3141c48b22803e5c4127b719917b67d0f8ca8c5248bebfa2a19f7da10
-@@ -21,7 +21,7 @@ diff --git a/a.c b/a.c
- index d325124..e4fa1d8 100644
- --- a/a.c
- +++ b/a.c
--@@ -22,1 +22,1 @@ int main ()
-+@@ -22 +22 @@ int main ()
- -}
- +}
- \ No newline at end of file
-@@ -37,5 +37,5 @@ new file mode 100644
- index 0000000..9f550c3
- --- /dev/null
- +++ b/a.c
--@@ -0,0 +20,1 @@
-+@@ -0,0 +20 @@
- +}
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 5ee2b96d0a..32e04630ee 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -91,6 +91,25 @@ static int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- 	return 0;
- }
- 
-+static int strbuf_out_line(void *priv, mmbuffer_t *mb, int nbuf)
++static void line_range_filter_init(struct line_range_filter *filter,
++				   const struct range_set *ranges,
++				   xdiff_emit_line_fn line_fn,
++				   void *cb_data)
 +{
-+	struct strbuf *out = priv;
-+	int i;
-+	for (i = 0; i < nbuf; i++)
-+		strbuf_add(out, mb[i].ptr, mb[i].size);
-+	return 0;
-+}
-+
-+void xdiff_emit_hunk_header(struct strbuf *out,
-+			    long old_begin, long old_count,
-+			    long new_begin, long new_count,
-+			    const char *func, long funclen)
-+{
-+	xdemitcb_t ecb = { .priv = out, .out_line = strbuf_out_line };
-+	xdl_emit_hunk_hdr(old_begin, old_count, new_begin, new_count,
-+			  func, funclen, &ecb);
++	memset(filter, 0, sizeof(*filter));
++	filter->orig_line_fn = line_fn;
++	filter->orig_cb_data = cb_data;
++	filter->ranges = ranges;
++	strbuf_init(&filter->hunk.lines, 0);
 +}
 +
  /*
-  * Trim down common substring at the end of the buffers,
-  * but end on a complete line.
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index ce54e1c0e0..51c88296ed 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -76,4 +76,19 @@ int xdiff_compare_lines(const char *l1, long s1,
-  */
- unsigned long xdiff_hash_string(const char *s, size_t len, long flags);
+  * Begin a range hunk at the first in-range line.  Its position fixes the
+  * hunk's begins, taken from the two image cursors before they advance:
+@@ -2744,6 +2756,50 @@ static int line_range_line_fn(void *priv, char *line, unsigned long len)
+ 	return filter->ret;
+ }
  
-+struct strbuf;
-+
 +/*
-+ * Append a unified-diff hunk header to `out`, e.g.
-+ * "@@ -<old> +<new> @@ func\n".  The header comes from wrapping xdiff's
-+ * own hunk-header emitter, so it matches what a normal diff would
-+ * produce for these begins and counts.  For a side with no lines
-+ * (count 0) the begin is the line before the change, and a count of 1
-+ * is omitted.
++ * Run an xdiff pass through an initialized line-range filter, flush the
++ * final range hunk, and release the filter.  Inflates ctxlen to the largest
++ * range span first, so that every change within a single range lands in one
++ * xdiff hunk and the inter-change context is emitted; the filter then clips
++ * back to range boundaries.  The optimal ctxlen depends on where changes fall
++ * within the range, which is only known after xdiff runs, so the max span is
++ * the upper bound that guarantees correctness in a single pass.  Every
++ * consumer (patch, diffstat, check) relies on one xdiff hunk per range, so
++ * this lives here rather than at each call site.  Also clears
++ * XDL_EMIT_NO_HUNK_HDR: the filter seeds its per-image position from the hunk
++ * headers, so a consumer that otherwise suppresses them (diffstat) still gets
++ * them here.  Returns non-zero if xdiff or any forwarded callback failed.
 + */
-+void xdiff_emit_hunk_header(struct strbuf *out,
-+			    long old_begin, long old_count,
-+			    long new_begin, long new_count,
-+			    const char *func, long funclen);
++static int line_range_filter_diff(struct line_range_filter *filter,
++				  mmfile_t *mf1, mmfile_t *mf2,
++				  xpparam_t *xpp, xdemitconf_t *xecfg)
++{
++	const struct range_set *ranges = filter->ranges;
++	long max_span = 0;
++	unsigned int i;
++	int ret;
 +
- #endif
++	for (i = 0; i < ranges->nr; i++) {
++		long span = ranges->ranges[i].end - ranges->ranges[i].start;
++		if (span > max_span)
++			max_span = span;
++	}
++	if (max_span > xecfg->ctxlen)
++		xecfg->ctxlen = max_span;
++
++	/* the filter seeds its per-image position from hunk headers */
++	xecfg->flags &= ~XDL_EMIT_NO_HUNK_HDR;
++
++	ret = xdi_diff_outf(mf1, mf2, line_range_hunk_fn,
++			    line_range_line_fn, filter, xpp, xecfg);
++	if (!ret) {
++		flush_range_hunk(filter);
++		ret = filter->ret;
++	}
++	strbuf_release(&filter->hunk.lines);
++	return ret;
++}
++
+ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
+ {
+ 	const char *old_name = a;
+@@ -4108,49 +4164,15 @@ static void builtin_diff(const char *name_a,
+ 			xdi_diff_outf(&mf1, &mf2, NULL, quick_consume,
+ 				      &ecbdata, &xpp, &xecfg);
+ 		} else if (line_ranges) {
+-			struct line_range_filter lr_state;
+-			unsigned int i;
+-			long max_span = 0;
++			struct line_range_filter lr_filter;
+ 
+-			memset(&lr_state, 0, sizeof(lr_state));
+-			lr_state.orig_line_fn = fn_out_consume;
+-			lr_state.orig_cb_data = &ecbdata;
+-			lr_state.ranges = line_ranges;
+-			strbuf_init(&lr_state.hunk.lines, 0);
+-
+-			/*
+-			 * Inflate ctxlen so that all changes within
+-			 * any single range are merged into one xdiff
+-			 * hunk and the inter-change context is emitted.
+-			 * The callback clips back to range boundaries.
+-			 *
+-			 * The optimal ctxlen depends on where changes
+-			 * fall within the range, which is only known
+-			 * after xdiff runs; the max range span is the
+-			 * upper bound that guarantees correctness in a
+-			 * single pass.
+-			 */
+-			for (i = 0; i < line_ranges->nr; i++) {
+-				long span = line_ranges->ranges[i].end -
+-					    line_ranges->ranges[i].start;
+-				if (span > max_span)
+-					max_span = span;
+-			}
+-			if (max_span > xecfg.ctxlen)
+-				xecfg.ctxlen = max_span;
+-
+-			if (xdi_diff_outf(&mf1, &mf2,
+-					  line_range_hunk_fn,
+-					  line_range_line_fn,
+-					  &lr_state, &xpp, &xecfg))
+-				die("unable to generate diff for %s",
+-				    one->path);
++			line_range_filter_init(&lr_filter, line_ranges,
++					       fn_out_consume, &ecbdata);
+ 
+-			flush_range_hunk(&lr_state);
+-			if (lr_state.ret)
++			if (line_range_filter_diff(&lr_filter, &mf1, &mf2,
++						   &xpp, &xecfg))
+ 				die("unable to generate diff for %s",
+ 				    one->path);
+-			strbuf_release(&lr_state.hunk.lines);
+ 		} else if (xdi_diff_outf(&mf1, &mf2, NULL, fn_out_consume,
+ 					 &ecbdata, &xpp, &xecfg))
+ 			die("unable to generate diff for %s", one->path);
 -- 
 gitgitgadget
 
