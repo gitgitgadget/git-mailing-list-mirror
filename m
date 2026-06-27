@@ -1,164 +1,108 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711BB13777E
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 00:43:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6C42609E3
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 02:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782521024; cv=none; b=Y5xGz0YOMnchmundb0G92LTYPecqzfurnpd1hS6gfR5sf5Pa7NBMP6GCS0APgnkmnkDSKOn4GIJ2v83PJCAAa/ZBqVwF2n4qr+Hb5YuHr4WRZdlzaHu0O4UPDNSn6OmUf4DuRtDSjq6eDxj2O8G3NWJ5YeB5cPASyCWB34ILHT0=
+	t=1782526177; cv=none; b=lry6qqSpt5XCa/xWcqjaEnteGvKhhg5aZIyOf5eAieFGmmLamuSLanD+Wx3BJzsf7enOAb7eG0XrOhMaopLGq4ES1KmqKmUdkACs5IcLgwrXuu9+ICGe9cIdeoreJIC5moR6AqPN0hTXQ9kg1PWtNALFcxNREkNTerCFvXz59uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782521024; c=relaxed/simple;
-	bh=ktTOvdk5UfvOcdqgRGIbkm7t5AfBXXLCLmlBbj2ZJFA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IjSa2Sww9+Jqcavz+5LgB+46/f9DYoVx77NG/Mza3DzLfBEhyYSO4AdglIbbnBFqs3DcoTLFY3N8+lpnaE/l6E2VoOR4LmqcH0Q1cAO13MO7oAYgZFDZR9kbxus696JsaJpVsRhP2vi1rUEXTGltF3udAeMn9W+AIVk5no9N7YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=HugpWLyv; arc=none smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1782526177; c=relaxed/simple;
+	bh=gpKMSR2VJkF2A0+nolQ+I7UJqH6/Qv/+QhAOmwOMciw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Z3Fvi1rqKFejpQYFfhMSnGtQnchRV0LLk73HIgHd5npv5btj5AGqftct0C/wVCceGrt8ViV6sruLNPyVynoCe89x6xTyMskEAHw1IHLhCF5gt9avzEk38aHQBfPRX23nZeuXNsGrwLa9j/16N1d+8XVlko+qHmbb6wBveQ4ZkC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i94Y2/u6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QyYZXEUm; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="HugpWLyv"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-664346e66daso1474567d50.0
-        for <git@vger.kernel.org>; Fri, 26 Jun 2026 17:43:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1782521022; x=1783125822; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rYxKBOyE/+3t5us32RdUbgUE4u33mDA2rmd0AYF62qw=;
-        b=HugpWLyvAy8T/NN1EPh3vsIHV6wvLztRIFN2j9Ei1/wA3+mU+xc3dOHmkjgLs8iZrm
-         Y5PcFy9Nh2f6vV5CTD8RT0e4wJ1Syo/C4lXd8orNxBHkUaIbL6EsFjqaydtjjg8It/+O
-         Q9HCwW2QibRYItKXc88741a3GBBPSKGg4rVSN6iLFBiYoARBElSj76g1xgdPZW3ayYJr
-         6Lqs8/i+BJWuRAJXo71fAlHx6T16Z3UXKt1NYiuaejPwkPTLmYxI4AcWWWOPQZ3lst+V
-         tiVlJrh8LROMq6jTLAhTJ+7EhYWNbEsmiBiMgLFSSGOINfRc9dHKSPkfOePRniQG6rXa
-         uRWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782521022; x=1783125822;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rYxKBOyE/+3t5us32RdUbgUE4u33mDA2rmd0AYF62qw=;
-        b=PvTIke454xAoBdKa9a78cKG/Q8f6l5r3X9DYUUMy2iZc8641z2miaNPmydPHmSWte/
-         DTCMCz0B9wHrxHHpsN2JEdiHYHTwAp3Z1WOKX0K4UXfJLKbrzkoz3ERDJGTH4kc7pG0X
-         k2gIA3pXCMpOCmLhOlqAmQXDJeFdCRAiw2bb2juMOwmnZOXDtH0jjlMsE4gGkx8Uxyp7
-         xJGRNIN+pYcDtVHs2rzBJXa2FJA+UX34rmyDgbqDvXb2MPFYj8svZPZyVAH/SsxrZzSA
-         5EIqiQuOWcetooT8A5Z6mfH/5hyHodkgnBZLOW3pENCnKP3mkZXUQscW3WrWhiKLqHaR
-         YWAw==
-X-Gm-Message-State: AOJu0YyczfDzu3LQUQKa9CxbQwHNUdztppDPHI4JRW/M1iRq/IOpGdQ7
-	h2kHImkixo6oMyhAsdCHPBDWOG+/obNVYtLI2mCByas61zxm1Kqe+uXePxuWjy5dxKDL1VKImgf
-	1gGpNIlHizw==
-X-Gm-Gg: AfdE7cl4qgHjGWIeje9/Nj192+vueZe0uwWnifXwYWfAgzOyhZ6I4sra9lJWZNDuKr2
-	DxfBMUENLHsJYdrKDN/OLHHqjhIuxr1jRK8V+FillWJEjmOaWBl2g5ng0dZQEkOUy/+nlDCAkBz
-	bXlwRr03pctCFChTZgouJUAv1GdGXHoEw/znmatvxYV1/ri4gBz4RZcyf21+yLOdiPbI6CBq+QJ
-	5k2x3q66yLso/qvRV0RCq64bMSFknzs2UbOskeqA2RGRsy8RHQPLd/SY1GzwWKfdVEKP3w65XYK
-	pg3Ao7vwpGvZrVHO0z7m9IsEzYnuj34wQ3P4UI2l89bFYhMNg/EVWmzEr+W1s98dwIZkiUR/Lyp
-	A4O4MTifzWItjoPIzQWFn1A+xtQ1Cri/B/kCXPc+XsXYizm7CXBpn98GfGbQ+bnLKh307LfYT0/
-	4u627vygp/XLKB/EvFLqjOnNHsgxIb9fxV1KcRbgIaI2wyOWQF4BOsYHhJmLRinrv1IGuAhNbgb
-	3wHz5ij/IpuBmrFAy9cvLlVLZQwh7aBCSG2sZNzqzHBliIEGIut59NG9Y/IwjcBbQOQDltijjvo
-	CAxuMYUbefs0oDwx
-X-Received: by 2002:a05:690e:4808:b0:662:da40:c98c with SMTP id 956f58d0204a3-66487e73b55mr6008928d50.41.1782521022451;
-        Fri, 26 Jun 2026 17:43:42 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-664a18f653bsm1454059d50.8.2026.06.26.17.43.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2026 17:43:41 -0700 (PDT)
-Date: Fri, 26 Jun 2026 20:43:40 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [RFC PATCH 04/10] repack: teach MIDX retention about geometric
- rollups
-Message-ID: <aj8cvDCMcw+RayyO@nand.local>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i94Y2/u6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QyYZXEUm"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id CD6A2EC0276;
+	Fri, 26 Jun 2026 22:09:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 26 Jun 2026 22:09:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782526174; x=1782612574; bh=gqTTSCRcNx
+	uSImN8y8WlvJ3Zfo9gq9NkfN20E8h6oAk=; b=i94Y2/u6U48oP19x5+m9myqVZt
+	p529/uW4QguN7on/Lpq7NgcldWJ8qtvsk18bEcT3HzK1WXe9EkJ5IDPC/fOrRXjR
+	/SE5yoy4ThpNYbGVnqDH0p6E5eNgpBg6Ep4yYShBsm90KKfD0RIm9zXtlLPZluda
+	Rb+ncXub3FG917SIWIa1Cxyt3pfedVA7DsK7/egLpNcZ4aOMldy1OAKnWiYKulLM
+	xL//jL9vMTWvjymTYlidbzQaq4uKD76UbliRlKqJWhW2MoUkqFzfcqAYfYc9tCuy
+	fmwZwffwrbpozHyls7mCJ40k0pCXeOJAReA5aXzzDkc0Ze8pz3OuNMPnKG+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782526174; x=1782612574; bh=gqTTSCRcNxuSImN8y8WlvJ3Zfo9gq9NkfN2
+	0E8h6oAk=; b=QyYZXEUmfNQ2taoYlGgGYMmjysiPf+DD8a6k9afTkA18axeV+lD
+	3f877TS65m7Y48sqvci4Nsu7JbtYepU5ia/1SD/+BdjX5rrIuA8aKl8RH1j63WbV
+	8XBO2kuKd5lkYhWD+Nnfgw6vCs0EZ0oz6jTnkYYP/5NCGXN5qJ067hWSLk19nrOX
+	qV4meTyhJIRtZBVq4rqs9YQBO1k7m3+SUjItTAv7OeHK0amcUF/XgC54Y/Ttv0me
+	OhGukEZ5intEMfjpqxRhtfkntdZSC8ZCE4wTqzU83qW7QuiJwdneqeB6nYNuapBJ
+	mCOf/p9JKrJgPG99NZUxVCHKg2W9+D9snhQ==
+X-ME-Sender: <xms:3jA_alx7i1gShjt8hB3FkJ_I68SEy6pJYTsoE3uHDX3vKaNHnm_N1Q>
+    <xme:3jA_ao9veXxtgC2a5Hs-zzSYtJEvcxGoaCjx98JrYjCluB24FP54w13dedVf6jbVL
+    QbQ7_beSfjkvCoOzia4NRfpd0iN-3t0FMEBgRKbG7si8aGNxlol>
+X-ME-Received: <xmr:3jA_apJUhjzZd5uzhG8xTJhHWCGRneiJYGCCBi5E8JhG_7MD2cc4ijrse_1pEBz2LKvWHOtkXeXUNnMzR-ugBQOxV2RunvTXIEVQE8c>
+X-ME-Proxy-Cause: dmFkZTFwMRSlnUMwuviLAV3bV68Heu71AtEt0MCqmS0tj/WMy3GGbv5JUpN3OQSaRCMw/7
+    YNBv5OATxna5w0FjJ87xxOZ5tB/OLr6N8NcRbseW/S4PvrZhlaVwJ8I0wP3YoG7DeNsaWC
+    dZSVY7TztoNxb1a+lTa3YJ0Wlp5A39hm02kp2Fu9BAHvXER5CzKQl9pmX407UXUCcKM5Ox
+    0uDx4mpYmYCxKF0Ie/CzIXzaMr2bipCWRM27QGS5As/dEkPd37IrsTcIF/yM+MJgLWlZZW
+    RPrmvg8wZM1NYgX/BQqmV6WgBYy4PpNBy61NtpxhialPSTO02Gw5erEoG6QyYBBdrfpxcu
+    dJzQrrlHO764Hh9N9zROd+DzAxYTDEI37k5fpEKp0zDmxtTiD76xqRiD9DZ3lsYuR83VVK
+    5cWr0U5QXa/k3i/Ls6eljOYdi/oMBkfwoc7x9RKgSDNgDb2Cai1ySgpxQOhqwNqoRqRfG7
+    AnV2grAKibSPgNgaO9xXb7ndNDlDo5NG1ycqlSi6yTsbR88VK2DE+rZUrBRvemceR0e6aN
+    vKiWF34gLuc79RWmELF6Nh8IWw6+wy2MryF4bNMx2wXJYXAD/6PHbgX2VTp5CYkifyxhPq
+    iTFZYh/iOnyDH4rs/qwLrlYnelnN3siDrOp3Y3pknUClaGWJb7V52n3dcEaQ
+X-ME-Proxy: <xmx:3jA_auedsuv27P3oKKVRscxr6ntIbvSkLDSPmK-pRwq7ZJRjN91FQA>
+    <xmx:3jA_ao-UVB7Ciul_AHZAfRDfjdPQMPqG78-AQbpxQ96FqKAoPgiveA>
+    <xmx:3jA_arrZf2z124yjsBndTGwzo1Wb0UqnGSjTbUC3mLkaRZip1avXog>
+    <xmx:3jA_atBGjSGCQi3Ww5k8FPEbNe55vxNT_GjeOi8BQIjtYywZNVz3KA>
+    <xmx:3jA_anOs1W_CZX-YOR90tvx50fc_CE97r-THh5MrkAEvl87GQatrxVCf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Jun 2026 22:09:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [RFC PATCH 08/10] pack-objects: introduce
+ '--stdin-packs=follow-reachable'
+In-Reply-To: <aj8cOhH6hGVZIFft@nand.local> (Taylor Blau's message of "Fri, 26
+	Jun 2026 20:41:30 -0400")
 References: <cover.1782500507.git.me@ttaylorr.com>
- <ad76f06fc7ed304af97c73a5931e1ebc5f2d3895.1782500507.git.me@ttaylorr.com>
- <xmqqwlvl56vh.fsf@gitster.g>
+	<e3d2e46443d0b32ce29215563dde04ebcf850679.1782500507.git.me@ttaylorr.com>
+	<xmqqpl1d56dd.fsf@gitster.g> <aj8cOhH6hGVZIFft@nand.local>
+Date: Fri, 26 Jun 2026 19:09:32 -0700
+Message-ID: <xmqq8q8068f7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwlvl56vh.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Jun 26, 2026 at 02:28:18PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > +static int pack_geometry_contains_pack(struct packed_git **packs,
-> > +				       uint32_t packs_nr,
-> > +				       const char *base)
-> > +{
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	uint32_t i;
-> > +
-> > +	for (i = 0; i < packs_nr; i++) {
-> > +		strbuf_reset(&buf);
-> > +		strbuf_addstr(&buf, pack_basename(packs[i]));
-> > +		strbuf_strip_suffix(&buf, ".pack");
-> > +
-> > +		if (!strcmp(buf.buf, base)) {
-> > +			strbuf_release(&buf);
-> > +			return 1;
-> > +		}
-> > +	}
-> > +
-> > +	strbuf_release(&buf);
-> > +	return 0;
-> > +}
->
-> It feels slightly inefficient to repeatedly strbuf_reset(),
-> strbuf_addstr(), and strbuf_strip_suffix() in the loop.  I do not
-> know if my understanding of what existing_packs_retain_midx_packs()
-> passes down in buf.buf as base is correct or not, but if so,
-> wouldn't it equivalent to
->
-> 	for (uint32_t i = 0; i < packs_nr; i++) {
->                 const char *pack_name = pack_basename(packs[i]);
->                 const char *suffix;
->
->                 if (skip_prefix(pack_name, base, &suffix) &&
->                     !strcmp(suffix, ".pack"))
->                         return 1;
-> 	}
->
-> perhaps?
->
-> Starting from "/path/to/objects/pack/pack-deadbeef.pack", you take
-> the basename of it to have "pack-deadbeef.pack" in buf, strip out
-> the ".pack" suffix to get "pack-deadbeef" in buf and then compare it
-> with the base.
+Taylor Blau <me@ttaylorr.com> writes:
 
-I think that this would work nicely. I think that the skip_prefix()
-variant is easy enough to read, and is clearly more efficient.
-
-> Instead, pack_name in the rewitten one becomes the basename of the
-> packfile path, i.e., "pack-deadbeef.pack", then we see if it begins
-> with base and take the remainder in suffix, and finally we check if
-> that remaining suffix is ".pack".
+>> > +	if (packed_object_info(p, ofs, &oi) < 0)
+>> > +		return 0;
+>> > +	if (type != OBJ_COMMIT && type != OBJ_TAG)
+>> > +		return 0;
+>>
+>> We do not care about non commits, non tags.
 >
-> Which should be equivalent.
->
-> > + * freshly-written pack supersedes them. When doing a geometric repack,
-> > + * packs below the split are rewritten into the new MIDX tip and should
-> > + * remain eligible for deletion.
-> >   */
-> > -void existing_packs_retain_midx_packs(struct existing_packs *existing)
-> > +void existing_packs_retain_midx_packs(struct existing_packs *existing,
-> > +				      const struct pack_geometry *geometry)
-> >  {
-> >  	struct string_list_item *item;
-> >  	struct strbuf buf = STRBUF_INIT;
-> > @@ -315,6 +351,9 @@ void existing_packs_retain_midx_packs(struct existing_packs *existing)
-> >  		strbuf_strip_suffix(&buf, ".pack");
-> >  		strbuf_strip_suffix(&buf, ".idx");
->
-> Not a fault of this patch, but it makes the hairs on the back of my
-> head tingle to see that a bogus input like "pack-foobar.idx.pack"
-> happily is taken, while "pack-foobar.pack.idx", an equally bogus
-> input, is not.
+> This should not be an &&, but rather an ||. We only want to handle
+> objects which are either commits *or* tags via this function.
 
-Yeah, this is gross (and my fault). Presumably I was swapping out one
-variant for another and didn't stage the removal of one of the
-strip_suffix() calls.
+My comment above did not mean to say anything is wrong in the code;
+I was just thinking aloud.  We return for blob or tree because they
+are not commit and they are not tag.  If we say "||" then we return
+for everybody, because anything that is a commit (failing the LHS of
+the "||") cannot be a tag (satisfying the RHS of the "||").
 
-Thanks,
-Taylor
