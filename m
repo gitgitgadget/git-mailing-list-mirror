@@ -1,137 +1,358 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700C61991CB
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 20:47:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782593259; cv=none; b=NUOzGN09ceGXpXPyMGYZXNLrmelEWCbcuVc3kdln3jUhkRFxfLjlD7IZiNPyZ4zzyFBiqtu/HRV0B7CvMVPg+ouMRR9ihTinwSLrT2s07tMcjffKktpZRqjVFxKacf41x0qMUODM+urkOyG5mQfUBhf+6660Idv02yLgdTSb9Nc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782593259; c=relaxed/simple;
-	bh=Hd3NyYwYfnEtnOpsx8eBUvpPIcX5hbnGNBXdq36DKW8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VQ1dFtfzdkPa0HHE1uc5DeqZaEfzDmMwvfDka+TtocqzB4oyZuiLeo0xQZqpIQqm2OmOOX4vvPi+R0R8mGKjWJXmNKemAphweuLSzfL7Rn4cxzQaCfNf5Rd3v3pHdvdvw7QJyUX+D1Ft5D3oeFUu5mHrhUGJutuxYDNOwI/3YQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NZJxyFVD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TKLtwMZb; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726AE2FDC27
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 20:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.179
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782593530; cv=pass; b=rYo8pLqG0BMWEeyMSlsnxfd94ibTuoWncJVP6DXdEga6ZgqWfXwg8zRhQFH+JNwS+WfxhfzJr+KGlqWCf4zPfJbO27N/65nod8ECNlbKKHTT+GcurJyBzMG1FIIRr/6ICM4Q4lKURqSrLfXmLoQicPTYzVd6pR5/Acqh8EtaCuo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782593530; c=relaxed/simple;
+	bh=+fzdLT970I/AN6ZYEqWDlaBYAxwz7gnl12HvVohu9NA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pA6LqRUz3b5T3rwkrrfKMhz3TDuutMmu+mG2vFsUbKTaoVoH4WBfgSH/sunL7oRfROy8Z9pAeMHdvlS8QKF/yVTGZ2F4AlJDC67bIgNzYP+n7/eEFenS2SCaTQOqn8Vo4CPRIk/48siXE9kw7gS7tTyHENusRtyY3DULMmrIa/c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FR5OSrHK; arc=pass smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NZJxyFVD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TKLtwMZb"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B1D8514000DA;
-	Sat, 27 Jun 2026 16:47:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Sat, 27 Jun 2026 16:47:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782593256; x=1782679656; bh=sxeLUdOrQj
-	LFtad/8LzsJCK031pCGIjxkWNF0MIb6/w=; b=NZJxyFVD3SdMjhoW55eXUUB7O+
-	UyhP/w9vNPTYPxd/6e5Ipfjf9p0Xn7CwxAITcsRxeH/5lW1/pzReUyIvW2vt84Xf
-	p0pEUrRNegL+8pYL3z/Rtzn/YZs84Ezb9BAN5U6OkoGgUEFECq4vjei2M4ZcYLL5
-	YD3/Iq23M/qTTb81bSfG+KPRQTkmrWFwWe38LHdgHM+gbZCt/mh7glx++l0AGkmG
-	PgapOnthi2D7bBU4a3wcmhy1AT7bPeilbrJ+BRV5CmBNF5djAjyM56umv9JcoWYB
-	cGVHRGNdckUuiunhaxOPpyC7CYm/J0OBGWhiV0GNZiT28ZmhHR8MvIj6O2Jg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782593256; x=1782679656; bh=sxeLUdOrQjLFtad/8LzsJCK031pCGIjxkWN
-	F0MIb6/w=; b=TKLtwMZblNvBOmp8y6Mwh/GzakMzs24z29HNPdrmqWdGwWMoNaf
-	byWwnertnf6udplDo2VmBsoun4SvtjSbtnKLs1N44NGya0OooeLkga4V2p5EwqLh
-	2KTP8AymGmr2dZi5h8VqgLH5gXdqZO0v9uSk15KeXjD59kcJJ8Ak4LTul7Dj8hEs
-	k0VOxj3K+MdmWSQZ0KVsRFLEOH97c/QYqyJ2TDjRLgALU+eGb0hfSLwLbtT56hzE
-	BhD1s3ILBkWgqf9wsUwtfRtQ6NURzRv48aWvXSvfsqK/bIDxJmTeJgEhqETms0GE
-	gvaUHSSvYNky97DxyofaGRCv16YZyHAKhQg==
-X-ME-Sender: <xms:6DZAanctZAP-Qd0c3uc6PYyMlqgCOBrpjPMd6xN64QQJFyhAgnNYAg>
-    <xme:6DZAasRAnRwypI6HPpInhhCK_ZH3b8isH8k-A1pu0eak_GCXEWB5Qw6yMJoeJPJ7h
-    XsflHEmCx_1j7o5fWtg-fAMFsmV1uvTvAmOksSoipnar998Gi6IXHw>
-X-ME-Received: <xmr:6DZAamtpYbeIEswT910CnPcD9G9_PeI9A1bbljucFPTfkUPgAFhMUFvyvNqNVJq2FsP2YM6uTuoNwgYNS0JR9tiWs3Xin_kvfcdjLHg>
-X-ME-Proxy-Cause: dmFkZTGbylt477Q4WH5vsjLr3q1bxxnH3US/TJFA2wKtztfAK+TJfRh6B9uYoBhwKGYkkM
-    ZqkB87OQJNAOtQ0MbtiBkpVuUuYygAxdm4Se5M1W6yefclRPFPMopGmhpSCaUVMJlhhcAH
-    bS/map3Bs42wDLIt4lLFYWrOFQXFMCMp0jymMpseUar546Fqi3m1fFfAzpJroFpuU+rQzE
-    V3tilkE1HyvxIwIEU80WHLjVyu5HVLaSzQ8ckz6uakA8RlFilSLKZQX52NpaMvRSOesN8C
-    zpfSgAdwS3m8VY/1W07Leji2K6BJ8rZtot/zXzXvFaJbqAb5Ib+GjSkL8GEASwK1Y815AW
-    yY/3yGJFWsbGUOJYuaAGUSN6DQiBXFW4iA/8ifPSJdGh5z+ETv81p5+GT/T06PTYUmAHbq
-    p71kiPJL+81RoCoZSYhj3zM1LomHuR7HF03zaAmkNirs/ZAyBcOy3U76FXvhb+G6kL57wx
-    UMLaVLtFOr/bhR7eF+wyBoTDtTkAoxGyv34XPYSmKkSG2kmql6o5JHhwYZMyTHff/8WsDP
-    rC8kMZiyhGzZq6rDTYyXE3Mn78g6X6BcLHpbc9gJTxg/IU8+oIcBKvEC+an6EdU2b389wN
-    GAreuyevniEouPCXshu2+K/Fo3xR48gNMTeOChPu0x+a65Q7t2PltJOlkWQg
-X-ME-Proxy: <xmx:6DZAalcivQZ4nECWQubl3lNLRZMiSQRMBO8Fp-uk12F-lvYFPm1czw>
-    <xmx:6DZAaoZX1A1ztgsr03QKRtPifoo6G3TOwxruRCDftq3W4QBkWdcEXA>
-    <xmx:6DZAavalS27n5m2CroET40pPC4XDajd0svOVnXkODiUwpSbkk3pvrg>
-    <xmx:6DZAalL-28INMCvFqYkZOoQWt4K0teJWzKecfPkPjjdPWaS9I56fdQ>
-    <xmx:6DZAamIUFnum2XnuMfFg-IGoW7tTl-b5nrSeWdusrEUHWWEWcLtgL1B8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 27 Jun 2026 16:47:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  cirnovskyv@gmail.com,  szeder.dev@gmail.com,
-  Christian Couder <christian.couder@gmail.com>,  Ayush Chandekar
- <ayu.chandekar@gmail.com>,  Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v4 1/1] environment: move excludes_file into
- repo_config_values
-In-Reply-To: <04d1a7d5-ef83-4728-b816-5cdf1cb4aa25@malon.dev> (Tian Yuchen's
-	message of "Sun, 28 Jun 2026 00:10:49 +0800")
-References: <20260626075037.532164-1-cat@malon.dev>
-	<20260627160813.1074201-1-cat@malon.dev>
-	<20260627160813.1074201-2-cat@malon.dev>
-	<04d1a7d5-ef83-4728-b816-5cdf1cb4aa25@malon.dev>
-Date: Sat, 27 Jun 2026 13:47:34 -0700
-Message-ID: <xmqqv7b34snt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FR5OSrHK"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-80e24970f1dso1196467b3.0
+        for <git@vger.kernel.org>; Sat, 27 Jun 2026 13:52:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782593524; cv=none;
+        d=google.com; s=arc-20260327;
+        b=i7iFKDlgDvvm4tcUdgSTJiecqKUgw23XFa3kccEzIgY12q6Zf3MxCuY+oXiSQRFVKR
+         33Ryy//9AWAYd9WbmSk1BnOhEtxv8kBQUaSAR0b+oV/kq810s6MHteKt6A8P29aNSFti
+         ztuivuID9ZhIN+Ei77aqUGWJLYMmE0ZHeuny/ZOog/TQkbzM/KNbUDL/Y/JFebxr2clf
+         gQ2CIWSXtWp9ViQVHC+jRpawO2Br8UkgdMvsNGnddrIjStnBotv+BoFcyZMpogVQn+0n
+         rxUANexzU7yVC+ZW6EM5s0TQgMpCVoTQHsTZuIEcFUdIhPVqYd+gpZZ6adC8NgdqPSvs
+         3lrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=FkPzuFbucFNCCalBSH/XlGR9y++mjwZsRe65qIH8vtw=;
+        fh=II1xNaWpsbGGoje1lWhXs73nMC4GzAl4tRfC7+O7yrw=;
+        b=WXIfRPt9MF3/mc5quwhaMxq4bpjOslgjpBgSIZjY15JUNNhsi9cdj4WPouO/DBIjJy
+         +WfPLQRtRqhHTfGKNfaPMnqAE49XElP7VZMAvIkknDpYWVHVAFHJJQo/X3ZfhFz+Ns0D
+         F1CATLimlyrbPlcTGIVILJvmniYk5G2NLRc14vZI2RX/5T5Wf16ZTIk1oiPKkdM655QF
+         PM/p9do0G+esltR6LVGAXRmSbGqXGC29Swo8NdbBfmkodkdk+BuSRv4UPCc0QigALYqr
+         ldjWbyRGkEyfr43msdYGAuPzFIWiK5e0XxBDNsnj7b+smEbIMSNHDh+LzpZTQ/AVuvRj
+         j1TA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782593524; x=1783198324; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FkPzuFbucFNCCalBSH/XlGR9y++mjwZsRe65qIH8vtw=;
+        b=FR5OSrHKLKLTRphhvaqdcLq+9mVf+Ar4MfAg/S4X24fcvzT4VuaUnfRUaGwbHbkzpQ
+         wFJjXvigfDU5eZgDPB3Dn0t0nZPfrpbDVLsovvEefzcNYkHUIfpx2jF4YCNmBRPPeW0Y
+         Hm0ed5coTNjJKVjdNy5sx8URA7S3Lkvr9RjbjsGooY6kGyLHnQyY3IubZXa1P+nX+aaI
+         d5xRwiTioAFaPXwlOHfLWOzsq+VVVq5868SsC2yLq4A7az4nJ+vSXluQROi3lsCce2kG
+         sLX2tjkq4AJ59VMk71Ics42wgdhq6AGLxwWUnbv3ZaB0C9WxcjBem95Vjvwv1By+i3QA
+         ydxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782593524; x=1783198324;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FkPzuFbucFNCCalBSH/XlGR9y++mjwZsRe65qIH8vtw=;
+        b=V/naLyh7fwmxKQnPPAbjyhCZFUtXCzDS0njF4Nak5bHbFbrp+AqJYjgTJU08UbTlcV
+         DRicKw0TsMoVCPXaOoCLShl+vt9z8zLNk7zjQW16Ivkz1NHFrIxHprMMT+/sWDcujdpn
+         u4qYzkA5l/wSvHsGx6BErpB1MbiqJK3kx1tdqhzmTmRiMQqQNLA4Sd2Kq7YthJvVNF1U
+         rWzbswpOdu4MQ5VadCGH+6F+0wFV71I4r2VX821PBJ7zo06bSts9/GHMT9VBh1ZZrexQ
+         PacutwfWIdCffpbCElK7e8jMbZ8/i7J7ZihcQs6XdBhR04Fo1ixWd/vun5OeLQ9GnsiV
+         53tg==
+X-Gm-Message-State: AOJu0YyhE0S6EJltiH56syTo/cQKVAD5M3CHSxPvtRHrO0gBiZJswOIR
+	fwD6aWsFHpv9J40OoKjVYa8hm4CXx0b8wjcV6SXJDzehSye/ZGtyfx1P2GML6dIcUQkDVKwh+W5
+	s5MozznKss8YAZ3IGjXrl4iCqAcES1Po=
+X-Gm-Gg: AfdE7cl+OpEPApGVY+M6qNf8qC2bmUAZqfwZMBcbaUkaPh74O1o2sP7j3rj7XX9oIzf
+	3f7niZ9EOfvbYnTmDRNe/A+VSmie97ldOIB0yyZmKcP/iFNDFJOF9M6UCNQlTYvpzzmAc3nHw00
+	M2sFAr4ANvYbiCLnUEPaHK94jz0gH9ZttwqC0iZ3urygRc4ZfyT/C/jCamilbJrfIiLIWfYhi26
+	1X7X2Th0Nam40AHrD8+6VTjMDpz8sR8EUlRq9GNFbnwS8MLcJmFPBBBlP8Pcq0nLudLiEvVm9tN
+	fNECbpGXhYHFuArQhovKK9w7pfHu6QzxjyjHlZp/EDU7gGO3POIuC6FdXsnL29qjxj0MN/jDi/z
+	7t3pBbhh0VdK6lPsvkVDYNAtBQQWx2b8OnLilSdGGz+UKql8qdb1dYodXGPzrLBODSUo6nw==
+X-Received: by 2002:a05:690c:7207:b0:80c:85e5:8742 with SMTP id
+ 00721157ae682-80c85e58a26mr52929207b3.64.1782593524101; Sat, 27 Jun 2026
+ 13:52:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+ <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
+ <20260625-ps-eric-work-rebase-v14-11-09f7ffe21a53@gmail.com> <CAOLa=ZSCKbwckV-j+DyUqOkDkfYcW5xSCPza562mq+OJtQc7DA@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSCKbwckV-j+DyUqOkDkfYcW5xSCPza562mq+OJtQc7DA@mail.gmail.com>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Sat, 27 Jun 2026 22:51:51 +0200
+X-Gm-Features: AVVi8Cd7shkxdWj1ew-jHQqiVlCkqnuIjG22ED69mDMWw521ozMGWKW3wzGKxEg
+Message-ID: <CAN5EUNRCOHu1M1OujRzhjdt1Oc=nyNSh2t0HrzECV+MO2kbrDA@mail.gmail.com>
+Subject: Re: [PATCH GSoC v14 11/13] cat-file: add remote-object-info to batch-command
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
+	eric.peijian@gmail.com, gitster@pobox.com, jltobler@gmail.com, peff@peff.net, 
+	toon@iotcl.com, Jonathan Tan <jonathantanmy@google.com>, 
+	Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tian Yuchen <cat@malon.dev> writes:
-
-> Hi all,
+El s=C3=A1b, 27 jun 2026 a las 15:14, Karthik Nayak
+(<karthik.188@gmail.com>) escribi=C3=B3:
 >
-> Apologies again for the duplicate...
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
 >
-> On 6/28/26 00:08, Tian Yuchen wrote:
+> [snip]
 >
->> +const char *repo_excludes_file(struct repository *repo)
->> +{
->> +	if (!repo || !repo->initialized)
->> +		return NULL;
-
-I might already have said this, but I am not sure why want to be as
-loose as this code.  It is not limited to this line, but I think we
-saw plenty of other "We know we must get an already initialized
-thing here, and the subsequent operation we perform on that thing
-will cause us to die() later, so let's return silently and early
-to avoid hitting die()" attempts to sweep problems under the rug.
-
-Wouldn't we rather want to try to be more strict and say
-
-	if (!repo || !repo->initialized)
-		BUG("repo must be an initialied repository");
-
-here?  Aren't all the callers of this function supposed to be
-dealing with an already initialized repository?
-
-
->> +	if (!repo_config_values(repo)->excludes_file)
->> +		repo_config_values(repo)->excludes_file = xdg_config_home("ignore");
->> +
->> +	return repo_config_values(repo)->excludes_file;
->> +}
+> > diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-fi=
+le.adoc
+> > index 86b9181599..aba20eb770 100644
+> > --- a/Documentation/git-cat-file.adoc
+> > +++ b/Documentation/git-cat-file.adoc
+> > @@ -169,6 +169,13 @@ info <object>::
+> >       Print object info for object reference `<object>`. This correspon=
+ds to the
+> >       output of `--batch-check`.
+> >
+> > +remote-object-info <remote> <object>...::
+> > +     Print object info for object references `<object>` at specified
+> > +     `<remote>` without downloading objects from the remote.
+> > +     Raise an error when the `object-info` capability is not supported=
+ by the remote.
+> > +     Raise an error when no object references are provided.
+> > +     This command may be combined with `--buffer`.
+> > +
+> >  flush::
+> >       Used with `--buffer` to execute all preceding commands that were =
+issued
+> >       since the beginning or since the last flush was issued. When `--b=
+uffer`
+> > @@ -312,7 +319,8 @@ newline. The available atoms are:
+> >       The full hex representation of the object name.
+> >
+> >  `objecttype`::
+> > -     The type of the object (the same as `cat-file -t` reports).
+> > +     The type of the object (the same as `cat-file -t` reports). See
+> > +     `CAVEATS` below. Not supported by `remote-object-info`.
+> >
 >
-> One more thing:
+> Do we have to keep adding 'Not supported by `remote-object-info`' to
+> each type? Can't we do the inverse and only add 'Supported by
+> `remote-object-info`' to `objectsize`. This avoid having to add this
+> line to every new type.
+
+Yes, I will do that.
+
 >
-> I deliberately didn't write a comment for the getter because it will 
-> probably be merged with comments from the previous several patches in 
-> some form in the near future... I'm not sure if it would be more 
-> appropriate to write a separate patch to add the corresponding comments 
-> then.
+> >  If no format is specified, the default format is `%(objectname)
+> > -%(objecttype) %(objectsize)`.
+> > +%(objecttype) %(objectsize)`, except for `remote-object-info` commands=
+ which use
+> > +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not s=
+upported yet.
+>
+> Nit: I would drop the 'for now' here, since we don't know when the change=
+s
+> for 'objecttype' will land.
 
-That's very sensible.
+Okay, I'll drop it.
 
+>
+> [snip]
+>
+> >  enum batch_mode {
+> >       BATCH_MODE_CONTENTS,
+> > @@ -633,6 +649,81 @@ static void batch_one_object(const char *obj_name,
+> >       object_context_release(&ctx);
+> >  }
+> >
+> > +static int get_remote_info(struct batch_options *opt,
+> > +                        int argc,
+> > +                        const char **argv,
+> > +                        struct object_info **remote_object_info,
+> > +                        struct oid_array *object_info_oids)
+> > +{
+> > +     int retval =3D 0;
+> > +     struct remote *remote =3D NULL;
+> > +     struct object_id oid;
+> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
+;
+> > +     struct transport *gtransport;
+> > +
+> > +     /*
+> > +      * Change the format to "%(objectname) %(objectsize)" when
+>
+> Nit: perhaps prepend a "TODO"
+
+I'll add it.
+
+>
+> > +      * remote-object-info command is used. Once we start supporting o=
+bjecttype
+> > +      * the default format should change to DEFAULT_FORMAT.
+> > +      */
+> > +     if (!opt->format)
+> > +             opt->format =3D "%(objectname) %(objectsize)";
+> > +
+> > +     remote =3D remote_get(argv[0]);
+> > +     if (!remote)
+> > +             die(_("must supply valid remote when using remote-object-=
+info"));
+> > +
+> > +     oid_array_clear(object_info_oids);
+> > +     for (size_t i =3D 1; i < argc; i++) {
+> > +             if (get_oid_hex(argv[i], &oid)) {
+> > +                     size_t len =3D strlen(argv[i]);
+> > +
+> > +                     if (len < the_hash_algo->hexsz && len >=3D 4) {
+> > +                             size_t j;
+> > +                             for (j =3D 0; j < len; j++)
+> > +                                     if (!isxdigit(argv[i][j]))
+> > +                                             break;
+> > +                             if (j =3D=3D len)
+> > +                                     die(_("remote-object-info does no=
+t support "
+> > +                                           "short oids, %d characters =
+required"),
+> > +                                         (int)the_hash_algo->hexsz);
+> > +                     }
+> > +                     die(_("not a valid object name '%s'"), argv[i]);
+> > +             }
+> > +             oid_array_append(object_info_oids, &oid);
+> > +     }
+> > +
+> > +     if (!object_info_oids->nr)
+> > +             die(_("remote-object-info requires objects"));
+> > +
+> > +     gtransport =3D transport_get(remote, NULL);
+> > +
+> > +     if (!gtransport->smart_options) {
+> > +             retval =3D -1;
+> > +             goto cleanup;
+> > +     }
+> > +
+> > +     CALLOC_ARRAY(*remote_object_info, object_info_oids->nr);
+> > +     gtransport->smart_options->object_info =3D 1;
+> > +     gtransport->smart_options->object_info_oids =3D object_info_oids;
+> > +
+> > +     /* 'objectsize' is the only option currently supported */
+> > +     if (!strstr(opt->format, "%(objectsize)"))
+> > +             die(_("%s is currently not supported with remote-object-i=
+nfo"), opt->format);
+> > +
+>
+> Aren't we setting the opt->format ourselves in this function? Why do we
+> need to check it?
+
+We only set `opt->format` when the user does not provide a custom format.
+
+The `strstr` check catches cases like `%(objecttype)` alone, but is
+not sufficient for mixed formats like `%(objecttype) %(objectsize)`.
+This is fixed in [12/13] with the allow-list.
+>
+> > +     string_list_append(&object_info_options, "size");
+> > +
+> > +     if (object_info_options.nr > 0) {
+> > +             gtransport->smart_options->object_info_options =3D &objec=
+t_info_options;
+> > +             gtransport->smart_options->object_info_data =3D *remote_o=
+bject_info;
+> > +             retval =3D transport_fetch_refs(gtransport, NULL);
+> > +     }
+> > +cleanup:
+> > +     string_list_clear(&object_info_options, 0);
+> > +     transport_disconnect(gtransport);
+> > +     return retval;
+> > +}
+> > +
+> >  struct object_cb_data {
+> >       struct batch_options *opt;
+> >       struct expand_data *expand;
+> > @@ -714,6 +805,57 @@ static void parse_cmd_mailmap(struct batch_options=
+ *opt UNUSED,
+> >               load_mailmap();
+> >  }
+> >
+> > +static void parse_cmd_remote_object_info(struct batch_options *opt,
+> > +                                      const char *line, struct strbuf =
+*output,
+> > +                                      struct expand_data *data)
+> > +{
+> > +     int count;
+> > +     const char **argv;
+> > +     char *line_to_split;
+> > +     struct object_info *remote_object_info =3D NULL;
+> > +     struct oid_array object_info_oids =3D OID_ARRAY_INIT;
+> > +
+> > +     if (strlen(line) >=3D MAX_REMOTE_OBJ_INFO_LINE)
+> > +             die(_("remote-object-info command too long"));
+> > +
+> > +     line_to_split =3D xstrdup(line);
+> > +     count =3D split_cmdline(line_to_split, &argv);
+> > +     if (count < 0)
+> > +             die(_("split remote-object-info command"));
+>
+> We should  be using `split_cmdline_strerror()` here
+
+Ok, I'll use it.
+
+>
+> > +     if (count - 1 > MAX_ALLOWED_OBJ_LIMIT)
+> > +             die(_("remote-object-info supports at most %d objects"),
+> > +                 MAX_ALLOWED_OBJ_LIMIT);
+> > +
+> > +     if (get_remote_info(opt, count, argv, &remote_object_info,
+> > +                         &object_info_oids))
+> > +             goto cleanup;
+> > +
+> > +     data->skip_object_info =3D 1;
+> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++) {
+> > +             data->oid =3D object_info_oids.oid[i];
+> > +             if (remote_object_info[i].sizep) {
+> > +                     /*
+> > +                      * When reaching here, it means remote-object-inf=
+o can retrieve
+> > +                      * information from server without downloading th=
+em.
+> > +                      */
+> > +                     data->size =3D *remote_object_info[i].sizep;
+> > +                     opt->batch_mode =3D BATCH_MODE_INFO;
+> > +                     batch_object_write(argv[i + 1], output, opt, data=
+, NULL, 0);
+> > +             } else {
+> > +                     report_object_status(opt, oid_to_hex(&data->oid),=
+ &data->oid, "missing");
+> > +             }
+> > +     }
+> > +     data->skip_object_info =3D 0;
+> > +
+> > +cleanup:
+> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++)
+> > +             free_object_info_contents(&remote_object_info[i]);
+> > +     free(line_to_split);
+> > +     free(argv);
+> > +     free(remote_object_info);
+> > +     oid_array_clear(&object_info_oids);
+> > +}
+> > +
+>
+> [snip]
+>
+> > diff --git a/t/meson.build b/t/meson.build
+> > index 3219264fe7..54d21111a3 100644
+> > --- a/t/meson.build
+> > +++ b/t/meson.build
+> > @@ -170,6 +170,7 @@ integration_tests =3D [
+> >    't1014-read-tree-confusing.sh',
+> >    't1015-read-index-unmerged.sh',
+> >    't1016-compatObjectFormat.sh',
+> > +  't1017-cat-file-remote-object-info.sh',
+> >    't1020-subdirectory.sh',
+> >    't1022-read-tree-partial-clone.sh',
+> >    't1050-large.sh',
+>
+> [snip]
+
+Thanks for the feedback,
+Pablo.
