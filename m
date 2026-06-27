@@ -1,77 +1,119 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F748346A1D
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 16:11:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5E41A5B9E
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 17:17:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782576663; cv=none; b=Wkad+8BYF6sHKDYwJX41nC5S1fXj5zmXt8E3DEsASBPSGmtuCumuE/mH6k2R7gfuplh8NgZ+DH1F5KozV6VeYBLdMFFQ1m7FSeFXKxwQDQ298u3FgXlEr4fGxp053XJP8lfA/ZTJ9PwzUlZZGyTOj9PaEGjPp2NvurFTVkAv4Vc=
+	t=1782580680; cv=none; b=qkleRqI6Izhacc0EHa8SCMCKZZW3DtMJfuM98jhn+RIRgj6tScdnvmiHPU7sBjlIQFA4EyOrWwKWjHJ1sX2WNwCqOifLI69Z7fyzx5mS1y8zHcS1oBHhtyhlRVT4Oy5Grh5Mh4Bt8IGPPo0+leVsDUdN5f63rvnyCSrlypENZJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782576663; c=relaxed/simple;
-	bh=qQ6OGGj0wn0uEs+bHNU7oykJdjFzKB2NIfIX+28RGhI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JK5ieHY5OmbbzjpBAAg35wNXdJT8yJocFjpqosP+7C4uALnguwcesamRK88WsII9kieE1wzDBlOUE59V5zMWDHN+xPsm08R62n8xwgMdeEV3Z1tblpYlod1Z/5nkXEwAQg31fanNTGMdCqm1gHJ7i0pz2yRb40X4FPQ6NuDXR2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=L3ADef1R; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=Oa5UdloX; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1782580680; c=relaxed/simple;
+	bh=AfdfJqutYuMxutT8o2T6yHfqTeQzTGloKD0O0do5xfU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=SgQyyb1HZme31gsFdHTCdF0CkTx6AkmCPHWNGn4b3s0zLZM9LEIpQiaY/glXNIKdXR80Tj3l6WFDwU1vuk6UANiTJVBpzXJuVyWoI3TQR6Yh4i2vYiR54YMNXQlDE1nzHH/MNGe5/Zd107F8dfn6NUBn3KbRXAB+l9mbvHo59dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jlhFvUoK; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="L3ADef1R";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="Oa5UdloX"
-DKIM-Signature: a=rsa-sha256; b=L3ADef1Rv8HzxcxBYoCiNv4bircC9i+RW2LagkFiq2ZSn0qETX+QQ6f9SnsJP1nTftD7rw9ccI1SdQ/vw5wrPOClcYayBt3AOVSk8e/QxDqUKrk0+kFmSuZ2KsGnHtwy5HErXkM/XFwDsNK9KJxOMXTala1T3hMezSxJ3TS4f8fn579Jt6V9sr5V3iN9E7fqxZf1ApOoqN0RnMPfVatItsadbQ5CctrwFedIB0d1JyVx2NxF+yqSCxuJvV83fO35HV6AlTC5GLR/sxsNqkLAUzxDVO2yAYIG7q67Iq1jBMofy47PsPHsI+i/YfU2bd4xMXx0WEkzZdmwyfjib7voMw==; s=purelymail2; d=malon.dev; v=1; bh=qQ6OGGj0wn0uEs+bHNU7oykJdjFzKB2NIfIX+28RGhI=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=Oa5UdloXt5zToqaAV3+R5sj3kp/NVAcoUPxqtsxHcBy+0SyHr7iFdRTnmT4Lx6c8EU0UMkxeoLGQalJKxHwX+j8kXCi7SdtccMqNb89+bXuPKJ3/aQwFotSxP5xLsAzyAcRjeb+ACTB/sZXCoDIdZBoY1VjJo9hvFz4kft4OuzV5iqvgNkbklFM38tZqxJn4B71qwc/bw8eLrmCqSER+X8XHNnsuLCZU4d5qnlmYSaG8frNVl5meM22x/omhbpC8CBceyROxQ4IY7Sute6KlGCcXkAneQRHqeWvw/Z0o4dkHvpuB+l3l0lfkXXA71yp3WZMHEtrR7L87wUo3FOfYnw==; s=purelymail2; d=purelymail.com; v=1; bh=qQ6OGGj0wn0uEs+bHNU7oykJdjFzKB2NIfIX+28RGhI=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1661015028;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sat, 27 Jun 2026 16:10:54 +0000 (UTC)
-Message-ID: <04d1a7d5-ef83-4728-b816-5cdf1cb4aa25@malon.dev>
-Date: Sun, 28 Jun 2026 00:10:49 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jlhFvUoK"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-30c9c8c2697so2258678eec.1
+        for <git@vger.kernel.org>; Sat, 27 Jun 2026 10:17:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782580678; x=1783185478; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ux9aK2fbRRt0jXN3myozcaLObP6aXFFoI0y1+pnUw4g=;
+        b=jlhFvUoK332na6SsGsknFU1kHgyCRBuoEsbtKrkWAFg5jBtcG5RSTSXFAfSqMkizzL
+         JiR4xh+VuY2ng+tYjYxYMa27EiY8VlLaUEaf/oPQeAIYQDrGgcAQw/w+s9Rh/S6x5WvS
+         esjoP6pirWXQ34X7RWCIa+2ox6NEMLEy+rhsyoxmeGmtJyeVVlhAiKq/WDb9FwD2ZOaE
+         y1LPeM6bEvVdGqN73CUTZyT4GXvJ5n0d6bzDNMyQYje7MYJ487myUzjlxL7MJW+w6ALt
+         1HHCuN4RTuhVVLHcmVi1CNG/5U0Z4JtKO2IwBvLrnPN07kTo6vbPSs97JfXCSbzqCL+g
+         +NLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782580678; x=1783185478;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ux9aK2fbRRt0jXN3myozcaLObP6aXFFoI0y1+pnUw4g=;
+        b=RlvsnrM1iIoOCzWZYLdi6KgpY4FTE70+fBQBl5Kxhw1R2rNm3eRC+tg0YmGxQEm66J
+         cWz0M6eCpkJY66tmE1RvytFe0JMtwd1RmPuj6QHfaY1nOWbJlrqf4E11qKLQfIjRgY3r
+         r5QJhwEMQwMevKPOa+A60TUr1EmiN08Ae6NsXUOMP6XV0GFuGeG0ee8kAiRBgDYiFAZ9
+         4PGfKtm8PhIOAC7TTv0y/1iAP3rObjxEQg34//PGXgau4e+VWj2WzP7gGjNsLyrjng7V
+         8rYTHIOMOezsRZiwfh3lxUdh95Vr3u1T4BL3eHRusoNF2O62RaYJL5dltIRWFTKes0yS
+         Eohg==
+X-Gm-Message-State: AOJu0YzfModhmlfEXzEeya9rDJdY14iavMHloT4NT9Gp4ks0StRDA4dS
+	31TzIypglWVkW5gJm7SpudPJPM0A1YGr0Cvx8ePJW/DgaKHuWIBK/0YawZC9eg==
+X-Gm-Gg: AfdE7ck+dVllXZKZf3T+zw1uujE9JRTijVovfbTF/g65PPn05egzsFmoNu5EIgDFsBw
+	0vKwbLYnXxh8OSaB/nudAVvoDkzFHfhCq2MvkCvFGmp6ExyGo/aRebCvIbEPSdCgYjB7sQ1L7mB
+	ikDcP8lw22TpRdUM6ZHPRXLoJ0uMCjoCxmE3uUB/TJEUjXBAVQoji80cSPBCWe8Mz5++XTKrjlm
+	0vMxCLivylr/v007yOeKwYCcZhIfw7PuBysphj7hz2hB5HkoPPKX+eOTkm17YAp22ze2IdNGtFk
+	C8W54SmkTbpe96QtXuqLYFJLu9m28odrHNHo1juaG+Q7QUC325JHyDKG67Ejmag0YCV2OKI0yE7
+	4fs7sfvZbL2fOdnIwNczlGHf1ol9wv2LRbDltAuMIEqgCuiKBfiETeopBPC6ubzQo1Pl2uHrhhh
+	fejF+QvBjbfc8nXA==
+X-Received: by 2002:a05:7300:760a:b0:30b:f0c6:12c8 with SMTP id 5a478bee46e88-30c84ba31edmr10748824eec.9.1782580678257;
+        Sat, 27 Jun 2026 10:17:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.83.162.32])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c52c664sm33405359eec.8.2026.06.27.10.17.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Jun 2026 10:17:57 -0700 (PDT)
+Message-Id: <pull.2161.git.1782580676734.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 27 Jun 2026 17:17:56 +0000
+Subject: [PATCH] http: accept https:// proxies again
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/1] environment: move excludes_file into
- repo_config_values
-Content-Language: en-US
 To: git@vger.kernel.org
-Cc: cirnovskyv@gmail.com, szeder.dev@gmail.com,
- Christian Couder <christian.couder@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Olamide Caleb Bello <belkid98@gmail.com>
-References: <20260626075037.532164-1-cat@malon.dev>
- <20260627160813.1074201-1-cat@malon.dev>
- <20260627160813.1074201-2-cat@malon.dev>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <20260627160813.1074201-2-cat@malon.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: Aliwoto <aminnimaj@gmail.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Hi all,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Apologies again for the duplicate...
+Since 663d7abe07ea (http: reject unsupported proxy URL schemes,
+2026-05-05), set_curl_proxy_type() returns 0 only for the "http"
+and SOCKS variants via dedicated early returns, and -1 for
+everything else. The "https" branch configures the CURL handle for
+HTTPS proxying but then falls through to the trailing `return -1`
+intended for unknown schemes, so the caller in get_curl_handle()
+treats a perfectly valid https:// proxy URL as unsupported and
+refuses to use it.
 
-On 6/28/26 00:08, Tian Yuchen wrote:
+Noticed while looking into a Coverity report against the same
+function; the unchecked curl_easy_setopt() return values it flags
+are orthogonal to this fix.
 
-> +const char *repo_excludes_file(struct repository *repo)
-> +{
-> +	if (!repo || !repo->initialized)
-> +		return NULL;
-> +
-> +	if (!repo_config_values(repo)->excludes_file)
-> +		repo_config_values(repo)->excludes_file = xdg_config_home("ignore");
-> +
-> +	return repo_config_values(repo)->excludes_file;
-> +}
+Assisted-by: Opus 4.7
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    http: accept https:// proxies again
 
-One more thing:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2161%2Fdscho%2Ffix-bug-in-validate-proxy-url-scheme-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2161/dscho/fix-bug-in-validate-proxy-url-scheme-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2161
 
-I deliberately didn't write a comment for the getter because it will 
-probably be merged with comments from the previous several patches in 
-some form in the near future... I'm not sure if it would be more 
-appropriate to write a separate patch to add the corresponding comments 
-then.
+ http.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Regards, yuchen
+diff --git a/http.c b/http.c
+index 8e5a4d8bcf..8c0f831365 100644
+--- a/http.c
++++ b/http.c
+@@ -802,6 +802,8 @@ static int set_curl_proxy_type(CURL *result, const char *protocol)
+ 		if (has_proxy_cert_password())
+ 			curl_easy_setopt(result, CURLOPT_PROXY_KEYPASSWD,
+ 					 proxy_cert_auth.password);
++
++		return 0;
+ 	}
+ 
+ 	return -1;
+
+base-commit: 663d7abe07ea376c2657019a03297ae87037c993
+-- 
+gitgitgadget
