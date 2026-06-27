@@ -1,337 +1,271 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6513A59BC
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 13:14:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782566101; cv=pass; b=W0yGxtuhA2Ja0oLcjd8Xu8QNfEF+1XkLeu5lWxOdWd8oex34GDhQtZCk+8kJkUcu91cFTRXfrmq7eBHpKLrSJe4wmK1whq696p6sECWHyMaHI2VnSblFnxAJWbBdaX0xiv/UaB8pKBz4lVujhrK/gpYIznKjLU6JGWyP43R3Cl4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782566101; c=relaxed/simple;
-	bh=azKz8I1C8mxfgohXt6wNmE5UtlQgGyHovvYTTjGofr8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HrCUhJzXeGQfAHB7cEpLgtHRnWwwz7tedlf6a+EpL00Uaxs3lEOO+1fgIGivVsirS33Kx4oS/E3UAC+tTI37X1UFauhQUPH5re87z3pwfH8gTOwKx9GNP0OCocz2HJuvYVjwBvIlOANeLtiL10qr8T1IVb7B3vhyvaYmDEPLidE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pwFvy0in; arc=pass smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6B03A6411
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 13:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782567857; cv=none; b=r8onpKygIlDbjHTGs+q1AgNINE4psoYk3XSN02cn6oiNmvkS84Vp9ft+Y991P8D3YyV1gN7HrECzJVnVsm/B5ty833OZ1HLRFI/sM8y7losW2TnuK8T5AyEzd2Xwk4Xg7v/Q0Uuup78iIJfpsiM2OnerXtUVcLTBIoat+tXVyZw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782567857; c=relaxed/simple;
+	bh=WQ6oNGahuuujQb9eF4A2PJnGcBfsOBKLqQP/3aXgUe0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fNpxWo/DwJUnohraBK5V1sS1/4TRtCnP98ZIbXlot9daEmm49/Bk8eMZ3MrRGJGzqbDvTT/wLzMEZB1gG9CWy7lVqrxE/eC/XXLx1JKmSVF70HgN3ImXwvZc8AJ8+Ec90Ei6RpVI9BfKJ9ZeCEusicWShTw5Nn2DmQBJLNnqAvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gMaNtNGp; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pwFvy0in"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-966801d093aso553970241.2
-        for <git@vger.kernel.org>; Sat, 27 Jun 2026 06:14:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782566098; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FV0E5mQHL/2lof1QMH3YYJOaq+8vtBMr6o/3T2Kmn8L18dx49hmgrDC7eSa3O4N19D
-         nc1WNl9IQH2/SYI2cSrR2tXVOaaEikvB+Oso6g+2JPdZcL2/mFgs1zebdEeQ3gPCo0dx
-         99Ji+wrZZ4Viom40WQYYer+Tn9gxdCP4UzgzLH2QyutbbV+6kqMNpP6wUGKwrjrW1SUy
-         TPdJFFan4Id4WHsq2c9GkcXNAZd6uzwUq7A0V90qt2mLNF0bQDuy5xYsw4hepcQ1JhkV
-         b7+nloaa2C2C0vQ+bqOH2Y3dXfTb/Ek27ZoHshyxkSYHFX3Th1QdKokG5Q+eutMAuR7O
-         tFRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=u/tCxO/KXWHjlmpBlbmVCBgTSJQdTaq8Tliy1MuHCzI=;
-        fh=RVsDsL3CiYhHKzgk6+PesGhKIdehyrToipqBqD4fAdQ=;
-        b=OfkT8ZkyckmEKS/2qYqcyj6gsxcKUE1o2Es3fmSdV1ha7dSAdXdLMbPgEaZfsD+cfn
-         UCj6uQ2Dt0Kaf4J83MTOi/XDF5q3nf0k/73WUGEEkNnV+rcI942c6gPwZxz6B8v0cQI4
-         3o2NsucNP8Cp770WKmhRzNI0OXaXOYEaCKpDNhMpdddVNmn8EbNMZx9EcjVr53NZb03F
-         ZNf7+pYRUetTafeeHPbj7rlJlPtF2Y/IvaxwtiL5A+34CUh2kJUnnuVboSWkiBXLJcN9
-         KyHZosgGTCSJTG2bVxcXvikH//MxpgX0GpaQKHlX+baWkUHZiCqruFPblBz1MfQn0tIr
-         nwVw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gMaNtNGp"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-470174001a0so431613f8f.0
+        for <git@vger.kernel.org>; Sat, 27 Jun 2026 06:44:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782566098; x=1783170898; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=u/tCxO/KXWHjlmpBlbmVCBgTSJQdTaq8Tliy1MuHCzI=;
-        b=pwFvy0in+elSQqG55GmL5Nx9Y2Pk7+IXl4fg8xHy81IaGhauZuOQe74qCaqOgtlXps
-         zy+aJuncAZqqlLghDYN4QGLv39wjV2aFmONqI3Z3ss4K0QC/S8qtmLRhL8o4Lo52J326
-         uf6yid3w4MtpojYq6evjSH3x9x/darmM/eBh/H2KKVYND4Fdw0VtqIrTnxRTGDJqxW75
-         BU2SQt4CULgzn/jLAIkU+0PtUNAxGCezmzDj5RgFPV7tVmMsfQgmHF5fmLmbtANANE8R
-         4PjyXapVKFE1RvarESH0f2OJRuzzanJAorYjtrIkb199ZPf23ShQZTbAPP479f7QR+Iz
-         mDQw==
+        d=gmail.com; s=20251104; t=1782567854; x=1783172654; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=oX/gEMNhPZs1S7MOUc6yN7R/rvo0jIHyJuOkaHyoMls=;
+        b=gMaNtNGpY/G/B+RnnxC3MS6CS1n2EPBOhRT/XGlzsaL6bN0h3tT/nAcOf/t0BrCaWx
+         AcQBZhzrFlWWYDf03qJceXJRoOYqwi+fC4XheJlGZQY0sIsFGX26U2lXuo4bs6vyPaRi
+         7dceBp9flKpa9T98CLo/fGs3ZUP8oiUj3gg8rQ6b9+3YJQcvxugzj3XC7jtv8ATReMQ7
+         pQjOlB1dXcmHnwp16RkPKy35sKntgKqYVDj86LFluhfOsRw8wSPHg6edczDIWsZa1HGp
+         eEPllz2uhjV1ZD3EJsxDRcABENyvilillhKGtDwHeVkxT01dlq3iz1bAMvotQnWqoOdQ
+         Ob1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782566098; x=1783170898;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u/tCxO/KXWHjlmpBlbmVCBgTSJQdTaq8Tliy1MuHCzI=;
-        b=PPcyetqwohzc8kF3pCyIR+AA0QwwSAwLhwuZkKLRaMm6dqj5G2baSYVpkiH0FNOya4
-         Kxm2keXu4xB2V7fU5cdylPwNXObF1wiAQTFywa+48Jnh4nFRnDkYVaTmfvgBRF8H0YED
-         wxxiUgzc3vzogU60CrrWeqa9ksd099z8h5NGd0b1Zjpd8xqdC0G2WscJnARHwvdIGO+A
-         IUE10uafeejjGHo3ghiFuGPVXghRW0ia18cnDcmZQ89ah6n4g3/ZvBLIzNMc9GSYUtT3
-         OnzJ8NitiaJ1ezRZHYuW2m6HEfM+1UqZpOl2Xlj2o0mrrE2t5xGjsxrZjn8xmiN3Y1+U
-         ipCw==
-X-Forwarded-Encrypted: i=1; AHgh+RqZsN5VsoDufclqTMhCHsJ10D07+8BpyknZ/eZvhYW33GP+uVm/IiFH4LkcU9pCB+tEUH4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxwX6mbeUjknGdmPxzq/k+GusFMN1lXMXwsY/J9UUxQjLNFEMVC
-	rC0lbDi6vhgUGT+qDY281b4uDpX1vkWriRp+uoPlggd436pBMoZQ1GV9veP3fWFbUf4c7sxWyju
-	55iRE0zhtc/PCKu9C7KXlI0x1npF8Dxs=
-X-Gm-Gg: AfdE7cm2PcdJ2OrKQ1hAecc09G823eijvXC3kLimDPA8XutqfbVMVtSG22UagJavD/Q
-	9P31tTppie6gxt80DKqbsWpvE0dGuQ7Vv4LInUuS1UwcCKvNW/Cdz3hruUemWIYQ9GjVUqpqPFl
-	606ydlot3SbcrBigrA8XwN1NA4JeENNIre68t2lBG0tttaBXKXk3EF9+HDSPka/itffPYdvp4eE
-	/5bETeubDW5LIMs4OkUB6JlRU7kwjKj9tRX+zhaDikfm0A9+z034F/M2g5aBvyJhVEtKX7u27GE
-	FP5pvH045ljO7qg4JjbqMhS/ak4MFm6ImTDM/u99+o3ty1WCKT/khmWCVs++/vQ=
-X-Received: by 2002:a05:6102:1489:b0:607:5cd7:d7c0 with SMTP id
- ada2fe7eead31-734360a1990mr4936764137.19.1782566098460; Sat, 27 Jun 2026
- 06:14:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 27 Jun 2026 08:14:57 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 27 Jun 2026 08:14:57 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260625-ps-eric-work-rebase-v14-11-09f7ffe21a53@gmail.com>
-References: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
- <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com> <20260625-ps-eric-work-rebase-v14-11-09f7ffe21a53@gmail.com>
+        d=1e100.net; s=20251104; t=1782567854; x=1783172654;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oX/gEMNhPZs1S7MOUc6yN7R/rvo0jIHyJuOkaHyoMls=;
+        b=r9Hgv/TxQ41bHVjRUgLmmhcHmR0z8pv5WiY4UGgfV8cs+sKkVhuqASUrjIf58yfXtG
+         ZsmkDVaodtPWSk6b0o0O9/PqnL8sgyqwATZVAJDNSnj8QrlvirbAO/SE+EUDXLkBw6zj
+         0n/xQrIi6Yrdo7ziZT2XDSzG6Oh2Tg3ZWOVRqfEX/5B2gxppOwg0whQ8hPBJmX4Bn9Jq
+         xWavT2RSoIuXRGWOquvKvUGKgqvg7FxbfwMKoOcLuQmsQDKLkTM9Ewc5UIz4LPP2+joT
+         ZUFlwLHEI/DicsZTt1Y/OdXBCbCIfcK7B+obyxgee2gZchntULujf8iRNWCF4SwPAca3
+         P6MQ==
+X-Gm-Message-State: AOJu0YyVToUr6YMsF/mYH5sWL8Pzh733I3QGDilTcs90MYCdenRuugly
+	muz/5H02m3qux6h11MNJhU1vD5ntjmDH6YtjKZGulxW5y0zsCPrgU5oy
+X-Gm-Gg: AfdE7clPKIXi/8nv/cdY1nI70NtMmJ9+T9kKCkT18Lz33kqERpnY6hdIIkKQP/4z0U2
+	pGpC/X6arf8QaMN5Id9dcUCf3PK5Ujv8ZS4NR+DtWCcs7Xz0LcBrIQs9sTICf/HDtMF7ejZtj9q
+	CPvy8LtnKJ/hVzOzbjuHzzM2EZdnoA7d76xwkkwjvKJi/OneoXyos5W8Gmooy6ekKEDsKs+hc/Q
+	ykqBDcUr2OlOQbZjve+mGc3qMeCnI130piNkN5sjnDxrIoPFX2pSO8ypr6PhWyD77AJwY2ZXofZ
+	co1xs+AP/lc1wRcWdHossZY4T4s6j/FtBEPsWwUR/uLKLYboTp0CQxV3GZ0eEvYou/tujikbZjk
+	XOwjcmbQUzLCLZYL6286Aww4lcoZzsdJ3YcuKPUufgJg7/wKikKM37+Snp0F0abFKirYLeAnNq2
+	enGKTAYHJPh+D943KTGc2kTPg+bbxwQsvGhj15lZhshcG30SHO86ZB4hMwpB1LNEzn6Bk=
+X-Received: by 2002:adf:e010:0:20b0:46d:d90b:bbe1 with SMTP id ffacd0b85a97d-46dd90bbd41mr11427542f8f.14.1782567853740;
+        Sat, 27 Jun 2026 06:44:13 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4721c88bfcasm2580279f8f.10.2026.06.27.06.44.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 27 Jun 2026 06:44:12 -0700 (PDT)
+Message-ID: <b5d70a0b-ef32-49c9-84ba-8a64b7809574@gmail.com>
+Date: Sat, 27 Jun 2026 14:44:11 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 27 Jun 2026 08:14:57 -0500
-X-Gm-Features: AVVi8Cfh9qpyVdUuJ-Et9NW7VBRA5Br6XH1g7KYTAcNPBbXOixrIaNid-vKHeI4
-Message-ID: <CAOLa=ZSCKbwckV-j+DyUqOkDkfYcW5xSCPza562mq+OJtQc7DA@mail.gmail.com>
-Subject: Re: [PATCH GSoC v14 11/13] cat-file: add remote-object-info to batch-command
-To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
-Cc: chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
-	eric.peijian@gmail.com, gitster@pobox.com, jltobler@gmail.com, peff@peff.net, 
-	toon@iotcl.com, Jonathan Tan <jonathantanmy@google.com>, 
-	Calvin Wan <calvinwan@google.com>
-Content-Type: multipart/mixed; boundary="0000000000001685a706553c03c1"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 3/3] replay: offer an option to linearize the commit
+ topology
+To: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20260626-toon-git-replay-drop-merges-v5-0-5e120738b9d0@iotcl.com>
+ <20260626-toon-git-replay-drop-merges-v5-3-5e120738b9d0@iotcl.com>
+ <xmqq5x358byf.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqq5x358byf.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000001685a706553c03c1
-Content-Type: text/plain; charset="UTF-8"
+On 26/06/2026 18:10, Junio C Hamano wrote:
+> Toon Claes <toon@iotcl.com> writes:
+> 
+>>   Documentation/git-replay.adoc |  8 ++++-
+>>   builtin/replay.c              |  6 +++-
+>>   replay.c                      | 50 ++++++++++++++++----------
+>>   replay.h                      |  5 +++
+>>   t/t3650-replay-basics.sh      | 84 ++++++++++++++++++++++++++++++++++++++++++-
+>>   5 files changed, 132 insertions(+), 21 deletions(-)
+> 
+> "replay --linearize" behaves differently from the flattening rebase
+> in a case where X and Y that forked from A are merged at Z, and we
+> ask to flatten the history leading to Z, doesn't it?
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+That's a good point. rebase takes the list of commits given by "git 
+rev-list --reverse --no-merges" and cherry-picks each on on top of the 
+previous one. In contrast replay cherry-picks each commit on top of its 
+rewritten parent so it does not flatten the topology.
 
-[snip]
+Thanks
 
-> diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
-> index 86b9181599..aba20eb770 100644
-> --- a/Documentation/git-cat-file.adoc
-> +++ b/Documentation/git-cat-file.adoc
-> @@ -169,6 +169,13 @@ info <object>::
->  	Print object info for object reference `<object>`. This corresponds to the
->  	output of `--batch-check`.
->
-> +remote-object-info <remote> <object>...::
-> +	Print object info for object references `<object>` at specified
-> +	`<remote>` without downloading objects from the remote.
-> +	Raise an error when the `object-info` capability is not supported by the remote.
-> +	Raise an error when no object references are provided.
-> +	This command may be combined with `--buffer`.
+Phillip
+>       A----X
+>        \    \
+>         Y----Z (tip)
+> 
+> A typical flattening rebase would rewrite X to X', Y to Y', while
+> dropping Z, and would leave us a flattened history, like
+> 
+>       A---X'---Y' (updated tip, the order of X' and Y' may be swapped)
+> 
+> I may be misreading the logic, but doesn't "replay --linearize"
+> instead produce
+> 
+>       A----X' (dangling)
+>        \
+>         Y' (tip -- Z is dropped and gets mapped)
+> 
+> and leave X' dangling (or Y'; the point is that only one of them
+> will survive), never incorporating it in the resulting history?
+> 
+>> +		if (commit->parents && commit->parents->next) {
+>> +			if (!opts->linearize)
+>> +				die(_("replaying merge commits is not supported yet!"));
+>> +			/*
+>> +			 * Drop the merge commit: do not pick it, leave
+>> +			 * `last_commit` unchanged, and fall through to the
+>> +			 * rest of the loop. As a result:
+>> +			 * - the merge commit is mapped to `last_commit` in
+>> +			 *   `replayed_commits`, this will become the parent for
+>> +			 *   the child commits.
+>> +			 * - refs previously pointing to the merge commit are
+>> +			 *   rewritten to point to the previous non-merge commit.
+>> +			 */
+>> +		} else {
+>> +			/*
+>> +			 * pick_regular_commit() looks up the parent of `commit` in
+>> +			 * `replayed_commits` to determine the ancestor to replay onto.
+>> +			 * The `default_base` parameter is used when no ancestor is found,
+>> +			 * which happens for the first commit in the revision range.
+>> +			 * When reverting, commits are replayed in reverse order, so the
+>> +			 * lookup never succeeds, and we need to pass `last_commit`.
+>> +			 */
+>> +			struct commit *base = onto;
+>> +			if (mode == REPLAY_MODE_REVERT)
+>> +				base = last_commit;
+>> +
+>> +			last_commit = pick_regular_commit(revs->repo, commit, base,
+>> +							  replayed_commits,
+>> +							  &merge_opt, &result,
+>> +							  mode, opts->empty);
+>> +		}
+>> +
+>>   		if (!last_commit)
+>>   			break;
+> 
+> Immediately after this hunk beyond the post-context are these lines.
+> 
+> 		/* Record commit -> last_commit mapping */
+> 		put_mapped_commit(replayed_commits, commit, last_commit);
+> 
+> Let's imagine X gets processed first. X (and other commits on its
+> branch) gets replayed, last_commit is set to X' (which is the
+> rewritten X).  replayed_commits mapping holds X->X' mapping.
+> 
+> Then let's imagine the history leading to Y is replayed next.
+> last_commit becomes Y', and Y->Y' mapping is stored in
+> replayed_commits.
+> 
+> Finally, we see Z.  We are going to _drop_ it.  last_commit is left
+> unchanged, pointing at Y'.  Then last_commit (i.e., Y') is used as
+> the merge commit Z maps to (i.e., correctly dropping Z).
+> 
+> Any descendants of Z, if any, will be grafted as descendants of Y'.
+> If X did not have any descendants other than Z in the rewritten part
+> of the history, then X' (and commits leading to it) would be lost,
+> no?
+> 
+> This "loss of the other branch" may be an inherent characteristic of
+> this feature (i.e., I do not think it is necessarily a bug, and it
+> may even be that the "bug" is in the way I am reading the patch),
+> but then I wonder if the user may want to have control over which
+> side branch should survive, perhaps?  It would probably need to be
+> documented, and a test or two to cast this behaviour in stone.
+> 
+>> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+>> index 3353bc4a4d..34c038eab9 100755
+>> --- a/t/t3650-replay-basics.sh
+>> +++ b/t/t3650-replay-basics.sh
+>> @@ -52,8 +52,12 @@ test_expect_success 'setup' '
+> 
+> The pre-context here has
+> 
+> 	git switch --detach topic4 &&
+> 	test_commit N &&
+> 	test_commit O &&
+> 	git switch -c topic-with-merge topic4 &&
+> 
+>>   	test_merge P O --no-ff &&
+>>   	git switch main &&
+> 
+> The above does prepare topic-with-merge branch, but ...
+> 
+>> +test_expect_success 'replay to rebase merge commit with --linearize' '
+>> +	git replay --ref-action=print --linearize \
+>> +		--onto main I..topic-with-merge >result &&
+> 
+> ... this does not really exersize linearizing replay in a typical
+> mergy history.  P merges O with --no-ff because otherwise there
+> won't be a merge, since O is a descendant of the commit "test_merge
+> P O" runs on (i.e., topic4 == topic-with-merge).
+> 
+>      topic4 --- N --- O
+>            \           \
+>             .-----------P
+> 
+> So, as long as O is replayed later than the parent of N (which is
+> true), O' will be the surviving tip (corresponds to Y' that the
+> dropped Z was mapped to in the earlier example), and nothing gets
+> orphaned, I think.
+> 
+> Perhaps a test to try a real merge may look something like this.
+> 
+> diff --git c/t/t3650-replay-basics.sh w/t/t3650-replay-basics.sh
+> index 34c038eab9..bb737f729a 100755
+> --- c/t/t3650-replay-basics.sh
+> +++ w/t/t3650-replay-basics.sh
+> @@ -647,4 +647,37 @@ test_expect_success 'replay with --linearize to rebase multiple divergent branch
+>   	test_cmp expect actual
+>   '
+>   
+> +test_expect_success 'replay with --linearize of a divergent merge drops one branch' '
+> +	git switch -c topic-divergent-base main &&
+> +	test_commit base &&
+> +	# Fork 1: base -> X
+> +	git switch -c topic-divergent-x &&
+> +	test_commit X &&
+> +	# Fork 2: base -> Y
+> +	git switch topic-divergent-base &&
+> +	git switch -c topic-divergent-y &&
+> +	test_commit Y &&
+> +	# Merge them at Z
+> +	git switch topic-divergent-x &&
+> +	test_merge Z topic-divergent-y --no-ff &&
 > +
->  flush::
->  	Used with `--buffer` to execute all preceding commands that were issued
->  	since the beginning or since the last flush was issued. When `--buffer`
-> @@ -312,7 +319,8 @@ newline. The available atoms are:
->  	The full hex representation of the object name.
->
->  `objecttype`::
-> -	The type of the object (the same as `cat-file -t` reports).
-> +	The type of the object (the same as `cat-file -t` reports). See
-> +	`CAVEATS` below. Not supported by `remote-object-info`.
->
+> +	# History is now:
+> +	#
+> +	#       X - Z (topic-divergent-x)
+> +	#      /   /
+> +	#  base - Y
+> +	#
+> +
+> +	git replay --ref-action=print --linearize \
+> +		--onto main topic-divergent-base..topic-divergent-x >result &&
+> +	test_line_count = 1 result &&
+> +	tip=$(cut -f 3 -d " " result) &&
+> +	# Get the commits replayed onto main
+> +	git log --format=%s main..$tip >actual &&
+> +	# We expect exactly one commit to be replayed (either X or Y)
+> +	# because the other one is left dangling due to the merge being dropped.
+> +	test_line_count = 1 actual &&
+> +	test_grep "^[XY]$" actual
+> +'
+> +
+>   test_done
+> 
 
-Do we have to keep adding 'Not supported by `remote-object-info`' to
-each type? Can't we do the inverse and only add 'Supported by
-`remote-object-info`' to `objectsize`. This avoid having to add this
-line to every new type.
-
->  If no format is specified, the default format is `%(objectname)
-> -%(objecttype) %(objectsize)`.
-> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands which use
-> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not supported yet.
-
-Nit: I would drop the 'for now' here, since we don't know when the changes
-for 'objecttype' will land.
-
-[snip]
-
->  enum batch_mode {
->  	BATCH_MODE_CONTENTS,
-> @@ -633,6 +649,81 @@ static void batch_one_object(const char *obj_name,
->  	object_context_release(&ctx);
->  }
->
-> +static int get_remote_info(struct batch_options *opt,
-> +			   int argc,
-> +			   const char **argv,
-> +			   struct object_info **remote_object_info,
-> +			   struct oid_array *object_info_oids)
-> +{
-> +	int retval = 0;
-> +	struct remote *remote = NULL;
-> +	struct object_id oid;
-> +	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
-> +	struct transport *gtransport;
-> +
-> +	/*
-> +	 * Change the format to "%(objectname) %(objectsize)" when
-
-Nit: perhaps prepend a "TODO"
-
-> +	 * remote-object-info command is used. Once we start supporting objecttype
-> +	 * the default format should change to DEFAULT_FORMAT.
-> +	 */
-> +	if (!opt->format)
-> +		opt->format = "%(objectname) %(objectsize)";
-> +
-> +	remote = remote_get(argv[0]);
-> +	if (!remote)
-> +		die(_("must supply valid remote when using remote-object-info"));
-> +
-> +	oid_array_clear(object_info_oids);
-> +	for (size_t i = 1; i < argc; i++) {
-> +		if (get_oid_hex(argv[i], &oid)) {
-> +			size_t len = strlen(argv[i]);
-> +
-> +			if (len < the_hash_algo->hexsz && len >= 4) {
-> +				size_t j;
-> +				for (j = 0; j < len; j++)
-> +					if (!isxdigit(argv[i][j]))
-> +						break;
-> +				if (j == len)
-> +					die(_("remote-object-info does not support "
-> +					      "short oids, %d characters required"),
-> +					    (int)the_hash_algo->hexsz);
-> +			}
-> +			die(_("not a valid object name '%s'"), argv[i]);
-> +		}
-> +		oid_array_append(object_info_oids, &oid);
-> +	}
-> +
-> +	if (!object_info_oids->nr)
-> +		die(_("remote-object-info requires objects"));
-> +
-> +	gtransport = transport_get(remote, NULL);
-> +
-> +	if (!gtransport->smart_options) {
-> +		retval = -1;
-> +		goto cleanup;
-> +	}
-> +
-> +	CALLOC_ARRAY(*remote_object_info, object_info_oids->nr);
-> +	gtransport->smart_options->object_info = 1;
-> +	gtransport->smart_options->object_info_oids = object_info_oids;
-> +
-> +	/* 'objectsize' is the only option currently supported */
-> +	if (!strstr(opt->format, "%(objectsize)"))
-> +		die(_("%s is currently not supported with remote-object-info"), opt->format);
-> +
-
-Aren't we setting the opt->format ourselves in this function? Why do we
-need to check it?
-
-> +	string_list_append(&object_info_options, "size");
-> +
-> +	if (object_info_options.nr > 0) {
-> +		gtransport->smart_options->object_info_options = &object_info_options;
-> +		gtransport->smart_options->object_info_data = *remote_object_info;
-> +		retval = transport_fetch_refs(gtransport, NULL);
-> +	}
-> +cleanup:
-> +	string_list_clear(&object_info_options, 0);
-> +	transport_disconnect(gtransport);
-> +	return retval;
-> +}
-> +
->  struct object_cb_data {
->  	struct batch_options *opt;
->  	struct expand_data *expand;
-> @@ -714,6 +805,57 @@ static void parse_cmd_mailmap(struct batch_options *opt UNUSED,
->  		load_mailmap();
->  }
->
-> +static void parse_cmd_remote_object_info(struct batch_options *opt,
-> +					 const char *line, struct strbuf *output,
-> +					 struct expand_data *data)
-> +{
-> +	int count;
-> +	const char **argv;
-> +	char *line_to_split;
-> +	struct object_info *remote_object_info = NULL;
-> +	struct oid_array object_info_oids = OID_ARRAY_INIT;
-> +
-> +	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
-> +		die(_("remote-object-info command too long"));
-> +
-> +	line_to_split = xstrdup(line);
-> +	count = split_cmdline(line_to_split, &argv);
-> +	if (count < 0)
-> +		die(_("split remote-object-info command"));
-
-We should  be using `split_cmdline_strerror()` here
-
-> +	if (count - 1 > MAX_ALLOWED_OBJ_LIMIT)
-> +		die(_("remote-object-info supports at most %d objects"),
-> +		    MAX_ALLOWED_OBJ_LIMIT);
-> +
-> +	if (get_remote_info(opt, count, argv, &remote_object_info,
-> +			    &object_info_oids))
-> +		goto cleanup;
-> +
-> +	data->skip_object_info = 1;
-> +	for (size_t i = 0; i < object_info_oids.nr; i++) {
-> +		data->oid = object_info_oids.oid[i];
-> +		if (remote_object_info[i].sizep) {
-> +			/*
-> +			 * When reaching here, it means remote-object-info can retrieve
-> +			 * information from server without downloading them.
-> +			 */
-> +			data->size = *remote_object_info[i].sizep;
-> +			opt->batch_mode = BATCH_MODE_INFO;
-> +			batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
-> +		} else {
-> +			report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "missing");
-> +		}
-> +	}
-> +	data->skip_object_info = 0;
-> +
-> +cleanup:
-> +	for (size_t i = 0; i < object_info_oids.nr; i++)
-> +		free_object_info_contents(&remote_object_info[i]);
-> +	free(line_to_split);
-> +	free(argv);
-> +	free(remote_object_info);
-> +	oid_array_clear(&object_info_oids);
-> +}
-> +
-
-[snip]
-
-> diff --git a/t/meson.build b/t/meson.build
-> index 3219264fe7..54d21111a3 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -170,6 +170,7 @@ integration_tests = [
->    't1014-read-tree-confusing.sh',
->    't1015-read-index-unmerged.sh',
->    't1016-compatObjectFormat.sh',
-> +  't1017-cat-file-remote-object-info.sh',
->    't1020-subdirectory.sh',
->    't1022-read-tree-partial-clone.sh',
->    't1050-large.sh',
-
-[snip]
-
---0000000000001685a706553c03c1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 4b5958953647b7d8_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vL3pOQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meC9xREFDWTBubWFtczRWclFFQzhnWHBsSlorYW1McQpkNHpJUFBsd3Av
-R1VmdjUzQW93NWU5QlNZSG5GZUJZZ3h4UXUwVlQyNmU5NC9sSHd6MXhseGNNSTBhb0RPeGFtClIw
-SUYxWnNJSU1uZlRVblVGbGpqZmFEWTZzVzZMRW9YQ01HLzdPbzg3UERkRkRtbXhWaHcrcFBvNjBs
-NVFhNFIKd2VyVFBUMG1kdGV0akRodzRROWplNFRDMWJaV0NDbjltY3BzeW9jRTE0VklqYTllSHdS
-TkZWTEw0RWEzMkdJWQp2ZlJTN0doL280bE1Gb1N1S243RDhvUm5lYXlGaXpxSEZmY3hNRXNtMURv
-TmFKSkMybTJrZW92ZUFoUS9WYVlDCmpJa1BRUDNwb2VIWDRweFptZ3lKWWNQVE5VN1Ywc0pKS3Jj
-NTRYb3QxODdKZk90MmtFS2REWEgxd09XVUdmWW8KNWsrN0p2LytTOGlpMUwzakR6M0QxcjM3UlRt
-MFlSUlljQ0RvRTdXWlFNd0M4eVlxbXVPTUErUDZYZW44QjZiVwpvcmlSdGE5N0QwS2Z6QXpVUHlH
-ZWtqMmJwVSs0TEZXaE02RkF3OUZjU1ZOS3RQVXl1ZldNenVJTXAwSUhZWEhXCmtTUHNzTDF5LzZY
-TlFPOVVNK1NMQjVPSlZBbzF3bTloWXJ5N29RYz0KPTk3R1UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001685a706553c03c1--
