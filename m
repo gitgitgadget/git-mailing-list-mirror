@@ -1,69 +1,69 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D40324B20
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 17:29:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0EB3382C8
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 17:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782581353; cv=none; b=c5pcDND+BuLGBRU9EtqGoc3LVD0DWxwlDBO+UEJe4FkEWo22Y67PvL5zAJIj7x+D/2ETRRjfDBhhiDzYM1Ka5rYiWPTrMnmO3jSwIQUkKq5M7lY+KQDfEkdFrT4aaxkIqMQuG3sWfWrvj6qEOdetVRSIGm47ownjX7C+/YrJLv4=
+	t=1782581355; cv=none; b=GLTme0vzhQEadzUkV8my/1VIqkCYBfOvB60PRt/MQ7Ch5zZPtrEV6Y3JSLnkHF5mGvhy2BHlu+925lwI3H6dxWtBe/q4kkO1S3d+1RVtqrqyGFlEFIed0foKu6NZi4H3t0saiyL/2UrdfNUcdp7srJ49F4VlzrXXLiSvcHvw5BU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782581353; c=relaxed/simple;
-	bh=nAbTmx7S9iauGan1pON3XDW4bbUII7NrgOZ8wSTtB2w=;
+	s=arc-20240116; t=1782581355; c=relaxed/simple;
+	bh=1tkkmQhf4Df8/nr5qofAnCcm+ZK7VMVk5BYU3rlzh4g=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tPVu2Xem3lZ6xaQZJuNlbx82nu6NC/XZUun00eANLVyOSIsrWwu8iNMOwwU+yIcHIaB8HLnN7tOBorIqJO9jdlxyMyCjhrLT7xl6zV+yU4FcP0KwRHbEasEMmceFB/6EX8IKWhkBfUYKP64U82QWr565QRzG09UeJoxqwzoh/Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G159zPOa; arc=none smtp.client-ip=209.85.160.170
+	 MIME-Version:To:Cc; b=Wk8N6HmL88iP8F1D9KD0zWq2SWW7zzLRX3mVrn+bNhyQdtuVrdifKUoVjofIhPA4OXYsmlkuABVmwnGY1whUS19OUVZNIepptD+H3lgbEmf9DKKbhG0JBWrH8i0KWH/8r494mThNBzxUE6Kpf6pLD+Y2ZN/QUdeTwIYGrXz5ujQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MiswFQRb; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G159zPOa"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-51a8f78b1d2so4443921cf.0
-        for <git@vger.kernel.org>; Sat, 27 Jun 2026 10:29:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MiswFQRb"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-920fbdffa31so166732185a.3
+        for <git@vger.kernel.org>; Sat, 27 Jun 2026 10:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782581351; x=1783186151; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782581353; x=1783186153; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J1/uc69ZBPjvi761gR5LtaXgClbo5975NI6D2zpHNok=;
-        b=G159zPOamiEAp02hC2xJWoJvgvms+m0j5LehMmEAQIvaVPMp3rmeFGzlgXOFlCAxK7
-         4jSZMWgNwlMWgyRM2aY8S7LQVfUBQHmWWVhVuYZ+7oplKUc68zihIk8IIF4cBzIfMgSr
-         I9/r0HjenwB1MvgDh3uLGfRUJIfHbHR3GEwdleYDkY4wsceaNFN/pArjMPJymj+PKO9Y
-         Kf9Vs2zwUrZPtEqaaqLHOWoUqYfZoYvrjjK0+S+OPwtGNsszUAYf99Dn1IN7cin8sjmd
-         tNhviFBX+uM9iHdnpbNLpfi/H3heWx9jNBJl1E5hj0lKTVaFXZ/BrtLdzKLtYn6IilXC
-         1hqA==
+        bh=+l66i6ZF5ssNmSsUXgJsJ+50R2EdXFeCXt0HSfJ7Dbw=;
+        b=MiswFQRbUDzxgvN8D3qgDT2iO+lDDUfT/NoGeakVkp2lOZZpo/+IPA1z/CzrcWBpbn
+         zwvokY2kc6xEaPRBa+SqEI/42IwPA+biT0BGIafWn9WGGXamZ3nL863HFDKOsgMtf1XZ
+         9OHp9zyR2kzC3G8v7Un+yb3UDWGtGlflykti8iay0xrQ0VdMPTpUCY1H58ZqiTpFJ7+p
+         FYm1FoVfUCtpmJpEHf7Ob1n7Qg6TGWlblEeNW7zJSRafM3SEjuY8Dto25xO/ZhRpc0ay
+         4a+ENNt7ReEwR26fmivdVGarPjTT/wPNQ7uA6H9xquO/PBhZj+AI5NkjMTl7xIq+C07h
+         c1SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782581351; x=1783186151;
+        d=1e100.net; s=20251104; t=1782581353; x=1783186153;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=J1/uc69ZBPjvi761gR5LtaXgClbo5975NI6D2zpHNok=;
-        b=oMLyTFezwPnlgJup8OXgMfVwcYOA+mP3aUKo4QE/cV872nayiIPQuUsHqJSMSQWoYI
-         KWwUpQQYdQHQKKKzIUA4ghe433Ubj2T2GFFXoFZTpdcrAQ5r9uPRBEOFUL7vhL+NsS8U
-         9I4evdP9Sm6AwGt4LMKSrkhLG4+IpBF3Xap8MRb8+VBaH/2t6DDiaUDpX+5gAsQGwAun
-         Sx8tPmL7UUJ6xWmc2ZiDSwENlxtd0dNJuHG+GEOkZxYNOXmIQyh80evOUB8WZP3orxkv
-         o3pc3uKleuZmVEbWTqKVGp7dpRWfZXU7HIyYmmIK0DCVs/r5AUViTCBDtR3w8EVTAkjF
-         Q6BQ==
-X-Gm-Message-State: AOJu0YzhFrf8KVu3LxO4Odx+CtrSyKV4/VxzYSvmiVLRU3W/jjO5hnH6
-	mPsh8CE+FquO/h7ABCPSa0wXE9E8j0eps/nApoxg/XGeBenkuqNY/uzRfNAHWQ==
-X-Gm-Gg: AfdE7cl0BAOztHJFNRgfLJLOYkWypuOhOHxLv5SFF0lg7Uqb7MSzbp58/dpDcxUF9PO
-	0cZygm6pTnjtXlCVGFYReAPI8H3BeQRE3/euPYN2iey6Tqj6K+qrEOrZKm9ABTHmj8IigAN3Nsi
-	iI1xjIv0fEAuUeSTx3mR1sKZHDiPESxfi9R82j/ofZfMbWwRy6iRVwc7spSn1ZqEz2smbQKwHRG
-	cQp3vt9ayyea9XgL+Wl5Y+JTQ5Lk12nO+QEGrMppdXcY9PvglfX5yBVWiuHccNQdMz67OmYnUts
-	qbZtIIcYYs0VeIwRkDlfsG1dLK+ODPk91G5Ol73wRVCc1TfFLT1zU7Z5WHlR/WDuBl8T5BXOQnC
-	mvS6Gkj9cshiAWIhUj2B6PK6v6oDOP4x1pOeXBzJmgJhzbqzNXfIF5AulZZVzTSAeuQg88x+MU/
-	fuYYVNNNsegSuJK4w=
-X-Received: by 2002:ac8:6f1b:0:b0:517:76ad:8161 with SMTP id d75a77b69052e-51a8b02bce8mr75502641cf.24.1782581350840;
-        Sat, 27 Jun 2026 10:29:10 -0700 (PDT)
+        bh=+l66i6ZF5ssNmSsUXgJsJ+50R2EdXFeCXt0HSfJ7Dbw=;
+        b=OU3nu1YagNvHplqR+4tOs0WQIuNe7kRCluhnj3F9AgozT2NU+0x6+C1TPz27YWA8rH
+         WHrDbOXVQ5C0mBuhSzgnj6ll4jW4fkr/NisPQVQ7djDkuUF9TD1izVfLDi+VOVbe3ngv
+         DXekIprgkxJ94bclfUrCE5+KnuTPwZoj2k/pvkC5S8XB0luN+OkhWiuc1gThqrH9niin
+         5r7zEQy2UGl573TsO60Uejk/EoYxLKl+XYsuVC6++rmva2MkxzaUS6+BpMDCLsXAfmBe
+         t6OgzwH4cFS5QnzE75GpZM9+ht8rHdnteuXREVuVPSmNJd00NOfx9ya63nw5vAXGtWav
+         AKsA==
+X-Gm-Message-State: AOJu0YwYI7t+E+vOn0cBYCp8XDJpe3xcwBKfEjFqASBYO/avW+x5qv4a
+	0uVQaMCM0ND1lGVGOEA0A+Ue7nbKQv92DXy6OqwtHB2EbFjSA51BuRBGk227WQ==
+X-Gm-Gg: AfdE7ckJOrWubUKB6/IF0A58LyV27CpzXq4dve3a0Lb1mhFrkx2xQ7kjHLRwKVfAngX
+	iQcJX32igk6tQkUzfWqFInN+fZ0EU6gkUgj9q4kI0Y0dlsPui1LCEan+XWXzpVICrEYu4yR6zQ4
+	EVONnon2CHEY26x1fg7h4E+6fWRPuM8OHfLjMmaFWQlsNHZ8fYw4DWWXGDob0RD2ZSMeCyK7RJy
+	DryDRpyCp2wNdd1Clw5cImcf9cP7zPi1IaOC0OS2e555vYNvrGHmQOet5JwL3VHWkw5znWI8A5D
+	18J3ghSjmGu5GGfSRPTZsGcMxHfUZe6rZiaejnpGcSq4QS/ZsxZbHYoEVVh8voul5fsP4Oakwvq
+	laKLieplxu8YztWB1oL/2gNMaocQXVboHr71ywviVnFhKyhUk+jVMs0AunjNnTYoeUGclM0B4U/
+	u9GqZQWEDM7LBe6Gs=
+X-Received: by 2002:a05:620a:46a0:b0:914:7e9a:2716 with SMTP id af79cd13be357-9293c506503mr1787929885a.38.1782581352626;
+        Sat, 27 Jun 2026 10:29:12 -0700 (PDT)
 Received: from [127.0.0.1] ([40.76.191.160])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df7f015805sm251762606d6.1.2026.06.27.10.29.10
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92dc13f0279sm172377485a.3.2026.06.27.10.29.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Jun 2026 10:29:10 -0700 (PDT)
-Message-Id: <b82a997359b7e1acd16151439b1dabad4cfb20ea.1782581342.git.gitgitgadget@gmail.com>
+        Sat, 27 Jun 2026 10:29:12 -0700 (PDT)
+Message-Id: <3d0091b549114f6bf32c9fb7626da9fc2583e88b.1782581342.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2152.v2.git.1782581342.gitgitgadget@gmail.com>
 References: <pull.2152.git.1781806593.gitgitgadget@gmail.com>
 	<pull.2152.v2.git.1782581342.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 27 Jun 2026 17:28:58 +0000
-Subject: [PATCH v2 4/7] diff: extract a line-range diff helper for reuse
+Date: Sat, 27 Jun 2026 17:28:59 +0000
+Subject: [PATCH v2 5/7] line-log: support diff stat formats with -L
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,163 +80,282 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-builtin_diff() open-codes the line-range filter setup and teardown
-around its xdi_diff_outf() call: zero the struct, point it at the
-output callback, inflate ctxlen to the largest range span so each range
-yields a single xdiff hunk, run the diff, flush the trailing range
-hunk, and release the buffer.  The upcoming -L stat and check formats
-need the same sequence.
+Reuse the line_range_filter in builtin_diffstat() so the stat formats
+count only the lines within the tracked range.  When a filepair carries
+line_ranges, the filter wraps diffstat_consume() as its output callback,
+forwarding only the lines inside the range for counting.
+flush_range_hunk() replays buffered content through diffstat_consume(),
+which ignores synthetic @@ headers since it only counts '+' and '-'
+lines.
 
-Extract line_range_filter_init() for the setup and a
-line_range_filter_diff() helper that prepares the xdiff config the
-filter needs, runs an initialized filter through xdi_diff_outf(),
-flushes the final range hunk, and releases it, returning the latched
-error.  The helper inflates ctxlen to the largest range span so each
-range yields a single xdiff hunk, and clears XDL_EMIT_NO_HUNK_HDR so
-the hunk headers the filter seeds its position from are always emitted.
-Folding both into the helper keeps these invariants, which the filter's
-position tracking relies on, in a single place for every consumer.
-builtin_diff() now does init + line_range_filter_diff(); the next two
-patches reuse them in builtin_diffstat() and builtin_checkdiff()
-instead of repeating the boilerplate.
+Expand the output format allowlist in setup_revisions() to accept
+--stat, --numstat, and --shortstat with -L.
 
-No behavior change: builtin_diff() leaves XDL_EMIT_NO_HUNK_HDR unset,
-so clearing it is a no-op until the suppressing consumers arrive.
+Leave --dirstat out of the allowlist so it is rejected like any other
+unsupported format.  Its default mode counts each file's whole-file
+byte damage via diffcore_count_changes(), outside the line-based
+pipeline that the -L filter scopes, so bare --dirstat cannot honor the
+tracked range.  The --dirstat=lines mode could: it aggregates the same
+per-file line counts as --numstat, which -L already scopes.  But
+accepting only that sub-mode while bare --dirstat keeps erroring is a
+confusing split, so the whole format is deferred to a follow-up;
+--numstat already reports the exact per-file counts within the tracked
+range.
+
+Also drop "yet" from the generic -L rejection message ("does not
+yet support the requested diff format").  Some rejected formats do
+not fit a line range at all, so "yet" wrongly implied they are all
+just awaiting support.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- diff.c | 100 +++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 61 insertions(+), 39 deletions(-)
+ Documentation/line-range-options.adoc |  12 ++-
+ diff.c                                |  13 ++-
+ revision.c                            |   6 +-
+ t/t4211-line-log.sh                   | 150 ++++++++++++++++++++++----
+ 4 files changed, 155 insertions(+), 26 deletions(-)
 
+diff --git a/Documentation/line-range-options.adoc b/Documentation/line-range-options.adoc
+index 72f639b5e7..a111a492b4 100644
+--- a/Documentation/line-range-options.adoc
++++ b/Documentation/line-range-options.adoc
+@@ -9,10 +9,14 @@
+ 	_<start>_ and _<end>_ (or _<funcname>_) must exist in the starting revision.
+ 	You can specify this option more than once. Implies `--patch`.
+ 	Patch output can be suppressed using `--no-patch`.
+-	Non-patch diff formats `--raw`, `--name-only`, `--name-status`,
+-	and `--summary` are supported.  Diff stat formats
+-	(`--stat`, `--numstat`, `--shortstat`, `--dirstat`) are not
+-	currently implemented.
++	The following non-patch diff formats are supported: `--raw`,
++	`--name-only`, `--name-status`, `--summary`,
++	`--stat`, `--numstat`, and `--shortstat`.
++	The stat formats count only lines within the tracked range.
++	`--dirstat` is not supported
++	with `-L`: it summarizes change as each directory's share of
++	the total churn, not as counts for the tracked lines.  Use
++	`--numstat` for exact per-file counts within the range.
+ +
+ Patch formatting options such as `--word-diff`, `--color-moved`,
+ `--no-prefix`, and whitespace options (`-w`, `-b`) are supported,
 diff --git a/diff.c b/diff.c
-index 9751bb6798..6233a96bf0 100644
+index 6233a96bf0..026fafeb90 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -2580,6 +2580,18 @@ static int quick_consume(void *priv, char *line UNUSED, unsigned long len UNUSED
- 	return 1;
- }
- 
-+static void line_range_filter_init(struct line_range_filter *filter,
-+				   const struct range_set *ranges,
-+				   xdiff_emit_line_fn line_fn,
-+				   void *cb_data)
-+{
-+	memset(filter, 0, sizeof(*filter));
-+	filter->orig_line_fn = line_fn;
-+	filter->orig_cb_data = cb_data;
-+	filter->ranges = ranges;
-+	strbuf_init(&filter->hunk.lines, 0);
-+}
+@@ -4289,7 +4289,18 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 		xecfg.ctxlen = o->context;
+ 		xecfg.interhunkctxlen = o->interhunkcontext;
+ 		xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
+-		if (xdi_diff_outf(&mf1, &mf2, NULL,
 +
- /*
-  * Begin a range hunk at the first in-range line.  Its position fixes the
-  * hunk's begins, taken from the two image cursors before they advance:
-@@ -2744,6 +2756,50 @@ static int line_range_line_fn(void *priv, char *line, unsigned long len)
- 	return filter->ret;
- }
- 
-+/*
-+ * Run an xdiff pass through an initialized line-range filter, flush the
-+ * final range hunk, and release the filter.  Inflates ctxlen to the largest
-+ * range span first, so that every change within a single range lands in one
-+ * xdiff hunk and the inter-change context is emitted; the filter then clips
-+ * back to range boundaries.  The optimal ctxlen depends on where changes fall
-+ * within the range, which is only known after xdiff runs, so the max span is
-+ * the upper bound that guarantees correctness in a single pass.  Every
-+ * consumer (patch, diffstat, check) relies on one xdiff hunk per range, so
-+ * this lives here rather than at each call site.  Also clears
-+ * XDL_EMIT_NO_HUNK_HDR: the filter seeds its per-image position from the hunk
-+ * headers, so a consumer that otherwise suppresses them (diffstat) still gets
-+ * them here.  Returns non-zero if xdiff or any forwarded callback failed.
-+ */
-+static int line_range_filter_diff(struct line_range_filter *filter,
-+				  mmfile_t *mf1, mmfile_t *mf2,
-+				  xpparam_t *xpp, xdemitconf_t *xecfg)
-+{
-+	const struct range_set *ranges = filter->ranges;
-+	long max_span = 0;
-+	unsigned int i;
-+	int ret;
-+
-+	for (i = 0; i < ranges->nr; i++) {
-+		long span = ranges->ranges[i].end - ranges->ranges[i].start;
-+		if (span > max_span)
-+			max_span = span;
-+	}
-+	if (max_span > xecfg->ctxlen)
-+		xecfg->ctxlen = max_span;
-+
-+	/* the filter seeds its per-image position from hunk headers */
-+	xecfg->flags &= ~XDL_EMIT_NO_HUNK_HDR;
-+
-+	ret = xdi_diff_outf(mf1, mf2, line_range_hunk_fn,
-+			    line_range_line_fn, filter, xpp, xecfg);
-+	if (!ret) {
-+		flush_range_hunk(filter);
-+		ret = filter->ret;
-+	}
-+	strbuf_release(&filter->hunk.lines);
-+	return ret;
-+}
-+
- static void pprint_rename(struct strbuf *name, const char *a, const char *b)
- {
- 	const char *old_name = a;
-@@ -4108,49 +4164,15 @@ static void builtin_diff(const char *name_a,
- 			xdi_diff_outf(&mf1, &mf2, NULL, quick_consume,
- 				      &ecbdata, &xpp, &xecfg);
- 		} else if (line_ranges) {
--			struct line_range_filter lr_state;
--			unsigned int i;
--			long max_span = 0;
++		if (p->line_ranges) {
 +			struct line_range_filter lr_filter;
- 
--			memset(&lr_state, 0, sizeof(lr_state));
--			lr_state.orig_line_fn = fn_out_consume;
--			lr_state.orig_cb_data = &ecbdata;
--			lr_state.ranges = line_ranges;
--			strbuf_init(&lr_state.hunk.lines, 0);
--
--			/*
--			 * Inflate ctxlen so that all changes within
--			 * any single range are merged into one xdiff
--			 * hunk and the inter-change context is emitted.
--			 * The callback clips back to range boundaries.
--			 *
--			 * The optimal ctxlen depends on where changes
--			 * fall within the range, which is only known
--			 * after xdiff runs; the max range span is the
--			 * upper bound that guarantees correctness in a
--			 * single pass.
--			 */
--			for (i = 0; i < line_ranges->nr; i++) {
--				long span = line_ranges->ranges[i].end -
--					    line_ranges->ranges[i].start;
--				if (span > max_span)
--					max_span = span;
--			}
--			if (max_span > xecfg.ctxlen)
--				xecfg.ctxlen = max_span;
--
--			if (xdi_diff_outf(&mf1, &mf2,
--					  line_range_hunk_fn,
--					  line_range_line_fn,
--					  &lr_state, &xpp, &xecfg))
--				die("unable to generate diff for %s",
--				    one->path);
-+			line_range_filter_init(&lr_filter, line_ranges,
-+					       fn_out_consume, &ecbdata);
- 
--			flush_range_hunk(&lr_state);
--			if (lr_state.ret)
++
++			line_range_filter_init(&lr_filter, p->line_ranges,
++					       diffstat_consume, diffstat);
++
 +			if (line_range_filter_diff(&lr_filter, &mf1, &mf2,
 +						   &xpp, &xecfg))
- 				die("unable to generate diff for %s",
- 				    one->path);
--			strbuf_release(&lr_state.hunk.lines);
- 		} else if (xdi_diff_outf(&mf1, &mf2, NULL, fn_out_consume,
- 					 &ecbdata, &xpp, &xecfg))
- 			die("unable to generate diff for %s", one->path);
++				die("unable to generate diffstat for %s",
++				    one->path);
++		} else if (xdi_diff_outf(&mf1, &mf2, NULL,
+ 				  diffstat_consume, diffstat, &xpp, &xecfg))
+ 			die("unable to generate diffstat for %s", one->path);
+ 
+diff --git a/revision.c b/revision.c
+index 6a8101e8b7..2c76e15778 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3193,8 +3193,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	     (revs->diffopt.output_format &
+ 	      ~(DIFF_FORMAT_PATCH | DIFF_FORMAT_NO_OUTPUT |
+ 		DIFF_FORMAT_RAW | DIFF_FORMAT_NAME |
+-		DIFF_FORMAT_NAME_STATUS | DIFF_FORMAT_SUMMARY))))
+-		die(_("-L does not yet support the requested diff format"));
++		DIFF_FORMAT_NAME_STATUS | DIFF_FORMAT_SUMMARY |
++		DIFF_FORMAT_NUMSTAT | DIFF_FORMAT_DIFFSTAT |
++		DIFF_FORMAT_SHORTSTAT))))
++		die(_("-L does not support the requested diff format"));
+ 
+ 	if (revs->expand_tabs_in_log < 0)
+ 		revs->expand_tabs_in_log = revs->expand_tabs_in_log_default;
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index e9691066de..b9ca336dbc 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -176,24 +176,15 @@ test_expect_success '--name-status shows status and path' '
+ 	test_grep ! "^@@" actual
+ '
+ 
+-test_expect_success '--stat is not yet supported with -L' '
+-	test_must_fail git log -L1,24:b.c --stat 2>err &&
+-	test_grep "does not yet support" err
+-'
+-
+-test_expect_success '--numstat is not yet supported with -L' '
+-	test_must_fail git log -L1,24:b.c --numstat 2>err &&
+-	test_grep "does not yet support" err
+-'
+-
+-test_expect_success '--shortstat is not yet supported with -L' '
+-	test_must_fail git log -L1,24:b.c --shortstat 2>err &&
+-	test_grep "does not yet support" err
+-'
+-
+-test_expect_success '--dirstat is not yet supported with -L' '
++test_expect_success '--dirstat is not supported with -L' '
++	# --dirstat is not supported with -L: its default mode measures
++	# whole-file change, not the tracked lines, and the
++	# --dirstat=lines variant is deferred too, so both forms are
++	# rejected like any other unsupported format.
+ 	test_must_fail git log -L1,24:b.c --dirstat 2>err &&
+-	test_grep "does not yet support" err
++	test_grep "does not support" err &&
++	test_must_fail git log -L1,24:b.c --dirstat=lines 2>err &&
++	test_grep "does not support" err
+ '
+ 
+ test_expect_success 'setup for checking fancy rename following' '
+@@ -887,9 +878,9 @@ test_expect_success '-L with -S suppresses non-matching commits' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success '--full-diff is not yet supported with -L' '
++test_expect_success '--full-diff is not supported with -L' '
+ 	test_must_fail git log -L1,24:b.c --full-diff 2>err &&
+-	test_grep "does not yet support" err
++	test_grep "does not support" err
+ '
+ 
+ test_expect_success '-L --oneline has no extra blank line before diff' '
+@@ -900,6 +891,127 @@ test_expect_success '-L --oneline has no extra blank line before diff' '
+ 	test_grep "^diff --git" line2
+ '
+ 
++test_expect_success 'setup for stat range-scoping tests' '
++	git checkout --orphan stat-scoping &&
++	git reset --hard &&
++	cat >file.c <<-\EOF &&
++	int func1()
++	{
++	    return F1;
++	}
++
++	int func2()
++	{
++	    return F2;
++	}
++	EOF
++	git add file.c &&
++	test_tick &&
++	git commit -m "Add func1() and func2()" &&
++
++	# Modify both functions in a single commit so that
++	# whole-file stats differ from the counts for the tracked range.
++	sed -e "s/F1/F1 + 1/" -e "s/F2/F2 + 2/" file.c >tmp &&
++	mv tmp file.c &&
++	git commit -a -m "Modify both functions"
++'
++
++test_expect_success '--numstat counts only lines in tracked range' '
++	# "Modify both functions" changes one line in func1 and one in
++	# func2.  Whole-file numstat would show 2 added, 2 deleted.
++	# numstat for func2 within the tracked range should show only 1 and 1.
++	git log -L:func2:file.c --numstat --format=%s -1 >actual &&
++	test_grep "Modify both functions" actual &&
++	test_grep "^1	1	file.c$" actual &&
++	test_grep ! "^diff --git" actual
++'
++
++test_expect_success '--numstat counts only additions for root commit' '
++	# Root commit creates both func1 (4 lines) and func2 (4 lines).
++	# Whole-file numstat would show 9 lines added.  numstat for func2
++	# within the tracked range should show only 4.
++	git log -L:func2:file.c --numstat --format=%s >actual &&
++	test_grep "Add func1() and func2()" actual &&
++	test_grep "^4	0	file.c$" actual &&
++	test_grep ! "^diff --git" actual
++'
++
++test_expect_success '--stat counts only lines in tracked range' '
++	git log -L:func2:file.c --stat --format=%s -1 >actual &&
++	test_grep "Modify both functions" actual &&
++	test_grep "file.c |" actual &&
++	test_grep "1 insertion" actual &&
++	test_grep "1 deletion" actual &&
++	test_grep ! "^diff --git" actual
++'
++
++test_expect_success '--shortstat counts only lines in tracked range' '
++	# --shortstat prints only the summary line: no per-file "file.c |"
++	# line.  Counts cover only the tracked range, as for --numstat above.
++	git log -L:func2:file.c --shortstat --format=%s -1 >actual &&
++	test_grep "Modify both functions" actual &&
++	test_grep "1 insertion" actual &&
++	test_grep "1 deletion" actual &&
++	test_grep ! "file.c |" actual &&
++	test_grep ! "^diff --git" actual
++'
++
++test_expect_success '--numstat across renames and multiple commits' '
++	# parallel-change carries the tracked function f across an a.c -> b.c
++	# rename and a merge of two parallel histories.  With -M, --numstat
++	# follows the rename and reports added/removed counts for f within
++	# the tracked range (not whole-file) per commit; the file column flips from
++	# b.c to a.c at the rename as the walk goes back in time.  Commits
++	# that do not change the range of f emit no row (the merge and the
++	# pure file-move produce nothing), so there are fewer rows than
++	# commits.
++	git checkout parallel-change &&
++	git log -M -L ":f:b.c" --format= --numstat >actual &&
++	cat >expect <<-\EOF &&
++	1	1	b.c
++	1	1	a.c
++	1	1	a.c
++	1	1	a.c
++	1	0	a.c
++	13	0	a.c
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '-L multiple ranges with --numstat excludes untracked change' '
++	git checkout --orphan multi-range &&
++	git reset --hard &&
++	cat >m.c <<-\EOF &&
++	int func1()
++	{
++	    return F1;
++	}
++
++	int func2()
++	{
++	    return F2;
++	}
++
++	int func3()
++	{
++	    return F3;
++	}
++	EOF
++	git add m.c &&
++	test_tick &&
++	git commit -m "add m.c" &&
++	# Change all three functions but track only func1 and func2.
++	# Whole-file numstat would be 3 3; a 2 2 result proves the
++	# untracked func3 change is excluded and the two ranges just sum.
++	sed -e "s/F1/F1 + 1/" -e "s/F2/F2 + 2/" -e "s/F3/F3 + 3/" m.c >tmp &&
++	mv tmp m.c &&
++	git commit -a -m "Modify all three functions" &&
++	git log -L:func1:m.c -L:func2:m.c --numstat --format=%s -1 >actual &&
++	test_grep "Modify all three functions" actual &&
++	test_grep "^2	2	m.c$" actual &&
++	test_grep ! "^3	3	m.c$" actual
++'
++
+ test_expect_success '--summary shows new file on root commit' '
+ 	git checkout parent-oids &&
+ 	git log -L:func2:file.c --summary --format= >actual &&
 -- 
 gitgitgadget
 
