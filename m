@@ -1,80 +1,80 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F8537F015
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 21:04:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8966F37EFE2
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 21:07:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782594293; cv=pass; b=KBeYTvabH5bfBIqNLSozag7vKvHSrW9b8+zHGN2VgFwAZBLmcVbtJ78R4iJKV4v0LTAFuQBN8jRFqoJ4uZVsMex9VtQCYtga5Iwgbx4qPtpBKqswrvtmpBuk4BT9mXFhBlcgfiD/LJOXF+nbkcVKK5CJairsybF5dDXs8xnyBMk=
+	t=1782594435; cv=pass; b=n6NBrZBTEEvG5nfHjNPgPeV6nMIhmRSuDpisQxx3YR6Go1b5G5PcfS53FrCiZL4VSMUlb5aza6zqwlkQ9Om4XNrW4JWxtgYPORx6m8grwug1/wjwLHNqlvWoSX1/LljFYYzTukp7mra+04Dc83ZPhArst1s7IRZ0kHwd0t/6vWk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782594293; c=relaxed/simple;
-	bh=P/+jgk9E/FM7viB21YYho4qZpDKOZYHjv+1Y54kKOO4=;
+	s=arc-20240116; t=1782594435; c=relaxed/simple;
+	bh=lGyKtNVXBT2DXOvS3+lwaYUac6npsWbiIrTs9CsdMmU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VPhkZJqEsTH+njC52F2r7OoNY2inN4LXMiJO2vbkndVzAOVttnj7qyDKlQu67UCVVUN9eZI0CwW/zdg355KRGxcQtBCcsnV4o4QRGMR5AvLHOzPPIExpUJEzLNqi0EAHomD8NmFgneLXUr75TaCNTArX5fXN6337XKh2kOgLM3k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BuUcHdAr; arc=pass smtp.client-ip=74.125.224.51
+	 To:Cc:Content-Type; b=S1vql+vAb1aPy3zffDJACgjCS6X9s1Dpr9KxgssMzdOQdwlwJHyivtF14abDzKAT01HPc2G+QxsW5VqoOLITdgNs+UAgh6SFx/DjgEQ38jMnrvxTiBvPzFTya+u4oHIt/bq8G6RsRVXkZZcUzEl33AeMVMnCRDoFgTneg/Sea+E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CdGJ4t6z; arc=pass smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BuUcHdAr"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-66388bf3793so2259986d50.2
-        for <git@vger.kernel.org>; Sat, 27 Jun 2026 14:04:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782594291; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdGJ4t6z"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7fe36f1be74so25706677b3.2
+        for <git@vger.kernel.org>; Sat, 27 Jun 2026 14:07:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782594429; cv=none;
         d=google.com; s=arc-20260327;
-        b=RD3MsIMgfyiojPttZAycNpIQFutGJ0I+Mv21/jB4MO9CM8nJq39wCfxn50JpG2g/Ni
-         YPQAr4NEU3VKWhzaaF9rYfQoWuGMPZRBO4MS/wuTt08JmF/smU+R5wPckZz0paO0URhD
-         ssn07GWZkppnY79RKHIWhaJ1CUKxQLSxoaIk3/e/XQ2M+jdGULZSB//JELlItMKcl75H
-         SMNCF9lJYeUdK/vKJ7U9KV3by/ocI27uWN2oggiUGKskO7nwJ2PFmn1lzkO6ag1BmVGq
-         PgmSa3rBScQIgm9WQ8XcXYm9Ajua5YamNwvzfoQeGQw1TfkUxgqoA6YIiaXfeaXLCxxH
-         GmPQ==
+        b=JNYESjCwvv5/xzu85LY6uT1Kv4uT0A5qiF3XK/T8CQC5HwmSUwJSpBGeKI6GoishGA
+         IObau3nAVn4tae5i8bDjUTWNYkzuoaTYUc9GmXp23SeQSjZcthdsoEgntDJKFHMD+4s4
+         dDc3NF2bbVkz6xiF0sg92JlcdUReVZphT5ilf0N3gfm19Fbpa/HZ54LJnipHYAPIa8vQ
+         dFiv05GW9Zta6S7TdzPCZO8+QKq75I4ZD+B6TU+K3vvTBwaJzxUvyPgCzJGwEZMyBJ5f
+         xbVCaXLHUEC8Unm3d2qjKMhvc9kh3McZOYDSX82wxwXwK3FZnlzPSlVvsgHT23D/sr8+
+         Kg9A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=P/+jgk9E/FM7viB21YYho4qZpDKOZYHjv+1Y54kKOO4=;
-        fh=XvEMCcMsZaIQhi7zcFaiFvid+wsdKjMhyp1f3jI+fkA=;
-        b=j8cJoL6HB48x/R/TM0wSiVkJcqmOZLuG3H5WSsYxjv75+8ZA27bhuvrnWsN23DFk6o
-         EzlUrlsMHZ/HsZ6/FRkDyuUilasIpfhEUHw9/OXh0PBnL6d92nlJW07+R5J9CozBvrg+
-         FtHwkxDiBN7sa/O/Qimla2tfZ2y3iafmuxBtgONEYTERiJmoOsHb7YTpmplY8LVE0jx4
-         a47vjOkjUQ2IBdyVIpBatZtKwmdipovtf4aguXLoa3WieRxPpmIw5OLwasR84WabH9Ye
-         qho7bPh+9lDqQaZHS7WhPBNn3WAUscF9ch6B1tE2wQdLzgmQ37EqztrG7xVXwEYcKR72
-         +R2g==;
+        bh=IoIPof4gcRFb20qvfaMzh7fIOLS3bsGPSmhH9gi7090=;
+        fh=II1xNaWpsbGGoje1lWhXs73nMC4GzAl4tRfC7+O7yrw=;
+        b=YUo5+77pNwkHSo9OZ79tUmRs9r3NAnPBt9OpgxmPqvbs4rlUSIW7e7mbKNmdwMZoRP
+         9V/Xw/QdGqhz6VDNXre29iXPv9LY5f/+qUByz4CmIwR5Jc9BPbY0AR0dSyG/eoo6fnPD
+         zEWbUxtshWeVcxRgfmHUN/pb0KYtvqXPbMvJ9VAMEXuwUcjs8UYLQtLu5vJfbnpoGK+N
+         bK7j5Q0MJiWz0TOVyMk8IhGmG3m9ogHW++LaLG3Af+RzVr3k/AnLr0nBkgq98p5l0tQq
+         vDyHq0R4+hjXDpZB4BuZ8uA67hmSRK0JjdFmYvWWwIlbbzi8IVk+XR+8VPslkXzUf90F
+         iHJA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782594291; x=1783199091; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782594429; x=1783199229; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P/+jgk9E/FM7viB21YYho4qZpDKOZYHjv+1Y54kKOO4=;
-        b=BuUcHdArJ3qzL0lWj5GQqK9jA7S4JIaSy/6WIM0vr3/eymnJbg/4W2Xzf915NmYAzb
-         s93hN6gcqfsGuB7+qRXRhCTfJ+b8ftagMQNPNn8MJABVdiAac7HCgG9i1VrFjOXI4Nrp
-         dHjXU68+EJ4mqDf/1KeH4SQ2cWqBglubSD5hRbu3gZXbCPkp1KGG0BhMJJAo2GsbKhoy
-         jPIGEPJd/wtrFPXunQh4ub8wo8yH6B5l5376/T0wnjh3liwelnnUGjNYhMHs/W+7qXbn
-         hPB8ajFUpkDiw2dcddIBCR03fQgFEtFevddV5OAbI7b6c/rxFmkYrrsWoM0xn2XEDy2a
-         MXXg==
+        bh=IoIPof4gcRFb20qvfaMzh7fIOLS3bsGPSmhH9gi7090=;
+        b=CdGJ4t6zexrZRoN9xp6vVJ+IBO7Mq7EiWWdpQlsD9rD4SSRh0h1g0eleNsg5qIGAXS
+         8ztytCOpnJO+06fvSjjFs2qdf44yMxxBXENze4JRIf94hLbjdvsFX0pTqXEGDN4914js
+         u7Lkmm9TZe6kqpkhDfbRfixQV28Bu7AgGYzOGQCWRdP5M3jfcUvcieo+l7I4ltZp3dAK
+         vGsh/TCZbeBA3vk1nxNIrfTtLquGdLWllwEokOedM3mBZKlXCHrwSBXRfyZVs3rMoPmc
+         ljRtnUOKOF2XQdQw/BaMjBuivOUvm8j9mXfx9MQvlKdN4XPRp9Wg4QJfIRJgKXTiO7yJ
+         XLaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782594291; x=1783199091;
+        d=1e100.net; s=20251104; t=1782594429; x=1783199229;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=P/+jgk9E/FM7viB21YYho4qZpDKOZYHjv+1Y54kKOO4=;
-        b=Lb4SrN+1mLaItc8DSvusnXYwMzxlO8LENbJ7++C9tA5hTRcjWVtYG6l+62uApt10HO
-         +hF+YprKL+NDbwJcP7h2/TjAehVFeJ3xzvQCmDPIzYWjXeaKRGm0E5qnShB1NwUaQjVp
-         4CFsH9ssN6gXxQ2dZiBNq2Q4gCk5/POFSTjdV7ujY2U41BeHblrci8Ai3mjanyuHv3/h
-         ubjE8aLsr9fvgQWQRf1l5cz64Xhv1cy+kgXyLlNEsUBSEGPvnptwUCt1lbR8/cKZ/4Tl
-         EGExbxpDUt7Di42P/1Ga9bn8vjCSCP+fw+AdZXszChhpMjDDOBQgneXxx+CYRg60XjKG
-         qzPw==
-X-Gm-Message-State: AOJu0Yyhz63LF25Q7YcxTSrHvDgNYMRao0njJFYjb/z5CnmJbbiXePF7
-	EqcxxLXUFDHIQ5pMMj/4wx1mJ5iq7/gNZPVqvhdLmUF1Wt/HGiVoCNEcuEg6dqLBaC4wHUQOnWT
-	1OFoOgOs8Md65IPDlOLP8JvC0KzRBQts=
-X-Gm-Gg: AfdE7cmyHOgn+yvvu6BYAUG9X/oqvGGBG5Rr9b5tJTIYJUj+P9/jc+nOEj7ga98hs5p
-	/VvvicAqxbGPL+JZrg2fKL6Owmh7GXKpzYMa+uZkzo443yXtOfy4smVACkZS5afLetBS/KuA18p
-	MhVEyWYeaDl1zQr3NGeaHewzGUiyGxb77GRBZX8hNPZ5zH+76EM3AodEha/+8VD8hh24+EOD1Y0
-	BbJmlL0qko4DQ+ofB9dhUULt/WF2mtDD6AeCS1jJ8zw98NnUKWFjgDuAm1t39tX+xDEeNhfdydy
-	VJW8foayhk6d5BapRGCUV7DlotsxVPVxiAmnAOZdZIGCXjuu5ACq6GOCYRlGqHqZuw1ZdSa05nc
-	lEV8R0yiLtQffiNAB5Ad9Cepybwm87Zd80fnADNb/oFdsi8oBJtJ8aaUeGDF0ZL1/4Qij+w==
-X-Received: by 2002:a05:690c:3603:b0:80d:7292:614f with SMTP id
- 00721157ae682-80d72a1a7b3mr26080847b3.10.1782594291024; Sat, 27 Jun 2026
- 14:04:51 -0700 (PDT)
+        bh=IoIPof4gcRFb20qvfaMzh7fIOLS3bsGPSmhH9gi7090=;
+        b=V0GkqVgWhEJ+lH5t26FXQmkr+hpZXElFku1JRfQptT373YbrXO2gYqOsk1NdbXcq+V
+         4UtttiLEWRdS6GyrbgpG2/9TRjQrSEIEWZ7Et0LSVJpXJMwFw22L3bCZdA4mr6VWGjpe
+         AEme9FO5pfICKI5elE8rZVuh8LLQbvQLilJJfyVLIbJTLd5+Y8u1EvD4B6+o7hRVQVDW
+         0Hax4pikZrV9ijodcwBX0jybpvz/08mWeq6aqUGFZkknUtO3xOp27u8/X61VJ7DF4QIL
+         xBDRwfwkjxmfiJibSPVtsG1W7mUKllYz2I/yp9UZ/LjbdUWfz7ESYUeZHqigxlfFNgfY
+         g1qQ==
+X-Gm-Message-State: AOJu0YykTduQZiZ3S2V1CdloRCnTBidpd6g/FflF3q7lZrjeZKTK+G0/
+	CYpVi3Ob6O+mZod2N+swNZZ1s6YPWPDMwyttLbTkw+jx4BsA+/Wt1q3ic0paOeqjATxpIs1lsiA
+	Fzq/qnYKsOsiExsdrZpsasHwQE+Dojn8=
+X-Gm-Gg: AfdE7cl8G9sG/7dv6xauRTW2ARElA2QjtKrwUO0dvN3ZfTThhlCRJO9gxsEJm54SUCT
+	yTev4jSdOezif5Q2ZT3Hc+Dxs3jH26Qub8t3tDmfrPaCMBfPOYjBkU3w60OkdixFNuo1CyO35Nm
+	HEZIQdbp97PddsA7dWHMGGWPidPqDlaKIrEj9fOaFeutXss+T/M+xG3QDdTIM8YHjtMDg7pKrse
+	i5B2mB4BUIZZNPF4LFlXkw9cLz7sXF4LWbhKenzPwLO4zNDY+dY8JlYMtwIt0WA6wX6yUeGHzhV
+	LQWV17JCCAdq+R6ODm+vwkPY9tLyOaPB7yRgOj5zfow3f2v+8POgSX7xXR/kLLX4rGRfEupe7Fb
+	YCmtKUinBMWy/w8iQ23bO1hNI4kQ4VjfMV+ve1oBgSHfU2lo1p6AIFi7KGC8JKLbR/rXJKg==
+X-Received: by 2002:a05:690c:6e05:b0:80d:964f:890c with SMTP id
+ 00721157ae682-80d964f9080mr25391957b3.19.1782594429412; Sat, 27 Jun 2026
+ 14:07:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,46 +83,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
  <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
- <20260625-ps-eric-work-rebase-v14-6-09f7ffe21a53@gmail.com> <CA+J6zkRm_F4MQ2K8Ayv8PGJOx+pNAg73+p-4VdOgkxeuKAkKew@mail.gmail.com>
-In-Reply-To: <CA+J6zkRm_F4MQ2K8Ayv8PGJOx+pNAg73+p-4VdOgkxeuKAkKew@mail.gmail.com>
+ <20260625-ps-eric-work-rebase-v14-5-09f7ffe21a53@gmail.com> <CAOLa=ZScS3Gmm5BAgJF69phpaDXGnP_j9jx+bMhn_tfF65RXEg@mail.gmail.com>
+In-Reply-To: <CAOLa=ZScS3Gmm5BAgJF69phpaDXGnP_j9jx+bMhn_tfF65RXEg@mail.gmail.com>
 From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Sat, 27 Jun 2026 23:04:40 +0200
-X-Gm-Features: AVVi8CdA7hYFLolwwr13GzMQERw9YYJkqnnjzVCPelPgaFZ8FNqg2vKMyEZz2js
-Message-ID: <CAN5EUNQzwoZ+v1cCZSWkdJUqqgQBVzLNUmyDsz9jhuKK42Q0Yg@mail.gmail.com>
-Subject: Re: [PATCH GSoC v14 06/13] fetch-pack: move function to connect.c
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, eric.peijian@gmail.com, 
-	gitster@pobox.com, jltobler@gmail.com, karthik.188@gmail.com, peff@peff.net, 
+Date: Sat, 27 Jun 2026 23:06:58 +0200
+X-Gm-Features: AVVi8Cf32qtbW1Q-CKIfgPJHGnUgnlu0v4Z12Jlnxm_9c1c_txXSoC2VeYmu1TQ
+Message-ID: <CAN5EUNR2Sv_JtSwQ66m1CwYxgDs4Zb_RxpkpnDTWevPVAOm4xA@mail.gmail.com>
+Subject: Re: [PATCH GSoC v14 05/13] fetch-pack: prepare function to be moved
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
+	eric.peijian@gmail.com, gitster@pobox.com, jltobler@gmail.com, peff@peff.net, 
 	toon@iotcl.com, Jonathan Tan <jonathantanmy@google.com>, 
 	Calvin Wan <calvinwan@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-El vie, 26 jun 2026 a las 14:14, Chandra Pratap
-(<chandrapratap3519@gmail.com>) escribi=C3=B3:
+El vie, 26 jun 2026 a las 18:54, Karthik Nayak
+(<karthik.188@gmail.com>) escribi=C3=B3:
 >
-> On Thu, 25 Jun 2026 at 17:43, Pablo Sabater <pabloosabaterr@gmail.com> wr=
-ote:
-> >
-> > write_fetch_command_and_capabilities will be refactored in a subsequent
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
 >
-> Nit: The paragraph below and the preceding patches refer to this function
-> as `write_fetch_command_and_capabilities()`. It will be nice to maintain
-> consistency throughout this series.
-
-I'll do that.
-
+> The subject doesn't really give much insight into what the patch does.
+> Perhaps something like:
 >
-> > commit where it will become a more general-purpose function, making it
-> > more accessible to additional commands in the future.
+>     fetch-pack: use repo config in `write_fetch_command_and_capabilities(=
+)`
+>     fetch-pack: drop static variable use in
+> `write_fetch_command_and_capabilities()`
+>
+> > `write_fetch_command_and_capabilities()` will be refactored and moved i=
+n
+> > subsequent commits where it will become a more general-purpose function=
+,
+> > making it more accessible to additional commands in the future.
 > >
-> > Move `write_fetch_command_and_capabilities()` to `connect.c`, where
-> > there are similar purpose functions.
+> > To move `write_fetch_command_and_capabilities()` to `connect.c`, we
+> > previously need to adjust how `advertise_sid` is managed. Currently in
+>
+> I don't think 'previously' makes sense here.
+>
+> > `fetch_pack.c`, `advertise_sid` is a static variable, modified using
+> > `repo_config_get_bool()`.
 > >
-> > Because string_list is only used as a pointer, use a forward
-> > declaration [1].
+>
+> Perhaps:
+>
+>     To move `write_fetch_command_and_capabilities()` to `connect.c`,
+>     drop the usage of file static variable `advertise_sid` within the
+>     function. Currently, `advertise_sid` is modified...
+>
 > >
-> > [1]: https://lore.kernel.org/git/Z0RIqUAoEob8lGfM@pks.im/
+> > Initialize `advertise_sid` at the begining by directly using
+> > `repo_config_get_bool()`. This change is safe because:
+> >
+> > In the original `fetch-pack.c` code, there are only two places that wri=
+te
+> > `advertise_sid`:
+> >
+>
+> This needs to be modified no? This is from the prev patch, where we
+> moved and refactored in the same patch, this no longer is the case.
+>
+> > 1. In function `do_fetch_pack()`:
+> >         if (!server_supports("session_id"))
+> >                advertise_sid =3D 0;
+> > 2. In function `fetch_pack_config()`:
+> >         repo_config_get_bool("transfer.advertisesid", &advertise_sid);
+> >
+> > About 1, since `do_fetch_pack()` is only relevant for protocol v1, this
+> > assignment can be ignored, as `write_fetch_command_and_capabilities()`
+> > is only used in v2.
+> >
+> > About 2, `repo_config_get_bool()` is from `config.h` and it's an
+> > out-of-box dependency of `connect.c`, so we can reuse it directly.
 > >
 > > Helped-by: Jonathan Tan <jonathantanmy@google.com>
 > > Helped-by: Christian Couder <chriscool@tuxfamily.org>
@@ -130,7 +163,47 @@ I'll do that.
 > > Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 > > Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 > > ---
-> [snip]
+> >  fetch-pack.c | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/fetch-pack.c b/fetch-pack.c
+> > index f13951d154..ad07603755 100644
+> > --- a/fetch-pack.c
+> > +++ b/fetch-pack.c
+> > @@ -1380,6 +1380,9 @@ static void write_fetch_command_and_capabilities(=
+struct strbuf *req_buf,
+> >                                                const struct string_list=
+ *server_options)
+> >  {
+> >       const char *hash_name;
+> > +     int advertise_sid;
+> > +
+> > +     repo_config_get_bool(the_repository, "transfer.advertisesid", &ad=
+vertise_sid);
+> >
+> >       ensure_server_supports_v2("fetch");
+> >       packet_buf_write(req_buf, "command=3Dfetch");
+> > @@ -1395,7 +1398,7 @@ static void write_fetch_command_and_capabilities(=
+struct strbuf *req_buf,
+> >       }
+> >
+> >       if (server_feature_v2("object-format", &hash_name)) {
+> > -             int hash_algo =3D hash_algo_by_name(hash_name);
+> > +             const unsigned int hash_algo =3D hash_algo_by_name(hash_n=
+ame);
+> >
+>
+> Agreed with Chandra, this needs to be assessed.
+>
+> >               if (hash_algo_by_ptr(the_hash_algo) !=3D hash_algo)
+> >                       die(_("mismatched algorithms: client %s; server %=
+s"),
+> >                           the_hash_algo->name, hash_name);
+> >
+> > --
+> > 2.54.0
+
+I'll reword the commit message with all you and Chandra reviewed.
 
 Thanks for the feedback,
 Pablo.
