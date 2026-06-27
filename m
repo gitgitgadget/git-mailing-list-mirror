@@ -1,29 +1,30 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118A43B47E2
-	for <git@vger.kernel.org>; Sat, 27 Jun 2026 15:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BFF3C2D
+	for <git@vger.kernel.org>; Sat, 27 Jun 2026 15:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782575130; cv=none; b=e5D3EYJvDleQsL6l7hfufaW66Jvlcfvw+rEEKChf2CO56otWnw9WHA/oRMNWvLCeNrJzOrQu9Q1zt64pKQ2N/TToTnj7BaioeWW0l5DL2ak9+TDTTvzk07d8m2h/Nukh+dAjGSBh7KOuARyvPiaiiNlXHx5Hnhv+Nw/XxYFRJe8=
+	t=1782575135; cv=none; b=EWOb+3oeeFJLQ7WNuevTqo4yeDyqMyDWtq5RcYI+YfjHvBZYeZjNTeyUGfeWD66ayTpNAKSeeGmlecV3ODBTlVTGzCVshfiqheBJlljLNBQPSn7Oye8qW0z+OpMJzsyPUDgHQ9q5Wnc/ikLP6CoxTExKg+Cm01Zgv9Mr9sw3LH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782575130; c=relaxed/simple;
-	bh=j2Up83zFCR9ox9HAYa+rEjKxTzgI9ghCVF8GBiUnFGU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HGw0mAJSAR7ButJRRQtFMhl/DapC7Aar6dsQgYxT6FP2ACJOsR+4SgM5JDM6BxJkUvxiSLRc43ztpebCJ3ekGLFyuaL6jUU+POYkVKqxewZDTKjLLNSJZm9hm8V/gxIUCQecIjnxzdT5ZqvR9Ya+v6J29Z+bGyagVXAsaQB3ZQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=cP1sh+z6; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=oqzxjIRB; arc=none smtp.client-ip=34.202.193.197
+	s=arc-20240116; t=1782575135; c=relaxed/simple;
+	bh=d9PN0jd6eF2ADIUgtwtHuFsdyCzPPS6HIrYvkUeWSvY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PvgSfsNh70Q+HhcXH59WcMeugKZpn/MmcIWV1x0wBxY1chPkg4gzYr2FfpCerSZB8aJXsHcYMrbWi0wncBs9vZTKO5eS/0EIOKxjphvjxdP7PDfYKmScggnRUJz/ARcjAzgg81tTkhbhn/tcqjur+62SvDKqbnGpl8bQkSc+kR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=TUea07im; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=t45pQTPW; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="cP1sh+z6";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="oqzxjIRB"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="TUea07im";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="t45pQTPW"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=cP1sh+z6BCjTZYnDdlQ46yfHQ/b3KIJwajN9sUcL+qpDTckKMaShCA66WADfIxZKOPn1zpNu/hovmXLJJ5yIkQ7DcW3KKYtN7uGwtXDhscl5R0Xo6FCkydtbnS0LD7buGo3RI9TlUMeXgsWdkqWozOp+y+Z2cYjaf/Cec94hRVSh91iZTFYpjSgSAZKF88EMSVKk3V0pwBdH3qS8xoB+0WsuZhNIqPRsgePvUanv9vRghWXQmejwR1hxaHlm6lyGkzwNo+Qwrsy+aBwbbSjElki+C65CTtmxagQdMViUvM7TVM4E6jDCQVb5F/PyoapQXaQKET9VPSrtCQ89FYESaw==; s=purelymail2; d=malon.dev; v=1; bh=j2Up83zFCR9ox9HAYa+rEjKxTzgI9ghCVF8GBiUnFGU=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=oqzxjIRB5T4f9oZOrug6RNQhSep+2sKMvKOkwla6he5twC+mLJGqDHM+wCv+TwqNUnygNTqur52sRhNkem24CMuk0m98fWlo5sWD1DRO4Cu2ee5N2esrqTAWdaD5R265Ge2uyfHQveRiU8FRKBb/9skIDvhiOcNtDisWaAzDjTnhURSeI6dYTsgNtDGRTm9x9hR/UNC6hP1sYnSNlqwStfaUI/IPur3rOq3kqr9uXkKbElkth8LBfNUf4flOW1xwxouYZ1mqLjZipL18koKEil+TLogaErAuibvjLsHwXRBaGRHUqvAkab+dtFol6anLv4vtrXjLbSlL6mc+wBbUCA==; s=purelymail2; d=purelymail.com; v=1; bh=j2Up83zFCR9ox9HAYa+rEjKxTzgI9ghCVF8GBiUnFGU=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=TUea07imuWNYFC8il0SHTPcVNltPMPs1E+wW7j2wdCSNa327XxLZ70H95pnVWnTRiXWaYtMof90DyO1NGMK+Rb4Bbe2sg76sFjlYOoEgC/fnhODh+0gG0WFUwu9sVTRPqeeqYDEXQGCoXLq7aYhuc3V0tWMT/5uCCXUpCRRYUbk9Oam5viFsxFPuvUFFinHEuUh/IMhA45N2ctqO4ZmFn65cwN1w74IrYn2KbdJgpOTwnPGm0GETBsFHAKPTSK2Im34VqJ7ejY3HLAmoxKLNCPvSKeoga5ykkPWt5R/HDNSSwDHyU2Wlc+UnCaBoDYxxK8Iy4PYnhKJyQQjUyPwD3Q==; s=purelymail2; d=malon.dev; v=1; bh=d9PN0jd6eF2ADIUgtwtHuFsdyCzPPS6HIrYvkUeWSvY=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=t45pQTPWf20nCxlqIKvi/gDWR1mcmZ2f49q//ZrE+roJHISM73mU3Uo+TYC6hxaoqIIlkRnbzo6u229xW953/acdu76PBO1K8ERQNQyoM32KqQhXQQ4Rz4C7Ttyya9RlFJGqd8loUnvzFFjWQeN3auV0xukvfiygCNrRFW6c+4VrhvKAgULFXANTQJvqBuIZMQuH9YjVABw+hHaVwP7Iu2GH195sUALX4Fyww0xYPOivcXAi43tnEVm5Z2KJzWAL2zyZCvFdeSNglxsNP9kDEUoKY5XZLAzhI+/QhGX7m3ay8bYJ7qW0R5dydpxVlvSmzzsuo1rBpi+bfxYB0mWS+w==; s=purelymail2; d=purelymail.com; v=1; bh=d9PN0jd6eF2ADIUgtwtHuFsdyCzPPS6HIrYvkUeWSvY=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1352112617;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sat, 27 Jun 2026 15:45:24 +0000 (UTC)
+          Sat, 27 Jun 2026 15:45:29 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: cirnovskyv@gmail.com,
@@ -32,10 +33,12 @@ Cc: cirnovskyv@gmail.com,
 	Christian Couder <christian.couder@gmail.com>,
 	Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v3 0/1] move excludes_file into repo_config_values
-Date: Sat, 27 Jun 2026 23:45:13 +0800
-Message-ID: <20260627154514.1073154-1-cat@malon.dev>
+Subject: [PATCH v3 1/1] environment: move excludes_file into repo_config_values
+Date: Sat, 27 Jun 2026 23:45:14 +0800
+Message-ID: <20260627154514.1073154-2-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260627154514.1073154-1-cat@malon.dev>
+References: <20260627154514.1073154-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,51 +49,177 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-This patch continues the libification effort by migrating the global
-string variable 'excludes_file' into 'struct repo_config_values'. Since
-this is a dynamically allocated variable, the migration requires proper
-heap memory management.
+The global variable 'excludes_file' is used to track the path to the
+global ignore file. If this variable is NULL, setup_standard_excludes()
+in dir.c forcefully evaluates and assigns the XDG default path to it.
 
-This patch mainly does three things:
+Continue the libification effort by encapsulating this lazy-loading
+fallback logic into a proper getter and moving the variable into
+'struct repo_config_values'.
 
- - Abstract the XDG fallback lazy-loading logic out of dir.c into a proper
- getter.
+Since 'excludes_file' is a dynamically allocated string, it requires
+proper heap memory management. Introduce repo_config_values_clear()
+and wire it up in repo_clear() to safely free this memory when a
+repository instance is destroyed. Also clean up the heap-allocated
+'attributes_file' in this new destructor while we are at it.
 
- - Move the variables into the struct repo_config_values.
-
- - Introduce the memory destructor 'repo_config_values_clear()'.
-
-
-Changes since V2:
-
- - Squash together the previous two commits into one.
-
- - The 'repo->initialized' check is used in both the getter and destructor.
- This eliminates redundant checks and follows the fail-fast principle. This
- is consistent with the previous global variable removal patches [1][2][3].
-
-Thanks!
+Note: 'if (!repo->initialized)' is added in both the getter and the
+destructor. This ensures we safely return or bypass cleaning up
+uninitialized repositories without hardcoding a dependency on
+'the_repository'.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 Signed-off-by: Tian Yuchen <cat@malon.dev>
-
-[1] https://lore.kernel.org/git/20260610093635.139719-1-cat@malon.dev/T/#m8=
-56253610936d052a798259bfc06d598561e53c4
-[2] https://lore.kernel.org/git/20260606143412.15443-1-cat@malon.dev/
-[3] https://lore.kernel.org/git/20260617154929.564498-2-cat@malon.dev/T/#m8=
-843984a6175a1a4c7e00877085c77b0c72f5803
-
-Tian Yuchen (1):
-  environment: move excludes_file into repo_config_values
-
+---
  dir.c         |  4 ++--
  environment.c | 30 +++++++++++++++++++++++++++---
  environment.h | 13 ++++++++++++-
  repository.c  |  1 +
  4 files changed, 42 insertions(+), 6 deletions(-)
 
+diff --git a/dir.c b/dir.c
+index 7a73690fbc..4f87a52b3c 100644
+--- a/dir.c
++++ b/dir.c
+@@ -3481,11 +3481,11 @@ static GIT_PATH_FUNC(git_path_info_exclude, "info/e=
+xclude")
+=20
+ void setup_standard_excludes(struct dir_struct *dir)
+ {
++=09const char *excludes_file =3D repo_excludes_file(the_repository);
++
+ =09dir->exclude_per_dir =3D ".gitignore";
+=20
+ =09/* core.excludesfile defaulting to $XDG_CONFIG_HOME/git/ignore */
+-=09if (!excludes_file)
+-=09=09excludes_file =3D xdg_config_home("ignore");
+ =09if (excludes_file && !access_or_warn(excludes_file, R_OK, 0))
+ =09=09add_patterns_from_file_1(dir, excludes_file,
+ =09=09=09=09=09 dir->untracked ? &dir->internal.ss_excludes_file : NULL);
+diff --git a/environment.c b/environment.c
+index ba2c60103f..2519c60918 100644
+--- a/environment.c
++++ b/environment.c
+@@ -57,7 +57,6 @@ enum fsync_method fsync_method =3D FSYNC_METHOD_DEFAULT;
+ enum fsync_component fsync_components =3D FSYNC_COMPONENTS_DEFAULT;
+ char *editor_program;
+ char *askpass_program;
+-char *excludes_file;
+ enum auto_crlf auto_crlf =3D AUTO_CRLF_FALSE;
+ enum eol core_eol =3D EOL_UNSET;
+ int global_conv_flags_eol =3D CONV_EOL_RNDTRP_WARN;
+@@ -134,6 +133,17 @@ int is_bare_repository(void)
+ =09return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
+ }
+=20
++const char *repo_excludes_file(struct repository *repo)
++{
++=09if (!repo || !repo->initialized)
++=09=09return NULL;
++
++=09if (!repo_config_values(repo)->excludes_file)
++=09=09repo_config_values(repo)->excludes_file =3D xdg_config_home("ignore"=
+);
++
++=09return repo_config_values(repo)->excludes_file;
++}
++
+ int have_git_dir(void)
+ {
+ =09return startup_info->have_repository
+@@ -461,8 +471,8 @@ int git_default_core_config(const char *var, const char=
+ *value,
+ =09}
+=20
+ =09if (!strcmp(var, "core.excludesfile")) {
+-=09=09FREE_AND_NULL(excludes_file);
+-=09=09return git_config_pathname(&excludes_file, var, value);
++=09=09FREE_AND_NULL(cfg->excludes_file);
++=09=09return git_config_pathname(&cfg->excludes_file, var, value);
+ =09}
+=20
+ =09if (!strcmp(var, "core.whitespace")) {
+@@ -715,6 +725,7 @@ int git_default_config(const char *var, const char *val=
+ue,
+ void repo_config_values_init(struct repo_config_values *cfg)
+ {
+ =09cfg->attributes_file =3D NULL;
++=09cfg->excludes_file =3D NULL;
+ =09cfg->apply_sparse_checkout =3D 0;
+ =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+ =09cfg->trust_ctime =3D 1;
+@@ -726,3 +737,16 @@ void repo_config_values_init(struct repo_config_values=
+ *cfg)
+ =09cfg->sparse_expect_files_outside_of_patterns =3D 0;
+ =09cfg->warn_on_object_refname_ambiguity =3D 1;
+ }
++
++void repo_config_values_clear(struct repository *repo)
++{
++=09struct repo_config_values *cfg;
++
++=09if (repo->initialized)
++=09=09return;
++
++=09cfg =3D repo_config_values(repo);
++
++=09FREE_AND_NULL(cfg->attributes_file);
++=09FREE_AND_NULL(cfg->excludes_file);
++}
+diff --git a/environment.h b/environment.h
+index 6f18286955..2e8352de7f 100644
+--- a/environment.h
++++ b/environment.h
+@@ -90,6 +90,7 @@ struct repository;
+ struct repo_config_values {
+ =09/* section "core" config values */
+ =09char *attributes_file;
++=09char *excludes_file;
+ =09int apply_sparse_checkout;
+ =09int trust_ctime;
+ =09int check_stat;
+@@ -133,8 +134,19 @@ int git_default_config(const char *, const char *,
+ int git_default_core_config(const char *var, const char *value,
+ =09=09=09    const struct config_context *ctx, void *cb);
+=20
++const char *repo_excludes_file(struct repository *repo);
++
+ void repo_config_values_init(struct repo_config_values *cfg);
+=20
++/*
++ * Frees memory allocated for dynamically loaded configuration values
++ * inside `repo_config_values`.
++ *
++ * As dynamically allocated variables are migrated into this struct,
++ * their FREE_AND_NULL() calls should be appended here.
++ */
++void repo_config_values_clear(struct repository *repo);
++
+ /*
+  * TODO: All the below state either explicitly or implicitly relies on
+  * `the_repository`. We should eventually get rid of these and make the
+@@ -208,7 +220,6 @@ extern char *git_log_output_encoding;
+=20
+ extern char *editor_program;
+ extern char *askpass_program;
+-extern char *excludes_file;
+=20
+ /*
+  * The character that begins a commented line in user-editable file
+diff --git a/repository.c b/repository.c
+index 187dd471c4..b31f1b7852 100644
+--- a/repository.c
++++ b/repository.c
+@@ -388,6 +388,7 @@ void repo_clear(struct repository *repo)
+ =09FREE_AND_NULL(repo->parsed_objects);
+=20
+ =09repo_settings_clear(repo);
++=09repo_config_values_clear(repo);
+=20
+ =09if (repo->config) {
+ =09=09git_configset_clear(repo->config);
 --=20
 2.43.0
 
