@@ -1,88 +1,85 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3851A0BE0
-	for <git@vger.kernel.org>; Sun, 28 Jun 2026 01:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E827081E
+	for <git@vger.kernel.org>; Sun, 28 Jun 2026 01:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782610917; cv=none; b=Z8KSTa2wk7TZZ2NZoyVwGdBBJGZtQcONcJPjgORPPWjbJwrqLUsxop5RjhUw//OiUfS+K37JEjjuyhhpSAg410aAIqj1S8ZDZA5Uj1CJQctyFtUINQqKJJRiGMEjQupkiCxxXLcG0yLsopHnP46Fu/zuGcfS+VLQ0yPAbg6K7fs=
+	t=1782611009; cv=none; b=iIQfq0D+JVnhoKtRNRxMcu5xwEKbyEPspmPn7XgJblrFjsqkWYYFnRbGBT3eaBayeoGRAgmCxqwCUdtEX6BihRBjkwdu/3TbynzSxgeyYs2hDbcxxD13AeMA3mNUWkOKig8ah3zoMSgg3IbaALp2BTHyq1yj+ghig/ai/fa8cww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782610917; c=relaxed/simple;
-	bh=7YT3sugYH64MUDe0641oDEKTRY2n3DOzHUKDzpvaLmQ=;
+	s=arc-20240116; t=1782611009; c=relaxed/simple;
+	bh=1EEmZzf5ORk26ntpbpahCB20lCMGJhN4cWlSHebPUxI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gPvGWCyJgRbRfesf9rPwErUlH81pDFEKJM8qHv8HOvTLJuM3a6bqEVVGo7pZp4cnUaosZyk45lMcY527RvIFNKMtrmSBI9dMtWSNQFZRFjEINHOGjug0m6FHrxzS3Y3W3v0RTrrTdFmeibKXni/fCH4S3M+0M/4S6bkbW1phB6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IALy8lrs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DoFtqfwO; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=RrvUyM4o0DJjEUF3BbV/bVwCgL5zjena+pNPHMl0gjDRooM3W7ycEz6MNkAGVQW/6mtXIfsdYjSqMtNZodZE5om5rpWJQsOkxh4qBofBdx50ceqKnpEHK9iXcfLLDaiH4WmilAkemuGEUk1xIELG1TSjwuO22ccTcvjTnHtzyRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QVP1UU1f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QGfVjoRM; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IALy8lrs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DoFtqfwO"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A82941400062;
-	Sat, 27 Jun 2026 21:41:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QVP1UU1f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QGfVjoRM"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C5E651400105;
+	Sat, 27 Jun 2026 21:43:27 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Sat, 27 Jun 2026 21:41:54 -0400
+  by phl-compute-01.internal (MEProxy); Sat, 27 Jun 2026 21:43:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1782610914;
-	 x=1782697314; bh=JCPqDOMhh/RF4ENXaVheCmQWMu5Hc9DffCrouWtaehA=; b=
-	IALy8lrsehAP/I3tUNv1jBfJggeUbLMX2Es/dLOvNozvgCKY1tqzorCVW3pF/3kQ
-	8MfOtbwOWKmN6leJNj0vkOhSILFG/uzfqbU1S1PFV/QvXNHEn3l7Pllg+bF4el3/
-	qOvJt3Zs4LN5g0iF7qdCKHQ9ZJwJuOIDdyx9Ski7+U6MMgO4/sNqJVsyaBLFHZc+
-	0h1UF6obuEEhd8OTLmJxPsk3UbQ44vXOgCoJ56vaVVUCNLjIa5o2Z7fKrGXmgL99
-	m+j9hWYTsRYPTVd3FNvs+Hf0kJAQ+EiSYF+xP22Wcp978PTml6RaQzt5u45n4qbF
-	lG/8HgPjbHKIGxbtse+EJA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782611007; x=1782697407; bh=1EEmZzf5OR
+	k26ntpbpahCB20lCMGJhN4cWlSHebPUxI=; b=QVP1UU1fnou0yo4L1ZL400SveE
+	ynZ8Bss9csjMJZiqEP8onoNolvjJyI+FCQJgsK2wl1vByTgr2ExSihlyo94ZDceX
+	jmxSKyYJ+n0Bg1j68S3uIrimBPw0lPykZ1BTgIFAvzBJcFmFGugj14pvYsKyVpA+
+	dait6AlOMEcSELbsnoaZsTYJssH8Gi+Uv9EHQwUsQXq62itRztgBS5IjNSs25Jtz
+	XGBprNJU+DXbmrGZ33Ac+j3BKkdBx4lEdYlf+1ZRyTSEwknvIlGrA7K6d39DYu2K
+	6VPeZ69k2UBR3dh7qoMmk8gxJiw6AQitiLp9icMqWDDatOY+kaZmrq3Xr5lg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782610914; x=
-	1782697314; bh=JCPqDOMhh/RF4ENXaVheCmQWMu5Hc9DffCrouWtaehA=; b=D
-	oFtqfwOe+LifwkXV9aQx+U23zBBHjAIRej5VmTtsa01XMfCKDZc4E+vLaqrAGvza
-	+CxtFvLc+JqreijN/qlQJYnWXUMmxMGN6ubqT2uvVgrHlo+XCqNcn5XmKOs7BI88
-	P4x9nTFz/zr28+ON7SHapkNbNpZmOAmYXG2897fKZBYnbYCMb6hHRRxM2VLhS8tn
-	FeUrshrgKw7yPaq4CHoHp2ygsz43nUTVJv6R07jHBiL9gyJ69BBAvpS5WyZHHvuH
-	ekKXDUStnUEMwcAnp99oUVknshdDfpNO2kxU3oJyP4sp245nhiq2P3UKBFpBnMHW
-	CmUM4gILe2JLUuy+nv5kA==
-X-ME-Sender: <xms:4ntAarjjKX8xFzh5CflDz30-X35ciSGPotqbUhQhSmBxmxTIStdhYQ>
-    <xme:4ntAaqRJ20NOshVAit4VjaVtL24xSUDsm0miEnN4asfv8GfqLVbCJbxQHxQj455QW
-    rPAoPBh0iloBxP7K36rOt8ccRp6fBsJD0V5dYbMDEpcIqNionZ0slA>
-X-ME-Received: <xmr:4ntAatWO--5F_POp7e7fapX0POf5Hp9jfc1yDZa4OmzH5NQ1M7jIPg2kZCkM-5C6ZWHkXQRueN_2QWEjLf0yLie8qvJYVUdLD55dBMc>
-X-ME-Proxy-Cause: dmFkZTFvVVdAJfNayWy7LCHUp7UPW1KVNfCDRjRv2NARE9d43ejuJDou8GlnwLTiEawuab
-    10arxaDSsCZ3pMT4qPbXzFKndLYWi0J7Qn3wxMLZUgv4STMHRKGHdhEIDtyJSZ0dVhDZR7
-    2kn04OcEyjkTyUFZ3iHoqSqV+cbP2i4pBVKnL6WUrKbHmP0uQJKBNVdXi+XbMp2Krx3JRF
-    PC2wcZAViu7iJdvBJjyHbaMQqRAXw0sgxE0W4rQh4d6zKQqV5q8IV0k+Y8kzEsqQ8h+5nQ
-    eFsI2R0x23OfCJemyI/A6khpl8NI8rQwV/LB40gt/9nMkZqT/ChU/xE80W6FVk19IHPFti
-    SFs5WxOn5Kntse2FvZh2uSFybAbuV0sF6PPw7O606iQ2myMBtHuMeuqcunkm/ClNBTRnMv
-    FqI4gtPYd8yw5rzdPoxpqz4/4cnCyL+00oibUoeRMYjjt7nhfIBa1TkQD4VRCHa9SCXe1H
-    023LebmKzWhbUfvescOnBi7JQUxFpOG/8dtMREVmjo0QYsCVPCTFmNCkqPzJ/xic4w8qYs
-    NIqzHO8G12O8IR2uIOvNnyDhk5Ync8puIN9o4REvkoX+uEezpnK0IU5a+ZO+7vgZF19QFH
-    hRMFo3zLZP20h9EI92Tmt2wGAZUdUWgbdUx64TAN4gvWAPb2WWf1ZmjHk0SA
-X-ME-Proxy: <xmx:4ntAauScerRt2buDTuu8U5n0U_qQKQR6gJwFUigi7WJkcZtg_cEzWA>
-    <xmx:4ntAanl5DqOx0v5s3YTvPOm0q3yVcLIz4GOeMwdB2n6fMhxQbNLHfw>
-    <xmx:4ntAak7OJaogiP3zL-XtKenmGQ1eVOzBX91RiKLgQbgB-oB3jdLlCA>
-    <xmx:4ntAathGNbE4pdzwp10hdYgAfiNthYnXhKYNcNGTSo4qoJDXliQyqQ>
-    <xmx:4ntAah8ys7alULkCwUyjnyNgfGoKoo-C1XE4h2nOqvrvxy69C-DAeN94>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782611007; x=1782697407; bh=1EEmZzf5ORk26ntpbpahCB20lCMGJhN4cWl
+	SHebPUxI=; b=QGfVjoRMZ0h5WLjnqkuc8XDRlwDLvAnhGcSDYLrPW3xLo4Xmluj
+	cPRsiH03DfSzFO94dioMZ4uyROtB/WjFGSiBwQgOQi5+dU6CWMMbOheWEXODnw8w
+	u9AUMQsHWSt2yy87M/RfJ3iMH2W5FESJdDLz9+nVS7Yr465KgSnH3lcDecluGPn8
+	OjV8orjAKjOCzoOTb/ED6bRS7rBLFSacboyAvvI+5VnE+5TzYbV5smpRc+rv+roT
+	IJVxynSFa+O2jXqQZYXPTRQwSk5mZQWh1KE40gzChOikLbnTlGf8WPJWwO/R+n7b
+	uerY6iwNXU61xLv5PDeKxDFucWC7Vcz/t9Q==
+X-ME-Sender: <xms:P3xAaqCNM00lSzW42KA_wOzMs7d2WGNTKegF_onAcKkQ-bw4A_dwOQ>
+    <xme:P3xAarbz3Zq0MsTTlOKpRxRRkioj6J1YZNvtXdct-Ht_mxxHZMbFWxcgrTNHHaX3Q
+    4_ISZvSDpRn3YLpFzG1wuuuashBTZohIBKTRxRvVqyhYbCWAykGDg>
+X-ME-Received: <xmr:P3xAal7bUHxTcKGWzvjs0HhgBMa4eRFznKHKm6o4txGNIKWm249kIVLwfUxajBT3DWt2R6O6cYQgyE3UFFS3wHEwhPjcDe5S8N1zogo>
+X-ME-Proxy-Cause: dmFkZTGye9bOxcmuCe5NDrCQATBWzLjouLFCkTy05RfV8Ctwlo9512W1pNznP7ejJiSPlr
+    V0RUp6N+y8TPczjuXfQvMVuqY8Vlrl+4UjzG2uBbBcVmh6uiYScLktuDJ62FYJ9MVQiX0H
+    Kbr2NVkgKFbacKm1wWC6Ri1z1IE3j5v7VlALnN0eLYvUN/MkxOIatnF2YvXKSL4q0ujjej
+    qzSOyzjZcavLSmqMEOA1C50BgdhXrwLwhrqugkkKYTOEFN9lIgWOGOeomu6OShE7ndhJWM
+    6D03phhULOu73OHDjEBn7FEsPIAjJESuFQ0C5gt6QzK7nnfHUAleJ1e/XFT7fN66ZgRiRc
+    MCBrWyC2hCkj/PuoTXU3I3DIbXHCsFCXVrq9ZsIKVl5/Z52R4a1F6YMPdIWrMIUYyD2poU
+    Q5Bo7vb1dYy5gMYPz/C03vN7IwbGvKyigiWlQmvZreIlYqNIqZDUa0Y92MhM3AivD6rwi8
+    4BivLEfnvxbdDpZhHdTFEEruVIjDEqU6twSP8CqJq+vpXrNfls2wJyLffbZIB/6ODr8/Rn
+    q2L4dEk0VlQ0v9yF/FToWGA6GM0gb9canU45TrCnrD4uFTsIO+JEHDfZANvC8UCipDTiVz
+    rg2G8nbxDzdlRgoHsSBP1XlNuHS/IGLWA6ITi9u7lK9h19Z07TxFuUDAQxNw
+X-ME-Proxy: <xmx:P3xAakYFzded8edXTULIonl9u6Ehr04bfgA-25dwTvH7-Bvc1W-f4A>
+    <xmx:P3xAasjfpdodqcCQ9QFPwI-jnDVmfSQ2hs7bGT_-a53oA1IBpWcyQA>
+    <xmx:P3xAat9RCuB1CeBKfdfcIrqfeKel3XLtwfTA4W3IWuqwHGFFMnamDw>
+    <xmx:P3xAavp9wNtAhpyMYT-9j9LVbDdIB0qNKqZqeQMvYOBUEscgjNdfFQ>
+    <xmx:P3xAairqLVF5wFwc5NBlZt4rC2U1BKuxaU58hp75Anv3Ws_GephVT_8n>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 27 Jun 2026 21:41:54 -0400 (EDT)
+ 27 Jun 2026 21:43:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Eric
- Sunshine <sunshine@sunshineco.com>,  Michael Montalbo
- <mmontalbo@gmail.com>
-Subject: Re: [PATCH v2 5/6] t: convert grep assertions to test_grep
-In-Reply-To: <xmqq4iio59uv.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-	27 Jun 2026 07:36:08 -0700")
-References: <pull.2135.git.1780559158.gitgitgadget@gmail.com>
-	<pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
-	<3a589ef7386303075413f388e61c203c4e325d44.1781323575.git.gitgitgadget@gmail.com>
-	<aj93BE8MYatQAjoy@szeder.dev> <xmqq4iio59uv.fsf@gitster.g>
-Date: Sat, 27 Jun 2026 18:41:53 -0700
-Message-ID: <xmqqldbz4f1a.fsf@gitster.g>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,  git@vger.kernel.org,
+  Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH v3 0/2] Silence po catalog output under "make -s"
+In-Reply-To: <40b7eee4-6b45-449f-a3a0-0ae415097041@kdbg.org> (Johannes Sixt's
+	message of "Sat, 27 Jun 2026 11:34:50 +0200")
+References: <pull.2339.v2.git.git.1781995570677.gitgitgadget@gmail.com>
+	<pull.2339.v3.git.git.1782053803.gitgitgadget@gmail.com>
+	<d38d233c-a7c9-4457-96c1-bfb75af71ffe@kdbg.org>
+	<CAHwyqnX78ePVhiL+_T3FzCSA5oGaU_RPvQj6YP=s1WyULg=tdg@mail.gmail.com>
+	<40b7eee4-6b45-449f-a3a0-0ae415097041@kdbg.org>
+Date: Sat, 27 Jun 2026 18:43:26 -0700
+Message-ID: <xmqqh5mn4eyp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,36 +87,20 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> Am 26.06.26 um 21:27 schrieb Harald Nordgren:
+>> What should I expect here, will it be merged to master now?
 >
->> I think in this case checking the file3's contents is wrong, because
->> at this point file3 should not exist in the first place.  I've sent a
->> patch to fix this long ago, but apparently didn't manage to follow
->> through back then.
->>
->>   https://lore.kernel.org/git/20211010172809.1472914-1-szeder.dev@gmail.com/
+> These patches are cooking in my respective j6t-testing branches in my
+> repositories[1][2]. I'll ask for inclusion in the Git repository in the
+> coming weeks (but certainly not for v2.55).
 >
-> Thanks.  I guess the test_grep can be extended to catch this case,
-> where 
+> -- Hannes
 >
->     test_grep ! -e pattern1 -e pattern2 file
->
-> does not find any hits, but only because 'file' is missing, as an
-> error, ...
+> [1] https://github.com/j6t/git-gui/commits/j6t-testing/
+> [2] https://github.com/j6t/gitk/commits/j6t-testing/
 
-Wait.  The necessary check is already there, isn't it?
-
-        test_grep () {
-                eval "last_arg=\${$#}"
-
-                test -f "$last_arg" ||
-                BUG "test_grep requires a file to read as the last parameter"
-
-So why don't we see it every time we run that test that inspects
-file3's contents with Michael's series merged in?  Puzzled...
-
+Thanks.
