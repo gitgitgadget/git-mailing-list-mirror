@@ -1,197 +1,205 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834A532E757
-	for <git@vger.kernel.org>; Sun, 28 Jun 2026 11:35:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA522175A69
+	for <git@vger.kernel.org>; Sun, 28 Jun 2026 12:20:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782646552; cv=none; b=sTjDxNRmqIixvPzxKIvrIg6HCAwd3qAxbKR5nVWPKceiv7fz3aND9Loh5+vtQHgPvdtGG83UCdS0e686DUYViIcKqiu/2gFCvrJ6mh7kVI2DhRRrvzX6L3Jl4hoQr9VmYqIh/hB3Y4vaJcvYUqSaICfx6srDa+Q1S4GSzcjtxFw=
+	t=1782649222; cv=none; b=ME15YgQCY5wFdzYW6pIe/reP93OxtTwC4B0bGmHo4fzRgFkEhhxg0OqSA+U6wvpxpj4HloP3AxgDuTemUNYHQRFzj7sTg3emIp6iOaV+44qRpon8zDtOUZilS8mKAtQBVYpAjYQ7h+7Whr4dkpfyGtgu9ttXdP1LmxMjSLaJza8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782646552; c=relaxed/simple;
-	bh=YdGbkwDB7qH+6dwaTUgMS4UInPcJAUhgsbzTLJuHr44=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Dg6g3m90tsXMEWRE5mQQZWDcfNoyB0GCcL58/HfKFOzM48vxDTm4ovI6g7F4RSG7767jQ2IAUYCkF209ELWu8GnLVSafCn0BTvVQHRr+3ksLy9H4nS+OIMS9LMl/Tmzz87+t/28mOCuVNXxYqAgC/ZpyGHx7BLUzc0XwQpKSsvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E+L4rVGd; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782649222; c=relaxed/simple;
+	bh=AH5z+EuSPtXwYQfgZdkmhNl6llmD8cZonRZaQ946O6Y=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=OtWf0AZO0CJ+vSPDDRezTWh8lYHuZ3OKGolPBCScTTYB0GKeopeNbrRXuzXKD0qi29QdwjZgXcj6tbkSmrum2jC/uu9D50yIcLGdpRThX4RkfGt+jUsVSzvVZTkcihOYTf7r1UeoDKdEY5rwsB2mCJ8EQaQBIjRsH1bg8Fd9K5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=sNUmFxuy; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E+L4rVGd"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-804e46366d7so20807487b3.2
-        for <git@vger.kernel.org>; Sun, 28 Jun 2026 04:35:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782646550; x=1783251350; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2yKacdEJwC9vt8u/BkgcANkMehTSQZ32J6TMo2U3MJk=;
-        b=E+L4rVGds1Zjy61BlFWEO7MeueVJ96SuGwKDEp9T0c/Y+D3C+xh79NWcLQz7qC74Fw
-         epa/z+evIv8zXuS97VMa+lBHjuL6dBlTYdWeMd4lmVXcP9tqmGAdt3bCRIsWnw5tdNAQ
-         wgDg0hw3p733GVmd8gfNZt7t0D+kxZvn8eap7sl5xoaWKtgJ3BIkSTxrRGwS2YRi+NqC
-         8TY0VnI7u+/P6KT0uH25aGx/AMZThYHpr+IuiYPBZ+EzcgN8BTEz1wYUsP8tN2xy0PEL
-         uP+tGPia84mW8T211bgemWxfgo1oPNlf+upVd4dSnIrt9ufEXG7XX2Q+kM1CCECH3Jpc
-         zvHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782646550; x=1783251350;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2yKacdEJwC9vt8u/BkgcANkMehTSQZ32J6TMo2U3MJk=;
-        b=Q9Z84vHtAcb8bfOSW2OWg3QKrcoD+PRgwO5asDBQ0ykk0CgMIztgQOOH5KGA1+1Ers
-         NAhhygsOD2SYNsQQ2IXWjtqf6vp5rCjW9jw/5ggE3ocKtuY77P8jPTQtkazFX5dVpwn6
-         5+z/LMgIuoZungZDwA6uqEIpuw/iZ5wazZsdElqN1i1kXVZDijA3DgvWTd9AceFCl/o9
-         YbsJkHEwmW0fZpYAgY1rSKKGKFQy+0sKgWXJysW9c+B3oNGvuzXLsrNZPXM9UFTxR51g
-         XUDtxfA3oco7lbHefdTT6JfYCMtQldkFwXxXttyMosIALZWwEPwRuZ6YMqCd7EA/jdz8
-         6xYQ==
-X-Forwarded-Encrypted: i=1; AHgh+Ro1SgK18rSapvvMOW8nb8aNjXTR2dlmCnC4rKkgycUlVK/FH8tAXk4CZOk82ROAgtNlsZA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMi/Y3Li9Z50q9WuuEzP3u1If4MK3sz9vYnqOAFOrK7WF+GpGP
-	Wd2AGy/Wj/F2aqgqJ/+8/+fZq3XDKMshZdwM29dPpyyyuTRqq5BULNud
-X-Gm-Gg: AfdE7cmH2KZN8ZrdVNsIAlD7cRkz45Jla5pbDtfkRci7/B6aGZv/38Ndnfsii1LqfzH
-	BlEE5OISW4wNDZMpgyIlffRH9xTLS8DQmxpj1+W4wjm8LyjQGAJNgLn/aO2y2KOrJKItYHyboSF
-	JBWoxLAyPN4plFCfnmd0ZKDCKyFwKCSaDar+zEf2il9bbwJLjUccBZ58z7iboz9FC8XjVHxGLE5
-	lmRynrU0cp0dIds/KflHJc6aNh3pLqGBXEUiRYt8P5Uwh3KzxVlU3HmB7EHufEFij/Rig5k8FOp
-	2reYEUVsxUhgc8g/ueSA+/VkgU326c6L4qHjaHtN6aLZxpa6SxNTxdNd2iAPKj3yY/P5FQwYh6p
-	TIQNHBt7BoyQdKg2eKqnnJGLtIqZxFBwZ+iI5g9Sh4WY780I9u6UUnNEWzSSvBh9eqEjk5NZbQG
-	uFo7nV9zSlnIYRR0xbeOXnUBhkvd9g7FUcwCdLNQSCH0/47Lvf6P9OWg8QVYPve5M1nWyCnSOPR
-	85Jo34jL/yIS7tDKoZS6uNITr3epYZM3lQ592Pxr6nS5fg7BnX3oUHg0WmXFm4VJDPmGVTVOY5H
-	dL3lGEVXjH8=
-X-Received: by 2002:a05:690c:c508:b0:80c:39:1d7d with SMTP id 00721157ae682-80c00391ecamr76125047b3.5.1782646550382;
-        Sun, 28 Jun 2026 04:35:50 -0700 (PDT)
-Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-80aa19a0516sm39082907b3.19.2026.06.28.04.35.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jun 2026 04:35:49 -0700 (PDT)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?q?Aindri=C3=BA=20Mac=20Giolla=20Eoin?= <aindriu80@gmail.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Arkadii Yakovets <ark@cho.red>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Emir SARI <bitigchi@me.com>,
-	Emir SARI <emir_sari@icloud.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	lilydjwg <lilydjwg@gmail.com>,
-	Lumynous <lumynou5.tw@gmail.com>,
-	Matteo Beniamino <beniamino@beniamino.eu>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Mikel Forcada <mlf@prompsit.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [GIT PULL] l10n updates for Git 2.55.0
-Date: Sun, 28 Jun 2026 19:35:42 +0800
-Message-ID: <20260628113545.1822426-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.51.0.rc2
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="sNUmFxuy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1782649215; x=1783254015;
+	i=johannes.schindelin@gmx.de;
+	bh=Pn1hRvDrg4wQjCOGHbj85LXCAJbjp/bWTy/5bhDvr4E=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=sNUmFxuyR2RIg0ttlJFAW/0oM/22h/ilx66g4+Xz9RzwYHBRoSWwquIxlXPugJVv
+	 aSp1ZNaZ1dRVEzazPHbWjnJl8bCivrzJekCiUFaFINqRWpHmimE/vsw/3SpFoi9KV
+	 FEkJcgtQCeVsPgYqY62vZOMoIwFWaMn7Js6HKZ8UbVYRLP4+ctkD19260tF3/9HNA
+	 GwZWh8LHmTqDXx7njDrX3AdRpPsQJx+B3IxLNQe6BzlBYfjLKHSMWotcPXYW+g7zj
+	 +RX9zAsfnYiQEAc7dAmdJQ44jzCNmfFriqJmgxUuX7BQj72jYM3LbH5iwmIPmrj5d
+	 16SicJXWK5fyYkiZ+Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MS3mt-1wXbKm3LoJ-00Skg8; Sun, 28
+ Jun 2026 14:20:15 +0200
+Date: Sun, 28 Jun 2026 14:20:13 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Toon Claes <toon@iotcl.com>
+cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v5 0/3] Teach git-replay(1) to linearize merge commits
+In-Reply-To: <20260626-toon-git-replay-drop-merges-v5-0-5e120738b9d0@iotcl.com>
+Message-ID: <f8b520d1-edeb-9e45-c503-025c8b5833c3@gmx.de>
+References: <20260622-toon-git-replay-drop-merges-v4-0-ff257f534319@iotcl.com> <20260626-toon-git-replay-drop-merges-v5-0-5e120738b9d0@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:WNTu0Zu3nEYHpUb+vLIzrVwXqNjq+zqoL2TrYSattSt6NsLpaOU
+ gX8TVbSztD/Q2B6f/4UobZkVKhmIyk82AaveV+JMdCh8z3juYqSonaJZiQatwIG28lbZ9if
+ lL6BR/qAIMQZrm1AIne/PRU9+KU+pmnOaIBSAUeTGRSRJToZ+QAnobFiniBqxFCGz5AryJE
+ Gv4FwExMiagQGgdSZAv0A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:lYvXQm3v53Q=;vnLI9JK+enjqcEOl8SwxHV+4/Ie
+ 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
 
-Hi Junio,
+Hi Toon,
 
-Please pull the following l10n updates for Git 2.55.0.
+On Fri, 26 Jun 2026, Toon Claes wrote:
 
-The following changes since commit 6c3d7b73556db708feb3b16232fab1efc4353428:
+> - (BIGGEST CHANGE) When working on a refactor to undo the enum->bool
+>   patch, I extended the code comments to explain how things work. This
+>   made me realize the use of the "replayed_base" was incorrect when
+>   multiple branches are rebased with --onto. This is fixed now and a
+>   test is added for this scenario.
 
-  Merge branch 'ps/t4216-tap-fix' (2026-06-25 19:49:01 -0700)
+I am not quite certain that this results in the desired outcome when
+working with a single branch that contains a merge commit. Take for
+example this topology (master~2..master at the time of writing):
 
-are available in the Git repository at:
+  *   6c3d7b73556d Merge branch 'ps/t4216-tap-fix'
+  |\
+  | * f0411a4c717e t4216: fix no-op test that breaks TAP output
+  * | ab776a62a785 Git 2.55-rc2
+  o | 1ea786d14a1b Merge branch 'hn/macos-linker-warning'
+   /
+  o 08b6ae38c602 t4216: test changed path filters with high bit paths
 
-  git@github.com:git-l10n/git-po.git tags/l10n-2.55.0-v1
+Running `git replay --linearize --onto master~2 master~2..master` used to
+result in this:
 
-for you to fetch changes up to 08621c32d5536babd139ab1a9086349b3672edd6:
+  * 3ec7cc3e73c0 t4216: fix no-op test that breaks TAP output
+  * 8dca9f98dc05 Git 2.55-rc2
+  o 1ea786d14a1b Merge branch 'hn/macos-linker-warning'
 
-  Merge branch '2.55-uk-pr' of github.com:arkid15r/git-ukrainian-l10n (2026-06-28 19:25:08 +0800)
+which is what I would expect. But now, due to the dropped `replayed_base`,
+that tip commit is replayed directly on top of `onto` and the first
+replayed commit ("Git 2.55-rc2") is simply (and inadvertently) dropped:
 
-----------------------------------------------------------------
-l10n-2.55.0-v1
------BEGIN PGP SIGNATURE-----
+  * 5e4899a3e03c t4216: fix no-op test that breaks TAP output
+  o 1ea786d14a1b Merge branch 'hn/macos-linker-warning'
 
-iQJPBAABCAA5FiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmpBBXgbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMCwzAAoJEJNuFQ3dRTLVKN8QAJfOm5oM21vsH6ONo4QO
-u89j0ynacQI0rvQNLa9yGrR7vZumPQQKETwBulWTZLpQ0BrWev69LwpTZFVjQBp0
-JxXvUW5FiHKQx+tSPT2SeNkMR3eHWxEFcyCP3QMnAbV5GFRRTnOr9ajRVI/b3Fi3
-5xP2dgQW0F8oiuMAX/6osqwjjqO8qAAxtnX/+ecw2KPQ8ddgJsWPdAkWnAG7Ctnu
-ff5jxOJ4ECAvsV5eywr2Ea1MOT032nsRX6Yaf6JIfdpU2oZzhCaVXgJwVkjKn/8c
-mdEvaEZGSXPn969PEV3bsUEUEV7kgBt5wdWHRX5bGjwfXv/MKVnXZz/OQjlIa/pP
-Pzpbi8jRSVCNXBi1kOpqVIOP3yndrYPh103juue5LEwyxsctmmvOtvB2t8Q3pY6G
-/baSLDKp8GGi8x0h61D+lGAToK05YWafx95pZlxuwdd27ShJWaE6cknMkirJl9yD
-IkihgCWxrCZmRX32YstZsV3FrvsT1GUwLEXm31IHfFRLp+76oVympgQh1r2qttCo
-zMRPdo8ECZ9jwZ7OeCjshmAzgGzhuiwURZnYaPG/BC9wKqPDRmaUp8oKSjYreNgy
-IuBUt/bOJO/y8ut6KZvMhpbJnOlULrOnHWDWqm2IfY+7+PLSD6uoodtbWf7ISUeP
-k4eqg5pJX/q0t+uo8I0Z9Xqb
-=M5pa
------END PGP SIGNATURE-----
+I had originally introduced that `replayed_base` specifically to prevent
+this commit-dropping.
 
-----------------------------------------------------------------
-Aindriú Mac Giolla Eoin (1):
-      l10n: ga.po: update for Git 2.55
+As to the question what should happen if multiple branches are replayed at
+the same time with `--linearize`: This is a very tricky problem. Naively,
+one would want all of those branches to be linearized _individually_. But
+that idea breaks down when you replay three branches, two of them with
+distinct commits, and the third branch a merge of the first two:
 
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (6322t)
+  * Branch C: merge branches A and B
+  |\
+  | * Branch B
+  * | Branch A
+  |/
+  o onto
 
-Arkadii Yakovets (1):
-      l10n: uk: add 2.55 translation
+What should the replayed branch C look like? Should it have A' and B' in
+that order? I.e. share the rewritten commit with the replayed branch A?
+But then B' could not be the replayed B because that needs to be directly
+on top of onto.
 
-Bagas Sanjaya (1):
-      l10n: po-id for 2.55
+So I fear that the `replayed_base` design _is_ needed, and the only way
+`git replay --linearize` can work with multiple branches is by linearizing
+all of the replayed commits into one single, linear commit topology.
 
-Emir SARI (1):
-      l10n: tr: Update Turkish translations
+Obviously, there are ways one could _try_ to rescue the previous idea, so
+that at least replaying just branches A and B would keep the replayed
+commits non-reachable from each other, but I strongly suspect that any
+such design will invariably surprise users in nasty ways when the logic
+has to fall back to the simple idea I outlined anyway.
 
-Jean-Noël Avila (2):
-      l10n: fr: version 2.55
-      l10n: fr: mass fix of typos
-
-Jiang Xin (12):
-      l10n: AGENTS.md: add quotation mark preservation guidelines
-      Merge branch 'master' of github.com:mbeniamino/git-po
-      Merge branch 'master' of github.com:nafmo/git-l10n-sv
-      Merge branch 'fr_v2.55' of github.com:jnavila/git
-      Merge branch 'master' of github.com:alshopov/git-po
-      Merge branch 'po-id' of github.com:bagasme/git-po
-      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
-      Merge branch 'zh_CN-2.55' of github.com:lilydjwg/git-po
-      Merge branch 'ca-20260624-b' of github.com:Softcatala/git-po
-      Merge branch 'l10n/zh-TW/2026-06-26' of github.com:l10n-tw/git-po
-      Merge branch 'l10n-ga-2.55' of github.com:aindriu80/git-po
-      Merge branch '2.55-uk-pr' of github.com:arkid15r/git-ukrainian-l10n
-
-Lumynous (1):
-      l10n: zh-TW.po: Update Chinese (Traditional) translation
-
-Matteo Beniamino (1):
-      l10n: it: fix italian usage messages alignment
-
-Mikel Forcada (1):
-      l10n: ca.po: update Catalan translation
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation
-
-lilydjwg (2):
-      l10n: TEAMS: change Simplified Chinese team leader
-      l10n: zh_CN: updated translation for 2.55
-
- po/AGENTS.md |   51 +-
- po/TEAMS     |    6 +-
- po/bg.po     |  796 ++++++++++++++++----
- po/ca.po     | 1421 +++++++++++++++++++++++-----------
- po/fr.po     |  836 ++++++++++++++------
- po/ga.po     |  864 ++++++++++++++++-----
- po/id.po     | 2322 ++++++++++++++++++++++++++++++++++++++++++--------------
- po/it.po     |    2 +-
- po/sv.po     |  784 ++++++++++++++-----
- po/tr.po     |  752 +++++++++++++-----
- po/uk.po     | 2384 +++++++++++++++++++++++++++++++++++++++++++---------------
- po/zh_CN.po  | 1034 ++++++++++++++++++-------
- po/zh_TW.po  | 2261 +++++++++++++++++++++++++++++++------------------------
- 13 files changed, 9725 insertions(+), 3788 deletions(-)
-
---
-Jiang Xin
+Ciao,
+Johannes
