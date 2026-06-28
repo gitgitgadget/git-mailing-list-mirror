@@ -1,106 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B371A0BF3
-	for <git@vger.kernel.org>; Sun, 28 Jun 2026 08:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BE231282F
+	for <git@vger.kernel.org>; Sun, 28 Jun 2026 08:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782635791; cv=none; b=srevkl2duQL5T3qYKhycwJIebhZurJQgxPsqGflzjN5CmYQwLPt3dQqlXkCsUVs5INLZgcTU+YR1xX2UaoagRgwSXVQ7E7RHKAHxQ219kkqPnjqgb7tHa5O8MCCFZO7J/1cVuRLDVkugva0ceZHIJto9rjmluqw6Bm6XO37gCdc=
+	t=1782636022; cv=none; b=SaEvdWL4I/q/fACHNi8noPbfNOc9enC7O1xH2vHfZK/iX0sVSDRK9BIdoyzrvLm2Nz6XgrUawuSsEmFJvA6CS3ap9TSJidTzRLzb5l/NXD5HzeTATLaAecO5bJjIJc9EOyBMuSPMosabGqF9deV1+vCOxSHFVPh0i4u5WWDH16I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782635791; c=relaxed/simple;
-	bh=A3ROuY0SRFxDvxr6XArlmlDNkp/tHegAfuRepSCIAeI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nxuaPoIC6kt/VL8ZvXE3NtE1Ns9G62uKjcVn1zLWXeEmFTFqGgg6nO+ADtf1ZOOYfmtI00fMoS25cf2oq3YUfWwQyFtxACvxTSHtFLAJa7C3R9/eUseFUfMOYjaIHvtg8wWgUvb2Q9txKHUftOAXriPbq2we9XduxuwLbbPQtq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BFnC3Xgk; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1782636022; c=relaxed/simple;
+	bh=Nx8Qn/634vRQ2UwC9J6kcwT9jm0ARjM7Je8IqOre+fk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TykgnaYaS9NurQ1z6m6I3FEIvJ703kkCm0QUa0GOgRc2NGXNlxO7jbz5RRbz2PS43i2bBXfZNSnKSmeoS7gsEBPifDbAlOTdzclw9tqNizcdFx1EOBUBkGKC6xz/dVZqoSE0HG4LY5pSIYqp+i9Je2JZLX7qpO71ux9P2+aIjJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AVlKl3eo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OqY6Pt83; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BFnC3Xgk"
-Received: (qmail 52435 invoked by uid 106); 28 Jun 2026 08:36:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=A3ROuY0SRFxDvxr6XArlmlDNkp/tHegAfuRepSCIAeI=; b=BFnC3XgkDbF6aeiqaWRMMBSDUnPF8yxdh0shlNzj5Qvs8WhxYtcxo+JK2/m4qRtZlX38mWklU37Jyx9ZLwBw76OiOzqelEIUQ7YsBtStHfI5I+WYCRHR7dvX2Z8Tjrkg/CAed4jjR6AeMXX2rmgibx2oslgBj0aV2mxEN/RkKKjKV/EsfptM1DlXiIhhNlp2vFiu9awm/DbnJJxMBjcR6yyRtWjZlywr7Wv+fPTfj3odS3yJK1s+8BmEjI0f8NXcMzkp8xmHYNidAXP+02kOXcyZ/IA4HFMyywA+R1Hzp6pb2hQZaZAVYbhrnPhlaZdGdutQpmqCQSiGxGkgc6awMQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 28 Jun 2026 08:36:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 111717 invoked by uid 111); 28 Jun 2026 08:36:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 28 Jun 2026 04:36:29 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 28 Jun 2026 04:36:28 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: git-diff in a worktree is an order of magnitude slower?
-Message-ID: <20260628083628.GB3594700@coredump.intra.peff.net>
-References: <20260609001134.GD358144@coredump.intra.peff.net>
- <CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
- <20260611085526.GL2191159@coredump.intra.peff.net>
- <CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
- <xmqqa4sog1e9.fsf@gitster.g>
- <20260621172432.GA2206349@coredump.intra.peff.net>
- <20260621174518.GB2206349@coredump.intra.peff.net>
- <xmqqfr2f7iay.fsf@gitster.g>
- <20260621212805.GB2297179@coredump.intra.peff.net>
- <xmqqik7a4vhp.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AVlKl3eo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OqY6Pt83"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0FF787A0085;
+	Sun, 28 Jun 2026 04:40:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sun, 28 Jun 2026 04:40:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782636018; x=1782722418; bh=XW7sgaxpjG
+	dTrAMImxYBE/71M8xa83QSao1+I/xWuGA=; b=AVlKl3eosXtIqB+GE7GVKy1cR0
+	zW+HLS1lLHCD5vf2owEQm4rRS0k7dJI7+gQLRSOYOZ2BjZnp5ZTof6gRXrrQ33RM
+	KwUqHo1ulk5I+YAw3nGp6IklhU2YiZfcDWFay8C+jzBkk6BMS8CnJ9672djLUX4C
+	WYT3Dm+I7nnMU5DFx5ebT8KQIPCvgvGh2Sq5KBMYfe1/9xzl/0fvHFzZM2dK/Z+i
+	PORVc3/9G69xNTXQBQEWdVR79EEr7H/9JtWUIr+DvPdEfPvHuunSlq3+G9WIP2nX
+	2us3LlzgcGDJh6CBzgUtsNdeZa3ghBtscBgp4pYJC+iZFeQ5+CHTSMR7JVCA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782636018; x=1782722418; bh=XW7sgaxpjGdTrAMImxYBE/71M8xa83QSao1
+	+I/xWuGA=; b=OqY6Pt83biA1GCHPvq1hiLpgITuCPEGiggGUQlKbdNI9bJj0Mi2
+	tnn3/B5Cfu4lDHvhYKS03nO7OOIn+8LW9xtwyA6VfGThKbUHF8TQ6j8JGKu81Nja
+	OUScNDrpFm0rsu1r8www+gWxLhdoHs87+OuNWY2OM+0y6sRx/Sa5I7vUKCwssOfU
+	rvskgwEEq2xBRSwxVPmJi/7ghsm+KDIM2qD6lLGp0gnqvmdhrGuvDsYslk6IKgd5
+	TP8VXS4lzAHh5kH/jHtTO1wR52VT6hPD5Yj/KdF3lqAgOnlAq8M9iIuQLyxcxstv
+	0vqN5AF1891b7N/EilBaH7+Mpcj1kibPckw==
+X-ME-Sender: <xms:8t1AapBKb0iY_234CD5bJHxFSYTbHckom47HJ0IKbyM8NH7mVI-V0w>
+    <xme:8t1Aamkaif_d6hTJ7ZVyTx1IbuBUBuDSCIVZnl6W0ienkL4PAPvqg1qyN-Wx9Gx_2
+    0PqfiIGAUi10nBfiQ404qqaxY1w1BVTyQ629k0Nv4zM3SFDFMnvWqU>
+X-ME-Received: <xmr:8t1AaqxSc_V1NjReFXY5WNyGJc6ZOfyfqYZmUE1jUfMOx9ECZRoLA1LFL9aX7nPZXatLbjIyzvJOosw2a3gAmTvhc75dGzeufChFQ1o>
+X-ME-Proxy-Cause: dmFkZTG1Lme9D7PmGw9DH9sDD3ikZmrslSVh35vfF7li28uORisRZ/TymxlX0kpQS1sKb3
+    DyGe+bBJIxH1W1CHTeSMp8iCMvtrMR2M803mflnGwILbXVz0fkDoA489M5a4FuoOTKMNe/
+    3RjYRCnySjQnKhTh2L2bVKV6bfeMBYqQZJDW01+fLibCgSHgwJ15P8N84UP6RfNJiH2EFZ
+    QxywHb1+zK3d2mVhTzlIrYCro8/pO1wi5YGW0fiPfhDor+xHD9AJO0sG4mATenLX/816tq
+    gbhv6JFjzVGXqsdp4Lqbf5PRyHuCIutY8AS03KrmVCvKkg5epwiScNJxANkaBNec0x8oVB
+    z8MrWD5tOitlLLhxEXne8nbH3JslUFI+xGGZAGA6DzPk2cHytd9uQdWyLWf7E4HqOqVQ0d
+    mNkPuUzHERyFCCDKn5hq4d37dI8DwuMpUFpvCutQfCfpTCVhMxkfZNtn06dNo7805uqcGO
+    ecNoU3PaVRtwVpDCw9si/di3yDfTZVy3bkSCpuT2KwyqHiawFGFLG0KrH63HNQmjfKR5ua
+    uEf7SGaWoKX0njOR5TkykFTBO89i8Q+JhK+S5lZWtVPv2A4lAGqVdu7i5coOGUc/UxXK0U
+    KuDKAF+mL3c4QVMSDgkcsRXsFrbypgVdUuyxKBfnrRaHBB7h/f9np+tuoOIQ
+X-ME-Proxy: <xmx:8t1AagTZ2fHLhSBWYZA8mu-6BIo_IK10KIW6l13VKLzY22R_yJMiGA>
+    <xmx:8t1Aai-NqWLVKAt4qkhNl0UsPGpV1TrKC4ryHw2sp-WdcBH38421TQ>
+    <xmx:8t1AautUFSG6NpqaD4s9EKf0ZnQboyqxbmMYtxKtzNc0C-VEAy7goQ>
+    <xmx:8t1AaqOax9VkIpNpdYdCR1FEuX9B5A99lVaA5e38mPRmkuBnK-L7ZQ>
+    <xmx:8t1AamurKnZD6Gqu8JR0mbuwN5UFKelowTmTGn4euPR_bLR82cklTIJi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 28 Jun 2026 04:40:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  cirnovskyv@gmail.com,  szeder.dev@gmail.com,
+  Christian Couder <christian.couder@gmail.com>,  Ayush Chandekar
+ <ayu.chandekar@gmail.com>,  Olamide Caleb Bello <belkid98@gmail.com>
+Subject: Re: [PATCH v4 1/1] environment: move excludes_file into
+ repo_config_values
+In-Reply-To: <eabb8169-2c13-4961-9b21-f44b1fa66f70@malon.dev> (Tian Yuchen's
+	message of "Sun, 28 Jun 2026 11:19:55 +0800")
+References: <20260626075037.532164-1-cat@malon.dev>
+	<20260627160813.1074201-1-cat@malon.dev>
+	<20260627160813.1074201-2-cat@malon.dev>
+	<04d1a7d5-ef83-4728-b816-5cdf1cb4aa25@malon.dev>
+	<xmqqv7b34snt.fsf@gitster.g>
+	<eabb8169-2c13-4961-9b21-f44b1fa66f70@malon.dev>
+Date: Sun, 28 Jun 2026 01:40:16 -0700
+Message-ID: <xmqqbjcv2h3j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqik7a4vhp.fsf@gitster.g>
+Content-Type: text/plain
 
-On Mon, Jun 22, 2026 at 05:20:34AM -0700, Junio C Hamano wrote:
+Tian Yuchen <cat@malon.dev> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Yes, though that implies comparing the index and file mtimes with
-> > nanosecond precision.  We have that precision stored (at least
-> > when the system supports it) but I'm not sure if that comparison would
-> > run afoul of the reasons USE_NSEC was not the default in the first
-> > place.
-> >
-> > I guess not? The problem there is that the nanosecond portion would
-> > sometimes get wiped if the entry was dropped from the kernel's in-memory
-> > cache. And then stat-matching would not work. But if we are talking
-> > about strictly asking "is this mtime later than that mtime", then I
-> > think the worst case is that we fall back to the current behavior.
-> 
-> Right, and you are right to point out that for the purpose of
-> comparing mtimes of files' and the index file, this would make it
-> unworkable.  I can imagine that a file and the index may have been
-> written within the same millisecond but we can tell that the former
-> slightly earlier than the latter (or the other way around) with
-> nanoseconds resolution, then only one of the two lose the sub millisecond
-> resolution but not the other due to its in-core inode evicted out of
-> the cache.  Depending on which one survives (and keeps a non-zero
-> sub millisecond part), they can compare differently.
+>> Wouldn't we rather want to try to be more strict and say
+>> 
+>> 	if (!repo || !repo->initialized)
+>> 		BUG("repo must be an initialied repository");
+>> 
+>> here?  Aren't all the callers of this function supposed to be
+>> dealing with an already initialized repository?
+>
+> That makes sense, but from my point of view...
+>
+> 'repo_config_values()' already has a check for 'repo->initialized'. If 
+> we're absolutely certain that the 'repo' is initialized, wouldn't it be 
+> better to simply remove all the checks inside the getter and leave the 
+> judgment to 'repo_config_values()'?
 
-Hmm, yeah. I was thinking there might be some mitigating factor because
-we're comparing stat information that is stored in the index, and not
-against a fresh stat() call. But that's not true.
-
-We are using stat() information stored in the index from a file that was
-written in the same second as that index (otherwise we do not care about
-nanoseconds at all). But the index does not store its own mtime. At the
-time of reading, we will fstat() it fresh, so we may see the truncated
-mtime value.
-
-In that case we'd always see the index as older than it really is. Which
-I think does fail in the favorable direction for us (we assume the
-too-new file is possibly racy and err on the side of caution).
-
-But I don't think it rules out seeing the truncation in the other
-direction. The original index write would have to be done in the same
-second that the tracked file is written (because we only care about
-nanoseconds when that is true). So it implies that the tracked file was
-written, had its inode evicted, and then was re-read from disk all in
-the same second that the index is being written, and the index inode
-itself is never evicted. That seems unlikely but not impossible.
-
-Anyway, it's all sufficiently scary that I think it should stay
-conditional on USE_NSEC. I do suspect that USE_NSEC is safe at least on
-Linux these days (see my response to Patrick elsewhere).
-
--Peff
+Yes, that was what I was getting at ;-).
