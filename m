@@ -1,128 +1,104 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58D13FCB0A
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 10:09:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AC738A718
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 11:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782727782; cv=pass; b=VY62KC9TyxUjwH6nT7GTSW5CYgFLKITcsTXlUfnHI4lQ1WQmbqB0k3aaHSOqhPIYH4pfktmmN51L3iKj06YYuFQBSiVdndqilpGoBKVKzkkI4hiXWCaxK+AQXKyHspChsGabRnWLc0PNJuE4xxfUZzKvw6sPStR9UZjFY3SaoAQ=
+	t=1782733800; cv=pass; b=rPnwFoyrGbZV+R/T3cx2SMJWj0meglsbOLDjynKIogHC8nGMlmdix5acqRRaSUpqyeQcBhHKefDVxp1MJcGsYM7y4zpLTqXheJMBO8oWX0zLkWmfVrggxkN+2vnq1pZ5Jq4tWH6oiIIJF9qAmwjaKh1jcgybIlUpOwZJhAKbEVs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782727782; c=relaxed/simple;
-	bh=tsQzSgKOyqX5ekIGwbdwtspL+S4KMp79kItffX8TBTs=;
+	s=arc-20240116; t=1782733800; c=relaxed/simple;
+	bh=iYKWXAspyenoP8bMcNmxkf2ZKuYmgUzWy2/UHRGCITg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EYK1ZQs+KPlFp1vF3iHLEOaxCWyV8bWOFzhzdMu6wHpQxqUnPI04cF8Rpjf7iQteCD8WefkrqpbyZfrQO46zL/DkTvwv/hnvt1zkKJe6EC+QE7ovolog+wIaiLDLCvo2iaqMlFont5JxNLwL8aNXa+/aJazAOD0pNup4ZJjL46A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Nbd2iGIQ; arc=pass smtp.client-ip=74.125.224.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	 To:Cc:Content-Type; b=ft2W5YJV4eJiwAmx+zkzli1iazLiKXyYpOI17BibUxgoUUAaf0YJf3rfwgM+HVn8HxvyGVWeIbuhnK89sF/BzyzI0mHLZ1UMAuFMYR0jP2PGoiwhGLf1YgqzAvrEs4Yt2MHbj0GG5vmOrKmMAGl7wj5kORNQ8t3TmZmv9eSmQ20=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dyh6Rofo; arc=pass smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Nbd2iGIQ"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-664a09bc459so2763059d50.1
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 03:09:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782727778; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dyh6Rofo"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-84592b55832so1526676b3a.3
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 04:49:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782733799; cv=none;
         d=google.com; s=arc-20260327;
-        b=Oh8N25+ziagTlOJ2c9ErTuuzceYudxFjrESCYfZZJBEdbGjtx0uB/NAsmTBANXGNCx
-         +hv57BB0aauNCZeMeCjogMHu+ZH6qbvc6JxiMjni27WW6LaD2WJmaWYMiMlgEXK84Mkt
-         /BeoozzmEvI3cMUYzbnNI3vrdGIQhlylOI3mQ8MkUYSssbD+NhehDzzzYP9cUb/mL2NT
-         VSdhxlozJ+3g+0pKw+stlYi09ufT7oKYRN2V9ve8N7KivCuWGg/fWpbitPAURIshrhp2
-         yXp+g4fUq2kQb2ZZJrdORLnQscNDUW0r2NU3rY4CpRZVfw/ezFY74qnzJb3MkesA2n0s
-         m2TA==
+        b=roqPiEgeANAwLPE6KFTZOBNJs/dCz/GToXgh6lju1vmnh8dSr9vOnpF45lniDVUWKv
+         rSaAomYpwbhJt0dfPltEQzyoQftb8MEITjQksjKqM0OYKc5vyXuvGovzhtt9A842JH3/
+         rGuyWNXWOkTqaXnHw/aJYCjXTSbCM1pI1bIVKZEvRftg02AUOGU2vydSKT4+ZUmyqNhA
+         Ok8AIpyWnKp2NYZ86nX2lRIl2LwEmyFS7eYLFoQP1bVrT6IKuWwtmVsylTq1yTV1cHUb
+         W2KbVDgmBKmMaKMtuc1FU7NCMq7kvOisBcOt0AxD5uv+PoJNeAkFL8vs9mwYY6sqkQLt
+         X3yA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=wPVwTsjUgtXotKrLZv+juxhY5JFbJ0MUl4BnRdvGDts=;
-        fh=fClg/pnLcDIdwF8qY1rmMokykJoEfJm8OplWhmnw7vI=;
-        b=sa7N4RhI478uEk6QLEB/KXFFaJaSa3QNc4f0Sa/eAopWLeMHX1IcIkpoB7hTEsTXS2
-         5315aweUgh4UnlCDsP6cu1BLrdTsWTj68Xq0QP6IIQLPI1ix8puBqarogpiegP6F9qai
-         82xFMf/uYW0sKI20u4uMQKKbzyLbRbFdptRA22pETWAZFY9J8qAwmTzbb47wbnie6Qp9
-         gso0JhdCFGYKSlNX9GubKSIDx2VjgkbcH/65kVAZIUrTC3LYKKb7vvWmeJID6Jiqefpa
-         6mdT/Ybkseko68ydIyzeJ+jqAlQ5p32j1BqjxczWYc7juR7KkBkk7BqvWrYJdFzGfhFP
-         Wq4g==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=iYKWXAspyenoP8bMcNmxkf2ZKuYmgUzWy2/UHRGCITg=;
+        fh=xFkGNlwBTIbSQlTAuP7IICOn+9qF32ywGtU2a0gtYq0=;
+        b=R+WHcsYBAK7SdlCxHOfm+eK7qF84iCEzKiSNjH4jvWT1x9oGinM91Ii/x4OxfjyUF7
+         8JjM4JbE2ECwAaQ+1KfB20pv2XTqDUCRjdT40V8g2OaazPJq5RRVsRnanuzoLehTDXiv
+         d4GxyitOtEY7MS/Tur2/SUIz0sI5mcprtd7sD5RMj2YpOKIMMjX7vSlK5vz7aHhciC01
+         cPQxVNDNwIfPtM7oTqpI1PPU+J8AqwRy3dqk/4/pwuD05Vv4NfjOr96PV0WjFsAyHkck
+         xhGhNAm6JPcM0rz1CHFpiQPQ3Y4BgyyEOFi1vphAuXK575gzShWJouLtxlzO1S4pxtMv
+         m6ng==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1782727778; x=1783332578; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wPVwTsjUgtXotKrLZv+juxhY5JFbJ0MUl4BnRdvGDts=;
-        b=Nbd2iGIQ7+FoxEtGleBIpcVao9mPCp5dw5zQHKAkxcshsn4lZH8rl8Tqo3XpKQ6acb
-         ac8OMGuZSe4rDF8PfFGwSKquSGfE7oBSs2aIWJuugjnWmByFR9ayp/LP/WWmgmRW29/I
-         YOZkZIX83y4mucgNog+7c6yBqNOlUCR27w6GI=
+        d=gmail.com; s=20251104; t=1782733799; x=1783338599; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iYKWXAspyenoP8bMcNmxkf2ZKuYmgUzWy2/UHRGCITg=;
+        b=Dyh6RofodhqD/5HVps8p9USXYyGQNHrLBLzwneGTg53ryo5NNKTz5oGt1RwBarwoMK
+         DS6DIhxWFcUunhuALqXovrMcxj6I5IdEYHddfS8b+ME9beXz3oALh21hQ0VupC7KwIqU
+         PDrJXENpT6tzK0IMMTFVI29TcUBkhs71ISRosb755vRyWf9hrCgDcChNRiL01O5iSWwq
+         7yNzzxz0kcBP6QW67gxwqRkecE5JUmMJySPAv/aKRnsoZj4qkwPHo7upDN5ldPkB2j7H
+         vOYtZ+tU5nKtCWU4mso/7iu8aeHgJs5cdlmmDykeC5MsKT1fEE64VZNKFBfyHIPeSxMZ
+         Z4Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782727778; x=1783332578;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=wPVwTsjUgtXotKrLZv+juxhY5JFbJ0MUl4BnRdvGDts=;
-        b=CeppOAK43ChV4v+SqqhdG5xyY1/rFYIRRSOQV44X8TJI4NTPIKpV5MLsSTJHJ8JVJF
-         KpIgdjJ/k09hDFUVcZ4g1p89qQXMMnLLa7Ux8i9Pt+UYeElNPw2RNAVejyYS0VLh1TCd
-         pFVRw+x91z/faQcS7wnNmZsoOU3rxOWvvuAclISJrcN8M41tuHtIW4rU+8stdv0qU7fI
-         Tpy5CVXmpXnvDlgEM7GojoasPuG5eAf7ITcsZZWufnB5aFIqZkplKtCC3A19nmdFl4MW
-         nlmCTA+FcS9rgQrXHQorziTJOAyM/4Lv0PdbjF+mdDiX9h/eBiLzE+E7o1I9sc7aPh09
-         3j3w==
-X-Forwarded-Encrypted: i=1; AHgh+RriJ9Sg+AkaEMFGRHxSSNEwjN3AeIdZGF/EXP9TR8KU52rIRkUdkKE53KqKw4gY12hlwbg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+9g9gsEqVf25U20SVpHrx9bTApjbNirINoX8uMdvi4fkS0i63
-	E6UYhRIY6Ywnuxg++9owOASi3ijqsXciGoO5espdMhou4S64cbjDmOFgmS5GEDsgXoUyEYWqBb5
-	hiD8FZtsUNG1D8//rf31yU2Xhds80c4fzmV1NjfceMQ==
-X-Gm-Gg: AfdE7cnd9lnihBZgUrf4GWOx4CuPp/hXblnuoQoL83OPY4k6DSTNUQw407hTO4Gn+Wd
-	4eBhYLf8o3HTRXfjOaGkkhoo85tbcehucb5QpL9bMCW1A3osPjNr+ZtgRLmmMMCyDY2kt0fVU3u
-	yQRk78fu8Ycspv7yMiSRQOagN/rsxosWcZT48AMxvd8qCceoCI9R1W/oPF+rg/U06bK6w844Pcr
-	bpHvswW8o9lQ37CGsRGdSoU5iy9zRlYmB//d2L7ezKF43lm0ye0qCu6eOjl75mZynls30S91p6s
-	XwQ29z7U
-X-Received: by 2002:a05:690e:1913:b0:664:c281:a100 with SMTP id
- 956f58d0204a3-664c281aff2mr5466349d50.40.1782727778536; Mon, 29 Jun 2026
- 03:09:38 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782733799; x=1783338599;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iYKWXAspyenoP8bMcNmxkf2ZKuYmgUzWy2/UHRGCITg=;
+        b=qEoZuBj4MVb7wBoadRZHp48F5sM5J8MLeUiatlBvYdOUA43wDMjMDA6qxrmlEdai0a
+         lXyeonmt4mSJVXUNZC7H3MWM2buiDqcteb60zTiUEgYGXjJstC4If9b/xQceiyjzVIdb
+         /n52ttiiiG02h864lwUgNG6TAbq+F7YEU/L8N4y9F90M8JBjrRkWPQHrRWi4+rIMjtON
+         EbzdSOGdPwvs4PQqXGIP0E8+X6bXR7FW2Oety64QvIMdJyu+J7eZEilZM+CNSf1kPAO5
+         5zcKoRsaAOZv76UjJFPxbjNMqxIqaH5i4+7IefsKeljw89Wmh/Wk116dsuRC9rr0YBin
+         Hc7w==
+X-Gm-Message-State: AOJu0Yzaw2wMMe5JXZNdRBy8r7B2HERRdPmqbC5iDZ595SJ/gVBg+JGh
+	dSxDRu1f7zdpcdtP1dFR/PufLBQtwEtIFE9UIRbH5Fpo2BHjHkA5z5aCGY5MetOADEqC5LPEPGm
+	ovS4qadruhCVRNayEFzpQ58UNtbfL0QAMd0uo
+X-Gm-Gg: AfdE7cnWE8s6B336Kkg44npgNHUZL/6K9nsGF/ymuBJO/K/E29nke9hB1Y2LWwPSX1U
+	MXXVL4/7lGknnvOy5jgfLsg/RKcnBjkmCHk/wfRrXjm9392za0d5nksyvLWVDrE4WttZ6LiUYrl
+	e4dm/EYnbmZwFY9+K9V58OGz1adQ7+NXeKL1zoOhiPxbchnnH/KswLu7wNDzdvLecbfMPCdELuX
+	+Jr3Zd0W95Lym1MUrfxkcFjxgc0TWmIffRn4itS8RwxF+WYNkXY+yzw8y756OMfByQLBYIYpiX+
+	X5/RwIolgU27yhpIzms3+HjXaoIo2SBvo4rutji9qymepTBx/H1MQGzEvDgpT6HjqJge7FyrhPu
+	ftI6ylKs2GVWjR0/N
+X-Received: by 2002:a05:6a00:991:b0:847:7ece:3426 with SMTP id
+ d2e1a72fcca58-8479b0488c3mr113518b3a.58.1782733798421; Mon, 29 Jun 2026
+ 04:49:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com>
- <pull.2149.v4.git.1782649547.gitgitgadget@gmail.com> <4db485b48aae810eeba28ea4feb47401ab352e88.1782649547.git.gitgitgadget@gmail.com>
- <akIBvWT7nIWntCNT@szeder.dev>
-In-Reply-To: <akIBvWT7nIWntCNT@szeder.dev>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Mon, 29 Jun 2026 12:09:26 +0200
-X-Gm-Features: AVVi8CdeSqHt_7tHS4jX5pmcMqHxmTwJdHOq6C2VGUZ6xcKG-ZkhhRl8THNZnlI
-Message-ID: <CAL71e4N92t8170UBW3rMA6B-rEUeOm-R_HSioB957mUKOpwRyQ@mail.gmail.com>
-Subject: Re: [PATCH v4 6/8] commit-reach: remove unused nonstale_queue dedup wrappers
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
+References: <CAGWgyh_WJ2mAgbJ2agp9UQm8iyR=eq0xWjdYT59CC9fZTnAbzA@mail.gmail.com>
+In-Reply-To: <CAGWgyh_WJ2mAgbJ2agp9UQm8iyR=eq0xWjdYT59CC9fZTnAbzA@mail.gmail.com>
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Date: Mon, 29 Jun 2026 17:19:21 +0530
+X-Gm-Features: AVVi8CfL_M5d0ciuAlSm6RggUgEDFG2-YJkzS41CugUVeg-_n7cbxRaSQt5T_oA
+Message-ID: <CAGWgyh-Udy9p9yF_8EDnVgK4bxyG9BsX1gio8oKr0G9b-sdQFA@mail.gmail.com>
+Subject: Re: [GSoC Blog] Week 5 : Improve Disk Space Recovery for Partial Clones
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, 29 Jun 2026 at 07:25, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrot=
-e:
->
-> On Sun, Jun 28, 2026 at 12:25:44PM +0000, Kristofer Karlsson via GitGitGa=
-dget wrote:
-> > From: Kristofer Karlsson <krka@spotify.com>
-> >
-> > nonstale_queue_put_dedup() and nonstale_queue_get_dedup() became
-> > unused after the previous commit. The core nonstale_queue functions
-> > remain in use by ahead_behind().
->
-> Please squash this patch into the previous one.  Since the last
-> callers of these static functions went away in that commit, it can't
-> be built with DEVELOPER=3D1:
->
->   commit-reach.c:91:23: warning: =E2=80=98nonstale_queue_get_dedup=E2=80=
-=99 defined but not used [-Wunused-function]
->      91 | static struct commit *nonstale_queue_get_dedup(struct nonstale_=
-queue *queue)
->         |                       ^~~~~~~~~~~~~~~~~~~~~~~~
->   commit-reach.c:82:13: warning: =E2=80=98nonstale_queue_put_dedup=E2=80=
-=99 defined but not used [-Wunused-function]
->      82 | static void nonstale_queue_put_dedup(struct nonstale_queue *que=
-ue,
->         |             ^~~~~~~~~~~~~~~~~~~~~~~~
->
+Hello everyone,
 
-Thanks, will squash for v5! It's unfortunate that this means the commit its=
-elf
-becomes less clean, but I don't have any other good solution
--- and having each commit compile cleanly is more important.
+My latest blog post, covering week 5, is now live:
+https://siddharth.shrimali.info/#post/7
 
-- Kristofer
+Please feel free to review my work and share your feedback.
+Always open to discussions! :)
+
+Regards,
+Siddharth Shrimali
