@@ -1,70 +1,70 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298EF2E736F
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 19:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1931723ED5B
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 19:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782760241; cv=none; b=It0zl3ri/JzvdGo6kUVf9AwvRzQikPj4qL477l3nLUBUwcvfBHMdm0fYpt9NCq2w7SmlZ5j2vMtL9/xX5QnFqD1UUkjonhp4ZtJ4hiRBbv6VPHYpBgJlwRjamq3kSNMg/R/mAcCORrH7xEg1YD2LW2ZjU2zoRP8e21QHkPA9wbc=
+	t=1782760517; cv=none; b=VpDEALUJV4QST5W++F9s1dpBUE3BhICIXXTygqkaQcRbXe2Evbqhkq+EVoSw4hlPN1oE6g9j0w3ghe/iR6njro71TBIZIWmYE3r3WhgDaL/pBer+IcHDgsk2sbD8laMGdseeqAHvbm8P2LmDQTh332/JToQrx6rqci50lqaF7H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782760241; c=relaxed/simple;
-	bh=Jo7JCpIvtv+tpaF7gLI7/J4gG0EygmUZ0zmkXtk7JEA=;
+	s=arc-20240116; t=1782760517; c=relaxed/simple;
+	bh=xaCY3COIQQown9utY8mLKzck8aPUHpKk5ZIhJszHwHM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DW4A/xECqUOrqfZsA224TzErPfUKRsVgEni1nxthX99xrXwDCfuekRZ5Py0BWQoFuuorK41N19htI/6j0QLuND3dTjEtsQ1JW8PvUIB/MEWYVztTdGC7d+EpoOk4JFuMaG7obJy7eoDM1KJWX7dCJwkpN0IwYoinK/1G2wNRxK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qOTf7AAi; arc=none smtp.client-ip=209.85.210.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=m5AXXI5pYmxDH/blIHdmCRu4krKauXO+MA6p4khm09CG755soPwGo9yMR4oHaMSPrQqR5vVK7NYGNHKmZI2zq41OtCk/LwJI2cfash4z6YRQL13IiBUYdPB51rLs4AoRV4Yyc94ZSpiXtS6s8DxzWT5c1MDbQwl4tTdp2AxMN4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sPUBoAgY; arc=none smtp.client-ip=209.85.210.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qOTf7AAi"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-7e93f93ed01so2350788a34.3
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 12:10:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sPUBoAgY"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7e93f93ed01so2353508a34.3
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 12:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782760239; x=1783365039; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782760515; x=1783365315; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=myojnBp1dXCACXLHUhNaDklG6HzD4H9WFv+1zLvADMM=;
-        b=qOTf7AAiKmFysucAl6vX2q+QsR602ds4VnUI7U452VFgmzNXO+x8CglGs6m/M9VVsI
-         GN63hAJKZeySO1tY7tQi5GJ+z6KR6Y3+IYgDNrpUYNVCRAb3qdpk2rGVpLNePj91IGh5
-         IbrXRwlMZnrYtmO98lo6fIzHSi6FNozrNCY3aJFhuz80o3eNaZmZXSfHJWVSQ3wkI5Jb
-         FpnWE+KV0sNS9JyPFU5q52PumJ/i8oBLDBIjBYmQWKLPipEJdJjT06jjDnJHsm2W+l5R
-         qy5vhO4tmFbeXBshzNkFd5BA2incjNEJjc/g5nZ4tDP7aa1BehaIdmpbpkOHfwNSvjEB
-         PFLQ==
+        bh=qktEx/YlZVOGwRAfdoKJqG8O1Fc9Uf3CUZf2ej/v4JU=;
+        b=sPUBoAgY3WPK7jjZMazzGRMKnJSjyQED5x0gbLjrQVeGMC0kwYnT3hdFjbwfM0wO4d
+         XVhZSLEPHlv19abvrcoe/tJ5A+9LG3CMt4audYpo63z0WoCpmi6AfNPO45qHCIzSMZhX
+         XbFhx7dZr2aoYZR4LgWpMtHklqWvvQr6QkXh6zbK5mWaSfala3KatqeiSU8j7wAXqV6u
+         Ry48QJRzhKZ/h5zP+Keeafh0A8HoaOiKTExfOrYPIhIETjvGgwDiWyFogBEw9kH26rjt
+         +e8y7+5HilXicUWo5aiTveOuyUe2+8DQPRWPnvN3KZFtemEghKZYobIDyfPm/9jcmFo9
+         Z4lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782760239; x=1783365039;
+        d=1e100.net; s=20251104; t=1782760515; x=1783365315;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=myojnBp1dXCACXLHUhNaDklG6HzD4H9WFv+1zLvADMM=;
-        b=VOHs/cv2g9FDRI+vqRSt5O+sCOnx7eozjFRJXW5mwU9Ag0s5k4dcQQ59dqWuWpukUq
-         QMe2EG00HDsxartR4Wn1SM03exvp7TSw6MKT4Ny3LI0uySqdA/gI2l0q3eVXBLPzE+Fd
-         iKgDt7aX+RioKeqBOc5peFBLOaUeK7X4gvbMeSQ81/yB5O/fJaEwSoVvKWAUWNX9m4DB
-         T8fdprSR9EGo4uhp0CScaum5IV9s0MkrL76iD7+Cdt9NixsYhfAApy7bnUxliYB6YHaW
-         f0cIjCCV3rug28FI42wZcnhzenDwBtBLRUXu0Tzd7bPpXI4VdKKTEbHmSx0dH3onc678
-         U4nQ==
-X-Gm-Message-State: AOJu0YxgvuzeYKQfuclywDYm+oPc86t62sNmkOCPSJsQ1r/hkX9rBX9d
-	IrOGLEp5kfI7uabhTMxkNN5Mo63VrRXgKU8Bek7qwAwuLhTF3XvUrlGI
-X-Gm-Gg: AfdE7cnySn02Y+trnjlVcVufzpWSzgbrIGxeNv2iLDoG/O1j3iKe0M/kEfizIoTscOx
-	4lZn0WIIYZElA41Ce6jpVuYiGEJLeIK0BIfK+uBa/QhYU8QIlTr6DXaUsSIuFiXeRfjtzm2yNdc
-	cdR/OBTXIXdHijmR1JwTieoxi2AhvBbciGRyMeeU9Cad8DMohhRq6eOP5vvV+BemG2YPQ/G7PDZ
-	NOL/lr3PPQmcheqnT2RBgRsJqCkv27fnXPQUmkdkPu7T4N49LtsETBFwAk4zwowrDK9EKzDLFKr
-	0e8i1ZPoHooX6PnbY6btQsaVrZnf9C9rMOw7Gfm5GBSb0nPBlah2c7z/H1pfQFfQRDXkbmTsPxk
-	LN6yqNdb/4o3sjOlnt6ijVp7j5h9Se1+UgZkg4bORnKci08gP9jBYqxV387cRQY9BJCtJsm1ZsM
-	Xxoex+gw==
-X-Received: by 2002:a05:6830:268c:b0:7e6:fa37:9797 with SMTP id 46e09a7af769-7e9ec59b510mr601984a34.6.1782760239153;
-        Mon, 29 Jun 2026 12:10:39 -0700 (PDT)
+        bh=qktEx/YlZVOGwRAfdoKJqG8O1Fc9Uf3CUZf2ej/v4JU=;
+        b=k8d/RHhlUS56wLqJocXRK90n+6ktl/K/6b1cbODdpk6INiCtVMGmK3eAAcTZsjzOGQ
+         Q2HG3AZbwBD0UOKXejOdED4cXdASi5ohMTZVTfTLkC3C1+G1yRarEgG7/+54iU2hIXMB
+         Pw+mZE2hPl16+PA1kSp9aHJioRoE1oZufQO0UlIF0TO4dEH0wl52/qkKY+dWu9KQCX75
+         qkFkDSRHZehGtItyqZJPF45h/AHCLlsQmq289fTkNGTI4TKETmetcORnoaWfyJy4jyyv
+         cZyDgk9C89ezEeoSGmJnl8sq04UefrODToG4pV2YGzkSUKj1+UCUuXh40Alu9qow5iP3
+         3y5w==
+X-Gm-Message-State: AOJu0Yy6ntnjOhB/b/7+tCE7ZLRazNkG7sosLm9WCOfc/+edHNgP2unC
+	asbphBYQl5DPuZ8lTIlWuwx1s++7enYRufbTqAlEbwtPvIO9PfYhuzah6HzeXw==
+X-Gm-Gg: AfdE7ckrnkfpbEt3F3LKw3T7+aQnXP9MASID78DCtO/4Fb5NVJiqYPkuGh38/qL0w9d
+	8aZL/s4jd0vTGIfA9oxoPAj36a+yKkEjH4MOLsjPQJJMr6xecDeuVY1bmkQC5xMaBmZx2h2DwRe
+	zCg05zhQ8MIH7mgLEhZn9h+KAL3IHxVMcR/sj0H5dRxCEaczxGTSOL2dpZMj1xgT24KEVlEIKWc
+	o+shhEhh4h+xcQfMQLg+P6AZYGDnD5+wT625hAcLK/CcYIEJf/Zoi+iTFjCkRpEdWkKDf5HtR5R
+	lWRUgJCLQDP3TIQ12n3lAbWss2zgck1gqqyggsd0aNHktIcqpNqQ31OAEbBPMJiEVZm/vFJcReQ
+	n/ZRavuhn5CZ6X0rCQ450+0F7Mqd0neh+VEFOKgNmB9rF+8iSS8zKIlNNu+KtbRe3ZZaQXEgYbL
+	jWFFgaHw==
+X-Received: by 2002:a05:6830:81f7:b0:7e9:e82e:e683 with SMTP id 46e09a7af769-7e9ec5958afmr645204a34.7.1782760514952;
+        Mon, 29 Jun 2026 12:15:14 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e9ebf891e0sm505019a34.4.2026.06.29.12.10.38
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e9ec34f898sm473563a34.27.2026.06.29.12.15.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 12:10:38 -0700 (PDT)
-Date: Mon, 29 Jun 2026 14:10:37 -0500
+        Mon, 29 Jun 2026 12:15:14 -0700 (PDT)
+Date: Mon, 29 Jun 2026 14:15:14 -0500
 From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH 2/6] object-file: propagate files transaction errors
-Message-ID: <akLByeT2no922sBX@denethor>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/6] odb/transaction: propagate begin errors
+Message-ID: <akLDimUfWnCtRL6e@denethor>
 References: <20260624041920.2601961-1-jltobler@gmail.com>
- <20260624041920.2601961-3-jltobler@gmail.com>
- <xmqqjyrniy6r.fsf@gitster.g>
+ <20260624041920.2601961-4-jltobler@gmail.com>
+ <aju-8hUeuyL6gnNU@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,52 +73,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqjyrniy6r.fsf@gitster.g>
+In-Reply-To: <aju-8hUeuyL6gnNU@pks.im>
 
-On 26/06/24 11:35AM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > The "files" transaction backend may encounter errors related to managing
-> > the temporary directory used to stage objects, but silently ignores
-> > these errors. Instead return errors encountered in the
-> > `odb_transaction_files_{prepare,begin,commit}()` interfaces to allow
-> > callers to handle as needed.
-> 
-> "handle them as needed", perhaps.
-
-Will fix, thanks
-
-[snip]
-> The caller of this function does react to a failure of it, ...
-> 
-> > @@ -1670,27 +1678,34 @@ int read_loose_object(struct repository *repo,
-> >  	return ret;
-> >  }
+On 26/06/24 01:26PM, Patrick Steinhardt wrote:
+> On Tue, Jun 23, 2026 at 11:19:17PM -0500, Justin Tobler wrote:
+> > diff --git a/odb/transaction.c b/odb/transaction.c
+> > index b16e07aebf..d3de01db50 100644
+> > --- a/odb/transaction.c
+> > +++ b/odb/transaction.c
+> > @@ -2,14 +2,20 @@
+> >  #include "odb/source.h"
+> >  #include "odb/transaction.h"
 > >  
-> > -static void odb_transaction_files_commit(struct odb_transaction *base)
-> > +static int odb_transaction_files_commit(struct odb_transaction *base)
+> > -struct odb_transaction *odb_transaction_begin(struct object_database *odb)
+> > +int odb_transaction_begin(struct object_database *odb,
+> > +			  struct odb_transaction **out)
 > >  {
-> >  	struct odb_transaction_files *transaction =
-> >  		container_of(base, struct odb_transaction_files, base);
+> > -	if (odb->transaction)
+> > -		return NULL;
+> > +	int ret;
 > >  
-> > -	flush_loose_object_transaction(transaction);
-> > +	if (flush_loose_object_transaction(transaction))
-> > +		return -1;
-> >  	flush_packfile_transaction(transaction);
-> > +
-> > +	return 0;
-> >  }
+> > -	odb_source_begin_transaction(odb->sources, &odb->transaction);
+> > +	if (odb->transaction) {
+> > +		*out = NULL;
+> > +		return 0;
+> > +	}
 > 
-> ... like this, which is good.  Do we need an explicit "abort-transaction",
-> or is that implicit?
+> Hm. So we may return successful, but not set the `out` pointer to a
+> transaction. And...
+> 
+> > diff --git a/odb/transaction.h b/odb/transaction.h
+> > index f4c1ebfaaa..cd6d50f2e5 100644
+> > --- a/odb/transaction.h
+> > +++ b/odb/transaction.h
+> > @@ -33,11 +35,20 @@ struct odb_transaction {
+> >  };
+> >  
+> >  /*
+> > - * Starts an ODB transaction. Subsequent objects are written to the transaction
+> > - * and not committed until odb_transaction_commit() is invoked on the
+> > - * transaction. If the ODB already has a pending transaction, NULL is returned.
+> > + * Starts an ODB transaction and returns it via `out`. Subsequent objects are
+> > + * written to the transaction and not committed until odb_transaction_commit()
+> > + * is invoked on the transaction. Returns 0 on success and a negative value on
+> > + * error. If the ODB already has a pending transaction, `out` is set to NULL.
+> >   */
+> > -struct odb_transaction *odb_transaction_begin(struct object_database *odb);
+> > +int odb_transaction_begin(struct object_database *odb,
+> > +			  struct odb_transaction **out);
+> > +
+> > +static inline void odb_transaction_begin_or_die(struct object_database *odb,
+> > +						struct odb_transaction **out)
+> > +{
+> > +	if (odb_transaction_begin(odb, out))
+> > +		die(_("failed to start ODB transaction"));
+> > +}
+> 
+> ... we don't special-case that here, either. So a caller may invoke the
+> function, not die, but it might still not have a valid transaction. That
+> feels wrong to me.
 
-So this is currently handled implicitly via
-`tmp-objdir.c:remove_tmp_objdir()` which gets registered as an atexit()
-handler. As long as the tmp_objdir global remains set, it will
-automatically get cleaned up.
+Ya, the original idea for a NULL transaction to signal that there is
+already a transaction in flight and nested ODB transaction users to use
+that to determine whether they needed to start a new transaction or not.
+I completely agree thought that this is rather ackward.
 
-In a subsequent series, I do plan to add `odb_transaction_abort()` to
-the transaction interface. It may make sense to also use that here to
-make the cleanup a bit more explicit though.
+Instead we could just make the callers that are worried about
+potentially nested transactions handle this explicitly. I'll do that in
+the next version.
 
 -Justin
