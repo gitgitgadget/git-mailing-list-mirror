@@ -1,183 +1,188 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C2B38AC78
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 07:08:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782716920; cv=none; b=HlLUaUMtCBqBjTWiFQmgVDu4hlUqJpvphF+cHfkR7jXy2SQAHYvskgWP9DffVVLXsjhlBkUmfvF1HUTTK49l5sv7Iv0oc855Lfy1BSMpzVeRYvbvHdF4MK/lbrhrssJ2KVQSePvweUUW3ee9qqXM57y2HYVO+9t4+uet4t2phmg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782716920; c=relaxed/simple;
-	bh=/YdZje115qWyJ469OGlNfFCT6ykDs4Uy4X1KTFmTftU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SSAj5YyuMkT3QfLiZ4xKHK4pxGOHCcizvviarklVMLHzHdkgPTWh1shTzuQBLniMKSOukyFVM3yT984VK6McmGhIMtpS2Y1u4myd8M6VtKPOAwsMpy0Cyu64zIdm5nr3qCPAggurC1mgDU3XkDtF51+GeNC2pfvz2OzKVrAHqa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nmQghRMp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XiCjbTXI; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161E439B97E
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 07:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782717072; cv=pass; b=bK1IcH+1W10a81/Hd8i/SclsuC2IiEEEVKhVaN11iKaNlgvH9QN/W6K0bFFqsrgwOt2cBuvIOnp2p0NDb1AM8Gvp34NKrg2yq+jtLVHoo3XklHQwJj5JaYrANfw5QiSmHP+2CpUwrolTBE8nU2RpOJnpIKt8BPsNsIdYU0+PvoA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782717072; c=relaxed/simple;
+	bh=Fe8TSRf0Gev+AadNGY2SRRqkZLTLTxMj3ODsTgdSU2A=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=b969+ZY1ivP6seYtpdULylMLZL42CyTGuwX7hS1nDaYSZSovx/gfOasE5QCMHLEbRKmpM1U86/3Qfc2Jm3VFMSbkpdhA22SnMZmp0hjh256jm+EL/7ePUB1oVAn5a7xXuJYMNPMdipNsbd+yr276eUOdbg/KtIuEvv03N/LrbEM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qx/wAa3U; arc=pass smtp.client-ip=209.85.217.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nmQghRMp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XiCjbTXI"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C4AEA7A006C;
-	Mon, 29 Jun 2026 03:08:38 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 29 Jun 2026 03:08:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782716918;
-	 x=1782803318; bh=/LofVa3amjjR00/FdEA6mqfJkhr7wt1vgSe0c9TxHYo=; b=
-	nmQghRMpSQ/HG+HcY5zFrgGXsi7f9niLKo9iVKM0HAZEHRFviZ9oRQJE+8tgU5YO
-	/MjZOtUZxJyMEZGuaZTdYvcJu9F4iodRo73bKqAXjzmSi6i4S5mZV08PUJRQP6+r
-	5Fsjj4Cpy123LI43L5fkxC7OXJ2uIV7vccRQa6QUPKfBoCYWSzTVsnZSpA8bAplh
-	NIwxCmgqIQwwe0c2kBzNx1l7oNJJAWnN10nDZEhB6Sca0KxqUqEhu//BeOn2tfdU
-	kb531VNu1eHUAWpsJAaV0afRnytMQ7Y15VXPMUBipn214b17zPIPmIQiilFBn4EK
-	ERV43NLDUBnY7AKxhmZmzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782716918; x=
-	1782803318; bh=/LofVa3amjjR00/FdEA6mqfJkhr7wt1vgSe0c9TxHYo=; b=X
-	iCjbTXIGnXhJMGTixF+27dDeqbsWrUDUqxw4/s//m95mIoV9kc2de4GHl2+0jlIZ
-	k+GuJreZN6jWhKwLmPi+teJnfFimL0ugvYO3bZK9R4GfmzEBlH+mLFDZMwCgYuT0
-	Ak/SM+2D8zfIopiGJCv/5gI6CS6fPttG89tFv1045Ma7vNF9xCpzInb9W8ToMKGW
-	RknzITzOYcz4F+DT1/SsGFE5qOqtogEaBIdvprtu6tfkRmRobv6byc0Uug5ylP6R
-	AATXFTyb8H3EqVIv9HUAAYMDHRYX6Xmketcgntg7PaHQ777/WRCBs/EWdF915PXD
-	+iesD85WPZ9i1AGYz8kvQ==
-X-ME-Sender: <xms:9hlCalxHOYNdJJb6VQQ3ld8BEJ2TTVpmTgG0Q8ryZCp46QypbL7Chw>
-    <xme:9hlCassBIpgP9R7cGwDWt_P4Rxp-z-euRbOAcb6TPlZpLD8Gofj-SF_TEZg13zPqC
-    ZCngv-Xzuh9bM3cyyL2IkwdGr8bNTJl3LfT261gf8zJA61-CdGOYw>
-X-ME-Received: <xmr:9hlCasstuTnSIHqYSheHtVPl6pG0MRU3UAqChOl_onNY5-VqSAbkfzUAoqJ5lBQ6JSHBk-xCyPKZN2czsE_I-liX0O8FpJ_8K_6M8b0809V3>
-X-ME-Proxy-Cause: dmFkZTFlUFF2TaP6OUhAV1Io1LpiVz/xprdgLxxSQzmKysdyMC0SMgvm5rDokum8JHnzsD
-    2009EbgBbpzEdNKL8EuNgyCIV4MqUGghjiY//yRk+BrxC3/7Iu+TMu7SCVdUxYEShIjbvL
-    JWsHPMKiMGdM17RMDi1nBn8IK1bA5pW2nSSo0mOGmxQZweoFRUvuZwQBqIAdT9/DVSeisN
-    48RLHOU/PKeXpCF8gazGSmeDB5lwiG8N/3Km4xwuY+6elMMhndZNkul9zpY/K2ZBcBhvzq
-    H+m+SVhyRBepXW1i780YSKvx7S30c3pnUDARYx6QDWIWnpSB7rgQbLLBMXh0UQvO5AsLcm
-    x6LR4HKZWcmAKNv/t7s4EfdESpunqDFIavVNZKNq0C2ElyWGtMz4bjiM33NO4kLDHJmQrs
-    pJLjDqP+16d4yzR2B2+j9k1QkTPZCpPAkZqcreBIlu8fAJARuanrCrf8hkQRzLha6Gwx8f
-    Mdb6xroLby5E3dMtuaZJAzVkOyIs80gwjhJihP6yYd8l30LgsY6dVtgw/wY7x6uZkacvMq
-    Fm3IgHOhRoIPNysATa0w0iWZOKVoDlDTvhjLe1wmKsUfludhroqXoC3aKGA5siWX6PibQH
-    OHQ3yAmOk7awtUukuOSNwDrPUZ+8345Rzc1N2ZuTGJUPuWlR/x9i2ZppJLMQ
-X-ME-Proxy: <xmx:9hlCahNl6xysK6iuNHlLlNZ7MU4wcRWJo1kHJNe4GINe1LKG5V3wXA>
-    <xmx:9hlCaq2W7t4yySQPbesHKhQa0yW8iAMYQjmeQQDQzhy1vP40I2Jm3w>
-    <xmx:9hlCatMWAz9rWB3lHqFPWiSAyIkHxsH6eaviQUcvEC74YwVlDnv0gg>
-    <xmx:9hlCaq1TKQ1cg_Imi3eD7oMyvF4usv2NfI3-CgPpqiuDeC5RIKVQmw>
-    <xmx:9hlCavLRRfjmIvj4NrDNiU-54UStDxMNM7tOvIM3kVVbLKOQ_cUdVNVY>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jun 2026 03:08:37 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 56183714 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jun 2026 07:08:35 +0000 (UTC)
-Date: Mon, 29 Jun 2026 09:08:32 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, oxsignal <awo@kakao.com>
-Subject: Re: [PATCH 05/11] reftable/block: fix OOB write with bogus inflated
- log size
-Message-ID: <akIZ8F05W5Lx63f2@pks.im>
-References: <20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im>
- <20260624-pks-reftable-hardening-v1-5-66e4ce87c6b9@pks.im>
- <CAP8UFD0y0GVjdnWYDkOsk6R9-ReGfzr6ZEm8PbyHOHrdAETXzg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qx/wAa3U"
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-7387ac7d28cso191180137.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 00:11:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782717070; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Yv3knucFsPuFwl8+UaaEtK9sM8YJM5KzoinwtC52HVnoUizkfZfNb4QBpG6+ebWQu1
+         H45Sgs6c3f5F8pyAg2Rx7/0xjstYjr9EIAFM+9PapcesAhJVe3esFMOqMDGGnduZol5Z
+         3WrfRCX8z6jxmgfAvW9Jgtsd27YGQ4d309ErTqKq9vonUsqEEYG8OtmDuHbov5bSjYPE
+         7QOehTBfaGdnidAHFt4FALRq+fMejSsLGfo1sciVqwXykBN0PQH56ft7qna8InpfCx5F
+         Nr6JKwPRH0mNm2rjLfBBKOS5758kb7wkvrGuYjJlQrBKLFuNPNsLaAbXX7COHrTIMwv0
+         sAaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=hTmUZwdkwJO25SwADrDneHtv4wzwJXBypxzalNstcVM=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=SBcC4VooWxpu3mdjyEmXa8jnIoOJmZwJdpGNXEe2lufT+rmL0TjEJNDXxym6PSdbuu
+         EjkugYgmekKIHsCEciFnvcbBw9NiP993ZBPeW6qegnpxjzyYLePSzcoi/u4ymDCj3zMY
+         twjHOh5HgX24JKOkZCbPBQR/Kh31gl5zpzSjZ3cCZoFX0Al3b+SiPkjfiq+Obbx8ySAQ
+         0/t/LSklMHBE6cirB9eqg+d2oLvwHIBvEjMswTwEX70QlE8BrvRL8SX+luZJjzxGQNxQ
+         7pW4VIuII6yiYpoPfgDpbLMRU3tpso1pgAixstcw151EjxROpzS/4NNNYWGhMelOyy13
+         ErjQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782717070; x=1783321870; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hTmUZwdkwJO25SwADrDneHtv4wzwJXBypxzalNstcVM=;
+        b=Qx/wAa3U4ytRiU1JR66/wjXaVLUwZvllHZReHHt1COs/FLNPIMGzIjPZiH930xY5ga
+         DoYvLWpQu5Jrx11Q2CYpHRUA3MNyiGQEmpVjHIbStbPjA3NcwmCl5UYgrU9D9B/LmK0+
+         nWw636iZ6df/+BAcFFOMutgpNqEtU/jIbqgYvWG0m2kXCHPiFch00hUM5EPMeffANZRs
+         BQ70w/QMnz5owZ7TWG2yguv8/z4UgR6tS02oun9Dyn/Ssbxt5TVjvp+5glHtTUahfMyU
+         jfjSCp5nv4CtFoQcOXuxX43tm1YrOs4Mq8z0K2imqOw0zJjx+dgXBT5+PK4GlXxf86/p
+         y2iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782717070; x=1783321870;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hTmUZwdkwJO25SwADrDneHtv4wzwJXBypxzalNstcVM=;
+        b=hYy2F9auZy6JQB6vIPmTS25TNz6a04rrZ8JEJoH7jZGZKsoEBggPAEJE0ZWCi7scba
+         A0i4C8CoNEU6m+lk2eLWdsa6lYBl8TFwOajw9MlVb5U/QjSfAItuxN1t+KOX63aTZavN
+         9qnARNRCvDjkNqjzGBKXtf3ih0pC+MOEHSDP+mVaqUe1a94ppNCDBF6KGl7JJSoREK9D
+         CrFn3XyhxagmQxvGQosalvjoEHZvujfhS3WIZhe4X4T0cqbDl/WIselE0yAz52YYJyzA
+         JFb9BsdmketRIDATlOEqtvDNQA9KKDQI8dOFPxRt13Q8PjaFh61i156lj5oYjeRsIu6J
+         SYbA==
+X-Gm-Message-State: AOJu0YzTzKhQcQsHTe1hHGyA5RoI/3ajUownoo8nPoyUX4BKRFNOjf99
+	aelH1/kIyhhINyDYn+5UJC4OCUH21+mUwX784A2XXEJW2uPniUFRe9Bb8sFOyJULfxDnKiO0zkh
+	wbBoO9WecrGMSDwuU3QENmY80oMM95Wr4rdLG+9A=
+X-Gm-Gg: AfdE7clLw6RjZeDRfHPWqhmCqHoOu++SkKBV8X6SO3s9HZt03Dxz3LWC9JgRyFqpXk6
+	3ydbDqjFaDiMx9UTIba701ZEOTN8sAg3BYlO7bJwg5KVlKUGFHL2A2hCbG6NupCpKMM++PrAHo/
+	jfP+qn/sQQdFreuq4dvXlpbwaOPzYEAnRZLTCpwcSpfFAi44cdjfQ9XOITD1EElgd3qhnOBA6Uy
+	NpqLRyA+67TboVHeKHf2gkz5hAgsLKoElYjFlb8pe3XFRWWDxZnhrnyDhVjAdbI66JO75AbBNFc
+	VCpo1w==
+X-Received: by 2002:a05:6102:3e83:b0:728:f34d:f410 with SMTP id
+ ada2fe7eead31-7343464c372mr6497727137.7.1782717069960; Mon, 29 Jun 2026
+ 00:11:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD0y0GVjdnWYDkOsk6R9-ReGfzr6ZEm8PbyHOHrdAETXzg@mail.gmail.com>
+From: Wei Hu <weihu.math@gmail.com>
+Date: Mon, 29 Jun 2026 15:10:42 +0800
+X-Gm-Features: AVVi8CdE04uQCGSUsQFYnZO3hT86vuSP9pUlkQB_dSC7CX_IgmiWZweFWnARe1A
+Message-ID: <CACLXMtCSzW9BY7idqB1yGa87MeG0Y2FN5Ho2hRXuPJ_qswE27Q@mail.gmail.com>
+Subject: receive-pack hangs on zero-object push into promisor-shaped repository
+To: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000b0c41f06555f2999"
 
-On Fri, Jun 26, 2026 at 09:48:36AM +0200, Christian Couder wrote:
-> On Wed, Jun 24, 2026 at 10:24 AM Patrick Steinhardt <ps@pks.im> wrote:
-> 
-> > diff --git a/t/unit-tests/u-reftable-block.c b/t/unit-tests/u-reftable-block.c
-> > index f4bded7d26..40274af5c0 100644
-> > --- a/t/unit-tests/u-reftable-block.c
-> > +++ b/t/unit-tests/u-reftable-block.c
-> > @@ -456,3 +456,47 @@ void test_reftable_block__iterator(void)
-> >         block_writer_release(&writer);
-> >         reftable_buf_release(&data);
-> >  }
-> > +
-> > +void test_reftable_block__corrupt_log_block_size(void)
-> > +{
-> > +       struct reftable_block_source source = { 0 };
-> > +       struct block_writer writer = {
-> > +               .last_key = REFTABLE_BUF_INIT,
-> > +       };
-> > +       struct reftable_record rec = {
-> > +               .type = REFTABLE_BLOCK_TYPE_LOG,
-> > +               .u.log = {
-> > +                       .refname = (char *) "refs/heads/main",
-> > +                       .update_index = 1,
-> > +                       .value_type = REFTABLE_LOG_UPDATE,
-> > +               },
-> > +       };
-> > +       struct reftable_block block = { 0 };
-> > +       struct reftable_buf data;
-> > +
-> > +       data.len = 1024;
-> > +       REFTABLE_CALLOC_ARRAY(data.buf, data.len);
-> > +       cl_assert(data.buf != NULL);
-> > +
-> > +       cl_must_pass(block_writer_init(&writer, REFTABLE_BLOCK_TYPE_LOG,
-> > +                                      (uint8_t *) data.buf, data.len,
-> > +                                      0, hash_size(REFTABLE_HASH_SHA1)));
-> > +       cl_must_pass(block_writer_add(&writer, &rec));
-> > +       cl_assert(block_writer_finish(&writer) > 0);
-> 
-> It looks like some of the block writing code above could be simplified
-> using an helper function like:
-> 
-> int cl_reftable_write_block(struct reftable_buf *buf, uint8_t block_type,
->                            size_t block_size, uint32_t header_off,
->                            struct reftable_record *recs, size_t nrecs)
-> {
->        struct block_writer writer = {
->                .last_key = REFTABLE_BUF_INIT,
->        };
->        int block_end;
-> 
->        REFTABLE_CALLOC_ARRAY(buf->buf, block_size);
->        cl_assert(buf->buf != NULL);
->        buf->len = block_size;
-> 
->        cl_must_pass(block_writer_init(&writer, block_type, (uint8_t *) buf->buf,
->                                       block_size, header_off,
->                                       hash_size(REFTABLE_HASH_SHA1)));
->        for (size_t i = 0; i < nrecs; i++)
->                cl_must_pass(block_writer_add(&writer, &recs[i]));
-> 
->        block_end = block_writer_finish(&writer);
->        cl_assert(block_end > 0);
-> 
->        block_writer_release(&writer);
-> 
->        return block_end;
-> }
-> 
-> This function could be introduced by a preparatory commit in
-> t/unit-tests/lib-reftable.{c,h}. It would be kind of similar to the
-> existing cl_reftable_write_to_buf() helper in those files.
-> 
-> It looks like it could already simplify existing tests like:
-> 
-> - test_reftable_block__log_read_write
-> - test_reftable_block__obj_read_write
-> - test_reftable_block__ref_read_write
-> - test_reftable_block__iterator
-> 
-> and it could simplify the new tests introduced by other patches in this series:
-> 
-> - 06/11 reftable/block: fix OOB read with bogus block size
-> - 07/11 reftable/block: fix OOB read with bogus restart count
-> - 09/11 reftable/block: fix OOB read with bogus restart offset
+--000000000000b0c41f06555f2999
+Content-Type: multipart/alternative; boundary="000000000000b0c41e06555f2997"
 
-Good point, will do. Thanks!
+--000000000000b0c41e06555f2997
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick
+Hello,
+
+I found a reproducible hang in `git receive-pack` when pushing a ref update
+that sends zero objects into a repository that has promisor remote
+configuration and `.promisor` pack sidecar files.
+
+The same zero-object ref update returns normally when the receiving
+repository
+is a normal non-bare repository or a bare repository. It also returns
+normally
+if I remove either the promisor remote config or the `.promisor` sidecar
+files
+from the receiving repository.
+
+Check the attached script to reproduce the bug.
+
+Environment:
+
+  git version 2.54.0
+  cpu: x86_64
+  no commit associated with this build
+  sizeof-long: 8
+  sizeof-size_t: 8
+  shell-path: /bin/sh
+  rust: disabled
+  gettext: enabled
+  libcurl: 8.5.0
+  zlib: 1.3
+  SHA-1: SHA1_DC
+  SHA-256: SHA256_BLK
+  default-ref-format: files
+  default-hash: sha1
+
+  OS: Ubuntu 24.04.4 LTS (Noble Numbat)
+
+--000000000000b0c41e06555f2997
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello,<br><br>I found a reproducible hang in `git receive-=
+pack` when pushing a ref update<br>that sends zero objects into a repositor=
+y that has promisor remote<br>configuration and `.promisor` pack sidecar fi=
+les.<br><br>The same zero-object ref update returns normally when the recei=
+ving repository<br>is a normal non-bare repository or a bare repository. It=
+ also returns normally<br>if I remove either the promisor remote config or =
+the `.promisor` sidecar files<br>from the receiving repository.<div><br></d=
+iv><div>Check the attached script to reproduce the bug.<br><br>Environment:=
+<br><br>=C2=A0 git version 2.54.0<br>=C2=A0 cpu: x86_64<br>=C2=A0 no commit=
+ associated with this build<br>=C2=A0 sizeof-long: 8<br>=C2=A0 sizeof-size_=
+t: 8<br>=C2=A0 shell-path: /bin/sh<br>=C2=A0 rust: disabled<br>=C2=A0 gette=
+xt: enabled<br>=C2=A0 libcurl: 8.5.0<br>=C2=A0 zlib: 1.3<br>=C2=A0 SHA-1: S=
+HA1_DC<br>=C2=A0 SHA-256: SHA256_BLK<br>=C2=A0 default-ref-format: files<br=
+>=C2=A0 default-hash: sha1<br><br>=C2=A0 OS: Ubuntu 24.04.4 LTS (Noble Numb=
+at)<br><div><br></div></div></div>
+
+--000000000000b0c41e06555f2997--
+--000000000000b0c41f06555f2999
+Content-Type: text/x-sh; charset="US-ASCII"; name="git-promisor-zero-object-push-repro.sh"
+Content-Disposition: attachment; 
+	filename="git-promisor-zero-object-push-repro.sh"
+Content-Transfer-Encoding: base64
+Content-ID: <f_mqyvoj3p0>
+X-Attachment-Id: f_mqyvoj3p0
+
+IyEvYmluL3NoCnNldCAtZXUKCkdJVD0ke0dJVDotZ2l0fQpST09UPSQobWt0ZW1wIC1kICIke1RN
+UERJUjotL3RtcH0vZ2l0LXByb21pc29yLXB1c2gtaGFuZy5YWFhYWFgiKQpTUkM9JFJPT1Qvc3Jj
+CkRTVD0kUk9PVC9kc3QKVVBTVFJFQU09JFJPT1QvdXBzdHJlYW0uZ2l0ClRSQUNFPSRST09UL3Ry
+YWNlLmxvZwoKZWNobyAicm9vdDogJFJPT1QiCmVjaG8gImdpdDogJCgkR0lUIC0tdmVyc2lvbiki
+CgokR0lUIGluaXQgLXEgIiRTUkMiCiRHSVQgLUMgIiRTUkMiIGNvbmZpZyB1c2VyLm5hbWUgUmVw
+cm8KJEdJVCAtQyAiJFNSQyIgY29uZmlnIHVzZXIuZW1haWwgcmVwcm9AZXhhbXBsZS5pbnZhbGlk
+CgpwcmludGYgQSA+IiRTUkMvZmlsZSIKJEdJVCAtQyAiJFNSQyIgYWRkIGZpbGUKJEdJVCAtQyAi
+JFNSQyIgY29tbWl0IC1xIC1tIEEKJEdJVCAtQyAiJFNSQyIgYnJhbmNoIHRvcGljCk9MRD0kKCRH
+SVQgLUMgIiRTUkMiIHJldi1wYXJzZSB0b3BpYykKCnByaW50ZiBCID4iJFNSQy9maWxlIgokR0lU
+IC1DICIkU1JDIiBjb21taXQgLXEgLWFtIEIKJEdJVCAtQyAiJFNSQyIgYnJhbmNoIC1NIG1haW4K
+TkVXPSQoJEdJVCAtQyAiJFNSQyIgcmV2LXBhcnNlIG1haW4pCgokR0lUIGNsb25lIC1xIC0tYmFy
+ZSAiJFNSQyIgIiRVUFNUUkVBTSIKJEdJVCBpbml0IC1xICIkRFNUIgokR0lUIC1DICIkRFNUIiBj
+b25maWcgcmVjZWl2ZS5kZW55Y3VycmVudGJyYW5jaCB1cGRhdGVJbnN0ZWFkCiRHSVQgLUMgIiRT
+UkMiIHB1c2ggLXEgIiREU1QiIG1haW46bWFpbiB0b3BpYzp0b3BpYwokR0lUIC1DICIkRFNUIiBj
+aGVja291dCAtcSBtYWluCgokR0lUIC1DICIkRFNUIiBjb25maWcgcmVtb3RlLm9yaWdpbi51cmwg
+ImZpbGU6Ly8kVVBTVFJFQU0iCiRHSVQgLUMgIiREU1QiIGNvbmZpZyByZW1vdGUub3JpZ2luLnBy
+b21pc29yIHRydWUKJEdJVCAtQyAiJERTVCIgY29uZmlnIHJlbW90ZS5vcmlnaW4ucGFydGlhbGNs
+b25lZmlsdGVyIGJsb2I6bm9uZQokR0lUIC1DICIkRFNUIiBnYyAtcQpmb3IgcGFjayBpbiAiJERT
+VCIvLmdpdC9vYmplY3RzL3BhY2svKi5wYWNrCmRvCgk6ID4iJHtwYWNrJS5wYWNrfS5wcm9taXNv
+ciIKZG9uZQoKJEdJVCAtQyAiJERTVCIgdXBkYXRlLXJlZiByZWZzL2hlYWRzL3RvcGljICIkT0xE
+IgoKc3RhdHVzPTAKdGltZW91dCAtLWtpbGwtYWZ0ZXI9MnMgOCBcCgllbnYgR0lUX1RSQUNFPTEg
+R0lUX1RSQUNFX1BBQ0tFVD0xIFwKCSRHSVQgLUMgIiRTUkMiIHB1c2ggLS1wb3JjZWxhaW4gIiRE
+U1QiIEhFQUQ6dG9waWMgXAoJPiIkVFJBQ0UiIDI+JjEgfHwgc3RhdHVzPSQ/CgpBRlRFUj0kKCRH
+SVQgLUMgIiREU1QiIHJldi1wYXJzZSByZWZzL2hlYWRzL3RvcGljKQpaRVJPX1BBQ0s9bm8KZ3Jl
+cCAtcSAtLSAnLS1wYWNrX2hlYWRlcj0yLDAnICIkVFJBQ0UiICYmIFpFUk9fUEFDSz15ZXMKCmVj
+aG8gIm9sZDogJE9MRCIKZWNobyAibmV3OiAkTkVXIgplY2hvICJhZnRlcjogJEFGVEVSIgplY2hv
+ICJwdXNoIHN0YXR1czogJHN0YXR1cyIKZWNobyAiemVyby1vYmplY3QgcGFjayBvYnNlcnZlZDog
+JFpFUk9fUEFDSyIKZWNobyAidHJhY2U6ICRUUkFDRSIKCmlmIHRlc3QgIiRzdGF0dXMiID0gMTI0
+ICYmIHRlc3QgIiRBRlRFUiIgPSAiJE9MRCIgJiYgdGVzdCAiJFpFUk9fUEFDSyIgPSB5ZXMKdGhl
+bgoJZWNobyAiQlVHIFJFUFJPRFVDRUQiCglleGl0IDAKZmkKCmVjaG8gIkJVRyBOT1QgUkVQUk9E
+VUNFRCIKZXhpdCAxCg==
+--000000000000b0c41f06555f2999--
