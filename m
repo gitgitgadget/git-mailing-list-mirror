@@ -1,181 +1,121 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD8F3803EF
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 17:49:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEB02D0C94
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 17:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782755356; cv=none; b=FHpyNP9xQ7ZQ9yHyyfZajUMbpF7ZTibWt+wekgAaXS3CBQnVGKBADRWT3M067o2sw0U0KVFxv4yrAtTKmbLIX3d6ysbPgOO+qoIjXwYqjp8X43hnQosdOnh0qfrctOMAkctAGYHgcipkBVej5X0CtRG+tIU6UykuNIsGczL7K/Y=
+	t=1782755408; cv=none; b=iZKzTFrw9UWiXWVYo/rI1X/rW0ppVLyWYUip8yXETXdKXAO7fl9QFKvPGook66OaY2O/dER4Nj0bXDijZz+rJNshmgFqgv/X4W8grtgeNWyBMHMQUU/ERSYE0/hBN4rOIz+TPOclZQU1JqLNZBmaWsIdc75kPvnlM3X8llBqBzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782755356; c=relaxed/simple;
-	bh=PkQHdJuWpyYaH0SJ15OtJxD3F6NB7Avk4qS6lqK6C74=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q+ELUazMUySF4XJSQeE2wQ92cy8EmuzAz6KgwYDJURaB2TmXbaMAQ7Mv/+5iV8VONyLdOoNHBR3pj7OmQCDmrZ3f67+wx1NamgM794KrzlJWkWEt2AogDZjiNG5L0NxPwadncvPHdVpqoTQJ+C68PtBMolh9zdmozLhYioi5SIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rthxenui; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782755408; c=relaxed/simple;
+	bh=qF6GOs9nwabn/G/gqaO2nUEFfpggCf5BG9k0yh7gI/Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dwkp0kHOL8iaEwY8FS6HBrVGvykBpn0LsAkQjlfNRL1JG6Nu3x2bLQDcZzi1WDLmSdpdrAPDazuabvBAFbYQJB7Ti26xj91iS3Un4v6n7Ro3b6dDfdSj62X5UDsloBy53EOuk7HegkFRsS5LGKUTHLtZk2jL3U/3LHXtERHJfPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gSfcxtOZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IECuKIg7; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rthxenui"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e943356247so2889438a34.2
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 10:49:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782755352; x=1783360152; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IiuEy7ZUcXmy8GkhRd1IQ7NBulObs3MlpSKfQFQvdaA=;
-        b=rthxenuiIaS9/WkKG1KabnEC9aFI4YnUcSc7O8fw7elD43Rks0SWgp4WnwX1sQsSTv
-         aY7CYLrsqzwrbwqGPS0ux6zPUJQA4vbnUDz2FROCK2bPykxBvNynOnn2qJ19O7NcYBLf
-         Yun74xTUAEMeizOitOPHfkiOTy2aDQeyVXInkLbkiqgvNo2s7kyForgOdU86JpBBdn4b
-         OhXXwBv0k1gheuF9yIyYU1OiA34gMG6qMEGR1/W4MI4nr2sfwPkdijzSaQYwTlIlKGyX
-         OHBIA1X7CZvmVuNVs2+5C2xorWVn6EHYgOFQkGZVWlJ3CdGjBFF+T8BNSzAV6Dz9O5Vd
-         4R4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782755352; x=1783360152;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IiuEy7ZUcXmy8GkhRd1IQ7NBulObs3MlpSKfQFQvdaA=;
-        b=Z2VW3wTl++YmqYCYWq152IauuRyiTHgIfPvs29T0zXfsjNiMUNKdF0/WOxhM6H+bYo
-         mc70b/OJ7ALPGM2sYHgKifi786T1f8lqeTPF9xycbEW7YmWMD6pjebFZYRQHpUNIsqf1
-         /N3BwwK6DzbuJQObsGtpPhzlvA5dYcSE6v2O6VElnspsEcQIen/B0HRzIMOMmLiGqIO3
-         BDuSk0wDMixdWVN1GxjfhyrSZj9f+aqr19MfgloPrOVmOIEz6AcGScH661tRS8PjppxD
-         kY18a7CruV9XQh9Huc+FeRk2Wm0NfGmtJ0eXOZgSWqiuMZWRP+bs8sAW2K/bIQbByHNZ
-         pX8w==
-X-Gm-Message-State: AOJu0Yz4Kv/WqltQvRiQOek+W2gb+BMZ52IXn1sMJlNabicWpPOAroYd
-	Tff4DP97NcYR5AclczgX3atxHYXwe7sIkw8Cq59696rCADo2uxwFeDU7N8Bd5w==
-X-Gm-Gg: AfdE7cn4XojCKfkzipiL1wgPsiz2NGKTvS6bi+qVry2iO5F7bXw/nCMM3cR44vYW0To
-	pv2lkWbxZnVAqtOxPoSShoPQbImXu0/sUz86qD7gw9O9Wj2BbdOl/6gbh+2aJ9rCb9BBnR3nEfm
-	whyifSJcqul9A8eXcKnfFlGTbNLuKaN8KF1kYTExFOdQgepAgKYM8a+YuR2cB03sjrX17xFVzJb
-	ObKarOZmnEn5g4e84IzP+5kzxdvIECt9sDTjKBeQU570Vk+aGj32zX54cNBNN6xOJV9yuzZ/Zk2
-	MMDBAmPLvyZFKr8gz/5TtP12icwp5vwMm7LdXVKQgWEmC08j2XCWM18XrzD5MnOrH91rnkVwLqs
-	pBY9IKLK0gwcFsAsW7D793OD6CRhROS0UGtxiNdhtmvNgxIXOpyTXj1Ey33rj0VA8osCkfvbq/a
-	BYiX8cAA==
-X-Received: by 2002:a05:6830:4126:b0:7e9:b4d1:78b1 with SMTP id 46e09a7af769-7e9ec80cf59mr371821a34.31.1782755351651;
-        Mon, 29 Jun 2026 10:49:11 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e9ebfdaa63sm331775a34.10.2026.06.29.10.49.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 10:49:11 -0700 (PDT)
-Date: Mon, 29 Jun 2026 12:49:08 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/6] odb: add `source` field to struct object_info_source
-Message-ID: <akKtc4ybxFRVJmNv@denethor>
-References: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
- <20260624-b4-pks-odb-drop-whence-v1-3-8d1877b790ac@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gSfcxtOZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IECuKIg7"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CD4C27A0075;
+	Mon, 29 Jun 2026 13:50:06 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 29 Jun 2026 13:50:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782755406; x=1782841806; bh=Y2DiKVeebL
+	49aLwr6BvwQFOQOc13j01WwGwFdma4Z7g=; b=gSfcxtOZLQEHOsT66WanidnjZv
+	RPeyHUQhKHvfZ3mEkcaaFSG99VNv9GMu2bGNmAgnvo//Ethvs/F6vcUjpYoVrq1g
+	Nq+ECUg3IKp3DPCkK/psQcqL/Jmru4J3tRXEgQNF4iNv4kz8h5g9q91X748vd+vO
+	SYwkA8QSS9VXe1NfslMX/SQzwUfVg57x5thDdUKWRDHVKKtIWJ3YVFW8TNN75Unw
+	INizZCX0ENekKfKp87jJ01SOab7WSt7P2/YY0Bd1C+SLVITULiLaz3z5SKlvQKOC
+	Tfz2NZ9j7O1b69LKA2hDaNYTLFJ9UpZwUKI1kRwPgWqXsyvkrdUlJUW6gqvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782755406; x=1782841806; bh=Y2DiKVeebL49aLwr6BvwQFOQOc13j01WwGw
+	Fdma4Z7g=; b=IECuKIg79rI2RcoR98BSZUHYZDcMdYB+d95RUqLCBIjC1HtofJ+
+	AvDItZcmA5S5d95X6fi5dEaTGXTCmyD8kdYUgHKdoPUsI1hew7uOpn7i4xL2hp2k
+	Zab5MzWclQTiYWU6hL2/2G32jy868kkENgJdgKphlwgpuO6BCmA84DAyAj6p/2Lm
+	kYBx/7rL/N8612++a4xD+sadXrN3VqPP4yLFYYTrpzsq0mUP3zWByTZfvID0Vt4b
+	WYXdZpJUYTDhQFdBbe62uFlzVGZ4idtvdMivU3k231/K3rjKUbCUFg+QZiD15Mvg
+	iJ2kQ5ujz2W+a7bjdx4Pjwb/gA0Lk8wTRRA==
+X-ME-Sender: <xms:TrBCaoDW955Uhwgj_4h4irGaxYzj8yAn1RHVZNi7uCCV6X7xBliqbQ>
+    <xme:TrBCahY7ajMjY030mL3cD76AMi6tHTNld9kK_SMXdLkrhVBtKoTceKQK9V87U_7lJ
+    hXBS8XB9FNZvbCdQsafM2aHcbcq7IHIYj-QxhsfkZe-LJHlsYQNFg>
+X-ME-Received: <xmr:TrBCaj5_q4QbfoYFOSdmUAElxeQT0AyTJBrjDCabqn1n7akjApk2UjQoSozKdfvBiTjqxqv0TeeHztIyc-nNEzHi9pVYZy-NcnYVmAI>
+X-ME-Proxy-Cause: dmFkZTFEX95cT9kZqJKsrbttsDVB2hUVI1AtpXucggVmyUmNdEFTbTUWwhD5Nb7NRfHlyN
+    e+rUE55s+4jd+gwK0p0IwOBQKqKwlDGkqVz731IMb/D+HcKk8u2whBR94+ug6+FhMGRMnt
+    t8A2ceByBWOh8fv6GP/Zl+olfeINZ0dC7YxdHagJ09ssynyL5a5XP1Xz1bzExAku2jyAYx
+    gtCrSzIClnHrILHFIgsBn7oUVmeMsFvrw8jeKj4R4jVzk7Brgoy4dfAl57XMTz2EgMPQ8G
+    4wZrNbuPTYPDu97vUz6pgKQIOmbzI9/GucWv9dc5p4NwGI06TATguniCXaAuy2TOvDuIsJ
+    Aa0J6QsTWT3elSHA02h2kbktSYgoBTfAgVdNOKNGb8GaJON/ABztzQqC99nd3O+g/sCh0N
+    JaPsgp99igOVTMRHPQUHMLAk09puHxr1AvPNKLDbu5lr6R1lkKYaMVMw9CgVRjMjB5n7jr
+    E3SwGkyQt56yAkqZ3el17te26zi1tl2MJ1Lnh//nnRAfuHDj0U2O9kwrLtlU9La647OHMY
+    eosDB6PZa94EdUfK8bGqyS9+GiJRwUvprCYWdX2/NctHhjN9+KMlhCngSkPBcDWahiRaJi
+    jRT3/z65MzVt5+OBjLyQnXlceadyGVyLIpLhegkGHFDvoVJmKa7ChkxkC36Q
+X-ME-Proxy: <xmx:TrBCaqYLICiyWNvwgviGZXRMJAC3dpv2mDen-2rIC2YKaW7pFWn9KQ>
+    <xmx:TrBCaqjWOcYWrtdInPgfIPN-ZdG1YCwgTqoFyuLPHpsa8-Sa-FbaNQ>
+    <xmx:TrBCaj-vV_TGgsHrInXWvQ8hlHMbuJA1AQcS6wyzi5phlOGt3J4yiw>
+    <xmx:TrBCatp_FVedy4C2w2Lc2j9lUCktKalnLLnYzoh04kcncOnWiHQOkQ>
+    <xmx:TrBCarHZ8AzliUhPHSNOYPUaHjlBuKc1c-XKvCE0B-A3jOxRM_9tcnWO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Jun 2026 13:50:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Kristofer
+ Karlsson <krka@spotify.com>
+Subject: Re: [PATCH 0/2] commit-reach: fix !FIND_ALL early exit with v1
+ commit graph
+In-Reply-To: <pull.2162.git.1782739162.gitgitgadget@gmail.com> (Kristofer
+	Karlsson via GitGitGadget's message of "Mon, 29 Jun 2026 13:19:19
+	+0000")
+References: <pull.2162.git.1782739162.gitgitgadget@gmail.com>
+Date: Mon, 29 Jun 2026 10:50:01 -0700
+Message-ID: <xmqqldbxw81i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260624-b4-pks-odb-drop-whence-v1-3-8d1877b790ac@pks.im>
+Content-Type: text/plain
 
-On 26/06/24 02:19PM, Patrick Steinhardt wrote:
-> The previous commit introduced `struct object_info_source` as an opt-in
-> container for backend-specific information, but for now we only moved
-> preexisting data into this structure. Most importantly, the caller has
-> no way yet to learn about which source an object was actually looked up
-> from. Instead, callers have to rely on the `whence` enum to distinguish
-> the object type, but cannot use that enum to tell the object source.
-> 
-> Add a `struct odb_source *source` field to the structure and populate it
-> from each backend's lookup path.
+"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Makes sense.
+> Fixes a bug introduced by 93e5b1680e (commit-reach: early exit
+> paint_down_to_common for single merge-base, 2025-04-10) where git merge-base
+> can return the wrong result.
+>
+> The bug requires all of the following to trigger:
+>
+>  1. A v1 commit graph (topological levels only, no corrected commit dates).
+>     Generation v2 with corrected commit dates has been the default since
+>     2021, so only repos that have not rewritten their commit graph in over
+>     four years would be affected.
+>  2. git merge-base without --all (the common case, but --all is unaffected
+>     because it disables the early exit).
+>  3. A topology with clock skew: the correct merge base has a lower committer
+>     date than one of its ancestors that is also a common ancestor. With date
+>     ordering, the deeper ancestor pops first and the early exit fires before
+>     the correct result is found.
+>
+> This two-patch series:
+>
+>  1. Adds a test demonstrating the bug (clock-skew topology where the correct
+>     merge base has a lower date than its ancestor)
+>  2. Fixes it by tracking whether the queue is generation-ordered and gating
+>     the early exit on that flag
 
-> The `whence` enum is still set and used by callers; it will be removed
-> in a subsequent commit now that `sourcep->source` can identify the
-> backend on its own.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.h                 | 3 +++
->  odb/source-inmemory.c | 3 +++
->  odb/source-loose.c    | 2 ++
->  packfile.c            | 6 +++++-
->  4 files changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/odb.h b/odb.h
-> index 770900289a..330a55879e 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -253,6 +253,9 @@ int odb_pretend_object(struct object_database *odb,
->   * more about how exactly it is stored.
->   */
->  struct object_info_source {
-> +	/* The source that this object has been looked up from. */
-> +	struct odb_source *source;
+Where should this new "gen_ordered" flag go in the world with
+kk/merge-base-exhaustion topic merged in?  Does it also belong
+to the paint_state struct or can it be on-stack independent variable
+to the function?
 
-Here we add the `struct odb_source` so we can begin recording it.
-
-> +
->  	/*
->  	 * Backend-specific information about the specific object. This can be
->  	 * used for example to uniquely identify a given object in case it
-> diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-> index e004566d76..2328e62687 100644
-> --- a/odb/source-inmemory.c
-> +++ b/odb/source-inmemory.c
-> @@ -52,6 +52,9 @@ static void populate_object_info(struct odb_source_inmemory *source,
->  		*oi->contentp = xmemdupz(object->buf, object->size);
->  	if (oi->mtimep)
->  		*oi->mtimep = 0;
-> +	if (oi->sourcep)
-> +		oi->sourcep->source = &source->base;
-
-Here we set the source for the in-memory backend.
-
-> +
->  	oi->whence = OI_CACHED;
->  }
->  
-> diff --git a/odb/source-loose.c b/odb/source-loose.c
-> index 66e6bb8d3f..5c4e9892b5 100644
-> --- a/odb/source-loose.c
-> +++ b/odb/source-loose.c
-> @@ -196,6 +196,8 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
->  			oi->typep = NULL;
->  		if (oi->delta_base_oid)
->  			oidclr(oi->delta_base_oid, loose->base.odb->repo->hash_algo);
-> +		if (oi->sourcep && !ret)
-> +			oi->sourcep->source = &loose->base;
-
-Here it is set for the loose backend.
-
->  		if (!ret)
->  			oi->whence = OI_LOOSE;
->  	}
-> diff --git a/packfile.c b/packfile.c
-> index 688c410b35..fa22095b75 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1324,7 +1324,7 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
->  	hashmap_add(&delta_base_cache, &ent->ent);
->  }
->  
-> -int packed_object_info_with_index_pos(struct odb_source_packed *source UNUSED,
-> +int packed_object_info_with_index_pos(struct odb_source_packed *source,
->  				      struct packed_git *p, off_t obj_offset,
->  				      uint32_t *maybe_index_pos, struct object_info *oi)
->  {
-> @@ -1424,6 +1424,10 @@ int packed_object_info_with_index_pos(struct odb_source_packed *source UNUSED,
->  	oi->whence = OI_PACKED;
->  
->  	if (oi->sourcep) {
-> +		if (!source)
-> +			BUG("cannot request source without an owning source");
-> +		oi->sourcep->source = &source->base;
-
-And here it is set for the packed backend. Looks good.
-
-Naive question: I understand that some `packed_info_object()` callers
-may not have the `struct odb_source` on hand, but when the `struct
-packed_git` is intially setup, is it not always known the ODB source it
-comes from? It makes me wonder if the ODB source should also be recorded
-when `struct packed_git` is initialized.
-
--Justin
