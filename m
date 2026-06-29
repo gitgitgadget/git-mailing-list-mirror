@@ -1,164 +1,100 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD5C282F35
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 18:04:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782756253; cv=pass; b=MjikLD42GS7kiRPCYTET9GJlvJRD9HrId8MxqJuioOQpt1hVG6TNP7hBqkauHyDRPuygpSe+ZaG0rUEyCSHD4Y1Gh/wruhYdpPG5qJXJLpDWcWSru+BZtuQgwFnvF5irYjGSg7k6evQU+Cg8XeRkN4Ylc1PGXix/sRuh8QqkSz8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782756253; c=relaxed/simple;
-	bh=6htruieKKRpkrB58Hkp4h2rAP3e7CDi6aB5tS1RSYBI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B1qbWkEIUsBvfRGpVmkXUqPLGnY6LfFSIRAQ5uFA03SkhaoueeCEBAufxdngMEhY/Smzgfnq1Og1amu4p4wDN1gQQdmcDhq/9H0TM1iPIpRzbAmympjc/rsCyQtpVOmvCgjtUhz7jgv18xvzKDW0KTioaD5jDNtkhP1j/ouon2g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JX+cgsSn; arc=pass smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFAB35E956
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 18:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782756719; cv=none; b=qKnhcfDORxbgth28fG9sXqPjYJxNWJaPZzwARV3HWRkmDSryJA2oY/70EG64mUkrSv+LN/INN1pSTgluwRdavDyxTrcc9oFc4JzodghIiz3qfB5QV7i5YSIBUnneubLwSMz0W35VDD9rs0eq0L0terOy2Fpr+SsedLjLvVLP/MA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782756719; c=relaxed/simple;
+	bh=vKb3Ae8Z51lV+3VgGw2g3OsgqWQZfabkGPcYEuqUR14=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BVJI2AsSIVrwpXI6jE7TbsE+bg6B7u4n41qzqY+YO+Rl/vnNaEFJMCiRqjpjO4hHb2gW5MsTmKtgSBncxluv0I75uGwmSCQg7Xdq1Xw87M1aD8N2VuOHJIhwoyqQCJ8BEOUgECJk8cfAmI5FGRNWIO9hNt2p2B6wccaRfsx9g+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CzX5R02N; arc=none smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JX+cgsSn"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6983f20a8bfso5067421a12.1
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 11:04:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782756251; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MFdmSOFp4pLM5iDWKZKt/Tss/Ep/a2BnVbPKRKBnRU3T4guLuJUtd4fe9CQOH2BSBE
-         HbX3Ymgpzc4HFNeHlw0Z91Kxk0Y9h/sz9Q+//VMuFFQM3QKSA07HJ01Na0G7dGTBF2mi
-         x+Jt/QgXYQLLSK5mANbh68h66P04wUxk4oMXZH/VhxXzL4Q7IcT6DMKESj7ZP4Y0tEwY
-         AfL8INYdZXzs3ynLsBy7cUl41Qxt3KYi1zK14ZuFintNHxRPZAjb2+siAZGfb18yxUOo
-         arV6AeI4mV16eBQzYPU9P2O0qmLQjXwdF7xJFCoLoCoGXom3QOgAgr+lRjSJrW6P4tti
-         +/6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=wgFuMStil+Ci3OywpRVKpvlKXRlkPI4t2RElhVF6WAg=;
-        fh=IVR3BQbGhZb8D66CLeyAg3IF96fkc33A2ADte2m75uo=;
-        b=VBfjXabsLWHu5lTGHmEUBHje/qk6//pzs6cW2QBbWjLnm4HuIrjPTJBwO/neHZyjPe
-         6n8EaHTw/+/dyO97yzbCbUVbMJXRtxyUhetNPJEOGxhprd73dhc63KICpRaM89/DTTV3
-         7+GnuEZ0umsuFnPgFgO8JqVIn0GQskkINlJILzv9jFMy6YUhiqE1Lh3we2QG90xNbKxI
-         7o7bT899tWv7YXNacw73NlveUvVu+Y96DPzYQejxQvdK+DOaUCC4isdGcb65Fb1EGdTA
-         tyIu13NwFL5f/sMgEFwzzeMaADT5FUrjS5xww7/6cE7ApM1WihE2X9R5CjiSqv6g83uE
-         1Xqg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CzX5R02N"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-4488e958486so808310fac.3
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 11:11:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782756251; x=1783361051; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wgFuMStil+Ci3OywpRVKpvlKXRlkPI4t2RElhVF6WAg=;
-        b=JX+cgsSnaVAoZpTl1hmGiRMUZMvOK1pjpcEASu6E6ISIq0MZ1RFv3t19qvfbIgqA0x
-         Jq7eU0OlY48mJClihur/geP4Jnk9VnNsFREmKKJvSUdlKKJWHNiH2AX99+C2g7EXVc6J
-         QEeA/+H22rnQL42XviFuDWsR5Ui4a3MRjW3R4kuq7/8IZ8qcrZ546ZVUTRdmoOH7tyjL
-         WoKrlb/5hmiZw41ZrykA4i58esuksWNqcyJF0h2IyvRC4vxUPWr9gC0aZFucm88V1Ocx
-         JBTnso11+ki4RTziQsuP26VrIea8587VeLLkz4+ogoGFbBH0gzGOOby7Hjx4hSc9Zjb+
-         F4aA==
+        d=gmail.com; s=20251104; t=1782756717; x=1783361517; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dZuu6dFUA2G3k2bdTEAXAoRy0QiGCjfGSun3WreY1V4=;
+        b=CzX5R02NwYOcRlkuldV2dNYxMmIk9MRozOfpEMRKkAD8XZt2hdOiJXjmz1UAdznsPV
+         g6v8H4VN7pWomfgr087fDvxqfmUzXq/wXYncG8wWIY/FflsRg1OtS0mvB28QmvdL1xh5
+         CQeS7tZuH62zVP7k+JhWLEfdxKXAk0aV8LwS4MtciudFl7zGqN0elQvTUhFVhgbaOG7f
+         iMr9qHTp23V8iu9oIOouf0kyHT4k4uP6SvxIQ+M9R5Y8bLnkOTHOCeamA7KyYR9+Baap
+         zsDAPsab9PRYZFT0WrxZLTneoeTiA5KEoexu66timHqfVZe8jEsTvG3Wcb3SEJVNp1bl
+         vl0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782756251; x=1783361051;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wgFuMStil+Ci3OywpRVKpvlKXRlkPI4t2RElhVF6WAg=;
-        b=UUTlklGjyCWmlOGheAazB9Pbu+9ogcyxsnTyk6+zZ1pXiryMtXJIio9ZEhb9i00gdO
-         /xDK1BoPkexk52bwYPvsPU62eBXjw0SS29wn55zknmivjAAXyqdfj1N9dyA+ftUCi8SD
-         A77DOQqNnTiQ8nj8tfX8+QKOBoFjCov1M7mEDimLnOzOrjOr7oioJXPUj8JROjqFQL/s
-         M+JKW4wf3cMuTxkLrDAlt/DVh0qlpRcwRkRJG6UdZyFR960OHCR+oawrB5FvB72ER7ll
-         ULl4BhnUaGd36zF1FCUeGCFPMNEObw/JobzJO4N6Vy7ztU7xj9ihUKj+ILSlKl7utfwE
-         uoLw==
-X-Forwarded-Encrypted: i=1; AHgh+RrsD9OmFikrC4FdrtZuzUI5PmXce456LFJZOvWYZYKDSb0SWB+M0FKjPgelb6K7iFI1aZw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRsIf9ZegHtMYzVeqjtept1b17Do4TDpBuUWBLfmVrNvXH/wDq
-	PWL2nH1oxJ/b/gzdDaw7srVE4xWYipOiGStJfxunzuRmZoGgvhH9wSDAq08fbbgau/9aLJ9QyGm
-	6Ffo7SnleDCwlKaboxpHagSOhOMLGO8Po8cfOmtM=
-X-Gm-Gg: AfdE7ckQlnXMzCXoDeccl4dOJRgC7YOb72qA1gi+0LINRCf5RqQPwtxRroICaDkMOH+
-	J1nOzPcBfH/VqrkxmVaSEvj/lcJjdchG3mj5wASlbHTPM4+U14dJ+/qnRVI7HqQMYT9+lC0Q55V
-	RrjbViIVCB5/hklKLKcXL3PIPWeZF0E20bIBBtgNGOirfMISsq/S6e6MwE/mjbOjXg/Au9b6upv
-	lwn7AoLDXEFOCf3dEkMyHxmOXgoRZu5CrU8oJ1pGWH7PWyXa+LK1hyKTvjruQY4ZBPLuyC6
-X-Received: by 2002:a05:6402:40d3:b0:697:dbe0:de0f with SMTP id
- 4fb4d7f45d1cf-69879d61246mr135757a12.0.1782756250337; Mon, 29 Jun 2026
- 11:04:10 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782756717; x=1783361517;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dZuu6dFUA2G3k2bdTEAXAoRy0QiGCjfGSun3WreY1V4=;
+        b=JM7S8J+q4jJ8hYT3KkkpmQNlFySA0jHTXE+AYmQP+mqYpAJZxG4BdOsHIcuCNjYW3u
+         NaKILlccl/IrkkutFh+lruVPRluD9BCqp/YETJZYlzu29YGyxQEjY9h5Scq4Nv9Wrqd+
+         o/FZSlmMaSXWMv+Av85Dt3Qngc22GTJP1TDKN3h/iQaROvlcmMhC4KwQ4Q0DSiVv3RUi
+         inGHOymDs6vCFBmOk2eCnmjx2zWHreUqUR0jp68pr+hbIm9ELjsWaqSe7OzdNnqPogxv
+         XY7q6US0taVYFHer4TvzXJdOjcAaJ69SIBA8f4Tlp2V9LOrEuRh3BthiaDxCErnN+uJt
+         zdnA==
+X-Gm-Message-State: AOJu0Yy9Njnk3boPd81gVX6cakuYjgTNVdgOWqDhPZfeveyuwxQbGE6s
+	KsiDaeTTgQq+lyvNsyBMq6UtCuxICKxtUv38QruzTQ94me9fGSYICGw1xiT6IQ==
+X-Gm-Gg: AfdE7cl7EjF8m1wXhD87xFb6bWB8qMYN0TziUlm8OIDcOOunBowttAtRGGHRFHfbvfG
+	hVOrQke6q1HLA9CPFdOOPTYbnGNN8CfInGukYBsuYmcAMdZdPKRjKwLJjwsTcfZWF43xc9vmzTa
+	V3fxkmTb+XZNn5yBOKVbj21x6R4pTBjXyxn33ln4cCyFAVkWKT5KbpiZRvJ3fg12lw/vzY1xItu
+	84BhizaNqzY/ViBIGyPFniDWL+5m5yctI/niFHHTQyGlj0F1fb/f9XX+MVB5uAjZ4sI0fwxQyYP
+	4TU3KNDmWvr4kplIPduNKTNQpBeWc04dQs3i+UwUpvPT/Avi9PXvoF+17X9mqPwnxtTKzXKZSet
+	Ga6Lb3BVMPgsDxNQhcCZHpCF0hdKrTNQ4sNFKwQeOELnqoYg0iGO61Um/XnrQ/dY4H/bp+CtEpJ
+	b26bvJDwxyoLdKFP7Y
+X-Received: by 2002:a05:6808:1522:b0:493:6cfe:88f3 with SMTP id 5614622812f47-495eadf239dmr409841b6e.18.1782756717390;
+        Mon, 29 Jun 2026 11:11:57 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-49352505004sm7290252b6e.2.2026.06.29.11.11.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jun 2026 11:11:56 -0700 (PDT)
+Date: Mon, 29 Jun 2026 13:11:53 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 1/6] object-file: rename files transaction prepare
+ function
+Message-ID: <akK05yZ6843K8Vdd@denethor>
+References: <20260624041920.2601961-1-jltobler@gmail.com>
+ <20260624041920.2601961-2-jltobler@gmail.com>
+ <xmqqse6biyma.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
- <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com> <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com>
- <akIQLM6xZTHBudWT@pks.im> <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
-In-Reply-To: <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 29 Jun 2026 20:03:30 +0200
-X-Gm-Features: AVVi8CdFOMUJH8uc4SyYTQfReD3M4zw_rBHnZ0DZ-r0190V-OqO-ykETrP3VpkA
-Message-ID: <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqse6biyma.fsf@gitster.g>
 
-> So instead of
->
->      # This is the combination of 4 commits
->      # This is the first commit message
->      Base subject
->
->      Base body
->
->      # This is the second commit message
->      # Another subject
->
->      # Another body
->
->      # This is the third commit message
->      # fixup! Base subject
->
->      # This is the fourth commit message
->      # amend! Another subject
->      A better subject
->
->      A better body
->
-> We'd have
->
->      # This is the combination of 4 commits
->      # 123 Base subject
->      # 456 Another subject
->      # 789 fixup! Base subject
->      # abc amend! Another subject
->
->      Base Subject
->
->      Base Body
->
->      Another subject
->
->      Another Body
+On 26/06/24 11:26AM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > The "files" ODB transaction backend lazily creates a temporary object
+> > directory when the first loose object is written to the transaction via
+> > `prepare_loose_object_transaction()`. In a subsequent commit, the
+> > temporary directory is used to also write packfiles to.
+> >
+> > Rename the function to `odb_transaction_files_prepare()` accordingly.
+> 
+> Taken by itself this renaming does make sense, but there are many
+> other function that follow the historical naming convention, like
+> {fsync,flush}_loose_object_transaction().  Should we rename them for
+> consistency with the new naming scheme, not necessarily as part of
+> this series but with a todo comment to do so once the dust settles,
+> or something?
 
-I think this makes it a lot harder to read. If every commit body was
-always just a single paragraph it could make sense, but it's generally
-not. Look at the commits in this series, with no delimiter of where
-one commit message ends and the next one starts, it would be very
-confusing.
+Ya, both {fsync,flush}_loose_object_transaction() are probably good
+candidates to be renamed to odb_transaction_files_{flush,flush} also. In
+the next version, I'll probably add another patch to do so accordingly. 
 
-> It would be good to error out if the user tries squash a fixup! style
-> commit and range does not contain its target commit.
-
-Good point, I don't see a good reason to allow this.
-
-> There does seem to be some support for merges in this patch series which
-> I think behaves pretty sensibly. If we have
->
->            C - D
->           /     \
->    - A - B - E - F - G
->
-> Then squashing A..G should be fine because the parents of F are in the
-> range and it looks like we support that. Squashing should B..G without
-> --ancestry-path should be safe as well because B ends up as the parent
-> of the squashed commit but we don't have a way to disable
-> --ancestry-path (and maybe we don't want to add one). Squashing F^@..G
-> might be useful to fixup a merge (though perhaps amending F rather than
-> creating G is a simpler way to fix a broken merge). Squashing E..G does
-> not make sense because the range does not include one of the merge parents.
-
-Thanks for a good explanation here!
-
-
-Harald
+-Justin
