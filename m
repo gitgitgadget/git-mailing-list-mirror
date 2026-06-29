@@ -1,153 +1,163 @@
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907171367
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 06:03:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782713034; cv=pass; b=m18zNpcNXe0LmTuvFeYD8WBwplxLFBk7DnQKijNRWvre3BWdpNaH9O1f/vxNmV2AYU7PwvKUIazQtxeJEHaFlQXtt6WCNt+NoWT7bnXzJ46CgMPxuxiaUCfgeQkzoCOaxv96WV3B2LGwVrG/6XjxyZnjAlRaYlInKmP4iEC7Dqw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782713034; c=relaxed/simple;
-	bh=zNt+ncdXlwieh+c7QfkXn9M7AVI48xAu2C17oOpj4j4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CeSPqCM3qNjZgb/CdqTVQj5+8Gh2gtKSZsVVbXCJfI7uuJOCyF6mRHuLJRj+KF7npCKwaXp52RdA6cYJ9VnnhzLY2gXq1Scf3aL04ObIgEGQe3vcjXNtTqSVhPec2fOmZ42nTIfiETt/9NIiUbu+WS/jq4Nes5CUX9C8NMOwwkI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rEpTcBHb; arc=pass smtp.client-ip=74.125.82.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C39B393DCA
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 06:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782713335; cv=none; b=O1LFWOu3F6Cla7H01BeVCzYch6xe7PQuceA6wwKqpkG+/pUzbSdO1ibUlUgeMNPm/2sjTQyaf50GAqHV/TYtuTa8ggrBb6lHopeUgh2Q6C7Cv1G9PV3jVuxaGtv6P9four2wJHuGP0+QKpGlWpTOhwJNlzfvnp3zF0ZfacRerD0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782713335; c=relaxed/simple;
+	bh=7YzGjbobvEttJf7pByoUsjYiEqk3Mcmol9qoJkLzwqc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ONFgrinmcteLNsXM1PjTIpTh+SILtgcaPcFQAMVGPa179MLbfu+kEHQwD9S1lK5EOmdCTtFWB7S0LlmHaX808QSC+eBy3zoP6T4+bYCT1uCqUSUUSWrgG9JAe8sGl3muwzBNcfM94xJHzheo7YHbXnscjadavScjdG3iE6raFGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vhUGokk4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k+M+aB50; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rEpTcBHb"
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-1397e093f90so313352c88.1
-        for <git@vger.kernel.org>; Sun, 28 Jun 2026 23:03:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782713033; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UXz2jRU7oLdCwiNyRBQVevKee1e/ORU75wqtLuOvL5HFQoIZfzrf3aLK5pe3ADwzoz
-         GO/9wnY20DHmhnWuHLnZ0SPowE7LOwGO6o1V3hYihUVKnQRDTwmrFhbCdkOLpEU+UpHo
-         EaJN/dAQ++NKrsQl/yYGQ+p3+q7bpU8TS+qj8fFfHuhipzy+Txnr4KOWdqjUQjgn6/gp
-         9dQh00xVII/iCSId4UzpYRjVIKSpqB+K7lRVXqgMl0hsX28Wh9/OLv/mTqk9EUNbWT8W
-         TIqWSofqQcwNt7lbVIcoR6to5cmlyYw0YqyOMvzODR9M8cKgKEB2YB0EwltEQ9FRizXo
-         0yQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NAJ1AkExuwFrd3t1L4gI9FF0dvtwMy5QARQjJZIn2Nc=;
-        fh=awLKVMFOALteoxtHNVryV/86GpgLlmhFCNWdjumvQXk=;
-        b=kgyn5bMvg9+vq55nlg5vGUiIjxmWV5gaEoSkNpq5yndQuemH5NJ1Sy1pRTdFYIGbyw
-         hJio9l5wcrY1JR8OaE0Ke857tMsn00AyfLI1ehWz2N8kyUWC5ZYHEO7EypGJjETMY1wd
-         OwE2bNbajWsRuDcBmKfNVSdDUSTCcCjibq3rbrEg4VXaPvwb0F3Sspu23+kPK74bKm6J
-         gdhNterIKzLo0G0OWUerCIcUpbckRv/1qC7gVlRXkaq6fNdmIAvUDbm3UKlnyPLVXbs1
-         RAPpD5yl8oaTAuJoggLpENZUTJ5IY5fSUxN2wxetML/hhM/Ef6U/o7wuNRC7CWnLBxDI
-         CtkA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782713033; x=1783317833; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NAJ1AkExuwFrd3t1L4gI9FF0dvtwMy5QARQjJZIn2Nc=;
-        b=rEpTcBHbeAkUBFiA1wxQpMAuHhmxoPkBGlRGiq/TaoIiXRGb98VNlzbP16LUg0wKY8
-         TiHtrZwrcc6YqoJVHge5srYALmlvTLbOBYiwlKf+XbUMy5zKWEaf/xTOGtS42BEtJXN+
-         +mTjch3IZ9XWqAoKHOVqRvF8d4GxJgOehETD46ZgR5EOYkcCu75YgOczqt4ErLJzrFhu
-         JHVLnutLdhYymxJIBaG/sPJx+6K5go2/qLQf+WULBUBYn5l2VofcjG1fA6KHAbVolfV1
-         Kqtf5L36Zw7/LZsEW8+SgYWhAj74YQ2jSsvk7llPRJzbRtHvoQITNLnwQnExFs1DrOze
-         xOPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782713033; x=1783317833;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NAJ1AkExuwFrd3t1L4gI9FF0dvtwMy5QARQjJZIn2Nc=;
-        b=srAqfKHhHGCXFcIqMfHu+z0BwZGHQgfXtvUfnuBCSjIWH9tg235iNhdzcSFQh7DGqv
-         hf8rQCxgdi1GcjlypxK0J99z9f20nupw2ttgVG5CQF8/UsK4+CyszmLvYA/vjqvtuYkM
-         hwZMew7xtC99g0MiPFM2ER+rhtRKveeHwPqBiBxNA/nKheLntB3wjzHW5ow5QwvC495v
-         pGpm7jY8oDsBZeRPIOaKNDXZ+PKpksglH7w5fjb754rjcIEr5nZRZN0aTCwd4RMEbZ6a
-         ZcREfHHiwhLQDNc7PHNduyiQZY1AXQJUSH9cHjFGAhaKYuTadTUZkpCKdbZhIfMdWFgN
-         n4cQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8EdvQ5/cfijU9ENxJfy7nMR0fS8zIe/arsfe9qHJs0xH42SCKr/MYpNn0tY5rLaro95NQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6cvnKsp+qXXtg09fGlakx6loLrEwL3phoQyPzZxL1RwFUMBm1
-	jNU9A8zw5CeA+IybXB8WifVI+tvlVPZGUaN0hkJMd2jHsNiFDJbOOGKG8WGAEd72cUJvT/NelJ/
-	+YtEj1IyXwqedGhCMR4PUDctVFr3S75+60ZYH
-X-Gm-Gg: AfdE7clLOzvHXkoUFx/sZKIuEGPaixLPxAovSjP89bWqRWo0GiVfxsec9745+bRvlbI
-	CdAzaXh1PFVSp0QaRJaSpZN5A+gbLmXk35I4waQGv5V+an8bsMtD7Eu7P2yav2LfMxMhU4bPWBA
-	oOKSKy68M79EGj+DcIBU4bhvnrkKcCqCW4lfMAd/cp/u3WXh8mz+KtCPBpEP+IoASEsrR24o+Ic
-	cKCXgC/S1b1hh3icjwTkjoHFutq5HlxvrHejM6oIMEyblBRCuVDH5Sw24ku1zTG85bHzQncJ9QR
-	SivI3b4hHCyPkBzfe46BQK3TVGWnESpVbCe2Pj03yqf0Nseb0OFLQHK2jQ==
-X-Received: by 2002:a05:7022:f411:b0:139:c4e3:947a with SMTP id
- a92af1059eb24-139dba4ca3bmr11245637c88.15.1782713032668; Sun, 28 Jun 2026
- 23:03:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vhUGokk4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k+M+aB50"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8E4831D00095;
+	Mon, 29 Jun 2026 02:08:53 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Mon, 29 Jun 2026 02:08:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782713333; x=1782799733; bh=+9O7kqCTQQ
+	xNvD/v7CtGC1zbjZK59MVi0bc8Vxvv7Vg=; b=vhUGokk4zWRvDLPDw6Fb9cGeQx
+	dzFPVsq7804nh21NyG7/4YapOW2mG1qfLhMYknKVTpq1RgqH9PjuBEJRlv/mqrXo
+	/J9+RLdmd4zVZGJHn2o4OjPVmLFe1k6LKHUBPKGc2/yx7psyqlU0smNaGaPTNk/M
+	4IZFWlhTZw9NQKBkMn7pCx3zb5MEykQp5QxlQYqrSsGoFeYxihro6LNz6AnO1pqZ
+	D8ck0iKHANAedJXmzT7OH7dlJRHJSGXNxYp2fiHY9cwm3yN8P27M84feSje/djW0
+	/w543pylDeBsDaKrwwa9a1XEZgtLq2PtbgufY26V4N3qAvcmyXM9/qaXtmFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782713333; x=1782799733; bh=+9O7kqCTQQxNvD/v7CtGC1zbjZK59MVi0bc
+	8Vxvv7Vg=; b=k+M+aB50aMFeT6L16CME/65FerM7cG5i6SQVgu5YDAGXLtPdYk6
+	3alSg3wsVb7qSmG4OfTlzKrzFJi7YXEBwBJKtZT4tQ0Fr0OCwXgkhT7IpuUxiO9V
+	H4XVOL/JsINNsB1tA1qddCXBz/QEHoqeCfGFVotJRMe9NkOmHhcJYSOtPvobihiU
+	G7WALA/ocAQr+h3M8TrPsSsh3v+FT9o/igCaeLJrES/hl4Uu4hnUcIiCRlMA4q/X
+	oW3a98n1GQDCYwIXIqanv7Mxe9V6baksbRHUA09kWw+Ef4vnr1ZSTZNuYxNhgnu4
+	Jbd2CbVUsyJBO0KFukA88NXUmXRFHPKsMdQ==
+X-ME-Sender: <xms:9AtCakeMt7P9f8YIhuucnUcz3m50T78xAVISCnav4EWyFPptx0pXvw>
+    <xme:9AtCavjzjzT0qbhW4I9RhKPViTxzKA0wS_j3x9UJDWGOKTgQT9GvVe75I76KBpJj7
+    cSzO6biU6du8D3Jv5capppqGT7dQbKiYgGhd0j947PU7zGcxZzvcg>
+X-ME-Received: <xmr:9AtCasx_kRWB19pj0XXptZH3Hz5cRYP_xd0BbdXCx1GaKyOsQ0n9ts2x_PsVavJM1hvdzSBeXbVkApwUUDkWNkQ581SVYrHgHVyB8oev6LgF>
+X-ME-Proxy-Cause: dmFkZTEEVfkx+0d8ep96CBi6ly4X+RAY3iyYF9FphVm+Ky/DkbWMPi0XgMz6I5ywlirW6Q
+    nG7AqLdC1gB0MPk3AGuJXKzYVzvFRKjtvge+q9PsortSOik/n7efsEyYoeOxmoyOdRgkVk
+    YQh71Fs17ZExcG0N7aJSrNerfn9c7cELjvHb/VHGpvSPPb4zeuVZsZwFXl85TPQ9JY642X
+    ktNatxCCvKx5Uj5AKslCsdbub9UPL7ch+mmnO+8kJwIdgs1P9yzKJ2bybYhuwwVSD1I1bK
+    Gy3qjmNW3h0alU58vB1U9NG2kaY/E52tg76Z/bYi3QIwy74r7pTELEI9HWvG8W9B5NuuZa
+    faEgXt2Ta6XrQLVvilDQ1UTSg6lNtegodTE1vZpUf+smH/BNO5qb/Fw1Vfp2od5VRDLj76
+    c3LoXbk+qez0CqCBix5xgXRO8hKLQEh6KgceRZ8FzcikCb1KNSmoP13gQbS/e5p3rXg+R1
+    UpIdDwjE6MGtVCsCdNbVYvDjeQeHIe7vH8vhYeStCBVGgE4tdMJpzQHhvGCcR4ziiP7DHS
+    M7pX5EQ/n4TMo5+37HKigcK40q9VM6h31WWTjHl/9e1dhCltQHwUjOY+rVwOJ2WRAQu15u
+    uvKKtEwQ3I/fU5u9TLWnQAMqjaFVkWotkd5UD1cE7zGZ7ASRNp5p1lCthYKw
+X-ME-Proxy: <xmx:9AtCarPQBC8nwPGFKx4AxqGYntF5eKjDcj-lK-wH3GnNgWGIxJ7onQ>
+    <xmx:9AtCatUkmgW9yTIYN6EXfhadiGZMR047uyjIf6L1VGCEaxbXPIIavQ>
+    <xmx:9AtCav0Q44hhj1WnJ6V4CsCw-3iNVtH7Jlo9ZkE3PB0TEr_iKHjZMA>
+    <xmx:9AtCarplcUT0PHCQ-OXcyNT2FGNLbQcS-mJVSp84EIvIOD3bV8j0Lg>
+    <xmx:9QtCatlyrlKQCTzEp3oTeQ0GtJwBjtlSPtD4_9VDrl3V6cQH4YRROtjL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Jun 2026 02:08:51 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d18d7363 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Jun 2026 06:08:49 +0000 (UTC)
+Date: Mon, 29 Jun 2026 08:08:42 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] meson: wire up USE_NSEC build knob
+Message-ID: <akIL6oJgUv8J8SB2@pks.im>
+References: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
+ <20260621174934.GC2206349@coredump.intra.peff.net>
+ <ajjuoS5Qc3K0nCRl@pks.im>
+ <20260628081806.GA3594700@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260626075037.532164-1-cat@malon.dev> <20260627160813.1074201-1-cat@malon.dev>
- <20260627160813.1074201-2-cat@malon.dev> <04d1a7d5-ef83-4728-b816-5cdf1cb4aa25@malon.dev>
- <xmqqv7b34snt.fsf@gitster.g> <eabb8169-2c13-4961-9b21-f44b1fa66f70@malon.dev>
- <xmqqbjcv2h3j.fsf@gitster.g> <18ad7c1c-5ddc-4f62-ba7c-5cda53f5a48d@malon.dev>
-In-Reply-To: <18ad7c1c-5ddc-4f62-ba7c-5cda53f5a48d@malon.dev>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 29 Jun 2026 08:03:40 +0200
-X-Gm-Features: AVVi8CcXgcY4RVczpYj4SLpXopTWe4IpajPktlEQ4ZwCDPQ5qHAXJ052w9QmG18
-Message-ID: <CAP8UFD3Z0M_1NEXGcAxNZKpRUQiSkHZLTEvNNYushKA_PoPgjA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/1] environment: move excludes_file into repo_config_values
-To: Tian Yuchen <cat@malon.dev>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, cirnovskyv@gmail.com, 
-	szeder.dev@gmail.com, Ayush Chandekar <ayu.chandekar@gmail.com>, 
-	Olamide Caleb Bello <belkid98@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260628081806.GA3594700@coredump.intra.peff.net>
 
-On Sun, Jun 28, 2026 at 2:58=E2=80=AFPM Tian Yuchen <cat@malon.dev> wrote:
->
-> On 6/28/26 16:40, Junio C Hamano wrote:
-> > Tian Yuchen <cat@malon.dev> writes:
-> >
-> >>> Wouldn't we rather want to try to be more strict and say
-> >>>
-> >>>     if (!repo || !repo->initialized)
-> >>>             BUG("repo must be an initialied repository");
-> >>>
-> >>> here?  Aren't all the callers of this function supposed to be
-> >>> dealing with an already initialized repository?
-> >>
-> >> That makes sense, but from my point of view...
-> >>
-> >> 'repo_config_values()' already has a check for 'repo->initialized'. If
-> >> we're absolutely certain that the 'repo' is initialized, wouldn't it b=
-e
-> >> better to simply remove all the checks inside the getter and leave the
-> >> judgment to 'repo_config_values()'?
-> >
-> > Yes, that was what I was getting at ;-).
->
-> A lot of CI tests are failing, but that just goes to show that the
-> "bugs" are being properly identified, doesn=E2=80=99t it?
->
-> It means there are a lot of "invalid" calls in the tests (if the way we
-> define a 'valid' call, i.e. repo must be initialized, is correct)... It
-> seems that code like 'if (repo !=3D the_repository) return' or something
-> similar is inevitably going to end up somewhere, even though, as you
-> said, it=E2=80=99s "sweeping problems under the rug."
->
-> I=E2=80=99m not sure how to proceed from here either..
+On Sun, Jun 28, 2026 at 04:18:06AM -0400, Jeff King wrote:
+> On Mon, Jun 22, 2026 at 10:13:21AM +0200, Patrick Steinhardt wrote:
+> 
+> > > So I guess if we wanted to go further it would take some digging as to
+> > > how each platform behaves, and then flipping the config.make.uname knob
+> > > for ones where it can be argued that the behavior is always reasonable.
+> > 
+> > Yeah, it would be nice indeed to figure out whether these concerns still
+> > apply. If they do, I would argue that it might even make sense to remove
+> > the build option completely. It doesn't really make sense in my opinion
+> > to have a build option that nobody uses and that is subtly broken when
+> > enabled.
+> 
+> I suspect it works just fine on some platforms and some filesystems
+> (i.e., those that actually store nanoseconds on disk). So probably Linux
+> with ext4 is OK. That's just guessing, though.
+> 
+> If I understand the original problem correctly, then doing this:
+> 
+>   touch foo
+>   ls --full-time foo
+>   echo 3 | sudo tee /proc/sys/vm/drop_caches
+>   ls --full-time foo
+> 
+> should be instructive. If it shows the same time for both "ls" calls,
+> then USE_NSEC would be fine. If it doesn't, then the system is losing
+> the nanosecond information when it drops the cache and has to reload
+> from disk (and thus USE_NSEC would cause spurious stat mismatches).
+> 
+> On my ext4 system, I get the same answers. So far so good.
+> 
+> I get the same answers with a loopback-mounted ext2 system. Which
+> surprised me a bit, but even unmounting and remounting the filesystem,
+> the nanosecond times are still there. So...I guess ext2 supports
+> nanoseconds.
+> 
+> I tried with a vfat mount, and it also works: we don't have nanoseconds
+> either before or after. That makes sense, and implies that modern Linux
+> will always be OK (because it limits the cached VFS response to what the
+> underlying filesystem can handle).
+> 
+> So...maybe this is just a non-issue these days, at least on Linux?
+> 
+> > > But that's all outside the scope of your patch here.
+> > 
+> > Kind of, I guess. If we figure that this mechanism is still subtly broken
+> > then I'd argue that it doesn't make sense to expose the option via
+> > Meson.
+> 
+> True, but AFAICT it probably is safe these days, at least one some
+> platforms.
 
-I agree that the best end state would be to have no `if (!repo ||
-!repo->initialized)` check, but we shouldn't have to get there right
-away. I think it's fine to proceed in several steps:
+Hm. That makes me wonder whether it is the completely wrong approach to
+make this a build option then. If it works on some systems and only on
+some filesystems, then a build option is just too coarse-grained. A
+distro wouldn't really be able to ever enable the option, unless it knew
+that repositories will only ever exist on a filesystem that works. Which
+I guess is an assumption that no distro can make.
 
-1) `if (!repo || !repo->initialized) return NULL;` allows us to remove
-the global variable and use getters which will help us in the next
-step.
+So instead, I wonder whether we should treat this the same as for
+example "core.ignoreCase", where we only use nanosecond resolution when
+opted in by the user. Ideally, if we had a way to detect brokenness, we
+could even make git-init(1) set it automatically.
 
-2) `if (!repo || !repo->initialized) return BUG("repo must be an
-initialized repository");` now we want to find and fix callers
-(including tests) that haven't properly initialized things.
+If so, we could unconditionally enable nanoseconds on platforms that
+support them, but still have a runtime toggle for filesystems that
+don't.
 
-3) No `if (!repo || !repo->initialized)` check, as we are sure that
-all the callers that didn't properly initialized things have been
-found and fixed.
-
-So I think 1) is fine for now as long as we properly explain in the
-commit messages and in code comments (maybe using NEEDSWORK comments)
-that we know there is more work to do on this in the future.
+Patrick
