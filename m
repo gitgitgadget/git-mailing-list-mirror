@@ -1,121 +1,175 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA324A33
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 19:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8BF149C7B
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 19:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782760806; cv=none; b=DTye8E/bM0yUxK0D6HVL6C9vPskIadLOk04HwoBsbgXK+I3fzGuVIkZCdYJ01O8TiLhQPG4GNU9gFe43imPzlGn6CparFaBvx0HuzEIUehO0bkyhiplWM0VOYfs4mIokEJuhkDbs5XE0voiGc1tWooHEk+i88/krpi8HUPna3IM=
+	t=1782762507; cv=none; b=GjF8FVFWxPDcaxkAOj+E+S4qvDM5xOWYrgbGy8+cCLf3G4TVsXkpgSZN3irQz9lCoRiivFZh+qxrh+jROOE13OHDdSZcj0ENhoaHCCme8WgfCeEtaethyHpwF81525th/ZkYJJv9MG4ywQlWcfY/0HNZMK7bDN6s1bQ+wLs1/2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782760806; c=relaxed/simple;
-	bh=hquW2u3f/M1mKTprHY1IAFGZ+ejWCTl86n0WwCcJtmA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gD+9M9JDaX6Eu89T5Y7ersYUpqXxxbt3VkxIuOWwaO7TZ1pPNQqArLQu0zDUbZ3PpK0QbrMf8vKmBJR8HMqzqP+di/FAl5N+jdXRt1DUHjcnKQgOy6pJODqZ+0YLk4szKf+SB3tDPJGsLQUOrYKUGcKNmulUzlw8FDieTyctCRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UOpHYRBD; arc=none smtp.client-ip=209.85.210.41
+	s=arc-20240116; t=1782762507; c=relaxed/simple;
+	bh=jThc7577GD8ICKV4znG9XdbvAnhSeOOp8J7vrywrT2Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NEF6SjaUxHKPYElKe77pZXECNx8OkBxxatVhY79FxWTrV10CruVD6GSK/68fIOzAqSdfGfojnhYRJXMVuZCy8H2D6RyteF6KKl75vFdR2byA6QzWOhafwOr3xaWICLQcAu0qTzTda+LANnfpMPnhvjc2CeTClOcGzCcsRLzY9yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pxpFP10o; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UOpHYRBD"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7e9c7e8eb21so1494577a34.1
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 12:20:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pxpFP10o"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4938d60c035so21343225e9.0
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 12:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782760804; x=1783365604; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q6Yekzi0baGCcsbQX2BVLol4EfH3lUldNSr5pAgjHwo=;
-        b=UOpHYRBDCaBLTED1+spTpm7p+Q3rx2l/Ez0PO/56T6TELDKvzd2Q/R+EVMS+g/ji2A
-         tFgcSDx2Ck9l2cYR3Km7PGodO02s+KkoZZMKCLlaFYZ/gpriAtD+sGzJTvKBd5TsfB1g
-         4LPHQ0fKcbPyEn0QjksIaGi4dfQEOlYUgeN8amWXvzaz4CFr4Vb+2I/oeo4zoWmddqMe
-         rhhF0oHm9j8CPtaRweCkYduYTbnXgf4I4U1PzwNSp1vJzQKumOHSNA3HgKXYfwpNZTbz
-         p4oq+/oQgrFg4b9EpVw35UOY4G/bwGktZNsZy9cmejnd6yUbTTY0652dX3XPRg6c4hqD
-         B3kQ==
+        d=gmail.com; s=20251104; t=1782762504; x=1783367304; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=haC6VBCCFCxOxh93rtN5UjMg1pxpE6AFWG2HcXqZZak=;
+        b=pxpFP10ohKp/0qD9UcrrsukN8DJX051dUI9QbHL+lp9zV7qcx6cgF/HQUERDFa6BXF
+         mozxLkV4B3rtquCwAVeoLqrLEy0uEcXkwecHkBdxi8jxFNx8LEJdFUrgZpdjS8VtnfhJ
+         wGFHA3ID7GxHwsrScoTpf3Vy/+PBVBn66QnjJYausZBlIZTdhua5VJfg68f0r71pDzxj
+         KYcFj8F016TbLSJ5KK+avUJLZE8owABtpPQKk5YSp2CFR8txgB/ekB0n9c7+5mNQql7V
+         y8l9m1JfdOXcX/RAwv7a4gAhmR/qMC2FMwfCOQahtiDmrAqwucis57KU6a3Ws723megG
+         C1Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782760804; x=1783365604;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=q6Yekzi0baGCcsbQX2BVLol4EfH3lUldNSr5pAgjHwo=;
-        b=VawYxCwIGbpISyaTM9k+loBOL1vB4ChLJQEETJ+t9ZkhKo4t6JfBGUz2D/HU79A2Rg
-         haHkFzl4ZqfNhKzWSl98ssviXDJ4Xxcv3OIAToEaSUhwyClStldEUuie4YhS1P0PzjiU
-         YvqbZfOd/Q0q5adNVydwgW+eUvrMRKGHSwj5OZsY05PiBC/SEP14+LYp+Zy4PnaEcvll
-         j1jHpSVAxJF9IREM8yoa18kv9UDa0Qtct+rs+jqerVUujVXwFaC3SheNZ3ofQykTLMEb
-         A9iYifzW4zaiW/G9Q6i31ml8AGcHcL0Lvz8959ZW9g3jSNyAXctanQ1nldtEnzcAfJgN
-         3yeg==
-X-Gm-Message-State: AOJu0YzvDwkFgBpUCYS6Y14Xt3R9jR7cDveScXK2xm17Pag7cw2W8MZT
-	Gw7bO1IUAxZcOR4FanZIfjQD4tJ7EQR8t9NMyjOrUP6Z/awqFzAsu1TSJpaEEA==
-X-Gm-Gg: AfdE7cnFFgRgbOOIVzBf6LIsr1dm2n9PiRFnRttz7XnUeP5RSnVKMzBeVJhWO/XoQKk
-	oMBsdmu6JiZBxG2cjRbaSalm2NahWTV6sTejuBVdnI3VVNDn4yumlxCcJQHGjxsMYBdIiK92YC7
-	3HbBgfjgTmPWktZMqZi32t4nFv3aET6CYaZqTSspv6X2SWJm+kQi7K5YFosmGk+gh+16Mh/BJ6O
-	71tv3NVwXxsakWJ6UMLVxdX4H2MafdwsU3xmQ43OtK3nA78TrgVRryz+Yem/E9BmPCVh1sgLBBS
-	eZ2jikUWrQlNfUSDhWk5witt2Da1THI4CVUssCQWCIr9/Xta/egQLJ8g9ObYhtUjSyyDPXpCfYV
-	CP1Wc9VTKVGKDX47pZOhLwrqi9U4+O/KcjlIt3whWCd12FyF567PQHGg0Y+MA655GsY55ovqSJ7
-	2y82NFaw==
-X-Received: by 2002:a05:6820:1384:b0:6a0:b54b:a1ef with SMTP id 006d021491bc7-6a189058db2mr660585eaf.11.1782760804082;
-        Mon, 29 Jun 2026 12:20:04 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6a189428fcasm425886eaf.11.2026.06.29.12.20.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 12:20:03 -0700 (PDT)
-Date: Mon, 29 Jun 2026 14:20:03 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] odb/transaction: add transaction env interface
-Message-ID: <akLE1DhWGaOWhvQ4@denethor>
-References: <20260624041920.2601961-1-jltobler@gmail.com>
- <20260624041920.2601961-6-jltobler@gmail.com>
- <aju-_Nf3kmoIidue@pks.im>
+        d=1e100.net; s=20251104; t=1782762504; x=1783367304;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=haC6VBCCFCxOxh93rtN5UjMg1pxpE6AFWG2HcXqZZak=;
+        b=q8J9U8YbznSALS/ZwLQsHVk62oMzVBcyFNTpUdt3rqEs69TUfYD1vHn0E06xrBRkvA
+         oLZhcNDTrLllDf76zVPoMrKfRw6ry+9T8XnvwHmJgqKD5HSbRwlfmw0w9V/qJo5Qo5Uc
+         JsCHdA3/JCG7aduaPmleIrmpgFs7ViKkPQQEnfn/KSv/PGN8SEeWXTkHz11NAfLuV7ka
+         c4TAgwsbUVauetGx8ap9i9RU0bzEacfTPoLzHVaK866tjtbNLcI1P7wbi+1LfO7trUGW
+         Frqvd5EBSbZbC2L0dqulz4V7sx88SkFdd58HpGznHl+g5gs8/9uinrUQ19wctKxpZIxF
+         m/GQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+6OtXxEHpsuq2cQlEDSvgaHhV8e/kxFz+qqgAIEt1fjraInZIm0DWfGNSOK34at/VBb6c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxbktQCZ+KSfikULy52V+K1u8Zl1ZA+auhIcU3H4nEaL0BkTIG
+	bUhEdEKZgdGDUoxJBVmiHMdf0b2NZaBX1FoykUknpvg1ulsEYNF+XC0G
+X-Gm-Gg: AfdE7clJSchjCa3xMV5l+t04yIVxKmwBCPp/zUX9EF78lK/nyePo90xQM19k6+s2+wK
+	YtNPCmZ4NBCip5OY0Wym6UK56REMRVyJYaeqvD978Dq79KK9Dggm087WFsAwm5uSf1e0ttL6eAI
+	CjxfqSAdiMEZUSQAfpmJOKjxjA6F1xNnv31RoXSf9ZubN9o+ZMVnu+IKbvd/JQ2N6YLCpaF55rZ
+	zK1xsG0+6XfCbe0vh8IDFH3R1Mby2DWKNe3OvNoYy3uQKAKREaxKJ//G6H1pm1ZiOWSv7CxUmeG
+	zx6lqNP1kO56cQRGggHU+G+Pt5wjF6sSazn0/Z4rX19WOteDH+k3qAGDwFup5MrMoWoyuWF7LPF
+	sV8sv+KmeNCF6BGtWEudr8SNNj7Z5RmcOdW17srnyh4wJ0J3UgaSrAgvZN9hGATQeDEXzVmF5Pu
+	5p3474FRgJ0hTpGnbM6Lp/r8mTJUF6E1uERJsB9mTq4PlnLBk2ABklnp1sc+n0DkDuGxc=
+X-Received: by 2002:a05:600c:3b11:b0:493:b3ba:84b4 with SMTP id 5b1f17b1804b1-493b82bc036mr15432535e9.29.1782762503876;
+        Mon, 29 Jun 2026 12:48:23 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493b8c7b82asm12060115e9.8.2026.06.29.12.48.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jun 2026 12:48:23 -0700 (PDT)
+Message-ID: <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
+Date: Mon, 29 Jun 2026 20:48:22 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aju-_Nf3kmoIidue@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+ <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
+ <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+ <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 26/06/24 01:26PM, Patrick Steinhardt wrote:
-> On Tue, Jun 23, 2026 at 11:19:19PM -0500, Justin Tobler wrote:
-> > The ODB transaction backend is responsible for creating/managing its own
-> > staging area for writing objects. Other child processes spawned by Git
-> > may need to access to uncommitted objects or write new objects in the
+On 29/06/2026 19:03, Harald Nordgren wrote:
+>> So instead of
+>>
+>>       # This is the combination of 4 commits
+>>       # This is the first commit message
+>>       Base subject
+>>
+>>       Base body
+>>
+>>       # This is the second commit message
+>>       # Another subject
+>>
+>>       # Another body
+>>
+>>       # This is the third commit message
+>>       # fixup! Base subject
+>>
+>>       # This is the fourth commit message
+>>       # amend! Another subject
+>>       A better subject
+>>
+>>       A better body
+>>
+>> We'd have
+>>
+>>       # This is the combination of 4 commits
+>>       # 123 Base subject
+>>       # 456 Another subject
+>>       # 789 fixup! Base subject
+>>       # abc amend! Another subject
+>>
+>>       Base Subject
+>>
+>>       Base Body
+>>
+>>       Another subject
+>>
+>>       Another Body
 > 
-> s/may need to access to/may need access to/
+> I think this makes it a lot harder to read. If every commit body was
+> always just a single paragraph it could make sense, but it's generally
+> not. Look at the commits in this series, with no delimiter of where
+> one commit message ends and the next one starts, it would be very
+> confusing.
 
-Will fix.
+You've trimmed the line where I said
 
-> > staging area though.
-> > 
-> > Introduce `odb_transaction_env()` which is expected to provide the set
-> > of environment variables needed by a child process to access the
-> > transaction staging area.
+ >> Possibly with a comment before each message saying where it came
+ >> from.
+
+So I'm not against adding a comment before each message, but I do think 
+we should omit any messages that would be commented out completely. If 
+you look at the rebase example above you can see there is a mass of 
+comments between the two pieces of text that make up the new message. 
+That makes it hard to see what is actually going to be included in the 
+new message.
+
+Thanks
+
+Phillip
+
+>> It would be good to error out if the user tries squash a fixup! style
+>> commit and range does not contain its target commit.
 > 
-> Possessive s is missing, I think.
-
-Yes. :)
-
-[snip]
-> > +
-> > +	/*
-> > +	 * This callback is expected to return a NULL-terminated array of
-> > +	 * environment variables that a child process should inherit so
-> > +	 * that its object writes participate in the transaction. The
-> > +	 * returned array is owned by the backend and remains valid until
-> > +	 * the transaction ends. May return NULL when the backend does not
-> > +	 * need to expose any state to child processes.
-> > +	 */
-> > +	const char **(*env)(struct odb_transaction *transaction);
+> Good point, I don't see a good reason to allow this.
 > 
-> Would it make more sense to adapt this function so that:
+>> There does seem to be some support for merges in this patch series which
+>> I think behaves pretty sensibly. If we have
+>>
+>>             C - D
+>>            /     \
+>>     - A - B - E - F - G
+>>
+>> Then squashing A..G should be fine because the parents of F are in the
+>> range and it looks like we support that. Squashing should B..G without
+>> --ancestry-path should be safe as well because B ends up as the parent
+>> of the squashed commit but we don't have a way to disable
+>> --ancestry-path (and maybe we don't want to add one). Squashing F^@..G
+>> might be useful to fixup a merge (though perhaps amending F rather than
+>> creating G is a simpler way to fix a broken merge). Squashing E..G does
+>> not make sense because the range does not include one of the merge parents.
 > 
->   - It receives a `struct strvec` as input that the environment
->     variables are to be amended to.
+> Thanks for a good explanation here!
 > 
->   - It returns a normal error code to indicate errors?
+> 
+> Harald
+> 
 
-Ya, that is probably a more sensible interface as it would be nice to be
-able to signal an error. Will do in the next version.
-
-Thanks,
--Justin
