@@ -1,83 +1,81 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198F540D57D
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 06:16:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929623655F1
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 06:22:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782713814; cv=none; b=UXc6OlH0/3f7hyMllOrs9+q4iywEQvLhoC7d21NB4O1Bk3Fqnv+Q6hvPYc9+to2n/yMddaPmzuY3iF6r6PYBxBSPujNhyktFjZgWsYoqD2LpaFfkn4/rJrQbpd7Y98rDgWiNqaUqFNEK4rpJn8TbQED2z6YP7VgghI90zdL88LM=
+	t=1782714128; cv=none; b=MInStzxytlPWnZkMWzZ0dLXUDBma/dc3PK9HrbeScyIld4oSEulKCXfSPOA9+wqF3lUj+QFhxgbuXpT9IiZvdz+se2Ps+WvIhoh7xRp6WVP1OED9s1NVrMrEiH1QxoFz8icEPf31RaJ9roFT7TUzLcGDZ0jhZyQ0IIIqCPfgnNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782713814; c=relaxed/simple;
-	bh=hnL8VSV5SX19xB8sXp3OQewOZEUGC9fPmnNJqzk5x3g=;
+	s=arc-20240116; t=1782714128; c=relaxed/simple;
+	bh=Y2QIMbKFKM4+1OTAY5eL4NFLiBapbcteGh6/+t2dV4w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SOjgCBhbx6TV3iqQtILCbdpzA+J0x/pzb07GsT3/6RqD0F8DznrBnlc72Ntj4nfyPd1KdCSaFHW0rpULldNID9IEjI6BwypP+Tz/zX2N9+gEtiPl8oHggawei/8YT7jMvmCajyedYTkQjH1Q0mXKRGo1mRubwTnM105yRCm7jhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q/T/Qgjb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OcN/slXS; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=tObCoElIlQc8q/0ahQQ3FxwYL4qJP37vPJxzTYE3JqconjnqvUsqCYoL7hwP+nIcwmUTDWFMM0wLa494NYguUeUZX/op4F7Fpu289NTLTBlYPepOWzzkyWMMFnlcVO5B0sRm5XUFTGCvh74GXEVABUDRdJDy0ODn1hqGjScei+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lgMQAOSS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FaSCSQ6+; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q/T/Qgjb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OcN/slXS"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5BA671D0007C;
-	Mon, 29 Jun 2026 02:16:52 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 29 Jun 2026 02:16:52 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lgMQAOSS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FaSCSQ6+"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F4C17A0036;
+	Mon, 29 Jun 2026 02:22:02 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 29 Jun 2026 02:22:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782713812; x=1782800212; bh=HtdfpID/q6
-	cUYSTkoc2x8UjWNeKIIDF9IwAT4bs8ooA=; b=Q/T/Qgjb+Ke8zv30f3+O42+oQu
-	mRr0usAzkkoiygUfsuodHNbzFd1zcBghBdkS697rQbmG+LUHFuSr9ux0Khq2tDKW
-	GasvvN/hDJAAruoencgOKRSCu6NhjF++DsgVrIcexo2xsd6trzjBHAyXUda1xRAH
-	TzQNGh5IPQWQEExBc3IcX+Nrdzs7WbblextCizjdwAzWy4nvdXUKjMJ5KHGsBjgC
-	r51H5ovLDx14Wi84qBYCcHR/zIpY6V535CCU0QqTtE+QtiUHu+V9Ftn4STER1htg
-	C/UXql+0OWp1HgInOC0gxyEqFTfGcASu7l79j9R66NP6KFOOdaEASf6dQUpQ==
+	:subject:to:to; s=fm1; t=1782714122; x=1782800522; bh=iENE9sIw9W
+	wUO9jjlojMQjnwrxSIxVH/DUqeHpwYZ5M=; b=lgMQAOSS8+cVkC0vQxltZtgthq
+	ce53/Ubs8UO8pUfC3/Gl511O1XpB0wvDeULL6qd/AwqgsEX1YmlTXNr+2m+Jf8VG
+	QOuhJFG9WoOyzCnR0jM3ngt4Wg2D2aFnW2uv4fLYSZUKMa+Pyv2eJ/QRDM7Vyjv5
+	5ZJOPPimJQ7W68aFEDT8EL2Rt04YrQxC/WDckCo1+cVVPr3NsPQPXQuk0tQeoV08
+	V3Ofe1RRvIsi8vU7H0SUJFpY55fG5IQWpzWcFo2qm85XIsiLaKDuDEy59xC4qwX8
+	lTQQ4G6D1n7i8a/tSrhYuca064UKEAeiR4xHZ7D40zQbxqyM/nCrzEjMcnaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782713812; x=1782800212; bh=HtdfpID/q6cUYSTkoc2x8UjWNeKIIDF9IwA
-	T4bs8ooA=; b=OcN/slXS2wATvvjvi1nMA1L2CN+Aw6uddhDMyFzCDS1qii691Iw
-	FXvQ9NAIUwg3ccUrdsTYtgQMyRyNb0XaFY2NdEm1dxxTmi4/buB0IKqT3Sh0aTaV
-	Nh0fyiILFZV/kwnr432MhBqZWSv4m4dYGn8CMN19JwNCZzfqedniGv7AYnHR+sil
-	xHtpr99nGqsQfWvsphSo5wfQHj0GWYbWG2L0w/cWiqAnZ48ak08kuiOPjnQ+soOj
-	a6TPcm0tKsA/C4q0hZgNkNrU6Yl7kj8zNjSB4J46y0dgNHDHeNDR3THKFmv6TURU
-	XaUlhAZZ77y6TVbImH87+OLghHjBAmdxMag==
-X-ME-Sender: <xms:1A1CaodUUhbvImkpDQXyiDp5ysfeOH7nEpC3MgQLIwndfH45JxEJCw>
-    <xme:1A1CagPnBlBGF7285QVh9tacYsUnF7CnVJfaH1AS8JxzGxEKAwWQ3FkfVFUtp2u7r
-    71EitnOTWH3mIkYCK4WYA41ShfsAUTSpGXOTH7jOJARJSHpxvdM5g>
-X-ME-Received: <xmr:1A1CanIEigvrhK0fquKLe2bmEMPuqZZQ-WnHvdsTPq9cu63oT3yd36a40tG6gsq2Qcc5vZ6Hq2LMp4JgJynzcI9xNymhm5FnJllfus_fkL98>
-X-ME-Proxy-Cause: dmFkZTFRK/XYfN0ACmNxIhkiOWmmX1JzVjHsZEprK02m/biH1QhCrGE+HwzjHFBqPTPYVk
-    Nmeu+yS/4hxB1Al6P+P1oZRU3v+S53sDJEq16SYYLaN43DD+yyh0loe4AOi/g1y7mIftSR
-    f3Shrw7tvm8JotKH4YlO2OTqsclebnjJqo4Rxj1o/NJEYpdDaAsMZajD/b1QFoUID3qgV9
-    9EG0r6PD99Pbz/+OUTADjrp9+dW3QN41gLMVEtiSI5qsdBtUgDhu3E5hEnsUee2TPoh5Vr
-    9hfL/TeIIXInCX16OTur+LlGsqmpJ4Qw+hCCTBrX2k4tCS/slm+/w+N864Y8yfQMzkG/jU
-    wqtq4CW5dDtQQTkMiMEOcDReFXtsQwUi8EN0uK/BaLKSBKmD+DpoHnwTivqVWdsPkywOkT
-    Rbgiz072x2PESAQMcOY1jo1EqRaOUg1/C0xFCHvwx+o+k5pyv1UHCVFX2FJjiJxb+FP4a3
-    Rw36giYKiRgSI2QsjrNabjEETLmy1qrkXx6+808xHuKTkTkIt+8YzidJcsFs8AShMIYK2U
-    MLC3bi5S9ONdStwx5AGfjDIAj93XLhsEizqziasUjAscXX3wv82cYLXSvIwWj0T6Qu22oA
-    LD6/vC5fEyUEldbQkYiz3kAq1t88Ilr4IFvdhOIasr1wnCP4BB0m+jD31mbQ
-X-ME-Proxy: <xmx:1A1CapGZtAbmWhitmyztbFtt6eSvkiMjAYXcDpqOHvTB_tNG2I6Vlw>
-    <xmx:1A1CanQmUFbCI7lZhT8ga_FqSU4TbfPJmt2UY7LaFtXJNEOwrV1dfQ>
-    <xmx:1A1CatGCNGu1Sw0SbDvnJdFDvTlOgTEDajLZtRwtZtJlrrNmYNjE8Q>
-    <xmx:1A1Car8rJIUzW1sSg4weNWkHZVhWLclRMcpJsiUBKxivFTTApcsE0w>
-    <xmx:1A1Caj0yZxs7eK07RVI51AZTJpqfSaPU7OQtHgJ_4KztZfqZnBWmgyP7>
+	1782714122; x=1782800522; bh=iENE9sIw9WwUO9jjlojMQjnwrxSIxVH/DUq
+	eHpwYZ5M=; b=FaSCSQ6+yVqPl7ssMaadg0gH2BMCm9XdzQEVSqdhUVNoH/miCMz
+	S9MqCW+aSex9ObsBpkW/98L53eeBRChZwfULLYtuD6vIQyYkQvXo06o1jDWPsc6T
+	HZq10+6QnaG6iBpst1BGzD4qR7FFlIbx7u5HsWjVA7Z97k6FRg8KbyJi8urNst0h
+	dgTi1WPP8QS2IUJYXwrJo5rp2nUwb/SBBJhqjShEj+UhBtiF/PzQoIGGfPwjvFUz
+	M1Jt+yK2vwRBZPAB6vQse8N79DwBnZMrAStTJeXEDTHlParzBzCkHRr2V2QKPIse
+	2Q9rL0wPVY+gtYwB5TV0so+EMIIgAO8fS/Q==
+X-ME-Sender: <xms:Cg9Cat_VdFaGUvlGrpc1zKUd9SoyQFYLDGk-qVSL_FP2VUDVC1QlcA>
+    <xme:Cg9CansJDSxfrg-V40uniS7M5pCRikTj7M4dDWDo4ZfVZ1W3XhiecmEZ4cNpvXJjJ
+    zE4IngwL3_n7gZU69tbvu8UMqoyWHODbE8INFhBg5wGnsCv0bDvrA>
+X-ME-Received: <xmr:Cg9CaoqBvhO_d179KY97EhuTmFEntsu54gfuCFz8dwPpbRYpIx8TxnOBQOHRaf0TcdJrePl3lYKkUG-pdAk_8D25I_QJ8gSV_unlPFazoIfD>
+X-ME-Proxy-Cause: dmFkZTE/R/3mHUO/GV48zDjj45mKZ2SS3Bddrk5QWsMcMmrKb+6ODPQ0N9FVW4dgouZIFQ
+    Qr+u0leiXxtdCN3t1d6FM557F3EGeLpQkh6DZih54eNyfqYOYftMveYK1OzRNb/Hh4DwTs
+    LQmtznCunFNyDLmZHhho587/TeRmb/aZkPrYU6knYZNkU9RHBk4yLsEFMgSufx+af/W5nf
+    BUnaJY/lMsgfvV+7Gf6ObcgycFjUnu5cBTQLEyuO6i7NI4xrYsYzhzdfJrDcUtO+OvkPkL
+    EE+VFWNDl6pPL12BnslcQCPGh3/ruGtLUJjkE2f1V+IaYL3N+EVbgIA7wkN0pSBSYIH8rf
+    jSI0USKseZlLh9dP7WEYZzhh3jnLC3AXKDlKUcUaRZ+PGX4T0AqJCQeZ1e3dzerTNGwFZq
+    h7JXYXGQCdtIx1mxowb2EJuQW9dPorewjw1wk9tnLBMB1IocNCB2XAST/DyD9KNF6M6zcq
+    QAy6mqkkZ/woKWh3jzn1qS2gSy/Vt4q8tixPd6bZV6iTzmJXYf0azBcLfBpiTPO5emR1Pc
+    GGGK8KxfvHWLb5zpBLVV2PthoNkq6AtW0aVdZZNXoedByGHD+5GpDxps5w//JYsnV7ThKn
+    9eSXuRTBgkWmgOGCnvBtSlHpsW7brhGnxV/nJgXs1ntNoygJ1tn8i0ajP+IA
+X-ME-Proxy: <xmx:Cg9Caslskc9AUkvG1NM_ayMG9vuQdp5sZh5rp_9fVfPjfWubS8VTjQ>
+    <xmx:Cg9CakxluonKvDhpKZc9d-f8aHlVY0UxMEyAOKga2JqYZvvOlhocSQ>
+    <xmx:Cg9CaslUBwNRGk5-Rwxvrb1Rh7DUWYDESUlGcU9v1QwB9Owk-JTA9w>
+    <xmx:Cg9CaldiLDNtW7nWc2KddodhwjmHxDYBFX3G6Fi9GBVQyJqn2cW0HQ>
+    <xmx:Cg9CavdBL737EfcVDBmFH7aL8oBFR2wish3ymU_MaAQopRV16TSxeWv1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jun 2026 02:16:51 -0400 (EDT)
+ 29 Jun 2026 02:22:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dbfb7263 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jun 2026 06:16:51 +0000 (UTC)
-Date: Mon, 29 Jun 2026 08:16:48 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ffa0339a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Jun 2026 06:21:59 +0000 (UTC)
+Date: Mon, 29 Jun 2026 08:21:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] odb: introduce `odb_prepare()`
-Message-ID: <akIN0CxVxhaHnvJ0@pks.im>
-References: <20260622-b4-pks-odb-generalize-prepare-v1-0-d2a5c5d13144@pks.im>
- <20260622-b4-pks-odb-generalize-prepare-v1-2-d2a5c5d13144@pks.im>
- <87o6gx4i5w.fsf@emacs.iotcl.com>
+Subject: Re: [PATCH] reftable: fix unlikely leak on API error
+Message-ID: <akIPBJLtPqDjQt-A@pks.im>
+References: <20260628090314.GA661068@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,35 +84,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87o6gx4i5w.fsf@emacs.iotcl.com>
+In-Reply-To: <20260628090314.GA661068@coredump.intra.peff.net>
 
-On Fri, Jun 26, 2026 at 02:09:47PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/odb.h b/odb.h
-> > index c14c9030e4..b1c0f3767b 100644
-> > --- a/odb.h
-> > +++ b/odb.h
-> > @@ -133,9 +133,13 @@ enum odb_prepare_flags {
-> >  };
-> >  
-> >  /*
-> > - * Clear caches, reload alternates and then reload object sources so that new
-> > - * objects may become accessible.
-> > + * Prepare the object database for use. Calling this function is generally not
-> > + * needed, but can be useful in case the caller wants to pre-open individual
-> > + * sources.
-> >   */
-> > +void odb_prepare(struct object_database *o, enum odb_prepare_flags flags);
-> > +
-> > +/* Equivalent to `odb_prepare(o, ODB_PREPARE_FLUSH_CACHES)`. */
-> >  void odb_reprepare(struct object_database *o);
+On Sun, Jun 28, 2026 at 05:03:14AM -0400, Jeff King wrote:
+> If the reftable writer sees a bogus block size, we return with
+> REFTABLE_API_ERROR, leaking the reftable_writer struct we previously
+> allocated. Originally this case was a BUG(), but it became a regular
+> return in 445f9f4f35 (reftable: stop using `BUG()` in trivial cases,
+> 2025-02-18).
 > 
-> According to my grep results are there 17 callsites for odb_reprepare(),
-> then I agree it makes sense to create this wrapper.
+> We could obviously fix it by calling "reftable_free(wp)". But we can
+> observe that we never use the allocated "wp" until after we've validated
+> the input options. So let's just bump the allocation down. That fixes
+> the leak, and I think makes the flow of the function more logical
+> (we validate our inputs before doing any work).
 
-Yeah, I was a bit torn myself whether or not to keep the wrapper. I
-eventually decided to just keep it because it reduces churn, and it's a
-trivial wrapper anyway.
+Another alternative would be to create a common exit path where we free
+the structure when we're about to return an error. But that might not
+even be worth it.
+
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index 0133b64975..1bd4aa388b 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -152,16 +152,16 @@ int reftable_writer_new(struct reftable_writer **out,
+>  	struct reftable_write_options opts = {0};
+>  	struct reftable_writer *wp;
+>  
+> -	wp = reftable_calloc(1, sizeof(*wp));
+> -	if (!wp)
+> -		return REFTABLE_OUT_OF_MEMORY_ERROR;
+> -
+>  	if (_opts)
+>  		opts = *_opts;
+>  	options_set_defaults(&opts);
+>  	if (opts.block_size >= (1 << 24))
+>  		return REFTABLE_API_ERROR;
+>  
+> +	wp = reftable_calloc(1, sizeof(*wp));
+> +	if (!wp)
+> +		return REFTABLE_OUT_OF_MEMORY_ERROR;
+> +
+>  	reftable_buf_init(&wp->block_writer_data.last_key);
+>  	reftable_buf_init(&wp->last_key);
+>  	reftable_buf_init(&wp->scratch);
+
+Makes sense. There's another early return in this function, but there we
+already know to free the writer.
 
 Thanks!
 
