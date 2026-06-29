@@ -1,183 +1,353 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213113B5E19
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 08:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E3E3F8254
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 09:02:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782720276; cv=none; b=qqClVYP6OxtuLJoBC+NFUplFachZT/jjO7x3yfrg6nRwdSeiTR4miJAgyTYOfHbnGOsOlI2RrnyuDWVW2/wdr4gw+RBPOhzgqTNd+GEa4PWvZJvWc3C8SvolZueeGLruji8z7FiZZgMha7a2nECIbozi7/seXveCg/9ynhcOXzg=
+	t=1782723744; cv=none; b=ji4/NXxoTZCtcFiYWG7+cMvK5fptp0HlMdkOgODYX/3qUpJpwa06G/+rw7/+KYey8WfLVClGGxYbn4K1uGOtI3Xsn90sjcC/AOO2qsP9+0umQHhhObhQiwXLxAgVyZcXGzbU5zDrewL96/DdzYsD1/sBPZ1bcnQfqawQkaQpzco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782720276; c=relaxed/simple;
-	bh=bjMNERxXdtFHiV/SBjI4rAcy4xzIiy0EksrtKyP/JZo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SK2sT4cmf9ZY9CJNtheybRCY0de3abKvt4A8iujE69gK/44ozCtYHaxiBynFJKHFkhr598Ukla/ggD7sR9Bvs9e4ODtTEMGM4cSgO4ahrD1sYUfkLkvb0J3oPis552EFx2EP7aE2NOLdtbRBmJne6YIihkGugM+3ho+TblVNv0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SKgJtiy3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G1newggF; arc=none smtp.client-ip=202.12.124.144
+	s=arc-20240116; t=1782723744; c=relaxed/simple;
+	bh=7hM21DfoHfO+airwXsgqXCfrutRzAD3wVXWkO+pBZ0w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=r3TxAD7gcEZp5VxiBOuXBGCnfiBunatUX2bVZ68hYdpWiOlLMqZvEV3Whiik3aeoxKc0J0Bz0lP7/4vkuEOK5669rf7ejtWUstu/p+pkxm3zOukEVZ4zPlDrMCY5Jl8u+0tyUXgCmzmijWanIJaWi3RBEiXuXVTEUridjJ5ShcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S6zzipfJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ePGE7N2K; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SKgJtiy3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G1newggF"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 653B21D000DB;
-	Mon, 29 Jun 2026 04:04:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S6zzipfJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ePGE7N2K"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 313117A00D4;
+	Mon, 29 Jun 2026 05:02:22 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 29 Jun 2026 04:04:34 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 29 Jun 2026 05:02:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782720274; x=1782806674; bh=E/7LEyfvFU
-	yl2tSYhG3E24xueCqfoNDr27Tac7Ru6rQ=; b=SKgJtiy3dYQPoBDQTkhn8idYBc
-	Si4ROnl+xWB63yPlk1KJma/ao8JjQWSGuWMiputV6OQSoDPp/9QH7E0WJXmU0Ipr
-	zDIcQagFh9/9kQoFFgeukl64ftgg7xV5snRHDBkudlQLvhbM8p3ttqSYdaDK/0VX
-	cn5Hbr09CksZXX+bMAVS8EB1Oeu70TTzN9rhN6tc+fxBheWJvhOi3oAsAA/9fQ8q
-	uLePESToBEpyOB4/TvH6md2Ea9RfBoTvCCibOp+aZNE3Emdx2rngBf0+KR0LNCHv
-	avDa8joe29cgtnC53CbVr89crevr1U57oyezqoHhIxNDjy1MaNmzXt1TlMrg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782723742;
+	 x=1782810142; bh=SRzY20F8ycrLXIoj3SdM46qwDRm1Emx8dy4rCrj1oes=; b=
+	S6zzipfJ4J5kpoF6rdLd4OUIDWn5Y7TBkwrmjLbm/cUlGTRCQrdoZoiGw2HsXaFu
+	oJGO5VgEXCr9TpDl38QwgPZ5+955Ov6s1GVFe/tbiFhSvDCDxBdyg6smbxdgObWH
+	uGwpw70WPVdvfS/4FH8EF+fCb0Br9JdCzX2FRMO13VXAY4BQgMt1AZC2qo5+bGjZ
+	ilTOhfKeuRxnZVBOmRPzMEPbKTPlI69LvnKoFSvplWH1tcyPQWdbJWtjeED+Q1nM
+	n2QfiwKnfhi3QfUZIonrm52hy/tRa7ApX4mvBl2i9rnMvnKHixQxeB/cl1BaVRtG
+	amK3y8HCRS7Wg2ZZMJqqRg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782720274; x=1782806674; bh=E/7LEyfvFUyl2tSYhG3E24xueCqfoNDr27T
-	ac7Ru6rQ=; b=G1newggFZJlM678IymcqeZ3032XyktY4EFqatLubm+UP2jr/dHg
-	Qh/PWuTfpksDvxMlWg+AA1RSSSu+kMrImhJGU8Y43bJjcQjl1XhbnLUyQDqjpzXz
-	bM0bS1tybesnLJkxI+t2Y73aDT7zCGnMQPxLHeZdEP8+te57z6H489ccTEgJBzuR
-	a0wnqXKoJ+0Q+xo1Upw8yWcIBnhKCkrqGulOfVYzwJMe8Eao74SOs9Yma/l4mzPt
-	Ptbccxdc1lZ+37BsfK0RWWVWdRrUsCEgKZ2BR3gcPf1PjZaZs+aBO+bP6gE/YbTK
-	ygyK6paSct7H2RBfnzc168ejzAUf0J09rOw==
-X-ME-Sender: <xms:EidCaqAxwIKr7SUooKCuLwP_45bTr4AxJ5610JikJeruMyAZCGtt_w>
-    <xme:EidCarihGTsVwoCeHcKXhBom_YnyjwwxTg1jWnitEfZEUzNAV7ZdImwDK1248DD82
-    WU3lFM6tIWYE0H1HSM2NN4LgRoGzSKH0xd3AiYIoBUyKVlCF82j8w>
-X-ME-Received: <xmr:EidCaik5v0TWPgycYQrGVFspBSrPA1fhXuWhT4Colk0rhs2zCtlfopa6SBhrh8bp8269k4as1ghEsjK6_nt0xrQwzcwXXGk2c3Rj_CyDKyZH>
-X-ME-Proxy-Cause: dmFkZTFXepKPI/uxgdQm/7zCqpK+VfkXR+wkEj1afnx/n31WbNsuUl1qtZCDTk0lKY5vgw
-    kqJOtuOZN1WCL1jc+UWajTDIDAOAkhBLDCLb6AinML4WwdjM6C0QPnPaDUrxw+Kdq3CBPv
-    INi9K2VzTj/iymghf8N7LuLEErF3l0QfnOIhJw2tRXviny0dcMNpfUVgb5cOONvqC3j4cG
-    rVnKgzdlC7/6jN71vJPFDKVgrs3wxKH2o+IWlEFpZaJbR5bD8c19vF3+dP+3t8sqqcM4Iu
-    PNzOr5kd4xzjZoYw3IaKr4WdfDGo7ObtkreTXyvCI6VMvKx1OUwZUaPY/buEG4sX4oQSQD
-    lrhvn39SFG9AJIjJb/3JaqpcmxhF2Hs0E+7sH10SkXxbSFn2dPRS/3N58n+UYuaLYJCZlR
-    Sp4xrYqlK/JGlCTz23ktW/lFhgHz6X5e6oINzhjwu912qaHxOrMEvZEKOmOp2ky0Liln5g
-    hpPEXLjg+QNo2ot/LZyVTJsfmhAfpO2ZifqAi4sA5eH86dHvtjljHjDGuENod6NiNP9Mr0
-    K5guwcfZv6uplaZG/URX3rF8RbAGj77DiBHe40mZXWL9OCzlSybN++Cx4faqwkf2Ukb8cN
-    ENpRiH6VtkneyZH3t5Ftd9SaCUH7T/wha6S27v4cWwSf97uzZNqjn6tnquwg
-X-ME-Proxy: <xmx:EidCano6sivxaHKGYMPJ9Gi4oxEVxlNaZbFZH7HICIz6F_N-1IT9_w>
-    <xmx:EidCarG3JR1DfUQ9cSaaw0778SRVh1Blbk7Qa6axSOIJrVktVZ9I0A>
-    <xmx:EidCajyK2m814srQzmPlL-yrPs8I4wcxP2MXI4SnEacHUHXPJPFI_Q>
-    <xmx:EidCagrXefcklFxwc6fSaXoDB0iYgT9zXpK8otH9GV_NMi_BqyvwDg>
-    <xmx:EidCan8Rhsa3L4SrGQDS1Ke_u3rckfhD07QXW0_8bmvmqOcnpnV0aP-X>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782723742; x=
+	1782810142; bh=SRzY20F8ycrLXIoj3SdM46qwDRm1Emx8dy4rCrj1oes=; b=e
+	PGE7N2KRLlbTPzVpcgu0UMM5upmUbnN1/7CTPR22YwTfAhTkFhOfg4rv4irbWeMu
+	nWJHhAZRLp7Odi1TYdogvZ8+HeaX73WjPZDd5v2mBEpGBzTQ8xvMrjMrDO81r15W
+	4tKgQgyEYm/LVU0FJbvXcC0mpBPjNUzkmtmVycTFXgta451r4het6YiXj9+VrYLd
+	tXr4TcHgIUN8MCFU7zND+DAcg0SL/DYeNetuv8HOIa9vx4Cej//xflXvgqY80etr
+	VC1P8kbIDoubm+NRmWXqrwDoDXqS5V0r5/tnLhMQzKse4OnNL/h7xBXC6bUWz+Gd
+	9yW3YKhM8l9Bhcd7MbPAg==
+X-ME-Sender: <xms:nTRCaiX6H8WfzOc6O-Rzozp4SLMgHjRtbq8PRhVuVC-n6C7z5h1cqQ>
+    <xme:nTRCamC3SAu8RfICYHlgzMUlUvI2SVQjQjObVRpWU-w_Xfhxs-28K8CFJHJ4IyLKC
+    yysSeTJktFTwYXlWc2SQnBehzwFNCaAKr48vJVRa1GjQAMGTVzOH4o>
+X-ME-Received: <xmr:nTRCajxctKPz60V18X834ECHO14TWoAoT_4QjN_4zScIAdlwQ3QxNXQPplf9sB8rXGOMleGTYCANtg15sCgGZNl7qVDfreAQR3uodMcia3IE>
+X-ME-Proxy-Cause: dmFkZTEiK9aH6JM++k7RUyIA/51QuyxRomzw94ZNyikrCJx1afi4EErA8u+xhgErQ7dqg/
+    l6bB4jzrcWUjtDk0O7/O1OqRx4idFbP+4Uwu6xpAhFCWMbEGibf+JvmP/9OzW9bt3Bb/1B
+    8BAK7n/djZt5RnrnrgKVTt0Jp9dtBIADoNxbCzzs8vBj6fbnNBJzHdJI+hfQ68ApEPXGon
+    C275Mw2cTauVPY7uRTaqrkFu12hu2XeJwN+vgCK3xAP7QJddMXL+CQBNht96yUWxkaQV5k
+    57/pIPFaRdYIXBBDjOUFBJ3Ltj4ye9tumUKde+cfdE7rLRpwhKYs4V9BgQ9mdASkkzggdO
+    PZC8it5ohWbLt/xAl3bq0Vh0R8XE0U8M5TrUe3ADpbKZyBHekyLALSxQDZiYQ1V9SAPr7C
+    dUTNkafYOQyp3Fhg9GAAxvEEcxoCuzDJFYPCsYyiVvP77MjonpRk9BAjSbJMx3kMo0w1cB
+    14VzDDe8w8zYV8QV4Xgh230mz6q0ZsxzJPh1sXdg755ttA8iCLKKUp1UqJDAE0i+O9KSjF
+    A8lPu0rKZLY/EWxJg2FnDF1SDclPLxm0V4INX4QGNF9Oo0UU0RynYCerS+RA+mWevNF99b
+    SaVtOpyrNsOYWfeR+PY/rOn/sE0KxADNTpM1qy7N3e9iMo6SFpbGuuOH5cPA
+X-ME-Proxy: <xmx:nTRCajCxw7aaKezHd9Rjt5-FIEWO-Xd2EbCo6FQ80IbRSIoFqPmJ3g>
+    <xmx:nTRCagYNJQV1HJkg5SfXkXS55tB2rFieGo6pXItqFRJbCzyNWUWG1w>
+    <xmx:nTRCarhwk7qRlz3xBONIr2N-E6i6jXb0qDhUf54TRv8Skgmr7r9A5Q>
+    <xmx:nTRCai5Yf8-XV79yTPdl-WZrUsbr_YLMFgsQ6f5bEAtSHuTInFOuVA>
+    <xmx:njRCak9ScpFQbpS_K-_eP4sISzb7i3O2TfjTicKsAcAx89zD1k33hRGW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jun 2026 04:04:33 -0400 (EDT)
+ 29 Jun 2026 05:02:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d16d08b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jun 2026 08:04:31 +0000 (UTC)
-Date: Mon, 29 Jun 2026 10:04:28 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0df924eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Jun 2026 09:02:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 3/3] replay: offer an option to linearize the commit
- topology
-Message-ID: <akInDBlyWbbRFcLH@pks.im>
-References: <20260622-toon-git-replay-drop-merges-v4-0-ff257f534319@iotcl.com>
- <20260622-toon-git-replay-drop-merges-v4-3-ff257f534319@iotcl.com>
- <ajk-a4a3KSJ2u7Ju@pks.im>
- <87qzltyiao.fsf@emacs.iotcl.com>
+Subject: [PATCH v2 00/12] reftable: harden against corrupted tables
+Date: Mon, 29 Jun 2026 11:02:13 +0200
+Message-Id: <20260629-pks-reftable-hardening-v2-0-b0228e7d908d@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87qzltyiao.fsf@emacs.iotcl.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJU0QmoC/3WNQQ6CMBBFr0Jm7RgoOIor72FYlDLAqBTSItEQ7
+ m7BuHT5kvf/m8GzE/ZwjmZwPImX3gZQuwhMq23DKFVgULGimFSKw92j43rU5YOx1a5iK7bB+pB
+ VTHnNmlII4yE48tqOr8WX/bO8sRnXt9VoxY+9e2/lKVm9XyT7F5kSjJGIM8Ono6EyvwRxLx0Uy
+ 7J8AF2sZAHLAAAA
+X-Change-ID: 20260623-pks-reftable-hardening-f54de69fea63
+In-Reply-To: <20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im>
+References: <20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im>
+To: git@vger.kernel.org
+Cc: oxsignal <awo@kakao.com>, Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: b4 0.15.2
 
-On Fri, Jun 26, 2026 at 07:36:31AM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > git-rebase(1) essentially knows about three different modes:
-> >
-> >   - "--no-rebase-merges", which is the default and maps to your
-> >     "--linearize".
-> >
-> >   - "--rebase-merges", which by default doesn't rebase cousins by using
-> >     "--ancestry-path" internally.
-> >
-> >   - "--rebase-merges=rebase-cousins", which doesn't pass the above
-> >     option.
-> >
-> > So it's not a simple boolean there, which makes me wonder whether we
-> > should mirror the same interface so that all of git-rebase(1)'s modes
-> > can be represented, as well.
-> 
-> That's a valid question, although I don't know a good answer to that.
-> 
-> Basically you're asking for what the command line options will look
-> like? Allow me to think out loud.
-> 
-> In this series I'm adding --linearize to git-replay(1). As mentioned, I
-> don't think it makes sense to add it to git-history(1) as well. Without
-> this option, the process aborts when it encounters a merge.
-> 
-> Dscho sent a patch series to properly replay (2-way) merges. I think
-> this should become the default for both git-replay(1) and
-> git-history(1).
-> 
-> But then, do we want to have an option that brings back the current
-> behavior of aborting at merges? Maybe with --no-merges?
+Hi,
 
-I think that would be a sensible option to have.
+this patch series addresses a bunch of errors that may happen when
+trying to read corrupted tables. These errors include out-of-bounds
+writes, out-of-bounds reads and the ability to hit abort(3p) calls.
 
-> Then there's the option of rebasing cousins left. That's something that
-> isn't covered by Dscho's series yet. Maybe --replay-cousins?
-> 
-> To reiterate what the final design could look like:
-> 
->  * <nothing>: replay merges preserving topology.
->  * "--linearize": flattens merges (only git-replay(1)).
->  * "--no-merges": dies when the process tries to replay a merge.
->  * "--replay-cousins": does what --rebase-merges=rebase-cousins does.
+The out-of-bounds write was originally reported by awo on the security
+mailing list. As we never transfer reftables over the protocol it would
+require local disk access to create such corrupted reftables, so there
+isn't really an easy way to exploit these.
 
-Right. And if we tried to be consistent with git-rebase(1), then this
-could be done as:
+In any case, I took that chance and wrote a fuzzer for parsing the
+tables, which surfaced a bunch of issues. At the end of this series
+though the fuzzer can now run for an extended amount of time (2hrs+)
+without surfacing any new issues.
 
-  - "--rebase-merges" to replay merges preserving topology, which is the
-    default once we support replaying them.
-
-  - "--no-rebase-merges" to flatten commits.
-
-  - "--rebase-merges=abort" to explicitly die when seeing merges.
-
-  - "--rebase-merges=rebase-cousins"
-
-> Now, all these options are (I think) mutually exclusive, so we could
-> consider an option "--replay-merges=<mode>", but personally I find
-> "--<option>=<value>" arguments harder to use than specifying separate
-> options.
-> 
-> I think I'm avoiding your question, because the design of the command
-> line parameters doesn't need tot 1-on-1 correlate to the internal
-> datastructure. And I agree the mode isn't a boolean, but does that mean
-> we want to use an enum internally? Well, I don't know. And I also don't
-> think that matters right now. Code is easy to change, I think the
-> command line options should be designed with the future in mind, which I
-> believe we do with "--linearize".
-> 
-> Sorry for this long-winded rambling, but bottom line I think it's fine
-> to add --linearize and in the future add more options and see how the
-> code should evolve to support those.
-
-Hm, I dunno. You basically reasoned that we potentially want to have all
-of the same options that git-rebase(1)'s "--rebase-merges=" already
-supports. So that begs the question why we need to reinvent the wheel
-then and not just use the same syntax.
-
-Note that I'm not arguing that we should support all of these options
-now. I'm merely arguing that we should try to be consistent, unless
-there is a good argument not to do that. I'm fine with the interface if
-there indeed is a good argument, but if so we should document why we
-think that the current interface in git-rebase(1) is not a good fit for
-this command.
+Changes in v2:
+  - Introduce a test helper that writes a reftable block.
+  - Link to v1: https://patch.msgid.link/20260624-pks-reftable-hardening-v1-0-66e4ce87c6b9@pks.im
 
 Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (12):
+      meson: support building fuzzers with libFuzzer
+      oss-fuzz: add fuzzer for parsing reftables
+      reftable/basics: fix OOB read on binary search of empty range
+      reftable/record: don't abort when decoding invalid ref value type
+      t/unit-tests: introduce test helper to write reftable blocks
+      reftable/block: fix OOB write with bogus inflated log size
+      reftable/block: fix OOB read with bogus block size
+      reftable/block: fix OOB read with bogus restart count
+      reftable/block: fix use of uninitialized memory when binsearch fails
+      reftable/block: fix OOB read with bogus restart offset
+      reftable/table: fix NULL pointer access when seeking to bogus offsets
+      reftable/table: fix OOB read on truncated table
+
+ Makefile                            |   1 +
+ ci/run-build-and-minimal-fuzzers.sh |   1 +
+ meson.build                         |  15 +++
+ meson_options.txt                   |   2 +
+ oss-fuzz/.gitignore                 |   1 +
+ oss-fuzz/fuzz-reftable.c            |  74 +++++++++++++++
+ oss-fuzz/meson.build                |   2 +
+ reftable/basics.c                   |   3 +
+ reftable/block.c                    |  39 +++++++-
+ reftable/record.c                   |   6 +-
+ reftable/table.c                    |   7 ++
+ t/unit-tests/u-reftable-basics.c    |  11 +++
+ t/unit-tests/u-reftable-block.c     | 184 ++++++++++++++++++++++++++++++++----
+ t/unit-tests/u-reftable-record.c    |  24 +++++
+ t/unit-tests/u-reftable-table.c     |  91 ++++++++++++++++++
+ 15 files changed, 435 insertions(+), 26 deletions(-)
+
+Range-diff versus v1:
+
+ 1:  82275a5448 =  1:  5bb58da117 meson: support building fuzzers with libFuzzer
+ 2:  8b234b5dc6 =  2:  8d11b15082 oss-fuzz: add fuzzer for parsing reftables
+ 3:  f265bcf6f4 =  3:  21186da3f1 reftable/basics: fix OOB read on binary search of empty range
+ 4:  a56c6cb50c =  4:  3c327bacc2 reftable/record: don't abort when decoding invalid ref value type
+ -:  ---------- >  5:  4125c76a97 t/unit-tests: introduce test helper to write reftable blocks
+ 5:  9074372e30 !  6:  e923c23518 reftable/block: fix OOB write with bogus inflated log size
+    @@ reftable/block.c: int reftable_block_init(struct reftable_block *block,
+     
+      ## t/unit-tests/u-reftable-block.c ##
+     @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__iterator(void)
+    - 	block_writer_release(&writer);
+    + 	reftable_block_release(&block);
+      	reftable_buf_release(&data);
+      }
+     +
+     +void test_reftable_block__corrupt_log_block_size(void)
+     +{
+     +	struct reftable_block_source source = { 0 };
+    -+	struct block_writer writer = {
+    -+		.last_key = REFTABLE_BUF_INIT,
+    -+	};
+     +	struct reftable_record rec = {
+     +		.type = REFTABLE_BLOCK_TYPE_LOG,
+     +		.u.log = {
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__iterator(void)
+     +		},
+     +	};
+     +	struct reftable_block block = { 0 };
+    -+	struct reftable_buf data;
+    -+
+    -+	data.len = 1024;
+    -+	REFTABLE_CALLOC_ARRAY(data.buf, data.len);
+    -+	cl_assert(data.buf != NULL);
+    ++	struct reftable_buf data = REFTABLE_BUF_INIT;
+     +
+    -+	cl_must_pass(block_writer_init(&writer, REFTABLE_BLOCK_TYPE_LOG,
+    -+				       (uint8_t *) data.buf, data.len,
+    -+				       0, hash_size(REFTABLE_HASH_SHA1)));
+    -+	cl_must_pass(block_writer_add(&writer, &rec));
+    -+	cl_assert(block_writer_finish(&writer) > 0);
+    ++	cl_reftable_write_block(&data, REFTABLE_BLOCK_TYPE_LOG, &rec, 1);
+     +
+     +	/*
+     +	 * Log blocks store their inflated size as a big-endian 24-bit integer
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__iterator(void)
+     +			  REFTABLE_FORMAT_ERROR);
+     +
+     +	reftable_block_release(&block);
+    -+	block_writer_release(&writer);
+     +	reftable_buf_release(&data);
+     +}
+ 6:  6877f58485 !  7:  16c2904a96 reftable/block: fix OOB read with bogus block size
+    @@ reftable/block.c: int reftable_block_init(struct reftable_block *block,
+     
+      ## t/unit-tests/u-reftable-block.c ##
+     @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_log_block_size(void)
+    - 	block_writer_release(&writer);
+    + 	reftable_block_release(&block);
+      	reftable_buf_release(&data);
+      }
+     +
+     +void test_reftable_block__corrupt_block_size(void)
+     +{
+     +	struct reftable_block_source source = { 0 };
+    -+	struct block_writer writer = {
+    -+		.last_key = REFTABLE_BUF_INIT,
+    -+	};
+     +	struct reftable_record rec = {
+     +		.type = REFTABLE_BLOCK_TYPE_REF,
+     +		.u.ref = {
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_log_block_siz
+     +		},
+     +	};
+     +	struct reftable_block block = { 0 };
+    -+	struct reftable_buf data;
+    -+
+    -+	data.len = 1024;
+    -+	REFTABLE_CALLOC_ARRAY(data.buf, data.len);
+    -+	cl_assert(data.buf != NULL);
+    ++	struct reftable_buf data = REFTABLE_BUF_INIT;
+     +
+    -+	cl_must_pass(block_writer_init(&writer, REFTABLE_BLOCK_TYPE_REF,
+    -+				       (uint8_t *) data.buf, data.len,
+    -+				       0, hash_size(REFTABLE_HASH_SHA1)));
+    -+	cl_must_pass(block_writer_add(&writer, &rec));
+    -+	cl_assert(block_writer_finish(&writer) > 0);
+    ++	cl_reftable_write_block(&data, REFTABLE_BLOCK_TYPE_REF, &rec, 1);
+     +
+     +	/*
+     +	 * The block size is stored as a big-endian 24-bit integer right after
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_log_block_siz
+     +			  REFTABLE_FORMAT_ERROR);
+     +
+     +	reftable_block_release(&block);
+    -+	block_writer_release(&writer);
+     +	reftable_buf_release(&data);
+     +}
+ 7:  3c022a4f97 !  8:  872eca67bb reftable/block: fix OOB read with bogus restart count
+    @@ reftable/block.c: int reftable_block_init(struct reftable_block *block,
+     
+      ## t/unit-tests/u-reftable-block.c ##
+     @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_block_size(void)
+    - 	block_writer_release(&writer);
+    + 	reftable_block_release(&block);
+      	reftable_buf_release(&data);
+      }
+     +
+     +void test_reftable_block__corrupt_restart_count(void)
+     +{
+     +	struct reftable_block_source source = { 0 };
+    -+	struct block_writer writer = {
+    -+		.last_key = REFTABLE_BUF_INIT,
+    -+	};
+     +	struct reftable_record rec = {
+     +		.type = REFTABLE_BLOCK_TYPE_REF,
+     +		.u.ref = {
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_block_size(vo
+     +		},
+     +	};
+     +	struct reftable_block block = { 0 };
+    -+	struct reftable_buf data;
+    ++	struct reftable_buf data = REFTABLE_BUF_INIT;
+     +	int block_size;
+     +
+    -+	data.len = 1024;
+    -+	REFTABLE_CALLOC_ARRAY(data.buf, data.len);
+    -+	cl_assert(data.buf != NULL);
+    -+
+    -+	cl_must_pass(block_writer_init(&writer, REFTABLE_BLOCK_TYPE_REF,
+    -+				       (uint8_t *) data.buf, data.len,
+    -+				       0, hash_size(REFTABLE_HASH_SHA1)));
+    -+	cl_must_pass(block_writer_add(&writer, &rec));
+    -+	block_size = block_writer_finish(&writer);
+    -+	cl_assert(block_size > 0);
+    ++	block_size = cl_reftable_write_block(&data, REFTABLE_BLOCK_TYPE_REF, &rec, 1);
+     +
+     +	/*
+     +	 * Corrupt the restart count to claim a bogus number of restart points.
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_block_size(vo
+     +			  REFTABLE_FORMAT_ERROR);
+     +
+     +	reftable_block_release(&block);
+    -+	block_writer_release(&writer);
+     +	reftable_buf_release(&data);
+     +}
+ 8:  af5697b85b =  9:  c82d51c163 reftable/block: fix use of uninitialized memory when binsearch fails
+ 9:  e9d4eca613 ! 10:  16e1087a66 reftable/block: fix OOB read with bogus restart offset
+    @@ reftable/block.c: static int restart_needle_less(size_t idx, void *_args)
+     
+      ## t/unit-tests/u-reftable-block.c ##
+     @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_restart_count(void)
+    - 	block_writer_release(&writer);
+    + 	reftable_block_release(&block);
+      	reftable_buf_release(&data);
+      }
+     +
+     +void test_reftable_block__corrupt_restart_offset(void)
+     +{
+     +	struct reftable_block_source source = { 0 };
+    -+	struct block_writer writer = {
+    -+		.last_key = REFTABLE_BUF_INIT,
+    -+	};
+     +	struct reftable_record rec = {
+     +		.type = REFTABLE_BLOCK_TYPE_REF,
+     +		.u.ref = {
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_restart_count
+     +	struct reftable_block block = { 0 };
+     +	struct block_iter it = BLOCK_ITER_INIT;
+     +	struct reftable_buf want = REFTABLE_BUF_INIT;
+    -+	struct reftable_buf data;
+    -+
+    -+	data.len = 1024;
+    -+	REFTABLE_CALLOC_ARRAY(data.buf, data.len);
+    -+	cl_assert(data.buf != NULL);
+    ++	struct reftable_buf data = REFTABLE_BUF_INIT;
+     +
+    -+	cl_must_pass(block_writer_init(&writer, REFTABLE_BLOCK_TYPE_REF,
+    -+				       (uint8_t *) data.buf, data.len,
+    -+				       0, hash_size(REFTABLE_HASH_SHA1)));
+    -+	cl_must_pass(block_writer_add(&writer, &rec));
+    -+	cl_assert(block_writer_finish(&writer) > 0);
+    ++	cl_reftable_write_block(&data, REFTABLE_BLOCK_TYPE_REF, &rec, 1);
+     +
+     +	block_source_from_buf(&source, &data);
+     +	cl_must_pass(reftable_block_init(&block, &source, 0, 0, data.len,
+    @@ t/unit-tests/u-reftable-block.c: void test_reftable_block__corrupt_restart_count
+     +	reftable_buf_release(&want);
+     +	block_iter_close(&it);
+     +	reftable_block_release(&block);
+    -+	block_writer_release(&writer);
+     +	reftable_buf_release(&data);
+     +}
+10:  4bb729aeb0 = 11:  63dd98f908 reftable/table: fix NULL pointer access when seeking to bogus offsets
+11:  e3bca6af6e = 12:  32696a01bc reftable/table: fix OOB read on truncated table
+
+---
+base-commit: ab776a62a78576513ee121424adb19597fbb7613
+change-id: 20260623-pks-reftable-hardening-f54de69fea63
+
