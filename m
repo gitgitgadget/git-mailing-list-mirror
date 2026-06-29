@@ -1,188 +1,175 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161E439B97E
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 07:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782717072; cv=pass; b=bK1IcH+1W10a81/Hd8i/SclsuC2IiEEEVKhVaN11iKaNlgvH9QN/W6K0bFFqsrgwOt2cBuvIOnp2p0NDb1AM8Gvp34NKrg2yq+jtLVHoo3XklHQwJj5JaYrANfw5QiSmHP+2CpUwrolTBE8nU2RpOJnpIKt8BPsNsIdYU0+PvoA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782717072; c=relaxed/simple;
-	bh=Fe8TSRf0Gev+AadNGY2SRRqkZLTLTxMj3ODsTgdSU2A=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=b969+ZY1ivP6seYtpdULylMLZL42CyTGuwX7hS1nDaYSZSovx/gfOasE5QCMHLEbRKmpM1U86/3Qfc2Jm3VFMSbkpdhA22SnMZmp0hjh256jm+EL/7ePUB1oVAn5a7xXuJYMNPMdipNsbd+yr276eUOdbg/KtIuEvv03N/LrbEM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qx/wAa3U; arc=pass smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99F433BBCF
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 07:33:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782718401; cv=none; b=kvdAGtQHRcfs3dsojbZCEGoCpFWeHKMHFGQMZHZh62b7J9k6BV+Lc15UwgQRuXxPqImhXQ051HhkyufQDpfDxYxiW4ZY4ePU4uHXokRBFeT/DwZNE72JCjMBOr65Ib93+t8bNElZSlwI+KlGFOIiw//SIdRrc7WgTEqDNSIgSBk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782718401; c=relaxed/simple;
+	bh=fUgBmO5eu84AJPvh/TgRAqKYPr7x2KX27mxL/Y9FQL4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F+1gKeWa0t0KvyYRj5onblqcM02KNkZL/WdoKnZ15Ge5oPIgK3VZ1C9yZFOvrTWS8o8IZ2p7IYSp+AmZQJAPxO57eqzs8XNogahWLFWd/Gn2dQKJSjT38TPFS7fF7PFdhCt8mDQahjZxMN7BU0lgYPS0VpaFPDNP+9KQ/MjPdlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ig/uya/J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DK/lug0U; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qx/wAa3U"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-7387ac7d28cso191180137.1
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 00:11:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782717070; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Yv3knucFsPuFwl8+UaaEtK9sM8YJM5KzoinwtC52HVnoUizkfZfNb4QBpG6+ebWQu1
-         H45Sgs6c3f5F8pyAg2Rx7/0xjstYjr9EIAFM+9PapcesAhJVe3esFMOqMDGGnduZol5Z
-         3WrfRCX8z6jxmgfAvW9Jgtsd27YGQ4d309ErTqKq9vonUsqEEYG8OtmDuHbov5bSjYPE
-         7QOehTBfaGdnidAHFt4FALRq+fMejSsLGfo1sciVqwXykBN0PQH56ft7qna8InpfCx5F
-         Nr6JKwPRH0mNm2rjLfBBKOS5758kb7wkvrGuYjJlQrBKLFuNPNsLaAbXX7COHrTIMwv0
-         sAaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=hTmUZwdkwJO25SwADrDneHtv4wzwJXBypxzalNstcVM=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=SBcC4VooWxpu3mdjyEmXa8jnIoOJmZwJdpGNXEe2lufT+rmL0TjEJNDXxym6PSdbuu
-         EjkugYgmekKIHsCEciFnvcbBw9NiP993ZBPeW6qegnpxjzyYLePSzcoi/u4ymDCj3zMY
-         twjHOh5HgX24JKOkZCbPBQR/Kh31gl5zpzSjZ3cCZoFX0Al3b+SiPkjfiq+Obbx8ySAQ
-         0/t/LSklMHBE6cirB9eqg+d2oLvwHIBvEjMswTwEX70QlE8BrvRL8SX+luZJjzxGQNxQ
-         7pW4VIuII6yiYpoPfgDpbLMRU3tpso1pgAixstcw151EjxROpzS/4NNNYWGhMelOyy13
-         ErjQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782717070; x=1783321870; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hTmUZwdkwJO25SwADrDneHtv4wzwJXBypxzalNstcVM=;
-        b=Qx/wAa3U4ytRiU1JR66/wjXaVLUwZvllHZReHHt1COs/FLNPIMGzIjPZiH930xY5ga
-         DoYvLWpQu5Jrx11Q2CYpHRUA3MNyiGQEmpVjHIbStbPjA3NcwmCl5UYgrU9D9B/LmK0+
-         nWw636iZ6df/+BAcFFOMutgpNqEtU/jIbqgYvWG0m2kXCHPiFch00hUM5EPMeffANZRs
-         BQ70w/QMnz5owZ7TWG2yguv8/z4UgR6tS02oun9Dyn/Ssbxt5TVjvp+5glHtTUahfMyU
-         jfjSCp5nv4CtFoQcOXuxX43tm1YrOs4Mq8z0K2imqOw0zJjx+dgXBT5+PK4GlXxf86/p
-         y2iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782717070; x=1783321870;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hTmUZwdkwJO25SwADrDneHtv4wzwJXBypxzalNstcVM=;
-        b=hYy2F9auZy6JQB6vIPmTS25TNz6a04rrZ8JEJoH7jZGZKsoEBggPAEJE0ZWCi7scba
-         A0i4C8CoNEU6m+lk2eLWdsa6lYBl8TFwOajw9MlVb5U/QjSfAItuxN1t+KOX63aTZavN
-         9qnARNRCvDjkNqjzGBKXtf3ih0pC+MOEHSDP+mVaqUe1a94ppNCDBF6KGl7JJSoREK9D
-         CrFn3XyhxagmQxvGQosalvjoEHZvujfhS3WIZhe4X4T0cqbDl/WIselE0yAz52YYJyzA
-         JFb9BsdmketRIDATlOEqtvDNQA9KKDQI8dOFPxRt13Q8PjaFh61i156lj5oYjeRsIu6J
-         SYbA==
-X-Gm-Message-State: AOJu0YzTzKhQcQsHTe1hHGyA5RoI/3ajUownoo8nPoyUX4BKRFNOjf99
-	aelH1/kIyhhINyDYn+5UJC4OCUH21+mUwX784A2XXEJW2uPniUFRe9Bb8sFOyJULfxDnKiO0zkh
-	wbBoO9WecrGMSDwuU3QENmY80oMM95Wr4rdLG+9A=
-X-Gm-Gg: AfdE7clLw6RjZeDRfHPWqhmCqHoOu++SkKBV8X6SO3s9HZt03Dxz3LWC9JgRyFqpXk6
-	3ydbDqjFaDiMx9UTIba701ZEOTN8sAg3BYlO7bJwg5KVlKUGFHL2A2hCbG6NupCpKMM++PrAHo/
-	jfP+qn/sQQdFreuq4dvXlpbwaOPzYEAnRZLTCpwcSpfFAi44cdjfQ9XOITD1EElgd3qhnOBA6Uy
-	NpqLRyA+67TboVHeKHf2gkz5hAgsLKoElYjFlb8pe3XFRWWDxZnhrnyDhVjAdbI66JO75AbBNFc
-	VCpo1w==
-X-Received: by 2002:a05:6102:3e83:b0:728:f34d:f410 with SMTP id
- ada2fe7eead31-7343464c372mr6497727137.7.1782717069960; Mon, 29 Jun 2026
- 00:11:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ig/uya/J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DK/lug0U"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id BBE051D0007C;
+	Mon, 29 Jun 2026 03:33:11 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 29 Jun 2026 03:33:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782718391; x=1782804791; bh=sXfUsvyYFT
+	Gz/deU54bawMSs9y04FLrvGSBGoT7QzBU=; b=ig/uya/Jk6DSk8ThsnxYy1oEWQ
+	rxQ/DgNnhLBiF2IJlL8Bl3QgdTgzjKzUiHYiY3WXZDTGXM9YdPbHdLYajCxvB3jQ
+	X4hPc2KEq2ev3spz7mag6vkjP76HywkKfI2haDfJ2xq7Ch70wddUwc5sRiWjxEtS
+	xGhkjtx1t/sLQKYmc9XVKjrQGWKRoXPauVAEixhfHmetyX1O2av7QSwMTHE31xiq
+	cGmhlf6Ga71WVwc7Ml80VWpakGkMnO0vRKaBuH6yR1Xl8cCy9LA9ZkGulr72L+cD
+	QVANXDUo5GRVojYMivhhfaYn/lMZVH+iAAN+ia9TbEL7KrZmCatI+Tam6M1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782718391; x=1782804791; bh=sXfUsvyYFTGz/deU54bawMSs9y04FLrvGSB
+	GoT7QzBU=; b=DK/lug0Uy7M2axCl9f2vVGPIJk63jin/ixuSVbc+LrWfPCnfUGL
+	XQAdq74kS83cPgPNceLz/8M6kSZznSh+d6ecC2/jcQbZpqN5thNidysvkjqJnEhy
+	bdnd9cruiTo2HWq4SxCKDD/etrtzrjvyy89LDzGwpwSmHEZKwGxXy4tfuu+lKji8
+	lXtKRmUovgps8dydWIzL3I79Au0fvY+ztYIpOT6TwPGHUf3VwPnFSZnydiWhhsTt
+	UpuIOxCxSjwt6qaq4GOqgqplIME1vtLYxKEP78KPW9J6c6KWNBA6cKUfD0AV8B3i
+	Cb+9K9SVCnLY7BBinb88OrWEP3sSMYD65iw==
+X-ME-Sender: <xms:tx9CapbdYgQOavB95FNmAeEowYkDXqKmBWBktRtQjrCgKKy9-fazLw>
+    <xme:tx9Canbdo27LnoO4S0x3uYtjRQlRI2_K62je7B1oXz6Qro7ayA79GNcajlV6p8G2B
+    GmOozyloQKy_BXNVJSQzhPCdZEfMqlUHp-vZVejmcJbKvlP5xp9OQ>
+X-ME-Received: <xmr:tx9Cag9dbz-HTl3QmUVWmTuq4AOgyfSPaj-TzW_uYazm-R-DpIXdlYkQwBG1wJ3hcgVXun6zVpaX35VDjbvOVQq9boDlgp6b0xPMEsZ4FfnI>
+X-ME-Proxy-Cause: dmFkZTF3A97Qho2zD2ZXuQjdkPnerCzV8oFIZ6Cvk0p1erv91jd2feePXRlKQvcvACpWre
+    duq7cSpuHLMeXU+iLv878dTuAHV1HDhk1ujDjqA+/gXozN91JIkykCon7BxtA0RSZAA56T
+    Uw6G2Rx8RA/mDeUOj5C8zNDzTuy+a3aTDN1aGcP3nTWkQDyHzS8AUZWIlpNqzd0mxEEIBO
+    Lqs9euzdkdR/7QIoFPGco0Ilp0qLEea430aKviQ6OLLKkj9w6eaga8X6rCsHvKhxl2QZmi
+    cxshvwLf7w8GyW7b8uoVtQXY0O1zoLC42gu1lMeIGvw+eWGmrm0k+taDlH5wGUNookcqBm
+    ByxvoRXzdWSPsi2NRF0npfVOTKaAv1zxQyQIa8wFVCrNuatTn0mKE21qjbszuIV83Sgdrv
+    9gyVs4wSajk5nudS/bkFXBA24PdEooCRwJV1rUHLy6CVyQQI0ROqFIKW+FtaMVVQQMHxDc
+    9+Ia8HxzTbRmcVBD9ON6UwuRHUEX09c0DFMlz/Qnrd8GbgX/liLExjVGD09WnRiNi+FrR7
+    gabQtCAxY4QLxZtzUz59FYP8VZcYkg7qPZU07oiyzc5iXFlcGXlA6Qi2j7vsuUgGxIHM24
+    FmGbyBLhnS1f3Bx8c/WrnBPfQu8nAaqdTLBK84Mu+4/ePCBeypxCsf4Dq3Tg
+X-ME-Proxy: <xmx:tx9Camgn-rT1kCUPSJgwEgrl3HGYXhd2mUelbwA6vryZu_xOpgVkcw>
+    <xmx:tx9CagdtC_-6qSH3HxmGuVkZRofQkwnZdagg-15mAISPCxuwOXvE_Q>
+    <xmx:tx9CatoD3L7jAT-xnVFKO4THV_Pb_OVh7bAqCzDmfRI9_kKlyq9DaQ>
+    <xmx:tx9CalCTBhBXB4JX3qG-OXr6GFl_hQNu-dCWGYOVSPunpz1HiqU26w>
+    <xmx:tx9Cau4XSDCdoWJwCvdQ5E8yXOLWhIwD6L4eLEn7C3mf3nmm_WdA0LIj>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Jun 2026 03:33:10 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4c784b60 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Jun 2026 07:33:08 +0000 (UTC)
+Date: Mon, 29 Jun 2026 09:33:05 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] fixing expensive http test timeouts
+Message-ID: <akIfsaVMB_S6kfJQ@pks.im>
+References: <20260621213407.GC2297179@coredump.intra.peff.net>
+ <aji9MOE-NTHKXYqn@pks.im>
+ <ajkEzhdqzmAePk_P@pks.im>
+ <ajkGkB2ckf3p43QR@pks.im>
+ <ajkOoRhqaAcy6gBg@pks.im>
+ <CAC2QwmJA2TH6BmO0O61qRYvV2pqURUk0dTXpkJtb9e-TZNZDZQ@mail.gmail.com>
+ <20260626051657.GB3138423@coredump.intra.peff.net>
+ <aj5ZaZK7xylfs4Xw@pks.im>
+ <CAC2QwmLkHUymvtYbjY8aQO9_VogvaSXdbb1_DSZtcBttGfN0tg@mail.gmail.com>
+ <20260628075716.GA3525066@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Wei Hu <weihu.math@gmail.com>
-Date: Mon, 29 Jun 2026 15:10:42 +0800
-X-Gm-Features: AVVi8CdE04uQCGSUsQFYnZO3hT86vuSP9pUlkQB_dSC7CX_IgmiWZweFWnARe1A
-Message-ID: <CACLXMtCSzW9BY7idqB1yGa87MeG0Y2FN5Ho2hRXuPJ_qswE27Q@mail.gmail.com>
-Subject: receive-pack hangs on zero-object push into promisor-shaped repository
-To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000b0c41f06555f2999"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260628075716.GA3525066@coredump.intra.peff.net>
 
---000000000000b0c41f06555f2999
-Content-Type: multipart/alternative; boundary="000000000000b0c41e06555f2997"
+On Sun, Jun 28, 2026 at 03:57:16AM -0400, Jeff King wrote:
+> On Fri, Jun 26, 2026 at 04:26:28PM -0700, Michael Montalbo wrote:
+> 
+> > I think Peff and Patrick's suggestion to just increase the Apache timeout
+> > makes sense. I ran some experiments using a really long timeout with an
+> > artificially slowed down CI runner and all the jobs made progress
+> > (if slowly) without stalling, and eventually completed successfully:
+> > 
+> > https://github.com/mmontalbo/git/actions/runs/28267019651
+> > 
+> > I haven't spent a lot of time trying to figure out what the right timeout
+> > value should be. An hour definitely seems like overkill, with something
+> > on the order of 5-10 minutes seeming more reasonable, but I don't
+> > have a principled number.
+> 
+> Here are some patches to keep things moving along. I arbitrarily picked
+> 10 minutes, because multiplying the 1-minute default by 10 felt right. ;)
+> 
+> The first one just bumps the timeout and should make our problems go
+> away. The other two are optimizations, but I'm on the fence on whether
+> the final patch is worth it.
+> 
+> Thanks again for all of the digging.
+> 
+>   [1/3]: t/lib-httpd: bump apache timeout
+>   [2/3]: t5551: put many-tags case into its own repo
+>   [3/3]: t5551: pack refs after creating many tags
 
---000000000000b0c41e06555f2997
-Content-Type: text/plain; charset="UTF-8"
+By the way, the only reason why we at GitLab haven't been feeling the
+pain is that we only enable GIT_TEST_LONG for GitHub. So I was wondering
+whether we want to have something like the below patch on top.
 
-Hello,
+Patrick
 
-I found a reproducible hang in `git receive-pack` when pushing a ref update
-that sends zero objects into a repository that has promisor remote
-configuration and `.promisor` pack sidecar files.
+diff --git a/ci/lib.sh b/ci/lib.sh
+index b939110a6e..57801586aa 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -215,6 +215,14 @@ then
+ 	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
+ 	CI_REPO_SLUG="$GITHUB_REPOSITORY"
+ 	CI_JOB_ID="$GITHUB_RUN_ID"
++
++	case "$GITHUB_EVENT_NAME" in
++	pull_request)
++		CI_EVENT=pull_request;;
++	push)
++		CI_EVENT=push;;
++	esac
++
+ 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+ 	DONT_SKIP_TAGS=t
+ 	handle_failed_tests () {
+@@ -239,6 +247,13 @@ then
+ 	CI_BRANCH="$CI_COMMIT_REF_NAME"
+ 	CI_COMMIT="$CI_COMMIT_SHA"
+ 
++	case "$CI_PIPELINE_SOURCE" in
++	merge_request_event)
++		CI_EVENT=pull_request;;
++	push)
++		CI_EVENT=push;;
++	esac
++
+ 	case "$OS,$CI_JOB_IMAGE" in
+ 	Windows_NT,*)
+ 		CI_OS_NAME=windows
+@@ -319,7 +334,7 @@ export SKIP_DASHED_BUILT_INS=YesPlease
+ # enable "expensive" tests for PR events.
+ # In order to catch bugs introduced at integration time by mismerges,
+ # enable the long tests for pushes to the integration branches as well.
+-case "$GITHUB_EVENT_NAME,$CI_BRANCH" in
++case "$CI_EVENT,$CI_BRANCH" in
+ pull_request,*|push,*next*|push,*master*|push,*main*|push,*maint*)
+ 	export GIT_TEST_LONG=YesPlease
+ 	;;
 
-The same zero-object ref update returns normally when the receiving
-repository
-is a normal non-bare repository or a bare repository. It also returns
-normally
-if I remove either the promisor remote config or the `.promisor` sidecar
-files
-from the receiving repository.
-
-Check the attached script to reproduce the bug.
-
-Environment:
-
-  git version 2.54.0
-  cpu: x86_64
-  no commit associated with this build
-  sizeof-long: 8
-  sizeof-size_t: 8
-  shell-path: /bin/sh
-  rust: disabled
-  gettext: enabled
-  libcurl: 8.5.0
-  zlib: 1.3
-  SHA-1: SHA1_DC
-  SHA-256: SHA256_BLK
-  default-ref-format: files
-  default-hash: sha1
-
-  OS: Ubuntu 24.04.4 LTS (Noble Numbat)
-
---000000000000b0c41e06555f2997
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello,<br><br>I found a reproducible hang in `git receive-=
-pack` when pushing a ref update<br>that sends zero objects into a repositor=
-y that has promisor remote<br>configuration and `.promisor` pack sidecar fi=
-les.<br><br>The same zero-object ref update returns normally when the recei=
-ving repository<br>is a normal non-bare repository or a bare repository. It=
- also returns normally<br>if I remove either the promisor remote config or =
-the `.promisor` sidecar files<br>from the receiving repository.<div><br></d=
-iv><div>Check the attached script to reproduce the bug.<br><br>Environment:=
-<br><br>=C2=A0 git version 2.54.0<br>=C2=A0 cpu: x86_64<br>=C2=A0 no commit=
- associated with this build<br>=C2=A0 sizeof-long: 8<br>=C2=A0 sizeof-size_=
-t: 8<br>=C2=A0 shell-path: /bin/sh<br>=C2=A0 rust: disabled<br>=C2=A0 gette=
-xt: enabled<br>=C2=A0 libcurl: 8.5.0<br>=C2=A0 zlib: 1.3<br>=C2=A0 SHA-1: S=
-HA1_DC<br>=C2=A0 SHA-256: SHA256_BLK<br>=C2=A0 default-ref-format: files<br=
->=C2=A0 default-hash: sha1<br><br>=C2=A0 OS: Ubuntu 24.04.4 LTS (Noble Numb=
-at)<br><div><br></div></div></div>
-
---000000000000b0c41e06555f2997--
---000000000000b0c41f06555f2999
-Content-Type: text/x-sh; charset="US-ASCII"; name="git-promisor-zero-object-push-repro.sh"
-Content-Disposition: attachment; 
-	filename="git-promisor-zero-object-push-repro.sh"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mqyvoj3p0>
-X-Attachment-Id: f_mqyvoj3p0
-
-IyEvYmluL3NoCnNldCAtZXUKCkdJVD0ke0dJVDotZ2l0fQpST09UPSQobWt0ZW1wIC1kICIke1RN
-UERJUjotL3RtcH0vZ2l0LXByb21pc29yLXB1c2gtaGFuZy5YWFhYWFgiKQpTUkM9JFJPT1Qvc3Jj
-CkRTVD0kUk9PVC9kc3QKVVBTVFJFQU09JFJPT1QvdXBzdHJlYW0uZ2l0ClRSQUNFPSRST09UL3Ry
-YWNlLmxvZwoKZWNobyAicm9vdDogJFJPT1QiCmVjaG8gImdpdDogJCgkR0lUIC0tdmVyc2lvbiki
-CgokR0lUIGluaXQgLXEgIiRTUkMiCiRHSVQgLUMgIiRTUkMiIGNvbmZpZyB1c2VyLm5hbWUgUmVw
-cm8KJEdJVCAtQyAiJFNSQyIgY29uZmlnIHVzZXIuZW1haWwgcmVwcm9AZXhhbXBsZS5pbnZhbGlk
-CgpwcmludGYgQSA+IiRTUkMvZmlsZSIKJEdJVCAtQyAiJFNSQyIgYWRkIGZpbGUKJEdJVCAtQyAi
-JFNSQyIgY29tbWl0IC1xIC1tIEEKJEdJVCAtQyAiJFNSQyIgYnJhbmNoIHRvcGljCk9MRD0kKCRH
-SVQgLUMgIiRTUkMiIHJldi1wYXJzZSB0b3BpYykKCnByaW50ZiBCID4iJFNSQy9maWxlIgokR0lU
-IC1DICIkU1JDIiBjb21taXQgLXEgLWFtIEIKJEdJVCAtQyAiJFNSQyIgYnJhbmNoIC1NIG1haW4K
-TkVXPSQoJEdJVCAtQyAiJFNSQyIgcmV2LXBhcnNlIG1haW4pCgokR0lUIGNsb25lIC1xIC0tYmFy
-ZSAiJFNSQyIgIiRVUFNUUkVBTSIKJEdJVCBpbml0IC1xICIkRFNUIgokR0lUIC1DICIkRFNUIiBj
-b25maWcgcmVjZWl2ZS5kZW55Y3VycmVudGJyYW5jaCB1cGRhdGVJbnN0ZWFkCiRHSVQgLUMgIiRT
-UkMiIHB1c2ggLXEgIiREU1QiIG1haW46bWFpbiB0b3BpYzp0b3BpYwokR0lUIC1DICIkRFNUIiBj
-aGVja291dCAtcSBtYWluCgokR0lUIC1DICIkRFNUIiBjb25maWcgcmVtb3RlLm9yaWdpbi51cmwg
-ImZpbGU6Ly8kVVBTVFJFQU0iCiRHSVQgLUMgIiREU1QiIGNvbmZpZyByZW1vdGUub3JpZ2luLnBy
-b21pc29yIHRydWUKJEdJVCAtQyAiJERTVCIgY29uZmlnIHJlbW90ZS5vcmlnaW4ucGFydGlhbGNs
-b25lZmlsdGVyIGJsb2I6bm9uZQokR0lUIC1DICIkRFNUIiBnYyAtcQpmb3IgcGFjayBpbiAiJERT
-VCIvLmdpdC9vYmplY3RzL3BhY2svKi5wYWNrCmRvCgk6ID4iJHtwYWNrJS5wYWNrfS5wcm9taXNv
-ciIKZG9uZQoKJEdJVCAtQyAiJERTVCIgdXBkYXRlLXJlZiByZWZzL2hlYWRzL3RvcGljICIkT0xE
-IgoKc3RhdHVzPTAKdGltZW91dCAtLWtpbGwtYWZ0ZXI9MnMgOCBcCgllbnYgR0lUX1RSQUNFPTEg
-R0lUX1RSQUNFX1BBQ0tFVD0xIFwKCSRHSVQgLUMgIiRTUkMiIHB1c2ggLS1wb3JjZWxhaW4gIiRE
-U1QiIEhFQUQ6dG9waWMgXAoJPiIkVFJBQ0UiIDI+JjEgfHwgc3RhdHVzPSQ/CgpBRlRFUj0kKCRH
-SVQgLUMgIiREU1QiIHJldi1wYXJzZSByZWZzL2hlYWRzL3RvcGljKQpaRVJPX1BBQ0s9bm8KZ3Jl
-cCAtcSAtLSAnLS1wYWNrX2hlYWRlcj0yLDAnICIkVFJBQ0UiICYmIFpFUk9fUEFDSz15ZXMKCmVj
-aG8gIm9sZDogJE9MRCIKZWNobyAibmV3OiAkTkVXIgplY2hvICJhZnRlcjogJEFGVEVSIgplY2hv
-ICJwdXNoIHN0YXR1czogJHN0YXR1cyIKZWNobyAiemVyby1vYmplY3QgcGFjayBvYnNlcnZlZDog
-JFpFUk9fUEFDSyIKZWNobyAidHJhY2U6ICRUUkFDRSIKCmlmIHRlc3QgIiRzdGF0dXMiID0gMTI0
-ICYmIHRlc3QgIiRBRlRFUiIgPSAiJE9MRCIgJiYgdGVzdCAiJFpFUk9fUEFDSyIgPSB5ZXMKdGhl
-bgoJZWNobyAiQlVHIFJFUFJPRFVDRUQiCglleGl0IDAKZmkKCmVjaG8gIkJVRyBOT1QgUkVQUk9E
-VUNFRCIKZXhpdCAxCg==
---000000000000b0c41f06555f2999--
