@@ -1,134 +1,77 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58FE1F938
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 00:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32B01F938
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 00:34:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782693042; cv=none; b=TJnPkLxfO+syFDvxnT9kSgVBV0rWw69T7I1Mt+XxMzhv6hgUaUee4nFQ3YIMdjDoO2p0bCFNpLbAvnoiRk9ofp1MejK2yNgwLCCO0aqoaSwppen5IV30x7d/UVEJ356KxWJrBPZBPbygbSBDw+nGDwww7Rubzi9TkUJa6EPxfM8=
+	t=1782693284; cv=none; b=l9jc8aUL9PzBJ42l1Z0ThDNVhII3pOm8LrUVbDFmS7apWgoFZMSDtG/wljYnQj1gDvsL7jWO5XDg+y706JuEHGaMnb51mgso5YynVD5TcW6BYeeSxDdDoVzbFQ3C5Srru4dqTNTG/DWNV2uqf4Bqwnbfk03Ie/Mzj/OBezrR1Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782693042; c=relaxed/simple;
-	bh=OfxtSDSho7aiGgQWWF8wmm/FTUw4KjfuFcAFsFQPZZA=;
+	s=arc-20240116; t=1782693284; c=relaxed/simple;
+	bh=X07GKoi3JwIbvD/mSCYKrmAB5LfMbjekvdufaWWG4rU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hBIBQJfUb3GgHW9tmkfX9iIhH8HYanEkKqWaLoG4JrFUt7IltvppBvoTWDoNVteESuQJm5bbxwpIeO0NkBLvlFgxuLXFza96R3HlkPCJ3vjCD/5a+UsG0X/+g/rf7RRqatNtXnYDkwk6HxY4IcZ9C23/Aco/zQfzCtobyIk5YH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=EEY27PX2; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=edYXpK0+0Wkf1Vn+uU9Xc+6IbBAacqXfC2bLdbxP8oi6VjWjU3T7J/ixU9NdXSC+yFvU6QiW/l6230EWnHM+d+CI560HSrq83jq5gJ0SZXzaZRJAONAodp9b8ZClCiJ0adZY9KYRlXc2DpynOlZ7TUv1DohrC2AhRhHlZUWADGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NVInn/f1; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="EEY27PX2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1782692609;
-	bh=OfxtSDSho7aiGgQWWF8wmm/FTUw4KjfuFcAFsFQPZZA=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=EEY27PX2iDqUeYOmHJeEo/KYQM3fYIrQ5B6zt2rRa4aK93oxplV9D9DpwtKd1HoBw
-	 4SRyofT9kN8np+ROHqYvAgYoOYFyxfX5ZZgx/yXAIglMgUUYeVZnlPLXyk2QKHjsrM
-	 rbh10F7p3IFYBbi6WYoL4oL9rrbAU/ELyDK8+7nM4U81gF+00i+aLJgPGbda1yvcVE
-	 e/GyvEW8+CtUvwchjnrP70Jenmhx2jKX3M+4aKsPojHU6Z+IffUCZ7NctDekSA+s4K
-	 j/9lRPX4Dt72dpwxohe5MsFBHXa+PD/4j/nFV8xyTIwQ7kpincYX3YCVkl2+jfkVSf
-	 z9YgxGQdI7pi3r2IyfHBShUUHBP5OKPWMTwTsRjHiAKalJrWH604RXEqcjKXOUHe+Z
-	 IMVxNaohp0/9D7DjISUES8RuWiwK6AOu7NsaZpLWlr2SzhMlUz5Vh0CHkmYRDttj80
-	 STZd+H+HbZ+y99FNx/AmfHCrnFh7iG7aOMiSZisxuPYhhUL+T5D
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:555a:46ce:5f47:1487])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A51D8200BB;
-	Mon, 29 Jun 2026 00:23:29 +0000 (UTC)
-Date: Mon, 29 Jun 2026 00:23:28 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] meson: wire up USE_NSEC build knob
-Message-ID: <akG7AJxeiWc8KUYN@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
- <20260621174934.GC2206349@coredump.intra.peff.net>
- <ajjuoS5Qc3K0nCRl@pks.im>
- <20260628081806.GA3594700@coredump.intra.peff.net>
- <20260628084815.GA111587@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NVInn/f1"
+Received: (qmail 59542 invoked by uid 106); 29 Jun 2026 00:34:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=X07GKoi3JwIbvD/mSCYKrmAB5LfMbjekvdufaWWG4rU=; b=NVInn/f1FmCjS8t359xTOTumywGDgO29x8V4Yggxri6KTQZdxY3VRQbfNX7b7kF1z7N16QOBOe+r4G/TwGkM8/m5d0IkLUHEbdPm67g4qWCy0juZIRHxHWmx9RaX7odCShhXy9NMUWaq1JKlJUw5si6SgHAfoCLBWlWky8Juiqo5STFbxigh0BJZiwKksLpfNU3qRdFy6ZItLbBKPGxi1+I2P6GLZMfJ4sAHijxv33ar0Kj4p1r+LX47GUx3v9po791iSM73GNHeVGPQ9P5HnaG6ygp0HSKBUzUFaB14O6zZxMsNESnHTiCJQ8dZ0X1lR3u6vUekjkrFJWZeNxfVIg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Jun 2026 00:34:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 121467 invoked by uid 111); 29 Jun 2026 00:34:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 28 Jun 2026 20:34:41 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 28 Jun 2026 20:34:34 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Michael Montalbo <mmontalbo@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 2/3] t5551: put many-tags case into its own repo
+Message-ID: <20260629003434.GA1228461@coredump.intra.peff.net>
+References: <20260628075716.GA3525066@coredump.intra.peff.net>
+ <20260628080345.GB107826@coredump.intra.peff.net>
+ <xmqqh5mm1gsf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3zvKzDmdUSAgtE3a"
-Content-Disposition: inline
-In-Reply-To: <20260628084815.GA111587@coredump.intra.peff.net>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-
-
---3zvKzDmdUSAgtE3a
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqh5mm1gsf.fsf@gitster.g>
 
-On 2026-06-28 at 08:48:15, Jeff King wrote:
-> Oh, I also ran across this old thread:
->=20
->   https://public-inbox.org/git/5605D88A.20104%40gmail.com/
->=20
-> that implies similar:
->=20
->   * In-core file times may not be properly rounded to on-disk
->     precision, causing spurious file time changes when the cache is
->     refreshed from disk. This was fixed for typical Unix file systems
->     in kernel 2.6.11. The fix for CEPH, CIFS, NTFS, UFS and FUSE will
->     be in kernel 4.3. There's no fix for FAT-based file systems yet.
->=20
-> I also tested with CIFS on my system and it is fine. It looks like FAT
-> systems were fixed since 2015. ;)
->=20
-> But there is another interesting question raised there, which is how
-> different implementations may interact (e.g., two versions of Git
-> without and without USE_NSEC, or JGit which may have to use
-> millisecond-resolution APIs, etc). It should all work correctly as long
-> as each implementation consistently uses its own resolution (so JGit
-> would have to compare in millisecond-space and treat ties as racy). And
-> I think that is _probably_ what is happening now, since we already store
-> nanoseconds unconditionally (and only use them with USE_NSEC).
->=20
-> Though the opposite case is a performance problem but not a correctness
-> one: if JGit writes out an index with milliseconds and USE_NSEC Git
-> tries to read it, we will consider everything stat-dirty and re-read the
-> contents.
->=20
-> I don't know if these would be a problem in practice or not, but it's an
-> interesting potential gotcha. And one that nobody may have noticed,
-> because probably hardly anybody bothers to build with USE_NSEC now.
+On Sun, Jun 28, 2026 at 02:44:32PM -0700, Junio C Hamano wrote:
 
-I would suggest that we provide a config knob and then build with
-USE_NSEC by default.  Most people are using Linux with typical Unix file
-systems, NTFS, CIFS, or FUSE (e.g., sshfs).  In the event someone
-detects a problem, there's an easy solution=E2=80=94adjust the knob=E2=80=
-=94and we can
-then add a Linux-specific statfs call to determine if the file system is
-a safe one in a future version.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+> Jeff King <peff@peff.net> writes:
+> 
+> > diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> > index e236e526f0..cd851f24b8 100755
+> > --- a/t/t5551-http-fetch-smart.sh
+> > +++ b/t/t5551-http-fetch-smart.sh
+> > @@ -397,15 +397,16 @@ create_tags () {
+> >  }
+> >  
+> >  test_expect_success 'create 2,000 tags in the repo' '
+> > +	git init "$HTTPD_DOCUMENT_ROOT_PATH/many-tags.git" &&
+> >  	(
+> > -		cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+> > +		cd "$HTTPD_DOCUMENT_ROOT_PATH/many-tags.git" &&
+> >  		create_tags 1 2000
+> >  	)
+> >  '
+> 
+> While all the other repositories used in this tests are bare
+> repositories, this new one is a non-bare repository.
+> 
+> It shouldn't make any difference, but since I noticed it...
 
---3zvKzDmdUSAgtE3a
-Content-Type: application/pgp-signature; name=signature.asc
+Ah, yeah. It should work either way, but it is slightly confusing for it
+to be non-bare. I'll wait to re-send (though if nothing else comes up,
+it may be simpler for you to just amend on your side).
 
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmpBuv8JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ4E8oqzMR9Uay/5kWGe1syvsu1ON9Q9Z0xydjBOO2qWS
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAAFoAQCFJHjIn0Qb0GcYFeEyH8ZAqBBB
-OpfrnWj+7+5O9od99AEArUvLfhxyMS95zp0qa/c6AH57CDIjNvHrVSZykBCmNQE=
-=VFEW
------END PGP SIGNATURE-----
-
---3zvKzDmdUSAgtE3a--
+-Peff
