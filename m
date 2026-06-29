@@ -1,118 +1,112 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E05D40D57B
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 21:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782768096; cv=none; b=Efh9VsmUc70AYE4kc/CgSDMtfiH7cr8iSJhPsCCjvg6mu3jfQZOIY2+JHZuOtBYUd/7Z8QMGIOmbA+d4yZ+qU5RwOUYjUrgw7OgPw8xlRz2L6bwRf+7zuxGjESY1jo7Z9YpQq01Jt2NSqt0BXJGht/0hvbr+ofzrEGN3BsSb3sg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782768096; c=relaxed/simple;
-	bh=pxOiCOk/cnKYQJ1sk+MkBscShwPmejuCoZpsHbGJhhY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jNTSlw0L3679NmB/1YayS+ruPy3DLAT83xeuyFAWLsvVXQmb9Gxy0x2ejFEg5NIDSXAXOy7HW5kCyVNMZo69SrijDAi1USuZN+ibaMVSCTkQnU0eKEdKMO4FXu6FhbL25WnqXbAjCCCbLr97uxl61IREEjHSjfe1ZkF++42wQII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Js0imkiw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OjTffQ2O; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3E93B42D2
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 21:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782769026; cv=pass; b=OHjCmNvR2e+DSE6mPqig2EzVs31sobvxtAK9mBa3CWTqnxzYmOztmzMlE/1KCT2E9iza+/coOdbskY2FQfMwo2Bw84riuFou4NDhOluIxeteKYkoPhsS96016lbSqvB+ZrgEOOD5oV0nNW9zAhvW8jLem1uBOz2VKzWlnTa0qTU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782769026; c=relaxed/simple;
+	bh=JcDexbWjmHEr2wlwEtiUCVfRnLZdPCZDGLdigM8LGw0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=h+UgoiXzIydRICLrMOG6ZeGSKleaL6rPNe2+14+UaPQCKXi3VFyHDnIRLkamgu5Fmpj9CFZcCK2k/JQXEIkj0h8bXkWPaPoT8HuDfHsGXOBLrTn5xf/f4ZURUaQ85vFC/b4m2Td4EGd6HklpT21uQ7Vcc2gChk9ctD5GvimMMyA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=fxbcUV2n; arc=pass smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Js0imkiw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OjTffQ2O"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7759F7A009B;
-	Mon, 29 Jun 2026 17:21:34 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 29 Jun 2026 17:21:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782768094; x=1782854494; bh=xzMUfeedgM
-	tnipnQ08OPw2S4+jAIhgAN/KdoZw7qJtA=; b=Js0imkiwOTvG3KImerrdzL+onT
-	jiUV1NuYQIW9SwmDDih8zYykyUJMs+Jdgyti0l30fWHUBRdAIIuGpIfnWk8uqp6E
-	nFSuD5sB750NtAmC71i6FxEz3K3cxeEqYqotbzKi+QjFYP6dN4b2LgAhrJuBch2x
-	Klf93KhaqyA8Ug4cdyBNCh0hAnaV+057eCdsSGf8t2eplY9MW+6mzwmokIpM/dGq
-	B4zLew0tgrzgghqPaD7C/cGRmh7VIH55I55SF/BlRcWeVrQPZw8mXEWhK+X/3R0c
-	KDV8b/chEFuy7wcn7yYm0yjAaQFsxfg4If4ZWAyrQgv9s+dudLiahWUbK/zw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782768094; x=1782854494; bh=xzMUfeedgMtnipnQ08OPw2S4+jAIhgAN/Kd
-	oZw7qJtA=; b=OjTffQ2OULkpRF1xZr+HyKKX/Mx/ccxZOhsGAutHIJsDaVhc0vk
-	64rr1+JcpG8NEPCOoFqMl7sORl8f+d65tDEpa8jAYBM5g81lbc/IjTGLGFoVZOX1
-	QxYuDzHOtDBDqq/zTW0985d2F9/wCwYpdWBlXu3OPp9Dt7t807vC0C1Ojga9UGCA
-	0hS0YXUsyDeCc9o5sKBefrTmEREUH0RQvXUz7lt40Z3q3CUnwWpjxJYGg/upFI95
-	+XSjBLgZ06Wy70mLvNS2i2vxtgS41KSpnMD+7hw+Ul6mn2S3lclU4PgvjafU/sau
-	53cjLcxabmaVjr+ObZoC8wcFwxBCtFEMqow==
-X-ME-Sender: <xms:3uFCaodw9n032FqRwBOavUuRxB_MDuYQxGp113URpJs1RWfTs_gyEg>
-    <xme:3uFCasc3SdgU8b-72_1NgyJL-qWq6jthdyYe7P_uSZGPY6-ODcKxsyDoIyWgcre_8
-    R7VF6WNbBA_1Fa47y6smy_SkTmqAIB0NK_z73o4dkrLgeAtuB7_>
-X-ME-Received: <xmr:3uFCarxlAciKn8EYySsN2aRleSBSSccQTVpI7LOglupd77Vqd-4IQ_jirn9Ihml4A6m3MIpn6TzzKCor03_dIWfLC2cfLAxOpne1KM4>
-X-ME-Proxy-Cause: dmFkZTF7JBhc/pqy/nvZB/tP10WPdikgGPj6cZ4NR4vFUOtwgOXBx3B7t8GWlKbppD7Mcr
-    1Yn19KgMT5K8lz7/yrbqRAKfOJTYH9RJMk3KInTmuNsf7bLL8Hoq8Hbe3xmyG6VJW0QfgV
-    YBQS7qOWOTJw2BY0smP8Yd6Lmo3XBGnpem4dg9262sOoePsK0w/5C5WY/gCMERD+LmMQO0
-    UeGLsF6/XWzsotTClhjRvJGgv8+ogJK0xRLWSAV2BL82oG+7vVaTp43LGJUIYRWYtKYXzR
-    yvFoBfB+EIs9JsX/QjMndp4+XCYBEShKkZFa/970Sfp+uzwM21veoWJJergHxwR5GQKEon
-    e0sOraGCWUQ8cR3Z/zyNdIozymHi5IxlBYsFrDxp4BA9vEIYuae1XWUtSG5/oAAfIV7Krq
-    119CA1RAL16k0c6sqtsr0AiZUCTah7FbYGVhnbs4jsqJmFEWMD13DgvUEpOuhBfxXoGfpG
-    OMkZ5sjZvJyaLawF29s3RC5SNhjUZGvEj6PjZpLt/vmsGHp9aOa/OwyauExq9kGXQKyXWI
-    BCnAsAE+iPaglv9yHaPP3dnr9xCR+PW8v4WeARHYvPr6wXZhToZs8izLHtjCWnfKltQwno
-    JWKZNhKUpzRyNnG6GM+uesvjy7hoIKf4NLUVO8Ht8lf0nr/XwzGY/pF9qVqQ
-X-ME-Proxy: <xmx:3uFCaj-n_smU1HjE_idwfGWIvRezAE8qijolG3l2lE0QdylgA-vRkg>
-    <xmx:3uFCajikeOP3d4ToAAphEchhmCEBy3g1JURv8fPasdhyJcJCF7wIlQ>
-    <xmx:3uFCaqGb1YP6OaBYz8VFI2-Jgf1P6U76eYsqXHy9npgKynqoAlWGbQ>
-    <xmx:3uFCai9FDJbd5-ngkvTMQ_d_3sMdNyd5DGk-X8x32CG27YNOop4efw>
-    <xmx:3uFCapqkyRmx5_FT0W2QfGbWKcJ5nyS6FNSJyi5TmLGP_QGvJlfH4KaE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jun 2026 17:21:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, SZEDER
- =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Eric
- Sunshine <sunshine@sunshineco.com>,  Michael Montalbo
- <mmontalbo@gmail.com>
-Subject: Re: [PATCH v2 5/6] t: convert grep assertions to test_grep
-In-Reply-To: <xmqq4iin4e1i.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-	27 Jun 2026 19:03:21 -0700")
-References: <pull.2135.git.1780559158.gitgitgadget@gmail.com>
-	<pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
-	<3a589ef7386303075413f388e61c203c4e325d44.1781323575.git.gitgitgadget@gmail.com>
-	<aj93BE8MYatQAjoy@szeder.dev> <xmqq4iio59uv.fsf@gitster.g>
-	<xmqqldbz4f1a.fsf@gitster.g> <xmqq4iin4e1i.fsf@gitster.g>
-Date: Mon, 29 Jun 2026 14:21:32 -0700
-Message-ID: <xmqqqzlpt543.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="fxbcUV2n"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-51bfb91795eso10629681cf.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 14:37:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782769024; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Xif0efpZ4di5KnCF/yobD9gH3Q24qrq/PaowrfRi9o21IzrvnpetGbYSpKSN5+r3Gs
+         K2c4ojdqUk6gpq5/6ARF7ktz/gCo9o3ZjBTbi7hE2Nftm72L6CQyXV43FYEkXjlhS9Jp
+         AX64drdcFMCPsFTamY9Eoq8VsiF8Hs0oxiuwCYe0c55ywsermNUvtGQczbuO/pb5BZnh
+         eG4lDWiv8hyJuDGmxK+GgES/JguHzGEdqe+xK7NWpcniSqDXBTFQnob0XbiV1WfLSzLy
+         KykPu21Tl6SmHYo0uwPgXSqbNEW8PBmVxppr9bWtvBjwEP+vdjSaZDC7H7CeQFs8o+sG
+         +MxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=JcDexbWjmHEr2wlwEtiUCVfRnLZdPCZDGLdigM8LGw0=;
+        fh=6tZ82tJpiAuIHaEM/1xuTc+njHXLOUb6k/YwAlh3SrI=;
+        b=s51jna/qDDVcHIIyxZMRftrLVw7DYEut3rsca4JGEeLvwmKbi9BMWFoBEHAUYfwmUQ
+         hBa9ebr5eSFdEw+D4OLzU+T2TukZ0jMoHWaBgfT2rvGJKrkNaMyaA5rIR1iOXUE56LON
+         p3NE6cMmpUI03gFnWcjMKPjEaZXA7w3a952BiGtMxIztlwckY1P6UwWlp4T3JGx/i3ng
+         ZsCSTNfv8Oi0b/c3hgeawmIil5WXsaiTmgwppQSRd5Bv16raIO2x5gFVA8wdoTM7QcPU
+         qqB9iMh9ye2N8g6H6ujmPsVS4A9gZ/ZjEdRoqHbJql0F8KGJBFGB1qnGWlayAgjgD2ZC
+         T80Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1782769024; x=1783373824; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=JcDexbWjmHEr2wlwEtiUCVfRnLZdPCZDGLdigM8LGw0=;
+        b=fxbcUV2nN4zD2iahXJwnFgkXykS64PEa395UZCGidFuhixrjLbtdOiBSikLE1dkYJQ
+         cdiYczeCPilPJL/FbCzwjW+tMWDsL798y+lCR8y7qWbUyvDeIs+PsIxHc3JhLAfOzFSG
+         jK8SFGcsmZXVIXvIG9p2WBQLWi9huK+DiLlLfYe+6Lb0mPg6T505ZA+kxVWJIRPktiVm
+         HGQpXmyB2QHA0CEddcNAR3ykZJncp9g0eS0fpqrSiJfAnFY0ayczJFjFDcdPjqfRfwKn
+         4Ns4kAo6zEA52K9Krl7c3JNxXjIGMf7dHvQTHGCbR/8xx12EUTRW8O5DJgop+XPDIGv5
+         93Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782769024; x=1783373824;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JcDexbWjmHEr2wlwEtiUCVfRnLZdPCZDGLdigM8LGw0=;
+        b=oI/2PqD4pvLJ0rnoBHjEP+LcE7YCV8TbiqI7TitE3vNeCEGybjAlKSkDiwlzIZcNGA
+         L0dVXPEHfvT5OJwRMra3vyIeOmnSjLt6ZmtQopm+qJHs2Rjz22feeGkWEab+7ke58dga
+         8au5m3ySwYvqoIm42nHujjslVhh7wUPoo/TqLXKg21Jc1yHdOFinKBAc8viafhcW5ymk
+         qKJ/sqi6WVCFnMIByCu7oYRRbGkbGkvOKBqGJ3bGkMollTkHIKgcZXgNCzpTOvdDR7OT
+         nqnEF4KeGhvcDzzGdxLzizMTU9hsBni4+MTGxM31kH95ksKjhZwOsVR6/VTvc6nfqQf/
+         tNyA==
+X-Gm-Message-State: AOJu0Yysx/Ud4OsZvZ4ENUv1tPw2+fMoM/feivL49PMztvr6ujyDqFEr
+	a/BhW6/NNMUXzh2g6ocIyTYaXZu5WWuITHSeJlDUw1rpTEXzGFlsv1jwJxQ/ZEOFedPcaJ05EJ0
+	6ypbs6yYw+5VKMerz8le8lU2R5bRh0S9PqmGWuBxJ6Fv17K2wzTjFZJe+tg==
+X-Gm-Gg: AfdE7cn/VlWV5rL0edDYINFs5LM94A2Z0bdvSYL/9m/frB2mKkhzo2ozDvGasyTEaVR
+	Kx7njU5tVhsfiqYjlSVFWli+ejomYn54rBcIFsLWM0P4RVG/ArS4pfZCxtcvJbnewv/BF06z95E
+	lVQBF377eeG/yF2BGXThYIBb3lHcXVViSyGELTXL00ZIGYhH3/24QIq3yYKfJfKbRk96ReJgzQi
+	SKDyFmnhflAMxN4O0Mn1hxkq+0jmB0Ku0emjG6d2tykjHsmIhZeotkBGFq9QRgvVFOVdjzUhE8y
+	zm4RZMhp1uILKOdOKmlZz457z3Dq6T2xJEXrdwqeAdGKN0FVCEokXlOwFRP+Vj/h3dT4+k7Esw9
+	D17Mhq1pFNgAqMPvw
+X-Received: by 2002:a05:622a:50f:b0:51b:fe47:b3a4 with SMTP id
+ d75a77b69052e-51c1081f88bmr15344451cf.46.1782769024037; Mon, 29 Jun 2026
+ 14:37:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Taylor Blau <me@ttaylorr.com>
+Date: Mon, 29 Jun 2026 16:36:53 -0500
+X-Gm-Features: AVVi8CeESUnrom_HqceY7ghfUXWVOTHxp3gzFmK1aPPjJCDajS34SYbSRvcjrq4
+Message-ID: <CABvF+3b-C8Py0PjMqv1jub=eS2xpyNhLnarrENb9XkhumS2jfA@mail.gmail.com>
+Subject: [ANNOUNCE] Git Merge 2026 CFP deadline extended
+To: Git Mailing List <git@vger.kernel.org>
+Cc: Scott Chacon <schacon@gmail.com>, Emily Shaffer <nasamuffin@google.com>, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+[GMail web client, please excuse any formatting errors.]
 
-> Ah, of course.  Michael sidesteps this mechanism by not using
-> "test_grep !", with
->
->        ! grep dirty file3 && # lint-ok: file may not exist after --quit
->
-> and if we realize that "may not exist" is actually "never exists",
-> then your other patch from 5 years ago would become the most
-> sensible fix for this line.
->
-> It may not be a bad idea to go through "# lint-ok:" introduced by
-> Michael's series with finer toothed comb (there are only a handful
-> of them) and see if there are similar "look, the file we are
-> grepping in never exists with correctly running Git" gotchas.
+Hi,
 
-In any case, I think SZEDER's fix to stop grepping in the file but
-instead insisting on its absense does make sense and it is now in
-'next'.  So perhaps this topic can have a small and final reroll v3
-that omits change to this particular line (and possibly fix other
-lines that punts with "# lint-ok" if needed) and we can declare
-victory after that?
+In [1], the dates and deadlines for Git Merge 2026 were announced, and
+the CFP deadline was set for June 30, 2026.
 
-Thanks, all.
+**The deadline has been extended to July 14, 2026 at 11:59 PM (UTC-7).**
+
+The primary reason for extending the deadline is to collect more
+submissions from folks who have not yet submitted a talk, but indicated
+that they plan on doing so. (A number of folks I'm thinking of are
+currently out of office, and I want to make sure that they have a chance
+to submit their talk proposals.)
+
+If you have any questions about the talk submission process, or about
+Git Merge in general, please feel free to reach out to me on- or
+off-list. See you at Git Merge!
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/agJVZhTbA%2FhFUKG%2F@nand.local/
