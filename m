@@ -1,159 +1,153 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873B8391E6D
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 05:57:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782712650; cv=none; b=UZ+IfzY382aQ4605u39rUcv3hWv+EQJWRchM6W4u21+MbReNpeH0YX/Ru26pOyilCghiG9/Q61C6NOYxH+cBxFckGa0njy2Iq+lvmUFFbetNAoDNSw91llPnn05N5hResfafoc8CJPRqfkpT4LlXZh6+lWHCONgma+SB3SfYobg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782712650; c=relaxed/simple;
-	bh=C8qZUvp3bu8IfqLqACbqr8VHBLK/E9fqjE9fXVIgGQU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IekvDhsvey2etQtsCz5IuOo4GqrAPHbTtoWQz7azWlM4pZune+b877koWGng2gIbOyU+cpn+tZuoIBTezHdpFA77pT+jvu9b/jPLJTOGtbeFSbeGH7iqwjyH3OKA03Gos7BzL6OsHd6SvbWjTbMN2v4Ncqf25eaZQpG5FtG0YCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V2MI0bxW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KuqqB0NI; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907171367
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 06:03:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782713034; cv=pass; b=m18zNpcNXe0LmTuvFeYD8WBwplxLFBk7DnQKijNRWvre3BWdpNaH9O1f/vxNmV2AYU7PwvKUIazQtxeJEHaFlQXtt6WCNt+NoWT7bnXzJ46CgMPxuxiaUCfgeQkzoCOaxv96WV3B2LGwVrG/6XjxyZnjAlRaYlInKmP4iEC7Dqw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782713034; c=relaxed/simple;
+	bh=zNt+ncdXlwieh+c7QfkXn9M7AVI48xAu2C17oOpj4j4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CeSPqCM3qNjZgb/CdqTVQj5+8Gh2gtKSZsVVbXCJfI7uuJOCyF6mRHuLJRj+KF7npCKwaXp52RdA6cYJ9VnnhzLY2gXq1Scf3aL04ObIgEGQe3vcjXNtTqSVhPec2fOmZ42nTIfiETt/9NIiUbu+WS/jq4Nes5CUX9C8NMOwwkI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rEpTcBHb; arc=pass smtp.client-ip=74.125.82.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V2MI0bxW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KuqqB0NI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7D732EC0032;
-	Mon, 29 Jun 2026 01:57:27 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 29 Jun 2026 01:57:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782712647; x=1782799047; bh=RHfc2DTHlf
-	8BfgrPReqRJXHwlmTFqG7GuALdeidtasY=; b=V2MI0bxWpS8lRyaeDpeZHJXCep
-	y1bKzxR25ya/laCSwEl3x/kDWqdlCaOGPveqgC21qnKyQz6Zm0B5ks4OH6PTdhIK
-	uQCr43Z8i13KzSkwPC/+ceMeZYrmhzXP5JYlTiP1LNf1oDCwx5Z6M1eZaaEbipm3
-	nU7KgIIIEegDKgqMZ+uEwZKT+T5lwG+ZmNgrb2CEe07Hb8JB3Whbyx66v4eO3VUR
-	DwktncVoo41NB8q1I5XeGf5rixzC0D7tHJNDzGdJVDLs9Fd9G48UuKOGhrnp8ZrZ
-	LaEjEEwFJ6xFWrUbCa6nswJqAhQCWNLLhmu4q1vmADT2QgZLiFsSpuUpg9HA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782712647; x=1782799047; bh=RHfc2DTHlf8BfgrPReqRJXHwlmTFqG7GuAL
-	deidtasY=; b=KuqqB0NInsDQLLa5GTTXQ+1zWvkHTDmBwhVy9mo0JrKBsjzv1xt
-	g2Cjlz1eZ4QuY17Vvss7tgs4II4PZKv5JaI7LCPZVqu7IyvivoSOfi/z24bBBX2X
-	ci9MgNi4rXqA2hKup2v8XWdG/hukK+1sgMSpPnnsDqRnfKgcTICteYXkFUiMiTP2
-	AxQdYVDtynpxTbL9OpPtM0zJc/ui3SRoCVkH+rdIMC4XlbAqZKpx3SSm6zEexrRM
-	mRYxj8mHoJpaMSdg8gX/7hAn8xalS1tgeIEuRcazgIM7v6h0sxyu9Q8oHA6NJwNW
-	LTKQ0dnLLBveuO+yO8A+NoXR2wnrzrtNEvg==
-X-ME-Sender: <xms:RwlCaumvdOKhBd3s-JxOvkrwv_2-jKm727M__DuVvX4FPKzGNp940g>
-    <xme:RwlCas38tN384C3jNQN8boFxv7TNLZIJ9pBjZCTQu0dqE8x8IZf68Dais0Qkyp1f6
-    YIcYqQg0NpzpI5n8LLjfA1f0n3tRqnJUNdN-Y4PYoz9OSiHW4d_ww>
-X-ME-Received: <xmr:RwlCahrfFUJcn7v0TqzgFnpawtVLxgYQfhtsun5R7uXqIgBs_aMQ3XMFh40j_uBuJstbLA-QHC649tulDpVzDpEOujRD0a9SwXJPWe7rZKhR>
-X-ME-Proxy-Cause: dmFkZTG31eRRvrf/uuwsKzPxuvbVjOt1DfsDkbFwLYVcokv1nZYJsxG+/mtRCQduZHujls
-    VwM89QmTRVQPZaZQHX6L8OWY76kx3MaBKD9AOK3BcoodsUN8hEjOs9x8d8uMUR/ofXmd6U
-    JOLsuUKF/yrxc6MssW8MX4uJnQGu/cFuK7YOBYjR0wx6Rvrd6wxVexcHvU1oxWdOLhj2i6
-    QPVCMf4yubnXTXZgZ8/CR5ciWcVgDXIqcjUGatoOCJOo2iN3qXz9ShD7oSYY0gHuJrCymu
-    7p6dhveYBZc+OFWx00rM7xxBQgkn+5Mh7FuWwoG2tEIDMvwRPkv188ediU5DrQYngi5KKv
-    CkfVGEH84wR8IQQ4lJBGtEsm4wzm932g9UWPfAolLc+jziNHsKwr0/DDBWL/J8Qz/Yptfh
-    EAhpEP/nYoJ4FQSD8+cpTZPbETz2hCPNqR0O/LL/R0I3exRcDtE62ZYtyQu864ZS+OjDkb
-    Rvs+NRC6vAI6+/Lf2NFr9cIYcdyPoZCvfkoQhbsSuMYEgSRgfbDLVuQ1IqzqBOjGafkaCj
-    +aZULAYd5f59Akhm+i84XPoocw37ssO+QjN9zrY1ZyfPjm30qJDuIIrBnS2yyALSwrgLFg
-    NPefz5wJyd9rr6rN9+EM5TWInCQ9ftDq2ZcW4VeHaLoQdlLnG3a+kMoUm6KQ
-X-ME-Proxy: <xmx:RwlCahdo2dqqitePAPloLWzkvc4wk3lP7N5ylLt1JyzQAXH1JsLxWA>
-    <xmx:RwlCaooxixZl9N_BSNRgMJVzYmJ93zrmTldyFhLiQjLxa7T5PjZw4A>
-    <xmx:RwlCaqFhlE10AnbPcNn4_MR_JSKhtZGRbqjg6Dh5Uz1Qs_sstHShcQ>
-    <xmx:RwlCagtLO360EmvYahUBz9ggFVqfg4fKxwGfHsFnzWkv7QYYUFaSUw>
-    <xmx:RwlCahlE2ol7PmubSJCfB4jb6L7_WW_mBiot0sjh_WBeDaY6gTxbojnI>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jun 2026 01:57:26 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 25e1349b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jun 2026 05:57:24 +0000 (UTC)
-Date: Mon, 29 Jun 2026 07:57:21 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] t5551: pack refs after creating many tags
-Message-ID: <akIJQbOUbdBbkTef@pks.im>
-References: <20260628075716.GA3525066@coredump.intra.peff.net>
- <20260628080710.GC107826@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rEpTcBHb"
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-1397e093f90so313352c88.1
+        for <git@vger.kernel.org>; Sun, 28 Jun 2026 23:03:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782713033; cv=none;
+        d=google.com; s=arc-20260327;
+        b=UXz2jRU7oLdCwiNyRBQVevKee1e/ORU75wqtLuOvL5HFQoIZfzrf3aLK5pe3ADwzoz
+         GO/9wnY20DHmhnWuHLnZ0SPowE7LOwGO6o1V3hYihUVKnQRDTwmrFhbCdkOLpEU+UpHo
+         EaJN/dAQ++NKrsQl/yYGQ+p3+q7bpU8TS+qj8fFfHuhipzy+Txnr4KOWdqjUQjgn6/gp
+         9dQh00xVII/iCSId4UzpYRjVIKSpqB+K7lRVXqgMl0hsX28Wh9/OLv/mTqk9EUNbWT8W
+         TIqWSofqQcwNt7lbVIcoR6to5cmlyYw0YqyOMvzODR9M8cKgKEB2YB0EwltEQ9FRizXo
+         0yQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NAJ1AkExuwFrd3t1L4gI9FF0dvtwMy5QARQjJZIn2Nc=;
+        fh=awLKVMFOALteoxtHNVryV/86GpgLlmhFCNWdjumvQXk=;
+        b=kgyn5bMvg9+vq55nlg5vGUiIjxmWV5gaEoSkNpq5yndQuemH5NJ1Sy1pRTdFYIGbyw
+         hJio9l5wcrY1JR8OaE0Ke857tMsn00AyfLI1ehWz2N8kyUWC5ZYHEO7EypGJjETMY1wd
+         OwE2bNbajWsRuDcBmKfNVSdDUSTCcCjibq3rbrEg4VXaPvwb0F3Sspu23+kPK74bKm6J
+         gdhNterIKzLo0G0OWUerCIcUpbckRv/1qC7gVlRXkaq6fNdmIAvUDbm3UKlnyPLVXbs1
+         RAPpD5yl8oaTAuJoggLpENZUTJ5IY5fSUxN2wxetML/hhM/Ef6U/o7wuNRC7CWnLBxDI
+         CtkA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782713033; x=1783317833; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NAJ1AkExuwFrd3t1L4gI9FF0dvtwMy5QARQjJZIn2Nc=;
+        b=rEpTcBHbeAkUBFiA1wxQpMAuHhmxoPkBGlRGiq/TaoIiXRGb98VNlzbP16LUg0wKY8
+         TiHtrZwrcc6YqoJVHge5srYALmlvTLbOBYiwlKf+XbUMy5zKWEaf/xTOGtS42BEtJXN+
+         +mTjch3IZ9XWqAoKHOVqRvF8d4GxJgOehETD46ZgR5EOYkcCu75YgOczqt4ErLJzrFhu
+         JHVLnutLdhYymxJIBaG/sPJx+6K5go2/qLQf+WULBUBYn5l2VofcjG1fA6KHAbVolfV1
+         Kqtf5L36Zw7/LZsEW8+SgYWhAj74YQ2jSsvk7llPRJzbRtHvoQITNLnwQnExFs1DrOze
+         xOPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782713033; x=1783317833;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NAJ1AkExuwFrd3t1L4gI9FF0dvtwMy5QARQjJZIn2Nc=;
+        b=srAqfKHhHGCXFcIqMfHu+z0BwZGHQgfXtvUfnuBCSjIWH9tg235iNhdzcSFQh7DGqv
+         hf8rQCxgdi1GcjlypxK0J99z9f20nupw2ttgVG5CQF8/UsK4+CyszmLvYA/vjqvtuYkM
+         hwZMew7xtC99g0MiPFM2ER+rhtRKveeHwPqBiBxNA/nKheLntB3wjzHW5ow5QwvC495v
+         pGpm7jY8oDsBZeRPIOaKNDXZ+PKpksglH7w5fjb754rjcIEr5nZRZN0aTCwd4RMEbZ6a
+         ZcREfHHiwhLQDNc7PHNduyiQZY1AXQJUSH9cHjFGAhaKYuTadTUZkpCKdbZhIfMdWFgN
+         n4cQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8EdvQ5/cfijU9ENxJfy7nMR0fS8zIe/arsfe9qHJs0xH42SCKr/MYpNn0tY5rLaro95NQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6cvnKsp+qXXtg09fGlakx6loLrEwL3phoQyPzZxL1RwFUMBm1
+	jNU9A8zw5CeA+IybXB8WifVI+tvlVPZGUaN0hkJMd2jHsNiFDJbOOGKG8WGAEd72cUJvT/NelJ/
+	+YtEj1IyXwqedGhCMR4PUDctVFr3S75+60ZYH
+X-Gm-Gg: AfdE7clLOzvHXkoUFx/sZKIuEGPaixLPxAovSjP89bWqRWo0GiVfxsec9745+bRvlbI
+	CdAzaXh1PFVSp0QaRJaSpZN5A+gbLmXk35I4waQGv5V+an8bsMtD7Eu7P2yav2LfMxMhU4bPWBA
+	oOKSKy68M79EGj+DcIBU4bhvnrkKcCqCW4lfMAd/cp/u3WXh8mz+KtCPBpEP+IoASEsrR24o+Ic
+	cKCXgC/S1b1hh3icjwTkjoHFutq5HlxvrHejM6oIMEyblBRCuVDH5Sw24ku1zTG85bHzQncJ9QR
+	SivI3b4hHCyPkBzfe46BQK3TVGWnESpVbCe2Pj03yqf0Nseb0OFLQHK2jQ==
+X-Received: by 2002:a05:7022:f411:b0:139:c4e3:947a with SMTP id
+ a92af1059eb24-139dba4ca3bmr11245637c88.15.1782713032668; Sun, 28 Jun 2026
+ 23:03:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260628080710.GC107826@coredump.intra.peff.net>
+References: <20260626075037.532164-1-cat@malon.dev> <20260627160813.1074201-1-cat@malon.dev>
+ <20260627160813.1074201-2-cat@malon.dev> <04d1a7d5-ef83-4728-b816-5cdf1cb4aa25@malon.dev>
+ <xmqqv7b34snt.fsf@gitster.g> <eabb8169-2c13-4961-9b21-f44b1fa66f70@malon.dev>
+ <xmqqbjcv2h3j.fsf@gitster.g> <18ad7c1c-5ddc-4f62-ba7c-5cda53f5a48d@malon.dev>
+In-Reply-To: <18ad7c1c-5ddc-4f62-ba7c-5cda53f5a48d@malon.dev>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 29 Jun 2026 08:03:40 +0200
+X-Gm-Features: AVVi8CcXgcY4RVczpYj4SLpXopTWe4IpajPktlEQ4ZwCDPQ5qHAXJ052w9QmG18
+Message-ID: <CAP8UFD3Z0M_1NEXGcAxNZKpRUQiSkHZLTEvNNYushKA_PoPgjA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/1] environment: move excludes_file into repo_config_values
+To: Tian Yuchen <cat@malon.dev>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, cirnovskyv@gmail.com, 
+	szeder.dev@gmail.com, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Olamide Caleb Bello <belkid98@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 28, 2026 at 04:07:10AM -0400, Jeff King wrote:
-> We have two tests that create 2,000 and 100,000 tags respectively.
-> After doing so, the resulting state can be a bit slow to work with when
-> using the "files" ref backend, as each of those refs is in its own file.
-> 
-> This isn't a very realistic scenario, as we'd expect most of those refs
-> to be packed. If they accrue over time along with objects, they'd get
-> packed by maintenance/gc runs. And if you have a process that creates a
-> ton of refs at once (like a big fast-import), the usual recommendation
-> is to run maintenance afterwards.
-> 
-> So let's follow that recommendation and pack the refs ourselves.
-> Unfortunately, this does not seem to produce an improvement to the
-> run-time of the test script! That's because after producing this state,
-> we perform only a few fetches of it. And packing the refs costs at least
-> as much as serving a ref advertisement (both have to iterate the refs,
-> but packing additionally must write .lock files as we pack).
+On Sun, Jun 28, 2026 at 2:58=E2=80=AFPM Tian Yuchen <cat@malon.dev> wrote:
+>
+> On 6/28/26 16:40, Junio C Hamano wrote:
+> > Tian Yuchen <cat@malon.dev> writes:
+> >
+> >>> Wouldn't we rather want to try to be more strict and say
+> >>>
+> >>>     if (!repo || !repo->initialized)
+> >>>             BUG("repo must be an initialied repository");
+> >>>
+> >>> here?  Aren't all the callers of this function supposed to be
+> >>> dealing with an already initialized repository?
+> >>
+> >> That makes sense, but from my point of view...
+> >>
+> >> 'repo_config_values()' already has a check for 'repo->initialized'. If
+> >> we're absolutely certain that the 'repo' is initialized, wouldn't it b=
+e
+> >> better to simply remove all the checks inside the getter and leave the
+> >> judgment to 'repo_config_values()'?
+> >
+> > Yes, that was what I was getting at ;-).
+>
+> A lot of CI tests are failing, but that just goes to show that the
+> "bugs" are being properly identified, doesn=E2=80=99t it?
+>
+> It means there are a lot of "invalid" calls in the tests (if the way we
+> define a 'valid' call, i.e. repo must be initialized, is correct)... It
+> seems that code like 'if (repo !=3D the_repository) return' or something
+> similar is inevitably going to end up somewhere, even though, as you
+> said, it=E2=80=99s "sweeping problems under the rug."
+>
+> I=E2=80=99m not sure how to proceed from here either..
 
-> My wall-clock time was slightly improved (but within the noise) with
-> this patch, but my user and system CPU time were slightly worse!
-> However, on a loaded system with I/O bottlenecks, it may be a net win.
-> That's somewhat of a guess, though.
-> 
-> It would be nice if we had a way to generate all of these refs without
-> writing so many individual files. But even if we taught the ref code to
-> write large cases directly to the packed-refs file, we'd still need to
-> take individual locks. The real solution is a backend like reftable,
-> which shaves ~30% off of the test runtime.
+I agree that the best end state would be to have no `if (!repo ||
+!repo->initialized)` check, but we shouldn't have to get there right
+away. I think it's fine to proceed in several steps:
 
-We kind of already have this with the `REF_TRANSACTION_FLAG_INITIAL`
-flag, but right now it is only used when performing a clone or when
-migrating references. Also, it requires an empty repository that has no
-references yet.
+1) `if (!repo || !repo->initialized) return NULL;` allows us to remove
+the global variable and use getters which will help us in the next
+step.
 
-It raises the question whether we could also extend git-fast-import(1)
-to use it, as it would typically be run on an almost-empty repository.
-It's the "almost" that kills it though, as we already do have at least
-the HEAD reference. So it could be feasible, but it's not as trivial as
-just setting the flag and then we're magically faster.
+2) `if (!repo || !repo->initialized) return BUG("repo must be an
+initialized repository");` now we want to find and fix callers
+(including tests) that haven't properly initialized things.
 
-And besides, in this particular test here we run git-fast-import(1)
-multiple times in the same repository, so it wouldn't help us.
+3) No `if (!repo || !repo->initialized)` check, as we are sure that
+all the callers that didn't properly initialized things have been
+found and fixed.
 
-We could of course extend all of this so that Git is able to write into
-the packed-refs directly, even with preexisting refs. But I agree with
-your sentiment: it doesn't feel worth it as the reftable backend fixes
-scenarios like this anyway.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I'm iffy on whether this one is worth it.
-> 
-> If you apply just this patch without patch 2, then the run-time does
-> improve quite a bit. The cost of packing is amortized by the improved
-> performance for all of those subsequent tests (but after patch 2, they
-> never even see the unpacked state).
-> 
-> Likewise, I suspect this would make our timeout problems go away even
-> without patch 1.
-> 
-> So the whole series _could_ be reduced to just this one patch. But
-> hopefully the reasoning given in the earlier patches makes sense, at
-> which point this one is kind of superfluous.
-
-Agreed. I'd just merge the first two patches and drop this one here.
-
-Thanks!
-
-Patrick
+So I think 1) is fine for now as long as we properly explain in the
+commit messages and in code comments (maybe using NEEDSWORK comments)
+that we know there is more work to do on this in the future.
