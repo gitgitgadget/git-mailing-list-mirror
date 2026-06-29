@@ -1,171 +1,148 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDA03BB4A
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 12:12:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782735126; cv=pass; b=eTpRRTyzjsqPtv0SDCCnjfUto9IOpnAKYcwKRwASgCdS8zJPR4DnNKWIzpF0cfaOPn3rzVFLtcz2sA0uBXud0tjQno1Hs462wzvLD20BAHmJlNP2IEbyNWAdLAGWFrIR3yYwa/nVzoyZmlcB/CRh7u55UUtXLJUmWAaTch+CZ5I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782735126; c=relaxed/simple;
-	bh=NVRAeVAjlDwbhXHlgvS8ir/J4b+PR+pR/Bthi13rgZ4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lm2XZ1gd8qKWJJgfgO0Ll/TUI/Na1NFC1H+5Jf49gB8LNk3SlYT52OVeQfzYzN2kuGhNxgb2OLRGMSTBWuVevqESvKnChfg/T1axXz0wh0JMlFG9l+EElZMgwkoJVNv2XUFL482h0h3HvBOZrkv7XRueniFkPAnDO/IEiD8WBBc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=JyMHgt3f; arc=pass smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5F6403B0A
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 12:40:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782736828; cv=none; b=q83+4ptpZ0/s9zSe1p0f6hhFskgQCKoMP+LJoOcgUgrsnfGSRuDMgDWDXe8Qy/+QSi0ovn1ODnaef7VFRrvsQsAwrHLf2xgdePDUXhEgoZR6pnQhrm8ai/GBY/As4LSIBuF3NUywXTGzC2dnZYlJSmwgb6tjLHADYtoOV4gHwiA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782736828; c=relaxed/simple;
+	bh=aVJuws5kBDdupR/7PuIDrz7aBhKTbUxOlmpyTHS6Muk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=l3/tPjZOXBbHmMvdKSaBgobyumBtY+ulbDwEFPABCgRs3AHkfuX7S+sObpwVc76q7y+wC4Zis1bywiOIYDDqZgeiFEYcegIC6c8NwdnzM+Qvx/CZU4T2hCi4Cf3UMgZfwzsyJ62mfUJboF4oMjrdNzMvfgSNohEWaX7AYXP83/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LHYCwrL8; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="JyMHgt3f"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-6647bc8f900so3870617d50.0
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 05:12:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782735124; cv=none;
-        d=google.com; s=arc-20260327;
-        b=dvaVijOGJNuDhBXXxdjRqgIAPXiIABEn2GFMvhML3j/2qbucHcisUJpriEQ5Ya2fDF
-         dq5CcqRL1FAIrCYhy3p5TDVA91doYDZfWTtTXGqSNY7jTuzF75JFVQroYtnihkHisdOt
-         aVuX8sIvIF2CGc07gZQAS8pIo6ldTzNOIE3/EY1qj/bfIEZ/ilI4gPv4wlBlndqKgHSc
-         dOM/J9h9qW81Yt0V/ofmg4Y/flrsO0Q0Gvr6W2EyETeTudvLcbQv8QhxeBJwmW1XapnZ
-         E61FE+G7Ukv6OwXQBbXcgSAktk+u0lpyBPGWGnm2+TOlK0Umg0wxxiK40hX4Z1UhUUi/
-         4q6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=M6FLZvA8Pwfh3nUJdXEdRIbFisLwFVFAuq70Ux9RsJg=;
-        fh=ts3H1UQbhaUrVqpNdcRXPigk2/9OLg9qfpi4paTEsA4=;
-        b=RlqT7FwzkMB1gpbNdjVYRT3ViUo+3m/lWOFOR4kvet9W50m7jSuQ+s7PrfRB5ppA+7
-         T9qkEEbMbMpmkXO+L/Zp3kjKv5S9GVQVRmbux0WRh6Y0DO/KSRz+3VZDKpSrkdxdi3HW
-         DjPDFpY8D8kaERiDmU20ooCnIdX3TgNlJ3klCRZkqyI2EOtXwNbOkt7bD8zE4KaJgXd1
-         wfhfxeIwNwrZ6+w4fs2Rwd8uX+NwOwzvfShRcK2rTdtQ6TTqe0kv217K6c7YA3+BN2DI
-         L7SOOKfV75+IIqmfkur9Akhsne01fvs+WoMmbP1egfmkVNxC1+oacx6A8pUsWMNeF5j4
-         paDw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LHYCwrL8"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5aeab3465b9so1950905e87.3
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 05:40:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1782735124; x=1783339924; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=M6FLZvA8Pwfh3nUJdXEdRIbFisLwFVFAuq70Ux9RsJg=;
-        b=JyMHgt3fasD19yibzvtXd4M6CFHR80+7gW10PkNDLpsPGLRdWJK4GxjbO8jXpw01B5
-         eUo7DZ9uXhvXdyTPwudqfCZllw1FmFw4ea3aa0rqk1LQ4okzAsMVp4yflBBCkcv5PlR8
-         S+Su8NZWDw2ceDZri8EkIZ1Rg8eUjF1onkeyI=
+        d=gmail.com; s=20251104; t=1782736825; x=1783341625; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1UYgXQTkwi0BSLs5KZ1+i2dt/IZBMQa46sErHphNiVU=;
+        b=LHYCwrL8Pwfm+iim7MlLxXs99GqiE5OO6+Ria8cOugVPt+wlrDAPR3r9fW7i9jxjcQ
+         ae2A6Y1bqFUCQu1jtD4Ye73pXZwKE3F9QJkPKkri0mcpeOSxgfyfCQGzEESs+oJguCSy
+         +ep0Pk/G2xFQNo5XUSFicArjgNQXyQz6ye1iegsDuXhgke0l6v93a74PMPkI0ak1Bg7g
+         2//QZH8BKXLEzxrYjwnboVGmXoNi3beDF1HYK9FuEvDsM5kLpUy5xunYGGS4ZD0HFQ1W
+         Vsuf5IxX1BMjDZ0PUtbewaygbu/BJimyl+AE4pjl/UCdd6+lfu1a5zlhkFe5v+yL3I2b
+         WCZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782735124; x=1783339924;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M6FLZvA8Pwfh3nUJdXEdRIbFisLwFVFAuq70Ux9RsJg=;
-        b=DRlMX/3jIWGAt5Z+Hq+1vIzrP0ETAiuNx+2f/qBydN57xJgLuSjg+3CTVEjeCfZyD0
-         GAL8Q4+iaMRj9FOvrqH3wwfS853DMKCmtMmIipbDQc/YZsmdszuMOkKvHRAouPKoesp0
-         V/70nTvPB7M+wU58HqRdhQoWZ44lRw7r9Jyv6kZB0cLXJTR4p0wzLbatmABEzPrFJRJP
-         ZeslAYeMJp5AojUDhla0MD2NPA6AzZ/QAtf0uyWQCKcVhW8cVIbzohheRn6mb0kxgPgl
-         grdmTKKGPyN6lgI1SntU2Qp8O0E/5+iEBcoWdkHin2CjoAFceu6YvssIrwAf+a6MLoZA
-         r8Ow==
-X-Forwarded-Encrypted: i=1; AHgh+RqQyoNEph/7Eprbdl11ItSM6YZbzxbEx7n8qySA2BbIrWIFtXCS3/uWAVAyuCnOe5giHdU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxc9ralG0UL2Zikwk+fESuaBN4Qvx+gXngQk/cdntdeYQg4ne4N
-	oasowg9RuNxUK/JeiK1wJqBRGOVJxahUKjAiV8V1Erwdjoiey+0PHS/OGwvvEdmGMsmYkKiJ+vg
-	XWdocNuFu6BAeiY/vcaP1105bN1dtnFz2YgqY6lFGrw==
-X-Gm-Gg: AfdE7ckO4zkThF4DeMXA1ZMmArv96o5gsLwNPAKBzCLThbRdXQQeZEdLXX3J7j5cWCq
-	EWpdJOg9UgatEo/LbChyZvz7J5TjFktUq7WBGE+FsWMKxziIUknr2l/X7+g5crqQkguMwCPI5TV
-	+D80bibxB9BecfQn/tZ0MzcNqVreQcYTYm1Qi5oAHZ1yNTSntW6l8V2X6Y1c24k2L5izl7XTWcw
-	eJM3vI7xnVaYB1WwkeXhfu2R9xDJ1e7cbkkgiKvoJcxzgt2SLv3r99szcIRO1FqwxHWykdkhiEG
-	cT1+6qBL
-X-Received: by 2002:a05:690e:4885:20b0:660:5a88:6442 with SMTP id
- 956f58d0204a3-664f628f0d3mr109832d50.64.1782735123580; Mon, 29 Jun 2026
- 05:12:03 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782736825; x=1783341625;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1UYgXQTkwi0BSLs5KZ1+i2dt/IZBMQa46sErHphNiVU=;
+        b=Pfk0fWBRuecROz/FDtrYg4ifEJvi54qtLmrsU9J7Envy3OTvn2oESkKAPrD2lxE5sr
+         dNwPApCj98bzfD5sAeKG5xE+va3L3toscLlYFp3usVu1AbmGAiLIFXN9jw4vWHMnMmCv
+         rvNEP3njdTUn9Iv+mKN9/WKM1bFcrIsc96deRXpaJu6biTsPj3ddRMpRYXPRhb7Y4KSM
+         PQd9XPKHwSWpXHaJ5RxHv6PZV6hPP8R9Q5bIHouYU56ktJH9dfn1rqlUPnSG+CylR+Dp
+         p7Cf6/gz3gzraWTsYWJjVGXSJL74OzUOBt7oGhZV5xFE0veUnZXpUDQwTNe6Jo8E8v+C
+         lb5g==
+X-Forwarded-Encrypted: i=1; AHgh+Rp73t2A8RglfEl0LldbJ85EWzrkPoiNh5bzQ/D/sYPfGz1g3uxzlNu/kzleC+ZZT0xpVFw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2UU5OfbgCEa2UOnqq2ccd2cDt9QJxzinQE439HTUBsNhlZtEf
+	BQazr6JCQuYKBqGX7CTYvfn1nNH43E/pAUqPgHQcO0vSrUjIMP7TfsYyDgPd9VlY
+X-Gm-Gg: AfdE7cl+3MwHqwieEhx3GB7hxJ/bh2akb36KZUwDUGJpyBJ6VGrigWNFddOYT6SdX2Y
+	OADeNKhWD1BPzaEfLP3ry+EAVSvNvrAN+lVzf5YdpKNd1pfO+uQLRQkWdGoPwlNr+GFrJlciS/k
+	o3sVbt/s31e7JS2e0MbMu2scz6UqUZxeOe5OP+r6JVYUCjA0Nf/h0OXnn6C9Y1fshvdYE5UhnPt
+	NUkShkfnaaF/BvZlLMAQs+v8Oj3NEH7SgE+gL8ndkvGz/lOBGIWOupMvACpWb5zbHWjMI3eq2q7
+	WaG61otBc7htGtBUAHUyCRTlz0bfWhJwjaLHz9HzzeRkBoPItHzf3p0xqNrpiom327HI9WUJsiT
+	DSD+J0jOxcx8vFZUzUTaVmTx9YfW/43QXJMK/mKxpj6o3ibOHyCdP05yObUPVRc4FAjYmO3MagI
+	Mg8/y/+CpAs81zO33Y7pcH269913byFWQp3/ch1JjEwrTcSF4GgpAbSrPgjA==
+X-Received: by 2002:a05:6512:b88:b0:5ae:a2b5:3acf with SMTP id 2adb3069b0e04-5aebcf09f4bmr137469e87.33.1782736824891;
+        Mon, 29 Jun 2026 05:40:24 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad69580f73sm5781422e87.63.2026.06.29.05.40.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jun 2026 05:40:24 -0700 (PDT)
+Message-ID: <5ef694a3-9164-4ab4-8835-136439f6d267@gmail.com>
+Date: Mon, 29 Jun 2026 08:40:22 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com>
- <pull.2149.v4.git.1782649547.gitgitgadget@gmail.com> <48bfdb11-2624-4aa6-8fbd-d3f894c33bcc@gmail.com>
-In-Reply-To: <48bfdb11-2624-4aa6-8fbd-d3f894c33bcc@gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Mon, 29 Jun 2026 14:11:51 +0200
-X-Gm-Features: AVVi8CdRasuEFrS2GFBTzdZ3sTNdZIQ_sq5g3qdlZjJW3d5SgX8A27wFkj2NxKw
-Message-ID: <CAL71e4O8gTLm4WUcPF-ZbOYTuEzuNSVh0Qjf8ys1w4LVF9Hi8Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 0/8] commit-reach: terminate merge-base walk when one
  side is exhausted
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <pull.2149.v3.git.1782479286.gitgitgadget@gmail.com>
+ <pull.2149.v4.git.1782649547.gitgitgadget@gmail.com>
+ <48bfdb11-2624-4aa6-8fbd-d3f894c33bcc@gmail.com>
+ <CAL71e4O8gTLm4WUcPF-ZbOYTuEzuNSVh0Qjf8ys1w4LVF9Hi8Q@mail.gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAL71e4O8gTLm4WUcPF-ZbOYTuEzuNSVh0Qjf8ys1w4LVF9Hi8Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, 28 Jun 2026 at 17:16, Derrick Stolee <stolee@gmail.com> wrote:
->
-> I reviewed the v3 discussion, the range-diff, and reread patch 8. I think
-> that this version is good to go.
+On 6/29/2026 8:11 AM, Kristofer Karlsson wrote:
+> On Sun, 28 Jun 2026 at 17:16, Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> I reviewed the v3 discussion, the range-diff, and reread patch 8. I think
+>> that this version is good to go.
+> 
+> Thanks for all your reviews and feedback. However, I found one more
+> problem that needs to be resolved before this is good to go.
+> 
+> paint_down_to_common() has this fallback:
+> 
+>     if (!min_generation && !corrected_commit_dates_enabled(r))
+>         queue.pq.compare = compare_commits_by_commit_date;
+...> I traced the history of this fallback. 
+...> The problem that 091f4cf3 addresses looks closely related to what
+> side-exhaustion solves: the walk goes deep into a subgraph where
+> only one paint side has presence. With side-exhaustion, the walk
+> terminates as soon as one paint side is exhausted from the queue,
+> so the deep walk never happens regardless of queue ordering.
+> 
+> I benchmarked "git merge-base --all v4.8 v4.9" on the Linux kernel
+> (the same case from 091f4cf3) with three configurations:
+> 
+>                     master (--all)    side-exhaust (--all, gen ordering)
+>   no graph:           3212 ms            3268 ms
+>   v1 graph:            188 ms              17 ms
+>   v2 graph:            227 ms              17 ms
+> 
+> With side-exhaustion, the v1 case no longer shows a regression
+> compared to the date fallback -- if anything, it is slightly faster
+> since the walk terminates earlier. This suggests that the workaround
+> from 091f4cf3 may no longer be needed when side-exhaustion is
+> present.
 
-Thanks for all your reviews and feedback. However, I found one more
-problem that needs to be resolved before this is good to go.
+Thanks for digging into the history of this fallback and catching it
+during review!
 
-paint_down_to_common() has this fallback:
+> If that reasoning holds, the fix for v5 would be to remove the date
+> fallback entirely, always using compare_commits_by_gen_then_commit_date.
+> This would:
+> 
+>  1. Fix the bug (finite generation always means generation-ordered
+>     queue).
+>  2. Remove corrected_commit_dates_enabled() which has no other
+>     callers.
 
-    if (!min_generation && !corrected_commit_dates_enabled(r))
-        queue.pq.compare = compare_commits_by_commit_date;
+I agree with your reasoning, data-backed discovery, and the course of
+action to fix this. I'm happy that you're able to close the loop on
+this long-standing performance issue even with v1 generation numbers.
+> Do you see any cases I might be missing where removing the fallback
+> could cause problems?
+I don't see any other concerns here. You're right that if we were to
+have a different mode that changes the priority-queue ordering, then
+the side-exhaustion optimization cannot be trusted, but you will
+remove this possibility.
 
-When this fires, the queue uses commit-date ordering instead of
-generation ordering. The side-exhaustion optimization and my older
-patch for !FIND_ALL early exit both check for reaching the finite
-generation, but with date ordering, that check is wrong --
-a commit can have a finite topo level (it is in a v1 commit graph)
-while the queue is not ordered by generation. This unfortunately
-means there is a regression for the !FIND_ALL optimization that
-I should fix before 2.55 is final. I will send a small patch for
-that separately: add tests that demonstrate the problem, and disable
-the !FIND_ALL early exit when generation ordering is not active.
-
-I traced the history of this fallback. The queue was switched from
-date ordering to generation ordering in 3afc679b (2018-05). Then in
-091f4cf3 (2018-08) you added the date fallback after finding that v1
-topo levels caused "git merge-base v4.8 v4.9" on the Linux kernel to
-walk 636k commits instead of 167k -- a side branch with a low topo
-level stayed in the queue behind a long chain, preventing early STALE
-propagation. Later, 8d00d7c3 (2021-01) tightened the fallback to
-only fire without corrected commit dates, since v2 does not have the
-regression.
-
-The problem that 091f4cf3 addresses looks closely related to what
-side-exhaustion solves: the walk goes deep into a subgraph where
-only one paint side has presence. With side-exhaustion, the walk
-terminates as soon as one paint side is exhausted from the queue,
-so the deep walk never happens regardless of queue ordering.
-
-I benchmarked "git merge-base --all v4.8 v4.9" on the Linux kernel
-(the same case from 091f4cf3) with three configurations:
-
-                    master (--all)    side-exhaust (--all, gen ordering)
-  no graph:           3212 ms            3268 ms
-  v1 graph:            188 ms              17 ms
-  v2 graph:            227 ms              17 ms
-
-With side-exhaustion, the v1 case no longer shows a regression
-compared to the date fallback -- if anything, it is slightly faster
-since the walk terminates earlier. This suggests that the workaround
-from 091f4cf3 may no longer be needed when side-exhaustion is
-present.
-
-It is also worth noting that commitGraph.generationVersion has
-defaulted to 2 since 2021, so the v1 fallback path is rarely
-exercised in practice. Any commit-graph rewrite produces v2 data,
-and only repos that have not rewritten their commit graph in over
-four years would still have v1-only data.
-
-If that reasoning holds, the fix for v5 would be to remove the date
-fallback entirely, always using compare_commits_by_gen_then_commit_date.
-This would:
-
- 1. Fix the bug (finite generation always means generation-ordered
-    queue).
- 2. Remove corrected_commit_dates_enabled() which has no other
-    callers.
-
-The alternative would be to keep the fallback and disable the
-optimizations that depend on ordering (via a flag like
-paint_state.gen_ordered).
-
-Do you see any cases I might be missing where removing the fallback
-could cause problems?
+It _may_ be worth mentioning this with a comment when initializing
+the queue order for the paint_queue, because the use of the queue
+requires topological ordering.
 
 Thanks,
-Kristofer
+-Stolee
+
