@@ -1,153 +1,220 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FF537CD5A
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 15:30:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2CD43C06A
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 15:51:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782747036; cv=none; b=uWCXZw76xBc1U8MTeMb/JLKwbHd1x7qFeVgmd4yacF5rlHmZZ9SLCj5sHpzw8O5lvcAaDKosVw5FqX3weKxRPmKqJ/TD9Ol4tOlmkYaeyXpJ3s6dXdrXfrg9X0EMGqMyY9/N9zv6xpeZKZpv4aRsuZL6jJDy6jBJ8mZUma719wA=
+	t=1782748284; cv=none; b=bLF9imw8jIs5cmR1wir5fbJdE/scKIC4fkoWAK+YxyA9DQjP+VyW6otrem3FUBgtGO0l6c88LkSCuAsWaeJus9N41eOAKYLM3C/k3bLZWNO+mJNuNsxmPWimLNKH/VOo/1UfYlox/NtDmk3TPWyQ2FfcsY+dcHBmFUn9UT2qUio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782747036; c=relaxed/simple;
-	bh=M2j/zWMJKenRhcxZh9/RJ52JVAgJjv7s3KQ7T26Ct8s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=spIXgElNXQG/CeHIbY2sRsERohywpCpoIWvDLhKB7I2eRtojMFahYu7xRkQh9/xHA9HjVKTSqH52t5QO1f9VRhb6e6JhNKvLce3SCs9U37lxUgX/zcSUrvag1HLQoXo8jueF2MVRZiJhRulTaptTAAFw8COfjYJ7FhGCPe7d2vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zz/mT/75; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ieVMkO7S; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1782748284; c=relaxed/simple;
+	bh=3JEvbM72mqVkPbTtvGSYLKPYQ5FGQU1MMSV5rXj/QNE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kaSOtIdsPG4MKQlQ9eVQhcMo45fXsvB30NWv3pSGG31iF/yUxfX8OzjME6Y6RvNhVC0I0uMY2l/OUfcDbeTRqYBbEk2TXUgORCj6UoZq34Qh6S5Fd4gJrz+dkdOpmrTkIC3bFz9MPItwkeXkqKEfK9RzoNpPr7fo1kMbOdykl70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qpSKd+Ju; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zz/mT/75";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ieVMkO7S"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CF7A21400101;
-	Mon, 29 Jun 2026 11:30:33 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 29 Jun 2026 11:30:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782747033; x=1782833433; bh=TieEEVaw5Y
-	uuz7FV702FvAUg548dp+IZAAxsbuI+blU=; b=Zz/mT/75LX0JoWmYOBOXJ/p4V4
-	hPtzoBmk6BX9Lfn/NyVxRn5mJrh0TvdqOx838nf5cS2kpT6+XT5C0aAQ75mclADZ
-	B1CuFtoXjSZMfIoESTKSUZtL+kxN1dVSKGhFu74hS12tSiSgFlzJeEfHfta2hUtM
-	stDyyJhivFLdQ4Zyr40xjOX6TBlRFkBtczQcYxavcGnZSUNRVPUgSbTxkX3ZFIl2
-	SHPpOpGeuu4uAKVM8Yi1sGWrelofPMWwJvI69JiSeqr2kVIpKHdoiaXjlnSBC3qj
-	5RF8iTpTbbBttBjJblVmyMnAykU8TR0ye9/h5TRBXiSj+tfbb+l0G1VGAJVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782747033; x=1782833433; bh=TieEEVaw5Yuuz7FV702FvAUg548dp+IZAAx
-	sbuI+blU=; b=ieVMkO7SKbP8Zs9jr1sF3YptujSffISu+IqL5Vi/Jw1MDUaoDVk
-	agAjZZi5f1ZJuqNa24HYYxPyVT2Bq6NKAvwsKUdi+B+K9jcKGixZRDgpotKvQWQ+
-	ANAAtGy1gctfT94iQTUFQ+7or47KY9olPOOcWSgS0MJZvL4i82G96/KFb2W7d0Mn
-	meG/4R2z3CZXLWdmvfpgO58+aM+ZNat6OkZvMWNBAxi8vTY3xTL9XhtmTsI5IUS9
-	TwlhF2Rt4urcin21a4hQUSlVOefLHugyXbwSGwSJeF7nDNgx6K4Iin1HK7HbJX3+
-	N5n9guB0ncUYD1AxsnP5x1xW8PPOc6e2AwA==
-X-ME-Sender: <xms:mY9CauKJH9HlVJnePLL3IW7aj86Cj-rLP3M7gsZPOPOWyWcEs3uRmQ>
-    <xme:mY9CasJgOlH5ZweVpPSMRJWgukPzLePKDYyd92QZuV-T4ctgJcaUkRIwn_IRg2Qel
-    zT3phLgURfmyIrHkE5Scz_Ik7HS-qjZ21g9DHYazOVlKCJQNjEJ7kA>
-X-ME-Received: <xmr:mY9CasV06qulm4PY_ltFgYCL-cUwWzqdi5ZYtlJjdOuWuSvAnMfpoMQMj5rhEkDTCCt7eNr4ZdHgPl9l-Cg4kCnYJPkVpUbbehuNaQ-qFR1I>
-X-ME-Proxy-Cause: dmFkZTFQvPCPOJV0h3jvW+N70DqVuqIrSqJPyebGBpNRtxGLAMi3y7ll0Yo5+hcsSp0mpt
-    q2/hBzFnxIb2h+oZo20cqTOdQR6jB05tpwYSML8wUVBUj56gMHtlx+brH90SHY0L/EDHGh
-    mXVdksgXmny0eFxopBoUFnuU9RJonzc8pz7f2ouJgcRJegdFkvIfN2EdASY0RhLds+SzCF
-    9ZKkNV+F2JEtQ/o2J3YWPZVE7MAQMOczFLXTVlzkFOnmLtsRWA5o3bf39wdfZsK7pGfzL3
-    CFJFhnDy+2/4KH++NZVdQF96+ZlX3jPm2fIFVupOuvbSN29IVTCT6mXWfCfLRmUAFOYrc8
-    97v8IPhfIt514mscRvsqJhb6WZllLOidDPwpbjRHNS0CIwOiTrtS6u1ch1TzTNtU/q5lXV
-    fqgHPUqf+4pn4Td4fzvsl4vgdOEYdwPsKojA1JIT0C7DohL1tZEn4xu1h9no4ung07B7Gk
-    Y4+cRdwe0yuEELaGTmyobSlR5gzsnd3dNQkgNQMpAepd5Qbse0bonvZNCbiDO+Yx4kQmPP
-    gMLIhBCsQSaZGKH5X/mo2+812dffD6vGihOauBUx8xSi/q+uF7fS7Ovkvw+4b9rDyAig8U
-    MbyChGafhE9b6IXuiP9VbiFklqsG4PfpT10oiA1+0imu4MKXzYFhJllD+9hw
-X-ME-Proxy: <xmx:mY9Cauj-Mns_UcpPAT_dzaTqE0g72KCZ-9biqFgrcnOP_oMLoHdjaA>
-    <xmx:mY9Can92YV1HqPRBWXcY1nZmPbUcWxhbMfXp4UDsAbF1QQwXQ-oWkA>
-    <xmx:mY9CaoB5oU-txx9hm9u96tkXB-lV7TLD0jJx95Y_oVnyBXZH9fnYeg>
-    <xmx:mY9CakJuftihML4fFDseRr6kT4OlxoVPHJWY0ldhaVZyc-L-uGyzzA>
-    <xmx:mY9Cav7SpIURaLKMAqtow6sFSELd_DpfHAFDxz9_OA5fKtS1FWyUYhge>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jun 2026 11:30:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dd786d88 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jun 2026 15:30:29 +0000 (UTC)
-Date: Mon, 29 Jun 2026 17:30:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Wei Hu <weihu.math@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: receive-pack hangs on zero-object push into promisor-shaped
- repository
-Message-ID: <akKPjjfabiRkTbtt@pks.im>
-References: <CACLXMtCSzW9BY7idqB1yGa87MeG0Y2FN5Ho2hRXuPJ_qswE27Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qpSKd+Ju"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-490b1bbcf3aso18227995e9.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 08:51:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782748281; x=1783353081; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=O3tbug0pX0ubBWNLsgSHUdWhilqqOH/unS8ymjBbanM=;
+        b=qpSKd+JurjweRfOF6Rx/8JLLbK6kUZhoEYIhcDf2lVUjX2SY46iCGOnYWhrUXt6QPv
+         WbMrySlousQxRJgXpokv0usLQ5Fpc8VFfEE4yEd2/7nYakfvrNeSqerAcNlIRVwH9Xop
+         vld8heKl4WB+0DxujWEfArerggl4EX/KcDkiNNkubg5/m16uD5ujjNkooOcJIhYkA2XB
+         bxIF/uIRlRaG4CM7RkOP3yWDoPztmo8nAT+vvozkIPbDwy7h0Ppy0bsb3naDfQGSV2XY
+         /JAWkhEfE7id14qgwl6Llh95rUAiNw0NPwmUNHYy5d8GxWVLUMOyRYZLY2MbAdpPxUXR
+         KwCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782748281; x=1783353081;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O3tbug0pX0ubBWNLsgSHUdWhilqqOH/unS8ymjBbanM=;
+        b=oWAnrvu1nQcRgBW0E8gJGFKxScg9SlHjIBTDJ5n55tnIRGAoYr2xzU3mx8kJx4/j4P
+         MtVDGAlP5vrOegFqQeLEUr/R3izcl6dgfcy978MUO8RA9/BKdfjXQU76opt3+4ou1Bku
+         xd+XU+79WLj478D4rOx2Gzdzvu6U0khU/JZjPrEi0X0Br3haPMuwTeI6/Utw+5RxQunl
+         RPD+vufUQNHyICXwdltTIO7OKeFjSBsGkAH6/3b+wgyW5JJQPlGGa/ky41TYnfGsI0c+
+         Rh635m4hAroqFp1Q+/CyZ5PpipB+PhpDflv8tgz+izwkYCMG5snH+50v06dvdxrtab4F
+         8cuw==
+X-Forwarded-Encrypted: i=1; AFNElJ8onP8YvlIWE2vq8OwhAm60We5ZPA9Q0FZtiohybYub1duBYY5s1UZsXflxkEI9KfZG/WE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrPrzPIOINSxOaRP3um5f5PXKsofW/Nre83cvezsw2Eb2pqbJ2
+	acXmM5gshUgMKfOm8v1tlX1rS4VKQvnXwk6iaRRn6Iogt0gYziJNq00c
+X-Gm-Gg: AfdE7cnY8Kx7PS2EoN/dZ3tJCCt8YClJXlshuweZtKvIkaljJhu+fVoyRGMSqcO35NA
+	2UjX/Pt5vY7NrYSPFCoFhv8PWyv4X8oTGfWjEPP3yepblu5HI7/3Nl5YRE9QtGfrwjmuxDI66So
+	pViRWqnLxwf9jWXzXu8sfEMVadll9WWWVg5/VAGMuk/hun37KDa40j/1Lh9h5R8wc8OtxJtWfPo
+	br4Blf5RwJ6QdWUXMyeLcD9wtCV9C/9N6a+wNcyVJW03SXdAyVe/L3y8hWC1l2Z0G9yQ0iysqXH
+	4/QGlO1Tz/9t4k66oXzR9A4irlbKMn/4fKyp+wh321Oft4SLa6QUOp2nShUmGJ8f+BJAQB6SisR
+	tz4k5LbxAAg7nnAOtR99ANQMzpPP1Zk26fhvKzOJpkoAh5CLSLcq3rh4B5vtA8q7C2by2In0YCc
+	Ae3BamCdjMdVlNWCm+j7WY2v5amrxCCnozj/S/fDOW9DZbMUzQ9Rl7nR+H9T/2NDKI0wQaDF8BA
+	v7Nqg==
+X-Received: by 2002:a05:600c:4452:b0:492:3e66:6c84 with SMTP id 5b1f17b1804b1-493b82b5ae2mr3851945e9.30.1782748280735;
+        Mon, 29 Jun 2026 08:51:20 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4926c28673dsm289013295e9.2.2026.06.29.08.51.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jun 2026 08:51:19 -0700 (PDT)
+Message-ID: <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+Date: Mon, 29 Jun 2026 16:51:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACLXMtCSzW9BY7idqB1yGa87MeG0Y2FN5Ho2hRXuPJ_qswE27Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+ <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
+Content-Language: en-US
+In-Reply-To: <akIQLM6xZTHBudWT@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 29, 2026 at 03:10:42PM +0800, Wei Hu wrote:
-> Hello,
+Hi Harald and Patrick
+
+On 29/06/2026 07:26, Patrick Steinhardt wrote:
+> On Fri, Jun 26, 2026 at 09:52:57AM +0100, Phillip Wood wrote:
+>> Hi Harald
+>>
+>> On 24/06/2026 22:54, Harald Nordgren via GitGitGadget wrote:
+>>> Adds git history squash <revision-range> to fold a range of commits.
+>>
+>> It would be helpful to give a bit more detail here about the command so that
+>> the reader has an overview of what is actually being implemented.
+>>
+>>   - what does it do with fixup!, squash! and amend! commits? Can it use
+>>     the message from amend! commits to reword the commit?
+>>   - can the user reword the commit message?
 > 
-> I found a reproducible hang in `git receive-pack` when pushing a ref update
-> that sends zero objects into a repository that has promisor remote
-> configuration and `.promisor` pack sidecar files.
+> Good things to document/discuss.
+
+Thanks, I was disappointed that these questions were not addressed in 
+the cover letter for v6 which contains no more detail than this one.
+
+We should make rewording the commit as easy as possible to encourage 
+users to create useful commit histories. I think that means having some 
+support for fixup! style commits. We could just do what rebase does and 
+comment out the fixup! style commit subjects and the commit messages 
+replaced by amend! commits but I think we have the opportunity to do 
+something nicer (I find the commented-out messages annoying). We could 
+have a comment saying "this is the combination of the following commits" 
+followed by a list of the subject lines and then in the template message 
+we'd simply omit the useless fixup! subjects when the commit body is 
+empty and also omit the original commit messages that have been replaced 
+by an amend! commit.
+
+So instead of
+
+     # This is the combination of 4 commits
+     # This is the first commit message
+     Base subject
+
+     Base body
+
+     # This is the second commit message
+     # Another subject
+
+     # Another body
+
+     # This is the third commit message
+     # fixup! Base subject
+
+     # This is the fourth commit message
+     # amend! Another subject
+     A better subject
+
+     A better body
+
+We'd have
+
+     # This is the combination of 4 commits
+     # 123 Base subject
+     # 456 Another subject
+     # 789 fixup! Base subject
+     # abc amend! Another subject
+
+     Base Subject
+
+     Base Body
+
+     Another subject
+
+     Another Body
+
+Possibly with a comment before each message saying where it came from.
+
+It would be good to error out if the user tries squash a fixup! style 
+commit and range does not contain its target commit.
+
+In the long run we should provide a way to squash an arbitrary list of 
+commits rather than just a range.
+
 > 
-> The same zero-object ref update returns normally when the receiving
-> repository is a normal non-bare repository or a bare repository. It
-> also returns normally if I remove either the promisor remote config or
-> the `.promisor` sidecar files from the receiving repository.
+>>   - what happens if a merge commit inside the range has a parent outside
+>>     the range?
 > 
-> Check the attached script to reproduce the bug.
+> Yeah, I agree that we should punt on merge commits for now. They are a
+> can of worms, and I'm not sure that we should just squash them. I would
+> at least like the user to ask a flag that tells us that it's fine
+> squashing those.
 
-Thanks for your report! I was able to reduce your test case to the
-following minimal reproducer:
+There does seem to be some support for merges in this patch series which 
+I think behaves pretty sensibly. If we have
 
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 1c2805acca..2850e78e49 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -723,6 +723,28 @@ test_expect_success 'after fetching descendants of non-promisor commits, gc work
- 	git -C partial gc --prune=now
- '
- 
-+test_expect_success 'zero-object push does not hang' '
-+	rm -rf src dst &&
-+
-+	git init src &&
-+	test_commit -C src initial &&
-+
-+	git init --bare dst &&
-+	git -C src push "$(pwd)/dst" main &&
-+	git -C dst config set remote.origin.promisor true &&
-+	git -C dst maintenance run &&
-+	for pack in dst/objects/pack/*.pack
-+	do
-+		>"${pack%.pack}.promisor" || return 1
-+	done &&
-+
-+	# Push the already-existing commit with a new branch name, which
-+	# results in zero objects being written. This used to hang in the past.
-+	git -C src push "$(pwd)/dst" main:topic &&
-+	git -C src rev-parse main >expect &&
-+	git -C dst rev-parse topic >actual &&
-+	test_cmp expect actual
-+'
- 
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
+           C - D
+          /     \
+   - A - B - E - F - G
 
-As it turns out, the bug itself was fixed already via d9982e8290
-(connected: close err_fd in promisor fast-path, 2026-05-15), and that
-fix is going to be part of Git 2.55 (which is due today).
+Then squashing A..G should be fine because the parents of F are in the 
+range and it looks like we support that. Squashing should B..G without 
+--ancestry-path should be safe as well because B ends up as the parent 
+of the squashed commit but we don't have a way to disable 
+--ancestry-path (and maybe we don't want to add one). Squashing F^@..G 
+might be useful to fixup a merge (though perhaps amending F rather than 
+creating G is a simpler way to fix a broken merge). Squashing E..G does 
+not make sense because the range does not include one of the merge parents.
 
-That commit didn't add a test for this scenario though, even though the
-commit message points out that there's been multiple regressions in this
-area already. It's probably worth it to add the above test to our test
-suite. Is this something you'd like to do? Otherwise I'm happy to send a
-patch.
+>>   - what happens to branches that point to commits inside the range?
+> 
+> Yeah, this should be documented indeed.
+> 
+>> I had a quick play and found that it accepts ranges that containing a single
+>> commit (e.g. @^!) where there is nothing to squash. It also accepts ranges
+>> that are not ancestors of HEAD (e.g. checkout master and run "git history
+>> squash --dry-run origin/seen^2^!") without printing an error message. Only
+>> accepting a single argument is quite limiting as one cannot say
+>>
+>> 	git history squash ^:/base :/tip
 
-Thanks!
+We should sanitize what the user passes though - we do not want to 
+accept arbitrary rev-list options. Off the top of my head "--left-only" 
+and "--right-only" would allow the use of "A...B" and allowing "--not" 
+seems reasonable.
 
-Patrick
+> Note that it is intentional that you can rewrite branches that are not
+> currently checked out, and the other subcommands work the same. So I'd
+> argue this should also be the case for "squash".
+
+Ah, thanks for clarifying that - it does not seem to check that there is 
+a branch to be rewritten though if I do
+
+     ./git checkout origin/master
+     ./git history squash --dry-run origin/seen^2^^..origin/seen^2
+
+there is no error message and it exits 0. If I create a branch pointing 
+at origin/seen^2 then it does print a sensible ref-update.
+
+Thanks
+
+Phillip
