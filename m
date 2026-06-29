@@ -1,216 +1,119 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE1E46AF24
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 17:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342102D2483
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 17:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782753929; cv=none; b=j7P99/o5ZgnS2jiMrHuos1ECXGU1KBIZQ5ZEcnx9dFLpiLceHieJ4aaCUuRY5+r0AHLFZss6XCGIIKNVrEqABTvoOaFcK7Q+McEDpVatt9+ASgMZSqoBItWdqqulXIIk+kAe5v6WaTwy2EwkJII3aehJlHRtm0HuzZXDZavGOII=
+	t=1782754689; cv=none; b=OdmDvqvuruMdeiwrcr+MXC0JJMmemptaoXPUUbNSkWCe0l6BUTbTq6gZdEZpJDsrsBJikWZresQLt1ow/M07fxW4teHEXNEOmPMlG1LCh4Zoe25bg5yTNQlaYRDq61q1y3yQ8WHE79oQF4f7V3j7R4SWxA86vqORDzwrrb8n0C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782753929; c=relaxed/simple;
-	bh=s9tCBFVAwP3X+fBL7iAFDe2JhPg3awhlsOT816qRXSY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OrL/tj/2y04JKdci5ZghnJVsWFpZfVSPU20wJhcGmKetE9yeKFCjh5WurKcuhkJgWmdGDMDeGuvgFXg6M3S/FmAuJhSqxD48SrQf3gRWYLL5pxZ3qSeR2iVvWBmiUk0vb+igM2tjeHLprVhPg9YbpXqg0eLUPmOa7XLWLAREVzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7P5WNbR; arc=none smtp.client-ip=209.85.167.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782754689; c=relaxed/simple;
+	bh=VNVR7Gf33XfW/6CQc/jqLS6J2WdasPwXx+fXQsW+ovY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Jc4JRRKdJLLKUSSBhlCOIxHrY/0Jg+lNjqkRDnfFz3nQ+J19oZvPZkV1cIT78Q3HoU07J/Ln+M3tdlzdXix1/iT3VOpiXMkDwz0MyYdT4uj0/2WN0JkCMqlKsNdioNwme/KxjVXXJjyttzO4xqrKAIH4ABjR3Ehf9PhyEcfIlG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KPsi403/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jeta9wFT; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7P5WNbR"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-489f0c807c5so2358661b6e.0
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 10:25:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782753927; x=1783358727; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fWnlqfjPurkr9P0Q7FDITdJIeulKpC1ZF/4Fs+bly9U=;
-        b=Q7P5WNbRJJ612kdX4x/O+FaaYtXZVsCPPtWnPo9+SgCJVTtElKDq76csvlXTpaF56+
-         eJ1eqC+S3+T07MncaMO+UVFvgBAnk4uuPK+VlRzgqNvVAyz9bARLIxsJdywUzLREfWpY
-         9bMnjlgbXmQIKMNe1UEq9zUiksXD1XULOiVbPnFQnYYEp8c0FHyjaz5M/cpkUMx1sj6Q
-         /iGlhaxl6TNzpT08X1VY84+++nkLWJXYjCg57AnFV2NrvCWgy3V7IXEFIYHY0V/zeWg3
-         ae/9Dm9wZlezJiPMMEmn/UYtmryMwGxdnJXctMJgRUXMzpGGMgWHGsLxZUEtUUKx2ZhU
-         IELw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782753927; x=1783358727;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fWnlqfjPurkr9P0Q7FDITdJIeulKpC1ZF/4Fs+bly9U=;
-        b=CnUwADpL6iAv66xbP6K4ui7qtJ2qNLRY7bc+4ac16+adMNe6lBZLzAuwWhrZMSo/JC
-         9IiIYunxHB6fmjoWIndlci7iGH7OsKMrYbGMn1HyK2YsHpaF2pqNWd4C32Vblbl8GL5j
-         XRb6ltJMhSsFlQfqtVvbLHVxz/fEV2KNBrOb0Ew7ObFrcnV4yW6YgzBZ0SQZ8XBmqoKX
-         TpdZtYwEbfBjsx2MIAvB/hn1WPAT6AI0WWMIZqKs6ZaDjSuzG0mIMADvMKwDOTSWxFr0
-         bQ5M5AukqkNIrzxltdM6qboDEhMTqq5tKicXa+DUoSEHlpmly0yW6w4jUIzAGcr5HwsA
-         2C6w==
-X-Gm-Message-State: AOJu0YxkAvD12KLUDJn5mg/xfGZEy0xy5gnq4ZCSju8cMKm84VTNVJl0
-	UkqnoftDEpeaM2PMUWyHtG3jZddYUU1TtZ1F4za2PPY8K4jcgncyHPgewzlq+g==
-X-Gm-Gg: AfdE7cmk54EjuDtPkD5BqIWMB1MbLyI9IPNkoUbih6NIhFaKn9WFhx2zyfM90qfgKeH
-	uvog8feanOixM8jozS0dGtJMeeXLXo54PEK2RTy/6CvcT5xDVUB6pD/UvA6d+G9wUfyfFxNkAm3
-	fxcH06PBQRdD5G5VzyTlhOQTvqyJ3f+LPdd5IsHvxGfLzHjRTiRvdW+ePH+K+7rohahI0yvKoGs
-	nrgvUmXXxVRXDFWnzYlRgLphrgcxTQkvPid9Pl6am6fYUmrmxi0fO3gVuZcETDYixgwlvbfUIeV
-	aA6Ix8ivroUksM6kimE3rdJmi1g971G8L/VLuRqs0F87wZm80IeBpOeAcUJBD1RStrdP9yayqer
-	vhPpZ8ufXWVZGg4O/3zIsZrBTwXRsE3BAjd0OciC7JO1hGceMcT8vBgPPl5u4KfW3r1LrtPyhuX
-	bZgDXX9w==
-X-Received: by 2002:a05:6808:c2f8:b0:490:72d7:6efc with SMTP id 5614622812f47-495eb8ad9dfmr118321b6e.17.1782753926753;
-        Mon, 29 Jun 2026 10:25:26 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-495e092b61bsm1097323b6e.5.2026.06.29.10.25.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 10:25:25 -0700 (PDT)
-Date: Mon, 29 Jun 2026 12:25:21 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] odb: make backend-specific fields optional
-Message-ID: <akKmwPGSAGEGKZjL@denethor>
-References: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
- <20260624-b4-pks-odb-drop-whence-v1-2-8d1877b790ac@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KPsi403/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jeta9wFT"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 72E687A00DE;
+	Mon, 29 Jun 2026 13:38:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 29 Jun 2026 13:38:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782754687; x=1782841087; bh=ROZaSrj4eS
+	zi1r6/2jcyF2YD18xYJqble6bw6KOWfo4=; b=KPsi403/OZndKiHUBhKfFQswlB
+	o6w8wQFTcCeJT78xw5wTz890lXV4HnP7mfi8K0ksMMedEX1L0XOvXqnB2Y5yNgKE
+	lwY0b0SyaHn/7NREx3aFvEEOdGqZk2XDt6gG2aBpID9CeZ92txDkLPcN385487XT
+	7AilBclt0jUgMhi15T9nCiG3maEbUSDzKzD16z+xoLKzxEfvcFceTy9yQW6Tw/7I
+	HMGSk6RJqmx/qUvvI1xhu2DRw0BXeP3eiDVqlxlSdwPAcNi6Ns2DlArpTS7CJd8J
+	YC3n6KEduH8h9tg0ax+nT6qp7mKdPzdVZwSFS6hyrR5oj7tH34dVC8TL3efA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782754687; x=1782841087; bh=ROZaSrj4eSzi1r6/2jcyF2YD18xYJqble6b
+	w6KOWfo4=; b=jeta9wFTj8zA3CWgcqUHvtTPlIQQ5wq1flhhyc4Ch3p7wOxtyzJ
+	VfU2szyo/sHPPrbOYorrtH1Q56umDyfUBJZ6XKzL1UBfAx5SZf+lLXu22FJBQ+9p
+	BXqKMP6bNr9R15TmNJCXszFBvtoocLNKYXIsT3tSFTuBQEps4dZFLd6CuQ3OtlNx
+	49dmOeoBYIdXfYON9N27ROS00ddd7UmNCkJ4OLYD4n0Lrmq4x4b+pp/4gRbNS5m+
+	V66DDHUnNUQKN4u0S5RDUSdzz3fRuYenVmittzT52eNqAHgwJJ6OKDTd78DL5IHe
+	XX9Xuv9IXtCe3Vd1l5XkOWIA+CaI9Be6gYw==
+X-ME-Sender: <xms:f61CaiK0mcqdI2T1_EVdtcC9TtJ8EOCNH_bgjnz5dZuRO17ZthDu-w>
+    <xme:f61CahL_zkmRs7gq4Le069n9cdrD73BNQYkOta4mOZ0ICOx9Ibz-Q8Cwk4E5Ve6Rq
+    -k0nXlHd4Dbb_Rng9hQEJ4fzNn5WCjyCctAcih61CzvVGi8Lj_2SQ>
+X-ME-Received: <xmr:f61CanvUzpTfZFA36soiWPDAyT8AgafsNykW5JXC7cpkSpHjmERQuXp4sOdhX8LQydImfgF9ZERYWSMJw6YWvum5sosCWNmZkUwd3K8>
+X-ME-Proxy-Cause: dmFkZTFAEMmduZw5EqcCHFnFjRL+Bw2JHFyQyEQbmc9usmO2yGQvbKfacssaPXZ8sWU4vz
+    FSCxPqzu9Z/DuctWW06ZZH8y4CcebhliqCzV+Sf/ZCFAf8jg7uXLW6xo0YI4sDvPT8XAT4
+    I05ydSNV7MTFh4gk0mnf95018L+Kslqxcf+eE4sN+0mgkSrv3dv6aAfeSfGW3oo4uQfGqh
+    Uw5KPqpHi2YxDoKN/s0Kg9p+GotVu28qSOqEclG+nSAEYeFREDGZZ0SfpmdBBGsXTulSQU
+    Kc5q/mNEvBGFzRfbwOjXkL6HPfDSFD2R+qIFSeIie4TqlVTU48jNMTh34EwVo/DH/WyrE2
+    4TXRuFPRjhUEFA7jnD9JOsgYg+NHLuAy0riZndUUgwHB1Bt2ArWVGHKD5QD8NpymathHAZ
+    AsE/icHOBQGSYXFXWMAcuv7DgS/2ok9SE2jsiGgYcIhFH2FZI00l6G/avGEIGXfguoEovo
+    KrbBBcwHQKKqsKks6/OzEzvEueQXXP1YAzkqHWyM9pVOKL5hcYt6JoP++kd8MBDRuCvAqN
+    6LWuF2kWlR7TCbsZGEeKxUUMnjow1s37qtSHBfpmVukV907PYZ0Xzbv9I7DOOeTHBDgc2V
+    //sHzlLT8dGdAN2AYHVKiElD226+YWKYWsHyqR+D76lkLESz1nEr1nG8Jhcw
+X-ME-Proxy: <xmx:f61CamQIe5MubHW1FPb1TkPF9J9yyoBSplOGmRA2P_4F11Efbj4ADA>
+    <xmx:f61CalOgXXZ9sAoTj0D7u_cgsYzeF8DW30A3vZuEq5bt3VKfn9q-YA>
+    <xmx:f61CajYjApkN2Hl5NFFFvVsFP6uXPf1mbobrRL7hPO__C7a879mTxw>
+    <xmx:f61CanyVPuMdGb6pHs1wRK25a45emKVRiEYRdDnkSmehmscwbclx5g>
+    <xmx:f61CanNCP78ZKNzVzZXVr5hWaE8kM8VLO6ypwjg1Ez5R5nsQT3Yj40qw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Jun 2026 13:38:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v6 4/4] history: re-edit a squash with every message
+In-Reply-To: <xmqq7bnhz9jr.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	29 Jun 2026 07:49:12 -0700")
+References: <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+	<pull.2337.v6.git.git.1782635349.gitgitgadget@gmail.com>
+	<4edf012b77fd2f2fb2a51eb10863bbf852fffa40.1782635349.git.gitgitgadget@gmail.com>
+	<xmqqwlvhzyhz.fsf@gitster.g>
+	<CAHwyqnXXFz4z_ULUq7Oqu0ykwpLJyEyW-uoF2bKfoYZQAjrNdQ@mail.gmail.com>
+	<xmqq7bnhz9jr.fsf@gitster.g>
+Date: Mon, 29 Jun 2026 10:38:05 -0700
+Message-ID: <xmqqpl19w8le.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260624-b4-pks-odb-drop-whence-v1-2-8d1877b790ac@pks.im>
+Content-Type: text/plain
 
-On 26/06/24 02:19PM, Patrick Steinhardt wrote:
-> The `struct object_info` carries two pieces of information
-> about how an object was looked up:
-> 
->   - The `whence` enum identifying the backend.
-> 
->   - The backend-tagged union `u` exposing backend-specific details
->     (currently only the packed-source case, which records the owning
->     pack, offset and packed object type).
-> 
-> The union is populated unconditionally, even though most callers don't
-> care about provenance at all.
-> 
-> Split the backend-specific union out into a new public type, `struct
-> object_info_source`, and make the object info structure carry it via
-> just another opt-in request pointer. As with all the other requestable
-> information, callers that need source info allocate a `struct
-> object_info_source` on the stack and point `sourcep` at it; callers that
-> don't care about it simply leave the field as a `NULL` pointer. Adapt
-> callers accordingly.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Since not all callers may require this information, requiring callers to
-explicitly request it seems reasonable to me.
+> Harald Nordgren <haraldnordgren@gmail.com> writes:
+>
+>>> I doubt it would make practical difference, but one thing I notice
+>>> is that unlike "git rebase -i", this one does not intersperse
+>>> markers like "# This is the 1st commit message" in between the
+>>> messages taken from the squashed commits, so it is not exactly
+>>> "mirroring".
+>>
+>> I wouldn't mind extracting that logic from 'rebase -i' to show it
+>> here. It would be nice to have.
+>
+> If we can share more code (not necessarily the exact existing
+> code---after cleaning it up if needed is perfectly fine and may even
+> be better) across codebaes that would be excellent.  Thanks.
 
-> Note that the `whence` enum is strictly-speaking also backend-specific
-> information, so it would be another good candidate to be moved into the
-> `struct object_info_source`. For now though it is left alone, as it will
-> be replaced by a `struct odb_source` pointer in a subsequent commit.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/cat-file.c     |  8 +++++--
->  builtin/index-pack.c   |  8 +++++--
->  builtin/pack-objects.c | 15 +++++++++----
->  odb.c                  |  3 ++-
->  odb.h                  | 60 +++++++++++++++++++++++++++++++++-----------------
->  packfile.c             | 33 ++++++++++++++-------------
->  reachable.c            |  5 ++++-
->  7 files changed, 87 insertions(+), 45 deletions(-)
-> 
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 8726485f1f..adc626ce30 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -835,7 +835,8 @@ static int batch_one_object_oi(const struct object_id *oid,
->  {
->  	struct for_each_object_payload *payload = _payload;
->  	if (oi && oi->whence == OI_PACKED)
-> -		return payload->callback(oid, oi->u.packed.pack, oi->u.packed.offset,
-> +		return payload->callback(oid, oi->sourcep->u.packed.pack,
-> +					 oi->sourcep->u.packed.offset,
->  					 payload->payload);
+After looking at what Phillip said in a side thread (look for "So
+instead of ... We'd have") [*], I retract my "I doubt it would make
+practical difference".  Without boundary that shows where each
+message begins, the result is much harder to look at.
 
-We update callsites now that object source info is stored differently in
-`struct object_info`.
 
->  	return payload->callback(oid, NULL, 0, payload->payload);
->  }
-> @@ -906,7 +907,10 @@ static void batch_each_object(struct batch_options *opt,
->  						&payload, flags);
->  		}
->  	} else {
-> -		struct object_info oi = { 0 };
-> +		struct object_info_source oi_source;
-> +		struct object_info oi = {
-> +			.sourcep = &oi_source,
-> +		};
+[Reference]
 
-Caller that wish to know information regarding the source of the object
-are required to explicitly request it. Makes sense.
+ * https://lore.kernel.org/git/3b3af3ef-a043-4af9-964e-429237789c97@gmail.com/
 
-[snip]
->  struct object_info {
->  	/* Request */
->  	enum object_type *typep;
-> @@ -269,32 +301,20 @@ struct object_info {
->  	 */
->  	time_t *mtimep;
->  
-> +	/*
-> +	 * Backend-specific information that tells the caller where exactly an
-> +	 * object was looked up from. This information should help disambiguate
-> +	 * object lookups in case the same object exists in multiple sources,
-> +	 * or multiple times in the same source.
-> +	 */
-> +	struct object_info_source *sourcep;
-
-To me, the name `sourcep` makes me think a pointer to `struct
-odb_source`. This did confuse me slightly when initially reading, but
-I'm not sure it's worth it to be overly verbose here.
-
-[snip]
-> diff --git a/packfile.c b/packfile.c
-> index 2b741d7a76..688c410b35 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1422,22 +1422,25 @@ int packed_object_info_with_index_pos(struct odb_source_packed *source UNUSED,
->  	}
->  
->  	oi->whence = OI_PACKED;
-> -	oi->u.packed.offset = obj_offset;
-> -	oi->u.packed.pack = p;
->  
-> -	switch (type) {
-> -	case OBJ_NONE:
-> -		oi->u.packed.type = PACKED_OBJECT_TYPE_UNKNOWN;
-> -		break;
-> -	case OBJ_REF_DELTA:
-> -		oi->u.packed.type = PACKED_OBJECT_TYPE_REF_DELTA;
-> -		break;
-> -	case OBJ_OFS_DELTA:
-> -		oi->u.packed.type = PACKED_OBJECT_TYPE_OFS_DELTA;
-> -		break;
-> -	default:
-> -		oi->u.packed.type = PACKED_OBJECT_TYPE_FULL;
-> -		break;
-> +	if (oi->sourcep) {
-> +		oi->sourcep->u.packed.offset = obj_offset;
-> +		oi->sourcep->u.packed.pack = p;
-> +
-> +		switch (type) {
-> +		case OBJ_NONE:
-> +			oi->sourcep->u.packed.type = PACKED_OBJECT_TYPE_UNKNOWN;
-> +			break;
-> +		case OBJ_REF_DELTA:
-> +			oi->sourcep->u.packed.type = PACKED_OBJECT_TYPE_REF_DELTA;
-> +			break;
-> +		case OBJ_OFS_DELTA:
-> +			oi->sourcep->u.packed.type = PACKED_OBJECT_TYPE_OFS_DELTA;
-> +			break;
-> +		default:
-> +			oi->sourcep->u.packed.type = PACKED_OBJECT_TYPE_FULL;
-> +			break;
-> +		}
-
-Source information is no longer unconditionally set.
-
-Overall, this patch looks good.
-
--Justin
