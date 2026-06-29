@@ -1,106 +1,164 @@
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667882F8E93
-	for <git@vger.kernel.org>; Mon, 29 Jun 2026 17:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782755861; cv=none; b=cFedg6iIabC7lB5NUsD5E+Si+YxXV6NUyRUwjM5YSNehl0DqvhhfPmhU/zph4mvMgepytZhC9JVmI55rM6Q9bJEDZcQ8g8CCfyHYgwEQusnP/edWWyBYJIGx/IzbokArz66LBH4+QleE+Ud+lhcxQj9AbtqH7g8Rj33PldaHWVw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782755861; c=relaxed/simple;
-	bh=PDUXFBJdS7w+GuSSP1HETSOuOYLmaG9bVEXGrDJSDqc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gs6e9xCT3WVv7cX25WmaDEnNDL7Y0/rAjwKf/44eN+NCl9RTDRuVHjt+S3+yNJixJzRQ+lR0n04/rEk7ePGbtSSR5nLhJyjNW/kLAhHXIXtmBENYoUVgiiTAKxV7oYGEsP9pqGz8f209NlNxf7tut79AdXueA5CKLGhEq4ypJYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ppV1Fawe; arc=none smtp.client-ip=74.125.82.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD5C282F35
+	for <git@vger.kernel.org>; Mon, 29 Jun 2026 18:04:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782756253; cv=pass; b=MjikLD42GS7kiRPCYTET9GJlvJRD9HrId8MxqJuioOQpt1hVG6TNP7hBqkauHyDRPuygpSe+ZaG0rUEyCSHD4Y1Gh/wruhYdpPG5qJXJLpDWcWSru+BZtuQgwFnvF5irYjGSg7k6evQU+Cg8XeRkN4Ylc1PGXix/sRuh8QqkSz8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782756253; c=relaxed/simple;
+	bh=6htruieKKRpkrB58Hkp4h2rAP3e7CDi6aB5tS1RSYBI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B1qbWkEIUsBvfRGpVmkXUqPLGnY6LfFSIRAQ5uFA03SkhaoueeCEBAufxdngMEhY/Smzgfnq1Og1amu4p4wDN1gQQdmcDhq/9H0TM1iPIpRzbAmympjc/rsCyQtpVOmvCgjtUhz7jgv18xvzKDW0KTioaD5jDNtkhP1j/ouon2g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JX+cgsSn; arc=pass smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ppV1Fawe"
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-30bbe98c3f0so1121224eec.0
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 10:57:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JX+cgsSn"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6983f20a8bfso5067421a12.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2026 11:04:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782756251; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MFdmSOFp4pLM5iDWKZKt/Tss/Ep/a2BnVbPKRKBnRU3T4guLuJUtd4fe9CQOH2BSBE
+         HbX3Ymgpzc4HFNeHlw0Z91Kxk0Y9h/sz9Q+//VMuFFQM3QKSA07HJ01Na0G7dGTBF2mi
+         x+Jt/QgXYQLLSK5mANbh68h66P04wUxk4oMXZH/VhxXzL4Q7IcT6DMKESj7ZP4Y0tEwY
+         AfL8INYdZXzs3ynLsBy7cUl41Qxt3KYi1zK14ZuFintNHxRPZAjb2+siAZGfb18yxUOo
+         arV6AeI4mV16eBQzYPU9P2O0qmLQjXwdF7xJFCoLoCoGXom3QOgAgr+lRjSJrW6P4tti
+         +/6w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=wgFuMStil+Ci3OywpRVKpvlKXRlkPI4t2RElhVF6WAg=;
+        fh=IVR3BQbGhZb8D66CLeyAg3IF96fkc33A2ADte2m75uo=;
+        b=VBfjXabsLWHu5lTGHmEUBHje/qk6//pzs6cW2QBbWjLnm4HuIrjPTJBwO/neHZyjPe
+         6n8EaHTw/+/dyO97yzbCbUVbMJXRtxyUhetNPJEOGxhprd73dhc63KICpRaM89/DTTV3
+         7+GnuEZ0umsuFnPgFgO8JqVIn0GQskkINlJILzv9jFMy6YUhiqE1Lh3we2QG90xNbKxI
+         7o7bT899tWv7YXNacw73NlveUvVu+Y96DPzYQejxQvdK+DOaUCC4isdGcb65Fb1EGdTA
+         tyIu13NwFL5f/sMgEFwzzeMaADT5FUrjS5xww7/6cE7ApM1WihE2X9R5CjiSqv6g83uE
+         1Xqg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782755859; x=1783360659; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJCWocpYEkozlLLmo2iidsxGGHaA7DxzFF6+3Hk4AVA=;
-        b=ppV1Fawea2zLpwScu5xyapP3b5UDx7ylAUEul705VAeQ8zQLtmUj3p/bE3mMC0g3Fs
-         QBm8iAoNAGMEuiHmrdNKTUnMnDSYJrKMCBiTBeq9oQnHuqGXSAJd9A4jm98S4etNwJvp
-         Q0PmU37MYdm7Eq9YUh07IedYBq7RiNaZIt+YhYHkoLmpcHTHJCfwksX7Viw4neIz7Vrt
-         3NS0262kzrAboKQaBJW6O2b5BI8YrrpvqvtWCxEK/r0ftbH4AfLAx+O8UP4ZnSwhQXez
-         XrWCa7iWUAh8vvDGvE/sEh9ZyIjU6iSVIqGk+wW4rnaq4qrRR20Rt0U7dDpPr7S4/ly6
-         ygoQ==
+        d=gmail.com; s=20251104; t=1782756251; x=1783361051; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wgFuMStil+Ci3OywpRVKpvlKXRlkPI4t2RElhVF6WAg=;
+        b=JX+cgsSnaVAoZpTl1hmGiRMUZMvOK1pjpcEASu6E6ISIq0MZ1RFv3t19qvfbIgqA0x
+         Jq7eU0OlY48mJClihur/geP4Jnk9VnNsFREmKKJvSUdlKKJWHNiH2AX99+C2g7EXVc6J
+         QEeA/+H22rnQL42XviFuDWsR5Ui4a3MRjW3R4kuq7/8IZ8qcrZ546ZVUTRdmoOH7tyjL
+         WoKrlb/5hmiZw41ZrykA4i58esuksWNqcyJF0h2IyvRC4vxUPWr9gC0aZFucm88V1Ocx
+         JBTnso11+ki4RTziQsuP26VrIea8587VeLLkz4+ogoGFbBH0gzGOOby7Hjx4hSc9Zjb+
+         F4aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782755859; x=1783360659;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xJCWocpYEkozlLLmo2iidsxGGHaA7DxzFF6+3Hk4AVA=;
-        b=LwS0SQGuznlU+jNTAmbrho+aLBSruse26chRzJkWjNm1ldwqIWeYYIbxDgh6hJ9F+J
-         qb4+FwI5aDLY74x6NEyki0c/hrhPoJ/nqjnwWEhRKJ7sHva1aHzIK456TpF0xNFfwYdp
-         kdxnJBhmtOUh3btQbmFFyl8JCnN742+xOJ9zNWOHIp2L7O3m7hYYAhicV4UrYx9+Kz03
-         ya3r70jtrFLqlf2Fgx4BPCtwWujjFymgxM+AYntZJh6Z6qZ6SuB1DTnF645P9dEP4dO1
-         w8wWSqNBm6zt/XNnZGoihW+dW7rJwrObLYwoT7Vco6rYHaBJe2oUGkD4z5TTAOrcesXW
-         3Ftg==
-X-Gm-Message-State: AOJu0YzZeHM9TJtf0QKijBW0NDbBp+qIYUGTRMFw3H/PKlhOuKXwfmhX
-	NTITsMXCef2z/UCoykXDSsgZun1V7ih9e0GKbd3zPJ1jyN/Gla4q97cF
-X-Gm-Gg: AfdE7clRllFHizVi9eEybVYr6LG4nGstjtRYAgjd8BU2QOLpYqT+G9/8BXW61zjhjRu
-	/YT5f9GD397aL0eiKhi4Fwtm/yPseoDn8+qvN4MMclBreytfrc2C6/hxhoF/ZUIuMsgQ2ednpO/
-	aOHufaMbZPcGTGQeEMKXlBDRfY8qS73247tYXEVjHby1IIQXwhKBsVhtQMFK6W6gQ3r286bk2Ex
-	g7kSLYP9EehEhPirE81CMblg0kOaAN5wmndkMqFIxeqJVWG6xakraGCYR5RkDc4CZJdUSfmRu2J
-	wUZfQFNY+oxPacLAsFOjbA5PDt+65I3lsGdS7IJiInbaLsw5EwIncIY8DyGiqi7O1cmCvXi/Adj
-	+gMyjCk2+yoGEUq82JZCmbMxV3wMfp7pwmuitLXPzaFaMP44TMY8vj9b/ZwhgqtBeFYYYcfUNK/
-	RAybuYhQ==
-X-Received: by 2002:a05:7300:c8d:b0:30c:ab4d:da36 with SMTP id 5a478bee46e88-30ee1436f6emr341240eec.40.1782755859413;
-        Mon, 29 Jun 2026 10:57:39 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c4c691dsm45728678eec.5.2026.06.29.10.57.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 10:57:39 -0700 (PDT)
-Date: Mon, 29 Jun 2026 12:57:38 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] odb: drop `whence` field from object info
-Message-ID: <akKxwkg0jbnkL1XW@denethor>
-References: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
- <20260624-b4-pks-odb-drop-whence-v1-5-8d1877b790ac@pks.im>
+        d=1e100.net; s=20251104; t=1782756251; x=1783361051;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wgFuMStil+Ci3OywpRVKpvlKXRlkPI4t2RElhVF6WAg=;
+        b=UUTlklGjyCWmlOGheAazB9Pbu+9ogcyxsnTyk6+zZ1pXiryMtXJIio9ZEhb9i00gdO
+         /xDK1BoPkexk52bwYPvsPU62eBXjw0SS29wn55zknmivjAAXyqdfj1N9dyA+ftUCi8SD
+         A77DOQqNnTiQ8nj8tfX8+QKOBoFjCov1M7mEDimLnOzOrjOr7oioJXPUj8JROjqFQL/s
+         M+JKW4wf3cMuTxkLrDAlt/DVh0qlpRcwRkRJG6UdZyFR960OHCR+oawrB5FvB72ER7ll
+         ULl4BhnUaGd36zF1FCUeGCFPMNEObw/JobzJO4N6Vy7ztU7xj9ihUKj+ILSlKl7utfwE
+         uoLw==
+X-Forwarded-Encrypted: i=1; AHgh+RrsD9OmFikrC4FdrtZuzUI5PmXce456LFJZOvWYZYKDSb0SWB+M0FKjPgelb6K7iFI1aZw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRsIf9ZegHtMYzVeqjtept1b17Do4TDpBuUWBLfmVrNvXH/wDq
+	PWL2nH1oxJ/b/gzdDaw7srVE4xWYipOiGStJfxunzuRmZoGgvhH9wSDAq08fbbgau/9aLJ9QyGm
+	6Ffo7SnleDCwlKaboxpHagSOhOMLGO8Po8cfOmtM=
+X-Gm-Gg: AfdE7ckQlnXMzCXoDeccl4dOJRgC7YOb72qA1gi+0LINRCf5RqQPwtxRroICaDkMOH+
+	J1nOzPcBfH/VqrkxmVaSEvj/lcJjdchG3mj5wASlbHTPM4+U14dJ+/qnRVI7HqQMYT9+lC0Q55V
+	RrjbViIVCB5/hklKLKcXL3PIPWeZF0E20bIBBtgNGOirfMISsq/S6e6MwE/mjbOjXg/Au9b6upv
+	lwn7AoLDXEFOCf3dEkMyHxmOXgoRZu5CrU8oJ1pGWH7PWyXa+LK1hyKTvjruQY4ZBPLuyC6
+X-Received: by 2002:a05:6402:40d3:b0:697:dbe0:de0f with SMTP id
+ 4fb4d7f45d1cf-69879d61246mr135757a12.0.1782756250337; Mon, 29 Jun 2026
+ 11:04:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260624-b4-pks-odb-drop-whence-v1-5-8d1877b790ac@pks.im>
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com> <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com>
+ <akIQLM6xZTHBudWT@pks.im> <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+In-Reply-To: <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Mon, 29 Jun 2026 20:03:30 +0200
+X-Gm-Features: AVVi8CdFOMUJH8uc4SyYTQfReD3M4zw_rBHnZ0DZ-r0190V-OqO-ykETrP3VpkA
+Message-ID: <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/06/24 02:19PM, Patrick Steinhardt wrote:
-> In the preceding commits we have migrated all callers to derive their
-> information of how a specific object is stored to use the new object
-> info source instead, and hence the field is now unused. Drop it.
+> So instead of
+>
+>      # This is the combination of 4 commits
+>      # This is the first commit message
+>      Base subject
+>
+>      Base body
+>
+>      # This is the second commit message
+>      # Another subject
+>
+>      # Another body
+>
+>      # This is the third commit message
+>      # fixup! Base subject
+>
+>      # This is the fourth commit message
+>      # amend! Another subject
+>      A better subject
+>
+>      A better body
+>
+> We'd have
+>
+>      # This is the combination of 4 commits
+>      # 123 Base subject
+>      # 456 Another subject
+>      # 789 fixup! Base subject
+>      # abc amend! Another subject
+>
+>      Base Subject
+>
+>      Base Body
+>
+>      Another subject
+>
+>      Another Body
 
-Makes sense.
+I think this makes it a lot harder to read. If every commit body was
+always just a single paragraph it could make sense, but it's generally
+not. Look at the commits in this series, with no delimiter of where
+one commit message ends and the next one starts, it would be very
+confusing.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> diff --git a/odb.h b/odb.h
-> index 330a55879e..e0d05eaf87 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -311,13 +311,6 @@ struct object_info {
->  	 * or multiple times in the same source.
->  	 */
->  	struct object_info_source *sourcep;
-> -
-> -	/* Response */
-> -	enum {
-> -		OI_CACHED,
-> -		OI_LOOSE,
-> -		OI_PACKED,
-> -	} whence;
->  };
+> It would be good to error out if the user tries squash a fixup! style
+> commit and range does not contain its target commit.
 
-Nice. This patch also looks good.
+Good point, I don't see a good reason to allow this.
 
--Justin
+> There does seem to be some support for merges in this patch series which
+> I think behaves pretty sensibly. If we have
+>
+>            C - D
+>           /     \
+>    - A - B - E - F - G
+>
+> Then squashing A..G should be fine because the parents of F are in the
+> range and it looks like we support that. Squashing should B..G without
+> --ancestry-path should be safe as well because B ends up as the parent
+> of the squashed commit but we don't have a way to disable
+> --ancestry-path (and maybe we don't want to add one). Squashing F^@..G
+> might be useful to fixup a merge (though perhaps amending F rather than
+> creating G is a simpler way to fix a broken merge). Squashing E..G does
+> not make sense because the range does not include one of the merge parents.
+
+Thanks for a good explanation here!
+
+
+Harald
