@@ -1,101 +1,123 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72A9218ADD
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 04:02:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782792174; cv=pass; b=OX2QAF3+MIR5FcCoh4OcH5ocoKNvy8oPGM6yy/vYEbcJy+yIv7AnGxGs5ZXC6BM0GvkV26PMbm90rd9SjMz9gZcl/hRtyDAOA9CQYQAVxiZeMW0cUzGide5pUU5utWXXW0BiXiQWVFukmGhZ/FRtYhFpWTv/hQxS+oH6fdFcjYg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782792174; c=relaxed/simple;
-	bh=v8lvh/j9nzWaL9JPVkCPzQNY1XC+2NPoryrMNDhpnN8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qDna2KCnuYkMrhkEHqP+uyoq7/7+IL6aHpGRHLgSu31QzI13/BhQIie5rGdDZCkyu2hMxZdLz2cLg4TroD9mWcDe0ZkPVSHTVY0NiPeMpWwAJ5uD8l634IDdHWmEiRU2KHx+jIkQK/H6pjJ6g+/IeDQB7EsBKuAhWEyDPgUWdBE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGELvdEm; arc=pass smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4C632A3D7
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 05:26:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782797172; cv=none; b=d2NZesLOcWKZDLBHTOPFAgkHd1hV0Q4zsyrIfdM7g5wJsH0SevPY5IMdE3VVd/Rfy6SkuO3oTeGB8NvCaV/3hV1MFWcF5e3Mt0dKgn/TxleTpvnDIQysNck/roZdl8MK5Nm0bAMaT/vTIXHHICMAfbU5uo3ho3w8S8B2YebHOZg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782797172; c=relaxed/simple;
+	bh=OJncVEhTdpngDNHlqBGjODtfH5otxLwJZvGbPCHHhQk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q+IRcuSnLdQ4dowdqadrhhYcvZDvRTvBkSaT6cfVAA2o5yQBbzp7z08OuXC4NTNZoZxIjuEMfc5Bs/OaFc5VOrZU6LWZwM2t7xOfTiUSMIub7x+ZGhkid8QMzjj40GdJaidwPxWfdhc4pFt3nTJspzPK1AdthmI5YKh4U0lJcWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SLCgdMd6; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGELvdEm"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-664d78637f8so1628997d50.3
-        for <git@vger.kernel.org>; Mon, 29 Jun 2026 21:02:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782792172; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ASon+VFbkxvG+QpG0ppeeiO405cuGQ/6UzG6i2MUQI60as+Qmavyj2dZmBuuKrodiP
-         U46gQPh1NvCW4Z+vye6XRLP7fi8+319rUCD5XvaidEepcx/VR4pfviw1lmtpDptRk5ud
-         RPBSMotW70+I8qbwiBtC2BmuxiODDVwY3L/u017CXjpMI9E6/StrxyCNYiFMsKxDXVWk
-         L8Q0wblTolRIL37IPQFl3JnjKQxqOd1ZyuC+t7VU+w4ryD2VODbk2GChnygFEZv9LuDP
-         y7+yPB9S9M3LW++afrONE40XHVX4TWZdHyprkN1WRFXTPVPVHOWewShG5qg6YwYJ7744
-         g4qQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=v8lvh/j9nzWaL9JPVkCPzQNY1XC+2NPoryrMNDhpnN8=;
-        fh=C2tFeZSjQ5U2DbsKPSTaDUz6Yew+nfnvrCXoFTYwlBE=;
-        b=KlUENIRkgIJGyrApLgPN2ztcSKbhLq1lxqaI7hb7S29qvxO14b/f4rYTCkuR+fUiDH
-         bigASdTsJy1sa/5ePtE57h3yfQEPPtCZQHSmiRrARBPIJeY7DBF054+T7wPXljTt/fLz
-         vNXu7CYVLazRJnaRx/sWEbhtbRkFaawC1oGHXowpRTnmZispgcDmcnhtZ3fvWtahM+CY
-         Cip4u57uwK7SkAg71bg9qPYzXFwwAsoPC3zPnGTedXN35N+3wFy3Vyl/x6BkIopg7Zw6
-         5tKs8OuJrgUHiUQQGubaLPgRwvnxYFcbkbFkQ2jce0GCG6XQpEmYjsqnyAmw5Ijxsx7U
-         VlIw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782792172; x=1783396972; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=v8lvh/j9nzWaL9JPVkCPzQNY1XC+2NPoryrMNDhpnN8=;
-        b=JGELvdEmle/c6WrnwxgnEgEfW+UaDdb2LRK1hn+on0wdIxtH6mo8Oe2+DT0eHr/NuI
-         1vPONFBVwAie+vhVITkgOXlXoMvqyZCM+263pDbtwN8zCnncjPbysiEo26EwqZXqJlA9
-         Uri05RXfN3LKyVMxwhbRgsaUBh/NspKyH9rMQYb7dGu9ueKT796nHAQ165DVQpC0fH6k
-         hz9oXQbcw7c3MUPqytLRddrj/XO44A4HiWdxxdHUCwb19zxLwITPBGf5Cv6T8FIstwN3
-         tAvebZCQtVmy3KnYObWcdnYir4K3jDVqvcbNgX6wUMhD1aPcqJKW233ngvqiSA1n8g7f
-         Pu9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782792172; x=1783396972;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v8lvh/j9nzWaL9JPVkCPzQNY1XC+2NPoryrMNDhpnN8=;
-        b=M6vgCd9LkHGeYNezGS9ftx4AcA5P2jNxg1/8U+cWEEbSwsN5nGu4np0dMmEC6FFbRc
-         2I8QtEOxwCjPV1A3eg0EWYjiNiAd02qWA3J9CWR1rPWuxZ/SeixBdzsnOrP0HYM5B2B2
-         PXb8l9gcLbyxHYhhPzukxSVe4VuUjXc3jZmQIfLEDcQofr/DrodIinxf1Ug4NVkNb8sl
-         AzhfGFBIeqVtebhjbX/hA/0Lqdr5Itd1mhIF/ZI59OQRW1jGx63+U0P7O7ghAU3AmOdT
-         jRb0R55zmXROKHWrb+elyFH8FxGNW9hxEN25UAdZNLpyzGpzA0BsRqXVexVsFEOYQf/z
-         wDfQ==
-X-Gm-Message-State: AOJu0YxYmCK3//ZTZOwHc6kcH4cwAD/TnzzGhSx//EnLzL/aHPdTYp70
-	v9Z1rqaqchVdUuqDhjhkuAEljz59GBj81FPZ4r0wOHP++Vg1nxGnoSfkILNuZfFRnMR6MPZmYod
-	xYGWXr/xGKoALxH3C0ym8mecvZpip9M7y/8xgcXg=
-X-Gm-Gg: AfdE7ckMYek9ykGRmkCMKx9R5PwpTQHPOQy084JmK2PlvXmpI7i4FdEMd9vWVGwlcU1
-	9r3aKszd7vpjQ0hPiQjnDaxhWUG50NHpI7qzGKT9VJNnpKPYms8MVNlxD52cygJi5c5eSCJtixN
-	2BMKuFNaHul+xI5cLZFwfpyMNvAmEgdV7BOm5NRwuqHRr2SRl0fBTJ/UY9MM2u12iuNkqKSgy4/
-	IVgR2ke5hvwJHi1UBHN1830FgepxOuLtrMN12zLfShrduIFV9/sNAag3G7HcexP7assZwBe
-X-Received: by 2002:a05:690e:4287:10b0:664:ae6b:b49b with SMTP id
- 956f58d0204a3-664f9b164aemr1717953d50.80.1782792171718; Mon, 29 Jun 2026
- 21:02:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SLCgdMd6"
+Received: (qmail 69592 invoked by uid 106); 30 Jun 2026 05:26:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=OJncVEhTdpngDNHlqBGjODtfH5otxLwJZvGbPCHHhQk=; b=SLCgdMd6wYNV+etBfwS0f++DJphNYsNV1H0KLWevycnoMjco5AHW6CH9dywwHZp6QK+zCCMQa3ldRW+qbAZ3Mh41XsTh78JbPUvIwq8owmcdFCqCaaAHQI7pwxvtOH+a7tHoyHfAgywFrTF/Dah03XMBQk/+AlRPZSTM/C+//105R7rjHP4nMfDISa3MOaRaDh7Mr22OO1sKnyyorXDlnh6nS7QkV5dYrw+MgHodJeB1PFfVHi/Kfz1r5cwTd9VQUFOBzTvppsqUvh5XnCY/3IMXFquE7A5jt4oYiMChtKEK4jWSBOt+c3vA+LZIkLdfojkR2iPZ/mzoqMLJ5+mPOQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jun 2026 05:26:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 140763 invoked by uid 111); 30 Jun 2026 05:26:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jun 2026 01:26:08 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 30 Jun 2026 01:26:08 -0400
+From: Jeff King <peff@peff.net>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] builtin/history: unuse the commit buffer after use
+Message-ID: <20260630052608.GA2495216@coredump.intra.peff.net>
+References: <20260614141600.620272-1-kaartic.sivaraam@gmail.com>
+ <ai_KWo9o1Fhc6OFs@pks.im>
+ <20260615172946.GD91269@coredump.intra.peff.net>
+ <317d0f7b-469f-4456-8808-506e17de264d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALE2CrTVVQF4rGhGG-9kmjweFHHYw+xnPU6Jtt=QmHpq7L6P2w@mail.gmail.com>
-In-Reply-To: <CALE2CrTVVQF4rGhGG-9kmjweFHHYw+xnPU6Jtt=QmHpq7L6P2w@mail.gmail.com>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Tue, 30 Jun 2026 09:32:35 +0530
-X-Gm-Features: AVVi8CeS7dfRdIsNH1rT_w5OyNLSkkVqoDdaLA6bXDIoO6um0GytrQCc1uYqkWg
-Message-ID: <CALE2CrTZrwYPOXMkXM993Bjo=bVGZeUKo3kDyuM2sBYg2VC4yg@mail.gmail.com>
-Subject: Re: [RFC] clone: allow sparse-checkout paths to be specified during clone
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <317d0f7b-469f-4456-8808-506e17de264d@gmail.com>
 
-Hi,
+On Tue, Jun 30, 2026 at 09:15:49AM +0530, Kaartic Sivaraam wrote:
 
-Just a gentle ping in case this RFC got buried.
+> > So what the patch is doing is correct, but the explanation is a little
+> > confused. We see the leak only when re-encoding, so we'd probably want a
+> > test case that triggers that. Which I assume implies rewriting a commit
+> > that was previously generated with an encoding header.
+> > 
+> 
+> Thank you very much for these insights! It has been helpful but on further
+> digging I think this is not about reencoding. On testing and digging
+> further, the leak appears to be happening when the commit that is being
+> reworded we get is a freshly allocated buffer from repo_get_commit_buffer.
+> I'm still trying to figure out how specific commits get cached in the slab
+> while other commits don't. I'll update this thread shortly once I get an
+> idea about the same.
+> 
+> Meanwhile, if anyone knows offhand about this, kindly chime in.
 
-If anyone has any thoughts on the proposal, I'd be happy to hear them.
-I'd mainly like to know whether this seems worth pursuing, or whether
-I should move on to another idea.
+The most likely cause of an uncached commit buffer is that we loaded the
+commit from the commit-graph (and thus never opened the object in the
+first place, so there was nothing to cache).
 
-Thanks,
-Pushkar
+I suppose it is also possible that we might create a commit struct and
+then before ever calling parse_commit() on it, ask to see the commit
+msg. And thus we never looked at either the commit graph nor the object
+itself.
+
+We'd also refuse to cache if save_commit_buffer is disabled (since
+that's the point of that flag). If that were the case I'd expect it to
+be set consistently within a given program.
+
+So my guess is probably the commit graph, but it could be that the
+command tries to format unparsed commits (which is _not_ a bug or error,
+but would trigger the situation where we hand back a freshly allocated
+buffer).
+
+I suspect the leak could _also_ be caused by re-encoding, but yeah, the
+root cause is "repo_logmsg_reencode gave us an allocated string", and
+that can happen when re-encoding is necessary, or when we did not have a
+cached buffer in the first place.
+
+> > But note that you need to do _both_ the unuse and free calls. If we did
+> > re-encode, the former is needed to free the newly allocated buffer. The
+> > latter only drops the original buffer in the cache.
+> 
+> From my understanding, I think we may not need free_commit_buffer for the
+> following reasons:
+> 
+> - The leak was only being reported when the commit did not come
+>   from the commit slab.
+> - We are not going to be reading too many commit objects into memory in
+>   this code path. Hence freeing the commit in the slab isn't strictly
+>   necessary.
+> 
+> Kindly correct me if I missed something, though.
+
+It depends on the definition of "too many" here. ;) Probably nobody will
+notice if you keep a dozen in memory, but they may if the command
+happens to get thousands of commits as input. That's not likely, but if
+there's an easy moment where the program can say "ah, I am done with
+commit X, let's free any resources associated with it" then I think it
+is worth doing.
+
+If there isn't such an easy moment, it is probably not that big a deal
+to leave it as-is. It's a rare case when somebody would notice at all,
+and if you think over the implications above, a repo with an up-to-date
+commit graph won't have very many cached entries in the first place.
+
+> To conclude, I think the change that the patch proposes if fine but the
+> commit message definitely needs updation.
+
+Yep. Whether we should be calling free_commit_buffer() or not is really
+an orthogonal question to the leak. If we want to do something about it,
+it would be a separate patch anyway.
+
+-Peff
