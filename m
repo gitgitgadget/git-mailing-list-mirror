@@ -1,85 +1,85 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A899A11CBA
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160B838D
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782808293; cv=none; b=MLYxvdOxxKVEm2z/7RKyiATTY0llsaR20En2HoYu1DGccysmxM/uygfn6wWTPzFKp7LMkXgITDfBQyi3H6JCxZ43LizLfe/KCd5j+1ZM+ZWGl/Q25hkTaYVtvGhEkpEa79v6jizUPqRzuHS3L8TODa9BYX4bb1fMIvaprx7+628=
+	t=1782809146; cv=none; b=a6F4n8essMva1U2bTI0H+hpXoyUEkS6a1fUtCGx99Fhc75l0L+WBQuE5YNV6NOrT2jTy3v6j631cjHaBJkvdr34kTiA6YjTrUnPVXYKgxln/IV9xMkt1f7wwYAy9dW65nM2vPCovcZKy/g4045d7iFZYpmKoUR3YJpFhZBK2XYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782808293; c=relaxed/simple;
-	bh=+r0sefFBhfxcCZ9CtQu9dr3p8Rispv4ilZ0y2WpkwLY=;
+	s=arc-20240116; t=1782809146; c=relaxed/simple;
+	bh=Z2wv9myUw6HPhy7GbQbXiaS5yB9MIZBiN63JULEMZF4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JejllihyI2kLNLD8s9jjPrZ5+89q0AaU/1/MHsCAjI65IDKJ2AdnY9CpLmrKAi3UbJSuJgaxP1GO5MA5vmab613bwNitYh44TVYUzLsSWM4S/WOwYSlAktGxrl6vTXbfvdvZW8s8ltK9IGY6AlrV8i4JqQS2fLMu/bl83NBqkBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AtIUK0ig; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ACD4LVw6; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=aZ/d0I30OBlbubBNvNvmwya6SFQ/n0XlKyGpwFGupIMBfftVDgOV4FBX5he5Bz4QSKZpODlpklSSud9a70szd9hMMM/hqOYk1vwtj1bn7lwh9g/uQrt/68vpOIRL6iJtvoA5jstF+0oxbWJir7PH0Gl5L8TR4o074SxTMImTimI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hw3D28I6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=knh0lpPA; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AtIUK0ig";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ACD4LVw6"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9652F1D0008B;
-	Tue, 30 Jun 2026 04:31:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hw3D28I6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="knh0lpPA"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6964D1D0011C;
+	Tue, 30 Jun 2026 04:45:44 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 30 Jun 2026 04:31:30 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 30 Jun 2026 04:45:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782808290; x=1782894690; bh=fBQ/gMA7Ic
-	I9mS0c5TAU9EhkkL/HEIl720Qrz37k/mg=; b=AtIUK0igiUPA4NO2pJDG5ZMaEj
-	uKuxrWvMX2Os4Ugd3igJd2AfH1lcrCYlXnj6d2yJC1Jvt1q96SZtiY1UkKI8Di8k
-	t/bQvvFD9QAd3Vk44ilAcc4/NodpMlXgbDqPZspiUeBqR8ygShRRVsIobZRuavOr
-	P40WpfFpgCQEg0GAhjXOpbg3WyYs7Aa54XtMtr8T+x+rkp/PuXdQ83alPluiImou
-	Brei+EZ+dKRVS713XRxNvHbg1lNKCL1aQTN7CKRKZjC2aa2zvFxuBcWsgmmn4ofX
-	Wy074RPh7v2nTsl3GobQEVW+wvmF/UPPgqndarULlcmaOp/y16HJzfIIy7ww==
+	:subject:to:to; s=fm1; t=1782809144; x=1782895544; bh=NK5xf4QS2/
+	VdTQ5EPDfz4UiMfJ6qnsuGO1aKdb5zxxs=; b=Hw3D28I6pg1HmXSVVzFJmSuXWA
+	fwUg7bgN4Hepr5DLMgSV36wqgXM64bdcm25o+mWNtNCwNKERlobQ1H3qJnnXQYa6
+	tVmInn7Xva4VgOBd/H6TeCi585zm7tPZXBBpthXqJL7PkNfSHjJp3bbo73WhHJK7
+	b+TNb9OezF5WEn8Zhh1vKiPF4rMPpkxunzg3kLMoXZ7QMDE/kCjXA/ZIJTlsZWUR
+	Z23pFEEswYBoimLKqqBxWUPcj7Jxz6hF8HF2n6eOvVlVitLJvhjBpj+n615ZeZbF
+	I96nqX3Y/sMzHz2GsSd/LcUGZiCV5jKr9TVvwVjggIgmwhXymXcyKWykUKIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782808290; x=1782894690; bh=fBQ/gMA7IcI9mS0c5TAU9EhkkL/HEIl720Q
-	rz37k/mg=; b=ACD4LVw6OmZc4jQhw9/qSBg2yakUQYXnfijCYf8rBGzNyPLova1
-	/obBOeLfHFYT6P9VFUCbvssNHXaooyRTU+0szQdFJlWye5IJ8yWh8XA5XrNC6KDj
-	u24c20x5RMx1+yEvcc1X2SAtovVC8pJH5qosvLoU1wk+34s3mjkFCMybKen7PsdS
-	VoatEAezr1/xY5QvqFPFAyTjJjPoDxXWkHOKDJT3uUw+zEGVAk+aKVj9pK231Y4S
-	u7JSVHqb1z1iXiTdGZdUqtS2CP43wR2plE+M/SrKy6pZmN78q5IWRXhH1vRoRgsw
-	tqKZFmiE4gFv85C1J3eZBOelqxQ0ke8rdYw==
-X-ME-Sender: <xms:4n5Dag0WVpqCnAzA-GjglMuWx-wmTNnttPLlxD0-PXUfW0G5-swh4Q>
-    <xme:4n5DaigJRVrZaQRQhIaQgOXGtdjyg5-IuJRkOA9MmVGZq4Lm4qJTpbqVOjoqUAi39
-    HAJsaqnlgHrDQLI-DFedZnyJeQ4Z955znxkFjJF-GfHKAvgbtUM>
-X-ME-Received: <xmr:4n5DamTe_Mog8GM3mZX2_4fE5cptaCcRLeGtj09zBvFsj98cBweaGTTkZPXvVJn_v7JPnMmU4kOfvpCsTkv0WTvd_Qn6eDoNHaPc4jTxSoGu0g>
-X-ME-Proxy-Cause: dmFkZTEuqFZIq5wxlrjS+Sxzp222PMk/EgCQiXhFXTCsIzvWMIFXSoe5C4i6OnLU4cGPJW
-    NOMZsURq+KjPhuQ7A1svHlmpdphcsNkgWyOYGQx/Cer+TnHs/nwil+Gve7R6o3fH+JMYcT
-    qnjTXk70FYDmfWc5E7A/ibBO/dKVb9gIlYbpUdEJUMP+if36k+2CG39AgMnWQo6hzH59mq
-    5ykB4q8SFD0NeAe56E8BLAyaYvkMJtOMpabJD4BBEBAUGyoJWEuJnDkBATP62fU7BuF7bi
-    MNX96YvX2eJ19r+6lg5ylb9dwifG5i/3ApPEepX3GVP1oFz7ef37GBADly9neREVgF/+NU
-    U28nHJG4plOIndtCBps+13Y4kCKfGPCG2ODtLjDfPKIRfvCKd5YHa6cCGiTNZFYEARwj31
-    GAab1u+uaRqWvfwlZGtNoA70wBeXEfOjEV0Q7/1QtfLCiVB3oeLg6jsAAbF7KjPrq1L0lY
-    HHlyq8R12pjjGmVDrMxkfCi3bTk3UuAw5LrFRJphoxN9Ik8VtMrf+HyPvwi6FC5Y7OavMY
-    0sci5M5B71YEVWiDcrW/fShXSSWPUOm56Sf81BOhkCauH5bjgqQyMiI+wYZENbr5JJ8JOO
-    bvZV00L+vz/8vq470vtYePhIpymaapLwe57qaU9ayVKj3htbJf/k5nUmwbyw
-X-ME-Proxy: <xmx:4n5DajgMc0IuKPSYV7dY476GLcEJqW7616jBs_He9zsEgPg3aRGKKQ>
-    <xmx:4n5Dam7_9-WnLFjTUpHwKd8H3qExsRNa0z-H8WpXAjmfy7S1cq-O8Q>
-    <xmx:4n5DagAXDqIZ5KKkaJ-6lGo9MYx9SF1x-xzKklnTI1cIoKtlsfMdFQ>
-    <xmx:4n5DatbUfEqMiHmWbLjEUOgzyFf7KypFtUx814JhFp9TBwNKErfIwA>
-    <xmx:4n5DaoIaqixdU5rEY_Juv4HJltBg3CQmtz5qb1D5P1k8T9uwjeswoChD>
+	1782809144; x=1782895544; bh=NK5xf4QS2/VdTQ5EPDfz4UiMfJ6qnsuGO1a
+	Kdb5zxxs=; b=knh0lpPAgK3EzdI2v+1Iwvfs/Nilcpd2VunXYKx6rTXz3eiO1/r
+	c0x9VjVaYMWr2xu2SIlM8pfNLbtwAtaazax5mq6GLHLHnk8XBEVNbj3qv80yE0fD
+	yGT3vjSF0T3gdcZOoo4vD6rkCWxyB2v8jp6pLsRzXcOlpwH9RtuJz5CQyXoaDUkg
+	f4VUr1fXEGsiDClPssRZRc2w51yIbay0c7UgXz213RGA0qVG99ZqT1WXDuvsKqa9
+	i37YcCfrmWKA8UCRyZ9N7wzQ3tdqX/w5kGx7Ua8MGjV9yGzhQlhPcz2NaqpSFDJg
+	rJLZ8PzAeM2eEMtQXrOwOI1Mw3TgkupRF8g==
+X-ME-Sender: <xms:OIJDajwBiOWmsUTL0xxVHk4uUaivvFmS-ma6psKqBdVWl08j-HkAyg>
+    <xme:OIJDahQO6O9cS5pBb6NCm-xRbBOmawFiKzhBId_9c5ANGP1YsqZE9Z8G2g8IUZ08L
+    p5j5cCHgXRSDWS_RYkSTl-03VvPQn1sTbD4QD9r3fqap6M1e4I-ZA>
+X-ME-Received: <xmr:OIJDaq_sLCmT1Oz9UcOUaqQNSuDFHy0APUm8LGWCJdHxlLBNUh0Lgauo2GSjfPph-pJJQa_aHdyACxV-YZ9LGslKR9tiz0VyYSkoyIXreijRzw>
+X-ME-Proxy-Cause: dmFkZTGc7sxv2TGyzY2QPNUj0p4U40BkcTr0mOHVuNfYZjooiKFk72DOzzS16x8anVv2ps
+    RoqpSxFiiJKKE49lhe84SSY/u8FOif5Ttc5Ig1j8Z2LfeJunDtnxFgNsyNxyvE1Ob8OR25
+    f/WBhEN3ZibgEqwNCOSS0IhW/6a27vuxx9NxHS90NLXSKnFG1e0yg7pVcIONe6/exuGOrH
+    XXFDheDF49zUNS4EWKniXgJ0Hd2zSThRkHxgBgIVnvcS8Jb/btQbtLmbs9HWOpl85AB0tH
+    5kEt99HUbNJ4MdBA5k7FX7lE5EVH7h/Sxdvmh0C7HbfLkgBrPqG4qVxSZ5oNWZaNHRoOo8
+    gnXrJEVIkv3nlj3oRjWsRF1C4f86DJTs14me3qJ5sBGlqTQqpDoHzFO72dQrx62v3Wpb3T
+    vvE+q1f2KN59KY7EE/fJHSgOpiOSRWGQFehwbRPoJUD3fdgJLLJJvfZ1Q0rZB6kNXiPNH/
+    KXlabsW3Ub6ew4SdNfE4Z3jMFQ+6JVaKgzgFvZUiZuKuhVtdGpO1FoPab+MYeGZ5oOpKAQ
+    8yIbpnGOiJ6wDCCkF3vkUbXp1PEIdWQo671LsGj9mQaNWKMvcwJB0OKwO/7993PxGbxlfU
+    RBIx6tglZqI83SwAAMhr8lOzrd0jxe4RjYBisg9/jYmbxd+Hsh5+zuVSqz+Q
+X-ME-Proxy: <xmx:OIJDaopJ9P-UpnHmPZCo1-sjzyG5rY3rz3hatXDHWej6miv9XetCSQ>
+    <xmx:OIJDannJE9YDbcsKhXF7m_oQB4W09YX5neCNBUiu_-A_WU3834RcCQ>
+    <xmx:OIJDavJpkzTlmzNlR2BV4zoUtjN50w7YLKcnT-_HrQb0plVRbeqLLA>
+    <xmx:OIJDasw6oDYHU2Akj5KYy5G5LPF1rJKdSvk09IKtKTIEn37MVKc7aQ>
+    <xmx:OIJDaviva7HvC-nAI9yP5bnXyGmy6IGcmeJNgU-spu3989RxiaTIGNSN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 04:31:29 -0400 (EDT)
+ 30 Jun 2026 04:45:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7ec1f819 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jun 2026 08:31:27 +0000 (UTC)
-Date: Tue, 30 Jun 2026 10:31:24 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a1667ad5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Jun 2026 08:45:41 +0000 (UTC)
+Date: Tue, 30 Jun 2026 10:45:39 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] odb: introduce `odb_prepare()`
-Message-ID: <akN-3GYpI7OmkBuO@pks.im>
-References: <20260622-b4-pks-odb-generalize-prepare-v1-0-d2a5c5d13144@pks.im>
- <20260622-b4-pks-odb-generalize-prepare-v1-2-d2a5c5d13144@pks.im>
- <87o6gx4i5w.fsf@emacs.iotcl.com>
- <akIN0CxVxhaHnvJ0@pks.im>
- <xmqqa4sdt3e6.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/6] builtin/receive-pack: stage incoming objects via ODB
+ transactions
+Message-ID: <akOCM8qVi2r9YPsF@pks.im>
+References: <20260624041920.2601961-1-jltobler@gmail.com>
+ <20260624041920.2601961-7-jltobler@gmail.com>
+ <aju_AmlKVi5UZaiQ@pks.im>
+ <akLLB_J-pvJ7iR7c@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,24 +88,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqa4sdt3e6.fsf@gitster.g>
+In-Reply-To: <akLLB_J-pvJ7iR7c@denethor>
 
-On Mon, Jun 29, 2026 at 02:58:41PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Jun 29, 2026 at 03:25:18PM -0500, Justin Tobler wrote:
+> On 26/06/24 01:26PM, Patrick Steinhardt wrote:
+> > On Tue, Jun 23, 2026 at 11:19:20PM -0500, Justin Tobler wrote:
+> > > Objects received by git-receive-pack(1) are quarantined in a temporary
+> > > "incoming" directory and migrated into the object database prior to the
+> > > reference updates. The quarantine is currently managed through
+> > > `tmp_objdir` directly. In a pluggable ODB future, how exactly an object
+> > > gets written to a transaction may vary for a given ODB source. Refactor
+> > > git-receive-pack(1) to use the ODB transaction interfaces to manage the
+> > > object staging area in a more agnostic manner accordingly.
+> > > 
+> > > Note that the temporary directory created for git-receive-pack(1) is
+> > > eagerly created and uses a different prefix name. This behavior is
+> > 
+> > A different prefix name compared to what?
 > 
-> >> According to my grep results are there 17 callsites for odb_reprepare(),
-> >> then I agree it makes sense to create this wrapper.
-> >
-> > Yeah, I was a bit torn myself whether or not to keep the wrapper. I
-> > eventually decided to just keep it because it reduces churn, and it's a
-> > trivial wrapper anyway.
+> Currently the temporary directories created for ODB transactions all use
+> the prefix "bulk-fsync". The temp dir created by git-receive-pack(1) is
+> expected to have the prefix "incoming".
 > 
-> That sounds OK.  Are we all happy with the current shape of the
-> topic?  I myself did not find anything iffy in these two patches.
+> > > special cased in the "files" backend by having `odb_transaction_begin()`
+> > > callers that require this behavior provide an `ODB_TRANSACTION_RECEIVE`
+> > > flag.
+> > 
+> > Okay. I guess this is to retain existing behaviour where the temporary
+> > directory is created lazily everywhere else. Makes me wonder whether we
+> > should eventually change this to just unconditionally create the
+> > directory in all cases so that we can drop this new flag.
+> 
+> It would be nice to not have to have a flag here, but if we want to also
+> keep the existing temp dir prefixes, we would also need to keep the
+> flags.
 
-Based on Toon's reply [1] it seems like this series is ready to go.
+Fair. Makes me wonder whether we really need to keep the exact same
+naming for this temporary directory. This is so deep into internals that
+I'm not sure whether we really need to treat this as part of our
+interface. I'm rather inclined to say it's not necessary.
+
+In any case, I think it's fine to defer that discussion and keep this
+as-is for now. But we might keep it in the back of our minds and maybe
+simplify this in a subsequent patch series.
+
+> > > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > > index 19eb6a1b61..ee8e03e2ab 100644
+> > > --- a/builtin/receive-pack.c
+> > > +++ b/builtin/receive-pack.c
+> > > @@ -2326,7 +2323,8 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
+> > >  		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
+> > >  }
+> > >  
+> > > -static const char *unpack(int err_fd, struct shallow_info *si)
+> > > +static const char *unpack(int err_fd, struct shallow_info *si,
+> > > +			  struct odb_transaction *transaction)
+> > >  {
+> > >  	struct pack_header hdr;
+> > >  	const char *hdr_err;
+> > 
+> > It feels a bit weird that we sometimes pass the transaction as
+> > parameter, whereas othertimes we access it via `the_repository`.
+> 
+> That's fair. I was trying to avoid the churn of wiring to all its
+> callsites, but it's probably best to be consistent. Maybe it would be
+> fine to just create a transaction global like we do for the reference
+> transaction?
+
+My first kneejerk reaction was "no", but then I noticed that the global
+variable you're talking about is local to "builtin/receive-pack.c". So
+that might be an okayish solution.
+
 Thanks!
 
 Patrick
-
-[1]: <87ik704f1j.fsf@emacs.iotcl.com>
