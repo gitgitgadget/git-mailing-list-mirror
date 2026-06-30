@@ -1,66 +1,66 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD042609FD
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 13:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7B7450F2
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 14:01:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782827306; cv=none; b=oAAf4KWs6H7Wj5h3KIwaFnjg5mPsc7N07jih3C6l9jtCl+YK0mz+lg1a6qmIuYIBGNm/sPG3atRrAxbkOxvtTHJuu+Hfue2EFRIRnTZNXyAgZw8jwBRcRc/t71PrZ+GuyvPYQ4oZ/JVpD+ONR5DOe2PObexJ9743j1VEpap5kB0=
+	t=1782828110; cv=none; b=rz9eGOC3+A0BSg6XdI/yUYDeaS6GEPY3zTCTQEulwYTXbA/jMQ7d/fX6c+PliViNA63QAAiTzWHixyqhuHVAyya4ARoqJLY7Mv/NYErrcd6qmbk+NYmQA3K5YBHsFSKSbgZV6WPpKkzA+srq7za/o5xZNHpzz18mnZFXUaAm6Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782827306; c=relaxed/simple;
-	bh=MydccrQmKPZ5YsmEo3BhE/B+tf3QwF+LkUGgc5uvwTo=;
+	s=arc-20240116; t=1782828110; c=relaxed/simple;
+	bh=P+K6XmN7Bs+I2gM0e8HDszXj9Rz11xO+gvlIYCVP16k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qF8BghBKLDngvcj1nKjb7CQJaz9w8Z5x8RIQKl158lJ5sqHVpr9XpPk0ppNPuG6sDvW5XgCubfywPu68vvTBN40uldyRC82nsftySGwvkUaHJPhvZ2TArg8lJMNfU77EhwllkTMH4d7axe98v0aqktn2e2PEsB9wStUjFqXeYbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OhRJLPKi; arc=none smtp.client-ip=209.85.208.53
+	 In-Reply-To:Content-Type; b=FHdptfsWPylmESiHIjAk3xJfire+9wbPIR6WdmHxPsxDYYHsfxCNv2c5diW5Km5+bME1XUQ6VDatU8WZfmtcb9YYv6wD6MwUW1Zb6ztJnDGoVhFraYQ9iCXLuQweEKXhXeTpG/CXfK0t2Ty1cOtioYWRC7Ja5ObIkq7GjSK0oVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ybo87ZnG; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OhRJLPKi"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-691c5776f95so7819284a12.3
-        for <git@vger.kernel.org>; Tue, 30 Jun 2026 06:48:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ybo87ZnG"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-698823a9881so641600a12.2
+        for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:01:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782827304; x=1783432104; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782828108; x=1783432908; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8gjyQiTffu2gK5OyjLZ2m2ngCDnOhmbIjATNmuRHy80=;
-        b=OhRJLPKiEYWXOz/lbunwlyHdjASC6rbQ06q71pmhmoF26qwdtNCkGq9gZ9mF8kSFZ9
-         SLlDJTj1EE+kuD408nXJ7RSiMAvZJpU1yteqJuRANioAH9LGAzTgBt5CGHxs0t9z4jza
-         DT2y73sYjAItUSnyIZDCDsvZcJwNBL3e4W7Upq+uyLHEQdY5iewNbcj5IlYAcUBGKfR0
-         4iU/Ns8ztZhO+zlfmtPRKbXICfXQ9vL6itW0/ezCCl494WAIudGQFYjQC4aBfxVROaOB
-         bXhTO0fShgdZep0P5rlHgV7sZU05QA82CBp35ZyLzgB786tLtfRS8vn4dBrPMbP5YZHe
-         NTaw==
+        bh=ndBseJCQYo8pIDhEvAR6TPb5bC7uyxQBA3hV2jNAvgI=;
+        b=Ybo87ZnGmoJsIkne3ZXWzvYliy1ZSn+b41aS/tpM3orzoZlNgk20f+zS3QMzKbIMLe
+         DRD+TrtAH19ivuj344unD1cgmlCRYleJarRtDRr2KQWtZECkN/jr6eek333FQamBOj8+
+         aZSXOoyPVhzFrap+WxMlG3TVvFYmyNBt2cC3rWT5ONYDJ2A9RPL5E9CIRbDQRj+gTRVm
+         b7soJ4PQsHgClT21q++e0u/Gw5Woz8GS7/KwQaJBOCvAWdujV/qKLby2VW0066JmNXy4
+         ohY7xcBSc80rTyYdaSDVbZPd5vywr2bh1fjT7g7ZpN5a0wqteirvlK4cOn/ugQaF83o0
+         RbOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782827304; x=1783432104;
+        d=1e100.net; s=20251104; t=1782828108; x=1783432908;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8gjyQiTffu2gK5OyjLZ2m2ngCDnOhmbIjATNmuRHy80=;
-        b=hdlz2I89VhQs2trBXIiL+Q+JOB9Qt8MSEhngxjKOwZTQIPf0JLrkmmyPVPNxZGLh3N
-         C6kqpQ0QhS0Qmr+md2xN25GRdUrZbRmi6sMLoWxQD087LzMKGe/O41lzpjNBNcNnm4wD
-         Tx7xelJJU3nZgZfcITAFTzPnFVPgSQfY/0vSSWNnnA5v9EdJ2fHGMnVjlPg7WxOtVhOX
-         hyQUJ2xAzP3nzabcZAdTnZJ3ZApYNVit/UjlXXSetklksmZWGwf+yw3KlbsfkXwD4vyO
-         div0Xdk+lYaVpdrjAuIqjHT3P17aTQcj4LgoZS2JgQIxKNBRgW1NjFVlO5+Hdqd4NrWu
-         6Q6A==
-X-Forwarded-Encrypted: i=1; AHgh+RpvNHI8SuxyrY5b41V1Lgj90BgB99d703GEwK8SOW0jOUBF78PDtyan7cJW0RWyQE88GHU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxATChib3RifleiP7Oab1LuqRmK4sh0QNurE3tyDmlKWMLCfF8L
-	CW1ZCbX/2vjT7cUuNrd/H6UiZLWiTyNOQaQJaL8AqGPtpQGF5t7i4yEW
-X-Gm-Gg: AfdE7cmYSIvLCiH5O80OqaOxKo3c8odcyuQwzHzTsOGxaNtIB90FOCSrxMtyyVQl5mp
-	Bgx5Q63XP3aul720turg6yz7XchYnhGmCC549UvY4j8359dkbEEFSeEJ3IQ3BxGG42Q7cBA4SNe
-	drC/b/k7ft/RH0cXhQMEB5HayKa76b36WiwRpzZbaLmKp1hgyq4ielZqOC9kvEOYIjC7TGJfTV+
-	jOHf6d89WUv0DpOHzmH9ZzErdvAtZb5vx8PMNA7BNLHoDPkFlmxOVEeFozVgYT6BfvxVmdMesd7
-	KXxAspg5EuADgal+oQ/4owU0jLZYZS6lYD2btAUm41kerZ1Ah9hkEjqcTg1CVLx07aQ1eCZbydb
-	0Ee3OF+Y78oQpLdxGSZNXoXYRV7bFtXmcZPmTTfvtl4PwaXKcXfewk3/p4qosYUv/MV9oOuLZTg
-	l6i8UMEl1zDQg9bkpghmizeiYsgtG+LtPZRjppaG37joff/P7nC/g7zkTMzp3Qt1WC7r4=
-X-Received: by 2002:a17:906:fe43:b0:c12:34ed:da11 with SMTP id a640c23a62f3a-c12873872afmr158982266b.61.1782827303313;
-        Tue, 30 Jun 2026 06:48:23 -0700 (PDT)
+        bh=ndBseJCQYo8pIDhEvAR6TPb5bC7uyxQBA3hV2jNAvgI=;
+        b=ouAl+WFeob+elJhtTg1uYfHmByoLErsJhEhnB7qRxJzf6DcsjtyQxJ+xjyKVOU9NXm
+         xBr07A5DwZoz1Pa5Q05uQVMhv0R0SL/2WUOM+qMouxBnQd5/8JlOkCi+ufoJR6QoC4tm
+         da/34ZLlWp2HohSl03ZIUWYYrnwFgEdTET+uS9dmBHvAkSy6o5SPYTFZCr5qTdy99KnG
+         T31mBdeP1OqKUSoZGUcMsPWfL+2lQ4TIkUTl17Fn/v+ybJQsdCq+WM0p55De5XSYey2i
+         AsBtjPAblO8ywOlxqoKRPR1MsEBZd78hiiBKIKUTksGlusmPhkN8NJll7XWrSlCiwZRB
+         Sbog==
+X-Forwarded-Encrypted: i=1; AHgh+RpEXk/pXF7t7xs0qE3whwLIM4aKLXWFIW8wWR+pUIVDeYRZWbTxu63U6Jpu/hS7pW58Vtg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxHyH4mFtCttVRtCZN4hdTWIdsH+4qY9vMPC4NYBR8TfZHsU2e
+	GVQcByXBvol5cEKU3jC31XvCU3MATSh7p0BzUmkvNxlebALcf79UuHLq
+X-Gm-Gg: AfdE7ckB2tLio3Qf4xJyvkO14d1Xgb5qVenXepnSzT/iL3+1pSuahpvZw/sCqT4fJ4m
+	ubn55Yc8k+oP0EIqgKjvk1kcByngLjg08bJhmaV4VKPl36HizL9TQQt6o4B4egxvfCOkRt0QAdw
+	HQYQ+hgO5pmr5Up82/uK+OQUEHms5AxT7PuvK2E6y3XAwXGChok3Pi3wd46OuTL7qLForrrN00C
+	o7NX91ImYeyb5obKU7loVQ3/faM4BL9Xdz2yea3wrs3OFzeKTiRTl4b/COmeXS1to39ZfbsalKd
+	0mST7npLX8zdzgEhncJrArZv0+nYtgyUjozuY/FcY3q45ZJLN17was+QBlJ+qrcTtgA522HZBtq
+	n7MH/o+7mxrELY93U0ik6o9vMFEBBgKvZUPDGl5ApbC4R7Hd1dzLfIEadDPW2b1vWAiNKqurjte
+	VlkSAV/NTK4NPZZL1fB3o31cxCcycsrDwXXEFBN7ByhPchj5QSguflxx+dEGSuNvECTM0=
+X-Received: by 2002:a17:906:68d8:b0:bb7:eb68:514e with SMTP id a640c23a62f3a-c1297facf63mr25046966b.36.1782828107182;
+        Tue, 30 Jun 2026 07:01:47 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1288f46dccsm134881766b.48.2026.06.30.06.48.22
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1289176eb0sm134443466b.63.2026.06.30.07.01.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jun 2026 06:48:22 -0700 (PDT)
-Message-ID: <4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com>
-Date: Tue, 30 Jun 2026 14:48:20 +0100
+        Tue, 30 Jun 2026 07:01:46 -0700 (PDT)
+Message-ID: <3c35bd17-e884-432d-a400-36a89964ed89@gmail.com>
+Date: Tue, 30 Jun 2026 15:01:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,7 +70,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
+To: Matt Hunter <m@lfurio.us>, phillip.wood@dunelm.org.uk,
+ Harald Nordgren <haraldnordgren@gmail.com>
 Cc: Patrick Steinhardt <ps@pks.im>,
  Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
@@ -80,77 +81,80 @@ References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
  <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
  <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
  <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
- <CAHwyqnVN=McZjtQGcPnoVOHAd0+VDNPXy_N949VMsqZty3RDjQ@mail.gmail.com>
+ <DJM1N17VMUM5.3V5Y6YMFLIFQJ@lfurio.us>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <CAHwyqnVN=McZjtQGcPnoVOHAd0+VDNPXy_N949VMsqZty3RDjQ@mail.gmail.com>
+In-Reply-To: <DJM1N17VMUM5.3V5Y6YMFLIFQJ@lfurio.us>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 29/06/2026 22:13, Harald Nordgren wrote:
->> You've trimmed the line where I said
->>
->>   >> Possibly with a comment before each message saying where it came
->>   >> from.
+Hi Matt
+
+On 30/06/2026 03:55, Matt Hunter wrote:
+> I haven't experimented much with the new 'git history' commands, but
+> this discussion caught my eye and wanted to chime in.  (aka: please
+> forgive my stupid questions)
 > 
-> Sorry about that! Can you show me the example of what it would look
-> like? It's much easier for me to reason about it then.
+> Note: I have built and am testing with v6 of this topic.
 
-For the commits
+Thanks for testing it, and also for your questions - it is always 
+helpful to get the perspective of someone using the command, especially 
+while we're still designing it.
 
-     123 Commit one
-     456 Commit two
-     789 fixup! Commit one
-     abc squash! Commit two
-     def amend! Commit one
+> [...] 
+> I agree with this idea as well.  And letting fixup! messages completely
+> fall out makes more sense here than I want to say in git rebase.  The
+> commented list of commits at the top is a nice compromise for the todo
+> list you would have seen had you run 'git rebase -i' instead, and a
+> glance at the list would confirm that the fixup!s you thought you
+> included _actually are_ in the squash range.
+> 
+> I assume the same treatment would _not_ be completely given to squash!
+> messages, since there is at least some expectation that they carry an
+> additional remark that the author might want to reword into the base
+> commit?
 
-It would look something like
+Yes for "squash! Some commit" I think we'd want to have
 
-     # This is the combination of the following commits:
-     #   123 Commit one
-     #   789 fixup! Commit one
-     #   def amend! Commit one
-     #   456 Commit two
-     #   abc squash! Commit two
+     Some commit
 
-     A better commit one subject
+     Some commit body
 
-     A better commit one body
+     # squash! Some commit
 
-     # ------------------------------------
+     The body of the squash! commit
 
-     Commit two
+> Given the above, and how 'git rebase' usually works, I'm suprised that
+> --reedit-message isn't the default behavior.  This may be my bias
+> towards rebase showing...  Perhaps the typical use of this command is to
+> just work fast, and expect a follow up 'git history reword' if needed -
+> when the original just needs a little extra context?
 
-     Commit two body
+That's a good point - if we want to encourage good commit histories then 
+opening the editor by default gives the user an opportunity to double 
+check which commits are being squashed and edit the message as appropriate.
 
-     # squash! Commit two
+"--reedit-message" is a bit of a mouthful - maybe we should call it 
+"--edit" (or "--no-edit" if we want to open the editor by default) like 
+"git commit"
 
-     More text for commit two
+> This is probably a larger question, since (according to the man page) it
+> affects the other 'git history' commands as well.  When I run
+> 'git history ...' and discover that I made a mistake after inspecting
+> the results, is there a fool-proof way to undo the change and return to
+> the previous state?  My first thought was to run 'git reset --hard ...',
+> but the default behavior of --update-refs (moving other branches) can
+> make this more complicated.
 
-I've rearranged the commits in the summary to keep fixup commits with 
-their targets instead of listing them in the same order of "git log 
---reverse". As we're dropping uninteresting messages I not sure there is 
-much point in numbering them[1] so I've just used a plain separator to 
-show where a message ends. For squash! commits commenting out the 
-subject shows where the original message ends and the message from the 
-squash! commit begins. I'm on the fence as to whether it is worth having
-
-     # amend! Commit one
-
-above the first message
+Yes this is a problem to which we don't have a good solution at the 
+moment. I believe Jujitsu and git-branchless both have some kind of 
+operations log that lets you revert a whole operation rather than just a 
+single ref-update. We'd need some way to tie all the ref updates from a 
+single ref transaction together either by logging the separately or 
+adding some form of transaction id to the reflog. That would be a big 
+change.
 
 Thanks
 
 Phillip
-
-[1] If we really want to number things we could number each commit in
-     the summary and then use that to label it in the message template
-     with separators like
-
-         # This is the message from commit <n>
-
-     instead of separating them with
-
-         # ----------------------------
-
 
