@@ -1,82 +1,82 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4924312CDBE
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 18:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333623DCD8B
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 18:26:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782842432; cv=none; b=oj5PepF8YiLmwdan64C9CEGItZ0UTf5P0aOQg9gzWyfXP4eqrd1IQvkru53p351yb2FEjwRjvoJfYS8TckPWrjsCggLjSRn/RCIatGxH1gugiif2bL54+bdjwjjpDElflYGmpTWHP3JUJdxfT+EuAqSbXZjFFiuKtwjLep1Ssa0=
+	t=1782843981; cv=none; b=Jq4KNPHi3HKFc7lSMj0pjBXvHwlZnO4AzDbX/U8X7xCSyPDEYEK/PE3RTT8WHKQRpej+kz5sIJYXE1LAIq26kyI1aiOfsaEdm1witb/rkx8NEPZuTq7sqMEVJurWrO9MQ45ymYr6f2TqxVLcOpwd4Bf4BRXEDyStYOmbIqv4kDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782842432; c=relaxed/simple;
-	bh=viwW/SAcKnhBdyXJk0C4ilsr4ZXkcoFL8ts/l/O2IU8=;
+	s=arc-20240116; t=1782843981; c=relaxed/simple;
+	bh=JR6JVNXjiEx+CK3tkEXmZ/vyrdcqvMxxAzlMpC9X308=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=m4qOlKA0q4re4MinUvqEX5UO7Perf+fCnJuS36q1NedtixiSgeWMTnpMexdjIxCW4Fo0u5e0R18yeVc5lJQqRvz54ZXhTV//nkdwEP98relUUl+huahY8BLLnr5/7ZFGhhBCRrzL85rr8zpSmixsmKN8c7QJDHmNWXCEPIjefAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E5IM2boF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cdHAMC3Q; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=YWBhE/rf5fVGytgdr9prueZIS4zV5pyV9LodV7ZU5xYG5dXFTh/HGWOo6d5sDqeCsCag3AtATM0wfwoF2GZ/ZkVeEaZ3rzuMwTEqPm0XvswKptdG5zwHZ2mwYx1si8h8BdbOa9LTC18P5K2uiVr4LtCyAtHgiOMMhRrUf9aH6/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AerEXy4+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PLgB5Z0Y; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E5IM2boF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cdHAMC3Q"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AerEXy4+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PLgB5Z0Y"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87EEE140013C;
-	Tue, 30 Jun 2026 14:00:30 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id A0AACEC0123;
+	Tue, 30 Jun 2026 14:26:18 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 30 Jun 2026 14:00:30 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 30 Jun 2026 14:26:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782842430; x=1782928830; bh=N7+SBmbxCR
-	FDM35ys03RMYqmHf1QFO67OpTf92GXEpo=; b=E5IM2boFu9THkLv6i3RJp1jEMe
-	gcyQiCHiKoe121YiRgsEOlrlfZA6ltOUxHI5ZjRe35hkSscrpSAyyMSLdxx7CXvX
-	+C09jzGk3XwNFAcv3jDG3AB0kJgl/cH3dOflyGi60QPztdIcA0IekxbKzRoTOj9C
-	w8quLG/dkil2rhBqnh+OakNyS2AlFd+mA1xB/gi+TIW2LzMJeXAn26Inpb9JQ4R7
-	JmzWuIn31wHOaITUVIgn8/LZj9lqQiB8+uZuKwhbdnx9yEJbfsedMOFsifbu4Va/
-	LlxTlp0nEyspjCJNpmoU5LldldZq/JsSlCIX+kjhAZvEJDTAbeheTWktxVjw==
+	:subject:to:to; s=fm3; t=1782843978; x=1782930378; bh=uQwHb4XwIa
+	HMHaZxEDfszzxRBdnRwSTDaBRJ/DmAXRM=; b=AerEXy4+/oPHMiIAGcfq8VLtSD
+	k6QCSzSuRJf0B1osvJ0AxfNXHfvMvkGEjpQF26TIxfVz+l0SNXz5RN6UZ1R66Jb4
+	vRB9J+5WxZODfOUw0ynl0uL9Z8QSExOcd1zmnQplF1oBj9tXgXXs+0+7F2vo5jwF
+	JnzSe4+JACm+mYCmA9pcvcyRhv3jy5npv2R11RXVXbIheK5eqmErbuIqgPuz1xPT
+	qF+MLjiR5/S343+zZ51+6OJKKbTV9fYVW0Z/sKPNpJ+RXOPG/NGbn7R0/TfpSwgB
+	aRrMzmLNzbVxccN0FTzMHoRMqdMFs2NWPQmIvahTp2JT5k0f3AydQ2VRQ8Gg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782842430; x=1782928830; bh=N7+SBmbxCRFDM35ys03RMYqmHf1QFO67OpT
-	f92GXEpo=; b=cdHAMC3QjI3RJO+s/eeZTVSUNHcqHu3fmnJBlh5JC2Cr8UydRcc
-	ceyOspM59h8ZwtCowKVt4ZTbkdFrJg48V/UjJWo55R14bXFG2XUipWNCceJPeMNJ
-	nDJrPWDkN4JKrlouepp+0FxXDaq4lkSgx+07set3B7GG2joiFOHPW7I7NeuMrwx5
-	FC408EX3R2T7geAz5249bgF4RVy7kcqt56Nz/eyHftplIdm7c0yfyq4ZtRIZHWLn
-	zi4OvJ6OpHpfMHRUaEU4ZH1yn7eyfwa8oUPPLmCe3IxUoo29ktE1Dhw8GVnDvQxD
-	c8/oCCCkR/nq9azQRjRZ6FsLDusykcAqxzA==
-X-ME-Sender: <xms:PgREaifGmp095LrtZgDPytauf5ofxK1rhNxQE2eGm1CReZODg2Iypw>
-    <xme:PgREajFPDsLGVBepAyK-Tg50VEEB-YF5ol4zpoFrw5tWb2zJgfRIB8JL2zUm9lenP
-    k6Ekr8bbV8X1OtWiZpNU6s16sPSdI8OTzxfmW7wxOjN9PcD3sBI>
-X-ME-Received: <xmr:PgREar1QfJ0VBjzXSlJu77r5Y-msXI13wxUKIk3815GcYVXdFR6cpxJU1DTYwnHsV6CJwhUQDYyYG7EFWFA5wEtVjjZy6qUwtP4yhj8>
-X-ME-Proxy-Cause: dmFkZTEZQLmIh82eAD6y4RYlVrY33E/guUySAorq78UOFo3skWSGp7TZ90VxkO9Dh1eI4o
-    +hDjw1BNq5sGIpoa8ddp9+IteQ01JCtlg4fYKFvVvE493DVcSzDnHUWP/iWGlAlgM1ubG6
-    2rSZ4lzN6yHv8Cax+qrN4hlZYrWPH44+DvHlBhmQaZyyjS9qGth2JoTtUqNsSEZgoxgufg
-    Ad2N9NmyucGLcNaCIlOnIANNuLqN4rDLarsmG8bM9igbTGWyA3zbMj+acSmw8GBGbIu64G
-    5gG6qkfBBfTa2a1mOotZpJDlawQr/KRtIcBBVbtdznzW/CK+sZLiFHzPQvmIKpn9OHJCSn
-    8rDOfhDdeeoBObScdtGvt6drYj+Zhl1k9TSeNG2gSQ+/Nyu3Jr4jZKaFdv0qxmSdpXCu0+
-    i1Kmr5cssiZsN8j2wEWD5ASKffGtrOXVjEUgbrcV74NL6/fFL7JBjgtnzKNRiW1DbultMA
-    22bA160oGD1e0mgbrSrMwMP4YvMQhUwciq4IKVf2ENkRL2Ll3+SwNGdEl3Gc9YWq5MUXzu
-    tS23Zl7MdEaC0mzt+TA71fztPIumzy0pD4KK9HGxXzFEPdAMvcHomBbEvCSr7UUXRUBslp
-    CBTkkALPZJ5JWFou7spXQsdlbKyn5/RZrR85M33Eh1HwXHuMjZ2MdtQSJ4rA
-X-ME-Proxy: <xmx:PgREarlYVZilsnPMQh7GMDa--ZJ6nFZfcIlZBlAx4VvTIVZ0FUJ8Gg>
-    <xmx:PgREar-5rvdyfbTte1T59Yo3d4ztlHzCY4XBkhpBDej0WKXkYLU5Jg>
-    <xmx:PgREagoKV1K5O6n74xawo0R_HGR4yiRaHOmqdprNG1g9GJQuu8KDew>
-    <xmx:PgREakmKhYVtHwldExQlKRgkNfxAEvY1qT7X7ojyvIEFqpWxPIr6sg>
-    <xmx:PgREaoFwmtILfNgf6Wrl1M2RdHcrYRQTgyOFGUOYRflHq-EqTb2ndveB>
+	1782843978; x=1782930378; bh=uQwHb4XwIaHMHaZxEDfszzxRBdnRwSTDaBR
+	J/DmAXRM=; b=PLgB5Z0YPfYyWXzYcOyYrjo8/SlpdtYn9esC66SwmeAXE/jB/2M
+	47JoOKJRPhr+flgx96bv1qWWXgio0sNm2E/xf7aSauvc9nMW/kgsoot/PzF24dxv
+	OlnZ9bAmJIitwBAKox2+2OnLKiqT+JSgEKg3bSMnKLGH+j/iLkaLOXgmlCFXw+1N
+	zwh41S7GlzlUaOsrUxQ3VpZ9sxkNdkRKvG5iChRx1NhrnfP1l+SyiMmx4t0AdlBv
+	KN1uKa5dyH9zQGahjhG0O6OrNhFoNNR/LhQ6TFfqcXko8GFUWI6+6HyrFI3NXe92
+	wo4Zx6YTrqIfdvUsb8xuE4rgGsocF04xxng==
+X-ME-Sender: <xms:SgpEahFd1JkppnAc5T2NF_5RPeiVj156pAXI_hqjo_SjBJGaN2L4ww>
+    <xme:SgpEatzdhoZNvSKvwpal-tcZv32vSn35J9NXq_n-cS3Ibo69eqbFQed56nmfTWb4G
+    spfa-7f5pS2nEut1raL2rI0kphfuTbqnXdibXDUIY2pdKgb_Zuf>
+X-ME-Received: <xmr:SgpEaggnDvbzhuJigd6rLiOMaMg9jApdJcNTI7pOdgdvOMjrvAVb7U36zTx1FWWff2NU3zKC6Ftn3Pv1s3_-krM5clif4kE7yZKqaQ8>
+X-ME-Proxy-Cause: dmFkZTFs6LmZIi6LqIFbgboc2bv8lKlA3AiEzgZ6gzIqbFLgZFSZnceHBZVvsY5DdoAjh1
+    Bu8/gvTUj/Rzi/RhZGy72HI/mgVpzfV/IvyzYcm7eoI7iyzFQYQpaiRxVxUN+NrLF/ewhl
+    mwCUzhv8sEVtKpIzkFODV8e7plx0DK08X2aJbsjhVjEM5hmMWiYCAp1Od3ongN5mdynfjp
+    qZB/XOk089/8YTROGXKujoRphpVLGcqJHM+bYC8xXe2587cjLAqkGBeRzYt78KsC1nWGvw
+    /OWuiIuRn2FVE1QsXKnBt38kAh6rHcas1syzUyvdHq5hDifDaOgVHRD9xrZ28kuA/LPrj6
+    YrRr6Y41mstzViUiU+RcmGPHpY2DH19nzDTJv5TIPVOi7PywRa0UGdfiCesnOGQHwhZW13
+    b2sv0nAkPjXNsLifsgt/WKGG/JY3O+VXz4m8cR3D6OX9yjyGRWSDJaA4MoyKN+5r289+2k
+    hWvf6iiT86V2cqV4Y80sEPPlt2h4Ah6epldxJPSpT65HQkn2eb0czeZ9Lnyt/DgzEylEz9
+    DuMGUyKnc1UVsR81rJUvMvehUNJ59bO/+f6hNABbDuHNQw6x6JuFF0TGuQmqRp6p4eztmy
+    9qCb1aut3JsQ+s9dOwCYedqj01qsTh1kG3EgXRmXENYZ8wj+kJfXFit0NHBA
+X-ME-Proxy: <xmx:SgpEagxSQk_m_bxJpjKgVh5hvFayFGzqfVFDV7UmVDQNtkajTO3T0A>
+    <xmx:SgpEarIyZcoKj0nCYTgCw5U9OzpBTdZP-MaftjV3SZ2oyXv1PS8yKw>
+    <xmx:SgpEavQCTDtyt4ZHeRTatMI3Zbo8j0IW3wn28XODzF5tKGLFtVdMVA>
+    <xmx:SgpEarqDx0hWcjJrteUumDqkVwq0FLyTL136FMZasxQGCXljPmcRbg>
+    <xmx:SgpEat5pMvRhULSXCtSnkerMANFVJJWsLYsiG6ELVGE-R5rYSshI0bjj>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 14:00:29 -0400 (EDT)
+ 30 Jun 2026 14:26:17 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Bryan B. Lima" <bblima@usp.br>
-Cc: git@vger.kernel.org,  gustavoscorrea@usp.br,  =?utf-8?B?w4Z2YXIgQXJu?=
- =?utf-8?B?ZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH] submodule absorbgitdirs tests: use test_* helper functions
-In-Reply-To: <20260630020220.1559190-1-bblima@usp.br> (Bryan B. Lima's message
-	of "Mon, 29 Jun 2026 23:02:20 -0300")
-References: <20260630020220.1559190-1-bblima@usp.br>
-Date: Tue, 30 Jun 2026 11:00:28 -0700
-Message-ID: <xmqqmrwbsybn.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/13] setup: mark bogus worktree in
+ `apply_repository_format()`
+In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-2-13864eb5a032@pks.im>
+	(Patrick Steinhardt's message of "Tue, 30 Jun 2026 13:47:41 +0200")
+References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
+	<20260630-pks-setup-split-discovery-and-setup-v1-2-13864eb5a032@pks.im>
+Date: Tue, 30 Jun 2026 11:26:15 -0700
+Message-ID: <xmqqh5mjsx4o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,85 +86,10 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Bryan B. Lima" <bblima@usp.br> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Use modern helper functions from test-lib-functions.sh to provide nice error messages.
->
-> Signed-off-by: Bryan B. Lima <bblima@usp.br>
-> Co-authored-by: Gustavo S. Correa <gustavoscorrea@usp.br>
-> Signed-off-by: Gustavo S. Correa <gustavoscorrea@usp.br>
-> ---
->  t/t7412-submodule-absorbgitdirs.sh | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+> +		 * we have to exlicitly unset the configuration.
 
-Welcome to the Git development community.
+explicitly (will amend while queuing).
 
-It is rare, but it happens from time to time, that we see a patch by
-somebody we haven't seen on this list, and the patch looks perfect.
-Very delighted.
-
-Will queue.  Thanks.
-
-> diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-> index 0490499573..bd1c684480 100755
-> --- a/t/t7412-submodule-absorbgitdirs.sh
-> +++ b/t/t7412-submodule-absorbgitdirs.sh
-> @@ -34,8 +34,8 @@ test_expect_success 'absorb the git dir' '
->  	git submodule absorbgitdirs 2>actual &&
->  	test_cmp expect actual &&
->  	git fsck &&
-> -	test -f sub1/.git &&
-> -	test -d .git/modules/sub1 &&
-> +	test_path_is_file sub1/.git &&
-> +	test_path_is_dir .git/modules/sub1 &&
->  	git status >actual.1 &&
->  	git -C sub1 rev-parse HEAD >actual.2 &&
->  	test_cmp expect.1 actual.1 &&
-> @@ -47,9 +47,9 @@ test_expect_success 'absorbing does not fail for deinitialized submodules' '
->  	git submodule deinit --all &&
->  	git submodule absorbgitdirs 2>err &&
->  	test_must_be_empty err &&
-> -	test -d .git/modules/sub1 &&
-> -	test -d sub1 &&
-> -	! test -e sub1/.git
-> +	test_path_is_dir .git/modules/sub1 &&
-> +	test_path_is_dir sub1 &&
-> +	test_path_is_missing sub1/.git
->  '
->  
->  test_expect_success 'setup nested submodule' '
-> @@ -72,8 +72,8 @@ test_expect_success 'absorb the git dir in a nested submodule' '
->  	EOF
->  	git submodule absorbgitdirs 2>actual &&
->  	test_cmp expect actual &&
-> -	test -f sub1/nested/.git &&
-> -	test -d .git/modules/sub1/modules/nested &&
-> +	test_path_is_file sub1/nested/.git &&
-> +	test_path_is_dir .git/modules/sub1/modules/nested &&
->  	git status >actual.1 &&
->  	git -C sub1/nested rev-parse HEAD >actual.2 &&
->  	test_cmp expect.1 actual.1 &&
-> @@ -109,9 +109,9 @@ test_expect_success 'absorb the git dir in a nested submodule' '
->  	EOF
->  	git submodule absorbgitdirs 2>actual &&
->  	test_cmp expect actual &&
-> -	test -f sub1/.git &&
-> -	test -f sub1/nested/.git &&
-> -	test -d .git/modules/sub1/modules/nested &&
-> +	test_path_is_file sub1/.git &&
-> +	test_path_is_file sub1/nested/.git &&
-> +	test_path_is_dir .git/modules/sub1/modules/nested &&
->  	git status >actual.1 &&
->  	git -C sub1/nested rev-parse HEAD >actual.2 &&
->  	test_cmp expect.1 actual.1 &&
-> @@ -155,7 +155,7 @@ test_expect_success 'absorbing the git dir fails for incomplete submodules' '
->  	test_must_fail git submodule absorbgitdirs 2>actual &&
->  	test_cmp expect actual &&
->  	git -C sub2 fsck &&
-> -	test -d sub2/.git &&
-> +	test_path_is_dir sub2/.git &&
->  	git status >actual &&
->  	git -C sub2 rev-parse HEAD >actual.2 &&
->  	test_cmp expect.1 actual.1 &&
->
-> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+> +		 */
