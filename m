@@ -1,70 +1,70 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829733BBFAE
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 15:29:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6803E3F929C
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 15:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782833365; cv=none; b=Q+Y4xhfedIfr55YuU0r4tWFpQLbQS62Dyh+rFvmXtSpTp4gc+SxLO22eXkxoZxdvdkBMe6rsWKHBNc1GJl+jQlXpxVgYdEYnafP8PyUVdf99U6r54b/viuvXTuECTmLzyPeSiEIWcf1XaPsLirJkKhFxKs66JYYNKMP+7qz3h6E=
+	t=1782833367; cv=none; b=C7CkH9cg3q08+48J90xB7TPjlHgOHfqhYciv+ESZX0vQrWzbcYyWlq89ndhakgLyO9971zk4yIt4d25lMIml4zjTUIGpXHD71SqH/ltJiOmGP+3tBtph5YNs0ZFTIQQwdpmHH+VT2cyX0n3CGy9x5yW+/6hv3onF3E/ogMsG6q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782833365; c=relaxed/simple;
-	bh=WckH0j2WaajshgvwYWShDWv1Aj/D0Hut7rHhcOtrv10=;
+	s=arc-20240116; t=1782833367; c=relaxed/simple;
+	bh=aPqmVR65MXxoVX3g0DYG6CKuA5M7iNnOp1SJhph0RSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjPlBBnHzb/C5rpp0sdnRtWkMOA4tX/0ZQVne1pcoFIF8ncwNSA/AJM+6SBNuFLsQIRWOMHVc4BuYejWLGN5Q1t0CmiidOs2LipJN5yy/MaalR0OA6qSXsWGSwwqmxK4wIRQ1c7EPy+Nzt8aNnPXMR9ENyIIdGa7j0RTgJzL3EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AI29unwG; arc=none smtp.client-ip=209.85.221.50
+	 MIME-Version; b=qnc2N3nMjlK0cnjNZzjAsJ//LZMzL3O3GcII6nrp8YaJ16QwNnKDSEfefahCMjqZLV91LrvDYHPIMP7sEeEaMkMDaKUI2wKJfsAYSQ1T4kzz4zi3f8O2aP9LeoxmYiYyp6LsbU2MbzIcfcjFkwMH6Qz0ZZx6lZVCHBtyD505Ns0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hI0Cw75K; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AI29unwG"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-46e4764ca48so4286628f8f.0
-        for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:29:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hI0Cw75K"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-47640541585so325552f8f.1
+        for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782833359; x=1783438159; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782833361; x=1783438161; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=QzpqQQOQfmtU+4Lqnvf0hLr8i+BkC66dAaimCvldFDk=;
-        b=AI29unwGCSEEVsgOO+zHtfAdlOGYQFEhZfxEs3hrV6tay9A06HEZCoFRa7ldrBUHlX
-         CjwJ4yf0l5+uvoPFhfnCmJNnWyevhilGjbYv/K3FcvQc4ZWRuR1F2YeYtKVTii3Xb6MR
-         A/ZP8t+hnWi3j8R+n5pFcVFFjt05bDYw39NnGaTr21Fm/B+QwKbd6D6tmZc/CyNKcMjs
-         39sCyOBO7c1g12/ZNEyvj06nH+f3UPW6lcnzNBQt2hctU7RkannVSdabTtcB7cyr8uli
-         dSU/al7jqimYn0VLgXCuNQOk1/jIQqRIRUURkDK9xnw2Y0trDJK515X8l+KaKqyg3qM7
-         yyRg==
+        bh=ezj3Q3MyCQ75MAlcDUAfx08nWFUs0vfNvbuRuQI3JJI=;
+        b=hI0Cw75KsXNYXICH2gnwSn2qkr+NetPj2AWhUZhT4Rb2riZZvubyhoDzrVaZFTbddr
+         vNzV5ZwL8QDFafHmogmYpTgAkM362hgI4ScLgGAjtGR0AgoLVA+lJVpVQ3jQrK1ww5eF
+         S0FnozuCFs5k5/4KnrM5KMpr4IscdSuQvZguXV250rGALViJ+Fx2IlEdYn8SaSoJ4Bsi
+         LXicZUZhP1Rqq1eCukuHvMNGTnonUVRjVEYP4eEWl9LRlnjTTdWJqa/YvT687+c+0jt+
+         iOfJK3JpfmdPP7b+JPNjTvgVl3pznmt/fWz26IS3NZy67/2SkIlxPrAPv5iPiKHz7iB9
+         x6mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782833359; x=1783438159;
+        d=1e100.net; s=20251104; t=1782833361; x=1783438161;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QzpqQQOQfmtU+4Lqnvf0hLr8i+BkC66dAaimCvldFDk=;
-        b=joMaHCaqsZhBbdvIQwqhe7V8BSnXAezWvmuvejQxjSBsX2w66vp4YnYA9VNo7LCoRB
-         wXiLHny13O2SAlDSapD2CbZx+B4Ql7t7hMtiuwZvGEXgNDM/iXU6tUtjQREw4bSJp4gL
-         P184rDUNW4hZ+dirJXm/3VrrsGqsETDGGdwTMH+asR72biyjHwpLAQw1GlGB27jfQs3S
-         GCdoqPJVMaugJMm95tdJFG04pyyxpGBl+KttVH4aClTaFQBbzP7tB2S51wtsXoONX84U
-         r2S/a6/v5iJwf5PxbqszA9Z2+cQ5DNdPn3gzJRIKXyvtx/OLDcj6to+/fWMI35/5ayrl
-         q7Yw==
-X-Gm-Message-State: AOJu0YyaOjsy2+5ZrVCUY6lnugE/06gi9Ggg695/8MYZAINjuKNCFQO8
-	H491FFW8RlFS7S6UrE8bMr8/55HGPbwFuJKkhEc0J2SdiV9v7fUdsourHzDXVw==
-X-Gm-Gg: AfdE7cmbidqIlz1I9r9h53TvKLSDuCBW8Ip1XAT1x1YgRwe4srKbitl2sSPB6k/uaNS
-	BnkrAB39WjhJKrMZTj/rHLAmylSjUVC08zl0dUMzjrHl1DJSyiL0HxlpbmfT1jtJRtU5jegSMYV
-	pK9OdLh1cudV9DkE0/7zKAu5uxZwlrB+yYhb/yRbGdjnHmjLYSmM+hJrFsFPP0bWbSGUhceuP7q
-	jrJoJGh8SVUPcIYydoARBRBkcZ5pGd3/VyCNKzmI2vFM+ruHW6/PZ+SGuUwWV3IAeruJHNEngPj
-	fP9+JyQv1TVX6/+bTrwrrvpT2/JXxfH4S8PMgek1MBQEC0BpMFzB/XWOVv/L4leRGI/Tql+3Ie5
-	YVNty6zJq+NcEIFsSuOWC/NP3/Qf3evFJeZDqaUOp48YC868PZU4Rk8gxb5EYruKhv+WOyxVF7n
-	iICRlZJJzT6MTIVR8V
-X-Received: by 2002:a05:6000:22c9:b0:475:a4ae:e630 with SMTP id ffacd0b85a97d-475a4aee803mr4329972f8f.37.1782833359435;
-        Tue, 30 Jun 2026 08:29:19 -0700 (PDT)
+        bh=ezj3Q3MyCQ75MAlcDUAfx08nWFUs0vfNvbuRuQI3JJI=;
+        b=Ek7pIPjO3imo46QQaij21LC3lAoyrGsSl9qdSxpO5UlSAppsXjb/KHS91HyUm+CF6p
+         K0UgFW7ooGZFvZMvvJeSJDgo2wcVNm2jBn6IF8k1Y70iKy2tjf8COW/z/rvn8UfVGxHw
+         DUfl7Bs/uBtr98xmljhbW7Kb3HH8BHjvfQTBbRklGWcRhqWqdjPi6zs1IZW24hMyJ474
+         KO/7Bl0oUjMzfk6fh27cp1VGay2sDuL+KUIiaH3BtCRr1wOniobpFPZ+hVIzIzDtu/5f
+         chy8LW9bb0Js/KXGd4JXqBhaXxw+iRnDFVxe5RHWwHMoLid9zFmqYowKIO5kJA4XLAg1
+         6MBg==
+X-Gm-Message-State: AOJu0Yz0NOvrRQfI/nZIB1FlO/FsCZGDEMzJwYW/NhjipznsaNzF9CuH
+	zQTxHtsSh1TJ61J7ZgcADrzfdASwWrXW8y7irrCxqqCgNDcIlPsur0xsTRFjJA==
+X-Gm-Gg: AfdE7clDOh+ZUweuO25aXPyNtKIZPtp7Jx6xl0sdpeokbyfRjV1CGeJWY8SS8OWaG3r
+	zJmObfwmxIFbMXoXOsYdgmiIoLa3mSJJGnJ6vAt3CYLCYX/h/6jgdkWHj/iBOqZ1xwZJ5ozfO7i
+	5s5VqyHB5V1ZtMIFKt5Web5BzGX3oFwsDhz4tId3LlavCFzEzv07wD/VOS45kNxg9Q/XEM6RduU
+	OZwE8aLUcU2nfYbn7v+7e8VxI3+SCIf+idwkfSV1YC6NQOx/Gbng5QD6nnbwC1NgPC0ThlblMq8
+	O0euKiOWc6zb6lLFep0SLjwbZcHZRXeY9upKRfb4qMk2kCVLGEbwkf2wrIPJrknVGlsC0GOIW8p
+	htz2F4sNi2Wd3vLp9oeWjW1GkAEpHfxPdiSHG4oI9a6RlxYA1ylh63Glqhk8knICgQwUp2MOgQC
+	J8nAVM1SLgzHT/MJq3
+X-Received: by 2002:a05:6000:4a16:b0:46e:37a6:c762 with SMTP id ffacd0b85a97d-4765a3b80a2mr1528860f8f.32.1782833361176;
+        Tue, 30 Jun 2026 08:29:21 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47567979eafsm8477378f8f.34.2026.06.30.08.29.18
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47567979eafsm8477378f8f.34.2026.06.30.08.29.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 08:29:19 -0700 (PDT)
+        Tue, 30 Jun 2026 08:29:20 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 05/11] sequencer: remove unnecessary "or" in pick_one_commit()
-Date: Tue, 30 Jun 2026 16:28:55 +0100
-Message-ID: <cb286ac70d77cdcbb644a34b2fa89663b3c443b9.1782833268.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 07/11] sequencer: remove unnecessary condition in pick_one_commit()
+Date: Tue, 30 Jun 2026 16:28:57 +0100
+Message-ID: <4386ca67d1052b15d15f62b9761f716508ce276d.1782833268.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
 In-Reply-To: <cover.1782833268.git.phillip.wood@dunelm.org.uk>
 References: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com> <cover.1782833268.git.phillip.wood@dunelm.org.uk>
@@ -79,31 +79,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If error_with_patch(..., res, ...) succeeds then it returns "res", if
-it fails then it returns -1. This means that or-ing the return value
-with "res" is pointless the result is the same as the return value.
+item->commit holds the commit to be picked and so it must be non-NULL
+otherwise pick_one_commit() would not know which commit to pick.
+It is also unconditionally dereferenced in do_pick_commit() which is
+called at the top of this function. Therefore the check to see if it
+is non-NULL is superfluous.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index d7e439b1feb..39cbb7b6e3e 100644
+index bcfbda018a7..ff28873d21c 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -5007,9 +5007,8 @@ static int pick_one_commit(struct repository *r,
- 		      oideq(&opts->squash_onto, &oid))))
- 			to_amend = 1;
+@@ -4988,7 +4988,7 @@ static int pick_one_commit(struct repository *r,
+ 	if (res && is_fixup(item->command)) {
+ 		return error_failed_squash(r, item->commit, opts,
+ 					   item->arg_len, arg);
+-	} else if (res && is_rebase_i(opts) && item->commit) {
++	} else if (res && is_rebase_i(opts)) {
+ 		int to_amend = 0;
+ 		struct object_id oid;
  
--		return res | error_with_patch(r, item->commit,
--					      arg, item->arg_len, opts,
--					      res, to_amend);
-+		return error_with_patch(r, item->commit, arg, item->arg_len,
-+					opts, res, to_amend);
- 	}
- 	return res;
- }
 -- 
 2.54.0.200.gfd8d68259e3
 
