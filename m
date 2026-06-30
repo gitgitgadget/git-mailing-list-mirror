@@ -1,70 +1,70 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D9D41325E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368C140DFD1
 	for <git@vger.kernel.org>; Tue, 30 Jun 2026 15:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782833371; cv=none; b=lNvBKN2Zdx0whA60X7QCqFvlDDN57hgaihoJZhjmTiqvOWm3V0/byyHx9za5wmJf4u1WKlMEpA57QZa7BBuAOD5GllCnZROLlY5dSRVgV3tzBIrJdEe59+z61WdOILqif3T2rf8T996bqJvkrDoSdECoa1m3Ku5/+UNBcMEGb40=
+	t=1782833372; cv=none; b=CUsZ9/AyI6e+2zy7InR6LtnLhMJrXA3xdnMJVSUzu/xrLg4QnVkMAYrRn/abu6dZz+QlfhKxkWnpvfmYnToy/I3u8StMm1Z3k8huDKS1y/TsznX8sz9/KB34WfhrjGOrvzhvlbf8L1EHr+NsCG7WVyvyGt3pJYL81gh/JLvWyb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782833371; c=relaxed/simple;
-	bh=VEmqp2R5t0W1YfK9l1XDmDtgJ9VM7Y8lr8rp3k3WmA4=;
+	s=arc-20240116; t=1782833372; c=relaxed/simple;
+	bh=za66EcRT3k8Wqza1HAqpiOJf6ia5tpjWxrQ/daL1ats=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o9CVjAW+R7Z4EzqCI/BBMmvlGOvXwRW17W4eVLAhlmXBCA607JMVXVWGhf8rhWrcqkdYqfpejfJFlFQcJl4rfTan6/mlWa2tkNgjEllEizTflSY8W9EiNGgAWDOQedark7YKDpuxh4SxiW1GdLXc2ndh320DXBW7STSuM5/sYtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M3O3o9w4; arc=none smtp.client-ip=209.85.221.49
+	 MIME-Version; b=V6si5KpbqXtQVT57p/lFpP8/4F7KO+d1Lwt7E8jXtetRGGR3sT+o/uJjFoK3hl8Hq1fY4y/u/wj+aNfsa3qv+ksd5wCcr4WN4QA8c0U0pGquci065Dz3WcYcCaYYSzd9WU/5wLyaIxRsqq88GelT3peoaHkkAq5dDS66ZYcLfTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lMndn86+; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M3O3o9w4"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-4763b0c1dcdso561654f8f.2
-        for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:29:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lMndn86+"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-47248615e4dso2992378f8f.2
+        for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782833365; x=1783438165; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782833364; x=1783438164; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=WVKH06geH7RiKeZHAUMNHTV/e6X3Ae4hiNZOgWToVu0=;
-        b=M3O3o9w4faKtAUcyNCzFXDzNQ1T7o/lHMbKWWYdPYFYCS8m8drEVVqkJN+g3XIZKJ7
-         qtr9/MagaYkpD3jdxrb+GG92JsvHrsKVPw+A92qWfjtTxX39d2IaXFErigHz40cvPNRy
-         ZdlWUOPndWq3TQywVdNzH6U2gLOO1eU7IPRjmWsaOT6uJ2OcFaPzLanR7SZPNF2k/Swb
-         bmp/EeHzEeIwqS2UqdzegvRVDuQisuWTarG5jdlLSG92wT7R9m+qBmp98k6mr3ay9WLw
-         +6shBOZx4OH61SjB+8pRVD9k2NJHoscGtXdVu+Ku8lIBa3j+kseHzFQIre1/YfDDERDn
-         EGlA==
+        bh=UKK0h9IuCueRRCV0TTrtM9ueyR0uKhpf0t9/DFabafg=;
+        b=lMndn86+fiCq586VVO75E/fMWrlt4vJyVhCmEvNQsZ+4L//oqLf0edxSVYxxpUUMlG
+         mMoM6k61SWyWXFzcRd5ti/fC686PV+LKDZS8t47hKfi7U6UKzkgQFG75q7KozgoTchft
+         L1L6Y1hNlgz7xtYs0cY42ehVrOfiNjqayKtR0autc5R4U8PoAuih7o8RBNdQmBdJNHLp
+         GeOqm/fyz07eqa55GW4EO6Y6CsbAKu1Umsnxy50y6odDdiKPP6VUM5P0g/Sy4t4uBvWr
+         ttx+gJhnvjGqBMIpF6QAew3x+VbKT7fr0Odos4u4efagOuOazDZDM+Y94BaynJ8ZzW3J
+         Yc/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782833365; x=1783438165;
+        d=1e100.net; s=20251104; t=1782833364; x=1783438164;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WVKH06geH7RiKeZHAUMNHTV/e6X3Ae4hiNZOgWToVu0=;
-        b=J60DiX/OStCRbMCCXD5Qdgd06mW6iqNR6r7SkxjQxXjSDqA9+8+lceNr0BW8ZTc0a4
-         afwkak5rKsb2AyGbMfJNLYzWS6Zi0s4j/MOwWGIewz17Z/W0Ml0kkHK9kJoKLY7BeOUM
-         3xiRx0ir3wmhOhj+9AW0X/UzkPXwTXCmegfkd3KQa8+mIukSR1UbinSbzenICtJnwjoq
-         kmmzEG6W8MpV3BMmyP87ERORbRII2oheugFwa+l/rPOnjMok0zgFJqvQ4P0043f6m39m
-         2nO73X8ApEI1tuGiPriJfD07vKPeNeH4Njyv6gOOWnnqy9Gk27z04trMgSOZTfjEXTVA
-         04Nw==
-X-Gm-Message-State: AOJu0Yzer/0lFys1z1v8h4Z6SmASlL7LGlKeUmdeE7No3HnYbi/mYG/1
-	SJuSeztOyiQ9xZBDgCow5tYRevHrAVLO6QIYuMPqUl9ES0868jmwAuk9+pJzXQ==
-X-Gm-Gg: AfdE7ck2mk++ybksGkkjxN6gNvXWdnSOAY2LCiOvgdBQzRqfQFoApPDIC7/E061D0al
-	r+sCmCAbypR9p1/b8BysT5kFb8Y+nNy5tkdMG6UsS1JZvn1BCz+YInV9/PhCqc3uxo8nOVuqZhK
-	Rf7fUTLEIWv7Dcb6lzrgtAhoPPAEigCyyc6BhstYUzdm8X+rFR8LJ0pgL+qAeyb8c5m4iSdqgJ9
-	YwCYyRz+wQC6YYc9anTBryCkVRpprbcZUe9hZn4CN6hyCMCmQDfrie6FvHQygQlNMux9c0uqI0f
-	P6PjAkNsnMx6f7XCSc8wdF0nOZVa5kzfo+3XliHlIGgD5AXnRqKJ/RlpOOyy0tNl79bM4YMFO3l
-	wrLaKogCoaNjXDkak+eDx08UH0WIPNMhZ6XK5AdtPHnQohuBLRKRa7sFh15YGx21RwW3phkS9sg
-	MoTkJ868tmZIo5rSNI
-X-Received: by 2002:a5d:5d0f:0:b0:475:613c:c9f2 with SMTP id ffacd0b85a97d-475613cca4bmr5978936f8f.5.1782833365180;
-        Tue, 30 Jun 2026 08:29:25 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47567979eafsm8477378f8f.34.2026.06.30.08.29.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=UKK0h9IuCueRRCV0TTrtM9ueyR0uKhpf0t9/DFabafg=;
+        b=tLoIv8vk3a/sSV5Bun/BC9FRFlz4Y++Rj6OFp8ypnICq+fNmp8dTLYpflcpo0WBJM7
+         zjyAR6vidhKUx4nBfgt3t+WLqGDqRCZ9tYxXpBGXprZT2w9mrIqbc1N21VF4CSuM6/Ik
+         zQnvTXlVoI5PWBr8SOZou+knylmc0ESYiPMIf1L7DPZDzT/ec1zXQUg6KvbkE6XZ898U
+         cU39/ybSNDj//aUqJr4P0ozhKHLAN9fhyNSI0QDNBy51zcuoRznDw+IErji6GtkcOKnf
+         ezf+44IjVl7uXxjj3lcDJyJ+M/RsvFLAe9CKk2A8FcdAye8CmmWPTKgfCBD42EwTpmQx
+         yQ/g==
+X-Gm-Message-State: AOJu0YwqJTR55isN5a+3hP+JF0EMOj9obkamue1QdDtAo7yrsHlkfHga
+	4/9kU+AaFzUFU3Is/PWUxpKZMkz/FrWGaUKugCgzXt0tKKYj2TNXZUprbSZOnA==
+X-Gm-Gg: AfdE7cnEe2yeN0Vvyo9kyHlHE7RL8qA02yrrEaf3MgAW3nE2u0knba5pkRWBq/KA8xG
+	U6qE7bGcjs0Sx4Z48srSJNfiWLfPLR2fFHmFbdZlWfQiCotqfgojEm6YhyBxwNj8q+gZrY5Kvom
+	6zeRbV6p5MpaW6Pklc4YZzEvm6a5riMyoMPmaJZM9CEwl0g3tl55+3Gh0NWVGxeaJQeleXaKfI9
+	Cm0RUNCq3KexB3kEMy+IAgWldA8I0kfnJQ31HZ4g8CDZk5zfnvdYVC+2OlQVbAzi8nACuOLRDWa
+	aYxg/+9ERJUcO5XO7ar8sg812FHBoFBKG42Z7e60KrYzCC4Z0RAJW0jmbQ8NzOd4hUBji8Mov5u
+	BCvsDwrJJvded/D1DbDkAPkBaTRSFgz6cuHizImyenisiuqI7freOH3AnxoZ6Emc8fNMsujvKup
+	c7mX0MW6vJ4I8Ul3Ek
+X-Received: by 2002:a05:6000:38b:b0:475:f0c2:75a6 with SMTP id ffacd0b85a97d-4765b03d0cfmr1503973f8f.55.1782833364250;
         Tue, 30 Jun 2026 08:29:24 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47567979eafsm8477378f8f.34.2026.06.30.08.29.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2026 08:29:23 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 11/11] sequencer: do not record dropped commits as rewritten
-Date: Tue, 30 Jun 2026 16:29:01 +0100
-Message-ID: <26551f2687be0f5c1d2f503bdd50729a20b0dade.1782833268.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 10/11] sequencer: use an enum to represent result of picking a commit
+Date: Tue, 30 Jun 2026 16:29:00 +0100
+Message-ID: <e4050ead27f1e01ca72acc849fa16bd67e0d1c4b.1782833268.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
 In-Reply-To: <cover.1782833268.git.phillip.wood@dunelm.org.uk>
 References: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com> <cover.1782833268.git.phillip.wood@dunelm.org.uk>
@@ -75,166 +75,145 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If a commit gets dropped because its changes are already upstream
-then we should not record it as rewritten. As well as confusing any
-post-rewrite hooks this means we end up copying the notes from the
-dropped commit to the commit that was picked immediately before the
-one that was dropped.
+Rather than using an integer where -1 is an error, 0 is success and
+1 means there were conflicts use an enum. This is clearer and lets
+us add a separate return value for commits that are dropped because
+they become empty in the next commit.
 
-While we do not want to record the dropped commit is rewritten, if
-it is the final commit in a chain of fixups then we need to flush
-the list of rewritten commits. The behavior of an "edit" command
-where the commit is dropped is changed so that "rebase --continue"
-will not amend the previous pick. However, as the code comment notes
-it will still be erroneously recorded as rewritten when the rebase
-continues. That will need to be addressed separately along with not
-recording skipped commits as rewritten.
+Note we continue to use "return error(...)" to return errors and
+take advantage of C's lax typing of enums
 
-The initialization of "drop_commit" is moved to ensure it is initialized
-when rewording a fast-forwarded commit.
-
-Reported-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c                  | 24 +++++++++++++++++++-----
- t/t3400-rebase.sh            | 12 ++++++++++++
- t/t5407-post-rewrite-hook.sh | 23 +++++++++++++++++++++++
- 3 files changed, 54 insertions(+), 5 deletions(-)
+ sequencer.c | 61 +++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 45 insertions(+), 16 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index ca005b969c4..a85f9e8b77d 100644
+index 655a2e84bef..ca005b969c4 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2264,6 +2264,7 @@ enum pick_result {
- 	PICK_RESULT_ERROR = -1,
- 	PICK_RESULT_OK,
- 	PICK_RESULT_CONFLICTS,
-+	PICK_RESULT_DROPPED,
- };
- 
- static enum pick_result do_pick_commit(struct repository *r,
-@@ -2279,7 +2280,7 @@ static enum pick_result do_pick_commit(struct repository *r,
- 	const char *base_label, *next_label, *reflog_action;
- 	char *author = NULL;
- 	struct commit_message msg = { NULL, NULL, NULL, NULL };
--	int res, unborn = 0, reword = 0, allow, drop_commit;
-+	int res, unborn = 0, reword = 0, allow, drop_commit = 0;
- 	enum todo_command command = item->command;
- 	struct commit *commit = item->commit;
- 
-@@ -2509,7 +2510,6 @@ static enum pick_result do_pick_commit(struct repository *r,
- 		goto leave;
- 	}
- 
--	drop_commit = 0;
- 	allow = allow_empty(r, opts, commit);
- 	if (allow < 0) {
- 		res = allow;
-@@ -2574,6 +2574,8 @@ static enum pick_result do_pick_commit(struct repository *r,
- 		return PICK_RESULT_ERROR;
- 	else if (res > 0)
- 		return PICK_RESULT_CONFLICTS;
-+	else if (drop_commit)
-+		return PICK_RESULT_DROPPED;
- 	else
- 		return PICK_RESULT_OK;
+@@ -2260,10 +2260,16 @@ static const char *reflog_message(struct replay_opts *opts,
+ 	return buf.buf;
  }
-@@ -4994,18 +4996,30 @@ static int pick_one_commit(struct repository *r,
+ 
+-static int do_pick_commit(struct repository *r,
+-			  struct todo_item *item,
+-			  struct replay_opts *opts,
+-			  int final_fixup, int *check_todo)
++enum pick_result {
++	PICK_RESULT_ERROR = -1,
++	PICK_RESULT_OK,
++	PICK_RESULT_CONFLICTS,
++};
++
++static enum pick_result do_pick_commit(struct repository *r,
++				       struct todo_item *item,
++				       struct replay_opts *opts,
++				       int final_fixup, int *check_todo)
+ {
+ 	struct replay_ctx *ctx = opts->ctx;
+ 	unsigned int flags = should_edit(opts) ? EDIT_MSG : 0;
+@@ -2564,7 +2570,12 @@ static int do_pick_commit(struct repository *r,
+ 	free(author);
+ 	update_abort_safety_file();
+ 
+-	return res;
++	if (res < 0)
++		return PICK_RESULT_ERROR;
++	else if (res > 0)
++		return PICK_RESULT_CONFLICTS;
++	else
++		return PICK_RESULT_OK;
+ }
+ 
+ static int prepare_revs(struct replay_opts *opts)
+@@ -4960,37 +4971,47 @@ static int pick_one_commit(struct repository *r,
+ 			   struct replay_opts *opts,
+ 			   int *check_todo, int* reschedule)
+ {
+-	int res;
++	enum pick_result pick_res;
+ 	struct todo_item *item = todo_list->items + todo_list->current;
+ 	const char *arg = todo_item_get_arg(todo_list, item);
+ 
+-	res = do_pick_commit(r, item, opts, is_final_fixup(todo_list),
+-			     check_todo);
++	pick_res = do_pick_commit(r, item, opts, is_final_fixup(todo_list),
++				  check_todo);
+ 	if (!is_rebase_i(opts))
+-		return res;
++		switch (pick_res) {
++		case PICK_RESULT_ERROR:
++			return -1;
++		case PICK_RESULT_CONFLICTS:
++			return 1;
++		default:
++			return 0;
++		}
+ 
+-	if (res < 0) {
++	if (pick_res == PICK_RESULT_ERROR) {
+ 		/* Reschedule */
+ 		*reschedule = 1;
+ 		return -1;
  	} else if (item->command == TODO_EDIT) {
  		struct commit *commit = item->commit;
- 		int res = pick_res == PICK_RESULT_CONFLICTS;
-+		int to_amend = pick_res != PICK_RESULT_CONFLICTS &&
-+				pick_res != PICK_RESULT_DROPPED;
- 
--		if (pick_res == PICK_RESULT_OK) {
-+		/*
-+		 * NEEDSWORK: Do not record the commit as rewritten when
-+		 * continuing if it was dropped. Does it even make sense
-+		 * to stop if the commit was dropped?
-+		 */
-+		if (pick_res == PICK_RESULT_OK ||
-+		    pick_res == PICK_RESULT_DROPPED) {
+-		if (!res) {
++		int res = pick_res == PICK_RESULT_CONFLICTS;
++
++		if (pick_res == PICK_RESULT_OK) {
  			if (!opts->verbose)
  				term_clear_line();
  			fprintf(stderr, _("Stopped at %s...  %.*s\n"),
  				short_commit_name(r, commit), item->arg_len, arg);
  		}
--		return error_with_patch(r, commit,
--					arg, item->arg_len, opts, res, !res);
-+		return error_with_patch(r, commit, arg, item->arg_len, opts,
-+					res, to_amend);
- 	} else if (pick_res == PICK_RESULT_OK) {
+ 		return error_with_patch(r, commit,
+ 					arg, item->arg_len, opts, res, !res);
+-	} else if (!res) {
++	} else if (pick_res == PICK_RESULT_OK) {
  		record_in_rewritten(&item->commit->object.oid,
  				    peek_command(todo_list, 1));
-+		return 0;
-+	} else if (pick_res == PICK_RESULT_DROPPED) {
-+		if (is_final_fixup(todo_list))
-+			flush_rewritten_pending();
  		return 0;
- 	} else if (pick_res == PICK_RESULT_CONFLICTS &&
- 		   is_fixup(item->command)) {
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index f0e7fcf649a..1d09886ea35 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -274,6 +274,18 @@ test_expect_success 'rebase --apply can copy notes' '
- 	git reset --hard n3 &&
- 	git rebase --apply --onto n1 n2 &&
- 	test "a note" = "$(git notes show HEAD)"
-+'
-+
-+test_expect_success 'rebase drops notes of dropped commits' '
-+	git checkout n1 &&
-+	echo n3 >n3.t &&
-+	echo n4 >n4.t &&
-+	git add n3.t n4.t &&
-+	git commit -m n34 &&
-+	git rebase HEAD n3 &&
-+	test_commit_message HEAD -m n2 &&
-+	test_must_fail git notes list HEAD >actual &&
-+	test_must_be_empty actual
- '
+-	} else if (res && is_fixup(item->command)) {
++	} else if (pick_res == PICK_RESULT_CONFLICTS &&
++		   is_fixup(item->command)) {
+ 		return error_failed_squash(r, item->commit, opts,
+ 					   item->arg_len, arg);
+-	} else if (res) {
++	} else if (pick_res == PICK_RESULT_CONFLICTS) {
+ 		int to_amend = 0;
+ 		struct object_id oid;
  
- test_expect_success 'rebase commit with an ancient timestamp' '
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index ad7f8c6f002..51991956d1d 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -306,6 +306,29 @@ test_expect_success 'git rebase -i (exec)' '
- 	cat >expected.data <<-EOF &&
- 	$(git rev-parse C) $(git rev-parse HEAD^)
- 	$(git rev-parse D) $(git rev-parse HEAD)
-+	EOF
-+	verify_hook_input
-+'
+@@ -5008,7 +5029,7 @@ static int pick_one_commit(struct repository *r,
+ 			to_amend = 1;
+ 
+ 		return error_with_patch(r, item->commit, arg, item->arg_len,
+-					opts, res, to_amend);
++					opts, 1, to_amend);
+ 	}
+ 
+ 	BUG("Unhandled return value from do_pick_commit()");
+@@ -5547,7 +5568,15 @@ static int single_pick(struct repository *r,
+ 			TODO_PICK : TODO_REVERT;
+ 	item.commit = cmit;
+ 
+-	return do_pick_commit(r, &item, opts, 0, &check_todo);
++	switch (do_pick_commit(r, &item, opts, 0, &check_todo)) {
++	case PICK_RESULT_ERROR:
++		return -1;
++	case PICK_RESULT_CONFLICTS:
++		return 1;
++	default:
++		return 0;
++	}
 +
-+test_expect_success 'rebase with commits that become empty' '
-+	cat >todo <<-\EOF &&
-+	pick H
-+	pick E
-+	fixup I
-+	fixup H
-+	pick G
-+	pick I
-+	EOF
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i --empty=drop A A
-+	) &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<-EOF &&
-+	$(git rev-parse H) $(git rev-parse HEAD~2)
-+	$(git rev-parse E) $(git rev-parse HEAD~1)
-+	$(git rev-parse I) $(git rev-parse HEAD~1)
-+	$(git rev-parse G) $(git rev-parse HEAD)
- 	EOF
- 	verify_hook_input
- '
+ }
+ 
+ int sequencer_pick_revisions(struct repository *r,
 -- 
 2.54.0.200.gfd8d68259e3
 
