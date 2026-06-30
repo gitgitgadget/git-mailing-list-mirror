@@ -1,80 +1,81 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5626240683C
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA6F40683C
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782820102; cv=none; b=TtWq2wA5hMScGZI0SIMXlyrPYnzbEfU96YjaLGGH+Q9vUgptptXHsglRjSrG+NmIaO+gWedc8j1Jb2CKaRXILDNcZyTt22+eft0fKf/Cesoh7cFs7tDA9FPQrLLZjf8AR0GWuyv8VQIHLZPy7ajV4+h2+oWv5eAtv90iRMEp7Uc=
+	t=1782820105; cv=none; b=bUXXkckX4w9WRnq/4kMyBnWQi456Cy3kELI07D97BXon/WBnH4Z1nk+/a5zUZlgU4Yzb4le5kGYXFPX6k/HSxs5n08mQGtuIUB3g0n4GQ3eorHDb9Yg5NozH3RLd2ARSlvXh7Ku1jsFDNeQ4+euL3oaG2iJsif0XplaCW+QWujM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782820102; c=relaxed/simple;
-	bh=e0HIyOlE0ACG9oJeF+Ib2amBvbAkCdnDU5B1CY7Dbqg=;
+	s=arc-20240116; t=1782820105; c=relaxed/simple;
+	bh=gQoHveg6MJHOf3py8uL1Ya4rB3c9I/dgZ7/4GS0LV8E=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=g/85Q2q2P/w//0o+HxDWhCDj0QPfYxcu/xolYCqRDHWevNoX+jdGAmEM529RduvAK+niA55H4kU4+7ZHxQKedS+Z8hOJKmDLBFhTWJKTBa2nMcaywMcD0uENsxG1BuvORuDIndSHEiKy6XSzPSXQuC1470a4PhfbY5CCht7t0Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TohxKlzJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xxh3ocKM; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=FzeKQG3oRh2VZ9TKkPMQ+6/Q8Q+/4pwc2kDCTWXOgNaBK2aXyvZp5rRbWLTSaWwhCgATYvyRKdz2x31OHNvOtUyUaz+tiXTsQkC/d8ZJTqoQNYGPo5KMK66n+PE3J1iYbDG5EeI3h6zt+DkddMM8mMDnuzPJmk9vgzLBVWRzy+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e3vUddIs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JWl/HQhs; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TohxKlzJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xxh3ocKM"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id DBBE91D00132
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e3vUddIs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JWl/HQhs"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D28ED7A00F1
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:23 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 30 Jun 2026 07:48:20 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 30 Jun 2026 07:48:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782820100;
-	 x=1782906500; bh=OnxtLQ8uEdcSU8PaFZJGk5HfkQLdoCfm/kcr4m8RSEo=; b=
-	TohxKlzJyrUXewKCyqh9YPwKT9RbwfU5pXe+e4KH60hn5O5KBSpDdWxqs/YbpiLf
-	vHEhhjfUkqvgDdtxYfDotcAEOrWNKfA7bL05ifXxmrrL56PoTAx8EFQyXjx9BMw8
-	rpoabkQ+OtQnPWuQ6iXYvrz8Vl+/7zuIPYtTApdD5i/RrM2uVkJveCDsz0a5xjPY
-	/EQs1J18UQ8bO2mOZYjk595hzXYSHbejxq6EuT9TuD0Jkl5v4kMi80e7Zqy5vgC3
-	hel2+Y0LR1JOymLSPNFlMWwv8n/f6vzFeahXWsmFUH29xRbYt7v7ynT7lfrJRz+B
-	+rgfUAcGeRYMQcjisaMF+Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782820103;
+	 x=1782906503; bh=aFLUH5xv6cZIa6hjXAaLnw4G1GbFEukOxFJEtzb1p3I=; b=
+	e3vUddIsJdrbHO8M97AV34q/lQ3UeTmQHArxsHvtMALejAeT06uGkSIMH6RkqqVD
+	BwqiTBOE1aOEJ54Anuhfn6E/YlDoKx3XKgLx9UPT10XdSqR5w1SupRu0+BMQBWG3
+	1mU1244/o+MbmJfIPnpQ8oiAOCUbh34tmM0TLaMIriNWXwBoNGgJ12h4EdzNtJFN
+	4v5qjuK1WpHaI6BQpt9+4ZDMiFpy5iOeWM4tDV6tp4CtQ/QosErQXKy+WJ0DVEjr
+	IVu9KGqsEPZRLzymulHQm17insPqwcx+Dyegw+kOALj0LZeYajOtxV0Ij3RQInaC
+	L/tHucexc0SvZt6ltIWw/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782820100; x=
-	1782906500; bh=OnxtLQ8uEdcSU8PaFZJGk5HfkQLdoCfm/kcr4m8RSEo=; b=X
-	xh3ocKMXQ2LhgbsT7SkpN00U78Beeh28bWPh+4Lnb1dGiZkAMxd/yTkfhqL22A1c
-	g0bzQ3tPT32FaW0Dc5YY1kdTrfVhS5ow2APlfjA7r7RKHazEN31XP5oB7ZMZyigE
-	ALrFJ8jRZcdctemoBQkr5Q7Rhq5Zm8eigLPnZIH2uhqS7Cb7t3pvRS1RFtGOZklJ
-	2GBBCj6ccO66MUYqrvSA6fQmby8vMmmVPdaOoxWLtonnH0X5IGLhkheIi3AYOV5/
-	OrzZHrzicPeMqUiNShl41ec1ML5RSDWghjTUOGTjjFFyaTZ6UOj+VkWSXJbA98zU
-	iUppHhVPv8nJlBiFrVWtg==
-X-ME-Sender: <xms:BK1Dat7E3VT2qonbT1dfO_zQo9NRnW_yQpshJYCO4KkF9CkbEIHESA>
-    <xme:BK1Dah1blAiMvdzQzAMR10D0b_cejk-AIoYDb6qO1NiqAUhQrkYMYOGENjDFHWiBQ
-    AsWyoNEj1L-KZGs36hVUDMs0V7mMkjK52fJuJY8pEDrLkwgLDSbeQ>
-X-ME-Received: <xmr:BK1DaqFE5ZGGxuhzxYgQZzTiH15CrSGlo3QnG9LctwCO0RjJP_tCB6iqqlZ0R1ix5rhKbkKK2MR2jw2mUc9QCuCEI7whnl3KGkLn5XJQsbdCpA>
-X-ME-Proxy-Cause: dmFkZTFDZ8EBIRkLTKt14TuSGr1p9PVZekTad1c/wqf+J4rUdU57yUeNCpU56+znu8nsjb
-    fYDR646+CJ3TGFv8kQTHR4VNBrT/tkMeSXjzT67aaHpKiIdg7Ex7ASQFMr3pvovOMeWRc2
-    b+Hb+9BEYhuDH+pmqgJy7oGhS1oPcxj3Hy28pR4Uz81T3ewRUNKEnbf7HExREqmx77S7CO
-    8q4+s9ohDmUs11CzmmSQpKP0fvZO9hDzS3HZYuZIL2rRpsr/my7MnY/OfRKNFc3m22a8aE
-    0HfNWlTaLhp/UB/uVY+/uRI7kUgfffb/QcAn+DT1zAl/2aW3MU8z9wRoF8TwRTtj2JqpL7
-    pH33r1qstpTW2ZTvMkwgmdLprb/kdNGDqNUaU4BNyQKRkgj16/tIHOFOMBylCfqk+DzRO/
-    n1/QYuePTzaMx6JcP937mF5SXV/TZ8fRCwChwyfIsb7pCBoxiaTE+HSyYKdKSBWPVLHk4j
-    yu02qn1G2L+inX85tyQh06tg3QjuO6i2ywySVymGzY6fiT/uRz/zU13SHO6DnaWJT5pwV6
-    IECKRuqN2ccbUejhaxLAj1jd/o7sTL4sr5ON+HZ5o+myIc1uxH2P1frs49tXzzNOIOv4T4
-    frohvCFipWW8Bpv3Ss6VlKJtNIBxG13sjijLY4exRS2O1JQ5fG+3I0ZyswPQ
-X-ME-Proxy: <xmx:BK1DarRfKGU6C1OyfjYpKnz7vY9yfDPzpQXcmK7w_8_VasMQgWt40A>
-    <xmx:BK1DahBtQUvMYvIz5UwqPDyKDC7tdjGK-VRAqO656BrS-gZ9BWU0nA>
-    <xmx:BK1Dar28Qv-qtjcH1RpdeIxwXmEe9dqQ8S6qrozWbWxoCqrL2IfKZw>
-    <xmx:BK1DavUzN5hrYxby0jUYVeW5bTrgNZznZFHQfogMqnXW0CeJnV5jYw>
-    <xmx:BK1DaiYEhD9z4fu07vykSbFj0KW7oEMMsRxnm3qMGqPO4ypTTiC7u1nE>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782820103; x=
+	1782906503; bh=aFLUH5xv6cZIa6hjXAaLnw4G1GbFEukOxFJEtzb1p3I=; b=J
+	Wl/HQhsiWmRLBkjvVrCDP0z5HhJN/RLLYghdrmAAFSZ3b7KEKgJiKfJlp1Nz4h+m
+	WOS+kRRHEtBsAR/71pttAUH2SHHmQAMpipUS+rlxqWY8OundTE2n4uAnoiIQIT18
+	3rHkFk4g+HWglpIvFUx/ix5AFKZl/r4bsdijxrL0ovZhwLYRXhNUO6EyZzDARa+y
+	32BypkO848N+vDbcnwaXpyHwrTFJvTuI9hPOaQAZBVJ+TiutvuPSav57txlGC/JC
+	gLMZt+Xn54u466kcDb3uvP4r/9noGcjEkI9lc932sa9JwgBkU4ZClHIJ4Zarhoi8
+	C6D2Hj6a8vgG+cptJKT2Q==
+X-ME-Sender: <xms:B61DagEEX2wlbPD_MA4tka8bDw4XQ9ifN7WqzLRGJ3ey9y0DC2NzWw>
+    <xme:B61DagSvmbdLUIKS_W6VxdHX2tZHzns47nIIhBHiM7rS9ZbFP-e5anViAT4ztEu2v
+    pYR2qMrpvouDJTyez9IC8DtaYJM1LxktLXIbh-7pVOhJX5LxGqx>
+X-ME-Received: <xmr:B61DavyHf4uO9GYUB6Dbb1l0Idj3CLn446W6qrgBVJRUsIl0dJaQhsgMbOzgBUMBSyCb9rIo4Ar5bf0jxO0xNj-8Zn_5O-nDtKdGNenui8WKVA>
+X-ME-Proxy-Cause: dmFkZTFMj0npvFJ5xMu5TnTZGwl/kjNgIE3c+0+JrvywJVsBHvwNH0JmEkV9/sHb7KtHci
+    MWHt4fCw++BHgU20LsJIOXEGWWe7laoLapVct5ezFWgUrSK246UxYzIlrE931fJU7zptCb
+    Kt8ycW9gOfxVEBILBMqaO/gR7ZjX830aRvEzgMVkDX71WFJ1OAahhczPptAaL8l+tOR3ej
+    9r8uWRRiGNgTXQd7Q16Bn4Ti/3nvp69LgGzwNNdE7d9Zs6RyP3ilqh9SA/M1mBNs2+qPBf
+    vwS5f4zH1TbnYNSv0Awptv9a5rucDDTqwCIXVp+kgUqtQvSOo6yzZiVbOAfdN362M5E2Xe
+    G69II6221dJKVADa4+R721a1q4qsP5v3z991+JPJPERGAUdN2Af+yis9HH8hjBXbYAfLL6
+    tiTqxPgnwEBkFZYEELCSjX7G+JEhJ7CpnB2pNwITlZ3DjBLUV/OaousLuxKizeSYiYzZR0
+    xrgSXYRQ54dN3zAkLPN2FY1YPIojn7I/dUFbRAD1KMjdakztU91tutl8BGZdViWA/3fNsT
+    AWxAifiCKbJngACQyFRaeJAyZc6YwzCUVRld2GlItuT9rNYf7r4LkWZu6fKGOnQMC9PKk8
+    TXU7WY/ysGuBwSWGqb4fD6Mfz5R/BZq+jW6Fd7onIQB9bGPzBysrxSmHvddg
+X-ME-Proxy: <xmx:B61DanPPPkbgTz4biaWC2XevhtFGqbWPVZAFS5SSxZ34Yl3jGu8IEg>
+    <xmx:B61DamObSPB_WxXVkcWMOHg8yPCLItHm-1qWZZLxtxbc_CXRiuS5kw>
+    <xmx:B61DahQIdGUaF109V2u7IRFoxcBpLVSaL2Y-okYtmXapftEclxgOlQ>
+    <xmx:B61DagByGEtQ6SKYojJbKFz_gGkSFGnq92Oo1gFRB_-sSEos2Ua1FA>
+    <xmx:B61DaqXhodXAgpKYxtX8efjnN7qyFLRYTufe5_TFjUj__kWqfWcC_n66>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:20 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e0f4fe72 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id b92798f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 30 Jun 2026 11:48:19 +0000 (UTC)
+	Tue, 30 Jun 2026 11:48:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 30 Jun 2026 13:47:49 +0200
-Subject: [PATCH 10/13] setup: make repository discovery self-contained
+Date: Tue, 30 Jun 2026 13:47:50 +0200
+Subject: [PATCH 11/13] setup: drop redundant configuration of
+ `startup_info->have_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,119 +84,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260630-pks-setup-split-discovery-and-setup-v1-10-13864eb5a032@pks.im>
+Message-Id: <20260630-pks-setup-split-discovery-and-setup-v1-11-13864eb5a032@pks.im>
 References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
 In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-In the preceding commits we have introduced a separate repository
-discovery phase and refactored the logic so that we have two clear
-phases:
+In `init_db()` we set `startup_info->have_repository` twice: once before
+reading and applying the repository format and once after. This is
+redundant though, as configuring the repository format does not rely on
+this variable at all.
 
-  1. Repository discovery, which doesn't modify the repository itself at
-     all.
-
-  2. Repository configuration, which takes the information we have
-     discovered to set up the repository.
-
-Extract the first phase into a new function `repo_discover()` to further
-stress these two different phases.
+Remove the first such site. While at it, fix up formatting a bit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- setup.c | 43 +++++++++++++++++++++++++------------------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ setup.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/setup.c b/setup.c
-index fc73276149..7715f3ea85 100644
+index 7715f3ea85..4f37a7b642 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -1922,20 +1922,10 @@ void set_git_work_tree(struct repository *repo, const char *new_work_tree)
- 	repo_set_worktree(repo, new_work_tree);
- }
- 
--const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
-+static void repo_discover(struct repo_discovery *discovery, int *nongit_ok)
- {
- 	struct strbuf cwd = STRBUF_INIT;
- 	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT, report = STRBUF_INIT;
--	struct repo_discovery discovery = REPO_DISCOVERY_INIT;
--
--	/*
--	 * We may have read an incomplete configuration before
--	 * setting-up the git directory. If so, clear the cache so
--	 * that the next queries to the configuration reload complete
--	 * configuration (including the per-repo config file that we
--	 * ignored previously).
--	 */
--	repo_config_clear(repo);
- 
- 	/*
- 	 * Let's assume that we are in a git repository.
-@@ -1951,19 +1941,19 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 
- 	switch (repo_discovery_find_dir(&dir, &gitdir, &report, 1)) {
- 	case GIT_DIR_EXPLICIT:
--		repo_discover_explicit_gitdir(&discovery, gitdir.buf, &cwd,
-+		repo_discover_explicit_gitdir(discovery, gitdir.buf, &cwd,
- 					      nongit_ok);
- 		break;
- 	case GIT_DIR_DISCOVERED:
- 		if (dir.len < cwd.len && chdir(dir.buf))
- 			die(_("cannot change to '%s'"), dir.buf);
--		repo_discover_implicit_gitdir(&discovery, gitdir.buf, &cwd, dir.len,
-+		repo_discover_implicit_gitdir(discovery, gitdir.buf, &cwd, dir.len,
- 					      nongit_ok);
- 		break;
- 	case GIT_DIR_BARE:
- 		if (dir.len < cwd.len && chdir(dir.buf))
- 			die(_("cannot change to '%s'"), dir.buf);
--		repo_discover_bare_gitdir(&discovery, &cwd, dir.len, nongit_ok);
-+		repo_discover_bare_gitdir(discovery, &cwd, dir.len, nongit_ok);
- 		break;
- 	case GIT_DIR_HIT_CEILING:
- 		if (!nongit_ok)
-@@ -2013,6 +2003,27 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 		BUG("unhandled repo_discovery_find_dir() result");
+@@ -2847,12 +2847,10 @@ int init_db(struct repository *repo,
+ 		apply_and_export_relative_gitdir(repo, real_git_dir, 1);
+ 		git_dir = repo_get_git_dir(repo);
+ 		separate_git_dir(git_dir, original_git_dir);
+-	}
+-	else {
++	} else {
+ 		apply_and_export_relative_gitdir(repo, git_dir, 1);
+ 		git_dir = repo_get_git_dir(repo);
  	}
+-	startup_info->have_repository = 1;
  
-+	strbuf_release(&dir);
-+	strbuf_release(&cwd);
-+	strbuf_release(&gitdir);
-+	strbuf_release(&report);
-+}
-+
-+const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
-+{
-+	struct repo_discovery discovery = REPO_DISCOVERY_INIT;
-+
-+	/*
-+	 * We may have read an incomplete configuration before
-+	 * setting-up the git directory. If so, clear the cache so
-+	 * that the next queries to the configuration reload complete
-+	 * configuration (including the per-repo config file that we
-+	 * ignored previously).
-+	 */
-+	repo_config_clear(repo);
-+
-+	repo_discover(&discovery, nongit_ok);
-+
  	/*
- 	 * At this point, nongit_ok is stable. If it is non-NULL and points
- 	 * to a non-zero value, then this means that we haven't found a
-@@ -2104,10 +2115,6 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 	setup_original_cwd(repo);
- 
- 	repo_discovery_release(&discovery);
--	strbuf_release(&dir);
--	strbuf_release(&cwd);
--	strbuf_release(&gitdir);
--	strbuf_release(&report);
- 	return repo->prefix;
- }
- 
+ 	 * Check to see if the repository version is right.
 
 -- 
 2.55.0.795.g602f6c329a.dirty
