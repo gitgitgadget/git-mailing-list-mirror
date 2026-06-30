@@ -1,118 +1,130 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8700C78F2F
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782804039; cv=pass; b=c62zp3tUvNPwF9ZgQbQtj/DpR0FAXhc0zXeQCdn+kvgMEpFUJyIMzqS/X8Jq713h03lVEb5adUfHoG2nVe+6IN/+oAlJRXTiYFpbZ9rdM6lB8MhfxczpWqTlSNCKmvEmpy7/8lpqHXpLJzUBnKLA+w6ePyQitYlOHZDSVPEu7Nk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782804039; c=relaxed/simple;
-	bh=4/3m61EOba4W99GuqCr14a63RmRPUDllDMKjkzyzVP8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ahzYtYjUegnVQ2qstcfkNZ2oxj+py6pbkEpGXcUJ7kvA6QiPQLFLh2gE2WlnrhFxbfBW0m8NmgFIik5SD+eG+tzwS0Z4SBqGxwl7JpW/al94R+Cs5pEPsUcxfJwcMeBWpCTrVNRP4DMVUma6DFmc1Rct5LPhHhkRlDtAhw1nC+g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkRNL8Vm; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531E31A682A
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782807526; cv=none; b=LADrlU+Mz0GsjQ5Qlc7ZNFIIF9yg63axQoHv9oU33hiQtMvUDWCh09iZmQbpd4PUT3dhAUSGp8QiSm4S/JAzlG3JYkYEZIZ/oux0RGh09YeQAxf7JSFQsz9XZTY//emViSuT0wp+R3yhLfh66h0bWVgpgRyPL1SGDCv4vgx+LIY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782807526; c=relaxed/simple;
+	bh=RNVVvPYZlQo6pmh+UmgIyXIkV5zS83EOIoZCBAYP1FI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RLGydKg37JiJWCSNcB5wule0oIF5ZZPXEpKOc6SCj+ixjxdcp6S7TI+Lp9Fa63j44nRgzfXMnYgXd4dPeEl+0wQl6EeXnalWNhgR4GA5ISAcSfeoeyum52m2jvGw0Po6vpfyRHekKlpNcUdX47yimkUnd+HZewAeAoWTcUBQMew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=WUHl8lO0; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkRNL8Vm"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c1276f8414bso185932766b.0
-        for <git@vger.kernel.org>; Tue, 30 Jun 2026 00:20:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782804037; cv=none;
-        d=google.com; s=arc-20260327;
-        b=oShV9ynyOux7sqqo/QXvCDAmYItafpVgvVJyyiMKsOo0j0MvViy/QHztVXRapM0Bcg
-         ihTKXKb2I5YccZKFbgoIljb3h12+ysmgoS3gePkJQDyX10qg0yJWJ62vK0k4Xs6E9OVQ
-         /GR+ZEe6ahR2hLf132rZstxexQHLzcIFgWJF5s4Nd1/5Poneu2P9lMF7dXuooQj7gGlf
-         IeeqMkDOUJcWLRdQfQEEJxkE+OKaJyqSY4l/RvJ3+csJA711Gj/Am7Y6tWiAO1CEykVo
-         NttpBY9d302iyv/G5G9kcj8AxEzpRo376MHrUqgmw8oCxRfMBgrcI6d6cnbModES93y9
-         zw9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=yG4SFGkL443P1x1eOn3E3EXNC/+9be5UFP7KoZe4GD0=;
-        fh=kmI/ww2vmK4oJ0CfE6N5YFYnMAPiQ5vDs1w14D4FBvo=;
-        b=a5We3miBEjjFsu/J36SX7lDFdvZrgaTw8F9Pfsq3oBPb6uJdcYqVgWDCb33y4vmwwQ
-         panRMSE/GxrvPgMhkSikYnnqHZT1pNcWCp2OR8eZ1l06gItRausGQwH51SZv3NVIg0UY
-         ZNdKvJt5u9u6tJ3+I5SN0ndRBiJViHe1aqhNfdcMLLpA69xfdnFS7SKjnPEwBrLhUTqh
-         GE3qAlzoTcaDC2jdXd9LGws0QahERgIup8s5bhkWZKFnjS7rJlY+BQe7D6x6ug6bEjbQ
-         DzPf4XrPg2VRZDtIPFDweGTRsy1sxKFB9USj84HET5W9VRlV8G+hc98BH3OJi7DaD0uc
-         rr2g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782804037; x=1783408837; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yG4SFGkL443P1x1eOn3E3EXNC/+9be5UFP7KoZe4GD0=;
-        b=BkRNL8Vms3EOEKc5I8uA81D3sHGzxMUOSTr2sTvNmqJWW63fP+dBkZwVkwtcoBvlz4
-         ktm6pr3w7dgNdjJvnwUmXB5Jw+nA+pX+ccfP9SJKkrRD5ckpneeMd11WgMNco6zLCjog
-         RKQsdG1t42+dxT5VkpfF7cf0aFchJhSiftTxxU3osYAfnJhZB57hvNHG77BlAhyEWTky
-         Sa8BOKE2/UfNDADlrn9G3LZM7rf9FTr/qC8OR7yK6T+kpfPlelGwyVPE/qedXoJf0cva
-         XbvEjGFRYgmN+bBQk9RKOJRdFb7KcaFx0QT/Lt+AIcEPq5VVHdp/rvjNxILHTj6XnJcP
-         3fUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782804037; x=1783408837;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yG4SFGkL443P1x1eOn3E3EXNC/+9be5UFP7KoZe4GD0=;
-        b=O3BR1QtH3mgGX5eEs79rN/ZcsZKoGyGv1aagMsvPESHF3KKCGsOpVHpghtrqOxe8x2
-         Ve6OVyv4B0YYv54s4V2k7FOyfbGPXJzxKi3CmRwMi2zxoXJhh9hFMhfuaRJqS0/QnXP0
-         SopE7LtjUvJPLCKNfHhSfP3svngFZRCJC628W0NyAomkRig5M3li9oXjmPKGIZCk/rfZ
-         1Yp6dQC206BHuaGbvVjQ22vbns/ohylUh5feq5F2cPcb/ncHnMmx53VqPIVh2Ny+poQN
-         4YCTDx9zVlNBMNv5L7usobwY5mqSGi62q2xUUY/jhUwCrbAPIbVfXR+GArZplAIwHyU/
-         1gtw==
-X-Forwarded-Encrypted: i=1; AHgh+RqYnXwgPC+lLMlMhGDmzZHJX1V/FVkzGfbIM/p8NSILiZY7Vk1JEUCBTirxApCQQB0pahQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwG+C/bsb3K2JShuk+n36J7Gu571YXgfXQBeJmafzkgf9vGJ7/b
-	i/+z71loxpvNJkg2aGiAvYIdKbIpbUsqV9TTHE8yqdwY86Pam2pSO2I4onL4ZBDlqHGe3iOawON
-	xMRgau1HPnSSFu6R6mKWRmdMsLLJBvV1i371llPc=
-X-Gm-Gg: AfdE7cka4kHLHYtNfCrUWsRI0ZswlCQ/VQ+tK1VBH3kMoVwpIAEEwpVt7FPsl304qQq
-	GhQPUlLzLaHJ0Otvt1SmuBZfjbOkuYFjQudR2EADTXb3A+70HCi6iulKU11rqBlGcxv1xdeyGWA
-	GYqswdQNNw9kVOrUxiXxN/XiMcW/Gy+3TiRQ4pp60MpHgk4oJisW/Cud6RIyO0t7AVmc/MjSwCt
-	Ef2C9NyWMuL6DCaNVayoPuyaoiDbMzZAt7Y1/x1Bf8Aq2JVoWSQwFgxyPnyOLFp+bNDlNWa
-X-Received: by 2002:a17:907:980a:b0:c11:f4d6:48fc with SMTP id
- a640c23a62f3a-c128731bd76mr93074666b.45.1782804036744; Tue, 30 Jun 2026
- 00:20:36 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="WUHl8lO0"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1782807520;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/5xvih0f0/37a0Dnc7J3+k8swNF5iloZEuc/kU8q4yQ=;
+	b=WUHl8lO04/tiLopkGu1GjAAe120S4BwSjGSdK5Iz7/qIVk57i8a9AjgyHL+PcaZj6rrCBo
+	epD3VSr1Ew8axNmhP48ba45uQn5nYIEukN1a0QSLgqspKAApNT7+P//vPw1fnN/iHIPHyz
+	cKOsURKfmffpmF0yg270iB4bQRsWGW8=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] odb/source: generalize `reprepare()` callback
+In-Reply-To: <akINy-hP5EPD4Y4e@pks.im>
+References: <20260622-b4-pks-odb-generalize-prepare-v1-0-d2a5c5d13144@pks.im>
+ <20260622-b4-pks-odb-generalize-prepare-v1-1-d2a5c5d13144@pks.im>
+ <87ldc14i4n.fsf@emacs.iotcl.com> <akINy-hP5EPD4Y4e@pks.im>
+Date: Tue, 30 Jun 2026 10:18:32 +0200
+Message-ID: <87ik704f1j.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
- <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com> <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com>
- <akIQLM6xZTHBudWT@pks.im> <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
- <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
- <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com> <DJM1N17VMUM5.3V5Y6YMFLIFQJ@lfurio.us>
-In-Reply-To: <DJM1N17VMUM5.3V5Y6YMFLIFQJ@lfurio.us>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Tue, 30 Jun 2026 09:19:59 +0200
-X-Gm-Features: AVVi8Cdpok2k5vl8itiKEXUqiWZ_cWHFzzJSAXQaZuGGMG-StfnIXgVwiTcvqa0
-Message-ID: <CAHwyqnVBEOm+FwD+i9Aa7edTvdnDPJom1zubcXgoExZnp--vWQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-To: Matt Hunter <m@lfurio.us>
-Cc: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-> This is probably a larger question, since (according to the man page) it
-> affects the other 'git history' commands as well.  When I run
-> 'git history ...' and discover that I made a mistake after inspecting
-> the results, is there a fool-proof way to undo the change and return to
-> the previous state?  My first thought was to run 'git reset --hard ...',
-> but the default behavior of --update-refs (moving other branches) can
-> make this more complicated.
+Patrick Steinhardt <ps@pks.im> writes:
 
-This is a larger question: But I would love to have a reflog that is
-more human-centered. When e.g. rebasing a series with N commits, it's
-very tricky in the reflog to find what was the state before that.
+> On Fri, Jun 26, 2026 at 02:10:32PM +0200, Toon Claes wrote:
+>> > diff --git a/builtin/grep.c b/builtin/grep.c
+>> > index 8080d1bf5e..7361bf071e 100644
+>> > --- a/builtin/grep.c
+>> > +++ b/builtin/grep.c
+>> > @@ -1361,10 +1360,8 @@ int cmd_grep(int argc,
+>> >  			struct odb_source *source;
+>> >  
+>> >  			odb_prepare_alternates(the_repository->objects);
+>> > -			for (source = the_repository->objects->sources; source; source = source->next) {
+>> > -				struct odb_source_files *files = odb_source_files_downcast(source);
+>> > -				odb_source_packed_prepare(files->packed);
+>> > +			for (source = the_repository->objects->sources; source; source = source->next)
+>> > +				odb_source_prepare(source, 0);
+>> 
+>> So you're downcasting inside the implementation by the backends itself.
+>> That makes sense, but would it be worth to say something about that in
+>> the commit message?
+>
+> Hm. Would that provide much value? I'm probably quite a bit biased here,
+> but I think that it's implicit that the backends have to eventually cast
+> the generic structure to their own backend.
+>
+> So I wouldn't really know how to clarify this. Did you have anything
+> specific in mind?
 
-I feel like branch switching is given too much space in the reflog,
-since it's not a destructive action, I don't care about it.
+Ah, I'm sorry, I misread that. I thought you changed the vtable function
+to do the downcasting, but you're simply changing from calling a 
+`*_packed_*()` to the generic variant that goes through the vtable.
 
-And when handling multiple commits in on go (squashing, rebasing), I
-would love to see a visual hierarchy (with indentation for sub-steps)
-instead of treating each action as equally important when it isn't.
+Anyhow, not worth mentioning in the commit message.
 
+>> > diff --git a/odb/source-packed.c b/odb/source-packed.c
+>> > index 42c28fba0e..fa5a072488 100644
+>> > --- a/odb/source-packed.c
+>> > +++ b/odb/source-packed.c
+>> > @@ -15,7 +15,7 @@ static int find_pack_entry(struct odb_source_packed *store,
+>> >  {
+>> >  	struct packfile_list_entry *l;
+>> >  
+>> > -	odb_source_packed_prepare(store);
+>> > +	odb_source_prepare(&store->base, 0);
+>> 
+>> Why are you not using ODB_PREPARE_FLUSH_CACHES here? It used to do
+>> before?
+>
+> Because this was calling `odb_source_packed_prepare()` before, not
+> `odb_source_reprepare()`. So this was calling the non-flushing
+> variant.
 
-Harald
+Again, confusion on my end.
+
+>> >  	if (store->midx && fill_midx_entry(store->midx, oid, e))
+>> >  		return 1;
+>> >  
+>> > @@ -47,7 +47,7 @@ static int odb_source_packed_read_object_info(struct odb_source *source,
+>> >  	 * been added since the last time we have prepared the packfile store.
+>> >  	 */
+>> >  	if (flags & OBJECT_INFO_SECOND_READ)
+>> > -		odb_source_reprepare(source);
+>> > +		odb_source_prepare(source, ODB_PREPARE_FLUSH_CACHES);
+>> 
+>> I think the new code is correct, but why wasn't `packed` used here in
+>> the past? The old odb_source_reprepare() expected a downcasted, didn't
+>> it?
+>
+> No, `odb_source_reprepare()` is the generic variant. The naming schema
+> is typically:
+>
+>   - `odb_source_frobnicate()` for the generic variants, which receive a
+>     `struct odb_source` as input.
+>
+>   - `odb_source_<type>_frobnitcate()` for their backend-specific
+>     implementations, which cast down the generic `struct odb_source` to
+>     their backend-specific struct.
+
+Yeah, I understand things better now. Thanks for clarifying.
+
+-- 
+Cheers,
+Toon
