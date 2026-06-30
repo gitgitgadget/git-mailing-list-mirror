@@ -1,84 +1,84 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F214C38C41B
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D2E403AF8
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782818936; cv=none; b=Ll2rrtIttUcTPZ8sbkh6jZn+5G+bFYM3YGLecokCyExlEgn45sqCh0GHBf6vUI+WBKKsX8evTfkk23wyUxQ3v/VEbXRw4DHGgtOVIohDs3cybnwS+5Gcj0Yiu9m+ujwawvsu925m+ptPQxcNBdLdazZqNGwQqIrWhuq5csekeeg=
+	t=1782818941; cv=none; b=NTi0uYuWw3VqsadOs2oQgjN7KfuhmVf8ZRnREK8W7AF7wRQ3MM0Hh9/TWHKtj54kO+rKqHw/l/PZbDdmnm5DwYNalcaeC1dzZxo0foxE0Gaat3wkFU6Fm8wtxfkbWVQyPjEPurEU/PuNn1G3oVqAsXW0LjQJvpcuVrjtaU/Ji9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782818936; c=relaxed/simple;
-	bh=/24Bgjzs9EAZyOqqUibAV8I0MV8cCHQQVhYq7eOc/Tg=;
+	s=arc-20240116; t=1782818941; c=relaxed/simple;
+	bh=2CeJta52bUwrcgifrmtpMLIA5Mh41Bby+TdfmQXPvHw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KQOxY5F6hKFgQBrp7pIu3tXh69BT5Pm7e2LCJgnvF0QUcL+7Bc+jH+SMFHltD+RN+daPR7IgyZHfWkJbGiIv1rm8rDcTMFPmr576LMU2+4mL2QBmsUaMmpx5GfFblhbYzlqCy0SFJx+ctlmbXncN/wq2aVMES6A4qDWvA2G2gdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fDUeXnve; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aPG8JUXA; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=VNkGDEiNHhRlZM1Gopntg8eZ9LgAD6Xc53mjj3awj6eGxFAJIzhhPVQfzYTXO0ZoT9EFeRGKhujLwXq4g7Jl7W5dv4rr49Pwhk+/wtMnhfzsp7Ui06kzQ8AlOe8wAy2BN0hWfWRNsdiSswElOpASpHJJw4Z+ueJ9vzJHU7Ir1zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tCeFiEih; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cWLl3jN0; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fDUeXnve";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aPG8JUXA"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 645491D0010D;
-	Tue, 30 Jun 2026 07:28:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tCeFiEih";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cWLl3jN0"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A29237A00AE;
+	Tue, 30 Jun 2026 07:28:59 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 30 Jun 2026 07:28:54 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 30 Jun 2026 07:28:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782818934; x=1782905334; bh=cYOil3/MV9
-	Gk1BvgISFxOSvInFHIyL3UwQ8pgZ2JmbY=; b=fDUeXnve63F7urK07SqY0BQ0y/
-	xbxYyUaIlbP/tUw8DgBUfv3qOMQIOI4GOGUzFer4S9RgKt5hmFOqWxTBGmqBOtGk
-	kbXTcBXSCOs4EZX6P9UUVukhGH8aHbkX5fx7s00SU8KzR5MP/Doam0JSflhcOBxF
-	Jtn3hGS78Rl7q14SoVFCRsVGWHG8OfLuqN1c9NIbKaGlA0/HUKtQNyYezUEGe6+n
-	QH3/5t0aSef55u+e02buMiPfEyk8lkFWKm5ZtVzIxpratkEA+fS8jRnk9uo5dzgM
-	cudvJkC7ufiFaZCRI/rc243e134wCwXObMKI9xEHp4mxNubyn4Pbtlytoxug==
+	:subject:to:to; s=fm1; t=1782818939; x=1782905339; bh=1TtFDbdQcg
+	uaGpD8qqX0andixgjt1f3uL3XYTwbi2lA=; b=tCeFiEihZgCwO1r9WVWKVPTuC0
+	vf370/9wFQv4BxrJ7yrVMcrPiyrQw6SfZlInT4sxz7X7w0jsoe3NwES6QfvYr+g+
+	Kpy17YuRK+Bn38YJf2iYGSHuIjJ8XJwTbsTh8zGzh8vfhstlrV+KLkfZfZwkxTBK
+	jUFSJeeDlQvl8vkwy33b4WSarww+m7NwbqRwE8U9zoZo6ZzHjYGxNuh6E2P/ZcrO
+	ZLgJzsqLxqdsoEkZvEN8J0wmkXz/jx+VyZmUkHyOICu9ARtRz3PM/XA/pZ3QUzdz
+	GnggwBDgxbWdenGQ/194Z2qr3POL6yLMDHon9mgMRsUTH6IcFscdR1ncjbSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782818934; x=1782905334; bh=cYOil3/MV9Gk1BvgISFxOSvInFHIyL3UwQ8
-	pgZ2JmbY=; b=aPG8JUXAWIyNAvP1BMADgmRIbPT8PNoUtFBSvxuoGIgkYC1Z3sx
-	a5WmY+xEMjewFICT/+3otaGyhvRMUNobtc70YWyq0Xz+DjE2MSUnLvO+bh8pcidC
-	ryS1kHxigPfIq8Ho2WRsfyo+8Tj2YdfPktrLywxqgpF//eTkhs8+iHS1im0l9qVj
-	eXuBwUHy+SBvnSmNCqMvBMt8VkVEURZ1WCNSA672dcgu4T3IBTruHR6zzn8iy61f
-	KhgEbgBir+DZQbS+79Opg3rBpAsRD6jBLo90n/imYL0aEiOi2g5rWvAl8J6nfZiT
-	HY9HNXcl1bGDWz+ycuy/yokMZN5inBtPFwQ==
-X-ME-Sender: <xms:dqhDaqAf8O90dhBhzZyASQ-qgoKgOmmRHPgsy2CX6k73lFNL2FyECw>
-    <xme:dqhDaqjWuqWqq5a3TwduH8Yfddje8oUVb0AsgOPcd2U-SIKnD19EqYA6B-cTwUWjz
-    betOkzcAjXvjFG_KgASczDnJoufGGJ65mXfLd6LPWdlyqYM2rXn>
-X-ME-Received: <xmr:dqhDarNLkTRMSv1Pi4j872GRuffDcQH6_ifMz5iO2GxfXvPrdWHPgtpORrHpmYN6m8HFUYkBV-DP_v4U-0Eu0gU_gwl3kdeJfUFBvzHCvL7-Mg>
+	1782818939; x=1782905339; bh=1TtFDbdQcguaGpD8qqX0andixgjt1f3uL3X
+	YTwbi2lA=; b=cWLl3jN03F2lAfZd1LBdB0f0Lxj4JoE0xighkTFKM5Eap7gvcH/
+	AwFxRELd++RuxZHyj8NJLt8qZzEajfEbhMnGe6GimHCcm5R9eLFPMUu/NbfFGT8D
+	xRW/GcOH3J1mFFr44EFwB/jEqJVyrHacWc+DIMTKCGPNh3creipQfOmWmNOvnNVJ
+	WSNV64tNV6kqhYIJOUtWSUsTiyVU3VH8xOEjQQe39BRzzIR/WzNlnEHCBo6/gggj
+	4YGWJuoeWIIPHuZnAX0WA6Z7JOPj+y3l8DpV9yrpT6KPrEVySjDTf7GhnTmNt4zh
+	1wIDWbJd1eWuEX9Pc+w7nQcksSFLxxDH0HA==
+X-ME-Sender: <xms:e6hDapuhGSsW3um3mrjAj0zzTOKeEBmK6iWuUgddhkzYlo6iZkRiOQ>
+    <xme:e6hDap4I0XdhUNtN3SUIwM6avzopy30XbIumgUXwvFZt_7ef-zNlgM69LMjhd6gjM
+    RRM0Te9U1hJOCuTed-8LNaVzSg4D11nbIUdqfRa748QxEdQiZaO>
+X-ME-Received: <xmr:e6hDaqKn5PuHrCJ9SCOCwLeC-0F4pTlxtIA_omiLr7wqr278SEBv50XdAu4QBjFRrtVI8KwzDoRymMPhWi5jRveJ3DcJCZmwNWO6-QEGN6HIHQ>
 X-ME-Proxy-Cause: dmFkZTEP8gyq1rVzNUn/0HjzBgz/9Moq2/c6+W0mF9K0Ur2/hwLPheqCVQEu5fgPUN4FUv
     KL9FS2wCbLmGf3oA7V9vdLYWMhI2ns7FXSZcBmZKBSC57HkBMlLb3tLo3UyLnkeELt8E4U
     7Llf9equv2aBCztzVBoZccck+q6kuD5Zbp+HYjJXvwHnwYNLkEf7ffSaIaALO1PcneiGxm
     TVYdFmNxbtxftw6FevYNH0+s27rskKY6UD314Q3eHcZWTHlugfW/L2NOxqKFOUAggwBC8f
-    oE+0u/5jMDTyE6Jah3UOv7BkNTE/wsSTDSV/6ccYOyAL1lRC+ISqV8SogYASQzydVjJGld
-    yGrjnnbMlKxlZQsyLZYmyJff5rVMJq/m4ZJJ4lZg9gonx+eNwZ9zl2LDvLI6Dt4Y0+R1lL
-    E261wPinLLJXdiEfZRBhL8tFtLjMMUk/QxYaOKzXCApooOXvMdKAqoIokJyAHgM7TZYjNK
-    T8fh5m1q9ZUPLxU+tgXGHkuxdiDXcd/CwfowRqZqrIcaW/43KfBNk77jUstBCC0TyPHISr
-    ER35LGR7ZqeBprtUGhqezCRYOagJ55ykPh16uqAJK9Ialt3VN9RL9+tRkod846YlYN6nW6
-    mIn+pQ9ubKD0BC++8bXpquTaMwESo+dQnA86pl0//qfhFPiSySngroJseeIQ
-X-ME-Proxy: <xmx:dqhDaj5WvhbN1SJE-olM-PUPa6JNnDE_H2o9hLKMs9lnvNggklhKbw>
-    <xmx:dqhDah3qdN-IIBY2KRYs7q4a3Gg5B5WbtfdgekdwHqA2VwUQEPbbEg>
-    <xmx:dqhDasanccU8FWzTZRnfkgIUVPaA4fF6208vT8gvDW6uUA3NKDmCkA>
-    <xmx:dqhDahAGPWg6wicDZNOg5Hhsbk10w6qpo4laxmI7LVGWcN8WmcI6Ng>
-    <xmx:dqhDapwU6FFNviD1IB6jg9E0e_IxncTPQm2aC5HTKydJurqiBQGzmSy4>
+    oE+0u/5jMDTyE6Jah3UOv7BkNTE/wsSTDSV/6ccYOyAL1lRC+ISqV8SogYASQzydVjJGfZ
+    5gQyBveZQtAzKv5xFWQSDv9zule1ajxAr6s+F2oK776XFlC8+epZNRetNrkToS+Oypobei
+    k0odoEngiWGwjVNmMWkN3QgeEq8cVMqMdXgwVBaZ+9QwVknY5tGeDGrSWTxJcg2L1xd6L+
+    lYRx8ZtEKsq3bShgj4kWATTFKFRWEOmOHJU3De2DXheDeOeeC65/VWrxp9KTCTm8C8BWUL
+    G0ttMI7Is9o8gJFZ8Uk6MfLf4MS8R6XwXuvQO96ozFeAFMnImbmr33+VnJIIDQSQCFG85T
+    Uwcs+/E/vjrbZzl9gLBZSfu0I3A58EJvzPKT47EtjtPyx0M2O3w2qyU4emew
+X-ME-Proxy: <xmx:e6hDap5vGZ2p2Zoyimd4W4fpBTC1QycYtOzc6qwxWXE1cx8dDdhNNA>
+    <xmx:e6hDatz1JRIRGXIc_Skd2YJ67FQQkLfGDYyxDw_XiS1tFWUqOmcpLg>
+    <xmx:e6hDatbXbk4MlcY4Zs6aKlPsztsXf3EvVFW3VR5PVM2bqNO12oPL_A>
+    <xmx:e6hDavQzN_bA7zacnX5xU8_FRT8VyDkwFz6w8ifAqR_tzfmfSH6qgg>
+    <xmx:e6hDaqw6OKl0kET5I55hTIsqVK1TesqjsTVM-25ZlbLj86AyG682gXef>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 07:28:53 -0400 (EDT)
+ 30 Jun 2026 07:28:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 36acf6b9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jun 2026 11:28:52 +0000 (UTC)
-Date: Tue, 30 Jun 2026 13:28:50 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 75c5e528 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Jun 2026 11:28:57 +0000 (UTC)
+Date: Tue, 30 Jun 2026 13:28:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/6] packfile: thread odb_source_packed through
- packed_object_info()
-Message-ID: <akOocmBK61006i-p@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/6] odb: add `source` field to struct object_info_source
+Message-ID: <akOod6X1a2axIXKZ@pks.im>
 References: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
- <20260624-b4-pks-odb-drop-whence-v1-1-8d1877b790ac@pks.im>
- <akKge0zmT3WSfdyz@denethor>
+ <20260624-b4-pks-odb-drop-whence-v1-3-8d1877b790ac@pks.im>
+ <akKtc4ybxFRVJmNv@denethor>
+ <xmqqmrwdul8y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,56 +87,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <akKge0zmT3WSfdyz@denethor>
+In-Reply-To: <xmqqmrwdul8y.fsf@gitster.g>
 
-On Mon, Jun 29, 2026 at 12:01:47PM -0500, Justin Tobler wrote:
-> On 26/06/24 02:19PM, Patrick Steinhardt wrote:
-> > Add an optional `struct odb_source_packed *source` parameter to
-> > `packed_object_info()` and `packed_object_info_with_index_pos()`. This
-> > parameter is unused at this point in time, but it will be used in a
-> > follow-up commit so that we can record the source of a specific object.
+On Mon, Jun 29, 2026 at 01:47:41PM -0700, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> Ok so `packed_object_info()` is responsible for populating `struct
-> object_info` from the provided packfile and object offset. By
-> additionally providing the object source, the ultimate goal is to store
-> the this information in `struct object_info` or some equivalent
-> structure.
-> 
-> At first, I wondered if it would make more sense for `struct packed_git`
-> to record the `struct odb_source_packed` it comes from, but maybe that
-> wouldn't be the best layer to handle this bookkeeping?
+> >> @@ -1424,6 +1424,10 @@ int packed_object_info_with_index_pos(struct odb_source_packed *source UNUSED,
+> >>  	oi->whence = OI_PACKED;
+> >>  
+> >>  	if (oi->sourcep) {
+> >> +		if (!source)
+> >> +			BUG("cannot request source without an owning source");
+> >> +		oi->sourcep->source = &source->base;
+> >
+> > And here it is set for the packed backend. Looks good.
+> >
+> > Naive question: I understand that some `packed_info_object()` callers
+> > may not have the `struct odb_source` on hand, but when the `struct
+> > packed_git` is intially setup, is it not always known the ODB source it
+> > comes from? It makes me wonder if the ODB source should also be recorded
+> > when `struct packed_git` is initialized.
 
-Yeah, I was thinking about that, too. But I feel like that would be a
-layering violation: a packfile can in theory live standalone without a
-source. So tracking that information as part of the packfile itself just
-feels wrong to me.
+I've addressed this comment on patch 1.
 
-We could in theory adapt all callers of `packed_object_info()` to track
-the origin of the packfiles. I _think_ that should be feasible at almost
-all sites. But I'm just not sure myself whether that really buys us much
-in the first place, because...
+> As with your reaction to [PATCH 1/6], I do share this puzzlement: if
+> the source can almost always be NULL, what is it good for and isn't
+> it something that can be computed from the available information?
 
-> > Note that callers in "odb/source-packed.c" pass the already-available
-> > source, but all other callers pass `NULL` instead. This is fine though,
-> > as we only care about populating this info when called via the packed
-> > store.
-> 
-> Hmmm, is this because knowing the ODB source the object comes from is
-> only useful for callers from in "odb/source-packed.c"? Maybe this will
-> become a bit more clear to me in subsequent patches.
+It's not almost always NULL, even though it looks like this because we
+ended up adapting more callers to pass `NULL` than we adapted callers to
+pass an actual source. But in the end it's rather the opposite: there
+are very few low-level callers that don't have the source info
+available, and everyone else instead uses `odb_read_object_info()`,
+where we do have it available. But those callers don't need to be
+adjusted, so they weren't visible in the diff.
 
-... right now none none of the callers that call `packed_object_info()`
-directly care about the source information at all. It's really only
-callers of `odb_read_object_info()` that do.
+> Perhaps it is the naming?
 
-So I understand that this feels a bit iffy. But arguably, the right way
-to fix this is to stop using `packed_object_info()` altogether. It is an
-internal implementation detail of the object source backend, and ideally
-we shouldn't need to care about it.
+Yeah, as Justin pointed out, calling this `sourcep` is confusing.
 
-I already have a patch series that fixes git-cat-file(1). The
-commit-graph is a bigger building site, as I'm still not a 100% decided
-on how to represent such auxiliary data structures with pluggable object
-backends. And for the other commands I don't yet have a good answer.
+> I am confused what the above quoted code actually is doing ("if you
+> have a source, then grab its base and set it to .source member of
+> the struct the out parameter points at", makes it sound like the out
+> parameter sourcep should be pointing at a structure with .base
+> member, not .source member, or perhaps the caller should be passing
+> &oi->sourcep->source as *base to be assigned to, or something).
+
+We have to return the generic source here, not the specialized source,
+so that this interface can be used by every implementation. Other sites
+would end up storing their own source, which of course would have a
+different specialized backend.
+
+So an alternative to write this would have been:
+
+    oi->sourcep->source = (struct odb_source *) source;
+
+But by assigning the base we avoid having to cast.
 
 Patrick
