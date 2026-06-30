@@ -1,197 +1,90 @@
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD69410D01
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 12:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073B1413D8E
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 13:07:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782823757; cv=none; b=KqWjIAGj/tQFSo9X9blJKiWQlfwndnSCZ+xXFznZYXKsEduwdla9nqPTbUCIQMS5dff1bQ6wkpPXMm9aeOJsLEui6LkikZVyjgnVJCT5i9WIZE7GxIh9osAqE1kP86HigHyNEINDFCKl3AUnH0urXAy5BoYhDV056WL/LfXK1no=
+	t=1782824855; cv=none; b=fMXthtOTcf+CW7MtYP3dnu7BoGeDZZZss6vPLCdUTa6/QclRU0fKpAEdab46g6c4abFWOK10af/YMrGohhMAZ9s7e93R0itbHMswpkLxvw5dPBRejIweB7qP9gYIJBvc23DScVvw20KbtmKEbmkhe3yuI8qXeBvLd6mWjQMgdG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782823757; c=relaxed/simple;
-	bh=JbqeuGLiVpInLkKbLgaOV2jewZ3VLb5LOtw8zTYL8DE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oRa6lMWqAQ2o6fkpHi5j/eqWzaNCFKdLV9YzuG7HMPo7xVYZxfF11Tf6ffJBpcEJgs4361kXOoUQ/AboNdFVUilyHHAfEI84qwS1LINaNU9ODUXBkIfG2d9+Fioo3a3H5oxHOtTR4hZe144FK9xaVOHpMESt/02kd4mW4FDSnSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kt+J7Hle; arc=none smtp.client-ip=74.125.82.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782824855; c=relaxed/simple;
+	bh=6w+LNapS6L2RJQQTvRMt394K1FJpPeW6+5jRMxI4em8=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=HIEol85gyzdq5uE/oBkOnut/O+5OJyO2Ajy2dS2bNQDSm5ZFhqKjH0okKltwNMbx5/gt64kl0vNGcok+1JnwlvAlyhMSSySdEfM2Oru0nAdl55zcSeneViez/A5X2SwR0FYdv8NirH7LW7P7sF1sguQNIX/OgPFtjjfCboCzx3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=NcOyb5YF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BXt9/HP2; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kt+J7Hle"
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1390f75d8bbso8991917c88.0
-        for <git@vger.kernel.org>; Tue, 30 Jun 2026 05:49:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782823755; x=1783428555; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=soDB7AvW/ucFk1vqssNKLfOr42NVdiIANOj9hexftGw=;
-        b=Kt+J7HleO9BbrfTQwxwyH3HLgoRPHpqPHcT4GitC0QhCM2oVg09zXlpFXkyYuuUnYn
-         3m/FljLGBLSfwv4aWd/sPRuwP06EnBhfZ6wMfpzU62zDSbyIxdkrg4/jMBPhN9Mbavcw
-         oUIFPIYL0c5a+04hb74JmSS6FYOpx0JD2D+zsUJfnxjcksJir5qyUZpd+IfB35PvnbpA
-         GC+QchGryDs7rxVH3OO75OecpRo9npJLc5AZs/P+9nxmiUqgH7cXgXAJ+Z8XHxV1wJju
-         j0E9vYz+tG/4sD8RXaNFbIFLxi7/W6i8kVIDb1Fshah765bB0W9scMcT/aC40Vxaqfgm
-         FC9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782823755; x=1783428555;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=soDB7AvW/ucFk1vqssNKLfOr42NVdiIANOj9hexftGw=;
-        b=LfdGCUJZcAdvjbk3ZD+g6yB7ddm4KYGIqwvPMB2+SDrYPz7uEI9tiP51bZ5obkCGBF
-         e/j3zMPCnrbpBnWdCODMOkCQqF6d1DG9aE8EILdRaDrECETNC7X1kAOG/UX3XvXxaG4o
-         mjJbNee6lghSn/Z2hSeM/NQu6wvzz7G3LJ5IA13ngr2t5HZ561LBqReognbSRATokepp
-         qur0jZVtzcbFjzwxueusLGp7qbe//989wJKWgS8pw/5CPFyPxX+QAZfgBVEtQg8MA1aX
-         M1mSh50RjerOiJMvppLadBxjQBqtR2wphC/2WeFzFJOITYaUKRL5dpGTTBIAxG4vZ/Dl
-         7+Gg==
-X-Gm-Message-State: AOJu0YxV6DtSKS++NKrPM9QV2x7CqqCBVuEwLQ2DKxsg7QlG6a25Anbv
-	5jZx6avthGdpOo+QE7vR+onRQ8xiH/JsiUVTE/6vGUlByhYgKd4nNhd0lWI8EY+A
-X-Gm-Gg: AfdE7cmdrzYGR3qmPc0fIhc7eBraYs1YdfnzIIx3NCgB7Gqja+Swp0aDBTgB6R4Aqz+
-	5mJIjv5mj07bbqBRZWB+zXEWGzOmOxWrGHUybzUkA3QUwdGKo6GdGiWSPUi+1az85Gy3iJy01JT
-	l5cZusQQAb+I1RIv8BaC809BhS7jvO13acH6y4DCkkzHMVgTZQUIqeOiq7a6S9y9VSGhknzDiwJ
-	ZaB2FVV1zywpU5uiPjDVhqBdrFbY4Zzprj9D6lQRD4LonA6NDlia1zZPXWG/DMml0gqxIcvDlUx
-	NOpS7gmgsAvvBodXcrHGcRR3N8PSo4lcH9C5M5ked7iPI8PQraXNUN07Hyfro98CuN2TJ0JQVKO
-	P0Ov2R1EAZiWOoOyh5tudvAB2Fffe5hIOADq/ghz/B4dUzri47Tqc9Ri0Tn/x5Nxk8siQSsfP6c
-	zbqCcAyVnS9XTbuTwdVmHyueO3oFx3v35iTYzarqUzJw+rNw==
-X-Received: by 2002:a05:7022:68a6:b0:139:fb1a:7717 with SMTP id a92af1059eb24-13b2a1d333amr2229846c88.47.1782823754525;
-        Tue, 30 Jun 2026 05:49:14 -0700 (PDT)
-Received: from localhost.localdomain ([117.194.56.215])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b2ab20921sm6060239c88.4.2026.06.30.05.49.05
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 30 Jun 2026 05:49:09 -0700 (PDT)
-From: RISHAV DEWAN <rishavdewan10@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="NcOyb5YF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BXt9/HP2"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4F9AF7A00C1;
+	Tue, 30 Jun 2026 09:07:32 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 30 Jun 2026 09:07:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1782824852; x=1782911252; bh=6w+LNapS6L2RJQQTvRMt394K1FJpPeW6
+	+5jRMxI4em8=; b=NcOyb5YFaISl4DEyJB9NXJmPFCi/9q0RvTOc6UacTTbqWCZw
+	V5U5E9pZcON4l7oybQkf/B0CS+5y0l9upRJpTnEHt0wUHcdxbpZfU9lqnSE1Kg+e
+	4gNqhfK0CoaG3h37Lm8i3zdosHXBtvXfPiFhTUzcn56oQOOFBDIsR4jRFpv+NuUb
+	UFjU72umHdnNp4NNr2rj/nIPXeT6tyiIflx2zHUqmrLsfS6f1zN7q29uSXbb8SME
+	0++LBdXBpXYqWH4iXTgbaExlEOjxA4Vmrvsvk0yxPCEzLpEEA3KPAI7+tm4Jv9wp
+	7KE+a7v3f0Ea/neKHMQS0QUPP+3JaXt5o3TwIA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782824852; x=
+	1782911252; bh=6w+LNapS6L2RJQQTvRMt394K1FJpPeW6+5jRMxI4em8=; b=B
+	Xt9/HP2nOpWR0E8frqrEMQHAB4dWHesMnHXbxGqtYqWz95pFbalxl67JvTAshcyj
+	L68Yr93CqcJD9+GAnbbPis06RUrYJ2kkYjtaeuKNhHiXWIwsWJqMKBOBNddvRJy/
+	XDrD+T7in0lCxblOnMyxQpr9jpOShPrPmaRduy/xWD4uqWpccfaD46at4W4enJ7F
+	MLfVHll9+oWolcFm4sa0HEoQmOnV96RUoW/zloezpKe1RXDJtIv58DgoNdt3cb7U
+	FxCTldvkDM1PPKCRlHJGhjrvPFuEnP5ylE/U/Tbv55GGvtAuyWsC2mVVzWI30GNC
+	cvAz+nUeX3bPlFnorcRCw==
+X-ME-Sender: <xms:lL9Dam1gW--XN97H0BbkOi-Mcctm719QW6rgRmSbV9moLwCdazovhw>
+    <xme:lL9DagARphNHEwX1NHCeko5hkteDWBF2CxR0O9qR7sUqp7i1RpqPxiCGjsK35fUwQ
+    pzVs0p8w85hhH55AI3r0E73jVjxDrv9-V9YRn0Z5EGuYVsDnX7X>
+X-ME-Received: <xmr:lL9DakioHblUM9cpWlMu6yZtqbgBLsAEFE05KAkgJwmtLdLNd4PFEEAarOPJBLt646QuwAgmOUrsn1gN09LHLl99aYcJ>
+X-ME-Proxy-Cause: dmFkZTFHlTnaLsRaXoA//oSA58pM5SYTHSN2cUZQnC2lMPiof1EzTcHk8CtgkDw+gR1CJI
+    1pewpW0oS10XgfNxGKofCDMTX0+XuzJJSFGIAdyOIhCYE3io+ZDv2/Pv/QbjVkY2VSr6eF
+    3Z8v61ytKkhdxlLXhc7GGge0jnG2DVztJXN8H4XKH+usuLOyUy3NSsjgw5XeYbxELiYowu
+    c5UKcWAf2swl3FZGy9RW3JOdyVjukkSsYf6rK1Up45aToCd7eCHa/wYWU30UshpQKbljqg
+    l4y8rORVJkVFz+BZN3z1nxSeAZWxiLZgAFzguaBNr7glqwvXQzcaU7K4ZQTL1W+v+3WSXm
+    1ZjTZYNucefs75C+iaBv69L8jRnTJfX+QcxuYxsGl6OY96bCzRx22jHFBXvlVJQQrB0FRo
+    FfdMJo5S4kBBuKtPqPvBFo0EkVoV5/rEY2q0v2pFI8+hENF37neTWvTnOylXz16PBYayYF
+    +f9AnkEJzOfDsk+FBK41Fmh5ghm84fDqhoZEiXtLCHxegKI3xZK3VxADS/m/reR3xmyeUx
+    jw/8LP0q/1u35QVruYaqMon8T4JhpaWz1/guuR3vHwscOGa7O5nIs5Tn+nfyZwP5Hu7LKB
+    sicfQ6JwlAj8QwLaDpbXohT3PjS5UJBbAn4eFFBe8WdjKuIepUS7Rrr8ZQJA
+X-ME-Proxy: <xmx:lL9Das_XpnHBMRAKU3hfiDVdi0xIQ58VwHu_22anbIjDyLs3ewG_gg>
+    <xmx:lL9Dao_S5l_V7EP40J1uPlmYHxrra9YoIr3oYqeeA0JpHn8alpnImQ>
+    <xmx:lL9DatAN8xVWDavYThwoFPoR93GC2CSNgna9YbQN71mBEHI-OeDzLw>
+    <xmx:lL9DagzLpOE0HAzgTyfQ4V0PHBxv7swLfcfK-mY8-xWpPbzkZYV4mw>
+    <xmx:lL9DagG5zPQAhgkuIFMiezIkCd_-FW65jsSqlxQL7ey-9UD5xWWrhAZK>
+Feedback-ID: i01894241:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 30 Jun 2026 09:07:31 -0400 (EDT)
+Date: Tue, 30 Jun 2026 15:07:29 +0200
+From: Jan Palus <jpalus@fastmail.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	RISHAV DEWAN <rishavdewan10@gmail.com>
-Subject: [PATCH v1] config: fix case-insensitive match for old-style [section.subsection]
-Date: Tue, 30 Jun 2026 18:18:50 +0530
-Message-ID: <20260630124850.2498-1-rishavdewan10@gmail.com>
-X-Mailer: git-send-email 2.50.1
+Subject: RUST_LIB dependency on LIB_FILE in Makefile
+Message-ID: <akO9JTUIlHqBrgny@pine.grzadka>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: NeoMutt/20260616
 
-When writing to an old-style "[section.subsection]" header, the
-config file parser always folds the subsection to lower case
-(get_base_var() lowercases unconditionally), while the key given on
-the command line keeps whatever case the caller typed
-(do_parse_config_key() deliberately leaves the subsection segment
-untouched). matches() compared these two forms with a plain strcmp(),
-so a caller passing an upper-cased subsection (e.g. 'git config
-section.Subsection.key value2' against a file containing
-'[section.subsection]') never matched the existing key and a
-duplicate line was appended instead of replacing the value. This was
-a known, documented limitation (see the now-removed BUGS section of
-git-config.adoc).
+According to Makefile $(RUST_LIB) target depends on $(LIB_FILE):
 
-Track whether the currently active section was parsed case-
-insensitively (old-style) or case-sensitively (new-style, quoted) in
-struct config_store_data, and have matches() use that information to
-compare the subsection segment of the key accordingly, instead of an
-unconditional case-sensitive strcmp().
+$(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
 
-Signed-off-by: RISHAV DEWAN <rishavdewan10@gmail.com>
----
- Documentation/git-config.adoc | 21 ---------------------
- config.c                      | 18 +++++++++++++++++-
- t/t1300-config.sh             |  2 --
- 3 files changed, 17 insertions(+), 24 deletions(-)
-
-diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
-index 57af010ade..11dfd802b4 100644
---- a/Documentation/git-config.adoc
-+++ b/Documentation/git-config.adoc
-@@ -634,27 +634,6 @@ http.sslverify false
- 
- include::config.adoc[]
- 
--BUGS
------
--When using the deprecated `[section.subsection]` syntax, changing a value
--will result in adding a multi-line key instead of a change, if the subsection
--is given with at least one uppercase character. For example when the config
--looks like
--
----------
--  [section.subsection]
--    key = value1
----------
--
--and running `git config section.Subsection.key value2` will result in
--
----------
--  [section.subsection]
--    key = value1
--    key = value2
----------
--
--
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/config.c b/config.c
-index 6a0de86e3a..7f086fcd75 100644
---- a/config.c
-+++ b/config.c
-@@ -2594,6 +2594,7 @@ struct config_store_data {
- 	} *parsed;
- 	unsigned int parsed_nr, parsed_alloc, *seen, seen_nr, seen_alloc;
- 	unsigned int key_seen:1, section_seen:1, is_keys_section:1;
-+	unsigned int subsection_case_sensitive:1;
- };
- #define CONFIG_STORE_INIT { 0 }
- 
-@@ -2613,7 +2614,21 @@ static void config_store_data_clear(struct config_store_data *store)
- static int matches(const char *key, const char *value,
- 		   const struct config_store_data *store)
- {
--	if (strcmp(key, store->key))
-+	/*
-+	 * The subsection part of "key" (key[0..store->baselen)) was parsed
-+	 * out of the config file using the case sensitivity of whichever
-+	 * section header it came from (see store_aux_event()): old-style
-+	 * "[section.subsection]" headers are folded to lower case while
-+	 * parsing, so they must be compared case-insensitively against
-+	 * store->key, which preserves whatever case the caller passed on
-+	 * the command line. New-style "[section "Subsection"]" headers keep
-+	 * their case, so they need an exact, case-sensitive comparison.
-+	 */
-+	int (*cmpfn)(const char *, const char *, size_t) =
-+		store->subsection_case_sensitive ? strncasecmp : strncmp;
-+
-+	if (cmpfn(key, store->key, store->baselen) ||
-+	    strcmp(key + store->baselen, store->key + store->baselen))
- 		return 0; /* not ours */
- 	if (store->fixed_value && value)
- 		return !strcmp(store->fixed_value, value);
-@@ -2654,6 +2669,7 @@ static int store_aux_event(enum config_event_t type, size_t begin, size_t end,
- 			!cmpfn(cs->var.buf, store->key, store->baselen);
- 		if (store->is_keys_section) {
- 			store->section_seen = 1;
-+			store->subsection_case_sensitive = cs->subsection_case_sensitive;
- 			ALLOC_GROW(store->seen, store->seen_nr + 1,
- 				   store->seen_alloc);
- 			store->seen[store->seen_nr] = store->parsed_nr;
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 87ca11a127..eaa3b83990 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1499,7 +1499,6 @@ test_expect_success 'old-fashioned settings are case insensitive' '
- 	EOF
- 	q_to_tab >testConfig_expect <<-EOF &&
- 	[V.A]
--	r = value1
- 	Qr = value2
- 	EOF
- 	git config -f testConfig_actual "V.A.r" value2 &&
-@@ -1511,7 +1510,6 @@ test_expect_success 'old-fashioned settings are case insensitive' '
- 	EOF
- 	q_to_tab >testConfig_expect <<-EOF &&
- 	[V.A]
--	r = value1
- 	Qr = value2
- 	EOF
- 	git config -f testConfig_actual "v.A.r" value2 &&
--- 
-2.50.1 (Apple Git-155)
-
+but is that really the case? As far as I can tell $(RUST_LIB) does not
+use $(LIB_FILE) in any way and there's no such dependency in
+meson.build.
