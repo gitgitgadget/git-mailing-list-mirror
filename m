@@ -1,128 +1,145 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0013423392B
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 14:14:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DC43BFE3B
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 15:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782828896; cv=none; b=rMqwQ2oVmEIG7fD9spaI10DJKTGpIKk3lcWnB5bCTVJTMgZVwRvcLc4l2b9U2fjMkDw+AT1zRCThz0KTRa4Nl17WyHYq96w7TWVOcaZOl+pfGYEdHtEtvGo+DysrgG1VfxIKUhWOZSlkUXweiQASAA7Mysl44oye9F741zWF9j4=
+	t=1782833361; cv=none; b=UYLhfqF2KkTux8XnfWQ52WY4I6tJJRyx0pB3ZK+ETnLofaMPVQtpKwzhKHTGCVowM4bnkTzurjZMPNbt3AdIXvd+D1/Zt2BbMPwi18wuUkU9WoAGuEs0VFbOyqfjE5wb3Xbp5LsSm46OcrU3KZuqsqS+otDLmM8EEicytlKlekM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782828896; c=relaxed/simple;
-	bh=dGFLQ+QPBnaCgLq7iyr3OMOpkgJtRni3AOigJhUCQl8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DynsJJTllW1EpW3rZli2PMjsiBO7meLd1eW+nSD3RQ2PRj3/FyMcctcT5mR+8fC8l4iF4bsRTOGGbBhKthsOkxKjqhXmokvJIwWbbM8dUGtTittYgzm4ctu2jwdA/1jPKEqdtd4E/sSdRqw4z305dw0QIBJlMBf/LUgvw8EF8Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kEdsIvgL; arc=none smtp.client-ip=209.85.161.44
+	s=arc-20240116; t=1782833361; c=relaxed/simple;
+	bh=BoYoKxDptZHzwFc9atfDzusSkrvzomKEXrJ/JC0CBzA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EovaP4BF6hWt+PQwerUStDLyPz0aSyBpQZaqfMlO7tOWXSbwIYgL4ZC787v9f03T+LoKSjbTmKO7FI6ReM0iHrmHSgiEgs5E+43Sb7uH+2LizLAVh7gE7kEYv7YB39uzpZmapEE1Ldk7uztaISCy5BxldtmrIsp3fSUhwsD5nhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mRHhBGR8; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEdsIvgL"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-69d7aa0ac14so3055749eaf.3
-        for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:14:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mRHhBGR8"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4926f8e02e8so28726935e9.0
+        for <git@vger.kernel.org>; Tue, 30 Jun 2026 08:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782828894; x=1783433694; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JOyDBQHmQX8/wS4mafutdNgdHtYh2aDpzMqLD60Wc3k=;
-        b=kEdsIvgLEUdLN7bIKdoKqaNHCCJdTc72fjIybZYUCurNJJuUcrTgTyrIso00BpM166
-         QYRZylObxUUoHcRqCPvasf473BHz64yEplJ1zdGF/bj7IjWSzYoqsRA0Tbom329yPN39
-         kkONmLw4sOkcDGDPMmZ9OkHZ/GYEqFhr8ScBLsJfMXbcAm356GlAKy09JiB5UasNwODE
-         ObjpefDIUCW1PJdnH9/dozlBWxrGJJhPUM3revKi3xz3FocjXEyAxvT+zC70Hs2jVjKT
-         1l3akK/QqbYu2H7ur/mQPYLwVVrKML9GzC+YdfmDzqEqI8WTMNWOHf6F9Y0FSWNcrBoh
-         lBXA==
+        d=gmail.com; s=20251104; t=1782833355; x=1783438155; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=n6Neyhmp3W7rdulRwfkV3qvC/vhdWLnUNZSoP/dS41A=;
+        b=mRHhBGR8PQh4IIpP/KDIxeR57T6tbbYkJSpswwZiatk8VZz5tMxo2EH+ttml+eHsvE
+         T6d5xIIww2s29AmSo4ucMx1wfJ8pOcy2WP3UmRiXkyNwPSGLTCQpisqMX34ZJpl/DIVy
+         Y1jzM8RDgSCRV376nFe47WzA1MCZ8umdG43NhoSXboKsQu6RWczexozPnULxbVlf07RC
+         I0Gbq/G8DDALoZirtBEFFZfTI5gCLTq6PkSbiO5WA2wGbYRmH7Dd47/tV/uFiHdHK2+D
+         +yYuRWgdHPgnqsMsTWQC67BU21ctf7/tBgyjqkLQI6hhpSqp12RVYwINm2QHQnjLkmMX
+         iTsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782828894; x=1783433694;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JOyDBQHmQX8/wS4mafutdNgdHtYh2aDpzMqLD60Wc3k=;
-        b=Ve+qvOEPAwHaElJ0uD+RBKenDjRr6AUBtEs1SveQlr35HyY2CNHQ1w26dD3ACzpP+o
-         jE1+T62PtGNDI3ouG8HUMovi+BjmJuGC1JUQoEOm0yrEO4B1zr0MVMe2JuP2vwWGUZPh
-         3an2xUn2Dk1RD1N0FytjM2rXOQcGBf1Eak+IOyVwpcH61jAiKZ9lSnhvld3AM65b8DUg
-         VdvXUf9qGoaHTGZ615TxSJ9FpVEPWW09PpDfeqbx8fZ/5+uC7+e/hcDVDQYJ1WknQKvN
-         pifI5nGTE8UHpjLDUs+hRH4kRqmB0Y/kGvS8KIFY2Qs9/u5HIiVnYju9IH/46KN7qUf/
-         Fe6w==
-X-Gm-Message-State: AOJu0Yx8seqc+twcRYKKnCxH7GauHfxVZ9jEs9it+svRgDvvGrrz34Rf
-	tIBovQRtfPuqEBfXlfzu4mLOqUQeZNc1U+EaQTLJo8+zYloh7IjvG4OUXgOmsQ==
-X-Gm-Gg: AfdE7ckUWtUYya+rV86GgQ6Q1HzS796J0kN6jvQ0PwfAuhyZ65CuXPDV5E3xuJiNePc
-	ddy/+4oRsqH6eEBDVev1nr+pAtBxAknJJ8vPHcSIuKJ/PbwOh2XKT0x+bo1EaiOYLH+qMB1MFqI
-	8wAP0uNfUmw9dnbNsrJTBUYxvearA6kf3g30kMDedZINObEE1H7k6Ruv0uOvxEGR67RUJiH7OJg
-	FAN5RD+clQRAtzhpySVatDg+agKHQb8tZ9uOY94lTwwiv2tApv64pt+axufbQYodTiUMVhMqRKW
-	nW1uAEp09h8iY7h5/Jsx1DcnsFx2VObErHU/iYghemHM/xWtP6g1lRWaDZeAKdS0Dd5XnreND5s
-	vMLHRC5zt40nsltf5g3M6QAYKgw/EyHzqcM/7gBuUaTouU2nJvCw54zYD4YK3DBwzpGkXLkBEJh
-	EWItwLYg==
-X-Received: by 2002:a05:6820:c449:20b0:6a0:de78:6154 with SMTP id 006d021491bc7-6a18904c07cmr2016420eaf.14.1782828893728;
-        Tue, 30 Jun 2026 07:14:53 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6a18946385fsm2137850eaf.12.2026.06.30.07.14.53
+        d=1e100.net; s=20251104; t=1782833355; x=1783438155;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n6Neyhmp3W7rdulRwfkV3qvC/vhdWLnUNZSoP/dS41A=;
+        b=B4t+X0Kx6v3RJhxWD6exN9sanw6A7MIxdpBhZwBUrfXPT+8mpuXyxne53GMj5er8Bv
+         qU1vUBh9t+MoG/5i7u/3njRZ8FhdbN4y+bJ168rSvYv2v1RY6zeDXdhdyW0rhnQmKR7j
+         WqwHwI0q5Y7Kq0nykRx0/T87poJqri5jEMGy9/qi/GTbSpuJFMsYQmXZDHVtc8ABJ/Ae
+         En5lmDKpKpb3Z1Xp102E7di9KhQKxX5JA1Jpi5Xq3U47cYQnRHjVbtZ2otOM4ilQvgY3
+         +rKSrdWApdnEO6nXUmiu4Gm7aYXar9I1N5y0HxOxPTGuKuBlV45h2WB38ScbBdsWCH9B
+         ajPQ==
+X-Gm-Message-State: AOJu0YzQ1hDhmYhH3sw9tf3UZr56qDHOHwspKgpSFF4RHe/OTbkIID5+
+	lC9yrr2qJqYe8di08haN4HRZQY02qoqByaUj4uufjOat9+0P7QT3QfETX/i8tQ==
+X-Gm-Gg: AfdE7cmTrlNmhpFqhjx73tRsIkgzL7moW05t+aaSjlKWF7Y2wrjPlgnJfzv7sGanTA6
+	YDSbUgGJ2ieAn1rLfvX9eL/cVFhsDPRGPGbhu+YmngHsIuV+XO1ydv1aXe/5yi4quEK44XblFTf
+	tHYqeHTHU0XMeFKuBrMS5DG461dXMDdVyeVivubq11aNpJ+66F9ivEwXOk5qjeju9RAP8PPXzMZ
+	olWAJInqPUJqiMs+f+6Pg63DhGn5O0KwxMl5G55n6/Ke+yho2O3tpv1GwpwoB2dhfUzpkSs1d0H
+	TDhCQ425/OOfnTAnN6mUcsxLSyQ7oP4KBB7wdKLZPrGzpBaAuxpLb+TVylII+bi48qDpXsWzvbK
+	hr3jVDlYNv/TSc+MOYuKDqjNjpRF2MbUl6e4FyLln5ClTya7WxBIFt3GH6dgDcejxG+hTUE2tRA
+	iI2pzWVj7jE/+eqauHeBx0JAyKVxM=
+X-Received: by 2002:a05:600c:1c0a:b0:493:b03c:5650 with SMTP id 5b1f17b1804b1-493bda6fc65mr15943035e9.19.1782833354727;
+        Tue, 30 Jun 2026 08:29:14 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47567979eafsm8477378f8f.34.2026.06.30.08.29.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 07:14:53 -0700 (PDT)
-Date: Tue, 30 Jun 2026 09:14:47 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] object-file: propagate files transaction errors
-Message-ID: <akPOZMCq8G_DGl0h@denethor>
-References: <20260624041920.2601961-1-jltobler@gmail.com>
- <20260624041920.2601961-3-jltobler@gmail.com>
- <aju-7Z-ecJG_ORow@pks.im>
- <akK1roQJknYstX0u@denethor>
- <akLBFaTfBEq8vHUr@denethor>
- <akOCPk55yi3lerL-@pks.im>
+        Tue, 30 Jun 2026 08:29:13 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH 00/11] sequencer: do not record dropped commits as rewritten
+Date: Tue, 30 Jun 2026 16:28:50 +0100
+Message-ID: <cover.1782833268.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
+In-Reply-To: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com>
+References: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <akOCPk55yi3lerL-@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 26/06/30 10:45AM, Patrick Steinhardt wrote:
-> On Mon, Jun 29, 2026 at 02:04:08PM -0500, Justin Tobler wrote:
-> > On 26/06/29 01:58PM, Justin Tobler wrote:
-> > > On 26/06/24 01:26PM, Patrick Steinhardt wrote:
-> > > > On Tue, Jun 23, 2026 at 11:19:16PM -0500, Justin Tobler wrote:
-> > > > > @@ -511,11 +511,15 @@ static void odb_transaction_files_prepare(struct odb_transaction *base)
-> > > > >  	 * added at the time they call odb_transaction_files_begin.
-> > > > >  	 */
-> > > > >  	if (!transaction || transaction->objdir)
-> > > > > -		return;
-> > > > > +		return 0;
-> > > > >  
-> > > > >  	transaction->objdir = tmp_objdir_create(base->source->odb->repo, "bulk-fsync");
-> > > > > -	if (transaction->objdir)
-> > > > > -		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
-> > > > > +	if (!transaction->objdir)
-> > > > > +		return -1;
-> > > > 
-> > > > Huh. So previously we just didn't handle this error at all and just
-> > > > continued to tag along? Did that result in anything sensible or was this
-> > > > just YOLOing it?
-> > > 
-> > > Good question. Previously if there was an error, we wouldn't end up
-> > > creating any tmpdir and would instead continue to use the primary ODB to
-> > > write objects in. This change would make it a hard error if we fail to
-> > > create the temp dir. This matches the behavior that git-receive-pack(1)
-> > > expects, but I didn't consider that the existing callers could
-> > > transparently handle there being no temp dir.
-> > > 
-> > > I suspect we may want existing ODB transaction users to continue being
-> > > resilient in the same manner. In the next version, I'll maintain the
-> > > same behavior.
-> > 
-> > I think I got a bit ahead of myself. The existing callers of
-> > odb_transaction_files_prepare() still continue to ignore this error. So
-> > the behavior already does remain the same here.
-> 
-> Oh, well, okay. I think this behaviour is plain bad -- if the caller
-> wants to have a transaction, then we should bail in case we cannot
-> create one. But this doesn't need to be fixed in this patch series.
+On 19/06/2026 11:13, Phillip Wood wrote:
+> I'm happy to take this forward and try and fix at least some of the
+> other bugs I've listed above. Uwe - if I don't cc you on some patches
+> within the next couple of weeks please feel free to send a reminder.
 
-Ya, I tend to agree. The problem here is that
-odb_transaction_files_prepare() is being invoked lazily during the
-object write. This would be another argument against lazily creating the
-temporary directory though. In a followup series I'll explore removing
-this and investigate if it has any meaninful performance implications.
+Here is the first batch that fixes the same problem as Uwe's patch. I've
+taken a slightly different approach that uses the return value from
+do_pick_commit() to signal that a commit was dropped rather than
+adding another function argument. That involves a number of preparatory
+patches, but they are hopefully reasonably small and easy to follow.
 
--Justin
+If a commit gets dropped because its changes are already upstream
+then we should not record it as rewritten. As well as confusing any
+post-rewrite hooks this means we end up copying the notes from the
+dropped commit to the commit that was picked immediately before the
+one that was dropped.
+
+This series is structured as follows:
+
+Patch 1 restores some test coverage that was lost when the default
+rebase backend was changed.
+
+Patch 2 moves a function so it can be called without a forward
+declaration in Patch 11.
+
+Patches 3 & 4 fix the return value of do_pick_commit() when an external
+command fails (this is in preparation for patch 10).
+
+Patches 5-9 try and simplify the control flow in pick_one_commit()
+in preparation for patch 10.
+
+Patch 10 changes the return type of do_pick_commit() to an enum.
+
+Patch 11 adds a new member to the enum from patch 10 for commits that
+are dropped when they become empty and uses that to stop them from
+being recorded as rewritten.
+
+Base-Commit: 6c3d7b73556db708feb3b16232fab1efc4353428
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Frebase-drop-notes-with-commit%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/6c3d7b735...26551f268
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/rebase-drop-notes-with-commit/v1
+
+
+Phillip Wood (11):
+  t3400: restore coverage for note copying with apply backend
+  sequencer: move definition of is_final_fixup()
+  sequencer: be more careful with external merge
+  sequencer: never reschedule on failed commit
+  sequencer: remove unnecessary "or" in pick_one_commit()
+  sequencer: simplify handing of fixup with conflicts
+  sequencer: remove unnecessary condition in pick_one_commit()
+  sequencer: simplify pick_one_commit()
+  sequencer: return early from pick_one_commit() on success
+  sequencer: use an enum to represent result of picking a commit
+  sequencer: do not record dropped commits as rewritten
+
+ sequencer.c                   | 154 +++++++++++++++++++++++-----------
+ t/t3400-rebase.sh             |  16 +++-
+ t/t3404-rebase-interactive.sh |  11 +++
+ t/t5407-post-rewrite-hook.sh  |  23 +++++
+ 4 files changed, 155 insertions(+), 49 deletions(-)
+
+-- 
+2.54.0.200.gfd8d68259e3
+
