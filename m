@@ -1,130 +1,91 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA673E6DD4
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 09:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7517D379EF7
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 09:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782810328; cv=none; b=TuYPsUlV8vhusisTj1sXN1tGJ5wrexZCXVPEtsLTukh6eikP9MWuLBF9NLJJ34LRmQYfUVCQz5Za1AX4zaB691Vroqvtm8w/0YMd07YQv9QCBj0zB1ZN3RbQzTPfR2Vgi3cpWAHQn1/sC9DIzUEK61pX4YETx7zw3bzNrn5oANE=
+	t=1782811405; cv=none; b=OfDACR8/Q4Z16kqfu/QugRe5Xs3CdaLrwQfrecYC6EJRrMUW7+7KDPVa6I1sPBnt/FmWCdf4wY1tiE+7XSIN9zj32OBz8UQUk/f1a2cF09eLaci4v6z+rIOVyQRq68e0R6/j8s5bhttVoMgVwFlanElSp55gb5TX4OCh6P8fHZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782810328; c=relaxed/simple;
-	bh=nH27Yczq0fImUYLaB0B4bXnmJ16fPj6YNy8qIfNS6bo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n57tcvTLieC72qaCuFlQ9248S75wD8vvfGDC+S5UbJ9nMlSBe6XFnZskwQ0xmztNEuV/FMWaf6H6fIuVGYZp96I7i+7qxhwDi9WmR/MSK1bTfQKaRboHYrvp47lQEZ89FBV0MtD1Nqf8xxRuEb80B8pYO9jVyjQcdPVgaKh8ZK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=q6ZhRIwD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XUl3jOfs; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1782811405; c=relaxed/simple;
+	bh=+OIdqb9mg9IxSsK4/KWvBQ/fyQUUSDwwUy1ICHE634Q=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=qECqxkXUT1WSjJi67FwKDbeIRxrJraGRwSJOZ6SztsdOdLa7y25jb1xq8mw3OYwkca/CK+SEihw0poFGQl/+EJUnJnVwnAiHVkF+t902jBvBcsrF8TEIxupIcHSK67XHV5Gd2jHjT7sb9B9cdwdx9N+xDr5YORi2nYxjyl4RAiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=l6/NkOMN; arc=none smtp.client-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q6ZhRIwD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XUl3jOfs"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4B7181D00126;
-	Tue, 30 Jun 2026 05:05:26 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 30 Jun 2026 05:05:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782810326; x=1782896726; bh=gofkZA267d
-	Mkh1fD11KPriwQjlhZZzLPjNXMMgRZr3Q=; b=q6ZhRIwDSMGLpsDhd0O+rzoeac
-	rdXD4PNmRpciYK40PiDipnQkvVoBZEhR+uz7yzso7f+ykQSJXq8POZiMXa1XH8df
-	pYnZ8zC20eSqUuGfcR1nGswLakK5oe02DA/3VUQOaF+567eY/g0VIKM4cwO18s4u
-	rW2PISLZFkjByQkjr5g/6uCuPn80L/P175PAlVPlkzaCzb5+gQ5FaSOxbVAPA3Gb
-	OFmXgegRKSWNgkf8f/6dRsux8atd7SVIRabaX8lX2fx1FZ2YVs4b1ygzJfYuJiqM
-	CuE8anR6AYCsCZ2iL1BTu3AnwY3CKmvO+YEX4LtYRndTEFPrYebhB2oMTZmw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782810326; x=1782896726; bh=gofkZA267dMkh1fD11KPriwQjlhZZzLPjNX
-	MMgRZr3Q=; b=XUl3jOfsMqMeVe47rG6q0IkRC8McJptPx+BEKBnPZfHZ0JLEbzD
-	3Po/1gnmyHzQ7HAhrd0KubbKyIiL+0Ia3iB1YfTVFd3KQY3OvG4//SQl3do35hCA
-	HZ15wTeX7ikPoE72G9gTEUxaDmdzIzNQTG7CD29AtnHen9wMb38IvQgR/rbMGnIk
-	0eJ+SU/cu/FOf02S45oa5iezYaQG2xCOOvRxTvjGGc63oSlJC6/uIFpCyBXh/2el
-	LHnyEITXwG4BspaZKWD7OQD87ExgyFYTOe1BLidpdYCJ3t4LZsEjeCrlx6cqhOsX
-	jHuFDbzzgNVG31no4rUjccsCdJUyI+S9I2w==
-X-ME-Sender: <xms:1oZDauZOjyPsFydyb6vt8IDbS_X5QWIRfyAX_2DkKCXHebN3QpsuZQ>
-    <xme:1oZDaob8HXj3aT-IC-PBSm4geFltOwIQck7Y54z8mY6Araq97IGgMsmwunV_icNbx
-    t-YyUMKXIlsBxMz7o_8XG1pit4m7s4a-DfDGOFDv-QMx8OZbeem>
-X-ME-Received: <xmr:1oZDat_2FoPVzZLQEq32UvHsgEbCLkMR3K2CDy9kLWQcuboqqOsRfhvbDOatdcD93WgC5pLBdQIavnvgxNl_eeBu4FcncyhvXjEAlXMuEBczag>
-X-ME-Proxy-Cause: dmFkZTEYrxH/Mp7C8KDKzETReCZfJIezUciv8Mtp3JMmOLa6qjd2qOrkUp1+OG7UfSDztj
-    wd6kkNLSVn7xkGhP93Tk3/sJRgTHydXDapXs5ba6syqSGCFIPaR4JgY2ZZ3sgrnpovRRDe
-    qI3NM37h0Osvs2SXBR6A2aPAv2iFR4gEj3NCfFuud3MMVa7kDmc4/uQ9xL5GUTUQU0DZDh
-    /fJSInGOUom5BeiIfFDxgKj3sCT/5Uc5hmf9yC/Yod6aNViRPhDvj7nPgKln+y1+uZTtxE
-    O38uPLTVPNojAyaP5H7RcJEAU+dkgV+xnnuG98BjaGb/J7ToLCpFUt1HjxKiHUjs7PUTCw
-    8u6wsC36MqhUCYPSP0t2cnvMp3BXnklGDlSjqk2UDwmu4AtWvD2MO5IHjuCp00M7j89a42
-    tT8pKEfT7w4ME0r39EydfcRUH428lxbvn3xgW2yBZa/m/p8S8lL1tb7WrFDmGvPMuJZJE6
-    J3piJSghQahygnqs8YSkNz40HL5lFcRi87PH5bCC8BEOM6ZvalRKsVMbvDXLaEpRv+AKSx
-    bzbYTJIhilvbMNkCYl/jWZbQZxzw44JsYqX6r4wYCwJh9kprYHEc7KzONuOAAaq46eS4+c
-    or2Fudol/Nk9K/Y7GALrVdlpXKAEzxwv4HRXdM4itkqSDrO0quwUPk0mswSg
-X-ME-Proxy: <xmx:1oZDaviER0PuiyQvM9qkO8skrHlVRnF78ifx_hAofJxryamM5AmFhg>
-    <xmx:1oZDalejyzgGoG_o0nIzPJzyHmmYzPp1tqk9FeXYTSLxVwqZ_FP20A>
-    <xmx:1oZDauoDP3iGS0ZC-M82pwrVDuqfelbfs8kXh6cNhxvwJdDrcsKEvQ>
-    <xmx:1oZDaiD6-9-ujD8B-EF7Bu8nWWTCc7Ccvv06bXy3DJ_h3VQIjlpDTQ>
-    <xmx:1oZDar7_J4MkQO7ukyEXDQj65bZIdm5puwNfM9UN-1q7k1L85RSnQ1tR>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 05:05:25 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 79037d54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jun 2026 09:05:24 +0000 (UTC)
-Date: Tue, 30 Jun 2026 11:05:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] t5551: pack refs after creating many tags
-Message-ID: <akOG0oMu2KTqqyW7@pks.im>
-References: <20260628075716.GA3525066@coredump.intra.peff.net>
- <20260628080710.GC107826@coredump.intra.peff.net>
- <akIJQbOUbdBbkTef@pks.im>
- <20260629203527.GA1895313@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="l6/NkOMN"
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id 0C0C060431;
+	Tue, 30 Jun 2026 09:23:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1782811403; bh=+OIdqb9mg9IxSsK4/KWvBQ/fyQUUSDwwUy1ICHE634Q=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
+	b=l6/NkOMNvPRjPhXyszBNsp1650D/aWEuYloVqtXDYPed4z9otzcysySreOmH1biP4
+	 2Drho+BRhtPMCJKmfuUjMtkleyZW2k1HKitubeQlT1nPTJZ0pPc/IK8n1y7skjYRi1
+	 JuqjlKxbt2z7w7AHNks/cJWDrn972I09GEC25l5Q=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260629203527.GA1895313@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 30 Jun 2026 05:23:22 -0400
+Message-Id: <DJM9WBO3EI9M.5ASUW8SQ6BP2@lfurio.us>
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+Cc: <phillip.wood@dunelm.org.uk>, "Patrick Steinhardt" <ps@pks.im>, "Harald
+ Nordgren via GitGitGadget" <gitgitgadget@gmail.com>, <git@vger.kernel.org>
+To: "Harald Nordgren" <haraldnordgren@gmail.com>
+From: "Matt Hunter" <m@lfurio.us>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+ <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
+ <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+ <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
+ <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
+ <DJM1N17VMUM5.3V5Y6YMFLIFQJ@lfurio.us>
+ <CAHwyqnVBEOm+FwD+i9Aa7edTvdnDPJom1zubcXgoExZnp--vWQ@mail.gmail.com>
+In-Reply-To: <CAHwyqnVBEOm+FwD+i9Aa7edTvdnDPJom1zubcXgoExZnp--vWQ@mail.gmail.com>
 
-On Mon, Jun 29, 2026 at 04:35:27PM -0400, Jeff King wrote:
-> There's one other thing you might find interesting. While poking at the
-> timings here the other day, I noticed that reftable is very eager to
-> stat the tables.list file. Try this:
-> 
->   git init --ref-format=reftable
->   blob=$(echo foo | git hash-object -w --stdin)
->   seq -f "create refs/tags/foo-%g $blob" 2000 |
->   strace -c git update-ref --stdin
-> 
-> We make 2000 fstat, which strace claims takes 85% of the time. I suspect
-> this is over-emphasized because strace inherently makes syscalls slow,
-> but running with perf also highlights it as a non-trivial cost.
+On Tue Jun 30, 2026 at 3:19 AM EDT, Harald Nordgren wrote:
+>> This is probably a larger question, since (according to the man page) it
+>> affects the other 'git history' commands as well.  When I run
+>> 'git history ...' and discover that I made a mistake after inspecting
+>> the results, is there a fool-proof way to undo the change and return to
+>> the previous state?  My first thought was to run 'git reset --hard ...',
+>> but the default behavior of --update-refs (moving other branches) can
+>> make this more complicated.
+>
+> This is a larger question: But I would love to have a reflog that is
+> more human-centered. When e.g. rebasing a series with N commits, it's
+> very tricky in the reflog to find what was the state before that.
+>
+> I feel like branch switching is given too much space in the reflog,
+> since it's not a destructive action, I don't care about it.
 
-Yeah, this rings a bell. If I remember correctly, this is because we
-call `refs_resolve_ref_unsafe()` to verify whether the target already
-exists. And as that function is generic, it wasn't easy to optimize it
-by reusing the already-loaded reftable stack.
+I share these headaches to an extent.  When dealing with the first
+problem (seeing an atomic entry in the reflog), I usually look at the
+branch's own reflog instead of HEAD's
 
-> It has been a long time since I've thought about reftable internals, but
-> it feels like we ought to be able to take the lock and then trust that
-> the stack has not been manipulated.
+But my question is about doing a comprehensive reset from a botched
+operation.  If any history operation updates branch refs besides the
+current one.  I don't think there's an obvious way to see which other
+ones were affected, and a naive 'git reset --hard my-branch@{1}' leaves
+them pointed at unwanted commits.  Is this right?
 
-Yeah, that would certainly be an option to explore.
+tangent:  I'm pretty sure that git-status relies on checkout / branch
+switching reflog entries in order to know which tag your detached HEAD
+started from, eg: when it says something like
 
-> It may not be worth digging into too much, though. I can make 50,000
-> refs in 150ms on my system, which is probably good enough (especially
-> compared to the files backend).
+    HEAD detached from v2.55.0-rc2
+    nothing to commit, working tree clean
 
-True, it's going to be much better compared to the "files" backend. But
-that isn't enough reason to not optimize it even further -- doubly so if
-it actually takes 85% of the time. Sounds like a low-hanging fruit to me
-that can result in a significant speedup.
+>
+> And when handling multiple commits in on go (squashing, rebasing), I
+> would love to see a visual hierarchy (with indentation for sub-steps)
+> instead of treating each action as equally important when it isn't.
 
-I'll probably not get to it anytime soon, but I'll create an issue to
-keep track of it.
-
-Patrick
+Sounds compelling!
