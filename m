@@ -1,89 +1,80 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A78380FFE
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 19:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76820360ED7
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 19:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782847294; cv=none; b=I4STt4skLMpiJXw9uVX48jdz0k2/2laHgsogWcka0taA9P+LVU5wR9kZBK5HIj9tmJ3Cru8sZHJwmJBkaAVXEMgI7oH2VkyzjEro5SqH7wgFuYrFZdOmzPbZBXarezPwnmgtph7C2hRipMyI9O2Sm96aLiIcCd0UxT9UglAma0o=
+	t=1782847664; cv=none; b=qBR7LGxodBAjxHxpIlGD92AbjlgYxxO/SoMNx2qSzsRdbXN2ZdfQgC9M59i9ggLNMnGRwPUlRkotgnQ4eLrsMarIDw22zJoERWCcRwe7Rij1DWUVEK1Vz8x5IRb9xDFWSUayKHtpxg5UYkcb7H5AwL+xBCYa1XbBgLt30RUdPns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782847294; c=relaxed/simple;
-	bh=3AkUcf8WgbaKDA6XlMV/SV4s7/0T7M1GTWE9J+wrxyU=;
+	s=arc-20240116; t=1782847664; c=relaxed/simple;
+	bh=/KZwgZICTJgpdpMUJVs0W5OgRGMrdL+FAFUwtLTOi7I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s9tuMaVfJJlfe6DXgjyD2/9sl7srwQqc5p3pCLKO7x0qmvKNbv8b6cH1YYbx44UtnNx+6ZB2JFAAiw65/Xs0j2xENAAbIZ3oXkvlRTqCW/yaMZkFiQWnFod7MyAMDqfu1mlx2PTVvwF6ZcbRPQaCyYyHSOYUh3Q5fwuCHnVPc3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=av7grIBr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XJUnCk2D; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=URlfDBkWXT28rPVvDS6ErHhC70VVoP5oWtkFSbyl4xpaV104/qhtL+jX9OEnijRb6NzeRzJ7dI8eswhlDHFhLXK1y4XH6uhtpwcZoI4PqlvkWhioqYxT9rbe7VqzDtnjk7dbgO+RaUk43Ak7B3rk3Y0leh/lbX2Uobf6x3fhJS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oybmmMOY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=diwY6faM; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="av7grIBr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XJUnCk2D"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 03479EC01A0;
-	Tue, 30 Jun 2026 15:21:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 30 Jun 2026 15:21:32 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oybmmMOY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="diwY6faM"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AA2B91400138;
+	Tue, 30 Jun 2026 15:27:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 30 Jun 2026 15:27:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782847292; x=1782933692; bh=9RcE/EXFcY
-	ZXB0jTCnOo/rhS3YCZYhSw5KWP5Lc37Ug=; b=av7grIBraLpoS+jbQcHX70OzGD
-	6M7COUCgu/KHQFchxWPx0Q+1QbOYRgoSs3+DsM/tSzCbwidFBR/r1nchBGjznneq
-	HTYR89b2nCd00vc+7xQEW4XbtVKonZA9kicb/SurxYl0twJdaROkwE6ZUHKg6DZo
-	LcQMYZjE4gwIq5FvdDDw5Q10yta3/aH5GtnJqf/LcuSooKvtvV6NwYbv0xpyx/1u
-	H/n1hpk9TLwN0fHkSI99hj/3VTbW/KWzAEduwYhanVjH2V1PmCsJi0jXwwf0AW33
-	kDJNfVv1AiRIqOsftVw1jhj1aTzj+dlGvL+dVZrq3ZaAl0RYvA1huPujykbg==
+	:subject:to:to; s=fm3; t=1782847662; x=1782934062; bh=ZealaA7ps3
+	ijsGx14uxvq9qYgbrVhAXnFUFZ95+j/uI=; b=oybmmMOYLvBmvN525fHEOVWJKT
+	5IoNhkfSBrlHTju/tTHsBsFyER8jM0Q+ntv9nWysZxexj9Npm14b29Mr7322aeCy
+	oWwmPZ+/QuIDQt67rBdMQxoLaDuIWQyZ9kgn4iw4CHuKssM44fP9IIurqykZH6CT
+	mrfbUfdgSBO6IA+Y3XUtsP1VCmLgN21/0xKf+b7f9PfIH70lrU2O9gd0QQLQkXP4
+	TRM2aeKS+YoKOt7njrf2F8o1v6NYZsQb3I3v9EfKdvl7OQAeKMXyc9SS5HVQ6K8+
+	KKOv4LFrz2y/EUsM7MkTy1jZUM/XrBGAxaSh1zWpIWb7KdsMg3mmlvMD+tBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782847292; x=1782933692; bh=9RcE/EXFcYZXB0jTCnOo/rhS3YCZYhSw5KW
-	P5Lc37Ug=; b=XJUnCk2D3GVlzXmesugPPkrjLq0DltgVYg+fM12bo9gQdfkTyh7
-	w03NTXXyoOXU6U4l/mlRRdekdkPSMQQbxysylMV8R4IN3st6V51JIQFPKDLC2Qj6
-	0kEDAJhcyIDBRy9EYisOVDnfJq78tGzmcd2/tcNL+Tde1agyDk1HFiiic2tic5Pl
-	5wfRYi0tvZnTrOBrOJQ1c6ytVy5t8YwtfwhKmnY/wUGXJ9aCsCA877x9GHNAPwaN
-	ebGMe9H2iw+EeyX+fXVQaU8VUNOSUKceQxbz48O/VSxF/Uz/SC21Pqga1uYtTP7Z
-	UStj2nz2yj679j+S526mT0T0IwjOTa9HtTQ==
-X-ME-Sender: <xms:OxdEalWNBbzqAx-0RhW6hJnGuK2W4lakvG6MrCBv2Jofkh0vnISnFQ>
-    <xme:OxdEasdx4CZemOX70nJRaEWV8kTYgI2ChX03dEun-hYeOW38-hud6BVkVuL-rPuPG
-    BEw7EKkFXL8YXIFkCZHedbOdCYnr4jNr4WIBwNGKF-c1fyfDnhVMg>
-X-ME-Received: <xmr:OxdEapvOT0zKXO-rU3P1kjm2a6pZjG9K5r7LHpH31prWCoFKOHNiQ0j3vZv7zVxxXEIqHTRY-aLW8AlDPZ5Fe36Mchh-4wYYc7D1y4U>
-X-ME-Proxy-Cause: dmFkZTFrspFAZ+JXgKna6d8altJguWr2fHYjBmDP/fib3apYZDYXCcR31aLFzVW4026O7q
-    hRJAGFVcZbdGzJU1+L00Fzlw02yur5g/U08kaIHT6bKxy5ta/IvvBaKfCIee7OD3ODJybs
-    x6pFexQXtSbKEIrD8JoN7NHuHZNRBgmzprhj6yT7TJiSdwzh6phM8P/4zczhy3ElMkT4Le
-    QVGN9V2hknSVrInj9aGwxD0S+8dvgZT/qNEffT1E62mSl9KYmDvsiMwNXPYKXX1/v0PGV0
-    IKiDCbH3BVU5v/YJ9ye3kGImiYW+2GBX1p/Rj08Z/hkNPtEoxC+ZJpGHip57BYDRlMQ/X/
-    B55cTphj6BfC5HET+WVTcTziq1D4zDUrh+M5JHQgOlYrgmYiXMjPPcBoFo6O3A3w+kU1hC
-    FG9z32lq5ptyA5NbsbG0zdNBjbkKAFMKCvpYnbGUeN53WM823cpI8wkA+WoXhqPZqP3TfC
-    jQWkD/4oRdrGlMBNVovR1joZowEGtIWOhVDKj7CmbYivlVeUjfsxa0li+zk5/T9L4wueDE
-    Ypo5ubfoUUX4iREud90eymf6750/xVZJVp0RW19dmkafuK2IZCI4Ai6GMGbGHCYbptyzEu
-    KV2S5J1spqJPcH609hYz0ol60tgPNq1yICvhMnJIsOqdqAQff6iL2S/2CpXA
-X-ME-Proxy: <xmx:OxdEaj9kH5g0HFF55tjSXkCk66jdJmNKmqlN7xsii_xZQ4Cd-v38Jg>
-    <xmx:OxdEas0FmDqziD6WOcONCZHL70s-pPqWr9VVdrTcSubYNZ6QTJtcmA>
-    <xmx:OxdEagAA6aqZjwu6o3zXv0oApUORm8wErX00H8bOcKBp7OCssLPh_A>
-    <xmx:OxdEagdIbnFNqjPesT-yIkce4RZ6iu6lr-9V6giFizadcxhHW_yrZw>
-    <xmx:PBdEaudDW9xGXK14TFtu0M0DzaspYRcJICOn1QhDGEAuAlXApD5L_XqZ>
+	1782847662; x=1782934062; bh=ZealaA7ps3ijsGx14uxvq9qYgbrVhAXnFUF
+	Z95+j/uI=; b=diwY6faM69m6RBdGGwZXTvG3Y8Mabp+ZgnLq760wfPtTr9y8POy
+	3uRjW0NNEFNtT2k4BKzLuATePMIKFjwvEdpPVVDRyxTb0g1uYz2QpZ5HV/MhesS+
+	9k0DRcmQhr7EBtYofwtiLJZkq6KXnzehCO7CkpPYdIIB1RxPtZBgKUhFSbmhctW/
+	UQaxK9hdDtbyBMAbMpNhzhP6DV63GAIPFqnIeuIPiuT5CBsUVnsiVE9As2FIIpN7
+	FqCAisaHW5iPEASWEkqvrQwWemLFe6yj1gjP0gm5tEtc8bgE58o2bpCEwId7UX49
+	X5dmO/IwDcSD2rhoZ6/tEj/U2E8DiW+uWBA==
+X-ME-Sender: <xms:rhhEao31PcTBcAIq7XQwCR5gMbprV347t36CtDDxvLgAmYcGNISpqg>
+    <xme:rhhEaqgyzI5gs5vECaSt8XFxddPm_NISWRR7ICc6Bw-X0JlWEzorpWERLXtrCMre0
+    04-QQolFigRIPmdwdHIlDIKUK_0nRE-6zYdXrm4fzcRgScG_Pye>
+X-ME-Received: <xmr:rhhEauSJ0tnwJ8SlMvess-vLQA6W7Y73EseRDmU9m6jyah2U47h-5Tb9cFeR4IYLliOzwmSDDWAJgkQ5njmDSKfAiEn986mfEWek2vs>
+X-ME-Proxy-Cause: dmFkZTGGeJ67dQrtXdMB7KCgv7z1FmSOZoPJ/QIDsEwSwvcAONKoBdpvMa31Lilefnw+0z
+    un4oYDeX5X5lFu43pqkdbhzGnb7iK5HE8K/TgPaEvvqXNrCh4Aff7ePUGYLK2QEo+XBRjX
+    rB6D44HV7HUDA+HMVvzk3mNqz2ov0ofbfnX50NIcM6duFVoq3EE0b7Orc1DuPFglq0gihi
+    nI/mJanXhkOHjyVwGjaFqV8nb7W1wX0aYzvrOoaW7V5nzdIZjypP0neF/Xt+ozN5sDSB/x
+    fVfw5A7uEUU0egYs1eWCjAUQX0h14YWh7VEhGedjEWVtvTl1VdNY2y2su9N1Ke/ESGclCw
+    YsRGQYpjQT31exERs8fHlv64XD/F/0PxiKpVNbU2J8hhBJn7rsgyWnJ82bz56HMiUbxnNU
+    OtWGDQbF3iI27wVd491Y1pnw0NAjaWmHoM6Xe+3NnAJpWo+hCW7EtRNPz+pVsluCvZ4L8C
+    Q9IKDaXPTlU6D47d5rVVL99BDOD3CxhOPnJm+zXkFtIMJlei23dG/EFEMkXq4seOFABLLN
+    zF254J3CGnAf+P+5FQrdl9Ld+r88LUhPynI/bKYlLvlS4ygjuPSTDhIgMX6rxHJU7D7944
+    xTyQ+AlCvA3+pVGZGhP58GaYQmu+qCvg7f/eSSknBoIAtxpAfJ+Qmo+XACDQ
+X-ME-Proxy: <xmx:rhhEargRgqWVB0E19UWz655WzfH3CZm8JcK0RqHxFjxu_oCtp85rvw>
+    <xmx:rhhEau5WTqTeaOEDiEI5ZxJ1WRWi--FgI9pFbbybRpruTubXKrPTVg>
+    <xmx:rhhEaoBYbul47CQTRdoqKIU4C_Z9gNfKs0LAdDmrDxSsc3lN3B9g5A>
+    <xmx:rhhEala4UYvKUrndnDNvCjUzH3clMKTBezh7ufCyZ9jHZ-Kr8qqgTg>
+    <xmx:rhhEagLMF0o5VwAI-frofCTcIbbzFGlLMlIzaACEcxNij2w8JvQOUtMK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 15:21:31 -0400 (EDT)
+ 30 Jun 2026 15:27:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  Michael Montalbo <mmontalbo@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 0/3] fixing expensive http test timeouts
-In-Reply-To: <akOGzAq8Is7ghgIM@pks.im> (Patrick Steinhardt's message of "Tue,
-	30 Jun 2026 11:05:16 +0200")
-References: <ajkOoRhqaAcy6gBg@pks.im>
-	<CAC2QwmJA2TH6BmO0O61qRYvV2pqURUk0dTXpkJtb9e-TZNZDZQ@mail.gmail.com>
-	<20260626051657.GB3138423@coredump.intra.peff.net>
-	<aj5ZaZK7xylfs4Xw@pks.im>
-	<CAC2QwmLkHUymvtYbjY8aQO9_VogvaSXdbb1_DSZtcBttGfN0tg@mail.gmail.com>
-	<20260628075716.GA3525066@coredump.intra.peff.net>
-	<akIfsaVMB_S6kfJQ@pks.im> <xmqqldbxz9z4.fsf@gitster.g>
-	<akKYv3nqX0BXcavu@pks.im> <xmqqik71xqtc.fsf@gitster.g>
-	<akOGzAq8Is7ghgIM@pks.im>
-Date: Tue, 30 Jun 2026 12:21:30 -0700
-Message-ID: <xmqq8q7vsukl.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2026, #10)
+In-Reply-To: <87cxx84exj.fsf@emacs.iotcl.com> (Toon Claes's message of "Tue,
+	30 Jun 2026 10:20:56 +0200")
+References: <xmqq5x36dtyf.fsf@gitster.g> <87cxx84exj.fsf@emacs.iotcl.com>
+Date: Tue, 30 Jun 2026 12:27:40 -0700
+Message-ID: <xmqq4iijsuab.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,29 +84,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> The pipelines of the official mirror can be found at [1]. We might for
-> example add something like the below patch to our README.md to make it
-> more discoverable.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Patrick
+>> * ps/odb-generalize-prepare (2026-06-22) 3 commits
+>>  - odb: introduce `odb_prepare()`
+>>  - odb/source: generalize `reprepare()` callback
+>>  - Merge branch 'ps/odb-source-packed' into ps/odb-generalize-prepare
+>>  (this branch uses ps/odb-source-packed.)
+>>
+>>  The `reprepare()` callback for object database sources has been
+>>  generalized into a `prepare()` callback with an optional flush cache
+>>  flag, and a new `odb_prepare()` wrapper has been introduced to
+>>  allow pre-opening object database sources.
+>>
+>>  Needs review.
+>>  source: <20260622-b4-pks-odb-generalize-prepare-v1-0-d2a5c5d13144@pks.im>
 >
-> [1]: https://gitlab.com/git-scm/git/-/pipelines
->
-> diff --git a/README.md b/README.md
-> index d87bca1b8c..9ad77fdf7e 100644
-> --- a/README.md
-> +++ b/README.md
-> @@ -1,4 +1,5 @@
-> -[![Build status](https://github.com/git/git/workflows/CI/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
-> +[![GitHub build status](https://github.com/git/git/workflows/CI/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
-> +[![GitLab build status](https://gitlab.com/git-scm/git/badges/master/pipeline.svg)](https://gitlab.com/git-scm/git/-/pipelines?ref=master)
->  
->  Git - fast, scalable, distributed revision control system
->  =========================================================
+> I did have some questions/remarks, but Patrick answered them, and with
+> those answers I'm happy about this series.
 
-Oh, nice.  We of course do not want to be heavily involved in
-advertising offerings by commercial entities but I think these two
-sites deserve one line each for their continued service to the
-community ;-)
+Yeah, I am also happy with these patches.
+
+Thanks.
