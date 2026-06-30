@@ -1,80 +1,80 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76820360ED7
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 19:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D589D367F4D
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 19:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782847664; cv=none; b=qBR7LGxodBAjxHxpIlGD92AbjlgYxxO/SoMNx2qSzsRdbXN2ZdfQgC9M59i9ggLNMnGRwPUlRkotgnQ4eLrsMarIDw22zJoERWCcRwe7Rij1DWUVEK1Vz8x5IRb9xDFWSUayKHtpxg5UYkcb7H5AwL+xBCYa1XbBgLt30RUdPns=
+	t=1782848963; cv=none; b=UqI00iFwZzRf6kMOYpnIllj8/0KrG4qfEi7BYxFs4BWk7AZBpXLB4jqeco3v9LOCni1fZfEqgGvI5b9F62Wh/uj0aaVYCGNnBkS6h2REyA38nvvMOhHWXMQ/4yDncuV/Rwj4VoU0bQdRYH5RCD+sqJxeKpT4OZWcGcOcmOSoGSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782847664; c=relaxed/simple;
-	bh=/KZwgZICTJgpdpMUJVs0W5OgRGMrdL+FAFUwtLTOi7I=;
+	s=arc-20240116; t=1782848963; c=relaxed/simple;
+	bh=4UTimG4POjqrLCvtXjq4hNc4jUw21ngWpU4kuNADW9c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=URlfDBkWXT28rPVvDS6ErHhC70VVoP5oWtkFSbyl4xpaV104/qhtL+jX9OEnijRb6NzeRzJ7dI8eswhlDHFhLXK1y4XH6uhtpwcZoI4PqlvkWhioqYxT9rbe7VqzDtnjk7dbgO+RaUk43Ak7B3rk3Y0leh/lbX2Uobf6x3fhJS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oybmmMOY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=diwY6faM; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=EatjEo2d6s4fHBXsRwetS/UQc06o0g05tEGGRsZ7vLN7O5KgB4i3ageJawqFQ6eX4r4T9RSD1OFsp1oVNCyG/t+6d5kVilTyonqJyz66mZV3Xm3xKBJBxXbEIEUjH0L29pj2yncHpkwlvuS+HC8DQUWVHkAEcJzYV8FzYOlk9ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j4ZsU2+U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aBFaj/GS; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oybmmMOY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="diwY6faM"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AA2B91400138;
-	Tue, 30 Jun 2026 15:27:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 30 Jun 2026 15:27:42 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j4ZsU2+U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aBFaj/GS"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2B1DAEC0112;
+	Tue, 30 Jun 2026 15:49:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 30 Jun 2026 15:49:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782847662; x=1782934062; bh=ZealaA7ps3
-	ijsGx14uxvq9qYgbrVhAXnFUFZ95+j/uI=; b=oybmmMOYLvBmvN525fHEOVWJKT
-	5IoNhkfSBrlHTju/tTHsBsFyER8jM0Q+ntv9nWysZxexj9Npm14b29Mr7322aeCy
-	oWwmPZ+/QuIDQt67rBdMQxoLaDuIWQyZ9kgn4iw4CHuKssM44fP9IIurqykZH6CT
-	mrfbUfdgSBO6IA+Y3XUtsP1VCmLgN21/0xKf+b7f9PfIH70lrU2O9gd0QQLQkXP4
-	TRM2aeKS+YoKOt7njrf2F8o1v6NYZsQb3I3v9EfKdvl7OQAeKMXyc9SS5HVQ6K8+
-	KKOv4LFrz2y/EUsM7MkTy1jZUM/XrBGAxaSh1zWpIWb7KdsMg3mmlvMD+tBw==
+	:subject:to:to; s=fm3; t=1782848961; x=1782935361; bh=4kxSZs3LOs
+	V2Wl8xzEk+txAjOAdL1S+70obQkuOc12s=; b=j4ZsU2+U/7qDZxMcdDGPQbGkcD
+	d/EwnKTxEUSeaH6qbJrPS+CiuqBGhbPtNPW2o9ILU9fzDunQhSkhq0Sn/CAofA1L
+	UjVG44HXsQzRMPsZyLVG6ea5lcnFeV2lBcpKsR96gR9m/O6Dv9aBXgc/TCRefqQW
+	YisjKqehL/My/GFkVVKL6glm34JnpyMSkF/unxbJBPoDuDnPy7TjJHhBASttQCuX
+	J2JwA4i6r0UkcQk+TAQvXyzPn0+qa2UW5Wtbnbz17Mi85pzx1xLlZ3bKZVVD9xtc
+	+z6Kd24tq0XM/pxOZ7G/QT2lqo1QQNFE1EmAvdTLvuvU0wLcLNkn66HjrmWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782847662; x=1782934062; bh=ZealaA7ps3ijsGx14uxvq9qYgbrVhAXnFUF
-	Z95+j/uI=; b=diwY6faM69m6RBdGGwZXTvG3Y8Mabp+ZgnLq760wfPtTr9y8POy
-	3uRjW0NNEFNtT2k4BKzLuATePMIKFjwvEdpPVVDRyxTb0g1uYz2QpZ5HV/MhesS+
-	9k0DRcmQhr7EBtYofwtiLJZkq6KXnzehCO7CkpPYdIIB1RxPtZBgKUhFSbmhctW/
-	UQaxK9hdDtbyBMAbMpNhzhP6DV63GAIPFqnIeuIPiuT5CBsUVnsiVE9As2FIIpN7
-	FqCAisaHW5iPEASWEkqvrQwWemLFe6yj1gjP0gm5tEtc8bgE58o2bpCEwId7UX49
-	X5dmO/IwDcSD2rhoZ6/tEj/U2E8DiW+uWBA==
-X-ME-Sender: <xms:rhhEao31PcTBcAIq7XQwCR5gMbprV347t36CtDDxvLgAmYcGNISpqg>
-    <xme:rhhEaqgyzI5gs5vECaSt8XFxddPm_NISWRR7ICc6Bw-X0JlWEzorpWERLXtrCMre0
-    04-QQolFigRIPmdwdHIlDIKUK_0nRE-6zYdXrm4fzcRgScG_Pye>
-X-ME-Received: <xmr:rhhEauSJ0tnwJ8SlMvess-vLQA6W7Y73EseRDmU9m6jyah2U47h-5Tb9cFeR4IYLliOzwmSDDWAJgkQ5njmDSKfAiEn986mfEWek2vs>
-X-ME-Proxy-Cause: dmFkZTGGeJ67dQrtXdMB7KCgv7z1FmSOZoPJ/QIDsEwSwvcAONKoBdpvMa31Lilefnw+0z
-    un4oYDeX5X5lFu43pqkdbhzGnb7iK5HE8K/TgPaEvvqXNrCh4Aff7ePUGYLK2QEo+XBRjX
-    rB6D44HV7HUDA+HMVvzk3mNqz2ov0ofbfnX50NIcM6duFVoq3EE0b7Orc1DuPFglq0gihi
-    nI/mJanXhkOHjyVwGjaFqV8nb7W1wX0aYzvrOoaW7V5nzdIZjypP0neF/Xt+ozN5sDSB/x
-    fVfw5A7uEUU0egYs1eWCjAUQX0h14YWh7VEhGedjEWVtvTl1VdNY2y2su9N1Ke/ESGclCw
-    YsRGQYpjQT31exERs8fHlv64XD/F/0PxiKpVNbU2J8hhBJn7rsgyWnJ82bz56HMiUbxnNU
-    OtWGDQbF3iI27wVd491Y1pnw0NAjaWmHoM6Xe+3NnAJpWo+hCW7EtRNPz+pVsluCvZ4L8C
-    Q9IKDaXPTlU6D47d5rVVL99BDOD3CxhOPnJm+zXkFtIMJlei23dG/EFEMkXq4seOFABLLN
-    zF254J3CGnAf+P+5FQrdl9Ld+r88LUhPynI/bKYlLvlS4ygjuPSTDhIgMX6rxHJU7D7944
-    xTyQ+AlCvA3+pVGZGhP58GaYQmu+qCvg7f/eSSknBoIAtxpAfJ+Qmo+XACDQ
-X-ME-Proxy: <xmx:rhhEargRgqWVB0E19UWz655WzfH3CZm8JcK0RqHxFjxu_oCtp85rvw>
-    <xmx:rhhEau5WTqTeaOEDiEI5ZxJ1WRWi--FgI9pFbbybRpruTubXKrPTVg>
-    <xmx:rhhEaoBYbul47CQTRdoqKIU4C_Z9gNfKs0LAdDmrDxSsc3lN3B9g5A>
-    <xmx:rhhEala4UYvKUrndnDNvCjUzH3clMKTBezh7ufCyZ9jHZ-Kr8qqgTg>
-    <xmx:rhhEagLMF0o5VwAI-frofCTcIbbzFGlLMlIzaACEcxNij2w8JvQOUtMK>
+	1782848961; x=1782935361; bh=4kxSZs3LOsV2Wl8xzEk+txAjOAdL1S+70ob
+	QkuOc12s=; b=aBFaj/GSOCW9Bhr1veg7fIHStVr2DyTPX/ujCcw1gCiQ3h5pYaB
+	VXJZI53jHC4Tu/svfESMQpV/EPY6ND/wQnG21leSeMv0EgV9act4CjlD3mTMrmu2
+	sGxvMQOg4HisI0dKFbsC85F/FlemKyYEfLPoYc4CYESTfqvZl0OZzbX3tDfgakE0
+	K+pKdoQYx8VI8xRgImOsDvnBvgmGKhyotP4TAJhiffUa80GwR2ApDQMUvhk5DZ10
+	iuorULtjmrzhlemkXlSwL58v8xpXkOe8gBuqan+to1QVDW2WvW8CXHnOgRm/Ok7j
+	KZPq+UxVBECXzMPvAtWtEQbR1Ywh3hhIqmA==
+X-ME-Sender: <xms:wR1EarSwucbLAEmJ2DppbMzXOO5Yfw7LZVFK0QqCATsTp5SQnuy_BA>
+    <xme:wR1EakPskyGkaAa3W7o-v53pRyEf7qhJMvAbfycnfuAuGZN9PgkFoCuIiuNU01eFW
+    JO37Ku79G6DWYf2gULSqNQtXAkBmycoDnZhDNK9YXJHDK69HfQd>
+X-ME-Received: <xmr:wR1EauPSgU7k8M5WUOr1sa7SGTHD0MC-YDJIrL1wE3jqpemMqRCLUu-v9-BKRwUa6lTyVMb4Bv4J70xo40lXbxoPhP2p2FDU13veZPM>
+X-ME-Proxy-Cause: dmFkZTEX7jdcSpNBWfuRCsZFtreQOY5fUsSD/retXD7NdVMQQxHlsBXtoEKDlPMTBN4ybw
+    TZU9m2T7BcS5Da7C46RtlOCZxt/ugfCY2cKOdm7cyf6sSeydb/Ih48En4R5T/5Bp5PMEse
+    qJY+ZjBUwD3DU9HmEFHuGDdBNZICqQ0zES0YSwqC1+AaXvy6IT4J0JcouDGpwNW3lsCx91
+    6lsG3wvO47qQFKR6H7wf4AZ9cTpGOPlq4IQ1uWiBMzU8Fn3SwAZMYyY8VQFfubXeizlURH
+    BzPw5eCNjlMTKmJ0T1/qaPy9lRyFZf9+mUkoOjbjdFpyhh+Et7uZ/iHJE8kxnoOZ5im9BP
+    Vw6qvZ3bKEQod/DUo5L0JWVPrnn6ivAjHaffNk7HDLMb7QAjYangQF1w1GUbGzwf23r6wg
+    IuYfyux5fsc7bRbC+5fa3NPZT9pOniHzBYfNvi+7w8+pgwZwrW3e5WEf6wSiE8aJBmxOwu
+    2kqrdWIPH77b1K+94CT6lR+GYpVV0nEi1WpfuB6Rlg2MxARI9hpkDjzlAHT/nwIcoJnSLm
+    0e1PJLI+3KfsRvPdJiC0U3KyecTJWQ7d2Q1XyxGieGe8sd4A1zHSCJZ2b3wQ5ZyMrX99I3
+    b1Lnn3vOJFmv4OBR0OC7zTdcymUXAGJkugxaW1CjZvV4mzTJEuICgZ7cV6dw
+X-ME-Proxy: <xmx:wR1EaktAzTyC_fg8xT-bmiyH9PIm1uQjVHqrMBAjBZxE7R5YBUJxHw>
+    <xmx:wR1EaoU9rQQFmJ3eDTFiIo8nUJaGEoVbcSOi2KNXOh7s1eM3Nn-1rg>
+    <xmx:wR1EasswNrqkAnWKSEdIW9toaSw8pbn1bK5bgyvdV9hykgQWgz8Nkg>
+    <xmx:wR1EakUy4GsERuzuCOnXkDqQTQzghopsx2gl--8lB8t-hrjv7rZLcQ>
+    <xmx:wR1Eav8Sjq-pIlnGwpJ_-if4mpayBjt4L0SiqrBC7laod3hYDc694WBX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 15:27:41 -0400 (EDT)
+ 30 Jun 2026 15:49:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
+To: Laszlo Ersek <laszlo.ersek@posteo.net>
 Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2026, #10)
-In-Reply-To: <87cxx84exj.fsf@emacs.iotcl.com> (Toon Claes's message of "Tue,
-	30 Jun 2026 10:20:56 +0200")
-References: <xmqq5x36dtyf.fsf@gitster.g> <87cxx84exj.fsf@emacs.iotcl.com>
-Date: Tue, 30 Jun 2026 12:27:40 -0700
-Message-ID: <xmqq4iijsuab.fsf@gitster.g>
+Subject: Re: git-blame vs. abbrev
+In-Reply-To: <b500479b-14c1-4fbb-a672-1d2cd4852601@posteo.net> (Laszlo Ersek's
+	message of "Tue, 30 Jun 2026 11:15:17 +0000")
+References: <b500479b-14c1-4fbb-a672-1d2cd4852601@posteo.net>
+Date: Tue, 30 Jun 2026 12:49:19 -0700
+Message-ID: <xmqqy0fvreps.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,27 +84,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Laszlo Ersek <laszlo.ersek@posteo.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Hi,
 >
->> * ps/odb-generalize-prepare (2026-06-22) 3 commits
->>  - odb: introduce `odb_prepare()`
->>  - odb/source: generalize `reprepare()` callback
->>  - Merge branch 'ps/odb-source-packed' into ps/odb-generalize-prepare
->>  (this branch uses ps/odb-source-packed.)
->>
->>  The `reprepare()` callback for object database sources has been
->>  generalized into a `prepare()` callback with an optional flush cache
->>  flag, and a new `odb_prepare()` wrapper has been introduced to
->>  allow pre-opening object database sources.
->>
->>  Needs review.
->>  source: <20260622-b4-pks-odb-generalize-prepare-v1-0-d2a5c5d13144@pks.im>
+> when git-blame is passed the "-b" option ("Show blank SHA-1 for boundary 
+> commits"), shouldn't git-blame *stop* reserving a commit hash nibble for 
+> the caret that otherwise marks boundary commits?
 >
-> I did have some questions/remarks, but Patrick answered them, and with
-> those answers I'm happy about this series.
+> More directly, I find it inconvenient that git-blame shows commit hashes 
+> that are one nibble longer (13) than my "core.abbrev" (12) setting; that 
+> makes cutting and pasting commit hashes from the git-blame output into a 
+> git-rebase TODO list cumbersome.
 
-Yeah, I am also happy with these patches.
+I never knew that the parser in rebase did not want to see a longer
+abbreviation; shouldn't it take 16 hexadecimal abbreviation from the
+result of letting the user edit the list, even if it initially gave
+12 hexadecimal abbreviation, as long as these extra 4 hexdigits do
+not break the commit object name?  That is a more serious usability
+bug that needs to be fixed, if it is the case, I would think.
 
-Thanks.
+FWIW, even if your core.abbrev says you want 12, if two objects
+share the same 12 hexdigits as the prefix, you do end up getting 13
+or more, so a parser that insists on exact 12 hexdigits sounds like
+a bug.
+
+Just for the sake of aesthetics, I agree that when we are not
+showing the boundary mark, it would make sense not to reserve one
+column that we know we will never use.  But unless there is a
+mistaken parser that insists on 12 hexdigits when 13 hexdigits you
+give uniquely identify the same object, I suspect you wouldn't even
+notice that the hexadecimal digits you see on the screen have one
+digit longer than usual ;-).
