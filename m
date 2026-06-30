@@ -1,80 +1,80 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA71823FC5A
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:48:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC274071D9
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782820092; cv=none; b=cv/vSp8SrqoZOrTU1FTf9qs9m+FP9KEdtW9JSZTuboY9tIZdtTglDSLtieDXYuoJzlw1iOSfZLXFjSIZUCKEk0g6xdXDuP0VUj79hybJorOLJJ6RhdlB2uOZD1veRX1e4XPScLQKIF4ell0PO2gQUTEW/ZPPUCK4oCcYVYk7y3Q=
+	t=1782820095; cv=none; b=PZAEaBfbU+weNlYcu7sGHkuDk5ZrU3Mxt51sML3hYCftOxiGFGXT7678vFod1Hb/zCzuaATo5AGsaLJVRLi4IzHWRWTrHQf8IH9305Sp1s3hj/xH6ufHzWikae96kKXDFma+anq4kJa0kPFAhDgUDoU278PU/Qj98/XnMqOkRyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782820092; c=relaxed/simple;
-	bh=GXDxPSSmXvjqnbNfC413icjhksyY3/5v1pL5+JZQzZk=;
+	s=arc-20240116; t=1782820095; c=relaxed/simple;
+	bh=CLHZ+Wk6MsLO1pvWa3Ce58EFO7Guw28iEkLVBiQC3Xs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fnAKOOIcO2LEYFZNR87DI65gy5q+53vaFmmlOZwSBKrj7z8PYgL+Px64SMT5j/BuvPMOD2qA0R8tSgoph43SVktBZcl0osuRKJ63mWwsl0TyKnEuUZ4Km6j9OVO38fgF7XxIiyg+JusKCkUh04X3lFL6fBZmXBzTPE/M0Q5yAg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WJjR7PnG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F/nC3iKG; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=RXAj9g1TUru02et6F4iyxW4EhthEn0iFV6KN47y8IpdioQ0bA9To9MItPPT13hCVXmMk0AKWehaD4VJCVvI1Nt9uqa+iUx0/qxBccHTCyLBSWlGKuyxn5E6M4M11c8MmuCaV5TXInf+h069vKVMw8uqNl+aN/UElmetJ+rEM3Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q0j0YGiK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ey63WWUC; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WJjR7PnG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F/nC3iKG"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1963E1D0012C
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q0j0YGiK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ey63WWUC"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 086AD7A002F
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:13 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 30 Jun 2026 07:48:10 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 30 Jun 2026 07:48:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782820089;
-	 x=1782906489; bh=2bKPc9ZVYATGL+tro385Y97ERjw/lRWu7YC4i+aLsPw=; b=
-	WJjR7PnGxDpHdcV1nT407cF+ut3j6fLBDKj6fjYy9EiUiKcIAKG7MWMfZw43EFOh
-	fOsgHLvlmZMgpwpJ5+DCWg36tP/HYCq9uQVzV5/yJQ66YNyI4h8aiAbGB2Jj+71o
-	Usd8TxVOyKwTmrMbpha7SKY75+5rHy8N7f3Pvc2rnmXcLIFlG2JHzn5POOflttI2
-	l1z9onNCbkSsdnkFHS4rB9FL8iGWb7x6ghqKHXs1NTP6wtEVSnkLkl+awhCiYjMX
-	TAFxc9/fFB6AziL7IcUNSHdPR6/ScmhidPN1Ftw/dF9kcgez0ZbcXLcsMaArX6US
-	bcGJ+qDXBrGmQBpIuifGSw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782820092;
+	 x=1782906492; bh=oQFrpR7e4MV0EDk6gGMj++xbQP9wP310j63hVlN+UzU=; b=
+	Q0j0YGiK7ID4yne6V+Bl+XSJ3tmAMyKeNQ8YsTfyGIdcqWvNxWMLjSpxyriugyrd
+	qa0H0Zgl9ehluULS/nPMx8MuC5lqKMkRT5BKhxDMNFHpzI0pwmPQPdDsHOPlsLuJ
+	M5w7Sz1OEdasrsMmmNJq+nsiVNsh7Rwof9UfLDhkgnRe95OPgf+9z+n+aUgi9j85
+	m7E5GEcJ/UE0wF6Ub/sQDcimy2M+P50vjnmIJs9LJXlWQSjlVzCgu87ueYBat6q1
+	COMEN70xDao3jSPg5g2VHy+yuI0Wc3upXQq5P3wv8ihjImk4j8IQuIa9wqISKXlE
+	MXPVEp0NZF+bN0t9hgbeYw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782820089; x=
-	1782906489; bh=2bKPc9ZVYATGL+tro385Y97ERjw/lRWu7YC4i+aLsPw=; b=F
-	/nC3iKG4p+Onk7MtHnVGIWv1XGuOijvS/aegwcH4JdQDsZNblOqJJUSd8Jn0N0ya
-	t4qQr1ylK7HfMzIb5Rs65DLl/rrEpErgkZVb61GiPCxIpxuGYlRn6sE+O6mWSHss
-	gNvmyXZDpJFoZJ0dD7LgLIfkqjTyg+b1f7BFQPsF9ZcG66BTsVVJiUeDjaF8577s
-	L+EZYzKWV/tKjeBjzDp85iKzUldphLyNWgtvvedBxfawfuXQe/X3B/KRUKAUPC5r
-	YiNQLli5Ym8MuAgOcufTX9tvq47gJRZi7y17nZAM5ZBOCZk4hHrXQl0S54fGDE78
-	Slu2c6G1j/N58dU0dnuhg==
-X-ME-Sender: <xms:-axDatNBpVVeluAKod4huB5DSH4PWw7_KI1NMZCn5i3V6BxQmgp3hw>
-    <xme:-axDam6tpD85fScVcbd9asiD3wK9gr2Tmv_3gVp36XZfPQ_Uprj_6bm-QQ9C1d2dD
-    1b9f4L7ZISPUv6Uf6tI61sjc3EPHXT5P6SgVCSgbRkXl5VmnnEw>
-X-ME-Received: <xmr:-axDah4Xec4WHrOuaLhEhtQhGAFmQQjoLg3dwmGgFbPI1LaCZIUqrr1nA2OYbS1XBnDeIKdVTM48s8D_y32fSDSKV77m7xEHuYybmJPVWuVDvA>
-X-ME-Proxy-Cause: dmFkZTEHKyD9k4hs6CMGZE9u/eOfhZPMS1hUt9aCAd0rwwggXlz1iqnecuSzSLoVYUhX8e
-    yViKLJTXKCJk/U1aXM/giAOkhFYoWbRlfYSxDxDo+mkMwSHMhQC6FrDuORj7dRnjikTX2Y
-    6HzH0qqQDLq1N0uEFeKjsP6t6uvLFVrcZJHz3hVqO+fHSH1qcCA0IF2x8AH65bcoBH3YYB
-    kd4l8sQp/7kAcAYFOEUcuxccPu31t/xT7Q7P5JpFqS/TjE2iMbdJUZamt/+5h73tfY9WzG
-    lSKmirUZ4Kl7n7yUMsjNbgBjgs+74oUdDnMYKJ8cSam58SE772CzVaP7Z8Oa58nsNS44JR
-    SI78tR9uDx7ozfH6os4o8IpJ0pC+X3CY1wofbwCL2NaLycYjkVYEsX1KuHv3Az9Xd+/dyi
-    8bcUe8Zq/xqO512wS2jwAZxSpe9CvBhtjDodOlrIhLg3rWRmZIAb3Db2XKpj9pTAfz9FgG
-    rhg9FfhsnWBccJ8GscjC/Q46REtNwGd8ermgE8CPNfN+BhkoJCTwrESdRi66bzttCHvuyy
-    bq3n+LBTPxIIRzpHWTKG615xcY87WF1BECjFO69EQgjl4Y6pSVP6xnNS0zKK8gypC+s7M8
-    wLXt8o/U5HszRnW8/AUA5Xf9VKp7OrDrlxYQi46uCqGbhKA8+2vOpWNDVLzw
-X-ME-Proxy: <xmx:-axDau1McXC4bJNRB4jpJ8ZoY6IMKygisnNt4p49KF0Ypgk9Nk_cYw>
-    <xmx:-axDalWk-7yPYVLc-CXCi66_pGVRxW5UPycgB4rhc9HEwh5jqu3GdQ>
-    <xmx:-axDah5D0IIVp1m_ktpN7rrAceiJmT_SstQYaCR6HiKzpkq5XS8AYg>
-    <xmx:-axDakKRoMHXBVV5Cly-wHLUgeJuZWOx84begwzuQVCu5i4eM25Ggw>
-    <xmx:-axDap-xtozjbf4PUKPgVdgrBJOFLRGqDALCOpKUjvkgdiYETJrzvY4U>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782820092; x=
+	1782906492; bh=oQFrpR7e4MV0EDk6gGMj++xbQP9wP310j63hVlN+UzU=; b=E
+	y63WWUC8BzwM7WPErX8CkV1x7qGlXMLYU9B0P06kCFnTUAkDnCW3AluMpRU2ab7A
+	3sCqtIEMUDHk0yiCIrlmGxgZlDC6cN1MHO2TexmTjO6bdx/+5I3KDVieK3uhVHn8
+	qc6RjbO366Fg/h0WEx0443txGF+zYOUf2rLg9aGZCU+EVHY2dTJEAX39hghb2SxR
+	3HcOK/y7qXfQ3tylxVjWmnOBJQvRCsfUJZAH8cslP+EESxPF6nyGIFRYnDzeRZ9K
+	S84GM02jku4LemYyuK0vfJ1UqNRc+qB/pAl2/3xYw2CC6PoPo5RMGXJT9Au3svOX
+	7835XGb682iDwg+f6+yNA==
+X-ME-Sender: <xms:_KxDapF9yP_HIaeyFcnm_hi6VVMPON9YsRuUqbbd-bI6FHkENy9Juw>
+    <xme:_KxDalTReS-poe_yt99VIiONvJIHdfORNrIbW2dbfMgzaep-R33cxdmiDeThFnKh0
+    ORHZJ4-1aIt4WRhz7g50EJUn_DUAvwmLok9mag3uBqPefrsT7aK>
+X-ME-Received: <xmr:_KxDagwEgvZj_6qtCMwCcZWUizh5XjXUSF2nl5_VTT7LnXeWyKW15G5LZeLKp9pu2yb38ay52AmnxCu_2AfaCA2yDwmGPDEXcYcuOCLsgZB-BA>
+X-ME-Proxy-Cause: dmFkZTFDZ8EBIRkLTKt14TuSGr1p9PVZekTad1c/wqf+J4rUdU57yUeNCpU56+znu8nsjb
+    fYDR646+CJ3TGFv8kQTHR4VNBrT/tkMeSXjzT67aaHpKiIdg7Ex7ASQFMr3pvovOMeWRc2
+    b+Hb+9BEYhuDH+pmqgJy7oGhS1oPcxj3Hy28pR4Uz81T3ewRUNKEnbf7HExREqmx77S7CO
+    8q4+s9ohDmUs11CzmmSQpKP0fvZO9hDzS3HZYuZIL2rRpsr/my7MnY/OfRKNFc3m22a8aE
+    0HfNWlTaLhp/UB/uVY+/uRI7kUgfffb/QcAn+DT1zAl/2aW3MU8z9wRoF8TwRTtj2JqpDC
+    eNun4nc1Dpp96E5G9aQpm+Rc4NZrurawHm2ENrtLoIfJ5SpI9j/kgDmd3WnovAghbKS8+i
+    KmezKbB+GZik0FbWasTlIB6VjXsXKysGuL4OE0fnorXL7AAEZkrQnTHrsqocx2FzMt1iU8
+    /St8YaCd0Zkxw/Ii187I/6QmFu4PKes7egV1JKRg1Jr4bHSqBveS7y5O2Uz0PKMhIzGPsE
+    NsXkUGuSNtFj/oLNMS2HiQ6YHmzoCWyYIxnXg57HvqEoQGJPJWuvRMtzedH4j3ZW5gOmVV
+    YCQf2JNGNzX/8VvJXtQ/1iX1iiDxJm5+46rfJEvh226PgkefEGwBcJVqUqzQ
+X-ME-Proxy: <xmx:_KxDakMChFBp1-D8BxaC_h09KX3cCalbp_gfdNbmOgKsMt54UWXX8w>
+    <xmx:_KxDavMdJrNbSjE7LepCM1gMrd3jCPd7vu0FC_30oKDqBZvcTUNYHw>
+    <xmx:_KxDamT_0Z3_UaA5p9Ygm7eA9VJSSyH4YHw6pK58AvbkFJ1_tkckOQ>
+    <xmx:_KxDahCfDBU6RMuGuxAV9G_jTuGgLv-7RUKluLn-BI010Z03XREBZQ>
+    <xmx:_KxDanVo2QGu3HCfVHFgJhKNOvJAeNazRjWyH6eqBPneRbRyOGiF_M-b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:09 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 30 Jun 2026 07:48:12 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 89a947fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id a20a7cd9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 30 Jun 2026 11:48:09 +0000 (UTC)
+	Tue, 30 Jun 2026 11:48:11 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 30 Jun 2026 13:47:45 +0200
-Subject: [PATCH 06/13] setup: embed repository format in discovery
+Date: Tue, 30 Jun 2026 13:47:46 +0200
+Subject: [PATCH 07/13] setup: move prefix into repository
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,224 +83,223 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260630-pks-setup-split-discovery-and-setup-v1-6-13864eb5a032@pks.im>
+Message-Id: <20260630-pks-setup-split-discovery-and-setup-v1-7-13864eb5a032@pks.im>
 References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
 In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-All functions related to repository discovery receive both a `struct
-repository_discovery` and `struct repository_format` as input, and the
-expectation is that both will be populated. Refactor this so that the
-repository format is part of the discovery result.
+The repository prefix is currently stored in the startup info. This
+feels somewhat awkward though, as it is inherently a property of a given
+repository.
+
+Move the prefix into the repository accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- setup.c | 60 +++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 29 insertions(+), 31 deletions(-)
+ builtin/repo.c         | 8 ++++----
+ builtin/rev-parse.c    | 5 +++--
+ builtin/update-index.c | 4 ++--
+ object-name.c          | 4 ++--
+ repository.c           | 1 +
+ repository.h           | 8 ++++++++
+ setup.c                | 6 +++---
+ setup.h                | 1 -
+ trace.c                | 4 ++--
+ 9 files changed, 25 insertions(+), 16 deletions(-)
 
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 042d6de558..84e012f83f 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -84,7 +84,7 @@ static int get_path_commondir_absolute(struct repository *repo, struct strbuf *b
+ 	if (!common_dir)
+ 		return error(_("unable to get common directory"));
+ 
+-	format_path(buf, common_dir, startup_info->prefix, PATH_FORMAT_CANONICAL);
++	format_path(buf, common_dir, repo->prefix, PATH_FORMAT_CANONICAL);
+ 	return 0;
+ }
+ 
+@@ -95,7 +95,7 @@ static int get_path_commondir_relative(struct repository *repo, struct strbuf *b
+ 	if (!common_dir)
+ 		return error(_("unable to get common directory"));
+ 
+-	format_path(buf, common_dir, startup_info->prefix, PATH_FORMAT_RELATIVE);
++	format_path(buf, common_dir, repo->prefix, PATH_FORMAT_RELATIVE);
+ 	return 0;
+ }
+ 
+@@ -106,7 +106,7 @@ static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
+ 	if (!git_dir)
+ 		return error(_("unable to get git directory"));
+ 
+-	format_path(buf, git_dir, startup_info->prefix, PATH_FORMAT_CANONICAL);
++	format_path(buf, git_dir, repo->prefix, PATH_FORMAT_CANONICAL);
+ 	return 0;
+ }
+ 
+@@ -117,7 +117,7 @@ static int get_path_gitdir_relative(struct repository *repo, struct strbuf *buf)
+ 	if (!git_dir)
+ 		return error(_("unable to get git directory"));
+ 
+-	format_path(buf, git_dir, startup_info->prefix, PATH_FORMAT_RELATIVE);
++	format_path(buf, git_dir, repo->prefix, PATH_FORMAT_RELATIVE);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 5e04b0e2bd..43693454d5 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -255,7 +255,7 @@ static int show_file(const char *arg, int output_prefix)
+ 	show_default();
+ 	if ((filter & (DO_NONFLAGS|DO_NOREV)) == (DO_NONFLAGS|DO_NOREV)) {
+ 		if (output_prefix) {
+-			const char *prefix = startup_info->prefix;
++			const char *prefix = the_repository->prefix;
+ 			char *fname = prefix_filename(prefix, arg);
+ 			show(fname);
+ 			free(fname);
+@@ -832,7 +832,8 @@ int cmd_rev_parse(int argc,
+ 				prefix = argv[++i];
+ 				if (!prefix)
+ 					die(_("--prefix requires an argument"));
+-				startup_info->prefix = prefix;
++				FREE_AND_NULL(the_repository->prefix);
++				the_repository->prefix = xstrdup(prefix);
+ 				output_prefix = 1;
+ 				continue;
+ 			}
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 3d6646c318..f43d150eb3 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -875,7 +875,7 @@ static enum parse_opt_result unresolve_callback(
+ 	const char *arg, int unset)
+ {
+ 	int *has_errors = opt->value;
+-	const char *prefix = startup_info->prefix;
++	const char *prefix = the_repository->prefix;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 	BUG_ON_OPT_ARG(arg);
+@@ -896,7 +896,7 @@ static enum parse_opt_result reupdate_callback(
+ 	const char *arg, int unset)
+ {
+ 	int *has_errors = opt->value;
+-	const char *prefix = startup_info->prefix;
++	const char *prefix = the_repository->prefix;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 	BUG_ON_OPT_ARG(arg);
+diff --git a/object-name.c b/object-name.c
+index 46159466ac..fc70acc9e0 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1708,8 +1708,8 @@ static char *resolve_relative_path(struct repository *r, const char *rel)
+ 		die(_("relative path syntax can't be used outside working tree"));
+ 
+ 	/* die() inside prefix_path() if resolved path is outside worktree */
+-	return prefix_path(the_repository, startup_info->prefix,
+-			   startup_info->prefix ? strlen(startup_info->prefix) : 0,
++	return prefix_path(the_repository, the_repository->prefix,
++			   the_repository->prefix ? strlen(the_repository->prefix) : 0,
+ 			   rel);
+ }
+ 
+diff --git a/repository.c b/repository.c
+index 73d80bcffd..2ef0778846 100644
+--- a/repository.c
++++ b/repository.c
+@@ -376,6 +376,7 @@ void repo_clear(struct repository *repo)
+ 
+ 	FREE_AND_NULL(repo->gitdir);
+ 	FREE_AND_NULL(repo->commondir);
++	FREE_AND_NULL(repo->prefix);
+ 	FREE_AND_NULL(repo->graft_file);
+ 	FREE_AND_NULL(repo->index_file);
+ 	FREE_AND_NULL(repo->worktree);
+diff --git a/repository.h b/repository.h
+index 7d649e32e7..b767307911 100644
+--- a/repository.h
++++ b/repository.h
+@@ -52,6 +52,14 @@ struct repository {
+ 	 */
+ 	char *commondir;
+ 
++	/*
++	 * The "prefix", a path to the current working directory relative to
++	 * the work tree root, or NULL, if the current working directory is not
++	 * a strict subdirectory of the work tree root. The prefix always ends
++	 * with a '/' character.
++	 */
++	char *prefix;
++
+ 	/*
+ 	 * Holds any information related to accessing the raw object content.
+ 	 */
 diff --git a/setup.c b/setup.c
-index 06768de23f..0185257b2c 100644
+index 0185257b2c..fc88ea2dbd 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -1091,14 +1091,18 @@ static void apply_and_export_relative_gitdir(struct repository *repo, const char
- }
+@@ -2030,7 +2030,7 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 	 * repository and that the caller expects startup_info to reflect
+ 	 * this.
+ 	 *
+-	 * Regardless of the state of nongit_ok, startup_info->prefix and
++	 * Regardless of the state of nongit_ok, the_repository->prefix and
+ 	 * the GIT_PREFIX environment variable must always match. For details
+ 	 * see Documentation/config/alias.adoc.
+ 	 */
+@@ -2105,10 +2105,10 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 	 */
+ 	if (prefix) {
+ 		prefix = precompose_string_if_needed(prefix);
+-		startup_info->prefix = prefix;
++		repo->prefix = xstrdup(prefix);
+ 		setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
+ 	} else {
+-		startup_info->prefix = NULL;
++		FREE_AND_NULL(repo->prefix);
+ 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
+ 	}
  
- struct repo_discovery {
-+	struct repository_format format;
- 	char *gitdir;
- 	char *worktree;
+diff --git a/setup.h b/setup.h
+index b9fd96bea6..c01a244fe9 100644
+--- a/setup.h
++++ b/setup.h
+@@ -299,7 +299,6 @@ struct startup_info {
+ 	bool force_bare_repository;
+ 
+ 	int have_repository;
+-	const char *prefix;
+ 	const char *original_cwd;
  };
+ extern struct startup_info *startup_info;
+diff --git a/trace.c b/trace.c
+index 9b99460db8..515b99e7f5 100644
+--- a/trace.c
++++ b/trace.c
+@@ -299,7 +299,7 @@ static const char *quote_crnl(const char *path)
  
--#define REPO_DISCOVERY_INIT { 0 }
-+#define REPO_DISCOVERY_INIT { \
-+	.format = REPOSITORY_FORMAT_INIT, \
-+}
- 
- static void repo_discovery_release(struct repo_discovery *r)
+ void trace_repo_setup(struct repository *r)
  {
-+	clear_repository_format(&r->format);
- 	free(r->gitdir);
- 	free(r->worktree);
- }
-@@ -1127,7 +1131,6 @@ static void repo_discovery_set_worktree(struct repo_discovery *r,
- static const char *repo_discover_explicit_gitdir(struct repo_discovery *discovery,
- 						 const char *gitdirenv,
- 						 struct strbuf *cwd,
--						 struct repository_format *repo_fmt,
- 						 int *nongit_ok)
- {
- 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
-@@ -1152,7 +1155,7 @@ static const char *repo_discover_explicit_gitdir(struct repo_discovery *discover
- 		die(_("not a git repository: '%s'"), gitdirenv);
- 	}
+-	const char *git_work_tree, *prefix = startup_info->prefix;
++	const char *git_work_tree, *prefix = r->prefix;
+ 	char *cwd;
  
--	if (read_and_verify_repository_format(repo_fmt, gitdirenv, nongit_ok)) {
-+	if (read_and_verify_repository_format(&discovery->format, gitdirenv, nongit_ok)) {
- 		free(gitfile);
- 		return NULL;
- 	}
-@@ -1165,22 +1168,22 @@ static const char *repo_discover_explicit_gitdir(struct repo_discovery *discover
- 		 * bogus where we have both "core.worktree" and "core.bare", so
- 		 * we have to exlicitly unset the configuration.
- 		 */
--		FREE_AND_NULL(repo_fmt->work_tree);
-+		FREE_AND_NULL(discovery->format.work_tree);
- 		repo_discovery_set_worktree(discovery, work_tree_env);
--	} else if (repo_fmt->is_bare > 0) {
-+	} else if (discovery->format.is_bare > 0) {
- 		/* #18, #26 */
- 		repo_discovery_set_gitdir(discovery, gitdirenv, 0);
- 		free(gitfile);
- 		return NULL;
--	} else if (repo_fmt->work_tree) { /* #6, #14 */
--		if (is_absolute_path(repo_fmt->work_tree)) {
--			repo_discovery_set_worktree(discovery, repo_fmt->work_tree);
-+	} else if (discovery->format.work_tree) { /* #6, #14 */
-+		if (is_absolute_path(discovery->format.work_tree)) {
-+			repo_discovery_set_worktree(discovery, discovery->format.work_tree);
- 		} else {
- 			char *core_worktree;
- 			if (chdir(gitdirenv))
- 				die_errno(_("cannot chdir to '%s'"), gitdirenv);
--			if (chdir(repo_fmt->work_tree))
--				die_errno(_("cannot chdir to '%s'"), repo_fmt->work_tree);
-+			if (chdir(discovery->format.work_tree))
-+				die_errno(_("cannot chdir to '%s'"), discovery->format.work_tree);
- 			core_worktree = xgetcwd();
- 			if (chdir(cwd->buf))
- 				die_errno(_("cannot come back to cwd"));
-@@ -1222,14 +1225,13 @@ static const char *repo_discover_explicit_gitdir(struct repo_discovery *discover
- static const char *repo_discover_implicit_gitdir(struct repo_discovery *discovery,
- 						 const char *gitdir,
- 						 struct strbuf *cwd, int offset,
--						 struct repository_format *repo_fmt,
- 						 int *nongit_ok)
- {
--	if (read_and_verify_repository_format(repo_fmt, gitdir, nongit_ok))
-+	if (read_and_verify_repository_format(&discovery->format, gitdir, nongit_ok))
- 		return NULL;
+ 	if (!trace_want(&trace_setup_key))
+@@ -310,7 +310,7 @@ void trace_repo_setup(struct repository *r)
+ 	if (!(git_work_tree = repo_get_work_tree(r)))
+ 		git_work_tree = "(null)";
  
- 	/* --work-tree is set without --git-dir; use discovered one */
--	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || repo_fmt->work_tree) {
-+	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || discovery->format.work_tree) {
- 		char *to_free = NULL;
- 		const char *ret;
+-	if (!startup_info->prefix)
++	if (!r->prefix)
+ 		prefix = "(null)";
  
-@@ -1238,13 +1240,13 @@ static const char *repo_discover_implicit_gitdir(struct repo_discovery *discover
- 		if (chdir(cwd->buf))
- 			die_errno(_("cannot come back to cwd"));
- 		ret = repo_discover_explicit_gitdir(discovery, gitdir, cwd,
--						    repo_fmt, nongit_ok);
-+						    nongit_ok);
- 		free(to_free);
- 		return ret;
- 	}
- 
- 	/* #16.2, #17.2, #20.2, #21.2, #24, #25, #28, #29 (see t1510) */
--	if (repo_fmt->is_bare > 0) {
-+	if (discovery->format.is_bare > 0) {
- 		repo_discovery_set_gitdir(discovery, gitdir, (offset != cwd->len));
- 		if (chdir(cwd->buf))
- 			die_errno(_("cannot come back to cwd"));
-@@ -1269,25 +1271,24 @@ static const char *repo_discover_implicit_gitdir(struct repo_discovery *discover
- /* #16.1, #17.1, #20.1, #21.1, #22.1 (see t1510) */
- static const char *repo_discover_bare_gitdir(struct repo_discovery *discovery,
- 					     struct strbuf *cwd, int offset,
--					     struct repository_format *repo_fmt,
- 					     int *nongit_ok)
- {
- 	int root_len;
- 
--	if (read_and_verify_repository_format(repo_fmt, ".", nongit_ok))
-+	if (read_and_verify_repository_format(&discovery->format, ".", nongit_ok))
- 		return NULL;
- 
- 	setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
- 
- 	/* --work-tree is set without --git-dir; use discovered one */
--	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || repo_fmt->work_tree) {
-+	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || discovery->format.work_tree) {
- 		static const char *gitdir;
- 
- 		gitdir = offset == cwd->len ? "." : xmemdupz(cwd->buf, offset);
- 		if (chdir(cwd->buf))
- 			die_errno(_("cannot come back to cwd"));
- 		return repo_discover_explicit_gitdir(discovery, gitdir, cwd,
--						     repo_fmt, nongit_ok);
-+						     nongit_ok);
- 	}
- 
- 	if (offset != cwd->len) {
-@@ -1936,7 +1937,6 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT, report = STRBUF_INIT;
- 	struct repo_discovery discovery = REPO_DISCOVERY_INIT;
- 	const char *prefix = NULL;
--	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
- 
- 	/*
- 	 * We may have read an incomplete configuration before
-@@ -1962,19 +1962,19 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 	switch (repo_discovery_find_dir(&dir, &gitdir, &report, 1)) {
- 	case GIT_DIR_EXPLICIT:
- 		prefix = repo_discover_explicit_gitdir(&discovery, gitdir.buf, &cwd,
--						       &repo_fmt, nongit_ok);
-+						       nongit_ok);
- 		break;
- 	case GIT_DIR_DISCOVERED:
- 		if (dir.len < cwd.len && chdir(dir.buf))
- 			die(_("cannot change to '%s'"), dir.buf);
- 		prefix = repo_discover_implicit_gitdir(&discovery, gitdir.buf, &cwd, dir.len,
--						       &repo_fmt, nongit_ok);
-+						       nongit_ok);
- 		break;
- 	case GIT_DIR_BARE:
- 		if (dir.len < cwd.len && chdir(dir.buf))
- 			die(_("cannot change to '%s'"), dir.buf);
- 		prefix = repo_discover_bare_gitdir(&discovery, &cwd, dir.len,
--						   &repo_fmt, nongit_ok);
-+						   nongit_ok);
- 		break;
- 	case GIT_DIR_HIT_CEILING:
- 		if (!nongit_ok)
-@@ -2078,21 +2078,21 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 			if (ref_backend_uri) {
- 				char *format;
- 
--				free(repo_fmt.ref_storage_payload);
-+				free(discovery.format.ref_storage_payload);
- 
--				parse_reference_uri(ref_backend_uri, &format, &repo_fmt.ref_storage_payload);
--				repo_fmt.ref_storage_format = ref_storage_format_by_name(format);
--				if (repo_fmt.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-+				parse_reference_uri(ref_backend_uri, &format, &discovery.format.ref_storage_payload);
-+				discovery.format.ref_storage_format = ref_storage_format_by_name(format);
-+				if (discovery.format.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
- 					die(_("unknown ref storage format: '%s'"), format);
- 
- 				free(format);
- 			}
- 
--			if (apply_repository_format(repo, &repo_fmt,
-+			if (apply_repository_format(repo, &discovery.format,
- 						    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 				die("%s", err.buf);
- 
--			clear_repository_format(&repo_fmt);
-+			clear_repository_format(&discovery.format);
- 			strbuf_release(&err);
- 		}
- 	}
-@@ -2118,8 +2118,6 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 	strbuf_release(&dir);
- 	strbuf_release(&gitdir);
- 	strbuf_release(&report);
--	clear_repository_format(&repo_fmt);
--
- 	return prefix;
- }
- 
+ 	trace_printf_key(&trace_setup_key, "setup: git_dir: %s\n", quote_crnl(repo_get_git_dir(r)));
 
 -- 
 2.55.0.795.g602f6c329a.dirty
