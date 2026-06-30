@@ -1,160 +1,128 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7B7450F2
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 14:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0013423392B
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 14:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782828110; cv=none; b=rz9eGOC3+A0BSg6XdI/yUYDeaS6GEPY3zTCTQEulwYTXbA/jMQ7d/fX6c+PliViNA63QAAiTzWHixyqhuHVAyya4ARoqJLY7Mv/NYErrcd6qmbk+NYmQA3K5YBHsFSKSbgZV6WPpKkzA+srq7za/o5xZNHpzz18mnZFXUaAm6Jk=
+	t=1782828896; cv=none; b=rMqwQ2oVmEIG7fD9spaI10DJKTGpIKk3lcWnB5bCTVJTMgZVwRvcLc4l2b9U2fjMkDw+AT1zRCThz0KTRa4Nl17WyHYq96w7TWVOcaZOl+pfGYEdHtEtvGo+DysrgG1VfxIKUhWOZSlkUXweiQASAA7Mysl44oye9F741zWF9j4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782828110; c=relaxed/simple;
-	bh=P+K6XmN7Bs+I2gM0e8HDszXj9Rz11xO+gvlIYCVP16k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FHdptfsWPylmESiHIjAk3xJfire+9wbPIR6WdmHxPsxDYYHsfxCNv2c5diW5Km5+bME1XUQ6VDatU8WZfmtcb9YYv6wD6MwUW1Zb6ztJnDGoVhFraYQ9iCXLuQweEKXhXeTpG/CXfK0t2Ty1cOtioYWRC7Ja5ObIkq7GjSK0oVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ybo87ZnG; arc=none smtp.client-ip=209.85.208.48
+	s=arc-20240116; t=1782828896; c=relaxed/simple;
+	bh=dGFLQ+QPBnaCgLq7iyr3OMOpkgJtRni3AOigJhUCQl8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DynsJJTllW1EpW3rZli2PMjsiBO7meLd1eW+nSD3RQ2PRj3/FyMcctcT5mR+8fC8l4iF4bsRTOGGbBhKthsOkxKjqhXmokvJIwWbbM8dUGtTittYgzm4ctu2jwdA/1jPKEqdtd4E/sSdRqw4z305dw0QIBJlMBf/LUgvw8EF8Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kEdsIvgL; arc=none smtp.client-ip=209.85.161.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ybo87ZnG"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-698823a9881so641600a12.2
-        for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:01:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEdsIvgL"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-69d7aa0ac14so3055749eaf.3
+        for <git@vger.kernel.org>; Tue, 30 Jun 2026 07:14:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782828108; x=1783432908; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ndBseJCQYo8pIDhEvAR6TPb5bC7uyxQBA3hV2jNAvgI=;
-        b=Ybo87ZnGmoJsIkne3ZXWzvYliy1ZSn+b41aS/tpM3orzoZlNgk20f+zS3QMzKbIMLe
-         DRD+TrtAH19ivuj344unD1cgmlCRYleJarRtDRr2KQWtZECkN/jr6eek333FQamBOj8+
-         aZSXOoyPVhzFrap+WxMlG3TVvFYmyNBt2cC3rWT5ONYDJ2A9RPL5E9CIRbDQRj+gTRVm
-         b7soJ4PQsHgClT21q++e0u/Gw5Woz8GS7/KwQaJBOCvAWdujV/qKLby2VW0066JmNXy4
-         ohY7xcBSc80rTyYdaSDVbZPd5vywr2bh1fjT7g7ZpN5a0wqteirvlK4cOn/ugQaF83o0
-         RbOQ==
+        d=gmail.com; s=20251104; t=1782828894; x=1783433694; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JOyDBQHmQX8/wS4mafutdNgdHtYh2aDpzMqLD60Wc3k=;
+        b=kEdsIvgLEUdLN7bIKdoKqaNHCCJdTc72fjIybZYUCurNJJuUcrTgTyrIso00BpM166
+         QYRZylObxUUoHcRqCPvasf473BHz64yEplJ1zdGF/bj7IjWSzYoqsRA0Tbom329yPN39
+         kkONmLw4sOkcDGDPMmZ9OkHZ/GYEqFhr8ScBLsJfMXbcAm356GlAKy09JiB5UasNwODE
+         ObjpefDIUCW1PJdnH9/dozlBWxrGJJhPUM3revKi3xz3FocjXEyAxvT+zC70Hs2jVjKT
+         1l3akK/QqbYu2H7ur/mQPYLwVVrKML9GzC+YdfmDzqEqI8WTMNWOHf6F9Y0FSWNcrBoh
+         lBXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782828108; x=1783432908;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ndBseJCQYo8pIDhEvAR6TPb5bC7uyxQBA3hV2jNAvgI=;
-        b=ouAl+WFeob+elJhtTg1uYfHmByoLErsJhEhnB7qRxJzf6DcsjtyQxJ+xjyKVOU9NXm
-         xBr07A5DwZoz1Pa5Q05uQVMhv0R0SL/2WUOM+qMouxBnQd5/8JlOkCi+ufoJR6QoC4tm
-         da/34ZLlWp2HohSl03ZIUWYYrnwFgEdTET+uS9dmBHvAkSy6o5SPYTFZCr5qTdy99KnG
-         T31mBdeP1OqKUSoZGUcMsPWfL+2lQ4TIkUTl17Fn/v+ybJQsdCq+WM0p55De5XSYey2i
-         AsBtjPAblO8ywOlxqoKRPR1MsEBZd78hiiBKIKUTksGlusmPhkN8NJll7XWrSlCiwZRB
-         Sbog==
-X-Forwarded-Encrypted: i=1; AHgh+RpEXk/pXF7t7xs0qE3whwLIM4aKLXWFIW8wWR+pUIVDeYRZWbTxu63U6Jpu/hS7pW58Vtg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxHyH4mFtCttVRtCZN4hdTWIdsH+4qY9vMPC4NYBR8TfZHsU2e
-	GVQcByXBvol5cEKU3jC31XvCU3MATSh7p0BzUmkvNxlebALcf79UuHLq
-X-Gm-Gg: AfdE7ckB2tLio3Qf4xJyvkO14d1Xgb5qVenXepnSzT/iL3+1pSuahpvZw/sCqT4fJ4m
-	ubn55Yc8k+oP0EIqgKjvk1kcByngLjg08bJhmaV4VKPl36HizL9TQQt6o4B4egxvfCOkRt0QAdw
-	HQYQ+hgO5pmr5Up82/uK+OQUEHms5AxT7PuvK2E6y3XAwXGChok3Pi3wd46OuTL7qLForrrN00C
-	o7NX91ImYeyb5obKU7loVQ3/faM4BL9Xdz2yea3wrs3OFzeKTiRTl4b/COmeXS1to39ZfbsalKd
-	0mST7npLX8zdzgEhncJrArZv0+nYtgyUjozuY/FcY3q45ZJLN17was+QBlJ+qrcTtgA522HZBtq
-	n7MH/o+7mxrELY93U0ik6o9vMFEBBgKvZUPDGl5ApbC4R7Hd1dzLfIEadDPW2b1vWAiNKqurjte
-	VlkSAV/NTK4NPZZL1fB3o31cxCcycsrDwXXEFBN7ByhPchj5QSguflxx+dEGSuNvECTM0=
-X-Received: by 2002:a17:906:68d8:b0:bb7:eb68:514e with SMTP id a640c23a62f3a-c1297facf63mr25046966b.36.1782828107182;
-        Tue, 30 Jun 2026 07:01:47 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1289176eb0sm134443466b.63.2026.06.30.07.01.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jun 2026 07:01:46 -0700 (PDT)
-Message-ID: <3c35bd17-e884-432d-a400-36a89964ed89@gmail.com>
-Date: Tue, 30 Jun 2026 15:01:43 +0100
+        d=1e100.net; s=20251104; t=1782828894; x=1783433694;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JOyDBQHmQX8/wS4mafutdNgdHtYh2aDpzMqLD60Wc3k=;
+        b=Ve+qvOEPAwHaElJ0uD+RBKenDjRr6AUBtEs1SveQlr35HyY2CNHQ1w26dD3ACzpP+o
+         jE1+T62PtGNDI3ouG8HUMovi+BjmJuGC1JUQoEOm0yrEO4B1zr0MVMe2JuP2vwWGUZPh
+         3an2xUn2Dk1RD1N0FytjM2rXOQcGBf1Eak+IOyVwpcH61jAiKZ9lSnhvld3AM65b8DUg
+         VdvXUf9qGoaHTGZ615TxSJ9FpVEPWW09PpDfeqbx8fZ/5+uC7+e/hcDVDQYJ1WknQKvN
+         pifI5nGTE8UHpjLDUs+hRH4kRqmB0Y/kGvS8KIFY2Qs9/u5HIiVnYju9IH/46KN7qUf/
+         Fe6w==
+X-Gm-Message-State: AOJu0Yx8seqc+twcRYKKnCxH7GauHfxVZ9jEs9it+svRgDvvGrrz34Rf
+	tIBovQRtfPuqEBfXlfzu4mLOqUQeZNc1U+EaQTLJo8+zYloh7IjvG4OUXgOmsQ==
+X-Gm-Gg: AfdE7ckUWtUYya+rV86GgQ6Q1HzS796J0kN6jvQ0PwfAuhyZ65CuXPDV5E3xuJiNePc
+	ddy/+4oRsqH6eEBDVev1nr+pAtBxAknJJ8vPHcSIuKJ/PbwOh2XKT0x+bo1EaiOYLH+qMB1MFqI
+	8wAP0uNfUmw9dnbNsrJTBUYxvearA6kf3g30kMDedZINObEE1H7k6Ruv0uOvxEGR67RUJiH7OJg
+	FAN5RD+clQRAtzhpySVatDg+agKHQb8tZ9uOY94lTwwiv2tApv64pt+axufbQYodTiUMVhMqRKW
+	nW1uAEp09h8iY7h5/Jsx1DcnsFx2VObErHU/iYghemHM/xWtP6g1lRWaDZeAKdS0Dd5XnreND5s
+	vMLHRC5zt40nsltf5g3M6QAYKgw/EyHzqcM/7gBuUaTouU2nJvCw54zYD4YK3DBwzpGkXLkBEJh
+	EWItwLYg==
+X-Received: by 2002:a05:6820:c449:20b0:6a0:de78:6154 with SMTP id 006d021491bc7-6a18904c07cmr2016420eaf.14.1782828893728;
+        Tue, 30 Jun 2026 07:14:53 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6a18946385fsm2137850eaf.12.2026.06.30.07.14.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2026 07:14:53 -0700 (PDT)
+Date: Tue, 30 Jun 2026 09:14:47 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/6] object-file: propagate files transaction errors
+Message-ID: <akPOZMCq8G_DGl0h@denethor>
+References: <20260624041920.2601961-1-jltobler@gmail.com>
+ <20260624041920.2601961-3-jltobler@gmail.com>
+ <aju-7Z-ecJG_ORow@pks.im>
+ <akK1roQJknYstX0u@denethor>
+ <akLBFaTfBEq8vHUr@denethor>
+ <akOCPk55yi3lerL-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-To: Matt Hunter <m@lfurio.us>, phillip.wood@dunelm.org.uk,
- Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
- <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
- <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
- <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
- <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
- <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
- <DJM1N17VMUM5.3V5Y6YMFLIFQJ@lfurio.us>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <DJM1N17VMUM5.3V5Y6YMFLIFQJ@lfurio.us>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <akOCPk55yi3lerL-@pks.im>
 
-Hi Matt
-
-On 30/06/2026 03:55, Matt Hunter wrote:
-> I haven't experimented much with the new 'git history' commands, but
-> this discussion caught my eye and wanted to chime in.  (aka: please
-> forgive my stupid questions)
+On 26/06/30 10:45AM, Patrick Steinhardt wrote:
+> On Mon, Jun 29, 2026 at 02:04:08PM -0500, Justin Tobler wrote:
+> > On 26/06/29 01:58PM, Justin Tobler wrote:
+> > > On 26/06/24 01:26PM, Patrick Steinhardt wrote:
+> > > > On Tue, Jun 23, 2026 at 11:19:16PM -0500, Justin Tobler wrote:
+> > > > > @@ -511,11 +511,15 @@ static void odb_transaction_files_prepare(struct odb_transaction *base)
+> > > > >  	 * added at the time they call odb_transaction_files_begin.
+> > > > >  	 */
+> > > > >  	if (!transaction || transaction->objdir)
+> > > > > -		return;
+> > > > > +		return 0;
+> > > > >  
+> > > > >  	transaction->objdir = tmp_objdir_create(base->source->odb->repo, "bulk-fsync");
+> > > > > -	if (transaction->objdir)
+> > > > > -		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
+> > > > > +	if (!transaction->objdir)
+> > > > > +		return -1;
+> > > > 
+> > > > Huh. So previously we just didn't handle this error at all and just
+> > > > continued to tag along? Did that result in anything sensible or was this
+> > > > just YOLOing it?
+> > > 
+> > > Good question. Previously if there was an error, we wouldn't end up
+> > > creating any tmpdir and would instead continue to use the primary ODB to
+> > > write objects in. This change would make it a hard error if we fail to
+> > > create the temp dir. This matches the behavior that git-receive-pack(1)
+> > > expects, but I didn't consider that the existing callers could
+> > > transparently handle there being no temp dir.
+> > > 
+> > > I suspect we may want existing ODB transaction users to continue being
+> > > resilient in the same manner. In the next version, I'll maintain the
+> > > same behavior.
+> > 
+> > I think I got a bit ahead of myself. The existing callers of
+> > odb_transaction_files_prepare() still continue to ignore this error. So
+> > the behavior already does remain the same here.
 > 
-> Note: I have built and am testing with v6 of this topic.
+> Oh, well, okay. I think this behaviour is plain bad -- if the caller
+> wants to have a transaction, then we should bail in case we cannot
+> create one. But this doesn't need to be fixed in this patch series.
 
-Thanks for testing it, and also for your questions - it is always 
-helpful to get the perspective of someone using the command, especially 
-while we're still designing it.
+Ya, I tend to agree. The problem here is that
+odb_transaction_files_prepare() is being invoked lazily during the
+object write. This would be another argument against lazily creating the
+temporary directory though. In a followup series I'll explore removing
+this and investigate if it has any meaninful performance implications.
 
-> [...] 
-> I agree with this idea as well.  And letting fixup! messages completely
-> fall out makes more sense here than I want to say in git rebase.  The
-> commented list of commits at the top is a nice compromise for the todo
-> list you would have seen had you run 'git rebase -i' instead, and a
-> glance at the list would confirm that the fixup!s you thought you
-> included _actually are_ in the squash range.
-> 
-> I assume the same treatment would _not_ be completely given to squash!
-> messages, since there is at least some expectation that they carry an
-> additional remark that the author might want to reword into the base
-> commit?
-
-Yes for "squash! Some commit" I think we'd want to have
-
-     Some commit
-
-     Some commit body
-
-     # squash! Some commit
-
-     The body of the squash! commit
-
-> Given the above, and how 'git rebase' usually works, I'm suprised that
-> --reedit-message isn't the default behavior.  This may be my bias
-> towards rebase showing...  Perhaps the typical use of this command is to
-> just work fast, and expect a follow up 'git history reword' if needed -
-> when the original just needs a little extra context?
-
-That's a good point - if we want to encourage good commit histories then 
-opening the editor by default gives the user an opportunity to double 
-check which commits are being squashed and edit the message as appropriate.
-
-"--reedit-message" is a bit of a mouthful - maybe we should call it 
-"--edit" (or "--no-edit" if we want to open the editor by default) like 
-"git commit"
-
-> This is probably a larger question, since (according to the man page) it
-> affects the other 'git history' commands as well.  When I run
-> 'git history ...' and discover that I made a mistake after inspecting
-> the results, is there a fool-proof way to undo the change and return to
-> the previous state?  My first thought was to run 'git reset --hard ...',
-> but the default behavior of --update-refs (moving other branches) can
-> make this more complicated.
-
-Yes this is a problem to which we don't have a good solution at the 
-moment. I believe Jujitsu and git-branchless both have some kind of 
-operations log that lets you revert a whole operation rather than just a 
-single ref-update. We'd need some way to tie all the ref updates from a 
-single ref transaction together either by logging the separately or 
-adding some form of transaction id to the reflog. That would be a big 
-change.
-
-Thanks
-
-Phillip
-
+-Justin
