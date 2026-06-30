@@ -1,84 +1,88 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D2E403AF8
-	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A1C3EFFBA
+	for <git@vger.kernel.org>; Tue, 30 Jun 2026 11:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782818941; cv=none; b=NTi0uYuWw3VqsadOs2oQgjN7KfuhmVf8ZRnREK8W7AF7wRQ3MM0Hh9/TWHKtj54kO+rKqHw/l/PZbDdmnm5DwYNalcaeC1dzZxo0foxE0Gaat3wkFU6Fm8wtxfkbWVQyPjEPurEU/PuNn1G3oVqAsXW0LjQJvpcuVrjtaU/Ji9A=
+	t=1782819137; cv=none; b=lXYdlYJeWibFUS0fmmsgm2FFEf3UDCS1aLurLYrtW9qZ4gzB7rp6bJJs5AA+/3PK644TMqeyFzEsTKj3D9SedDxZT1yhuc6D4OKZBEZdOeF0gz6vNq1sBsbewyNsi2T40zFx9DxqaLoInhGkHSRzgdHe6sjYVeDu2k3KJrSEvJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782818941; c=relaxed/simple;
-	bh=2CeJta52bUwrcgifrmtpMLIA5Mh41Bby+TdfmQXPvHw=;
+	s=arc-20240116; t=1782819137; c=relaxed/simple;
+	bh=i/CuaGdGKkNJimv3Ucikttlkuq0Qxpwx8FcKDW1wwEU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VNkGDEiNHhRlZM1Gopntg8eZ9LgAD6Xc53mjj3awj6eGxFAJIzhhPVQfzYTXO0ZoT9EFeRGKhujLwXq4g7Jl7W5dv4rr49Pwhk+/wtMnhfzsp7Ui06kzQ8AlOe8wAy2BN0hWfWRNsdiSswElOpASpHJJw4Z+ueJ9vzJHU7Ir1zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tCeFiEih; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cWLl3jN0; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=k/oIR/aavCPMcWlhYA0SmmhJcnF2ykgFSiB4MSYGXQBTqMwfX79y30jWOO+yh9xneC5OIGjwkym8uwA7A26JsbSbUmyhbTIFlnOvQ6Tuy7tLaG0CGH4llrcjrIdxxsEgBZyzIt84VGN3Ne8RpIeyLB4KCBjoEiD1oGQZAIinzB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C4bNcsvd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YpYuoxiM; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tCeFiEih";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cWLl3jN0"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A29237A00AE;
-	Tue, 30 Jun 2026 07:28:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C4bNcsvd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YpYuoxiM"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4A6647A007F;
+	Tue, 30 Jun 2026 07:32:15 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 30 Jun 2026 07:28:59 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 30 Jun 2026 07:32:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782818939; x=1782905339; bh=1TtFDbdQcg
-	uaGpD8qqX0andixgjt1f3uL3XYTwbi2lA=; b=tCeFiEihZgCwO1r9WVWKVPTuC0
-	vf370/9wFQv4BxrJ7yrVMcrPiyrQw6SfZlInT4sxz7X7w0jsoe3NwES6QfvYr+g+
-	Kpy17YuRK+Bn38YJf2iYGSHuIjJ8XJwTbsTh8zGzh8vfhstlrV+KLkfZfZwkxTBK
-	jUFSJeeDlQvl8vkwy33b4WSarww+m7NwbqRwE8U9zoZo6ZzHjYGxNuh6E2P/ZcrO
-	ZLgJzsqLxqdsoEkZvEN8J0wmkXz/jx+VyZmUkHyOICu9ARtRz3PM/XA/pZ3QUzdz
-	GnggwBDgxbWdenGQ/194Z2qr3POL6yLMDHon9mgMRsUTH6IcFscdR1ncjbSg==
+	:subject:to:to; s=fm1; t=1782819135; x=1782905535; bh=owR7FWYM+O
+	j24JOP7An/UqyNkZd2DPE1KI1rWQoKI+8=; b=C4bNcsvd1iEx4OsAoS/IlSDcjl
+	M4F5NEfH3BJh68TqWfLKTgY3JRQB6J9siYlSfjwOX06Cg4lTYSLy+DUwriIH6XF/
+	R/L2FPNxhsLd0Wt23aDcfyNbzhrFTQc6UaduVXg137gOlCkrOV5HZc+hwoSKt2h6
+	S4MRydsto2cMngCm8uoAQnZrkoMuGcEK6Y0PU2zeDeIaCoEz2Hwh50uvW9zvkIdk
+	UjX3jQIWrR+3ZFD+ODFTHD6UoyVror2t9mwuFtrPP4wNsK4BxaELYs6KFC2ehDWf
+	uDiYcjk+76TWHwFw4dODGR6xhzmtuhbqJE3jHy3at9e+B0FFwwV6dnZo2dhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782818939; x=1782905339; bh=1TtFDbdQcguaGpD8qqX0andixgjt1f3uL3X
-	YTwbi2lA=; b=cWLl3jN03F2lAfZd1LBdB0f0Lxj4JoE0xighkTFKM5Eap7gvcH/
-	AwFxRELd++RuxZHyj8NJLt8qZzEajfEbhMnGe6GimHCcm5R9eLFPMUu/NbfFGT8D
-	xRW/GcOH3J1mFFr44EFwB/jEqJVyrHacWc+DIMTKCGPNh3creipQfOmWmNOvnNVJ
-	WSNV64tNV6kqhYIJOUtWSUsTiyVU3VH8xOEjQQe39BRzzIR/WzNlnEHCBo6/gggj
-	4YGWJuoeWIIPHuZnAX0WA6Z7JOPj+y3l8DpV9yrpT6KPrEVySjDTf7GhnTmNt4zh
-	1wIDWbJd1eWuEX9Pc+w7nQcksSFLxxDH0HA==
-X-ME-Sender: <xms:e6hDapuhGSsW3um3mrjAj0zzTOKeEBmK6iWuUgddhkzYlo6iZkRiOQ>
-    <xme:e6hDap4I0XdhUNtN3SUIwM6avzopy30XbIumgUXwvFZt_7ef-zNlgM69LMjhd6gjM
-    RRM0Te9U1hJOCuTed-8LNaVzSg4D11nbIUdqfRa748QxEdQiZaO>
-X-ME-Received: <xmr:e6hDaqKn5PuHrCJ9SCOCwLeC-0F4pTlxtIA_omiLr7wqr278SEBv50XdAu4QBjFRrtVI8KwzDoRymMPhWi5jRveJ3DcJCZmwNWO6-QEGN6HIHQ>
-X-ME-Proxy-Cause: dmFkZTEP8gyq1rVzNUn/0HjzBgz/9Moq2/c6+W0mF9K0Ur2/hwLPheqCVQEu5fgPUN4FUv
-    KL9FS2wCbLmGf3oA7V9vdLYWMhI2ns7FXSZcBmZKBSC57HkBMlLb3tLo3UyLnkeELt8E4U
-    7Llf9equv2aBCztzVBoZccck+q6kuD5Zbp+HYjJXvwHnwYNLkEf7ffSaIaALO1PcneiGxm
-    TVYdFmNxbtxftw6FevYNH0+s27rskKY6UD314Q3eHcZWTHlugfW/L2NOxqKFOUAggwBC8f
-    oE+0u/5jMDTyE6Jah3UOv7BkNTE/wsSTDSV/6ccYOyAL1lRC+ISqV8SogYASQzydVjJGfZ
-    5gQyBveZQtAzKv5xFWQSDv9zule1ajxAr6s+F2oK776XFlC8+epZNRetNrkToS+Oypobei
-    k0odoEngiWGwjVNmMWkN3QgeEq8cVMqMdXgwVBaZ+9QwVknY5tGeDGrSWTxJcg2L1xd6L+
-    lYRx8ZtEKsq3bShgj4kWATTFKFRWEOmOHJU3De2DXheDeOeeC65/VWrxp9KTCTm8C8BWUL
-    G0ttMI7Is9o8gJFZ8Uk6MfLf4MS8R6XwXuvQO96ozFeAFMnImbmr33+VnJIIDQSQCFG85T
-    Uwcs+/E/vjrbZzl9gLBZSfu0I3A58EJvzPKT47EtjtPyx0M2O3w2qyU4emew
-X-ME-Proxy: <xmx:e6hDap5vGZ2p2Zoyimd4W4fpBTC1QycYtOzc6qwxWXE1cx8dDdhNNA>
-    <xmx:e6hDatz1JRIRGXIc_Skd2YJ67FQQkLfGDYyxDw_XiS1tFWUqOmcpLg>
-    <xmx:e6hDatbXbk4MlcY4Zs6aKlPsztsXf3EvVFW3VR5PVM2bqNO12oPL_A>
-    <xmx:e6hDavQzN_bA7zacnX5xU8_FRT8VyDkwFz6w8ifAqR_tzfmfSH6qgg>
-    <xmx:e6hDaqw6OKl0kET5I55hTIsqVK1TesqjsTVM-25ZlbLj86AyG682gXef>
+	1782819135; x=1782905535; bh=owR7FWYM+Oj24JOP7An/UqyNkZd2DPE1KI1
+	rWQoKI+8=; b=YpYuoxiMB5UWR83mNDzk55kVFH5qRSbQ5uPHvYYLS1yMzlytOdk
+	+4IRnYECmv12X4ZxwEzncCzNhFIhItMOOZz8cvx2os4uzaotFUpuIt0cOtIiF50f
+	eIhD6bOtWj/0ozoG9zBe/x3oQADhBg9o83RBzeLJil8pCfO0yBcNjpVSgTtxi854
+	lSxpx+sXkvBBm4biwMLr4pAFDKa8l5uOMn7pgIugS6+otq4QsVhiPAaEsxpuoBIu
+	d997Gk+SHB+GTGuhxtWgc86MqLLNrNwdIrYtpo6xKTrhU5Zx9ODWIKGrDLRXDwBO
+	moRfbEnBy/KxyHeCpEO2VJ9DcS63NOJqYdA==
+X-ME-Sender: <xms:PqlDalWKvY8om-AqOMARpmSTFozN1yr6xHFNDmTvCKkrunHQclv4AA>
+    <xme:PqlDaskEhx0YKtzyeCZdvE2g7o9rq3Xm9FiseHgQ1_f1GfhuczHx_wiS2OUlgePNx
+    ezCZ3yA7HQ93-i5ZjXcZnufsaWb3V7i5HnjB9Xr9CXtp-B-Md54S2E>
+X-ME-Received: <xmr:PqlDamat_wXZJISaUJZHDZ_4nx6ubQp5nPmd5MVNyO4rqOHSlW3Xb1pLZ0qKyKagAL4vmboInf8nGQTlWYsoupqj4FXc6zzaVPVFsrSOHTaOpA>
+X-ME-Proxy-Cause: dmFkZTFvhyGWtp7zree5qZVcSczxwhVhMJnslr50wz/vZ+KPECCtcCFLDFPvR6VdoJ1r8t
+    WXzDkUtHmCFj33N2YoNtZkU7XzzDbFru95UhDFaBpNh/J8nxZTFBKFBLvsa/mI6YslXYjJ
+    5MzcfD1ZSXqooqfrzAy7VHcLwuvE70JH0pKdu/FZjD4kLGi73N0veDhshFIibzQ/bE1ma9
+    b/kiuIo0yBjN02SI7K/YW/cUkQJbi/DeLqtxDLeLP1PtSZkqyKyoRj6ku/qgDtGUceNrmB
+    MeMZGTwRiJcVcoyAMyRoxAckvW57TdrT7JKnFw4J9I7uGK+DNmobWsSJtpjzFZrVyzQEF+
+    cii13Bob93J5XvbKnWN8NioXd+v2su1fcHel/IhcS6fQw8PIoWlk8+VX7LORHyCw3afNBy
+    TbKAKIdpGmA0tVd+uOByqiqZYI31SAAiC7Nvji8qUeEImrON/92lq4tEm9Z+GAamvtZn5i
+    BeXCKUTZSdbNkBRUl5N0WVsr9Fg2wNgprxfsQ80Kpc4R0fscSxpSq9T/pZyL163j/rAeQ3
+    IZHYk9782jTPBfNxvY4wHcGGSPC/7oSGz3k5zv19V4m3hBlbAO8HI/phdKN7SiLHVENn06
+    ZA88KnHju4qst0QzvYp9NohdC/x77KEbybvWRr57gc+nlC2YckaatDB4jhAA
+X-ME-Proxy: <xmx:PqlDanOGzmo57-TgGH5qACp3_is4kBr6RbVzun4Ioy1sLd97pypdtw>
+    <xmx:PqlDarbG_184M0waB2Mz66AuXsG6Gx8Z8QZS9GV_976Bn7-kEGC3zg>
+    <xmx:PqlDal1tzf65dYqioi6QkJdE-kGOznS0cwUdUBpMnra-cOBIuTwCpg>
+    <xmx:PqlDahcyYA2Cs4ryxxmm6KSeYXFqkcY-zrdj-Jh6Ju4B--xn8VC_IQ>
+    <xmx:P6lDajztJ2gVofN1xyTyMZF2d040eSizimhzFUSHvUqb7NjTe3eFKnuO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jun 2026 07:28:58 -0400 (EDT)
+ 30 Jun 2026 07:32:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 75c5e528 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jun 2026 11:28:57 +0000 (UTC)
-Date: Tue, 30 Jun 2026 13:28:55 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b3564a9f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Jun 2026 11:32:12 +0000 (UTC)
+Date: Tue, 30 Jun 2026 13:32:09 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/6] odb: add `source` field to struct object_info_source
-Message-ID: <akOod6X1a2axIXKZ@pks.im>
-References: <20260624-b4-pks-odb-drop-whence-v1-0-8d1877b790ac@pks.im>
- <20260624-b4-pks-odb-drop-whence-v1-3-8d1877b790ac@pks.im>
- <akKtc4ybxFRVJmNv@denethor>
- <xmqqmrwdul8y.fsf@gitster.g>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 3/3] replay: offer an option to linearize the commit
+ topology
+Message-ID: <akOpOXeD_gS5U7rH@pks.im>
+References: <20260622-toon-git-replay-drop-merges-v4-0-ff257f534319@iotcl.com>
+ <20260622-toon-git-replay-drop-merges-v4-3-ff257f534319@iotcl.com>
+ <ajk-a4a3KSJ2u7Ju@pks.im>
+ <87qzltyiao.fsf@emacs.iotcl.com>
+ <akInDBlyWbbRFcLH@pks.im>
+ <9e7d14c4-82f0-2b89-b07b-f219119a199b@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,61 +91,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqmrwdul8y.fsf@gitster.g>
+In-Reply-To: <9e7d14c4-82f0-2b89-b07b-f219119a199b@gmx.de>
 
-On Mon, Jun 29, 2026 at 01:47:41PM -0700, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
+On Tue, Jun 30, 2026 at 11:44:47AM +0200, Johannes Schindelin wrote:
+> On Tue, 30 Jun 2026, Patrick Steinhardt wrote:
+> > On Fri, Jun 26, 2026 at 07:36:31AM +0200, Toon Claes wrote:
+> > > Then there's the option of rebasing cousins left. That's something that
+> > > isn't covered by Dscho's series yet. Maybe --replay-cousins?
+> > > 
+> > > To reiterate what the final design could look like:
+> > > 
+> > >  * <nothing>: replay merges preserving topology.
+> > >  * "--linearize": flattens merges (only git-replay(1)).
+> > >  * "--no-merges": dies when the process tries to replay a merge.
+> > >  * "--replay-cousins": does what --rebase-merges=rebase-cousins does.
+> > 
+> > Right. And if we tried to be consistent with git-rebase(1), then this
+> > could be done as:
+> > 
+> >   - "--rebase-merges" to replay merges preserving topology, which is the
+> >     default once we support replaying them.
+> > 
+> >   - "--no-rebase-merges" to flatten commits.
+> > 
+> >   - "--rebase-merges=abort" to explicitly die when seeing merges.
+> > 
+> >   - "--rebase-merges=rebase-cousins"
 > 
-> >> @@ -1424,6 +1424,10 @@ int packed_object_info_with_index_pos(struct odb_source_packed *source UNUSED,
-> >>  	oi->whence = OI_PACKED;
-> >>  
-> >>  	if (oi->sourcep) {
-> >> +		if (!source)
-> >> +			BUG("cannot request source without an owning source");
-> >> +		oi->sourcep->source = &source->base;
-> >
-> > And here it is set for the packed backend. Looks good.
-> >
-> > Naive question: I understand that some `packed_info_object()` callers
-> > may not have the `struct odb_source` on hand, but when the `struct
-> > packed_git` is intially setup, is it not always known the ODB source it
-> > comes from? It makes me wonder if the ODB source should also be recorded
-> > when `struct packed_git` is initialized.
+> The `git rebase` options are unlikely to be a good precedent to follow.
+> Their history is full of usability warts, and in hindsight, I would really
+> have loved a more steady hand in developing and maintaining a good UX. The
+> fact alone that this is called `rebase` speaks volumes about how hostile
+> of a user experience this command surfaces.
+> 
+> In any case, these options should use the much more natural term "replay"
+> instead of "rebase".
+> 
+> But then: you said that `--no-rebase-merges` should flatten the commits?
+> That's not what this option name conveys to me; It would convey to me that
+> the operation would _abort_ on encountering merge commits.
+> 
+> In other words, I do think that the --linearize option is conceptually
+> quite distinct from the different modes in which merge commits could be
+> handled. As such, this option should probably not be conflated with
+> the various `--replay-merges=<mode>` modes.
 
-I've addressed this comment on patch 1.
+Fair enough. Arguments like this are basically what I want to read in
+the commit message. As said in the below snippet: I'm not against
+diverging from the git-rebase(1) interface, but if we do that we should
+document why we think that the current interface is bad.
 
-> As with your reaction to [PATCH 1/6], I do share this puzzlement: if
-> the source can almost always be NULL, what is it good for and isn't
-> it something that can be computed from the available information?
+[snip]
+> > Note that I'm not arguing that we should support all of these options
+> > now. I'm merely arguing that we should try to be consistent, unless
+> > there is a good argument not to do that. I'm fine with the interface if
+> > there indeed is a good argument, but if so we should document why we
+> > think that the current interface in git-rebase(1) is not a good fit for
+> > this command.
 
-It's not almost always NULL, even though it looks like this because we
-ended up adapting more callers to pass `NULL` than we adapted callers to
-pass an actual source. But in the end it's rather the opposite: there
-are very few low-level callers that don't have the source info
-available, and everyone else instead uses `odb_read_object_info()`,
-where we do have it available. But those callers don't need to be
-adjusted, so they weren't visible in the diff.
-
-> Perhaps it is the naming?
-
-Yeah, as Justin pointed out, calling this `sourcep` is confusing.
-
-> I am confused what the above quoted code actually is doing ("if you
-> have a source, then grab its base and set it to .source member of
-> the struct the out parameter points at", makes it sound like the out
-> parameter sourcep should be pointing at a structure with .base
-> member, not .source member, or perhaps the caller should be passing
-> &oi->sourcep->source as *base to be assigned to, or something).
-
-We have to return the generic source here, not the specialized source,
-so that this interface can be used by every implementation. Other sites
-would end up storing their own source, which of course would have a
-different specialized backend.
-
-So an alternative to write this would have been:
-
-    oi->sourcep->source = (struct odb_source *) source;
-
-But by assigning the base we avoid having to cast.
+Thanks!
 
 Patrick
