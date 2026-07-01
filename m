@@ -1,103 +1,138 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E289B3DBD4D
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 15:04:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782918247; cv=pass; b=ZBaYWifNBk5x2AzWrWOAolNveeca4F0h5UdNkxCNrHtMYzJdVEE0f+NblQ1bYDP4K7MoKTxvMWCleuusA5Fia58oMD8fQMJGSyNhV3s96+e7GoC37PrdZFaOaXETw9RxvBa/MNUKV7bpQN0yhzIuMjUnz/wqldfuAmW+x6EeESI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782918247; c=relaxed/simple;
-	bh=hCW/d0/ygPlq8F+jRmuMm3zYxX6mwvEB94MXKftIdM4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=Slmn0S4MB9QoIk3Mm8CFK7Fd4X8THL26QuLtYluYU4VB5C8SxAmQV5JiEEumaaT+A7U82wX1/K4HY0fx62ps6NLf2Y3aRD0KZgqt4XVfTS2O5w5MzVNnr2uwVeW2TGwKpanGC/BKYiPRapE98zoLFtd84ROboaPsoGCNmgu4gsA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qhpe86nz; arc=pass smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2942A34D397
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 15:14:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782918897; cv=none; b=mb/qgcxZ74r6sHOyZ0D0gK4xtPo5RxhgdG1QaYJfLnnneZUIbqgNHst6jJhPxp3FjhGlTA+u+0JRAQYPBP+KSh148MkVX1tQsbuKn+ZDaRH4ekcRSMS8TW7IYJBfM7bpDpKfTcmjo7BA4AP3Mj7XGc4eOc9UZCg2qG2NoCPLBRw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782918897; c=relaxed/simple;
+	bh=HVWWzCGoFF2LUu0XElvmGukKGufgqjfKOLvnAAXyLhY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=PojmD95DynmI3GEZPbDBM5yfbsjpineNk7eXTDsnOQQzhDaZ+65qBhcrbAO072X4o9GNZMkqz+qbhHH3TBoM8r0Q8SYXpp9bd1PFKW178VoF+f05uHz2/Fp5tpfIs+Sc04M+S1OuEBzbI8NnyHdlqDSLcsoUy+fSH2WUEMnC2es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pWPSEgNo; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qhpe86nz"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8111c0c7561so8201487b3.3
-        for <git@vger.kernel.org>; Wed, 01 Jul 2026 08:04:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782918245; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PzljA9AcZgbTE5ZFQI/M/lGUiNbW+XC05pYJOkET4xYVvRUWgskPT9iQptaAqCwYxn
-         mFWfYwIReACFImWFQg9L3uqiXqS9D9r2+yl7ukhtqnrLo9TlY0BhAv9B4R6w1l+PudSV
-         yFPRFp8IZUxN3iiKlwwWVhsX5i6MfzDtSL1Q2IL99qL+kuBjo661UbCmN0GXFnalTgC2
-         Sj40vbX8HmsjzDIMjr52fUuhJC/dRj90kyBCb1d5+WYQ0CE0sqRQ1qWGbJX3W6q0qrtW
-         AmKIJjSxaIEHsw7cMzVUmK5zZoqaJf+ADmoanRpGOibSF9qkSLZCfgdtbsB7MWILydN2
-         H+VQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=hCW/d0/ygPlq8F+jRmuMm3zYxX6mwvEB94MXKftIdM4=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=Ln70HI4pPfE4lOrk+2D2PGAG0iFzMJzl8Ju+pvcBXr/uqHe2kvWYHhAX3XSy6jU/hu
-         +rGPnGPvfptOt3W6aMYcwmYTWSO95KXMH9A3+vF7gaQIyHmIiDdlGhfpXIEe+LimWUyQ
-         8HAnNfrAfEMm+qwAwmaRuhNrd6YM+eNRBdwNs4N6OevRlNzxrWEThLOOjb175klF3wlO
-         YCpE8EcBbXLFgZCZAwL3PqJdWuvguGm5A10c/FzLVdY/S/czDSBkXzNUEUJgIDy1JHPO
-         7wdT5QBmUe0gqDQ9IVLs1CjS5K2zz1qt1YdJ3WkMb3tTnIYscShfM+SC8HqWJNLMyoyx
-         JoRQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pWPSEgNo"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-493bf73ec2aso4616005e9.2
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 08:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782918245; x=1783523045; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+        d=gmail.com; s=20251104; t=1782918894; x=1783523694; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hCW/d0/ygPlq8F+jRmuMm3zYxX6mwvEB94MXKftIdM4=;
-        b=Qhpe86nzW9dRmwjZeZpCVgjfdg749xDtQY4rYxJZXyNyAWdiFclatlrugJib5WXsIU
-         5+8DiXG4Q1w0kv7vKaiarn8Rl3eSEOvlxvKJKxIH4XXFnFZIJCgpZXJSf6iti5cDCi50
-         blvDuNbJd5Xp3AgYR/9MIX4y0JHC3N+BUw/JgB+B6Ozv06AOzBaBnn2Wpwh2ktNADfXd
-         f/9jVGlMUcgayFSUTYlCxI8rsKw24DkP++EMwd73LD2a2scdBUtGku9CcNbwmTz9bDSU
-         WQg0PUbCYtTqTcs9mMqbMVrewJa1cCltf1Sdc7IA/3UxhyeDGNvykWLtCBNRJYPESo1e
-         Vf8A==
+        bh=dU5aJm2P804J4l363I6UbzZVye5X7NRBfY2zDojUSdM=;
+        b=pWPSEgNooiEnB8NRrR+spobUgLa55gppnTotmW+eTJNkoRazqqzWy0JeI7y5qV4LXT
+         Cwk8Oz6aHMjgeA7Rj5JMhglfZFEZMYhe3W70jRLFexVAZQc6Zryz2TqDyWU8x9t4H4SZ
+         K5FhT96R1n8yiNLA6HKq1poo8VAoHgzM59lN+RFmC5pvwQOstMIby9J2KkSm1Z1O5BJq
+         oumJtG+SZdQB0LymnYfma2TRWXY0VuxLmiYl66+IV5XIKQBNcLSK8rEvxGX85PPbJmIG
+         c2PlDQ37NebwOQ1nJGkX9dfX7UdngcKkmssrZ9/y2KGSxyTLPuI1Q5mLNo9J2l1C9lPT
+         i/1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782918245; x=1783523045;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+        d=1e100.net; s=20251104; t=1782918894; x=1783523694;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hCW/d0/ygPlq8F+jRmuMm3zYxX6mwvEB94MXKftIdM4=;
-        b=q5ZOlyH7o9nBbLxqQez5Z+xKAHQ3+EC9CvAexfod6mMm91QjaYJXxX4qrTo7d95rZH
-         4nxoOSKV2/Zz/3s4pYr0v5SdSnKv5Nl9ZRmCk+x1W0bOvszyt7rCogUNY+KI6IIa1eIH
-         jMuFvP80lElLJec0BlYUthOoHKyTZNpFoTz1oHVGmaH/lPOCTDSbF5efun+NymPFE4d9
-         7t4dcV82qm3WNmwA7At4O7UV/gxMV8SHeDIGI/w60xUtB2Pf9I2B9sH1VXkX4Acv3fEA
-         CUbYI6C/yWbE9ALThzTPZ73pgz5eoleRI6+Kq7Nfo0FThaqPWJJyAVy2OgKUY6pYWcQ3
-         OuUw==
-X-Gm-Message-State: AOJu0Yx5p5Y4n4jdO9CHnIKFPhx/pKGUNrWwbHvxwcZc9JoWeQhBixv1
-	X4CY/BCprePGahGzxqLZ3usrVClTdkghhZh2saBrknWYQ4bTKYjGvCFDKvArL7I5Ku3R9/0TOMy
-	P+yY+7ZILJSlN42gPgXBZ0ACrsQn5UTXZvPHw
-X-Gm-Gg: AfdE7ckd7rqsYrUOIS95NsJUl2tflLvPUdfDyFpAwixDuuzVlf8+zt8J6LsYUaenWaE
-	ge090iUyhJjK4QLKbLkAoouU00gvpEsf5kXnAbE3dTZfnB7YfaI5kVAWPXJfdE0iIBy4m/BWHAA
-	EU+Zl/MUA9tyV/xa8xwyCu22JZi56N/tO8b+XGAFKZhMwzBbfRqMwqbK1wwBVXEBC97gKCAAjaG
-	PRCl4tU2l9rZNBVOPiosPHgPYcQcHwuCPVNgwmkHMq6kay3gW5xyZFQt5RePC95C56s8bL8sdVk
-	EOaxTyex/mE6y2zdN0uHVGWNQZ81cZ5WSKqu6IBDu2a32NVUXz90cWBin6K0MzNKa1jGbGrWXLR
-	hzVQczVebeFpKngxD3gHznfovFC8nCSNl94RJFr1tVcd5AlYlKdM/LdNN2dZGYE1eH0jO9c8=
-X-Received: by 2002:a05:690c:893:b0:80e:2592:5218 with SMTP id
- 00721157ae682-812eb767dfdmr22151767b3.50.1782918244307; Wed, 01 Jul 2026
- 08:04:04 -0700 (PDT)
+        bh=dU5aJm2P804J4l363I6UbzZVye5X7NRBfY2zDojUSdM=;
+        b=VdFBdritWzBfphvtidnaWrIN2gC/S4rCOiUyDdPr0j+R/Q801AzFGjYde3IDX2t1jQ
+         DA2KhnrpIirZhuHlj/F4Qd/CVfb2dYxe6lmQSZ6omxhKMsNTc6FE9FnhZBuECylaF6oe
+         FKyp34uLBElgCAqT12GX8UMvANrhG7vjUWjgEkUUY+e1INxhCFZdsUyYUENAvC43nFVB
+         9aAGk3WPyAxeLZiZO29XbNyidcAfaqWvwkkRul93R8UICWspsZ/puld4R9RKTAHvBS2n
+         YKdfRbg9Yib4on+lp5x70cvRo93Q2bIWoh3Lw+RLFg9tBYXohwrHvmtN3RzbNCx1WIta
+         uIRg==
+X-Forwarded-Encrypted: i=1; AFNElJ+G426/kfohgFcG7u9uHWHvot6qrrmzgnmYMup6um+3Han5NDGvXrE6ieSmIfV+tIOpYWA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzD+Yhh5Un7nGk7qRUg4hUA2P20y8sXKEr+lWLFoja2sSGSmL6Z
+	mc//gPBlNIvgDNJPNxNYWzly5jEwpjQOUGQqzwWjlSuH3ZNj3fRC0UfxMkA5TA==
+X-Gm-Gg: AfdE7cnOKTjM7Xa16XmtaBonjtcR7O03l3tMvVqrNEInvhvGtEwTgv9ye/VbBd4pnD7
+	PvPr8ZCDgOOdY93WhZgQuqxB9kiS1OCexl0QSmbjFK20WsyQdGk8DEP9iA+w7lRx3dwmmV78box
+	Cz3WIrt5NOynHLwpQD3SjoBGUHj2sK7LpWV1d2hsqJRdy6U59p/T0y9p2kjGETNmQW8+sLUSM8b
+	c/TT0lszUpZUO8HoiVHeCaBohBQx6wh/yifQ4UrkmxbxMLYitblMPo+c328V8Vse2XnNidxwEby
+	isBsFXj/5JV5FtrLfvkoB1o31pfn/4+KNM1vxGmh33DbGlJNN7qurxeesjPOCr2mOk/feepbJr4
+	LCF7FY6oK3Dn0OyOR1I8HGHGDZfRPtzbW9b5olP8oeJIDEjnUwfYAYfnKN/s6TiUbIAxKIkpGn4
+	ZzM6x5eKdUCqyJfqyYbBdI0n+h+ItosZ7r8VtPpdw8CLO+KfJoYyKz7q6SCQ6GvBZqSgg=
+X-Received: by 2002:a05:600d:c:b0:490:d38c:7836 with SMTP id 5b1f17b1804b1-493c2b3d08cmr27013925e9.3.1782918894337;
+        Wed, 01 Jul 2026 08:14:54 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493be4c7f2csm97414115e9.3.2026.07.01.08.14.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jul 2026 08:14:53 -0700 (PDT)
+Message-ID: <c517bce2-9f39-46ec-8509-bb0893e26ae2@gmail.com>
+Date: Wed, 1 Jul 2026 16:14:52 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAN5EUNT1C6O+xHKfbptO5eohx3Md=h4pKRdqpY8+pD9YT_-3Og@mail.gmail.com>
-In-Reply-To: <CAN5EUNT1C6O+xHKfbptO5eohx3Md=h4pKRdqpY8+pD9YT_-3Og@mail.gmail.com>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Wed, 1 Jul 2026 17:03:52 +0200
-X-Gm-Features: AVVi8CeqTeaAaNelPNcVhe9fpXOgeVYYVW6tq4G_fHcDXstpolLQRyWNXBrPOHw
-Message-ID: <CAN5EUNSuwptaVY+rBvDpND2NMuGC72-vUSNLyOyucXEY9QAhkQ@mail.gmail.com>
-Subject: Re: [GSoC Blog] week 1 and 2: Complete and extend the
- remote-object-info command for git cat-file
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk,
+ Patrick Steinhardt <ps@pks.im>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+ <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
+ <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+ <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
+ <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
+ <CAHwyqnVN=McZjtQGcPnoVOHAd0+VDNPXy_N949VMsqZty3RDjQ@mail.gmail.com>
+ <4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com>
+ <CAHwyqnXoqZYHodWXHtwnk0_PiZcCYSVL+WgL3h5nWiYx_cSZLw@mail.gmail.com>
+ <f15456d2-d8b2-4edc-80b4-3a9d8fc77da9@gmail.com> <xmqq8q7urfe1.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqq8q7urfe1.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello!
+On 01/07/2026 14:47, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> The reason we're introducing the history command is to experiment with
+>> providing a better user interface for rewriting history without being
+>> bound by the limitations of "git rebase". So I think it would entirely
+>> appropriate to try a different format for the squash message here. If it
+>> turns out to be a success then we can see if we want to use it in "git
+>> rebase" as well.
+> 
+> Do we know concretely things that are bad in the current way "rebase
+> -i" works, so that we can experiment deviation from? 
 
-I just posted my week 4 and 5 on the blog.
+Yes - if you apply the way "rebase -i" works to multiple commits you can 
+end up with a message template that has a screen full of commented lines 
+between uncommitted parts of the message. See the example below from 
+earlier in the thread. It is not so much of a problem in "rebase -i" 
+because it only fixes up a single commit at a time so all the commented 
+messages end up at the top of the buffer and at worst you have a few "# 
+fixup! ..." or "# squash! ..." lines mixed in with the uncommitted text.
 
-https://pablosabater.dev/posts/gsoc-week-4-and-5-coding-period/
+     # This is the combination of 4 commits
+     # This is the first commit message
+     Base subject
 
-As always any doubt, idea or opinion are welcome.
+     Base body
 
-Thanks for reading it,
-Pablo.
+     # This is the second commit message
+     # Another subject
+
+     # Another body
+
+     # This is the third commit message
+     # fixup! Base subject
+
+     # This is the fourth commit message
+     # amend! Another subject
+     A better subject
+
+     A better body
+
+Thanks
+
+Phillip
+
