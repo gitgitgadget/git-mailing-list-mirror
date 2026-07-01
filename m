@@ -1,89 +1,84 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780B42DB7B9
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 06:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AED8224AF2
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 06:23:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782886674; cv=none; b=jpbC3QJ7RQcRuTTSj6BmjbJq4sz/d7LpB826YSBlZf2BlhahVXlUvWws9VAs0/Oho9tJt6AGU2pPPp/kdeIxJDZYfYg+j1rHXWJzBlChNd1x8rwYxI7m0FiOUgYrWwHLZ324QK8ORnw67RNYu7tVwJzyzu1ONcIfT06JGFr72tk=
+	t=1782887002; cv=none; b=FrsScDpQ67EkCxN0oNSf3/VWjvHMEwF8VUI5bo8B6i5xaNEQgDWGWXQcZeY+O6VMS3+Do+rCl9QM1BDLRpCsu5LOTQg+QeKWAikXl+YmixKBz+GsNlUBoakk9/EbN+Iya1ZgL7P8QhL6LhS8V0VAmraIBJEKQUZoiZcWTxj2PQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782886674; c=relaxed/simple;
-	bh=hSc3qKKjqTjde1MFL64mVYYGPH6Jzdl0UEUEjuvEwS8=;
+	s=arc-20240116; t=1782887002; c=relaxed/simple;
+	bh=aJh7zFepfy1YmFAz22gc5Dc0siVSMQ57vMupW0kqj4U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tEOLC3ZM+zoBuTAo5+V4Ckorg48ZHK1J4STw8zQoCeeteF08O3OqjlctWDah7FR0pfF8VWJ5xW2RdTYEgUx5G0cUALGC8oHPki2tAW4jKBEtHRI9CTqVdxyRSvw0TD+oSVSRuRCwO972fPEce4qRXQkgcZ8b5XC9x7FskfjA+Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pgBhc0zX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EzBqHmSQ; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=qssXqM/0HiCXFu8MWKhBsgt9kY/+mDctNHRjTDVAO1Zj3pDvMjDHWo0+LqNXmsAel2YRKA0Hpkjew6h/OwWPUg5mWsuhOzqJZPjsxD7KLKhDuitp6pjC3ndlcM7KcsQLY3dE5Av6DXs9FOAVGO3hI1XSGcCmadnHs/7xW+PF9C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lmHVWp82; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TNsodEh6; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pgBhc0zX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EzBqHmSQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 92B5CEC0057;
-	Wed,  1 Jul 2026 02:17:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lmHVWp82";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TNsodEh6"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 65F9814000F7;
+	Wed,  1 Jul 2026 02:23:20 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 01 Jul 2026 02:17:51 -0400
+  by phl-compute-12.internal (MEProxy); Wed, 01 Jul 2026 02:23:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782886671; x=1782973071; bh=fONaKvb7kN
-	Pw+58ReaEXQF9/vHImkdqXZOa57UrKu2M=; b=pgBhc0zXdQBZxG3jXPipjJDi13
-	Sla2C59Kasw8euSrn2N8vqMTPrXQ9KQzkq4joYziap1/Na4NMxQM6d4kq63N+kXV
-	Ry0nXyEr3Lbyg8WfWU1LVJl5TDWCE8CV+xgfd57v4tnIuIPy6nPmbUi1llQzpZ1H
-	eZ2/Lm/VuLSmvbculGIbB+S/mn7nBYVgTJj0QgvsrLjlUEik8kRCVqxcRbIOq+oF
-	O3CN786+OCzQ5W2cRaHp+bv9NLXVDSarawMLFNyGF56qKs7HQEMGefi1+gfXTPw1
-	0XvGcyQpThnGbLCwKnhgnVxLZOTJ2QPEMlqBf9nvbzSsFNQaKrbDPU2tF33Q==
+	:subject:to:to; s=fm1; t=1782887000; x=1782973400; bh=sFMcESceqt
+	jN4Sz9c6pozrHOoqTBuBThtU3UMxZ5rpA=; b=lmHVWp823hxR1TnaTi0FhMgdyh
+	ucnEx/7EbQ9hJdJ6yRQ+Sqh/1V4tSAlAB/jXjvFNeXU9wfuuA/qYTgZPAaTr160K
+	9DSaSRqZpR07kQudP4HGRtCf84Jx2cZTT1ybx4OPrBR4YGXKrlXqBIP856cZC9eD
+	iVTRHhd742IKEMOWwv73De5GOPl7fTngp8yK/Y6jRq3RIuRwKV9HgQJOW0vmqEXu
+	MiWSCQ31+3npRLjDSFEcgoqhECWiL0C49cjCOKhxAl/0hVOdf24Sbn3w4hEOlilw
+	QI8GgtbwttlDMosPEg8BNXnv9O/hQYWfOup57WE9b1wGmpNSe1wbE/inBltQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782886671; x=1782973071; bh=fONaKvb7kNPw+58ReaEXQF9/vHImkdqXZOa
-	57UrKu2M=; b=EzBqHmSQGQPFDYVlGuzv/DYr/kojXs3PWu5QOMQc+gpmbelQCEZ
-	m5wMyH9rebdP6jYDF/ABVgW8JuYTsqmnKvi2ZMTlgOMRzA05DKiJVdgpSpXlHAnE
-	/4YJeSxlR3Is0q28i2He3BOPAVBU8WFYvGuYG9+nvYLrWMZVf92cmeZf4Md9J40v
-	hnMA7AIyZJ1udJ9JtTBteNT9aFg+JprggRxlLSm4d/QwOjJJuR4dork9hExB2usW
-	c3xiH2Lpp2O0124TLMrv5tHe/62wfoJVUcdBD1WFEwr0b9cd+VDbXz9tSVjkcPtA
-	93iHRngiYoI9N0mbEtKjVktyu6H8iFYT43Q==
-X-ME-Sender: <xms:D7FEajRT3x_EDnEUK-R5slcbkixlfEMgrjKOy49tXordK3U98dGNkg>
-    <xme:D7FEarzl9WVHdyiHm56E1VrrJpNkZbkWAIPQn0dqSXwYIA1vCytchqYxwzVrKp5m5
-    F-YpEIc14XtShYdvRCO4KeEmYCp9aI94lD19U1xPO9Wp-GwERrdUg>
-X-ME-Received: <xmr:D7FEat3GU5XkRZY7Oo3nHulfIxYpgPWRENXQ8-p-FkuarJd-FcHDvTioEYgCSihG2knYGeou-jZAtBKJwgFjjOCaPjYeifaVhav-vEuW7p0>
-X-ME-Proxy-Cause: dmFkZTFUW/GT/B07cUKo7TFy+ertftzHS0PcPhDjtI1aF3eDkHtnKZyPm4S/InomMBS9yB
-    7KuE1BEXkst+JZHYhAsJZIAx80SC72HJcv9ySwXMiLZwED4HPIV0MT5mbnOCAqtLfV+Kx1
-    jpuP8e4zkPDlsLREWn4TjE4jThtZkwiQOnTWCKJtAYcHjKXRsHleoaGTieQbCi3phPa6qf
-    j8wd4HQopdizx9NG7CWKK/zDSaLHe7RFYSjkSoCr7PJcDDi94Yk4NUt38EqWg2lBf6FykP
-    6h6d8thh8XU3K8ttWVLA7iaqfkiJzVwZLTiR1y1eHzYtesu+x10JDbHuySIaYcji0+pHAD
-    Sl/Kzlx6myP1XXGuBJvi9DG5gFk/dMCBa/4fsH4rygfFFsR9oGXGrHiDd4YWaAkbCx3rto
-    exHJo/mYi81aJrPU9zuDInI4q+DSnmyj5ekhFBEhtIWYb/iLB7Olp338IY+e5bnDB3LO6g
-    MWIZgW3ShesNFksN8QnhWfxLMp3ekNFwdRLp8VIfEgcohu7SpuM5/MQm+6lTed1rYpYZQY
-    jWBBaVJRxNRHUt2m1m2GTSlP7zFjVnxzvKXVvJkSEhaMQF1CQ3zdK7Kx/AQwjK4nRCnH6t
-    eplDIeVC8GwSpruOLN0g4Kd5nW7DEizcceUsleY5NLZ8ptyIB0jpHmOyCmjw
-X-ME-Proxy: <xmx:D7FEah5IMqzYyF2D1ViNU_Pv4D16u4hd80mQKq3AVxt35geu8NBsGw>
-    <xmx:D7FEaoXeHKv4d83Lbr44_BZ1I2nzdjYy5-MgsaQV_NBRlYYiiIeLKg>
-    <xmx:D7FEaoCKaJLV1XYDOPuSxWRClsgsOUe2hJrtpr7Jr5ENNZjLp7sICA>
-    <xmx:D7FEav4L3XgL7EC2fDa6AWwKPpMXvR8uD-MNIu_fhrpfLVd2P-NGpg>
-    <xmx:D7FEavzq5fYjFmcEYaFPBnCqlAhHT6onpE_bVd7kk1B3G4LyTaWDEgso>
+	1782887000; x=1782973400; bh=sFMcESceqtjN4Sz9c6pozrHOoqTBuBThtU3
+	UMxZ5rpA=; b=TNsodEh6NkIB71GxVIwgNSP3/PvDmDq9WztS6R5R0XmEzlMM2SV
+	RrbMh8cdH4sauncLkz3fHSMmfZCV7SrIaPYt2jg9BanSbxfVBAX9MlAL5+Ttg52L
+	sCJX0FObA54XmPWl/DNFU9ebfDlPeYZkOpAZDYu+1cxmnRHEo5tih7DyovH61rdb
+	yJzN/n9cbquXFKV0ZG4rWa35vSBQFIyoXZJSZY5JRW9Qzbop+2shlc1Lq6a+QSgW
+	ReVepCZEZe2mSoMaTq2nXLMi1YZ+fOt4GLSynNYokd05ZqUctEZxImfPfVQt2n/2
+	ugJzz3J6DqjNdPWpLkZodDSTIdkwG5/nrmA==
+X-ME-Sender: <xms:WLJEaoOifD4Ykd3KhoE7av33wMYiwmcCUHFN59Zz6IbM1D-PO9hjaA>
+    <xme:WLJEak-DatiQc11GsG1RcAwjRbYFf57rXi_a2knnyKjookZLpCDM_kJiKshhFxsb0
+    1rj-dXOjcKRcdukLEz822DyHZxd1eIg4wQNiuKv078I3QjjMx0>
+X-ME-Received: <xmr:WLJEas7Yb5qMSvwKc5XhHF7_zMgFJGRnRizGBDCUia3EOLa5P2LnUYL6W8fmRQtxaLp8L7KKuKu-s_I7r-x5RH8XdL1DVFRheYL3GWtiCk4>
+X-ME-Proxy-Cause: dmFkZTFvc5x5iZRv2lrmYg8dqa0OrZGLh3ljGsq+/m8BrwFXF1UBjB7lRHEz1YA8cOSTPK
+    mueje3eUKcaLl4glEuqgCcPCTAmaEcFqtqXw1zAslh7dtadD7GruUCmY7hHY+kqM55gIT1
+    YT55ARd1I7wgBk5dZAcVajW/Lt3P9Zj8+o1bqC+ERH7DPYPDFpzcJznrcy8mlL02GYJIEp
+    HusudL9aY9f1cHAurqRyD0NUdh/JbQVkKsXBkZc0PFE6WucrJ5GrgQ0PnVOMNvoZ8F08wi
+    DD9CePQnQZtzmlEbl+mVJjBmq0q/F6pZ5Wxwh6tE0VslYY5E77hAhKQv10ChXC9qLal9pF
+    LjNmDUUNyGTsdjDcmT8nkrN+FxjG7AoUycWo6jGTnZRCJBpXQOv5pMzzq9lYAQD0RR5sbk
+    VmozdxDNs+Xz/W5qiv2kXAYIJXv8e1JF8poEp4v5zBU3je6NIyzcKhSORoc9ydiMYfrZ3v
+    KzQsRLkskOWn605MOJL5wEwE8oWt1teaRsbljTIxvNrEZcBo10w4ofHILsOPUkrqNbPAJR
+    nGSwfJ5LrSmZ3CM+h340ZXYBGnZDx8CPjclJF9bJxaB684hLp1Az8/753i/ZmNNFSQG6sk
+    jBEXS/5C28lat5luV0Q+L/nfqqMfSHT8RKJRsLAyrscW4kYZeFv1jwRGX/UQ
+X-ME-Proxy: <xmx:WLJEar2sKuhUcjdofJU0w15IXUJmGIo8E4GfgtyBuj1XahsuUTCjKw>
+    <xmx:WLJEajDYXz8IfyclnrKszJGWwqBTubUj5PKi3a2kDGH_LEBgT20z4A>
+    <xmx:WLJEat0X4qHK6zvemCvwkko6Ju41b0rU2OK3uPa17Z6PR5MF92jjKA>
+    <xmx:WLJEattpBZDNeVCZecsqHwWliEhsi2EouswzBBHOtqjwUwEn35p8CQ>
+    <xmx:WLJEajkuHLF1N-dLDzbNS0mylcBdzIy6QrV6ZVTVwn0ucQRRuaZIkJ3e>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 02:17:50 -0400 (EDT)
+ 1 Jul 2026 02:23:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8ca9b5ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Jul 2026 06:17:47 +0000 (UTC)
-Date: Wed, 1 Jul 2026 08:17:45 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 17786ad7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Jul 2026 06:23:18 +0000 (UTC)
+Date: Wed, 1 Jul 2026 08:23:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: weird quadratic reftable behavior, was: Re: [PATCH 3/3] t5551:
- pack refs after creating many tags
-Message-ID: <akSxCUfm2P7ocLJX@pks.im>
-References: <20260628075716.GA3525066@coredump.intra.peff.net>
- <20260628080710.GC107826@coredump.intra.peff.net>
- <akIJQbOUbdBbkTef@pks.im>
- <20260629203527.GA1895313@coredump.intra.peff.net>
- <akOG0oMu2KTqqyW7@pks.im>
- <20260630234702.GA3759976@coredump.intra.peff.net>
- <20260630235850.GB3759976@coredump.intra.peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/13] setup: mark bogus worktree in
+ `apply_repository_format()`
+Message-ID: <akSyU2kYWrFvnrmc@pks.im>
+References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
+ <20260630-pks-setup-split-discovery-and-setup-v1-2-13864eb5a032@pks.im>
+ <xmqqh5mjsx4o.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,72 +87,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260630235850.GB3759976@coredump.intra.peff.net>
+In-Reply-To: <xmqqh5mjsx4o.fsf@gitster.g>
 
-On Tue, Jun 30, 2026 at 07:58:50PM -0400, Jeff King wrote:
-> On Tue, Jun 30, 2026 at 07:47:02PM -0400, Jeff King wrote:
+On Tue, Jun 30, 2026 at 11:26:15AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > There was one other oddity I didn't quite resolve. You may notice the
-> > gross reftable.orig stuff in hyperfine. I originally wrote this as:
-> > 
-> >     git for-each-ref --format="delete %(refname)" | git update-ref --stdin
-> > 
-> > but for some reason that causes the subsequent update-ref to loop
-> > infinitely on merged_iter_next_entry(). It does so reliably, but I can't
-> > reproduce it outside of hyperfine. Super weird, and I'm sure I'm missing
-> > something obvious.
+> > +		 * we have to exlicitly unset the configuration.
 > 
-> Ah, maybe not infinite, but probably quadratic. The key is that you have
-> to delete a lot of refs and then try to insert them again. So with this
-> script:
-> 
->   nr=$1; shift
->   rm -rf .git
->   
->   git init --ref-format=reftable
->   blob=$(echo foo | git hash-object -w --stdin)
->   seq -f "create refs/tags/foo-%g $blob" $nr >input
->   git update-ref --stdin <input
->   git for-each-ref --format="delete %(refname)" | git update-ref --stdin
->   time git update-ref --stdin <input
-> 
-> I get results like this:
-> 
->   nr   | runtime
->   ------------
->   1000 | 0.125s
->   2000 | 0.454s
->   4000 | 1.811s
->   8000 | 7.091s
-> 
-> So for every doubling of the input size, the runtime quadruples. I guess
-> it is iterating through some deleted tombstone entries, but I'm not sure
-> why.
-> 
-> That's probably a more interesting and productive performance problem to
-> work on than micro-optimizing out the last few microseconds of writing. :)
+> explicitly (will amend while queuing).
 
-This is a known issue, I think [1].
-
-The problem here is the tombstoning: when you delete all references,
-chances are that they are not truly gone but that every reference is
-just tombstoned. The problem with this is that reading refs may now take
-signifciantly more time as we cannot just say "this stack is empty".
-Instead, we need to figure out that it is empty by processing all the
-tombstones, and that takes a lot of time.
-
-I remember that I did some digging back then and improved the status quo
-quite significantly by optimizing `refs_verify_refname_available()`. I'm
-sure there are more opportunities for optimization here though -- I have
-a feeling that we for example exhaust the merged iterator until its end
-when searching for a specific refname, where we could easily abort once
-the observed tombstone name sorts lexicographically after the needle.
-
-But eventually I decided to not care too much about this edge case, as
-it seems very specific to this artificial benchmark scenario. Which of
-course doesn't mean that it's not worth doing, I just had bigger fish to
-fry and didn't get around to it yet.
+Thanks, fixed locally, as well.
 
 Patrick
-
-[1]: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
