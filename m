@@ -1,66 +1,66 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F37E48BD39
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 13:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60C5125AA
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 13:45:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782913073; cv=none; b=mCfmEQQa6EaKoc9IugVI4iGD022ic6IX8sdZRDSrO2QrMpxq4YaV5rjWdS8PoMXkO05LGYrCSIUFQS0hesFuYUiMk8KJyoNJ3KYadjpR+4xdtb4/bbN1xRLrisCr0T1lKpt5JFwJFpN5WqaCZcSbHRUj/nouaSGbzBbIo3TWxgY=
+	t=1782913528; cv=none; b=S7xYk04FFtdF/1RlUWkw+5T2/0jUgtoo2O2MzYtmytw1BIjMzRv6GRdSCiE4Q8PwuJuICmCuvpnEv5gZQzbWdVVozM9ISJCC35T3JVudVY02eqiV+TYSHKNCEqZPi8zK1qNCMyQb5p6uxwVxYokvQdnAtX3ZpaqOM2q92vcD+7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782913073; c=relaxed/simple;
-	bh=46f012XekYWZGOZ4Ri5BSQet/fqRO+OfzyQOFE1sb2c=;
+	s=arc-20240116; t=1782913528; c=relaxed/simple;
+	bh=Ym06V2LgZ1ys5tE9a1X0UdKsH21fmE6XpCS8D7paZ8c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pc3Sfpfga/xUSVwtPfy5donadLQ7CH+7Ag+QJsPoZfnC99rZg0IkyXoiuZENHda1wo936WS+A1k9eHopaGV9WZ78jh3SltQiNQek3vnZd26rrvOyFNCl2pvZW2T/O9mgLpyRBZ6LKthZtMXzZ3uCMy7etRbP7NnpEKZ7ZCt+WaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEvdmPAM; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:Content-Type; b=JgGidM4rNRPanR1CvscP1EqXwf58kB7gmEq4gHmhYYrPC/VlLsIghnmSyTqU74X5Rs0ASbm0Esnma7Di2ExJamOeFmBdKZCqs0Ofll5GVmJwv+I6JKO9v4UqSf/ttIms0FyFGeFN357KR5NXL23ZJEwX+MvM1grEAQd6VmhXGdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NPqVPNs0; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEvdmPAM"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-493bb510ce4so5050945e9.1
-        for <git@vger.kernel.org>; Wed, 01 Jul 2026 06:37:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NPqVPNs0"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-697ebe536b6so1270391a12.1
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 06:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782913065; x=1783517865; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782913526; x=1783518326; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=KC4BMOvMxLdBAaj4m+DDl+xXvzdvGEwDzajLY8Fpzqk=;
-        b=BEvdmPAMfWqnJChf98Zsx3T7LU6665kI1OqSrKZoIq+eTJRSRKF27pSkYy+XHZJZy8
-         HFPkbceYEzi0TJR4LCPEMox8iztWbB/QJuAI0n8GEUqMzc3Lq3GZfaUjcrMKvSdU5dw+
-         B7kJYhSj8KX/Ys+MUgIoMaE52qAQr4jt4fhOkMEuhqrG3+LhWgbaPJuaHzkqEGxufji3
-         MIoHHbTAYAGuowNxOU6StneofPo9eLHbsvr++R5GdtD+YlWQ5aFDIVyVnpFwHhXRCFSU
-         i50sauN8ElErW2aonrr+r5l0hwyqwleY0wFrd1Ux3YMnFmTeVM2x7uYdM9/ebPF5iXbT
-         VByA==
+        bh=WkT8bfkv4FNLwn3fHP5W6DEjSdUYi+1KOKIRsdPDsPo=;
+        b=NPqVPNs03fGhYGtCsLGt1zYL4W26y/B4OCgbFz8Yy+EeHCdOauzgfgsrylntuXVSgw
+         kJei5OeuNBTkCQb05U1fCjZLkzTfaAAMOoYtvWHxwu94KFmhyH4uE0ttfyJbRljaRvms
+         Sn86fmgqfb/EvEfXepie5vHpklK6ULJ3cgvGfQKw6rMp1FjxAzq2xGhFzd6xTZEfEzPa
+         VfJjIadm4CuQk0c5Kg6Kgi8RV1fU9Ci3tIRZ9q6hvGrKPKvJ/x86br8TwJIVU+zBfkjA
+         7agh/FhsK4b/Z14sYw+TtH9qzV5d4qnX9z5nwkwkxia3EcI1hRfivi++TDteb4wjbwAH
+         6ynA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782913065; x=1783517865;
+        d=1e100.net; s=20251104; t=1782913526; x=1783518326;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KC4BMOvMxLdBAaj4m+DDl+xXvzdvGEwDzajLY8Fpzqk=;
-        b=Y4WewcNBMVLIE1msm+Z1clxTFO3yvaF0jUz4l1HuMv9vJdexFVY9Lmu+tIPa+snBsV
-         kH4WlQBH841pRMlzTyig2mAV+HDU5qQnly8zp/yIMu0iuLHspqc2epb38jEcHEGdZiR0
-         XchvZTxzVGs5BgmY+3DiThldGY3cY2cXuMp7DZVybUhyN/j9PWKIaZ1WUiTW0EalmiYY
-         1SYwLOSbKm7W+WwSzSnMbI/hjfjmPU+64vCYBR0CVOQV6E8pQLim6fDv9Pn8n1Ra1vVm
-         Emnbw7fMkn4hVVd+SMKn+anFAMjcqX3/4/Q+8J8DX9KAEvMRcrEpM8RE++d+nguOHB9K
-         9cNA==
-X-Gm-Message-State: AOJu0YwR/KSN8O7JF3gF9BN8XJQViGUbq8Jo+8qmkpxvRN/vyeTzD/KH
-	0Rb1eHPCKaUv6m/ZNLW33z9q/pglUovUmxx9g51KIi3Pl9JfVLXHiqinkZn6vw==
-X-Gm-Gg: AfdE7clRGlLBWkNP1H/nWmJf2fgE7STEa7/kOsxPSMu8LLLIblhFrC6C8l6FOY9pcEO
-	rEVN30+jVOZqHeEoJZEaermz1Q7eBi4w7WORRtdbE9bQNkC32okrNttRoMxeLlBErvgmthbAfNX
-	g3H8videqKFcgycS4indpoXRswKrACf5k2IL2VVIVcWehGmhza1Sjc+Z/kWBU7gXp0cbQTt5yek
-	YSjHvLJz/p6INAHYG8guJsICKEh4JKXNb10INrGt9m+96QSDaQz1erPg3fRMreuHVAfGMgXSmnX
-	6vCzJ6LTa3kr/Vr0H3igC4wy8FeOBwC+KsaJ9e7A0SDGHJ5yRs4rW6HWeUoyuKrHJ4CBhdZWRLE
-	4Qf4iLMtL57BHfBSHa2YWeE1La6nROokaLMzptdl1yhTMNGoSYHC2N39XWt/+Z1QqBRL6R2DNJa
-	xdmHalgwXhgyYGW6PffOB9eOF5RELiDxn9TcDk72H2lqkTfNNPoCkSjhYkJFQUH00jZ4+Rw0TTb
-	8enAQ==
-X-Received: by 2002:a05:600c:4ecf:b0:493:ae5d:8c40 with SMTP id 5b1f17b1804b1-493c2b95cfbmr26661905e9.27.1782913065185;
-        Wed, 01 Jul 2026 06:37:45 -0700 (PDT)
+        bh=WkT8bfkv4FNLwn3fHP5W6DEjSdUYi+1KOKIRsdPDsPo=;
+        b=k5NHwyE7ZWeiPKOaS/DHpVOH1gAQ0uXzf6jGfkZxEcl/ua4U5Vr/3S6eLIcme5MM8v
+         XtAj4bjoNsSYKRB8vSy6D+f77hPFmdQjXGdVXm52X5PmGRyh48GsLgW+3KTIYrMlcu7D
+         KivIRVobrsTwcS89idGE21Yyd4+8zU+UFxRT8OibasGCcvnhel9ImHQsuAz5yvIs16Wd
+         OB0dpLuwt0SbYVQ04JuY18hrJjkV7IljjXJxnZr5vpRoSm8KaMuxWkPWpo/0YOxmlBuP
+         LHzMIk31+aCRXrbaXYtdQ1w0qbRscwVdyekJdUR/fGofHvl88RYIOvb7Ef6lVWNd6mLk
+         i3Gg==
+X-Forwarded-Encrypted: i=1; AHgh+RqdZoMn8HjLiWB2DnQshSg34QEa7All5a8KqyDSNfL7sh3hTAKCHwlStlsvA46RihTILTI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvyReHWpEHjiEQlND9RSrm/nvfe/rvqdD8IAAdsj6flgJpX9eg
+	amIkiKDQqk/7p9mcOLzVuV82tQIFTvBXnPfdxhfbZY/Dh/N5uBJ36Zx+
+X-Gm-Gg: AfdE7ck6H3IZpt4tca5c1tG2Ved0MdYR2rmdwPsqSj5XLOxo8kp2DL+bS0kaF10MPVB
+	7hGz0kzDg7ZsCyF+5IxL7VnqWQzGGDJz5eEPq2iLi/bIL+cQaBBgHoxeViw8vYuZvF2FG4r89MI
+	KXreXvwqW709QEaxAa00VKbZvK1FfzPcQhMUNDszJYEnhnqA/qG5TgPj86YLjig0Ho+XuSvloYd
+	Y9TTywHV/Z19JLXkDYaxaafMty85p1PAi4iGImEqHolPScYiOMbFzbcR5k9X4/PD5fo/OVfAL4c
+	f18QHbqNWHLa+tvW+kYM9ZZrVesxMFo/1xoTDSqzxRA2seYmpeMCFboM794j3Otr6Rt7fnMsSUu
+	DEbczIqMSA4dZO4PS5obRhzC/aQRv1nGmckjhS/N1d8x10gGHM3wrQ7HUxNfVu5wFUFBK3a/IY0
+	soOsTXzx51f7aXs1yE+XGrDaw54K2aQxY6s5d5A6wFG+ik1DqHnHensoKj5yoAQRkZTqk=
+X-Received: by 2002:a17:907:6c0f:b0:c12:1dd4:13ea with SMTP id a640c23a62f3a-c12aa142a5emr79119966b.30.1782913525687;
+        Wed, 01 Jul 2026 06:45:25 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493be4d8f5asm115167285e9.8.2026.07.01.06.37.44
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1288d6a3e8sm276418566b.19.2026.07.01.06.45.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jul 2026 06:37:44 -0700 (PDT)
-Message-ID: <3c397d49-58cb-4a2e-b187-04840bbe75b9@gmail.com>
-Date: Wed, 1 Jul 2026 14:37:43 +0100
+        Wed, 01 Jul 2026 06:45:25 -0700 (PDT)
+Message-ID: <f3fe7ff2-3ce9-4e90-95e7-8c620de5628a@gmail.com>
+Date: Wed, 1 Jul 2026 14:45:24 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,47 +69,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 00/11] sequencer: do not record dropped commits as
- rewritten
-To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com>
- <cover.1782833268.git.phillip.wood@dunelm.org.uk>
- <akSuP-IWiH2wPd6S@monoceros>
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+ <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
+ <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com> <xmqqzf0dwalx.fsf@gitster.g>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <akSuP-IWiH2wPd6S@monoceros>
+In-Reply-To: <xmqqzf0dwalx.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Uwe
+Hi Junio
 
-On 01/07/2026 10:38, Uwe Kleine-König wrote:
+On 29/06/2026 17:54, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> With my very little knowledge about git internals, this looks
-> reasonable, and it behaves as I expect in my test case. I installed a
-> local
+>> We should sanitize what the user passes though - we do not want to
+>> accept arbitrary rev-list options. Off the top of my head "--left-only"
+>> and "--right-only" would allow the use of "A...B" and allowing "--not"
+>> seems reasonable.
 > 
-> Tested-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+> I would not recommend guessing what these rev-list "expressions"
+> would produce and blacklist some of the operations and notations.
+> It would be a more robust approach to let the machinery do its thing
+> to determine the set of commits, *and* inspect the shape of the
+> history these commits represent.  Are they connected?  Do they have
+> a single "bottom" that is just outside and below the range so that
+> we can replace it with the result of squashing everything together?
+> Do they have a single "top" whose children can be rewritten to have
+> the resulting single commit as one of their parents?  Starting from
+> the acceptable shape of the history we want to deal with, rather
+> than trying to enumerate rev-list operations and notations that
+> would prevent the resulting set of commits to fall outside the
+> acceptable shape of the history (and I am reasonably sure anybody
+> who attempts to do so would either end up with unusablly narrow
+> subset of what we can reasonably handle, or miss some cases that we
+> do not want to handle), would be a better approach.
 
-Thanks for testing these patches
-
->> Base-Commit: 6c3d7b73556db708feb3b16232fab1efc4353428
-> 
-> BTW, b4 didn't pick this up, for me it says:
-> 
-> 	Base: not specified
-
-Oh, my script generates the same trailers as GitGitGadget but I see "git 
-format-patch" uses "base-commit:" I wonder if b4 expects it to be all 
-lower case.
+I think we still want some sanity checks similar to "git replay" though 
+to ensure the user has not overridden "--reverse", "--topo-order", and 
+"--boundary". It will be easier to sanity check the list of commits if 
+we can at least rely on those options being set as we know what order to 
+expect them in and can detect merge parents that are outside the range 
+by looking for BOUNDARY commits.
 
 Thanks
 
 Phillip
-> (and I applied it on top of 2.55.0).
-> 
-> Best regards
-> Uwe
-
