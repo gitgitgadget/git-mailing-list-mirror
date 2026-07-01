@@ -1,83 +1,84 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD50D3009F6
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22633E0251
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782894416; cv=none; b=Wnnj1V7PHXMEeHpKcwC7+cZfGQlCiRVcikw/VsEgosQmck2IeZ0JcQU86B6ynkpsYu/Y+3mdweBfmuuGQEo3AbY3WdinEDdULPKOrYiOcG6vlaxjmvgtn7BFyXTVa3bOtUOCiwcjfddEb7gw/reRrTUlymENSzCZ1jghXSvLqBs=
+	t=1782895365; cv=none; b=p4EdWyjtk0MxOoZu4EWcVwkogNOmpWZdrxh9fz6ZE53cQnZHZoJtcRSrnCKwDk+3xnIOdZrmyJwC6vZSK5dTRAba5aAzD49rw9LeEfGRHXJ+IyVAXRY6ubYxkV8fxLicd8dzH+DRrKHl47Oe6bAvPaZm/3KtD4TDwedUt7Fojgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782894416; c=relaxed/simple;
-	bh=e8QPBWYhaMlz6zGFAAtP53HlT0a2MefiKFBK/o3kNzk=;
+	s=arc-20240116; t=1782895365; c=relaxed/simple;
+	bh=9Om9ti7Td41Rui5VTeWuvhDYRDCwtC10BDBWykxZVnA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lNseOqbPJebdp6+qg5KTx2HRnM7XYLIddjikHkq4Uk08OZAJUNLhs9J5IU2IPBTE1d4SibX9An+pwlTM4ZpNWDmcu6p9+bOFIeZrhQmExawb3aXZANSq/YBmF/P84OukIYAz9efIKByFbGO6rBasme0Rai97DlGsFmlt4nZdupo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EZ4GEWWe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g1Fc4clD; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=YVAubKSlJRXQWG61ynoBCDusRMTMWnyFO7nABdRFRSpTrHgtMgMT8ADfltiS++ZY6T014x9CEelIOtptQ/aLpLBuW10SVakQitGj8HyT9pEodAJCoY4awjAVjmNHN7g7nURdUH3akMgegc1UFFnhlx94cEoJhDC5A3KR3kJVHzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=o7aUu3qI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eKLnTMIX; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EZ4GEWWe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g1Fc4clD"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F82C1400149;
-	Wed,  1 Jul 2026 04:26:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o7aUu3qI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eKLnTMIX"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4133A1400035;
+	Wed,  1 Jul 2026 04:42:43 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 01 Jul 2026 04:26:54 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 01 Jul 2026 04:42:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782894414; x=1782980814; bh=e8QPBWYhaM
-	lz6zGFAAtP53HlT0a2MefiKFBK/o3kNzk=; b=EZ4GEWWe+WQsFVBZScDOqXFETV
-	EQhrV7LODSi1Swg8wIsZ/JnNy+3MwTjgQ8B6rLRsgSa//l9kz3mAkq86rtwULVKb
-	uPlu7tp2DfQNqKRP3cNPYIZEfaq5jvm4p9cVQziWnN7SizC2jBcU9Ep0hFHKyg2L
-	lUMCUFsD8wtmU/UegkhJ4WlPabsOAeq6vLziZfk1+brOdo2UqFeslhOyLl2IQe8I
-	dUZkaUohaa3b5CnlbRhN1vkXdZf/mDVctH9W0bl3zxdaklxjgf08tPDipmluPckC
-	jDnrCpUHFs/h2TyTu7A+OW3/i6srKlaQCJiUHN27q/pEwfU/i3Wms+AShwZQ==
+	:subject:to:to; s=fm1; t=1782895363; x=1782981763; bh=gWs9JQoEL+
+	fseByq9YzRQHdr3nBYZ6nvUA4roJxenQA=; b=o7aUu3qIfF0krwlLLpUcOPEvo0
+	52vPtFP6F78Ptg4CgMpXVPtRXtaCkh8DqejmtuwZBU2JHHEzWEatcfnw72TBAuCs
+	h7c1bajCWWbcP38dtYe7sXJw7ITn9dp0SkWUVZtCu0JE9nknAUSUyR5zktbnlG/K
+	V2Y2NBHBLIzNePc9XZGsiynnaSbRHvMKWuFs3MPTZ1CRFpZe8YoT3lwlFw3i+TQE
+	EXtrWuqBRTUmohgH26aYwmox9ziCpZlRfQungNEkSVoSdTHwRFp9km9HbrtVGSP3
+	XJLrn8YORZJMrA1vUWmFYnakDMxbtd2hcTZayqKdtMcs/SU9dENSU3+rvGFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782894414; x=1782980814; bh=e8QPBWYhaMlz6zGFAAtP53HlT0a2MefiKFB
-	K/o3kNzk=; b=g1Fc4clD0AhkY0oAmBZbwpKWZ7gHrECkrryjEz8hVfaO3ZrMg2J
-	hdtSIx0XpsAA5Bbdk7jdt0IngJnNzAt2YiEfhYcWWr00ajIx5RYq45cx6tIGEzS1
-	vsXULrNITQw4pUvEiyzxHwEBa58RD0FnBV3B7TEKldNlR5VStUWRTr7du6/ySPA1
-	K0DNAnpYqN3YaHdXYC0xchVcxVsMgGwmurlHRAQxXf3++j/joQaxgDdgB8gL1/Pw
-	YKiXWXcEvn5PB2rqxOy9bKSiRBe9/qGqQhHvXiwt3CFiZKnoxs+++yloKs2VDUhz
-	hnXgffU4kOq936BMre8Jv6mHAWiB09yfB4A==
-X-ME-Sender: <xms:Ts9EamlodjLyCAKdQa2KAng_OPq2awpu6oBtZNS8i4Ipb2Y0UrTOAA>
-    <xme:Ts9Eaj1qmAXAqtIg-9a2JvnPHhNeBukIBH7rDrfiG7yW4zt0KH-1VRVb-CO_osN9l
-    khkYcKzx9RVZ3DKkHmYPeiV5MKXGilQi7PJXDgwCL1P3e19zZ0VKQ>
-X-ME-Received: <xmr:Ts9EaiQA3VvJoS61ZuGGY_SdRLmTM84Y37vCtuFuR70TB8GMudyeMAA3wqEekgNXJMax-eVxGGEfo787dQwng1E9GDR5vO06wCOMGyp49NQ>
-X-ME-Proxy-Cause: dmFkZTGdZBTIgAmDmploz9XtNydoPEpmSXQS1hBVk03r8rZW0E0aeYtx+0BmLAvXOQkhH6
-    A60jCIPUu3f9lR74ugVRk2txxCzEspg4WL4F2EPgulzXF5rA9avKqI7UyKRZxf3nfmzXbP
-    gUNjg6cpgfOkpaUjRyoizPkCqUm/LlY9AyBM361ag8QmSzWXizxQweI0y6/UftGK0mXi4T
-    Ft/em9xEgPkLBdgobXwLxJX1GCo4BvFz5tOSek345RdEDjHD2PEn2GMxkjHNgnkbFqqgJX
-    ygzZxWwnBQZEq9tbumK3e30EZBM0udQ8biYJJYmwIXhuJeL8f9601glNP+iKQrpw8S23f2
-    yN6k2l8UukCiUAdEQzgm/u3sncMs5as80hTPOuVHV+JU9KU+8i2+XR55Y3hHybB7APlZwC
-    5dDGXTC8SABqjkrPOow/ddDnDCDv7UISTCLtbdzFEI6XPFF/QUeCi+kw/orEg+mAxx++A7
-    6NMkjkO7RJAt2L4P4bLufMDdq8eParveclb5hb+97mC6OdkNwG+43DfDg+I4W6R+Pa0HOa
-    xvi4lyChHvMKWzv97jitAO9jedQIfUkd2G6bbo8XNk9YeWbReBJOejmN5CQ+pgAl3+iA+k
-    mwmGX8904zeHJlwHsLU0/DZnmYr3fgJdjhWhuQFnvGVNgJD0CyFZOeNGzbFQ
-X-ME-Proxy: <xmx:Ts9EaluwQyz8qEwWJ13gtwBFBoRONwlWqwS3OgJVjx09UQodS1sKCw>
-    <xmx:Ts9EanZW7hACNcFh3snd05JxOci8rpce4q5Kv7PjnnkQJVCjEVgjEw>
-    <xmx:Ts9Eaqu_iP0Cs4ddeB_pISRS1C6v-R6rykkq-4NU2-AlDw2A2MJ6fQ>
-    <xmx:Ts9EapHwpab9CW8HUDhRHYjzVwm5vmMISJV6_F2rLRN0GYK3Pzx7EQ>
-    <xmx:Ts9EauFcaLyuqZsbk-bsGff30-d68AerHbfnGEHrTppwP-wQfEtSvZLs>
+	1782895363; x=1782981763; bh=gWs9JQoEL+fseByq9YzRQHdr3nBYZ6nvUA4
+	roJxenQA=; b=eKLnTMIXEwtJHuMphGRFqVdrbIYkO7EiabwnDZVfk9+oPpGYRmH
+	69ELvsi49KuSzKuJmRVQpO4HPihtss9FZTQhxM5ztEWZHJWP+Au4j6EGVpsIIQgw
+	k8VVmwzqbGNatm0dpB5pW9R5fGELHxkdB9Z1bxWGoF0o9jMpLdKuZoQbnkZXR1R0
+	3J+ad4bXs0B3pzJEodiKoGlReSihyUEOEQ5RKavxXqYwPYYUaOmntIqL+iYVZrlV
+	73BADW5C+dfG+okcLBUe7/o8jxlhoAAqCZ5fYVPSGKiLz5oqb8o6VP0Ibwpa3U5X
+	YOg+JvhETo2epBLpNALlEqbbXGFeH5jsGkQ==
+X-ME-Sender: <xms:A9NEavh9KgWVJtvAabZnapnWGT9zIoQwlkOXKqRO66DFtMisc2IzBQ>
+    <xme:A9NEajdqtkJyhN_3VGYivqoB4zAk_NJPJ34bGyasT0m52QE9pexrgeelu640vKEGl
+    4JihL7IkFOpjxD2BX9lQlEZIGSU7U6muAgWXg3Zxv1cm8zYpmIt6Q>
+X-ME-Received: <xmr:A9NEaserShxoqMu19qBL9O-Q85rGKFO2DHUCW0Q8nFOShRBvatUwa3t03P_Y5yHSziYvtDvKgMd6qswVAfo2SkI6hDtotgk2DZw7yuh7fBE>
+X-ME-Proxy-Cause: dmFkZTFG4ZwZE74w93EHKh1IcRoJzBNs8i7MSFPQdDq/cFhB1VFDJht4iKcEBDnO6I1GJE
+    bEyqjhAHrD5oFR6yaJU8H6+2QdvJt/dVWhlMrcmNOyTy7ahP6dvZzrFn4sJWcBt7hS+0aF
+    92t+JJjjCvtncUmuo3R5OLPptl4R8dtd3l8PoOW4d82YGcCKtzR7CmTKHtZGsQI8NnyrqU
+    WAxStabM2zhMq2bHmZjTyEEpow/RGESmw+XqcIcYlH/zP4pP+9lGGDHyEWjfyCFQ6d/v6E
+    B704zXzk8Gt0eGpn4BQknOzD4cGIS94TRO6ybLe2p9Ch62I4796iRKv5+ldn/WqzWsF4AF
+    GD7Wh1VJcXVPdAXLzYF37QVPH6RGCp5w5jFUWFMYabT7i7Rqx0vjr+fplu42gKP/8Gfq5k
+    gC0jXbnfFJ+qxxJg0PSy3UZaaUEjUodb4Aas4qtGpED+ZqrrNK5OfNe5z4+Xrp7M31NaLO
+    CTo4h1zVExOmE2Baw77X2G/mL5vPl0PZ2ryKy3Bz1HSsiHtByzJ0NRoGJ9JTgc54JJu7b0
+    mNeedBHaliKBedOYY+UiSRQhitUd7zbGipooYGOA3rcLVDX4B0RFQJhaGxBFTnB9a+u2Ho
+    LMzD1vWkdwGIxYv6ZuKWHKnoC4wfIk7y//of/2ITGgYtQPCNN5kQ8yLqQ5Dg
+X-ME-Proxy: <xmx:A9NEal9xXvhofcnPvwiDf1Gn2Ar8LENJDBVZ-l3QSah4JL6A7BUCmg>
+    <xmx:A9NEagkbB-qAmthWc7JPDIYE_k24d4Ct9hW4DJ0cYE60OhQhTinrXA>
+    <xmx:A9NEav8ZLsw2JyVLCqZtb6mDbmZTwXy8zE6ujm7QxyBy1lk9HpmocQ>
+    <xmx:A9NEamk14-H68Syc8YoQKZ7sWvJi8YhLUH0ZYbGZVDID9cI88T8OqQ>
+    <xmx:A9NEaqKs8zC3sduNjL6vjpCQ0AIDwytsWtVW_7NNihK1wd2ojzKfhUA->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 04:26:53 -0400 (EDT)
+ 1 Jul 2026 04:42:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5dca82aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Jul 2026 08:26:51 +0000 (UTC)
-Date: Wed, 1 Jul 2026 10:26:43 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 3743ea7d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Jul 2026 08:42:40 +0000 (UTC)
+Date: Wed, 1 Jul 2026 10:42:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] revision: avoid leaking bloom keyvecs with multiple
- traversals
-Message-ID: <akTPQ1IVqWy8WTk8@pks.im>
-References: <20260701063538.GA2579765@coredump.intra.peff.net>
- <20260701064052.GB2580331@coredump.intra.peff.net>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 2/2] format-patch: fix leak of rev_info in prepare_bases()
+Message-ID: <akTS_rPV7JaGHKRq@pks.im>
+References: <20260630063944.GA3733670@coredump.intra.peff.net>
+ <20260630064301.GB3733961@coredump.intra.peff.net>
+ <akOZy-BygZS8fqPM@pks.im>
+ <20260701081358.GB813310@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,28 +87,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260701064052.GB2580331@coredump.intra.peff.net>
+In-Reply-To: <20260701081358.GB813310@coredump.intra.peff.net>
 
-On Wed, Jul 01, 2026 at 02:40:52AM -0400, Jeff King wrote:
-[snip]
-> There's an alternative fix, which is that prepare_to_use_bloom_filter()
-> could notice that we already have keyvec entries and just reuse them.
-> But this is less safe; the keyvec depends on the pruning pathspec, and
-> we don't know if that has changed.
+On Wed, Jul 01, 2026 at 04:13:58AM -0400, Jeff King wrote:
+> On Tue, Jun 30, 2026 at 12:26:19PM +0200, Patrick Steinhardt wrote:
+> 
+> > >   make SANITIZE=leak
+> > >   cd t
+> > >   GIT_TEST_COMMIT_GRAPH=1 ./t4014-format-patch.sh
+> > > 
+> > > which yields many entries like:
+> > > 
+> > >   ==git==3687620==ERROR: LeakSanitizer: detected memory leaks
+> > >   Direct leak of 200 byte(s) in 1 object(s) allocated from:
+> > >       #0 0x7f4ccba185cb in malloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:74
+> > >       #1 0x55cd452cdd0b in do_xmalloc wrapper.c:55
+> > >       #2 0x55cd452cdd9d in xmalloc wrapper.c:76
+> > >       #3 0x55cd45255473 in init_topo_walk revision.c:3845
+> > >       #4 0x55cd45255bef in prepare_revision_walk revision.c:4017
+> > >       #5 0x55cd44ffec40 in prepare_bases builtin/log.c:1872
+> > >       #6 0x55cd450010ec in cmd_format_patch builtin/log.c:2439
+> > 
+> > Interesting. Makes me wonder whether we should modify linux-TEST-vars to
+> > also run with the leak checker enabled. Ideally we'd of course just do
+> > this for all jobs, but the overhead is probably way too high... yes,
+> > doing a simple benchmark shows a ~3x hit.
+> > 
+> > So this is definitely nothing we want to do for all jobs. But for the
+> > linux-TEST-vars job it might make sense, as it exercises a bunch of
+> > non-default code paths.
+> 
+> We already run a special leak job for linux-reftables. Why not turn that
+> job into "leaks plus reftables plus test-vars"? The only downside would
+> be potentially hiding leaks found by linux-reftables-leaks if the
+> test-vars features force us into a difference code path. But looking at
+> the list, it doesn't seem likely to me. None of them is particularly
+> ref-related.
+> 
+> In fact, I kind of wonder if we could fold linux-reftables into the
+> test-vars job completely.
 
-Right. We could of course start to record the pruning pathspec so that
-we're able to tell these cases apart, and if so we could reuse the bloom
-keyvec entries safely. But as you mention...
+linux-reftable or linux-reftable-leaks? I think it would certainly make
+sense to drop one of these and merge it into linux-TEST-vars. The
+linux-reftable job doesn't provide any benefit over its -leak variant,
+so that would be the candidate I'd personally merge.
 
-> I think it would _probably_ work in practice, since any caller using a
-> rev_info for multiple traversals is probably doing so with the same
-> pathspec. But it would also create a very subtle bug if that assumption
-> is violated. So we'll do the safer thing here, and generate fresh keyvec
-> entries for each traversal. The efficiency difference is probably not
-> noticeable, and this is what was happening already (we just weren't
-> bothering to free the old ones!).
+> > One thing worth noting: there are still six test suites that are failing
+> > with this patch: t0095, t3451, t3452, t3453, t4013 and t4211. The t345x
+> > failures are because of the missing call to `repo_unuse_commit_buffer()`
+> > in git-history(1), which we already noted elsewhere.
+> > 
+> > All of the remaining leaks in t0095, t4013 and t4211 seem to be related
+> > to bloom filters.
+> 
+> I sent some patches to fix the bloom-filter cases.
 
-... we haven't been doing that beforehand, either, so it's fine to not
-care about that for now and just plug the memory leak.
+I saw them already, thanks for your work here!
 
 Patrick
