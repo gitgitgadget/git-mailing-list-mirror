@@ -1,193 +1,69 @@
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D543EFFA1
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:45:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C6F3EEAEF
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:47:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782895543; cv=none; b=Lu7O/OTI3r8zskYZXW3QYHCAeXqJv1itLNq23lw+D8afVO91EP7jOVPlA6lo802rdBzTH26NjsgIGezNtpvEeOg3/hCsdogjlGWzWoaMau8GEx+GJCtaUNvUkTonGkd//ey7+hqTUbPok8ffA89xWcZdzkVF6b3EzQVlGy3zvpE=
+	t=1782895657; cv=none; b=bzOfdWaxlmGbgrGRto7mFLx8AbIJn2d3sD/K18ouga9hzWu7GXNte5pPHscNleaDXezFXW7n55Uk0a4FawqC/nA+u5BBhMcY3ELs3B3j6SYgo6OpV2EIc2R8c1tBNF3XPhCR7zI98LBo1w0Q80QNnspZ5HS7cddSsyRFn8HOb+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782895543; c=relaxed/simple;
-	bh=rUZEJsIFJHC44ZJuDbqDDI9tc6gHTLwC1OyOsYHqKj8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qsAhGCwBJIFuIocUVZNziFkrvg8/jXkLpbDNTkLdNyIQHzgo9yg9bgc2PTVL/BggKhq4w6BoJ4ciY3QthM/KRnxnLeeGQ2WXdMv4UaAPnMyF1oaCZ78P6nkN0ulYMPRUpldLIe69wZatY8pknCYo0NUj1ccLJiAKWVv084mgHe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net; spf=pass smtp.mailfrom=posteo.net; dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b=AaG689lY; arc=none smtp.client-ip=185.67.36.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.net
+	s=arc-20240116; t=1782895657; c=relaxed/simple;
+	bh=73VLubdnS5uis5KrC+/Fz4HhYsmumCqD8hIGZlM70y0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KdQ59nl1GmkzZKCVQ2FxRK5Fd1ZS1dTYAjOn3pxtuhWZXCo9GtxtXU/TfoR+zcmQqC7SDkA4IKNpQU/WttXPk0ySW7RY7COf1ggjYiawKIyHFBTE9xk624hj4xcCThOUPtS57ELycXJBbnd/g8Q/6xlxBZTkd6z9/x14YYRVZcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fyWg5771; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="AaG689lY"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id 4AE78240028
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 10:45:33 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
-	t=1782895533; bh=LvudmcgAq5llwaqWx+T2TrqCH6fh43RQ221iMu9kThM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:Content-Type:
-	 Content-Transfer-Encoding:From;
-	b=AaG689lYe8iyaHMobBxTFWBtQoNE/KI0AnhxelhgwODbbvlURSVFnpoewi6BdNiii
-	 Q72519PTGgyRROI4jzPw2pClCu0XrmyOPjVYXhSvElBUkmu+bNtqcv2NfE6gFSAmh3
-	 rViACsZ606avrVedfhTTuLDLKNrSBbtGwtBOeAGFBwwC/BSPabexXlwEkdTJfjtnMv
-	 uQYzop9779RSOnvM+BZh69sWNcQeDCus8bJ1ZhGdD19YphCFW10SwZh/oO0wlV4OBA
-	 MTePt7E55PXcAtjk+oMHeNfKPtf6Ihr5WfRZLw+9c8udXr+Wb0/Zl8ljNfCjlMxlv2
-	 M540bQCYQcG/A==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4gqtrX4t1mz6tvm;
-	Wed,  1 Jul 2026 10:45:32 +0200 (CEST)
-Message-ID: <7146f6a0-89aa-41bb-b187-4fc456b0c7da@posteo.net>
-Date: Wed, 01 Jul 2026 08:45:33 +0000
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fyWg5771"
+Received: (qmail 77933 invoked by uid 106); 1 Jul 2026 08:47:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=73VLubdnS5uis5KrC+/Fz4HhYsmumCqD8hIGZlM70y0=; b=fyWg5771xqGuuxDeCzpp1RTRfcQ9Bc8jud6md6pDj4VzMLY8Xv6zr/MqujZzHrh5FLLuV6kst/1DL1sRw6FscP74S98JIgrebO6ypG5pTaPkBOgHMEWf+qiEcbzKWejAO/umlQ7disK7v/WFN9KuU7RVewPL4AijanfUcW+La5LT6xxyRHnpQukDV9BiCkzFPQDzhnUuPyIDOK/ujg25PtL/9DcXF4aD5mshHMwfBnaVDdOomkboWTFSR+3skG71palzp9o+pMH2JZWzYbXjL0yhhp/m1gFRPd3EYjjsM2f42HmGOCJKSScXqXnfT84jpqqdSVT8qsYUoTWFOWsO3g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jul 2026 08:47:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 159106 invoked by uid 111); 1 Jul 2026 08:47:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jul 2026 04:47:34 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 1 Jul 2026 04:47:33 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 2/2] format-patch: fix leak of rev_info in prepare_bases()
+Message-ID: <20260701084733.GA814472@coredump.intra.peff.net>
+References: <20260630063944.GA3733670@coredump.intra.peff.net>
+ <20260630064301.GB3733961@coredump.intra.peff.net>
+ <akOZy-BygZS8fqPM@pks.im>
+ <20260701081358.GB813310@coredump.intra.peff.net>
+ <akTS_rPV7JaGHKRq@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: git-blame vs. abbrev
-Content-Language: en-US
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <b500479b-14c1-4fbb-a672-1d2cd4852601@posteo.net>
- <xmqqy0fvreps.fsf@gitster.g> <f9761389-8c31-4928-babf-8218e9393376@web.de>
-From: Laszlo Ersek <laszlo.ersek@posteo.net>
-In-Reply-To: <f9761389-8c31-4928-babf-8218e9393376@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <akTS_rPV7JaGHKRq@pks.im>
 
-On 6/30/26 23:38, René Scharfe wrote:
-> On 6/30/26 9:49 PM, Junio C Hamano wrote:
->> Laszlo Ersek <laszlo.ersek@posteo.net> writes:
->>
->>> Hi,
->>>
->>> when git-blame is passed the "-b" option ("Show blank SHA-1 for boundary
->>> commits"), shouldn't git-blame *stop* reserving a commit hash nibble for
->>> the caret that otherwise marks boundary commits?
->>>
->>> More directly, I find it inconvenient that git-blame shows commit hashes
->>> that are one nibble longer (13) than my "core.abbrev" (12) setting;
->>
->> Just for the sake of aesthetics, I agree that when we are not
->> showing the boundary mark, it would make sense not to reserve one
->> column that we know we will never use.
-> Here's a patch to reserve a column only if marks are actually shown.
-> 
-> I strongly suspect that any line can only have a single mark, but I
-> didn't bother checking and proving whether that's actually true; the
-> new code should be able to handle multiple marks just fine.
-> 
-> Misses tests.
-> 
-> René
-> 
-> 
-> ---
->   builtin/blame.c | 61 ++++++++++++++++++++++++++++++++++---------------
->   1 file changed, 42 insertions(+), 19 deletions(-)
-> 
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index ffbd3ce5c5..0e747a43f2 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -453,6 +453,39 @@ static void determine_line_heat(struct commit_info *ci, const char **dest_color)
->   	*dest_color = colorfield[i].col;
->   }
->   
-> +static size_t handle_marks(const struct blame_entry *ent, int opt, bool print)
-> +{
-> +	size_t len = 0;
-> +
-> +	if ((ent->suspect->commit->object.flags & UNINTERESTING) &&
-> +	    !blank_boundary && !(opt & OUTPUT_ANNOTATE_COMPAT)) {
-> +		if (print)
-> +			putchar('^');
-> +		len++;
-> +	}
-> +	if (mark_unblamable_lines && ent->unblamable) {
-> +		if (print)
-> +			putchar('*');
-> +		len++;
-> +	}
-> +	if (mark_ignored_lines && ent->ignored) {
-> +		if (print)
-> +			putchar('?');
-> +		len++;
-> +	}
-> +	return len;
-> +}
-> +
-> +static size_t print_marks(const struct blame_entry *ent, int opt)
-> +{
-> +	return handle_marks(ent, opt, true);
-> +}
-> +
-> +static size_t count_marks(const struct blame_entry *ent, int opt)
-> +{
-> +	return handle_marks(ent, opt, false);
-> +}
-> +
->   static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent,
->   		       int opt, struct blame_entry *prev_ent)
->   {
-> @@ -499,23 +532,10 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent,
->   		if (color)
->   			fputs(color, stdout);
->   
-> -		if (suspect->commit->object.flags & UNINTERESTING) {
-> -			if (blank_boundary) {
-> -				memset(hex, ' ', strlen(hex));
-> -			} else if (!(opt & OUTPUT_ANNOTATE_COMPAT)) {
-> -				length--;
-> -				putchar('^');
-> -			}
-> -		}
-> -
-> -		if (mark_unblamable_lines && ent->unblamable) {
-> -			length--;
-> -			putchar('*');
-> -		}
-> -		if (mark_ignored_lines && ent->ignored) {
-> -			length--;
-> -			putchar('?');
-> -		}
-> +		if ((suspect->commit->object.flags & UNINTERESTING) &&
-> +		    blank_boundary)
-> +			memset(hex, ' ', strlen(hex));
-> +		length -= print_marks(ent, opt);
->   
->   		printf("%.*s", (int)(length < GIT_MAX_HEXSZ ? length : GIT_MAX_HEXSZ), hex);
->   		if (opt & OUTPUT_ANNOTATE_COMPAT) {
-> @@ -647,11 +667,15 @@ static void find_alignment(struct blame_scoreboard *sb, int *option)
->   	struct blame_entry *e;
->   	int compute_auto_abbrev = (abbrev < 0);
->   	int auto_abbrev = DEFAULT_ABBREV;
-> +	size_t max_marks_count = 0;
->   
->   	for (e = sb->ent; e; e = e->next) {
->   		struct blame_origin *suspect = e->suspect;
->   		int num;
-> +		size_t marks_count = count_marks(e, *option);
->   
-> +		if (max_marks_count < marks_count)
-> +			max_marks_count = marks_count;
->   		if (compute_auto_abbrev)
->   			auto_abbrev = update_auto_abbrev(auto_abbrev, suspect);
->   		if (strcmp(suspect->path, sb->path))
-> @@ -685,8 +709,7 @@ static void find_alignment(struct blame_scoreboard *sb, int *option)
->   	max_score_digits = decimal_width(largest_score);
->   
->   	if (compute_auto_abbrev)
-> -		/* one more abbrev length is needed for the boundary commit */
-> -		abbrev = auto_abbrev + 1;
-> +		abbrev = auto_abbrev + max_marks_count;
->   }
->   
->   static void sanity_check_on_fail(struct blame_scoreboard *sb, int baa)
+On Wed, Jul 01, 2026 at 10:42:38AM +0200, Patrick Steinhardt wrote:
 
-This way, I didn't even need to pass "-b". :)
+> > We already run a special leak job for linux-reftables. Why not turn that
+> > job into "leaks plus reftables plus test-vars"? The only downside would
+> > be potentially hiding leaks found by linux-reftables-leaks if the
+> > test-vars features force us into a difference code path. But looking at
+> > the list, it doesn't seem likely to me. None of them is particularly
+> > ref-related.
+> > 
+> > In fact, I kind of wonder if we could fold linux-reftables into the
+> > test-vars job completely.
+> 
+> linux-reftable or linux-reftable-leaks? I think it would certainly make
+> sense to drop one of these and merge it into linux-TEST-vars. The
+> linux-reftable job doesn't provide any benefit over its -leak variant,
+> so that would be the candidate I'd personally merge.
 
-I didn't try to test the patch exhaustively, but it definitely does what 
-I'm after.
+Both. Fold linux-reftable into linux-TEST-vars, and then drop
+linux-reftable-leaks in favor of a new linux-TEST-vars-leaks.
 
-Tested-by: Laszlo Ersek <laszlo.ersek@posteo.net>
-
-Thank you!
-Laszlo
+-Peff
