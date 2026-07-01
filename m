@@ -1,83 +1,82 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70E93C108A
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B316D3C09E5
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782892607; cv=none; b=f6vpfCmx7ZOcpoBn5tG5V9R72glO5bHvRqPnCOj2bBn2m2A21eXXtHTs/Wate83egvzxhDZ6njPkz0NtcgFySwMaWfmp0cHpw6TG37ii7hZ7QEUWfeqf+xBBjBSWt28SchTgpAIWOUtC9668FnPW0uHHgNCR2I7DGXrpBS+lUIo=
+	t=1782892612; cv=none; b=ooTDSgESv7pq+3QfEUMEPvV/sXHEtCBw0gXUluZiyf8BLNqI+yU0XIRUrkGrVna0jX5+PDo1U6r9vNiBW8LkqQfvCpOnnVrjQqEZH2XFaSs9f/7HYuboWMP8AuaSAGdwv7dfH/0uFl0DPmmoiZhg456pzb6M2YUvNX53pDBjrbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782892607; c=relaxed/simple;
-	bh=fYMUguGLi17gR7GULE67j8XKVu9B3NpKXunDZim06FM=;
+	s=arc-20240116; t=1782892612; c=relaxed/simple;
+	bh=WDygkV6pw1ztwZi3dFqSXKUSPoTt3LXzt3yZi5lFrQg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KSQwOcafBP1jpuX7S/geHkJyXzgHdpqtqmaVOSjZQ5sQ9wexa+6SuF9ELl3Ou95iU8OvUc7SkXjFjq6OE/2MxtYZ9TU8WFciLkHoDBoIsaFAnUrFIGs43ogKutLZSiqCO3nI/DHNyKXc4OzgtE8SHUCqMz7bwlVfWoPaaMTF8eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iy8fKKkn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MNGSxkv9; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=kvnxdFJyqoAi+oQPJQeT9ByZ7mNhUTZH7kQXLLkstBhQmkEY8zQTzU/67lpbfaT5oNRUUz/2LjYDlb5G/SUAn+e4ZrHcOmMNLGm7ukTvrPcnkI6UK/4HroKt4U+NQsbRLW0EMefVFlq+nAIzHIxPJ17GXeXJt5VvYdUuoL4eSys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AncuMi+v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TOnPGBXm; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iy8fKKkn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MNGSxkv9"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AncuMi+v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TOnPGBXm"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 06B58140006E;
-	Wed,  1 Jul 2026 03:56:46 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 06EDB1400042;
+	Wed,  1 Jul 2026 03:56:51 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 01 Jul 2026 03:56:46 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 01 Jul 2026 03:56:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782892606; x=1782979006; bh=XKbPOhwPj2
-	CePNISppTX8ZvLpQk3ngAQ3lAaGysB9xE=; b=iy8fKKkn9WvSPwvjpKwtI1w/G6
-	5OjgNSH7913Y4Tl0n2Xtd2OuFuC+Oj89v6GYa9++KjRMf9mUabnh6wujCwegZC6p
-	zkXOlEqhfnbsefbe70Q4r825if1wj4fPMxSfsUGLuc9DsQQxXMt5sed/MZyN6fCg
-	Vg+R4WUBMggV7xoohCjgjCduqvQYs3z/D/J1BUL5Zq+UjlqP172lXafjWAARFwyz
-	ehMqou8YhaQs9paTkoQ2opT7m6wyyoqwXE3XePOAzaDF88lxr3/kV9jT3VfrCbHm
-	N7JPjRJdFxPF/mzTli2q0enLDrq+AkjSw/oCeMORU0ibSRzFSF83cbeeUlOQ==
+	:subject:to:to; s=fm1; t=1782892611; x=1782979011; bh=yQDXgq3aRs
+	SreOfL9iPi/72ICcF+wO5fmArvXUl7XVs=; b=AncuMi+vTqx41YNu4a7OXhDFIx
+	gA8AHgzCqqYUuLRHhc3i3qdJ7EP6EsuSxLqdGwFAiYSeTp7XgBau/ytKJ9tn9Y8w
+	AYSPapB3gcMv4k7xEGWStq2XquYV04Cvhwr5na2R4Y4OV+x2JcSTfv2SulGImwC7
+	ReclqL//ZUDHh/kCtnoBbDUl5pi7J65nE/bKOvDBtfjwz6BLtu3aQGqxMuMDkSin
+	mLeVOWGlw4V29+sJbP6CF8cLBzdhfD8us6P1V2K92yfsvV8vILVLRM+1LzTAr8XH
+	uVI5mEpP4BG86Zqt6ncbMDJ5ChbbCM3rYArokeSWDRIEz98iJ8FW91AG2j9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782892606; x=1782979006; bh=XKbPOhwPj2CePNISppTX8ZvLpQk3ngAQ3lA
-	aGysB9xE=; b=MNGSxkv9EEhvb5MF+B+C+zKk9xLrWtEh0XU29+oZkqNtdJHwMXq
-	cuyVOiUVgZRy5LCrNbB5Zq4T/sOEq9/R4wWfEcHDrelDwQW0+J1lDEXhPsAgoL2j
-	saPrk0RuvRLw7NyuXS9/TIb4Xv1xTY6dOGsw5Lhk0t8DNOh6s5fYOMSBk219HLWR
-	QllfQMs4oqH4Zn0AL3WJljPTFzWSwT5hulIlu20k5ovWMCCziw87LpoBWFabl7Ol
-	lW6Q7+H1CvQ6t6EoYdyfvmziXZmkLWDhc8PCIIgwsDtY0NT0DLtIC7SP/X+i4aRU
-	clVXoAXjJX2KPRiqu5nGPbk1O7MPXwObzYw==
-X-ME-Sender: <xms:PchEavBGXZYjlhL0uMjSI1ghx6sQYLyv1BJBaz73LAjIwkjhko8BcQ>
-    <xme:PchEas_LhAprgsVWt0OX4N5yStNSKfzxzXZhAOz89mz0PUddvzdtLyon-EN1eyP1w
-    oyYfqMLuJGFpplSZ3sF9O3vaQQDwPyz4t61vb_wlARRcg49d5O8Ww>
-X-ME-Received: <xmr:PchEan_J-GIDj8cLRmjsue2c-NIECL_NucbpV0Qb6L43V2kjftBG_fBnVsuLRavO27XRMn8hTLokhsxEUFOMr6q9H4mnsktnOeyD48C6Q5Y>
-X-ME-Proxy-Cause: dmFkZTFlPFsgBwBaLKeciHlMQjRufptWj9P4KLyd1RX74QQYCkiOePmpU4Lo6TYmHk6LQd
-    aTHd9/+AD9GrsX/ZstR6AF4a/4OMcJu2HFMzxZ0Gn2lfSok+GXDlQ02KoAPudmX0TTC/Cm
-    C/7TrI5bX06cSm1+KpfSJiCQOc6frsEwBwHdeqUJH+zeFCnsO/5Bsz0amnpm4X7h6hHvy1
-    4RfaDx585qthf6JbU8U4bhqSoauT0QzgOgt60TfgwDYxVTezJ+kOUd0dVqxXTVz7sGN2br
-    fu2l1Ek1h2bveLVtuoK6RV4ghOt18Y8z6n2tToxW4Ul6Xl58kS53N3R+S5QOgAg5xHQUQD
-    r1/1C5yGsm9uEHrJDObrv/Fq8CD/wb8yaV8t5eq90Ds7GVGpoYPhtDHDcQSbnEBkiR+Xsi
-    lL7sld/3/5d/bM6X7XRG6DAV/TO8vAzg13R72Q/AuKoqTGzEtZsO6HiiseJGeb3kiz3shV
-    7jqo1t6hC4h3Ns2dKy+/G3W6qRysWXruggdtkdMiArg5kjK7Xvr+tvCymU1drDo85Eix02
-    OpvsKX9R48ssB9XHFAcFy3C11/unxmDMJ3+P10yeJroRp1Q/CYAmyPsHdhPQpYJNQAoQGi
-    sfnuhzKtDBLPPY4l/S0/4fbU/A83VsZqhip7jp7eWvPdtb2yZnVzym9DHh8w
-X-ME-Proxy: <xmx:PchEardo1HRBOaVDavb66o5Mbj_PMmeuUomF7kJLN2_uleih_TurrQ>
-    <xmx:PchEaoF7mjmag-a6dtzbhZC0glSWXu4pIrXPPp5YuH2W80pvfSrIsQ>
-    <xmx:PchEahf9ORU6BGaAkFVKPgSEjzGERL9Agcn7pb5u2sPYD6Hx2PIyTw>
-    <xmx:PchEaqF2GtRgFbrT8B413uqPcUseBllmiY1unCihj3-Z7Joru_nKtQ>
-    <xmx:PshEapca2IzKknKNfmTDPp91D2PeHS04zdCf1QWXODRnlJtoWXEC5NGu>
+	1782892611; x=1782979011; bh=yQDXgq3aRsSreOfL9iPi/72ICcF+wO5fmAr
+	vXUl7XVs=; b=TOnPGBXm+F7EbIf6r78tJcL4Eu2tS3OvGl8pINqQe9RBI34vKIL
+	VM5hJegKQb1uOBwuShKdC20+3W9VX8JAWuhdmI5AiwRW9eRpgQS7A0d841ELjrbG
+	QJ/VQ/K36H58VELSxkctVsOKNhg7+hCpBOXQVouOvgUFlfn38yxioUW/ybdF5XrB
+	MoQooz98OnG45/O0yCaNetefMU4o3d3osnbeYl7WOCgvnk5tlpluPtpPedu3Ijlj
+	hODp1mDvos7ffOmPxZneSGByIJVe2fhyUgQeu8Kg/ljaRIsbm8qeeQkfsyeoa/XJ
+	x/Bvyh/cNxmrkDtirt45T/3GIY07x7ZiPHQ==
+X-ME-Sender: <xms:QshEasJl5EO3DHIwpQOcoEIBFzC-po0g7ZYhjaLmKLM3Sno3CYAn4w>
+    <xme:QshEajmXVdgFAzb-bGvTHKqVjG4WfLQQYKrPXxeVTiDPBQRm6jChn28GAiww6ftxm
+    Ujc0LdWaPUP_2sTrluS20DQy68cLSDVQvkLdjerjE-ObLiJHblfVQ>
+X-ME-Received: <xmr:QshEaqGhWA0jXU6fEUR8BrWoLqGWxDVRqLOtAZXzKvrNasrIKvbrvpn2JbNpZ5qaHxrzdb9aM-p4BBBEgDhyC30246huSBSHR9Vk8VuK0aM>
+X-ME-Proxy-Cause: dmFkZTEx2/Tpgugszdx3cqANsMdeLz2sgStOU/YZrKHnMLmJ1SrMlvve4gFx8sHmL8Zkls
+    qkvo8niaL6JdzaJIBTnjlNI3jbiLNqMZQ68UqC4mPj7FrDr9qhEgS3yzqBVB0SJs09uqI+
+    kkyTBzBMaY0vLeNE7Bh/E3f/ZuHYKXhAUyr0W+bb8jy4hVcNlQGFPG3pjdp7TWwOJVh5kj
+    B+x+qoVgtSug0RoaTzaM5B285UhiBvzW/4aORCF2CJwl+KCgxUEv4atE0/OOcSe489J9FJ
+    Quwx4l/plUyg1BOUVnhR5Xf1FUu94X856KTlI9WitY+D+ain7s5QMIleIbICigzvgCSNS3
+    LiGXZLxsK9uAZGJA5jRytRVuc7dtqRQ5ASguWel4zInZtGGjhzFvMCNMLNXf+15i+qq7X/
+    B51h+pMnY6jkrf992pOaYfEVxYZgMTc2oqB+sU3JHmn6ljrodWkPEbFiLijDHxXyDj8fbs
+    DSMVMsQj4JoLlDdAJXDh3X+HDbgWz/5Io5lUvgPuq3oWJR3nlvJds5npoe2kCwMib3S2Jq
+    kS8R8rTMxzPS+lfbGvddlEKpgkosRd1oAE9tdLd0qyfFT+Pd2sKEtBoOid/PLGflzQ/8Kk
+    tl7Asmhy3p/z9nUScZR+HRWdF24KkOZ+4V8pRY2zKBWhUEMKLhE2oQU99ifA
+X-ME-Proxy: <xmx:QshEajH7KdcnT3LBkox6RTG0blkxX79CwWjRQLqz_OVfuxttNBKlqg>
+    <xmx:QshEanN1G87hG2Yc8g8h18D7Xp26FNondaQxOwBYyNtys1-QVrJy6w>
+    <xmx:QshEaiHVy3eAsjVw_3_IJPfKB2hWXG78AlphQNN7myOyttV63Ly9PA>
+    <xmx:QshEauNuhKlG6U9bGfNpKsnCSxRa3ObaFdHdU8k-QImNHYwGEH9-cw>
+    <xmx:Q8hEaiGj2nSppoXwGCqD-S9Y_-mMAL5n8IBum2fs5_UwgiWyIVlxD43i>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 03:56:45 -0400 (EDT)
+ 1 Jul 2026 03:56:50 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 44f8daea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Jul 2026 07:56:44 +0000 (UTC)
-Date: Wed, 1 Jul 2026 09:56:41 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b32c5a61 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Jul 2026 07:56:49 +0000 (UTC)
+Date: Wed, 1 Jul 2026 09:56:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 07/13] dir: free allocations on parse-error paths in
- read_one_dir()
-Message-ID: <akTIOeXFhNjJ7V3i@pks.im>
+Subject: Re: [PATCH 01/13] load_one_loose_object_map(): fix resource leak
+Message-ID: <akTIAGKOS2uUcuZG@pks.im>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
- <62ce03454aa1928edd8fa538e0600155629939cd.1782889472.git.gitgitgadget@gmail.com>
+ <17242c249f0beb387fd30634663f13ce42d34f79.1782889472.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,37 +85,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <62ce03454aa1928edd8fa538e0600155629939cd.1782889472.git.gitgitgadget@gmail.com>
+In-Reply-To: <17242c249f0beb387fd30634663f13ce42d34f79.1782889472.git.gitgitgadget@gmail.com>
 
-On Wed, Jul 01, 2026 at 07:04:25AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> diff --git a/dir.c b/dir.c
-> index 32430090dc..23335b9f7a 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -3792,13 +3792,18 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
->  		ALLOC_ARRAY(ud.untracked, ud.untracked_nr);
+On Wed, Jul 01, 2026 at 07:04:19AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> diff --git a/loose.c b/loose.c
+> index 0b626c1b85..47b7f5ec38 100644
+> --- a/loose.c
+> +++ b/loose.c
+> @@ -65,6 +65,7 @@ static int load_one_loose_object_map(struct repository *repo, struct odb_source_
+>  {
+>  	struct strbuf buf = STRBUF_INIT, path = STRBUF_INIT;
+>  	FILE *fp;
+> +	int ret = -1;
 >  
->  	ud.dirs_alloc = ud.dirs_nr = decode_varint(&data);
-> -	if (data > end)
-> +	if (data > end) {
-> +		free(ud.untracked);
->  		return -1;
-> +	}
->  	ALLOC_ARRAY(ud.dirs, ud.dirs_nr);
+>  	if (!loose->map)
+>  		loose_object_map_init(&loose->map);
+> @@ -98,13 +99,12 @@ static int load_one_loose_object_map(struct repository *repo, struct odb_source_
+>  		insert_loose_map(loose, &oid, &compat_oid);
+>  	}
 >  
->  	eos = memchr(data, '\0', end - data);
-> -	if (!eos || eos == end)
-> +	if (!eos || eos == end) {
-> +		free(ud.untracked);
-> +		free(ud.dirs);
->  		return -1;
-> +	}
->  
->  	*untracked_ = untracked = xmalloc(st_add3(sizeof(*untracked), eos - data, 1));
->  	memcpy(untracked, &ud, sizeof(ud));
+> -	strbuf_release(&buf);
+> -	strbuf_release(&path);
+> -	return errno ? -1 : 0;
+> +	ret = 0;
+>  err:
+> +	fclose(fp);
+>  	strbuf_release(&buf);
+>  	strbuf_release(&path);
+> -	return -1;
+> +	return ret;
+>  }
 
-Hm. Here we assign ownership to the caller, but this still feels quite
-off to me as we also have two more early returns after this point that
-seem to leak memory. Do the callers make sure to always free the data?
+Makes sense. There's no `goto err` before we assign `fp`, and when the
+call to `fopen()` fails we return via a different path. So the added
+call to `fclose(fp)` is fine.
 
 Patrick
