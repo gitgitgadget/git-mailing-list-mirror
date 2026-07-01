@@ -1,46 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E203B6C11
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC6A3CB2D0
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782892818; cv=none; b=khMJqPTfe+nfBof2sXFHjKSdEMRQKlht9TFqSbKkihKmwEAlnYs+UQAfLR63q49MEcamtCBQc/6uBLJwsQCzLKv7FpdiToxW3CwBR3xRniGTIG9nsYFb+7+GHsAf4kbGKDAx+4GFmzQfeZAI/fHBgcZkPOZCWQ53dUqFghP7Sm8=
+	t=1782892949; cv=none; b=qyl1oqqPa2mUhyevSTKNyZwj4p5lgsV5UGxe/C2i0X/ZbG/lLgrqSKiGunZLmFivMlLuO0uWZioPMqiwOjcbI5n7M4AQl/IzbkdiJeahSGNGH7rAuoSjzI8+QG8NhG6ppiZRksXey7KMZC/epLercTGubHzD5HYFUZsmash5gJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782892818; c=relaxed/simple;
-	bh=0RhAMKlg/UBl6iS+m3u958+Vz2fDTsaEdnCM/PKfMGw=;
+	s=arc-20240116; t=1782892949; c=relaxed/simple;
+	bh=08JC70HJuAyQR308gimG1mkD/2/WKSpyszmxq1FRJdc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=em58Klai8D4n3LuPId8MIVi49AA2t9jBneCVyL1+UYjNehnorl0dBBWC45TzJf+XXlE3jiWkoQGxcTAA153tFgIR2AhCmFxlCk4F+3H7zWOpbiufNp+0EBm4IkTNmsZbuX7ksvbGSbrxbWysIhPq5NX325lYLL8wWp00KZ5qwp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SzHw15bS; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=txZSaCVQNnu8984nA1rIUjTDwjEgLpysaubk75qFjKeDUyf8wZzKEixP+NvVr8DZ0T0g57YGF6IxDSOgi2Mgj66lXXlFlbKJrfb47E5vQe9Y/aM1i/x2XOWUewbVbNkumvw+t4Z2KzXEXMchGMyOFoHUNqNXrus/9a0E/GPIBFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OSIIdHyY; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SzHw15bS"
-Received: (qmail 77491 invoked by uid 106); 1 Jul 2026 08:00:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0RhAMKlg/UBl6iS+m3u958+Vz2fDTsaEdnCM/PKfMGw=; b=SzHw15bSkVGt6WrheBUFBO8bOYAR+iU7hSEmFuIXNCTAMqo3jnmq3j9ASakFMRh6BV5C61uhXKAEGuaBOUKzg1M1cUSDBK2ZdVLmj2BBcyxmnaBaCVZp6Qje2QwkZIxuFCQOixcE5MVMcdxpjTtzkZkpzGbpr1tAjEi1kppv4AK/B9IFCmrHeLB2DkJFxFw2DxRyKFkSUKbc0bOttoZKZI95XIqR+YC2EebBgYHrT2dK/vTIkAxJGcfCho1n/3MCfMe4HCXYqAcnLDDgJZVoPovs4tkguPH79puDMQXFpnVjOJQ+a+HypySqhnxsKJQx8qtuMzhBaIuBSxfnYYDFmg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OSIIdHyY"
+Received: (qmail 77534 invoked by uid 106); 1 Jul 2026 08:02:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=08JC70HJuAyQR308gimG1mkD/2/WKSpyszmxq1FRJdc=; b=OSIIdHyY/brzIxqyanHE1Bmd7rgJjyGr73Ji2bErwl8OcKixFmtpPoUb5fIvi1nDU8dcusk1vkBD/urEaXqKKuaYR+Vi981+zfh+tpANTS4bCetXXhKq3vc9xLjRd1IAnNQrJkxAHNM9otoGI3Nd10rc4S/i2+6N14kX1nXgLDorF2vKDqy0v+EdETnUAFp28NVLHpYERbIGFNupWtFjhhokrgpTLby4fdVIkiv92Bstl0t7SxApbk5vD7ReXYgzTmpoTah9qIr91dbpMV0Zuz+7KOYWgHMe/A7LUqUG3sj56Ue8ofhiiuedKAeccGglXQlq+VrtAWuc1jKb7PCH8A==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jul 2026 08:00:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jul 2026 08:02:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 158635 invoked by uid 111); 1 Jul 2026 08:00:15 -0000
+Received: (qmail 158664 invoked by uid 111); 1 Jul 2026 08:02:24 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jul 2026 04:00:15 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jul 2026 04:02:24 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 1 Jul 2026 04:00:14 -0400
+Date: Wed, 1 Jul 2026 04:02:24 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: weird quadratic reftable behavior, was: Re: [PATCH 3/3] t5551:
- pack refs after creating many tags
-Message-ID: <20260701080014.GA3748390@coredump.intra.peff.net>
-References: <20260628075716.GA3525066@coredump.intra.peff.net>
- <20260628080710.GC107826@coredump.intra.peff.net>
- <akIJQbOUbdBbkTef@pks.im>
- <20260629203527.GA1895313@coredump.intra.peff.net>
- <akOG0oMu2KTqqyW7@pks.im>
- <20260630234702.GA3759976@coredump.intra.peff.net>
- <20260630235850.GB3759976@coredump.intra.peff.net>
- <akSxCUfm2P7ocLJX@pks.im>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 06/13] line-log: avoid redundant copy that leaks in
+ process_ranges
+Message-ID: <20260701080224.GA813310@coredump.intra.peff.net>
+References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
+ <5a6b17f075ca2d0442d512a0021557aa112860fc.1782889472.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -49,42 +42,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <akSxCUfm2P7ocLJX@pks.im>
+In-Reply-To: <5a6b17f075ca2d0442d512a0021557aa112860fc.1782889472.git.gitgitgadget@gmail.com>
 
-On Wed, Jul 01, 2026 at 08:17:45AM +0200, Patrick Steinhardt wrote:
+On Wed, Jul 01, 2026 at 07:04:24AM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> This is a known issue, I think [1].
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> The problem here is the tombstoning: when you delete all references,
-> chances are that they are not truly gone but that every reference is
-> just tombstoned. The problem with this is that reading refs may now take
-> signifciantly more time as we cannot just say "this stack is empty".
-> Instead, we need to figure out that it is empty by processing all the
-> tombstones, and that takes a lot of time.
+> When bloom_filter_check() indicates that a commit does not touch
+> any of the tracked paths, line_log_process_ranges_arbitrary_commit()
+> propagates the current ranges to the parent by calling
+> line_log_data_copy() and passing the copy to add_line_range().
+> However, add_line_range() always makes its own copy internally
+> (via line_log_data_copy or line_log_data_merge), so the caller's
+> copy is never freed and leaks every time this path is taken.
 > 
-> I remember that I did some digging back then and improved the status quo
-> quite significantly by optimizing `refs_verify_refname_available()`. I'm
-> sure there are more opportunities for optimization here though -- I have
-> a feeling that we for example exhaust the merged iterator until its end
-> when searching for a specific refname, where we could easily abort once
-> the observed tombstone name sorts lexicographically after the needle.
+> Pass range directly to add_line_range() instead of making a
+> redundant intermediate copy. The callee's internal copy handles
+> ownership correctly.
+> 
+> Pointed out by Coverity.
 
-Yeah, it is (mostly) the same problem. About half the time is spent in
-refs_verify_refnames_available().
+Heh, I just posted the identical patch (in my case found by running the
+test suite with GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1).
 
-The other half is in reftable_be_transaction_prepare(). Looks like it
-makes individual calls to prepare_single_update(), which reads each ref.
-And those reads are expensive because of all of the tombstones. It might
-be possible to do an iterator merge or similar between the sorted list
-of transaction refs and the reftable contents.
-
-> But eventually I decided to not care too much about this edge case, as
-> it seems very specific to this artificial benchmark scenario. Which of
-> course doesn't mean that it's not worth doing, I just had bigger fish to
-> fry and didn't get around to it yet.
-
-Yeah, that's fair. I dug a bit further in case there was anything useful
-to write up, but I don't have much to add beyond what's here and in the
-thread you linked. We can let it live on in the archive for now.
+So yeah, looks good to me. :)
 
 -Peff
