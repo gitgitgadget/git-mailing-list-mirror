@@ -1,118 +1,156 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C180C299927
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 06:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB27A28DB54
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 06:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782888877; cv=none; b=ZcvNur6V0UiRahSEfF4l1+lnFNux2cBaC8XFHo01xl5SXkImYZFQu+Oayvg59oJNu0R/oH7m7F7qLqWulZlefNVQIq+txXXfFtmYigj8eauf/nkZpItnb6dg28O/ITDrxix2an5IgBe8yO2KEzvATkNti7uHCh0lj4ZdaQ4szFE=
+	t=1782888927; cv=none; b=ONAG89Efb4lKOCTY6oPWCUAbk8oLG07pEeRDjC93TYNvs8LW2QW8yVc2NKk0t79s0OO9Gibl/H/ZH2XRSCwV84fpnnw26SZAr4NolUtKuqquWSQUtYpZHb5TNk6nG2IEQ77jpE9N0abg61Is/zAAJw2nbscfH/s8em589CHo1nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782888877; c=relaxed/simple;
-	bh=U/8XBVEBOKLchn1kFdmH2HdfkocQ3Bwpk8B5bVCdELE=;
+	s=arc-20240116; t=1782888927; c=relaxed/simple;
+	bh=2yMBCSWMNWvEA+VvTIhZkKJsQZwLIGS3c0mfbIU/ZZA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g0058PfCZAuTUVyV+Wd6NvpZzt2WyU9LKtPcjAGdyZIoLOBbQSmh/Hf7nqcOCxgnYi0rzXUpAEwalrXLolEcGZmdjCbrhWp5XqAHB3CNarl0mPRuyIgNtKRHzONcXWj1jcDoShqWU99R//qMjusnaUI5R3DDL/I+XpekKwoDULI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GHMPwR62; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FV4iAHHG; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=qX4mF9yiWZCZSAJyA46Z/U9IIbA4hnG+irCC+kemZQDJ6fe/jAkSuD0w0sBAvnrfLtkmp/5RaICSLE39DH3v3xro41DuTHRQKvKuSdoBILm/lcfcXECMqN0OOSnfP1lpWDZoBelX9OHmJFuwJf2C5+iRD0m8MHK9qL1cTtXIrVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kc82DZ0/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VTajcE9i; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GHMPwR62";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FV4iAHHG"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EEC101400160;
-	Wed,  1 Jul 2026 02:54:34 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 01 Jul 2026 02:54:34 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kc82DZ0/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VTajcE9i"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2EF4F1400168;
+	Wed,  1 Jul 2026 02:55:25 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 01 Jul 2026 02:55:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782888874; x=1782975274; bh=zWSdsvtCM1
-	XLw3Uop2FNUGkinViE2sNvAKgp6sj+6L4=; b=GHMPwR62nkvfaXZztHlMwPQoEz
-	SO0gluHY7DxocK5rycQFcqLwt0uY/gxxf6bW92TwFcMbD2EjSYIvi9PzLTvrU78l
-	K7TmymSa49n8f5i0SqO2XmlkoSYxK1NjNwqn1klrRM9s+TZ8I6vmGzRdMi/JlQ/b
-	JCfSpyyVohTFBO1xdgn36Jcsv9PJTZ/+S/krargoRTJZNpQtWeUUeUGM+0AM7btc
-	eHEcPtrbgfAtjoPNMxVLz73Nz/HoNQhQBQjYslFsE2vVlA9di5gA2jqDlnm6JZVm
-	ZWciMIpyuP3sqoIiTp7NJ63skEKC/ASKU6Mmu0G6pipUMfE8yzZHKJqTMOXA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782888925;
+	 x=1782975325; bh=fjRN4ttoErj/i4ldD4/RBPSM3E0aIlCPnRiK5ELLbws=; b=
+	kc82DZ0/Iu+lnyWkZtjg1uUfj+eqcc19+GpKIStJydBChiXIJW7D3jv5nRa8iyS6
+	A10eSeCQKwOs1mwgs6OJhbHWAIxlcNH4ryMzRGE0SdkHeU0+ZvUSAp5h7Z2Wcpr+
+	RmUZVoFdufNV2tor3uVhY8I9eSFITU2wuALuFGAwqTDviGrj1bUYg7S3t1F6aJg8
+	MQBvL+yO4tNGxJASUqN62Xv+GlF3/OK7Hsn61yF3MKZ9rYCkux2wrJx698pTKbL5
+	V7U5wQpXJcNeJ9RR2GoiEqafpQgIRYlHXcm9KlFQ7ZWMhzOIEjW/RNZ4LHpLKbgr
+	YlXEmwzlnlAE3mnyF7vueg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782888874; x=1782975274; bh=zWSdsvtCM1XLw3Uop2FNUGkinViE2sNvAKg
-	p6sj+6L4=; b=FV4iAHHGRKpXZjiHcKga9HvvyNEyZ/iZSkvyQSvdJcGpYS7p9cE
-	9iCZCitPTuDupgReM7ynOjNPImwl2s7KUXX87QyZUXzC4ihSD33z2ag2SfOQN9K4
-	ONZwOma6TJn01oLPqaIlsNdZ8qiwVztAd0yI0blavn4FgByts/EgLzP5IR2axrjx
-	1Bohsk7fOnbwdwfTFhJ4YDMoHQC1H+Gd3vUBpwROCepEG80wS3CoOKovggFH9BPS
-	yrTFb2Ztt/6ElTOJCEoPulVvyYqdjlEOfKbCqp5NHhbFqXqYZ4Dl6HRC/Px6ejbo
-	qmS/7Z2pNOElfPIomkJAgehPkj83J2viCFg==
-X-ME-Sender: <xms:qrlEaqnILwD_lMhRmHM1U4Fyhh5zneg2utF0pIELXtcZpcgAiCYxiA>
-    <xme:qrlEaii0GxsbH7hKoCYB87xjlD4h6uQiqe-McJ7U9rlcNm71wigOI1y_bkwE-kqQV
-    rbaecv1IXr6P3KjE0xwUGLhDp9d5i_kTgA0M1ag5fBXZm2KKQUGAw>
-X-ME-Received: <xmr:qrlEam15PHvdRH5f1nqRKpMRNnEgIqyV6TZC2wTKEfYsAoBrlyglZlaKvC8Ulnd8yRu4Fy3n5D1SL6igCl4NFm1MXFVI_b5yt74k141EOK4>
-X-ME-Proxy-Cause: dmFkZTEu6/4J1WooLnDoGTADEWF6jcpOe23ftbagTIzR3XvgsAS6lNz2KA5XTLreMFTSfu
-    R+LwvpR8yzE9gTSMT6T1+CzJB6lug6r30dD/fbyy2JThwjpaA42KVsUnvWFR4UUj4lvg/K
-    W3cFE7JrqmikzxgTQkZT2jy7zU0JFYCTFAZdfiI25VwpCuWd0jj/4bhgJE52Io1RbQrp6m
-    PVZFwViAMyZg+ZKYIuSi4UDQ6Oq/gIajegB6IfVH6By2OkVuJPAXUpzb+eD96/7vzGRa75
-    p2vO1ANQW90GYGV2B7970E3tozIyBsxLsJZwRXQBGfiymY0pUKg5kzsKkPFrCdtPj+9oOc
-    P4ONhErS99rhXwkNDDKirEGzZC0nucViT+1CQFEnSqUzouaICD12rdNuKTHe8SQmlv5O3O
-    nkZmU9elgddDHNWu3UtDcmKCvxHfKVpuYVzyERKxP1KKqHuivrTS4aslh845+zCCmDutJd
-    fCm9G62GLjnM5RVhTa+OJRYpqmQ1JBqzq3c7ISlLZCYMmFowEUkEIZs+Yt1RctZzKKM1W/
-    86m2lEqQ91Qke754j1gD7yKmwpcngBWay7EPJj/BaWSqFJt9xAazhOHvtZ0pv8M25MnCD4
-    oOPl75c2UiPSiPGBAarb/KGnZFgL664Gb7+j0+GJ+D3ZDItNpATbPLyVCPZg
-X-ME-Proxy: <xmx:qrlEajIBoZZyoek1VFba_2AccGZyImTO88iVHZqKMRxkDGViXgIizA>
-    <xmx:qrlEauzJkrMQWrv_MqJBFQxXrPtzIr3-yVJGGx2CiJqmRiqWt0b6mA>
-    <xmx:qrlEapX84rJZqXPLK7PTkDfump2Q7rfiMN1Xb_reoJJFX4NTyWzasw>
-    <xmx:qrlEamgnfLwn8ofHOZpt6nDFxtID4rpbQPSff5LXl0GjDpkGDHVxMQ>
-    <xmx:qrlEahT-68Lb3djlpGDP560c4XEtx37-nNMGrBkvNsDnJHPerDVt5Lzy>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782888925; x=
+	1782975325; bh=fjRN4ttoErj/i4ldD4/RBPSM3E0aIlCPnRiK5ELLbws=; b=V
+	TajcE9iQKxTGCGWK/Ud8SHv0IEpsx725zWgG3ohdjEJ2WuuWzOgOlmuXrilueqyt
+	4QCxxmAJ4Nx9B676nABli0lPCYNKAb1uwUQ7YDuY5Q+W+QWoOzfGbwUaN9+7bFMW
+	wUSE+IPKcq/jC3YYBaqseK5x5nIYhjqLDLpSiGVb6ulOBVU6Y+rXJsCqrD9GwPmS
+	7f3omyyUImMD0nvdoGGh1JHQU7Bs7zaecYgQQEETcNpth4dQr++QnZO0axZk3mK8
+	SG5pUqWB4DtAmtfk+RXY9scc445g15OqZwOU8XV9yRr86kMK32K72ILcjTqD2XQD
+	EqvemYePUF44jYUb2Rn+g==
+X-ME-Sender: <xms:3blEatsy8NIzZpknHFXDvWhn33wyLZlOO8mldQEzqA82XUziO2OB8w>
+    <xme:3blEanLXifjBoh_MrPG-A1FQjAKa4lrgPkRP8CKedir_i0CaLY1Rpe-XjZbRw8hEK
+    7saXkJYq4lE8EFvZM3dmzy06ETNwUXuNhNtZDKHT5NrtHFKxub-Ag>
+X-ME-Received: <xmr:3blEau_7DWucrnPkLAY-3z9i2h9t7_LDZgQoYXzhdKUY691EdW9LsMjnzZPVU2wek4kVdjb7g_7CoVKb6yzm6LaUIqVpQcC8mP2ps_h5FEE>
+X-ME-Proxy-Cause: dmFkZTGD4KJh4YYAz9/f0MH6W7NEy3tAi+fwqDAjv+zInilXON8ipyV4bSr1W5h/bvBxd7
+    Ao7NHgw32GczCHDuY3su314/1S9UBvqhjsIC3JMiYgGE3MErPW/KotlogramOFZUzRNgtd
+    Wo+pvuk1W5I2gQZjB5kwCjqoe4D4qnuP+plvyX8kW0sjllRPitv14F2VwedaDyKrxU/lv3
+    dEpIHXbaTMQwqVj0n5tqfSXftj3DweoFQk+RGttEzOoEY3x5zsd1NDu/7i5G/z+u6WhyAc
+    1DKk45bbq+GGMHBqMhS47lnasMKe472Dip0x+K5DPxHG2IPE/MG/tRBKGx4r7O1kwWcEWB
+    Z44tgxOYMWecinzp2FrsblcTHI9xy3wy0odsOYukpCmsDx6C8nK0w1JwGZ8P4sE97cOjf5
+    NLyEFT9JHyETQ7Ez5mFu05OOtpEKInMb/cxCJPjJIjCi6hcCxEmfBWn2UqVxwTTUM2kKeL
+    9UKQQIcWmOxb0VpvuwUvV5GaZEWCuc8Ii9h897K27snjcZcRrKN8KwGB6jl5YLquUFqslD
+    c2fDziTYhQ7k0bR2+FKUSf0IoVgvKLj5aJn4Bfn7oO/92aFjH792gpLscKs4nCbiLAbJCw
+    SS0Oc9LSJoL1LutGlLZHvY2WkUpDJikJDIcnpQwfNztrhGQK9uNl9JtVf3sA
+X-ME-Proxy: <xmx:3blEaoxe7vnGD11lu4GcRezcitEJoTAQRji1Om_7MRueBd7tNiYA7A>
+    <xmx:3blEaj5lWpiYljUM7sevUVsgGJD4599n1rqs5ZGaPPQz32O16sNdbQ>
+    <xmx:3blEan_KA71jjc0a99AoSKueH4LPTmm2NsSHiCzHeZwQJHwm_YWEUQ>
+    <xmx:3blEagoQLEV7N8FAgtJ3c7lLdBEGQ_yqa3vrWVSc7C9dtlPOCmYiAQ>
+    <xmx:3blEaurRfUugzSnm5jCzrrFAXdDbMd5h1WuT-niF9bkApfn9zGyL88km>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 02:54:33 -0400 (EDT)
+ 1 Jul 2026 02:55:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 55350ab1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Jul 2026 06:54:31 +0000 (UTC)
-Date: Wed, 1 Jul 2026 08:54:24 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a5dde90e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Jul 2026 06:55:22 +0000 (UTC)
+Date: Wed, 1 Jul 2026 08:55:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>
 Subject: Re: [PATCH RFC v2 2/2] Move libgit.a sources into separate "lib/"
  directory
-Message-ID: <akS5oKGnbbimA5vy@pks.im>
+Message-ID: <akS51xJSP4tkP_pS@pks.im>
 References: <20260622-pks-libgit-in-subdir-v2-0-cb946c51ee7b@pks.im>
  <20260622-pks-libgit-in-subdir-v2-2-cb946c51ee7b@pks.im>
- <32bb1cf6-1e37-dc0c-dfb2-e78a30763342@gmx.de>
+ <aj9wcFEb6oCRnfn2@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <32bb1cf6-1e37-dc0c-dfb2-e78a30763342@gmx.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aj9wcFEb6oCRnfn2@szeder.dev>
 
-On Fri, Jun 26, 2026 at 06:01:49PM +0200, Johannes Schindelin wrote:
-> Hi Patrick,
+On Sat, Jun 27, 2026 at 08:40:48AM +0200, SZEDER Gábor wrote:
+> On Mon, Jun 22, 2026 at 12:38:22PM +0200, Patrick Steinhardt wrote:
+> > The Git project is not exactly the easiest project to get started in:
+> > it's written in C and POSIX shell, with bits of Perl, Rust and other
+> > languages sprinkled into it. On top of that, the project has grown
+> > somewhat organically over time, making the codebase hard to navigate.
+> > 
+> > These are problems that we're aware of, and there have been and still
+> > are efforts to clean up some of the technical debt that is natural to
+> > exist an a project that is more than 20 years old. Furthermore, we
+> > provide resources to newcomers that help them out like our coding
+> > guidelines, code of conduct or "MyFirstContribution.adoc".
+> > 
+> > But there is a rather practical problem: finding your way around in our
+> > project's tree is not easy. Doing a directory listing in the top-level
+> > directory will present you with more than 550 files, which makes it
+> > extremely hard for a newcomer to figure out what files they are even
+> > supposed to look at. This makes the onboarding experience somewhat
+> > harder than it really needs to be. This isn't only a problem for
+> > newcomers though, as I myself struggle to find the files I am looking
+> > for because of the sheer number of files.
+> > 
+> > Besides the problem of discoverability it also creates a problem of
+> > structure. It is not obvious at all which files are part of "libgit.a"
+> > and which files are only linked into our final executables. So while we
+> > have this split in our build systems, that split is not evident at all
+> > in our tree.
+> > 
+> > Introduce a new "lib/" directory and move all of our sources for
+> > "libgit.a" into it to fix these issues. It makes the split we have
+> > evident and reduces the number of files in our top-level tree from 550
+> > files to ~80 files.
+> > 
+> > This is still a lot of files, but it's significantly easier to navigate
+> > already. Furthermore, we can further iterate after this step and think
+> > about introducing a better structure for remaining files, as well.
 > 
-> On Mon, 22 Jun 2026, Patrick Steinhardt wrote:
-> 
-> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> > index cf341d74db..a8402babd9 100644
-> > --- a/.github/workflows/main.yml
-> > +++ b/.github/workflows/main.yml
-> > @@ -179,7 +179,7 @@ jobs:
-> >        uses: actions/checkout@v6
-> >        with:
-> >          repository: 'microsoft/vcpkg'
-> > -        path: 'compat/vcbuild/vcpkg'
-> > +        path: 'lib/compat/vcbuild/vcpkg'
-> >      - name: download vcpkg artifacts
-> >        uses: git-for-windows/get-azure-pipelines-artifact@v0
-> >        with:
-> 
-> Please also adopt:
+> Please also discuss the drawbacks of this proposal, and try to argue
+> convincingly that the benefits outweigh the drawbacks.
 
-Thanks, will do!
+This is overall a subjective change, so there is no "right" or "wrong".
+The reason why I think the pain is ultimately worth it is that it's a
+one-time cost for a permanent improvement in discoverability. And that
+improvement is especially helpful for newcomers, who already have a hard
+time navigating the code base.
+
+> I, for one, see myself being rather annoyed by regular 'git log
+> lib/foo.c' stopping at the rename barrier, and by the limitations of
+> '--follow'.
+
+Right. As mentioned in a parallel subthread, I think this is a
+deficiency in Git itself which we are in the best position to fix. If it
+is proving to be painful, then it might even help to subject ourselves
+to the same pain that other projects that do larger renames experience.
+So it might motivate us to improve this area.
+
+In any case, I'll amend these thoughts to the commit message, thanks!
 
 Patrick
