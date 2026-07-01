@@ -1,150 +1,124 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from mail-06.mail-europe.com (mail-06.mail-europe.com [85.9.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368874C6F04
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 18:19:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD2F386541
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 18:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782929996; cv=none; b=q/FUgl6dyxiC2sPJm7h1FMWtX1I/F3bZwN6HjcsdsHM2rZCEBXqWEzt0xp0z2G2X9fYXe09ygDZAVTYjBXvB5YxvxBI+GSfTBJeW05JXKtK+uyttPpt8OGQi4JyFt6qUW4KQDsxFuVxDxAAYUGw8IlYk74EeY0pQLeg/jjBfsM4=
+	t=1782930596; cv=none; b=MeQKK2lRM7AhAtGy+ahnTeYPg7yICDy2WF1QY1sBe/ia+X0Y7WmdgN+CWOxAjBCEQDBUeez1ZMcxyfCgBI88KCbq/mXUqxq308tOjaRzVVLp++4VB8UPxlFQxO1puUtfzNPGlvpEV91R5RCp23viOnFv5wbKqwpaGW8vMgdXp94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782929996; c=relaxed/simple;
-	bh=dwFO1G1mMG8LcCHCxj28WF8v2AcLCZwYWua3kX/Wao4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QsdyQT/TV/nb7fnpOLcyE22XWEnL0XJY4nRYRITnPpXesyV/8Kvp7lZvyjjm9R1QG0IRFN875AeV0Xb1YsPRLJXhYh4AJ/W4QSHrP1vHlWLDKWeQ4KxhObyp7kMU9s/UpzCANIiIl7nKdu16AejmkoW93GmRocOviDbm/tOsoEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kNoAr3N4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bv2sUF/l; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782930596; c=relaxed/simple;
+	bh=LO6EDhpVLmY8MQqutEwRieeIBZH7zTomCAXTQRndgQ4=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=BvNTXGQTMCGGOdip/2EvS7uep62sJom6/VP1PxzIEyu0+k7U6/u4xYymUjg2wTj1OWNf8PPKOdVryR/AB20WE1KZD/dYYj9a4UvRtyDNPS0p9+n6BxmvarXIpxeXoiz4IQt4pq7BfI1fG3FDthzLxSR9GaGtsEbci2HE5nX78DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=brozkeff.net; spf=pass smtp.mailfrom=brozkeff.net; dkim=pass (2048-bit key) header.d=brozkeff.net header.i=@brozkeff.net header.b=jOaDxbC4; arc=none smtp.client-ip=85.9.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=brozkeff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=brozkeff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kNoAr3N4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bv2sUF/l"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 41D921D00118;
-	Wed,  1 Jul 2026 14:19:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 01 Jul 2026 14:19:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782929993; x=1783016393; bh=ZdqWLWqFGv
-	4I9jp13j0hhAx0i3PLxHKmkZFFK9O6b2g=; b=kNoAr3N4pGfeJANqi1C4nEuuIm
-	8rrLsWgWnHf2uPaq2+XEScVlQV6HQWj5B8ViIgLqXdnsHUuY7k+dx408rTgV6TUC
-	rLbqMoKGt2GvJisqpZYoNSai47ai5zOtQQ+xMvrIPueT9rvvq1poUmU2qQD720xA
-	b2ZQ5NewELX+FzAqcurRFLMhgl0KRrW4Sty3bRXFj2rOLvkOwgsSsR+458+6NZxr
-	yzoH+zT5Pb/dqxxYEMqwhT+oqMYBINabbk5NOGeDwWam7Tc5Csi2ukY4cHbwry9R
-	ROg/Mx8oAsrmtnDNsYo36KpzNWV5+XRNfkBWE6zfCZxe+h3zempYdUJ1Hzaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782929993; x=1783016393; bh=ZdqWLWqFGv4I9jp13j0hhAx0i3PLxHKmkZF
-	FK9O6b2g=; b=Bv2sUF/lBqTA5Za2/eAgXmNylj1a0B0Gp74KXe7vAgN7cwGCAhT
-	hltYKmpwPopJ7Hnig7KPhsPDMeNuLpQA8HtsHqniPaO1zFGfcukAPKMMDEwFksEv
-	DVE2X12A/GgVRRIZUc3MHDmgfjpgZ26DvUHhiy19zwFKPLLh5+do54I0iIjfZXk9
-	0XefQx9Bc4j18K/dczT7JVlAYDrkMSaGZGPCQ2vKX90sTtKz0w9OrjhLKhnrt3g4
-	xkyyZqKv2aymRGZg5hTE6y0LxORNz0ARmqvrZZauViJbAz771EI5TztqArY6pmOZ
-	8U/kBGJLTirXNCJ2e47uTt/VSE3JD4zV8Kg==
-X-ME-Sender: <xms:SFpFagDZElLhZ6M-1qbR2fMRdiK0EmJSmhs-nNoED9q139spcThbBQ>
-    <xme:SFpFauXPLarjOPT_unzXcGhBhmSKWQjUGH3Ck04NOgLk6y9FHWFyVthlCIJ_csAr0
-    jOKwvADVfhIue36sx4hRxyTt1ImN_0kZcroz8qvo1-3Hh0LEAu8pVg>
-X-ME-Received: <xmr:SFpFau97tqN1ghoDA6gm8t0_CcbPuIXibRJjmMczSE2MSarv_T2YUZFw-a0ftEj45D9QBhrKz9JZoQHYprxOG9mbESrTp7mSqXQSwWE>
-X-ME-Proxy-Cause: dmFkZTF+XNSYsZS1UVzZUE9/VNsbG/a0uS0/VuWvev9a055gH9sVjZ4eFJbLElTwCz7vjh
-    j0nPy13r7re4NZ6hNX5ooJWDSGhKoEgYZVBfeIIadQtGEIDmT1pXmeNqy4pGrnuZbAO6Kq
-    UKDAC4eunFHSL5YqJfXCJ4AJQNjQCN7nkl2L1JWkx/ebqlf6cmQfyMVpckYGlwVjXmMPQQ
-    fTHlAMNSH0qzoNVJ0bL5Tc3qyDrelpF5VApy9/3rlnSD04Nva4DVxw+HCMLIHn6ZUrvj4H
-    nCZz7rPcSLMKR5gbyrrIytkeD0GXNaTFjoMUsivRHIFeSZyzUdSSSaEL7h+WR4SNBnA6gf
-    M3/9+9BVcb+NsBK9JnYt6DG6CgomwQt4Ov6CCTuDU9XigGKPB0nMOUgdZzY9F6LuBEIEBv
-    IQGUG6r5YCFrv5guNaoQyG4vI0Ard7YHcA0+mwKjB48biERu0h/RfuyOCUaKreUyCnkFBX
-    PbwSOenMSRyeoRzdR750GOdSCduzQisbsM5c1YZQn1yU7OeVchlKx7TDbayt5nh1e2NE+I
-    2zciMYSPCy05ztkPPJzDuXflTGsbIBqjhfy18dRF8QyPLkD3E7cIeQ0ZzdmMBn013GWAgn
-    TXI5Nl8FOCYgJEQpyQXjaXsNLzN4JEZ/1ZTmXfE1XBtENAD0rUjBkvTpJWCQ
-X-ME-Proxy: <xmx:SFpFagS8DV2vs0U8GVrJwiFFN7uJVOhUaxk6Di3pPysGUNFk-JCDxw>
-    <xmx:SFpFajQ8_wc5mDxkYrtLI9dvAdGjFXuKHaxgSzToJpbNEajS3z1M5g>
-    <xmx:SFpFas4rsnol6MVB2zAt5yM2Tu8i_kVKBxrrdTPpl9h0RgpiJXiqlw>
-    <xmx:SFpFaoXIuCALL75bBQ1Rpbly9CkrEVpCSPVKLI-8VzDcGmvHTGMilg>
-    <xmx:SVpFaudZ1T2LhBHdb4bSL3uFW1p6Z24Uga68eb5-uXtFItYLe65d6O9o>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 14:19:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,
-  chriscool@tuxfamily.org,  eric.peijian@gmail.com,  jltobler@gmail.com,
-  karthik.188@gmail.com,  peff@peff.net,  toon@iotcl.com,  Jonathan Tan
- <jonathantanmy@google.com>,  Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH GSoC v15 05/13] fetch-pack: drop static `advertise_sid`
- variable
-In-Reply-To: <20260701-ps-eric-work-rebase-v15-5-c88a43b63917@gmail.com>
-	(Pablo Sabater's message of "Wed, 1 Jul 2026 14:18:39 +0200")
-References: <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
-	<20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
-	<20260701-ps-eric-work-rebase-v15-5-c88a43b63917@gmail.com>
-Date: Wed, 01 Jul 2026 11:19:50 -0700
-Message-ID: <xmqq7bneo9mh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=brozkeff.net header.i=@brozkeff.net header.b="jOaDxbC4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=brozkeff.net;
+	s=protonmail; t=1782930575; x=1783189775;
+	bh=LO6EDhpVLmY8MQqutEwRieeIBZH7zTomCAXTQRndgQ4=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=jOaDxbC4BGH61QRgY9eo+zEGNeAivj+lxVc/qbmMaQ2CjyJy3uRyzpEQflTCdAfXd
+	 sJJ0D3wRpnMoW7RDqLdTUvQGmWOGB11b5mQV9Dhf6V3oGEz/XuFWqtixMh3edEzSw1
+	 d9MUu/BvUtCfBKLxIhXUf2tQJGr7P1+rv6Emd4NojREHJ65yS7aqL+JS6t8thJh0gQ
+	 Lp5avfSepHskaHs49RQ8Og2eWS3yBAItdjexSw8VFgLKETtOc1miW3rWxn0ZaFhIvl
+	 Z5ifyQ/2+B1/n/hw7lGZumcwHooP9Bg+nw2NTAHgDr/LTWZmjstJ0+j0HqddRCwqbf
+	 A+glnDztjy7FQ==
+Date: Wed, 01 Jul 2026 18:29:34 +0000
+To: git@vger.kernel.org
+From: Martin Malec <martin@brozkeff.net>
+Subject: Bug report (2.55.0.windows.1): git gui: "configuration error" when home directory contains non-ASCII characters on Windows
+Message-ID: <d715b56a-2c39-4634-b304-c003df2e8c43@brozkeff.net>
+Feedback-ID: 4758433:user:proton
+X-Pm-Message-ID: 64c0ffc243451a84db8816fd8e92baa2baad222c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------018c3bc4252eafa84f03efe1dcf6c09aa8fe5aad252560cd22d831f89c6d3c84"; charset=utf-8
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------018c3bc4252eafa84f03efe1dcf6c09aa8fe5aad252560cd22d831f89c6d3c84
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Message-ID: <d715b56a-2c39-4634-b304-c003df2e8c43@brozkeff.net>
+Date: Wed, 1 Jul 2026 20:29:31 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: cs, cs-CZ, en-GB, en-US
+To: git@vger.kernel.org
+From: Martin Malec <martin@brozkeff.net>
+Subject: Bug report (2.55.0.windows.1): git gui: "configuration error" when
+ home directory contains non-ASCII characters on Windows
 
-> `write_fetch_command_and_capabilities()` is moved to `connect.c` in a
-> subsequent commit. To prepare for that, drop the static variable usage
-> of `advertise_sid`. Currently `advertise_sid` is used in two places:
->
-> 1. In function `do_fetch_pack()`:
->         if (!server_supports("session_id"))
->                advertise_sid = 0;
-> 2. In function `fetch_pack_config()`:
->         repo_config_get_bool("transfer.advertisesid", &advertise_sid);
->
-> Since `do_fetch_pack()` is only relevant for protocol v1, it can be
-> ignored because `write_fetch_command_and_capabilities()` is only used in
-> protocol v2.
->
-> About 2, call `repo_config_get_bool()` directly inside of the function.
+V2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkP8KgIEluc3RhbGwgbGF0ZXN0
+IGdpdCAyLjU1LjAgDQpvbiBXaW4xMSAyNUgyIFBybyBDemVjaCwgdHJ5IHN0YXJ0aW5nIEdpdCBH
+dWkgdmlhIFN0YXJ0IE1lbnUuIFVzZXIgDQpsb2dnZWQgaW4gdmlhIEVudHJhIElEIChBenVyZUFE
+KSB3aGljaCBjcmVhdGVzIGF1dG9tYXRpY2FsbHkgaG9tZSANCmRpcmVjdG9yeSBpbiBDOlxVc2Vy
+c1wgY29udGFpbmluZyBub24tYXNjaWkgZGlhY3JpdGljYWwgbWFya3MgKGhlcmUgDQpgw71gIC0g
+YWNjZW50ZWQgYHlgIGluIEN6ZWNoIGxhbmd1YWdlKQ0KDQpXaGF0IGRpZCB5b3UgZXhwZWN0IHRv
+IGhhcHBlbj8gR2l0IEdVSSBvcGVucyBmaW5lDQoNCldoYXQgaGFwcGVuZWQgaW5zdGVhZD8gRGlh
+bG9nIGJveCB3aXRoIGVycm9yIGFuZCB0b2Z1IGNoYXJhY3RlcnMgDQppbnN0ZWFkIG9mIHJlYWwg
+dW5pY29kZSBjaGFyYWN0ZXJzOiBUaGUgZGVmaW5lZCBzaGVsbCANCignQzovVXNlcnMvUGV0cmFL
+QTEvMm92QcKhL0FwcERhdGEvTG9jYWwvUHJvZ3JhbXMvR2l0L3Vzci9iaW4vc2guZXhlJykgDQpp
+cyBub3QgdXNhYmxlLCBpdCBtdXN0IGJlIGFuIGFic29sdXRlIHBhdGggdG8gYW4gZXhlY3V0YWJs
+ZS4pDQoNCmdpdC1ndWkgZmFpbHMgdG8gc3RhcnQgd2l0aCAiVGhlIGRlZmluZWQgc2hlbGwgKCcu
+Li4nKSBpcyBub3QgDQp1c2FibGUsIGl0IG11c3QgYmUgYW4gYWJzb2x1dGUgcGF0aCB0byBhbiBl
+eGVjdXRhYmxlLiIgd2hlbiB0aGUgDQp1c2VyJ3MgaG9tZSBkaXJlY3RvcnkgcGF0aCBjb250YWlu
+cyBub24tQVNDSUkgY2hhcmFjdGVycyAoZS5nLiwgDQphY2NlbnRlZCBsZXR0ZXJzIGZyb20gYW4g
+RW50cmFJRCBwcm9maWxlKS4NCg0KU3RlcHMgdG8gUmVwcm9kdWNlOg0KMS4gSGF2ZSBhIFdpbmRv
+d3MgdXNlciBwcm9maWxlIHdpdGggbm9uLUFTQ0lJIGNoYXJhY3RlcnMgaW4gdGhlIHVzZXJuYW1l
+DQoyLiBJbnN0YWxsIEdpdCBmb3IgV2luZG93cyAocGVyLXVzZXIgb3Igc3lzdGVtLXdpZGUgdW5k
+ZXIgYSBwYXRoIA0KY29udGFpbmluZyBub24tQVNDSUkgY2hhcnMpDQozLiBSdW4gYGdpdCBndWlg
+DQo0LiBPYnNlcnZlIHRoZSBlcnJvciBkaWFsb2cNCg0KUm9vdCBDYXVzZSBhcyBmb3VuZCBieSBP
+cGVuQ29kZSB1c2luZyBCaWcgUGlja2xlIEFJIG1vZGVsOiBJbiANCmBnaXQtZ3VpLnRjbGAgbGlu
+ZSA0MDMsIGBzYWZlX2V4ZWMgW2xpc3QgY3lncGF0aCAtbSAkX3NoZWxscGF0aF1gIA0KY2FwdHVy
+ZXMgY3lncGF0aCdzIG91dHB1dCB1c2luZyBUY2wncyBkZWZhdWx0IHN5c3RlbSBlbmNvZGluZyAo
+QU5TSSANCmNvZGUgcGFnZSksIGJ1dCBjeWdwYXRoIG91dHB1dHMgaW4gVVRGLTguIFdoZW4gdGhl
+IHBhdGggY29udGFpbnMgDQpub24tQVNDSUkgY2hhcmFjdGVycywgdGhlIGVuY29kaW5nIG1pc21h
+dGNoIHByb2R1Y2VzIGEgY29ycnVwdGVkIA0KcGF0aCB0aGF0IGZhaWxzIHZhbGlkYXRpb24uIFN1
+Z2dlc3RlZCBGaXggYWNjb3JkaW5nIHRvIEJpZyBQaWNrbGUsIEkgDQphcHByb3ZlZCB0aGUgYWdl
+bnQgdG8gcGVyZm9ybSB0aGUgZml4IGFuZCBpdCB3b3JrZWQsIHRoZW4gR2l0IEdVSSANCmNvdWxk
+IGJlIHJ1biBmaW5lOiBSZXBsYWNlIHRoZSBgc2FmZV9leGVjYCBjYWxsIHdpdGggYSBwaXBlIG9w
+ZW5lZCANCnRocm91Z2ggYHNhZmVfb3Blbl9jb21tYW5kYCBhbmQgZXhwbGljaXRseSBzZXQgYC1l
+bmNvZGluZyB1dGYtOGAgb24gDQp0aGUgY2hhbm5lbCwgbWF0Y2hpbmcgdGhlIHBhdHRlcm4gdXNl
+ZCBpbiBgZ2l0X3JlZGlyYCBhbmQgDQpgX3BhcnNlX2NvbmZpZ2AuDQoNCmBgYHRjbA0KaWYge1tp
+c19XaW5kb3dzXX0gew0KIMKgIMKgIHNldCBjbWRwIFttYWtlX2FyZ2xpc3Rfc2FmZSBbbGlzdCBj
+eWdwYXRoIC1tICRfc2hlbGxwYXRoXV0NCiDCoCDCoCBzZXQgZmQgW29wZW4gW2NvbmNhdCBbbGlz
+dCB8IF0gJGNtZHBdIHJdDQogwqAgwqAgZmNvbmZpZ3VyZSAkZmQgLWVuY29kaW5nIHV0Zi04DQog
+wqAgwqAgc2V0IF9zaGVsbHBhdGggW3N0cmluZyB0cmltcmlnaHQgW3JlYWQgJGZkXSAiXG5cciJd
+DQogwqAgwqAgY2xvc2UgJGZkDQp9DQoNCltTeXN0ZW0gSW5mb10NCmdpdCB2ZXJzaW9uOg0KZ2l0
+IHZlcnNpb24gMi41NS4wLndpbmRvd3MuMQ0KY3B1OiB4ODZfNjQNCmJ1aWx0IGZyb20gY29tbWl0
+OiBiZjVhZmRlY2MxMDQ3ODM5N2Q3MDU5ZDA3NTczNjMwOTAyZmIyZTJmDQpzaXplb2YtbG9uZzog
+NA0Kc2l6ZW9mLXNpemVfdDogOA0Kc2hlbGwtcGF0aDogRDovZ2l0LXNkay02NC1idWlsZC1pbnN0
+YWxsZXJzL3Vzci9iaW4vc2gNCnJ1c3Q6IGRpc2FibGVkDQpmZWF0dXJlOiBmc21vbml0b3ItLWRh
+ZW1vbg0KZ2V0dGV4dDogZW5hYmxlZA0KbGliY3VybDogOC4yMS4wDQpPcGVuU1NMOiBPcGVuU1NM
+IDMuNS43IDkgSnVuIDIwMjYNCnpsaWI6IDEuMy4yDQpTSEEtMTogU0hBMV9EQw0KU0hBLTI1Njog
+U0hBMjU2X0JMSw0KZGVmYXVsdC1yZWYtZm9ybWF0OiBmaWxlcw0KZGVmYXVsdC1oYXNoOiBzaGEx
+DQp1bmFtZTogV2luZG93cyAxMC4wIDI2MjAwDQpjb21waWxlciBpbmZvOiBnbnVjOiAxNi4xDQps
+aWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxlDQokU0hFTEwgKHR5cGljYWxs
+eSwgaW50ZXJhY3RpdmUgc2hlbGwpOiA8dW5zZXQ+DQoNCg0KW0VuYWJsZWQgSG9va3NdDQpub3Qg
+cnVuIGZyb20gYSBnaXQgcmVwb3NpdG9yeSAtIG5vIGhvb2tzIHRvIHNob3cNCg0KUmVnYXJkcw0K
+DQotLSANCk1hcnRpbiBNYWxlYw0KaHR0cHM6Ly9naXRodWIuY29tL2Jyb3prZWZmLw0K
+--------018c3bc4252eafa84f03efe1dcf6c09aa8fe5aad252560cd22d831f89c6d3c84
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Puzzled.  The patch does introduce a local on-stack variable with
-the same name, but does not remove the file-scope global one.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index f13951d154..ad07603755 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1380,6 +1380,9 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
->  						 const struct string_list *server_options)
->  {
->  	const char *hash_name;
-> +	int advertise_sid;
-> +
-> +	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
+wqsEARYIAF0FgmpFXI4JED3R2vb7xMD3NRQAAAAAABwAEHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmfLMv1TPGpNzVuIrBOpRNZxFiEEfCTRz3uT3bC0
+Ga0PPdHa9vvEwPcAAPdYAP9//Qu9/MTd28tHZ/jXmtb5LNIaPEqHkvT2eeFj
+ObgCAwD/XOQSCwQhfQ+c3/jOjjpMTYCa8AyXOhiiXZZLPQOJsgo=
+=n7rb
+-----END PGP SIGNATURE-----
 
-If there is no such configuration variable defined anywhere in the
-system, advertise_sid will be left uninitialied.  Wouldn't it cause
-problems later.
 
-Initialize it to 0 (if the default is not to advertise, which I
-think is the case but please double check), and you would be OK,
-probably?
+--------018c3bc4252eafa84f03efe1dcf6c09aa8fe5aad252560cd22d831f89c6d3c84--
 
->  	ensure_server_supports_v2("fetch");
->  	packet_buf_write(req_buf, "command=fetch");
-> @@ -1395,7 +1398,7 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
->  	}
->  
->  	if (server_feature_v2("object-format", &hash_name)) {
-> -		int hash_algo = hash_algo_by_name(hash_name);
-> +		const unsigned int hash_algo = hash_algo_by_name(hash_name);
->  		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
->  			die(_("mismatched algorithms: client %s; server %s"),
->  			    the_hash_algo->name, hash_name);
-
-> While at it, change `hash_algo`'s type to match `hash_algo_by_name()`'s
-> actual return type (`unsigned int`) and make it `const`.
-
-This one makes sense, but is better left out to a separate step.
-Especially when the primary focus of the change is iffy (see above).
