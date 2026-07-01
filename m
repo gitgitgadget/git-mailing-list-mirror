@@ -1,123 +1,158 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3953644C5
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 09:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782896494; cv=none; b=u0JAwVYKY8TLgt2zXtsMoSs9A0Lv2TLAin1rU71ES+JNhqXBnYjV+AZhi7VOQ07h6Xig/e14Vbw1ucxIC48UDmk/R+W2wz0eHTeBK+gLeDCVex46UMGb/b+/LmK940hFgms/NRXHrD3yOa8m2rwZeq3Y2fp0tw3aNFZCzOcrz7w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782896494; c=relaxed/simple;
-	bh=mr3G5GkLbES495lCv41SkcXckyk8vqckYbEjPHtuYpk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zwid7inCXmgU3lCw8FSK3C0pS761Uue6jLbQ07qnndgDsGuFGPOGdbZNVhmWffhMQLCsbe3FWz72F7Wr+x6umZee68PVLHVEcshBt6uBpkkjbqiOetSiwo3SjG53sEaK4hH+vA20dtBdCzqISis2i6lFr/IqAp8MjoQpa1xkTN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b5iDfQuH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SBt+eNl2; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA19D34CFC6
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 09:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782896699; cv=pass; b=p3bhQK1ypp9fnWDkOno3bRozOrdTeD3tPYWt4NoxjFWJ9akwDfo3fM3LxvHfWxl6l9vBZPneYJFoAG7kVhF87pgsiaunDILiT4PRXtdSTzHlbRaTm0+cs2chHW0vGcLljHa/9TGx+eGT9ZEHqE612R/5uYp7tZmnypQIu3qLteI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782896699; c=relaxed/simple;
+	bh=hF2VAzhluawLoWTCnQbRSKJUP3MEenW2LfVtSz3b2o8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bysoJG4cHtju0DpYeofw3dmZ4uBRIYQtUmpYWKlnR/GaxP/Em+fEhevgGnDIM+Td6SW1C2jBoiYcFS6SsFuiZlsHhNSp8+HQ+ZoFIgwkQ6xdB/8Ybh+axrFa24F1U2HBv/yWku1i10F5jCG7IMwWWLFYbRKIepd/5Mla9Nv8Ge4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=BhrZx2zX; arc=pass smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b5iDfQuH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SBt+eNl2"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 33F8DEC0080;
-	Wed,  1 Jul 2026 05:01:32 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 01 Jul 2026 05:01:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782896492; x=1782982892; bh=VRSMiJLkcD
-	KBBf9YzqvoJhJAB9Jj3sfaPPYPhu97n9U=; b=b5iDfQuHPmrPjr1ByuFugN9ZJ2
-	fvdIOQWZbyX7Xwsg0fAHFEDQHuZjfIvXXXPr3Rel9myxxAdZ6UOGCE7sGMQv5gVa
-	yRYl2t2rNqGu7KvyUsh4SUavNcitrZmP9RUQ1q4s7yqObM5VLbaZ+O2cCBPnxgZ2
-	svaTkA8fEjwLw+S6g/EMKvdysgkNJRuwhvSZVNWTGoTE1Y5uDNrjm4mpUBPDLU1q
-	ZaP/421UhcTdd4QK4Ab2BLrd9MVhYnpiUwzEMj7KT/LodQRVvjQbaVrJ4NZMswR0
-	KVBXgul/v8Jsaubg6MTtUBh3N5RfbCezJke55lkQla3g4M5s4X+gy5ZKsmdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782896492; x=1782982892; bh=VRSMiJLkcDKBBf9YzqvoJhJAB9Jj3sfaPPY
-	Phu97n9U=; b=SBt+eNl2y14D8puDsUbGbrcpggQXZqAQqblmaRsVt7a+HC4nJ+M
-	8de3UORrixveGxamAFixcrHRhMvxoPG/NeMuNOJQvDV1ae5e0G6zg+Rd+RXMbZWD
-	xtY1lvE1+BaEQon4kAnN/mBeURMPDFA08ZAC/gifU/qDtQI1p+V0DsEM2tAvc8fc
-	wMMe7B9bQ7DRILDdYUUcNOIwvOq8RrB0uF2ZFOz/axTcI5I7oOPiPB6UZduURlLs
-	I12fiO69L+5GlSezvrLDX+hyhT5z6x0+zlRFLouUxHJHo0HBbAHgrXX006FNIK23
-	as0uvVeRaYpfnGv4Ijwg2yQHpqSWHfEz1EA==
-X-ME-Sender: <xms:bNdEavDQRSAxHMhTFmcWxgpC3aNqSWQQidgZXH5rd4nIqRtgdoPNdw>
-    <xme:bNdEas-Ng-bHT5cx-u1k_yrsoX9L-HqV8-qvhxYsH09NA9tMX3XXd-KbEF4Jy5H5a
-    nyTg86gawYhPoCP0uYjRncxJnDBl7kUC6qNTpoyjRAQAXJVXGGZ_WQ>
-X-ME-Received: <xmr:bNdEan9jvcgiTVUq2g4mxB5Pzru0CbTgT-mmjYoidi0-diAFJ3MqNzSGhiJOCqCvhRwG7t5HlbIxFhYxvuCmZ6jD_uTno5rZ-eVgVNJ-xmI>
-X-ME-Proxy-Cause: dmFkZTEu/bgtu00z0X7aJBiP39pWRzFDSn40yA0J7Cc+8Hx8zxUA7tkVVJ7j2uwg1oei/H
-    k0egH4f/PGgGS3N8i7tw+sjj49CXd54e84AEeF5hMiv8JorPN48P9+ppaKqGOUZnskltIy
-    xjwSMKMSiWHz4uxBKf3BrjmfsgtrHGxa85Qp1YeWdBJ3T1sH1k8QESxQG4/MgLO34VjWFg
-    0LlNQSYV217jPaC1W3ZBJRmDfpxRH2xXmuCKnFjJC7Eso6Q4FqaZf28JttBX7RRBFDYoaa
-    kqR6pU9wIp1zKtK5v06jFVxcxJGZYOQTRfkVq1/b2+HgQ0DBZYNXbZJZBscz+afpYRqEpt
-    AY83ncannoIUEgC7k/yWgveglcfx4F3P+CIjbg+gHdpG/Smt6MYHLXD8UGhSOnW+CUSiKQ
-    +KylXl1ySPokKtsCWnngwUUc+i/7AA0KrLSH6T72fq8+lDs+VyXM68RS/CAMVFaAJbtU7L
-    CXH/+uPeEMpO8lHwx8Y9yQopxhCc3TZWYXkW2J3Uxwy9nsNmi5Uir3IRKOm893RY6HxR9i
-    efJgIbipm9TFpF7ppq5bUPJAyAyACTMNI/Fkh37ciUAhXh7A7LA1BqD4PUylr3Zi8n6fcu
-    h2AzaoS+mNZQH2dFAQsniJgyi7KeShRRuq9HmKJLRmCJ2rmrL2cAXaSuNi0w
-X-ME-Proxy: <xmx:bNdEarf65WOi2TV7e06EiOJiNVJ_TWMsCdjnGhQhKECv1ka-8aS1OQ>
-    <xmx:bNdEaoGlQWXPJVm43BP28DsjiYYl62aOkwtevNPZqDPJ9qeM3W0NuA>
-    <xmx:bNdEahffIpO9SGP5q_lF-OpXzQ5XtxBfKiHCOE5qV0WZR_zzkyC6hA>
-    <xmx:bNdEaqGwTgNCJEFie1322_gWvXnjYlAyDgsnYHwWEqrKIVWrGf78Og>
-    <xmx:bNdEarrUDHVm_Yh2lZXrerQ13pBCbM8fPEY5s-UzKPYNBfadK2jrKxPQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 05:01:31 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5215204b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Jul 2026 09:01:29 +0000 (UTC)
-Date: Wed, 1 Jul 2026 11:01:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/2] format-patch: fix leak of rev_info in prepare_bases()
-Message-ID: <akTXYoY7mSQUM33P@pks.im>
-References: <20260630063944.GA3733670@coredump.intra.peff.net>
- <20260630064301.GB3733961@coredump.intra.peff.net>
- <akOZy-BygZS8fqPM@pks.im>
- <20260701081358.GB813310@coredump.intra.peff.net>
- <akTS_rPV7JaGHKRq@pks.im>
- <20260701084733.GA814472@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="BhrZx2zX"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-66493875766so484012d50.0
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 02:04:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782896697; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DkXPKfkoaiDpKnWeV30j8RzJIkbzKaTho5h7gFo/6Qqku9buqsMAGUYDinCM/EFRKH
+         b4JpZpq96O3HInxrW2KO3ciOVQu/mptHQFflIGyY8GeRnIfrnCtvO+8krs4sWQ097xdj
+         Ea6gxFAoPiC4BYi2v65y7hzlvvt/QTAjWU+ZT67A/k0jGJ7ZQRbhQf0+TcUFm8LSeaUj
+         Zaex0E56v24XimkO1TC8l0/xLJwGoEdgUK4bC4hjMJ7/xbuNu/1OjR1gyTDjg2HXQeDc
+         kmATvZ1rptXjpCt/2ohvqRzE5ciH9xGA/ZhRAqktRaLGBnDsHcsxsDbONNXBF8E19L//
+         LX3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=pthR7B4UaRZeAZUAeuFZeSqPRnBqYECH7I7kteBK5So=;
+        fh=r8BF32fe1NfFHoO5uoBIqu2GR2AW4xj0EvvFLLquQ70=;
+        b=Pejy0PSN9do84PPm/eh6NRRCJlDeKxNKiSOuxYawcVTiP22ArHNdwHABBLB0ehVuOY
+         KLgd/S9qsl7rDMgVw/B7UUBgXoHp4wTzkX9DvifgZYOXWDQoWz9PY9S0L5ZJ6icqjxAx
+         JQwWBor2zWws4ATJWWKYD5Sxs0k7DRjaLBj8SofORoWKVR21TT5LRKYNNG3mHkFM6NC/
+         d4rTemZyYyQ8bVfn9DTsEAQ6xczmzTIFLX7/C89EYTNZIgTeT8MfzK42PeepJ67jzzsx
+         sN/K19ahvCc579vY+e6SucSCqWXNJtubsnDCybUTsLPVKLl7VCc7iBtmA5GeRe/dsOLX
+         P2FQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1782896697; x=1783501497; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pthR7B4UaRZeAZUAeuFZeSqPRnBqYECH7I7kteBK5So=;
+        b=BhrZx2zXVzq4/EybYR+ltK66TjqyP+TgTCof5FsKHtOxoUXFkYdNLKmSFclb/Qb91B
+         JJy29mYGDR7uWcn1CrOJsOCCLohYZTKb0pPHts9mdn7EogcAXootnkYxY6bJVepQrZ0L
+         9ot6bbudvz+h517IeB5cvPzQLNzZBqyAYeXvI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782896697; x=1783501497;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pthR7B4UaRZeAZUAeuFZeSqPRnBqYECH7I7kteBK5So=;
+        b=lRpl4gV8atcEErXE56Dct8TbJ7WUvNwFTsK2TPU6+f2vqFLFK0KeNbM2YHcwEpjkiZ
+         f0dsahiEqg7ZeJ/k8EQu7apI3oAJ4YH2DqkDItNA+yxTGZ+d8qCpv5wwdsf2EBVEAV9k
+         Jrm5aiYqB+uvAS38BlwCZ9UvGsiWpD+1tlPZFK7I24GGfZG674WCiyOQSWnguT1LXCgz
+         3em/Hy6JI0IV3VuiB8pElqivrQ8tcvW9OFFYZIfHsvpQ30Q+ofPmqCCNyIITqOxKVsD6
+         e4XpWtvEq1MtdPTZHJMtv2mQ5xkFnY8Kau2VaWNk3w5loVJm9nb2HFGN2b8LtinpfENi
+         MkdQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rr0XBq4TVvcUgWggj414rjmLHz7lsivN6pFCVtSUonBp6Ew9dF8nWVqrHynThPx3QdMUSo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwT4dVA2EhW4+c4HISxLNoWZ7UvNt9esJ19/Hz8T616fDXn+hdh
+	yZRZinxyPDn3u6TJoTPfmEFR5fQiZHv2jFRY+KD9epL125RbK8UmQ+ROAFIwTyZkcAHaq45gC5c
+	rRaOrt5FZqx5l5gfdcqAbXBorfyDgkCRqKiViBubfOw==
+X-Gm-Gg: AfdE7ckvKuzAVWzfqvZxH7NIfd09ixbD0EVdKSq2sh/EiS10ksgEs796x6EGpr8oULv
+	eTndt+QmEraKAJaDq4XScpXw4e3y4DlaYSUGqJ8E1f+/JaOLcY6kokBDFc624Qq7vNI7KaNW32/
+	wViyYGBSJRZwM58yvuHsRB/s26srEsqoes5k+JSr6CZi2b0+hYv5ElHpeZ13BL8+Xu0fndtCL1U
+	r9oqXjX5YoCYF4K7xVG2sl8PNF1IHr5tr89v7d2SS6BHWaeCTQHDVETJjD69o4roG8vDIPGMw==
+X-Received: by 2002:a05:690e:4503:10b0:664:988a:89ab with SMTP id
+ 956f58d0204a3-665219659e0mr562219d50.5.1782896696773; Wed, 01 Jul 2026
+ 02:04:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260701084733.GA814472@coredump.intra.peff.net>
+References: <20260628075716.GA3525066@coredump.intra.peff.net>
+ <20260628080710.GC107826@coredump.intra.peff.net> <akIJQbOUbdBbkTef@pks.im>
+ <20260629203527.GA1895313@coredump.intra.peff.net> <akOG0oMu2KTqqyW7@pks.im>
+ <20260630234702.GA3759976@coredump.intra.peff.net> <20260630235850.GB3759976@coredump.intra.peff.net>
+ <akSxCUfm2P7ocLJX@pks.im> <20260701080014.GA3748390@coredump.intra.peff.net>
+In-Reply-To: <20260701080014.GA3748390@coredump.intra.peff.net>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Wed, 1 Jul 2026 11:04:45 +0200
+X-Gm-Features: AVVi8CfEcRMPxdPvem37qc_QXXNxnWxokRWA3NZwX_jgq2Am03QMWcdtd7KfSuI
+Message-ID: <CAL71e4PfXA-ixKR6r7fu_7_QmdzK+rTRs29mOsUYKaq+_a5q5w@mail.gmail.com>
+Subject: Re: weird quadratic reftable behavior, was: Re: [PATCH 3/3] t5551:
+ pack refs after creating many tags
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>, Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jul 01, 2026 at 04:47:33AM -0400, Jeff King wrote:
-> On Wed, Jul 01, 2026 at 10:42:38AM +0200, Patrick Steinhardt wrote:
-> 
-> > > We already run a special leak job for linux-reftables. Why not turn that
-> > > job into "leaks plus reftables plus test-vars"? The only downside would
-> > > be potentially hiding leaks found by linux-reftables-leaks if the
-> > > test-vars features force us into a difference code path. But looking at
-> > > the list, it doesn't seem likely to me. None of them is particularly
-> > > ref-related.
-> > > 
-> > > In fact, I kind of wonder if we could fold linux-reftables into the
-> > > test-vars job completely.
-> > 
-> > linux-reftable or linux-reftable-leaks? I think it would certainly make
-> > sense to drop one of these and merge it into linux-TEST-vars. The
-> > linux-reftable job doesn't provide any benefit over its -leak variant,
-> > so that would be the candidate I'd personally merge.
-> 
-> Both. Fold linux-reftable into linux-TEST-vars, and then drop
-> linux-reftable-leaks in favor of a new linux-TEST-vars-leaks.
+On Wed, 1 Jul 2026 at 10:00, Jeff King <peff@peff.net> wrote:
 
-Hm, okay. I guess that should be fine. Do we also want to do a similar
-thing for macOS and create a macos-TEST-vars job that exercises all of
-this?
+> Yeah, it is (mostly) the same problem. About half the time is spent in
+> refs_verify_refnames_available().
+>
+> The other half is in reftable_be_transaction_prepare(). Looks like it
+> makes individual calls to prepare_single_update(), which reads each ref.
+> And those reads are expensive because of all of the tombstones. It might
+> be possible to do an iterator merge or similar between the sorted list
+> of transaction refs and the reftable contents.
 
-Also, while at it... I really think that job name is just plain awful.
-While at it, we might rename it to something more sensible like
-"linux-changed-defaults".
+Hi, sorry for jumping in -- I found this interesting and started
+poking at the code. I think both halves may share the same root
+cause.
 
-Patrick
+The merged iterator's suppress_deletions flag filters out tombstones
+internally, which means higher-level code with prefix or refname
+bounds never gets a chance to stop iteration early. By letting
+tombstones pass through and filtering them one layer up in the
+reftable backend, the existing bounds checks can kick in before
+we scan through all the tombstones.
+
+So instead of doing full scans inside merged_iter_next_void()
+we can just delegate to merged_iter_next_entry() and instead
+add a loop to reftable_be_reflog_exists() that skips
+tombstones (but is amortized O(1)).
+
+Now multiple call sites would need to add something like this
+to compensate for returning tombstones:
+
+    if (reftable_log_record_is_deletion(&iter->log))
+        continue;
+
+but it may be worth it if it reduces cost when there are many refs.
+
+The key spot is reftable_ref_iterator_advance(), where the deletion
+skip goes right after the existing prefix check -- so a tombstone
+past the prefix stops iteration immediately instead of being
+silently consumed. The same idea applies to reftable_backend_read_ref()
+and the log iteration paths.
+
+I have a local branch with this attempted fix. Rerunning the
+benchmark:
+
+  Before:
+    nr=1000  0.306s
+    nr=2000  0.945s
+    nr=4000  3.816s
+    nr=8000  14.93s
+
+  After:
+    nr=1000   0.020s
+    nr=2000   0.044s
+    nr=4000   0.071s
+    nr=8000   0.145s
+    nr=16000  0.258s
+    nr=32000  0.591s
+
+I can send a proper patch if needed/wanted, but I might have missed
+something silly here.
+
+Thanks,
+Kristofer
