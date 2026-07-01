@@ -1,164 +1,180 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86533A1A3F
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 09:38:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BDF30C154
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 10:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782898711; cv=none; b=WI0urieUFi/4hxnc6T2Sf7AAGULg4yyfwOhgOcXV0i7Xe7B0S9J3Pdz8y52P5X6Pg34HyO6mYppv8bpsBcrd83K4AIQAk18wQ0SzyWTz69MLysCVYRyAkzKhCptfyomawWQRPLtHjB6PD1ryqLZp0QzGGQhsXYkchC7SuQ04DhE=
+	t=1782900469; cv=none; b=SGYFzoswEd02qF1PAm2E4Z4sekmPW9PIHhzocfEmN1yJk+llbs1PqezTSSUszfLmlAWioawQ3uPrTABvGW0L5Sb+KIooWEZUSG+36KMe5399A5ljC5mRDl9yL7ISss6shV7bxCkmnR3iCVxPKha7VohuJ2IAbOAB7lrIdhUCfLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782898711; c=relaxed/simple;
-	bh=kxH/AsGaVqlqFuIiAUoxDkQn6xSUcf+cVi5PCADk70g=;
+	s=arc-20240116; t=1782900469; c=relaxed/simple;
+	bh=kY4Hr0mIFDRs5FzJLu6ragzv3Ne8OBX2JsN8jp19dUI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oz2xgxb/2C8cFkUMuHsnIRlWCSe5pN2aHPjyoXYbJJ+krPZHH21jaOuD95N/z+ySBk0qQg6U6RjCzxLP12lAF6BplYCpqzsTh5mzOBBdW3xvIEaWezvAkJPvVfLsZReau71EkHsYYFdbEAUSVY7v++o2MpNRx8GehdtvHKBB/Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=k0XtUnMY; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=GLV1MfZcgaFpm2VIBBKxoLPelgZJjwG/BpFNO2LL94JZkPen+ewfP6y6Y+/G9kACKfdcz82TjzgVj2vYziuRy/uKoEFGJw8fVXdgP61ZLm/SGTTgnVRC+gqE8PqmLbCQuUZlBNfeEH0rg56Goy83XthTM7mYeip0j94rMxl4cJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gO5DUipm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IWz7msVM; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="k0XtUnMY"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-45fd464d51fso203077f8f.3
-        for <git@vger.kernel.org>; Wed, 01 Jul 2026 02:38:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1782898707; x=1783503507; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aMpApZIevpB9KN3HZJ94htM/pMsk//HOnR9ilTJTRH0=;
-        b=k0XtUnMYVgv+nQ5vfxxQ0I2/4KGjsAp5/Pjl9poCoJm8GZY9chQl0TXI3JtAOCBW70
-         2MlMxg8gMunwdJbg0V5tR/qcjyY4+KzAQs0VaVsU7E9HnLUOytlbI8b+I9lSZdMRDDP4
-         xC8alpBLx7rFOk4mV9mYzA0lSVksOFpCrD1K4lwhI5V5nZQr6C4vzn10UHOVXeUXufF9
-         M4MmYZc1f453LHpSxX85GCUGnmuV3esh0bAlIcOTYWEFoh9PkXEFwu92lLJ7h+TaEJLq
-         wFTA+6eRnfXww3P6r1Z5kvsMYBLcrrSNA5yw07u1nQRJ7Dq+pXQNBsFGSZwowK+Jt8u3
-         x7KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782898707; x=1783503507;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aMpApZIevpB9KN3HZJ94htM/pMsk//HOnR9ilTJTRH0=;
-        b=DSJByvYLF11T82eEeifjV33v2jah/zpqIA2J+uIOjkVIMpGFilq1CS8dVYxSauuRNK
-         pItqHdel3Z88u+sDlgahU8JyyB4eJ3QyIUBWGbnFzqQvT88ExKT+KOllTmy+Dp2FfRP+
-         QDGUyLcNYhNG6OgPNv5R4t9ACruoym/VmRBTMpWLCtxiRdcTb+uia4EjWb8vcq2+EOML
-         KH8x0Lb09FsD6ANUZi0kk+K1S7k+hhfbTi+Afg5hUw5zwdGgsjG9KrtrzCac3b4uBUMY
-         rFulMTUcff+z0c5EM5eSCP+iJnyIV8pD2P+DE1hcOsb0CHYoYSuaQVq+Jsi9m063z4Eq
-         yi/g==
-X-Gm-Message-State: AOJu0YwMgHQjjr1cMWUq8btb8C7vmXwzimUA24/kWm5D2MofrH8IlUZE
-	0kfsLwtuo4qk2OTvPa/N5MWJtqG1h5hSZZOdrMxyie1tQVbStZat/IiOwpacNra1qhQ=
-X-Gm-Gg: AfdE7cmUaCDr0cMMZyYD7bmGwz/Qspsw40ap0yeeOWJD1/GxhI7lbZtdyfORHlNKzYC
-	xU+LVp1gMj1o4WXDlzcHLtvVktdEg8gIyJStKD8yuXc+q3+GuWJDMJSuFtncBk5DL9CA80hE8xQ
-	hf+935OlwWZm0Sqjy+qwYTf39kZ9iBikFaGP8lMUrWEjmoHkOm5bD9u58oqaJxrksWhHERIOVu2
-	EbgvQYGwVipjOCJTRxslknmNQPF7eDJCHlP290cfwMPg6OZXTfrLCSB9bxrUAuy+UA65X4gq/we
-	faxuH4Fsyvt124Ua0+3C4yVoo2GgHIDxWm+EH5fZ7VcMszs9LNL0V7AkJPsGbW+HsBTkCnvPulG
-	Y6w65Xw5eygUfSRdGN44Z+2BoRUPkSZ8NAex26ctuCmDoIbq6sWlK4VZl3oCk8sccOORcLhAi+W
-	ht86Nj0tA6oOrU72qV/4sY+9lXjXX3YhvmbbR6JW/1ihYXlepo2LfNsQu8Dn584otpdnoSCeXK+
-	3nnvP/QbTWYUwY=
-X-Received: by 2002:a05:6000:2f88:b0:466:6ed8:1e1b with SMTP id ffacd0b85a97d-4775798c679mr1482654f8f.21.1782898707081;
-        Wed, 01 Jul 2026 02:38:27 -0700 (PDT)
-Received: from localhost (p200300f65f47db046ba1718111b88cfd.dip0.t-ipconnect.de. [2003:f6:5f47:db04:6ba1:7181:11b8:8cfd])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-475641e4cdesm16540744f8f.13.2026.07.01.02.38.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 02:38:26 -0700 (PDT)
-Date: Wed, 1 Jul 2026 11:38:25 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 00/11] sequencer: do not record dropped commits as
- rewritten
-Message-ID: <akSuP-IWiH2wPd6S@monoceros>
-References: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com>
- <cover.1782833268.git.phillip.wood@dunelm.org.uk>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gO5DUipm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IWz7msVM"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id A78F2EC00FD;
+	Wed,  1 Jul 2026 06:07:46 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 01 Jul 2026 06:07:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782900466; x=1782986866; bh=fjvGu5ABIq
+	En5y/RWMbUGgkJOEr36bl7UPo8bfLZ4Hg=; b=gO5DUipm6j/S134TONyw3nKaLz
+	9P9CNXpoxBkukDKFoZGJCG991zP1t6+YYjvKHAltdYNKl1hWygFE699QWXgTs2AZ
+	SorUVLO/JP5PS7CwYouAq2JnHOS7RZkz7T/nkUE3JO2UjGo7s7XSmC9XBYOH2K1A
+	CUrKfIs9JH2Th25DQt9hRnAJ+FFK4kOZFwJO5vXAMyfLHH3Na4jHiGlOkD7QLWRu
+	aKhWWfIkcRuLMwT6omUPnYT9j+5klN3y3/BFJ7sNQI8OnQDqg0CiIn7QNV8SeG8a
+	IDQ7JXH4AbsQIBKHnrVHglXkisbbKdq6S1jVjzgw6Dvp+PBAYhYLhv2hgqfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782900466; x=1782986866; bh=fjvGu5ABIqEn5y/RWMbUGgkJOEr36bl7UPo
+	8bfLZ4Hg=; b=IWz7msVMop7cjSK/isbwzvZ8dodItzMNOiJT0i7IlznNc+wacn8
+	NXORiqbi9mZK4GNT8v1Uh1Eg0/TnL6m8fxfes+r7lyIdTQFpHp2NED17Eum18Fwr
+	oJy+uSP/HzTx9q11JWQxKG0CTtQemnbaLHFbuIF1Xth14qTnjl6icCJ0Ao5C85bB
+	G/vGrIFpIhZydAJR5EnuEl0oN4lEhN3CNlCpJdJSQyFmmDz/o1A/ejKvYrNQ58Y3
+	naPDj1U0dZvSPW94Sn6hJjCOKbxMyiOTPfFziFQKn+qIAY63N6uCzD5dPfw38Mim
+	0XJ3cFmoINe7QJXGqT3aldEP1cBtK30D/Mg==
+X-ME-Sender: <xms:8uZEavitoAIMYqKPz1CMdYBz45xLl6yLdNw1xVtJbK61WnXvsB037A>
+    <xme:8uZEai7JgwZ0cnB_bEpNUu0itYYYj8vXTAGp0zW35srnBkMiy9IfJZkH9dgtOth9Z
+    ngNKsku7TGLzsn8L49dA32wiUYnltnb5DzIAO3PzArEsSjBwkt0dw>
+X-ME-Received: <xmr:8uZEanaPVio1D7kXLdgiSlySo2ARpgd45DfuLnY6wEkxyvrjugmMT5cUR2Q9AzjMWvY-kNBnjjLabOJjjYDFGLucVO1X9Y4gHbiEgkrrTOw>
+X-ME-Proxy-Cause: dmFkZTESLDXNx3LTJIqvbCIFD5DELzY1UEELXfDaf1n8SBZ5fS5KujjUMp8JmPWN4cx+lp
+    SyVC5c98GE2yGoSktmIPT32we6YHcktiRD2TJ+W70rAjGqJrq+3HHdFaYqPTcB96o6j8qK
+    SECM8xgnX4Oz3fQJPPihzXsPaRv0+S4sPnGjQvEC4Oiy2GyFNgF4i6BDPLh13viXKMGa/w
+    NXO+P2M3UWdN8WJj8eLGEqjhXwA1ziNA8YbtIVd5a99qaLb1qf61YYebQOLFwDnoKJ3k82
+    /kWqQHVDszKIfOg4WghXe66eqyc0NjJYjbqza+q6AUnXs0bYdzRd4PsbwlSv845jw/UnS9
+    CVZCk79vX8k0gOYaWnYxVbMEHJJlH28RABOz9pV6Ok3+dS3uQYs//hlp4sQw3oOvX9ZBM4
+    /nMlpD4TxTIY0GQj7v1q8PvNy7Qwh17LEfgcFDNaP1VA1nbvDA4rAxb5Gnni7QEjSEIFu8
+    iVNxIJtjYILUkNHYe1VW36PtslTfW2LozW/CB6eoAFBC6ks43x4YNUpVvHkYF7Lopoikka
+    FOg7iZtfR7A51qq1KXURpaihxRIWw9TG17WELxC8fb6NOFcn/Zo+UglMubZx7dZEJfj5JC
+    6dy2pnhn8J1bV9FMwMvUJHY8TFkRZaIe3/XjIRODSGBxD+/JK7CvpJpNyAtA
+X-ME-Proxy: <xmx:8uZEan5DKOZDHKM0D7fgFUJ6eSmSbEc5BRu4UyXP_uZf5YTkfBVG7A>
+    <xmx:8uZEaqCtBd2VBWbiZnGGzIGJhV3vLs3Rfx1Ze-Vgzto1NbIYbR3Cvw>
+    <xmx:8uZEatcG5QjaVt-ewQYnhQsnQ0B1GfKHUYQr8uxLoSRcJDfaGvjWaw>
+    <xmx:8uZEapJbFqQfZ9XPSga24U9CFaFFRKYzNsTnA4wUyYWkA8Jwo6GvdQ>
+    <xmx:8uZEajh_B_E6aqTtfoyW4buh19OdWFmmzEJTYrwcWqM6FOzGSMdhmyZN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Jul 2026 06:07:45 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 73908625 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Jul 2026 10:07:42 +0000 (UTC)
+Date: Wed, 1 Jul 2026 12:07:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Jeff King <peff@peff.net>, Michael Montalbo <mmontalbo@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: weird quadratic reftable behavior, was: Re: [PATCH 3/3] t5551:
+ pack refs after creating many tags
+Message-ID: <akTm7BDohsy85sN8@pks.im>
+References: <20260628075716.GA3525066@coredump.intra.peff.net>
+ <20260628080710.GC107826@coredump.intra.peff.net>
+ <akIJQbOUbdBbkTef@pks.im>
+ <20260629203527.GA1895313@coredump.intra.peff.net>
+ <akOG0oMu2KTqqyW7@pks.im>
+ <20260630234702.GA3759976@coredump.intra.peff.net>
+ <20260630235850.GB3759976@coredump.intra.peff.net>
+ <akSxCUfm2P7ocLJX@pks.im>
+ <20260701080014.GA3748390@coredump.intra.peff.net>
+ <CAL71e4PfXA-ixKR6r7fu_7_QmdzK+rTRs29mOsUYKaq+_a5q5w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="izutlaebnxcpe5pa"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1782833268.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <CAL71e4PfXA-ixKR6r7fu_7_QmdzK+rTRs29mOsUYKaq+_a5q5w@mail.gmail.com>
 
+On Wed, Jul 01, 2026 at 11:04:45AM +0200, Kristofer Karlsson wrote:
+> On Wed, 1 Jul 2026 at 10:00, Jeff King <peff@peff.net> wrote:
+> 
+> > Yeah, it is (mostly) the same problem. About half the time is spent in
+> > refs_verify_refnames_available().
+> >
+> > The other half is in reftable_be_transaction_prepare(). Looks like it
+> > makes individual calls to prepare_single_update(), which reads each ref.
+> > And those reads are expensive because of all of the tombstones. It might
+> > be possible to do an iterator merge or similar between the sorted list
+> > of transaction refs and the reftable contents.
+> 
+> Hi, sorry for jumping in -- I found this interesting and started
+> poking at the code. I think both halves may share the same root
+> cause.
+> 
+> The merged iterator's suppress_deletions flag filters out tombstones
+> internally, which means higher-level code with prefix or refname
+> bounds never gets a chance to stop iteration early. By letting
+> tombstones pass through and filtering them one layer up in the
+> reftable backend, the existing bounds checks can kick in before
+> we scan through all the tombstones.
 
---izutlaebnxcpe5pa
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 00/11] sequencer: do not record dropped commits as
- rewritten
-MIME-Version: 1.0
+Ah, interesting. This kind of hits int o the direction that I proposed
+of stopping iteration once we hit the first reference that has a
+lexicographically-larget refname. But I thought about having to solve it
+generically in the iterator somehow, and I wasn't really looking forward
+to that.
 
-Hello Phillip,
+Your solutions works around that issue indeed. It of course doesn't
+solve reference iteration, which would still be expensive. But it does
+solve the issue where we just want to look up a single reference, which
+is what Peff noticed to be slow.
 
-thanks a lot for addressing this, very appreciated!
+> So instead of doing full scans inside merged_iter_next_void()
+> we can just delegate to merged_iter_next_entry() and instead
+> add a loop to reftable_be_reflog_exists() that skips
+> tombstones (but is amortized O(1)).
+> 
+> Now multiple call sites would need to add something like this
+> to compensate for returning tombstones:
+> 
+>     if (reftable_log_record_is_deletion(&iter->log))
+>         continue;
+> 
+> but it may be worth it if it reduces cost when there are many refs.
 
-On Tue, Jun 30, 2026 at 04:28:50PM +0100, Phillip Wood wrote:
-> On 19/06/2026 11:13, Phillip Wood wrote:
-> > I'm happy to take this forward and try and fix at least some of the
-> > other bugs I've listed above. Uwe - if I don't cc you on some patches
-> > within the next couple of weeks please feel free to send a reminder.
->=20
-> Here is the first batch that fixes the same problem as Uwe's patch. I've
-> taken a slightly different approach that uses the return value from
-> do_pick_commit() to signal that a commit was dropped rather than
-> adding another function argument. That involves a number of preparatory
-> patches, but they are hopefully reasonably small and easy to follow.
->=20
-> If a commit gets dropped because its changes are already upstream
-> then we should not record it as rewritten. As well as confusing any
-> post-rewrite hooks this means we end up copying the notes from the
-> dropped commit to the commit that was picked immediately before the
-> one that was dropped.
->=20
-> This series is structured as follows:
->=20
-> Patch 1 restores some test coverage that was lost when the default
-> rebase backend was changed.
->=20
-> Patch 2 moves a function so it can be called without a forward
-> declaration in Patch 11.
->=20
-> Patches 3 & 4 fix the return value of do_pick_commit() when an external
-> command fails (this is in preparation for patch 10).
->=20
-> Patches 5-9 try and simplify the control flow in pick_one_commit()
-> in preparation for patch 10.
->=20
-> Patch 10 changes the return type of do_pick_commit() to an enum.
->=20
-> Patch 11 adds a new member to the enum from patch 10 for commits that
-> are dropped when they become empty and uses that to stop them from
-> being recorded as rewritten.
+I think it certainly might be.
 
-With my very little knowledge about git internals, this looks
-reasonable, and it behaves as I expect in my test case. I installed a
-local=20
+> The key spot is reftable_ref_iterator_advance(), where the deletion
+> skip goes right after the existing prefix check -- so a tombstone
+> past the prefix stops iteration immediately instead of being
+> silently consumed. The same idea applies to reftable_backend_read_ref()
+> and the log iteration paths.
 
-Tested-by: Uwe Kleine-K=F6nig <u.kleine-koenig@baylibre.com>
+Yup.
 
-> Base-Commit: 6c3d7b73556db708feb3b16232fab1efc4353428
+> I have a local branch with this attempted fix. Rerunning the
+> benchmark:
+> 
+>   Before:
+>     nr=1000  0.306s
+>     nr=2000  0.945s
+>     nr=4000  3.816s
+>     nr=8000  14.93s
+> 
+>   After:
+>     nr=1000   0.020s
+>     nr=2000   0.044s
+>     nr=4000   0.071s
+>     nr=8000   0.145s
+>     nr=16000  0.258s
+>     nr=32000  0.591s
+> 
+> I can send a proper patch if needed/wanted, but I might have missed
+> something silly here.
 
-BTW, b4 didn't pick this up, for me it says:
+Nice gains. I certainly think it would make sense to polish this a bit
+and then cast it into a patch.
 
-	Base: not specified
-
-(and I applied it on top of 2.55.0).
-
-Best regards
-Uwe
-
---izutlaebnxcpe5pa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpE4A4ACgkQj4D7WH0S
-/k5QyAf+OfwoMFl3N8Ts+LYgxSzLeWaL33EOxbYM70obvAcKmODWeHlOGQg3VgUH
-QfQZvasBz92To5DVmKf7K1yeYfB43emlJxIyBUkSFh2AGM5pDmeoZVAhlRFqBN7u
-ofKWjR69BJ3LzH40GTRU6+aynl5HhGQ4NGK3vF3LX9/3MBFShW+splUAuuiqbJr/
-DxMLiaSUya5ePKvCu3NYLqyD0LuMvTUOUnw3MHZxItk8sOBIbEllbwIIBiK220M/
-+O2/aXm7ScrL0l6Jh38rC6e7F70H/LHkpXt6SbVPXrVl8wG9p43ieUpztf5lChAd
-u1LcGX6y8+0GTeTPo++9WrPrhmTlFw==
-=ResI
------END PGP SIGNATURE-----
-
---izutlaebnxcpe5pa--
+Patrick
