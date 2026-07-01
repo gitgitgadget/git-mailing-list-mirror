@@ -1,999 +1,221 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A668480DC5
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 11:36:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782905771; cv=none; b=B32B5uxq43WBLyba7R5cu4xnhILrDoivrnVEyFoMHaNu916OFjsxK59lV53k8a6T/j910XpokKF9rdWrpa/5pAc1gM5FQiEChzBWMspVpoVvqAWGTzaEDdBVCt096lc2Xx1oO9zo0LVP84/2HtsLVNmATpq3/qqgkgkAmRDDEjg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782905771; c=relaxed/simple;
-	bh=vPydbyV5Xr2Q0798FIFRdMzSdyZfBYYt6/x71Sdmmmg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fj/T73IZHQd15aPoz4JnuyXJvTrjRm/7KQGJqj7hVL0s8JyiZEMcvh7a4ouBUep09Nrk9w2PDAzoq93eGvPKAW4vcUh+2OwD8EhC0MxC652MuWoW0vrT3nanzHNcGEPK8NWcQo3p9EjQtZeoLk3XKOvN187NaEsuS87/IqftzkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CKwvuFWB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nxn3yHAp; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE663BC687
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 11:47:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782906440; cv=pass; b=OXdEyCbvIy4Tgn8XsDytKLhq9TnXbc4B1CWkjXJyrJ8qrYjwsLszE6ygJjPpMybSG9bw6wRGMu3GLuNHd4wCvZnUkZzoxT/exN8GP8Li8bm3hEtFKqL1kpgpqc4nr2xpbwJLaj/mbgpexOyhmkuFl22PFcPjXljGEIoBD+GsNwU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782906440; c=relaxed/simple;
+	bh=LQ0K3KnyYFA3k2TtUyv9dgiJjHcqjTwHStpZU3qrvow=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=F5XIbO0hY3l1eok7UM/+M8+M1jbI2+8xmOsJhLKN5z/7ZuvQf4O5IRc7bTjppXrPtBHVQUMhNmVbxZMnhZN59RLFhs+dg/NEVxCX2g3Mxx6wXO1dDVmFo0PhCW1HN4Ciugxrm2kGN8lb8SC4HOjXQbVSSlEvMSCTxWBqSR+lP3Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tvh.com; spf=pass smtp.mailfrom=tvh.com; dkim=pass (1024-bit key) header.d=tvh.com header.i=@tvh.com header.b=bWoSXfMR; arc=pass smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tvh.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tvh.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CKwvuFWB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nxn3yHAp"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5F6CEEC0112;
-	Wed,  1 Jul 2026 07:36:08 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 01 Jul 2026 07:36:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782905768;
-	 x=1782992168; bh=9uhyMHq+uHShPF/2216dO+Ed4YdnJq0PpReNzL/I5aM=; b=
-	CKwvuFWB1nYuBPenHST9wnVGmHzkZryvRDSmGFWtCdNf1jRk7ck+6b6ruJBalhu0
-	B61QlBtrB0V6mn47UirEpztJmP4+lqwE/Mm60WuHqQu/m6iTjSy+l+QpcjkOUIu4
-	WQI0Y5PMA3VaVlNysgGprLlCBtgQZnXj8E62+S48Tekrd2P7uDaytK6xRtTfmWhz
-	Mu8ngY4FhvNyT+pz0ROHpNheq0Egr1dTB1tzwjQt/Hee3KwUopCzpaN21ijGshGp
-	ZH9+cJVYLV4M/CHSdrlb6DdvKqnqJYSnQA73o0cFpJhI1zpQGM+Mn+2bG/baMibE
-	WuQVl2hMzOVFNK7OO2PhVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782905768; x=
-	1782992168; bh=9uhyMHq+uHShPF/2216dO+Ed4YdnJq0PpReNzL/I5aM=; b=N
-	xn3yHApdFHA+GCwFrdSOJhe8gvZD3dN52h6VdJ7fcKi+70HC+IOoO7pPKMJUwawT
-	IWJXYKIw+F7R/Sh6RVLC9nQAJwrHFYOmand81i+MU/YxgVHsewUy6qKh9edtJ1VQ
-	EBl7QdF7bjMi6UqmL5RGAHM0TagZSRqeiTVI1e4EffI0rJcLyw+Ic2pLOUZA7Vz0
-	vlV2kVibDrb/i1YSAs3Lyh7946c6/AUzu5pBf0uEiwW1ECo2kDbuZAe4m+eSwx7Z
-	bkZJwACgM69pmnVwUSrbRA4XDJNOxxTGsrRMXSyBsCw27wnNoEU08vy59jR2pPh/
-	TcMmeVrjBNxNkXAbO3I+Q==
-X-ME-Sender: <xms:qPtEaospW8_2NqlC-YkmjzX2oyMv1fIKfo3SlakLZEjqvc1VsFZtmg>
-    <xme:qPtEauwBNev0yFx7QjYy1mks_vRzaC7ZNbKOWvkqx1ClN_1B5RYhJN2qRZ4QvaATs
-    KJGQc_ZYi4z3JQL8U8KLFcBK44Z2k-xYfz0rhaTjXZPlNQBmorZqF0>
-X-ME-Received: <xmr:qPtEarCoUZk-hs560Jv4HMRLetVjCwFIOL3yuZjAAA2Gv-bzl5WU_1wimIbNYpUfZ7TrXwNy3FySAkOPBhRaq5CSgbu5WRkrRJIGtGOXYt0>
-X-ME-Proxy-Cause: dmFkZTEZoO6HolNFiuzhqEVK1EXq4BbCn1tdQX7LTJIMJcT/+latCDErJzD4+CwgisT7ri
-    qxkn+QB2VfpeBpgOV5q2sBGT63aEOuYhfWwjT+wgnaZ2qGTsJfaJHBVk347IlsaCNTe39N
-    jrZm/FsYSWHGfvBlbmbsEFy/XtzODL8fdqiFNJeGFn2lrHVPGPL/Yr6cOMglYCr7uBXs7r
-    aXJwkPam35tJtUVY8r7/VZg2IyQl/w9r8/QisqR4rjlYUkyluAeVVxaLcVOMBGocW1MGez
-    Nwenq9cyAhPKHT6bW4GOhAoe1hp9EC68DfdP8WD4TQ3JQn6e5yBMnRKyOIrDWHKuIfRTRU
-    K57JKITlata0yqjurevRg0se88Eo5c/LjScNnUMxaqhGWLwtW29AAnxBFwf9FAnRm/t9Ry
-    zTJ3fZTbzpRdQiw2VpfLrjq1FdIuaBTGvE8e9bFCfjO334VTv2N1c988++ZfldyK5AnDom
-    JR85eMFEdBwgrStJAL1Xkg4RwxjK8FQ3wn+ToepOgqdcOlea5NMobE9luDtZeAQc316xQg
-    1qNP151UzMmWOe/vaVpzMKoGxRhbZCZcXQvbFPp6QA1bwk8eGmXdWLKG++1wNiHbvIubis
-    vywGjaDCqqxcP5DJ/mS0eU0xponT62cgDx8YXQ70KWk5bM717Lx+R9RfZMtw
-X-ME-Proxy: <xmx:qPtEascRw1arxrWAkI01x45cHangOdgEnq-HEwiZN3M4wJohxL1bww>
-    <xmx:qPtEalnSgzYtTAZfi9g4V8Uzb8yFEYDsLJtxaiihEoebf4miYGypUQ>
-    <xmx:qPtEajGK9rttBgP1S6dvVHdUfvYFyeX6ILEBpfHhtMxmlkxvuJ7X9A>
-    <xmx:qPtEat64kFbggyLOw_odKvK7HAESI9Q9XELUyWknGI5z53_d1CcDIQ>
-    <xmx:qPtEaiLaU7Vd-4ATUUEOaqVRVgIq7Iied-ssfoxAYNXtJDD6NddpEYDy>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 07:36:06 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 64e7506e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Jul 2026 11:36:06 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 01 Jul 2026 13:35:38 +0200
-Subject: [PATCH v8 11/11] builtin/history: implement "drop" subcommand
+	dkim=pass (1024-bit key) header.d=tvh.com header.i=@tvh.com header.b="bWoSXfMR"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6983d3dae7aso2609062a12.0
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 04:47:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782906436; cv=none;
+        d=google.com; s=arc-20260327;
+        b=AvN451tS3qOqSYDJNxhvQ6HhfX4T8OBwaR2L4ovNPlxTWI9IzbYx1rut23zhPRE5CP
+         oqLvN3FECEy9a2i6nNpoBC5YwTY+h2EnLINW6LPAMSCWSIOtYZTdsQuBo0e3f3pb+J/T
+         5HWseOebnG951Xu0YUyjk6A4CY65vgJlWAuIrwXqfnXHuOB4o/LAwDCtajeSnXFHb4Ck
+         BeSSS7whjaie6sAS8oPPh2J4FshO+AqZCDzTuuhkV7CATUyE84cDrZraS0p7pAzgDzeG
+         8JarCoLjPUPhpbSxzt2oN0DcmKrmPUuMyF8eBRL3QzfX3Wd1cciSwQuCW1pqY6XLmmBG
+         iYUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=u44iL0QCXJRo4cSQL9akyL1FLpylI+C/7qwCkvRZX8E=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=Mc8Qhc9Q4vt5QoKLH4ChyNW+sGmccQTdw4MGtMWAc4UN74FqCB7yBHlry/ZvPeAmYg
+         6NKMq6U1smagjbqz8Q5zxW3nECfljtbokIyYj8fHkFRGBMKZItVPSg7h4bSjlRcXCuE6
+         OsjeL3XcndafKs5W2Bb1xkuzXJbHfn8PZ+kEVoO4AgRTCxBxh8bIO7/0PTEgk5widLKY
+         wJceSyc3QRytYb1ecROXaS2+R7KnaErdwNN+3Ty/SS6oJxLYh5fAv9BIoU5hGXvYAcXt
+         gmyUgfXBGZM1J/utzhy8L+fIomHPQD3cklBVF4q8YvUk0l/7B07XW2NuvzOaXmZAeoj+
+         ucIw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tvh.com; s=google; t=1782906436; x=1783511236; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=u44iL0QCXJRo4cSQL9akyL1FLpylI+C/7qwCkvRZX8E=;
+        b=bWoSXfMRfaN3UWPJoMl51nStmWlKDynzgXaQvA5+qO5LxWsM6qzpQ1Yn1SdaGvCVXt
+         Q4+XTAU4I+Sp3sFNX3aq6yog03znmhRRlDaRswmQRtvMPUUJKTJW6AMjVITYREor4F5r
+         KOHfYnwyT8momoK4+Srha302jV/MtKWQ/yr98=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782906436; x=1783511236;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u44iL0QCXJRo4cSQL9akyL1FLpylI+C/7qwCkvRZX8E=;
+        b=swEwMsPW3AKEy4GUHmXlcjZWHGZIy/3WiAV5EALS4LwdQIjoWwk7fHerfKWkvxRMVf
+         FlQf65XPJGfY9akshv2pbaNgQ1YKc2bLn5JeutqEM+XFxofhviiJpnSPBNf3/9G79/PB
+         ivqfoGRN+wVq4grVgvpovvZ6mBlFbTYAvoWvBHk96Km+wr4AR8TFwBD2FL+OEZ2q6C+r
+         9ItztVSz/MQ7aMj89u2gFT0hu4xsc8QeL2XXhfruodFp6Z+TaIGasQGjry+wpqBqptqp
+         /Sn9OpS2tImCdxgGNyKwzHhrZQYObo+NY/HrmybpLXdYMdjwtqQ1feEVuA68Z40Fsfj8
+         VjEQ==
+X-Gm-Message-State: AOJu0Yw0UfUQm8fNVidhUrZoH/2odKUpMQ91C9JXwaFGYC6J/4UdrON4
+	b1x1d9sunLLax0AzlVXMO6zR29nxJRy28xj76jXLnaselgh8LitNR7g8AKJRIzgG79yMN3EGhgl
+	BOmLkledk6skUdUYn0acDHRWcI5HIQq80IWibffPgHWqwK3IyUOBKg1gW8TGPR7+ESrmJZSroi2
+	5OQj+bbVB2ciUrMeZYz5QHzsOlgIBtXyH/IRE=
+X-Gm-Gg: AfdE7ckXrCxBg4G1fq8DP5BNWdm7JWgzxu/diUdX+GTIhMEJ5Axzp6BiPyP6Y3y4Wm3
+	tC1pAa9zk+ScJh/cJK3eaqDLiKrUf6+2GOHuPGYxXLRDqEiJGPmW041FDsI2n4AJfhuw7xOHpcz
+	+GJx64u2cHwg/xhjMj5WHAJtt+Suo2Brll7OgLWB8A2La9xB+O0SgBdx0a1F2YyTtuIdj9eDlJs
+	mG2tosK+KAZ63sMmARfbu4HYLg+Zx7Zuurn52+6rAOjY6z4ucCG1iGgma87Xt8ZOY5ydww=
+X-Received: by 2002:a17:907:6d25:b0:c12:7e41:3904 with SMTP id
+ a640c23a62f3a-c12a7b4e7d4mr78480166b.16.1782906436067; Wed, 01 Jul 2026
+ 04:47:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-b4-pks-history-drop-v8-11-19b5cdf1facd@pks.im>
-References: <20260701-b4-pks-history-drop-v8-0-19b5cdf1facd@pks.im>
-In-Reply-To: <20260701-b4-pks-history-drop-v8-0-19b5cdf1facd@pks.im>
+From: Hayk Avetisyan <hayk.avetisyan@tvh.com>
+Date: Wed, 1 Jul 2026 13:46:50 +0200
+X-Gm-Features: AVVi8Cda8eH7_hwlboCmE-wIip0LrNjhQM3jwGHJW0PHRgfIp3tg2o5dcbhBo68
+Message-ID: <CACwZ3KFCJSqj-fwU8WH0=_53mPSZ-uaxdCcSuEEL7=eyJu4APw@mail.gmail.com>
+Subject: A bug
 To: git@vger.kernel.org
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Phillip Wood <phillip.wood@dunelm.org.uk>, 
- Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: b4 0.15.2
+Content-Type: multipart/mixed; boundary="000000000000ca6fab06558b40e8"
 
-A common operation when editing the commit history is to drop a specific
-commit from the history entirely, but this operation is not currently
-covered by git-history(1).
+--000000000000ca6fab06558b40e8
+Content-Type: multipart/alternative; boundary="000000000000ca6fab06558b40e6"
 
-A couple of noteworthy bits:
+--000000000000ca6fab06558b40e6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  - This is the first git-history(1) command that will ultimately result
-    in changes to both the index and the working tree. We thus have to
-    add logic to merge resulting changes into those.
+Please, find the bug report attached.
+--=20
 
-  - It is still not possible to replay merge commits, so this limitation
-    is inherited for the new "drop" command.
+Kind Regards,
 
-  - For now we refuse to drop root commits. While we _can_ indeed drop
-    root commits in the general case, there are edge cases where the
-    resulting history would become completely empty. This is thus left
-    to a subsequent patch series.
 
-Other than that, most of the logic is rather straight-forward as we can
-continue to build on the preexisting logic in git-history(1) for most of
-the part.
+*Hayk AvetisyanSenior Software Engineer*
+M +32 476 030611 =E2=80=A2 hayk.avetisyan@tvh.com
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-history.adoc |  38 ++-
- builtin/history.c              | 184 ++++++++++++++
- t/meson.build                  |   1 +
- t/t3454-history-drop.sh        | 561 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 783 insertions(+), 1 deletion(-)
+*TVH PARTS HOLDING NV*
+Vichtseweg 129 =E2=80=A2 BE-8790 WAREGEM
+T +32 56 43 42 11 =E2=80=A2 F +32 56 43 44 88 =E2=80=A2 www.tvh.com
 
-diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index 2ba8121795..28b477cd37 100644
---- a/Documentation/git-history.adoc
-+++ b/Documentation/git-history.adoc
-@@ -8,6 +8,7 @@ git-history - EXPERIMENTAL: Rewrite history
- SYNOPSIS
- --------
- [synopsis]
-+git history drop <commit> [--dry-run] [--update-refs=(branches|head)] [--empty=(drop|keep|abort)]
- git history fixup <commit> [--dry-run] [--update-refs=(branches|head)] [--reedit-message] [--empty=(drop|keep|abort)]
- git history reword <commit> [--dry-run] [--update-refs=(branches|head)]
- git history split <commit> [--dry-run] [--update-refs=(branches|head)] [--] [<pathspec>...]
-@@ -51,13 +52,28 @@ be stateful operations. The limitation can be lifted once (if) Git learns about
- first-class conflicts.
- 
- When using `fixup` with `--empty=drop`, dropping the root commit is not yet
--supported.
-+supported. Likewise, `drop` cannot remove the root commit or a merge commit.
- 
- COMMANDS
- --------
- 
- The following commands are available to rewrite history in different ways:
- 
-+`drop <commit>`::
-+	Remove the specified commit from the history. All descendants of the
-+	commit are replayed directly onto its parent.
-++
-+The root commit cannot be dropped as that may lead to edge cases where refs
-+end up with no commits anymore. Merge commits cannot be dropped either; see
-+LIMITATIONS.
-++
-+If `HEAD` points at a commit that is to be rewritten, the index and working
-+tree are updated to match the new `HEAD`. The command aborts before any
-+references are updated in case local modifications would be overwritten.
-++
-+If replaying any descendant would result in a conflict, the command aborts
-+with an error.
-+
- `fixup <commit>`::
- 	Apply the currently staged changes to the specified commit. This is
- 	similar in nature to `git commit --fixup=<commit>` followed by `git
-@@ -170,6 +186,26 @@ The staged addition of `unrelated.txt` has been incorporated into the `first`
- commit. All descendant commits have been replayed on top of the rewritten
- history.
- 
-+Drop a commit
-+~~~~~~~~~~~~~
-+
-+----------
-+$ git log --oneline
-+abc1234 (HEAD -> main) third
-+def5678 second
-+ghi9012 first
-+
-+$ git history drop 'main^{/second}'
-+
-+$ git log --oneline
-+jkl3456 (HEAD -> main) third
-+ghi9012 first
-+----------
-+
-+The `second` commit has been removed from the history, and `third` has been
-+replayed directly on top of `first`. All branches that pointed at the dropped
-+commit have been moved to its parent.
-+
- Split a commit
- ~~~~~~~~~~~~~~
- 
-diff --git a/builtin/history.c b/builtin/history.c
-index 22b9fcb4a4..dd11ce2fa8 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -17,13 +17,17 @@
- #include "read-cache.h"
- #include "refs.h"
- #include "replay.h"
-+#include "reset.h"
- #include "revision.h"
- #include "sequencer.h"
- #include "strvec.h"
- #include "tree.h"
-+#include "tree-walk.h"
- #include "unpack-trees.h"
- #include "wt-status.h"
- 
-+#define GIT_HISTORY_DROP_USAGE \
-+	N_("git history drop <commit> [--dry-run] [--update-refs=(branches|head)] [--empty=(drop|keep|abort)]")
- #define GIT_HISTORY_FIXUP_USAGE \
- 	N_("git history fixup <commit> [--dry-run] [--update-refs=(branches|head)] [--reedit-message] [--empty=(drop|keep|abort)]")
- #define GIT_HISTORY_REWORD_USAGE \
-@@ -999,12 +1003,191 @@ static int cmd_history_split(int argc,
- 	return ret;
- }
- 
-+static int update_worktree(struct repository *repo,
-+			   const struct commit *old_head,
-+			   const struct commit *new_head,
-+			   bool dry_run)
-+{
-+	struct reset_working_tree_options opts = {
-+		.oid_from = &old_head->object.oid,
-+		.oid = &new_head->object.oid,
-+	};
-+	if (dry_run)
-+		opts.flags |= RESET_WORKING_TREE_DRY_RUN;
-+	return reset_working_tree(repo, &opts);
-+}
-+
-+static int find_head_tree_change(struct repository *repo,
-+				 const struct replay_result *result,
-+				 struct commit **old_head,
-+				 struct commit **new_head,
-+				 bool *changed)
-+{
-+	const struct replay_ref_update *head_update = NULL;
-+	struct commit *old_head_commit, *new_head_commit;
-+	struct tree *old_head_tree, *new_head_tree;
-+	const char *head_target;
-+	int head_flags;
-+
-+	*changed = false;
-+
-+	head_target = refs_resolve_ref_unsafe(get_main_ref_store(repo), "HEAD",
-+					      RESOLVE_REF_NO_RECURSE | RESOLVE_REF_READING,
-+					      NULL, &head_flags);
-+	if (!head_target)
-+		return error(_("cannot look up HEAD"));
-+
-+	for (size_t i = 0; i < result->updates_nr; i++) {
-+		if (!strcmp(result->updates[i].refname, head_target)) {
-+			head_update = &result->updates[i];
-+			break;
-+		}
-+	}
-+
-+	if (!head_update)
-+		return 0;
-+
-+	old_head_commit = lookup_commit_reference(repo, &head_update->old_oid);
-+	new_head_commit = lookup_commit_reference(repo, &head_update->new_oid);
-+	if (!old_head_commit || !new_head_commit)
-+		return error(_("cannot resolve HEAD commit"));
-+
-+	old_head_tree = repo_get_commit_tree(repo, old_head_commit);
-+	new_head_tree = repo_get_commit_tree(repo, new_head_commit);
-+	if (!old_head_tree || !new_head_tree)
-+		return error(_("cannot resolve tree for HEAD"));
-+
-+	if (oideq(&old_head_tree->object.oid, &new_head_tree->object.oid))
-+		return 0;
-+
-+	*old_head = old_head_commit;
-+	*new_head = new_head_commit;
-+	*changed = true;
-+
-+	return 0;
-+}
-+
-+static int cmd_history_drop(int argc,
-+			    const char **argv,
-+			    const char *prefix,
-+			    struct repository *repo)
-+{
-+	const char * const usage[] = {
-+		GIT_HISTORY_DROP_USAGE,
-+		NULL,
-+	};
-+	enum replay_empty_commit_action empty = REPLAY_EMPTY_COMMIT_DROP;
-+	enum ref_action action = REF_ACTION_DEFAULT;
-+	int dry_run = 0;
-+	struct option options[] = {
-+		OPT_CALLBACK_F(0, "update-refs", &action, "(branches|head)",
-+			       N_("control which refs should be updated"),
-+			       PARSE_OPT_NONEG, parse_ref_action),
-+		OPT_BOOL('n', "dry-run", &dry_run,
-+			 N_("perform a dry-run without updating any refs")),
-+		OPT_CALLBACK_F(0, "empty", &empty, "(drop|keep|abort)",
-+			       N_("how to handle descendants that become empty"),
-+			       PARSE_OPT_NONEG, parse_opt_empty),
-+		OPT_END(),
-+	};
-+	struct strbuf reflog_msg = STRBUF_INIT;
-+	struct commit *original, *rewritten;
-+	struct rev_info revs = { 0 };
-+	struct replay_result result = { 0 };
-+	struct commit *old_head, *new_head;
-+	bool head_moves = false;
-+	int ret;
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	if (argc != 1) {
-+		ret = error(_("command expects a single revision"));
-+		goto out;
-+	}
-+	repo_config(repo, git_default_config, NULL);
-+
-+	if (action == REF_ACTION_DEFAULT)
-+		action = REF_ACTION_BRANCHES;
-+
-+	original = lookup_commit_reference_by_name(argv[0]);
-+	if (!original) {
-+		ret = error(_("commit cannot be found: %s"), argv[0]);
-+		goto out;
-+	}
-+
-+	if (!original->parents) {
-+		ret = error(_("cannot drop root commit %s: "
-+			      "it has no parent to replay onto"),
-+			    argv[0]);
-+		goto out;
-+	} else if (original->parents->next) {
-+		ret = error(_("cannot drop merge commit: %s"), argv[0]);
-+		goto out;
-+	}
-+
-+	ret = setup_revwalk(repo, action, original, &revs);
-+	if (ret)
-+		goto out;
-+
-+	rewritten = original->parents->item;
-+
-+	ret = compute_pending_ref_updates(&revs, action, original, rewritten,
-+					  empty, &result);
-+	if (ret) {
-+		ret = error(_("failed replaying descendants"));
-+		goto out;
-+	}
-+
-+	/*
-+	 * If HEAD will move as a result of the rewrite then we'll have to
-+	 * merge in the changes into the worktree and index. This merge can of
-+	 * course conflict, which will cause the whole operation to abort.
-+	 *
-+	 * If we had already updated the refs at that point then we'd have an
-+	 * inconsistent repository state. So we first perform a dry-run merge
-+	 * here before updating refs.
-+	 */
-+	if (!is_bare_repository()) {
-+		ret = find_head_tree_change(repo, &result, &old_head,
-+					    &new_head, &head_moves);
-+		if (ret < 0)
-+			goto out;
-+
-+		if (head_moves && update_worktree(repo, old_head, new_head, true) < 0) {
-+			ret = error(_("dropping this commit would "
-+				      "overwrite local changes; aborting"));
-+			goto out;
-+		}
-+	}
-+
-+	strbuf_addf(&reflog_msg, "drop: dropping %s", argv[0]);
-+	ret = apply_pending_ref_updates(repo, &result, reflog_msg.buf, dry_run);
-+	if (ret < 0) {
-+		ret = error(_("failed to update references"));
-+		goto out;
-+	}
-+
-+	if (!dry_run && head_moves && update_worktree(repo, old_head, new_head, false) < 0) {
-+		ret = error(_("could not update working tree to new commit %s"),
-+			    oid_to_hex(&new_head->object.oid));
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	replay_result_release(&result);
-+	strbuf_release(&reflog_msg);
-+	release_revisions(&revs);
-+	return ret;
-+}
-+
- int cmd_history(int argc,
- 		const char **argv,
- 		const char *prefix,
- 		struct repository *repo)
- {
- 	const char * const usage[] = {
-+		GIT_HISTORY_DROP_USAGE,
- 		GIT_HISTORY_FIXUP_USAGE,
- 		GIT_HISTORY_REWORD_USAGE,
- 		GIT_HISTORY_SPLIT_USAGE,
-@@ -1012,6 +1195,7 @@ int cmd_history(int argc,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option options[] = {
-+		OPT_SUBCOMMAND("drop", &fn, cmd_history_drop),
- 		OPT_SUBCOMMAND("fixup", &fn, cmd_history_fixup),
- 		OPT_SUBCOMMAND("reword", &fn, cmd_history_reword),
- 		OPT_SUBCOMMAND("split", &fn, cmd_history_split),
-diff --git a/t/meson.build b/t/meson.build
-index 2af8d01279..d5e71056b2 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -399,6 +399,7 @@ integration_tests = [
-   't3451-history-reword.sh',
-   't3452-history-split.sh',
-   't3453-history-fixup.sh',
-+  't3454-history-drop.sh',
-   't3500-cherry.sh',
-   't3501-revert-cherry-pick.sh',
-   't3502-cherry-pick-merge.sh',
-diff --git a/t/t3454-history-drop.sh b/t/t3454-history-drop.sh
-new file mode 100755
-index 0000000000..68a86d1e37
---- /dev/null
-+++ b/t/t3454-history-drop.sh
-@@ -0,0 +1,561 @@
-+#!/bin/sh
-+
-+test_description='tests for git-history drop subcommand'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-log-graph.sh"
-+
-+expect_graph () {
-+	cat >expect &&
-+	lib_test_cmp_graph --format=%s "$@"
-+}
-+
-+expect_log () {
-+	git log --format="%s" "$@" >actual &&
-+	cat >expect &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'errors on missing commit argument' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		test_must_fail git history drop 2>err &&
-+		test_grep "command expects a single revision" err
-+	)
-+'
-+
-+test_expect_success 'errors on too many arguments' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		test_must_fail git history drop HEAD HEAD 2>err &&
-+		test_grep "command expects a single revision" err
-+	)
-+'
-+
-+test_expect_success 'errors on unknown revision' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		test_must_fail git history drop does-not-exist 2>err &&
-+		test_grep "commit cannot be found: does-not-exist" err
-+	)
-+'
-+
-+test_expect_success 'errors with invalid --empty= value' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		test_commit second &&
-+		test_must_fail git history drop --empty=bogus HEAD 2>err &&
-+		test_grep "unrecognized.*--empty.*bogus" err
-+	)
-+'
-+
-+test_expect_success 'drops a commit in the middle and replays descendants' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+		test_commit third &&
-+
-+		git symbolic-ref HEAD >expect &&
-+		git history drop HEAD~ &&
-+		git symbolic-ref HEAD >actual &&
-+		test_cmp expect actual &&
-+
-+		expect_log <<-\EOF &&
-+		third
-+		first
-+		EOF
-+
-+		test_must_fail git show HEAD:second.t &&
-+		test_path_is_missing second.t &&
-+
-+		git reflog >reflog &&
-+		test_grep "drop: dropping HEAD~" reflog
-+	)
-+'
-+
-+test_expect_success 'drops the HEAD commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+
-+		git history drop HEAD &&
-+
-+		expect_log <<-\EOF
-+		first
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'drops a commit on detached HEAD' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+		test_commit third &&
-+		git checkout --detach HEAD &&
-+
-+		git history drop HEAD~ &&
-+
-+		expect_log <<-\EOF
-+		third
-+		first
-+		EOF
-+	)
-+'
-+
-+# Note: in this case it would actually be fine to drop the root commit, as we
-+# do have a descendant commit, and no reference points to the root commit
-+# directly. So this is something that we may relax eventually.
-+test_expect_success 'refuses to drop the root commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+
-+		test_must_fail git history drop HEAD~ 2>err &&
-+		test_grep "cannot drop root commit" err
-+	)
-+'
-+
-+# In contrast to the above case, we actually don't want to drop the root commit
-+# here as that would cause us to end up with an empty commit graph.
-+test_expect_success 'refuses to drop the root commit when branch becomes empty' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+
-+		test_must_fail git history drop HEAD 2>err &&
-+		test_grep "cannot drop root commit" err
-+	)
-+'
-+
-+test_expect_success 'refuses to drop a merge commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		git branch branch &&
-+		test_commit ours &&
-+		git switch branch &&
-+		test_commit theirs &&
-+		git switch - &&
-+		git merge theirs &&
-+
-+		test_must_fail git history drop HEAD 2>err &&
-+		test_grep "cannot drop merge commit" err
-+	)
-+'
-+
-+test_expect_success 'refuses when descendants contain a merge commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		test_commit middle &&
-+		git branch branch &&
-+		test_commit ours &&
-+		git switch branch &&
-+		test_commit theirs &&
-+		git switch - &&
-+		git merge theirs &&
-+
-+		test_must_fail git history drop middle 2>err &&
-+		test_grep "replaying merge commits is not supported yet" err
-+	)
-+'
-+
-+test_expect_success 'works in a bare repository' '
-+	test_when_finished "rm -rf repo repo.git" &&
-+
-+	git init repo &&
-+	test_commit -C repo first &&
-+	test_commit -C repo second &&
-+	test_commit -C repo third &&
-+
-+	git clone --bare repo repo.git &&
-+	(
-+		cd repo.git &&
-+
-+		git history drop HEAD~ &&
-+		expect_log <<-\EOF
-+		third
-+		first
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'updates branches on other lines of descent' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		test_commit target &&
-+		git branch theirs &&
-+		test_commit ours &&
-+		git switch theirs &&
-+		test_commit theirs &&
-+
-+		expect_graph --branches <<-\EOF &&
-+		* theirs
-+		| * ours
-+		|/
-+		* target
-+		* base
-+		EOF
-+
-+		git history drop target &&
-+
-+		expect_graph --branches <<-\EOF
-+		* ours
-+		| * theirs
-+		|/
-+		* base
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'moves branch pointing at dropped commit to its parent' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo --initial-branch=main &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+		git branch points-at-second &&
-+		test_commit third &&
-+
-+		git rev-parse first >expect &&
-+		git history drop second &&
-+		git rev-parse points-at-second >actual &&
-+		test_cmp expect actual &&
-+
-+		expect_log --format="%s %D" --branches <<-\EOF
-+		third HEAD -> main
-+		first tag: first, points-at-second
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--dry-run prints ref updates without modifying repo' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo --initial-branch=main &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		git branch branch &&
-+		test_commit middle &&
-+		test_commit ours &&
-+		git switch branch &&
-+		test_commit theirs &&
-+
-+		git refs list >refs-expect &&
-+		git history drop --dry-run main~ >updates &&
-+		git refs list >refs-actual &&
-+		test_cmp refs-expect refs-actual &&
-+		test_grep "update refs/heads/main" updates &&
-+
-+		git update-ref --stdin <updates &&
-+		expect_log main <<-\EOF
-+		ours
-+		base
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--dry-run detects conflicts with modified working tree' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo --initial-branch=main &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second modify-me &&
-+		echo modified >modify-me &&
-+
-+		git refs list >refs-expect &&
-+		git diff >diff-expect &&
-+		test_must_fail git history drop --dry-run HEAD 2>err &&
-+		test_grep "dropping this commit would overwrite local changes" err &&
-+		git diff >diff-actual &&
-+		git refs list >refs-actual &&
-+
-+		test_cmp diff-expect diff-actual &&
-+		test_cmp refs-expect refs-actual
-+	)
-+'
-+
-+test_expect_success '--update-refs=head updates only HEAD' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo --initial-branch=main &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		test_commit target &&
-+		git branch theirs &&
-+		test_commit ours &&
-+		git switch theirs &&
-+		test_commit theirs &&
-+
-+		# When told to update HEAD only, the command refuses to
-+		# rewrite commits that are not an ancestor of HEAD.
-+		test_must_fail git history drop --update-refs=head main 2>err &&
-+		test_grep "rewritten commit must be an ancestor of HEAD" err &&
-+
-+		expect_graph --branches <<-\EOF &&
-+		* theirs
-+		| * ours
-+		|/
-+		* target
-+		* base
-+		EOF
-+
-+		git switch main &&
-+		git history drop --update-refs=head target &&
-+
-+		expect_graph --branches <<-\EOF
-+		* ours
-+		| * theirs
-+		| * target
-+		|/
-+		* base
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--update-refs=head can rewrite detached HEAD' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo --initial-branch=main &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+		test_commit third &&
-+		git switch --detach HEAD &&
-+
-+		git history drop --update-refs=head second &&
-+
-+		expect_log HEAD <<-\EOF &&
-+		third
-+		first
-+		EOF
-+		expect_log main <<-\EOF
-+		third
-+		second
-+		first
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'conflict with replayed commit aborts cleanly' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		test_commit conflict-a file &&
-+		test_commit conflict-b file &&
-+
-+		git refs list >refs-expect &&
-+		test_must_fail git history drop HEAD~ 2>err &&
-+		test_grep "failed replaying descendants" err &&
-+		git refs list >refs-actual &&
-+		test_cmp refs-expect refs-actual
-+	)
-+'
-+
-+# Build a history where a descendant of the drop target reverts the change
-+# introduced by the drop target. After dropping, the descendant's diff applies
-+# against a tree that already lacks the change, so it becomes empty.
-+setup_empty_descendant_repo () {
-+	git init "$1" &&
-+	(
-+		cd "$1" &&
-+		echo C1 >file &&
-+		git add file &&
-+		git commit -m "base" &&
-+		git tag base &&
-+		echo C2 >file &&
-+		git add file &&
-+		git commit -m "drop-me" &&
-+		git tag drop-me &&
-+		test_commit middle &&
-+		echo C1 >file &&
-+		git add file &&
-+		git commit -m "revert-drop-me" &&
-+		git tag revert-drop-me
-+	)
-+}
-+
-+test_expect_success '--empty=drop drops descendants that become empty' '
-+	test_when_finished "rm -rf repo" &&
-+	setup_empty_descendant_repo repo &&
-+	(
-+		cd repo &&
-+
-+		git history drop --empty=drop drop-me &&
-+
-+		expect_log <<-\EOF
-+		middle
-+		base
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--empty=keep keeps descendants that become empty' '
-+	test_when_finished "rm -rf repo" &&
-+	setup_empty_descendant_repo repo &&
-+	(
-+		cd repo &&
-+
-+		git history drop --empty=keep drop-me &&
-+
-+		expect_log <<-\EOF &&
-+		revert-drop-me
-+		middle
-+		base
-+		EOF
-+		git diff HEAD~ HEAD >diff &&
-+		test_must_be_empty diff
-+	)
-+'
-+
-+test_expect_success '--empty=abort errors out when a descendant becomes empty' '
-+	test_when_finished "rm -rf repo" &&
-+	setup_empty_descendant_repo repo &&
-+	(
-+		cd repo &&
-+
-+		test_must_fail git history drop --empty=abort drop-me 2>err &&
-+		test_grep "became empty after replay" err
-+	)
-+'
-+
-+test_expect_success 'updates index and worktree when HEAD moves' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+		test_commit third &&
-+
-+		git history drop second &&
-+
-+		# Worktree should no longer contain second.t.
-+		test_path_is_missing second.t &&
-+		test_path_is_file first.t &&
-+		test_path_is_file third.t &&
-+
-+		# Index and worktree should both match the new HEAD.
-+		git status --porcelain --untracked-files=no >status &&
-+		test_must_be_empty status
-+	)
-+'
-+
-+test_expect_success 'updates worktree when dropping HEAD itself' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+
-+		git history drop HEAD &&
-+
-+		test_path_is_missing second.t &&
-+		test_path_is_file first.t &&
-+
-+		git status --porcelain --untracked-files=no >status &&
-+		test_must_be_empty status
-+	)
-+'
-+
-+test_expect_success 'preserves unrelated unstaged modifications' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		echo first-content >unrelated.txt &&
-+		git add unrelated.txt &&
-+		git commit -m "add unrelated" &&
-+		test_commit second &&
-+		test_commit third &&
-+
-+		echo locally-modified >unrelated.txt &&
-+
-+		git diff >diff-expect &&
-+		git history drop second &&
-+		git diff >diff-actual &&
-+		test_cmp diff-expect diff-actual &&
-+		test_path_is_missing second.t
-+	)
-+'
-+
-+test_expect_success 'preserves unrelated staged changes' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		echo first-content >unrelated.txt &&
-+		git add unrelated.txt &&
-+		git commit -m "add unrelated" &&
-+		test_commit second &&
-+		test_commit third &&
-+
-+		echo staged-change >unrelated.txt &&
-+		git add unrelated.txt &&
-+
-+		git diff --cached >diff-expect &&
-+		git history drop second &&
-+		git diff --cached >diff-actual &&
-+		test_cmp diff-expect diff-actual &&
-+		test_path_is_missing second.t
-+	)
-+'
-+
-+test_expect_success 'aborts when local modifications would be overwritten' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		test_commit conflict &&
-+
-+		echo local-edit >conflict.t &&
-+		git diff >diff-expect &&
-+		test_must_fail git history drop HEAD 2>err &&
-+		test_grep "would overwrite local changes" err &&
-+		git diff >diff-actual &&
-+		test_cmp diff-expect diff-actual
-+	)
-+'
-+
-+test_done
+--=20
 
--- 
-2.55.0.795.g602f6c329a.dirty
 
+****=C2=A0DISCLAIMER=20
+<https://media.tvh.com/content/pdf/various/Email-disclaimer.pdf>=C2=A0****
+
+This=20
+message is delivered to all addressees subject to the conditions set forth=
+=20
+in the attached disclaimer, which is an integral part of this message.=C2=
+=A0Your=20
+privacy is important to us. We use your personal data only in compliance=20
+with data protection laws. For further information on how we process your=
+=20
+personal data,=C2=A0please consult our=C2=A0Privacy Policy=20
+<https://www.tvh.com/privacy-policy>.=C2=A0By communicating with us, you=20
+unambiguously consent to our use of your personal data as explained in the=
+=20
+Privacy Policy.=C2=A0The information contained in this communication may be=
+=20
+confidential and may be subject to the attorney-client privilege.
+
+--000000000000ca6fab06558b40e6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><br clear=3D"all"></div><div>Please, find the bug rep=
+ort attached.</div><span class=3D"gmail_signature_prefix">-- </span><br><di=
+v dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature">
+
+
+<div><br><div style=3D"font-family:Arial;font-size:12px;color:#000000;text-=
+decoration:none">Kind Regards,<br><br><b><font color=3D"#E4002b">Hayk Aveti=
+syan</font><br>Senior Software Engineer</b><br>
+M +32 476 030611 =E2=80=A2 <a href=3D"mailto:hayk.avetisyan@tvh.com" target=
+=3D"_blank"><font color=3D"#000000">hayk.avetisyan@tvh.com</font></a><br><b=
+r><font color=3D"#E4002b"><b>TVH PARTS HOLDING NV</b></font><br>Vichtseweg =
+129 =E2=80=A2 BE-8790 WAREGEM<br> T +32 56 43 42 11 =E2=80=A2 F +32 56 43 4=
+4 88 =E2=80=A2 <a href=3D"http://www.tvh.com" target=3D"_blank"><font color=
+=3D"#000000">www.tvh.com</font></a></div></div></div></div>
+
+<br>
+<p>****=C2=A0<a href=3D"https://media.tvh.com/content/pdf/various/Email-dis=
+claimer.pdf" target=3D"_blank">DISCLAIMER</a>=C2=A0****</p><p style=3D"text=
+-align:justify">This message is delivered to all addressees subject to the =
+conditions set forth in the attached disclaimer, which is an integral part =
+of this message.=C2=A0Your privacy is important to us. We use your personal=
+ data only in compliance with data protection laws. For further information=
+ on how we process your personal data,=C2=A0please consult our=C2=A0<a href=
+=3D"https://www.tvh.com/privacy-policy" target=3D"_blank">Privacy Policy</a=
+>.=C2=A0By communicating with us, you unambiguously consent to our use of y=
+our personal data as explained in the Privacy Policy.=C2=A0The information =
+contained in this communication may be confidential and may be subject to t=
+he attorney-client privilege.</p>
+--000000000000ca6fab06558b40e6--
+--000000000000ca6fab06558b40e8
+Content-Type: text/plain; charset="UTF-8"; name="git-bugreport-2026-07-01-1333.txt"
+Content-Disposition: attachment; 
+	filename="git-bugreport-2026-07-01-1333.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_mr20fq0s0>
+X-Attachment-Id: f_mr20fq0s0
+
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpCkluIHRoZSBsYXN0IHR3byBHaXQgZm9yIFdpbmRvd3MgcmVsZWFz
+ZXMgKDIuNTUuMCBhbmQgdGhlIHZlcnNpb24gaW1tZWRpYXRlbHkgYmVmb3JlIGl0KSwgR2l0IEJh
+c2ggY2hhbmdlZCBob3cgaXQgaGFuZGxlcyBrZXlib2FyZCBpbnB1dCB3aGlsZSBhIGxvbmfigJFy
+dW5uaW5nIEdpdCBjb21tYW5kIGlzIGV4ZWN1dGluZy4gUHJldmlvdXNseSwgd2hpbGUgYSBHaXQg
+Y29tbWFuZCB3YXMgc3RpbGwgcnVubmluZywgeW91IGNvdWxkIGFscmVhZHkgdHlwZSB0aGUgbmV4
+dCBjb21tYW5kLiBXaGVuIHRoZSBydW5uaW5nIGNvbW1hbmQgZmluaXNoZWQsIHlvdXIgcHJl4oCR
+dHlwZWQgY29tbWFuZCB3b3VsZCBhcHBlYXIgY29ycmVjdGx5IGluIHRoZSBwcm9tcHQsIGFuZCB5
+b3Ugb25seSBuZWVkZWQgdG8gcHJlc3MgRW50ZXIgdG8gZXhlY3V0ZSBpdC4gSW4gdGhlIHJlY2Vu
+dCB2ZXJzaW9ucywgdGhpcyBubyBsb25nZXIgd29ya3MgY29ycmVjdGx5LiBJZiB5b3UgdHlwZSBh
+IGNvbW1hbmQgZHVyaW5nIHRoZSBleGVjdXRpb24gb2YgYSBwcmV2aW91cyBvbmUg4oCUIGZvciBl
+eGFtcGxlOiAiZ2l0IHJlYmFzZSAtaSBIRUFEfjMiIOKAlCBhbmQgdGhlIHJ1bm5pbmcgY29tbWFu
+ZCBmaW5pc2hlcyB3aGlsZSB5b3UgYXJlIHN0aWxsIHR5cGluZywgb25seSB0aGUgbGFzdCBwYXJ0
+IG9mIHlvdXIgaW5wdXQgYXBwZWFycyBhdCB0aGUgQmFzaCBwcm9tcHQuIFRoZSBiZWdpbm5pbmcg
+b2YgdGhlIGNvbW1hbmQgaXMgaW5zdGVhZCBpbnNlcnRlZCBpbnRvIHRoZSBWaW0gZWRpdG9yIHRo
+YXQgb3BlbnMgZm9yIHRoZSBpbnRlcmFjdGl2ZSByZWJhc2UuIEZvciBleGFtcGxlLCBpZiB0aGUg
+cHJldmlvdXMgY29tbWFuZCBmaW5pc2hlcyByaWdodCB3aGVuIHlvdSB0eXBlIHRoZSBmaW5hbCBw
+YXJ0ICJBRH4zIiwgQmFzaCB3aWxsIHNob3cgb25seSAiQUR+MyIuIFByZXNzaW5nIEVudGVyIHJl
+c3VsdHMgaW4gYW4gZXJyb3Igc3VjaCBhczogIlNvcnJ5LCBidXQgc3VjaCBhIGNvbW1hbmQgZG9l
+cyBub3QgZXhpc3Q6ICdBRH4zJyIuIEFmdGVyIHJldHlwaW5nIGFuZCBleGVjdXRpbmcgdGhlIGZ1
+bGwgY29tbWFuZCBhZ2FpbiwgVmltIG9wZW5zIGFzIGV4cGVjdGVkLiBIb3dldmVyLCBpbnNpZGUg
+dGhlIHJlYmFzZSB0b2RvIGxpc3QsIGV4dHJhIGNoYXJhY3RlcnMgYXBwZWFyIGJlZm9yZSB0aGUg
+Y29tbWl0IGhhc2guIEZvciBpbnN0YW5jZSwgYSBsaW5lIHRoYXQgc2hvdWxkIGJlICJwaWNrIGFi
+NTQ2ODciIGJlY29tZXMgIkhFYWI1NDY4NyIuIFRoZSBpbnNlcnRlZCAiSEUiIGNvbWVzIGZyb20g
+dGhlIGJlZ2lubmluZyBvZiAiSEVBRH4zIi4gSXQgYXBwZWFycyBpbnNpZGUgVmltIGJlY2F1c2Ug
+dGhlIC1pIGZsYWcgYXV0b21hdGljYWxseSBwdXRzIFZpbSBpbnRvIGluc2VydCBtb2RlLCBzbyB0
+aGUgcHJlbWF0dXJlbHkgY2FwdHVyZWQga2V5c3Ryb2tlcyBhcmUgdHlwZWQgZGlyZWN0bHkgaW50
+byB0aGUgZWRpdG9yIGluc3RlYWQgb2YgdGhlIEJhc2ggcHJvbXB0LiBJbiBzdW1tYXJ5OiBXaGVu
+IHR5cGluZyBhIGNvbW1hbmQgZHVyaW5nIHRoZSBleGVjdXRpb24gb2YgYSBwcmV2aW91cyBHaXQg
+Y29tbWFuZCwgcGFydCBvZiB0aGUgaW5wdXQgaXMgaW5jb3JyZWN0bHkgc2VudCB0byBWaW0gaW5z
+dGVhZCBvZiByZW1haW5pbmcgaW4gR2l0IEJhc2guCgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhh
+cHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9yKQpJIGV4cGVjdGVkIHRoZSBwcmUtdHlwZWQgY29tbWFu
+ZCB0byBhcHBlYXIgb25jZSB0aGUgY3VycmVudCBjb21tYW5kIHdhcyBkb25lLgoKV2hhdCBoYXBw
+ZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpJbnN0ZWFkIHRoZSBjb21tYW5kIHdhcyB0
+eXBlZCBhcyBhIHNpbXBsZSB0ZXh0IGluIHRoZSBWSU0gZWRpdG9yLCBvbmNlIGl0IHdlbnQgb3Bl
+bi4KCldoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3aGF0IHlvdSBleHBlY3RlZCBhbmQgd2hhdCBh
+Y3R1YWxseSBoYXBwZW5lZD8KVGhlIGRpZmZlcmVuY2UgaXMgdGhhdCBpdCBjb3JydXB0ZWQgdGhl
+IGZpbGUsIHdoaWNoIHdhcyBub3QgZXhwZWN0ZWQuCgpBbnl0aGluZyBlbHNlIHlvdSB3YW50IHRv
+IGFkZDoKClBsZWFzZSByZXZpZXcgdGhlIHJlc3Qgb2YgdGhlIGJ1ZyByZXBvcnQgYmVsb3cuCllv
+dSBjYW4gZGVsZXRlIGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFyZS4KCgpbU3lzdGVt
+IEluZm9dCmdpdCB2ZXJzaW9uOgpnaXQgdmVyc2lvbiAyLjU1LjAud2luZG93cy4xCmNwdTogeDg2
+XzY0CmJ1aWx0IGZyb20gY29tbWl0OiBiZjVhZmRlY2MxMDQ3ODM5N2Q3MDU5ZDA3NTczNjMwOTAy
+ZmIyZTJmCnNpemVvZi1sb25nOiA0CnNpemVvZi1zaXplX3Q6IDgKc2hlbGwtcGF0aDogRDovZ2l0
+LXNkay02NC1idWlsZC1pbnN0YWxsZXJzL3Vzci9iaW4vc2gKcnVzdDogZGlzYWJsZWQKZmVhdHVy
+ZTogZnNtb25pdG9yLS1kYWVtb24KZ2V0dGV4dDogZW5hYmxlZApsaWJjdXJsOiA4LjIxLjAKT3Bl
+blNTTDogT3BlblNTTCAzLjUuNyA5IEp1biAyMDI2CnpsaWI6IDEuMy4yClNIQS0xOiBTSEExX0RD
+ClNIQS0yNTY6IFNIQTI1Nl9CTEsKZGVmYXVsdC1yZWYtZm9ybWF0OiBmaWxlcwpkZWZhdWx0LWhh
+c2g6IHNoYTEKdW5hbWU6IFdpbmRvd3MgMTAuMCAyNjEwMCAKY29tcGlsZXIgaW5mbzogZ251Yzog
+MTYuMQpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxlCiRTSEVMTCAodHlw
+aWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6IEM6XFByb2dyYW0gRmlsZXNcR2l0XHVzclxiaW5c
+YmFzaC5leGUKCgpbRW5hYmxlZCBIb29rc10KcG9zdC1jaGVja291dApwb3N0LWNvbW1pdApwb3N0
+LW1lcmdlCjpyZS1wdXNoCg==
+--000000000000ca6fab06558b40e8--
