@@ -1,69 +1,69 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC17A3955C0
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:04:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97773446AD
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782889484; cv=none; b=RGLAByJrVzhCNc3n8cA/MkvIX3YARK0kgVKq1CFCVSFMPH6oHP9fotI3s/TyCJ4/J7vICLEEwWKWXIYjL9rLBjMyZSXngr6T/Cig+sONN9jQfJ2it8cBUm+x00udBY/mkB3Pv/KXdfYc51C0G11dhuiyteHr/9Ny6mf4sW96msc=
+	t=1782889485; cv=none; b=PMcb20SuPQvqt6QlfvqHPnOlKXJ8mwyt1KCmvQ71nfUgI6i18oz+czawKPACOSVOOXy5352AsSGc7K6D86utmt5yoDN0FzeeLj0t6Vpfozh8K2ykDoQx+XNyKaVZ0+PXt6SeAzF3oCcHOwF5thEmM27K8iJbDej56W5IhQambeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782889484; c=relaxed/simple;
-	bh=q/65UelVfCCPkMTsaTEmnv+v5D8aGw81hG0FhHk3Ksg=;
+	s=arc-20240116; t=1782889485; c=relaxed/simple;
+	bh=Bw+j1sRjQOGi38LtFdyYr4DOgzrm05WAdnNccMl2LOw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KA/hM9QZn00SWLsMyrlgoX2SK2gysZpIF7VSPh62eSywR+yMfNPJK91xUhwdDXbsHnhC/PW1QDuJhUm1ppizvYy69Imx3d5iiS/Ns+ONACTODCuWXZzrukt5VYmUzlW/7gc1wKfFzRJSrqSr5iIGZS+K3M5ECzqcBCt4SvM44qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ASAKh0ou; arc=none smtp.client-ip=209.85.160.171
+	 MIME-Version:To:Cc; b=aaczKFSSOGr4blQJSp15EhMNKBaXNu2DQn2C29qz3C3WYfmHRO01/da9UpMGoDNKyjlLIdmgwaz7/84quQbKF15NYhMWzNiRUHkzrp5uEa3Tztn/rNzCmog7O7vQ0hgGuH9ndVRGJgnilWpZK5UbibEoHOLNLAHMJ8Z8HXPU2fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cmT2/g49; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ASAKh0ou"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-51c08df8513so2199411cf.3
-        for <git@vger.kernel.org>; Wed, 01 Jul 2026 00:04:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cmT2/g49"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8eabb1a9378so2813986d6.1
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 00:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782889483; x=1783494283; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782889484; x=1783494284; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RsKS1hwy6oKRKqny0aGjNsolU0wy9WcU0s2BulyQZ3E=;
-        b=ASAKh0ouOPhOgtdwSo0wDbrck54+bI84NchaZha4IcLoiM5OsvdHKEqLILW50xTHlH
-         kIGE2K2R8XRgCtXlqbomCoVhDXw1PwBcTnMM9PvbuAqrS1gq0DKDKispxzo41Www82vl
-         PsQ6NcqlAA6AghvBqlhEEDImI41boyB5s0l8MA4SE8RqVu3dX11NWXCYqF3sBX+fOt+i
-         V2F7JNmRWIZqeoJkid0ADXhfsG/9pPVmO3dkuWMRK5j2pUU1neEwAzPHZckcqS3IKupZ
-         Gy4CRkcXRC7xB0r8c2DC/dWzH3TtjY1e4cXkwIcluvcoLHsWhfnhnGIbozkCNV5CgWat
-         J5zg==
+        bh=UaRw6AR0DhUSgZvhKZ4wS5CCV1AQoL0l4uBGIwlvIYk=;
+        b=cmT2/g49CQPqVMLqqsHY5IqKRXjdRQV/y7YQN5thM0WAU38H1BW+3uaHZ4CTRTTeOW
+         fTCyH3qpmNRttvot59ZhtFC+oNwotPdMub6Ocr7RXVA723AbaK+oREmJZDXg/lvSgjjH
+         h2uWcdRxcDEbXc7VviQwHXq+lyzQnb8aQ/0dtnL7dK3z0L/KWUIsF5rXpc4eO4gaYuHo
+         S/AFpQ9Zn//ms6+L6b+0GyzrZBhm/1aKGio5c/RazdsRGoNd3KnQ+yaNiXLLIl8Q5NDH
+         4HAw3kaG95tqtel/H/yJPq400nwMKyVTUs+Jm+WfZ0kTAdt8olYp4gRZ2PnKFfBsdDfy
+         VcNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782889483; x=1783494283;
+        d=1e100.net; s=20251104; t=1782889484; x=1783494284;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=RsKS1hwy6oKRKqny0aGjNsolU0wy9WcU0s2BulyQZ3E=;
-        b=RlZu5RulePgONh65A/XosFPRBr2K00O5zeNoer9uCLnr6NTFQ/VzSihM0kIePkIbKV
-         dfJBu3u7K0O+zY0w6zEeZdCbLaEhh3CnQ9NsSj2R1x8kfqheuthhoRfdq8elI9OSKuIy
-         GZ008mp+qI+uSJE55M6xBQgIiGHWeeZH33zWwzXi4CRB6McZj4PydZgOb4fdAGLOhwIO
-         mUoBNrRpG1ZkyN/TIHtHs+GzMOPqVroO+jQLOuelSY5vao6bm4fDVgLDyhwlOOcbYStf
-         Cy8T+587U0lMKkb3zPvoEoyiE69UzLVoVh6uf2bVmDxDVakAUz80PeODfUW9BUR7337F
-         T/8A==
-X-Gm-Message-State: AOJu0Yz0CuvXjkHtOISRw9SqWd8fmqH9Ps4RSDNMKX4srW4MyMkKXUbX
-	ThnSq9SkT8y4ttGyHS/aNOSdSb6QvGe9XhCFPjoz9IyGsq5kMWWtCiI8GrkvSQ==
-X-Gm-Gg: AfdE7cmZI2mHfd8dDsmKvvHxZEjb2f/N7X/Bgz1eCfNnNFaVYuZXNnbpk01xgHqAAiI
-	oqZ7Pafr035km7ETj3itIxPvN8pN6AuLOlQK2jMZZU37CQjiW47z0kSPkqgEOwexehhppTraRZo
-	nF4a27Cc8AlTnkusu/HokDQvJJzM3nABg+MGgQ6g63r3DOxlk8V/+X3z5QGsNtaR5yMorRinPkY
-	wTCHStvE5njB8awm+YvKQwl3G7JA6IOE5zbuswtkVcNxQWJfooMXi3hGmdntNbRN6oOXQSzZuhd
-	SjEcbiPvRaqSf0Rx933weNLezAGRFvFFT6MsUpSNRkkX0ucyR9zkMXFKkLUQ5Z6XSoOTBQP3XwU
-	3sg8uGlgH2yFMrL8nw9JK2Ga9NeyB/xBKFNSP3stzIwkCUl7xQF8GA4TvacqzQKJAwA8LVS5tdX
-	9m7OfZYC+bkfVPEH4L
-X-Received: by 2002:a05:622a:83:b0:517:9206:10fd with SMTP id d75a77b69052e-51c26a65d70mr5601861cf.16.1782889482677;
-        Wed, 01 Jul 2026 00:04:42 -0700 (PDT)
+        bh=UaRw6AR0DhUSgZvhKZ4wS5CCV1AQoL0l4uBGIwlvIYk=;
+        b=kLt1QkWUa/2EFM7JGPlPEoXFIN0XwN4kNn0Sd4ibQRBC9eD4Xcpb1ieaGTWAqAuaBo
+         9qlq3x5eXIjubjfk0tzJjzRASICibwhOxHJ8bNYAjRsnJDuXf4cIl0cMa97yH9zYcafY
+         Oq+VdLYuVjrEDynVqGyKwLgwLaAUIuyJSCkD1sFYS+y4XyMQwJ9cVvhtZO51WLwQjCwb
+         yNGSqZwkDPdk9AHnL3BaSVQxNIfcgbtAqx2fIpyCvEqVQ+4zybyWFsAnz8epYVZTvYc6
+         vgUzptdBVMzJ+mnn6sKG1ZB6lHHT6Y74aX/i26aXLZZMR7enmPEj8q8JJ+AvtWDruY/s
+         y/DA==
+X-Gm-Message-State: AOJu0YxMHqwV+53C7BT3C8SPtPtrao2McBOn1qikdJEdjNaMwSBm8QIN
+	Bvlo0KVa0UitEsfnTpXDa7u6J0UmgCMX1e+rsjBpNbLKnsUYS8OhleIpRWQC1w==
+X-Gm-Gg: AfdE7cn/XFIu99nvbAsaMuWcoEY5/7rClO0FER+X9xlyTkOxHefhPmMRKcBan6b++So
+	uGYbGno6F0mc96vGZuoHpGS5xjRXCC8jatXhZQRR6BCabzWiXivbOTTlADOrAMotTlhzfDYk32I
+	f9+pa8jp4TFBiGOhREgB6KSi1WAYaMFvxxPnm5SITlUmQahUcm4pBL8zPgd2+5PBRij3kyjCpDW
+	TbvI78dG0HjrlUExZy/4WrxkNgK/Xum7YuWsYwiVvKE3sBslA8elWgv8G5UxANq1cEsENTUTyXT
+	eoJmeJ1TAUPc2zaDSPPXwhFMlddC+xgpZbDaUyshhT6rQofckchzT8/HrA1yDWx3s8RDLby/i5F
+	oMJ9h08tx4SxddxgzgXSD9iwoRPJnlagxcSNSCprErZlFk5h7HQ+zynFSg1zULtTzTwdir/OAOH
+	2CA8dhd3yT97f3CEKN
+X-Received: by 2002:a05:6214:1c47:b0:8ed:1887:426e with SMTP id 6a1803df08f44-8f3c7d76b15mr5094916d6.24.1782889483733;
+        Wed, 01 Jul 2026 00:04:43 -0700 (PDT)
 Received: from [127.0.0.1] ([172.214.44.231])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f3afb5ad48sm6902146d6.11.2026.07.01.00.04.41
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f362189372sm13809336d6.47.2026.07.01.00.04.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 00:04:41 -0700 (PDT)
-Message-Id: <5a6b17f075ca2d0442d512a0021557aa112860fc.1782889472.git.gitgitgadget@gmail.com>
+        Wed, 01 Jul 2026 00:04:43 -0700 (PDT)
+Message-Id: <62ce03454aa1928edd8fa538e0600155629939cd.1782889472.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 01 Jul 2026 07:04:24 +0000
-Subject: [PATCH 06/13] line-log: avoid redundant copy that leaks in
- process_ranges
+Date: Wed, 01 Jul 2026 07:04:25 +0000
+Subject: [PATCH 07/13] dir: free allocations on parse-error paths in
+ read_one_dir()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,40 +79,49 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When bloom_filter_check() indicates that a commit does not touch
-any of the tracked paths, line_log_process_ranges_arbitrary_commit()
-propagates the current ranges to the parent by calling
-line_log_data_copy() and passing the copy to add_line_range().
-However, add_line_range() always makes its own copy internally
-(via line_log_data_copy or line_log_data_merge), so the caller's
-copy is never freed and leaks every time this path is taken.
+When read_one_dir() encounters a parse error while reading the
+untracked cache from disk, it returns -1 immediately. Two
+allocations made earlier in the function can leak on these
+early-return paths: ud.untracked (allocated at line 3846 when
+untracked_nr > 0) and ud.dirs (allocated at line 3851).
 
-Pass range directly to add_line_range() instead of making a
-redundant intermediate copy. The callee's internal copy handles
-ownership correctly.
+Free both before returning on the two error paths between these
+allocations and the point where they are transferred into the
+final xmalloc'd struct at line 3857.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- line-log.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ dir.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/line-log.c b/line-log.c
-index 5fc75ae275..0179f138f7 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1141,8 +1141,7 @@ int line_log_process_ranges_arbitrary_commit(struct rev_info *rev, struct commit
+diff --git a/dir.c b/dir.c
+index 32430090dc..23335b9f7a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -3792,13 +3792,18 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
+ 		ALLOC_ARRAY(ud.untracked, ud.untracked_nr);
  
- 	if (range) {
- 		if (commit->parents && !bloom_filter_check(rev, commit, range)) {
--			struct line_log_data *prange = line_log_data_copy(range);
--			add_line_range(rev, commit->parents->item, prange);
-+			add_line_range(rev, commit->parents->item, range);
- 			clear_commit_line_range(rev, commit);
- 		} else if (commit->parents && commit->parents->next)
- 			changed = process_ranges_merge_commit(rev, commit, range);
+ 	ud.dirs_alloc = ud.dirs_nr = decode_varint(&data);
+-	if (data > end)
++	if (data > end) {
++		free(ud.untracked);
+ 		return -1;
++	}
+ 	ALLOC_ARRAY(ud.dirs, ud.dirs_nr);
+ 
+ 	eos = memchr(data, '\0', end - data);
+-	if (!eos || eos == end)
++	if (!eos || eos == end) {
++		free(ud.untracked);
++		free(ud.dirs);
+ 		return -1;
++	}
+ 
+ 	*untracked_ = untracked = xmalloc(st_add3(sizeof(*untracked), eos - data, 1));
+ 	memcpy(untracked, &ud, sizeof(ud));
 -- 
 gitgitgadget
 
