@@ -1,213 +1,357 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11021134.outbound.protection.outlook.com [52.101.52.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0083803F1
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 21:39:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.134
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782941989; cv=fail; b=jYOywuw796xPviy7rVkQNKWcSek0bgCTW76hFr727Z1aPR1+0lS+QZHPxV0HKXZc1lwCTLUit2Q1EjzdIiY2Us+p1aE/gHVI3M/+J/zu5cZd4YuJbK2tsCfK1i72vtzQb5i4ayy+Amw0qxnEpRzYsY34sZkmPGkH0RyiqRaiYiU=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782941989; c=relaxed/simple;
-	bh=KV4pHT56Jx0zbHD/kclXgaMAHB3GCeLHyZadi+VS1GQ=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=DMYt03Yf6rpiKqf7f+/CBf6QKzPwap1s2dx2kKrJ1bSxil3J2JdiEbafgDmOOifpONZOq7Y8IZgqx2kvP5O9jTUPWsHEmpPBDkfqlIkTvwm5UimG3P+zt8RuungSC38wwWlRB0H4G5neHiDIhHZXjT5xY/LCQUClbesOuhTgs60=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=personent.com; spf=pass smtp.mailfrom=personent.com; dkim=pass (2048-bit key) header.d=personent.com header.i=@personent.com header.b=HwKd6JC1; dkim=pass (2048-bit key) header.d=personent.com header.i=@personent.com header.b=HwKd6JC1; arc=fail smtp.client-ip=52.101.52.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=personent.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=personent.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832933769E2
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 22:01:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782943311; cv=none; b=bG5ZhRs7S9nRPRYuvzTR8vOefZdHYtTWNM+wWVf+Zr40TjTfRi4lKgzLBSn2exZvOavzCfjsAtrdaeoNVkFyTJnZioZHIVneOLqJO/IxjXJRXCsv/svS3ArsV8K1UYtpItDC0ArEOSmbrdxntfsdRxLV4xijNRzBVC8GtmMRnt0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782943311; c=relaxed/simple;
+	bh=7Xl67f0Eg/ce/HjGazHyXKhN/PRHJ79C55jj2mcnaOE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=nvQBXUvtNf2efK0PrYQBFsAiromkZpxhQBmElTx73vbd8bG2bMdsb4lC8+z77OavAPlVqDLzZJ9OVRdK55BKruLsxVTrG5UryDFqSkvr+opYCKxP7UsREPK60qPNSoVL2+OMOQX2Ignr4e8T7/njLvOHywiAet1EL1yAbt0sqpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nly4UR5f; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=personent.com header.i=@personent.com header.b="HwKd6JC1";
-	dkim=pass (2048-bit key) header.d=personent.com header.i=@personent.com header.b="HwKd6JC1"
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=acRYdMQbpqruVQ0UGtEnl7TVdbXVLo4EDMXQbJu0cerLna8LBbRg3N7j3B/PdtCpQ3m6PktHV5xqkk9MvvOt4RRQw5kZjfqrnliAkegr0mAvr9Jd3t+xNLS0TcgFu8kSyJnkne31pcOwErH6OgWC5JLwy5dgBgt24LwbvJz8+FXWBqwSHygG6Sh4X5RY4IhYiLr1eGCSSg7aVt/cFiBA4uELx0Sr4Tkkp5GX86WqxcL3/gwqsS9/J2tqf0Z2tmjBqSUNjEoYVpf0K2i2YVe1ErnlMyagsYa3kNryD5GYDbHifHNBC3zUZnMHyR+gsy06i9W8v1uPrL93dhzxTNxJzQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KV4pHT56Jx0zbHD/kclXgaMAHB3GCeLHyZadi+VS1GQ=;
- b=AloeLRXXqbFUaBxMtqUW4YPVW/UiPdvTkAsWWSdkpkJvCX+pkX8gEJCn6jxPj7TgfDPGhUDoRBV7zY/5DnqPhluHLSDT14D0KBr1kkVqeQ7aTUKXOr4YD/xE07ZQGdv347OHc4Ro4PPBA34u5aSzPnuLk2SUtCa/BIMyPxCrRBO6oNjRy7A6MddrNz637MT2MSun9Qjr4LW6aXwyFSinGkHo+E8mxHFY6WBmlDucnqaeZMFhZjkQFRntRtETDAJt0VfgK4ksMFgq8tVpTUL0210JJFKkteC4a3KTuyMc8t6lqukphqMCafVAEdP3Nq/sVklNYa6PJnezkbxb9CdNIQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 24.32.222.183) smtp.rcpttodomain=gmx.de smtp.mailfrom=personent.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=personent.com; dkim=pass (signature was verified)
- header.d=personent.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=personent.com] dkim=[1,1,header.d=personent.com]
- dmarc=[1,1,header.from=personent.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=personent.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KV4pHT56Jx0zbHD/kclXgaMAHB3GCeLHyZadi+VS1GQ=;
- b=HwKd6JC1LlAXFDNel2Y/IgirkjVVajrMQ15s1cimFG1tIUVzXJAIAZgJgPdTgf5jZPvWomMtp6f5b0fUpaodcX4sN2Z+oFvwqLKfc5qrXy3yuWw72aO2Wkfwb0dKoMR8EQWC7OulyRH4dgZC6UhW0JQ2d7lrYMGu7CpBtfGQySCgMEO5qbbc/gTsSA+EcCHjxPMiEhTNZKSGf1PMq+wqG1jVB59dOI73HWJFYwBP36Fm+OG4nqQm1GVvJKB7SooXcJGBuSQ0sBWEeM3d/J8C689DsNvKDcfXorIQnWxMkIDX7v2QpH8DiI0c7e1dgMvmU3gyDPYE3k987dCdnkhMuw==
-Received: from SA0PR12CA0025.namprd12.prod.outlook.com (2603:10b6:806:6f::30)
- by SA1P221MB471428.NAMP221.PROD.OUTLOOK.COM (2603:10b6:806:51c::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Wed, 1 Jul 2026
- 21:39:44 +0000
-Received: from SA2PEPF00003F65.namprd04.prod.outlook.com
- (2603:10b6:806:6f:cafe::7d) by SA0PR12CA0025.outlook.office365.com
- (2603:10b6:806:6f::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.9 via Frontend Transport; Wed, 1
- Jul 2026 21:39:44 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 24.32.222.183)
- smtp.mailfrom=personent.com; dkim=pass (signature was verified)
- header.d=personent.com;dmarc=pass action=none header.from=personent.com;
-Received-SPF: Pass (protection.outlook.com: domain of personent.com designates
- 24.32.222.183 as permitted sender) receiver=protection.outlook.com;
- client-ip=24.32.222.183; helo=webmail.personent.com; pr=C
-Received: from webmail.personent.com (24.32.222.183) by
- SA2PEPF00003F65.mail.protection.outlook.com (10.167.248.40) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Wed, 1 Jul 2026 21:39:43 +0000
-Received: from EXSHQSP02.ad.personent.com (172.16.112.163) by
- EXSHQSP02.ad.personent.com (172.16.112.163) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Wed, 1 Jul 2026 14:39:36 -0700
-Received: from SJ0PR08CU001.outbound.protection.outlook.com (40.93.1.76) by
- EXSHQSP02.ad.personent.com (172.16.112.163) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Wed, 1 Jul 2026 14:39:35 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qBuNsQeR+eWxq3+xUDOQVwVMdu17nCubCt70sjUf7dGt0TQ/Ay+geungH+4qfTDlX2guDav98GNJ0F3iVgpfkmKv8VCECYs9qu/4HBCup5DR7YRknF3xKhYwDsbxXl+rR7RGxBq5BqGYRjKXErqGQff7N5ExHVvle/L4OitNqU5GIILzw0zpjyKBSZcCqFPhnff9pSnNUDwgdoIrGmxgMuj0Mh+wNnlA/jXqm8JuwKynCDvmDOOl5mCOQHnlA0unDy8y3zI/76l7ACLa/3HgQ8aUNOYWcb6BDXJRsBqa0LZTGfUpnhpYP7WaRGiJgJi+iRGu8EIzcWh2NxpdvHRTxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KV4pHT56Jx0zbHD/kclXgaMAHB3GCeLHyZadi+VS1GQ=;
- b=GMys7XHZKg21wpD2X6QL7LpuD6zkdQDoGdEtKsCKodtrR+ZQAzsfZDGcbAPKHRT8s/m4ONGZw090TORRCHScaG0RjRIOa/BX699DcUUrnxuXnEOdGHwJKpc+Cq4VijNILoDwfIwGyJmcshZOxmjMxeUzVxlr/NP4EwmnxlZJ2kyOn9yjyes4P9hZIq5ftrlyI8bn+31X7WDUldjScd+7kiJ5CrwknswTKcOhiGyC1ON99QsDa7BqyQ8JCANnx9JW5vUacoFptQIKpw/PUI5pqB9rqb6rr4qRaxpqZbTshujudte7RKCkphQG9AKQHm7GVWG5cWa/s1b0Z0QT0TSR5w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=personent.com; dmarc=pass action=none
- header.from=personent.com; dkim=pass header.d=personent.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=personent.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KV4pHT56Jx0zbHD/kclXgaMAHB3GCeLHyZadi+VS1GQ=;
- b=HwKd6JC1LlAXFDNel2Y/IgirkjVVajrMQ15s1cimFG1tIUVzXJAIAZgJgPdTgf5jZPvWomMtp6f5b0fUpaodcX4sN2Z+oFvwqLKfc5qrXy3yuWw72aO2Wkfwb0dKoMR8EQWC7OulyRH4dgZC6UhW0JQ2d7lrYMGu7CpBtfGQySCgMEO5qbbc/gTsSA+EcCHjxPMiEhTNZKSGf1PMq+wqG1jVB59dOI73HWJFYwBP36Fm+OG4nqQm1GVvJKB7SooXcJGBuSQ0sBWEeM3d/J8C689DsNvKDcfXorIQnWxMkIDX7v2QpH8DiI0c7e1dgMvmU3gyDPYE3k987dCdnkhMuw==
-Received: from SN4P221MB0713.NAMP221.PROD.OUTLOOK.COM (2603:10b6:806:200::15)
- by IA4P221MB1742.NAMP221.PROD.OUTLOOK.COM (2603:10b6:208:56b::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.9; Wed, 1 Jul 2026
- 21:39:31 +0000
-Received: from SN4P221MB0713.NAMP221.PROD.OUTLOOK.COM
- ([fe80::fb08:77b9:d3c2:fd5]) by SN4P221MB0713.NAMP221.PROD.OUTLOOK.COM
- ([fe80::fb08:77b9:d3c2:fd5%2]) with mapi id 15.21.0181.008; Wed, 1 Jul 2026
- 21:39:31 +0000
-From: "Person, Tim" <Tim.Person@personent.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Security Vulnerability in Git 2.54.0/OpenSSL 3.5.6 Status
-Thread-Topic: Security Vulnerability in Git 2.54.0/OpenSSL 3.5.6 Status
-Thread-Index: Ad0GabCi7jER2lM0TbS3m4XEzhGxjgBZX5oAAHSvXtA=
-Date: Wed, 1 Jul 2026 21:39:30 +0000
-Message-ID: <SN4P221MB0713A20D5451F80499B36C4694F62@SN4P221MB0713.NAMP221.PROD.OUTLOOK.COM>
-References: <SN4P221MB0713994458A94BFCB51F7AC494EA2@SN4P221MB0713.NAMP221.PROD.OUTLOOK.COM>
- <fe8a3a3f-d762-d2c2-9454-a57ac9a75331@gmx.de>
-In-Reply-To: <fe8a3a3f-d762-d2c2-9454-a57ac9a75331@gmx.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels: MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_ActionId=d5fd7cfd-51fc-4871-bc1b-5bb22ab8e3d5;MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_ContentBits=0;MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_Enabled=true;MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_Method=Standard;MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_Name=defa4170-0d19-0005-0004-bc88714345d2;MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_SetDate=2026-07-01T21:38:15Z;MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_SiteId=e2de18dc-8323-462e-8c47-561025ebc66c;MSIP_Label_defa4170-0d19-0005-0004-bc88714345d2_Tag=10,
- 3, 0, 1;
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=personent.com;
-x-ms-traffictypediagnostic:
-	SN4P221MB0713:EE_|IA4P221MB1742:EE_|SA2PEPF00003F65:EE_|SA1P221MB471428:EE_
-X-MS-Office365-Filtering-Correlation-Id: ef8b1cc1-053c-48d2-b24d-08ded7b943d8
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|4143699003|11063799006|56012099006|4133799003|22082099003|18002099003|55112099003|38070700021;
-X-Microsoft-Antispam-Message-Info-Original:
- DpD44exZnmdXIlpWSbeAA04dVzYrZuYUQHfiX3WWVqNHLkDGu+oliI3QIYGhjT4WwnUYBwp0jUoKNnUJ7uELOMLzqJGk0d0AKDblg8qHikLybNjQdXNOiIi51HR0vEia7QtHnfVEqX7u43KAoxil5NokhnoE2ORzkoHyf4sEpVo/ARwFeL2Y6hfdOf716YZuU5AyEicdHOV27WiNTTOHH6rBc1HEcfxB4ymA4YLx7cp5B6jBoH0xBVOBwxKMOyJoRZCwk0vL0+K4/SMnwtGrfbD3Kmi5iuzGoXOZg7BxVdb7yl4BkCFYIhCbshjh5nWmf5tfxyQ71UfDUzxtmM8W4VwYxJKkeBIMs0ULtE3KzCT2fepN1ww3FGvSDipzujz8EVOKgskYRwctTfOv8ZiOdz2HfgQezPA4v/k9QWoDMlo/b/QS+zJtmo0u/vCrnoHag73JiBiov678AFg9stWdmpW8p1bS2Y9qV7OhfHuxgtlRBq/UZmRgbSzx6WDcep07LBf1ZrrKwnHgV9FfdEyFSQeJJJmye1Q1aJtLIhfsoA9KO6OYEY9T2JSmho5HtWRm0CHjfU6UddEqRgJI7wD2Qig93Aud01sYrMoDXhPXS1XjHXiXBVF3DO9FF+lv1tS46g2qnuRy3EUFYFk8sZNkmEjXcMFXuqfXN4PSAAc9Yd+HA2FzxjkxWdxpjZC4NwaC0FBMg5t7Zi5Pc+mhZKg0gO1tFvETXMjyTmfHNFNOwco=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4P221MB0713.NAMP221.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(4143699003)(11063799006)(56012099006)(4133799003)(22082099003)(18002099003)(55112099003)(38070700021);DIR:OUT;SFP:1102;
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nly4UR5f"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-51c1d487f2cso10450251cf.1
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 15:01:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782943308; x=1783548108; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=47M7wnaW091iEGUATP9MgjPlST6933eu7ca97aXXBsw=;
+        b=Nly4UR5fWoBaCv8g316uxTnwz3txhfHy9ElpyXzaLj7uLG9ZCzkQL0fb7YVweELgSN
+         hCsdSFzb4oXNf7bJfffCWlxO16VIjvVUB1UpxuwNrA7TN1TqFYdmGVkE2wvzbEZBKiAC
+         KFmVBsK3q2bR8PlJXZxZo9qUaHPEnk5Y7bPzVKNhZZ0sFS8NV7lY3ybzKfFX76u+76jr
+         5OGvQOPIHTLHgLIDRPkAC4A4zP2Y/fkRxJ2TXzHajIjaNJo/+j6eyPvUIpd3t8xV1h54
+         YLs3cOzJ+4hnTbtvQG6vgBq/TbYdE8FtKVfKIviPj4eCFL741hWVLMyY50T3LfQ8c+ib
+         SHww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782943308; x=1783548108;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=47M7wnaW091iEGUATP9MgjPlST6933eu7ca97aXXBsw=;
+        b=EMCoDBtVffZ4fex5IBLIzNC4XV2QdJ8fll2t4N7Q86WYV9RaiAG/EACxyDdQUhl0bW
+         Ji9CXwFryXHBMwBe8L94qfCYesImxI0HFndlSpyVEBr+DUeIDpbGGyOpCqmpDUSHhTTo
+         NDCd07Maglqiqe9j/UTxoZS0/Mfl6Bvx4vvgOeiI6O1zcapmximGl6J35QsFibZZIfEs
+         LC7xZ+8jfGwJXMAIsw0j7/zh3cifpfzHUwIrHMXITmN01jEo0gQCCiEqTAdSMnrBrsDH
+         dShMQLdV/W/Ycw7k41NQbNolzTfaYeU2ggetfy0RDk996VxKoXHuePMyU/hROjId1SxB
+         DCmQ==
+X-Gm-Message-State: AOJu0Yw1dx4M4T2CHF39ewjddVtC39D5BrL88hHf1b1kJxOc1FRrA8KA
+	e4Uob9eH6s+hBN0JlNlqXbvDeloXozjBnigHF4dov6QZg0yWcA/5IqVC2fkM7A==
+X-Gm-Gg: AfdE7clBF75iU+NWfDhmSCcrN5J5c/yoSpUeaMhGNkQmKdHt3mHa4R2ZUpjmXQg464Q
+	7OX/NA1VklZtzXX6VLzdYTEO59JjN6KTIlOxLj2Rs2J9HiD/51VGJKn5URKO4sEaZnjONA2O9Rq
+	EBOI9fY4i+Eqjj9Q12JOljG6SfqyXq9ze7oxE75adZXvLzNB4V4SaGnnQ6MpuU61qi/4hDLhAUL
+	kwkaz1Ciw7Vr9+B8BrUWOHtB/uZvfm07OO0YvNq3X5xaVQg5I7pG2sWKdz0qCiAGB38m6fyyuTA
+	IpAfgGkrglroKudUs1sWXmQrw5MVH/L2QsWA2hs0CE0Wc/n2wueWerPiVzDMS6MuDfYsQfDXLz4
+	yYFIhGphS46/2oBJp3bgZOxOZsts92jNwq22QYxro4r13nlxF7uYPzFoAPSHTfUKJdmR6Onqbnh
+	Im3q2uKo3CmGF9yqO3
+X-Received: by 2002:a05:622a:1186:b0:51c:1ec5:d11 with SMTP id d75a77b69052e-51c2ad275d0mr33777401cf.19.1782943305598;
+        Wed, 01 Jul 2026 15:01:45 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.133.193])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c30c67294sm1635651cf.30.2026.07.01.15.01.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jul 2026 15:01:45 -0700 (PDT)
+Message-Id: <pull.2288.v2.git.git.1782943303219.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2288.git.git.1778001976709.gitgitgadget@gmail.com>
+References: <pull.2288.git.git.1778001976709.gitgitgadget@gmail.com>
+From: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 01 Jul 2026 22:01:43 +0000
+Subject: [PATCH v2] Makefile: link osxkeychain & support universal Rust
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: kKGE5KLwj1COUJun2fCTzf63cfMDExVg4Wo2gSR2R/h0NSaV0EtKE/k8FxRDC3aVg6C9neyYWSt8mZmkx/0u6eKwboxwD57WR2pRZ/HWZtBPEpoKrLg8WQsnEfqThnBtGqU5luT12QiUQXKkjGRWmKtsu+dUPQ3d9/e6yXCm4S/MBDJnDqCJWtNCWA2gqGhZBWfcg0DEFjaIZPKqkr+09Aez64OkEkHDTxUSKffGaYJ0POonwWdFvJ/iFFjo1kVvldRNqM48vx4OC6CVkNq/wYmMmbhBxYXjGo0IVcnGELeW9YxniNB/ufwvIuymvi9TFSXm+ehjrTOem8dI/vML0Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4P221MB1742
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- SA2PEPF00003F65.namprd04.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	2d206698-5901-4770-4848-08ded7b93c09
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|14060799003|23010399003|35042699022|376014|82310400026|36860700016|1800799024|13003099007|18002099003|22082099003|4133799003|56012099006|4143699003|11063799006|55112099003;
-X-Microsoft-Antispam-Message-Info:
-	3zvfHjmqVTominBO/V+wjdFyPAqFha5xCs2HM8tebh7rLuglPrkSgq4AylRZd3Sw7DE2DCLreC5xIaKAWd7eOeY10kON8FQmwmfS7J7JaWIzXyPjNjk9lTCxJhfsu9+aBm2FWFNSEFnv+egkLuIywcTo/ZWQJOmBXO73BZdG0+/8QJvYu1cvrW7s7P9+sJlZxoFlgAqy4OJ+cG7pPNxN4Rv2Sh/6Ydlgiytw/E/lMFoo36QuTWmXxjhDmNOBf4kjm4TgSu5f2cb2/za2r1IjAXInjVQa7l6fybrdsiiadbJaIiFMsgWMZqvCwPQ9nWK1/Ph9UoxbI+Modys2+79aqZu/G7tCXx5esk7P6yAfEmzHRS11SMP3PwgFcfX+dCPiCN/RVsB4bph8VTF7oW7lNAg6qoXBmcIPl12vF9C+eWHD7tyKXcPcg3VahIGMpU3JEIlfxzvVuTumSI0PJAix3j6XmOJ6zORLDwQfna2QZfWG8HkZcbYsSDwvbicyLL12gKhnd3v6HNwB+cuORUsudu81ZgCcxFyHgofsVZhEduFcMD5hVu7ZjaecAYnedbB6h8hgKhuDGxmbBsRFexR+eIiJo2QmSxpspoCx2QA/jSgLvCwthj7J1CyABlRZUfXxZZQj7W0ejIvqntRPF8cQ0Ar0mZi8HIGSXjanpwyJbeU8cQDkg3/ROtENoryiQks8he2ON7DigNHgHxT5fGLgmg==
-X-Forefront-Antispam-Report:
-	CIP:24.32.222.183;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:webmail.personent.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(14060799003)(23010399003)(35042699022)(376014)(82310400026)(36860700016)(1800799024)(13003099007)(18002099003)(22082099003)(4133799003)(56012099006)(4143699003)(11063799006)(55112099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	H0FYKHt3WBk7PoLrBYHELtQnhPTsxQi34yNKxYNFoFy7OAiby3rDt5C0iphK9nzgOjnzEDYQcApsiHRRN15JKDL6YUSeJqfh23yNs+rnZ+0Lc1F+oVgEO+E7UdSFSn4NbSx1wvPhY1ERv4Nz1/7NIBMCPUHGarh8r782pA5YNk3pdDp2HHMLZLBp3En3EC3CoqjoM5UiJ7pZhX+uGPVNMvC79ppozrGW3lCZRIP6+DBVKx/PUDjxT1bO5eaHQLNle69Oxv/vTCYWwbpBS5sO3OLNGVyosuW5lhnR/nomYljjmnZznGEJhcA3aupHaGrWG7FncBO8MXn5BZ/1kfiXtldIQWPsU0QopxcTluUgrYp7vMNmmdiNnjyt6Rm9YjcUqfWjeloGhvq5JloYWoTb3DwxkaE9MNhsIOPSLU2jxA3FVnaBduugvpocqhFcQKUn
-X-OriginatorOrg: personent.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2026 21:39:43.9116
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ef8b1cc1-053c-48d2-b24d-08ded7b943d8
-X-MS-Exchange-CrossTenant-Id: e2de18dc-8323-462e-8c47-561025ebc66c
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e2de18dc-8323-462e-8c47-561025ebc66c;Ip=[24.32.222.183];Helo=[webmail.personent.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SA2PEPF00003F65.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1P221MB471428
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Shnatu <snatu@google.com>,
+    Koji Nakamaru <koji.nakamaru@gree.net>,
+    Shnatu <snatu@google.com>
 
-Johannes,
+From: Shnatu <snatu@google.com>
 
-Thank you for the reply. I wasn't sure who to reach out to for this questio=
-n. I really appreciate the response and the insight related to your process=
- and timing.
+When Rust is enabled, ensure that the git-credential-osxkeychain
+helper is linked with the necessary Rust libraries.
 
-Thank you and have a great rest of your day.
+Also, introduce native support for macOS Universal Binaries
+(multi-architecture builds) in the Git build system by allowing
+the user to specify a list of target triples in the RUST_TARGETS
+environment variable.
 
-Thanks,
+To implement this cleanly without complex shell scripting in recipes:
+  1. We introduce a declarative Make pattern rule (target/%/...) to
+     compile each target-specific library slice (e.g.,
+     target/aarch64-apple-darwin/...).
+  2. We update the $(RUST_LIB) recipe to depend on the list of
+     compiled target-specific member libraries ($(RUST_MEMBER_LIBS)).
+  3. On macOS, if multiple targets are specified, we use lipo to
+     combine them into a single Universal static library at
+     target/release/libgitcore.a.
+  4. If only one target is specified, we copy it to the standard
+     path.
+  5. We enforce that building for multiple targets requires macOS
+     (as lipo is only available there), raising a clear make error
+     on other platforms.
 
-Tim
+This is a highly elegant and native Makefile solution that avoids
+complex shell scripting in recipes and fully supports macOS Universal
+Binaries.
 
------Original Message-----
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>=20
-Sent: Monday, June 29, 2026 6:57 AM
-To: Person, Tim <Tim.Person@personent.com>
-Cc: git@vger.kernel.org
-Subject: Re: Security Vulnerability in Git 2.54.0/OpenSSL 3.5.6 Status
+Signed-off-by: Shardul Natu <snatu@google.com>
+---
+    Makefile: link osxkeychain helper against Rust
 
-[You don't often get email from johannes.schindelin@gmx.de. Learn why this =
-is important at https://aka.ms/LearnAboutSenderIdentification ]
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2288%2Fkiranani%2Fnext-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2288/kiranani/next-v2
+Pull-Request: https://github.com/git/git/pull/2288
 
-[CAUTION: This email originated from outside of the organization. Do not cl=
-ick links or open attachments unless you recognize the sender and know the =
-content is safe.]
+Range-diff vs v1:
 
-Hi Tim,
+ 1:  57046d2f78 ! 1:  6a11aff909 Makefile: link osxkeychain helper against Rust
+     @@ Metadata
+      Author: Shnatu <snatu@google.com>
+      
+       ## Commit message ##
+     -    Makefile: link osxkeychain helper against Rust
+     +    Makefile: link osxkeychain & support universal Rust
+      
+          When Rust is enabled, ensure that the git-credential-osxkeychain
+          helper is linked with the necessary Rust libraries.
+      
+     -    Introduce the RUST_LIBS variable inside ifndef NO_RUST block
+     -    to hold the Rust library dependency, and use it in the helper's
+     -    build target. This cleanly handles cases where Rust is disabled,
+     -    making it a no-op and avoiding any build failures on systems
+     -    without Cargo.
+     +    Also, introduce native support for macOS Universal Binaries
+     +    (multi-architecture builds) in the Git build system by allowing
+     +    the user to specify a list of target triples in the RUST_TARGETS
+     +    environment variable.
+      
+     -    This addresses reviewer feedback from internal CL 910223487
+     -    by simplifying the variables and avoiding confusing "LINK"
+     -    terminology.
+     +    To implement this cleanly without complex shell scripting in recipes:
+     +      1. We introduce a declarative Make pattern rule (target/%/...) to
+     +         compile each target-specific library slice (e.g.,
+     +         target/aarch64-apple-darwin/...).
+     +      2. We update the $(RUST_LIB) recipe to depend on the list of
+     +         compiled target-specific member libraries ($(RUST_MEMBER_LIBS)).
+     +      3. On macOS, if multiple targets are specified, we use lipo to
+     +         combine them into a single Universal static library at
+     +         target/release/libgitcore.a.
+     +      4. If only one target is specified, we copy it to the standard
+     +         path.
+     +      5. We enforce that building for multiple targets requires macOS
+     +         (as lipo is only available there), raising a clear make error
+     +         on other platforms.
+      
+     -    Signed-off-by: Shnatu <snatu@google.com>
+     +    This is a highly elegant and native Makefile solution that avoids
+     +    complex shell scripting in recipes and fully supports macOS Universal
+     +    Binaries.
+     +
+     +    Signed-off-by: Shardul Natu <snatu@google.com>
+      
+       ## Makefile ##
+     -@@ Makefile: ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
+     - ifndef NO_RUST
+     - BASIC_CFLAGS += -DWITH_RUST
+     - GITLIBS += $(RUST_LIB)
+     -+RUST_LIBS = $(RUST_LIB)
+     +@@ Makefile: include shared.mak
+     + #
+     + # Building Rust code requires Cargo.
+     + #
+     ++# Define RUST_TARGETS if you want to cross-compile. If left unspecified, it uses
+     ++# the default rust target on the system.
+     ++#
+     ++# On macOS, this supports specifying multiple targets, separated by a space.
+     ++# This will produce a Universal static library using `lipo`.
+     ++#
+     ++# Example: RUST_TARGETS="aarch64-apple-darwin x86_64-apple-darwin"
+     ++#
+     + # == SHA-1 and SHA-256 defines ==
+     + #
+     + # === SHA-1 backend ===
+     +@@ Makefile: TEST_SHELL_PATH = $(SHELL_PATH)
+     + 
+     + LIB_FILE = libgit.a
+     + 
+     ++ifndef NO_RUST
+     + ifdef DEBUG
+     +-RUST_TARGET_DIR = target/debug
+     ++RUST_BUILD_CONFIG = debug
+     + else
+     +-RUST_TARGET_DIR = target/release
+     ++RUST_BUILD_CONFIG = release
+     + endif
+     + 
+       ifeq ($(uname_S),Windows)
+     - EXTLIBS += -luserenv
+     +-RUST_LIB = $(RUST_TARGET_DIR)/gitcore.lib
+     ++RUST_LIB_NAME = gitcore.lib
+     + else
+     +-RUST_LIB = $(RUST_TARGET_DIR)/libgitcore.a
+     ++RUST_LIB_NAME = libgitcore.a
+     ++endif
+     ++RUST_LIB = target/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
+       endif
+     + 
+     + GITLIBS = common-main.o $(LIB_FILE)
+     +@@ Makefile: scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+     + $(LIB_FILE): $(LIB_OBJS)
+     + 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+     + 
+     ++ifndef NO_RUST
+     ++ifeq ($(RUST_TARGETS),)
+     + $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+     + 	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
+     ++else
+     ++ifneq ($(words $(RUST_TARGETS)),1)
+     ++ifneq ($(uname_S),Darwin)
+     ++$(error Building universal Rust libraries requires macOS (lipo is not available on $(uname_S)))
+     ++endif
+     ++endif
+     ++
+     ++RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
+     ++$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+     ++	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
+     ++
+     ++$(RUST_LIB): $(RUST_MEMBER_LIBS)
+     ++	$(QUIET_GEN)\
+     ++	if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
+     ++		lipo -create $^ -output $@; \
+     ++	else \
+     ++		cp $< $@; \
+     ++	fi
+     ++endif
+     + 
+     + .PHONY: rust
+     + rust: $(RUST_LIB)
+     ++endif
+     + 
+     + export DEFAULT_EDITOR DEFAULT_PAGER
+     + 
+      @@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+       contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+       	$(AR) $(ARFLAGS) $@ $^
+       
+      -contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
+     -+contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) $(RUST_LIBS) GIT-LDFLAGS
+     ++# When Rust is enabled, git-credential-osxkeychain depends on Rust symbols in $(RUST_LIB)
+     ++contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) $(RUST_LIB) GIT-LDFLAGS
+       	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+     --		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
+     -+		$(filter %.o,$^) $(LIB_FILE) $(RUST_LIBS) $(EXTLIBS) -framework Security -framework CoreFoundation
+     + 		$(filter %.o,$^) $(LIBS) -framework Security -framework CoreFoundation
+       
+     - contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
+     - 	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
 
-On Sat, 27 Jun 2026, Person, Tim wrote:
 
-> I am writing to determine when Git plans to release an update=20
-> installer to patch the security vulnerability in Git 2.54.0 because of=20
-> the included OpenSSL executable. This vulnerability is rated=20
-> "Critical" in the CVE=20
-> (https://nam10.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fwww
-> .cve.org%2FCVERecord%3Fid%3DCVE-2026-34182&data=3D05%7C02%7CTim.Person%4
-> 0personentcloud.mail.onmicrosoft.com%7Cd04161ef041e4b2492fe08ded5e65ef7%7=
-Ce2de18dc8323462e8c47561025ebc66c%7C0%7C0%7C639183382582991445%7CUnknown%7C=
-TWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkF=
-OIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3D0dAHZbln7dV%2BrqdlWcsEGf=
-DvkY5k0L%2Fon0NExDAIGzo%3D&reserved=3D0). An updated version of the OpenSSL=
-.exe fixing this problem has been available since 06/12/2026. I am just won=
-dering if/when you plan to address this major security issue.
+ Makefile | 44 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
-OpenSSL.exe is not part of the critical path of Git for Windows. It is mere=
-ly included as a curiosity for historical reasons. The critical CVE you men=
-tioned does not affect anything in Git itself. Therefore, I did not even co=
-nsider making an out-of-band release of Git for Windows merely for that Ope=
-nSSL v3.5.7 update.
+diff --git a/Makefile b/Makefile
+index 1f3f099f5c..8d49ecc897 100644
+--- a/Makefile
++++ b/Makefile
+@@ -500,6 +500,14 @@ include shared.mak
+ #
+ # Building Rust code requires Cargo.
+ #
++# Define RUST_TARGETS if you want to cross-compile. If left unspecified, it uses
++# the default rust target on the system.
++#
++# On macOS, this supports specifying multiple targets, separated by a space.
++# This will produce a Universal static library using `lipo`.
++#
++# Example: RUST_TARGETS="aarch64-apple-darwin x86_64-apple-darwin"
++#
+ # == SHA-1 and SHA-256 defines ==
+ #
+ # === SHA-1 backend ===
+@@ -939,16 +947,19 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ 
+ LIB_FILE = libgit.a
+ 
++ifndef NO_RUST
+ ifdef DEBUG
+-RUST_TARGET_DIR = target/debug
++RUST_BUILD_CONFIG = debug
+ else
+-RUST_TARGET_DIR = target/release
++RUST_BUILD_CONFIG = release
+ endif
+ 
+ ifeq ($(uname_S),Windows)
+-RUST_LIB = $(RUST_TARGET_DIR)/gitcore.lib
++RUST_LIB_NAME = gitcore.lib
+ else
+-RUST_LIB = $(RUST_TARGET_DIR)/libgitcore.a
++RUST_LIB_NAME = libgitcore.a
++endif
++RUST_LIB = target/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
+ endif
+ 
+ GITLIBS = common-main.o $(LIB_FILE)
+@@ -3019,11 +3030,33 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
++ifndef NO_RUST
++ifeq ($(RUST_TARGETS),)
+ $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+ 	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
++else
++ifneq ($(words $(RUST_TARGETS)),1)
++ifneq ($(uname_S),Darwin)
++$(error Building universal Rust libraries requires macOS (lipo is not available on $(uname_S)))
++endif
++endif
++
++RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
++$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
++	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
++
++$(RUST_LIB): $(RUST_MEMBER_LIBS)
++	$(QUIET_GEN)\
++	if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
++		lipo -create $^ -output $@; \
++	else \
++		cp $< $@; \
++	fi
++endif
+ 
+ .PHONY: rust
+ rust: $(RUST_LIB)
++endif
+ 
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
+@@ -4074,7 +4107,8 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+ contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+ 	$(AR) $(ARFLAGS) $@ $^
+ 
+-contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
++# When Rust is enabled, git-credential-osxkeychain depends on Rust symbols in $(RUST_LIB)
++contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) $(RUST_LIB) GIT-LDFLAGS
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		$(filter %.o,$^) $(LIBS) -framework Security -framework CoreFoundation
+ 
 
-The next Git for Windows release (v2.55.0, likely due later today, may slip=
- to tomorrow) will include OpenSSL v3.5.7.
-
-Ciao,
-Johannes
+base-commit: 43192e7977f5f05138abcdb3212a3f87ab513bef
+-- 
+gitgitgadget
