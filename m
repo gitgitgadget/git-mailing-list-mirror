@@ -1,112 +1,111 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2134B1A9FB7
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 13:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5563225B0BB
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 13:53:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782913626; cv=none; b=P3fxXpjVi3XzCDyF90Wg1qnCXfWXq7Y8fdfiem2eU0B8XMfBs/MSRMO6htuK+zRu2b/Qxf5f1iyHLuKcEmkihbkd0Wxxc6xY6+nhzt1+eFd+JTSW7qMuUzsY3n/klBSENYEwvi3aBo51Qt5vZ374g/TX+gn6cx492WGMBx91yP8=
+	t=1782914013; cv=none; b=jiv3G6ABXO7IzMH4X+7QzlMcbMqTIe3ezXj26NcY6DqUDwROXBusZPYRPZFPlz6wSYembStXwOOZLc5o6vId4wIf+EvgCif020YcdpifGmPOTLkvxIhRoN+ftL9fikZpp7ZCJMx1SzSu7rJ+WsgkxXeqCZcAyR/f5JrOCwrWr/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782913626; c=relaxed/simple;
-	bh=oOo12DAtS1b9uy6nZIOSDCq46c1cWrFVkFEGw+ti7+Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A25jGBQnk0myYrNDe9C5hQ1KymrN6xAMXOsJjCIer2tHRBbTgmfvPj9wKA/1m1xhrYUtI3efw0q8z15oiAGw6Qtc3gEJ7OCurHkCuRMpYSNyVDVLa/Q5Ji428W1WMEEUDDd7evCFx9Q1vGJgFtRXscWKu39uagNrcXt5G2QT1Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GUPUrpAN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZGyuIP2; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782914013; c=relaxed/simple;
+	bh=dbWDZm9K/ejst1JNUxDgt29y9+tfl0OLbyEXvt/wTms=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H57rj23TvnKFtRGfOa4KqsKjvUHegs9VOZeNJ9X6F0R9spGWL13qNZvz+8hlT2hU8m6KjwZEVhAm8HYVogV5XOPCzYKMLboHwKue6otTSwJQNme7aEKWNL7jxZLR/JtxIdN4nQsGc+S7H/whLeqEHTtXXfuDu71H3OX7eFeLjN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bIroZLe9; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GUPUrpAN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZGyuIP2"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 66065EC0101;
-	Wed,  1 Jul 2026 09:47:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 01 Jul 2026 09:47:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782913624; x=1783000024; bh=nqISCGj4SX
-	jmdXBHWDVGFuU/jMwbI50XVVErV0Hgm68=; b=GUPUrpANisnNVsDvn01ahS1ELr
-	RBzHT3D1lT12JxgT69Df7HDT3StIf+tnaNgTi1XU5TlyGDjsX9u/Qrnm6sjHPO7P
-	jdLqzHjIRAiIffJ9H4dOxIe5ZJn3N4U8/tfekaV5dPwkM2kcgB8VtHx235gmTr3y
-	FKIBKv5OtyvKZ6ajWbga6TiyKEMGqnL+3zxvmALS4AO2rDTMZ5bqyb33+sdrGKMK
-	FkQNdhOTP7+ySFnNI3xarKG0MZBhvYl6gSdlVQiXNsf57ixwADplTSRHcPDaSj/H
-	mDoBtx8V+iuR5vlfcOvRor89xzXhw7G//tG5YrtKSMSPMOs2XEKNUdEpONzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782913624; x=1783000024; bh=nqISCGj4SXjmdXBHWDVGFuU/jMwbI50XVVE
-	rV0Hgm68=; b=EZGyuIP2/RQ9wVdsa6ch5jqOtT7AdGLz4Z47G+VWqBb7FWidJ5R
-	9w681m4aT5a7JYW2opKXJKH2vICk+XpxDBUym6cVW1QKDOh3uIGBrBO5Fm+CjyM6
-	HOtOsHuDK+Vi083jbKvRyu/cnPDV75DAOke58xLys9VdRLQZoPDIYCN94CGaZsGQ
-	EurEDmdrA1V/RtssiDwNBYlOOshPLkLAqXQLDylpJApd8+dtIXP32rhUZr+l4h4z
-	So/TKQwxXK/toD5fhIKmb3Qx9QP+iCO0KcW8dBeTz8WAHs2UOFVdYJYmIzWFB9fN
-	p0xaYjsXkPgdJHuvZmtwMqHuYiYipIzth9g==
-X-ME-Sender: <xms:VxpFatJsyObf_9115NrQp4sS6sOAEN6SBGM5pFCaqoEt2vRnUUt93A>
-    <xme:VxpFap1vYlEYlFRVtIDhGtjopeXKDOyicQwP5IthFQVoJxK5MgzlmHDPlR8aMelQl
-    8vcuEkEIouh-336oT94IEg8LFXSJwDj4vvIRi61cAv78Lh7LWGwSw>
-X-ME-Received: <xmr:VxpFaj5ooWlz3HB0LN33Kh_XdydMnIq2_XlH1ANCgZzXuNX6KYSKXeTM7QsiUFzAlFtiR3tPVyWP2ZDcajpeYdqiLEau6W3ETt9ciMw>
-X-ME-Proxy-Cause: dmFkZTE+/65C9kathvCKHrb8ssdxZ44vQ9Wnme7S8CPn/kn4pr/S/jSxLM6EH6l8zwuBcf
-    q83S7lpsSt7w09k341+exVGNDRM6vhXNpESnRdxFh0EMAbLNhxJo9n2bVo7kYkZkcm3X7X
-    PQG7saE3OEjyQOhbu6iWC/n7V8kLi0/K2xCOWzy2v8e10bzlZUcx5D4XPaIqhKJxvPs3d6
-    FyPFIOqiNHuiYENEPr+H+qBM+Apm2qFu6HKOW2LOGhCwsUFegpqm5JS7QUusT/VYGg7oUN
-    JKF1kuOyrehEpntNT1QHBPeVgiax6Ct0eE/6fNVmTux35KMH7pyx6t9bJieKOjFjh1dUZp
-    qxm/AwbByYhhT0RbJGMrlzqhmOUQuKGtjSHIwb1ChOmN2EwUqupxusKOeT55+F8wCXrhk7
-    irewWT+T0hDIyliHh3m8C+x9IJl5eumQu36pEWiTyjOTzIzwysJI1IygaiaOviPFPiHchs
-    J5EBJ3yTKOnZ6nXNbawFN5JT1LZTDXN8DFkucTVYLqqZJusW2ke4RizNwdpekxhF01zrzA
-    g56Oj/Bag8oGWI0W5xNXp0IoOJo2BIWW32BRe60E81o0fPS3qthgUdQjKsb0vXrBXtypPc
-    jFRTdJtui0H7rt21lzCl/W7KyMMmIR1K5NDGU+CCpSzn4cLwa2iltQ84rhGA
-X-ME-Proxy: <xmx:VxpFai921iyUG_sAK0s_8QqCahnA0K9I_6JIL9qcpjd7iIqwL9rp-A>
-    <xmx:VxpFaqXnrO61HngzBzdubCTdbRMbj9shHWyDti7X8FIcLwXJk5Verg>
-    <xmx:VxpFalraQSgU4dtZ7oo9CF8LOAQOS1VewWGoghgo-aQRnpvHq3zjig>
-    <xmx:VxpFakmSuziQtrTm4aGXZq3V_xgn8yO62XUHNWUdAcanFpt3r7woyQ>
-    <xmx:WBpFamFEyya792wAWJ-XnIivPiQC5bvMCHUpnPWjpbiq5lJzSmNyKZPg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 09:47:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,  phillip.wood@dunelm.org.uk,
-  Patrick Steinhardt <ps@pks.im>,  Harald Nordgren via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-In-Reply-To: <f15456d2-d8b2-4edc-80b4-3a9d8fc77da9@gmail.com> (Phillip Wood's
-	message of "Wed, 1 Jul 2026 11:31:23 +0100")
-References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
-	<pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
-	<d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com>
-	<akIQLM6xZTHBudWT@pks.im>
-	<3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
-	<CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
-	<dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
-	<CAHwyqnVN=McZjtQGcPnoVOHAd0+VDNPXy_N949VMsqZty3RDjQ@mail.gmail.com>
-	<4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com>
-	<CAHwyqnXoqZYHodWXHtwnk0_PiZcCYSVL+WgL3h5nWiYx_cSZLw@mail.gmail.com>
-	<f15456d2-d8b2-4edc-80b4-3a9d8fc77da9@gmail.com>
-Date: Wed, 01 Jul 2026 06:47:02 -0700
-Message-ID: <xmqq8q7urfe1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIroZLe9"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-51c0c68aa31so4760991cf.3
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 06:53:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782914011; x=1783518811; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BHlN6PITeO6N48AkIjMSM4ZaySfarItS1txWy7CXLzs=;
+        b=bIroZLe9CHKS6h7/4pTJypphU0Js8Th/Z1W73LFGx3H3vbVc9CB8Wg8WlvvRMexg5I
+         2Ib5FQtVbBZQZStIX/Z1dTotKCr0BCb/LxxC+E7maxUB1D3m0Rp32e59d7FFzPMXBdPK
+         Xv5SdLa9lmE+v0GME4XbiWejx/BCOzJCQR5rlLk2tUqUTGJq2MjEzVy8jUUpj+J1GShm
+         nW9jkeM/6KX2MWIi1XJpJeyF4Lcw/6k1V50F7UqrM4J4CPNqyhe/WsGFtWsOmDgRZc70
+         yL9g0mUSxq1+JTCKyARpKmT9MJI3J3PtxEdZJr1IRsam9jlZAKtdl0YmXJoC2klnaNN4
+         CQBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782914011; x=1783518811;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BHlN6PITeO6N48AkIjMSM4ZaySfarItS1txWy7CXLzs=;
+        b=OzmjaImkxRMFe/7Yq2JLtIxbrn6UKUDdtM9bvaji4BY3P9BEoXQ69joPg4+GHYS2aC
+         TsnEF/mgQOHyPUSVN33ilzShEn2lVS3r2PZIuh1zCeTXSdW+WUGBePl5k4SBM79NPc6y
+         y3ynEiyeYeZXdnJ1IBO5xPsLyKbUq6W+PHHadkIKtE3Us/JvgmxfvtPm1hv0kWJfXGs8
+         xRD1uJ4O0+ZDbXruTkzh3DbR6MuUsj8Smv/YKUZuQE+LYjo/f0VDheFY73F9qXJctBIR
+         d1gnqoYHDS2IenKIlNkrjbwxbCDBGFPdM0QtKIXqtdOahY7GGIaxTSYbGl57zJg3ttAq
+         NLCA==
+X-Forwarded-Encrypted: i=1; AFNElJ/uorY3veWpQPhYcQfAq3TTsWf3xT2PBwqXTEi/1uWMNBWt8U6rvaNWMZaweuQFH9cdJZE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQiRIY4pXMoVktEDqu9WjcssTljTdV+cWHaXHfmycEJHAdq2qv
+	vU61BGNpA45K8f02LTFz4CX2X6OnYAG7eqKaXsmwgLIwKxcQyn1d2Q/0
+X-Gm-Gg: AfdE7ckPLm/KKAk1mE/ISQNO29vKnUo3E4o8m5khkO9KHJTTfpU/m1kJ5hv0JWPuJGs
+	bVxSpWNJsRVjJGZZXIgXHFszOHCRcaD9q3SQJ9jgnUhQ1eUN1OUANdNFJXl39HeEBKp4MQsOkmn
+	/u5WgYUELfpLqZvOL1DRIJOL4RZbgxy11GD6m+zhV/O/kgZpv4jVPZUUjcK1EAd32renYLKY1MZ
+	vk6mTULSHOVGZuiRFq7xSjdgq1h+4GV25EQk+FRCQ+ex8HRmSI5SwMWEicvREAERFKduTZytZr5
+	/xw81MbhDru2/ObjVIvMd1Fd9oWij8PWpx6Ew12ZM2atnimpO/YII1LXoWG20dnh+NOQRNJGK+c
+	AEEa54eIDO0yjXrEdgmRl1yd6RjPBizPQ808aEelkWn6u/idXycfjcQSFOaTKZqioSMBHudJy30
+	nPajsmeH/hReb3IsYTj9+IoWvM6pl0LIKOQGK3cspMQRQ8FGG+knQ95ssXSw==
+X-Received: by 2002:a05:622a:1:b0:51c:1e6f:5c5e with SMTP id d75a77b69052e-51c2af1dc26mr10630351cf.55.1782914011117;
+        Wed, 01 Jul 2026 06:53:31 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c10a2f6ccsm44938591cf.28.2026.07.01.06.53.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jul 2026 06:53:30 -0700 (PDT)
+Message-ID: <f7384ae3-bcd3-4191-9ff9-1ab86701c762@gmail.com>
+Date: Wed, 1 Jul 2026 09:53:29 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] bloom: make bloom-filter slab initialization
+ idempotent
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+References: <20260701063538.GA2579765@coredump.intra.peff.net>
+ <20260701063942.GA2580331@coredump.intra.peff.net>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260701063942.GA2580331@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 7/1/2026 2:39 AM, Jeff King wrote:
+> Before using any of the commit-graph bloom-filter code, somebody needs
+> to call init_bloom_filters(). This initializes the commit-slab we use
+> for storing filter information. But we don't want to call it twice
+> (without a matching deinit call in the middle), since it overwrites the
+> existing slab pointers, leaking the old values.
+...
 
-> The reason we're introducing the history command is to experiment with 
-> providing a better user interface for rewriting history without being 
-> bound by the limitations of "git rebase". So I think it would entirely 
-> appropriate to try a different format for the squash message here. If it 
-> turns out to be a success then we can see if we want to use it in "git 
-> rebase" as well.
+> This patch takes a smaller and more direct route to just dealing with
+> the potential leak issue.
 
-Do we know concretely things that are bad in the current way "rebase
--i" works, so that we can experiment deviation from?  If not, the
-above is going backwards, I'm afraind.
+> +static int bloom_filter_slab_initialized;
 
-Thanks
+>  void init_bloom_filters(void)
+>  {
+> +	if (bloom_filter_slab_initialized)
+> +		return;
+>  	init_bloom_filter_slab(&bloom_filters);
+> +	bloom_filter_slab_initialized = 1;
+>  }
+
+>  {
+>  	deep_clear_bloom_filter_slab(&bloom_filters, free_one_bloom_filter);
+> +	bloom_filter_slab_initialized = 0;
+>  }
+This patch looks like the right fix.
+
+Thanks,
+-Stolee
