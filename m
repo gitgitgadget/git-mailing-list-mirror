@@ -1,81 +1,82 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88DE3A6418
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 22:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A89412287
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 22:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782943620; cv=none; b=LdEIakojPFXUQGHZCB7G87YoHB8eL7fyT9TnIF0yuE7moq14QsLZvsxPEPJAHvaE6M9C8Zwwa6rM7lXEAN/HgJXljuhCHaXaHLxtq3jr0WKy+b4Dfrv9Xr36VPn1+zvw9EHgpdnYPvNYsS6Cq1IxxyPygZWgbTruYDs0I5s9zys=
+	t=1782943859; cv=none; b=CAnZg8693UPE1/+Ceh0OiQqt1uZMeBGHQiNLoLenf10xva/0AzpSO4gbWeX71cUbpuar8meSnF14kkDCR9/yZiosP9NtTmUl6W3Yu1wde2ze95oKTswWu7QrtQ68UaBSvHh9rQoCerVmomruhSZ94gs6FLfocWQyhkdp1avZe+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782943620; c=relaxed/simple;
-	bh=p2KgyNqKfv6dmbqElXM5154qhVZpgskLgmex5BoIYOA=;
+	s=arc-20240116; t=1782943859; c=relaxed/simple;
+	bh=XsjziWednUHgp/G6CmYplFh/ZlAzfB1wyGKog6VyrP4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q0/hcWkJzxIkLDsbAPqCQfAE3Cn4tXnWNFQTvY9cSDyL4e3UIvsXvGirAI/pDPzC31AE9lETKJxMqdjOMK+ErbAsZeWYOKTwsEbReaT1EkkO5GWa+wGzZwW+qnowMRt/kqUIlkPWK1Oi04UsSwfwK19Vo/are2gsyQF6hK3gFCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FkBh3ny8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G6fZh3JR; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=u+JyOu+CvgeqHRI0euTdXXeNu+tEhQhc1P8HRi3HOOz1G2LsCbqDfNiWfhpDNTkeD6GHMQJWqbU2xr/1/7maut6liiu8mHis4MO2EvAgmz8i5BHtS2qemDKYQl/dTOIqjRJ6FUNPHn+QQZ3drNeliSw21H7q/EsdkjuXGgpbpMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J2ovNYtZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aq8C++JH; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FkBh3ny8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G6fZh3JR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id E05211D00073;
-	Wed,  1 Jul 2026 18:06:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J2ovNYtZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aq8C++JH"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9BF421D000C5;
+	Wed,  1 Jul 2026 18:10:55 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 01 Jul 2026 18:06:55 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 01 Jul 2026 18:10:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782943614; x=1783030014; bh=I1vJUgVPV3
-	ELAadXRn4jOjoVvyyglpzt+WsvdvQVmLc=; b=FkBh3ny8tEXijhR1BjyYQ+GzmE
-	UxdejiF9YPcAAeQOMMVl5HuUlyt9vpt6BiFnHiBBs/YJI5UuzdByRsIuoiiB9VJ2
-	6NP1uUpllTBUqakY3XG8VdFdiDdRAM6hQiP2XUPs2Y+Yc3qtwL11yvFiCrsgmbLr
-	gWLeeEjMxZcC0j1jcMCoh54CFzY38TKXrvVmjOUaPbqW0+1VOxobeyzUD6D7o3Yp
-	gU1MYhjGHt03NIvYc1MsPpRDe7lRufDdyxiCs75c8NXVXeNcSvzqR7R4x8kWvyen
-	IEApU20VxsytqnoT/oB1WVO/+PGOGdFvXm0LdAxnTAg08FsLn64Qo/boNLaQ==
+	:subject:to:to; s=fm3; t=1782943855; x=1783030255; bh=61MC3avNxu
+	ppaoV05ffZ6In2AG6fwyrBZhgfpVb1AII=; b=J2ovNYtZiPttPiZipgoqAK5FPf
+	Z2Qtep+e+VtjDx5PXgODSiJwKtGtX0uBPv4pJwKRkEYg3Kp1gNtqL0FH9xee4xat
+	zkB3v+jTzgGpRvp4YoV65FsY3ZkrVDBr4wy1U0hGftSe97YCVCH9UsjORzFnG8bh
+	0ii07j7xY5vJ0I1xbGQSCPii3LC4lu+vayyRbXa28t9wL6dxNvOHPJdacrwvDB5S
+	dV7CuHRnTCGAvzMcEgIbKDIC5PIk29ySid02z7kxLv4YVyZv3PGnAMOQXcGVJijh
+	Rl28y3MHTqK/PtsBBTYZgLLVu1CRguls2f6AkyQthgGk1QfIZLCmoboT0kQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782943614; x=1783030014; bh=I1vJUgVPV3ELAadXRn4jOjoVvyyglpzt+Ws
-	vdvQVmLc=; b=G6fZh3JRTmVuC28KkhUXy2NdRRz80/GerBKfvxpPdG5be7LsTKb
-	J97kqE+vgY5hZBRSPCi/hnd1MSP3EqCOSGret3p565P/g5sTW4W1VjefxJTvt1ti
-	/E7AKgN5QoyyJUSQdamZjrPmVD2K6/wQtR4Ju3R8ihPVNaDvpbONxy6IAS7IPzie
-	NPFr8qdLFxvAZc19St0tjQk0nAKzcNsYp7nzaSJt/LnmJ284D/EeM94Pkhx9ErFb
-	aVXmutb4ftTn7C3vMPWIEDiHNNzo9RGttx264n5blcx2xTibXjuhm8QFXFn7hrle
-	E7hTODwpec3S83dT68rvRB1faGx5NvNbGSg==
-X-ME-Sender: <xms:fo9FaoMLaqIzTx9KWVmfthNlKsqDz2DJOfDfbyHdKWzP1v-zLM4OwQ>
-    <xme:fo9Fal9ZcQd7fhWgAqSfCya0YGSxFVnfhYO_ApYougG2T4LQB9ziTYTVrOImgmZ8I
-    sml1pxwEkXWZcK1L7ufbcAO2IM6AhEz0rDXPZV2f5Yq5ch394IFMQ>
-X-ME-Received: <xmr:fo9FakR1DDUG-7IKi_flyqLAg1HfWQ7Wyy1oBRA32k6gUXlyi_oOTX3U5_pY6gT0F-msp11Hh8z_SzszLpeGxYsBSqoI99Coz60DN6M>
-X-ME-Proxy-Cause: dmFkZTGNZ7H1kxEQrTvdkNM8dy/Nm3CrwvnvlOvfoJUunHjv/mtFvLV8TYTr9FRiSf9O68
-    +3yNnFEvqaqubVHcT0H1lU8qUIqqifDXvnjPexj5aEqGe1EaaRnuo2b74nszQEg/KuOHrs
-    NrGhCeOsbtOuFzun4vrp1mRV02lEtME6QnlrQHyR9hun4cvkoXyRfW9/FjLVW5abJW0+x4
-    TXmmMKISN7i30wtJGK52uNpcPgZQ3qPIjlDVTCagG9MQQ/pqDJtDdWL+6peA0H2K4m5LlO
-    2mz+4rKc3/A3OCLmd8Q8cqvohBGVekoezdFiC87V4d3SleL2/zL8HiuriPIncLDL9QXrEb
-    ZHuaS5CIxj1OQsqDlaWfdjFsuOf64hA4JKZ0BnfDcHGdreZEDgCEltMKnCFhKX3qBFkQpl
-    GETifwxyVkAdj+cb2dvfFo4lw3oS5v/wbr7vZ1cCQ6OmMYcDa5x6rBJJC/7kXp2Rqk8Rr5
-    oNTowuBylJkLDwVinqf3q9xXjUneKTnJIpAmurLE+tljC2kxSP2GvkhUhuPJig/J0Z2sdi
-    MAJVv39ymSCP+z0XFDzfb9GAl3v7+5uxtsK205Nwxsr8Zq1+jao+2ctTMLITfBoBVEZFL+
-    o1enid1KwWzqPGQl4e4rRQT1mDo3Q07tq1t2E476xZlHcKyepYG9lJdgeQdg
-X-ME-Proxy: <xmx:fo9FavkTebOreEG1AjDsjtijiP2QAxs-32zAmChkMuPOydnsK3PzVg>
-    <xmx:fo9FasRsTDdFS3f6lXSSiEGXUjHaqERMJ0qMvyD3s3ukOOSJcnoVKg>
-    <xmx:fo9FalO1iMAO1lPL86fMCWz8mzGCWVNE1C4FkaCc-ggocrVuEkuNAA>
-    <xmx:fo9FatXZjHc0lA1qi2BwRXQvaf0ESm_Xy4xXl6uCftCm6URDpvVW9g>
-    <xmx:fo9FahTJEJvJ3ps7JorML1lDSq9nTRXbRTVxeq3ns7z7ZsyuBi796j_H>
+	1782943855; x=1783030255; bh=61MC3avNxuppaoV05ffZ6In2AG6fwyrBZhg
+	fpVb1AII=; b=aq8C++JHsGOgCGzu60BxziZnTSOltiDJ7RVFoar3f3lF/P2kX4S
+	yyo36USeJuFxQWsrCJqEAudLp291p1QanO4kF/Ce2P6kUkz0PIEGnjSL4Bc0D1On
+	XIFkN0QkMWA7NBiUpG2uMj+ApRehUUlaB6g4bpj0zEgkufbXQb3OAF2rj9jX95Ce
+	bgl1ZrV5x9g0Nzjoq1QrF2xwhNx052Z3czE2KZcZ1qeDecUb3r6ZIvkWxMYiun1i
+	t+8H+VV51VTBmS1ZD7Amk+j+rUNRopIRBdTXYmQubzrmRTDqzZ1H7fr6URfV7sIK
+	cbemKqvubOQcr2xzysJqVtNVE3lCEHaAzFQ==
+X-ME-Sender: <xms:b5BFauj0W65nSvccx96M8sm404r2nY0DenTPyynPc5vJwMYONN5tGw>
+    <xme:b5BFamB3PjRHx_Mi9fnyJsFnV-t3BjY3UW1ZFhxmew6mrm_vYGRk6Is87khEZ8hGj
+    qWIKSlSQqpNx8_kk9wkYnO9-4KBjBb1sLaorGCmIm3_OUNekGlfHg>
+X-ME-Received: <xmr:b5BFarEhQxjWuy9FDmfXYvNs740FQayODZl3ssJSXFnyrcZHXOo-ES2sIIA4IK5tnNzmuhx6hraeVxeEBqWeEDn5poXyWr3_IPV4GXc>
+X-ME-Proxy-Cause: dmFkZTEBL0G1TewY48UaCO1TbbodYFeGLBsTa+P6gf4ZUJhMK0mx9vSta0X1tePuO6qNGi
+    yKW61pKsQVMGXEIO2cSMSvseR+7/40Cy8snbeCiv5YcqocOvss/oLepy5bFfOeqVc6bevv
+    70b2cwd6h5HZKN8mQz7cYzg0JBz0H0qV/Ns44HFj4SLSoewl5EYAVKSTAIj0bSIaOTTvL/
+    SlZAOVYSMxWBr8EEDTRp33M00YOOANzaWz15oWVdCAitLQi8NjASXs0wQ05AHKp+FVYgmu
+    Luwp1sD2s0MUu5C5ENlbLOFGh8J5ZCKi38zZuk6DQfHzp+6ARlYU01TNUQbxraXAcDUHXX
+    nSn62QTb7SNp79frIYyv2CDsp30xn3S2FoX9piQulMfGoTIuGjjEVYHGVgDDd/UTemqXRi
+    ZGToAPt30fbIz6I6cbqANMz5ZzAcyXynuWId9wG/IUq/66kzWmxT58bQ9dhFC+Al5DoAHd
+    HQ4sZFiF3edszuXXNx6FHmFXS6DlCaoHrYoqyq7GuAhx33dVPDUTbS9AARivSOqQ+/bKuC
+    2dR/qhNSnzZlQu1w2Bfpcj/rwLVnlxOBpik0CR9KzD5w7qGh1BSxQRzRT2DX48m8KibcSS
+    BgjxWqPzn3q9R1eIJI8qBIAC1533vZ6awhbNK6bVTBLo153nYHoENsNQ56jw
+X-ME-Proxy: <xmx:b5BFamJsJguUwUN_BibsK93cuMQsmTZQqiW1oOkOnRpQAAl9sNxZKA>
+    <xmx:b5BFanlnVdhhOTKy1pPbyH-Fc26c3-o_qydgBoLUNIk_7XhzLurFAw>
+    <xmx:b5BFamQSdncmBk2frIOMZmhsT7XsUAOiNnegkHhK-OGfEujaI3R1hg>
+    <xmx:b5BFahLA5iVSPxCgn7kQUmjt7FQGGH4AOwJpUzNAqd39Kl6VJaVYAA>
+    <xmx:b5BFajkMWE7eSZwBw2SG1fVYNoVxekdh3ONlm_qiMNQaSAzikoyzyxiY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 18:06:54 -0400 (EDT)
+ 1 Jul 2026 18:10:54 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/4] rev-parse: exit 0 on --help
-In-Reply-To: <20260701212442.1430084-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 1 Jul 2026 21:24:38 +0000")
+Subject: Re: [PATCH v2 1/4] t1517: skip svn tests if svn is not installed
+In-Reply-To: <20260701212442.1430084-2-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 1 Jul 2026 21:24:39 +0000")
 References: <20260316220742.1286157-1-sandals@crustytoothpaste.net>
 	<20260701212442.1430084-1-sandals@crustytoothpaste.net>
-Date: Wed, 01 Jul 2026 15:06:52 -0700
-Message-ID: <xmqqcxx6mkjn.fsf@gitster.g>
+	<20260701212442.1430084-2-sandals@crustytoothpaste.net>
+Date: Wed, 01 Jul 2026 15:10:53 -0700
+Message-ID: <xmqq8q7umkcy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,43 +88,50 @@ Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> The standard philosophy for Unix software when a help option (such as
-> --help) is specified is that the software should exit 0, printing the
-> help output to standard output, since the standard output is for
-> user-requested output and the program performed the requested task
-> successfully.  If the user specifies an incorrect option, then the help
-> output should be printed to standard error (since the user has made a
-> mistake) and it should exit unsuccessfully.
-
-Hmph.
-
-> git rev-parse --parseopt properly directs the output in both of these
-> cases, but it currently exits 129 when it receives a --help or -h option
-> on the command line, which causes its invoking script to do the same.
-> This is not in line with the usual behavior and it causes scripts using
-> this command to exit unsuccessfully on --help as well.
+> The svn tests currently assume that git-svn's option parsing will always
+> fail the tests because it exits 0 on --help, not 129.  However, in a
+> future commit, we'll expect it to exit 0 and the tests will then need to
+> be updated to succeed in some cases and fail in others.
 >
-> This series introduces some changes to distinguish the --help and -h
-> options from other cases in which we print help output and adjusts the
-> exit code to 0 from those two options.  We continue to exit 129 when the
-> options are invalid, which is useful information to have for callers.
-> We also make the relevant changes such that `git rev-parse --parseopt`
-> does the same thing as long as it is invoked in the way specified in the
-> manual page (which a quick GitHub search shows almost everyone does).
+> We therefore need to have t1517 determine whether the Subversion Perl
+> modules are present, since if they are not, git-svn will die on start
+> and then it needs to continue to expect failure.  Add a stripped down
+> version of the tests in t/lib-git-svn.sh as a prerequisite we can use
+> here for our svn tests.
 >
-> One of the patches is rather long because we have many cases in which
-> we've hard-coded exit code 129 into our tests.  However, the changes
-> there should not be complex, only somewhat tedious to review.
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  t/t1517-outside-repo.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+> index c557f2f55c..583784f21b 100755
+> --- a/t/t1517-outside-repo.sh
+> +++ b/t/t1517-outside-repo.sh
+> @@ -4,6 +4,14 @@ test_description='check random commands outside repo'
+>  
+>  . ./test-lib.sh
+>  
+> +test_lazy_prereq SVN '
+> +	test_have_prereq PERL && test -n "$NO_SVN_TESTS" && perl -w -e "
+> +		use SVN::Core;
+> +		use SVN::Repos;
+> +		\$SVN::Core::VERSION gt '1.1.0' or exit(42);
+> +	"
+> +'
 
-It is borderline for "yes, we all know it is obvious that things
-should have worked this way from day one, we regret that it is not
-the case, but it has been working differently and users' scripts all
-have been working with the current behaviour, and it is likely that
-they will all break".
+This corresponds to 42 in t/lib-git-svn.sh?  We can use any non-zero
+value here, but just being curious.
 
-Two big things that make it much less likely, saving grace, are that
-this is only about "--help" (which is unlikely to be a part of
-end-user script), and this makes the invocation succeed (if we were
-changing from exit 0 to exit 129, we would be breaking tons more).
-
-;-)
+>  test_expect_success 'set up a non-repo directory and test file' '
+>  	GIT_CEILING_DIRECTORIES=$(pwd) &&
+>  	export GIT_CEILING_DIRECTORIES &&
+> @@ -138,6 +146,8 @@ do
+>  	case "$cmd" in
+>  	instaweb)
+>  		prereq=PERL ;;
+> +	svn)
+> +		prereq=SVN ;;
+>  	*)
+>  		prereq= ;;
+>  	esac
