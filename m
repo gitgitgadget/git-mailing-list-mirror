@@ -1,176 +1,109 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD7F40910E
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 10:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC1D3F39DB
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 10:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782901295; cv=none; b=tz6ffzvv/uK3tCvOyCFGjYZyLQvL9o5MaSTRClm9qXKht6YhAHW0L6hISCY6YKkHilGd7hzLoZbouOBawZGHDs5ioPM+LF5OBURViZcSsIyre7CiKUfny7GoTe7tZHe8G1byXaxJn90quXKh9KKfC8JNTswEYOze8ELeDwB0pYc=
+	t=1782901890; cv=none; b=KkeffoUMniXp7XfDli/v99KenNIb+3TMZ7PdtGSudHOrREjZYRIfITEPUDFavdgck8oWgJ6QH58lEUv5rxofx4Ar5/8f73Alrg82B7pYwMnNuQIBpC3sffZgbT/Z/zmfcC2cZ3Gv2AhP646z7hF1uQxkfrzSAf68NVSrJ0Q9lis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782901295; c=relaxed/simple;
-	bh=fAqMmM33WmdsqmJqbcG6gG758HYHUTQV5MFg7XEHCZs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HaFJHFl6B68baBnOaEHsc7jPCW4qpsUPtuA6uiiDabSVnuesIlHv7k2cRob+EJ3HFj6Fw5KJhKbEmY9zmk1AbXK1fSzgIkJBtntS/7qLJCa+02YK4xOvmibrdfUWAxPuMsIGzfTdGxAon0fzXmKcJjmcB9NdkLKUoZA2mZUVsps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=v4zH3tUG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JN1jY1Mr; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1782901890; c=relaxed/simple;
+	bh=6e8/ibO8LFcmVKxBo6V7MX04Dl/RTIahXjrUQNsGItU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Zt2FQqIBnq9jvR8TeBdDFXUlcNPAksvAgEPbRr3p/48qH/wnJuRULq/T7L59sZQZSw1Z5antV+1TIRCfr3i+fCx/Qg/bzrMeHe4QT4TiSoE08+Dymm6bfEXbADiuN3uoMxQzv2qQ4UsHJFslsauTRyESnIfXH0BEp6A68djP0b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XY7tBX/j; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="v4zH3tUG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JN1jY1Mr"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id BCFCEEC0181;
-	Wed,  1 Jul 2026 06:21:33 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 01 Jul 2026 06:21:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782901293; x=1782987693; bh=2l6p/3r5Aq
-	I34UtY5uceYfOWw+jRq2fJLe7rugerWN4=; b=v4zH3tUGMtO9ODSCzncjeE942b
-	yGwPtwA9fgiFQor6bMPjBnzYzMCLxiYoeHXE25w8wXV1KeDDaxAtj8sXY+17Ky0d
-	6u6sEc5jvPooeutqhlzvE2z8w9GkgcN3bZLZigcV/p1RSZ57xcsYVKVwLI8ZzNee
-	p2xPDjDo9BbIwdga6f9fr4UkXz0hATZmjAIZnrxMQHd5YNziNYM6jfAUGPEjFQI8
-	u5LkfyM4sGXt7SouRYYIWgji3D4aL+Hi38sMo/s2sGQRvpBMev2AgyIXAl6l8CRM
-	+nxzSpiyW9UEobDkJcFmikFjfZVuziQrzL5+FL9yimt60cx107LRmW+6AYQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782901293; x=1782987693; bh=2l6p/3r5AqI34UtY5uceYfOWw+jRq2fJLe7
-	rugerWN4=; b=JN1jY1Mr2dCP+CVlaXSzPq9F448NwdJT4m27HuC5tRCTq9coYfP
-	SD+PUV+IRA6BMjOX7fQpv605K9L/27id3607Rt66K7Pfo5+L+225SflkQC4PAKW+
-	LumHOECyQ8Qp8Mdlr2i9cRp9PW3s6rfj/KBqsMsuPZfTcNVjMmMUMbxyEnkyNESc
-	FIuUNucxm4NEirLyw/fIWeciiluo+bb5FHYaElnQ1tcOPFXO7EE9PoX9t61IkGL4
-	gwBIr+hYR+g+8B2bTImOssWUAiyaUnf6j0F0sd/hTOxpeyX58JhYsYhcUdLGxVyP
-	etSHKgI9HXmeN8VZko4aoUZ8Lbk2FKloFyA==
-X-ME-Sender: <xms:LepEatOmzrud3uJyc7F91-XgPjRl1DYiJvjhQm6WcknuSOMZVAfkRA>
-    <xme:LepEapQJUEkOPn_e15j3t4UntCfkLbhwYIOzffVXLwdGUiLfcQtMr0GxfqjhuqsUd
-    DavnUJwppIKyoTbLamrVY4eIhSpTkIO8yLiIItTVUkyOhJ-DsZ-yw>
-X-ME-Received: <xmr:LepEajjblLLLPBiUJBC8teKRnd8zcz8W09OSW4gZzJbOB3eNo5GvLwAZhxxvTsbuxfm-x6_Fg6AVKnV_8YbJM_V-NckJbp3zhLcRsYGj-Mw>
-X-ME-Proxy-Cause: dmFkZTGwU5AlBVLANVN5GzNPsI3GWLLkbxFI2Ga5K94+WIfEcPa+YxLcAMR+SkoWyM7Yli
-    N8USxr24byKnWIKcqkWDJcr7wL+G+iV55R/0zpgffVTdFKC6xaP3cpl4avU5dg6wmFjDiR
-    i3/ERi0avMUPNMSZ6zximmSYPB6qresFTj7RYm007iDkH/tvK24Eu6b0X3D6EbaPCkfuL2
-    /LTmWWoOwPhaZxEwzjqgwkMoAme5cp+sFWOE26WIHCV9/XVDSL7UbEYB6ROlpGz2oXRUJO
-    GlqhX6usjzT764IEACOi0oXCAyogtfAMdzWCG7oiqy2xqmp07+Wo27ZXTqnZVQ2zH/UHV4
-    obJ7kmozgTwTfPNc6mx91TTm5kh+f4EeB2/daJK9DoMn1JafViz+xFIPKnhWrE+eNoCPkQ
-    pb98jYMjbApGyk/p1RErn7yQkb7bz8RyooGYC0BzqE3mFck+fWS+PVFKIcDgJlJdLBFX8r
-    1pK/R1Uf+UdSjb7oUtv4J9ftdpOI2GwfNJXjFtoTk9ZlPjqH8EDqUQG5jmWKLg12Sge3OF
-    UhLprFxv+34TPMr4wO8itnR3LzeuUPOd4EqRmyyYecAs4QCHDspWoFGLRgxHmGrxrBHeso
-    G2w6Z5QkImw2ahxeOuANJSUgFvJO4vDmGL3sOgIWe6oJX963IYClU/hywM+A
-X-ME-Proxy: <xmx:LepEaq_FJf1UpuHeafpy_83bEOdwF76Q7fi2w8nL-lxBvz_uQ1aYdw>
-    <xmx:LepEaiHcDMbQuAKxmsG5yIyarUiVVgHKBYVokLGAeoIFesGcD2kMVw>
-    <xmx:LepEallkeWzcr-dGR4PilRo9Eo4NfqI-yq30vNp8FtxBp7iqtf2ubQ>
-    <xmx:LepEauaLJ9snyfT4QVlnRfPgNbtbn_U6cA2kQl1e1vk7llta_j_K3g>
-    <xmx:LepEaoHOOhV_z5kJfeyiuitH0LiKdD5kK_MflqJd93grgVCC37uqaqAk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jul 2026 06:21:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f1276944 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Jul 2026 10:21:30 +0000 (UTC)
-Date: Wed, 1 Jul 2026 12:21:27 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Pablo Sabater <pabloosabaterr@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v7 11/11] builtin/history: implement "drop" subcommand
-Message-ID: <akTqJw0qlN0RGfyz@pks.im>
-References: <20260629-b4-pks-history-drop-v7-0-6e9392a957d8@pks.im>
- <20260629-b4-pks-history-drop-v7-11-6e9392a957d8@pks.im>
- <xmqqv7b1unxl.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XY7tBX/j"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6987cd38a64so970500a12.0
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 03:31:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782901886; x=1783506686; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=leueRkDGdd2bqtnrsUn2KXCpuVr+cpgxMyd0a6l9spA=;
+        b=XY7tBX/jKXhv3ZRTG3zRtHfrS2hShjaoQmUxVE2mP5ROqwFNgHW0IORO+k467JOb6x
+         XrXxCZLQzOsNxrGbLbvu7DkO/8S4W227wY2RK2BRGeN58YRc1WweVT2/NziWwmoyu+9k
+         aPxuYXrjkYlpzrvpcprr51HjfVRuuiNI7eO5kMEnbSnXMdZwqKHfX363Ujc1PnFuHPdp
+         JPzH76EzxnWCX30dc4FmMza3cqYMUa6f3XMWTlUp7iz++Rw0ydpQg3oKjAZ9F2qq1vI6
+         1n8UcZ1DXyXmtww2xvQ1BKNrssCasQOdA3Js/qBBMc09EG7AMSDviHdEKxV621mqBhvD
+         BqiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782901886; x=1783506686;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=leueRkDGdd2bqtnrsUn2KXCpuVr+cpgxMyd0a6l9spA=;
+        b=OFLpiWRYvFZclH+bLafzW6SfJIALinzZ9ymofIqP9ILEvi6hs54WcIiTTHPHzl9rXr
+         eutu4W+Lr7YMI4s+QMwHZgRZZXaXxgKSrGgwqwe44/qswFyPsZ5LW/GeqWBtU4G/dUCJ
+         vWtnNPgdJXoqW8pQLLBF1FX9mAnuJt0xmU5mZEdJnyPKKsgpLzixoqVXb1w8AtxgJY5w
+         Kdn0e5Nw3uv7e9qxtI1Qy6QZLyRcchPpSAeTuv3RU/6VKTCiwuLnvcN+n9nY/9eFYRCu
+         PK+vBw19f0WPnmcht3hBlRjaBxz+p/L7H4zwluzJulQYWsjqjH3QZx3/8JYVq+svsliv
+         phCw==
+X-Forwarded-Encrypted: i=1; AHgh+RokMNgEuHpfwvNuuR2M3yg3OHo1QrsE4HLu42CdU+ThmO8jJgy5KeBExC06otYpQeppE8Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxbE5FCx+8Oj+pM/j+DkLbUkNYO7jZe2NvjhPIYYUb9zu8zo2z4
+	rH1VJqvT5ksqbPVGgmaGim+KdFZvspejPWD2TPHaT+Ni22mogQ0tmdQN
+X-Gm-Gg: AfdE7clcovgklHDYPxxBsPejYOmemF+s+XBjzXsG360IDhANpiEpZaTVoe26kTpZk2F
+	hqYOqsa+eMlBHYiSxClczsqCcCEG+8Ufc3suzzqZldKHAiZDQ5WerScgRqS4AqM2eeOKTEh/8Mc
+	6AaXxyVxEf7vWiywcx7/YmJxRarJcEBEb/VQ6MDPWeV24foNwNwq0Y+POJpxkj4LdKmgGms+gKj
+	uWLd0x7QE0ixHuL7T+12Kpg6e9tTyInCzbKkzgd6ypn6+yiELklaNqGHRzVdaaCbyhCmOnsicQF
+	6BiweLoai9LzSjtF7YAPX6MxRL8lcu6bNxJoGIRbo+vskFpSSm1HgYBT7yhjQv2PwTrt+APOFVd
+	aHlb0jU37XDFC5wsBRmlph7jDNHN5dLKcyNAt+XXGQai+hfjH8LvQ/e//xC3q4/IgB8ypeYecnc
+	0h6/7Aa5UJJzToPVyrYJW9cYE3PSCMPj9TREh6MIRie55JRpyEna35B9dpkcTpLkvLqwI=
+X-Received: by 2002:a05:6402:a589:10b0:698:ff3:85ea with SMTP id 4fb4d7f45d1cf-698819cd1aemr2089813a12.5.1782901885467;
+        Wed, 01 Jul 2026 03:31:25 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6987c98921asm2405587a12.31.2026.07.01.03.31.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Jul 2026 03:31:24 -0700 (PDT)
+Message-ID: <f15456d2-d8b2-4edc-80b4-3a9d8fc77da9@gmail.com>
+Date: Wed, 1 Jul 2026 11:31:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv7b1unxl.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+ <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
+ <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+ <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
+ <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
+ <CAHwyqnVN=McZjtQGcPnoVOHAd0+VDNPXy_N949VMsqZty3RDjQ@mail.gmail.com>
+ <4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com>
+ <CAHwyqnXoqZYHodWXHtwnk0_PiZcCYSVL+WgL3h5nWiYx_cSZLw@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHwyqnXoqZYHodWXHtwnk0_PiZcCYSVL+WgL3h5nWiYx_cSZLw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 29, 2026 at 12:49:42PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > +static int find_head_tree_change(struct repository *repo,
-> > +				 const struct replay_result *result,
-> > +				 struct commit **old_head,
-> > +				 struct commit **new_head,
-> > +				 bool *changed)
-> > +{
-> > +	const struct replay_ref_update *head_update = NULL;
-> > +	struct commit *old_head_commit, *new_head_commit;
-> > +	struct tree *old_head_tree, *new_head_tree;
-> > +	const char *head_target;
-> > +	int head_flags;
-> > +
-> > +	*changed = false;
-> > +
-> > +	head_target = refs_resolve_ref_unsafe(get_main_ref_store(repo),
-> > +					      "HEAD", RESOLVE_REF_NO_RECURSE,
-> > +					      NULL, &head_flags);
-> > +	if (!head_target)
-> > +		return error(_("cannot look up HEAD"));
-> 
-> Here head_target would be something like "refs/heads/master", or
-> whatever the "HEAD" happens to point at.
-> 
-> > +	if (!(head_flags & REF_ISSYMREF))
-> > +		head_target = "HEAD";
-> 
-> But if it is not a symref, then it is a detached HEAD.  We manually
-> set it to "HEAD" again.  We know head_target was not NULL, so what
-> did we receive in it from refs_resolve_ref_unsafe() call, before we
-> overwrite it here?
+Hi Harald
 
-True, this is redundant indeed, as the returned name would already be
-"HEAD" in that case.
+On 30/06/2026 19:38, Harald Nordgren wrote:
+> I want to avoid creating drift between this and the format of 'git
+> rebase -i', so if we want to change this, maybe better to change both
+> at a later point instead?
 
-[snip]
-> > +static int cmd_history_drop(int argc,
-> > +			    const char **argv,
-> > +			    const char *prefix,
-> > +			    struct repository *repo)
-> > +{
-> > +...
-> > +	struct option options[] = {
-> > +		OPT_CALLBACK_F(0, "update-refs", &action, "(branches|head)",
-> > +			       N_("control which refs should be updated"),
-> > +			       PARSE_OPT_NONEG, parse_ref_action),
-> > ...
-> > +		OPT_END(),
-> > +	};
-> > ...
-> > +	ret = compute_pending_ref_updates(&revs, action, original, rewritten,
-> > +					  empty, &result);
-> 
-> Here we call the function.  When action is "--update-refs=head",
-> doesn't this code in compute_pending_ref_updates() ... 
-> 
-> 		if (action == REF_ACTION_HEAD &&
-> 		    decoration->type != DECORATION_REF_HEAD)
-> 			continue;
-> 
-> ... skip any reference name (loaded by load_ref_decorations() lazily
-> by calling get_name_decoration()) that is not "HEAD", which would
-> mean we end up not finding any hits in the find_head_tree_change()
-> function call we make later ...
-> 
-> > +	if (ret) {
-> > +		ret = error(_("failed replaying descendants"));
-> > +		goto out;
-> > +	}
-> > + ...
-> > +	if (!is_bare_repository()) {
-> > +		ret = find_head_tree_change(repo, &result, &old_head,
-> > +					    &new_head, &head_moves);
-> 
-> ... here?
+The reason we're introducing the history command is to experiment with 
+providing a better user interface for rewriting history without being 
+bound by the limitations of "git rebase". So I think it would entirely 
+appropriate to try a different format for the squash message here. If it 
+turns out to be a success then we can see if we want to use it in "git 
+rebase" as well.
 
-No, because `replay_revisions()` populates the result with the resolved
-branch name, and we're also searching for the same branch name inside
-`find_head_tree_change()`.
+Thanks
 
-Patrick
+Phillip
+
