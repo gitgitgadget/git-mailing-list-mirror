@@ -1,115 +1,113 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B653270545
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:13:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD50D3009F6
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 08:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782893641; cv=none; b=AiHvfuPpMHfXT6x7w5ruz+6ofCGLXmCZlMOb+laTHZZUFKDTpiNcls2ZhYkW2wUSEIyb1WZ7pfhvKqOkloZHgIBQ7j22eaCZqFyE3a58AkIOhCXTYQWkQDRbXXiQaUd4/LU9lpNoOa0dh4u4JFJ5XoCP3VfqK6EpUoGnfP0A8UM=
+	t=1782894416; cv=none; b=Wnnj1V7PHXMEeHpKcwC7+cZfGQlCiRVcikw/VsEgosQmck2IeZ0JcQU86B6ynkpsYu/Y+3mdweBfmuuGQEo3AbY3WdinEDdULPKOrYiOcG6vlaxjmvgtn7BFyXTVa3bOtUOCiwcjfddEb7gw/reRrTUlymENSzCZ1jghXSvLqBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782893641; c=relaxed/simple;
-	bh=mnd21UFXAGVmMUlNVet/PT7vXU6yl1VZiGkYG/lRAa4=;
+	s=arc-20240116; t=1782894416; c=relaxed/simple;
+	bh=e8QPBWYhaMlz6zGFAAtP53HlT0a2MefiKFBK/o3kNzk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=thKXLClPJ5CcdD7nyI3l1ywZ0WThakMovgbXrInTtDCSlAf47F50r/c9KvmNwdjjheqsVeK5iRzcw7cYlhcw2Eoc656AveqRqhY7TfG0tNYErSrihpofm4GcvWHJtqAAA18TF2zchDvzmlWp5zclKhfnCLbpeZgoZTMnkl0dzAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=iA9Aqzjz; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=lNseOqbPJebdp6+qg5KTx2HRnM7XYLIddjikHkq4Uk08OZAJUNLhs9J5IU2IPBTE1d4SibX9An+pwlTM4ZpNWDmcu6p9+bOFIeZrhQmExawb3aXZANSq/YBmF/P84OukIYAz9efIKByFbGO6rBasme0Rai97DlGsFmlt4nZdupo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EZ4GEWWe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g1Fc4clD; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="iA9Aqzjz"
-Received: (qmail 77662 invoked by uid 106); 1 Jul 2026 08:13:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=mnd21UFXAGVmMUlNVet/PT7vXU6yl1VZiGkYG/lRAa4=; b=iA9Aqzjzj2fFiKyMBRor2mDsrjWm9pmz8Bau1f61HN6QhgJNlakAilYfTBHo9AKihPVdDz00bobzLEQMdZVQa9H7OZwzC7wUl8J86DIE1NeIgagVOzHaeDM+OUgYAEBaxkaO2wuBgoM30ZPD3ndLwdx065KyZjqWJRK0dtvdHIzBwjEIuPQsQOIvGbqrjhcPPteAYII6F8gSUTs6o0sKUWlJOWlQnEjwBW/DaaPdj2L7iNyiQCiC6FRsAaBbyvBSsnS1g8b1rKqpNqRIyoxAaZwFn1XtOEJKboNhAh7LOlczoAaxCrvIhDtMDBNb36CAD4arfSgJmEwKCQLXWNn2Lg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jul 2026 08:13:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 158753 invoked by uid 111); 1 Jul 2026 08:13:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jul 2026 04:13:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 1 Jul 2026 04:13:58 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/2] format-patch: fix leak of rev_info in prepare_bases()
-Message-ID: <20260701081358.GB813310@coredump.intra.peff.net>
-References: <20260630063944.GA3733670@coredump.intra.peff.net>
- <20260630064301.GB3733961@coredump.intra.peff.net>
- <akOZy-BygZS8fqPM@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EZ4GEWWe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g1Fc4clD"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F82C1400149;
+	Wed,  1 Jul 2026 04:26:54 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 01 Jul 2026 04:26:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782894414; x=1782980814; bh=e8QPBWYhaM
+	lz6zGFAAtP53HlT0a2MefiKFBK/o3kNzk=; b=EZ4GEWWe+WQsFVBZScDOqXFETV
+	EQhrV7LODSi1Swg8wIsZ/JnNy+3MwTjgQ8B6rLRsgSa//l9kz3mAkq86rtwULVKb
+	uPlu7tp2DfQNqKRP3cNPYIZEfaq5jvm4p9cVQziWnN7SizC2jBcU9Ep0hFHKyg2L
+	lUMCUFsD8wtmU/UegkhJ4WlPabsOAeq6vLziZfk1+brOdo2UqFeslhOyLl2IQe8I
+	dUZkaUohaa3b5CnlbRhN1vkXdZf/mDVctH9W0bl3zxdaklxjgf08tPDipmluPckC
+	jDnrCpUHFs/h2TyTu7A+OW3/i6srKlaQCJiUHN27q/pEwfU/i3Wms+AShwZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782894414; x=1782980814; bh=e8QPBWYhaMlz6zGFAAtP53HlT0a2MefiKFB
+	K/o3kNzk=; b=g1Fc4clD0AhkY0oAmBZbwpKWZ7gHrECkrryjEz8hVfaO3ZrMg2J
+	hdtSIx0XpsAA5Bbdk7jdt0IngJnNzAt2YiEfhYcWWr00ajIx5RYq45cx6tIGEzS1
+	vsXULrNITQw4pUvEiyzxHwEBa58RD0FnBV3B7TEKldNlR5VStUWRTr7du6/ySPA1
+	K0DNAnpYqN3YaHdXYC0xchVcxVsMgGwmurlHRAQxXf3++j/joQaxgDdgB8gL1/Pw
+	YKiXWXcEvn5PB2rqxOy9bKSiRBe9/qGqQhHvXiwt3CFiZKnoxs+++yloKs2VDUhz
+	hnXgffU4kOq936BMre8Jv6mHAWiB09yfB4A==
+X-ME-Sender: <xms:Ts9EamlodjLyCAKdQa2KAng_OPq2awpu6oBtZNS8i4Ipb2Y0UrTOAA>
+    <xme:Ts9Eaj1qmAXAqtIg-9a2JvnPHhNeBukIBH7rDrfiG7yW4zt0KH-1VRVb-CO_osN9l
+    khkYcKzx9RVZ3DKkHmYPeiV5MKXGilQi7PJXDgwCL1P3e19zZ0VKQ>
+X-ME-Received: <xmr:Ts9EaiQA3VvJoS61ZuGGY_SdRLmTM84Y37vCtuFuR70TB8GMudyeMAA3wqEekgNXJMax-eVxGGEfo787dQwng1E9GDR5vO06wCOMGyp49NQ>
+X-ME-Proxy-Cause: dmFkZTGdZBTIgAmDmploz9XtNydoPEpmSXQS1hBVk03r8rZW0E0aeYtx+0BmLAvXOQkhH6
+    A60jCIPUu3f9lR74ugVRk2txxCzEspg4WL4F2EPgulzXF5rA9avKqI7UyKRZxf3nfmzXbP
+    gUNjg6cpgfOkpaUjRyoizPkCqUm/LlY9AyBM361ag8QmSzWXizxQweI0y6/UftGK0mXi4T
+    Ft/em9xEgPkLBdgobXwLxJX1GCo4BvFz5tOSek345RdEDjHD2PEn2GMxkjHNgnkbFqqgJX
+    ygzZxWwnBQZEq9tbumK3e30EZBM0udQ8biYJJYmwIXhuJeL8f9601glNP+iKQrpw8S23f2
+    yN6k2l8UukCiUAdEQzgm/u3sncMs5as80hTPOuVHV+JU9KU+8i2+XR55Y3hHybB7APlZwC
+    5dDGXTC8SABqjkrPOow/ddDnDCDv7UISTCLtbdzFEI6XPFF/QUeCi+kw/orEg+mAxx++A7
+    6NMkjkO7RJAt2L4P4bLufMDdq8eParveclb5hb+97mC6OdkNwG+43DfDg+I4W6R+Pa0HOa
+    xvi4lyChHvMKWzv97jitAO9jedQIfUkd2G6bbo8XNk9YeWbReBJOejmN5CQ+pgAl3+iA+k
+    mwmGX8904zeHJlwHsLU0/DZnmYr3fgJdjhWhuQFnvGVNgJD0CyFZOeNGzbFQ
+X-ME-Proxy: <xmx:Ts9EaluwQyz8qEwWJ13gtwBFBoRONwlWqwS3OgJVjx09UQodS1sKCw>
+    <xmx:Ts9EanZW7hACNcFh3snd05JxOci8rpce4q5Kv7PjnnkQJVCjEVgjEw>
+    <xmx:Ts9Eaqu_iP0Cs4ddeB_pISRS1C6v-R6rykkq-4NU2-AlDw2A2MJ6fQ>
+    <xmx:Ts9EapHwpab9CW8HUDhRHYjzVwm5vmMISJV6_F2rLRN0GYK3Pzx7EQ>
+    <xmx:Ts9EauFcaLyuqZsbk-bsGff30-d68AerHbfnGEHrTppwP-wQfEtSvZLs>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Jul 2026 04:26:53 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 5dca82aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Jul 2026 08:26:51 +0000 (UTC)
+Date: Wed, 1 Jul 2026 10:26:43 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] revision: avoid leaking bloom keyvecs with multiple
+ traversals
+Message-ID: <akTPQ1IVqWy8WTk8@pks.im>
+References: <20260701063538.GA2579765@coredump.intra.peff.net>
+ <20260701064052.GB2580331@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <akOZy-BygZS8fqPM@pks.im>
+In-Reply-To: <20260701064052.GB2580331@coredump.intra.peff.net>
 
-On Tue, Jun 30, 2026 at 12:26:19PM +0200, Patrick Steinhardt wrote:
+On Wed, Jul 01, 2026 at 02:40:52AM -0400, Jeff King wrote:
+[snip]
+> There's an alternative fix, which is that prepare_to_use_bloom_filter()
+> could notice that we already have keyvec entries and just reuse them.
+> But this is less safe; the keyvec depends on the pruning pathspec, and
+> we don't know if that has changed.
 
-> >   make SANITIZE=leak
-> >   cd t
-> >   GIT_TEST_COMMIT_GRAPH=1 ./t4014-format-patch.sh
-> > 
-> > which yields many entries like:
-> > 
-> >   ==git==3687620==ERROR: LeakSanitizer: detected memory leaks
-> >   Direct leak of 200 byte(s) in 1 object(s) allocated from:
-> >       #0 0x7f4ccba185cb in malloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:74
-> >       #1 0x55cd452cdd0b in do_xmalloc wrapper.c:55
-> >       #2 0x55cd452cdd9d in xmalloc wrapper.c:76
-> >       #3 0x55cd45255473 in init_topo_walk revision.c:3845
-> >       #4 0x55cd45255bef in prepare_revision_walk revision.c:4017
-> >       #5 0x55cd44ffec40 in prepare_bases builtin/log.c:1872
-> >       #6 0x55cd450010ec in cmd_format_patch builtin/log.c:2439
-> 
-> Interesting. Makes me wonder whether we should modify linux-TEST-vars to
-> also run with the leak checker enabled. Ideally we'd of course just do
-> this for all jobs, but the overhead is probably way too high... yes,
-> doing a simple benchmark shows a ~3x hit.
-> 
-> So this is definitely nothing we want to do for all jobs. But for the
-> linux-TEST-vars job it might make sense, as it exercises a bunch of
-> non-default code paths.
+Right. We could of course start to record the pruning pathspec so that
+we're able to tell these cases apart, and if so we could reuse the bloom
+keyvec entries safely. But as you mention...
 
-We already run a special leak job for linux-reftables. Why not turn that
-job into "leaks plus reftables plus test-vars"? The only downside would
-be potentially hiding leaks found by linux-reftables-leaks if the
-test-vars features force us into a difference code path. But looking at
-the list, it doesn't seem likely to me. None of them is particularly
-ref-related.
+> I think it would _probably_ work in practice, since any caller using a
+> rev_info for multiple traversals is probably doing so with the same
+> pathspec. But it would also create a very subtle bug if that assumption
+> is violated. So we'll do the safer thing here, and generate fresh keyvec
+> entries for each traversal. The efficiency difference is probably not
+> noticeable, and this is what was happening already (we just weren't
+> bothering to free the old ones!).
 
-In fact, I kind of wonder if we could fold linux-reftables into the
-test-vars job completely.
+... we haven't been doing that beforehand, either, so it's fine to not
+care about that for now and just plug the memory leak.
 
-> One thing worth noting: there are still six test suites that are failing
-> with this patch: t0095, t3451, t3452, t3453, t4013 and t4211. The t345x
-> failures are because of the missing call to `repo_unuse_commit_buffer()`
-> in git-history(1), which we already noted elsewhere.
-> 
-> All of the remaining leaks in t0095, t4013 and t4211 seem to be related
-> to bloom filters.
-
-I sent some patches to fix the bloom-filter cases.
-
-Building with OPENSSL_SHA1_UNSAFE turns up more. The core issue is that
-recent versions of openssl require an allocation to open a sha1 context,
-and we free it in git_hash_final(). So code paths that abort mid-hash
-will leak the allocation, and we need a git_hash_discard().
-
-It comes up mostly with csum-file.[ch], since that's where we use the
-unsafe variant.
-
-If you further build with OPENSSL_SHA1 (using it for _all_ hash
-computations), there are a few more cases. It's hard to care too much
-since that isn't a recommended build (and we've even discussed dropping
-support for non-dc sha1 totally). But sha256 has the same issue, so
-we'll want to fix it eventually (I didn't try leak-checking the
-linux-sha256 build, but I expect it would complain a lot).
-
-I have some patches but they need a bit of polish. In particular I think
-we'll have to tweak the hash.h #define mess to expose a "discard"
-primitive from each implementation (otherwise we have to finalize the
-hash to discard, which is a little inefficient). I didn't quite have the
-stomach for that tonight.
-
--Peff
+Patrick
