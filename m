@@ -1,68 +1,70 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4523A2E25
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2D23B52F8
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:04:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782889492; cv=none; b=AuCu49Z7rhpGltnBN8l59wVJrAc8u2LQ0WjZKnsDI/DRa1pVvrVvsuIw7ziSyD4ksjofLcXWVi4FVKdVLnueCACjWZDcdYIewFpYVbsrbvarZUqcAdtQpNfIILtorJfoev8oufVOnIkrdIJfWDwaB/SBm74ZXbE1GQZkjrmvQPQ=
+	t=1782889494; cv=none; b=YAQXvYAhYGKWPlpZ+2fWFRJQWivmAzSRYUiXsL1SSeWlKUQ974+E0VSttsplwrO0IzRYtuBvTFdMojkFBjysBPkmKhBWpZx2Tkcjb7JclUHeJj5/IDlO4rwEc9wCD4MeRlSjJsRVWKTbfxuTiwpv37beaGbkjuq6WGI1B7NWENU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782889492; c=relaxed/simple;
-	bh=lXNsk+KSyUZhB6CmaLHulJ53tvgeLMRbh1UrKIctjQs=;
+	s=arc-20240116; t=1782889494; c=relaxed/simple;
+	bh=mrBcuP5uqIYjQ75rlD36u0b9wt/y08coG9Knk8FjDLo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=oq1GF9KcTp8Buh04OaMJ2f4Zc2uUT6hEMmKewGbRtGXMF1s89vP0+bpV+rnLDuYuIfRH5T1JZDdkYK0YHHh8IK4qijnESxKWerUsuU5RXVrNDwNE/0P2kQxn0oFbjhgwUO4ZmGEY3MukI1sNNKyrCz6Um+1vgeDdOmqG3NptpSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s/bpuPCb; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=nNVRV7NldmT2QXxRChwCUPeDmExy2df/Mg0cVroBMnjqOHFvw4XcspzlSock7V2xWVAVe8FjRfhTGlkFknWZ/GZmMcP/DFK2WR5x2IPskcH757PJ+IzPTH3+hClXm4RAnimFS5Ftqz8FRjVSnLSjahJf6HSK3wcgRYH9nUebijY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D1hAWk+w; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s/bpuPCb"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-915ab38ac14so30480985a.0
-        for <git@vger.kernel.org>; Wed, 01 Jul 2026 00:04:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D1hAWk+w"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-92e5cb052edso28201485a.2
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 00:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782889490; x=1783494290; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pdvr7lER9V9H7fdQf5A/5tTn1ept9289MiKOfZ+OtDg=;
-        b=s/bpuPCbRgTqq8tHJ4y8oLIDPpRm/6rwXsfcuJSikPqjCn8/GtznepeXHEmLuP+Md2
-         wd265L1D8Ag6LAKOLNUikCh+of602VVF3NPhzeXwcVWDXoI0oFt7jX9bhaAwsXJvOpqM
-         CmF9pl9r1aleF4K1l8BQlzXUcpgITBBBiDXz9kxA2pQChUUr5E/lJY1rY1WdfmanAqLs
-         J5QenTve5UtjJ8w5QLAUYsOOXpmIA5ybAsGVzzFhFAfoepulXhOy+/l0nHvzWR80uXY6
-         1qnmH3ANOEw6oJItpkiNqakqw2HiqKwFxyZ+msyZaOYQPvxIBlRRNlOg04XW1DiHBxHB
-         cR5A==
+        d=gmail.com; s=20251104; t=1782889491; x=1783494291; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=tDKq041CEXhPpuz8LfGlSSIJN7u8oShSF1f6hHy0Lfg=;
+        b=D1hAWk+w9iDDGYM4uU1S5tsLtnXJRyXVx9cp0ilD/rb07jqOZFiRecxcTcbnaYp5Ol
+         R0CQ0SGlBZ8zIw2+gFalcdXvOHj6Rx57txaGFxmcYBG56VMz4XD2Zqx5pXb1armer3v+
+         E9mvJi4VI07GP2CpV7urAZpGvks0RlLyw3JUpmB7Cy1yQNVvg2jAT9DmzGSR6j4RSyej
+         hxceD09OMopYnEl5jXvkUr1whV/QMc3UnG3ykVn8O87ALmcQgLJj6HgqRXd/VxnRVUpJ
+         NF5QCzC11g2XT3iAE46+gS3n16hWBvnu4YeXliorGIcn/yvAs/vj2/M+f/qrRpneRjRG
+         8kvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782889490; x=1783494290;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Pdvr7lER9V9H7fdQf5A/5tTn1ept9289MiKOfZ+OtDg=;
-        b=OaXJRsq+ReF1Mqbo2YeONZRGB4Te8hZvTcbR8g0v2Vh+YyxuinRZfoRcYCUeXSVjeA
-         vMH4ngzraqTlk1oNuVu9PjCBBiBq18Vt+wr1IhqsDwRLPAoyL2QtWwwj7sUC2pLpzMcH
-         2fn0fb2UPtrexiXp7EB8ccrBC4DKKDUqRHD0j5iiR26liIcNHnJ74I2HzwwDP4LmEt0m
-         yD66Tc5a2vFexE6iRJGcTEB9z1Y92aJFEB1DqV1c7RBbUJzY0uzz/kx3C3CmU2LmWLes
-         dy+9OaNk398C5m4UHSpNxrNRXFwg+EMIzan4va2xbqKHE0odj3XLQbkbfwx4yclRbYU3
-         yGwQ==
-X-Gm-Message-State: AOJu0YzQTQFuPKnm/47hoGcfIf5YFuOqdh0y1uQ7DJYIlcEtVyc6tjpE
-	2Hvbj8JtMqkGsDkl/t6/+S/bO6TCp6W08w6EUs1A4Zz2wRntBX8doLvPK+absA==
-X-Gm-Gg: AfdE7cnlepJMsj6B+8eMpcSr13dx1DoDwUr7iWSyB5kOnh1V3NR2yHCsYMqqNa14LAX
-	2b8LxJ7iQKbnmW4CTlubdFBc8Fu/MBoOQyiluVz93vVxGBgSM6dZieiOiy2HeSFhQYxLvC0qSDo
-	MzzekIBz3Lqt6r6vAt/7woEa+StLG/GGEXrTLx2I5feX7EqTgdc/65IuwAkvsYd73IjhUsKcwxp
-	zZbBmJhkMCcqWCbpIA+8bKnq1oh5OUlvjjO/Q4g/9bk79cr0W81fDtAGm2C0AYEqPLi7kcZWxf2
-	npeoAyw6Ra+DJ4qf5mnIZ1y5ZhWijnhqL1sSdECAc/EBjyRz5nSJCQNTb8sjjVCyey2kaZ/aRkP
-	ol1e6wEO7ogpvuBM1U4FzrKy9x2WTz6U6ireuAf/6dyYByz3NYdAquCDJ7uv4PLjBAXccekkFdN
-	JgNKh0tGf0OZtF1Iqi
-X-Received: by 2002:a05:620a:bd6:b0:914:cb07:447e with SMTP id af79cd13be357-92e78209b4amr55695185a.5.1782889489845;
-        Wed, 01 Jul 2026 00:04:49 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782889491; x=1783494291;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tDKq041CEXhPpuz8LfGlSSIJN7u8oShSF1f6hHy0Lfg=;
+        b=RK9uz9Ttu/pHs5hylrQNshwfrHeEjzr5Uv+QQv+82MWJO+SZKUyEogBi+qEusfN8Fv
+         6k0CN4qq+Gil/PWPAqXK8zMUTldl7gYte0Nb7fMesFV0xVE1e2mwDEXWh+9nU7fAL8sK
+         FDFJWiv1vM+YqWmE3QNqD3TlKp2NUIBcbMQaHcHdll0NI1yEq2VSYExp9+yEhZj2xkZ1
+         jyUTQ4ZZ35o1nJeSGkHkb3v+YN0lmaFDft9AwEBKG0+E8tsWdu8ReTOsnFvjx87eoCkn
+         pZIMzMBQYF8kk21sBvUp4uFA69f6GB4gsGzjjCWR26yN1XLPf5qIzkGXDrJXXDPoEVgj
+         9nfg==
+X-Gm-Message-State: AOJu0YyQbEQ57lmR5bFwjBocm83Pfbj4Xs6bmz79QrPZDQF7iknaSnU3
+	b7xkhovEd27U0twm0cQCsEcq/ui8zmyi7xjUHLdlpxY3E3eCHEjN6UyWkTn4Zw==
+X-Gm-Gg: AfdE7ckgpcfPDq2Pz/o+IJoOLBgVaLuEJF4v6CDjPgl5ScwGr6qGVGD3VmXIeVYf7kW
+	+r+LeN3ibLJYA3oZYdH0TxR9wW61y9X4RZThwTWvs9Jd1zre+B3PBURyal4CzAaieAQqB4mINmn
+	4qbxvRLQpmA13m+H58e2paaIKz98/0FhTXEQ2ADU6ryHZkUxMYSc8qyh/hQwqsbc/E4zHTmEr9v
+	N7rwGrss3sNcJSuBGGEprC6ba+ZPoHARwPsC0OafFNfgIOlzSuCkqc4U53Zt5ouAzB6pz2G1H0P
+	roHsNXC1yfbtyaAi/NB77Qc1U4dbnLH6bPE2Nkwx7QOaggB8gSMyedaMrxfZvXDQc2Aqi+l0+rq
+	r5ehxG+SkYiLzLRwUhCUhlJW3mhJwBRaKMq28bBPt6A/DzhRV2j5caBBU5y6Nf3S6Clj6avrWlS
+	HHZ8TufVXi3SjF2Ovn
+X-Received: by 2002:a05:620a:19a6:b0:92e:5444:9274 with SMTP id af79cd13be357-92e7825c336mr58685985a.30.1782889491514;
+        Wed, 01 Jul 2026 00:04:51 -0700 (PDT)
 Received: from [127.0.0.1] ([172.214.44.231])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e621374dbsm484446985a.4.2026.07.01.00.04.48
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f3611d7ea8sm13676686d6.31.2026.07.01.00.04.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 00:04:48 -0700 (PDT)
-Message-Id: <198062addd9ccd3e7bb32fa81970ac00aa48c46e.1782889472.git.gitgitgadget@gmail.com>
+        Wed, 01 Jul 2026 00:04:50 -0700 (PDT)
+Message-Id: <8ad6b220e9ef58cf90c3bf40b80fc96b6d8bf55d.1782889472.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 01 Jul 2026 07:04:29 +0000
-Subject: [PATCH 11/13] reftable/table: release filter on error path
+Date: Wed, 01 Jul 2026 07:04:30 +0000
+Subject: [PATCH 12/13] fsmonitor: plug token-data leak on early daemon-startup
+ failures
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,39 +80,42 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-reftable_table_refs_for_unindexed() allocates a filtering_ref_iterator
-and then calls reftable_buf_add() to populate its oid buffer. On
-success ownership is transferred to the output iterator, but if
-reftable_buf_add() fails, the goto-out cleanup only frees the table
-iterator and walks away from both the filter allocation and the
-oid buffer that reftable_buf_add() may have grown.
+`fsmonitor_run_daemon()` allocates `state.current_token_data`
+before any subordinate setup step that may fail (alias resolution,
+listener/health constructors, asynchronous IPC server init). On
+the successful path the listener thread takes ownership and clears
+the field during its teardown, so the `done:` cleanup block sees a
+NULL pointer. On every early-error path, however, control jumps
+straight to `done:` with the freshly allocated token data still
+referenced, and it is never freed, as Coverity flagged.
 
-Release filter->oid and free filter alongside the existing table
-iterator cleanup.
-
-Reported by Coverity as CID 1671512 ("Resource leak").
+Free it at the top of `done:` and clear the pointer. The success
+path is a no-op (the pointer is already NULL there); the error
+paths now drop the otherwise-leaked allocation.
+`fsmonitor_free_token_data()` is NULL-safe and asserts
+`client_ref_count == 0`, which holds trivially here because the
+IPC server has not yet begun accepting clients when these failures
+occur.
 
 Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- reftable/table.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/fsmonitor--daemon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/reftable/table.c b/reftable/table.c
-index 56362df0ed..d604ddebf4 100644
---- a/reftable/table.c
-+++ b/reftable/table.c
-@@ -709,6 +709,10 @@ out:
- 		if (ti)
- 			table_iter_close(ti);
- 		reftable_free(ti);
-+		if (filter) {
-+			reftable_buf_release(&filter->oid);
-+			reftable_free(filter);
-+		}
- 	}
- 	return err;
- }
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index f920cf3a82..4161dd8282 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1418,6 +1418,8 @@ static int fsmonitor_run_daemon(void)
+ 	err = fsmonitor_run_daemon_1(&state);
+ 
+ done:
++	fsmonitor_free_token_data(state.current_token_data);
++	state.current_token_data = NULL;
+ 	pthread_cond_destroy(&state.cookies_cond);
+ 	pthread_mutex_destroy(&state.main_lock);
+ 	{
 -- 
 gitgitgadget
 
