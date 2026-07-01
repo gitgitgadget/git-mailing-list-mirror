@@ -1,65 +1,65 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CA6480DEA
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 12:18:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE29547ECF6
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 12:18:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782908335; cv=none; b=k+0PnH/UUH0ogu/1Hyrhc/TnpNrDb51xjV47FbUlXoi+NehP7ufqEZdxMcZxTDBblc2PLGe2ysGciVjWMLK0d5ywMnoiYV0ytjHscURbE+jpJONk7TW7TGImGwm5zvVDyvRRACuWs8o2oYz8zwJmXF1QciUXA7d1ZOKsC0RgC9s=
+	t=1782908336; cv=none; b=BJiDcdsYIE2qGIAPc1bWk56QBjQjFzedZ6ctU/2Yq6olY4OXIfp+Lvd2OeRSkRZ7azxSF/8OqwfrU2b5+qHtuW940Ew8dJRv79by/xlJCJXciSNChD6WFmH2qFM608H3ZRKYtrG+myx2HlfmYj9NXPj/XOGNlTNvcij4vzwbbRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782908335; c=relaxed/simple;
-	bh=2Rc1WMYxK4jkQScE367Ltv4//O4qNpCXUfBsi7GsNeM=;
+	s=arc-20240116; t=1782908336; c=relaxed/simple;
+	bh=S8K2Apd9JlTqvjposBzihO5hkkXb5+d8KZby99en23Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pKe+cfb/3eHcIc2d/0xPMz4hCqSdNKUJfpNR4TSFhJvfO4HBJV3Kh+Dxgs953vDtwDAggxocuVnPY3ofpNjAKF2Fr6RphExsP3AAXVOgCuheE90Vj1pcFOqdl4vsiQEOqnGyv2y8wPsbVF17RMolKu90xtegWm94UURlH6hXTRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQp1iAJE; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version:Content-Type; b=lVE5ROQmPByHaMUwluaWEpOiYFcpuYtYzVuqqucq88ozCQA9QvID/wlleHKsW72eM3kFNNN64L8Z97IABAbK9phL1Kwbu7eQTL9ciG5R0aDdlTVZvDR4Yiw4zwkOcEM9iqXAz0KkETxhsB5MCGVKZ5NvU5/tuDO2qoyuFB03Fcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jNszSnZn; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQp1iAJE"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493bf73ec2aso3438105e9.2
-        for <git@vger.kernel.org>; Wed, 01 Jul 2026 05:18:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jNszSnZn"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-493b691cb44so4004615e9.0
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 05:18:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782908332; x=1783513132; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782908333; x=1783513133; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=itYZe/LulVvqcvmTmKahXhswsHgi4U/qhzWFD+LLzUw=;
-        b=LQp1iAJE4Oo5+yLa1USiotc4wyx3J86I7ILAB4OihR98W12MPKNvy7EcdMdjkX2EqU
-         3IehOL2YPluvpw58Sj8dQZkZnlu9YdztuorZMTJ6oLY5xqEaW7tEoycL/x0hi8nza354
-         Kg/ywe/7/iftTjKK4ExbvT1moYAhJfGWumhQSBlIoU50mcIPKJtTTyKPui0M4r1vtr3w
-         PMtGsAUtktSvm28YzfH514jReAEN8UBboK3jEJrqSrxw23BQhr6Bc5B2e9tjT/GpZlU8
-         DbnHHvTxV6NGITXS0KLKEGXGqvjE/v5VrRONdFQ4YBr62cE9bfUJXG5ZjrlvrxLkOyEq
-         KZOA==
+        bh=CnzxkSALcLAWHAHljw3Ji78HFG7NIzX5IfhYhNKPI+A=;
+        b=jNszSnZnZF7xuYnmJq/ykr6vF0cJQc74vvknBa4a3v54A7SUBeDb9Dal5IXw3buqFW
+         DydDAW4y8nPZEbxAtcH8NG+jjJ7FyzNZXE/w2L2OMY0QLCA6//AkcVbDQkbRYo77MmR3
+         e47dKIWSluMJgFid5m6FaqD7tE2XpmTmEv9MgYYHJmFS8q/+neMYT6OcnyBJn3gwc5N4
+         +FH7nNo3iaKg+/Ze3UV/0HTuvUD+olXi8cPuSoIuTbmGXieg7uoBOtpDUfOv9cTeSMmU
+         3nRyBTyGaR9mQq+a/kMnIFQegifxtpKn+NwKh8fyOuH3NFWFErdadhJI5O8hoyWyPiUT
+         bloQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782908332; x=1783513132;
+        d=1e100.net; s=20251104; t=1782908333; x=1783513133;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=itYZe/LulVvqcvmTmKahXhswsHgi4U/qhzWFD+LLzUw=;
-        b=d8sMcqKQnQIBRCYaf3jvLWXYEkxrmyaq/VGw/L6N0JuvFfIn75zqPK3hp6C/F+M6wg
-         xOKyNNC5DCTKLvDH+xWrPgSxjdzhI95/9MWbvRwSpWhQxBCwGRsUGcCNUpZFS0dvyVwZ
-         zTeCwjb3BTqz8bBhhDz+vtXkDttiF6ERbz6d+aGlRVaeFJq7kJypG1MT5Pz2+bqY8g+b
-         tsZPMkByhF2mNLl/l4xyNnoh/PrJ1s4rVWYCpgP4epQjyhfB7i07JYHCP5C7xYk/gsEQ
-         VWpvc4S044U40EFmGBxDcrA90mj/DRg69+frMzrvGliqlXXoEX7e/7qv9QyJ8A1FnvKR
-         GWUA==
-X-Gm-Message-State: AOJu0YzXdpIi7lyC8VbzoZcK/gU8T/aSHzajHPFu5cU3gk+QWrCQx4rB
-	T9w7pxAaLwsUdmCeyurkQ1AeW2r6OSTo8u8ZK+2yN57VVzhg6gc3EbC77AWJWXkH
-X-Gm-Gg: AfdE7cnY4PBPHCxk5kCilp12Flw2+kGrp9t7em2J+iK1tDXUIkQnnh/jT57Mg+f0ksC
-	XfQgMdtgQ+jdW7Xo9BtdBp4wW8dHmdyYN7ohZhFQnlDu9WkFoMdfKAvyHgINvOQ3qrfKzXUi4uo
-	JZGeETf1/KRFZ+mbx5vpCnjRbpVoWq7dIXypsu9ovLGxuuiBDckFv3M2azIMbJ7eRrlZZC1Hyrk
-	19KsExFhu4amxAHeoY4l8GzYSQqsrXQ8HopeUukSzdYf9p3wtEPnMiSLHc2qZpx+Lsd0Q2aiSx2
-	U3/cX8cYFTk5GWOJDS/WncDtSVeElR5IA0KfZDsvaJr1oXsf3ZjqK/WvVD4I2Vt3slU1emRuMRC
-	aD6zrciCpcVoErtjT5EJlfiB1o7uyAV0dN8hbzY2fTlyHnEMHWCGbeT4gZhkslgrh6syh7gbOi5
-	J+J6POsuo+Zsj3mAt6QpeBQhaMKzORnLSTBX6ufq77cqCEqGgEFzXxXVitBUIQ1IFGHV/SYJm8H
-	/dtO9pkMYCxUSqXcrH6QJ8RSkjXkumidWs/DKAz/+6yBbpXp2QvpEwbM3bSJUgrGYcYh6/OAZPT
-	/squQo99Qv9GxWNSmlYkqNFdUAmMk5P70YVNKHtL5PwwzNn8NBJRsNC4ER78ShvtC6oD1jwhYK/
-	BxQaA76fOqTCyDvVvYXiD
-X-Received: by 2002:a05:600c:3f07:b0:492:4a56:690b with SMTP id 5b1f17b1804b1-493c2b9e2a0mr21141255e9.35.1782908332224;
-        Wed, 01 Jul 2026 05:18:52 -0700 (PDT)
+        bh=CnzxkSALcLAWHAHljw3Ji78HFG7NIzX5IfhYhNKPI+A=;
+        b=tW/LFl0ugpWeXFN82a/izN4ryhUGfr1oeFdEUphy/Z4dguJFPRt2G7g94PlcqOhhxC
+         9wHvtnx8PoaLrG49L72l+bJfj7vGbnAt5LPsto9kSKjz3kVyrfSSlnCyQoW2q/XzI5MB
+         r41PrjXIFrDV2ZjBpZGivk2EZbDSvfdPCK70AAH3yrNaWOk+QoNAgA4skQBV84VNnEEs
+         2gS90Ru1Dtn9TlPeobWKOIhkkld8eUJ7CHh8NvKsRhqOD4F/9qXHf68xB3c4CVGiRPKy
+         2qmH4ni0ZqewbehXSsLC902zKrMFkNq3CJZoi0FSsDI/kC/ghMhmvicRXrjS+lldHMMp
+         jUyA==
+X-Gm-Message-State: AOJu0YxpZn5fJjherSttcFQg9GcjhodKSiDf45cajrdcDevKtIRF0JMy
+	HHgGq+SZooDcley3ldLFUcvO0WuqpMtETE8vnFzmHWOnjlxWsl49KA8MtX0V2WWR
+X-Gm-Gg: AfdE7cm7ocXwdzlcUsyNKcZVPswGwSBclq3Mn7q3hb6HlYCkGDpdK0O9l0rQzvz01DX
+	2fykKa7GfEvYXeKdEUA/AdLrLqAPmRos/QtT0QpXbguSWB1loO5S1uzhXIKPT/s3u0/j7dejxQ3
+	IOKII6bfwfnogNNn4Gch6ugDgHPT4sZLFkWbZpoLJ04EBPxWemCGc5q57bCFUMA9KDF4tcUUoXg
+	KH8GsnO98B5w3ivo5uyDZLULsj1DXR8cReWoZkhF4lzfvtg2BpargMazC/0YH+COEqy3TxLB8JJ
+	q0jy2ZHa8glnk7s+dsYlCvjAOtUGv+c9xsADcYDAjC/GAELUt+zlfos6jiee6DA4pcvdb45GK4R
+	cmD/Fxh/GugoCWh0o26LoKMR4AlNJyPdWXpoYtWMDB3ZOldMB+luJJGZODesQ4h/qZY3BnDdxKy
+	LcOJoJOsmvs60CaCltsy2fhhZmDkxA9HzCkRbNfsQ3+ZUBku8fYWFhvCbzkzF6OKwxQYJgS9TlA
+	trflMS7mNJWUp944J7be1Sevc9+72dUnbL1GYNcxkoRpbyNJaybzT5ktHhXtLtqw7P+8wYG4iAE
+	Q8opDRxV9gFH44q5XgreD/3ldXEB/iZojQIXGKYb6rEPDY9a5N4BaZ8P6cfPPepN0USpB8XQl/G
+	NkNfEjgD1ayHxdhmLOyuo
+X-Received: by 2002:a05:600c:8590:b0:490:b2c9:e284 with SMTP id 5b1f17b1804b1-493c2ba2397mr17186835e9.30.1782908333290;
+        Wed, 01 Jul 2026 05:18:53 -0700 (PDT)
 Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493be810be8sm68267235e9.9.2026.07.01.05.18.51
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493be810be8sm68267235e9.9.2026.07.01.05.18.52
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 01 Jul 2026 05:18:51 -0700 (PDT)
+        Wed, 01 Jul 2026 05:18:52 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -71,9 +71,9 @@ Cc: pabloosabaterr@gmail.com,
 	karthik.188@gmail.com,
 	peff@peff.net,
 	toon@iotcl.com
-Subject: [PATCH GSoC v15 02/13] git-compat-util: add `strtoumax_szt()` with error handling
-Date: Wed,  1 Jul 2026 14:18:36 +0200
-Message-ID: <20260701-ps-eric-work-rebase-v15-2-c88a43b63917@gmail.com>
+Subject: [PATCH GSoC v15 03/13] cat-file: declare loop counter inside for()
+Date: Wed,  1 Jul 2026 14:18:37 +0200
+Message-ID: <20260701-ps-eric-work-rebase-v15-3-c88a43b63917@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
 References: <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
@@ -89,59 +89,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Ju <eric.peijian@gmail.com>
 
-We already have `strtoul_ui()` and similar functions that provide proper
-error handling using `strtoul` from the standard library. However,
-there isn't currently a variant that returns a `size_t`.
+Some code used in this series declares variable i and only uses it
+in a for loop, not in any other logic outside the loop.
 
-Using `strtoul` is unreliable because `size_`t is platform-dependent,
-`unsigned long` could be too big to fit into a `size_t` or too small to
-hold a `size_t`.
+Change the declaration of i to be inside the for loop for readability.
+While at it, we also change its type from `int` to `size_t` where the
+latter makes more sense.
 
-Use `strtoumax` which returns a `uintmax_t` guaranteed to be at least as
-large as `size_t`, add a range check against `SIZE_MAX` to prevent
-`size_t` overflow.
-
-This variant is needed in a subsequent commit to enable returning a
-`size_t` with proper error handling.
-
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+Helped-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- git-compat-util.h | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ builtin/cat-file.c | 13 ++++---------
+ fetch-pack.c       |  3 +--
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8809776407..5ecce5bbd2 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -975,6 +975,26 @@ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
- 	return 0;
- }
- 
-+/*
-+ * Convert a string to a size_t using the standard library's strtoumax, with
-+ * additional error handling to ensure robustness.
-+ */
-+static inline int strtoumax_szt(char const *s, int base, size_t *result)
-+{
-+	uintmax_t uim;
-+	char *p;
-+
-+	errno = 0;
-+	/* negative values would be accepted by strtoul */
-+	if (strchr(s, '-'))
-+		return -1;
-+	uim = strtoumax(s, &p, base);
-+	if ((errno || *p || p == s) || uim > SIZE_MAX)
-+		return -1;
-+	*result = uim;
-+	return 0;
-+}
-+
- static inline int strtol_i(char const *s, int base, int *result)
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index d6ef8414ee..1e5473ab70 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -718,14 +718,12 @@ static void dispatch_calls(struct batch_options *opt,
+ 		struct strbuf *output,
+ 		struct expand_data *data,
+ 		struct queued_cmd *cmd,
+-		int nr)
++		size_t nr)
  {
- 	long ul;
+-	int i;
+-
+ 	if (!opt->buffer_output)
+ 		die(_("flush is only for --buffer mode"));
+ 
+-	for (i = 0; i < nr; i++)
++	for (size_t i = 0; i < nr; i++)
+ 		cmd[i].fn(opt, cmd[i].line, output, data);
+ 
+ 	fflush(stdout);
+@@ -733,9 +731,7 @@ static void dispatch_calls(struct batch_options *opt,
+ 
+ static void free_cmds(struct queued_cmd *cmd, size_t *nr)
+ {
+-	size_t i;
+-
+-	for (i = 0; i < *nr; i++)
++	for (size_t i = 0; i < *nr; i++)
+ 		FREE_AND_NULL(cmd[i].line);
+ 
+ 	*nr = 0;
+@@ -762,7 +758,6 @@ static void batch_objects_command(struct batch_options *opt,
+ 	size_t alloc = 0, nr = 0;
+ 
+ 	while (strbuf_getdelim_strip_crlf(&input, stdin, opt->input_delim) != EOF) {
+-		int i;
+ 		const struct parse_cmd *cmd = NULL;
+ 		const char *p = NULL, *cmd_end;
+ 		struct queued_cmd call = {0};
+@@ -772,7 +767,7 @@ static void batch_objects_command(struct batch_options *opt,
+ 		if (isspace(*input.buf))
+ 			die(_("whitespace before command: '%s'"), input.buf);
+ 
+-		for (i = 0; i < ARRAY_SIZE(commands); i++) {
++		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
+ 			if (!skip_prefix(input.buf, commands[i].name, &cmd_end))
+ 				continue;
+ 
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 120e01f3cf..f13951d154 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1388,9 +1388,8 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+ 	if (advertise_sid && server_supports_v2("session-id"))
+ 		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
+ 	if (server_options && server_options->nr) {
+-		int i;
+ 		ensure_server_supports_v2("server-option");
+-		for (i = 0; i < server_options->nr; i++)
++		for (size_t i = 0; i < server_options->nr; i++)
+ 			packet_buf_write(req_buf, "server-option=%s",
+ 					 server_options->items[i].string);
+ 	}
 
 -- 
 2.54.0
