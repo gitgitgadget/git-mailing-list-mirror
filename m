@@ -1,69 +1,69 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872CB3AFCE5
-	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC17A3955C0
+	for <git@vger.kernel.org>; Wed,  1 Jul 2026 07:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782889483; cv=none; b=qpkRAqg1uUhZGZ5+zpUSV9apupU1eNe/WxFGYqVXg3qenmSeBYZoDgBlY9/z+zobqjMkEM8g/WLAS/XydwmaAkZj/tGm/uFpnnN/jyO+j3L0nvsP3Btgc5T5qAua0YiAsyBPEbln1yPF8svCR6wAGmu44gDJG2kMHGxIjYSoQc0=
+	t=1782889484; cv=none; b=RGLAByJrVzhCNc3n8cA/MkvIX3YARK0kgVKq1CFCVSFMPH6oHP9fotI3s/TyCJ4/J7vICLEEwWKWXIYjL9rLBjMyZSXngr6T/Cig+sONN9jQfJ2it8cBUm+x00udBY/mkB3Pv/KXdfYc51C0G11dhuiyteHr/9Ny6mf4sW96msc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782889483; c=relaxed/simple;
-	bh=ULx61KFjRiz8ztCxJvoM710oeJ91oJlK5KV6bsa4a5I=;
+	s=arc-20240116; t=1782889484; c=relaxed/simple;
+	bh=q/65UelVfCCPkMTsaTEmnv+v5D8aGw81hG0FhHk3Ksg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SrcW6M51Ywm2scriKyp09YcIf4uj2+97/9vTfNcKppzpmWQbZoISx5Mxs840lNP6An3HkYPDNeWCcBCFC2wW5UAZc9k7gC7/f9v65TIi8dfkTmmT77uya72M7BDtTQOR0XdElLeHCxJjpZ+h5lrWQhfFuJdttNzgLgnvPtNaNH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4gRUwgZ; arc=none smtp.client-ip=209.85.222.171
+	 MIME-Version:To:Cc; b=KA/hM9QZn00SWLsMyrlgoX2SK2gysZpIF7VSPh62eSywR+yMfNPJK91xUhwdDXbsHnhC/PW1QDuJhUm1ppizvYy69Imx3d5iiS/Ns+ONACTODCuWXZzrukt5VYmUzlW/7gc1wKfFzRJSrqSr5iIGZS+K3M5ECzqcBCt4SvM44qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ASAKh0ou; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4gRUwgZ"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-92e5cb052edso28187385a.2
-        for <git@vger.kernel.org>; Wed, 01 Jul 2026 00:04:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ASAKh0ou"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-51c08df8513so2199411cf.3
+        for <git@vger.kernel.org>; Wed, 01 Jul 2026 00:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782889481; x=1783494281; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=3RmaHc7Vng2Frkb01b4MmSdCz5j8c1AUvXwqnuGFRaA=;
-        b=B4gRUwgZIMs8ACATKgJf82httYwrbZXqJ00htlLmkOqsGk59oRsG14TTLbLyth0I9F
-         5ql1T+/VC5yr3+eL+sTlE5DgbTvtYwpg0jH6KejQmEyfFwkqng7pONfE9fPABDPHLaKo
-         mh3DA4LkqzWUf1DdGLX1uYSgr2p6SryqGEnsxutWbCr5JK0FMgi3Eoo6HjcbsBVLGjTT
-         6ygbZ7B59ZmHinUM03vA1d5ES1OJiPB5lzLL3jBXSQ6fsiuJKxWKkXn/rDb1I7gbXJCj
-         Bj9vCQbfU/wm7aTNJD+JJdeNFvngg57URRUCbm8jNJkUVNHZZhY/zzuYiFYeR2Sl/FvC
-         52fw==
+        d=gmail.com; s=20251104; t=1782889483; x=1783494283; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RsKS1hwy6oKRKqny0aGjNsolU0wy9WcU0s2BulyQZ3E=;
+        b=ASAKh0ouOPhOgtdwSo0wDbrck54+bI84NchaZha4IcLoiM5OsvdHKEqLILW50xTHlH
+         kIGE2K2R8XRgCtXlqbomCoVhDXw1PwBcTnMM9PvbuAqrS1gq0DKDKispxzo41Www82vl
+         PsQ6NcqlAA6AghvBqlhEEDImI41boyB5s0l8MA4SE8RqVu3dX11NWXCYqF3sBX+fOt+i
+         V2F7JNmRWIZqeoJkid0ADXhfsG/9pPVmO3dkuWMRK5j2pUU1neEwAzPHZckcqS3IKupZ
+         Gy4CRkcXRC7xB0r8c2DC/dWzH3TtjY1e4cXkwIcluvcoLHsWhfnhnGIbozkCNV5CgWat
+         J5zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782889481; x=1783494281;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3RmaHc7Vng2Frkb01b4MmSdCz5j8c1AUvXwqnuGFRaA=;
-        b=fitorKinj6DaFoV8dyGe4EgpNNKMOMbzfqzPxImKO90EvwjZeMfJttnpyUL1jWRRky
-         9WzgGJW+e9iNpFFf9P7m0TV/zr483tP2O/7mjBpmwIoy77MeIatrnCyWtvQIVgXo6AW3
-         DA6q/5MXTbEuvSI2FZg4hrnO9M8a20GWRyOeoBs0zrVoCqBMykayx8nf/fTD4LRPUmvU
-         d2TR5h7SRZdG2no7lZYD7wVZhxwW75WmVWsn8RNOahXEInO09tdgXIqpefKipxKo8enG
-         sMguo3MHKY17M4RGSr16Qt45aKqCLisZMv5iXBN2TLDiIkCZAhfDbq7QvYG04Cln2k4f
-         xa8Q==
-X-Gm-Message-State: AOJu0YzmtjsGxu2MmnjLnuhXQjItmbEsixFsBX6vI5+Q/XPdMD1LPJ3a
-	cPxkB+7FnzmSDAxnFfkV4QgnxnAyXe8rQG8AjHLx15/XKIR5o0oXIMTix/q8Cg==
-X-Gm-Gg: AfdE7cmLkPPve3mfRmuDeY8U469++LfbABt48T8qAyXME4BNusEe4oqNwT0kKR1QHKE
-	cVBS8ANPj6Km8WQ0krEI6VWcHGQMYvzWABS52gPhhV5xBVdflInHyVmiVEgVJoG5q5zYuG0+s0b
-	wyKhNJD9csCrixnFk/TYQ27yaMuZba83QVesFETB+J7Wq5tqIRisArq7FFEQl+Ys3xTUSG0MxFP
-	09A40hHjLjXSoAuuHnkg4mYKWgdNO8A0f2g4hgt1PyJmPs6v3cXqkFEXXJiHeE6hVnyoP2Jl9GN
-	PO+r+RrjR3EHiIMjqKrAWnuKlrVwjtZooPbjsLDsKW6usAkknhcpLa4UdGQAQrguXsI5QDC3R+w
-	3JwmAMQciyqgz9f+bcX5QT3Kfpi6LRlJMmeXovHs1EiCghezUEZPk9X81xJVMUTFiL/Yj9orkVO
-	Z9J3D3/MG+7g3PJOVO
-X-Received: by 2002:a05:620a:4005:b0:91c:ac0a:690b with SMTP id af79cd13be357-92e7825a4e2mr63662485a.17.1782889481534;
-        Wed, 01 Jul 2026 00:04:41 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782889483; x=1783494283;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=RsKS1hwy6oKRKqny0aGjNsolU0wy9WcU0s2BulyQZ3E=;
+        b=RlZu5RulePgONh65A/XosFPRBr2K00O5zeNoer9uCLnr6NTFQ/VzSihM0kIePkIbKV
+         dfJBu3u7K0O+zY0w6zEeZdCbLaEhh3CnQ9NsSj2R1x8kfqheuthhoRfdq8elI9OSKuIy
+         GZ008mp+qI+uSJE55M6xBQgIiGHWeeZH33zWwzXi4CRB6McZj4PydZgOb4fdAGLOhwIO
+         mUoBNrRpG1ZkyN/TIHtHs+GzMOPqVroO+jQLOuelSY5vao6bm4fDVgLDyhwlOOcbYStf
+         Cy8T+587U0lMKkb3zPvoEoyiE69UzLVoVh6uf2bVmDxDVakAUz80PeODfUW9BUR7337F
+         T/8A==
+X-Gm-Message-State: AOJu0Yz0CuvXjkHtOISRw9SqWd8fmqH9Ps4RSDNMKX4srW4MyMkKXUbX
+	ThnSq9SkT8y4ttGyHS/aNOSdSb6QvGe9XhCFPjoz9IyGsq5kMWWtCiI8GrkvSQ==
+X-Gm-Gg: AfdE7cmZI2mHfd8dDsmKvvHxZEjb2f/N7X/Bgz1eCfNnNFaVYuZXNnbpk01xgHqAAiI
+	oqZ7Pafr035km7ETj3itIxPvN8pN6AuLOlQK2jMZZU37CQjiW47z0kSPkqgEOwexehhppTraRZo
+	nF4a27Cc8AlTnkusu/HokDQvJJzM3nABg+MGgQ6g63r3DOxlk8V/+X3z5QGsNtaR5yMorRinPkY
+	wTCHStvE5njB8awm+YvKQwl3G7JA6IOE5zbuswtkVcNxQWJfooMXi3hGmdntNbRN6oOXQSzZuhd
+	SjEcbiPvRaqSf0Rx933weNLezAGRFvFFT6MsUpSNRkkX0ucyR9zkMXFKkLUQ5Z6XSoOTBQP3XwU
+	3sg8uGlgH2yFMrL8nw9JK2Ga9NeyB/xBKFNSP3stzIwkCUl7xQF8GA4TvacqzQKJAwA8LVS5tdX
+	9m7OfZYC+bkfVPEH4L
+X-Received: by 2002:a05:622a:83:b0:517:9206:10fd with SMTP id d75a77b69052e-51c26a65d70mr5601861cf.16.1782889482677;
+        Wed, 01 Jul 2026 00:04:42 -0700 (PDT)
 Received: from [127.0.0.1] ([172.214.44.231])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e622e8d9fsm486066985a.22.2026.07.01.00.04.39
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f3afb5ad48sm6902146d6.11.2026.07.01.00.04.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 00:04:40 -0700 (PDT)
-Message-Id: <860bc8f52dc9be8bbfafcda296be831a1ffaf1c2.1782889472.git.gitgitgadget@gmail.com>
+        Wed, 01 Jul 2026 00:04:41 -0700 (PDT)
+Message-Id: <5a6b17f075ca2d0442d512a0021557aa112860fc.1782889472.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 01 Jul 2026 07:04:23 +0000
-Subject: [PATCH 05/13] run_diff_files: avoid memory leak
+Date: Wed, 01 Jul 2026 07:04:24 +0000
+Subject: [PATCH 06/13] line-log: avoid redundant copy that leaks in
+ process_ranges
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,46 +79,40 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In 4fc970c4388 (diff --cc: fix display of symlink conflicts during a
-merge., 2007-02-25) a conditional block was introduced in
-`run_diff_files()` that skips the rest of the loop iteration and
-advances directly to the next iteration.
+When bloom_filter_check() indicates that a commit does not touch
+any of the tracked paths, line_log_process_ranges_arbitrary_commit()
+propagates the current ranges to the parent by calling
+line_log_data_copy() and passing the copy to add_line_range().
+However, add_line_range() always makes its own copy internally
+(via line_log_data_copy or line_log_data_merge), so the caller's
+copy is never freed and leaks every time this path is taken.
 
-However, it missed that there was a similar conditional block that was
-last touched in b4b1550315c (Don't instantiate structures with FAMs.,
-2006-06-18) and which demonstrated that the `dpath` structure needed to
-be released.
-
-Let's fix this.
+Pass range directly to add_line_range() instead of making a
+redundant intermediate copy. The callee's internal copy handles
+ownership correctly.
 
 Pointed out by Coverity.
 
+Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- diff-lib.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ line-log.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index ae91027a02..7ba839b4a8 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -152,7 +152,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
- 			continue;
+diff --git a/line-log.c b/line-log.c
+index 5fc75ae275..0179f138f7 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -1141,8 +1141,7 @@ int line_log_process_ranges_arbitrary_commit(struct rev_info *rev, struct commit
  
- 		if (ce_stage(ce)) {
--			struct combine_diff_path *dpath;
-+			struct combine_diff_path *dpath = NULL;
- 			struct diff_filepair *pair;
- 			unsigned int wt_mode = 0;
- 			int num_compare_stages = 0;
-@@ -164,6 +164,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
- 			else {
- 				if (changed < 0) {
- 					perror(ce->name);
-+					free(dpath);
- 					continue;
- 				}
- 				wt_mode = 0;
+ 	if (range) {
+ 		if (commit->parents && !bloom_filter_check(rev, commit, range)) {
+-			struct line_log_data *prange = line_log_data_copy(range);
+-			add_line_range(rev, commit->parents->item, prange);
++			add_line_range(rev, commit->parents->item, range);
+ 			clear_commit_line_range(rev, commit);
+ 		} else if (commit->parents && commit->parents->next)
+ 			changed = process_ranges_merge_commit(rev, commit, range);
 -- 
 gitgitgadget
 
