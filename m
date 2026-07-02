@@ -1,77 +1,88 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C87535836E
-	for <git@vger.kernel.org>; Thu,  2 Jul 2026 05:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7213C342A
+	for <git@vger.kernel.org>; Thu,  2 Jul 2026 07:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782970654; cv=none; b=uhKzNFXeAWa9sKyQiMo4TbNXsuPRP6E0PorL2ZqFV/d6rruw0KICcytFO3tGEJoXQhbA0uxtoZoHtA1tQNwjmrWi6j8kwLP2vYCawLEIEr6QIoTw6cHon4ndUnvppJ2J2qxIveqy3/Pd4FQvCR40zgI5dPTwjRvQLO8sB4aU9Wk=
+	t=1782978556; cv=none; b=nRUOQkFYWAe8T6E6+UHWM3fwwBLZtmZKqs2U2pHifEbyjLIhn812Us7kNmuuCiRw0yCb4dud7MeZQz0V0rg0Whs/ILfaL1bdWyXpbLbH+MpzcY/WE4gLIccwzPzBkYTIXZW8guOWSM/7HvUoabbrHDqczKesqCiESH/Y783Jxco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782970654; c=relaxed/simple;
-	bh=T6N1K9glA5DZJdPH0Ry30EGGaC6ln6q8sLCGFvgU0dI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uHkSI5QFXTRHxm24VgTeUSof/YKUEpKI7GHRGaiuRd0rEQOf5otclYdaKvNf5lETUKn2W3suMI4Wwbmtz5Z2kJqzPscPPj41/XfR1uZLajAZfmsAWOKCsrRx/tc41UCJGgMMKXucgMQW6siUztkxV15nbF+Yt2t9rZg/BkOi29k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XjaIczVp; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1782978556; c=relaxed/simple;
+	bh=f3T595LO3V8t5J2eZiJiBE8vduw4LwMyOIx+DC8gRZI=;
+	h=Date:From:Message-ID:To:Subject:MIME-Version:Content-Type; b=FFSKHpDJ5bjSpYlw2n5CdMnQcRQgFyiVNw6maUX8lk2Z5wkrE9GvlI5I51+5OwQNICXy/5UchYnZsIUoCbM4aE9oOMU2p/4UYA3TmHZAwXiPcMNDQx7ESGom0VPqEpNsf3YHAjjwihwkJJOV6EcMw/YrZCj/dIVlCr1ZTRverDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FnDkbIkg; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XjaIczVp"
-Received: (qmail 84797 invoked by uid 106); 2 Jul 2026 05:37:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=T6N1K9glA5DZJdPH0Ry30EGGaC6ln6q8sLCGFvgU0dI=; b=XjaIczVppGif3U5DnYL3HZDjA6RlGR/87kyB5Us4Mrlu2ivioSjEKP7RUED4022WKtvEO3r0vZkoIbJZq7uhgNHwukvur+9n7hJlqFrOOfyCXMs0Mm/7wd3k6qz1HLaOflgRjV5Xingdy/z91pd6xKk5CvnWaWhlcv9udYkICYWG7c+L9qQaX61I4XwodK7GYcknpa2xvKR1K95yOW16CpR9iRSVVfFvYg++RuicmYr/P8pxW5nD27dzcHsCwncB3I0+htDz6O389xWG3r+SlyF5A8c6vabEV1ZfmlXrIaIrgeQ8eADPcbKLB51wSHn0u9FbtvVyvaVJ5NofvxO5Tw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jul 2026 05:37:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 176938 invoked by uid 111); 2 Jul 2026 05:37:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Jul 2026 01:37:24 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 2 Jul 2026 01:37:24 -0400
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] t1517: skip svn tests if svn is not installed
-Message-ID: <20260702053724.GA3437623@coredump.intra.peff.net>
-References: <20260316220742.1286157-1-sandals@crustytoothpaste.net>
- <20260701212442.1430084-1-sandals@crustytoothpaste.net>
- <20260701212442.1430084-2-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FnDkbIkg"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-39b1026e171so16292371fa.1
+        for <git@vger.kernel.org>; Thu, 02 Jul 2026 00:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782978553; x=1783583353; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:subject:to:message-id:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PlXFLCqcOuVQfMYxbICaO8n/rUIqFANDjxkNq+jO980=;
+        b=FnDkbIkgI9Mtis7mAaricKHYaK7yh/2d9F/yWrqxVeXtsI9XIve6P6Tll9BvZ0FNNG
+         2bMEyeFQANouekudZ++2c/wYqBTK0GDQx2fPcYdhqll2ZjKFygdOmKSMrXgGyi/rus5u
+         m80sy/nrf6kr2/tOCDjjFGovhZFTWt5ygmT9uCyCkg9/8G4Ln12Xo/jN1XLxXHhs6U6e
+         T3WvX/kcOrDbHLKgy2cUpXU98RPbUske5vfw978rnX/IIYWRItj1KRZRxdgv6gR7yWmR
+         0EDVvl7MenCCjpQ5MBzwhi1A75OPufVMvxppwTJOjwAWEH5lRPfkogrA+GYYR812+m7e
+         6Aww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782978553; x=1783583353;
+        h=content-transfer-encoding:mime-version:subject:to:message-id:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PlXFLCqcOuVQfMYxbICaO8n/rUIqFANDjxkNq+jO980=;
+        b=iLmno3/avRqNfGx9EZrw+iex5w0FtUz2t+wrLM4deIKSDxZ2S1ysRwKGcjifnTRM46
+         HQZ873azrOqCYyfEfGQSPFtx0RMcxjIGMC+DmS6JmYHLRHsHB03w7SYHh6Gws3QmLVfY
+         KEVMgbZUF02koRfjFlatB1ZhETnydhRNqHwjDAzyTzdZMJx3vsblNAneHNac53+9kPqG
+         HVeqXg/LxB1pQjbWwFUblgMqklwDisF78XjTzPl/WfSkf6GbW+bYdur7s1fNyDI6/kLh
+         +xwWjutAiXrR5a2ETk4s22mTt8iDh0wdK25WHPjKvLmGLvUiBSvD2uXyZm6xntpYzJ5B
+         zWBg==
+X-Gm-Message-State: AOJu0YwMyiguvK4nC1jTr9wzNC1u8iEwVwe9pxGSTrSDKmE48hBTzIOS
+	Jrb/vTCHdAbaeDcYhbZa+B+VosMp5zYlgqlC+eCN1ztF+g+QbKVNMvWoGm+akw==
+X-Gm-Gg: AfdE7ckc5qzVYez53ZJ9ZKX47fLAdSViD/2FqdC0jzzHjWFUKEGmSP6J8fzdzhbbIaB
+	vgfPQ2svVJgFSlS8PtQaXWCFWfZoGNH5/aS4qSmf+E2MJQT3zHuSmxQV5sbfLxxE2OP6/PtrJi7
+	n2FCfC7R+TRhkr5CqP93UKWRKrbCBlcYW5zbQhR/ZWvImLFwjXw9qOh8pCJyqnBMXumvgTLjSME
+	tvckINc1rF19Nmt+98aOQ5jG4uzCEntgVbh4r0VtFghbOSpy+h6yE7EUdMV/gSIVL8j2tbff0bD
+	PxG1cebnU7mVZRYhj7FZJxW3DWYaz61M263byBBmMcxNDjt9sF/3BfVVk+rWT2UgzG4LXnxMRF3
+	rnRPeVXQvyOy0UUPP2TJKVRoC0JGMkW7Q96d2wt9UMC3kDY1A0LJcdsctZIrZklOiazkEx1EsVP
+	rQbD1dIL9DF8PsXQoOEPI5+iTgKWb/v54AOr+kQINUgGeptlrKq2Cgm1aYkOc=
+X-Received: by 2002:a05:651c:2204:b0:39b:224f:93a1 with SMTP id 38308e7fff4ca-39b36fa31c8mr9560001fa.38.1782978552864;
+        Thu, 02 Jul 2026 00:49:12 -0700 (PDT)
+Received: from host.docker.internal ([83.149.249.84])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39b37fc341asm4813801fa.24.2026.07.02.00.49.12
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 Jul 2026 00:49:12 -0700 (PDT)
+Date: Thu, 2 Jul 2026 10:49:10 +0300
+From: =?windows-1251?B?xeLj5e3o6SDP6+jx6ujt?= <eugene.pliskin@gmail.com>
+Message-ID: <323134122.20260702104910@gmail.com>
+To: git@vger.kernel.org
+Subject: Unexpected recursion in 'git rm'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260701212442.1430084-2-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 01, 2026 at 09:24:39PM +0000, brian m. carlson wrote:
+Hello.
 
-> +test_lazy_prereq SVN '
-> +	test_have_prereq PERL && test -n "$NO_SVN_TESTS" && perl -w -e "
-> +		use SVN::Core;
-> +		use SVN::Repos;
-> +		\$SVN::Core::VERSION gt '1.1.0' or exit(42);
-> +	"
-> +'
+The following git command does recurse directories as contrary to the refer=
+ence (https://git-scm.com/docs/git-rm):
 
-The single-quotes in your inline perl will be interpreted as ending (and
-restarting) the lazy-prereq snippet. So you actually get a bare:
+    git rm -n *.json
 
-  $SVN::Core::VERSION gt 1.1.0 or exit(42);
+Without directory specification before '*.json' this command is not expecte=
+d to recurse directories, but it really does.
 
-fed to perl (no quotes around 1.1.0). We sometimes catch these cases
-automatically it results in an extra argument to test_expect_success,
-etc. But here you are unlucky enough that it does not (and anyway, we do
-not seem to have the same safety check for test_lazy_prereq; we'd just
-ignore the extra arguments).
+git version 2.55.0.windows.1
 
-And of course being perl, it doesn't complain. I'm not sure how it is
-interpreted, but I doubt the use of "gt" is right. My version of
-SVN::Core is 1.14.5, which is (correctly) more than "1.1.0", but is
-(incorrect) not more than "1.2.0".
+--=20
+Regards,
+Eugene Pliskin                          mailto:eugene.pliskin@gmail.com
 
-I think the "gt" bug is inherited from lib-git-svn.sh (unless I'm just
-holding it wrong), but the single-quote one is new (it happens at the
-top-level in the original).
-
--Peff
