@@ -1,164 +1,145 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1254B8DC8
-	for <git@vger.kernel.org>; Thu,  2 Jul 2026 13:58:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAB44C042A
+	for <git@vger.kernel.org>; Thu,  2 Jul 2026 14:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783000734; cv=none; b=NyWs+okSNMQTDGZOnczHmA3Uj7xMnKjfyMDQiFaSpqzGGFGuFKx38/e91kTKUxjIynBzAVIryYdebCoWAp1lEkohs5Jk5Ew+dA/Lg7K2UIdWdGdIJR9Xqszs6aHKmwDQxCfHjabkC3Tn7XMCDfzx9EyiKM6jjhls9bFNrbDk7iU=
+	t=1783001250; cv=none; b=KkskETCPktjElLtmiMC9cQAVOl7azZCyDWJqxyUTd8ZxR3jCQqlNP5A4FdvHrmgS/CIptBc+OBGUwJTVMkFa4k1i2IamD4xTGkTpk7rXyIO41lfcs1DtztbB5iuiCARjMNEGU0EhQVSSsUYN0g8wQqQ66bWiGWbIBV/E2OTHMYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783000734; c=relaxed/simple;
-	bh=+JiTWnpPxJLe/SmfGUP8kEhXsRV3M54qPXhZFOfasLw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dHALEbS8zjxX98R17GXnrP5TeDLkixH5MAHlpbV9ATCSo59sI8QZovrSwVsOzwb+dQA7rlYntFyV9CDm69NRtkVvl1U4hrULHUJ2RgOikMWU74vJAWzVAGkaEW44k3nTvSH3IWVArLMmUO/3Xm3lp4z3k4kDz4ALVJVNlpf+t18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rUnFHzqO; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783001250; c=relaxed/simple;
+	bh=+daoOnC56RWD95KQ3aSWjhUpipUQY9pkzs93GQoERcE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=qVp6cQ8bvwNCgcwX4uWYjtHRQMHxYw+pz4D8oyxlwb2P0NdjfJfR/TWRjeDHmigEyZEgKuTyws/k8TErOZZ7czAgN58fo2yK6ly84ePLD28ouk2ICobQgVmILAlgUwlL+j2jmpOKO+WloyIBRy+Lj/AI6pWcRHR1nBnY2GqAm1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=usp.br; spf=pass smtp.mailfrom=usp.br; dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b=tQNPKV3N; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=usp.br
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=usp.br
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rUnFHzqO"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so13013255e9.0
-        for <git@vger.kernel.org>; Thu, 02 Jul 2026 06:58:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="tQNPKV3N"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3810e733d85so153463a91.0
+        for <git@vger.kernel.org>; Thu, 02 Jul 2026 07:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783000731; x=1783605531; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KyaJmN2n61u7xUjVdifQ+bDcxO6HfaA9K7BIo4wdsfo=;
-        b=rUnFHzqO6I0E+8yXnJ9unAwrJOrLZMaKl7KEjiTBRHLocjCaekGJywgJIJlWSnpesk
-         zkfle0E1hVR1hCM+m/bC7/uGcGSwVgqtiXZStHTGaqezqqR/pgiP6n9uVPqhfnMGt0Eq
-         kN78DblAHK7j14byP/ZCDdm7RzqzvfbF7choG2nF3t766UtSJVklZG6GfE8BEUSO5Bch
-         /VdieaS9MGvRc8m6LFxec0y/wXSRNxM3T/WQem7r9rh2/hqnWaNoZodvUvxZWqj0ET4B
-         pHwLHaVOfBSTsWoHh+EDvtUMGvGfgOLg+E5o7nJSpkJlLFdxDgl8oMJ1lsXxxlCEWC6N
-         u8eg==
+        d=usp.br; s=usp-google; t=1783001246; x=1783606046; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nLUZLWjhFgoDaauov4lhokjOl1Fh0zg+N5tSXyIW/VA=;
+        b=tQNPKV3NhU8DJ/rk+OAh5DAASDNZTAHEJCw+U+rNo6/ROLmr3I3VvjKWFqRxWWszFW
+         pccy/1Sn1KFYWUOs2ECdNHDPHy6d8iNPSECcyPBcZjfpB4hgGR5R3G96TsETrHn9vIFC
+         Lcq9MNo0PcBLJ/Sr6tpX0giTkzT1fyIelUzQACkdGW4YAimK01nVD53H2P2UZeOprXFh
+         kYK2fK+4Mn3fJnCUyHsvLXI015NTnSG5Fu31GfM9sBdCZN/6yV7jomzYYsFipzH2XZk8
+         +TDLnH6fVciINmuKXrMdNKLr1hewom/iNOoS8Lgh2e3oWhapcZHmaVfYwdNRE7WBrYr/
+         P3WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783000731; x=1783605531;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KyaJmN2n61u7xUjVdifQ+bDcxO6HfaA9K7BIo4wdsfo=;
-        b=UT/oZlfeY54vs3TL8BWGo2y8uG/xD58Qy5Q2aBAc4PKEgLrwP6EMXnciXQJuz12lIz
-         eZy7x1KsAXgUe1l4/YDNgIZrr1IwSmkJgPVh14pf2Jk3muPk5XaHlFeaXJZwj5Y6tQKb
-         ZyX80ZZXK2tHhFmOhLxZmJwZT6wwY5HCZiIVcmuFgtd+tSDZTh27qxOR+szUuLOfyRvQ
-         HnmuGaKRwYQJUOd8OU1cl9XiHqDI1UxpYkpraM+tbUt0pIniubP1n+1PxkPE2vtmAEj8
-         tAUNyo9BbNSJU7S7OI9A2cDv9KrFxQSiy5MmzwsLGPSbs8dsVWGS972CvkdC6BrIMeqU
-         zLig==
-X-Forwarded-Encrypted: i=1; AFNElJ8PZlXXP2hnbeLt2MB+W5eaQnW3qcVcz/xmFopien4BEVyYOhtKdYKGhlVEeycIJRakLiY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1C0KlU4tWeKy3UVYh3Gge9ioUwYpfi2zyLt0aYcw6EPsYmu8d
-	Pi0vLuhwDNSfapIXag6AlB8ApnLE4bj+wly5//PKyGDsO2vGLBPcwSED
-X-Gm-Gg: AfdE7cmoj+BBkRlPS8KI5Oej+PWAlZWUaGzVhxUF6z5jk/whSHIl5yc0h+DtfJtvXhj
-	MLR+HTDsbQ3hA8iUyroCBx7eBKYkFWaQMejDknAYqKLQhdtgYis1edGgrWQEq+EfblwfccgIA6W
-	+zoiOR4VDq76JmCK7BLLd9BEZD/vbNUvVOy0JNPbIQ1LXvDlJmNdhvO5dKpyCBGw1DJE79el5ic
-	bJVpXPmRQP8lDc6PnYpv6cBb2Ox5MlBSBC5WnhvGek3xfx0rC2fR76KxKhGLT7ldlYvT4e+DYDb
-	Sj/OXBeEawiGND15Upnu+pXdoRYu1zDL6NzZZ6rFDZMSNG6TdcQgaL3IH1M6YGOM3CzG5OR30EV
-	2LOma/blILeBkpAx/PdBW/YEaLcruMUwDNTGIwkW6i4tpn+odpnUN0E4U1ptPe27fjwuzYSIOkT
-	if9jP20oNk+WtBYkYbwhvabNQqdiz8Oqp1qn6kl8K/aQeu9aGDWxvFHm8PlR2OasG9aGQ=
-X-Received: by 2002:a05:600c:8189:b0:493:b56b:c45c with SMTP id 5b1f17b1804b1-493c2b9cc74mr85588555e9.30.1783000731263;
-        Thu, 02 Jul 2026 06:58:51 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477dd94c8ccsm9482895f8f.21.2026.07.02.06.58.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jul 2026 06:58:50 -0700 (PDT)
-Message-ID: <dd692c2d-87ca-4618-ae34-7e5e90ffa515@gmail.com>
-Date: Thu, 2 Jul 2026 14:58:49 +0100
+        d=1e100.net; s=20251104; t=1783001246; x=1783606046;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nLUZLWjhFgoDaauov4lhokjOl1Fh0zg+N5tSXyIW/VA=;
+        b=XUaTHl3kC6UEvYHOVOvwixzkgGd/pZI3/WmArQYBIXd01pNky+1Jms5A4AJmSgn377
+         uwjV5DDPlHmhoCo+sTgnDsjMtczlAgNzH8DNZoYxribMSKoxxa3bynYAvohPCqe7vCJn
+         0F2kB3immP+ZFiBNwoVlMMB0iS9wHoAo6V/j8WacukwsUozyNeqiutlXqUelr0CAReRf
+         RrB9GkHQQgHVl2G0kz8kBOtPp0zMfdFDZlYySf0LVmc3MdYBqBr5TKz4ocPdqQJeChQn
+         ZsHMe8IxOEBglAJf18id8DIhE9aGuXHKwC3mKghUA3zQyyAw41KmdKjtbUJs8hVdCgch
+         p8aA==
+X-Gm-Message-State: AOJu0YxqDEIU/zorYYuesASOw9MUZbrA0SwfneCJbxsOMilQ9I4obGim
+	xEzYX2btHqC5Z7Koc3/tEFh8LIO+2rCFKgVRfxHgEHb961NtJKNdlljD3pc+i859eEAsLiMBgVk
+	WgspK7pr9Pg==
+X-Gm-Gg: AfdE7cmQwAWYL6EoZ97UD7BDrAhcVYvVhszajlK4xpHIVoVMb3pkPIWlkMv2uJasWyw
+	CKzA+ZQ2cSVurSGQFChbRPi7OWUbR1fEG8YAmeljicKjNXhY9eiWljy0cRu25Hn3JdEGgYHCqrw
+	c1XOBuXr7xi9KHnR5xyFhJv2HCQJgMlVXkUIxgasN5m899kiLpA8hdaJTMblK4gHeIjARnC2Py/
+	mBi2+HJAkpgxYRrh9huAeo6j11byAXUThTkLW7YuTrY1px1WgqeDg/dGD0oOVBX2Jjm+N6uJodI
+	eJJYBlCmlAytwgL/+2EpQCygMZG9r/gtIsrM/vNuL7TctsoZ1qGTTQ9xbgKImN4PJbypZ890GCc
+	j/tGjUoylXD3ztaG7jjA8aHUncl21SsJDctg84eeNdGMFRQdsp9/hBGm45rpQKil5IAmu/G/d5f
+	IIbYNYsrJHZ/V/oseHDeDinWY20As30zM82S2hDmQUanP/0f/ALYVVWMUNTtvzDv1/KDoBCUxZP
+	CI=
+X-Received: by 2002:a17:90b:564f:b0:37f:bfa2:1887 with SMTP id 98e67ed59e1d1-380aa0f47aamr6612073a91.8.1783001246226;
+        Thu, 02 Jul 2026 07:07:26 -0700 (PDT)
+Received: from avocado.semfio.usp.br (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f0b7b9a1bsm10020636eec.3.2026.07.02.07.07.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jul 2026 07:07:25 -0700 (PDT)
+From: Marcelo Machado Lage <marcelomlage@usp.br>
+To: git@vger.kernel.org
+Cc: Marcelo Machado Lage <marcelomlage@usp.br>,
+	Vinicius Lira de Freitas <vinilira@usp.br>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t9811: replace 'test -f' and '! test -f' with 'test_path_*'
+Date: Thu,  2 Jul 2026 11:07:04 -0300
+Message-Id: <20260702140704.65805-1-marcelomlage@usp.br>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk,
- Patrick Steinhardt <ps@pks.im>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
- <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
- <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
- <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
- <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
- <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
- <CAHwyqnVN=McZjtQGcPnoVOHAd0+VDNPXy_N949VMsqZty3RDjQ@mail.gmail.com>
- <4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com>
- <CAHwyqnXoqZYHodWXHtwnk0_PiZcCYSVL+WgL3h5nWiYx_cSZLw@mail.gmail.com>
- <f15456d2-d8b2-4edc-80b4-3a9d8fc77da9@gmail.com> <xmqq8q7urfe1.fsf@gitster.g>
- <c517bce2-9f39-46ec-8509-bb0893e26ae2@gmail.com> <xmqqfr22obei.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqfr22obei.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 01/07/2026 18:41, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> Yes - if you apply the way "rebase -i" works to multiple commits you can
->> end up with a message template that has a screen full of commented lines
->> between uncommitted parts of the message. See the example below from
->> earlier in the thread. It is not so much of a problem in "rebase -i"
->> because it only fixes up a single commit at a time so all the commented
->> messages end up at the top of the buffer and at worst you have a few "#
->> fixup! ..." or "# squash! ..." lines mixed in with the uncommitted text.
->>
->>       # This is the combination of 4 commits
->>       # This is the first commit message
->>       Base subject
->>
->>       Base body
->>
->>       # This is the second commit message
->>       # Another subject
->>
->>       # Another body
->>
->>       # This is the third commit message
->>       # fixup! Base subject
->>
->>       # This is the fourth commit message
->>       # amend! Another subject
->>       A better subject
->>
->>       A better body
-> 
-> In the example, the second one becomes completely empty?
+Replace the basic shell commands 'test -f', with more modern test
+helpers 'test_path_is_file' and 'test_path_is_missing'.
 
-Yes because there is an amend! commit that replaces its message
-> Is the proposal not to show any messages that will be discarded
-> anyway and not even show them in commented form?  I think that makes
-> sense, and leaving only commit titles for these commits that would
-> not contribute to the text in the editor given to the user to edit
-> would indeed be an improvement.  For the same reason, as "# amend!"
-> will replace the message wholesale, it would also be a good idea for
-> the first commit to be hidden like all the other commits that would
-> not contribute to the text,
+Co-authored-by: Vinicius Lira de Freitas <vinilira@usp.br>
+Signed-off-by: Vinicius Lira de Freitas <vinilira@usp.br>
+Signed-off-by: Marcelo Machado Lage <marcelomlage@usp.br>
+---
+ t/t9811-git-p4-label-import.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-But the amend! commit does not target the first commit - it replaces the 
-message of the second commit so I think we should keep the first message 
-as shown below. You can see a different example with a squash! message 
-at [1]
->      # This is the combination fo 4 commits
->      # 1. Base subject
->      # 2. Another subject
->      # 3. fixup! Base subject
->      # 4. amend! Another subject
+diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
+index 7614dfbd95..93d6b4c479 100755
+--- a/t/t9811-git-p4-label-import.sh
++++ b/t/t9811-git-p4-label-import.sh
+@@ -62,9 +62,9 @@ test_expect_success 'basic p4 labels' '
+ 
+ 		cd main &&
+ 		git checkout TAG_F1_ONLY &&
+-		! test -f f2 &&
++		test_path_is_missing f2 &&
+ 		git checkout TAG_WITH\$_SHELL_CHAR &&
+-		test -f f1 && test -f f2 && test -f file_with_\$metachar &&
++		test_path_is_file f1 && test_path_is_file f2 && test_path_is_file file_with_\$metachar &&
+ 
+ 		git show TAG_LONG_LABEL | grep -q "A Label second line"
+ 	)
+@@ -102,11 +102,11 @@ test_expect_success 'two labels on the same changelist' '
+ 
+ 		git checkout TAG_F1_1 &&
+ 		ls &&
+-		test -f f1 &&
++		test_path_is_file f1 &&
+ 
+ 		git checkout TAG_F1_2 &&
+ 		ls &&
+-		test -f f1
++		test_path_is_file f1
+ 	)
+ '
+ 
+@@ -135,9 +135,9 @@ test_expect_success 'export git tags to p4' '
+ 		p4 labels ... | grep LIGHTWEIGHT_TAG &&
+ 		p4 label -o GIT_TAG_1 | grep "tag created in git:xyzzy" &&
+ 		p4 sync ...@GIT_TAG_1 &&
+-		! test -f main/f10 &&
++		test_path_is_missing main/f10 &&
+ 		p4 sync ...@GIT_TAG_2 &&
+-		test -f main/f10
++		test_path_is_file main/f10
+ 	)
+ '
+ 
+@@ -168,9 +168,9 @@ test_expect_success 'export git tags to p4 with deletion' '
+ 		cd "$cli" &&
+ 		p4 sync ... &&
+ 		p4 sync ...@GIT_TAG_ON_DELETED &&
+-		test -f main/deleted_file &&
++		test_path_is_file main/deleted_file &&
+ 		p4 sync ...@GIT_TAG_AFTER_DELETION &&
+-		! test -f main/deleted_file &&
++		test_path_is_missing main/deleted_file &&
+ 		echo "checking label contents" &&
+ 		p4 label -o GIT_TAG_ON_DELETED | grep "tag on deleted file"
+ 	)
 
-        Base subject
-
-        Base body
-
-        # -------------------------------------
-	
->      A better subject
-> 
->      A better body.
-
-Thanks
-
-Phillip
-
-[1] 
-https://lore.kernel.org/git/4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+2.34.1
 
