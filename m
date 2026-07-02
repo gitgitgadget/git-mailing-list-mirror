@@ -1,167 +1,164 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76635224D6
-	for <git@vger.kernel.org>; Thu,  2 Jul 2026 13:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1254B8DC8
+	for <git@vger.kernel.org>; Thu,  2 Jul 2026 13:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783000001; cv=none; b=cW24yZ428JFdBub//dgDpyXU3cIrisy+8BrBEMODhnzzm+a4RsEmsGuiV5S/MegARbGBPKweuJTVjJVjB/oWXn+60k4VinMi3MikgHZm5oC8F+hknztnKxFLyKbUaAL3c2XUWlJ0c8L4EOD0F8T0CoF/w8/AD4K++KAdqhyoeqk=
+	t=1783000734; cv=none; b=NyWs+okSNMQTDGZOnczHmA3Uj7xMnKjfyMDQiFaSpqzGGFGuFKx38/e91kTKUxjIynBzAVIryYdebCoWAp1lEkohs5Jk5Ew+dA/Lg7K2UIdWdGdIJR9Xqszs6aHKmwDQxCfHjabkC3Tn7XMCDfzx9EyiKM6jjhls9bFNrbDk7iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783000001; c=relaxed/simple;
-	bh=gd2A5GJeBP2nUb0x0ZOJ6Rw2/hicypn7+BD2gW2xgHE=;
-	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=OT/haCLr5G184GeaO6vcT2zDUOCt+WaHw6QmNr31rcc5QGCkUqMsPt10YY/DLcuvOhRS8OTrSq7GQ0nh3kMftuo8swhgmZqowxHGI61UQ39b8ohLR6yoIXkbiJSLxkWM++nEFDVcIxRu0hnPjgyCaRRZaxTlPTEkVpS21blL/WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=PgiWGzKr; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1783000734; c=relaxed/simple;
+	bh=+JiTWnpPxJLe/SmfGUP8kEhXsRV3M54qPXhZFOfasLw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=dHALEbS8zjxX98R17GXnrP5TeDLkixH5MAHlpbV9ATCSo59sI8QZovrSwVsOzwb+dQA7rlYntFyV9CDm69NRtkVvl1U4hrULHUJ2RgOikMWU74vJAWzVAGkaEW44k3nTvSH3IWVArLMmUO/3Xm3lp4z3k4kDz4ALVJVNlpf+t18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rUnFHzqO; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="PgiWGzKr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1782999997; x=1783604797;
-	i=johannes.schindelin@gmx.de;
-	bh=ggsRzFhyK8OVvVX5vwb3wVe/eq8l10hBdM/eZuh7uUA=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=PgiWGzKrqgiFwkMhhZPQCOv4544pZp0/TnNdINQKhZn7XwBdiKlq2hu5GV6CuTh1
-	 H5xoA/zT5zTnrFgNP/l48ibp64I3pprAndQqVuBp6Meje8n4WpVVbli/vzRmhi7lv
-	 HLJaf6OVXZNJOlaTzsQgLn4289Dn2LgqI+5JCdSb+NceYoihkh9yJnnTyD7gzb4Af
-	 N2plgylLScfSSwXTyqYDlH2jjhCbsCrs78eDYyBYEOvjIjmtNZg1BC9T08bZU1j9g
-	 wb71zjUk1mrQubMCRWTEetl4Zzj84g0r62U/JKSSTokHLBjMtLqNFuai9lwW24dv5
-	 9FC3Pv7Cl1lTB97I4g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDysg-1wmxFB13LA-002DQ9; Thu, 02
- Jul 2026 15:46:37 +0200
-Date: Thu, 2 Jul 2026 15:46:32 +0200 (CEST)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.55.0(2)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rUnFHzqO"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so13013255e9.0
+        for <git@vger.kernel.org>; Thu, 02 Jul 2026 06:58:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783000731; x=1783605531; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KyaJmN2n61u7xUjVdifQ+bDcxO6HfaA9K7BIo4wdsfo=;
+        b=rUnFHzqO6I0E+8yXnJ9unAwrJOrLZMaKl7KEjiTBRHLocjCaekGJywgJIJlWSnpesk
+         zkfle0E1hVR1hCM+m/bC7/uGcGSwVgqtiXZStHTGaqezqqR/pgiP6n9uVPqhfnMGt0Eq
+         kN78DblAHK7j14byP/ZCDdm7RzqzvfbF7choG2nF3t766UtSJVklZG6GfE8BEUSO5Bch
+         /VdieaS9MGvRc8m6LFxec0y/wXSRNxM3T/WQem7r9rh2/hqnWaNoZodvUvxZWqj0ET4B
+         pHwLHaVOfBSTsWoHh+EDvtUMGvGfgOLg+E5o7nJSpkJlLFdxDgl8oMJ1lsXxxlCEWC6N
+         u8eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783000731; x=1783605531;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KyaJmN2n61u7xUjVdifQ+bDcxO6HfaA9K7BIo4wdsfo=;
+        b=UT/oZlfeY54vs3TL8BWGo2y8uG/xD58Qy5Q2aBAc4PKEgLrwP6EMXnciXQJuz12lIz
+         eZy7x1KsAXgUe1l4/YDNgIZrr1IwSmkJgPVh14pf2Jk3muPk5XaHlFeaXJZwj5Y6tQKb
+         ZyX80ZZXK2tHhFmOhLxZmJwZT6wwY5HCZiIVcmuFgtd+tSDZTh27qxOR+szUuLOfyRvQ
+         HnmuGaKRwYQJUOd8OU1cl9XiHqDI1UxpYkpraM+tbUt0pIniubP1n+1PxkPE2vtmAEj8
+         tAUNyo9BbNSJU7S7OI9A2cDv9KrFxQSiy5MmzwsLGPSbs8dsVWGS972CvkdC6BrIMeqU
+         zLig==
+X-Forwarded-Encrypted: i=1; AFNElJ8PZlXXP2hnbeLt2MB+W5eaQnW3qcVcz/xmFopien4BEVyYOhtKdYKGhlVEeycIJRakLiY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy1C0KlU4tWeKy3UVYh3Gge9ioUwYpfi2zyLt0aYcw6EPsYmu8d
+	Pi0vLuhwDNSfapIXag6AlB8ApnLE4bj+wly5//PKyGDsO2vGLBPcwSED
+X-Gm-Gg: AfdE7cmoj+BBkRlPS8KI5Oej+PWAlZWUaGzVhxUF6z5jk/whSHIl5yc0h+DtfJtvXhj
+	MLR+HTDsbQ3hA8iUyroCBx7eBKYkFWaQMejDknAYqKLQhdtgYis1edGgrWQEq+EfblwfccgIA6W
+	+zoiOR4VDq76JmCK7BLLd9BEZD/vbNUvVOy0JNPbIQ1LXvDlJmNdhvO5dKpyCBGw1DJE79el5ic
+	bJVpXPmRQP8lDc6PnYpv6cBb2Ox5MlBSBC5WnhvGek3xfx0rC2fR76KxKhGLT7ldlYvT4e+DYDb
+	Sj/OXBeEawiGND15Upnu+pXdoRYu1zDL6NzZZ6rFDZMSNG6TdcQgaL3IH1M6YGOM3CzG5OR30EV
+	2LOma/blILeBkpAx/PdBW/YEaLcruMUwDNTGIwkW6i4tpn+odpnUN0E4U1ptPe27fjwuzYSIOkT
+	if9jP20oNk+WtBYkYbwhvabNQqdiz8Oqp1qn6kl8K/aQeu9aGDWxvFHm8PlR2OasG9aGQ=
+X-Received: by 2002:a05:600c:8189:b0:493:b56b:c45c with SMTP id 5b1f17b1804b1-493c2b9cc74mr85588555e9.30.1783000731263;
+        Thu, 02 Jul 2026 06:58:51 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477dd94c8ccsm9482895f8f.21.2026.07.02.06.58.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jul 2026 06:58:50 -0700 (PDT)
+Message-ID: <dd692c2d-87ca-4618-ae34-7e5e90ffa515@gmail.com>
+Date: Thu, 2 Jul 2026 14:58:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Message-ID: <1M5fIW-1wlLDb1F7q-00EtvD@mail.gmx.net>
-X-Provags-ID: V03:K1:ww5dUXXxVyCAK+1pIaEODzgHNt23adQKpv0to7YPraTqMYIUv5K
- Mjn42OcSKH5r985PK3XOZZD5mXbnjNstVJeFG//zYrSkGRTBreCi+QCLBb+mAUdaGwq9wa0
- ct3wv81zm5LPT7ZTwuPl7VnBAVf1q7i8mcCWKi5ZTas1o5dPdOnC0DYirbYx1B27UcpVRtT
- UEGOGYi275HROzqwlss5A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NbYdy7AuQ08=;1xlqByHfc2SMW1dkPazZtB3GJKX
- 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
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/4] history: add squash subcommand to fold a range
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk,
+ Patrick Steinhardt <ps@pks.im>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
+ <pull.2337.v5.git.git.1782338102.gitgitgadget@gmail.com>
+ <d37e8f4f-d1f9-45aa-8c95-ebe676d54671@gmail.com> <akIQLM6xZTHBudWT@pks.im>
+ <3b3af3ef-a043-4af9-964e-429237789c97@gmail.com>
+ <CAHwyqnWQmObWr3N81_EU6F13iyKp3FfY8KSNFfoAjS4r_0qJrQ@mail.gmail.com>
+ <dff9378a-267f-4b49-bee4-615b4bf75abb@gmail.com>
+ <CAHwyqnVN=McZjtQGcPnoVOHAd0+VDNPXy_N949VMsqZty3RDjQ@mail.gmail.com>
+ <4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com>
+ <CAHwyqnXoqZYHodWXHtwnk0_PiZcCYSVL+WgL3h5nWiYx_cSZLw@mail.gmail.com>
+ <f15456d2-d8b2-4edc-80b4-3a9d8fc77da9@gmail.com> <xmqq8q7urfe1.fsf@gitster.g>
+ <c517bce2-9f39-46ec-8509-bb0893e26ae2@gmail.com> <xmqqfr22obei.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqfr22obei.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Dear Git users,
+On 01/07/2026 18:41, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> Yes - if you apply the way "rebase -i" works to multiple commits you can
+>> end up with a message template that has a screen full of commented lines
+>> between uncommitted parts of the message. See the example below from
+>> earlier in the thread. It is not so much of a problem in "rebase -i"
+>> because it only fixes up a single commit at a time so all the commented
+>> messages end up at the top of the buffer and at worst you have a few "#
+>> fixup! ..." or "# squash! ..." lines mixed in with the uncommitted text.
+>>
+>>       # This is the combination of 4 commits
+>>       # This is the first commit message
+>>       Base subject
+>>
+>>       Base body
+>>
+>>       # This is the second commit message
+>>       # Another subject
+>>
+>>       # Another body
+>>
+>>       # This is the third commit message
+>>       # fixup! Base subject
+>>
+>>       # This is the fourth commit message
+>>       # amend! Another subject
+>>       A better subject
+>>
+>>       A better body
+> 
+> In the example, the second one becomes completely empty?
 
-Hot fix release for NTLM authentication issues! Git for Windows 2.55.0(2)
-is available!
+Yes because there is an amend! commit that replaces its message
+> Is the proposal not to show any messages that will be discarded
+> anyway and not even show them in commented form?  I think that makes
+> sense, and leaving only commit titles for these commits that would
+> not contribute to the text in the editor given to the user to edit
+> would indeed be an improvement.  For the same reason, as "# amend!"
+> will replace the message wholesale, it would also be a good idea for
+> the first commit to be hidden like all the other commits that would
+> not contribute to the text,
 
-    https://gitforwindows.org/
+But the amend! commit does not target the first commit - it replaces the 
+message of the second commit so I think we should keep the first message 
+as shown below. You can see a different example with a squash! message 
+at [1]
+>      # This is the combination fo 4 commits
+>      # 1. Base subject
+>      # 2. Another subject
+>      # 3. fixup! Base subject
+>      # 4. amend! Another subject
 
-(Please note that NTLM support is scheduled to be dropped later this
-year.)
+        Base subject
 
-Changes since Git for Windows v2.55.0 (June 29th 2026)
+        Base body
 
-Following the MSYS2 project, on which Git for Windows is based, Windows
-8.1 support will be dropped after Git for Windows v2.55.
+        # -------------------------------------
+	
+>      A better subject
+> 
+>      A better body.
 
-Bug Fixes
+Thanks
 
-  * NTLM opt-in support, which had been prematurely disabled altogether
-    (a glimpse into this fall when NTLM will be disabled, no opt-in
-    possible) was fixed by temporarily enabling optional NTLM support
-    again.
+Phillip
 
-Git-2.55.0.2-64-bit.exe | 74300da8dfe0d844c5449ffb809662f8eeac47916f83730c879c4084890c6c0e
-Git-2.55.0.2-arm64.exe | 3df091fc297001ea9592554ee630111ea27b2d33b137859d08c4971abb319a7c
-PortableGit-2.55.0.2-64-bit.7z.exe | b20d42da3afa228e9fa6174480de820282667e799440d655e308f700dfa0d0df
-PortableGit-2.55.0.2-arm64.7z.exe | 65b913a56a62d7a91fc11a2eecb08422aaa34332d3b2ea39457d2eda02c2f99c
-MinGit-2.55.0.2-64-bit.zip | e3ea2944cea4b3fabcd69c7c1669ef69b1b66c05ac7806d81224d0abad2dec31
-MinGit-2.55.0.2-arm64.zip | 0b2b81fdce284efd174cbb51b886ccea2fd271679c4b5c21f07d9e03bae51413
-MinGit-2.55.0.2-32-bit.zip | 04009f6150c1cec2d6779c51406c8c6a3f0133e57fa91c91eb8a030b93e68ccb
-MinGit-2.55.0.2-busybox-64-bit.zip | 760e5a4d2ff5469adfc74f9f46901eee412de48dedaa6ef1785c0cf9a7f065fb
-MinGit-2.55.0.2-busybox-32-bit.zip | cc4ce341dae51eafb6c30e0701569338b7cb32c0621328fe43db2047e8a8d821
-Git-2.55.0.2-64-bit.tar.bz2 | 5cfd35fadb11ac2f629c16f7be262f3f138cfe3f368331ad1e44f9abb5814882
-Git-2.55.0.2-arm64.tar.bz2 | 06c1c6c854628b9ac1081376bccc4a7b6ecd46ee14bb1bca10c57fa680234305
+[1] 
+https://lore.kernel.org/git/4b505228-4846-4a48-9255-e249f4e70a1f@gmail.com
 
-Ciao,
-Johannes
