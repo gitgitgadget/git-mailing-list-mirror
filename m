@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62361A6835
-	for <git@vger.kernel.org>; Thu,  2 Jul 2026 08:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4083D4128
+	for <git@vger.kernel.org>; Thu,  2 Jul 2026 08:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782979292; cv=none; b=ZdoMoM//TMBYHGNfpAj89LJQGg7LMqtUIfdKr1afj4WPXCr5sQB5jgKfs74+BynolNkaJm/HQlvZVvtqbhf7gUQynlieIRnsnDwkepJuMrkRk+BR0eWjyUUbfuLeh7LuBWFyaC1mk5fqwbRHOoe3TTzwmqkrlMe+PijiIgxTVOE=
+	t=1782979402; cv=none; b=nQMMzhqtprMxB/xBlhcFvgOOv1o+lHzNdCycdaVzbRlRBNMG+tw9DrcHBXUPGJMh5iax8lArNomB9YjxU9tmrtqu9/nkYKc+e4hPuiaETyqDrWNkmhykGdHpUTpf6rTEerguw+JpvFgA8KU/ivC5PSxmH69+C0RSOzY51/9nk+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782979292; c=relaxed/simple;
-	bh=DEfy8+gNiDNvqqcnfBrhs2LrBF/Gg0/5OSksFxNYO+k=;
+	s=arc-20240116; t=1782979402; c=relaxed/simple;
+	bh=JkKZfuOnxleW/mrulZrbiMHPHleynkkFtCaSnLEzmQQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qdImm6jK3xya/bw+Xy5XliBjuKNT4eztdL2G9kaG32tYunG3eM8JnZgJH8K+t3SrVpX1MeBpt7CbZy0PyAXtJ2UzRvxWIE9rzWQdSdVDC8qBkp67Oy1JnTgf/wBxodkiriD1DE4BDJ1l6TdonEpeznzP0Fznm+8uaRS+ujtaqss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Me7lUcfJ; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=o6tM6p40AJYsi2NyGoKrWifgJBlHE9v4l4kb5FY6VFnJUSba3vknFYdGvjVeosG9QzBz/tTSjOIO7b06+iymvF7H2ay4Cv919pk6607bY3AajFf3OekcvMCxiq6O5RsBS17mOid4Aqgr5rXAq8dJ9TdJGPGMxHZehG8i/F8zUsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OHLQYZ5U; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Me7lUcfJ"
-Received: (qmail 85598 invoked by uid 106); 2 Jul 2026 08:01:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=DEfy8+gNiDNvqqcnfBrhs2LrBF/Gg0/5OSksFxNYO+k=; b=Me7lUcfJ+R78QRzgpmHm5paoEle/cm+ZALSQzffyORxuDmsx3+F33TdJK8EA0jBs8exnFy1gYHlrknHLI08VQanp9SfkCRiRqZgcZpjo5lTBsPoXckymxbvr7PXRWm+QEnT6WiRgs/1FOqhWhGwBSLUNR3CnR+zDl/UceTD4GK1e1JbE8b1ZfOqFwj6p46FBOPi9FA/kpJEVs3u7vzNiGMS+F1b62gMoX4mCVrtvhVa/dQazqr01IxZrfpFK59hv0vwxv2v0UFFHLVbfuVlu7jXejzFB3/J2cl1Dx/Uq0gut/xAAivWLqSBQPjZXE8pTTGjXDC+k7sb4N1EogwZe8A==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OHLQYZ5U"
+Received: (qmail 85621 invoked by uid 106); 2 Jul 2026 08:03:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=JkKZfuOnxleW/mrulZrbiMHPHleynkkFtCaSnLEzmQQ=; b=OHLQYZ5U77atHdP+9I+0/EsexnfgiWg7/WioqPAr4L35OpV3IEO/lvZHf2q+Q/llMl7bltoU27b/qeY1tFKUEEBtwdd9u7BvUP0q2vY7H4uPpNLNWEoqWJIAGGsfSJXQRDt8ZUM8zF9/9fKDekdTVfS1zZWjVHChKsEqEmJ0+wZoM5WCenkQ15hlmxW69ieTM4SLNmdtBaQglNTbdAlM/ePvthVi/Y69xa7nHAThTUUL6Q1gSICwUIDEEbxTiT5sOr/GCdCiiCGqvXX4NRr7+lBkTItClryXagtdpkKiKEqSWzMynaqau+H6It28/5OnN+6EWZGDPW+mqTiaj4EeMQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jul 2026 08:01:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jul 2026 08:03:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 178210 invoked by uid 111); 2 Jul 2026 08:01:30 -0000
+Received: (qmail 178222 invoked by uid 111); 2 Jul 2026 08:03:19 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Jul 2026 04:01:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Jul 2026 04:03:19 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 2 Jul 2026 04:01:30 -0400
+Date: Thu, 2 Jul 2026 04:03:19 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 3/9] csum-file: always finalize or discard hash
-Message-ID: <20260702080130.GC2029434@coredump.intra.peff.net>
+Subject: [PATCH 4/9] csum-file: provide a function to release checkpoints
+Message-ID: <20260702080319.GD2029434@coredump.intra.peff.net>
 References: <20260702075234.GA1548258@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -42,93 +42,80 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260702075234.GA1548258@coredump.intra.peff.net>
 
-When a hashfile struct is created, we always initialize the git_hash_ctx
-inside it. We usually end up in hashfile_finalize(), which passes that
-ctx to git_hash_final(), cleaning it up.
+A hashfile_checkpoint struct is basically just a copy of the hash_ctx
+state at a given point in the file. As such, it contains its own
+git_hash_ctx which may (depending on the underlying hash implementation)
+need to be discarded when we're done with it.
 
-But a few code paths don't do so:
+Let's add a "release" function which cleans up the hash context it
+holds. I chose "release" here and not "discard" because you'd use this
+to clean up every checkpoint, whether you used it or not. As opposed to
+git_hash_discard(), which is needed only if you didn't call
+git_hash_final().
 
-  1. If we bail on the hashfile and call free_hashfile() directly rather
-     than finalizing.
-
-  2. If the skip_hash flag is set, the hashfile_finalize() call will
-     never call git_hash_final(). (You might think that we should just
-     avoid git_hash_init() entirely in this case, but the skip_hash flag
-     is set by the caller after the hashfile is initialized).
-
-For most hash implementations this is OK, but for ones that allocate on
-initialization it causes a memory leak. You can see many failures by
-running:
-
-  make SANITIZE=leak OPENSSL_SHA1_UNSAFE=1 test
-
-since OpenSSL >= 3.0 is such an allocating hash implementation (and
-csum-file uses the "unsafe" algorithm variant).
-
-We can solve this by calling git_hash_discard() as appropriate.
-
-Note that free_hashfile() is used both directly by callers to abort
-without finalizing, and by hashfile_finalize() to free memory. In the
-latter case we _don't_ want to call git_hash_discard(), because we'll
-already have either finalized or discarded it. So we'll push that to an
-internal "free_memory" function, and keep free_hashfile() as the public
-interface to abort a hashfile without finalizing.
-
-This fix makes several scripts leak-free with the command above: t1600,
-t1601, t2107, t7008, t9210, t9211.
+There are only two callers which use hashfile_checkpoints, and we can
+add release calls to both. When built with "SANITIZE=leak
+OPENSSL_SHA1_UNSAFE=1", this makes both t1050 and t9300 leak-free.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- csum-file.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ builtin/fast-import.c | 1 +
+ csum-file.c           | 5 +++++
+ csum-file.h           | 1 +
+ object-file.c         | 2 ++
+ 4 files changed, 9 insertions(+)
 
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index aa656c5195..f6473dcc8e 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -1216,6 +1216,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
+ out:
+ 	free(in_buf);
+ 	free(out_buf);
++	hashfile_checkpoint_release(&checkpoint);
+ }
+ 
+ /* All calls must be guarded by find_object() or find_mark() to
 diff --git a/csum-file.c b/csum-file.c
-index 8ca9246a80..44ff460692 100644
+index 44ff460692..b166f89624 100644
 --- a/csum-file.c
 +++ b/csum-file.c
-@@ -55,24 +55,32 @@ void hashflush(struct hashfile *f)
- 	}
+@@ -223,6 +223,11 @@ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint
+ 	return 0;
  }
  
--void free_hashfile(struct hashfile *f)
-+static void free_hashfile_memory(struct hashfile *f)
- {
- 	free(f->buffer);
- 	free(f->check_buffer);
- 	free(f);
- }
- 
-+void free_hashfile(struct hashfile *f)
++void hashfile_checkpoint_release(struct hashfile_checkpoint *checkpoint)
 +{
-+	git_hash_discard(&f->ctx);
-+	free_hashfile_memory(f);
++	git_hash_discard(&checkpoint->ctx);
 +}
 +
- int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 		      enum fsync_component component, unsigned int flags)
+ void crc32_begin(struct hashfile *f)
  {
- 	int fd;
+ 	f->crc32 = crc32(0, NULL, 0);
+diff --git a/csum-file.h b/csum-file.h
+index d1a0ff29cd..6ed74d1637 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -39,6 +39,7 @@ struct hashfile_checkpoint {
+ void hashfile_checkpoint_init(struct hashfile *, struct hashfile_checkpoint *);
+ void hashfile_checkpoint(struct hashfile *, struct hashfile_checkpoint *);
+ int hashfile_truncate(struct hashfile *, struct hashfile_checkpoint *);
++void hashfile_checkpoint_release(struct hashfile_checkpoint *);
  
- 	hashflush(f);
- 
--	if (f->skip_hash)
-+	if (f->skip_hash) {
-+		git_hash_discard(&f->ctx);
- 		hashclr(f->buffer, f->algop);
--	else
-+	} else {
- 		git_hash_final(f->buffer, &f->ctx);
-+	}
- 
- 	if (result)
- 		hashcpy(result, f->buffer, f->algop);
-@@ -97,7 +105,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 		if (close(f->check_fd))
- 			die_errno("%s: sha1 file error on close", f->name);
+ /* finalize_hashfile flags */
+ #define CSUM_CLOSE		1
+diff --git a/object-file.c b/object-file.c
+index e3d92bbda2..32a0d6d237 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1352,6 +1352,8 @@ static int odb_transaction_files_write_object_stream(struct odb_transaction *bas
+ 			   state->alloc_written);
+ 		state->written[state->nr_written++] = idx;
  	}
--	free_hashfile(f);
-+	free_hashfile_memory(f);
- 	return fd;
++
++	hashfile_checkpoint_release(&checkpoint);
+ 	return 0;
  }
  
 -- 
