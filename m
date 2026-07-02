@@ -1,39 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89B322AE48
-	for <git@vger.kernel.org>; Thu,  2 Jul 2026 21:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36AA30B51A
+	for <git@vger.kernel.org>; Thu,  2 Jul 2026 21:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783026365; cv=none; b=Diu64m8O1/UkpVXLbuVfvtCUFHFqzqeDSgQkbMvSde1DpZAyJqHDKwx0IsI6Oq9ISYCzlSJE0gcFiWUCEVaqH2HBlvVYbpv2C/qjzcqQUJjsN/cPbCzuuaxp0nCOsq4l4aAw2M4cTYj4rUSxn+5RM7pe6K5uUDAmC2qxNduMTz4=
+	t=1783026978; cv=none; b=qeCkI0RWmE/crXFO/o9YfX3waguy1+6szKtlC4Ci7YdG4xYV5QIg014Xm/I9yQGWvHbqzOzQY0y2D33tUin+HcM7KHTLFSXkKLlCr6hoRKpqomJt1FhQm0Pth2UMydD1gNy1lqDFRXi4Tu6ss+wtkzmKMXIivNHz4TedH0ApKOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783026365; c=relaxed/simple;
-	bh=1amXDpl5JTVmlXRAmxJMUTPh8qHn54xuZZpTnMooBpo=;
+	s=arc-20240116; t=1783026978; c=relaxed/simple;
+	bh=CBQWGLt4Uhmank+ChbyE7VwwjWtj9iZK5IDmRbeUPhE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W+5X/S7tpTzFWltlknhZzOLBB/YMJGWnR2fWSY1raU/QApU9NsC8n+CTbVRW2KtrmE40XOO0Cyu+AJANU7KSnjG531z/JL9y8V3ED/Qy5K0vliH+2eplRBM3RA02ykU086zbqv7CwC9eXLraVFO2flHkAdbcD28AhefjTnHFf+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=b+9ADycx; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=jT1P/yvBB1n221F3q+MMaYGxWoxIryVN8BJ35mZLk5jqBkB6u2JUTDvKjUTFfUtJeOMEwMXMZgCXEAGoOSa6UbqcsxrH9XiMgnNsJ/LQ6/etqHcTj1SODIpqAxjMM3EAXYkVUBUmaPEeAGay9VQYzfKyr+GO97J7FgSs4JIOrn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aZ9ovg5d; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="b+9ADycx"
-Received: (qmail 88788 invoked by uid 106); 2 Jul 2026 21:06:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1amXDpl5JTVmlXRAmxJMUTPh8qHn54xuZZpTnMooBpo=; b=b+9ADycxZN7W1Oif9n1l61cKOvG2fKQ7j+K2AGhw/W4Fi3Fh/x+U5/IYMZdqxse4PNV1UUHFRCL7F1xAsKXZIOnHXlGs1YgGA+0qi9CtLbfO+k5lzuFJeKn7oevnpeJZWbMvySlKgXrw/hIoa+gV6OhXznF4EzCHO85XfaEDV08JfZ2YeUeCaMH4kXWmH61wTA1qyRtsP4KXEan7BfEQkDcxOkxy51SeeO4PGD0BbsAfShBKLMMvAqQDXfDOJ4CQkwzdrhAwCS7eFDjk57IMt28qkipvai+LPNP6bK1wqqZVW7dGQzwSZfRs23k1ef6o1MCqiCmDRaNx3aSq8FUOVQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aZ9ovg5d"
+Received: (qmail 88812 invoked by uid 106); 2 Jul 2026 21:16:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=CBQWGLt4Uhmank+ChbyE7VwwjWtj9iZK5IDmRbeUPhE=; b=aZ9ovg5dgJYZ7jaTNb3oIlWHixw5lFVq6Ak1AInaYHURdgQF7CvuC4kCKF3DS+B2GqAYok3+BVywYKlSqwzs4rT2lOrBGU7c1ccAIne6cYdNyYTQt7PnJpAi59l9bm9sBAa6xrPDPp1Hx0p5h3UdtcCP5T9atpWhaZCHMLEw/htuhmlGPRW0v4111O36y/Osflur4eojGPHfOOV/dETAZHBtqhyXm7+pgsgh+NMTdjPSS7Ty+lS87j5IHXidSr56mt6Ob6RODUWYk1mhpk1BO5jWSTWfVjWi3LNmPQYnIkiITTnYcDBDUyTlEo8X5KJiRqalDfgEjpEKhbbtwFTf+w==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jul 2026 21:06:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jul 2026 21:16:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 187678 invoked by uid 111); 2 Jul 2026 21:06:01 -0000
+Received: (qmail 187861 invoked by uid 111); 2 Jul 2026 21:16:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Jul 2026 17:06:01 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Jul 2026 17:16:15 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 2 Jul 2026 17:06:01 -0400
+Date: Thu, 2 Jul 2026 17:16:14 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/9] csum-file: drop discard_hashfile()
-Message-ID: <20260702210601.GA2051171@coredump.intra.peff.net>
-References: <20260702075234.GA1548258@coredump.intra.peff.net>
- <20260702075744.GA2029434@coredump.intra.peff.net>
- <xmqqik6xl0fb.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/9] t4141: fix inefficient use of dd(1)
+Message-ID: <20260702211614.GB2051171@coredump.intra.peff.net>
+References: <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-0-76b4d7bab3d0@pks.im>
+ <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-3-76b4d7bab3d0@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,37 +42,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqik6xl0fb.fsf@gitster.g>
+In-Reply-To: <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-3-76b4d7bab3d0@pks.im>
 
-On Thu, Jul 02, 2026 at 11:19:04AM -0700, Junio C Hamano wrote:
+On Thu, Jul 02, 2026 at 02:00:56PM +0200, Patrick Steinhardt wrote:
 
-> Jeff King <peff@peff.net> writes:
+> This test setup is extremely expensive, as `test_copy_bytes` is
+> implemented via `dd ibs=1 count="$1"`, which copies data one byte at a
+> time. So as we write 1GB of data, we end up doing 1 billion reads and
+> writes. This naturally takes a while: it takes 6 minutes on my system,
+> and around 40 minutes in some CI jobs!
 > 
-> > So now we have two functions, discard_hashfile() and free_hashfile(),
-> > and we only need one. Which one do we want to keep?
-> >
-> > The only difference between them is that the discard variant also closes
-> > the descriptors held in the struct. Let's look at the three callers:
-> > ...
-> > Note that I said "descriptors" plural above. Those callers all care
-> > about the "fd" member of the struct. But discard_hashfile() also closes
-> > check_fd. That is only used if the struct is initialized with
-> > hashfd_check(), and neither of its two callers call either discard or
-> > free (they always "finalize" instead). So closing it is irrelevant for
-> > the current callers.
-> >
-> > I think we're better off sticking with the simpler free_hashfile()
-> > interface, and the handful of callers can decide how to handle the
-> > descriptors themselves.
-> 
-> Sonds good.
-> 
-> Our resident naming czar (already Cc'ed) may have preference about
-> the names and word order, though ;-)
+> We can do much better though, as genzeros already knows to handle an
+> optional limit of how much data it is supposed to write, which allows us
+> to remove the call to `test_copy_bytes`. Furthermore, it has already
+> been optimized to generate the data fast.
 
-Heh, yes, it should be hashfile_free() but that would require changing
-the whole interface. We could do that on top, which might also be a good
-time to do s/free/discard/ without worrying about a subtle behavior
-change.
+Seems like a good fix for this case, where we can skip the extra process
+entirely.
+
+It feels like test_copy_bytes should be able to do much better in
+general. The obvious thing to reach for is "head -c", but the function
+was originally added because that wasn't portable. The "-c" option is
+not in POSIX, though the original comment claims IRIX was the problem,
+so I wonder if "head -c" is de facto portable these days.
+
+I'd use perl of course. ;) The history here is somewhat amusing. We
+originally did use dd, but that changed in 4de0bbd898 (t9300: use perl
+"head -c" clone in place of "dd bs=1 count=16000" kluge, 2010-12-13)
+because dd was slow. The code moved to test-lib.sh in 48860819e8 (t9300:
+factor out portable "head -c" replacement, 2016-06-30), where I rejected
+the dd solution because it was slow. And then the perl turned back into
+dd in 01486b5de8 (t: adapt `test_copy_bytes()` to not use Perl,
+2025-04-03), becoming slow again.
+
+Chesterton's fence at work?
 
 -Peff
