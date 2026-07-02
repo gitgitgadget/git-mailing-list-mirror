@@ -1,88 +1,96 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7213C342A
-	for <git@vger.kernel.org>; Thu,  2 Jul 2026 07:49:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F1F3CC313
+	for <git@vger.kernel.org>; Thu,  2 Jul 2026 07:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782978556; cv=none; b=nRUOQkFYWAe8T6E6+UHWM3fwwBLZtmZKqs2U2pHifEbyjLIhn812Us7kNmuuCiRw0yCb4dud7MeZQz0V0rg0Whs/ILfaL1bdWyXpbLbH+MpzcY/WE4gLIccwzPzBkYTIXZW8guOWSM/7HvUoabbrHDqczKesqCiESH/Y783Jxco=
+	t=1782978765; cv=none; b=qJXnD5eNxj6VyvJJi0Bmv54nKEDXOF0C0VwVHEcJ0bVS+lKAYO23auZmPUkVJUGkZT9QQ/pi//lHJhKe199GmTdfD3FGIF3Ql2cA8te3laZNjDBREd7kO6J6nsBQhtH1eZdm5u6S2TrAbeVBiC08k1aK+drutqhABXluvw4PNEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782978556; c=relaxed/simple;
-	bh=f3T595LO3V8t5J2eZiJiBE8vduw4LwMyOIx+DC8gRZI=;
-	h=Date:From:Message-ID:To:Subject:MIME-Version:Content-Type; b=FFSKHpDJ5bjSpYlw2n5CdMnQcRQgFyiVNw6maUX8lk2Z5wkrE9GvlI5I51+5OwQNICXy/5UchYnZsIUoCbM4aE9oOMU2p/4UYA3TmHZAwXiPcMNDQx7ESGom0VPqEpNsf3YHAjjwihwkJJOV6EcMw/YrZCj/dIVlCr1ZTRverDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FnDkbIkg; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782978765; c=relaxed/simple;
+	bh=iFaPKnVO7eXAJ/Q8MVcn/FOMxu/nilYlTcZScEAcXJQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=di8/VWgKcDMxAfB9VyDNt14bulyec/Y2bhEBkqECPCqAHcEykn6MNtuwj09PFlXRmzJwJq463NS+U+IruPV/PoxKmDUS9LbsvoJEQLnTeKMmpvcsXbaJKQf/gA6qY7/GAnM13zCKc3kzfQ5SoccWcekz/RpxHoStiilSqV+DFWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=S+YjlStI; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FnDkbIkg"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-39b1026e171so16292371fa.1
-        for <git@vger.kernel.org>; Thu, 02 Jul 2026 00:49:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782978553; x=1783583353; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:subject:to:message-id:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PlXFLCqcOuVQfMYxbICaO8n/rUIqFANDjxkNq+jO980=;
-        b=FnDkbIkgI9Mtis7mAaricKHYaK7yh/2d9F/yWrqxVeXtsI9XIve6P6Tll9BvZ0FNNG
-         2bMEyeFQANouekudZ++2c/wYqBTK0GDQx2fPcYdhqll2ZjKFygdOmKSMrXgGyi/rus5u
-         m80sy/nrf6kr2/tOCDjjFGovhZFTWt5ygmT9uCyCkg9/8G4Ln12Xo/jN1XLxXHhs6U6e
-         T3WvX/kcOrDbHLKgy2cUpXU98RPbUske5vfw978rnX/IIYWRItj1KRZRxdgv6gR7yWmR
-         0EDVvl7MenCCjpQ5MBzwhi1A75OPufVMvxppwTJOjwAWEH5lRPfkogrA+GYYR812+m7e
-         6Aww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782978553; x=1783583353;
-        h=content-transfer-encoding:mime-version:subject:to:message-id:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PlXFLCqcOuVQfMYxbICaO8n/rUIqFANDjxkNq+jO980=;
-        b=iLmno3/avRqNfGx9EZrw+iex5w0FtUz2t+wrLM4deIKSDxZ2S1ysRwKGcjifnTRM46
-         HQZ873azrOqCYyfEfGQSPFtx0RMcxjIGMC+DmS6JmYHLRHsHB03w7SYHh6Gws3QmLVfY
-         KEVMgbZUF02koRfjFlatB1ZhETnydhRNqHwjDAzyTzdZMJx3vsblNAneHNac53+9kPqG
-         HVeqXg/LxB1pQjbWwFUblgMqklwDisF78XjTzPl/WfSkf6GbW+bYdur7s1fNyDI6/kLh
-         +xwWjutAiXrR5a2ETk4s22mTt8iDh0wdK25WHPjKvLmGLvUiBSvD2uXyZm6xntpYzJ5B
-         zWBg==
-X-Gm-Message-State: AOJu0YwMyiguvK4nC1jTr9wzNC1u8iEwVwe9pxGSTrSDKmE48hBTzIOS
-	Jrb/vTCHdAbaeDcYhbZa+B+VosMp5zYlgqlC+eCN1ztF+g+QbKVNMvWoGm+akw==
-X-Gm-Gg: AfdE7ckc5qzVYez53ZJ9ZKX47fLAdSViD/2FqdC0jzzHjWFUKEGmSP6J8fzdzhbbIaB
-	vgfPQ2svVJgFSlS8PtQaXWCFWfZoGNH5/aS4qSmf+E2MJQT3zHuSmxQV5sbfLxxE2OP6/PtrJi7
-	n2FCfC7R+TRhkr5CqP93UKWRKrbCBlcYW5zbQhR/ZWvImLFwjXw9qOh8pCJyqnBMXumvgTLjSME
-	tvckINc1rF19Nmt+98aOQ5jG4uzCEntgVbh4r0VtFghbOSpy+h6yE7EUdMV/gSIVL8j2tbff0bD
-	PxG1cebnU7mVZRYhj7FZJxW3DWYaz61M263byBBmMcxNDjt9sF/3BfVVk+rWT2UgzG4LXnxMRF3
-	rnRPeVXQvyOy0UUPP2TJKVRoC0JGMkW7Q96d2wt9UMC3kDY1A0LJcdsctZIrZklOiazkEx1EsVP
-	rQbD1dIL9DF8PsXQoOEPI5+iTgKWb/v54AOr+kQINUgGeptlrKq2Cgm1aYkOc=
-X-Received: by 2002:a05:651c:2204:b0:39b:224f:93a1 with SMTP id 38308e7fff4ca-39b36fa31c8mr9560001fa.38.1782978552864;
-        Thu, 02 Jul 2026 00:49:12 -0700 (PDT)
-Received: from host.docker.internal ([83.149.249.84])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39b37fc341asm4813801fa.24.2026.07.02.00.49.12
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Jul 2026 00:49:12 -0700 (PDT)
-Date: Thu, 2 Jul 2026 10:49:10 +0300
-From: =?windows-1251?B?xeLj5e3o6SDP6+jx6ujt?= <eugene.pliskin@gmail.com>
-Message-ID: <323134122.20260702104910@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="S+YjlStI"
+Received: (qmail 85471 invoked by uid 106); 2 Jul 2026 07:52:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=iFaPKnVO7eXAJ/Q8MVcn/FOMxu/nilYlTcZScEAcXJQ=; b=S+YjlStIvp79BcjL7P3iDsNV1ReRGwyfb8Xem4viKx2Kw20fxq+IWITqfMY5Gvx7WqYfSK0ACQyveyh/cn66oB4Lfrb9vBh8oDK8K6GoWg1QtG5S8OdKN0GD9SewwKkGa/ymaq8YawPICCytnH3PLMBMHQCzrHde+ku5gZPeO1DjrfwbtAF9LASK/6XSrJ7olA4CXL+t8fikgLhlUGiNC1X7BBkutmdEaLSwdS8f7hHIHYZmAXZFoMsBjpamtQleieAAVN6nZDA/v0jWPCpzRmYFzukhlWyxY9P9xubdSDCsDgcElrQcSH031vMOm6U6/xkLsOPsfLv1rEEhf6fYwg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jul 2026 07:52:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 178097 invoked by uid 111); 2 Jul 2026 07:52:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Jul 2026 03:52:34 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 2 Jul 2026 03:52:34 -0400
+From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: Unexpected recursion in 'git rm'
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/9] hash algorithm leak fixes
+Message-ID: <20260702075234.GA1548258@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Hello.
+This series fixes some leaks you can find by running:
 
-The following git command does recurse directories as contrary to the refer=
-ence (https://git-scm.com/docs/git-rm):
+  make SANITIZE=leak \
+       OPENSSL_SHA256=1 \
+       GIT_TEST_DEFAULT_HASH=sha256 \
+       test
 
-    git rm -n *.json
+The crux of the issue is that we depend on calling git_hash_final() to
+clean up any git_hash_ctx we've initialized. But we don't always call
+that function (we may return early due to an error, etc).
 
-Without directory specification before '*.json' this command is not expecte=
-d to recurse directories, but it really does.
+We don't see these in our regular leak-test builds because the default
+hash implementations we use treat the hash_ctx as a sequence of bytes.
+So there's no cleanup needed, and just letting the context go out of
+scope is fine. But other implementations do allocate on initialization,
+and need to have some kind of free/discard function. So building with
+OPENSSL_SHA256 above is what lets us see the leaks.
 
-git version 2.55.0.windows.1
+You can see the same thing with OPENSSL_SHA1, but of course we don't
+recommend that. Using OPENSSL_SHA1_UNSAFE likewise, but it sees only a
+subset of the leaks since it is only used in a few code paths. Those
+leaks would be found if we turned on leak-checking in the
+linux-TEST-vars job, but the rest of them would require leak-checking
+the linux-sha256 job.
 
---=20
-Regards,
-Eugene Pliskin                          mailto:eugene.pliskin@gmail.com
+And as a special bonus, patch 8 is a semi-related leak that only affects
+libgcrypt. I don't think we build against that in CI at all. :-/
 
+  [1/9]: csum-file: drop discard_hashfile()
+  [2/9]: hash: add discard primitive
+  [3/9]: csum-file: always finalize or discard hash
+  [4/9]: csum-file: provide a function to release checkpoints
+  [5/9]: patch-id: discard hash when done
+  [6/9]: check_stream_oid(): discard hash on read error
+  [7/9]: http: discard hash in dumb-http http_object_request
+  [8/9]: hash: fix memory leak copying sha256 gcrypt handles
+  [9/9]: hash: add platform-specific discard functions
+
+ builtin/fast-import.c |  1 +
+ builtin/patch-id.c    |  1 +
+ csum-file.c           | 30 +++++++++++++++++-------------
+ csum-file.h           |  2 +-
+ diff.c                |  1 +
+ hash.c                | 29 +++++++++++++++++++++++++++++
+ hash.h                | 22 ++++++++++++++++++++++
+ http.c                |  4 ++++
+ http.h                |  1 +
+ object-file.c         |  4 ++++
+ sha1/openssl.h        |  6 ++++++
+ sha256/gcrypt.h       |  7 +++++++
+ sha256/openssl.h      |  6 ++++++
+ 13 files changed, 100 insertions(+), 14 deletions(-)
+
+-Peff
