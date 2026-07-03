@@ -1,146 +1,175 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31926285CA2
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 15:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4C8284693
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 15:46:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.175
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783092689; cv=pass; b=mpxCA4SBF0zjo5455/sQBs2z3whXJ1g9AbZL7riwDxBl+QaWWuU3JVNWsOtAxN4jgIyG8FNASW1NJAmiif1Vlp7vF3DFudmvIHqpH7bxgac5C9DpfwrKwqk3RtXCkTO/TshIR0Ju0YGadh9DBigj91DH5XPbJIfn5tPICXi8iAY=
+	t=1783093588; cv=pass; b=gZGeoWq0Moe0+/4KpV+TQeJfQ2cji0gNHTFLzVBf2u/OW+/B3oNQ+3MATKE03IxmWpAOLe/XG5vl1j2BXWRv6MMfFixKUa5OjtTUvRd+kZJFnB+w9JDLXReQMTKL9ckixTYB1Uw5YaQP9md9ddeXdxVBPuqBx+64Wxpt4J8LHQQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783092689; c=relaxed/simple;
-	bh=tT/XLyvq/6PdPb1ZVxzMx5/U2H1hFMJPWdXsq0Ywago=;
+	s=arc-20240116; t=1783093588; c=relaxed/simple;
+	bh=XdiIgjCaAubXZY163uX1dJAyppTMPi2Tw8TaVteWFqQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=JTHZYL0N6gSaySbDhSBObTtWz4lRTEW1IMRIuA1DApw7VE0sLmiPNhRvKaqfyaTs6QH1qEHe/fB8NEecFoseZLWIgdSuvE+ehLqFyB/RavDjrkexKtFSQOLdoXEI270JUizoN4AdRUsw6h+wowzZ0CcMgjhjZyi8iD8eUxgYsAk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QveJshlh; arc=pass smtp.client-ip=209.85.214.178
+	 To:Cc:Content-Type; b=a4bpxmTSl2/f4EjnEqB+mO0WVu0O9HbVauLeXml5iPfBXBrWeIwXnREfWuu69mgjhpqRJLAFFVGnGun4U4ORe4LVh5iUq0gj57D26UAPPeU2szjx5moXkMlhLKeiPZgMrPpGUNo16OHjRUAllRVWYLLmV4J6ThS/UnBj5bVLDmI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JlOQjBQP; arc=pass smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QveJshlh"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2caa57a41cdso6572165ad.1
-        for <git@vger.kernel.org>; Fri, 03 Jul 2026 08:31:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783092687; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JlOQjBQP"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-847a52edeb2so550480b3a.0
+        for <git@vger.kernel.org>; Fri, 03 Jul 2026 08:46:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783093586; cv=none;
         d=google.com; s=arc-20260327;
-        b=s96nl+/oJFRLJ/gv3vIIrH3ukJCbcAzsOV+4SwFuQm4p2GhjtCqPGhjbE3kcC9gsRm
-         EDzXdvHwZO1IsLGZjr0dfSWLnSnkRcpYL9yCQ+2muNDF7qTGP2i7pxtGSzkGdhbM1zKs
-         wqQkqPMr6DA4Fbb5zQsHu0+X2vixzSDY6dXBC36wszfFj2peG3o16l6zADMKofVxspau
-         EdHT1/u7gMJdpSn03XhwqKv4hKprmTH2dhFLJu3gvdVybMcD/a0QXwpGnYEDyO9U1fFh
-         XL52umg6iaLx+mpKEK76O7Bp6YmwwQKaO7LyMC5oD1EACdDSX/t/34N61J8j4AuZ8OpE
-         6I1w==
+        b=p00WMp3L9WVG2iO0rQnA/IryCi7qWI+y1wK+IzE+nZvGLjXnjcx5+KMisr74+XFnKD
+         Coumj4Hy6RXBqqnwyPQylkta0mQffJXPNN67UCwFwOs8Q/GWXr4jiq+YyDF978RWgSm7
+         wn4mTPfcBhiQuLvQVh5Qs+idE8zCTFePL0xGocuY5nKYoRCy6ZdItG/rCcSKDAC0ZV9K
+         QBdFXzJzykrIbmuKmjVsIpIfF09FKezPdVjRQjED/GUEpw0Q25HzGo99VucGKD8Dc24n
+         fhwplE7ZSzminnoSPnE7a/AZ6m1nDMGxTa/nYCg6ocDPq6ooG9vEr5S7QI8I0cF7ptiW
+         GBXw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=n/hBVzrSbgh6v0/hR5gk4+l6whWKkrqKTKuEdwGbivU=;
-        fh=S08nhb/nbOH8psHWhvXaCkC+N1AMCH6EWiVfYO4FT6U=;
-        b=ZTO6iaNL90YKVbxXUG6Y0FWpVkd7H2sLFZ7wZsMbcIy5lc8j/QBvrA8VGSUfEL73io
-         x4xKwHTuL39yzrpQ4MIPFs+xVsMoLEYVMo1RJayA89wiR8/ZeVwtw5jSqZkiqvbdSrCc
-         TpHixI++TnLdILzd5IUkYPd/qht3aOnhZIBxtne3Tq+Lm2YOdYthm8MtWhtHt+PuNu9T
-         uTvZx4vpzlhGHMNa2XizFUCs5VsQBlVZ/9y8a7e6TkJYtSDU/6pUhMy3Y4vXwDhKPBl6
-         EDbvpqNArXKLR29df5LwiXehw0gWtpfS6dxrl+kOuVpJnxs73OymkQo4D8THxhDOrd+W
-         lMlg==;
+        bh=XwNJbzGFZLmOYF3SUIKQpGaZQIy0N10NfUI+ARqcYiQ=;
+        fh=XjQ7wSgBN65vGB9/IbiwVarztbcAt5gKb7fv5SFPkDU=;
+        b=kVF5mMgRwezE+KAqHTVOlHyYGtuo+BmpD3f73/m+k9zhw/vsrJCtlUyAHh7hrs9gS0
+         Jn+LCP8qsLqSC5TacIHx0H2R8RuheXOoXZhmJuVcgYh4PnVyOjV5k85IqMOjx/XbYul4
+         +dhttt7g5U0yeTLxAeuuoYD0w4YsyObFqvJbT8gldX9w1+tYIQHHF+Hj0sd7Lc8R9tzv
+         e2cMrVUk6zdnskmyHbRmAFwiRzcgKB4WRDHhOAanqP+4+o7Ww940RW7YjTqGsa1K0ywf
+         56b67uUVDlAZXt7s1gnA60AEDCwM/NsihXhPlbP5VDo0ZuPWWHXPRCk3NDMkU9+W4HaD
+         mgYg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783092687; x=1783697487; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20251104; t=1783093586; x=1783698386; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=n/hBVzrSbgh6v0/hR5gk4+l6whWKkrqKTKuEdwGbivU=;
-        b=QveJshlh15rOp2T3+X6GtL/8L1fp7Yo66d4BHt4MhdIMguhv5857DFB+/gK1RRzUhI
-         c2AEWfXXvAGc1j7Lk3C1SbTSpDAvbo0jDIGl5gxaGlErMXBjQ/TxslrwDPaTxSI0vQsr
-         YTnYh8XWeNRzB3LiknRhC5YX9V0ysV0q5tey1/lqFHEvthPipvYftmP0Fl+SkpdOAx3b
-         FYhGylWNU/UBx+dPJIAEAQBELekYsKGmIvrB3LuWO2iR5x93DmDnpTeARq5m3jjK/GfU
-         dY46bc7l6iq/kRfSX6uLZbJqNqnQDuszw4c+I0L8M0zoiguJrpqUpX1hMNuuLcBpQreP
-         VVuw==
+        bh=XwNJbzGFZLmOYF3SUIKQpGaZQIy0N10NfUI+ARqcYiQ=;
+        b=JlOQjBQPGMPl6EYy+PLBAG1bRcuVXZ8K8iEsADQ0gD74ccr5rSE6akFAowG9yjHW3E
+         dKGzW09//9sRo1VPo5Yqjm6c9rCx1tiV4+wqorkfn9URhOYVA660OdESM2KdFjAN5wo8
+         lhi9vE++Gb0Thdp6aeGS2T9GnJpReIoDYbcU/W4Q7Inzpyr1BYLUui0sOiFFpQYcuiAa
+         hYdivnCk8jbGtvOQAKAb28rj50rqnne+0/Gnblsvua4C568zeTFoNN8nMl6fxGK+OLtL
+         eCf/p1+Y0SmWpPGOFzx51rRPbzlK8LnqMYnWOHKi49mY/xdeh6jnqchvxOCakl4EIikf
+         ne7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783092687; x=1783697487;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20251104; t=1783093586; x=1783698386;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=n/hBVzrSbgh6v0/hR5gk4+l6whWKkrqKTKuEdwGbivU=;
-        b=g7x6uma08eocYoOk4BpIogXom69kvZsCjZLe9BPGSO3Y1ojYTSNYJ5aiIk+ATYtN2W
-         d1geS//SOnwalxIJKj58tblscoFVXZzHvXanF7y1x79OgxMGAUyWvCo3GsyQwZudmXJe
-         29E3oWJvhnEowK+b7vwiIckoNPqj6QtMcGzbaPDq0tFi5mTn4hzwrVFNGPE3d9H04BPy
-         VKSpw2xOWbeb1Q6OeV/WPB/dy9/DcAVc9/Z+54/e4o5YCRA4nL1wC/Qt5HnaDAHYz6QB
-         +argoPseXDkdlt0QQadUSG2y7a5+JFe7Bp8kPNe5ufQnecT4J5iAK3cgPw4Pfpk1dpXo
-         KK3w==
-X-Forwarded-Encrypted: i=1; AHgh+RpFOYipFQcTRO0b3OgvVo8C+i6Ofk8QaEFr76dvkG/Qq2NOlaLNlqrADqA8K3HjdX5yQoo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxS7AljnfJiBUNt07pwgLs5/erf/rwNQ6+89V0SpHdQaHLwNCY8
-	PEGG1gEDtNXgTOUIZUW7klaqYAmcdO/jtkO0yfXCi78aOI70QbcKzc/s1o5Kg9NTe+qk+3j+x6B
-	Ibp8QYHTAJxsH5FBIxXFB5BIAYsYne3NdhmgfYoY=
-X-Gm-Gg: AfdE7cnUfaPaAJUlNwrDHf8Gwdn088E9mpZ8vEhnAVC7A9YJo2hyzvQ0tLvaTMlGZQ7
-	Ihav43PaPHo6OruycmBvTQvdt0+aEaCQRFwaviQx0rS0EQEKxuaMx8B2SZx2r3M7TjAXOVmoB5g
-	Vw/EotBopsftV7zbHmb9rkfFwu/oCEAw18bcHbUld7RAw7Rj0CPqE5J6Hke92cVdUWQId5VHnzK
-	GK2Z/5oU9Djk8HUGcUeMFtQpXKmmlUei9yV6x7wCx1uTE/PeZX05xN/hs2x42Ze7qYqSbMjxl6n
-	mF9npuAA2n07qVvc2JF9mIBn+I/oUTz7ZLafQt2F8vTciLmKU0rd3BdBqU0tKWChIlCvPZKWeOF
-	8mOZ1gRvDaBoygTBu+0hwYW7v5g==
-X-Received: by 2002:a17:902:e749:b0:2c9:e69f:8b0f with SMTP id
- d9443c01a7336-2ca7e6cfca2mr116055365ad.17.1783092687192; Fri, 03 Jul 2026
- 08:31:27 -0700 (PDT)
+        bh=XwNJbzGFZLmOYF3SUIKQpGaZQIy0N10NfUI+ARqcYiQ=;
+        b=cWKWaEpmI084+Hu5cACY9lbglDOIe6+xgfYvm+j9Uo7iyIQaiqEgH+kluDi8eDRTNP
+         O4IlSCh+X8Y7C8WUliCmjlBsuN2zK612KhU8LJqzlY5n7TLl0awfnPj8lyXBUdW1oI7M
+         5cLNhzlZ4oH9V2O64JOPDixKgnNWuROLqBC/FC6e5LrnDmM1kjPmD8wHOtLGslGHZNkL
+         0+ZrIBzEH03d+05Oxajxf9oxyA7NMjc5YYneWkTZ2q/kMsBCC8FeuEv5p88m7TStPhZ4
+         iePLeU3lhWoQyPHFbhUCi2hKGC5ijA/eaiaLZhy1fPV7om0mzvd/hByUgTRVZd0Kcw5z
+         PrWg==
+X-Forwarded-Encrypted: i=1; AHgh+RpdMeRSKvp1EWi1tCE+Mj5qDmtaXMsqf6YTOFzkE8Z53PJo9NXu8mKpU5B9b+8Uj8KYUUA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7LWxc5yyHj3nWBsCCUf+9qcsV6iS4WwIbu2LbciK8rJSb33Q7
+	2pXW4KsQTADMXU+qgdh22tZC9eUXcP4E2z0q3asOIg7BsLIefC9/TpqKWw7Ryk7XAg2H8gFC3Xg
+	bleJmOLcy+8GVzjCPJd6d7PCYVhX0FNQ=
+X-Gm-Gg: AfdE7cnJHwXg7w89hhoWp0oYYOT5mqECAT/WZfPqiUGjp/OZZpaLL8kv3up/I+EulLx
+	wBeijIwn6Qf+Ou2witv2TS0f3B0DnMLjhapG0ftEykiYX/dSBhQU01/vJHqXuc3hlJv9X8om+dn
+	CGvkdVGcWnhsY8SGyW89IRTaW39+aBll2p4f4uoaHoKlxz+izT+G1GQo8HEf79igh6avfbdH3j4
+	+NIBsGYTmIDsNy5lQMXm5nGLFZhTP8hdxKdFB4ptZLpMD7QPIW1VZkeNR/23ARnhmACxElAP2PC
+	gWJ0U5JyPYgGk3yXGfHjjM5mt9CQ15kL3Mtn5xbuCJdBxzJxLYdkUWsmK2CEzOPJAjdgFUHh9T2
+	STYXyf6rpbDFV1Blu4dvqUdqXhg==
+X-Received: by 2002:a05:6a00:3686:b0:847:99a7:c751 with SMTP id
+ d2e1a72fcca58-847f6dfde0bmr69744b3a.25.1783093585996; Fri, 03 Jul 2026
+ 08:46:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <akei64goQf3nFhX4@hikari> <ake8OAIyK-ELs-fU@fruit.crustytoothpaste.net>
-In-Reply-To: <ake8OAIyK-ELs-fU@fruit.crustytoothpaste.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 3 Jul 2026 11:31:14 -0400
-X-Gm-Features: AVVi8CfpgxLuDtjHjotvCP9ZEqhYVk-RFmjlCLPsCW4c4qZFm_TlGaQYCNJ8P6k
-Message-ID: <CALnO6CCaAaVTDABQT9APasnhmvL3w_C1VKo3UYhgDt29OYPmFg@mail.gmail.com>
-Subject: Re: Programmatically edit the git rebase sequence?
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Matthias Beyer <mail@beyermatthias.de>, 
-	git@vger.kernel.org, neikos@neikos.email
+References: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
+ <20260621174934.GC2206349@coredump.intra.peff.net> <ajjuoS5Qc3K0nCRl@pks.im>
+In-Reply-To: <ajjuoS5Qc3K0nCRl@pks.im>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Fri, 3 Jul 2026 11:46:14 -0400
+X-Gm-Features: AVVi8CfOUAU-g-AUOci2bRAoAhrVMyeSrLL7Mneey8DsoBg3UkUKwjHUr_kpFwU
+Message-ID: <CALnO6CDAG4e4A_Qn-3QVe0s4D9xB333Sp0QRntNATwMygNXmQg@mail.gmail.com>
+Subject: Re: [PATCH] meson: wire up USE_NSEC build knob
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 3, 2026 at 9:46=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+[with apologies for the delay; I wasn't paying attention to "What's
+cooking" to notice that this was waiting on my response.]
+
+On Mon, Jun 22, 2026 at 4:13=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> On 2026-07-03 at 12:02:33, Matthias Beyer wrote:
-> > Is there a way I am not aware of to do that manual step programatically=
-?
-> > Something like
+> On Sun, Jun 21, 2026 at 01:49:34PM -0400, Jeff King wrote:
+> > On Sat, Jun 20, 2026 at 12:00:24PM -0400, D. Ben Knoble wrote:
 > >
-> >     git rebase -i master --edit-commits=3D"$(git log master..mybranch -=
--diff-filter=3DM --format=3D"%H" -- "./subdir/*.rs")"
+> > > Autotools-style builds permit enabling USE_NSEC for cases where that'=
+s
+> > > desired; the equivalent knob is missing from meson-based builds.
 > >
-> > would be convenient here, although I would understand if that is too
-> > much clutter for the already very heavy git CLI interface :-)
+> > Seems reasonable. This is not changing the defaults at all, but just
+> > bringing meson's options to parity with the Makefile.
+
+For now, I still think this makes me in favor of the patch: source
+distributions like Gentoo can then offer the build knob for those who,
+in Junio's words
+
+> know the target box with its filesystems happen to be OK with the option
+
+Otherwise, the discussion would suggest removing it from Makefile as
+an option :)
+
+> I was originally wondering whether I should recommend that Meson can
+> auto-discover the availability of nanoseconds. But your below remarks
+> make me question that.
 >
-> Yes, such a thing exists.  You want `GIT_SEQUENCE_EDITOR`, which is an
-> `EDITOR`-like command that edits the rebase list in place.  So tools
-> like `ed`, `ex`, `sed -i`, `perl -i`, or `ruby -i` would be useful here.
+> > I'm not still not sure if turning on USE_NSEC is a good idea. There's
+> > some discussion in Documentation/technical/racy-git.adoc:
+> >
+> >   With `USE_NSEC`
+> >   compile-time option, `st_mtim.tv_nsec` and `st_ctim.tv_nsec`
+> >   members are also compared. On Linux, this is not enabled by default
+> >   because in-core timestamps can have finer granularity than
+> >   on-disk timestamps, resulting in meaningless changes when an
+> >   inode is evicted from the inode cache.  See commit 8ce13b0
+> >   of git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+> >   ([PATCH] Sync in core time granularity with filesystems,
+> >   2005-01-04). This patch is included in kernel 2.6.11 and newer, but
+> >   only fixes the issue for file systems with exactly 1 ns or 1 s
+> >   resolution. Other file systems are still broken in current Linux
+> >   kernels (e.g. CEPH, CIFS, NTFS, UDF), see
+> >   https://lore.kernel.org/lkml/5577240D.7020309@gmail.com/
+> >
+> > That's the most succinct description of the problem I've seen, but I
+> > have no idea how widely it still applies. Kernel 2.6.11 is quite old
+> > now, but I could believe that other filesystems (especially network
+> > ones) still exhibit the issue.
+> >
+> > So I guess if we wanted to go further it would take some digging as to
+> > how each platform behaves, and then flipping the config.make.uname knob
+> > for ones where it can be argued that the behavior is always reasonable.
 >
-> So you might want something like this (untested):
+> Yeah, it would be nice indeed to figure out whether these concerns still
+> apply. If they do, I would argue that it might even make sense to remove
+> the build option completely. It doesn't really make sense in my opinion
+> to have a build option that nobody uses and that is subtly broken when
+> enabled.
 >
->     GIT_SEQUENCE_EDITOR=3D"perl -pi -e 's/^pick ($(git log master..mybran=
-ch --diff-filter=3DM --format=3D"%h" -- "./subdir/*.rs" | paste -d '\''|'\'=
-' -s -))/edit \$1/'" \
->     git rebase -i master
+> > But that's all outside the scope of your patch here.
+>
+> Kind of, I guess. If we figure that this mechanism is still subtly broken
+> then I'd argue that it doesn't make sense to expose the option via
+> Meson.
+>
+> Patrick
 
-Yep. Although, the last time I wrote a program that used
-GIT_SEQUENCE_EDITOR, I had to deal with enough shell-nesting that it
-was more convenient to make the editor program separate:
+This bit addressed more down-thread, so I'll reply there.
 
-- git-split-topic [1] sets up a sequence editor with some interpolated
-arguments that also re-invokes the original
-- split-topic-editor [2] pre-processes the rebase script with ed
-
-[1]: https://github.com/benknoble/Dotfiles/blob/ca48a09f783b78e038a41c5d60e=
-e6b163337f580/links/bin/git-split-topic#L47-L53
-[2]: https://github.com/benknoble/Dotfiles/blob/master/links/bin/split-topi=
-c-editor
-
-See the comments in [1] for some weirdness in the invocation of the
-sequence editor, where it gets "$@" appended to the command string
-(meaning the last command in a chain might need to be written
-specially).
-
-And yes, I'm sure there's a few ways for things to go wrong with the
-way some of the shell script variables are embedded into strings for
-another shell to evaluate later; if I rewrote with Zsh, I could at
-least use the ${(q)var} forms to perhaps handle that better=E2=80=A6
-
---=20
-D. Ben Knoble
+To summarize: If we're all leaning in the direction of a run-time flag
+instead, I can noodle in that direction. That certainly involves a bit
+more surgery than just giving Meson access to the option, but the
+dynamism may be nice. I'm not too sure how we'd write a test case for
+it, though.
