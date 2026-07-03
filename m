@@ -1,41 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F368F3019AA
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 07:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098B23451B0
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 07:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783062039; cv=none; b=nEqsrA4pBkKHsqiW/3kux0oN19h7Wuz1k5lld/5r3diFdBqAhdqjTcm7Xw6c97+HpNncoy7dEn6ureOMSBLGvCedpcUqCG3blPQBbVDkLHiLtUeeFaMU/menCSl58YnmyD0EjuWpvn2JEemeKKEPe7vQWAKbq1mjExoulCfGi4M=
+	t=1783062051; cv=none; b=MY8GlF7p3fy66UsSq2NdqADVMXyfBZgSPDG6WoqrQYzPiFGCh2oW3obtBTnoSUUlSRa4gF3HNIaCbFo/RF6PDndsM5mIJTZcmXqU9V6br6hTlwFU83vFqXDIPI256okxKlfSAmUUIexwwf2UsqpYXufZwtIkFEAahUpRXOD+ZlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783062039; c=relaxed/simple;
-	bh=1seBdkeNSkGLgehAy1DHHevySgG2PQ4fmIpqP3gz164=;
+	s=arc-20240116; t=1783062051; c=relaxed/simple;
+	bh=vzNocTzwieaih9eSNV3WY4kX1gaelchxYMJ8ItkSZXs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P5te4e3l91FCHEwhYiJrDLuN1jLWp/lQD6WoIRjBZ7ScP4H9wa7nNYsM7cCVztIf3Bv00i+lGe2XYH07JConNCEQnK4JeNp5dylu9o3JjXtupy+Glr2zITVaQAhdc/oNuW8Gg/jLcJ76ZlI9LBFBIE513sLY4OE2hW+mBTg9iZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FqsItKD2; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=RIovkLRTWD7mEvvqAkg9KHNSqG1dTD/7KekpBiCB7Y9kAvflIQieruAd2eGW081g61zAhX8vMLOUR9xCWAnX4gbEPa+nf/+iQ101Q4Glfli0uw+kDopk2rdYg5FYkfkikT++bZrNU0COa7iAigkfOR+X7vUqR7chJ8wsCnhcp6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=goK588cg; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FqsItKD2"
-Received: (qmail 91222 invoked by uid 106); 3 Jul 2026 07:00:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1seBdkeNSkGLgehAy1DHHevySgG2PQ4fmIpqP3gz164=; b=FqsItKD21+OsGo7nWAPjT1Sn/DjpsrMGgc4pIayoHQuL12Si34CLrLFo5VxyaHlj83s6eOHABaRMxozGoM3dhSGG73N+J9/pCln3s5NJxiwwXU7PqNTmbNikj7o4ldh7j+1AtHHYZpdIkHGQs1YgRhui211lmCTVPdTgARjtRM3rSRh1Q21C8MabVGv6OhaSePXnUXQJwu/JYcivbREM8AzXRPNIOtIcPiHoSmKeJfTzIA2qJw2yvu+5nBLZakAfx/3xWW3SOlf05U89oQkv+11Izz8FYuxrN8+zbmPgzhMpgDVJ3PgfN96W22AiOZFcsWy8E9he1ZRvxrng/96xUw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="goK588cg"
+Received: (qmail 91238 invoked by uid 106); 3 Jul 2026 07:00:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vzNocTzwieaih9eSNV3WY4kX1gaelchxYMJ8ItkSZXs=; b=goK588cgR1/lFRcbmyfghlBdhTeB44cGYUzfbGb/A/4DS4avzuujnxDQAs8TKAbrNaySRk575jtFMFBZUaOnWwbIXZD8KHzqA1udtZAurguAOYGFkBAuuS16ylcLlfUMDv8od3WHOjHXga4ljx9TfhEKBLAgiI6rYlrNhuan57Itx/1ZNx4QL47v//f2nugpRQjAUgTOnWf6M+Pm7DmOxuQ39x7azzoAF3633yxQ45vy5sXBeA1wuqEV5Xn05ONL5wdOJvGcLGAISwsERncOhrKPO1MsgwH+lT7NxDp+TOV1n172tbACejP4Vyw79UjlCgBDF3iyKqiEvg990bdYww==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jul 2026 07:00:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jul 2026 07:00:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 194000 invoked by uid 111); 3 Jul 2026 07:00:30 -0000
+Received: (qmail 194008 invoked by uid 111); 3 Jul 2026 07:00:48 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jul 2026 03:00:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jul 2026 03:00:48 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 3 Jul 2026 03:00:30 -0400
+Date: Fri, 3 Jul 2026 03:00:48 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/9] t4141: fix inefficient use of dd(1)
-Message-ID: <20260703070030.GA2082500@coredump.intra.peff.net>
+Subject: Re: [PATCH 6/9] t7900: clean up large EXPENSIVE repository
+Message-ID: <20260703070048.GB2082500@coredump.intra.peff.net>
 References: <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-0-76b4d7bab3d0@pks.im>
- <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-3-76b4d7bab3d0@pks.im>
- <20260702211614.GB2051171@coredump.intra.peff.net>
- <akdLqNHW3pGThQat@pks.im>
+ <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-6-76b4d7bab3d0@pks.im>
+ <20260702213044.GD2051171@coredump.intra.peff.net>
+ <akdLryzNx1Vi2BnL@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,22 +44,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <akdLqNHW3pGThQat@pks.im>
+In-Reply-To: <akdLryzNx1Vi2BnL@pks.im>
 
-On Fri, Jul 03, 2026 at 07:42:00AM +0200, Patrick Steinhardt wrote:
+On Fri, Jul 03, 2026 at 07:42:07AM +0200, Patrick Steinhardt wrote:
 
-> > It feels like test_copy_bytes should be able to do much better in
-> > general. The obvious thing to reach for is "head -c", but the function
-> > was originally added because that wasn't portable. The "-c" option is
-> > not in POSIX, though the original comment claims IRIX was the problem,
-> > so I wonder if "head -c" is de facto portable these days.
+> > Hmm, I hoped this would drop the time to run t7900 with --long, but it
+> > takes about 1m40s both before and after your patch (vs ~6s without
+> > --long). Just looking at the script, I'd guess that it's because the
+> > subsequent repacks are mostly incremental or geometric, so they don't
+> > need to write the big pack.
+> > 
+> > Oh well. It still seems like an obvious improvement, though, both in
+> > terms of peak disk usage and avoiding unwanted surprises when more tests
+> > are added later.
 > 
-> An alternative could be to implement a simple helper as part of our
-> test-tool. But I doubt it's really worth it: almost all callers only
-> want to copy a small number of bytes. The only exception seems to be
-> t0021, where we copy up to 65kB. But that whole test suite still only
-> takes ~3 seconds, so optimizing that feels like wasted time to me.
+> Yeah, the commit message is a bit hand-wavy there indeed. I think the
+> bigger argument here is that having a test that is marked as EXPENSIVE
+> and that may influence subsequent tests is just a bad idea.
 
-Yeah, you're probably right that it's not worth worrying too much about.
+Yes, very much agreed.
 
 -Peff
