@@ -1,106 +1,146 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D833C7696
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 11:27:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5533101A0
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 12:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783078069; cv=none; b=Jh0472T6QDXYjqMrJSFBeZWtUoe7WSTvsLphhsn46WXJTXqH7hCoDtxYD7KvA4BFbEVcBYtd9gLMMfCFe0VLTalGit+pIO3gPPSFRCzamFldPaYhA9Yb3v7cWc0tGv7GBzYkrV8GOSbNg5aQ8s+eT+/ufe4G4Nfj9tX4ZtlRH48=
+	t=1783080178; cv=none; b=fc2tIcAtrwsu8FhUBPlh8sXPdBaGXcdAgew8JtogswvlOtYrs41LyXOIaTy5Ul2qEpC5VLvhmbirdDzBI6MVIzhV2mo+8n5VoL2buh4HDUA+M/fxfrn38YIKoJ/Or6NuTc7MAJ/8LPXou5p9pGZPLZ9cO5p8EYHp4inxa6sEcP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783078069; c=relaxed/simple;
-	bh=Aaen4FsRv9vaTw/jJ9ZV3O0qmCJ41F+8xkoHhBluJF4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jQXqZYu7iIMNn48iAsL/Z4vo5fEapemcOlyTNJ2Q6zeTYMY5moZhvXAQlqqa8zKbLRWn2UGyX9aMIlp/gDkIL6MGuCjo5Qxk2Z0l+yBfqgzk7ruq1TCInhcNEskmiGX/havTWfTnPTe6Q8c5TsybdulkOILW/1+KsiKiRv5htuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bVVazZL1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cj1Y+bt6; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783080178; c=relaxed/simple;
+	bh=/4SnDKk1zwevd506OjTNSt6wlo9vaDpaJSzHBT1wQqo=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=kcbRk6wX4JLFFP4sz42xSQ4kJGABfgQhz9eQ3yWFVoP40Xehl0Ell+TQT7ttCBW9JJ6vqGWdyaBbY923Q7eTDUapKvU+ARlyU3QehnRdDgfdRW/LAMU38JGQf32JjhZ2DmeIjiTbhhkB5x+tpcvfJO72i4On0ytiM1X6G+K72GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LHVWmatu; arc=none smtp.client-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bVVazZL1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cj1Y+bt6"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id A33791D000D2;
-	Fri,  3 Jul 2026 07:27:40 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 03 Jul 2026 07:27:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783078060; x=1783164460; bh=Aaen4FsRv9
-	vaTw/jJ9ZV3O0qmCJ41F+8xkoHhBluJF4=; b=bVVazZL1FHTOmhqU+S9ospeVPI
-	AwkZDarsII7XubTjePFv7pBqhDTZJgGY/HWtpCi+RUzFCdslQVOybbQvma+52Q9O
-	fvoYgaivE6w24JvfjvKYSOwC8MeYqbWvJmC7qhiCtU4j2C4qn6heQlzgUyJwO/GO
-	HCUhKZLxb7Oc+g6oj8274CWQhf1amTA732uOOma0UX+WkGm+XsiBDKjTvbc4eezD
-	FtVql9n5HwrznbaFlud2aYDS4KRD3X2CkyNrLVZmjN4f/UmUscn0YRo99VJPRXjd
-	33NpAx+OFhhW9mg0ClCDSoi2IRNxvwGA49HXLcegqyOQAaQF/qLT3IBoO/gw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783078060; x=1783164460; bh=Aaen4FsRv9vaTw/jJ9ZV3O0qmCJ41F+8xko
-	HhBluJF4=; b=cj1Y+bt6bbzPYmkQ58dZ7h7Xkov/fE79GBJX5DdW6sHo0jDXV3+
-	nQvBOLatWca1zldqBGnN3/Bx+ydAKMMF1qnxJiFwRZGUOTs7rfjFNt3++OZNY/H7
-	lLjcms9yvQLVnlbjh07f9Uz8zaJfOeXWD3IikHaOaltdvF53EODMj/HUbw0fE8lX
-	OVrl11soRN7mZ9XMe4ycTH1KaZominzu1xlwdUqG9xtCPffcmN+igDx8jCAdT9Ig
-	TMxhDm47rrw4bPEyiHvzMB7K5PeF4nsGvRnRMQs/ZYjlsCGflgmNKAOwSh0zSLyr
-	JX75liLk0Bik2dg9fL1JmFZ6khPKO9hWoug==
-X-ME-Sender: <xms:rJxHapGNZP0BcTP2BYhdoapCwLe4ostUg5piXcZCdMYZ1FgLgKvtww>
-    <xme:rJxHakUsQFO44Zx_1PPnEqts2uWiPk57Fsi-0w4hVMszLsob5CkJL_-qdkewuJ_Rm
-    cKmxGaUt0lE1robl_tBQ-eGrPIf9SdoqxazQtEHEQJeItpmGa9C>
-X-ME-Received: <xmr:rJxHaozN_fPtL6vhNTrGE9fkUdE70aonZfm42VYolqOHWrlHBNCpzHqRCZIomd_GrMDHYfD0cx5nDiS-bfUkjMXye1OftQ44Q8HOjMrePw>
-X-ME-Proxy-Cause: dmFkZTFUH3EXMKFe/q2TjJXSO31Gm+6009hwuY+1CQ/T3pzb0jSEDLBuXP7G1H9igjjzu/
-    ByF0toCxcnPPzN3ihujVnZrjEM3IZwGEtlucKjhCRY/K3f0mG8//c89cpqRwEvI/RGmTZB
-    oZPK7/WdOc8j7acmF1/TVgzE0GY7CHL6nAib55GU2XMa9l2a3dnCo/EEPFhLBPoKKADZoU
-    MaOLn2wbAjpCJsbj/Etwz42qxZjWFpl6GyDpAfcs5V1/7bw0/d6WEJiU9vsNm1ZQqBtTjf
-    +6TiIV8wDQ8IK7p6yvcK2RpEC6vxTGfefs/mjniQsFVxvphXiEGPMlcla7iQggYttSFyNV
-    coaEp8uPMmMSv771IxZnLv2w/6z6pOggOKOeLMLcEx3Ej1+2HpWtNqj+i2sGkEXnKbw7SC
-    J9n0QPYS0Cl0m7fzoElXq18v6UY3Z6+53il5oVd2+R8q/MxBqRIuZKRcxGryS+I6T0G+As
-    VB7jZQe+bAwzysSS45fqJx0TrA6d4bo4TcL/ULOn8+haNR3XEn5OSoCjpAw1emeggUtkpu
-    XAAwOTsK0/rfT55+uepjVnIJV42zZ3S/EkgzCFTuZxU/GehMypJqPUF4Bzey9/H6qQKoXy
-    8nOe8BfY03P6f/4OZBvfmoA/x/Jneh+7qqCcUjPYjcpaGXqMaX8Z9Ud3hYsg
-X-ME-Proxy: <xmx:rJxHaqOVpvbNc1pGky-RhWdRFWE4ALuNxoXSGsbvVYwhW0KH6JVDxQ>
-    <xmx:rJxHah6maOWwfWaw2x-tySWpyDcIxHfSSBMU8jgBjFXPo31Pj9j0LQ>
-    <xmx:rJxHajOaDXijH3KjLH5aaapotAI0KKggbCCpRa56NH2LAryJFg47SQ>
-    <xmx:rJxHanks7ZJ1Jizju6aZRaNFBtSwoHyD7JH3fXnABovVLv0ZL4n_3g>
-    <xmx:rJxHaolzrpv4KHyeBthtR3Vs7X_bw0GZrOLMb8oqW_qn4hBg3q0go1Bg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jul 2026 07:27:39 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 300e387a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jul 2026 11:27:39 +0000 (UTC)
-Date: Fri, 3 Jul 2026 13:27:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/9] http: discard hash in dumb-http http_object_request
-Message-ID: <akecqPq4F702E8Cq@pks.im>
-References: <20260702075234.GA1548258@coredump.intra.peff.net>
- <20260702080707.GG2029434@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LHVWmatu"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-664ee752958so698502d50.1
+        for <git@vger.kernel.org>; Fri, 03 Jul 2026 05:02:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783080176; x=1783684976; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+E9RNF7Pc9QfTU8d0OnHHye407DLYwVhtXEmIwfPFiQ=;
+        b=LHVWmatuukNV+oNeMRi9J5nCMEDC5sOERFwSlJFD0UnW3z6jhnjz+IO3Xsz9xBdgax
+         z4MIi9wDaeWwiVe/TcpXElVVE25yN9G6Soy/jZBY4Xn/z51jvYZ2R5/69L5dUq30qlO8
+         GrSdos0spavgjxRqzmdQxRWO013qy7CSgYKtaeZ+DD2ILbt/en0jreWP3JF//kSIhhhF
+         4MiLS1cPRBHDkUCdAl8e/TttV0va56TjI286OGBfH2ydMuc+eX6+Sh/U+K6jl64FivJM
+         AknsdUB34OXxZELDJdNAIVCDYDrprI6PKx4FMZektDSLll9JeLmbQms/WgHIRGBQxACu
+         /nkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783080176; x=1783684976;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+E9RNF7Pc9QfTU8d0OnHHye407DLYwVhtXEmIwfPFiQ=;
+        b=VPWQ27u8B7BHjLTo36inXbzMTx7iG/VaMGLOkvNJuBMj8xu5wEgsAyWta4kGHj2eAk
+         z0wDQn/x1mnC79LZu9gUsb9xlW3MZ3VUxi0TCCtelD8BEZyHpu4iUqjUhLyzE3suke+D
+         l8PS4oGCKzD1AnK70C/fQnCTF4AC5v60yDBgfNGmjBGwpeWT1qppJXZ8PSeycIxchxqr
+         7JQitCohAFp7F/4aFBuCIeG+YVQkdCjcGtxNDDqawRD+9KVBSdJiT64mMowKYMuTYI/i
+         a1xZ6B4/zj84l9CqGMLVTKYOqI5qHGKf+Gsldjf+fse9vMfnxn2DnOsYss5OqEv3uDvD
+         iirA==
+X-Forwarded-Encrypted: i=1; AHgh+Rr+WcLA6G3e7lvBeDph8dxYrwCr3ywK3nHO/rei4iNUCOcfB1MVsgByGeBCY8+NGsOLGcA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmBT6b66y4lYP3MokTjo71Vwos3PfHcCsBJ36tamzVerNqsS1S
+	7MK4FflxIedFJDx8tT/zNIuJcR2kcO/SJMZ3s0UEe6E5+cZUwdL8Vkfkvpfh0J/L
+X-Gm-Gg: AfdE7clLIAjbt8exp/21xwFwEzEYxHEDHIJ7auM9zfXUxTlPAjndatkvZ99zDAY7RnJ
+	HGCQ1iwpNWs7DUa+0QK/rcfY8YqAw/RFeV0hEjrQZvOEvuUbrTUPz0Xji6urIBD8jTHC6sgM1JW
+	cgctUJA5SffUUzMYZslB4O6yXI0E8ceBCtU8RG+3XfEuqLmRHxwrPvdxqZcSUN6SGvHuufM+tRP
+	HEOjW4dxRIpfgiUbldO1LJ6SIahIYQjnsOxOidaAYaRYdcdiAGEtXnGh2Lr834BTBejumoRM06x
+	JJdUAiuUrPa6CaPIz3HwfAd2Cky6BsKNDQnQmUx99Q7uR6DXU5VUk3akCEUbXWg1/skf9eXP4gK
+	WUlM+UlvTOSypN8MVnblpncmbs2xIKoj8M/kTA0LkQrYotmuihB1kob3Yl/HuF87xpzVH0J7DvZ
+	vZTW1eXfxKGna0MC5gbv9aoSZrJnSIlCohSHgcxX35yos69kaM1CkKi3GfA0CasG9WFZXqHUIt2
+	aXrjMvRVx5VgSnMbWuwhhXDnsVGzNNvv8b8LeO+Pczo5C6Swym5zDvhaqquvQ4Z2UUUtaQ1Wcmu
+	bA==
+X-Received: by 2002:a05:690e:d59:b0:664:b1c2:88f with SMTP id 956f58d0204a3-665219659bdmr9138655d50.1.1783080176120;
+        Fri, 03 Jul 2026 05:02:56 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:8d7d:a0ea:80ba:35bc])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6664053777esm708498d50.8.2026.07.03.05.02.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jul 2026 05:02:55 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260702080707.GG2029434@coredump.intra.peff.net>
+Mime-Version: 1.0 (1.0)
+Subject: lipo availability [was: [PATCH v2] Makefile: link osxkeychain & support universal Rust]
+Date: Fri, 3 Jul 2026 08:02:44 -0400
+Message-Id: <539E5E6E-ADEB-415B-B126-18FC0BDABC99@gmail.com>
+References: <akZQmDYe9MtTdGM2@pks.im>
+Cc: Shardul Natu via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Shnatu <snatu@google.com>, Koji Nakamaru <koji.nakamaru@gree.net>
+In-Reply-To: <akZQmDYe9MtTdGM2@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (23D8133)
 
-On Thu, Jul 02, 2026 at 04:07:07AM -0400, Jeff King wrote:
-> The flag handling could be removed if the hash-discard function were
-> idempotent. This could be done easily-ish by having the underlying
-> hash functions (like the ones in sha256/openssl.h) set the context
-> pointer to NULL after free-ing. But it's something that every platform
-> implementation would have to remember to do, and the benefit for the
-> callers is not that huge (it would let us shave a few lines here and
-> probably in a few other spots).
 
-This answers an earlier question of mine. It would indeed be great if it
-was idempotent -- I've been bitten by interfaces like this once too
-much, where you have to be very careful to manage the lifetime of a
-specific object. The prime example of this are (were? I don't quite
-recall whether we fixed that interface) reference transactions, and that
-caused a bunch of bugs in the past.
+> Le 2 juil. 2026 =C3=A0 07:57, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
 
-Patrick
+>=20
+> =EF=BB=BFOn Wed, Jul 01, 2026 at 10:01:43PM +0000, Shardul Natu via GitGit=
+Gadget wrote:
+>> From: Shnatu <snatu@google.com>
+>>=20
+>> Also, introduce native support for macOS Universal Binaries
+>> (multi-architecture builds) in the Git build system by allowing
+>> the user to specify a list of target triples in the RUST_TARGETS
+>> environment variable.
+>=20
+>>  3. On macOS, if multiple targets are specified, we use lipo to
+>>     combine them into a single Universal static library at
+>>     target/release/libgitcore.a.
+>>=20
+>=20
+>> diff --git a/Makefile b/Makefile
+>> index 1f3f099f5c..8d49ecc897 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -3019,11 +3030,33 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+>> $(LIB_FILE): $(LIB_OBJS)
+>>    $(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+>>=20
+>> +ifndef NO_RUST
+>> +ifeq ($(RUST_TARGETS),)
+>> $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+>>    $(QUIET_CARGO)cargo build $(CARGO_ARGS)
+>> +else
+>> +ifneq ($(words $(RUST_TARGETS)),1)
+>> +ifneq ($(uname_S),Darwin)
+>> +$(error Building universal Rust libraries requires macOS (lipo is not av=
+ailable on $(uname_S)))
+>> +endif
+>> +endif
+>> +
+>> +RUST_MEMBER_LIBS =3D $(foreach target,$(RUST_TARGETS),target/$(target)/$=
+(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
+>> +$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Car=
+go.toml $(RUST_SOURCES) $(LIB_FILE)
+>>=20
+>> +    $(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
+>> +
+>> +$(RUST_LIB): $(RUST_MEMBER_LIBS)
+>> +    $(QUIET_GEN)\
+>> +    if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
+>> +        lipo -create $^ -output $@; \
+>=20
+> Can we assume lipo to be generally available on macOS?
+
+=46rom my digging, universal binaries to support the PowerPC transition to I=
+ntel have been available since Xcode 2.1 from 2005 (whose release notes, if t=
+hey ever existed, have been impossible for me to find). Of course for modern=
+ (Universal Binary 2) formats, you will need newer Xcode: the format was ann=
+ounced in 2020, so I suspect Xcode 12 is a minimum but not necessarily suffi=
+cient version. I have not been able to find a release note specific to UB2, t=
+hough in 12.2 there is mention of both universal binaries and the arm archit=
+ecture. Apple=E2=80=99s announcement [1] supports the argument for v12.
+
+[1]: https://www.apple.com/au/newsroom/2020/06/apple-announces-mac-transitio=
+n-to-apple-silicon/=
