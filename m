@@ -1,153 +1,121 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB446318ED2
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 05:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A473537F7
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 05:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783057011; cv=none; b=J2AmUU1HbwswDr2keOsUk2GX4YCJTm5d0CZBS73+Nc4EM1rSdr+pjqUYnTgEiVtn8Br+5Nw+bO0fuVmiYiHBXW0H3AUn9p0GQfvUFkcAVjCypQLyqeLgYh0TreqEVMAYsq9NIt7LsrELOMLigu050OXItOsobD42qYKja/OQO48=
+	t=1783057328; cv=none; b=HcOHwqgtU8EEdilX0bEl8eIk4de+eVMNEimxpF7oBoxG0hhwMFcTDW8pTn5I4s3ZK8A7gxW08k8XjUynmIXn6bvsv4ZfmUQAoa0am19Oe6p6BQZp0DQI3RqhVIdfRbw+Ev/IzNY/4eaObU/sjNDmqvGCENR4uGpPA4rJkLh5TkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783057011; c=relaxed/simple;
-	bh=WnfbS60/Kh/4ve6HTgE3hiQgey7b+Jg7TYvlQGx7okM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SETsKiTCMZClpo9OjOHSmhp19Y0/l4IOaUZP00EC0wWGTOJrR8wbfr7B8Yroy/1kI1EU4U7oYU6AI6kP/ikx6U/FUOXK6HxDwzBbMnCLKPAU+I/quEIVxwwqMoaaRcB+TEeGCoScKxiacGmzqAQfXJISQqiV4jJBKtiJlz4AgDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uUfpIEj4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XQinBLAF; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783057328; c=relaxed/simple;
+	bh=0xFkhJqXa/wcmz+vQlawohAExYSdnK08KJGFuy+ke5E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XL6OaMRsHbVX7rAlkJCa/jJxncBwVHyNM7Um5XlvHGauzH1QrjUO0CQVMrpHJuPG3YP+m4uHiz96r03WhucoGhqtyqjHGYWdq634ZLapJ0/Im7pXFXX3Q9lv3W+AzzMfsh/QGx0i22WUEkspkrczCuNveKGML+3+uNBM0iWo338=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CF4wr+Kz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zu2GlhBy; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uUfpIEj4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XQinBLAF"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AAD1C14000A7;
-	Fri,  3 Jul 2026 01:36:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 03 Jul 2026 01:36:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CF4wr+Kz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zu2GlhBy"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5582F7A001C;
+	Fri,  3 Jul 2026 01:42:06 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 03 Jul 2026 01:42:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783057008; x=1783143408; bh=h6sLHhLSCz
-	d3kaPHKWXZgWti30+XpY0FKf9uXHu/Hoc=; b=uUfpIEj4b52+WcZdOR+UhWm+wb
-	lWEZnV2lLOsvqU+q/ArkUXScP/QDcuAKb59UObGK7AVjEVUg92IMG4ykSvS2J9lm
-	wnyh0Z+vP7G4p+G8BUpOmaC1EaN0rQPsdBpc8qW1zdnlkFcYyLKXk0WL1rm4KB8g
-	bdJePwhsbt9AwlbMGAiWWjwOa7lzXopNJvvkFciPE5W+ZQCQsqRQIv91AmZkQB/l
-	h4lnzXSL7C6zoKW/qOLooUCNNWBfHHWrVids1aCrQivkg7AZWn30lwHm22y0vasN
-	KmxbgdlYGhR6y5LV/SHmVQUMzpIiA2S0ZmwVuoCxxa+dPHWLErw6lMpspRcw==
+	:subject:to:to; s=fm2; t=1783057326; x=1783143726; bh=/cP/t3Cyng
+	0B7NmBnYLhH2VDPCjozRjH5wW3uNwK4GM=; b=CF4wr+KzbSHrqB+z8vu9cV9n7G
+	w6gsQVUXQMWy1NKBQxVrLS8yXsHEQZj3f/xgvpbRe9885qcUs3UV/VemAYBZo5f7
+	TK3PXHc1y2X0FYzWB9hm92imoqa7wQ639dUk0ephzyQhDqGD7MQpxxT2h8gFt7LA
+	u/RcDjvJCvKFAvXqMjTeOukTxnUqGc7bKUjmJlYQltdotLFkE3KzrBpOkuuTmZ81
+	jC9sL5Zgio5BK3Yq70wswyjm5zIH5J/tJnX81/zOiws7HojDCeEVrJv9Y4E9nVSX
+	wE/nOnLPXBkyDRr4Gw//tKc+aPg8hDTMZfNnVTx9S3dLkA2itwfiqVCGSQ1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783057008; x=1783143408; bh=h6sLHhLSCzd3kaPHKWXZgWti30+XpY0FKf9
-	uXHu/Hoc=; b=XQinBLAFjR8l8+S1Gb7uYJ6+W6u823f65bb7fo2yWznMosjS1Pr
-	JUpRSBk39RdaziRy+BA6hEPzr6oROlK2wVPtKXWyGIuxjx9UHXSESUtXHXlNpeed
-	GCUMyeGza760FCfh/MkaY78ksilpaf7Fdb1A8jBldhkDRhfIP664wQTVsBAOmywr
-	80SNWu7Ix6aeS51S2FPQS7Eau53yKkU9Dh5IvR4YkehQgY7tBmIFQ5p1PeYnfbrl
-	AEiB3D7t7kfDg+QnaY5kr799wq/y0UDMnCvOpZD0Zs1RxGc70MoGJ283SbxMdrTk
-	iTR/plGaYCzoHnuSv4RIPumXmwRND1Zjl+g==
-X-ME-Sender: <xms:cEpHalE9e91qN_jlSKcanvDVHOQpX-o2hKbDFCjNQiZEw71kfNwXLA>
-    <xme:cEpHauAircLu3n4RfJ6zq1SGsCknGL1lLN0lhnWQgNORHCmAMIjp7Lm0S6PhLMnRV
-    vYvpveQt54wX2fSJBwHs4Ug1GXUPlPxxfIrqkPEDfpl01lgTZfIag>
-X-ME-Received: <xmr:cEpHag90UCCj8vRusOHRf_kyn2IdNl7oYOvixFK5Joc6pQqjJ4znXZ2LS1sBLUL9wALDFPc-Za9ibua1kLdMRDBw2iybCTNa4hJzL2g>
-X-ME-Proxy-Cause: dmFkZTF4qQ4Ym+TZ/j8/ZaQGANnHx5jkHEfd5swHukHI+jG3xHl5bwvHPHTHAmdfAke+uT
-    zPPrZJCA5yYxNL0RD8wU34LHPopKWgwXLgiD7z5M2Be7jA08j/QA7ZMjgc2GF46iREiq6V
-    v2Hz1RAR0tv26CvOuhIyXJbMumaLrO6yS78kk1x630/dDVYXzvqtaLK4h2Iw7AFvVUtKn1
-    BmuxiuGDxYIsyGenK6S/AUlQ4SdKtXoFwvIWEk0G2XIvwvnZEeSdDVtTpg8lukTzYBr6jD
-    uHGhPVjrQ5PgEYQ1fRrmbbteEkaxQ2yhS3lqJRBYMlxkEGd0K8eGVemv9yf1H9dCE7lTAF
-    a2sQukozOq8Ck8Q5KA8CNXkoEFo5jGIuUYwpE0V6Lhr4gNx0mq7TWDAsT4zqlRQIEh7grn
-    23mtpkyplbIjCaOg1RoEIzZW0DkBjlOHrVJrQTGuDZU2YwL7PM6BHKh9FvrA8UzNnZb4l9
-    nZUXfVs6gTDoh9GK9Xec0sP6p9XaNXbfaokHv00hWBickwzLgdIRfakGzknw7kokdKh79J
-    NifIPc70Qdoi6zfGOShOZwe6PwIKdxq8PbdWfYHUvY60fYCPgNOkBNnOD4LXDx6NfOR9vk
-    qcj90IdEiWbiBBhTb0bSp7TRCyeQPOjgcPC9O6cLKj0fPO8XqXCcNbFE0zOw
-X-ME-Proxy: <xmx:cEpHaiBUSO7qVbYhb-__qD1_EFAzk-aCfQOVh8vMcgcfIlC-s1JdXw>
-    <xmx:cEpHatRgViSeiWXp0-RyGNUPo-RNw71SiFb4AbG-aSJn042YnSYUXg>
-    <xmx:cEpHahvRZb5czkwAm9VQFqlw8jRE-iFXYynMbbw40AIblypl0BFUZw>
-    <xmx:cEpHah3BJMgQ2mqQlOKnX3Tcz2FCQ0oN-2SaEa3BjCPRhQyDvUQOcw>
-    <xmx:cEpHaoADhYViJS3cC8QTUoapb1JDnk36DZdh4nrG2CvoeCeabRVR_K1l>
-Feedback-ID: if26b431b:Fastmail
+	1783057326; x=1783143726; bh=/cP/t3Cyng0B7NmBnYLhH2VDPCjozRjH5wW
+	3uNwK4GM=; b=Zu2GlhBy8LhWrR94SeTga6pMtWLjT5OYBHc9Y9Zrh9TRM2yI2Y4
+	Lq6WUhYMHvm16d45CG+tsm2Ugf01XSgcq5ZSvUWF3KY05kelHCnkaKC0W+2PD9dv
+	1gqnHQIXy7qPDxM41tu5mPBxn5LAqZXWQVI1VakLmKVpLg0xAKrjTBz9hmUEOmb1
+	jO0Q6kBDkFJ6EIi4hZhfoLekjbfW4o+v/C8/7qglzoJUt1raY9f2lBkoai8oI74N
+	VPKTjDGGHV9V4wZG1jvIbQDkGGZOzP+QUBTEOjUqHYObhx1B2cMid3pRxB1VW/UY
+	VuO8VI+WmFv7htZNniIwLKGpVuM5y1+32sw==
+X-ME-Sender: <xms:rktHaqrnzTZm2mjC6w8R0Ld1lin6TUFK4f7KU7XFH6YtImeLdcCrZw>
+    <xme:rktHavoftbPLjCGUxpTpj4cmI1MHS1ow6gy0rLDP9FXXEyyfWcuZkjX5wHZaNiIKL
+    mm_K9T-sLFZTjA1MWDp_7IdcRRIAsOvPbsJSyv7XepLO-QBBj_H6g>
+X-ME-Received: <xmr:rktHakNHO_OzA3ISx0wsvkGdDJWwhpofHus4PgEl74jhP6EinpksB-bcxiQ2URYEQcbuhOm2WpABd_jlaMOCayx5tQ5R1rZFYw8UQ8DOrw>
+X-ME-Proxy-Cause: dmFkZTGgJxKAniFpP/0S6WeeJZEe2xOAAgq2F1Z3mINUVfhX9E4rHYvLyxzJmcXxZv5C0/
+    o+p15RyPnEgoviQJW5tdnFEMXWd8muTk2ZJ5ui13HABWgFiT9/Dap20PxsZglgZ0VLJCD2
+    GNU2qwGkdhWdZS3sSfLZQuu+PNUEBQ9iODOwUWyO/OP7Nfuotf9h63n1JnA5aSJNC6oK8m
+    gnnfokSgdqYym9FJIZDfpXb+0t5FuMJiJXG8f7hj8VMo+poVhuCildxZDHCtd8BmEihpvz
+    fJP7cNq0mEQslhIk7f5JtWXOoINSH+lIKvzFxFhoBav7jAyVQ6fgk1zP2+R7Pc8fTERHd0
+    Vsu+HDfhMd2n1DDucUFWl0hKlJyYiOTBmCqofwFbg0fZ6/hrneAO1rb6JJPOY8P+OzR4w0
+    j9VuYPmW07W/zUBNWvhKJI7r4G3N+040pGKWwTWbpXgoHCuGBQOKbUTaXFbgHjL6GdM7Ym
+    OVpNBFnizT3//2V7U7G3RFjjo6I0hDVn18y2JqTXb0k+Ve1je7we5zlza6RaplC9AkJOEr
+    XVJvVqOAKW/Ywy0SLnhYQw5O4T/GM1XlEFVnSUpgQLaaFhw+egZse/65zUQSMdu0rLOlJt
+    vHIpCbux+/dXcn+LraCnNrdOOd2W1W3EsCifbug0qUkytLANXv+HzGHJqG3A
+X-ME-Proxy: <xmx:rktHaoyXJ3cEScCQBAubVwkTkXI5xTAfhqYU69gIH9mpPcpXgbqTsg>
+    <xmx:rktHaluEVBi6_d6U7WKjTMf1dSZTfIQ4SWZK5F0avlWXYanEOpuAGw>
+    <xmx:rktHap5qYIeQVhMwVJUNAZ1CBwBVyXP34Lj5thubkiU3_wifAC9asw>
+    <xmx:rktHasRsahnFYyIgXoJ15O7d601boHaRZwCEX3ue--BNQpR4HzAq4Q>
+    <xmx:rktHaoZ2zply_shBVtV_98FYVT1iklbzrP87HhaU3-DPcm7sCEkjjK8P>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jul 2026 01:36:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Shnatu <snatu@google.com>,  Koji
- Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH v3 2/2] Makefile: support universal macOS builds via
- RUST_TARGETS
-In-Reply-To: <257f5ef42fbb2841036591657e740872635df49b.1783030971.git.gitgitgadget@gmail.com>
-	(Shardul Natu via GitGitGadget's message of "Thu, 02 Jul 2026 22:22:51
-	+0000")
-References: <pull.2288.v2.git.git.1782943303219.gitgitgadget@gmail.com>
-	<pull.2288.v3.git.git.1783030971.gitgitgadget@gmail.com>
-	<257f5ef42fbb2841036591657e740872635df49b.1783030971.git.gitgitgadget@gmail.com>
-Date: Thu, 02 Jul 2026 22:36:46 -0700
-Message-ID: <xmqqldbsk51t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 3 Jul 2026 01:42:05 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 03990491 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 3 Jul 2026 05:42:02 +0000 (UTC)
+Date: Fri, 3 Jul 2026 07:42:00 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/9] t4141: fix inefficient use of dd(1)
+Message-ID: <akdLqNHW3pGThQat@pks.im>
+References: <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-0-76b4d7bab3d0@pks.im>
+ <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-3-76b4d7bab3d0@pks.im>
+ <20260702211614.GB2051171@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260702211614.GB2051171@coredump.intra.peff.net>
 
-"Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jul 02, 2026 at 05:16:14PM -0400, Jeff King wrote:
+> On Thu, Jul 02, 2026 at 02:00:56PM +0200, Patrick Steinhardt wrote:
+> 
+> > This test setup is extremely expensive, as `test_copy_bytes` is
+> > implemented via `dd ibs=1 count="$1"`, which copies data one byte at a
+> > time. So as we write 1GB of data, we end up doing 1 billion reads and
+> > writes. This naturally takes a while: it takes 6 minutes on my system,
+> > and around 40 minutes in some CI jobs!
+> > 
+> > We can do much better though, as genzeros already knows to handle an
+> > optional limit of how much data it is supposed to write, which allows us
+> > to remove the call to `test_copy_bytes`. Furthermore, it has already
+> > been optimized to generate the data fast.
+> 
+> Seems like a good fix for this case, where we can skip the extra process
+> entirely.
+> 
+> It feels like test_copy_bytes should be able to do much better in
+> general. The obvious thing to reach for is "head -c", but the function
+> was originally added because that wasn't portable. The "-c" option is
+> not in POSIX, though the original comment claims IRIX was the problem,
+> so I wonder if "head -c" is de facto portable these days.
 
-> From: Shardul Natu <snatu@google.com>
->
-> On macOS, Universal Binaries contain native executable code for
-> multiple architectures (such as Intel x86_64 and Apple Silicon arm64)
-> bundled into a single file. This is standard practice for macOS
-> distribution and CI packaging (such as internal distribution packages
-> or tooling like Burrito/Homebrew), allowing a single build artifact
-> to run natively across all Macs without Rosetta emulation or
-> maintaining separate packages.
->
-> When building Git C code for multiple architectures on macOS, the
-> Apple toolchain (clang) natively supports universal builds via
-> CFLAGS/LDFLAGS. When "-arch x86_64 -arch arm64" is passed, clang
-> automatically compiles and links universal binaries for all C object
-> files and executables out of the box.
->
-> Cargo and rustc, however, do not support multiple "-arch" flags or
-> emitting universal binaries in a single invocation. Instead, Cargo
-> requires invoking each target triple independently (e.g., passing
-> "--target x86_64-apple-darwin" and "--target aarch64-apple-darwin").
+An alternative could be to implement a simple helper as part of our
+test-tool. But I doubt it's really worth it: almost all callers only
+want to copy a small number of bytes. The only exception seems to be
+t0021, where we copy up to 65kB. But that whole test suite still only
+takes ~3 seconds, so optimizing that feels like wasted time to me.
 
-This is much easier to understand for those of us unfamiliar with
-the macOS ecosystem.  Very much appreciated.
-
-> +$(RUST_LIB): $(RUST_MEMBER_LIBS)
-> +	@$(call mkdir_p_parent_template)
-
-The leading @ is a bit curious because among ~20 existing use of
-this pattern, nobody adds it to squelch "mkdir -p".  In fact, the
-macro uses the standard pattern to define $(QUIET_MKDIR_P_PARENT)
-that does the squelching when $(V) is unset.
-
-> +	$(QUIET_GEN)\
-> +	if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
-
-Recipe parts in our Makefile that are written in bourne shell, the
-CodingGuidelines apply.
-
-    $ git grep -n -e 'if \[' ':(glob)**/Makefile'
-
-gives empty.  Probably,
-
-	if test $(words $(RUST_TARGETS)) -gt 1; \
-	then \
-
-would fit better.
-
-> +		lipo -create $^ -output $@; \
-> +	else \
-> +		cp $< $@; \
-> +	fi
-> +endif
->  
->  .PHONY: rust
->  rust: $(RUST_LIB)
-
-Other than that, looking good.
-
-Thanks.
+Patrick
