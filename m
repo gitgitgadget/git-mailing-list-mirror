@@ -1,335 +1,139 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717092727EB
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 03:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A97329C40
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 04:54:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783048427; cv=none; b=NbgO7R4KdcM0jxTAzLfUx542gGkpeHe4qFgi4Bf2KOPuFvOmN10iZA6MKFl+44qOmKxsfWWsZau+NTWqIsxJpB1M+1kq77Jw0AYk6f06Cln0ROE68otnmS/Bf2WwmMJq8QH5yOKdi1++FsWWgZmtdSwr8FLUoULQoUI+sWgVwQM=
+	t=1783054480; cv=none; b=bPqmIU5+XN5ALNLW/YldBlmZ78Dwg6PZA4ZU5RJFsioZH7xX5aXeD8RG0g2d5O+8RjzAPi3sY1B2Q+AVVQuC9X3P7pPabjziNVg+GoIrr4muD1T7YM/8wDcFt3efMVrWe0M5SuRx/adZaNlwoafsa7TCPlXDQK2Xm9xoDrF+bHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783048427; c=relaxed/simple;
-	bh=Oq4UQtQjMHfBiuPIBKb8ASw3IVLgqEEjPEkIbIK5kp4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sHuMAQF/6kZZWiQxL1Qg1Lp/55eU1gqPjw7b6WkV4ZqNImR9HNCFk7CCWjO159Sq+9909dYVBf5/mKUFoitUhmYtWwuDrHI9pJQ1woZ8WinxesYJ7w9jblZemZfo8PHfb/boq2wTyW1wm5cGTm1sRQNA/UqipCUD6cfhraNdu94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gw3CZAK0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1783054480; c=relaxed/simple;
+	bh=l2fv5w1rx99zbFO7ezpQTFGh1MkF+eOKEIntWWJoJ0I=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=SlA+HaFN9oTOGO/1QgJ6PsVBMTBWhGAWwA/GET1mPPdq37VK0pm0be5pGcR+G+1/zsaRz+rkZyBrpss/sUGYN0Nhpcc9S0ZnIMcxEgt2TSedbdsU2+A7BZPngNpK+lhY/qFfYhYuoVsgivFN4ColDD6ljadbbqZsaI59pnDI9Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=muzVnPGc; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gw3CZAK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2C237C2BCF5;
-	Fri,  3 Jul 2026 03:13:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783048427;
-	bh=Oq4UQtQjMHfBiuPIBKb8ASw3IVLgqEEjPEkIbIK5kp4=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=gw3CZAK0lWCIkbLEcJT72WhoKecrXKFfcKFEOlcBiGdm85ewLo4TXp7w6kJU287Oz
-	 fJJaceLpMFSZZ5rtSQ4AOBvVb90LnMvsgBUZG/n2v1m+vKAgZe7IAVEiou1a/w3c6M
-	 aWvae1tFBMO4XEh43sNK64ROhoDm6gd/4+KVJdPPU/tH2t9B3gqkQyaN9J932YCvS9
-	 LxK4p8xIY45rvFgahIdeQ1LJLRhDLhxjrBK9jkPkaYozS5bYf8a7sf8CHrrn8OQEin
-	 IUE6nAvvgFJYPdTsZtkbUS5sMj1UiouprHCeIopj0mfLxkFCWPvhEZ/kzjn7e3EQaP
-	 TCyfgJ7eZ/M2A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FC5BC44501;
-	Fri,  3 Jul 2026 03:13:47 +0000 (UTC)
-From: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-Date: Fri, 03 Jul 2026 11:13:18 +0800
-Subject: [PATCH v6 2/2] config: add "worktree" and "worktree/i" includeIf
- conditions
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="muzVnPGc"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-51a868b6962so2137081cf.2
+        for <git@vger.kernel.org>; Thu, 02 Jul 2026 21:54:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783054470; x=1783659270; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tiAmM3pttDX18SRiSdUkVjzvqVOqJ1SGEU4OnMt0mw8=;
+        b=muzVnPGcGq73lbnGFTxc1GILd3l4vNhXbS4Pf0D4ou07CsEP/y3gJU3JHWH/s6okWg
+         Z8BjKhn4eUihb5ENUglQl1oVgPYk+Oh8Ou3EnX3hbW3UNZ4T6LR7/PfVH24KKS6D24m/
+         007z1CsJk2YirpOyeLXRlIm43uMhe66Suljdkd9OOqidm3Q7rjZBZRhAy/bwbq3mFHdh
+         17AbYAgHfLeAXOorRWe0lp62z0zpFvak4LJiMDCteEDMAIB7HRiseVfQ3leJw717FxZl
+         YlN87jSzKsEziUN3dHd8x+vwK912T4QBtZCfpoOgLpj3tr88PeXdnCXUM0MJFaen8N+c
+         wCUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783054470; x=1783659270;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=tiAmM3pttDX18SRiSdUkVjzvqVOqJ1SGEU4OnMt0mw8=;
+        b=NSxhZL7Eid3DPL9EfiM32Sc9GEwwpKyUC8+nn2gYPfdnTv5Gr/7KFLevkCSdIZUOxQ
+         4cOIpeLzZzS+KQGWbTPprYN3qnrZe+SqNh4pBLfpGLBlkdL50kedoinDIdwt3VtLh3g3
+         8ndS2bG6amBvUXnVVJftVHe+v8KWtDoP5/gcTeRc7DOQdbHROi9MNsIdszqfPV7JUzop
+         6w0HZ6PcIQkwfhL0+mAXGYm5WElbPyR5hQ4kvJCFA/f3LY43fqiGfXc+gFgvpTbnQk0V
+         CttymdTDmDSOeSgbqX2u/u2tVhQv2YdU8gKp+MyiCW23AkacnLH2YXWVSJr7D0gNr1qf
+         p0Gw==
+X-Gm-Message-State: AOJu0YyUFmfwc4w+k8PQBVyVOoo1eGhADj9fksrxDAIaDrMgXIPcyXRM
+	V3vO2obV/w0g5da+wd/b8a9EnlCbHe7FDUK+vcdOlUy/eb5HnV/HaixsvgwVNw==
+X-Gm-Gg: AfdE7cn/BEHWscra7lFVaUSG34OWhyzujEKQDzv3+COK8wME8fA4dtr6HcRUJabtCP1
+	rsHpyp82xb7udM1hSDAW9z5IxE+UfFTTE8rPmOxeOGv2u2dEZwzeOwCklZEs2tMinMklcUynaZ7
+	J4umb4u7ArJyI1G6rhHzPtVNew48whAjmkF/QmHwzNGzBaFXSpCZBh9LfM9Uq4CdLzTMNTcboMz
+	CQucWSrd3/KtIEhHqq4p4P1N/VNf2cQE34FE9SFcArDU8Wde+auQxSw63GJoj04X/05AIoCQcQK
+	0E4LChqWpfxXJ+3/UMWf9cQtb/hdhUqned4sCJCSqtpfDHJ+tj1P+8iosx3zWhp7pSnvPoDElbn
+	hyjLPHnpP8Ag8VLD6wREUi/M9sfseinmT8/+a+EXTth2nRKcg+0p8fxAVWu5t9EYQqIr/we0Ih2
+	JRPyKg8xuTU3cs/KY=
+X-Received: by 2002:ac8:7e94:0:b0:516:e10f:7140 with SMTP id d75a77b69052e-51c26af015bmr106818421cf.35.1783054470099;
+        Thu, 02 Jul 2026 21:54:30 -0700 (PDT)
+Received: from [127.0.0.1] ([48.217.251.96])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41d2cf18sm8068591cf.14.2026.07.02.21.54.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jul 2026 21:54:29 -0700 (PDT)
+Message-Id: <ec6b478c4ce0da2c963c4cee4eacde50d3d877cc.1783054466.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2135.v3.git.1783054466.gitgitgadget@gmail.com>
+References: <pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
+	<pull.2135.v3.git.1783054466.gitgitgadget@gmail.com>
+From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 03 Jul 2026 04:54:20 +0000
+Subject: [PATCH v3 1/6] t/README: document test_grep helper
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-includeif-worktree-v6-2-a13893ad9a7f@black-desk.cn>
-References: <20260703-includeif-worktree-v6-0-a13893ad9a7f@black-desk.cn>
-In-Reply-To: <20260703-includeif-worktree-v6-0-a13893ad9a7f@black-desk.cn>
 To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
- Chen Linxuan <me@black-desk.cn>, Phillip Wood <phillip.wood@dunelm.org.uk>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10530; i=me@black-desk.cn;
- h=from:subject:message-id;
- bh=nABSZ2SeZktQyHL7TvSYe+wB1lzM85LToYLRBCY19/0=;
- b=owEBbQKS/ZANAwAKAXYe5hQ5ma6LAcsmYgBqRyjoOSMWs/a25zwCXti9epRKXXYVLZvs5HrmQ
- cA9Z/mCsOWJAjMEAAEKAB0WIQTO1VElAk6xdvy0ZVp2HuYUOZmuiwUCakco6AAKCRB2HuYUOZmu
- ixe3D/9ex75EUxqQ1mfl3aWBml/7jkQOiPTaP3OsmpbARSpGB+13PiV9wtijVWRUX99I8VCqjGS
- 43VtExyLuLbbDCBTC7MvsEVQO63IoNdV8Havk8WQFbwJke/m0AbSx2cosYWoj88balZkQ+O3oKL
- J6AXxx90A+cAgl5HHvHdWCPwdcJ3jbeOQXiKS6rizQ3e8LmMC+Xs51DZTK13pESmneoH+tbKehE
- 6zRPwoNUM3u/bz+NGhJfD+PIWU9kOPBc2TNJ0H7wfSH6FIVBEyIgYxU1qE8EM6H9VxiK6v/G9sz
- /VJfsyZY2EURD/H7ziNDbyGX7c25iQIczktN1FggDTHqelcaiJakcpK9oNz8jU4C5Z02sjggFzN
- 49qW16w1d1HeNL2sQYfaqVqi2DbzYUJsJEdYIv9epJPcxmdxHr0UaCtGgbH36rshTpbtfe7y6+n
- mhX9H7aSJwHFOGpITPc7px44BLHdaEJyYeqIPmhIG2BpHmBgRiKVIt9F7j1vDdYHAqXKKwEJRuz
- b8cDUJrnkLyxQC4UKANU164MMnesTE4kDAiGFFYmO4G6zuOAgqU3/Zcu3k7irol3tKoj+Tdqmhs
- 8EHkCu1GBa7Jha+PtdbjAM5hrc/QBVOPkNmSVUYRrjpY0EMJkiya0wBuSgL7r/QTmE3h3/hf9Rq
- EQIdtTC8cLErFJg==
-X-Developer-Key: i=me@black-desk.cn; a=openpgp;
- fpr=D818ACDD385CAE92D4BAC01A6269794D24791D21
-X-Endpoint-Received: by B4 Relay for me@black-desk.cn/default with
- auth_id=573
-X-Original-From: Chen Linxuan <me@black-desk.cn>
-Reply-To: me@black-desk.cn
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+    Michael Montalbo <mmontalbo@gmail.com>,
+    Michael Montalbo <mmontalbo@gmail.com>
 
-From: Chen Linxuan <me@black-desk.cn>
+From: Michael Montalbo <mmontalbo@gmail.com>
 
-The includeIf mechanism already supports matching on the .git
-directory path (gitdir) and the currently checked out branch
-(onbranch).  But in multi-worktree setups the .git directory of a
-linked worktree points into the main repository's .git/worktrees/
-area, which makes gitdir patterns cumbersome when one wants to
-include config based on the working tree's checkout path instead.
+test_grep is a wrapper around grep for test assertions that prints
+the file contents on failure for easier debugging.  It also accepts
+'!' as its first argument for negation, which preserves the
+diagnostic output that '! test_grep' would suppress.
 
-Introduce two new condition keywords:
+Despite being widely used (and the preferred replacement for bare
+grep in assertions), test_grep has no entry in t/README alongside
+the other documented helpers like test_cmp and test_line_count.
+Add one.
 
-  - worktree:<pattern> matches the realpath of the current worktree's
-    working directory (i.e. repo_get_work_tree()) against a glob
-    pattern.  This is the path returned by git rev-parse
-    --show-toplevel.
-
-  - worktree/i:<pattern> is the case-insensitive variant.
-
-The implementation reuses the include_by_path() helper introduced in
-the previous commit, passing the worktree path in place of the
-gitdir.  The condition never matches in bare repositories (where
-there is no worktree) or during early config reading (where no
-repository is available).
-
-Add documentation describing the new conditions, including a comparison
-with extensions.worktreeConfig.  Add tests covering bare repositories,
-multiple worktrees, symlinked worktree paths, case-sensitive and
-case-insensitive matching, early config reading, and non-repository
-scenarios.
-
-Signed-off-by: Chen Linxuan <me@black-desk.cn>
+Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- Documentation/config.adoc |  48 +++++++++++++++++
- config.c                  |   6 +++
- t/t1305-config-include.sh | 128 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 182 insertions(+)
+ t/README | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/Documentation/config.adoc b/Documentation/config.adoc
-index 15b1a4d59347..c153da986e4a 100644
---- a/Documentation/config.adoc
-+++ b/Documentation/config.adoc
-@@ -146,6 +146,46 @@ refer to linkgit:gitignore[5] for details. For convenience:
- 	This is the same as `gitdir` except that matching is done
- 	case-insensitively (e.g. on case-insensitive file systems)
+diff --git a/t/README b/t/README
+index 085921be4b..928331fc7d 100644
+--- a/t/README
++++ b/t/README
+@@ -1039,6 +1039,32 @@ see test-lib-functions.sh for the full list and their options.
  
-+`worktree`::
-+	The data that follows the keyword `worktree` and a colon is used as a
-+	glob pattern. If the working directory of the current worktree matches
-+	the pattern, the include condition is met.
-++
-+The worktree location is the path where files are checked out (as returned
-+by `git rev-parse --show-toplevel`). This is different from `gitdir`, which
-+matches the `.git` directory path. In a linked worktree, the worktree path
-+is the directory where that worktree's files are located, not the main
-+repository's `.git` directory.
-++
-+The pattern uses the same glob syntax as `gitdir` (including `~/`, `./`,
-+`**/`, and trailing-`/` prefix matching). This condition will never match
-+in a bare repository (which has no worktree).
-++
-+This is useful when you want to apply configuration based on where the
-+working tree is located on the filesystem. For example, a contributor who
-+works on the same project both personally and as an employee can use
-+different `user.name` and `user.email` values depending on which directory
-+the worktree is checked out under:
-++
-+----
-+[includeIf "worktree:/home/user/work/"]
-+    path = ~/.config/git/work.inc
-+[includeIf "worktree:/home/user/personal/"]
-+    path = ~/.config/git/personal.inc
-+----
-++
-+While `extensions.worktreeConfig` (see linkgit:git-worktree[1]) also supports
-+per-worktree configuration, it stores the config inside each repository's
-+`.git/config.worktree` file and requires running `git config --worktree`
-+inside each worktree individually. In contrast, `includeIf "worktree:..."`
-+can be set once in a global or system-level configuration file (e.g.
-+`~/.config/git/config`) and applies to all repositories at once based on
-+their worktree location.
-+
-+`worktree/i`::
-+	This is the same as `worktree` except that matching is done
-+	case-insensitively (e.g. on case-insensitive file systems)
-+
- `onbranch`::
- 	The data that follows the keyword `onbranch` and a colon is taken to be a
- 	pattern with standard globbing wildcards and two additional
-@@ -244,6 +284,14 @@ Example
- [includeIf "gitdir:~/to/group/"]
- 	path = /path/to/foo.inc
+    Check whether a file has the length it is expected to.
  
-+; include if the worktree is at /path/to/project-build
-+[includeIf "worktree:/path/to/project-build"]
-+	path = build-config.inc
++ - test_grep [!] [<grep-options>] <pattern> <file>
 +
-+; include for all worktrees inside /path/to/group
-+[includeIf "worktree:/path/to/group/"]
-+	path = group-config.inc
++   Check whether <file> contains a line matching <pattern>, or
++   with '!' that no line matches.  Use this instead of bare
++   'grep <pattern> <file>' in test assertions.  On failure,
++   test_grep prints the contents of <file> for easier debugging,
++   whereas a bare 'grep' would fail silently.
 +
- ; relative paths are always relative to the including
- ; file (if the condition is true); their location is not
- ; affected by the condition
-diff --git a/config.c b/config.c
-index 00eeeea370c9..9d6d7872d76c 100644
---- a/config.c
-+++ b/config.c
-@@ -400,6 +400,12 @@ static int include_condition_is_true(const struct key_value_info *kvi,
- 		return include_by_path(kvi, opts->git_dir, cond, cond_len, 0);
- 	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
- 		return include_by_path(kvi, opts->git_dir, cond, cond_len, 1);
-+	else if (skip_prefix_mem(cond, cond_len, "worktree:", &cond, &cond_len))
-+		return include_by_path(kvi, inc->repo ? repo_get_work_tree(inc->repo) : NULL,
-+				       cond, cond_len, 0);
-+	else if (skip_prefix_mem(cond, cond_len, "worktree/i:", &cond, &cond_len))
-+		return include_by_path(kvi, inc->repo ? repo_get_work_tree(inc->repo) : NULL,
-+				       cond, cond_len, 1);
- 	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_len))
- 		return include_by_branch(inc, cond, cond_len);
- 	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index f3892578e4ff..4e840dfdb35b 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -396,4 +396,132 @@ test_expect_success 'onbranch without repository but explicit nonexistent Git di
- 	test_must_fail nongit git --git-dir=nonexistent config get foo.bar
- '
- 
-+# worktree: conditional include tests
++   For negation, pass '!' as the first argument:
 +
-+test_expect_success 'conditional include, worktree bare repo' '
-+	git init --bare wt-bare &&
-+	(
-+		cd wt-bare &&
-+		echo "[includeIf \"worktree:/\"]path=bar-bare" >>config &&
-+		echo "[test]wtbare=1" >bar-bare &&
-+		test_must_fail git config test.wtbare
-+	)
-+'
++	test_grep ! "^diff --git" actual
 +
-+test_expect_success 'conditional include, worktree multiple worktrees' '
-+	git init wt-multi &&
-+	(
-+		cd wt-multi &&
-+		test_commit initial &&
-+		git worktree add -b linked-branch ../wt-linked HEAD &&
-+		git worktree add -b prefix-branch ../wt-prefix/linked HEAD
-+	) &&
-+	wt_main="$(cd wt-multi && pwd)" &&
-+	wt_linked="$(cd wt-linked && pwd)" &&
-+	wt_prefix_parent="$(cd wt-prefix && pwd)" &&
-+	cat >>wt-multi/.git/config <<-EOF &&
-+	[includeIf "worktree:$wt_main"]
-+		path = main-config
-+	[includeIf "worktree:$wt_linked"]
-+		path = linked-config
-+	[includeIf "worktree:$wt_prefix_parent/"]
-+		path = prefix-config
-+	EOF
-+	echo "[test]mainvar=main" >wt-multi/.git/main-config &&
-+	echo "[test]linkedvar=linked" >wt-multi/.git/linked-config &&
-+	echo "[test]prefixvar=prefix" >wt-multi/.git/prefix-config &&
-+	echo main >expect &&
-+	git -C wt-multi config test.mainvar >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git -C wt-multi config test.linkedvar &&
-+	test_must_fail git -C wt-multi config test.prefixvar &&
-+	echo linked >expect &&
-+	git -C wt-linked config test.linkedvar >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git -C wt-linked config test.mainvar &&
-+	test_must_fail git -C wt-linked config test.prefixvar &&
-+	echo prefix >expect &&
-+	git -C wt-prefix/linked config test.prefixvar >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git -C wt-prefix/linked config test.mainvar &&
-+	test_must_fail git -C wt-prefix/linked config test.linkedvar
-+'
++   Do not negate by writing '! test_grep', as that suppresses the
++   diagnostic output.
 +
-+test_expect_success SYMLINKS 'conditional include, worktree resolves symlinks' '
-+	mkdir real-wt &&
-+	ln -s real-wt link-wt &&
-+	git init link-wt/repo &&
-+	(
-+		cd link-wt/repo &&
-+		# repo->worktree resolves symlinks, so use real path in pattern
-+		echo "[includeIf \"worktree:**/real-wt/repo\"]path=bar-link" >>.git/config &&
-+		echo "[test]wtlink=2" >.git/bar-link &&
-+		echo 2 >expect &&
-+		git config test.wtlink >actual &&
-+		test_cmp expect actual
-+	)
-+'
++   test_grep should only be used as a test assertion.  When grep
++   is used as a data filter (e.g. 'grep -v "^index" actual >filtered')
++   or inside a command substitution (e.g. '$(grep -c ...)'), plain
++   'grep' is the right choice because the exit code is not the
++   assertion itself.
 +
-+test_expect_success !CASE_INSENSITIVE_FS 'conditional include, worktree, case sensitive' '
-+	git init wt-case &&
-+	(
-+		cd wt-case &&
-+		test_commit initial &&
-+		wt_path="$(pwd)" &&
-+		wt_upper=$(echo "$wt_path" | tr a-z A-Z) &&
-+		echo "[includeIf \"worktree:$wt_upper\"]path=case-inc" >>.git/config &&
-+		echo "[test]wtcase=1" >.git/case-inc &&
-+		test_must_fail git config test.wtcase
-+	)
-+'
++   test_grep requires <file> to exist and will BUG otherwise.
++   When a file's presence is conditional (a backend-specific
++   file, or a path that only exists on some platforms, such as
++   an NTFS 8.3 short name), keep a plain guarded 'grep' instead.
 +
-+test_expect_success 'conditional include, worktree, icase' '
-+	git init wt-icase &&
-+	(
-+		cd wt-icase &&
-+		test_commit initial &&
-+		wt_path="$(pwd)" &&
-+		wt_upper=$(echo "$wt_path" | tr a-z A-Z) &&
-+		echo "[includeIf \"worktree/i:$wt_upper\"]path=icase-inc" >>.git/config &&
-+		echo "[test]wticase=1" >.git/icase-inc &&
-+		echo 1 >expect &&
-+		git config test.wticase >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# The "worktree" condition cannot match during early config reading
-+# because the repository object is not yet fully initialized and
-+# repo_get_work_tree() returns NULL.
-+test_expect_success 'conditional include, worktree does not match in early config' '
-+	git init wt-early &&
-+	(
-+		cd wt-early &&
-+		test_commit initial &&
-+		wt_path="$(pwd)" &&
-+		echo "[includeIf \"worktree:$wt_path\"]path=early-inc" >>.git/config &&
-+		echo "[test]wtearly=1" >.git/early-inc &&
-+		test-tool config read_early_config test.wtearly >actual &&
-+		test_must_be_empty actual
-+	)
-+'
-+
-+# Use a loose pattern so the "present in non-worktree cases" check works
-+# for Unix-style absolute paths and Windows paths like D:/a/git/...
-+test_expect_success 'conditional include, worktree without repository' '
-+	test_when_finished "rm -f .gitconfig config.inc" &&
-+	git config set -f .gitconfig "includeIf.worktree:**.path" config.inc &&
-+	git config set -f config.inc foo.bar baz &&
-+	git config get foo.bar &&
-+	test_must_fail nongit git config get foo.bar
-+'
-+
-+test_expect_success 'conditional include, worktree without repository but explicit nonexistent Git directory' '
-+	test_when_finished "rm -f .gitconfig config.inc" &&
-+	git config set -f .gitconfig "includeIf.worktree:**.path" config.inc &&
-+	git config set -f config.inc foo.bar baz &&
-+	git config get foo.bar &&
-+	test_must_fail nongit git --git-dir=nonexistent config get foo.bar
-+'
-+
- test_done
-
+  - test_path_is_file <path>
+    test_path_is_dir <path>
+    test_path_is_missing <path>
 -- 
-2.53.0
-
+gitgitgadget
 
