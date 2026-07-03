@@ -1,86 +1,84 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F208122D792
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 11:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D872237F741
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 11:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783076588; cv=none; b=D6CawBVd6+MyxaBaZ9R2QzyOufJNvJdJtSdqy3kJFvkfhPRpeSsoJyQ9SvlOeg1FLzNS1fz4SisXf07HJ56zz+l2guySpDQn+3in9rUguveOVhjKNPNsfDaybaIKa7Jfa1UmJMv+T89nQYKqBl1Aw/UEqM6UtvR8k/n7s5USzWY=
+	t=1783078046; cv=none; b=ahDq4JEwABjUCHhpwAXEkDzmODdkxuTBDq7rogbThbb8vD7bQKdm5CRkTx5uZNVwPaCSE7Coexv3cun5Y9Rz5IHPnxTqxnpf7SbBj9BGlyxbW/1ycY7eskGZen3pnfN2jpucyCQeYrqvTFxZoQqQQSKqHEW9KCwqsxozny6SUpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783076588; c=relaxed/simple;
-	bh=dimNp5TiAKAfMtBCidyI8DmerTc88b9eKkExuia106g=;
+	s=arc-20240116; t=1783078046; c=relaxed/simple;
+	bh=fczmlqtZfq0vprAPUG95kYdtXs/J4w2VAcRNtvMWn5s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tjdQTs2QvybhDWxNE8sMdA4IEzsW4yqf06ml405bmn1r8gAiqvZY9ZInQv5o+1GBlrAJYPCHKlQYSrXUV3+fy8I2J5v+2306CBoZgjrIYxNhX349NskOBtzb5Qa6PUfVHQRNtyAVNwXiRVfSyQcHR34VxbS9LvQ1Xn+AEdSZWTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b7ZgvdCQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iq3SE4pu; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=WOs34ttI2xAL+9LgunmDQ+uDE46jFbZPITnwfcq4n0PsLbBkSAtvXNpRZscXLEJ3Rt2N2/h0tGqsKx3M1GnOFdLBygKkn/jXAIK7F2gDZVOUrsFPZytnGGXxYeOIYthxb9uvjkYsr4kgBFK1/rA5bIhVsbjvmh2Aj3FccdlwEyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F44VM6wX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YWZ3+5JV; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b7ZgvdCQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iq3SE4pu"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id E7D3A1D000FD;
-	Fri,  3 Jul 2026 07:03:05 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 03 Jul 2026 07:03:06 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F44VM6wX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YWZ3+5JV"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4DD2B7A012E;
+	Fri,  3 Jul 2026 07:27:21 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Fri, 03 Jul 2026 07:27:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783076585; x=1783162985; bh=9oezOVGhLR
-	AG/HoMRZ1aCegxmB4P1ZKwP5XlLXPjPEo=; b=b7ZgvdCQxpvkyYyfXJ3GkctG/Y
-	o4fO/BRzLOTOyxTwpcR3wflEVPOsHcHMDiHviqKZ13v2tz5PzDde0yVaY1yzwxgf
-	y3xnMsu2sRs0BZrB/YWHOQZ/gZJa4oEetw09BLn5C8BNcMmH4pFP8t5ehlKoomSN
-	SjEh9BJZojsoNEZN4vCPgtUSPoFMXrIuOgaTldsPQrXVM9kW0Wqd34pB0/peXhP9
-	pCaonfLwoBR+XBfms95TrCfVbcLsfYMaTBlxHvijA08CnWjmTMiNHqYVsHD0CJKA
-	oLzjf/YqPD6V/H8du8Wtj9O6jplVX/3DkmJZqi/JaJn1JK6YbFPkFMI2EE6Q==
+	:subject:to:to; s=fm2; t=1783078041; x=1783164441; bh=AgqafCS1Gl
+	izvk6UlTjdtbmkZ5M6f5HP8kIpahQsVPI=; b=F44VM6wXFogZMIa144PPernWlu
+	flvW/9yzQW6b0Bt5s8gJrOuO1DfsF3R25Sby6jWfTKoYiEzZdE5zkU2baf2l7VUW
+	YbhvlVytnBCDP734M69K0SmYAo57UnT7UHGGdKCtHo0yGuJkGHPW+DX2QX2ddXgh
+	NAZsZq4EHg5UNJ43XQs42O3CiGwPPQaN4QQJkGBMwsz0P2GXJ7HqcmyrDqDv0cp3
+	IxWQXwynhcPnmqpgZRgskuXzPZwE5taYExAJzM8021/waQQwSc4/7iAH/0N12zU1
+	rDLcEc9VdsSBpqpRrkRYyeWwlV9/8E3a4sE6ed4eyo9Zm9bWi3fAVKnZhQjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783076585; x=1783162985; bh=9oezOVGhLRAG/HoMRZ1aCegxmB4P1ZKwP5X
-	lLXPjPEo=; b=iq3SE4puN71OFZFYCAa/7qF/CeyCpCiHURpJruUeuJXCfpvnvYU
-	fwrmMMzOEGq3VGWeCghBoFaiFAORK15q6mcJHgOBObq50WM6t/u2xnCczrhODdEv
-	VL0j4X5Dzd7DDViRV3xrDBuMd8iRpJMG9Uw8+yJPYfqpqPi0v8/GXpfG6/nGqFiz
-	aGGidGDfN/8b+awzipsF//S9Xhxv0B/ead8QW70vVhkAuMIPzHtfhSjjjjakQBNC
-	l1IcmwHUTTwqvorWgUkuE0jvgkhMUnp/gZ+ToNYdz1FGZjG0rcSfUbryo8B3KQLu
-	NcLdBAMLhWQIbqZFuAc0SQqQ1hujPAC1DsA==
-X-ME-Sender: <xms:6ZZHaoVGbdDE1sUwMmGVgjLatJ5XgYmIO7Fg0HlQ6J0mlpKQe0tiNA>
-    <xme:6ZZHauGuH8r6xAdpY8-gPa6eMP2gvmv9K3rpWCYEqB2k6HwlagZ3uy2bDXTTF_Zvm
-    ZW3SYrkHN_gdX6y_hGsDmkbI9PhInnDnO799u2IauWRl4TtUQBWMg>
-X-ME-Received: <xmr:6ZZHasdYHRH3DijWWQPep8OUTccK5A_Zy6_cmgkxgEmmwN_SAsgdrjLKZlFA05b_9Vsee7M1ennfQKMXVEfyXlQigDDsVo7YK3l4LNlmFw>
-X-ME-Proxy-Cause: dmFkZTF4C00PKcVvNrCTIvFIh+7YL4kJ+0k8c5Yooen9gD5Yrod9jmeAR4G3jiImTVh9oU
-    tZcf7EAnJswtHQvGXSbj5mj5PqTPpF9Zh8Yn/YLah4+hpThCqIOFEYx3Efz7AJ7JfNnC8+
-    Pri5tR+/3dJGmTOPzY+fb1cRNxyoRryelXzLEITtkJRsVHY17Bd3HE8icaK7G6cUrOEGzp
-    LJ7YjPRPzqIi3OZYQcje6ZggU1aPg9buXF6ei2j1WICpPPmKS//SYkFSvOuk2j4tOYeqHE
-    3+uggGzPfIKNVz7jkm6gwizs1KK2UQ7uReiHCo+3lrfOMwLfNSQKu3ehwbwl84++5J70CX
-    V4jTI3WVBUAC1S0HkLm9V9QIXNXMF6KEmyUrduY4hhnR/3fbcB67IZWox+tJyud/n428wX
-    yf5fK+7pV87VJkH4PJtl9cMTIVbzAwaZLzUYcaSEMI0YRE9s69sJcJYVhH4zavORKV7aCp
-    eS587z+8Dgrh1/8nO8hQ34A43PO5xVzg/bc++am5e7O3mGC10ZlTeA/VCS3ew0eiH8Mbqz
-    O2t3NmJ8XHQeKNz0YaJY7ISFnG34PvBL6CixQRy+vPheTA82sCrKVY09Z4ZGUB2XDkkK7/
-    xSC3ycYGCt/hDOghCpS0YLhPIPHtLHar+fU41e5BNmpcLrD8DkrN5FZNlZPw
-X-ME-Proxy: <xmx:6ZZHanLwsRTWsYk1aWGutAUsM8rx20GgeWZcnU7VurAa1bRpYHmL2g>
-    <xmx:6ZZHapEUG4lL5prz8hOs4Jx9F5YOVc7ygS37SiW1o5fHgcy6zxgaXw>
-    <xmx:6ZZHaiBJH2Co2sb2oNy6c6M7H6xoylU8TxrnrtsXpezfSvmAAMxVTg>
-    <xmx:6ZZHak89SHvEzO6msnjjiWHjiC0tOs3yG6s9ZSWg9vkNAaskahe4mQ>
-    <xmx:6ZZHavLV3u4IOkS8pkegTq7xz7fzTx1JVcxHOzp5i2fSPJ1I-JRnRooI>
+	1783078041; x=1783164441; bh=AgqafCS1Glizvk6UlTjdtbmkZ5M6f5HP8kI
+	pahQsVPI=; b=YWZ3+5JV0W9InE2vbL+m7zHgLhx6KoszhnKe5sdWMR4Etxcl5OV
+	ca51tDgzFXzv8J/HK/3V9kEJBnfKFbyOd2eKAp2XRkZWxDKB7EY7KfNacw85EoxE
+	ytdazUPz02gyFoOIBZviep7ztwmgCb6Q4UjIF7vo2xr/NUBCo2q3TcPaZBFrpZDg
+	TDQdqNbtzZRgk9QYseghwvtTT4yc/JSWCrx1+lxYu7r2saCqtk0v0uroO+qPbMOq
+	i43lbo8pJVKLulaOk9Xq30mgCnFUlKOUiEdJNAytmOA9eOZQ5I9zOpUHeUwvW/0q
+	0LKs1RXlhqnXYhwo1jSvJr8MZW4nPP4eJzw==
+X-ME-Sender: <xms:mJxHasO1Fh6PVK6jAvTy22Ue2sW0tGLPuBETfsu82RhTiw2pHWs2Gw>
+    <xme:mJxHaqaNjpLWfxsn5vRrt3UsJ-7kgaDV0atDgzIzUvuFXyLf8tYRFoKOG8PppcFQ2
+    le0kl1lq6U9Wh22HS6LB9_zMepIiy5sW2i3zD-HZFVZMTO1yGy7QQ>
+X-ME-Received: <xmr:mJxHagp8ezdOBr4BKz6U-HV-id5QncLn9BYT1Th4BgHEQb9IcBfa39e52PEBOU64Dj6KV-3nIuDKe2bYRBDpDTJajcAoutPQ6_M69dAogQ>
+X-ME-Proxy-Cause: dmFkZTGeAY3XLQ+eJytQBDv4r96S0vh0CaBkfGJD4vwzxE1pmIM2XDaq/VlOc3U8w8oTLN
+    3zwjSJf/qrPTLB/FFLWyzEj377Axywm7Rd+oDxcbSexgTHsD+HsLTY9glWNg5xUPoXjlku
+    yX8qowJw4FGOVPu57OjOjTDq0el8O9AHWDLKtDknck9XssHTSQPtGSgllZ2DpV3CvmmMS9
+    QqzdXSVZXoIoRjfcWsgMcGTHKtXcYHpaxDeHr+l5c8aH5ZcjimVbzY5Zg1QN5zOZlpsJoC
+    SxIZ6sdUtDON3CYx2DaICYZnBESHPGpVgm2NIqnallUJyY1Vx5uB3tVsT33Px5LUZiIlJs
+    ffN/dDuh9ZgwkBhD2JTDGvjLriuoytqq3romwM1m3dpTPbnNV8+QIJtinZGqxXLt904BzS
+    TiFJ8i/fv0NBtimwdcfW5bT1G5ZrGAmZePemFNCabRqgOWnzo1+PtAJzOOIVU31/KJ5HhK
+    aarKBXdw2cy/Zuf4UvdGXbsnGDYMfyR0xVgbvdf9QrpnAzzZkrTdbIlLWI3pQWn8pZV7ny
+    Rj7zwXbcp8VNeykjmMksmqY9uIPCWBsRugF33845cSwVSaJWcxOlhv51dDk/nlAAeAOO7U
+    6QI9BS4QdVr56atSwWccon27O/QeNbC7QnfQ0rRYf6Ylc6G8VStDdNu8CPKA
+X-ME-Proxy: <xmx:mJxHauZPB3-vafQTT6OfcyaGPAK8YJWtOemNRkSEdUwUn36GY3faSQ>
+    <xmx:mJxHaoQkTy7LAEAEbfSeDHNrLmi81qHx-edPWtgIj-forq-McgoNow>
+    <xmx:mJxHal6lwv4t4LKwqFZ1XvPgunQ48rtSS5on7NHf1ZLCracGp_5HIg>
+    <xmx:mJxHatzm7b3aAzJYI1qiGF23kJR2jXvSOTT5Rpi92JNE_HDklTLGBA>
+    <xmx:mZxHarJHI_tUQJLNl8w5BsrNZz2GurfvzE-TLi2cbApcMn7NdKNj0tLL>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jul 2026 07:03:04 -0400 (EDT)
+ 3 Jul 2026 07:27:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cd754776 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jul 2026 11:03:02 +0000 (UTC)
-Date: Fri, 3 Jul 2026 13:02:59 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b6e9401a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 3 Jul 2026 11:27:18 +0000 (UTC)
+Date: Fri, 3 Jul 2026 13:27:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: me@black-desk.cn
-Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v6 2/2] config: add "worktree" and "worktree/i" includeIf
- conditions
-Message-ID: <akeW4yFC8uuu2o8a@pks.im>
-References: <20260703-includeif-worktree-v6-0-a13893ad9a7f@black-desk.cn>
- <20260703-includeif-worktree-v6-2-a13893ad9a7f@black-desk.cn>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/9] csum-file: drop discard_hashfile()
+Message-ID: <akeck67vIBHe8o9C@pks.im>
+References: <20260702075234.GA1548258@coredump.intra.peff.net>
+ <20260702075744.GA2029434@coredump.intra.peff.net>
+ <xmqqik6xl0fb.fsf@gitster.g>
+ <20260702210601.GA2051171@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,66 +87,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260703-includeif-worktree-v6-2-a13893ad9a7f@black-desk.cn>
+In-Reply-To: <20260702210601.GA2051171@coredump.intra.peff.net>
 
-On Fri, Jul 03, 2026 at 11:13:18AM +0800, Chen Linxuan via B4 Relay wrote:
-> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-> index f3892578e4ff..4e840dfdb35b 100755
-> --- a/t/t1305-config-include.sh
-> +++ b/t/t1305-config-include.sh
-> @@ -396,4 +396,132 @@ test_expect_success 'onbranch without repository but explicit nonexistent Git di
-[snip]
-> +test_expect_success SYMLINKS 'conditional include, worktree resolves symlinks' '
-> +	mkdir real-wt &&
-> +	ln -s real-wt link-wt &&
-> +	git init link-wt/repo &&
-> +	(
-> +		cd link-wt/repo &&
-> +		# repo->worktree resolves symlinks, so use real path in pattern
-> +		echo "[includeIf \"worktree:**/real-wt/repo\"]path=bar-link" >>.git/config &&
-> +		echo "[test]wtlink=2" >.git/bar-link &&
-> +		echo 2 >expect &&
-> +		git config test.wtlink >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
+On Thu, Jul 02, 2026 at 05:06:01PM -0400, Jeff King wrote:
+> On Thu, Jul 02, 2026 at 11:19:04AM -0700, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > So now we have two functions, discard_hashfile() and free_hashfile(),
+> > > and we only need one. Which one do we want to keep?
+> > >
+> > > The only difference between them is that the discard variant also closes
+> > > the descriptors held in the struct. Let's look at the three callers:
+> > > ...
+> > > Note that I said "descriptors" plural above. Those callers all care
+> > > about the "fd" member of the struct. But discard_hashfile() also closes
+> > > check_fd. That is only used if the struct is initialized with
+> > > hashfd_check(), and neither of its two callers call either discard or
+> > > free (they always "finalize" instead). So closing it is irrelevant for
+> > > the current callers.
+> > >
+> > > I think we're better off sticking with the simpler free_hashfile()
+> > > interface, and the handful of callers can decide how to handle the
+> > > descriptors themselves.
+> > 
+> > Sonds good.
+> > 
+> > Our resident naming czar (already Cc'ed) may have preference about
+> > the names and word order, though ;-)
+> 
+> Heh, yes, it should be hashfile_free() but that would require changing
+> the whole interface. We could do that on top, which might also be a good
+> time to do s/free/discard/ without worrying about a subtle behavior
+> change.
 
-Okay, this covers one scenario. But with "gitdir:" we're actually able
-to use both the symlinked and the real location:
+Heh :P
 
-    test_expect_success SYMLINKS 'conditional include, worktree matching symlink' '
-    	mkdir sym-real &&
-    	ln -s sym-real sym-link &&
-    	git init sym-link/repo &&
-    	(
-    		cd sym-link/repo &&
-    		link_path="$(pwd)" &&
-    		real_path="$(test-tool path-utils real_path "$link_path")" &&
-    		cat >>.git/config <<-EOF &&
-    		[includeIf "gitdir:$link_path/.git"]
-    			path = gitdir-link
-    		[includeIf "gitdir:$real_path/.git"]
-    			path = gitdir-real
-    		[includeIf "worktree:$link_path"]
-    			path = worktree-link
-    		[includeIf "worktree:$real_path"]
-    			path = worktree-real
-    		EOF
-    		echo "[test]gitdirlink=1" >.git/gitdir-link &&
-    		echo "[test]gitdirreal=1" >.git/gitdir-real &&
-    		echo "[test]worktreelink=1" >.git/worktree-link &&
-    		echo "[test]worktreereal=1" >.git/worktree-real &&
+I think this being called a "free" function makes perfect sense, because
+ultimately that's all we do here. So the semantics align with other free
+functions.
 
-    		git config get test.gitdirlink &&
-    		git config get test.gitdirreal &&
-    		git config get test.worktreereal &&
-    		test_must_fail git config test.worktreelink
-    	)
-    '
-
-The last call to git-config(1) fails, which is inconsistent with how
-resolve the path for "gitdir".
-
-Other than that I didn't have anything to add, thanks!
+We could of course fix the ordering while at it, but I don't want to
+tack that onto this series. It already makes the codebase a better
+place, so I'm happy enough.
 
 Patrick
