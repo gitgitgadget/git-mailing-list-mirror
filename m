@@ -1,70 +1,69 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65593264F1
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 04:54:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38F4330652
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 04:54:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783054485; cv=none; b=AoVF9MhKVSirjDp/X2nG4DfgDZh1By1IcK5ZqGOxMS0HGa5kxeG8+BDLglT7M1rh6x46iD4lLjitzeawh3MVHHy/eNKbLsnwaiYHxfcYO+GwBnRR+k/VAG0jgpfevxlmAUDQ+bR6CZE0Bq3uKqjphTEhQPIwjcgMyaTZRVVciLM=
+	t=1783054489; cv=none; b=Ln6Hv7U0NjSroNFi47GHxLfldoVUvtKFdeJTCevG6Cp96mLmk9UrIuOvEnrsnh+M1PJiuBM/Fp4aeGjCBTrgsEu0XaaSItqVaqtsDv4xQblwHhfJ5iMBN4wTc7rxAl51pLKiH5gtuRJKuzapsJrrjRneWNH/pJHS6T8JEO9jqAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783054485; c=relaxed/simple;
-	bh=cXHzFO7+qBiNqSwUz2TAOi8M53fD1AnlMLnx4ZQUTgg=;
+	s=arc-20240116; t=1783054489; c=relaxed/simple;
+	bh=k3v4xd1xggNiARxWFwoZhQY4liK9xxX+qE2ufUUuwAQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Iueh4JZrbpehyXlKzEt3VNuCVmrfdm838ddRfoA/HpauLjUMfmDecuSWoRVN2vbQ3CfQqk+SnQJd0qENLsdi1mTn6IdK5m+hzY6SH+isac0wMWb8e2bTxgByaCP+YrIhd33i9SGaDSyevuUreFpgo63G0amSxZbgwjhz4BItxzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kiEu9wao; arc=none smtp.client-ip=209.85.160.175
+	 MIME-Version:To:Cc; b=SnVc6bss45LXZLxuYBmeuA4EYBMUQ/+YRA48S3CA5Ria64XHR/BGP+und2QmDRxfBQzlWzR3Pfa52Wo6Ckio2GTKGwH5IQ65s4FRVvxDJw/lbeh2VuFZCU/le3C+hOkkjszYVTJAexDveStnLjGkT3O6QnuZP0t4KoSdkuzDNyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IeJ7StsS; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kiEu9wao"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-51c05dcdf49so2052961cf.0
-        for <git@vger.kernel.org>; Thu, 02 Jul 2026 21:54:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IeJ7StsS"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-92e55b62640so6892385a.0
+        for <git@vger.kernel.org>; Thu, 02 Jul 2026 21:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783054475; x=1783659275; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783054474; x=1783659274; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ILkaG14RkoqFOxawttGG22ALaxpi2/ynXVrtqLVSKak=;
-        b=kiEu9waoW3y1qEW80exJnB89c65IcUKjwxXbXSRrdfMwXuuL4CMzSteLgrKIF769Rf
-         kQFLkB3zHZAdBevRd9eKf15VPy4wOV5hjlLPo2ppyxSE0cLQLWxyIlQ/JdMtwM6J7d16
-         hIYWObG2Jb3L7z1r1PeQxVXl77Ttxkfz8n7TUY0nqhxk+nqnvNGv80jPWmCDJAJuDckz
-         OHEX1GwdhLHbjaR8YL+V+x1Ha4Y1u6te36a3ArqailFSlQbPmNP9pfl+2vMZbOhGZNYa
-         wK0yOexuPGGXAsUqGrr8ccWJ3sP4AC/EbR1g3RFif1HoxOMJX7LrICF2d7AdiXC2yNYd
-         BAxw==
+        bh=o0zzUJ0s+DLoVRq4Ejn/unLXe2jdCo4LRzzr76xjHFQ=;
+        b=IeJ7StsS0OHEzAP8cU/3SKZw3Tabp3prym12l/ohKanZBUXeT86u0jPxj4weyEKSId
+         46ffVgJeO4p11c1me/5XwPmMA+Almgy90dEwOriMa1Fi2fqOx6BLCCWQrIaSR7+ggsq9
+         1v6Db/9QnJP3NqpI1VKAUXw/pjSpROpdghAKoxugJ5rC8Zj8WxQh1yEXPsMEqr1ZJnlg
+         7CVNjBuFW29uqchFMoctNWMDtAhT1M7csevc9VJr32G1I9NMV+cELOz3MvciAgweFRwM
+         fl9BMdraBc/rJ8oraeCWL39BpeorWSRQeRs6cBl1V+hGoUr5b3X84/GFgQrz/QZ4ZR9V
+         aUPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783054475; x=1783659275;
+        d=1e100.net; s=20251104; t=1783054474; x=1783659274;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ILkaG14RkoqFOxawttGG22ALaxpi2/ynXVrtqLVSKak=;
-        b=CKTNsHF5tegMYzjvGfY/K7ATt0G2DkEpMK5GITV7SO9xT2uDsKF5s6GwM8OQIfpgUN
-         K5Gkz/Jh3cYDPiU0tcvNzBbhX9nz//k+tufl585UtV33C9UNX0s28oG2MjnYIVrbkSn6
-         /UgJWwHkjQIOatX42jJwKYjFlHj0gBssMSgtQWgu/AMpmtU6w7ojCWJnknpGVYDPcT00
-         hnE9rykFbvXmm2VFDLCZf8YPKUH1R/TlfoKDCsJmeWyNt1XMSpK13b8nlVwfMkUm0mDk
-         Jlc5zUX9gnBJ7a8QGMBTelos1erZ6PW872j0JBThKwkyIdxMeL+9iUAtK+PXi348ZB1U
-         1Fhw==
-X-Gm-Message-State: AOJu0YwuhhIuH8v6NRefIanqn8WxZZKT0HoIBR35Il1Qb56n556F+UG7
-	4GVo0nSW2FhmohxynC1fBhVbOOSrzWhbfA5IJVC+CfgeF41icppe7Ref9xhvuw==
-X-Gm-Gg: AfdE7clyYBc/PAN4QOGuwy3DCmdB5wNO295mgkfccLwSQ6PEKU9u/WhcmpMG95x0wbb
-	bT4ewF5IWE58kc83lujMMY8Xy6ue8Ik18w+I3kz9IzAo35QvEYTsb1X8ZAW5b0eM7ISRyiwLdsh
-	oLIT6TByVTrJRGy6LhfuVHHgZTlGLt7H7hSAM8xTfPAiOyovLvzi/IdH+8hMXPcFipSwCZuD4A9
-	Q5A9fE6fvr/6VIV/iipAs0Sgu5TAdeIJvUlI+3UVHw2dywPmeh9xea7d7z+PPptcxH92SqnCwb+
-	af37GgYg2Pr6lVzgoFik1ucK0/Rj0UdWlZ8IgownCoW+5IekeBi4PmFuP7pylPuRZHZ6JavYYwD
-	ZFjMnL1Gkrwrk1OQlzHkOdeB5sAxVq+08EQm/Z6RVhQJg5bkMyW75eaiywjF65Jj2kanXBQzZoO
-	i7s3haht3AHVyLb0vw5+ZDumwk1w==
-X-Received: by 2002:a05:622a:1829:b0:517:8d24:64d8 with SMTP id d75a77b69052e-51c26a3e326mr116967591cf.13.1783054475346;
-        Thu, 02 Jul 2026 21:54:35 -0700 (PDT)
+        bh=o0zzUJ0s+DLoVRq4Ejn/unLXe2jdCo4LRzzr76xjHFQ=;
+        b=DJCokTRyNYKDPdzOqmFr8oOYXI/lMvyWQpRoEyIvFhXmeSRgD4111OVm38xNRKuzuP
+         14p1x4Q8q5C4bUaQtoOsT9BlzkWjp/thJlJ+d7i5c9z+Y3+6gLuI/o2V9t+h79eFZ4uf
+         PP/xpmZpEMSa1qphUm+iwoGKOTXf0jbLYaVbV7j9DnykjYsd+ZJZ3DmmtHFpaAo4Ne8D
+         d7JymSvsyYX6QqG7lGC75DgBihBHZI51/E212RZ3M2Y+orZ9ffeHUsnhLumUR1O9ANAg
+         vMvCkxMkbyvoVv8ZArZuQZjGEAv8aNb/QdRRLI6rnOnZA/fQEaIvxtEDkBnnnfkC/NZI
+         KDvA==
+X-Gm-Message-State: AOJu0YzJs4NODs8ux5UiZrMoT6jRUcs0q5A3qMCXQ65JVrobi/HsVpR+
+	dxX6jxuPfuVNZaZtgFuEriKuLNtqF/BbaTkyPkYIM5zbd2nPr3HSaR8iHtQ8cw==
+X-Gm-Gg: AfdE7cmoHx/wFX6HNzfLGho3QgnBKtCNxGnLGX1p/5dAIlIpPk08VD+DqlLcxspWVIe
+	A85OqcCceQBnSXiP6zwcoyhA95E4GMei9XGyAhHGGQuYQTES2+Vn5Ao93cGgm7RsJpLGMfWlPZ6
+	A+l0AJo7PlC3D9yoHw7DF0hmUpfhcmgrFCNSEQ/GYD4FssOfKeJ+WcokLJiseMqR876B5gbLadd
+	nlWsa529pLYRqdzmVusIEOaCDEYrGmSorWtsfy7FqGZ+zJRnw2E+IKikXDtJ3Qo6oZwqHsHGS0T
+	psNIRsP+bYd2clNHfvTCvI+pb9hkJRHxTv6rcLaZSe1N2zvAM6+kh7wnn7/FNmbAVpgBdd9BhUC
+	RGxcV9Z2KtIWOef+T8I+8PJ0xAGsEtNP6lwaER37AMv8kk9bNjkZ/5mRhOAaE+a+65gSq0fh0ZT
+	5S2WCpzSgMZ2LGlAg=
+X-Received: by 2002:a05:620a:a50d:b0:92e:93a6:4eaa with SMTP id af79cd13be357-92e93a65123mr5401085a.32.1783054473946;
+        Thu, 02 Jul 2026 21:54:33 -0700 (PDT)
 Received: from [127.0.0.1] ([48.217.251.96])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41d2cde7sm7460651cf.18.2026.07.02.21.54.34
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90bb8629sm74152985a.19.2026.07.02.21.54.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2026 21:54:34 -0700 (PDT)
-Message-Id: <416c95fee5994b03364b853845e2efe87f4efb54.1783054466.git.gitgitgadget@gmail.com>
+        Thu, 02 Jul 2026 21:54:33 -0700 (PDT)
+Message-Id: <5894ca1724c29a6a7dfd5b5eface11b7721c9f92.1783054466.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2135.v3.git.1783054466.gitgitgadget@gmail.com>
 References: <pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
 	<pull.2135.v3.git.1783054466.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 03 Jul 2026 04:54:23 +0000
-Subject: [PATCH v3 4/6] t: fix Lexer line count for $() inside double-quoted
- strings
+Date: Fri, 03 Jul 2026 04:54:22 +0000
+Subject: [PATCH v3 3/6] t: extract chainlint's parser into shared module
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,56 +82,1144 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-scan_dqstring's post-loop newline counter re-counts newlines that
-were already counted during recursive parsing of $() bodies.  This
-happens because scan_dollar returns text containing newlines (from
-multi-line command substitutions), and the catch-all counter at the
-end of scan_dqstring counts all of them again.
+Move chainlint.pl's Lexer, ShellParser, and ScriptParser into a
+shared module (lib-shell-parser.pl) so other lint tools can reuse
+the same shell parsing infrastructure.  A subsequent commit adds
+greplint.pl, which needs the same tokenizer to correctly identify
+command boundaries.
 
-Fix this by counting newlines inline as non-special characters are
-consumed, and removing the post-loop catch-all.  Each newline is
-now counted exactly once: literal newlines at the inline match,
-line splices at the backslash handler, and $() newlines by
-scan_token during the recursive parse.
+ScriptParser's check_test() becomes a no-op in the shared module.
+chainlint.pl defines ChainlintParser (extending ScriptParser)
+with the &&-chain check_test() implementation.
 
-This is a latent bug: any consumer that relies on token line
-numbers rather than byte offsets would get incorrect results for
-tokens following a multi-line $() inside a double-quoted string.
-chainlint is not affected because it annotates the original body
-text using byte offsets, not token line numbers.
+No functional change: chainlint produces the same output and
+check-chainlint self-tests pass.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- t/lib-shell-parser.pl | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ t/chainlint.pl        | 529 +----------------------------------------
+ t/lib-shell-parser.pl | 531 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 543 insertions(+), 517 deletions(-)
+ create mode 100644 t/lib-shell-parser.pl
 
-diff --git a/t/lib-shell-parser.pl b/t/lib-shell-parser.pl
-index 5c435c5d05..17fbf461b1 100644
---- a/t/lib-shell-parser.pl
-+++ b/t/lib-shell-parser.pl
-@@ -93,8 +93,12 @@ sub scan_dqstring {
- 	my $b = $self->{buff};
- 	my $s = '"';
- 	while (1) {
+diff --git a/t/chainlint.pl b/t/chainlint.pl
+index 2d07a99700..cededf15ee 100755
+--- a/t/chainlint.pl
++++ b/t/chainlint.pl
+@@ -23,458 +23,9 @@ my $jobs = -1;
+ my $show_stats;
+ my $emit_all;
+ 
+-# Lexer tokenizes POSIX shell scripts. It is roughly modeled after section 2.3
+-# "Token Recognition" of POSIX chapter 2 "Shell Command Language". Although
+-# similar to lexical analyzers for other languages, this one differs in a few
+-# substantial ways due to quirks of the shell command language.
+-#
+-# For instance, in many languages, newline is just whitespace like space or
+-# TAB, but in shell a newline is a command separator, thus a distinct lexical
+-# token. A newline is significant and returned as a distinct token even at the
+-# end of a shell comment.
+-#
+-# In other languages, `1+2` would typically be scanned as three tokens
+-# (`1`, `+`, and `2`), but in shell it is a single token. However, the similar
+-# `1 + 2`, which embeds whitespace, is scanned as three token in shell, as well.
+-# In shell, several characters with special meaning lose that meaning when not
+-# surrounded by whitespace. For instance, the negation operator `!` is special
+-# when standing alone surrounded by whitespace; whereas in `foo!uucp` it is
+-# just a plain character in the longer token "foo!uucp". In many other
+-# languages, `"string"/foo:'string'` might be scanned as five tokens ("string",
+-# `/`, `foo`, `:`, and 'string'), but in shell, it is just a single token.
+-#
+-# The lexical analyzer for the shell command language is also somewhat unusual
+-# in that it recursively invokes the parser to handle the body of `$(...)`
+-# expressions which can contain arbitrary shell code. Such expressions may be
+-# encountered both inside and outside of double-quoted strings.
+-#
+-# The lexical analyzer is responsible for consuming shell here-doc bodies which
+-# extend from the line following a `<<TAG` operator until a line consisting
+-# solely of `TAG`. Here-doc consumption begins when a newline is encountered.
+-# It is legal for multiple here-doc `<<TAG` operators to be present on a single
+-# line, in which case their bodies must be present one following the next, and
+-# are consumed in the (left-to-right) order the `<<TAG` operators appear on the
+-# line. A special complication is that the bodies of all here-docs must be
+-# consumed when the newline is encountered even if the parse context depth has
+-# changed. For instance, in `cat <<A && x=$(cat <<B &&\n`, bodies of here-docs
+-# "A" and "B" must be consumed even though "A" was introduced outside the
+-# recursive parse context in which "B" was introduced and in which the newline
+-# is encountered.
+-package Lexer;
+-
+-sub new {
+-	my ($class, $parser, $s) = @_;
+-	bless {
+-		parser => $parser,
+-		buff => $s,
+-		lineno => 1,
+-		heretags => []
+-	} => $class;
+-}
+-
+-sub scan_heredoc_tag {
+-	my $self = shift @_;
+-	${$self->{buff}} =~ /\G(-?)/gc;
+-	my $indented = $1;
+-	my $token = $self->scan_token();
+-	return "<<$indented" unless $token;
+-	my $tag = $token->[0];
+-	$tag =~ s/['"\\]//g;
+-	$$token[0] = $indented ? "\t$tag" : "$tag";
+-	push(@{$self->{heretags}}, $token);
+-	return "<<$indented$tag";
+-}
+-
+-sub scan_op {
+-	my ($self, $c) = @_;
+-	my $b = $self->{buff};
+-	return $c unless $$b =~ /\G(.)/sgc;
+-	my $cc = $c . $1;
+-	return scan_heredoc_tag($self) if $cc eq '<<';
+-	return $cc if $cc =~ /^(?:&&|\|\||>>|;;|<&|>&|<>|>\|)$/;
+-	pos($$b)--;
+-	return $c;
+-}
+-
+-sub scan_sqstring {
+-	my $self = shift @_;
+-	${$self->{buff}} =~ /\G([^']*'|.*\z)/sgc;
+-	my $s = $1;
+-	$self->{lineno} += () = $s =~ /\n/sg;
+-	return "'" . $s;
+-}
+-
+-sub scan_dqstring {
+-	my $self = shift @_;
+-	my $b = $self->{buff};
+-	my $s = '"';
+-	while (1) {
 -		# slurp up non-special characters
 -		$s .= $1 if $$b =~ /\G([^"\$\\]+)/gc;
-+		# Slurp non-special characters; count newlines here because
-+		# newlines inside $() are already counted by the recursive parse.
-+		if ($$b =~ /\G([^"\$\\]+)/gc) {
-+			$s .= $1;
-+			$self->{lineno} += $1 =~ tr/\n//;
-+		}
- 		# handle special characters
- 		last unless $$b =~ /\G(.)/sgc;
- 		my $c = $1;
-@@ -111,7 +115,6 @@ sub scan_dqstring {
- 		}
- 		die("internal error scanning dq-string '$c'\n");
- 	}
+-		# handle special characters
+-		last unless $$b =~ /\G(.)/sgc;
+-		my $c = $1;
+-		$s .= '"', last if $c eq '"';
+-		$s .= '$' . $self->scan_dollar(), next if $c eq '$';
+-		if ($c eq '\\') {
+-			$s .= '\\', last unless $$b =~ /\G(.)/sgc;
+-			$c = $1;
+-			$self->{lineno}++, next if $c eq "\n"; # line splice
+-			# backslash escapes only $, `, ", \ in dq-string
+-			$s .= '\\' unless $c =~ /^[\$`"\\]$/;
+-			$s .= $c;
+-			next;
+-		}
+-		die("internal error scanning dq-string '$c'\n");
+-	}
 -	$self->{lineno} += () = $s =~ /\n/sg;
- 	return $s;
+-	return $s;
+-}
+-
+-sub scan_balanced {
+-	my ($self, $c1, $c2) = @_;
+-	my $b = $self->{buff};
+-	my $depth = 1;
+-	my $s = $c1;
+-	while ($$b =~ /\G([^\Q$c1$c2\E]*(?:[\Q$c1$c2\E]|\z))/gc) {
+-		$s .= $1;
+-		$depth++, next if $s =~ /\Q$c1\E$/;
+-		$depth--;
+-		last if $depth == 0;
+-	}
+-	$self->{lineno} += () = $s =~ /\n/sg;
+-	return $s;
+-}
+-
+-sub scan_subst {
+-	my $self = shift @_;
+-	my @tokens = $self->{parser}->parse(qr/^\)$/);
+-	$self->{parser}->next_token(); # closing ")"
+-	return @tokens;
+-}
+-
+-sub scan_dollar {
+-	my $self = shift @_;
+-	my $b = $self->{buff};
+-	return $self->scan_balanced('(', ')') if $$b =~ /\G\((?=\()/gc; # $((...))
+-	return '(' . join(' ', map {$_->[0]} $self->scan_subst()) . ')' if $$b =~ /\G\(/gc; # $(...)
+-	return $self->scan_balanced('{', '}') if $$b =~ /\G\{/gc; # ${...}
+-	return $1 if $$b =~ /\G(\w+)/gc; # $var
+-	return $1 if $$b =~ /\G([@*#?$!0-9-])/gc; # $*, $1, $$, etc.
+-	return '';
+-}
+-
+-sub swallow_heredocs {
+-	my $self = shift @_;
+-	my $b = $self->{buff};
+-	my $tags = $self->{heretags};
+-	while (my $tag = shift @$tags) {
+-		my $start = pos($$b);
+-		my $indent = $$tag[0] =~ s/^\t// ? '\\s*' : '';
+-		$$b =~ /(?:\G|\n)$indent\Q$$tag[0]\E(?:\n|\z)/gc;
+-		if (pos($$b) > $start) {
+-			my $body = substr($$b, $start, pos($$b) - $start);
+-			$self->{parser}->{heredocs}->{$$tag[0]} = {
+-				content => substr($body, 0, length($body) - length($&)),
+-				start_line => $self->{lineno},
+-		        };
+-			$self->{lineno} += () = $body =~ /\n/sg;
+-			next;
+-		}
+-		push(@{$self->{parser}->{problems}}, ['HEREDOC', $tag]);
+-		$$b =~ /(?:\G|\n).*\z/gc; # consume rest of input
+-		my $body = substr($$b, $start, pos($$b) - $start);
+-		$self->{lineno} += () = $body =~ /\n/sg;
+-		last;
+-	}
+-}
+-
+-sub scan_token {
+-	my $self = shift @_;
+-	my $b = $self->{buff};
+-	my $token = '';
+-	my ($start, $startln);
+-RESTART:
+-	$startln = $self->{lineno};
+-	$$b =~ /\G[ \t]+/gc; # skip whitespace (but not newline)
+-	$start = pos($$b) || 0;
+-	$self->{lineno}++, return ["\n", $start, pos($$b), $startln, $startln] if $$b =~ /\G#[^\n]*(?:\n|\z)/gc; # comment
+-	while (1) {
+-		# slurp up non-special characters
+-		$token .= $1 if $$b =~ /\G([^\\;&|<>(){}'"\$\s]+)/gc;
+-		# handle special characters
+-		last unless $$b =~ /\G(.)/sgc;
+-		my $c = $1;
+-		pos($$b)--, last if $c =~ /^[ \t]$/; # whitespace ends token
+-		pos($$b)--, last if length($token) && $c =~ /^[;&|<>(){}\n]$/;
+-		$token .= $self->scan_sqstring(), next if $c eq "'";
+-		$token .= $self->scan_dqstring(), next if $c eq '"';
+-		$token .= $c . $self->scan_dollar(), next if $c eq '$';
+-		$self->{lineno}++, $self->swallow_heredocs(), $token = $c, last if $c eq "\n";
+-		$token = $self->scan_op($c), last if $c =~ /^[;&|<>]$/;
+-		$token = $c, last if $c =~ /^[(){}]$/;
+-		if ($c eq '\\') {
+-			$token .= '\\', last unless $$b =~ /\G(.)/sgc;
+-			$c = $1;
+-			$self->{lineno}++, next if $c eq "\n" && length($token); # line splice
+-			$self->{lineno}++, goto RESTART if $c eq "\n"; # line splice
+-			$token .= '\\' . $c;
+-			next;
+-		}
+-		die("internal error scanning character '$c'\n");
+-	}
+-	return length($token) ? [$token, $start, pos($$b), $startln, $self->{lineno}] : undef;
+-}
+-
+-# ShellParser parses POSIX shell scripts (with minor extensions for Bash). It
+-# is a recursive descent parser very roughly modeled after section 2.10 "Shell
+-# Grammar" of POSIX chapter 2 "Shell Command Language".
+-package ShellParser;
+-
+-sub new {
+-	my ($class, $s) = @_;
+-	my $self = bless {
+-		buff => [],
+-		stop => [],
+-		output => [],
+-		heredocs => {},
+-		insubshell => 0,
+-	} => $class;
+-	$self->{lexer} = Lexer->new($self, $s);
+-	return $self;
+-}
+-
+-sub next_token {
+-	my $self = shift @_;
+-	return pop(@{$self->{buff}}) if @{$self->{buff}};
+-	return $self->{lexer}->scan_token();
+-}
+-
+-sub untoken {
+-	my $self = shift @_;
+-	push(@{$self->{buff}}, @_);
+-}
+-
+-sub peek {
+-	my $self = shift @_;
+-	my $token = $self->next_token();
+-	return undef unless defined($token);
+-	$self->untoken($token);
+-	return $token;
+-}
+-
+-sub stop_at {
+-	my ($self, $token) = @_;
+-	return 1 unless defined($token);
+-	my $stop = ${$self->{stop}}[-1] if @{$self->{stop}};
+-	return defined($stop) && $token->[0] =~ $stop;
+-}
+-
+-sub expect {
+-	my ($self, $expect) = @_;
+-	my $token = $self->next_token();
+-	return $token if defined($token) && $token->[0] eq $expect;
+-	push(@{$self->{output}}, "?!ERR?! expected '$expect' but found '" . (defined($token) ? $token->[0] : "<end-of-input>") . "'\n");
+-	$self->untoken($token) if defined($token);
+-	return ();
+-}
+-
+-sub optional_newlines {
+-	my $self = shift @_;
+-	my @tokens;
+-	while (my $token = $self->peek()) {
+-		last unless $token->[0] eq "\n";
+-		push(@tokens, $self->next_token());
+-	}
+-	return @tokens;
+-}
+-
+-sub parse_group {
+-	my $self = shift @_;
+-	return ($self->parse(qr/^}$/),
+-		$self->expect('}'));
+-}
+-
+-sub parse_subshell {
+-	my $self = shift @_;
+-	$self->{insubshell}++;
+-	my @tokens = ($self->parse(qr/^\)$/),
+-		      $self->expect(')'));
+-	$self->{insubshell}--;
+-	return @tokens;
+-}
+-
+-sub parse_case_pattern {
+-	my $self = shift @_;
+-	my @tokens;
+-	while (defined(my $token = $self->next_token())) {
+-		push(@tokens, $token);
+-		last if $token->[0] eq ')';
+-	}
+-	return @tokens;
+-}
+-
+-sub parse_case {
+-	my $self = shift @_;
+-	my @tokens;
+-	push(@tokens,
+-	     $self->next_token(), # subject
+-	     $self->optional_newlines(),
+-	     $self->expect('in'),
+-	     $self->optional_newlines());
+-	while (1) {
+-		my $token = $self->peek();
+-		last unless defined($token) && $token->[0] ne 'esac';
+-		push(@tokens,
+-		     $self->parse_case_pattern(),
+-		     $self->optional_newlines(),
+-		     $self->parse(qr/^(?:;;|esac)$/)); # item body
+-		$token = $self->peek();
+-		last unless defined($token) && $token->[0] ne 'esac';
+-		push(@tokens,
+-		     $self->expect(';;'),
+-		     $self->optional_newlines());
+-	}
+-	push(@tokens, $self->expect('esac'));
+-	return @tokens;
+-}
+-
+-sub parse_for {
+-	my $self = shift @_;
+-	my @tokens;
+-	push(@tokens,
+-	     $self->next_token(), # variable
+-	     $self->optional_newlines());
+-	my $token = $self->peek();
+-	if (defined($token) && $token->[0] eq 'in') {
+-		push(@tokens,
+-		     $self->expect('in'),
+-		     $self->optional_newlines());
+-	}
+-	push(@tokens,
+-	     $self->parse(qr/^do$/), # items
+-	     $self->expect('do'),
+-	     $self->optional_newlines(),
+-	     $self->parse_loop_body(),
+-	     $self->expect('done'));
+-	return @tokens;
+-}
+-
+-sub parse_if {
+-	my $self = shift @_;
+-	my @tokens;
+-	while (1) {
+-		push(@tokens,
+-		     $self->parse(qr/^then$/), # if/elif condition
+-		     $self->expect('then'),
+-		     $self->optional_newlines(),
+-		     $self->parse(qr/^(?:elif|else|fi)$/)); # if/elif body
+-		my $token = $self->peek();
+-		last unless defined($token) && $token->[0] eq 'elif';
+-		push(@tokens, $self->expect('elif'));
+-	}
+-	my $token = $self->peek();
+-	if (defined($token) && $token->[0] eq 'else') {
+-		push(@tokens,
+-		     $self->expect('else'),
+-		     $self->optional_newlines(),
+-		     $self->parse(qr/^fi$/)); # else body
+-	}
+-	push(@tokens, $self->expect('fi'));
+-	return @tokens;
+-}
+-
+-sub parse_loop_body {
+-	my $self = shift @_;
+-	return $self->parse(qr/^done$/);
+-}
+-
+-sub parse_loop {
+-	my $self = shift @_;
+-	return ($self->parse(qr/^do$/), # condition
+-		$self->expect('do'),
+-		$self->optional_newlines(),
+-		$self->parse_loop_body(),
+-		$self->expect('done'));
+-}
+-
+-sub parse_func {
+-	my $self = shift @_;
+-	return ($self->expect('('),
+-		$self->expect(')'),
+-		$self->optional_newlines(),
+-		$self->parse_cmd()); # body
+-}
+-
+-sub parse_bash_array_assignment {
+-	my $self = shift @_;
+-	my @tokens = $self->expect('(');
+-	while (defined(my $token = $self->next_token())) {
+-		push(@tokens, $token);
+-		last if $token->[0] eq ')';
+-	}
+-	return @tokens;
+-}
+-
+-my %compound = (
+-	'{' => \&parse_group,
+-	'(' => \&parse_subshell,
+-	'case' => \&parse_case,
+-	'for' => \&parse_for,
+-	'if' => \&parse_if,
+-	'until' => \&parse_loop,
+-	'while' => \&parse_loop);
+-
+-sub parse_cmd {
+-	my $self = shift @_;
+-	my $cmd = $self->next_token();
+-	return () unless defined($cmd);
+-	return $cmd if $cmd->[0] eq "\n";
+-
+-	my $token;
+-	my @tokens = $cmd;
+-	if ($cmd->[0] eq '!') {
+-		push(@tokens, $self->parse_cmd());
+-		return @tokens;
+-	} elsif (my $f = $compound{$cmd->[0]}) {
+-		push(@tokens, $self->$f());
+-	} elsif (defined($token = $self->peek()) && $token->[0] eq '(') {
+-		if ($cmd->[0] !~ /\w=$/) {
+-			push(@tokens, $self->parse_func());
+-			return @tokens;
+-		}
+-		my @array = $self->parse_bash_array_assignment();
+-		$tokens[-1]->[0] .= join(' ', map {$_->[0]} @array);
+-		$tokens[-1]->[2] = $array[$#array][2] if @array;
+-	}
+-
+-	while (defined(my $token = $self->next_token())) {
+-		$self->untoken($token), last if $self->stop_at($token);
+-		push(@tokens, $token);
+-		last if $token->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
+-	}
+-	push(@tokens, $self->next_token()) if $tokens[-1]->[0] ne "\n" && defined($token = $self->peek()) && $token->[0] eq "\n";
+-	return @tokens;
+-}
+-
+-sub accumulate {
+-	my ($self, $tokens, $cmd) = @_;
+-	push(@$tokens, @$cmd);
+-}
+-
+-sub parse {
+-	my ($self, $stop) = @_;
+-	push(@{$self->{stop}}, $stop);
+-	goto DONE if $self->stop_at($self->peek());
+-	my @tokens;
+-	while (my @cmd = $self->parse_cmd()) {
+-		$self->accumulate(\@tokens, \@cmd);
+-		last if $self->stop_at($self->peek());
+-	}
+-DONE:
+-	pop(@{$self->{stop}});
+-	return @tokens;
+-}
++use File::Basename;
++do(dirname($0) . "/lib-shell-parser.pl")
++	or die "$0: failed to load lib-shell-parser.pl: $@$!\n";
+ 
+ # TestParser is a subclass of ShellParser which, beyond parsing shell script
+ # code, is also imbued with semantic knowledge of test construction, and checks
+@@ -482,9 +33,10 @@ DONE:
+ # the tests themselves or in behaviors being exercised by the tests. As such,
+ # TestParser is only called upon to parse test bodies, not the top-level
+ # scripts in which the tests are defined.
++
+ package TestParser;
+ 
+-use base 'ShellParser';
++our @ISA = ('ShellParser');
+ 
+ sub new {
+ 	my $class = shift @_;
+@@ -578,51 +130,10 @@ DONE:
+ 	$self->SUPER::accumulate($tokens, $cmd);
  }
  
+-# ScriptParser is a subclass of ShellParser which identifies individual test
+-# definitions within test scripts, and passes each test body through TestParser
+-# to identify possible problems. ShellParser detects test definitions not only
+-# at the top-level of test scripts but also within compound commands such as
+-# loops and function definitions.
+-package ScriptParser;
+-
+-use base 'ShellParser';
+-
+-sub new {
+-	my $class = shift @_;
+-	my $self = $class->SUPER::new(@_);
+-	$self->{ntests} = 0;
+-	$self->{nerrs} = 0;
+-	return $self;
+-}
++# ChainlintParser extends ScriptParser with &&-chain checking
++package ChainlintParser;
+ 
+-# extract the raw content of a token, which may be a single string or a
+-# composition of multiple strings and non-string character runs; for instance,
+-# `"test body"` unwraps to `test body`; `word"a b"42'c d'` to `worda b42c d`
+-sub unwrap {
+-	my $token = (@_ ? shift @_ : $_)->[0];
+-	# simple case: 'sqstring' or "dqstring"
+-	return $token if $token =~ s/^'([^']*)'$/$1/;
+-	return $token if $token =~ s/^"([^"]*)"$/$1/;
+-
+-	# composite case
+-	my ($s, $q, $escaped);
+-	while (1) {
+-		# slurp up non-special characters
+-		$s .= $1 if $token =~ /\G([^\\'"]*)/gc;
+-		# handle special characters
+-		last unless $token =~ /\G(.)/sgc;
+-		my $c = $1;
+-		$q = undef, next if defined($q) && $c eq $q;
+-		$q = $c, next if !defined($q) && $c =~ /^['"]$/;
+-		if ($c eq '\\') {
+-			last unless $token =~ /\G(.)/sgc;
+-			$c = $1;
+-			$s .= '\\' if $c eq "\n"; # preserve line splice
+-		}
+-		$s .= $c;
+-	}
+-	return $s
+-}
++our @ISA = ('ScriptParser');
+ 
+ sub format_problem {
+ 	local $_ = shift;
+@@ -635,10 +146,10 @@ sub format_problem {
+ 
+ sub check_test {
+ 	my $self = shift @_;
+-	my $title = unwrap(shift @_);
++	my $title = ScriptParser::unwrap(shift @_);
+ 	my $body = shift @_;
+ 	my $lineno = $body->[3];
+-	$body = unwrap($body);
++	$body = ScriptParser::unwrap($body);
+ 	if ($body eq '-') {
+ 		my $herebody = shift @_;
+ 		$body = $herebody->{content};
+@@ -673,24 +184,8 @@ sub check_test {
+ 	push(@{$self->{output}}, "$c->{blue}# chainlint: $title$c->{reset}\n$checked");
+ }
+ 
+-sub parse_cmd {
+-	my $self = shift @_;
+-	my @tokens = $self->SUPER::parse_cmd();
+-	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
+-	my $n = $#tokens;
+-	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
+-	my $herebody;
+-	if ($n >= 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =~ /^<<-?(.+)$/) {
+-		$herebody = $self->{heredocs}->{$1};
+-		$n--;
+-	}
+-	$self->check_test($tokens[1], $tokens[2], $herebody) if $n == 2; # title body
+-	$self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  # prereq title body
+-	return @tokens;
+-}
+-
+ # main contains high-level functionality for processing command-line switches,
+-# feeding input test scripts to ScriptParser, and reporting results.
++# feeding input test scripts to ChainlintParser, and reporting results.
+ package main;
+ 
+ my $getnow = sub { return time(); };
+@@ -803,7 +298,7 @@ sub check_script {
+ 		}
+ 		my $s = do { local $/; <$fh> };
+ 		close($fh);
+-		my $parser = ScriptParser->new(\$s);
++		my $parser = ChainlintParser->new(\$s);
+ 		1 while $parser->parse_cmd();
+ 		if (@{$parser->{output}}) {
+ 			my $c = fd_colors(1);
+diff --git a/t/lib-shell-parser.pl b/t/lib-shell-parser.pl
+new file mode 100644
+index 0000000000..5c435c5d05
+--- /dev/null
++++ b/t/lib-shell-parser.pl
+@@ -0,0 +1,531 @@
++# Copyright (c) 2021-2022 Eric Sunshine <sunshine@sunshineco.com>
++#
++# Shared shell script parser for test lint tools. Provides Lexer,
++# ShellParser, and ScriptParser. Subclass ScriptParser and override
++# check_test() to implement lint checks.
++
++use strict;
++use warnings;
++
++# Lexer tokenizes POSIX shell scripts. It is roughly modeled after section 2.3
++# "Token Recognition" of POSIX chapter 2 "Shell Command Language". Although
++# similar to lexical analyzers for other languages, this one differs in a few
++# substantial ways due to quirks of the shell command language.
++#
++# For instance, in many languages, newline is just whitespace like space or
++# TAB, but in shell a newline is a command separator, thus a distinct lexical
++# token. A newline is significant and returned as a distinct token even at the
++# end of a shell comment.
++#
++# In other languages, `1+2` would typically be scanned as three tokens
++# (`1`, `+`, and `2`), but in shell it is a single token. However, the similar
++# `1 + 2`, which embeds whitespace, is scanned as three token in shell, as well.
++# In shell, several characters with special meaning lose that meaning when not
++# surrounded by whitespace. For instance, the negation operator `!` is special
++# when standing alone surrounded by whitespace; whereas in `foo!uucp` it is
++# just a plain character in the longer token "foo!uucp". In many other
++# languages, `"string"/foo:'string'` might be scanned as five tokens ("string",
++# `/`, `foo`, `:`, and 'string'), but in shell, it is just a single token.
++#
++# The lexical analyzer for the shell command language is also somewhat unusual
++# in that it recursively invokes the parser to handle the body of `$(...)`
++# expressions which can contain arbitrary shell code. Such expressions may be
++# encountered both inside and outside of double-quoted strings.
++#
++# The lexical analyzer is responsible for consuming shell here-doc bodies which
++# extend from the line following a `<<TAG` operator until a line consisting
++# solely of `TAG`. Here-doc consumption begins when a newline is encountered.
++# It is legal for multiple here-doc `<<TAG` operators to be present on a single
++# line, in which case their bodies must be present one following the next, and
++# are consumed in the (left-to-right) order the `<<TAG` operators appear on the
++# line. A special complication is that the bodies of all here-docs must be
++# consumed when the newline is encountered even if the parse context depth has
++# changed. For instance, in `cat <<A && x=$(cat <<B &&\n`, bodies of here-docs
++# "A" and "B" must be consumed even though "A" was introduced outside the
++# recursive parse context in which "B" was introduced and in which the newline
++# is encountered.
++package Lexer;
++
++sub new {
++	my ($class, $parser, $s) = @_;
++	bless {
++		parser => $parser,
++		buff => $s,
++		lineno => 1,
++		heretags => []
++	} => $class;
++}
++
++sub scan_heredoc_tag {
++	my $self = shift @_;
++	${$self->{buff}} =~ /\G(-?)/gc;
++	my $indented = $1;
++	my $token = $self->scan_token();
++	return "<<$indented" unless $token;
++	my $tag = $token->[0];
++	$tag =~ s/['"\\]//g;
++	$$token[0] = $indented ? "\t$tag" : "$tag";
++	push(@{$self->{heretags}}, $token);
++	return "<<$indented$tag";
++}
++
++sub scan_op {
++	my ($self, $c) = @_;
++	my $b = $self->{buff};
++	return $c unless $$b =~ /\G(.)/sgc;
++	my $cc = $c . $1;
++	return scan_heredoc_tag($self) if $cc eq '<<';
++	return $cc if $cc =~ /^(?:&&|\|\||>>|;;|<&|>&|<>|>\|)$/;
++	pos($$b)--;
++	return $c;
++}
++
++sub scan_sqstring {
++	my $self = shift @_;
++	${$self->{buff}} =~ /\G([^']*'|.*\z)/sgc;
++	my $s = $1;
++	$self->{lineno} += () = $s =~ /\n/sg;
++	return "'" . $s;
++}
++
++sub scan_dqstring {
++	my $self = shift @_;
++	my $b = $self->{buff};
++	my $s = '"';
++	while (1) {
++		# slurp up non-special characters
++		$s .= $1 if $$b =~ /\G([^"\$\\]+)/gc;
++		# handle special characters
++		last unless $$b =~ /\G(.)/sgc;
++		my $c = $1;
++		$s .= '"', last if $c eq '"';
++		$s .= '$' . $self->scan_dollar(), next if $c eq '$';
++		if ($c eq '\\') {
++			$s .= '\\', last unless $$b =~ /\G(.)/sgc;
++			$c = $1;
++			$self->{lineno}++, next if $c eq "\n"; # line splice
++			# backslash escapes only $, `, ", \ in dq-string
++			$s .= '\\' unless $c =~ /^[\$`"\\]$/;
++			$s .= $c;
++			next;
++		}
++		die("internal error scanning dq-string '$c'\n");
++	}
++	$self->{lineno} += () = $s =~ /\n/sg;
++	return $s;
++}
++
++sub scan_balanced {
++	my ($self, $c1, $c2) = @_;
++	my $b = $self->{buff};
++	my $depth = 1;
++	my $s = $c1;
++	while ($$b =~ /\G([^\Q$c1$c2\E]*(?:[\Q$c1$c2\E]|\z))/gc) {
++		$s .= $1;
++		$depth++, next if $s =~ /\Q$c1\E$/;
++		$depth--;
++		last if $depth == 0;
++	}
++	$self->{lineno} += () = $s =~ /\n/sg;
++	return $s;
++}
++
++sub scan_subst {
++	my $self = shift @_;
++	my @tokens = $self->{parser}->parse(qr/^\)$/);
++	$self->{parser}->next_token(); # closing ")"
++	return @tokens;
++}
++
++sub scan_dollar {
++	my $self = shift @_;
++	my $b = $self->{buff};
++	return $self->scan_balanced('(', ')') if $$b =~ /\G\((?=\()/gc; # $((...))
++	return '(' . join(' ', map {$_->[0]} $self->scan_subst()) . ')' if $$b =~ /\G\(/gc; # $(...)
++	return $self->scan_balanced('{', '}') if $$b =~ /\G\{/gc; # ${...}
++	return $1 if $$b =~ /\G(\w+)/gc; # $var
++	return $1 if $$b =~ /\G([@*#?$!0-9-])/gc; # $*, $1, $$, etc.
++	return '';
++}
++
++sub swallow_heredocs {
++	my $self = shift @_;
++	my $b = $self->{buff};
++	my $tags = $self->{heretags};
++	while (my $tag = shift @$tags) {
++		my $start = pos($$b);
++		my $indent = $$tag[0] =~ s/^\t// ? '\\s*' : '';
++		$$b =~ /(?:\G|\n)$indent\Q$$tag[0]\E(?:\n|\z)/gc;
++		if (pos($$b) > $start) {
++			my $body = substr($$b, $start, pos($$b) - $start);
++			$self->{parser}->{heredocs}->{$$tag[0]} = {
++				content => substr($body, 0, length($body) - length($&)),
++				start_line => $self->{lineno},
++		        };
++			$self->{lineno} += () = $body =~ /\n/sg;
++			next;
++		}
++		push(@{$self->{parser}->{problems}}, ['HEREDOC', $tag]);
++		$$b =~ /(?:\G|\n).*\z/gc; # consume rest of input
++		my $body = substr($$b, $start, pos($$b) - $start);
++		$self->{lineno} += () = $body =~ /\n/sg;
++		last;
++	}
++}
++
++sub scan_token {
++	my $self = shift @_;
++	my $b = $self->{buff};
++	my $token = '';
++	my ($start, $startln);
++RESTART:
++	$startln = $self->{lineno};
++	$$b =~ /\G[ \t]+/gc; # skip whitespace (but not newline)
++	$start = pos($$b) || 0;
++	$self->{lineno}++, return ["\n", $start, pos($$b), $startln, $startln] if $$b =~ /\G#[^\n]*(?:\n|\z)/gc; # comment
++	while (1) {
++		# slurp up non-special characters
++		$token .= $1 if $$b =~ /\G([^\\;&|<>(){}'"\$\s]+)/gc;
++		# handle special characters
++		last unless $$b =~ /\G(.)/sgc;
++		my $c = $1;
++		pos($$b)--, last if $c =~ /^[ \t]$/; # whitespace ends token
++		pos($$b)--, last if length($token) && $c =~ /^[;&|<>(){}\n]$/;
++		$token .= $self->scan_sqstring(), next if $c eq "'";
++		$token .= $self->scan_dqstring(), next if $c eq '"';
++		$token .= $c . $self->scan_dollar(), next if $c eq '$';
++		$self->{lineno}++, $self->swallow_heredocs(), $token = $c, last if $c eq "\n";
++		$token = $self->scan_op($c), last if $c =~ /^[;&|<>]$/;
++		$token = $c, last if $c =~ /^[(){}]$/;
++		if ($c eq '\\') {
++			$token .= '\\', last unless $$b =~ /\G(.)/sgc;
++			$c = $1;
++			$self->{lineno}++, next if $c eq "\n" && length($token); # line splice
++			$self->{lineno}++, goto RESTART if $c eq "\n"; # line splice
++			$token .= '\\' . $c;
++			next;
++		}
++		die("internal error scanning character '$c'\n");
++	}
++	return length($token) ? [$token, $start, pos($$b), $startln, $self->{lineno}] : undef;
++}
++
++# ShellParser parses POSIX shell scripts (with minor extensions for Bash). It
++# is a recursive descent parser very roughly modeled after section 2.10 "Shell
++# Grammar" of POSIX chapter 2 "Shell Command Language".
++
++package ShellParser;
++
++sub new {
++	my ($class, $s) = @_;
++	my $self = bless {
++		buff => [],
++		stop => [],
++		output => [],
++		heredocs => {},
++		insubshell => 0,
++	} => $class;
++	$self->{lexer} = Lexer->new($self, $s);
++	return $self;
++}
++
++sub next_token {
++	my $self = shift @_;
++	return pop(@{$self->{buff}}) if @{$self->{buff}};
++	return $self->{lexer}->scan_token();
++}
++
++sub untoken {
++	my $self = shift @_;
++	push(@{$self->{buff}}, @_);
++}
++
++sub peek {
++	my $self = shift @_;
++	my $token = $self->next_token();
++	return undef unless defined($token);
++	$self->untoken($token);
++	return $token;
++}
++
++sub stop_at {
++	my ($self, $token) = @_;
++	return 1 unless defined($token);
++	my $stop = ${$self->{stop}}[-1] if @{$self->{stop}};
++	return defined($stop) && $token->[0] =~ $stop;
++}
++
++sub expect {
++	my ($self, $expect) = @_;
++	my $token = $self->next_token();
++	return $token if defined($token) && $token->[0] eq $expect;
++	push(@{$self->{output}}, "?!ERR?! expected '$expect' but found '" . (defined($token) ? $token->[0] : "<end-of-input>") . "'\n");
++	$self->untoken($token) if defined($token);
++	return ();
++}
++
++sub optional_newlines {
++	my $self = shift @_;
++	my @tokens;
++	while (my $token = $self->peek()) {
++		last unless $token->[0] eq "\n";
++		push(@tokens, $self->next_token());
++	}
++	return @tokens;
++}
++
++sub parse_group {
++	my $self = shift @_;
++	return ($self->parse(qr/^}$/),
++		$self->expect('}'));
++}
++
++sub parse_subshell {
++	my $self = shift @_;
++	$self->{insubshell}++;
++	my @tokens = ($self->parse(qr/^\)$/),
++		      $self->expect(')'));
++	$self->{insubshell}--;
++	return @tokens;
++}
++
++sub parse_case_pattern {
++	my $self = shift @_;
++	my @tokens;
++	while (defined(my $token = $self->next_token())) {
++		push(@tokens, $token);
++		last if $token->[0] eq ')';
++	}
++	return @tokens;
++}
++
++sub parse_case {
++	my $self = shift @_;
++	my @tokens;
++	push(@tokens,
++	     $self->next_token(), # subject
++	     $self->optional_newlines(),
++	     $self->expect('in'),
++	     $self->optional_newlines());
++	while (1) {
++		my $token = $self->peek();
++		last unless defined($token) && $token->[0] ne 'esac';
++		push(@tokens,
++		     $self->parse_case_pattern(),
++		     $self->optional_newlines(),
++		     $self->parse(qr/^(?:;;|esac)$/)); # item body
++		$token = $self->peek();
++		last unless defined($token) && $token->[0] ne 'esac';
++		push(@tokens,
++		     $self->expect(';;'),
++		     $self->optional_newlines());
++	}
++	push(@tokens, $self->expect('esac'));
++	return @tokens;
++}
++
++sub parse_for {
++	my $self = shift @_;
++	my @tokens;
++	push(@tokens,
++	     $self->next_token(), # variable
++	     $self->optional_newlines());
++	my $token = $self->peek();
++	if (defined($token) && $token->[0] eq 'in') {
++		push(@tokens,
++		     $self->expect('in'),
++		     $self->optional_newlines());
++	}
++	push(@tokens,
++	     $self->parse(qr/^do$/), # items
++	     $self->expect('do'),
++	     $self->optional_newlines(),
++	     $self->parse_loop_body(),
++	     $self->expect('done'));
++	return @tokens;
++}
++
++sub parse_if {
++	my $self = shift @_;
++	my @tokens;
++	while (1) {
++		push(@tokens,
++		     $self->parse(qr/^then$/), # if/elif condition
++		     $self->expect('then'),
++		     $self->optional_newlines(),
++		     $self->parse(qr/^(?:elif|else|fi)$/)); # if/elif body
++		my $token = $self->peek();
++		last unless defined($token) && $token->[0] eq 'elif';
++		push(@tokens, $self->expect('elif'));
++	}
++	my $token = $self->peek();
++	if (defined($token) && $token->[0] eq 'else') {
++		push(@tokens,
++		     $self->expect('else'),
++		     $self->optional_newlines(),
++		     $self->parse(qr/^fi$/)); # else body
++	}
++	push(@tokens, $self->expect('fi'));
++	return @tokens;
++}
++
++sub parse_loop_body {
++	my $self = shift @_;
++	return $self->parse(qr/^done$/);
++}
++
++sub parse_loop {
++	my $self = shift @_;
++	return ($self->parse(qr/^do$/), # condition
++		$self->expect('do'),
++		$self->optional_newlines(),
++		$self->parse_loop_body(),
++		$self->expect('done'));
++}
++
++sub parse_func {
++	my $self = shift @_;
++	return ($self->expect('('),
++		$self->expect(')'),
++		$self->optional_newlines(),
++		$self->parse_cmd()); # body
++}
++
++sub parse_bash_array_assignment {
++	my $self = shift @_;
++	my @tokens = $self->expect('(');
++	while (defined(my $token = $self->next_token())) {
++		push(@tokens, $token);
++		last if $token->[0] eq ')';
++	}
++	return @tokens;
++}
++
++my %compound = (
++	'{' => \&parse_group,
++	'(' => \&parse_subshell,
++	'case' => \&parse_case,
++	'for' => \&parse_for,
++	'if' => \&parse_if,
++	'until' => \&parse_loop,
++	'while' => \&parse_loop);
++
++sub parse_cmd {
++	my $self = shift @_;
++	my $cmd = $self->next_token();
++	return () unless defined($cmd);
++	return $cmd if $cmd->[0] eq "\n";
++
++	my $token;
++	my @tokens = $cmd;
++	if ($cmd->[0] eq '!') {
++		push(@tokens, $self->parse_cmd());
++		return @tokens;
++	} elsif (my $f = $compound{$cmd->[0]}) {
++		push(@tokens, $self->$f());
++	} elsif (defined($token = $self->peek()) && $token->[0] eq '(') {
++		if ($cmd->[0] !~ /\w=$/) {
++			push(@tokens, $self->parse_func());
++			return @tokens;
++		}
++		my @array = $self->parse_bash_array_assignment();
++		$tokens[-1]->[0] .= join(' ', map {$_->[0]} @array);
++		$tokens[-1]->[2] = $array[$#array][2] if @array;
++	}
++
++	while (defined(my $token = $self->next_token())) {
++		$self->untoken($token), last if $self->stop_at($token);
++		push(@tokens, $token);
++		last if $token->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
++	}
++	push(@tokens, $self->next_token()) if $tokens[-1]->[0] ne "\n" && defined($token = $self->peek()) && $token->[0] eq "\n";
++	return @tokens;
++}
++
++sub accumulate {
++	my ($self, $tokens, $cmd) = @_;
++	push(@$tokens, @$cmd);
++}
++
++sub parse {
++	my ($self, $stop) = @_;
++	push(@{$self->{stop}}, $stop);
++	goto DONE if $self->stop_at($self->peek());
++	my @tokens;
++	while (my @cmd = $self->parse_cmd()) {
++		$self->accumulate(\@tokens, \@cmd);
++		last if $self->stop_at($self->peek());
++	}
++DONE:
++	pop(@{$self->{stop}});
++	return @tokens;
++}
++
++# ScriptParser is a subclass of ShellParser which identifies individual test
++# definitions within test scripts and passes each test body to check_test().
++# ScriptParser detects test definitions not only at the top-level of test
++# scripts but also within compound commands such as loops and function
++# definitions.
++
++package ScriptParser;
++
++our @ISA = ('ShellParser');
++
++sub new {
++	my $class = shift @_;
++	my $self = $class->SUPER::new(@_);
++	$self->{ntests} = 0;
++	$self->{nerrs} = 0;
++	return $self;
++}
++
++# extract the raw content of a token, which may be a single string or a
++# composition of multiple strings and non-string character runs; for instance,
++# `"test body"` unwraps to `test body`; `word"a b"42'c d'` to `worda b42c d`
++sub unwrap {
++	my $token = (@_ ? shift @_ : $_)->[0];
++	# simple case: 'sqstring' or "dqstring"
++	return $token if $token =~ s/^'([^']*)'$/$1/;
++	return $token if $token =~ s/^"([^"]*)"$/$1/;
++
++	# composite case
++	my ($s, $q, $escaped);
++	while (1) {
++		# slurp up non-special characters
++		$s .= $1 if $token =~ /\G([^\\'"]*)/gc;
++		# handle special characters
++		last unless $token =~ /\G(.)/sgc;
++		my $c = $1;
++		$q = undef, next if defined($q) && $c eq $q;
++		$q = $c, next if !defined($q) && $c =~ /^['"]$/;
++		if ($c eq '\\') {
++			last unless $token =~ /\G(.)/sgc;
++			$c = $1;
++			$s .= '\\' if $c eq "\n"; # preserve line splice
++		}
++		$s .= $c;
++	}
++	return $s
++}
++
++sub check_test {
++	# no-op; subclass and override to implement lint checks
++}
++
++sub parse_cmd {
++	my $self = shift @_;
++	my @tokens = $self->SUPER::parse_cmd();
++	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
++	my $n = $#tokens;
++	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
++	my $herebody;
++	if ($n >= 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =~ /^<<-?(.+)$/) {
++		$herebody = $self->{heredocs}->{$1};
++		$n--;
++	}
++	$self->check_test($tokens[1], $tokens[2], $herebody) if $n == 2; # title body
++	$self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  # prereq title body
++	return @tokens;
++}
++
++1;
 -- 
 gitgitgadget
 
