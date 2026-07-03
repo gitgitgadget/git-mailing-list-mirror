@@ -1,79 +1,79 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EBA39E17E
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 09:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2D63B27E9
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 09:24:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783070666; cv=none; b=aokYiiAtrmy49Lt3z9hV4zwFkS6KorNVdZNl1Zwv837g+kQ0zNkf4MYIsNm/KEUB16C+Qg66mtw+munKIF4uQpNe3pW30ctc6PB5rCloCiF34hXcI3hjKIbJX1aaiZT0uBlRPYXfdAD/XWlbo35wLsE98sx259gqtPYKg/xC51o=
+	t=1783070670; cv=none; b=JOS8IT6f78p0YQUINupDgNIIxYi9Aegfv1XYm2a1sD0gJ6JH/4h7O7ZuEp71OipHlsoq0UUiizitZucbDi1bmiaFX9+vqfmdwZNGZR9nXtB1s8AE5VumlbdGwU/rlWuOes1Yplu2k0v9HBXNEZI909F43M8n8+9CzVxVpWum0ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783070666; c=relaxed/simple;
-	bh=oooeUt2TauJ4JIg1uQv6YVKocm9UZlZ4PMf5Inbkg+Y=;
+	s=arc-20240116; t=1783070670; c=relaxed/simple;
+	bh=Qrsfy1ePgmKQCOgbavgQ/xUZoprC67F3D0Qsdcitg0k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hNCwdUjRK+Vq2QyC/Z8CjW9g9aAiCqtQnFVBTE5S8Jl8iW28xcySYOrrDAJsI7sMLQ2oCdySSZhTGAkiITjz9PY/iTeFLKoZ5YfWSDZqTU8+dvH2pBq1B2R9fsdkkP+YP3HmGBflHJGWzrhgwWtgzrsqfgp9Th7MPGinSERMvcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LsY1rrCB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZmGuLr4h; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=pnuc2+5abJvmsYKorjhSEP3urJLdTrO+Ns7MO1MD5NwvEia7Q30LLElNQT0nUR6kHWp/ZQN7qMIZ1PooJNWesnC+QWFvo0aXZFfFjkhDal//8cKVbWypfjGhlWZfTj1+MGB1qn9JRxB1D55aFmydzgaaNeOqj5h4Tt3PBPXDvco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OcFqxsle; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P2xMOqIT; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LsY1rrCB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZmGuLr4h"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OcFqxsle";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P2xMOqIT"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B36391D00105;
-	Fri,  3 Jul 2026 05:24:23 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5441F7A00D8;
+	Fri,  3 Jul 2026 05:24:26 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 03 Jul 2026 05:24:23 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 03 Jul 2026 05:24:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783070663;
-	 x=1783157063; bh=aOQ/InnYuKQyqfx/K6ZaIklkwunFwlc/kObL/4KIyDk=; b=
-	LsY1rrCBTu+JG9olmeMbfKEeqOot2BE74s+AA36lzCZMZ4OzBRcZhfgPMoUzcRTf
-	+C/vTbiMYqEoah5BbMPmsXOQKpO6ORfkUWQziFbiIZxXMlMJlEhvg7jAP45NblcF
-	xxSE3GuMMiuHORLz1Mmb1Fpo3ki77wRmdpOz6gJy7SibAqkGlYSc8Za59AdfL+oB
-	v5Y1jVyDbpUm1mikHTM+yCITwwud33ZkSsystkDvTx3ofqS+D40wwAJqLMPtU5bB
-	mFEc5cXSqnbhAw2FgibDMoEsloawMWSRDxqKzUTuN04EtoryGOP002TxgE7KFB8Y
-	HH/WeYtmhFOyBtH7286qRg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783070666;
+	 x=1783157066; bh=pCM7U7wlbHjuewBLjleiDe7QptB+x61P80rVHOUn+tQ=; b=
+	OcFqxsle55GbG2f93qOhE7JVuIgXmQN7xhKfvHw4n1adXXAlaPOerlJm+Y+JWqCD
+	4XntJuh8zevwDx2nvXcOABbKeLDGmYMHnOCheQtPtwtreZY1uilkIr+I7IUvCRc0
+	36Tf0bjlkTPTnMzwVGvX0UBV/0mNxZZcXpJKUoRvlgeFtM9MtAt6lOiok9/2GV6g
+	S5I2AcbxeIUvJJ5ZiGqYNl7pZeuHqJ261jhIoeV++ctFBc9XQoMaXOkHOr/qkgzQ
+	0C/j4zYpP/XNZZbv679bC9EX2BpEffBoDTJi0thV999kEDW9EgpubeKvbfpzWfXQ
+	87wugQiAeuA0NFwajgdUSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783070663; x=
-	1783157063; bh=aOQ/InnYuKQyqfx/K6ZaIklkwunFwlc/kObL/4KIyDk=; b=Z
-	mGuLr4h5Tz+84ECSaTtBLCYJIS+MJ4dxGvIdtChtAzzqFZicxEeAc6Gcw5gXZVVc
-	XC+zfA0lbxV3yNQfhPgTvkEhKE/dTY4w6SNJG7FjGm9056sPlaMsuTq0m3wyIEDr
-	/xtUPXTF1goErwdGtcd+jJqLQ7FQrROF3qlAsEFhVtbwh2d5//7DFhCZx8Y9wje6
-	0BnYG2juf11UV/7S+GKJa4oTvjtrr+4fJ/BRBfeCZ/VMlvnLBboMXcZz/yHNUmBx
-	rzxXZgIW1wInqFR/86hjCLtxwzwn/8JRiepOr9rpuIV3fVrIwECLC8JjyjDFmaSm
-	a1V2EFf00nxpuQO0MQDBA==
-X-ME-Sender: <xms:x39HahhmJP0EzY_YmnJ5qZYmCgUk5GWCDCVjUVnhXHjRAKHvYSe50A>
-    <xme:x39Has7uhYXj1cNlfY6uSXe87HP6yLY-ry_HIatUt9qGVVsfhAyMpWtrF8YeOwboJ
-    3MHnXkrTaihJkt3TXXGTdqvZEst2_zunyTQi-RrgzcyxqgDPmlg>
-X-ME-Received: <xmr:x39HapZUjps4ZgJeI0WGDaHrVr999HW4JjSabgfwtxMsG3h5IeVfk0ocERbE4LtEwNSqqx210tcP18sWSwCYwy4Pti1e6G4ukeg-mHhFWQ>
-X-ME-Proxy-Cause: dmFkZTFabOOUVHYlTeQsMyAH9bXrP5tP4g7TtI3YXPU6qVJW4xybcjXGcBB/d8YFFD7PDR
-    GTJjJMQxG1Ep7ek5Q1B6kLNCuwqHXKZCZWD+f1ToEimbdsAr40LcQqtlyZ/JP74GDKow+/
-    0P4OGksevwqrp91fLzDIejw9a76MnFa/K8dWxX8sI/E8Kbm9p11kbry+Y0hW3sEUidMCgC
-    VgnC8Dd36aIefh/M+PX4rviAZjFZBP8NdGjxQVD7ISek+/7q5NmRWLoh9GoDXr1NaZFkkE
-    WlA0826UkfsEvcde54s5mb+xh9UY3S2PlDRow5BPBzMzn8O68BFXw6a3WVlDwlIYNlekJf
-    wspYd035kZ1JVoMWRfjF/mIBigTQcxp08Ws8JyDlvt7da8RStkoWu3autU6wdkWgIHGhw8
-    9w5ee7BiIKOqzNnV1rYK3Gcjih9d/PQT0R8NUop5cqfqky6GVgn9sAn+1hRBE6ucW8cOEZ
-    v4v2DX/wHYBUpvbAOoTKV2rM4AuL6PNZLslZMzpN8C02Dhq5GDS3uO+1VQ0c8x5gv4i0kL
-    YaxoJ1eOxXPtfXI+6u0XNw7mc0gJkN1P0WsU3I9uCquFZhVq/dPm9/6aY4ZdLSm1reQmkN
-    LGRJ5mKJ91ktpBRp9YbdxfRJN2oK0lfpj8jSdYahIhfuAp6W2/MZA7OTooXA
-X-ME-Proxy: <xmx:x39Hah7yga-kRbBlzvm39leWJdtM0JPjkFvQUe0Zg3BNeex12xBs7A>
-    <xmx:x39HasDHmOam9rZ6TkxytLMfXJGNwCmWMoK1HEu-rkR0wOgjwU9Omg>
-    <xmx:x39HanfmfxvUtbVvZJ9SsyYlsV4mF-oHEftTUP7PmrWgN6cBqPaYkQ>
-    <xmx:x39HarJScZwyF2ZatY-6O5MZwKqyhBmI4s0NzPNZXYu5Ejyd9ao7mA>
-    <xmx:x39HapWJznPE07B3BBIk5fHn5rSMtAgQ_fkr9lalt_XNyNK1NdsNmD-u>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783070666; x=
+	1783157066; bh=pCM7U7wlbHjuewBLjleiDe7QptB+x61P80rVHOUn+tQ=; b=P
+	2xMOqIT9YSFWX04iTxsaHSTApXIhUeofvOLdkF+hhDVW1NhiAEm22lOciqM2+b6m
+	rwNHz9AejFHd8eiVHrFbvbZ4S8Ne5neoDAkGM22lZUx0tpgP2niaDNNjob2k/eSl
+	7wAau3lBtqsdcjOPgmS1xA0mbik3JAhDMrUdvK+So/oMZJGyQBQP9qChoua7Pham
+	IQv2w6Rn8uLbbQ55KiDcGhZ0fouznHW37WUDr0MCpk33iv7jcOqKpvV20xZ/vaB3
+	rNMQanBQnOqrNSWsXU1u3xoj0KKl1APCM86TCkZhLwNQJHpB9b6JxPa7p0WFchKf
+	og9XR+5fYNSj0WRiOyxQA==
+X-ME-Sender: <xms:yn9Haqy-Bv9vNHQGMIdxVz7fq3UYTFCt5BSBHqYtYIcOn48OJugk5Q>
+    <xme:yn9HatKd6q5YD8FArp95C0iB0WP8dtBR1PYIK6oFAIaXVH2hEt3Gams0phGj8Px3r
+    wzY0gSM2rtH9A8pGgjy1aJPFtfz04PP-XWVr563R0ohYw69Zyui>
+X-ME-Received: <xmr:yn9HakpxWoAX4qquiyKAs2mAzfWPrKA4-htXLtZSg3CF7-KH7ng0CXleBDNqCNq-q_VVkyT8ZY-jioQ3ohaAA3VwVNs0GdbczE9mwDGsSw>
+X-ME-Proxy-Cause: dmFkZTFyyNOLAcshjgVd4Q9FXxgzHw2qDJRjTUAvWuBVqYeS1MyOxkL1QG5dKt9VZ/5NYc
+    LnChgBFugEjGNqn1M8WPg94Dc3uINRvg43BZwl++VXe4wBnviUmQAV55q1lqyY9KsfTWOT
+    vGnCMyKHWZhdXHRc6KF2/qw/OHM8tMLo8xwsMTBUhdu77axrQwlpo28CdcSR8ec97pwpz6
+    u/JJAK0kDrcUWeg06bvhiU0v8M+S5R10ar79laPC3mAo21ViXFcg6s9vmJ8olk8ZCnRmMh
+    jfE6JFlQiz7KvvXg/RGPKn9nii0HX0eSWP/VtECnLrjd8vAPtPbSwyN8LUX5ySsC9mnTKH
+    Q7M/ofJGZr76K3i1os3bWztZYzAIWkDwE9BBAK/czwNk5/EohAxz07tNDngK3b0tqk6tkC
+    4AiGbIqwcue8AG6xYqxmpuyISc8KfvCDu37gbTK5TEIKfgczI0IFFHMgvrmeeJx/Zz6hCB
+    csZWZkCUg9DSO9UALb8olnWY/pyOOm1AE+cV4pV20wJx/umlJBN14Y0JtEOhO9JbsZR3ol
+    O+XlWceMN2eBh23ZAnmglejdAMro9nkL1hiPMnhQ611Qok/l41n9p9qWZQxSWrQtwZt4Kv
+    j7ahGFMLtKq1V/6sBPvmAK0gbs5p23Hm8XHj8v0fgSNj5U14L3Yr0thYd/Hg
+X-ME-Proxy: <xmx:yn9HasLiIwrqZ0uvqSVI95FvRpi-6Lr8qsNhE9mdrR6KziV61-3BRQ>
+    <xmx:yn9HapSV7wpwtPyQpuIX3d-0-fylFl9yb3-cp_zNszImk58WSo_REA>
+    <xmx:yn9HarsB0ih7k0dyHmP2AA1cvRxBDonkMpdONWxQxfRrXcLOB45ofg>
+    <xmx:yn9HaqYGlidHTpYU4dYMGJwAYha8O-eByPbA1Vl3OhXdD_xu-J7b8Q>
+    <xmx:yn9Haj1yRvph9t4dhdc6mHlaEWxXfQZwPlLssSgl8UmIx498uMFAF1xk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jul 2026 05:24:22 -0400 (EDT)
+ 3 Jul 2026 05:24:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2f888318 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jul 2026 09:24:22 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 62c6a393 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 3 Jul 2026 09:24:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 03 Jul 2026 11:24:06 +0200
-Subject: [PATCH v2 3/9] t4141: fix inefficient use of dd(1)
+Date: Fri, 03 Jul 2026 11:24:07 +0200
+Subject: [PATCH v2 4/9] t5608: reduce maximum disk usage
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-3-79076a7e0c62@pks.im>
+Message-Id: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-4-79076a7e0c62@pks.im>
 References: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-0-79076a7e0c62@pks.im>
 In-Reply-To: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-0-79076a7e0c62@pks.im>
 To: git@vger.kernel.org
@@ -92,57 +92,130 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Jeff King <peff@peff.net>
 X-Mailer: b4 0.15.2
 
-In t4141 we generate a patch that is roughly 1GB in size to verify that
-git-apply(1) indeed rejects that patch. We generate that patch by
-prepending a patch header and then executing `test-tool genzeros`
-without a limit. This causes us to print infinitely many zeros, and we
-limit the overall amount of generated bytes via `test_copy_bytes`.
+The tests in t5608 perform a couple of clones of repositories that are
+somewhat large. Ultimately, we end up creating:
 
-This test setup is extremely expensive, as `test_copy_bytes` is
-implemented via `dd ibs=1 count="$1"`, which copies data one byte at a
-time. So as we write 1GB of data, we end up doing 1 billion reads and
-writes. This naturally takes a while: it takes 6 minutes on my system,
-and around 40 minutes in some CI jobs!
+  - A setup repository that contains 2GB of uncompressed pack data.
 
-We can do much better though, as genzeros already knows to handle an
-optional limit of how much data it is supposed to write, which allows us
-to remove the call to `test_copy_bytes`. Furthermore, it has already
-been optimized to generate the data fast.
+  - A bare clone that contains the same 2GB of data.
 
-And indeed, doing this conversion drops the test execution to less than
-a second on my machine. That means that in theory it becomes feasible to
-drop the EXPENSIVE prerequisite now. But git-apply(1) still soaks up 1GB
-of data into memory, which may count as being expensive. Consequently,
-we keep the prerequisite intact.
+  - A clone with worktree writes a 2GB packfile and a 2GB worktree.
+
+  - A second setup repository that contains a 4GB packfile.
+
+  - Two 4GB clone of that repository.
+
+Some of these clones ultimately hardlink files, which ensures that we at
+least don't end up with more than 20GB of data. But at the end of the
+test we still have around 16GB of data, which is only a tiny bit better.
+
+Refactor the test to prune repositories after they have no use anymore.
+This reduced the peak disk usage of this test to 8GB.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t4141-apply-too-large.sh | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ t/t5608-clone-2gb.sh | 66 ++++++++++++++++++++++++++++------------------------
+ 1 file changed, 35 insertions(+), 31 deletions(-)
 
-diff --git a/t/t4141-apply-too-large.sh b/t/t4141-apply-too-large.sh
-index eac6f7e151..9dbed940db 100755
---- a/t/t4141-apply-too-large.sh
-+++ b/t/t4141-apply-too-large.sh
-@@ -5,7 +5,6 @@ test_description='git apply with too-large patch'
- . ./test-lib.sh
+diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+index 4f8a95ddda..5d56debf1c 100755
+--- a/t/t5608-clone-2gb.sh
++++ b/t/t5608-clone-2gb.sh
+@@ -10,45 +10,47 @@ then
+ fi
  
- test_expect_success EXPENSIVE 'git apply rejects patches that are too large' '
--	sz=$((1024 * 1024 * 1023)) &&
- 	{
- 		cat <<-\EOF &&
- 		diff --git a/file b/file
-@@ -14,8 +13,8 @@ test_expect_success EXPENSIVE 'git apply rejects patches that are too large' '
- 		+++ b/file
- 		@@ -0,0 +1 @@
- 		EOF
--		test-tool genzeros
--	} | test_copy_bytes $sz | test_must_fail git apply 2>err &&
-+		test-tool genzeros $((1024 * 1024 * 1023))
-+	} | test_must_fail git apply 2>err &&
- 	grep "patch too large" err
+ test_expect_success 'setup' '
+-
+-	git config pack.compression 0 &&
+-	git config pack.depth 0 &&
+-	blobsize=$((100*1024*1024)) &&
+-	blobcount=$((2*1024*1024*1024/$blobsize+1)) &&
+-	i=1 &&
+-	(while test $i -le $blobcount
+-	 do
+-		printf "Generating blob $i/$blobcount\r" >&2 &&
+-		printf "blob\nmark :$i\ndata $blobsize\n" &&
+-		#test-tool genrandom $i $blobsize &&
+-		printf "%-${blobsize}s" $i &&
+-		echo "M 100644 :$i $i" >> commit &&
+-		i=$(($i+1)) ||
+-		echo $? > exit-status
+-	 done &&
+-	 echo "commit refs/heads/main" &&
+-	 echo "author A U Thor <author@email.com> 123456789 +0000" &&
+-	 echo "committer C O Mitter <committer@email.com> 123456789 +0000" &&
+-	 echo "data 5" &&
+-	 echo ">2gb" &&
+-	 cat commit) |
+-	git fast-import --big-file-threshold=2 &&
+-	test ! -f exit-status
+-
++	git init 2gb-repo &&
++	(
++		cd 2gb-repo &&
++		git config pack.compression 0 &&
++		git config pack.depth 0 &&
++		blobsize=$((100*1024*1024)) &&
++		blobcount=$((2*1024*1024*1024/$blobsize+1)) &&
++		i=1 &&
++		(while test $i -le $blobcount
++		 do
++			printf "Generating blob $i/$blobcount\r" >&2 &&
++			printf "blob\nmark :$i\ndata $blobsize\n" &&
++			#test-tool genrandom $i $blobsize &&
++			printf "%-${blobsize}s" $i &&
++			echo "M 100644 :$i $i" >> commit &&
++			i=$(($i+1)) ||
++			echo $? > exit-status
++		 done &&
++		 echo "commit refs/heads/main" &&
++		 echo "author A U Thor <author@email.com> 123456789 +0000" &&
++		 echo "committer C O Mitter <committer@email.com> 123456789 +0000" &&
++		 echo "data 5" &&
++		 echo ">2gb" &&
++		 cat commit) |
++		git fast-import --big-file-threshold=2 &&
++		test ! -f exit-status
++	)
  '
  
+ test_expect_success 'clone - bare' '
+-
+-	git clone --bare --no-hardlinks . clone-bare
+-
++	test_when_finished rm -rf clone-bare &&
++	git clone --bare --no-hardlinks 2gb-repo clone-bare
+ '
+ 
+ test_expect_success 'clone - with worktree, file:// protocol' '
+-
+-	git clone "file://$(pwd)" clone-wt
+-
++	test_when_finished rm -rf clone-wt &&
++	git clone "file://$(pwd)/2gb-repo" clone-wt
+ '
+ 
++rm -rf 2gb-repo 2>/dev/null
++
+ test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'set up repo with >4GB object' '
+ 	large_blob_size=$((4*1024*1024*1024+1)) &&
+ 	git init --bare 4gb-repo &&
+@@ -61,6 +63,7 @@ test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'set up repo with >4GB object' '
+ '
+ 
+ test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone >4GB object via unpack-objects' '
++	test_when_finished rm -rf 4gb-clone-unpack &&
+ 	# The synthesized pack has five objects, so a large unpack limit keeps
+ 	# fetch-pack on the unpack-objects path.
+ 	git -c fetch.unpackLimit=100 clone --bare \
+@@ -77,6 +80,7 @@ test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone >4GB object via unpack-obje
+ '
+ 
+ test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone with >4GB object via index-pack' '
++	test_when_finished rm -rf 4gb-clone-index &&
+ 	# Force fetch-pack to hand the pack to index-pack instead.
+ 	git -c fetch.unpackLimit=1 clone --bare \
+ 		"file://$(pwd)/4gb-repo" 4gb-clone-index &&
 
 -- 
 2.55.0.795.g602f6c329a.dirty
