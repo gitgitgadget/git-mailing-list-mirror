@@ -1,86 +1,85 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2343A1B5
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 02:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FAF3A1B5
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 02:54:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783047156; cv=none; b=uWcswDSjjDCvRniNDEvSffzhZ0p7SaSTvFBQVM/BdfddkkBZonDqJJNx4hl/ikPFdaXKQqv/84NB7GGn4ULtOXjz/ZJ25Qo9zHc4Akf1xqCVaJROkDWMLTlgxPcaGkEd/iRCuGepM0Cl7O0sj3fXlTwxVyQnluWTSd+urw1a0ME=
+	t=1783047262; cv=none; b=lgZtBj453Ch8paVMJr1LTZszrn3LVVNx2hMUAv42pbIEJWlCUHUJbkS13QCSeSG/B2QIdZ72HMAkb5cMhodqSLRIfqeze2nfpoNUE+HpKccIqn6CZTRrrqhoDXhlvY05YOkH68dLj6BiAYiD2nlpjbLf0q7jcA0Vdu6Eovw2wVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783047156; c=relaxed/simple;
-	bh=tmeIn7m+RhifunZPt37owoVqmWfG4v17LiUVo2/PCKg=;
+	s=arc-20240116; t=1783047262; c=relaxed/simple;
+	bh=7RLAR89Xrs1sBDpt+JKH29d29PvvN7HcZo2kVo7Eh+M=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UcTo+d/Lp1BnyyagpAxM6I+bCeowJj6+r7DrJss1qYQfIKhBZyUeyAHPKMmyPcMUtGS2vr67GvfJlSMqoICDjyNkUNRzkutsAXILD7COVrrcJN+0ekK3gIV1M/DN6AM3OwpKpHLJayk7i3sMps3cv36p3ik3+XfQ5vAuCiQb68s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wpIpfrQ+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jnIzhAUu; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=bai8yF4dRGqUVfcrfV5+XqzGOlHjD034aTOG+8H1oXUjxD5i3NaVVjTMlbM4m6m/YgC4jW7eBGLqsMgvalLFgAVo4DEsc+kmz1jMB8ApWyVWmXR7Ai63FGcqnrPWT7WCEgpFw5fP5qencVnzWOJQN0a1/rd2qAM1TvSDB86fl+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rgMXW4R9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VWaU6pxE; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wpIpfrQ+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jnIzhAUu"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rgMXW4R9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VWaU6pxE"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4BD59EC0095;
-	Thu,  2 Jul 2026 22:52:33 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D099B14000B5;
+	Thu,  2 Jul 2026 22:54:19 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 02 Jul 2026 22:52:33 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 02 Jul 2026 22:54:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1783047153;
-	 x=1783133553; bh=coBrbtyDHbfrj9KFTfKZ2mn8XwRhg+vScWFeY6MEGdU=; b=
-	wpIpfrQ+awr6CqhS5Dip5YY/Kx0ue/F+gkiORMX4ZRQszVS9HNX04dAbHby+2equ
-	FzVKzEE1Xy3uJ4k+kwiib93m15xQ6FRe60J+pIx/+W/zjsMWZWv3C/wgJ4lt9Tdi
-	c/ml43Y+VdVDS+gkR4xXHLVndce2Eevsg1ol985rCV1SWZVT8+VPCsj0la7f9zmX
-	WyDIwbpwLHbY5b5py+HM6T3EFrgsnSlGWWIZF0j4NNUOEDsMKAlIa8yyQ8F+mgYY
-	Du+vTOd+HOCZInG/Eo/rkPeXLXMPJDKmPql3YOnCCqeZFcnVi80/TXiy1vWwjTN1
-	kQY0MWGzoQ+UCsTdLVbfww==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783047259; x=1783133659; bh=7RLAR89Xrs
+	1sBDpt+JKH29d29PvvN7HcZo2kVo7Eh+M=; b=rgMXW4R9uwDN9V086CUTNRqZW1
+	sBYVQqJYzI56QRlwdnLLue3S9l+snLgTwRDziuTVjxzm2nvypVX1ATiTYbpJlgnY
+	qQvEDSu/NvbZDUcfHQchMlbjQuSVCzYBTXWPC2jX+ZDZ43cLVhEa5hCmep+/OCg0
+	moKGvqV9r9+vNM2aBeQqdvuGYB6YYJsbF3O1JG/0YRgXRhiZe1mhEfDLXFJD/jcO
+	p4rbIfkO1pZj7AQqPkqrJ5NLsPJ1mB+yL4JnWh93//0+oAg3tDU2lZdycLw7DoHk
+	ROWSj3Zmd73s9UCr1LabGQX8K+P9LlrC36/GxlgZ2uysvvTIIPN5biuiG/wQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783047153; x=
-	1783133553; bh=coBrbtyDHbfrj9KFTfKZ2mn8XwRhg+vScWFeY6MEGdU=; b=j
-	nIzhAUuWGHgdbWwjZEW67GSpcchSMipNqihBMnN1rZ196Wnbl/rs4sYa36a0mV7H
-	MnjVcn0HYD4HHLTMrgqtkA9lJQl7PNAvNnpNdpAKqJh5HmdZjzyE9uocRF0iGDC0
-	wLzMWZKLaDAxzMgiBNCgKmpr/4UExEWa1BF2kSJnTDogHGRwAt68KSPhleF65P0y
-	uT7vbys0mdbhU7K+LDyXKINL4Ua99dNk+BTTg2vckfJ9kPAqff4siDhvvA/f2aRh
-	+S/NfQMQp5Xigw6sGieivTbLopAiDXMbxrUWLAcy1RoqUH26ilYrIY7U/8j2VPaK
-	WCVcf+jtg1KcATqyhci1g==
-X-ME-Sender: <xms:8CNHaqWRtQw2uv2qolqBM-2pMty0ncmROrEnm5S0IbXqgs3eTMgbzw>
-    <xme:8CNHaqSCttu1GIix9nI3iGeRiK2y4Lk_UNYsZIfwgP_UiI87XX_6ThSnmYqYm0BCL
-    79R1fMpCeHfYUfWNz6Xd_XCvbJV36-Fe1nxIsTJD3MvEi0yi3qZng>
-X-ME-Received: <xmr:8CNHaoNSCHY4xop86lUqZg_OMiQmpv9vUGNXllQtSTjHYfmc1fDi1gYHv6uPG0Q3H7IHdlyWalNHOG1hVhT7UjE9CPrXprHuBG8FFv0>
-X-ME-Proxy-Cause: dmFkZTF9dmKQtK1IE3HzoNIjCuDvlngKXVr1f4RQ5hrkomjjQE+qbFC71lIiMalJPd478Q
-    rzsFzyHUCi4jH7iggBwZDpTzLEK+FCRqad+GCOdQ9nJ+QWzLr/K9eBdTH5mSUBa195BDnY
-    922wEkRkNXoYbh9ET8uDsYId/4N/zZQtRaGVCrJP/NeTV6+jqMGffCJKVISeIw8PsNTDwx
-    +WAshxgJ5jNiI0yusy6fm8ikLbkAZ0ro2lX13h1RK9oIlwtKqYjBxbflwapgrobzxsXzCW
-    mRummsywrWInt7UQ4k7jO54SMcdobyyOM+ehlYTkx04SDgbqDJKaL2Wd9AeDBdFMmPKUiC
-    KOnrL1szT8ArXoZ4uc1yJ8Nztg/LHn71JIEkLpSWKPk/kM0rC5Ooz2sHRZ7Kl0snp3kjPU
-    F6z7dLOpfBuoEyUSAAxGlBzPjnobrN4Hk16oFBmFMcuFrRbvDzBJJxlhmdUCX/IhogOIsL
-    MlvL/gUNpTB1yIwgtj9eJiFkbY0Dn7dGfzMwEcN2ZSUeXDEJ+z/hdl3P4TIRuYuO2yUeDM
-    zNuTahNbK6OX8S9JmCrX8NuEkpySZx7eacPVaI6HRi25oxMKtXzx0xF9zO5ZIBAlw/5sLC
-    T25Ihh0I3fVV2H7+HOuHBFhLtIUlfDtGjZ3x6QRzdqh/nHvguTfYjeVKIg+w
-X-ME-Proxy: <xmx:8CNHaoRDXkpLA0qMZL8kQlzGxbkeK4arfteR-miHnmGNlbMGqEuFkA>
-    <xmx:8CNHamgm8XYWmkKKhQNV3HSwfiqdA8nUdKsfGO4BgdEoxdIGwZMDOg>
-    <xmx:8CNHah_pPnRrC24mhRhbbQB7LSnwoU32EawcDRLtTs9IoqHu5BJ4_Q>
-    <xmx:8CNHatGS19zsDYgRlkEWqJuw8MhQijBETmuqvwf0yykJzdmxB9a0Zg>
-    <xmx:8SNHak47dcb7deT__AAt_oxqa3MHhAy7Ddt8E7UONUwhU4fyBrxnUst3>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783047259; x=1783133659; bh=7RLAR89Xrs1sBDpt+JKH29d29PvvN7HcZo2
+	kVo7Eh+M=; b=VWaU6pxErfaY4vDQh6xK5TsgqajczM1zzk/pd3GL1Z9mIuWVvkb
+	BEPm5J8ya0vqst9ipZYRjUlHwQdH7ilBXYSnIxEI5LZxI8cR9K6hmbd1FnPU8N82
+	5wzOwBLAv3H7129KSEcMvB4iIuqCkZ28kOYz5m88UdzFQ2iaxj3o7Y0oagM0s3+o
+	kTkSGJDnH/z1dPIL12lMT0NDCFN8feblSok4W85M17+1TMaCxS8HvTahe//SdNvR
+	EDs7J2XDvqk22OcixNEsNviU7SsEjWVMt9vpQH3nwLM5CPvNgZim66jVUC5nynEi
+	5sbmzCIayHmgEmcfp8SyxdZnf1H/+2W8BKA==
+X-ME-Sender: <xms:WyRHak1mxx_dDz2MsfFVS8MoG1sr_gC2xQURNfurZjFj35pru7Zrig>
+    <xme:WyRHamF9-iUyJcxD1hN8iX4yBBSaUU8sbkB0MGzuZnEhiqapFJBLhArQTZ-AtibBo
+    pB12STo0C2gTnR3K0txibQwrhejTmbCsGGnCKkQCy0LOxgpIWuCE4Q>
+X-ME-Received: <xmr:WyRHah6Wolnt0eZrcDHwvc-WCbGbYJytbfgiDOUXzKW5d5PCmdRpkWar6AEsGGI3HsXm0WTWsXt-HaaX-Dpchy2gfwirZbuLl3ev4z0>
+X-ME-Proxy-Cause: dmFkZTGdsJbAvcQFv5PofzGlm8d81wljoUL8kmw6rzn48YayZomdK8y+4kXpMh+pXuMDc7
+    it9+sfYbKSubGolu3hNxIhDspd9zu2XsvCRQ+6Dz1AOzMAhD0fLcrOY9IgNLc9BlrJ1RVS
+    ihdNLRIlIqbJikW8FwmhQdn8wH0GeSM4ZVJN8urz3mxYb6HZFgCbQb1cA0CfPpPx4FDjPD
+    tJDZAfj4oZh+/3x8Lmvgg/CKgBLJ0qAsEEXpc1tFv9QQoOAM95JAIe8ZT/3y3qfr0IreFY
+    Zs8yylA+iykAQZ5OyTPrfv5WJGtfe4hqSuQR3Gmq5cGoAW93K6jMEiC/mLwtGDWDhO39eN
+    O8YoJC7Pc3sXT8f1Hu3VKPUWs1SKltUhAbs3EOHGr+KIz4W0Lw1gRWCTIwqd8TrJWCM+Kq
+    nK2dQv0Vin32nECVwIjKNMNcGqwe5q/OgjqokzRyodKgMhoLBG7q6NRWQallXNFfvjH//G
+    wyySiqjayEs9BJy1LMDJNx0nYz8LUBxejBHebkZ+W7OazzSuGv0c/Api7NLur5MFEGCega
+    LdLbV6275KHKydA0+9zV2qQxl8t4HZVzSHoUp7pQg4FatFQG1Sdv7X2UADbd0xIfTpyqdM
+    3+3MZPeagGUkNDRSWL5Y44xDsZKAjMpYUCfpEr0gS1yf0ZPq6CTtIM8DgnCg
+X-ME-Proxy: <xmx:WyRHasvs4H2imKpaXXo7XfMIpgAW288e1tMyGufCtuKnl3lN8NUlug>
+    <xmx:WyRHai5q6K9oVL68ZI1lgEa2Y2RbD5mDTVtWDlMUuJED2xPV4Ew-Hg>
+    <xmx:WyRHanXXWMob4xtyMHSDXQmdqLJEl91eyh3R7dqOqa148U5EC5_YJg>
+    <xmx:WyRHak_uLZcn7JJZuUfEs6OGHwKJK7SRskuOd5eVNz3rw68xBEAo6A>
+    <xmx:WyRHaqN9VrSWE5zOwNHXO9NHwOL_55dQgiKsIDDieRVlb3GYbpo843Tw>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Jul 2026 22:52:32 -0400 (EDT)
+ 2 Jul 2026 22:54:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  oxsignal
- <awo@kakao.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 05/12] t/unit-tests: introduce test helper to write
- reftable blocks
-In-Reply-To: <CAP8UFD3d4e_OOQrNUXU5iVavwhuCZfiNUuE-hH=hwV84xN+pEg@mail.gmail.com>
-	(Christian Couder's message of "Thu, 2 Jul 2026 11:31:25 +0200")
-References: <20260629-pks-reftable-hardening-v2-0-b0228e7d908d@pks.im>
-	<20260629-pks-reftable-hardening-v2-5-b0228e7d908d@pks.im>
-	<CAP8UFD3d4e_OOQrNUXU5iVavwhuCZfiNUuE-hH=hwV84xN+pEg@mail.gmail.com>
-Date: Thu, 02 Jul 2026 19:52:30 -0700
-Message-ID: <xmqq8q7slr81.fsf@gitster.g>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v5 00/10] commit-reach: terminate merge-base walk when
+ one side is exhausted
+In-Reply-To: <CAL71e4PgcZDK-gJziJa_yjEqX9TE+PFMwZn0xbjAUzuUDDDBYA@mail.gmail.com>
+	(Kristofer Karlsson's message of "Wed, 1 Jul 2026 23:15:27 +0200")
+References: <pull.2149.v4.git.1782649547.gitgitgadget@gmail.com>
+	<pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
+	<xmqqpl16mq3v.fsf@gitster.g>
+	<CAL71e4PgcZDK-gJziJa_yjEqX9TE+PFMwZn0xbjAUzuUDDDBYA@mail.gmail.com>
+Date: Thu, 02 Jul 2026 19:54:18 -0700
+Message-ID: <xmqq4iiglr51.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,35 +87,17 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Kristofer Karlsson <krka@spotify.com> writes:
 
-> On Mon, Jun 29, 2026 at 11:02 AM Patrick Steinhardt <ps@pks.im> wrote:
->> ...
->> +static int cl_reftable_write_block(struct reftable_buf *buf,
->> +                                  uint8_t block_type,
->> +                                  struct reftable_record *recs,
->> +                                  size_t nrecs)
->
-> Yeah, I suggested:
->
-> int cl_reftable_write_block(struct reftable_buf *buf, uint8_t block_type,
->                            size_t block_size, uint32_t header_off,
->                            struct reftable_record *recs, size_t nrecs)
->
-> which accepts `size_t block_size` and `uint32_t header_off` as
-> arguments, so that more existing tests could be refactored using
-> cl_reftable_write_block().
->
-> Your choice to not have these extra arguments is reasonable though, as
-> they are not needed for the code that your series adds, and they make
-> the implementation of cl_reftable_write_block() a bit more complex.
->
-> Also they can still be added in the future if we really want to clean
-> up more existing tests.
->
-> This version of your series looks good to me now.
+> In the meantime, there are still some aspects of this v5 that would
+> benefit from some discussion and feedback -- specifically the new
+> test diagnostic helper (patch 2) and the commit-date ordering
+> fallback removal (patch 10). Both are new in this version and could
+> be seen as optional.
 
-Thanks, both.
+Sure, review comment on this iterations are welcome, of course, but
+I'll punt on integrating it in 'seen'.
+
+Thanks.
