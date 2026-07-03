@@ -1,107 +1,415 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0C33D9559
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 13:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27DF2C3251
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 14:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783086431; cv=none; b=PWo+/SEMDsj48fm4GrQqpzSt9PjP+LvrnE0PNVlnnzFly2pp+lmBWTzElP36Vwd3Hpll2ZVJ7GOmbv9Rq4x3OVNNSw/kyqdNN6RGQT+hxnBpV2TMGMxICdFDD0+t5C8eYWJ5JFfeSjPcMUCQGEpa7bEoZbZ6H5JzN2Lf81z37ZM=
+	t=1783088411; cv=none; b=WqTux1fl9yTmOkLCJsvouPTZkuqN7DRpq7p4NA0kjzasu5w1IS+MnS5jCZZXz3S3IDzZW/ecHadQTziFkJzIH3aXHlZQQGpMeeh7DA3KzaF/RTrzWIWst4SYNExNHYRL8c2pq3KxTigG8wE32snSsPUB6ozAlrtx5aOL9rIu/SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783086431; c=relaxed/simple;
-	bh=VquhUtlgzTbP4ZNtsPK1/JfO8D1p2HNTx7povVaL5BQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Eb9wN7e27IBiB4Tuv9c3az7Le9N82aAcCvXyPt0VfU6oO4Qshoq4WiKGQFyAYfSy5BMN0pDuaOk6Zg5rIv6O7k2oj0qYgS33iejxlAiZDdeKs3/jTFMhOb8LX4i4B6idCEVb4P1BINZUxemIh5Gs5ZmM2EukI8d0zGagoQRJcYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=A4TVhN23; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1783088411; c=relaxed/simple;
+	bh=SDjHPJ8QPWEH9b1IJX40/qvK3IPZVZOQYlBE7DiL6dM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U/ci+DMNT0cXFIJzUS6xXIJf3IOS/8a0IQ87meKbjUoCyMVw/eLSyqmq26UmA80F2llqJTY7+2E2l9mS/hQR93bPe44c0YHWLsbDAOqRSHkKi7str0AzIaz9JhElhIzopkJW9ttzZXkU8sSzRe5lPFHA3+Mn4MG52Tx1ClmvJdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=R2D4V0qq; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="A4TVhN23"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1783086427;
-	bh=VquhUtlgzTbP4ZNtsPK1/JfO8D1p2HNTx7povVaL5BQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=A4TVhN23xS40TuxITAra1jm1fq3+eZ8IKdKWwWmTzush0u9q9ZM91QtSgApIvP5OT
-	 RuFV41bMRUz+nITdnhAJf4rdrtKJb0kJkw5eTsPa3QGX/yq/SvfJC8OjsYLpFJjFdT
-	 2ah5ekHWxRsZV3dUIiwVjoWWq2ZdhuyAwgdGltMIzlWNxGBNS7XNVGo1SH8wXUr87w
-	 KTWyjDbvBKKrav357SuOGRtV/cMVCibb+bF4XPhrtC9UAMGNimY2bMkqYzRbvPTL9q
-	 lNmbQaSZ+H3W1t8m3cUpFcxfkUx5HjCfZCfZDEk9V7HeaD7fVLUfDz8JKpLvvEunut
-	 einMobIkYecKaWaXtQ+TdRfV421jqiuc9ZNyya7gl+Eug1gN7BXNbO2VVUEvHbnJ4u
-	 M4GXGhLcSqFWXTz2k+H5eCHC9YoU3cFCTBn2Hz/+ak6C1S1s9j+oJZgYvWKQGc7yxA
-	 EZoqaTZhGlam7VAan5/9yUcd/r4SNBUnnaQ524P31Dwx4G3hvQs
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:4c68:467a:f157:4800])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6B49720074;
-	Fri,  3 Jul 2026 13:47:07 +0000 (UTC)
-Date: Fri, 3 Jul 2026 13:47:06 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 7/9] http: discard hash in dumb-http http_object_request
-Message-ID: <ake9Wng-Q9p_sf_H@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-References: <20260702075234.GA1548258@coredump.intra.peff.net>
- <20260702080707.GG2029434@coredump.intra.peff.net>
- <akecqPq4F702E8Cq@pks.im>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="R2D4V0qq"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1783088404;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5pqV9tYAJbMQgBPwMfUhu5T5DkHJyOcs8Cw7mbDaUbE=;
+	b=R2D4V0qqAnzjnV7SCLei2aJmLzeW0UyGvrV4nVKfmVntxzMsvFx/v62QcQVf72wdp29kS9
+	WZdZ7MyM8zKqajTO9iawHMSsRiUiPrAfNqezIHubNYgTOihG9TEczvEflklrT3q76a8V82
+	4uJ/N1FDBqiyV/qEIjGsibF4u7C+jL8=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 4/5] builtin/refs: add "create" subcommand
+In-Reply-To: <20260630-pks-refs-writing-subcommands-v3-4-deb04de1ecef@pks.im>
+References: <20260630-pks-refs-writing-subcommands-v3-0-deb04de1ecef@pks.im>
+ <20260630-pks-refs-writing-subcommands-v3-4-deb04de1ecef@pks.im>
+Date: Fri, 03 Jul 2026 16:19:58 +0200
+Message-ID: <87qzlk2m0h.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xgiQR9enH8FDr7Tr"
-Content-Disposition: inline
-In-Reply-To: <akecqPq4F702E8Cq@pks.im>
-User-Agent: Mutt/2.4.0 (2026-06-19)
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
---xgiQR9enH8FDr7Tr
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 2026-07-03 at 11:27:36, Patrick Steinhardt wrote:
-> On Thu, Jul 02, 2026 at 04:07:07AM -0400, Jeff King wrote:
-> > The flag handling could be removed if the hash-discard function were
-> > idempotent. This could be done easily-ish by having the underlying
-> > hash functions (like the ones in sha256/openssl.h) set the context
-> > pointer to NULL after free-ing. But it's something that every platform
-> > implementation would have to remember to do, and the benefit for the
-> > callers is not that huge (it would let us shave a few lines here and
-> > probably in a few other spots).
->=20
-> This answers an earlier question of mine. It would indeed be great if it
-> was idempotent -- I've been bitten by interfaces like this once too
-> much, where you have to be very careful to manage the lifetime of a
-> specific object. The prime example of this are (were? I don't quite
-> recall whether we fixed that interface) reference transactions, and that
-> caused a bunch of bugs in the past.
+> The "update" subcommand cannot only update an existing reference, but it
+> can also create new branches and delete existing branches by specifying
+> the all-zeroes object ID as either old or new value. Despite that, we
+> already have the "delete" subcommand as a handy shortcut so that a user
+> can easily delete a branch. This relieves them of needing to understand
+> the more arcane uses of the "update" command, and of counting the number
+> of zeroes they need to pass.
+>
+> But while we have a "delete" subcommand, we don't have an equivalent
+> that would allow the user to create a new branch, which creates a
+> certain asymmetry.
+>
+> Add a new "create" subcommand to plug this gap.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/git-refs.adoc |   5 ++
+>  builtin/refs.c              |  52 +++++++++++++++
+>  t/meson.build               |   1 +
+>  t/t1466-refs-create.sh      | 151 ++++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 209 insertions(+)
+>
+> diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+> index 6475bdcc62..e6a3528349 100644
+> --- a/Documentation/git-refs.adoc
+> +++ b/Documentation/git-refs.adoc
+> @@ -20,6 +20,7 @@ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
+>  		   [ --stdin | (<pattern>...)]
+>  git refs exists <ref>
+>  git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
+> +git refs create [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value>
+>  git refs delete [--message=<reason>] [--no-deref] <ref> [<old-value>]
+>  git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]
+>  
+> @@ -53,6 +54,10 @@ optimize::
+>  	usage. This subcommand is an alias for linkgit:git-pack-refs[1] and
+>  	offers identical functionality.
+>  
+> +create::
+> +	Create the given reference, which must not already exist, pointing at
+> +	`<new-value>`.
+> +
+>  delete::
+>  	Delete the given reference. This subcommand mirrors `git update-ref -d`
+>  	(see linkgit:git-update-ref[1]). When `<old-value>` is given, the
+> diff --git a/builtin/refs.c b/builtin/refs.c
+> index 08453ae1c8..1ebaf30149 100644
+> --- a/builtin/refs.c
+> +++ b/builtin/refs.c
+> @@ -21,6 +21,9 @@
+>  #define REFS_OPTIMIZE_USAGE \
+>  	N_("git refs optimize " PACK_REFS_OPTS)
+>  
+> +#define REFS_CREATE_USAGE \
+> +	N_("git refs create [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value>")
+> +
+>  #define REFS_DELETE_USAGE \
+>  	N_("git refs delete [--message=<reason>] [--no-deref] <ref> [<old-value>]")
+>  
+> @@ -181,6 +184,53 @@ static int cmd_refs_optimize(int argc, const char **argv, const char *prefix,
+>  	return pack_refs_core(argc, argv, prefix, repo, refs_optimize_usage);
+>  }
+>  
+> +static int cmd_refs_create(int argc, const char **argv, const char *prefix,
+> +			   struct repository *repo)
+> +{
+> +	static char const * const refs_create_usage[] = {
+> +		REFS_CREATE_USAGE,
+> +		NULL
+> +	};
+> +	const char *message = NULL;
+> +	unsigned flags = 0;
+> +	struct option opts[] = {
+> +		OPT_STRING(0, "message", &message, N_("reason"),
+> +			   N_("reason of the update")),
+> +		OPT_BIT(0 ,"no-deref", &flags,
+> +			N_("update <refname> not the one it points to"),
+> +			REF_NO_DEREF),
 
-Yes, that would be fantastic.  The Rust code will need a few fixes as
-well (which I will send on top of this one when it's picked up) and it
-really simplifies our Drop implementation if I can just do
-`git_hash_discard`.  Otherwise, I need to keep track of whether we've
-already called one of the final functions or not to avoid a double free.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Can `git refs create --no-deref` be used to create symrefs? Should we
+add a test for that? Or can it not
 
---xgiQR9enH8FDr7Tr
-Content-Type: application/pgp-signature; name=signature.asc
+I understand the symmetry, but does it make sense to ask the user to
+create symrefs with `--no-deref`? Feels a bit obscure. The docs say:
 
------BEGIN PGP SIGNATURE-----
+`--no-deref`::
+	Operate on <ref> itself rather than the reference it points to via a
+	symbolic ref.
 
-wr0EABYKAG8FgmpHvVoJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ8bf2eKd6C+Ub5H6hRMwUvPcOVs4RCIOLMTtgoccGpOw
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAC0fAQCKEQh24Ygem1ykvnWQGniMEhSD
-YBcdjqpFr4qkA6mzLgD/S8IOhUEcYdxi+Up053+p7o3Mnq9NnjLCGH6Uj5z1KA0=
-=A1jr
------END PGP SIGNATURE-----
+That's far from obvious for a user to realize they need to pass that
+option if they want to create a symref.
 
---xgiQR9enH8FDr7Tr--
+> +		OPT_BIT(0, "create-reflog", &flags, N_("create a reflog"),
+> +			REF_FORCE_CREATE_REFLOG),
+> +		OPT_END(),
+> +	};
+> +	struct object_id newoid;
+> +	const char *refname;
+> +	int ret;
+> +
+> +	argc = parse_options(argc, argv, prefix, opts, refs_create_usage, 0);
+> +	if (argc != 2)
+> +		usage(_("create requires reference name and an object ID"));
+> +
+> +	if (message && !*message)
+> +		die(_("refusing to perform update with empty message"));
+> +
+> +	repo_config(repo, git_default_config, NULL);
+> +
+> +	refname = argv[0];
+> +	if (repo_get_oid_with_flags(repo, argv[1], &newoid, GET_OID_SKIP_AMBIGUITY_CHECK))
+> +		die(_("invalid object ID: '%s'"), argv[1]);
+> +	if (is_null_oid(&newoid))
+> +		die(_("cannot create reference with null new object ID"));
+> +
+> +	ret = refs_update_ref(get_main_ref_store(repo), message, refname,
+> +			      &newoid, null_oid(repo->hash_algo), flags,
+> +			      UPDATE_REFS_MSG_ON_ERR);
+> +
+> +	if (ret < 0)
+> +		ret = 1;
+> +	return ret;
+> +}
+> +
+>  static int cmd_refs_delete(int argc, const char **argv, const char *prefix,
+>  			   struct repository *repo)
+>  {
+> @@ -288,6 +338,7 @@ int cmd_refs(int argc,
+>  		"git refs list " COMMON_USAGE_FOR_EACH_REF,
+>  		REFS_EXISTS_USAGE,
+>  		REFS_OPTIMIZE_USAGE,
+> +		REFS_CREATE_USAGE,
+>  		REFS_DELETE_USAGE,
+>  		REFS_UPDATE_USAGE,
+>  		NULL,
+> @@ -299,6 +350,7 @@ int cmd_refs(int argc,
+>  		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
+>  		OPT_SUBCOMMAND("exists", &fn, cmd_refs_exists),
+>  		OPT_SUBCOMMAND("optimize", &fn, cmd_refs_optimize),
+> +		OPT_SUBCOMMAND("create", &fn, cmd_refs_create),
+>  		OPT_SUBCOMMAND("delete", &fn, cmd_refs_delete),
+>  		OPT_SUBCOMMAND("update", &fn, cmd_refs_update),
+>  		OPT_END(),
+> diff --git a/t/meson.build b/t/meson.build
+> index 2063962dab..541e6f919c 100644
+> --- a/t/meson.build
+> +++ b/t/meson.build
+> @@ -225,6 +225,7 @@ integration_tests = [
+>    't1463-refs-optimize.sh',
+>    't1464-refs-delete.sh',
+>    't1465-refs-update.sh',
+> +  't1466-refs-create.sh',
+>    't1500-rev-parse.sh',
+>    't1501-work-tree.sh',
+>    't1502-rev-parse-parseopt.sh',
+> diff --git a/t/t1466-refs-create.sh b/t/t1466-refs-create.sh
+> new file mode 100755
+> index 0000000000..cfb21bf863
+> --- /dev/null
+> +++ b/t/t1466-refs-create.sh
+> @@ -0,0 +1,151 @@
+> +#!/bin/sh
+> +
+> +test_description='git refs create'
+> +
+> +. ./test-lib.sh
+> +
+> +setup_repo () {
+> +	git init "$1" &&
+> +	test_commit -C "$1" A &&
+> +	test_commit -C "$1" B
+> +}
+> +
+> +test_ref_matches () {
+> +	git rev-parse "$1" >expect &&
+> +	echo "$2" >actual &&
+> +	test_cmp expect actual
+> +}
+> +
+> +test_expect_success 'create a new reference' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		git refs create refs/heads/foo $A &&
+> +		test_ref_matches refs/heads/foo "$A"
+> +	)
+> +'
+> +
+> +test_expect_success 'create fails when the reference already exists' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		B=$(git rev-parse B) &&
+> +		git refs create refs/heads/foo $A &&
+> +		test_must_fail git refs create refs/heads/foo $B 2>err &&
+> +		test_grep "reference already exists" err &&
+> +		test_ref_matches refs/heads/foo "$A"
+> +	)
+> +'
+
+I was curious about this test:
+
+	test_expect_success 'create succeed when the reference exists with the same value' '
+		test_when_finished "rm -rf repo" &&
+		setup_repo repo &&
+		(
+			cd repo &&
+			A=$(git rev-parse A) &&
+			git refs create refs/heads/foo $A &&
+			git refs create refs/heads/foo $A &&
+			test_ref_matches refs/heads/foo "$A"
+		)
+	'
+
+That fails. It that intentional?
+
+> +
+> +test_expect_success 'create with null new value fails' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		test_must_fail git refs create refs/heads/foo $ZERO_OID 2>err &&
+> +		test_grep "null new object ID" err &&
+> +		test_must_fail git refs exists refs/heads/foo
+> +	)
+> +'
+> +
+> +test_expect_success 'create with invalid new value fails' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		test_must_fail git refs create refs/heads/foo invalid-oid 2>err &&
+> +		test_grep "invalid object ID" err &&
+> +		test_must_fail git refs exists refs/heads/foo
+> +	)
+> +'
+> +
+> +test_expect_success 'create does not create a reflog by default' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		git refs create refs/foo $A &&
+> +		test_must_fail git reflog exists refs/foo
+> +	)
+> +'
+> +
+> +test_expect_success 'create creates a reflog with --create-reflog' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		git refs create --create-reflog refs/foo $A &&
+> +		git reflog exists refs/foo
+> +	)
+> +'
+> +
+> +test_expect_success 'create with message records reason in reflog' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		git refs create --message="create reason" refs/heads/foo $A &&
+> +		git reflog show refs/heads/foo >actual &&
+> +		test_grep "create reason$" actual
+> +	)
+> +'
+> +
+> +test_expect_success 'create with symref target creates target reference' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		git symbolic-ref refs/heads/symref refs/heads/target &&
+> +		git refs create refs/heads/symref $A &&
+> +		git reflog exists refs/heads/target
+> +	)
+> +'
+> +
+> +test_expect_success 'create with symref target and --no-deref refuses to create reference' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		git symbolic-ref refs/heads/symref refs/heads/target &&
+> +		test_must_fail git refs create --no-deref refs/heads/symref $A 2>err &&
+> +		test_grep "dangling symref already exists" err &&
+> +		test_must_fail git reflog exists refs/heads/target
+> +	)
+> +'
+
+Would it make sense to add this test:
+
+	test_expect_success 'create with symref target with --no-deref' '
+		test_when_finished "rm -rf repo" &&
+		setup_repo repo &&
+		(
+			cd repo &&
+			A=$(git rev-parse A) &&
+			git refs create refs/heads/target $A &&
+			git refs create --no-deref refs/heads/symref refs/heads/target &&
+			git reflog exists refs/heads/symref && false
+		)
+	'
+
+But that makes me think, this option `--no-deref` is pretty obscure for
+use with `git refs create`. There are two situations:
+
+* The symref doesn't exists: so --no-deref basically is forcing the
+  command to create a symref. That's confusing
+* The symref exists already: then the question is, does the user know it
+  exists:
+   - The user knows: so they pass --no-deref because they know it exists
+     and they want to create a symref. But why run `create` then anyway?
+   - The user doesn't know: brings us back to the first asterisk,
+     passing in `--no-deref` to create a symref, making it a weird
+     option name.
+
+
+> +
+> +test_expect_success 'create with empty message fails' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	(
+> +		cd repo &&
+> +		A=$(git rev-parse A) &&
+> +		test_must_fail git refs create --message= refs/heads/foo $A 2>err &&
+> +		test_grep "empty message" err &&
+> +		test_must_fail git refs exists refs/heads/foo
+> +	)
+> +'
+> +
+> +test_expect_success 'create without arguments fails' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	test_must_fail git -C repo refs create 2>err &&
+> +	test_grep "requires reference name" err
+> +'
+> +
+> +test_expect_success 'create with too many arguments fails' '
+> +	test_when_finished "rm -rf repo" &&
+> +	setup_repo repo &&
+> +	test_must_fail git -C repo refs create refs/heads/foo a b 2>err &&
+> +	test_grep "requires reference name" err
+> +'
+> +
+> +test_done
+>
+> -- 
+> 2.55.0.795.g602f6c329a.dirty
+>
+>
+
+-- 
+Cheers,
+Toon
