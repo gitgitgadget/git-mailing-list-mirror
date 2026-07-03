@@ -1,268 +1,190 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE733C7691
-	for <git@vger.kernel.org>; Thu,  2 Jul 2026 22:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783031437; cv=pass; b=mpjh9Zuwc0lyf9B6ghSvEIgLl+6FMSw35rdLShnud8fkEEZ3JTTDaNrOKC/yIyjUsuSv807LIvnpazajVQGAXkpFFFjqPqjA/qApuw3XlTxyWBHZHu9Y8oGJiUquUfsBKmDJughVRDXrviuTQ/MU8Gt2ToXlLF+5bNIdbLSiRNs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783031437; c=relaxed/simple;
-	bh=BOwWdC7ltxs1Wb8hkv4fDMojqQjvqe+0sfGdRLaPE0o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CPiLR/VRf2J67SQETJXmw8GLMWuo3Z9/IGdutrSjOhmO2JOM/M/tClfglUQx4uUY/UC7nR8i/N9/zIMEwqHY5GngZgv0MZnkdIiIVUWMVeWeQIZBOLsZNBReB6bEcSspdltO1XOZkr2IA5anlCWL+3fEwDrtVLcNYahF9Q3213A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q74ADKKv; arc=pass smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB7526A0B9
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 02:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783046174; cv=none; b=uNcDSwdtsudIYQ/Pe7KwOLWONobsRyuYFLyLEKhDADpGEKkN7WFDowYMYkexqr6Xy+4Izc22D5TAr3AMXP2QVjjeBwwdkY1rQ5HMLvMJoS0z6mQKOGSlOawNSM8Nip+bQdnvR5EuPFK4oebw9RYaF9b8Q7ICMVA2aP9Rj/5Ok2g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783046174; c=relaxed/simple;
+	bh=asAawWfPeIn5+sOeW/jxrYfYReluD7fmQOSChlXpKVQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GTXXC6ckecABh15mIIWrM/q7+WXUWLyeKmlgHuWRU0NTHZkxCAkTDpSSsx7eOAtVVwI/a1DdKQEMiiQOUIlBHjS3Gg+K1vk3Omv4Xu1Hurf+du+oBKWqaLsWEFSwk3E8rEnlo+MnFcn1SLpgy8+5c8tnnXY4LLBp6/m1Yqg6vWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y1foZwyd; arc=none smtp.client-ip=74.125.224.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q74ADKKv"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5aebc8cb5bcso1595304e87.2
-        for <git@vger.kernel.org>; Thu, 02 Jul 2026 15:30:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783031428; cv=none;
-        d=google.com; s=arc-20260327;
-        b=imEuNXkPDCH6lAfo4iEUQcxtIpka5O6tI6ColwV0SIsvf19YUMZo0PWy+92/1kfPhq
-         6JVZ4t6scQnX62Pd0fP8wA299ZpXfbEWn31FCYQtghiiA0KJKmsLpHFbppVjajZD8YdO
-         WfeDCOhua33g9B1Xy4NOaBQWzsEXWlPHa4GdY1XzOAr6/I1WfLNjRDOSrpB64kkN/cOm
-         8m2EIM8t/sukGl2HD4K/aZ6E+csDiTFKNg5EwHQ2LPK35c61ZX0RaBaLNGQqAOxKLQ8h
-         m0TUMai7iZLZ/iR2B8VdTv9omYL+5HdWk/djJghP8AyG7/d0JQOZUmCb+NOFmkNUmASx
-         sJsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nt8ogUnlNzVpVJjFzzMA8atJtRI1z+UQUqxBg2HyB6E=;
-        fh=XuxBRLyyp8WNhsJNokR1gNqd8RbBTRz/+64ANv+EvLs=;
-        b=Qo9D1NM6lLb5iqUcAU4pvhGVbWel+qiEDB26TpLBL3ST/D5+TC0R2U1YrhzAl5dEEV
-         0GuTcMDqC+NEl+pRQRwStGQhEarbHZ9G/kLUqlm0z2YVSLMx+iipcmQzAxajyzckds9a
-         nfJEC47Tjpalhkj/4jnyKwIf1bSyB/eZIBaf+FGBZUQe9jbAIc3SHQ59DQI59B8PpVRr
-         Xy8pdC07AilL/uyQG0xt1pP5aIUuUsXbU8wLP8Gy4SPqgNGl6QwRWdqsAQEesrb52Zmo
-         vM7UXvI0dx1ajyswDDQ5Y/P7fVtCpY1GQzDAGAWXhXe1ihQF5L6538+Tm1My4uPY8Dz7
-         sw0Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y1foZwyd"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-664b3831a20so126462d50.3
+        for <git@vger.kernel.org>; Thu, 02 Jul 2026 19:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783031428; x=1783636228; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nt8ogUnlNzVpVJjFzzMA8atJtRI1z+UQUqxBg2HyB6E=;
-        b=Q74ADKKvlHPKcFIkPf9VwCQriEY2eA/URZYe517qvWXdRLqhLSbfm/5vC3BHW7E7Nx
-         OeH5o0mPSM9lVb9kCwMzB7DfG8obUWuSB/M2Un88iqps7w0xQmCD3x/Jz4zSVP75nQMh
-         pHiZpbJ2mfv/Y8o2OhtvpqDcn2bkwy/xN5yB8YCcKWqP9NTwgpgC/GXO05wY3etDo5ix
-         dqqJL8OhDc1OQPss5r/84srIBWoVzPOeoaSuhhp/hpeoyiKih48VR4xdzeAsdhf86fqz
-         PuCcBOemXTR+vQ+YsRNYYKJXginwSETTkEXWJAX+KSixzYAe0WIKoUOcd5Se6DmDdlNc
-         b3fQ==
+        d=gmail.com; s=20251104; t=1783046170; x=1783650970; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0H3R/XpbM9Qq5IQpAe6Yc5hLYaZT1VIIprhTUOKMENs=;
+        b=Y1foZwydZ+Rd5QBVBqJC63tyZeP9pENW/ig+10g2Vwh5XjG0jcb5bDb81at7q56A07
+         8iHe4ISUHRKjr+jtsFN37C7hUBxQW4C8shOCBuqpYFhyd6+IcH0WbifFLWlx61rZ802G
+         qeEfnHREEn+7yIwFPpzDDjpajoMgQcgw4x63m1M2SrYWdDMc/595NRfbsqetpej7Bye7
+         Qb45HTRG92UfsOJpH7vqminN7VzSnSsMpHZaNaQOIqywHVutJrZGIomBT+8/vqAqnJ9l
+         ltOce3OI4hUFjuocI+0YSKXHZWZWi/BJX3Fv/xVmH3klUKS63GoiUJai1eXVMYkxR7x7
+         0pVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783031428; x=1783636228;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nt8ogUnlNzVpVJjFzzMA8atJtRI1z+UQUqxBg2HyB6E=;
-        b=aMTPNuFbJ7USDlwA7r+Eboqu3raltb7CuMQ4jcf0s4bOvVFJAcMiIwOiS3yCsLvPBB
-         uw7QDI2f6sw3iyeLpuLh0RacgY3HLkWjfxVNu2Oc6kqNXorjp26sj5GsxfNbqMujXHJY
-         nUtzTIEoG0kjuDtWejdMhJNz7Pr2MI3j9B+qHW5+Zcuvj9nWossM3FNIBSr9SKfFHm9m
-         CdUPG6pKBorzv073mbdNJy8VT+2WNTDPGF9bal9XmCRNpWtnOa5qZEHUf5rGT1s3mOn4
-         7b+OKdjUC4Afb22EkfneCw83WxbnN5F69O35NpiBDQWxoWwiv26mjudokXEJF2qggeGa
-         l8iA==
-X-Forwarded-Encrypted: i=1; AHgh+RqPYcSQ/BTLfgjmkqcglc6dVsU0hLEuVze8y2xMxIdYaaYGXvtO3gOA3yDW8BPSh/R/hL0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8cn/n1CEP59ueDi8VCUANNcLnzDdITEDtaHRloij/0Dt1PYZw
-	Ekr/a0cdBr8Ak7ND0tldThw5aAg8DO+raKiew03BILe1LpFYaEu7hI3zgMW7uXvXZty3n8y/cEV
-	EFN6uTOB9Y5jdMRIetHBHQeH+bMQLqnBSBMPkGIo=
-X-Gm-Gg: AfdE7cn3MYSt4ib7M37VYv9l7X49ATtGHJCOOVWgA3cQhtjJeoTcHlIoLpiH5ID5fF8
-	BMkzfZ73pLEaIIY0w/VL7/illwNvblzYaHfmO/YfNXMTuNrTIiN8G2s9Mr7UYDWpO/MNZ//AUOg
-	eQeGQXZFAWl6WrVDzWnVD9buqg00wgFeliUFYhq2EMod0kiiBBRdJi+QfhQtL6pZAMXZxmtEM/S
-	RIBrReoDICcVoUSGGhIeQlkwxbaDrm5BUFU2M8crRw6m28XL2fy3riIpKw+MqLKZkz48QQXHucO
-	5W+johMpESEVQ9ik/th+yP2h72iEiA==
-X-Received: by 2002:a05:6512:a90:b0:5ae:bf45:e3ac with SMTP id
- 2adb3069b0e04-5aec742fa0cmr2011370e87.53.1783031427549; Thu, 02 Jul 2026
- 15:30:27 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783046170; x=1783650970;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0H3R/XpbM9Qq5IQpAe6Yc5hLYaZT1VIIprhTUOKMENs=;
+        b=lDnKx03BWgiz4tnSZYNqZRUF2PlZVGSW9Vzv5uo2fvf1oY6sY7YU6g/9f25nKQlDNv
+         cVU4KLF1k4ePKqOZms4L0gO5aDxzDT50q+0XXGyOV5YyYwYf6Jc68HuAHyHnwHrzu564
+         gjTE67TI9aAtrciqyMGtYTUm2XJg+DSAw5f0/0orhHI4zVwDxg/2nnem6r32G2a1CJkW
+         rk2fFx8tKAv3EEJslgG8ACg3/M/saN5nRv+02W8H4X85M8y77cIebFB/lOIXdO9PTH71
+         gfMAlPLuAQw6xtQHotE/uX8WDGNwTcEld0uIh9ABSqB2WGWFWjRrdbMJKuPh3dc1Cpmw
+         J7lg==
+X-Gm-Message-State: AOJu0YxCIZrNWJqAoEcwf3Ion8HRCkZqWZOupyOc1VdojIz9R2qs3pP/
+	jOLw7G2zDb3KvMZ+89qekLLDIpGrBiQ4WB2kjyI8cJN7sZtgFJUdXRD35mSqbw==
+X-Gm-Gg: AfdE7cl52bLzsYLBjkuzlL8tmKe6MsjPGgZSB7LzYU6jI/TrPl2GGpA+Bd+Q9K68Rdl
+	8cXXDAkSl6krbwzLASbXY62FyNjDJOKcGLuG+wH9gf7zKO5/v0hi6y742TyG+NXk/jWSZhFU2h0
+	3Mkv6zW3TLgfF2dKqr29S30+6TCN+DDFqEXIguDflsbIpI/yzikgX/C4mVPGO34C+zsmtXLf4Sk
+	ylYt1aRlaYSp1mcj3HrpGYPXUh4ppa8eWVFf7ETWb/JC3YxkBQLPlqY4rge4uckGGAJmFuK2xVR
+	3zl7IZru5TygySnZbcW3ntM9HpY9GkdSVMxYbkyck19nOMnjxsXmHHE2rwmy0ZMkgl8sHwf0y1W
+	qzbVtNYanF/KPs8QrT0MGFDYaC2V4bVnXf64UFdnYsUZSzKFdPvxDJUDIBDQTUGjohfu/7n/sra
+	vZI+xe9gaAcx1XhJECMJ7IhtjOAsip04VBPQlOcQ==
+X-Received: by 2002:a05:690e:140a:b0:664:9306:fc50 with SMTP id 956f58d0204a3-66521b855camr7610771d50.48.1783046169566;
+        Thu, 02 Jul 2026 19:36:09 -0700 (PDT)
+Received: from mair.home.arpa ([65.187.96.176])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-666407cd3d8sm174507d50.13.2026.07.02.19.36.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jul 2026 19:36:08 -0700 (PDT)
+From: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>
+To: git@vger.kernel.org
+Cc: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>
+Subject: [PATCH] precompose_utf8: use a flex array for d_name
+Date: Thu,  2 Jul 2026 22:35:54 -0400
+Message-ID: <20260703023554.36577-1-ihar.hrachyshka@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2288.git.git.1778001976709.gitgitgadget@gmail.com>
- <pull.2288.v2.git.git.1782943303219.gitgitgadget@gmail.com> <akZQmDYe9MtTdGM2@pks.im>
-In-Reply-To: <akZQmDYe9MtTdGM2@pks.im>
-From: Shardul Natu <shardul.27591@gmail.com>
-Date: Thu, 2 Jul 2026 15:30:15 -0700
-X-Gm-Features: AVVi8CcbuMf847UYjOmLxsV4TpvyF31LnN34Ui40dhwjPpp1_LRqbbmCMJ-xIV0
-Message-ID: <CABw8Y3H7P3JKwaSrUGjifcDh7rMR2nCFgqPjw8q6vfZnLc730w@mail.gmail.com>
-Subject: Re: [PATCH v2] Makefile: link osxkeychain & support universal Rust
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Shardul Natu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Shnatu <snatu@google.com>, 
-	Koji Nakamaru <koji.nakamaru@gree.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-> "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Shnatu <snatu@google.com>
-> > Signed-off-by: Shardul Natu <snatu@google.com>
->
-> You'd want to make sure these two match.
+On macOS, git status may abort while reading a directory entry
+whose UTF-8 name grows past NAME_MAX bytes:
 
-Good catch. Done!
+  __chk_fail_overflow
+  __strlcpy_chk
+  precompose_utf8_readdir
+  read_directory_recursive
+  wt_status_collect
+  cmd_status
 
-> > This is a highly elegant and native Makefile solution that avoids
-> > complex shell scripting in recipes and fully supports macOS Universal
-> > Binaries.
->
-> You're the second person on this list I saw who calls their own
-> creation "elegant" ;-).
+The precompose wrapper already reallocates dirent_prec_psx for
+long names, but d_name is declared as char[NAME_MAX + 1]. A
+fortified libc can still see that declared object size and reject a
+larger strlcpy bound, even though the allocation was grown.
 
-Removed! It was AI generated description
+Make d_name a FLEX_ARRAY and size allocations from offsetof(). That
+matches the actual object layout with the dynamic allocation, so the
+fortified copy sees a destination whose size can grow with max_name_len.
 
-> Do we know that leading directories to $(RUST_LIB) target has
-> already been created at this point? If not, we may want to have
->
-> $(RUST_LIB): $(RUST_MEMBER_LIBS)
-> + $(call mkdir_p_parent_template)
-> $(QUIET_GEN)\
-> if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
-> lipo -create $^ -output $@; \
->
-> on top.
+Add a regression test that creates a 261-byte non-ASCII basename and
+runs status with core.precomposeunicode enabled.
 
-Added $(call mkdir_p_parent_template).
+Signed-off-by: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>
+---
+ compat/precompose_utf8.c     | 12 ++++++++----
+ compat/precompose_utf8.h     |  9 +++++----
+ t/t3910-mac-os-precompose.sh | 15 +++++++++++++++
+ 3 files changed, 28 insertions(+), 8 deletions(-)
 
-> > When Rust is enabled, ensure that the git-credential-osxkeychain
-> > helper is linked with the necessary Rust libraries.
-> >
-> > Also, introduce native support for macOS Universal Binaries
-> > (multi-architecture builds) in the Git build system by allowing
-> > the user to specify a list of target triples in the RUST_TARGETS
-> > environment variable.
->
-> These are fundamentally unrelated things, aren't they? So I'd argue they
-> should be split up into two commits.
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index 1711794..8077f62 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -19,6 +19,11 @@ typedef char *iconv_ibp;
+ static const char *repo_encoding = "UTF-8";
+ static const char *path_encoding = "UTF-8-MAC";
+ 
++static size_t dirent_prec_psx_size(size_t max_name_len)
++{
++	return st_add(offsetof(dirent_prec_psx, d_name), max_name_len);
++}
++
+ static size_t has_non_ascii(const char *s, size_t maxlen, size_t *strlen_c)
+ {
+ 	const uint8_t *ptr = (const uint8_t *)s;
+@@ -114,8 +119,8 @@ const char *precompose_argv_prefix(int argc, const char **argv, const char *pref
+ PREC_DIR *precompose_utf8_opendir(const char *dirname)
+ {
+ 	PREC_DIR *prec_dir = xmalloc(sizeof(PREC_DIR));
+-	prec_dir->dirent_nfc = xmalloc(sizeof(dirent_prec_psx));
+-	prec_dir->dirent_nfc->max_name_len = sizeof(prec_dir->dirent_nfc->d_name);
++	prec_dir->dirent_nfc = xmalloc(dirent_prec_psx_size(NAME_MAX + 1));
++	prec_dir->dirent_nfc->max_name_len = NAME_MAX + 1;
+ 
+ 	prec_dir->dirp = opendir(dirname);
+ 	if (!prec_dir->dirp) {
+@@ -145,8 +150,7 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+ 		int ret_errno = errno;
+ 
+ 		if (new_maxlen > prec_dir->dirent_nfc->max_name_len) {
+-			size_t new_len = sizeof(dirent_prec_psx) + new_maxlen -
+-				sizeof(prec_dir->dirent_nfc->d_name);
++			size_t new_len = dirent_prec_psx_size(new_maxlen);
+ 
+ 			prec_dir->dirent_nfc = xrealloc(prec_dir->dirent_nfc, new_len);
+ 			prec_dir->dirent_nfc->max_name_len = new_maxlen;
+diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
+index fea06cf..c7c3cc2 100644
+--- a/compat/precompose_utf8.h
++++ b/compat/precompose_utf8.h
+@@ -14,11 +14,12 @@ typedef struct dirent_prec_psx {
+ 
+ 	/*
+ 	 * See http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/dirent.h.html
+-	 * NAME_MAX + 1 should be enough, but some systems have
+-	 * NAME_MAX=255 and strlen(d_name) may return 508 or 510
+-	 * Solution: allocate more when needed, see precompose_utf8_readdir()
++	 * Start with room for NAME_MAX + 1 bytes, but keep d_name as a
++	 * flexible array. Some systems have NAME_MAX=255 while strlen(d_name)
++	 * from readdir() may return 508 or 510 bytes. Grow the allocation as
++	 * needed in precompose_utf8_readdir().
+ 	 */
+-	char   d_name[NAME_MAX+1];
++	char   d_name[FLEX_ARRAY];
+ } dirent_prec_psx;
+ 
+ 
+diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.sh
+index 6d5918c..fda4a76 100755
+--- a/t/t3910-mac-os-precompose.sh
++++ b/t/t3910-mac-os-precompose.sh
+@@ -207,6 +207,21 @@ test_expect_success "Add long precomposed filename" '
+ 	git commit -m "Long filename"
+ '
+ 
++test_expect_success "status with long non-ASCII filename" '
++	test_when_finished "rm -rf long-utf8-status" &&
++	git init long-utf8-status &&
++	(
++		cd long-utf8-status &&
++		test "$(git config --bool core.precomposeunicode)" = true &&
++		long_utf8_name=$(
++			perl -e "print q(a) x 249, qq(\342\200\224) x 3, q(.md)"
++		) &&
++		test "$(printf "%s" "$long_utf8_name" | wc -c | tr -d " ")" = 261 &&
++		printf "content\n" >"$long_utf8_name" &&
++		git status --porcelain=v1 >actual
++	)
++'
++
+ test_expect_failure 'handle existing decomposed filenames' '
+ 	echo content >"verbatim.$Adiarnfd" &&
+ 	git -c core.precomposeunicode=false add "verbatim.$Adiarnfd" &&
 
-You're right; these address two fundamentally different
-problems. In v3, I have split this into a two commits:
-1. Makefile: add $(RUST_LIB) prerequisite to osxkeychain
-2. Makefile: support universal macOS builds via RUST_TARGETS
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+2.54.0
 
-
-> I think we could also use an explanation here what the universal binary
-> buys us for those who are not deeply familiar with the macOS platform.
-> What are they, and why do we want/need to support them?
-
-I have added this background to the relevant commit.
-
-
-> Can we assume lipo to be generally available on macOS? Also, is it
-> sufficient to just do this for the library? I would have expected that
-> binaries would also need some treatment there.
->
-> In other words: what does it help us to have the Rust treated this way
-> if the rest isn't?
-
-Yes, "lipo" is part of the Apple Xcode CLT, which
-is already a hard prerequisite for invoking clang or make on macOS.
-The reason only Rust needs special treatment in the Makefile is due to
-how the respective toolchains handle multi-architecture builds:
-1. Apple's C toolchain (clang) natively supports universal builds via
-CFLAGS and LDFLAGS. When "-arch x86_64 -arch arm64" is passed, clang
-automatically compiles and links universal binaries for all C object
-files and executables out of the box.
-2. Cargo and rustc, however, do not support multiple "-arch" flags or
-emitting universal binaries in a single invocation. Instead, Cargo must
-be invoked separately for each target triple ("--target x86_64-apple-darwin=
-"
-and "--target aarch64-apple-darwin").
-
-By using "lipo" to combine those target-specific Rust static libraries
-into a single universal archive at "target/release/libgitcore.a", we
-bridge this gap. Once $(RUST_LIB) is a universal archive, the standard C
-linker seamlessly links it with the C object files to produce the final
-universal Git executables.
-
-
-On Thu, Jul 2, 2026 at 4:57=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> On Wed, Jul 01, 2026 at 10:01:43PM +0000, Shardul Natu via GitGitGadget w=
-rote:
-> > From: Shnatu <snatu@google.com>
-> >
-> > When Rust is enabled, ensure that the git-credential-osxkeychain
-> > helper is linked with the necessary Rust libraries.
-> >
-> > Also, introduce native support for macOS Universal Binaries
-> > (multi-architecture builds) in the Git build system by allowing
-> > the user to specify a list of target triples in the RUST_TARGETS
-> > environment variable.
->
-> These are fundamentally unrelated things, aren't they? So I'd argue they
-> should be split up into two commits.
->
-> I think we could also use an explanation here what the universal binary
-> buys us for those who are not deeply familiar with the macOS platform.
-> What are they, and why do we want/need to support them?
->
-> > To implement this cleanly without complex shell scripting in recipes:
-> >   1. We introduce a declarative Make pattern rule (target/%/...) to
-> >      compile each target-specific library slice (e.g.,
-> >      target/aarch64-apple-darwin/...).
-> >   2. We update the $(RUST_LIB) recipe to depend on the list of
-> >      compiled target-specific member libraries ($(RUST_MEMBER_LIBS)).
-> >   3. On macOS, if multiple targets are specified, we use lipo to
-> >      combine them into a single Universal static library at
-> >      target/release/libgitcore.a.
-> >   4. If only one target is specified, we copy it to the standard
-> >      path.
-> >   5. We enforce that building for multiple targets requires macOS
-> >      (as lipo is only available there), raising a clear make error
-> >      on other platforms.
-> >
-> > This is a highly elegant and native Makefile solution that avoids
-> > complex shell scripting in recipes and fully supports macOS Universal
-> > Binaries.
->
-> As Junio already pointed out this self-praise reads quite weird. I'm
-> just going to assume that this is AI-generated fluff.
->
-> > diff --git a/Makefile b/Makefile
-> > index 1f3f099f5c..8d49ecc897 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -3019,11 +3030,33 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
-> >  $(LIB_FILE): $(LIB_OBJS)
-> >       $(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-> >
-> > +ifndef NO_RUST
-> > +ifeq ($(RUST_TARGETS),)
-> >  $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
-> >       $(QUIET_CARGO)cargo build $(CARGO_ARGS)
-> > +else
-> > +ifneq ($(words $(RUST_TARGETS)),1)
-> > +ifneq ($(uname_S),Darwin)
-> > +$(error Building universal Rust libraries requires macOS (lipo is not =
-available on $(uname_S)))
-> > +endif
-> > +endif
-> > +
-> > +RUST_MEMBER_LIBS =3D $(foreach target,$(RUST_TARGETS),target/$(target)=
-/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
-> > +$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): C=
-argo.toml $(RUST_SOURCES) $(LIB_FILE)
-> >
-> > +     $(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
-> > +
-> > +$(RUST_LIB): $(RUST_MEMBER_LIBS)
-> > +     $(QUIET_GEN)\
-> > +     if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
-> > +             lipo -create $^ -output $@; \
->
-> Can we assume lipo to be generally available on macOS? Also, is it
-> sufficient to just do this for the library? I would have expected that
-> binaries would also need some treatment there.
->
-> In other words: what does it help us to have the Rust treated this way
-> if the rest isn't?
->
-> Thanks!
->
-> Patrick
->
