@@ -1,145 +1,153 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4957231960B
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 05:21:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB446318ED2
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 05:36:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783056090; cv=none; b=W2kmcarxij+MDmXxyhAUpME1I5St7z8emSZM9QNMsjcKWcKiAK19CdFl6t1i4BfSt9/eMmKzCWnqD2LBeFOdPx5WYIhmbkEv0jSUVR12iB3x13v+93A85VRPkf/MQaeBoiTvLJP6Fm+hlOGZyKLsYyE8SMAl5ONh/Rw1i6p3KOk=
+	t=1783057011; cv=none; b=J2AmUU1HbwswDr2keOsUk2GX4YCJTm5d0CZBS73+Nc4EM1rSdr+pjqUYnTgEiVtn8Br+5Nw+bO0fuVmiYiHBXW0H3AUn9p0GQfvUFkcAVjCypQLyqeLgYh0TreqEVMAYsq9NIt7LsrELOMLigu050OXItOsobD42qYKja/OQO48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783056090; c=relaxed/simple;
-	bh=1/puOwVmW8zJH8BYhj5MP9FXzxBhzatEec88y8EH1dg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZHtkgGFD3C4ZTNSDdJM6/cQFOkL6tjsdYqO0FVDp5pl+0U8eHbSuA5EOTYXxy/aC7YYnZJLuyrEliu7LPIZcUMlW7WD9cZxzyqUpUseqbK47FmCO22DOGm75JSwYVdpo8BAmoEjdVbeC1B1yz/1XOFHo9kRXpvdVufUPLIUSbBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WM/AFRZ0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j7WVP4nR; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783057011; c=relaxed/simple;
+	bh=WnfbS60/Kh/4ve6HTgE3hiQgey7b+Jg7TYvlQGx7okM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SETsKiTCMZClpo9OjOHSmhp19Y0/l4IOaUZP00EC0wWGTOJrR8wbfr7B8Yroy/1kI1EU4U7oYU6AI6kP/ikx6U/FUOXK6HxDwzBbMnCLKPAU+I/quEIVxwwqMoaaRcB+TEeGCoScKxiacGmzqAQfXJISQqiV4jJBKtiJlz4AgDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uUfpIEj4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XQinBLAF; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WM/AFRZ0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j7WVP4nR"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3F1831D00013;
-	Fri,  3 Jul 2026 01:21:23 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Fri, 03 Jul 2026 01:21:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783056083;
-	 x=1783142483; bh=70nU6CccUD1NrN1ViqhX4zpoyBqEDIjYGsmj55enroA=; b=
-	WM/AFRZ0vsbaYTP66IiB4jsBLPP+3dIBprLXJk1gJj9VK34z8MrQfh3jhOgGFNrn
-	EeYgltFs/ROaM7qWogSKHMmEeRQXPEHfM/eyKF8GJRLduFVdzw/g0dIZDA9NYAmF
-	SoksxxvdjnuLngZxpLsuIf7kbLFmDusR7jwj2fca2CTg8tsJcbNGqhrRp47/t8bF
-	10jQta29BMzy1OLxaQVvO3Y7BpmJKl25bRnQjog4l2qo6JHk9dNVzy0wVfkUf4QW
-	4E2M2J8ZkR5X+OA9Y1tFFyJzKtaCASeXGdxi2PnN6h9TMPpNI0ps2sS9k74uNZhG
-	hNymgsXovwOO6+FdHIKbPA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uUfpIEj4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XQinBLAF"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AAD1C14000A7;
+	Fri,  3 Jul 2026 01:36:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Fri, 03 Jul 2026 01:36:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783057008; x=1783143408; bh=h6sLHhLSCz
+	d3kaPHKWXZgWti30+XpY0FKf9uXHu/Hoc=; b=uUfpIEj4b52+WcZdOR+UhWm+wb
+	lWEZnV2lLOsvqU+q/ArkUXScP/QDcuAKb59UObGK7AVjEVUg92IMG4ykSvS2J9lm
+	wnyh0Z+vP7G4p+G8BUpOmaC1EaN0rQPsdBpc8qW1zdnlkFcYyLKXk0WL1rm4KB8g
+	bdJePwhsbt9AwlbMGAiWWjwOa7lzXopNJvvkFciPE5W+ZQCQsqRQIv91AmZkQB/l
+	h4lnzXSL7C6zoKW/qOLooUCNNWBfHHWrVids1aCrQivkg7AZWn30lwHm22y0vasN
+	KmxbgdlYGhR6y5LV/SHmVQUMzpIiA2S0ZmwVuoCxxa+dPHWLErw6lMpspRcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783056083; x=
-	1783142483; bh=70nU6CccUD1NrN1ViqhX4zpoyBqEDIjYGsmj55enroA=; b=j
-	7WVP4nREY9giuDq3+zg/yMPZZbfR77KetxmPp1QBTLf7JKimCw/wI2HF32YSc4Ap
-	sU76+c0gx6ob2XAJRUVqViaz/ok1XV378aO5ESVaTNjCvfVRRnS8vl1/nORfx4GN
-	GglUu0IR6SwV8G3tw6EjKgIastnKD7s/Bji+x9hfm8JtGFsDk+E0fGi2l31jN12O
-	6V5COPoVtp473wWAi2qFmJTLcm2LzMY27wUA1hQ8iKoESUhjop/mWKdIHVhHtJH0
-	2iaBOo9xpJPAPIqIAcQ0DeiZTwijsfmNWnZmQ752A80FmNvHVaVCIkCRPqrR5qqP
-	VQGDcnC+vY+GEzj4CpOGw==
-X-ME-Sender: <xms:0kZHagDgNTaujPwjGJGeOcD94J24SeRAH5lcwakE9N88NJ7GWXRhsg>
-    <xme:0kZHap9XAq4T6qs8_uzDLvl-5vaOALWCd3_6Zy-9KBa5k3MugfB7GelVg_vfDBpUy
-    KjHSJgh7MyhnbvALIP6yOTKHk-A8jjB66LI7vL4vm5dhXcwDHiox3Y>
-X-ME-Received: <xmr:0kZHag8xyg5rejbleKF4jMfbavkn8geaCGsncVIQ-OiC4MFasOlQ-yFyH1-IeuuWlYhC1lrOJrjaFzuTscyIwH0PnFxWEG55jVxaS6dN4w>
-X-ME-Proxy-Cause: dmFkZTFIusyqErPxYI9TvTZysJsDRcg1ylMHaOR3Ssn+u9XexAtwJXGbO+jIzMpDVjj5uv
-    s9y41Goxgj6ae1FK8cCkzvTO8wFJloudNpLvQeQDUxiEdLETpz+YP1zLL++igh48YZXcm6
-    t6iQRl2F3TqshHkkDne7YlYhbQMvGktkufaj3JS/BAj8Ru4CZCy1pG8yi8r7eg2v7qNk2x
-    T5ERNb7w7jz3Of/lko2cZ/Jpzu3jAg84eV4YKTzFBRKWJDzL7CDvCQpKLfOME4Kh8NG6Wu
-    H4lKfRg9Dalm4rK/HKSZJYTtzEXRG1XsjobOIUO+DRAapM1BtTIidpInOg7Tzr/tvi0BpW
-    4JgEvWintb6rHzeMjC3GIW1bIpUFofn6iuoNuEilSJ7ahasoVSeDicRLUZDKL9pOxojJM6
-    m86RvLZ4QVXVoqQYI14v/FTWVIBdLKnXYyIHBpsFCD60JM7xtBadRBbd3VFSj5RZtElT6R
-    cvcZ9jPiRP+psdq2dpPlA9NDTd78uzDCDFU2816PooUEZgaaxex5TbNSudvL/rJZTDmN/H
-    DubksKcCjo7UJsaotduXc2Hyy7t+NfAkp7OJNBHMWoCTn0rEsmGTl5NsVvOCUWp+wFqAX/
-    vg2GJD/DqZyMl55cuonlo7viQL6dBcXOsngRkpKDqAevjk0BSRTFdHKHkUJQ
-X-ME-Proxy: <xmx:0kZHagfhyBjfvOqfFfylUov825HDFvcYz9oIsUatg1MlLw5qYp3HfQ>
-    <xmx:0kZHapGVifYLgfoIGbPcm8UyzVISOGPsUHqPNcqemhltSVDXrDK60Q>
-    <xmx:0kZHaud1Mj9seOLR5JtcB1ee9jc5aNJrPA_m1MZ6MdytvvN4KFFrNw>
-    <xmx:0kZHajHHMK_StyxOCqYa2JZihK9FhboqqalwtF1h9Fh3QxMcNGjBJA>
-    <xmx:00ZHasm-Y3juPf6mi5U_JoRnzwyrJCro-NF5qJmIbOtLP5wzN3g8Gs3A>
-Feedback-ID: i197146af:Fastmail
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783057008; x=1783143408; bh=h6sLHhLSCzd3kaPHKWXZgWti30+XpY0FKf9
+	uXHu/Hoc=; b=XQinBLAFjR8l8+S1Gb7uYJ6+W6u823f65bb7fo2yWznMosjS1Pr
+	JUpRSBk39RdaziRy+BA6hEPzr6oROlK2wVPtKXWyGIuxjx9UHXSESUtXHXlNpeed
+	GCUMyeGza760FCfh/MkaY78ksilpaf7Fdb1A8jBldhkDRhfIP664wQTVsBAOmywr
+	80SNWu7Ix6aeS51S2FPQS7Eau53yKkU9Dh5IvR4YkehQgY7tBmIFQ5p1PeYnfbrl
+	AEiB3D7t7kfDg+QnaY5kr799wq/y0UDMnCvOpZD0Zs1RxGc70MoGJ283SbxMdrTk
+	iTR/plGaYCzoHnuSv4RIPumXmwRND1Zjl+g==
+X-ME-Sender: <xms:cEpHalE9e91qN_jlSKcanvDVHOQpX-o2hKbDFCjNQiZEw71kfNwXLA>
+    <xme:cEpHauAircLu3n4RfJ6zq1SGsCknGL1lLN0lhnWQgNORHCmAMIjp7Lm0S6PhLMnRV
+    vYvpveQt54wX2fSJBwHs4Ug1GXUPlPxxfIrqkPEDfpl01lgTZfIag>
+X-ME-Received: <xmr:cEpHag90UCCj8vRusOHRf_kyn2IdNl7oYOvixFK5Joc6pQqjJ4znXZ2LS1sBLUL9wALDFPc-Za9ibua1kLdMRDBw2iybCTNa4hJzL2g>
+X-ME-Proxy-Cause: dmFkZTF4qQ4Ym+TZ/j8/ZaQGANnHx5jkHEfd5swHukHI+jG3xHl5bwvHPHTHAmdfAke+uT
+    zPPrZJCA5yYxNL0RD8wU34LHPopKWgwXLgiD7z5M2Be7jA08j/QA7ZMjgc2GF46iREiq6V
+    v2Hz1RAR0tv26CvOuhIyXJbMumaLrO6yS78kk1x630/dDVYXzvqtaLK4h2Iw7AFvVUtKn1
+    BmuxiuGDxYIsyGenK6S/AUlQ4SdKtXoFwvIWEk0G2XIvwvnZEeSdDVtTpg8lukTzYBr6jD
+    uHGhPVjrQ5PgEYQ1fRrmbbteEkaxQ2yhS3lqJRBYMlxkEGd0K8eGVemv9yf1H9dCE7lTAF
+    a2sQukozOq8Ck8Q5KA8CNXkoEFo5jGIuUYwpE0V6Lhr4gNx0mq7TWDAsT4zqlRQIEh7grn
+    23mtpkyplbIjCaOg1RoEIzZW0DkBjlOHrVJrQTGuDZU2YwL7PM6BHKh9FvrA8UzNnZb4l9
+    nZUXfVs6gTDoh9GK9Xec0sP6p9XaNXbfaokHv00hWBickwzLgdIRfakGzknw7kokdKh79J
+    NifIPc70Qdoi6zfGOShOZwe6PwIKdxq8PbdWfYHUvY60fYCPgNOkBNnOD4LXDx6NfOR9vk
+    qcj90IdEiWbiBBhTb0bSp7TRCyeQPOjgcPC9O6cLKj0fPO8XqXCcNbFE0zOw
+X-ME-Proxy: <xmx:cEpHaiBUSO7qVbYhb-__qD1_EFAzk-aCfQOVh8vMcgcfIlC-s1JdXw>
+    <xmx:cEpHatRgViSeiWXp0-RyGNUPo-RNw71SiFb4AbG-aSJn042YnSYUXg>
+    <xmx:cEpHahvRZb5czkwAm9VQFqlw8jRE-iFXYynMbbw40AIblypl0BFUZw>
+    <xmx:cEpHah3BJMgQ2mqQlOKnX3Tcz2FCQ0oN-2SaEa3BjCPRhQyDvUQOcw>
+    <xmx:cEpHaoADhYViJS3cC8QTUoapb1JDnk36DZdh4nrG2CvoeCeabRVR_K1l>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jul 2026 01:21:22 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 19fd0e70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jul 2026 05:21:20 +0000 (UTC)
-Date: Fri, 3 Jul 2026 07:21:17 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Mike Gilbert <floppym@gentoo.org>
-Cc: git@vger.kernel.org, adrian.ratiu@collabora.com
-Subject: Re: [PATCH] meson: restore hook-list.h to builtin_sources
-Message-ID: <akdGzbF7dex9XQwp@pks.im>
-References: <20260701193928.358825-1-floppym@gentoo.org>
- <akZGJP1kVtjBFN_e@pks.im>
- <CAJ0EP43gyQf_XhCLCNEzCq9wMYXZBQX=PWjR-wYqoESSvByJiA@mail.gmail.com>
+ 3 Jul 2026 01:36:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Shnatu <snatu@google.com>,  Koji
+ Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH v3 2/2] Makefile: support universal macOS builds via
+ RUST_TARGETS
+In-Reply-To: <257f5ef42fbb2841036591657e740872635df49b.1783030971.git.gitgitgadget@gmail.com>
+	(Shardul Natu via GitGitGadget's message of "Thu, 02 Jul 2026 22:22:51
+	+0000")
+References: <pull.2288.v2.git.git.1782943303219.gitgitgadget@gmail.com>
+	<pull.2288.v3.git.git.1783030971.gitgitgadget@gmail.com>
+	<257f5ef42fbb2841036591657e740872635df49b.1783030971.git.gitgitgadget@gmail.com>
+Date: Thu, 02 Jul 2026 22:36:46 -0700
+Message-ID: <xmqqldbsk51t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ0EP43gyQf_XhCLCNEzCq9wMYXZBQX=PWjR-wYqoESSvByJiA@mail.gmail.com>
+Content-Type: text/plain
 
-On Thu, Jul 02, 2026 at 01:03:05PM -0400, Mike Gilbert wrote:
-> On Thu, Jul 2, 2026 at 7:06 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > On Wed, Jul 01, 2026 at 03:39:28PM -0400, Mike Gilbert wrote:
-> > > diff --git a/meson.build b/meson.build
-> > > index 3247697f74aa..bdc83843e8e0 100644
-> > > --- a/meson.build
-> > > +++ b/meson.build
-> > > @@ -566,19 +579,8 @@ libgit_sources += custom_target(
-> > >    env: script_environment,
-> > >  )
-> > >
-> > > -libgit_sources += custom_target(
-> > > -  input: 'Documentation/githooks.adoc',
-> > > -  output: 'hook-list.h',
-> > > -  command: [
-> > > -    shell,
-> > > -    meson.current_source_dir() + '/tools/generate-hooklist.sh',
-> > > -    meson.current_source_dir(),
-> > > -    '@OUTPUT@',
-> > > -  ],
-> > > -  env: script_environment,
-> > > -)
-> > > -
-> > >  builtin_sources = [
-> > > +  hook_list,
-> > >    'builtin/add.c',
-> > >    'builtin/am.c',
-> > >    'builtin/annotate.c',
-> >
-> > ... that's exactly what you do. So this fix looks good to me, thanks!
-> 
-> Thank you for the review. This is my first contribution to the Git
-> project and I'm trying to follow the lengthy SubmittingPatches guide.
+"Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-It's gotten quite long by now indeed.
+> From: Shardul Natu <snatu@google.com>
+>
+> On macOS, Universal Binaries contain native executable code for
+> multiple architectures (such as Intel x86_64 and Apple Silicon arm64)
+> bundled into a single file. This is standard practice for macOS
+> distribution and CI packaging (such as internal distribution packages
+> or tooling like Burrito/Homebrew), allowing a single build artifact
+> to run natively across all Macs without Rosetta emulation or
+> maintaining separate packages.
+>
+> When building Git C code for multiple architectures on macOS, the
+> Apple toolchain (clang) natively supports universal builds via
+> CFLAGS/LDFLAGS. When "-arch x86_64 -arch arm64" is passed, clang
+> automatically compiles and links universal binaries for all C object
+> files and executables out of the box.
+>
+> Cargo and rustc, however, do not support multiple "-arch" flags or
+> emitting universal binaries in a single invocation. Instead, Cargo
+> requires invoking each target triple independently (e.g., passing
+> "--target x86_64-apple-darwin" and "--target aarch64-apple-darwin").
 
-> I believe we have "reached a consensus" and my next steps are as follows:
-> 
-> - Add Reviewed-by (or Acked-by?) for Patrick and Adrian.
-> - Send the patch to Junio with the list CCed.
-> 
-> Do I have that right?
+This is much easier to understand for those of us unfamiliar with
+the macOS ecosystem.  Very much appreciated.
 
-In the current state you don't have to do anything. Reviews were
-favorable and you weren't asked to do any changes, so there is no need
-for you to send a second version. Unless somebody else chimes in and
-asks for changes, Junio will eventually pick up this patch and may then
-add the Reviewed-by trailers himself.
+> +$(RUST_LIB): $(RUST_MEMBER_LIBS)
+> +	@$(call mkdir_p_parent_template)
 
-Thanks for your contribution, and welcome to Git :)
+The leading @ is a bit curious because among ~20 existing use of
+this pattern, nobody adds it to squelch "mkdir -p".  In fact, the
+macro uses the standard pattern to define $(QUIET_MKDIR_P_PARENT)
+that does the squelching when $(V) is unset.
 
-Patrick
+> +	$(QUIET_GEN)\
+> +	if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
+
+Recipe parts in our Makefile that are written in bourne shell, the
+CodingGuidelines apply.
+
+    $ git grep -n -e 'if \[' ':(glob)**/Makefile'
+
+gives empty.  Probably,
+
+	if test $(words $(RUST_TARGETS)) -gt 1; \
+	then \
+
+would fit better.
+
+> +		lipo -create $^ -output $@; \
+> +	else \
+> +		cp $< $@; \
+> +	fi
+> +endif
+>  
+>  .PHONY: rust
+>  rust: $(RUST_LIB)
+
+Other than that, looking good.
+
+Thanks.
