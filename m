@@ -1,177 +1,165 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB6A3B27D8
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 09:24:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DE93B19DE
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 09:28:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783070681; cv=none; b=O5bA3ub5F3fOPFZs/n3TcGksYjOqfgRYqKGM94zVmBoNXa7RxxwqilYep/5Id49qFROxYkhahCff87ZzFoHdj8+oc4MW5UnTv8ZdOW4Wll5vTQtygYWSuaZGBWJ7dPj96SX7BYNfAUZi5pV2P/baWox9gckeARF4rnWyWVzd8GU=
+	t=1783070909; cv=none; b=Rwbvc2FqgSfuc4rYct+sAFqNAsUlJus2v2pWlb5tizK9WAX9ib3qEt9VcbDGa+yLhoMYO7jzGw34T4GtOTxW7TRWI2HOD7j68LlNOpkRj56pFJHh2JESxEV8ZPI7OUw0B2KagjyMdn124RcEAmt/eFunPOvFBmJVUoTudEYlNDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783070681; c=relaxed/simple;
-	bh=SZcZJhmh5DaKPGCsrn4GJv9rj0zaTKFOdl7C15bWz+M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a8OnLmd6Axa7hH6qwcis0qwwOwtALyFFyBQVxg9JVN/MWbb5z5Q4ekYzGD7x0+wEEEdmD/x0JDg9C4wl7TkrnIZ6apDjV6gQ/tlMB/9zw3Uhbf5r1jkDXiIoTzlWJR14A10VXAkBtwN/6ZuIOzbhi9DAr2ipTgmw0jdGIn1PfVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P1wdxAAQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V2Sn6s/N; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783070909; c=relaxed/simple;
+	bh=ePH6db6I+G+Oz9TX2iwvkUeVZtqiaCXEIygCjMfCmCA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X8i5WW3kDz7Bok+j4l5RIBshChVLDMTEwkknW/TyiN/IUznzzDHcW2rpsooOq6qOEcI5ovxJOBl8d379UNjHvNZO3ZJ6P+rwROo5dHOYNjFSXqI1Fth5E/hZM3xu5K1BuH/CgeBiI0oGpYJacsqJKQBqeeExXk3cHHjkJqLSDnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=WGFxEj8s; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P1wdxAAQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V2Sn6s/N"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id C60DB1D000E7;
-	Fri,  3 Jul 2026 05:24:39 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 03 Jul 2026 05:24:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783070679;
-	 x=1783157079; bh=M76ySHe1+ZP3S3R7CuWibA4lkzAccC4tBQS/QEjE4dY=; b=
-	P1wdxAAQkvZbt3nTWBJ3uT8IQc6RxWHpSZYw5FQcsoGfPrC2yEcEj4rHukgkJNMY
-	T7E+22YOL/FV8iJMwpTZDsugQ1iJCbfaW+2mOFfbG+xIZMWHjkKA0rIT1YxHDlu+
-	Z6f+HPG73A1Ckn2QNSqyvG/94qahHhmmC4GlslB4sv9Wq8YtmpImeKEIzC2Yq8Q1
-	/tFZ1QgRXHL1QWW8kufNFtaUBnFBrq+1sKiw6CqeZZdauff/hI5bXAkzwb6vmR/J
-	Hjw7rMUtXK6LPUmNbQhSiHnx9vg6LhI4R2zMzhkeylNmY2iFLqSZWLv+w3j2xD0j
-	v8oOpATwvfrtmgSUb0PuVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783070679; x=
-	1783157079; bh=M76ySHe1+ZP3S3R7CuWibA4lkzAccC4tBQS/QEjE4dY=; b=V
-	2Sn6s/N0X2D0i3N30qhcubAARFpsstrGfoF5HJmQmEW4xEbzIR/jOp3I83InV7C4
-	vA5h68qQyh0WUbzUCjM1DG0gfEFBc7KGGCCn5idELzTAzbVdIWFFwbwUeqV6upnJ
-	Nf0edNFyTE+QKXg81UfetsT7DP73vClWtJ2cGrA117Jdj9O2D9wSHwrnvxhMmhFs
-	ptOAEdefyYqTdWsgy4DM2SCbPOEQPe19LiEu6Q/cSzLw+mWCS5HYXYb4HOAWhCjI
-	Fu0D9eQiQIiZHXtTYVoyPn8Jws/PMpIWxG1cwklYaV5zqH6dTU53xW4srXZYVVdZ
-	l4TdgSXOwuaSq4zZrdSog==
-X-ME-Sender: <xms:139HajzVYAHMDivZnfMJ4YcJbd7H2n4LUGpQKJ3VHW7MG7RLFoqbyA>
-    <xme:139HaiKZS0zwivl-WJ9f7h8u8Z7LRkxW5HMjtqeRi6sSC3fvW87stbzcB0Gn7BaWF
-    nlmwWnBQ9DdeJUjF5CZTbFecNAJp6zATVT9cciy_SPvEaBic7hx>
-X-ME-Received: <xmr:139HalpSL7IA92YUuHQWRLP3q59HV9SuKM8rFhaIrdIDGsQL4hGX9Frh0gU-Rhb-VX88-NLK0ZH1LA_-0Yspuiz6Oak1i39zrSxONmECKA>
-X-ME-Proxy-Cause: dmFkZTFb5SBx9MeY3S5o5Ioqnar670cY/8XxsDOxiA7WSBgrFSHAkUx7DJ0mPTSh10hln+
-    NvG5kJwq+PLRpa2VvbP94nrwnDUpfQlL2ITJTS7KvpW0pBHth0nIMzLG4LynhomUdIvyDJ
-    u7b6wdnb8qmyq1yalx2lBNTUPFRXgACFqe6+WmflmFjQCd3WBVU5JMykP+n0J4vOdH3i8c
-    347HlXopohgkAcU3cCdVhV5PDW2AAEkCy9H9oDK53D4ymfi9YiEH/y5z33uo35SfKFPzkL
-    ugMGN+2d+N1xOG8hGC+IDD16+J8NTf0Zq9UsUiODtp88ohGckjL+H2Ebe6Ez3qdDLqrDsf
-    C6vhHoCAPjBVAKgKbXvKd8Xg6ooMtj0uW2CsZbi+n5upgBc02wMA5S5ObZ01kQvPV1dOf7
-    3gCT5Ce4GTPLlrKNf7VEfZ719CnbjqkSuzh6GSa7uOAA9pmSRK6zvCROQQeu8nRLCQux1a
-    vL9tb0jiq1Qu8c4HBULBrSFDbOO/qbBcGge2UV80wN8Pq7BxTCaZgdxKZ/g3kbPDnOxDuJ
-    j4OLdyXEoEXjka1A+o8qdyoggCKa/M8Z5uhRTbjpEDgXzlCzI8VaMGiS4PYmNUYxiRIRXr
-    qzZCtmxqoMyz2DQPd0VT12sEX8cm+c7/VGuuTLah9WD077YKbKtdYg0PVWhQ
-X-ME-Proxy: <xmx:139HapIWvN4z5zkbTwlK4yWNpdHy0jbGekz8gjxV3fFyl_ByzTfXhg>
-    <xmx:139HaiSFCnKSxMIDJ--ksqgWnp6OTjFMxAEhIz5VFAUmdD-aOlomSw>
-    <xmx:139HagtiRfsM8gv6idDfwcNndPCEI55DZGXQ6GYn-sNFFZIz-vkHZg>
-    <xmx:139Harbo_ZRgqmYGIjdSeNUxiG8RXWzI5broY-MCwsfe-354gP0QyQ>
-    <xmx:139Haonm51SsjwP3vcclEwuLXw53EDnivrUSqHLDWE2oAzWtWNGr5qb0>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jul 2026 05:24:38 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ab6f5987 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jul 2026 09:24:37 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 03 Jul 2026 11:24:12 +0200
-Subject: [PATCH v2 9/9] gitlab-ci: enable "GIT_TEST_LONG"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="WGFxEj8s"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1783070905;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Bdd7xPGh7XbztyEhourLiLMhjtWuVWPmdQ6VkRqswaU=;
+	b=WGFxEj8sUATqluuHOSKFAj2FoQUWe+XvLVL6yiiHJ70+v+dX8CR+F4LfEhjR9BiHzJVpxI
+	KfPtr2k/U/eUCfIFQ026FlycMRe7tfcSzWdUsk00cDKzzUt+31qqliJVLrl3S6fKTbfeo2
+	WqmbuQIhHTYMsHhYm4yMsWZEKnqd574=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: oxsignal <awo@kakao.com>, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 07/12] reftable/block: fix OOB read with bogus block
+ size
+In-Reply-To: <20260629-pks-reftable-hardening-v2-7-b0228e7d908d@pks.im>
+References: <20260629-pks-reftable-hardening-v2-0-b0228e7d908d@pks.im>
+ <20260629-pks-reftable-hardening-v2-7-b0228e7d908d@pks.im>
+Date: Fri, 03 Jul 2026 11:28:21 +0200
+Message-ID: <87wlvc2zii.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-9-79076a7e0c62@pks.im>
-References: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-0-79076a7e0c62@pks.im>
-In-Reply-To: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-0-79076a7e0c62@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
- Jeff King <peff@peff.net>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Starting with 7a094d68a2 (ci: run expensive tests on push builds to
-integration branches, 2026-05-08) we run expensive tests in our CI for
-certain events. So far, this has only been wired up for GitHub Workflows
-though, which creates a test gap for GitLab CI.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Plug this gap by also making this work for the latter.
+> The block size is read from the block header, which is untrusted data.
+> We use it without verification to access the restart count at the end of
+> the block as well as to compute the restart table offset. With a bogus
+> block size that exceeds the data we have actually read this can lead to
+> an out-of-bounds read:
+>
+>   ==1458284==ERROR: AddressSanitizer: SEGV on unknown address 0x7d8ff7de4b7d (pc 0x55555598c339 bp 0x7fffffff4ef0 sp 0x7fffffff4eb0 T0)
+>   ==1458284==The signal is caused by a READ memory access.
+>       #0 0x55555598c339 in reftable_get_be16 ./build/../reftable/basics.h:118:9
+>       #1 0x55555598bee2 in reftable_block_init ./build/../reftable/block.c:344:18
+>       #2 0x555555813e0e in test_reftable_block__corrupt_block_size ./build/../t/unit-tests/u-reftable-block.c:540:8
+>       #3 0x5555557f684e in clar_run_test ./build/../t/unit-tests/clar/clar.c:335:3
+>       #4 0x5555557f2e69 in clar_run_suite ./build/../t/unit-tests/clar/clar.c:431:3
+>       #5 0x5555557f2882 in clar_test_run ./build/../t/unit-tests/clar/clar.c:636:4
+>       #6 0x5555557f375f in clar_test ./build/../t/unit-tests/clar/clar.c:687:11
+>       #7 0x5555557fa49d in cmd_main ./build/../t/unit-tests/unit-test.c:62:8
+>       #8 0x55555584b55a in main ./build/../common-main.c:9:11
+>       #9 0x7ffff7a2b284 in __libc_start_call_main (/nix/store/57iz36553175g3178pvxjij8z5rcsd4n-glibc-2.42-61/lib/libc.so.6+0x2b284) (BuildId: 8ae0b698f2d4e727f569f64bb166e08ae30bd077)
+>       #10 0x7ffff7a2b337 in __libc_start_main@GLIBC_2.2.5 (/nix/store/57iz36553175g3178pvxjij8z5rcsd4n-glibc-2.42-61/lib/libc.so.6+0x2b337) (BuildId: 8ae0b698f2d4e727f569f64bb166e08ae30bd077)
+>       #11 0x555555694c24 in _start (./build/t/unit-tests+0x140c24)
+>
+>   ==1458284==Register values:
+>   rax = 0x00007d8ff7de4b7d  rbx = 0x00007fffffff4f00  rcx = 0x0000000000000006  rdx = 0x0000000000000010
+>   rdi = 0x00007d8ff7de4b7d  rsi = 0x00007bfff5cf0420  rbp = 0x00007fffffff4ef0  rsp = 0x00007fffffff4eb0
+>    r8 = 0x00000f807eb960b8   r9 = 0x0000000000000001  r10 = 0x00007bfff5cf05e7  r11 = 0x000000000000000f
+>   r12 = 0x00007fffffff58f8  r13 = 0x0000000000000001  r14 = 0x0000555555ee8160  r15 = 0x0000000000000000
+>   AddressSanitizer can not provide additional info.
+>
+> Verify that the claimed block size fits into the block data before using
+> it.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/block.c                |  9 +++++++++
+>  t/unit-tests/u-reftable-block.c | 33 +++++++++++++++++++++++++++++++++
+>  2 files changed, 42 insertions(+)
+>
+> diff --git a/reftable/block.c b/reftable/block.c
+> index b86cb9ec5a..4d6b11c2e7 100644
+> --- a/reftable/block.c
+> +++ b/reftable/block.c
+> @@ -340,6 +340,15 @@ int reftable_block_init(struct reftable_block *block,
+>  		full_block_size = block_size;
+>  	}
+>  
+> +	/*
+> +	 * Ensure that we have sufficient data available now to satisfy the
+> +	 * claimed block size.
+> +	 */
+> +	if (block_size > block->block_data.len) {
+> +		err = REFTABLE_FORMAT_ERROR;
+> +		goto done;
+> +	}
+> +
+>  	restart_count = reftable_get_be16(block->block_data.data + block_size - 2);
+>  	restart_off = block_size - 2 - 3 * restart_count;
+>  
+> diff --git a/t/unit-tests/u-reftable-block.c b/t/unit-tests/u-reftable-block.c
+> index 088162483e..43b9d5fb59 100644
+> --- a/t/unit-tests/u-reftable-block.c
+> +++ b/t/unit-tests/u-reftable-block.c
+> @@ -497,3 +497,36 @@ void test_reftable_block__corrupt_log_block_size(void)
+>  	reftable_block_release(&block);
+>  	reftable_buf_release(&data);
+>  }
+> +
+> +void test_reftable_block__corrupt_block_size(void)
+> +{
+> +	struct reftable_block_source source = { 0 };
+> +	struct reftable_record rec = {
+> +		.type = REFTABLE_BLOCK_TYPE_REF,
+> +		.u.ref = {
+> +			.value_type = REFTABLE_REF_VAL1,
+> +			.refname = (char *) "refs/heads/main",
+> +		},
+> +	};
+> +	struct reftable_block block = { 0 };
+> +	struct reftable_buf data = REFTABLE_BUF_INIT;
+> +
+> +	cl_reftable_write_block(&data, REFTABLE_BLOCK_TYPE_REF, &rec, 1);
+> +
+> +	/*
+> +	 * The block size is stored as a big-endian 24-bit integer right after
+> +	 * the one-byte block type at the start of the block. Corrupt it to
+> +	 * claim a size that is larger than the data we actually have. Reading
+> +	 * the restart count and restart table relative to such a bogus block
+> +	 * size must not access out-of-bounds memory.
+> +	 */
+> +	reftable_put_be24((uint8_t *) data.buf + 1, 0xffffff);
 
-Note that these tests cannot be run on the Windows runners, as they only
-have 7.5GB of RAM. This is insufficient for some of the EXPENSIVE tests,
-so we explicitly disable "GIT_TEST_LONG" on these jobs.
+Same here, would it make sense to write a size that's `+1` too much?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- .gitlab-ci.yml |  6 ++++++
- ci/lib.sh      | 12 ++++++++++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+	uint8_t *p = (uint8_t *)data.buf + 1;
+	uint32_t block_size = reftable_get_be24(p);
+	cl_assert_equal_i(block_size, 47);
+	reftable_put_be24(p, block_size + 1);
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index a4aebe8b71..1c4d04da9d 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -147,6 +147,9 @@ test:mingw64:
-   needs:
-     - job: "build:mingw64"
-       artifacts: true
-+  variables:
-+    # Windows runners don't have enough RAM to run EXPENSIVE tests.
-+    GIT_TEST_LONG: false
-   before_script:
-     - *windows_before_script
-     - git-sdk/usr/bin/bash.exe -l -c 'tar xf artifacts/artifacts.tar.gz'
-@@ -195,6 +198,9 @@ test:msvc-meson:
-   script:
-     - |
-       & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'ci/run-test-slice-meson.sh build $CI_NODE_INDEX $CI_NODE_TOTAL'
-+  variables:
-+    # Windows runners don't have enough RAM to run EXPENSIVE tests.
-+    GIT_TEST_LONG: false
-   after_script:
-     - |
-       if ($env:CI_JOB_STATUS -ne "success") {
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 01a0bc6b75..6c52154eac 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -215,6 +215,7 @@ then
- 	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
- 	CI_REPO_SLUG="$GITHUB_REPOSITORY"
- 	CI_JOB_ID="$GITHUB_RUN_ID"
-+	CI_EVENT="$GITHUB_EVENT_NAME"
- 	CC="${CC_PACKAGE:-${CC:-gcc}}"
- 	DONT_SKIP_TAGS=t
- 	handle_failed_tests () {
-@@ -239,6 +240,13 @@ then
- 	CI_BRANCH="$CI_COMMIT_REF_NAME"
- 	CI_COMMIT="$CI_COMMIT_SHA"
- 
-+	case "$CI_PIPELINE_SOURCE" in
-+	merge_request_event)
-+		CI_EVENT=pull_request;;
-+	*)
-+		CI_EVENT="$CI_PIPELINE_SOURCE";;
-+	esac
-+
- 	case "$OS,$CI_JOB_IMAGE" in
- 	Windows_NT,*)
- 		CI_OS_NAME=windows
-@@ -319,9 +327,9 @@ export SKIP_DASHED_BUILT_INS=YesPlease
- # enable "expensive" tests for PR events.
- # In order to catch bugs introduced at integration time by mismerges,
- # enable the long tests for pushes to the integration branches as well.
--case "$GITHUB_EVENT_NAME,$CI_BRANCH" in
-+case "$CI_EVENT,$CI_BRANCH" in
- pull_request,*|push,*next*|push,*master*|push,*main*|push,*maint*)
--	export GIT_TEST_LONG=true
-+	export GIT_TEST_LONG=${GIT_TEST_LONG:-true}
- 	;;
- esac
- 
+
+> +
+> +	block_source_from_buf(&source, &data);
+> +	cl_assert_equal_i(reftable_block_init(&block, &source, 0, 0, data.len,
+> +					      REFTABLE_HASH_SIZE_SHA1, REFTABLE_BLOCK_TYPE_REF),
+> +			  REFTABLE_FORMAT_ERROR);
+> +
+> +	reftable_block_release(&block);
+> +	reftable_buf_release(&data);
+> +}
+>
+> -- 
+> 2.55.0.rc2.803.g1fd1e6609c.dirty
+>
+>
 
 -- 
-2.55.0.795.g602f6c329a.dirty
-
+Cheers,
+Toon
