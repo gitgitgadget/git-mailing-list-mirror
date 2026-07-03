@@ -1,120 +1,143 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD5B388885
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 07:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783062634; cv=pass; b=I0eivVI28WoiF/bozb+BhYX3d2yuJzKQvFIglK4eG8s49aqCRHT4EFqJMhht5h1t6dDbOEM5M+zJ3xjH+kC5CH4BD0DvdxykGrnOkTSGLcL9CLZ2kwKjXYfMlvNu5vJa3VqxuLiSJls/Cc0aH1KXbj7DtUt5J27OvavCFpe0nn0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783062634; c=relaxed/simple;
-	bh=aogCxskktMdZDwl4HYu7y9oCIXPQtQeGpZAcjwcu7Lw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bm89pT+LJLcjoDyCyjREqRR5zi4sUPZ/sVwNqyLDyVb+QG/XtRzBjIEOFEi2oyVSgujK5lvw6dDdYEP+oCURTT1ZBTCBOI61iwd+7ptbSsQaQehK7yOC6jloIzw6CfjSQDaET/MIDRxCLX9lzpnkUWWcjM8sXfoB0hfpHOO/DZU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGsMtTWl; arc=pass smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C77930B53F
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 08:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783066800; cv=none; b=Dj22OsRSPKJJKmNrr+dMHk4dZQ3lcPnvcALuRgKa3GbiPL3Pn3xYyX4MKW9pyMlyLGaCQitw6Ku7+iRgqnujF4JLdzZnO7nojX9hQIM5TFaBrWPUzZtjlzB3UrKivknDzajD3Yxx4QNe8eE3unI2yhvoS4R5sGBNJn/Kcw6d/0o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783066800; c=relaxed/simple;
+	bh=Ag8KX3VoHa1AVNLMQi+S8KOzYwCFEkVz7UgjlcUISZ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PsoRZzqeEJq39OSqizOaAArDsQvod2bTbUSc8vG/94sMv/D+13PXyuNBN4sqVybWpKqnwrcfO/3RAEFvHMe1ppFapk8wTY9PhKcwFkDYYo09pZah+iW8pftFn4Gsf8sLFuSNyugQZVjg0ew60hWW+4ogIKhOAGz2OhEqVA8foQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zq3bWilR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rPidx6WB; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGsMtTWl"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c9cf07d2df6so174163a12.2
-        for <git@vger.kernel.org>; Fri, 03 Jul 2026 00:10:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783062632; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YBDlbvxjwpBIKwiIrIvkTTzrooQigY1rL6PANRWPIEYfuzZMmtDqHRuqlZu2gH0D1O
-         QYUCwP4LKW+KmBfWY1Xdh6rOOzGHBNoc/JbGPkqxq50HfS6UVdReGLtX2fwfrvhW7lb3
-         CJn/dIRtZpmAOiJ2H5lKOuNvMVaqM/6rzTDbrrsqYD9YDtb/FIfxBuP2MUlwgMKzkE2I
-         1jE/htg+OrbsKDDvjzpBdFSUtuklTftuH0c9MsXOm8x07yNebt2N9NvTNSFUtdxD3yZi
-         uiJiI56+ExstSga1A/LCTRRWiWnC6gnJ05tMX4KGKeD/KLMbnzR+/1tPsLQuaOApZ3Sp
-         j1aQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=J/3zv2atCG1oJ2Xs00epUHAjhRX4KKv1qVoLQRFGRpo=;
-        fh=NBuqo4SefB35QRIgWelYQtL2t+NSesZoSkW8edUAe4k=;
-        b=CWCd6CkSZrsaU/ERXiRoi2MQyzXQztHGwn65FgktUvNiu1WJSGV15BbheJ7pGZJd3w
-         bA2hfRLccdJuN8k/C+UCk/mcQlAcDHIquAn9ztm2IYBomjuZJ8ifRo/UFL0uKQV9KDcJ
-         IA2TRVebRRCVjRpreSs3KEwgK58pzp43B/BfUGVM9GTpQ7qGt2pUixdjwkaFUVyiEIAK
-         fvis9sIcfbPAJRFX/7RFgHe4MlWpst5EFJkgxpdLr8G3FAsY16b/VJDDP6uKreQIKm5g
-         ZJJzhjwUjSC7sPi3X+EFk8axGwPABjh4Cm2yXVhqbG/tDE4Nx/BSQnN6/Ia5nCde0isF
-         6waw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783062632; x=1783667432; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J/3zv2atCG1oJ2Xs00epUHAjhRX4KKv1qVoLQRFGRpo=;
-        b=lGsMtTWl965hbBrVW6iCkPI0wmVfDD2i/td19opWyr7qIbnzZqOj5gfq3SxqrbvUyp
-         JEyL+Xz/dsn2HfRMFJV2Nin40Ahil03jXp/v+Nyk1ui12aypkMRZXiTcSWMboSck6S1j
-         zxBkHZEOiNgoPm9UJZ8Wli5AHr+u9l54mA/cb4fC8AEB2SjkNrBoSM8sgojZV3oB8xya
-         hrEhZLxHjOiS55cFAjIBEzO+e4gaVf3Fnnxh+oT0WBYIv/Fdm9uyRI5xT+VM8KTZvBPY
-         GqYMBL/aXl25lGtXXTdtZr12zeLd/JQn3DevODNmb4Gi9sQ4yFbQTyuETQQ7zkQ3WVgF
-         pgZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783062632; x=1783667432;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=J/3zv2atCG1oJ2Xs00epUHAjhRX4KKv1qVoLQRFGRpo=;
-        b=q+bVAxqff2GBY4eM0WenpVmRd7skGd+bUgOV+vEVPLvzoCS4cwnzswDMublM1MrXy4
-         5Rw3ZjXfbYBqAbLexn5FEP8TcwcgEcgdyfuDtcNmbAez4kyh2yz/268vZmXMkCYZu16E
-         7sGsx644zzXGlHN2LLC+dyk6FLsFZPDeT9XK5wN8YHvGKb9IZTgQCGZDA/gdciC7KajE
-         c+L+L9GyOeS1wNmGdj+XjvbuPN3ZwNOBuQsQzfswLky989q/zO0xJaoXbsRsLMS8oLS1
-         FhImofD1doWxvuAxiQsHzcpNeFQOEWGKkNYijd8NxdSeXFrRtjV5AV7b8sLvOJUf82gp
-         z9Pg==
-X-Gm-Message-State: AOJu0YxdJHn2qObA0k1xy5QhHSNQdBpwoJK3Lmpy8T+OTV1QgHlQ9IKc
-	GT/Psu5sdSngiSEjoH6yT22BIrXHCE6RdjjQh0CQiwiOiHX+eb3KqixcEgtphienZhooGHbhI8s
-	YBIY6yh8jbDmXKiKRa1hbNedf9QgVUVM=
-X-Gm-Gg: AfdE7cmXh8RzNEvK7lJMCsx5tFPVT0H0orxmC4IDZCuQnYXf95vyzkjdayiv1kjEuIx
-	GH1/+iGIN9Kf5kCTOZFvf4l/a6BnHfbHZ2zCZ894AC2PM1Nly5yVQxfDnoGChF/tZU2sqQNL1Uw
-	10C6dXyS0zaU1cqgKcb8b/Y0F0lBY+EFKaPE+ws8TlFdmWetSTiWKtuxFYNLvl8JpRicsbkjXIc
-	MOC2LB4VCL21pnBl0C7Nvn5StyzuhF2PMWe3kBhpS++DypuzvVcRUaq9MVQdKEGO5DhS0K3Sr8y
-	PWewG+CTKQkTRi1+ijioV7fK4aSKcNihljsFCwcIFR4kcncqXpRKIBLW6g==
-X-Received: by 2002:a05:6a21:7014:b0:3bf:7f0b:2f70 with SMTP id
- adf61e73a8af0-3bfed47a56amr11161689637.34.1783062631990; Fri, 03 Jul 2026
- 00:10:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zq3bWilR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rPidx6WB"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9E90C1D00099;
+	Fri,  3 Jul 2026 04:19:58 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 03 Jul 2026 04:19:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1783066798; x=1783153198; bh=6PTgDF5jfX
+	io3QfOtoB1AIdkDD+Hpzk4ncOqjvh1hGc=; b=Zq3bWilRsiGhYKAKC5A9QVdxBu
+	i5yyBb971wExW0Nat0HpwMzhqg7Q/7pmnhvzCiXFdilZ0PBNKhPMQDaSDO6JjgrP
+	lZ+4MZdxz2GdnCvyILYo3LWYcVlELGGdDyt9UFxg9jSKX3syjx3sDiIRQH91z7Wv
+	ng/M9mLUpTMlbrmUpO5r5Pia73rI0H2oU90XwCNvaWX8HZh1yjIyPA9GihovQDpz
+	blPBoiJALXxHpdsedtCzxfQ/hiGPlGVBjM5w2plVLsrcv56kWXztPmrMYdVawXLZ
+	PfBbq6DBEP8qb9kwuOtrc752BVm6n+BR6UYO+MwJrmouhgTILwX+r6RCOFOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783066798; x=1783153198; bh=6PTgDF5jfXio3QfOtoB1AIdkDD+Hpzk4ncO
+	qjvh1hGc=; b=rPidx6WBkfBI/AENV6JwDAs29xlMRU1Zcx0Y6EDCf9W/zTY3EZs
+	ZYCRGSfKmr5eee/ISrFYoPTdwbUB313b5zXjcFX8EZV5QXEVjwYgFFMNENLjtZg0
+	nhaQxg4EuhSBhsKBCLZackPqcg2056DzjuKkj6aP1YEhITMCqpxFtXux7SJPkTwG
+	NTUi7UzdUMNsVGF2oEyVlxyxnvQ78xrdSggiK8u7SvShOvw9gqbQwILDDDY9AzhX
+	Mf9gP5gOBPX2vOFlAosq5Np++fQLU7oOjMbrPgLYzjY3E6iwRXD05IraSm7ML2r9
+	kUfnW9K8zj90iTEIJJfsZ+nC8qQm6dQTxNw==
+X-ME-Sender: <xms:rXBHamPZgz1jDnTds1kfCSMJra47Gmweuw_bzJqmlQwYr9OT-Y0FGA>
+    <xme:rXBHar9B5UogrwMtwYoDaXBL7cHT3FOjAy0zLyFz6uRxjwBget_fuB6MnidOrZnA3
+    CPqqMUcvKBl6M_GDfeIJMbPdiXR3jbAQLEmwG4YpGuDwxDkVvpZ>
+X-ME-Received: <xmr:rXBHaiSmrIiGsOkdzcrbb2pe8OdfLCwjJDTa_pPh5I6I-Hpn1Tf-9xFzHN1xc7HhEUATGsOOSs5D1C1LP2l7nHz_YhYVrQND9OWXkY1UbQ>
+X-ME-Proxy-Cause: dmFkZTFJXgM2oMSt6sZyKrW3yrg7loDKjxNMfZ2h7BoIqYejW+IOG2zIT8ZvhVTkaaSxtr
+    v7rxiLciDiJAhfJOHM5OpfDpS21tjD/H+1svqNuUflaJOSpkq1qpIB0XttPFw6xbtjWHD6
+    sy1w9r1IjaoFvXfKM865EJcXI8ajuABLz2p3ot5PGsdyN1zS38p2jJw+0/o3gS7nUUxh0t
+    dCntuSu9lFgfZVgu2oR/S2KVh0gN+dVAr782tuZ78lX2fGIAm2tBDTC8ZyWZlrIS8viprY
+    qyE0GKeM8oCbh4ifm8SB3doMsWWsB5V2wfBgH1pyiq6lBWOfCdvqyKKZAZOCG2gpZaU7Bu
+    gBI5c3CmJWjWrhIG5KqJIi9lq1H1vskxBCgHI/aQSZGb2Z5fQFG/IxGM1LGQV9x2A3BIsd
+    wtRxS8VKoNyx33Vpzi3bp44adYV8p5sVtGMef76DYCNTojbjNjTn3ST+Z6URd+Q1opGis/
+    3xQk3UC+evXz3B7B8NEdxGmuUu1oxI2QOsi5bIWtOv/qpBQ+3KIGAvcDPBKTKegxxjeQgF
+    XS7z+R/BvdNdElj0JfjqRgCEOh7DBPB8+fQ9wmUkFX03vbgYC4pyHhKmYh8iGNJDj/ciST
+    8kp3Bh2vyII5iaPy46wJgipQXAzfhHaB2On7fRJgOtyvV9LleFfR2xnj254g
+X-ME-Proxy: <xmx:rXBHalkjF4nJvTT_T7wddAjax5E5AiEXJ84XselA6YEkP9X-q3E0mA>
+    <xmx:rXBHaqQ46ZnTWConEmJQZq43OlaaqTtUGc42U7X_oJBTzv4St8vInQ>
+    <xmx:rXBHarPD9s7eDz75Qbv4lNqDz33H0udLEQE_jjR2PYWA4zIJsBUKBA>
+    <xmx:rXBHarU40_22RQJu5_kkeuIOPOhDTSCgRJ540mmM57ZwQdAQHPGzfw>
+    <xmx:rnBHalxhq3bd1Hz1knGuVGVODoHISDpaneCQMvzPb_NBAtJSnjcMYPnd>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 3 Jul 2026 04:19:56 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 63293841 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 3 Jul 2026 08:19:54 +0000 (UTC)
+Date: Fri, 3 Jul 2026 10:19:51 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Marcelo Machado Lage <marcelomlage@usp.br>
+Cc: git@vger.kernel.org, Vinicius Lira de Freitas <vinilira@usp.br>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9811: replace 'test -f' and '! test -f' with
+ 'test_path_*'
+Message-ID: <akdwp_a2EuhVoGVW@pks.im>
+References: <20260702140704.65805-1-marcelomlage@usp.br>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im> <20260701-b4-pks-history-drop-v8-0-19b5cdf1facd@pks.im>
-In-Reply-To: <20260701-b4-pks-history-drop-v8-0-19b5cdf1facd@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 3 Jul 2026 09:10:19 +0200
-X-Gm-Features: AVVi8CdNLrQko7d-0VJitU-VszjFjSI0Esk6jfrU5HlyiVpFfXvrpH83z_uymv0
-Message-ID: <CAP8UFD3OAktVQsLuqBNFH2uhEO31PH8ZF3ZT1ZW8k++XE8YLPw@mail.gmail.com>
-Subject: Re: [PATCH v8 00/11] builtin/history: introduce "drop" subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Pablo Sabater <pabloosabaterr@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260702140704.65805-1-marcelomlage@usp.br>
 
-On Wed, Jul 1, 2026 at 1:35=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> Hi,
->
-> this small patch series introduces the new "drop" subcommand for
-> git-history(1). As a reader might guess, the command does exactly that:
-> given a commit, it will drop that commit from the commit history and
-> replay descendant branches on top of it.
->
-> Changes in v8:
->   - Pass `RESOLVE_REF_READING` to make `refs_resolve_ref_unsafe()`
->     return a NULL pointer when it cannot resolve the reference.
->   - Drop unneeded code that sets `head_target =3D "HEAD"` on detached
->     HEAD.
->   - Add a test case that verifies that we can drop commits with
->     "--update-refs=3Dhead" and a detached HEAD.
->   - Link to v7: https://patch.msgid.link/20260629-b4-pks-history-drop-v7-=
-0-6e9392a957d8@pks.im
+On Thu, Jul 02, 2026 at 11:07:04AM -0300, Marcelo Machado Lage wrote:
+> Replace the basic shell commands 'test -f', with more modern test
+> helpers 'test_path_is_file' and 'test_path_is_missing'.
 
-Except for the style nit in patch 6 (spurious space character), this
-series looks good to me.
+Nit: it might make sense to briefly mention why we do this exercise.
+Like, what does `test_path_is_file` et al give us over `test -f`?
 
-Thanks.
+> diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
+> index 7614dfbd95..93d6b4c479 100755
+> --- a/t/t9811-git-p4-label-import.sh
+> +++ b/t/t9811-git-p4-label-import.sh
+> @@ -62,9 +62,9 @@ test_expect_success 'basic p4 labels' '
+>  
+>  		cd main &&
+>  		git checkout TAG_F1_ONLY &&
+> -		! test -f f2 &&
+> +		test_path_is_missing f2 &&
+>  		git checkout TAG_WITH\$_SHELL_CHAR &&
+> -		test -f f1 && test -f f2 && test -f file_with_\$metachar &&
+> +		test_path_is_file f1 && test_path_is_file f2 && test_path_is_file file_with_\$metachar &&
+
+While at it we could split this line into three lines -- it's getting
+overly long, and we typically don't chain multiple commands on one line
+nowadays.
+
+> @@ -135,9 +135,9 @@ test_expect_success 'export git tags to p4' '
+>  		p4 labels ... | grep LIGHTWEIGHT_TAG &&
+>  		p4 label -o GIT_TAG_1 | grep "tag created in git:xyzzy" &&
+>  		p4 sync ...@GIT_TAG_1 &&
+> -		! test -f main/f10 &&
+> +		test_path_is_missing main/f10 &&
+
+This is a stronger guarantee compared to before, as we only checked
+whether the path is not a file. Now we verify that it doesn't exist at
+all, which would be equivalent to `test -e`. That's a strict improvement
+though, but may be worth pointing out in the commit message so that the
+reviewer is not surprised.
+
+> @@ -168,9 +168,9 @@ test_expect_success 'export git tags to p4 with deletion' '
+>  		cd "$cli" &&
+>  		p4 sync ... &&
+>  		p4 sync ...@GIT_TAG_ON_DELETED &&
+> -		test -f main/deleted_file &&
+> +		test_path_is_file main/deleted_file &&
+>  		p4 sync ...@GIT_TAG_AFTER_DELETION &&
+> -		! test -f main/deleted_file &&
+> +		test_path_is_missing main/deleted_file &&
+
+Same here.
+
+Other than that the patch looks good to me, thanks!
+
+Patrick
