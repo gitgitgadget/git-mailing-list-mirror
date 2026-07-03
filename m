@@ -1,80 +1,79 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3914E3D6CA0
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 12:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7411D3D5C06
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 12:59:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783083565; cv=none; b=s1NOyAUygujSQ6EdCV+axKw7nRsc4HeTBvQEnNMPscvkWU/5myDMKypOFJTrjc1Lgr60+63GetTSI1KnRn1UZysicC/GieEZxscb09IVWOfHZcTNQskwcVOnHl1aVY2LcUESDdSEXpJpfpCbMhnqrKdDWpv/tIvbT3Yn67C4XNQ=
+	t=1783083567; cv=none; b=S9ooQu1ig5NkTnn6WVmYlkhnKnsvM7h/bQgXJBqs1gj2SdpRAg7I4tL8Cc+Lgbn4bwoRL8DP8LeUWJd2uopqEQeNqCWD6+5Voa07PDTSGLUOZezawEc0tCVtddoC/2FwrDhkRpPCm9AAve1pZ3SJ0iQqvPsN0LXlm3yNFe0O8P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783083565; c=relaxed/simple;
-	bh=B3AOJxHjQwDmHQk+vGXl1HIK3evnmBNKM/xH/VcBNHs=;
+	s=arc-20240116; t=1783083567; c=relaxed/simple;
+	bh=6zgukQkOcCwNQLOufDOl7V9tZA0xsIHv0laB/d+iuP4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lyYWrPzfV5aWBR5Lx8KFU5eMRdZ38DHfEJ01Db/bRXyPZZT/QoXgWsmHrem5Sx2HdbT7IrMv711hSqTRfbR0tRXzWNQoXSijcOVsppk4n6XZ9UP7gKbjZtgn6YjcEI/XqFDv7OLlpgwQEFP+KsNhzVw+UaCMagrvuuy1KSSb/M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F6mJK21m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YI1F4kMC; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=spwAd63JZwt7krTU8R2yTnEJOA6FinTIoXqxwrXOXeVDV20QApXGB1IFSTJ4l22zxUjCW+qCLTvpXeQQXi5VoE+hD5WxDmvT9hiP9MtTa+tyLQCP+C4CdDEcdF6K0uLipzsrpkG9CQb4W1dEM37TroQ+qiifPw0Ai1nvrh+YRCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FYhQWAhL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d2ECi7OF; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F6mJK21m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YI1F4kMC"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FYhQWAhL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d2ECi7OF"
 Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 728757A0118;
-	Fri,  3 Jul 2026 08:59:23 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id C9EDD1D000B5;
+	Fri,  3 Jul 2026 08:59:25 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Fri, 03 Jul 2026 08:59:23 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 03 Jul 2026 08:59:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783083563;
-	 x=1783169963; bh=tjOcOjuVMcuFL4pucgKtCETwMvL/srM9ZLjhlyXI7Pg=; b=
-	F6mJK21mjN+kw4qj7bfXpa/iSCtjqw68faN+SffMiyfTytp01E4w45DexJkwxxFM
-	OTsQauxrRiYyEDtLvjzvJgGPHoOMDl94XKuvDCwsIVlW7Uj7vKuIqkdQ7/blYX8t
-	J3YZa/OBA63G7Ygi2rxzf4iVDKxDygarvMIdDtTmzeWjbOW3dWo5RkF1J1N8Iyhz
-	NJ9I5jnctsQ91g9fERlJelURaWn/szdgtpuOLM45Z7C4Sk8FOoTgPNc93dL7ymFc
-	6meHrgthVG4H9YD+1QL4Lx1iKGMGx5aB4GR5TZ+AKBn4GjvUehr8Ykw+I45fEYsE
-	7ylKBM5NaZIQfJ5yDsxvdg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783083565;
+	 x=1783169965; bh=cNbm6Qs87QG+oSC/4ldNWovk84XjP0e626Ilpyp2YoA=; b=
+	FYhQWAhLUTWQ5snqJsD0wA1zSpmGC6l4r4u8+De2+mkqMalR/QOc5VZCNJ1BuBQV
+	mmylEg4kjER1sU1cayKhkW14IehJloXkiVnYKIS7L5pBRVnKSDxoN6GqqBzgAE3r
+	UVq8W/HLPHxL/2RHOVtY+vvl12UVTxBlZQ5hb/55kNI3/eECe6rwgeLl/K94LZUw
+	aZ87kOvN2pvZmqapX6ZiT1WoBdwrMdwXi+DRT99vi63kf02nUVXT4JaiKzSmqPgs
+	hPn4fnKJhDuRtskExNkJdaFprOP9pBHCgbz581lYxqqcYMcvloEno1zqTYuULH1x
+	XBqp/fI/F3IB+Q+8DU/8hw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783083563; x=
-	1783169963; bh=tjOcOjuVMcuFL4pucgKtCETwMvL/srM9ZLjhlyXI7Pg=; b=Y
-	I1F4kMCoSWqeVKsCBgPyXPKryOb1LMhHCElnZiKCFVaw9RZOrbDjBr943VSQK9zS
-	FMq77H4dXZ6qn3gBdhoI6PtpIfE50lPkTl3WB7dWeZNIcw1Edo4kPq2+dGCa3yb6
-	rh7Ye+oz65RXJSe/shRFRohzVHAQRMrAgHR5ZRyRjYGtPNgE0h1NZUEZDIgvEDqU
-	07U2WSujsx4tPayCyHSqndnXGJrU6VRECDB0Y/2bJeisq5RUxjdMTBrT+bvyZBIz
-	C1Qpcv5zJ70FfsYRf4nnsdvVRkJ6/Ir+5ZgXCeHvtu530Ga+zAOnU9CY9LvvssQ2
-	tkkIJRchDsmIk+d2rBcPQ==
-X-ME-Sender: <xms:K7JHamPL8rJob_STgDGdxnTe2EZiTNEc9Cm9HnBT8P-jT-LWmMPRJA>
-    <xme:K7JHar9LjhBTME4wFihUacrWC1Kv8IvhJ-60-KlJnYa27Px2v0cYYMor8JQJHSjCs
-    ChuuLm9DmMZlyPUoqYGKiJUFfDkckv9qegFH1uHyN1soVF_BOFusA>
-X-ME-Received: <xmr:K7JHaiToociMe358M17Ak7Tn7Y8Qulzf1sry7JHgilSFL1eb-maNpfOY0ruDyGWkd9fvdspNkA1szFLYcjRYhejmbe4LTXsXvwfdXMKORA>
-X-ME-Proxy-Cause: dmFkZTGoCLYy7o+orBjNqqsIx56U3KxtpJNx7gtMGlkzAJylSMHMnvFdCqwehmPSQPITy9
-    R7t5Rzub+QvN3LZVi03voy3ME2/5k2jbcy9di2gK6XKOY0x1AiFfdcghelfqUt0HbY4GYr
-    DipJiQWX7aZXgzirzl+EyOCmG2tvgePU8xS92w2WWhH/sIPsPEZzVmiBZQWim47RuszfgC
-    Ue9jR02R4F8oeC5uqLZg+cpbPRBIHHfxUTfP4GxqO5uIOmfohih3SRJk6WGsC/r+W68VUI
-    xa1LFYM9VCv+6Cv9uWYGWWiTfcMdJmW9pVov3eqY3ZXhw20kVu6VSwBltsiBcRAcNHHElY
-    5gp1A7XFtEh2yFGGotEKatYOFADD8DsMFHT1C2gymSx0akOKXmvE6KfHQ6GAWn8WGX+bro
-    VB7JjJkasrnfSezhQaTEREEcQjMISbzafMOM44k8uqBQWmnIka4PKpzJk+n8n76Q7V8ggL
-    5GJBSHq9lttl7mH1VZU0iIFNFv+7kVysi4J7989f3OzNEQvufAqoRnelA4N1DQWjfFzoky
-    pYe796njWet0x2C/KtGE2wKNQvcCPI3vQFn9pPvX7Fez1Xe+bSsGNd3CdBiv9yweJ51kTP
-    VknUy9QHONsJrG2+GCCtg4Q2I9ZSMouyqPaiOPdhOp73pXhL55FoTYyA03BA
-X-ME-Proxy: <xmx:K7JHalk90PWB1Atjgwab4n99747GpWOnpaBwK0Ra2KjA8EutP7pSSg>
-    <xmx:K7JHaqRKFSp3QpMHjIPiSxuxmpAJkCRn9pA8ZnHldpJrlOITeYuTdg>
-    <xmx:K7JHarNt5mHc37GvD7Hf8o98K2jWeF_cR1h9LMJoONDicTEsiBw1tA>
-    <xmx:K7JHarWampjQqIccXwWBVBNpxN_3wwfYxD7bjn2bY_grCs64mudQgA>
-    <xmx:K7JHatnEYMrISzC3B_g2ZRK1w2nG99MQRWtp8YSbCj_G8myVQWWzDhXV>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783083565; x=
+	1783169965; bh=cNbm6Qs87QG+oSC/4ldNWovk84XjP0e626Ilpyp2YoA=; b=d
+	2ECi7OFf7pomkF2hI4zyLLoAj0wuUtoZiBgjEiuq6n7yKC4PyluSgzFud/O7wrNT
+	+lojR3VK5t6KB2XGHpgij5riCrzwkJ7Ld1rbuAfjvSiHSs1OFVqILZY2bVMmsicf
+	sEOFcoraHCo9RCFXfYEgrMFdZxxNxM0or+yer8hadfKlP5Nvoho0CVX3TKQhum00
+	YTmCfDf8F8bTlsyPOM1/9uV4xZwyADmLxaWF8qFnB9lj5J03IomctkpOLKqP4F3/
+	qCw8iCDWLuXSXLZY/Fnr9D9IgCiWy6YBa5kMT7hEYWSg67AAe97SD8HB7eMeKnVt
+	b5Ogisv+OnWjE0gyx6GBQ==
+X-ME-Sender: <xms:LbJHahMm142aXLC0kCceZWYRNDxsWTkR2tv0S_OT8qOerARGR6zQnw>
+    <xme:LbJHaq8Ig6dPteypV-Qaz8nT_69qSmL4jCKWOb_uxq3c4wjyiLSGhVSPA1kmI1amX
+    cTvgpbVhKfCLLb8SWKStWKHd4S21_5ovpxjTIWw5Xyl8bSbMUxCoA>
+X-ME-Received: <xmr:LbJHalT61T2Chs9m7O0sGuusFs7CwYVikl1kcDvUVE6EHhMbjrlKfcrMezI2bfToUSEO0MnqsBnwNwT5XfCqXtv3XVqpbOO9jmmZ8TRVlA>
+X-ME-Proxy-Cause: dmFkZTEnwvHVL/02oA1h2uWNRZvjgjI9BD+dkxtOdLwJ8hgL6Y0qLSdb2NnWfTr6UNt0dl
+    rwcoArYQ53f/0Y1FZHpBSRkzqgsnWJdFO56zP44BeEklSg+tOlFA8QUvWfYVi08L7JDXBX
+    C0xy2B23fAAi9AWPhME0flDA5F0trsEpHLxNt21heC4fvk20kF/9jy081ZaZO/gfwY3ch9
+    2xOOalj33Pq3zJIZLRyMR9G4D6StkfivX9t6bDBrNuxuuWSBUGXjxloUjOXAUCWNsmPY7p
+    s+5SDmDTgvFsrgvtN+2U/UQp4QGAIPVCHjlaeXB5lhP/4PP+T0wy8yw7e67gBqEG1EgqBK
+    dJLVOFMLMtMvoiHvD00kuz8Ad/z2R4+hAZ7+nhVZgPilp5NjIQjHSRs8e141PMoyPi1nFS
+    WsO2pDcV1qPliMxqiWp8Qr9N12Uc64A7GEhAGgHYj0h+wXi/bz7s4Njtu7o0u7/PicUl7k
+    NORklqoregWB1uM3lUQ15JG5xGLo4c0HH1HoDelzZErT4tFwzxC+XDbenveI48s//6ATat
+    buzbPoiFNlHamofQursMGrIMq4pwYcBQ1tXuR0fkoYyJ5TZeDx7zPWE5XS+/WhvKeknaFu
+    xcS4tGhBk6WvtYdXOSzQ1Jgga/B2cOlJLko0Z+fTW19jc1S2NtBjkftbnGHA
+X-ME-Proxy: <xmx:LbJHaskbkwl-bWoD050PC01X4rCYM2bkvO-LKVAxojO1tdG3mmHn-A>
+    <xmx:LbJHalSgJteQEzEgUAUXfOTRxkh6ZcNVF8WLvnb-LomATJTLG2V-ug>
+    <xmx:LbJHaqMJhENlRjWGtdPq-Axoj5Sc9lOoZwSVVSMHL-L8xX4jh_D72w>
+    <xmx:LbJHauWfDyR6DGeUPe_iKkeYkB4lOL-gcLCyA5P33oYtt5QXKptTKg>
+    <xmx:LbJHagl6liIcv2rtgELsGnc9BdHHW3iiPQlgg8Prat9xpVbxUq2t4gH_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jul 2026 08:59:22 -0400 (EDT)
+ 3 Jul 2026 08:59:24 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d55f0765 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jul 2026 12:59:21 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id f429ab66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 3 Jul 2026 12:59:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 03 Jul 2026 14:58:54 +0200
-Subject: [PATCH v3 11/12] reftable/table: fix NULL pointer access when
- seeking to bogus offsets
+Date: Fri, 03 Jul 2026 14:58:55 +0200
+Subject: [PATCH v3 12/12] reftable/table: fix OOB read on truncated table
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-pks-reftable-hardening-v3-11-b87c555b9920@pks.im>
+Message-Id: <20260703-pks-reftable-hardening-v3-12-b87c555b9920@pks.im>
 References: <20260703-pks-reftable-hardening-v3-0-b87c555b9920@pks.im>
 In-Reply-To: <20260703-pks-reftable-hardening-v3-0-b87c555b9920@pks.im>
 To: git@vger.kernel.org
@@ -91,92 +90,81 @@ Cc: oxsignal <awo@kakao.com>, Toon Claes <toon@iotcl.com>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.15.2
 
-When seeking an iterator to an arbitrary offset we may return a positive
-value in case the offset points beyond the block. This makes sense when
-iterating through multiple blocks of the same section, as the positive
-value indicates to us that we're at the end of the table.
+When opening a table we compute the size of its data section by
+subtracting the footer size from the file size. We do not verify that
+the file is actually large enough to contain both the header and the
+footer though. With a truncated table the subtraction can thus
+underflow, causing us to read the footer out of bounds:
 
-But when the offset originates from a section or index offset it is
-supposed to point at a valid block, so an out-of-bounds value means that
-the table is corrupt. Treating it as a normal end-of-iteration causes us
-to silently report an empty section instead of surfacing the corruption,
-and we are left with a partially-initialized block. This may later on
-cause a NULL pointer exception:
+  SUMMARY: AddressSanitizer: heap-buffer-overflow (/home/pks/Development/git/build/t/unit-tests+0x2479a4) in __asan_memcpy
+  Shadow bytes around the buggy address:
+    0x7ccff6e0de80: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+    0x7ccff6e0df00: fd fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa
+    0x7ccff6e0df80: fa fa fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+    0x7ccff6e0e000: fd fd fd fd fa fa fa fa fa fa fa fa fd fd fd fd
+    0x7ccff6e0e080: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  =>0x7ccff6e0e100: fa fa fa fa fa[fa]00 00 00 00 00 00 00 00 00 00
+    0x7ccff6e0e180: 00 00 00 00 00 00 00 04 fa fa fa fa fa fa fa fa
+    0x7ccff6e0e200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    0x7ccff6e0e280: 00 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x7ccff6e0e300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+    0x7ccff6e0e380: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  Shadow byte legend (one shadow byte represents 8 application bytes):
+    Addressable:           00
+    Partially addressable: 01 02 03 04 05 06 07
+    Heap left redzone:       fa
+    Freed heap region:       fd
+    Stack left redzone:      f1
+    Stack mid redzone:       f2
+    Stack right redzone:     f3
+    Stack after return:      f5
+    Stack use after scope:   f8
+    Global redzone:          f9
+    Global init order:       f6
+    Poisoned by user:        f7
+    Container overflow:      fc
+    Array cookie:            ac
+    Intra object redzone:    bb
+    ASan internal:           fe
+    Left alloca redzone:     ca
+    Right alloca redzone:    cb
+  ==1500371==ABORTING
 
-  ==1486841==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x55555598e02c bp 0x7fffffff4eb0 sp 0x7fffffff4e70 T0)
-  ==1486841==The signal is caused by a READ memory access.
-  ==1486841==Hint: address points to the zero page.
-      #0 0x55555598e02c in reftable_block_type ./git/build/../reftable/block.c:392:9
-      #1 0x55555598ee6e in block_iter_seek_key ./git/build/../reftable/block.c:536:35
-      #2 0x5555559ae553 in table_iter_seek_linear ./git/build/../reftable/table.c:344:8
-      #3 0x5555559adbff in table_iter_seek ./git/build/../reftable/table.c:450:9
-      #4 0x5555559ada9c in table_iter_seek_void ./git/build/../reftable/table.c:460:9
-      #5 0x555555992872 in reftable_iterator_seek_log_at ./git/build/../reftable/iter.c:281:9
-      #6 0x555555992953 in reftable_iterator_seek_log ./git/build/../reftable/iter.c:287:9
-      #7 0x55555583aa78 in test_reftable_table__seek_invalid_log_offset ./git/build/../t/unit-tests/u-reftable-table.c:257:20
-      #8 0x5555557f684e in clar_run_test ./git/build/../t/unit-tests/clar/clar.c:335:3
-      #9 0x5555557f2e69 in clar_run_suite ./git/build/../t/unit-tests/clar/clar.c:431:3
-      #10 0x5555557f2882 in clar_test_run ./git/build/../t/unit-tests/clar/clar.c:636:4
-      #11 0x5555557f375f in clar_test ./git/build/../t/unit-tests/clar/clar.c:687:11
-      #12 0x5555557fa49d in cmd_main ./git/build/../t/unit-tests/unit-test.c:62:8
-      #13 0x55555584cffa in main ./git/build/../common-main.c:9:11
-      #14 0x7ffff7a2b284 in __libc_start_call_main (/nix/store/57iz36553175g3178pvxjij8z5rcsd4n-glibc-2.42-61/lib/libc.so.6+0x2b284) (BuildId: 8ae0b698f2d4e727f569f64bb166e08ae30bd077)
-      #15 0x7ffff7a2b337 in __libc_start_main@GLIBC_2.2.5 (/nix/store/57iz36553175g3178pvxjij8z5rcsd4n-glibc-2.42-61/lib/libc.so.6+0x2b337) (BuildId: 8ae0b698f2d4e727f569f64bb166e08ae30bd077)
-      #16 0x555555694c24 in _start (./git/build/t/unit-tests+0x140c24)
-
-  ==1486841==Register values:
-  rax = 0x0000000000000000  rbx = 0x00007fffffff4ec0  rcx = 0x0000000000000000  rdx = 0x00007cfff6e2bd58
-  rdi = 0x00007cfff6e2bd58  rsi = 0x00007bfff5da1020  rbp = 0x00007fffffff4eb0  rsp = 0x00007fffffff4e70
-   r8 = 0x0000000000000000   r9 = 0x0000000000000002  r10 = 0x0000000000000000  r11 = 0x0000000000000017
-  r12 = 0x00007fffffff5908  r13 = 0x0000000000000001  r14 = 0x00007ffff7ffd000  r15 = 0x0000555556056e90
-  AddressSanitizer can not provide additional info.
-  SUMMARY: AddressSanitizer: SEGV ./git/build/../reftable/block.c:392:9 in reftable_block_type
-  ==1486841==ABORTING
-
-Fix this by returning a proper error in `table_iter_seek_to()` when the
-offset ranges beyond the block.
+Verify that the file is large enough to contain both the header and the
+footer before computing the table size.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/table.c                |  2 ++
- t/unit-tests/u-reftable-table.c | 63 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+)
+ reftable/table.c                |  5 +++++
+ t/unit-tests/u-reftable-table.c | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
 diff --git a/reftable/table.c b/reftable/table.c
-index 56362df0ed..f4bc86a29d 100644
+index f4bc86a29d..b4d3f9e211 100644
 --- a/reftable/table.c
 +++ b/reftable/table.c
-@@ -242,6 +242,8 @@ static int table_iter_seek_to(struct table_iter *ti, uint64_t off, uint8_t typ)
- 	int err;
+@@ -562,6 +562,11 @@ int reftable_table_new(struct reftable_table **out,
+ 		goto done;
+ 	}
  
- 	err = table_init_block(ti->table, &ti->block, off, typ);
-+	if (err > 0)
-+		return REFTABLE_FORMAT_ERROR;
- 	if (err != 0)
- 		return err;
- 
++	if (file_size < header_size(t->version) + footer_size(t->version)) {
++		err = REFTABLE_FORMAT_ERROR;
++		goto done;
++	}
++
+ 	t->size = file_size - footer_size(t->version);
+ 	t->source = *source;
+ 	t->name = reftable_strdup(name);
 diff --git a/t/unit-tests/u-reftable-table.c b/t/unit-tests/u-reftable-table.c
-index 14fae8b199..c7dca45e70 100644
+index c7dca45e70..28b0ef5258 100644
 --- a/t/unit-tests/u-reftable-table.c
 +++ b/t/unit-tests/u-reftable-table.c
-@@ -1,8 +1,11 @@
- #include "unit-test.h"
- #include "lib-reftable.h"
-+#include "reftable/basics.h"
-+#include "reftable/block.h"
- #include "reftable/blocksource.h"
- #include "reftable/constants.h"
- #include "reftable/iter.h"
-+#include "reftable/reftable-error.h"
- #include "reftable/table.h"
- #include "strbuf.h"
- 
-@@ -199,3 +202,63 @@ void test_reftable_table__block_iterator(void)
+@@ -262,3 +262,31 @@ void test_reftable_table__seek_invalid_log_offset(void)
+ 	reftable_table_decref(table);
  	reftable_buf_release(&buf);
- 	reftable_free(records);
  }
 +
-+void test_reftable_table__seek_invalid_log_offset(void)
++void test_reftable_table__new_with_truncated_table(void)
 +{
 +	struct reftable_ref_record refs[] = {
 +		{
@@ -185,54 +173,22 @@ index 14fae8b199..c7dca45e70 100644
 +			.value.val1 = { 42 },
 +		},
 +	};
-+	struct reftable_log_record logs[] = {
-+		{
-+			.refname = (char *) "refs/heads/main",
-+			.update_index = 1,
-+			.value_type = REFTABLE_LOG_UPDATE,
-+			.value.update = {
-+				.name = (char *) "user",
-+				.email = (char *) "user@example.com",
-+				.message = (char *) "message\n",
-+			},
-+		},
-+	};
 +	struct reftable_block_source source = { 0 };
-+	struct reftable_log_record log = { 0 };
-+	struct reftable_iterator it = { 0 };
 +	struct reftable_table *table;
 +	struct reftable_buf buf = REFTABLE_BUF_INIT;
-+	size_t fsize = footer_size(1);
-+	uint8_t *footer;
 +
-+	cl_reftable_write_to_buf(&buf, refs, ARRAY_SIZE(refs),
-+				 logs, ARRAY_SIZE(logs), NULL);
++	cl_reftable_write_to_buf(&buf, refs, ARRAY_SIZE(refs), NULL, 0, NULL);
 +
 +	/*
-+	 * Corrupt the log section offset stored in the footer so that it points
-+	 * past the end of the table. The footer is checksummed, so we also have
-+	 * to recompute and rewrite the CRC.
++	 * Truncate the table so that it is large enough to read the header, but
++	 * too small to also contain the footer.
 +	 */
-+	footer = (uint8_t *) buf.buf + buf.len - fsize;
-+	reftable_put_be64(footer + header_size(1) + 24, UINT64_MAX);
-+	reftable_put_be32(footer + fsize - 4, crc32(0, footer, fsize - 4));
-+
++	buf.len = footer_size(1) - 1;
 +	block_source_from_buf(&source, &buf);
-+	cl_must_pass(reftable_table_new(&table, &source, "name"));
 +
-+	/*
-+	 * Seeking the log iterator must not crash even though the log section
-+	 * offset is bogus. As the offset points past the end of the table we
-+	 * know that the table is corrupt, so the seek must report a format
-+	 * error instead of pretending that the section is empty.
-+	 */
-+	reftable_table_init_log_iterator(table, &it);
-+	cl_assert_equal_i(reftable_iterator_seek_log(&it, ""),
++	cl_assert_equal_i(reftable_table_new(&table, &source, "name"),
 +			  REFTABLE_FORMAT_ERROR);
 +
-+	reftable_log_record_release(&log);
-+	reftable_iterator_destroy(&it);
-+	reftable_table_decref(table);
 +	reftable_buf_release(&buf);
 +}
 
