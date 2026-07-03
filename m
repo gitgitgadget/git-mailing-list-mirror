@@ -1,118 +1,123 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mailgate02.uberspace.is (mailgate02.uberspace.is [185.26.156.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69533CF1FE
-	for <git@vger.kernel.org>; Fri,  3 Jul 2026 12:09:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783080599; cv=pass; b=S0eFdMWCvPwcClmn/fxj+8ZZGfUZifK3kJXeA1+C0MvWkAw6+MHKbMFos9K2SGloxxN/I6wlAJF24CFvVjLbniOm/LAdiE3WVS1MSfAR6cCDZOM8wpWh1S8SAMl8ILXy2lZnzvHZJGHM1eIIbVb9DlhMVvT8q071w8G00Y3N6Ww=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783080599; c=relaxed/simple;
-	bh=krs+JoXUsOlwOShMRknvmgk2jA3PXXlVR2WftJq78Ac=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ATD6ebFWXDXkqFXH7xdE5YvoceZixZbz6GPijEpD24knmVZ2T4v2elS4B/JwYURYmiZE2Xu0rujBn8It84pnZNorBouQbSoQLfyLLoVbR273ZyC5POj4+xFTNPEhgR59f5SuzAr8T0+I0ZsayLjHQFrGbmMc8ooR5qq1BvFyaXo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=WUqFIQYn; arc=pass smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862523CE0A7
+	for <git@vger.kernel.org>; Fri,  3 Jul 2026 12:10:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.26.156.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783080607; cv=none; b=r5l2vcy8ZJN78/+FkhaO75Nz4K04r/1jZf3FeVJ+CzNVf2iOkhmweIxWZ1TR0BZD3gOpq0/xI8xTNC27pTt9DwPNfgugJh8bDB8UH4hCcJnFD+Qu6etVgEevMih56vmTSuCxFcnO+W8cxY/AIidZyaqV5h70xXCKBdnUJpQVnzA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783080607; c=relaxed/simple;
+	bh=LWlBaeIwC271x/N36SphcYY68GSW50V1I5JLqddQD+k=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=dp3bbI5oetp+8v5yHYcECqHfYlHodWTVoljhTWLRqST1ZnJD1GkdhE1GBcZME5BaU4ol7vb+MKJVB4Qzv1Yc5lPPi78YOsBETgupYQwJ9KBU7uZhESPkP9zynUwtPfDk/e+r3mDYeCKBJUDOua2ZLr8nYjBHcX7xhj5IZNPTzdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=beyermatthias.de; spf=pass smtp.mailfrom=beyermatthias.de; dkim=pass (4096-bit key) header.d=beyermatthias.de header.i=@beyermatthias.de header.b=ciNO+Z/w; arc=none smtp.client-ip=185.26.156.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=beyermatthias.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=beyermatthias.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="WUqFIQYn"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-664c6304683so466329d50.2
-        for <git@vger.kernel.org>; Fri, 03 Jul 2026 05:09:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783080597; cv=none;
-        d=google.com; s=arc-20260327;
-        b=VO02J4ErvUhG9mj9TH2pqF4V4tJ/YTt5q8iRR4s8iknP2TRyHr8SOX1ral9Pwa5YsF
-         o/RYiYXS8kJS22ISa0SgSdyBOKcyQxKDWGuXFKTMHJFhI9bxNirC+wskCjCXivKZPRpN
-         2l3KxLvGFZk1QYshvzR6JjkwsUMDzXNN+cWnDttEQUTsyJ68VVcutf3F6n/ytzEynou1
-         xIPGk0xYBaQf1qpLqoGqwgmXXkVGLSYKVkx55PqZNfWZqZDRWkh9A3qH4dWFKCnm65A7
-         qaNLDMJCEV/QaFWXSHgH5t+kY4Yf7JomhdGRI7JV9V6j6AgsW1WlbEg5YUsAKAmvRmZ8
-         WWAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=krs+JoXUsOlwOShMRknvmgk2jA3PXXlVR2WftJq78Ac=;
-        fh=yzLg3vprUz7yKtvpFi/TiMan98RthxzznLIBhKMGgWA=;
-        b=mm5m0vRID0JTNHiGeW3SloZ8oYFAP4QuE0MpUDiWK1oDe4ZlHjddksz4AGuP3KdiKY
-         qqkWqLR3NTfx75cf7pfBCkrxA4XDvEBxbbf0EcM354kPMb/3AypCAXcomBVfnsI6kgmd
-         3zYcQFDr977Pbs6njEexf5K8Xqd9PLN6A/xEgFBHoKc4MX9qKP0xN//DO+0ZsC8UqsOg
-         RZumTP2+R2PgCWYOSu5+/M+pkqTENqQmgRWJy7k5N+sdmIi2b7CipiywROBAeG5n7Rqw
-         /trgtwrUKamsrvR8hO2wnDqyFUeoRLt1a52W1S4ujGVEWrQc7UeDZeEiL6FgsoEXpXKD
-         wzEA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1783080597; x=1783685397; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=krs+JoXUsOlwOShMRknvmgk2jA3PXXlVR2WftJq78Ac=;
-        b=WUqFIQYnhUvn4kyQsLUkHjLgsesMafuf9h3qNM77fJ/dJmTEK8xCC3+yyap2f9tpSk
-         gn1p/Cg+NPRnLRVUX8Ftqsuf0qof/gepCFX0W0KTf0dsK7nveGPEFzDtXHJ5DtuApqmZ
-         jMPlUu0WjFykBqs9r/Iw9a+PgetvlgAgll5TY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783080597; x=1783685397;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=krs+JoXUsOlwOShMRknvmgk2jA3PXXlVR2WftJq78Ac=;
-        b=Lqi7Zv8aXMhG77H+B11ZbT2UI2Ypu+5BbUNyAOqgOuo5Codiz12VkhfJatK5msbdLp
-         KwgmKHbkv8IaKlD1Wd7avuEapPGz/fU/Zog1wMRGvzyGB6tOpK6kGIrAW2I4/2jThKZ0
-         o3xbDkRVEXyw7IU91i3vY2ExU1CSdV+wHUsavTS1kgPad49tRQil+PdwEyKjX/Ft5FJw
-         8U+ucSLKF3FaTLivN8LkoqDaynBnzZGABcuOkQxwJZr41d9+HBy7KL/TpdDzmWLXHEbA
-         w/2KFKxSTL78aQhVcKklyOvSHEmFfwm+XAKg6VYDBtJ2sD6CskXhScRtnFXUOPNxEjME
-         iHPg==
-X-Forwarded-Encrypted: i=1; AHgh+RpyN3F9Q4nlBVrR+ONPmZaVv3qyDPS1h1nzjPsSuKIU7WUp1ArU8dJ6QNqgC3OdnhX5liQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUkL1uESF8o00WSRDz1Q4ipgVH1RKAq3b3cTr+2HzY1sCcpY1o
-	fSbYA0a+L/MNdzz3JJJW9vBTPdycAlVgeD2wFpd8QPbmycn51RUOSSVovBO7ZEF+XUnjqI6sycH
-	/iJi2yMP74ZbdGLPwXq8G0PDFs6dUppUqtnFfoSqrBg==
-X-Gm-Gg: AfdE7cnUUp/cCFYETa21CrKRBljOPj4DHLacgfQA3DgLPZMkhFyNqsRS1eVshyfeoQ8
-	cS+Ep/nMOrUukNTOUxXXLuXt17JjAhya2AikhqilFynejqXrjnr9VdEfc5K2u/Du4LFjFuBWGO2
-	xk54EnvHgDhxXTfVxWrkzEnDDJK1mn7H6evUsETFa8BKX80tOcn3/th/99P+eL3bm1xjlpUet7F
-	oJlUMtYFRAlgTOyNS+L52/aBDiSqcs2zULcNl1NePDn7ccTZXF+wOBNuT0V1E3kYJyfjG4=
-X-Received: by 2002:a05:690e:e8c:b0:664:c8af:1910 with SMTP id
- 956f58d0204a3-66596526562mr8700718d50.26.1783080596888; Fri, 03 Jul 2026
- 05:09:56 -0700 (PDT)
+	dkim=pass (4096-bit key) header.d=beyermatthias.de header.i=@beyermatthias.de header.b="ciNO+Z/w"
+Received: from cressida.uberspace.de (cressida.uberspace.de [185.26.156.202])
+	by mailgate02.uberspace.is (Postfix) with ESMTPS id 2B55A18015A
+	for <git@vger.kernel.org>; Fri, 03 Jul 2026 14:02:38 +0200 (CEST)
+Received: (qmail 13095 invoked by uid 989); 3 Jul 2026 12:02:38 -0000
+Authentication-Results: cressida.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unknown) (::1)
+	by cressida.uberspace.de (Haraka/3.1.1) with ESMTPSA; Fri, 03 Jul 2026 14:02:35 +0200
+Date: Fri, 3 Jul 2026 14:02:33 +0200
+From: Matthias Beyer <mail@beyermatthias.de>
+To: git@vger.kernel.org
+Cc: neikos@neikos.email
+Subject: Programmatically edit the git rebase sequence?
+Message-ID: <akei64goQf3nFhX4@hikari>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260628075716.GA3525066@coredump.intra.peff.net>
- <20260628080710.GC107826@coredump.intra.peff.net> <akIJQbOUbdBbkTef@pks.im>
- <20260629203527.GA1895313@coredump.intra.peff.net> <akOG0oMu2KTqqyW7@pks.im>
- <20260630234702.GA3759976@coredump.intra.peff.net> <20260630235850.GB3759976@coredump.intra.peff.net>
- <akSxCUfm2P7ocLJX@pks.im> <20260701080014.GA3748390@coredump.intra.peff.net>
- <CAL71e4PfXA-ixKR6r7fu_7_QmdzK+rTRs29mOsUYKaq+_a5q5w@mail.gmail.com> <akTm7BDohsy85sN8@pks.im>
-In-Reply-To: <akTm7BDohsy85sN8@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 3 Jul 2026 14:09:45 +0200
-X-Gm-Features: AVVi8Cev2ywPAcyOerwKuiwURUFRTk62pW2-1tJrw7Q5NCOHL-e0C9-R6Y8SDG4
-Message-ID: <CAL71e4OavgfXtjN7QxkvmctS3fTpb5MtDsi-iUg=2izZCG5yxg@mail.gmail.com>
-Subject: Re: weird quadratic reftable behavior, was: Re: [PATCH 3/3] t5551:
- pack refs after creating many tags
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>, Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fb7eythi5ogkv6k4"
+Content-Disposition: inline
+X-Rspamd-Bar: -
+X-Rspamd-Report: BAYES_HAM(-1.278719) MID_RHS_NOT_FQDN(0.5) SIGNED_PGP(-2) SUBJECT_ENDS_QUESTION(1) MIME_GOOD(-0.2)
+X-Rspamd-Score: -1.978719
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=beyermatthias.de; s=uberspace;
+	h=from:to:cc:subject:date;
+	bh=LWlBaeIwC271x/N36SphcYY68GSW50V1I5JLqddQD+k=;
+	b=ciNO+Z/wvO2iueqJKLM16ogfHcuL/1gUYvrvBkyy0dIlTtmqurUlMQLO3O1BREdaDazkuCimrQ
+	dBXhy3j5IFm23DnuhfWP40ehNWPZ8SEJSpkj0v+fhHSa8Gdcod9CrsVwksqq/GhL4tGUXxF/D6cy
+	95xUDstGYavRH844qJbzf8Fi3/w4cF7hLXAKNMdiBDP76heiIvW6J/pviK4b8gFLjKWq+DY7B8Xf
+	ECGHjf5qBnjaeNu9Pp/3li3HO70W1gsXMeBiodn3TByEcNpWi0ltoEsxZA3w3lE9BBcba3JdG1bz
+	1GXRgKjolpD0Da0c1TmZJOfJ1toMYELb3t5IIxDtV0DYQrL0lt+NxeXFsJtv6ITu9vUGwgMLYyaE
+	6+YTDGM/iITma8FSxMTIyrqJjz0TVzWWmuBO7FIg9rgGUPLSxgOipZepNLl/46osKZa31c8B/kNf
+	J4MBgaKjVwGPGQfcbDEZnTXwdfx8GqnjU0vtiuKOoynwgUrSax3poiVeLPrytB/3fsZhiLGb+Vdr
+	Qi50jB42T+sa/X8+dkjx6mha/iF2jdHZoc+M+kb4vJdlCxWnDFytTZysBC561E/NzmNTnOfBDQrf
+	xkFOWP1eRRloJfFk8/mDBsdHBqzlShpN1lT5DiMr8oZ+rNxOVE+LTWqS5oIwdYavBUiVJTnj6x+e
+	M=
 
-On Wed, 1 Jul 2026 at 12:07, Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > I can send a proper patch if needed/wanted, but I might have missed
-> > something silly here.
->
-> Nice gains. I certainly think it would make sense to polish this a bit
-> and then cast it into a patch.
->
-> Patrick
 
-I have a small draft here https://github.com/gitgitgadget/git/pull/2166
-but I am honestly not sure if it's worth submitting as a patch - the
-change is somewhat small, but spread out, and I failed to properly
-reproduce the performance win in any realistic scenario (I had to
-disable compaction to see the improvement).
+--fb7eythi5ogkv6k4
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Programmatically edit the git rebase sequence?
+MIME-Version: 1.0
 
-I would want to rely on your expertise to know if this change
-would be valuable to discuss as a patch at all.
+Hi git people,
 
-Thanks,
-Kristofer
+in a recent conversation at work, the question of how to
+programmatically edit the git-rebase sequence came up.
+
+Example use case:
+
+I have a branch that touches a number of files, adds some files and
+removes some files.
+When rebasing, I want to split all commits that touched a certain subset
+of files, for the clearity of the history.
+
+I look at the output of
+
+    git log master..mybranch --oneline --diff-filter=M -- "./subdir/*.rs"
+
+to find all commits in that subdir that only touched the files. All of
+these commits are to be "edit"ed.
+
+Now I fire up `git rebase -i master` and manually(!) match the list from
+above `git-log` call and find the respective commits to edit them.
+
+Is there a way I am not aware of to do that manual step programatically?
+Something like
+
+    git rebase -i master --edit-commits="$(git log master..mybranch --diff-filter=M --format="%H" -- "./subdir/*.rs")"
+
+would be convenient here, although I would understand if that is too
+much clutter for the already very heavy git CLI interface :-)
+
+Maybe I am just not aware of the obvious solution - I would be happy to
+learn that there is already one!
+
+Best,
+Matthias
+
+--fb7eythi5ogkv6k4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEUJGUus1GMTrRclzcEKWX9Kitz80FAmpHpNkACgkQEKWX9Kit
+z83yXBAAuYXiagezK8LI3h51/cQzpxRpHK6GmdbbglwOWyfOWqCMQVc16s8QGXfi
+S+UCrQGITJ20t3gBDYhbKCvcTCwUNDM7X3iaHxz8AcTBWx9em3vYd+g+GmxB2I8x
+6YWi+/IrPdfrmqULctdbbh/s8oSctiErlrmHJzjOLtJh2KPMMCaRAsEUf3xE4RGU
+3fre39Z7EvODs+OdM0JMJtoSa4T2GzwOX2vQlncRWBKCTAspRLELCUfSnlP7RbOX
+fB07oSf3DqozN+rQDRMXiebhFepIRiwgKkFUkNbZdodGgntT8O7dFPRC43ORqjXh
+MpRHxE3FnbCROc3RM86RcJvqebm+X08icj/rSX1jI7VJtS4MAN+Np1Q2GFk5ZCbp
+wApQjCiHFZvucqidJ3meKxCRU6RfGgdLIBGyqaRpIz8CexX7uPrQhp8S99uaMvwD
+xgM0k+NPfuNeQB8Xoe0Asbeesvs/Zs8SC1q9pmidMoz9/qaV0ukrA08qcEZj3J4A
+dRIAXl2bROGXVJ8v2xN9FRQnmesaa8frov1at+nf6LAgkTvayAzhEVt+EvD3s6X7
+aakx91BVVKFZKzX9yOKjIMI9kOHlSLickTUwJPyGZNO4nULzlD3y9GTjiZ6rbXw9
+IbyeuCwi8IX3cB4AD3HK90GHu97zY6anV/bDPrfvi0mmRCzHXvo=
+=O6Z5
+-----END PGP SIGNATURE-----
+
+--fb7eythi5ogkv6k4--
