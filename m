@@ -1,142 +1,169 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4291FDA61
-	for <git@vger.kernel.org>; Sat,  4 Jul 2026 09:49:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A3F28030E
+	for <git@vger.kernel.org>; Sat,  4 Jul 2026 18:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783158592; cv=none; b=qczh2QYyYATd2iKWA+QdoEFRS97Si5J2FDyjF96bM1KIbxEVKMXvcXPx6Y4zy4pNyX4IOVF2opqoc7092rQhwGvt3G+X072jqCYMbKezwfnebaTcyfl0qThro3OAdMX862+hl+TQCQKgmK3kv8QnffzolRuj/g3vTrsEgPDcf1Y=
+	t=1783188359; cv=none; b=WHQciRTjh6p/WPdYraCDtLOhPBL+bmx4igqPVMCCfmqmtnuZfG+qiatNOF7Pr2EQVA7U6F1Ny/dHCXqfUT9peAc/uocFW6rFSLuFqefmYkcKYOFKOU0W0xILWmTZcSLRe1PVyQULPJGjZOaEZSHkOmTwLDy04+AEWhmNvgpbWyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783158592; c=relaxed/simple;
-	bh=jH0vx5soQsrKaKpgsWiwS2auTdRZ24HdojNGmvwSXeI=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=sXBB9xs9g7dVmX77ZnCkxCqURwYvnlDIMWTRx4JdXNkFiBgxKuZWbdT2AiVZM/YWbhVErj5zi3EKS5Ao+2D6thDZ6pMUYvNJErmuhkzsiO8NPZXX1YXAb1vzv7HH84euoa9AKbR1lzVzWin4acEg81D1BMDYwiLpqnB0CNUacRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=UDYtqSHG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XnMnnwKt; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1783188359; c=relaxed/simple;
+	bh=IQ0xKjAj9LY+pef4sbvxGU/WqhOAYNgzk6B+hZYzaO4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=DdH8aDCg/m8Cirm2w+zg0jUrwE7y3ehvY7qmMuqIgg+eRiW10JB4L3H8fizjvKjPkpmjO/oHXCjH8hvFzaSnw0cDKurZt0l3UmR1LgC3UB2q4Q0uq+lN/sdPmYReFYlAOyx5pMgtx85XYgMgLvnKb3Zrcop0I65KtK44YgvfbhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qe27H6OS; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="UDYtqSHG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XnMnnwKt"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 859E81D00009;
-	Sat,  4 Jul 2026 05:49:49 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sat, 04 Jul 2026 05:49:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783158589;
-	 x=1783244989; bh=ejuCRDnAfeQgtSO4NiW1rSHfZY9o+Q04S7EYtOEpY/I=; b=
-	UDYtqSHGLzGs6Ja52cJs5hxBaQ/iW8ErnXzWiMuaLoskmaaYYCo00Ru645EoXh+I
-	1EBAi5IEhsTpE0IVqa/oDThg6qLwFruBO+0bBVMDv4PdxQalo07Z65E9n+mzbI3U
-	p+dAtaZCiyPCtYXL+lvmJY0uCCbem76gfdWG9KwMnTsAW8L2cD3cBS5RBRbzMbZh
-	syb55TIuLxgSubY4ZtRGMQiO2vAqxtTraJkC8JNuTTkmwKXxFfj3bU6jCVhpjokl
-	Y7tDIq092K5ZiYPXR3+3a0uEiFr43uZVf4eUnqmJOVtretIZyfZ4OPfh6d0bV/fE
-	8zTTAPJ10tna6DfR5ZsZbQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783158589; x=
-	1783244989; bh=ejuCRDnAfeQgtSO4NiW1rSHfZY9o+Q04S7EYtOEpY/I=; b=X
-	nMnnwKtayJAdpfv+6Oe3BEvt5VzWFOyCkl6nsXMvMa0ZY2X6hanc7ttDxtl+C+V0
-	RZGPLVcIiyfpwcS18UG9dsr+xCAwEmxbMcu2/++hEvKAnMNOlGRPLmH7rYlD4Rew
-	uJvZRPPXTWYI6soEtqU5vZh/rLz+PKtkj9ux+PbXZxC82YDxOSDUWruynvfn7/nW
-	3ScV0fEc4tNojybj5mmTD0/zWZW4JGrCE142KtDhY3Jhrfi9xmV+SmdSslZIEexM
-	ClS+ChwCbr3yQ606lBPP+h4KywxoP3JZ+CEVpKvfj7w+8RTSFripJfAGNOegD19T
-	43bbHiqjuZAPbw/eINHsA==
-X-ME-Sender: <xms:PNdIaqBeeUM_kQa-GP8t3M9qhqIuK7x_0IXSgGCJgz_J4QcCRBffrkU>
-    <xme:PNdIavXdv5xIseBEzmw7aLjqBHoU7wardiaKBeCdDo-Y4GaOjJBS4yMA1oQWhu0jt
-    2vqG3nRatcVffwZRiJOD91qwbs6XIh-Ra6-BBFXims_kSQklYcB>
-X-ME-Proxy-Cause: dmFkZTFmBii2pC1D4s0Ynj/3AE/WSBlV8fsq/uaQOU2Sg8WHRfkJmylkTyJ42bL5uIbFtC
-    ZJmPEdCSDxV2zqUk0stW2Gmrwcj5HCPIko3upcckDNeQ0+pPYUX16ZcwzMFIKJmg/liVhd
-    BGou9IU/w2kLyuv8aMXJOasrzCw9w7fo9I2kiVL2gMx86iLlFm7suHblDciEwkPwf+jqLt
-    mxAqVvcwdgzvdg5w5X2NwT6bzNwUfPArP4599UpABzC4o7ohUMMZehm0PX/pnwyfKhTHqF
-    2YAbYl0QLM9FY2Vwkab59NjUT/a5BHGomxMjyhQP8gBpzsDHZgzIz0wZgVKGKVTgety2g/
-    r11HwjY4IhwEjzqYvLddioSGQasrnf4Yvzj7HWee/pTsybqqDxJ2a8ebflkvrheG3kNXhp
-    5CJqGRksKPnlZ+T42mCkxW7nTxKsb0Ja/IEHGvF7OwsguA8fBX3uWfI9gFay27SwFXcVBR
-    uMy3j2M+8dzaMxwobuQ1wmiZOLlyw+dcTZpi/thgmV/SwIKmnldfrZ3kkDcBqykaXORDoY
-    ROOUFuM16hDGkR6iajYLPrZmGuOvInIkD7oxZ5DURlfUHEDRzWkutUvp7n4Z+YmftBfCSm
-    vvgfrRuJqv9TIl0hXHe4PXy2klOdsayxiW+ZkRso5JEPNPH4lTpwp6ZKUfMA
-X-ME-Proxy: <xmx:PNdIap_PZOcRo_tVenBF_1nCeB338F8rQsevXXOfRphrvb3e4YEYaQ>
-    <xmx:PNdIair2lW7E-NRSq1hoT47JkQSm8dOcvi3JRwCgxbcpN4V-LhsRoQ>
-    <xmx:PNdIarS7O60b5gMSamnTxMGN_iHLq4iEmJAsIaTD2t3bFSV-u_xMKg>
-    <xmx:PNdIatNZpKDBYpJ5LF4oQ4cP0WICs_-VCahkd71VUXoNS-W8RyXxtQ>
-    <xmx:PddIauGgLkph_vTziHQYuhcxSY0eGOvlc9_JaEzQUqmsruj10StzeT9l>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 559CB3020081; Sat,  4 Jul 2026 05:49:48 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qe27H6OS"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2ca11143dbbso11404485ad.2
+        for <git@vger.kernel.org>; Sat, 04 Jul 2026 11:05:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783188357; x=1783793157; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pJT38vkR2N8MOWg7QCRSV3uZIAkxh7d1M7Uj8ndQ+18=;
+        b=Qe27H6OSlnfPbcHQwOVWmVHQY9o8de7IddGJwgRQsrErnTzo3JiRBpZPopVgr3mOad
+         zjVaLOom/atjFTNao3HOctW1YwgpG1ZigIybGq8YxA91P5zhylK7mQSeiGcSag/Zuwt2
+         9zgS9O3f5EFTeihLjT5AwEiTaKExMdEiLxmMW6hnzr9BuL+qvAh5VhbLNJKdsCsd+LbM
+         alrZdpTYLqUoVu/bWHU3AGlW3WU7lPl9ENpaWl0RkTserFstS/Ff40w8Jvw0ymfoz4+O
+         3xM5wuWYJuSBw1eCxC6BpLiJ0k0Ie3eYel/3M0pXKzGsnMdvh/7itCR8jvTJ7L/wPTGM
+         C7bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783188357; x=1783793157;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pJT38vkR2N8MOWg7QCRSV3uZIAkxh7d1M7Uj8ndQ+18=;
+        b=rj2kWldRjt8RBVJVIrxKGfWxiLBN0OjlQD7YW9dxP0ScUPfxcinrlch5HiKFn30TX+
+         jAfidZgE8OBp2usJBnWEmGSzzZB4MUP5UNkKxIbhZPyPejdSazcwADY5OrEqqude5Nkq
+         j8J/eiuu85xgLYE+tg5JUtu/aIQyayPMNfq69hghyFv8wl7YRVSd+jfOSR0xpUAdnhjX
+         HV7pChnMlcHb91sOKblsXDvin878ve3kSC153wdyoOSu0n1aoxl/6eRtC3PSrLPu7UCC
+         HzpL382qyW41uKgnqV6ynEa0qzCan2M1s2FP1vDiz9GR1IKeOosT9msFTpH9nqg7Xfjq
+         NEPg==
+X-Gm-Message-State: AOJu0YyF0T9HqPKP8EgjjRpU3LJwSTizkgjM2rOBcNv1whb1ZZCaf0ls
+	VK4HdBcpRX7ewnZhkIHVBs+Up7qCiNNPRMW4FQYWu7qnUERjyt3zn99Wsm9uEw==
+X-Gm-Gg: AfdE7ckAVYGcBg/hRZHN1+CfFH27DbwegXTSOWUPS95vutEZpABjUECFm83915pLhcG
+	S7JJ4B7DCrg6uoOrsorNwSXrc74KQeJ/uzN+zxC06bL1Qf810EpTtHSzpkJkKxNDlQmooimm9Ua
+	5rlY2EB3+WXPmk8Kzms5pjc3Ziku4yoqr7rfY3pdIHvawFiwT9+gPVoHwY7AB72lvQ5CvPdOu5w
+	Cp0zPvUsp7xC5fPQ6pVvoektUp9JLcbDctBOQ5DaI8x22OEfDgjOHMBsiDhzB9rq5qps1eKkHm5
+	3IsYfehPFKggT4NiJQaoWDyfknnLsdTKIc5Tcqcs3cpKQiCBkwrsPVOczgZUpOK6yrvVMWwhgBM
+	5Shlfguhyac9FxRIIBdX/0GVLwnZfUKL7E2leK2d3YHJhFhwWgX91YJxMTm1BvLnZogxNdSWxZB
+	FNjajLZ2/jBbJpdC/U4/7QwrUGjGcc
+X-Received: by 2002:a17:903:19c5:b0:2ca:b8d:e65e with SMTP id d9443c01a7336-2cbb9ecc08dmr41925035ad.37.1783188357143;
+        Sat, 04 Jul 2026 11:05:57 -0700 (PDT)
+Received: from [127.0.0.1] ([172.184.214.227])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b3c7ef188sm32596893c88.2.2026.07.04.11.05.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Jul 2026 11:05:56 -0700 (PDT)
+Message-Id: <pull.2288.v4.git.git.1783188355.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2288.v3.git.git.1783030971.gitgitgadget@gmail.com>
+References: <pull.2288.v3.git.git.1783030971.gitgitgadget@gmail.com>
+From: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 04 Jul 2026 18:05:53 +0000
+Subject: [PATCH v4 0/2] Makefile: link osxkeychain helper against Rust
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AIieKx0iZG-B
-Date: Sat, 04 Jul 2026 11:49:27 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Christian Couder" <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>,
- "Taylor Blau" <me@ttaylorr.com>, "Karthik Nayak" <karthik.188@gmail.com>,
- "Elijah Newren" <newren@gmail.com>, "Toon Claes" <toon@iotcl.com>,
- "Christian Couder" <chriscool@tuxfamily.org>
-Message-Id: <4320d6a6-eda7-472e-b416-65bced3e9481@app.fastmail.com>
-In-Reply-To: <20260527140820.1438165-9-christian.couder@gmail.com>
-References: <20260519153808.494105-1-christian.couder@gmail.com>
- <20260527140820.1438165-1-christian.couder@gmail.com>
- <20260527140820.1438165-9-christian.couder@gmail.com>
-Subject: Re: [PATCH v4 8/8] doc: promisor: improve acceptFromServer entry
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Shardul Natu <snatu@google.com>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-On Wed, May 27, 2026, at 16:08, Christian Couder wrote:
-> The entry for the `promisor.acceptFromServer` in
-> "Documentation/config/promisor.adoc" has a number of issues:
+This series improves macOS build reliability and distribution support when
+Rust is enabled in the Git build system. It addresses two distinct
+challenges: a parallel build race condition in git-credential-osxkeychain
+and support for macOS Universal Binaries (multi-architecture distribution).
 
-(This series is now in `next` so this is not a review comment)
 
->[snip]
->  Documentation/config/promisor.adoc | 53 ++++++++++++++++++++----------
->  1 file changed, 35 insertions(+), 18 deletions(-)
->
-> diff --git a/Documentation/config/promisor.adoc
-> b/Documentation/config/promisor.adoc
-> index 455ce40be8..f07a2e883b 100644
-> --- a/Documentation/config/promisor.adoc
-> +++ b/Documentation/config/promisor.adoc
-> @@ -32,24 +32,41 @@ variable is set to "true", and the "name" and "url"
-> fields are always
->  advertised regardless of this setting.
->[snip]
-> ++
-> +The available options are:
-> ++
-> +* `none` (default): No promisor remote advertised by a server will be
-> +  accepted.
+Why This Series is Needed
+=========================
 
-Why did you use an unordered/bullet list instead of a description list?
+ 1. Parallel Build Race Condition ("make -j"): While commit 522ea8ef7d
+    ("osxkeychain: fix build with Rust") updated the link command for
+    git-credential-osxkeychain to pass $(LIBS), it omitted $(RUST_LIB) from
+    the target prerequisite list. When running a parallel build ("make -j")
+    from a clean working tree, Make can attempt to link
+    git-credential-osxkeychain before Cargo has finished compiling
+    libgitcore.a, causing linker failures.
 
-> ++
-> +* `knownUrl`: The client will accept promisor remotes that are already
-> +  configured on the client and have both the same name and the same URL
-> +  as advertised by the server. This is more secure than `all` or
-> +  `knownName`, and should be used if possible instead of those options.
-> ++
-> +* `knownName`: The client will accept promisor remotes that are already
-> +  configured on the client and have the same name as those advertised
-> +  by the server. This is not very secure, but could be used in a corporate
-> +  setup where servers and clients are trusted to not switch names and URLs.
-> ++
-> +* `all`: The client will accept all the promisor remotes a server might
-> +  advertise. This is the least secure option and should only be used in
-> +  fully trusted environments.
-> ++
-> +Name and URL comparisons are case-sensitive. See linkgit:gitprotocol-v2[5]
-> +for protocol details.
->
->  promisor.acceptFromServerUrl::
->  	A glob pattern to specify which server-advertised URLs a
-> --
-> 2.54.0.275.g96c817d129.dirty
+ 2. macOS Universal Binary (lipo) Support: On macOS, Universal Binaries
+    bundle native executable code for multiple architectures (Intel x86_64
+    and Apple Silicon arm64) into a single file. This is standard practice
+    for macOS distribution and CI packaging (such as Burrito, Homebrew, and
+    Git's macOS CI runners), allowing a single artifact to run natively
+    across all Macs without Rosetta translation.
+
+While Apple's C compiler (clang) natively supports universal builds by
+passing "-arch x86_64 -arch arm64" in CFLAGS and LDFLAGS, Cargo and rustc do
+not support multiple "-arch" flags in a single invocation. Instead, Cargo
+must be invoked separately for each target triple ("--target
+x86_64-apple-darwin" and "--target aarch64-apple-darwin"). This series
+bridges that gap.
+
+
+Overview of Patches
+===================
+
+ * Patch 1: Makefile: add $(RUST_LIB) prerequisite to osxkeychain Adds
+   $(RUST_LIB) as a prerequisite dependency to the osxkeychain target,
+   eliminating the parallel build race condition. Additionally, wraps the
+   definitions of $(RUST_LIB) and the "rust" build target in "ifndef
+   NO_RUST" so that disabling Rust cleanly makes the dependency a no-op.
+
+ * Patch 2: Makefile: support universal macOS builds via RUST_TARGETS Allows
+   users to specify space-separated target triples in RUST_TARGETS.
+   Introduces declarative pattern rules (target/%/...) to compile each
+   target slice via Cargo, and uses "lipo" (part of the mandatory Xcode
+   Command Line Tools) to combine the resulting static archives into a
+   universal library at target/release/libgitcore.a. Uses
+   mkdir_p_parent_template to guarantee directory creation before lipo.
+
+Changes since v2:
+
+ * Split the original combined commit into a two-patch series to separate
+   prerequisite bug fixes from Universal Binary features.
+ * Added $(call mkdir_p_parent_template) prior to invoking lipo to guarantee
+   that parent target directories exist.
+ * 
+
+Shardul Natu (2):
+  Makefile: add $(RUST_LIB) prerequisite to osxkeychain
+  Makefile: support universal macOS builds via RUST_TARGETS
+
+ Makefile | 46 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 41 insertions(+), 5 deletions(-)
+
+
+base-commit: 602f6c329a7d99df269d382df353b4e1bbbbd8aa
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2288%2Fkiranani%2Fnext-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2288/kiranani/next-v4
+Pull-Request: https://github.com/git/git/pull/2288
+
+Range-diff vs v3:
+
+ 1:  41de7d391a = 1:  41de7d391a Makefile: add $(RUST_LIB) prerequisite to osxkeychain
+ 2:  257f5ef42f ! 2:  88fc2e0bd8 Makefile: support universal macOS builds via RUST_TARGETS
+     @@ Makefile: $(LIB_FILE): $(LIB_OBJS)
+      +	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
+      +
+      +$(RUST_LIB): $(RUST_MEMBER_LIBS)
+     -+	@$(call mkdir_p_parent_template)
+     ++	$(call mkdir_p_parent_template)
+      +	$(QUIET_GEN)\
+     -+	if [ $(words $(RUST_TARGETS)) -gt 1 ]; then \
+     ++	if test $(words $(RUST_TARGETS)) -gt 1; \
+     ++	then \
+      +		lipo -create $^ -output $@; \
+      +	else \
+      +		cp $< $@; \
+
+-- 
+gitgitgadget
