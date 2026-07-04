@@ -1,191 +1,168 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E86271456
-	for <git@vger.kernel.org>; Sat,  4 Jul 2026 08:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B968931F993
+	for <git@vger.kernel.org>; Sat,  4 Jul 2026 08:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783155129; cv=none; b=bF+H4Gk1kPg8Frhdtjp+sfYIwp/BsF+/iqSB9E9gZRa2LdeIyFB8MiTZ3gY+WKY5rj/aNurthTQwnssi6weqa50lyjyfqovIjrqQTHYG7YoFIyVasxQrhGsSTjsYFjqCBXnfiTQhmrnXzvheNtelaOx8lXxfd1Mua09rTEvXk/s=
+	t=1783155208; cv=none; b=NHvfGhoUYhvUuu1900FkejOy3L5uqA3tp7/e9TLSrQym4A+9q8sfNb8KREHsleUfQGIbXy5wAUAQBUM6KSkWDfs+I+BeOtf/WaP2zZ0v8qyT/btN8UBJsh5csFXEf4BfLa8DJ2X4qIJiKUgKTOeTHIm4HsS7HtDBfvPAPmQgP50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783155129; c=relaxed/simple;
-	bh=y8vTgndMss32QwFzlXM6ge+USVPA0JyluvD3zSxUjhk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=M/7QjQPNphAW8BF/4zFArdWYJTZYwrYznqyjWKi4mhxtvEOfDwyvhFI+dWxkRWenRQo10Bzh/ivAeBOkB+EH5/Z4SjzP5rrUirdyCrdf/Ur97hF44TJ1sRp1itGzBcV9SmdvaHxIieT1Qk12iZS8av1o5MD4kGaWK8DCm4fXktw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XO8Kh0rl; arc=none smtp.client-ip=209.85.160.172
+	s=arc-20240116; t=1783155208; c=relaxed/simple;
+	bh=2Leqa/nCfwwWufZZ2dot4b4ftIp76JaBj5r8JOVJYJM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FhhZ+lOOrU+qER45NwDdhzmVa9l23cv3Dw8FzrZr6GV72wJqnwYVdT5nRVszFWZp9hbPwcITPW8iFhYjULT6C9Qji1RPVN2IwdHY/YNLh5wTyIxhPRS0vaZ2HoJpGCfB+lq/6+F8U3CK+L6LoAw2ozNQdqtcrGsieG/by7N/mx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=onxCm3pK; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XO8Kh0rl"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51c21495722so7055351cf.3
-        for <git@vger.kernel.org>; Sat, 04 Jul 2026 01:52:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="onxCm3pK"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-493b966dd74so4583435e9.3
+        for <git@vger.kernel.org>; Sat, 04 Jul 2026 01:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783155127; x=1783759927; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1783155205; x=1783760005; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rI6tL+CdYGSEMuTQ6KkfdTufz/4dvxNfdULEaaO0/Gw=;
-        b=XO8Kh0rl69Cxlwh6VqTQxRt0ow31Y/6sklWuijQqSK5RNiJ1vfF0C3vwQcalUYG9/u
-         h2Ba8k5qX5cYLr0oCRjdipPXVN3/VZ6HCSQvPFwPrzmYf1HW45HXP0nYdAtkVY0H0z3x
-         aQkIi5YTttNamLoARYzvL7NopZV+TTs/MsIBM4erSIBMmZuAQqF+j1DXCDZzp8p6aB+z
-         mVl2TkLWdoWuLRfAkGYq3dm2AlKHnFD2mSduDPIVy5RZwJFOVJM5fuUPRojVcozfDB/0
-         PTwvZZFSsY7siNa2zozTMzQpTJiy8HUd74rUVPW7otsP4QkwC4xexkiZYH18Q2TXrA8c
-         w/7A==
+        bh=6u8XXiDpcaNx2c2bBvm6KN7ssnfZNpvKfwMZr3ouRHY=;
+        b=onxCm3pKBIT8iw01XdzFSXA8UtGKJj/mQiEOeq9l3YKsVyf7l5oQYquO0VN3zl2kuE
+         CJazDTxajtM/s8PSKzqh6SN2oSqk8c4lrovUHlAuiPxEazmAqSjOYR6wrhwy3oQ3/FuC
+         CNv1VXo6H0g48cbgWezW6TXySdmHE4w7BqPZ6j7KomFlOZADIk6kiNmMTyVTRUR6HzwG
+         gUnFmhgyYIXFqr1AVTajQdD1wfX+Hg6u4ZUQKf43J6yP3aNls5WE1Orx18jWAl05pwZs
+         A92MjeMGrfPH5vww99UfSmLSenOGlZuoRRkCSrEcnhVOLA8Yt1VZwae/+e7pF/CJ7Dii
+         HTyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783155127; x=1783759927;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1783155205; x=1783760005;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=rI6tL+CdYGSEMuTQ6KkfdTufz/4dvxNfdULEaaO0/Gw=;
-        b=sz4FYVkIosdUv6CgDKM75+uhIF53e4IQDxMplNDOJQ+Ifpf+/oyMkqKZWGj0MjOxvo
-         LoAHaKrK1hMhQRadaptRCintKZiwLoqUyPeegg64Hn6IMCTQX9PiwniGPrimO2SuZXsQ
-         qNgcHRpmIi01QvIKLGn4AKUh6kDtL1cbfE+CFbRLtEdSfB2nBOnFxKZ62wm0UM/l849L
-         aTLs2WHJrruf02I7+8ot/6yepJvwN3wC+9YZIe7jTiXS7iAcX1bDdsk852RbScVNQS1p
-         m2DDycDrguPhnSaWGas4nCrvZmzYLdxLSuxcZKxnHo9SL5vOHtMQGsq6FL2AEsGbPFqN
-         gyfw==
-X-Gm-Message-State: AOJu0YyDir3hpbq7jdZGcaR7aFpzYksM/+/851uVFvwbtxNUEklI3Vxn
-	lJWYiqIm8+RhORXn5kb7kRwxo78AmLNguVl6uK2tK1bN9fnpIh+nxSeGQq90lnLq
-X-Gm-Gg: AfdE7cmo/9HcXEfIdHNW5z+MMj8Thipasf/au/IjzvvmWn9hrV3DmY1LUsKedhBJ8R6
-	w5DRU4icw+Xh+fZqTzPtr5OPM25hn/8JWgtMpWvtpdQdQSbVTU3PKiidelansyTVvROs84fwx73
-	41D4I0nW5/pvlo8xY6JDKkFRl/d3nU8OTwvw4wK+Ycb958SdKfR8dZ4DkcnRabWvViQc+RS5nku
-	GF0dPOwY/M4ey3jKRhH8sIZNg2waoCnU5vWYTmc3F1J27G6tIywCWDuRIecENi07PDKuRswT6Yw
-	al/rL/PhfTjxDoHSnjUCKQeEBknKu9sURkqzn57CfkI1/tpKHWcORTOMb2lUULjM8Oyns5HVmHy
-	QMutazo0tSRuD/E49B979qtdv/RCCfcO/h4SP1Hj1fqzyxNfo51CUAQoXSLhDMhj3lXFutbso49
-	D2UB2BoFXNJR4Qc8kIgQJb4T6gm5E=
-X-Received: by 2002:a05:622a:1115:b0:51b:fddc:1de8 with SMTP id d75a77b69052e-51c4c3511bemr41970271cf.65.1783155127146;
-        Sat, 04 Jul 2026 01:52:07 -0700 (PDT)
-Received: from [127.0.0.1] ([172.172.119.97])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41d7eb26sm36505791cf.21.2026.07.04.01.52.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Jul 2026 01:52:05 -0700 (PDT)
-Message-Id: <pull.2164.v2.git.1783155124926.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2164.git.1782889484346.gitgitgadget@gmail.com>
-References: <pull.2164.git.1782889484346.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 04 Jul 2026 08:52:04 +0000
-Subject: [PATCH v2] ci(dockerized): raise the PID limit for private
- repositories
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=6u8XXiDpcaNx2c2bBvm6KN7ssnfZNpvKfwMZr3ouRHY=;
+        b=B1ddAQdkCoByD+W2BHuApLawpbnglV9yHTa9Ap1KaSQe7zCEUqtDeHyKUgWnC2tW2h
+         98BfICyzusUjPklLj27ea0unEzwKqjA6OnsgdjSB7hggrU2JBRK2ugHOeuXCphHx5aKa
+         IE+qQ3ripwx4UmlhgO3mflXxr2FMrjOFilglq612HUvNLPhKEa515Vl1K5TlGX6aGGK2
+         H5LynhGaNnIYs1k7HMcF5uoK7tvPFuvjYz/XaLAzZEMDQlB/9VoQQSWegpV9hTXbmrX5
+         y6SJ+/aSm6ur2xPizzi9bHdPDPAb0xYSrkiS+AY8KACMl7p6Yfb2NUzr6cykpyhZfupF
+         lyXg==
+X-Gm-Message-State: AOJu0YwRrbVsqnMOCMvasIZqkBLj0ncF83/qKYVQxl7JISdJoY9cLURg
+	4uO7BAvGNv5IVxlYGHaW/5sdnhCF7Cs8QyqiOvC7B0j6HtvfGHbNOqPNSco2aO/W
+X-Gm-Gg: AfdE7cl/a32N8ZcKKmXpj7vLJvLwUe7K+zLt24yG1pqe6P/YV4QlsbtROxBZ9VvEl+x
+	Lx2PBvGzK1JWyNa1S8T4VnsOvQqS3Fa4kKFlckqC00fpHcWvC5HO1ZZ0w2a96nCX5Pd2P4yrbgF
+	C/XKFUco1oaoj/Xt+UXEqFtrouEuzCX0lOVUTD4snwNFsnuJbKmssuM3LrIYh7PY09kMYZqyYam
+	FK/U3SRw312+e4mDoZnEUsDWtY6fdVXf3Pad1wrK6N7AgoBU5gXbi3jmladlgF4wg5DVsE3PhEL
+	vYBaaRNA8VfyJoeLmE78lPg4ku2Wf/FbJg1fkMbOS5/i2Btd8YP65UHbKfZUchv4Wpz9DXcmA3W
+	0+UcPpJJWk1CduFG9BE8kjJi/9e2Cu4LfQzFBivWS31veQRoOWPhX72g6eDfSuGklbzlSK32OzK
+	MYJxdcnl8m8dyv0D5CAHxvoBCqTWq4pmzKhgxT2tv+pKly34fLLwRvf8xlZCS/ztrFiK3GggMmL
+	uLVidfMruRCneBdOdV1CO8IBveI6ybxM7oPFZyHvsdupkgw5Dhf2ys/fCNpQf1q2ZRCQkDjJKns
+	ojBx8OMFMX/dDS2fmZ2cJu1anCEOcPrYl1K2Yj3E8uzmIaxRsMwRbhP2dUKDl55Lr0pwwMDyesh
+	2iQWK34x2mw==
+X-Received: by 2002:a05:600c:4ec7:b0:493:b6ee:fcb7 with SMTP id 5b1f17b1804b1-493d11d9562mr25934315e9.14.1783155204942;
+        Sat, 04 Jul 2026 01:53:24 -0700 (PDT)
+Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493bef23feasm214141535e9.2.2026.07.04.01.53.23
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 04 Jul 2026 01:53:24 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: pabloosabaterr@gmail.com,
+	ayu.chandekar@gmail.com,
+	chandrapratap3519@gmail.com,
+	christian.couder@gmail.com,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	krka@spotify.com,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk,
+	siddharthasthana31@gmail.com
+Subject: [PATCH v7 0/3] graph: indent visual roots in graph
+Date: Sat,  4 Jul 2026 10:52:32 +0200
+Message-ID: <20260704-ps-pre-commit-indent-v7-0-a94706cc8376@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
+References: <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260612-ps-pre-commit-indent-39ca72816382
+Content-Transfer-Encoding: 8bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+When rendering a graph, if the history contains multiple "visual roots",
+actual roots or commits that look like roots (i.e. have their parents
+filtered out) can end up being vertically adjacent to unrelated commits,
+falsely appearing to be related.
 
-Every once in a while I need to verify that Microsoft Git's test suite
-passes for changes that are not yet meant for public consumption, and
-since it was (made) too difficult to keep up a working Azure Pipeline
-definition, I have to use GitHub Actions in a private GitHub repository
-for that purpose.
+A fix for this issue was already attempted [1] a while ago.
 
-In these tests, basically all Dockerized CI jobs fail consistently. The
-symptom is something like:
+This series adds indentation to the visual root commits, so they cannot be
+vertically adjacent anymore making it easier to identify them.
 
-  error: cannot create async thread: Resource temporarily unavailable
+Before indentation:
 
-in the middle of a test, typically in the t5xxx-t6xxx range. The first
-such error is immediately followed by plenty more of these errors, and
-not a single test succeeds afterwards.
+	* A
+	* B1
+	* B2
+	* C1
+	* C2
 
-At first, I thought that maybe the massive parallelism I enjoy there is
-the problem, and I thought that the cgroups limits might be shared
-between the many containers that run on essentially the same physical
-machine. But even reducing the matrix to just a single of those
-Dockerized jobs runs into the very same problems.
+After indentation:
 
-The underlying reason seems to be a substantial difference in the hosted
-runners that execute these Dockerized jobs: forcing the PID limit of the
-container to a high number lets the jobs pass, even when running the
-complete matrix of all 13 Dockerized jobs concurrently. But that's not
-the only difference: The jobs seem to take a lot longer in these
-containers than, say, in the containers made available to
-https://github.com/git/git.
+	  * A
+	* B1
+	 \
+	  * B2
+	* C1
+	* C2
 
-When forcing a PID limit of 64k in that private repository, the jobs
-completed successfully, but they also took a lot longer, between 2x to
-2.5x longer, i.e. painfully much longer. Reducing the PID limit to 16k,
-the CI jobs still passed, but took an equally long amount of time.
-Reducing the PID limit to 8k caused the errors to reappear.
+Indents the visual root commits that have still commits to show after
+them, and if they have children it connects them with an edge at a new
+row.
 
-Here are the numbers from three example runs, the first one forcing the
-PID and nproc limit to 65536, the second one to 16384, the third run is
-from the public git/git repository:
+If there are multiple visual roots adjacent in history, the indentation
+starts with the second one, avoiding redundant indentation of the first
+one and cascades after the second.
 
-Job                           | 64k     | 16k     | reference
-------------------------------|---------|---------|---------
-almalinux-8                   | 19m 3s  | 16m 0s  | 9m 36s
-debian-11                     | 20m 31s | 20m 3s  | 8m 5s
-fedora-breaking-changes-meson | 16m 29s | 19m 19s | 9m 40s
-linux-asan-ubsan              | 1h 10m  | 1h 11m  | 34m 36s
-linux-breaking-changes        | 25m 39s | 25m 58s | 13m 15s
-linux-leaks                   | 1h 9m   | 1h 10m  | 33m 30s
-linux-meson                   | 28m 9s  | 27m 4s  | 13m 45s
-linux-musl-meson              | 16m 32s | 13m 39s | 8m 6s
-linux-reftable-leaks          | 1h 13m  | 1h 13m  | 34m 34s
-linux-reftable                | 26m 2s  | 25m 48s | 13m 31s
-linux-sha256                  | 26m 12s | 26m 3s  | 12m 36s
-linux-TEST-vars               | 26m 5s  | 25m 21s | 13m 25s
-linux32                       | 21m 16s | 19m 57s | 10m 44s
+	* A
+	  * B
+	    * C
+	* D1
+	* D2
 
-It does not look as if the PID limit is the reason for the longer
-runtime, seeing as the 64k vs 16k timings deviate no more than as is
-usual with GitHub workflows. So let's go for 16k.
+This series first commit is a cleanup that brings a common function
+from t4215 and t6016 to a graph functions file which they both use, so
+the new test file for indentation, t4218, can use it as well.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+[1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+
+V6 DIFF:
+
+- Replaced the queue peeking with a 2-entry lookahead buffer populated by
+  get_revision_internal() (second commit and graph_peek_next_visible()).
+
+- Changed assert() with BUG() at graph_output_pre_root_line().
+
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
-    ci(dockerized): reduce the PID limit for private repositories
-    
-    I needed to craft this patch while developing fixes for vulnerabilities
-    which eventually were published as Git for Windows v2.53.0(3).
-    
-    Changes since v1:
-    
-     * Reworded the commit message's title to reflect the actual intent.
+Pablo Sabater (3):
+      lib-log-graph: move check_graph function
+      graph: add a 2 commit buffer for lookahead
+      graph: indent visual root in graph
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2164%2Fdscho%2Fraise-pid-limit-in-private-repositories-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2164/dscho/raise-pid-limit-in-private-repositories-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2164
-
-Range-diff vs v1:
-
- 1:  77aa18442c ! 1:  671d03ad33 ci(dockerized): reduce the PID limit for private repositories
-     @@ Metadata
-      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## Commit message ##
-     -    ci(dockerized): reduce the PID limit for private repositories
-     +    ci(dockerized): raise the PID limit for private repositories
-      
-          Every once in a while I need to verify that Microsoft Git's test suite
-          passes for changes that are not yet meant for public consumption, and
-
-
- .github/workflows/main.yml | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index cf341d74db..85cfedf5b0 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -420,7 +420,9 @@ jobs:
-       CI_JOB_IMAGE: ${{matrix.vector.image}}
-       CUSTOM_PATH: /custom
-     runs-on: ubuntu-latest
--    container: ${{matrix.vector.image}}
-+    container:
-+      image: ${{ matrix.vector.image }}
-+      options: ${{ github.repository_visibility == 'private' && '--pids-limit 16384 --ulimit nproc=16384:16384 --ulimit nofile=32768:32768' || '' }}
-     steps:
-     - name: prepare libc6 for actions
-       if: matrix.vector.jobname == 'linux32'
-
+ graph.c                                    | 282 ++++++++++++++++++
+ graph.h                                    |  17 ++
+ revision.c                                 |  17 +-
+ t/lib-log-graph.sh                         |   5 +
+ t/meson.build                              |   1 +
+ t/t4215-log-skewed-merges.sh               |  33 +--
+ t/t4218-log-graph-indentation.sh           | 453 +++++++++++++++++++++++++++++
+ t/t6016-rev-list-graph-simplify-history.sh |  25 +-
+ 8 files changed, 798 insertions(+), 35 deletions(-)
+---
 base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
--- 
-gitgitgadget
+change-id: 20260612-ps-pre-commit-indent-39ca72816382
+
+Best regards,
+--  
+Pablo Sabater <pabloosabaterr@gmail.com>
