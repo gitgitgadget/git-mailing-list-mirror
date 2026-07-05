@@ -1,69 +1,70 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE7E36CE10
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FA736EAAC
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783239894; cv=none; b=R50mY/RvVqsVbdcKDKv/P9sVTSH8jqsNCIb0GV/lFjwLNxp1RU3NzVRqvYLARP5bYHyuJ4Paw8/UlXzgfLPQP3eG7x9FwjwyKr/98aCNnz1dlU2bLrrPEE5Rb3TwdBe1dUfKfeG54uwvydAXY3J+EE+N4w+JUvLeFqrTHR2FgKE=
+	t=1783239896; cv=none; b=tlEn6GcptgC3GkYmJVHb2gXYuuak+HkgrQM/PvSXx1Ls2SrqFZT7gknXCBV2+LCOkwoWGDjjCB+Tm/3fsx+hyyHtjRie24+LM3diWAJV7aC/W5NSYFBquUSqAaWYFyFFwtcuF6a0AR/yVsqdFg8hzXV/x/86TbZpXYT2i3h3oEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783239894; c=relaxed/simple;
-	bh=DdLrBEAnjUn0qzAG3UTaDRp8jRJaZ5CpNIericlIy7U=;
+	s=arc-20240116; t=1783239896; c=relaxed/simple;
+	bh=mrBcuP5uqIYjQ75rlD36u0b9wt/y08coG9Knk8FjDLo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=cgCrRhstiaXnSFDDGbGgI4pc3ZuZns5xn3mlgG5BmgnnYejFC0JUcS5DxuDwnFKyx+Ey1WOvjgKci5NQs2XESpDqkgVYKd9/L/9AfQvZMlYcdciU7wevdGRd/7Oh7pdkinX59h0vaJii4+dutuKb/B3LmBBtGqZm1s1QGT9ftg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KfLf7cAE; arc=none smtp.client-ip=209.85.219.44
+	 MIME-Version:To:Cc; b=hhrn6StEifP+ogNQpcvhsPp73TJQJ6FydNo7McZqhzc8byuZgjSGnDh6f3nfMQBeGs3eB7toI51Q0/TsxmK0ByPc4CSUUqlESoVzdtR+hcK74Ttha7mR4qUZAX1i1Hm6FfqPhFe2SOpWXQ4pHuypqWA/R4hqbLf5ML/yaYQHUe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gACmVHWu; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KfLf7cAE"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8f0e5e36912so11757206d6.2
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gACmVHWu"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-92e663c828dso110223085a.0
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783239892; x=1783844692; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783239894; x=1783844694; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FcPImijrp/FJoVvHN1JYuK9O7gj2NKEMm9XH/ybNafU=;
-        b=KfLf7cAESnRih2yW3rYggR3n0lFT4aI6boWpTye136CNJObQwfCv/s4RGEKIKJ+gIc
-         IM0C4973pFc9o01AhpH50454YP4IYnhyJ4lSvWZGNLHWtkroVUwxSMvPxatc0kiMrs8Y
-         h2JoD/VNJkRbpLynuZKg6w/MhWr9qN7zSPzDy7kvr+riN0iSZKXS17T9ddf8N5Nsh0i2
-         VH4eQVU2Xg6vsfsaf4QAa1WgRVCm78yQqAY/73DOXmT/Qc7iXih2JyzlBEkxjiXExqRS
-         oMIgzotaM++4I/XQpAciX/PJfjZCMwtvIA+knnvbO7O4bgSm3hX2z7yTz3PS9vQiXilh
-         6n7Q==
+        bh=tDKq041CEXhPpuz8LfGlSSIJN7u8oShSF1f6hHy0Lfg=;
+        b=gACmVHWurdPh+h+WK48iWb0FMDLBwHQmOX+AQCilimLfuWUmScsS4NCSO6dOaMAWUv
+         YMFNK1iCUMsBgcwJIieLPLgTT7Ubn0m5EKI5q8owMSIzduB+u49eJAfMS7tndyJOzQlL
+         MgR/PN8hA7qr+vdBX39SIMRcKcg143hkjqxQBTrT8rBM88D4HJlnnfNsvZAa9EqZi+oe
+         veOevERLQlKvKhKkEtn0JvluDYvSOTE3YAHAWPYNTAkximxC6EilTrHraswxuSx4oxT5
+         cMnFrm4rzlF8p+okoEer0dQayeet0inWg1D7kdWOpbm+r2lYm2fNW8ftHvw+sEV08xDi
+         NbNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783239892; x=1783844692;
+        d=1e100.net; s=20251104; t=1783239894; x=1783844694;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=FcPImijrp/FJoVvHN1JYuK9O7gj2NKEMm9XH/ybNafU=;
-        b=gZ27IfIKXOuI5TGbHgSDWJDy3IOaheTMXMwQBaWt8q4h2K7jynJFlKXqdItDa/QgdY
-         NOcO9NnvvXxeZMIDDhivkipRyHXIe6sZP5pom3+4Ia7GH3xCXJBRCTeSIUMIURADgXHL
-         HIkrVIQjUvUGfmtCBH7LyE/si2z8nmo+ssyqRLzPobjNspQJnlG8Ur6CnDbBX6DUgpUM
-         HOnXfnP1LB9yPeOQOYf16zyDeNKed67zbfSMWTsb/kVjEYQPkybUKkOanCW6EM8Iap8Q
-         mGnRaYpuE0mXwnuNkL369/NSNn30GYFuycedTCK9vaLakJxyW7KMDda7+qbtlQwXTfMZ
-         PmfA==
-X-Gm-Message-State: AOJu0Yzaeijtw9xoK0W+euF0ATI9vNej2AqSnmmSKLX98sXsleu9kR/S
-	KuF7/0jReAXlLt3oaVeyKMLs2IYrcjhXmIClhjTB2zJ2OnxGBxkVP0PWy7R4kQ==
-X-Gm-Gg: AfdE7cm9DnjCh8Bs+Nr24Vc0wAkGBdS1vDZKSUAEYSor+cGPak+dWK+5ZjUGH9jVph1
-	yWDDIxQI4YL+hqQekl+IQ1I6m/A7aYDUlkyeDYtI3kMIxFOeDzEMYGpsAnufrHtT+xY7WuNoptx
-	+mZAZ5hG1wKXhJfAiXJ0YWP8Y0h4X0+8gLJSfIT0ei7BgNKmWd/HQEqTghu2dTYyH1LN/vguvhI
-	eWa9U162f/vwlKY/WjbnHQBpxyF5t5cPZws8CYAs5NafNg8btNgcrBBTvKpFCjrHxtQ7q7uU8fR
-	61wPfepsU4EHIl1Ns9a46OeokvM7Eq6ryInXvPqvDewt3DJ0pEe3rbcbJ0pN0LSOTF3BWSSW7GU
-	RLTJ0IYMGNIhZR5O6EJQhBtp3wxxVExPYhtqBx+7SrKpDCrHjIiqFiDj2w3TxcQu8l4FP+jdmWJ
-	7A+PfS7iGLGVrUo4NcN9h9XzBmv6fG
-X-Received: by 2002:a05:620a:4398:b0:915:9d08:94e1 with SMTP id af79cd13be357-92e9a43b335mr825303785a.46.1783239891793;
-        Sun, 05 Jul 2026 01:24:51 -0700 (PDT)
+        bh=tDKq041CEXhPpuz8LfGlSSIJN7u8oShSF1f6hHy0Lfg=;
+        b=DdAzUM+e5HWlXSf4uTs3PipaoVmyD2Yl1xdFMqn1oquhnEGT9q7/eDqd6fQjBm6zwS
+         HM5QfzYUU+kXp0OsLGgD7mR/85+iUSeCU1hmCsZY5Sj98DCPL542Ntco1irDxjKyZuhq
+         HD5OJBzP8TeiDlVydvVfZLUHkVHkUGXjnO/+fd2yWccknFDI5gqosxgP94bfov0TBvfy
+         oOBxHIhqzw4y2u5b5GZ6Was8aC6fePZtZX2YoRLsh3bZFAoQGbaDxAXgTNjRxTEFmOX3
+         Zp6zybJ2PDrJg406G33NGcOhksxLe9mFoCYlbXZldxBrlMSWXxMie4cfkD2OsQTWuBM5
+         7+xg==
+X-Gm-Message-State: AOJu0YwPLodpiyCYsRoAzf3w4cR3n5WGe1+3ScUob6vfHZsIssKKKg73
+	ffH2cka+n0XnGnwtlAdfkOUvj9EBKWUlIAXCIfjIKalTQkhl7ywjXSeUtGi9CQ==
+X-Gm-Gg: AfdE7cklGF+paUjCehRhM0xHpbXERN4PVIsdfLC1nz3p2lGufp5nBrEBxDpguKg8s8M
+	BJPkIUizCKDQ81EHELwmGBwpAOYjRzVJjMDH8VhRWyxqZN6HCIfj9uWNNcQfyy5ZN7IkTTigKRP
+	m7ZJgqbCcUtwf3uZUGPuJeZ6DtafZqeLTrp6tZN+WJrMkcKLptilJo1i5/0KhpFNvjOVT/R8tPT
+	UA91lFr7Ov9AXNOWj+CHI+Hw2JXXTolAGj+ee+5akxxC0HwB5bOoQZdLFAClrzT97gIVAB78IWl
+	wnC8RHkN6uutp4Wiy9mlkXiUgRHoxKSKF/2u5D9O61UoxZYKDm2WoKbO9jiw4O9CKuE2ICGXTE2
+	UGbMUVnY+sBLR7x4NOvYj+AByClkJkus0rVYugAHMB4QRFXOVhuo5A1L3mwI2/cMYN+AHQ7/5L8
+	K/NI9OMieKxCuPg3T49g==
+X-Received: by 2002:a05:620a:468f:b0:92e:5232:91f8 with SMTP id af79cd13be357-92e8b5d2342mr1246348985a.43.1783239893662;
+        Sun, 05 Jul 2026 01:24:53 -0700 (PDT)
 Received: from [127.0.0.1] ([135.237.130.145])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90c92634sm626327585a.27.2026.07.05.01.24.50
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90bb8629sm627933085a.19.2026.07.05.01.24.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 01:24:50 -0700 (PDT)
-Message-Id: <13ecebcdee633689b861418a005cf4f64c190fb3.1783239870.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 01:24:52 -0700 (PDT)
+Message-Id: <97049d7cc3960937d822fb9403849d1dba063b78.1783239870.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 	<pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 05 Jul 2026 08:24:27 +0000
-Subject: [PATCH v2 10/12] reftable/table: release filter on error path
+Date: Sun, 05 Jul 2026 08:24:28 +0000
+Subject: [PATCH v2 11/12] fsmonitor: plug token-data leak on early
+ daemon-startup failures
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,39 +80,42 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-`reftable_table_refs_for_unindexed()` allocates a filtering_ref_iterator
-and then calls `reftable_buf_add()` to populate its oid buffer. On
-success ownership is transferred to the output iterator, but if
-`reftable_buf_add()` fails, the goto-out cleanup only frees the table
-iterator and walks away from both the filter allocation and the oid
-buffer that `reftable_buf_add()` may have grown.
+`fsmonitor_run_daemon()` allocates `state.current_token_data`
+before any subordinate setup step that may fail (alias resolution,
+listener/health constructors, asynchronous IPC server init). On
+the successful path the listener thread takes ownership and clears
+the field during its teardown, so the `done:` cleanup block sees a
+NULL pointer. On every early-error path, however, control jumps
+straight to `done:` with the freshly allocated token data still
+referenced, and it is never freed, as Coverity flagged.
 
-Release filter->oid and free filter alongside the existing table
-iterator cleanup.
-
-Reported by Coverity as CID 1671512 ("Resource leak").
+Free it at the top of `done:` and clear the pointer. The success
+path is a no-op (the pointer is already NULL there); the error
+paths now drop the otherwise-leaked allocation.
+`fsmonitor_free_token_data()` is NULL-safe and asserts
+`client_ref_count == 0`, which holds trivially here because the
+IPC server has not yet begun accepting clients when these failures
+occur.
 
 Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- reftable/table.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/fsmonitor--daemon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/reftable/table.c b/reftable/table.c
-index 56362df0ed..d604ddebf4 100644
---- a/reftable/table.c
-+++ b/reftable/table.c
-@@ -709,6 +709,10 @@ out:
- 		if (ti)
- 			table_iter_close(ti);
- 		reftable_free(ti);
-+		if (filter) {
-+			reftable_buf_release(&filter->oid);
-+			reftable_free(filter);
-+		}
- 	}
- 	return err;
- }
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index f920cf3a82..4161dd8282 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1418,6 +1418,8 @@ static int fsmonitor_run_daemon(void)
+ 	err = fsmonitor_run_daemon_1(&state);
+ 
+ done:
++	fsmonitor_free_token_data(state.current_token_data);
++	state.current_token_data = NULL;
+ 	pthread_cond_destroy(&state.cookies_cond);
+ 	pthread_mutex_destroy(&state.main_lock);
+ 	{
 -- 
 gitgitgadget
 
