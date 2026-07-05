@@ -1,253 +1,94 @@
-Received: from mail-108-mta32.mxroute.com (mail-108-mta32.mxroute.com [136.175.108.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4993596E1
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 14:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADD5260580
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 16:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783260929; cv=none; b=O7vsj1Udkvt++HBoTstOZv7QdxjMgYRlgAZX1MFFi3o1tNk0cgepDEcgdMsSNRhuR5q+MfssQUfRKL93pkM0BkInxOJTzUYlDQ8n7v/P9jexRSB0dc/6/M4/KpnxM6Sb5SJx7ynJ+Pfqiq6FAa5p1B6DDmlocsEmTP0nRLv+dVI=
+	t=1783268402; cv=none; b=kKxQCyJgKRsKbAfSZ3DN9IxagO3pHc4XJCOKXOwrNuZtAaSd2I+R6/5pmuFDOgCDbzgCW7n90aujMVfjR/LeHtdFRHAqi/HITSNJV8NMfr5d8d7gBjuvxhVZ1rpV51+xxES945zftfHJMfxTo9zPqNWwqJg0otbOJDcy8GjItMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783260929; c=relaxed/simple;
-	bh=2B7wAaI+ab03ekj9cnCO43x17p84/29VV6u8w1fN528=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ltswaPzVjpujp93tm1x7+iCOrYwZV+48mFMUOF67nDZx7MfeU42dJ0jo8vz4/zJOoLHDCYWcvPnNcYR0X7EYfgoxKHxDozF3JUnAMADSISmX25AV56mIamjLwKY/gogN3bFE/jMNtfuGq562WOPpj4rQDfhMSAlt7pIXBrkFuTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=trevorgross.com; spf=pass smtp.mailfrom=trevorgross.com; dkim=pass (2048-bit key) header.d=trevorgross.com header.i=@trevorgross.com header.b=rZzzg5fB; arc=none smtp.client-ip=136.175.108.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=trevorgross.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trevorgross.com
+	s=arc-20240116; t=1783268402; c=relaxed/simple;
+	bh=AhTrbUoPJWP542+I1yMX+Jkxn//Q0U6/0AeKiZByUWo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NQpIlKojC866YtbuwbqzKL1Vu/Rn4UYxAB9R9yfp6ex6wlucadOKIl30GPTIg3JdKdCMYA5QAeDXyAEUYFBJmCOy8Tpq4el+qL1mQzS6UKLyw3Gh5tWJFOjK9xY6X2T5UvkDtN+eAfDJi6+wk9kbZEj76crsw/Q90HpgM087vW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rv9l+oVY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F8JxFHDG; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trevorgross.com header.i=@trevorgross.com header.b="rZzzg5fB"
-Received: from filter006.mxroute.com ([136.175.111.3] filter006.mxroute.com)
- (Authenticated sender: mN4UYu2MZsgR)
- by mail-108-mta32.mxroute.com (ZoneMTA) with ESMTPSA id 19f329d937700067f7.006
- for <git@vger.kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Sun, 05 Jul 2026 14:10:15 +0000
-X-Zone-Loop: e3be293e1aa4c1d5cad183394f27b7f6f240b96e59e8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=trevorgross.com; s=x; h=Content-Transfer-Encoding:Content-Type:MIME-Version
-	:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=7Y1NVMKx2NF/GfWLGkOjJBv2FJc0woOEk0NQHJ02J1U=; b=rZzzg5fBxi4VwkG2hykJOQVALr
-	7OfW4UsBaDRWH9khousawevXJOPzxV8yt5eJEiNwTjbYVybuIF5wj7XkWBckUk03fA/kcZMgSxl1S
-	WLepRbxVtPV+LKgFwZ9hOnOAN5EaTpeyzlW/bY9KQqwftppjfgU5K/avyfjXuTIY4r55YGuzBd4vD
-	ue+5b0gC01J+PXi2pw8V9+x7nRMOrD7C/aZ3aFE30L2UR38cV5xn/sOqM6ES/2Idr8kK4ZTG56Rg1
-	uODeCaQUVs98Z9SKwcoCFzy7G24FQnj1IJnOICDmu91WNGVLL6uK4k099oakI8ehFZds4VNJJP9it
-	+f60NQ4g==;
-From: Trevor Gross <tg@trevorgross.com>
-To: git@vger.kernel.org
-Cc: Trevor Gross <tg@trevorgross.com>,
-	Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Haller <lists@haller-berlin.de>,
-	Derrick Stolee <stolee@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH] rebase -i: introduce `pick -x` to add "cherry picked from commit ..."
-Date: Sun,  5 Jul 2026 14:09:06 +0000
-Message-ID: <20260705140931.98262-2-tg@trevorgross.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rv9l+oVY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F8JxFHDG"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 330471D000D8;
+	Sun,  5 Jul 2026 12:19:59 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sun, 05 Jul 2026 12:19:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783268399; x=1783354799; bh=H4jgQeQPf9
+	EQsG969c5UygR6tvWd/v6zrSrVOrBDAv0=; b=rv9l+oVYvamUX0GsI8u3DYWZjg
+	HBNn3zTQVCPOSX5NpuhIJcXuR9idIYuJqcL4talZ/NEYlkwj9Wl0oCSVyPaEUMF2
+	T7pVkm0vXzC0FPhOPbKm0+tA++OBmEt8/FBvp4Qg8yutFUIalX7nYAkz2ekXvqrL
+	aYknMtsXRpvE84FPqWnnptfYnEgK/GLtLG9Hc25L15vF0pwavR+YeYQPPvgaJfoO
+	YpuVK7yY2c0uSDNsL47t2T/RAoiyw6fG+W54CaGl2hFpp10DWjiO88AOsbH0iYjH
+	qZq3MPBop+ywIgDptiVCfAy6PgnKqkPNwBdEKwFJtE5Wx+74/00AJkitrYFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783268399; x=1783354799; bh=H4jgQeQPf9EQsG969c5UygR6tvWd/v6zrSr
+	VOrBDAv0=; b=F8JxFHDGCqiHUQmdLBp0YXp7RglG8oxrNocZXNpb513RLJryNJ6
+	aHOzPefT6+2VFaZYNV8Vg1ANWQ3pZDN+svfoYjNXWRhABtxa8E6vG5FzqNPJmgMI
+	EA6PTWVTG3tVcP9Jguc3WBFGSqHV3NMlQXXN23QFopB90Cal4EA2BIWnsj3BoGxn
+	0mrohP2GFUPIE1ioEDlM5h164IORF5GAq9yEz8haAF1oyBlqhrsxfbGiQ4tmhNDp
+	FEbp4TMZg43yDiec1E6Xy1MHU0wZeq0NgSVkUgQWzXMh57TrDtWLnWnUbNgOiUKw
+	2gd+9pwpIaAbjeKHUxagweWNgCESAX4p3GQ==
+X-ME-Sender: <xms:LoRKauetZHoM4K5BGyaNVIturM_SgMOgdEWirLSNzrKCa41zecb_7A>
+    <xme:LoRKavqM4eW11VUZmEcXtH1KZD9ZDQtnPN_TOFI0eE4LUppI1ehmpUgOx7Z9KaPir
+    IMdHx9SAy6LP2TFzOebJonc1TumxpS-oj_55QaSfReJsa9FAEVhPw>
+X-ME-Received: <xmr:LoRKas6qp3ymh81uGY8L7Q2GWQcC8wlUOBdcSIiY_4yg84a59trcazeqBdfEl0AQ7E3-BwG0a7CGH0Rdy49zFr1OR1N3VrkBNQi8KWQ>
+X-ME-Proxy-Cause: dmFkZTFTr6xQtxk7IXvrFOQMGsTiIjwhTY517mPF3n/1vRf2ZsZN0266EcC84KE7Y18tRu
+    Cq+xHQujDsJW5Sj2RqPJmcpxGD7Im1nSOyzgcmkCn467GyD+gs37DzrX8DHLGjD/oVrQgD
+    MpI+BrdSvgMHNXq8p+VoDcjjtPiTgSJwSuo/nJnGluusjK/T/OA/6VHJi0VYvYHgnWqlbm
+    PH9uBwyg434oGttLNT6Y0+SL0u3g62sLuZuvYKPktlbAMKaGKmS4h3epRK7cjKzeFyN6Sl
+    bTQq7lrdWQzh+vqtyZyPT3Df0IpL2HuK4Kfql8r11uLHrxbY/0cHHxJKYG+uyyGBxjYDkL
+    st2K/y9SU6GDgDN1YVJH8HzWJ+tIFHILJnmmIa5fYU1G752w3jQs/ozyORU8JNdAIuxHP0
+    trUU/+WClvWCsKeXCPzxJ8YkDngffSUGmh1SZo9nLc0mGDFREdjUPwf7CE0wK49ddT0h1p
+    NxBL66BnELJsJoXXsi3yimB1P3V1AbZvytbqqm1TyEmrM/OkGyNLPYkIc36+PtlF9vT36Q
+    /U8/0dLyretts8i1hUk90sWWWKsBcARYdWH6m/F19/MxyG6uB8oQK9mGbecXuRczITyZcJ
+    VkA1rPvwokBg8ShRyX0qZtmILaz2rKuuQeM4pTqgVQ17UcY/D5cqaV/IH44A
+X-ME-Proxy: <xmx:LoRKalpRi7kyCUz-PGO_ziHvwlg81Rx91waRX8_pz7pXVAKRcwtW5w>
+    <xmx:L4RKauj6waA9vJ0P1gjC4jzrhgdBma2urZGSkIbY5kV6H__m4MRoHQ>
+    <xmx:L4RKavLFdUIa6mbOOKySPlIdXP-jL3g7XTU2g-AW80ZFHLwNg69Wlw>
+    <xmx:L4RKauC95-CdAustWooF55pA7G4Jom5crh737gWfj4CyLK9jNvYCFg>
+    <xmx:L4RKarpzae9fRLVaunu6ChGZWTVse581GhFhgj0MMf-1Sje6UREll9d8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 5 Jul 2026 12:19:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] diff: give --compact-summary a short synonym --sstat
+In-Reply-To: <4fa47057-0a14-4749-96f0-0efd3d50386d@gmail.com> (Phillip Wood's
+	message of "Sun, 5 Jul 2026 14:42:18 +0100")
+References: <xmqqldbqdpri.fsf@gitster.g>
+	<4fa47057-0a14-4749-96f0-0efd3d50386d@gmail.com>
+Date: Sun, 05 Jul 2026 09:19:57 -0700
+Message-ID: <xmqq4iide7de.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authenticated-Id: tg@trevorgross.com
+Content-Type: text/plain
 
-It is sometimes useful to do cherry picks via rebases when there is a
-sequence of picks or other git operations to combine. However, there is
-no interactive rebase equivalent to the cherry-pick `-x` flag, which
-adds a line to the commit body indicating the original commit.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Using `exec git cherry-pick ... -x` does work, but is not as nice
-because it interrupts rebase flow; after resolving a conflict, both `git
-cherry-pick --continue` and `git rebase --continue` must be run.
+> ... this is saving the user much typing and it clutters the UI with an 
+> obscure option name that could plausibly be an alias for "--shortstat".
 
-To improve this, introduce `-x` to the pick, reword, and edit todo
-rebase commands.  This uses the same logic as cherry-pick to add a
-"(cherry picked from commit ...)" note to the commit body.
+Fair enough.  Thanks for a doze of sanity.
 
-Of note is that rebase will fastforward wherever possible, meaning the
-check for TODO_RECORD_ORIGIN doesn't get hit and the message will not
-get amended. This differs from the cherry-pick logic, which will add
-"cherry picked from ..." even if a rewrite isn't otherwise necessary.
-
-Signed-off-by: Trevor Gross <tg@trevorgross.com>
----
-
-Link to PR with the CI runs: https://github.com/git/git/pull/2194
-
- Documentation/git-rebase.adoc | 16 +++++++++++++
- rebase-interactive.c          |  9 +++++---
- sequencer.c                   | 19 ++++++++++++++--
- t/t3404-rebase-interactive.sh | 42 +++++++++++++++++++++++++++++++++++
- 4 files changed, 81 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index f6c22d1598..d8a8e2c2d6 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -978,6 +978,22 @@ pick f4593f9 four
- exec make test
- --------------------
-
-+Similar to `git cherry-pick`, `-x` can be specified to append a "(cherry
-+picked from commit …​)" line to the commit body if the the commit base
-+changes. That is, the following todo list:
-+
-+--------------
-+pick 123456 -x
-+edit 654321 -x
-+--------------
-+
-+acts the same as:
-+
-+---------------------------
-+$ git cherry-pick -x 123456
-+$ git cherry-pick -xe 654321
-+---------------------------
-+
- SPLITTING COMMITS
- -----------------
-
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index 809f76a87b..6a86ab5a94 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -47,9 +47,9 @@ void append_todo_help(int command_count,
- 		      struct strbuf *buf)
- {
- 	const char *msg = _("\nCommands:\n"
--"p, pick <commit> = use commit\n"
--"r, reword <commit> = use commit, but edit the commit message\n"
--"e, edit <commit> = use commit, but stop for amending\n"
-+"p, pick   [ -x ] <commit> = use commit\n"
-+"r, reword [ -x ] <commit> = use commit, but edit the commit message\n"
-+"e, edit   [ -x ] <commit> = use commit, but stop for amending\n"
- "s, squash <commit> = use commit, but meld into previous commit\n"
- "f, fixup [-C | -c] <commit> = like \"squash\" but keep only the previous\n"
- "                   commit's log message, unless -C is used, in which case\n"
-@@ -68,6 +68,9 @@ void append_todo_help(int command_count,
- "                      to this position in the new commits. The <ref> is\n"
- "                      updated at the end of the rebase\n"
- "\n"
-+"With pick, reword, or edit, -x will append a line that says \"(cherry\n"
-+"picked from commit <sha>)\", similar to git-cherry-pick."
-+"\n"
- "These lines can be re-ordered; they are executed from top to bottom.\n");
- 	unsigned edit_todo = !(shortrevisions && shortonto);
-
-diff --git a/sequencer.c b/sequencer.c
-index 57855b0066..fde09dd77d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1884,6 +1884,7 @@ enum todo_item_flags {
- 	TODO_EDIT_MERGE_MSG    = (1 << 0),
- 	TODO_REPLACE_FIXUP_MSG = (1 << 1),
- 	TODO_EDIT_FIXUP_MSG    = (1 << 2),
-+	TODO_RECORD_ORIGIN     = (1 << 3),
- };
-
- static const char first_commit_msg_str[] = N_("This is the 1st commit message:");
-@@ -2390,7 +2391,7 @@ static int do_pick_commit(struct repository *r,
- 		if (find_commit_subject(msg.message, &p))
- 			strbuf_addstr(&ctx->message, p);
-
--		if (opts->record_origin) {
-+		if (opts->record_origin || (item->flags & TODO_RECORD_ORIGIN)) {
- 			strbuf_complete_line(&ctx->message);
- 			if (!has_conforming_footer(&ctx->message, NULL, 0))
- 				strbuf_addch(&ctx->message, '\n');
-@@ -2758,6 +2759,14 @@ static int parse_insn_line(struct repository *r, struct replay_opts *opts,
- 		return error(_("missing arguments for %s"),
- 			     command_to_string(item->command));
-
-+	if (item->command == TODO_PICK || item->command == TODO_REWORD ||
-+	    item->command == TODO_EDIT) {
-+		if (skip_prefix(bol, "-x", &bol)) {
-+			bol += strspn(bol, " \t");
-+			item->flags |= TODO_RECORD_ORIGIN;
-+		}
-+	}
-+
- 	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
- 	    item->command == TODO_RESET || item->command == TODO_UPDATE_REF) {
- 		int ret = 0;
-@@ -5524,7 +5533,7 @@ static int single_pick(struct repository *r,
- 		       struct replay_opts *opts)
- {
- 	int check_todo;
--	struct todo_item item;
-+	struct todo_item item = { 0 };
-
- 	item.command = opts->action == REPLAY_PICK ?
- 			TODO_PICK : TODO_REVERT;
-@@ -6340,6 +6349,12 @@ static void todo_list_to_strbuf(struct repository *r,
- 					  short_commit_name(r, item->commit) :
- 					  oid_to_hex(&item->commit->object.oid);
-
-+			if (item->command == TODO_PICK || item->command == TODO_EDIT ||
-+			    item->command == TODO_REWORD) {
-+				if (item->flags & TODO_RECORD_ORIGIN)
-+					strbuf_addstr(buf, " -x");
-+			}
-+
- 			if (item->command == TODO_FIXUP) {
- 				if (item->flags & TODO_EDIT_FIXUP_MSG)
- 					strbuf_addstr(buf, " -c");
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 58b3bb0c27..3ff86ebaae 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -2337,6 +2337,48 @@ test_expect_success 'non-merge commands reject merge commits' '
- 	test_cmp expect actual
- '
-
-+
-+test_expect_success 'rebase -i with pick -x' '
-+	git checkout A &&
-+	orig_j="$(git rev-parse J)" &&
-+	orig_k="$(git rev-parse K)" &&
-+	orig_l="$(git rev-parse L)" &&
-+	cat >fake-todo <<-EOF &&
-+	# No message since this is a fastforward
-+	pick -x F
-+	# The rest should get the "cherry picked from " message
-+	pick -x J
-+	reword -x K
-+	edit -x L
-+	EOF
-+	(
-+		set_replace_editor fake-todo &&
-+		git rebase -i HEAD
-+	) &&
-+	git log --format="---%n%s%n%b" >actual &&
-+	cat >expect <<-EOF &&
-+	---
-+	L
-+	(cherry picked from commit $orig_l)
-+
-+	---
-+	K
-+	(cherry picked from commit $orig_k)
-+
-+	---
-+	J
-+	(cherry picked from commit $orig_j)
-+
-+	---
-+	F
-+
-+	---
-+	A
-+
-+	EOF
-+	test_cmp expect actual
-+'
-+
- # This must be the last test in this file
- test_expect_success '$EDITOR and friends are unchanged' '
- 	test_editor_unchanged
---
-2.50.1 (Apple Git-155)
