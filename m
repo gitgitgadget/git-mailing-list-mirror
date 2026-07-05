@@ -1,70 +1,70 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC09136EA84
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158BF367F25
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783239885; cv=none; b=pvSNWvCEeFMKCCs/JiV/gaC4IB9sf85orUxUur9pVjhtluDOeH4lFnUoHVrTJ9/iMrV3KlagOpVQ1EZ2Cv7zr/F53R6RijyKkBiUGh7HobdsdzPxjsveUG4AxTP4wcaIfSO/697qM7TUvcNhNntiY9C4jgfSTroH6r1LbUP0H1k=
+	t=1783239888; cv=none; b=BKkzfBPmmn3qQjUhT+edirKVRtWM3+lvD4V0A5B+CslbkDlvEG0U5A2izmW3Ilur9ihRD89dsreoTL6rbf0QVw7F4+c5Gvia0E7VodGY8DwrMi/mbE91fi42+GwPq1Nwmlpl8sLDHAWIO7KFJCfImqI0LAOpiHBccWkLgbGibL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783239885; c=relaxed/simple;
-	bh=aaFfy6YpyDVMgvlQ5YUO6T+kpehXyIehzXR1DaAE9ZE=;
+	s=arc-20240116; t=1783239888; c=relaxed/simple;
+	bh=VoISBO7MYxn4FS9y2Ce5pmRnEXSk+8zgeMUIR1hCeTQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SI8oPm5a29O7ziuDSHtmHhTUUo5Qy8pIw5CpATH8p1V27GI4SJgtnMryrQnb5efVlPnPPNwr7UsTduRWOa/RtRxm3rdMcJEZNwBAY1WrYkxoyZKhdc6S8i1URPpT3iAg2y10XhPmT5FY7dX7xsjjT4kUMFN0Bt++2SK5x40JoFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L+k54759; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version:To:Cc; b=tWBPd81aOJFmmpZLqZqR5HvAxQYwsv3bLhJQpZBWilveRyU3PSDKnuq4H65RPjurH7+Ej1vwtbST5xVcTSEreqmakjAzYQa3V4+jYJsOejYcHg0dcGGr2qIYMUX9+qMPRFAxHSfzHgLKH31LPZWE90wVNK2gRWvQ0DNEYY98Wmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a/+APoz4; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L+k54759"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8f23e851626so15503816d6.3
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a/+APoz4"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-92b21f65b60so179968085a.1
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783239883; x=1783844683; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783239886; x=1783844686; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cZ9fgpHfhqrImu5EBEaJ4HH2V6u7g1aSBQpnuRbIJkk=;
-        b=L+k547591cFHVcD3HMblRNb0wZt7ljpBdAtA+0gJ1YYefTNvI7nb1bVYLSQNIQN8dk
-         DPqo6dBglkvSqI6PTPEJfaboPlUEnU7X893JACNZxXTqM86Es9ELSZWvqTeVPGAnFy3n
-         SbWU/jzOR56RmTc6V+T0JdRMmEySt1sH9lpdSyolAEO6rP1OIcOLDr4GYtOBo/XFZkSP
-         so7PyOn7Hb8z0BZUEKSdTeqADZRHRhcgHHufvrRAa5+1PgJGKI8ta7hTmeXRGpfB0MD/
-         IBzl3PMjq27LXRoaMwakjxDKHSfiOJdqN/xFQ9xGIYb83VUMPPM5wr4wT8I76KUVg+eA
-         gt9Q==
+        bh=0MjcMI7oVG65IHJLtZG8wB8KbPAhMW+yUfO7+0MW/gw=;
+        b=a/+APoz43o/AH06XmYdG4QpSuU+PrNJronsBHOAzw8fprQHtKKm/tBq5gLGwQrBNR9
+         pgwfvtqcFjwHyQOsxmESpIvciP3qOSFc1yIu5VYhK0tCRjmnzKq3JFNferWUzHbsNX9u
+         +0TvRdvYpfLLjzva/2+5BwKu0uzMkVN0s7B4dSZRfIUYKydAwv2tIBuZBi8KNEc9bgVG
+         cU3GYupjVWAbZetIDbSQRY8ZKSSIBI7iYyQ4h3+Jxfs13xKP4a9CrvU9SmpE9P0NKa1T
+         yzZBXq1rlhpU2rZq0Uv5bMrScjikyBJKS0JYRfa13ZjympWR8TwWuwsBGAJlsqFoTM9O
+         /RBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783239883; x=1783844683;
+        d=1e100.net; s=20251104; t=1783239886; x=1783844686;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=cZ9fgpHfhqrImu5EBEaJ4HH2V6u7g1aSBQpnuRbIJkk=;
-        b=Dq01/emNt7oaYbLj8bF6XjAR32T8JotTR3BthfIgpsKVsCJY0CMpADCp49QUgyaOEr
-         ZQpwkWtUaZacTA5mrkO/tpf4Jymbi9yKqR8St9ON1FxS7GeV33azxBthb0ND0OZ//RAv
-         QdWIYf6AGyV+Lub1/jnC1a8wrIGTgCgO1GSXD4rUaYHMiU5O7M7mBFyqGrYacFaXFLAo
-         cpQIsBwztiSTbYGeN5gV0o+1miEP51AD4ft+QNjfsBiaz0bMNTAaUm9UQ+EHxIQLXbI2
-         IHGJcOkPRko97Vsk9trnqCuI95M3o+NcEmzXAr4S1nJhtlgLbuF7GQJtJdvIRfhXhFnL
-         URPw==
-X-Gm-Message-State: AOJu0YzZh2noo+5QvXR7fQVq03FVvayhnvjfkNirLHtnKjQ0vV5naaLU
-	64OugEugrsm/QiyNfpOskcUBO7+H7SMekhQQb1Sx80Dj/XG7Cd6qJ7f6oa+xDA==
-X-Gm-Gg: AfdE7ckmTDTii29mw3CoAJ5r97RRE6w90xMAykKdLrud5Rgqv5UgvEDwM33gFQoricJ
-	UABUkMh8VLRRi4RN2Dh9FGrgX2aScnqW/7X11ZdAke4xBUyzWtUgo/seY0F8XZes6Dhx/ppUEO0
-	A8Zl0B6V6c7uxcUAIkmrezjZKacKt4bCJeJWjV8HJszDN+fKqSoqGkk5ZegnwQJHlBAcvDJ4S88
-	wq7R5zMdTVV+DFxqYTLj04nYXKFx3lDfxIvYGyowUn+/Cm0T730ohL9JKEqv/YYtdo7Q2AiOFDa
-	SoC/EeA17oVOG7YAEH5NBumHmZq9mN0P1bYOUxF3j4YZJNuuBBgJbSsIBhc5XEd8loE+SGqLXCh
-	JuK4CTQS++VbR8X0UTQYm9okbMzKsLVwg9MWQ8wS70gp7gkM/ck02ou5knaIzpywXW3RDHKJp6p
-	VWiTkwI3LVUG/wrf9AHg==
-X-Received: by 2002:a05:622a:250a:b0:51c:1cbd:5fdc with SMTP id d75a77b69052e-51c4c1d8d58mr92636861cf.10.1783239882730;
-        Sun, 05 Jul 2026 01:24:42 -0700 (PDT)
+        bh=0MjcMI7oVG65IHJLtZG8wB8KbPAhMW+yUfO7+0MW/gw=;
+        b=KBUc+T1LNQTmoPL8ulkbsj3+gvg19Y05Sbldrz6AMHMfPaAkTVikt4NYedgEz/UK51
+         wgfcsN6iQEOUWExdlZWmvHcZpXIWMhsDrVuj20PK1OvAVMSw/ibr5U7jLKfnHIJzgpiL
+         RMBs5PDYGwiDnpJNfePQdcokHmrY6CoNLrgKto1X+C6atNS0JFzU7oIIjKWZ/jqBlTSU
+         cCgfu/lBgm4d8e5x2KnUwpN/jheBPHN49EA4fb2ISxbcuAUEPFHXWf1yLWLarDHkl6la
+         Ox8PEmlD9oGpKB5m9pQtieX0laI2TvVXoORTvCYzKixYaOzs/ecMmL7TVvccANQ+yS/Y
+         QaWA==
+X-Gm-Message-State: AOJu0YwSt/ECWI/RIQug4pn1Ax/OIXdKPHNtDLbnMHmExiDoqfWJWTNx
+	DooGaadS7HJ1U2MpCWE10n74dBaKMv1hBHoW5L6ZGHMurugF8fK/o7QsAku6lA==
+X-Gm-Gg: AfdE7ckAxFLghWr5fGYrVaGZS9TFYvC+T304/ayT5om5LTbHHS2ASue8Dl2ZrpkugxX
+	xuY+kOWFjKjVxkCSaocQs0gEsqwDE7Jdn2/miQEF89EI2zNggmP8TAnHwCv9SnK22v5ypyH4BHq
+	iWYxUig5yG0O0DTBthFEfiwyTQq1Xjry3IHhlecRlcNH2jALU9KH9nV19ABMRMx5s9wkukDwVA1
+	O8sHiYzLiNvYCMNW72mOJ4MGFKrFRqiqB1Zr7I42UR4O9WbH/97+bwjXkLgjiqgSDVkGy9zQQsg
+	EXbqPy66sgw7iOBnFAd1gdXw2/UMrep8j9Q9nTU3MAbXYvoEIJat18ItYOl5Tn0QDWxQu2ANq70
+	KOUOYC937+7HiIM45607uOfZ/9DIoGS1eR8PzbuDlbpVMpqf/iD7QzFwZumzxqldVRhocjf1seE
+	Mf13ym9gI4JY4DmlYXuCS2Bt9vHyCc
+X-Received: by 2002:a05:620a:a505:b0:92e:9cc7:fa68 with SMTP id af79cd13be357-92e9cc80362mr638180185a.30.1783239885995;
+        Sun, 05 Jul 2026 01:24:45 -0700 (PDT)
 Received: from [127.0.0.1] ([135.237.130.145])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41d2d688sm63038401cf.17.2026.07.05.01.24.40
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90cbd6c9sm631336385a.33.2026.07.05.01.24.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 01:24:41 -0700 (PDT)
-Message-Id: <8a8fe2d3e342b912de1013082ac838e8544d7031.1783239870.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 01:24:44 -0700 (PDT)
+Message-Id: <5397ea785c6da50e977598a35d03af82cb2a5e4d.1783239870.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 	<pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 05 Jul 2026 08:24:23 +0000
-Subject: [PATCH v2 06/12] dir: free allocations on parse-error paths in
- `read_one_dir()`
+Date: Sun, 05 Jul 2026 08:24:24 +0000
+Subject: [PATCH v2 07/12] submodule: fix cwd leak in
+ `get_superproject_working_tree()`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,48 +80,71 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Two of `read_one_dir()`'s parse-error early returns leak ud.untracked
-and ud.dirs. Plug them.
+`get_superproject_working_tree()` allocates cwd via `xgetcwd()` at the
+top of the function, but two early-return paths (when not inside a work
+tree, and when strbuf_realpath for "../" fails) return 0 without freeing
+it.
 
-The other early returns in the same function are fine: they occur after
-the `xmalloc()`+`memcpy()` that copies ud into `*untracked_`, at which
-point ownership is transferred to the caller.
-`read_untracked_extension()` then releases everything via
-`free_untracked_cache()` on failure.
+Redirect these early returns through a cleanup label that frees cwd
+before returning.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- dir.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ submodule.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 32430090dc..23335b9f7a 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3792,13 +3792,18 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
- 		ALLOC_ARRAY(ud.untracked, ud.untracked_nr);
+diff --git a/submodule.c b/submodule.c
+index fd91201a92..92dfb0fc2d 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2627,13 +2627,12 @@ int get_superproject_working_tree(struct strbuf *buf)
+ 		 * We might have a superproject, but it is harder
+ 		 * to determine.
+ 		 */
+-		return 0;
++		goto out;
  
- 	ud.dirs_alloc = ud.dirs_nr = decode_varint(&data);
--	if (data > end)
-+	if (data > end) {
-+		free(ud.untracked);
- 		return -1;
-+	}
- 	ALLOC_ARRAY(ud.dirs, ud.dirs_nr);
+ 	if (!strbuf_realpath(&one_up, "../", 0))
+-		return 0;
++		goto out;
  
- 	eos = memchr(data, '\0', end - data);
--	if (!eos || eos == end)
-+	if (!eos || eos == end) {
-+		free(ud.untracked);
-+		free(ud.dirs);
- 		return -1;
-+	}
+ 	subpath = relative_path(cwd, one_up.buf, &sb);
+-	strbuf_release(&one_up);
  
- 	*untracked_ = untracked = xmalloc(st_add3(sizeof(*untracked), eos - data, 1));
- 	memcpy(untracked, &ud, sizeof(ud));
+ 	prepare_submodule_repo_env(&cp.env);
+ 	strvec_pop(&cp.env);
+@@ -2678,20 +2677,22 @@ int get_superproject_working_tree(struct strbuf *buf)
+ 		ret = 1;
+ 		free(super_wt);
+ 	}
+-	free(cwd);
+-	strbuf_release(&sb);
+ 
+ 	code = finish_command(&cp);
+ 
+ 	if (code == 128)
+ 		/* '../' is not a git repository */
+-		return 0;
+-	if (code == 0 && len == 0)
++		ret = 0;
++	else if (code == 0 && len == 0)
+ 		/* There is an unrelated git repository at '../' */
+-		return 0;
+-	if (code)
++		ret = 0;
++	else if (code)
+ 		die(_("ls-tree returned unexpected return code %d"), code);
+ 
++out:
++	strbuf_release(&sb);
++	strbuf_release(&one_up);
++	free(cwd);
+ 	return ret;
+ }
+ 
 -- 
 gitgitgadget
 
