@@ -1,70 +1,69 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C15E36E497
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE7E36CE10
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783239892; cv=none; b=KQfuIwO5pdHF02mclagouJaCJSvTXJIXiA9w31RmtBgYzeplTmm+Y/t/O9AYUuqYtCREo3NIDJ93UM+PwgRmowh+1/rYkl67yT2aXz7S4yYQgydEcXiEPajK9Yb9Tb/MPK4e4JtA0he4o/YQd+DPm6IlQtU5OwPaMAx52ytVKlk=
+	t=1783239894; cv=none; b=R50mY/RvVqsVbdcKDKv/P9sVTSH8jqsNCIb0GV/lFjwLNxp1RU3NzVRqvYLARP5bYHyuJ4Paw8/UlXzgfLPQP3eG7x9FwjwyKr/98aCNnz1dlU2bLrrPEE5Rb3TwdBe1dUfKfeG54uwvydAXY3J+EE+N4w+JUvLeFqrTHR2FgKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783239892; c=relaxed/simple;
-	bh=wx+JlE70rOi4SBqFn/h6xoYD2eFQoDfjUZ1gsKGOsrE=;
+	s=arc-20240116; t=1783239894; c=relaxed/simple;
+	bh=DdLrBEAnjUn0qzAG3UTaDRp8jRJaZ5CpNIericlIy7U=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nHJDC355Q6ZQ4O+uDz4IlxgKEdqS0Qmz5tXv62+A1/CygfaVV4JLaKwMltYv5ySb18evQAhAvnuOLFf4IPDEOcUi44VEbz25xph10OaWXSJune8cyFG2SPhAXuPbXmL2BEUUMD8R/qUiSNVBBvF6yD7uf5+TtRR6myAkh2H78gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b52hQ9Rq; arc=none smtp.client-ip=209.85.160.179
+	 MIME-Version:To:Cc; b=cgCrRhstiaXnSFDDGbGgI4pc3ZuZns5xn3mlgG5BmgnnYejFC0JUcS5DxuDwnFKyx+Ey1WOvjgKci5NQs2XESpDqkgVYKd9/L/9AfQvZMlYcdciU7wevdGRd/7Oh7pdkinX59h0vaJii4+dutuKb/B3LmBBtGqZm1s1QGT9ftg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KfLf7cAE; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b52hQ9Rq"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-51c5382806fso9474261cf.2
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KfLf7cAE"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8f0e5e36912so11757206d6.2
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783239890; x=1783844690; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pISzHfMRvyruBo9Uw4e7eHU1iaUtDDgFkmtFTz5JzN8=;
-        b=b52hQ9Rqp8FL69U73fnqxa6nwBDtEa7TSJTRMzPH0NO4i+nrKENYh0mvbliF7NDMQ2
-         16K9SNsGmqn2yKqd7kRwSLmTk9PdKRdXMoUbtUuDL/iYQj4kbOncoNg+qgoDlxVXqYDN
-         PAJM/YTuxE1XA9FdCueInwObnyuLhAfv3cn7w6cRfc4vFzy4BZ2WvQkyBCQEvcfGTuoC
-         sQMcmCmZvV5HYAfaRZ0Q079yFdF6dvXpwxffq1EEYjUjBRBWzKMlUwnacxUqPvSTyXf2
-         U41m3gZy4QN3iMPqlJsnBu+NkD7ut9b3GhMF3/Pn+RGgam2YK9vve5RPRnFsLLBawPo3
-         vHJA==
+        d=gmail.com; s=20251104; t=1783239892; x=1783844692; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FcPImijrp/FJoVvHN1JYuK9O7gj2NKEMm9XH/ybNafU=;
+        b=KfLf7cAESnRih2yW3rYggR3n0lFT4aI6boWpTye136CNJObQwfCv/s4RGEKIKJ+gIc
+         IM0C4973pFc9o01AhpH50454YP4IYnhyJ4lSvWZGNLHWtkroVUwxSMvPxatc0kiMrs8Y
+         h2JoD/VNJkRbpLynuZKg6w/MhWr9qN7zSPzDy7kvr+riN0iSZKXS17T9ddf8N5Nsh0i2
+         VH4eQVU2Xg6vsfsaf4QAa1WgRVCm78yQqAY/73DOXmT/Qc7iXih2JyzlBEkxjiXExqRS
+         oMIgzotaM++4I/XQpAciX/PJfjZCMwtvIA+knnvbO7O4bgSm3hX2z7yTz3PS9vQiXilh
+         6n7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783239890; x=1783844690;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pISzHfMRvyruBo9Uw4e7eHU1iaUtDDgFkmtFTz5JzN8=;
-        b=Pl/2bbzZKNRN8dKgTH1+8ArWhhl77jybCbalVKIv1CY+2m1SKCysJQJdwjCadglCX9
-         F+sJaOqqQdRe/JrrcFOQKkqUmm3rdzBTSYTfdHSafAYNSUD4XAE8ub+evqT4S0NK28Yh
-         hsEsONbM4QrBrk0nMACxIXwZyVSPLqf2Dpwv3hdjkT1NNwcPJeaRyQmFPsCcf263MREI
-         7NB7g7/cJo5mW6k4Myb9xs12Y8+RHLf2gaWbTXP8Fpkq4M9J8bqx7L96UrrsaeMlZn01
-         +JRAg1e+RUBq6QtmBjdOn1QHUjEvHdlte/RnAGpAJDyceYs6EJrZmMc90oecNtTLGsKJ
-         4HxA==
-X-Gm-Message-State: AOJu0YwZRYNGViQehFWLaJLAOdLgnpYL78R66F9dl01TWgfJ2fSYfV3D
-	mLbBPqqmyU/2BCOSTGrmzZllUkePPwHXNY0J3kNSomD9/g9rda5/zhmvcOPSow==
-X-Gm-Gg: AfdE7cknheHqZ/h9mSrzquEl/Pt1gA/GP1ouPPMnMLq0ZN7sQMLMvlGv8L9+LLp7EG3
-	i2njojqb1FVoByOy7jWbHQCcaV/utPC2u6G8gf4rGq/yJ/76jpDE6sobOO6DqIqiscZcqTZNlK7
-	aHozLewCR8F5uhwpvf52ZHPAMhmpxiPFSevf+tpuZpE8kNNm1Vcu5t582NwoyV/HCyztiP6Tgey
-	koLA64XfLDlU7Ry+DjDSsnrY/GdeuJvKuJ+EEpkWW+LrOrv+0Myl9TCJZguvOQPKkzyF4SmHit9
-	tW6QIrvKBU5ej0BBLgV331Z53fZNvhyd1vCsw+dD27rL7UOLjfadNVNXjJ/sW7YKUVEdIpzJIvm
-	/qH2zPInZTL7wgKNvBCkjH2UFGMmq2nU08lt6KRcPUTdplcUfPNhB6alhNQoERGoUnGgIqBsroq
-	86KISWeauWf5IxnSxG6g==
-X-Received: by 2002:a05:620a:4403:b0:92e:72a4:f28a with SMTP id af79cd13be357-92e9a418bc4mr833247385a.44.1783239890402;
-        Sun, 05 Jul 2026 01:24:50 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783239892; x=1783844692;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FcPImijrp/FJoVvHN1JYuK9O7gj2NKEMm9XH/ybNafU=;
+        b=gZ27IfIKXOuI5TGbHgSDWJDy3IOaheTMXMwQBaWt8q4h2K7jynJFlKXqdItDa/QgdY
+         NOcO9NnvvXxeZMIDDhivkipRyHXIe6sZP5pom3+4Ia7GH3xCXJBRCTeSIUMIURADgXHL
+         HIkrVIQjUvUGfmtCBH7LyE/si2z8nmo+ssyqRLzPobjNspQJnlG8Ur6CnDbBX6DUgpUM
+         HOnXfnP1LB9yPeOQOYf16zyDeNKed67zbfSMWTsb/kVjEYQPkybUKkOanCW6EM8Iap8Q
+         mGnRaYpuE0mXwnuNkL369/NSNn30GYFuycedTCK9vaLakJxyW7KMDda7+qbtlQwXTfMZ
+         PmfA==
+X-Gm-Message-State: AOJu0Yzaeijtw9xoK0W+euF0ATI9vNej2AqSnmmSKLX98sXsleu9kR/S
+	KuF7/0jReAXlLt3oaVeyKMLs2IYrcjhXmIClhjTB2zJ2OnxGBxkVP0PWy7R4kQ==
+X-Gm-Gg: AfdE7cm9DnjCh8Bs+Nr24Vc0wAkGBdS1vDZKSUAEYSor+cGPak+dWK+5ZjUGH9jVph1
+	yWDDIxQI4YL+hqQekl+IQ1I6m/A7aYDUlkyeDYtI3kMIxFOeDzEMYGpsAnufrHtT+xY7WuNoptx
+	+mZAZ5hG1wKXhJfAiXJ0YWP8Y0h4X0+8gLJSfIT0ei7BgNKmWd/HQEqTghu2dTYyH1LN/vguvhI
+	eWa9U162f/vwlKY/WjbnHQBpxyF5t5cPZws8CYAs5NafNg8btNgcrBBTvKpFCjrHxtQ7q7uU8fR
+	61wPfepsU4EHIl1Ns9a46OeokvM7Eq6ryInXvPqvDewt3DJ0pEe3rbcbJ0pN0LSOTF3BWSSW7GU
+	RLTJ0IYMGNIhZR5O6EJQhBtp3wxxVExPYhtqBx+7SrKpDCrHjIiqFiDj2w3TxcQu8l4FP+jdmWJ
+	7A+PfS7iGLGVrUo4NcN9h9XzBmv6fG
+X-Received: by 2002:a05:620a:4398:b0:915:9d08:94e1 with SMTP id af79cd13be357-92e9a43b335mr825303785a.46.1783239891793;
+        Sun, 05 Jul 2026 01:24:51 -0700 (PDT)
 Received: from [127.0.0.1] ([135.237.130.145])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90ca004fsm629531185a.28.2026.07.05.01.24.48
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90c92634sm626327585a.27.2026.07.05.01.24.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 01:24:49 -0700 (PDT)
-Message-Id: <4048a225a5c3c0b698a2dbc58c756d217f851a72.1783239870.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 01:24:50 -0700 (PDT)
+Message-Id: <13ecebcdee633689b861418a005cf4f64c190fb3.1783239870.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 	<pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 05 Jul 2026 08:24:26 +0000
-Subject: [PATCH v2 09/12] imap-send: avoid leaking the IMAP upload buffer
+Date: Sun, 05 Jul 2026 08:24:27 +0000
+Subject: [PATCH v2 10/12] reftable/table: release filter on error path
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,32 +79,39 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When uploading messages via libcurl, `curl_append_msgs_to_imap()`
-accumulates each one in a strbuf that grows across loop iterations but
-is never released before the function returns.
+`reftable_table_refs_for_unindexed()` allocates a filtering_ref_iterator
+and then calls `reftable_buf_add()` to populate its oid buffer. On
+success ownership is transferred to the output iterator, but if
+`reftable_buf_add()` fails, the goto-out cleanup only frees the table
+iterator and walks away from both the filter allocation and the oid
+buffer that `reftable_buf_add()` may have grown.
 
-Release it alongside the existing libcurl cleanup.
+Release filter->oid and free filter alongside the existing table
+iterator cleanup.
 
-Reported by Coverity as CID 1671507 ("Resource leak").
+Reported by Coverity as CID 1671512 ("Resource leak").
 
 Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- imap-send.c | 1 +
- 1 file changed, 1 insertion(+)
+ reftable/table.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/imap-send.c b/imap-send.c
-index cfd6a5120c..0d16d02029 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1750,6 +1750,7 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
- 
- 	curl_easy_cleanup(curl);
- 	curl_global_cleanup();
-+	strbuf_release(&msgbuf.buf);
- 
- 	if (cred.username) {
- 		if (res == CURLE_OK)
+diff --git a/reftable/table.c b/reftable/table.c
+index 56362df0ed..d604ddebf4 100644
+--- a/reftable/table.c
++++ b/reftable/table.c
+@@ -709,6 +709,10 @@ out:
+ 		if (ti)
+ 			table_iter_close(ti);
+ 		reftable_free(ti);
++		if (filter) {
++			reftable_buf_release(&filter->oid);
++			reftable_free(filter);
++		}
+ 	}
+ 	return err;
+ }
 -- 
 gitgitgadget
 
