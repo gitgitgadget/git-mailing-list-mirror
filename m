@@ -1,71 +1,70 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0232C36A36C
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B47E3290AD
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783239881; cv=none; b=APP8BMRfr6Ox02Mh62s3iaNPBCFnKkli3oNM7ay+gG4W9X0ZQbkcXC5E4OCfVKqP0ZZPgmGD5UCBCztQRZzCEUhT7G61r7Xo4/dRKMp7JE7hIQonOCBNa2GmsdNQWdLDNrVklE3xeiYrmdg8nkCDzlrxdb0p2D42ccJO8lZKxJQ=
+	t=1783239882; cv=none; b=jwDya/2K7hF9UnNkj4f+BVNshh4JD0WzyFGufdjln3R8GXgf9PPQmcc1TF9XDyKRhR1+Pl9mJvh5IPvJuR8dc30TMuVneJ9s/+q8zT7fmVIPnrf+6DRiT6yTQPrE9ReN5bT/DQYMMT4Zr5aRF3qqn0NYPWRWEA7ERV6jBvJCqOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783239881; c=relaxed/simple;
-	bh=5KReHGpE+c4QY7zYNf2a8IJTKKag/hrylxzoxvOKc1c=;
+	s=arc-20240116; t=1783239882; c=relaxed/simple;
+	bh=TpUyXjcUeMf4sW/PJDwLKKEx6godQTdBUvHsScrI4A0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KV3T7oo8WVPifY4AmPqWoADcwZLMjduok6BXyD3EluilEfr2cIpbJk/xMch33lmZaim3z2VJVUOAZudKSE/EdYVqwiOg3vzE6T2bQMtmD6xh267P9dAcQ1ShwfROkGCla4cBvVX8uCY4t258mmmiqwHL9FOJifXaQWag93wKaDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jQhv5yrC; arc=none smtp.client-ip=209.85.219.43
+	 MIME-Version:To:Cc; b=o50aaLu5b/Daiwb+wGxGDhp3GuBS91Bir8QhheKuXRjbFkHT9Qz4UX6epZcOx2zZ4qK20x4+MWEGqmYR6ZLoLRnBdPEiLeJkirfmvh2v8xlVcOXWtdck03QAdxTEyQzMj5RIaazDNUuaJ5t0GZUgv2g+Bmoxqqs7X2kIloeKTUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MnEjJu/Z; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jQhv5yrC"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8f18d92172aso27146876d6.2
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnEjJu/Z"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-92ea24a2dbfso51789085a.0
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783239879; x=1783844679; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=n/IH11gAP6j2Weua/ktmxnkdLoweIr3ul0MME6AKzD4=;
-        b=jQhv5yrCNwIsbV6VFv5yvWDEnL0enZs6s5WLRPPabxE+bDvzPutv8biJsOEepb+u5Q
-         x98s3PDQdFm30CSbGIDru8n26skq7EaCnfNRNy2hzIpzU5YyeWmdhc7b6hZZVLLNtLNN
-         k2EpYFVep0xUSjrI9PQJkdAiJrj3NDwjppTk1Lcs4PTOd/zVCUwSzN7Pgz6Ke90Ccs7i
-         4vEvdPYUFZtLY5jfJFoQTFNKFBXPXo9+ick9fh9fqWM6TaepIoIIWRFb3ZWP/WjujU5D
-         RfZ7XUcKUteR/6nA8BKCiaYc2FRtpWVV1t3Da3t1UV9pjgQZpc1XWY3AdtRTxj/euyZ2
-         998A==
+        d=gmail.com; s=20251104; t=1783239880; x=1783844680; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ivMX+0mIcBtHw1VuMkm5NDui4oOxFh6q6jeBIRZUyVw=;
+        b=MnEjJu/ZV+z7RE1ISRUggol0Nx/4u6Tv3uU9vFJcmff2Y7nsX9JIZ7e5zz8IzDLb0+
+         vasSq22O90k5PDd1cXbZRVsMgiCuqp5rnLjWuvIQp9tHApr8jBXhGdjlOufKhc5J2f4t
+         8/hi8iRRqdDW9P/xmQ8UcsTUt0F58hzP31k1j3ufpSv/+5iy9ZO/AlDWHzJ8m4f1v7Dk
+         fsXtIMT/xGXH+vAWQ0jzR9kJQjC6PxJA6L0yZk6MSSvNsv4bjZbrAAJ/U6K5Y/pJ13L4
+         Bz8deDf8JiPrWRr21prHp05HL+A+vq2SMm+9TIUJ1pFWdOGeQiC+tsppn74ZXYxpNccw
+         0j+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783239879; x=1783844679;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=n/IH11gAP6j2Weua/ktmxnkdLoweIr3ul0MME6AKzD4=;
-        b=Si5WNruDtU3mlLAgd3FlY8F8d3GVJ4/22sw2n0i5fhWPYO4AD0VjhaBWac3z2zLeBb
-         Ry5d/WGqAMSFnX2y+oqep3+CiJA8IyNM7PaqG3dp5BcOR+6pGhVUb6pHyQ9Vy8Ss556U
-         I2PJ62WHbvpn6zt4fkJ6C/ruPrizRXGU0Ht9lnqxoabTqQHbUTLjq0MJ1L4zmbJ/65Kc
-         7DJ6bV5PW/y7XIiXNdxRKFJxpvopnXSRFIMaHCPt9tMj4XNXOcOZ9ltucvmS4H1hzfu0
-         gO8Ozy2vpAOZki4fpw4djlSJ7gI10IicqYg5FSYC3KraEgzY0jMrvHqFarbkjNnM2zYs
-         57dQ==
-X-Gm-Message-State: AOJu0YylkOYX2xdmmziV7KubfzwgQ/U9amzfyPvdMwb33XYA3Lxd5cyr
-	wiwb0+uNkQegPxCti3ZAdCt7UbAtcruHOPrqJmC0fDAUkWaw6hMg1MVlULI/lg==
-X-Gm-Gg: AfdE7cmYFlvIuh1ecTBQuCdEYCRhjvqLbhMwK/9BbxWSSqHbxZwHAGlREZydigEVyHh
-	yqjdGDCXwPgei4sIuKBjSRfI4dwpqpCw9bO6KqS5yXZuJ8ZvZubVjKKNyvQXDJFH4U4+SyAUPcf
-	WeZ997kELAki5hZStp43kkIqZGBVTHY2hMaAzhseeuayK0tja4ED0j2NJaIZQO9CtQNYUD4ecBu
-	fNaexuWn3Et+cgOsOMMh0oY3uC+rNOdHF0jTEZUeusEe+ubozKkmnr94XaV+gHDNpH8s48LymbL
-	6dOrXlLmxDTawWVoOjVeyy65hzpU2Prb/GYer6eHklShhCiomo9erhnwSULhZBr/1d/IThrwnbm
-	z9sD6f7XCpyxypNvHYWJ3wFlyI2CQQjtPIH+L4LSf3ppkDXWMFgbXr4J6l6pK84dGCwTIPTgj81
-	1npL5LU9Xp2KYrs9a8sA==
-X-Received: by 2002:a05:6214:e6a:b0:8db:3c35:e2b2 with SMTP id 6a1803df08f44-8f74baa5a2emr83146736d6.26.1783239878852;
-        Sun, 05 Jul 2026 01:24:38 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783239880; x=1783844680;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ivMX+0mIcBtHw1VuMkm5NDui4oOxFh6q6jeBIRZUyVw=;
+        b=fEtEgw5iMsIehk7M8LdiOGtgwy5GVhq012Iren4sp2qGzaPIv7I7ECGjmysQILXFwb
+         YrNFdciU7rG0kqY0/d61qYe9vkO3pYIjWmWeTggp5C3qta6K3GpVrqM2C1FdoiGd+gYJ
+         3dAWwPiOxCyTcoMnI8GlN1BYQbsvKA/9TbU5wzGa63qDh24sgcpZpWjduo2Dkfd8CVn9
+         dS6EbOQj7KAdgiSE01+pWXt8v19+WFgqEyvbZbX4dmW1bF95V1ECavZQwuR2Cly5GAio
+         YAMa5sUWnR+AM/u6MJ40C+Fw4oYKfd5UI+gU5rIXipEG9tAN3f7852saVoKS8rnKrTn0
+         QYsg==
+X-Gm-Message-State: AOJu0YyZvT62o1DRQwn/EavoR1i9qDfyMpDkI7seNgIr5egPR86cBmMc
+	xM1H9JHyw/5Jqs77ME5p4hPo3VmXZFQM17LT7oKQu8ELgG6vAp75Wx7OgPOshw==
+X-Gm-Gg: AfdE7cnrSFc8ZBswi46ykpgzdjXk2Wt/q0Y2M4yiLbCiSKn+vxdiU0/akl9+NkDQJNR
+	oBAU/EFyAgPnw2+99P5fe2dn0nc/xCSkK3AcEcb4uRP3ewa4DGgUvvm8H2BovYcehZ94WhtreKc
+	E4Ki7NOb0xgyp9ErXzfTkDeUYhUEbEdkLlBUcbCe6725jmPT2dKpGBmkc5fHGhByi1urqxao7/a
+	8Z5L/Bf/oEQ0OFGWC2QDjZT1WEBT0uM2nrWLpJ4LHR+kxIiutWcTL3qM1PK22qRoPDqTZsDOl0g
+	fNordT1yGQEUc+7O/eroLEfy4Ak9xhnY2gP4kPDfz+7ZUVXw8kdq+mIaZTSQpJNhzTkIqZ3hhmg
+	jqtO8tT3JPa85Y0P122a3rkGSZs5sCaBPQF70Uuq+F6OLO5Puac0dSfOWle0i2dE1t3yKigRBzw
+	qIsYZKMEpN6irSIvypLdzKohLgcqTE
+X-Received: by 2002:a05:620a:6506:b0:92b:6805:9190 with SMTP id af79cd13be357-92e9a53a6b2mr840740885a.72.1783239880457;
+        Sun, 05 Jul 2026 01:24:40 -0700 (PDT)
 Received: from [127.0.0.1] ([135.237.130.145])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f4722ca4c6sm102405356d6.39.2026.07.05.01.24.37
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90ba754fsm635979685a.18.2026.07.05.01.24.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 01:24:37 -0700 (PDT)
-Message-Id: <0360016d91bfca251c914e46700ba190798e1911.1783239870.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 01:24:39 -0700 (PDT)
+Message-Id: <8c623cc28f5c86b33b03deec0c2d0b5486b08c02.1783239870.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 	<pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 05 Jul 2026 08:24:21 +0000
-Subject: [PATCH v2 04/12] run-command: avoid `close(-1)` in `start_command()`
- error paths
+Date: Sun, 05 Jul 2026 08:24:22 +0000
+Subject: [PATCH v2 05/12] line-log: avoid redundant copy that leaks in
+ process_ranges
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,55 +80,40 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When `start_command()` fails to set up a pipe partway through, it rolls
-back by closing the pipe ends it has already opened. For descriptors
-supplied by the caller rather than allocated locally, that rollback
-tested `if (cmd->in)` / `if (cmd->out)` before calling close(). The
-CHILD_PROCESS_INIT default of -1 ("no descriptor") is non-zero and so
-passes the test, meaning a caller that sets cmd->no_stdin or
-cmd->no_stdout without supplying a real fd ends up triggering close(-1)
-on the error path.
+When `bloom_filter_check()` indicates that a commit does not touch any
+of the tracked paths, `line_log_process_ranges_arbitrary_commit()`
+propagates the current ranges to the parent by calling
+`line_log_data_copy()` and passing the copy to add_line_range().
+However, `add_line_range()` always makes its own copy internally (via
+line_log_data_copy or line_log_data_merge), so the caller's copy is
+never freed and leaks every time this path is taken.
 
-The stdin-pipe failure branch a few lines above already uses the right
-idiom, `if (cmd->out > 0)`, which rejects both the -1 sentinel and 0
-(the parent's own standard streams). Apply it to the three remaining
-rollback sites.
+Pass range directly to `add_line_range()` instead of making a redundant
+intermediate copy. The callee's internal copy handles ownership
+correctly.
 
-Reported by Coverity as CID 1049722 ("Argument cannot be negative").
+Pointed out by Coverity.
 
-Assisted-by: Opus 4.7
+Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- run-command.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ line-log.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index e70a8a387b..ce84db8782 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -706,7 +706,7 @@ int start_command(struct child_process *cmd)
- 			failed_errno = errno;
- 			if (need_in)
- 				close_pair(fdin);
--			else if (cmd->in)
-+			else if (cmd->in > 0)
- 				close(cmd->in);
- 			str = "standard output";
- 			goto fail_pipe;
-@@ -720,11 +720,11 @@ int start_command(struct child_process *cmd)
- 			failed_errno = errno;
- 			if (need_in)
- 				close_pair(fdin);
--			else if (cmd->in)
-+			else if (cmd->in > 0)
- 				close(cmd->in);
- 			if (need_out)
- 				close_pair(fdout);
--			else if (cmd->out)
-+			else if (cmd->out > 0)
- 				close(cmd->out);
- 			str = "standard error";
- fail_pipe:
+diff --git a/line-log.c b/line-log.c
+index 5fc75ae275..0179f138f7 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -1141,8 +1141,7 @@ int line_log_process_ranges_arbitrary_commit(struct rev_info *rev, struct commit
+ 
+ 	if (range) {
+ 		if (commit->parents && !bloom_filter_check(rev, commit, range)) {
+-			struct line_log_data *prange = line_log_data_copy(range);
+-			add_line_range(rev, commit->parents->item, prange);
++			add_line_range(rev, commit->parents->item, range);
+ 			clear_commit_line_range(rev, commit);
+ 		} else if (commit->parents && commit->parents->next)
+ 			changed = process_ranges_merge_commit(rev, commit, range);
 -- 
 gitgitgadget
 
