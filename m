@@ -1,154 +1,118 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBC33C465
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 01:38:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783215486; cv=none; b=sfvFimQRZBIqcAOvBhb3MErh3GV1cf9wzS8lu4GCE+LChIX3uOP/UC0frpdE42WApjQ7qhKKXOcLjdHlOW2TN/4GT5IL2UbdPAN/tSvP7GA4Ny9Fg5++JTkjUuxvy3dZgde+XC3zNaap1E07mV2GupMHm84PUcp94qRydFAhXfI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783215486; c=relaxed/simple;
-	bh=bC4S619+hTIC63itnwnHzODfCGn7QjEl8fy1TOsExw0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PYhBKOKfs5gTV5J+uxYIPD4sxu1kArqYA+8MJmIGF9tP3cRQnylsPd498GtAaA8d3+CjciJZJWjtcxBolcIl1CaUz+VeejqzkpvDRKmpvwr5r6Hn0yzVdL91mBt/r9eosoGoAr3rTCgh7Pbc+b0TLyTHN2N2pUiZRPCJpJHApAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OLP9EndJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TrAMxefb; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1C578F2B
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 02:50:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783219805; cv=pass; b=RfyFaSSlAnUi9EsJ62MziApZ34AHP0+wKSW7PEzo4FkrO9+tG5K8m/XDnxP6elx+f6qtiffSFm3KKCe9HjDxdCsGdzfZldUIWQwNXZxMmFpCJbVZz0PMUgpGDxvLUVKGy3bsKX/sNu1R7KXyNIAMbzVRcDIlY3+BEc6Ua/pen1M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783219805; c=relaxed/simple;
+	bh=z03xDMCORw9KIUNoc6lybeMK/yIoJfPlU0tdDGCT6MQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eJVY/AqwbhAKi0rN8i+1IMjJCGfSX+v241lvXKgWiUjIjWR+N/zhhzDf+AgDNeaCxq7YYnWiMCI5guhFQXXkU9mT0j544c6bxaV10c9XJ0EFEysif0/s7uzjYQPRu8rX//cPO1dJs/Wg+5UMftN+XmI+LgWYckUthcT39zgkLic=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o4/2Qy3C; arc=pass smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OLP9EndJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TrAMxefb"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 81DA21D000A8;
-	Sat,  4 Jul 2026 21:38:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sat, 04 Jul 2026 21:38:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783215484; x=1783301884; bh=LHuQQ8x2bF
-	QYtJoryVGhVlNxENkvCUwxk183625zM1U=; b=OLP9EndJPtBU7emMq64bJENm0y
-	1gA1jZg3RLYOS5qWdaZ44SEcJj1gAD4IBGPlEfZygXkzh77tdl1fjvIYCfWqcXy/
-	iaC5gC/lIkvrZ1nOIGwU412sJWJyO1kfxKRDKQrSySo7fS+1t9cfjTCgwNapG351
-	yPs7tv+NRMZT10IHOHnfQE1K+cz5Op7S2sDnBXGdgrO4MK1TmquoD8KlNEg99HeQ
-	jlmku2xzxfukoufNnh3/jZA/CrerdlOOqId2Py0/UuIUx1l3mzCOUv1JDSXZYPfK
-	2UITaji9WvvUpvTAZkX/qY4Vw1d7hxfKtilFMr7OlgZvlbzkpJHPP6nCP4Gw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783215484; x=1783301884; bh=LHuQQ8x2bFQYtJoryVGhVlNxENkvCUwxk18
-	3625zM1U=; b=TrAMxefbg5hGzzgooFvFb85bMG4LXPn5ir44RdnMGOByeXPjwyp
-	Zz8WOldCA9FbASWa3o+H52DMWRhtRz12KDFUiR72ZkM7XMhs7MbO21szMb7JIeHt
-	Q46D7Ki52Ft+3xMMMXvS1JS7idx2FCIByGiZUOqPtmBEKyxQuqPbAFH6E95ihFnL
-	tKIF9u0SMT9UDIKHjCBQaThNMTMJVPRfBlyzkqmXEVEuEYPaG1JBGeD956TCBMHX
-	LeHrCGQU6g9v+vUHX7W3cJXxifN3Q6/ryMNJ9k509LKSIE+3+kuHVj/NE5e3Wv9k
-	HvOz/soIcexuaCzcXRMF5hLx1fWwmcKYdgQ==
-X-ME-Sender: <xms:fLVJasUHPmhdnbC-9UWPtZfLtZ2LESoFHZSwV61TpvU1UCnMIhiQ3g>
-    <xme:fLVJai1Rzht1tiTYbz53Jg5wXAhL29hfdSh2VLRoQuU7-iVKvIRfw_IjsLjKo4368
-    XGNZ1WWVrTesrqsRktg7W33EratxIkuhdOrbs4vEisfub73MiEN>
-X-ME-Received: <xmr:fLVJairahvpohGZn2GWvQuzHA5KRBz_yQgK1xxfxFVrv8SuIweiA02jowisLdD1Z-GAzKeAlHJQLtx8jFpaz328QWLjeWelMTyRHSdA>
-X-ME-Proxy-Cause: dmFkZTFl1P424TMWqfei/Sk8HxuINHNLpWMKiKSI3HCpLZOMZh+TBinsmjTr5nd5XimgIM
-    fceu08ZhTHI/eiPGU8ojqdtzBZdnpSxOdyOohyj4ZIXtCGQj3dhWSrosGNcE6lzvOz195/
-    8/mRXkSLMezKkwZxHI3YFZhgIyhPM5vkDSR4cP6p29xDgeyBjVhMWp1DeNZjN2LjpRiRu5
-    LJ95e8ssoXRG42SY0TevNDF2jERFmWk6z1CBAGPoxQZjIMlWVhuyg3tqlLk8jHJz/iGwNK
-    c8w6P/hXttDHkFezXR47xlHpo/66s+MjNio54M/IJusivK2bb5fWzlmRLzDO5KMvlgZFAZ
-    Tesww4eSlKAKRgTT5kTZRv9wpwcAeECkWOZeev6gyVuBPmXcwNcIanTPucy3N5vHOEuXRi
-    SoFzuJgwYejrGMTG1Y+l4Z5f2popjq+qssQM/SHatCA/QDbSoteAt6BlOPm/q0R/Dl0nUv
-    dhyFojljG5Obl2jUCZHAqz1TcXDcCrvG+l7Nth4JZf1d7rOopBJX1u6aqtPPFMQcYfHtbi
-    Kv9d6CdzaBhzTrvmh9fm0gfgX9pHx13Rkq/nMIkf93rrEwxoa2bRTSN4RKoHi/Ms1uAlS+
-    xjyulYlJf8GQw1ptVtWEWg91rtRYHxrJwlN1KRw9H3e1vTYs29cSji4nrhxQ
-X-ME-Proxy: <xmx:fLVJahUO1OzgIr2ECqO3F7TxpfrbvUqV3gaRDHJvFn7XNjMpW8zlBQ>
-    <xmx:fLVJalaxAdQDLwqN-B61VOuJHHpHzKefYLynNmSV2zr206uPHTrUcw>
-    <xmx:fLVJamcloSsEs64Jca3g1Q7XKWPUibkoXEzR4mpc4bh_Y0dJ95D4Kg>
-    <xmx:fLVJan3SBZzxdZFJ6c0E_Lf2qfSf_z5IFXPhhtZ-w98lzl7vgfLbGw>
-    <xmx:fLVJarDnFJ66Oq2vYAg5y1MLI8gC4XiaZWa3QTEN5NE7-ZnYmRCkc25O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 4 Jul 2026 21:38:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Eric
- Sunshine <sunshine@sunshineco.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,
-  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH v3 0/6] t: add greplint.pl and convert grep to test_grep
-In-Reply-To: <pull.2135.v3.git.1783054466.gitgitgadget@gmail.com> (Michael
-	Montalbo via GitGitGadget's message of "Fri, 03 Jul 2026 04:54:19
-	+0000")
-References: <pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
-	<pull.2135.v3.git.1783054466.gitgitgadget@gmail.com>
-Date: Sat, 04 Jul 2026 18:38:02 -0700
-Message-ID: <xmqqtsqedxmt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o4/2Qy3C"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-6a1888969ddso1021035eaf.3
+        for <git@vger.kernel.org>; Sat, 04 Jul 2026 19:50:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783219803; cv=none;
+        d=google.com; s=arc-20260327;
+        b=E/TgmypiJfRstw+e/ysW0XVhJbVUMUDTcdQ1WiUELs7V3ML5F+cMMEIVwf5NxavwTP
+         7AreTcOd28hCBdAC0dhQ6mnDj2i4J8o36N3H+QT9N8ZYsdZK68Vfc1mTNW95l1BfGoMo
+         FoAxMT56OvVtwIbQnoc7L4fPReaSqE2yD0fqBT2irg0dz6JD0zFmULai+IdCEbv6lPE2
+         4V82dfwl+PE7jjvjr32NAWAK3HDCIMnN3QlRNIejQAdlL1e1RD5Ap2yOcTPx7ei5uhbo
+         GmhpUEmfqM2eambw2P7vWypvcRLTWNdJeCXjC1NlyZNyjaiy9WgaXBEIzPTA74d4M2+0
+         Fn3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=cmphjNVkurm8+K3z1OQRfdrmtwZW+Or6jU1YUsUr+EQ=;
+        fh=RyQx3rVuCs3XEtVz75cvj2zqc0vato+juZGzqjZl7EE=;
+        b=SHLo/4UsBpvyle42ieYpusZo3cWyU5YJ2sFvJkiEKWIlF3iTaVTlrXBLgHWkBaCENv
+         Mu4cUyTasYTqnn03y1bxD6G7+9eia1mHajP+JHIcsRUvvjNBgmwCcyVx+aZ+FiCDsbii
+         AqduxIPp/SK/SP5kpYOGQjDPAqvzhS2N41GJYX3oNsuZnc2ajqqJVKYqmCOTScSCh2Wq
+         BofcZVRGDrIajZBGjBWoJ25G5KIeCHfts69sIYK97zcfmGIxKevZE/a3xZmbkezsHRtV
+         7vcf3kn2WNzMtknmmVKA8mNzDWYElN89HO2KjzNxIptADOZlspNQNxKeg2eqh+28qOI6
+         SIWQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783219803; x=1783824603; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cmphjNVkurm8+K3z1OQRfdrmtwZW+Or6jU1YUsUr+EQ=;
+        b=o4/2Qy3C3zkfBIVL9cCzSAM4QVhSWMygigSdRGrg63aonArev4y3Cu1hGcvjx8tJM6
+         rVYsE/VtPY5rcchFIWcHnENUdXTMxb2diuPogQ4P6SMC+/QC5Mcfqvgd4CQ9WIpj7+Lh
+         FFhuCccb3a6QFPvtGNax+SoeGZObOMYInNSnLsxe90poF4ire1Eia252G9yb8oWQoaI1
+         lbAhTqWgVAJWbHggUT1wgNAXuX2mrcAZTtGPywZCZQ08E8z3Eeu4+h+wOYU21Aum3PQD
+         5vHvN9nEAjzf5Nbd5xSKft5XgFK5E2VoIFHakyCmP5xA3waR/VCZ9UiV8UtfZUwSb+/9
+         1yOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783219803; x=1783824603;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=cmphjNVkurm8+K3z1OQRfdrmtwZW+Or6jU1YUsUr+EQ=;
+        b=AeUufR/gE1gPwy+U26Ei4wCSIepGhPNIolFpTzBm+VtgK/ioVA/Hs7vgcU2ewyY4w4
+         q2rA4kP73zh7zBvv87QxSrbpaV9TjZpW9eXVwxCmtpEpKzst0YSRNl7rdw9fzbCoiW1W
+         zXkfDKv7jKpDYpvrHE9YN7qLAJ08L32X2WAiW3gAMi6iLiMf3ZucGpnuUfcvPQPClQZv
+         LzmgxHPIYiAIBTFFq4rVdtPLoVNXf1n4JJvlkBcoPpSmIU09w8kfqauixOQGPbrJT9fo
+         Eqp8ySxVxNilGYwpLBMAfTSpi66Aoe1gOq3Dvpz7z05avCWaMf3GWHg/oJoLxRP8aDHm
+         z2Hg==
+X-Forwarded-Encrypted: i=1; AFNElJ/22Tvh8jaiO6DbhrnUJyEdqCwmUxUDEVdFqEQVnK6oIDJbPRVqzSnDvN+fxBedmZKords=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsIEUd9FNMNt3AWeiNLaWySO3I8gDSMK8E5Cu5qgLy/+DWWIar
+	ef0T/iWg0FLYlS5u5IYZ3aCrSyA4+YsyIKTvT6/bDy6WvdXkZsFlv6uSg53yVqBlys3Vd/X++2Y
+	Skf8kWeYLtedcWDFImx06z0EBXPx1U94=
+X-Gm-Gg: AfdE7cnOT2pV4UZ7quLFyOGExKLcxfKd9PERHW/PmHcLi8tOO936UTa3I30cfkg69hF
+	RXieKJOh7ir9ws8TDJPeWmok3vtYNqpCen/c8JAdkK9YIl8UHqFKdf/pn51L6D4DAKwlVs5Jf70
+	SciBFjpNpXCe57nlLoHb/O3S+N1aLHnUlF6ZpiaqevxMhZOsE4H8NigWLAB3Vn8a3udhBV75+Xc
+	jt5PoSrWTRme28PBV/qGzxSJsmr7nQvhplorywRD7UCHjVbsPuAP/udxAwnAnmHNe2AD1d5nAAV
+	C8AKJgzYmfqi/4Yje2jomfM/h5gvC/AA9QEmJ9C8w27bP2/9ClKLtMt7jM0st2WVZ3CFkISv6e4
+	UJ6xDMs7aqdQCLCM=
+X-Received: by 2002:a05:6820:221f:b0:6a1:68dc:4a82 with SMTP id
+ 006d021491bc7-6a32f545aebmr2637309eaf.40.1783219802996; Sat, 04 Jul 2026
+ 19:50:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
+ <pull.2135.v3.git.1783054466.gitgitgadget@gmail.com> <xmqqtsqedxmt.fsf@gitster.g>
+In-Reply-To: <xmqqtsqedxmt.fsf@gitster.g>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sat, 4 Jul 2026 19:49:51 -0700
+X-Gm-Features: AVVi8Ceh479rHaQNmdSiYQONvzHd9i0vMEL-VLogEoFmtM_H_Q7HLqvJRuQ4WTo
+Message-ID: <CAC2QwmKvb24Rhx44aey8MuGtV5=3m++5OZwcCrMGwqvAhjdmLQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] t: add greplint.pl and convert grep to test_grep
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Changes since v2:
+On Sat, Jul 4, 2026 at 6:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
->  * t3420-rebase-autostash: dropped the change to the '! grep dirty file3'
->    line under 'rebase --quit'. As SZEDER pointed out, file3 never exists in
->    the conflicted state, so that grep was passing only because it could not
->    open the file. SZEDER's fix (sg/t3420-do-not-grep-in-missing-file, now in
->    'next') replaces the line with 'test_path_is_missing file3', which is the
->    right check; this series simply leaves that line to his fix.
+> It is not quite clear if I can follow this instruction myself,
+> without knowing what a "plain guarded 'grep'" is, unfortunately.  Is
+> it different from bog-standard grep?
 >
->  * Audited the remaining '# lint-ok' annotations for the same "grep a file
->    that never exists with correctly running Git" gotcha, as Junio suggested.
->    The rule the audit applies: 'grep' becomes 'test_grep' only where its
->    exit code is the assertion; grep that produces data (a filter) or that
->    reads a file whose presence is conditional stays a plain 'grep', because
->    test_grep BUGs on a missing file.
->    
->    * t5537 (.git/shallow): the file is still present after the repack (the
->      client stays shallow), so the assertion is converted to 'test_grep !'
->      like any other; the "may not exist" note was wrong.
->    
->    * t1400 (.git/packed-refs): the file exists only with the files backend.
->      Guarded the packed-refs check with a REFFILES prerequisite; the
->      backend-agnostic 'git show-ref' check that follows still runs under
->      every backend.
->    
->    * t7450 (squatting-clone/d/a/git~2): kept as '! grep' with an improved '#
->      lint-ok'. 'git~2' is the NTFS 8.3 short name of a planted '..git' decoy
->      and only exists when 8.3 short-name generation is enabled. Verified on
->      a Windows VM: with 8.3 disabled (the modern default) the short name is
->      absent, the '! grep' correctly tolerates it, and a plain test_grep
->      would BUG. So this one deliberately stays a missing-file-tolerant grep.
->    
->    * t5326 and t5702 remain annotated: these are genuine data filters (grep
->      produces data that is redirected/captured, not an assertion).
 
-Great.
+I agree with you that the word "guarded" is really confusing here
+after reading it
+again. The suggestion should just be to use "plain `grep`" with no mention =
+of a
+guard. Will remove it.
 
->      ++   test_grep requires <file> to exist and will BUG otherwise.
->      ++   When a file's presence is conditional (a backend-specific
->      ++   file, or a path that only exists on some platforms, such as
->      ++   an NTFS 8.3 short name), keep a plain guarded 'grep' instead.
-
-It is not quite clear if I can follow this instruction myself,
-without knowing what a "plain guarded 'grep'" is, unfortunately.  Is
-it different from bog-standard grep?
-
->      @@ t/t1400-update-ref.sh: test_expect_success "move $m (by HEAD)" '
->        	test_when_finished "git update-ref -d $m" &&
->        	git update-ref -d HEAD $B &&
->       -	! grep "$m" .git/packed-refs &&
->      -+	! grep "$m" .git/packed-refs && # lint-ok: file may not exist (reftable)
->      ++	if test_have_prereq REFFILES
->      ++	then
->      ++		test_grep ! "$m" .git/packed-refs
->      ++	fi &&
-
-The intent is shown very well in this version (admittedly, the
-lint-ok comment is readable but only by humans and LLMs).  Here, we
-expect .git/packed-refs only while REFFILES prerequiste is active.
-
-Thanks.
+My original intent was something along the lines of "guarded against BUG'in=
+g
+on missing file", but the wording is confusing and, worse, could encourage =
+the
+anti-pattern of using grep to test for file existence.
