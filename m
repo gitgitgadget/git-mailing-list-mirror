@@ -1,71 +1,70 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CB536EA84
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C15E36E497
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783239890; cv=none; b=iQ0jwI1wy4GhB8Bmn6TB4shRxplA41l4IKG2Kwyabc2wTKTDnXFOJ6b27RBU/bSZ6BfV3FBBNkqb8HbmXRvL361jLyj6nRNMOHCRO8RMqmuoSxlerE0FsVzau4UeuWeF34hH8kCK6JOJ7Subt1aEyZVUo9eNaU3q5Mmg5EmlwEM=
+	t=1783239892; cv=none; b=KQfuIwO5pdHF02mclagouJaCJSvTXJIXiA9w31RmtBgYzeplTmm+Y/t/O9AYUuqYtCREo3NIDJ93UM+PwgRmowh+1/rYkl67yT2aXz7S4yYQgydEcXiEPajK9Yb9Tb/MPK4e4JtA0he4o/YQd+DPm6IlQtU5OwPaMAx52ytVKlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783239890; c=relaxed/simple;
-	bh=cYVz8SAx3dAKViqMYxsANed4fTd5lIvT00C45fyj6Pc=;
+	s=arc-20240116; t=1783239892; c=relaxed/simple;
+	bh=wx+JlE70rOi4SBqFn/h6xoYD2eFQoDfjUZ1gsKGOsrE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FsT+LPWs+L+WZikcrnUWA5E4sJnotG62/I8BHzXO9rQhjVlvN3lUzyap/MRigfSykMaik5YdK3eKw5m/FaR+erP39vg2NlYqav04Sqk9qmGHcNkTB1uNj4P5rFr9NafZ7Wb6M0eBmwC6T3jJjqVNoN18T2r78cWDp3ESjXoQ2Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJ0wXOnG; arc=none smtp.client-ip=209.85.222.175
+	 MIME-Version:To:Cc; b=nHJDC355Q6ZQ4O+uDz4IlxgKEdqS0Qmz5tXv62+A1/CygfaVV4JLaKwMltYv5ySb18evQAhAvnuOLFf4IPDEOcUi44VEbz25xph10OaWXSJune8cyFG2SPhAXuPbXmL2BEUUMD8R/qUiSNVBBvF6yD7uf5+TtRR6myAkh2H78gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b52hQ9Rq; arc=none smtp.client-ip=209.85.160.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJ0wXOnG"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-92e5cb052edso145779785a.2
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b52hQ9Rq"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-51c5382806fso9474261cf.2
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783239888; x=1783844688; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783239890; x=1783844690; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=+31RVqFfLVXxUW7YYIaqSHEKTPV07+qpCi/C9V4GjUs=;
-        b=MJ0wXOnG7IOHJu3fSah271M7woturNEnKquCPvC6xP3RXnyw3FaeVYcYiobDpjxB4f
-         1DseMiN15XDE9MnZbm7jgbJtmL02Dr836GxTZQa1YDTQuHH1iyauffWoLKiy97dljuMD
-         rZjDe/xP1PBGZK+SafA1M/G6kSoXTLeWNwoISU9el9am5aXfSzNNAkeOuve5pHcwuz+v
-         WsALyvpMZASwV7bc1paUwG8nnvijxGjqN/QKLCxtsF4FBBnLXpDzYpQV0NAfYdzBzZ8y
-         +nLWnnDD5qAFz1xo832Ko9dqLzgmWdWA8GfUf6gpmoChWeSI0N1J103Ev6KryOyhuthF
-         /NKQ==
+        bh=pISzHfMRvyruBo9Uw4e7eHU1iaUtDDgFkmtFTz5JzN8=;
+        b=b52hQ9Rqp8FL69U73fnqxa6nwBDtEa7TSJTRMzPH0NO4i+nrKENYh0mvbliF7NDMQ2
+         16K9SNsGmqn2yKqd7kRwSLmTk9PdKRdXMoUbtUuDL/iYQj4kbOncoNg+qgoDlxVXqYDN
+         PAJM/YTuxE1XA9FdCueInwObnyuLhAfv3cn7w6cRfc4vFzy4BZ2WvQkyBCQEvcfGTuoC
+         sQMcmCmZvV5HYAfaRZ0Q079yFdF6dvXpwxffq1EEYjUjBRBWzKMlUwnacxUqPvSTyXf2
+         U41m3gZy4QN3iMPqlJsnBu+NkD7ut9b3GhMF3/Pn+RGgam2YK9vve5RPRnFsLLBawPo3
+         vHJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783239888; x=1783844688;
+        d=1e100.net; s=20251104; t=1783239890; x=1783844690;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+31RVqFfLVXxUW7YYIaqSHEKTPV07+qpCi/C9V4GjUs=;
-        b=a1T4S3XKm4WQ33HTLnJahD8Uakuo2gY7hFy2Jw2dPWBfHrrUdvXZ+vFWrJrUDk6KfJ
-         9zEZWEP+HR5hniJoOm3+EFOYRHlQ++g1OykOPPbXc9xdOfeYYLn1+z/HTQ/Zyxiq2NBr
-         qbmsTgVKuvvNI9tanECDugN91HMOQxu99eFv1DlVtvKRlCZiBo6pN7fCe9IntRivJY8p
-         RrgQ1IEs17nSmaPKe+TtWrZgXWN2y/5Cvb7yVnzyVyILc0eD2CMoFRnXm493MWi4RvuH
-         wpgI98BPYKvwKZ67B99NzM9EEJa0LIx8K53JdGmPI1S5suEh0O8q69PAJt99h9rFjsbN
-         n2bg==
-X-Gm-Message-State: AOJu0YxHJmKwf8obiHBUbXtsl7NHpajwIyE/NKleNE+Zs5Wiqt9/WcaG
-	1bmWvWEasCICPPwzKHPc/7PYWlIywVblVtrVahyY4/rlPSTtViB/ROztHKBI7A==
-X-Gm-Gg: AfdE7ck7NBhG4msMTxYBlpLf0q5aCR3SYYCfbv2R8ZLDW3zaoY8pMLAjSPvr9qiVGL3
-	4I6l8saXKpZZu3nfafmQJew/MW7Va6AtFRNti5XP0IL6bKNVBajxcB7CL41TpjKVhDGS/GDTSbq
-	vW63Dw3eQMKliB5r9R8A5Qu90rJq48yjlX+B783m+1TI+OWDRA6NnBOYF6ajb7jRgnle/O8iOsF
-	h1cJRKpVL86i9+lRxX41+SaHwevZ5gIIrXi8I7ZRrsuDXEFwQD+/FCWeO6YJlpmDNdi7SmfpfML
-	VEHEoZ9BE/V60hFi+/cJAO8qdRDEtH+mJi56Pceotx98PWmf2uXou42kobd52rE+2w099vOhyRv
-	qCEqli+J1zL1jvbFsYTlO83Z2RxxcW2Hb7Og+1WMRytflskjS7tAAJHw2gwiL6yQ/HEUyYwTtpG
-	FLBZSxJp/FX39nG9cnGQ==
-X-Received: by 2002:a05:620a:4728:b0:92e:4e88:f453 with SMTP id af79cd13be357-92e9a477c49mr882959885a.52.1783239888332;
-        Sun, 05 Jul 2026 01:24:48 -0700 (PDT)
+        bh=pISzHfMRvyruBo9Uw4e7eHU1iaUtDDgFkmtFTz5JzN8=;
+        b=Pl/2bbzZKNRN8dKgTH1+8ArWhhl77jybCbalVKIv1CY+2m1SKCysJQJdwjCadglCX9
+         F+sJaOqqQdRe/JrrcFOQKkqUmm3rdzBTSYTfdHSafAYNSUD4XAE8ub+evqT4S0NK28Yh
+         hsEsONbM4QrBrk0nMACxIXwZyVSPLqf2Dpwv3hdjkT1NNwcPJeaRyQmFPsCcf263MREI
+         7NB7g7/cJo5mW6k4Myb9xs12Y8+RHLf2gaWbTXP8Fpkq4M9J8bqx7L96UrrsaeMlZn01
+         +JRAg1e+RUBq6QtmBjdOn1QHUjEvHdlte/RnAGpAJDyceYs6EJrZmMc90oecNtTLGsKJ
+         4HxA==
+X-Gm-Message-State: AOJu0YwZRYNGViQehFWLaJLAOdLgnpYL78R66F9dl01TWgfJ2fSYfV3D
+	mLbBPqqmyU/2BCOSTGrmzZllUkePPwHXNY0J3kNSomD9/g9rda5/zhmvcOPSow==
+X-Gm-Gg: AfdE7cknheHqZ/h9mSrzquEl/Pt1gA/GP1ouPPMnMLq0ZN7sQMLMvlGv8L9+LLp7EG3
+	i2njojqb1FVoByOy7jWbHQCcaV/utPC2u6G8gf4rGq/yJ/76jpDE6sobOO6DqIqiscZcqTZNlK7
+	aHozLewCR8F5uhwpvf52ZHPAMhmpxiPFSevf+tpuZpE8kNNm1Vcu5t582NwoyV/HCyztiP6Tgey
+	koLA64XfLDlU7Ry+DjDSsnrY/GdeuJvKuJ+EEpkWW+LrOrv+0Myl9TCJZguvOQPKkzyF4SmHit9
+	tW6QIrvKBU5ej0BBLgV331Z53fZNvhyd1vCsw+dD27rL7UOLjfadNVNXjJ/sW7YKUVEdIpzJIvm
+	/qH2zPInZTL7wgKNvBCkjH2UFGMmq2nU08lt6KRcPUTdplcUfPNhB6alhNQoERGoUnGgIqBsroq
+	86KISWeauWf5IxnSxG6g==
+X-Received: by 2002:a05:620a:4403:b0:92e:72a4:f28a with SMTP id af79cd13be357-92e9a418bc4mr833247385a.44.1783239890402;
+        Sun, 05 Jul 2026 01:24:50 -0700 (PDT)
 Received: from [127.0.0.1] ([135.237.130.145])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90b81342sm621849485a.7.2026.07.05.01.24.46
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90ca004fsm629531185a.28.2026.07.05.01.24.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 01:24:46 -0700 (PDT)
-Message-Id: <0048c0ca2752853dfba7ae1bf89dd70c8e501d54.1783239870.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 01:24:49 -0700 (PDT)
+Message-Id: <4048a225a5c3c0b698a2dbc58c756d217f851a72.1783239870.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 	<pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 05 Jul 2026 08:24:25 +0000
-Subject: [PATCH v2 08/12] worktree: fix resource leaks when branch creation
- fails
+Date: Sun, 05 Jul 2026 08:24:26 +0000
+Subject: [PATCH v2 09/12] imap-send: avoid leaking the IMAP upload buffer
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,46 +80,32 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the "add" subcommand, when `run_command()` fails while creating a new
-branch (line 948), the function returns -1 immediately without freeing
-the allocations made earlier: path (from prefix_filename at line 858),
-opt_track, branch_to_free, and new_branch_to_free.
+When uploading messages via libcurl, `curl_append_msgs_to_imap()`
+accumulates each one in a strbuf that grows across loop iterations but
+is never released before the function returns.
 
-Redirect the error return through the existing cleanup block at the end
-of the function so all four allocations are properly freed.
+Release it alongside the existing libcurl cleanup.
 
-Pointed out by Coverity.
+Reported by Coverity as CID 1671507 ("Resource leak").
 
-Assisted-by: Claude Opus 4.6
+Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/worktree.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ imap-send.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d21c43fde3..4bc7b4f6e7 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -945,14 +945,17 @@ static int add(int ac, const char **av, const char *prefix,
- 		strvec_push(&cp.args, branch);
- 		if (opt_track)
- 			strvec_push(&cp.args, opt_track);
--		if (run_command(&cp))
--			return -1;
-+		if (run_command(&cp)) {
-+			ret = -1;
-+			goto cleanup;
-+		}
- 		branch = new_branch;
- 	} else if (opt_track) {
- 		die(_("--[no-]track can only be used if a new branch is created"));
- 	}
+diff --git a/imap-send.c b/imap-send.c
+index cfd6a5120c..0d16d02029 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1750,6 +1750,7 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
  
- 	ret = add_worktree(path, branch, &opts);
-+cleanup:
- 	free(path);
- 	free(opt_track);
- 	free(branch_to_free);
+ 	curl_easy_cleanup(curl);
+ 	curl_global_cleanup();
++	strbuf_release(&msgbuf.buf);
+ 
+ 	if (cred.username) {
+ 		if (res == CURLE_OK)
 -- 
 gitgitgadget
 
