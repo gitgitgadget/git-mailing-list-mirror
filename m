@@ -1,75 +1,83 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8682192F4
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 04:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C7333993
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 05:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783225686; cv=none; b=EpUgmae3FEI1Kzx6ydhUMO3dM98isbs+6BzzvC6HrqU4GNMOj78BvtTMPu96datOfZXXCh9yUxRyorV7vkgGKNa8W81GZNA6Qu0TJX76G8tj8wrmBkSlVz/lT/dFQAGn8Nd/QupClg0J7N8uqYtuPxxwzQUEcp2Eu7FJMpbf33g=
+	t=1783229286; cv=none; b=Z8rHfec8QUyj8C/veuDirjuTDWDMFLSP7E+chXTcsHyxG8Y1A5AJdlpKGScWGfAFFg7GgXjxFJGy24wz71VoZP3Ad1LmY2ChE5zy0EzfvHWZWPNvWBITUp9d1hkYDBXc4Jgr0AEfEXT9fl/p2ZpDKDFVJSdMPATpBq+9vPy5YB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783225686; c=relaxed/simple;
-	bh=OpNNgFFw2EF6zu0KYYAKymrU8Fswt5mdJ4LAOR9wU/4=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VI2KE+rJovgL0SoyK5H0mwpSew6CEgU28AfrNZvK5tluZw5xovbXP+pP+R5Zj+rMbspeuk8cgY7RMkvavvHUDh3uWvmjME0gN3KWXp1UaC1lwk63xmK1kbCWJpza4vTGaZFRfbdFAqQidxDeZsn9jIi2NJnWAJvXzlb3gJ2U/a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GbHANayk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WjWKkA07; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1783229286; c=relaxed/simple;
+	bh=0NSv/gOBG0BqVM5eB8o9Ts4bevO+S3lNzNI2Meep+tY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aWFRjfWEowxeHh7MATgyHkt4snDYG8ApW6/4DTlSzSaQfVMK/Exxr306vocBZuPzH9l5+rr4FvaL1CzYwVtscEjjJcrnUR6oaYxf7QtJ+x7RGBSO3U1a6YIep7ttQDyItaXia9UAe2NdnaMgQS9jlSaHqV5c0WHYHjb/JIrOT2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HOAbOmSh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GVgYySA/; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GbHANayk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WjWKkA07"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id F03451D00085;
-	Sun,  5 Jul 2026 00:28:03 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HOAbOmSh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GVgYySA/"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id E9EC81D000D6;
+	Sun,  5 Jul 2026 01:28:03 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 05 Jul 2026 00:28:04 -0400
+  by phl-compute-03.internal (MEProxy); Sun, 05 Jul 2026 01:28:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1783225683; x=1783312083; bh=YX5GjXWJe4WMi6jweeeI2zucwr3K3YXh
-	8cCexQkTztI=; b=GbHANaykUknWLAEX+sg6GsnzGn7FZ2b67QxYzTduspAHYWCW
-	wH7xCfMH7PBBLxLG4adRvsiQFsd8HP1tJXSj2II+z6WwmC3+W0+446CraxKLV8xx
-	n5rMrFgHBN8HGEfadZ56pMNeXCBfzG7qbWRkrK1n2D0kKEonjjIIVOUpsEjJXk9X
-	ZQa73A3iasCStD/eZoEoY9zdyRUqR7BwNNF0C99mKCWQGQtJMfFhAzSfzBdTnAb9
-	TzqpsnIKNBgzeuCcdU2jUeD64gMz2UodcSmtOG3zdXKAiFcSu9aOGTcoYoLNJJez
-	r++JQhCamxsTwFYsZgRfPQ6PimG8dd7hyLWKwA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783229283; x=1783315683; bh=DJ7aF5Ea3r
+	0dtmD3gEEdBaSoCjqO0yNcui2Qwx3mp78=; b=HOAbOmSheYPVr4Gh0wy9cOjZJ6
+	6ruX+Pi0lGe31UXenWum6hfmWf3qNMVyoOV4wkqa6EP+WqLFlTBOGP4NMnCjOBCa
+	Eba/n/33LZWr3aaevdV0LZ1/j76nDN3C9NNDbAC0defW2MunRHtkwNz74cJYJR2s
+	vVoOsRnhPP/0CHcTrbhpWfPphrNFr6yl80GxAlAIbBP0kBOTPbD5xVIITXJyDVLz
+	GYpcjO5NxDwNRj2B3BfvxiixgWhn7Awb7BdrLDElTbE6r6M/47qWcPX3vOjxYNUB
+	3pJcV9YPKqtykQn3njCJnjbNN1y20zhJTNo8bDUr4yqrL4BtdSWsFcr5TcPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783225683; x=
-	1783312083; bh=YX5GjXWJe4WMi6jweeeI2zucwr3K3YXh8cCexQkTztI=; b=W
-	jWKkA07lelAJTnvNftzdtoUBXlMo2BNBJWatZlgS4SQZOs0R926Q9WefrlVFgvOy
-	ONfr4Rd0FT0YBnRKOTGGJvp6EENJB3z4Ub6H8REZQMEsEyiSRR4xN+r616NaxXJ2
-	7J5N6VRcMmxB9mOOsQJBA0YRs4sZxN/1VgOhpt23zs1vVFWv0cnslnLqEepUafFw
-	VfAhvmLBfR/RCkft9ZecLLjJzJnDnBPz3PWHOE8uX+6TajXiXub9Z/fatwoMZmhA
-	58ezNy6hpS2rQ/65qbJsqig41wIyONGmKFe+MfdQyv5mXvUBksOZDlx8VjA/LSQC
-	Fc9iF8cjbPzF6LMPHHsAw==
-X-ME-Sender: <xms:U91Jah0qBWThBxuKSLqMpZJNmYA555bka6due9b0vFdqXaZLPj50aw>
-    <xme:U91JauGbWAuA7IxLDjRcTHd4-zNUSiSDHBswAnjwPxaXy_PTzZCUGOz5ZD2-iYiA6
-    sP7aV7wBpbZ1JAsVZ8eKtcYdrUVFIhCG5kVsqtUSlojaDqtjTi-_w>
-X-ME-Received: <xmr:U91Javh6e3a4FQkl5L7MwSPRQfHlIhmLKkMs8YUzo035mkiWPPSt-4LYdwljewnfaIBecjwVsSqwAoCHlJtMmo2XgB_VV32RJV3qhOI>
-X-ME-Proxy-Cause: dmFkZTE4gJ6YuGdp6bBPx9FA9C5mEN4wMi7Z1D0PVD8lFrIvfjRTZE5xINcTEKzGQARbmW
-    etOyO6dNGdi1atNv1/vZyj/X2A33/r+By5mHeGZ5RJyhoga6C/fXGXOerZ+eeSBnHuRGum
-    eVmBm4qQamaPmeRtrqR+pCIJEQdxBIxFnYjru7JzV4ucB2ZhG7Y8P7LV3A/WJOgw+ygUpm
-    fUbR00Hh6pfiDF6CMK9nzBi9IpHwAHhWa+XH2fr2+KAi0YH3eZ5TanKX8swb7+3Tpp2B4L
-    kmj+bQruDznAeudQzvtSHP5VTGg2yhsrAji9FyrIw7yIqJ/F+/yXUcARnY1QB/EjaKXsMN
-    xTCSeQlGXUt0Cz2heRUosgMixoTi3gAovcnePVriTU1TE3P88IN7yjana8M1rYaODBj+kS
-    98S4SlokGZ/uX9cQ0xRqx6afARmEl2RLAzY3Ct3Cjsbg8ng39eLtyA2dRK2H7yNMz+iFwp
-    1aVeqoCfnFN3zS/mMT4HJrbAyj4sUClcmzFhn1otO0mdP1aJMjxFrzCMCInsdvUzGGSIvE
-    /JW1Bbwi4jHYUSWgv+KjdnLaHwtsuTFxAsgKG/IuqzGNfJqT0XxApjN3RpLE5lIh9QF2OC
-    LKqhztUDCLt+8F4e1rxJEsfPJyZaSQ27ZGBQuTvJ4/l3YJv1hODKLVq5jbxA
-X-ME-Proxy: <xmx:U91Jap90iPfUMe8Ckx8YxkcDJYVvlTbCJEJjeSwbDZPo-YJTtnicqw>
-    <xmx:U91Jamr_OkyYlCB4olckwj4amdPbzra7AHVioUi2PCkiIAaTMY2pYg>
-    <xmx:U91Jao_n53W48EZIMpTdRohX7AaII1nByi_EscAZM5pwqi24M1Sd8g>
-    <xmx:U91JaqXEMONs_S2pDj2FTTuZ4_A3kY4SK0ezk1IrtLulmcAeCMB6lg>
-    <xmx:U91JatOKElOQbZa5fwRGqNOiDWhcsYVBGWeHH2GNW9_z0tElP2YyLlIo>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783229283; x=1783315683; bh=DJ7aF5Ea3r0dtmD3gEEdBaSoCjqO0yNcui2
+	Qwx3mp78=; b=GVgYySA/AA4UI6N+wsHNLOofr5/hULkPBXVE1X244TmgQ0d5GWE
+	+hK1ImcppRIHxeUU9ZsUN1CsbLj6Kd+NP3It9jXchY/lD8oBBZ2BQ5PdRIvwPVry
+	pNgUM1gEaRLI8gN+tAvwjwYfyxMLwFjgLpciqBSeyYnWy+ylgZkc6IFVkprtSoII
+	jZyUIfpS+FgNnWLgo0wfG/fi4KIOSVx/9ZtFO0a2CIBY77ks1SiU5JS1740g00EP
+	9J32GYC2pMgTp9GKMkqFnWsYZbBjTpkvE06rPFSw+uCZSLKUtuRPbCKMfywWe/Ae
+	O+D26Zyb4r3njt9KXiStYGj9uEzlrQ4CnNQ==
+X-ME-Sender: <xms:Y-tJakFzYY9FEIWz86_HzRB4SwBSRziVAy2t0fRZhuQH2RwPnKui8Q>
+    <xme:Y-tJakU5JZvH8wabrfQ2PB6AxEG47Eta6gS6IiUR-yABghR_3DMWxY197RPLymwZp
+    TXOAy3UNcZt0ieiHZlMyMV4BOhpDKaiRT-pCTUYjzyde70QRw4hBA>
+X-ME-Received: <xmr:Y-tJajJu0492J7PaU7gCOafziqKd2K3c5mZpvwT81l6EOTPtG8_ONTSERJmrpMM9zyoLXqCWvbLX7T_FwjD4Xi7__Q42GwHHzX820pk>
+X-ME-Proxy-Cause: dmFkZTEGaFijcxbYqMK5D0kUJdisGrMHX+5ufy6G2EO/igtC1l0VWO07Ndf+NVQtTSHS+e
+    VW3MVgcD3uJjKOaei67lsU6TSy2C35yjkrRY3X1pjA72Sy/dVUSNenvdqH6YwroxAfYJYw
+    Ean5EtepzsBW5o+s7DiUOd5cWyPgDaMyM3APNs+lJ4l5gdqSaqQnJRhxcS9tu+aEx6JcIj
+    dMe/GIZT5OavDRFBylw4Z7Jfd9EnExhPCMETmWSi8pQYbPfbCK95Mzia5ugCDBQpi5mKvM
+    plYdOQ5njr5GHwc+PZaR+3ooaWRfhEeBUbmcXv0GkAdZ1wBw5TvOiJ1djUYL2Zejv/w1sf
+    xVHcKJh1n/quCazcTMH3gMwEwdGanvAJWBIAx8gpzA+pFr2P3mMjo4aX7Re7nvYtopwBuF
+    Nn/mNsccQ4X1q6t03G8w87Fuf9VYcB4YHIdjCeZUsp77mwzPmid9YMIPL4Hmf9lACRTORJ
+    zLhwM5YEpzG+awFVgtK7q2SRL1JYEBOnJQyLZOvCHRq+pUr3rzKDC/6FO24/imosIcM34p
+    p4WJje0Oc1bXOlzRRnzjDa6CNEHaWDJ7Nh27Z36wbfN6tHN3gowkPsSNYLxbe3Y59jfBnU
+    gLPHiv95eeblGYb80rqBivRNb3uQTF1cbYUsqEK2DaBHb0TyVMnRvT8puKMQ
+X-ME-Proxy: <xmx:Y-tJak_lPv0-WMX-l3UxUJzUCv0xQMSzUJXADkwB19zy5YPCqosoAw>
+    <xmx:Y-tJamLS4ek6pYlNufuyMWoKuxopxjdJPSpnBD8haJFv29W0dXlanA>
+    <xmx:Y-tJapntGLXlazGARclqSLBBxVra5Ej_jYS7eKPlkP-9B543ZHvfJQ>
+    <xmx:Y-tJaqOzC8C_GNGAfCH6MIyQCXU-G88xE3P1mJYtp1OgKNFsl-c8Ew>
+    <xmx:Y-tJagiwiU2GJ0zd25JW59d1Md1EOtD4H2qO73hq5lzPE3oJF_B2cYmN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 5 Jul 2026 00:28:03 -0400 (EDT)
+ 5 Jul 2026 01:28:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] diff: give --compact-summary a short synonym --sstat
-Date: Sat, 04 Jul 2026 21:28:01 -0700
-Message-ID: <xmqqldbqdpri.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] ci(dockerized): raise the PID limit for private
+ repositories
+In-Reply-To: <pull.2164.v2.git.1783155124926.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Sat, 04 Jul 2026 08:52:04
+	+0000")
+References: <pull.2164.git.1782889484346.gitgitgadget@gmail.com>
+	<pull.2164.v2.git.1783155124926.gitgitgadget@gmail.com>
+Date: Sat, 04 Jul 2026 22:28:02 -0700
+Message-ID: <xmqqh5medmzh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,117 +87,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-These days I find myself using '--compact-summary' very often, which
-I consider is a strict superset of '--stat' (or '--stat --summary').
-Promote its use by giving it a short synonym '--sstat' (stands for
-summary+stat).
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * The `format-patch` output still uses --stat --summary, which
-   looks like so:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Every once in a while I need to verify that Microsoft Git's test suite
+> passes for changes that are not yet meant for public consumption, and
+> since it was (made) too difficult to keep up a working Azure Pipeline
+> definition, I have to use GitHub Actions in a private GitHub repository
+> for that purpose.
 
- Documentation/diff-options.adoc                      |  1 +
- diff.c                                               |  3 +++
- t/t4000-diff-format.sh                               |  2 +-
- t/t4013-diff-various.sh                              |  2 ++
- .../diff.diff-tree_--pretty_--root_--sstat_initial   | 12 ++++++++++++
- t/t4013/diff.diff-tree_-R_--sstat_initial_mode       |  4 ++++
- 6 files changed, 23 insertions(+), 1 deletion(-)
- create mode 100644 t/t4013/diff.diff-tree_--pretty_--root_--sstat_initial
- create mode 100644 t/t4013/diff.diff-tree_-R_--sstat_initial_mode
+Great.
 
-   but if we change it to use --compact-summary (aka --sstat), it
-   would instead look like this:
+The updated subject no longer confuses me ;-).  Shall we
+mark the topic for 'next'?
 
- Documentation/diff-options.adoc                              |  1 +
- diff.c                                                       |  3 +++
- t/t4000-diff-format.sh                                       |  2 +-
- t/t4013-diff-various.sh                                      |  2 ++
- t/t4013/diff.diff-tree_--pretty_--root_--sstat_initial (new) | 12 ++++++++++++
- t/t4013/diff.diff-tree_-R_--sstat_initial_mode (new)         |  4 ++++
- 6 files changed, 23 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index c8242e2462..b2b755fd3d 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -221,6 +221,7 @@ These parameters can also be set individually with `--stat-width=<width>`,
- `--stat-name-width=<name-width>` and `--stat-count=<count>`.
- 
- `--compact-summary`::
-+`--sstat`::
- 	Output a condensed summary of extended header information such
- 	as file creations or deletions ("new" or "gone", optionally `+l`
- 	if it's a symlink) and mode changes (`+x` or `-x` for adding
-diff --git a/diff.c b/diff.c
-index 2a9d0d8687..284d391c47 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6112,6 +6112,9 @@ struct option *add_diff_options(const struct option *opts,
- 		OPT_CALLBACK_F(0, "compact-summary", options, NULL,
- 			       N_("generate compact summary in diffstat"),
- 			       PARSE_OPT_NOARG, diff_opt_compact_summary),
-+		OPT_CALLBACK_F(0, "sstat", options, NULL,
-+			       N_("generate compact summary in diffstat"),
-+			       PARSE_OPT_NOARG|PARSE_OPT_HIDDEN, diff_opt_compact_summary),
- 		OPT_CALLBACK_F(0, "binary", options, NULL,
- 			       N_("output a binary diff that can be applied"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_binary),
-diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
-index 32b14e3a71..cc5c62fdbc 100755
---- a/t/t4000-diff-format.sh
-+++ b/t/t4000-diff-format.sh
-@@ -101,7 +101,7 @@ date >path2/path3
- 
- for format in stat raw numstat shortstat summary \
- 	dirstat cumulative dirstat-by-file \
--	patch-with-raw patch-with-stat compact-summary
-+	patch-with-raw patch-with-stat compact-summary sstat
- do
- 	test_expect_success "--no-patch in 'git diff-files --no-patch --$format' is a no-op" '
- 		git diff-files --no-patch "--$format" >actual &&
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index d35695f5b0..a42dca8a0b 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -474,6 +474,8 @@ diff-tree --pretty --notes note
- diff-tree --format=%N note
- diff-tree --stat --compact-summary initial mode
- diff-tree -R --stat --compact-summary initial mode
-+diff-tree --pretty --root --sstat initial
-+diff-tree -R --sstat initial mode
- EOF
- 
- test_expect_success !WITH_BREAKING_CHANGES 'whatchanged needs --i-still-use-this' '
-diff --git a/t/t4013/diff.diff-tree_--pretty_--root_--sstat_initial b/t/t4013/diff.diff-tree_--pretty_--root_--sstat_initial
-new file mode 100644
-index 0000000000..b5c9d7693a
---- /dev/null
-+++ b/t/t4013/diff.diff-tree_--pretty_--root_--sstat_initial
-@@ -0,0 +1,12 @@
-+$ git diff-tree --pretty --root --sstat initial
-+commit 444ac553ac7612cc88969031b02b3767fb8a353a
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:00:00 2006 +0000
-+
-+    Initial
-+
-+ dir/sub (new) | 2 ++
-+ file0 (new)   | 3 +++
-+ file2 (new)   | 3 +++
-+ 3 files changed, 8 insertions(+)
-+$
-diff --git a/t/t4013/diff.diff-tree_-R_--sstat_initial_mode b/t/t4013/diff.diff-tree_-R_--sstat_initial_mode
-new file mode 100644
-index 0000000000..51b1aa7d71
---- /dev/null
-+++ b/t/t4013/diff.diff-tree_-R_--sstat_initial_mode
-@@ -0,0 +1,4 @@
-+$ git diff-tree -R --sstat initial mode
-+ file0 (mode -x) | 0
-+ 1 file changed, 0 insertions(+), 0 deletions(-)
-+$
--- 
-2.55.0-236-g7bd4d671b1
-
+Thanks.
