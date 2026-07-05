@@ -1,70 +1,71 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158BF367F25
-	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CB536EA84
+	for <git@vger.kernel.org>; Sun,  5 Jul 2026 08:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783239888; cv=none; b=BKkzfBPmmn3qQjUhT+edirKVRtWM3+lvD4V0A5B+CslbkDlvEG0U5A2izmW3Ilur9ihRD89dsreoTL6rbf0QVw7F4+c5Gvia0E7VodGY8DwrMi/mbE91fi42+GwPq1Nwmlpl8sLDHAWIO7KFJCfImqI0LAOpiHBccWkLgbGibL8=
+	t=1783239890; cv=none; b=iQ0jwI1wy4GhB8Bmn6TB4shRxplA41l4IKG2Kwyabc2wTKTDnXFOJ6b27RBU/bSZ6BfV3FBBNkqb8HbmXRvL361jLyj6nRNMOHCRO8RMqmuoSxlerE0FsVzau4UeuWeF34hH8kCK6JOJ7Subt1aEyZVUo9eNaU3q5Mmg5EmlwEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783239888; c=relaxed/simple;
-	bh=VoISBO7MYxn4FS9y2Ce5pmRnEXSk+8zgeMUIR1hCeTQ=;
+	s=arc-20240116; t=1783239890; c=relaxed/simple;
+	bh=cYVz8SAx3dAKViqMYxsANed4fTd5lIvT00C45fyj6Pc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tWBPd81aOJFmmpZLqZqR5HvAxQYwsv3bLhJQpZBWilveRyU3PSDKnuq4H65RPjurH7+Ej1vwtbST5xVcTSEreqmakjAzYQa3V4+jYJsOejYcHg0dcGGr2qIYMUX9+qMPRFAxHSfzHgLKH31LPZWE90wVNK2gRWvQ0DNEYY98Wmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a/+APoz4; arc=none smtp.client-ip=209.85.222.177
+	 MIME-Version:To:Cc; b=FsT+LPWs+L+WZikcrnUWA5E4sJnotG62/I8BHzXO9rQhjVlvN3lUzyap/MRigfSykMaik5YdK3eKw5m/FaR+erP39vg2NlYqav04Sqk9qmGHcNkTB1uNj4P5rFr9NafZ7Wb6M0eBmwC6T3jJjqVNoN18T2r78cWDp3ESjXoQ2Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJ0wXOnG; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a/+APoz4"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-92b21f65b60so179968085a.1
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJ0wXOnG"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-92e5cb052edso145779785a.2
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 01:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783239886; x=1783844686; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0MjcMI7oVG65IHJLtZG8wB8KbPAhMW+yUfO7+0MW/gw=;
-        b=a/+APoz43o/AH06XmYdG4QpSuU+PrNJronsBHOAzw8fprQHtKKm/tBq5gLGwQrBNR9
-         pgwfvtqcFjwHyQOsxmESpIvciP3qOSFc1yIu5VYhK0tCRjmnzKq3JFNferWUzHbsNX9u
-         +0TvRdvYpfLLjzva/2+5BwKu0uzMkVN0s7B4dSZRfIUYKydAwv2tIBuZBi8KNEc9bgVG
-         cU3GYupjVWAbZetIDbSQRY8ZKSSIBI7iYyQ4h3+Jxfs13xKP4a9CrvU9SmpE9P0NKa1T
-         yzZBXq1rlhpU2rZq0Uv5bMrScjikyBJKS0JYRfa13ZjympWR8TwWuwsBGAJlsqFoTM9O
-         /RBw==
+        d=gmail.com; s=20251104; t=1783239888; x=1783844688; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+31RVqFfLVXxUW7YYIaqSHEKTPV07+qpCi/C9V4GjUs=;
+        b=MJ0wXOnG7IOHJu3fSah271M7woturNEnKquCPvC6xP3RXnyw3FaeVYcYiobDpjxB4f
+         1DseMiN15XDE9MnZbm7jgbJtmL02Dr836GxTZQa1YDTQuHH1iyauffWoLKiy97dljuMD
+         rZjDe/xP1PBGZK+SafA1M/G6kSoXTLeWNwoISU9el9am5aXfSzNNAkeOuve5pHcwuz+v
+         WsALyvpMZASwV7bc1paUwG8nnvijxGjqN/QKLCxtsF4FBBnLXpDzYpQV0NAfYdzBzZ8y
+         +nLWnnDD5qAFz1xo832Ko9dqLzgmWdWA8GfUf6gpmoChWeSI0N1J103Ev6KryOyhuthF
+         /NKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783239886; x=1783844686;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0MjcMI7oVG65IHJLtZG8wB8KbPAhMW+yUfO7+0MW/gw=;
-        b=KBUc+T1LNQTmoPL8ulkbsj3+gvg19Y05Sbldrz6AMHMfPaAkTVikt4NYedgEz/UK51
-         wgfcsN6iQEOUWExdlZWmvHcZpXIWMhsDrVuj20PK1OvAVMSw/ibr5U7jLKfnHIJzgpiL
-         RMBs5PDYGwiDnpJNfePQdcokHmrY6CoNLrgKto1X+C6atNS0JFzU7oIIjKWZ/jqBlTSU
-         cCgfu/lBgm4d8e5x2KnUwpN/jheBPHN49EA4fb2ISxbcuAUEPFHXWf1yLWLarDHkl6la
-         Ox8PEmlD9oGpKB5m9pQtieX0laI2TvVXoORTvCYzKixYaOzs/ecMmL7TVvccANQ+yS/Y
-         QaWA==
-X-Gm-Message-State: AOJu0YwSt/ECWI/RIQug4pn1Ax/OIXdKPHNtDLbnMHmExiDoqfWJWTNx
-	DooGaadS7HJ1U2MpCWE10n74dBaKMv1hBHoW5L6ZGHMurugF8fK/o7QsAku6lA==
-X-Gm-Gg: AfdE7ckAxFLghWr5fGYrVaGZS9TFYvC+T304/ayT5om5LTbHHS2ASue8Dl2ZrpkugxX
-	xuY+kOWFjKjVxkCSaocQs0gEsqwDE7Jdn2/miQEF89EI2zNggmP8TAnHwCv9SnK22v5ypyH4BHq
-	iWYxUig5yG0O0DTBthFEfiwyTQq1Xjry3IHhlecRlcNH2jALU9KH9nV19ABMRMx5s9wkukDwVA1
-	O8sHiYzLiNvYCMNW72mOJ4MGFKrFRqiqB1Zr7I42UR4O9WbH/97+bwjXkLgjiqgSDVkGy9zQQsg
-	EXbqPy66sgw7iOBnFAd1gdXw2/UMrep8j9Q9nTU3MAbXYvoEIJat18ItYOl5Tn0QDWxQu2ANq70
-	KOUOYC937+7HiIM45607uOfZ/9DIoGS1eR8PzbuDlbpVMpqf/iD7QzFwZumzxqldVRhocjf1seE
-	Mf13ym9gI4JY4DmlYXuCS2Bt9vHyCc
-X-Received: by 2002:a05:620a:a505:b0:92e:9cc7:fa68 with SMTP id af79cd13be357-92e9cc80362mr638180185a.30.1783239885995;
-        Sun, 05 Jul 2026 01:24:45 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783239888; x=1783844688;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+31RVqFfLVXxUW7YYIaqSHEKTPV07+qpCi/C9V4GjUs=;
+        b=a1T4S3XKm4WQ33HTLnJahD8Uakuo2gY7hFy2Jw2dPWBfHrrUdvXZ+vFWrJrUDk6KfJ
+         9zEZWEP+HR5hniJoOm3+EFOYRHlQ++g1OykOPPbXc9xdOfeYYLn1+z/HTQ/Zyxiq2NBr
+         qbmsTgVKuvvNI9tanECDugN91HMOQxu99eFv1DlVtvKRlCZiBo6pN7fCe9IntRivJY8p
+         RrgQ1IEs17nSmaPKe+TtWrZgXWN2y/5Cvb7yVnzyVyILc0eD2CMoFRnXm493MWi4RvuH
+         wpgI98BPYKvwKZ67B99NzM9EEJa0LIx8K53JdGmPI1S5suEh0O8q69PAJt99h9rFjsbN
+         n2bg==
+X-Gm-Message-State: AOJu0YxHJmKwf8obiHBUbXtsl7NHpajwIyE/NKleNE+Zs5Wiqt9/WcaG
+	1bmWvWEasCICPPwzKHPc/7PYWlIywVblVtrVahyY4/rlPSTtViB/ROztHKBI7A==
+X-Gm-Gg: AfdE7ck7NBhG4msMTxYBlpLf0q5aCR3SYYCfbv2R8ZLDW3zaoY8pMLAjSPvr9qiVGL3
+	4I6l8saXKpZZu3nfafmQJew/MW7Va6AtFRNti5XP0IL6bKNVBajxcB7CL41TpjKVhDGS/GDTSbq
+	vW63Dw3eQMKliB5r9R8A5Qu90rJq48yjlX+B783m+1TI+OWDRA6NnBOYF6ajb7jRgnle/O8iOsF
+	h1cJRKpVL86i9+lRxX41+SaHwevZ5gIIrXi8I7ZRrsuDXEFwQD+/FCWeO6YJlpmDNdi7SmfpfML
+	VEHEoZ9BE/V60hFi+/cJAO8qdRDEtH+mJi56Pceotx98PWmf2uXou42kobd52rE+2w099vOhyRv
+	qCEqli+J1zL1jvbFsYTlO83Z2RxxcW2Hb7Og+1WMRytflskjS7tAAJHw2gwiL6yQ/HEUyYwTtpG
+	FLBZSxJp/FX39nG9cnGQ==
+X-Received: by 2002:a05:620a:4728:b0:92e:4e88:f453 with SMTP id af79cd13be357-92e9a477c49mr882959885a.52.1783239888332;
+        Sun, 05 Jul 2026 01:24:48 -0700 (PDT)
 Received: from [127.0.0.1] ([135.237.130.145])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90cbd6c9sm631336385a.33.2026.07.05.01.24.43
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90b81342sm621849485a.7.2026.07.05.01.24.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 01:24:44 -0700 (PDT)
-Message-Id: <5397ea785c6da50e977598a35d03af82cb2a5e4d.1783239870.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 01:24:46 -0700 (PDT)
+Message-Id: <0048c0ca2752853dfba7ae1bf89dd70c8e501d54.1783239870.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
 	<pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 05 Jul 2026 08:24:24 +0000
-Subject: [PATCH v2 07/12] submodule: fix cwd leak in
- `get_superproject_working_tree()`
+Date: Sun, 05 Jul 2026 08:24:25 +0000
+Subject: [PATCH v2 08/12] worktree: fix resource leaks when branch creation
+ fails
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,71 +81,46 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-`get_superproject_working_tree()` allocates cwd via `xgetcwd()` at the
-top of the function, but two early-return paths (when not inside a work
-tree, and when strbuf_realpath for "../" fails) return 0 without freeing
-it.
+In the "add" subcommand, when `run_command()` fails while creating a new
+branch (line 948), the function returns -1 immediately without freeing
+the allocations made earlier: path (from prefix_filename at line 858),
+opt_track, branch_to_free, and new_branch_to_free.
 
-Redirect these early returns through a cleanup label that frees cwd
-before returning.
+Redirect the error return through the existing cleanup block at the end
+of the function so all four allocations are properly freed.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- submodule.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ builtin/worktree.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index fd91201a92..92dfb0fc2d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2627,13 +2627,12 @@ int get_superproject_working_tree(struct strbuf *buf)
- 		 * We might have a superproject, but it is harder
- 		 * to determine.
- 		 */
--		return 0;
-+		goto out;
- 
- 	if (!strbuf_realpath(&one_up, "../", 0))
--		return 0;
-+		goto out;
- 
- 	subpath = relative_path(cwd, one_up.buf, &sb);
--	strbuf_release(&one_up);
- 
- 	prepare_submodule_repo_env(&cp.env);
- 	strvec_pop(&cp.env);
-@@ -2678,20 +2677,22 @@ int get_superproject_working_tree(struct strbuf *buf)
- 		ret = 1;
- 		free(super_wt);
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index d21c43fde3..4bc7b4f6e7 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -945,14 +945,17 @@ static int add(int ac, const char **av, const char *prefix,
+ 		strvec_push(&cp.args, branch);
+ 		if (opt_track)
+ 			strvec_push(&cp.args, opt_track);
+-		if (run_command(&cp))
+-			return -1;
++		if (run_command(&cp)) {
++			ret = -1;
++			goto cleanup;
++		}
+ 		branch = new_branch;
+ 	} else if (opt_track) {
+ 		die(_("--[no-]track can only be used if a new branch is created"));
  	}
--	free(cwd);
--	strbuf_release(&sb);
  
- 	code = finish_command(&cp);
- 
- 	if (code == 128)
- 		/* '../' is not a git repository */
--		return 0;
--	if (code == 0 && len == 0)
-+		ret = 0;
-+	else if (code == 0 && len == 0)
- 		/* There is an unrelated git repository at '../' */
--		return 0;
--	if (code)
-+		ret = 0;
-+	else if (code)
- 		die(_("ls-tree returned unexpected return code %d"), code);
- 
-+out:
-+	strbuf_release(&sb);
-+	strbuf_release(&one_up);
-+	free(cwd);
- 	return ret;
- }
- 
+ 	ret = add_worktree(path, branch, &opts);
++cleanup:
+ 	free(path);
+ 	free(opt_track);
+ 	free(branch_to_free);
 -- 
 gitgitgadget
 
