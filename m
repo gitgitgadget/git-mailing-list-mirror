@@ -1,127 +1,102 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24C42F7ACE
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 17:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D323ACA65
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 17:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783359246; cv=none; b=doAFov9qA/dm234BtSNPSxJ+YS74ADk5HKz9uNZ+ykf3Q08nGlM4Qtl2MYvuCBDHpqmNP0PcjFf85je5/An1+u8e9b7bM4Fh7s1GM6m9QMYz6MYMkAneS6nes9rKcIOwGszy+Q9bpQUtgScTAnStTOYySJ+XS32pTrQ15xRobSA=
+	t=1783359519; cv=none; b=DdFQ9fEfVSq3c9hLr5boWv9MLg5uqpIJSXSe0EdygnJ5xkjjXBEkwHbSoaKUR/M+uZRiaScZmeEh4tHkUcRWScsn7dw9LEkZtQm7IFlX33N9OCK3VNjvlyHhkrrhmaGWrD6EtDabLvXbuQo+o1ZI8abpoYG6TkEAaPKWYXD45OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783359246; c=relaxed/simple;
-	bh=ZAfbyVwK3aaUKHTBaVCrtDo6AyI+55sqxs/OVRhZ4bs=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=SA9cXDd5rwS8D2pfjTTbuP2QvrBhgu84E5AtHsA1U8WkK5YEH7jK+JeAVHm4nMUlsm3adWCw5ga5QhKRlPW5etZf+/uAz3wXZHWWs2hfj2LO/0QrQ3ntpo415ZasPYZ5TtY6eLzuc323Ifi3/84UW0+vKeJNbAA1aynUBUmO1D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KPD4C/Ro; arc=none smtp.client-ip=209.85.215.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783359519; c=relaxed/simple;
+	bh=oXeVhgrjutcLgNWOV4m1LPB1eoWkLygagwXcaUU6S7o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Axp96KrH19rh82lT0mbTG5Te1G8SNeUa93e44HjqBkPogeJM3vF06HC2B83FMX4AFiUGqwqGxu8awsL87d6pqa8Bx2DxEfASKS8VB6gXCyvELS9rXNTyOGd2QBtSsDNis/JHM8oDyFHsedxBqWDIQtNBOaKLXEnZMMDRSnbEqLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L7ii3+vt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k4r5UOn2; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KPD4C/Ro"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c89636920a3so1581535a12.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 10:34:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783359244; x=1783964044; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=MhH3JSS1fIfg7JP/0NeWPavcGWO5GjLLd8L6eKz6Y08=;
-        b=KPD4C/Ro/YZ/svcZnPtumi9nNpmHijDeTBXlfawWAs3BorUkfPKEKMInCZ1eoKm5x3
-         PPDZ9SlwGLaVwG9mVvxJewKDOltmyJ81ks/6mibubklZ8iMdmjk1dM+tA6JNmIXTmwze
-         fj+0QH8Am/QVLzSmXqt9al7BI04+sAe2FhspRpqM2FSfEgzq/w3wXyp3ogR5UyUNzypt
-         vGuMUmL8sMkTt9azNk5UB2JuPsNSsXIlqdkiBSwdJHomoJT7K/Y9uP/ovOU1ibx4K+qz
-         R88OYRr5g4HCkhMoi4d1IpIxxe2iWky3rPQe8xhEv4+okgSYJIp4zOlYA+6BuUZNijLd
-         Bi/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783359244; x=1783964044;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=MhH3JSS1fIfg7JP/0NeWPavcGWO5GjLLd8L6eKz6Y08=;
-        b=AC4RyYpzvySGW8nzFkftSIeoIQ87nbL1OYKzeNk6ZH2QIlRAvFjFBrqDdfRVoEwych
-         qylc/kKmR8qkykF2PfIclkV0NPLoY/bmW9ggwQzuVp/izJqwa5iAKLqJfQfpgZMCBLmK
-         v8uIE15KbqtCpO/Fre0Y+u7Iy8iynRvnEIrGw/XrvoOjsQD79YyGhBtvuvxl4xA8xcN+
-         eExjR5jpiJhS2dAjoM1PZVjrZjYlxbAfQyxtMFZaajbuB3vlZHsqATw6SWjtoWvudDup
-         9aDoc3MP40Nq3NSZ2elJwXlgTMabNkPcheSErIWSu/+8H954gUs+nrKFLqF0WVcGIsJD
-         IzbA==
-X-Gm-Message-State: AOJu0Yy/PaGbaupst5ZVc3m3Q4btsgyQRCbjD8xd3Cw9G56KZhkLMyff
-	b5OKSXC1xFTLPf7f9KTH4SIwm3RBmUMxv4bk+SjNtA+XzZOFFhUr3oYYvxfsRA==
-X-Gm-Gg: AfdE7cnz7Mi26m6I/sCD/5LMHFs69+TkM6veAoTvMGOt+XAhWL4vcYvDn38u75YJWkw
-	nKhBgL2jWVtMJWVclmA4VPJ8TpiLSr09f3O1VA4yBvgGYAI9tRe8p1NvVpQwqXJBBvokpaJxAm5
-	0IcfS8GspeuRWkb9EOOyRbjT6o0LgBGrdMonKr9wwIQ4FowQq9kqwv5RxNuD1PSB781gfrtvwz/
-	WdM1K8l+HPrgTHI7GqcSEHuDbIk+Qz3TrDrg85KSomSnwvQGMyK/wXh9cuiklkAQc0DxRWY77mX
-	KpCJ7n2FuQ7VlQZyE/8py236OEZ9O148472YepZJb8iFUtp1aGxDU2mMvjp+BJYodZ//y76TZgb
-	RPxX0iFhLUnMES3cTxOxpE0HoEmsglqwSYTzMa94Ef8oY4UzAabiQJJQXFdS8VtIUqoHlY18IWs
-	sZpn9IewDB+QFAyA==
-X-Received: by 2002:a05:6a21:7116:b0:3bf:6c08:2b2f with SMTP id adf61e73a8af0-3c08efa611amr1891489637.55.1783359244080;
-        Mon, 06 Jul 2026 10:34:04 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.226.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c9e927a1152sm6506816a12.29.2026.07.06.10.34.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 10:34:03 -0700 (PDT)
-Message-Id: <pull.2168.git.1783359242130.gitgitgadget@gmail.com>
-From: "Jamie Magee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Jul 2026 17:34:01 +0000
-Subject: [PATCH] t0213: skip ancestry tests under user-mode emulation
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L7ii3+vt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k4r5UOn2"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 502A11D000E3;
+	Mon,  6 Jul 2026 13:38:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 06 Jul 2026 13:38:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783359517; x=1783445917; bh=hexCa0LR/y
+	8/ezhVsIiTjFkKPPcrLFRHOLT2CuFNGsc=; b=L7ii3+vtwzoN9c8fncRrewX000
+	Eog7eYX3k8lMOZYWQeQSzpAyWn/qdBMyLsgEwGK09RbuaiJ1lAqH9v5E100+cLQU
+	LWImLgBszJCHK8gcB5oa4VQlcAlj6caTKRJx6WktlP20zyQL6x0Zvixir6PvPyEI
+	EYAM3eKrI4QRQgSlYlq4+b3bwZ5g8XRWODNArYSa/BAm7mWMQDjFWgmDqQeLZpGL
+	GOl6HiN5/1nPn0pvlWLoMBMowSRCeWFiCXOcYmxr/UFNaTkQh/CAVN9HqbOFDqa9
+	BJasYd4X1rpRr+IDpdQx0uwPADCDN90LHy3XewMmrU306KOZSWqfmfPVh06w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783359517; x=1783445917; bh=hexCa0LR/y8/ezhVsIiTjFkKPPcrLFRHOLT
+	2CuFNGsc=; b=k4r5UOn2oyDvR9HuHefdxllgTHkC7ia+963JaQno01JdsPvEEc4
+	nD1y0NVRpx4WBm2VMSELEtkJOwuj73AYmfKcmoUUtnGtO240QSujM4r9acfE1+Fv
+	yqkZBy3JbueV1YTiM/SJ7AzTJW3loqKdAcmCi4oDI7ft8dII9vC9j+hAo3s5f0bC
+	gcc8ef/0vBD18QT/SJfylE1/jlLp7pBYIxD0yg8fISs4b/sPSeDHn6Z1l3RsSc/t
+	tXqB2m3tHDxIumhn6qPqISlQ0gxuBER9bz9ZRTP1kZh91qXHBywXl5kP8EOJES0f
+	Fn6W5dKCKNczMPg76WBRlO0El8gguQBJTzw==
+X-ME-Sender: <xms:HehLar280o0oF5Yk10VOnYhwNUWAKOFx1Nd0NuWbDrpj0RCo6glm9w>
+    <xme:HehLapIl8SqS00Nz3GUTMXLXntBstmBejS927ioMvwhOxKZW3HR14rlzcmzUH1YKG
+    hrXTY01TrwzGkoZcvYB-59H6A8Iz9HBQhanfy65XPAoIOp10-gHkw>
+X-ME-Received: <xmr:HehLaiHpksIB13NxyyCvDoApGqa1NgpaAE0Qs75LPwzkOmTvRhekNop7KR7xmik5ialp3fCX6qy_6cBB7jQsVQjurYAkFMz0yBQZjCs>
+X-ME-Proxy-Cause: dmFkZTGK+AKLHWwVlb4o8AhLdSdXx8IaBAiAJyoJtk+UEn8rMArQjFCEwXAlPGWQ81rgnu
+    bHCdlIIihGxgveQ1mxV6GduMfKCAGmEofcUSc9ftU2CQu5AvYD00nJ42KvAQjHaL7YFzB6
+    Miw/7whYn5hVt9LmUjN6kSg9RuCf+ycvDrvIph433Vb6GJsDWedV2nBCDcELwtbCwtcumh
+    6kRRrZlkEdVrppOaIvMeRz6bdT4Mu9GS8RQ21jBxR230JdBGRqM7LDE6iD+l60JGAbrir6
+    CG49yQ7v9ayZRRBjlTgb4qsT8gZwBKjj45ufOhxeCwPv7z4Zr/nivZ8r0V75nxUavYEYFM
+    K1eGt7q5HgrYAykkZlhxdbdAfleHUHhIOh5sQV1Fgnv0eCLBxkdXzshQbC9UrvJjSpnDJO
+    IeCiVQeIdJhnDKUnVKWm467Q+VjW3+GNgoMpgaKoqfyX5A5M/0EcD1OqINWZcRaxjRlj4A
+    naNccOxcVYieF19DO/B6Irshargk25ombRnYBgCL+OUipWqPsE/6o7KEx+kbmsp14LRcT8
+    pXw+08dZou4IhFbIxuCER1MUKh5uvplWZWtZ9Ucr6IPk3YAOQdkIS2GyUHZ3BIpDO1k/zI
+    WeL8Flf7RRIgRdXnzP0hovKRHVKwlZZFdQE4gVAl+O08aWwgHi4ffTmXPNHQ
+X-ME-Proxy: <xmx:HehLatUGVtNVBpkxFcJHM7lMC_kCLFPmJ73m-f2noUnHvvtKhdd2iQ>
+    <xmx:HehLaizVXnCa5nqOIyZ4QKujxFcqlXmPQ8xCgrEkeOec8FIE-t_uDw>
+    <xmx:HehLaqRJLplDNV_yy5D-BPRnx2Zq6mEXrU-9B4nMHDEar1WW14PUVA>
+    <xmx:HehLamgD0mxObQVo9gUiWYWRM1OrlQbTcsmHACEEX9QlIg21ao7VQA>
+    <xmx:HehLakicB_NZ1UWWDXDujYyzG7HNe6UA9DT8Fj3sSkOwTJBApvNbSQJh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Jul 2026 13:38:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  cirnovskyv@gmail.com,  szeder.dev@gmail.com,
+  Christian Couder <christian.couder@gmail.com>,  Ayush Chandekar
+ <ayu.chandekar@gmail.com>,  Olamide Caleb Bello <belkid98@gmail.com>
+Subject: Re: [PATCH v7 4/9] environment: move pager_program into
+ repo_config_values
+In-Reply-To: <20260706142530.3681520-5-cat@malon.dev> (Tian Yuchen's message
+	of "Mon, 6 Jul 2026 22:25:25 +0800")
+References: <20260701180813.776173-1-cat@malon.dev>
+	<20260706142530.3681520-1-cat@malon.dev>
+	<20260706142530.3681520-5-cat@malon.dev>
+Date: Mon, 06 Jul 2026 10:38:35 -0700
+Message-ID: <xmqqpl10auhw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jamie Magee <jamie.magee@gmail.com>,
-    Jamie Magee <jamie.magee@gmail.com>
+Content-Type: text/plain
 
-From: Jamie Magee <jamie.magee@gmail.com>
+Tian Yuchen <cat@malon.dev> writes:
 
-The tests added in 3c8c638df6 (t0213: add trace2 cmd_ancestry tests,
-2026-02-13) expect the cmd_ancestry event to name "test-tool" and
-"git". On Linux those names come from the "comm" field of
-/proc/<pid>/stat. Under user-mode emulation (e.g. qemu-user) /proc
-reports the emulator ("qemu-riscv64") instead, so the event is still
-emitted, the TRACE2_ANCESTRY probe enables the tests, and tests 2-5
-fail even though they pass on native riscv64.
+>  	if (data.value)
+> -		pager_program = data.value;
+> +		repo_config_values(r)->pager_program = data.value;
+>  	return data.want;
+>  }
 
-Require the probe to see "test-tool" in the ancestry of a test-tool
-spawned from test-tool, so the tests skip when the names are unreliable.
-
-Cc: Matthew John Cheetham <mjcheetham@outlook.com>
-Signed-off-by: Jamie Magee <jamie.magee@gmail.com>
----
-    t0213: skip ancestry tests under user-mode emulation
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2168%2FJamieMagee%2Ft0213-skip-under-emulation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2168/JamieMagee/t0213-skip-under-emulation-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2168
-
- t/t0213-trace2-ancestry.sh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/t/t0213-trace2-ancestry.sh b/t/t0213-trace2-ancestry.sh
-index a2b9536da8..2eb86c1952 100755
---- a/t/t0213-trace2-ancestry.sh
-+++ b/t/t0213-trace2-ancestry.sh
-@@ -31,12 +31,15 @@ PATH="$TTDIR:$PATH" && export PATH
- # no cmd_ancestry event is emitted.  We detect this at runtime and
- # skip the format-specific tests accordingly.
- 
--# Determine if cmd_ancestry is supported on this platform.
-+# Enable these tests only when cmd_ancestry reports real process names.
-+# The procinfo stub emits no event; under user-mode emulation (e.g.
-+# qemu-user) /proc reports the emulator, not the guest. Spawn test-tool
-+# from test-tool and require "test-tool" in the child's ancestry.
- test_expect_success 'detect cmd_ancestry support' '
- 	test_when_finished "rm -f trace.detect" &&
- 	GIT_TRACE2_BRIEF=1 GIT_TRACE2="$(pwd)/trace.detect" \
--		test-tool trace2 001return 0 &&
--	if grep -q "^cmd_ancestry" trace.detect
-+		test-tool trace2 004child test-tool trace2 001return 0 &&
-+	if grep -q "^cmd_ancestry.*test-tool" trace.detect
- 	then
- 		test_set_prereq TRACE2_ANCESTRY
- 	fi
-
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
--- 
-gitgitgadget
+May not be a new problem, but does the old value or pager_program
+leak here, if callers call this function more than once (or
+pager_program gets assigned elsewhere)?
