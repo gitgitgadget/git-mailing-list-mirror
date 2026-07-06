@@ -1,186 +1,117 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BD13F7874
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 10:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026B836F42B
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 10:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783332504; cv=none; b=thBQUKqll14gdk6jo3QMqdqfTtI6JFjTQvYvoz4u9ifIkAdChkfShzcqAVSgBNYdRJ97qOKCI4H1xI3vghtbSKdBmsSsccD6oQfIGnjSz0vuJYctFfGiwMMcInsNLiu4kV6+eDZYxpHOlECVg3RRTrvFw8pNjG36JUocBj2Mnlw=
+	t=1783334980; cv=none; b=juxmPRnkSAKUeJlWj9GNNyjB1SXiePcp5CYF/Fje81MJC79n0uG8SsnGk6kTiqMVPk/NRHMZhfhd9tlnsfiEHkqv/QjFQpctS3akTfQdljbXFJN2+QZb2bVsB1VRc1NIbA7pgxc19ZhZHkCdhskZAZlbaYMpZvFmhoTLsmPwyfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783332504; c=relaxed/simple;
-	bh=ckbg2tb6MY5eY1n2vq/A7rlTFpGesA7Atctaj/1QFaw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xs7qYC8TZjbgZZxyHvbrqRqD1NWJ5vPOh174BoW2hYr1NM3acMAiucLxc26cd+B8EC4tWyYAv3UmKAA3TE07taXHWQMSjWdQ0ks6zeSV6A6zhnQ+vlS5SVZcb+cJlPXAbqGa2BZeFtGISLdpcW14cLbyWJ341lqYLe0MCK5l0fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hvw7Zl9M; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783334980; c=relaxed/simple;
+	bh=D9wiK+7C7voNL0unt8vDhWL3TI5m0Cnd3lzP+6lnl70=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=txCwTpJocl0bMs45cHkl3ZIcRDHwY9mvKu2QkHV356lkioiUcvIVwe6x9Nu/X+FgU77O6Lmy5diXlGGqlKKiXlM7WrIK9PknHEtDXIclVeiNyNQYhQBbIMFOmEBZC4xYz9CiJxBzTeuNFsWOVB71q6YKHQSe9lJMY81cUCJpyTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Kfnbkv7u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rNqFk0Ff; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hvw7Zl9M"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-493d3135e9bso9580285e9.2
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 03:08:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783332501; x=1783937301; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4HewG7zdNlZku0pCitBj59gNpBaPhR86ZakrIEkJ3qQ=;
-        b=Hvw7Zl9MsaBQ4ahUyo4Cj5roHDXoLKamPdqPNR/cw7aiamGNvmgURhpMjvXafbZ8y3
-         cm1Vd9mA/s5hpnCO/tvzPEsW2yw46N4cr+w8RSxJ+GhDMxVVkNv29Q080WnPa/Ubh3t8
-         OmWKsqENpIjxM60qzCsHPCrnAzmW7dIFUGfQ3ivVp4rf7GlKKkO/R5RUeGnV9ERVy9G2
-         dz/ojRKqNsqWBonMIM6mE0UH5+licuANGn/hIhkFs6c1WnJeKWWMxpwF4AfC/PN07V7V
-         nEk3kg7CnyMoiAeAUOvlms88zp4eWuCYNYjinKDO8UeSNtbbTR9MqAImFE4PGkc207D3
-         jNpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783332501; x=1783937301;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=4HewG7zdNlZku0pCitBj59gNpBaPhR86ZakrIEkJ3qQ=;
-        b=TtkI4PB7FMh+9+ypsbRFj7AJMP1JFNp03ojOv8/qC0yOuqvPM+bmA1PCUxrNUOsaT8
-         EXEMUk0aMJNUVRyMh6DoYK4jFawCAvmc8cC7Y5AeBhWup5n2XEwlARbLUfa91G+seX6i
-         30IQS5gML7tvRUlMd2Ntp5zEIfeoFdPvRopecF+QxZIZzj8nGhzYA7XH2b1iiauIhx/i
-         eTmloRqwkffgEfIoXPIjGyrx4POR/ge/gSGNya6iD5cA9+GH39Pu/G8eUCH80r+KOg+4
-         3GAEXTEKXTjdcegVVbkQkKnFpQePUfGipCCeOGwyGsbQCcATj1YjDZYVKKQ5TN2S27Yr
-         KaSg==
-X-Gm-Message-State: AOJu0Yw7N+l1/9hR+l2C/UcqHLs4Ml5GkhzL/6ptZxdNkZJan+am3EM8
-	/CusImvCwC9cykNNhW9RjRcENpyuijNkRcQ1JmVclAivDtuOD/hYdZNRo3QTFw==
-X-Gm-Gg: AfdE7cmi9tl53BiZtRdNkNay985Vtv0/geLYZZXd7bqEer9XkBBtNFkK8iNDIdEIZqg
-	aiZ9kyJr+FVKZIoCxVLS4s90taS1utT4zjz9SlwHBcdLIurnACmdxsG9W6xNW93b8gKtiiYCgKB
-	6MqZ+JZip8X0eJmutiX8jHwqEVn3uRdEbes6jfg7GyRtS3P3JRBOVavi69lRE04satPsZQM5V0M
-	A9uAIkPZR24GJ+PuiS/Y6QROBfvnqK1OQAFZJaSQ+QqatMNJ1Qa6CUGLdbzHoj2IG8+3RqM+z+O
-	bsVCEE63lhgRumVdylxumZslnMJkj/MvhnA4anP05lFwfvdyUcQ8sRhoP24z7M1qc2Z7K38Bemc
-	46cqYoO+2wo2gdTPhlg+KxlwzNUrM6nsE0mlCqBguD9gTEDSXL5FKvdAH34UYnYFUzsRHE2zfLu
-	3zyx5XzMCNp3ekk90cnA7XYrNSAx3WQH6J1/CpjlgiNxmc1MDBOvTZbXgJnD/IOFSL6x5k8Q==
-X-Received: by 2002:a05:600c:3491:b0:493:b8dd:9d68 with SMTP id 5b1f17b1804b1-493d11d7b19mr118046775e9.10.1783332500788;
-        Mon, 06 Jul 2026 03:08:20 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:33f4:2760:38a0:c4f? ([2a0a:ef40:69a:b801:33f4:2760:38a0:c4f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa0960af0sm21679666f8f.30.2026.07.06.03.08.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 03:08:19 -0700 (PDT)
-Message-ID: <5d238e0d-18ba-429a-a9a4-a3988b00e1e1@gmail.com>
-Date: Mon, 6 Jul 2026 11:08:18 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Kfnbkv7u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rNqFk0Ff"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3D5587A011C;
+	Mon,  6 Jul 2026 06:49:38 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 06 Jul 2026 06:49:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1783334978; x=1783421378; bh=T2VngoSAmY
+	2iLGTYNqW/984tQmutgIoyuai8kGKb+RI=; b=Kfnbkv7uyHCanz6rXFeaZl2XDH
+	WRhqCDFDCBY48E1sqhNR1vhQit4xoEYCxLQLq20Lc5XU+cF3L/WecK9NqljTxw6x
+	Laay2YBINYQHURVyba6MrZxNNcbnsHkG5oX3tddh281OzxS2p7qf6MeAslud1C/a
+	orzbVjV8Ws0XWbBJF7PmohmiybQZuzyzHulE5SeV8ZgqulVETab5Cg9R6fu/0CjJ
+	7HerrQinq2wiBfDv0QUFzFXtziJkElcyBIq+gwPtdpgWIxzeG0KLgifvPsX/34YK
+	/njpotdT3D4lQONCO0qvTtKhmeFpgsQOZMCs0wJkGE16PVDSH73qak86N29w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783334978; x=1783421378; bh=T2VngoSAmY2iLGTYNqW/984tQmutgIoyuai
+	8kGKb+RI=; b=rNqFk0Ff8SLbiFUmzfVzVUF3cT3Za58CT6uNwk3hzw5eSPrHVYZ
+	AQoEFWSFvmOT7vvMaCqCwbX4+G3CnGZRmhHZ+YWMsm/LknUXBIPAMsxGbt2hBWdD
+	BuM0jxqxYBMTJzbsAE+tr8Im8BwmoCfwZ6XoiL5F8viRD6EH4cqfyDb9njG8xvx6
+	vD8D9djtQaQ35qUBx4bY8FSDrpvWCYW9C70JjEdKSjZcLKXPZXDDZ7VGZsGY3YZ5
+	0v5zOu2r+NXGmBvQ/mluZpIzZZdaYFVgy5DvshUkLAIcogU56rtL2uHF3kxORbn4
+	ZQOTwnT2nm9HROBRockUas94e+y40OkJQmA==
+X-ME-Sender: <xms:QYhLalYhMFOPlJGdmJHC9okd6VHYjmTaFAe3Pd-tV7aRHM2FwddPIQ>
+    <xme:QYhLajRc5hMQXb1g-TDOylis2b4AvZ0ewmT7JxyNk14DbSd0R2xIEUm7P_cEg6fSP
+    2vk5Q4ZpC0_iZZFTGHczzn-DmTeFZoB__tTyzAWiiCKdvmcT0Rxaw>
+X-ME-Received: <xmr:QYhLagSN7ipjHPkj0laVf7TDFLOnYTusWpfPvYNKYEPdM937KLm9bLQn2kUPb4--5CJGSm-AFklkKGyF9st_iTnBFqJtELI3eZOWIQ6ruXg>
+X-ME-Proxy-Cause: dmFkZTFD10TcuDPAH0cNPpo52DhWt8u1rrOL7/OIeHoKTIvCvIdckXJpBmr2UXeFwFvYrD
+    z+0W/4MUnM+ru2eRQexz3unX8Z9Q8Vy27RUXusUOhxK4ycDXB/eAPwbk+6RAKGczbMoZPR
+    fGxDn/cg1Y9n4WifAw65C/KqnRJ3vzKG/6w+uqeCZ6JI9VGxmPalJWojIkEZTLone+CFHN
+    x0XkFIRlXzTnaPyfcVqwFfCX7P9AlMk5qwJz+I75WeyeQ7jUCGPmL1tVZm8yfqTVEjDJd0
+    Qn3HNh1MXd1guxwVvs08hTCKZ9cNZrwp/j4R8eIz4Eo/mhqz0ku9UJJlNtoSz6G8t6CrCb
+    zauZqS0paVRXIygBCOEE0GavJbn5x5j24ipPfGmrJqFVq95YnznhieZMxT9qo4YhfAFLsH
+    Va2OznqzZVQxyBuMQivpBnlyM/J4uUbF8XjLfvj7R7md+AY8eTLhwIwktJitqbm1PnyMNg
+    OGqFPwhXJDFQLljMeBWW38Gze/3IdhNEx5gsNXu4ee9S3Tl0rUdZmQrDL4Lz8ZF/Dh2f5Z
+    Po6Y298b4z0nxZsIg/06+StHVVO80VhOak05iB3WgMW3tkMxufxVmh7VqQO32AEcVsyYNg
+    1wP2VWXMN+yr49DRzB2AhujTZ9zHDMWu0pD4adjmecUfsjy7dOT2kJ24i6pA
+X-ME-Proxy: <xmx:QYhLavTMlJeVkB9h9K9YNe2TWwB87eik_rTyVeKtAyuoiCj_3lMPuw>
+    <xmx:QYhLat44hPh36sQNdM3Em9xnH7jNp3CfPxW4ubPpp5JuSjQoBSQ12A>
+    <xmx:QYhLaj0ECJC8U_1TW2Sdo2wfFZTlQQiyv1fh4NuD0jWH3i7Fi3idbg>
+    <xmx:QYhLagDkrasqicBDkQam2zjOQHLGS59rPX0AyuFz8LscnPxXcydbUA>
+    <xmx:QohLap5nlSaOeQnwP7j0OMS6T-DbTqUS50SPDXNXVkY_vgeI7ouyw98Q>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Jul 2026 06:49:37 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a5136d00 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jul 2026 10:49:34 +0000 (UTC)
+Date: Mon, 6 Jul 2026 12:49:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Shardul Natu via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Shardul Natu <snatu@google.com>,
+	Koji Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH v4 1/2] Makefile: add $(RUST_LIB) prerequisite to
+ osxkeychain
+Message-ID: <akuIO-uOy3KhqIAE@pks.im>
+References: <pull.2288.v3.git.git.1783030971.gitgitgadget@gmail.com>
+ <pull.2288.v4.git.git.1783188355.gitgitgadget@gmail.com>
+ <41de7d391ac00c70bfa981d20ed9df22dbdf7ace.1783188355.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rebase -i: introduce `pick -x` to add "cherry picked from
- commit ..."
-To: Jeff King <peff@peff.net>, Trevor Gross <tg@trevorgross.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Stefan Haller <lists@haller-berlin.de>, Derrick Stolee <stolee@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20260705140931.98262-2-tg@trevorgross.com>
- <20260706002415.GC2301945@coredump.intra.peff.net>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260706002415.GC2301945@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <41de7d391ac00c70bfa981d20ed9df22dbdf7ace.1783188355.git.gitgitgadget@gmail.com>
 
-On 06/07/2026 01:24, Jeff King wrote:
-> On Sun, Jul 05, 2026 at 02:09:06PM +0000, Trevor Gross wrote:
-> 
->> It is sometimes useful to do cherry picks via rebases when there is a
->> sequence of picks or other git operations to combine. However, there is
->> no interactive rebase equivalent to the cherry-pick `-x` flag, which
->> adds a line to the commit body indicating the original commit.
->>
->> Using `exec git cherry-pick ... -x` does work, but is not as nice
->> because it interrupts rebase flow; after resolving a conflict, both `git
->> cherry-pick --continue` and `git rebase --continue` must be run.
-> 
-> To me this feels like you're approaching the problem backwards. Mostly
-> because rebase and cherry-pick are _kind of_ the same operation.
-> 
-> Usually a rebase is about rewriting the commits on a new base so that
-> you can throw away the old ones. And that's why git-rebase generally
-> rewrites the branch you're on, and replaces those old commits. So adding
-> a "cherry-picked from..." annotation doesn't make sense there; nobody
-> would have those old commits!
+On Sat, Jul 04, 2026 at 06:05:54PM +0000, Shardul Natu via GitGitGadget wrote:
+> From: Shardul Natu <snatu@google.com>
+> diff --git a/Makefile b/Makefile
+> index 1f3f099f5c..7db38ecce9 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -4074,7 +4078,8 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+>  contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+>  	$(AR) $(ARFLAGS) $@ $^
+>  
+> -contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
+> +# When Rust is enabled, git-credential-osxkeychain depends on Rust symbols in $(RUST_LIB)
+> +contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) $(RUST_LIB) GIT-LDFLAGS
+>  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+>  		$(filter %.o,$^) $(LIBS) -framework Security -framework CoreFoundation
 
-Exactly
+I was wondering why no other target declares an explicit dependency on
+RUST_LIB. As it turns out, all the other targets that link "$(LIBS)" all
+already depend on "$(GITLIBS)", which includes both "$(LIB_FILE)" and
+"$(RUST_LIB)". So shouldn't we also depend depend on "$(GITLIBS)" here
+instead of on either of the other two variables?
 
-> And so while cherry-pick is doing roughly the same thing under the hood,
-> it has different defaults: you specify a read-only source from which to
-> pick the commits (and "-x" may or may not make sense).
-> 
-> So I can see why you might use git-rebase to do what is essentially a
-> cherry-pick, porting options from cherry-pick to rebase feels weird. Why
-> can't we fix the problems in cherry-pick that make you want to use
-> rebase instead?
-
-I think that would be a better solution. Trevor - what is missing from 
-"git cherry-pick" that means you end up using "git rebase" instead?
-
-> So what I'm wondering specifically: have we done 99% of the work to have
-> interactive cherry-pick, and we just need to add a "-i" option to let
-> the user edit that todo file before we start executing it?
-> 
-> To be clear, I don't know the answer. It's been ages since I've looked
-> at sequencer code, so there might be more gotchas. That's just my gut
-> feeling from a high level after reading your message.
-
-I don't think it would be much work. The code that edits the todo list 
-is rebase specific because it deals with rebase.missingCommitsCheck but 
-it shouldn't be too difficult to generalize it. I do wonder though if it 
-makes sense to support all of the usual commands when cherry-picking 
-especially with `-x`. In particular I'm not sure about adding support 
-for `edit -x`, or for `pick -x` followed by `fixup` - what does the 
-trailer mean when the commit has been edited or fixed up? (though if 
-you're back-porting bug fixes I guess some degree of editing is inevitable)
-
-On a slight tangent I've sometimes wanted to be able to do
-
-	git cherry-pick --exec 'make test' some commits
-
->> To improve this, introduce `-x` to the pick, reword, and edit todo
->> rebase commands.  This uses the same logic as cherry-pick to add a
->> "(cherry picked from commit ...)" note to the commit body.
-> 
-> There is one thing that differs here from how cherry-pick works. Even
-> though cherry-pick is using the sequencer under the hood, it does not
-> allow individual "pick -x" commands, but instead records it as an option
-> for the whole operation. So if you add "-x" to the conflicting
-> cherry-pick above, you can see:
-> 
->    $ cat .git/sequencer/opts
->    [options]
-> 	record-origin = true
-> 
-> That's less flexible, since you can't have per-pick "-x" behavior. If
-> that's important to you, I think it might be reasonable to support the
-> "-x" option for those sequencer commands, and have "cherry-pick -x" just
-> add it automatically to each line (rather than record the global
-> option).
-
-Yes, if we're adding a per-commit flag to record the origin it would be 
-much nicer just to set that flag when we build the todo list rather than 
-having to do
-
-	if (opt->record_origin || (item->flags &  TODO_RECORD_ORIGIN))
-
-to see whether we need to add the trailer.
-
->> Of note is that rebase will fastforward wherever possible, meaning the
->> check for TODO_RECORD_ORIGIN doesn't get hit and the message will not
->> get amended. This differs from the cherry-pick logic, which will add
->> "cherry picked from ..." even if a rewrite isn't otherwise necessary.
-> 
-> This sounds like another case where cherry-pick and rebase have subtly
-> different behaviors, even though the core functionality is still "pick
-> these commits". So being able to stick to the cherry-pick command for
-> cherry-picking may be preferable.
-
-I think that is a consequence of the way this patch is implemented - it 
-adds the new per-commit flag but does not change the conditions for 
-preventing a fast-forward in do_pick_commit() or skip_unnecessary_picks().
-
-Thanks
-
-Phillip
-
+Patrick
