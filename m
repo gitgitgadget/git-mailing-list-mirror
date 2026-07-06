@@ -1,39 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A3E2F84F
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 00:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAE43A1C9
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 00:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783296469; cv=none; b=KNSahbzYz/EAmW6unYyzqbvh3XLtEHwjOnitDkNqwg4kPRTmY7KP/hrWhaOWciI8NRIyL64YsRKIPfhjvGFkbsanRBGlGOymKK5I5A8tznXVUIuM0NB9F3qz++hU+UZrezcq4GdbevrcRB1HyJ9IZl/361C/IAZtTh2nuS3pILI=
+	t=1783297458; cv=none; b=tmtgmJm2EcWPjrqVbhxaD7/4c4BTSR00sqkbfKsHW9ZqKrs8/CRKXRZgvO69JsnD++ZDTKy4dwoGmspNM0TWUsn0cpLkrQAp+34Ish3N46EGhQRfZ8r1BXSOnF+LdUV3gWyfefEfcbE4RsNw4TlbR2zRcKE3o5YHMLLQkCXnrTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783296469; c=relaxed/simple;
-	bh=EvJ09Y12fjttWHufatCKk9EpW+XuNvB5cAOndu7YBRI=;
+	s=arc-20240116; t=1783297458; c=relaxed/simple;
+	bh=2n42RYilRwEcXGNtwof1PFRp3f3LCZlKAXbDzBp3Lw0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XaWmdmmDpaBY5Tkv/0dA4Xpa74NAD0vk8gdjCy1WTtMw6QNgjdGhI5/qrKOoVcYKvjkzafBjEvbRh9sDBCKYGVxTC8OkHazXE2Pjj83Iig0y4R2JcLhrzCb63s6Wi9rI8qVKkwkfGcnXu5O//9viGRdRGTob202VnaS/DfgOH+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BlWHHbBJ; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=N41YjPIEcPzc0DgOgNWSxIi7Dxq22vzm0HLR+Qi5DA1DVEBRx7KrgxBf9L/FgthBxTSzRHSYjVlFjUYoSHmufI31UOFYSNHOcq6xDhXMIAf2Gl8K92QC3BPDJoSqCpBfYN66WLfbeW5sKtmXVtsfFz9obXmoZr2+EwLCTwmLK6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aWiRbkEB; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BlWHHbBJ"
-Received: (qmail 2333 invoked by uid 106); 6 Jul 2026 00:01:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=EvJ09Y12fjttWHufatCKk9EpW+XuNvB5cAOndu7YBRI=; b=BlWHHbBJ3UDG49WQ6IqNPEmiQT1WP4OXtRk9vRCkxk7l94n6FHf3e3kcpZnRPsN5hl/20q+sUVAkMtGqLCH3o+QV2PR1UdOcdZBnp8ZkqjAsgRJJ8bl2yh1mijY/Z0dgbD9zc6AS0FomeStv3ucNuv05riqbLWQJTI6eMsGB79/u8Vv9R2g9hLwvA5q3ZklUY2kppPOdwuROTk00JuU4bPCeaX0Dybf8qIwK/vS7FoewXxU69qdqydxGuRBblspFP38cQox5jOC1/0GRLQr2O5TzyoOFvkpcjvPt5ealZJZITGxt4b5zvvn72+q9psx8CDv2pgFvdrDvzKcpEzJl2Q==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aWiRbkEB"
+Received: (qmail 2434 invoked by uid 106); 6 Jul 2026 00:24:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2n42RYilRwEcXGNtwof1PFRp3f3LCZlKAXbDzBp3Lw0=; b=aWiRbkEBTsJqceCEbfjC74M+m09v86Ga1YP4iHIDJFbdn8cg1exyj3QJmBRII4NAr88gYRe+UdZ+AH/fhv88fPyHbYZ7RrgYS5R6peVCkWXL1XXQCN3Pl+zAu9q48GlFH3MVERPxVeeOb7wy3wRUKACHJqmZUxU6+0Ow5hRyZfxwbzKp0za5eQkzy4jyR6UYfOr0R5NpMELAvBq7i9oNAvh5soRlYKMapWK8AAB79FR0r9bRVHpBMCJI26iHUSx4ERwUBpjsmZwH5ZGnaMFxQV4Gdim/V/pQav3UmORNu9RxMCODt0t2/O+Jmsbzlm79GmaCKhTZKkOD3Edxw0BzSg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 06 Jul 2026 00:01:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 06 Jul 2026 00:24:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3579 invoked by uid 111); 6 Jul 2026 00:01:05 -0000
+Received: (qmail 3773 invoked by uid 111); 6 Jul 2026 00:24:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 05 Jul 2026 20:01:05 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 05 Jul 2026 20:24:15 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 5 Jul 2026 20:01:05 -0400
+Date: Sun, 5 Jul 2026 20:24:15 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Subject: Re: [PATCH 7/9] http: discard hash in dumb-http http_object_request
-Message-ID: <20260706000105.GA2301945@coredump.intra.peff.net>
-References: <20260702075234.GA1548258@coredump.intra.peff.net>
- <20260702080707.GG2029434@coredump.intra.peff.net>
- <akecqPq4F702E8Cq@pks.im>
+To: Trevor Gross <tg@trevorgross.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Stefan Haller <lists@haller-berlin.de>,
+	Derrick Stolee <stolee@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase -i: introduce `pick -x` to add "cherry picked
+ from commit ..."
+Message-ID: <20260706002415.GC2301945@coredump.intra.peff.net>
+References: <20260705140931.98262-2-tg@trevorgross.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,168 +44,113 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <akecqPq4F702E8Cq@pks.im>
+In-Reply-To: <20260705140931.98262-2-tg@trevorgross.com>
 
-On Fri, Jul 03, 2026 at 01:27:36PM +0200, Patrick Steinhardt wrote:
+On Sun, Jul 05, 2026 at 02:09:06PM +0000, Trevor Gross wrote:
 
-> On Thu, Jul 02, 2026 at 04:07:07AM -0400, Jeff King wrote:
-> > The flag handling could be removed if the hash-discard function were
-> > idempotent. This could be done easily-ish by having the underlying
-> > hash functions (like the ones in sha256/openssl.h) set the context
-> > pointer to NULL after free-ing. But it's something that every platform
-> > implementation would have to remember to do, and the benefit for the
-> > callers is not that huge (it would let us shave a few lines here and
-> > probably in a few other spots).
+> It is sometimes useful to do cherry picks via rebases when there is a
+> sequence of picks or other git operations to combine. However, there is
+> no interactive rebase equivalent to the cherry-pick `-x` flag, which
+> adds a line to the commit body indicating the original commit.
 > 
-> This answers an earlier question of mine. It would indeed be great if it
-> was idempotent -- I've been bitten by interfaces like this once too
-> much, where you have to be very careful to manage the lifetime of a
-> specific object. The prime example of this are (were? I don't quite
-> recall whether we fixed that interface) reference transactions, and that
-> caused a bunch of bugs in the past.
+> Using `exec git cherry-pick ... -x` does work, but is not as nice
+> because it interrupts rebase flow; after resolving a conflict, both `git
+> cherry-pick --continue` and `git rebase --continue` must be run.
 
-There are three tricky points I found while thinking about this.
+To me this feels like you're approaching the problem backwards. Mostly
+because rebase and cherry-pick are _kind of_ the same operation.
 
-First: how and when do we decide to skip a discard? For most
-implementations (like sha1dc), it's always a noop, and we can ignore it.
-For OpenSSL, we could be setting ctx->ectx to NULL. But for gcrypt we
-typedef their opaque structure directly. So we'd have to push that down
-into its own struct and add an "active" flag.
+Usually a rebase is about rewriting the commits on a new base so that
+you can throw away the old ones. And that's why git-rebase generally
+rewrites the branch you're on, and replaces those old commits. So adding
+a "cherry-picked from..." annotation doesn't make sense there; nobody
+would have those old commits!
 
-That's not too bad, but it does put the burden on each backend. Instead,
-we could keep a flag in the top-level ctx like this:
+And so while cherry-pick is doing roughly the same thing under the hood,
+it has different defaults: you specify a read-only source from which to
+pick the commits (and "-x" may or may not make sense).
 
-diff --git a/hash.c b/hash.c
-index 55d1d41770..f4c451b20a 100644
---- a/hash.c
-+++ b/hash.c
-@@ -285,6 +285,7 @@ void git_hash_free(struct git_hash_ctx *ctx)
- void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop)
- {
- 	algop->init_fn(ctx);
-+	ctx->active = 1;
- }
- 
- void git_hash_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
-@@ -300,16 +301,19 @@ void git_hash_update(struct git_hash_ctx *ctx, const void *in, size_t len)
- void git_hash_final(unsigned char *hash, struct git_hash_ctx *ctx)
- {
- 	ctx->algop->final_fn(hash, ctx);
-+	ctx->active = 0;
- }
- 
- void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
- {
- 	ctx->algop->final_oid_fn(oid, ctx);
-+	ctx->active = 0;
- }
- 
- void git_hash_discard(struct git_hash_ctx *ctx)
- {
--	ctx->algop->discard_fn(ctx);
-+	if (ctx->active)
-+		ctx->algop->discard_fn(ctx);
- }
- 
- uint32_t hash_algo_by_name(const char *name)
-diff --git a/hash.h b/hash.h
-index 0a23ef4dfd..2840f20793 100644
---- a/hash.h
-+++ b/hash.h
-@@ -281,6 +281,7 @@ struct git_hash_ctx {
- 		git_SHA_CTX_unsafe sha1_unsafe;
- 		git_SHA256_CTX sha256;
- 	} state;
-+	bool active;
- };
- 
- typedef void (*git_hash_init_fn)(struct git_hash_ctx *ctx);
+So I can see why you might use git-rebase to do what is essentially a
+cherry-pick, porting options from cherry-pick to rebase feels weird. Why
+can't we fix the problems in cherry-pick that make you want to use
+rebase instead?
 
+Once upon a time they had very different backends, but these days
+they're both using the sequencer subsystem under the hood. And it sounds
+like you just want to do interactive sequencer type things. If there was
+an interactive cherry-pick option, would that be enough? I wonder how
+far we are from that.
 
-That nicely puts the responsibility in a single place, but now we have
-the opposite problem: what if somebody calls algop->final_fn() directly?
-Then the flag gets out of sync with the underlying state. There are two
-such calls currently, in submodule--helper.c and test-synthesize.c.
-AFAICT there is no reason they could not just use git_hash_final().
-Maybe it would be enough to fix that spot and comment the algo function
-pointers to warn people away from using them directly.
+Let's do a little experiment that stops the cherry-pick in the middle,
+like this:
 
-That by itself is enough to make:
+  # start with a repo with any file
+  git init
+  echo base >file
+  git add file
+  git commit -m file
 
-  algo->init_fn(&ctx);
-  git_hash_update(&ctx, ...);
-  git_hash_final(out, &ctx);
-  ...
-  git_hash_discard(&ctx);
+  # one branch makes a few commits
+  git checkout -b branch-a main
+  for i in a1 a2 a3; do
+	echo $i >file
+	git commit -am $i
+  done
 
-safe.
+  # another one does the same
+  git checkout -b branch-b main
+  for i in b1 b2 b3; do
+	echo $i >file
+	git commit -am $i
+  done
 
+  # and now we try to cherry-pick all of branch-a, which will
+  # fail with conflicts
+  git cherry-pick main..branch-a
 
-The second issue is related: what should we do in other functions when
-the active flag is not set? For example, what should this do:
+And now let's look in the sequencer directory:
 
-  algo->init_fn(&ctx);
+  $ cat .git/sequencer/todo
+  pick 206bede a1
+  pick 638aff4 a2
+  pick ec375c4 a3
 
-  git_hash_update(&ctx, ...);
-  git_hash_final(out, &ctx);
+So what I'm wondering specifically: have we done 99% of the work to have
+interactive cherry-pick, and we just need to add a "-i" option to let
+the user edit that todo file before we start executing it?
 
-  git_hash_update(&ctx, ...);
-  git_hash_final(out, &ctx);
+To be clear, I don't know the answer. It's been ages since I've looked
+at sequencer code, so there might be more gotchas. That's just my gut
+feeling from a high level after reading your message.
 
-In the second git_hash_update() call, there are two obvious options:
+> To improve this, introduce `-x` to the pick, reword, and edit todo
+> rebase commands.  This uses the same logic as cherry-pick to add a
+> "(cherry picked from commit ...)" note to the commit body.
 
-  1. It should do nothing; there is no active context to add to.
+There is one thing that differs here from how cherry-pick works. Even
+though cherry-pick is using the sequencer under the hood, it does not
+allow individual "pick -x" commands, but instead records it as an option
+for the whole operation. So if you add "-x" to the conflicting
+cherry-pick above, you can see:
 
-  2. It should automatically re-init the context (using the algo from
-     the previous init) and add the data.
+  $ cat .git/sequencer/opts
+  [options]
+	record-origin = true
 
-The second final() call has the added bonus that it returns data, but I
-think there are two matching options:
+That's less flexible, since you can't have per-pick "-x" behavior. If
+that's important to you, I think it might be reasonable to support the
+"-x" option for those sequencer commands, and have "cherry-pick -x" just
+add it automatically to each line (rather than record the global
+option).
 
-  1. It should do nothing, and hashclr() the output (leaving it
-     uninitialized just seems insane).
+> Of note is that rebase will fastforward wherever possible, meaning the
+> check for TODO_RECORD_ORIGIN doesn't get hit and the message will not
+> get amended. This differs from the cherry-pick logic, which will add
+> "cherry picked from ..." even if a rewrite isn't otherwise necessary.
 
-  2. It should automatically re-init the context (assuming there was not
-     already an update() call that did so). And then I guess return
-     whatever hash that particular algo generates for the empty string?
-
-Those all seem reasonable-ish to me and give a defined output at every
-moment (which is better than crashing). But it kind of feels like they'd
-be papering over potential bugs. Maybe crashing _is_ better (we don't do
-so reliably now, but a BUG() could make sense).
-
-
-And the third is related: do we check the active flag when initializing?
-Right now the answer must be "no", because the point of the init
-function is that the input is potentially garbage. But that means
-something like:
-
-  struct git_hash_ctx ctx;
-  algo->init_fn(&ctx);
-  algo->init_fn(&ctx);
-
-leaks. That's maybe OK in practice. We could do something more like:
-
-  struct git_hash_ctx = HASH_CTX_INIT;
-  git_hash_start(&ctx, algo);
-
-where the INIT step doesn't actually allocate anything, and start() is
-the moment where you must promise to call final() or discard(). And then
-it would be OK for start() to BUG() when the active flag is already set.
-
-
-That was maybe more than you wanted to read about the topic. But if the
-request is for safer object lifetimes in general, then I think there are
-a lot of details about what that means.
-
-If we are going to do anything, I'd be inclined to stop mostly after the
-diff I showed above. That's the only thing I've seen that would simplify
-existing code. The rest are mostly hypotheticals, but since Rust was
-mentioned, I wondered if you're trying to shoot for something safer.
-
-At any rate, I would prefer to do any of this on top of the series I
-posted. I took care there to avoid double-calling final()/discard(),
-which could now be simplified away. But I think I'd rather see that
-simplification its own step.
+This sounds like another case where cherry-pick and rebase have subtly
+different behaviors, even though the core functionality is still "pick
+these commits". So being able to stick to the cherry-pick command for
+cherry-picking may be preferable.
 
 -Peff
