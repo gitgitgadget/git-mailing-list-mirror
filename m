@@ -1,69 +1,69 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1581B38F659
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 22:02:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08083A9013
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 22:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783375334; cv=none; b=RnzFskdZlZQmsJ2ouJhhYj56SjLKm8ua2LiU81zYTPlLYa6I0Tf0dLWGauE6B14W8VdqqugLhb8lySF3AKzcFg0QXaTQTRAXPivg2u2WMbDj0ABpcfofjLTuVG10gIb9qvAfwK2zmqeGePJ1tRS7wd+C4syBE8szqPj5fBfFbF8=
+	t=1783376406; cv=none; b=k+b9qpRvAbzBqWsee5tFM6qjdMa0IYYT76g1C2mpDLYkGHJG1YxLj+F3aat8Jnp07zh8BwUek6OX/3lKusMe8ZlcxYSODYfHjD/JJZCMJGtjH3Q3RrBC8RIloTwsEEv2WvX9KUsyC55Tj6Orsigbgu9b65GMsnCJPHgBRX09z1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783375334; c=relaxed/simple;
-	bh=bfcyjjR0PHWXLLRZ2ibr1t9lSLn3hhXxITG6oB3WYMY=;
+	s=arc-20240116; t=1783376406; c=relaxed/simple;
+	bh=zrSZ8ISDHNl3SK0aQUyhVFOFS+85Xccul5Xc1aj9Etw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uaW+G2yNNGOEuN4fCw2GMbKtK5Gyoql27GDfhabgY6NVq8sAbCIVRg4lKO91ve/8m2evVjCVurQa1emTXZllRSyvNfNzZxwnOaYNh4tex35zVpcB/VSh7R1a+fdKTY7ppZUT2dD5GoceHUTNmx+i24cMT/fx7vZosOl7biQKOBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HlJOdiOx; arc=none smtp.client-ip=209.85.210.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=RIFW3XsQACGtEjH8DyArjxwGzevVO+LKbsGTRjR44sCDhQukZZdagxbNT2zLLBhxXqC9KY8s2AXLh9sU6h7Iu8v8+v2QjfcTL/W+HSPoeNWjQfDCBJUz5EKAYGsMrOV382WACrVf+a2DebJG5SZoFwu5XPRd4D/2MdaZL83yIG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UgJeqh9Q; arc=none smtp.client-ip=209.85.160.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HlJOdiOx"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7ea9c6ea7deso2630078a34.3
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 15:02:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UgJeqh9Q"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-448cf99c133so21372fac.1
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 15:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783375332; x=1783980132; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783376404; x=1783981204; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LOQr6CJ3hNkrgPpBmDdQTlUGyVobf7PcO0cPw39f2fI=;
-        b=HlJOdiOxgCI0KnHEHYwTQUZT6z8ZTaxSgwNpoWv1tWKe9HaqTSU045KNbOwYDOC+vP
-         G6wDQ1ZusErauGpCtCDbCuxHPTtTxCk+YtjIuiJt7TePAyAURALPEGSP6jtc5jCbhCmm
-         nVGzqjtWLC9iyf/Qy+GyN81RDwAWc8iwQ2rOn2HCpDVYF5CCv95StYAMrzfCeDU3yHDx
-         xK9rrzrA+wTzUnE5FXUqcKG31bYjhkPijKyMk6933KtoV4KnF0A/ChzZvp38HnXtOn3x
-         3PNDtBuN/8jIK/FIGTuFsOEgQ0nrQM8QM0cEI4WGnPF0sneHX0KHfD8ZBfzcOykO/laF
-         nGoA==
+        bh=oLCwSc3K2XNvdlif3HKKYYNzywvUdhUzfqsScCtACxg=;
+        b=UgJeqh9Q5IYBt4AaWUIGE95p+CF8STMHHWf0MHuwN+JMBYiP8C5TWHFs4ZdXsGt27w
+         GahJAoK60C0jXwQ3N6jn3UF9Hk863g4FE53hcY2E+Ba4arm66ZajCIUAdki11rU9qgXD
+         lZf7PkUx1XUG3/FZHolR8eUZECxygAdSxsWD7SD3OVRALrNn0RdPzEjHWzQX0mI0yatD
+         26RVe/QjIvVh8ZDy9I07tToYhh9ki2PS9GUgdu7GcSRKEB1JnzN4pVxYQaWna5aT0QKf
+         J4v81edNj9zUl/1ADJfTrDozMQf12O7B8e83h7F3ZJ4XH5MTVGbeOnJrZE6/ioZXScQQ
+         goQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783375332; x=1783980132;
+        d=1e100.net; s=20251104; t=1783376404; x=1783981204;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LOQr6CJ3hNkrgPpBmDdQTlUGyVobf7PcO0cPw39f2fI=;
-        b=YVLPqY1BV4JQ3+c+bmJMFvuyxiAuARlGSWExwMRjia0I6qfjlCf0sBBhwpPArcviC4
-         09qCQvli0lyZbzaG9N1KWICywNRnAoVKaFQAW0sszmXOKnsYeQ2Qm2ycgbghb7Rny00M
-         E7M39bl+zdxwbBbIT6XEIiCVqpFvDraoXbPu+jbaO3Rbw5k4uj2vl4isTjT3Ys+JbjQF
-         7yFGXTLcuD9DMGPMq9R5sZUT9f3a1uYD1YfC5BR/H+x/JiEE40vNunP1AJeuGPrBzmw+
-         vNvT0lOAms/b6vGOOvlns/i+j6twLJoPUybb4lAn0F9lamgnCpMjfuZtsBgrMHqm/soP
-         O7ig==
-X-Gm-Message-State: AOJu0YygLv5HYEW4VVNIayg6IPuBy9CTECaOqrACDwurk5ZhbmCUrpPF
-	nUuKlSYpZ6dDpDK4iZZVg7N2R21hX5i5hVYIxGi9zmBe8ZMvO3IC6hQhCB9F6w==
-X-Gm-Gg: AfdE7clnIqkDnTuW70HRWXGiodMIAFjaulxP2Qz/e0nveekrg/w6GVlZyzUe/czUK1A
-	3QXZyLycCeBmgL/w0qMXeL6pdwaBNCzNbLpSMSepClx9D8XP9QyE8+aqVdeCHGMa7i/6m/cSCmY
-	smlizka0YS8U/qdVb5n3zroYbwV5RVY2idcD2iTMEsrs7m9hANm0eszZxCoI2vcmoipKYUCDfW+
-	dUe55I7xle8WAg5Y0jQMYLdz7BGPNnu3sFBy8nqIh7CWVIiGxzCn2j+3vb+oELJq/5aZHA6Abmp
-	WgrEdpXiHvb44ucCP0xIL5OszRgA4JlvGIG6wb8Lggu1Jp7CBk25dRrCzY3p7MCVEyBGkjxBpH1
-	DGF3rsKwRzleAO4MRiaVkd7mRltSzmACG5MQ8L45uUf+P87HYwDHo9BUiUel0saAvRAkrsi5Uxs
-	nilpL/wQ==
-X-Received: by 2002:a05:6808:1202:b0:487:6930:d50 with SMTP id 5614622812f47-49fde3e3947mr1828067b6e.35.1783375331664;
-        Mon, 06 Jul 2026 15:02:11 -0700 (PDT)
+        bh=oLCwSc3K2XNvdlif3HKKYYNzywvUdhUzfqsScCtACxg=;
+        b=S7P6w9qPOe/BAgxp4hhH7vEO6NPYyjhM7VajO9bcQj4MgWCJVIoOkCLEF0U8vGjmM3
+         1J6DZfj5ISyqFTEUpIAZK4xL3ZeFkZ6qZKDIVUe4IDjpO6qmZCpYqWIQX1k5MetxuAHN
+         hDsuWmCAWnQY7+DsZJspdaZypva53d5w4avCR0hjRv72bDxMqdRXY8FjHqCM1UYStTWd
+         g/O13DAS+yIujER5XkXwRJHqoxndNhZ9oWs0exCCzVILdWm1THNlSC0bp28kcUANUpRp
+         w/F+sUuI2DPrB/jBWPAzWhQAavBt4Ha++MYtnBoKQ2pbgcya5pHJkGEq2edKY5YZIvtO
+         7bLA==
+X-Gm-Message-State: AOJu0Yxu4MUYHZ1gDB9PmoQFAxzDefCjjjp8z42J6/tKMdeQSzVkL7tj
+	qHLO17tH2n9Of1oB9Ufw3Ka0mCs5KB5Jjhakq+nBx85JKjbnGc092tKKHt4Twg==
+X-Gm-Gg: AfdE7cnBlc1gcTDmY8smCyL7RpWvu4a5yfgbLKUjnlXbqbe6ObOeQL/EGCiLL8qSj5r
+	QYkFtvVPXxc320kT942ELPBDpyt9f/1ZxktXNmX9wATRhIwxtSO4tuL/7lkE9ur8X4QRU8OO0En
+	FMKK096FSiWyeR0Y6hi1Zp4J+leOjDMHjPWgStyASCpByPJlbo0/VMX2Vvcpzv5xUsJpE+r/HGG
+	B1HzDr6xMurdfRBIfuyKC9Mm6QqXgTlc58/FRA7bPi4asDL5M4JxWDsdWHEPyShq6QoAIN159V+
+	aVIQxLKonQP5/6uteslfo7Nk1fBN52h1GF2gCTYUJIWFk/T9TBuKW0mrkFE1cenZPUdpXuR2nBo
+	sksHYe4KZRwFZi2/rx/8gaCN3ZtHBd2yNRBuIJgBLRQOMwc9JPQINmFnRgAbVH/t3ZpR8X7Fntm
+	hDtqtaJw==
+X-Received: by 2002:a05:6871:408a:b0:448:6cdd:3bfd with SMTP id 586e51a60fabf-451189138ffmr134504fac.10.1783376403628;
+        Mon, 06 Jul 2026 15:20:03 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-497d1af4af7sm10887675b6e.9.2026.07.06.15.02.10
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44cfb5db92dsm11618483fac.13.2026.07.06.15.20.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 15:02:11 -0700 (PDT)
-Date: Mon, 6 Jul 2026 17:02:08 -0500
+        Mon, 06 Jul 2026 15:20:03 -0700 (PDT)
+Date: Mon, 6 Jul 2026 17:19:59 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 03/13] setup: unify setup of shallow file
-Message-ID: <akwkS45ZknejwhuO@denethor>
+Subject: Re: [PATCH 05/13] setup: introduce explicit repository discovery
+Message-ID: <akwocdrzeu0xBLQZ@denethor>
 References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
- <20260630-pks-setup-split-discovery-and-setup-v1-3-13864eb5a032@pks.im>
+ <20260630-pks-setup-split-discovery-and-setup-v1-5-13864eb5a032@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,43 +72,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-3-13864eb5a032@pks.im>
+In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-5-13864eb5a032@pks.im>
 
 On 26/06/30 01:47PM, Patrick Steinhardt wrote:
-> It is possible to configure an arbitrary "shallow" file via two
-> mechanisms, and the respective logic to handle these is split across two
-> locations:
+> When setting up the global repository we intermix repository discovery
+> and repository configuration: we repeatedly call `set_git_work_tree()`
+> and `apply_and_export_relative_gitdir()` until we're happy with the
+> result. The result of this is then a partially-configured repository
+> that we use for further setup.
 > 
->   - Via the "GIT_SHALLOW_FILE" environment variable, which is handled in
->     `setup_git_env_internal()`.
+> This process is quite hard to follow, as it's never quite clear which
+> parts of the repository have been configured already and which haven't.
+> Furthermore, it means that the repository configuration is distributed
+> across many different places instead of having it neatly contained in a
+> single location. Ultimately, this is the reason that we cannot use a
+> central function like `repo_init()`.
 > 
->   - Via the global "--shallow-file=" command line option, which is
->     handled in `handle_options()`.
+> Refactor the logic so that we stop partially-configuring a repository
+> and instead populate a new `struct repo_discovery`. This allow us to
+> essentially split repository setup into two phases:
+> 
+>   - The first phase only figures out parameters required to configure
+>     the repository.
+> 
+>   - The second phase then takes these parameters and applies them to the
+>     repository.
 
-Ok.
+Ok so `struct repo_discovery` is just an intermediate structure to store
+all the repository configuration so we can apply it all at once. Makes
+sense.
 
-> We can rather easily unify this logic by not configuring the shallow
-> file in `handle_options()`, but instead overwriting the environment
-> variable. The environment variable itself is then handled inside of
-> `apply_repository_format()`, which is responsible for configuring a
-> discovered Git directory.
+> Like this, we'll never end up with a partially-configured repository and
+> can eventually extend `repo_init()` to handle the full initialization
+> for us.
 
-What is supposed to be the correct order for processing shallow file
-configuration here? Does this mean that the `--shallow-file` option now
-overwrites the environment variable? Was this how it already was?
+So IIUC the expectation here would be for all configuration of the
+repository to happen prior to it being applied? Would it be a bug to
+attempt to apply configuration to a repository more than once? 
 
-> This new logic is similar in nature to how we handle the other global
-> options already, all of which end up setting an environment variable.
-> So for one this gives us more consistency. But more importantly, this
-> change means that `the_repository` will not contain any relevant state
-> anymore before we hit `apply_repository_format()` once we're at the end
-> of this patch series. Consequently, it will become possible for us to
-> completely discard `the_repository` and populate it anew.
-
-I can't say that I'm a fan of using environment variables to store
-global state in this manner, but I guess if there is precdent and this
-is making us more consistent, it is probably fine. I guess the other
-option would be to store the read configuration is some intermediate
-structure to be applied later, but that may not be worth it here.
+Overall, I like the direction of this patch so far :)
 
 -Justin
