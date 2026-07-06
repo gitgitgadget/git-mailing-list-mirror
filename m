@@ -1,69 +1,70 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24463AEB40
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 05:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A5A171CD
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 05:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783314127; cv=none; b=uUd1NoNps864r3Bti92jreR3Ts3eH889xS+EpAMQbW1SbRBjO9ywZuVrnoRHf51SiKwm2clBoNSD7i6S+KerjTuHNTv79oYWnPlcH406Vzy/RrnrENs1eGek/fjGHQG0HffPi6JP6EgUwolg2pYg9mZMN2xJGBaFPaMa+T2q9aY=
+	t=1783314130; cv=none; b=aYylgzkQczXyg1Gr1wULfV7s/htUJ3XhuiC2+1tvV0HZZxjgQbnDkXjCEqcCXA0KgKxvirl3dMy5ngHt68lSnxJvdLco6r3G3qf1alcWLJ/jrEi6ZyfBeMl86a+M/NCKgplMZg9grWTg7RN2WdNYJtG9DUyBzPKWsAxhj6c3ZsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783314127; c=relaxed/simple;
-	bh=qaB1nsiXAcgKjaL+Qht+y9BlAoNECNd5rcmEi+61Miw=;
+	s=arc-20240116; t=1783314130; c=relaxed/simple;
+	bh=cXHzFO7+qBiNqSwUz2TAOi8M53fD1AnlMLnx4ZQUTgg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ZnT+XKxfgvsdbQGGNcn6WtQLC8z1Ql9mRZ/4GYrAXDGN3jNYtsEs5e7bT5pJxJkJSAf5SLT8hORv7ofqYEZ+ttuY264iL1kEkIFnQeGW30xpGFtQ1N8QOP6rvagGeYwOCv11CL2f+t64aNAQLuPsn5hveuQpEdMu6nZiPc1PPNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UZwIKaAz; arc=none smtp.client-ip=209.85.222.182
+	 MIME-Version:To:Cc; b=mfToBqF+qdhYZuhRV4Tk+OWk7hNlbzbbcwjv59dGF5djhg6bT2cVYcuxMvP8yXUqKUFx4s6Ts+yS1yNf6+JJ4LqAbDBxI9NYYDLyT3ByGWr2VGZvF9RPxHegi2QAOdW3WPm501TUO6UVzwSE3lL4Nqwx9B2fnnEBYDt4vET1FEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DMgZYF8H; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZwIKaAz"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-92e5c92c389so116579385a.3
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 22:02:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DMgZYF8H"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-51c21495722so13315831cf.3
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 22:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783314125; x=1783918925; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783314128; x=1783918928; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/LTIQGno0E9IVyA8/YHvOOSseNq4q5Fmb1ybXTEFeAI=;
-        b=UZwIKaAzXbytoMy6RXpuajBRPLQPa5IvXgsk43ZnDPbrUFDn6/vojH0AqsSUOumqQr
-         84AN3t8EwLZejUJ1UI2O4x217PlJWAx9pA5TQ+Dislc3zbEAFwn3qPqWEp8qXC5QJgAk
-         9sTUtp9X8IhMaL3RNnyNeNOpE2Rf4Eoo1sIrQNp7+3dVn4pf0UmAR57fy4y9k16gJMbN
-         cF7AjLNzk9YNct4B9Hh6NcQGAjJIkd+92o70ZcM3fue3oIQqTCRdtmJj0ehCj72MezpU
-         ixh1518tOnfdZ1gwJo3j6q3IUd0dOKVwESFVJ3i19jHoketZ069Bp+dLn4ynkYlPpZR0
-         lIiQ==
+        bh=ILkaG14RkoqFOxawttGG22ALaxpi2/ynXVrtqLVSKak=;
+        b=DMgZYF8HnKSSLw8LXIe6ry70yMWsX1lMEdXfbxH5R2NDCu0iNoE18HuGrL/W9eHo2W
+         4ZFtYbSOJfcFEueuAK8qCiPeK0mJdRiO6OQMB2R9cAbvuuVrciBnlcAgAyrgLcjzAnnp
+         cdsY0JuSnxeudxeEHOmcsjiCl+ERCPCX89YUsZMimu0xFSuL78+phvhhhZNFrRhxfau1
+         /JBe6S0TwEyZOSX/v5S3Bo+564+MK37QCew4Dkau74TTZkUI2YVWTSgF8WLbVkrCutTU
+         5rUWRZOtsncJCy0pP65Lh1+/fQLr0oATnTeo0tD5mxyB2YaoXHdydLdcKgvHrTRp1Tl4
+         wMqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783314125; x=1783918925;
+        d=1e100.net; s=20251104; t=1783314128; x=1783918928;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/LTIQGno0E9IVyA8/YHvOOSseNq4q5Fmb1ybXTEFeAI=;
-        b=Kp4iazxsmnE66gpr5EkMxDA6jiSzBGIGas+Hg4h/f9ZZhAWA3VihX9nX9gyQjMcjZk
-         aJRa50bEUbxYsS3pPXVIE0y/gfssWivaluvnXI6wXGk+eio5Srn0GsZD+IV5MPtPVfnZ
-         +MiiwaE9wQtc2q0zBRl1AymegAwFUcM/+uEaYpPwZDQKu4uNYAoXRJvlTnF5dTn0m88o
-         y3sz6MDMGMzw1faN33cEhWVlzGrVJX/ny4nt7Ee9MyVPVnG45hSpaiSOp5apeAOS/uoE
-         4KcSpZ0J/oQ2R/Fxpv32sxncte+anZ9tuiVLIaHbzTSPZ5pYFzGnJ8tSB0T+ZzfWEckn
-         Z4Gw==
-X-Gm-Message-State: AOJu0YxifobCNL+YLIemj6QQR9FQelVSMXdPUtn04M3PfNW4osLtBzyu
-	ni16NNG4i5n48UUBpd+H+kaQxqRkx+ogGr2LkaGsPnUVUzDzth1cEYVA/ZrD27AS
-X-Gm-Gg: AfdE7ck2JDpv5+B1s/Vi73gMZDumaPEFonMtwViRw8VsKuYZq637pzCuowf9h5bEBZo
-	Msbr0HNXvz4Ofhk2UaQnep1Ql2v1B6d+7Gd/Yeuv70wceTW8dYKYV/ofRLzA+hr0sZjZB4DfIll
-	7saU2fVaxOQsm5O8IvrJ5Vf0o64FR5QSZt1IC6619F0GZHxSiSlcqc/G0SnZxU9RWNuxqmsWNdY
-	U3EfF6OvAC3ZKiq6sG0XcqLK7v2InHfo5/UbX/dHZRt0st2abSrRagCNgrvmpg12gbykUeGKy7r
-	N4gxZSJTNh43wjc2CXKm8UhQ1ugvg1Bh7mwBBVGF2SXDxu9tEW6WWvYmv5eB7lC348JN9e6S3TA
-	LX4fijs3rh8hAeU2gCE/RrAjEmeB5pn/0eLBhGwHsKIKBNWYq5XP0PVcq/JscJcAxfV/NZciMm0
-	VbPunGqxmtL4b5Lg==
-X-Received: by 2002:a05:620a:170b:b0:92e:7973:ebd8 with SMTP id af79cd13be357-92e9a4a6eb9mr1193150585a.37.1783314124943;
-        Sun, 05 Jul 2026 22:02:04 -0700 (PDT)
+        bh=ILkaG14RkoqFOxawttGG22ALaxpi2/ynXVrtqLVSKak=;
+        b=rdGV2a5Qdt4J0ZqXaz2IeylU1kMpMTaBkk1i8bDr+4oMQzCiJDxXhIqPXtjf23zfW2
+         gYDD9dGsxd5S1BNto1Gdyt1ebgw3YIN4Z5Q8CFkzQjwea6dVUc3c4fgcROaPhV2roZru
+         PsdCk80HmleRTL9jTpwIAQHNSI/6/HQBw+xcMBc2U+zb/AlS1Cxw/Fnpx4Bq6Er4WSLu
+         //AZGx0jkNgdJinz3v7B/hjBm20u/QDo36QP+BCrUnOpexz+KqYFldbbhxuvI8esujT4
+         b3tYdzvNAvY2Cofx0o5gn1REvR7CV8xKhUdCx7E1UNmt68tB65n+0Bv2Q6QirW6sdxip
+         JikA==
+X-Gm-Message-State: AOJu0YxlTL3SVJsiAQRVYcduk+uomEjJdIemh713r6kOVoYP+J4aw5zk
+	7dARjmHZf3pHXGNF9lm+stz+w4sPeE4rbKd/4hv+wIObpmtSYqPIuuEyIfHzwgaM
+X-Gm-Gg: AfdE7ckIGV9pkCal+7T9q9/HmfzyOojO8V1rvHRffpmSnTyQ11LayoBoHcRTj7EBnxE
+	z+5mH6/Jsw6cwmL6h2eYnzYv+/4fCNKnZEgHdRb7UQbZ9mU6JyZ1w6cMYoOUJp6riT6UjVCLAcQ
+	bP50MEK9OFsP5e1GUiUcVh0vbiznqa+BsSAvcQRtyQqRAZwTIVbPwZQoi3eQt5Xb7B7rp+rTRE8
+	rSAjYNKe9fZ92FLkFjFlqiYVBuA2nlXqXMQ6OJb/qufG1RrJFmKDeYm74tRRnrBP6lEqyl3FWBn
+	iMHglzHFwyOu/3t2JaXc7+EiqubZMRKlv/PEWUXRKIbjBkgBIlBB8gUFHbJZb+ioILidJwyAfRl
+	/SXP576HcAhPlXgMly0cdaZ6WC//EC3cBxHb+DJ5BckJhUp6uD6T93qOu39htlNZjOiuEz59nM7
+	21t6WFYANsyvjWZXMceKD0f1wx
+X-Received: by 2002:a05:622a:58d:b0:51a:8c9c:7f51 with SMTP id d75a77b69052e-51c4c352237mr128961441cf.68.1783314128322;
+        Sun, 05 Jul 2026 22:02:08 -0700 (PDT)
 Received: from [127.0.0.1] ([68.154.38.16])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90ca004fsm842186985a.28.2026.07.05.22.02.04
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41b266c0sm81226821cf.8.2026.07.05.22.02.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 22:02:04 -0700 (PDT)
-Message-Id: <44ba6d1f1a549f34f73f3863c035837403271f35.1783314119.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 22:02:07 -0700 (PDT)
+Message-Id: <5689d2074ad81d39502838029831f559365ca776.1783314119.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2135.v4.git.1783314119.gitgitgadget@gmail.com>
 References: <pull.2135.v3.git.1783054466.gitgitgadget@gmail.com>
 	<pull.2135.v4.git.1783314119.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Jul 2026 05:01:54 +0000
-Subject: [PATCH v4 2/6] t: fix grep assertions missing file arguments
+Date: Mon, 06 Jul 2026 05:01:56 +0000
+Subject: [PATCH v4 4/6] t: fix Lexer line count for $() inside double-quoted
+ strings
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,68 +83,56 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-Three grep assertions were missing their file arguments, causing
-them to read from empty stdin instead of the intended file:
+scan_dqstring's post-loop newline counter re-counts newlines that
+were already counted during recursive parsing of $() bodies.  This
+happens because scan_dollar returns text containing newlines (from
+multi-line command substitutions), and the catch-all counter at the
+end of scan_dqstring counts all of them again.
 
-- t2402: '! grep ...' should read from 'out', matching the
-  grep on the preceding line.
-- t7507: the closing quote is in the wrong place, making the
-  entire 'diff --git actual' a single pattern with no file
-  argument instead of pattern 'diff --git' and file 'actual'.
-- t7700: '! grep ...' should read from 'packlist', matching
-  the redirect on the preceding line.
+Fix this by counting newlines inline as non-special characters are
+consumed, and removing the post-loop catch-all.  Each newline is
+now counted exactly once: literal newlines at the inline match,
+line splices at the backslash handler, and $() newlines by
+scan_token during the recursive parse.
 
-Without file arguments these greps always succeed (empty stdin
-matches nothing), so the assertions were not actually checking
-anything.  All three tests pass with the corrected file arguments,
-confirming the intended behavior is sound.
+This is a latent bug: any consumer that relies on token line
+numbers rather than byte offsets would get incorrect results for
+tokens following a multi-line $() inside a double-quoted string.
+chainlint is not affected because it annotates the original body
+text using byte offsets, not token line numbers.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- t/t2402-worktree-list.sh  | 2 +-
- t/t7507-commit-verbose.sh | 2 +-
- t/t7700-repack.sh         | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ t/lib-shell-parser.pl | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
-index e0c6abd2f5..93f92e854a 100755
---- a/t/t2402-worktree-list.sh
-+++ b/t/t2402-worktree-list.sh
-@@ -144,7 +144,7 @@ test_expect_success '"list" all worktrees with prunable annotation' '
- 	rm -rf prunable &&
- 	git worktree list >out &&
- 	grep "/prunable  *[0-9a-f].* prunable$" out &&
--	! grep "/unprunable  *[0-9a-f].* prunable$"
-+	! grep "/unprunable  *[0-9a-f].* prunable$" out
- '
+diff --git a/t/lib-shell-parser.pl b/t/lib-shell-parser.pl
+index 5c435c5d05..17fbf461b1 100644
+--- a/t/lib-shell-parser.pl
++++ b/t/lib-shell-parser.pl
+@@ -93,8 +93,12 @@ sub scan_dqstring {
+ 	my $b = $self->{buff};
+ 	my $s = '"';
+ 	while (1) {
+-		# slurp up non-special characters
+-		$s .= $1 if $$b =~ /\G([^"\$\\]+)/gc;
++		# Slurp non-special characters; count newlines here because
++		# newlines inside $() are already counted by the recursive parse.
++		if ($$b =~ /\G([^"\$\\]+)/gc) {
++			$s .= $1;
++			$self->{lineno} += $1 =~ tr/\n//;
++		}
+ 		# handle special characters
+ 		last unless $$b =~ /\G(.)/sgc;
+ 		my $c = $1;
+@@ -111,7 +115,6 @@ sub scan_dqstring {
+ 		}
+ 		die("internal error scanning dq-string '$c'\n");
+ 	}
+-	$self->{lineno} += () = $s =~ /\n/sg;
+ 	return $s;
+ }
  
- test_expect_success '"list" all worktrees --porcelain with prunable' '
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index b53d71c086..acdb6b1455 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -163,7 +163,7 @@ done
- 
- test_expect_success "status ignores commit.verbose=true" '
- 	git -c commit.verbose=true status >actual &&
--	! grep "^diff --git actual"
-+	! grep "^diff --git" actual
- '
- 
- test_done
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 63ef63fc50..c6ff3aed30 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -194,7 +194,7 @@ test_expect_success 'local packed unreachable obs that exist in alternate ODB ar
- 	rm -f .git/objects/pack/* &&
- 	mv pack-* .git/objects/pack/ &&
- 	git verify-pack -v -- .git/objects/pack/*.idx >packlist &&
--	! grep "^$coid " &&
-+	! grep "^$coid " packlist &&
- 	echo >.git/objects/info/alternates &&
- 	test_must_fail git show $coid
- '
 -- 
 gitgitgadget
 
