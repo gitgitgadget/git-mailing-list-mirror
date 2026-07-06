@@ -1,68 +1,69 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1CB376467
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 13:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038F2376467
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 13:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783344962; cv=none; b=O4AVaNOQUtSjtkeMN/0Z44VhKgVYQKd5bwbKqSw+eyHQOF2Pc4zwZwOTfrzSKtC+j4B5tEScpV10na7v98XJGvh0zX6gXs1dKxqy+YxeASFzMQVB9t2rycm33uW8zY+sP0YLyq1LWW/WcqRXyaQCLqf/ZVgVRmpLhbtnwIFNh7c=
+	t=1783344965; cv=none; b=WC0KVhgijvCFzA7kU/z5kCQVz/kepwDu3VfF/FLrGeZlGq3KcuY1wYGPcPDt9dX+6cCO2aVlJY337qdkcsHobftulPFDx56xMlg67SaQX0oj+qr1gYKMVJeHIh+g3HSinXzU8Dyou86HEug91kn6AIry01yz7OMk7Jm9J665jqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783344962; c=relaxed/simple;
-	bh=bSAePSVUYaMnEFiiBuUIbqzUA59ucBmKnmMrDv0y2ew=;
+	s=arc-20240116; t=1783344965; c=relaxed/simple;
+	bh=a60T8i6f1m34kWixuj/uyLm2hPbx3MW5vNJQHkkWgpg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lw+fP+IYVf3AG1F8aV+wvSoRLVClNG+htnbHp4Q9FIky35KfnANpVBzQKmtFk/Vi+Aj/tQMT7sbuOG9lq0L/J/vPKtvlMfiKIrEU2ARmBHyqFDNjgEjVgWdHgL71ZXmhDLnbVQzCD5BOw5RPOXGQu9u0nt/wJvWqSOdK7Cai2Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RDEL2REL; arc=none smtp.client-ip=209.85.210.181
+	 MIME-Version:To:Cc; b=LcByfXITHbBbDN6NxYo6DGDJ7iGIEyXouMdozrqDKSWrxEx5s1F9R/tYSMlhkqKu17W21Oc761fOkJ+mvS9eZl/6N0rFwvI/3nbMvy+MJxKjHOhOKcMqPU/NwatVjC4IYj9bYiJsKy3ihmZDK1K/zsXCcBaKwhj9i/TK4z8uqE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqKt2Gbh; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RDEL2REL"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-842338c18e0so2433720b3a.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 06:36:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqKt2Gbh"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2cc97653887so12780915ad.1
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 06:36:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783344961; x=1783949761; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783344963; x=1783949763; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GDZnBjxenYaBJjk8uCNqihPL3xm61Nnoj2j6p7G+3PY=;
-        b=RDEL2RELwBRWM25/rhyeXmPiWkN0NLZrasIazRYXxsSpxRGRzT02Y8/XOf/yQES2sf
-         i8LSDj3iY34x+pnk+8Ntc0dhNlgwbfwLH9UzaJe6+vII9V3UfN9mFYGY8z9vGJQa/U6C
-         gT/JIIQjInQ0PGSYMQ5oMVavvlxMASY/OaM63XlcoTTJJCEKyhIzumE3OMFci15LB61I
-         F//ilVSG7ij1S0aRENJICAHqaXnWraSpZMjlBCHPH3LHc1G2s+TsjO+UlX6EWfrbrN0o
-         +GS0wT5lvi40j0q9VMLw/vDC5jh0SDne5qWGhM998ok9luumYh/+IRMsAvuyPYsvc8Qg
-         Qcag==
+        bh=Clrir/QyEPMvsgYcJA1+iEYYBGOHo5nqzVjNWyzaWaM=;
+        b=dqKt2Gbh5KbuNSMTI+L5fPWLhf9fR0dEavuSuIvGv/j/424LH8ARC7WYZ+5J8yARqs
+         QlNtOHPPC4OCFB1mR5mIjEDXWAsv4D4CFxwqJmpEDx/wtb7Tn23LD9s592nkAMTiqMZV
+         ZKWOC+CyJTMjEkwfun4DprBaWdvJKHv4QSw/26k1AG2hlWYLW8McK21E0EnlSMFGIjve
+         eMnbhJHmGgQpcZJNqIoL14B+W1L8nvqva13U13M4xyuUQPjtk1+Ds8ILp6RkuiEfggSH
+         sE55UB2HlufnaW6B2jm0ou5LmoMY4RTxgR7wivcjJImsYT/pcg9cA1N67+h/tyk1KsZj
+         yCxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783344961; x=1783949761;
+        d=1e100.net; s=20251104; t=1783344963; x=1783949763;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=GDZnBjxenYaBJjk8uCNqihPL3xm61Nnoj2j6p7G+3PY=;
-        b=X+Ryw1YJB7vNPETomYAEC9jcNuqI9xNTV3kdMpfWQBfw+KMAEVhk38lkLAKwEGS8S/
-         VoJwk4F434z6hTLOWSZpva++LjE/EDv+d2Sis58w7UkMeEG6NlewyPQ8YY0HLegsxzhL
-         dIQLuhdu9t3PHdeBiHDC2NUw/LjCOvIwvLKf7Ek32yKvNbLQyeHlKCFBvLkc2RDjnZuV
-         4sJMmZDSoA22SRat6yoVdodySHkEXKDpvYNJMrypGm1y683/689uuEN6y6c+yf1HVu3b
-         +rD/3OyZfhLc0LkfhyC8AYFE/I0nR4k0hKiOi5oJYZ6RAvpWQQ+B38ozwl70Bwa/bNbx
-         8oTQ==
-X-Gm-Message-State: AOJu0Yw802FvUjSaEA9X3d2qPDl+WqV6tJyM/NizY0CiTizCRna7apE2
-	obp/V3Xa92+ssRJ5Fe5AEQxYKxJKctSJzbE+S8nka7CQsyCJNDLi+83TS5U2kA==
-X-Gm-Gg: AfdE7cnjVFDc8kDi/cIb6gC0BC0ybQ5sY+athdMHdYgxa9qpc+Hg9rQcTMcKdeVDRuu
-	yvvc9YQBWXB3A2hm+Ew57oqSPvmHM6Ij68/iYjJsmFqFutSDZ1epMh0Oieuq7yu+p9wcWEGBNGq
-	z2QMA2+5Z3nOxkYQjm/8PTx1D16wcXaN6gEt481LztTnKUoRmP1skBVagyRNvXTvI58fGlD+mpM
-	eTpI6Rk2jxPQecobkrUXHe3TIyP8EZJPqWUviJxoVkrtLGzg8w+WnunN6wWITeuv+ZG3dJ5a01d
-	2j2sb0D/TE+lMffZGlH2B2QtHME5Umzzy7zNMDKgof5B7Vu/4RGBQY8HVGf0ZHvhFWRPLMPbIso
-	uWwpycg5pqvW4k9hLt46UTfr2f5MLs275ffZqC6kE33Az9RLP0dZHeNAKiOiQjCUI1IaDE0v5W4
-	AY8ejkceAGIM93
-X-Received: by 2002:a05:6a00:32ce:b0:842:614e:cc94 with SMTP id d2e1a72fcca58-84826d69104mr519926b3a.26.1783344960640;
-        Mon, 06 Jul 2026 06:36:00 -0700 (PDT)
+        bh=Clrir/QyEPMvsgYcJA1+iEYYBGOHo5nqzVjNWyzaWaM=;
+        b=g2rf4mjrzB/dyW4mM77U2FUwZK3eiFw05k6xd6JviadVDtJHwoWHtimLi7ZaxhCE6D
+         Xrw3kfkwH5cgAGxd4cjaUqizc0KrZhckD5hp9lNnskT6zRTDXysXgxfnc8wTgbc/VIyD
+         fC2qEg1hlqazLKbkx1ph7sQ2yP6fgkZ3QtNo910U32A6EgqO8g24EsDRoB6QM3l4bwwj
+         0KSQzqSK3ZC4ywHbpOMYm2BEYu/h6tMRgaIxvhwPoZwMBtlygcE7E8jGl3BcUrN420Z4
+         Y87V8lI993vSFB/WPHQGs7oG8KxmAhNC6pJikTiRByFHCOHPMUkyY6VqL9azl3RjU0q/
+         cXOg==
+X-Gm-Message-State: AOJu0Yx7wIMPgQZS1OCuseA++d3x9cGBQwgEOkrhIPNcuZ7vWUONg5YK
+	TOtcLGRXGJE/fofYmg/MRPJe+tv2j6Bg4nGTPuRAdCCUd1UKL4F2W+5LcpNgcA==
+X-Gm-Gg: AfdE7ckA+vZsG40cl7BjTwne+91Ief0te7/4jhKmln8ORcIJIvW1/ufk8YuFU6MIKVq
+	WEFBFxAcHRsWH96RYbFqZsGAzy3WIUXhUVqmHF/F4yDO2tkgE7oGEXqVb3JYCZfDqCOl5klIPpG
+	oxxTlNgNJhpNrc/ac3kHmetbwG5YzLXqcSwbFs16swjLWnHtaNKOL2R9qr+VyEhOorRdLb3kCrz
+	0CRCC0aJHnStmRK8vlsRq18aG3USZrO12pseLTeFkGtF3Iy4DxCT1wrWJQwb7Lv/CTmtb97dfBu
+	YDyaZ0jBvEwV/vOWJKeRwL1K31Ao3EXCmhkVv/yRvMuPIfgDvSTHxVq0GqSWYvMW9P1sLGwFX4e
+	Lht8Ctv+4fpzi8kRj5LQJOmVzN1XSZWzU05V6jAWU5SE6XU2ZgWGzeed6EMxGyR/L9LieeWkhS0
+	JaIS/d6e7vFiNY
+X-Received: by 2002:a17:903:32d1:b0:2c9:b01a:fbd4 with SMTP id d9443c01a7336-2ccbe6266fcmr5618985ad.16.1783344963260;
+        Mon, 06 Jul 2026 06:36:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.83.42.69])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6dd3bd3sm3836310b3a.58.2026.07.06.06.35.59
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cad789424esm50517295ad.76.2026.07.06.06.36.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 06:35:59 -0700 (PDT)
-Message-Id: <d8ffdcb4f8c1988c109761ddb9daff8c07caa2b1.1783344957.git.gitgitgadget@gmail.com>
+        Mon, 06 Jul 2026 06:36:01 -0700 (PDT)
+Message-Id: <1459371d3ab2f237152e20040987b4cb6a5eca77.1783344957.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2166.git.1783344957.gitgitgadget@gmail.com>
 References: <pull.2166.git.1783344957.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Jul 2026 13:35:55 +0000
-Subject: [PATCH 1/2] t: add tests for ref tombstone scenarios
+Date: Mon, 06 Jul 2026 13:35:56 +0000
+Subject: [PATCH 2/2] reftable: fix quadratic behavior when re-creating deleted
+ refs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,111 +79,258 @@ Cc: Kristofer Karlsson <krka@spotify.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-Add a performance test and a correctness test for update-ref when
-many tombstones are present in a reftable.
+When many refs are deleted and then re-created, update-ref exhibits
+quadratic behavior.  With 8000 refs deleted and re-created, the
+runtime is ~15s, quadrupling for each doubling of input size.
 
-The performance test (p1401) exercises two scenarios:
+The root cause is the merged iterator's suppress_deletions flag.
+When set, merged_iter_next_void() silently consumes tombstone records
+in a tight internal loop before returning to the caller.  This
+prevents higher-level code from checking iteration bounds (such as
+prefix or refname comparisons) until after all tombstones have been
+scanned.
 
- - All refs are deleted (creating tombstones) and then re-created
-   with the same names, which currently exhibits quadratic behavior.
+This affects two code paths during ref creation:
 
- - An asymmetric variant where refs are deleted and then new,
-   differently-named refs are created.  When the tombstones sort
-   after the new refs, every create scans all tombstones, making
-   this case even worse than re-creating the same refs.
+ - refs_verify_refnames_available() seeks to "refs/tags/foo-1/" to
+   check for D/F conflicts and must scan through all subsequent
+   tombstones before the caller can see that they are past the prefix
+   of interest.
 
-The correctness test (t0610) verifies that refs deleted and then
-re-created with the same names are visible afterwards.
+ - reftable_backend_read_ref() seeks to a specific refname and must
+   scan through all subsequent tombstones before returning "not
+   found", because the merged iterator skips the matching tombstone
+   and searches for the next live record.
 
-Helped-by: Jeff King <peff@peff.net>
+Fix this by removing suppress_deletions from the merged iterator and
+instead handling deletion records at each call site in the reftable
+backend, where prefix and refname bounds are available.  Tombstones
+are now returned to callers, which skip them after their existing
+bounds checks.  This allows iteration to terminate as soon as a
+tombstone past the relevant bound is encountered.
+
+This also requires adding deletion checks to the log iteration paths,
+since suppress_deletions applied to both ref and log iterators.
+
+Both tests in p1401 go from ~14s to ~0.2s with this change.
+
+Reported-by: Jeff King <peff@peff.net>
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- t/perf/p1401-ref-store-tombstones.sh | 44 ++++++++++++++++++++++++++++
- t/t0610-reftable-basics.sh           | 22 ++++++++++++++
- 2 files changed, 66 insertions(+)
- create mode 100755 t/perf/p1401-ref-store-tombstones.sh
+ refs/reftable-backend.c | 54 ++++++++++++++++++++++++++++++++---------
+ reftable/merged.c       | 12 +--------
+ reftable/merged.h       |  4 ---
+ reftable/stack.c        |  1 -
+ 4 files changed, 44 insertions(+), 27 deletions(-)
 
-diff --git a/t/perf/p1401-ref-store-tombstones.sh b/t/perf/p1401-ref-store-tombstones.sh
-new file mode 100755
-index 0000000000..e40a6dcbf4
---- /dev/null
-+++ b/t/perf/p1401-ref-store-tombstones.sh
-@@ -0,0 +1,44 @@
-+#!/bin/sh
-+
-+test_description="Tests performance of ref operations with many tombstones"
-+
-+. ./perf-lib.sh
-+
-+test_expect_success "setup" '
-+	git init --ref-format=reftable repo &&
-+	blob=$(echo foo | git -C repo hash-object -w --stdin) &&
-+	for i in $(test_seq 8000)
-+	do
-+		printf "create refs/tags/tag-%d %s\n" "$i" "$blob" ||
-+		return 1
-+	done >repo/input &&
-+	git -C repo update-ref --stdin <repo/input &&
-+	git -C repo for-each-ref --format="delete %(refname)" |
-+	git -C repo update-ref --stdin
-+'
-+
-+test_perf "recreate refs after mass delete" '
-+	git -C repo update-ref --stdin <repo/input &&
-+	git -C repo for-each-ref --format="delete %(refname)" |
-+	git -C repo update-ref --stdin
-+'
-+
-+test_expect_success "setup asymmetric" '
-+	for i in $(test_seq 8000)
-+	do
-+		printf "create refs/tags/old-%d %s\n" "$i" "$blob" ||
-+		return 1
-+	done >repo/input-old &&
-+	sed "s/old-/new-/" <repo/input-old >repo/input-new &&
-+	git -C repo update-ref --stdin <repo/input-old &&
-+	git -C repo for-each-ref --format="delete %(refname)" |
-+	git -C repo update-ref --stdin
-+'
-+
-+test_perf "create new refs after deleting differently-named refs" '
-+	git -C repo update-ref --stdin <repo/input-new &&
-+	git -C repo for-each-ref --format="delete %(refname)" |
-+	git -C repo update-ref --stdin
-+'
-+
-+test_done
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index e19e036898..4b7cfe38e4 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -1163,4 +1163,26 @@ test_expect_success 'writes do not persist peeled value for invalid tags' '
- 	)
- '
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 4ae22922de..8c4f119ff1 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -86,7 +86,8 @@ static int reftable_backend_read_ref(struct reftable_backend *be,
+ 	if (ret)
+ 		goto done;
  
-+test_expect_success 'delete and re-create refs with tombstones' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	test_commit -C repo A &&
-+	A=$(git -C repo rev-parse HEAD) &&
-+	cat >input <<-EOF &&
-+	create refs/tags/a $A
-+	create refs/tags/b $A
-+	create refs/tags/c $A
-+	EOF
-+	git -C repo update-ref --stdin <input &&
+-	if (strcmp(ref.refname, refname)) {
++	if (strcmp(ref.refname, refname) ||
++	    reftable_ref_record_is_deletion(&ref)) {
+ 		ret = 1;
+ 		goto done;
+ 	}
+@@ -112,7 +113,6 @@ static int reftable_backend_read_ref(struct reftable_backend *be,
+ 		oidread(oid, reftable_ref_record_val1(&ref),
+ 			&hash_algos[hash_id]);
+ 	} else {
+-		/* We got a tombstone, which should not happen. */
+ 		BUG("unhandled reference value type %d", ref.value_type);
+ 	}
+ 
+@@ -633,6 +633,9 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			break;
+ 		}
+ 
++		if (iter->ref.value_type == REFTABLE_REF_DELETION)
++			continue;
 +
-+	# delete all tags, leaving tombstones
-+	git -C repo for-each-ref --format="delete %(refname)" refs/tags/ |
-+	git -C repo update-ref --stdin &&
+ 		if (iter->exclude_patterns && should_exclude_current_ref(iter))
+ 			continue;
+ 
+@@ -1492,6 +1495,8 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+ 					ret = 0;
+ 					break;
+ 				}
++				if (reftable_log_record_is_deletion(&log))
++					continue;
+ 
+ 				ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 				tombstone = &logs[logs_nr++];
+@@ -1889,6 +1894,8 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
+ 			ret = 0;
+ 			break;
+ 		}
++		if (reftable_log_record_is_deletion(&old_log))
++			continue;
+ 
+ 		free(old_log.refname);
+ 
+@@ -2019,6 +2026,9 @@ static int reftable_reflog_iterator_advance(struct ref_iterator *ref_iterator)
+ 		if (iter->err)
+ 			break;
+ 
++		if (reftable_log_record_is_deletion(&iter->log))
++			continue;
 +
-+	# re-create the same refs and verify they are visible
-+	git -C repo update-ref --stdin <input &&
-+	git -C repo tag -l >actual &&
-+	test_line_count = 3 actual
-+'
-+
- test_done
+ 		/*
+ 		 * We want the refnames that we have reflogs for, so we skip if
+ 		 * we've already produced this name. This could be faster by
+@@ -2178,6 +2188,8 @@ static int reftable_be_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ 			ret = 0;
+ 			break;
+ 		}
++		if (reftable_log_record_is_deletion(&log))
++			continue;
+ 
+ 		ret = yield_log_record(refs, &log, fn, cb_data);
+ 		if (ret)
+@@ -2230,6 +2242,10 @@ static int reftable_be_for_each_reflog_ent(struct ref_store *ref_store,
+ 			ret = 0;
+ 			break;
+ 		}
++		if (reftable_log_record_is_deletion(&log)) {
++			reftable_log_record_release(&log);
++			continue;
++		}
+ 
+ 		ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 		logs[logs_nr++] = log;
+@@ -2276,18 +2292,26 @@ static int reftable_be_reflog_exists(struct ref_store *ref_store,
+ 		goto done;
+ 
+ 	/*
+-	 * Check whether we get at least one log record for the given ref name.
+-	 * If so, the reflog exists, otherwise it doesn't.
++	 * Check whether we get at least one non-deleted log record for the
++	 * given ref name.  If so, the reflog exists, otherwise it doesn't.
+ 	 */
+-	ret = reftable_iterator_next_log(&it, &log);
+-	if (ret < 0)
+-		goto done;
+-	if (ret > 0) {
+-		ret = 0;
+-		goto done;
++	while (1) {
++		ret = reftable_iterator_next_log(&it, &log);
++		if (ret < 0)
++			goto done;
++		if (ret > 0) {
++			ret = 0;
++			goto done;
++		}
++		if (strcmp(log.refname, refname)) {
++			ret = 0;
++			goto done;
++		}
++		if (!reftable_log_record_is_deletion(&log))
++			break;
+ 	}
+ 
+-	ret = strcmp(log.refname, refname) == 0;
++	ret = 1;
+ 
+ done:
+ 	reftable_iterator_destroy(&it);
+@@ -2399,6 +2423,8 @@ static int write_reflog_delete_table(struct reftable_writer *writer, void *cb_da
+ 			ret = 0;
+ 			break;
+ 		}
++		if (reftable_log_record_is_deletion(&log))
++			continue;
+ 
+ 		tombstone.refname = (char *)arg->refname;
+ 		tombstone.value_type = REFTABLE_LOG_DELETION;
+@@ -2580,6 +2606,10 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 			reftable_log_record_release(&log);
+ 			break;
+ 		}
++		if (reftable_log_record_is_deletion(&log)) {
++			reftable_log_record_release(&log);
++			continue;
++		}
+ 
+ 		oidread(&old_oid, log.value.update.old_hash,
+ 			ref_store->repo->hash_algo);
+@@ -2746,6 +2776,8 @@ static int reftable_be_fsck(struct ref_store *ref_store, struct fsck_options *o,
+ 		report.path = refname.buf;
+ 
+ 		switch (ref.value_type) {
++		case REFTABLE_REF_DELETION:
++			continue;
+ 		case REFTABLE_REF_VAL1:
+ 		case REFTABLE_REF_VAL2: {
+ 			struct object_id oid;
+diff --git a/reftable/merged.c b/reftable/merged.c
+index 733de07454..2f9a361234 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -26,7 +26,6 @@ struct merged_iter {
+ 	struct merged_subiter *subiters;
+ 	struct merged_iter_pqueue pq;
+ 	size_t subiters_len;
+-	int suppress_deletions;
+ 	ssize_t advance_index;
+ };
+ 
+@@ -166,15 +165,7 @@ static int merged_iter_seek_void(void *it, struct reftable_record *want)
+ 
+ static int merged_iter_next_void(void *p, struct reftable_record *rec)
+ {
+-	struct merged_iter *mi = p;
+-	while (1) {
+-		int err = merged_iter_next_entry(mi, rec);
+-		if (err)
+-			return err;
+-		if (mi->suppress_deletions && reftable_record_is_deletion(rec))
+-			continue;
+-		return 0;
+-	}
++	return merged_iter_next_entry(p, rec);
+ }
+ 
+ static struct reftable_iterator_vtable merged_iter_vtable = {
+@@ -278,7 +269,6 @@ int merged_table_init_iter(struct reftable_merged_table *mt,
+ 		goto out;
+ 	}
+ 	mi->advance_index = -1;
+-	mi->suppress_deletions = mt->suppress_deletions;
+ 	mi->subiters = subiters;
+ 	mi->subiters_len = mt->tables_len;
+ 
+diff --git a/reftable/merged.h b/reftable/merged.h
+index 4317e5f5f6..6fafd1d080 100644
+--- a/reftable/merged.h
++++ b/reftable/merged.h
+@@ -17,10 +17,6 @@ struct reftable_merged_table {
+ 	size_t tables_len;
+ 	enum reftable_hash hash_id;
+ 
+-	/* If unset, produce deletions. This is useful for compaction. For the
+-	 * full stack, deletions should be produced. */
+-	int suppress_deletions;
+-
+ 	uint64_t min;
+ 	uint64_t max;
+ };
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 1fba96ddb3..77aeac4715 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -337,7 +337,6 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
+ 	/* Update the stack to point to the new tables. */
+ 	if (st->merged)
+ 		reftable_merged_table_free(st->merged);
+-	new_merged->suppress_deletions = 1;
+ 	st->merged = new_merged;
+ 
+ 	if (st->tables)
 -- 
 gitgitgadget
-
