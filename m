@@ -1,47 +1,45 @@
 Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC3F420898
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 13:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE3F3195F0
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 13:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783342884; cv=none; b=bKf1djoEf1bg9CRmWthPeoiyFCETVm7Sipp4AKNTAE7svosb7UMKFQ3591yJFnUM8kVF6c9csZj4hGsbqz0TVzGJaaErA4VuD7rPfI1+dGpyrBJ/R4Sgp+lbwyimKGL8TIYziBniEDBgLwLBrYXW+O1W+ky+MPDfrmmzqhDNiMo=
+	t=1783343042; cv=none; b=YNg+JmscQakscDL1vNKXNyVy2F0q7Tt1OE+PRPDHTPxbrMWGp1HnBOf1G5OWHV/QuGY0COWbwKpk1mjMeUrY9DEvnDQSuB+Evufu+492F/w3GECOQGYTKx2vYNfpViR+SHBdgwt++V0MUQU0Ng6t9Z0wLvf16+sAH8GzbNEghkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783342884; c=relaxed/simple;
-	bh=RRtC0cIK4kr78NBvX+MU4z+gy9is5cyEDgM8gxKGhNY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3KJD+Ac56Bsf63bs20jGKA1Vui9nX0lwfjqib+7G2vcwzITc5764+s8sFNNje2Bxf+l0iCNvz30cGpIW4DP6mixBOi6ONHDtSri10db6BZAxL79mVN+yO7VkHkRvhcf2jEOulpF31HXBMahEVv32A+BAw6LyWrsQVICEoRjyWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=tWIuVozy; arc=none smtp.client-ip=93.93.131.194
+	s=arc-20240116; t=1783343042; c=relaxed/simple;
+	bh=OPkZnUM/OP7VaBEFQQap601IkqdR2gJIFKj+C10ndwY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bx9l6d1qDpxxIoUZ5h4WDjJgumDaUEKy0R61pSSo+dTV4JJZzV8vYVpzAMa016a0o30v5WX9Va0OVT5jRilPlDfoDrMKaA0xiJYHBX8hH5TzhV/nOj7Mo4TK8uH1hXWMWU7XCYLrCnLAn+oKJrZHnHPNjRLpPZz+8VRjgZgVZ58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=VHOXLZEK; arc=none smtp.client-ip=93.93.131.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="tWIuVozy"
+	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="VHOXLZEK"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=chiark.greenend.org.uk; s=l.chiark; h=DKIM-Signature-Warning:
-	Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date
-	:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=6MGZiBsM8Vocchq0T0rZPMck/O65QwzJfzezHNvpyTc=; b=tWIuVozyLQoWcsr46SH0ahaIXi
-	s/0sSWUohoFc3s7fn6Vdy05HPpD3HwIsSqWzucAaIYfwzSlCw7tH3+lJdnsN2vo2PpBrB+Xezz5EA
-	ZYtGKNt+NPhqiFPxrTYz38VgLTjHJJh+5J1H2dQaOQB4+lmUzhY6Ox9EYq2e1Toe06WlWfb7vlQb6
-	ZXlgC1J9BKKRHy6osDTcFJs+MKt8KPJqvqkxEvFyV9l9fFSEikAPSHlSxaCphrrfqPRzKT12Pvqzu
-	8kP8HwwQThKJ2wKUCFlI7q94kUmDyAK+hGe8rWS2LctgcVV6VnQA8ek30nHSBHCd96KnuDA2qbHke
-	cHKZLanQ==;
+	Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:To:From:
+	Sender:Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
+	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
+	List-Owner:List-Archive; bh=TpmIlTyAIJUi0mH7PSANNU11dtuDJJkEEoVz04fvUvc=; b=V
+	HOXLZEK3/5D00XXvFW3v//ZfbNhl77sFsRkxSEIvW7SU5NeqPRsy2kZCWdDTFeX9xsTHvvKa7ARlv
+	ua6AimNRpaViLDaJkfkDnBvFvVi+SliHCow/yGH1k8v7Inn3odHq/tCQ3HbS8qxONqn6OYR/3C/78
+	PgBj4ER0Yt0efguYtU8u9MNk7/TyAgME2cFBUfJSx7WCJG+thodgbvldTs0RoAMTPISuqT1H+N/ql
+	CuuVZdvclk3MkNSXXhgYCTs/QOFL0D5/3UXSG+4yUVm+nC+Kq2Pzi5CoVU08Mljc3gVz02FpXM2/C
+	8gb8pPW+5Hc6IeekyNEN/ixSJWiUJFbkg==;
 Received: from [172.18.45.5] (helo=zealot.relativity.greenend.org.uk)
 	by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with esmtp
 	(return-path ijackson@chiark.greenend.org.uk)
-	id 1wghy3-0000qE-Dk; Mon, 06 Jul 2026 12:58:31 +0100
+	id 1wghxy-0000qE-SW; Mon, 06 Jul 2026 12:58:26 +0100
 From: Ian Jackson <ijackson@chiark.greenend.org.uk>
 To: git@vger.kernel.org
-Cc: Ian Jackson <ijackson@chiark.greenend.org.uk>
-Subject: [PATCH 2/2] git-subtree: Bail out if we find output from Rust rewrite (test)
-Date: Mon,  6 Jul 2026 12:58:16 +0100
-Message-ID: <20260706115816.20267-3-ijackson@chiark.greenend.org.uk>
+Cc: Ian Jackson <ijackson@chiark.greenend.org.uk>,
+	Colin Stagner <ask+git@howdoi.land>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/2] git-subtree: Bail out if we find output from Rust rewrite
+Date: Mon,  6 Jul 2026 12:58:14 +0100
+Message-ID: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
-References: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -51,40 +49,61 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/26/2626ff584df1644c89bafcc8f3c9745f.pem
 
-Signed-off-by: Ian Jackson <ijackson@chiark.greenend.org.uk>
----
- contrib/subtree/t/t7900-subtree.sh | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+My rewrite of git-subtree is coming along fairly nicely.  I have done
+a bunch of data model design work, as well as successfully implemented
+the "split" operation.  (It's several orders of magnitude faster than
+the shell script implementation, and produces much better output.)
 
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 4194687cfb..e8fa640166 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -439,6 +439,24 @@ test_expect_success 'split sub dir/ with --rejoin' '
- 	)
- '
- 
-+test_expect_success 'split fail on RIIR git subtree data' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD &&
-+		# simulate RIIR git-subtree generated data
-+		mkdir .git-subtree &&
-+		echo "# sabotage" >.git-subtree/config &&
-+		git add .git-subtree/config &&
-+		git commit -m sabotage &&
-+		test_must_fail git subtree split -P "sub dir" HEAD
-+	)
-+'
-+
- # Tests that commits from other subtrees are not processed as
- # part of a split.
- #
+I have concluded that it is going to be too difficult to have
+bidirectional interoperability, for a number of reasons.  One reason
+is that I want to change the way split commits are constructed and
+they should be as stable as we can make them.
+
+Another, bigger, reason is that current git-subtree generates unmarked
+subtree merges (ie, without any git-subtree trailers); reliably
+figuring out whether something is such a merge requires a complete
+history walk, which is very unfortunate.  To avoid having to do this
+in perpetuity, I plan to have new git-subtree assume that commits
+which show signs of use of new git-subtree are not unmarked subtree
+merges generated by old git-subtree.
+
+So mycompatibility plan is:
+
+ - New git-subtree can read old git-subtree data
+ - Old git-subtree (this one here) will *not* handle new data
+
+New git-subtree needs an in-downstream-tree config file with at least
+an indication of the downstream project name, because otherwise split
+commits can be quite inscrutable.  So the presence of that file is a
+convenient way to signal the change.
+
+
+The purpose of the present patch is to help prevent messes, where old
+git-subtree is used *afer* new git-subtree, generating output that no
+tooling can handle correctly.  We change old git-subtree to spot the
+new git-subtree's config file, and bail out.
+
+Right now there is no new data in existence, becauwe new git-subtree
+is not useable.  So right now this change has no effect.
+
+But if we ship this change now, users with this change will be
+defended from this lossage, as their collaborators start to use new
+git-subtree.  I'm hoping to possibly persuade distros etc. to take
+this patch as a backport.
+
+I wasn't sure how precisely to word the error message.  I chose to
+refer to the new tool, as if it really exists.  By the time anyone
+actually seex this message, it will do.
+
+
+Ian Jackson (2):
+  git-subtree: Bail out if we find output from Rust rewrite
+  git-subtree: Bail out if we find output from Rust rewrite (test)
+
+ contrib/subtree/git-subtree.sh     | 18 ++++++++++++++++++
+ contrib/subtree/t/t7900-subtree.sh | 18 ++++++++++++++++++
+ 2 files changed, 36 insertions(+)
+
 -- 
 2.47.3
 
