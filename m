@@ -1,92 +1,83 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B679B43637A
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 06:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58D339C62F
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 07:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783320404; cv=none; b=dCa+p2ykAzZF0UyfM/43+INxKoh0oBkA9Kd0DJDzrRJdqxQ++x78ekjHZkJKyijRyTyBADHtkz023xwEp4e0Gy8mOxOgsvGr+1rfO/7DkFUVL8UcVpiG5yzRhjQRCsvoO+uyDz3FSCDHXM9gd9M866NbcUVu5gmhZH1bgtjiNRk=
+	t=1783321987; cv=none; b=ON71Sak2vphR9LBzNOQSPhqmvDBiiTYuAwo6JfVZQ3zVU1PCHIDzl5frtrzoGrDd9jGFbmf2dagcS2sqnC9xfAo0ebrT59mX/LWnh97CPz72VcFwlt62jU/o23xF3NkjgzgLeEJudlqCgZAnR6Vjn5CX9PgzjxuaPGmHkMU0jl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783320404; c=relaxed/simple;
-	bh=G34KVDPblzQXYvxPxe/O0/HVu6i1RLSr7SPG+18kO+o=;
+	s=arc-20240116; t=1783321987; c=relaxed/simple;
+	bh=R5p83m44S5WPpOVnEhCFRAH7OQs/WGbc/22FAcomi+k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T4dCDrInVCQCjd/atBI4+Z/TR0wduayBArgF8doMagwSsW5hw+nM5uhDbjNylToYdC0W163AtLom3F1BNCBrNQwpqj4wSEJtcV85GFLD4/0U9LwinvRlydzpovHXihlwRnOSDtoYH9pMSoM2+ZFSUrdY48ORDZ7r3WFRJ4SM7Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BUYftc2A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YuMyYli0; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=mgTfegmlVCxuI0rlaClsWdFyxIkK8Id7VYRmpkamy4w9Vig/HNcOm6cpiRY3kiUpMwe6x00fypVd4QPMW3UVp9CzoifWOcw+6MP0frLU/cWs9m+wVjKWvn0X6qNXtgBclWUwlfZn6Lk9jnwShroG7IdkbzEO6xKhUCj8QsgvGzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gLtnPAWZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EuxQmrKq; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BUYftc2A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YuMyYli0"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A6D067A00D1;
-	Mon,  6 Jul 2026 02:46:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gLtnPAWZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EuxQmrKq"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CC4787A00D4;
+	Mon,  6 Jul 2026 03:12:59 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 06 Jul 2026 02:46:28 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 06 Jul 2026 03:12:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783320388; x=1783406788; bh=bnxh78FB7B
-	t/Dg+nO7Jfjn2Ts1WaghEIzXIWqJnHGjE=; b=BUYftc2AxeMdClX2RXHSJp2v9m
-	1JIaTrTHT/ak1fyY9asdZzf9f6GsjQscAp9RietyfJNk8iZOsUSPQbg+/17vNpaK
-	3Zz1y3hZdVRQlF17YUU9pDFO3FHfdSm9tBR/liRxbRAGlx90cOFFiSCeVacNSzAL
-	tB5mP477d0sFoUVc6Bh5gUT4Qj6/Q1MWos9rcS15zUj+7cwQ72Z/QsAweMyf/gBa
-	ZtjOK2H2Dh7I7WAx0EI33qdjJV9frrObPk6b4b8P8IpHlhkbi+FwRs8YNVa94m72
-	m0xoeklsRr3txCxa5zG1Ex5LxB3++o4sW8dVty7EPep08sazHlOpmdFtYPBg==
+	:subject:to:to; s=fm2; t=1783321979; x=1783408379; bh=0Kqp0Mj41l
+	u5/09Oq1L4xJ+QmGu/k9qLESuQX9qePio=; b=gLtnPAWZyJgoc4vJGjRSuHX0qY
+	7nMCOe1lMp6XzIV+2/VAvMOEI7yhgJaxeho0Rm3aw1EZa0wDbf4koQjR8Fpyv78g
+	aWTrbQO4GJTZnrdAFnuUPKkO8BTPzPOMCBVFf50gpSsB5X+3qQaVWDWc2c9TNIZA
+	RYwomhP3Kvs0jefp9kRm+JmcSCTQf5MmyIg8MJ3jY0/oOtcIsvkPXU1p72kLzVGP
+	nyrCy6hBZS4naTF3oHq3RjKGDkMC4dSZiqzturjiw6vgw+IQXdI5S6A1mtuJZlDv
+	msUCQQJf5AWlkxTmJMVXRHtnY0bNnCPh2x+iMDDqAB6AQat+Y4aLFJ0C3l3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783320388; x=1783406788; bh=bnxh78FB7Bt/Dg+nO7Jfjn2Ts1WaghEIzXI
-	WqJnHGjE=; b=YuMyYli0plkLeXr/hrzpVkLdx/mHEP+b1W8JTOkZ9nLeUr4XrLN
-	KS3a8fLaaO6KoFH8PQBppnGrE5qU2Tvp7tKVqXiFwk2Pnk9Sgtl616IdLew/3A79
-	e/A2e9WQL/682rXDUCHokaM2ChCK++WH8tmlfFNhqfgtVNI5Cuu7tSCB1PlnMCeM
-	+5l25XZoK7lMFkedtsTzWiMwSn4SybhxIHp+Z8SwPYpOqajLskVsYJgLFCblsYOd
-	pS1oAjJKh+wqK2FOlT+7AEinIAVODABgqT0qrTA8FYDGdLS27ZgNnv4hZKV6qu4i
-	Ck2NIEY6Mnl1ubYv2iNe3UzARnKkDvhy18w==
-X-ME-Sender: <xms:RE9Lalsb_-1OwMsltcxl8YKejWxnEnZwGWp-tjusdzfucskoqVasOA>
-    <xme:RE9LalVOQ8WM6iLxOkgNFF587UJM4TvF1hkiDaIEgsZy0DSG45xu_EP4coQ8b0Yzi
-    L25ORxm8XdqzOdrwTvKUdSLecZFHw-DcvasX8N_C3MStZJIy03MGg>
-X-ME-Received: <xmr:RE9LahFLdwW5iUXy34giPzzs6EjMuez2fTi5OvO2eGddlRh9DQFhcCZ7haLon9_k0mrOXbbU0MyPoggeE3zG60awaar8BTR95yM4S41bztI>
-X-ME-Proxy-Cause: dmFkZTGFKrt8GDxpPqF3Ftka3r7Z7RUYMxENTA2B3ASQ2g7wEwiluZ9pCdxksxLEfhnisT
-    wFFMxtSZ28MvdwAVJDJlFzLUrx6/+xC6q06+LJFaM2P72W1nuZCLVBZ+gteTUXtb6RjZ64
-    Lk9OaQO8j/lfZI2vZM5/oHiqYRph4cnvCHekeSRcq1YVU5hRjxnQyksSmYNkBTcRVuCd1W
-    GCZmwOmVQg9DtnOH1FzjCGKWwJpwOrBpzMCKgG2RukQr2o3tuTmZsRHBJPpGjnEAaRTsv9
-    8f41Bp9HWR4OxxpeUxy/oUF7t23lIQwZXMv0stM/dXQtp8XaYb061kShKLJWAniHEBJuB6
-    RsZG31ET7YmMmQ0Tp7mcRWDYno0s0H0BFo+CsvewRLeLKaR0Cd9onc8/U9wPZgGCHNJuiO
-    ZanfIfg1p/Thy59DkkTBCMtiHIyb57bFzKo/hBjietjIVZ6oT+dN5tWO1W+0BIDE7ZH5X+
-    itqYbSZxv66kRCsfImqgefkP0Lr98jy0vTVTDGGxyNjX+DWO0xDCRtYVIKhFE9lI99wGVW
-    uFHHTB+NQanLBb/qF2b6bZPcdCA4kAlBgqwrvNGo7Ebv0PpC80rMFCUX6aeNNlXpqclrkS
-    J/5DsdaOptbL20oVh0+saPBVW5HG3Bu55cg/tSmBtjtXhIIRnwvecNfest2A
-X-ME-Proxy: <xmx:RE9Lan1mifhfcrPBYFGgmXA6cZ7MIVfYIpnG-bXBkKNpgLGkRL_G3Q>
-    <xmx:RE9LajOu5lqgAMGJf0MQwSMpVMjbq_yXPX8Xtl7fiEKPyBi2MfyxUg>
-    <xmx:RE9Lam5Xusm65A_oM2JLF5FO8ocyS6mCEftUdamcG9YHH5l-PAlOqg>
-    <xmx:RE9Lat1VhaL5MpQaPWHR-wmeCUHw1zYzyK3HUkzWiqv7_-AN4f3jVQ>
-    <xmx:RE9LagcwZ2xl8_wQgHpTIsSNkii5j8Pjl7PcnorIM-fYDqH8gzdNl12t>
+	1783321979; x=1783408379; bh=0Kqp0Mj41lu5/09Oq1L4xJ+QmGu/k9qLESu
+	QX9qePio=; b=EuxQmrKqUplE51oO9qBUxIIH2eldoQjSUSFsmfH7glDX1YMbWol
+	m2x5MmElR8wSro+4wBruxERYm00g5iR2tBYyg0yyIQZEDuj4W7vu7n2v69jO5B6U
+	21RHfwOlwLvcK9OCHBIQfKgpjTlwrzx68sdfFK5mahX00NlGEB5q1Y6ThzuWUYDt
+	0eviOBYTG46S+H3yLgUIUwZ9ue8DSJ69TWFbldSszAcNzz0YrzVWpV/LTB4IJ/Ka
+	0d8YfwmbjAxoB51tCC4pCsUV9hgjDpwOhweEnwYytBRIRY7BivJos4K4ld5E35fj
+	KE4Z4l6e04eu8zFFNsSVPSF8fXefOyzbR5g==
+X-ME-Sender: <xms:e1VLalnTwUBYaHcsuME98370PK0IBtz_sOig-rnBVmlgB3Z66b7QpA>
+    <xme:e1VLaoTqRmzl_FuTXDoiJZhCBfWDVgWgNKksX4ra2yjT-VlhGptV_Lq_ZwDgVn8vH
+    NeiQmtf826A9wlwoscRKWKCZwqOzE9bxMD5jXfW_s3aWmD-DWh14A>
+X-ME-Received: <xmr:e1VLapB6Eq_p9a9Zn_Hh-se-xTOVoz9VrVsIObbM77ZG3NAy78MJA-P4IREID9aoghulpantbdVUynL2floRu6ADJpKvLqpUojusr3VigVc>
+X-ME-Proxy-Cause: dmFkZTGUNqPqteeLNjFeEkeAAGY8sZ8B1Q0e98o52LpIYiUvup4bfElqttbneVdutLhG5T
+    JsOYc9Ilfqwe0s2m9LB3EgbGQVLpD0Qg43SlEmX2vaaPyDd6WI9upWnb0DH3DtVKQkHqZw
+    QlX73PdYOHOT2vWYDe07lBcUxa6Eryk8lr5uCJL43FK83ZPJUwHb6xYxaW/XMVFXohP2/1
+    RfUeWU/0BhWaTD94WALfIUxdXctUJd7LBlaOsVS++Wca060eBZh1xiW5Kei6ockWYIiYQB
+    SGnElYn+5q51oegL0GiGBZrGSRkHFjVLxzfQyhqDo6bqZRL4p3rL9Y60UxSfFdzkYb8iG7
+    RcZqvj5FR8bd60pkLG39j9C9pnLny7j98c/TWI4GVKUrMA8L3pe7SMY5NtE+Nt6kgTNEbP
+    G6ex/7AJ3mg++PyRi0GYbEZvrQs0xwnoQG4myxoFG72t2/NkKNwy1Sp5Oxfmn5KuneQJjR
+    wOjhDPMsoeBNptsu3LHOuyLRCAnJ1Ff16lL6mP2oaNLfwgOBP2GdLgOjFh9Cj/WIletCKz
+    5BiRrCh4lgJdSCL83W5We0nWKCQHGHUdSlXxiHqWVDhNpCGd/gj/Isv3IqTxKGkby1kbKp
+    9IoB5WlyR/bEZVISNcUf/xSvjwQ9bb4zzXpC4xZWAgsNETQBOvOeMViUUxMg
+X-ME-Proxy: <xmx:e1VLavQShuoHN3yfNEckAInuFnwhBEbSN8xrxG3M9UoOtTsvfFicpQ>
+    <xmx:e1VLanrFbstCjYFZF54YInFsR3lSUVAf5L4GcW0KVTllIPIR4znjuA>
+    <xmx:e1VLahwynwbu5zVhOnZQxnt5MgXln3FYl1SkasTdktzHv1F4gL6JJw>
+    <xmx:e1VLasKHcMCH9GcuiCLZ1EH3MHWasluaX_jC0Nb4e20aVoy1KPtbxw>
+    <xmx:e1VLah570glo2qSOdqaY2yf5JdT3G0Nf6wzRK8iYedrMEqV5Ou8Sq9J4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 02:46:27 -0400 (EDT)
+ 6 Jul 2026 03:12:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d5bc0a09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jul 2026 06:46:26 +0000 (UTC)
-Date: Mon, 6 Jul 2026 08:46:23 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0ffb8eb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jul 2026 07:12:56 +0000 (UTC)
+Date: Mon, 6 Jul 2026 09:12:53 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Jeff King <peff@peff.net>, Michael Montalbo <mmontalbo@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: weird quadratic reftable behavior, was: Re: [PATCH 3/3] t5551:
- pack refs after creating many tags
-Message-ID: <aktPP_aRI5Xfo4RA@pks.im>
-References: <akIJQbOUbdBbkTef@pks.im>
- <20260629203527.GA1895313@coredump.intra.peff.net>
- <akOG0oMu2KTqqyW7@pks.im>
- <20260630234702.GA3759976@coredump.intra.peff.net>
- <20260630235850.GB3759976@coredump.intra.peff.net>
- <akSxCUfm2P7ocLJX@pks.im>
- <20260701080014.GA3748390@coredump.intra.peff.net>
- <CAL71e4PfXA-ixKR6r7fu_7_QmdzK+rTRs29mOsUYKaq+_a5q5w@mail.gmail.com>
- <akTm7BDohsy85sN8@pks.im>
- <CAL71e4OavgfXtjN7QxkvmctS3fTpb5MtDsi-iUg=2izZCG5yxg@mail.gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 4/5] builtin/refs: add "create" subcommand
+Message-ID: <aktVdaB2xRk-iI_8@pks.im>
+References: <20260630-pks-refs-writing-subcommands-v3-0-deb04de1ecef@pks.im>
+ <20260630-pks-refs-writing-subcommands-v3-4-deb04de1ecef@pks.im>
+ <87qzlk2m0h.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,34 +86,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAL71e4OavgfXtjN7QxkvmctS3fTpb5MtDsi-iUg=2izZCG5yxg@mail.gmail.com>
+In-Reply-To: <87qzlk2m0h.fsf@emacs.iotcl.com>
 
-On Fri, Jul 03, 2026 at 02:09:45PM +0200, Kristofer Karlsson wrote:
-> On Wed, 1 Jul 2026 at 12:07, Patrick Steinhardt <ps@pks.im> wrote:
-> > >
-> > > I can send a proper patch if needed/wanted, but I might have missed
-> > > something silly here.
-> >
-> > Nice gains. I certainly think it would make sense to polish this a bit
-> > and then cast it into a patch.
-> >
-> > Patrick
+On Fri, Jul 03, 2026 at 04:19:58PM +0200, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+> > index 6475bdcc62..e6a3528349 100644
+> > --- a/Documentation/git-refs.adoc
+> > +++ b/Documentation/git-refs.adoc
+> > @@ -181,6 +184,53 @@ static int cmd_refs_optimize(int argc, const char **argv, const char *prefix,
+> >  	return pack_refs_core(argc, argv, prefix, repo, refs_optimize_usage);
+> >  }
+> >  
+> > +static int cmd_refs_create(int argc, const char **argv, const char *prefix,
+> > +			   struct repository *repo)
+> > +{
+> > +	static char const * const refs_create_usage[] = {
+> > +		REFS_CREATE_USAGE,
+> > +		NULL
+> > +	};
+> > +	const char *message = NULL;
+> > +	unsigned flags = 0;
+> > +	struct option opts[] = {
+> > +		OPT_STRING(0, "message", &message, N_("reason"),
+> > +			   N_("reason of the update")),
+> > +		OPT_BIT(0 ,"no-deref", &flags,
+> > +			N_("update <refname> not the one it points to"),
+> > +			REF_NO_DEREF),
 > 
-> I have a small draft here https://github.com/gitgitgadget/git/pull/2166
-> but I am honestly not sure if it's worth submitting as a patch - the
-> change is somewhat small, but spread out, and I failed to properly
-> reproduce the performance win in any realistic scenario (I had to
-> disable compaction to see the improvement).
+> Can `git refs create --no-deref` be used to create symrefs? Should we
+> add a test for that? Or can it not
+> 
+> I understand the symmetry, but does it make sense to ask the user to
+> create symrefs with `--no-deref`? Feels a bit obscure. The docs say:
+> 
+> `--no-deref`::
+> 	Operate on <ref> itself rather than the reference it points to via a
+> 	symbolic ref.
+> 
+> That's far from obvious for a user to realize they need to pass that
+> option if they want to create a symref.
 
-An easy scenario where you don't have to disable compaction would be
-what Peff posted: you create X references and then delete all of them.
-That shouldn't result in compaction and directly hits the case that we
-care about.
+It doesn't cause them to create a symref. What this flag controls is
+whether the command would fail when the refname exists already as a
+symbolic ref. That is:
 
-> I would want to rely on your expertise to know if this change
-> would be valuable to discuss as a patch at all.
+    $ git symbolic-ref refs/heads/symref refs/heads/target
+    $ git refs create refs/heads/symref $OID
+    $ git refs exists refs/heads/target
 
-If we can demonstrate a significant improvement in the above case then
-it would be worth it, I guess.
+The git-refs(1) command would have created "refs/heads/target" in this
+case, and by passing "--no-deref" you'd instead make it fail.
+
+This flag is somewhat weird. Having it is probably a sensible think to
+do, but now that I think about it I wonder whether the default makes all
+that much sense in the first place. That being said, _if_ we want to
+change it then we should change it for all subcommands.
+
+> > diff --git a/t/t1466-refs-create.sh b/t/t1466-refs-create.sh
+> > new file mode 100755
+> > index 0000000000..cfb21bf863
+> > --- /dev/null
+> > +++ b/t/t1466-refs-create.sh
+> > @@ -0,0 +1,151 @@
+[snip]
+> > +test_expect_success 'create fails when the reference already exists' '
+> > +	test_when_finished "rm -rf repo" &&
+> > +	setup_repo repo &&
+> > +	(
+> > +		cd repo &&
+> > +		A=$(git rev-parse A) &&
+> > +		B=$(git rev-parse B) &&
+> > +		git refs create refs/heads/foo $A &&
+> > +		test_must_fail git refs create refs/heads/foo $B 2>err &&
+> > +		test_grep "reference already exists" err &&
+> > +		test_ref_matches refs/heads/foo "$A"
+> > +	)
+> > +'
+> 
+> I was curious about this test:
+> 
+> 	test_expect_success 'create succeed when the reference exists with the same value' '
+> 		test_when_finished "rm -rf repo" &&
+> 		setup_repo repo &&
+> 		(
+> 			cd repo &&
+> 			A=$(git rev-parse A) &&
+> 			git refs create refs/heads/foo $A &&
+> 			git refs create refs/heads/foo $A &&
+> 			test_ref_matches refs/heads/foo "$A"
+> 		)
+> 	'
+> 
+> That fails. It that intentional?
+
+Yes, this is intentional. We didn't end up creating the reference, which
+is what the user has asked us to do, and hence we fail.
+
+[snip]
+> > +test_expect_success 'create with symref target and --no-deref refuses to create reference' '
+> > +	test_when_finished "rm -rf repo" &&
+> > +	setup_repo repo &&
+> > +	(
+> > +		cd repo &&
+> > +		A=$(git rev-parse A) &&
+> > +		git symbolic-ref refs/heads/symref refs/heads/target &&
+> > +		test_must_fail git refs create --no-deref refs/heads/symref $A 2>err &&
+> > +		test_grep "dangling symref already exists" err &&
+> > +		test_must_fail git reflog exists refs/heads/target
+> > +	)
+> > +'
+> 
+> Would it make sense to add this test:
+> 
+> 	test_expect_success 'create with symref target with --no-deref' '
+> 		test_when_finished "rm -rf repo" &&
+> 		setup_repo repo &&
+> 		(
+> 			cd repo &&
+> 			A=$(git rev-parse A) &&
+> 			git refs create refs/heads/target $A &&
+> 			git refs create --no-deref refs/heads/symref refs/heads/target &&
+> 			git reflog exists refs/heads/symref && false
+> 		)
+> 	'
+> 
+> But that makes me think, this option `--no-deref` is pretty obscure for
+> use with `git refs create`. There are two situations:
+> 
+> * The symref doesn't exists: so --no-deref basically is forcing the
+>   command to create a symref. That's confusing
+
+No, it's not. It tells us that we only want to create the reference if
+it doesn't exist and is not a symref. Otherwise, we'd potentially create
+the reference that the symref is pointing to.
 
 Patrick
