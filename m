@@ -1,182 +1,172 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64A63AFAED
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 10:49:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C36E3A48F6
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 11:06:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783334990; cv=none; b=SKQhReYUMrmQ3sQR2sUx1tzYbakSkH2EvHjXEjcFIslw1IJWjbEKxnwy3nr/a9H1QkZttMRINcDZkHPB7OebSTM3IMP8qaaT10MCSszNw7Qnypy98hMUvbyMs/CvnVeWYE87Oy1s5JnE4EqGL0/O0z9Dulvt0fgHVrg41uKj/vQ=
+	t=1783336013; cv=none; b=doaOHLHS8YpqBkvAq7RGIDUw+xyYkxcJAcIVtAgMbAk8VHCYvsLYn2HEFL7rCTgiV+D5pCy7OmA4mAsXQOvizye0OrjmOq2VeYclzv0ID7q+jqXHTKrdoGyLl5TwjSc2Vf0TqUTkWSed56f8iVd3XH0NxBBwQQs5KvtO9rEJ1Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783334990; c=relaxed/simple;
-	bh=PtUu6WF79gvWEFWmYHin9HXIy9xcev5A5brdf2zjRW4=;
+	s=arc-20240116; t=1783336013; c=relaxed/simple;
+	bh=+QpeY73DApjr7eSEB77jiy0lC6SwriorF9HnCA/seVU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TjscQoH5Qp2zX7SiSnJ9TXwVXmDcQ8CxlUaYBwrIfa2u8XCQUAHjqbTtCbvErP9xMniED0fO5WEGjwo81nxvizqTLpFfSKM4cvsef0QgbZSkWFnpUpmbBsib4UsOourMC+LfemZ3HUPyb9KjbTLPzT15mtTVasZfxP2uEshtWJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N0IokNpw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gaqSuRc3; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZwqNOXeNNCWbCOVvZ6OTnW05varYHMc4Gjh+DWrJUvEsmgjLGryUP+zUs+zZOgDxE4m8kEr7SxVILqoGWcFPeWfACeg2lIeQ/302ZBKYWnzMCtsvu3eaQbm5VhUdQzbtV99cb4ctsHio2PR2lRwB818PHzTnDDmCIQT9tCyzoNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=epUdpuap; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N0IokNpw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gaqSuRc3"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id E88831D00124;
-	Mon,  6 Jul 2026 06:49:47 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 06 Jul 2026 06:49:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783334987; x=1783421387; bh=vzMz2shuzS
-	vHsZURfTrLBEC/GZ5Qji63xm3SwYUxesU=; b=N0IokNpwokKcsTbgKf1NbUirOh
-	+E6sEU3vSQ8DbXe5RUP8YHlQ2lsZOzlBwKeT5i+IXtxbOL3/5fGuJCkzXPu+JVJw
-	1S8v1/3o8yW9Ux+OuFAh08/+NL72CncMFUyFj7MUKlNABNztyAQFr05s5J19o/Yc
-	vOjHpuBmYAyKnYa1g67wzU1ceGTkPw8+gBL2Iouq8nQ+lNZsyd9Va3YpTC+t3dns
-	grl+6EzvHelh777lyyFRORlHqOfCaxCQYoJGRTTIa5swogyWWbmnj8ZWlQPqx0JE
-	yeVY33XCcDsvYi4xXmxdJCIDa+u1CZSI+JIYcEiAW8b8Kmm0gT0JnclxjYhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783334987; x=1783421387; bh=vzMz2shuzSvHsZURfTrLBEC/GZ5Qji63xm3
-	SwYUxesU=; b=gaqSuRc32deSWfWC4KY785W4XUm1o/KJq4s4efOgx9BGyRfjEc9
-	1+kJXVGNytjn+2bUxA2MjOP0tBYDCdHJqEvnN5xC0rxRBjXsRPGp0VUUnNwYZQDO
-	oWKQSsbl0zXS8vAb+7hbnq8BFo9ZK4fiOu5vgoXBNsCmhaf6OrBcmlLO5GIwG4Fy
-	pURICu2dcbPvHvWgP6HO+7/TNrMjDyD6CzkwzSIS6loYC7DCgEn5qXCMxx0eBpRv
-	mx3b2HJDcJhDrFnmNAgi/cjioMRN6U6kvGywDrWrK7BrrxRavrBRA7g5iLkUGeHH
-	yVJAjVKcBLNmiCbMsUmhwX+X5uD45fyjHLw==
-X-ME-Sender: <xms:S4hLaiUvuhJ-B3WaFn_e7gbfiG-oRaeW73fl93Sivomotww65jlZAw>
-    <xme:S4hLalc36uamrgn0LnO9EcCU5in9vFXwh-bVfaTrog8_gugjETKoy2mJb5Wik3l0V
-    E0KVqoxUGwx9CJN18_kaoaC2xw2dHIrMr0H7H9cW_yOCLnB3GhaVg>
-X-ME-Received: <xmr:S4hLautMuNj7LrYSqjq4YY26AwLyqxpN8sl42jyxKp-iNAkvda9oO1MkbAymV3r0X8ak1r1itcrp9_6512jdm5Yjjm2SW2wBj9y0hHlT2xU>
-X-ME-Proxy-Cause: dmFkZTFD10TcuDPAH0cNPpo52DhWt8u1rrOL7/OIeHoKTIvCvIdckXJpBmr2UXeFwFvYrD
-    z+0W/4MUnM+ru2eRQexz3unX8Z9Q8Vy27RUXusUOhxK4ycDXB/eAPwbk+6RAKGczbMoZPR
-    fGxDn/cg1Y9n4WifAw65C/KqnRJ3vzKG/6w+uqeCZ6JI9VGxmPalJWojIkEZTLone+CFHN
-    x0XkFIRlXzTnaPyfcVqwFfCX7P9AlMk5qwJz+I75WeyeQ7jUCGPmL1tVZm8yfqTVEjDJd0
-    Qn3HNh1MXd1guxwVvs08hTCKZ9cNZrwp/j4R8eIz4Eo/mhqz0ku9UJJlNtoSz6G8t6Crcj
-    OrZq/7avnp9XyZi+F3MEYuI4CsgWmgQoJ87SVAIiezgd7vWqDofPEEV5jGFce7JrL+9uaB
-    4vhoS1FeW/lw0xCc/lKg/0btYlsewjnoEu8+LLbkRrlJ/soIJA0dyfiXVGa1EL3LCYg+Pl
-    bwxlA6Yd1VHnWy3TDYWOf+nIsbYZ6/UmtentaYtajiL/uWMr5llOlaNdG9I1iMYZZ3Unrf
-    ok0mdMJyL2ixhW3n+sgsFJIu0OBbvHry4WOImtAaKJClGEU76I+CSD4BXvV91owMqrmxEn
-    Hg6BvcNK0plh/4XujiaDM7TenlgX8f1H/O5RxtxA9tVlzsQVSr3JANDCnEVQ
-X-ME-Proxy: <xmx:S4hLak8M2ROTmBl6eOmoRvTAvqQ5VoJ_n6iSi23BaKSkyRcgTr2AkA>
-    <xmx:S4hLap30YoSAgZSyH4pAOD1DyAQVGLxuc55-uiJadyBTHHzvGBh5dw>
-    <xmx:S4hLapCOn_AqY9QCp5iF2lu-YzgHkLVr8TzZrUeHcv-XgGK1qVRy-Q>
-    <xmx:S4hLaldb_nDIdp06NnNELLXoszXLykSVpy30z674N50sA0YutpyGaw>
-    <xmx:S4hLahYBTHua6Vxgvy5IGWGMDZYwOlW0FCeaSRXOgHf3QLoz4oQHMIm1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 06:49:46 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 484e459f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jul 2026 10:49:39 +0000 (UTC)
-Date: Mon, 6 Jul 2026 12:49:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Shardul Natu via GitGitGadget <gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="epUdpuap"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1783336003; x=1783940803;
+	i=oswald.buddenhagen@gmx.de;
+	bh=v7rzjw8TGpNTVbQI0dK4j1lJ1o6F1LntI5/SvcppBVA=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=epUdpuapqFSfiw+1nX4OcITKdg5xrm7YrGBLXgZs/csQMuU5XL06b+F+au+IjDgq
+	 ptOI+bROYIdhUYOolidiX5Dn+SlBw9gGs3MOxRfhkDy3adBtePGNY6fPYU/mfUoDe
+	 /CaYfJspvYBf/+To41NjSynMKSwYKd4dXiyNDis6TVRJSXedslGWbdCpC5/IWMAcd
+	 deVlgyIbDevZb+9biias3JPIWmH+rGJUsArrSfA3Knx5RO7VTzvVjiB4lSVS8kOU6
+	 XCmGHmL/Z0QinuCttr6gbG1/eBrsLnvca60NFVh2cGIvsEZv4Ur8mgH1GFwvjMQJn
+	 xEMyXN+/0FzQrDUNig==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5fMY-1wiM7l2xTu-004d5D; Mon, 06
+ Jul 2026 13:06:43 +0200
+Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
+	id 1wgh9v-GDf-00; Mon, 06 Jul 2026 13:06:43 +0200
+Date: Mon, 6 Jul 2026 13:06:43 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Shardul Natu <snatu@google.com>,
-	Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH v4 2/2] Makefile: support universal macOS builds via
- RUST_TARGETS
-Message-ID: <akuIQADP_aRb5pY6@pks.im>
-References: <pull.2288.v3.git.git.1783030971.gitgitgadget@gmail.com>
- <pull.2288.v4.git.git.1783188355.gitgitgadget@gmail.com>
- <88fc2e0bd88756a07467bdaf75f6a344d2e58b41.1783188355.git.gitgitgadget@gmail.com>
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 08/11] sequencer: simplify pick_one_commit()
+Message-ID: <akuMQ45aQejRcQ_Y@ugly.lan>
+References: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com>
+ <cover.1782833268.git.phillip.wood@dunelm.org.uk>
+ <f51751fa3ec1545b7304b869d91d21b055218755.1782833268.git.phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <88fc2e0bd88756a07467bdaf75f6a344d2e58b41.1783188355.git.gitgitgadget@gmail.com>
+In-Reply-To: <f51751fa3ec1545b7304b869d91d21b055218755.1782833268.git.phillip.wood@dunelm.org.uk>
+X-Provags-ID: V03:K1:mQBWTHsz5+bMk2ShUFyHhMXUaMFDu3tmyXShPeTFjgg5D+nvttt
+ IPX0/pjwSdSMsqmWHT96lCHxA9Q6/TdDKGP9h0jxXZE5KjUtMOJGJUKfsnXV9YzSbyD88oa
+ tBAI+d2d+D9/quil7VWV3Tf/hZWMT/4p6I88q1PL1zLCEPCQ9NzaBa0zj9eS2j71TdtaHcK
+ w/pLQuigcHclLi2do53EA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:zpLmvP/EC2c=;EGT0npsxG4Wgrf210Bt9T4SLqR5
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 04, 2026 at 06:05:55PM +0000, Shardul Natu via GitGitGadget wrote:
-> From: Shardul Natu <snatu@google.com>
-> 
-> On macOS, Universal Binaries contain native executable code for
-> multiple architectures (such as Intel x86_64 and Apple Silicon arm64)
-> bundled into a single file. This is standard practice for macOS
-> distribution and CI packaging (such as internal distribution packages
-> or tooling like Burrito/Homebrew), allowing a single build artifact
-> to run natively across all Macs without Rosetta emulation or
-> maintaining separate packages.
-> 
-> When building Git C code for multiple architectures on macOS, the
-> Apple toolchain (clang) natively supports universal builds via
-> CFLAGS/LDFLAGS. When "-arch x86_64 -arch arm64" is passed, clang
-> automatically compiles and links universal binaries for all C object
-> files and executables out of the box.
-> 
-> Cargo and rustc, however, do not support multiple "-arch" flags or
-> emitting universal binaries in a single invocation. Instead, Cargo
-> requires invoking each target triple independently (e.g., passing
-> "--target x86_64-apple-darwin" and "--target aarch64-apple-darwin").
-> 
-> To bridge this gap when Rust is enabled:
->   1. Allow specifying space-separated target triples in RUST_TARGETS.
->   2. Introduce declarative pattern rules (target/%/...) to compile
->      each target-specific library slice via Cargo.
->   3. On macOS, if multiple targets are specified, use "lipo" (part of
->      the mandatory Xcode Command Line Tools) to combine the resulting
->      static libraries into target/release/libgitcore.a.
->   4. Ensure target directory creation before invoking lipo via
->      mkdir_p_parent_template.
+On Tue, Jun 30, 2026 at 04:28:58PM +0100, Phillip Wood wrote:
+>+++ b/sequencer.c
+>@@ -4981,14 +4983,13 @@ static int pick_one_commit(struct repository *r,
+> 		}
+> 		return error_with_patch(r, commit,
+> 					arg, item->arg_len, opts, res, !res);
+>-	}
+>-	if (is_rebase_i(opts) && !res)
+>+	} else if (!res) {
+>
+because of this ...
 
-Nit: The last item really is quite uninteresting in the bigger scheme of
-things.
+> 		record_in_rewritten(&item->commit->object.oid,
+> 				    peek_command(todo_list, 1));
+>-	if (res && is_fixup(item->command)) {
+>+	} else if (res && is_fixup(item->command)) {
+>
+.. the res conditional is pointless here.
 
-> Once $(RUST_LIB) is compiled into a universal static archive, the
-> standard C linker seamlessly links it with the C object files to
-> produce universal Git executables.
+> 		return error_failed_squash(r, item->commit, opts,
+> 					   item->arg_len, arg);
+>-	} else if (res && is_rebase_i(opts)) {
+>+	} else if (res) {
+>
+and here as well.
 
-Okay, this overall reads a lot better now.
-
-> diff --git a/Makefile b/Makefile
-> index 7db38ecce9..ecada0acb4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -500,6 +500,14 @@ include shared.mak
->  #
->  # Building Rust code requires Cargo.
->  #
-> +# Define RUST_TARGETS if you want to cross-compile. If left unspecified, it uses
-> +# the default rust target on the system.
-
-s/rust/Rust/
-
-> @@ -3022,8 +3031,30 @@ $(LIB_FILE): $(LIB_OBJS)
->  	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
->  
->  ifndef NO_RUST
-> +ifeq ($(RUST_TARGETS),)
->  $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
->  	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
-> +else
-> +ifneq ($(words $(RUST_TARGETS)),1)
-> +ifneq ($(uname_S),Darwin)
-> +$(error Building universal Rust libraries requires macOS (lipo is not available on $(uname_S)))
-> +endif
-> +endif
-> +
-> +RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
-> +$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
-> +	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
-
-With this we now have both:
-
-    - target/$ARCH/$BUILD_CONFIG/
-
-    - target/$BUILD_CONFIG/
-
-Is there any reason why we have to have those two different layouts
-instead of swapping the order in the first item so that all artifacts
-are in "target/$BUILD_CONFIG/"? Essentially, what I'm proposing instead
-is:
-
-    - "target/$BUILD_CONFIG/" for the final universal executable.
-
-    - "target/$BUILD_CONFIG/$ARCH" for the per-arch artifacts.
-
-Patrick
+> 		int to_amend =3D 0;
+> 		struct object_id oid;
+>=20
