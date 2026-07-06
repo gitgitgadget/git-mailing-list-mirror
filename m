@@ -1,66 +1,66 @@
-Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
+Received: from mail-pz2-f0.google.com (mail-pz2-f0.google.com [74.125.228.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1113ACA4B
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 19:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6EF3BBFB5
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 19:14:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.0
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783365090; cv=none; b=fnUC9SalRP6keVcX8PUP2jdZ22EzRK/PjMiF42RyP/KVd0754Q3XF7pFPPD6ErcningqXZbUfU1UobBTFRu5H1hsWwL4YrVX7QLn88A48HC12rFXXmcJSZ6PjZlnuNRkWDvf23OY+FvFNQpRuQPYbyVX9rsBoM5OZ+Z/bOSGULg=
+	t=1783365271; cv=none; b=WjQl7JXdnBS6hebVH6EwdI0rP7UJrksxN2338Iu/9roOq+Pr6yLc6lEw5/2gnDgpEJ4bjb1dKjOUnoIrkSmrijYJyhkMXhMupK0Wq67NOZQiDDEJw2kXECuJdbxYHdvmDwxDYOufFuo9tod7j2bAKW1XBZdQzBXNcCtT2bO+zmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783365090; c=relaxed/simple;
-	bh=d8dBrGV+f6rAlHW3D9RWwQEOINT++i+UT/3Wy8OBwt4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oeSVVVjnhp30yF13hxMCpB8+D5dQ1Ww56zFz9IPH7Fc05H1sxmYhPyxJ2TBQVYcLj3KHW8mH1uJNdciFL6/hLF3B5OYTbUYHo72FZ6I9hmPas/Su1W+vene2n/65Z4ARKwJmZqhWZeqaXbFgjFUtcfsYx1+mFqnbMhUUl9/a2OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LiyQd29e; arc=none smtp.client-ip=74.125.227.132
+	s=arc-20240116; t=1783365271; c=relaxed/simple;
+	bh=u/2QyYdB5UL57ehop+u+BlW9XRg+ZsH0aSsM6lAhBN0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UFgRNzShgnnWyJe2U69QfKEcEDSuQBcOR7sB02Yvdr1dpcTBVinK98WcwFWCVLVrnI0Hy2COITVsq1bpKbEyFM0r7Era3evvJ7Sz4ZfvGmnfM3rx6cvQGd/vvomoKastKegO/w5MyCsz34/BxL64V/KXxNjVK1rBM4O9TOo06q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYLaq6tL; arc=none smtp.client-ip=74.125.228.0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LiyQd29e"
-Received: by mail-pj2-f4.google.com with SMTP id 98e67ed59e1d1-381191ea2adso703302a91.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 12:11:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYLaq6tL"
+Received: by mail-pz2-f0.google.com with SMTP id 41be03b00d2f7-c888c19b85dso457096a12.0
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 12:14:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783365089; x=1783969889; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783365269; x=1783970069; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7ha2c6PPObBerdIX+Ejgq43jn9gDWJWp1vJdhLxxfxM=;
-        b=LiyQd29eAVjBV8n+/GbooQKXFz9Wn6OY19SqrAyorj4xf4+CWTrp8dT82yEjPZTpnD
-         WZ4p7i46pQl/W0jS8j3mJmmQdSi43LIHN49mxu4KKftnCUemCuPQFY/nqoo9pRlVQWH0
-         9nT+r58akE24H4ZgS/6oPAVCwbaIVciqvsaj/fpFNqrr7oWA62NAzQxFZ+o7zvv6OE0w
-         EV/1oPhn/PmEjTzUkHD8MrfiEuHZca+gc1XFSLKBmYai7H/U7GaUkd20mJzaymQrUFbk
-         APq82q049qn81biTuZsmRG4Rbe83IiYGP5H49Vos0tRdS7ZYf2ifHmZO8StKa34Df5Lf
-         318Q==
+        bh=i5aufMPtnHNnqbXrVNg/fWNtn1ahCtxHshfJG9Di5h0=;
+        b=fYLaq6tLrPyDB8P2MtG1g11S8J1XG6H+VCs5HTYw2K1NIKgMX/+E4oTnz0rvhWgpYP
+         VlKPtuj2KVGMJyXAuMfcTrNW6raLZJODAiLGwh8xZ9YdaqdUC2gL5/FMUPeT9XTM4cr6
+         PjdJL4BEpSBUnv+Rc4XcNNHDMfJldlYEoXQkUeg8Jqc65GhUDRGp3vVX5Zt+1Po3d9t/
+         9HpeB1+IB+wI4ch7xt9Yg/0BcXqeuHIZ4aM/fno51E0pGXlnUXsDUHAD+NY511KsCJDX
+         TR8Yd0H1eZIJl6L72Dm8YYY7urANdbm8ztTxkFzGC5hPkVQO51JXLUnxXrP/HPx9Db1o
+         LvLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783365089; x=1783969889;
+        d=1e100.net; s=20251104; t=1783365269; x=1783970069;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7ha2c6PPObBerdIX+Ejgq43jn9gDWJWp1vJdhLxxfxM=;
-        b=jaU7AMRPgnsRuBXQll3Kce6KevvMsTNogWhelSr4cHGIh/QLswvEu+GtzLQet6A+mn
-         tFSdSivvsPNboMC/MAruxQFXPSjg20rliPak+KNQhW3Th3YJujILm8/F2aihXIrO8sQ+
-         wM2lHoqea9KtQkL55+7acuofEosAzHGFh4DripctDS7i5MqIkxliqv5l51BURv49K5wr
-         8FKVGL619btQctONCb4WnfVgJz1Gabytf4JdhubJfjZCquae9jsD41MnYEDAk8nRAMuo
-         l4OybVbNQmI41XM2NvYlv6gCCHphV+kz0QNqnOP8YQcGE+KbXVht4eXYTEbP9/Jvt0V0
-         A4sQ==
-X-Gm-Message-State: AOJu0YwB5CFxD0fj3p2vVz2cr4aQW1DmpRDlmPxEYPBOT8Z4qEd1hZSU
-	dNzzLAQXoKlR6fvglZO/ccn47Zg5/6GfDzi6nceL7e0cMm0aITg8xTPvOfpg6MzBTwY=
-X-Gm-Gg: AfdE7cklNmrqKeDXnKuxnYTWBGTkdKl9AP0nXLCn7xhOVK+HaicUAIAdVn5RqygOk2Z
-	abgy1fypFah0+CaaXQA/TwTXu3wsM7L3srfsUUTzTFKTXbib+cHu2SGTdlRvk/m8XV5iH3iJn/4
-	s/N3YTpQRsiRerMo7w/YguLjX4jN4fMU+Ut0r7hCVfXPR74A1ULdw/UQIfP2hp4QQtVYIlHQq7M
-	+/8q/DrB2Bo/8KnCSknk4UWHShKOOksRJoZtrBk0bxwsKn+3xHjyBvivNCqGqocBg6VKEWXRRK6
-	ac9cAMH7jnttnWGVDpvdNsBNlRkuZRJWfSavNi0DH8QMf+uWKMGDnQJ8vtpZDSSHLNvkk0F4eB1
-	ZqnckRQkrcYT/h/neoQ1v1HUNKSVK7eqqM15NNFWrRrG0DBviq+bMz2+m+rLmhc5Q7XwvpgQtC2
-	XhfogkfW4gn8JmaLIUR5aGbGjpe/fR9epHP3BBV01ljmyv/5FYTRCymutUVw==
-X-Received: by 2002:a17:90b:1d01:b0:381:bf9f:be37 with SMTP id 98e67ed59e1d1-38755768660mr2139879a91.5.1783365088873;
-        Mon, 06 Jul 2026 12:11:28 -0700 (PDT)
+        bh=i5aufMPtnHNnqbXrVNg/fWNtn1ahCtxHshfJG9Di5h0=;
+        b=oqzD/lPLSOzJJKwUNvmyC1jMLZ20rUi+u/DKE/3TS6kbIisImT4PRXZwqOCuPZ8W1A
+         WSPGYwJNGz8/Rwhl207GukGsYsyBJ0jjTgDWVvMNJkAakMoA0ys+wVM3eVIMyGnN1kr5
+         D/WCCz6KriqPHCwsUCtmbd4avDEZfmZBFIeOHnwl1z6NsTqvbjWKV3xsMGbTckUnqUU2
+         iT1nVJ1xNopOGf5o3hQZNESDEHQFbxxIazngf3JjEEYIAl4YCPqiZmvWqEm1A5TYySvu
+         8FkPYapSWiVcTEaizrKAiE77VG/M/BdPfPGlpzCr63ta2Y+btJFLG7EEPHeo76Q33och
+         ngbw==
+X-Gm-Message-State: AOJu0YwYjUIkhdaYo0E3VGY4W3JIrC9Xr14zDndoeonCOZlFEDiEGmQk
+	H1N7u1XhtC5vz/zT1aTvrIZxrUZ0dsDiDhEMXtrvPLejoUZNgFs1pBWPoiPiKltm650=
+X-Gm-Gg: AfdE7ckVlTa6YB9GP512vILHjjWFSQhcBltgXoWgAWLa9U4fdkmWyUSD2FOJUenpPct
+	sF8lvyxWvcMO5UDuPYbDBOncqu2aABUy+7+ukunQMknDQF6ABpRXHy5g6JG0DabmDIF4n7WUzdm
+	kdyGuJXAkG7epxc6IMwWxg7jqccvz+QqUOAGHMEdDVU5Fnw+QIw+/gLT+NFB4K85iL3F+drqVjS
+	rDZ/t/xYyZjR87N3+dQZz2zdkSDuOInHCW1wCfhDb1Qh1ZdjJYobS4YIu3qjz3BY/ivUVfmlfxN
+	1qOgsBsZeMt5/PrJ0APXeyswREyYmRBU6xl0eSAyz/M3zObAypdA1INlniCBVvfebJwgOBvPmch
+	1Y4uLZhS1Xeej5pl5nx/QxV/dEyNMY/AGFWGXAIiBHQByD1zcrwfEPltPgCP51xLwqyCAZ8ogkz
+	xNzd2uVN3p2WAIJjfjGYsRRn60DRZtyRjkAGPCYkG2sPCXkWXLmkG4oLSaC5SaEqP2nMwn
+X-Received: by 2002:a05:6a20:d490:b0:3bf:5539:f8f with SMTP id adf61e73a8af0-3c08ee6d060mr2227838637.37.1783365268939;
+        Mon, 06 Jul 2026 12:14:28 -0700 (PDT)
 Received: from localhost.localdomain ([45.117.66.208])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30ffdd292b0sm24453562eec.2.2026.07.06.12.11.27
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b3c85d4fesm51780365c88.11.2026.07.06.12.14.27
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 06 Jul 2026 12:11:28 -0700 (PDT)
+        Mon, 06 Jul 2026 12:14:28 -0700 (PDT)
 From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
 To: git@vger.kernel.org
 Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Subject: [PATCH v2] builtin/rm.c: use die_errno() when system call fails
-Date: Tue,  7 Jul 2026 00:40:24 +0530
-Message-ID: <20260706191024.93788-1-gatlavishweshwarreddy26@gmail.com>
+Subject: [PATCH v2] setup.c: use die_errno() when chdir() system call fails
+Date: Tue,  7 Jul 2026 00:44:21 +0530
+Message-ID: <20260706191421.94453-1-gatlavishweshwarreddy26@gmail.com>
 X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,29 +70,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When remove_file_from_index() fails, the errno value contains the
-reason for the failure. Using die() instead of die_errno() loses
-this information, making it harder to diagnose failures. Switch to
-die_errno() to include the system error message in the output.
+When chdir() fails, the errno value contains the reason for the
+failure. Using die() instead of die_errno() loses this information,
+making it harder to diagnose failures. Switch to die_errno() to
+include the system error message in the output.
 
 Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
 ---
- builtin/rm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ setup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 081d0bc375..3f5e6e232d 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -396,7 +396,7 @@ int cmd_rm(int argc,
- 			printf("rm '%s'\n", path);
- 
- 		if (remove_file_from_index(the_repository->index, path))
--			die(_("git rm: unable to remove %s"), path);
-+			die_errno(_("git rm: unable to remove %s"), path);
- 	}
- 
- 	if (show_only)
+diff --git a/setup.c b/setup.c
+index b4652651df..e2e98d1126 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1954,13 +1954,13 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 		break;
+ 	case GIT_DIR_DISCOVERED:
+ 		if (dir.len < cwd.len && chdir(dir.buf))
+-			die(_("cannot change to '%s'"), dir.buf);
++			die_errno(_("cannot change to '%s'"), dir.buf);
+ 		prefix = setup_discovered_git_dir(repo, gitdir.buf, &cwd, dir.len,
+ 						  &repo_fmt, nongit_ok);
+ 		break;
+ 	case GIT_DIR_BARE:
+ 		if (dir.len < cwd.len && chdir(dir.buf))
+-			die(_("cannot change to '%s'"), dir.buf);
++			die_errno(_("cannot change to '%s'"), dir.buf);
+ 		prefix = setup_bare_git_dir(repo, &cwd, dir.len, &repo_fmt, nongit_ok);
+ 		break;
+ 	case GIT_DIR_HIT_CEILING:
 -- 
 2.54.0
 
