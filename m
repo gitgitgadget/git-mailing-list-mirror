@@ -1,79 +1,79 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC044963C3
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 06:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED13A3D8900
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 06:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783319075; cv=none; b=jAA3YvgBKvR94IZbspC24liCI95uk6X1sfRBGj03pikDr0nXWdc22/ZFIBYU86Gw1ToSvTDzryzF2rCMGtXPyjOQGjr7s6TSooOHqPa0Xd+OZ6SZ1FZDXvNFuO2WwrauzjmvSC0JropXSLQs88NuAjj53W2ccsYEnx5CrAdPbfU=
+	t=1783319075; cv=none; b=Wsbq5BWPQ3sg2/fKglJBwEbms0LcSqebeWNUlRW93qDLhyJ3/QlrRR1omW+/piLA8rRLnAp+wVMWvcOuHRDEpPNxNeGzktSnP+2XKoCEVI3WytSRQ7xGaoTz+d3fonsXhEqT+K1Yn+zzGmNqUAvjsovnDx4hhifex0krXfGYvEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783319075; c=relaxed/simple;
-	bh=AFI+vnpH3zHNusWMuH5mKDyHt2JevXGZEh1D8qqCoRY=;
+	bh=SZcZJhmh5DaKPGCsrn4GJv9rj0zaTKFOdl7C15bWz+M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fTTbWBAlcXlDWDAYBGziGGzyOM63eZ7Qbs1UYbAExK/JoLYtkCRgXnQbvcUY8l9P7Rfuk8Y7HqUAtlu0edGF7mJ5g6OndOYawE8uCyCx2unAeQQyhXmEnPzi8TfAiFWCS2aMbBJRKeIyr7a6+sj1JvcS7OM/Y2AiS4camdL26xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dIvNWcSG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CRIjvjli; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=iMfGlDrbWSCdpodDbDrUkZI9JevDo06kNf0SRs4uPD7xU2x9xTyRi8hkJcMNmHW5LRn3HPpZdXZDThMfJNbPekkdHhgsjgnS6pJACn4GaHrKzlwYtQWaFth29msgPXCpkQB75XVQinnEghu1g71egVyeBQM4yMT4Z3B2/QEn0sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cf3IgTh9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mA8/15+r; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dIvNWcSG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CRIjvjli"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 812931D000B5;
-	Mon,  6 Jul 2026 02:24:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cf3IgTh9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mA8/15+r"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 225DC1D000C3;
+	Mon,  6 Jul 2026 02:24:26 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 06 Jul 2026 02:24:23 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 06 Jul 2026 02:24:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783319063;
-	 x=1783405463; bh=MI28hU6I1+ab0W1wCoFZ8FNjDkfY5FCCAR+FXPWnib4=; b=
-	dIvNWcSG4vmSHjf4gVEpZiJgHZyrOyufOXCVjQG4S+fpcpRmSyxoT9WRWr8WV427
-	SCUOI7gUxr+K41WCvtGG8FlqXOVzrK+h+QcGKgjkf2amC5mJ1ig0nR0+GHKBGDGI
-	7VAEPzqErMq3roR95JqSqsRhKkii5zgEPH1sApxGXXj2NWYsSYjMAg57F63JEruW
-	BAaZtO3XcD0SfSaQRFx6okfvE1H0PhRVS0yI7lJMDaVDaMHn6Hzgw6bS7Cw0R3l7
-	XfoeY97ecBFJrfM92BMlUUVf2tUmklRNIJ+U/5d2xBad7beM42ZO+LIUJXW0tkvB
-	5TCyvf28lPj7OQTxmzVDJg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783319065;
+	 x=1783405465; bh=M76ySHe1+ZP3S3R7CuWibA4lkzAccC4tBQS/QEjE4dY=; b=
+	cf3IgTh95U7ukoAljSLoE+MiDNEJP6FO/fCBFzbJRGb3L3wksOqqW8r3Ngb7928n
+	04DteD03Nor9bMco0utFiHU8SwBdFBef7YXAJxMzCJBCUDtDBRcvNNgY0LIw3sQ8
+	Zu+M9zsDobxUWcEJbcOuUgG8r/y5GMdEqNu2FSqrJOgiLTePMOOXqyysfKLJzT5v
+	zW14xvbBlNVUOZEsp0Ji39wf3wq6KYKqma0UOd3Ixf4UGh7uAl/e+wCXZPTm6CX2
+	ExmbgFc16rasrjkBgZv9RYEtQcwT+EHRf4Eh63Y+AsLeLZGUfBFnx/wY31vXnF2/
+	MRNKqYRAoiXmUJFVYS5HcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783319063; x=
-	1783405463; bh=MI28hU6I1+ab0W1wCoFZ8FNjDkfY5FCCAR+FXPWnib4=; b=C
-	RIjvjlikMHGDjhwSkyV58ESN3e6XMJ8AXKNjabMTvqwnT+K6OodLeOKEyG15O4w7
-	IBwDlIzhnugxoxeTwjbPM2/Y6Jdu5HUAo6XqQXGaGhTU/h8HivfIN49c48Eyr7ET
-	FSfxJo+9dYZgq+1ou3Ulc1cVy6t7KX5wanU1Zj+/rfsD1LUpwVPy8AfXIcdWRcds
-	//rh28Sb6yACKzT7TZTmsH1rx8CCJkSMaomhsRguLEvBTkJTJfm0/U5wT7GUzz2U
-	KnGuBDmQiAJ1ihtOoeDPgw90VFSQV/gta68qKNn4V2V4HjaqzL9qquHTi/p5jz14
-	m5zZGuQLQx0FuobxurREw==
-X-ME-Sender: <xms:F0pLats0zvdtvRU7M973mF-Bqn5PEQTv-tclTsLqN1dMcuxhJM3kJA>
-    <xme:F0pLatUpWoXazVnYzpYUxy6VzheLtRzYuQELpFIaEKuFlqFe4RJgqFyL48cM-102s
-    1YdUMbXqlEFMcJf4HBNH3I4rHi2GlUyXQloe7CJMIT-IFgQ3TBbrA>
-X-ME-Received: <xmr:F0pLapHAZ7J5FbGd2QpypZVZwy2uXlVfia3IATz7BIcN-o-85DsOwKXOyK1tFPcq-bcQVJLxxxWyHOo_1221j3OxDAyvbaOuTHGHV475j0Q>
-X-ME-Proxy-Cause: dmFkZTFexpsNN8+D1iB4kmccXHNXSwz7Jj2Jci0dIahDOLBK3JR9GzpNXmk8ZjVQMNuAiz
-    NbxPUSm/PPCoV5/3Ush0TGdOppTlxnJBxvn7l+1vf0sw9WBdKEtSWeUoeOI8fST8Mn4Nhv
-    qjSftjyM2Tm9bdl+gmtQ8CVkJ6YNokwW2zLSkH4xJ27EzwvUZ/SzWJEQ6+9g2PMn/YNd1X
-    gwXl+0oCzj2ubEWj5XVNiCl0luAzOyh3YEPf/A72yEFJNE0KGPybhEUrD1QNfTKFPzlhBL
-    Oz6CorBRX/mF1rpMTmdXsbloSzqKJjGhncv6qKPHwGyHHt4/5bePAsn+WRPDLz0/8nkCqA
-    fvHK+DaZQ6QY1ztD0zMNqzLrBicTTA4V5tFvI1+2kOxkk0vOjY2Qpagwa76UrBDrbumx/l
-    TNfqIuStuQ10W0IYXZQ2oILDasDyFK34rBByvcmp9HhUlqgjDU67pRgydwQOmeIb4ULMHA
-    yI4T87pOSWyrds9n1YaK5XV9d5dMMO6aiduBbCS6jZ4GMRM6R1GsfHfQK6L3kYi/Y5nZmX
-    e05cHR9hMANbDsMxNCe5NJ60PLmtRdwADS7rysRi81c6x3nXO8JlMqcJHQRf/nF6o6RVfm
-    wTohnCtxUh/0B/QSCJpnFAOvYx8UunMtflE2jy5m2+lxr6Cj+OGgL0P0XlIQ
-X-ME-Proxy: <xmx:F0pLav1tfPbxN7ar4pBSy9pIGidallQfbtSFrtBoXIiP-q4hxqe1aQ>
-    <xmx:F0pLarPfHb72SbdOKmJ1gE0z198Ee0Q-pGmjBcrk6_RFDHdzLMtqww>
-    <xmx:F0pLau5qs0AnlI5G5CQ4udAzL24wGI-Xy1pLeWrUmYT2XEbrvmSbBQ>
-    <xmx:F0pLal2jFwwLfpaXXHiVVFfpD130ZNQ1udCK8i61SYC951RS6LJ5Ig>
-    <xmx:F0pLatQkQYXHHyC9ozCafbhsLPbMhQiOJ3SoLeZjgKsDwwEtjpaBvT1a>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783319065; x=
+	1783405465; bh=M76ySHe1+ZP3S3R7CuWibA4lkzAccC4tBQS/QEjE4dY=; b=m
+	A8/15+rApJFSoVPhLVx8q8DCFHDWvmGONTej6rXF36DC0EjD9hLJnRwqCmWbpmv0
+	qObm9eGzwnfoOHio0kiqolwlun5IUnRyx4QhsJBEQW75LVkh6OVnaqkSKfpCE3Nb
+	YAj0HqhYog+lriM04aLVnuy2ZJX9qS2PeJcWhMtk8IaoFlQvuFupEa35aQ7Womio
+	xjDpsmiGxUENyawIIq9/tpVG7+zr3CXE37ql2xuVl/R0zHOC45yPeAOEpTYip32s
+	m2ta1XNFT2GdF/RWSAfVQGvC/07yJS19YMGUdKxZIaXlfr6buYRdmzmNN905SfOS
+	UMXfBWl8DiP/AsJbtyeAQ==
+X-ME-Sender: <xms:GUpLaiIcprc5-2fIvaUJKLp0C-F6dGHz5sfXnqDdMAFzGdza3Izohg>
+    <xme:GUpLahBthfWcWBGPQSeX0n3pzM4wHyv05kM-E4LKoBb6n_7D97ZRNj0O-8JM9L0gC
+    _eiP2vcvm0JwoQA6qsYYCNk2J5cBx5RidAEybSKmR2ySVh4MslzVA>
+X-ME-Received: <xmr:GUpLarBinnefe4XIHjVjmAqw4cApetgUU430cV6XUCYrpINQesKx722PaKp7hExAfrsXdsjgSr3o2jqz4i48DmRJLI-yIyeQmCDJUpuQYvw>
+X-ME-Proxy-Cause: dmFkZTFmtDwNISh74WWS0/J9hdQqLKv21ClKsUHf5vXif8xEKB/RVFgrRZ6eMF5TZ0F9FQ
+    MLaMAHvMPW3ftQmynyDZOcfxi4Dr+jTvOAcrdb64R8lWWsxvJ+51TUUVsWU8+CG3AcmHdZ
+    4sW3lkGXhyoxIGgR0aGTL8UWrIkK/JiiMzpF5AlLuhEnxcudttwi4+Ie/h7XfzxCIyQ/yh
+    mDx4evcKBiM3lkwpV8jNZRrtNhn1dUmqpA1Rdk28Z3q1eIjAn7wqKusccB6k228ACjACeJ
+    eVT+2pNAsU/vlBw4Da9JuECz9xgRVM3ZkCVhGQtwO1SvfGNcumAh3wmOq+vtFb0S3AddEP
+    Zqb59d8KKMJH8ejPHo7Nl+IuguFiGaiqZ4doCWD6IKDsf50X9zWTkWgxYDDeQsXTUnLyeu
+    6yQCQrW7/OjI2ovKZ1LCIWG1li6N+k+dXt5fLyTTHN0MhgO27HKzXMP12YF9vQQO5W5p2N
+    wQyY5bTfOggy+ANluA7kcKcN8QNrjSGFo2aziU9KPDQwaX8oB+t49TGiWvbNGwLJKCYb0/
+    iaaS0Mh7dBS7tUh4Vo6ZA8ENT1hHAPU8Q7+32AHtO/UNHJ+kWDUb7M/587WlIRPxbjkasq
+    ZnGkEcLlI+xb7A4EP1gzWoyqr0uPPqE6ivArKgVKf8z+ly0dxNZjHIgmY/dA
+X-ME-Proxy: <xmx:GUpLajBP-1qeWlRB-0xS-TuOwLR5IFLL-Y1RLEHe--4emQ1_PJSNcQ>
+    <xmx:GUpLamqUe1vuQjHANIGBZtBijEFwVbi53knc0pV32HjylCf126l8PA>
+    <xmx:GUpLatnGqbx0LH1pG4l_K9CipQ201lboFjJYRuHLxW7BZ0YMz6UQnQ>
+    <xmx:GUpLamzoNbHqwVpQe_Zqr-Nc-2KGjGrnYRZcRS5e9dIqnT1UMNiDCA>
+    <xmx:GUpLatM-1pbLQZGJiPRw9x98_UghB1CYJY8BTMmuMH3mg2l7ndr5nps6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 02:24:22 -0400 (EDT)
+ 6 Jul 2026 02:24:24 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4753bede (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jul 2026 06:24:21 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 1529d7b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jul 2026 06:24:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 06 Jul 2026 08:24:03 +0200
-Subject: [PATCH v3 8/9] gitlab-ci: disable RAM disk on macOS jobs
+Date: Mon, 06 Jul 2026 08:24:04 +0200
+Subject: [PATCH v3 9/9] gitlab-ci: enable "GIT_TEST_LONG"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-8-4f6c5a37fd1f@pks.im>
+Message-Id: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-9-4f6c5a37fd1f@pks.im>
 References: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-0-4f6c5a37fd1f@pks.im>
 In-Reply-To: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-0-4f6c5a37fd1f@pks.im>
 To: git@vger.kernel.org
@@ -92,66 +92,85 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Jeff King <peff@peff.net>
 X-Mailer: b4 0.15.2
 
-When we added the macOS jobs to GitLab CI in 56090a35ab (ci: add macOS
-jobs to GitLab CI, 2024-01-18) we had to work around some very slow
-disks. This workaround essentially creates a RAM disk that we mount,
-where all test data is being written into RAM instead of the real disk.
+Starting with 7a094d68a2 (ci: run expensive tests on push builds to
+integration branches, 2026-05-08) we run expensive tests in our CI for
+certain events. So far, this has only been wired up for GitHub Workflows
+though, which creates a test gap for GitLab CI.
 
-In the next commit though we're about to enable "GIT_TEST_LONG", which
-will make tests run that are marked with the "EXPENSIVE" prerequisite.
-This change will make a couple of tests run that write up to 8GB of data
-into the test output directory. As our RAM disk is only 4GB in size,
-this change will cause ENOSPC errors.
+Plug this gap by also making this work for the latter.
 
-We could accommodate for this by increasing the size of the RAM disk.
-In c9d708b7fc (gitlab-ci: upgrade macOS runners, 2026-05-21) we have
-upgraded our runners to use the "large" runners, which have 16GB of RAM
-available. So we could easily expand the RAM disk to a capacity of for
-example 12GB. But some test runs have shown that this is still quite
-flaky overall, as we get quite close to our limits.
-
-Instead, drop the workaround completely. This does indeed slow down
-execution of the test jobs:
-
-  - osx-clang goes from 18 minutes to 25 minutes
-
-  - osx-meson goes from 21 minutes to 33 minutes
-
-  - osx-reftable stays at 21 minutes
-
-The last one seems like an outlier. The only explanation that I have is
-that we end up writing significantly less files with the reftable
-backend, which ultimately causes less I/O.
-
-Overall though, it's preferable to have something that works with the
-least amount of flakiness compared to having something else that is
-faster but unstable. Despite that, the macOS jobs aren't even the
-slowest jobs, so this doesn't extend the overall pipeline's length.
+Note that these tests cannot be run on the Windows runners, as they only
+have 7.5GB of RAM. This is insufficient for some of the EXPENSIVE tests,
+so we explicitly disable "GIT_TEST_LONG" on these jobs.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .gitlab-ci.yml | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ .gitlab-ci.yml |  6 ++++++
+ ci/lib.sh      | 12 ++++++++++--
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 1a8e90932c..a4aebe8b71 100644
+index a4aebe8b71..1c4d04da9d 100644
 --- a/.gitlab-ci.yml
 +++ b/.gitlab-ci.yml
-@@ -88,13 +88,8 @@ test:osx:
-   tags:
-     - saas-macos-large-m2pro
-   variables:
--    TEST_OUTPUT_DIRECTORY: "/Volumes/RAMDisk"
-+    TEST_OUTPUT_DIRECTORY: "/tmp/test-output"
+@@ -147,6 +147,9 @@ test:mingw64:
+   needs:
+     - job: "build:mingw64"
+       artifacts: true
++  variables:
++    # Windows runners don't have enough RAM to run EXPENSIVE tests.
++    GIT_TEST_LONG: false
    before_script:
--    # Create a 4GB RAM disk that we use to store test output on. This small hack
--    # significantly speeds up tests by more than a factor of 2 because the
--    # macOS runners use network-attached storage as disks, which is _really_
--    # slow with the many small writes that our tests do.
--    - sudo diskutil apfs create $(hdiutil attach -nomount ram://8192000) RAMDisk
-     - ./ci/install-dependencies.sh
+     - *windows_before_script
+     - git-sdk/usr/bin/bash.exe -l -c 'tar xf artifacts/artifacts.tar.gz'
+@@ -195,6 +198,9 @@ test:msvc-meson:
    script:
-     - ./ci/run-build-and-tests.sh
+     - |
+       & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'ci/run-test-slice-meson.sh build $CI_NODE_INDEX $CI_NODE_TOTAL'
++  variables:
++    # Windows runners don't have enough RAM to run EXPENSIVE tests.
++    GIT_TEST_LONG: false
+   after_script:
+     - |
+       if ($env:CI_JOB_STATUS -ne "success") {
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 01a0bc6b75..6c52154eac 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -215,6 +215,7 @@ then
+ 	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
+ 	CI_REPO_SLUG="$GITHUB_REPOSITORY"
+ 	CI_JOB_ID="$GITHUB_RUN_ID"
++	CI_EVENT="$GITHUB_EVENT_NAME"
+ 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+ 	DONT_SKIP_TAGS=t
+ 	handle_failed_tests () {
+@@ -239,6 +240,13 @@ then
+ 	CI_BRANCH="$CI_COMMIT_REF_NAME"
+ 	CI_COMMIT="$CI_COMMIT_SHA"
+ 
++	case "$CI_PIPELINE_SOURCE" in
++	merge_request_event)
++		CI_EVENT=pull_request;;
++	*)
++		CI_EVENT="$CI_PIPELINE_SOURCE";;
++	esac
++
+ 	case "$OS,$CI_JOB_IMAGE" in
+ 	Windows_NT,*)
+ 		CI_OS_NAME=windows
+@@ -319,9 +327,9 @@ export SKIP_DASHED_BUILT_INS=YesPlease
+ # enable "expensive" tests for PR events.
+ # In order to catch bugs introduced at integration time by mismerges,
+ # enable the long tests for pushes to the integration branches as well.
+-case "$GITHUB_EVENT_NAME,$CI_BRANCH" in
++case "$CI_EVENT,$CI_BRANCH" in
+ pull_request,*|push,*next*|push,*master*|push,*main*|push,*maint*)
+-	export GIT_TEST_LONG=true
++	export GIT_TEST_LONG=${GIT_TEST_LONG:-true}
+ 	;;
+ esac
+ 
 
 -- 
 2.55.0.795.g602f6c329a.dirty
