@@ -1,107 +1,123 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E333DEAF6
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 06:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996223CEBBD
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 06:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783319043; cv=none; b=R2viFBW4HhU1FxYHkFut0l828tVg540++GYa9HWjKRKok+dn9e5xXekWS8OF3PXrCiuik0su9zQosOHn8AwLDhWUgBH82HNjjz4iYGRHwT6ydYSBZrTYu8oZb91j0MCJRL/pIPuQ5BetXqk/z9rQRAmCM3lXycqVj062fehUaPg=
+	t=1783319051; cv=none; b=TUk4Np6EQKSHf7yA4rov41w0w7IZN9qJH/v9zwQw1MBBFMSVvpJYjMk/xbUpTi7xcL2JpwTyBLg/wQtCopJc1q8OXLLt57u6prPt4AaNjTBD5j18xtVnmK331oE1kEIzIpIhXYIBb0CByPavLVeNyu/rilFSpKdIlyVGU9wdqQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783319043; c=relaxed/simple;
-	bh=7GsO5VM48npf5tI9Lgt9esRt8WdIqlB/CxZPkV1tvYg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uRe0MJboHeHsZK/1mXGUt7rk+q0xv831NGVmLIFX8KdvLcVxL1ni6GzCsX1o0uJ+IrqR9dAOO5MfxT+QZJB25b8ivelzHnWrfCqVL6ig29pG0qIo8u2DhU0aFZaZMH+1ZBnWH7FxsR3FD997atisbjIGpI3wO6l007Hdzj7WFzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gf7xtMja; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hYmM3CyI; arc=none smtp.client-ip=202.12.124.154
+	s=arc-20240116; t=1783319051; c=relaxed/simple;
+	bh=vr03F32QDdwRisxFkWJ3cya1dQ0ZM17+K/Jqf1IIVtE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=aqEFeKPYcLqOJumra5GJXiFd6B2s1X5EzXHCMYO+hF2JTdDO6v61r0dE/Qk2qJy8eSHqS69xnLED3+9HUU5HzI8O1h768vczEQn5/RTKUW5BYQaErYD7FGPgVEQCenez9nlLuAph+TH953oR2qOI55CiuBB8GoN6AbbjaJdyHzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FJJfK6d5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B58wVe2U; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gf7xtMja";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hYmM3CyI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C3D77A00DD;
-	Mon,  6 Jul 2026 02:23:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FJJfK6d5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B58wVe2U"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D03927A00EA;
+	Mon,  6 Jul 2026 02:24:04 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 06 Jul 2026 02:23:55 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 06 Jul 2026 02:24:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783319035; x=1783405435; bh=FdrKIdLAB/
-	th1ZaQt2GbyrG0HZIATngjMZvBAjUDZYM=; b=Gf7xtMjaBNzmxF5ZAT67iiwpWs
-	XDvsQzX9cAYJmR2IMHP5Uy7uEWsWv7JlYQFautJTqbPLqscX0F3II1Py90rYbLA3
-	9HShUfV8DTZWG50fRkowsvr+SqcRFQqTnMHcXX5/D4VeNz3WJo1602zgwAGZOWgy
-	MY44h7Yu7sz/hcbu4dZSritPIfIuq4cSqI4GH8OMysNURD0Gvmoz7gEVA4IAqz4O
-	dNTMyi8EEcIH7cf1fU/lAtkVeVBXgraplGqtVUIpvBCpQ/qMj4CVJCD2rbCfsx8n
-	lUAkUOXlmO2uu7yc2sDgb1j6LuTg3ORlevcLjNBEZNKe5ZtfYpVzAw5CKmJA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783319044;
+	 x=1783405444; bh=lvzsWpBxcsC0AIb7iPQR1BzLE7Mg/GaGRy7dALk2OZ8=; b=
+	FJJfK6d5mvxf4Ojz5QZ9XFul7m/bPl5IFnY4jB+GcY5mH3DatnndKuMugC1OppJ2
+	rj5ekA41138S/1clbbHvIJK7+IbOVeeBO3lINQJpItnMYydDusVw8rEtcCWAW6Bu
+	N049HjUluCRmrHkBpdJ6H4i4px5xh149rChGL3wWiHQPgugisN0a0+70F3tf9T4/
+	tAKcWf3W3d6+BvpxHmwAbZ4CWWm7HhSmC31KYNKh001h30kKRupvLOxHZmTh9h6F
+	KXgbikXj90i2CZz33Bk7m2uXaOrz5SkELXVc43zPsMBjHbt2FpZBKbD7mOvKwZ+u
+	k4m6xtf8KYZI/gTrt2qEmw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783319035; x=1783405435; bh=FdrKIdLAB/th1ZaQt2GbyrG0HZIATngjMZv
-	BAjUDZYM=; b=hYmM3CyIQPAPj6nE8OgJWWncw5K8xFxS3gaCmBBO4MgvXKBrFPp
-	CSvUwWUuG2GOb9aOVzstGnPmn2r0tt5WtKzEFU2ssSWzeaHnapsW/ba37+bav6rh
-	Hh0FSR0FALxATWwLgEwbL2Lt201rK6Cn78lxRZ5+iwKyg0ML1KtqQHzzBwnZDajy
-	MCb4PN8eeG8OIyKkuzRkyrMTBUAgmNYz+5Av9EKL6SGvEkRCAS7DxQPERGjjP57u
-	uXgkWYiZXbQqShnwESoWobmRDqgYM/k47VJfUzuvBV9exdRCn8kZqcCXDv0ksBqi
-	WLsEZZGMplez10E7+bEWrRlLGlRGYyUQJoA==
-X-ME-Sender: <xms:-klLaia_FVVgc5A8nIeFQEqj8joe0QsOy5rMoKZCP4EHS3Wrk-LNjQ>
-    <xme:-klLasRtMwrl5FFDwqPRiROtyHcIjzOmj-U93ZUSAxvZCgD1FWvWWpo_EqQWzAAj9
-    wFy7NitLRTMC9rpg5IkERyRRpsKNpqJ_hLWGrC-x_czpSo8Psv5Uvs>
-X-ME-Received: <xmr:-klLalRnRlhIgjJMBddWd6khFjrm5uBgPSyUJm--4yURzZstppr_FeJP5YCH5G0Kr8vRprTJoIB1Rl6e2HqNbn2FzKvSQ4ahhBTriAgzHvI>
-X-ME-Proxy-Cause: dmFkZTGV4KO5gsJMUGnh3RULPMZU0Ww4bujjMzwuMNAzfUcjyAxB1d+qlV7w6mE+ATcsCL
-    PFnfqO8uy2cJVX3w0MafhZca0yyJTpLf7j7xw/VJoI9jCkRJgwNwJWV5sCm9npJdl6Jxtq
-    SXlTdN8mORlIo4O8Mazi0AmTkx0f9LtbWZs1vcnw7Rwmyv8or2zh20i7CXgLYzhr7ui6C/
-    cjKwaWPmVX5wbhIsfRPGn0vfrBGMa6lNUHtFGLrcnuclr/S4HzWJkRLBCoBEM7U3HYPq/G
-    R4l0EGYPlodg7OrfZzY+bMc5BgorEhl3Yy3HoVvFfygcxQrif+WL3WGFyOFtwo3w9qwAef
-    0EqA9T3/ZJZVp7o8H8S5mwBQVIb6YTA7XqPLIEaLZw5g9yEDDlYA20SiKQcOU/7BpGEDa9
-    Hote3dXHIEFYzVHwEUSU0VdjK5DpeP9zmxSkUSz4lE6lrP13lwHccRasSf1zD2qy0J5fAj
-    Z7Uqb3q+iYGR6t7FmdifggqXh5dxJiuFWN3iuprsS3Cl22qricpXF1e1zS6bD835sdneYa
-    bOj+AhVu7x2UZM+/iMD5N4Mu7b5EjEAhDWWnOIcMDPO9ez8F31XtnoZb+0FAqEU2zOO8di
-    24g/1xJZP+cXIlcoxixOaP3/4VZ6buKlc7+vM10fEBFVwC/0+nQAr/LUWslA
-X-ME-Proxy: <xmx:-klLagSh4HUnjPdLTp6cghoelwBYDyr65qDtsPEFllhNTyaX6JPJUA>
-    <xmx:-klLaq7jEx4-SoBRoRhR7rQwsEsytw4TwTBk0s4rJ21vkRMJ8GwqxQ>
-    <xmx:-klLas2eankRlc9FAbeglnPecM-_vrgh0ow8IFh73XGHsBq4rlkYJQ>
-    <xmx:-klLalATR_4zyCLV6OOtROIlxcRKtBhawfQ6-TKj2effoHo3QtmiQA>
-    <xmx:-0lLajvQ29QICt0wXaWdarHtnlZ04map4n9YslatKUMYNioQpxrgwpak>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783319044; x=
+	1783405444; bh=lvzsWpBxcsC0AIb7iPQR1BzLE7Mg/GaGRy7dALk2OZ8=; b=B
+	58wVe2Ua4blE1WfddsShBkKkGTESao3FHpCIvSccNtqaK55j1cLkLfxBQKbuwcM/
+	iaZs8CwuPqe4byMZFLgyyPQIEf/lk4Frrm91CcI9A4OXZN+WmVySR/F1eynHxFU+
+	h1lfrmbvXcHe/x4t0Gw0yJnMQwMThqsoN7GOI199Ykjtt1h3Nx8GkQyl6lps6rCk
+	XCfCLbpxX392GpXh261vKhivUMZuYSDoB7kY5Xfpa1z12d0h/orUNIZwDf2MHLNZ
+	QYVklDFHvikTbS1/HcDi/+F9nqjeup6J8tSOyv4VYOS8y0Iyo3xBFwDBfHmcAk97
+	SkdKpcJJLU57PDbaIil+w==
+X-ME-Sender: <xms:BEpLarFLAMEE2S9IOHmAk__Gv5XC-a_d7rsIQ9yyKvIowUlIssQxng>
+    <xme:BEpLavMmetGmaUNvkEWyB3xqErW0BcGZGS3OC1TMfBxsn3638uMtyjlOJ2VM0QFBD
+    B5-eG33NK8L0_ojdWMjKfgR70H-FfSwa0zovuflNUvxrW0eZzBzMg>
+X-ME-Received: <xmr:BEpLald6FzW1Jp0B8eHPpBI0HGHGCv-ZAI90pHyDCQozRhiiRQKZ8k0bRXIba_Lu-Ty9fR5zQLNdl7yjbsZy2WnK17JjpxcYJe6ZWDkzxb0>
+X-ME-Proxy-Cause: dmFkZTGejZaeofRKQvcGjHp0MhN/v5Fg57w5Ahf/VBY2zh9ZoeAwwAGkMcoFph3J7Bm4pY
+    ZOZzmdQmpDS04POmvIWqFKgPGmN1GthhExVLjIBI6uJzOOaR/eOerkkXmu2qh62E2U3N7M
+    UvEvpxaEi6qD7zhJuKVO72qeR3rrr+jns7SXChu9gexR6DCPqF/zPnpGoY4fp0soU8tRvC
+    kRhaYo/Q86HLUuoFHADF83KuG2DWEvhiFHS5FFh20TYbBWXVsDc+l8Do9BXilGuQqBBDsD
+    pwfDFdCkoDBb/yKhPjqhedWAsKMIREm5eEPm4y5sQK3qSHrjY9qBNtosm04pgbYO+xhza4
+    ExyobU3tlSApdZdIbaULEyPbAobpLEivmJljqnXRr5lhcQ9z7ELdCJZStA8d+0XuM5a6z0
+    ULA6y/L2MxJntokuNbzOf0M+n/E9xhPza/bsy/5iesW6AuHdNff1IZu9uBSmg/pCQVpG5e
+    sC49FvnHFfu6En0jtZnTPyo6IaHfC09RxMTYh3fiGBwse1CApt1swqZaSlzf6iaQYh8gmM
+    8ojRvy1ujiR4cb6ebWh7gDaw8ut+N/LDwOV6RwlhRj4TTKp+zh96xIvMwa1Ys4xKdt4AwB
+    yFRCgJX03IK+/GO6LNwwKpfhIQ1jxcuB8pyai0lnyKjGvg6Itqr3lwKWLTjw
+X-ME-Proxy: <xmx:BEpLaktrvnLqC5Wo-gz1Xe0ZbrO0hGCqf_Bugo8shqubi0_HuY_ODQ>
+    <xmx:BEpLaunNshfhy5FjImFW3wGxgPjhND7VnylCTNUiGwb9I0kkKMLiOQ>
+    <xmx:BEpLauxb6aB12hrnPqm5WLb8iCePAE9f9TAw6-_ZaccdhpFqlTNRBw>
+    <xmx:BEpLaoNzu-f71WjGiLEMjRFS1NXtBnDJ3jhnjGvE5TI-zDTd41Cs1Q>
+    <xmx:BEpLauKaNeqDfqbE90HWlpj3WBSbPDIwo7w8vbEQiEkSY1bD65wWlfoU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 02:23:54 -0400 (EDT)
+ 6 Jul 2026 02:24:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 364615c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jul 2026 06:23:52 +0000 (UTC)
-Date: Mon, 6 Jul 2026 08:23:49 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 01edc8c8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jul 2026 06:24:03 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/9] t0021: skip EXPENSIVE test that is broken without
- SIZE_T_IS_32BIT
-Message-ID: <aktJ9R4lRhWswWbt@pks.im>
-References: <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-0-79076a7e0c62@pks.im>
- <20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-2-79076a7e0c62@pks.im>
- <xmqqse60ht57.fsf@gitster.g>
+Date: Mon, 06 Jul 2026 08:23:56 +0200
+Subject: [PATCH v3 1/9] README: add GitLab CI badge to make it more
+ discoverable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqse60ht57.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-1-4f6c5a37fd1f@pks.im>
+References: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-0-4f6c5a37fd1f@pks.im>
+In-Reply-To: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-0-4f6c5a37fd1f@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+ Jeff King <peff@peff.net>
+X-Mailer: b4 0.15.2
 
-On Fri, Jul 03, 2026 at 10:36:52AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> The subject reads "skip EXPENSIVE test that is broken without
-> SIZE_T_IS_32BIT", but we need to add prerequisite for 64BIT,
-> wouldn't it be more accurate to say without SIZE_T_IS_64BIT?
-> 
-> That is, the test is broken with SIZE_T_IS_32BIT, no?
+The Git project uses CI systems from both GitHub and GitLab. While both
+of these systems are extensively used in day-to-day work, we only have a
+link to the GitHub Workflows in our README, which makes the GitLab CI
+hard to discover.
 
-Ugh, it should either be "with SIZE_T_IS_32BIT" (which doesn't even
-exist as a prereq) or "without SIZE_T_IS_64BIT". Will fix, thanks for
-noticing!
+Improve the situation by adding a second badge for GitLab CI to our
+README.
 
-Patrick
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ README.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index d87bca1b8c..46489b0971 100644
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,5 @@
+-[![Build status](https://github.com/git/git/workflows/CI/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
++[![GitHub build status](https://github.com/git/git/workflows/CI/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
++[![GitLab build status](https://gitlab.com/git-scm/git/badges/master/pipeline.svg)](https://gitlab.com/git-scm/git/-/pipelines?ref=master)
+ 
+ Git - fast, scalable, distributed revision control system
+ =========================================================
+
+-- 
+2.55.0.795.g602f6c329a.dirty
+
