@@ -1,69 +1,69 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08083A9013
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 22:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29E9435A84
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 22:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783376406; cv=none; b=k+b9qpRvAbzBqWsee5tFM6qjdMa0IYYT76g1C2mpDLYkGHJG1YxLj+F3aat8Jnp07zh8BwUek6OX/3lKusMe8ZlcxYSODYfHjD/JJZCMJGtjH3Q3RrBC8RIloTwsEEv2WvX9KUsyC55Tj6Orsigbgu9b65GMsnCJPHgBRX09z1k=
+	t=1783377222; cv=none; b=acw66GBoWV6VKtguJrKVp+NQNE0SPFgrX9QPK4eo1++4QKoTIZdh04d1nC3Zn0Fz1uy7lP009RMveUlces/BxRO67Mg9gukTH7mLpBQpojduEn87x7dHUcmgQSV4mzaT+u1rVggBWRQ6AG35SW/MRznKlOUP6i86C/faMDrX7Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783376406; c=relaxed/simple;
-	bh=zrSZ8ISDHNl3SK0aQUyhVFOFS+85Xccul5Xc1aj9Etw=;
+	s=arc-20240116; t=1783377222; c=relaxed/simple;
+	bh=GCdI3dcb/O6DJlOOIsEWjtESzIAvo7Byw3vwIVKK8zM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RIFW3XsQACGtEjH8DyArjxwGzevVO+LKbsGTRjR44sCDhQukZZdagxbNT2zLLBhxXqC9KY8s2AXLh9sU6h7Iu8v8+v2QjfcTL/W+HSPoeNWjQfDCBJUz5EKAYGsMrOV382WACrVf+a2DebJG5SZoFwu5XPRd4D/2MdaZL83yIG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UgJeqh9Q; arc=none smtp.client-ip=209.85.160.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=jioE41BW+yo1BwzZ9pJ3QZYgQ0ReQwUpIMQoajYssqk/nAy7EhBp6g9oy/NFa/xK2uh0enbugCZ7VdxBuT7ethIt5Hs9j0ma8TGi32dFiZ0XNOQpGu3L//bsdR0d2BIbrBWehPpaigcoKfXNz8Cbb3sGwoEabjtgO4oPzEGW+xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c/ovlmxj; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UgJeqh9Q"
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-448cf99c133so21372fac.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 15:20:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/ovlmxj"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e9f6b94a49so1993002a34.3
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 15:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783376404; x=1783981204; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783377220; x=1783982020; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oLCwSc3K2XNvdlif3HKKYYNzywvUdhUzfqsScCtACxg=;
-        b=UgJeqh9Q5IYBt4AaWUIGE95p+CF8STMHHWf0MHuwN+JMBYiP8C5TWHFs4ZdXsGt27w
-         GahJAoK60C0jXwQ3N6jn3UF9Hk863g4FE53hcY2E+Ba4arm66ZajCIUAdki11rU9qgXD
-         lZf7PkUx1XUG3/FZHolR8eUZECxygAdSxsWD7SD3OVRALrNn0RdPzEjHWzQX0mI0yatD
-         26RVe/QjIvVh8ZDy9I07tToYhh9ki2PS9GUgdu7GcSRKEB1JnzN4pVxYQaWna5aT0QKf
-         J4v81edNj9zUl/1ADJfTrDozMQf12O7B8e83h7F3ZJ4XH5MTVGbeOnJrZE6/ioZXScQQ
-         goQg==
+        bh=RlUipA2ey2kCmON9nToJRohdn/zdTW51VduOY6K3u7A=;
+        b=c/ovlmxjnC4aI2Gfs66fl7/V4Wy1RBECpqJ06ZPP5HWQLlQmRbbzjAwthAZ0bwoj27
+         IK37obnMCtqoKhiz91xYotdtLaCtoS+pPktCIxcFn8HZ577Lvh4wwyV9vppSranFKBuj
+         HKpd7KNe1jliKRR9kE+Q1Tgvka8I4+3bA5sawRnrwUjSwh5xw7i9L7NrZTPVpf0KH3MD
+         QK3zQXCbU7G18jB9jyiEjSc2m7DS6lbbuKHl7ZSdT8CQORVD7Udzn98+RyRvTmEI1d2T
+         TIu5BjvJKihu+OSF4jz/zxCVKIStVa4WvFBz0Yp0RxpUEa2nQMgF7Cfz/gIzXeuU85Lj
+         gTHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783376404; x=1783981204;
+        d=1e100.net; s=20251104; t=1783377220; x=1783982020;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oLCwSc3K2XNvdlif3HKKYYNzywvUdhUzfqsScCtACxg=;
-        b=S7P6w9qPOe/BAgxp4hhH7vEO6NPYyjhM7VajO9bcQj4MgWCJVIoOkCLEF0U8vGjmM3
-         1J6DZfj5ISyqFTEUpIAZK4xL3ZeFkZ6qZKDIVUe4IDjpO6qmZCpYqWIQX1k5MetxuAHN
-         hDsuWmCAWnQY7+DsZJspdaZypva53d5w4avCR0hjRv72bDxMqdRXY8FjHqCM1UYStTWd
-         g/O13DAS+yIujER5XkXwRJHqoxndNhZ9oWs0exCCzVILdWm1THNlSC0bp28kcUANUpRp
-         w/F+sUuI2DPrB/jBWPAzWhQAavBt4Ha++MYtnBoKQ2pbgcya5pHJkGEq2edKY5YZIvtO
-         7bLA==
-X-Gm-Message-State: AOJu0Yxu4MUYHZ1gDB9PmoQFAxzDefCjjjp8z42J6/tKMdeQSzVkL7tj
-	qHLO17tH2n9Of1oB9Ufw3Ka0mCs5KB5Jjhakq+nBx85JKjbnGc092tKKHt4Twg==
-X-Gm-Gg: AfdE7cnBlc1gcTDmY8smCyL7RpWvu4a5yfgbLKUjnlXbqbe6ObOeQL/EGCiLL8qSj5r
-	QYkFtvVPXxc320kT942ELPBDpyt9f/1ZxktXNmX9wATRhIwxtSO4tuL/7lkE9ur8X4QRU8OO0En
-	FMKK096FSiWyeR0Y6hi1Zp4J+leOjDMHjPWgStyASCpByPJlbo0/VMX2Vvcpzv5xUsJpE+r/HGG
-	B1HzDr6xMurdfRBIfuyKC9Mm6QqXgTlc58/FRA7bPi4asDL5M4JxWDsdWHEPyShq6QoAIN159V+
-	aVIQxLKonQP5/6uteslfo7Nk1fBN52h1GF2gCTYUJIWFk/T9TBuKW0mrkFE1cenZPUdpXuR2nBo
-	sksHYe4KZRwFZi2/rx/8gaCN3ZtHBd2yNRBuIJgBLRQOMwc9JPQINmFnRgAbVH/t3ZpR8X7Fntm
-	hDtqtaJw==
-X-Received: by 2002:a05:6871:408a:b0:448:6cdd:3bfd with SMTP id 586e51a60fabf-451189138ffmr134504fac.10.1783376403628;
-        Mon, 06 Jul 2026 15:20:03 -0700 (PDT)
+        bh=RlUipA2ey2kCmON9nToJRohdn/zdTW51VduOY6K3u7A=;
+        b=sGGOwj5HT/pmpFxYrvdRvpR9ElXtDgfYyufRmwW7Y8hFy6BsVlcnjhJJ/9utoU37b/
+         GkcAOaNQOtBGyPa1Trl+ZhyL7BRy2lFaYa1HZZmH/XKjmqs1C2KpGq/Q9yIETYvj2Nek
+         PokOAfpGnNLyzf90FpgqDoBKeOKjm1sZwpIRpDhZV/LHc1hFOVlaFHMjc7cPgb/nZCDM
+         nzy05j0lRG5sxMd24D/ce7j/3xKaWAZskgvWAiA2Q9a938p8AOkSdouxM9CVvIuWL66s
+         5jnmjvpnQKM23hXxaFNZPNgXyT0rxTsL5hbMDpeMHkUIlqMpcaXi0nxBKBR0JTwrXKrn
+         aHGg==
+X-Gm-Message-State: AOJu0Yw+CWEDV0u2sZrFYbsIgUjHfSQ1vRJ56wmAPaw4nqH26guRwJgO
+	2uaOpkmuInQkxjVKTe6McZxGDPDwT2q+WhXjUBoSIy5MLiDPIMc98oH/sqJ/gA==
+X-Gm-Gg: AfdE7clhQPR7XXPot6TpkaYKaGnz0gaMwBh0YBtHtIOvs0pVB2OHh/eJPCkeqPteWzK
+	GO5nn2FU+R6CtVh0BD7m+Qf8ssqseXe8XzFsAJdiDQ0q0ZU+Aovr74an1aewSKq3cI4Po/A8oyE
+	k8i1s2sdN+Mh7oj/KujLWL01MMzvEeu1l4pa2bGXz7Osg7vTImPUyqK1guvqOSV6MyoE6PImNiZ
+	ZuPG4XmfakWhF/2U6XKFAYNdKsPuQhaZLPGXZrOqeqUnV4F1SqEuNDz2dZkdek1QrGUacIzWOHK
+	AlKaFPr0y4oGsYPC7ol7c8IO5XSqNGwM7FqF54BOiwbL2SMe4ujV4m4mDNJaRK5qTcCe67qWEGr
+	4m9X131Pp4T81CHFJ5EtYHa534qY5078ldRuXvz9oCGB/d4trsb6UHGfaRpOeL8nUqxfP8R6e7q
+	bMuISK2uJNrU3zjSpE
+X-Received: by 2002:a05:6830:3490:b0:7e9:e342:3e0 with SMTP id 46e09a7af769-7ebb2339f8fmr1640182a34.18.1783377219844;
+        Mon, 06 Jul 2026 15:33:39 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44cfb5db92dsm11618483fac.13.2026.07.06.15.20.02
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7eb54291227sm12670476a34.3.2026.07.06.15.33.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 15:20:03 -0700 (PDT)
-Date: Mon, 6 Jul 2026 17:19:59 -0500
+        Mon, 06 Jul 2026 15:33:39 -0700 (PDT)
+Date: Mon, 6 Jul 2026 17:33:36 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 05/13] setup: introduce explicit repository discovery
-Message-ID: <akwocdrzeu0xBLQZ@denethor>
+Subject: Re: [PATCH 07/13] setup: move prefix into repository
+Message-ID: <akwq5fqlxk-ndw_8@denethor>
 References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
- <20260630-pks-setup-split-discovery-and-setup-v1-5-13864eb5a032@pks.im>
+ <20260630-pks-setup-split-discovery-and-setup-v1-7-13864eb5a032@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,44 +72,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-5-13864eb5a032@pks.im>
+In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-7-13864eb5a032@pks.im>
 
 On 26/06/30 01:47PM, Patrick Steinhardt wrote:
-> When setting up the global repository we intermix repository discovery
-> and repository configuration: we repeatedly call `set_git_work_tree()`
-> and `apply_and_export_relative_gitdir()` until we're happy with the
-> result. The result of this is then a partially-configured repository
-> that we use for further setup.
-> 
-> This process is quite hard to follow, as it's never quite clear which
-> parts of the repository have been configured already and which haven't.
-> Furthermore, it means that the repository configuration is distributed
-> across many different places instead of having it neatly contained in a
-> single location. Ultimately, this is the reason that we cannot use a
-> central function like `repo_init()`.
-> 
-> Refactor the logic so that we stop partially-configuring a repository
-> and instead populate a new `struct repo_discovery`. This allow us to
-> essentially split repository setup into two phases:
-> 
->   - The first phase only figures out parameters required to configure
->     the repository.
-> 
->   - The second phase then takes these parameters and applies them to the
->     repository.
+> The repository prefix is currently stored in the startup info. This
+> feels somewhat awkward though, as it is inherently a property of a given
+> repository.
 
-Ok so `struct repo_discovery` is just an intermediate structure to store
-all the repository configuration so we can apply it all at once. Makes
-sense.
+Agreed.
 
-> Like this, we'll never end up with a partially-configured repository and
-> can eventually extend `repo_init()` to handle the full initialization
-> for us.
+> Move the prefix into the repository accordingly.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+[snip]
+> @@ -832,7 +832,8 @@ int cmd_rev_parse(int argc,
+>  				prefix = argv[++i];
+>  				if (!prefix)
+>  					die(_("--prefix requires an argument"));
+> -				startup_info->prefix = prefix;
+> +				FREE_AND_NULL(the_repository->prefix);
+> +				the_repository->prefix = xstrdup(prefix);
 
-So IIUC the expectation here would be for all configuration of the
-repository to happen prior to it being applied? Would it be a bug to
-attempt to apply configuration to a repository more than once? 
+git-rev-parse(1) has an option to explicitly set the prefix and we honor
+that here.
 
-Overall, I like the direction of this patch so far :)
+[snip]
+> @@ -2105,10 +2105,10 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+>  	 */
+>  	if (prefix) {
+>  		prefix = precompose_string_if_needed(prefix);
+> -		startup_info->prefix = prefix;
+> +		repo->prefix = xstrdup(prefix);
+>  		setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
+>  	} else {
+> -		startup_info->prefix = NULL;
+> +		FREE_AND_NULL(repo->prefix);
+>  		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
+>  	}
+
+We set the startup_info prefix here is `setup_git_directory_gently()`
+aleady, so we might as well just set it in the repository. I think this
+is a good change.
 
 -Justin
