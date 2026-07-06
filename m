@@ -1,91 +1,84 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792D43BE17C
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 05:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC543C060F
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 06:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783317467; cv=none; b=Ff8yAy5ngKdKQSIhkz3XVsW6lSdqBqDLeaae0OB/4TggWG6B8orzvNWnLglB2N3v9kJeHQfVj4L1GnsIpyA342SK53gc8pF09tjEPApBYsKBu71T7fZLO0XkjxDIESKbEW/DTni6JwoJbt7839/zOKsZpBrg/MWnU5mFKwGt7Wc=
+	t=1783318568; cv=none; b=hAKG5Ir/fz8KyKCH/HbGhbG0JAKz14rhwN9m6r7NqBhxn1LIRgHhtxIy7DqlTC0Asd76zsOi8J8uEq2S8IOKmbGvyLJsEe6TwySwzoKRj0ubjEBIb9tOzjv/No+5ma/J5WzhNn06RNwTGmD1nBCrokuhLWc0UAdKQnBiYW5m9hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783317467; c=relaxed/simple;
-	bh=AQ+EgTUZhnM9x0TMP5fFt6+oj8NmmlYk6YsyxFGBVVQ=;
+	s=arc-20240116; t=1783318568; c=relaxed/simple;
+	bh=+XuIW7dSIoaCqmjg6G8oDPqXhnNtsAchs4ueZgAzWVI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iPYIJUXpolIfGIgYamL+KK67YcTemueAztWgcU11PWrDzuW7AI/MpxxwBNZSzCd3I1zasp192op9Rcnyjcef7vJAJlO3Idvsm0ipdax5LuwqA7dCxttB6p/JMjWb2U+464G7g0CaZbX2spOPbicK+OEwAv2/IfjgTctcMwMGpEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Fgk06h8H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TAXd0GCP; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=kpU4IY/Wlrxu2Zz5QlNERp8SYff5f+opruWvgLBXTVx93tdsVTCcCdQ8nvaq4Ce9cDDAjhjFgHM+b5ViuegaBqnP3cdN3HJeONPrJArBbjUvLyodh/3cYTCmvKmgA5QC/e8dD38yLTXX2y0kMKRvLNax3iJU/BlDczagXOsDKc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EEbxexQS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lSBBMmwM; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Fgk06h8H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TAXd0GCP"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61EC4EC018C;
-	Mon,  6 Jul 2026 01:57:44 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 06 Jul 2026 01:57:44 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EEbxexQS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lSBBMmwM"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9D9697A00A3;
+	Mon,  6 Jul 2026 02:16:06 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Mon, 06 Jul 2026 02:16:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783317464; x=1783403864; bh=/DjqaU3UMo
-	FA5uRDq+K8K+haj8F3ADrvG8FCP32a4PI=; b=Fgk06h8HROe1bbWK+jcwyxPWls
-	10CKVRCPnZ3uc+oBuzkyoC30507mq2wrnmH7dWMnCcY+mP7w2QATdEVTBAUJidGc
-	kqsTLBKneBUw6jLY42i7kF6sqPU89SNDzovWS8OTdKdV/Fy6cU4G/f/WQYXrtAKS
-	Fp4TPMIQVrKsOKlz2OMRembzSlFXgiUrvWZ7vA2UdbuWPu71BUndL7gBcU+2Z1mN
-	J4i/R+EQac851oKvV2sNiQB8CPAKpzh6CiuQCBwHuv4omTG8EBolzrRQHFdvD/qF
-	jZB9wUUro7wIh1wdMOXWkEy3oXA5eOKKnA5ARRiOI9THIoNXPl1L1Lo4VBCQ==
+	:subject:to:to; s=fm2; t=1783318566; x=1783404966; bh=Fz+rIJWAt0
+	q7Rwlaf38n7qtUIc+n3JDsxGIugll+bWk=; b=EEbxexQSvgDCSc7BPX8n3fnnQX
+	PHd+OleetKun3R2vj7UISx2i5tzxKSmOKwCuJtw/kHex3vhUa17zok9GFMQbBK3B
+	CEfyA8oB7UVVj+jeROeYmOuGPMNQHbbp9k7/HeLD6z9o131zGDpivOL8Y0IeJhND
+	ws4fG672srM10JM+uXlWwy7TyVyOyCEskwzr+9jfUKOA5IM3j64J2CjAIcNUyDtn
+	I+fkSaAUQCUlwSTKR8epvb0hLOWsgO7tAmPtW7AaQO+dmJR4WgiDn7uLvSls0wCa
+	i8Zq9+uP+BYLesRYApo5WYOEEDAxezcqSW5sKvGuxN/r4Ed4k8fqaf+V1BCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783317464; x=1783403864; bh=/DjqaU3UMoFA5uRDq+K8K+haj8F3ADrvG8F
-	CP32a4PI=; b=TAXd0GCPd7sfsMm1vs1poFzPvVPghBGhUWrGF7URBOJORYAtI4s
-	9D0l2Y7I6sOIeoszBHZ/Y96T8xA0j9D9zIGtL1E5z55KaVb87DOPHKDZkcknWJ/7
-	SoLK+oN5rl/MEahvzJkNnHZtqBYdcbMWXHsUNh9xwvW271kr+Awi6WwqTAqUbKLa
-	+tZD2jOBX2xrT2u3FUmwld78nU6dsh2eePHd+v7sJGrhAU5DS/g4AtxB+d9mRkRr
-	WY6bE41+I8Le8e1DYtX1mF1kOJaVD4pF/Uxs/SI6kCtvfcrMzkaCOVnNUSpUFz7f
-	q3B/ghORg3IyX8/5lRU5TtuoyinRhUxke9Q==
-X-ME-Sender: <xms:2ENLaqiNmqm3iZcD3GmHPdey2nyz-dDO5WmwTd4Sx8EKgtke--uDRg>
-    <xme:2ENLaiABIrxX0BSSwFCg6w1CSpvVJbD-Oh_vVzKPYppoSVjBI2I8SCe_YaRWxlGzF
-    GOOrsDGpgZPqc24wroxmSS6EaP7fy2eiFvvL42JZ1jdT2XANTbjpw>
-X-ME-Received: <xmr:2ENLanFI596An0O97auFva3GzVl9nuk8qrjAruKCErVibgJ88xYUyKsXjL2psA6LR5tqoR3ng0mpSpY0G-R6zzSIcK-MBxo0_dYHYD7ldqM>
-X-ME-Proxy-Cause: dmFkZTFieY/5t03mFmW0kMrzxbCkgoTnxfyF6w1DY0yJxTxaQpPdLlH0dNHPbWVDCebm8e
-    Lx8NY1eErYNp7JyYenERgFVGZjUYJn7+cMms+r+d5zHhuGR1jqIgq9HpXNWJvE697s1V7B
-    Dv9PV9nBomXQ7r8j6DKLL0HbFm7bevMpQ5o3LoLkdTvnh4175bdMKSY6idcpDI1ukTJpOk
-    nK3AcZSwl8YYf068DsbqtQKSOCqC2OLfBRsg1vFrWVP8EHyfLKSxMjJC7e1Fs83djNK+wx
-    FAZbMFXnv8kqI0L/Le0ADLffh26562rlg5dq2VMjSyoaA7fCzWLDzzHr+0QgNqlXlz4xFQ
-    YDgnTtYeyWoMWAglRF7N8aAa0Y/Vg3GVScKCWCLYkShmfT4jrhcYfJQnYNurNI70uQX1wY
-    F/UOwlIG4Tg+o0/LdsF+NBfWY2rpvL9g+c7zTBYAjB13vBX+3YqqouZ+phI2j2y+MXCO+W
-    Bx9lRXnl4mNHyNIP9715e3T6rRyUbii+puU+QrIh+q1SrHMvjs9iqIeBh4NiCY3n99EL3u
-    0AFreVMSDZ2oaHZJXuP+X2lpp7D0jLTdgIaJe0EqKjHr5d9NLmt5d3LgnMkxv9AOBSRTqc
-    zFgcJx2bDsqvcfKj0dA9Z2PBmkBk1D5w8nzLTPGr8UoXvqan9jfcoTk8oN0g
-X-ME-Proxy: <xmx:2ENLaiJs21JbYcTTrVkUCZwlFNRAXZ4Bf-lHsx8Ly0TFNPceFXuoYg>
-    <xmx:2ENLajnMLEPrPmW907ddGFiFej2f5Fw3TrudE-_Q1KkOKbOijuuVCw>
-    <xmx:2ENLaiR4sNrQey8BbZAH-RXFWueczs1rbWdyMxbFq7jD3pi37WQTVg>
-    <xmx:2ENLatKSLip9A5LfYFGfsnvADkpu3Ix99GMmI191m68SNFs9fislkg>
-    <xmx:2ENLaoR-dFq45hKq4KAq8EOhqHZQvZ1kfQh7Htv6WFN8ZCGVjmuuZ3pj>
+	1783318566; x=1783404966; bh=Fz+rIJWAt0q7Rwlaf38n7qtUIc+n3JDsxGI
+	ugll+bWk=; b=lSBBMmwMoIFdQkzjG5eszOEVqwiAyEXOQi4k6P3GnRsQ9PwiWi8
+	whd35DDK1186xcF7zygQYPc+PKXwwC7ndKJwRkR7W7dM6Vp0ONDqfIPUGm+bgXHm
+	pOcT5O3tXeTebFJYdFYIcixYfxPJ7z4vT7Hrf//0zsFcnN8XUj6BFbcJxBUuFbFg
+	Krm04hDuMCFHP2oRijAQeZYItQA7N0jOn/cYsHMbQxZSxBTLg6qYjCEe2zEvSNzT
+	qByUJNHnM8n47Tkr4pRyQC5+soTezr45P2RyIBW5vsBlZ4BhmucRVCohs3BAObap
+	KROjsjEeJadNMiTrzxH6P9e57Br9hguUbJw==
+X-ME-Sender: <xms:JkhLal5YfLjnbxiWSJOWMMs9NxoDyiz3ead5uA0mfngazdxA3s7Pbg>
+    <xme:JkhLaqUL0PAc98c58JvVSFP19sNgppAYuCyTBJVQT6Uxi__HVX2g5vjpySBTF6mRP
+    YeU0-Fq6VfHyBU-Mo5a5nCXrM-8uruXblN428LI-r8JWT6Vs7NOGg>
+X-ME-Received: <xmr:JkhLap07pXnV9GiaqDvilKRE5pB0bHkelK3IDDEiuKotN0qucjwNnL6mOf_ae02nKiVUZ5k9Kwq7bsiy0VHusus0RrMTtQUUnxD8EpS5jts>
+X-ME-Proxy-Cause: dmFkZTFU799QJVittf0RWk9R+cJqRTTBNVj+bmdoWR+QQ8CeIQdc8+JFKtDovsVUVco7ij
+    ekU55hSuHvlpcyNQOQxNG7OAawrAS4/dbAFDzwj+9ayJO9lNqcGNFGvWuht9xbywF9A5Im
+    +kqkxMwZ3m3Kj2nvqI5h4qJ19o77UatDbjOvPxB6us++Z3Ks4zpxuvTSmd2lcgs6TPbrNl
+    Y4LhLo9Fxo1061ZRwUzBB429ZDz8GohAKlcWZsHeEt8EWIoxFvqm1ewuP7yDWaBsZYetlf
+    NIBmLJcDINpH7wJTKXh0Kmlajsub0TOeAxqkWWJciB8vblv19bH8dxlRDeH35nmCvM0lJs
+    IeRMbrtd2UImq6z2MVaUDXN4cX9t9R5Xo37bubaBaKKWiyC0c2W4ht7nxf/NX9/BQYvdGu
+    5t27ytyco4XM75hPYnvbXxS9Ez05E3uu7fPBOJEFBmrd8qj7HDEIFfuBq28C2+0KcRpy+6
+    p0LnhemE44YlgDPO9jYHYxdPZ9jsWrOTBFKO9lKXdLiBWGzL7DkF2RiBCL/7gO5UvbHzis
+    Z6mMIrGa2cUrbr04jpPgbRpCsgjjodvsIDNL33ACYbV8RE0AY7wGVib0REDOp1CN4o+hxL
+    061L/nqKpQMFUuXQT1ToZ8wPtqskE9TIr1g85qdAoAZYn2uubbnDZ9kr/Nqw
+X-ME-Proxy: <xmx:JkhLan3zb0KkbniEW6FfQ7aIRSGrGMtg812ajbbLkjvcb7TVlqphUQ>
+    <xmx:JkhLas91CiZvL-0kTVCYu3K23HGH1pOdeVFa1zDTMZk4IZiCQ2DqMQ>
+    <xmx:JkhLak2ksb82fMRwI6SDRezmpPGPIFuOj2iUzK4Bu7_Q9A8N-JA52Q>
+    <xmx:JkhLap8sD-OmLPBKLhxWHWkyE6xgsy_lREEj3Ri876fPr-8p9oRQ7g>
+    <xmx:JkhLakZwCeEL2u46VDMo95Q5rNeNk6p0bzO4wEVRPdgAOGK3L2b7gAwS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 01:57:43 -0400 (EDT)
+ 6 Jul 2026 02:16:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f7d3f809 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jul 2026 05:57:40 +0000 (UTC)
-Date: Mon, 6 Jul 2026 07:57:37 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a4093a2f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jul 2026 06:16:03 +0000 (UTC)
+Date: Mon, 6 Jul 2026 08:16:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/2] format-patch: fix leak of rev_info in prepare_bases()
-Message-ID: <aktD0fioUvyebhOY@pks.im>
-References: <20260630064301.GB3733961@coredump.intra.peff.net>
- <akOZy-BygZS8fqPM@pks.im>
- <20260701081358.GB813310@coredump.intra.peff.net>
- <akTS_rPV7JaGHKRq@pks.im>
- <20260701084733.GA814472@coredump.intra.peff.net>
- <akTXYoY7mSQUM33P@pks.im>
- <20260702085821.GC481298@coredump.intra.peff.net>
- <akY4u02vdBkVqs7m@pks.im>
- <xmqqjyrbhkf8.fsf@gitster.g>
- <20260706003429.GD2301945@coredump.intra.peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: [PATCH 7/9] http: discard hash in dumb-http http_object_request
+Message-ID: <aktIIKuReMxJmDsi@pks.im>
+References: <20260702075234.GA1548258@coredump.intra.peff.net>
+ <20260702080707.GG2029434@coredump.intra.peff.net>
+ <akecqPq4F702E8Cq@pks.im>
+ <20260706000105.GA2301945@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,44 +87,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260706003429.GD2301945@coredump.intra.peff.net>
+In-Reply-To: <20260706000105.GA2301945@coredump.intra.peff.net>
 
-On Sun, Jul 05, 2026 at 08:34:29PM -0400, Jeff King wrote:
-> On Fri, Jul 03, 2026 at 01:45:15PM -0700, Junio C Hamano wrote:
+On Sun, Jul 05, 2026 at 08:01:05PM -0400, Jeff King wrote:
+> On Fri, Jul 03, 2026 at 01:27:36PM +0200, Patrick Steinhardt wrote:
+> > On Thu, Jul 02, 2026 at 04:07:07AM -0400, Jeff King wrote:
+[snip]
+> The second issue is related: what should we do in other functions when
+> the active flag is not set? For example, what should this do:
 > 
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> > >> Likewise I find the dual clang/gcc jobs to be overkill. Compiling with
-> > >> both is useful, as they have different warnings. But have we ever seen a
-> > >> case where running the tests showed a different result with different
-> > >> compilers?
-> > >
-> > > Not that I'd know of. As you say, I think it makes sense to use
-> > > different compilers in general. But I don't really think we need to have
-> > > this as a full "compiler x tests" matrix.
-> > 
-> > Very true.  Different configurations with TEST-vars are great
-> > combination to test, but we are not in the business of hunting bugs
-> > in clang/gcc so we long as they compile (instead of warning "hey,
-> > that construct gives you undefined behaviour"), we shouldn't have to
-> > run the test suite with the same configuration for both.
+>   algo->init_fn(&ctx);
 > 
-> I don't care about finding bugs in clang vs gcc. I'm more concerned with
-> a case where we have undefined behavior, both compile it fine, but the
-> bad behavior is revealed in the tests only by one of them.
+>   git_hash_update(&ctx, ...);
+>   git_hash_final(out, &ctx);
 > 
-> I can think offhand of only one case where I saw that happen[1]. IIRC it
-> had to do with integer sizes being passed to a variadic function. But it
-> also changed behavior within the same compiler using different
-> optimization levels. So it feels like kind of a scattershot way of
-> trying to flush out UB, and we are probably better off with UBSan and
-> friends.
+>   git_hash_update(&ctx, ...);
+>   git_hash_final(out, &ctx);
+> 
+> In the second git_hash_update() call, there are two obvious options:
+> 
+>   1. It should do nothing; there is no active context to add to.
+> 
+>   2. It should automatically re-init the context (using the algo from
+>      the previous init) and add the data.
 
-Yes, I just wanted to say that UBSan is definitely the better way to go
-in this context. I have no idea of course whether it would have catched
-the mentioned issue, though.
+Or 3rd: we `BUG()` when any of the functions is called on an
+uninitialized context. That to me feels like the most sensible solution.
 
-And even so, we'd have at least one job that runs all tests with either
-of the compilers, so we'd still notice issues like that.
+> The second final() call has the added bonus that it returns data, but I
+> think there are two matching options:
+> 
+>   1. It should do nothing, and hashclr() the output (leaving it
+>      uninitialized just seems insane).
+> 
+>   2. It should automatically re-init the context (assuming there was not
+>      already an update() call that did so). And then I guess return
+>      whatever hash that particular algo generates for the empty string?
+> 
+> Those all seem reasonable-ish to me and give a defined output at every
+> moment (which is better than crashing). But it kind of feels like they'd
+> be papering over potential bugs. Maybe crashing _is_ better (we don't do
+> so reliably now, but a BUG() could make sense).
+
+Yes, agreed.
+
+> And the third is related: do we check the active flag when initializing?
+> Right now the answer must be "no", because the point of the init
+> function is that the input is potentially garbage. But that means
+> something like:
+> 
+>   struct git_hash_ctx ctx;
+>   algo->init_fn(&ctx);
+>   algo->init_fn(&ctx);
+> 
+> leaks. That's maybe OK in practice. We could do something more like:
+> 
+>   struct git_hash_ctx = HASH_CTX_INIT;
+>   git_hash_start(&ctx, algo);
+> 
+> where the INIT step doesn't actually allocate anything, and start() is
+> the moment where you must promise to call final() or discard(). And then
+> it would be OK for start() to BUG() when the active flag is already set.
+
+I'd say being as strict as possible is the best way to go until we find
+a case where it makes sense to be less strict.
+
+> That was maybe more than you wanted to read about the topic. But if the
+> request is for safer object lifetimes in general, then I think there are
+> a lot of details about what that means.
+> 
+> If we are going to do anything, I'd be inclined to stop mostly after the
+> diff I showed above. That's the only thing I've seen that would simplify
+> existing code. The rest are mostly hypotheticals, but since Rust was
+> mentioned, I wondered if you're trying to shoot for something safer.
+> 
+> At any rate, I would prefer to do any of this on top of the series I
+> posted. I took care there to avoid double-calling final()/discard(),
+> which could now be simplified away. But I think I'd rather see that
+> simplification its own step.
+
+Fully agreed.
+
+Thanks!
 
 Patrick
