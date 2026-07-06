@@ -1,199 +1,139 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD25547D920
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 21:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783374588; cv=none; b=hGF5IQXyt/GLj3xECY+LvHbJMAyGHJGfXVkhsRh10DuzB+hpznAoDhRj9pVKYdRB/yMLwJxdHum5uPTVHD84PAmzMsZz1ijMLd9cXTgUmO2YbcRwOZmgYUfLQkBazpCzbRA5AqV/2hnHMH18K8eM4/KAqb95NdfiDLP6+UsU5/8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783374588; c=relaxed/simple;
-	bh=XLCYbhP7UjGedxS1Qb9cbLCbmpGvgCNjnqWk4TU7VpY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fUoWqUMTNSxw+Rs78jX95y8QyD7niw4aAgzjXHv6CROv3d6I1CC9Oh5Le945HL5LcZ6JPVp+dj9rp9428z+18LIjYuYJJKSRXPfYUdv5caSzY6MpGQ/kcCwejDxY6OvD+X4ZRrV67EgvGP+UCyG4V0PLwbdiW8kfELzMcU9YJMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OpV6zHCu; arc=none smtp.client-ip=209.85.210.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557E8480953
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 21:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783374774; cv=pass; b=C1n868tJLzopA22PnqrLblmgbR2n84qJ5K1c1qB45kIHmtJvWfVBeMoCWaahPQeKX03e5Yd99u1cxBGtxw4D3oWmJi2fpbil1sp6Ks8Pvgo6Rsc9KYWhKGRTf1yYhETKGfLXu8MCbt/GNkS1/7mmmb/SXqmh8icpvN3CG8+BkBQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783374774; c=relaxed/simple;
+	bh=2BDlsmeLnR0bDF1U9akvw8/StUf/cFrhS7dz1JwOHdQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ReQyC/jamJI5uufpimCwZXHva9/S/zcHPLycIyypF+ALe6wtbx7CZ6YZlXMon9FWdacGFwPJLApdeBTPTzOitxjuuMDU2S50mtnwylAf747+5Haa7Ea9dSjLsZ63on09w92vTr9dHVv3flSTOtP12DSL+iTdIoW7b0zTifsb7iE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=DIm0oXMk; arc=pass smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OpV6zHCu"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7e6b554044fso2736921a34.0
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 14:49:46 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="DIm0oXMk"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-667627ae83aso2586965d50.0
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 14:52:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783374766; cv=none;
+        d=google.com; s=arc-20260327;
+        b=T1lSw+T0b/cPQ2+w0AvOw/m5I7rSXrcV8phv3x8DPdseQVOXfMT1uIn3g5thIlHPRG
+         otGXDT2W96mXli14rmbH4BGJPPb6c8yCToI2c8Kd0PktTEWGo3BvejjCiYNESzQ1qkpE
+         Hjf8M/mOaa2M+y5bPlz8Qxke/itnsvMLJcCT8t1nGptVmKuTXEfyNFBDOvP9I9fvoF1d
+         yQYQj5Prz7yO/QsMct+xZnBWMbanlgo9eFcy3kP+t1wNNzjSNSchRsB+c1zOUu9uhChs
+         ArnDzktNsTA12QG+UsE0DzCaEDKLov0Tsds8zP9ZWYHZ6YQvLKIIA8iz8t8ZoLZX8Wdl
+         FPdQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vfCgt7m0zgtyoaY8YXfjA9ldfZfBBMi2V5HS3EjMu94=;
+        fh=D7MxG65u15Vc90giVcXohNh1UInsLykXV1FPxfXLKjo=;
+        b=CyH7rBjQ/l1uuk0P0+gtcQeQDoV9kZdtseOaO1KEy/p6RXA5wiWXv2ke0pKmsXpN/3
+         hcayMZcAdd49S/MgZfUB+50KTL+2W6IN3EgVoGtfl2zBEXhxE4h1LiwBoVWjTWHyqJV3
+         +HDV/MQ/NKZ294eO4fRUAd5XvlcW+WCx7iN1zijdNTUQZ6Hd3fIh4y9TBkb47tVLrUlj
+         FsI8aw22NUNJXG1Wmg7U/fyz670DWTVfWvIuxsnKfVqWAQFNdPOF0FqVkfArxwzxzGWJ
+         EKmojIivIKCkjOAZ6YGrfeuLGFVZO9VYgYpQELezjOqk4XEs0DLQgqtZGbkwKOfJcyyD
+         1y3g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783374586; x=1783979386; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9ugkbt3rMhOslB4/xNd+ZL9+Sd3imPSX449qkLcvVY=;
-        b=OpV6zHCudVzZtRGq0s7A+0ljhY9IA+uRDS7p6VwBXUwsatduX8/XpB918C5q6b95bO
-         5R+eFWuMdC6T4ktW1hO8bcceCxeoESCiu/HueY4JLfVvovMjq2Cji3YLWbXfGuc5O/dg
-         mL4HfHBFqnP8Yvf6E1xBFcUuHmUzqX+XArNYz7KnZCtpJuU50xBqtaKuSZyBzqtxX41f
-         ptKWUjtyxjVWihqJCcFuVBUqVdYkVoRoN1LepwduwBFJ/vNHKcwo0nOozWPCUbvOgDx5
-         +WOzGTlzwF5qdqGJ2hIn9mihfUACq5EulqSoPrkybEmMCwfcLG6y1uI9rHs7jUAlGmG9
-         9+vQ==
+        d=spotify.com; s=google; t=1783374766; x=1783979566; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=vfCgt7m0zgtyoaY8YXfjA9ldfZfBBMi2V5HS3EjMu94=;
+        b=DIm0oXMkzc1QHfZiPLDZFaPKK+jWbfuhaM18c/NtS87BIIFmr7S8BVMW3hO3/wwkfn
+         fDa81/cG4myZlqlCyokl3t/XdZBR3mWY5ihCFrXbEVg+Hk2OP+SGaO/6CrQ9HjAnq0YB
+         4l5af6jovd6rN8meJ+o9fknZ2xzZOo7hdutcE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783374586; x=1783979386;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y9ugkbt3rMhOslB4/xNd+ZL9+Sd3imPSX449qkLcvVY=;
-        b=N/J+idHhVfYrUC+7fXVJufJNg0K5kQZOgjx7PRV9WuD57x6fxIkZgSkYgeDIY4zKdy
-         dM6elOIF8KLhQW6ZqXB7+fTkgXZZSRgpOlV4AK4GskLKVH6hRoF2I490naBgw7oS00Ni
-         QToZvty3PLaXtR5hfD42z51SUlr+YF/ZMVqkRRtI+5q8QIjwVHZFo40zXaldn2O272l5
-         fvlGtuqsGPIqIYQpORLAB9L9xGtb/3h2tTm3MSiehoY/s9NIFeY+oKH5cBLGM32LMmeu
-         vW+DVSZ+Za2u+ZHd1YsQH6t3K5a852G277LvbPhUrJWQQHs+AwfQ8Abi1r/QUPgS9NEN
-         Kg4w==
-X-Gm-Message-State: AOJu0YzQnGCEyC2hOlQcReBAu/rA7RFLaRkw3yLOhWW/tST0ogQKcnIt
-	u+I7r450ecF9x+znmR3bT/xw7ttBEv1570yucSaxuFesDWhMgwunx4dD
-X-Gm-Gg: AfdE7cmpjgrxCWJb1GFq8QjAbw2o+YrXlLWyYOrtwlvgYleGUfKx2k9+TZ+nZxKKVzs
-	LSZEriGxH3uo24CU7w2QockE76LgMKoq8u88H8IOoTEeD8EhbgwwCYT/oEVDvbHRK3RIZ0a/u9F
-	lgrf4oba9KnfaiawsKkQ0NP5PG5feJLPqyYwmW1cixXg27CCAzVUaLEscj8klHm6qD5nk1FDpJl
-	FlkWymGtOx9/oqSTdyA5aDYgs6ePpVQX+dGorLZzpGV2k6FvASWgY+sUwbvG0rGYcoxh4yVIgz9
-	+QR/jIVjKAr+lj5XvJ9T6gFBRODfTXwm8gfJFbK1sGhWEHTZvu/vVoM1jDf3MKcdatCos2DOCfC
-	o0M8ht6qHWIppfVWuBk8Kk6+lVZeLVWLR70F3dhkL6tR78uQTHxpJGBll5FJlXG5tYXRlJ55vEZ
-	EYK/sWNg==
-X-Received: by 2002:a05:6808:1314:b0:489:b7d1:db7b with SMTP id 5614622812f47-49fde0e8034mr2244393b6e.22.1783374585361;
-        Mon, 06 Jul 2026 14:49:45 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-49acd63b6b1sm5593901b6e.0.2026.07.06.14.49.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 14:49:44 -0700 (PDT)
-Date: Mon, 6 Jul 2026 16:49:41 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 02/13] setup: mark bogus worktree in
- `apply_repository_format()`
-Message-ID: <akwfAmyeIVJYXj1h@denethor>
-References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
- <20260630-pks-setup-split-discovery-and-setup-v1-2-13864eb5a032@pks.im>
+        d=1e100.net; s=20251104; t=1783374766; x=1783979566;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=vfCgt7m0zgtyoaY8YXfjA9ldfZfBBMi2V5HS3EjMu94=;
+        b=k0Zx9CyEdmriUF/xAx51ImW+ESG5DtIv5JIeq5RZAVvBqlId7xjqvI7U8fbnFAvAcx
+         LWPp9fySXPy1ccckkEOE9xhQiojclQzSj0j8REeVOLQxPXDPnMLiQBbyd2ujPOG+tnNP
+         gSKgT981ecJssM4gXCQc41YjscDRpTIhSRM4DYCFmpKxR++O2TdOgHCulwgSOncyFKSE
+         sG2+dh8UYDv9VVOxo4lE96Tyg0e8WbdT8sAC4ERs77wuZZN+Qlbc6hkIC0QHkEXXnp1T
+         SYbeG0hYdu7u6/ATk1gZMpfDmIEbTx+ioR5D9TpheUzDgeN5+qRSM/hGq48eE1XdbylJ
+         8rHA==
+X-Forwarded-Encrypted: i=1; AHgh+Rqv2sWM1xC7/C6T9YH5J6TiWc/g+ijPY0utwVuDLjzGot7j7lO4qiIMZ94cOZTdJWXIDvk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUqsFvPT+jGOnCD6C/J370LN8JRtvR248YQ1FR6BOQ28Tdl7l+
+	8utBNgYBl0MZQn99itKbzW7duMeEm3Sk9SpdT6Tq3wHK/vIepUup122mCNl7lZu+CRqs5TmuU4P
+	yl+QwKnbK971Lt6ljYsL3Ym7GTrshg5sCo/G+k/B83w==
+X-Gm-Gg: AfdE7cnCzGilG3BBMUIgoR8aYMddPaKv27z3oMY4V8rxRJrsaXGbExw+d4zbqq4sz4K
+	KCRLbETLzFHA6JSQVOs4leG7OUFy98owcXiCwQ4wSn39XRgMxNg72w9wqopgTmp7gy2AraFAcTd
+	atbySE0P20K0VxuLisvzIM9Ot3IzbGcYHxpLRmL32rbaVdKgED2o9qQGMhDu+ZXCeqlNX/auB3B
+	hUHFTz/TfPU4QT7j0JqUchWE+GFeGnIlb+IuIRsRPviyOyQyphpyFd6CwFTG9Ux/A/j0FU3u3YS
+	XI6Bl2Go
+X-Received: by 2002:a05:690e:14ca:b0:666:390f:e8f1 with SMTP id
+ 956f58d0204a3-6677fd15f91mr1916917d50.74.1783374766206; Mon, 06 Jul 2026
+ 14:52:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-2-13864eb5a032@pks.im>
+References: <pull.2132.git.1780250236304.gitgitgadget@gmail.com>
+ <pull.2132.v2.git.1780301856444.gitgitgadget@gmail.com> <90270818-c52b-4611-8da2-6cee20628fc2@web.de>
+ <CAL71e4Ob-B5MJ5DPY+_tzpj6nyrbQ5WutxED2T93SWJV6kJGPA@mail.gmail.com>
+ <CAL71e4PV-1aDvn1JnweMa3OR1xxB75fWjzJOBvM54KOWqC0stw@mail.gmail.com> <1aa5b755-0f74-46d5-bd6e-a9cb7f3fbb12@web.de>
+In-Reply-To: <1aa5b755-0f74-46d5-bd6e-a9cb7f3fbb12@web.de>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 6 Jul 2026 23:52:34 +0200
+X-Gm-Features: AVVi8CfZZsM8bIKJx7E0PtkMmlWRwPybC5ndlc6RPdWwQ9L1dEvj2jF_uBXxhz4
+Message-ID: <CAL71e4NZYdpw5cvi6ARn1req8xaRGGg9X4xhZKp6S9Dz4K23aQ@mail.gmail.com>
+Subject: Re: [PATCH v2] prio-queue: use cascade-down for faster extract-min
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 26/06/30 01:47PM, Patrick Steinhardt wrote:
-> When a repository is configured to have both "core.worktree" and
-> "core.bare" we emit a warning and mark the worktree configuration as
-> bogus so that the next call to `setup_work_tree()` will cause us to die.
-> This allows us to still use the misconfigured repository, at least as
-> long as we don't try to use its worktree.
+On Sun, 7 Jun 2026 at 09:30, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+> So I guess we keep the full sift-down for prio_queue_replace(), knowing
+> that sometimes we have a lot of items that end up at or close to the
+> root of the heap.
 
-Ok.
+The lazy-fold series (kk/prio-queue-get-put-fusion) is in next now.
+I rebased this cascade patch on top of it to check if it's still
+useful.
 
-> This condition is handled in `setup_explicit_git_dir()`. In a subsequent
-> commit we'll refactor this function so that it doesn't receive a repo as
-> input anymore though, and consequently we cannot set the "bogus" bit
-> anymore.
+With lazy-fold in place the regression scenario you identified
+is resolved. The only remaining change is in flush_get(),
+where unfused gets now cascade instead of sifting down:
 
-Ok IIUC, `setup_explicit_git_dir()` is currently responsible for
-checking if both "core.worktree" and "core.bare" are set. 
+  -    queue->array[0] =3D queue->array[--queue->nr_];
+  -    sift_down_root(queue);
+  +    --queue->nr_;
+  +    sift_up_rebalance(queue);
 
-> Move the logic into `apply_repository_format()` instead to prepare for
-> this. While at it, fix up formatting a bit.
+plus the ~20-line sift_up_rebalance() implementation.
 
-So `apply_repository_format()` is expected to still have the repository
-info which has access to the "bogus" field.
+I benchmarked this on the linux kernel repo and on a large
+merge-heavy repo.
 
-> Note that this change requires us to also explicitly unset the value of
-> "core.worktree" in case we have the "GIT_WORK_TREE" environment variable
-> set. This is because the environment variable overrides the repository's
-> configuration, and we don't want to warn or die in case the work tree
-> has been configured explicitly regardless of whether or not "core.bare"
-> is set.
+The results are consistent: a real but small 1-2% end-to-end
+improvement across commands. A prio-queue microbenchmark
+would likely show a larger difference, but the queue
+is only a fraction of the total work in any real git operation.
 
-Hmmm, does this mean we now just silently ignore the misconfiguration if
-done via environment variable?
+The lazy-fold optimization cannibalized some of the value here,
+so cascade only helps the remaining unfused gets. As you observed,
+cascade is better there, but there are fewer of them now that there
+is more fusing happening.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  setup.c | 37 +++++++++++++++++++++----------------
->  1 file changed, 21 insertions(+), 16 deletions(-)
-> 
-> diff --git a/setup.c b/setup.c
-> index 118416e350..f54eac5e5a 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1147,24 +1147,24 @@ static const char *setup_explicit_git_dir(struct repository *repo,
->  	}
->  
->  	/* #3, #7, #11, #15, #19, #23, #27, #31 (see t1510) */
-> -	if (work_tree_env)
-> +	if (work_tree_env) {
-> +		/*
-> +		 * The environment variable overrides "core.worktree". This
-> +		 * also has the consequence that we don't want to flag cases as
-> +		 * bogus where we have both "core.worktree" and "core.bare", so
-> +		 * we have to exlicitly unset the configuration.
-> +		 */
-> +		FREE_AND_NULL(repo_fmt->work_tree);
+I am on the fence about whether 1-2% end-to-end justifies adding
+another sift function. If you (Ren=C3=A9 and Junio) think the benefit
+is too small for the code cost, I am happy to drop this patch.
+Otherwise I can submit a small reroll on top of
+kk/prio-queue-get-put-fusion (or rather next, in practice).
 
-Ok, this confused me a bit a first, but IIUC we have to unset the
-environment variable because we now defer setting the bogus flag to a
-later point when `apply_repository_format()` is executed.
-
->  		set_git_work_tree(repo, work_tree_env);
-> -	else if (repo_fmt->is_bare > 0) {
-> -		if (repo_fmt->work_tree) {
-> -			/* #22.2, #30 */
-> -			warning("core.bare and core.worktree do not make sense");
-> -			repo->worktree_config_is_bogus = true;
-> -		}
-> -
-> +	} else if (repo_fmt->is_bare > 0) {
->  		/* #18, #26 */
->  		set_git_dir(repo, gitdirenv, 0);
->  		free(gitfile);
->  		return NULL;
-> -	}
-> -	else if (repo_fmt->work_tree) { /* #6, #14 */
-> -		if (is_absolute_path(repo_fmt->work_tree))
-> +	} else if (repo_fmt->work_tree) { /* #6, #14 */
-> +		if (is_absolute_path(repo_fmt->work_tree)) {
->  			set_git_work_tree(repo, repo_fmt->work_tree);
-> -		else {
-> +		} else {
->  			char *core_worktree;
->  			if (chdir(gitdirenv))
->  				die_errno(_("cannot chdir to '%s'"), gitdirenv);
-> @@ -1176,15 +1176,14 @@ static const char *setup_explicit_git_dir(struct repository *repo,
->  			set_git_work_tree(repo, core_worktree);
->  			free(core_worktree);
->  		}
-> -	}
-> -	else if (!git_env_bool(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, 1)) {
-> +	} else if (!git_env_bool(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, 1)) {
->  		/* #16d */
->  		set_git_dir(repo, gitdirenv, 0);
->  		free(gitfile);
->  		return NULL;
-> -	}
-> -	else /* #2, #10 */
-> +	} else { /* #2, #10 */
->  		set_git_work_tree(repo, ".");
-> +	}
-
-Some random curly brace cleanup above.
-
->  
->  	/* set_git_work_tree() must have been called by now */
->  	worktree = repo_get_work_tree(repo);
-> @@ -1768,6 +1767,12 @@ int apply_repository_format(struct repository *repo,
->  	if (verify_repository_format(format, err) < 0)
->  		return -1;
->  
-> +	if (format->is_bare > 0 && format->work_tree) {
-> +		/* #22.2, #30 */
-> +		warning("core.bare and core.worktree do not make sense");
-> +		repo->worktree_config_is_bogus = true;
-> +	}
-
-We now perform this validation in `apply_repository_format()`. Does
-deferring this check have any meaningful impact? Or is
-`apply_repository_format()` always called after
-`setup_explicit_git_dir()`?
-
--Justin
+Thanks,
+Kristofer
