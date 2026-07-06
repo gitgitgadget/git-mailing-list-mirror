@@ -1,148 +1,103 @@
-Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4230A3EFFC0
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 20:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6483A05F2
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 21:27:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783371048; cv=none; b=iHQsaAypM5AJo9DdI49srTHd1k9BxqORp6E4Ka4DdQR4La4Av34DRCro6akRA8lPqWeSsnqoyY5mFhHEFveq5Kenuc/boaKZrxcCBPflHy0zim3xPfy7FqZCSTgYiGekDUyGhVDTFGxsC15RnfRtTMEWUdRl88Qrmc7aNZL2WzQ=
+	t=1783373246; cv=none; b=rEVjLFEtChT+hJuoMiIce6xuJst5XVADlIUKTLzTnmULvTPmzd+QfQXfk7KsPW2v1KYK5XT/ifkdzY7wKZyEzpvW1JrIEz32bqa9wSgL/8n4i5YkaqKazKvGt7r1Pm0eBCQZrqQ3/rSYECfa8r88DUdhJt61ihoKXXA/E5lPzMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783371048; c=relaxed/simple;
-	bh=ayc8hCny0SJ/eL9p/CL364uiqt5rWseCBd77yffnlx4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G+TOItpA26PLN4aGPey8YOg2a1b4U+TgekqcaXGAy4hRwAvxdGgrTpDeFKgqnJX/SEpFAUVWsB/Sjp4yWEjFkfqUTU07Ol08WRf05gS54uXy0ai1XpBUOSrlc0PEkUk+xMo9+RgiEttmb2FTrXmyGqlH0D+jOrG8hdjqqDEpJWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hfT3FWUy; arc=none smtp.client-ip=74.125.227.132
+	s=arc-20240116; t=1783373246; c=relaxed/simple;
+	bh=XI+d+DAsovev+xtb7illBMFPKhHcEfp1/MAoffAHxQQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fb+X3BIW9KjcOqpO0QXiY2yWPYDRNzfXDNu6+OI80wxVF9xY8Y0P0hIZA+pvGWI+Di0u4qfc9sfhMJi1ge1tsmx0dtd2dEPn0AG2phD2P+NNPNdUDnI7MDd0r1jOkX0wazJwN/mTBK/k+GNLqvL7g2Lb9FdgIseVsNTja6rg9RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DRC+LYCA; arc=none smtp.client-ip=209.85.161.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hfT3FWUy"
-Received: by mail-pj2-f4.google.com with SMTP id 98e67ed59e1d1-381a094c43fso470340a91.0
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 13:50:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DRC+LYCA"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-6a308736a36so2098930eaf.3
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 14:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783371046; x=1783975846; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7PbUeh0br+vQhZIPaqt9JtWwDbS3BX8QsddDeqt5h68=;
-        b=hfT3FWUyeAO4Jnm/J6cdv1avHR9A+XhXQmRK/Kp6GJ97MGZWcJokeFfHQCXxetdGwm
-         ooVNEZGTQiu0jt6r+8HXZcVBejPBYnN1V2j/wekdBmtsRfMJJZlBrIDvltyymQgyNlQV
-         MNLDfwbUUyfOKSuiJ9nhMdrIVdDdb+hv4VA68Q5kE0hD3W7F8krxYoT4JrilaGhZeJkG
-         MFbgnOf3jIrN9wgPVy1oLZwxNh9SHm73zeW2UZDI3H4VgQZhjwBsI8WofKKQWzX758b5
-         pj68vUzK2NQuw0fPMnHuJ1eLKQv5hFL2g/J6nDPPZCwTtmiidpm4FwRsHDGd0TrFQXwu
-         vBjA==
+        d=gmail.com; s=20251104; t=1783373244; x=1783978044; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=CctuaP4hihXipo/tvULdqch4zddGEY5JNSWEe+N3zXw=;
+        b=DRC+LYCAjlzDqP1HXVb+6CQgjUGcYvauZVGV2YRy5QZs8FiVVrlsmSDdlfdmZwPFh9
+         FTjCKNF4kt9e9mMZXif5ARG5Q7PK3LOnQdtOEYoCXmb+LksaKatYvsAQtwWILL+Q1nqq
+         XoMtVbcMdTI3iE+ZhJkbIrdy73ZW884axdLO/nI3BxisHla6n5ExJEvwPUdJaGB03D+F
+         QXcOy1E2Mkmj9Jop3LcwOkC1LF1G4615r4c4hr0/BZsSEHIpfQ2WuUFpuRIbygyW6oZ/
+         E0oXLiY5WAfM60Bt+7AMTGB/MMY/pMhH/JahFbA5iz/SswD0PXP6VUBPQVcoruY4wU1l
+         Tfsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783371046; x=1783975846;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7PbUeh0br+vQhZIPaqt9JtWwDbS3BX8QsddDeqt5h68=;
-        b=fX/jgvElGmqIAdU3Reg7Am8eIiali7+Ff3tX9JQ4WvY29ALrWDpJr7eGjbHuXoPeRX
-         UnYPY+uGEks4K30KtRrLjr7+mAbFJYYLFI13l8hmn9Bjkz2w5jZpjQ6sZQ72DCIVEk3P
-         PAQbUaJfP5KBUrOtH0DJQe8C9dzEfbgw/7BPBGV5FRvBBR43KUi+DZsWjR6zvdCtSevY
-         JofEI0qZL9ulTZyvkLEebe7xXO3b9tF0nalkg55z6fXpt+GWIHLUEdnzqmM3G6i/naL0
-         85dN3YCRIBVtX7HxT4pmXJX4hsiBOa9x5gFH280KzQ74R8NaknBThdS7ZEKH5zGpSWbR
-         FAHw==
-X-Gm-Message-State: AOJu0YwOIV289DMIaAC6b3SN9MgM4TXl9Wj6KUhqSMgilqarkXUw9zsG
-	u0oRkKH1YkrIx2FFUe/t4Rd9C011FQMhcOEyWxJeWwZu1ge0PrE2NFFT4h2fRhrDCH8=
-X-Gm-Gg: AfdE7clc38Z5hPlVMX9z59TCY0m3k+rSj6tsCf1dwWm8GSW7nIELa09HT/2EuHsfKT4
-	HSHPtxdACtSQZIblhh/UYPFf85FdoVRgC4Cb5QfnCvaan8u2ULY7tJI2kphHuOFFddTCZU235Ug
-	uhxKkAWO9Ra+vSboHunaiF1jk5jMgubNOuSMn+Sztz22oWCrRAeHKa7kpX3QnwoOI7g0SjeWW7N
-	GSquWfd30cb8EVNJ2N1VgdCI3xSbQdOZU++PqZymKU0GfaRc0gew8RPeFyQV5RAP08/dDsU2Gts
-	CINjFAtPB0ogV1YEdd2Fsci5U0c1MRSy9X3437Pj1c6P6N5nXkyn7YOLUNopZhEv2SryS5n/cVG
-	Ffy7LqwqbFIyJ4lxMsr4IFB2LnxVMGR5jaOCY2OflU5ZvPCCLFH2hO9cFDW0TIk0IzfFqv0v5Yr
-	P8swgxxyGcviBu8iyfwqLSWWU7AxZJjP3RUu8RYnKzkxb5kLrlCnPOu096sQ==
-X-Received: by 2002:a17:90b:2e87:b0:387:41de:e8e with SMTP id 98e67ed59e1d1-387575ac00dmr2484627a91.23.1783371046378;
-        Mon, 06 Jul 2026 13:50:46 -0700 (PDT)
-Received: from localhost.localdomain ([45.117.66.208])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174892711sm308920eec.13.2026.07.06.13.50.44
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 06 Jul 2026 13:50:46 -0700 (PDT)
-From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-To: git@vger.kernel.org
-Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Subject: [PATCH] t1410-reflog.sh: avoid suppressing git's exit code in pipelines
-Date: Tue,  7 Jul 2026 02:20:36 +0530
-Message-ID: <20260706205036.3453-1-gatlavishweshwarreddy26@gmail.com>
-X-Mailer: git-send-email 2.54.0
+        d=1e100.net; s=20251104; t=1783373244; x=1783978044;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=CctuaP4hihXipo/tvULdqch4zddGEY5JNSWEe+N3zXw=;
+        b=Oz4E/h+KGGDu8aB732kioX5h5Oe0wCo44CHdFdBMg7SaArYOLr62l+Kknson2S/f8R
+         xP8+SZElVJkzbY3jUL94SgwXvpDr8boHjFY9cjmf7WWEiJe1boFXLJTpNU+2nGl2zAO2
+         nHC6k2Rm70MrHlqo2KGPwKUWvevAjuCKS7lmQs/NrhM9rsn/slqfxBiMl/6fktSKXRJI
+         gKt5B+yaIhKcyxoKIGD6Guh3f/EjqzVFOg2oIQZVqOS5bPrpGqz64NldPRpaAhfCnURl
+         ZNlRjsSHOtcofLVZNeuJVsTuxUboA6fyifJWTthKbrxGgoKCyfJ2nXC8xAv3xV9YsYF1
+         +8RQ==
+X-Gm-Message-State: AOJu0Yy83rW4FIV/h41uV0uJpNSorP3Nh9YNHvMc4tu2JVCJa+bZYPke
+	CHlvcNegR2Kpd9XyYEe6OQCVG4zFNCBmKgDMo7aIJnbGxGmUozQ7X9SOaNjXXA==
+X-Gm-Gg: AfdE7cnbtxn95jZBiS9OpEwdF0TCACWL+v5ho0LmBluG5KsmezRYqEKJC7afzoYsUZa
+	vzmtJJ4pX8S2dg/lhaHsVJyRwJlgwFrMSdJY/c8w/xZHc8oOR3xA4ekfQX17fHUaVON1Lm2MRJS
+	31x/DKBO5YOzJhbAykSfnFSO3NmeVdhwfr0aHKVS/q7dPG4ncJ2TgxL36HY4rBTWp38tHp63SsO
+	ZxAET1ybrlAIuTGCQ9nXfeAOV/Sju/Z2GIUqKyb/45Un4Am8hNmPD3OMlfCYP1MZnOlW2yBeu4g
+	liQveYVPOG65oNEqKDgKOJw7fCI6FpCNvj27XB8Pw8YRjp24fh30PsexxLvW3FlnRbk/BjPmzou
+	82Somx8B6zEWt5PvsWHOoVVTmVDwV+lNnbb//s87kljnKzBmMvxE1ryVnIpBZsO1JQjuyJ4ts5x
+	gZUtoJNg==
+X-Received: by 2002:a05:6820:134a:b0:6a3:db2:ecb5 with SMTP id 006d021491bc7-6a355313915mr1569390eaf.3.1783373243758;
+        Mon, 06 Jul 2026 14:27:23 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-450fd2cfbf5sm2091574fac.0.2026.07.06.14.27.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jul 2026 14:27:23 -0700 (PDT)
+Date: Mon, 6 Jul 2026 16:27:20 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/13] setup: rename `check_repository_format_gently()`
+Message-ID: <akwdRmmU3y15jUiB@denethor>
+References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
+ <20260630-pks-setup-split-discovery-and-setup-v1-1-13864eb5a032@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-1-13864eb5a032@pks.im>
 
-Piping git commands directly to wc -l suppresses the exit code of
-git, hiding potential failures from the test suite. Capture the
-output to a temporary file first, then count the lines separately
-to preserve the exit code.
+On 26/06/30 01:47PM, Patrick Steinhardt wrote:
+> The function `check_repository_format_gently()` receives a format as
+> input. An unknowing reader may thus suspect that this function actually
+> checks the passed-in format for consistency. While the function indeed
+> checks the repository format, it actually serves two purposes:
+> 
+>   - It reads the repository's format and populates the passed-in format
+>     with that information.
+> 
+>   - It then indeed checks whether the format is consistent.
 
-Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
----
- t/t1410-reflog.sh | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+Ok
 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index ce71f9a30a..397f94b039 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -244,8 +244,10 @@ test_expect_success 'delete' '
- 	test_tick &&
- 	git commit -m tiger C &&
- 
--	HEAD_entry_count=$(git reflog | wc -l) &&
--	main_entry_count=$(git reflog show main | wc -l) &&
-+	git reflog >reflog_output &&
-+	HEAD_entry_count=$(wc -l <reflog_output) &&
-+	git reflog show main >reflog_main_output &&
-+	main_entry_count=$(wc -l <reflog_main_output) &&
- 
- 	test $HEAD_entry_count = 5 &&
- 	test $main_entry_count = 5 &&
-@@ -254,16 +256,23 @@ test_expect_success 'delete' '
- 	git reflog delete main@{1} &&
- 	git reflog show main > output &&
- 	test_line_count = $(($main_entry_count - 1)) output &&
--	test $HEAD_entry_count = $(git reflog | wc -l) &&
-+	git reflog >reflog_output &&
-+	test $HEAD_entry_count = $(wc -l <reflog_output) &&
- 	! grep ox < output &&
- 
- 	main_entry_count=$(wc -l < output) &&
- 
- 	git reflog delete HEAD@{1} &&
--	test $(($HEAD_entry_count -1)) = $(git reflog | wc -l) &&
--	test $main_entry_count = $(git reflog show main | wc -l) &&
-+	git reflog >reflog_output &&
-+	test $(($HEAD_entry_count -1)) = $(wc -l <reflog_output) &&
-+	git reflog show main >reflog_main_output &&
-+	test $main_entry_count = $(wc -l <reflog_main_output) &&
-+
-+
-+	git reflog >reflog_output &&
-+	HEAD_entry_count=$(wc -l <reflog_output) &&
-+
- 
--	HEAD_entry_count=$(git reflog | wc -l) &&
- 
- 	git reflog delete main@{07.04.2005.15:15:00.-0700} &&
- 	git reflog show main > output &&
-@@ -321,11 +330,15 @@ test_expect_success 'git reflog expire unknown reference' '
- '
- 
- test_expect_success 'checkout should not delete log for packed ref' '
--	test $(git reflog main | wc -l) = 4 &&
-+	git reflog main >reflog_output &&
-+	test $(wc -l <reflog_output) = 4 &&
- 	git branch foo &&
- 	git pack-refs --all &&
- 	git checkout foo &&
--	test $(git reflog main | wc -l) = 4
-+	git reflog main >reflog_output &&
-+	test $(wc -l <reflog_output) = 4
-+
-+
- '
- 
- test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
--- 
-2.54.0
+> Rename the function to `read_and_verify_repository_format()` to clarify
+> its functionality. While at it, reorder the parameters so that the
+> format comes first to better match other functions that pass around the
+> format.
 
+I agree that the current name is a bit misleading so this change sounds
+reasonable to me. 
+
+The patch itself is just a trivial rename and reorder of parameters.
+Looks good.
+
+-Justin
