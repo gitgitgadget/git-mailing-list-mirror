@@ -1,118 +1,241 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29E9435A84
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 22:33:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABD525782D
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 22:52:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783377222; cv=none; b=acw66GBoWV6VKtguJrKVp+NQNE0SPFgrX9QPK4eo1++4QKoTIZdh04d1nC3Zn0Fz1uy7lP009RMveUlces/BxRO67Mg9gukTH7mLpBQpojduEn87x7dHUcmgQSV4mzaT+u1rVggBWRQ6AG35SW/MRznKlOUP6i86C/faMDrX7Nc=
+	t=1783378340; cv=none; b=DHsNbXQCA8EjHS/4L4DOn+yaBXO4jf17mqZbA0SMTV8g658gZoVLX5uIwEa1gjuF1yhpG69Nl2KltXr1lLy0E6ydRj2Uyt/NVRGo5z+UqwP9Cpxbqze2KAQzYpsdhQP8X09QaC0L1oBASdZI1kXlr5m2DdQLUpfX0glKPclbQh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783377222; c=relaxed/simple;
-	bh=GCdI3dcb/O6DJlOOIsEWjtESzIAvo7Byw3vwIVKK8zM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jioE41BW+yo1BwzZ9pJ3QZYgQ0ReQwUpIMQoajYssqk/nAy7EhBp6g9oy/NFa/xK2uh0enbugCZ7VdxBuT7ethIt5Hs9j0ma8TGi32dFiZ0XNOQpGu3L//bsdR0d2BIbrBWehPpaigcoKfXNz8Cbb3sGwoEabjtgO4oPzEGW+xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c/ovlmxj; arc=none smtp.client-ip=209.85.210.44
+	s=arc-20240116; t=1783378340; c=relaxed/simple;
+	bh=aT8vRggQxqvPozXZShk3V8oeDx2mAy8yYrsosVUh+xo=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=B7Y/h4vsFaKpIRzDQ7ZasoU5QHewmk2xGRCQig5ELmY8S751KCUu0HGoDeEdROLN0KzK2c1vIKCTW+TZ8AGEYBd+ElAJLyH2qFM9920q4yPKro+4M0h2j1RHCGL9og0qARpV98O93mMlyM+Qv10OuacopAnMgEfvMeg5JrNBVus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NiDhgeVH; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/ovlmxj"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e9f6b94a49so1993002a34.3
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 15:33:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NiDhgeVH"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-51c5382806fso24833871cf.2
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 15:52:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783377220; x=1783982020; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RlUipA2ey2kCmON9nToJRohdn/zdTW51VduOY6K3u7A=;
-        b=c/ovlmxjnC4aI2Gfs66fl7/V4Wy1RBECpqJ06ZPP5HWQLlQmRbbzjAwthAZ0bwoj27
-         IK37obnMCtqoKhiz91xYotdtLaCtoS+pPktCIxcFn8HZ577Lvh4wwyV9vppSranFKBuj
-         HKpd7KNe1jliKRR9kE+Q1Tgvka8I4+3bA5sawRnrwUjSwh5xw7i9L7NrZTPVpf0KH3MD
-         QK3zQXCbU7G18jB9jyiEjSc2m7DS6lbbuKHl7ZSdT8CQORVD7Udzn98+RyRvTmEI1d2T
-         TIu5BjvJKihu+OSF4jz/zxCVKIStVa4WvFBz0Yp0RxpUEa2nQMgF7Cfz/gIzXeuU85Lj
-         gTHw==
+        d=gmail.com; s=20251104; t=1783378337; x=1783983137; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=bAIGkNivCUgOvc1J6l+a3O+CQrN3hmimln0GmmL9Mr8=;
+        b=NiDhgeVHSiTwS+w5t54t+LDEjYtrS2TILSD1H0jZZ6clTGSCagQXZ5rPWSs5PJkKiH
+         T/PMPXdcHURy9eJmcNF10BLMeB8wuo3S7q4Er1s12Cet6wbEj+XPPQATeECoSeqL2DgA
+         d/yJ+PBawre49NeY4hghhgYomMXxuVuCXGu7w7eHbRiAl86rjIYArZwuHTd26LDIoWut
+         /L8gj3sh13EcNepbk6r8tDpgC5BXV4b4mMzZU+h0dyiWtM7/Hg+i9OJL4LU7Pe862gjZ
+         qeJ0UhTPgo79u67L4+yqhDHDQ7BvTOTM5OP0YbleWaK4AqLiKTNWoLb2FYCPl/6yNVfE
+         jP+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783377220; x=1783982020;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RlUipA2ey2kCmON9nToJRohdn/zdTW51VduOY6K3u7A=;
-        b=sGGOwj5HT/pmpFxYrvdRvpR9ElXtDgfYyufRmwW7Y8hFy6BsVlcnjhJJ/9utoU37b/
-         GkcAOaNQOtBGyPa1Trl+ZhyL7BRy2lFaYa1HZZmH/XKjmqs1C2KpGq/Q9yIETYvj2Nek
-         PokOAfpGnNLyzf90FpgqDoBKeOKjm1sZwpIRpDhZV/LHc1hFOVlaFHMjc7cPgb/nZCDM
-         nzy05j0lRG5sxMd24D/ce7j/3xKaWAZskgvWAiA2Q9a938p8AOkSdouxM9CVvIuWL66s
-         5jnmjvpnQKM23hXxaFNZPNgXyT0rxTsL5hbMDpeMHkUIlqMpcaXi0nxBKBR0JTwrXKrn
-         aHGg==
-X-Gm-Message-State: AOJu0Yw+CWEDV0u2sZrFYbsIgUjHfSQ1vRJ56wmAPaw4nqH26guRwJgO
-	2uaOpkmuInQkxjVKTe6McZxGDPDwT2q+WhXjUBoSIy5MLiDPIMc98oH/sqJ/gA==
-X-Gm-Gg: AfdE7clhQPR7XXPot6TpkaYKaGnz0gaMwBh0YBtHtIOvs0pVB2OHh/eJPCkeqPteWzK
-	GO5nn2FU+R6CtVh0BD7m+Qf8ssqseXe8XzFsAJdiDQ0q0ZU+Aovr74an1aewSKq3cI4Po/A8oyE
-	k8i1s2sdN+Mh7oj/KujLWL01MMzvEeu1l4pa2bGXz7Osg7vTImPUyqK1guvqOSV6MyoE6PImNiZ
-	ZuPG4XmfakWhF/2U6XKFAYNdKsPuQhaZLPGXZrOqeqUnV4F1SqEuNDz2dZkdek1QrGUacIzWOHK
-	AlKaFPr0y4oGsYPC7ol7c8IO5XSqNGwM7FqF54BOiwbL2SMe4ujV4m4mDNJaRK5qTcCe67qWEGr
-	4m9X131Pp4T81CHFJ5EtYHa534qY5078ldRuXvz9oCGB/d4trsb6UHGfaRpOeL8nUqxfP8R6e7q
-	bMuISK2uJNrU3zjSpE
-X-Received: by 2002:a05:6830:3490:b0:7e9:e342:3e0 with SMTP id 46e09a7af769-7ebb2339f8fmr1640182a34.18.1783377219844;
-        Mon, 06 Jul 2026 15:33:39 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7eb54291227sm12670476a34.3.2026.07.06.15.33.39
+        d=1e100.net; s=20251104; t=1783378337; x=1783983137;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bAIGkNivCUgOvc1J6l+a3O+CQrN3hmimln0GmmL9Mr8=;
+        b=CiqsYYZMqnvWxI+PaB6ZeP8qvsyGuAlfJ6pZCRnBpE7bj7Fg9FuegUBl6uBVQEhxLP
+         WTVujJXdY6wcOkR29UaxRzAZaXpPCkAQrtrzxnqQ6kew2YAms8izk0qwJEGzORhZtq4/
+         Ey4upJfNWN4gx22bIxkOa6TI9F7+oc7J54KCEhZm68Ar/TdYj3AcnkVCqWZpuSa58Va7
+         Fwg9RS8TYGM4vrv0dYzbZOZdwl9T/zgphVD2gViaLsC5Gg4cgXlbXcC6KwPq889t8mQK
+         H5k1er9yptu51G6MPl7632Cz002KryUnh8vrE/rU2LvLLga95SZFSE33MR2kclxQeFaF
+         Gjdg==
+X-Gm-Message-State: AOJu0YwJTkpv821ULyaQGoitRe2+0fDrjnIzvWrTKpcBtat/cEfbuF7a
+	WuKF7Yxd/q8GOIQniFPMrQbC47Cssa1sHcUicZLtojn7ENioZhRt7WOnnGmLb7OK
+X-Gm-Gg: AfdE7cn+z8pPy/kLnXSzDpqGMqt/TWXNYUgezTjdRPjdckM+5IGIM1kGjW1kNBiIpOD
+	6iwR7roJexalzbh2J0KcQqP6eyoaLqZ644/FHwPjinyfLr4qGNC8q7H52+a86fGSjF0MiXSXXN0
+	rc2RMGdFUFVDpp8OkilQOv7kg8Td+GtbPvG3fVlQ6UPZtFbp+9iNMrp2pxNffmdYKTNzHPelAcE
+	QkiqK3ionVpskRNdoNTpWha0dIRESKshf5SD3xP6Xk5NJb1RgbHN4vg1uN7HoygPfC5CATAwfMo
+	XVYgS3IirLOxy177STYFkvpLQhmsALAHZzztrQES4aid3TPOLk1EUyT6RDVN3B14Tkjgd++nI1i
+	psH7eet/oHXkhDR3UlXNtWYa33yLaiGRq02uQptUBZLFlrjZ1/U6UdOMkYW6FHcr096s59p+YJ8
+	kg3Br8HgrhQAqjYQU=
+X-Received: by 2002:ac8:5854:0:b0:517:c6b1:bffa with SMTP id d75a77b69052e-51c748b0ac5mr29737331cf.48.1783378337491;
+        Mon, 06 Jul 2026 15:52:17 -0700 (PDT)
+Received: from [127.0.0.1] ([40.116.72.211])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41b281c9sm101953131cf.9.2026.07.06.15.52.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 15:33:39 -0700 (PDT)
-Date: Mon, 6 Jul 2026 17:33:36 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/13] setup: move prefix into repository
-Message-ID: <akwq5fqlxk-ndw_8@denethor>
-References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
- <20260630-pks-setup-split-discovery-and-setup-v1-7-13864eb5a032@pks.im>
+        Mon, 06 Jul 2026 15:52:15 -0700 (PDT)
+Message-Id: <pull.2288.v6.git.git.1783378333.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2288.v5.git.git.1783358097.gitgitgadget@gmail.com>
+References: <pull.2288.v5.git.git.1783358097.gitgitgadget@gmail.com>
+From: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 06 Jul 2026 22:52:10 +0000
+Subject: [PATCH v6 0/3] Makefile: link osxkeychain helper against Rust
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-7-13864eb5a032@pks.im>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Shardul Natu <snatu@google.com>,
+    Koji Nakamaru <koji.nakamaru@gree.net>,
+    Patrick Steinhardt <ps@pks.im>,
+    Shardul Natu <shardul.27591@gmail.com>,
+    Ben Knoble <ben.knoble@gmail.com>
 
-On 26/06/30 01:47PM, Patrick Steinhardt wrote:
-> The repository prefix is currently stored in the startup info. This
-> feels somewhat awkward though, as it is inherently a property of a given
-> repository.
+This series improves macOS build reliability, automated CI verification, and
+distribution support when Rust is enabled in the Git build system. It
+addresses three distinct challenges: a parallel build race condition in
+git-credential-osxkeychain, support for macOS Universal Binaries
+(multi-architecture distribution), and missing automated CI test wiring for
+macOS contrib utilities.
 
-Agreed.
 
-> Move the prefix into the repository accordingly.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> @@ -832,7 +832,8 @@ int cmd_rev_parse(int argc,
->  				prefix = argv[++i];
->  				if (!prefix)
->  					die(_("--prefix requires an argument"));
-> -				startup_info->prefix = prefix;
-> +				FREE_AND_NULL(the_repository->prefix);
-> +				the_repository->prefix = xstrdup(prefix);
+Why This Series is Needed
+=========================
 
-git-rev-parse(1) has an option to explicitly set the prefix and we honor
-that here.
+ 1. Parallel Build Race Condition (make -j): While commit 522ea8ef7d
+    ("osxkeychain: fix build with Rust") updated the link command for
+    git-credential-osxkeychain to pass $(LIBS), it omitted $(RUST_LIB) from
+    the target prerequisite list. When running a parallel build (make -j)
+    from a clean working tree, Make can attempt to link
+    git-credential-osxkeychain before Cargo has finished compiling
+    libgitcore.a, causing linker failures.
 
-[snip]
-> @@ -2105,10 +2105,10 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
->  	 */
->  	if (prefix) {
->  		prefix = precompose_string_if_needed(prefix);
-> -		startup_info->prefix = prefix;
-> +		repo->prefix = xstrdup(prefix);
->  		setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
->  	} else {
-> -		startup_info->prefix = NULL;
-> +		FREE_AND_NULL(repo->prefix);
->  		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
->  	}
+ 2. macOS Universal Binary (lipo) Support: On macOS, Universal Binaries
+    bundle native executable code for multiple architectures (Intel x86_64
+    and Apple Silicon arm64) into a single file. This is standard practice
+    for macOS distribution and CI packaging (such as Burrito, Homebrew, and
+    Git's macOS CI runners), allowing a single artifact to run natively
+    across all Macs without Rosetta translation.
 
-We set the startup_info prefix here is `setup_git_directory_gently()`
-aleady, so we might as well just set it in the repository. I think this
-is a good change.
+While Apple's C compiler (clang) natively supports universal builds by
+passing -arch x86_64 -arch arm64 in CFLAGS and LDFLAGS, Cargo and rustc do
+not support multiple -arch flags in a single invocation. Instead, Cargo must
+be invoked separately for each target triple (--target x86_64-apple-darwin
+and --target aarch64-apple-darwin). This series bridges that gap.
 
--Justin
+ 3. Automated CI Verification for Contrib on macOS: When running make test
+    with TEST_CONTRIB_TOO=yes (default in macOS CI workflows), $(MAKE) -C
+    contrib/ test is invoked. However, contrib/Makefile only invoked tests
+    for diff-highlight and subtree, meaning git-credential-osxkeychain was
+    never compiled or verified during standard CI test runs.
+
+
+Overview of Patches
+===================
+
+ * Patch 1: Makefile: add $(RUST_LIB) prerequisite to osxkeychain Adds
+   $(RUST_LIB) as a prerequisite dependency to the osxkeychain target,
+   eliminating the parallel build race condition. Additionally, wraps the
+   definitions of $(RUST_LIB) and the rust build target in ifndef NO_RUST so
+   that disabling Rust cleanly makes the dependency a no-op.
+
+ * Patch 2: Makefile: support universal macOS builds via RUST_TARGETS Allows
+   users to specify space-separated target triples in RUST_TARGETS.
+   Introduces declarative pattern rules (target/%/...) to compile each
+   target slice via Cargo, and uses lipo (part of the mandatory Xcode
+   Command Line Tools) to combine the resulting static archives into a
+   universal library at target/release/libgitcore.a. Uses
+   mkdir_p_parent_template to guarantee directory creation before lipo.
+   
+   * Patch 3: contrib: wire up osxkeychain in contrib/Makefile on macOS Adds
+     a test target to contrib/credential/osxkeychain/Makefile that depends
+     on building git-credential-osxkeychain. Introduces a generic OS_CONTRIB
+     variable in contrib/Makefile to conditionally wire
+     credential/osxkeychain into all, test, and clean whenever running on
+     macOS (Darwin). This guarantees that standard CI test runs on macOS
+     automatically compile and link the helper, preventing build
+     regressions.
+
+Changes since v5:
+
+ * Reverted Patch 1 to depend explicitly on $(LIB_FILE) $(RUST_LIB) rather
+   than $(GITLIBS). Unlike Git builtins or scalar (which define cmd_main()),
+   git-credential-osxkeychain.c defines its own standalone main(), meaning
+   $(GITLIBS) caused a duplicate symbol error for _main during linking.
+ * Added Patch 3 ("contrib: wire up osxkeychain in contrib/Makefile on
+   macOS") using a scalable OS_CONTRIB variable so that running make test
+   with TEST_CONTRIB_TOO=yes in macOS CI workflows automatically verifies
+   compilation and linking integrity.
+
+Changes since v4:
+
+ * Changed the osxkeychain prerequisite dependency from $(LIB_FILE)
+   $(RUST_LIB) to $(GITLIBS) to match the canonical prerequisite pattern
+   used by all other core Git targets linking $(LIBS).
+
+Changes since v3:
+
+ * Removed leading @ from $(call mkdir_p_parent_template) so it relies on
+   the built-in $(QUIET_MKDIR_P_PARENT) behavior, matching existing Makefile
+   conventions.
+ * Replaced if [ with if test in Bourne shell recipe snippets to strictly
+   adhere to the project's CodingGuidelines.
+
+Changes since v2:
+
+ * Split the original combined commit into a two-patch series to separate
+   prerequisite bug fixes from Universal Binary features.
+ * Added $(call mkdir_p_parent_template) prior to invoking lipo to guarantee
+   that parent target directories exist.
+
+Shardul Natu (3):
+  Makefile: add $(RUST_LIB) prerequisite to osxkeychain
+  Makefile: support universal macOS builds via RUST_TARGETS
+  contrib: wire up osxkeychain in contrib/Makefile on macOS
+
+ Makefile                                | 46 ++++++++++++++++++++++---
+ contrib/Makefile                        | 10 ++++++
+ contrib/credential/osxkeychain/Makefile |  4 ++-
+ 3 files changed, 54 insertions(+), 6 deletions(-)
+
+
+base-commit: 602f6c329a7d99df269d382df353b4e1bbbbd8aa
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2288%2Fkiranani%2Fnext-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2288/kiranani/next-v6
+Pull-Request: https://github.com/git/git/pull/2288
+
+Range-diff vs v5:
+
+ 1:  e0bb18ff01 ! 1:  0d21513940 Makefile: add $(GITLIBS) prerequisite to osxkeychain
+     @@ Metadata
+      Author: Shardul Natu <snatu@google.com>
+      
+       ## Commit message ##
+     -    Makefile: add $(GITLIBS) prerequisite to osxkeychain
+     +    Makefile: add $(RUST_LIB) prerequisite to osxkeychain
+      
+          When Rust is enabled, the git-credential-osxkeychain helper depends on
+          Rust symbols compiled into $(RUST_LIB). While commit 522ea8ef7d
+     @@ Commit message
+          clean working tree can fail because Make does not know to invoke Cargo
+          to build libgitcore.a before linking git-credential-osxkeychain.
+      
+     -    All other core Git targets that link $(LIBS) already depend on
+     -    $(GITLIBS), which bundles common-main.o, $(LIB_FILE), and $(RUST_LIB)
+     -    when Rust is enabled. Add $(GITLIBS) as a prerequisite dependency to the
+     -    git-credential-osxkeychain target to make it consistent with the rest of
+     -    the codebase.
+     +    Note that we depend explicitly on $(LIB_FILE) and $(RUST_LIB) rather
+     +    than $(GITLIBS). Unlike standard Git builtins and programs like scalar
+     +    (which define cmd_main() and rely on common-main.o to supply main()),
+     +    git-credential-osxkeychain.c defines its own standalone int main().
+     +    If $(GITLIBS) were used, $(filter %.o,$^) in the link recipe would
+     +    match both git-credential-osxkeychain.o and common-main.o, causing a
+     +    duplicate symbol linking error for _main on macOS.
+      
+          Additionally, wrap the definitions of $(RUST_LIB) and the "rust" build
+          target in "ifndef NO_RUST". This ensures that when NO_RUST=1 is
+     @@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+       
+      -contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
+      +# When Rust is enabled, git-credential-osxkeychain depends on Rust symbols in $(RUST_LIB)
+     -+contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(GITLIBS) GIT-LDFLAGS
+     ++contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) $(RUST_LIB) GIT-LDFLAGS
+       	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+       		$(filter %.o,$^) $(LIBS) -framework Security -framework CoreFoundation
+       
+ 2:  66f71fb0d7 = 2:  21dedb91f0 Makefile: support universal macOS builds via RUST_TARGETS
+ -:  ---------- > 3:  8455e449f3 contrib: wire up osxkeychain in contrib/Makefile on macOS
+
+-- 
+gitgitgadget
