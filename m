@@ -1,132 +1,148 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA7A3E9C2B
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 20:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4230A3EFFC0
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 20:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783370578; cv=none; b=Ut0w0Xt+/rpSeMY+zD42rPWSy2R1I0B0fBoJB9HjW2JkeXEYHRConB6JTKvbdNFoG75tiyEvhguQyCClDG9RHxGp1aoFhnQM0isdsXylq8cwGFYJIKGur2cnyA9p7ICTUPV//5qdUeccX7MYjXYQxczGInlNQsMZ/5XjcRWaJjY=
+	t=1783371048; cv=none; b=iHQsaAypM5AJo9DdI49srTHd1k9BxqORp6E4Ka4DdQR4La4Av34DRCro6akRA8lPqWeSsnqoyY5mFhHEFveq5Kenuc/boaKZrxcCBPflHy0zim3xPfy7FqZCSTgYiGekDUyGhVDTFGxsC15RnfRtTMEWUdRl88Qrmc7aNZL2WzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783370578; c=relaxed/simple;
-	bh=heUjv3OOIEEoB1dP5lLITfeuyLJ8KVsNFxS0dDVNze0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XUT+XM5W5q88cEZU0rIRg7q6oracUIkWr7osP3ppwWPaUqiZIF8sWk5KcpEg72L0g3sTasjmS03DZKb2I19ZsITewiJ42z5ur6ux6V36kPbfTvJLys4HK5YpfWUKp6Da1pMbnxT5U3ioOc4U1g7gUh6C4UIadJ1PN0HVJ831Z+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X4sTo8Rd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f+N0PbaU; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783371048; c=relaxed/simple;
+	bh=ayc8hCny0SJ/eL9p/CL364uiqt5rWseCBd77yffnlx4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G+TOItpA26PLN4aGPey8YOg2a1b4U+TgekqcaXGAy4hRwAvxdGgrTpDeFKgqnJX/SEpFAUVWsB/Sjp4yWEjFkfqUTU07Ol08WRf05gS54uXy0ai1XpBUOSrlc0PEkUk+xMo9+RgiEttmb2FTrXmyGqlH0D+jOrG8hdjqqDEpJWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hfT3FWUy; arc=none smtp.client-ip=74.125.227.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X4sTo8Rd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f+N0PbaU"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id C3152EC00CA;
-	Mon,  6 Jul 2026 16:42:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 06 Jul 2026 16:42:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783370576; x=1783456976; bh=gJRz1IktxC
-	a7rVUeX5qP0cXe96wFa5dU9SxzcgAcmGE=; b=X4sTo8RdmEh8RdXiYbjYrfQpAN
-	0W8aOSgX0Tn851H9VWsVslT2nAVPttPB5tkSfxVH7+PtZjtFLbWb6dn7eFblahLu
-	PqCh2E3Z/YYyFlmlCgmS1h4iqkx0jdeT6eeEpSAqOGFFe6MW1rmWdrABs4nT76tR
-	UcR667MrBh2UaFPHHe17Q55pMURiGquXXyQ8RSb9VOzCvjBFMkFshnwLbR6ABI24
-	iAxISzEiYhOrEeG2VSgHH39oKA3BuYTaB9L2+WuPwJJi+3Hzg+ijHr6EqCznemsn
-	Q/92yBTeF71ieLz8/P5igagkjaNyKiWKDehT10mbrjVgdlhke9BOjUbI8r3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783370576; x=1783456976; bh=gJRz1IktxCa7rVUeX5qP0cXe96wFa5dU9Sx
-	zcgAcmGE=; b=f+N0PbaU4x4pCUpxP0iMvVEV8PXf775O/uN3rh6LLOridZcDBdO
-	1VDXW9g15nKwnWlytBllRsMq/IaKm4qdA4kEsfS3kN05fJZ0KCXJ4/9nstXK6Z/O
-	5mSlsBqAl6NoUjwNNhfUxrJPTYDxkjjDYXqpT4JIZivHPwNiyy7BoAW9RkiC3TgZ
-	0U9jHapzFzNhlK3er0SreJsV6Qjdf9K69r0CoFC5l0svOGipveLYPwCJbp0NFUSW
-	qBM9nKLKMIi/NWwZ26/W3Gar8Tc7RfgDsosu77LR7ESfnNSYKUnkO9pveLCt15m0
-	hzJ8zbMDV03Qn3entLpEqk4JFdHVTzls9Ww==
-X-ME-Sender: <xms:UBNMas37BV0LWGDn5VpeVFqhL0XTcdJzJKUE9-ZZpglWaWBUABIplQ>
-    <xme:UBNMauEk8UVDiST5B-85oMmunKBrthsdfIFeI2pxlsIyYomAZnYQlMiVyWaLsNYcF
-    O8uWs6orQ6Yyih8z0niAUhcqXD0kubP4pohzOuUDJweqDdMAvM>
-X-ME-Received: <xmr:UBNMap7nJPoa-2Te9qJ8cDm8CwjfUBrJwuQXyytg0I356cELnOPyUVo9mTUI-n0Nds8rzZJksVqOnStb_WD2SCHgrXVrVy7Ym0eeIuY>
-X-ME-Proxy-Cause: dmFkZTFviHDwqJHlNtIV4xWStrsvAa/6uCr3sMysvHfXiuU5ciqfGca4vMltsc0XQ/HU5M
-    q+lRXs6PZU6mor+CiompOGuNEA3zPvFoixGvCe91DMXALq4S/8qtn+2PtGJ2XnwY+2q0QH
-    xc2vrubWfP2qaKJEinu2rhcqCckjzD8J7oOzF60zGy50gJlR4S/cGWvt3wyilrEi5wrojG
-    iwv/E09gn7FIVANa/EjtY9FXMESav6cNMDPKZDUNHpjEY20nsVAoxcJ1ZagjWPKJ02Yf/G
-    7kxzFqlToh9sT+bYC+GudPDigcqxU9sElgYB/5o5UsTrwZso3M3I44nx2OZzSqVhzij9Lp
-    J1B/nvUiYs4ugC1hO8lc3T5Y1IzC7vNupnNvKD9fNKE4cIy67h1V3lNf770t1IvMcHY6jX
-    EJSJ13mJ1n2CRlbYsacoMbaeQ+sIKZR3UbMiAD3DUpl/J5rpk8pDVxOSF++a6zcJ9t3FfV
-    KdFHZRefbZAZBjHCV4ReInLnmmn5AYSWUUov6Cdz/CxaOFZhhGklZrgeaJi3LLspfxnBkb
-    1OZ85pGqBCmgSNAHuJ1xKBw+Fof2MH45kxU/VgKlPWkLcpZqMBaCiTKMXSPmRrYbqpYvSG
-    BNISGoKoQUhvJCOqpG9bfA2mu/5SchowL8018cKiX0fnoiF7FpkRLmX2shEg
-X-ME-Proxy: <xmx:UBNMakuglgweXTI9Sfzcm2YkkKVYX3Ugafaq6kLam8nKGW6HGGlK7w>
-    <xmx:UBNMaq7Xiiz0CAEq504kwdgb6q8_RttuzmqRDItFhw7qKir_b7nNKA>
-    <xmx:UBNMavV24rvU2AuzXrRMzhaj11KrMKKHPThvvy0ZFfgUHpiVn_wZRg>
-    <xmx:UBNMas_XEx7j958pBDaqA7hFq95gGDHOy9D-PbINMR3WPCkTFEyNiw>
-    <xmx:UBNMalZ_vHZ9GBAWswK-E08tCveS87JkmmuGd7Bpuk87jQjV23CIl-ow>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 16:42:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v7 0/5] history: add squash subcommand to fold a range
-In-Reply-To: <pull.2337.v7.git.git.1783327849.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Mon, 06 Jul 2026 08:50:44
-	+0000")
-References: <pull.2337.v6.git.git.1782635349.gitgitgadget@gmail.com>
-	<pull.2337.v7.git.git.1783327849.gitgitgadget@gmail.com>
-Date: Mon, 06 Jul 2026 13:42:55 -0700
-Message-ID: <xmqqse5v97e8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hfT3FWUy"
+Received: by mail-pj2-f4.google.com with SMTP id 98e67ed59e1d1-381a094c43fso470340a91.0
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 13:50:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783371046; x=1783975846; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7PbUeh0br+vQhZIPaqt9JtWwDbS3BX8QsddDeqt5h68=;
+        b=hfT3FWUyeAO4Jnm/J6cdv1avHR9A+XhXQmRK/Kp6GJ97MGZWcJokeFfHQCXxetdGwm
+         ooVNEZGTQiu0jt6r+8HXZcVBejPBYnN1V2j/wekdBmtsRfMJJZlBrIDvltyymQgyNlQV
+         MNLDfwbUUyfOKSuiJ9nhMdrIVdDdb+hv4VA68Q5kE0hD3W7F8krxYoT4JrilaGhZeJkG
+         MFbgnOf3jIrN9wgPVy1oLZwxNh9SHm73zeW2UZDI3H4VgQZhjwBsI8WofKKQWzX758b5
+         pj68vUzK2NQuw0fPMnHuJ1eLKQv5hFL2g/J6nDPPZCwTtmiidpm4FwRsHDGd0TrFQXwu
+         vBjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783371046; x=1783975846;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7PbUeh0br+vQhZIPaqt9JtWwDbS3BX8QsddDeqt5h68=;
+        b=fX/jgvElGmqIAdU3Reg7Am8eIiali7+Ff3tX9JQ4WvY29ALrWDpJr7eGjbHuXoPeRX
+         UnYPY+uGEks4K30KtRrLjr7+mAbFJYYLFI13l8hmn9Bjkz2w5jZpjQ6sZQ72DCIVEk3P
+         PAQbUaJfP5KBUrOtH0DJQe8C9dzEfbgw/7BPBGV5FRvBBR43KUi+DZsWjR6zvdCtSevY
+         JofEI0qZL9ulTZyvkLEebe7xXO3b9tF0nalkg55z6fXpt+GWIHLUEdnzqmM3G6i/naL0
+         85dN3YCRIBVtX7HxT4pmXJX4hsiBOa9x5gFH280KzQ74R8NaknBThdS7ZEKH5zGpSWbR
+         FAHw==
+X-Gm-Message-State: AOJu0YwOIV289DMIaAC6b3SN9MgM4TXl9Wj6KUhqSMgilqarkXUw9zsG
+	u0oRkKH1YkrIx2FFUe/t4Rd9C011FQMhcOEyWxJeWwZu1ge0PrE2NFFT4h2fRhrDCH8=
+X-Gm-Gg: AfdE7clc38Z5hPlVMX9z59TCY0m3k+rSj6tsCf1dwWm8GSW7nIELa09HT/2EuHsfKT4
+	HSHPtxdACtSQZIblhh/UYPFf85FdoVRgC4Cb5QfnCvaan8u2ULY7tJI2kphHuOFFddTCZU235Ug
+	uhxKkAWO9Ra+vSboHunaiF1jk5jMgubNOuSMn+Sztz22oWCrRAeHKa7kpX3QnwoOI7g0SjeWW7N
+	GSquWfd30cb8EVNJ2N1VgdCI3xSbQdOZU++PqZymKU0GfaRc0gew8RPeFyQV5RAP08/dDsU2Gts
+	CINjFAtPB0ogV1YEdd2Fsci5U0c1MRSy9X3437Pj1c6P6N5nXkyn7YOLUNopZhEv2SryS5n/cVG
+	Ffy7LqwqbFIyJ4lxMsr4IFB2LnxVMGR5jaOCY2OflU5ZvPCCLFH2hO9cFDW0TIk0IzfFqv0v5Yr
+	P8swgxxyGcviBu8iyfwqLSWWU7AxZJjP3RUu8RYnKzkxb5kLrlCnPOu096sQ==
+X-Received: by 2002:a17:90b:2e87:b0:387:41de:e8e with SMTP id 98e67ed59e1d1-387575ac00dmr2484627a91.23.1783371046378;
+        Mon, 06 Jul 2026 13:50:46 -0700 (PDT)
+Received: from localhost.localdomain ([45.117.66.208])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174892711sm308920eec.13.2026.07.06.13.50.44
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 06 Jul 2026 13:50:46 -0700 (PDT)
+From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+To: git@vger.kernel.org
+Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Subject: [PATCH] t1410-reflog.sh: avoid suppressing git's exit code in pipelines
+Date: Tue,  7 Jul 2026 02:20:36 +0530
+Message-ID: <20260706205036.3453-1-gatlavishweshwarreddy26@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Piping git commands directly to wc -l suppresses the exit code of
+git, hiding potential failures from the test suite. Capture the
+output to a temporary file first, then count the lines separately
+to preserve the exit code.
 
-> Adds git history squash <revision-range> to fold a range of commits.
+Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+---
+ t/t1410-reflog.sh | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-What I saw in the range-diff looked all reasonable.
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index ce71f9a30a..397f94b039 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -244,8 +244,10 @@ test_expect_success 'delete' '
+ 	test_tick &&
+ 	git commit -m tiger C &&
+ 
+-	HEAD_entry_count=$(git reflog | wc -l) &&
+-	main_entry_count=$(git reflog show main | wc -l) &&
++	git reflog >reflog_output &&
++	HEAD_entry_count=$(wc -l <reflog_output) &&
++	git reflog show main >reflog_main_output &&
++	main_entry_count=$(wc -l <reflog_main_output) &&
+ 
+ 	test $HEAD_entry_count = 5 &&
+ 	test $main_entry_count = 5 &&
+@@ -254,16 +256,23 @@ test_expect_success 'delete' '
+ 	git reflog delete main@{1} &&
+ 	git reflog show main > output &&
+ 	test_line_count = $(($main_entry_count - 1)) output &&
+-	test $HEAD_entry_count = $(git reflog | wc -l) &&
++	git reflog >reflog_output &&
++	test $HEAD_entry_count = $(wc -l <reflog_output) &&
+ 	! grep ox < output &&
+ 
+ 	main_entry_count=$(wc -l < output) &&
+ 
+ 	git reflog delete HEAD@{1} &&
+-	test $(($HEAD_entry_count -1)) = $(git reflog | wc -l) &&
+-	test $main_entry_count = $(git reflog show main | wc -l) &&
++	git reflog >reflog_output &&
++	test $(($HEAD_entry_count -1)) = $(wc -l <reflog_output) &&
++	git reflog show main >reflog_main_output &&
++	test $main_entry_count = $(wc -l <reflog_main_output) &&
++
++
++	git reflog >reflog_output &&
++	HEAD_entry_count=$(wc -l <reflog_output) &&
++
+ 
+-	HEAD_entry_count=$(git reflog | wc -l) &&
+ 
+ 	git reflog delete main@{07.04.2005.15:15:00.-0700} &&
+ 	git reflog show main > output &&
+@@ -321,11 +330,15 @@ test_expect_success 'git reflog expire unknown reference' '
+ '
+ 
+ test_expect_success 'checkout should not delete log for packed ref' '
+-	test $(git reflog main | wc -l) = 4 &&
++	git reflog main >reflog_output &&
++	test $(wc -l <reflog_output) = 4 &&
+ 	git branch foo &&
+ 	git pack-refs --all &&
+ 	git checkout foo &&
+-	test $(git reflog main | wc -l) = 4
++	git reflog main >reflog_output &&
++	test $(wc -l <reflog_output) = 4
++
++
+ '
+ 
+ test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
+-- 
+2.54.0
 
->  3:  811e393ab4 ! 3:  cf3346a1cd history: add squash subcommand to fold a range
->      @@ Commit message
->           Add "git history squash <revision-range>" to do this directly. It folds
->           every commit in the range into the oldest one, keeping that commit's
->           message and authorship and taking the tree of the newest commit, then
->      -    replays the commits above the range on top. fixup!, squash! and amend!
->      -    commits are folded like any other and are not interpreted, so the
->      -    squashed message comes from the oldest commit, or from an editor with
->      -    --reedit-message.
->      +    replays the commits above the range on top. The squashed message comes
->      +    from the oldest commit, or from an editor with --reedit-message. As that
->      +    message is reused, a range whose oldest commit is a fixup!, squash! or
->      +    amend! is refused, since the marker's target cannot be in the range.
-> ...
->      -+git history squash <revision-range> [--dry-run] [--update-refs=(branches|head)] [--reedit-message]
->      ++git history squash [--dry-run] [--update-refs=(branches|head)] [--reedit-message] <revision-range>
-
->      ++static int reject_fixupish_oldest(struct repository *repo,
->      ++				  struct commit *oldest)
->      ++{
->      ++	const char *message, *subject;
->      ++	int ret = 0;
->      ++
->      ++	message = repo_logmsg_reencode(repo, oldest, NULL, NULL);
->      ++	find_commit_subject(message, &subject);
->      ++	if (starts_with(subject, "fixup! ") ||
->      ++	    starts_with(subject, "squash! ") ||
->      ++	    starts_with(subject, "amend! "))
->      ++		ret = error(_("the range begins with a fixup!, squash! or amend! "
->      ++			      "commit whose target is not in the range"));
->      ++	repo_unuse_commit_buffer(repo, oldest, message);
->      ++	return ret;
->      ++}
-
-Nice. I often see myself getting rescued by the corresponding sanity
-checks in the sequencer.
-
-Will replace.  Thanks.
