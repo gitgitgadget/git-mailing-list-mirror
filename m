@@ -1,105 +1,136 @@
-Received: from mail-pz2-f0.google.com (mail-pz2-f0.google.com [74.125.228.0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6EF3BBFB5
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 19:14:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A1531A057
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 19:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783365271; cv=none; b=WjQl7JXdnBS6hebVH6EwdI0rP7UJrksxN2338Iu/9roOq+Pr6yLc6lEw5/2gnDgpEJ4bjb1dKjOUnoIrkSmrijYJyhkMXhMupK0Wq67NOZQiDDEJw2kXECuJdbxYHdvmDwxDYOufFuo9tod7j2bAKW1XBZdQzBXNcCtT2bO+zmE=
+	t=1783366541; cv=none; b=bEshnMXtCyvkaVqhjMhryDhr06s6gSLQfrb/mhq4kdI0nPZz7wA33zRFP310BXL1hDlwrwymAxlJGxHJEtbC+epSodgzNgpU7y3CAyG0zCACOw1HbSxSa5vUmHXx+S23kfCMNQhlG4LPlugbS//sHD36aVivJMoLIGLJkJxcGpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783365271; c=relaxed/simple;
-	bh=u/2QyYdB5UL57ehop+u+BlW9XRg+ZsH0aSsM6lAhBN0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UFgRNzShgnnWyJe2U69QfKEcEDSuQBcOR7sB02Yvdr1dpcTBVinK98WcwFWCVLVrnI0Hy2COITVsq1bpKbEyFM0r7Era3evvJ7Sz4ZfvGmnfM3rx6cvQGd/vvomoKastKegO/w5MyCsz34/BxL64V/KXxNjVK1rBM4O9TOo06q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYLaq6tL; arc=none smtp.client-ip=74.125.228.0
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783366541; c=relaxed/simple;
+	bh=03WKY3XkcL+6FFvH83uDWJcGINsJGFniSJ3btZU0GlY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EnO9AV50NR+GaYN8OkqzoLjwX2ZTNSR3oBbnZfF9mHHw97GfBBHVuO3A0/14NHwHZ9i+PbouXSKliVr9fEg5FHdjr/ri3K8ntlL/jW677I7HdlbnCalZzc7taVRe1TbfOOYeuGY5O+kAtNkantF4ZOMzOmxSZoMEveTs8iCyrsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qx/QAm4f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ev2v1jgm; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYLaq6tL"
-Received: by mail-pz2-f0.google.com with SMTP id 41be03b00d2f7-c888c19b85dso457096a12.0
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 12:14:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783365269; x=1783970069; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=i5aufMPtnHNnqbXrVNg/fWNtn1ahCtxHshfJG9Di5h0=;
-        b=fYLaq6tLrPyDB8P2MtG1g11S8J1XG6H+VCs5HTYw2K1NIKgMX/+E4oTnz0rvhWgpYP
-         VlKPtuj2KVGMJyXAuMfcTrNW6raLZJODAiLGwh8xZ9YdaqdUC2gL5/FMUPeT9XTM4cr6
-         PjdJL4BEpSBUnv+Rc4XcNNHDMfJldlYEoXQkUeg8Jqc65GhUDRGp3vVX5Zt+1Po3d9t/
-         9HpeB1+IB+wI4ch7xt9Yg/0BcXqeuHIZ4aM/fno51E0pGXlnUXsDUHAD+NY511KsCJDX
-         TR8Yd0H1eZIJl6L72Dm8YYY7urANdbm8ztTxkFzGC5hPkVQO51JXLUnxXrP/HPx9Db1o
-         LvLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783365269; x=1783970069;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i5aufMPtnHNnqbXrVNg/fWNtn1ahCtxHshfJG9Di5h0=;
-        b=oqzD/lPLSOzJJKwUNvmyC1jMLZ20rUi+u/DKE/3TS6kbIisImT4PRXZwqOCuPZ8W1A
-         WSPGYwJNGz8/Rwhl207GukGsYsyBJ0jjTgDWVvMNJkAakMoA0ys+wVM3eVIMyGnN1kr5
-         D/WCCz6KriqPHCwsUCtmbd4avDEZfmZBFIeOHnwl1z6NsTqvbjWKV3xsMGbTckUnqUU2
-         iT1nVJ1xNopOGf5o3hQZNESDEHQFbxxIazngf3JjEEYIAl4YCPqiZmvWqEm1A5TYySvu
-         8FkPYapSWiVcTEaizrKAiE77VG/M/BdPfPGlpzCr63ta2Y+btJFLG7EEPHeo76Q33och
-         ngbw==
-X-Gm-Message-State: AOJu0YwYjUIkhdaYo0E3VGY4W3JIrC9Xr14zDndoeonCOZlFEDiEGmQk
-	H1N7u1XhtC5vz/zT1aTvrIZxrUZ0dsDiDhEMXtrvPLejoUZNgFs1pBWPoiPiKltm650=
-X-Gm-Gg: AfdE7ckVlTa6YB9GP512vILHjjWFSQhcBltgXoWgAWLa9U4fdkmWyUSD2FOJUenpPct
-	sF8lvyxWvcMO5UDuPYbDBOncqu2aABUy+7+ukunQMknDQF6ABpRXHy5g6JG0DabmDIF4n7WUzdm
-	kdyGuJXAkG7epxc6IMwWxg7jqccvz+QqUOAGHMEdDVU5Fnw+QIw+/gLT+NFB4K85iL3F+drqVjS
-	rDZ/t/xYyZjR87N3+dQZz2zdkSDuOInHCW1wCfhDb1Qh1ZdjJYobS4YIu3qjz3BY/ivUVfmlfxN
-	1qOgsBsZeMt5/PrJ0APXeyswREyYmRBU6xl0eSAyz/M3zObAypdA1INlniCBVvfebJwgOBvPmch
-	1Y4uLZhS1Xeej5pl5nx/QxV/dEyNMY/AGFWGXAIiBHQByD1zcrwfEPltPgCP51xLwqyCAZ8ogkz
-	xNzd2uVN3p2WAIJjfjGYsRRn60DRZtyRjkAGPCYkG2sPCXkWXLmkG4oLSaC5SaEqP2nMwn
-X-Received: by 2002:a05:6a20:d490:b0:3bf:5539:f8f with SMTP id adf61e73a8af0-3c08ee6d060mr2227838637.37.1783365268939;
-        Mon, 06 Jul 2026 12:14:28 -0700 (PDT)
-Received: from localhost.localdomain ([45.117.66.208])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b3c85d4fesm51780365c88.11.2026.07.06.12.14.27
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 06 Jul 2026 12:14:28 -0700 (PDT)
-From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-To: git@vger.kernel.org
-Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Subject: [PATCH v2] setup.c: use die_errno() when chdir() system call fails
-Date: Tue,  7 Jul 2026 00:44:21 +0530
-Message-ID: <20260706191421.94453-1-gatlavishweshwarreddy26@gmail.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qx/QAm4f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ev2v1jgm"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CFA891400114;
+	Mon,  6 Jul 2026 15:35:38 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 06 Jul 2026 15:35:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783366538; x=1783452938; bh=u5RAWePdub
+	ET4mRa3VuAD+KkYXk3Vky73OyEH39nL+Q=; b=Qx/QAm4fGI4pvsTw8bcqUVF9Vx
+	VC+mgvG4Kq14A2pyNGzf/zHXACgspBLqt03SEf/k5EmqtZxWjOUe3Bmo9h80OpSU
+	I+RchFwhWQRBCxQxK70vKUQamzi38BImcflH+bGo9JL4uVRixL3Dlp2Esm1c7gwB
+	xEFdSfo908BEuDyfmy6SK4Hh/x/IwM7qRhFf1JEO7zi0sQSk2K/gavzkPHVTduHD
+	jormP09GV5c8BhoSl2w43HKJoeCaQt6tEisWqC0H9pKEi2UzPeRskA+mYX3Dy3i8
+	sYcjrbr+DOHHTCDS/oElWafPIN/qGFjn9REnmrJZWUO8mHxGCY1hFuyHPEiw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783366538; x=1783452938; bh=u5RAWePdubET4mRa3VuAD+KkYXk3Vky73Oy
+	EH39nL+Q=; b=ev2v1jgmdJ9lURbd2BdBTClksvNMC/zTwdhmHwSV9X+OmGi/UF0
+	DAf99tlExb0p8wQCKBmygs+KRINfBzjxdUkMHQxOhapJgeiupdvstshhts8AnFX3
+	w5NOPbbRL1rSoabo2zW0uoZrSTj+gk46kXLhwyVdIvq0mOnTF4a1XD/A9U3NdcuO
+	ssznWojoN/hh6UgAJMoDoXcPWG5oONjQlp0gIM2clF8XiJeTvzJrOVWsrIf36seF
+	aXlwaKPX62wt1gzxt//IgMtmxBpi593Lf9gIN6YdAZEZetlz6m6j2gqdlpKndY+U
+	unrYL0dr6PW/1IXkaEMYf66Wt3pxe3fiRbA==
+X-ME-Sender: <xms:igNMatnnEEIY0bmoTl6NwJzwagdmswLddQv-9xj4zANzM475e7pxXQ>
+    <xme:igNMagSlXe2_VyrolqwIxbjL9OBQB8_emMQiWoNKsyaNzpgMoniOY8DANQGxQomBM
+    IWnRHC4O8xH48tn_YK_FnqRDQZRB__Meos3664z0iPDe4ehOyUE_Q>
+X-ME-Received: <xmr:igNMahDjTv-w6CZp2rH8WCB7l00FsumWUN4AiJMseUPkCytsE5-Pzkzi7MqvXW6hkFojD4yejTItwfBsfC2kb1iJwP9vV3bnvA8Gp7A>
+X-ME-Proxy-Cause: dmFkZTGDI+kiJB1KIu5pGOl09zS/hSwxlNA65aJTqRDIOfR4/pdFvf1PEQemTkxZp+V1Bf
+    zcoFX7MATMcu5z5m77u9MKyOKLgDdDJz93raHA2aIheEYyQjd16jBcyAGA8l0r8pdR19FT
+    hbI3rnPtLECxPfq/8+5DJu4PqVwqsW7R7B438wxkLjuZsib1HEKRImEcMWujnJkoEHr3Go
+    +ni7douy70ZZqPlfEsYVXaxeNsPnoUSVzwZa9gpilS5a09tYy7nQ2jmfMmWwCowUNAtKc4
+    ZBL/J90HsMbtwsEC8xurW+j7PoZvaJZ2SopOZgCLjhpIzdsGAHLeNbVfgV/NAqUSKhGJpP
+    BKUNCBFoiDIw8BYJIUXHOGZZZKSW2q0D/q04MmowAQev33JeS8z2zG1LQ4yVgtmUMd4wbr
+    IJrJ6kFfbvYRDw1SB3E4X6ycG/uogIv5frxvgUSuPePMyM/uwNEiAMWloL5Q3me+AklVyX
+    aLOy09q1HHnt0V4JzysZN2O8g/qQ1kIxSWYtWqcUcyAlh8MQk2Mx8INEDJ0LXj1Y1N7Avz
+    F5Ssg7jIjaBo+01OE972q1FpgmsgxbS/QhUxykf5kTUMCC+FY4TEfm0BmKsrM5PJqIuu0s
+    VuxbA+w4u6LIfXJJcjG61cix0Qb6VS3nnab76EC5kbdwOMuL5g6mYQfaA9cg
+X-ME-Proxy: <xmx:igNManSRIbDd6SkRmiPsKbgSadmbCGYEPR1OpsH2i48H9K3Eh1Hv8g>
+    <xmx:igNMavqhSkCQ1yoyS2p3GF4CWqgTA5wjSQLKg0N5swDKC7BNd6PXpw>
+    <xmx:igNMapwUV5aea3K-2hvZynSS8-wkbxhq9ks_5q5W7rRE_7jgo67aGQ>
+    <xmx:igNMakL4OvUSUrx1RcPiz1jGzfwgN_ZxX614W-przt0o912P61GKOQ>
+    <xmx:igNMakQ8pq_2Yx-_rpAXF8YlC7QoRGzwK-LISS2p8MDJ_pmap23SelUY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Jul 2026 15:35:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] setup.c: use die_errno() when chdir() system call fails
+In-Reply-To: <20260706183851.90517-1-gatlavishweshwarreddy26@gmail.com> (Gatla
+	Vishweshwar Reddy's message of "Tue, 7 Jul 2026 00:08:51 +0530")
+References: <20260706183851.90517-1-gatlavishweshwarreddy26@gmail.com>
+Date: Mon, 06 Jul 2026 12:35:37 -0700
+Message-ID: <xmqqbjcjc3na.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When chdir() fails, the errno value contains the reason for the
-failure. Using die() instead of die_errno() loses this information,
-making it harder to diagnose failures. Switch to die_errno() to
-include the system error message in the output.
+Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
 
-Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
----
- setup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> ---
 
-diff --git a/setup.c b/setup.c
-index b4652651df..e2e98d1126 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1954,13 +1954,13 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 		break;
- 	case GIT_DIR_DISCOVERED:
- 		if (dir.len < cwd.len && chdir(dir.buf))
--			die(_("cannot change to '%s'"), dir.buf);
-+			die_errno(_("cannot change to '%s'"), dir.buf);
- 		prefix = setup_discovered_git_dir(repo, gitdir.buf, &cwd, dir.len,
- 						  &repo_fmt, nongit_ok);
- 		break;
- 	case GIT_DIR_BARE:
- 		if (dir.len < cwd.len && chdir(dir.buf))
--			die(_("cannot change to '%s'"), dir.buf);
-+			die_errno(_("cannot change to '%s'"), dir.buf);
- 		prefix = setup_bare_git_dir(repo, &cwd, dir.len, &repo_fmt, nongit_ok);
- 		break;
- 	case GIT_DIR_HIT_CEILING:
--- 
-2.54.0
+The usual way to compose a log message (i.e., what the readers would
+have seen above that three-dash line we see) of this project is to
 
+ - Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
+
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
+
+ - Give commands to somebody editing the codebase to "make it so",
+   instead of saying "This commit does X".
+
+in this order.  And then to conclude the message, add your sign-off
+(see Documentation/SubmittingPatches:[[sign-off]]).
+
+>  setup.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+The changes are trivially correct, in that you call die_errno()
+immediately after seeing chdir() fail (which means there is no other
+potential failures that can contaminate errno---what your die_errno()
+will report cannot be anything but what we got from chdir()).
+
+> diff --git a/setup.c b/setup.c
+> index b4652651df..e2e98d1126 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1954,13 +1954,13 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+>  		break;
+>  	case GIT_DIR_DISCOVERED:
+>  		if (dir.len < cwd.len && chdir(dir.buf))
+> -			die(_("cannot change to '%s'"), dir.buf);
+> +			die_errno(_("cannot change to '%s'"), dir.buf);
+>  		prefix = setup_discovered_git_dir(repo, gitdir.buf, &cwd, dir.len,
+>  						  &repo_fmt, nongit_ok);
+>  		break;
+>  	case GIT_DIR_BARE:
+>  		if (dir.len < cwd.len && chdir(dir.buf))
+> -			die(_("cannot change to '%s'"), dir.buf);
+> +			die_errno(_("cannot change to '%s'"), dir.buf);
+>  		prefix = setup_bare_git_dir(repo, &cwd, dir.len, &repo_fmt, nongit_ok);
+>  		break;
+>  	case GIT_DIR_HIT_CEILING:
