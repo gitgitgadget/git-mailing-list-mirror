@@ -1,69 +1,70 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B493AF668
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 05:02:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72F1171CD
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 05:02:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783314131; cv=none; b=gfLH1g+AR1kjjWVWIBTAo9T6A9WnM14g01UQ2kOxfAORKaUZtggydtasIKFNJkSiNk0qaPHXy8PUGqm1ih8T4p3GFI6br1RDnNjUBZ+9WFAVEsgXus+xyIA2j3NjBHoaaFlWLw+3PjsC9dzrGF3YGdQ5Sl9vNC0U3EFe6F3Fyl8=
+	t=1783314136; cv=none; b=dzxTqXHiAVRoORPqP7Ou7Dydap7cLIcsW0zIKjHA0vNC64xcdkF+2MmeBh5mvX59uTk0aKTNLEH1nidt857xLqEVBloMxuuIvJqpg/3/o9YLwE9n0ENr2grUKItNLdcEBILShC1E/NaxpO4RQJ+WSkh+pZ/ZEUPcsPHgQaXNCMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783314131; c=relaxed/simple;
-	bh=k3v4xd1xggNiARxWFwoZhQY4liK9xxX+qE2ufUUuwAQ=;
+	s=arc-20240116; t=1783314136; c=relaxed/simple;
+	bh=QbCVKvN0uP8zGMaGLCqzotwQKo9B83aBHeF1mANj4OU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=P9/4I580pSAaZdQGQSBbZRlMiDr52dcPY2ODUOm/GyQwS4OAjOGTNg2GaxWLKIxthNk8lK5wLyIAlqM0cf01oJNYdWntCphlurYYfBDPtqXJte0Z7vF09fSYI4SDey2tZPeUhZyRULUEd4InocLAZJC3Wmjyhbg9sCTZ+iBGB40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UBIN30Qc; arc=none smtp.client-ip=209.85.160.170
+	 MIME-Version:To:Cc; b=nmroCyoJPTjsNx1s4sh+WW2kEf9PgHTJdY/NEqSogtQ98/751h5v/9J03j1PqDewoWuaMl7YijNpog+v4MSF7pV/FFpp1By13FM76aQ4YmKkT769C+X8TUtYf5DTPaddzYB7kZ6DxjMfEMAuxWYxpSRWrmmXOK9QwfW98CxSMxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f55JuSmC; arc=none smtp.client-ip=209.85.160.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBIN30Qc"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-51c0cea8883so16601711cf.1
-        for <git@vger.kernel.org>; Sun, 05 Jul 2026 22:02:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f55JuSmC"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-51c0c68aa31so14905591cf.3
+        for <git@vger.kernel.org>; Sun, 05 Jul 2026 22:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783314127; x=1783918927; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o0zzUJ0s+DLoVRq4Ejn/unLXe2jdCo4LRzzr76xjHFQ=;
-        b=UBIN30QcDmV0/WX7oMLVGmOdnJRWWX1mY5zPdHIffd/UQRG8vfmRe7rAqcbZbRc7Q7
-         xp03NuZTDDqAv+YnGntG8T7IW201Y2Rej49pZXMemuLf1Vzao0EIYs4RYSxXILg3oVb2
-         SlfmljaOAvzcINcoJ5sqr+EQxqC2UXXNLI3/4cLhIb6MKXy2sNKWauzGgI2kDRMiH45S
-         ZJLi3Un8bLFWuprrHMKdR8LM2qcjGg9WBXkv1RVVHqQg8BGO3aSmTczim0Z3zz0VzTdy
-         QwOSTDuYcSdNfYZwtsr1WddBMTMyep716XPLXOD0BSTXHpBqaUgho91ghR2uId/c6WM1
-         P8NQ==
+        d=gmail.com; s=20251104; t=1783314133; x=1783918933; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=kE5r7Al187Lpq37Fu4H7qEBsIPL7MzEMwJS96a1xz50=;
+        b=f55JuSmC3UMRttVy3RjaX386fjxRUJNSertt82oMjtfONPcsVLz7zuhndL4l0k08EI
+         4f8qqKLqBkOQMk5HtmN7fDa3ZXmkiIwjpf2hiybtZAYArqoxeLnYXURmoNsS0OU1H7Tm
+         85QgdMXuE+zYnEcu/VYgkyIyGP5BkYirGkGvP5/Muk6je64rk+5K+3XsYHDXSYBiwBAN
+         zmvkgISeHEMZ4bdBBKCa2aBTSPl50MbKKLCXZI+z9Ica24PNmVszFBrUY+OEkvvpVBJx
+         bec0Vui7SS4GjCECOVsAZBWbZqMKOKD7AvBXmrWeAJ2xiH1LfD4R7Hj5cyGZa4N68pQZ
+         0Wug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783314127; x=1783918927;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=o0zzUJ0s+DLoVRq4Ejn/unLXe2jdCo4LRzzr76xjHFQ=;
-        b=JyRTn4CSvcpUm3wywgybyY8723ES+RAqET8uR4G4plxd4xTP3UryknEang/hbfxMWz
-         fLvrtpdfl1pqalgIJyzzflXFyOE45MNllbQv6VBu4rCYbVU8Sj/r1wdr73s1kh5CPPAz
-         KbwuP0ZT6BrFmqO+Fq1iDolBPNMRIuwsC8Wv+ZV83wQhHYoCSOq92P7DE93L+Pu3uBYE
-         Nsxj+jfoCGCHx4wmuBwA7AR42f8m9fGRPa11tGsQp2354o7T1TnSKxANrKxVcD8aA7us
-         FXTR9Rva0lfMLWqg95EPCjC5Qlfd0fsg7g8BXyO0rbt6/47w3iMPKJiPV8M/SgpUJkAv
-         mMSQ==
-X-Gm-Message-State: AOJu0YzoOHeDi2Vw7+Gl9qbgYGilTAxl9mWF6Gd9uJSvXj7Ly/f4cbmn
-	WwH+yJK4H7m1ezv9FigJrCa5tQpilLADLe0e6coWSH/Fn0J4daA2JPBxThbTZPzD
-X-Gm-Gg: AfdE7cm/V9VcKTMLC+n7emp0Dee24Wwy9Ie1WauX8blPJN88lxqD0wUC9BQ6KohU2fh
-	lNYnWXw8CPYjsbYMkf2wm/IcFjbftk6+g1BfliiE6bSd/D6mN5hRFrn9OfLpQl2xl2Izdw4a6kH
-	KuA6P5TX9kKyXVruY1M09uRHC2HeSrYJfbGp2yyp3XTHhAAZoNOukJ5VR4eeT9jJfCre4yP/07i
-	/72RHieWa5ZByrSZQlV+8LYrLb9uZmuv5JMgQeX0/wqSA3GWG65k2898oLL04f47t1UgA9aMo7n
-	TaWzVEsDlSsoGYxzahDRFd0z5QxTeK+2fFA8ILB6A9qwlh5+6K/2Z1eGYk0Dzbm2kfmXE2Hi4g9
-	KSMDhVO7+17nJ44HA3ujB4ErHbx1NdSSanUiNUcCy1HozSK2t2xtnHY90l0S97gpUFZFAD46YzI
-	8G7EJ0/M65DvYutQ==
-X-Received: by 2002:a05:622a:14d:b0:51c:98f:f282 with SMTP id d75a77b69052e-51c3c2f82b3mr163791481cf.27.1783314126572;
-        Sun, 05 Jul 2026 22:02:06 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783314133; x=1783918933;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kE5r7Al187Lpq37Fu4H7qEBsIPL7MzEMwJS96a1xz50=;
+        b=kUtx41K7Z5348wT/xB9u5dofTWAk8Z0uLXPem+SL917eh4QY0ARFVESWotNo11kUaR
+         69DvjKFQ0PqfH2+iUR/5pM772ehH4TWpJLGUVOilIdegMjiC7m26kpIn1rfEmtHcvlTU
+         r6NilN4VMH8hX5RE03y8VYk0g3h0+8HUJ9+bfSPAzuhnMKCrPxrIzlW6kfEC+NPo1bw/
+         hpJhRZk2yEE6yLOrcrUwngAn81nb5LGp22DxFCj4Zzaf5DO2r3+RM/g1leC9NW+XDICA
+         BcOCQORQTxvS8EnOazBaHtqq+BAifO4C4L12CpqUJLmB0ZdbFadhanrfmJqhJ69Bug2M
+         Yurg==
+X-Gm-Message-State: AOJu0YzGi5oc4EuEf0BAXvvIjM8CDbU3Hf1+u0SeYx3K4l3PzN6Pqydt
+	6VAl+V9oRZExh5/rKmuEru/P3Eq0yZka9Tu2Noh4ZEq4RqtuStuejTRPT8rIznUB
+X-Gm-Gg: AfdE7cnHJv9x8GScwQ3jgSA6dmX+g+NhjI3xUmCykMAO9wzlJODqWTh5OiFn+a6FQ4v
+	XlnwWAZGPGDfifRPnLeZcfJxmKS1reiQdWettaw6isnXOxbqOScLQAmq2IywrPp1F/dou+96CkP
+	q3tV3YgDrjleQFEsz6J+suAPb9ADdP43MB+ELaXtAU5BhTnbBOoeCe9klU/mLJoscQeZ+N+PT/6
+	a3Xh7Bsx7Zv4T6ADcD96RRDwHNEdp/asN8eo1OZc9louiB70hSFMcTLyI6gb0+qo4IpSESXA3LO
+	Tb2lwMh/JFohS3gaQsq7rB0HMgjLWkmueTD7CUsfMqFrwuk6VCYxcOkZGBBokch10Nvx9RvBzjN
+	skLWKHFKZvVESy6+AcYNQeDm9SE6nDOO9U8jrF0f8aCmxBc8TrfX1YqohpisdA6K4Tp704gSHYz
+	XsPum1ljCtFPYjxg==
+X-Received: by 2002:ac8:7e8b:0:b0:51c:1b46:47cd with SMTP id d75a77b69052e-51c4c240a56mr125271041cf.12.1783314132539;
+        Sun, 05 Jul 2026 22:02:12 -0700 (PDT)
 Received: from [127.0.0.1] ([68.154.38.16])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41d2cf18sm88042441cf.14.2026.07.05.22.02.05
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41b5d704sm88247381cf.12.2026.07.05.22.02.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 22:02:05 -0700 (PDT)
-Message-Id: <8f3ebe6426639e1b7158ea96c30d01a3ca012811.1783314119.git.gitgitgadget@gmail.com>
+        Sun, 05 Jul 2026 22:02:11 -0700 (PDT)
+Message-Id: <5cda64fc260d96b9dcc239d0046d1a0208ce9737.1783314119.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2135.v4.git.1783314119.gitgitgadget@gmail.com>
 References: <pull.2135.v3.git.1783054466.gitgitgadget@gmail.com>
 	<pull.2135.v4.git.1783314119.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Jul 2026 05:01:55 +0000
-Subject: [PATCH v4 3/6] t: extract chainlint's parser into shared module
+Date: Mon, 06 Jul 2026 05:01:58 +0000
+Subject: [PATCH v4 6/6] t: add greplint to detect bare grep assertions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,1144 +83,856 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-Move chainlint.pl's Lexer, ShellParser, and ScriptParser into a
-shared module (lib-shell-parser.pl) so other lint tools can reuse
-the same shell parsing infrastructure.  A subsequent commit adds
-greplint.pl, which needs the same tokenizer to correctly identify
-command boundaries.
+Without a lint guard, bare grep assertions will creep back into
+tests over time, defeating the previous commit's conversion.
 
-ScriptParser's check_test() becomes a no-op in the shared module.
-chainlint.pl defines ChainlintParser (extending ScriptParser)
-with the &&-chain check_test() implementation.
+Add greplint.pl to catch bare 'grep' used as a test assertion
+(where 'test_grep' should be used) and '! test_grep' (where
+'test_grep !' should be used).
 
-No functional change: chainlint produces the same output and
-check-chainlint self-tests pass.
+greplint.pl reuses the shared shell parser from lib-shell-parser.pl
+to tokenize test bodies.  The Lexer collapses heredocs, command
+substitutions, and quoted strings into single tokens, so 'grep'
+appearing inside these contexts is not flagged.  A flat walk over
+the token stream tracks command position and pipeline state to
+distinguish assertion greps from filter greps.
+
+For double-quoted test bodies, a source-line walk counts
+backslash-continuation lines that the Lexer consumes without
+emitting into the body text, adjusting the reported line number
+accordingly.
+
+Add test fixtures in greplint/ (modeled on chainlint/) covering
+detection of bare grep assertions, correct skipping of filters,
+pipelines, redirects, command substitutions, and lint-ok annotations.
+
+Wire into the Makefile as:
+  - test-greplint: runs greplint.pl on $(T) $(THELPERS) $(TPERF)
+  - check-greplint: runs greplint.pl on fixtures, diffs against expected
+  - clean-greplint: removes temp dir
+
+Add eol=lf entries in t/.gitattributes for greplint fixtures,
+matching chainlint, so that check-greplint passes on Windows
+where core.autocrlf would otherwise cause CRLF mismatches
+between expected and actual output.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- t/chainlint.pl        | 529 +----------------------------------------
- t/lib-shell-parser.pl | 531 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 543 insertions(+), 517 deletions(-)
- create mode 100644 t/lib-shell-parser.pl
+ t/.gitattributes                              |   2 +
+ t/Makefile                                    |  29 +-
+ t/greplint-cat.pl                             |  27 ++
+ t/greplint.pl                                 | 258 ++++++++++++++++++
+ t/greplint/bare-grep-after-and.expect         |   1 +
+ t/greplint/bare-grep-after-and.test           |   4 +
+ t/greplint/bare-grep-after-semicolon.expect   |   1 +
+ t/greplint/bare-grep-after-semicolon.test     |   4 +
+ t/greplint/bare-grep-compound-body.expect     |   3 +
+ t/greplint/bare-grep-compound-body.test       |  17 ++
+ t/greplint/bare-grep-count-mode.expect        |   1 +
+ t/greplint/bare-grep-count-mode.test          |   3 +
+ t/greplint/bare-grep-explicit-pattern.expect  |   1 +
+ t/greplint/bare-grep-explicit-pattern.test    |   3 +
+ t/greplint/bare-grep-flags.expect             |   1 +
+ t/greplint/bare-grep-flags.test               |   3 +
+ t/greplint/bare-grep-lint-ok.expect           |   0
+ t/greplint/bare-grep-lint-ok.test             |   4 +
+ t/greplint/bare-grep-negated.expect           |   1 +
+ t/greplint/bare-grep-negated.test             |   3 +
+ t/greplint/bare-grep-pattern-file.expect      |   1 +
+ t/greplint/bare-grep-pattern-file.test        |   3 +
+ t/greplint/bare-grep-simple.expect            |   1 +
+ t/greplint/bare-grep-simple.test              |   3 +
+ t/greplint/bare-grep-subshell.expect          |   1 +
+ t/greplint/bare-grep-subshell.test            |   5 +
+ .../dqstring-continuation-offset.expect       |   1 +
+ t/greplint/dqstring-continuation-offset.test  |  11 +
+ t/greplint/filter-command-substitution.expect |   0
+ t/greplint/filter-command-substitution.test   |   3 +
+ t/greplint/filter-pipe-input.expect           |   0
+ t/greplint/filter-pipe-input.test             |   3 +
+ t/greplint/filter-pipe-output.expect          |   0
+ t/greplint/filter-pipe-output.test            |   3 +
+ t/greplint/filter-redirect-output.expect      |   0
+ t/greplint/filter-redirect-output.test        |   3 +
+ t/greplint/filter-stdin-redirect.expect       |   0
+ t/greplint/filter-stdin-redirect.test         |   3 +
+ t/greplint/grep-as-argument.expect            |   0
+ t/greplint/grep-as-argument.test              |   3 +
+ t/greplint/grep-as-value.expect               |   0
+ t/greplint/grep-as-value.test                 |   6 +
+ t/greplint/wrong-negation.expect              |   1 +
+ t/greplint/wrong-negation.test                |   3 +
+ 44 files changed, 415 insertions(+), 5 deletions(-)
+ create mode 100644 t/greplint-cat.pl
+ create mode 100644 t/greplint.pl
+ create mode 100644 t/greplint/bare-grep-after-and.expect
+ create mode 100644 t/greplint/bare-grep-after-and.test
+ create mode 100644 t/greplint/bare-grep-after-semicolon.expect
+ create mode 100644 t/greplint/bare-grep-after-semicolon.test
+ create mode 100644 t/greplint/bare-grep-compound-body.expect
+ create mode 100644 t/greplint/bare-grep-compound-body.test
+ create mode 100644 t/greplint/bare-grep-count-mode.expect
+ create mode 100644 t/greplint/bare-grep-count-mode.test
+ create mode 100644 t/greplint/bare-grep-explicit-pattern.expect
+ create mode 100644 t/greplint/bare-grep-explicit-pattern.test
+ create mode 100644 t/greplint/bare-grep-flags.expect
+ create mode 100644 t/greplint/bare-grep-flags.test
+ create mode 100644 t/greplint/bare-grep-lint-ok.expect
+ create mode 100644 t/greplint/bare-grep-lint-ok.test
+ create mode 100644 t/greplint/bare-grep-negated.expect
+ create mode 100644 t/greplint/bare-grep-negated.test
+ create mode 100644 t/greplint/bare-grep-pattern-file.expect
+ create mode 100644 t/greplint/bare-grep-pattern-file.test
+ create mode 100644 t/greplint/bare-grep-simple.expect
+ create mode 100644 t/greplint/bare-grep-simple.test
+ create mode 100644 t/greplint/bare-grep-subshell.expect
+ create mode 100644 t/greplint/bare-grep-subshell.test
+ create mode 100644 t/greplint/dqstring-continuation-offset.expect
+ create mode 100644 t/greplint/dqstring-continuation-offset.test
+ create mode 100644 t/greplint/filter-command-substitution.expect
+ create mode 100644 t/greplint/filter-command-substitution.test
+ create mode 100644 t/greplint/filter-pipe-input.expect
+ create mode 100644 t/greplint/filter-pipe-input.test
+ create mode 100644 t/greplint/filter-pipe-output.expect
+ create mode 100644 t/greplint/filter-pipe-output.test
+ create mode 100644 t/greplint/filter-redirect-output.expect
+ create mode 100644 t/greplint/filter-redirect-output.test
+ create mode 100644 t/greplint/filter-stdin-redirect.expect
+ create mode 100644 t/greplint/filter-stdin-redirect.test
+ create mode 100644 t/greplint/grep-as-argument.expect
+ create mode 100644 t/greplint/grep-as-argument.test
+ create mode 100644 t/greplint/grep-as-value.expect
+ create mode 100644 t/greplint/grep-as-value.test
+ create mode 100644 t/greplint/wrong-negation.expect
+ create mode 100644 t/greplint/wrong-negation.test
 
-diff --git a/t/chainlint.pl b/t/chainlint.pl
-index 2d07a99700..cededf15ee 100755
---- a/t/chainlint.pl
-+++ b/t/chainlint.pl
-@@ -23,458 +23,9 @@ my $jobs = -1;
- my $show_stats;
- my $emit_all;
+diff --git a/t/.gitattributes b/t/.gitattributes
+index 7664c6e027..e867f38c71 100644
+--- a/t/.gitattributes
++++ b/t/.gitattributes
+@@ -1,5 +1,7 @@
+ t[0-9][0-9][0-9][0-9]/* -whitespace
+ /chainlint/*.expect eol=lf -whitespace
++/greplint/*.expect eol=lf -whitespace
++/greplint/*.test eol=lf -whitespace
+ /t0110/url-* binary
+ /t3206/* eol=lf
+ /t3900/*.txt eol=lf
+diff --git a/t/Makefile b/t/Makefile
+index ab8a5b54aa..e3249879c4 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -27,9 +27,11 @@ TEST_LINT ?= test-lint
+ ifdef TEST_OUTPUT_DIRECTORY
+ TEST_RESULTS_DIRECTORY = $(TEST_OUTPUT_DIRECTORY)/test-results
+ CHAINLINTTMP = $(TEST_OUTPUT_DIRECTORY)/chainlinttmp
++GREPLINTTMP = $(TEST_OUTPUT_DIRECTORY)/greplinttmp
+ else
+ TEST_RESULTS_DIRECTORY = test-results
+ CHAINLINTTMP = chainlinttmp
++GREPLINTTMP = greplinttmp
+ endif
  
--# Lexer tokenizes POSIX shell scripts. It is roughly modeled after section 2.3
--# "Token Recognition" of POSIX chapter 2 "Shell Command Language". Although
--# similar to lexical analyzers for other languages, this one differs in a few
--# substantial ways due to quirks of the shell command language.
--#
--# For instance, in many languages, newline is just whitespace like space or
--# TAB, but in shell a newline is a command separator, thus a distinct lexical
--# token. A newline is significant and returned as a distinct token even at the
--# end of a shell comment.
--#
--# In other languages, `1+2` would typically be scanned as three tokens
--# (`1`, `+`, and `2`), but in shell it is a single token. However, the similar
--# `1 + 2`, which embeds whitespace, is scanned as three token in shell, as well.
--# In shell, several characters with special meaning lose that meaning when not
--# surrounded by whitespace. For instance, the negation operator `!` is special
--# when standing alone surrounded by whitespace; whereas in `foo!uucp` it is
--# just a plain character in the longer token "foo!uucp". In many other
--# languages, `"string"/foo:'string'` might be scanned as five tokens ("string",
--# `/`, `foo`, `:`, and 'string'), but in shell, it is just a single token.
--#
--# The lexical analyzer for the shell command language is also somewhat unusual
--# in that it recursively invokes the parser to handle the body of `$(...)`
--# expressions which can contain arbitrary shell code. Such expressions may be
--# encountered both inside and outside of double-quoted strings.
--#
--# The lexical analyzer is responsible for consuming shell here-doc bodies which
--# extend from the line following a `<<TAG` operator until a line consisting
--# solely of `TAG`. Here-doc consumption begins when a newline is encountered.
--# It is legal for multiple here-doc `<<TAG` operators to be present on a single
--# line, in which case their bodies must be present one following the next, and
--# are consumed in the (left-to-right) order the `<<TAG` operators appear on the
--# line. A special complication is that the bodies of all here-docs must be
--# consumed when the newline is encountered even if the parse context depth has
--# changed. For instance, in `cat <<A && x=$(cat <<B &&\n`, bodies of here-docs
--# "A" and "B" must be consumed even though "A" was introduced outside the
--# recursive parse context in which "B" was introduced and in which the newline
--# is encountered.
--package Lexer;
--
--sub new {
--	my ($class, $parser, $s) = @_;
--	bless {
--		parser => $parser,
--		buff => $s,
--		lineno => 1,
--		heretags => []
--	} => $class;
--}
--
--sub scan_heredoc_tag {
--	my $self = shift @_;
--	${$self->{buff}} =~ /\G(-?)/gc;
--	my $indented = $1;
--	my $token = $self->scan_token();
--	return "<<$indented" unless $token;
--	my $tag = $token->[0];
--	$tag =~ s/['"\\]//g;
--	$$token[0] = $indented ? "\t$tag" : "$tag";
--	push(@{$self->{heretags}}, $token);
--	return "<<$indented$tag";
--}
--
--sub scan_op {
--	my ($self, $c) = @_;
--	my $b = $self->{buff};
--	return $c unless $$b =~ /\G(.)/sgc;
--	my $cc = $c . $1;
--	return scan_heredoc_tag($self) if $cc eq '<<';
--	return $cc if $cc =~ /^(?:&&|\|\||>>|;;|<&|>&|<>|>\|)$/;
--	pos($$b)--;
--	return $c;
--}
--
--sub scan_sqstring {
--	my $self = shift @_;
--	${$self->{buff}} =~ /\G([^']*'|.*\z)/sgc;
--	my $s = $1;
--	$self->{lineno} += () = $s =~ /\n/sg;
--	return "'" . $s;
--}
--
--sub scan_dqstring {
--	my $self = shift @_;
--	my $b = $self->{buff};
--	my $s = '"';
--	while (1) {
--		# slurp up non-special characters
--		$s .= $1 if $$b =~ /\G([^"\$\\]+)/gc;
--		# handle special characters
--		last unless $$b =~ /\G(.)/sgc;
--		my $c = $1;
--		$s .= '"', last if $c eq '"';
--		$s .= '$' . $self->scan_dollar(), next if $c eq '$';
--		if ($c eq '\\') {
--			$s .= '\\', last unless $$b =~ /\G(.)/sgc;
--			$c = $1;
--			$self->{lineno}++, next if $c eq "\n"; # line splice
--			# backslash escapes only $, `, ", \ in dq-string
--			$s .= '\\' unless $c =~ /^[\$`"\\]$/;
--			$s .= $c;
--			next;
--		}
--		die("internal error scanning dq-string '$c'\n");
--	}
--	$self->{lineno} += () = $s =~ /\n/sg;
--	return $s;
--}
--
--sub scan_balanced {
--	my ($self, $c1, $c2) = @_;
--	my $b = $self->{buff};
--	my $depth = 1;
--	my $s = $c1;
--	while ($$b =~ /\G([^\Q$c1$c2\E]*(?:[\Q$c1$c2\E]|\z))/gc) {
--		$s .= $1;
--		$depth++, next if $s =~ /\Q$c1\E$/;
--		$depth--;
--		last if $depth == 0;
--	}
--	$self->{lineno} += () = $s =~ /\n/sg;
--	return $s;
--}
--
--sub scan_subst {
--	my $self = shift @_;
--	my @tokens = $self->{parser}->parse(qr/^\)$/);
--	$self->{parser}->next_token(); # closing ")"
--	return @tokens;
--}
--
--sub scan_dollar {
--	my $self = shift @_;
--	my $b = $self->{buff};
--	return $self->scan_balanced('(', ')') if $$b =~ /\G\((?=\()/gc; # $((...))
--	return '(' . join(' ', map {$_->[0]} $self->scan_subst()) . ')' if $$b =~ /\G\(/gc; # $(...)
--	return $self->scan_balanced('{', '}') if $$b =~ /\G\{/gc; # ${...}
--	return $1 if $$b =~ /\G(\w+)/gc; # $var
--	return $1 if $$b =~ /\G([@*#?$!0-9-])/gc; # $*, $1, $$, etc.
--	return '';
--}
--
--sub swallow_heredocs {
--	my $self = shift @_;
--	my $b = $self->{buff};
--	my $tags = $self->{heretags};
--	while (my $tag = shift @$tags) {
--		my $start = pos($$b);
--		my $indent = $$tag[0] =~ s/^\t// ? '\\s*' : '';
--		$$b =~ /(?:\G|\n)$indent\Q$$tag[0]\E(?:\n|\z)/gc;
--		if (pos($$b) > $start) {
--			my $body = substr($$b, $start, pos($$b) - $start);
--			$self->{parser}->{heredocs}->{$$tag[0]} = {
--				content => substr($body, 0, length($body) - length($&)),
--				start_line => $self->{lineno},
--		        };
--			$self->{lineno} += () = $body =~ /\n/sg;
--			next;
--		}
--		push(@{$self->{parser}->{problems}}, ['HEREDOC', $tag]);
--		$$b =~ /(?:\G|\n).*\z/gc; # consume rest of input
--		my $body = substr($$b, $start, pos($$b) - $start);
--		$self->{lineno} += () = $body =~ /\n/sg;
--		last;
--	}
--}
--
--sub scan_token {
--	my $self = shift @_;
--	my $b = $self->{buff};
--	my $token = '';
--	my ($start, $startln);
--RESTART:
--	$startln = $self->{lineno};
--	$$b =~ /\G[ \t]+/gc; # skip whitespace (but not newline)
--	$start = pos($$b) || 0;
--	$self->{lineno}++, return ["\n", $start, pos($$b), $startln, $startln] if $$b =~ /\G#[^\n]*(?:\n|\z)/gc; # comment
--	while (1) {
--		# slurp up non-special characters
--		$token .= $1 if $$b =~ /\G([^\\;&|<>(){}'"\$\s]+)/gc;
--		# handle special characters
--		last unless $$b =~ /\G(.)/sgc;
--		my $c = $1;
--		pos($$b)--, last if $c =~ /^[ \t]$/; # whitespace ends token
--		pos($$b)--, last if length($token) && $c =~ /^[;&|<>(){}\n]$/;
--		$token .= $self->scan_sqstring(), next if $c eq "'";
--		$token .= $self->scan_dqstring(), next if $c eq '"';
--		$token .= $c . $self->scan_dollar(), next if $c eq '$';
--		$self->{lineno}++, $self->swallow_heredocs(), $token = $c, last if $c eq "\n";
--		$token = $self->scan_op($c), last if $c =~ /^[;&|<>]$/;
--		$token = $c, last if $c =~ /^[(){}]$/;
--		if ($c eq '\\') {
--			$token .= '\\', last unless $$b =~ /\G(.)/sgc;
--			$c = $1;
--			$self->{lineno}++, next if $c eq "\n" && length($token); # line splice
--			$self->{lineno}++, goto RESTART if $c eq "\n"; # line splice
--			$token .= '\\' . $c;
--			next;
--		}
--		die("internal error scanning character '$c'\n");
--	}
--	return length($token) ? [$token, $start, pos($$b), $startln, $self->{lineno}] : undef;
--}
--
--# ShellParser parses POSIX shell scripts (with minor extensions for Bash). It
--# is a recursive descent parser very roughly modeled after section 2.10 "Shell
--# Grammar" of POSIX chapter 2 "Shell Command Language".
--package ShellParser;
--
--sub new {
--	my ($class, $s) = @_;
--	my $self = bless {
--		buff => [],
--		stop => [],
--		output => [],
--		heredocs => {},
--		insubshell => 0,
--	} => $class;
--	$self->{lexer} = Lexer->new($self, $s);
--	return $self;
--}
--
--sub next_token {
--	my $self = shift @_;
--	return pop(@{$self->{buff}}) if @{$self->{buff}};
--	return $self->{lexer}->scan_token();
--}
--
--sub untoken {
--	my $self = shift @_;
--	push(@{$self->{buff}}, @_);
--}
--
--sub peek {
--	my $self = shift @_;
--	my $token = $self->next_token();
--	return undef unless defined($token);
--	$self->untoken($token);
--	return $token;
--}
--
--sub stop_at {
--	my ($self, $token) = @_;
--	return 1 unless defined($token);
--	my $stop = ${$self->{stop}}[-1] if @{$self->{stop}};
--	return defined($stop) && $token->[0] =~ $stop;
--}
--
--sub expect {
--	my ($self, $expect) = @_;
--	my $token = $self->next_token();
--	return $token if defined($token) && $token->[0] eq $expect;
--	push(@{$self->{output}}, "?!ERR?! expected '$expect' but found '" . (defined($token) ? $token->[0] : "<end-of-input>") . "'\n");
--	$self->untoken($token) if defined($token);
--	return ();
--}
--
--sub optional_newlines {
--	my $self = shift @_;
--	my @tokens;
--	while (my $token = $self->peek()) {
--		last unless $token->[0] eq "\n";
--		push(@tokens, $self->next_token());
--	}
--	return @tokens;
--}
--
--sub parse_group {
--	my $self = shift @_;
--	return ($self->parse(qr/^}$/),
--		$self->expect('}'));
--}
--
--sub parse_subshell {
--	my $self = shift @_;
--	$self->{insubshell}++;
--	my @tokens = ($self->parse(qr/^\)$/),
--		      $self->expect(')'));
--	$self->{insubshell}--;
--	return @tokens;
--}
--
--sub parse_case_pattern {
--	my $self = shift @_;
--	my @tokens;
--	while (defined(my $token = $self->next_token())) {
--		push(@tokens, $token);
--		last if $token->[0] eq ')';
--	}
--	return @tokens;
--}
--
--sub parse_case {
--	my $self = shift @_;
--	my @tokens;
--	push(@tokens,
--	     $self->next_token(), # subject
--	     $self->optional_newlines(),
--	     $self->expect('in'),
--	     $self->optional_newlines());
--	while (1) {
--		my $token = $self->peek();
--		last unless defined($token) && $token->[0] ne 'esac';
--		push(@tokens,
--		     $self->parse_case_pattern(),
--		     $self->optional_newlines(),
--		     $self->parse(qr/^(?:;;|esac)$/)); # item body
--		$token = $self->peek();
--		last unless defined($token) && $token->[0] ne 'esac';
--		push(@tokens,
--		     $self->expect(';;'),
--		     $self->optional_newlines());
--	}
--	push(@tokens, $self->expect('esac'));
--	return @tokens;
--}
--
--sub parse_for {
--	my $self = shift @_;
--	my @tokens;
--	push(@tokens,
--	     $self->next_token(), # variable
--	     $self->optional_newlines());
--	my $token = $self->peek();
--	if (defined($token) && $token->[0] eq 'in') {
--		push(@tokens,
--		     $self->expect('in'),
--		     $self->optional_newlines());
--	}
--	push(@tokens,
--	     $self->parse(qr/^do$/), # items
--	     $self->expect('do'),
--	     $self->optional_newlines(),
--	     $self->parse_loop_body(),
--	     $self->expect('done'));
--	return @tokens;
--}
--
--sub parse_if {
--	my $self = shift @_;
--	my @tokens;
--	while (1) {
--		push(@tokens,
--		     $self->parse(qr/^then$/), # if/elif condition
--		     $self->expect('then'),
--		     $self->optional_newlines(),
--		     $self->parse(qr/^(?:elif|else|fi)$/)); # if/elif body
--		my $token = $self->peek();
--		last unless defined($token) && $token->[0] eq 'elif';
--		push(@tokens, $self->expect('elif'));
--	}
--	my $token = $self->peek();
--	if (defined($token) && $token->[0] eq 'else') {
--		push(@tokens,
--		     $self->expect('else'),
--		     $self->optional_newlines(),
--		     $self->parse(qr/^fi$/)); # else body
--	}
--	push(@tokens, $self->expect('fi'));
--	return @tokens;
--}
--
--sub parse_loop_body {
--	my $self = shift @_;
--	return $self->parse(qr/^done$/);
--}
--
--sub parse_loop {
--	my $self = shift @_;
--	return ($self->parse(qr/^do$/), # condition
--		$self->expect('do'),
--		$self->optional_newlines(),
--		$self->parse_loop_body(),
--		$self->expect('done'));
--}
--
--sub parse_func {
--	my $self = shift @_;
--	return ($self->expect('('),
--		$self->expect(')'),
--		$self->optional_newlines(),
--		$self->parse_cmd()); # body
--}
--
--sub parse_bash_array_assignment {
--	my $self = shift @_;
--	my @tokens = $self->expect('(');
--	while (defined(my $token = $self->next_token())) {
--		push(@tokens, $token);
--		last if $token->[0] eq ')';
--	}
--	return @tokens;
--}
--
--my %compound = (
--	'{' => \&parse_group,
--	'(' => \&parse_subshell,
--	'case' => \&parse_case,
--	'for' => \&parse_for,
--	'if' => \&parse_if,
--	'until' => \&parse_loop,
--	'while' => \&parse_loop);
--
--sub parse_cmd {
--	my $self = shift @_;
--	my $cmd = $self->next_token();
--	return () unless defined($cmd);
--	return $cmd if $cmd->[0] eq "\n";
--
--	my $token;
--	my @tokens = $cmd;
--	if ($cmd->[0] eq '!') {
--		push(@tokens, $self->parse_cmd());
--		return @tokens;
--	} elsif (my $f = $compound{$cmd->[0]}) {
--		push(@tokens, $self->$f());
--	} elsif (defined($token = $self->peek()) && $token->[0] eq '(') {
--		if ($cmd->[0] !~ /\w=$/) {
--			push(@tokens, $self->parse_func());
--			return @tokens;
--		}
--		my @array = $self->parse_bash_array_assignment();
--		$tokens[-1]->[0] .= join(' ', map {$_->[0]} @array);
--		$tokens[-1]->[2] = $array[$#array][2] if @array;
--	}
--
--	while (defined(my $token = $self->next_token())) {
--		$self->untoken($token), last if $self->stop_at($token);
--		push(@tokens, $token);
--		last if $token->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
--	}
--	push(@tokens, $self->next_token()) if $tokens[-1]->[0] ne "\n" && defined($token = $self->peek()) && $token->[0] eq "\n";
--	return @tokens;
--}
--
--sub accumulate {
--	my ($self, $tokens, $cmd) = @_;
--	push(@$tokens, @$cmd);
--}
--
--sub parse {
--	my ($self, $stop) = @_;
--	push(@{$self->{stop}}, $stop);
--	goto DONE if $self->stop_at($self->peek());
--	my @tokens;
--	while (my @cmd = $self->parse_cmd()) {
--		$self->accumulate(\@tokens, \@cmd);
--		last if $self->stop_at($self->peek());
--	}
--DONE:
--	pop(@{$self->{stop}});
--	return @tokens;
--}
-+use File::Basename;
-+do(dirname($0) . "/lib-shell-parser.pl")
-+	or die "$0: failed to load lib-shell-parser.pl: $@$!\n";
+ # Shell quote;
+@@ -38,6 +40,7 @@ TEST_SHELL_PATH_SQ = $(subst ','\'',$(TEST_SHELL_PATH))
+ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
+ TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
+ CHAINLINTTMP_SQ = $(subst ','\'',$(CHAINLINTTMP))
++GREPLINTTMP_SQ = $(subst ','\'',$(GREPLINTTMP))
  
- # TestParser is a subclass of ShellParser which, beyond parsing shell script
- # code, is also imbued with semantic knowledge of test construction, and checks
-@@ -482,9 +33,10 @@ DONE:
- # the tests themselves or in behaviors being exercised by the tests. As such,
- # TestParser is only called upon to parse test bodies, not the top-level
- # scripts in which the tests are defined.
+ T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
+ THELPERS = $(sort $(filter-out $(T),$(wildcard *.sh)))
+@@ -45,6 +48,7 @@ TLIBS = $(sort $(wildcard lib-*.sh)) annotate-tests.sh
+ TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
+ TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
+ CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
++GREPLINTTESTS = $(sort $(patsubst greplint/%.test,%,$(wildcard greplint/*.test)))
+ CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
+ UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
+ UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
+@@ -63,8 +67,8 @@ test: pre-clean check-meson $(TEST_LINT)
+ 	$(CHAINLINTSUPPRESS) $(MAKE) aggregate-results-and-cleanup
+ 
+ ifneq ($(PERL_PATH),)
+-test: check-chainlint
+-prove: check-chainlint
++test: check-chainlint check-greplint
++prove: check-chainlint check-greplint
+ endif
+ 
+ failed:
+@@ -102,7 +106,7 @@ unit-tests-test-tool:
+ pre-clean:
+ 	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
+ 
+-clean-except-prove-cache: clean-chainlint
++clean-except-prove-cache: clean-chainlint clean-greplint
+ 	$(RM) -r 'trash directory'.*
+ 	$(RM) -r valgrind/bin
+ 
+@@ -120,6 +124,17 @@ check-chainlint:
+ 	{ $(CHAINLINT) --emit-all '$(CHAINLINTTMP_SQ)'/tests >'$(CHAINLINTTMP_SQ)'/actual || true; } && \
+ 	diff -u '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
+ 
++clean-greplint:
++	$(RM) -r '$(GREPLINTTMP_SQ)'
 +
- package TestParser;
++check-greplint:
++	@mkdir -p '$(GREPLINTTMP_SQ)' && \
++	'$(PERL_PATH_SQ)' greplint-cat.pl '$(GREPLINTTMP_SQ)' $(GREPLINTTESTS) && \
++	{ '$(PERL_PATH_SQ)' greplint.pl \
++		$(patsubst %,greplint/%.test,$(GREPLINTTESTS)) \
++		>'$(GREPLINTTMP_SQ)'/actual 2>&1 || true; } && \
++	diff -u '$(GREPLINTTMP_SQ)'/expect '$(GREPLINTTMP_SQ)'/actual
++
+ check-meson:
+ 	@# awk acts up when trying to match single quotes, so we use \047 instead.
+ 	@mkdir -p mesontmp && \
+@@ -139,7 +154,7 @@ check-meson:
+ test-lint: test-lint-duplicates test-lint-executable \
+ 	test-lint-filenames
+ ifneq ($(PERL_PATH),)
+-test-lint: test-lint-shell-syntax
++test-lint: test-lint-shell-syntax test-greplint
+ else
+ GIT_TEST_CHAIN_LINT = 0
+ endif
+@@ -160,6 +175,9 @@ test-lint-executable:
+ test-lint-shell-syntax:
+ 	@'$(PERL_PATH_SQ)' check-non-portable-shell.pl $(T) $(THELPERS) $(TPERF)
  
--use base 'ShellParser';
-+our @ISA = ('ShellParser');
++test-greplint:
++	@'$(PERL_PATH_SQ)' greplint.pl $(T) $(THELPERS) $(TPERF)
++
+ test-lint-filenames:
+ 	@# We do *not* pass a glob to ls-files but use grep instead, to catch
+ 	@# non-ASCII characters (which are quoted within double-quotes)
+@@ -185,7 +203,8 @@ perf:
+ 	$(MAKE) -C perf/ all
  
- sub new {
- 	my $class = shift @_;
-@@ -578,51 +130,10 @@ DONE:
- 	$self->SUPER::accumulate($tokens, $cmd);
- }
+ .PHONY: pre-clean $(T) aggregate-results clean valgrind perf \
+-	check-chainlint clean-chainlint test-chainlint $(UNIT_TESTS)
++	check-chainlint clean-chainlint test-chainlint \
++	check-greplint clean-greplint test-greplint $(UNIT_TESTS)
  
--# ScriptParser is a subclass of ShellParser which identifies individual test
--# definitions within test scripts, and passes each test body through TestParser
--# to identify possible problems. ShellParser detects test definitions not only
--# at the top-level of test scripts but also within compound commands such as
--# loops and function definitions.
--package ScriptParser;
--
--use base 'ShellParser';
--
--sub new {
--	my $class = shift @_;
--	my $self = $class->SUPER::new(@_);
--	$self->{ntests} = 0;
--	$self->{nerrs} = 0;
--	return $self;
--}
-+# ChainlintParser extends ScriptParser with &&-chain checking
-+package ChainlintParser;
- 
--# extract the raw content of a token, which may be a single string or a
--# composition of multiple strings and non-string character runs; for instance,
--# `"test body"` unwraps to `test body`; `word"a b"42'c d'` to `worda b42c d`
--sub unwrap {
--	my $token = (@_ ? shift @_ : $_)->[0];
--	# simple case: 'sqstring' or "dqstring"
--	return $token if $token =~ s/^'([^']*)'$/$1/;
--	return $token if $token =~ s/^"([^"]*)"$/$1/;
--
--	# composite case
--	my ($s, $q, $escaped);
--	while (1) {
--		# slurp up non-special characters
--		$s .= $1 if $token =~ /\G([^\\'"]*)/gc;
--		# handle special characters
--		last unless $token =~ /\G(.)/sgc;
--		my $c = $1;
--		$q = undef, next if defined($q) && $c eq $q;
--		$q = $c, next if !defined($q) && $c =~ /^['"]$/;
--		if ($c eq '\\') {
--			last unless $token =~ /\G(.)/sgc;
--			$c = $1;
--			$s .= '\\' if $c eq "\n"; # preserve line splice
--		}
--		$s .= $c;
--	}
--	return $s
--}
-+our @ISA = ('ScriptParser');
- 
- sub format_problem {
- 	local $_ = shift;
-@@ -635,10 +146,10 @@ sub format_problem {
- 
- sub check_test {
- 	my $self = shift @_;
--	my $title = unwrap(shift @_);
-+	my $title = ScriptParser::unwrap(shift @_);
- 	my $body = shift @_;
- 	my $lineno = $body->[3];
--	$body = unwrap($body);
-+	$body = ScriptParser::unwrap($body);
- 	if ($body eq '-') {
- 		my $herebody = shift @_;
- 		$body = $herebody->{content};
-@@ -673,24 +184,8 @@ sub check_test {
- 	push(@{$self->{output}}, "$c->{blue}# chainlint: $title$c->{reset}\n$checked");
- }
- 
--sub parse_cmd {
--	my $self = shift @_;
--	my @tokens = $self->SUPER::parse_cmd();
--	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
--	my $n = $#tokens;
--	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
--	my $herebody;
--	if ($n >= 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =~ /^<<-?(.+)$/) {
--		$herebody = $self->{heredocs}->{$1};
--		$n--;
--	}
--	$self->check_test($tokens[1], $tokens[2], $herebody) if $n == 2; # title body
--	$self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  # prereq title body
--	return @tokens;
--}
--
- # main contains high-level functionality for processing command-line switches,
--# feeding input test scripts to ScriptParser, and reporting results.
-+# feeding input test scripts to ChainlintParser, and reporting results.
- package main;
- 
- my $getnow = sub { return time(); };
-@@ -803,7 +298,7 @@ sub check_script {
- 		}
- 		my $s = do { local $/; <$fh> };
- 		close($fh);
--		my $parser = ScriptParser->new(\$s);
-+		my $parser = ChainlintParser->new(\$s);
- 		1 while $parser->parse_cmd();
- 		if (@{$parser->{output}}) {
- 			my $c = fd_colors(1);
-diff --git a/t/lib-shell-parser.pl b/t/lib-shell-parser.pl
+ .PHONY: libgit-sys-test libgit-rs-test
+ libgit-sys-test:
+diff --git a/t/greplint-cat.pl b/t/greplint-cat.pl
 new file mode 100644
-index 0000000000..5c435c5d05
+index 0000000000..fa9c3b8aab
 --- /dev/null
-+++ b/t/lib-shell-parser.pl
-@@ -0,0 +1,531 @@
-+# Copyright (c) 2021-2022 Eric Sunshine <sunshine@sunshineco.com>
-+#
-+# Shared shell script parser for test lint tools. Provides Lexer,
-+# ShellParser, and ScriptParser. Subclass ScriptParser and override
-+# check_test() to implement lint checks.
++++ b/t/greplint-cat.pl
+@@ -0,0 +1,27 @@
++#!/usr/bin/env perl
 +
 +use strict;
 +use warnings;
 +
-+# Lexer tokenizes POSIX shell scripts. It is roughly modeled after section 2.3
-+# "Token Recognition" of POSIX chapter 2 "Shell Command Language". Although
-+# similar to lexical analyzers for other languages, this one differs in a few
-+# substantial ways due to quirks of the shell command language.
++# Assemble expected output for check-greplint target.
++# Usage: greplint-cat.pl <outdir> <test-name> ...
 +#
-+# For instance, in many languages, newline is just whitespace like space or
-+# TAB, but in shell a newline is a command separator, thus a distinct lexical
-+# token. A newline is significant and returned as a distinct token even at the
-+# end of a shell comment.
++# For each <test-name>, reads greplint/<test-name>.expect and
++# prepends "greplint/<test-name>.test:" to every non-empty line,
++# matching the output format of greplint.pl.  Writes combined
++# expected output to <outdir>/expect.
++
++my $outdir = shift;
++open(my $expect, '>', "$outdir/expect")
++	or die "unable to open $outdir/expect: $!";
++
++for my $name (@ARGV) {
++	open(my $fh, '<', "greplint/$name.expect")
++		or die "unable to open greplint/$name.expect: $!";
++	while (<$fh>) {
++		print $expect "greplint/$name.test:$_";
++	}
++	close $fh;
++}
++
++close $expect;
+diff --git a/t/greplint.pl b/t/greplint.pl
+new file mode 100644
+index 0000000000..23efe27511
+--- /dev/null
++++ b/t/greplint.pl
+@@ -0,0 +1,258 @@
++#!/usr/bin/env perl
++
++# Detect bare 'grep' used as a test assertion where 'test_grep'
++# should be used, and '! test_grep' where 'test_grep !' should
++# be used.
 +#
-+# In other languages, `1+2` would typically be scanned as three tokens
-+# (`1`, `+`, and `2`), but in shell it is a single token. However, the similar
-+# `1 + 2`, which embeds whitespace, is scanned as three token in shell, as well.
-+# In shell, several characters with special meaning lose that meaning when not
-+# surrounded by whitespace. For instance, the negation operator `!` is special
-+# when standing alone surrounded by whitespace; whereas in `foo!uucp` it is
-+# just a plain character in the longer token "foo!uucp". In many other
-+# languages, `"string"/foo:'string'` might be scanned as five tokens ("string",
-+# `/`, `foo`, `:`, and 'string'), but in shell, it is just a single token.
++# The shared shell parser tokenizes test bodies so that 'grep'
++# inside heredocs, command substitutions like $(grep ...), and
++# quoted strings is collapsed into a single token and never seen
++# by our check.  A line-oriented approach would need to track
++# heredoc delimiters, nested $() depth, and cross-line pipe
++# state to avoid false positives on patterns like:
 +#
-+# The lexical analyzer for the shell command language is also somewhat unusual
-+# in that it recursively invokes the parser to handle the body of `$(...)`
-+# expressions which can contain arbitrary shell code. Such expressions may be
-+# encountered both inside and outside of double-quoted strings.
++#   write_script foo.sh <<-\EOF
++#   grep pattern file    # data, not an assertion
++#   EOF
 +#
-+# The lexical analyzer is responsible for consuming shell here-doc bodies which
-+# extend from the line following a `<<TAG` operator until a line consisting
-+# solely of `TAG`. Here-doc consumption begins when a newline is encountered.
-+# It is legal for multiple here-doc `<<TAG` operators to be present on a single
-+# line, in which case their bodies must be present one following the next, and
-+# are consumed in the (left-to-right) order the `<<TAG` operators appear on the
-+# line. A special complication is that the bodies of all here-docs must be
-+# consumed when the newline is encountered even if the parse context depth has
-+# changed. For instance, in `cat <<A && x=$(cat <<B &&\n`, bodies of here-docs
-+# "A" and "B" must be consumed even though "A" was introduced outside the
-+# recursive parse context in which "B" was introduced and in which the newline
-+# is encountered.
-+package Lexer;
++# The Lexer already handles these.
 +
-+sub new {
-+	my ($class, $parser, $s) = @_;
-+	bless {
-+		parser => $parser,
-+		buff => $s,
-+		lineno => 1,
-+		heretags => []
-+	} => $class;
++use warnings;
++use strict;
++use File::Basename;
++do(dirname($0) . "/lib-shell-parser.pl")
++	or die "$0: failed to load lib-shell-parser.pl: $@$!\n";
++
++my $exit_code = 0;
++
++# GrepLintParser inherits ScriptParser's ability to find
++# test_expect_success/failure blocks and call check_test()
++# on each body.  We override check_test() to walk the token
++# stream looking for bare grep assertions.
++package GrepLintParser;
++
++our @ISA = ('ScriptParser');
++
++# After these tokens, the next token is a command word.
++# For example, in 'echo foo && grep bar file', the 'grep'
++# after '&&' is at command position and should be flagged.
++my %cmd_start = map { $_ => 1 } qw(&& || ; ;; do then else elif), "\n", '{', '(';
++
++# Tokens indicating grep's output is piped or redirected.
++my %filter_op = map { $_ => 1 } qw(| > >> <);
++
++# A token is at "command word" position if the shell would
++# interpret it as a program name rather than an argument.
++# Only 'grep' at command position is an assertion we should
++# flag; 'grep' as an argument ('test_must_fail grep') or
++# value ('for cmd in grep sed') is not.
++sub is_command_word {
++	my ($tokens, $pos) = @_;
++	return 1 if $pos == 0;
++	for (my $j = $pos - 1; $j >= 0; $j--) {
++		my $t = $tokens->[$j]->[0];
++		# After a separator or pipe, a new command starts.
++		return 1 if $cmd_start{$t} || $t eq '|';
++		# After '}' or ')', what follows is a separator or
++		# redirect on the compound command, not a new command.
++		return 0 if $t eq '}' || $t eq ')';
++		# '!' is a prefix that does not consume command
++		# position; keep scanning to find what precedes it.
++		next if $t eq '!';
++		# Any other word means we are past the command word.
++		return 0;
++	}
++	return 1;
 +}
 +
-+sub scan_heredoc_tag {
-+	my $self = shift @_;
-+	${$self->{buff}} =~ /\G(-?)/gc;
-+	my $indented = $1;
-+	my $token = $self->scan_token();
-+	return "<<$indented" unless $token;
-+	my $tag = $token->[0];
-+	$tag =~ s/['"\\]//g;
-+	$$token[0] = $indented ? "\t$tag" : "$tag";
-+	push(@{$self->{heretags}}, $token);
-+	return "<<$indented$tag";
++# lint_ok() reports whether a bare grep carries a trailing
++# '# lint-ok' comment telling this linter to skip it.
++#
++# In practice this is needed for just one case: a grep acting
++# as a data filter whose output is consumed by a redirect or
++# pipe on an enclosing compound command (such as a subshell or
++# brace group) rather than by grep's own pipeline, e.g.
++#
++#	( grep ... && # lint-ok
++#	  sed ... ) >out
++#
++#	{ grep ... || : # lint-ok
++#	} >out
++#
++# is_filter() only scans grep's own pipeline: it stops at the
++# separator before the compound command closes and never sees
++# the outer redirect, so it would flag such a grep as an
++# assertion.  A grep that really is an assertion is better
++# written as test_grep (or a guarded test_grep when the file's
++# presence is conditional) than annotated with lint-ok.
++sub lint_ok {
++	my ($raw_lines, $ln) = @_;
++	if ($ln < 1 || $ln > @$raw_lines) {
++		warn "lint_ok: line number $ln out of range (1.." .
++		    scalar(@$raw_lines) . ")\n";
++		return 0;
++	}
++	return $raw_lines->[$ln - 1] =~ /lint-ok/;
 +}
 +
-+sub scan_op {
-+	my ($self, $c) = @_;
-+	my $b = $self->{buff};
-+	return $c unless $$b =~ /\G(.)/sgc;
-+	my $cc = $c . $1;
-+	return scan_heredoc_tag($self) if $cc eq '<<';
-+	return $cc if $cc =~ /^(?:&&|\|\||>>|;;|<&|>&|<>|>\|)$/;
-+	pos($$b)--;
-+	return $c;
++# Grep is a filter (not an assertion) if it receives piped
++# input or sends its output to a pipe or redirect.  Check
++# both directions from grep's position in the token stream.
++sub is_filter {
++	my ($tokens, $pos) = @_;
++	# Backward: is grep receiving piped input?
++	# Newlines don't break pipes ('cmd |\n grep' is one
++	# pipeline), so skip past them.
++	for (my $j = $pos - 1; $j >= 0; $j--) {
++		my $t = $tokens->[$j]->[0];
++		return 1 if $t eq '|';
++		next if $t eq "\n";
++		last if $cmd_start{$t} || $t eq '}' || $t eq ')';
++	}
++	# Forward: is grep piping or redirecting output?
++	# Unlike the backward scan, we do not skip newlines here:
++	# a bare newline is a command boundary, and redirects or
++	# pipes must appear on the same line as grep (or after a
++	# line continuation, which the Lexer consumes).
++	for (my $j = $pos + 1; $j < @$tokens; $j++) {
++		my $t = $tokens->[$j]->[0];
++		return 0 if $cmd_start{$t};
++		return 1 if $filter_op{$t};
++	}
++	return 0;
 +}
 +
-+sub scan_sqstring {
-+	my $self = shift @_;
-+	${$self->{buff}} =~ /\G([^']*'|.*\z)/sgc;
-+	my $s = $1;
-+	$self->{lineno} += () = $s =~ /\n/sg;
-+	return "'" . $s;
-+}
-+
-+sub scan_dqstring {
-+	my $self = shift @_;
-+	my $b = $self->{buff};
-+	my $s = '"';
-+	while (1) {
-+		# slurp up non-special characters
-+		$s .= $1 if $$b =~ /\G([^"\$\\]+)/gc;
-+		# handle special characters
-+		last unless $$b =~ /\G(.)/sgc;
-+		my $c = $1;
-+		$s .= '"', last if $c eq '"';
-+		$s .= '$' . $self->scan_dollar(), next if $c eq '$';
-+		if ($c eq '\\') {
-+			$s .= '\\', last unless $$b =~ /\G(.)/sgc;
-+			$c = $1;
-+			$self->{lineno}++, next if $c eq "\n"; # line splice
-+			# backslash escapes only $, `, ", \ in dq-string
-+			$s .= '\\' unless $c =~ /^[\$`"\\]$/;
-+			$s .= $c;
-+			next;
++# Map a body-relative line number to a file line number.
++# For double-quoted bodies, backslash-continuation lines
++# (\<newline>) are consumed by the Lexer without appearing
++# in the body text, so the inner parser sees fewer lines
++# than the source file has.  We walk the source lines to
++# count continuations and adjust accordingly.
++sub body_to_file_line {
++	my ($body_lineno, $body_token, $raw_lines, $body_start) = @_;
++	my $body_text = $body_token->[0];
++	my $body_end_line = $body_token->[4];
++	unless ($body_start && $body_start >= 1) {
++		warn "body_start is not a positive integer\n";
++		return $body_lineno;
++	}
++	my $file_lineno = $body_lineno + $body_start - 1;
++	# Only double-quoted bodies have line splices.
++	return $file_lineno unless $body_text =~ /^"/;
++	my $adj = 0;
++	my $lines_seen = 0;
++	unless ($body_end_line && $body_end_line >= $body_start) {
++		warn "body_end_line is not set for double-quoted body\n";
++		return $file_lineno;
++	}
++	my $end = $body_end_line;
++	if ($end > @$raw_lines) {
++		warn "body_end_line ($end) exceeds file length (" .
++		    scalar(@$raw_lines) . ")\n";
++		return $file_lineno;
++	}
++	my $src_ln = $body_start;
++	while ($src_ln <= $end && $lines_seen < $body_lineno) {
++		my $line = $raw_lines->[$src_ln - 1];
++		# Odd trailing backslashes = continuation (\<nl>).
++		# Even = escaped backslashes (\\), not a continuation.
++		if ($line =~ /(\\*)$/ && length($1) % 2 == 1) {
++			$adj++;
++		} else {
++			$lines_seen++;
 +		}
-+		die("internal error scanning dq-string '$c'\n");
++		$src_ln++;
 +	}
-+	$self->{lineno} += () = $s =~ /\n/sg;
-+	return $s;
-+}
-+
-+sub scan_balanced {
-+	my ($self, $c1, $c2) = @_;
-+	my $b = $self->{buff};
-+	my $depth = 1;
-+	my $s = $c1;
-+	while ($$b =~ /\G([^\Q$c1$c2\E]*(?:[\Q$c1$c2\E]|\z))/gc) {
-+		$s .= $1;
-+		$depth++, next if $s =~ /\Q$c1\E$/;
-+		$depth--;
-+		last if $depth == 0;
++	if ($lines_seen < $body_lineno) {
++		warn "body_lineno ($body_lineno) not found within body range " .
++		    "($body_start..$end)\n";
 +	}
-+	$self->{lineno} += () = $s =~ /\n/sg;
-+	return $s;
++	return $file_lineno + $adj;
 +}
 +
-+sub scan_subst {
-+	my $self = shift @_;
-+	my @tokens = $self->{parser}->parse(qr/^\)$/);
-+	$self->{parser}->next_token(); # closing ")"
-+	return @tokens;
-+}
-+
-+sub scan_dollar {
-+	my $self = shift @_;
-+	my $b = $self->{buff};
-+	return $self->scan_balanced('(', ')') if $$b =~ /\G\((?=\()/gc; # $((...))
-+	return '(' . join(' ', map {$_->[0]} $self->scan_subst()) . ')' if $$b =~ /\G\(/gc; # $(...)
-+	return $self->scan_balanced('{', '}') if $$b =~ /\G\{/gc; # ${...}
-+	return $1 if $$b =~ /\G(\w+)/gc; # $var
-+	return $1 if $$b =~ /\G([@*#?$!0-9-])/gc; # $*, $1, $$, etc.
-+	return '';
-+}
-+
-+sub swallow_heredocs {
-+	my $self = shift @_;
-+	my $b = $self->{buff};
-+	my $tags = $self->{heretags};
-+	while (my $tag = shift @$tags) {
-+		my $start = pos($$b);
-+		my $indent = $$tag[0] =~ s/^\t// ? '\\s*' : '';
-+		$$b =~ /(?:\G|\n)$indent\Q$$tag[0]\E(?:\n|\z)/gc;
-+		if (pos($$b) > $start) {
-+			my $body = substr($$b, $start, pos($$b) - $start);
-+			$self->{parser}->{heredocs}->{$$tag[0]} = {
-+				content => substr($body, 0, length($body) - length($&)),
-+				start_line => $self->{lineno},
-+		        };
-+			$self->{lineno} += () = $body =~ /\n/sg;
-+			next;
-+		}
-+		push(@{$self->{parser}->{problems}}, ['HEREDOC', $tag]);
-+		$$b =~ /(?:\G|\n).*\z/gc; # consume rest of input
-+		my $body = substr($$b, $start, pos($$b) - $start);
-+		$self->{lineno} += () = $body =~ /\n/sg;
-+		last;
-+	}
-+}
-+
-+sub scan_token {
-+	my $self = shift @_;
-+	my $b = $self->{buff};
-+	my $token = '';
-+	my ($start, $startln);
-+RESTART:
-+	$startln = $self->{lineno};
-+	$$b =~ /\G[ \t]+/gc; # skip whitespace (but not newline)
-+	$start = pos($$b) || 0;
-+	$self->{lineno}++, return ["\n", $start, pos($$b), $startln, $startln] if $$b =~ /\G#[^\n]*(?:\n|\z)/gc; # comment
-+	while (1) {
-+		# slurp up non-special characters
-+		$token .= $1 if $$b =~ /\G([^\\;&|<>(){}'"\$\s]+)/gc;
-+		# handle special characters
-+		last unless $$b =~ /\G(.)/sgc;
-+		my $c = $1;
-+		pos($$b)--, last if $c =~ /^[ \t]$/; # whitespace ends token
-+		pos($$b)--, last if length($token) && $c =~ /^[;&|<>(){}\n]$/;
-+		$token .= $self->scan_sqstring(), next if $c eq "'";
-+		$token .= $self->scan_dqstring(), next if $c eq '"';
-+		$token .= $c . $self->scan_dollar(), next if $c eq '$';
-+		$self->{lineno}++, $self->swallow_heredocs(), $token = $c, last if $c eq "\n";
-+		$token = $self->scan_op($c), last if $c =~ /^[;&|<>]$/;
-+		$token = $c, last if $c =~ /^[(){}]$/;
-+		if ($c eq '\\') {
-+			$token .= '\\', last unless $$b =~ /\G(.)/sgc;
-+			$c = $1;
-+			$self->{lineno}++, next if $c eq "\n" && length($token); # line splice
-+			$self->{lineno}++, goto RESTART if $c eq "\n"; # line splice
-+			$token .= '\\' . $c;
-+			next;
-+		}
-+		die("internal error scanning character '$c'\n");
-+	}
-+	return length($token) ? [$token, $start, pos($$b), $startln, $self->{lineno}] : undef;
-+}
-+
-+# ShellParser parses POSIX shell scripts (with minor extensions for Bash). It
-+# is a recursive descent parser very roughly modeled after section 2.10 "Shell
-+# Grammar" of POSIX chapter 2 "Shell Command Language".
-+
-+package ShellParser;
-+
-+sub new {
-+	my ($class, $s) = @_;
-+	my $self = bless {
-+		buff => [],
-+		stop => [],
-+		output => [],
-+		heredocs => {},
-+		insubshell => 0,
-+	} => $class;
-+	$self->{lexer} = Lexer->new($self, $s);
-+	return $self;
-+}
-+
-+sub next_token {
-+	my $self = shift @_;
-+	return pop(@{$self->{buff}}) if @{$self->{buff}};
-+	return $self->{lexer}->scan_token();
-+}
-+
-+sub untoken {
-+	my $self = shift @_;
-+	push(@{$self->{buff}}, @_);
-+}
-+
-+sub peek {
-+	my $self = shift @_;
-+	my $token = $self->next_token();
-+	return undef unless defined($token);
-+	$self->untoken($token);
-+	return $token;
-+}
-+
-+sub stop_at {
-+	my ($self, $token) = @_;
-+	return 1 unless defined($token);
-+	my $stop = ${$self->{stop}}[-1] if @{$self->{stop}};
-+	return defined($stop) && $token->[0] =~ $stop;
-+}
-+
-+sub expect {
-+	my ($self, $expect) = @_;
-+	my $token = $self->next_token();
-+	return $token if defined($token) && $token->[0] eq $expect;
-+	push(@{$self->{output}}, "?!ERR?! expected '$expect' but found '" . (defined($token) ? $token->[0] : "<end-of-input>") . "'\n");
-+	$self->untoken($token) if defined($token);
-+	return ();
-+}
-+
-+sub optional_newlines {
-+	my $self = shift @_;
-+	my @tokens;
-+	while (my $token = $self->peek()) {
-+		last unless $token->[0] eq "\n";
-+		push(@tokens, $self->next_token());
-+	}
-+	return @tokens;
-+}
-+
-+sub parse_group {
-+	my $self = shift @_;
-+	return ($self->parse(qr/^}$/),
-+		$self->expect('}'));
-+}
-+
-+sub parse_subshell {
-+	my $self = shift @_;
-+	$self->{insubshell}++;
-+	my @tokens = ($self->parse(qr/^\)$/),
-+		      $self->expect(')'));
-+	$self->{insubshell}--;
-+	return @tokens;
-+}
-+
-+sub parse_case_pattern {
-+	my $self = shift @_;
-+	my @tokens;
-+	while (defined(my $token = $self->next_token())) {
-+		push(@tokens, $token);
-+		last if $token->[0] eq ')';
-+	}
-+	return @tokens;
-+}
-+
-+sub parse_case {
-+	my $self = shift @_;
-+	my @tokens;
-+	push(@tokens,
-+	     $self->next_token(), # subject
-+	     $self->optional_newlines(),
-+	     $self->expect('in'),
-+	     $self->optional_newlines());
-+	while (1) {
-+		my $token = $self->peek();
-+		last unless defined($token) && $token->[0] ne 'esac';
-+		push(@tokens,
-+		     $self->parse_case_pattern(),
-+		     $self->optional_newlines(),
-+		     $self->parse(qr/^(?:;;|esac)$/)); # item body
-+		$token = $self->peek();
-+		last unless defined($token) && $token->[0] ne 'esac';
-+		push(@tokens,
-+		     $self->expect(';;'),
-+		     $self->optional_newlines());
-+	}
-+	push(@tokens, $self->expect('esac'));
-+	return @tokens;
-+}
-+
-+sub parse_for {
-+	my $self = shift @_;
-+	my @tokens;
-+	push(@tokens,
-+	     $self->next_token(), # variable
-+	     $self->optional_newlines());
-+	my $token = $self->peek();
-+	if (defined($token) && $token->[0] eq 'in') {
-+		push(@tokens,
-+		     $self->expect('in'),
-+		     $self->optional_newlines());
-+	}
-+	push(@tokens,
-+	     $self->parse(qr/^do$/), # items
-+	     $self->expect('do'),
-+	     $self->optional_newlines(),
-+	     $self->parse_loop_body(),
-+	     $self->expect('done'));
-+	return @tokens;
-+}
-+
-+sub parse_if {
-+	my $self = shift @_;
-+	my @tokens;
-+	while (1) {
-+		push(@tokens,
-+		     $self->parse(qr/^then$/), # if/elif condition
-+		     $self->expect('then'),
-+		     $self->optional_newlines(),
-+		     $self->parse(qr/^(?:elif|else|fi)$/)); # if/elif body
-+		my $token = $self->peek();
-+		last unless defined($token) && $token->[0] eq 'elif';
-+		push(@tokens, $self->expect('elif'));
-+	}
-+	my $token = $self->peek();
-+	if (defined($token) && $token->[0] eq 'else') {
-+		push(@tokens,
-+		     $self->expect('else'),
-+		     $self->optional_newlines(),
-+		     $self->parse(qr/^fi$/)); # else body
-+	}
-+	push(@tokens, $self->expect('fi'));
-+	return @tokens;
-+}
-+
-+sub parse_loop_body {
-+	my $self = shift @_;
-+	return $self->parse(qr/^done$/);
-+}
-+
-+sub parse_loop {
-+	my $self = shift @_;
-+	return ($self->parse(qr/^do$/), # condition
-+		$self->expect('do'),
-+		$self->optional_newlines(),
-+		$self->parse_loop_body(),
-+		$self->expect('done'));
-+}
-+
-+sub parse_func {
-+	my $self = shift @_;
-+	return ($self->expect('('),
-+		$self->expect(')'),
-+		$self->optional_newlines(),
-+		$self->parse_cmd()); # body
-+}
-+
-+sub parse_bash_array_assignment {
-+	my $self = shift @_;
-+	my @tokens = $self->expect('(');
-+	while (defined(my $token = $self->next_token())) {
-+		push(@tokens, $token);
-+		last if $token->[0] eq ')';
-+	}
-+	return @tokens;
-+}
-+
-+my %compound = (
-+	'{' => \&parse_group,
-+	'(' => \&parse_subshell,
-+	'case' => \&parse_case,
-+	'for' => \&parse_for,
-+	'if' => \&parse_if,
-+	'until' => \&parse_loop,
-+	'while' => \&parse_loop);
-+
-+sub parse_cmd {
-+	my $self = shift @_;
-+	my $cmd = $self->next_token();
-+	return () unless defined($cmd);
-+	return $cmd if $cmd->[0] eq "\n";
-+
-+	my $token;
-+	my @tokens = $cmd;
-+	if ($cmd->[0] eq '!') {
-+		push(@tokens, $self->parse_cmd());
-+		return @tokens;
-+	} elsif (my $f = $compound{$cmd->[0]}) {
-+		push(@tokens, $self->$f());
-+	} elsif (defined($token = $self->peek()) && $token->[0] eq '(') {
-+		if ($cmd->[0] !~ /\w=$/) {
-+			push(@tokens, $self->parse_func());
-+			return @tokens;
-+		}
-+		my @array = $self->parse_bash_array_assignment();
-+		$tokens[-1]->[0] .= join(' ', map {$_->[0]} @array);
-+		$tokens[-1]->[2] = $array[$#array][2] if @array;
-+	}
-+
-+	while (defined(my $token = $self->next_token())) {
-+		$self->untoken($token), last if $self->stop_at($token);
-+		push(@tokens, $token);
-+		last if $token->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
-+	}
-+	push(@tokens, $self->next_token()) if $tokens[-1]->[0] ne "\n" && defined($token = $self->peek()) && $token->[0] eq "\n";
-+	return @tokens;
-+}
-+
-+sub accumulate {
-+	my ($self, $tokens, $cmd) = @_;
-+	push(@$tokens, @$cmd);
-+}
-+
-+sub parse {
-+	my ($self, $stop) = @_;
-+	push(@{$self->{stop}}, $stop);
-+	goto DONE if $self->stop_at($self->peek());
-+	my @tokens;
-+	while (my @cmd = $self->parse_cmd()) {
-+		$self->accumulate(\@tokens, \@cmd);
-+		last if $self->stop_at($self->peek());
-+	}
-+DONE:
-+	pop(@{$self->{stop}});
-+	return @tokens;
-+}
-+
-+# ScriptParser is a subclass of ShellParser which identifies individual test
-+# definitions within test scripts and passes each test body to check_test().
-+# ScriptParser detects test definitions not only at the top-level of test
-+# scripts but also within compound commands such as loops and function
-+# definitions.
-+
-+package ScriptParser;
-+
-+our @ISA = ('ShellParser');
-+
-+sub new {
-+	my $class = shift @_;
-+	my $self = $class->SUPER::new(@_);
-+	$self->{ntests} = 0;
-+	$self->{nerrs} = 0;
-+	return $self;
-+}
-+
-+# extract the raw content of a token, which may be a single string or a
-+# composition of multiple strings and non-string character runs; for instance,
-+# `"test body"` unwraps to `test body`; `word"a b"42'c d'` to `worda b42c d`
-+sub unwrap {
-+	my $token = (@_ ? shift @_ : $_)->[0];
-+	# simple case: 'sqstring' or "dqstring"
-+	return $token if $token =~ s/^'([^']*)'$/$1/;
-+	return $token if $token =~ s/^"([^"]*)"$/$1/;
-+
-+	# composite case
-+	my ($s, $q, $escaped);
-+	while (1) {
-+		# slurp up non-special characters
-+		$s .= $1 if $token =~ /\G([^\\'"]*)/gc;
-+		# handle special characters
-+		last unless $token =~ /\G(.)/sgc;
-+		my $c = $1;
-+		$q = undef, next if defined($q) && $c eq $q;
-+		$q = $c, next if !defined($q) && $c =~ /^['"]$/;
-+		if ($c eq '\\') {
-+			last unless $token =~ /\G(.)/sgc;
-+			$c = $1;
-+			$s .= '\\' if $c eq "\n"; # preserve line splice
-+		}
-+		$s .= $c;
-+	}
-+	return $s
-+}
-+
++# ScriptParser calls this for each test body found in the script.
 +sub check_test {
-+	# no-op; subclass and override to implement lint checks
-+}
-+
-+sub parse_cmd {
 +	my $self = shift @_;
-+	my @tokens = $self->SUPER::parse_cmd();
-+	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
-+	my $n = $#tokens;
-+	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
-+	my $herebody;
-+	if ($n >= 2 && $tokens[$n-1]->[0] eq '-' && $tokens[$n]->[0] =~ /^<<-?(.+)$/) {
-+		$herebody = $self->{heredocs}->{$1};
-+		$n--;
++	my $title = ScriptParser::unwrap(shift @_);
++	my $body_token = shift @_;
++	my $body_start = $body_token->[3];
++	my $body = ScriptParser::unwrap($body_token);
++	# Handle heredoc-style test bodies:
++	#   test_expect_success 'title' - <<\EOF
++	#   grep pattern file
++	#   EOF
++	# The '-' signals that the body follows as a heredoc.
++	if ($body eq '-') {
++		my $herebody = shift @_;
++		if ($herebody) {
++			$body = $herebody->{content};
++			$body_start = $herebody->{start_line};
++		}
 +	}
-+	$self->check_test($tokens[1], $tokens[2], $herebody) if $n == 2; # title body
-+	$self->check_test($tokens[2], $tokens[3], $herebody) if $n > 2;  # prereq title body
-+	return @tokens;
++	return unless $body;
++
++	my $raw_lines = $self->{raw_lines};
++
++	# The outer parser gives us the body as an opaque string.
++	# Parse it to get individual tokens with command boundaries.
++	my $parser = ShellParser->new(\$body);
++	my @tokens = $parser->parse();
++
++	my $file = $self->{file};
++
++	for (my $i = 0; $i < @tokens; $i++) {
++		my $text = $tokens[$i]->[0];
++		next unless is_command_word(\@tokens, $i);
++
++		my $token_lineno = $tokens[$i]->[3];
++		unless (defined($token_lineno) && $token_lineno >= 1) {
++			warn "token has no line number\n";
++			next;
++		}
++		my $file_lineno = body_to_file_line(
++			$token_lineno,
++			$body_token, $raw_lines, $body_start);
++
++		# '!' negates the exit code without consuming command
++		# position.  '! test_grep' is an anti-pattern because
++		# test_grep only prints diagnostics on grep failure,
++		# and '!' inverts after that decision is already made.
++		if ($text eq '!') {
++			if ($i + 1 < @tokens &&
++			    $tokens[$i + 1]->[0] eq 'test_grep' &&
++			    !lint_ok($raw_lines, $file_lineno)) {
++				print "$file:$file_lineno: error: ",
++				    'use "test_grep !" instead of ',
++				    '"! test_grep"', "\n";
++				$exit_code = 1;
++			}
++			next;
++		}
++
++		# Bare grep as a command (not a filter) is a test
++		# assertion that should use test_grep for better
++		# failure diagnostics.
++		if ($text eq 'grep' &&
++		    !is_filter(\@tokens, $i) &&
++		    !lint_ok($raw_lines, $file_lineno)) {
++			print "$file:$file_lineno: error: ",
++			    "bare grep outside pipeline ",
++			    "(use test_grep)\n";
++			$exit_code = 1;
++		}
++	}
 +}
 +
-+1;
++package main;
++
++for my $file (@ARGV) {
++	open(my $fh, '<:unix:crlf', $file) or die "$0: $file: $!\n";
++	my @raw_lines = <$fh>;
++	close $fh;
++	my $s = join('', @raw_lines);
++	my $parser = GrepLintParser->new(\$s);
++	$parser->{file} = $file;
++	$parser->{raw_lines} = \@raw_lines;
++	$parser->parse();
++}
++exit $exit_code;
+diff --git a/t/greplint/bare-grep-after-and.expect b/t/greplint/bare-grep-after-and.expect
+new file mode 100644
+index 0000000000..7da1b21aa8
+--- /dev/null
++++ b/t/greplint/bare-grep-after-and.expect
+@@ -0,0 +1 @@
++3: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-after-and.test b/t/greplint/bare-grep-after-and.test
+new file mode 100644
+index 0000000000..c5b26e4572
+--- /dev/null
++++ b/t/greplint/bare-grep-after-and.test
+@@ -0,0 +1,4 @@
++test_expect_success 'grep after && is flagged' '
++	cmd &&
++	grep pattern file
++'
+diff --git a/t/greplint/bare-grep-after-semicolon.expect b/t/greplint/bare-grep-after-semicolon.expect
+new file mode 100644
+index 0000000000..7da1b21aa8
+--- /dev/null
++++ b/t/greplint/bare-grep-after-semicolon.expect
+@@ -0,0 +1 @@
++3: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-after-semicolon.test b/t/greplint/bare-grep-after-semicolon.test
+new file mode 100644
+index 0000000000..c1e468ddf8
+--- /dev/null
++++ b/t/greplint/bare-grep-after-semicolon.test
+@@ -0,0 +1,4 @@
++test_expect_success 'grep after semicolon is flagged' '
++	echo hello;
++	grep pattern file
++'
+diff --git a/t/greplint/bare-grep-compound-body.expect b/t/greplint/bare-grep-compound-body.expect
+new file mode 100644
+index 0000000000..eb6210f0c9
+--- /dev/null
++++ b/t/greplint/bare-grep-compound-body.expect
+@@ -0,0 +1,3 @@
++4: error: bare grep outside pipeline (use test_grep)
++8: error: bare grep outside pipeline (use test_grep)
++15: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-compound-body.test b/t/greplint/bare-grep-compound-body.test
+new file mode 100644
+index 0000000000..72472edcf6
+--- /dev/null
++++ b/t/greplint/bare-grep-compound-body.test
+@@ -0,0 +1,17 @@
++test_expect_success 'grep after then/do/else is flagged' '
++	if true
++	then
++		grep pattern file
++	fi &&
++	while true
++	do
++		grep pattern file &&
++		break
++	done &&
++	if true
++	then
++		echo yes
++	else
++		grep pattern file
++	fi
++'
+diff --git a/t/greplint/bare-grep-count-mode.expect b/t/greplint/bare-grep-count-mode.expect
+new file mode 100644
+index 0000000000..8922d35b42
+--- /dev/null
++++ b/t/greplint/bare-grep-count-mode.expect
+@@ -0,0 +1 @@
++2: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-count-mode.test b/t/greplint/bare-grep-count-mode.test
+new file mode 100644
+index 0000000000..b9c0f18783
+--- /dev/null
++++ b/t/greplint/bare-grep-count-mode.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep -c is flagged (not special-cased)' '
++	grep -c pattern file
++'
+diff --git a/t/greplint/bare-grep-explicit-pattern.expect b/t/greplint/bare-grep-explicit-pattern.expect
+new file mode 100644
+index 0000000000..8922d35b42
+--- /dev/null
++++ b/t/greplint/bare-grep-explicit-pattern.expect
+@@ -0,0 +1 @@
++2: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-explicit-pattern.test b/t/greplint/bare-grep-explicit-pattern.test
+new file mode 100644
+index 0000000000..69d8651019
+--- /dev/null
++++ b/t/greplint/bare-grep-explicit-pattern.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep -e is flagged' '
++	grep -e pattern file
++'
+diff --git a/t/greplint/bare-grep-flags.expect b/t/greplint/bare-grep-flags.expect
+new file mode 100644
+index 0000000000..8922d35b42
+--- /dev/null
++++ b/t/greplint/bare-grep-flags.expect
+@@ -0,0 +1 @@
++2: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-flags.test b/t/greplint/bare-grep-flags.test
+new file mode 100644
+index 0000000000..9ca0e10233
+--- /dev/null
++++ b/t/greplint/bare-grep-flags.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep -E is flagged' '
++	grep -E "pat+ern" file
++'
+diff --git a/t/greplint/bare-grep-lint-ok.expect b/t/greplint/bare-grep-lint-ok.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/bare-grep-lint-ok.test b/t/greplint/bare-grep-lint-ok.test
+new file mode 100644
+index 0000000000..335b902a42
+--- /dev/null
++++ b/t/greplint/bare-grep-lint-ok.test
+@@ -0,0 +1,4 @@
++test_expect_success 'grep with lint-ok annotation is not flagged' '
++	grep pattern file && # lint-ok
++	echo done
++'
+diff --git a/t/greplint/bare-grep-negated.expect b/t/greplint/bare-grep-negated.expect
+new file mode 100644
+index 0000000000..8922d35b42
+--- /dev/null
++++ b/t/greplint/bare-grep-negated.expect
+@@ -0,0 +1 @@
++2: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-negated.test b/t/greplint/bare-grep-negated.test
+new file mode 100644
+index 0000000000..ef789bc8b7
+--- /dev/null
++++ b/t/greplint/bare-grep-negated.test
+@@ -0,0 +1,3 @@
++test_expect_success 'negated grep is flagged' '
++	! grep pattern file
++'
+diff --git a/t/greplint/bare-grep-pattern-file.expect b/t/greplint/bare-grep-pattern-file.expect
+new file mode 100644
+index 0000000000..8922d35b42
+--- /dev/null
++++ b/t/greplint/bare-grep-pattern-file.expect
+@@ -0,0 +1 @@
++2: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-pattern-file.test b/t/greplint/bare-grep-pattern-file.test
+new file mode 100644
+index 0000000000..d70035e449
+--- /dev/null
++++ b/t/greplint/bare-grep-pattern-file.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep -f is flagged' '
++	grep -f patterns.txt file
++'
+diff --git a/t/greplint/bare-grep-simple.expect b/t/greplint/bare-grep-simple.expect
+new file mode 100644
+index 0000000000..8922d35b42
+--- /dev/null
++++ b/t/greplint/bare-grep-simple.expect
+@@ -0,0 +1 @@
++2: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-simple.test b/t/greplint/bare-grep-simple.test
+new file mode 100644
+index 0000000000..3a8d5f9bbd
+--- /dev/null
++++ b/t/greplint/bare-grep-simple.test
+@@ -0,0 +1,3 @@
++test_expect_success 'bare grep is flagged' '
++	grep pattern file
++'
+diff --git a/t/greplint/bare-grep-subshell.expect b/t/greplint/bare-grep-subshell.expect
+new file mode 100644
+index 0000000000..7da1b21aa8
+--- /dev/null
++++ b/t/greplint/bare-grep-subshell.expect
+@@ -0,0 +1 @@
++3: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/bare-grep-subshell.test b/t/greplint/bare-grep-subshell.test
+new file mode 100644
+index 0000000000..1fab2d3363
+--- /dev/null
++++ b/t/greplint/bare-grep-subshell.test
+@@ -0,0 +1,5 @@
++test_expect_success 'grep in subshell is flagged' '
++	(
++		grep pattern file
++	)
++'
+diff --git a/t/greplint/dqstring-continuation-offset.expect b/t/greplint/dqstring-continuation-offset.expect
+new file mode 100644
+index 0000000000..8185bfdca4
+--- /dev/null
++++ b/t/greplint/dqstring-continuation-offset.expect
+@@ -0,0 +1 @@
++10: error: bare grep outside pipeline (use test_grep)
+diff --git a/t/greplint/dqstring-continuation-offset.test b/t/greplint/dqstring-continuation-offset.test
+new file mode 100644
+index 0000000000..b332bd8f3b
+--- /dev/null
++++ b/t/greplint/dqstring-continuation-offset.test
+@@ -0,0 +1,11 @@
++# Double-quoted test bodies with backslash-continuation lines:
++# the splice adjustment in check_test compensates for \<newline>
++# lines that the lexer consumes without emitting into the body
++# text, so the reported line number matches the source.
++test_expect_success 'dqstring continuation offset' "
++	x=\$(echo \
++		hello) &&
++	y=\$(echo \
++		world) &&
++	grep pattern file
++"
+diff --git a/t/greplint/filter-command-substitution.expect b/t/greplint/filter-command-substitution.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/filter-command-substitution.test b/t/greplint/filter-command-substitution.test
+new file mode 100644
+index 0000000000..bd9a100a5d
+--- /dev/null
++++ b/t/greplint/filter-command-substitution.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep in command substitution is not flagged' '
++	x=$(grep pattern file)
++'
+diff --git a/t/greplint/filter-pipe-input.expect b/t/greplint/filter-pipe-input.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/filter-pipe-input.test b/t/greplint/filter-pipe-input.test
+new file mode 100644
+index 0000000000..cb5c0d9e23
+--- /dev/null
++++ b/t/greplint/filter-pipe-input.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep receiving pipe input is not flagged' '
++	cmd | grep pattern
++'
+diff --git a/t/greplint/filter-pipe-output.expect b/t/greplint/filter-pipe-output.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/filter-pipe-output.test b/t/greplint/filter-pipe-output.test
+new file mode 100644
+index 0000000000..01340086d7
+--- /dev/null
++++ b/t/greplint/filter-pipe-output.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep piping to another command is not flagged' '
++	grep pattern file | wc -l
++'
+diff --git a/t/greplint/filter-redirect-output.expect b/t/greplint/filter-redirect-output.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/filter-redirect-output.test b/t/greplint/filter-redirect-output.test
+new file mode 100644
+index 0000000000..ee70ba7cde
+--- /dev/null
++++ b/t/greplint/filter-redirect-output.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep with output redirect is not flagged' '
++	grep pattern file >output
++'
+diff --git a/t/greplint/filter-stdin-redirect.expect b/t/greplint/filter-stdin-redirect.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/filter-stdin-redirect.test b/t/greplint/filter-stdin-redirect.test
+new file mode 100644
+index 0000000000..292db7766e
+--- /dev/null
++++ b/t/greplint/filter-stdin-redirect.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep reading from stdin redirect is not flagged' '
++	grep pattern <input
++'
+diff --git a/t/greplint/grep-as-argument.expect b/t/greplint/grep-as-argument.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/grep-as-argument.test b/t/greplint/grep-as-argument.test
+new file mode 100644
+index 0000000000..7157228b60
+--- /dev/null
++++ b/t/greplint/grep-as-argument.test
+@@ -0,0 +1,3 @@
++test_expect_success 'grep as argument to another command is not flagged' '
++	test_must_fail grep pattern file
++'
+diff --git a/t/greplint/grep-as-value.expect b/t/greplint/grep-as-value.expect
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/greplint/grep-as-value.test b/t/greplint/grep-as-value.test
+new file mode 100644
+index 0000000000..92926f6378
+--- /dev/null
++++ b/t/greplint/grep-as-value.test
+@@ -0,0 +1,6 @@
++test_expect_success 'grep as value in for-loop is not flagged' '
++	for cmd in grep sed awk
++	do
++		echo $cmd
++	done
++'
+diff --git a/t/greplint/wrong-negation.expect b/t/greplint/wrong-negation.expect
+new file mode 100644
+index 0000000000..7dc52f65a8
+--- /dev/null
++++ b/t/greplint/wrong-negation.expect
+@@ -0,0 +1 @@
++2: error: use "test_grep !" instead of "! test_grep"
+diff --git a/t/greplint/wrong-negation.test b/t/greplint/wrong-negation.test
+new file mode 100644
+index 0000000000..542fbd9b28
+--- /dev/null
++++ b/t/greplint/wrong-negation.test
+@@ -0,0 +1,3 @@
++test_expect_success 'wrong negation of test_grep is flagged' '
++	! test_grep pattern file
++'
 -- 
 gitgitgadget
-
