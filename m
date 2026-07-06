@@ -1,85 +1,83 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C017C2EB5A6
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 20:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12F23E1CE4
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 20:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783369466; cv=none; b=QW7Nw2jSY1sehsAMD8d5nMiyUTtaFc4IwFl/qNW1loUgkOW1Zaq9xa2OTUPLRT5ZpWfz6GbWwWKz9t/4sGXVB19hQNoF8G4fncAmxEDBWbjD63ttqnqQohboctTXU5nG4c3+7dkdkf5qCx1+FZHvBaKrxsg0MRPvtdeEqwc8VNQ=
+	t=1783369790; cv=none; b=Mm4RHheJsWiykg9Fb4tNAOBgFaSbqWtZA5o4Dseis0IeQYa70KPvahpOxG7c0YAnffG0a26s0vdrWwFQKTRdR9y6vytEgWe6VRR6lk55cxeJoxaxEHKwhbNgpz9QYstpHLyby6/nYxt1L9xUNbcOwZ27cSl9Yi9MpYcxv6ghjiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783369466; c=relaxed/simple;
-	bh=rIsMGDqJrQC6w2pI32VIP4lz6/XuXVAr7HvqApx8qy0=;
+	s=arc-20240116; t=1783369790; c=relaxed/simple;
+	bh=BIao1r6Xuyrg+jUiuyFwb8fProXmdw7V84ds4rhG9Us=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CD5nOmxcWyFMx6XgTJlw5nWCLa2QS3MgNb0hbRgBoGOLBfA8sRVnC9ywovvw0A/9PC6wxExL5eRIVRQZ1MrommJ0dvdP59Q5qSTbF/OF74GZZA3DRvX4al3SgGirK5AXW5CFwVygfeH3tUuYi/Du3KHQA7JCwklFVJNWOFZFWlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LIrbi1Vs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U5fKXmem; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=D8nI9+ChrCwgMZcToWmOgUZqAzYUr5eNULogSmHV/17yUKXYYcyILItTPbyLPHakvzMZaT5WN7NUzALqVGIwTC5tUM6w8idvT/h2RWd+9ccz3TBmr7rheyAUmld8YuHqzfoWiw0DONI2Lb3DkY8FTc+TP0Cg2Oh2w9vNgpVOc5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aTId7fEn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rYRUno8R; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LIrbi1Vs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U5fKXmem"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D5FA91400082;
-	Mon,  6 Jul 2026 16:24:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 06 Jul 2026 16:24:23 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aTId7fEn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rYRUno8R"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CEA0814000FB;
+	Mon,  6 Jul 2026 16:29:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Mon, 06 Jul 2026 16:29:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783369463; x=1783455863; bh=Eg/n4xVmZr
-	LxJkGNCXwoslY+U4HE292EIvZNtfR4GFo=; b=LIrbi1VsTWeANxBUrj1IPEjWe2
-	Xw8rQhTNNP2JLOrgqR7EzYzzuXdIDBTgaigX5bwV8dDFHgweU5nYYcJxQ5mFCLjD
-	/7AVyWzCZYZ3W5n1Uz6Ooh4BElDNbwFc85E4J3I4VSYQwVm6bPZotc6Oh4KVHt8J
-	2PTKYigxpmx8XMq7JUJ/sV1HoMyRXPx7OPxVtA0o4n1VfXfrf5gu0grl0V3prtkO
-	5Vdt1X94+hM/RPJ5/kuh00o+JWg+flJYeTh6hM+r/X6PtHjQ1VseQdOGiKVFLAI5
-	n+WuOoNTX9LAArUEz4OKBngZfJYb3q6PQv8jiOnAHq4ZRD3KaR0djDj/4DWg==
+	:subject:to:to; s=fm1; t=1783369787; x=1783456187; bh=b/D3ZbU+l2
+	aA7zHX9aRSQT26G4RCB4JwDRvWqWASHIU=; b=aTId7fEnRJxBfZ1IjSQQfAWZp4
+	yT7l3+lX3lj30N4Kl3eRH5aaKuKGaU2D5wONqOCRVGtc4QUgie5oxnpaBvsc4Rom
+	uiIAe+bIbl0annNI1evFsqzEH/AiqE62tgDEYr5+xgqxPyOmWInQCBLQhKJ+RRUf
+	KEAUbPKa9wMvEAzA6lIhv1rVOJ1zVQXoZ9lLABhoUdGxj4UNbym6nlP73/uhplyf
+	FGLfv4a4Bty5P//Z4L1pzj6Quxs29sWPh4bUY3BrAmpUSLEbaMAhyZWlPc4Y2IN5
+	mlYLNIY2UAdaB08Mzk2poke0pTPPhiae4nRpMKkJzdlCRNlXxFQLqiuM2i8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783369463; x=1783455863; bh=Eg/n4xVmZrLxJkGNCXwoslY+U4HE292EIvZ
-	NtfR4GFo=; b=U5fKXmemG7B6kdkz9KfIh1fxp1YV8lHdlIJJ4SFaKNNXK4d6ioS
-	Y/+WzAk8C8RITN1ahS96M+NHCy4qK382pqCiN/IT5yhdp0eoxeebHmKqykyDqZOc
-	F1PXdcSNIUeYGw37c3O69/BgfLciw6IMJ97BI+WHPIWqMa6+ytXecpRy8fVFU83m
-	BqVF5sawqAJA9vjLeTFzhY1iGiY2/vRutvOallzvilYzF7u3Eh5GB2e25P31I2mR
-	cGgH+XoxEtZaxf/+gjEhQngj4hXKrx5eORK0nkRMne12v05ahsEHc076YnzPafzK
-	NqhwLSgldZ86NZD2p0EdU9+nYs7zMbyVHwA==
-X-ME-Sender: <xms:9g5Man1k5Z-GLmJJBTD0_rH1E7Ju0epM7dy5vPDD2QG1KEADoLBPjg>
-    <xme:9g5MagE1GasAxpPd4Z96PoSKOa-G5PLK0lZtPCLwl63sGZbqpCktN1eUovJwGO9n_
-    ohOWbD9398O1wzflVOfDhdsNwrEI1kK3UqqSvV1OfePhs7_jCIi>
-X-ME-Received: <xmr:9g5MaugFhWJzdiW9I7toejYKDLZn8suUyypGGV_u6oIPhWlM68y-owplHB8cnmUskGjy5cxKIo7hvmursWjaH5fXoAYI7lQ4Vgj1PmU>
-X-ME-Proxy-Cause: dmFkZTFQ6P260r539wcA5fvZo45Zm23odAj5ZgZ3nzUzOg6hDp3bKo/2lvU44fSktZlJKh
-    I4ldU2qOCvIKMqqwTrcUwUCQilXfgflDLVFAFOZ1TeHjYW4z+42w5kMG5Nbo/EHCP9xB7q
-    Q+3kZnLjYMqqWTJK5UwWsu5yW1bsO592GF9Un3ryBi/F9URdRprPHETdNbmBT/8/xQTxJy
-    4t2DSOil5oF34bGI1o5quoIXkoGhPAMiMawaGKygb0/JBW9LLgyi5dJp9xaeB8r6pyWAG4
-    KiU7ambC83M/WTIewiGxAna26xBgbRjICS9SPjm5X6UgciRHUdXtvI+xFYamcKOTdQ2nYp
-    2oOp1NA/+pjYvkkCfdLcFISWZFWks/hTu5IknLV8ZLIFwtYNAaSq4vamHGVbiAlUWBH3KK
-    JbK/4zlQu42JI0P1w16XEycEh+62Xr+9vN7REGRMed5fIHBKjiueJ+Y+0iFIuWPsdUrfEr
-    N5X4kx6Ruf2tRaqQQLX0JxtcNVIpXrJy2MGtXWYcMCDZPygkB4fx7yMEtBowm0hsB4yiK/
-    AE6B/WmhythWjBmEJphH6PhY9zjJKeMOaHk57escXhkRU7batdZkMJngUqxcLpbPsq+cdW
-    5C3WiNZsJxckoDbxjoF6SLma07nyjxgFbmFRPtJUpUgCrx/T3OCoHOFUgA1g
-X-ME-Proxy: <xmx:9g5MarDxifhiK4CABqRcgebsDUlajvk2uwWRUcqeO2HuVUiLMKUiYg>
-    <xmx:9g5MaoRY47Ii3ezknlqiMfCrWobkv1acIg_lf1lsEtKKDPC3vBlOlQ>
-    <xmx:9g5MaoUot7DdwcjWqDUu4fyt1OzMC_RYYqal2WuVHAt6LKtVHHUTuw>
-    <xmx:9g5MapeTHQSsfIzpp5gE0eNsu1cvnkSB_2ywBLdWhT9bk8zrE8mHYA>
-    <xmx:9w5MasJAkdUiPVLNDY2awcOrZlxeXKs9in7q69fV1IMsrBIzTedA4C4P>
+	1783369787; x=1783456187; bh=b/D3ZbU+l2aA7zHX9aRSQT26G4RCB4JwDRv
+	WqWASHIU=; b=rYRUno8Rk7mcuR8AgMzkRwrv25G7WsDR4m/9WZ3U5xWDccygQR9
+	0SBMJq6KcM8MBois52kUOx/D+7PRkqT2098CqLaSpdx/y/0saY/aUuSXpRqG4iI7
+	IkTtoyrJna0HLCY30nbQEoN7LzKxojD1Vw2YBUh8AuhEALbvvg9GydT4QXdFvy3p
+	HY/PjJJli+ZFll9A0WtouyYOj5vFZBDrZFl3g3h6utsiIcGw5Cxq7D9sX4WvFRYP
+	H8ZguQ3hMgEOot3d+wEMwuly6FDQCm3JW0pU8FDT1mg1yT+vFGIo49aEpLZ3qIcy
+	jVE085h0EssNIRuM4YPH+MTOzhBizB+s2hA==
+X-ME-Sender: <xms:OxBManZihDDc6v_ztakFYNYrTDs-pFW6P_Z9NKUTbXIjaDw7Ke3KAQ>
+    <xme:OxBMaqExDamAUzwV8gWLp3qeJ6DgRAVWrdqJbI72AS3Li7McGf9urMdvD50M8xmEn
+    7ANKev95zMePv0i3hTXZfWhCfqs_q1lLVmVjYhEfM5Soe4Mk0S0DQ>
+X-ME-Received: <xmr:OxBMajwiZHw7EQbBy3bR_g1QBZQu5z1x9yznAQnqk90_LHa1dV8ef992NxqQAYOtkztpVCm9EEYavUX449VKgb_aHYynblOmGqgfHsY>
+X-ME-Proxy-Cause: dmFkZTExkFL0lIFNPfWuTtMmulnekqNcSceXEl3phx6uDwAnY3sAhTOGjf8CWGl5kn5UNT
+    VQm0k1J+mnjH9McxpQoXhSZ6O+wWRepUx60B5tgstTvfbDawvIzDHyK+v6VAsxmEBZGlmO
+    z+2GP2vbTJdVwZgfZFbaiTqef/vdqjAuESLdrs6aDH14WEOshYxXiRGNBJtrfhhBUah6Je
+    oP/sJFhUw5v3xEseYqql5YlWaacv7xPbLRPqebjaQCYfsskXlGlC7QsvP0VSfvlIfLaSY7
+    iKE+36tj9OpbzozmWDB4VX4gTFdTLBe7/p01FqBICi+MJBI8Bt4/NQh4WvF1QGqBmdW/AW
+    bNz7zqIrQIbd8sA+0KlB4jKenOYYI+FNYCunST6djEF3xq7JIzX9aHs7Tiy/PIjs4tlQe9
+    tJRi695SwN48OC30y6O6gC/6790GYhA3Gzr9N8/XE4y9DMjiKgcBvdGPRT09/OxI4mFaZn
+    gH83yswB+94/t/nOYPKICftkcDwCtjKMmBAQc44dKtBXhdtV6ihVABqCBfmSiRZbAk/CBS
+    Kt7A41WAexjM756ICkfoFCuJwndPhVUjYNqmafy/o18X8N0myvtLpRCq2B+Sftw/pOUqPh
+    n/BDUtyhFIjkvB6E8O/y5H2BRcgP7un3H4/ZwZj8u1f0K8ZuPKgktH4KxL4w
+X-ME-Proxy: <xmx:OxBMaknroWgLRRjZ9LNIdbWGbXzPcZmKAFA889hklgxB0S6I6c5v-w>
+    <xmx:OxBMakmTFqIy2SACcfSkzptDDopACtASVVg2mU4S6ZKvJGh2X0pCyA>
+    <xmx:OxBMauxqbPCHkob7qeqZnhzg7cYMj1Xaan2UEFRM1i6VLlz20GX9Zw>
+    <xmx:OxBMahoF0g0wEH7C6ofSrhtXIaOcxFYOrqh7kn0mmyIa8kurs7aHUw>
+    <xmx:OxBMahi7mO1pqkaa7qwuD1wPv5UFG6NHs7qO5OOIqhmvJkOwqRyu8KQi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 16:24:22 -0400 (EDT)
+ 6 Jul 2026 16:29:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Trevor Gross <tg@trevorgross.com>,
-  git@vger.kernel.org,  Stefan Haller <lists@haller-berlin.de>,  Derrick
- Stolee <stolee@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: introduce `pick -x` to add "cherry picked
- from commit ..."
-In-Reply-To: <5d238e0d-18ba-429a-a9a4-a3988b00e1e1@gmail.com> (Phillip Wood's
-	message of "Mon, 6 Jul 2026 11:08:18 +0100")
-References: <20260705140931.98262-2-tg@trevorgross.com>
-	<20260706002415.GC2301945@coredump.intra.peff.net>
-	<5d238e0d-18ba-429a-a9a4-a3988b00e1e1@gmail.com>
-Date: Mon, 06 Jul 2026 13:24:21 -0700
-Message-ID: <xmqqcxwzamtm.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v3 0/9] t: fixes and improvements for GIT_TEST_LONG
+In-Reply-To: <20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-0-4f6c5a37fd1f@pks.im>
+	(Patrick Steinhardt's message of "Mon, 06 Jul 2026 08:23:55 +0200")
+References: <20260702-b4-pks-t-fixes-for-GIT-TEST-LONG-v1-0-76b4d7bab3d0@pks.im>
+	<20260706-b4-pks-t-fixes-for-GIT-TEST-LONG-v3-0-4f6c5a37fd1f@pks.im>
+Date: Mon, 06 Jul 2026 13:29:45 -0700
+Message-ID: <xmqq8q7namkm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,27 +87,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> Usually a rebase is about rewriting the commits on a new base so that
->> you can throw away the old ones. And that's why git-rebase generally
->> rewrites the branch you're on, and replaces those old commits. So adding
->> a "cherry-picked from..." annotation doesn't make sense there; nobody
->> would have those old commits!
+> Hi,
 >
-> Exactly
-
-;-)  
-
-Whew.  Briefly I wondered if I were the only one who felt 'rebase'
-and 'cherry-pick' serve two different purposes and need to behave
-differently, e.g., with respect to how notes on old commits are
-dealt with.
-
-> On a slight tangent I've sometimes wanted to be able to do
+> this series started out as a simple two-patch series that wired up the
+> GitLab CI badge in our README and GIT_TEST_LONG for GitLab CI. But as it
+> typically goes, tests broke on GitLab CI, which made me realize that
+> they are broken even on GitHub's master branch right now. Some tests are
+> failing in the linux32 job, and we only didn't notice because the whole
+> pipeline hangs.
 >
-> 	git cherry-pick --exec 'make test' some commits
+> So I had to go down the rabbit hole a bit, the result of which is this
+> patch series.
+>
+> Changes in v3:
+>   - Fix commit subjects to mention correct prerequisite.
+>   - Link to v2: https://patch.msgid.link/20260703-b4-pks-t-fixes-for-GIT-TEST-LONG-v2-0-79076a7e0c62@pks.im
 
-Yes, I agree that is something quite handy.
+The interdiff looks trivially correct ;-).
+
+Hopefully we are now ready to declare victory and plan to merge this
+to 'next'?
 
 Thanks.
+
+
+>  1:  e4add14ea7 =  1:  afc7563e22 README: add GitLab CI badge to make it more discoverable
+>  2:  d762b4d46e !  2:  753e950eaf t0021: skip EXPENSIVE test that is broken without SIZE_T_IS_32BIT
+>     @@ Metadata
+>      Author: Patrick Steinhardt <ps@pks.im>
+>      
+>       ## Commit message ##
+>     -    t0021: skip EXPENSIVE test that is broken without SIZE_T_IS_32BIT
+>     +    t0021: skip EXPENSIVE test that is broken without SIZE_T_IS_64BIT
+>      
+>          One of the tests in t0021 writes a 2GB file and then roundtrips it
+>          through the clean/sumdge filters. This test is broken on 32 bit
+>  3:  8d43eb2819 =  3:  f776e0fb5f t4141: fix inefficient use of dd(1)
+>  4:  fcd048f6f7 =  4:  9754b96a43 t5608: reduce maximum disk usage
+>  5:  11df7f2cb9 !  5:  0f2e28dc11 t7508: skip EXPENSIVE test that is broken without SIZE_T_IS_32BIT
+>     @@ Metadata
+>      Author: Patrick Steinhardt <ps@pks.im>
+>      
+>       ## Commit message ##
+>     -    t7508: skip EXPENSIVE test that is broken without SIZE_T_IS_32BIT
+>     +    t7508: skip EXPENSIVE test that is broken without SIZE_T_IS_64BIT
+>      
+>          One of the tests in t7508 is marked as EXPENSIVE because it ends up
+>          creating and adding files that are multiple gigabytes in size. This
+>  6:  a16bc1754b =  6:  d329a2cd40 t7900: clean up large EXPENSIVE repository
+>  7:  b2e6b0d517 =  7:  a336d4ce9e t: use `test_bool_env` to parse GIT_TEST_LONG
+>  8:  9632b19164 =  8:  cfff94c79e gitlab-ci: disable RAM disk on macOS jobs
+>  9:  a42c613012 =  9:  ed5e8807fe gitlab-ci: enable "GIT_TEST_LONG"
+>
+> ---
+> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+> change-id: 20260701-b4-pks-t-fixes-for-GIT-TEST-LONG-78e538bf0e06
