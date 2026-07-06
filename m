@@ -1,123 +1,136 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8F633A9E9
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 13:40:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783345218; cv=none; b=rDBSSzQRfUPuef6vShhfcM2alFzz+D91CJhhepeIdsCDgN9LoxPKY7/kAWrCY0S0oX+mL4nZgJjI9EPFH/+tw+T9YhO89esdDs+JVoHzSBkYoZqadCA6rKljgn2tQ1mJNJchs7NMrjjNW2+twaY5yo172g7ebJj5kH/oN11SEaA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783345218; c=relaxed/simple;
-	bh=g6PgOL72u93wYIDk86A3OUBTNnYxJL5v8Ao4L9rGVJo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hm97o70wE1NTkT+Tg3Wdrs+IW7S28xjt4ZVOYKn/5DilJ/aAz0JXepXtQ/DnxwSJZr6rUk+R+M7QXuOV9rQPf8S00kAhMxjhzC+ZTCs9WPr6sPeJxGfzouhDTHan7DsUERivR/ov/xWRs++/SYcuUpC7M72a3wo+zng/sz7eOHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rl8oIzBx; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74222DC792
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 13:45:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783345509; cv=pass; b=Y0RJeW8le5XHv6MjRYn9foob7PhkMp2GPD9WJOu5CqCoC4I1PwTfu0OT13d1rEkar2usmdtzbWNLS1cVbbgcdtPZbjA2pTmTF9KiocpUcuQuOKtRelIg3GiUGFARDsz9vvlvQLv2aWM/XBuedYnzm/E9R1eZsAJtImbt4CxBEvg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783345509; c=relaxed/simple;
+	bh=2iN2UzRA3qXtqLCt6jMDsERhWopumNh2NvSFf8EwEMw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BOJhoNn8SFW3lbY795aqdS7DhMpSrm3vi9+s9txg0iqTBAlrLs4xQu3aEacjP9KVM32Wg9a04PWNt5LRMwedRxcj5bkMfawUAYVY0kUYY1mr2Vi4IlWxT+EEaeVjuQKZEcPO2XwgN1hrHHWIGTwYtmJHrAxLJ7xC6na3zL8ynps=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=c+X02hmF; arc=pass smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rl8oIzBx"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-493c7902f47so18250535e9.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 06:40:16 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="c+X02hmF"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-6611669cd16so4116413d50.0
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 06:45:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783345507; cv=none;
+        d=google.com; s=arc-20260327;
+        b=iAJlfl1TzcS0uFXhScSYeRXZ4jcp627kNGybSlm3SfM/SBOhvnPXJR3AqyxHXp1Tms
+         B+/7V58xZ8roCVbyH1Ix6Q+qWXebYDv7xuj45m8WWGzC1+xINDmCqrrKUGpbeJt0UHuT
+         SGznkjN/J4UPMF04V9QWXqfmH+PlQ8MPVyIXr2Wk/sH/EWh2iXz/kWVk2dbBKNM3QBgf
+         nx65j1qTXE/kFotWbVbHEeP2Xz4BEy9111bYW87fzs4S8gRt419RGDNrn0zmBFGFRPVy
+         H9VU51bRobCwtmwgRcv4Lx1pkCV75ud2byg3MI9Gm6AwM8fIsqwVxhShBDxrN2znHQ4M
+         p8jg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=2iN2UzRA3qXtqLCt6jMDsERhWopumNh2NvSFf8EwEMw=;
+        fh=0xe4Jkr0A9N5Wf5NVqBswoIDQmpkhxCxKEPZtNhYjx0=;
+        b=lkf70Ey6pOWXIW83iQNbsUnpuMzFtAsC7jYbra2TR0uboojLD9yIiiXJmrWgbcSRWk
+         coVeK/TBRWe1lFVvFXXrq0oZES1qhxLN5QWXvfSvQAqvfGxAfkxVUJZSf+ez+hjJewSd
+         IDLRws9fh+jvaB2bghzpR+SqYvLSLrTu5E3NrPACAJi5EyPhznZYlijrrhWdtIaAD6Qr
+         afEuBqsWPFlcjXxkey9Zt92mp7Om0dzVefb9zEzAl45gFwzEA1LuC1I01bg7Q4TjZpZC
+         nfo5vHs20y8F9CYRhsuRhoMQO0FDencrhTcSQHE0ssXNGfzwwHPOJJnOltcC765WphiV
+         AdZw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783345215; x=1783950015; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nc5gb7we6fbCx+nAKmBppxSGApkzstOQaTzQeOLAQ40=;
-        b=rl8oIzBxrq7Ow/k9EuLX61oYlPV3FrPtsG05uJ3KSsXQ9+Amjxx8c9CBDC8rMvLL2M
-         ISWkH6ZdUmO9PfYqlYnOgAhdi6QS6FQEeXeiGvOcYr33ZgP1OePqN0FzyEovf7BNMnWa
-         7eLV4a76t4uZxIhJYXvwcN2O9UOYCd8tHu+umG7fnF2lVfTFfi9PoqdMvkoDdYit8mDz
-         FZBzNz1L3CBuGhge516mDFdw9WMZb6lWathVNzXnlVL0vEeCMVY0vSBXhbpxh6G+EmAZ
-         0Uw4qY3U/FOcSBeMb1ofvCH37x48e9vcz6airtIQEHuvqQpLxCJb8eSvP44VLffXV9jT
-         oIvg==
+        d=spotify.com; s=google; t=1783345507; x=1783950307; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2iN2UzRA3qXtqLCt6jMDsERhWopumNh2NvSFf8EwEMw=;
+        b=c+X02hmF+DaNrUbI+gfMEiT8Fs/oII1x8nXe6schzdN/4uaHKGXxIjGh/Sc/qomv9f
+         jftBO6ESGnsZFe1sMrGpsL0oMyWYXHox8Bs5pd7WKltX4aoKnfjCdaIGLnTMPKexY2M0
+         LD+elnxxbIVD1SL+F/2D4Qk/wuAgDEN1A5tuY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783345215; x=1783950015;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1783345507; x=1783950307;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Nc5gb7we6fbCx+nAKmBppxSGApkzstOQaTzQeOLAQ40=;
-        b=oNnZS4WtEFRjDsgfds8wLvJrEsRbK5u0pZfyDGJaAcVFqJNV889iGyqVltn3Zq2bqV
-         1BsPsEMZeI/I/sm06rMNch2KNqHM/rsMvS0mBPxhz2i9REsaZvlAOnd4ebk1Xba7p5RN
-         T09ifppSFuayP1oNr9IPDQo4P7N3t9dolSUsPLpbnLcTiOI3yRdqRAMSWbaoc1TFKx8P
-         2c9s4RPEEM2B+h5gW9d7WT8EV9v3TfShtupWMnkcJ3sf12iTbYIOLfzSilccio7sUu9Z
-         N8u/HYYlahu6xtsp8LuLRkGuYlFY8hjGJ/zkvz58GacgkHxiI2D6geZgpOnAwSlOA7Tq
-         wQ3g==
-X-Gm-Message-State: AOJu0Yz/LjCFpKXdaVgFaPlFlH3P8Q4yKOjfHVEDP0xeUQbnwkoRy1nY
-	40d/2YK0UwZXO2cUnrgUwDFsBQpzSnYyfn0N5n83sLfv6XFhnZE6eFZz
-X-Gm-Gg: AfdE7cn0/PYAp0cfSqwuNLWEHULHNcBH0bK6b56oydjsCf0i78B7rYao1oDFxcRMx7E
-	Gr70D4Va7OQNARZUQgn5hgFr8cx2YkAUDxN/pZNEOWNkyBEFSkuRIWbn7bI32/6SOR/t7XHeVcE
-	L1nZBxBmsstL+z3vjQtIguTS+9GGeGuVsKoD1G0WZImFbEEMwuLnSXmq6BnOPiI0feorHPE7lcI
-	blKvNt+grUcEUw4pkW79pXdYHQitsJQODekTBiPGEABcLdhIyzRcLG0TboM5hJg1uf4FXGsOy3O
-	cRXgtRtweV4G/1fSq1BV1Ehgq0slJy7GgcQVH7DaRNl017Rf3R1bAz62+YCMtC+A5docUkb2mvL
-	PgmKBDlwmTJHJF74ojgFLa3+XGHv0+OGCEaU9up8yoaWp385mJ9Jqx7iwu/RcOmJsM73R1pQtpo
-	Cay4mYgWLd7Vvmjancq2rwqHu5psydQd3wnz+2z5PNwYDd1bMiXoi5Lxu/jUZZPNnVyY16t7YKd
-	Hlsmg==
-X-Received: by 2002:a05:600c:c16e:b0:490:bd66:e523 with SMTP id 5b1f17b1804b1-493df06e90amr5897945e9.20.1783345214894;
-        Mon, 06 Jul 2026 06:40:14 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493c63bfba1sm424848905e9.15.2026.07.06.06.40.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 06:40:14 -0700 (PDT)
-Message-ID: <5d112698-75be-4b44-a3d9-8b6ecb4924de@gmail.com>
-Date: Mon, 6 Jul 2026 14:40:07 +0100
+        bh=2iN2UzRA3qXtqLCt6jMDsERhWopumNh2NvSFf8EwEMw=;
+        b=pB0JA7ZR/i6OyrGK0npOrmyZXLh9BXAWtj53kCmAyOC4fAKotDkHNGcRrvNKOmCE1P
+         0OQXUnL+bLAhQ8xsvlxXpKVztFeEqJa1H0BquAYQuyDxpHxVS2oQZZZ8ioPC96B7WDLb
+         GNnGCfUO0oU1R8WrZmeG3q8zgOCL5GQiDy/yGzM8NAtriCAqtTO565CxRTr0fvza8fkl
+         ce+OBNbMemDoyoXBKFDgxN/4jzZr6F8mtY+gjDobcGCeUDR1CEfhNusHDsLAk9OQJERj
+         CIxXbNvnEdOYb+yVKSfiy5cKByHk0HOUcGKbAaH5fziPHRDNyR0F9ufwkCdd5YV2xNYk
+         hMrQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoVxOCUpQYgpa5EVM/AyuO5HjQyCjmAuP6y8U3p8fi6ezHn39tRToTE/z3Vug5ANMHb4rk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5D5BqlbkF704bE2GtzC92gbxOVFv/kqawFLrIorntTfoT8kor
+	hVNzRXQkz90vA7hmAOtuTRwBcaEnulzXzWoIzFY3P+Cj6PafOO1HClAgry7Zf0hm6n1T9AbNZLL
+	kviar/Z6h4/bgtgA6MlwmAFwg/dsPzy5iD0gdv7H14A==
+X-Gm-Gg: AfdE7cnhoixVsLx87bPgqpKlgtSJ1oaYkN6bSxVmaYz+Xg4mIXNyvDJ44qT/yXEBzkM
+	pNm8CoUgR4RRXrrePMHKRFdaNyFHZLriAvFAHKllFtDkOEspcExYkMGVb06dy352i7BmgZlxB+6
+	xzY2GF95GFXULQbJsRERcxIn7S50GSiiEro0jaHWmr9ZQyALpSQPF8x7QZUquP4Pn2oAcgM2U5H
+	Yz+JPedDCC69XcKDm/z/dqYzLOds/+7k1tqZJQvp0dHHWeoFtJzzwkqsLxmcc2TOzS2MJnEOw==
+X-Received: by 2002:a53:d015:0:b0:664:c429:fbf with SMTP id
+ 956f58d0204a3-6677faedb9emr551913d50.6.1783345506645; Mon, 06 Jul 2026
+ 06:45:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 08/11] sequencer: simplify pick_one_commit()
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=
- <u.kleine-koenig@baylibre.com>, Junio C Hamano <gitster@pobox.com>
-References: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com>
- <cover.1782833268.git.phillip.wood@dunelm.org.uk>
- <f51751fa3ec1545b7304b869d91d21b055218755.1782833268.git.phillip.wood@dunelm.org.uk>
- <akuMQ45aQejRcQ_Y@ugly.lan>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <akuMQ45aQejRcQ_Y@ugly.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
+ <20260704-ps-pre-commit-indent-v7-0-a94706cc8376@gmail.com>
+ <20260704-ps-pre-commit-indent-v7-2-a94706cc8376@gmail.com> <CA+J6zkQFsTA3QfU5VVjQ=KhJCg_pCrTgW9zinAUC4D9YwsyOkQ@mail.gmail.com>
+In-Reply-To: <CA+J6zkQFsTA3QfU5VVjQ=KhJCg_pCrTgW9zinAUC4D9YwsyOkQ@mail.gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 6 Jul 2026 15:44:55 +0200
+X-Gm-Features: AVVi8CdbuMoUmODgdGb7Xfl0Ge7pipkcR61Ymza2-clkkNuPxBIYPebZqB9w6Qo
+Message-ID: <CAL71e4O1tLE_VSDeeZQ_p=8kAXvk9JQ9EqdPaYMZnNs+Xj+RYA@mail.gmail.com>
+Subject: Re: [PATCH v7 2/3] graph: add a 2 commit buffer for lookahead
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org, ayu.chandekar@gmail.com, 
+	christian.couder@gmail.com, gitster@pobox.com, jltobler@gmail.com, 
+	karthik.188@gmail.com, peff@peff.net, phillip.wood@dunelm.org.uk, 
+	siddharthasthana31@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
+The hardcoded size-2 lookahead buffer was my suggestion,
+so I am responding inline with my thoughts although Pablo is
+the right person for making further changes (if any).
 
+On Mon, 6 Jul 2026, Chandra Pratap <chandrapratap3519@gmail.com> wrote:
+> Do we need to NULL out the retrieved buffer entries? If so, it is
+> worthwhile asserting that the entire buffer is NULLed out in the
+> !graph->lookahead_nr check above.
 
-On 06/07/2026 12:06, Oswald Buddenhagen wrote:
-> On Tue, Jun 30, 2026 at 04:28:58PM +0100, Phillip Wood wrote:
->> +++ b/sequencer.c
->> @@ -4981,14 +4983,13 @@ static int pick_one_commit(struct repository *r,
->>         }
->>         return error_with_patch(r, commit,
->>                     arg, item->arg_len, opts, res, !res);
->> -    }
->> -    if (is_rebase_i(opts) && !res)
->> +    } else if (!res) {
->>
-> because of this ...
-> 
->>         record_in_rewritten(&item->commit->object.oid,
->>                     peek_command(todo_list, 1));
->> -    if (res && is_fixup(item->command)) {
->> +    } else if (res && is_fixup(item->command)) {
->>
-> .. the res conditional is pointless here.
-> 
->>         return error_failed_squash(r, item->commit, opts,
->>                        item->arg_len, arg);
->> -    } else if (res && is_rebase_i(opts)) {
->> +    } else if (res) {
->>
-> and here as well.
+You're right, it's not technically needed, and there are many places
+in the repo where stale data remains in buffers, and it would be possible
+to do that here too. I don't think it matters much in practice though,
+and NULLing them out would perhaps prevent some accidental reuse on bugs
+(NULL would crash instead).
 
-I meant to add a comment about that to the commit message. I 
-deliberately left them alone so that when we convert them to use the 
-enum it is clear that these arms are handling cases with conflicts.
+As for asserting: rather than checking that empty slots are NULL
+(which just verifies our own cleanup), it might be more useful to
+assert that a slot is non-NULL when lookahead_nr says it should be
+populated, i.e. assert on read rather than on empty. But even that
+may be overkill for a 2-element internal buffer.
 
-Thanks
+> Not the best engineering practice, but I guess it is fine to constrain
+> the logic to _only_ a 2-entry buffer since that's what we'll always
+> deal with anyway.
 
-Phillip
+I did consider making it a proper ring buffer, but it felt like
+overkill (and I could not find any other existing ring buffer to
+piggy-back on in the repo), and the lookahead depth is
+structurally tied to the algorithm - we only ever need two more
+elements.
 
+It also helps that this is entirely internal to graph.c. If the
+buffer were part of a broader API, a less hardcoded approach
+would be more appropriate indeed.
+
+> We should use ARRAY_SIZE(graph->lookahead) instead of hardcoding
+> the value 2.
+
+Agreed, that is a nice improvement. What do you think Pablo?
+
+Thanks,
+Kristofer
