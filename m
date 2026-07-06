@@ -1,210 +1,186 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B973F5BE4
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 09:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783331403; cv=pass; b=p9dyAh5UrjDYvlxigF1s8fYZasi5QRuqTv80953CFdVlR3ZNjHWKPADef1bjNJcX/WB/LeH7YZ2p4Y+oFUbycpG4HQWRgHuxY+CZQSjntS56TTfTYYPjnqJrQe+9cqzKJ0jl+kO9IA93f5v64EELYuFouYvHY3ARsW+WXCip+zw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783331403; c=relaxed/simple;
-	bh=LivgLi0wUmj8Vvhpx0utCHKrvSip4schWTQKxDgZAa4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RqTPHzluTP9BGyEqGkbk38ad2fwCdC5mG5WCauqng3DIWVvQ2ZNfSAaGecadoGzMsBiRfQ/7uydRdCKBRAFoYpSF2NKbwwT3PtqMAoD0wBMCfBA6DQgRPeYhNpxEr+x+zVNjeBp5Bb7xTUCDy5BP4Pgl9yMKGLDEdK5+684Wt2w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BdGPdumo; arc=pass smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BD13F7874
+	for <git@vger.kernel.org>; Mon,  6 Jul 2026 10:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783332504; cv=none; b=thBQUKqll14gdk6jo3QMqdqfTtI6JFjTQvYvoz4u9ifIkAdChkfShzcqAVSgBNYdRJ97qOKCI4H1xI3vghtbSKdBmsSsccD6oQfIGnjSz0vuJYctFfGiwMMcInsNLiu4kV6+eDZYxpHOlECVg3RRTrvFw8pNjG36JUocBj2Mnlw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783332504; c=relaxed/simple;
+	bh=ckbg2tb6MY5eY1n2vq/A7rlTFpGesA7Atctaj/1QFaw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Xs7qYC8TZjbgZZxyHvbrqRqD1NWJ5vPOh174BoW2hYr1NM3acMAiucLxc26cd+B8EC4tWyYAv3UmKAA3TE07taXHWQMSjWdQ0ks6zeSV6A6zhnQ+vlS5SVZcb+cJlPXAbqGa2BZeFtGISLdpcW14cLbyWJ341lqYLe0MCK5l0fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hvw7Zl9M; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BdGPdumo"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-699fbcd23ccso3456747a12.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 02:49:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783331397; cv=none;
-        d=google.com; s=arc-20260327;
-        b=M7UnIjEQBeIvDHQEWAkjDrJ86RUnHdPjAh9ZweGaNcRwZgmn8ABnFlbjDQsJ9AEuuo
-         t4paw1OII2vVVEPpNDCCv6Fo4r5pfaK00VkB/P7yoah83J8xAnJfzv0RDOGNMKHhurbL
-         uIdXSUEOet11S9ROfUGwOX8A7va2zH+R6+SKVWFlI67C5EfUqE63pIvbzwJKKSABOBo5
-         faR3PJF8Y6MkoxYYwBf88xBOCiyKvbY8EcWLG0oMpVY62xUmYOZq2amvDeYvHCvqO0pb
-         YwhjgEt+FpJ6ZLe4i6YQENI0WrqpKT7a2w45erno8+7yQbf7kLj/7JPkmbDsjDuy3gxt
-         /2Ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=6WzBvGIFzObn82lXysx4G5BBtt/3RKpY+O2JrBw7r5A=;
-        fh=yV8IZXb85bzDVjuLmU51Ff1zSYMZwIrignbbvNfYfPY=;
-        b=c5XdRrm0Vo+/Athmg2c0bgVmuN/XHev6vHjtZ7q8Qg8ArizLjTWUJon4G23TtDvrma
-         ITpDb9kcfX7mpzFKl8EZ2wtTaZHg6btjKh+aaj4czV0SQwDlWJmxnddN2XN7i3ivfdFZ
-         sgoL0iellJJXcdBOJ7TBfYIt8bNt2LbGpYptj55ukM+Ju0ijTngZvkuv7t4HEKHKt8dU
-         g+YPrBJlvZc90e/Jg6NW1V+xTXD6ldKfvU61tlS0+nB80booTTpt9iNeNWTjFKm8/9mE
-         BcCZTlsAu0Gfq6yy3ZdJgGQdQzKqterx8f5s8w9SuWtXzpFmQMrWnvsJuL1DgiPzu/yp
-         oN/g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hvw7Zl9M"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-493d3135e9bso9580285e9.2
+        for <git@vger.kernel.org>; Mon, 06 Jul 2026 03:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783331397; x=1783936197; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6WzBvGIFzObn82lXysx4G5BBtt/3RKpY+O2JrBw7r5A=;
-        b=BdGPdumorZNwfxenpigGclZP4NyGPwU3ojZ9V3Id/j1jrIPcj+lJ2/CQyibGV6SmYO
-         WpuHtMZz1Hi4F5T5a2ASITSGIaT5eWCDOaiiYExL3aq7dnK2DZECRe849zPDb0EsgoQh
-         fuez4PmVBEmCoXVyErvpNNYIOeWhLYDlUKNj1F1qE/GjfmNXiF6wNDgryVyyphmUAlVk
-         4aFigZSuILgcXmqbYBhdf7BzNc4sd5CMHeC3bzEFf50IGqZBRUNyg3RjIVetuPYyfo5h
-         kZAYf1MjqxiVSXg1Hs2mu/gcQM9DQxYsxmDCH6VgrwWjrF7XLVSIte+NeYtvBQO0QGOb
-         6cOQ==
+        d=gmail.com; s=20251104; t=1783332501; x=1783937301; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4HewG7zdNlZku0pCitBj59gNpBaPhR86ZakrIEkJ3qQ=;
+        b=Hvw7Zl9MsaBQ4ahUyo4Cj5roHDXoLKamPdqPNR/cw7aiamGNvmgURhpMjvXafbZ8y3
+         cm1Vd9mA/s5hpnCO/tvzPEsW2yw46N4cr+w8RSxJ+GhDMxVVkNv29Q080WnPa/Ubh3t8
+         OmWKsqENpIjxM60qzCsHPCrnAzmW7dIFUGfQ3ivVp4rf7GlKKkO/R5RUeGnV9ERVy9G2
+         dz/ojRKqNsqWBonMIM6mE0UH5+licuANGn/hIhkFs6c1WnJeKWWMxpwF4AfC/PN07V7V
+         nEk3kg7CnyMoiAeAUOvlms88zp4eWuCYNYjinKDO8UeSNtbbTR9MqAImFE4PGkc207D3
+         jNpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783331397; x=1783936197;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6WzBvGIFzObn82lXysx4G5BBtt/3RKpY+O2JrBw7r5A=;
-        b=DoRSiMEdPu3awnaiNmJfgk1AdG6T4+B0BcUnQpJwjK7e8xW/sge68WYgDtQovyPv9t
-         Jic50ZeS7nGi51qABV2p0NJlxt0mTbtUUqUfT/KT0ppp10Ij+/mudnYhyYT78fH04xiU
-         3FRni5cBgXisv7/mnu+3YY6JTxaAlW5cZWqj9CIgF4VpHSBJ4fwzx49cT1baS4zI1wbu
-         ir4L2hTrA3d6cQP+7qLVIB0WzRvds7cVoY3TiynQ82yNBruaeWyWC+Vb5Ttdu70bWa4D
-         D493VJJfJMxJCZhcCN5qox3YW5gGEAPIqs+vUaEnNEvR5bX2x8rMkLeYe7/ouRToyE7L
-         PfVA==
-X-Gm-Message-State: AOJu0YyfLdUxVeE2xThvfLmiJKOYTM0cuu2IkCMUeA4tM65Ku2O+r2Dk
-	vSAqe6MnRs5wFO0Z4lCPkf00qur7pcdB3NXXGcyY7XbXJR/mFr2DhHNlAkSDg2PllX51nPZSwSs
-	IhU/UKbagLld3HHCUcxhTuiYfIFRqhqBXAyRuRlY=
-X-Gm-Gg: AfdE7cn/2SvH/+uRao2QV7FORzIlk/sfEkke0Dg/Mjx5bR/Cod/BCX2YKMc51sGQtRf
-	FZZeX4Z1YDKoSZ62HlVoJP0TiYj3LfmDhAO/V+j40Uf3dWQd/cQa+eNPz3PKvRL+dqgp/i7Nplv
-	Z+sgkT1kX9pKJeE6/D49FO2VjOVRmGWJNZRrgC32LGDSO+cxevNkpqiToClKUd+ILqj86DkihVf
-	5OwYvUMK7t6X66nq60xe9jjFp2Gy0zvHisI9wb2MeIUYB95/4Vvlnv4pHw5delBk7lDXabPXz3c
-	xREZrViYRYkTdktxJxSjyC4r/gIpzy9kTwxTqonmQtibqhFLQdKDgj/bUcpGgK80UVVvKNwBOIl
-	2aX+K7OraLx8=
-X-Received: by 2002:a05:6402:4444:b0:697:decc:7f9a with SMTP id
- 4fb4d7f45d1cf-69a1a26059emr3361262a12.9.1783331396969; Mon, 06 Jul 2026
- 02:49:56 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783332501; x=1783937301;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=4HewG7zdNlZku0pCitBj59gNpBaPhR86ZakrIEkJ3qQ=;
+        b=TtkI4PB7FMh+9+ypsbRFj7AJMP1JFNp03ojOv8/qC0yOuqvPM+bmA1PCUxrNUOsaT8
+         EXEMUk0aMJNUVRyMh6DoYK4jFawCAvmc8cC7Y5AeBhWup5n2XEwlARbLUfa91G+seX6i
+         30IQS5gML7tvRUlMd2Ntp5zEIfeoFdPvRopecF+QxZIZzj8nGhzYA7XH2b1iiauIhx/i
+         eTmloRqwkffgEfIoXPIjGyrx4POR/ge/gSGNya6iD5cA9+GH39Pu/G8eUCH80r+KOg+4
+         3GAEXTEKXTjdcegVVbkQkKnFpQePUfGipCCeOGwyGsbQCcATj1YjDZYVKKQ5TN2S27Yr
+         KaSg==
+X-Gm-Message-State: AOJu0Yw7N+l1/9hR+l2C/UcqHLs4Ml5GkhzL/6ptZxdNkZJan+am3EM8
+	/CusImvCwC9cykNNhW9RjRcENpyuijNkRcQ1JmVclAivDtuOD/hYdZNRo3QTFw==
+X-Gm-Gg: AfdE7cmi9tl53BiZtRdNkNay985Vtv0/geLYZZXd7bqEer9XkBBtNFkK8iNDIdEIZqg
+	aiZ9kyJr+FVKZIoCxVLS4s90taS1utT4zjz9SlwHBcdLIurnACmdxsG9W6xNW93b8gKtiiYCgKB
+	6MqZ+JZip8X0eJmutiX8jHwqEVn3uRdEbes6jfg7GyRtS3P3JRBOVavi69lRE04satPsZQM5V0M
+	A9uAIkPZR24GJ+PuiS/Y6QROBfvnqK1OQAFZJaSQ+QqatMNJ1Qa6CUGLdbzHoj2IG8+3RqM+z+O
+	bsVCEE63lhgRumVdylxumZslnMJkj/MvhnA4anP05lFwfvdyUcQ8sRhoP24z7M1qc2Z7K38Bemc
+	46cqYoO+2wo2gdTPhlg+KxlwzNUrM6nsE0mlCqBguD9gTEDSXL5FKvdAH34UYnYFUzsRHE2zfLu
+	3zyx5XzMCNp3ekk90cnA7XYrNSAx3WQH6J1/CpjlgiNxmc1MDBOvTZbXgJnD/IOFSL6x5k8Q==
+X-Received: by 2002:a05:600c:3491:b0:493:b8dd:9d68 with SMTP id 5b1f17b1804b1-493d11d7b19mr118046775e9.10.1783332500788;
+        Mon, 06 Jul 2026 03:08:20 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:33f4:2760:38a0:c4f? ([2a0a:ef40:69a:b801:33f4:2760:38a0:c4f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa0960af0sm21679666f8f.30.2026.07.06.03.08.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jul 2026 03:08:19 -0700 (PDT)
+Message-ID: <5d238e0d-18ba-429a-a9a4-a3988b00e1e1@gmail.com>
+Date: Mon, 6 Jul 2026 11:08:18 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
- <20260704-ps-pre-commit-indent-v7-0-a94706cc8376@gmail.com> <20260704-ps-pre-commit-indent-v7-2-a94706cc8376@gmail.com>
-In-Reply-To: <20260704-ps-pre-commit-indent-v7-2-a94706cc8376@gmail.com>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Mon, 6 Jul 2026 15:19:31 +0530
-X-Gm-Features: AVVi8CczGqA10sKJfiuRwwvH2NiC43Zr8uvyI6YrK2XOggJ6S5g3UPVo0C8HWfY
-Message-ID: <CA+J6zkQFsTA3QfU5VVjQ=KhJCg_pCrTgW9zinAUC4D9YwsyOkQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/3] graph: add a 2 commit buffer for lookahead
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org, ayu.chandekar@gmail.com, christian.couder@gmail.com, 
-	gitster@pobox.com, jltobler@gmail.com, karthik.188@gmail.com, 
-	krka@spotify.com, peff@peff.net, phillip.wood@dunelm.org.uk, 
-	siddharthasthana31@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rebase -i: introduce `pick -x` to add "cherry picked from
+ commit ..."
+To: Jeff King <peff@peff.net>, Trevor Gross <tg@trevorgross.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Stefan Haller <lists@haller-berlin.de>, Derrick Stolee <stolee@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20260705140931.98262-2-tg@trevorgross.com>
+ <20260706002415.GC2301945@coredump.intra.peff.net>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260706002415.GC2301945@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, 4 Jul 2026 at 14:24, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
->
-> In a subsequent commit the graph renderer needs to know if the next
-> commit is a visual root or if it is the last commit to be shown. This
-> requires peeking 2 commits ahead.
->
-> Commits are pre-fetched at get_revision_internal() where they are also
-> marked as SHOWN.
->
-> Update graph_is_interesting() so it considers commits inside the
-> lookahead as interesting as well.
+On 06/07/2026 01:24, Jeff King wrote:
+> On Sun, Jul 05, 2026 at 02:09:06PM +0000, Trevor Gross wrote:
+> 
+>> It is sometimes useful to do cherry picks via rebases when there is a
+>> sequence of picks or other git operations to combine. However, there is
+>> no interactive rebase equivalent to the cherry-pick `-x` flag, which
+>> adds a line to the commit body indicating the original commit.
+>>
+>> Using `exec git cherry-pick ... -x` does work, but is not as nice
+>> because it interrupts rebase flow; after resolving a conflict, both `git
+>> cherry-pick --continue` and `git rebase --continue` must be run.
+> 
+> To me this feels like you're approaching the problem backwards. Mostly
+> because rebase and cherry-pick are _kind of_ the same operation.
+> 
+> Usually a rebase is about rewriting the commits on a new base so that
+> you can throw away the old ones. And that's why git-rebase generally
+> rewrites the branch you're on, and replaces those old commits. So adding
+> a "cherry-picked from..." annotation doesn't make sense there; nobody
+> would have those old commits!
 
-Nit: lookahead -> lookahead buffer.
+Exactly
 
-> Helped-by: Kristofer Karlsson <krka@spotify.com>
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
->  graph.c    | 47 +++++++++++++++++++++++++++++++++++++++++++++++
->  graph.h    | 17 +++++++++++++++++
->  revision.c | 17 ++++++++++++++++-
->  3 files changed, 80 insertions(+), 1 deletion(-)
->
-> diff --git a/graph.c b/graph.c
-> index 842282685f..300ae67669 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -315,6 +315,14 @@ struct git_graph {
->          * diff_output_prefix_callback().
->          */
->         struct strbuf prefix_buf;
-> +
-> +       /*
-> +        * Lookahead buffer: up to 2 pre-fetched commits that will be shown.
-> +        * Populated by get_revision() so graph_peek_next_visible() can use
-> +        * actual walk results instead of peeking at rev_info internals.
-> +        */
-> +       struct commit *lookahead[2];
-> +       int lookahead_nr;
->  };
->
->  static inline int graph_needs_truncation(struct git_graph *graph, int lane)
-> @@ -388,6 +396,9 @@ struct git_graph *graph_init(struct rev_info *opt)
->         graph->num_columns = 0;
->         graph->num_new_columns = 0;
->         graph->mapping_size = 0;
-> +       graph->lookahead[0] = NULL;
-> +       graph->lookahead[1] = NULL;
+> And so while cherry-pick is doing roughly the same thing under the hood,
+> it has different defaults: you specify a read-only source from which to
+> pick the commits (and "-x" may or may not make sense).
+> 
+> So I can see why you might use git-rebase to do what is essentially a
+> cherry-pick, porting options from cherry-pick to rebase feels weird. Why
+> can't we fix the problems in cherry-pick that make you want to use
+> rebase instead?
 
-Style: Manually NULLing out each entry doesn't look quite right to me.
-Maybe do something like this instead?
+I think that would be a better solution. Trevor - what is missing from 
+"git cherry-pick" that means you end up using "git rebase" instead?
 
-memset(graph->lookahead, 0, sizeof(graph->lookahead));
+> So what I'm wondering specifically: have we done 99% of the work to have
+> interactive cherry-pick, and we just need to add a "-i" option to let
+> the user edit that todo file before we start executing it?
+> 
+> To be clear, I don't know the answer. It's been ages since I've looked
+> at sequencer code, so there might be more gotchas. That's just my gut
+> feeling from a high level after reading your message.
 
-Although for an array of only two elements, manually NULLing is still quite
-readable and avoids the minor function-call overhead of memset().
+I don't think it would be much work. The code that edits the todo list 
+is rebase specific because it deals with rebase.missingCommitsCheck but 
+it shouldn't be too difficult to generalize it. I do wonder though if it 
+makes sense to support all of the usual commands when cherry-picking 
+especially with `-x`. In particular I'm not sure about adding support 
+for `edit -x`, or for `pick -x` followed by `fixup` - what does the 
+trailer mean when the commit has been edited or fixed up? (though if 
+you're back-porting bug fixes I guess some degree of editing is inevitable)
 
-Feel free to ignore this if you want.
+On a slight tangent I've sometimes wanted to be able to do
 
-> +       graph->lookahead_nr = 0;
->         /*
->          * Start the column color at the maximum value, since we'll
->          * always increment it for the first commit we output.
-> @@ -456,6 +467,15 @@ static void graph_ensure_capacity(struct git_graph *graph, int num_columns)
->   */
->  static int graph_is_interesting(struct git_graph *graph, struct commit *commit)
->  {
-> +       /*
-> +        * Commits in the lookahead buffer have been pre-fetched by
-> +        * get_revision() and will be shown in the future. They already
-> +        * have the SHOWN flag set by get_revision_internal(), but the
-> +        * graph still needs to treat them as interesting parents.
-> +        */
-> +       for (int i = 0; i < graph->lookahead_nr; i++)
-> +               if (graph->lookahead[i] == commit)
-> +                       return 1;
->         /*
->          * If revs->boundary is set, commits whose children have
->          * been shown are always interesting, even if they have the
-> @@ -763,6 +783,33 @@ static int graph_needs_pre_commit_line(struct git_graph *graph)
->                graph->expansion_row < graph_num_expansion_rows(graph);
->  }
->
-> +struct commit *graph_pop_lookahead(struct git_graph *graph)
-> +{
-> +       struct commit *c;
-> +
-> +       if (!graph->lookahead_nr)
-> +               return NULL;
-> +
-> +       c = graph->lookahead[0];
-> +       graph->lookahead[0] = graph->lookahead[1];
-> +       graph->lookahead[1] = NULL;
+	git cherry-pick --exec 'make test' some commits
 
-Do we need to NULL out the retrieved buffer entries? If so, it is
-worthwhile asserting that the entire buffer is NULLed out in the
-!graph->lookahead_nr check above.
+>> To improve this, introduce `-x` to the pick, reword, and edit todo
+>> rebase commands.  This uses the same logic as cherry-pick to add a
+>> "(cherry picked from commit ...)" note to the commit body.
+> 
+> There is one thing that differs here from how cherry-pick works. Even
+> though cherry-pick is using the sequencer under the hood, it does not
+> allow individual "pick -x" commands, but instead records it as an option
+> for the whole operation. So if you add "-x" to the conflicting
+> cherry-pick above, you can see:
+> 
+>    $ cat .git/sequencer/opts
+>    [options]
+> 	record-origin = true
+> 
+> That's less flexible, since you can't have per-pick "-x" behavior. If
+> that's important to you, I think it might be reasonable to support the
+> "-x" option for those sequencer commands, and have "cherry-pick -x" just
+> add it automatically to each line (rather than record the global
+> option).
 
-> +       graph->lookahead_nr--;
-> +       return c;
-> +}
+Yes, if we're adding a per-commit flag to record the origin it would be 
+much nicer just to set that flag when we build the todo list rather than 
+having to do
 
-Not the best engineering practice, but I guess it is fine to constrain
-the logic to _only_ a 2-entry buffer since that's what we'll always
-deal with anyway.
+	if (opt->record_origin || (item->flags &  TODO_RECORD_ORIGIN))
 
-> +
-> +int graph_get_lookahead_room(struct git_graph *graph)
-> +{
-> +       return 2 - graph->lookahead_nr;
+to see whether we need to add the trailer.
 
-We should use ARRAY_SIZE(graph->lookahead) instead of hardcoding
-the value 2.
-[snip]
+>> Of note is that rebase will fastforward wherever possible, meaning the
+>> check for TODO_RECORD_ORIGIN doesn't get hit and the message will not
+>> get amended. This differs from the cherry-pick logic, which will add
+>> "cherry picked from ..." even if a rewrite isn't otherwise necessary.
+> 
+> This sounds like another case where cherry-pick and rebase have subtly
+> different behaviors, even though the core functionality is still "pick
+> these commits". So being able to stick to the cherry-pick command for
+> cherry-picking may be preferable.
+
+I think that is a consequence of the way this patch is implemented - it 
+adds the new per-commit flag but does not change the conditions for 
+preventing a fast-forward in do_pick_commit() or skip_unnecessary_picks().
+
+Thanks
+
+Phillip
+
