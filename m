@@ -1,82 +1,87 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF783385A5
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 17:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDAA3859FD
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 18:09:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783447085; cv=none; b=g/yjEeGU6t5m3wLb5nZzrTbSdXhElUwYKnQFKHGjCtMi0q4OUfbUq70+ipP/naj/kt0/U+gov1RZNnAa47Ap5e/nBdQKDWvHDFRtEkr0Nwhlss7ioziNVtlYWIGTHfqCgDb8OvpP1WdDET9MWG9DzY2jPXaZRLP3pkGHjBKysiA=
+	t=1783447771; cv=none; b=NAOqT5+5cVnOG/ZqDli267tdxb5DFd+Pds/nPE+CMJmDhjpQxbxsUTy0TomAmfsrr+UNXHxb1wbqTnjbbBI+e16p3VCJAcdtdU+CVkUqkVdG6lpsSaVs0XPt3EtE3sdbSs8GPgl70zvjDq2ZrbP5SXvW8yZLL4QNnBfVofjvFGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783447085; c=relaxed/simple;
-	bh=86cgJ0XFSw4JB+R3iif5nEF3eNyqrxQfJZ/fWZ1VYTI=;
+	s=arc-20240116; t=1783447771; c=relaxed/simple;
+	bh=1KUikAPYiwSj8V14cfpwAS3XiButSOEaifgL3HDqA3U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HLLvwZRp9rRUYKxxS5XuX9QvQuMB3GqXcUEanJlcXL2C6ZnMScimjrRm+NUG2io9ze8qlL06xkE/kaXJcPo339dZSuFbuspwTs0Ibe5qrDQeiBXpsIWWDMSdMPR8hiipnwl7fuZ4vdk63xjwf7SZsNFkbLoQ/p2dRsNHVZLGzJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XXXnCrlv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZwhqWw82; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=LA0ECmTM4/W+vrP9+BC5EQH+MH5qvKt8/3t0bPZvWqaPtAC75jjH9w4pK4rtetMdHKTSCAG6MkuBWNN0u2aG6FBm1t1DnR8hJegkfKIv0zvTXLkuR8mAdJclyyK9BSVspP0mFNjuwMVWfHjtDt9AaNPerXN1wNhNOm9QENVNuGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wetjLAoq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KCMcdJ3N; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XXXnCrlv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZwhqWw82"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 77D6D1D000CA;
-	Tue,  7 Jul 2026 13:58:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 07 Jul 2026 13:58:03 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wetjLAoq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KCMcdJ3N"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 505591400026;
+	Tue,  7 Jul 2026 14:09:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Tue, 07 Jul 2026 14:09:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783447083; x=1783533483; bh=sT4WgY82Le
-	0AZ4GKLR9b0ElbYk8oDAexLqjac6/2sVk=; b=XXXnCrlv33Z/v/zaAmzdqwJ9NF
-	pvph63mCpbZOOnLCTOyu40cKwFtrUzKhNE7WPl5uFId6UKNghVUqGuYLbWzGDZox
-	o3fDsHvsAhOwUNeo5ZuufYolpz94QoqczSeYnJUiphH1G7GQiJZsKqL4t3Zj1MwN
-	HLvvhh+iXGNqiLJOHNSpHxfGgpicgpWiM7ub94+tFC80TNBYg43kn+DESCyIx8dK
-	fuzItClvAF5cT9HjZjMW3BMJJRmjBvnL3DRsA+DjcAlQZulZYBk86AtJ9jlpLtgW
-	XKrku9iDCqBkUDDDZ8iOwYz6/IzFnplt9QsjSW7ePa6PWSy8zvN+N7qdG4Qw==
+	:subject:to:to; s=fm1; t=1783447769; x=1783534169; bh=k04lYsWA1V
+	3qiSfDmoKBl1NCLrUo8yOXqB8TATBLDfw=; b=wetjLAoqrTtNlIOei3Eli6ys5O
+	RuDxbI77/8RszD8SQHi9A9Qx/UNpg5fhgesCJpg4dGKa8EJDukAYoTc7wvS23B1s
+	sieN3X+PpAgqnHKkDvlL7kq6I/xHp9nCKUekl+eNoLnifOzb2nJ8WPJklRD8cPVa
+	NYwIF8OVUah4xxS/bYjSsz0HmRb07Qo/MnzUoarOkmRMOm3pbkLO/34erVmDjBNa
+	YR71ZiLdsiWYyv0dJApdChElgJYE2n0qpaZanFZdGz2LHWxw0XC3ZqikZeW3NX0u
+	SKivf7PZFJZaNmaBk/2Utaalo/5jXcib8NMvsP3UkKf8BOtcmBQKT0tPI82w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783447083; x=1783533483; bh=sT4WgY82Le0AZ4GKLR9b0ElbYk8oDAexLqj
-	ac6/2sVk=; b=ZwhqWw82LjWwsdHypBD77o7/+tOsORhKHheZkM0RqcYhvGh1Yrt
-	cS1mW6jI1NGdtzV697EC17nEi7eglneBz/4bFYh6CAVGqwWhxWKmDxJ1DzEdZuPg
-	oZDA6Mp5wzZVx3fRS7eCs7p8GGa82DgPWThSovTSI5/F0hdX+Ek3fBF6GNBRp6Jd
-	s/jusmrj/TORah34or9wCXCZhY+Ii57hxYggrcL2T2dnVr0ai8OdNrj5ZO7a/yuI
-	313PPiTaopFGTxRF5DL0E0p6kL7my9k1A8T2r/SXJspE8UVI3o85QWQcBIHFFilW
-	un2hAgTwlEZcSg/ngci58ZcDgk/a3mLzLwg==
-X-ME-Sender: <xms:Kz5Nalk9jX3P6zYd73lIo3bVqHxbjxWgqyzQXK2rnwAhdf1hEoi8Pw>
-    <xme:Kz5Nan3Ve3mwxCDxet9auDQst9fMnIGwiak2W9Pj_Uvzn4puv5nnFctflJeukHh4G
-    9Pf8_xB1baRYJYCUJtZp-4140qKg7QIH3Dm_KjMvYUXQJqzN_fS>
-X-ME-Received: <xmr:Kz5NagpCrp5G0HzkblKLgpnZBj-XfCQ_eVYU-Rex6sCUQl45QSh9kFmVGASWjJvlRUNaTezRz-HKOVQtkVfwLWNjTzJqQSqkkap8aT8>
-X-ME-Proxy-Cause: dmFkZTFfyBdTvY/r5TyJ9sLMkJxXwje1P9G6oXA2ztZ+QHyZ72Et7+osuVDwDvony/lXyP
-    2w1s8KUvuNTWe267KcG9AuvwzK1Cwt+8bBQJxDfFHem+Y0qLBH1H9oG3wRRhiYETj08by4
-    yrnaHCTdV9qXcqhZWzfXBFOrGX2sYxPii2lZB7XRNrpnqMrx+MJfoqehzu7xBhgKbsHrrZ
-    t4ZOWQnM0PHyqsnDJj4S6dTWLcB5b8/gW2IyLHRpvIcr3isSok0xC1NSyOj1RfpeS98dG4
-    PwDsqRuLOvpNiXUEzO1eMvuf4VReiksQTggwo0itY5dvUAh2pVlJKqr+1dhfbnYvl7pUBC
-    2TnUc2zewKWQitXOD2h0m3h/giCkcZg9/6rplonBzxDu+pAiUF2FEpPIZLUWXpOoUFkOS7
-    vLFzmbDn+7WdOcGBW6P5JqgvaDZEME6NupUPaK9pLYDmds1sl4L25CDIefqBWRpfnRqKT8
-    eVvk741NPgz7Wc1MaaJcZd4LSI9tlVZSxkWRdIN4eQkAQh29W6I5/pPtW4WlHD8aTddRzL
-    SGH0q4NbB8ilfzrw5G/FOIaatfd4t6y3mO3bhHidEyeCyYnbDrcF4ia+8R9ZGgICJHgGwI
-    mXoxWC6UiK++o9il0lh392bZ2yrsOl2s9tcUnBDbld0hgQxSs7vrDDCMqvBQ
-X-ME-Proxy: <xmx:Kz5Nakco34UUj57608olH6dRni5l4paa7veqZcdvnyOpjFaCnih6XA>
-    <xmx:Kz5Navol6d6X8Y3F07lgYfe-rW0g_ihpdDkLoTFTGMBpmZzwlpbKJg>
-    <xmx:Kz5NalEVcn463Zs0RqHUxcoY1SPEzhKS9iknTolHh_jyfn6yrn1C1g>
-    <xmx:Kz5NavvsUMJvoqDFEiVzJod4luoY3fPGjUU0VtUvaLh0oE1dCG74Ow>
-    <xmx:Kz5NasKYqmx-99y-PqJurTWI3v6Q7y-XzgikI-2mG1QBhiIwTGcTa_R9>
+	1783447769; x=1783534169; bh=k04lYsWA1V3qiSfDmoKBl1NCLrUo8yOXqB8
+	TATBLDfw=; b=KCMcdJ3NagdNp6IvyoagaORysIvo+9ru2htJf00ZJP+LJJ9f86O
+	EJpskNNdjfRJ3p4QHGwoVJa2Aih9a4wQS4fMQK+nf4tBdJ2nXDVWOXRVYWq5arlC
+	wepH0j21Pt0M9shbGoDeyeobpnPEJuHkZlkWhBZX0nA6OSWJLw71vZ8RYLGlbVja
+	BsgvFVGMsigfMWGeDSKcKOxs6P6Y/x8NG+8B2+IVzJsjWmcfoaupvUOPfL3kNwA9
+	uDwtj+HNWIGFxIo4JlVA9qJj7AsHpLhGKd1QMGoX8FkpSWLwFFbQO43n41M7/gKq
+	1pNXH0WDrKmO4HhTkv5t/rX1YuX1np7jg1g==
+X-ME-Sender: <xms:2EBNautJ72J9r8O7tXvS0MEFzIKAiaK-lmlFWAuVJJHnVK90dObcjw>
+    <xme:2EBNagCCu4KFRjpJLcRLkj65cFbyivYoap47dtvgeBvRIMZVXyaOnz4bYObIVR87r
+    NBwqLwNnKZMIY82UKXrB92urRVJDgYr8Z0HgWqB4JOMoJZttdSmTw>
+X-ME-Received: <xmr:2EBNauOSSGwVS0ggTIzIEVsNvo3YQ1ThkUD3g8QmuWaXH83aaEHuSbB0DBLP5gSD3WYMx6xumHmLRxFDtQwknt7dRc5qywMXiUiud9c>
+X-ME-Proxy-Cause: dmFkZTG2II4pcbU3Ixoj8yPWpinZR/LhFcbvloGpJT2N9skOnolWi1Vet0PGCXa4k8wNjj
+    VpzYIuZxzae/o8i6HRugYGMg9SGWS3EluX4IV2daKdecv25zXPmdiuIriORsfigkS79DJH
+    dDYWvPnXw2N6+EltiNnQxi9DiefxvJGWKCGVZmodgX9dKi473LDW9oIZkQotEdART7u5rz
+    Dv2CpQ+zymNAgZECYS4YJj9B9TOcET8mqWFF6UZkjkyKriY0DQ4ucoLy07Ab9OWtaqr8bf
+    69CkuITxhRgq6PTartR/1h5+KmRJViv6C/HjU7qqRJuXON1fE+E9raMRQupId11ieoNSkZ
+    BLbrtD7fcnfBnTVgXLxTeNLNrk+XYRof+Bgsc63Jk4+Ka191dTrkUbWknLVbSeAXw+fraf
+    +pdfupg/yiwXZxQKZLMVEBQiIUX3ousJo+g65u6r+5ENX9VifZh4J5mVczvoFlWxSs37/Q
+    ZypJhQfSSjvRTRSVQddE8mqXei/N727di74wI6Id9V1qmD+eXl6mBO4sdoP5msN+44aNKc
+    5JJ/lXhuEmXCqF7nhdz7a/X3GrX/PRpPFe9nHt7mTlBsskT2OVfLfD/qjXnXbin8DijB7r
+    smUv54bmNjWfYKMCSZ4B+AWw5/gqQhwI9vh+44IzZAHR3YQJ2/G/wn5MP06g
+X-ME-Proxy: <xmx:2EBNagB-l8Ko82-GkSd2EP-CoUGV9Hgo58_0HT2FF3VDCMR9ixyuTw>
+    <xmx:2EBNav590nmzNYuggdDuGWvmoDPECR_ln1ezdMwkpT_uZpVo6CTxJA>
+    <xmx:2EBNaq5Q_D6wRGFCf-9m2qvvIqI6B_0XYAOfnow5tnwK-cUc7avEhg>
+    <xmx:2EBNahQXE1qlIKsezNX27jsM5HsdBrHrnBg1IX-WKWA8fDnYeeE4gg>
+    <xmx:2UBNan1tbRbXR6rgZWxmMt3WsTmx-EbtRAGtbElBDnb9frW8TmTxZ2gp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 13:58:02 -0400 (EDT)
+ 7 Jul 2026 14:09:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 00/13] setup: split up repository discovery and setup
-In-Reply-To: <ak0U46-J4qmwL2FD@denethor> (Justin Tobler's message of "Tue, 7
-	Jul 2026 10:02:58 -0500")
-References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
-	<20260707-pks-setup-split-discovery-and-setup-v2-0-aab372cd227c@pks.im>
-	<ak0U46-J4qmwL2FD@denethor>
-Date: Tue, 07 Jul 2026 10:58:01 -0700
-Message-ID: <xmqqldbm4r86.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,
+  chriscool@tuxfamily.org,  eric.peijian@gmail.com,  jltobler@gmail.com,
+  karthik.188@gmail.com,  peff@peff.net,  toon@iotcl.com
+Subject: Re: [PATCH GSoC v15 02/13] git-compat-util: add `strtoumax_szt()`
+ with error handling
+In-Reply-To: <CAN5EUNTYeDrQMor29eYMhJD0jcdRQq36ZA6BgupV8gG9xs9rFQ@mail.gmail.com>
+	(Pablo Sabater's message of "Tue, 7 Jul 2026 10:50:41 +0200")
+References: <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
+	<20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
+	<20260701-ps-eric-work-rebase-v15-2-c88a43b63917@gmail.com>
+	<xmqqse62obwh.fsf@gitster.g>
+	<CAN5EUNTYeDrQMor29eYMhJD0jcdRQq36ZA6BgupV8gG9xs9rFQ@mail.gmail.com>
+Date: Tue, 07 Jul 2026 11:09:26 -0700
+Message-ID: <xmqqcxwy4qp5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,19 +91,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Justin Tobler <jltobler@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> On 26/07/07 09:21AM, Patrick Steinhardt wrote:
->> Changes in v2:
->>   - Expand commit message to talk about precedence order between
->>     the "GIT_SHALLOW_FILE" environment variable and the "--shallow-file"
->>     command line switch.
->>   - Remove a now-unused parameter in `set_alternate_shallow_file()`.
->>   - Fix a typo.
->>   - Link to v1: https://patch.msgid.link/20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im
+>> If you are trying to more explicitly insist that s[] has only
+>> digits, which may not be a bad idea, as that is what we generally
+>> expect, then
+>>
+>>         if (!s[0] || s[strspn(s, "0123456789")])
+>>                 return -1;
+>>
+>> perhaps.
 >
-> The changes in this version look good to me. Thanks.
+> I like the idea of only digits but, even though in this series I only
+> use this function in base 10, I want the function to work in other
+> bases, that's why I left the base in the function signature instead of
+> hardcoding it. strspn(s, "0123456789") rejects bases >10  ("ff" for
+> base 16) while strtoumax does support higher ones.
+> I think that it would be better to explicitly reject what we don't
+> want similarly to "-":
 
-Thanks, both.  These indeed look good.
+Let's step back a bit and think.
 
-Will replace.
+Where do we plan to use this function?  Remember that being a
+superset is not always necessarily good for a helper function that
+serves as a format checker.
+
+In the output of "git diff master...ps/cat-file-remote-object-info",
+there is only one caller, which is fetch_object_info().  It reads
+into object_info_data[].sizep.  Do we expect to express the object
+size in anything but an unsigned decimal integer?  Remember that it
+is better to be unambiguous when designing a protocol.  We do not
+want a third-party reimplementation of whatever is talking to
+fetch_object_info() to send object size in hex ;-).
+
+It may also be usable to parse the size of the object payload in
+object-file.c::parse_loose_header() but notice that it is already
+even stricter not to use strto<anything> system function and instead
+handcrafts the trivial number parsing.  This would avoid system
+dependent funnyness, which is a good thing.
+
+> if (!*s || isspace((unsigned char)*s) || *s == '-' || *s == '+')
+>         return -1;
+>
+> About that, strtoumax works fine with "+" and ignores starting
+> whitespaces, but for consistency (we reject "-" and whitespaces
+> between or at the end) rejecting whitespaces and +/- will be better
+> and make the caller format it correctly.
+>
+> I'll do that for the next version.
