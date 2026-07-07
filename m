@@ -1,114 +1,105 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8407D43B6D6
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 17:47:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783446464; cv=none; b=tW9p+MU1msqUuruzvClImAcY/U6qa1T9u+pt27+VIazPAreQ+OzUlz+HARqEnC01yONkwm2HlJ60iNoKcFmEthWPfrl3LQReJWdqfQ8CJgG2DUHlEuSEWI6/6ezzeT0aCkJI/Q2XDeYESxn+/D5XgU1j9syNAMheoZxZAX6V0Os=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783446464; c=relaxed/simple;
-	bh=ucd9NByU+joXSgs6kbSHEDBEPSPTINPGOV6AXrDzMHU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZdwQsFyOUGuDJBi7HwLqFKNC+apjVfsBg3w64IOJBxNslVvHtrAqfqrFM4HZbijJdSin4TRyzA9hn6m6V64wSdKugrJckSh2CaZgx+C72kWj7xpV0LF3CO5LUh1B+R516vqJrLbBUfZc7elfPI2W1CC97sLSObeEBrI2lICafpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vpmvsf/t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QXP2FkgE; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401A53570AD
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 17:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783446869; cv=pass; b=draV6QklIMamvRQKxm8Af50CFG3OU6jxpsjJ23NBQmdWM5CLJoYA8mmYwkRHnyp92iJj59ud+i7gcMkoqZzNh/yc0CqjQyHuT6VmHVbxdI0yH5JRIPp2zzxjdLqX5OnYekucNLnvWTbt6Zm5vzgKKju3qfGqsKFSVKnw6Oy9SN0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783446869; c=relaxed/simple;
+	bh=8SJH4nb+O5wuPt/16M9JySuQ4JIKiAEUCn73/uDDg/c=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=OHmGt9qTqzZcXlHvNVQQ7RSDe9DUFkQI9CQc3p/Bd3+1eWnP6Y4AS3sapQLyzhuFrN3X48jR4LTuQNz37LW7WBL4vDSIp+y97SOEQNf63CowaV0N7OUdBKiUfC8U+OFIeGJaDA3G1J9ajnFAyXW0YSLP3Nj77cIntAP5s2c9GOc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4gURqLC; arc=pass smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vpmvsf/t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QXP2FkgE"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id D17A31D000C7;
-	Tue,  7 Jul 2026 13:47:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 07 Jul 2026 13:47:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1783446461; x=1783532861; bh=2zmCes7NT7iy+ptPBIVguLYqD5VkzWgs
-	2x1B/dNX+1c=; b=Vpmvsf/tayFOggK5Eh1NkxRylWfOhrt1oJ6Rp8CB17vAYLM7
-	I9wWBF3tzlob+OcAtlSOj4RWFWIFU5vh0cwOgmfQCkb+SDpZuEyPbehqnprc1jPf
-	r/wQWflTE8FEo4zHKioYbS79CmhDI7kZ9xzeXOfcG1TzxjfCdM3EZN5t54WxNXRe
-	vk5ZO14gVzAPVP3McR1jCE4kIKQ8K8ylhfD1otr0FrYTd8/ZLSR0HB9tz37eGl5n
-	ALVhM7abpHPWhrGQeuwbXQr7jBf7yKPyHfiubxOaW2Y8zH3VNm4PlzQyhCtPoPWv
-	7QHpPecM7uizZHyhN/DLYCSNegyiLXwYFDOWWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783446461; x=
-	1783532861; bh=2zmCes7NT7iy+ptPBIVguLYqD5VkzWgs2x1B/dNX+1c=; b=Q
-	XP2FkgE6rrlWGcDaXSzO5vaUJ6PzsEzGDoqVRI8LB/dXAVp1BhvC+7p/ckLNF1BN
-	Ky5+iagvte/BgVMi0jbx0V+cqpvKN6t11KgmvYApcWzBE6MgnmxPMXZ/4J529/f+
-	qkU+7mW5p8F/1007NNd/HMKChtQW+edWcA1m+aPI+tkKUAigKZT3/xSa+wK8CAM7
-	Y7z3YT6PhlRGMlw/xEQD5GxLyg3ysCdBcq6tRnZVLQoWqGfS33bm72IlMzQVODP4
-	KHfBGQPUrisoZbqqL0N/gbDsYAoPVDx5S7WhmiwVqMBY7sI+Fy2UBh4UG1mHJNtR
-	dRUnrnlgXUcrXO4X3KvHw==
-X-ME-Sender: <xms:vTtNagcxYxW7MeFQSL7aTIzKmTsplap5RzTU0cPwyyFGsU5bcVZwHw>
-    <xme:vTtNaoPJT1aaV3idsry-rO1AwX2BR22lr54RQp55UX7dVyrMn-AxbjMBw7yssQxT9
-    JOziMU1IMXH0BCocHzvhHDnjkiVGpEvIJjRydpDaKJZAKvnmx92xQ>
-X-ME-Received: <xmr:vTtNavJ0EQKIzH12zGIN4rjYF79zLoLDVoR5nfRKq6a-5-TxmWa7NWal4q_OJho2Nu61VyZhCFL8jP9_L49xZ4sVCgKeRE6ExxFeVnI>
-X-ME-Proxy-Cause: dmFkZTGTBMj8jxZ921gppxa75hTd5trbeQUdpkThFTDPGzR9t4hyhhaRt+rWXNvvxmc2dG
-    Ww7t7pu0uX/LtDMCSJX1aE0ba/xh9kxQdbiycNvSr+fw3mXMFsTkq8OFFMH3AfrRLabYEA
-    bki0prpC22JUBKw4M/wnk9/jYqwi+WwQpjIVdVWnEp7rBqc2riA43lrxE/QcTnrPzjc71/
-    CPMGDA1YT4shwkiXf23mIEjBcvX+SkJOCFhuJR/b2Fc0J5urcxoETKON8L9UXSUDSb5fET
-    Nj3HTSeHwW7lGeVFgrDR0pv01618BohzxPzR1kKKo6Iwd0hK4i2Xjb1ctImuclHRQJYWHf
-    Vg3xBudYzhPB/lpnregUDf9swRZyreLY+8guYNRNSBobH8PVTVaVOqO9NMRF09MUi6vXHl
-    lW1CMjYliFCQaBt6F5YvHtcpZVV6ZCIL1pPvrfIhYhFO6WJcrk0Vk/CjNrxTpLwakIPCSC
-    GJ31ZYEn+cWENhhQGJyF1aHqu/ULiq3uAQbKy+BnFjr7MTM70z0UZur9LYsxVfTAc9b+cw
-    ikNDkIVMKGoxTB7yD9uhKuP+D/CYJ9lBoQkdYYtKb/nCyQ182I3Hl82c0P5nnO+lhA3GUt
-    l8jFEo+4aMje3sUpNajv+IMO6QIhWd8TO9yYnZw8JDR78gkyxnDBI2qyGZiw
-X-ME-Proxy: <xmx:vTtNahGAcmPXPO0f1hGJRTkyw_0V3DlJ9X1M9KLi8TY-feXOaQeMVQ>
-    <xmx:vTtNavRKQu7VzpOUlzNXK_4vdIaYF_hZMxW1eRVgvlGJZ1BtPrNjpA>
-    <xmx:vTtNalENGVBao9AvBpAdTN3MeTkipx4lr3nS6TeXgRb-UqUCTqy2tA>
-    <xmx:vTtNaj8k4vwQLImsG3DFLeIujUHVO17cPk9sFd9tYwbWV5sicUWVoA>
-    <xmx:vTtNar1OoBZlX3ex4q4UtHCt8dXK_G6_kFsn2MSS1Q35N742En6eUPfX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 13:47:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] Rust: fix description in Release Notes to 2.55
-Date: Tue, 07 Jul 2026 10:47:39 -0700
-Message-ID: <xmqqpl0y4rpg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4gURqLC"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-44ae14b4fd6so1853272fac.2
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 10:54:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783446867; cv=none;
+        d=google.com; s=arc-20260327;
+        b=iya+smlMQd2FZ9mUWkUL1PYEvTth1ZaWvfSt2Adn4srFmMNo4kx7FN3LXBk82gwqyB
+         4Bobgt5aT6YcwAHFsiyBNqU5rDnB8PfY0TnCwMa/Xn+8skStwt1+imJe9tvdjimiEj9N
+         FaX5gOAtZUFDF/g4apOouHedeQ7vC1Pg8yq5KVN2wPZIVHBY0WOyE5PfGg3yB5Tcv92x
+         br/ihzV2MhL2bi/0Xc/fnfn/hnoYzIgIdjBUlkvg3p7E21Q66WshLtrEDEXR5w5LVG/V
+         D5c866RVf5rtK0CuvgQpM78lwmcr0K42IvRoDaiCELl9p+7dv75YVOA+Po8kGZlAA4re
+         LbTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=dyQVYHgSnZnnM4LybV2zMqIAk8TdSSEIGCXnLMnx23E=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=VYtE+ttVir+9SDx/ojAVkJEToUYVNZtoXsQPNX5Yzc+M5u8gW0EmUPrWqap5Zo3SHF
+         gDWNjnk9yMMH5z27xJijYoprNvkWySofRd/bErMZcO7OSn2LGXULKKHNfWmcAeiIu/27
+         aKVlvLo+6UULpxup5xEmssLxObj5pA+R9fB9ls+dqlqX4285DlZrwW8L78zWZEnA/fi+
+         MqEV6wi4CyiLEo6u2drq8R1ZmuzaVMGB0PcDW5kvnvmNqZU4QHMtzIwKN37Kc9umyhDi
+         wGiE06qohRr5dL20Bf4ju2ahy3WnCx8NheSXhjJVbflSxI6ihweQPbi+YvDAUesHHvP0
+         Ewbw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783446867; x=1784051667; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dyQVYHgSnZnnM4LybV2zMqIAk8TdSSEIGCXnLMnx23E=;
+        b=l4gURqLCJBQ5JKdD3rzBnIGi/O9IZdhDfJui2ba9RwZ1Nne2FzNUh9ZCg8Gt/EbY1p
+         fbZsVXamzZ9w+tIxCRcAI/DC5uUJgIL+9gQkwDSPOYRoMknUPx3oymGyUmTE6PuytuaO
+         W/s4t76yxTU/wElmxYqfP/558ICBwTY2gZp7fmEZMnhkiSURLOA5nRawcYxErrjK+NCz
+         loDdPucGZWqN/6ycgYjs8EN+8RpE73JY78urCJaHdT4mQV6cxVTjw4j8y+jCsDz5hbUG
+         pVKevwXSq/16UyhXWLoZpKr+mKurVm0GwkQhoCRPawCld1YYqh161JiG5a4oRCEqV03p
+         u1sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783446867; x=1784051667;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dyQVYHgSnZnnM4LybV2zMqIAk8TdSSEIGCXnLMnx23E=;
+        b=XjtNKc/znH6J/LLzl991sL7Qm53q8Y2E3ZMuH2vBtUl6FzNi7spLq7s6gk9Xm7PVK/
+         6IXMZ8Ec3XXkj5Y3na/7a7Y/P2Li87j8292k6psbNmZegtsgP93H0t6AdBWJauKB6Iau
+         S3f3F/0y8bYmoXiTP30hChy/iKs8Y/j8MQkdflgrjPun8/yDsGY9p4pwOyKB8Cp7JqZg
+         lyeEBEnMFu8fRvlPnnsN7HJrkTzOaHT2TYtID6kEdr41CRXdX7po2RI1nvpzXYgZLauV
+         LOcgW0rLbxn7B6b1z1Cc6b1ALVMevybDL2686BtIJtXJWmPFbZmAnEsbqjITz+lYxaVe
+         u18g==
+X-Gm-Message-State: AOJu0Yxj8zrvqKXZVwG7ObMWugRvOw1xHJ7bWk706qXKdqJLZwM/rxnm
+	5CKcJLlfGWKs0NtWAIUJiEDE0mcZnzcSsL4/VAGSmRNJ2LDCxR1Y9oteOYD4gvTbR//y3Ier6eN
+	BwuwSzsR4xY827EDl+3TuQdQElGEwsZbly1pJ
+X-Gm-Gg: AfdE7cl8LG1n42Ahqes3auSBrYJkNM2hkfziH/Ss2Utimhz/r+na6bKKOLKElTBi4LD
+	2eBgbyPNnT6Mx/igPf+1DoOTZDCH8//MoEQik/cb6KfEwxzu/u9y5x8SHEwHSLzQayn10Z7tIF+
+	A/CgvBd409e9PYaCI/GrNIdof/iGG65B3HOdGjJdbnSKQxEU4gerJB6V5xLMtlKtPjz5Bnf/U1m
+	xanij7HoZ30nq+IdZE/LKUekdnieOQI34wN7e/I0+WgLGnyoWa8ywI6yl/Q5ouHceLFL13Qp/tz
+	M24oTjNIwfOX4f9PnWK4M7K2x4uhI6Of1eezzsAY3eSECRDK1C4y+Yqr/pGjadT1aYwnyQiEz8W
+	pbjOyH0riLF7L/w4=
+X-Received: by 2002:a05:6870:9a1d:b0:44c:fb6c:4fe0 with SMTP id
+ 586e51a60fabf-451065bcce2mr4023817fac.21.1783446867190; Tue, 07 Jul 2026
+ 10:54:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Tue, 7 Jul 2026 10:54:15 -0700
+X-Gm-Features: AVVi8CeSf311VtrM5MaZyD7brT9NvbnCMNeKH2i6DYh_M9YTQtqly2tVbvNvzWU
+Message-ID: <CAC2QwmJwYqaJioPJ9a3_CY0vMp=wN1E90eq2VeExFkezHh97iA@mail.gmail.com>
+Subject: Re: [PATCH] Rust: fix description in Release Notes to 2.55
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Finish incomplete sentence to say that we
+Junio C Hamano <gitster@pobox.com> writes:
 
- - build Git 2.55 by default with Rust,
- - but you can opt out and build 2.55 without Rust,
- - but Rust will become mandatory in Git 3.0 and later.
+> diff --git a/Documentation/RelNotes/2.55.0.adoc b/Documentation/RelNotes/2.55.0.adoc
+> index f5643534dc..e7e77a8112 100644
+> --- a/Documentation/RelNotes/2.55.0.adoc
+> +++ b/Documentation/RelNotes/2.55.0.adoc
+> @@ -85,8 +85,8 @@ Performance, Internal Implementation, Development Support etc.
+> * Promisor remote handling has been refactored and fixed in
+>    preparation for auto-configuration of advertised remotes.
+>
+> - * Rust support is enabled by default (but still allows opting out) in
+> -   some future version of Git.
+> + * Rust support is enabled by default (but still allows opting out);
+> +   in Git version 3.0, Rust will become mandatory.
+>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * I usually do not bother with updating "historical" documents, but
-   this one seems to have already caused a confusion, so...
-
- Documentation/RelNotes/2.55.0.adoc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/RelNotes/2.55.0.adoc b/Documentation/RelNotes/2.55.0.adoc
-index f5643534dc..e7e77a8112 100644
---- a/Documentation/RelNotes/2.55.0.adoc
-+++ b/Documentation/RelNotes/2.55.0.adoc
-@@ -85,8 +85,8 @@ Performance, Internal Implementation, Development Support etc.
-  * Promisor remote handling has been refactored and fixed in
-    preparation for auto-configuration of advertised remotes.
- 
-- * Rust support is enabled by default (but still allows opting out) in
--   some future version of Git.
-+ * Rust support is enabled by default (but still allows opting out);
-+   in Git version 3.0, Rust will become mandatory.
- 
-  * Preparation of the xdiff/ codebase to work with Rust.
- 
--- 
-2.55.0-270-g106a830b98
-
+LGTM.
