@@ -1,137 +1,153 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from GVAP278CU002.outbound.protection.outlook.com (mail-switzerlandwestazon11020106.outbound.protection.outlook.com [52.101.188.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455D83FBB50
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 11:55:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783425354; cv=none; b=uTwnRO3qYVfR509W83TxAd/q3RJmXNStZgPFLlxoUcFGLvXYIQSzrkYdE+w1DHxs6YcbeBpw2XOT+OI4qTnwuolq4rCz4GMDsroyEDGjasFRSo3vghwiR1MLaWCaBJL3w0yp5i4+vGSGIrlVJWjJkJKmkk6TsuNwl2/M1THLEY4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783425354; c=relaxed/simple;
-	bh=x82Q9KuLLJHu/h9RHp8KgD+6NWAYPpxa3OU3xwoH2nc=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=WuvyoN+wJorx8XC9PDFluqD8uMu4hxlkAubATqlrvhp4vvv2TZZctwM3EDT8LeIHzvN4W30SEzJ9rEwrp6yQUJwN4OjaxeZB1II8ncJ1v+RtyZk8VhywNaObybGHrYclP4l9lk3NHxW3Y0K/sT6yVu1WfLHgCNH67EXE7rfdkts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=fKu+ddwH; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BF2414DCD
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 13:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.188.106
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783430745; cv=fail; b=kZwQBYjhjlWTTn3DwOSBFHRLv7U0sSoHFz8aengZFA3jvKpZJm82UenhNEm9lSFre/V3GFJyoBaCk7cnHWKJW8hnVz0WfMhKSmy1fKPRrvne8o2LPbrhzLkJ550kAzNUzVzrv8kxYuf3SEYawTmEfseHQw4EAKmRPShscrS9bOk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783430745; c=relaxed/simple;
+	bh=q0Bp2jPx2pb9r5NEkpsmZdxOdNQS5l6Ezp8omZrDObg=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=TQtUe9NqKqvZc8euHKz8WLPUHVx4rvELPbVSHFf70IvpyBPOizjj/9AHCN0x/3SiHglcg/6hEdX1nHwNLB6fymkNSe5rn0Ev9Jjun3LuhJedWWApmwbW8dLa28yRCsZw7L1awIbbQAkXKaafDwKRj/rRw8W7uBTEWitoQKZxxv8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qualitasag.ch; spf=pass smtp.mailfrom=qualitasag.ch; dkim=pass (2048-bit key) header.d=qualitasag.ch header.i=@qualitasag.ch header.b=cP1mgv9p; arc=fail smtp.client-ip=52.101.188.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qualitasag.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualitasag.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="fKu+ddwH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1783425349; x=1784030149;
-	i=johannes.schindelin@gmx.de;
-	bh=+Ibw+frDzMpeDAecUiR6fSJnajwu/TBUVrcYlx52PXQ=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=fKu+ddwHNf8MAegGdQ2A1FNwr8/TZ0nNeteQWtOa91/sWuStjL/v9k12pAYb1c2a
-	 8ZgrRcVPIqUh397hU5F2wOIWb0uh/tpb1qjK9H2csKVObGxUiGFlOqsORtbJfavLe
-	 rpTCE5Fu54wC2EVn4HsmtjMZz1YtcSp1brEp78ZV9M1UTZbqBZUctq80K476G/8jK
-	 36d8RjIHWxyghCK6Zga7puOeYjoz8ObdG0HYWqaeysxbTFbx/zoqoeBndTYSdqnMY
-	 Y3dE3Xe1HVxpnyfxM/+8Wjunx85v1fKGGSD0J4gnbbnaCMrwlzHzLs57i71cxuDuC
-	 TbCmRhjpuHzrsY/O6Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6UZv-1wjYJY2pDt-00AZJY; Tue, 07
- Jul 2026 13:55:49 +0200
-Date: Tue, 7 Jul 2026 13:55:49 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Berner Martin <martin.berner@qualitasag.ch>
-cc: "'git@vger.kernel.org'" <git@vger.kernel.org>
-Subject: Re: CVE-2026-55200 libssh2
-In-Reply-To: <ZR5P278MB19814B2CA717210492C13A73F0F02@ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM>
-Message-ID: <26531fd0-4a21-c8ef-84a9-25c871cde303@gmx.de>
-References: <ZR5P278MB19814B2CA717210492C13A73F0F02@ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=qualitasag.ch header.i=@qualitasag.ch header.b="cP1mgv9p"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HsJuhQRHuteetGoIlSLMJSnhtSeGMk2RrJzJG6w47qnT8DZuio5PDOBS25w9t0WlQ+jRXiupcsXcVTASlEApTW9DIktvDmqZ7COFyAhEnvEgz18dibFT1jn5WQuDPL2wJwK9T9zv+q5LLyA83y2MEqAN7pxaqJ7UttQx2nNjCqqG1oD9A1gWJInAR/JaojKxjBDaFb0L8JUFexWhBYfBHzpPbKb9Hhk3wEjbxAu9rOw/HvQTiJtjwzwTJME7i3DbdghkVQLjPc/H+B1vgjrkaoJQwgg0uNoYwjTARNwcz4vmYAvxcdlKq0++85barH5PIREaV7axk0816Uv2QiLn3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oQmcjk71/ojCbnu9BWnyz1RTMbm+HeIjxvSljHLDYuo=;
+ b=n6mVYaFGT9PBgrfBpP2DDBcQ2pEs3Hxix0mnLPaA5YPi/ATxlSue91em2NtFIo/vpt2I+zmiFXGOH+pz4VFVU0QgUYZcxO8D28niT4srZBGDBhqJLJzCcYqXRvoG8kXIhL6qP3r1Q/7ZBQzLVBccLYBJPHaCebyjCwSYH2e1i4blTFtC08SbELVdB0LYwyQy/ir3YlXebCQoqnzrUaHdAsME2z0CNqiQdTNWKbM3GgRfHZUn4l7WZrw30751+t9QiUlr6i8HMV1HP/Cvi/N62SWfp6QLnlnTHG4DMh26vyLQ1DvKh/9VT20fycVChvAEUjQwdJLaQEVRMUl9u3N66Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qualitasag.ch; dmarc=pass action=none
+ header.from=qualitasag.ch; dkim=pass header.d=qualitasag.ch; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualitasag.ch;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oQmcjk71/ojCbnu9BWnyz1RTMbm+HeIjxvSljHLDYuo=;
+ b=cP1mgv9pQsP7dAHSM7kJmuVQjM1gnbypOjpMMi6TYQcjfH21zYZzeX8zZN+E5ddUud3uUKwNwR34sf/mZ+xSBSyqLSoeeQIN/DOezwMvdLebdCgWQmcwxzPVXOaGrwDkFqXXLKsu0l04SySmOjbfCam4FAtBOSVJMpSI8JYoTP3afM2Jse10dtxTqp/c4CAJzEUEyX6fEhnxb8OthnplfIwkqx+zkx/zeoDnqLqh2/F+YrZmFI6P+CXEVZeQg9nzqExHxBPS4no4vENpbg6sebKv3GEkblLyXTXUJ9FyeeqsSx7LCwVGmPGsyP3HT3a4MJ0MB0A/czui6+kAIwOvEg==
+Received: from ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:ae::14)
+ by ZR1P278MB1233.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:6b::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Tue, 7 Jul
+ 2026 13:25:38 +0000
+Received: from ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::8a07:bcc9:d6bf:cd99]) by ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::8a07:bcc9:d6bf:cd99%4]) with mapi id 15.21.0181.009; Tue, 7 Jul 2026
+ 13:25:38 +0000
+From: Berner Martin <martin.berner@qualitasag.ch>
+To: 'Johannes Schindelin' <Johannes.Schindelin@gmx.de>
+CC: "'git@vger.kernel.org'" <git@vger.kernel.org>
+Subject: AW: CVE-2026-55200 libssh2
+Thread-Topic: CVE-2026-55200 libssh2
+Thread-Index: Ad0N6/53o/EQsu93S4KT/Zd4eDBGtAAG47iAAALDtbA=
+Date: Tue, 7 Jul 2026 13:25:38 +0000
+Message-ID:
+ <ZR5P278MB19812C0AE7089DB237227299F0F02@ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM>
+References:
+ <ZR5P278MB19814B2CA717210492C13A73F0F02@ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM>
+ <26531fd0-4a21-c8ef-84a9-25c871cde303@gmx.de>
+In-Reply-To: <26531fd0-4a21-c8ef-84a9-25c871cde303@gmx.de>
+Accept-Language: de-DE, de-CH, en-US
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=qualitasag.ch;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: ZR5P278MB1981:EE_|ZR1P278MB1233:EE_
+x-ms-office365-filtering-correlation-id: 667f319b-5eb5-4b8c-f8d9-08dedc2b3c31
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|18002099003|22082099003|38070700021|56012099006|11063799006|4143699003;
+x-microsoft-antispam-message-info:
+ zKuKvuhUkbfIy9pc3T0ST7Jn/wS6d9pQyUppu3x9wZjGMl6HPjTyUrwYi2NdLTttsDg6ndJkPRQbtWafFe6IEcmsPKFULBvPwcGy1DvWhQxEJrK0plKV9uCRvGnljFRgpjRuhHB4t6tJruzNz2Ylx/QnlSFIVZ05Z3Vpq1JznoUudPlN8YkcczdgUSz4HHjpIYHdFNzfEnDQPIGWxXKXGdxLgGgkILQXM+Vew6RMo5nD6Mj6Kbg2PadIZqNPvpd2XWEy0krJo7vShvs5sc2espyupC97QBUcTi2azVfRXAJUAHjfDltijb+83p4yb78bOiO7cJR7Fb3k26Q+BL2tl4+4nzNwoSOyPJSdBtgzGqtJ1FnpIqnHEN7vTFsSkEBTb6AhhXiHHdK+d6Fr2WGYIHXsNUR2nvjXgD2iYzGApAKmakV6It55YkYW6WzdoGHz77M8cM0ZjJT37fU9/Py2HK/5jgNwojJKovrVWmX0flLKeSgM/sF276T6aegSoYt2su1VYBa/OTBfb+ktL9wfxRVMR0+6eZWfqlhCX5WzmMp7xISxVk4yxvqpS+wY2cAwKhrNG/4CYCLFMQGo7FIOyZw5ztTfaQWArSVcP0CMOddmH1Nj1Edd03UIfW4Jit7tElxN5u0Hy+QVIDq9w7WZwCv7QeKIn+oCfDUcRx+mF4Q=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(18002099003)(22082099003)(38070700021)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?MlWcVuThZOdJatBxobFzCaGDTm+p9zZgMQy2Yckw2pIJIACBn32S8+1gWF?=
+ =?iso-8859-1?Q?9aTegb90gDzFivdXwcIrnIsnuO3c/BZ0bUAe38Jm5EyHNrzCnjmmfW+RrW?=
+ =?iso-8859-1?Q?lF1wJSsFMI+tE+QH30FDMrEnG80vJ7V3QkFVP9KTdkxsYJ4EtTPeZ2O4d4?=
+ =?iso-8859-1?Q?gc8v7fdRRJFv6w/vHNoF+V5N1EEJUuylDhHDUwi6gdSchyoO3AkR5/p1QL?=
+ =?iso-8859-1?Q?Iga4jHYBfIC6pBNG3bu0RsMUGaN6SvBSoWri3CBEpZgUS3DE4VJ/863ioI?=
+ =?iso-8859-1?Q?De6I3vpPUe/jr4mTu+s5XmP4jqS5xnOLnaI+vTGmju0WaUSabJV04xlSHE?=
+ =?iso-8859-1?Q?7J3oNAfQ/EKZTI0ykyy1ziIxvjWRFPLurjd85COT4sK0x+8/b1+pkUA9vX?=
+ =?iso-8859-1?Q?WRphI/yMHScbmKJMvjmSZpjSoqJTDjzRZwZS6zGwjMQsgGwbtPQbQQNzuH?=
+ =?iso-8859-1?Q?Bk/Yg58b4QWzdAnx+Ry0borHoMYFgfwF89du/yXVt8DyFdT8tMl+lDTfx0?=
+ =?iso-8859-1?Q?U5ob6XKs6gMEavSV4EeJo/vqBO6D4qwz70kW78DdQhAaaEL/Y/OKOO/c+0?=
+ =?iso-8859-1?Q?pqTcLaYSvBm2BfDG+9NPw1ywEECPRuRRNR7wypL1pb2TcwZbmzLjOZeDM8?=
+ =?iso-8859-1?Q?Xdnyr1HZaEvVdO/rMdsXDdaNPsEBNndzk6PN8HkwP1gopDNkCEbYL/AQsZ?=
+ =?iso-8859-1?Q?7qxurgZndZHRp/isLHepexgo+r9/1IWkn7vz5E3syaEzgNGx/dr2UcqDg+?=
+ =?iso-8859-1?Q?Zf9MNUHqEfvAvBAUTQlSs5D6gzHqP01b/okP/zBfuJhwhM72ESJsNjomp4?=
+ =?iso-8859-1?Q?RqwSPqdFRG0RvO5CbRVpQ9xs2K29spAplLm2xoiOxQBVqCQWuGVLC4hyc5?=
+ =?iso-8859-1?Q?cFKO3PWlNuukDM1nQxKvBIiwnQfQ/cic0QYLRE13euIa4LyyvoiqJeWQx4?=
+ =?iso-8859-1?Q?4SHdm0nVSjdjWb5hzdW7NpbkfpEqObqr0nBRe1IaE4BPw4KOGhjScAlORZ?=
+ =?iso-8859-1?Q?sHjJwLPj44SLUAcqPceD9wgVBK44OXSYtywuu9Bp/KJ5IaZl87g5a+zPrw?=
+ =?iso-8859-1?Q?GIelszPKaZec9w845GfAyiy0KOu8D2P0UjkjhCgcULJmdEhHgwnArc8HTi?=
+ =?iso-8859-1?Q?01mPJ+NxTrKXOkLBUNmqP/Or2B3/kE42PiuQtWYZNB7NTwvmlWGIYtRy7h?=
+ =?iso-8859-1?Q?AO4/cnDH7+r6/h2O3BpmDuvFPc/6TMNyPOLzWJkIW3/MNvTBUL5zar0yFZ?=
+ =?iso-8859-1?Q?OG+vIrzcrR0vYv9KoXMNeG1/sFnwLcbEjbLQm6cv8VzPdAb2Nh43p+4tFD?=
+ =?iso-8859-1?Q?7UtLO8NWr1yra7wG0TpjxgNPqF7WSGqrpXSW1ejqV9+ZSX3J437eWSl8Tl?=
+ =?iso-8859-1?Q?K+l7DogVMAJr/YUQJ1Wj2iTkjNlBrgD9fxvhG3u4Y8k+m/sydq1L5eBpKx?=
+ =?iso-8859-1?Q?XyKVNdXaQzUZrnUFjq1ypz5f+oJ9D7UihM0TJtzaYq0amYaUW4o8FB+Otu?=
+ =?iso-8859-1?Q?f0lm5cLTlIKJ9NXWz3QQyA6cqYd8x65icIH+cqN8LPpoMkmxKOotg+ZeLG?=
+ =?iso-8859-1?Q?S7jq/a28lVgUkMCAyIlAbARWcJN2dZ4VqN2plJHPB6DiVwJ2ZlCLdLmZTX?=
+ =?iso-8859-1?Q?HK+16jTMHKIonqdhfmh1QhpwZNwGoWRpYjmQVyC27TFPoHQgHF+iTyQX6E?=
+ =?iso-8859-1?Q?2JURt8PV1EAZ769oz6Uhm1hmKj0/rBDDdPBRgrrsEQ8OFx9jP+yxGTAoBO?=
+ =?iso-8859-1?Q?wkP2pdll3cgJwkSoBkBO4q9obSw2zdylBOKrgkh4mSRdlOXeM7XlCf8jTX?=
+ =?iso-8859-1?Q?JCUhDrNlgg=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:TjLGYIeuAiD9+gauZxAX1RWEw9OTkZoCGxmBRns2bworGCYYuQU
- mjuIo04/TPgSw1Of7yemCx9sg+0qIdGpbcBjl5x9i3PF/bhk51niVl4jrka9DhHJvqNoRWx
- maKGOmPX7+vaiXLs1ZSqrlViIkz/Q4o4FJ/UNO6z5fsIVr0y3GTg4tpMoklNWbRFppIlUg0
- sSX7AAppF6fwBTyhke3Ng==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:0RY0VCH+tiU=;RzVMXcT6hXXEyz+XdiR/7H0RLXG
- B2tMiJy8a22rGjrilozVtDVvMqmCRy98XoCOcWxTYNLJot41/CcEdt+Ztk4lj7ZUWU2m9T8jc
- HDUnFEByUPZ2TBoGYvbiYoJrgk6gjRQpDmqsLuEGFmLEwb+IlG8Fq/Q1NMtLmA3ZLCyEBwpkG
- Dbb19SL4K2DufN1txfzLyP6sfzh9MLnFHWTlqVFkk7fR5i1W8Cwp7gsGiNuCqTMu96g3uNcLZ
- AQZz0eN/0mlV8TroyOR2Ndcq+eT8EkP3gGa3jU5iPI3dYQyyXZt5ajNQlwvGGUCiOfAlo1s7y
- 3EKL5SpXTsNrcY9K488ae4g8VFDcD3k/a5CmmfFREcVceZiKoHKyPdm+9F11LLPXXENsobLGu
- /gFpsBM55BMxPox1WUhzK0waIWKVFNJlAXJ9q7HbekUPknquY7ulzexmMY89ZSkvMmZb7k7kS
- Z7UZh+AYD83yGOKNHf9/sKjrWLT1BOUbF3yq2RwqrqvkPpFE0zlGWxw3NZRCOlNtgLj1BXH/S
- MFhiq0OLDIx5iKNNiUmu84wjLNc+nIDstYUAXMu1uM0vdUHJIph8a0pOPBZGZqh9TTYx5ul0l
- 5eX1yFPe9FmJRPfY/55CWeyBPSh76APJsNjgGIQgHmvQ0ZM9QQRgYkl1cOww+8D5KMPkCAJYR
- Z7LcBI6Hzk6Cmjmo5AlZJBZYyDx2rOdyG1RFdfqgGZLHGJBwnTGN0Z2o+raCJoQWDu2Zve9x2
- gOeJvZX4fsH6QldleFaVxaSWsi/ilDy5rg4WoV/Cc/wH8jreYCG9lxsUpwiNv62TR4IDV63fK
- B4Ckck9vcbWVvURVKKjwIi7YFEG2YN29ZSThHkMFl9Jtv6fLkNF3geJU+uatR877II2lmswvg
- svdby0UhlPQ1maSGUE6mTzwcBksu3YwC4ELGAvQRe/n1f0jvCfVxdV8AlkqZQ14C2755AdWsu
- sPNFWwUNohYSzJsHnFDT2s7No2q9UUzzKxCV8iEp9JwSPCeYOGRCE01SKuFuYUrLlCW+mZZNM
- dxDqk6JYG3JBUj5e0GZCYhlTocg1sVVc3pBOf74sg/J3annRlUyU5ygcyRgY84JGUzze4jO4C
- KLlH6wmeY5JcAvDpMMe+13vdytMApAk4nENWH0letKIMJRhPglFOigMR2iCbAAlIoyPSvWZaB
- 4ZiYz/T4uJvHAszpHOQzBWdsiBFuSHnQ5GR0VnBfy3vOrc6hb6dat5Il0PEwl9hCQ5sTO9U7l
- xwDvnWOTQGGgBdyFXtc5X4WAWJ/rVkSHiWJP8cwzHixrcZmEl6nnZpSsXyEipyEn8RkP3Nlkr
- 3LYQ4LL45lV8laYtI/4e5oo8jpWsfPn7Xnyk/RyK3X27igBC4XbyscRcefNNpX0VhPL9Qsgi5
- XqwqX2iseb0DXTgePU7/SHyUqjejwq91tDSX2qETZXBXhJvPWlOimzRvVXa86/deY+9U5E3WG
- ALZ1O9tlmfXgH1tSthk4xrvCbsLqGc0tmT5rV0z7BBKAWew6p8h6nOWK3EeBTZgNzBhONSq3W
- AqtjD6vajYKVmnC98fNbrK5CrtzP2aia0VJKiZ69dWhM9atErcfdoyMxtUXCZj/PJbxBVcIo3
- et08fLqsjzCz7hFbQVILyNsImWE4jY3nGlDpsED4VWW0etm/FBXE2lisfbMzyY/tZHiWXbuLL
- yZjAO+lTpm5xi5FzXRM/uYUcVomoODIdmJbUW+lKTTSJhJh3gz5EBCkMOl0veWT69qFw7BybF
- mozYod0b5K0NXy5ohbq6ARCF9Cfe3niS16VpfSAyLx52+yyvn9nZOaMdpf5VNRyOLkeR76FPz
- IfqiuaxogLDIxtemERACKlAfCkkNFcfut+WCL7FHUiNMc/sgFSTBB8dFYU+v/A8BuZbYXP/MJ
- Jn67Pi4IjKFBtgQtrHE1ezQ5HGakF568QtbWCpo7pyqO7WCtIAbZB4iOFxLqCygE7AY65Fbcy
- 7fix88SJ+PSdLxz4jm84+fTF0Y256sG1j26OP0dZQMWKYJ39Pda8j0j9wM8UqS4zOuvOppqID
- xYfpZJtzB5N+EGkjaiK4dH6Gbf7JkM1ynmkIc6SssGOqxAOgLviWqwZFtWR6bfMQjPzhKDCE7
- AYFkIe4zxc+xPuWgy0oa3azRJB0hVrXhnVg5MuZ+Yy6CK/t2GVoquK/ZaJmsLrRJG5lONKCgK
- WT/V2V9F7cG2vznfR8KOqtzcJws1UBDqWej/4unnapf/lWWRAF8R/tMRZ9KckvnktLYU/tFQr
- VljsTC0R1i6gcDmnKob5nBwJUQFnENoKYzzG/Efr3cgIl2nbFiWw9ilPDkfB5KSf7eMzD8Kvr
- K6ofj0PqO3/D7V4uTkaL9fQieY26YLtyw2kTwnj+zy3HFYgg8CNFu4U3+sNEFdBHFBkyimkSm
- KCju6wHimoEqfW9SORCjlGaqQEfd7LO5DxCVp9oSycg1wfKuPlK7DSE5GOLVLgFBG1hdZ7Lo/
- Q3DCI80Ou3Lm6PMzxnPeM2B5aJ8EstPnqzf9aJBBmAj/l+HyEfX6V6tugyC0y02GJ1UBkKEFb
- 3nGHopGCGCgpPWbbW/VgqH+vgbsdXrOUpv/POvha1DhOhoLESLBRIM4vs2QzGe8Lu1AHLARtn
- 6t13bo6SoJNSM+PEgc9+cSDCgvjOy6UKZbO3gVmnw1FpRKUjX7PYLNUcBoA0XcGLs+dRmD667
- UWfowVjWw6n8SkI6TYWJBGAVuxxu1uj1ZH1q/sGF8qDXzQhYo8AnLlhHmGGm/2OHZy1x9HRve
- 8w3NsDCP8GC8Z4Sxino2AP9693Q1pku2mNCJsbuZ0euDj66Yteug0Nt2vENyqKD/75/VCjQGY
- KmYJJuuh9lBRv5cvqaKISmbNZDifIQJVsZ34J0Jj+BN6fjPql+VriIxp5KgtoXOVyhGAUXokD
- sehm+qosFweyi7TcjTW7zBCefLWpVYasYfygIj/nctowcKMmKbvjLKEUTY2J3wbHB1OHrU6Y/
- 8K4o+vJ61yO0pztuTqlZKpd+JLrIv12k4kUhUlLg2TfRQ9L0cA1BSk+W5jeNubGUVNUWVK9nN
- LwsSJhXsi4CxKsqav8jGkj5dtacGQz3fspVXs//W99Ug+x2css1HVmW8jX/olfw+AAwjXWDzT
- AvRMY1j/r68IWFwmlHoISsNylISIRthYcc9Tu3KUwR8OuIzTA6aq8KHB9tyfIyn3u1BBBZYVp
- NIqbZJ6jNcP3LMy23x5w0T1YiOYTw7zNei5B1P5YTN7qF6Gy4utNDnX00hfkANCUUuObotz1c
- FsFllEjHkVQZVlW6JXYlMxYF7NlWw0IP/f1dAvxoGooePzncEcmhB1gMY8U+GOx8C6Jn0g5FD
- oCyQtS0IJoJpL3qgPfedcDhL4DGS4rgz8VesojXi4f5VjYg1NGrVtnyhxZh26FzN3wRsUbVa4
- 6zJ3feda8I6b74Dnxqr4ce37OCPh81O00SyO6A0BXng9Lm4z084q8qI5SRD6hsLTPaRBzMLaA
- MUtQawAUWeSmLhdZJ6MwLYTPXv2XUGU3KtefuaZfnNEdZ6b6mqcmUIyc2BNVSv53VSIFKmwX1
- vKZLTxznW4yj4/fGSjSc9CVckZgXPOHyPNnnuy0DvB1MZAC9DlT22mjsCNp3fj/d0HRTiQjd3
- JBiMmu6+fzq6ylnSKW978aHxDYa/Xj0Fk8QlFNwejl02DFGqmFbyxdikx/gR/pj0Q9QHQzonI
- y9l+Mt8TB3zdPz+jSlFq6whrUh1sAhQ8xYOlRZSiOMZgWZE+zh+uGmEyf1GaqSDZ3SiKB3beS
- MZmMB48Nk84pkY7UEC0wBW23NRgcX6oL+i5ws2bauLuUs/xiqUD1rUSTojUr5klA4M229lnJ7
- gOmHXIneoXXZSoHVXr4vSMoZN2/BZIJhmQBMU3Sa4pqs7aF3Gj4mSYi1CW6Zh5sCSZXHeylIC
- Ggl6i0iuvJUkZDxiYWqblxShARu9FPnhiJzVCQT45OGMnjoTI+Xon/1qv/JCmUCnBRq4KpIwb
- Saxhs9T0W088b2A7WMm8SBQr6dlB0tUa3nJNQ+gppqEx+yNpUUvqFgA3EAvwEdM/3qI+HQiOr
- XL1ZgPwZxcFCa2tk97SIqxkwP5jW7CnykivNZAYjqBSBZMH7HuFGTCHpoZcBdOAmvOEcuGcB/
- ndHqJrMMn4mcqG1ne1iAtXf05/47sMwrJJ8XGEAbFKNX9tx/V4KipUN+VZnFbDuqfxzKtaw3h
- AFQqmul6WbB+kM+N7mZtv2V107XYhorFv5PxvLu0SlciQ/RmOHnr0ECw2KVpJ2djZf7/wWzAr
- Fx0PkYDaMgm2MUpedbzVafwK++TIJopJoYnRNJ5jCkHgjckyK/gownfmOpv/peTsPqqcXm71l
- wT/aHSqqOs8QtAg6fgCFLPy3AvR6NOWc8Kwx4kUggsyD8RhBG68skXmXljXY9FUEYPYU7wQ2z
- DGgv3QijbK0efmVYXIsmnA4SmMJoHI1FTOgTti1O7hBYX0JiDMJ1FzQHi/Eu2GfUL9vnW1BTp
- vaV/bT52A2kFPcmcHGZWBN1IXKBM8Npv/KHWtijuNy1I6OxdKxe6oUV07Dnf4TDL5ihqlouS+
- S0FCttYEye7sL7Ghp4z2Kb5ZC7SW0izZY3oImHwRMBzON60EK7slfL+uOQKcGrfpnvV9v3qzU
- d6EbcZ302E7cygaUXAcmK/YC32B+uJX4+Vt3dGnx1EnXfNguYEV1grDwf0W7W+nhF8PtkDbxi
- BgnIArEiBmV73C3+eNCCus3Vwj2h62N7e/JmmOVIPqGIJ3wdOoDNrF8b0O73p3PspLt4ZGPOu
- uKbtX4lcgX3Gz42bsDp2ZbxnxMt0S7v3Gfuhon+kfzwRsde+r9c/UB+vvnjAyhO0yoHW+CdQj
- AZW3Fd2LaPXkCVMC9cixLL3D4fdQhA423/jrZWzy05s/lsmQOA1R10SxHDeHy6F9SMI9Z6jsF
- 6FrLLtAfYTYK/Mz6lj9fXzR1zJe4C1QD8aFRB9GyCsxrjEervPm8/ZwwbAmm+yj/Sd5IhK74h
- SrrwkoMT4aKq2qEgItE8ue3OOluGIgZNfdOe1daACW993Q8R9yLfHE1entOKokSmBW/guCOLQ
- 0H/1jEZA4aiusNI4/SHq9CLZmhvtCxEgGaIRhjNEvB7mjv99anhtBLBFjDqplIw0DQgQ28Kp/
- 8X6liehDTIEEB1LhfcZ1CdzQT5XNopwkKf3774MOL+2QMok1h5WkqewdkVstMLRZws7Eyt1l4
- +Grkfm7R+FW5G4+7L2Jnq0/sYysdQfyNY04WVvffr3qL7zt8S2v+RFIE+jx6a4lfuxhC+XLaZ
- hxvM+U+lJq9ymH2VccSmvCxVcY11Wdrj77fqZx37Mv3e2Rb7o8Tl/xoOMkCWFBF6fkCLVf4t7
- 7FUCIlYAb24JyYhYgv1yXiUxAk3KN6e0Dzp3diljhUDTOvCkJwXAkuzvXj/6VXitfxcLJEYg9
- SjsPzUTNC9VRBL20RoBPmu4w2Kf6HUABb5LIPvj3YIBstGKXaGuWBRdCJ09jPGANy4vzAHacG
- pZm/QxG9MdT8RzuqIgHmv9P0OkI1XpEyJG9w=
+X-OriginatorOrg: qualitasag.ch
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 667f319b-5eb5-4b8c-f8d9-08dedc2b3c31
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jul 2026 13:25:38.4329
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bf92dc3f-ac30-478d-836e-9628882ad7b4
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: pUkL8VtNJjyFLFXpivNdcqkcS+hTAnYV1z58d/izxedLZod77Vha1FKVLGHKI7/lodBdnsqzbwFq3rJPa0y+LKjZUMlHuvKgL9yole++jV0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR1P278MB1233
+
+Hello Johannes,
+
+Thank you for clarifying that the use of Git in any way cannot lead to the =
+use of libssh2 and that, therefore, the situation is not as critical as it =
+initially seemed to me.
+
+I apologize for the wording that may have sounded demanding. That was not m=
+y intention and was partly due to the translator. My days as a software dev=
+eloper are quite a long time ago, and the languages in which Git is written=
+ were not among those I worked with. As a result, my ability to contribute =
+directly to the open-source community is rather limited. However, my employ=
+er supports the open-source community in other ways, so we are certainly no=
+t just beneficiaries.
+
+Thank you also for your explanations regarding MSYS2.
+
+Kind regards,
+Martin
+
+-----Urspr=FCngliche Nachricht-----
+Von: Johannes Schindelin <Johannes.Schindelin@gmx.de>=20
+Gesendet: Dienstag, 7. Juli 2026 13:56
+An: Berner Martin <martin.berner@qualitasag.ch>
+Cc: 'git@vger.kernel.org' <git@vger.kernel.org>
+Betreff: Re: CVE-2026-55200 libssh2
 
 Hi Martin,
 
