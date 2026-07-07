@@ -1,192 +1,131 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0303E9C2F
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:26:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170CA3E928B
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:32:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783437988; cv=none; b=jLUl4mEM8AnACnijBoph3RK5cwLw/F6zEuyxhUB43D2kzUNUxByyreOpFiPeC3N2Hi6GunCG8lEiCW1kEo9L/jC4su9hRiVw+uBtxCxfh4Ynnfur6wxNH2ik4Q46P0kP/8LjElPMnvm79SF0YZgfE2QH+9d3ZhyHPdefBAaq85g=
+	t=1783438379; cv=none; b=khjA1jV57r4O41lPnaAelDKXkBUKtsV252fqL4lNaZlsqZ0p/DzcVpjQQkXnFSKOXtv0+gNmSNfGySTUz6Az5fDGqmS6dn59zNX83GTHNionFniBxv8CJNBuLUzDnlVGf9kgv7o+Yo/tdGsjsED//oT4wzPdV4Bb8enwTW0EgTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783437988; c=relaxed/simple;
-	bh=G019Q0pcp1AextoSiufooAsg8fUM8F3mwU8Fm7kP9nM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X4GyUBaNkt4gZ07KwFFvBAdUAh5lgLcl+4T89NjZNH0W3f1ICNVzk9F0KavVyqLS+QUKXiePhgD2h9OVhA7GuKO+uXiT6qPjc9l9mR9gZdYLkLvliwxnlF+ncf03wG1kGf7tbsEkfy+bp5x7+dCYXhoS5Hw+FCXw4IiZcGn3TpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MnDbbI+u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T5vMmfiy; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1783438379; c=relaxed/simple;
+	bh=cX5PdBTf+Fn8aZqStSBi4FgElgplXLWkmW7YjKA7yMc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qK+vzoo5VWp4wmQTNSj8mV/4TlzOjUB+C7XEAq69N9vg4jk9+i+gRTMH1NBJp0lmhkzVf3hnNWSNMg64PJJgCVmGP14SrglPku1GJEEAatDBfams3IMLBAIlrb1teKOK9joGi9bn/8GbPcLbyL4SATgJgGtkd8U6k3RK3KPwqn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ADngmwie; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SSd62u9h; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MnDbbI+u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T5vMmfiy"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 81423EC001B;
-	Tue,  7 Jul 2026 11:26:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ADngmwie";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SSd62u9h"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3925A140003F
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 11:32:57 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 07 Jul 2026 11:26:25 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 07 Jul 2026 11:32:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783437985;
-	 x=1783524385; bh=xlZqoB//hR6KnPDLD6XHzNPnIhDFmTH7KlijwVZudT8=; b=
-	MnDbbI+ufEa4m0RdELwvRFE4tJEd4AODYRCHff6EpLgAmfEKwMt9WugSmzf3WLH1
-	v4Z1gd0ZqMkQ+83M176g9fwr5rloRm79spGoHAz7NWbV6ASi72Uq1lna/yiBcsCI
-	3Kz8zyqrApkaexaFL81r6nZDeQJO6xyOdCtPFG0vWvTNLax95wbCZt9sN1y15mHe
-	5v/KblJFb3heVMXRa/kqhg5P6IGFTqMqU2U3Ay9orfWs5f3vrWyIcC99Kbyr5Zw5
-	yDdc2wqUcwd2+fVFsKp+EcPMF+9SZFAt+7Qtcctxgcbvug4LyYJ7J6TpnKQ+QHCH
-	HYoO6SDP/CYrk/D7hmbR2A==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1783438377; x=1783524777; bh=hr+FOk0ESk
+	zFeQLrfvZOHCl16brexSDTD3aTjsuXqaU=; b=ADngmwieAlY2bYTHzHYBFwbCwY
+	OFacrvdeSczPN+PG760Kh2rg9OwwjlTiyRUjr+wP+CXMK6U4N7fwXaC4WhemA4LG
+	bfKFxdP25qfeHui+6WnjDEciyh+AOZmC0k3wSgP04+El+poCGDExA7OWRIRV4u1L
+	Q0dDdA52W8w/NDGiTazFwujQUwI+QWqVwFSqCdf8ZTO0CYNmE/DoUEPItq7lrf4y
+	mnc2b+aZAAczbmtmIoBc5fUDkHzQ2TBOc7KPFJf3ASqS7a0QJCkIg5uwVdw2AK8n
+	vAN2XgZQfeGU36/nElecb4XWXxbrmRhWxI/DKPc9BjUbY/lrAWrzVpKR64mA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783437985; x=
-	1783524385; bh=xlZqoB//hR6KnPDLD6XHzNPnIhDFmTH7KlijwVZudT8=; b=T
-	5vMmfiy2atsuO9BslmgZVncx7eEwUDKsxlCdqOYAknaKVIvgWXVbAa9PTAUBCV3n
-	TCdkN60/kl34kQa6pBqTubxRirL14gNXYo8uMiIGESLmTQhdI/fVZfCGjA+RNDIv
-	iiCtEmegjXWud9olE7WUrMgRjblEaJ4F2M/6ZAlv4+j1Auc8PD47ziauiurKfK39
-	ly5xr7IwTVFcxv+/58q4mJwoGOXhH4BodQF2kfLPEhQK8O1nw8LT1gOp2L8FkmpF
-	qXDyYp7AfOARTqsncjGaOTiYc06COyIYE26q1oJyuIpQn29gjF6XzOVGzUaUqZQc
-	GeOK3OdmzcmuckMmKc85Q==
-X-ME-Sender: <xms:oRpNagZi0Z2Kqii45zVB1HZbhN9uBfwxghhAXcDhUWE7xEkYjWlv_Q>
-    <xme:oRpNas5KYWecbzIPECCU4NHlM5cnlcj0YTyP4kMZwSMR6lu3n1rbDDvSsuLyOVFh7
-    N6R3BEtXLJ8WmHO7ew01vDPDgLCTnzZCM1IGi5OiXbxUYCzOyQ_Hw>
-X-ME-Received: <xmr:oRpNarCqnzz3t7BaE96xHCE-gCxcvPuJPXutvkLkFS4Qi8GVhcAir2pzPKuGQGqeIZwwhOfVDqsbwM-vla3cpntUwEQC84pdKdGerccvWA>
-X-ME-Proxy-Cause: dmFkZTGWcv0FJ3Sk+fRKTsD2b9Pluww4GLX0XXiMwJUp0j9n+TNJlncDt4+mD3FCmCnPc8
-    GEL/7L6khLzQchkYcowncYPihoAEgg0b19UXwSRBM4SmzdHUAhkV416YeEesR3SOOAWHtJ
-    HcW0m0bkPZFsiotei5feZ1/zNmeUBI3Zx2D+mXLzFuwPoJdN6wUlcBsvrzaf25V+rE4pVg
-    MtJpnWU7Lw962isO30b6UFeRPwvcsMAx9MOvWi38if0mXQG6DhSXvW6Xj82pywmMR4WWom
-    /FyaYSZG80rjmPwlevw10pvU+Xn30v0XuPivucUxAQJEZsOBWQn06DDZworCZKnf/84ojo
-    I19O1FB8w5B0nQis7gTeXHumPQFk6+RieHQsqBRdNKjZY5XkFHAimssQqy+EdKL3j5LZ/U
-    5prCPikTAArR30+WoxCA0xAPQhfdBEIifhl2PNl3qTSf/ufPhPUBYQEk0nKcAbHoiD9NSh
-    SSNwLEF4gRKteLTrgWfcoorQP1GJN1hxH9239PWp4/8Als3xBuDIYyh9BNbWmq4+xxY8t1
-    3HLeYqUCcANnljBXgadh3zeuITutj4EeuuA9fmow1Lu5Zhh+4CKtS0igjHV7Hvnd8rjO1z
-    yhc6r7TmvvWbuy8W5HN5ivC8dc9TlqZ59PMsJvqsq4Pp+XDmvJ21zjliOLxg
-X-ME-Proxy: <xmx:oRpNaqcmkkGifCg43yHUKqgWerSCRSWxUAWavr-aDxGR2ar1O2MY2w>
-    <xmx:oRpNaiLHIQREDsMUI4nq-WTCAbu9vW6rWnZdqGedF8MMNmAw3EdRwA>
-    <xmx:oRpNat2WEyJOw8p1Ho5v5BPzsTcb2bHGJCbHo61lGgLXsVLBAIcV5w>
-    <xmx:oRpNasgkYR4bJ2Qalt469eDf0RwkRolcumJZUu74I2J0zAyhdFXyig>
-    <xmx:oRpNahdzoZbwL0r-2VdcVRynp-KjRSvqCqW6OeLD0Og4Ubx3xdfeMSu_>
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1783438377; x=1783524777; bh=hr+FOk0ESkzFeQLrfvZOHCl16bre
+	xSDTD3aTjsuXqaU=; b=SSd62u9hR/VJyjuaakg6aVxLkmXuEMR39ixl/sJDdIPe
+	ZwToOK0vi15wP6ORSltiGmeG2DxIuPOsdnOJacVwKoMmZQGnGKG5WJukL0cHf9tg
+	vP4j8V5nKRRChBtipVJPBC/ErL4ARz/StSU61Ghz3J1K0R8Gs+PhUaa3NRITLAxy
+	VOuinP0xoSfIKcKbVDdSU3nyKsae9ZknKY6rjo4a0SebODOys0LnOKW6wrPbTaHg
+	keioDPFtVne3HlSxOb2mfer7UzdhnqunmTKp5JP+yPsKj+NCR+bM90uljSVBS7QG
+	rDVUb0pL+froLlLsezZ9ALeVtkfESX60tY7BHsUGAA==
+X-ME-Sender: <xms:KRxNajbrZcdGckaOyZY1KX1fnGt4QxKo7QTYrKFihkq2j4NSu10aeg>
+    <xme:KRxNapW-H8iMUISZJKF2E7QBwsoXgQNRk7ih4SrgLe_ArvgtpczHHvLLRv8kFBhkl
+    fyKkqV95_KvWZ5YjpERbsfv4rLoQdEoBv17_D6v_nGkDMdMB-ehiA>
+X-ME-Received: <xmr:KRxNarluPB6kqQf8oyNDCcm8I4l6HrfGNDPmKwyvFSNr8SOz51kPuuQeNcc1jDDPF8-MKSeMSi19FB1-OEZ1b-wRk74BzEcw3mFl-e13rg>
+X-ME-Proxy-Cause: dmFkZTGv/+rafY/GYZCo9dvFUwJlDkiRNKnSDlKPF6yUb8FzhbbRYFgC49bx1yh8RCe2CG
+    Mc2VwdeVsQ4dzsD9x+XtSj5bVeWoayaJfqjz58Kbsu2gYz+do4y6f8ZvODi3DPBdxXB7AQ
+    +6yGbGVqGhfWXn5BX2a5kdOq4Q3SO8QQ8ezlWKGb3JUOJE7S0p1LHk8rBIfl04a0+ik8MH
+    AWIl+ey9TFd4e7Jt53Yu3FTapVvZysY8VFz2XtUzzxXFcIb4YbBFMG2AdKix3G1CRWuuM+
+    GWRiGgUhyx3RpiQkj6mapO5oDDhyYqFQo3wpQDurlN57cD1+DB6oc1IJtcL2XBhVcNKEUV
+    Wko4YRZK31BRzxg8/EMG/YWOISliKMu4bVjUKF2v7obN0GIwHfDoc7MeVk6usXaiO+Eq4S
+    t+L1sBl76GHkCOavuJziOytyhyFTLUTNLbJT2sIxx3YDrcMW2qkEvYZY38sLsQNdFdVukS
+    i/VyVQXInxxps0O6/32JTFhnEoeebW1APut/xs+pFXrFRxGoX+NqkcPHXfgU79/RQhUIN7
+    A1I2aosOlvCB0qqHdguLKV7cwXXlImYOSz2HDsT9NpcGM77roZVuptbTE+lbu5KxngUTnc
+    7al4pbujJAbzfmIZpHaijPYffPsEoyXm3r/Aw0a9sxnATOXbKh6wrvJhgVrw
+X-ME-Proxy: <xmx:KRxNauzbNhSP8Y9Zeu07mOikC4mu-Tl8rlH1gAHOizLtOU3oTbL3tw>
+    <xmx:KRxNauigpus3y1LyUjxaEUDBJLoA-XoO8WUKPVbFmccIAGji7EaxGQ>
+    <xmx:KRxNarXfDVLRH2x0YTottH7ae4vqB9EnfNyMqs972P8Wd4tucxkzcw>
+    <xmx:KRxNao3nv6awgHEpbE1NQgDz7n0iCXJK-CqVQFqQ1IGwUqDaA5VNvw>
+    <xmx:KRxNal7-iRjuYd11sovZhR-SD7HRhWbY7qldmGod5S-DOBbruu-m5pgs>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 11:26:23 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 7 Jul 2026 11:32:56 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d52214a4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jul 2026 15:26:22 +0000 (UTC)
-Date: Tue, 7 Jul 2026 17:26:19 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 20dd0a3c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 7 Jul 2026 15:32:53 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Chen Linxuan <me@black-desk.cn>
-Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v6 2/2] config: add "worktree" and "worktree/i" includeIf
- conditions
-Message-ID: <ak0am-pEdtOvyBp4@pks.im>
-References: <20260703-includeif-worktree-v6-0-a13893ad9a7f@black-desk.cn>
- <20260703-includeif-worktree-v6-2-a13893ad9a7f@black-desk.cn>
- <akeW4yFC8uuu2o8a@pks.im>
- <CAC1kPDNBecLbmZwjfR5-CsNheF3rcbZ5=SQ+cwjzpFMjFr9KGQ@mail.gmail.com>
+Subject: [PATCH 00/11] odb: make optimizations pluggable
+Date: Tue, 07 Jul 2026 17:32:32 +0200
+Message-Id: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAC1kPDNBecLbmZwjfR5-CsNheF3rcbZ5=SQ+cwjzpFMjFr9KGQ@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABAcTWoC/yXMQQqDMBBA0avIrDsQo6bQq5QuTBx1LDUhoyKKd
+ zfV5Vv8v4NQZBJ4ZTtEWljYjwn5IwPX12NHyE0yaKWNMrlGW2L4CvrGog8T/3gjLEptXPWkyhU
+ KUhkitbxe1/fntsx2IDf9V3AcJ6apxiN3AAAA
+X-Change-ID: 20260612-b4-pks-odb-optimize-3426c57e5c30
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-On Mon, Jul 06, 2026 at 08:18:39PM +0800, Chen Linxuan wrote:
-> On Fri, Jul 3, 2026 at 7:03 PM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Fri, Jul 03, 2026 at 11:13:18AM +0800, Chen Linxuan via B4 Relay wrote:
-> > > diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-> > > index f3892578e4ff..4e840dfdb35b 100755
-> > > --- a/t/t1305-config-include.sh
-> > > +++ b/t/t1305-config-include.sh
-> > > @@ -396,4 +396,132 @@ test_expect_success 'onbranch without repository but explicit nonexistent Git di
-> > [snip]
-> > > +test_expect_success SYMLINKS 'conditional include, worktree resolves symlinks' '
-> > > +     mkdir real-wt &&
-> > > +     ln -s real-wt link-wt &&
-> > > +     git init link-wt/repo &&
-> > > +     (
-> > > +             cd link-wt/repo &&
-> > > +             # repo->worktree resolves symlinks, so use real path in pattern
-> > > +             echo "[includeIf \"worktree:**/real-wt/repo\"]path=bar-link" >>.git/config &&
-> > > +             echo "[test]wtlink=2" >.git/bar-link &&
-> > > +             echo 2 >expect &&
-> > > +             git config test.wtlink >actual &&
-> > > +             test_cmp expect actual
-> > > +     )
-> > > +'
-> >
-> > Okay, this covers one scenario. But with "gitdir:" we're actually able
-> > to use both the symlinked and the real location:
-> >
-> >     test_expect_success SYMLINKS 'conditional include, worktree matching symlink' '
-> >         mkdir sym-real &&
-> >         ln -s sym-real sym-link &&
-> >         git init sym-link/repo &&
-> >         (
-> >                 cd sym-link/repo &&
-> >                 link_path="$(pwd)" &&
-> >                 real_path="$(test-tool path-utils real_path "$link_path")" &&
-> >                 cat >>.git/config <<-EOF &&
-> >                 [includeIf "gitdir:$link_path/.git"]
-> >                         path = gitdir-link
-> >                 [includeIf "gitdir:$real_path/.git"]
-> >                         path = gitdir-real
-> >                 [includeIf "worktree:$link_path"]
-> >                         path = worktree-link
-> >                 [includeIf "worktree:$real_path"]
-> >                         path = worktree-real
-> >                 EOF
-> >                 echo "[test]gitdirlink=1" >.git/gitdir-link &&
-> >                 echo "[test]gitdirreal=1" >.git/gitdir-real &&
-> >                 echo "[test]worktreelink=1" >.git/worktree-link &&
-> >                 echo "[test]worktreereal=1" >.git/worktree-real &&
-> >
-> >                 git config get test.gitdirlink &&
-> >                 git config get test.gitdirreal &&
-> >                 git config get test.worktreereal &&
-> >                 test_must_fail git config test.worktreelink
-> >         )
-> >     '
-> >
-> > The last call to git-config(1) fails, which is inconsistent with how
-> > resolve the path for "gitdir".
-> >
-> 
-> I investigated the symlink mismatch.
-> 
-> `gitdir:` works because `opts->git_dir` still preserves the discovered or
-> user-provided spelling, and `include_by_path()` matches both its realpath
-> and its absolute non-realpath form.
-> 
-> `worktree:` is different: `repo_get_work_tree()` returns
-> `repo->worktree`, which is stored by `repo_set_worktree()` via
-> `real_pathdup(path, 1)`. So the symlink spelling is already lost before
-> we evaluate includeIf conditions.
-> 
-> Changing `repo->worktree` itself to preserve the original spelling looks
-> risky, because several users access `repo->worktree` directly, and setup
-> code appears to rely on it being canonical.
-> 
-> My current possible v7 approach is to keep `repo->worktree` canonical,
-> but store an additional absolute, normalized, non-realpath worktree path
-> for `includeIf.worktree`. For the ordinary discovered-repository case,
-> this has to be derived in `setup_discovered_git_dir()` from physical
-> `cwd`, the worktree-root offset, and a validated `$PWD`, because
-> `set_git_work_tree()` is otherwise only called with `"."`.
-> 
-> This makes your suggested test pass, but the plumbing is less trivial
-> than the original patch. Does this approach sound reasonable, or would
-> you prefer different semantics for symlinked worktree paths?
+Hi,
 
-It certainly sounds a bit ugly, but I'd rather have something that's
-ugly than something that's inconsistent for our users *shrug*
+this patch series converts object housekeeping to become pluggable.
+There isn't really anything else to say about this.
+
+The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
+2026-07-06).
 
 Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (11):
+      odb: run "pre-auto-gc" hook for all maintenance tasks
+      builtin/gc: move worktree and rerere tasks before object optimizations
+      builtin/gc: extract object database optimizations into separate function
+      builtin/gc: make repack arguments self-contained
+      builtin/gc: inline config values specific to the "files" backend
+      builtin/gc: introduce object database optimization options
+      builtin/gc: move geometric repacking into `odb_optimize()`
+      builtin/gc: introduce `odb_optimize_required()`
+      builtin/gc: refactor ODB optimizations to operate on "files" source
+      builtin/gc: fix signedness issues in ODB-related functionality
+      odb: make optimizations pluggable
+
+ builtin/gc.c           | 534 ++++++++-----------------------------------------
+ odb.c                  |  12 ++
+ odb.h                  |  45 +++++
+ odb/source-files.c     | 470 +++++++++++++++++++++++++++++++++++++++++++
+ odb/source-files.h     |  15 ++
+ odb/source.h           |  36 ++++
+ t/t7900-maintenance.sh | 143 ++++++++++++-
+ 7 files changed, 789 insertions(+), 466 deletions(-)
+
+
+---
+base-commit: f85a7e662054a7b0d9070e432508831afa214b47
+change-id: 20260612-b4-pks-odb-optimize-3426c57e5c30
+
