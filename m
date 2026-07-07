@@ -1,120 +1,116 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494503570AD
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 22:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72CC3D45DF
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 22:35:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783463547; cv=none; b=omPAPQfhS86Wlo+Ap12vN+OAYckDiClapTGw2f0qovp1UD1Q/QRcurgveKdKTnh4TKD4LKGOKhVuNnkE6qdANcstwXGycX61jpfLA+p7LTkrErVzk6n2dkGOtH6DBQiWkXGRANMAjW7n1zc6rcpo3XtJinxtlLL7gbRIxuTyTNk=
+	t=1783463718; cv=none; b=P/swmAsUp8IEvt+w6aod6gayxrVyVZylQG3reCo+pD2+99h/5uQmSCoi3MRQ5fYUlem0nQQAubibbMBO0LFBY7SsoqtI8CgAuIQ6lqHn2uISIj24mAI4EHEuVhaJ6kwimM97Q0PL1GnSpp02gQ1Z6HJxLDEmYN2jg3wCHtY31wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783463547; c=relaxed/simple;
-	bh=JIIX2JJbCmNtZxjG2LsbpOWmwWKPOP9eTBK17tfTyBM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=B4t+kq5baBJgLA3qYjMmREbVyk4+dGaLG7JiLkxMaQVD6BWRn+1PdeNGf4l74FRwO2jCQI7YlAgSjR+6SQ15q5rYyc4f2tg5IMw4xyDYwrWO3bE+R1occWQEDMGHlsN6ahq7btwUhHfD2B7IK8XuHKO98E/mqyH6H/3N/Puc+vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YBGTLWrH; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783463718; c=relaxed/simple;
+	bh=EJfOyM2YQXi7DAQL45Mk+i4GdGi6SdsYMH9Yy3AxKnc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Td6Z56rMOtPeXSI4xgzjsjm6bU9MszQB5xHIATL/iTEV+Nq3u2TN2/6u9LrweRDhRUIr5gNnPIHrr+r/p+xGGfgJdG+B0ite7NZQCkAqRKe9so7FXHVsyNms56ZX8aNKXBJzVgUH/rEbgJQFlJr7Ux//6cC/CJPgO7EdrvLwIZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uARJtE0L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LJ2JTIRV; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YBGTLWrH"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-47defaa012dso29488f8f.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 15:32:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783463544; x=1784068344; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M4ro2lRmXUrn/8ul+BT/RePPCBwIKtI3i2+4JgF0ECk=;
-        b=YBGTLWrH0cXF8f/w79cewU5p+9nSyeOVRGKXfT2ZUPMeL4J61tksY0SmaXvbIRc8ct
-         ltgQ9Hi+L6u4wYMU3RUy+9fN3r8lFenCeKu8+NG6dn7Idg6Z+pT77hej+SCGF1XkgZQW
-         aIyn7r9NJrQ/AEqNbq2ozl9WAlKfhL7fGI3UVpPMiPxgq4fgmqkp1xiyYaa9Vl8csEX2
-         C/svhWrf/oshjP4Qu71nxxnqeGdvlpap3xCzHRh/2okfUR0fHQR6T2y9nlkZ8Smgvauz
-         gN/NHfQn8TedkFo3BIwF+ioUzoUyoVeeOiyE6jhZTi2VE1caDkc/W6f3ngNzszPXA6SB
-         Wanw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783463544; x=1784068344;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=M4ro2lRmXUrn/8ul+BT/RePPCBwIKtI3i2+4JgF0ECk=;
-        b=qi1VqwNA9V1Ah9l410lXvuZpa4b7i2zV9UYVaH+Azula+j57slko13dZgHk/VIcbmD
-         LLixRCpOzOHzCbfxer/Tnf9Kyvn2Tpiy2hU01qGn5Kfmdp9VWAQ0VRlkWiBjpifO0b1C
-         gttJHVJqQ4T0lEjMlL6EsshEo2qIYeq5K1AXMqENh64V8Tp1IVLNLTP5LxWz45LIx4q2
-         U9nehf5uYXsUGpQOSKPstPD6sPZlwE+9hnnk/KJe3nHlXXPPVZtaw3tfHOqu+HF3pSSz
-         0jxfrFrsZh49g6rd+umC19RtdQoL4Bf026zUaJ1fqZwyMeslh99//TGqK1NOwFbnAHYM
-         mWJQ==
-X-Gm-Message-State: AOJu0Yz7ko7uakJqNKau1GTrJU/emp/ixB2Gi4uqoKETlcev01tM9UAg
-	Jff62BfJh1YH4OpCwS0i6JoV2/M8HDH/qaVRAuBfL71JY3+yGOx5cLrMYCmzUA==
-X-Gm-Gg: AfdE7ck08BFxct8fGQ0BjUQbhcWz/DIO9kSOFw7LyRel9vtBxD9gS2Vv9BSZLt2Ylyw
-	pCESyy/3dGYoF5/o3DK3W2B+BBLDFDIbTsIwTPEmGQ1O+qC2nRFN0bk1sgKW+KIfonVR62uhr6g
-	6f2zAebvraq7Yf46GGnehFumbeD2Rg0HCGRejLouhuo+deZGHYQb5apWYE9X2Kbyj2DvRJgPtIE
-	59uloxHOT8ygg0gYktzdluMDrlg01919icqK1GMWIaAKfbXy1Sc+Ws9kLDNllv3C1NE8hclQ3Yd
-	jbM1REyUwkjTC6ScIgela41CUVHiQyc84OT240xULIve1VJI8Vv29JymPer5Kxjm1zB0cL1er9x
-	/MThn5FisOrxdzNdOlWNe1g7ueMi32ZXzJhxALz/PfBG3TE2Qd6mfGqnRrpJp8P90HltOqqkEzb
-	qGzuIE+tB7zx7Mrx7sPMt1m1XEIEvBFtnNyGV5B0stpw==
-X-Received: by 2002:a05:6000:c8a:b0:477:80fa:f480 with SMTP id ffacd0b85a97d-47de66a2f76mr5669245f8f.39.1783463544495;
-        Tue, 07 Jul 2026 15:32:24 -0700 (PDT)
-Received: from localhost (84-236-78-136.pool.digikabel.hu. [84.236.78.136])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9de1e736sm40192523f8f.7.2026.07.07.15.32.23
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 15:32:23 -0700 (PDT)
-Date: Wed, 8 Jul 2026 00:32:22 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: git@vger.kernel.org
-Subject: Incremental 'git fetch' downloaded everything again
-Message-ID: <ak1+dsNQIV8EeSIc@szeder.dev>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uARJtE0L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LJ2JTIRV"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4D83EEC00FB;
+	Tue,  7 Jul 2026 18:35:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 07 Jul 2026 18:35:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783463716; x=1783550116; bh=lLHrw1c2tb
+	N6Le0kUJUWdB963FJQ54Djq8QRJ2RFCL0=; b=uARJtE0LNFrxyt2e9Nuuk9vPSl
+	oXVspjVr8HQWnVOIIcBqFp282FOnxhIeoMGBYC4dszGs0UfiC3E720x1mc/pqh0Z
+	v56J9ApzCD/ONL57zN44Z8nCZvk/ouUJAzTWpg9JFqqlOOgjODT2HCkwvV/vEZTx
+	xVeGuVIUICgkQB9jH1IgVELKimCqLTBx1fxRgucUsPeoFvPiwiObxJDjwW5LY/+3
+	PXEEOZB4LXzgcpiPex1zWXrP3IIKob6FqvYEANZ861sfA4TNnE9bMJcK1AWl7bMs
+	TTOKHyI0dmh6wqN6NB23GEt41wC/m+Y9K6+suYLG5U4XggZXPNp/MVEtgTew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783463716; x=1783550116; bh=lLHrw1c2tbN6Le0kUJUWdB963FJQ54Djq8Q
+	RJ2RFCL0=; b=LJ2JTIRVVUTpOwKwXl/LPFyusUwoYTCWSLhgaqvXFay91fyAgUC
+	YNokqE+YFVrBkbQ+wqj0daaoGwHdeL9mZaeVRXuzkZe1B6x79gmmEoBaxnRjSiyZ
+	pSe6+kD2Ip7Q+IrDJYRQk3DuP/9I0m6j6Qe7V+UlQhj0QeWl/plnb5yBPrsZwNvl
+	8ILGJBGUM5WPY7mjWQ+3OqZZNulvVtu/6cv3OdIvLw70KaxTGjzxl3kSq3kCTFDe
+	iHQwy39YYEp12nwsrzOUmvtvzp5BHGWmdvAZ3RyyEGktGW+3zY2ShnYZc9GuI9Gj
+	NWNKM34lRNdHoUw2Dfm2bIHvq5LZR84USYA==
+X-ME-Sender: <xms:JH9NaqpvQ3mCaKA7LeSejWbBRbiVW3ycF-9PB4iBqeVUFA02q7e7Rw>
+    <xme:JH9NavoH8PdjWjMq7ofOF13dQ1Idj46srHn1cbw_aiyr-b1VUPqCRAKxRWCHho4Gz
+    3oDdhMn6O6fkMnHdz0ee_xdVtmsBM3BmF_CMKYlaOmLLry6kqeX5A>
+X-ME-Received: <xmr:JH9NakMPwMzPV7GxTg_TJWWZeJuKKfJxxWgKPFI4Pgj6j3v66R6BVf8wMA_H8WF4CEmSMDx8hHZqDYsjmEHdK3j2H1weDRdwe_fiIjU>
+X-ME-Proxy-Cause: dmFkZTGXwBN/lM+AQWEMb1ptR2gNzITHw6AxpqQ0OEGBmPhwPrzewWw87wOFK4vTSDbvuR
+    CDYu/4547JUeR9Oz3HQU/4YtDCO75XAm0vgfcOqAThN4z/P1Ui2y25SgmRhwrcFuRC7Mjs
+    brrzJOCP5DdLw8xnGFh+LAxbyZ3VkQWpTFwuOKZ14oWFx5Emg6r8Ej28pcCTzetPDkmNBy
+    RL/LoeMzcrzeZx8GZjNsAWnMV54sZ5iKkVUNJvKcpYw2DPQhSNxRJWmT+lZto/G1xUuM2x
+    bRp2dtQnXMgRhGWKkCfv3hAECvtv7zkqiQOfwM0fLkzaouoAYvr1s8NdZ7vdQf66S4xLr1
+    Jw96hj3eBiHu7E+VBgNH5TDhZlNE1cRvU1gZtEfhrN2jFBJ0o9A266gV3DIEPY1NNPxq11
+    cdHbY8EjO8CdNJ0+O3w9NXx4o8KBL/bCBvRSf2lqg3oWuMuNb9YEqjuhM2qHLUz1X1KGJ3
+    QMsJvM3nRR/8Rm8ef2UcZS2EBcWoTKDVhvjeEVFT3U0dYQBvAoN+ssYXQnSlfjcgVT6Fix
+    J3Hkzb+4voxJgVh7sPd1xX0lxqRl7E9hhvaUtU4AAJck9W0ISOB1nQr+50FBuDzozVMDzy
+    gvS99MiMpj/ArKcTamD2i4FGioEOHgKVb7AsUzN+L7K6JZ+YAzltuGEJ6HuQ
+X-ME-Proxy: <xmx:JH9Naoy_YMDWoXH1TYP8BjCjvdTxk2cnyDpiA8s_qR8OrimvvTg8jA>
+    <xmx:JH9NaluMmn_w-qt9pc308ni1VSpW5O1Hdx6Xh9f1Ub9YfCBrE6qmWA>
+    <xmx:JH9Nap7SYctpJKQPqNYwxAbig_IF0nZsH-FsGdMjaxCX3yG8ir6iOw>
+    <xmx:JH9NasS0czHTLLb5vqwp3Gz-lh4_4K8YilU7TlKZ1RGAP0ndvPbs7Q>
+    <xmx:JH9NarRDAD710DUqjXEtsCUxfJf8-jq3_E2opAtk21fmkaMxouHnPoIT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jul 2026 18:35:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aaron Plattner <aplattner@nvidia.com>
+Cc: git@vger.kernel.org,  Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Subject: Re: [PATCH] http: preserve wwwauth_headers across redirects
+In-Reply-To: <68c2b88f-8976-474b-8965-97733eba5a99@nvidia.com> (Aaron
+	Plattner's message of "Tue, 7 Jul 2026 12:21:27 -0700")
+References: <20260602161150.1527493-1-aplattner@nvidia.com>
+	<xmqqpl28scll.fsf@gitster.g>
+	<5144a29d-a53f-4446-beff-e1f549345bf9@nvidia.com>
+	<xmqqo6gi3905.fsf@gitster.g>
+	<68c2b88f-8976-474b-8965-97733eba5a99@nvidia.com>
+Date: Tue, 07 Jul 2026 15:35:14 -0700
+Message-ID: <xmqqmrw2zavx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
 
-I usually try to fetch from https://github.com/git/git daily, and
-today morning something unusual happened:
+Aaron Plattner <aplattner@nvidia.com> writes:
 
-  $ git fetch
-  remote: Enumerating objects: 406099, done.
-  remote: Counting objects: 100% (1229/1229), done.
-  remote: Compressing objects: 100% (1044/1044), done.
-  remote: Total 406093 (delta 207), reused 1189 (delta 185), pack-reused 404864 (from 2)
-  Receiving objects: 100% (406093/406093), 292.22 MiB | 4.62 MiB/s, done.
-  Resolving deltas: 100% (308943/308943), done.
-  From https://github.com/git/git
-   + ffe2b816f5...106a830b98 jch        -> origin/jch  (forced update)
-     e9019fcafe..f85a7e6620  master     -> origin/master
-   + c42f45431d...00534a21ce next       -> origin/next  (forced update)
-   + f6884212b2...73452939f9 seen       -> origin/seen  (forced update)
+>> Did anything come of that discussion?  No rush, since this change
+>> fixes an immediate issue and the helper suggestion is for long-term
+>> future-proofing.  We can treat them as separate steps.
+>> 
+>> Thanks.
+>
+> No, I got sidetracked with other work and didn't get a chance to get 
+> back to this, sorry. It's not directly impacting my users since I can 
+> just tell them they have to use my server's FQDN, so fine with me to 
+> treat this as a low-priority issue.
 
-Note that it downloaded over 400k objects in an almost 300MB packfile.
+Understood.
 
-Looking at the objects that I already had and the objects in the newly
-downloaded packfile:
+I hate to leave a topic backburnered for too long.  As this topic
+unfortunately has not seen enough attention by reviewers, between
+two easy approach available to me to deal with such a topic, namely,
+merging it to 'next' and discarding it (with invitation to resubmit
+once the author can spend enough time on the topic again), I'd
+probably choose the latter.
 
-  $ git rev-list --objects origin/master@{1} origin/next@{1} origin/jch@{1} origin/seen@{1} | cut -d' ' -f1 | sort >existing-objects
-  $ git verify-pack -v .git/objects/pack/pack-080fedc9c19f711dd1b22103b382ede8925b90a6.idx | sed -n -E -e 's/^([0-9a-f]{40}) .*/\1/p' | sort >received-objects
-  $ wc -l existing-objects received-objects 
-    406954 existing-objects
-    406093 received-objects
-    813047 total
-  $ git diff --no-index --stat existing-objects received-objects
-   existing-objects => received-objects | 3615 +++++++++++++---------------------
-   1 file changed, 1377 insertions(+), 2238 deletions(-)
+Unless somebody else steps up and promises to usher the topic
+forward in its current shape, that is.
 
-The vast majority of objects were already available locally.
-
-What's going on?!
-
-This might be a recurring issue: I remember a similar large download
-from 2 or 3 weeks ago, but back then I didn't have time to investigate
-or to report.
-I tried to reproduce this issue by attempting to recreate the state of
-my git repository from yesterday in a new repo, but no luck, 'git
-fetch' only downloads what's necessary.
-
-I use a Git version based on next, with a bunch of my own patches on
-top, but none of them has anything to do with object transfer and I've
-been using most of them for years.  I don't have any config set under
-'fetch.*' or 'transfer.*'.
-
+Thanks.
