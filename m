@@ -1,118 +1,85 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA9D348C7C
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 02:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04009202C48
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 04:27:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783391421; cv=none; b=IPLKTQruyE3U+06oEHrWBO1YBgSky9XbkKny+y/gGW2vTNdxBLeHjZ7dioK+Ut46anV1je6m7JnaLtp+N033bs1S6g3wq2aUykS3/OESg0qDufH9eSgubNPZ4IbGD+3Gav6j7FSNrTYfLRcKux4PE001feY7eYq4jDBla+t5gY8=
+	t=1783398442; cv=none; b=Zo/k5hZqAFv0B2l4trM+vQc9EYcbckvFqyquCHpMzNJkefeDyGv5BWZ0EiF7xXGgRe3vIJ+RyCk3RdjGXpSOCFR5AZtg9rxHgWpCCDYZF42mwLQeoTIC/5xMHxLUPtWutax4mnlwd6dv2c6bq01u1jjpT/OzrvQKtBygkhcmnlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783391421; c=relaxed/simple;
-	bh=4ttBg5wE8Epaqxf6we7hx8kp16Ynpb6H6ZsCClQ1e1k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=el8jPuoTQ0aebNQt5gKNOjiEWPbb8ykc6h7f0QivWg1W+SIM/ANkOcDdvhRVn3vYtMQi9cczVtbWgx1pdsvgTAWEaGxQvyosQqnXZSaNLX0ViwjqkLTy91pFMhSX0Ip2+NqjqkTSJd/8588v+2cgvzhSvI8iGc5BqdR06QRCjmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LU4CLG3e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jXHnHvBv; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783398442; c=relaxed/simple;
+	bh=62tx+1wiG6QWUUHSB+/QAHuQ+xR9uHTsxeSy32BCOtA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZtV9w8FBwovtkULjSUP8py9SrYpjWd5IcjYxunQq3iu2ofuRhneeBpSmiGux4bl/B25m4SINPlwcFzK0+zTjtX57MqmVR8qFKm3fepqYdqTLYbt9IJ4l7HVdfjqZ04PmTQzPvLjYTWFW1OtElvLuInApIgAQAK5+Ami4hLEUZ3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KmG24b+x; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LU4CLG3e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jXHnHvBv"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0D10FEC003B;
-	Mon,  6 Jul 2026 22:30:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Mon, 06 Jul 2026 22:30:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783391415; x=1783477815; bh=B8+K0qJRYt
-	JBNjpe6O4EK80AUcAmP+xSzdafm1JAa7U=; b=LU4CLG3e1BheRqQ2trv5b/7psD
-	ZeD+yDX30r+Y0MBbJlvzqM9Yuoh4j8KIdcwBRoKboaP713kEaufu4dIVGonl7M/b
-	j3Mr/V+VheEmVoAdyZeDluQXAdBGHXBAZTloxwcSy9Sv/OsAbsiS32GMfBVjiSaw
-	rLRSOjy2G1o4VhP/50S7LPizqHxCVnRfxPvCJqqRbTKgSUIYdaktu4LW2fHVVRLc
-	mlhnB7ELLux/0gjIrV9iWz9ff5UbojEsVIkbRSHuzor/ihuzVnW9+sPM0HmoZ0pn
-	9Wff4/VUaCy49ZurPUMk6E/Jj+PbZGvqFlKV3oIREqUykhmEL7iI+94DVCMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783391415; x=1783477815; bh=B8+K0qJRYtJBNjpe6O4EK80AUcAmP+xSzda
-	fm1JAa7U=; b=jXHnHvBva2zjvBBHqywjduOCu/8JtO6BStsrjg1YTXENUVO2grY
-	zcL0k2ouiRop3+Q7Dalqwxn+/tsBd4doT5joxqLMetBxYQpTMWISMp9sj/N3m0TH
-	e4xXKKAPhVqwxwpedvDkNzN081TjZbqUeUIEO6KaSBDz4fglyk37EElNM7OEnEsx
-	N0EyrpDZywAX+WYyOR45glIg7NxGmZKSSNuAiiIRnlblQn+KXgrnFkK8DItNFT3o
-	IytqV0DN5WstH+zAgePUXYzGb/qUwVlbmItC7TXJOGFJ/JAkJNSMqoEK6C1/2U4i
-	6cIEOk6voanmEB36Gwla8QsMX527MiboRDQ==
-X-ME-Sender: <xms:tmRMahflLlGuRExgClDmeso5NUA6e0dUN0J_Oit2j45495H_xGNwTA>
-    <xme:tmRMamP1LDn4ZGk9iDiUamdHaWlTYo6pfIjLC2myoksJQGVTwegTeoO5qV9yQ4xYR
-    2UVKJf_6zIbJNyLhLNKTQYZKc6vCgtN8tGOAme9INEuz4xHuRHo-Q>
-X-ME-Received: <xmr:tmRMavh6yTv-ANDBUNNKu77xhIYAqAh_LAuHqL9fApkgOCL3hJc0d3Mpqz99m9uoifMP206zEGgt1IWCMztDtc0RoOsC0xoWqFkjoIg>
-X-ME-Proxy-Cause: dmFkZTGFJ6gjimzutWKyveVIwRrcHnGANlgP2WSv09kRFpMIWROy4NbCjO5Kunkrikqy5s
-    k7MHoO01eGaR9LPLkMZ2ZO7Uy7/e1ho2fKPPMuGRW+vM4El26MKp0X2NS8T/UKhpUWX2vQ
-    nEWjaelMvdtEZCsUetiQUiGedMZqpKWeqELNmVI3zHHMppqnWkCbNbAycLuto3BqnMH023
-    e1x/nG6DWG6KjvCNHvhuYDwNXT7tmRh3cSCUp7J3j6KMy77lm1neKWmpC2POsjBjDdy5yD
-    Ym6KvqN5YkSoKvNIA9ipAS1uO03Z3+pNoHaNqlhydl9Z7Xm/e+N+/2cRd5dp/DVd8F0THw
-    iH0kLoyReHaJXYzquTqRmioKCI2X/pzHLzCytldgEcvVRHEWPJYE86z2+90ea4wQdfpDQd
-    DIatbAQyAAIJdLWbqo4EVdsAyqN0PVrWduNEK8rSoZQkHNT4O3TGieK5T35UYJ6Pr5SSE2
-    6JxH+aINPNj+UKPSnth3A+X+3OYQL0ptMUpg97IFaUhuNUBNodGdkryCPGVNjIomiETmUu
-    vGPhAKo5tgPY2QK0hFeokXJr4C+avLbH3qEJqbe8nlwiUIX5oaVaBNApLdNpcZoBcQqgIT
-    X6BuZyaT5QbmgxYTXWZa8Z1IRnl7Eqw7CNSiXT9WC3HTKHmmTHZp91rFxi8A
-X-ME-Proxy: <xmx:tmRMap05BL_ekY-3XQpaSxL4DUQLrSxXtI3JD6hquDOJ59-l-xJ5lw>
-    <xmx:tmRMapjLjBCu_FZdTbka7uwxj_1MmsgaUTiliTYiwD4naYOV28t5RA>
-    <xmx:tmRMapeNk1kPuu6MGWSWm4qMEYLZFjJYjJZU443EmRos_KJC4sYsog>
-    <xmx:tmRMaskGKLaadW8_mav3R_0oAXnoPOdcSJ4TPlH81EJN2chcWect6w>
-    <xmx:t2RMajAH_1zDM2stSkFXrodgXfldCOYqOTqYyYMFbNm6vmKB-QqKIbl3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 22:30:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Jamie Magee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jamie Magee <jamie.magee@gmail.com>
-Subject: Re: [PATCH] t0213: skip ancestry tests under user-mode emulation
-In-Reply-To: <pull.2168.git.1783359242130.gitgitgadget@gmail.com> (Jamie Magee
-	via GitGitGadget's message of "Mon, 06 Jul 2026 17:34:01 +0000")
-References: <pull.2168.git.1783359242130.gitgitgadget@gmail.com>
-Date: Mon, 06 Jul 2026 19:30:13 -0700
-Message-ID: <xmqqa4s38rbe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KmG24b+x"
+Received: (qmail 17109 invoked by uid 106); 7 Jul 2026 04:27:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=62tx+1wiG6QWUUHSB+/QAHuQ+xR9uHTsxeSy32BCOtA=; b=KmG24b+xhQ1keLOLTAerkZ+2GlJzOmwh8lze/6MBqdstVDXaADHL478WTZHuxWg5stE5HmZLJCC2WYsHV5unVoanmfr121oKUGfb23Mg0r1uRVZKIFDKimglc/KS6kHg99ZeEI9uVb3Lt5xGGDsn1Kcd261ID6O8Ai1XZNbLS0vkzy3OLO9chJxLG3Vo76AllqeeFU4l4js1+jHsDl70pPd/sfFOPc81oULaQ22T7gDaMyagFJQCVC/0WHtKfGOXGjiBbZmRPy0gbjd4G6ff3WayxMJu2joMADicB4xkO/gPT7KA5DoKAlXe0nwlBdRyfs47cpSa0HHnKcXw9MjV8g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2026 04:27:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21913 invoked by uid 111); 7 Jul 2026 04:27:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 00:27:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 7 Jul 2026 00:27:12 -0400
+From: Jeff King <peff@peff.net>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Trevor Gross <tg@trevorgross.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Haller <lists@haller-berlin.de>,
+	Derrick Stolee <stolee@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase -i: introduce `pick -x` to add "cherry picked
+ from commit ..."
+Message-ID: <20260707042712.GA677056@coredump.intra.peff.net>
+References: <20260705140931.98262-2-tg@trevorgross.com>
+ <20260706002415.GC2301945@coredump.intra.peff.net>
+ <5d238e0d-18ba-429a-a9a4-a3988b00e1e1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5d238e0d-18ba-429a-a9a4-a3988b00e1e1@gmail.com>
 
-"Jamie Magee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Jul 06, 2026 at 11:08:18AM +0100, Phillip Wood wrote:
 
-> -# Determine if cmd_ancestry is supported on this platform.
-> +# Enable these tests only when cmd_ancestry reports real process names.
-> +# The procinfo stub emits no event; under user-mode emulation (e.g.
-> +# qemu-user) /proc reports the emulator, not the guest. Spawn test-tool
-> +# from test-tool and require "test-tool" in the child's ancestry.
+> > To be clear, I don't know the answer. It's been ages since I've looked
+> > at sequencer code, so there might be more gotchas. That's just my gut
+> > feeling from a high level after reading your message.
+> 
+> I don't think it would be much work. The code that edits the todo list is
+> rebase specific because it deals with rebase.missingCommitsCheck but it
+> shouldn't be too difficult to generalize it. I do wonder though if it makes
+> sense to support all of the usual commands when cherry-picking especially
+> with `-x`. In particular I'm not sure about adding support for `edit -x`, or
+> for `pick -x` followed by `fixup` - what does the trailer mean when the
+> commit has been edited or fixed up? (though if you're back-porting bug fixes
+> I guess some degree of editing is inevitable)
 
-T.r.i.c.k.y. ;-)
+I'd probably err on the side of assuming the user knows what they're
+doing, and will mention any edits in the commit message as appropriate.
+Maybe that's being too optimistic. :)
 
->  test_expect_success 'detect cmd_ancestry support' '
->  	test_when_finished "rm -f trace.detect" &&
->  	GIT_TRACE2_BRIEF=1 GIT_TRACE2="$(pwd)/trace.detect" \
-> -		test-tool trace2 001return 0 &&
-> -	if grep -q "^cmd_ancestry" trace.detect
-> +		test-tool trace2 004child test-tool trace2 001return 0 &&
-> +	if grep -q "^cmd_ancestry.*test-tool" trace.detect
+> On a slight tangent I've sometimes wanted to be able to do
+> 
+> 	git cherry-pick --exec 'make test' some commits
 
-This will be happy even if "test-tool-trash" that happens to have
-"test-tool" as its prefix appears on a cmd_ancestry line (for that
-matter, things like "cmd_ancestry-not-quite" that has "cmd_ancestry"
-as its prefix would be accepted).  I guess that is OK because we are
-testing this in a fairly tightly controlled environment (trace keys
-are taken from known vocabulary, not arbitrary strings, for example).
+Yeah, though in that case I'd usually cherry-pick and then just do an
+in-place "rebase -x 'make test'". You could really do _almost_ any
+cherry-pick sequencer operation like that, which is perhaps why we
+haven't see a huge number of requests for it.
 
-Will queue.  Thanks.
+This "-x" thing is special because it's inherently about looking at the
+original commit id, as opposed to fiddling with our rebased version. But
+I guess you could "cherry-pick -x" and then rebase (doing whatever
+rearranging and markup you wanted) the result.
 
->  	then
->  		test_set_prereq TRACE2_ANCESTRY
->  	fi
->
-> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-Peff
