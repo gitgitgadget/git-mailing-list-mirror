@@ -1,167 +1,122 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1B5430313
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783440766; cv=pass; b=HVGjjIB1hHC9eDT8aLQ+Id9aLKjT6E4ePoHLmrqQhMt1AR3lNYLMILMDWMh0T7Sk4JIHkkHDMN4syee+zWvAcgfVhOk36xtCRUCTZuKO+Bl1ectKxxZO/lRu47O5X0s5CBOQLj4Y87tMRs+J4UKSA/p1LxrOc5/LS0Xv3ZrNPGY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783440766; c=relaxed/simple;
-	bh=T5/Z4X93OWta0/FPFh0UA8kIQX8pjG+kcoF+9FUFwvA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OwAgJPHqyCwhSR5afKAHo+lKvniHZHSfmWdyoKcVb13Xy+sMQf4x2e+lRTWMy3FvutKfcj051cX5gmsLpk72EFheC0/GO0Uw+jaw8Xdrd0HLUYosXwEyu4fjxfgCIjPaMvUTKAbD2naFn786WGi3qvTtdCkzsVfpoPZwlrxog8o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=LnIPqQVI; arc=pass smtp.client-ip=74.125.224.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BF242E8EC
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783440909; cv=none; b=euSrYABMGJSYRVe0t/yMxMDnm4uffFkrVJXOIvi9JJ1jmZL4935vH3zC9lKScdog6Y1KWWYRaiiAtbfWHzmRBTUyTxzJ5WOOJbHE8HNzGcyb60zYrv984H8FO9ZeNqQWIjyaOe7D25QcV8lUaHVmq6UXQ5g6Q8J+eYRaTr1+GvA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783440909; c=relaxed/simple;
+	bh=sJy5XWmJY5CvBNNaozESTJv7pyAiw2MuNSvhEcFoDlQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nKOPXGWlnnHsDI+FzLXr+0T80TTb25DhB1bqJBDFz73SDu9cvF8K3VbJCtsjQUJ/A41jDZpHwhwFzpw9oCfG8Mr9bLOM6yOWCS+r70qrSTHLRZFwFk4m85vOW6s/d+2Zla/4jZbCRJ6UulNikwr+X4kYTknukMaUeNlhRI1GHfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e1XjZ0GR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kCfYqWoj; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="LnIPqQVI"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-6663b4fe293so3424959d50.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 09:12:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783440763; cv=none;
-        d=google.com; s=arc-20260327;
-        b=V136/TWGfqt1MgUsDiFy9NNCxccONP9x9Y2EgtwK4huv0lYm/ArEZu/wVN3Iri6/em
-         Vrftm0jZQB55jgGwniotDBYlnTOUxzXE4GZ0wNjkrNGg2er0D6654dQ3/ig9kDf2fsjX
-         XLJl36poLbeP1/30M39vlpFozRaeCLoQ+ZUdECfSfVPrVBKMiHBSTZDsQqFea+tdRf7U
-         pebvxQqmVTbx9QfUXFYx2aJJ7JbIHoEzmNoKnF+PSATlv5zKDcSolLNtVapckHxorQkY
-         ISiOmZyKQby4+FaO1S5b4kPif0JHDmZSFRvrviv4udcMGoU0o+IsWeN6ryEfhBmrd3Xc
-         rozA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=BhA7hU1jkJka0X//COtl6Q9QbmoZzHFdfSao8db9USY=;
-        fh=1KhExktlnSu2y9/+0/RlCLzpgz6Z45msX1+HJXZetPs=;
-        b=Zt0JT676FyHVDYZ1KVukULeSrwroQ07m5pJEcqeXkmULaXGD2jin+mMOYNjFV0z4q1
-         MOlbnU7B28T7ch3rL6yR42De9ZqpglqU8CNAEJWMS5Eese2WDRYCZQntTWc4Yct5KwLs
-         BStZf3X+QHDuomjbpz5kBgGFTPFkmkeS2hXPrc6y5JfMEyvDJo4jR2RgFoHH1IEC7rZ2
-         Twda3uaJ0HLTdoTZeWqaSXFN7RKQi5YQeWNTWND/nBf5I5yBEhyjNPCm1cxpFBn97NUg
-         tq8SjbTJ81/S89LCN7OFyuZNKqjxJ1kbKtTIMBwxzi1NZvNemRsutU0LI3WSeQD3kSHr
-         66Ng==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1783440763; x=1784045563; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BhA7hU1jkJka0X//COtl6Q9QbmoZzHFdfSao8db9USY=;
-        b=LnIPqQVIYcY1fhRNZhECUQFqlQsYfvCVYnFOWxDa/EFzCOkhT4rRFVnxYVE2b8ksG0
-         rOqPk0KXc8IS5FvQ/wXwanZfJuIeKM8t7Q7OHx5QPWitdtQlUbQ545/Nbnr5I3awWa1v
-         iuViwx73JqEIeulzUgs0bnEevBzzZwfxAdsKM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783440763; x=1784045563;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=BhA7hU1jkJka0X//COtl6Q9QbmoZzHFdfSao8db9USY=;
-        b=FhQrjauWXx5FHc7hGZN4XfLu26GaPDCKt7ITYTiUapn/104Bs030WGhBv8vyC984LG
-         ahGle4hkMI5M++RkESKxNaEp9u8zQamykpAGxT/+9VVuWOKxR7mHn+364cZTISw6S67g
-         s9RzsdScDwDtEHSWHnixGMIYeX/JyWVgxKfZArjkMxYly+uJ4YkDvafJyUXBt5VLWL35
-         7ForD5JyJ22ctBat2MgKnS37E1bd+s109Bbo7dLgkAKGbRZ9on4TMBVbxsDJnEkTcNDc
-         hS+fF/3/YD0ZHpwHDAAh7o3q4XhwgS4yPFcWqDRXb6VAx1mLEKqAwaVqZHlP38yfitwE
-         jEiA==
-X-Forwarded-Encrypted: i=1; AHgh+RrNYi2t2Fn8kvFbprw29kxbFgJjfYhU26zGun5gwcxqAylUKDjv0cGeFFWw2n7NjF1duMg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKBuVzNvWHp+rfXaOSAlL/lPThWHf1Gxbv3SkgBmWXHU16omex
-	lVINwOsXQKkMQos6eZrKQDWw7wb1oBS4shT26lwakiTvbXi0p+4zs7yN3QmWYk7t0GDgRckuykf
-	/gfnspY/FWAtjn3ekWaXSHs/UvClGAmcYQqm42HI3sA==
-X-Gm-Gg: AfdE7cma+hwmD1i9jTbe7Q6+DWtyRs5SpjdspRW7TayMleeadg13Ig8TI6vLLtck01X
-	jzTBh057I8b9b6yzfpsW9DnhO60NR8mmVLWR9ZKSs/rwcfTsgCNlP5sEOmcxMaQPyTypKUVGa9/
-	6abVSO0Yyq2Rk5+mVPGZXigend2yznbSkmrRd4A0Rp75I16DVySq0zxbQ8Mqd2kzppYMzXHq429
-	R3WXbxS5kL1fIeCp0JvPlKt5xfV721wcCJ/8wzedJMKYy2smNs6suvQ+rQLkjE0cxo/y8KQFQdG
-	dl/1A9f/
-X-Received: by 2002:a05:690e:14c8:b0:667:9010:2afd with SMTP id
- 956f58d0204a3-6679010324cmr1714560d50.38.1783440762843; Tue, 07 Jul 2026
- 09:12:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e1XjZ0GR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kCfYqWoj"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C2F9E7A0145;
+	Tue,  7 Jul 2026 12:15:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 07 Jul 2026 12:15:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783440906; x=1783527306; bh=I+VmpqZXoR
+	BYuJGoxLghSBN5Ob8HyNV51X1e0UGWy1Y=; b=e1XjZ0GRxNDqrgXHmNaU5zdnGi
+	d3ngmPKEAz1H6DTZ2loL4z7/4BPXPQXwoTNTChaMNNMNVdOBZfDkqaitDZytTqfE
+	TWS8/kWBld2EAGlOV+WfKKXdRbD4OVUz0zIbKEjkqXg67Gu/64UUTxjpHljYl0P1
+	VS/a5IK9aEOS9J9ItLjs6H8QVy9D68yt0F9PtDDD6b1SHQyclu4yLd+qkU5KjPeC
+	z8FN2hJwBHBCcqedPenE6l8bZsonNwqoXmWPheT9JU+wh3HZifu51+XfWjO/TbIl
+	qh8B/GdSKCbZUO1pDuTSn+KQI4ndVO8GGHvwkoTYDVWmiBkOY1gY9GrK0TQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783440906; x=1783527306; bh=I+VmpqZXoRBYuJGoxLghSBN5Ob8HyNV51X1
+	e0UGWy1Y=; b=kCfYqWojgJgZzmekkFQHtIqV8QL8SskoHOcK20G1N8QGzCC3UWO
+	wfiZ5LyGKo7ODvtRvOO3DnmOd6rEDYiuFEu2wlsgZm9F0AwxieDR++yXNtqDLpDu
+	9Z1HuQsO7l+X6iWzDSiLhPM7hFMZjTQ6aJP5Kl3OZjL6033RQOvDfxGbkty83V6h
+	GtsDST30xPBl7UGITU369o1uZYtG/vaJ91q9VPJaVzDeSe40vVwoxntFS7oc+QuM
+	fpxlrGcCj+JgBftX4iBllj3JOXx1RfJC64LdqlVf/KFDfCTsheGO64KYXMUt0Zbn
+	8MgcFLycO4xlHdGS3JhCtvnRBvB6kW1w1zQ==
+X-ME-Sender: <xms:CiZNapKI3GCW2CAjFgq_jGAniLIwnp3TwK62QHdlwcia-iXODuA1Lw>
+    <xme:CiZNasA4Xv5dIrbNvKGQkNKu2jxp1noS4dOKT1Dw4w26jg_gD7EQX-WCi-wdN1Rmu
+    XLMVpvtcO1rHZ2zjet3GcFPPF-ZL7ppesUIWUOyQdu88Knqy8eW>
+X-ME-Received: <xmr:CiZNaqA8LWmRiqV2HgN0YrQwAeJmLLMs-UHdNOeT9VUGN_OkhqQN2Xelp6eutC7JDACI1wFinrCW1_cLal1ee7HN4V0vKz0j1-m4Wg0>
+X-ME-Proxy-Cause: dmFkZTFhPhUDJEIeClL1bRJnlQlJzAoCONWjHY8y+qpLJj0z2qCK1MT3DMPxdDUHobA9tC
+    f2MDyJhlrp0Y8k1PHl6fU/fAjLTobSvM7GUJ9vK7wpkgFg6SxYqo4C7A3jYi27zwx1htBk
+    2HjBdNgoqSvW06LqFRczlBkxDCy4FkVxYGq9exinx2oox/NQ7QHQly7z8zrFTV0r9Fb3pN
+    ft5sk/P7JGxom9vyXy3Ae1JPlHWg3/rQq3r6zNfa+VEWeb4UJtyFUjwfj/4A7i7w1V/D/4
+    zwUz90WCjkDs5W1pZzUgWBMHpkgu+MgvYwGW22G4OuCNWuyOVcjfPEu+V+ImFLJwWTuAY5
+    l82/178DI7Oid5FO7nPzp9Dr4B1Icjpb6eALXTcIj9mmVoqcF6rpg/0enkmCOXZ79GMYCW
+    jopD1dbbKIiWYAF6A4CMYuOykYpBv3/wNankp8xRsL6Lws+p3dJGI++QnmbZ84LaqTapRY
+    xC8G4WAiAtOtOV/zpLFf2lSYH2rRmGOWgjK0cvKlNcEp+79Ec5eo9nwfm/sh9ceOGQdcIB
+    Q2TyWxLwxUqz56OfChls9U8vK0J1ZD6M2CrJHE3FX5vGZYr3+yqA2QIgSZ4Ynns1/sgl7A
+    jenUqCP6At3cgETDCHQQ79FRjEdzTjq6vqpaWFIzK9erLITsK3yt5/S7J3Vg
+X-ME-Proxy: <xmx:CiZNamC625WtJ0R4Nvszgl7kAaVnonaj9qAVLTwf8tK66EemdEf9ow>
+    <xmx:CiZNatpXln38lsxzIAHgOo7NTCqteYKpt5cms70J7OUzIDcDMJZS5g>
+    <xmx:CiZNaomd5ZiUcZKRgs-4v-Aw9C56uRXROJSckG2VDDfm_6x7VlmquQ>
+    <xmx:CiZNalxx0sNt57o7sSqhjctA58yoLmJrUyBm-hIBjtUASOERm5LK9w>
+    <xmx:CiZNasy-BCZr5ZudtlNsB-3QpICUfuHQcIqjR51e8KxWCYvdrRFfZpUw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jul 2026 12:15:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 2/7] hash: convert remaining direct function calls
+In-Reply-To: <20260707050417.GB1288294@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 7 Jul 2026 01:04:17 -0400")
+References: <20260707045556.GA1288172@coredump.intra.peff.net>
+	<20260707050417.GB1288294@coredump.intra.peff.net>
+Date: Tue, 07 Jul 2026 09:15:03 -0700
+Message-ID: <xmqq1pde93p4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2166.git.1783344957.gitgitgadget@gmail.com>
- <d8ffdcb4f8c1988c109761ddb9daff8c07caa2b1.1783344957.git.gitgitgadget@gmail.com>
- <ak0aNrBpuo7ZwZ2k@pks.im>
-In-Reply-To: <ak0aNrBpuo7ZwZ2k@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 7 Jul 2026 18:12:31 +0200
-X-Gm-Features: AVVi8CdjhE41CYZ2RZm3K1jFkiv2iX9JIz30yT65mAo6CbHMbj8cbTZ90trf41Q
-Message-ID: <CAL71e4ORdJXsz58SH71VjDNAWZ39T3+TrWN+gScAFx=Gt0CTkQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] t: add tests for ref tombstone scenarios
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Tue, 7 Jul 2026 at 17:24, Patrick Steinhardt <ps@pks.im> wrote:
+Jeff King <peff@peff.net> writes:
+
+> The previous patch added a coccinelle rule to make sure callers always
+> use git_hash_init() rather than direct function pointers from the algo
+> struct.
 >
-> On Mon, Jul 06, 2026 at 01:35:55PM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> > diff --git a/t/perf/p1401-ref-store-tombstones.sh b/t/perf/p1401-ref-store-tombstones.sh
-> > new file mode 100755
-> > index 0000000000..e40a6dcbf4
-> > --- /dev/null
-> > +++ b/t/perf/p1401-ref-store-tombstones.sh
-> > @@ -0,0 +1,44 @@
-> > +#!/bin/sh
-> > +
-> > +test_description="Tests performance of ref operations with many tombstones"
-> > +
-> > +. ./perf-lib.sh
-> > +
-> > +test_expect_success "setup" '
-> > +     git init --ref-format=reftable repo &&
-> > +     blob=$(echo foo | git -C repo hash-object -w --stdin) &&
-> > +     for i in $(test_seq 8000)
-> > +     do
-> > +             printf "create refs/tags/tag-%d %s\n" "$i" "$blob" ||
-> > +             return 1
-> > +     done >repo/input &&
-> > +     git -C repo update-ref --stdin <repo/input &&
-> > +     git -C repo for-each-ref --format="delete %(refname)" |
-> > +     git -C repo update-ref --stdin
-> > +'
-> > +
-> > +test_perf "recreate refs after mass delete" '
-> > +     git -C repo update-ref --stdin <repo/input &&
-> > +     git -C repo for-each-ref --format="delete %(refname)" |
-> > +     git -C repo update-ref --stdin
-> > +'
+> Let's do the same for the rest of the git_hash_*() wrappers. I split
+> these out because they're a bit different: they implicitly use the algop
+> pointer in the git_hash_ctx. So when we convert:
 >
-> You're not only benchmarking the reference recreation, but also their
-> deletion. If I'm not misreading things, then you can queue cleanups via
-> `test_when_finished`, and these calls will not be measured.
-
-I don't think measuring the full create+delete cycle is wrong per se,
-but you are right that if we can benchmark something more isolated
-is even more useful. I will try to split this up better.
-
-> > +test_expect_success "setup asymmetric" '
-> > +     for i in $(test_seq 8000)
-> > +     do
-> > +             printf "create refs/tags/old-%d %s\n" "$i" "$blob" ||
-> > +             return 1
-> > +     done >repo/input-old &&
-> > +     sed "s/old-/new-/" <repo/input-old >repo/input-new &&
-> > +     git -C repo update-ref --stdin <repo/input-old &&
-> > +     git -C repo for-each-ref --format="delete %(refname)" |
-> > +     git -C repo update-ref --stdin
-> > +'
+>   -algo->update_fn(&ctx, buf, len);
+>   +git_hash_update(&ctx, buf, len);
 >
-> Would it make sense to use separate repositories? Otherwise, state from
-> the preceding benchmark(s) will impact subsequent ones.
-
-Agreed, I can use a fresh repo for each scenario.
-
+> we drop the reference to algo entirely! But this is always going to be
+> the right thing. If "algo" does not match what is in ctx.algop, then
+> we'd already be invoking undefined behavior.
 >
-> > diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-> > +test_expect_success 'delete and re-create refs with tombstones' '
+> So in addition to making it possible to add more logic to the
+> git_hash_*() functions, we're avoiding the need to pass around the extra
+> algo pointer and make sure that it matches what's in "ctx".
 >
-> I wonder whether this test really adds any value. We probably have lots
-> of tests already that test creation/deletion of references.
+> The rest of the patch is the mechanical application of that coccinelle
+> patch, plus a minor cleanup in test-synthesize.c to drop a now-unused
+> function parameter (since we don't have to pass around the algo
+> separately anymore).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/submodule--helper.c |  8 +++---
+>  t/helper/test-synthesize.c  | 29 ++++++++++----------
+>  tools/coccinelle/hash.cocci | 53 +++++++++++++++++++++++++++++++++++++
+>  3 files changed, 71 insertions(+), 19 deletions(-)
 
-I could not find an existing test that covers the delete-then-recreate
-flow (where tombstones are present when the new refs are created).
-The existing tests cover creation and deletion separately but not the
-interaction with tombstones.
-(But perhaps such a test exists and I just can't find it.)
-
-Thanks,
-Kristofer
+Looks very straight-forward.
