@@ -1,142 +1,159 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C262935E1AF
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 17:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CBB420887
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 17:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783443627; cv=none; b=mIduyxGZ3VruKJzRUl5hOkQ2nHttpCq0GEZwHIqnC25/4VHEqGaJ96OB2oYwMTuYKFl2b0aoqjanzYol6fHwAxn/xtiX9tOeq5xeBk/xWhNu3xvyHfZHk/PgsFXYG+dMlRJFXh2O5L4DQQlKyv2WoTahPEFv25MS81j+R23T8F4=
+	t=1783443765; cv=none; b=cbuAcBGSLPeTIhQmC937RnHadBn3pO6Ykiiy25XBVsw6nEK6J8Y74t1UXpLlnHiw7TFC4+ti2L1cBTUpQAwRnUtRNm6oXZK9Fqyr8irm1/lNRy4s/bORp3m9Sq23q6irVZtfmRfnfhh/fJT2vQRGa1uOWmaD8gJmbRl9OVVVfqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783443627; c=relaxed/simple;
-	bh=/nxE/w0wQTvZGE0FINvw4xl5HHeeHIjllEOALT3oa1o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jtKfmAa5JAVqtSmfP3Sl9CxuirJ25NZbUCxT3LZ9MY+lIrg/kQu3bnflNVFdtfzKXASlCtdVRdRZvbZggDBy8B2NTgUxrP1u+9Z4JGO1wGHNMqwUERpwQzFn615TM0pXZmf8t4B0T2y6kLVTDeHeCpVF5sLxtifgdHuesF1t6Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JNRiWSiM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q8Zqf86O; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783443765; c=relaxed/simple;
+	bh=0iTpiH+GqxosFP1vcOYy9y02k15D3wpUNMZn4KpT9rk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ej5HFn3qosujpA8uQsL3lEEkDrd6D8RC346zvfZlUp5JB/wtdLxqt4HpMrGLYry24BF0vZlYAc2Pf/N2ib2o87JTiuXV2ZglgBEZTMzBFlEJItTNumKCtrdEBOc0kC84kDzEVAMQ7PSh5qU7/chAMG+3CnCM4TUqhz2io8iAKWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g/WyPrjr; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JNRiWSiM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q8Zqf86O"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 12E1D1D000D6;
-	Tue,  7 Jul 2026 13:00:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 07 Jul 2026 13:00:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783443624; x=1783530024; bh=JSnVIwZJJg
-	6U3078ZRpQ7vdKjc/WOR7F40mUb8Av+GU=; b=JNRiWSiM5a55Sxd5nP/YR+L2Jb
-	MWT58lp3sjwdgy73ReFPB7NucRhJ6Gim6xC9v9ppQ6AlSSo5SZ0wtmXdja07nBvN
-	IfnboPb7PG9Xrjxbi7b/rxkPGndgaH09cX0m8LkVY5DQZ20cHzt6iDRqZni/7VlZ
-	bgZiID3NS24WTB4W4ABs5ghEQSTs4pLmho+oli46XTqGwUvaugG1PBA6ZBFm+XbQ
-	b+jPwyNFFHo1qsXgLr2Maeb9jM0yZOOki9tJD9hwL3P/6r35U9n8CJTV8W1JM4m5
-	XwiqIbaaWxkq7VoIltiDxjMZoiaSPQv25EzEOO4INc6wMnEe8v/m48RrqPoA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783443624; x=1783530024; bh=JSnVIwZJJg6U3078ZRpQ7vdKjc/WOR7F40m
-	Ub8Av+GU=; b=q8Zqf86OMSsxVRIU/Vqrocqg8h9Cnq/FO/3fOJeclRn+X0Z4JEE
-	yNBasulZsiQChXi36LslASUsb8hv4u3SGL2sdYx3GH+cLNwgDFckFUMx58Yxz+Ep
-	AZsHtHzfche40necfHuO5k9f+DTXhASbBgmAIBVhnFGXNRC9eytP2kuGgK9bZtu9
-	3V24KUia95CjqvFwVMJwYgEOIH/cEUJyotdBOyyVy/thEjdpsW+bVL8alsrkf8wL
-	ypYiIP0OWM+vLVX9OKJ5pzy8QTsFOa8kZCoxIbqyPgCzmQ8Gfkrq8pHiRd99Qkk3
-	euvvyvx0OQ6K6A9IZJzgyuTxUyIzLMskxPQ==
-X-ME-Sender: <xms:qDBNajKbp8EDvI12NdXC2QgFys_wanojN1DBKnjkEkNhGTLUI6K9Lg>
-    <xme:qDBNauLAEts9Yq7r_3vGXC4ZsAgutfSdkYL8D5fRtJEPSTetyw-jfZqGZAUrTPu7U
-    uotlh-Gr_qZwlajf7SIi20dXSyCo6ZYAEfxRGa7Rh3QpefESypOhN8>
-X-ME-Received: <xmr:qDBNags6iVpPVOunovJeyowm-CE5Dx6u0-vSZtG_SDGvT60BHXL3yT8YgrVXQcSLx_LRV8QY_jLn3nwRW1-AxCCox9XJ7zW-LTWtjsQ>
-X-ME-Proxy-Cause: dmFkZTEOxgjeT62w35SkhXEOAkiXwhyLK9pG598bfXSVf4xXhj3lyFNj/Js2eXyhpKEnag
-    b7GpTAYKpZKzO0VNZh1W3WHxSTcferywFiMn+ouvHc44rPQoCBWE+MoinxqUYDlCrmEFbf
-    1QmWuJKLMfg6PC8tRKpazaERkVHk2zhkqvFHGKwvg7uqih2G2GSjCviIByByGJD2SQdaab
-    UTHMFyJDv+aGdkQz3reJAWW8pMh47Bns8NTc7HUsn0csY2QM7zP/2cAJBuZSSSUhOsm3/S
-    SfOh4gmw0JKfjjdFj87TEsXY/gE7+7B2s/dKBZkL+jxVABpa4GKBpRSHhENyNydgfU/LkJ
-    OZf7CQSdVWHPy8qqX15En9j3RhgCbKNqUzgCk5KCOR08+gZNeRO63XHvl62VrBJWqHneOb
-    XyUm+Hh6qR1G5mpxJYFZwO+cJqZA5QmHZltx3lxjwcZQT1foeE7jBYRZpU0kRBBOaiNrS2
-    YoWQdO26udO0sX5TxhwNDtP4xsnz0chQBqEtxSRrvNCT91yRX3Bhuxm2SxeR053i9zpEDT
-    7RhPtylZh/ytetPGsiLZv2WLGUc4qVH931OICeRJzsPgT3/ALJ/WddMDOnGBW5rR+8TAaO
-    ASi46NHuTbhq5mxqD/6X84F4CLqfSLRnWSDKeX4lWzSkvwthrKvgluZc9Y7w
-X-ME-Proxy: <xmx:qDBNarSm17vwb43qVR1rd7BNcEzisW1WBaGJ1b9BvCXarMGWiBf0nw>
-    <xmx:qDBNamPoyC2vZ0BDhvvu5xPuL_8afE-9EnGs6EOuHZ63tnBOu8lGeg>
-    <xmx:qDBNagYyLmNvXUmn8f1FIM4RgFT_ltCVt3I-IlWqfBQ8HyHDD1BvoQ>
-    <xmx:qDBNagzED5XEuJcrRznq3VmzuoVRRla0S14qgqQDl7Wg0ZPCzsP_Pg>
-    <xmx:qDBNap1PU2onQ8QZyZFrtzRpqrjuvRuFBF8CWr6E-_VgK57-hA8Gqe0t>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 13:00:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH 2/2] commit-graph: propagate topo_levels slab to all
- chain layers
-In-Reply-To: <f9c1482a76493520b948a2e918de7a5481fa1043.1783418384.git.gitgitgadget@gmail.com>
-	(Kristofer Karlsson via GitGitGadget's message of "Tue, 07 Jul 2026
-	09:59:43 +0000")
-References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
-	<f9c1482a76493520b948a2e918de7a5481fa1043.1783418384.git.gitgitgadget@gmail.com>
-Date: Tue, 07 Jul 2026 10:00:23 -0700
-Message-ID: <xmqqo6gi68go.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g/WyPrjr"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-92e602d2c0fso56222585a.0
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 10:02:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783443763; x=1784048563; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c+djyqxJ6HrOAGz2szKTIFezncc7v+/4FZEIriMmSKA=;
+        b=g/WyPrjr810hM2vR2xlhIv2g6xWwh0K/MHIm5rdvcpcx85uX11jq6gq7nsi+WjXb7Y
+         3zm3GPNHCR4uSSwJvF+ZUrTuyvBGn9c1mWA1wPwdQ25kExle1o35tn0ZBPF5aLcciQBX
+         rQqliytE7ANPI2vVFQW2wvWyiL2yStk1MfCJ0gPLkQca9JwQMc3YDqmh/68YHM4iMnDf
+         PuPuvuN4gzOR0mpJS5lJIszfFH36vnpZOUOr48tJVbh8MJ6+n+WCRAwJDYVpupWkFXhx
+         NRL5KuKq54S6S1JSSuQ2/Rfu2mC9D//ZhzGYiYJp51APAP4zIksJRW9FVGnXcqjafCoF
+         HI/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783443763; x=1784048563;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=c+djyqxJ6HrOAGz2szKTIFezncc7v+/4FZEIriMmSKA=;
+        b=XUloCLb+Ci8AR4vpAV5erI58BEJIlu47l7tnhG9mQfz+JP3/Jm48XBSz+QEPn755U9
+         udEx5cJ4mm0RfP9tDMmbCMBwOH08AbNH5DhWemwQq5iRGm6hSiKED/2SgYTm3vP8voq8
+         DWimDo0qsTzauexu1aVn5mNKM16lV3/sT/PQ2gaN6iv5Hx8aBKcO3Xvn3Tr0QVm2dAYq
+         cAfqaGq+Zb/eiXRfkj+n96pWVInn2890OPAQ1QTtuarXKXehDm715DeSKrs/I/riqYct
+         TULBqJOtWye5bhelW4gAIRvsOuJZZ5RUCw9HxfuEWoa8sK4379Fc9yRYClg9exUqUBCJ
+         /5iQ==
+X-Gm-Message-State: AOJu0Yw5ZzkWkhAobX/iX2MchhZhZbe+Y1Z37raj+KQHRx/t1oGcWMw0
+	j60xOQPV7Vq7O0ol5B0zg2eXDjt8Dt8JjHyhtfQogI7dqhtzNOIRD57osEM/1A==
+X-Gm-Gg: AfdE7cm0qjWxfoeAA7GcWk67+U821JkB3y3krdMUEbZIZd1SwFOW2KeSPLS5tWXSDmT
+	1T5nHTqmP7oev0U0Kvld9MWWENEftGlYaVTw443wLKdi61gaPCkufJyQTLy4L9snDIYGafWnRrw
+	jp8fqMzpQYfMm95c+2iUWnmQ/BxUoZKeTDdS0A2vGJRbRXac4v8bZeEL5WtZnPRkl3tY1p2hOyd
+	videCleXGjsv9Etw+oGShfrrNpPbhmQDEs7sYIhphZ5kr6bJpqjNryxYOPr88ZfoFDhG+IrTbh8
+	Xyl69xJHhwWkmA6NpATeMj1pbdQa12Op8yIUGNshtWoUc61WiqrbgOn6zesNiXhpd9XZwWuW7+L
+	hBRhcGbKhG72s5MZGqVn85j9Y1HoP0zOEQOT2LGcYZ4m7wEK5eUaCIHolEKDzrLr8EqOhjkeXop
+	mbcBHjdqziGdkz7pE=
+X-Received: by 2002:a05:620a:4503:b0:92b:856f:3c14 with SMTP id af79cd13be357-92ec0c7670amr363072185a.11.1783443762606;
+        Tue, 07 Jul 2026 10:02:42 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.201.38])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90b800e3sm1177571185a.2.2026.07.07.10.02.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jul 2026 10:02:41 -0700 (PDT)
+Message-Id: <8f2bd4b14a3ed796fc58184d305e4b64ca52c9a9.1783443745.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2288.v7.git.git.1783443745.gitgitgadget@gmail.com>
+References: <pull.2288.v6.git.git.1783378333.gitgitgadget@gmail.com>
+	<pull.2288.v7.git.git.1783443745.gitgitgadget@gmail.com>
+From: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 07 Jul 2026 17:02:23 +0000
+Subject: [PATCH v7 1/3] Makefile: add $(RUST_LIB) prerequisite to osxkeychain
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Shardul Natu <snatu@google.com>,
+    Koji Nakamaru <koji.nakamaru@gree.net>,
+    Patrick Steinhardt <ps@pks.im>,
+    Shardul Natu <shardul.27591@gmail.com>,
+    Ben Knoble <ben.knoble@gmail.com>,
+    Shardul Natu <snatu@google.com>
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+From: Shardul Natu <snatu@google.com>
 
-> From: Kristofer Karlsson <krka@spotify.com>
->
-> Fix a regression introduced in 199d452758 (commit-graph: fix
-> "filling in" topological levels, 2025-04-07) where the loop
+When Rust is enabled, the git-credential-osxkeychain helper depends on
+Rust symbols compiled into $(RUST_LIB). While commit 522ea8ef7d
+("osxkeychain: fix build with Rust") updated the linker command line to
+use $(LIBS), it omitted $(RUST_LIB) from the target prerequisite list.
+Without this prerequisite, running a parallel build ("make -j") from a
+clean working tree can fail because Make does not know to invoke Cargo
+to build libgitcore.a before linking git-credential-osxkeychain.
 
-I guess the same comment from [1/2] applies.  We might be chasing
-ghosts here.  Is that elusive commit a total hallucination?
+Note that we depend explicitly on $(LIB_FILE) and $(RUST_LIB) rather
+than $(GITLIBS). Unlike standard Git builtins and programs like scalar
+(which define cmd_main() and rely on common-main.o to supply main()),
+git-credential-osxkeychain.c defines its own standalone int main().
+If $(GITLIBS) were used, $(filter %.o,$^) in the link recipe would
+match both git-credential-osxkeychain.o and common-main.o, causing a
+duplicate symbol linking error for _main on macOS.
 
-> On a repository with 2.78M commits and a multi-layer split
-> commit-graph, this caused a single incremental commit-graph
-> write to spend ~3.7 seconds in the generation DFS instead of
-> microseconds.
+Additionally, wrap the definitions of $(RUST_LIB) and the "rust" build
+target in "ifndef NO_RUST". This ensures that when NO_RUST=1 is
+specified, $(RUST_LIB) evaluates to empty, making the Rust dependency a
+clean no-op without needing intermediate variables.
 
-Nice.
+Signed-off-by: Shardul Natu <snatu@google.com>
+---
+ Makefile | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-> Signed-off-by: Kristofer Karlsson <krka@spotify.com>
-> ---
->  commit-graph.c                | 2 +-
->  t/t5324-split-commit-graph.sh | 6 +-----
->  2 files changed, 2 insertions(+), 6 deletions(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 4e39a048c4..c2a711cceb 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -2610,7 +2610,7 @@ int write_commit_graph(struct odb_source *source,
->  
->  	g = prepare_commit_graph(ctx.r);
->  	for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
-> -		g->topo_levels = &topo_levels;
-> +		chain->topo_levels = &topo_levels;
->  
->  	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
->  		ctx.changed_paths = 1;
-> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-> index f9c57760f4..9e5ab7dbd0 100755
-> --- a/t/t5324-split-commit-graph.sh
-> +++ b/t/t5324-split-commit-graph.sh
-> @@ -738,11 +738,7 @@ test_expect_success 'incremental write reads topo levels from all layers' '
->  		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
->  			git commit-graph write --reachable --split=no-merge &&
->  
-> -		# BUG: topo levels from lower graph layers are not
-> -		# propagated, so the DFS re-walks from base-3 down to
-> -		# the root (7 steps) instead of reading topo levels
-> -		# from the existing graph (1 step).
-> -		test_trace2_data commit-graph generation-dfs-steps 7 <trace.txt
-> +		test_trace2_data commit-graph generation-dfs-steps 1 <trace.txt
->  	)
->  '
+diff --git a/Makefile b/Makefile
+index 1f3f099f5c..7db38ecce9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -939,6 +939,7 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ 
+ LIB_FILE = libgit.a
+ 
++ifndef NO_RUST
+ ifdef DEBUG
+ RUST_TARGET_DIR = target/debug
+ else
+@@ -950,6 +951,7 @@ RUST_LIB = $(RUST_TARGET_DIR)/gitcore.lib
+ else
+ RUST_LIB = $(RUST_TARGET_DIR)/libgitcore.a
+ endif
++endif
+ 
+ GITLIBS = common-main.o $(LIB_FILE)
+ EXTLIBS =
+@@ -3019,11 +3021,13 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
++ifndef NO_RUST
+ $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
+ 	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
+ 
+ .PHONY: rust
+ rust: $(RUST_LIB)
++endif
+ 
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
+@@ -4074,7 +4078,8 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+ contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+ 	$(AR) $(ARFLAGS) $@ $^
+ 
+-contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
++# When Rust is enabled, git-credential-osxkeychain depends on Rust symbols in $(RUST_LIB)
++contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) $(RUST_LIB) GIT-LDFLAGS
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		$(filter %.o,$^) $(LIBS) -framework Security -framework CoreFoundation
+ 
+-- 
+gitgitgadget
+
