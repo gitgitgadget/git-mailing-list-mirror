@@ -1,83 +1,83 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0720B39FCBF
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 06:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076D639EF1F
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 06:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783405549; cv=none; b=tva8zTVWmSbzL3lRFDnaanfKdlSF67BD8K5bozjWtrWG//2j7bBo/AVBlC/i54F6SwH1tO5vchqMTExCCv6bJlc8C1xx5s3440rTjTXxVYIhAHidyFL3RwFFJwtAq0/1U8/6ag41o6jCYwutzVTneX9v3gGnzaTafpHdx2ZJoqA=
+	t=1783405554; cv=none; b=JdAMSCsB0ibcUNJqFwZUPUla0O1KTRRiM2vZJO2KyMB3IHi46PaCy/k6wqLwkvs7NqBcqM1wj1OvcEbpcYyH1kpV56V+mHOxh6JV+QRlVbFaiRE+7jQtsSlfxLjuIC6PU3EzIfbhexczLqm4H1bjnIohcNbUhOR6IKbP848h5ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783405549; c=relaxed/simple;
-	bh=DRHyT/uEK7oDyABA1/2ZZlL0fgOWGirIPHUVAaEulrU=;
+	s=arc-20240116; t=1783405554; c=relaxed/simple;
+	bh=AtJzDHIfaneQlrx+15ZRW9A6ybwLe2nStsPa/WGEJuY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gh6R+8aRJZszM2xAAWJyXSUdTjFHfOiOuvg1S5KVR/s6pNhv8qmPV5iY9fkDPG4i6g7MHY3Mn32XrOM4DA/Td2YxYSt3BJ7/ZsIkmXOYcZDWVHIhZ0HKnB9n2VvG+Hi9/XpGlfBByOf2Qqi0VMqmT7iKbl65A/K58lTi7JydqOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G9IJ28Ew; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Asn3+lnB; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=XdvoKtyGA3AuBgBya/v2NUImO7LvkJ4QNg71GlBZkwQeU+f5UXkArvBe8w0MQuveXQSIF2dgQoRl9zu84d7Yl7jLW9CzBYu2pZ2MdDPC0ZqCK01hHaAsM8bN5jXhboSlYlwqGTeKoCliFVtCEVaOGzjy8scYuL9/1BlMD+PM1go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=in1pjsLA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F8x0k6A7; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G9IJ28Ew";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Asn3+lnB"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2F0461D00175;
-	Tue,  7 Jul 2026 02:25:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="in1pjsLA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F8x0k6A7"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4EE521D00192;
+	Tue,  7 Jul 2026 02:25:52 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 07 Jul 2026 02:25:47 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 07 Jul 2026 02:25:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783405547; x=1783491947; bh=EZY943S4AJ
-	NXlj7XVex/QJNGlrzCaNPXZDK1K9J/0XI=; b=G9IJ28Ewmeoi3tCsOnvjw5aQAw
-	qEUgdaUpIappBMjXcYUKYTdqxdTjQmgQ+ejJr3XEdVSttynp/j82I6yZJH8dxt+P
-	W0oEkSrER9klwA9vDYK/+W6d4Od0dEXrMZ5TFI0nWeSoFKxb6Eskn/h+9xAnGgBI
-	sPOdAd7sxgnPM1NPji4jdvN2KFTNGwEZsa9v+N7NB9SY0yrE55xBJb9EEEV2t90Q
-	sF5yLKs1onnCbKUCX3dZ2LVtbZ+eok0jVa4YsodfvXc2JAMaz4U8XLQ6MeWN31Er
-	Hl1lBH9uZ8xu9Ij5JhqTkqTpjGikxsRh6mpUahCMb8lDAEXRtsmSUxu/O4ug==
+	:subject:to:to; s=fm2; t=1783405552; x=1783491952; bh=6c0C0ajNk/
+	M5xiJWy7H8zni57teH9iJ8hWWk0IUMq7k=; b=in1pjsLAtBQav8ZYzri7ChM+nZ
+	f+6h2SrEqC3I/OZGlMFa9NAW8SP/5GhuHG7outm1qsycQGLpWQRga2JB8W4+M0HF
+	DWuhblZdEJU/KzLKnb2hsofytXCjaV6LwT7YRAeWPCA7kmbMHAzobjPV3at/BHaE
+	b4Cj9hHXN/MK8vBQY0cI/HXuhN4bTJEJ4PU+83sSSXLeEcAwy5VETILyecyt4z8B
+	ycIKUGt5cI9BfW5M724arpJ9q9rwsGkbqab2MrNPhgowMJ3S/4CjAyrP1I+2MD6c
+	B4SJ8pDytHRAkEr8le2mtMufHfBQOxz9la+0gllbLmwf27XRY7kOKWQCwrKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783405547; x=1783491947; bh=EZY943S4AJNXlj7XVex/QJNGlrzCaNPXZDK
-	1K9J/0XI=; b=Asn3+lnBauE531eA1sQHMRi1FLohCyzunMSJ748qKR20lo16rQU
-	zPaq+zK9F2q5Dw1s6NOpdPhHh8ClRx0OdGwINObhA7ZZhuMwy//v8G2RgxpekTAh
-	3CsL8LgYJteEwwbrRTojriQbig/LcZp2MDSFM43USrJ4SZ0q/J785iG3xhVtrQqj
-	NTKpHUxxTah7dMwTEr1kdnhSQNW87VDWzfua/92CA73impEyEz09AcfewyjBFfTM
-	vjhlDjJcmjyAc3fTupttjGlR3CJzYGiiU4HPF7Jtrc7C1FpEYEntQI9bhNIGeVao
-	Q2wc5xoMgjBJbvAp0kvfL2q0NajH1Wf2R6Q==
-X-ME-Sender: <xms:6ptMasPutlifTXggklzUTAI82bJorUkpf-DetnGy97pIQaK70pH1ZQ>
-    <xme:6ptMao96vi5zIhNz6dcgyGSuFLkjRiTmCtyKz-pjZzOtiMB175e2vCWVgImJFwLGQ
-    ndJlTPfqrRmRafIP_zc2bNa0mPSq5mjXduLew-cpa_Q0eg8nEvTEw>
-X-ME-Received: <xmr:6ptMag6fUzslASxji8csX9yZTJUVzwILmU8rQoKuROjxw4HqKnG6Nf8f0uWHVwvZjiOqlc6b0FJgbVSgXwAC80d9b7sLUKeh-DMZfbqviQ>
-X-ME-Proxy-Cause: dmFkZTFS/7ipyYUo0iy7Qt9MztIZJw9zdvP7UfaPhvlhQlFCILJfg+CxtYodQwQEwz6RGK
-    acdivkB3Sd+8rC5ej8ederuLaSHAY2oGxy107aYn9Q9TDBIHWkjOINaMPb7Ou/5v3o8D7X
-    9bjzQIIjWfFUU/ZY1i8uVF2Z0FbBFZBy4eq32WXIxzzjmRd9iD4PI1HnDA2JjffhZh9Fjp
-    yJE1d8IhsEInLD/8ALgw6aS8WuvuAp4/qTbpdw0j10pf8GSBfhGEYgRYGbx1raebSDMirp
-    R1wxNPGeFPQWK2FqdbvTsetFRwxtYC1KPmz2ylXJ4z4CXuRBYzYj0zvrh/mS86U2PU6WnM
-    xRj8Lum6CWVcKalWTZNA15QG+1mtWZp1brElhukqQ4NFiu/+9YgrFEmwmxwbr5hHp0j4dF
-    Z+XfLLYTBP33qp+pelZ/W30zdV83xlM1nXd33JniOvRqJlflC8scudF7LTf0THMAzMwRkV
-    8Zj9L9k4ljtyiiRBBwL5N23D2ucNVn5LGz7zBdSnWkEVSO7Pgx4AlOBOfILTHy311Z4Qho
-    7Btu0ZljVgTZTqexG8hZWEdFK6UhAGmw8OvD6SjlBygGU+GfKLUCs/A2NLq1wb2u9B2488
-    zNS6jk40ppUa6XblBVSUc47d11wOp+xH57qSI3PYTXss6nJcx8/yyUPVqodw
-X-ME-Proxy: <xmx:6ptMav2VQ1CVX5yh7He1ity3jjlQeMAxnkW3l59sjWATmQaY1dKrgg>
-    <xmx:6ptManCoino3pGugD48tJWpuAqau3OZMbqb9APtANvOYC98ENB1WSA>
-    <xmx:6ptMah1DNsVJ1M2dTxg7ClvLbHqB3vmRGppkpAkujR05JcGxXIEW_Q>
-    <xmx:6ptMahtUt5hEjY1ahU8HyeIjOGuw-hHI4SdukLp1eWh4BkIPA0GfFA>
-    <xmx:65tMau_d5-g7Dq2DDW3enkqtN5z8L3PMNZkHVkkCyiKPExPtuUtyJE5s>
+	1783405552; x=1783491952; bh=6c0C0ajNk/M5xiJWy7H8zni57teH9iJ8hWW
+	k0IUMq7k=; b=F8x0k6A7uCjnoP7fpFAjkNQP8dfNuFsFZcYV1xy8jr3GL0vN3rx
+	Fl57KaG60H57ORvpWEbyH4jUvSd6wrhaCtUhydvb9/94/ZxtExRhZY2GF3cHdnN9
+	vyvgBgNc/2WUTz9TnGc8z9CcAW3W8O8Vje15J03L9ggVArJ1x73P+vTCWYmW7opb
+	wq4CrAiI4JNt+Hqou27M3wOd3FiZqvoEnBARDTK8dCLOTi0qszASXK6fQ141bnKW
+	ICLL1kdzkzMQTBmFjAtDHIdGf39NQymI92K/V3UNn10VLqDJXexoE2WzhV/56LlJ
+	yE0dxOlIGz2MbNmzS6keB7QggYt0u77TMHw==
+X-ME-Sender: <xms:8JtMakQTSvZqS943aX4ZnfW3qbf8A72V2SN7NcpLZbxAbn-fEn4btA>
+    <xme:8JtManzrHP4tSw9urYnipOHmPc-X4EMpeQmlCLZv35rAOoqpQLcM-yOEnb0pv0pGY
+    zt4wQwFz5j-9jS_rnq4wmi-vNsddFXL4o5k0QA4PxSKVzoAwgLlPA>
+X-ME-Received: <xmr:8JtMavehegDh5L-cysLCf2oK6jxt5hHDM3st5e3OQUWrKEUyW4OKDDd-YYkFBrLBJgshVgTKK9EMpPWYgrAZxPG0SNoJGly2FopWfDI6Pw>
+X-ME-Proxy-Cause: dmFkZTEcuLUxjVB6/I8QqLeDtOhGrUpWknuVFHyPoEKMSbN3GFBGAUCxtPepf76xhB5ntk
+    c9PS0Jn8ukJGArmiL9mZmHIobS/qsceOHvnqCXr8MdITIiShjPfcXYZyTDm2frm25zPjkj
+    sXPKuteVVWRdJbQI3SuwNJl+MTMZ1pLbTaMjtguRZj8UcUNZ4t2Wu2xXM4kYPQ7ys2XWGt
+    4AqBR4kPCH/c0bSCLClar/28or26ZUTLzVIAMISSQG6QyZVTw7Zg+zAGL4cDBDAQfELO1g
+    5rt6DXpM0tXEQfQ5k1+x2BeglnWX22MaBuRwgfmjbRtdsQt/ZSR6xxGAyw2UvhPlQIIkmY
+    vh3Yv2H+FE9P6Uk3ZltHolvnWJHipkGX6WyEjSrklyB9rQodp6d5SqgDzxhS+OWJOPDhHL
+    3U5d7nEqXbFoFCgXP7BckaSAksXwpLlwg59SU/rqCwHXAPQU7zQ2pl1AVO3zdVt6WIF8a5
+    UwtmImV3yBqT9pZ/q2OLvrL+fOIAdiDfpkFey/AuWHA5XsDCzMYDs+Sqp32CwSOyUi00rA
+    b/2xziWsQKYlO9Kx//7pdgO2w2pkU7x1ZGzyO5gig0UW9kBCI6NvYxNZhV80grNPls+5Z+
+    C1Wrte2Zs19VfBR8LO9q9+3FbHdWUchY4z1bkDE+WI3vqv18ww+BUumgUIuw
+X-ME-Proxy: <xmx:8JtMajIpSQuam3hNeenOj2MVL3BG5ioWQGThmnUiCDzoZz_6WuzuJg>
+    <xmx:8JtMagH0B8nFSiTU_ZznhuSND7JhFAb6Kf_yLQw120WEcMNE37HBQQ>
+    <xmx:8JtMatq1HyqPEla11vR1pkCPfvHQV9DpfEbZHWY6M5VCRgYvT6zovA>
+    <xmx:8JtMapT8bvkuwgglvdxK1EOn3LiJTUmptrngMD24KI60YgYwcpTb0g>
+    <xmx:8JtMaoCiwRgWQ7oXpuLpGVPnFmMSTtOgWwFCrQZpRZD-qSjX3a1-clBs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 02:25:46 -0400 (EDT)
+ 7 Jul 2026 02:25:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id acdbe970 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jul 2026 06:25:45 +0000 (UTC)
-Date: Tue, 7 Jul 2026 08:25:42 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 82696b7b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 Jul 2026 06:25:50 +0000 (UTC)
+Date: Tue, 7 Jul 2026 08:25:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 03/13] setup: unify setup of shallow file
-Message-ID: <akyb5vljS5kYiOO3@pks.im>
+Subject: Re: [PATCH 05/13] setup: introduce explicit repository discovery
+Message-ID: <akyb6yOvhKS3qq3h@pks.im>
 References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
- <20260630-pks-setup-split-discovery-and-setup-v1-3-13864eb5a032@pks.im>
- <akwkS45ZknejwhuO@denethor>
+ <20260630-pks-setup-split-discovery-and-setup-v1-5-13864eb5a032@pks.im>
+ <akwocdrzeu0xBLQZ@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,61 +86,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <akwkS45ZknejwhuO@denethor>
+In-Reply-To: <akwocdrzeu0xBLQZ@denethor>
 
-On Mon, Jul 06, 2026 at 05:02:08PM -0500, Justin Tobler wrote:
+On Mon, Jul 06, 2026 at 05:19:59PM -0500, Justin Tobler wrote:
 > On 26/06/30 01:47PM, Patrick Steinhardt wrote:
-> > It is possible to configure an arbitrary "shallow" file via two
-> > mechanisms, and the respective logic to handle these is split across two
-> > locations:
-> > 
-> >   - Via the "GIT_SHALLOW_FILE" environment variable, which is handled in
-> >     `setup_git_env_internal()`.
-> > 
-> >   - Via the global "--shallow-file=" command line option, which is
-> >     handled in `handle_options()`.
+> > Like this, we'll never end up with a partially-configured repository and
+> > can eventually extend `repo_init()` to handle the full initialization
+> > for us.
 > 
-> Ok.
-> 
-> > We can rather easily unify this logic by not configuring the shallow
-> > file in `handle_options()`, but instead overwriting the environment
-> > variable. The environment variable itself is then handled inside of
-> > `apply_repository_format()`, which is responsible for configuring a
-> > discovered Git directory.
-> 
-> What is supposed to be the correct order for processing shallow file
-> configuration here? Does this mean that the `--shallow-file` option now
-> overwrites the environment variable? Was this how it already was?
+> So IIUC the expectation here would be for all configuration of the
+> repository to happen prior to it being applied? Would it be a bug to
+> attempt to apply configuration to a repository more than once? 
 
-That's a good question. The command line switch does override the
-environment variable, but it's not a change in behaviour: the last
-parameter of `set_alternate_shallow_file()` controls whether or not we
-want to override an already-configured shallow file. So even though we
-used to call that function with the value of the environment variable at
-a much later point in time, we had that parameter set to `0` there. So
-if we've already configured the shallow file before via "--shallow-file"
-it wouldn't have been overwritten.
-
-We can remove this logic now though, as it's essentially unused after
-this patch. And it certainly warrants a mention in the commit message.
-
-> > This new logic is similar in nature to how we handle the other global
-> > options already, all of which end up setting an environment variable.
-> > So for one this gives us more consistency. But more importantly, this
-> > change means that `the_repository` will not contain any relevant state
-> > anymore before we hit `apply_repository_format()` once we're at the end
-> > of this patch series. Consequently, it will become possible for us to
-> > completely discard `the_repository` and populate it anew.
-> 
-> I can't say that I'm a fan of using environment variables to store
-> global state in this manner, but I guess if there is precdent and this
-> is making us more consistent, it is probably fine. I guess the other
-> option would be to store the read configuration is some intermediate
-> structure to be applied later, but that may not be worth it here.
-
-I agree, I'm not much of a fan of this either. I'd also love to
-eventually refactor the argument handling in "git.c" to not rely on
-global state anymore, but that's going to be a bigger refactoring (if
-it's feasible at all).
+I'd say that it should be treated as a bug, yes. I basically want us to
+ensure that every repository is created once and exactly once via a
+constructor that takes all required parameters as input. That's still
+future music though.
 
 Patrick
