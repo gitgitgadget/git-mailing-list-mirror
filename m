@@ -1,132 +1,173 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9942E736A
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 19:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783452951; cv=none; b=pPssEjB9KqrCR1A4zKGnmrA3WXEOqTxKZs8ooDnrylunBLa8BmZvZLxT23EwUeBrCYoyJxGnRUqSrBvpXSyywXMqxC5mMWKffptH0kXjrnWwLngcRJJXxaOmsD3OJd0ybGsp5pazBvQbfX7Ii/aetdfnRsXwsbh4sWNwalMNAIY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783452951; c=relaxed/simple;
-	bh=1I/eb4xVUdHpnLXTFVT6Tv3mn2ucrtgiASb6QRHi+DU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gBr35/NXIOcSaurbn8DA7gslaqhcWirz7I0bYDgX6p0AEiEq1kpeaWzeQDyE7sPjH5dpFx+6g05VCHvI3XWSAGz++dgTsuVpUV8K2TZASmI99nRKim4CUablpySaDdew3OvI8oSOiH8wANstz1Vtb1kE+R5S+4Fmaoje6jHl22I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jWJf1WN0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G5hVIxy6; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A7E366045
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 19:53:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783453998; cv=pass; b=XCR3BHPatsOm8Z6eU1dCYaNI/HLShw3Xo29xzg8VduEhgs4BbanlJ0kveDkW6J9iOe9+n9Oe0gJP/AFpXASAJPou43DwlndQRfG20AytpzsI3BNEPnFP82kybuopTY7Hpf5OAiPrboEnBOAtAPRdIPBWeV3IO+lx2dimHxpmUt0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783453998; c=relaxed/simple;
+	bh=mcgD+hsZp04ZaV50PhBvVnr5Ol7JSzVYg+asOD6RBhg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IJIiwS8XtCIcXj1CvlDO77xLj8dCOUHyVPPiexwvNq62cc80VfwLuxZBmEsWzFcEoUvjqV8PQarh4FKZIRngAitN+DDyxD+NgftrvBOt7UPYHf0RV91ICaGY5NVmpeoBwATAr80KRVtj/TekPdblAXQnMHGCZuBNyCHh408KXx4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gLrcF8Ev; arc=pass smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jWJf1WN0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G5hVIxy6"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id AF12AEC0116;
-	Tue,  7 Jul 2026 15:35:49 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 07 Jul 2026 15:35:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1783452949;
-	 x=1783539349; bh=b6mdrdtPSbYsZ4+KLNFlWo3HW9V3tLqXFUqzCcXG2Cg=; b=
-	jWJf1WN0oKYwvtuMIj4rBNDMsedPOoa23afkINZ+7CLbQUU1fSZQ7yVN9HS4N+Kz
-	LEObzF0X8UHYnLWJuJLcwJeN4DEuGvBh2vspl12lyq75H9VpCH6r5ktazXHfGmXp
-	dmxL7OFT+f8HKhlMZMi3iBBYxqDtTNk0khfAm8EEszu0m4RrnyKsxVcigDZME0ge
-	Mz7inwco2NqYt5W4B/aG3CXVgBkSwgAdHuj7/i2K1FN68lvixmHPwhVhqtMl2MhX
-	p97t30dYHfCt1twLDw+7h7Wv1v1DbhXJWBArHS2MS8Yl+Ku9xyaDjSSU0JcW4XzF
-	m0eEV3+LeTyd8dUmnCEVLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783452949; x=
-	1783539349; bh=b6mdrdtPSbYsZ4+KLNFlWo3HW9V3tLqXFUqzCcXG2Cg=; b=G
-	5hVIxy6YR0uy4u4t4Vm8Ixh365GLB8EW0z0EcQYab4YUMlNr3+U8vBXitSXfsH5n
-	lEycsQhNItFuSCIh7Gz7KVhEry6z/GCcckiRm35+KDuppGFGL+AGzGVhJzMqZTBz
-	0oR6OJ2xWvVeyoMwGyUCuAVTpUoOSsipmBBP5WrMEym0gu3/FSUbyBTcM8VkOzR9
-	0cYQOTTF/SJnm8VzULyCthz7YNqJ701a4Apxe8vKuHk6eeivINCys6HvMyBdtFaU
-	NGDNaZV4Mn/5pxviXEh1TOR7M3pRbHcKYmrtpGbVc0UlqLbJfJnGTdBLleRuqGbc
-	2jNDKSXYb+rgK4hDxDgEg==
-X-ME-Sender: <xms:FVVNaqAI43lUM_VGdKQa0XmywStNfLFbD9PfVyQhpYUlhJRqmOyNdw>
-    <xme:FVVNarZSF66w6UT2fPt8b8CnALLhTakuFp2bGBLOA2OWPfeI-Sg9KWIoY2HqZVaJ3
-    DsY99ygQCsPbdyVNqSGlhk0yhn-sbzXfe-Q7lK-nOxFxrfNrtXEdQ>
-X-ME-Received: <xmr:FVVNal5OGMvkjOV4YsZW4w2N5wTF0vUiNRHnxj3aSC8fWFQHYJc2QFtLtR_w4Q71rs1_quMwhkWMfEY_vEnFguG7heWnu3EDldFmPLw>
-X-ME-Proxy-Cause: dmFkZTEFBl8SfVO3XA87Hb93FgRh/OyngoCvXVYA2c3bNgLXHXy/Zft3UTmZR1Aa55symG
-    kGPS9gIAwY+JjEOz7eLFU5/30/icYUKavVd2xZf/OOmh/Gpa3wYS3A6wUYWM9jvjv8tJMb
-    H4OIXF1A7UrWyavSNrrGORKAfgvlBEh/lsu+T9PoVuvwwkXVIdyJ/ymOhoKTQgvcsIBa1I
-    gCjcXqaDNhxbLyzacDIXItUWAwcFpZnorl05gdjxw/eJknEeBsEqYQDIpLJcdA4IZlUDCi
-    8cMxil2cqYeJEjdnLANs2gxCeqS7NMYXDIBx9dREACiBbb8gX0atssUsPd08eZqSssvCho
-    OhGQ0mh2QkHQFYS78GCvvceLQ/LnSsEcCMgczyM7mN5rHm/WWPG0mpsUAGQa3zpBI0D6Ks
-    /CXC1N7cQJ6uDvrr6AQG0snTv4sFHKYb0b6UC2jwuFX4RoDTggjTyfWv4s2+MGhh5O2Otv
-    4KbTfCRot0sxSXCETmfrsHmH5r9hGxCxjXvxl7OziFInmWFJ/+KvczW39UDliTWr7duW8d
-    68yj5DHvFPJyrVurZUjR4o2Q1HJHxUJBmJrthdOn+6Dgwqt9MMB/juXUoLrGLDHKo5170p
-    t024qMT2KztQy+e9SBRThzZG1fTHoNM/ivkhOigi3apMSEyQLHs78zb20KDg
-X-ME-Proxy: <xmx:FVVNakb8CpgXqJ8dLeRsLywsjIL57Z2llVv9xpioyb7gk5uNdB_yIg>
-    <xmx:FVVNasgK8hT8rQjrdtr8yIslvP4pRjWLw6zEjKPwYBkHRkk8AjOk7w>
-    <xmx:FVVNat-gGsXLZgXA5all58t85VrwD6Pw1EQab4r01pOMTG-XCS-e4Q>
-    <xmx:FVVNavogrN73YFEN5EK37h87NMa34HWe5Rb6e867c07mcUNGXmridw>
-    <xmx:FVVNarBB5txXkThXGyVsEWRvfOORV3-TDeAFd3b_wT7rumKMIYCrdIgz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 15:35:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 3/3] replay: offer an option to linearize the commit
- topology
-In-Reply-To: <87ldbm3kh6.fsf@emacs.iotcl.com> (Toon Claes's message of "Tue,
-	07 Jul 2026 17:09:09 +0200")
-References: <20260702-toon-git-replay-drop-merges-v6-0-78a07cdd0382@iotcl.com>
-	<20260702-toon-git-replay-drop-merges-v6-3-78a07cdd0382@iotcl.com>
-	<xmqqbjcnhjvk.fsf@gitster.g> <87ldbm3kh6.fsf@emacs.iotcl.com>
-Date: Tue, 07 Jul 2026 12:35:47 -0700
-Message-ID: <xmqqy0fm1tkc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLrcF8Ev"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-8111c0c7561so47848457b3.3
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 12:53:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783453996; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Q+WAgXb15uAlOiLwsCuntlVzfuIc8L/a/a4q8B53tKh3hD/XfQKi9Kq5Gq/ESpERa1
+         VRLBqeNLtGbkMuQG4invLim99vkOFsMr0Iwi1I98ptO7mG5tXNMY53NAH8Pt1G/YA2re
+         Lzn7IrVcGTLM0+mqkEDJpTASOY69pEi4+E1opcclpWOJSaO+zUJYEMaH1lCsUxklZ3dP
+         GgdYyH6mgAud6UIv2uorDWsLshtW5IDRG6goU8cKoBqJ+MY3rhOwLTp2lXw5MIIRseyu
+         VB2yyQNfjA6kSs/h1bq/FSf5kXPiqQKhshpCHINuwg22r9a3QHEnlsh/H/TGFEknGPFX
+         lzXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=p8W4KgQYwhU5Rs1M/hZnbBblyVQyG6tKyD8Xp71MCxA=;
+        fh=BY0PJxl/9NWRhq6Hk5NfDhGbQiIoMa5/xMUI66hWeLM=;
+        b=M6VyeEkzIqdETX2K9LTufufdg7dRzWhGMPzPwQFIvzgEZoDy6u4zd0VfQldDdPYCr6
+         JrNQuxMUGhTs9Jwo2aTwo/6jGr9FRzMNXHVGH/cmkEQ+H5D7Os4Cb714SGdWcKJoJtFP
+         qdrxOdlHcBV1vp6BzzbeGOGqW+2We6AN3M5P6HWm/F44Nt/3JcB0EBSFiXutUd+zQVAm
+         ePq8MsGtikdHuG+uqNaqggVL1+hSabOx8B3ins/nLYlfvRoF9sQ6zMGEJ6ncPM1VfVGx
+         RsDNnyskSb+XsCvB9UPcaA29RS6giCd1gNboXwL/ZMyFPAg0mMcBuF3Ua5za0D+daYb6
+         DnVQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783453996; x=1784058796; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=p8W4KgQYwhU5Rs1M/hZnbBblyVQyG6tKyD8Xp71MCxA=;
+        b=gLrcF8EvcV/n6R693ILVtnGjDv2LmRNo0VbviIDnros+jvw5vyKCU7CU8LEcUXDFy3
+         F38T1H7NnrVEGrCK7J76nfylRvylld2zhxR5gzQFJOdqoX8+pRQRnKWQ42X1vWOtSu6s
+         HMsYUnobzPRBTRpjeb+MO31YLQCVzk8e63VN9gP0GTVVa4TPpG6USVu23fd0bYP4p3Qe
+         hDFLgD6esIem0oYl2V01qQU/9WiB1nIg21OT/SRfrmZ8zi+EN0G8jVHpUHob7WYp01oz
+         CmCXTlh1Z+bHJEQj4fqWX8ADZ81maSJAP9PSRiHgblEJ1BM170qdXdEc1thh49HtjDiu
+         qYiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783453996; x=1784058796;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=p8W4KgQYwhU5Rs1M/hZnbBblyVQyG6tKyD8Xp71MCxA=;
+        b=J1pv1lm3DWgnhaeIBCLcjwi1kxYJFESTsIkh5zxS/BuKu7e419VB8NNs2PlbmvonN8
+         2VNBh7zyqqMkO9q3lK8S3TKiz2eCLgrFa6yqoDGwgAaPRtZKQL+rt3XXjOQEN9HiSVJC
+         RdI/SKyY81+hsYDU7Jd3yxE1xXuL3FaHbxah+qJBIuuOrX0h5kJBg+7EKhjLDukglPEZ
+         xYMKXnEmV9gz9f6xXgSO1SWQbyDwBYwFdpiD1A4uOj5oJVdKSjAszMV00ECkXiMTpQAV
+         wvLUU2JR+Xne1QBeJA2X1dEfsRI0sF9kkxg3eR1wu8W9fy2/7WMZjzq4jMKQnmhvZaqe
+         PKyA==
+X-Gm-Message-State: AOJu0YwsdPpJ+YOLx24u55wAv1d0a435QWWFzT6v3aTzPqEUPOsUv/As
+	oQhc9Kfq55bkX75vl+Qzhnw0jda4HcZ5fthwnpcCRz6ACqpwgDErKf5E6d5/aSk1mHJ7WA4i5U1
+	zfW4F56XVe68s5hHsu4kikjwTLMMyCQw=
+X-Gm-Gg: AfdE7cnfV8/XfQUB2EW0CeWptBE/ijRW41EjxsxH2hh9kL7+s4Q9noqxJ45ITwboCxL
+	MVQZRE20jYSBKNMcmtfMdVP9NC6Coz2grQoTSQ5IjUPK4PS8p5oMEHLaNxA8WbsxizTZrHhsXsZ
+	SH84wabr1KixsiCrwuL0FLREbe5m1R3SnSjO42VQgRO5afJrIgiUJdJuB9Vf8VwRSJNeVDo5PO6
+	Y2KDkjZdf7mDzreLHiLpmsqoNx/+QufHjcRzzBeUhMzG5PvWmMcpLC9i/WSPP0T40LI86MhXYlO
+	WnMKNRfqxQqvQb9iIEWkjZAegIOZVjYi+uk2pHqD0MEgDjsUkZrKVbVSmIpmw2khve3T0dRTj+I
+	xe4W43xxm6wF4Ku6SG+qRmxBG2401z/F347TgJU4AG70ojJT+m6yoeGhKmUrhyJwmPdBJ0w==
+X-Received: by 2002:a05:690c:650b:b0:80e:2592:5218 with SMTP id
+ 00721157ae682-81be2c82126mr53409517b3.50.1783453995744; Tue, 07 Jul 2026
+ 12:53:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
+ <20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
+ <20260701-ps-eric-work-rebase-v15-2-c88a43b63917@gmail.com>
+ <xmqqse62obwh.fsf@gitster.g> <CAN5EUNTYeDrQMor29eYMhJD0jcdRQq36ZA6BgupV8gG9xs9rFQ@mail.gmail.com>
+ <xmqqcxwy4qp5.fsf@gitster.g>
+In-Reply-To: <xmqqcxwy4qp5.fsf@gitster.g>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Tue, 7 Jul 2026 21:53:04 +0200
+X-Gm-Features: AVVi8Ce3fnKmWcoUNNn4bJ3zmdiQBHbN5DWRBcuhjxULnF6jmm-MWk6ND7uIiB0
+Message-ID: <CAN5EUNQ=2qtKXSJvxQiNLYqx0N0m6sfyBGLLXm4FB1kwtOsdbQ@mail.gmail.com>
+Subject: Re: [PATCH GSoC v15 02/13] git-compat-util: add `strtoumax_szt()`
+ with error handling
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
+	eric.peijian@gmail.com, jltobler@gmail.com, karthik.188@gmail.com, 
+	peff@peff.net, toon@iotcl.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Toon Claes <toon@iotcl.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+El mar, 7 jul 2026 a las 20:09, Junio C Hamano (<gitster@pobox.com>) escrib=
+i=C3=B3:
 >
->> Definitely it is OK to leave it outside the scope, but I am not sure
->> if reverting a group of commits that happens to be "closed" and
->> happens to contain merges, is inherently incompatible with
->> flattening.  If you have
->>
->>     ----O--A
->>          \  \
->>           B--M--C
->>
->> and you want to revert what happened while the history advanced from
->> O to M, I would naïvely expect that I can arrive at
->>
->>     ----O--A
->>          \  \
->>           B--M--C-B'-A'
->>
->> by linearly applying the inverse of A and B (in either order).
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
 >
-> You're absolutely right. Personally I'm not sure why the limitation was
-> introduced. I've done some testing and I cannot see why we wouldn't
-> allow --revert and --linearize to be combined. So I'll be submitting v7
-> without this restriction.
+> >> If you are trying to more explicitly insist that s[] has only
+> >> digits, which may not be a bad idea, as that is what we generally
+> >> expect, then
+> >>
+> >>         if (!s[0] || s[strspn(s, "0123456789")])
+> >>                 return -1;
+> >>
+> >> perhaps.
+> >
+> > I like the idea of only digits but, even though in this series I only
+> > use this function in base 10, I want the function to work in other
+> > bases, that's why I left the base in the function signature instead of
+> > hardcoding it. strspn(s, "0123456789") rejects bases >10  ("ff" for
+> > base 16) while strtoumax does support higher ones.
+> > I think that it would be better to explicitly reject what we don't
+> > want similarly to "-":
+>
+> Let's step back a bit and think.
+>
+> Where do we plan to use this function?  Remember that being a
+> superset is not always necessarily good for a helper function that
+> serves as a format checker.
+>
+> In the output of "git diff master...ps/cat-file-remote-object-info",
+> there is only one caller, which is fetch_object_info().  It reads
+> into object_info_data[].sizep.  Do we expect to express the object
+> size in anything but an unsigned decimal integer?  Remember that it
+> is better to be unambiguous when designing a protocol.  We do not
+> want a third-party reimplementation of whatever is talking to
+> fetch_object_info() to send object size in hex ;-).
 
-Of course, postponing this is a safe option (at least for our
-initial effort) *if* we cannot reliably detect the good case.
+No haha, we don't want size being sent in hex :), I agree that it is
+better to be unambiguous. We could hardcode the base 10 but I feel
+that calling the function strtoumax_szt() when it does not support >10
+base (or I hardcode the base to be 10) lies to a future developer that
+tries to use this function thinking that it behaves as strtoumax_*().
 
-For example, it is unclear what happens if the linearized range in
-the diagram above contains M and A, but not B or O. We might want to
-distinguish that scenario from the depicted case, where all of A, B,
-and O, as well as M, are in the range, but the current code may not
-be able to do so reliably. However, if we can consistently provide
-behavior that is logical and easy to explain, it would be ideal to
-lift this artificial restriction.
+Maybe because it is called only once in this series it is better to
+have a static function close to its caller that explicitly does what
+we want and it is unambiguous.
 
-Thanks.
+If that sounds reasonable I'll move this function to the commit where
+it's called, call the function parse_object_size() and keep the strict
+digits only with strspn proposed.
+
+>
+> It may also be usable to parse the size of the object payload in
+> object-file.c::parse_loose_header() but notice that it is already
+> even stricter not to use strto<anything> system function and instead
+> handcrafts the trivial number parsing.  This would avoid system
+> dependent funnyness, which is a good thing.
+>
+> > if (!*s || isspace((unsigned char)*s) || *s =3D=3D '-' || *s =3D=3D '+'=
+)
+> >         return -1;
+> >
+> > About that, strtoumax works fine with "+" and ignores starting
+> > whitespaces, but for consistency (we reject "-" and whitespaces
+> > between or at the end) rejecting whitespaces and +/- will be better
+> > and make the caller format it correctly.
+> >
+> > I'll do that for the next version.
+
+Thanks,
+Pablo
