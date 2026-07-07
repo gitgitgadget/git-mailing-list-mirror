@@ -1,81 +1,80 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D919542F711
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:33:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9904439A06D
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783438396; cv=none; b=fCl3BtLf/l6X7DoScRuef+0Zh3Ds8HAik87H+lES7FXPuMa17dDmhMnbEf86bqWwQErmChm2Nfu2LQsKFzTGCgbKTUMb86ey4AhVt3GQ/Z8ymBecMmiw3MpaGYIakG3/tWffY/OgtxSarhdZIi1DEGx1eKtMuHNppF66K2UsRnw=
+	t=1783438398; cv=none; b=ahVeD6DKi3iA+5LYm9TwvYS5gYeKL/32o8KuwkjmIfgV0WYX9LPcqrX1Kc+WvOdXXJ22iVm90UGXm6jb1oYnEZ4rXN2OZduLWJhOlIzS3f/e93OpJv0tDRKNIaXLyRafObw0cUx2i1w9MAEXhFODSNsT0/EDJm83PBXltkJVItQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783438396; c=relaxed/simple;
-	bh=dJ1rueWjms4JOZu2a0pmH9LfaFH33QeHq3QbUy0NeQI=;
+	s=arc-20240116; t=1783438398; c=relaxed/simple;
+	bh=tiSC4O6bFEHdWk9xecK47mybs/myfwDjzz2VqhPJizw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C6lk34ymhOAUVAo2FSy9amnIImgMLsNHENhxjoxzzAM/SPjccbmTWODjuPcxpbE9cgOrPFsLoXkx3miBXr7o+zqFt53D3lY8kiflGai+JnA7GNU0FX24Bs3uXVCtKJ7p/tAEaObpQlF1s2KssmOcdUD8XV0omofS3r/65C5R9vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=az0RZIwu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GFdZaRb3; arc=none smtp.client-ip=103.168.172.158
+	 In-Reply-To:To:Cc; b=eF7cJ8rn3YVSF3IHQEJTBoBQtOYe0lDZSY9jw5KvEGVGGyX4jtljJf1zJsXbw9fjuGYBzfRQQnjA9tYC9nh9sSsdV0GxPc3ly8ll/lCOiV9EijFggUN26Bfi8tsfju4XKAHCsEuTOSbm19mnSrLGTi8xVBlpxDGZhbWyHewXKxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gOGUSTAc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ELQOHNYw; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="az0RZIwu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GFdZaRb3"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 26C401400122
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 11:33:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gOGUSTAc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ELQOHNYw"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id E8731EC0227
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 11:33:15 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 07 Jul 2026 11:33:13 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 07 Jul 2026 11:33:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783438393;
-	 x=1783524793; bh=WDv13gJs24RprvBECb1P7JIBcLT9YTub0eepc30GVBY=; b=
-	az0RZIwudwQvmNnPrsuS/GGSrk+phQFnCt+5NNVNJjhF7IpQpSQARddl03mTtjjj
-	euUhlA9UnTyHadllcZLN+byQ7B7aah05QmzXmTUcDP0l4q446ozQVzxNIi6ZZhYJ
-	URP60eU8zA/sse11ONHoY60q5RQRF/rplP/Fm517d/XNlbXn+xD/rTm/0oRbDPLE
-	jndjYV1r4mxWiaeajvq5fz7B2Q/iVtkEA6KeBQfqiTE/3Vb1Z23C74LBA3UCHLbE
-	MUCYMoTpRIqGC8Ke5tv7/7O7JdojQUA22sezKifRXQJk/jS/hSTp2gAOaE5ler8F
-	t5eSXTxI+IV1ub08HukkCg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783438395;
+	 x=1783524795; bh=JMcsoz1rnflR2IWPYniuJ1FbN0sJMr2V2+YyuZzos5c=; b=
+	gOGUSTAc9xmVUX7d1qSu30p7XXa+Fn7Zjd9MNEj4LKhYF2YIXZ6aOUJpqcQYQpqC
+	hPh5XOOFATwv2dqKyeaebeU5cTNvV9OEG7ZVQY/tXAyLpY9qE0iJk0YfpJo/TaqM
+	hCZ0hk522VMhZ/hEPeSWd+KJjQ5LuEvRI+2rEtt95mkJCyixdY5W45NQTnTcWIdy
+	JSUyfa3gs2iFNN6lNYRh5bIXmX9EqwyOq+rV3xlithu57T0cxJdXPos0T9DV2gcT
+	PjBlodjkFPWD3eB2MiA4e1VUCiZryLl8chqb2LUEeUUw6GFVZ+CO7pyHJf5G5vCG
+	IAOF67ppXNNgzkdUj19VRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783438393; x=
-	1783524793; bh=WDv13gJs24RprvBECb1P7JIBcLT9YTub0eepc30GVBY=; b=G
-	FdZaRb3s8152jl3OtM5o4GaTx97wBPdCO3aJEWPYGDBExxKsUxyNR9DBFvl2+fqi
-	rKXeYUpcUcxxyOyG8KA2xDZsp1vNErqPfp1HvgCnqvCRKkqHy3V5rX7W34hYwFOR
-	XT8UHMIcBCmGa+BoK5TZl1P5SD76ta49/TQHxbNPmpfyZCNkQ7u/RNqS6XbBsOtF
-	EwZzSMPUTk0UgvjWAEYf7ISQN3lp1Pd5rQ43HBVRXGQfcyl0q7K36jWfxG842IfG
-	9IzzwAgez+OONwNl27nloSwVh0PvvfkpCwEtbbo5GrOuofcksuvjrj/ZkQ3FGId4
-	FX2ymYFmQjWr6Sc3tOFwA==
-X-ME-Sender: <xms:ORxNapGNku2QAwQ0drp16WL4NY5EanxtrFevuBE-LsVmMSet6DG_WQ>
-    <xme:ORxNalSh4rjerB_W6ralxPXpuWzcBSpWuuWP4yQ4C89sBComYh01n9LcMAyNWzduE
-    P6uHIHoqaqkfC11YEs5uIU-u3CTRLsYZgyRo0RA68fuvPFn7Db8qQ>
-X-ME-Received: <xmr:ORxNagyUAmNpVmHeKZghycwWaTct-60frRXOFe0E4IWaE_vIJzJJ5_TprICiWf29MnxlEgaxsnSNoJlwS1noH8QelQCELArLz41bIDBKNg>
-X-ME-Proxy-Cause: dmFkZTEJsHBfpO0PYEe5AorOfHcazVp/tBbkPBeEyBKukAxlTkshoZ2/gbuXJescdgLEDk
-    2G/3VKtvJlc5njlYrPCxkg9j00cHK7EbceH5LxXeH6PWEH2F+oepzAb9SewsjRo/KIW0lU
-    1lQE5NNhIb7f+4g+C5KCZPv4MqEkNsifUe5QUQNQKxPxqlLS2wxm0+oRvJw1AQX0T0+0UM
-    M9QSGRn0kaVEjf9V7cMY2jYCFqjaWroOsmMwIqvkSpUhAyQDxnLPwdCWG3jz/2YPCd808h
-    PkY/4hDSR4JLrxsPxxXC41eGPaToRv5DPX2LX50SXBrynI5VER33qWb84HYOTOnZBOy4Hx
-    oQaHOLA1B/ji707YPpqFB9aZgb1ClCjmPpcxryL5rrUdjDvn9vS7zEysJFnxiBRMlM1qD6
-    tKmrHYItL4P4MjN25ZiLB/rTeGAWlNk9yWuGB/lGuNo3rxcfhNTSdtN5Sud2OA9Z5mxVnZ
-    viaoKkkrLK3S9QxCGAF2RfqIIow3nHAOphhcMT7PpBIY8ZMd65cxBrg9T5p9NTUWg26IVI
-    Aq1HJ3rDzUdzZyLTqWsITrLeuj/XLgRnjaD9YIiob3AKZH7Bilki1/WA6vuBVNCP0MpccA
-    pNrz9cQMuVnjxR16IR3vm45w52RBc1uEbVJgLy5H1pmeq2XBGiigth8iGNew
-X-ME-Proxy: <xmx:ORxNakNSocRScKXc5MZUAX3pvAsA8RvegCj3MKhzkqXqVhsmQjusQA>
-    <xmx:ORxNavMtgTkllrkNPhtFn6Z1DD7kkxDgXz9441PTRzh7py0qfNWTKw>
-    <xmx:ORxNamTP92IGwk2gQ8j6FF7nRNsGr6nPekOJZ061SqJp2vGc5QsbnA>
-    <xmx:ORxNahAvBr8_mAGIwwswsNq0BaThgl6y9obOyjxiy21rSM2vVh9FOg>
-    <xmx:ORxNanW46vd8KtDcVoF-u-c2QdoznOUKF7DHc42p6AAZ7xXTIrzPGZ9a>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783438395; x=
+	1783524795; bh=JMcsoz1rnflR2IWPYniuJ1FbN0sJMr2V2+YyuZzos5c=; b=E
+	LQOHNYw2y4z72unlnB22tcxs+SB0NQIdYk8hxa+vZBvbFGvwwYCS4PxB5Q6AGP+8
+	n3Dbb+R6OfFgJ17PF3C7D/V8lpVwJPLwvpymMcQPH/5IedVNlmIaLQn6es1re5H6
+	FFBjhY7ZrASkuf0SW+xwhdI8c4nILrEbq5L4Xe6SJPshXWZcdh6PhiIfoMaeDYZm
+	nUUWBXeGC8ciBcUafEDctEWCChWYMmJEg6xc0Wclp0rSqErlH6a0hDn0vu1HKk6s
+	cqoereyPR1EYzTmL6tTYc6I0Uw5hL6F3SekulFn3/7KsvGRher1RgBahhFXeiL/n
+	UtnwCKpQYqavqXmhhpYDw==
+X-ME-Sender: <xms:OxxNagoYVh1p-bhsviXYuxqB-eKpxkIEScXYv2mlt_q_PBQZYd-mbw>
+    <xme:OxxNatlMGVPYHGFBCpmmTML7muXFnXskwRVEpLWrxhg_On20WFIZNHFFmSFYcjZw8
+    AnYHAcEHeQEvet6oHXzcWvhoFaco95dTKfFAQiRiyoXS7Gz4z-d-w>
+X-ME-Received: <xmr:OxxNaq0Z_543KU-MClBoCrdNyJDqcPjB8IU6H0lo1JqEbnYA-UbN6G6MdcMKT953ItMcx2ZR3jELlhDFJ1mMI8XlQkqPnTYshU797K77Wg>
+X-ME-Proxy-Cause: dmFkZTE6/iD3iHEuKBNru2cNsbN07kG+Ccd2z4KEMYhG2RvUCd+cOj2SmvRaPW6JdQJxYg
+    yIYZJCovWU1j7v3nEEWcH2j/Wq2UWDCGC2XEGJ5SCvILUi8Rz9tCTiiZ51Icbkoyae9CJ8
+    HA8uVCKObebcEoJ5TV2ivYrxy86qhazOGtYwH3j6uB5bc16miFoGFC2lxYTBbwQoWDP8w7
+    Lah7PP1UuH619unN5/HqL3nPvgy44p1ofkS+7wWIRtYeq/lSVpeXB8M8nm5c7cDYw5zp91
+    a1JFX+mSXwg6Bda7Ouf5RKV965olucpDrzFt45zWO9w5zYNzijwyqnCRczzOvzF6BX93Eb
+    8ZjGSKeUeieYxyG+oeYddL0Ig/HAshhTQlCmZLUrSYk9xnjJ43NMAtF8M61KCaNJSKmjwU
+    /GdR8W/g68CezHl8X0fe9ByfHK4PZk2Oe4VJ3ZndXQvhyMkhEnnQKDachICj0+BH43zsAo
+    UQlTkAtLRKZ1WEWqSIsIGIIRBc3mr7bokLwp7u54LKN7ZGmobPlPzQHgnd5uN5dQ67Zzag
+    A9oRjnpC2b99JoFYgAYVSaTlmugA+1RhNW8x/aSyOrhv8LS+lGWxBPKaLxdQH/O0rqfv/W
+    ZnrIihz9x+eUYEMvKGdTLPTg4W5bf+NJaFqIT7RRFWH7K+Qh/Lb9XpEIu0xg
+X-ME-Proxy: <xmx:OxxNatDdoP2QB5oaehM_8zsTfNq8Y_Nkaen1sSzVdzZMXIC4cgo2JQ>
+    <xmx:OxxNavxGrAFhDIAW5Yb8yWcB2ItYMgsGaMf9QLBks2GW5FfEwRi71Q>
+    <xmx:OxxNajmOGzhBtqD1kqceMbvrpdECZrvgy31pq_527q8aGB4qRKyBMQ>
+    <xmx:OxxNasHNDT--xcy66acCYlcT-KrDsssMlrMxqcvwsCPb4FGEy93D4A>
+    <xmx:OxxNakJByItzu19xmMBmByVpPSN72uVUdM3uCWu_1VNXOhfvDb6ELefO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 7 Jul 2026 11:33:12 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 7 Jul 2026 11:33:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b3e262ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 890b5373 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 7 Jul 2026 15:33:11 +0000 (UTC)
+	Tue, 7 Jul 2026 15:33:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 07 Jul 2026 17:32:39 +0200
-Subject: [PATCH 07/11] builtin/gc: move geometric repacking into
- `odb_optimize()`
+Date: Tue, 07 Jul 2026 17:32:40 +0200
+Subject: [PATCH 08/11] builtin/gc: introduce `odb_optimize_required()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,149 +83,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-b4-pks-odb-optimize-v1-7-aae607667be4@pks.im>
+Message-Id: <20260707-b4-pks-odb-optimize-v1-8-aae607667be4@pks.im>
 References: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
 In-Reply-To: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-We have two major object database optimization strategies:
+When invoking either git-gc(1) or git-maintenance(1) with the "--auto"
+flag then we only perform those maintenance tasks that are actually
+required. This logic is inherently an implementation detail of the
+object database backend that's in use. But the logic is scattered around
+multiple different functions, which makes it hard to make the logic
+pluggable.
 
-  - The legacy strategy used by git-gc(1), which absorbs loose objects
-    into packfiles, and eventually merges all packfiles once we have too
-    many of them.
-
-  - The more recent "geometric" strategy used by git-maintenance(1),
-    which merges packfiles using a geometric sequence.
-
-These two strategies are still using completely separate code paths. In
-a subsequent commit we'll want to make both strategies pluggable though.
-
-Prepare for this change by merging the "geometric" strategy into
-`odb_optimize()`. This also allows us to reuse some of the logic we have
-in that function.
-
-Note that this change requires us to adapt tests because we're now using
-"-q" instead of "--quiet". Naturally though, these invocations are of
-course equivalent to one another.
+Introduce a new `odb_optimize_required()` function that allows us to
+check these conditions in a generic way.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c           | 171 +++++++++++++++++++++++++------------------------
- t/t7900-maintenance.sh |  22 +++----
- 2 files changed, 98 insertions(+), 95 deletions(-)
+ builtin/gc.c | 160 ++++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 92 insertions(+), 68 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 17490106fc..c8504f4456 100644
+index c8504f4456..e119930adc 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -593,6 +593,11 @@ static int keep_one_pack(struct string_list_item *item, void *data)
- 	return 0;
+@@ -676,25 +676,84 @@ static void add_repack_incremental_option(struct strvec *args)
+ 	strvec_push(args, "--no-write-bitmap-index");
  }
  
-+enum odb_optimize_strategy {
-+	ODB_OPTIMIZE_INCREMENTAL,
-+	ODB_OPTIMIZE_GEOMETRIC,
-+};
-+
- enum odb_optimize_flags {
- 	/* Enable verbose logging and progress reporting. */
- 	ODB_OPTIMIZE_VERBOSE = (1 << 0),
-@@ -605,6 +610,7 @@ enum odb_optimize_flags {
- };
- 
- struct odb_optimize_options {
-+	enum odb_optimize_strategy strategy;
- 	enum odb_optimize_flags flags;
- 	const char *prune_expire;
- 	const char *expire_to;
-@@ -858,49 +864,87 @@ static int odb_optimize(struct object_database *odb,
- 	 *
- 	 *   - Otherwise we perform an incremental repack.
- 	 */
--	if (!(opts->flags & ODB_OPTIMIZE_AUTO)) {
--		struct string_list keep_pack = STRING_LIST_INIT_NODUP;
--
--		if (opts->keep_largest_pack != -1) {
--			if (opts->keep_largest_pack)
--				find_base_packs(&keep_pack, 0);
--		} else if (big_pack_threshold) {
--			find_base_packs(&keep_pack, big_pack_threshold);
--		}
--
--		add_repack_all_option(opts, &keep_pack, &repack_cmd.args);
--		string_list_clear(&keep_pack, 0);
--	} else {
--		if (too_many_packs(gc_auto_pack_limit)) {
+-static int need_to_gc(struct repository *repo)
++static bool odb_optimize_required(struct object_database *odb,
++				  const struct odb_optimize_options *opts)
+ {
+-	int gc_auto_threshold = 6700;
+-	int gc_auto_pack_limit = 50;
 +	switch (opts->strategy) {
-+	case ODB_OPTIMIZE_INCREMENTAL:
-+		if (!(opts->flags & ODB_OPTIMIZE_AUTO)) {
- 			struct string_list keep_pack = STRING_LIST_INIT_NODUP;
++	case ODB_OPTIMIZE_INCREMENTAL: {
++		int gc_auto_threshold = 6700;
++		int gc_auto_pack_limit = 50;
  
--			if (big_pack_threshold) {
--				find_base_packs(&keep_pack, big_pack_threshold);
--				if (keep_pack.nr >= gc_auto_pack_limit) {
--					string_list_clear(&keep_pack, 0);
-+			if (opts->keep_largest_pack != -1) {
-+				if (opts->keep_largest_pack)
- 					find_base_packs(&keep_pack, 0);
--				}
--			} else {
--				struct packed_git *p = find_base_packs(&keep_pack, 0);
--				uint64_t mem_have, mem_want;
--
--				mem_have = total_ram();
--				mem_want = estimate_repack_memory(p);
--
--				/*
--				 * Only allow 1/2 of memory for pack-objects, leave
--				 * the rest for the OS and other processes in the
--				 * system.
--				 */
--				if (!mem_have || mem_want < mem_have / 2)
--					string_list_clear(&keep_pack, 0);
-+			} else if (big_pack_threshold) {
-+				find_base_packs(&keep_pack, big_pack_threshold);
- 			}
+-	repo_config_get_int(repo, "gc.auto", &gc_auto_threshold);
+-	repo_config_get_int(repo, "gc.autopacklimit", &gc_auto_pack_limit);
++		repo_config_get_int(odb->repo, "gc.auto", &gc_auto_threshold);
++		repo_config_get_int(odb->repo, "gc.autopacklimit", &gc_auto_pack_limit);
  
- 			add_repack_all_option(opts, &keep_pack, &repack_cmd.args);
- 			string_list_clear(&keep_pack, 0);
- 		} else {
--			add_repack_incremental_option(&repack_cmd.args);
-+			if (too_many_packs(gc_auto_pack_limit)) {
-+				struct string_list keep_pack = STRING_LIST_INIT_NODUP;
-+
-+				if (big_pack_threshold) {
-+					find_base_packs(&keep_pack, big_pack_threshold);
-+					if (keep_pack.nr >= gc_auto_pack_limit) {
-+						string_list_clear(&keep_pack, 0);
-+						find_base_packs(&keep_pack, 0);
-+					}
-+				} else {
-+					struct packed_git *p = find_base_packs(&keep_pack, 0);
-+					uint64_t mem_have, mem_want;
-+
-+					mem_have = total_ram();
-+					mem_want = estimate_repack_memory(p);
-+
-+					/*
-+					 * Only allow 1/2 of memory for pack-objects, leave
-+					 * the rest for the OS and other processes in the
-+					 * system.
-+					 */
-+					if (!mem_have || mem_want < mem_have / 2)
-+						string_list_clear(&keep_pack, 0);
-+				}
-+
-+				add_repack_all_option(opts, &keep_pack, &repack_cmd.args);
-+				string_list_clear(&keep_pack, 0);
-+			} else {
-+				add_repack_incremental_option(&repack_cmd.args);
-+			}
- 		}
-+
-+		break;
+-	/*
+-	 * Setting gc.auto to 0 or negative can disable the
+-	 * automatic gc.
+-	 */
+-	if (gc_auto_threshold <= 0)
+-		return 0;
+-	if (!too_many_packs(gc_auto_pack_limit) &&
+-	    !too_many_loose_objects(gc_auto_threshold))
+-		return 0;
++		/*
++		 * Setting gc.auto to 0 or negative can disable the
++		 * automatic gc.
++		 */
++		if (gc_auto_threshold <= 0)
++			return false;
++		if (!too_many_packs(gc_auto_pack_limit) &&
++		    !too_many_loose_objects(gc_auto_threshold))
++			return false;
+ 
+-	return 1;
++		return true;
++	}
 +	case ODB_OPTIMIZE_GEOMETRIC: {
 +		struct pack_geometry geometry = {
 +			.split_factor = 2,
@@ -236,68 +160,119 @@ index 17490106fc..c8504f4456 100644
 +		};
 +		struct existing_packs existing_packs = EXISTING_PACKS_INIT;
 +		struct string_list kept_packs = STRING_LIST_INIT_DUP;
++		int auto_value = 100;
++		bool ret;
 +
-+		repo_config_get_int(the_repository, "maintenance.geometric-repack.splitFactor",
++		repo_config_get_int(odb->repo, "maintenance.geometric-repack.auto",
++				    &auto_value);
++		if (!auto_value)
++			return false;
++		if (auto_value < 0)
++			return true;
++
++		repo_config_get_int(odb->repo, "maintenance.geometric-repack.splitFactor",
 +				    &geometry.split_factor);
 +
-+		existing_packs.repo = the_repository;
++		existing_packs.repo = odb->repo;
 +		existing_packs_collect(&existing_packs, &kept_packs);
 +		pack_geometry_init(&geometry, &existing_packs, &po_args);
 +		pack_geometry_split(&geometry);
 +
-+		if (geometry.split < geometry.pack_nr) {
-+			strvec_pushf(&repack_cmd.args, "--geometric=%d",
-+				     geometry.split_factor);
-+		} else {
-+			add_repack_all_option(opts, NULL, &repack_cmd.args);
++		/*
++		 * When we'd merge at least two packs with one another we always
++		 * perform the repack.
++		 */
++		if (geometry.split) {
++			ret = true;
++			goto out;
 +		}
-+		if (the_repository->settings.core_multi_pack_index)
-+			strvec_push(&repack_cmd.args, "--write-midx");
 +
++		/*
++		 * Otherwise, we estimate the number of loose objects to determine
++		 * whether we want to create a new packfile or not.
++		 */
++		if (too_many_loose_objects(auto_value)) {
++			ret = true;
++			goto out;
++		}
++
++		ret = false;
++
++	out:
 +		existing_packs_release(&existing_packs);
 +		pack_geometry_release(&geometry);
-+		break;
++		return ret;
 +	}
 +	default:
-+		die("unknown maintenance strategy '%d'", opts->strategy);
- 	}
++		BUG("unknown maintenance strategy '%d'", opts->strategy);
++	}
+ }
  
- 	if (run_command(&repack_cmd)) {
-@@ -908,7 +952,8 @@ static int odb_optimize(struct object_database *odb,
- 		goto out;
- 	}
+ /* return NULL on success, else hostname running the gc */
+@@ -1076,13 +1135,19 @@ int cmd_gc(int argc,
+ 		die(_("failed to parse prune expiry value %s"), cfg.prune_expire);
  
--	if (opts->prune_expire) {
-+	/* Geometric repacking uses cruft packs, so we don't have to prune separately. */
-+	if (opts->strategy != ODB_OPTIMIZE_GEOMETRIC && opts->prune_expire) {
- 		struct child_process prune_cmd = CHILD_PROCESS_INIT;
+ 	if (opts.auto_flag) {
++		struct odb_optimize_options optimize_opts = {
++			.strategy = ODB_OPTIMIZE_INCREMENTAL,
++			OPTIMIZE_FIELDS_FROM_GC_CONFIG(&cfg, 0),
++		};
++
+ 		if (cfg.detach_auto && opts.detach < 0)
+ 			opts.detach = 1;
  
- 		strvec_pushl(&prune_cmd.args, "prune", "--expire", NULL);
-@@ -943,6 +988,7 @@ static int maintenance_task_odb(struct maintenance_run_opts *opts,
- 				int aggressive)
+ 		/*
+ 		 * Auto-gc should be least intrusive as possible.
+ 		 */
+-		if (!need_to_gc(the_repository) || run_hooks(the_repository, "pre-auto-gc")) {
++		if (!odb_optimize_required(the_repository->objects, &optimize_opts) ||
++		    run_hooks(the_repository, "pre-auto-gc")) {
+ 			ret = 0;
+ 			goto out;
+ 		}
+@@ -1379,9 +1444,13 @@ static int maintenance_task_gc_background(struct maintenance_run_opts *opts,
+ 	return run_command(&child);
+ }
+ 
+-static int gc_condition(struct gc_config *cfg UNUSED)
++static int gc_condition(struct gc_config *cfg)
  {
- 	struct odb_optimize_options odb_opts = {
+-	return need_to_gc(the_repository);
++	struct odb_optimize_options opts = {
 +		.strategy = ODB_OPTIMIZE_INCREMENTAL,
- 		.keep_largest_pack = keep_largest_pack,
- 		OPTIMIZE_FIELDS_FROM_GC_CONFIG(cfg, aggressive),
- 	};
-@@ -1624,58 +1670,15 @@ static int maintenance_task_incremental_repack(struct maintenance_run_opts *opts
- static int maintenance_task_geometric_repack(struct maintenance_run_opts *opts,
- 					     struct gc_config *cfg)
++		OPTIMIZE_FIELDS_FROM_GC_CONFIG(cfg, 0),
++	};
++	return odb_optimize_required(the_repository->objects, &opts);
+ }
+ 
+ static int prune_packed(struct maintenance_run_opts *opts)
+@@ -1681,58 +1750,13 @@ static int maintenance_task_geometric_repack(struct maintenance_run_opts *opts,
+ 	return odb_optimize(the_repository->objects, &odb_opts);
+ }
+ 
+-static int geometric_repack_auto_condition(struct gc_config *cfg UNUSED)
++static int geometric_repack_auto_condition(struct gc_config *cfg)
  {
 -	struct pack_geometry geometry = {
 -		.split_factor = 2,
 -	};
 -	struct pack_objects_args po_args = {
 -		.local = 1,
-+	struct odb_optimize_options odb_opts = {
++	struct odb_optimize_options opts = {
 +		.strategy = ODB_OPTIMIZE_GEOMETRIC,
 +		OPTIMIZE_FIELDS_FROM_GC_CONFIG(cfg, 0),
  	};
 -	struct existing_packs existing_packs = EXISTING_PACKS_INIT;
 -	struct string_list kept_packs = STRING_LIST_INIT_DUP;
--	struct child_process child = CHILD_PROCESS_INIT;
+-	int auto_value = 100;
 -	int ret;
+-
+-	repo_config_get_int(the_repository, "maintenance.geometric-repack.auto",
+-			    &auto_value);
+-	if (!auto_value)
+-		return 0;
+-	if (auto_value < 0)
+-		return 1;
 -
 -	repo_config_get_int(the_repository, "maintenance.geometric-repack.splitFactor",
 -			    &geometry.split_factor);
@@ -307,120 +282,34 @@ index 17490106fc..c8504f4456 100644
 -	pack_geometry_init(&geometry, &existing_packs, &po_args);
 -	pack_geometry_split(&geometry);
 -
--	child.git_cmd = 1;
--	child.odb_to_close = the_repository->objects;
--
--	strvec_pushl(&child.args, "repack", "-d", "-l", NULL);
--	if (geometry.split < geometry.pack_nr) {
--		strvec_pushf(&child.args, "--geometric=%d",
--			     geometry.split_factor);
--	} else {
--		struct odb_optimize_options odb_opts = {
--			OPTIMIZE_FIELDS_FROM_GC_CONFIG(cfg, 0),
--		};
- 
--		if (!opts->quiet)
--			odb_opts.flags |= ODB_OPTIMIZE_VERBOSE;
--
--		add_repack_all_option(&odb_opts, NULL, &child.args);
+-	/*
+-	 * When we'd merge at least two packs with one another we always
+-	 * perform the repack.
+-	 */
+-	if (geometry.split) {
+-		ret = 1;
+-		goto out;
 -	}
--	if (opts->quiet)
--		strvec_push(&child.args, "--quiet");
--	if (the_repository->settings.core_multi_pack_index)
--		strvec_push(&child.args, "--write-midx");
 -
--	if (run_command(&child)) {
--		ret = error(_("failed to perform geometric repack"));
+-	/*
+-	 * Otherwise, we estimate the number of loose objects to determine
+-	 * whether we want to create a new packfile or not.
+-	 */
+-	if (too_many_loose_objects(auto_value)) {
+-		ret = 1;
 -		goto out;
 -	}
 -
 -	ret = 0;
-+	if (!opts->quiet)
-+		odb_opts.flags |= ODB_OPTIMIZE_VERBOSE;
- 
+-
 -out:
 -	existing_packs_release(&existing_packs);
 -	pack_geometry_release(&geometry);
 -	return ret;
-+	return odb_optimize(the_repository->objects, &odb_opts);
++	return odb_optimize_required(the_repository->objects, &opts);
  }
  
- static int geometric_repack_auto_condition(struct gc_config *cfg UNUSED)
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 1212b306b6..e0251064c7 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -556,8 +556,8 @@ run_and_verify_geometric_pack () {
- 	rm -f "trace2.txt" &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
- 		git maintenance run --task=geometric-repack 2>/dev/null &&
--	test_subcommand git repack -d -l --geometric=2 \
--		--quiet --write-midx <trace2.txt &&
-+	test_subcommand git repack -d -l -q --geometric=2 \
-+		--write-midx <trace2.txt &&
- 
- 	# Verify that the number of packfiles matches our expectation.
- 	ls -l .git/objects/pack/*.pack >packfiles &&
-@@ -588,8 +588,8 @@ test_expect_success 'geometric repacking task' '
- 		# The initial repack causes an all-into-one repack.
- 		GIT_TRACE2_EVENT="$(pwd)/initial-repack.txt" \
- 			git maintenance run --task=geometric-repack 2>/dev/null &&
--		test_subcommand git repack -d -l --cruft --cruft-expiration=2.weeks.ago \
--			--quiet --write-midx <initial-repack.txt &&
-+		test_subcommand git repack -d -l -q --cruft --cruft-expiration=2.weeks.ago \
-+			--write-midx <initial-repack.txt &&
- 
- 		# Repacking should now cause a no-op geometric repack because
- 		# no packfiles need to be combined.
-@@ -609,8 +609,8 @@ test_expect_success 'geometric repacking task' '
- 		# an all-into-one-repack.
- 		GIT_TRACE2_EVENT="$(pwd)/all-into-one-repack.txt" \
- 			git maintenance run --task=geometric-repack 2>/dev/null &&
--		test_subcommand git repack -d -l --cruft --cruft-expiration=2.weeks.ago \
--			--quiet --write-midx <all-into-one-repack.txt &&
-+		test_subcommand git repack -d -l -q --cruft --cruft-expiration=2.weeks.ago \
-+			--write-midx <all-into-one-repack.txt &&
- 
- 		# The geometric repack soaks up unreachable objects.
- 		echo blob-1 | git hash-object -w --stdin -t blob &&
-@@ -644,8 +644,8 @@ test_expect_success 'geometric repacking task' '
- 		run_and_verify_geometric_pack 3 &&
- 		GIT_TRACE2_EVENT="$(pwd)/cruft-repack.txt" \
- 			git maintenance run --task=geometric-repack 2>/dev/null &&
--		test_subcommand git repack -d -l --cruft --cruft-expiration=2.weeks.ago \
--			--quiet --write-midx <cruft-repack.txt &&
-+		test_subcommand git repack -d -l -q --cruft --cruft-expiration=2.weeks.ago \
-+			--write-midx <cruft-repack.txt &&
- 		ls .git/objects/pack/*.pack >packs &&
- 		test_line_count = 2 packs &&
- 		ls .git/objects/pack/*.mtimes >cruft &&
-@@ -736,7 +736,7 @@ test_expect_success 'geometric repacking honors configured split factor' '
- 
- 		test_geometric_repack_needed false splitFactor=2 &&
- 		test_geometric_repack_needed true splitFactor=3 &&
--		test_subcommand git repack -d -l --geometric=3 --quiet --write-midx <trace2.txt
-+		test_subcommand git repack -d -l -q --geometric=3 --write-midx <trace2.txt
- 	)
- '
- 
-@@ -1167,7 +1167,7 @@ test_expect_success 'maintenance.strategy is respected' '
- 		test_strategy geometric <<-\EOF &&
- 		git pack-refs --all --prune
- 		git reflog expire --all
--		git repack -d -l --geometric=2 --quiet --write-midx
-+		git repack -d -l -q --geometric=2 --write-midx
- 		git commit-graph write --split --reachable --no-progress
- 		git worktree prune --expire 3.months.ago
- 		git rerere gc
-@@ -1176,7 +1176,7 @@ test_expect_success 'maintenance.strategy is respected' '
- 		test_strategy geometric --schedule=weekly <<-\EOF
- 		git pack-refs --all --prune
- 		git reflog expire --all
--		git repack -d -l --geometric=2 --quiet --write-midx
-+		git repack -d -l -q --geometric=2 --write-midx
- 		git commit-graph write --split --reachable --no-progress
- 		git worktree prune --expire 3.months.ago
- 		git rerere gc
+ typedef int (*maintenance_task_fn)(struct maintenance_run_opts *opts,
 
 -- 
 2.55.0.141.g00534a21ce.dirty
