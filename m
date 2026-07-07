@@ -1,37 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F27435898
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 05:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D722EEE61
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 05:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783400660; cv=none; b=MVsxc923gSEmnjANSm+fDdcyxbFglUmOR6MbiJK/9T6A8UcoVKxn2L4qwIETa7A1MNWjQCZ97ybQvSx7vgdfGJiJhLOHbqwTvPIYaiLH34/jXsv6t2CfylqZUF6IwXIxCA6RaIS+MGkv0tYgvxtl6qlHRaV88FpNKnoi0XhbSZY=
+	t=1783400760; cv=none; b=hnem1aDXDmnTb1LaEV/kuZTIvOE3BeefdJFvkJlKxmEwSKqyzbc36urTsok2efMyeqxME2wEh7CZUmkTpbzBmvk13sXMFJ1ZoL9Pa8p8kZOGFbv52TWsZU0VCmetdHdeuhubwmPsskSs6ryC2GFEG+u5xJMt2ytSG97vWF5S3o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783400660; c=relaxed/simple;
-	bh=/SC7v+vcJCJ7FPGs3y1zMGE+OYf7QdKQVKC7gfKrEJ0=;
+	s=arc-20240116; t=1783400760; c=relaxed/simple;
+	bh=WAduhzgj84U77y6DPRWvYUjGGH31bsPDgqgF1jaU8I4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EssDmaJBAWaqd3a4VHVJrGBiRVPysQLFXQBDlHLyJTyJzhRwRF9ZIOFUoOCU5gINeA/UWhSHtLwzCPOcI+a3Zc88vfU0I4DXLhISj/gxoycRLC2Bf0CUe9ZAVau+3MTzLnz+7sDMLVL7bNFgZSRcHIOcUeW2AkyYEqvFZUWmqBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QuwPsD0y; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=tgMogqj/GuvVJZ7PYchCFlRLSFiczPfgWk2AtDFyS97kwldF9rPaSI2paXGUNqDWZRKvQAvYRfOV0kBKvw3P8TvcVChnesWyJQmQYuo8b7rsa5qbptWXRaSUyNouaKDEyGhq0cO50E0mXV4WmyHP42oBG5ZnG+kukKzmJHY4AHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JoddVAAA; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QuwPsD0y"
-Received: (qmail 17482 invoked by uid 106); 7 Jul 2026 05:04:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/SC7v+vcJCJ7FPGs3y1zMGE+OYf7QdKQVKC7gfKrEJ0=; b=QuwPsD0yZrLY6kkEBNGDqTjWfSi/7vDfdQvqm2B57MY/7TicI8zdBTW7kbkzXhbcAMSAkvhXp5WWLEPVhBlNue6AmCVP87CJeF5ZdzkdS903llDPDKZ04g6rOU5oG4WXeWHR1oSqjJDZzHPohaVBTwkGTgx11noI1Mm5cT20z9hMKFrnxSuGAaXla9vqpKvs6WDkFomdvQpS+mL0Wg01dVYlFoPfH4EP/RG8mMqNmoQJx+1NgoctCDoWuNpZiMmAAuNLOZmb4Wh74EPS8VqVbB9MwGnaGYi4fP9dza1EjAQwzECIC829ciUq6pGf2hK1jUcp/aerMTppr5L/DSXx2w==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JoddVAAA"
+Received: (qmail 17504 invoked by uid 106); 7 Jul 2026 05:05:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=WAduhzgj84U77y6DPRWvYUjGGH31bsPDgqgF1jaU8I4=; b=JoddVAAAsWSK2OQuR4VDsew2J92B8RHpEWUJx4Rh7bfS+dY0OzaWmToeTnPepWdoVsxwkO2pCSmthabq3rhttrwKKSejEYW7JiK7am+WXeXTDrETydwKrc4oemvj8Tabi97n6I4HmTD5MyNohosWtaG31i2YiEefR1fGBlJ90TsaKpUhn/Y1FAt/XrMk2Zl3JZzierNDoCOGzGlSB+ROXwoKMhhzprCQ87UuHtzyMfjHGat3SB8mCx7I2D1t+Xk5+XpfM0MqNIMpmyWOwsq2zRGowJviyTpvm6YLBvbUJs/kFpiXTMllt1JQqgRYSda9Zm3qVba5mx2EtIjZhlQYTg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2026 05:04:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2026 05:05:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22402 invoked by uid 111); 7 Jul 2026 05:04:18 -0000
+Received: (qmail 22459 invoked by uid 111); 7 Jul 2026 05:05:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 01:04:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 01:05:57 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 7 Jul 2026 01:04:17 -0400
+Date: Tue, 7 Jul 2026 01:05:57 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 2/7] hash: convert remaining direct function calls
-Message-ID: <20260707050417.GB1288294@coredump.intra.peff.net>
+Subject: [PATCH 3/7] hash: document function pointers and wrappers
+Message-ID: <20260707050557.GC1288294@coredump.intra.peff.net>
 References: <20260707045556.GA1288172@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,213 +43,99 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260707045556.GA1288172@coredump.intra.peff.net>
 
-The previous patch added a coccinelle rule to make sure callers always
-use git_hash_init() rather than direct function pointers from the algo
-struct.
+We want people to use the git_hash_*() wrappers rather than the bare
+function pointers in the git_hash_algo struct. Let's document them
+rather than the bare pointers, and warn people away from the pointers.
+Coccinelle will eventually force the use of the wrappers, but it's
+helpful to lead readers in the right direction from the start.
 
-Let's do the same for the rest of the git_hash_*() wrappers. I split
-these out because they're a bit different: they implicitly use the algop
-pointer in the git_hash_ctx. So when we convert:
+While we're here we can document a few other bits of wisdom I've turned
+up while working in this area:
 
-  -algo->update_fn(&ctx, buf, len);
-  +git_hash_update(&ctx, buf, len);
+  - You have to initialize the destination of a git_hash_clone(). This
+    is something we may eventually change for efficiency, but we should
+    definitely document the requirement for now.
 
-we drop the reference to algo entirely! But this is always going to be
-the right thing. If "algo" does not match what is in ctx.algop, then
-we'd already be invoking undefined behavior.
-
-So in addition to making it possible to add more logic to the
-git_hash_*() functions, we're avoiding the need to pass around the extra
-algo pointer and make sure that it matches what's in "ctx".
-
-The rest of the patch is the mechanical application of that coccinelle
-patch, plus a minor cleanup in test-synthesize.c to drop a now-unused
-function parameter (since we don't have to pass around the algo
-separately anymore).
+  - You must eventually finalize or discard a hash, since some backends
+    may allocate resources during initialization.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/submodule--helper.c |  8 +++---
- t/helper/test-synthesize.c  | 29 ++++++++++----------
- tools/coccinelle/hash.cocci | 53 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 71 insertions(+), 19 deletions(-)
+ hash.h | 43 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index bf114a7856..510f193a15 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -551,10 +551,10 @@ static void create_default_gitdir_config(const char *submodule_name)
- 	/* Case 2.4: If all the above failed, try a hash of the name as a last resort */
- 	header_len = snprintf(header, sizeof(header), "blob %zu", strlen(submodule_name));
- 	git_hash_init(&ctx, the_hash_algo);
--	the_hash_algo->update_fn(&ctx, header, header_len);
--	the_hash_algo->update_fn(&ctx, "\0", 1);
--	the_hash_algo->update_fn(&ctx, submodule_name, strlen(submodule_name));
--	the_hash_algo->final_fn(raw_name_hash, &ctx);
-+	git_hash_update(&ctx, header, header_len);
-+	git_hash_update(&ctx, "\0", 1);
-+	git_hash_update(&ctx, submodule_name, strlen(submodule_name));
-+	git_hash_final(raw_name_hash, &ctx);
- 	hash_to_hex_algop_r(hex_name_hash, raw_name_hash, the_hash_algo);
- 	strbuf_reset(&gitdir_path);
- 	repo_git_path_append(the_repository, &gitdir_path, "modules/%s", hex_name_hash);
-diff --git a/t/helper/test-synthesize.c b/t/helper/test-synthesize.c
-index 7719fb3a76..fd116c87ba 100644
---- a/t/helper/test-synthesize.c
-+++ b/t/helper/test-synthesize.c
-@@ -25,8 +25,7 @@ static const unsigned char zeros[BLOCK_SIZE];
-  * Updates the pack checksum context.
-  */
- static void write_uncompressed_zlib(FILE *f, struct git_hash_ctx *pack_ctx,
--				    const void *data, size_t len,
--				    const struct git_hash_algo *algo)
-+				    const void *data, size_t len)
- {
- 	unsigned char zlib_header[2] = { 0x78, 0x01 }; /* CMF, FLG */
- 	unsigned char block_header[5];
-@@ -37,7 +36,7 @@ static void write_uncompressed_zlib(FILE *f, struct git_hash_ctx *pack_ctx,
+diff --git a/hash.h b/hash.h
+index 0a23ef4dfd..5686914b71 100644
+--- a/hash.h
++++ b/hash.h
+@@ -309,22 +309,15 @@ struct git_hash_algo {
+ 	/* The block size of the hash. */
+ 	size_t blksz;
  
- 	/* Write zlib header */
- 	fwrite_or_die(f, zlib_header, sizeof(zlib_header));
--	algo->update_fn(pack_ctx, zlib_header, 2);
-+	git_hash_update(pack_ctx, zlib_header, 2);
+-	/* The hash initialization function. */
++	/*
++	 * Low-level implementation hooks. Callers should use the git_hash_*
++	 * wrappers below rather than invoking these directly.
++	 */
+ 	git_hash_init_fn init_fn;
+-
+-	/* The hash context cloning function. */
+ 	git_hash_clone_fn clone_fn;
+-
+-	/* The hash update function. */
+ 	git_hash_update_fn update_fn;
+-
+-	/* The hash finalization function. */
+ 	git_hash_final_fn final_fn;
+-
+-	/* The hash finalization function for object IDs. */
+ 	git_hash_final_oid_fn final_oid_fn;
+-
+-	/* Discard an initialized hash without finalizing. */
+ 	git_hash_discard_fn discard_fn;
  
- 	/* Write uncompressed blocks (max 64KB each) */
- 	do {
-@@ -52,11 +51,11 @@ static void write_uncompressed_zlib(FILE *f, struct git_hash_ctx *pack_ctx,
- 		block_header[4] = block_header[2] ^ 0xff;
+ 	/* The OID of the empty tree. */
+@@ -341,12 +334,40 @@ struct git_hash_algo {
+ };
+ extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
  
- 		fwrite_or_die(f, block_header, sizeof(block_header));
--		algo->update_fn(pack_ctx, block_header, 5);
-+		git_hash_update(pack_ctx, block_header, 5);
- 
- 		if (block_len) {
- 			fwrite_or_die(f, block_data, block_len);
--			algo->update_fn(pack_ctx, block_data, block_len);
-+			git_hash_update(pack_ctx, block_data, block_len);
- 			adler = adler32(adler, block_data, block_len);
- 		}
- 
-@@ -68,7 +67,7 @@ static void write_uncompressed_zlib(FILE *f, struct git_hash_ctx *pack_ctx,
- 	/* Write adler32 checksum */
- 	put_be32(adler_buf, adler);
- 	fwrite_or_die(f, adler_buf, sizeof(adler_buf));
--	algo->update_fn(pack_ctx, adler_buf, 4);
-+	git_hash_update(pack_ctx, adler_buf, 4);
- }
- 
- /*
-@@ -92,24 +91,24 @@ static void write_pack_object(FILE *f, struct git_hash_ctx *pack_ctx,
- 						       sizeof(pack_header),
- 						       type, len);
- 	fwrite_or_die(f, pack_header, pack_header_len);
--	algo->update_fn(pack_ctx, pack_header, pack_header_len);
-+	git_hash_update(pack_ctx, pack_header, pack_header_len);
- 
- 	/* Write the data as uncompressed zlib */
--	write_uncompressed_zlib(f, pack_ctx, data, len, algo);
-+	write_uncompressed_zlib(f, pack_ctx, data, len);
- 
- 	git_hash_init(&ctx, algo);
- 	object_header_len = format_object_header(object_header,
- 						 sizeof(object_header),
- 						 type, len);
--	algo->update_fn(&ctx, object_header, object_header_len);
-+	git_hash_update(&ctx, object_header, object_header_len);
- 	if (data)
--		algo->update_fn(&ctx, data, len);
-+		git_hash_update(&ctx, data, len);
- 	else {
- 		for (size_t i = len / BLOCK_SIZE; i; i--)
--			algo->update_fn(&ctx, zeros, BLOCK_SIZE);
--		algo->update_fn(&ctx, zeros, len % BLOCK_SIZE);
-+			git_hash_update(&ctx, zeros, BLOCK_SIZE);
-+		git_hash_update(&ctx, zeros, len % BLOCK_SIZE);
- 	}
--	algo->final_oid_fn(oid, &ctx);
-+	git_hash_final_oid(oid, &ctx);
- }
- 
- /*
-@@ -434,7 +433,7 @@ static int generate_pack_with_large_object(const char *path, size_t blob_size,
- 
- 	/* Write pack header */
- 	fwrite_or_die(f, &pack_header, sizeof(pack_header));
--	algo->update_fn(&pack_ctx, &pack_header, sizeof(pack_header));
-+	git_hash_update(&pack_ctx, &pack_header, sizeof(pack_header));
- 
- 	/* 1. Write the large blob */
- 	write_pack_object(f, &pack_ctx, OBJ_BLOB, NULL, blob_size, &blob_oid, algo);
-@@ -472,7 +471,7 @@ static int generate_pack_with_large_object(const char *path, size_t blob_size,
- 	write_pack_object(f, &pack_ctx, OBJ_COMMIT, buf.buf, buf.len, &final_commit_oid, algo);
- 
- 	/* Write pack trailer (checksum) */
--	algo->final_fn(pack_hash, &pack_ctx);
-+	git_hash_final(pack_hash, &pack_ctx);
- 	fwrite_or_die(f, pack_hash, algo->rawsz);
- 	if (fclose(f))
- 		die_errno(_("could not close '%s'"), path);
-diff --git a/tools/coccinelle/hash.cocci b/tools/coccinelle/hash.cocci
-index 5a7af6c544..d0e2e5f4b1 100644
---- a/tools/coccinelle/hash.cocci
-+++ b/tools/coccinelle/hash.cocci
-@@ -8,3 +8,56 @@ struct git_hash_ctx *CTX;
- + git_hash_init(CTX, ALGO);
-   ...>}
- 
-+@@
-+identifier f != git_hash_clone;
-+expression ALGO;
-+struct git_hash_ctx *SRC;
-+struct git_hash_ctx *DST;
-+@@
-+  f(...) {<...
-+- ALGO->clone_fn(DST, SRC);
-++ git_hash_clone(DST, SRC);
-+  ...>}
++/*
++ * Prepare an uninitialized hash context for use. You must eventually release
++ * the context with with git_hash_final() (or final_oid()) or by calling
++ * git_hash_discard().
++ */
+ void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop);
 +
-+@@
-+identifier f != git_hash_update;
-+expression ALGO;
-+struct git_hash_ctx *CTX;
-+expression list ARGS;
-+@@
-+  f(...) {<...
-+- ALGO->update_fn(CTX, ARGS);
-++ git_hash_update(CTX, ARGS);
-+  ...>}
++/*
++ * Clone the state of a hash. Both src and dst must have been initialized with
++ * git_hash_init().
++ */
+ void git_hash_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src);
 +
-+@@
-+identifier f != git_hash_final;
-+expression ALGO;
-+struct git_hash_ctx *CTX;
-+expression list ARGS;
-+@@
-+  f(...) {<...
-+- ALGO->final_fn(ARGS, CTX);
-++ git_hash_final(ARGS, CTX);
-+  ...>}
++/*
++ * Add more data to an initialized hash context.
++ */
+ void git_hash_update(struct git_hash_ctx *ctx, const void *in, size_t len);
 +
-+@@
-+identifier f != git_hash_final_oid;
-+expression ALGO;
-+struct git_hash_ctx *CTX;
-+expression list ARGS;
-+@@
-+  f(...) {<...
-+- ALGO->final_oid_fn(ARGS, CTX);
-++ git_hash_final_oid(ARGS, CTX);
-+  ...>}
++/*
++ * Retrieve the final hash value from a context, releasing any resources.
++ */
+ void git_hash_final(unsigned char *hash, struct git_hash_ctx *ctx);
 +
-+@@
-+identifier f != git_hash_discard;
-+expression ALGO;
-+struct git_hash_ctx *CTX;
-+@@
-+  f(...) {<...
-+- ALGO->discard_fn(CTX);
-++ git_hash_discard(CTX);
-+  ...>}
++/*
++ * Like git_hash_final(), but write the result into an object_id.
++ */
+ void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx *ctx);
++
++/*
++ * Discard a hash context without computing the final value, but still
++ * releasing any resources.
++ */
+ void git_hash_discard(struct git_hash_ctx *ctx);
++
+ const struct git_hash_algo *hash_algo_ptr_by_number(uint32_t algo);
+ struct git_hash_ctx *git_hash_alloc(void);
+ void git_hash_free(struct git_hash_ctx *ctx);
 -- 
 2.55.0.459.g1b256877c9
 
