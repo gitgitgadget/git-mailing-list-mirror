@@ -1,148 +1,177 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B329B3D75AA
-	for <git@vger.kernel.org>; Mon,  6 Jul 2026 22:52:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9DF2B2D7
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 02:16:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783378346; cv=none; b=MQFFY+KaD5n/MCs6IS1HCjnRn49ldNNGe6unpliaUkg6/GnmAUKl/Xm9wqEnK5/v6fvtIxlnnZkykBgRJdUz1EUpznr1H4AoYHcqzKMj6Q886D7t6OXAXKxeSA2VAtEJMMzPM417JFZCMOaaXVLR4fAqvCXbQvFOPTpyeE8hrCg=
+	t=1783390574; cv=none; b=VcfZkOAeF09OrlRULndD1uJ+pClbSBuGKyDUnV8KHYlp9cSSpQ6r7Tcrfzlb2nQOinNVXEy1Tj6IPi4EcpGjXVKinxSphi03ItcSgp/hQt0xQHTR2DMM3DRm78Buh2lDKOefunaO0g6Uvydh797aMlomc77QI8G1h8dLjIwLd9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783378346; c=relaxed/simple;
-	bh=ejsA3K630jU1vrDZ/tgbCdIHh/lWaMB4C/dr3EIf4mA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ljsJrVHbQv6ehqgf369s4cSdhp+fjIpCxoNE/eNROVMxTIi/ZbeiDf8jzbT6/rVBArWKD6IsPDFD99SBSGjjzIlOitfgQ5yINKYpcR5dzxC6864qBvIMoX8x5ZOn98RMXV2aDpmaViRvUlMIJ6iNMrqL7gCmdQdfIYVS0n/mP9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I+fOFCQi; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783390574; c=relaxed/simple;
+	bh=kG8QKn5fz9fNY4RgT83XUlSEnE1DrOhUShwN44vQDqU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lGxhoM4tcBLo3vNs0zfdqF4A7dbwwRVhFSbmVnARi8m9+EvZ5AD8H5CTu+2hy97sGdKC0/PKMBqvb46o9HAvAWQwTyGrQoAEehwNs9HrQ7tYIUiJDaNy/YYCnGlwt5urdOpVk+ye8nl87s+ePnIGU9kmLckZPz8zAcScGAeRopM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b/54iTer; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=STfjJjV1; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I+fOFCQi"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-92e5c9211d2so281435285a.1
-        for <git@vger.kernel.org>; Mon, 06 Jul 2026 15:52:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783378343; x=1783983143; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=RtHDyHd0jyoGXTQPjfTXUb5KOvKmmqc4WKzRo+LrwIc=;
-        b=I+fOFCQifaHig0KLhJDyiQV/tnds6/Q8Z5AT38yQaVcoVPU14QRX6akMeECYv4lp5k
-         boV1ac15s+x0ZcG42xIC5Uj5I2xjTT72TNhhb/Z+g9CLUjoDb3+eY6cC0v0wZ26ZEJq7
-         fReuOiknBaASzcGv4tMsZR+y4P3WjtgZCdSFppIGJ/wmid5B7llkxeIHwVX0ZO7ouk3s
-         bRtd1NSn1srfwcnClxgFTSynbJvTg69EKSZi40OMaH44Vc2AXhH5f7yt2VMxHISduR+2
-         jcJIAcJQqeCzYITFphUARFvNXLGlqX/mebPnUtV/klpFsDtY51cPgS1PFVw6h7GIxkL5
-         IyFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783378343; x=1783983143;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RtHDyHd0jyoGXTQPjfTXUb5KOvKmmqc4WKzRo+LrwIc=;
-        b=Q/u1tQismHrMfkuPmvdhzqGEZm20vaQMtJf2gGk+u8eWmIzDdP/KT8XS6XO85Bq47Y
-         QDssBm5MEacAmvhNDZuun7h7aEjPpCIK1oYulpRouLWIA1cutetsTqlXt9q7RxxaTIlR
-         OUQBOfSImfZLTS3S5JXMSxygEqemHxm7sjG8UQ7HCHFkbuDorebV2Q0yLU7cUg1hg76D
-         o3l38x7ATYxT92UwD06eJRJNnKXtL8R0/LqpuO08FS2Tw7fqEnIJ4vn3fdnpwbiexwI1
-         XaKgPeEv3dv8uStDGxU6eCsivQ7DBYs1svhkKM9woj+rOyfVnOSE+CZGez5REpMOIeO/
-         2lHQ==
-X-Gm-Message-State: AOJu0YxTZl/89rr6xuETVKxmJlN93o9SfXISyOnaX89C3GbpolOPpFlQ
-	DgJEMyOLSsxOhIVOJXUAxx77NjRSQcPkv1mCLda/7Foy+rWA0+MBYI8ZUwYqmC2b
-X-Gm-Gg: AfdE7cltixII9IoV+d6gn8UXa4CTANdNh6oV37UO9UHR6lV7Myh6oVRp3h8MmKVYi2D
-	69CNyESemYfjncicFfsnTNnclEL5Cl35VdL2zlV5MznIW2H5EumuOWy2fhO2EfStPluGsX1XmGW
-	5k70BvJK2BOe1PMqoGXeFboweUKnD1UrrdL7UOr9b6yWOtucdFeeNhU37FGpyh0L46CN9ZT3Oo8
-	cfj9f3c8H7CA7pVMIZU8kHhKk3PgFB4YeTxzD5VDic6V9WJsvfjQJwU+JMHiaZ17w3c5AjGpx/3
-	jZ7L+duiDl48AnwSllPS29wotChSLK5gHoIdn2yT0iXh7w46RReWanIbVTTWn0QAGyIxQneURs0
-	VhzUzYfexLfp1e2cOxe24G+kWuFzzCQ/0EAC3P6tlAnWeWZhJsDUpxO48bynxGXtiSmZUPeez7T
-	4OPRQGv+HRQ2oyKLyEHaU5bmAKxg==
-X-Received: by 2002:a05:620a:408e:b0:92e:c118:18ad with SMTP id af79cd13be357-92ec118290fmr15731985a.76.1783378343549;
-        Mon, 06 Jul 2026 15:52:23 -0700 (PDT)
-Received: from [127.0.0.1] ([40.116.72.211])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90b800ccsm1041509085a.8.2026.07.06.15.52.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 15:52:22 -0700 (PDT)
-Message-Id: <8455e449f388486c4468dfd528d7d96e90fe2c59.1783378333.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2288.v6.git.git.1783378333.gitgitgadget@gmail.com>
-References: <pull.2288.v5.git.git.1783358097.gitgitgadget@gmail.com>
-	<pull.2288.v6.git.git.1783378333.gitgitgadget@gmail.com>
-From: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Jul 2026 22:52:13 +0000
-Subject: [PATCH v6 3/3] contrib: wire up osxkeychain in contrib/Makefile on
- macOS
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b/54iTer";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="STfjJjV1"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3ECD2EC00CC;
+	Mon,  6 Jul 2026 22:16:11 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 06 Jul 2026 22:16:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783390571; x=1783476971; bh=Z4ADp8ln6X
+	1heUBix067K2ClDFnfNv3OEXHrWn0Epmg=; b=b/54iTerNF6tcuE3uLE9lrSLgL
+	XyNTM59JrrWS73oggADYDQTwpuwXrXTm1CVTlRi8NsycNlCmFFHagVWqhZ4Kn+Lh
+	ccs45vzkgPSX0rsih3enG4npaZqUTP01doGMbUnI+qXWRgn1M3dhBNqR1z2/z0TB
+	N58Csn7tDzzE2b80BWp+WB03x0rTGv251F+3WLuWP+vvmx+xVVNC3CmEuPqX6Y45
+	VsZP0wh6EFQ1q9BLQkzpmR1WNDW0NGIL2BvFQEP/FT+3kVOZb2gnRXDT6YWd6HMe
+	QewTJYiGgUicTqfUp0WIrK2L32mn0v+djJr7vUZgu/C/2kLUORiVzdVBgTtg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783390571; x=1783476971; bh=Z4ADp8ln6X1heUBix067K2ClDFnfNv3OEXH
+	rWn0Epmg=; b=STfjJjV1mxuY4f3b661xzho93niyfSVg+pT+WkLCfZjM/sAQsiG
+	rGs+1HjxU9lmD4Ci9Dshzfiqwr9qQQySj0aQpgPMLDujQ4TFwrQ0Cl8bRyyp6drj
+	X53V9c4FOr21YQYrrIoJ15lhHYd/2MTKYjhNMlGjFjxPkCZpqiRABM1NEgcfzjn/
+	YdaY2pJIllemDXBf3qzYjI6dt4H/7KOqBTRlqND98XZsTizWh/qq2zZm4s5s1Fhs
+	E6wW75hIGpdzABqnnuGggbQCxSX7NEqFvFwawUp/piZk0PuAVfmxoLaWLIV29QK+
+	CsvqaQ/cW+JqHloqN5PWyvctUMnIG2DGnNw==
+X-ME-Sender: <xms:a2FMahPEOzv36plOgrBkmgU63XABn-dMUC220S0MAPd92xRwdnieeg>
+    <xme:a2FMaraF8dcRN609M20HWuQj7jZ1NnBrX9XhH2FvGJfFeaFr19A29qrkZLXLVQKD4
+    9m0nvKoYcC5m7s97_Y6Yu7yumaofLVLusLf7FBZg5Q0FK7wa2-8Xw>
+X-ME-Received: <xmr:a2FMatp6PTxfkiecE7uX3pWxW5SjSfEVzapZm6E6u4AiJjUpXTzqnL8AhpjC4Fy1IPS6GpBkMqqAPukStL1LFjdrn7ThhmlXIhSgqg8>
+X-ME-Proxy-Cause: dmFkZTFQh5oyIMDH2kDmLkIAAKrR8Kzb/xJNGoSmu09iPJn0bTsOcJNIgHRqZltFijwltz
+    aAmXOzAVwCUir1f+ta8DmU5hSaKSb3I3rv7gTVXnhJaD+fjUfP5PkWws+QXiJtSPpEiw+v
+    YK3o9u/gaUHwcGVTnLBFxMGP3XetYiheB967s2/Rc2c8vpwfEkdhCtja07jEH+w2z7SnzD
+    kEekf4yaDtyls9JzPxsP7WrfOz3c16lcDtdT6z/VXHa5DHZZckVyMtfgC66siBAB22+8gj
+    W12tETJhmMuk7Tuy6vCkk7c4wDMzQPRyZ5Ps9DWg6FJDljtJDWBFMkBZHbwacFcI5ijqQF
+    FYjnPry0TAP+oT6urPnrARfAWGtJmzT5MexHSXOrGzlMMARd3Cg+VFP/SuMFVvBkdiyOwV
+    Pk/G+0Xh1GUQ5a7FxRvzzOCt/DfUM1/VvOsKBltDKCllqyXJLwhNnf49FeqxkYI6eJU9Md
+    dRddYOWTj0MJmT18z2b0N34s1X4SXqXoEWUK+rdGOegCr6Wn1EDcDtIamvlbOv+zSMTrDq
+    g7iPCwb1zUw8WvVNkxGpoBwt0g0HZkUyF2M+RFtbVNdPGH2XyLlmgAw2O4jA5wf7w3b7GV
+    amyoI3bdnim2Op8r2FsIXjVL1aS6gxicivHbZbVFtE5MGqHbnXaQe9ChQftw
+X-ME-Proxy: <xmx:a2FManauTxinngMLDAdifZjiRZSuZO4Mv612ZmkiC3ygM-zThAuFmw>
+    <xmx:a2FMatTH1IPAwE3dE9w6_Q3Ym_uvq2_4_YPHNHZ8-79gQZAyGAkdow>
+    <xmx:a2FMam4OI2cpXHLstWiAWzC6No0ltKRxIgyfvj38wWeX6ocx9kFRhg>
+    <xmx:a2FMaqwCH4iTGjnFtEjeSOb928Y3xxf4IpNh9xsTL0xjm-2t2fR0tQ>
+    <xmx:a2FMauRDbDsthoFT-bTtwtxkU9Wb6dEk2gUMBV0-GhC_MF21rWCjVX0l>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Jul 2026 22:16:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] t1410-reflog.sh: avoid suppressing git's exit code in
+ pipelines
+In-Reply-To: <20260706205036.3453-1-gatlavishweshwarreddy26@gmail.com> (Gatla
+	Vishweshwar Reddy's message of "Tue, 7 Jul 2026 02:20:36 +0530")
+References: <20260706205036.3453-1-gatlavishweshwarreddy26@gmail.com>
+Date: Mon, 06 Jul 2026 19:16:09 -0700
+Message-ID: <xmqqechf8ryu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Shardul Natu <snatu@google.com>,
-    Koji Nakamaru <koji.nakamaru@gree.net>,
-    Patrick Steinhardt <ps@pks.im>,
-    Shardul Natu <shardul.27591@gmail.com>,
-    Ben Knoble <ben.knoble@gmail.com>,
-    Shardul Natu <snatu@google.com>
+Content-Type: text/plain
 
-From: Shardul Natu <snatu@google.com>
+Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
 
-When running "make test" with TEST_CONTRIB_TOO=yes (which is default in
-macOS CI workflows), $(MAKE) -C contrib/ test is invoked. However,
-contrib/Makefile only invoked tests for diff-highlight and subtree,
-meaning git-credential-osxkeychain was never built or verified during
-standard CI test runs.
+> Piping git commands directly to wc -l suppresses the exit code of
+> git, hiding potential failures from the test suite. Capture the
+> output to a temporary file first, then count the lines separately
+> to preserve the exit code.
+>
+> Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+> ---
+>  t/t1410-reflog.sh | 29 +++++++++++++++++++++--------
+>  1 file changed, 21 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+> index ce71f9a30a..397f94b039 100755
+> --- a/t/t1410-reflog.sh
+> +++ b/t/t1410-reflog.sh
+> @@ -244,8 +244,10 @@ test_expect_success 'delete' '
+>  	test_tick &&
+>  	git commit -m tiger C &&
+>  
+> -	HEAD_entry_count=$(git reflog | wc -l) &&
+> -	main_entry_count=$(git reflog show main | wc -l) &&
+> +	git reflog >reflog_output &&
+> +	HEAD_entry_count=$(wc -l <reflog_output) &&
+> +	git reflog show main >reflog_main_output &&
+> +	main_entry_count=$(wc -l <reflog_main_output) &&
+>  
+>  	test $HEAD_entry_count = 5 &&
+>  	test $main_entry_count = 5 &&
 
-Add a "test" target to contrib/credential/osxkeychain/Makefile that
-depends on building git-credential-osxkeychain. Additionally, wire up
-credential/osxkeychain in contrib/Makefile under "all", "test", and
-"clean" whenever running on macOS (Darwin).
+If you _know_ output from certain command must be 5 lines, would it
+make more sense to use test_stdout_line_count, perhaps like
 
-This ensures that running "make test" or "make all" in contrib on macOS
-automatically builds and links git-credential-osxkeychain, preventing
-future build or symbol linking regressions from slipping through CI.
+	test_stdout_line_count = 5 git reflog
 
-Signed-off-by: Shardul Natu <snatu@google.com>
----
- contrib/Makefile                        | 10 ++++++++++
- contrib/credential/osxkeychain/Makefile |  4 +++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+or something?
 
-diff --git a/contrib/Makefile b/contrib/Makefile
-index 787cd07f52..7962a9ff12 100644
---- a/contrib/Makefile
-+++ b/contrib/Makefile
-@@ -1,10 +1,20 @@
-+-include ../config.mak.autogen
-+-include ../config.mak
-+
-+ifeq ($(uname_S),Darwin)
-+OS_CONTRIB += credential/osxkeychain
-+endif
-+
- all::
-+	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
- 
- test::
- 	$(MAKE) -C diff-highlight $@
- 	$(MAKE) -C subtree $@
-+	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
- 
- clean::
- 	$(MAKE) -C contacts $@
- 	$(MAKE) -C diff-highlight $@
- 	$(MAKE) -C subtree $@
-+	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
-diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
-index 219b0d7f49..d9fba07e8d 100644
---- a/contrib/credential/osxkeychain/Makefile
-+++ b/contrib/credential/osxkeychain/Makefile
-@@ -10,4 +10,6 @@ install:
- clean:
- 	$(MAKE) -C ../../.. clean-git-credential-osxkeychain
- 
--.PHONY: all git-credential-osxkeychain install clean
-+test: git-credential-osxkeychain
-+
-+.PHONY: all git-credential-osxkeychain install clean test
--- 
-gitgitgadget
+> @@ -254,16 +256,23 @@ test_expect_success 'delete' '
+>  	git reflog delete main@{1} &&
+>  	git reflog show main > output &&
+>  	test_line_count = $(($main_entry_count - 1)) output &&
+> -	test $HEAD_entry_count = $(git reflog | wc -l) &&
+> +	git reflog >reflog_output &&
+> +	test $HEAD_entry_count = $(wc -l <reflog_output) &&
+>  	! grep ox < output &&
+>  
+>  	main_entry_count=$(wc -l < output) &&
+>  
+>  	git reflog delete HEAD@{1} &&
+> -	test $(($HEAD_entry_count -1)) = $(git reflog | wc -l) &&
+> -	test $main_entry_count = $(git reflog show main | wc -l) &&
+> +	git reflog >reflog_output &&
+> +	test $(($HEAD_entry_count -1)) = $(wc -l <reflog_output) &&
+> +	git reflog show main >reflog_main_output &&
+> +	test $main_entry_count = $(wc -l <reflog_main_output) &&
+> +
+> +
+> +	git reflog >reflog_output &&
+> +	HEAD_entry_count=$(wc -l <reflog_output) &&
+> +
+>  
+> -	HEAD_entry_count=$(git reflog | wc -l) &&
+>  
+>  	git reflog delete main@{07.04.2005.15:15:00.-0700} &&
+
+Can you explain the addition of these consecutive blank lines? The
+same question applies to the blank lines at the end of the test in
+the next hunk. I ask because formatting issues like this often
+resemble unedited AI-generated code that hasn't been properly
+cleaned up before submission.
+
+>  	git reflog show main > output &&
+> @@ -321,11 +330,15 @@ test_expect_success 'git reflog expire unknown reference' '
+>  '
+>  
+>  test_expect_success 'checkout should not delete log for packed ref' '
+> -	test $(git reflog main | wc -l) = 4 &&
+> +	git reflog main >reflog_output &&
+> +	test $(wc -l <reflog_output) = 4 &&
+>  	git branch foo &&
+>  	git pack-refs --all &&
+>  	git checkout foo &&
+> -	test $(git reflog main | wc -l) = 4
+> +	git reflog main >reflog_output &&
+> +	test $(wc -l <reflog_output) = 4
+> +
+> +
+>  '
+>  
+>  test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
