@@ -1,122 +1,146 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFEF3E92A9
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9E33F4DC1
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:25:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441496; cv=none; b=mc89NCZtY6OTu2AzuFDa9PIVNog7BBCzMgQpzV8z8IWo/6KqH17CXbA8oBtq+9dmWP6e3Ky188ESGHfMMwlPGreBH/Sz5uGJwLPQ2/h60B06AwqJG3s+TJQ3MS98FDZXAMWizl+QAiX6JUTdpOC22a3euHTpDOaN/VJyrWI5uOc=
+	t=1783441525; cv=none; b=RIxf6D5x3sq+w1wohnDQx+9BgldkR6aFgkhceB7gBJyhatlN6q1Yfpf/rfRZP610FDMVDzeCbFar7EWSge4pv8vyY0kBWgc8vygwCNyokuYKwo6MF2sYsmZovKVEw7FvCgeeyhsCNvRrPEZ2kT/R8Ta+LJpdkbYjouQdJcdpP3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783441496; c=relaxed/simple;
-	bh=FaoKUmQ2iyfgNVSfan1KNf1mshr0eE46H8QNYhgUMvM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iTNk0Gse4UCh6oIAoMQoCQJGjojSDuykaPUCwPLybiL5XfSlHRtnb6JEPF5vDkZCfzs4XYXt0pF9WzknZ1fW5PgNuy4Kag42E4hfGC+ozGeTaahX7GreVJ2Y5r2/V5BtU9Kr1wje8p4HDaMHlmaAuq/HIWafaHbZy1OnLS62lz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sxLikN2n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y0VAmSxB; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1783441525; c=relaxed/simple;
+	bh=6qhdfdMh1X/S9pfZ9i5s4E5jUA7B6gTUzs5R/YG/KXY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G6cINg9qCXsQ34aSCQLeIZedcimBjmHjYFzxjIwFkj8lYIlYc34lTBKdC0PvwBxOqLI+6IxTR+F7jU9BjZHk4wY1UN5KAsPdjOWbNtn8+mrWKf1HNULvDPad4/G6lto61Ao4X6eUg/X4r4b/m1GELkHdLDoGYKLFpkdnLn4i4/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Rh/wzgZD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XJFi+YuJ; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sxLikN2n";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y0VAmSxB"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9A607EC00B5;
-	Tue,  7 Jul 2026 12:24:54 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 07 Jul 2026 12:24:54 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Rh/wzgZD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XJFi+YuJ"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C6E2D7A0102;
+	Tue,  7 Jul 2026 12:25:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Tue, 07 Jul 2026 12:25:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783441494; x=1783527894; bh=nZGhe/qmhj
-	HF9Lk+Ch6bghLf6sI5udoiK2GGULH8ZLE=; b=sxLikN2nz0PMhBEnakrQBrcDc1
-	FLk3jQH3jsdsJ8w5dG2IKL5RAO6QzhjNnFAlQMFpwstx3ipUUMF8r9lZ41Bph5tB
-	kC/3fUKGWhSVqY3HhKQdHFOydd3UKW72Rz2+cei0jhSbOkC/EzuWEf6ONvXkZqdK
-	0SYSTB9pED2h2QMz4PYI6xxi9BQdxhKHQgKxialO+lx0TSE6q+aNLAWAJVgUfXkc
-	OyI4QiMekWexgQVKdTu2WpZxpXYNyJ6eJib0SL0eJSXHFjEp3NpcrnLJW/pMvfbh
-	6m1m5uyTKNNgonCbJH0WqQS/WStPbR5ZS/oFVf78+otBqCMhXQwQYW3JtEjg==
+	:subject:to:to; s=fm1; t=1783441523; x=1783527923; bh=gPHwkA+CAg
+	0Ey200YdXztla8PS53HR2c9tc65I0sh6E=; b=Rh/wzgZDXIdtK7DRSLmAP8yr7d
+	vd5qQgrmOiiwGZFy4mZC/+fn5Ngm8oezbVfCrg2Gar16aEpLzCaxkPk2dLvQkgvx
+	bGs8BeLuSP8WzgSLC/JL5JyhamIFB2NGo2rL9XjwMSrSxXnd1izQ65q9wvPZ1NJw
+	i9lxQ1ZsnRWpujZqii2p4dKb14uhEl83atEf2G2LKO7D1j/ML1X/64w1CywTc8o9
+	Ldrfc8GOf6PM/yo0vUST2eiHFCuFboiQhX1QUBxdqVy5reQY+HeBGVayFPUH/pSj
+	pEL4UO39wu/LhG85lIVT9rfB3FIZYu1YpOxfk9naBsb2d+rNf8KMWkfuPIHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783441494; x=1783527894; bh=nZGhe/qmhjHF9Lk+Ch6bghLf6sI5udoiK2G
-	GULH8ZLE=; b=Y0VAmSxBlWDFSUZ0jWTtM1DvmU0ANJtE2Of8CaPNhkft36rTWFM
-	O7D//3uIl4Iz/CbSQlq/T1Tc2pPreRZgBgU6ab7ItFcbmqWC1EJstElrUpIJgqqG
-	flp5T5DR7uzKLeCysc98Dweg51jydWJNgyR1H75PD1rxPcUZIvcVZ+l+DZIZQqx+
-	vI1E+PQuGlRYFZnpU6+/55WWTWthyWV+l0gO3FoBBxsjdqoNjhtcVNjU+HyFzsBg
-	MC8mMncv/W57b5rlmAWR4dKN2dCv2N0KuvsNQEWARsKAyl0dxXhpIJV8axgwKS/0
-	F088tFCWimLD2pmHOqCd4EkOJXOjz/M55pw==
-X-ME-Sender: <xms:VihNamJwG3JAmCv3vcu9YscbGx7c2CTu8g0rXrwUp2Zz8Xh4QVcZeA>
-    <xme:VihNalnd0IS5-FelHAXO9AqqBlJJVrURChDmvgrrGm0ztPhf7diknB4fZyU6hT-oK
-    lpCgmcpYKm_awGhUvCfzIWt5WadnXNGVnj0RWQr6i1DqEth7VT-QQ>
-X-ME-Received: <xmr:VihNakE9VqR6n7uWZZURxxVHezsMdkbUpPhh7GDjCgaUixuSNo98OnIDpcYZO7JaPAReN3DtIeCKVHiMvl2yBB7hRoNDUpukKqkBm4QtKecCTvsxMZNh-9s>
-X-ME-Proxy-Cause: dmFkZTFWC+7uUeEmTGgj4LJ8Te1VfbRWu43ffwq66rdlRmMCpLyp3ikj0hMVnkoq7pUCPR
-    O9vmR3z0lR6Yw2JG4hgbFD6BeWCh2qVNxY+spymVu0cpG+ISlXO+n2Dwp6KNS1NCf8GzvG
-    yQjMlXZ/SsYnH65Pr6y9wzozHm+YZeEgGtn8I8APZFKtk1d6/1CEOegbHhYkWrkPyzIQY3
-    Z+yfiY8DwaaB9smROTHvNCjo7rfnxsV1/GxrJ6rQkhpoD0nSka3VakOztQu/JMM3Xdgc2z
-    mgbcLfgQsSeh2mdt+lrcnjfstlh0MLhBnII9hOrO39OXflYJ6ceB6f8Wg9c4mfiSE7K2O3
-    vJglYG7K4ZR6iPKsCIqi9MIdFpDmdyR5fbSZHVd049My8KRf1NfSO1Fg2JWX98IkYyz9lT
-    T6Yx/dORGZdhJx4S4987x3w0GjFgu4XH9oawaSEVptETjPDiq+6QMeVk2o8OaqTU2K68re
-    p8+fJd8G84STyzAjBa4lOkdy7ZwFBpZ9hdMW/LSuIbhhKzogSjp0dBrGMqaBft5eQvly4s
-    aBZRusbwKKRZQpL3Cbfux/M5KVvC96kQ1QsyejVe2joYmzNXn+gbJNG2cZ1wM7t2f/yqyC
-    VfXCW5BViB0Iw/5jrB1i26MJdlq3Br+i/Op5w5crbHKPaOOHucquDy12HK0w
-X-ME-Proxy: <xmx:VihNalH-djIHgd9RvNY0KuZOTrEu6JyDihDhAlcvTHkVhTojBdFbUA>
-    <xmx:VihNahOKNIBewXd1tx3K6tAykWcXjMaNmp-lY-8gV4I5G3cgmJME6w>
-    <xmx:VihNakFdgZhyA9rACVf31AVkUihNZncFBCRIsDGEWLkxKSMlPpyUYQ>
-    <xmx:VihNaoMknOxLFJbVsp3iMWOkblpBk3rVFDAFYwYKoqtCJqIO4h4JPw>
-    <xmx:VihNaig3_3DCETgwG5PJdDVdO0g1gylqpQIq8zW5fSnc059TjKKpgRHT>
-Feedback-ID: ia13843cf:Fastmail
+	1783441523; x=1783527923; bh=gPHwkA+CAg0Ey200YdXztla8PS53HR2c9tc
+	65I0sh6E=; b=XJFi+YuJZZOXwMYItxnrGBuxz7wHNR2f/sLxl1pFf+u1QTKDATg
+	MWkAfOmQ0om75+lbHGoEgRYjFNXdLQ6a4uT60OfcqiHpy+kLvYQaizMMBF9t8Tw9
+	cc7i9AwGDiHDIPAZ0FS5se3NJwh04ej79Khqd+Ia57JMR/zvcVIRcrj1Xv7qufS5
+	Y1UkR6TDArneHK2yp8O7eYK8gtJeong/7nAFzbl9XrLEv3lo9wE7KUeIQ+bnt2YM
+	EErYe0A5h9//wcrgK6wSO6PsMyt61LxdHRZu+/TtBNxRIS1oDWD0zY/exmsZw6w5
+	XUWVHELxMjx2U1OGTF/hXTUghYieGSlBSdw==
+X-ME-Sender: <xms:cyhNavQPQLdNLp1sANhEKJa9DtV-7em1x7k1iqxqU8SBG1hYuICsmg>
+    <xme:cyhNanrpuPy0g-nl1l4FLHywBGCdBnOv0Z2FKivGmvRcNOI9UG_nDS_wGyr32nkn7
+    IMB1XIebttyramW1D9s1NdL7Jrxx_F5KtTLnflU7R40HxdXxjLaufo>
+X-ME-Received: <xmr:cyhNatKXCWjz9JFfFvEbcVLl0IF4UE8_g4BdueYeYmE9zbFQW7c6Xm-_q2i9YAhURfLK9TbHkvtJkR8nUuZDrSCQlxF_r3_-qwalMgs>
+X-ME-Proxy-Cause: dmFkZTE4g5IUInqTzcKoDrWkBBziJkduhmGpPgVJqqy48EvsJl1u0U/H8jUdoSOVdDAU7E
+    kJzauT/w0FUYQSZQXmZh7TRrNiWaSW38Btw4tkmXz1oP6YqVcbi1py7xz2c+prJeEjlpkD
+    ywIMlazNut21wO9dUT0NhJyFgA41fh+DbkphXAyqSUl5LQfGUPjqCzvZ+4LlgZ95zpS6Hs
+    aDYqWGlphOdlKxp75IjFfSC54w4zKcu4WmCxKrLsP71iDVCahrKCP8FMqTdtL3efwIfyRY
+    gMp3KPnIXC2St45TUMfeOwuIr2NlDdOv9OENn0qVxFuWm6zLFVYv8kyXk/og1vaq8pZjRK
+    5LAT6OnqZOXRrIAnxmFgbYswZCqmsp6HsaK2a+30XdHgMJrCnqxy+7D4Iur2/JCNnizYq0
+    UGwMhoTuJZaEaFCJJet/SoFpkDcYyIYhKo1Eryb9ANXkLpulQRyOXRjKdyrrwlFmZ3aYJw
+    TWz9nqdAETnZVkZkNtdQudq2iHjO4RG4IYrGzA8TjXIh8Wz3fRSSO1SY/94dv9dtlhqJUA
+    ySa4rC0Ny2RZ5uo6Az7Dml1aH2YnwcAk9OI/SGlolugBPJxNPlUcbQQ1+LaMTxjDeQz/8R
+    nod9oQPQuscuYNDCROYbqSzPiSRp+RaIu7QWu24MwjtJgE7PvG1NkQTUR5uA
+X-ME-Proxy: <xmx:cyhNaqp6tYFBKq9VgSjN8RGHVcDwKY3dhZhBsvyokHyQCk-4pBeOzQ>
+    <xmx:cyhNalyzR_y_MohyupcQ3mTNtEiwsHWDGfiy-xXd1afp3prFrtytYA>
+    <xmx:cyhNauNfePo4ErPkg3SZo2I22AHEa4lJBQYOmf8XkS7mQLNjPXzRPw>
+    <xmx:cyhNaq4N5GAJmkLuG6chJbRtd3t8y01ZAaz2DffcTFzB6ONbLPCKbw>
+    <xmx:cyhNagY3ETQIJTNfYsVPvh4T2PE7LVW6NAPvwZwrs2eyGEz8E-CFPa3J>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 12:24:53 -0400 (EDT)
-Date: Tue, 7 Jul 2026 12:24:52 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Berner Martin <martin.berner@qualitasag.ch>, git@vger.kernel.org
-Subject: Re: CVE-2026-55200 libssh2
-Message-ID: <20260707162452._tjDEpzZ@teonanacatl.net>
-References: <ZR5P278MB19814B2CA717210492C13A73F0F02@ZR5P278MB1981.CHEP278.PROD.OUTLOOK.COM>
- <26531fd0-4a21-c8ef-84a9-25c871cde303@gmx.de>
+ 7 Jul 2026 12:25:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 6/7] http: use idempotent git_hash_discard()
+In-Reply-To: <20260707050814.GF1288294@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 7 Jul 2026 01:08:14 -0400")
+References: <20260707045556.GA1288172@coredump.intra.peff.net>
+	<20260707050814.GF1288294@coredump.intra.peff.net>
+Date: Tue, 07 Jul 2026 09:25:21 -0700
+Message-ID: <xmqqldbm7oni.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <26531fd0-4a21-c8ef-84a9-25c871cde303@gmx.de>
+Content-Type: text/plain
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Johannes Schindelin wrote:
-> Back to your question why Git for Windows still only includes v1.11.1 of
-> libssh2. The answer is rather trivial: MSYS2 (on which Git for Windows is
-> based through a healthy collaboration) includes only that version:
-> 
-> https://packages.msys2.org/base/mingw-w64-libssh2
-> 
-> And the reason for _that_ might be rooted in the fact that both the
-> repository as well as the website of libssh2 list that as the very latest
-> available version:
-> 
-> - https://github.com/libssh2/libssh2/releases/latest currently redirects
->   to https://github.com/libssh2/libssh2/releases/tag/libssh2-1.11.1
-> 
-> - https://libssh2.org/ says:
-> 
->   Download
->   libssh2 1.11.1, released on 2024-10-16. *link to Changelog*
-> 
-> Easy explanation, right?
+> Now that it is OK to call git_hash_discard() even after finalizing the
+> hash, we no longer need the ctx_valid bool added by a2d8ea5a76 (http:
+> discard hash in dumb-http http_object_request, 2026-07-02).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  http.c | 5 +----
+>  http.h | 1 -
+>  2 files changed, 1 insertion(+), 5 deletions(-)
 
-Indeed.  :)
+OK, because calling _discard() on an already discarded or finished
+hash context is a no-op, we do not have to remember if we finialized
+or discarded anymore, allowing us to be extra lazy and safe.  Nice.
 
-An upstream issue requesting a release to aid in the
-distribution of these fixes was filed about 2 months ago
-(after CVE-2026-7598, before CVE-2026-55200 and some
-others):
-
-    https://github.com/libssh2/libssh2/issues/1925
-
-That may be worth tracking for anyone curious.
-
--- 
-Todd
+> diff --git a/http.c b/http.c
+> index 0341de5031..caccf2108e 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2880,7 +2880,6 @@ struct http_object_request *new_http_object_request(const char *base_url,
+>  	git_inflate_init(&freq->stream);
+>  
+>  	git_hash_init(&freq->c, the_hash_algo);
+> -	freq->hash_ctx_valid = 1;
+>  
+>  	freq->url = get_remote_object_url(base_url, hex, 0);
+>  
+> @@ -2989,7 +2988,6 @@ int finish_http_object_request(struct http_object_request *freq)
+>  	}
+>  
+>  	git_hash_final_oid(&freq->real_oid, &freq->c);
+> -	freq->hash_ctx_valid = 0;
+>  	if (freq->zret != Z_STREAM_END) {
+>  		unlink_or_warn(freq->tmpfile.buf);
+>  		return -1;
+> @@ -3030,8 +3028,7 @@ void release_http_object_request(struct http_object_request **freq_p)
+>  	curl_slist_free_all(freq->headers);
+>  	strbuf_release(&freq->tmpfile);
+>  	git_inflate_end(&freq->stream);
+> -	if (freq->hash_ctx_valid)
+> -		git_hash_discard(&freq->c);
+> +	git_hash_discard(&freq->c);
+>  
+>  	free(freq);
+>  	*freq_p = NULL;
+> diff --git a/http.h b/http.h
+> index 6b0639150f..729c51904d 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -255,7 +255,6 @@ struct http_object_request {
+>  	struct object_id oid;
+>  	struct object_id real_oid;
+>  	struct git_hash_ctx c;
+> -	int hash_ctx_valid;
+>  	git_zstream stream;
+>  	int zret;
+>  	int rename;
