@@ -1,106 +1,114 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C605E43849F
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 17:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783446194; cv=pass; b=gLaM9lULEMJ9LqdMDK53wV1RH97sTok1asUkKDLW6dFiahtJK4mM4Kh3a7J3R1sGqJA9ihrlsvgFHML6LhK3uLYznsHFHBsC90ZsN96eC5AXeeqY8nYBVuVB6DRfwDd+ZS+o9yHTtFMO4YDWPSTDc3ulpHiZa8CWi7j4yjNrLR0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783446194; c=relaxed/simple;
-	bh=W2CU+HjcViRPI6bkw1teN9ZmGWmpkSbCP9O2R6Hew+U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=odBss58X3AnqTGLT4WcRpmGba4c6bzg5lq7P/A8K6HLuCMJXPMPv5ENHkS37hhGt2GV/E8l2ZR+skZ1qyUQ4HbSjVnFyjgZziwf+I/W0I2ZCjknFvaDlGqj1kdNvzBA3DIA/ZZj0Z020dzWMQMQYbPWiI/1bMPt2bJo8Ot6JR2E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=T3fjk4P9; arc=pass smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8407D43B6D6
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 17:47:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783446464; cv=none; b=tW9p+MU1msqUuruzvClImAcY/U6qa1T9u+pt27+VIazPAreQ+OzUlz+HARqEnC01yONkwm2HlJ60iNoKcFmEthWPfrl3LQReJWdqfQ8CJgG2DUHlEuSEWI6/6ezzeT0aCkJI/Q2XDeYESxn+/D5XgU1j9syNAMheoZxZAX6V0Os=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783446464; c=relaxed/simple;
+	bh=ucd9NByU+joXSgs6kbSHEDBEPSPTINPGOV6AXrDzMHU=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZdwQsFyOUGuDJBi7HwLqFKNC+apjVfsBg3w64IOJBxNslVvHtrAqfqrFM4HZbijJdSin4TRyzA9hn6m6V64wSdKugrJckSh2CaZgx+C72kWj7xpV0LF3CO5LUh1B+R516vqJrLbBUfZc7elfPI2W1CC97sLSObeEBrI2lICafpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vpmvsf/t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QXP2FkgE; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="T3fjk4P9"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-664bb15d05dso6283510d50.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 10:43:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783446184; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Hq0j45nh+ugGI9XXoLiq4IRWAZLqa0ptHqC3r/G8fZPNBqAUnsemcdWoBfcj4NQgGr
-         HMoxVC2Qr7jgeZ5t/CYd5ZArBpyFgC0r7uniO4QbfSWNgwfuYqLvBjj0GE4PqkTcXuuh
-         GvnHxjsN/BNyYktzS2TPcm65b6qD8OeNhBrdWCP4hV3HfBb587geD1Lq7VY5BwRafLpF
-         oLeUEZfqIhTsnJaVZL0v2dqiSSSx0QAM2KXwW3BIDumEjk8gCeRczmrvsyz+DpZ53BAg
-         id4udZU/RRtViI/4KhPkjhmEB3H4+OPNmREczicgP5QC7w8Ih3XmBL/0kfqz68fvPJDo
-         X0qw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ZrLRWXgKqq0y9KXy5tBQm8tzTB7mdYiRPi29oiWYu58=;
-        fh=4gXc9BJO3jFv1yaG3QkI8701/Lh5WAnRCXGLO5MdbRE=;
-        b=O8PjdOHG3VyF38T1wudkxNLSQxvZXs4WgwYpm7QIpCilo9lip87/y5ExLrGG318FU6
-         iiYBym0ojHB/FnS9sXqiVXAA+oFC210+Y9B74+xpiWvhwNOu+gPdKpCMwnfJ1u6GGgOU
-         VY34sc0oTr86FKj6vhK/iv0tHa267hJ9sHITaL6kzv4P48QCdt9UqTJVqNBEV9aRL/Bh
-         Be0YBWDbFyPxYDf1xFzg86YJPl/BwujcCzonxOkm3oWMs4qWvf5V+v2gE9Yt8eAHnOz6
-         c9k0I6uF4g7DdTNcrVkt9XK0edJAgggkX+1dLimI2Fyy4KHTzJEe8gsNcCYqupwXf2Aj
-         4R4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1783446184; x=1784050984; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZrLRWXgKqq0y9KXy5tBQm8tzTB7mdYiRPi29oiWYu58=;
-        b=T3fjk4P9l+i/m+Kr1rNsoqOzkW7xnihHNjNPsZL8f/ZiPQg2IFq0253D0IG9Q/8Sy/
-         SgLXKHjXgyzxdAW9IvvN+dY/QbDtvZWAF2uth5093CQUMMSallRIIdl4gjg7ZJf/lT7c
-         BnOBp5sHcufHUOaeAUH86/yN9AkqguEchlA7I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783446184; x=1784050984;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ZrLRWXgKqq0y9KXy5tBQm8tzTB7mdYiRPi29oiWYu58=;
-        b=T37eRJRm30hP0B+TFHDnJQCtj4jaelIEekD0Ak+K8HfTmhG/JJ/7FzXnD/Md6tUt3B
-         Z0bS1hQxglb1zMV5m4LLmCRb6ppkNyJnFgeOLY6RNyfkdO33mLs3CzvWeDfMnrkIMKr2
-         WhhYjH+tdPN5QU3P3ijRHql6xZeDQdaWK6OQYzsH9aaFBvEcwdq5f/u3fe12pJrdzp9E
-         OVJfHxodNhdh2LWDzZSu4d+LO0YdJFQZFFkvByszlSAZ68cQIUSy8G5xgnv1cERvEEyX
-         OVBom/8ZGtBWlOD2I5CUOk5+fITCCvUUZtXEfIvMFKG6cn6cazjaIpv/sBUH09xdaFWc
-         0Q+A==
-X-Forwarded-Encrypted: i=1; AHgh+RpcR7XqKK4EgwWs/voucyqvzTI7dccB6aTTm+Miq+6sXp0fn21yv9pD3k3irzLRKjPpCF4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDrkwoerG43OlHaSwyAfgigXzAuL84AsJhakNADhc9X9kh6Kv3
-	1sUyotBhXq0aooHKjkXXHQgpdPmlPr9D3KVST28yQJ6iCJREGQUmYqeqom7nvKKawES++R8rnjC
-	8uHbrR3mIFbGN4Z41XHDFAFa3WCCj9/nRKA8WLz/I57wkBlpMMaIOfo8=
-X-Gm-Gg: AfdE7ckiF5480wS3OvNSG4CWnowh8Cb9H0BCYfHA9lv9hlmAMiY3YiNZP//MedLLNB8
-	vozHhCE7FDYafkgILSRokCBHcxKUv/rRG1ciacTTWbLkPLodI8gIgTvtamBCXwKkpdxeiIxznhG
-	6lORaRYXrroQuYKXfPOgBwT+fVsgcm6yHCsJGwq1RcRYNCfUSatVSFI53jLLbF6S3XMuKDXhfDx
-	sS+9H9SlsdHm5mtxXNVm4y4O4srcPLTBzluASTsOyBuxvLfH5SzyOSFiy3FkECa5hxmXBlAoQ==
-X-Received: by 2002:a05:690e:13c8:b0:666:3b1e:4554 with SMTP id
- 956f58d0204a3-6677faec518mr4632709d50.4.1783446184183; Tue, 07 Jul 2026
- 10:43:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vpmvsf/t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QXP2FkgE"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id D17A31D000C7;
+	Tue,  7 Jul 2026 13:47:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 07 Jul 2026 13:47:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1783446461; x=1783532861; bh=2zmCes7NT7iy+ptPBIVguLYqD5VkzWgs
+	2x1B/dNX+1c=; b=Vpmvsf/tayFOggK5Eh1NkxRylWfOhrt1oJ6Rp8CB17vAYLM7
+	I9wWBF3tzlob+OcAtlSOj4RWFWIFU5vh0cwOgmfQCkb+SDpZuEyPbehqnprc1jPf
+	r/wQWflTE8FEo4zHKioYbS79CmhDI7kZ9xzeXOfcG1TzxjfCdM3EZN5t54WxNXRe
+	vk5ZO14gVzAPVP3McR1jCE4kIKQ8K8ylhfD1otr0FrYTd8/ZLSR0HB9tz37eGl5n
+	ALVhM7abpHPWhrGQeuwbXQr7jBf7yKPyHfiubxOaW2Y8zH3VNm4PlzQyhCtPoPWv
+	7QHpPecM7uizZHyhN/DLYCSNegyiLXwYFDOWWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783446461; x=
+	1783532861; bh=2zmCes7NT7iy+ptPBIVguLYqD5VkzWgs2x1B/dNX+1c=; b=Q
+	XP2FkgE6rrlWGcDaXSzO5vaUJ6PzsEzGDoqVRI8LB/dXAVp1BhvC+7p/ckLNF1BN
+	Ky5+iagvte/BgVMi0jbx0V+cqpvKN6t11KgmvYApcWzBE6MgnmxPMXZ/4J529/f+
+	qkU+7mW5p8F/1007NNd/HMKChtQW+edWcA1m+aPI+tkKUAigKZT3/xSa+wK8CAM7
+	Y7z3YT6PhlRGMlw/xEQD5GxLyg3ysCdBcq6tRnZVLQoWqGfS33bm72IlMzQVODP4
+	KHfBGQPUrisoZbqqL0N/gbDsYAoPVDx5S7WhmiwVqMBY7sI+Fy2UBh4UG1mHJNtR
+	dRUnrnlgXUcrXO4X3KvHw==
+X-ME-Sender: <xms:vTtNagcxYxW7MeFQSL7aTIzKmTsplap5RzTU0cPwyyFGsU5bcVZwHw>
+    <xme:vTtNaoPJT1aaV3idsry-rO1AwX2BR22lr54RQp55UX7dVyrMn-AxbjMBw7yssQxT9
+    JOziMU1IMXH0BCocHzvhHDnjkiVGpEvIJjRydpDaKJZAKvnmx92xQ>
+X-ME-Received: <xmr:vTtNavJ0EQKIzH12zGIN4rjYF79zLoLDVoR5nfRKq6a-5-TxmWa7NWal4q_OJho2Nu61VyZhCFL8jP9_L49xZ4sVCgKeRE6ExxFeVnI>
+X-ME-Proxy-Cause: dmFkZTGTBMj8jxZ921gppxa75hTd5trbeQUdpkThFTDPGzR9t4hyhhaRt+rWXNvvxmc2dG
+    Ww7t7pu0uX/LtDMCSJX1aE0ba/xh9kxQdbiycNvSr+fw3mXMFsTkq8OFFMH3AfrRLabYEA
+    bki0prpC22JUBKw4M/wnk9/jYqwi+WwQpjIVdVWnEp7rBqc2riA43lrxE/QcTnrPzjc71/
+    CPMGDA1YT4shwkiXf23mIEjBcvX+SkJOCFhuJR/b2Fc0J5urcxoETKON8L9UXSUDSb5fET
+    Nj3HTSeHwW7lGeVFgrDR0pv01618BohzxPzR1kKKo6Iwd0hK4i2Xjb1ctImuclHRQJYWHf
+    Vg3xBudYzhPB/lpnregUDf9swRZyreLY+8guYNRNSBobH8PVTVaVOqO9NMRF09MUi6vXHl
+    lW1CMjYliFCQaBt6F5YvHtcpZVV6ZCIL1pPvrfIhYhFO6WJcrk0Vk/CjNrxTpLwakIPCSC
+    GJ31ZYEn+cWENhhQGJyF1aHqu/ULiq3uAQbKy+BnFjr7MTM70z0UZur9LYsxVfTAc9b+cw
+    ikNDkIVMKGoxTB7yD9uhKuP+D/CYJ9lBoQkdYYtKb/nCyQ182I3Hl82c0P5nnO+lhA3GUt
+    l8jFEo+4aMje3sUpNajv+IMO6QIhWd8TO9yYnZw8JDR78gkyxnDBI2qyGZiw
+X-ME-Proxy: <xmx:vTtNahGAcmPXPO0f1hGJRTkyw_0V3DlJ9X1M9KLi8TY-feXOaQeMVQ>
+    <xmx:vTtNavRKQu7VzpOUlzNXK_4vdIaYF_hZMxW1eRVgvlGJZ1BtPrNjpA>
+    <xmx:vTtNalENGVBao9AvBpAdTN3MeTkipx4lr3nS6TeXgRb-UqUCTqy2tA>
+    <xmx:vTtNaj8k4vwQLImsG3DFLeIujUHVO17cPk9sFd9tYwbWV5sicUWVoA>
+    <xmx:vTtNar1OoBZlX3ex4q4UtHCt8dXK_G6_kFsn2MSS1Q35N742En6eUPfX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jul 2026 13:47:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] Rust: fix description in Release Notes to 2.55
+Date: Tue, 07 Jul 2026 10:47:39 -0700
+Message-ID: <xmqqpl0y4rpg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
- <f9c1482a76493520b948a2e918de7a5481fa1043.1783418384.git.gitgitgadget@gmail.com>
- <xmqqo6gi68go.fsf@gitster.g>
-In-Reply-To: <xmqqo6gi68go.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 7 Jul 2026 19:42:52 +0200
-X-Gm-Features: AVVi8CdrR-s_8604jo_RDR8uzvhDxaYKnTGlMTcHyv0WmXcy_zCPHTN5_O3hFPw
-Message-ID: <CAL71e4NXPAitqQtCnwLCyXvigD5KjOCSj5em+3v4WSUaYQKHRg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] commit-graph: propagate topo_levels slab to all chain layers
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Tue, 7 Jul 2026 at 19:00, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Fix a regression introduced in 199d452758 (commit-graph: fix
-> > "filling in" topological levels, 2025-04-07) where the loop
->
-> I guess the same comment from [1/2] applies.  We might be chasing
-> ghosts here.  Is that elusive commit a total hallucination?
+Finish incomplete sentence to say that we
 
-Oops! The commit exists but the date there is indeed wrong.
-Will fix (or just remove it, I am starting to regret trying to make
-the commit reference too detailed in the first place).
+ - build Git 2.55 by default with Rust,
+ - but you can opt out and build 2.55 without Rust,
+ - but Rust will become mandatory in Git 3.0 and later.
 
-Thanks,
-Kristofer
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * I usually do not bother with updating "historical" documents, but
+   this one seems to have already caused a confusion, so...
+
+ Documentation/RelNotes/2.55.0.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/RelNotes/2.55.0.adoc b/Documentation/RelNotes/2.55.0.adoc
+index f5643534dc..e7e77a8112 100644
+--- a/Documentation/RelNotes/2.55.0.adoc
++++ b/Documentation/RelNotes/2.55.0.adoc
+@@ -85,8 +85,8 @@ Performance, Internal Implementation, Development Support etc.
+  * Promisor remote handling has been refactored and fixed in
+    preparation for auto-configuration of advertised remotes.
+ 
+- * Rust support is enabled by default (but still allows opting out) in
+-   some future version of Git.
++ * Rust support is enabled by default (but still allows opting out);
++   in Git version 3.0, Rust will become mandatory.
+ 
+  * Preparation of the xdiff/ codebase to work with Rust.
+ 
+-- 
+2.55.0-270-g106a830b98
+
