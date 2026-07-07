@@ -1,153 +1,137 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B6F70808
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 09:48:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D138F3C0A0E
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 09:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783417702; cv=none; b=PyaUC9BzOrISN4VyFQb89KqOTWoJhPZiGT0j6bm9xsoBfNwpPYZ5VVf9x3Li04PuYEtSaVu/rcbCgTT+kRFrmBh4Z7XmVVyL1kouCH343Jxof4+EE9jmF1o21I8VrIQ4vM8O8VRoK+SQxZD9fua9NUDTvcK89/G2MFD2aumHK98=
+	t=1783418388; cv=none; b=pQppVgCa5MwrUWw11sh3G1wHVLmY7esFfsXPtFwObBmoX2n/49JsCgnId2O4dPftMrBibSYngSVqdRiwNb3jXUWp14c4RHyew8ivVVJX0bg8/Uue2uMsnO6wn68BSkNfzPku7HduN4sZ3cTMp2PTH77+0morJ5ANuPbPpggIO44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783417702; c=relaxed/simple;
-	bh=AwRi0vIMeNow8sgjUpqY0miEFfbQKXqXaDWjVrz0qNQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AIuz7MRu06OPBEw7t++TXr5rBwpineGqjcIRsfby7Qbij80FdmkiN1NELmb1SBnk3dALqDmb3zAPFQp6vbSTzQoOLxMbiDm/coBrk5WoBI5s/vvrVK9zyI+Y6K/TTbQa8mxIPqLWodoE36yzUvtc6Qse7tGu70UdvFFPHCtxGWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o97s/EJ0; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1783418388; c=relaxed/simple;
+	bh=XyClFdmtX/WYJ6vbbRXI/vIPSCfds7SqEz/l5hcWYpI=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Iw72Amd/Zuz74IxKnuA9fEAFj1crIvxorwkMDjmV4+MV1SjG62AyaK+eKC3N1cADKQUErIM2W/FDGOoBZF1LtaKgOX7pyhtj967XzfV2SoQjSHxC966m3+lSAThcWcPRHODgiP/yCzS/mf25NJ/k4Q3yszUD0bIW69ohi5LQMf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RlS2Jtxp; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o97s/EJ0"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c15b1da6b82so40777266b.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 02:48:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RlS2Jtxp"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-36b9d265355so3093190a91.2
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 02:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783417699; x=1784022499; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1FSg+q6ZcQo/uao2qA/ANfhGUfVriUyxgJ8XtDGVE6k=;
-        b=o97s/EJ0FA36vick0ZNUJ8sKFPDm9AfOHyInudvTpj2lQAkOYrxvejSvxS8hFL/cLY
-         dTMdMkl3L/6JwJreWnfQqFa+UcRMN27PBEzguNwTRR8se0P9xh+aYTW40tvrVdDnXJ06
-         G/UHRELY1UYquEy6Ul13WEfRWyx2e2gGXYMt9shbtcSPVH3MOKdclJ/xHO6iqiNxVmNw
-         gTskMnoq7AyHs7krWmTEjcKjLdCKm22AIx8mU5Ndbtm8MKu77wtTsNEK+1WrfOVD1EUT
-         KIiYBPfBUajqEndiZb7hCbZdLIEYxhxH6TiFItTN7IgKiXVgicmAQJ2LCOrnwntPBkjU
-         aCwQ==
+        d=gmail.com; s=20251104; t=1783418386; x=1784023186; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ey6MWlZOkm8KpoDVr03ABMU86M8fG2g7uX+rUzs3Hzc=;
+        b=RlS2Jtxpsf7LBYnSyCuwG9ixzSL/1fH+vLe4t3ip8KGkEdRkVHlju0tnHb+wy3ZI8Q
+         2A3STCEN0xdxV34TTIj0yX59KHvAqDzsrNCbQKv9c3y20XWx9k/+jgXqR/licS2x3zS7
+         L+F8Io+Y9IgJwiV6E4avRlCa4M2uie+KtFPdecAWsBr2LK4jkOxiLbPPY5Pq/a0tEbCN
+         PmGmO1WyLyFWhUqoEe0s7njhXddnVmZzIJjPsSkL8l4R/zrKOXUu21jXekjwZSlxppsN
+         PlwGVqhyqylGnIp0h0EhGa2JTCaZ0bGfWY9qIoTvhvNGOzgKRIoWDDydkEFnLPz7Z8W1
+         79lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783417699; x=1784022499;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1FSg+q6ZcQo/uao2qA/ANfhGUfVriUyxgJ8XtDGVE6k=;
-        b=FaDl5aL00zd2+/ab7Gs4wFzeDjVJs85VlDgbkyU/KGVtQzCVq99Te/wRoRSk5yWErD
-         qROnCsARWnYmmRPlrvvE7aYItFwx/APHVJEoldIuc0uuA4k+BRZyuV4ErrL0BmQ+9Eqr
-         cs56eCbTPwjTqLVF48Rk/P9oATSI0CuUrvRNV4dCtVsrMPuRRVgDwS362S9Ms8p8IZm8
-         7/8dsVWDilZPsgTXAV6IU++Db9blGRh5E4ejBI4DnJ6AnFccLD+OugWnwzKnU3emPjpG
-         cR00Jaax5duJdyw7xDbyUHWDz1/eo62uSJ4IL4NG75WHIsETo6rjXUl4wJhFlyfTJM4F
-         B24A==
-X-Forwarded-Encrypted: i=1; AHgh+Rp+aEFk97m+jJ/ykMaIEFUt53HgKp1dazVagEY0NTahWTwVg1k5eIugJ6qT1WQxnb9an18=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzF8wnDEdrOAulprXJceXt18Us7lOVuqgQe6e4+XFjQriUcNN7a
-	LjrSuix625dA6EMKgV2r3Ev6wPUQ69aVgWoyfDGbDI8l0VQheNsxrZoV
-X-Gm-Gg: AfdE7cnwx2Q3heEz2H5cqBthCRFWqT9U/b3SfI5aTnXzTyAt1QW7GG3VVrzdcMv6wUb
-	Dnhwnq7TskdcTY6VuhuDl1Q9q7VH3OeyXwK81MJX0w3Ll7ZdgVtYMOVHVfmV01ZiHBei2QDvOEX
-	sG2CNVhlFhqfpYV7CHjYya+sEz6dNqMvVDH+J4TgTK1AZyLMvaiAzS+Jh+hZcKxEKUnWQhtZRyg
-	OKoDaa5PV1aBqDj3K0Pd7AHGnrwyzh/kSzk1bbiCyfdtgH7c0MqIKBkJzG2gK+3M095pLcjxziD
-	OL8IsMeZV00rWy62FmhEfWKuOBFD9fpUo0PgilBRzPaKz8/Q7iKyCUKLKy8OaTldiEmduDKd22l
-	1+mwmCFe5eqRECHzbKurCgRnWu3zuxf3IT8l2MDPxfyxRLNyjuIGv+l3nkhaqEW56y/HIta+4td
-	NvpQjR5q7sMqM45LtFwq0/ZAEp3AkJ2GcnAVFMew+7fD2D3MI2s5TnxTMCRYICZC/QuP4=
-X-Received: by 2002:a17:907:3cc2:b0:c15:b48d:caa4 with SMTP id a640c23a62f3a-c15b48dfd33mr77867266b.39.1783417698806;
-        Tue, 07 Jul 2026 02:48:18 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ad882289sm96074766b.26.2026.07.07.02.48.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jul 2026 02:48:18 -0700 (PDT)
-Message-ID: <40add226-d986-409d-9d9e-d14a56e62f27@gmail.com>
-Date: Tue, 7 Jul 2026 10:48:17 +0100
+        d=1e100.net; s=20251104; t=1783418386; x=1784023186;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ey6MWlZOkm8KpoDVr03ABMU86M8fG2g7uX+rUzs3Hzc=;
+        b=Teiy6ZR4G5Q0nx8u273TVFa48U4+xbIkM4RQLP0b1bSUtncRNbYDucL8DU+wlBwtLs
+         4jy1wq+APjdDBFEt4Hr65C8326HXBM97zL0Ao2ZRpQeK5NFrVSla7j8a36Qu5pboJsDA
+         x/yntut8yMgDxjapQ7Zt6OhCUk6BcrQ263faZTvuTB5fG5qcRs5NqGJTJq0QU6prp92T
+         sdkFNhIFLVrbfcBSRV6GnzWmLvXx++8q1ktHoW5W9Ls8OWgbi6ak86EyFKn+6SRdOPtn
+         kkI817v6d3fIIL6CK3oAi2M1Ddc0rZu/T86SHHiRC0AKGBhMnXne75aIJjyjUBorRWfz
+         lZzw==
+X-Gm-Message-State: AOJu0Yym9QF/bVwi/RWF0m/IxzLfDnu5gjH8HtoFgsvHnKjTr6vcEHIl
+	iIv/wTuTRta4Fxsfk1CWbooSC+C943+MFiZxHUzPFpoe7q/JIV4zhUm1JpWtGQ==
+X-Gm-Gg: AfdE7clKfwX7CuNnIwHnhFpaOti5xYQP4oW/HzrLHLpS1Jbm807AjhvXgKmIQjn2sM8
+	/m9vOFsIwVumBQfVRQedqkO3TSfZkr9D/0y+taBKE4x0+D178/g3RZJqrMM0PSMe/dQCqYMjU0D
+	RtI+pFYQWKC93+nt4Gp4aXjTJogKmWKGYt477g4Ktmljhu0lEAa5ujBo7ilDLusSSxLGWIwZ/K+
+	iEao7nlRhQh0+ik6waJS+hQEDwa9CM5ByGVb9kEISMV/c0eGTbswH4ZxhKVlYNxJ75+py8YSovP
+	+nRRdLY7W62bcXx7vyOjohqJKv5B+0UiT8p7SY006lgTp3pV003/Sl68DxzuCgaZ5jP/29WmtYB
+	pO8DyauzY70kGmZp5IDkyPwnXKleUrYuDqaCrUC0v0M4Uvtlw6oeIi+XuuxY4iMxV4eAbIZW1dQ
+	Reu57XHEoQPMW/5w==
+X-Received: by 2002:a17:90a:dfc6:b0:37f:9ce1:7360 with SMTP id 98e67ed59e1d1-38758162cc6mr4602852a91.33.1783418386050;
+        Tue, 07 Jul 2026 02:59:46 -0700 (PDT)
+Received: from [127.0.0.1] ([52.241.30.72])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-387d13fd857sm804728a91.7.2026.07.07.02.59.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jul 2026 02:59:45 -0700 (PDT)
+Message-Id: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 07 Jul 2026 09:59:41 +0000
+Subject: [PATCH 0/2] commit-graph: fix topo_levels slab propagation regression
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 0/5] history: add squash subcommand to fold a range
-To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Junio C Hamano <gitster@pobox.com>, Matt Hunter <m@lfurio.us>
-References: <pull.2337.v6.git.git.1782635349.gitgitgadget@gmail.com>
- <pull.2337.v7.git.git.1783327849.gitgitgadget@gmail.com>
- <5a5dbfae-4525-4b00-9e44-936be606ee85@gmail.com>
- <CAHwyqnVxa34iGmFvL4Ujrc2dTbmtF+7j7b=q5v95y=-pzUf0NA@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAHwyqnVxa34iGmFvL4Ujrc2dTbmtF+7j7b=q5v95y=-pzUf0NA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Kristofer Karlsson <krka@spotify.com>
 
-Hi Harald
+When fetch.writeCommitGraph is enabled (or git maintenance runs after
+fetch), an incremental commit-graph write computes generation numbers for
+the newly added commits. For commits already in the graph, their topo levels
+should be read from the existing layers, making the DFS proportional to the
+number of new commits.
 
-On 07/07/2026 08:51, Harald Nordgren wrote:
->> There was some discussion [1] about making that the default and renaming
->> it - was that overlooked? If not it would be helpful to comment on those
->> discussions to explain why you don't think it is a good idea.
-> 
-> Not overlooked, but I side-stepped it because the discussion died
-> down, and yes I don't agree that it needs to be the default. I could
-> have mentioned my thinking in the cover letter.
-> 
->>>      now builds the same editor template git rebase -i shows
->>>      for a squash (a combination of N commits banner with each folded message
->>>      under its own header) and follows autosquash for markers: a fixup!
->>>      message falls out (commented under a will be skipped header), while a
->>>      squash! or amend! keeps its body with only the marker subject commented
->>>      so its remark can be reworded in. Only the message text is affected,
->>>      every commit's changes are always folded in.
->>
->> Rebase re-orders commits so that fixups immediately follow their target
->> - do you do that here? I think that is very relevant because here we may
->> be dealing with several different commits each being targeted by a set
->> of fixups and presenting them mixed together will be confusing.
-> 
-> No, I'm not doing that now, but I can take a look at that.
+199d452758 (commit-graph: return the prepared commit graph from
+prepare_commit_graph(), 2025-04-07), part of the ps/commit-graph-via-source
+series [1], refactored the loop that propagates the topo_levels slab to each
+layer of the commit-graph chain. The original code used a single variable
+that advanced through the chain:
 
-That's great, it is fine to punt things like this which require quite a 
-bit of work to implement to a later re-roll but please be clear in the 
-cover letter so reviewers know what to expect.
+while (g) {
+    g->topo_levels = &topo_levels;
+    g = g->base_graph;
+}
 
->> I think it should allow squashing a bunch of fixups together though. I
->> thought there was a plan [3] to refuse to squash a fixup unless the
->> range included its target.
-> 
-> I attempted this with reject_fixupish_oldest(), assuming only the
-> first commit needs to be checked as not being a fixup/squash/amend.
-> 
-> But now I realize that maybe we need to check all of the commits, and
-> also check if the target is in the range or not. It just makes the
-> logic a lot bigger.
 
-Yes it is a bit more involved. If the first commit is a fixup! then we 
-should allow the user to squash other fixups with the same target and 
-take the message from the last "amend!" commit if we see one. If there 
-are other commits it the range then we should refuse to squash as you do 
-here.
+The refactored code introduced a separate iteration variable but did not
+update the loop body to match:
 
-If the first target is not a fixup then we should refuse fixup commits 
-whose target we have not seen. As well as exact subject matches "git 
-rebase" accepts prefix matches and "fixup! $objectid". I think it is 
-fine to skip the prefix matches to start with here. The $objectid 
-matches shouldn't be too much extra work and I think they are worth 
-supporting because if I remember correctly git-gui creates them. Another 
-gotcha is that fixuping up a fixup prepends a "fixup!" to the subject 
-line so you need to be able to handle things like
+for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
+    g->topo_levels = &topo_levels;
 
-	fixup! fixup! the real target
-	fixup! amend! the real target
-	squash! fixup! the real target
 
-etc. Hopefully looking at the code that handles fixups in the sequencer 
-will help
+This always assigns to the topmost layer instead of the current one. The
+other loops in the same refactoring all correctly use chain in their bodies:
 
-Thanks
+for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
+    ctx.num_commit_graphs_before++;
 
-Phillip
+for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
+    ctx.commit_graph_filenames_before[--i] = xstrdup(chain->filename);
 
+
+With only the topmost layer having topo_levels set, fill_commit_graph_info()
+cannot store topo levels for commits parsed from lower layers.
+compute_reachable_generation_numbers() then sees GENERATION_NUMBER_ZERO for
+those commits and re-walks their entire ancestry.
+
+On a large repo with a 4-layer split commit-graph, the cost of a single
+incremental commit-graph write drops from 4133ms to 233ms after the fix,
+which directly impacts every git fetch when commit-graph maintenance is
+enabled.
+
+[1]
+https://lore.kernel.org/git/aMNTELw0Wk8jWoPc@nand.local/T/#mb55b5f0e1ccf82d969ac1d8144c56ecf87b833e8
+
+Kristofer Karlsson (2):
+  commit-graph: add trace2 instrumentation for generation DFS
+  commit-graph: propagate topo_levels slab to all chain layers
+
+ commit-graph.c                |  7 ++++++-
+ t/t5324-split-commit-graph.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 1 deletion(-)
+
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2170%2Fspkrka%2Fkrka%2Ffix-topo-levels-slab-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2170/spkrka/krka/fix-topo-levels-slab-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2170
+-- 
+gitgitgadget
