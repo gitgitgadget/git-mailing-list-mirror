@@ -1,84 +1,86 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1690B2DEA93
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 19:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9942E736A
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 19:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783452351; cv=none; b=P2U7lm5ZcEvxHN3sd6hVq1v+rCrTc2xvUdcwufubdsdwMbc7GMSgZzhlq9G3X6E++aIcwvaUtBX78Svlsz4D1Texp9nOWcwmG/PYrL0Pwofs5x9B5yYgotS917mf+vFMrLAkZPj/Ae4COJsEuf5F2IE4r7rWX8LB0wYVEZWXW/o=
+	t=1783452951; cv=none; b=pPssEjB9KqrCR1A4zKGnmrA3WXEOqTxKZs8ooDnrylunBLa8BmZvZLxT23EwUeBrCYoyJxGnRUqSrBvpXSyywXMqxC5mMWKffptH0kXjrnWwLngcRJJXxaOmsD3OJd0ybGsp5pazBvQbfX7Ii/aetdfnRsXwsbh4sWNwalMNAIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783452351; c=relaxed/simple;
-	bh=+ZR/A+xZToQcatjo77ekdDoHDB0neryF1aCpOqyUmFk=;
+	s=arc-20240116; t=1783452951; c=relaxed/simple;
+	bh=1I/eb4xVUdHpnLXTFVT6Tv3mn2ucrtgiASb6QRHi+DU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n6pRvHulvQZWyTV4Mjmmrs3L0qibkUZ+gkBOrg0F9ZvqBhfVXB7n2VMLXUf4oAOJ6CqmYR5ZSnx1eJ6J1TwTCGylHFcv0UB2vm5cv74dG+4NDfs1JhChn8zla0fIXSOcuYHg6tAiZ+T0sasgX1xbJzARpxVo6pCKc1cBLtDOF/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mMjRyhtw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bq5P/RnU; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=gBr35/NXIOcSaurbn8DA7gslaqhcWirz7I0bYDgX6p0AEiEq1kpeaWzeQDyE7sPjH5dpFx+6g05VCHvI3XWSAGz++dgTsuVpUV8K2TZASmI99nRKim4CUablpySaDdew3OvI8oSOiH8wANstz1Vtb1kE+R5S+4Fmaoje6jHl22I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jWJf1WN0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G5hVIxy6; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mMjRyhtw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bq5P/RnU"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 593FE140014D;
-	Tue,  7 Jul 2026 15:25:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Jul 2026 15:25:49 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jWJf1WN0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G5hVIxy6"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id AF12AEC0116;
+	Tue,  7 Jul 2026 15:35:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 07 Jul 2026 15:35:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783452349; x=1783538749; bh=OU+GRHEW4u
-	iJlPwkJ9hi6dTmFHaJeoq1cFkh/20F57M=; b=mMjRyhtwO+Ed0FOoJm9E9orcIF
-	aROpJyCzSZ3veCof/r1WVTD2BU4d7McGHhqeAKB+6YDHIl7DW3N7dqm+0Jh2mrmf
-	T6ZDFykZcYHxF7ySVVvhaJabKDYqdSI/Iv8I7thffvBcgAHcH7gjpq2y2WLsyokm
-	MkH1/BXjKNgY1p6KggcDIad8adz947rseDFdDMHSft5N/DgU5057XX8J9JX3DmLI
-	GCgr94fnwHa8nsU2B+kSyLn6fHaa15Hn2UIrT5opsWT8qoXmwBkyGEkx0ElHa93k
-	VGme0thmblWQsTbFZy5DmBKdY/0ZVaRUG8fhSpDm5cU8jFxOedJPrjumyJug==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1783452949;
+	 x=1783539349; bh=b6mdrdtPSbYsZ4+KLNFlWo3HW9V3tLqXFUqzCcXG2Cg=; b=
+	jWJf1WN0oKYwvtuMIj4rBNDMsedPOoa23afkINZ+7CLbQUU1fSZQ7yVN9HS4N+Kz
+	LEObzF0X8UHYnLWJuJLcwJeN4DEuGvBh2vspl12lyq75H9VpCH6r5ktazXHfGmXp
+	dmxL7OFT+f8HKhlMZMi3iBBYxqDtTNk0khfAm8EEszu0m4RrnyKsxVcigDZME0ge
+	Mz7inwco2NqYt5W4B/aG3CXVgBkSwgAdHuj7/i2K1FN68lvixmHPwhVhqtMl2MhX
+	p97t30dYHfCt1twLDw+7h7Wv1v1DbhXJWBArHS2MS8Yl+Ku9xyaDjSSU0JcW4XzF
+	m0eEV3+LeTyd8dUmnCEVLQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783452349; x=1783538749; bh=OU+GRHEW4uiJlPwkJ9hi6dTmFHaJeoq1cFk
-	h/20F57M=; b=Bq5P/RnUh4HWIMQ3GE0F+mKelLv5LGK9Gmntrrgf0MG0tCREK/X
-	AUeMwhJYsLLRTb2Y1Ui/FQFxDvmuha37fq+aoWnQ0brnFKBo/Kpy2UXYYO16v6f2
-	nTuYo183aw+Lg/AQNVj7jVy+AGFStKZI2lRdCnZCwRAHraGWB7p6F2629MSuDvx7
-	5DkONkHsZlY2Qd0XxBv8qGawbdn419CUcWUsJzdV6jwpNJjvagVDcb/eKKUaRN0c
-	qXYqPv6WWYfLEZHfLpvGsXCY+SIFDyjVkUsG9uEomTjWqcpKpWo+G/uLFokwFUSI
-	ZHpVrzQSxWXqhybiLgNd8WmIbdH/yGX+ahw==
-X-ME-Sender: <xms:vVJNal4A4mFlhOOjfcY-nfa7TtPh2W-r0FKZxqfzGK9-EOz9yZpMMg>
-    <xme:vVJNauYuSTeQmALocIWT2dgjhtFMfjnuJoSXZ-sWNof6WKC1SKijoB8e5ZceciJ7G
-    Ky4yPqGGbgMI4WHxmUmxBNGNZp8Qewo670c58owRr3XKT2Du55x>
-X-ME-Received: <xmr:vVJNai7G9H-KuBQwTVKdZrZzFsKYxTqU0tkLy9BPysKVBSjXU1Lmvec9_qri2NoRxchCZzOeEEzD-Eu0kxhB80d6mgHaBd1a5ut8PUM>
-X-ME-Proxy-Cause: dmFkZTFcmUrMzV6O4tDKbWwRkxqn618Ah/BQPAYl1jKqz1WrlFErb/dVmvEmd5WPcmiMAT
-    Z0HRfUj+HSXbJnMhqtPXTTyu5TAMQirYwHDWAXqNoLlcENacgzjj1BMvefXKDxvBBb0QBO
-    oAK7xF2Kc9CF7I22k8fc6x/A6g4h1+2LE8gBwsFkAMkMDYVivkuTVWt79E8xp2Df58u7N3
-    2YeCqHtZd2iP1UkiP8Qku193qHLx7jUbRIp1YtVe1/MnZy3NYamn5tadUrQRfAjbmPDv3T
-    +ykzh51iCqi+RVL0rNZ343Zw3a4nvBoJEzAjFuM5s1oYAZtJZP3sRzFBiEFoUAnaco+/hL
-    4nWKKVhfhsSdB87uiRhNv5lWT7cSnWxQ1B2yw0ws7pZWGluVqzva8O1MQQI1Edq4ePBhOf
-    4p70AQ4KbRvP85diuKaBEvjJpfBB73lEQ7jU8m+uHQ7GETTdZ0RAHBbFwygoIK+HzSaIqG
-    uWl+pxy83gSZKG4Hgk7km226Io7aJnDRy+u6oSSOIVOfmQlAq2jEApbyEbrEF5gU2MiaqW
-    hOv+uXHff96aHm7h8UyxVd42tKyzWYdbkBRF61d5631nRjSmCZzPsve1aD81Ewr+wrPaAp
-    DeR996bejRhnRwu5rwLhCeURhvr6i7upFJjs5dYiAP+Zko9iScHYsxrRqrkg
-X-ME-Proxy: <xmx:vVJNapBywzAw4K6Pvr-93BErLYcrllHg7vypnbCyuWfq2XvFcl3W8A>
-    <xmx:vVJNageB4dzmR_xSF8d28WAFRlNE4z0ArArsx20HbeSr5b9hfBO0Sg>
-    <xmx:vVJNagKCnQCryE2bc8wqJx_7Yf801rS5p-oy0w3q_sN-yw-c-NFo8g>
-    <xmx:vVJNaj1oJ1MPlkw1NM4n32ZBSS_jvGFoHLgvZ5FM5ImvjCEaPwGpCQ>
-    <xmx:vVJNagfpoeHFPOGIP90HMUDOq06IThY0ZbYf8tDemlpfMA2cL42Q5tEl>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783452949; x=
+	1783539349; bh=b6mdrdtPSbYsZ4+KLNFlWo3HW9V3tLqXFUqzCcXG2Cg=; b=G
+	5hVIxy6YR0uy4u4t4Vm8Ixh365GLB8EW0z0EcQYab4YUMlNr3+U8vBXitSXfsH5n
+	lEycsQhNItFuSCIh7Gz7KVhEry6z/GCcckiRm35+KDuppGFGL+AGzGVhJzMqZTBz
+	0oR6OJ2xWvVeyoMwGyUCuAVTpUoOSsipmBBP5WrMEym0gu3/FSUbyBTcM8VkOzR9
+	0cYQOTTF/SJnm8VzULyCthz7YNqJ701a4Apxe8vKuHk6eeivINCys6HvMyBdtFaU
+	NGDNaZV4Mn/5pxviXEh1TOR7M3pRbHcKYmrtpGbVc0UlqLbJfJnGTdBLleRuqGbc
+	2jNDKSXYb+rgK4hDxDgEg==
+X-ME-Sender: <xms:FVVNaqAI43lUM_VGdKQa0XmywStNfLFbD9PfVyQhpYUlhJRqmOyNdw>
+    <xme:FVVNarZSF66w6UT2fPt8b8CnALLhTakuFp2bGBLOA2OWPfeI-Sg9KWIoY2HqZVaJ3
+    DsY99ygQCsPbdyVNqSGlhk0yhn-sbzXfe-Q7lK-nOxFxrfNrtXEdQ>
+X-ME-Received: <xmr:FVVNal5OGMvkjOV4YsZW4w2N5wTF0vUiNRHnxj3aSC8fWFQHYJc2QFtLtR_w4Q71rs1_quMwhkWMfEY_vEnFguG7heWnu3EDldFmPLw>
+X-ME-Proxy-Cause: dmFkZTEFBl8SfVO3XA87Hb93FgRh/OyngoCvXVYA2c3bNgLXHXy/Zft3UTmZR1Aa55symG
+    kGPS9gIAwY+JjEOz7eLFU5/30/icYUKavVd2xZf/OOmh/Gpa3wYS3A6wUYWM9jvjv8tJMb
+    H4OIXF1A7UrWyavSNrrGORKAfgvlBEh/lsu+T9PoVuvwwkXVIdyJ/ymOhoKTQgvcsIBa1I
+    gCjcXqaDNhxbLyzacDIXItUWAwcFpZnorl05gdjxw/eJknEeBsEqYQDIpLJcdA4IZlUDCi
+    8cMxil2cqYeJEjdnLANs2gxCeqS7NMYXDIBx9dREACiBbb8gX0atssUsPd08eZqSssvCho
+    OhGQ0mh2QkHQFYS78GCvvceLQ/LnSsEcCMgczyM7mN5rHm/WWPG0mpsUAGQa3zpBI0D6Ks
+    /CXC1N7cQJ6uDvrr6AQG0snTv4sFHKYb0b6UC2jwuFX4RoDTggjTyfWv4s2+MGhh5O2Otv
+    4KbTfCRot0sxSXCETmfrsHmH5r9hGxCxjXvxl7OziFInmWFJ/+KvczW39UDliTWr7duW8d
+    68yj5DHvFPJyrVurZUjR4o2Q1HJHxUJBmJrthdOn+6Dgwqt9MMB/juXUoLrGLDHKo5170p
+    t024qMT2KztQy+e9SBRThzZG1fTHoNM/ivkhOigi3apMSEyQLHs78zb20KDg
+X-ME-Proxy: <xmx:FVVNakb8CpgXqJ8dLeRsLywsjIL57Z2llVv9xpioyb7gk5uNdB_yIg>
+    <xmx:FVVNasgK8hT8rQjrdtr8yIslvP4pRjWLw6zEjKPwYBkHRkk8AjOk7w>
+    <xmx:FVVNat-gGsXLZgXA5all58t85VrwD6Pw1EQab4r01pOMTG-XCS-e4Q>
+    <xmx:FVVNavogrN73YFEN5EK37h87NMa34HWe5Rb6e867c07mcUNGXmridw>
+    <xmx:FVVNarBB5txXkThXGyVsEWRvfOORV3-TDeAFd3b_wT7rumKMIYCrdIgz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 15:25:48 -0400 (EDT)
+ 7 Jul 2026 15:35:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,
-  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/12] coverity: fix leaks and error paths
-In-Reply-To: <ak0hj9em1agVr4rj@pks.im> (Patrick Steinhardt's message of "Tue,
-	7 Jul 2026 17:55:59 +0200")
-References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
-	<pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
-	<ak0hj9em1agVr4rj@pks.im>
-Date: Tue, 07 Jul 2026 12:25:47 -0700
-Message-ID: <xmqqa4s238lg.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v6 3/3] replay: offer an option to linearize the commit
+ topology
+In-Reply-To: <87ldbm3kh6.fsf@emacs.iotcl.com> (Toon Claes's message of "Tue,
+	07 Jul 2026 17:09:09 +0200")
+References: <20260702-toon-git-replay-drop-merges-v6-0-78a07cdd0382@iotcl.com>
+	<20260702-toon-git-replay-drop-merges-v6-3-78a07cdd0382@iotcl.com>
+	<xmqqbjcnhjvk.fsf@gitster.g> <87ldbm3kh6.fsf@emacs.iotcl.com>
+Date: Tue, 07 Jul 2026 12:35:47 -0700
+Message-ID: <xmqqy0fm1tkc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,38 +88,45 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> On Sun, Jul 05, 2026 at 08:24:17AM +0000, Johannes Schindelin via GitGitGadget wrote:
->> I wanted to whittle down the many issues reported by Coverity in the Git for
->> Windows project. Turns out: The vast majority of the issues are false
->> positives. Most of the remaining issues are in core Git proper.
->> 
->> This effort was forced on pause while Coverity was down from May 16
->> [https://web.archive.org/web/20260516152422/https://scan.coverity.com/] to
->> June 22
->> [https://web.archive.org/web/20260622182153/https://scan.coverity.com/]).
->> 
->> Here is a first batch of fixes for those issues.
->> 
->> Changes since v1:
->> 
->>  * Edited the commit messages to put function names in backticks, and
->>    reflowed the messages afterwards.
->>  * Took Junio's suggestion to avoid (ab-)using errno to determine the return
->>    value of load_one_loose_object_map().
->>  * Dropped the obsolete patch "run_diff_files: avoid memory leak".
->>  * Rewrote the commit message of "dir: free allocations on parse-error paths
->>    in read_one_dir()" to clarify ownership of the allocated untracked/dirs
->>    buffers.
->>  * Changed "submodule: fix cwd leak in get_superproject_working_tree()" to
->>    reduce the cognitive load on the reader (i.e. to make it a lot easier to
->>    reason about the correctness of the patch).
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Thanks. The reflow of the commit messages made the range-diff somewhat
-> hard to read, but from all I could see the changes all make sense.
+>> Definitely it is OK to leave it outside the scope, but I am not sure
+>> if reverting a group of commits that happens to be "closed" and
+>> happens to contain merges, is inherently incompatible with
+>> flattening.  If you have
+>>
+>>     ----O--A
+>>          \  \
+>>           B--M--C
+>>
+>> and you want to revert what happened while the history advanced from
+>> O to M, I would naïvely expect that I can arrive at
+>>
+>>     ----O--A
+>>          \  \
+>>           B--M--C-B'-A'
+>>
+>> by linearly applying the inverse of A and B (in either order).
+>
+> You're absolutely right. Personally I'm not sure why the limitation was
+> introduced. I've done some testing and I cannot see why we wouldn't
+> allow --revert and --linearize to be combined. So I'll be submitting v7
+> without this restriction.
 
-Yup, this round looks good to me, too.  Thanks, both.
+Of course, postponing this is a safe option (at least for our
+initial effort) *if* we cannot reliably detect the good case.
 
+For example, it is unclear what happens if the linearized range in
+the diagram above contains M and A, but not B or O. We might want to
+distinguish that scenario from the depicted case, where all of A, B,
+and O, as well as M, are in the range, but the current code may not
+be able to do so reliably. However, if we can consistently provide
+behavior that is logical and easy to explain, it would be ideal to
+lift this artificial restriction.
+
+Thanks.
