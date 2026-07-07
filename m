@@ -1,82 +1,82 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BF242E8EC
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1021ABED9
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783440909; cv=none; b=euSrYABMGJSYRVe0t/yMxMDnm4uffFkrVJXOIvi9JJ1jmZL4935vH3zC9lKScdog6Y1KWWYRaiiAtbfWHzmRBTUyTxzJ5WOOJbHE8HNzGcyb60zYrv984H8FO9ZeNqQWIjyaOe7D25QcV8lUaHVmq6UXQ5g6Q8J+eYRaTr1+GvA=
+	t=1783441328; cv=none; b=WqAZQi2T8cMNMnqm+27UOsc7Psvt7jlAKQqqFb/BETu3uc29v0NwLxWdEyJfmxU+fZWK5O+530Ll9Xbr+AmH0asqNJ/0OTOBgRkmHscO9uA06v4YfjYot7XUKmGK7rzIpov9mox8k58kIqC++sMValtbhy6l9wsSc5EmVqXRm9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783440909; c=relaxed/simple;
-	bh=sJy5XWmJY5CvBNNaozESTJv7pyAiw2MuNSvhEcFoDlQ=;
+	s=arc-20240116; t=1783441328; c=relaxed/simple;
+	bh=7I5Jn4/bFZm64zxzuY1n1CII/PSA4yht8/6x4znwEz4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nKOPXGWlnnHsDI+FzLXr+0T80TTb25DhB1bqJBDFz73SDu9cvF8K3VbJCtsjQUJ/A41jDZpHwhwFzpw9oCfG8Mr9bLOM6yOWCS+r70qrSTHLRZFwFk4m85vOW6s/d+2Zla/4jZbCRJ6UulNikwr+X4kYTknukMaUeNlhRI1GHfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e1XjZ0GR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kCfYqWoj; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=QaAxDYeIj3ZJaMNq+t1YGW+847zSVpDyyb4cqH9hbGj32SZo/doPb7O1kuiQPqQZsmWfy1BdchR/+P6Ck8eCqCYzLk7Qva+bzX1MQJtpGQe9mw2WNGeqhz4nlUDGAZtrC28nb288BOUJZMlb/JFu/WBLKVyl3jjIWQ68vfoAzRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NRIUWFpT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=odb8BJbw; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e1XjZ0GR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kCfYqWoj"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NRIUWFpT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="odb8BJbw"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C2F9E7A0145;
-	Tue,  7 Jul 2026 12:15:06 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4F6767A00E5;
+	Tue,  7 Jul 2026 12:22:06 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Jul 2026 12:15:06 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 07 Jul 2026 12:22:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783440906; x=1783527306; bh=I+VmpqZXoR
-	BYuJGoxLghSBN5Ob8HyNV51X1e0UGWy1Y=; b=e1XjZ0GRxNDqrgXHmNaU5zdnGi
-	d3ngmPKEAz1H6DTZ2loL4z7/4BPXPQXwoTNTChaMNNMNVdOBZfDkqaitDZytTqfE
-	TWS8/kWBld2EAGlOV+WfKKXdRbD4OVUz0zIbKEjkqXg67Gu/64UUTxjpHljYl0P1
-	VS/a5IK9aEOS9J9ItLjs6H8QVy9D68yt0F9PtDDD6b1SHQyclu4yLd+qkU5KjPeC
-	z8FN2hJwBHBCcqedPenE6l8bZsonNwqoXmWPheT9JU+wh3HZifu51+XfWjO/TbIl
-	qh8B/GdSKCbZUO1pDuTSn+KQI4ndVO8GGHvwkoTYDVWmiBkOY1gY9GrK0TQg==
+	:subject:to:to; s=fm1; t=1783441326; x=1783527726; bh=hlEspbApr1
+	5j0//Qw4kWer3VXShWLNuN0k/CIJ/GKjc=; b=NRIUWFpTcOSjbTJtxdHZxXvAPW
+	g/DgMdRSs+o5dOadj4M+o3WqHHQ7SKdKeEYQzjHM04DfIfPFEj5v75JXelf1S0qL
+	S2Xbcx8GgDI9MkwuQe5swT4mHxkH/vjJhL6H/T2QSkP6P/Fkb8vGgXRHtqQ3MDco
+	FjPTbxhCM8zIRAfffdNEzy/DFBIsp2yz/4wVXbr41A4pbPQqxqckio7NOpFaMw7+
+	UZ9gA3yGeWjRexueZAxY1xowoTZ9G3TL/3cmu3I6lt1kSdsxX3Yb+acOG31oiwv9
+	Q1xc5NuAjowRaZrp/pXClrOYSJEczfJwPTcCxQuXRISoq7SFWrzAJ/IM91aQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783440906; x=1783527306; bh=I+VmpqZXoRBYuJGoxLghSBN5Ob8HyNV51X1
-	e0UGWy1Y=; b=kCfYqWojgJgZzmekkFQHtIqV8QL8SskoHOcK20G1N8QGzCC3UWO
-	wfiZ5LyGKo7ODvtRvOO3DnmOd6rEDYiuFEu2wlsgZm9F0AwxieDR++yXNtqDLpDu
-	9Z1HuQsO7l+X6iWzDSiLhPM7hFMZjTQ6aJP5Kl3OZjL6033RQOvDfxGbkty83V6h
-	GtsDST30xPBl7UGITU369o1uZYtG/vaJ91q9VPJaVzDeSe40vVwoxntFS7oc+QuM
-	fpxlrGcCj+JgBftX4iBllj3JOXx1RfJC64LdqlVf/KFDfCTsheGO64KYXMUt0Zbn
-	8MgcFLycO4xlHdGS3JhCtvnRBvB6kW1w1zQ==
-X-ME-Sender: <xms:CiZNapKI3GCW2CAjFgq_jGAniLIwnp3TwK62QHdlwcia-iXODuA1Lw>
-    <xme:CiZNasA4Xv5dIrbNvKGQkNKu2jxp1noS4dOKT1Dw4w26jg_gD7EQX-WCi-wdN1Rmu
-    XLMVpvtcO1rHZ2zjet3GcFPPF-ZL7ppesUIWUOyQdu88Knqy8eW>
-X-ME-Received: <xmr:CiZNaqA8LWmRiqV2HgN0YrQwAeJmLLMs-UHdNOeT9VUGN_OkhqQN2Xelp6eutC7JDACI1wFinrCW1_cLal1ee7HN4V0vKz0j1-m4Wg0>
-X-ME-Proxy-Cause: dmFkZTFhPhUDJEIeClL1bRJnlQlJzAoCONWjHY8y+qpLJj0z2qCK1MT3DMPxdDUHobA9tC
-    f2MDyJhlrp0Y8k1PHl6fU/fAjLTobSvM7GUJ9vK7wpkgFg6SxYqo4C7A3jYi27zwx1htBk
-    2HjBdNgoqSvW06LqFRczlBkxDCy4FkVxYGq9exinx2oox/NQ7QHQly7z8zrFTV0r9Fb3pN
-    ft5sk/P7JGxom9vyXy3Ae1JPlHWg3/rQq3r6zNfa+VEWeb4UJtyFUjwfj/4A7i7w1V/D/4
-    zwUz90WCjkDs5W1pZzUgWBMHpkgu+MgvYwGW22G4OuCNWuyOVcjfPEu+V+ImFLJwWTuAY5
-    l82/178DI7Oid5FO7nPzp9Dr4B1Icjpb6eALXTcIj9mmVoqcF6rpg/0enkmCOXZ79GMYCW
-    jopD1dbbKIiWYAF6A4CMYuOykYpBv3/wNankp8xRsL6Lws+p3dJGI++QnmbZ84LaqTapRY
-    xC8G4WAiAtOtOV/zpLFf2lSYH2rRmGOWgjK0cvKlNcEp+79Ec5eo9nwfm/sh9ceOGQdcIB
-    Q2TyWxLwxUqz56OfChls9U8vK0J1ZD6M2CrJHE3FX5vGZYr3+yqA2QIgSZ4Ynns1/sgl7A
-    jenUqCP6At3cgETDCHQQ79FRjEdzTjq6vqpaWFIzK9erLITsK3yt5/S7J3Vg
-X-ME-Proxy: <xmx:CiZNamC625WtJ0R4Nvszgl7kAaVnonaj9qAVLTwf8tK66EemdEf9ow>
-    <xmx:CiZNatpXln38lsxzIAHgOo7NTCqteYKpt5cms70J7OUzIDcDMJZS5g>
-    <xmx:CiZNaomd5ZiUcZKRgs-4v-Aw9C56uRXROJSckG2VDDfm_6x7VlmquQ>
-    <xmx:CiZNalxx0sNt57o7sSqhjctA58yoLmJrUyBm-hIBjtUASOERm5LK9w>
-    <xmx:CiZNasy-BCZr5ZudtlNsB-3QpICUfuHQcIqjR51e8KxWCYvdrRFfZpUw>
+	1783441326; x=1783527726; bh=hlEspbApr15j0//Qw4kWer3VXShWLNuN0k/
+	CIJ/GKjc=; b=odb8BJbwZc8tamUCN+15jAQZAoiYY8CE3Ug9L6AIdwv8HgzhFuu
+	b4tzfHy5cT4BT4RXc7eOSRCB0OHApwy5t9XTQcLHqvMDSZxjpJFnYZudCY5ydQ+s
+	Qv4m0eK5rAiabSbc5awm1zDuNl3r6i3GgAnRWZKxLLCxjR3tznGPzqCKzMVzUpH0
+	8g7lTtrlCz8Y8zKU4DfBpbU5rTLB7Ax2aRu57zFYbOerXdS8LBTvFBzRd8zS+xAl
+	4+fC5WaMi4g/QUisW87TU2737iEh4Pn8x2HH3MxVf0KLC44BGQQTuSraRo3Gey1w
+	ECixoU2NEGMyG8sBac8ZpTmsu4CzENvzs2g==
+X-ME-Sender: <xms:rSdNanLeASFqeuuUod3gZqM0HOJWy7uwvT3l6NqrFJXg1gxiGLNITQ>
+    <xme:rSdNaiAJ68MM4C-QqKl8eqxCDFJ4fHcIa2Jp8PNmBkxRhLzmQ5hkT75aSGyChxGMd
+    4-k7dTStIBcr5jd6jnQcvZBnSBoPmY0I6gkxpwfDfpgY3IHbA7b>
+X-ME-Received: <xmr:rSdNaoA12GG-4hnOyoCpQgB2a83yV_L4lNY6Rl2HMTYCqYe2gujeUe1HlT5ram7GcPntx-5zgV23H_fE3WXny7Xwbdu_-cHTjF8JhLA>
+X-ME-Proxy-Cause: dmFkZTGARpJ3BcA/ls43GXWflPkOuiMB6n0ewD5H1l0Tiz5tKCKt6+ORXpFnYFsQCs43lo
+    D+08kTgesSTd/4hq4zmE4sT3mG/dqXoeViZ8gLCuPsz3sRty42xBtzL0fnOzGjrtbv91ka
+    PAJ2aKbkHL+Y0cgeeRbE1GT1W/W8bhrhBfu08SoIR6hvqwNr+KOQUcqvorZZ16yNpdZpzo
+    5WsGU+0ZAswB752zFAss7RlNDyi7dEp95L1OB8N5+3vrw7juINNKpNaEsWxFse2xWY7xcg
+    FrIrDwcwEeu0nNianQgHVKEr1yyceCMdVQ70u/mhSviv8reHdE8dteYI1tgQK2s2fDIDRv
+    3/4AJzLPq9hIRysHaDEXjUbNL5wtDd1PGyij1ECYwvAmLRHczXpqVoa+jqXjtuI2fsCDv6
+    86VGC5f8PQxWc64S5yJFlIKpnkiAeHOqufdLrGhiLGq/CcObmJIMYsYbjEvCAMeaa3f1RL
+    HtDQDvxpwJCAW5/7KanWlP5gi7Hzj1Fa4zlg9SGMY8qgr3qwn0TgJ0w+SMk/N4hy3l8FuK
+    W155BVjzAIYe3KcMZMU+59w91toLn75ayWIoiB2KhrWli/bGpn3vUpqETXBYL2SoeRX3nm
+    6QdVFLORU/qPUABGBEajjncwDTNx9CEGX4IJmolyweZqbZjseDyyxshCb0Bw
+X-ME-Proxy: <xmx:rSdNasDxwMDVPwhRIOThKDtpUrmux6nNWLNz4Z2R8ic_n7Bwyvg-GQ>
+    <xmx:rSdNarorb_0wkw74XhOYJnxJ9F9-BZKZ8dLhmLOzNUdPfbOsdSPF0A>
+    <xmx:rSdNaukTE2kwI-nmfo-tsQI9UTWu-L29Zv-mPDxghq1EJ0FZHhVISQ>
+    <xmx:rSdNajwYCKBOf4q1YFNARcEzigaD0w-gbmtoqyyZeNIH5mLE0BmLNA>
+    <xmx:ridNaiwXwgb84WEkcebedgPZNcVI55aoMQnwQYwOxCOhBXcIt9YIIbcN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 12:15:05 -0400 (EDT)
+ 7 Jul 2026 12:22:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  "brian m.
  carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 2/7] hash: convert remaining direct function calls
-In-Reply-To: <20260707050417.GB1288294@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 7 Jul 2026 01:04:17 -0400")
+Subject: Re: [PATCH 4/7] hash: make git_hash_discard() idempotent
+In-Reply-To: <20260707050700.GD1288294@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 7 Jul 2026 01:07:00 -0400")
 References: <20260707045556.GA1288172@coredump.intra.peff.net>
-	<20260707050417.GB1288294@coredump.intra.peff.net>
-Date: Tue, 07 Jul 2026 09:15:03 -0700
-Message-ID: <xmqq1pde93p4.fsf@gitster.g>
+	<20260707050700.GD1288294@coredump.intra.peff.net>
+Date: Tue, 07 Jul 2026 09:22:04 -0700
+Message-ID: <xmqqqzle7osz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,35 +88,94 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> The previous patch added a coccinelle rule to make sure callers always
-> use git_hash_init() rather than direct function pointers from the algo
-> struct.
+> You must always either finalize or discard a hash context to release any
+> resources, but you must call only one such function. This creates extra
+> work for some callers, since their cleanup code paths need to know
+> whether they got there via their happy path (and the finalization
+> happened) or due to an error (in which case they need to discard).
 >
-> Let's do the same for the rest of the git_hash_*() wrappers. I split
-> these out because they're a bit different: they implicitly use the algop
-> pointer in the git_hash_ctx. So when we convert:
+> Let's add an "active" flag that turns a redundant discard into a noop.
+> That lets you safely do this:
 >
->   -algo->update_fn(&ctx, buf, len);
->   +git_hash_update(&ctx, buf, len);
+>     git_hash_init(&ctx, algo);
+>     ...
+>     if (some_error)
+>             goto out;
+>     ...
+>     git_hash_final(result, &ctx);
 >
-> we drop the reference to algo entirely! But this is always going to be
-> the right thing. If "algo" does not match what is in ctx.algop, then
-> we'd already be invoking undefined behavior.
+>   out:
+>     git_hash_discard(&ctx);
 >
-> So in addition to making it possible to add more logic to the
-> git_hash_*() functions, we're avoiding the need to pass around the extra
-> algo pointer and make sure that it matches what's in "ctx".
->
-> The rest of the patch is the mechanical application of that coccinelle
-> patch, plus a minor cleanup in test-synthesize.c to drop a now-unused
-> function parameter (since we don't have to pass around the algo
-> separately anymore).
->
+> This should avoid future errors, and will also let us simplify a few
+> existing callers (in future patches).
+
+Hmph, so is the point of this change to allow _discard() to be
+called even after _final() was already called that we do not need an
+early return or something before the out: label?
+
+Unlike commit_*() and rollback_*() used in lockfile API, where the
+names clearly say which one is for happy and which one is for error
+case, the _final() and _discard() pair does not exactly tell me
+which is which, but I guess I will get used to it, perhaps.
+
+But the change nevertheless looks mostly good except for one "hmph".
+When _init() is called, active gets turned on automatically, and
+either _discard() or _final() turns it off.  Only _discard() is
+protected from getting called multiple times.  Is this because
+it is already a no-op to call _final() multiple times?
+
+Thanks.
+
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  builtin/submodule--helper.c |  8 +++---
->  t/helper/test-synthesize.c  | 29 ++++++++++----------
->  tools/coccinelle/hash.cocci | 53 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 71 insertions(+), 19 deletions(-)
-
-Looks very straight-forward.
+>  hash.c | 6 ++++++
+>  hash.h | 1 +
+>  2 files changed, 7 insertions(+)
+>
+> diff --git a/hash.c b/hash.c
+> index 55d1d41770..b1296f0018 100644
+> --- a/hash.c
+> +++ b/hash.c
+> @@ -285,6 +285,7 @@ void git_hash_free(struct git_hash_ctx *ctx)
+>  void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop)
+>  {
+>  	algop->init_fn(ctx);
+> +	ctx->active = true;
+>  }
+>  
+>  void git_hash_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
+> @@ -300,16 +301,21 @@ void git_hash_update(struct git_hash_ctx *ctx, const void *in, size_t len)
+>  void git_hash_final(unsigned char *hash, struct git_hash_ctx *ctx)
+>  {
+>  	ctx->algop->final_fn(hash, ctx);
+> +	ctx->active = false;
+>  }
+>  
+>  void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
+>  {
+>  	ctx->algop->final_oid_fn(oid, ctx);
+> +	ctx->active = false;
+>  }
+>  
+>  void git_hash_discard(struct git_hash_ctx *ctx)
+>  {
+> +	if (!ctx->active)
+> +		return;
+>  	ctx->algop->discard_fn(ctx);
+> +	ctx->active = false;
+>  }
+>  
+>  uint32_t hash_algo_by_name(const char *name)
+> diff --git a/hash.h b/hash.h
+> index 5686914b71..f97f7b9ff4 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -281,6 +281,7 @@ struct git_hash_ctx {
+>  		git_SHA_CTX_unsafe sha1_unsafe;
+>  		git_SHA256_CTX sha256;
+>  	} state;
+> +	bool active;
+>  };
+>  
+>  typedef void (*git_hash_init_fn)(struct git_hash_ctx *ctx);
