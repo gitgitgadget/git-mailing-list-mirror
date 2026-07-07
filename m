@@ -1,79 +1,80 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6DB3C13F5
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 07:21:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56CE3C199B
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 07:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783408901; cv=none; b=uqSrAWSPZywayc767uxnGR2LFgz2uZ323aLOrlS8zrFBiCM59K1gto7l7KZPR/gkU+dJo4V8rjf1p9h1gforSDVA3qeHccF9Lv0E/qYO2RNYUYWy05WV9ytwwqNMLH+f8Ra8LMBqKG88u3Gpfst6TYSehAm33ZwkX0H7hMrw4Ok=
+	t=1783408905; cv=none; b=YBd0y5V+G+H1KuOftgWuPLTNYlICOS0FccOQuoe0fuFb3cbyMzBRYkjNFWNrxHtpSJ3d7EUKA4yCqc8xRn1wsGqR0ajz02TSQUs8MN90Wbs3lUapbQ2+VQ/UHWQHleIFeg99qkp88bMd5dAtdcFMMtndlLX4qSf3iNEg9d5a2as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783408901; c=relaxed/simple;
-	bh=EqaVj+s1JSt4qoUx717kH2+RQpqEyb1AkcuV2GMUHT4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lEqq88cOIYLSOTTRQslxC8yEV+QycaHLGepJUpMSGrjBozVWPtxaXQr/D0yllJrYbISIevg9tMeQtsDJc6Ys9doD5dOTQxOy0CMcJ+M6deZbOXfGTRKhqIOJZc2PIOgFsHSON2IB5zebuyOA9YsNcODCbpegoeBIlYdOMXstrjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZuCoJlVL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nydwriFd; arc=none smtp.client-ip=202.12.124.157
+	s=arc-20240116; t=1783408905; c=relaxed/simple;
+	bh=ZhsT94UlmqR36qpzJbjNIV31m1JgqBIvzWxUHtToM/w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=I/VtQHGsfco6t6E52Bl6D7BjQuOGlwCQhtuLOVTTTcrOTD7Dvn9Pq2H5yhF4E+w7AtQCkoTEgPpvNbEfMZHGIps3UovAE68rKYMVSIj2ZjU/Mn+aEOcJ0m4Gktg0OxzUwC5S/BUwwNeH4SAvXzAh5eXoVv/2raeKosL7qwPwN6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ak0PCe/7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GvylMsL8; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZuCoJlVL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nydwriFd"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 263157A01AA;
-	Tue,  7 Jul 2026 03:21:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ak0PCe/7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GvylMsL8"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id D25A51D000B1;
+	Tue,  7 Jul 2026 03:21:31 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 07 Jul 2026 03:21:33 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 07 Jul 2026 03:21:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783408893;
-	 x=1783495293; bh=J5nDwCXDpgxYNtdym2ERlGIlXRZA9kn3K2txfCJC890=; b=
-	ZuCoJlVLQYa/PZjVbjm6as0MWMePQkVrRuj9B5r59sh6nbaXQ0Y7ZUWuUcJUf/+5
-	R9vJkgF6jE8ft1uL8YLK/f/7+vudKw5NMGAe2eXo8w54sFv52RlJuKKAFY//4PQM
-	w42XajWsHkNqDBC5uvCEKUA0a93ImfZHi7mJwGbx765Aw4Jzb9noKdFqsE70fWJs
-	PN2eMjxRCnM8Cfc/gINQMRIOSOfAUQD9XU5AbqtAhgzjqQ3m8bqmx/Z1ctN+6RAi
-	/5SYKxA7HmrmxbZwneynfwD2IvrSI4LIVLmwutJ2FqyPoOBfm55tprt2YfryO+Na
-	xyPe+jSGCxvkc9rvq7k9FA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783408891;
+	 x=1783495291; bh=CWxNjREN1D4blsijhFJutnamnBm5C+N9qx2OjouHof4=; b=
+	Ak0PCe/71JNdOUz052ldNWxpmUQ5wDfYMy/ZPYiH5SWUrbHyJBNvNdaKXuMU8dA/
+	JF4wFgrQ8vwy7fZaSk9sAwsY4NBsMBpxP8B/vCUukj3CpnYgV3chUkMG3WRw1fVr
+	bsW4/YZ7RGlQgredIz4aRw4xqzZu9oEiV3wJiTT856rafAm6mmG8HFFc8gCMW0lk
+	emQm/5kSkB44sl+6n0s5l51YrdRCiSIPXC9IfB+2UYy+Ar6skHMreyTsIfQ8UJuV
+	H6tO17YCzsdIXdYqQVrb/Ac0okX6wD1obL/C0GLx4wl7Yu99mTmuko51EH3HzFG5
+	cnPGKiFasJhTo0RY2CfLHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783408893; x=
-	1783495293; bh=J5nDwCXDpgxYNtdym2ERlGIlXRZA9kn3K2txfCJC890=; b=n
-	ydwriFdjvKU3gXzXOaW9Syfob1M4yeLz2l4CM04Ueq+qZFmCkHui81B/bTSQzewy
-	H12T2Rh3+mwZMDepQ7FeeDF2DEcJ/i1P6sCc4HgQCi80Yf3zjhczAGOXih8NnUWR
-	hkPkM6JbZfeoEkdAQlmFykGmE4WCidQo5B9ouMfeaeTf1o+ECoOXqb4hMJ6EePi0
-	aya+IJfaL2WLVdggu1+06E6tdMhuJ14F2eBT9zOZUkPIpnJSIkdbE9sVCQGjxRw8
-	iyBOunGw83X7YBpml7kKnj7Bw2a3GizDQY9ZLeF7T4QM3BLoKo2PpGgjwwwegWXw
-	wzvyhK/pKCPKpN5VUORRA==
-X-ME-Sender: <xms:_KhMakheP3aZMdIjtQwV-nw1sd-NYqBhEOAgB3dxXSkQXOfU5Vj6nw>
-    <xme:_KhMakfM4VNXhpHmNhBsQbS0Be2fF4ph6CsFazvLVGCOD1HPNE_jw0JdQyoSVBzVx
-    xEemnTFmtUhfXTnInP1Rsslh-nDjCdCmltewjg6Wp0Muw06_DoO>
-X-ME-Received: <xmr:_KhMapfMnaya-RodzZKTU93fXEjrR0wlGL4nbrmw1lSV9R6VcoitkwVnhOTvnQpUizcP9_bWBKiZ6BsKd3U2Svw4Oq7VEkBNmXX_9Xsgww>
-X-ME-Proxy-Cause: dmFkZTGAyfwDroKZieLnOSPugQnCDQn14Mmdt+3EK+/ESXAYfd1wI6Uk7u9qvA9t7LMY/I
-    M05ShRmMN32YsM8ymhZ/gvlsp+/MrOY1dlkNg3iz1JLS4Mzu6tjPLsankE3BzkkDsA/4D1
-    Rk3uCd7YloGMMrWbesWbGxgUQ4oijeptd8CziEzopMeRsibT0viLIL9afP4G69Uegwis52
-    tAglxxzy6NVpHBQFKG9bl/FzZn6Ss67m3skr9mzNYx9FkUnQqH6SOards66DP/Bg2IYXVj
-    OsSQ84uUwrmecWzn0xHXoxi4xuqQXdPKjRtawcEW390ufFox8a8XOVBcaILZY1knLHzhab
-    wpMgaRFmRCTslveBspHe8CYA8fP4XT+CvfDNR0A2TOdaBMMm8ts6R+7qMEqs4IEfNSute2
-    Oj0/GQ2C9ZGQxsjOgWho+OKjZLPz8hTbr/GVqUt0fVy4q/PYsAkX6bHHZzfOkl0uD5y/QJ
-    epQ35OujHgUQpO54/yCbmpWwCGZOqVlN2KtczCDeaF1KTr7g1ox5SQ5P0o5C7Zi1srIEvZ
-    yefCXyxAcpmkQzqjRwfNlBPgXkDTBW1UpyqNJEytcfV63LGNnKMSWrg3CaBJBskJF5AyFv
-    VqNi6f0IdLmjI+oP7VDHOjgQS9ZNrZ1sqr2+X8jkI03mDmZPyfK8XhGIfDzg
-X-ME-Proxy: <xmx:_KhMau9J_ro55MYRbQjp1wTcPYl6eqrATNIADYDLuU6_ohG4OjJshw>
-    <xmx:_KhMalmwZ-mZeBHLqv-9j7e7BeE2ahFx6aJSWZuN7dRgvjL9ZjDxgw>
-    <xmx:_KhMag-NM1TNj5PfHvz3cPndF787XUNmEYHBQ2ipIpMUcNDrlCowUg>
-    <xmx:_KhMajmTVaTkun3Cq8MfA7TSnAj4ccug31q1gg59qY92OeNfERveAA>
-    <xmx:_ahMakf1B3_DTXMAFpSfmbB9WuELR1GX8n8GudPdGB7THT_sbLtmQVWZ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783408891; x=
+	1783495291; bh=CWxNjREN1D4blsijhFJutnamnBm5C+N9qx2OjouHof4=; b=G
+	vylMsL86D34M4DeDlpnrpPNVsy6UuUbPnYGzlDzFOZiS5BDfnJhBP5+/Z0eg/SVw
+	dPALICxyvYK0wUSSubg2DgMMwpJFavO4nK586fCZkR/SiKA80pD3h2D0I3LU1jNJ
+	AMe1OGSGwOx9yNICtz/49CcbT5/LCaibJcXJZFswkMQZxr3Y+0+O5RoM4i6i3DfY
+	Ue70NWHdgZxMaI31umtml5BiWa6HJqwJd+6A+wmKWuCLFEbf5k8H9hTZw0GGZdAo
+	wgv55xEsxvwNIOlOqYnsevS0RlooXphHYXVSM+XLVP+etT0e0uR31zZT+PBwzcWa
+	5Bzoaq12GyMuzBmhRc5zg==
+X-ME-Sender: <xms:-6hMaoIhMHSfQV6FAjdBHZ9A-PNxukdxbIk18tme_EneCnCZhdMsLA>
+    <xme:-6hMavkHQwjG9Eoj-QSQt19mbv5AAUzBJeAZd3V5L75MfIXTeBMlQ8uJaHLaYkZYN
+    P14q0R_xdI1MnzIX-2OI57kPhnMy_52q8aKuQMF4d50-MV3j3uU9g>
+X-ME-Received: <xmr:-6hMamEjvjniC07iDepl3gzqDx46xIqpuBsANLdf7RCf8I3x4YivmctgSV8DU7lmTUx7PCYhJMab43BWHLH7qjnoKw-s4u65rRzU67l6ug>
+X-ME-Proxy-Cause: dmFkZTEW0d5yHSv6g44l71Xf+WlofgaV1bbVSfFFHsU3Qi8eq+fSbh7U0XJ/g8O6e7PtRT
+    E23+fiyrHp3Uy2Lt7+OzK22Z842m6PuXkI1+0Dlxl17/WA4dUhtiRaq3Ln3quEQG0FftGB
+    fO8zVN2mAKLaOgJzYiNh/vRzwiwlnV29S6TSysDr+UslLcsc95PqP+fitxe3YhOhnTKEQW
+    L2A1snaBylUzOjD/MXEtbjFfzjyXbAZh9HVeEFMTgJcO4d5pQyWJC6vPfY2iPifFoykT0A
+    56bgXYwFoyjtYrrQgmYZQ61+/B3UdWUEK4VYhN2IUNllKpdEjepibMmhaUlFo7IhQQFvZI
+    2txyduDBossG2r9qzU0r7NCqS5e3JaRsFzN7Def03V19PNIuc7RULX42dRGsvTcLVjHdW0
+    OyTwisSHzl7WcuFgxs92IBCfhhkjVAZcZObqpu+qcvvwpQbRbbiFhGCximEUOdW2tR+TKM
+    sWX8JRzZegEZAEJzXKhG795hgYmUGaiu6HBsJ9lRMF7hSkKseKGTIr503yduyGLBdqaznC
+    otOeqmwyad6P2UDgAha5VmjU24ZmHKOaRb2jVZjFLKT3i759MuDL5h9ciqHGHSUDENN/e+
+    U/nffr24EdzFVcMrCy9h/OofOjcbr1i0eX+wHS/qqWpbZIemJzEJ2B8bQntg
+X-ME-Proxy: <xmx:-6hMavG59A0XHBv0oxu4HXjep43l66_jzQn5ePYpszkEdcqld6U_jQ>
+    <xmx:-6hMajMtz6LVBsohAdroEC3k--cnvb81gADoMsaw0IfwvRKEbfdeEA>
+    <xmx:-6hMauGRZ2QD_GLaKvYVMo-karAItJZifzaSVN4jkGjQoKBDs9kElw>
+    <xmx:-6hMaqNMaNTvKcXC6n_kqVrE1AeJWL_9Eupulvm_MRkReSN4h3blwQ>
+    <xmx:-6hMankD9FOOiBLRbqNVvn0VETEyCJzozIOkERFyoKFOr_6GoiMv1qaT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 03:21:32 -0400 (EDT)
+ 7 Jul 2026 03:21:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6e473cb0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jul 2026 07:21:31 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id b8b27be3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 Jul 2026 07:21:28 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 07 Jul 2026 09:21:20 +0200
-Subject: [PATCH v2 01/13] setup: rename `check_repository_format_gently()`
+Subject: [PATCH v2 00/13] setup: split up repository discovery and setup
+Date: Tue, 07 Jul 2026 09:21:19 +0200
+Message-Id: <20260707-pks-setup-split-discovery-and-setup-v2-0-aab372cd227c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,164 +83,205 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-pks-setup-split-discovery-and-setup-v2-1-aab372cd227c@pks.im>
-References: <20260707-pks-setup-split-discovery-and-setup-v2-0-aab372cd227c@pks.im>
-In-Reply-To: <20260707-pks-setup-split-discovery-and-setup-v2-0-aab372cd227c@pks.im>
+X-B4-Tracking: v=1; b=H4sIAO+oTGoC/42Oyw6CMBBFf8V0bU0fio0r/8OwgHaQ8QFNpzQSw
+ r9bkA9weTL33jMTIwgIxC67iQVISNh3GdR+x2xbdXfg6DIzJVQhCmm4fxIniIPn5F8YuUOyfYI
+ w8qpz28WdG6WNlkZoy/KSD9DgZ7Xcyh/TUD/AxmV6SbRIsQ/j+kaSS24zavGXMUkuuNSmOEJ9q
+ oRW19w64JuV8zx/Ae7moIzlAAAA
+X-Change-ID: 20260618-pks-setup-split-discovery-and-setup-d7f23831803c
+In-Reply-To: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
+References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-The function `check_repository_format_gently()` receives a format as
-input. An unknowing reader may thus suspect that this function actually
-checks the passed-in format for consistency. While the function indeed
-checks the repository format, it actually serves two purposes:
+Hi,
 
-  - It reads the repository's format and populates the passed-in format
-    with that information.
+this patch series is the next set of refactorings to simplify how we
+configure repositories in "setup.c".
 
-  - It then indeed checks whether the format is consistent.
+The setup of the repository is essentially happening in two phases:
 
-Rename the function to `read_and_verify_repository_format()` to clarify
-its functionality. While at it, reorder the parameters so that the
-format comes first to better match other functions that pass around the
-format.
+  1. We discover the location of the repository as well as its format.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+  2. We then use this information to configure the repository.
+
+So far so sensible. In our code base though these two phases are quite
+intertwined with one another, as we continue to repeatedly call
+`set_git_dir()` and `set_work_tree()` on the repository as we discover
+its locations. This makes it hard to follow the logic, and it basically
+leaves us with a partially-configured repository.
+
+This patch series splits this up into two proper phases that are
+completely separate from one another. The first phase now populates a
+`struct repo_discovery` structure, without even having access to any
+repository. The second phase then takes that structure and configures
+the repository accordingly.
+
+Ultimately, the motivation of this whole exercise is that eventually we
+can unify configuration of the repository into `repo_init()` instead of
+having bits and pieces thereof distributed across "repository.c" and
+"setup.c".
+
+This series is built on top of v2.55.0 with the following three branches
+merged into it:
+
+  - ps/refs-onbranch-fixes at d6522d01df (refs: protect against
+    chicken-and-egg recursion, 2026-06-25).
+
+  - ps/setup-drop-global-state at 1ceee7431b (treewide: drop
+    USE_THE_REPOSITORY_VARIABLE, 2026-06-11).
+
+  - jk/repo-info-path-keys at 3ac28d832a (repo: add path.gitdir with
+    absolute and relative suffix formatting, 2026-06-24).
+
+Changes in v2:
+  - Expand commit message to talk about precedence order between
+    the "GIT_SHALLOW_FILE" environment variable and the "--shallow-file"
+    command line switch.
+  - Remove a now-unused parameter in `set_alternate_shallow_file()`.
+  - Fix a typo.
+  - Link to v1: https://patch.msgid.link/20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im
+
+Thanks!
+
+Patrick
+
 ---
- setup.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+Patrick Steinhardt (13):
+      setup: rename `check_repository_format_gently()`
+      setup: mark bogus worktree in `apply_repository_format()`
+      setup: unify setup of shallow file
+      setup: split up concerns of `setup_git_env_internal()`
+      setup: introduce explicit repository discovery
+      setup: embed repository format in discovery
+      setup: move prefix into repository
+      setup: drop static `cwd` variable
+      setup: propagate prefix via repository discovery
+      setup: make repository discovery self-contained
+      setup: drop redundant configuration of `startup_info->have_repository`
+      setup: pass worktree to `init_db()`
+      setup: mark `set_git_work_tree()` as file-local
 
-diff --git a/setup.c b/setup.c
-index 951ab9eedb..118416e350 100644
---- a/setup.c
-+++ b/setup.c
-@@ -749,9 +749,9 @@ static int check_repo_format(const char *var, const char *value,
- 	return read_worktree_config(var, value, ctx, vdata);
- }
- 
--static int check_repository_format_gently(const char *gitdir,
--					  struct repository_format *candidate,
--					  int *nongit_ok)
-+static int read_and_verify_repository_format(struct repository_format *format,
-+					     const char *gitdir,
-+					     int *nongit_ok)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf err = STRBUF_INIT;
-@@ -759,7 +759,7 @@ static int check_repository_format_gently(const char *gitdir,
- 
- 	has_common = get_common_dir(&sb, gitdir);
- 	strbuf_addstr(&sb, "/config");
--	read_repository_format(candidate, sb.buf);
-+	read_repository_format(format, sb.buf);
- 	strbuf_release(&sb);
- 
- 	/*
-@@ -767,10 +767,10 @@ static int check_repository_format_gently(const char *gitdir,
- 	 * we treat a missing config as a silent "ok", even when nongit_ok
- 	 * is unset.
- 	 */
--	if (candidate->version < 0)
-+	if (format->version < 0)
- 		return 0;
- 
--	if (verify_repository_format(candidate, &err) < 0) {
-+	if (verify_repository_format(format, &err) < 0) {
- 		if (nongit_ok) {
- 			warning("%s", err.buf);
- 			strbuf_release(&err);
-@@ -780,37 +780,37 @@ static int check_repository_format_gently(const char *gitdir,
- 		die("%s", err.buf);
- 	}
- 
--	string_list_clear(&candidate->unknown_extensions, 0);
--	string_list_clear(&candidate->v1_only_extensions, 0);
-+	string_list_clear(&format->unknown_extensions, 0);
-+	string_list_clear(&format->v1_only_extensions, 0);
- 
--	if (candidate->worktree_config) {
-+	if (format->worktree_config) {
- 		/*
- 		 * pick up core.bare and core.worktree from per-worktree
- 		 * config if present
- 		 */
- 		strbuf_addf(&sb, "%s/config.worktree", gitdir);
--		git_config_from_file(read_worktree_config, sb.buf, candidate);
-+		git_config_from_file(read_worktree_config, sb.buf, format);
- 		strbuf_release(&sb);
- 		has_common = 0;
- 	}
- 
- 	if (startup_info->force_bare_repository) {
--		candidate->is_bare = 1;
--		FREE_AND_NULL(candidate->work_tree);
-+		format->is_bare = 1;
-+		FREE_AND_NULL(format->work_tree);
- 	} else if (has_common) {
- 		/*
- 		 * When sharing a common dir with another repository (e.g. a
- 		 * linked worktree), do not let this repository's config
- 		 * dictate bareness; it is inherited from the main worktree.
- 		 */
--		candidate->is_bare = -1;
-+		format->is_bare = -1;
- 
- 		/*
- 		 * Furthermore, "core.worktree" is supposed to be ignored when
- 		 * we have a commondir configured, unless it comes from the
- 		 * per-worktree configuration.
- 		 */
--		FREE_AND_NULL(candidate->work_tree);
-+		FREE_AND_NULL(format->work_tree);
- 	}
- 
- 	return 0;
-@@ -1141,7 +1141,7 @@ static const char *setup_explicit_git_dir(struct repository *repo,
- 		die(_("not a git repository: '%s'"), gitdirenv);
- 	}
- 
--	if (check_repository_format_gently(gitdirenv, repo_fmt, nongit_ok)) {
-+	if (read_and_verify_repository_format(repo_fmt, gitdirenv, nongit_ok)) {
- 		free(gitfile);
- 		return NULL;
- 	}
-@@ -1218,7 +1218,7 @@ static const char *setup_discovered_git_dir(struct repository *repo,
- 					    struct repository_format *repo_fmt,
- 					    int *nongit_ok)
- {
--	if (check_repository_format_gently(gitdir, repo_fmt, nongit_ok))
-+	if (read_and_verify_repository_format(repo_fmt, gitdir, nongit_ok))
- 		return NULL;
- 
- 	/* --work-tree is set without --git-dir; use discovered one */
-@@ -1266,7 +1266,7 @@ static const char *setup_bare_git_dir(struct repository *repo,
- {
- 	int root_len;
- 
--	if (check_repository_format_gently(".", repo_fmt, nongit_ok))
-+	if (read_and_verify_repository_format(repo_fmt, ".", nongit_ok))
- 		return NULL;
- 
- 	setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
-@@ -1874,7 +1874,7 @@ const char *enter_repo(struct repository *repo, const char *path, unsigned flags
- 		struct strbuf err = STRBUF_INIT;
- 
- 		set_git_dir(repo, ".", 0);
--		check_repository_format_gently(".", &fmt, NULL);
-+		read_and_verify_repository_format(&fmt, ".", NULL);
- 		if (apply_repository_format(repo, &fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 			die("%s", err.buf);
- 		startup_info->have_repository = 1;
-@@ -2836,7 +2836,7 @@ int init_db(struct repository *repo,
- 	 * config file, so this will not fail.  What we are catching
- 	 * is an attempt to reinitialize new repository with an old tool.
- 	 */
--	check_repository_format_gently(repo_get_git_dir(repo), &repo_fmt, NULL);
-+	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
- 	repository_format_configure(&repo_fmt, hash, ref_storage_format);
- 	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 		die("%s", err.buf);
+ builtin/clone.c        |   8 +-
+ builtin/init-db.c      |  34 ++--
+ builtin/repo.c         |   8 +-
+ builtin/rev-parse.c    |   5 +-
+ builtin/update-index.c |   4 +-
+ common-init.c          |  20 +++
+ git.c                  |   2 +-
+ object-name.c          |   4 +-
+ repository.c           |   1 +
+ repository.h           |   8 +
+ setup.c                | 419 ++++++++++++++++++++++++++-----------------------
+ setup.h                |   7 +-
+ shallow.c              |   4 +-
+ shallow.h              |   2 +-
+ trace.c                |   4 +-
+ 15 files changed, 285 insertions(+), 245 deletions(-)
 
--- 
-2.55.0.141.g00534a21ce.dirty
+Range-diff versus v1:
+
+ 1:  19230b18cf =  1:  f4db0a6a10 setup: rename `check_repository_format_gently()`
+ 2:  246e8caf8f !  2:  72f51e01ff setup: mark bogus worktree in `apply_repository_format()`
+    @@ setup.c: static const char *setup_explicit_git_dir(struct repository *repo,
+     +		 * The environment variable overrides "core.worktree". This
+     +		 * also has the consequence that we don't want to flag cases as
+     +		 * bogus where we have both "core.worktree" and "core.bare", so
+    -+		 * we have to exlicitly unset the configuration.
+    ++		 * we have to explicitly unset the configuration.
+     +		 */
+     +		FREE_AND_NULL(repo_fmt->work_tree);
+      		set_git_work_tree(repo, work_tree_env);
+ 3:  06ea13242f !  3:  1542e52523 setup: unify setup of shallow file
+    @@ Commit message
+         of this patch series. Consequently, it will become possible for us to
+         completely discard `the_repository` and populate it anew.
+     
+    +    Note that on first sight, this change looks like it might change the
+    +    precedence order. Before this change, we used to configure the shallow
+    +    file in the arguments handler first, and then it looks like we override
+    +    it via the environment variable. What's important to note though is the
+    +    last parameter to `set_alternate_shallow_file()`, which tells us whether
+    +    we want to overwrite a preexisting value, and when applying the value
+    +    from the environment we tell it not to overwrite preexisting values. So
+    +    in effect, the command line has precedence over the environment. After
+    +    this change, we now overwrite preexisting environment variables when we
+    +    see the argument, and consequently we keep the precedence order in tact.
+    +
+    +    With this change though we don't need the final parameter anymore that
+    +    tells `set_alternate_shallow_file()` whether or not to overwrite. We
+    +    only have a single callsite for this function now, and that function is
+    +    itself only ever called exactly once. Remove that parameter.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## git.c ##
+    @@ setup.c: int apply_repository_format(struct repository *repo,
+      		alternate_object_directories = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
+     +		shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
+     +		if (shallow_file)
+    -+			set_alternate_shallow_file(repo, shallow_file, 0);
+    ++			set_alternate_shallow_file(repo, shallow_file);
+      	}
+      
+      	repo->bare_cfg = format->is_bare;
+    +
+    + ## shallow.c ##
+    +@@
+    + #include "statinfo.h"
+    + #include "trace.h"
+    + 
+    +-void set_alternate_shallow_file(struct repository *r, const char *path, int override)
+    ++void set_alternate_shallow_file(struct repository *r, const char *path)
+    + {
+    + 	if (r->parsed_objects->is_shallow != -1)
+    + 		BUG("is_repository_shallow must not be called before set_alternate_shallow_file");
+    +-	if (r->parsed_objects->alternate_shallow_file && !override)
+    +-		return;
+    + 	free(r->parsed_objects->alternate_shallow_file);
+    + 	r->parsed_objects->alternate_shallow_file = xstrdup_or_null(path);
+    + }
+    +
+    + ## shallow.h ##
+    +@@
+    + struct oid_array;
+    + struct strvec;
+    + 
+    +-void set_alternate_shallow_file(struct repository *r, const char *path, int override);
+    ++void set_alternate_shallow_file(struct repository *r, const char *path);
+    + int register_shallow(struct repository *r, const struct object_id *oid);
+    + int unregister_shallow(const struct object_id *oid);
+    + int is_repository_shallow(struct repository *r);
+ 4:  add8007726 =  4:  5a2b4132a1 setup: split up concerns of `setup_git_env_internal()`
+ 5:  4bc374b957 !  5:  8190a24acf setup: introduce explicit repository discovery
+    @@ setup.c: static void apply_and_export_relative_gitdir(struct repository *repo, c
+      	int offset;
+      
+     @@ setup.c: static const char *setup_explicit_git_dir(struct repository *repo,
+    - 		 * we have to exlicitly unset the configuration.
+    + 		 * we have to explicitly unset the configuration.
+      		 */
+      		FREE_AND_NULL(repo_fmt->work_tree);
+     -		set_git_work_tree(repo, work_tree_env);
+ 6:  687443fcac !  6:  869b6cf7cb setup: embed repository format in discovery
+    @@ setup.c: static const char *repo_discover_explicit_gitdir(struct repo_discovery
+      	}
+     @@ setup.c: static const char *repo_discover_explicit_gitdir(struct repo_discovery *discover
+      		 * bogus where we have both "core.worktree" and "core.bare", so
+    - 		 * we have to exlicitly unset the configuration.
+    + 		 * we have to explicitly unset the configuration.
+      		 */
+     -		FREE_AND_NULL(repo_fmt->work_tree);
+     +		FREE_AND_NULL(discovery->format.work_tree);
+ 7:  6e2e1caf30 =  7:  af482fd82c setup: move prefix into repository
+ 8:  9dda7f521b =  8:  8ad046bc79 setup: drop static `cwd` variable
+ 9:  4fc0bbd6a2 =  9:  231c98255b setup: propagate prefix via repository discovery
+10:  54ddf6a854 = 10:  ee241b765d setup: make repository discovery self-contained
+11:  46dbc1ac4c = 11:  4fa953a970 setup: drop redundant configuration of `startup_info->have_repository`
+12:  c42085145a = 12:  4299a4aadb setup: pass worktree to `init_db()`
+13:  9a9a4dea01 = 13:  1add08fce7 setup: mark `set_git_work_tree()` as file-local
+
+---
+base-commit: b340fc4c4f3850656b726ff757b42d2020215378
+change-id: 20260618-pks-setup-split-discovery-and-setup-d7f23831803c
 
