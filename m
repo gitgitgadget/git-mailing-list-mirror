@@ -1,155 +1,131 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41172378818
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 05:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EDA39DBE0
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 06:25:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783401008; cv=none; b=GiLqoy4Xs16QOm/WM13j6oYFxd3hXTssFEpZnjKEdePd1N2MGDoy5xTYG1JLBDL5hn/Da0BwZW3ed/Z1TbeH7nJH3BNBbyfR1NXK3ZAwB7LhD8S86FXWdhs8dMctlB2HXs9gC7sWOCm5bbgS1Gz79MY/nB7cB6450ao66t8QEHQ=
+	t=1783405543; cv=none; b=U+EIn5hW3Z6fiyBPCa/yB8o3UkdB77ZMd1859IkhiMq5y75jw0N+7tnKqyRGV5lbI6gLiCkPox8VYFfKWAj2I9xPitcTeVf4US/GCdNkDiB3hRDQGFsrYrI/zqKyu9hAnDdEis5I0U7zpnpiWNsb/js9vkQJnrgvEVmAOkpmkzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783401008; c=relaxed/simple;
-	bh=xk9TVh19tJ8j7j5PVJs5ZrUhZdkKcH1pXZZl7yKR4HU=;
+	s=arc-20240116; t=1783405543; c=relaxed/simple;
+	bh=NEBqvoKPVMCjv8SUz1NWz6EiGjW3Ww4ljgwLK5y/et0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hhBtAGy13pMXTpFcqf9+HZnFmtll6eTYQnyQ+BYBJQcT8r1P/ZUnK5eATKAVBhg745dS/ZY+JO34jhKHEbQmwLPTCnQn2sh97RcxnyCBEcVYbaz8yYrYcY8aSy0w3OqFK7WJrKtQXJstFDT4/3ZQjfE7zb8VJhnwrl0heXjhe4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=pd/DeMtc; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=ovp77y8oTiSKXeFCnLwhyoUgThj7OczC80YmitCjCZSB+06+HPyBiPFbd1iuSxWBZU4BCVg069ZrWKn4KEkizJKzSvFy+yw8TVxxx/PaQ12tug6JRH0Y7t/JUDz38av+6wiYyiPKz/gLES40ipYRnSXrY4IsdwstLzHYh3gxMNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PzuaxcEu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gcdm3FK6; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="pd/DeMtc"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 6EA3814C2D6;
-	Tue,  7 Jul 2026 07:09:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1783400993;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nV/PIaD9cd3YCSjAVH6QdCWp7nPm7moMLoJaw1OFSvs=;
-	b=pd/DeMtc1UmzNIO3rXaNkesuTMSZUgl7fJfyAg6hEEK9zJl+TPrKRxUb2FgsJFVH64vyCA
-	gKfwnGELuc20FTM1wFhBSe2Yvz3+TFQGD5wq6/VkzpBxeE6GY9LzD5lvjXCI21KvDzlPP+
-	L1OC8eMOovwW/CnkBYEpBWrC9cLA5gMn4dvDr/VmwZUlgrzLLgKA1P2OVRXiu4/nqn+xjW
-	fzt/iWc6FZ5MNY4weBsj9fwsZiRosuDdUGn/9VIECognPq/ThtP3VYZHefvHcxjL3lk0ld
-	wA4L4MxmzsfavZ2AGt8VoJoZhygy7nSF/GUekTrOTUN1ix9pBAAHVniqg1FQ2A==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 1d0e413b;
-	Tue, 7 Jul 2026 05:09:49 +0000 (UTC)
-Date: Tue, 7 Jul 2026 14:09:34 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>,
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH RFC 2/2] builtin/history: print feedback after successful
- reword
-Message-ID: <akyKDtuHTHZGEpFx@codewreck.org>
-References: <CAN5EUNQNj86Q+hi6PouOZNWo1T4QTQ6sE5Hs9USZXWpkTedTcw@mail.gmail.com>
- <9C91B027-C24A-4D7B-A3BC-5CF3B04D990C@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PzuaxcEu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gcdm3FK6"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 014417A001F;
+	Tue,  7 Jul 2026 02:25:40 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Tue, 07 Jul 2026 02:25:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1783405540; x=1783491940; bh=/FMdy4HkKZ
+	qqlJzxaKKgKQLtHVk/KzVCxVrOYKDj04w=; b=PzuaxcEuvZGCyhKz7TvD1mP+9i
+	Rp/IVEGMdnIisj+t0ThfdYC/rPQ09E9BmhWLqpOsgOC7LPUaVeqeXlq7EMQ7LOxm
+	lgMPCSxUDN477lLe3aQrlbSqt/6JfAyC8o/rLSJ+0PIDcb7k1DZCG1GnrXNWGZjM
+	ndcUtS923N4Xr1xVvmjSCxFP8JKKL4+GY8YPJ19EEl/LVKn6qA2YTNlIEqu3YpBP
+	YNTtTw7slEJZIbmKH30cEArTcEgVAB+D7Oykzf56N4HVarkJUf21n4QGFdBsvk6T
+	YsK36ENSuFmhwPJ+yZ7Xh+qlbVDf8/F/zK2HXK49+DT3S1e+HAGahI2/iGVw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783405540; x=1783491940; bh=/FMdy4HkKZqqlJzxaKKgKQLtHVk/KzVCxVr
+	OYKDj04w=; b=gcdm3FK6wbjErFplNnql77d4SCKib6rx5qZrTN8RZwsYckKeX88
+	bflKJizogkbYnG2ys1C3An8bHBBs6yYxKZ4HfMUZE2BhIYVlod6YmMTPJmQfdfmX
+	nH9oLiNYJ5Ahx7mculnGDCL0fixPHzpuakIDnZC0AJBrcMNEgZ/hSYIN+Xr466ZU
+	ZqSX3+vN9gVRnLnaWaQdK/Cm0u1j6Ho16S1qrVXChWuvGAurVywz5wACYAm8WBZq
+	AftQ+Rrl7XUNNFGIEVjqMgQlqE+Vb2B0XLOCMuviBmaluEK1JsTtdbqgh7zDJxNK
+	R4N3Ttxh3PYo2YSBBnjVqjTWgtI1yDNws9A==
+X-ME-Sender: <xms:5JtMakV-ZZ0_6vqmxQk0kbOfZS3P-amuvGLtGBrdsqEoPeCxMqer6w>
+    <xme:5JtMaulg2EksfOnAqrwjMfwQxjDgR-71nDLFIW51FF84TAI4HOY3B_2dpXPGnO4IR
+    hlU1PKvEOjsUnk0GhUh1IsfKWFSk3cA0p_ZauIIF_HGb3qGa4_G1Jg>
+X-ME-Received: <xmr:5JtMamCPR3E29gquKQjLwbYgahxJ9hLvPLlKciVFY-gX9jDDZpuOmtoEZXYHON20n9PAi0ht3xORwc7HoaQsihwjp2qTPqAffBEdP81NBQ>
+X-ME-Proxy-Cause: dmFkZTGFPsrJdhKTDr1spWrqYaSqzq1RIgAknWH2QF0cfneaC2bQXkigU7T80p1x5mKzgB
+    hYgGOkRxfvnHe592/sQJPDvppfGPjcPf1Oh6D1o0Tc+/wGBmRmmcFjtZlZpuzXyZbZdLeX
+    z2GW5mI2D197Is3662Jkb3CGdJLlAYOhdc/KG47POwh0B9/z89Mmm4+JNcST6swzP1quUH
+    8q7SiMYLybbrvA+WR4ETiVdtJjH9LgDfJR8HQkbeiY31yR0LJjp7S2lP6ld7fCeTF/fnI5
+    yy41FhZYx5pHkAIKqk1ijgtbcU5CPy67mR8FgRW3Qpu2nAdmbFhQQFYvKs3N0PoxC93dqX
+    wLTsmFpuibp4R5DC72ihfc6Dh81rQhNhM3e+AvSCn+s91kbRI0Xuhz2AVzVQKstPBJS+KG
+    EdMaHVADtfgfNpTdugk/cGQcTCHO3TYjOWLbVvVyl7hNr5CPb4FBqpygCCNRJAeQ0uoIJ9
+    dY+kyXklkG4OvSt0L9ItXJ+xA7RQSP4Y0vQcM9moYIUmpIxgrCaoUJk8xJhA64m5AJpdoP
+    UcnQREN/jb+f24lW6/L4NbnPwRgXOZhY2NxYXQzpeBNJOfLEVP6M/vHb/MC74xJ9ZdHkNF
+    Bs1Ks7tv34ddSCiMIOaE2I9Fj8aUtQqONQsp5wqQBd96bboYIQ6wq3XdNoAA
+X-ME-Proxy: <xmx:5JtMaueUohonYJFHUYUzgXFBRQRR47KU4iaOFKSv-CGUJ-RJH6G3jg>
+    <xmx:5JtMahJuu-mPwdtjt2xYYbol8VtYAeTj0KoT6MJm-Trmk7NqJ1i7Hw>
+    <xmx:5JtMahf14ZtNdVD4gnVuohVP-C2tFbua3rUGKO_54hln_WM6qYtvDw>
+    <xmx:5JtMao23MCBUAgCQD6bhmCKYO6RT99---CkMtLpqzWsyDFg_knzIRQ>
+    <xmx:5JtMapEV5DZ8PVorXA1ncCIEhvVaPVD9-xQTwhp2ccPPA60rGYAtPh78>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jul 2026 02:25:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9c5ca83a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 Jul 2026 06:25:37 +0000 (UTC)
+Date: Tue, 7 Jul 2026 08:25:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/13] setup: mark bogus worktree in
+ `apply_repository_format()`
+Message-ID: <akyb3o5yG4QMSudd@pks.im>
+References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
+ <20260630-pks-setup-split-discovery-and-setup-v1-2-13864eb5a032@pks.im>
+ <akwfAmyeIVJYXj1h@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9C91B027-C24A-4D7B-A3BC-5CF3B04D990C@gmail.com>
+In-Reply-To: <akwfAmyeIVJYXj1h@denethor>
 
-[context: I just played with git history reword/fixup and dug through
-archives for anything like this, so chiming in.
-First, thanks for the new git history commands, they all look promising!]
-
-Ben Knoble wrote on Mon, Jun 08, 2026 at 12:47:41PM -0400:
->>> Do other commands in "git history" (split is in 'master', drop and
->>> fixup are cooking) behave with similar verbosity?  Consistency within
->>> the same "history" umbrella matters more than being similar with
->>> other commands that can be used for similar purposes.
-
-I agree with the sentiment of needing consistency, but rather than say
-"the other commands are not verbose" (as they are) I'd say they're new
-enough we can afford to "make them all verbose" instead.
-
-In particular, for git history reword there is an editor opening up, so
-I didn't have much trouble assuming silence was success, but I was
-disturbed by `git history fixup` which just returns immediately (much
-faster than rebase) with no feedback at all.
-
->> They do not, they are thought with the rule of silence in mind.
->> However I think that this output is valuable information I might have
->> explained myself better at [1] but my thought is:
->> 
->> git history reword aabb
->> 
->> Now that I have my commit aabb rewritten I want to check it again just
->> to make sure I did what I wanted correctly,
->
-> Some thoughts:
+On Mon, Jul 06, 2026 at 04:49:41PM -0500, Justin Tobler wrote:
+> On 26/06/30 01:47PM, Patrick Steinhardt wrote:
+[snip]
+> > Note that this change requires us to also explicitly unset the value of
+> > "core.worktree" in case we have the "GIT_WORK_TREE" environment variable
+> > set. This is because the environment variable overrides the repository's
+> > configuration, and we don't want to warn or die in case the work tree
+> > has been configured explicitly regardless of whether or not "core.bare"
+> > is set.
 > 
-> - If the rewritten commit is an ancestor of HEAD, look at the log of HEAD@{1} or the log between HEAD and the aforementioned reflog entry. (git-range-diff may also be helpful there.)
-> - Similarly, if the rewritten commit is reachable from some ref R, check R@{1} etc. 
+> Hmmm, does this mean we now just silently ignore the misconfiguration if
+> done via environment variable?
 
-During my quick tests I was surprised with how git history reword/fixup
-behave with commits that aren't ancestors of HEAD/any branch (that can
-happen for example if you print `git log --oneline` once and refer to it
-after editing.
+We do, but we also ignored those cases before. So the behaviour with and
+without this change is (supposed) to be the exact same.
 
-This transcript is a bit ugly but should illustrate the issue:
-```
-$ git init
-Initialized empty Git repository in ...test/.git/
-$ echo a > aa
-$ git add aa
-$ git commit -m init
-[master (root-commit) 62884dc4d43c] init
- 1 file changed, 1 insertion(+)
- create mode 100644 aa
-$ echo b > b
-$ git add b
-$ git commit -m b
-[master 058294f87a36] b
- 1 file changed, 1 insertion(+)
- create mode 100644 b
-$ echo c > c
-$ git add c
-$ git commit -m c
-[master 0c4ad0c9337c] c
- 1 file changed, 1 insertion(+)
- create mode 100644 c
-$ git log --oneline --graph
-* 0c4ad0c9337c (HEAD -> master) c
-* 058294f87a36 b
-* 62884dc4d43c init
-$ echo d > d
-$ git add d
-$ git history fixup HEAD^
-$ echo e > e
-$ git add e
-$ git history fixup 058294f87a36
-$ git status
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	new file:   e
-$ git history reword 058294f87a36
-(editor showed up, commit message modified and saved)
-$ git log --oneline --graph
-* 5cc5551381a3 (HEAD -> master) c
-* 0b7ab36bf167 b
-* 62884dc4d43c init
-```
--> fixup didn't show any message (and exited with 0), but didn't unstage
-the hunk either and didn't do anything, so one cannot differentiate with
-the fixup actually happening
--> reword showed up editor but didn't actually do anything visible
-(probably did create a new commit somewhere that's unreachable?)
+> > diff --git a/setup.c b/setup.c
+> > index 118416e350..f54eac5e5a 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -1768,6 +1767,12 @@ int apply_repository_format(struct repository *repo,
+> >  	if (verify_repository_format(format, err) < 0)
+> >  		return -1;
+> >  
+> > +	if (format->is_bare > 0 && format->work_tree) {
+> > +		/* #22.2, #30 */
+> > +		warning("core.bare and core.worktree do not make sense");
+> > +		repo->worktree_config_is_bogus = true;
+> > +	}
+> 
+> We now perform this validation in `apply_repository_format()`. Does
+> deferring this check have any meaningful impact? Or is
+> `apply_repository_format()` always called after
+> `setup_explicit_git_dir()`?
 
-So I agree with Pablo's suggestion: printing old/new short hash on
-success would help visualy confirming something worked.
+No, it shouldn't have an impact on any user-visible behaviour. We always
+call `apply_repository_format()` eventually, as that function is what
+does the final setup of our repository.
 
-... But it might be worth to ensure that the commit has any ref we can
-handle (if --update-refs is set then the commit we edit is ancestor to
-some branch, if not set then it must be an ancestor of HEAD)
-
-What do you think?
--- 
-Dominique Martinet | Asmadeus
+Patrick
