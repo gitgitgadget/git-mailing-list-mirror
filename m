@@ -1,173 +1,144 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A7E366045
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 19:53:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783453998; cv=pass; b=XCR3BHPatsOm8Z6eU1dCYaNI/HLShw3Xo29xzg8VduEhgs4BbanlJ0kveDkW6J9iOe9+n9Oe0gJP/AFpXASAJPou43DwlndQRfG20AytpzsI3BNEPnFP82kybuopTY7Hpf5OAiPrboEnBOAtAPRdIPBWeV3IO+lx2dimHxpmUt0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783453998; c=relaxed/simple;
-	bh=mcgD+hsZp04ZaV50PhBvVnr5Ol7JSzVYg+asOD6RBhg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IJIiwS8XtCIcXj1CvlDO77xLj8dCOUHyVPPiexwvNq62cc80VfwLuxZBmEsWzFcEoUvjqV8PQarh4FKZIRngAitN+DDyxD+NgftrvBOt7UPYHf0RV91ICaGY5NVmpeoBwATAr80KRVtj/TekPdblAXQnMHGCZuBNyCHh408KXx4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gLrcF8Ev; arc=pass smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BE939A06D
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 19:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783454135; cv=none; b=Xy2wDa/1v8UKgf+n78iDECAVlMeAPGKqB+7+EKcMVJK76WYKwY7LlqainjdI+7K/HvW/z5qtW+8BrSjkTJJlaXoXLJcIydZnt4E4CKv47MchnLgESGItRX76lJsrxbotDqOacEYlnlNi9A+F5kwo9eOIHUHkEHjDJZU+51PIv2c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783454135; c=relaxed/simple;
+	bh=q9igEN8BOt1LP2rsfYA4gb0/PMgkhgHByUrLTHfjut8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sJy6pYbRTmybPXRegvtlohO4rjuz5LPsozvgt2qx61amBVpq+muAiueEHmSyzHInUz/aNJpldrtNzIqZGMQihSoRf4lBYpWtp2YhKLB0O72/sUglRH4E8xbSQxw58a9BalBX0bys232qh3IClLcWdBCjsQ3SPB8/KjM+jl9nBQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FvCWJmN+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bxUzWdlo; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLrcF8Ev"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-8111c0c7561so47848457b3.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 12:53:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783453996; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Q+WAgXb15uAlOiLwsCuntlVzfuIc8L/a/a4q8B53tKh3hD/XfQKi9Kq5Gq/ESpERa1
-         VRLBqeNLtGbkMuQG4invLim99vkOFsMr0Iwi1I98ptO7mG5tXNMY53NAH8Pt1G/YA2re
-         Lzn7IrVcGTLM0+mqkEDJpTASOY69pEi4+E1opcclpWOJSaO+zUJYEMaH1lCsUxklZ3dP
-         GgdYyH6mgAud6UIv2uorDWsLshtW5IDRG6goU8cKoBqJ+MY3rhOwLTp2lXw5MIIRseyu
-         VB2yyQNfjA6kSs/h1bq/FSf5kXPiqQKhshpCHINuwg22r9a3QHEnlsh/H/TGFEknGPFX
-         lzXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=p8W4KgQYwhU5Rs1M/hZnbBblyVQyG6tKyD8Xp71MCxA=;
-        fh=BY0PJxl/9NWRhq6Hk5NfDhGbQiIoMa5/xMUI66hWeLM=;
-        b=M6VyeEkzIqdETX2K9LTufufdg7dRzWhGMPzPwQFIvzgEZoDy6u4zd0VfQldDdPYCr6
-         JrNQuxMUGhTs9Jwo2aTwo/6jGr9FRzMNXHVGH/cmkEQ+H5D7Os4Cb714SGdWcKJoJtFP
-         qdrxOdlHcBV1vp6BzzbeGOGqW+2We6AN3M5P6HWm/F44Nt/3JcB0EBSFiXutUd+zQVAm
-         ePq8MsGtikdHuG+uqNaqggVL1+hSabOx8B3ins/nLYlfvRoF9sQ6zMGEJ6ncPM1VfVGx
-         RsDNnyskSb+XsCvB9UPcaA29RS6giCd1gNboXwL/ZMyFPAg0mMcBuF3Ua5za0D+daYb6
-         DnVQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783453996; x=1784058796; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=p8W4KgQYwhU5Rs1M/hZnbBblyVQyG6tKyD8Xp71MCxA=;
-        b=gLrcF8EvcV/n6R693ILVtnGjDv2LmRNo0VbviIDnros+jvw5vyKCU7CU8LEcUXDFy3
-         F38T1H7NnrVEGrCK7J76nfylRvylld2zhxR5gzQFJOdqoX8+pRQRnKWQ42X1vWOtSu6s
-         HMsYUnobzPRBTRpjeb+MO31YLQCVzk8e63VN9gP0GTVVa4TPpG6USVu23fd0bYP4p3Qe
-         hDFLgD6esIem0oYl2V01qQU/9WiB1nIg21OT/SRfrmZ8zi+EN0G8jVHpUHob7WYp01oz
-         CmCXTlh1Z+bHJEQj4fqWX8ADZ81maSJAP9PSRiHgblEJ1BM170qdXdEc1thh49HtjDiu
-         qYiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783453996; x=1784058796;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=p8W4KgQYwhU5Rs1M/hZnbBblyVQyG6tKyD8Xp71MCxA=;
-        b=J1pv1lm3DWgnhaeIBCLcjwi1kxYJFESTsIkh5zxS/BuKu7e419VB8NNs2PlbmvonN8
-         2VNBh7zyqqMkO9q3lK8S3TKiz2eCLgrFa6yqoDGwgAaPRtZKQL+rt3XXjOQEN9HiSVJC
-         RdI/SKyY81+hsYDU7Jd3yxE1xXuL3FaHbxah+qJBIuuOrX0h5kJBg+7EKhjLDukglPEZ
-         xYMKXnEmV9gz9f6xXgSO1SWQbyDwBYwFdpiD1A4uOj5oJVdKSjAszMV00ECkXiMTpQAV
-         wvLUU2JR+Xne1QBeJA2X1dEfsRI0sF9kkxg3eR1wu8W9fy2/7WMZjzq4jMKQnmhvZaqe
-         PKyA==
-X-Gm-Message-State: AOJu0YwsdPpJ+YOLx24u55wAv1d0a435QWWFzT6v3aTzPqEUPOsUv/As
-	oQhc9Kfq55bkX75vl+Qzhnw0jda4HcZ5fthwnpcCRz6ACqpwgDErKf5E6d5/aSk1mHJ7WA4i5U1
-	zfW4F56XVe68s5hHsu4kikjwTLMMyCQw=
-X-Gm-Gg: AfdE7cnfV8/XfQUB2EW0CeWptBE/ijRW41EjxsxH2hh9kL7+s4Q9noqxJ45ITwboCxL
-	MVQZRE20jYSBKNMcmtfMdVP9NC6Coz2grQoTSQ5IjUPK4PS8p5oMEHLaNxA8WbsxizTZrHhsXsZ
-	SH84wabr1KixsiCrwuL0FLREbe5m1R3SnSjO42VQgRO5afJrIgiUJdJuB9Vf8VwRSJNeVDo5PO6
-	Y2KDkjZdf7mDzreLHiLpmsqoNx/+QufHjcRzzBeUhMzG5PvWmMcpLC9i/WSPP0T40LI86MhXYlO
-	WnMKNRfqxQqvQb9iIEWkjZAegIOZVjYi+uk2pHqD0MEgDjsUkZrKVbVSmIpmw2khve3T0dRTj+I
-	xe4W43xxm6wF4Ku6SG+qRmxBG2401z/F347TgJU4AG70ojJT+m6yoeGhKmUrhyJwmPdBJ0w==
-X-Received: by 2002:a05:690c:650b:b0:80e:2592:5218 with SMTP id
- 00721157ae682-81be2c82126mr53409517b3.50.1783453995744; Tue, 07 Jul 2026
- 12:53:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FvCWJmN+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bxUzWdlo"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0764E140005A;
+	Tue,  7 Jul 2026 15:55:33 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 07 Jul 2026 15:55:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783454133; x=1783540533; bh=+LXQxPXiGy
+	O/Uh208ex5ZEyggJoqBeqJ9pJsggB3Ojs=; b=FvCWJmN+0yEuPZCRchrY4gSLh6
+	jk16Pvt8J8md/qKTmd8y2i3Oqfib4piQzSMuQ0hd3rdqNy1MSMLSc+HBRw8qWzkb
+	7JiYCOpAFWFoEafAJ98tZ66ihlorpJRZwLVYugaWJQKpeZ2YtcY3D6NUo3NXLcPP
+	W/09duQN6ZW5JusnUAlPXZq5MJllPJ/GHoI9+Kv8ZZQLkZFwOsKNC+k/JgQCPIGy
+	2aFUbTYMYxKO8fGn3JJhOKSh43E14VSWB8rvKdD6xXcHxcjTORTYFjddKE+TX2Jl
+	25o0KJ5q26n1FqnRD3HeVor76WTX8aQ37Z/76NYvpF/KeFKs8CnmG3rHalqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783454133; x=1783540533; bh=+LXQxPXiGyO/Uh208ex5ZEyggJoqBeqJ9pJ
+	sggB3Ojs=; b=bxUzWdlonDkj9fW+MZImnSvC28erDF9GZ0MywbXnvfID1ov/p8H
+	d6GVsP0RN4zb2f2eZvmDnf3aYZlhVLSf74Pfha8931NzhoCFmMuvid7GtMITW89h
+	BG/Fdex8R20622xptx7MVU39rSHMUWXH2/bOH2NCpYWuTtl9d7TWP5peIcTm1GXZ
+	If9xChvTzDDQ5GXfa+PvEubB8o0+j9hBluBpvUR8Cdc5PdHeKd8PFA5v44iG7hjf
+	Yt4p2hzbTfp3a6FCzmjCO2ET+qLiFEaIJNhDa6/bHba6/A+L6Esh5ngj3Hd50P0K
+	/9MP9UaHXfOHenqBiyylWRaG2evSCXYcMjw==
+X-ME-Sender: <xms:tFlNaolktzXxGijkCSI0RS-CM7wIIWA6W3p-5m-6pINbfOePMerk_Q>
+    <xme:tFlNavTbhtET004qDa9D8tEczHuU2-fFfWpk5rRd3Yna1aZl5d_zde4hotGid5_i-
+    1zRHCWI4jNWoZUHeiwdr5NS2caGNWlrbAlIUfIt9eL-_fgpLC6E>
+X-ME-Received: <xmr:tFlNakDndvHIKOUxyGaRZ0nh8FRqovMLbnIt8swWvJAHMqmF8p6msck7aOq8ZljyxCQ8MMTRxp6GCghQcg5WucxI_YEgwTR2_kVLR_w>
+X-ME-Proxy-Cause: dmFkZTGEpX+qb0tc3eza1XFug6Jled+o93xXq5tqxdVmjZt/eM2JqJEjbfqDAWK+U92qmF
+    OZzxp5VDcs+OFGondwo/aZqZoMzWjIQyBv1iMZGOsESFvJc99QVxslhXAf/72j/hebdvWy
+    JtsNjIHxWOZbCMvXkRLMmBeVm3ffZ3NwWSkIb/J8Px4A6LI7tOkczsniNydd+8zsVTxTwf
+    Zh+ts8eXnhKYhxOe46Olf7O4v5MhNxEL85DKH8JXbLmnGNDVWdug8sFvX548rGxK/uufpI
+    AxQzAw5lxoxT4yFrgRGVAaSxJmhcBGWoPB/56j3Qt2fExx2cJx0+o96HTD8bVLyaSwCBJf
+    gUJ51FAyIWc8j+llWYwMeMg444Tmu/z5P3WEUJzskPEZ8ydTUDZpbTs3C/ALsEuyMoLIc0
+    HpWuMY4CruaEcUAcsnCL5SMJYHms/c7mWdYWYM75xBzk9WV/XfCK8ID2yIZ1Mbo0WcX74A
+    Ly80rxAsEWhun24M7SKZE2Vvc4TvD39eCgALuc82lbhFoRoAkpXrDbKYz0iLmBBecOUpGd
+    AjTc6CJ+AiWUA/uX6scf46PBJqPnRAnAqmijiPt58bfO8z2SGSCGcd0ZMkKJtvVC7vnom3
+    7VIYmgHHGXcMJhaTI02HwCTS/7jiu/J+EU2uvbMXF9ccKd/IU5SU+vR8+P5w
+X-ME-Proxy: <xmx:tFlNauR5LjsKoYj6Ri9qogk5Fer7XCZ1J7IVb4l_mRF3rBHpmQCyIA>
+    <xmx:tFlNaqo53nSsXrEjtintRyQHyZFgj33I2dCD6rL3AD2C3mMq3JL5uQ>
+    <xmx:tFlNaozKtgkztmttipOyBbGO1K8pf5WeLdMawQzShnDccIc1zVj9Ig>
+    <xmx:tFlNanIPsevf-B87NnD_oOCnL3FQklNQUh7IEZWzom4x8QKkckJCAw>
+    <xmx:tVlNavZTQ-vxiOfNRLcUxnPf1yWIsmYWqYtmyVdkDo5NEM2d0AcEBWI0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jul 2026 15:55:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/11] odb: run "pre-auto-gc" hook for all maintenance
+ tasks
+In-Reply-To: <20260707-b4-pks-odb-optimize-v1-1-aae607667be4@pks.im> (Patrick
+	Steinhardt's message of "Tue, 07 Jul 2026 17:32:33 +0200")
+References: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
+	<20260707-b4-pks-odb-optimize-v1-1-aae607667be4@pks.im>
+Date: Tue, 07 Jul 2026 12:55:31 -0700
+Message-ID: <xmqqo6gi1sng.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260625-ps-eric-work-rebase-v14-0-09f7ffe21a53@gmail.com>
- <20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
- <20260701-ps-eric-work-rebase-v15-2-c88a43b63917@gmail.com>
- <xmqqse62obwh.fsf@gitster.g> <CAN5EUNTYeDrQMor29eYMhJD0jcdRQq36ZA6BgupV8gG9xs9rFQ@mail.gmail.com>
- <xmqqcxwy4qp5.fsf@gitster.g>
-In-Reply-To: <xmqqcxwy4qp5.fsf@gitster.g>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Tue, 7 Jul 2026 21:53:04 +0200
-X-Gm-Features: AVVi8Ce3fnKmWcoUNNn4bJ3zmdiQBHbN5DWRBcuhjxULnF6jmm-MWk6ND7uIiB0
-Message-ID: <CAN5EUNQ=2qtKXSJvxQiNLYqx0N0m6sfyBGLLXm4FB1kwtOsdbQ@mail.gmail.com>
-Subject: Re: [PATCH GSoC v15 02/13] git-compat-util: add `strtoumax_szt()`
- with error handling
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
-	eric.peijian@gmail.com, jltobler@gmail.com, karthik.188@gmail.com, 
-	peff@peff.net, toon@iotcl.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-El mar, 7 jul 2026 a las 20:09, Junio C Hamano (<gitster@pobox.com>) escrib=
-i=C3=B3:
->
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
-> >> If you are trying to more explicitly insist that s[] has only
-> >> digits, which may not be a bad idea, as that is what we generally
-> >> expect, then
-> >>
-> >>         if (!s[0] || s[strspn(s, "0123456789")])
-> >>                 return -1;
-> >>
-> >> perhaps.
-> >
-> > I like the idea of only digits but, even though in this series I only
-> > use this function in base 10, I want the function to work in other
-> > bases, that's why I left the base in the function signature instead of
-> > hardcoding it. strspn(s, "0123456789") rejects bases >10  ("ff" for
-> > base 16) while strtoumax does support higher ones.
-> > I think that it would be better to explicitly reject what we don't
-> > want similarly to "-":
->
-> Let's step back a bit and think.
->
-> Where do we plan to use this function?  Remember that being a
-> superset is not always necessarily good for a helper function that
-> serves as a format checker.
->
-> In the output of "git diff master...ps/cat-file-remote-object-info",
-> there is only one caller, which is fetch_object_info().  It reads
-> into object_info_data[].sizep.  Do we expect to express the object
-> size in anything but an unsigned decimal integer?  Remember that it
-> is better to be unambiguous when designing a protocol.  We do not
-> want a third-party reimplementation of whatever is talking to
-> fetch_object_info() to send object size in hex ;-).
+Patrick Steinhardt <ps@pks.im> writes:
 
-No haha, we don't want size being sent in hex :), I agree that it is
-better to be unambiguous. We could hardcode the base 10 but I feel
-that calling the function strtoumax_szt() when it does not support >10
-base (or I hardcode the base to be 10) lies to a future developer that
-tries to use this function thinking that it behaves as strtoumax_*().
+> While the former makes sense, the latter is somewhat off. While the hook
+> is indeed strongly tied to gc'ing a repository, the original intent of
+> the hook is rather to inhibit any kind of automated garbage collection.
+> That noticeably also includes all the other maintenance tasks that our
+> new infrastructure may run, but those aren't getting intercepted at all.
 
-Maybe because it is called only once in this series it is better to
-have a static function close to its caller that explicitly does what
-we want and it is unambiguous.
+If we want to halt object collection right now for some reason, it
+is likely that for the same reason we may want automated pruning of
+old reflog entries, for example.  So I can buy the above reasoning.
 
-If that sounds reasonable I'll move this function to the commit where
-it's called, call the function parse_object_size() and keep the strict
-digits only with strspn proposed.
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index d7f82e1bec..1212b306b6 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -740,6 +740,127 @@ test_expect_success 'geometric repacking honors configured split factor' '
+>  	)
+>  '
+>  
+> +test_expect_success 'pre-auto-gc hook runs exactly once' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		write_script .git/hooks/pre-auto-gc <<-\EOF &&
+> +		echo hook >>hook.log
+> +		EOF
+> +
+> +		# Satisfy the auto condition for multiple tasks, both in the
+> +		# foreground and in the background phase.
+> +		git config set maintenance.reflog-expire.auto -1 &&
+> +		git config set maintenance.geometric-repack.auto -1 &&
+> +		git config set maintenance.rerere-gc.auto -1 &&
+> +
+> +		GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+> +			git maintenance run --auto 2>/dev/null &&
+> +
+> +		# The successful hook does not inhibit any of the tasks...
+> +		test_subcommand git reflog expire --all <trace2.txt &&
+> +		test_subcommand_flex git repack <trace2.txt &&
+> +		test_subcommand git rerere gc <trace2.txt &&
+> +		# ... but it must only have been executed a single time.
+> +		test_line_count = 1 hook.log
+> +	)
+> +'
 
->
-> It may also be usable to parse the size of the object payload in
-> object-file.c::parse_loose_header() but notice that it is already
-> even stricter not to use strto<anything> system function and instead
-> handcrafts the trivial number parsing.  This would avoid system
-> dependent funnyness, which is a good thing.
->
-> > if (!*s || isspace((unsigned char)*s) || *s =3D=3D '-' || *s =3D=3D '+'=
-)
-> >         return -1;
-> >
-> > About that, strtoumax works fine with "+" and ignores starting
-> > whitespaces, but for consistency (we reject "-" and whitespaces
-> > between or at the end) rejecting whitespaces and +/- will be better
-> > and make the caller format it correctly.
-> >
-> > I'll do that for the next version.
+Somehow I'd feel better if the hook used a full path to the append
+only log file, but it is reasonably clear that these three commands
+are unlikely to chdir around, so it may be OK.
 
-Thanks,
-Pablo
+Obviously not in scope of this topic, but I wonder if we have a
+better way to test these three "housekeeping tasks" have run, than
+casting in stone the current implementation that spawns these three
+external command as subprocesses.
+
