@@ -1,93 +1,198 @@
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43A25A655
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4757743634B
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783443075; cv=none; b=mNOaSwGOUHW15GEteV8bYlDzgZfzkggXYKljcu6nVCjFQgzUfZOZczvzdSC4Enp9exGz42hRCf4OJZPuEyfoYgd3q/U0NTKhiWYtNITO5j9r5kHggn9HoZc+q1myldGavcMV+nrvNNrdxk72f47AHv0087iBNmFyfWlggGolI2g=
+	t=1783443362; cv=none; b=UsEsRqt3zn7CEvks3qnpqV0oVCHunS6m8pzO6w+d+mY+9s41AyIWcCfrYJOgXn7s0GLtJ1Az4qec+bqB/JNt2kfPi0NdcVEycCISuuOns21u1c39A+6HCS/win3CSbA/dG8TvblNAWTrF3vTRcRJ2Dy2zcU0GjB97P98L1EbK40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783443075; c=relaxed/simple;
-	bh=TFeKJKUD4ruv+u7Fw13kYJ60nmL+y/TuHMy7iVY7rOE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=qz4LKs4KuY2mlfZ42Hqw3gU+UuAYZFmGBCS9HHUZmcB1Tpql2jKPs7VA/PSaPZCtoYGUIIPDRvsTOeewue2m1KR4ljy/vw1bczPXHiV0DvkzPMrHXDd9TFUgFFjys4u1bkjf9fTvMZ6/Q9ez64Ye2ey7t3S48bITs4Sb8R3Z/s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ssIAuI9i; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com
+	s=arc-20240116; t=1783443362; c=relaxed/simple;
+	bh=cdqmWjFK8RXIuh98Hs5JDMI9F0pyxOX2oJBvhCxZg3g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=m8RXn6TGk9SdkptK4FjByKJEQ10ngg8msqMqdidfvNuhGHJ72MUWU2GSSX3KU+mIzGJxiJizubyPclaKW012qYWA/F4GiHk/uljVAtwNxq1az5SZLRRx00uWdH4xoO2mrljqg/GwSlt/Q1sVkdZHXNG6ZWmDrrClqQfwpvl34OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JtIuA4eB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M0fK6uyK; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ssIAuI9i"
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-388cfc4848dso126518a91.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 09:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783443074; x=1784047874; darn=vger.kernel.org;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TFeKJKUD4ruv+u7Fw13kYJ60nmL+y/TuHMy7iVY7rOE=;
-        b=ssIAuI9iHFdvWQg/puxZ37uZhB74VSgA9QmiJjNpKWIIW4/Rr2LEmPG6mhaxktzwjE
-         i/AL1syd0CfzzKzCM3r8YF0kAyvkTtmqqkS3SGtyBLFr326wf7oKp7uvQI96FS/xjNAb
-         o9ETXYTezENsN5KS2UNjuQDd1K/1szOZze318LOABNGxPJwbCF7/ghMXY1gRw6g4FS6Y
-         FvJdYoM0MTw6W3F2vBy4p9NOhJstfNAFdJ6sI91t5aRaLb/55wDP7oWrnbugxUAJwW/e
-         V+RVHIds9dL2S98NsPNnFUbtX1YYHDExwsS+qZaIrjbYaKxJgUGvhQBEA+baY1ZucdZS
-         7K2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783443074; x=1784047874;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=TFeKJKUD4ruv+u7Fw13kYJ60nmL+y/TuHMy7iVY7rOE=;
-        b=elwzUOpHAP2i3jZmhUZMs1ufjc9HBssTkpdaDMS44EIXXs8uT/Hf5ROemkU8PF3NWf
-         /sgzPjjbc/apZ61qC/DAfhDnRKSTRVhegeBm6K9owb7VqZ1hYQkZhhh460/hyCUp+BET
-         2A2Dj94wuYvcc+SLy2RBue07RfQyX58Bc9Nx58XItVnvYTpN8WFqTspoYZPLjEdfroyV
-         qUXFYz2ptN3IE2dh4NXiAQ+xIE53IRUi1W5w4fPEuHSmaI3ea8BUhih6FQW4kYCGiiCi
-         w23hWenuLxnZq7pJxHlQxM8FmxGYfODphWsSGHIng2spzTi8YosLJ/tH0mh4Zi4BlBpg
-         AsIQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqdN623un5qpnzFXXeBEhv/L6SJIuY69sXW78Eb7FwUmHjoH9POCwICiJwBnhgITm/3LJg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yywm5WNbZCAqd4VKKnuO+ws1lob2q3vXmb3oa/7CL9KIDpTIweA
-	WQ08eNXexGJe7HIBlwVaBvxa4Fo0jVT/x5oVMgVqK7O20VAIKGkNxmLfMlBQaJQfjbYYfGTDUym
-	Xcg==
-X-Received: from dybhr12.prod.google.com ([2002:a05:7300:e2cc:b0:311:50ef:5b3a])
- (user=snatu job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2fd0:b0:37f:bfd6:8b40
- with SMTP id 98e67ed59e1d1-38755573934mr5444848a91.5.1783443073780; Tue, 07
- Jul 2026 09:51:13 -0700 (PDT)
-Date: Tue,  7 Jul 2026 09:51:12 -0700
-In-Reply-To: <xmqqmrw3aoas.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JtIuA4eB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M0fK6uyK"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E3FC7A0135;
+	Tue,  7 Jul 2026 12:56:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 07 Jul 2026 12:56:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783443360; x=1783529760; bh=QR46mo2RoP
+	4gNOGI9pneQlKFqpialtqVnhExoHNxb9s=; b=JtIuA4eBimJuCTZoje5vhKkpPh
+	sjCnBsUkv3X0Ohna5X9SMlPghoGJkm2yw1IL3KE/+aHoPZPWZMXFD8fJdncFtDam
+	7KKlJojSq2h6tmE4H4xTbuFux/BOoczQigzVQvUv6yRBc2otIaLTkb9aE+YntmJK
+	LStAgjBssq+g/eS807Lc/SB+pY9VgeozNHsraQBdlB/cLx3dz1qixPyTPwE/Bkgq
+	zlv64M3WbdHNFUlxA74ldYG4cG9L42BeW3YgtG8zKofb4AdTJGk4+Bc3iE2+HoFh
+	pGUdbxUOJNhBqVEKDHwpoV/vfSlvdaEX1UTBc0XhcTJ2PLqc70z7NOrj0+hw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783443360; x=1783529760; bh=QR46mo2RoP4gNOGI9pneQlKFqpialtqVnhE
+	xoHNxb9s=; b=M0fK6uyKMUV7WhQOFqhwWqbpQTNbo26VJVg2UsiauUI/B9aasWU
+	dGsv1yDOsjQ2WvwTVGcCqSl15kD3QP00kJhxMZcz05IBoTn+Ku8pMI4uHtIsvf6T
+	8sAf+/l1Cb4KPziO6ZvI4rAyZqanCOJuyOT+fw06+5IhHP/c6aGYDqSYOAJTPcGI
+	JjK2urdu0d5bPEssRRdpqRCRDZkQbom/NVG/M+6RFblQj1w8H0uv6lt/1ZlQmk0q
+	sjOlKhooHCkaEqQR22y06utS+B95eB6m1ZfXGJdrwrM6Mi5Jjod0SaoCkwA8gk7F
+	WnhW5eclXrxy0Un8/+Wgjbqaky3jjKSiMFQ==
+X-ME-Sender: <xms:oC9NasNHnQg7piK0YFu5eXJH5o6B5Kokuz3YsqYtA4tj8aKpo1eRuQ>
+    <xme:oC9Nap-AY55Xz3iOejLbUWmX3JpICqjfFs0yHi9X-w8F3VtCPKiyysvlan987UyyZ
+    BeWKuIl1QmbCAmooiFk3jCQz8BBg3-gDqYSesu6Y4HVMze-nd-H>
+X-ME-Received: <xmr:oC9NaoSrariOChxIfGC33UrgSfe8Jw-J9a_4kchd4hWBs3TFmPjglZxArnboWyQwZpu9FNkFWcIdeOkT2oJV_RHGPmHH6FNyKNcil3o>
+X-ME-Proxy-Cause: dmFkZTE9fvQbfFMuyDk3p1hfCFQKo3+ERvBfoaVhuKgd8JNvyb/3HGy/6T3lBZTWJV5CIe
+    ROYom4+6qAfd4OQyGx2WdV5WdJYlzmUJvrWJ1ri/aYTCULnJU4bN7xPKyHSFQKUyxkEAVg
+    U+5aO1CJLRIIkuw1OeVKebmz7JPpZYyDAPPy83LAjnSUx83EBHOdaoRJiTnA/7dddA8iok
+    1ELdLYh/5O++60sPthfhiK8QWg2BOs2lFl4vVdaBjjh11EXG6YIcwCCeeiz0CoFzpoFEUT
+    5Cksk0SHZwH68JidLBkZyDMIEpKefiryTnA/cSs/1Q246LT/Bq4U1HcdohV9Pkt8IMlKBq
+    qaPqLp7YzDWPf6ZoVffMRwoT0GJkh952hUDiGe45nJyZRBlNK0x+YZpme2VubvBnWWwNGF
+    65iSBXzzHgtWZCM5AOHrOrJUQw8spfd+aJglVP/3bZpBigcxc3Lof8MIzZIqtXl0pYgfBK
+    O7JoMPt40bBJ8RfzEtgVrgmmpk8IlFg5qfX0T7OOG33efPaMUiperxSdXBatD33EHkE8UI
+    vJJI/Z2bQJr/UFmiSjwrcCHRPj3aNj2Cxjcr+Ai6//xcHLhpGjjqzd/CHloQ6JYpVxUqII
+    nD3sV3MAhh9OMtFiGv0xH90dbffybPL06Ff9sA5QpkJw1mYYVLKUEDAaE4kw
+X-ME-Proxy: <xmx:oC9NajmtU8raAEteT0rdLcUq1S54-95ciTc5eKkLOflxGt_0TmiTVA>
+    <xmx:oC9NagQtDx_R5kbXkPW8dkaf8TFgLMrrsyNbiGf1ltFc2p5sNDwxNw>
+    <xmx:oC9NapMQLiIAhBKUOpNN03nUtspbGI-iejHpO3MSIsLzXTC2Yxjmfg>
+    <xmx:oC9NahU08DmxP7D0_QPjG_CdmdncYnE8J6cqK7rHIBmOHNCRkVKXUA>
+    <xmx:oC9NaqYhkHsgE4Dla43JkHvzoSXWev5tLiEqtcvODPANdsCv6HmdEuKe>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jul 2026 12:55:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH 1/2] commit-graph: add trace2 instrumentation for
+ generation DFS
+In-Reply-To: <b865c2bcff53a32637aac426dd2c6ef4a4c27077.1783418384.git.gitgitgadget@gmail.com>
+	(Kristofer Karlsson via GitGitGadget's message of "Tue, 07 Jul 2026
+	09:59:42 +0000")
+References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
+	<b865c2bcff53a32637aac426dd2c6ef4a4c27077.1783418384.git.gitgitgadget@gmail.com>
+Importance: high
+Date: Tue, 07 Jul 2026 09:55:58 -0700
+Message-ID: <xmqq1pde7n8h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <xmqqmrw3aoas.fsf@gitster.g>
-X-Mailer: git-send-email 2.55.0.795.g602f6c329a-goog
-Message-ID: <20260707165112.1750921-1-snatu@google.com>
-Subject: Re: [PATCH v5 1/2] Makefile: add $(GITLIBS) prerequisite to osxkeychain
-From: Shnatu <snatu@google.com>
-To: gitster@pobox.com
-Cc: ben.knoble@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com, 
-	koji.nakamaru@gree.net, kristofferhaugsbakk@fastmail.com, ps@pks.im, 
-	shardul.27591@gmail.com, snatu@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
 
-> Sorry if I am mistaken, but as far as I can see, $(GITLIBS) includes
-> common-main.o (and it being .o, not .a, it is always included in the
-> result), and git-credential-osxkeychain.c comes with its own main()
-> function.
+"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> From: Kristofer Karlsson <krka@spotify.com>
 >
-> Using a list of things to link that contains common-main.o does not
-> sound like a right thing to do; in other words, linking too many is
-> just as bad as linking too little.
+> Add a step counter and trace2_data_intmax call to
+> compute_reachable_generation_numbers() to make the cost of
+> the generation number DFS observable.  This exposes a
+> regression introduced in 199d452758 (commit-graph: fix
+> "filling in" topological levels, 2025-04-07) where
 
-You are completely right, and I missed that altogether!!
+Where did "fix filling in" came from?  Are you blaming
 
-In v6, I have reverted Patch 1 back to depending explicitly on
-$(LIB_FILE) $(RUST_LIB) rather than $(GITLIBS) so that common-main.o is
-excluded from the link step.
+    199d452758 (commit-graph: return the prepared commit graph from
+    `prepare_commit_graph()`, 2025-09-04)
 
-To ensure that linking errors in osxkeychain are caught automatically in
-future CI runs, I have also added a third patch to the series:
-"contrib: wire up osxkeychain in contrib/Makefile on macOS". This adds a
-"test" target to contrib/credential/osxkeychain/Makefile and wires it
-into contrib/Makefile under "all", "test", and "clean" whenever running
-on macOS (Darwin). Now, when CI runs "make test" with TEST_CONTRIB_TOO=yes
-on macOS runners, osxkeychain will always be compiled and linked.
+or something else that happend in April that year?
+
+> incremental commit-graph writes re-walk the entire commit
+> ancestry instead of reading topo levels from lower graph
+> layers.
+
+> Add a test that demonstrates the problem: with a two-layer
+> split commit-graph, writing a new incremental layer for a
+> commit whose parent is in the base layer walks all the way
+> down to the root (7 steps for 5 base commits) instead of
+> reading the existing topo level and stopping immediately
+> (1 step).
+
+OK.  I expect that [2/2] would update this exact test to demonstrate
+that with code updated in [2/2] the extra walk will no longer happen.
+
+> Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+> ---
+>  commit-graph.c                |  5 +++++
+>  t/t5324-split-commit-graph.sh | 28 ++++++++++++++++++++++++++++
+>  2 files changed, 33 insertions(+)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 801471a098..4e39a048c4 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1653,6 +1653,7 @@ static void compute_reachable_generation_numbers(
+>  {
+>  	int i;
+>  	struct commit_list *list = NULL;
+> +	intmax_t steps = 0;
+>  
+>  	for (i = 0; i < info->commits->nr; i++) {
+>  		struct commit *c = info->commits->items[i];
+> @@ -1671,6 +1672,7 @@ static void compute_reachable_generation_numbers(
+>  			int all_parents_computed = 1;
+>  			timestamp_t max_gen = 0;
+>  
+> +			steps++;
+>  			for (parent = current->parents; parent; parent = parent->next) {
+>  				repo_parse_commit(info->r, parent->item);
+>  				gen = info->get_generation(parent->item, info->data);
+> @@ -1694,6 +1696,9 @@ static void compute_reachable_generation_numbers(
+>  			}
+>  		}
+>  	}
+> +
+> +	trace2_data_intmax("commit-graph", info->r,
+> +			   "generation-dfs-steps", steps);
+>  }
+
+Pretty-much trivial addition of a trace element.
+
+> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+> index 49a057cc2e..f9c57760f4 100755
+> --- a/t/t5324-split-commit-graph.sh
+> +++ b/t/t5324-split-commit-graph.sh
+> @@ -718,6 +718,34 @@ test_expect_success 'write generation data chunk when commit-graph chain is repl
+>  	)
+>  '
+>  
+> +test_expect_success 'incremental write reads topo levels from all layers' '
+> +	git init topo-from-lower &&
+> +	(
+> +		cd topo-from-lower &&
+> +
+> +		for i in $(test_seq 5)
+> +		do
+> +			test_commit base-$i || return 1
+> +		done &&
+> +		git commit-graph write --reachable &&
+> +
+> +		test_commit extra &&
+> +		git commit-graph write --reachable --split=no-merge &&
+> +
+> +		git checkout base-3 &&
+> +		test_commit new-branch &&
+> +
+> +		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
+> +			git commit-graph write --reachable --split=no-merge &&
+> +
+> +		# BUG: topo levels from lower graph layers are not
+> +		# propagated, so the DFS re-walks from base-3 down to
+> +		# the root (7 steps) instead of reading topo levels
+> +		# from the existing graph (1 step).
+> +		test_trace2_data commit-graph generation-dfs-steps 7 <trace.txt
+> +	)
+> +'
+> +
+>  test_expect_success 'temporary graph layer is discarded upon failure' '
+>  	git init layer-discard &&
+>  	(
