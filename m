@@ -1,165 +1,102 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418A41EB5C2
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 21:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EA536DA0D
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 21:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783458109; cv=none; b=NbzlFxwB5/QJgIM7ND5f3mx2fU6wTU+Tfh+XMy6lj793ykFYNANjr8UpKkCmrCeFInbaGRXiG8afbCBvFG7KnWsqjE/QvLjWYGcj//KKzjRWJD8Xi8UUxTe3mn92aCwA952xtXvOKaP3YhVXGffF+ZRcyp00fH3gyK2Knjs1gV4=
+	t=1783459558; cv=none; b=fWZ0xDQ1zotMLOZ1CH0oVwhjLvYgUSNUC8iDft/jo+KP+6SUdbitStrL9wz1EAs6FhfnyPAlmuKwXTH+KSUipmpFCFxQyaBBAf3prCjQrur1CvzeGcvkPvDh29P2E4jc18DvDyxn/K1XuUsm0+OCyd8Mxom0U0kDWhJT2dAHv20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783458109; c=relaxed/simple;
-	bh=i3WtXXk6bKMFVEEepyvH+7PSNDegoZldngpIZRJ176s=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=trQ1Bivv32mOCFYKARBppiuyXRDbfRweovCw+qFQTbfEmMuMH2MJojplT9dgDJDmCvSPU4psYueVGao1SFWQtg5Nkz3z5tU/nkRWOrrYIDkaa5Nxx/2pkcIleJp3h6JJfzZweJhcvCcK3ZYN9U8eliyEeC0ru5n4mPHoCWh2ANU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cVnyFvgD; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783459558; c=relaxed/simple;
+	bh=0lLpYfV5r1TBVZoZ+NQynXW/kVuoc6XArHcB3cd1AF8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CeY8NJIs3k6qktGdct1R8ONjC6rbPptTbSJRjOf6nfK6zc4ic63kT9PfVRkHTZiBrBSl0HD9sJ4zffXBbWJmSqboWUV4el0WezAYRJuy3jGqiBPY8NzlK1Ui3jr1FnO0DmXAkbSgb0X0YfK//Xx87q6B2/9/2hOBnDKmf4Y672w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=slWTwPjg; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cVnyFvgD"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-92e5c92c389so235809685a.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 14:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783458107; x=1784062907; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6/aE4CY4lYvL5+7/iVew49HEQ4mURhyFE3uioOYJAgg=;
-        b=cVnyFvgDav+E/w+BfVJKplmEQKlv5OlOyUZqp+4hcf9a6Un4xOC6QIR5Llg+pmcIr2
-         qcAxlvfMn8pm5Y2gRoqke9CP1VLIlOlhX0bjN6dmpJfF69Ia61ccN0kFmAAil/t6SLxP
-         c93Z++yW7zbZFtA322up7qqBR/CFaSUG8vV0qKyhTaLLlieGK/16wjOfsSmwfshqQeG6
-         zk4ZMDbigIa0Shb9NIOJaZlvJ36Sf5hnmuRrFdsvAf1lI8x8W3zkhrIVJO6sDJe87nkg
-         sNZdSOJ2MGqRUEmFyQMPT8rML6wXC/HMV5oWEqMNYl4vZR4Mj8OJEuG5692OxtYv2FoM
-         6NfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783458107; x=1784062907;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6/aE4CY4lYvL5+7/iVew49HEQ4mURhyFE3uioOYJAgg=;
-        b=PeuPhyqhrMrQLrfSRfokem6ZJ2wmO6DvxmnPIaGx/5s3GfnGYMgpg2P9ljiYTGHI/o
-         qTLw3s405QwbFVq/jSFb8G7HvSAwy07veH3X/YTwqNrOJbQkougnruIpHcFqote0WxSo
-         u0LRrphIrKyK0AzrcbYTYAQgJa6DP8GMWDZ5IQ+qtYk3E74UGn5aWi9tzBFCqqCavULl
-         Ar3MsTbFUbXlCWz4Ty4abmkQZsdQCM7BdwDa6nSSUfxf7PFlNibycWoG1qpPD1R3X/ei
-         RMQx5bXfPNOY//nF7Die+0HLsooM64NtEzY0uVcSIGMevF+sQxtslnfPxOfLOUov5INy
-         aGrg==
-X-Gm-Message-State: AOJu0Ywv5Gox8U9bBsTVuX5osyDlTMZPTxy7uo5A/VIw/bJUOt/Bgw+6
-	4A9Iug0+w0dxnT7i19F5p8hz5KX/xXrPHALNUVJ6XVM26S7Y0g0jRn5/bhmY9A==
-X-Gm-Gg: AfdE7cmXHp3FoqAoY+7yJPMiXzvxEyEDmWSzmzn71/rVzenEOPKqhHNIAqa8qbzV5P6
-	uMnEFRob01dAM36r3BR7MDhpSK1SCTo5l15Bv1csTyJCz7UWlsh90XxvAqChzHzGOJFZ1UA5kZx
-	hCVTiOekoeP9/zOhLC9mnyYTCRQAkPOgM9XUXtSCfv2n/CXR065V11UybzqKUufgSz47koqwusa
-	DsOfKrY5GmEceBJFY8HOAHSC4lPDzb2/aPjoULYAXCutInRUKXo/N7I8cECdTy3lC/J/8CPAC4N
-	Iw6uWtmzVUkMc0sh9PcQEA3jPnmgG7luG7csVJXkUbaFgdvOQmipDSqJfPnc5474DVeQ+ttFCci
-	4P9LNoVFIX+4TDk1o24CBq9JGOfqkVex8VoaUAbXm7T8N228LdjU/kluwoIylMcK54h25XO3BTa
-	96aqHeALNFKqkYE1M=
-X-Received: by 2002:a05:620a:31aa:b0:92a:f65e:1e95 with SMTP id af79cd13be357-92ebb4f62d7mr883870485a.21.1783458107003;
-        Tue, 07 Jul 2026 14:01:47 -0700 (PDT)
-Received: from [127.0.0.1] ([20.115.94.225])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90c9314bsm1262305485a.23.2026.07.07.14.01.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 14:01:46 -0700 (PDT)
-Message-Id: <pull.2353.git.git.1783458106037.gitgitgadget@gmail.com>
-From: "Henrique Ferreiro via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 07 Jul 2026 21:01:45 +0000
-Subject: [PATCH] unpack-trees: avoid quadratic index scan in
- next_cache_entry()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="slWTwPjg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1783459549;
+	bh=0lLpYfV5r1TBVZoZ+NQynXW/kVuoc6XArHcB3cd1AF8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=slWTwPjg0+nkovbQmxADM6KivdbWlPToFItaxjA6fi0mNzLaIClISXiEfwV+3aTWM
+	 0p0rR0f1N6EGtp/t3SL+uFMZ1pkPiEu205fUFhP6l+hrwUojoapzS6CbrsYu7Jkedl
+	 24muJMXgXRPILyK2h4wTq6mi3r/A3qQD2LB0+bXl+mlDdKFni0yg8i2nUcuefS/1No
+	 43ZXKEyPW5kGHYdBFK/RnXRt2OijXkNgRdvOCBIAmViThIC7yBY1pgHtS+suToI2Va
+	 L91C4zUGsA3ZdVwn6teCJSvcZroWXskrMyPFPNCQicb8uKmJL+zNRDssVR7Bg3d5Iu
+	 IowyFzhZVTcLdHIMeL5u3rvMpRybpRFD7dn1DniR8iIr9/vBurAVPZ5Ta93qShsKXK
+	 nyLV3mRmnhk7H5NVGzfYwP/EOhh9pN8GNixJdEEvDxXh+/M56x3GsJC9dyCpUTBFkJ
+	 AxQV6AA1W0xEa9E9+g51z0sadgQSdoa4e2WdfHTeY6bhGwy9OPD
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9470:51ef:86dd:bc22])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D26E3200B0;
+	Tue,  7 Jul 2026 21:25:49 +0000 (UTC)
+Date: Tue, 7 Jul 2026 21:25:48 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/7] hash: use git_hash_init() consistently
+Message-ID: <ak1u25b2pmRAQIxD@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+References: <20260707045556.GA1288172@coredump.intra.peff.net>
+ <20260707050141.GA1288294@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Henrique Ferreiro <hferreiro@igalia.com>,
-    Henrique Ferreiro <hferreiro@igalia.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="h3o5SBY7gc13+HZ/"
+Content-Disposition: inline
+In-Reply-To: <20260707050141.GA1288294@coredump.intra.peff.net>
+User-Agent: Mutt/2.4.0 (2026-06-19)
 
-From: Henrique Ferreiro <hferreiro@igalia.com>
+--h3o5SBY7gc13+HZ/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Diffing the working tree against a commit with a pathspec can take
-time quadratic in the size of the index when the pathspec matches a
-subtree whose entries are the first entries of the index.  Fix it by
-having next_cache_entry() record how far it scanned in cache_bottom,
-so repeated calls no longer rescan the growing prefix of
-already-unpacked entries.  On a Chromium checkout (~500k index
-entries),
+On 2026-07-07 at 05:01:41, Jeff King wrote:
+> We'd like to add more logic to git_hash_init(), but many callers skip it
+> and call algop->init_fn() directly. Let's make sure we're consistently
+> using the wrapper by adding a coccinelle rule.
+>=20
+> Besides the coccinelle file itself, this is a purely mechanical
+> conversion based on the patch it generates. There should be no bare
+> init_fn() calls left (except for the one in the wrapper).
 
-	git diff HEAD -- .agents/OWNERS
+For context, the reason `git_hash_init` exists is that our Rust code
+needs to initialize a hash context but it treats `const struct
+git_hash_algo *` as `const void *` and doesn't have any access to the
+contents of the structure.  We could fix this with `cbindgen` and
+`bindgen`, but haven't done so yet.
 
-took about 8 minutes before this change and 0.07 seconds after it.
-The same diff without the commit, without the pathspec, or with
---cached was already instant.
+So that's why everybody has been using `init_fn` instead of
+`git_hash_init`.  Anyway, I have no objections to making this the
+standard interface going forward.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Add p0009-diff-pathspec.sh, which builds a 100,000-entry index whose
-first path lives in a subtree, to guard against the regression.
-Comparing v2.55.0 with this change:
+--h3o5SBY7gc13+HZ/
+Content-Type: application/pgp-signature; name=signature.asc
 
-Test                            v2.55.0           HEAD
-------------------------------------------------------------------------
-0009.2: diff pathspec subtree   7.16(7.12+0.01)   0.02(0.01+0.00) -99.7%
+-----BEGIN PGP SIGNATURE-----
 
-Signed-off-by: Henrique Ferreiro <hferreiro@igalia.com>
----
-    unpack-trees: avoid quadratic index scan in next_cache_entry()
+wr0EABYKAG8FgmpNbtsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ0tAvk9Ox2ijg3q/Enb+vKEBlEmdovWiFr14tK6dJGkS
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAALiLAP9XBbCoe7bV7up9fZzZ0s6p+BDG
+QhYazrzvnbylJlngWgD/Ye0GJytAFU7V1Arg17d6DBLZZpR7CXHxbtUTnMg36QU=
+=3aHb
+-----END PGP SIGNATURE-----
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2353%2Fhferreiro%2Funpack-trees-quadratic-scan-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2353/hferreiro/unpack-trees-quadratic-scan-v1
-Pull-Request: https://github.com/git/git/pull/2353
-
- t/perf/p0009-diff-pathspec.sh | 27 +++++++++++++++++++++++++++
- unpack-trees.c                |  4 +++-
- 2 files changed, 30 insertions(+), 1 deletion(-)
- create mode 100755 t/perf/p0009-diff-pathspec.sh
-
-diff --git a/t/perf/p0009-diff-pathspec.sh b/t/perf/p0009-diff-pathspec.sh
-new file mode 100755
-index 0000000000..0f1dccfbb4
---- /dev/null
-+++ b/t/perf/p0009-diff-pathspec.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+
-+test_description='Tests performance of diffing the working tree with a pathspec'
-+
-+. ./perf-lib.sh
-+
-+test_perf_fresh_repo
-+
-+# The entries exist only in the index, which is enough to
-+# exercise the index scan.
-+test_expect_success 'setup' '
-+	count=100000 &&
-+	blob=$(echo content | git hash-object -w --stdin) &&
-+	{
-+		printf "100644 $blob\taaa/file\n" &&
-+		printf "100644 $blob\tf%s\n" $(test_seq $count)
-+	} | git update-index --index-info &&
-+	git commit -q -m initial &&
-+	mkdir -p aaa &&
-+	echo content >aaa/file
-+'
-+
-+test_perf 'diff pathspec subtree' '
-+	git diff HEAD -- aaa/file
-+'
-+
-+test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index b42020f16b..ed9fef453a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -671,8 +671,10 @@ static struct cache_entry *next_cache_entry(struct unpack_trees_options *o)
- 
- 	while (pos < index->cache_nr) {
- 		struct cache_entry *ce = index->cache[pos];
--		if (!(ce->ce_flags & CE_UNPACKED))
-+		if (!(ce->ce_flags & CE_UNPACKED)) {
-+			o->internal.cache_bottom = pos;
- 			return ce;
-+		}
- 		pos++;
- 	}
- 	return NULL;
-
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
--- 
-gitgitgadget
+--h3o5SBY7gc13+HZ/--
