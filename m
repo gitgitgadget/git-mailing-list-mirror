@@ -1,119 +1,162 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF32431498
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:56:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783439765; cv=none; b=MeiaSyakT9704i5qugvTJVW4CoNrzwpLGTeGUP7PrRGYAZCjg7VcGMb29hd8Cn140rxHwcNaRytYmDFv4NsUa5qAJf1n946OWyNM4ZGM/ve6DELGdvMCb2NKCAbAtky/TK8STEVtIMgKyBqk03DYRltFDFO+y0kkrynbE/47NMg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783439765; c=relaxed/simple;
-	bh=/bAd70HOTsVpBgvdH+ryB4knYqy1oK6rsj9rDl4W7RU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BVvhqtbuukO3z3T9j2PeiO1C3Kv8cZ9MeS71Mxef3UN2TtjQPd9n2ZY3sm5oEmMuRmmIlWBrbM9WBxruVdFykw6y2cE8SXOiEeIohGNNjn8+rlzpUPEIi3Nsa0TJkhezzWZbrvVHoYT+VxpOhu7BugLEsWN9dCfjn5A5OIRW5t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bRk8wyX1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eFh2fZte; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B4C431491
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783440269; cv=pass; b=PJyH2x+3lfmeXLPCQVtxQ4TrgFVHXTGOZtDHPTxFYaHLBm/lr5VS9tJSTZELSDOE4vMBwOD7Y/S4WUxhnizpFUUlVu/vbhZcNrl6ziK7eJ702uFpCpgibJf38FeYHNVqhw8RR9kdn3zKPyVm/rNChO1qdlFjpyRJC2Df/zZvG18=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783440269; c=relaxed/simple;
+	bh=n5xIVLWy9wDbIxkmtzXRFGsSyWbroaI1EMFfrzJ5pHA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GtLpJvqG42WJMNJsAiDP0bQDf+FcpGULSjrHmb/NN6l0LzJMSKKItfQLaMVy8NEVGU5g/7cISL4l0GqepN+1MEgw3HJY6+uHVrXP1Rbt0fzmp8E+Jl1HBEKPzheqx232U94GLSCzU0Nb5QkGiGuTlXunrMV8hKoeCbYMtkuPloE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=FL0u6M3K; arc=pass smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bRk8wyX1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eFh2fZte"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 622CD14000E2;
-	Tue,  7 Jul 2026 11:56:03 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 07 Jul 2026 11:56:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783439763; x=1783526163; bh=B1G9nzapte
-	9+jmXJ3DuM43f4x5E28ekuZ8i6Gh0vtPA=; b=bRk8wyX1bCjo/llypAU8xNX/cO
-	FsLphX3yBhlEVfYdA0Mk3nF/4PeRYL8mfJBG8Zri9FlAdg9no0UO1oiQTrEst4Ow
-	jyGNshmr55dajklxaerERF3IGh8nQ1z2skN6nLnToFTgSC7U+h0VV9ocViZoa3Nd
-	qz39ZyDizUWGVEuD6Dh+7CmjSTFBqmF9d3snkiZghgtzoec6UwA1Qkn1Ehp7M+ZA
-	hNzuvXZa0aVcRfFVudQwQcvLkpfCUhSQlA3gejTIndc1qH2WzrhM5GZrTmcyf8n2
-	E/Ic2NUNFO8pnyp0tZGLkp3SDeNiFPk88ERHx+Amvd34iUj8KasWZTPR2H7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783439763; x=1783526163; bh=B1G9nzapte9+jmXJ3DuM43f4x5E28ekuZ8i
-	6Gh0vtPA=; b=eFh2fZteJ0u+XJ9SslVbpA0mNK5I0i0r3Bo/fYRX7tTqRPr2UIj
-	r/7GsvSLvwbkermMF3fYbDAlaFriEu8D/kAmfU4cCZ8ie0hLM5rGFSb49ftaLYF3
-	F626OI1j6GnuvrJoFAWjCKEMzqGdHrENgvJJDuCFwgFwmoYz5CnWpcY2yOH9N/U3
-	a6AHTU5tjFGXqRmj08M/vWL++9pRalqanO+yFIY1+qukcGluwxOFfzHYiWmCuj9s
-	QMMo7UBokEcwQNYcj02IPJRmcXXB9AMoVo5GtZPzBuYQlZ5Pkmg9vmaI3MQT5sCf
-	DLTBT/iBIUJ7+2k4spkCROkS+Ts0urQFGmA==
-X-ME-Sender: <xms:kyFNaudnTJJinDL8p4agS8YOOI6KbcJL5MLY0okpAeaEREA7CPSl4A>
-    <xme:kyFNavq-p7x1iZaoIRw2w04ACJyL85CrZze557TFW7MocRcFAgfInPly0mmSn-RwR
-    -uXe6vjAqhzVZB3JiF3Tf9FsvpVXpPgGNCsTQ1v1GPxRasNV3OIfg>
-X-ME-Received: <xmr:kyFNas709hePqpa107ZU8YtQOQfXA-dK7f1C-S0HtZCBI1auLpgOuE6kmAYdaSTAkQzRQOEGhNNqodkNO8eh5hXwn08AAIOQhcYMu2Wc3A>
-X-ME-Proxy-Cause: dmFkZTGVn3iwKXrmJepC2rEHyhVbo0mD5hctFe0U1twUgkTmTg4KHlvgXr1lj1DKk77EUg
-    p35vNeWvOMLwVGqKaPU/5ps41LsimTS5MTdp9kqsRxkWtXdIKmac7RDzN/3aWbmcjuPsc6
-    h7h62YZ83DOQPADNq8qnXzHrsdNt0wAIIK7lRIui5LFhV83Wl3XxzuTis8YbzqhYihzt26
-    y0ldLkZi46siODuQRHw2+cvTFRveDytYLt7uONl/50BbpoG/LTqQFrwshCOjT/QDFg1qpF
-    3gOa74EjEvzRi1PFi2KZYyF60WdzuqLuF6Jj5z5Znmyoy1twRC2ro9AizwfGpYJMnPzuhb
-    drdDBjrMP/4a8LJnZTpM4dL0HPa4p/55cgOz/G4aPCVkFuQL6H+zSecbO6ZUCYu7ToPdta
-    BET56BQ8jzavHVWMfE46FHot9+9UbrwjXMhDwBp92gNaKNJFNScmth0nEjcxcn2rEsqaB2
-    R8mb6YjdgQpe2CGfFSk1jfMDFmLKEqYaHae3nUkmQnzMOl7ofeT6CoreL6QsDkrFEKhIrP
-    3ZbXY66NoI4GAlJwZurwORGPYzSN12UdM52iii95oRwIOdMUP7mP17x3X6J1trtkxns6L7
-    NG6pIEXcT2UXBts3KnkaSR5B0UqmVMBuE0uD+5wLLWtaagTqjgKG1qbCZUYA
-X-ME-Proxy: <xmx:kyFNalrTyU7UzDhc_kqwOz4oPsxOLksvzR4pEPKBUggyUqgz3p2gFA>
-    <xmx:kyFNauhUKy326pmVQ1opnQTdbateLCpV8tAdjWAYKihj5JREoWioJA>
-    <xmx:kyFNavIXLap-7jZMSp1-ytu5oRuf9XxC_9Eyx-N1J9fxGlu8RhgZIA>
-    <xmx:kyFNauCnoVUrTGftiWS62Q9sbMgqKHRlWxv0GpATtnB_CQWJO2tm1g>
-    <xmx:kyFNajI17Oy1mzJtwMF9Teboy8FG1-qAKq4WqoesBGFvv9ds2_hJcPlD>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 11:56:02 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 98e66588 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jul 2026 15:56:02 +0000 (UTC)
-Date: Tue, 7 Jul 2026 17:55:59 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/12] coverity: fix leaks and error paths
-Message-ID: <ak0hj9em1agVr4rj@pks.im>
-References: <pull.2163.git.1782889472.gitgitgadget@gmail.com>
- <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="FL0u6M3K"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-664bb15d05dso6126343d50.3
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 09:04:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783440266; cv=none;
+        d=google.com; s=arc-20260327;
+        b=mtCDecoJsjNU8SyczVP+jFt45hpIVhdNE91/jY8BvQIavj4b8AKvSzD87A85PG4sKM
+         Gb5mkiwmcWTaVNTMNbjQyhUZmM1TMc7zqG3xjq35PmlrqXvYRJV6PXh2oSG9H54Pz2Ts
+         t+PXvX1MSXp5JOQWnBHgMhBkQiD3w2ZfEEovggJ+boOdzyUq6VBtJUQsGrBLGIuGIdkx
+         3ZJNhkaPLN+O78APDY6bKO3zkJI4E6FtX+N3iwDOiaRdOPNRFnzqTpjzlmVqDB+c/oHR
+         pu2gk0PRBbYCDkaaPDpGSMzfyNV0icW70rZtYAw9yulOhUNXM5GRVMBPzjUiGl4VqvFU
+         rPsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=9ha/n3nNVxim1M1yEbpInhY5N6BkqjgYusSoTKsl9iY=;
+        fh=8p1W5VcUNmuS9l7xhRsgRKAdbtz1Wpr3VOMDnViI3AA=;
+        b=G67K545eFrX9vDm8akmuS5TwAfQMTP39bWEh+cAsN4J5jLup3Mwq52PvR3T6tJklmn
+         Sp4w6gR082xS/Dmk+CaCuWMSTfzcTWD1KOgfU09Nm/iNJdC+sxZ12UQAb33Uo6ZGsP5q
+         4zYsRR25TMizoUTCMt893R8k8T9MtGbfgW5Z8g391usx/qgipmDLb/T+QrhudZJ9uhgJ
+         ScmWcdaEAq3U+74SN0/yCk/VDL0NmC+HgUmSnRv3D8DefCvKwcC2zr7Er7XNxexg18R3
+         +U9OFZ32QRh2G/yRnDpBEUzyVoJcYttWmLnS3/Uz3u+6z1L9/mZN9PISsZdQjsi7Y69V
+         I0zA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1783440266; x=1784045066; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9ha/n3nNVxim1M1yEbpInhY5N6BkqjgYusSoTKsl9iY=;
+        b=FL0u6M3KVBE37cT0ZRPTZSndwDWWHoATJ5yhk2Fv/ApPqFbJeENHoV2iPaXPxn6i7X
+         GGV6miKXpQpPGacYaaEs89tueWEk3e27V1YQ8dG7ZND4VjdwR+75+7PaIUKYvLgxY2ym
+         AoNWdMc3Keh/aagBe0d9cmS70HRQf/8+Xz0l8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783440266; x=1784045066;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=9ha/n3nNVxim1M1yEbpInhY5N6BkqjgYusSoTKsl9iY=;
+        b=kU8Yougo0QqOWn+DPWoOvVTFTrTKgVebhHgq8MSb4/IY12bTG+11CcQv3aaqm3uSun
+         oCvFhrVafqvawsE+Ecr67o+b0WZRm8ByOITFX8PRNNHxNCDsQCLDadGeyjj3rLI3ta6r
+         wE1YB1/xaPnndcCOgVPoOfVnnzlVLU/q8CuABYOVyACixsKkN5AU1UIn6qXKknZj2YQH
+         gKBhGiOyrBQXkAqbD8W5qbRhOHwHDaFkUvAAX5HaXxwL8S20IkrNljpwY5pH27IYoYb/
+         aSxhud10dgJJqYd3jHF3WytKTngPCZXXdrCTEAaoJu4u/eHFBqn+ex1wcGIyyDVj8wnR
+         uhPQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rqm9jD4VuBKoO/wNPlsrRQiKEPc79hT5tYpDU/C8jcXhabRt+f9UYQH4M7LwCOKGN9CHsA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5FZmrqGN7B9OXclaGzJTAAQfrHmKBT1vuVapHoW+5WFRxM1O2
+	+6Xrl5YjmiuRcbAILi+4SCKOaw1JLirQjszWI53nVVNAPFC5Taw8V4zqTOwqliWUSY+nGNhE2bz
+	7UHGZ2IeprrIVRz8mMK6fEekUxl160+kM5MQuy1ymWg==
+X-Gm-Gg: AfdE7cnv8MqevN3gymPUstfV8p4iMWwbSoiwZj8eDCCQI6eC6rhYJRPyHxIDxc4PdH6
+	0L+jzmCGkoDAvknE29/IRpdBx3Cs3sXPglNoMq/deh+zYb/BcmnD11wMGO8BETQNzY/Tmb2g7Ky
+	iLtcNu779Vrd95goi3HBGXa8Tj5v2TbuM9QDlxUSXdjCY+fG8U34eoOt7+kK1/9TmDy7Axxz2Ti
+	t1vhctTX1jRk28e1E79anV+ZbHmiiYHRNsNcbPvBKXrimhlKmU2hSlr2I2xaRIFFqeiKCdP2A==
+X-Received: by 2002:a05:690e:488e:20b0:667:5e83:80ce with SMTP id
+ 956f58d0204a3-6677fb79eecmr3629813d50.25.1783440265929; Tue, 07 Jul 2026
+ 09:04:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2163.v2.git.1783239870.gitgitgadget@gmail.com>
+References: <pull.2166.git.1783344957.gitgitgadget@gmail.com>
+ <1459371d3ab2f237152e20040987b4cb6a5eca77.1783344957.git.gitgitgadget@gmail.com>
+ <ak0aRtvSxSyIWieg@pks.im>
+In-Reply-To: <ak0aRtvSxSyIWieg@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 7 Jul 2026 18:04:15 +0200
+X-Gm-Features: AVVi8Cc5AFgRN7r96Fq-6CnBJezHqvXJBGlBc-sezldjyN-6L3GVTwJjx0YHBBA
+Message-ID: <CAL71e4NQLyM1T3YCL1Q09wfnkq7B3ah6i38yBeK8ZJCx1JejgQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] reftable: fix quadratic behavior when re-creating
+ deleted refs
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Jul 05, 2026 at 08:24:17AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> I wanted to whittle down the many issues reported by Coverity in the Git for
-> Windows project. Turns out: The vast majority of the issues are false
-> positives. Most of the remaining issues are in core Git proper.
-> 
-> This effort was forced on pause while Coverity was down from May 16
-> [https://web.archive.org/web/20260516152422/https://scan.coverity.com/] to
-> June 22
-> [https://web.archive.org/web/20260622182153/https://scan.coverity.com/]).
-> 
-> Here is a first batch of fixes for those issues.
-> 
-> Changes since v1:
-> 
->  * Edited the commit messages to put function names in backticks, and
->    reflowed the messages afterwards.
->  * Took Junio's suggestion to avoid (ab-)using errno to determine the return
->    value of load_one_loose_object_map().
->  * Dropped the obsolete patch "run_diff_files: avoid memory leak".
->  * Rewrote the commit message of "dir: free allocations on parse-error paths
->    in read_one_dir()" to clarify ownership of the allocated untracked/dirs
->    buffers.
->  * Changed "submodule: fix cwd leak in get_superproject_working_tree()" to
->    reduce the cognitive load on the reader (i.e. to make it a lot easier to
->    reason about the correctness of the patch).
+On Tue, 7 Jul 2026 at 17:24, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> > This affects two code paths during ref creation:
+> >
+> >  - refs_verify_refnames_available() seeks to "refs/tags/foo-1/" to
+> >    check for D/F conflicts and must scan through all subsequent
+> >    tombstones before the caller can see that they are past the prefix
+> >    of interest.
+> >
+> >  - reftable_backend_read_ref() seeks to a specific refname and must
+> >    scan through all subsequent tombstones before returning "not
+> >    found", because the merged iterator skips the matching tombstone
+> >    and searches for the next live record.
+>
+> It probably not only impacts reference creation, but also every reader
+> that wants to search for a specific reference that doesn't exist.
 
-Thanks. The reflow of the commit messages made the range-diff somewhat
-hard to read, but from all I could see the changes all make sense.
+Hm good point, I will try to rephrase this better.
 
-Patrick
+> > Fix this by removing suppress_deletions from the merged iterator and
+> > instead handling deletion records at each call site in the reftable
+> > backend, where prefix and refname bounds are available.  Tombstones
+> > are now returned to callers, which skip them after their existing
+> > bounds checks.  This allows iteration to terminate as soon as a
+> > tombstone past the relevant bound is encountered.
+>
+> This option is still used by downstream users of the reftable library,
+> like libgit2. So we shouldn't just delete it outright.
+
+Good catch! I can keep suppress_deletions as-is and just
+stop setting it from stack.c. That way libgit2 is unchanged, while
+we still optimize it at the other call sites. The reftable library
+diff then shrinks to a single removed line.
+
+> > diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> > index 4ae22922de..8c4f119ff1 100644
+> > --- a/refs/reftable-backend.c
+> > +++ b/refs/reftable-backend.c
+> > @@ -633,6 +633,9 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
+> >                       break;
+> >               }
+> >
+> > +             if (iter->ref.value_type == REFTABLE_REF_DELETION)
+> > +                     continue;
+> > +
+> >               if (iter->exclude_patterns && should_exclude_current_ref(iter))
+> >                       continue;
+> >
+>
+> Okay. I was first wondering whether we should move this call earlier.
+> But we actually don't want to, as this is the code that precedes the
+> above:
+>
+>         if (iter->prefix_len &&
+>             strncmp(iter->prefix, iter->ref.refname, iter->prefix_len)) {
+>                 iter->err = 1;
+>                 break;
+>         }
+>
+> So this allows us to not only skip the current iteration, but completely
+> abort iteration by observing tombstones that sort after our prefix.
+
+Indeed, this is the primary win.
+
+> In any case, as far as I can see all sites where we iterate through
+> either ref or log records have been adapted to handle deletions.
+
+Thanks! Appreciate the review (and spotting the libgit breakage!)
+Kristofer
