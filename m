@@ -1,81 +1,80 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9DF2B2D7
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 02:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA9D348C7C
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 02:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783390574; cv=none; b=VcfZkOAeF09OrlRULndD1uJ+pClbSBuGKyDUnV8KHYlp9cSSpQ6r7Tcrfzlb2nQOinNVXEy1Tj6IPi4EcpGjXVKinxSphi03ItcSgp/hQt0xQHTR2DMM3DRm78Buh2lDKOefunaO0g6Uvydh797aMlomc77QI8G1h8dLjIwLd9E=
+	t=1783391421; cv=none; b=IPLKTQruyE3U+06oEHrWBO1YBgSky9XbkKny+y/gGW2vTNdxBLeHjZ7dioK+Ut46anV1je6m7JnaLtp+N033bs1S6g3wq2aUykS3/OESg0qDufH9eSgubNPZ4IbGD+3Gav6j7FSNrTYfLRcKux4PE001feY7eYq4jDBla+t5gY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783390574; c=relaxed/simple;
-	bh=kG8QKn5fz9fNY4RgT83XUlSEnE1DrOhUShwN44vQDqU=;
+	s=arc-20240116; t=1783391421; c=relaxed/simple;
+	bh=4ttBg5wE8Epaqxf6we7hx8kp16Ynpb6H6ZsCClQ1e1k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lGxhoM4tcBLo3vNs0zfdqF4A7dbwwRVhFSbmVnARi8m9+EvZ5AD8H5CTu+2hy97sGdKC0/PKMBqvb46o9HAvAWQwTyGrQoAEehwNs9HrQ7tYIUiJDaNy/YYCnGlwt5urdOpVk+ye8nl87s+ePnIGU9kmLckZPz8zAcScGAeRopM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b/54iTer; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=STfjJjV1; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=el8jPuoTQ0aebNQt5gKNOjiEWPbb8ykc6h7f0QivWg1W+SIM/ANkOcDdvhRVn3vYtMQi9cczVtbWgx1pdsvgTAWEaGxQvyosQqnXZSaNLX0ViwjqkLTy91pFMhSX0Ip2+NqjqkTSJd/8588v+2cgvzhSvI8iGc5BqdR06QRCjmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LU4CLG3e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jXHnHvBv; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b/54iTer";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="STfjJjV1"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3ECD2EC00CC;
-	Mon,  6 Jul 2026 22:16:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LU4CLG3e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jXHnHvBv"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0D10FEC003B;
+	Mon,  6 Jul 2026 22:30:15 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 06 Jul 2026 22:16:11 -0400
+  by phl-compute-07.internal (MEProxy); Mon, 06 Jul 2026 22:30:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783390571; x=1783476971; bh=Z4ADp8ln6X
-	1heUBix067K2ClDFnfNv3OEXHrWn0Epmg=; b=b/54iTerNF6tcuE3uLE9lrSLgL
-	XyNTM59JrrWS73oggADYDQTwpuwXrXTm1CVTlRi8NsycNlCmFFHagVWqhZ4Kn+Lh
-	ccs45vzkgPSX0rsih3enG4npaZqUTP01doGMbUnI+qXWRgn1M3dhBNqR1z2/z0TB
-	N58Csn7tDzzE2b80BWp+WB03x0rTGv251F+3WLuWP+vvmx+xVVNC3CmEuPqX6Y45
-	VsZP0wh6EFQ1q9BLQkzpmR1WNDW0NGIL2BvFQEP/FT+3kVOZb2gnRXDT6YWd6HMe
-	QewTJYiGgUicTqfUp0WIrK2L32mn0v+djJr7vUZgu/C/2kLUORiVzdVBgTtg==
+	:subject:to:to; s=fm1; t=1783391415; x=1783477815; bh=B8+K0qJRYt
+	JBNjpe6O4EK80AUcAmP+xSzdafm1JAa7U=; b=LU4CLG3e1BheRqQ2trv5b/7psD
+	ZeD+yDX30r+Y0MBbJlvzqM9Yuoh4j8KIdcwBRoKboaP713kEaufu4dIVGonl7M/b
+	j3Mr/V+VheEmVoAdyZeDluQXAdBGHXBAZTloxwcSy9Sv/OsAbsiS32GMfBVjiSaw
+	rLRSOjy2G1o4VhP/50S7LPizqHxCVnRfxPvCJqqRbTKgSUIYdaktu4LW2fHVVRLc
+	mlhnB7ELLux/0gjIrV9iWz9ff5UbojEsVIkbRSHuzor/ihuzVnW9+sPM0HmoZ0pn
+	9Wff4/VUaCy49ZurPUMk6E/Jj+PbZGvqFlKV3oIREqUykhmEL7iI+94DVCMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783390571; x=1783476971; bh=Z4ADp8ln6X1heUBix067K2ClDFnfNv3OEXH
-	rWn0Epmg=; b=STfjJjV1mxuY4f3b661xzho93niyfSVg+pT+WkLCfZjM/sAQsiG
-	rGs+1HjxU9lmD4Ci9Dshzfiqwr9qQQySj0aQpgPMLDujQ4TFwrQ0Cl8bRyyp6drj
-	X53V9c4FOr21YQYrrIoJ15lhHYd/2MTKYjhNMlGjFjxPkCZpqiRABM1NEgcfzjn/
-	YdaY2pJIllemDXBf3qzYjI6dt4H/7KOqBTRlqND98XZsTizWh/qq2zZm4s5s1Fhs
-	E6wW75hIGpdzABqnnuGggbQCxSX7NEqFvFwawUp/piZk0PuAVfmxoLaWLIV29QK+
-	CsvqaQ/cW+JqHloqN5PWyvctUMnIG2DGnNw==
-X-ME-Sender: <xms:a2FMahPEOzv36plOgrBkmgU63XABn-dMUC220S0MAPd92xRwdnieeg>
-    <xme:a2FMaraF8dcRN609M20HWuQj7jZ1NnBrX9XhH2FvGJfFeaFr19A29qrkZLXLVQKD4
-    9m0nvKoYcC5m7s97_Y6Yu7yumaofLVLusLf7FBZg5Q0FK7wa2-8Xw>
-X-ME-Received: <xmr:a2FMatp6PTxfkiecE7uX3pWxW5SjSfEVzapZm6E6u4AiJjUpXTzqnL8AhpjC4Fy1IPS6GpBkMqqAPukStL1LFjdrn7ThhmlXIhSgqg8>
-X-ME-Proxy-Cause: dmFkZTFQh5oyIMDH2kDmLkIAAKrR8Kzb/xJNGoSmu09iPJn0bTsOcJNIgHRqZltFijwltz
-    aAmXOzAVwCUir1f+ta8DmU5hSaKSb3I3rv7gTVXnhJaD+fjUfP5PkWws+QXiJtSPpEiw+v
-    YK3o9u/gaUHwcGVTnLBFxMGP3XetYiheB967s2/Rc2c8vpwfEkdhCtja07jEH+w2z7SnzD
-    kEekf4yaDtyls9JzPxsP7WrfOz3c16lcDtdT6z/VXHa5DHZZckVyMtfgC66siBAB22+8gj
-    W12tETJhmMuk7Tuy6vCkk7c4wDMzQPRyZ5Ps9DWg6FJDljtJDWBFMkBZHbwacFcI5ijqQF
-    FYjnPry0TAP+oT6urPnrARfAWGtJmzT5MexHSXOrGzlMMARd3Cg+VFP/SuMFVvBkdiyOwV
-    Pk/G+0Xh1GUQ5a7FxRvzzOCt/DfUM1/VvOsKBltDKCllqyXJLwhNnf49FeqxkYI6eJU9Md
-    dRddYOWTj0MJmT18z2b0N34s1X4SXqXoEWUK+rdGOegCr6Wn1EDcDtIamvlbOv+zSMTrDq
-    g7iPCwb1zUw8WvVNkxGpoBwt0g0HZkUyF2M+RFtbVNdPGH2XyLlmgAw2O4jA5wf7w3b7GV
-    amyoI3bdnim2Op8r2FsIXjVL1aS6gxicivHbZbVFtE5MGqHbnXaQe9ChQftw
-X-ME-Proxy: <xmx:a2FManauTxinngMLDAdifZjiRZSuZO4Mv612ZmkiC3ygM-zThAuFmw>
-    <xmx:a2FMatTH1IPAwE3dE9w6_Q3Ym_uvq2_4_YPHNHZ8-79gQZAyGAkdow>
-    <xmx:a2FMam4OI2cpXHLstWiAWzC6No0ltKRxIgyfvj38wWeX6ocx9kFRhg>
-    <xmx:a2FMaqwCH4iTGjnFtEjeSOb928Y3xxf4IpNh9xsTL0xjm-2t2fR0tQ>
-    <xmx:a2FMauRDbDsthoFT-bTtwtxkU9Wb6dEk2gUMBV0-GhC_MF21rWCjVX0l>
+	1783391415; x=1783477815; bh=B8+K0qJRYtJBNjpe6O4EK80AUcAmP+xSzda
+	fm1JAa7U=; b=jXHnHvBva2zjvBBHqywjduOCu/8JtO6BStsrjg1YTXENUVO2grY
+	zcL0k2ouiRop3+Q7Dalqwxn+/tsBd4doT5joxqLMetBxYQpTMWISMp9sj/N3m0TH
+	e4xXKKAPhVqwxwpedvDkNzN081TjZbqUeUIEO6KaSBDz4fglyk37EElNM7OEnEsx
+	N0EyrpDZywAX+WYyOR45glIg7NxGmZKSSNuAiiIRnlblQn+KXgrnFkK8DItNFT3o
+	IytqV0DN5WstH+zAgePUXYzGb/qUwVlbmItC7TXJOGFJ/JAkJNSMqoEK6C1/2U4i
+	6cIEOk6voanmEB36Gwla8QsMX527MiboRDQ==
+X-ME-Sender: <xms:tmRMahflLlGuRExgClDmeso5NUA6e0dUN0J_Oit2j45495H_xGNwTA>
+    <xme:tmRMamP1LDn4ZGk9iDiUamdHaWlTYo6pfIjLC2myoksJQGVTwegTeoO5qV9yQ4xYR
+    2UVKJf_6zIbJNyLhLNKTQYZKc6vCgtN8tGOAme9INEuz4xHuRHo-Q>
+X-ME-Received: <xmr:tmRMavh6yTv-ANDBUNNKu77xhIYAqAh_LAuHqL9fApkgOCL3hJc0d3Mpqz99m9uoifMP206zEGgt1IWCMztDtc0RoOsC0xoWqFkjoIg>
+X-ME-Proxy-Cause: dmFkZTGFJ6gjimzutWKyveVIwRrcHnGANlgP2WSv09kRFpMIWROy4NbCjO5Kunkrikqy5s
+    k7MHoO01eGaR9LPLkMZ2ZO7Uy7/e1ho2fKPPMuGRW+vM4El26MKp0X2NS8T/UKhpUWX2vQ
+    nEWjaelMvdtEZCsUetiQUiGedMZqpKWeqELNmVI3zHHMppqnWkCbNbAycLuto3BqnMH023
+    e1x/nG6DWG6KjvCNHvhuYDwNXT7tmRh3cSCUp7J3j6KMy77lm1neKWmpC2POsjBjDdy5yD
+    Ym6KvqN5YkSoKvNIA9ipAS1uO03Z3+pNoHaNqlhydl9Z7Xm/e+N+/2cRd5dp/DVd8F0THw
+    iH0kLoyReHaJXYzquTqRmioKCI2X/pzHLzCytldgEcvVRHEWPJYE86z2+90ea4wQdfpDQd
+    DIatbAQyAAIJdLWbqo4EVdsAyqN0PVrWduNEK8rSoZQkHNT4O3TGieK5T35UYJ6Pr5SSE2
+    6JxH+aINPNj+UKPSnth3A+X+3OYQL0ptMUpg97IFaUhuNUBNodGdkryCPGVNjIomiETmUu
+    vGPhAKo5tgPY2QK0hFeokXJr4C+avLbH3qEJqbe8nlwiUIX5oaVaBNApLdNpcZoBcQqgIT
+    X6BuZyaT5QbmgxYTXWZa8Z1IRnl7Eqw7CNSiXT9WC3HTKHmmTHZp91rFxi8A
+X-ME-Proxy: <xmx:tmRMap05BL_ekY-3XQpaSxL4DUQLrSxXtI3JD6hquDOJ59-l-xJ5lw>
+    <xmx:tmRMapjLjBCu_FZdTbka7uwxj_1MmsgaUTiliTYiwD4naYOV28t5RA>
+    <xmx:tmRMapeNk1kPuu6MGWSWm4qMEYLZFjJYjJZU443EmRos_KJC4sYsog>
+    <xmx:tmRMaskGKLaadW8_mav3R_0oAXnoPOdcSJ4TPlH81EJN2chcWect6w>
+    <xmx:t2RMajAH_1zDM2stSkFXrodgXfldCOYqOTqYyYMFbNm6vmKB-QqKIbl3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jul 2026 22:16:10 -0400 (EDT)
+ 6 Jul 2026 22:30:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t1410-reflog.sh: avoid suppressing git's exit code in
- pipelines
-In-Reply-To: <20260706205036.3453-1-gatlavishweshwarreddy26@gmail.com> (Gatla
-	Vishweshwar Reddy's message of "Tue, 7 Jul 2026 02:20:36 +0530")
-References: <20260706205036.3453-1-gatlavishweshwarreddy26@gmail.com>
-Date: Mon, 06 Jul 2026 19:16:09 -0700
-Message-ID: <xmqqechf8ryu.fsf@gitster.g>
+To: "Jamie Magee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jamie Magee <jamie.magee@gmail.com>
+Subject: Re: [PATCH] t0213: skip ancestry tests under user-mode emulation
+In-Reply-To: <pull.2168.git.1783359242130.gitgitgadget@gmail.com> (Jamie Magee
+	via GitGitGadget's message of "Mon, 06 Jul 2026 17:34:01 +0000")
+References: <pull.2168.git.1783359242130.gitgitgadget@gmail.com>
+Date: Mon, 06 Jul 2026 19:30:13 -0700
+Message-ID: <xmqqa4s38rbe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,93 +84,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
+"Jamie Magee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Piping git commands directly to wc -l suppresses the exit code of
-> git, hiding potential failures from the test suite. Capture the
-> output to a temporary file first, then count the lines separately
-> to preserve the exit code.
+> -# Determine if cmd_ancestry is supported on this platform.
+> +# Enable these tests only when cmd_ancestry reports real process names.
+> +# The procinfo stub emits no event; under user-mode emulation (e.g.
+> +# qemu-user) /proc reports the emulator, not the guest. Spawn test-tool
+> +# from test-tool and require "test-tool" in the child's ancestry.
+
+T.r.i.c.k.y. ;-)
+
+>  test_expect_success 'detect cmd_ancestry support' '
+>  	test_when_finished "rm -f trace.detect" &&
+>  	GIT_TRACE2_BRIEF=1 GIT_TRACE2="$(pwd)/trace.detect" \
+> -		test-tool trace2 001return 0 &&
+> -	if grep -q "^cmd_ancestry" trace.detect
+> +		test-tool trace2 004child test-tool trace2 001return 0 &&
+> +	if grep -q "^cmd_ancestry.*test-tool" trace.detect
+
+This will be happy even if "test-tool-trash" that happens to have
+"test-tool" as its prefix appears on a cmd_ancestry line (for that
+matter, things like "cmd_ancestry-not-quite" that has "cmd_ancestry"
+as its prefix would be accepted).  I guess that is OK because we are
+testing this in a fairly tightly controlled environment (trace keys
+are taken from known vocabulary, not arbitrary strings, for example).
+
+Will queue.  Thanks.
+
+>  	then
+>  		test_set_prereq TRACE2_ANCESTRY
+>  	fi
 >
-> Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-> ---
->  t/t1410-reflog.sh | 29 +++++++++++++++++++++--------
->  1 file changed, 21 insertions(+), 8 deletions(-)
->
-> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-> index ce71f9a30a..397f94b039 100755
-> --- a/t/t1410-reflog.sh
-> +++ b/t/t1410-reflog.sh
-> @@ -244,8 +244,10 @@ test_expect_success 'delete' '
->  	test_tick &&
->  	git commit -m tiger C &&
->  
-> -	HEAD_entry_count=$(git reflog | wc -l) &&
-> -	main_entry_count=$(git reflog show main | wc -l) &&
-> +	git reflog >reflog_output &&
-> +	HEAD_entry_count=$(wc -l <reflog_output) &&
-> +	git reflog show main >reflog_main_output &&
-> +	main_entry_count=$(wc -l <reflog_main_output) &&
->  
->  	test $HEAD_entry_count = 5 &&
->  	test $main_entry_count = 5 &&
-
-If you _know_ output from certain command must be 5 lines, would it
-make more sense to use test_stdout_line_count, perhaps like
-
-	test_stdout_line_count = 5 git reflog
-
-or something?
-
-> @@ -254,16 +256,23 @@ test_expect_success 'delete' '
->  	git reflog delete main@{1} &&
->  	git reflog show main > output &&
->  	test_line_count = $(($main_entry_count - 1)) output &&
-> -	test $HEAD_entry_count = $(git reflog | wc -l) &&
-> +	git reflog >reflog_output &&
-> +	test $HEAD_entry_count = $(wc -l <reflog_output) &&
->  	! grep ox < output &&
->  
->  	main_entry_count=$(wc -l < output) &&
->  
->  	git reflog delete HEAD@{1} &&
-> -	test $(($HEAD_entry_count -1)) = $(git reflog | wc -l) &&
-> -	test $main_entry_count = $(git reflog show main | wc -l) &&
-> +	git reflog >reflog_output &&
-> +	test $(($HEAD_entry_count -1)) = $(wc -l <reflog_output) &&
-> +	git reflog show main >reflog_main_output &&
-> +	test $main_entry_count = $(wc -l <reflog_main_output) &&
-> +
-> +
-> +	git reflog >reflog_output &&
-> +	HEAD_entry_count=$(wc -l <reflog_output) &&
-> +
->  
-> -	HEAD_entry_count=$(git reflog | wc -l) &&
->  
->  	git reflog delete main@{07.04.2005.15:15:00.-0700} &&
-
-Can you explain the addition of these consecutive blank lines? The
-same question applies to the blank lines at the end of the test in
-the next hunk. I ask because formatting issues like this often
-resemble unedited AI-generated code that hasn't been properly
-cleaned up before submission.
-
->  	git reflog show main > output &&
-> @@ -321,11 +330,15 @@ test_expect_success 'git reflog expire unknown reference' '
->  '
->  
->  test_expect_success 'checkout should not delete log for packed ref' '
-> -	test $(git reflog main | wc -l) = 4 &&
-> +	git reflog main >reflog_output &&
-> +	test $(wc -l <reflog_output) = 4 &&
->  	git branch foo &&
->  	git pack-refs --all &&
->  	git checkout foo &&
-> -	test $(git reflog main | wc -l) = 4
-> +	git reflog main >reflog_output &&
-> +	test $(wc -l <reflog_output) = 4
-> +
-> +
->  '
->  
->  test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
+> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
