@@ -1,153 +1,134 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05889373BF3
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:04:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783436644; cv=pass; b=Z+sSBKl1r13/A0ujllMZUzutcwBsoyEZv3G8pj0kA7Fk+S+6hznZ6Kg00yn9w126RkX6TSEoZj5kJGEM+RQBGX/IiI3650IxuA51fUOmzSwqRI7u7D/oPDZ+u9/1R3zeDyIcOSwTwZ270XemjioCo4qTQtnZotsxUtoEr54LjIY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783436644; c=relaxed/simple;
-	bh=mRKPnxscwNz7uEIP60p2P2mFvC6nahohu3xjXa+Ug24=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Qhtbx5JLwpHZdk+s8x6M/N6yMP3jzrUjG3cQUaD+IojCc6EUbc9FhYbt5CYY9JjTwVZgCcExE/SzPNIzogt8l55eXpGKGDwgPWwDm0j/M8dLgpve57jKOFtds26tbPb+gprDG3ERkK50rlk6M6O1PELTEYQ0xIw1GiJdTDPeE7s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=epCqAJLB; arc=pass smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED34137B02B
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:09:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783436974; cv=none; b=ZwXF2F5bsdhPt0CGhmowhqjAU8me2wZb1mzGytErtwLA9JJbz+eLtoCeREjATkPrAVYh9lT/HkNOci7PGWO+KJF/D9BCjVkPVDqQKtCA1pL7fuldQUbyUO7bVsDOT/V0eD9WVjO3Heh0olSRbwLXj1x81KdrZDk39V1zqddLk7c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783436974; c=relaxed/simple;
+	bh=i3tpCBqz91PwlWDskV9BwK1w0Zd8M1e6QJ5U2d6jL9w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fG46PxZNNNqOlRjpZ4jJOgUg+c2CjuMEvLrKnmTjmRqOm9dGoE57d5rNRnduOpXS+gWO1yzLo68bxjSrJL6kqBQJ0EJvZUx4YSjhVwFUlOUAvYYYzYKJusYkamtTpIm3205TPFgCKD1UA/Xi3B1OYknrJ96cD5dzzPg0K4ZwgZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=1/yd6cg+; arc=none smtp.client-ip=95.215.58.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="epCqAJLB"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cad8076b01so53875665ad.2
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 08:04:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783436642; cv=none;
-        d=google.com; s=arc-20260327;
-        b=dvEUH+h/4jGMdPyYuNkkMr9rX/ruMcG70i6agnbKjWLk7meILTff7tJZDQ4yGb6kI/
-         BunqxDY9ATxC9JTLqsUjSST1TzCZs6Kb+aEDshzAIV4yrziVTcE3scvpANYQN1y6kFJI
-         9os7WW/1aydllegf8KuhTvYQvMjeo3eaN42uNY85BSGm5ufULygqCvPI2ehpANSWerRd
-         r+xB/6JggnQGWU289W72sPM2FbSO7qp+fS7WKAQmW/rYwDTssal5TPGLFRqT81cIfxN/
-         Vc4uFajFoitxNSNw/jUVY9yv4ffry/UQDQe9AHdHrz/rU/XhHpu2zxukMdSfKH7XN9z5
-         kcCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=8jGIA4LeZ6/Sh4qbdDJbZFjvXDCYwBjP6A34P/oQexA=;
-        fh=dsGF57VkC56Lx6IrXG8LC15R93nyzaXlc4RLdtc5S7c=;
-        b=QWwQB1y+mKgZEOSUp+roGPhqzU3fABd3iJG5+5Fgk/4sr/4BQ+1ClToBcfoWKlpqjn
-         zDKp/c2Q+CG9KE2DYpLAkOLbnKKDAdlzEn5d+pvdw9l3WF0+PqxMevHz+I/x2mJ1IU/j
-         oUSCf4YB0D1W/ao4XuWrWyUwYsQ2C/jOt2RXJkYsds3uDj+nLJVqW8wpZdGaFp8kHMiD
-         oJrLsH7rB4dRWkeFLrvvOdT+fcLVRj3zJjiE1oWk+XfCavDoUKYkYHsQGcfS3SfqNpu9
-         lOBCsnv3DcXuP7yuSG//mip85yD0KsFe8VgMwqQwEn99C6leBddnxXaoOXLmJBn/551S
-         2F5w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1783436642; x=1784041442; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8jGIA4LeZ6/Sh4qbdDJbZFjvXDCYwBjP6A34P/oQexA=;
-        b=epCqAJLBc250Nd+8bN+i66ZBfPP3t98Z1MUZWC23fL3O8ONyKRjGz2lmVWE9ietdeh
-         Gl0vU02XyK7SnvahfJiCxv8F5RlL83Oy0u9RxhWT0YRaOIYonN+SOpe67eb1kL0YsQZB
-         Wz0MRirHC2SMqP1heSjMBamCA+OBD7Xe3yS1g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783436642; x=1784041442;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8jGIA4LeZ6/Sh4qbdDJbZFjvXDCYwBjP6A34P/oQexA=;
-        b=pH+9BwExGE9KYbYDxRU/l4cEjuwwK7QBqBzRp1to0/uPspTgptC7OAAUCcXruF6GnY
-         hfZ0++5YQuiGlstiTUq87J0AitsaDs0Xzp28GrNXggToeaWDgg/MoCNooOycpy1wsbmD
-         AVFoahdWv+nzFLOKWhOR/D/kDp55p7uyPUfTsxnd+DeHXGAAwCpEd6SRC5tZMdbJPzfi
-         ubwE18/RR0SVhkrYFtmVSnNWYTMimnrevK/SGCVr2ub+gsajP57zUhmqSiKiQGenyY61
-         pFJrVxhc8uH9bzCb3DXQvyYHWJS2QwHW5tkmdWEMTGyX7FBz+xOj5wkn8eE/JcdVebFc
-         1M3w==
-X-Forwarded-Encrypted: i=1; AHgh+Rq7cnhGVUTUu6JZNhSESWfuGGxbuj8lHiMFBACkDTHERp3GZAbkBxdpM19f5nXMTVlZvbo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9e9Ee4yMkmQo6OJKExyh1JJD4awaKO3wsGX0XzZKZx7SEzhxz
-	iytFe4An8Qw8CiH2msGPp2Ggje5PioTP+rpmtfHNIyZrNnWaUyik8MKWD9tpz9fQTsZG8shqqCc
-	tYEpSM6rWUb5iElqyo4GtLreQ8xQtKvX2Y2I30UgPLSPh40CV75Wh/jcSag==
-X-Gm-Gg: AfdE7ck2Rd6G9UHB3KZ+vLUOHiR1JHps7GAhSp7GkNxa7HJh0FxQ3lXJ+wHMWoqbi8V
-	BZdOm32rIV4Rav7vZy8rOXVf4Yt9wZQ9Lrn0Cvln6DnpkFkRi05/ghKCMdghSmOQD0DmBLt9EL6
-	PblHfY9PEGVFQnBwg9yXtQWG2AUqueZUPylZ8gsZqO288diCl5OrSrYksfzeiByjZ3T8qjafHOx
-	qvVKo5Y4QgJ8w7z53ks1mn0S7Qa4/j86GmaXxn2quEDAHNHwPchgHJjbpyQ+Hml331nBu7Cew==
-X-Received: by 2002:a05:690e:1189:b0:667:9481:5b38 with SMTP id
- 956f58d0204a3-66794816746mr870640d50.41.1783436245071; Tue, 07 Jul 2026
- 07:57:25 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="1/yd6cg+"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1783436965;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jGHTRe/uM9zMhMt8tBXykhwqWFQvq/RjZSbbJMMCc8M=;
+	b=1/yd6cg+kreLUdK/bBaX3iq+LoTf/qNQ0lAaFAC1kIsELJ4Z8LoF1kongPJascxMcElijV
+	yrKhiIy8RkeQrNhoT6VWTJ/Sxq6KACe7v5BCx3kAuNle2JYb1jOKA7K3WrjIXALHK00baS
+	UmjGFBijJSYJDyuBw7nCDaYBwaBslFg=
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v6 3/3] replay: offer an option to linearize the commit
+ topology
+In-Reply-To: <xmqqbjcnhjvk.fsf@gitster.g>
+References: <20260702-toon-git-replay-drop-merges-v6-0-78a07cdd0382@iotcl.com>
+ <20260702-toon-git-replay-drop-merges-v6-3-78a07cdd0382@iotcl.com>
+ <xmqqbjcnhjvk.fsf@gitster.g>
+Date: Tue, 07 Jul 2026 17:09:09 +0200
+Message-ID: <87ldbm3kh6.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
- <f9c1482a76493520b948a2e918de7a5481fa1043.1783418384.git.gitgitgadget@gmail.com>
- <ak0D44nhSH/98WYD@nand.local>
-In-Reply-To: <ak0D44nhSH/98WYD@nand.local>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 7 Jul 2026 16:57:13 +0200
-X-Gm-Features: AVVi8Ce0bhcXbCOUdJ6yxrVgVR4zOYtGtRBCQRqlORieXBX0c0z1_fbCRpvO0Ds
-Message-ID: <CAL71e4OuU1+KHd0TrcxDX2dyoWEJXmi86m8u+E7vtxhcSF6M1Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] commit-graph: propagate topo_levels slab to all chain layers
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, 7 Jul 2026 at 15:49, Taylor Blau <me@ttaylorr.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Toon Claes <toon@iotcl.com> writes:
 >
-> I think that there is a more permanent fix, though, which would have not
-> allowed this bug to evade both its author, and reviewer (me). I *think*
-> that we may clear up some scoping issues if we removed g->topo_levels
-> entirely, and instead stored it in the write_commit_graph_ctx struct.
+>> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>> ...
+>> Linearizing is a distinct operation, and flattening merge commits is
+>> just one aspect of that. Recreating merges would be a separate mode, so
+>> rather than mirror git-rebase(1)'s `--rebase-merges[=3D<mode>]` interfac=
+e,
+>> git-replay(1) uses its own `--linearize` option.
+>>
+>> Co-authored-by: Toon Claes <toon@iotcl.com>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Signed-off-by: Toon Claes <toon@iotcl.com>
+>> ---
+>>  Documentation/git-replay.adoc |  21 ++++++-
+>>  builtin/replay.c              |   6 +-
+>>  replay.c                      |  54 ++++++++++------
+>>  replay.h                      |   5 ++
+>>  t/t3650-replay-basics.sh      | 140 +++++++++++++++++++++++++++++++++++=
+++++++-
+>>  5 files changed, 203 insertions(+), 23 deletions(-)
 >
-> I haven't thought through the implications of doing so completely, so
-> it's entirely possible that this idea is bunk for some other reason. But
-> it was the first thing that came to mind, and so feels worth exploring
-> to see if it might have prevented something like this from ever
-> happening in the first place.
+> With such an extensive change in behaviour, I wonder if Dscho is
+> still responsible for latent bugs in this round of implementation
+> and documentation, or should you take the responsibility over?
+
+I don't mind. But I don't want to steal credit.
+
+Initially, when Dscho shared the patch with me, he already informed me
+he doesn't really care about authorship. So in the next version I'll be
+taking over authorship and add a Based-on-patches-by trailer.
+
+@Dscho, let me know if you disagree?
+
+>> +--linearize::
+>> +	In this mode, each replayed commit is stacked on top of the
+>> +	previously replayed one, so all replayed commits are flattened into
+>> +	a single linear history.
+>> ++
+>> +When a merge commit is encountered, the behavior of git-rebase(1)'s
+>> +option `--no-rebase-merges` is imitated. All commits in the range
+>> +reachable from the merge commit are replayed into a linear history, and
+>> +the merge commit itself is dropped. A ref that pointed to a merge commit
+>> +is updated to the merge's last replayed ancestor.
+>> ++
+>> +This flattens the `<revision-range>` as a whole. When multiple revision
+>> +ranges are given they are stacked on top of each other into one linear
+>> +history. Each of their refs is updated to point to its position in that
+>> +history. To linearize ranges separately, replay them in separate `git
+>> +replay` invocations.
 >
+> OK, very much understandable.
+>
+>> +This option is incompatible with `--revert`.
+>
+> Definitely it is OK to leave it outside the scope, but I am not sure
+> if reverting a group of commits that happens to be "closed" and
+> happens to contain merges, is inherently incompatible with
+> flattening.  If you have
+>
+>     ----O--A
+>          \  \
+>           B--M--C
+>
+> and you want to revert what happened while the history advanced from
+> O to M, I would na=C3=AFvely expect that I can arrive at
+>
+>     ----O--A
+>          \  \
+>           B--M--C-B'-A'
+>
+> by linearly applying the inverse of A and B (in either order).
 
-I looked into the structural change you suggested and I think
-it's doable, though not quite as simple as just moving
-it into ctx (since fill_commit_graph_info() doesn't have ctx).
+You're absolutely right. Personally I'm not sure why the limitation was
+introduced. I've done some testing and I cannot see why we wouldn't
+allow --revert and --linearize to be combined. So I'll be submitting v7
+without this restriction.
 
-I found three approaches:
-
-(a) Thread topo_levels through the call chain. This would
-affect:
-- fill_commit_graph_info()
-- fill_commit_in_graph()
-- parse_commit_in_graph_one()
-- parse_commit_in_graph()
-- load_commit_graph_info()
-- lookup_commit_in_graph().
-
-This is the most direct approach, but it touches many functions
-and some callers would need to pass in NULL which makes it a bit
-noisy.
-
-(b) Move topo_levels to struct object_database. Since
-fill_commit_graph_info() can already reach the odb via
-g->odb_source->odb, no signature changes are needed.
-The write side becomes a single assignment:
-
-    ctx.r->objects->topo_levels = &topo_levels;
-
-and cleanup becomes:
-
-    ctx.r->objects->topo_levels = NULL;
-
-No chain walk needed and the diff is fairly small.
-I am not sure about the semantics of it though -- should the odb
-have a reference to topo_levels?
-
-(c) Introduce a struct for the chain as a whole, separating it from
-the per-layer struct commit_graph. Right now struct commit_graph
-represents a single layer but also serves as the chain head, so
-chain-wide state like topo_levels gets duplicated on every layer
-(only logically -- the actual overhead is still small).
-A dedicated chain struct could own topo_levels and the linked list
-of layers. IMO this is the cleanest model but a larger refactoring.
-
-I have a prototype of (b) that compiles and passes the test suite.
-
-For now though, I think the minimal bugfix is the right thing to do.
-
-Thanks,
-Kristofer
+--=20
+Cheers,
+Toon
