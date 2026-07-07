@@ -1,88 +1,153 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D5A373BF3
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783436585; cv=none; b=tFkK7044O88AB7omc+P8UMMkXs2GMhJST+M+UBLFV2fS5Fq9elmY10/oaN0EnTApgI149CI8nfnwZ9VaYNia0sOGg6tlMGbp2OrefiGSNPdb7EqftNDiT+4PlVX8qJepI1Fg+iHX9uU8UpWtOJQOf0BvifsCXHbPL6oltRqS+rw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783436585; c=relaxed/simple;
-	bh=9T1LIVkkTZcXVkA4/b13kkFZaXgIqGVjuHMDRehSdio=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y6sJsbs7WzgrD9OFBMuv+SjYhxdEOm5ZXcYT81SqTFR4UNnj6jy15qXMCc6L2nv66CubRP/7DYLuroxYfUxl7kC7Qlqo5oo/KmujcTmcseI/7rf7wt4lRgGLCKTmxrZOagJbaUBFEkyKtLhnxy8CJLBWRcwCbKJWGqJNvmqNc9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qRwcV6Ds; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05889373BF3
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783436644; cv=pass; b=Z+sSBKl1r13/A0ujllMZUzutcwBsoyEZv3G8pj0kA7Fk+S+6hznZ6Kg00yn9w126RkX6TSEoZj5kJGEM+RQBGX/IiI3650IxuA51fUOmzSwqRI7u7D/oPDZ+u9/1R3zeDyIcOSwTwZ270XemjioCo4qTQtnZotsxUtoEr54LjIY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783436644; c=relaxed/simple;
+	bh=mRKPnxscwNz7uEIP60p2P2mFvC6nahohu3xjXa+Ug24=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qhtbx5JLwpHZdk+s8x6M/N6yMP3jzrUjG3cQUaD+IojCc6EUbc9FhYbt5CYY9JjTwVZgCcExE/SzPNIzogt8l55eXpGKGDwgPWwDm0j/M8dLgpve57jKOFtds26tbPb+gprDG3ERkK50rlk6M6O1PELTEYQ0xIw1GiJdTDPeE7s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=epCqAJLB; arc=pass smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qRwcV6Ds"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e6b554044fso3287616a34.0
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 08:03:03 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="epCqAJLB"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cad8076b01so53875665ad.2
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 08:04:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783436642; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dvEUH+h/4jGMdPyYuNkkMr9rX/ruMcG70i6agnbKjWLk7meILTff7tJZDQ4yGb6kI/
+         BunqxDY9ATxC9JTLqsUjSST1TzCZs6Kb+aEDshzAIV4yrziVTcE3scvpANYQN1y6kFJI
+         9os7WW/1aydllegf8KuhTvYQvMjeo3eaN42uNY85BSGm5ufULygqCvPI2ehpANSWerRd
+         r+xB/6JggnQGWU289W72sPM2FbSO7qp+fS7WKAQmW/rYwDTssal5TPGLFRqT81cIfxN/
+         Vc4uFajFoitxNSNw/jUVY9yv4ffry/UQDQe9AHdHrz/rU/XhHpu2zxukMdSfKH7XN9z5
+         kcCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=8jGIA4LeZ6/Sh4qbdDJbZFjvXDCYwBjP6A34P/oQexA=;
+        fh=dsGF57VkC56Lx6IrXG8LC15R93nyzaXlc4RLdtc5S7c=;
+        b=QWwQB1y+mKgZEOSUp+roGPhqzU3fABd3iJG5+5Fgk/4sr/4BQ+1ClToBcfoWKlpqjn
+         zDKp/c2Q+CG9KE2DYpLAkOLbnKKDAdlzEn5d+pvdw9l3WF0+PqxMevHz+I/x2mJ1IU/j
+         oUSCf4YB0D1W/ao4XuWrWyUwYsQ2C/jOt2RXJkYsds3uDj+nLJVqW8wpZdGaFp8kHMiD
+         oJrLsH7rB4dRWkeFLrvvOdT+fcLVRj3zJjiE1oWk+XfCavDoUKYkYHsQGcfS3SfqNpu9
+         lOBCsnv3DcXuP7yuSG//mip85yD0KsFe8VgMwqQwEn99C6leBddnxXaoOXLmJBn/551S
+         2F5w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783436583; x=1784041383; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LY++dNc/GOYD7pztHeo7D5SJSZPzV2HGTezml+w0fb0=;
-        b=qRwcV6DsagNqTgm9xhuunDPXSNpSedCbCiihq0URVXsp/68manQstUUdIlBt909qr8
-         gzmuKJY2LMWxtpHEdozcE9ShXiCI5Qygjgt7XVNyhrNJzj0QPgjcWyofIOEe6aeWyyzz
-         SjVz9jUr9MVQJIE+TXGwBDDqiaUWSvmmKUwibFKHBJfNMkNUIXNkh0XKFDJP4qI5QjGN
-         JUW4u9BZHbi0KYD8DCdUJFVBFBn+NJYSbDpvqB8EkcyFxItQ0G4BDJaBeo1V1Fu/6Q0v
-         VVvZylbfpdgVvcoqxvKEX4sTcjT+r7o6Pi7jcDbzU+70P1rXsoaFVkQ4HAYh9uM773Tr
-         fbWw==
+        d=spotify.com; s=google; t=1783436642; x=1784041442; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=8jGIA4LeZ6/Sh4qbdDJbZFjvXDCYwBjP6A34P/oQexA=;
+        b=epCqAJLBc250Nd+8bN+i66ZBfPP3t98Z1MUZWC23fL3O8ONyKRjGz2lmVWE9ietdeh
+         Gl0vU02XyK7SnvahfJiCxv8F5RlL83Oy0u9RxhWT0YRaOIYonN+SOpe67eb1kL0YsQZB
+         Wz0MRirHC2SMqP1heSjMBamCA+OBD7Xe3yS1g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783436583; x=1784041383;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LY++dNc/GOYD7pztHeo7D5SJSZPzV2HGTezml+w0fb0=;
-        b=H5JjgidaanVONxCjJjQfZCCw9lhVEQwd1dHt61xZ86YEnOhYZ2zcwq0n9heiVef4qZ
-         dnVjENX35kCW5/8py5xrDpGi9wceaDQ+jGv3oR5LjFINZ0aiT1GkW3/oQXHVM05oeBbn
-         ehGUeNAWBgzRseuM1lVHrd+eFdM9kJeV14HqsSi/Z7Bns00hfbihHD4F4ea+p0Oh0ynr
-         kmaaxrpRtpiCmLKZXfgnzqCekkW/yOz1xC8bzKmCpIvARAMaGrCe80IT+qMrG4x+hMR6
-         uicHG5MbUOg7AmU9kiv01Of3RmR5Lgv86k6W1j8tO4omBm7t3YqjeDMoYgSgpM6RK31q
-         AP/g==
-X-Gm-Message-State: AOJu0YyR6xbTEZ++KHoq77mMvIRWNKjzwhu6aRgwPylo2E7V8KQoBvSg
-	Egsv31yBkErUCuJWnp9tWW+J005BTRix0IN4VxEXumO23o7d7+ZX+8x6KKp4zQ==
-X-Gm-Gg: AfdE7cldkfXej/pATkcE/WNiDNVtF+mX5NlMU6uf/jrqywfVw7mBfQtxH/3JG2a68M3
-	C8Vfan/ROnagrVueIyd5U3iVrLQYPZiwxphnQZWLZu0kB9o1DE38IR31uJcCRg4LyvFBnEFpCOT
-	C2mgBIGckrxp072gPehApWsNO31tPVo657HQ6w0/+g1qV6IDpi29D9uKC2+77mUXBaabX8m4ZHt
-	MFNkIclZBoh7amGgm6xs0If2LILEYx5DC8BQ+u2xrlCmP8N5x2ooGrLcrhdiXKekw+Ovd1BbxMI
-	ZtecFGPweUsDQlrmOFVAygsVCilLRYtO9AGmWWCP7+qcBWLNyXyTwcg91wSBv2g8aZedm1EW3o0
-	nRhUo0ohDtr8T8x1JgBg267h8hdbzbyOl/EYFTB8ZL+D9Kb4IjcCyxmiSKRuiHX2XVZE4bT9jiO
-	ikbLU/3w==
-X-Received: by 2002:a05:6830:3747:b0:7e9:e860:6f1 with SMTP id 46e09a7af769-7ebb23b17a3mr4247574a34.32.1783436582875;
-        Tue, 07 Jul 2026 08:03:02 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7eb542936e6sm14133596a34.5.2026.07.07.08.03.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 08:03:01 -0700 (PDT)
-Date: Tue, 7 Jul 2026 10:02:58 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/13] setup: split up repository discovery and setup
-Message-ID: <ak0U46-J4qmwL2FD@denethor>
-References: <20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im>
- <20260707-pks-setup-split-discovery-and-setup-v2-0-aab372cd227c@pks.im>
+        d=1e100.net; s=20251104; t=1783436642; x=1784041442;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8jGIA4LeZ6/Sh4qbdDJbZFjvXDCYwBjP6A34P/oQexA=;
+        b=pH+9BwExGE9KYbYDxRU/l4cEjuwwK7QBqBzRp1to0/uPspTgptC7OAAUCcXruF6GnY
+         hfZ0++5YQuiGlstiTUq87J0AitsaDs0Xzp28GrNXggToeaWDgg/MoCNooOycpy1wsbmD
+         AVFoahdWv+nzFLOKWhOR/D/kDp55p7uyPUfTsxnd+DeHXGAAwCpEd6SRC5tZMdbJPzfi
+         ubwE18/RR0SVhkrYFtmVSnNWYTMimnrevK/SGCVr2ub+gsajP57zUhmqSiKiQGenyY61
+         pFJrVxhc8uH9bzCb3DXQvyYHWJS2QwHW5tkmdWEMTGyX7FBz+xOj5wkn8eE/JcdVebFc
+         1M3w==
+X-Forwarded-Encrypted: i=1; AHgh+Rq7cnhGVUTUu6JZNhSESWfuGGxbuj8lHiMFBACkDTHERp3GZAbkBxdpM19f5nXMTVlZvbo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9e9Ee4yMkmQo6OJKExyh1JJD4awaKO3wsGX0XzZKZx7SEzhxz
+	iytFe4An8Qw8CiH2msGPp2Ggje5PioTP+rpmtfHNIyZrNnWaUyik8MKWD9tpz9fQTsZG8shqqCc
+	tYEpSM6rWUb5iElqyo4GtLreQ8xQtKvX2Y2I30UgPLSPh40CV75Wh/jcSag==
+X-Gm-Gg: AfdE7ck2Rd6G9UHB3KZ+vLUOHiR1JHps7GAhSp7GkNxa7HJh0FxQ3lXJ+wHMWoqbi8V
+	BZdOm32rIV4Rav7vZy8rOXVf4Yt9wZQ9Lrn0Cvln6DnpkFkRi05/ghKCMdghSmOQD0DmBLt9EL6
+	PblHfY9PEGVFQnBwg9yXtQWG2AUqueZUPylZ8gsZqO288diCl5OrSrYksfzeiByjZ3T8qjafHOx
+	qvVKo5Y4QgJ8w7z53ks1mn0S7Qa4/j86GmaXxn2quEDAHNHwPchgHJjbpyQ+Hml331nBu7Cew==
+X-Received: by 2002:a05:690e:1189:b0:667:9481:5b38 with SMTP id
+ 956f58d0204a3-66794816746mr870640d50.41.1783436245071; Tue, 07 Jul 2026
+ 07:57:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260707-pks-setup-split-discovery-and-setup-v2-0-aab372cd227c@pks.im>
+References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
+ <f9c1482a76493520b948a2e918de7a5481fa1043.1783418384.git.gitgitgadget@gmail.com>
+ <ak0D44nhSH/98WYD@nand.local>
+In-Reply-To: <ak0D44nhSH/98WYD@nand.local>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 7 Jul 2026 16:57:13 +0200
+X-Gm-Features: AVVi8Ce0bhcXbCOUdJ6yxrVgVR4zOYtGtRBCQRqlORieXBX0c0z1_fbCRpvO0Ds
+Message-ID: <CAL71e4OuU1+KHd0TrcxDX2dyoWEJXmi86m8u+E7vtxhcSF6M1Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] commit-graph: propagate topo_levels slab to all chain layers
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/07/07 09:21AM, Patrick Steinhardt wrote:
-> Changes in v2:
->   - Expand commit message to talk about precedence order between
->     the "GIT_SHALLOW_FILE" environment variable and the "--shallow-file"
->     command line switch.
->   - Remove a now-unused parameter in `set_alternate_shallow_file()`.
->   - Fix a typo.
->   - Link to v1: https://patch.msgid.link/20260630-pks-setup-split-discovery-and-setup-v1-0-13864eb5a032@pks.im
+On Tue, 7 Jul 2026 at 15:49, Taylor Blau <me@ttaylorr.com> wrote:
+>
+> I think that there is a more permanent fix, though, which would have not
+> allowed this bug to evade both its author, and reviewer (me). I *think*
+> that we may clear up some scoping issues if we removed g->topo_levels
+> entirely, and instead stored it in the write_commit_graph_ctx struct.
+>
+> I haven't thought through the implications of doing so completely, so
+> it's entirely possible that this idea is bunk for some other reason. But
+> it was the first thing that came to mind, and so feels worth exploring
+> to see if it might have prevented something like this from ever
+> happening in the first place.
+>
 
-The changes in this version look good to me. Thanks.
+I looked into the structural change you suggested and I think
+it's doable, though not quite as simple as just moving
+it into ctx (since fill_commit_graph_info() doesn't have ctx).
 
--Justin
+I found three approaches:
+
+(a) Thread topo_levels through the call chain. This would
+affect:
+- fill_commit_graph_info()
+- fill_commit_in_graph()
+- parse_commit_in_graph_one()
+- parse_commit_in_graph()
+- load_commit_graph_info()
+- lookup_commit_in_graph().
+
+This is the most direct approach, but it touches many functions
+and some callers would need to pass in NULL which makes it a bit
+noisy.
+
+(b) Move topo_levels to struct object_database. Since
+fill_commit_graph_info() can already reach the odb via
+g->odb_source->odb, no signature changes are needed.
+The write side becomes a single assignment:
+
+    ctx.r->objects->topo_levels = &topo_levels;
+
+and cleanup becomes:
+
+    ctx.r->objects->topo_levels = NULL;
+
+No chain walk needed and the diff is fairly small.
+I am not sure about the semantics of it though -- should the odb
+have a reference to topo_levels?
+
+(c) Introduce a struct for the chain as a whole, separating it from
+the per-layer struct commit_graph. Right now struct commit_graph
+represents a single layer but also serves as the chain head, so
+chain-wide state like topo_levels gets duplicated on every layer
+(only logically -- the actual overhead is still small).
+A dedicated chain struct could own topo_levels and the linked list
+of layers. IMO this is the cleanest model but a larger refactoring.
+
+I have a prototype of (b) that compiles and passes the test suite.
+
+For now though, I think the minimal bugfix is the right thing to do.
+
+Thanks,
+Kristofer
