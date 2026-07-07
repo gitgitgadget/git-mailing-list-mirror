@@ -1,156 +1,93 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E498D430CDE
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:33:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43A25A655
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 16:51:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441990; cv=none; b=FLI9ME9UShT9TBktKVKnDH+apXYcpJuFhEsbqVG7j+VlLKtCkZXoWo24q1DonxIneJSwwfKTqFepE60Z4536r16ROhcn36MTCPNPLYKJ4cuhJoGSLnryTgIXvwb9fKX+NHnRgAFge1GgTB/uvfspGALX9mIrYUXHU6xjHVpyYe4=
+	t=1783443075; cv=none; b=mNOaSwGOUHW15GEteV8bYlDzgZfzkggXYKljcu6nVCjFQgzUfZOZczvzdSC4Enp9exGz42hRCf4OJZPuEyfoYgd3q/U0NTKhiWYtNITO5j9r5kHggn9HoZc+q1myldGavcMV+nrvNNrdxk72f47AHv0087iBNmFyfWlggGolI2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783441990; c=relaxed/simple;
-	bh=7azzzbgEJx1XERhvW9XfjHvWQ6/zNrjXbv7vpeh7HXQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MKm/HtabzVuUfQZLzfbHxvJokmF5VqjoqfsI6++V0SJFqe6Q0DOqZMex2dyzq4X+8VyDEz3MsSbJKbKE9eGesLtDbwzl8ZQFSXegx+qMRooJgcxMZGo3DG0mBNuT/r6pJaGUyoy1uAEa4+htow6QPzsYqshxb/xtKV5Nli+6M1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rBpunVho; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p+W1FTJI; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783443075; c=relaxed/simple;
+	bh=TFeKJKUD4ruv+u7Fw13kYJ60nmL+y/TuHMy7iVY7rOE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=qz4LKs4KuY2mlfZ42Hqw3gU+UuAYZFmGBCS9HHUZmcB1Tpql2jKPs7VA/PSaPZCtoYGUIIPDRvsTOeewue2m1KR4ljy/vw1bczPXHiV0DvkzPMrHXDd9TFUgFFjys4u1bkjf9fTvMZ6/Q9ez64Ye2ey7t3S48bITs4Sb8R3Z/s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ssIAuI9i; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rBpunVho";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p+W1FTJI"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 39C5D7A0148;
-	Tue,  7 Jul 2026 12:33:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 07 Jul 2026 12:33:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783441988; x=1783528388; bh=ZttfMT+LYz
-	BCCjeEji0fkaLNX+Fj6w4pEIh4uWyhGoQ=; b=rBpunVho6E9teq12iGTcqbvhUf
-	k3SQTOqLS2Ni5nj6qwOuGdCJGQiQsmQx4SGqzMW6tGldjmW5b0s1w8cNphdwHMKE
-	HEsVkkWKQX4suXQbl7L27DmU+vpvKB145n2iOfdyf06TMvykdd50Kj3uS2eLF2QQ
-	rkZ/TOoALvStTrZxdJ1x4NSJJA2doX7Od1u7VekYAN0P7G2ic58NJyMmwJmht9AF
-	ukLSiFGY3UXlH3bRrTty+uH2WT33NurakwPkzr6izE0au+2C8EUCG8v44pNmRTGi
-	DRa3DJKRKH50KVSo9jrZYMbPlxgV0bx7gYmsuevV/nxyFZTqkt6LxSEfdYbA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783441988; x=1783528388; bh=ZttfMT+LYzBCCjeEji0fkaLNX+Fj6w4pEIh
-	4uWyhGoQ=; b=p+W1FTJIlPYiq7xTLbpLbZkwYFRb4Q+ruuLf4Ngpvu95PpvmtT7
-	kES+46Zrzz5HsAkaThLgUprW4q4Xt/hWOAGpZiaRtBrsKjZWUKTYJrbxaXli9cLm
-	QT2V40PqwfH4L1PQlbACFw1X9Bt1HqH8t7ql9qmIVj4edgPAQ6IEZCtAPp+OGWbK
-	BMclvCLJRNG4I7u0rRFhA0gcoxCtlfabnQmKvVz+l09nxSST5Zh6EwJddMvZgInL
-	A/j242gyCtDgRACppThm5QMfHce6Cgj1eafeB+Q/QAtAeyBA+guCJqd11i4JcVoa
-	1VjsE/QL23rAhyHPjDIGkQuwGPnXaITk7IA==
-X-ME-Sender: <xms:QypNao4M4hPAEtonwgXziLYOdEeg6L07nVrlCJC8S5xBWuCKSrBvTQ>
-    <xme:QypNagzTm2ApFgzlxOlBZ_Mp44Rh69KYKQqmZ1YjxQRHUPMwQmsLOSXCM-kxBA1D-
-    jHYjOvcjTL3ZGWO-5tD0TfpKpvBI_KzycpQHVhA1Lps9EMxIYgWfg>
-X-ME-Received: <xmr:QypNavw2GLxFh8dekO-IxsDdufMqI2QaUoHwltk8SktICRyiUi20ogFizXkvdhq9eLJRLFEgjZBc0zxHgH5Afz438Me5zHL7xeDyvyo>
-X-ME-Proxy-Cause: dmFkZTGeBZXeoUEW3t4IlRFW9KulAutSJNmDCnFNRKSPxWsawbo5xP2ptnSXGg+e4NIGj3
-    60KUYNP479W9yW8H4ZnA8McZvf6plNUIsdjRMpDWALUOHkLDi935cDHxhKslNO3nlS2aiU
-    BHwdprkVxDs2+Q5L6bKkmLcdoGNtLyDusAUqpVNGqSLHl1Z1fDSSdcHuBgh5eOqLST4l2o
-    qlSzYPLSOYBUTGXibIXvmVUAstxHfi1pXwDU+id0L/nByuW+0W6+5ZNFmABPwcm6RzI04l
-    XXrfzeg3AFV20DWuVSKfExCP/72kdIjA/9arMIuAaRGGDCHgm2nOdLzkWumMb7WxUYC/S6
-    Z0g+Woe0Ay/dqrmxclM3G42RBpzIIcLCvQ4Kt2TcF+JH/n+wtGMgRNBeAQKkAXNdRQNqsR
-    fuJRnIofmfXFtKF07ZfRWjdFrLph8UCaozuI1VrecdC6HgMrZHQu/b5cAirB6mZn3FmuOA
-    3DKF4gGXlVAV4PL7vUCVbrdnd8Sjx1wRvvUSq9edTIoTRbu5mPejaycFEIz79hk2W3Bq87
-    VtEMzDznW7gZe7pRh5fwuSdpvSK+Fur6POfcyVz+9wgRh44GwywXCzR4ICwH5Wv10zzT53
-    9/n+DapFdFkiuBaeWsyDs/IFjp1cXgSqzekuQexFn+X1yuTIWbh4ypPKGlEA
-X-ME-Proxy: <xmx:QypNaoz7ppWyvalRc33skp4AAYDbE5FVUNE01KtGf2HgIxGwjHAvHg>
-    <xmx:QypNapafPkC643vdIZ3gTqwuhJ_MeYKB29quw78Hvq72uO34HOSqPQ>
-    <xmx:QypNapUQT9SLJR1on4fX4N4hfidgs8viqoU49VOjErLQvhMyGTnHVw>
-    <xmx:QypNang1JUQUaUIf3gSYRcmnexnvgYkq9wKGfcbepFYQ-nOzeQmR8w>
-    <xmx:RCpNahgadvAp1D_3rhozFJtqH8ygMq7YfhOrOhpxMECiAQIIuV0DvROz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 12:33:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 7/7] hash: check ctx->active flag in all wrapper functions
-In-Reply-To: <20260707050952.GG1288294@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 7 Jul 2026 01:09:52 -0400")
-References: <20260707045556.GA1288172@coredump.intra.peff.net>
-	<20260707050952.GG1288294@coredump.intra.peff.net>
-Date: Tue, 07 Jul 2026 09:33:06 -0700
-Message-ID: <xmqqcxwy7oal.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ssIAuI9i"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-388cfc4848dso126518a91.3
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 09:51:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783443074; x=1784047874; darn=vger.kernel.org;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TFeKJKUD4ruv+u7Fw13kYJ60nmL+y/TuHMy7iVY7rOE=;
+        b=ssIAuI9iHFdvWQg/puxZ37uZhB74VSgA9QmiJjNpKWIIW4/Rr2LEmPG6mhaxktzwjE
+         i/AL1syd0CfzzKzCM3r8YF0kAyvkTtmqqkS3SGtyBLFr326wf7oKp7uvQI96FS/xjNAb
+         o9ETXYTezENsN5KS2UNjuQDd1K/1szOZze318LOABNGxPJwbCF7/ghMXY1gRw6g4FS6Y
+         FvJdYoM0MTw6W3F2vBy4p9NOhJstfNAFdJ6sI91t5aRaLb/55wDP7oWrnbugxUAJwW/e
+         V+RVHIds9dL2S98NsPNnFUbtX1YYHDExwsS+qZaIrjbYaKxJgUGvhQBEA+baY1ZucdZS
+         7K2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783443074; x=1784047874;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TFeKJKUD4ruv+u7Fw13kYJ60nmL+y/TuHMy7iVY7rOE=;
+        b=elwzUOpHAP2i3jZmhUZMs1ufjc9HBssTkpdaDMS44EIXXs8uT/Hf5ROemkU8PF3NWf
+         /sgzPjjbc/apZ61qC/DAfhDnRKSTRVhegeBm6K9owb7VqZ1hYQkZhhh460/hyCUp+BET
+         2A2Dj94wuYvcc+SLy2RBue07RfQyX58Bc9Nx58XItVnvYTpN8WFqTspoYZPLjEdfroyV
+         qUXFYz2ptN3IE2dh4NXiAQ+xIE53IRUi1W5w4fPEuHSmaI3ea8BUhih6FQW4kYCGiiCi
+         w23hWenuLxnZq7pJxHlQxM8FmxGYfODphWsSGHIng2spzTi8YosLJ/tH0mh4Zi4BlBpg
+         AsIQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqdN623un5qpnzFXXeBEhv/L6SJIuY69sXW78Eb7FwUmHjoH9POCwICiJwBnhgITm/3LJg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yywm5WNbZCAqd4VKKnuO+ws1lob2q3vXmb3oa/7CL9KIDpTIweA
+	WQ08eNXexGJe7HIBlwVaBvxa4Fo0jVT/x5oVMgVqK7O20VAIKGkNxmLfMlBQaJQfjbYYfGTDUym
+	Xcg==
+X-Received: from dybhr12.prod.google.com ([2002:a05:7300:e2cc:b0:311:50ef:5b3a])
+ (user=snatu job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2fd0:b0:37f:bfd6:8b40
+ with SMTP id 98e67ed59e1d1-38755573934mr5444848a91.5.1783443073780; Tue, 07
+ Jul 2026 09:51:13 -0700 (PDT)
+Date: Tue,  7 Jul 2026 09:51:12 -0700
+In-Reply-To: <xmqqmrw3aoas.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+References: <xmqqmrw3aoas.fsf@gitster.g>
+X-Mailer: git-send-email 2.55.0.795.g602f6c329a-goog
+Message-ID: <20260707165112.1750921-1-snatu@google.com>
+Subject: Re: [PATCH v5 1/2] Makefile: add $(GITLIBS) prerequisite to osxkeychain
+From: Shnatu <snatu@google.com>
+To: gitster@pobox.com
+Cc: ben.knoble@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com, 
+	koji.nakamaru@gree.net, kristofferhaugsbakk@fastmail.com, ps@pks.im, 
+	shardul.27591@gmail.com, snatu@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+> Sorry if I am mistaken, but as far as I can see, $(GITLIBS) includes
+> common-main.o (and it being .o, not .a, it is always included in the
+> result), and git-credential-osxkeychain.c comes with its own main()
+> function.
+>
+> Using a list of things to link that contains common-main.o does not
+> sound like a right thing to do; in other words, linking too many is
+> just as bad as linking too little.
 
-> It only makes sense to call git_hash_update(), etc, on a hash context
-> that has been initialized but not yet finalized or discarded. This is an
-> unlikely error to make, but it's easy for us to catch it and complain.
->
-> It's especially important because it would quietly "work" for many hash
-> backends (like sha1dc, which is just manipulating some bytes) but would
-> cause undefined behavior with others (like OpenSSL, which puts the
-> context onto the heap). Checking the flag lets us catch problems
-> consistently on every build.
->
-> Note that we can't do the same for git_init_hash(). Even though it would
-> cause a leak to call it twice (without an intervening final/discard),
-> the point of the function is that the contents of the struct are
-> undefined before the call. But calling it twice is an even less likely
-> error to make, so not covering it is OK.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  hash.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+You are completely right, and I missed that altogether!!
 
-Among the four we see here, I agree that calling _clone and _update
-on an already discarded or finalized context should be caught as an
-error. As I alluded to earlier, though, I am not sure about
-_final. The asymmetry in a design that allows _discard after _final
-but not _final after _final disturbs me slightly, but perhaps that
-is only because my morning caffeine has not yet kicked in. 
+In v6, I have reverted Patch 1 back to depending explicitly on
+$(LIB_FILE) $(RUST_LIB) rather than $(GITLIBS) so that common-main.o is
+excluded from the link step.
 
->
-> diff --git a/hash.c b/hash.c
-> index b1296f0018..82f7e24404 100644
-> --- a/hash.c
-> +++ b/hash.c
-> @@ -290,22 +290,32 @@ void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop)
->  
->  void git_hash_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
->  {
-> +	if (!src->active)
-> +		BUG("attempt to copy from an inactive hash context");
-> +	if (!dst->active)
-> +		BUG("attempt to copy to an inactive hash context");
->  	src->algop->clone_fn(dst, src);
->  }
->  
->  void git_hash_update(struct git_hash_ctx *ctx, const void *in, size_t len)
->  {
-> +	if (!ctx->active)
-> +		BUG("attempt to update an inactive hash context");
->  	ctx->algop->update_fn(ctx, in, len);
->  }
->  
->  void git_hash_final(unsigned char *hash, struct git_hash_ctx *ctx)
->  {
-> +	if (!ctx->active)
-> +		BUG("attempt to finalize an inactive hash context");
->  	ctx->algop->final_fn(hash, ctx);
->  	ctx->active = false;
->  }
->  
->  void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
->  {
-> +	if (!ctx->active)
-> +		BUG("attempt to finalize an inactive hash context");
->  	ctx->algop->final_oid_fn(oid, ctx);
->  	ctx->active = false;
->  }
+To ensure that linking errors in osxkeychain are caught automatically in
+future CI runs, I have also added a third patch to the series:
+"contrib: wire up osxkeychain in contrib/Makefile on macOS". This adds a
+"test" target to contrib/credential/osxkeychain/Makefile and wires it
+into contrib/Makefile under "all", "test", and "clean" whenever running
+on macOS (Darwin). Now, when CI runs "make test" with TEST_CONTRIB_TOO=yes
+on macOS runners, osxkeychain will always be compiled and linked.
