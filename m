@@ -1,81 +1,81 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6931B416122
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DBC3E3C50
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 15:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783438388; cv=none; b=VQoMHW6hDirMIl8wGuioMFUCqoEFM68FefTnoJgJ70N33YUfIU1PNI/e4DTtlVWuNppFIm5CTYn5wVjFnvSi1kYlxqsq9Ie/+7Ad0Enjs9NirBe7vcRrcMBJoU3rb90ffaRQGLyRmxxNWjReFayKFnQE9RnIoDxLmWhWJv467VM=
+	t=1783438389; cv=none; b=tiR4vaUhySYWO58ppca/Cxfsz2ixbglqDYsdmhtIwgZAboxDXdMs9gN/pZUQT8YUnqdOD1cwCqDdRp+Oed+3VLB6YCekMHGIFh6L8RaEfYhGU4xpYuMkZq48vi2NOpRTRVX/X0dUYAM7ED/cH7Dc0nUR7iKWh/cIU7tIBsesSWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783438388; c=relaxed/simple;
-	bh=1wkoQaG+U6d1N3oOcYBzEWImnDTUUe96MCwdJ9FU4RM=;
+	s=arc-20240116; t=1783438389; c=relaxed/simple;
+	bh=8HNzWtz/ClAz4s1hnBBIkevU5tJffqGLRH83KXPnR5Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jvrK+819smVQhY42Rhn/MlY/NbdmqFd90lDITNxrvKLcnQhCNg3eJ9uq2rEf1ic6+51fIAO1bWiOs1Zh6P0iy+21Xz9583FJid2HPAg8tuJXTJybR1GCOL+BWt9I+EovAWGIN02RwZ1iftoLPAJrLBL1eIIKvXgsbtK0JkgAjco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aHfz4M8w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HaMiwm2O; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=KPyoef0o/NK0qt6ftvmiWPfxXy745NJm2qZbtUk0qTdRIaQxUmomRgaJIaotpO3iSrI/FE+yVpplnAXACHuYipaEPGsQ3SkrtKdOZ+GGqfy/oUYrg9PuG+FhRtL6ccQpQJ8KkARTOyCrCn2aCWtLywN8AWiAU/FkfUKui2W4bvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GP1gWJva; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XAIX6cd1; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aHfz4M8w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HaMiwm2O"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id A1AB3EC022C
-	for <git@vger.kernel.org>; Tue,  7 Jul 2026 11:33:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GP1gWJva";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XAIX6cd1"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7A903EC0227
+	for <git@vger.kernel.org>; Tue,  7 Jul 2026 11:33:07 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 07 Jul 2026 11:33:06 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 07 Jul 2026 11:33:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783438386;
-	 x=1783524786; bh=gCiQbjWYhfyQ3eVKHoFZUliNSUoXrfi8rs9PKqb56nk=; b=
-	aHfz4M8wgd1xraBwvAB+2lUL5ct8+6Pzjr5YDWP3YGJIh3EEIVtTK7PgDNlqRZGa
-	JXllAi3Z2r07FFl+c4UjMCsibqDP/swHI9wAnnN2j6i+9uLjwUIHEVg6wxuFzl8Y
-	kiQt+0ZTOw0LEZtc7+irDPVuKoMAD6qcVZ2oqUpyngQHeYh28Wgo8LuhCeBKY1kw
-	gTIruPiVtuw99IRI8GZBeeU3V9MI2JNu1a+utFNzWivl89uI8yB/WWjjreL33UT0
-	V5SWXQ9ayJ/QqQJlHmD1RArH+vA+Xe+74ddLlOWVcdWBq4rZtAGna6bw/OhTsoqn
-	8vWDhkOYgtvhmQk8yPdUPg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783438387;
+	 x=1783524787; bh=lfMd5TXD2GT62g8cynFBmMKnlrDrtUjYpRu0+9arEp0=; b=
+	GP1gWJvaVUYsXiGL3862HSl1Jj88g7DglQmg2shwhVLBTBPwPcwJtAVFgt0/7wKT
+	Y855p+35GshF3SSFFrXfjYUGWRAkuM5SPvF9PW6jtO+zpBHHslF/sQ23hQyAowgs
+	MN+zuJPTr9EpgC3eBmOvwxBYl1IMXZxilnPOa8NEfmsoaO/9hhZFqo0nuJLxTOMp
+	x520LId9yj26N1G10Fg2bQpCQTk/EyofNDCUT+ODpmey7xv+jwDqMWv/Wf9083XP
+	yaUEWNkexJTQFKQPZeblsUWjwsXNTATuu6PNZYAd9N//rfGzYWjRg7E5o55aXz+m
+	HacGFjpp3RBBYTNvXt7X7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783438386; x=
-	1783524786; bh=gCiQbjWYhfyQ3eVKHoFZUliNSUoXrfi8rs9PKqb56nk=; b=H
-	aMiwm2OyXXf9MlKuZpDIT4UlTXa8kFKapORmywd5YeGYp9+rj08vXLCpFq48krKs
-	mC2+/8c69/y4YhcL1SAKPj3ujIdhjiLy1Vn+q6+4KljDuUhkHu3kiO8Zce0F9cfe
-	0y6/z+TVaangdJd0LxTRAFAR7YX1xvuQvQwOeVQgZL6IuH/aVGOYoyjIlDAiGfP1
-	AXa4MSf0vhRMWjwqJ276aqDkGg09mqj8RCR+B+bnV+BtiyKYkhU/qvpPcSaSaeNy
-	6hDARJcZvNGcpSGLTAdivFnYyTEbYoabNDxhhu1DNNoGjh92Whi03e7n+YUb/kRy
-	etG4PY7Va4pVk9NRtUDLQ==
-X-ME-Sender: <xms:MhxNasIwmxXZaTfI70zEMa4y-gvxVP-bEH7UZK0dKr2FFNuIkxf6_A>
-    <xme:MhxNajEjWnZTDEoupIXthgSxe-cRckuG4Y8muCcBgTR8DsIy2eGO89Y1CATIl5jj6
-    rGnndcdL5EvxHl_9DrKRnNPxlwhSaFhwThmrQLOzXpTCudZOkH3QA>
-X-ME-Received: <xmr:MhxNaiVtTcvXckPCIwcI667q-2ZwrJ9Qw-w9UfybSEPXzIuD4BOZ5RRD0gTflsnIUMGhKVi75YCX2Z2V-ry2itpVKbmVCxLnVBb6NZZCpQ>
-X-ME-Proxy-Cause: dmFkZTEJsHBfpO0PYEe5AorOfHcazVp/tBbkPBeEyBKukAxlTkshoZ2/gbuXJescdgLEDk
-    2G/3VKtvJlc5njlYrPCxkg9j00cHK7EbceH5LxXeH6PWEH2F+oepzAb9SewsjRo/KIW0lU
-    1lQE5NNhIb7f+4g+C5KCZPv4MqEkNsifUe5QUQNQKxPxqlLS2wxm0+oRvJw1AQX0T0+0UM
-    M9QSGRn0kaVEjf9V7cMY2jYCFqjaWroOsmMwIqvkSpUhAyQDxnLPwdCWG3jz/2YPCd808h
-    PkY/4hDSR4JLrxsPxxXC41eGPaToRv5DPX2LX50SXBrynI5VER33qWb84HYOTOnZBOy4GS
-    AaMf+RJTXriMYaJi2zhxeuecCqlzL1+pzcY9KoBCV0n6bskrszWXqbtX+lh+3QTn73oKjt
-    ngi3gauff1RE6GfT1knonDphyj0ZaR5wVw64SGrKmNTKSSvLOlXrdQiFbnsNh2aYk4ktVO
-    VAGwAjuEiivOAS1OuQ6M+97ia7YtpxdNfd6VWrrVrc3J8XUp1htBiWtpYG9gvqVlBWfy+m
-    MCRGVELrLNsOxvTK5Yo4z7u8jfZxQeZmg4Ic714/hcs7o7Nq8TN1G1Cpg+05aA8fQeIPiq
-    I8M+fPmAVx4NRnlTSlsyrydE9v1dEeddwSqt1x7gNYsXsMOkUaMH9UJsgXXg
-X-ME-Proxy: <xmx:MhxNaug3mDxG-yh3iLN3lWuCJkxu_lUu7gCaSVNAxXoykGTlYoodqA>
-    <xmx:MhxNajQzD-qv3DgwPO6SSVOY5v57-X0fOU6y5-nBIvD6xvX70ksKjA>
-    <xmx:MhxNahFyFF6doLbzTPZn8GTvtLPp0t85lv0Af0qip_vq4Hc0mrF_Fw>
-    <xmx:MhxNarng2mGahzggdoQ-Xsv-AnQX1x5I6p5J6UHdZK3BEzAQV0J63w>
-    <xmx:MhxNalpRKkrmKC0fPqX158R4cO8abi5-4i5gzI9o7bBmVL6jM-YpFWmO>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783438387; x=
+	1783524787; bh=lfMd5TXD2GT62g8cynFBmMKnlrDrtUjYpRu0+9arEp0=; b=X
+	AIX6cd1Sy91VE7eqmLKCEtXL5vG+36zSVHfIoDEMOMK1eTPL0pC9XtOp9w2dl3UL
+	TsK7633FXNV/XmogG86cvl8Se7FNep8bZ90I4mteIvp2pne7xW2lAvIj8kOXxv5w
+	M5Vm0gNtUgSwUWzhC7ZYcp6nCfRYjNTgvd3mNUyZZsBj7PYNOOrJ8Axd1k1WpdgC
+	blY03iuXgVODyngvDmehbJHUn1gYMVT94tde5MHYP+rK/cXhJ+xNQpV9Qzv9ekUe
+	i32/FYvz5VUoFAVqbCfzPIUX06w8QSegIPID7P6xV3jfQJ+wu3bAWSacmbStKt4s
+	8uIMmuFqcpGvOQ0V2xYKg==
+X-ME-Sender: <xms:MxxNarPjz8USIOfodneRZVca_1ILzpT_US0zot_1Qbh8YQmPgGuWww>
+    <xme:MxxNas7Zusl4R8NHH14DzVbhSRSvcUhdbwf6qhKPNM1hcco2M6uDC3r3m45OwBiND
+    dD1r0TNVmgt-rYvzlcGWGSMT506Ynj6w0MgVsC5Jul06R-hmQaF9A>
+X-ME-Received: <xmr:MxxNav47SK4lQE4vTTRm5FFLkCJ3sYeap981goxaY1LazhyNHo73TCms9c4K79-Fwvyw8hS0khaMMOHCZCunnJHXjThePuwgxo0Z55Y1nA>
+X-ME-Proxy-Cause: dmFkZTFRDwBZLYQxvD2QNsK0W3qg5znF1IzM8kQJZHsUMhZBRToXBU2+sjid99Q8u4zk5Q
+    /7RYSQbkU2bhdWABn0SUButsWxH7Uz0pU2EzWco9FQJZvRBaC6ICqs1hq2Py8DIv269ret
+    /zKTIGreSkdKYB7jkHmy9A3p9WrSXLh2h8o7srpK6OSc+G0wVM0sHLEXOblerkQWmtdCkZ
+    HnnvdZ7A69J+oiE3Zs7WbE5emwsjhrlw7VCVgdh8LvGqHiqhXJ/q8RQKSG+9Fhgln1ukyX
+    5hOyVzG7Inj0DrV+EQDy27dXOOqVAyQga+A1IgSURonY3sqWUjVEAs+WEZagW2JSeJm1fI
+    5bmt85JKoYp+mBcgZbPRqAt3Jv3CLpWElyNLcEWbT+5ONyUYMmQI3lbjJ40t3HWFSSalnR
+    FIoXeqZIX/epASi0r/1WH/0/Ow+oiAmLzX98i2V+cHUmFcN8kapH/G4SdCtwyC24b13875
+    YiXVIoL/1oS9gPTRIL3WkNQ1icwNrat9vIjOJomxiSd8QJ4RthSp4x9EYxDsfWT9hEPQYf
+    LMjKMtUdGANt9OBbFU+qE8+ztXpul6tUKxYant6bdIDf93auD+4AMbemNzC6Hu8S2QBbix
+    e/0FJMQeByEuR7UgAToT00cdhAOsukrnMPnX92tla0Gf2v3C0UZ0IdheXEVg
+X-ME-Proxy: <xmx:MxxNak1ARRX9XJSkhgVhDExNBjQkO7JhjtavX9gSmZHmn9Wnir4Y_A>
+    <xmx:MxxNajWEYvRzYh6MnLjMfj0DuWYAPiO-olVY6IhF5OldaBSDQn7kPw>
+    <xmx:MxxNan7VQCmqhI6a1rxYSHtDQjA-_NLOZL_RllphPcUWY6o52nk7dw>
+    <xmx:MxxNaiIkkfPPGJt5Z37sQ4gh1jX3MImylzHL1XlCxUk5Q2hozgIFGQ>
+    <xmx:MxxNav887lUcuI3ZvkrHaoGyxOiQpuZmEsvt6J96Y8GpvpXG1C-FbqvV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
  <git@vger.kernel.org>; Tue, 7 Jul 2026 11:33:06 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 256da7aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 1b9db1e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 7 Jul 2026 15:32:58 +0000 (UTC)
+	Tue, 7 Jul 2026 15:33:01 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 07 Jul 2026 17:32:34 +0200
-Subject: [PATCH 02/11] builtin/gc: move worktree and rerere tasks before
- object optimizations
+Date: Tue, 07 Jul 2026 17:32:35 +0200
+Subject: [PATCH 03/11] builtin/gc: extract object database optimizations
+ into separate function
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,73 +84,134 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-b4-pks-odb-optimize-v1-2-aae607667be4@pks.im>
+Message-Id: <20260707-b4-pks-odb-optimize-v1-3-aae607667be4@pks.im>
 References: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
 In-Reply-To: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-In subsequent patches we'll consolidate all tasks that relate to
-maintenance of the object database and move it into the "files" backend.
-The relevant code is somewhat scattered though, as several other tasks
-are interspersed between.
+Extract the object database optimization logic from `cmd_gc()` into a
+new `maintenance_task_odb()` helper function. This is a pure refactoring
+with no intended functional change.
 
-Refactor the code so that all object database optimizations are grouped
-together, which requires us to move worktree pruning and rerere garbage
-collection around. In theory, rearranging this code can have an effect
-on the object database optimizations:
-
-  - Rerere entries really shouldn't impact garbage collection at all, as
-    these entries are not stored in the object database.
-
-  - The index and HEAD reference of pruned worktrees may reference
-    objects that become unreachable.
-
-That being said, the impact should be overall rather negligible. If the
-user was asking us to prune objects with immediate expiration time then
-we might now prune objects that were previously still kept alive by the
-worktree. But besides being a very specific edge case, it's arguably not
-even the wrong thing to also prune any potentially-unreachable objects
-immediately.
+Note that the message that notifies the user about too many loose
+objects is moved into the new function, as well. It is inherently an
+implementation detail of how the "files" source works, and as a
+consequence we'll move it around in a later commit, as well. This
+reordering means that the warning may now be printed at a different
+point in time, but it's not expected that this will have any practical
+implications.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/gc.c | 79 +++++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 49 insertions(+), 30 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 77d0a5c948..8f568003ee 100644
+index 8f568003ee..2ff98fa727 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -1011,6 +1011,13 @@ int cmd_gc(int argc,
- 	if (opts.detach <= 0 && !skip_foreground_tasks)
- 		gc_foreground_tasks(&opts, &cfg);
+@@ -839,6 +839,53 @@ static int gc_foreground_tasks(struct maintenance_run_opts *opts,
+ 	return 0;
+ }
  
-+	if (cfg.prune_worktrees_expire &&
-+	    maintenance_task_worktree_prune(&opts, &cfg))
-+		die(FAILED_RUN, "worktree");
++static int maintenance_task_odb(struct maintenance_run_opts *opts,
++				struct gc_config *cfg,
++				struct strvec *repack_args)
++{
++	struct child_process repack_cmd = CHILD_PROCESS_INIT;
++	int ret;
 +
-+	if (maintenance_task_rerere_gc(&opts, &cfg))
-+		die(FAILED_RUN, "rerere");
++	if (the_repository->repository_format_precious_objects)
++		return 0;
 +
- 	if (!the_repository->repository_format_precious_objects) {
- 		struct child_process repack_cmd = CHILD_PROCESS_INIT;
++	repack_cmd.git_cmd = 1;
++	repack_cmd.odb_to_close = the_repository->objects;
++	strvec_pushv(&repack_cmd.args, repack_args->v);
++	if (run_command(&repack_cmd)) {
++		ret = error(FAILED_RUN, repack_args->v[0]);
++		goto out;
++	}
++
++	if (cfg->prune_expire) {
++		struct child_process prune_cmd = CHILD_PROCESS_INIT;
++
++		strvec_pushl(&prune_cmd.args, "prune", "--expire", NULL);
++		/* run `git prune` even if using cruft packs */
++		strvec_push(&prune_cmd.args, cfg->prune_expire);
++		if (opts->quiet)
++			strvec_push(&prune_cmd.args, "--no-progress");
++		if (repo_has_promisor_remote(the_repository))
++			strvec_push(&prune_cmd.args,
++				    "--exclude-promisor-objects");
++		prune_cmd.git_cmd = 1;
++
++		if (run_command(&prune_cmd)) {
++			ret = error(FAILED_RUN, prune_cmd.args.v[0]);
++			goto out;
++		}
++	}
++
++	if (opts->auto_flag && too_many_loose_objects(cfg->gc_auto_threshold))
++		warning(_("There are too many unreachable loose objects; "
++			"run 'git prune' to remove them."));
++
++	ret = 0;
++
++out:
++	return ret;
++}
++
+ int cmd_gc(int argc,
+ 	   const char **argv,
+ 	   const char *prefix,
+@@ -1018,32 +1065,8 @@ int cmd_gc(int argc,
+ 	if (maintenance_task_rerere_gc(&opts, &cfg))
+ 		die(FAILED_RUN, "rerere");
  
-@@ -1038,13 +1045,6 @@ int cmd_gc(int argc,
- 		}
- 	}
+-	if (!the_repository->repository_format_precious_objects) {
+-		struct child_process repack_cmd = CHILD_PROCESS_INIT;
+-
+-		repack_cmd.git_cmd = 1;
+-		repack_cmd.odb_to_close = the_repository->objects;
+-		strvec_pushv(&repack_cmd.args, repack_args.v);
+-		if (run_command(&repack_cmd))
+-			die(FAILED_RUN, repack_args.v[0]);
+-
+-		if (cfg.prune_expire) {
+-			struct child_process prune_cmd = CHILD_PROCESS_INIT;
+-
+-			strvec_pushl(&prune_cmd.args, "prune", "--expire", NULL);
+-			/* run `git prune` even if using cruft packs */
+-			strvec_push(&prune_cmd.args, cfg.prune_expire);
+-			if (opts.quiet)
+-				strvec_push(&prune_cmd.args, "--no-progress");
+-			if (repo_has_promisor_remote(the_repository))
+-				strvec_push(&prune_cmd.args,
+-					    "--exclude-promisor-objects");
+-			prune_cmd.git_cmd = 1;
+-
+-			if (run_command(&prune_cmd))
+-				die(FAILED_RUN, prune_cmd.args.v[0]);
+-		}
+-	}
++	if (maintenance_task_odb(&opts, &cfg, &repack_args))
++		die(NULL);
  
--	if (cfg.prune_worktrees_expire &&
--	    maintenance_task_worktree_prune(&opts, &cfg))
--		die(FAILED_RUN, "worktree");
--
--	if (maintenance_task_rerere_gc(&opts, &cfg))
--		die(FAILED_RUN, "rerere");
--
  	report_garbage = report_pack_garbage;
  	odb_reprepare(the_repository->objects);
- 	if (pack_garbage.nr > 0) {
+@@ -1057,10 +1080,6 @@ int cmd_gc(int argc,
+ 					     !opts.quiet && !daemonized ? COMMIT_GRAPH_WRITE_PROGRESS : 0,
+ 					     NULL);
+ 
+-	if (opts.auto_flag && too_many_loose_objects(cfg.gc_auto_threshold))
+-		warning(_("There are too many unreachable loose objects; "
+-			"run 'git prune' to remove them."));
+-
+ 	if (!daemonized) {
+ 		char *path = repo_git_path(the_repository, "gc.log");
+ 		unlink(path);
 
 -- 
 2.55.0.141.g00534a21ce.dirty
