@@ -1,127 +1,128 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB0D2D8773
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 18:23:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E363B42EC
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 18:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783535014; cv=none; b=p79wrWejZzAwoVLrPHhSOVzBxwJNX/z7SYDhr7RiSTxmtyRZ7ZMD62S/b3/7xAdYV4TxLsSAaYktydKmfOQMMSYIqFNyyiDPI92Awg6P6pyFFMu22KXPeKO1N03i/3wcizumDSGb+nSsA5sz6yCDxpVpJ5X+k2mj3OGdQvskRdA=
+	t=1783535508; cv=none; b=PwTQgJkRhfTA7FjBStS4znhv7dkTab7UcYus4B8TleydpS38Z0x68QK2kJEFDacnZiwo2mh4coNI9oKENZsaweBfB8L0rOgt21dN/WJKTGp9o38InaMprLBX77z8kZTen+5qlyjOSz0WEFPcDoraljlG7MdHb+g0anhCuTW1HpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783535014; c=relaxed/simple;
-	bh=GJ4+FJlKVfDdNrCR3IzU/foaXCgtd4d59TEH3iWXHmw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aiM9TiRs/gB2zr7OfU5/ZnEfjCWnGIMd3iyi9WCfsOoXTg+HSAuposOqWbpxuvPb7Hk5I5TOKktchMNEx399d42cgfibQVICWskLOM3RsFy6MtIML9v0Kn3nvCVAO18TAx3uvd/sn6mEbYVOCiIv+NyuqntAvXMGZwzOt+TexZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pB86Wceb; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783535508; c=relaxed/simple;
+	bh=KRvhtSulyzt8LntcNwMn5AlYZQA9L4Mu1fFWN/utFbo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AEvgulCA+TvobpghI8pC24scykUJyjuJJD8HB0emIiMGNqSDkFQy/o1VbH2A8IdDzHiyI42Rzu+hM9sWoDB2isHAEekp6eZl+oBCr5eil7ArbbdtgdqfSS4b/AXDASH9+jpUoXg2hlpe6lweSCfwN+mLikskW4sg+LeUbWbXANI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=pXLJ64vW; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pB86Wceb"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-ca7c1176317so486556a12.1
-        for <git@vger.kernel.org>; Wed, 08 Jul 2026 11:23:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783535012; x=1784139812; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=e0vyTm2ADA+0wJdqmLPXTYUwTvCKh2YoBH1sauBOlog=;
-        b=pB86Wceb0M//fIKHxbaNXnQBtyrEw0D+DhIE0GpHPJ7Nlfzis3Hqjpy0d5we1qXycE
-         xof4p6xbxGn+/CwaI2smclI9dr0MrFrRsG+AJgikvNCTpktu+Br9l6RPMGZr1myTd+1/
-         M8F6juOqqXdPXTU3qVFaFG5dT3Bes7ydHniso+O8a6VVuxwdKx/IEPQRSMn4LjM5t0uI
-         exoV4MgdFa0QvykW9mGl7iSuMO/YJiKlvAP1JCyEDbPEYcuN3mtWsManJT0IXM08B0lq
-         aAPMublQAvM+EOIEl3pacHWWjgKZq1Ah87tWkW579e8RVJ10pMt3ENJw0rF1IdVGQOSS
-         yEkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783535012; x=1784139812;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=e0vyTm2ADA+0wJdqmLPXTYUwTvCKh2YoBH1sauBOlog=;
-        b=aUxtNzeEbUwY/SKK31smoJfy0tfnBFWYnCVItk+1yAPV3t3f9BXQHl+RAR778CIVZO
-         NU4L+K8NyD8I6RB8EjMcTgONmJDTdsnIBMhLYvuIzEcEYOMi7scPA/xeRbFgMMlvtmqV
-         kYN0Q2bP4WLOqAopfcVt/qJ/CUUmcsdIe+MTk2FCr+S7HM58KRKVK6FA9cvzx5lrqNMj
-         t1fbqXrexxg7fYqXI0w32ku2PkjputgC/ZduiTUJh9kDYUwW3vc1UOmCxFbtEnP+jq4R
-         qqByLinS+csIc0Gr1w5YNcvHmCOf+DfopbqMVgQGMBqLYfYx0cSjxr83DogfVlvfD8h2
-         ocdg==
-X-Gm-Message-State: AOJu0YwDAqJWo0M9S+llkRLo8hK3JiIJWDSNWEKejj9ir+j8KTZUX4L3
-	EWQ4STIGpKxIHTGWW5dm7KuIZOOpEHeQdlVUDnbp7yoxe3mr5VzQh4yT
-X-Gm-Gg: AfdE7cmxExxl4Mba+iwQBaBh/tnUKYYKF/YZu6PKN+V3lUwsxv72v0BSR9apLPQpoVS
-	ARyaXA0ejDltQSDnRGhfay7/yzFn74NXbKpVkfuB/qATjQGQc+uuaT8nvi4zkJgtxz7L4uD1yeV
-	X5+HgKNtEl02GL1udvdUQQT23r6JcaCN3VnI5Dq8jSY5m3A902xnTNBH+gucDTU3pS1yV67SGgU
-	skDauAaC+gq6lCLXT2fFkQkcasZwET2M9XLwxZiJFEmkpv1XdPOEOyXo3ppIJaz8RHljow62qB6
-	PkPuqkDloDknIrS5npH64Fi0IBbsduXqpsu4cCBpP74LK8mxziGy5nbIuY3y6E6ydnEVPrxpxkQ
-	cR+U5YCz7BiZhiWWBpHUx8GXgvjLodEWD85MCrqCaI98opDaRKg/biMbBu9RFaXSQHweTMH60I9
-	bGbkXnF9ztqdB2NaVjKsZ3gagI3jVXfMmOq1ozn8AOF8QUMNEEaXGJcr9QJ4pAxnXH2geMW7dfK
-	iPObc/sZ0ncGTPwwJ5CG10A7BZjQFZdP1KOJQC7FR6sRAdM5Xh0Ty0KqM6OQU0I19MtDt9EpQ==
-X-Received: by 2002:a05:6a20:3d0c:b0:3bf:98fc:3054 with SMTP id adf61e73a8af0-3c0bcc2a399mr4481926637.56.1783535012021;
-        Wed, 08 Jul 2026 11:23:32 -0700 (PDT)
-Received: from localhost (192-184-169-91.fiber.dynamic.sonic.net. [192.184.169.91])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3117d847e17sm19703249eec.18.2026.07.08.11.23.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 11:23:31 -0700 (PDT)
-Date: Wed, 8 Jul 2026 11:23:30 -0700
-From: Michael Montalbo <mmontalbo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] SubmittingPatches: document how to retract a topic
-Message-ID: <ak6U07K1dQPlXxIp@nixos>
-References: <xmqqzf02xonc.fsf@gitster.g>
- <xmqqpl0xv25e.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="pXLJ64vW"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=DSFnNLhILF/8YmEPKPl1RAswS6+JkeicDtkYwVGc8xo=; b=pXLJ64vWo3H/4pQv2wqzntXhh6
+	x+1F737SmhNxGeTsMBXpJnojZpmZ6bPpy108ToNcXeZTit7xkiFDDH/HNQsSGuoOV2lc+Zies2GNy
+	7Kr+IZMgF9TAphFWcZVnIsBW2tkwHc+ttJhADKJqlfyWlN6QqQHVhp2UKzZgv5qJcjqfMYhtZJnBu
+	WNQ60L0EHouSOLNIQpVmu/u40jgiLqfqD/9vrAsCkC4smmlM+Li/ukdVJBguyHR43TNOt6AFAG/Xi
+	aKM1pJF/QuuGBD25CCDGl15V+zqgymlNVHshRrbdeUHkevwZWq2RKhU7T6rST6MkSRhSuVaTtleom
+	yPuxEggQ==;
+Received: from [91.117.33.88] (helo=[192.168.1.137])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1whX3c-00BrlV-Rp; Wed, 08 Jul 2026 20:31:40 +0200
+Message-ID: <4c0a31e9-9b20-46c8-8f1f-0fda34515270@igalia.com>
+Date: Wed, 8 Jul 2026 20:31:35 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpl0xv25e.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] unpack-trees: avoid quadratic index scan in
+ next_cache_entry()
+To: Junio C Hamano <gitster@pobox.com>,
+ Henrique Ferreiro via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.2353.git.git.1783458106037.gitgitgadget@gmail.com>
+ <xmqqv7aqzdvq.fsf@gitster.g>
+Content-Language: en-US
+From: Henrique Ferreiro <hferreiro@igalia.com>
+In-Reply-To: <xmqqv7aqzdvq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 08, 2026 at 10:09:49AM -0700, Junio C Hamano wrote:
-> While this document outlines an idealized lifecycle where an author
-> develops a patch, refines it with reviewer feedback, and
-> successfully merges it into Git, reality is rarely so seamless.
-> 
-> Sometimes, a topic must be abandoned. Doing so explicitly is far
-> better than leaving it in limbo, especially since topics can always
-> be resurrected later.
-> 
-> Clearly state that we encourage contributors to retract any topic
-> that does not pan out.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  * Added the third bullet that talks about when and how a topic
->    becomes stalled and discarded.
-> 
->  Documentation/SubmittingPatches | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index d2d82eb543..c269e474e3 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -123,6 +123,20 @@ of review.
->    top, it gets merged to the 'master' branch and waits to become part
->    of the next major release.
->  
-> +But sometimes things do not work as planned:
-> +
-> +. If a mailing list discussion convinces you that your changes aren't
-> +  ideal, please explicitly retract the topic to save the maintainer
-> +  time and effort.
-> +
-> +. If you must drop a topic due to shifting priorities, lack of time,
-> +  or other commitments, notify the list as a courtesy so others can
-> +  take over. Anyone can resurrect the topic later when they have the
-> +  capacity to do so.
-> +
-> +. Topics with unaddressed review comments that remain inactive for
-> +  four weeks may be discarded by the maintainer.
-> +
 
-Nice, I think these points read smoothly and the additional "four weeks
-until may be discarded" guidance is helpful.
-
-LGTM.
+On 07/07/2026 23:30, Junio C Hamano wrote:
+> "Henrique Ferreiro via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index b42020f16b..ed9fef453a 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -671,8 +671,10 @@ static struct cache_entry *next_cache_entry(struct unpack_trees_options *o)
+>>   
+>>   	while (pos < index->cache_nr) {
+>>   		struct cache_entry *ce = index->cache[pos];
+>> -		if (!(ce->ce_flags & CE_UNPACKED))
+>> +		if (!(ce->ce_flags & CE_UNPACKED)) {
+>> +			o->internal.cache_bottom = pos;
+>>   			return ce;
+>> +		}
+>>   		pos++;
+> Nice spotting.
+>
+> Does this trick work correctly even when a path's sorting order
+> differs between the index and tree objects, which is precisely why
+> .cache_bottom was introduced, to allow backward scanning while
+> bounding the lookback distance?
+IIUC, .cache_bottom points at the first entry that needs to be 
+processed. With this change, that still holds true even when entries are 
+processed out of index order. find_cache_pos() also advances 
+cache_bottom past unpacked entries since e53e6b4433 (unpack-trees: Make 
+index lookahead less pessimal, 2010-06-10).
+>
+>>   	}
+>>   	return NULL;
+>
+>> diff --git a/t/perf/p0009-diff-pathspec.sh b/t/perf/p0009-diff-pathspec.sh
+>> new file mode 100755
+>> index 0000000000..0f1dccfbb4
+>> --- /dev/null
+>> +++ b/t/perf/p0009-diff-pathspec.sh
+>> @@ -0,0 +1,27 @@
+>> +#!/bin/sh
+>> +
+>> +test_description='Tests performance of diffing the working tree with a pathspec'
+>> +
+>> +. ./perf-lib.sh
+>> +
+>> +test_perf_fresh_repo
+>> +
+>> +# The entries exist only in the index, which is enough to
+>> +# exercise the index scan.
+>> +test_expect_success 'setup' '
+>> +	count=100000 &&
+> You will probably want to mimic how t/perf/p4209-pickaxe.sh helps
+> testers by adjusting the count based on how the EXPENSIVE
+> prerequisite is configured.
+>
+>> +	blob=$(echo content | git hash-object -w --stdin) &&
+>> +	{
+>> +		printf "100644 $blob\taaa/file\n" &&
+>> +		printf "100644 $blob\tf%s\n" $(test_seq $count)
+>> +	} | git update-index --index-info &&
+>> +	git commit -q -m initial &&
+>> +	mkdir -p aaa &&
+>> +	echo content >aaa/file
+>> +'
+>> +
+>> +test_perf 'diff pathspec subtree' '
+>> +	git diff HEAD -- aaa/file
+>> +'
+>> +
+>> +test_done
+> Thanks.
