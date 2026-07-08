@@ -1,38 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D807349CD6
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F49D225775
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783482782; cv=none; b=QQAvpIL5Z/2tj2SkSsEby+jGH9mYu+PiYbbdhIRnZc27gT8RQ9uUU8tJtSbmGu19o2yWetVZQhUs/rCBFxlMHBFwZYcWWKwnQvDtELl02bGPM/6JM8B8su+kufdHmO7IlDLqe/GCp0OvIaIKxjOwjUA3FJWBdWhL29dk0B1oau4=
+	t=1783482785; cv=none; b=TM/vu++rYyWEAtULoiLa1eRctSakn783hT5MhP7r8VB142YgK9MRaSLPYUyZWmzAhbHXy2b02Ts6Ul2u5xFQnLKnMOCfibZnDb/RPk+ldkjaBvn5OwIyf3HeQiXW4R22kxyOCKSsbyxoYaGgo2aUi51tPcoRb3oWMnIJE+muuQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783482782; c=relaxed/simple;
-	bh=UtZCjwV3vAAUfzD4PF/j7okYw0YA7/KMVYbHJ3bk32U=;
+	s=arc-20240116; t=1783482785; c=relaxed/simple;
+	bh=dESNdydcSfYbQAUjrTjFnCUd4atI8/HYuBHny/ZpfkU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M2RmNxEp4q/WuZTxEbVE6ijxoePmmYGhchYVEvbNCzS3ZBgWebywzLSjI1DZm/mn8i3kGL2ik3kiyztgVjIXINni/r2t+soENoppxoRCfvoHw0ImsQ05cYKVCNvV8rlTnDneY+4RwGJVJ+7AkOqpq8STm8YBeVYOX51OEeDadP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CkY2Kffg; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=o1/Ro7jfKefyZN/QS1Zgugm0jUQ7Yb6t/9NsoIqYy6qfdaeHTPEo8gluO3Kysg/Q5+OAeZ+Jp7vLiJM2/plvblQyQfOUY+uL24AYzJOIGljaot4JXST5nis2qydsfbXCuE/H57YQx/Px+Nu1dOCmsT7SWOaOjQEDiLC4Limo9Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HOm0r5FS; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CkY2Kffg"
-Received: (qmail 25451 invoked by uid 106); 8 Jul 2026 03:53:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=UtZCjwV3vAAUfzD4PF/j7okYw0YA7/KMVYbHJ3bk32U=; b=CkY2KffgsXQXnBTr0kcU7npmN29SYbFrhm87dEYo5nMcr5ffxGQEf9Gui9kBgNit/W045bfa/gQxRtAlvttiyCVwBZVnDSefSxc4UuJkfIchg+2TtVA2B16Rny8hqjpWnYw/3yw/QW/xXiUUnbhR6WL3An9DE5D4fLl2kWm9osqoKQZ9x4nX09pBN1Y5C1dBADQd4VfClyX226pjyJuFbEgFd7B7Pjt5vGPDiImG5pSfTcMwWfXDOe6NMyw6lvFawE+e00uYmgAZpISP2zWYgZd+RZAljOcGN8UpvnnpaVV9BFKW+TbS/U1M46TEaV+ZtmcK7CsxIH9sajwNiejlbA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HOm0r5FS"
+Received: (qmail 25463 invoked by uid 106); 8 Jul 2026 03:53:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=dESNdydcSfYbQAUjrTjFnCUd4atI8/HYuBHny/ZpfkU=; b=HOm0r5FSrJDx++F6T9Bsh+h527S8mwAgzgYTXOj5/ARBXzMNsTIYl0muKgWJSGMxQN3HzKboanxCmtfmvb1dzKr2y5DfdPFTF62BnvQqdN/UAApUi9QxkIFqnQHHKwXf8erWhHLTtucgKCi0pyvXbHu8LJmG5W4Uy4hXPGDiFtCWKPwdkX6bDVV0Dfy9iTQ7lJgxuHp2i34T9HnWuOF9Yur4Ofb6MdH2tss6R3QhjgxiPP6H/KkqBr76iy+Fi8MPmGPRrkUTUTSOajXaHBOHFcdIZxrk7z7EgnyXTBz6nBmcgyKzm0QNmEitOLiQltFPxMUcsWd78haKsJRDSmRwlA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2026 03:53:00 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2026 03:53:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 41011 invoked by uid 111); 8 Jul 2026 03:53:00 -0000
+Received: (qmail 41017 invoked by uid 111); 8 Jul 2026 03:53:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 23:53:00 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 23:53:03 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 7 Jul 2026 23:53:00 -0400
+Date: Tue, 7 Jul 2026 23:53:02 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 5/7] csum-file: use idempotent git_hash_discard()
-Message-ID: <20260708035300.GE41620@coredump.intra.peff.net>
+Subject: [PATCH v2 6/7] http: use idempotent git_hash_discard()
+Message-ID: <20260708035302.GF41620@coredump.intra.peff.net>
 References: <20260708035235.GA41491@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -44,73 +44,58 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260708035235.GA41491@coredump.intra.peff.net>
 
-Now that it is safe to call git_hash_discard() even after finalizing it,
-we can simplify our cleanup logic a bit. This is mostly undoing a few
-bits of 64337aecde (csum-file: always finalize or discard hash,
-2026-07-02):
-
-  - We no longer need a separate free_hashfile_memory() function for
-    finalize_hashfile(). It can just call free_hashfile(), which will
-    now discard (or not) the hash as appropriate.
-
-  - When f->skip_hash is set, we don't need to discard; we can rely on
-    free_hashfile() to do it.
+Now that it is OK to call git_hash_discard() even after finalizing the
+hash, we no longer need the ctx_valid bool added by a2d8ea5a76 (http:
+discard hash in dumb-http http_object_request, 2026-07-02).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- csum-file.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ http.c | 5 +----
+ http.h | 1 -
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/csum-file.c b/csum-file.c
-index 7e81391524..fe18ee1de3 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -55,32 +55,25 @@ void hashflush(struct hashfile *f)
+diff --git a/http.c b/http.c
+index 0341de5031..caccf2108e 100644
+--- a/http.c
++++ b/http.c
+@@ -2880,7 +2880,6 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	git_inflate_init(&freq->stream);
+ 
+ 	git_hash_init(&freq->c, the_hash_algo);
+-	freq->hash_ctx_valid = 1;
+ 
+ 	freq->url = get_remote_object_url(base_url, hex, 0);
+ 
+@@ -2989,7 +2988,6 @@ int finish_http_object_request(struct http_object_request *freq)
  	}
- }
  
--static void free_hashfile_memory(struct hashfile *f)
-+void free_hashfile(struct hashfile *f)
- {
-+	git_hash_discard(&f->ctx);
- 	free(f->buffer);
- 	free(f->check_buffer);
- 	free(f);
- }
+ 	git_hash_final_oid(&freq->real_oid, &freq->c);
+-	freq->hash_ctx_valid = 0;
+ 	if (freq->zret != Z_STREAM_END) {
+ 		unlink_or_warn(freq->tmpfile.buf);
+ 		return -1;
+@@ -3030,8 +3028,7 @@ void release_http_object_request(struct http_object_request **freq_p)
+ 	curl_slist_free_all(freq->headers);
+ 	strbuf_release(&freq->tmpfile);
+ 	git_inflate_end(&freq->stream);
+-	if (freq->hash_ctx_valid)
+-		git_hash_discard(&freq->c);
++	git_hash_discard(&freq->c);
  
--void free_hashfile(struct hashfile *f)
--{
--	git_hash_discard(&f->ctx);
--	free_hashfile_memory(f);
--}
--
- int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 		      enum fsync_component component, unsigned int flags)
- {
- 	int fd;
- 
- 	hashflush(f);
- 
--	if (f->skip_hash) {
--		git_hash_discard(&f->ctx);
-+	if (f->skip_hash)
- 		hashclr(f->buffer, f->algop);
--	} else {
-+	else
- 		git_hash_final(f->buffer, &f->ctx);
--	}
- 
- 	if (result)
- 		hashcpy(result, f->buffer, f->algop);
-@@ -105,7 +98,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 		if (close(f->check_fd))
- 			die_errno("%s: sha1 file error on close", f->name);
- 	}
--	free_hashfile_memory(f);
-+	free_hashfile(f);
- 	return fd;
- }
- 
+ 	free(freq);
+ 	*freq_p = NULL;
+diff --git a/http.h b/http.h
+index 6b0639150f..729c51904d 100644
+--- a/http.h
++++ b/http.h
+@@ -255,7 +255,6 @@ struct http_object_request {
+ 	struct object_id oid;
+ 	struct object_id real_oid;
+ 	struct git_hash_ctx c;
+-	int hash_ctx_valid;
+ 	git_zstream stream;
+ 	int zret;
+ 	int rename;
 -- 
 2.55.0.459.g1b256877c9
 
