@@ -1,30 +1,30 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9953E92A9
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 16:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4CF409293
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 16:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783526616; cv=none; b=QQ28So8kUybIcy2KLK/U0OvVu4IbvL8iF6QE/p+K1JABUhM9FEYg6US05UgRZLBUeILRoDi183cbDV29JZTiyb12GdIlzGOLa8fFMJ1aIEBHmYcrGSA61ZA5rb45zTdn+PnEGQu5gKOLEvdyLkXLkzF6/4pAHYOg1V1EVasEzZo=
+	t=1783526618; cv=none; b=Egcnni7di0yLCvuTvnvC6+KxV6NCCqXabzRHY7DvjWXE9T3P8qv42/b6fGrkhcefluNLfZoZht2xT8hXpAS7LZ+51QGRlENq3Lek2Rw5sYtGuFdaehkkG8geFMydVEXfYqrqO+rOKr2r5VssMkbWs6T/UutiggM4fKBEK4uOrEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783526616; c=relaxed/simple;
-	bh=WFn61YskqVAnt0y/VnVfWSLJye/xzTUP3Cbobh+Kw+4=;
+	s=arc-20240116; t=1783526618; c=relaxed/simple;
+	bh=xi5Y0eNjh8iuUraRcXOzXEpCUk/7fPeCigZ3iCmHuyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M7pXH9oiEOOzcj4D2hswOjnNs5BdDF7qIyT2OI+Iyt5Xqc9xPFXIKebrxrNFEptJ0X62N6JINTbed2nEjtPxCcN+A1k66NaCPCThUvb5whsrlgFlqYC4I0ngJiHQULOXEQzuzNSGUvIMiWQtnRlYL0F+pm/0wJLkN4MjoJz7xbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=KWmGYORa; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=cgvbggR5; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=j9A5jH7XGATL7bwKVgoY5zD7sGPCUnDfHhl7kgXl3wQHjqFW+VX8UMego8OiND3t9LqltGXIkAWFLEXafJcQl0l+gzubpF3pIUXVQqZEuusddgf6VrA6hxYScWDgo3dz+nMJz5n8rpJnh0i8XaruHk9BQ+NB6bOYT5in5vpDBNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=A4oBIy8x; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=fFuQ726T; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="KWmGYORa";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="cgvbggR5"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="A4oBIy8x";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="fFuQ726T"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=KWmGYORamoRcTezq7nsii1jxpXRtvNlzhWgKWQxJlCSOQEE5SG/x/l67YG3QHW/viMuEs5kbOkpjhryOhmYSTWD4msD94wlnBa+oDXAcJcmvGQlXNZIXE6PuL+xqsBUMGDT63EeSDdhw2v1xPTWYGos5LtpRJKcWWIZ4vT6fa7db2KlV6o4XsXvsGf381lYscmWmMzZcBEbC8Ya+5YcCNwKXUkhGpIG4IDkIMDd4b0Q/ZjtQFyUWLspp6RAYdPw3PLJ8Bjbzj7tLg7qzM+Jo7imIhF2s08jA3N9cvOUOgkMeSohemxOiL6ONOpR+B8k1al8ipS1ZZmT1e9cN04+DRQ==; s=purelymail3; d=malon.dev; v=1; bh=WFn61YskqVAnt0y/VnVfWSLJye/xzTUP3Cbobh+Kw+4=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=cgvbggR5CoT1kaeEInDf7F9KmCvfWlDZm/LaLCK0vgyNoOA4kXymbOoqAwl69DzioqtZ90CCK5Hq2LB9ZesGIsqfXfoRMwizHWr6O/UpAhnmFED549FSXsm+EakZdAkWO9wn9FRxy6sJ6lcGCM0HW7ocQ8unU5GL/ZBlAVTefGJI9qVaNFz9MagOZ0omsDacLUhIIklqQl0ZEu8LYIHz4FW6NhFQs2VGO5GdRVr+mjFLYaDQ3ODu3T9hvQkKcA8had8GewLExjL1Nb8N2ko8kTagoM19z03xxpB8ZkpUxEdF82+UYX4fDdXdI9RtN5nh9WhH5XMUC5b+ZP1BSX59Sw==; s=purelymail3; d=purelymail.com; v=1; bh=WFn61YskqVAnt0y/VnVfWSLJye/xzTUP3Cbobh+Kw+4=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=A4oBIy8xQSu+hA/eG+HmZo9yYXPgFSVNB9JlpPwadu0vp79ZVk1VwZX8uioeyZJjY63hQBlVqaD7M2I9epX1RO6Qh7b9VinHEZnY6oZ7DsPmfn/pG5MHfUskQqDBxZQX06Ly8I5WZXVZ8kGe5mn/2cptT3Q5g6I6+do/DJ8+cPXH2NQmEsXuWr7q7avw9wE/Xt1MYwki2IEJfyFajS82aN2RYZBogf154X6ChZGgyH8pgWrGvaOm8CMQXdaMHWqUNBKn+1dJmzrWAOo3LVFaoFE3ggPoOaoITUt81pocqZd1DvvwkdZN0SN8mGYRlJ/5KsDBEuHBaP67hLXG5Ae00Q==; s=purelymail3; d=malon.dev; v=1; bh=xi5Y0eNjh8iuUraRcXOzXEpCUk/7fPeCigZ3iCmHuyI=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=fFuQ726TH+WTW24h6vtaei+J2MWeuSv6J9oxzGQH96VBq6SSK4Bo6qJ1juaM+i53JQVUjrahaZKtmRwdg0Lp9lcHYxv8Lhcb143/+F85sRtncjvY36Rwns+JUOY63Bb/Sj6zcQbzd5IHg2JwB4LoS6Refl073cUnk0jF/tILR/Nm0n8IPWPfcYZbJnZUi7kBm3OjmvusiwesPxRXJ7tl+TWqo18sPpGXrsDVdLSKSFwy3h0xlv5xf8Ig2xw3L1QFwafMzeKDANxqXcJ45fZqo7SbNEmsrm/rI6HPK8NPI7MjLYO315xmJiLyAEZdua1fgXxUYX+lvWatF04DajdO0g==; s=purelymail3; d=purelymail.com; v=1; bh=xi5Y0eNjh8iuUraRcXOzXEpCUk/7fPeCigZ3iCmHuyI=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -238025841;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 08 Jul 2026 16:03:30 +0000 (UTC)
+          Wed, 08 Jul 2026 16:03:34 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: cirnovskyv@gmail.com,
@@ -33,9 +33,9 @@ Cc: cirnovskyv@gmail.com,
 	Christian Couder <christian.couder@gmail.com>,
 	Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v8 6/9] environment: migrate apply_default_whitespace and apply_default_ignorewhitespace
-Date: Thu,  9 Jul 2026 00:02:57 +0800
-Message-ID: <20260708160300.8852-7-cat@malon.dev>
+Subject: [PATCH v8 7/9] environment: move push_default into repo_config_values
+Date: Thu,  9 Jul 2026 00:02:58 +0800
+Message-ID: <20260708160300.8852-8-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260708160300.8852-1-cat@malon.dev>
 References: <20260706142530.3681520-1-cat@malon.dev>
@@ -50,140 +50,196 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-The global variables 'apply_default_whitespace' and
-'apply_default_ignorewhitespace' are used to store the default
-whitespace configuration for 'git apply'. Move these variables
-into 'struct repo_config_values' to continue the libification
-effort.
+The global variable 'push_default' specifies the default behavior of
+'git push' when no explicit refspec is provided. Move 'push_default'
+into 'struct repo_config_values' to continue the libification effort.
 
-Dynamically allocated strings fetched via 'repo_config_get_string()'
-are now tracked per-repository and safely freed in
-'repo_config_values_clear()'.
+While 'enum push_default_type' ideally belongs in 'remote.h', moving it
+there introduces a circular dependency chain:
 
-As part of this transition, update 'git_apply_config()' to accept a
-'struct repository *' argument rather than relying on the
-'the_repository' global.
+  remote.h -> hash.h -> repository.h -> environment.h.
+
+Therefore, the enum definition is kept in 'environment.h' just above
+'struct repo_config_values' with a NEEDSWORK comment for future cleanup.
+
+Modify the configuration parsing in environment.c to update the
+per-repository structure directly, and update caller across the
+codebase to access the value via 'repo_config_values()'.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 Signed-off-by: Tian Yuchen <cat@malon.dev>
 ---
- apply.c       | 20 ++++++++++++--------
- environment.c |  6 ++++--
- environment.h |  4 ++--
- 3 files changed, 18 insertions(+), 12 deletions(-)
+ builtin/push.c |  8 ++++----
+ environment.c  | 16 +++++++++-------
+ environment.h  | 26 ++++++++++++++++----------
+ remote.c       |  2 +-
+ 4 files changed, 30 insertions(+), 22 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 249248d4f2..66db9b7678 100644
---- a/apply.c
-+++ b/apply.c
-@@ -47,11 +47,13 @@ struct gitdiff_data {
- =09int p_value;
- };
+diff --git a/builtin/push.c b/builtin/push.c
+index 6021b71d66..6dc3224b60 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -88,7 +88,7 @@ static void refspec_append_mapped(struct refspec *refspec=
+, const char *ref,
+ =09=09}
+ =09}
 =20
--static void git_apply_config(void)
-+static void git_apply_config(struct repository *repo)
- {
--=09repo_config_get_string(the_repository, "apply.whitespace", &apply_defau=
-lt_whitespace);
--=09repo_config_get_string(the_repository, "apply.ignorewhitespace", &apply=
-_default_ignorewhitespace);
--=09repo_config(the_repository, git_xmerge_config, NULL);
-+=09repo_config_get_string(repo, "apply.whitespace",
-+=09=09=09       &repo_config_values(repo)->apply_default_whitespace);
-+=09repo_config_get_string(repo, "apply.ignorewhitespace",
-+=09=09=09       &repo_config_values(repo)->apply_default_ignorewhitespace)=
-;
-+=09repo_config(repo, git_xmerge_config, NULL);
- }
+-=09if (push_default =3D=3D PUSH_DEFAULT_UPSTREAM &&
++=09if (repo_config_values(the_repository)->push_default =3D=3D PUSH_DEFAUL=
+T_UPSTREAM &&
+ =09    skip_prefix(matched->name, "refs/heads/", &branch_name)) {
+ =09=09struct branch *branch =3D branch_get(branch_name);
+ =09=09if (branch->merge_nr =3D=3D 1 && branch->merge[0]->src) {
+@@ -160,7 +160,7 @@ static NORETURN void die_push_simple(struct branch *bra=
+nch,
+ =09 * Don't show advice for people who explicitly set
+ =09 * push.default.
+ =09 */
+-=09if (push_default =3D=3D PUSH_DEFAULT_UNSPECIFIED)
++=09if (cfg->push_default =3D=3D PUSH_DEFAULT_UNSPECIFIED)
+ =09=09advice_pushdefault_maybe =3D _("\n"
+ =09=09=09=09 "To choose either option permanently, "
+ =09=09=09=09 "see push.default in 'git help config'.\n");
+@@ -232,7 +232,7 @@ static void setup_default_push_refspecs(int *flags, str=
+uct remote *remote)
+ =09const char *dst;
+ =09int same_remote;
 =20
- static int parse_whitespace_option(struct apply_state *state, const char *=
-option)
-@@ -126,10 +128,12 @@ int init_apply_state(struct apply_state *state,
- =09strset_init(&state->kept_symlinks);
- =09strbuf_init(&state->root, 0);
+-=09switch (push_default) {
++=09switch (repo_config_values(the_repository)->push_default) {
+ =09case PUSH_DEFAULT_MATCHING:
+ =09=09refspec_append(&rs, ":");
+ =09=09return;
+@@ -252,7 +252,7 @@ static void setup_default_push_refspecs(int *flags, str=
+uct remote *remote)
+ =09dst =3D branch->refname;
+ =09same_remote =3D !strcmp(remote->name, remote_for_branch(branch, NULL));
 =20
--=09git_apply_config();
--=09if (apply_default_whitespace && parse_whitespace_option(state, apply_de=
-fault_whitespace))
-+=09git_apply_config(repo);
-+=09if (repo_config_values(repo)->apply_default_whitespace &&
-+=09    parse_whitespace_option(state, repo_config_values(repo)->apply_defa=
-ult_whitespace))
- =09=09return -1;
--=09if (apply_default_ignorewhitespace && parse_ignorewhitespace_option(sta=
-te, apply_default_ignorewhitespace))
-+=09if (repo_config_values(repo)->apply_default_ignorewhitespace &&
-+=09    parse_ignorewhitespace_option(state, repo_config_values(repo)->appl=
-y_default_ignorewhitespace))
- =09=09return -1;
- =09return 0;
- }
-@@ -192,7 +196,7 @@ int check_apply_state(struct apply_state *state, int fo=
-rce_apply)
-=20
- static void set_default_whitespace_mode(struct apply_state *state)
- {
--=09if (!state->whitespace_option && !apply_default_whitespace)
-+=09if (!state->whitespace_option && !repo_config_values(state->repo)->appl=
-y_default_whitespace)
- =09=09state->ws_error_action =3D (state->apply ? warn_on_ws_error : nowarn=
-_ws_error);
- }
-=20
+-=09switch (push_default) {
++=09switch (repo_config_values(the_repository)->push_default) {
+ =09default:
+ =09case PUSH_DEFAULT_UNSPECIFIED:
+ =09case PUSH_DEFAULT_SIMPLE:
 diff --git a/environment.c b/environment.c
-index 3782bf68aa..8744790219 100644
+index 8744790219..09de2fee87 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -49,8 +49,6 @@ int assume_unchanged;
- int is_bare_repository_cfg =3D -1; /* unspecified */
- char *git_commit_encoding;
- char *git_log_output_encoding;
--char *apply_default_whitespace;
--char *apply_default_ignorewhitespace;
- int fsync_object_files =3D -1;
- int use_fsync =3D -1;
- enum fsync_method fsync_method =3D FSYNC_METHOD_DEFAULT;
-@@ -725,6 +723,8 @@ void repo_config_values_init(struct repo_config_values =
+@@ -59,7 +59,6 @@ enum eol core_eol =3D EOL_UNSET;
+ int global_conv_flags_eol =3D CONV_EOL_RNDTRP_WARN;
+ char *check_roundtrip_encoding;
+ enum rebase_setup_type autorebase =3D AUTOREBASE_NEVER;
+-enum push_default_type push_default =3D PUSH_DEFAULT_UNSPECIFIED;
+ #ifndef OBJECT_CREATION_MODE
+ #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
+ #endif
+@@ -619,21 +618,23 @@ static int git_default_branch_config(const char *var,=
+ const char *value)
+=20
+ static int git_default_push_config(const char *var, const char *value)
+ {
++=09struct repo_config_values *cfg =3D repo_config_values(the_repository);
++
+ =09if (!strcmp(var, "push.default")) {
+ =09=09if (!value)
+ =09=09=09return config_error_nonbool(var);
+ =09=09else if (!strcmp(value, "nothing"))
+-=09=09=09push_default =3D PUSH_DEFAULT_NOTHING;
++=09=09=09cfg->push_default =3D PUSH_DEFAULT_NOTHING;
+ =09=09else if (!strcmp(value, "matching"))
+-=09=09=09push_default =3D PUSH_DEFAULT_MATCHING;
++=09=09=09cfg->push_default =3D PUSH_DEFAULT_MATCHING;
+ =09=09else if (!strcmp(value, "simple"))
+-=09=09=09push_default =3D PUSH_DEFAULT_SIMPLE;
++=09=09=09cfg->push_default =3D PUSH_DEFAULT_SIMPLE;
+ =09=09else if (!strcmp(value, "upstream"))
+-=09=09=09push_default =3D PUSH_DEFAULT_UPSTREAM;
++=09=09=09cfg->push_default =3D PUSH_DEFAULT_UPSTREAM;
+ =09=09else if (!strcmp(value, "tracking")) /* deprecated */
+-=09=09=09push_default =3D PUSH_DEFAULT_UPSTREAM;
++=09=09=09cfg->push_default =3D PUSH_DEFAULT_UPSTREAM;
+ =09=09else if (!strcmp(value, "current"))
+-=09=09=09push_default =3D PUSH_DEFAULT_CURRENT;
++=09=09=09cfg->push_default =3D PUSH_DEFAULT_CURRENT;
+ =09=09else {
+ =09=09=09error(_("malformed value for %s: %s"), var, value);
+ =09=09=09return error(_("must be one of nothing, matching, simple, "
+@@ -725,6 +726,7 @@ void repo_config_values_init(struct repo_config_values =
 *cfg)
- =09cfg->editor_program =3D NULL;
- =09cfg->pager_program =3D NULL;
  =09cfg->askpass_program =3D NULL;
-+=09cfg->apply_default_whitespace =3D NULL;
-+=09cfg->apply_default_ignorewhitespace =3D NULL;
+ =09cfg->apply_default_whitespace =3D NULL;
+ =09cfg->apply_default_ignorewhitespace =3D NULL;
++=09cfg->push_default =3D PUSH_DEFAULT_UNSPECIFIED;
  =09cfg->apply_sparse_checkout =3D 0;
  =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
  =09cfg->trust_ctime =3D 1;
-@@ -758,4 +758,6 @@ void repo_config_values_clear(struct repository *repo)
- =09FREE_AND_NULL(cfg->editor_program);
- =09FREE_AND_NULL(cfg->pager_program);
- =09FREE_AND_NULL(cfg->askpass_program);
-+=09FREE_AND_NULL(cfg->apply_default_whitespace);
-+=09FREE_AND_NULL(cfg->apply_default_ignorewhitespace);
- }
 diff --git a/environment.h b/environment.h
-index d55b1ba073..9aecd64152 100644
+index 9aecd64152..72859b5d76 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -94,6 +94,8 @@ struct repo_config_values {
- =09char *editor_program;
- =09char *pager_program;
+@@ -87,6 +87,21 @@ extern const char * const local_repo_env[];
+ struct strvec;
+=20
+ struct repository;
++
++/*
++ * NEEDSWORK: It would be better if these definitions could be moved to
++ * other more specific files, but care is needed to avoid circular
++ * inclusion issues.
++ */
++enum push_default_type {
++=09PUSH_DEFAULT_NOTHING =3D 0,
++=09PUSH_DEFAULT_MATCHING,
++=09PUSH_DEFAULT_SIMPLE,
++=09PUSH_DEFAULT_UPSTREAM,
++=09PUSH_DEFAULT_CURRENT,
++=09PUSH_DEFAULT_UNSPECIFIED
++};
++
+ struct repo_config_values {
+ =09/* section "core" config values */
+ =09char *attributes_file;
+@@ -96,6 +111,7 @@ struct repo_config_values {
  =09char *askpass_program;
-+=09char *apply_default_whitespace;
-+=09char *apply_default_ignorewhitespace;
+ =09char *apply_default_whitespace;
+ =09char *apply_default_ignorewhitespace;
++=09enum push_default_type push_default;
  =09int apply_sparse_checkout;
  =09int trust_ctime;
  =09int check_stat;
-@@ -182,8 +184,6 @@ extern int has_symlinks;
- extern int minimum_abbrev, default_abbrev;
- extern int ignore_case;
- extern int assume_unchanged;
--extern char *apply_default_whitespace;
--extern char *apply_default_ignorewhitespace;
- extern unsigned long pack_size_limit_cfg;
+@@ -197,16 +213,6 @@ enum rebase_setup_type {
+ };
+ extern enum rebase_setup_type autorebase;
 =20
- extern int protect_hfs;
+-enum push_default_type {
+-=09PUSH_DEFAULT_NOTHING =3D 0,
+-=09PUSH_DEFAULT_MATCHING,
+-=09PUSH_DEFAULT_SIMPLE,
+-=09PUSH_DEFAULT_UPSTREAM,
+-=09PUSH_DEFAULT_CURRENT,
+-=09PUSH_DEFAULT_UNSPECIFIED
+-};
+-extern enum push_default_type push_default;
+-
+ enum object_creation_mode {
+ =09OBJECT_CREATION_USES_HARDLINKS =3D 0,
+ =09OBJECT_CREATION_USES_RENAMES =3D 1
+diff --git a/remote.c b/remote.c
+index 00723b385e..d48c01d375 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1933,7 +1933,7 @@ static char *branch_get_push_1(struct repository *rep=
+o,
+ =09if (remote->mirror)
+ =09=09return tracking_for_push_dest(remote, branch->refname, err);
+=20
+-=09switch (push_default) {
++=09switch (repo_config_values(repo)->push_default) {
+ =09case PUSH_DEFAULT_NOTHING:
+ =09=09return error_buf(err, _("push has no destination (push.default is 'n=
+othing')"));
+=20
 --=20
 2.43.0
 
