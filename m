@@ -1,38 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A033563EB
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689D4330328
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783482778; cv=none; b=Mfp79hY8umJ8QQ7oIh3Jc1h1bxDe1p5vjC5kIHERDd5eoCOb1Bk3XPaW0z4oZJMOGakYf8fS4ciH3eZjLzo/eJTabD28rJ/5FztIyyBkBho9XSpO24U/Y++aHfCOSz3Eb/I2R8ScuxXgnnvDFPuJBsJCP0NiVr2sjqKV5M97Kyo=
+	t=1783482780; cv=none; b=RzW6vldfaXnnke5lTCb0uEyxSeUWQDc7RczQOpSacSFPbQQ7kT9bcDrELlf8a2XjHWu+LyKs910SU44ESGwNVViHZoOyVKViWJ8q/ogzklhL/Vge8GoAj74Tpwzo+I2MooFR6ShPCAYDHwcFPBjahdYl8TSmexx6M3ByesmwVM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783482778; c=relaxed/simple;
-	bh=+goaUv9ltQnzkJhEJZesjM7Jsc/MbEFUhRCMKVlzVSg=;
+	s=arc-20240116; t=1783482780; c=relaxed/simple;
+	bh=Hv24YiE3FlfBW7Lv9lFRmZvNQYFlqQYcBxDS1rC4Kec=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EZ69o14sNC1ynClBy81CHWfk5tTQYFdIVWnEUcNeR5M11TJVYbvdkOAnharXgrF5FFDPDLxGoXJ/fbTgsz7rzaQjoB1ko+DmpNWQ0WAgxntww8NKjXtLy8rkNYrEEny4V7R7U7vRuYBTHPb3EaKyjJ6Bxb4Ti9Ar+gJOXKdEOrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QoeaFjo3; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=UDEW6xhW0QjYaYl3BKy+wB9x7QvPH1hoWM/KWIUfjRfhhv8LXhhB7a4ghc2T8uHBp56kn5m4osPg+AfXvWPZZibJtMV+iEJ1Wc7g8vBBuLWX+qV9zPmLfS+u8883lZClk2uHFufS70bKX2LNLbPcjDZm+DOrzEb/6Fy1zL1XQII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ETZNkaRo; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QoeaFjo3"
-Received: (qmail 25427 invoked by uid 106); 8 Jul 2026 03:52:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+goaUv9ltQnzkJhEJZesjM7Jsc/MbEFUhRCMKVlzVSg=; b=QoeaFjo3JgR0QeDj9d1Fg9ZEgV8GhwZr86YL0fmuBS0RFugIUAMQXxU4vHmt/X4r7cDbu0Vck+8cQK9AzPXpqesbFNNbmQsEmz2zvnlu/dK8qpll6XIV2vzY+n4n0dQpn3jSj0lAO8UgZ0aJoiaaHpWQ082KCASSFYj6O8ifgVaGYR+pGqG0QK/IER18Vsb66M75awVkyuyw4gdFTAxoReF/Sbt7vQUxhNe8G6kORlPJwBKKLo2afUzE2Hz5ttwIqz1C/XWqrxSzdZZcCLlaxfC5uBM3A4LwXlpszzkJh37BzgQtJJ6J9PzXYxm0ay3gJON4kCvGCLjDTU/JIIszaQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ETZNkaRo"
+Received: (qmail 25441 invoked by uid 106); 8 Jul 2026 03:52:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Hv24YiE3FlfBW7Lv9lFRmZvNQYFlqQYcBxDS1rC4Kec=; b=ETZNkaRovcmNL5xFDY1Ux95H+NYSLeUqUT1Wb8LFSuZ8MFdCVPoOEEIAdCYKXdYeHm6ziTnO3XA6hffWETL86FFdz9FBuOWf000Wwz3+k3Mc7s4VBFj+I+df1lg8XRV7gMEmC82bHlAm/jJEg2T7h7JnWhUhjQDH1Xg7WdNaZ4bBS3MiBJdOmQYdxSIoKb23vJbhvhIBBq8FvFEcEU4WWZ84yl19n6ufp9x667Nyo1860QNeVbwQd6cvnlsBo7JSX6vzBt2ok8k3xF05G3JnLOKnN8SpWaM0qC2biAj14Nixa8m3dWfpi8bhkpGz8YZ6evKFmBAu0wjAS3Sn+ckTAg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2026 03:52:56 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2026 03:52:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 40999 invoked by uid 111); 8 Jul 2026 03:52:56 -0000
+Received: (qmail 41005 invoked by uid 111); 8 Jul 2026 03:52:58 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 23:52:56 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 23:52:58 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 7 Jul 2026 23:52:55 -0400
+Date: Tue, 7 Jul 2026 23:52:57 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/7] hash: document function pointers and wrappers
-Message-ID: <20260708035255.GC41620@coredump.intra.peff.net>
+Subject: [PATCH v2 4/7] hash: make git_hash_discard() idempotent
+Message-ID: <20260708035257.GD41620@coredump.intra.peff.net>
 References: <20260708035235.GA41491@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -44,99 +44,80 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260708035235.GA41491@coredump.intra.peff.net>
 
-We want people to use the git_hash_*() wrappers rather than the bare
-function pointers in the git_hash_algo struct. Let's document them
-rather than the bare pointers, and warn people away from the pointers.
-Coccinelle will eventually force the use of the wrappers, but it's
-helpful to lead readers in the right direction from the start.
+You must always either finalize or discard a hash context to release any
+resources, but you must call only one such function. This creates extra
+work for some callers, since their cleanup code paths need to know
+whether they got there via their happy path (and the finalization
+happened) or due to an error (in which case they need to discard).
 
-While we're here we can document a few other bits of wisdom I've turned
-up while working in this area:
+Let's add an "active" flag that turns a redundant discard into a noop.
+That lets you safely do this:
 
-  - You have to initialize the destination of a git_hash_clone(). This
-    is something we may eventually change for efficiency, but we should
-    definitely document the requirement for now.
+    git_hash_init(&ctx, algo);
+    ...
+    if (some_error)
+            goto out;
+    ...
+    git_hash_final(result, &ctx);
 
-  - You must eventually finalize or discard a hash, since some backends
-    may allocate resources during initialization.
+  out:
+    git_hash_discard(&ctx);
+
+This should avoid future errors, and will also let us simplify a few
+existing callers (in future patches).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- hash.h | 43 ++++++++++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 11 deletions(-)
+ hash.c | 6 ++++++
+ hash.h | 1 +
+ 2 files changed, 7 insertions(+)
 
+diff --git a/hash.c b/hash.c
+index 55d1d41770..b1296f0018 100644
+--- a/hash.c
++++ b/hash.c
+@@ -285,6 +285,7 @@ void git_hash_free(struct git_hash_ctx *ctx)
+ void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop)
+ {
+ 	algop->init_fn(ctx);
++	ctx->active = true;
+ }
+ 
+ void git_hash_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
+@@ -300,16 +301,21 @@ void git_hash_update(struct git_hash_ctx *ctx, const void *in, size_t len)
+ void git_hash_final(unsigned char *hash, struct git_hash_ctx *ctx)
+ {
+ 	ctx->algop->final_fn(hash, ctx);
++	ctx->active = false;
+ }
+ 
+ void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
+ {
+ 	ctx->algop->final_oid_fn(oid, ctx);
++	ctx->active = false;
+ }
+ 
+ void git_hash_discard(struct git_hash_ctx *ctx)
+ {
++	if (!ctx->active)
++		return;
+ 	ctx->algop->discard_fn(ctx);
++	ctx->active = false;
+ }
+ 
+ uint32_t hash_algo_by_name(const char *name)
 diff --git a/hash.h b/hash.h
-index 0a23ef4dfd..121ecf13aa 100644
+index 121ecf13aa..cf94ad5700 100644
 --- a/hash.h
 +++ b/hash.h
-@@ -309,22 +309,15 @@ struct git_hash_algo {
- 	/* The block size of the hash. */
- 	size_t blksz;
- 
--	/* The hash initialization function. */
-+	/*
-+	 * Low-level implementation hooks. Callers should use the git_hash_*
-+	 * wrappers below rather than invoking these directly.
-+	 */
- 	git_hash_init_fn init_fn;
--
--	/* The hash context cloning function. */
- 	git_hash_clone_fn clone_fn;
--
--	/* The hash update function. */
- 	git_hash_update_fn update_fn;
--
--	/* The hash finalization function. */
- 	git_hash_final_fn final_fn;
--
--	/* The hash finalization function for object IDs. */
- 	git_hash_final_oid_fn final_oid_fn;
--
--	/* Discard an initialized hash without finalizing. */
- 	git_hash_discard_fn discard_fn;
- 
- 	/* The OID of the empty tree. */
-@@ -341,12 +334,40 @@ struct git_hash_algo {
+@@ -281,6 +281,7 @@ struct git_hash_ctx {
+ 		git_SHA_CTX_unsafe sha1_unsafe;
+ 		git_SHA256_CTX sha256;
+ 	} state;
++	bool active;
  };
- extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
  
-+/*
-+ * Prepare an uninitialized hash context for use. You must eventually release
-+ * the context with git_hash_final() (or final_oid()) or by calling
-+ * git_hash_discard().
-+ */
- void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop);
-+
-+/*
-+ * Clone the state of a hash. Both src and dst must have been initialized with
-+ * git_hash_init().
-+ */
- void git_hash_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src);
-+
-+/*
-+ * Add more data to an initialized hash context.
-+ */
- void git_hash_update(struct git_hash_ctx *ctx, const void *in, size_t len);
-+
-+/*
-+ * Retrieve the final hash value from a context, releasing any resources.
-+ */
- void git_hash_final(unsigned char *hash, struct git_hash_ctx *ctx);
-+
-+/*
-+ * Like git_hash_final(), but write the result into an object_id.
-+ */
- void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx *ctx);
-+
-+/*
-+ * Discard a hash context without computing the final value, but still
-+ * releasing any resources.
-+ */
- void git_hash_discard(struct git_hash_ctx *ctx);
-+
- const struct git_hash_algo *hash_algo_ptr_by_number(uint32_t algo);
- struct git_hash_ctx *git_hash_alloc(void);
- void git_hash_free(struct git_hash_ctx *ctx);
+ typedef void (*git_hash_init_fn)(struct git_hash_ctx *ctx);
 -- 
 2.55.0.459.g1b256877c9
 
