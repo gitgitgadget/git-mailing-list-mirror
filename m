@@ -1,158 +1,201 @@
-Received: from gw2.atmark-techno.com (gw2.atmark-techno.com [35.74.137.57])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E072642087F
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.74.137.57
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1511A9F82
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783481646; cv=none; b=FZ3+6ii/zbiu1ZEvi5mjEno5O5XS4XWTCqbYjodDxUJCzr0lj1BA/30BL9uaG3FbvCon6pTLsz+w3Ubhq3cwVIWfJ0k7xbbHpxWtHzupOrW0GsbMaCtmqNYdPDrE4I3FnAyEi1kjwimbA8P6x5mbejcmi965NiCc4TZmPEkifRk=
+	t=1783482758; cv=none; b=mbcuEmuOZNjhLe9m2hCSUeZx77gpUOtQ9ls4tKGxpEZ7AryuojSErG+0VHjU+Vn3BRIDI85AnvhXBiIHCcuT0K//XtPYIiSl+Lud7LCsamffF7BJa1EfkNoFlFUBBE3fIIJ9hlUF8Zy2kcAFuZ3A6bQEX2kyyzcLDwajp1ep5Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783481646; c=relaxed/simple;
-	bh=p7ACcegywY3Typ95ysXDMi0di/88NNCR3Cx7OvkOVgc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jJEFNc4+RJtS39qHMu04Bs3L1pTOy4iEg9nt0/CYZM5+WsCIC63WBGTOzTqZQNQgCIdeEvdOOPIuHDpOyFt/k8awkAYls2G6pAbBmu4Um67Cmodj3K0LT5HeR74DW96UjvSmesyxkzde2wywYF+36q/u6a7soGtTW9Moh/tQanM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com; spf=pass smtp.mailfrom=atmark-techno.com; dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b=WmzVXU4d; dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b=Y7YIvsTM; arc=none smtp.client-ip=35.74.137.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atmark-techno.com
+	s=arc-20240116; t=1783482758; c=relaxed/simple;
+	bh=HS8a80hh515obgzi8XMMG4ayklsSIZpKtce1UZPrjCA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tT27CZQsoDijyXEw5i4V0mGc8tZX3sMNsRjjE+qWYu1YziA+YjQGa0oP5CS3Pn7VWYE55sMRLcALvPEAuqk9NApfumOBvXIeO3P708suHkBPj8cwyCFn6MwUKq6TpNJEia0+ultdyR/8bMLoaWipPkqRqsSIewjcFS0VfyicEv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GTwJhabj; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b="WmzVXU4d";
-	dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b="Y7YIvsTM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=atmark-techno.com;
-	s=gw2_bookworm; t=1783481638;
-	bh=p7ACcegywY3Typ95ysXDMi0di/88NNCR3Cx7OvkOVgc=;
-	h=From:Date:Subject:To:Cc:From;
-	b=WmzVXU4dxet/EXxF/pO6+eZ1fKInG7ASsz/HN5V+74f/Xl2/Pwiw/XMUYEtxgmUV2
-	 fKeCcZEbnVgD5vu+/hktXQz0ode7wEJ0+3Yqm33VTZ+O+biZjHXpyUEhrgbchvqwAM
-	 uqXi9dBiYapfgQPUKIUaPo3l0Gel8KVu97i8esJV1xgVD9jlFAzrua8PlRoMYbMyX7
-	 U19EA79NUokGl2A0EtlawiQzhJbJZk8OWqsk0iz1Si7z3BWPiyKBZ4dkdnGDQOyuY3
-	 Gxb31VH7pu74B3E2J84UBBG8s/Iiui8CAajmLOg/h5fhjMJY9jrI9y7FlLRlS0D6MI
-	 gHa/78CMT+cfg==
-Received: from gw2.atmark-techno.com (localhost [127.0.0.1])
-	by gw2.atmark-techno.com (Postfix) with ESMTP id 4627A2D
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 12:33:58 +0900 (JST)
-Authentication-Results: gw2.atmark-techno.com;
-	dkim=pass (2048-bit key; unprotected) header.d=atmark-techno.com header.i=@atmark-techno.com header.a=rsa-sha256 header.s=google header.b=Y7YIvsTM;
-	dkim-atps=neutral
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by gw2.atmark-techno.com (Postfix) with ESMTPS id 7A8884CD
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 12:33:57 +0900 (JST)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2cc5faecf01so7356225ad.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 20:33:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atmark-techno.com; s=google; t=1783481636; x=1784086436; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=t84OJGBcqdaWqq5z0Ly5VKP8WNzMC5HnfVigIBAXItY=;
-        b=Y7YIvsTM521yV3emEIFXsHe8l3DZ2/WGDfsWoxCcZ6kXSfwpPgkk6Do9ePRnqf6tOe
-         c1Ri5TzUSET3FxmUbP4BAk9P/olIBJE14Yssgk6uUFTqW8vqQ941n/546qkzQyoBKhXj
-         9NTleRHharE1iKkpd/czlsDXT9Z1+pzR6ZaPY3JSHX+lXilP1/SNFFDOPWdQ/zpN+ddT
-         PGI/St4vGBL0tWEEnEiCpjsQSichykBSsVI6SJQGRiiSIedgrEYm2lXZrDM3yb+/sYkS
-         wRx6qwxf4ZMUZnertqrXIZt6dDh1frZNXn0mhtS5OfAhGJm3pgArUzZYzupyRqL4BTX/
-         GDxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783481636; x=1784086436;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=t84OJGBcqdaWqq5z0Ly5VKP8WNzMC5HnfVigIBAXItY=;
-        b=Z/t/aPfxlIsQOQD139Mavs7JzindjNh3pWDVFAvSOYmTnexeHKIgrJEf2WlhkdrlfC
-         8dN8N55xGK13yu+XX2CM5pHVwEUYANamUDz0U6CKSfUQ162vNvg5XxSJac+LLrBWEdcl
-         Zt9uwvea+wY/Za/tru+6pC/buBurJlrgU7WwpNpUYyNzMrurukffzeSdpFWd4HuW0a5f
-         2sZX3p9cE9BApAPgf+Q7x45PbxRSMLVswN9vxgtWqAyXZEWsIZHJFVKeNi5hFkkk1u2g
-         FPTK8S6YwzErF4fsJtkRbhj7X/k29pJNEFF536n1TEfXgPzfKvO3Takp1zYnwJAL3nm1
-         bF+Q==
-X-Forwarded-Encrypted: i=1; AHgh+Rr6Oan9A349DUg7+A7uRzDOPMjHd3q0BqRa/E8bvCW+u6SukRNNK416YfhLI/YX3LHG/ME=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywq/yxQ/m953ozX5yaCO2u5+t4HcuuRl08O1vK9IOqarhwYUf+I
-	F5U0AGsY4SXBknjvgSZN768xGNTdkCiw6FQUbhiTndXo+5hql5uR5L0ifjkaRhvg2Qq5wWvQeC0
-	aHg0GxeZfKpfCJIE3ye9k6EjMRW4yihQVnn5mfvqucDa9m4eumeH+6pQ=
-X-Gm-Gg: AfdE7cmYS33Qms++tjQSsVHRIXd3q7iOEaNBaxNT9vLB49aEb6MxTcYi1aUWn0SCcGD
-	QxUDdB4teXTi2nZj/9rrcxb4UqafvsT3h7osCkJde0WPrb6x0HqFpVC/yLS1xrB9sG+QTl5XKXJ
-	38+ngIBBaDjotOU9x2H9GpeUj77j6gRjfY8JZxjb2hmlwb/BEUaDhpkWM9Vcl+pQ4DBstv1lkUI
-	qvJhlKowJu3ZUbxYF6aSY6RtUExGLd+1mLC6ZvlhRYw17Gjoa6LhO1xKHcSdaIp/Lfhx+QQUqh3
-	r/xZPqLU+0hre9jp7COfhBvtMTLz4rcu1QV7iZiqSePjpeojm3gXoQFMHQft3RLtEawjN0BxEns
-	7Sa1T7rb/AaBXPY7Bqpv5bg/a50FPjEmZIuHdVk78eEL7+LEYJM9ubClgZ6I=
-X-Received: by 2002:a17:90b:3f4d:b0:381:6c5:3f63 with SMTP id 98e67ed59e1d1-3893fe5b9b7mr719423a91.6.1783481636448;
-        Tue, 07 Jul 2026 20:33:56 -0700 (PDT)
-X-Received: by 2002:a17:90b:3f4d:b0:381:6c5:3f63 with SMTP id 98e67ed59e1d1-3893fe5b9b7mr719401a91.6.1783481636011;
-        Tue, 07 Jul 2026 20:33:56 -0700 (PDT)
-Received: from localhost (sodcd-04p2-40.ppp11.odn.ad.jp. [203.139.65.40])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-387d17e9ff3sm1994865a91.7.2026.07.07.20.33.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 20:33:55 -0700 (PDT)
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Date: Wed, 08 Jul 2026 03:33:42 +0000
-Subject: [PATCH] submodule--helper: accept '-i' shorthand for update --init
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GTwJhabj"
+Received: (qmail 25388 invoked by uid 106); 8 Jul 2026 03:52:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HS8a80hh515obgzi8XMMG4ayklsSIZpKtce1UZPrjCA=; b=GTwJhabjbZdERrpCa6Q7hv4wuNJFFKb0Ek2KntOKDqEW5ydCrKlQ9eCP5QjYGwcM+ZRbUVE5HV4x5pSOpKwYxqlm6N6ZTB85kGTBwFERzEKDqH7dSk3hteDTE+YhLaPRxF4f2ko0vNADyNdJC/toNErC0QhrOVONsIC2wjfc3CsrtLVi9HDPATF2Qp9uuOr6b7Q+uzSpQ9fdRI227HWHWt2cVciIu8QbaLO8jYgqeIbq5BQNvSir5FPvlTJ3r280p2J7CmwcmrY2AFmBjPjSdkrpWo7peQj9whp+iaHLUMH/0Sk6k8LWAhzuUoOGrYBMy445vNEFPLkueEU1l/Nt/A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2026 03:52:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 40968 invoked by uid 111); 8 Jul 2026 03:52:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 23:52:35 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 7 Jul 2026 23:52:35 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/7] git_hash_*() quality-of-life improvements
+Message-ID: <20260708035235.GA41491@coredump.intra.peff.net>
+References: <20260707045556.GA1288172@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260708-submodule-init-v1-1-719456077262@atmark-techno.com>
-X-B4-Tracking: v=1; b=H4sIABXFTWoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcwML3eLSpNz8lNIcoEReZoluWmKyhalhommKiUWaElBTQVFqWmYF2MD
- oWAgfqCMrNbkEZIpSbS0AN+BLgnIAAAA=
-X-Change-ID: 20260708-submodule-init-fac851a5d48f
-To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>, Glen Choo <glencbz@gmail.com>, 
- Atharva Raykar <raykar.ath@gmail.com>
-Cc: Roy Eldar <royeldar0@gmail.com>, git@vger.kernel.org, 
- Dominique Martinet <dominique.martinet@atmark-techno.com>
-X-Mailer: b4 0.16-dev-a9e92
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1518;
- i=dominique.martinet@atmark-techno.com; h=from:subject:message-id;
- bh=p7ACcegywY3Typ95ysXDMi0di/88NNCR3Cx7OvkOVgc=;
- b=owEBbQKS/ZANAwAKAfKKYH/WjHEHAcsmYgBqTcUiL9Dbuyh2ndkBQXO82NXer/tjR0TDFklbW
- DAYKRGhgQeJAjMEAAEKAB0WIQQoFSiLMD+txr0veJbyimB/1oxxBwUCak3FIgAKCRDyimB/1oxx
- B7ZXEACbEqiNWLBRfYAfl4l5MyVjCtgqMdr7q+DBDWnO+vjSp6SiexiZj0PSTGBrh9NjlX3IU+D
- VFBDu8zuw+sLRzVyuk+B1v3HbmNw9ag+mEp9kAhC7/977nEua8XDuXyedC6tc7A+PrUNXA2e/XD
- iJWh3Lgw5ofXuSBomMUvkkjl4U1h7UHNiNLMWdwuB/43JucjWrZLB7osB3yUUFPJLx6MJmbcEhH
- O5UBWgqsePo23NWiNnujNrYWpGYmYabIKpk+TNLgz9CYIePN9A3grfZjmuoiuPSK7rB7PpaGNHU
- htjwBs/7J5CSeMe1stFUzDGfHR9hzSkRa01iZPiEj5v2EEJ45aw2/cHuJb7USOHA8g26i/yRIip
- PBEPQbWr07xFiOf1vFC0BPj5QS3kC3FXaceu0PhGXNR9GS4jRJV90u5u9IF6HNidGKKcEE+gfOU
- ftlwezunKQhVaeTri/vOj5UYw/SgKWTMBVd0Cre8x3R1sYkYRS9TuT/XIMhvHcioVdD2jLCY4tL
- C9EGDOOJUsacMZ5KeAldzZ+nnBzftLYNL9Upo5jAi5g3oMwwQIHv/QOSkjE3Upu4/DRqfHJJZRp
- IMFAJV/f9+YtIhPK9+k0hszZFHXKDL0hxT97cgE0yViJ87pRqZOOi+RHFcqEk2g14odOXY8D2aK
- 1MLd8UYp4an+HRg==
-X-Developer-Key: i=dominique.martinet@atmark-techno.com; a=openpgp;
- fpr=2815288B303FADC6BD2F7896F28A607FD68C7107
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260707045556.GA1288172@coredump.intra.peff.net>
 
-commit 3ad0ba722744 ("git-submodule.sh: improve variables readability")
-made `git submodules update -i` pass `-i` as is to submodule--helper,
-but it fails with `error: unknown switch `i'` because the helper does
-not accept the short option.
+On Tue, Jul 07, 2026 at 12:55:57AM -0400, Jeff King wrote:
 
-All other short options supported by git-submodule.sh are properly
-handle in the helper, so also add the alias for --init
+> This implements the "idempotent git_hash_discard()" discussed in this
+> subthread:
+> 
+>   https://lore.kernel.org/git/20260702080707.GG2029434@coredump.intra.peff.net/
+> 
+> with associated cleanups.
 
-Fixes: 3ad0ba722744 ("git-submodule.sh: improve variables readability")
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
----
-This apparently can't be used much because it's been broken since v2.49,
-and it's not in the help, but I guess we might as well fix this since it
-used to work?
+Here's a v2 addressing the comments so far. Mostly minor changes:
 
-Thanks!
----
- builtin/submodule--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  - fixed typos noticed by Patrick
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1cc82a134db2..3ec8bf50532e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2990,7 +2990,7 @@ static int module_update(int argc, const char **argv, const char *prefix,
- 	struct option module_update_options[] = {
- 		OPT__SUPER_PREFIX(&opt.super_prefix),
- 		OPT__FORCE(&opt.force, N_("force checkout updates"), 0),
--		OPT_BOOL(0, "init", &opt.init,
-+		OPT_BOOL('i', "init", &opt.init,
- 			 N_("initialize uninitialized submodules before update")),
- 		OPT_BOOL(0, "remote", &opt.remote,
- 			 N_("use SHA-1 of submodule's remote tracking branch")),
+  - dropped extra braces added by coccinelle
 
----
-base-commit: 11320dd2066f2139870e36987240abc981cb493c
+  - dropped a trailing blank line from patch 1 (this gets fixed in a
+    later patch as we add more content after the blank line, but I
+    noticed "git apply" complaining)
+
+  - a bit more explanation in patch 7 about why we don't support
+    idempotent final() calls
+
+Patch list below, followed by range diff.
+
+  [1/7]: hash: use git_hash_init() consistently
+  [2/7]: hash: convert remaining direct function calls
+  [3/7]: hash: document function pointers and wrappers
+  [4/7]: hash: make git_hash_discard() idempotent
+  [5/7]: csum-file: use idempotent git_hash_discard()
+  [6/7]: http: use idempotent git_hash_discard()
+  [7/7]: hash: check ctx->active flag in all wrapper functions
+
+ builtin/fast-import.c       |  4 +--
+ builtin/index-pack.c        |  6 ++--
+ builtin/patch-id.c          |  2 +-
+ builtin/receive-pack.c      |  6 ++--
+ builtin/submodule--helper.c | 10 +++---
+ builtin/unpack-objects.c    |  4 +--
+ csum-file.c                 | 23 +++++---------
+ diff.c                      |  4 +--
+ hash.c                      | 16 ++++++++++
+ hash.h                      | 44 +++++++++++++++++++-------
+ http-push.c                 |  2 +-
+ http.c                      |  9 ++----
+ http.h                      |  1 -
+ object-file.c               | 14 ++++-----
+ pack-check.c                |  2 +-
+ pack-write.c                |  6 ++--
+ read-cache.c                |  6 ++--
+ rerere.c                    |  2 +-
+ t/helper/test-hash-speed.c  |  2 +-
+ t/helper/test-hash.c        |  2 +-
+ t/helper/test-synthesize.c  | 33 ++++++++++---------
+ t/unit-tests/u-hash.c       |  2 +-
+ tools/coccinelle/hash.cocci | 63 +++++++++++++++++++++++++++++++++++++
+ trace2/tr2_sid.c            |  2 +-
+ 24 files changed, 177 insertions(+), 88 deletions(-)
+ create mode 100644 tools/coccinelle/hash.cocci
 
 
+1:  2f1c8cbc98 ! 1:  911cf0dfcd hash: use git_hash_init() consistently
+    @@ object-file.c: static int start_loose_object_common(struct odb_source_loose *loo
+      	stream->next_out = buf;
+      	stream->avail_out = buflen;
+     -	algo->init_fn(c);
+    --	if (compat && compat_c)
+    --		compat->init_fn(compat_c);
+     +	git_hash_init(c, algo);
+    -+	if (compat && compat_c) {
+    + 	if (compat && compat_c)
+    +-		compat->init_fn(compat_c);
+     +		git_hash_init(compat_c, compat);
+    -+	}
+      
+      	/*  Start to feed header to zlib stream */
+      	stream->next_in = (unsigned char *)hdr;
+    @@ read-cache.c: static size_t read_eoie_extension(const char *mmap, size_t mmap_si
+     
+      ## rerere.c ##
+     @@ rerere.c: static int handle_path(unsigned char *hash, struct rerere_io *io, int marker_siz
+    - 	struct git_hash_ctx ctx;
+      	struct strbuf buf = STRBUF_INIT, out = STRBUF_INIT;
+      	int has_conflicts = 0;
+    --	if (hash)
+    + 	if (hash)
+     -		the_hash_algo->init_fn(&ctx);
+    -+	if (hash) {
+     +		git_hash_init(&ctx, the_hash_algo);
+    -+	}
+      
+      	while (!io->getline(&buf, io)) {
+      		if (is_cmarker(buf.buf, '<', marker_size)) {
+    @@ tools/coccinelle/hash.cocci (new)
+     +- ALGO->init_fn(CTX);
+     ++ git_hash_init(CTX, ALGO);
+     +  ...>}
+    -+
+     
+      ## trace2/tr2_sid.c ##
+     @@ trace2/tr2_sid.c: static void tr2_sid_append_my_sid_component(void)
+2:  cf88edda3f ! 2:  879962bf47 hash: convert remaining direct function calls
+    @@ t/helper/test-synthesize.c: static int generate_pack_with_large_object(const cha
+     
+      ## tools/coccinelle/hash.cocci ##
+     @@ tools/coccinelle/hash.cocci: struct git_hash_ctx *CTX;
+    + - ALGO->init_fn(CTX);
+      + git_hash_init(CTX, ALGO);
+        ...>}
+    - 
+    ++
+     +@@
+     +identifier f != git_hash_clone;
+     +expression ALGO;
+3:  3c302bbe74 ! 3:  f06387a467 hash: document function pointers and wrappers
+    @@ hash.h: struct git_hash_algo {
+      
+     +/*
+     + * Prepare an uninitialized hash context for use. You must eventually release
+    -+ * the context with with git_hash_final() (or final_oid()) or by calling
+    ++ * the context with git_hash_final() (or final_oid()) or by calling
+     + * git_hash_discard().
+     + */
+      void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop);
+4:  e8b50b164a = 4:  2d876c17b1 hash: make git_hash_discard() idempotent
+5:  5488debdae = 5:  3d3d5d2c63 csum-file: use idempotent git_hash_discard()
+6:  15fd04f519 = 6:  91bda10e58 http: use idempotent git_hash_discard()
+7:  5370cd31a8 ! 7:  2b366bc79b hash: check ctx->active flag in all wrapper functions
+    @@ Commit message
+         context onto the heap). Checking the flag lets us catch problems
+         consistently on every build.
+     
+    -    Note that we can't do the same for git_init_hash(). Even though it would
+    +    Note that we can't do the same for git_hash_init(). Even though it would
+         cause a leak to call it twice (without an intervening final/discard),
+         the point of the function is that the contents of the struct are
+         undefined before the call. But calling it twice is an even less likely
+         error to make, so not covering it is OK.
+     
+    +    We leave git_hash_discard() alone, as its idempotent behavior is
+    +    convenient for callers. We _could_ try to do something similar for
+    +    git_hash_final(), allowing:
+    +
+    +      git_hash_final(result, &ctx);
+    +      git_hash_final(other_result, &ctx);
+    +
+    +    but it does not make much sense. After the first final() call we have
+    +    thrown away the state, so we cannot produce the same output. We could
+    +    come up with some sensible output (the null hash, or the empty hash),
+    +    but double-calls like this are more likely a bug, so our best bet is to
+    +    complain loudly (whereas the current code produces either nonsense
+    +    output or undefined behavior, depending on the backend).
+    +
+         Signed-off-by: Jeff King <peff@peff.net>
+     
+      ## hash.c ##
