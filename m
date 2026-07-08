@@ -1,82 +1,75 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3834CB5B
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 01:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B3F3264FD
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 01:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783472536; cv=none; b=ajyn2daHuXgAhpXMhfcuus7gg5Hufp0gDU3nL/SBtWWGo5TVMssYAt+nWfuGXiC2MgYTqugt81LCMRkSU8XcS0IoxFl/ZHDCdaDXSUy5cnI4ad9GBFzogCwqxDATmx5kZfFRnaaQsxJ4h6D75vn+r2hewxtqmA9aNz6/AhnrUaM=
+	t=1783473658; cv=none; b=TB6vFUJjDkU3MAxwMyvlKfI5/8Ncc0dUbX0tpA8vHle3NYdDoaif0jP3C4A+YlX6otpKuoEkCD8mSSyFmHEtkMdmIF4kFxgLzI9xT0kp5qlV2VVrGxkMXIRcNRHuznGNSM6T4XwfmdstkU6hgz+6+mDbsHPJiHnYKGuE7dRv5zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783472536; c=relaxed/simple;
-	bh=Iq8uAzzvU/GAYXj7xHbfrYrQ11kcCkl5tD7U/EaITu4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oUJQWJMkGM3Y/r+gWH9V3PQJTK+zVQ/kzn6ldJ+W0f0lfQeeZUPom9VWARlck8MxqXQJDJtO64wgp5x0jTnOGa7fhCbZH4AM2PiyvPutwMVoXxUZS70TpIfrxxQioHw6qQ65ZMlUtl77Q/QddArWgagmshtZfbXG9O5UwlzQj6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PLSaBaE3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b0EWqq9c; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1783473658; c=relaxed/simple;
+	bh=2v86lOsm5Xq7xLnJ+Qri3f+lLVNkGcCrUT058u3YbZM=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=MFeWgRjCXhQ6f+37YYvVh9cRXL4ibeZ+nCF4VMTbB70wPzJ8NyAm9/Aa2ssXnM3l6Y5cbEy4NneMKDlVtgT7gTOVgoMdeEZ/dVHKgmlRkDXoQ5+TAwXUYdpDR3DnXmZ3Yxu2v/vSAYHygCRcEOHNhzXgdarkd/VFazEq7NTvHUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DKuZw1Jb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W21tgCB6; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PLSaBaE3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b0EWqq9c"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A41C140006C;
-	Tue,  7 Jul 2026 21:02:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 07 Jul 2026 21:02:14 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DKuZw1Jb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W21tgCB6"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 64216EC02A8;
+	Tue,  7 Jul 2026 21:20:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 07 Jul 2026 21:20:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783472534; x=1783558934; bh=u2bsGxom/I
-	3GWteusCY1i9kvIgSxCrOZyMCYtC8ZB1M=; b=PLSaBaE3lrmszVn28M3nORNdGA
-	uOrfsYSfA0Cy+7i8DGKqUT8kjbFB+KogaUTHS0PI8TvDmwKHrAc6+52WEpqPcGCm
-	bmCvnZcA0f1TsQSq7sFrb5Q67D/ZjGj4xVXmha4KvmvoEuMIkesJn+CKadGif+36
-	IzIBbk4v+9a5nKrQYjWERCJ98Ijkn2Kq5m81REVW9IWoBpLBXlDAhSQrMbyfVYNx
-	flNLMeYetM1VXDFamqFHHlviPg2UAqRtPBNX9rq4rcqJUcZQi2pv0OdIrfdYayp/
-	3JS5KOkE+BlMOj0kCVkpJ1h2ez7L/wZVXxhUY6aNxObw8G8Za6G/OpA3cohQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1783473656; x=1783560056; bh=Ybu4lYHd3McYAemu/bWoNpKYXQbbVCjv
+	Q6jcAosfeV4=; b=DKuZw1Jb76tdq95v1+3Lhl7LqFr5NijIZhoR/rgagGOE/Tiz
+	gLPNNFBgGHCNquu+N3s/Lk3MLzoDH5pCSytzPktAnJaehN7ykwkD0f6U4Y1o+FSh
+	QITLtgPQvl6Bk6pkCrXVxw4GIKo5qVFSBdVxN+Q5Bssl0g7WjLwMmcOJ/r5OOomW
+	46jc5klQQ/R4AU8J3vPcdfx99M5zoxzspuHp1v2OJVhX4gHV4eXqLh0/UDXz6kZA
+	CSl2x4A3Gyn+Jww3Ekvt/jMTSK0ZvJ1YFzGq71C/PYZdmqUbJQWhioMZfNGqG95E
+	OAtSab/21hetM/XFCG8x+5UmAQyEnIcKwvxPeA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783472534; x=1783558934; bh=u2bsGxom/I3GWteusCY1i9kvIgSxCrOZyMC
-	YtC8ZB1M=; b=b0EWqq9cZGBJYnX3owkx2+WzkxhJ6HyXCZCZRnqWBK3nJXiEd+Q
-	PRu+RR+/Ws9oWomsB6CK3PakVg0unfY8hgJiMz987DwevSOR2QrArvtnVOtQKzR8
-	vWC33pTHUALFToi9GjJ5mNygOaPjzxDRyfZHg1b4K/15Ad7oVXFvCDNDCJPafaGS
-	owfIilONlN/hp4gyjDnWD/RxwmIrRn/vuiTAOsODnHLvr+xDzAnNlrzgPPs6p+4L
-	BtGYrzdhTjLMRy2WyD4LfhhwBRE0r53NWMhndCZxrLFe49Eb/n4i2qYiT9uYI8fk
-	FtQaycnu7L3f+bOwvQ5elPh0+Vw7HX4QUWA==
-X-ME-Sender: <xms:laFNalPFiwB4X-4x0AjPfeJ5Lr_8M_t6HRptzcImJ7a72MblYvcrtg>
-    <xme:laFNau18fMz1mZ1LMBiV3E4hrijHYdZ2dROhmb4Hioay_L8VRISYzoT5SuV784nWc
-    CMbGlDPHWRtCJwVkyiMj2qz_aTnOl3I8ntPiien4wEJsgA-hnzzNw>
-X-ME-Received: <xmr:laFNasmxzDznBz2OBMFSA7KWWHyQCoyKz_f4dnej6nmYmE28hszkPUSXuKbM6iRU4UmC1SU8ghyjQde0AlHdh5M_HRglQ-NY13c7Q6w>
-X-ME-Proxy-Cause: dmFkZTFnt5GHLsuo2jnNAwzRF/Er4zKhJWPA0w5FN5SVgk2Aix8GS9hEYWd7Fza4gNn5o6
-    hiRILJiooNq7b2PzdfG0Kh5TLuO4oTN/7jWkFztWRRE3fyR+IlcZKaBw22f+C6tPLlWMzP
-    zkfjG/BHJfdI/+YHP2IwYLHGCRMu7JqJGnSQFGaZ86K9C2OnCkZkU2F4lnHhw/YwY6A+gU
-    lTCTBM6TM1GLOBb8Sk0NLZXqD52eQh1yyLayR+X9pZerqL8gdJzHesGz0+HfGonZOdgY+u
-    1i9V2R+8shPNxWXXK7YSOg0TcAZ7pcAA1hYWS8N1TVCNEcu9XKfgktq2TB/RNKd6rDmvmF
-    gj7ijamBBR8pVTZAF+oOu6exp9bPtALGv95kT0ovA3Bj1qTLCEIJxz48Gls3TOcZm/j4VU
-    q/gM0BMDu7z416GO/fNdCj+IZFWUHKYtq05uVzkkViM7rA9AmipIKboEtwrnMInV1uQcvn
-    iS0VFR82BnHnxBhorqatxlXC21zhuS78twNAaknXeKKNrfsQwiWCog1D03kqIb4oqMapJm
-    6QYFC2sKIX4UW6IOEaxnfOVMwqch+eC6/D6etcyuujnXGCry3KuUcxrhX+qoumLgphspWy
-    /duYRGWTCGmXGVCHQW7k0zIDDLSDhaUg6z0zjpBX6MYUutmWDJJaTK1XuoWQ
-X-ME-Proxy: <xmx:laFNatVyz4MW-y2jvfMijKlXrnjMzFAhq_tVOGzrnm1sK0uekZHOmQ>
-    <xmx:laFNaqv_8Ecdp84HZeXQWbJ7V8TGV72ZigKP5ce66dJpVY13rZB4-g>
-    <xmx:laFNaobX8CaiUr226HVHI03T-jrJjfMZp_TjU5ZpQjuofQ_Bne8QSg>
-    <xmx:laFNahVw7y9tVnFnHWTmOcvKXZuW1f7Dz6U9P2orRYlmk7FjK-YnXA>
-    <xmx:lqFNao-1lWPFyZIk5kFgQg8LnXQAEqOkS8yQORxyzCtyaD4FBCTkjnqz>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783473656; x=
+	1783560056; bh=Ybu4lYHd3McYAemu/bWoNpKYXQbbVCjvQ6jcAosfeV4=; b=W
+	21tgCB6EnFYg3LPVCXJae+S2B+mWgVt+8NNHC89nwdPe2MjGsB12/olFzX3FRCMJ
+	mjKXAcucYbYYN7wOEnsahJDPZUVZX4q2JjXw66uBWtmb1RlrOBhidNtzuwAJRkqY
+	qcIAUPG1dGllXzXpGQtNwCZazxamo/2wS5BwbO5/t1jWiR7vGUuQZXqNDyoW3fO0
+	ncZu7StT45GmrsCFNcKKvuT/jISdDWWDlzu/N84SQlOatYMFYm/uDWknyETXWceL
+	4K1GpGjv/JehxNJWlK4P+RQV8H3jnniEOrm+TRjdvACivx9LxF2DMylNionOh7ll
+	lwchkj16yfI+RJFace4Bg==
+X-ME-Sender: <xms:-KVNajN0vCe3Z2v5338VyURgSL2uy_RTOw60ersFsLMnr8v48miK8w>
+    <xme:-KVNaj_rOm3yAhBBP0ruxIssNtfDaHS2W0gVVhj2fCZRyYaLYLXWc8w_zPlvSau7Z
+    U18TYv8mfQT3Tqa03RjSn2hhLmAy9pUk-aJ7fkbKAiX_E_4H_prgA>
+X-ME-Received: <xmr:-KVNav65zSUKdqtva0pG3BFLwUEG4IejjfBifyk18ovtb1ddSKH_qdyUNDNaxGtlX3L5cc5OBphxVUA14zpPggcLNJl-6JY5xdn6Kus>
+X-ME-Proxy-Cause: dmFkZTFceMUJwwLVPkoAKLifhodzvJS/3l4ubv2HZbkCRBAPqUP7Nmun040zSCqKadzwQ9
+    7v9AeRG1VZyakZS4+4kYMRUpNyUW+Mhd38Yx3yXiRo37o5RqixhnWApQ6Zp9pCIJlXR8Bk
+    XDIF4S1iXHst3rePuJTwSNJ9aNuaJvyWcYZsnpOIJladEBmSIGwAwrDAJqFzgIqfG430aM
+    40CF3oBJ19cWHn+WpyTPuT8HwmAIRErCUBsygCOUOebyimQ9d4Zu8NhBiUdXBnS0A12WzK
+    C1W4tOEegu8AEzYoVhzSqadv6Nvpogdpe6ifvbJYWylGBYf81D7AVjuDOFksfgxbUpfxkq
+    BrUwszC3qg6U2WUyDHp8PJFcPYxDsg6ylQg2ZjattG6f1/QNu1Wm+OWoHvjcC1H8ndCtsM
+    aCsUgo0MCgGkETCbCNnuU4K7y8CJf4ERYtetWNzO4n2GQmB3bEyFe/KR/VA+NF1hiEjQbR
+    uOkcRTLE324ReeCkkzmFhOzePS5iZmIpQtGweM/Fe5937L0/rCQ6yTf7Cssgu2+m5qYAey
+    ZM9AMfpa68gBSTS0FCuSLLC0a0tJoqRGFXgG1MWUSirsWScO9dmR9vdQYs1oRX2nLBOVrm
+    FpvQx65cUJ3J0W9R4BPxNhiZUKhxzA5lmw5BXOqurtGLqXaae8FErU6/oqHA
+X-ME-Proxy: <xmx:-KVNai2utM8v9ECeK5iY2TLN7sJadyBMYyGg6YI_O6S65caTK8ZNqA>
+    <xmx:-KVNauAUrUVyKLRvuK29QxDnRcbM30Cj_fXmA3F4iSWl6QZHF1XXDA>
+    <xmx:-KVNas0Oi0fuEl9_IjTKa8xXYN_fCFVMNvHkTSvwHTladUiY5685mw>
+    <xmx:-KVNagsuEqznsRguscsgkKI3DM0lKS8eJs8fQ5DYA7ckspBmdGMyPA>
+    <xmx:-KVNaumXljZSxCJEEhrjsjxBY43EwBHhuj-QteY0RYnRi27NGiV2mbKJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 21:02:13 -0400 (EDT)
+ 7 Jul 2026 21:20:55 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v7 0/3] Teach git-replay(1) to linearize merge commits
-In-Reply-To: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
-	(Toon Claes's message of "Tue, 07 Jul 2026 21:07:24 +0200")
-References: <20260702-toon-git-replay-drop-merges-v6-0-78a07cdd0382@iotcl.com>
-	<20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
-Date: Tue, 07 Jul 2026 18:02:12 -0700
-Message-ID: <xmqq5x2qz42z.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: [PATCH] SubmittingPatches: abandoning a series
+Date: Tue, 07 Jul 2026 18:20:55 -0700
+Message-ID: <xmqqzf02xonc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,33 +79,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+The document describes an idealized life cycle for a patch series,
+where an author scratches their itch, improves the patch(es) with
+help from fellow reviewers, and iterate until their work becomes a
+part of Git.
 
-> This series might conflict with Kristoffer's series to make
-> documentation changes[2], but should be trivial to resolve. And I don't
-> think there's a conflict with Patrick's series on adding "drop" to
-> git-history(1)[3].
->
-> dscho's series to replay merges[1] needs a bit of rework to fit on top
-> of this, but I'm happy to help figuring that out. We've been discussing
-> to either name the option --flatten or --linearize, but I've decided on
-> "linearize" because the documentation of git-rebase(1) also mentions
-> "linearize".
->
-> [1]: <pull.2106.git.1778107405.gitgitgadget@gmail.com>
-> [2]: <V3_CV_doc_replay_config.780@msgid.xyz>
-> [3]: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
->
-> ---
-> Changes in v7:
-> - Allow --revert and --linearize to be used together.
-> - Because quite a lot of changes have been made since the original
->   patch, change author from Johannes to Toon for the last commit.
->   Johannes already told me he doesn't really care about authorship when
->   he initially shared the patch with me.
+But sometimes a topic may have to be abandoned or retracted, with an
+option to later resurrect it when they can, and it is much better
+than leaving a topic in limbo.  Clearly state that we encourage
+contributors to explicitly retract their topic that did not succeed.
 
-Looks like all the previous review comments have been answered and
-the topic is in a good shape to be merged to 'next' (and allow us to
-polish incrementally as needed)?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/SubmittingPatches | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-Thanks for working on the topic.  Let me mark it for 'next'.
+diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
+index f042bb5aaf..f14ae20aaa 100644
+--- c/Documentation/SubmittingPatches
++++ w/Documentation/SubmittingPatches
+@@ -95,6 +95,21 @@ input and avoids unnecessary churn from many rapid iterations.
+   top, it gets merged to the 'master' branch and waits to become part
+   of the next major release.
+ 
++But sometimes things do not work as planned.
++
++. A discussion on the list might convince you that your changes are
++  not such a good idea, in which case you are expected to explicitly
++  retract the topic, to releave the maintainer from having to worry
++  about it.
++
++. You may have to stop pursuing the topic due to various reasons like
++  lack of time, other commitments, shifting priorities, etc.  It is a
++  friendly thing to do to tell the list in such a case, so that others
++  interested in the topic can take over the topic and continue.  When
++  there is no taker, the maintainer may have to discard the topic, but
++  anybody can resurrect the topic later when they (including you) can
++  spend more time on it.
++
+ In the following sections, many techniques and conventions are listed
+ to help your patches get reviewed effectively in such a life cycle.
+ 
