@@ -1,109 +1,123 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACB22E7378
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 17:36:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382BC439344
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 17:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783532211; cv=none; b=ALMZMUZABp7pNORdZ/BC2des5zkvUi9AMOq2tmP8O4OyaDPvWMjaMbm40B3BYXnbx5eTkQUu7FiXDXuI4nKGBe19TP28FH1krWUxV+fR3AXG1h05jL6c/6PjnECctp5tb393ZBddHFzOd4DcqlsUR5HsBqzFw0PpDWhcRFJ19gk=
+	t=1783532798; cv=none; b=qXjaT2tPTySiw5myeYEr7emKH3mKMDVgen/9+QrYKsg3zYmxT/G+yqZ32XITmwoKQr7mVHOAEWMLfq5HNJIasum/1jqgYfBUrAHtbBg2a4hR+cCf1s09Z5T1I4fDqZhsUISl/aewPmKXH0YnrHfAkmPj1ZpKIKptuXVAUgDZLfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783532211; c=relaxed/simple;
-	bh=3noPLEoBcL7E0jW5FzuEeLWZOCDafZipnKU1UYX0I9Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qcGij6PF7OGEGMZSqAX8b2g41JEXkLMD3Wb7gZ9XXb5d1mr3ez/68sS+htoD5juXCh73WqQxVc6FNNCrArmOi5URaKeTCyLANVLX+J6DK6UsgFuyjnoueLVrVloMGIiIiw4glNbkdCFfcrJuW01Dpx8lhVN/wsKbrjat+CzjgT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CdZd/3Yj; arc=none smtp.client-ip=209.85.210.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783532798; c=relaxed/simple;
+	bh=k85iYQarb3FDiQMi/UC9Hh49ixkXNInsmAuhQ1FFykg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jb/KDP7GTBAKnOCXgh+ZIpSnEc/FQPXTOlkKXp2YfA6jqLyNdJLRoJN8CjFJr+jDKCG8ERtbN4vd4lPQ/09YZ9q44VfsgbgbnWUXT3yJfdreO1ZZNTISRAfQCq882HLX/yR0LiA5BcIKfKM3Sd4FVQ/wWSaRL0cgZ6ky0kG3raY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QtakAJP3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g1mDO8Pq; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdZd/3Yj"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7eb61bbeb25so603972a34.1
-        for <git@vger.kernel.org>; Wed, 08 Jul 2026 10:36:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783532209; x=1784137009; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=by5zRUYPzJRqzdQ8eVxQcvN73VnE6J1rfyRpN/1z6qs=;
-        b=CdZd/3YjPpn6n8u6AQB8my5lSJuZRSuICcegpzNBxgZ9OA566BabHp8JDj29y2DCt9
-         6YLpaqW9gJTOTiWxQCSK7phMGnnPf/TapqicuZ2Ak+cn/3W0Zd92kKBr2zYjelzCcjXW
-         bdVYszU+r5bajmvgRibvoFy+cEckAztZlfCo0AeG6dHRK3WZ3iIrPESbX90GHFbchJaZ
-         2HMSnbgM2cNaDKLegH1nVcNKZ79lE7/v3Pka9czGvOAEWNedaf4Zu0qSeywWUYYqEp9b
-         6Gabd9aHUbEOcRWeAessDWGYjCFFQxFdxxWWhuKEpmB6AVU3JjMxRimLYmbqUcRxd8j2
-         jpyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783532209; x=1784137009;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=by5zRUYPzJRqzdQ8eVxQcvN73VnE6J1rfyRpN/1z6qs=;
-        b=AEYhJVrF7wrMrWxMnItLMUXL3i0HE99F3aLOEt6xArEA6m8hXo6WSIn16DNW5Rd5ax
-         SZKpcEpSUTWBdsk5RaG6rYBbCOtlPeuw0vYaU6AgmAWATd2W+ByfnKLke4emv+6g52Ow
-         R79w+muAx1iPEbw60g72fY223Qtgmgx20UtIWRjqU7HSWxybV/KCCanGQXd10+DuXBbC
-         51279XB892NsNPIQ3Dp2kBXfgStIkGjXGSoS9H2RT5tG+pLEwL1oDUYcWdEqhs7oXn4D
-         5xzx8Ew+7KroIB5KFeg0RmaN6YGsj2DXiSx3a7IBEL4hDkOMYD9gTeQpYm2kod+AmuYq
-         1jrQ==
-X-Gm-Message-State: AOJu0Yy0gNmlIKXgDBGs73rT8yJGVuT6DNvgKlRumVTwvc5/F8iHxiRH
-	lF5nFNeJ/a54W1WGgceBNJw0uB8z2EOI8PILts9Zln6876oQtDscqYK3
-X-Gm-Gg: AfdE7clrBXeOpq0FaVHrpemFISc3yQ78sswKlNvyzKWi+c0vS98C5zrgSWWi/IFnZm5
-	pKuFiOa4RozVhLCSLOavP0CV8QVnDXdfy8+79tjQ+qSbDBoGT/Ma+OSmZV+wDctWjH17qiL97w1
-	wxbcLfkN63djsDSP4TMICtydEsQFqf1EGqDejVuv5/gNcYGQcXFqCZ6bHcRO6bhDlymgmfM+u8b
-	NMGSqwkyN7BKqP0Orb7VFnyLLDNZtDmCvNI0//ICTlJhcXG4GiuEXXDy0R95o4JLDvyy+wMVMMP
-	2OPDnL+TJm0ei+qPeqoEE/hpfLgjD+AAiXcpB+kUWoND5jDg577hMla9pMpCsZxlz3EGgKhvFoO
-	QT/c0cyZdPPH3neAz6JAyDbg2azIXcDGLvPnAtPLk7lQjIXnD4DPCiMhY4afJY/qouWEPjJfFxe
-	CZ8vML7g==
-X-Received: by 2002:a05:6830:3886:b0:7e9:e860:6f2 with SMTP id 46e09a7af769-7ebd00435b2mr2361719a34.31.1783532209330;
-        Wed, 08 Jul 2026 10:36:49 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcb3f6826sm2270900a34.27.2026.07.08.10.36.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 10:36:48 -0700 (PDT)
-Date: Wed, 8 Jul 2026 12:36:48 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 00/11] receive-pack: use ODB transactions to stage
- object writes
-Message-ID: <ak6KkcSiMR_XpxfZ@denethor>
-References: <20260624041920.2601961-1-jltobler@gmail.com>
- <20260708041412.1157499-1-jltobler@gmail.com>
- <ak3xYym22Z7PFZ5y@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QtakAJP3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g1mDO8Pq"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 693E11400059;
+	Wed,  8 Jul 2026 13:46:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 08 Jul 2026 13:46:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783532796; x=1783619196; bh=8h7hRnWHQ7
+	EI0m5nM9mrgxuayRqwtLJLB0EZSzwYWt0=; b=QtakAJP33cYXP5H36TVgXHDSWg
+	lrGZm4FvdruBNKbRaNzREAwuYB/LlqsuVaXrXgs3zMTz0yaCMDq65UlL5JTnLgw7
+	1QwGgyFOojKTL7+sTCVn2KtrE+LO82g3kCidD9F/0ZZHxIsjEGCh0VvyJAfD/s7n
+	rZp4zYqyXKZ7CX37WF/teX4uJauAgO+x4zMagyMFr5TOJOMV67tTvoqnyMb3SQvH
+	gH7g9KUpGvjOVy9rDRz7miJ9KYwAew0Kt3z5FevS19nMz+o/VoNjDTYYcdIxM5MH
+	i10HzYf45PpXr9qJIdOvS02twmJCbchQzw0UX1/BOgoevN5wFc1nYyH0Mugw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783532796; x=1783619196; bh=8h7hRnWHQ7EI0m5nM9mrgxuayRqwtLJLB0E
+	ZSzwYWt0=; b=g1mDO8PqRcfyHz1D/nQxQQ6ayLFNL7wvc/n8EeDDTR7MjaQvnLe
+	n8gQrTHvTxssl7sS3RHODw4apPvjwcicerByQjRCoQDIDYmEREgNgE4w3Zzg9SQE
+	6YvPvdr8KiMlLTbNQBZheK7ayggbzOPLB5qPo2usdi1Hx7AmyZVcCQDaZ8Nwpce3
+	7wovTuRGlDiad2SPdrzK6BB5wusNLLv41sTN3D32Vm1Z8Dsq65rZQI/UWWsvyctb
+	cNXxsOAVO+oIRe+LwToqLs6f9R9zebXng+tGlgtTn3NEnXbSEi4XsfEP5sphnVnW
+	9hRDlP3HcHQDpnFeVbwZAMOMerwtVXbmGMw==
+X-ME-Sender: <xms:_IxOah1eCNjYN8QR_ukwNTrN5l-hhtD3-6cULL5Z3_YSW47eJRDHwA>
+    <xme:_IxOavHgCMwXtaB6Xs-y3Um1ZWuVq5AjjqGzxIKM8Ht93QyB9brIJREPxI3OX3hiZ
+    6AatzCdN0TAMQ960YYYCQ02DLAHvqmSE1k1sH8jckk9zx3qkT9-VQ>
+X-ME-Received: <xmr:_IxOam5a9qMFZuZw0BaHCw1kjg-cdoGyY6phvIS4mv7tSsSn0-gLMgL6D6INL8DriCr_sEtIQE9-K2D9yNRHMiHFy1P_Q-zq54nvWsU>
+X-ME-Proxy-Cause: dmFkZTEFN8nWnntVRA1dTCmvtFGoI+CIamsD2aV4UNeoal9qZtAj6I+s9ONrMvjxW5WJbq
+    VW43SvxF8ieejH6ogt3jrmUFtg4pY5NprbhGmpFEDJyNWDMVWATozhuPtDSRnZTrVX8egd
+    D1/2M7/ZbLp6o7MBv5CSzTq48BGoGHttOcPJmQGtetSvhPfEys5rk0hyCvGxUnlqa/gDZ1
+    l+ZMf37xjoB1ukWX+9xKCFjIBF01oWqURxCo7Fr/9Jc8YWaz4/0rYAtP8LchR5PyXDude5
+    C4YCttjAGJiUQ+616EDvpDf2EA7mebevgsjm3AAZwodHin+JYY+Kl6t3eF/UnknpE5CVfL
+    h7ylmpiaTjREPRoaBNRITEuFpoIjh9T24XpjZZSSdoP09evjwjuhDXhfmmKnslTqTuRImH
+    x+ChAGuhpXoa0lCOGTlq7IGzd8DpJ+O81UcHvnUvFuYlCA8XUPdxWJvh9DsjKqTAgpEWup
+    C5Bpd5tlndxxZxjWaOSTtTF7eVz/CbvyXvequrNT29Imaf8Wh/2Lxkn448DksVciOfyN0x
+    hVyCVfxTRNwEaBHIgerczxz9zP+ZdSnhnsdoP/Mg75a47cipXk7x2NGPRaT6AXcEcuCZNf
+    UTJH0gBmuZUo6VYT1v0x6OvmejdPgSm0OIL3uaXFIiGqWOilB+zKCcYEpEuQ
+X-ME-Proxy: <xmx:_IxOattiq7__N0a0L4FEucRolhXgBlWZakW5GypRqKrYelHLFILRfg>
+    <xmx:_IxOav4O70993Y3TLSNkJ0s97LSr3kks8S9q09EiJLhejVCqV_DkeA>
+    <xmx:_IxOagXk_zQtsjhzHQQULYvxqyGVFOBhPLUdRJSDaplkCsDhc8bSBw>
+    <xmx:_IxOap-nV4qzAlJnqw8Eydv-ZQvJ8Gdr8zZ7nNmGIAzzgdmzYvwTtw>
+    <xmx:_IxOalmcOBYNSl32RVEqSVotNu_jGA_HkuisfK4sG0f5ojP2VZlExTWh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Jul 2026 13:46:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Kris Point <KrisPointCSGO@outlook.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: [PATCH] merge --abort: don't delete autostash before reset
+ succeeds
+In-Reply-To: <0b7e6d74-0287-4be5-a19f-ed8c5fbc9217@gmail.com> (Phillip Wood's
+	message of "Wed, 8 Jul 2026 14:35:32 +0100")
+References: <SI1PPF1BAF45F0FA46A6EED57B732BB04D7ABFF2@SI1PPF1BAF45F0F.apcprd02.prod.outlook.com>
+	<0b7e6d74-0287-4be5-a19f-ed8c5fbc9217@gmail.com>
+Date: Wed, 08 Jul 2026 10:46:34 -0700
+Message-ID: <xmqq8q7lv0g5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ak3xYym22Z7PFZ5y@pks.im>
+Content-Type: text/plain
 
-On 26/07/08 08:42AM, Patrick Steinhardt wrote:
-> On Tue, Jul 07, 2026 at 11:14:01PM -0500, Justin Tobler wrote:
-> > Changes since V1:
-> > 
-> >   - Adapted other "file" ODB transaction helpers to be more consistent
-> >     with current naming scheme.
-> >   - Removed redundant NULL transaction handling from
-> >     `odb_transaction_files_begin()`.
-> >   - `odb_transaction_begin()` now returns an error if there is already
-> >     an inflight transaction pending instead of setting the `out` pointer
-> >     to NULL.
-> >   - Updated `odb_transaction_env()` to return an error code and append
-> >     environment variables to a strvec provided as an argument.
-> >   - Removed redundant setting of tmpdir environment variables for child
-> >     processes after tmpdir has been migrated.
-> >   - Split changes adding ODB transaction flags into a separate commit.
-> >   - Consistently wire the ODB transaction throughout git-receive-pack
-> >     code instead of reading it from `the_repository`.
-> >   - Updated user facing error message.
-> >   - Updated some comments to better document functions/flags.
-> >   - Clarified some commit messages.
-> >   - Fixed typos.
-> 
-> I've got a couple smaller nits, but overall I'm quite happy with the
-> shape of this series now. Thanks!
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Thanks for the review! I'll send another version later today. :)
+> I'm afraid I don't think this is the right solution. We only want to 
+> save the stash if there are conflicts when we apply it - that is why 
+> MERGE_AUTOSTASH is deleted before we do the reset - we want to prevent 
+> remove_branch_state() from saving it. If the stash applies cleanly then 
+> we should not save it. If the reset fails then we should keep 
+> MERGE_AUTOSTASH along with the other merge state files rather than 
+> saving the stash (which is actually what happens after this patch 
+> because cmd_reset() dies before it calls remove_branch_state()).
 
--Justin
+Thanks for pointing it out that reset calls remove_branch_state(),
+which in turn calls remove_merge_branch_state(), which in turn calls
+save_autostash_ref().  We end up (when cmd_reset() is successful)
+applying the autostash (which is good) but also saving a new stash.
+
+> I think the solution is probably to stop calling 
+> builtin/reset.c:cmd_reset() and instead ...
+
+Great.  In general, it is a bad pattern we should find and fix for
+cmd_A() to call cmd_B() in its implementation as a subroutine.  To
+clean any such instance is a great thing to do.
+
+> ...
+> So we only delete MERGE_AUTOSTASH after a successful reset and we only 
+> save the stash if it applies with conflicts. That's all a bit more 
+> involved than the patch here - please do give me a shout if you want 
+> some more information.
+>
+> Thanks
+>
+> Phillip
+
+Thanks.
