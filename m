@@ -1,83 +1,83 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011A7380FD4
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 06:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEE63DD519
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 06:41:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783492913; cv=none; b=AlbgGaNRGEotCCTUoIJtLEbL7g8yQMLaXI+VMVbcdjyliQFzKnmc6fVIfVs86NjIyTdiRF/gaVCltu1/xjoOG+NRcy03xkv+OlIW4BXYyTe3nmivnCf6Ds0BP9nofFoBV3dUKaXxZEydSyB7CRnKpUIsKeOTB8/BPChMCKwQLfo=
+	t=1783492910; cv=none; b=l/+ZsrYN22K1YgrjENC91kurGGdW6lqyj/IYrgomcounU2EefWrT4m5AhT9GaaDBjxD+ytE+RvFq+n1nNOxWFjuHB9OPmcdG+64weUrn9hPeDUMYLalrYH56llwTZyxxo1PKf9ykpfsjKmXFz4l3MwoY8D7rDH3GtlPqCp2vzeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783492913; c=relaxed/simple;
-	bh=F4UCau1JZtbeV7nSQAKQQt8a2R6JSVXV0Ix6Jgt4Z8k=;
+	s=arc-20240116; t=1783492910; c=relaxed/simple;
+	bh=8ZCT88IYKgBopwgl9/D2fjOvYnSFZV4RwQPxCZNeerk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DeJP7Zi+3QUKVH6j4zxwGsUvusHRTEfQsaCke6n5yZMR9mBgnEaRSwm8U4iGr0xd5NaZH/PaBATovN/wmx2gKC0Qu6juxbYnut+djS5fmgK0Fx7Nr6JHIsBWcYCa2lbT+v7KA8G+G1ILRPeIOjV3iQB9KWJvtNGljb6MoOM1r3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SeeFVB0y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rbFUUT4y; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=OxFIK1GcaUP7srZ0XVllwrc3GzF5D7yrLWF6T76AwCqBSD32h9enCTPv6nEbiOAZq9wvFAD9qpGrQvi7vkpzlvS4oG6SqKLTKbifdPhBMHjCN3vV3vLN2jVwhj6f/UZlQQUTbdcaRtclMcwzVCvNnWHpau9Ul6jDjoty9KfC+OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RWc4tKtl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ggYCWoau; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SeeFVB0y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rbFUUT4y"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 44CB21400052;
-	Wed,  8 Jul 2026 02:41:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RWc4tKtl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ggYCWoau"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4EE4FEC0128;
+	Wed,  8 Jul 2026 02:41:38 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 08 Jul 2026 02:41:44 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 08 Jul 2026 02:41:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783492904; x=1783579304; bh=fswP8VHDub
-	KyGOeWPFigMcwtcZW3jRfF1WYC0j8ubHQ=; b=SeeFVB0yU41X+Wz/i1S3PIKKrI
-	AoB77lDA0KEd6OqFBsHorkRc1zyyOfdUcVcKwXiuqHQrrrxh+Wmm9hrouBq5OgA8
-	VhOgpN7I29fkkTq1TzBgqfK+crG3iMCBER6hXbc5I/HK6poDJ1U3L8KJwBgm6e6I
-	SoFmI2gdUqzo+7RoEfiCx7SFs94SHlI6ajN2nUpAkTTdfN1P+XJxQnVjd3DsaIwV
-	IyIcN9fvGxBmJTJWuXziiVoqDRNlMY6xoxEs6J3KaT//SIvtxniR0GHB47MsyDmo
-	aCOINJQnoFa5PKrYwEM39NhR4F4r7owph5frgwAoWJ25SUzOba3Ov1fiWTNw==
+	:subject:to:to; s=fm2; t=1783492898; x=1783579298; bh=Wer5oQEM+n
+	y8jpgb97whw9GCy+Wb7Qp25yaLPzCD5oc=; b=RWc4tKtl6QpRC3+5zxCpffwimc
+	sGTDMUI2PuaFWjUqsRSKdHW+Q1I4PBs7W7chvEg311UDsxtoHVSxyNXa2fBK1Uev
+	A8f0DKpOZutHfy8/aXf01gLhm6NDU93k68qRM0PBcOTxFJHX0enz4ePTTmUKzcmj
+	d0cdaxD2N27zRHF9W99xjyZn8NHjMKuCvej6bwD6FEe0rY97h5iOrtXr7BkroAYs
+	7SoZAI66/jcqEhnT1+w+VIBZMJL0mOElFP/lmCcajqAgOis/91CroAbJr9TpbMZO
+	7ZQxajxonfGl/a9Sc2kqTcyQgFR8MbowAdemur8iw9ncEfrdhBMTWXttjEsA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783492904; x=1783579304; bh=fswP8VHDubKyGOeWPFigMcwtcZW3jRfF1WY
-	C0j8ubHQ=; b=rbFUUT4y8NnouPIhd/URZDsZnDqz2zFSeFt1uxPZDEBSK0OSnm/
-	Cs7SqgKBjMK/tV5/6KqEmNJp7R9HiuOLpve31WTjK8OK1jCta47vcCdBUlUDAcmc
-	IqR2BjQhkGl+Px7Ja53kVltkYXyChtp+A/kvCiPOaH1D7u1cB63wdvOXlvduKjX7
-	4HGphlO1ZBQE7QFbxbkrPk6Z/M9EJ9xlgxm1nQYkSoCE0FfS3lrojqmTHoglaNFZ
-	VYPyu8Iang+K0BnpZ1rWBDB99h4wg1REbFnPzaW/4LmVVo7WJRzIiKw5K8igLoJD
-	MslP9DLDJoTnSyTHC79dxh0wRYs/UKaSBrQ==
-X-ME-Sender: <xms:KPFNapr6iW0V6disgJ3sEaAE09FuXk7YZO0J0zpOvkpyW-DOuSOu4A>
-    <xme:KPFNajEHsN6B-d2KY8MKXMlLFaINK2WQRgjfFTxBTjv5quB2RVoychpt_iuN1akHS
-    3b31JDoF6xdhontqVrvCfBsp5qcxngnaf0INeW9e9N_4LqlyLgZ9g>
-X-ME-Received: <xmr:KPFNajkeE0vHf3v-DXuy9W0LNebsbjOYBO5xIFj_DRRL8ot7oT08D0Frr_Z9PS2TDz1_rh0NPUAleuTlhPQ_OCPtfvSlLGR-38N-EhUT>
+	1783492898; x=1783579298; bh=Wer5oQEM+ny8jpgb97whw9GCy+Wb7Qp25ya
+	LPzCD5oc=; b=ggYCWoau9wltVHA0plgudo5SNGydmSYht6eYcTlRwfWCXrhq7pA
+	pHfvfv8DJLLr3fu4bMQrz6cpDR4xWDmsQDyZ7cDpRNENkCjsWcT8MEacFedcfaQa
+	vghs4qM7nphSrP7L8F2ALJNNck06368NM5V+DgmJdnpjo1Lxw9vr6ZJILGhj4tuY
+	l+KelVX29RetgnUT8ojcQVyCnyWmj3XTOnfMXLtHXzcJsHaFCAWVQhZRDlIcWKCU
+	e44WOaoyv93tdiETOEMxqPwEZ779J0V2ZRzGj+LoWsKcV8QCUBY14/sH8H5eurcN
+	v05bW1PHp3WGr9w2tLDbnq9OcnKm90SZo/w==
+X-ME-Sender: <xms:IvFNaj51MNLMWY83yApl9kYaCGbJlXnEpXcT8xcS2BVt6gWSVOXaIA>
+    <xme:IvFNagWX8ZJusl3dSA7nMxZoygRg4V1OVYuQoBHP2f4VZ_9vGe79gevqhOy7fH3eo
+    YMsIap_JbAqS_y9JT3iOadB6sq9p9m3Th-j9t_NJJjaJF9pFFw>
+X-ME-Received: <xmr:IvFNan3TpWF_4fugHiKvsd3lO6GEjI7UmVHioKYYIpvF7LfHsRIWWykq6P7gkkVC26c0cGtK0-dVbqabivNjTGtKRInPQcZIwGAjNg4C>
 X-ME-Proxy-Cause: dmFkZTGZXL/xVJBZRT0XjNqQmj0NiEBsL4QM8RtI8yDGZADKrRfylrcgFrWZI9uiDIKpJG
     NjKjs02P0Mm6RVE/7hDfUtc9cztgn2Cw1NuVWkTQj+sAuE+2j63eSJoWyolt/Iiji6uwfB
     AwsPpkAgDLBwGtskl6J4DfVEmE3a8CrgO0CsSJrcgOSpTlkDb4uBEU2zo8XcOuoumIzvPq
     jcg3C9N3hj/0A3Ui37jFkht3TKzzhYoJNu6TlM4CtvieEBaYn4bcsRChYX5mEXYpyukiBZ
-    qNG2o1iENbIAOWxM/sLhn2X9ptN7rf4lBdIWSM0XtBgVFCdgfwbiDeFlBqFipjcVgu8+Mf
-    mWKp9HdZDpsG/OxFEd1ZVyau5FFmMoupyvXjkGThUh23WWgzKG4zUK6z9ztZEMGJmB5i1s
-    Vgpj252Y/2WV13/QbUJ9RpiBlN0MPnH+Q5LJPG7UAlzzga9AINbZjlZwofOP+twZuhvH8s
-    cuSxJBrh89t+eSfClD1LrkZKn4cYOl2yX/lskQwWCManAtcv/Emf6VMYLOBjhMCJmtvM6l
-    f5QT/qC4egvaMlAEORuWtf+/doJEaumw8BJgzxMUId4gJeEsIoEC8exOcfJrzcDVm/kZ5E
-    NhhF4a+wWpbb5LFBALJympe8ljNUHGF19G+QbKmaWanSIRZs2uuFhOPwSj1w
-X-ME-Proxy: <xmx:KPFNaumXoVcOiLZfEQW7TvsDOmfrLjXXCdpW7-G2tBkPySphm2Ji1g>
-    <xmx:KPFNast_dgFY3mmw-tpNQV55bd8v0IENy_lxAQvUVzLM7e4j1EoQyw>
-    <xmx:KPFNaplM-vkr_NTRCJ3RB_RJJKNJZh6nwSe8dtA8EcCqngUOcyh2eQ>
-    <xmx:KPFNavscQwnw6AOxsbJ6ea7JfmcCd7QWtbMVY6u9nLYVbqXqBjU3vg>
-    <xmx:KPFNarE4q6JIFjPps-TKx61EkfQFGV3tCmAF8gCI6lBkpoA4HTQspiAz>
+    qNG2o1iENbIAOWxM/sLhn2X9ptN7rf4lBdIWSM0XtBgVFCdgfwbiDeFlBqFipjcVgu8+WQ
+    lO2xaZ51DRUk4dC/XpZM+sXxnwu2VJqNPq62gy7aLa6PZPSP91oGpYj2p3lOAP50w+zQOo
+    FWX0V/PbBv2HOoWeHDZL7S8btZh9NcTGJKOc7PudipoU3lqiRYq38tnYgHeTetVioX0r4O
+    yBFmD6r0pw5FIIR8zi8RJnBaRUxDkcWm/TppknbHJVgCaV6bup9C1f8E67CCeddR80c7z5
+    tx3uaWTNpx4u/TzrWCo7GkxcBXnc6ssSIZWXra3VKaf/QBFov/0JNre8VskevPKEuE8LZR
+    V72sfxhAJMH7bJRJ3INcB9rH1lxYK23I8H+EmkNd0smEVKvgv0mdbIkdVdsQ
+X-ME-Proxy: <xmx:IvFNat3do9VQSxELk2vwG5Est802CBZq3AmEBEtugyqtLx5aO7seCw>
+    <xmx:IvFNaq-AN8i6Pc8PdCUy-lVwbtRwBMwo51bXClFZGqkGgTQEpNfiLQ>
+    <xmx:IvFNaq2FJIu2TlmfFGWRyLZaLfKZKJSSr-k5MbXRVrcmj38RraXQ6w>
+    <xmx:IvFNan9i9b0KDD1sSHnuKtkY5hgkFcACeFzqYxTdclwYJK-Dkg-AgA>
+    <xmx:IvFNaoVZOwZ662s9dXERMlc6cr2BaqgvgyMaXsow_PtPA5GonQyPcI5m>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 02:41:43 -0400 (EDT)
+ 8 Jul 2026 02:41:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0529c7fe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 8 Jul 2026 06:41:42 +0000 (UTC)
-Date: Wed, 8 Jul 2026 08:41:40 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 8164c0bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 8 Jul 2026 06:41:36 +0000 (UTC)
+Date: Wed, 8 Jul 2026 08:41:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 06/11] odb/transaction: propagate begin errors
-Message-ID: <ak3xJFDqTSN1Naoy@pks.im>
+Subject: Re: [PATCH v2 05/11] object-file: propagate files transaction errors
+Message-ID: <ak3xHiOQfNxqFR58@pks.im>
 References: <20260624041920.2601961-1-jltobler@gmail.com>
  <20260708041412.1157499-1-jltobler@gmail.com>
- <20260708041412.1157499-7-jltobler@gmail.com>
+ <20260708041412.1157499-6-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,105 +86,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260708041412.1157499-7-jltobler@gmail.com>
+In-Reply-To: <20260708041412.1157499-6-jltobler@gmail.com>
 
-On Tue, Jul 07, 2026 at 11:14:07PM -0500, Justin Tobler wrote:
-> When `odb_transaction_begin()` is invoked, the function returns the
-> transaction pointer directly. There is no way for the backend to
-> signal that it failed to set up its state, such as when creating the
-> temporary object directory backing the transaction.
-> 
-> In a subsequent commit, git-receive-pack(1) starts using ODB
-> transactions and needs to be able to report such failures rather
-> than silently ignore them. Refactor `odb_transaction_begin()` to
-> return an int error code and write the resulting transaction into an
-> out parameter. Also introduce `odb_transaction_begin_or_die()` as a
-> convenience for callsites that do not need to handle errors
-> explicitly.
-> 
-> Note that `odb_transaction_begin()` now returns an error when the ODB
-> already has an inflight transaction pending. ODB transaction call sites
-> that may encounter an inflight transaction are updated to explicitly
-> handle this case.
-
-Yeah, this change is very much welcome and results in much saner
-behaviour with less surprises. Thanks for making the change.
-
-> diff --git a/cache-tree.c b/cache-tree.c
-> index 184f7e2635..8eec1d4d52 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -474,6 +474,7 @@ static int update_one(struct cache_tree *it,
+On Tue, Jul 07, 2026 at 11:14:06PM -0500, Justin Tobler wrote:
+> diff --git a/object-file.c b/object-file.c
+> index e51389833a..64cb874fe7 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -511,11 +511,15 @@ static void odb_transaction_files_prepare(struct odb_transaction *base)
+>  	 * added at the time they call odb_transaction_files_begin.
+>  	 */
+>  	if (!transaction || transaction->objdir)
+> -		return;
+> +		return 0;
 >  
->  int cache_tree_update(struct index_state *istate, int flags)
->  {
-> +	int inflight = !!the_repository->objects->transaction;
->  	struct odb_transaction *transaction;
->  	int skip, i;
->  
-> @@ -490,10 +491,12 @@ int cache_tree_update(struct index_state *istate, int flags)
->  
->  	trace_performance_enter();
->  	trace2_region_enter("cache_tree", "update", istate->repo);
-> -	transaction = odb_transaction_begin(the_repository->objects);
-> +	if (!inflight)
-> +		odb_transaction_begin_or_die(the_repository->objects, &transaction);
->  	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
->  		       "", 0, &skip, flags);
-> -	odb_transaction_commit(transaction);
-> +	if (!inflight)
-> +		odb_transaction_commit(transaction);
->  	trace2_region_leave("cache_tree", "update", istate->repo);
->  	trace_performance_leave("cache_tree_update");
->  	if (i < 0)
+>  	transaction->objdir = tmp_objdir_create(base->source->odb->repo, "bulk-fsync");
+> -	if (transaction->objdir)
+> -		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
+> +	if (!transaction->objdir)
+> +		return -1;
 
-Callsites like this really make me wonder why we even care to create
-a transaction in the first place if we basically just commit it
-immediately anyway. And while it's a bit sad that we have so many sites
-where we don't really know whether we even have a transaction, I think
-it's a good change that we have now annotated them clearly. A subsequent
-patch series may then eventually refactor those sites so that we stop
-depending on `odb->transaction` and inject the transaction via a
-parameter.
+As far as I can see we don't report any errors as part of
+`tmp_objdir_create()`, so we should probably print an error here.
 
-> diff --git a/odb/transaction.h b/odb/transaction.h
-> index d52f0533ce..36032a5365 100644
-> --- a/odb/transaction.h
-> +++ b/odb/transaction.h
-> @@ -1,6 +1,8 @@
->  #ifndef ODB_TRANSACTION_H
->  #define ODB_TRANSACTION_H
->  
-> +#include "git-compat-util.h"
-
-We typically don't include "git-compat-util.h" in header files.
-
-> @@ -36,11 +38,21 @@ struct odb_transaction {
->  };
->  
->  /*
-> - * Starts an ODB transaction. Subsequent objects are written to the transaction
-> - * and not committed until odb_transaction_commit() is invoked on the
-> - * transaction. If the ODB already has a pending transaction, NULL is returned.
-> + * Starts an ODB transaction and returns it via `out`. Subsequent objects are
-> + * written to the transaction and not committed until odb_transaction_commit()
-> + * is invoked on the transaction. Returns 0 on success and a negative value on
-> + * error. Note that it is considered an error to start a new transaction if the
-> + * ODB already has an inflight transaction pending.
->   */
-> -struct odb_transaction *odb_transaction_begin(struct object_database *odb);
-> +int odb_transaction_begin(struct object_database *odb,
-> +			  struct odb_transaction **out);
+> @@ -1668,14 +1672,19 @@ static void odb_transaction_files_commit(struct odb_transaction *base)
+>  		 * Make the object files visible in the primary ODB after their data is
+>  		 * fully durable.
+>  		 */
+> -		tmp_objdir_migrate(transaction->objdir);
+> +		if (tmp_objdir_migrate(transaction->objdir))
+> +			return -1;
 > +
-> +static inline void odb_transaction_begin_or_die(struct object_database *odb,
-> +						struct odb_transaction **out)
-> +{
-> +	if (odb_transaction_begin(odb, out))
-> +		die(_("failed to start ODB transaction"));
-> +}
 
-We could make it a bit simpler to use this function by continuing to
-return the transaction directly. But on the other hand this results in a
-more consistent interface.
+Likewise.
 
 Patrick
