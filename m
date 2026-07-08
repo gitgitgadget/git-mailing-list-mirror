@@ -1,156 +1,85 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF833B9D9A
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 02:59:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9C731714C
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783479592; cv=none; b=FM1lOSNUWxEiolAkgCP8G+gsc9/mRHLWvIap3E79uXwo1hH+Q4/Xq6WmdsnUlh2VAfIKpknn53gYGWzu1OTXsI1gYJR+ztE1LNTFBGMBUFU7OFy0UyAJ6DxZQVFBOnZuvW2FQ2MdfCCCIwOqlLLYM06HzHTIbeAjNvpzhNbAdEQ=
+	t=1783480555; cv=none; b=bvDHFJykTPYzaz2gIZn5e4LAK9+9QjSPsZWuYsU4SMamjXD/TZUmmdDDw/27KUYRZtqGPmpWkDvldB4Qw5l5NZfLPGWopgy5V/gtl2ki3j5fLDKec5cY/mC+LVnzS2BJaKat3+88/cq7sp7yZt1SPgL+xn6FZ96nuF8EsO1xhp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783479592; c=relaxed/simple;
-	bh=XFTg39389gYjl4DlYjrE6Fh95Gp/ZuhV6U1JCuP5HtI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SrRpHfx8volm1Skg0iQIx2VWkV13lwE01s00zERBPu2x3pUCF3YQ/PsczJXMEnn6+XzXJNz0JAv7BFumuZCyhLsJjRBs6h9EBwL2qEnw9rHb4W5Erj47Jg2+agJC7sClR7/3I9q1lci/Y8OGWuElqrjFxsf3Gh0Z8qdaGjErBP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DeCSPcFP; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783480555; c=relaxed/simple;
+	bh=KS5Mg02XxC7lDskuAQOSI5zYR/fh93vqaTL20naJjXE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=o9BhgcPIV64i2JyhRolbDM27CAsKPjjAl1afZdOyf54uGwzgSQuBDfKK6R/qdUtoQhRiPRj2lw5w+L/k1qMLTC2l05QuZI9HriOZTJu/kwHFYmPxuSyx6jODN4yLQcjEfUIs4KutSBzGdzq8UD9bbOmRhg+vQGv8BMt+24j8ScY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lXu8v8RV; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DeCSPcFP"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7eb3865ea6fso203748a34.2
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 19:59:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lXu8v8RV"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c88fc985a65so324974a12.2
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 20:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783479590; x=1784084390; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cUabWVce8iHwnQPOo1Z1PgqpL5/OZl5hPyo2Jb0poJI=;
-        b=DeCSPcFPNdKmikTAAdIad+mDocy0MEEFCUv4IPVmp5+uMPa+kwqfmGbOY68Li+DSug
-         672qiYCKapqA8R7u5W1YTgK82T2gXFv5E0H8nH5HU1gChgheEJBlI2ZCO9I9HOLm9y5U
-         48xK4c9ShX/EpnyfFAVH9k9DNZZKZ9h6ge7ikDL+Q5Zc8XCoSXMYXXYxfFEQxJPHE/Gr
-         pLTZjvsq+j98Y3FClnGYSxzjuoGGZFFEOuYDTAuYxPhZMW9WWNrwHahKzpWxH3+QE17X
-         SnpvdG/eVaMBiOqJbWVgYajBuIJ5TgpKcUh5QFw4ZHv+7UmzLRKkgo8OzAbKroMyD4ca
-         AEzQ==
+        d=google.com; s=20251104; t=1783480554; x=1784085354; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ff1a3agMA+PjHMEHFGUcIuDM3dl9NslCosP433YvBI4=;
+        b=lXu8v8RVqX1Cohz4cmoDxdlsH18Q2wBTdGx2gbpRnEd9vWumAnaqpGfx75gUXdKQxt
+         +MGFMXx1/WCvJrvG0CixL89BdLzX82l/RHLGEwPtULWAb8df4kLO92vBqz4SFF14P1Oe
+         OQ2cegUSrCIOkM+ds2zn6qunkumSQ/dHeYHauzUb6JwalNwyUdPA01L2p1IHMOKMl5yb
+         RojJxTSaBJTKslamMhuGjD91fztPh/mr6awwQkXGDgASLGgCJOPYazrNUQY4tNNUSsoV
+         /DK4j3Betm0QcgRqxK1koOwNi7I7kssI0sefYeD23P9aRtxkWfSs8kyjOvl1b7GmB+gb
+         PXmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783479590; x=1784084390;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=cUabWVce8iHwnQPOo1Z1PgqpL5/OZl5hPyo2Jb0poJI=;
-        b=YQkVHEBdRi4aMPZQCQvN4FrNm+zybAZP9B9E+b2OJuSFffYT751HsruBvYb+ojSOEh
-         W0UFfaGtLojPJi+DZ3IyrWnZsNCHPxYObragSEuluiWLAKUtT9qTLQRBxhRBgK3nNi1e
-         /yvFrsEF+ad6Q3T7YYy0Ihlx7SpeuNQrwbqIHfjT/r6HHB4rJDjMm3fwHDSbMfoPLvXO
-         7aofeypzkVs7ADxzrVuxNr9tk800svV+t8yFy1KRflwmJngAGNlcv9JXJ7EYi8YQ2uoU
-         kdJSKuwMFqNl85qHsvY+/vOZfrNLxkJKioARgAa8gDCGjBp8nJ3+W54xY85FPXCuQeQL
-         pyPQ==
-X-Gm-Message-State: AOJu0YzUM3ZGnhqG9gcZKpVc5wN+SfH02x09W1yc+ymUya3jwum3rmBT
-	ckZ+Wn/oPj195TjOdMac8onF6MkJzAgMK62Bcn7dYIWOrzcTR0nzz7gKAFQf+LST
-X-Gm-Gg: AfdE7cn/kJPpldra38obvX4kaGIEh+gSyCgjwwshAfrk3H/d2OcIn8FkCG1OVMcWPLo
-	SmAEUlF/XVdTBRTCfRcoLwbFynQyIKUWGvQ9+KGxdfS9S8Dunv6yK1T3uO8NfVQpgXcUqECo5Ju
-	gaInqDdkK8az4bGGOX9ytAWzipAphhu9hZeXao/WW2w56wmmZq6HKQnndu9FId8U74m2jJUQB6z
-	RWbsu7/7O0gbqS9kHLGcuUja+qrFFMZJpZ7RvO1QheP2GjfGHpDd3bmozwwBRl3EV5C1djS7LrV
-	T+qdtdB6SQVF0c2lFgiUctsMwwMgXYh4oSaVpcYDjo+MO7BFiVq9dnsrKF7jyYyrNWFOlTvhsv5
-	ksWMwUM95LBGEOMXKy9sE1cjlh5zgsuVoWosVnBXI0hP+WdXiDSSAQvQK+iNC0JSJahUegYt3yT
-	3IlSOnJqV0T90M6VR4fA==
-X-Received: by 2002:a05:6830:4105:b0:7dd:9b19:a875 with SMTP id 46e09a7af769-7ebcfe42702mr420566a34.2.1783479589828;
-        Tue, 07 Jul 2026 19:59:49 -0700 (PDT)
-Received: from [127.0.0.1] ([172.202.102.208])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcb2bc241sm877852a34.20.2026.07.07.19.59.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 19:59:49 -0700 (PDT)
-Message-Id: <771d264d2999a780e0c93e64bb4451a05214ab75.1783479584.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
-References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
-From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 08 Jul 2026 02:59:43 +0000
-Subject: [PATCH 3/3] t/README: document writing concurrency-safe helpers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1783480554; x=1784085354;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ff1a3agMA+PjHMEHFGUcIuDM3dl9NslCosP433YvBI4=;
+        b=Zsvm1xQGJD06gGGWu6KHTNDd26a6vgRBe5ht4i5yNNE4tehWyk7ePE63p2SOo9foIn
+         1v+DH8f5FxeuKIvlECK1B3c+RuqypdS3WLIvBDfqJ4eXr/+g3fAt6/lW9eR1JjDmpVjJ
+         /tNgOSk1+A8WMg1UWaDfzr5VTSCRR9LipG4CbMm7sohTGYuEDJmQPIcSMM9GMKjMi/My
+         TeU+aHlM8orJG17R4nA2wn513u3JtCHnldmBWoG2lM0XJqk6WeFAyFQQ3ibK67RDgRm5
+         dni9skr19uPr1uESYr+EGRpAROullZZrcos1fWavEExojFxZAdvbFejMooSQ69MhUJ0E
+         bO0Q==
+X-Forwarded-Encrypted: i=1; AHgh+RpzZ92HCp2NEtYDGbbYs0WWGVZtj9MXIhaQscl2VmA35tWyENr9vI0wXZJ7Yzoz+caxScQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcNyS2ce2ImZbGJ7NpwuBZp+ebpPgipewVqTOhR4BbOqYX3bsB
+	yz/kh+fhwYInWhP7j6On48MfQZr8bjk9DgnxdWJiui9H0y8hPw7Dg9UbJo+5swUnIXymwZmbsp6
+	Pbg==
+X-Received: from dldyq14-n1.prod.google.com ([2002:a05:701b:454e:10b0:138:5e8:1b36])
+ (user=snatu job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:c98b:b0:3c0:9c19:65af
+ with SMTP id adf61e73a8af0-3c0bd3a34e2mr475823637.71.1783480553665; Tue, 07
+ Jul 2026 20:15:53 -0700 (PDT)
+Date: Tue,  7 Jul 2026 20:15:52 -0700
+In-Reply-To: <xmqqmrw3aoas.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Michael Montalbo <mmontalbo@gmail.com>,
-    Michael Montalbo <mmontalbo@gmail.com>
+Mime-Version: 1.0
+References: <xmqqmrw3aoas.fsf@gitster.g>
+X-Mailer: git-send-email 2.55.0.795.g602f6c329a-goog
+Message-ID: <20260708031552.157939-1-snatu@google.com>
+Subject: Re: [PATCH v7 3/3] contrib: wire up osxkeychain in contrib/Makefile
+ on macOS
+From: Shardul Natu <snatu@google.com>
+To: gitster@pobox.com
+Cc: ben.knoble@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com, 
+	koji.nakamaru@gree.net, kristofferhaugsbakk@fastmail.com, ps@pks.im, 
+	shardul.27591@gmail.com, snatu@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Michael Montalbo <mmontalbo@gmail.com>
+> Is $(uname_S) defined here at this point with only the above two
+> includes?  Don't you need to include ../config.mak.uname as well?
+> 
+> The top-level Makefile does this:
+> 
+>         include config.mak.uname
+>         -include config.mak.autogen
+>         -include config.mak
+> 
+> and so should this one, I think, in exactly the same order.
 
-The apply-one-time-script.sh and http-429.sh fixes addressed the same
-underlying problem: a test helper assuming it has exclusive access to a
-file when the web server can run it for several requests at once. The
-atomic idioms that avoid this are not specific to CGI or to HTTP, so
-document them generally, alongside the other guidance for writing tests,
-and leave a pointer from the lib-httpd helper list rather than a local
-comment. The note covers the anti-pattern (a "test -f" then a separate
-act) and the two safe operations (mkdir to elect a winner, rename to
-consume a one-shot marker), citing Git's own lockfile machinery and
-make_symlink() as precedent.
-
-Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
----
- t/README       | 32 ++++++++++++++++++++++++++++++++
- t/lib-httpd.sh |  3 +++
- 2 files changed, 35 insertions(+)
-
-diff --git a/t/README b/t/README
-index 085921be4b..a9d425f392 100644
---- a/t/README
-+++ b/t/README
-@@ -854,6 +854,38 @@ from the test harness library.  At the end of the script, call
- 'test_done'.
- 
- 
-+Writing concurrency-safe helpers
-+--------------------------------
-+
-+Some test code runs concurrently: a test may background work with '&',
-+and the helper scripts installed for the web server (in t/lib-httpd) are
-+run once per request, so the same script can execute for several
-+requests at once.  Such code cannot assume it has exclusive access to a
-+file.
-+
-+When exactly one of several concurrent processes needs to "win" a
-+decision, a single atomic filesystem operation can make it, rather than
-+a check followed by a separate action.  A "test -f X" then "touch X"
-+(or "rm X") races: two processes can both pass the check before either
-+acts.  Two atomic operations avoid this:
-+
-+ - "mkdir dir", which fails if the directory already exists, so that
-+   exactly one caller wins, electing a first or only request (see
-+   t/lib-httpd/http-429.sh).
-+
-+ - "mv src dst" (rename), which fails if the source is gone, so that
-+   exactly one caller consumes it, claiming a planted one-shot marker
-+   (see t/lib-httpd/apply-one-time-script.sh).
-+
-+A "$$" suffix on per-request scratch files keeps concurrent invocations
-+from clobbering each other's fixed-name files.
-+
-+This is a standard shell locking idiom, and the same reasoning behind
-+Git's own lockfile machinery, which creates its lock with O_CREAT|O_EXCL,
-+and make_symlink() in t/test-lib.sh, which uses an mkdir lock: an atomic
-+operation whose failure indicates that another process got there first.
-+
-+
- Test harness library
- --------------------
- 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index fc646447d5..d64f9c8c2d 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -159,6 +159,9 @@ prepare_httpd() {
- 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
- 	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
- 	cp "$TEST_PATH"/proxy-passwd "$HTTPD_ROOT_PATH"
-+	# The web server can run any of these CGI scripts for two requests at
-+	# once; a helper that keeps state between requests must do so with an
-+	# atomic operation. See "Writing concurrency-safe helpers" in t/README.
- 	install_script incomplete-length-upload-pack-v2-http.sh
- 	install_script incomplete-body-upload-pack-v2-http.sh
- 	install_script error-no-report.sh
--- 
-gitgitgadget
+Ah, yes. I have updated the include sequence in contrib/Makefile to:
+  include ../config.mak.uname
+  -include ../config.mak.autogen
+  -include ../config.mak
