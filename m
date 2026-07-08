@@ -1,82 +1,82 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4363E1686
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 19:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB6E3E317F
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 20:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783540794; cv=none; b=EmrBTYlfN/HUob+zXZuRIdYsriDGTyZLt5wGaHHi5o8s1GVZXaNUG/oVyilciHWx7ckiPIWYGZ0zKVoOZ/4MM29v26Kb5FE59ivISOs2tRUfUAXVVGqxBpUpdbjjrrlEBxYG8JxogxM4fENhWa575EATbYUao7hUcpO3rk3gaic=
+	t=1783540972; cv=none; b=XcAC/H+0CzAi8suujyI1M7XYrQy9xMjkRyA+J6/St0NhZxtdiCGRGATa0/YGK4vk0C/mrcKA9HckPePvJXagyJj+7wZILsAld0U2kL59IcjEAo3lPZoBl3zaZYGhdufv5hTAZuonZxY16aVocD5/Ep4U7AQC3WJKiAu1UL/gvrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783540794; c=relaxed/simple;
-	bh=Yembep+Ox6HXrOP2YxMl6NbljScBSk63cvwW1j2xNFo=;
+	s=arc-20240116; t=1783540972; c=relaxed/simple;
+	bh=cq9qgXXRLjo7NXR2jSZ+pjAzUT5EfAZqDOlVdT+/zno=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TDvVafRwpAAIYxNrcufYlDCH9BLplUylLqpBhd8EfglJw0CDeeyW8wtap47UzNYNBobHhKkeQ1BmezUdusZMIooVf/hwWJTRRqQMbL9msox2um9OwZnhoiY7yMAFQOusYj++EAKeO/H0ruS9a6Ek3GHGBBZ0CMY8fwyCi7CRC8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jysuKO1p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b0Eygq9h; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=uzv2BYDiQ+NNCmKls+7prX91Xn+Nq7aXF/c8AloRvIW1i2pH9nDWZmxXHI0wceN6H49dXX9QHEbuzhTUCZ422GWtMmm3Lv37Ia6gCXppEpCZwXyMQXTD9xa3jZllzNnUeysgXj9uITe99PPI98saB7GRXal+RJjo6XDi94rKxKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iKi3kjA2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZH+Q5+YK; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jysuKO1p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b0Eygq9h"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8B7551D00140;
-	Wed,  8 Jul 2026 15:59:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Jul 2026 15:59:52 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iKi3kjA2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZH+Q5+YK"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id AC7631D000D0;
+	Wed,  8 Jul 2026 16:02:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 08 Jul 2026 16:02:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783540792; x=1783627192; bh=URCzcw+Gzz
-	/gKIPR6asKlcZ0bYeVD59J4GLIyEbIdw4=; b=jysuKO1p2RzxpUPI4IRFtS0Q14
-	mbhpNIjp6kytxZj5cC8sNwS/5OCp9aMN0+Vwf5HKTDl71+WUijW2HybRvTaX2dFi
-	KnMME3ymgr9105dt69mu/6WHRR0SVP/NBkETykQCN9V4Ef9vzCULZCYiK5o3gU/N
-	cXMomhdihGKE7L2sfdAwtj3XeQCU8DWL93RW1QQPWRP5FT+geZmWqA1DktBJHMrL
-	3oNCW26MsG7w16YIq4levhXOqPZjmkHeM5CdxGTgOs7KWaX7RifWbe2Ud+p/hV/H
-	n3/C0JB57d+MR7t2FvA8Xu31XiHInBS37VtRMkbxCLNIHmanIV9Nuw6tgsTw==
+	:subject:to:to; s=fm1; t=1783540968; x=1783627368; bh=SJdhsDjJZ0
+	yH2GEM5/8Qh60XotR7VK6gGwmZOvXrzy0=; b=iKi3kjA25NpZc/jf+RjfNqwV3I
+	tjslmcpqCwUjvslkG8Of0ty9YIe159/U1BsQhkzXyAKIMcoSJOrTwrHOim/IhPLu
+	kfvHk1xx3zzlyOUjBR8OrPme/Z0qHKNx5CynSSYJxqFvT4IaHEp4sXT2XFjlbqG9
+	jKF4+oNiyUf7MkyhQeALKqH9N1CAeea7rrsK/npbaHwosbJGJcB5uUelOz7hQlpO
+	hhk6QT13bVanxPGIaD2svPEi5MdqAUEuppuguLwRmKCS/MEJV/SvC4+SlZAaHkkZ
+	2wdM9u9W11rh1jL0FTDO1vffTIKZS/SLIlNTvisIfcfCaj11cC5g0rhilEpA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783540792; x=1783627192; bh=URCzcw+Gzz/gKIPR6asKlcZ0bYeVD59J4GL
-	IyEbIdw4=; b=b0Eygq9hkNDmPFPJRaN9+bM3/yNSdO23VYSj1URwuZ2quMhiHtJ
-	Kz/Z6MHlNwjFwrA/4N/NtcF7FvfB6+5MPCEttDPACShJHiPX97gySWAbNRIOMNEV
-	JE4l7T/n89aQoPLKbq2/yhjVre/GrchNVvRO3oi5TegCkMZxgMXY1dZBlELgLQ8p
-	ge+vN640NmkLeKUSoxory436EAaYoWE0YY0UbpvLP7rZnjnePaCff1G1oenCIgVJ
-	0ae9WNB15ZrkNISukhVMPkSgJZFqANnQYL2Tpi/P2HuVVAZLz+KZHGYUpZ9yHR1t
-	ZCk1nj82ap8bGGpKfkz2Fe3QkBjdAz/92vw==
-X-ME-Sender: <xms:OKxOapLGOy4KbU5QJrSKr6Aqu9S2foxxmieUDLrHhUGxdluo8ty1xQ>
-    <xme:OKxOasJ4oXE_Th77TdsZ3ggZD17qgQ3OUu54woQf7ihej-JZR48BOnfLW7wS-CR4v
-    GSKKXZPa3KyiHcmH7ZLx635kFAy0fWm8t4FD22EEK3DKNmjyMgQPw>
-X-ME-Received: <xmr:OKxOamvEAHEamfp8saoAAGRWnA51FCyvYyPbNziBw19pvLDdkhQnf3w3oxTiO8G5eUPalgZlnbiFFEnfRdYuc-sk46aSsqhGnTQ0dKQ>
-X-ME-Proxy-Cause: dmFkZTEfMHTm3ms4Kufm8vO4bYagL2nANLGQDav7066X/8NYvRaUHFp2K342mymv7g8EZy
-    xk6xWDQ3vpVh06FXIVgH6lgmhBxrE1DPo1eTGEcF/zU7zf67z8bxMtmyIzK46iFTGEa+jY
-    of5wIUFWd6Urf9LcloPeSae4z1qR6Tl3xSIIXFifJE+i2mDbfaHNu+rqEoDXoXRwIqHg7j
-    pjSnkBwPaLxoCvRM7mmxsbJExuIEE9FFEFfcy4mDUhv5VxDmSPZq8Uudx1y0q+YV6Cw3N8
-    K+rjoGbZDtj1O/sLQhMN8ghTQChgJh6t3YzNbMqWiMp3mbP6jhm5JTO9mGAZifEDoL5jpT
-    VGSeq5x5J8pq6moVhlE641C4sfP0/iyJqoDt8dq56z/2+XRJ61uOaOIIotCxlUsymrkJ6t
-    TYaXFWG1R5uRBNjOM3o8DkCxvTl4La5kbaLiCAdtZofHeK0OTJ/ciBUjh2COasP51Qw0qW
-    I3u+r2n2dy8xcsxUvwlSRs7nLwtKtlk9z9cUKM6aZcV4OLsBl59UfuA0Di6C4HNPWAXoJx
-    RjXgQW8f+dO8Kv+Q/d3/u86waM//rFw6qbBOpOsscXfRpRDSwV59Dbpa//YeTzPIroELSE
-    wPCPbtGoD15mtLZVEnDSnMETzKvsrxGOEW090xAYRyDYyNXpnyHFrRYSMxiQ
-X-ME-Proxy: <xmx:OKxOapTRj4ORaJg_kkpU_H61e8FvMDuJax9kr5LgJ9GMrkqMFiMEgQ>
-    <xmx:OKxOasNpOHSDIMsTpCrphSBpV1zzhtoaHx86uAStvtB6wA2430pzAQ>
-    <xmx:OKxOauaHZBOL9cnJWm9HoKMzk4FvLVL7SVhH_Svqo8TuXgUL9Ln3Pw>
-    <xmx:OKxOamyU2dcwpSCZAOlNfOY9c3eeNy6QPtsuFUtQ1J8wFc8h4UZN3A>
-    <xmx:OKxOamN-Uk3oMJ5dkbp-f5TTkKq13tHm-FTRy8TO4m1gQnctixWJkXet>
+	1783540968; x=1783627368; bh=SJdhsDjJZ0yH2GEM5/8Qh60XotR7VK6gGwm
+	ZOvXrzy0=; b=ZH+Q5+YKk81gAGovs8gVM5f5QItsXSI4aahbFxlylfEFkXmQyzL
+	YaozDqVDsnXMPaNm4Yp6/iz/yjsrvBM8X8s8luXc2zFoAf3NczZLXDmw2HTtn6iG
+	O1xnzdWn2GdBc9HmKdawhG4m9zkd88ZeNy1sMfqe3zMUqySBnbgbympfsX2fWyDZ
+	9X+y47zgYBBfXJAAlgeK3uFQT2ndcqQhCIyqHqXPnXcLCh9znISTBaFQYJDfzIkw
+	NF1Fd+7gBTYJApuZtqqL9Ei8TzpxlWt0Q4+lN7F1iYL8qQ8ch4t46GReghOVBGm8
+	ix66K5zilEb/0TZnsIPNV7RHKVFv5QkfqIg==
+X-ME-Sender: <xms:6KxOalhY0vi0q9pL9S6XFP8VJvq48jEGR8xe7ReUgSSRdTdDZtGumA>
+    <xme:6KxOahBuPRHxmJywbmixYbTkCc5bSLy4IMIZB_jINrkQhz-UxJY2uipu057ObM9zc
+    j6IPH81Nbqon0EVgEoThojCHAlEj0ZgU7rz0By-DjrpiYLxI5KrzDk>
+X-ME-Received: <xmr:6KxOaqFKtEwQLU1PM5jj9fhXixMjlcYK6WoWfT6ymiLRBBKDIRTsK7KrTgSVFYQiQjEGOAaror1q8gIdfrEjd78CrmxIMokmv01GIW0>
+X-ME-Proxy-Cause: dmFkZTEcki6L6qpoLMhVZ80ZtNPyC+oqhde7VogeGbrIACZCkJf32So6kRBFhWkCFhMtbi
+    qUsIQB8qg0ozcpaVKcIUvIlDfPw+iUAB7bQXD5lYINuF1M3iVe9J2b22jUdx6xYxqajZoG
+    3kNmmsVLjuPwwmDTY+9Sn49z4CVNYxJv9/BNQEWMDJyuvduW7tXpwUL02+bxBeCQjqAZLX
+    +X5iobd2ttIKdyel+cF9F2vhYzi4W3r6bsUvpeImK53ZsNoTJuID69rv/Z9iLrChPBaUo3
+    /rN+t/m4QZe04MO9vtQVt/VmmL8PLueYXSdkh9xCeC5cPIPmckF4YD0KfEa9YPbg3Oloie
+    HS4bLW/UXGn9iorNFcDLDhYLtiiQUuFxx5fe2EH+osIe1Uux4dsVPYEQZdn5qQ4Inrhxtj
+    5/vFtkEoUoD5tq2zqGaJHd9IBsvtBluYB+WXk5UXXx4MsluOruRGgV28Muv8xppOiRy89c
+    Z2Ak/ODAs8iQtbV7ndF6V8nfe9ywVSXPfr4P+UY4GcGM4Dfpmka0+nkbHXBqnG323/gvwM
+    MPHr7sswxvhtKmJUznsEu5sv1cc1ssH679nC9BSN/Ky5EZZ3BhdyqRgyKVL1cludJpi/40
+    W4uhowSp5kx6SbKKUOC45yfmwdp0FQYsuE2lWzAh85+dZ0+mjCMF5MALewww
+X-ME-Proxy: <xmx:6KxOapJ6XOc-3sHdFnkUCFR53wsU8RWs6ag0qwSqGwZSm6KFygHoZQ>
+    <xmx:6KxOaumRWOAG0Cf_s2zthGt8_T2n5dwjuDSyQEKyvKdfj77hb8qSsw>
+    <xmx:6KxOahTEL_hlH8BaXFXlgLWa6PqNX8_f1XkkymLvnyLQCyNVTfxlVA>
+    <xmx:6KxOagKI2zgcEQ6eeRUNC2I51I1VnZSNIxHwrqDg6qKT4y_16o7G2g>
+    <xmx:6KxOahmkYWbyCta_x_M9ROXry8XV1AYvWLtOYBxJUxUBmftI9PqE8dxw>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 15:59:51 -0400 (EDT)
+ 8 Jul 2026 16:02:48 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH 3/3] t/README: document writing concurrency-safe helpers
-In-Reply-To: <771d264d2999a780e0c93e64bb4451a05214ab75.1783479584.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 2/3] t/lib-httpd: make http-429 first-request check atomic
+In-Reply-To: <efd34c17157b3183cdc851c8b17e7967b6c85506.1783479584.git.gitgitgadget@gmail.com>
 	(Michael Montalbo via GitGitGadget's message of "Wed, 08 Jul 2026
-	02:59:43 +0000")
+	02:59:42 +0000")
 References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
-	<771d264d2999a780e0c93e64bb4451a05214ab75.1783479584.git.gitgitgadget@gmail.com>
-Date: Wed, 08 Jul 2026 12:59:50 -0700
-Message-ID: <xmqqh5m9tfpl.fsf@gitster.g>
+	<efd34c17157b3183cdc851c8b17e7967b6c85506.1783479584.git.gitgitgadget@gmail.com>
+Date: Wed, 08 Jul 2026 13:02:46 -0700
+Message-ID: <xmqqcxwxtfkp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,83 +88,21 @@ Content-Type: text/plain
 
 "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Michael Montalbo <mmontalbo@gmail.com>
->
-> The apply-one-time-script.sh and http-429.sh fixes addressed the same
-> underlying problem: a test helper assuming it has exclusive access to a
-> file when the web server can run it for several requests at once. The
-> atomic idioms that avoid this are not specific to CGI or to HTTP, so
-> document them generally, alongside the other guidance for writing tests,
-> and leave a pointer from the lib-httpd helper list rather than a local
-> comment. The note covers the anti-pattern (a "test -f" then a separate
-> act) and the two safe operations (mkdir to elect a winner, rename to
-> consume a one-shot marker), citing Git's own lockfile machinery and
-> make_symlink() as precedent.
->
-> Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
-> ---
->  t/README       | 32 ++++++++++++++++++++++++++++++++
->  t/lib-httpd.sh |  3 +++
->  2 files changed, 35 insertions(+)
+> -# Check if this is the first call (no state file exists)
+> -if test -f "$state_file"
+> +# Apache can run this CGI for concurrent requests, so the script decides
+> +# whether this is the first call with a single atomic "mkdir": it succeeds for
+> +# exactly one of any racing requests and fails for the rest. "permanent"
+> +# always rate-limits and records no state.
+> +if test "$retry_after" != permanent && ! mkdir "$state" 2>/dev/null
 
-Thanks for a nice finishing touch.
+I think the last sentence in the above comment was meant to explain
+why the new code checks the value of "$retry_after", but it is not
+clear if it is needed for correctness (in other words, the original
+was wrong to do "test -f && touch" but also was wrong to do so even
+when "$retry_after" is set to "permanent), or if it is a mere
+"optimization opportunity" you are taking advantage of.  In either
+case, it would be nice to see it explained in the proposed commit
+log message.
 
-
-
-> diff --git a/t/README b/t/README
-> index 085921be4b..a9d425f392 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -854,6 +854,38 @@ from the test harness library.  At the end of the script, call
->  'test_done'.
->  
->  
-> +Writing concurrency-safe helpers
-> +--------------------------------
-> +
-> +Some test code runs concurrently: a test may background work with '&',
-> +and the helper scripts installed for the web server (in t/lib-httpd) are
-> +run once per request, so the same script can execute for several
-> +requests at once.  Such code cannot assume it has exclusive access to a
-> +file.
-> +
-> +When exactly one of several concurrent processes needs to "win" a
-> +decision, a single atomic filesystem operation can make it, rather than
-> +a check followed by a separate action.  A "test -f X" then "touch X"
-> +(or "rm X") races: two processes can both pass the check before either
-> +acts.  Two atomic operations avoid this:
-> +
-> + - "mkdir dir", which fails if the directory already exists, so that
-> +   exactly one caller wins, electing a first or only request (see
-> +   t/lib-httpd/http-429.sh).
-> +
-> + - "mv src dst" (rename), which fails if the source is gone, so that
-> +   exactly one caller consumes it, claiming a planted one-shot marker
-> +   (see t/lib-httpd/apply-one-time-script.sh).
-> +
-> +A "$$" suffix on per-request scratch files keeps concurrent invocations
-> +from clobbering each other's fixed-name files.
-> +
-> +This is a standard shell locking idiom, and the same reasoning behind
-> +Git's own lockfile machinery, which creates its lock with O_CREAT|O_EXCL,
-> +and make_symlink() in t/test-lib.sh, which uses an mkdir lock: an atomic
-> +operation whose failure indicates that another process got there first.
-> +
-> +
->  Test harness library
->  --------------------
->  
-> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-> index fc646447d5..d64f9c8c2d 100644
-> --- a/t/lib-httpd.sh
-> +++ b/t/lib-httpd.sh
-> @@ -159,6 +159,9 @@ prepare_httpd() {
->  	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
->  	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
->  	cp "$TEST_PATH"/proxy-passwd "$HTTPD_ROOT_PATH"
-> +	# The web server can run any of these CGI scripts for two requests at
-> +	# once; a helper that keeps state between requests must do so with an
-> +	# atomic operation. See "Writing concurrency-safe helpers" in t/README.
->  	install_script incomplete-length-upload-pack-v2-http.sh
->  	install_script incomplete-body-upload-pack-v2-http.sh
->  	install_script error-no-report.sh
+Thanks.
