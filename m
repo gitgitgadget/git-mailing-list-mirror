@@ -1,106 +1,169 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704EA4963AA
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 14:49:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE883DD521
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 15:03:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783522176; cv=none; b=JZbttzR/cpJKcWvRSL0A2AhRGyilCwhnf3w9NUeXRyro632nIQYZC1WyPFX2znHpmj8FkrrP17OwFYp0106K7vGPkwMlAaYKMyb33Zd5NgTQszJ9qvGgjQSRmAEQfapQzuh845WrzlpsUcvgT9Bs/r8cxo1JLWJq5Xhh/ep8M10=
+	t=1783523032; cv=none; b=XyO10f//esUdLA0bZrKKY5bJorjYrPPsn746KtcYn7YQyTTiTlFFrTB+fMlkSqaZjcYZSTZfF7HsNptbOK5UxDd9WzvjuxNoOEFGW0w9ZpdhKyTfZYL2gfcH7QEy026dqWReATJyV5sE9bEYHL/3Am1QNpG56XknbV+2Y4E8UrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783522176; c=relaxed/simple;
-	bh=F9ZSb/kCIcv02c/wXUgUFhPj1L3zeHuDUz0v1kO5SY8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TQncdUeOaiRlC0KOW2Q5cgTBhDivhm1G7Yoa4ZuTdSGhQGHKgkuEB5pAXXqzTDKSHxV9dH9DSoRvRwJpdWUxXztDl60FsMawbygDoYwowf+SgQzqmUPQyR3P1xANHZM2C6g17j9qXwKiCwcPJJEwo7sd+uNdUmn9vkrf5LL8iSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jtKILD/D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oJwdLqHm; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783523032; c=relaxed/simple;
+	bh=gogqgf0fbkvltCFIDaAxazSLQJkAE+YXDdBcJ/o7GHM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=b5q0nthBbOgPhVy+BnFVj5Nfl/5+INB5sBCGdYWwZEMoUlogEtqPz5HXQkAcMbPhSS/mMrguvZVsF/rYDAmhhgz2QCEIQryzjyZTKUeXEqvwXklb4lJCJkJOJ4SjQGlAf0MctOyrh/WWC/BdqPPYAYb9DjdsJT1bG6Wl+/npNP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=pNH4e2wN; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jtKILD/D";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oJwdLqHm"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5A342EC0196;
-	Wed,  8 Jul 2026 10:49:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Jul 2026 10:49:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783522164; x=1783608564; bh=13NpYOkfPc
-	5SCuvvOTl/vP46eO+Mv1WmaPpUMzw/Z9k=; b=jtKILD/DT7WIuDKTIXQuEb2Yfx
-	6JZ2W5a4SeBsMLOOcrQTEpWLRVtinM+l1mGsGJA0/Vtw40zPQurHewk9DSOdwHQ6
-	6LMAIl3CsNMZfOP6W1QL0v989YeVYG9lg8PK+DNfP80WFUMro4D93F/1lsbsp/du
-	/aLf3lFz9bsKo2iTKtFxFBSSiSmkc2e/JxTL59mRt0VHl9aCNbfJ5bx1KjUSJmTz
-	zTCgJhoPKqSHr159fv4ZXH8gqTg5BqRrSqQbBpMdoqf3lEKhPswsmlvSi6PH5CFd
-	RK6qLx9xRbExwQmTItHMjdpMJavUzOBkvDF6AcPDlAxJ/Qk8Vox72lY8B3+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783522164; x=1783608564; bh=13NpYOkfPc5SCuvvOTl/vP46eO+Mv1WmaPp
-	UMzw/Z9k=; b=oJwdLqHmpk/FxgAmf4CJKZg5xZU7RP4jy23awSjEFUKMWQ7a1Kc
-	ZYf2m5QHJE+zd+41IIKlhRkV1tyE/b9l9quGXudFbwc4m+DuZd2zurkPaCNRjE+t
-	Hp8hubyiQUHIuNMGcjF5XoDR3LQJJvC/F9QQPN+pKpqJh5FNK2cP1fhMlOE0Ww5u
-	N9ulPXA3hbObwXwfYNgexiyjIWXdE43IQU7K8DP99y6tGnWXE/bu6qhfwoVhfPYZ
-	t+YZ3JQYS8ciqepXvBdCN3bNQl184ukkOMVTLHc3dVz9Q0tvEbJKctuX6X0q+jHC
-	7DLJKjGN9kzWRc3XctAYR8Yupk6yAL9sCMA==
-X-ME-Sender: <xms:dGNOaiuQl2mq471HK52eW0TLb85_xNjiiQ9PK3Mu6xj66IzqfoCqLg>
-    <xme:dGNOauXq3203WTRnTorxAq9VIREINot0u1crUbHVxKxglBv5x_aFtdJuA4hAL2RzS
-    qqYbbmFMi0VFij599JzjNurJyZbN-C27pxkvjhghpiOehOzjDKlGA>
-X-ME-Received: <xmr:dGNOamFUj7mzbPI8Fv7BnVo8ffZzrW8GgrEAZVK8VHcm7P0_simzqbrILXXsJZMdAk6rfCI2dQTP17EMEEdfvQ78Q6c6ETGrwyeDINk>
-X-ME-Proxy-Cause: dmFkZTE1nyYx2tHURtz/jZsCjyP8GeiiyR2mixxfSoDOE89wMJkoxKMOpkV7xW2y0FCtNe
-    EyneY0pHVb9oatSE53QXyO6jL08wYeZMYnH8WbAcsRgV0XvU3lr/4RiqoXJyQzwGYvVmfZ
-    rDL7eiUqQE7cSNm951+TnMlMAaQP823I/cFHSvHhaWPXCqJDCM04D8ZwTEcmnPrUEOwpsb
-    cESjWC8PywrICzM88zGsQsEOPbiXBE+odYhQPYZTDNodoa/E+QzocVBbZcZ6qF3UP+LRtl
-    PtmgKT2aw1Q8ZJ4Y78Imyc4/dPof6gRmAaF8TBCwlFuIPGq68v1ybl8mo5EUN3mrbgaai0
-    szjGK0jQmJ0lL/VyFOaAcSHLn7IeyIgaEB5IOS9EPXcZic/ucQ/Ii2nD9RKFXANmGyU3Lp
-    xyTitLnRKuovYpePAlH4IUPyDxVHNcEu1hlYSpXatqD90Dn+himxVDEBLoRQfxkbopGo+O
-    lr3KO47dDgXGJifJxa1yAuKK3oMvIYW1JSPWJ7gdQOQoKCRfZNXT7NS/g1BZWKsjXLixkB
-    69pQTzfgHZG21fZ87MAjoPc5jl5eIhNtOWywOHrNzXAoI+ouUpq5vAx6MPtlATRlRZenl1
-    c26fRg1PQu4zYQCNa2wTkn3A0vKZI48X21AujvNdXfFj+e5epCjSOHgoX+yw
-X-ME-Proxy: <xmx:dGNOao094zQhZovfD0ylllpil758WZKgYCCLaJdNhgCut52hDGWF5A>
-    <xmx:dGNOagOgH-e5mn_7DpNPHkSmQaVqX-D8DN7K3b1qiFJo7TXJS1PHhA>
-    <xmx:dGNOav4s-vJxWDX_U2M6LTSamF2k2pMDtOyI0-qaeZXtcQzEED3x0A>
-    <xmx:dGNOai2kUk0JCMY8r4MHbVTLY9eHQuwadXXhg4yEHrt27ROZkjakVw>
-    <xmx:dGNOag49RJBJC3NeY4mJjmJX_owBhO8_oUmOJeeIKLDLaHS_ucgHKIJZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 10:49:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  Joerg Thalheim <joerg@thalheim.io>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2] config: retry acquiring config.lock, configurable
- via core.configLockTimeout
-In-Reply-To: <b5c80d76-5ef4-cf1f-f4e1-78e63cfea81b@gmx.de> (Johannes
-	Schindelin's message of "Wed, 8 Jul 2026 09:32:41 +0200 (CEST)")
-References: <409d05a5-235b-6b19-5a33-a4e613dd447c@gmx.de>
-	<20260517132111.1014901-1-joerg@thalheim.io>
-	<xmqqzf1xbl4i.fsf@gitster.g> <agrIrGwSMFlKTx9x@pks.im>
-	<b5c80d76-5ef4-cf1f-f4e1-78e63cfea81b@gmx.de>
-Date: Wed, 08 Jul 2026 07:49:21 -0700
-Message-ID: <xmqqa4s1wn7y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="pNH4e2wN"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1783523026;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fEPHydkMkoRxBUy9CRoqtTV6ok1PFYu0CAlwFCHeHNA=;
+	b=pNH4e2wN+pPq+CUxcwMHrM4RrDdPZZqrhRLoWH2DlokkN6hZqQm5JUxckiZc8i0UBYPXo1
+	hv7ecUHw15naGJ3XxYBvsgnExRCtkIA3EnECIxSgqcrFPihiZJsP5QZ2ZRVtgBiyIMJtEK
+	rnUsCf7E+EVJ+DQgnBS/CwvL8tJw+9E=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH v2 0/2] Fix fatal error in git-clone(1) when reading empty
+ bundle-URI
+Date: Wed, 08 Jul 2026 17:03:33 +0200
+Message-Id: <20260708-toon-bundle-uri-no-uri-v2-0-09a03d8db556@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr0K6dkxbGgRX3sOwKGWQMdghbSEaw
+ t0FPICrn5f8/98iIgbCKK7ZIgLOFIn9BvqUCddb/0CgdmOhpS6kkSUkZg/N5NsBYQoEno/Qpis
+ KZU1VWiu28Riwo/dxfK9/HKfmiS7tb3ujp5g4fA7zrPbeX8msQEFrrMS8yi/Y2BtxcsPZ8UvU6
+ 7p+AeYVw6fOAAAA
+X-Change-ID: 20260408-toon-bundle-uri-no-uri-24f661a498aa
+In-Reply-To: <20260408-toon-bundle-uri-no-uri-v1-1-d4a0e3937eba@iotcl.com>
+References: <20260408-toon-bundle-uri-no-uri-v1-1-d4a0e3937eba@iotcl.com>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This patch is a leftover from [1]. In that series I submitted two
+patches. Because that series was submitted a long time ago, I'm
+submitting this as a new series.
 
-> ... doubt whether the cost of that cache was worth blocking this patch for
-> over a month. Lacking such a cozy setting and at this time also lacking
-> the leisure to enjoy said beverages, I'd rather go forward with the
-> proposed version and move on to more exciting things.
->
-> In other words: I consider this patch fine as-is, and in the event that I
-> would consider highly unlikely where the cache _really_ bothers anyone, it
-> will be an easy patch to remove it.
+The first patch is in meantime superseded by [2], and thus is dropped
+from this series.
 
-And until now, we had over a month to see such an add-on patch, or
-hear argument like the above that such a patch is not needed.  That
-is what I find disturbing the most here.
+The second patch fixes a misleading "fatal: expected 'packfile'" error
+that occurs when cloning over HTTP from a server with misconfigured
+bundle-URIs. It is modified to address Junio's concerns[3]:
+
+> I tend to agree.  Instead of papering over a misconfiguration, it
+> would be better to let the users know, so they have a chance to
+> report and/or correct such a misconfiguration.
+
+To reiterate, in the previous series I changed the error() to a
+warning() and Justin and Junio both didn't like this. In this series I
+didn't remove the error(), but instead I'm ensuring the read buffer is
+flushed before get_remote_bundle_uri() exits. This leaves a clean state
+behind and clone can continue. (more details in the commit message).
+
+In reply to that other series, Justin also insisted to implement a
+server-side fix when bundles are misconfigured, and thus he provided the
+second patch. This patch fixes bundles with an empty `uri`, but not with
+a missing `uri`, that would require a substantial change which is
+outside the scope of this series.
+
+Because bundle-URIs are optional by design, I believe the changes in
+this series are sufficient. Also, the series [2] takes a similar
+approach: have the client gracefully continue in case of misconfigured
+bundles.
+
+[1]: <20250912-b4-toon-bundle-uri-no-uri-v1-0-f4525a406df8@iotcl.com>
+[2]: <pull.2134.v2.git.git.1766160106521.gitgitgadget@gmail.com>
+[3]: <xmqqbjnfmvwo.fsf@gitster.g>
+
+Greets,
+Toon
+
+---
+Changes in v2:
+- Add second patch provided by Justin that fixes empty bundle `uri` on
+  the server-side.
+- Extend inline code comments about continuing the loop in
+  get_remote_bundle_uri().
+- Extend tests to check error message presented to the user.
+- Link to v1: https://patch.msgid.link/20260408-toon-bundle-uri-no-uri-v1-1-d4a0e3937eba@iotcl.com
+
+---
+Justin Tobler (1):
+      bundle-uri: stop sending invalid bundle configuration
+
+Toon Claes (1):
+      bundle-uri: drain remaining response on invalid bundle-uri lines
+
+ bundle-uri.c                 |  8 ++++++--
+ connect.c                    | 15 ++++++++++++---
+ t/lib-bundle-uri-protocol.sh | 23 +++++++++++++++++++++++
+ t/t5558-clone-bundle-uri.sh  | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 70 insertions(+), 5 deletions(-)
+
+Range-diff versus v1:
+
+1:  b2e52ca7fc ! 1:  22a9017826 bundle-uri: drain remaining response on invalid bundle-uri lines
+    @@ Commit message
+     
+         This error is bubbled up to `transport_get_remote_bundle_uri()`, which
+         is called by `cmd_clone()` in builtin/clone.c. Over here, the return
+    -    value of is ignored, so clone continues.
+    +    value is ignored, so clone continues.
+     
+         Despite this, it still dies with this error:
+     
+    @@ connect.c: int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
+      		const char *line = reader->line;
+      		line_nr++;
+      
+    -+		/* Do not parse if an error was encountered */
+    ++		/*
+    ++		 * Do not parse if an error was encountered, but
+    ++		 * continue draining the response so no stale data
+    ++		 * is left in the reader for subsequent protocol
+    ++		 * exchanges.
+    ++		 */
+     +		if (err)
+     +			continue;
+     +
+    @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'bundles with newline in target
+     +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/no-uri.git" config bundle.bundle-1.creationToken 1 &&
+     +
+     +	git -c transfer.bundleURI=true clone \
+    -+		"$HTTPD_URL/smart/no-uri.git" target-no-uri
+    ++		"$HTTPD_URL/smart/no-uri.git" target-no-uri 2>err &&
+    ++	test_grep "bundle ${SQ}bundle-1${SQ} has no uri" err &&
+    ++	test_grep ! "expected packfile" err
+     +'
+     +
+     +test_expect_success 'bundles advertised with empty URI' '
+    @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'bundles with newline in target
+     +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/empty-uri.git" config bundle.bundle-1.creationToken 1 &&
+     +
+     +	git -c transfer.bundleURI=true clone \
+    -+		"$HTTPD_URL/smart/empty-uri.git" target-empty-uri
+    ++		"$HTTPD_URL/smart/empty-uri.git" target-empty-uri 2>err &&
+    ++	test_grep "bundle ${SQ}bundle-1${SQ} has no uri" err &&
+    ++	test_grep ! "expected packfile" err
+     +'
+     +
+      # Do not add tests here unless they use the HTTP server, as they will
+-:  ---------- > 2:  5d31c12afb bundle-uri: stop sending invalid bundle configuration
+
+
+---
+base-commit: f85a7e662054a7b0d9070e432508831afa214b47
+change-id: 20260408-toon-bundle-uri-no-uri-24f661a498aa
 
