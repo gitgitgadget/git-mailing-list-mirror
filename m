@@ -1,149 +1,163 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D66C434409
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 16:33:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01203F12C8
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 16:56:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783528437; cv=none; b=i1/VJBo9AOaaqj6rKBVcvJRa/SSni1jhILUL778lWEeU62o22P6hVWR9e6f5NwPVYX3mN0sHcV9ZNLr47CMtLqEQGf46WY74QwANeIjYJTFi7LYmP4jC8IoZ5QpCJqOz8Is1r+vVKHLJluOjZXrVvK9otF9newXe8BZJbxJHFIg=
+	t=1783529809; cv=none; b=TJXIiF2t1sAGtCNkvW65y6/lJJD0YzYDOslsozY/F+0ax4vikeiyt9tOlJTFUUs3PwLRdCR0l+6DNEb285L/6Nb036FKvQFBU1bKNXXFw3y8X7ZLuaShH22NB/s/CL60M1TBR4DAIRUjDOA6j/Y2pNPB1soqk227+Nf+fSpdiDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783528437; c=relaxed/simple;
-	bh=F6044NvcbCnPjJWrMe+uDmcNg8UizkT7nfeHwGXS+n0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I59I1I9sV1l2rJXZKlN9YV420GxXVlseCP3LMgCCzK3CtMxJ8HNMOYryx0CFx9auKcsRz2tKwGXqGhBmReW0BAcWaw1g09S0I8wJWIrJ3+2U5hg2cNDYwnjMHf5AT3Ti1Sye8zPvlJBZ8XOP7D1OywcrbGCqHqOaP8DbLmoMhOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dg3IluQ8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OqCfZGzn; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783529809; c=relaxed/simple;
+	bh=9tJiS2mLtB5VMxzMC5MxSJrWEeefTVK0eV+xkjUxDNI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kj4hUEYXMadAAJVniRRYRMsAjHiCR+hzghMevBnHNJh3Oc7+VkLQ2vtz1f13o5BExbb7GXsZKGpFZ4PAYTdXuvJd3Knh1CRhAz2BBYrqJXeechNsIhkPXwhHVuksmtFvzMaq/itUD4bo8s7EnY33EoRRHviJYQWF8hOsiALCRvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sDUzAObV; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dg3IluQ8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OqCfZGzn"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 770D7140005F;
-	Wed,  8 Jul 2026 12:33:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 08 Jul 2026 12:33:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783528434; x=1783614834; bh=RS4nBzOn9L
-	tAkAh+LSPryotZWg8G5Mpq1IwE/RdIMSA=; b=dg3IluQ8LQP7YbZel23w6/DMsJ
-	O+d2o9iJXxXDgOFBBNqq1sp8GL1GRBG2adK4msV8LkhesI+0SQaVHr66hFaN8K0y
-	V4Gdu6Lpp073buBeh7QkgIyWAL6xNv9hK+LpJNfH/Xh2GDlfnbafLpyN/nPXS6bh
-	hdyjC36tKwOD9N8iEMymomCBTOmk++Sr5SZcVSk3yARTnNXidcmWaAMaK7YEbTnF
-	A/V5/jstB53DEKgxOvDHnX9+Irq485wyBxgkMpcc4QtBy5kPyIxWcX73CWZ5UHNE
-	JFxBL1eqRMq4pz4qEmpwmzEqdFljntWHo3uBfd8prYuR9Vq6g999YrE+u2GQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783528434; x=1783614834; bh=RS4nBzOn9LtAkAh+LSPryotZWg8G5Mpq1Iw
-	E/RdIMSA=; b=OqCfZGznV09yV19lSN0osiDbCh4WaEw/mFqnXzZBpMkVmwZ3fya
-	+QQEJsqyyMtdNvXIbXstZsvpRyEruxKlR5zILwn4Ps2h3lmNoQm8YNalG5F23gtW
-	GHwtY0b+hCvkzOU9wflxlQh2EdfrnSpcwbVWEAsnqa4tsC76hMDUTBIvYSDrDsSF
-	rYctawnFaQsWKosXpjjtkwyVD2cTwsrl4v7eQSOAqrla+HgyIZ9UgsTXxwdI6Cq0
-	TyDuMWLSqW+pUZtzDfT+qnu1rXBvV1Vk+lc26CODwCetU5lrQG0rauhgzeo54kDw
-	H4OQ3QuAetHuSC1uAX2mqFek1w/NKwIRklw==
-X-ME-Sender: <xms:8ntOauaHcrkdNSsdce_0lYUsm-sqjFYclACvsdRlj_3_ZQiZ7-axLw>
-    <xme:8ntOaoZBE_taQD6KirqBsq4H1Yc2EBoQcMrSEIwDVbnYoLYs67Umconyj-h7I6oig
-    8f2ehhK0O5Ndut4F6pRgvpLNpYg20V2Apf_R7uS1uacVR9T82XGbsM>
-X-ME-Received: <xmr:8ntOat9Xgz2LIiS5Prc6_ZrhzjnIxGlX9XzE03zSC5z9AA4xrtPyUMSTQnDFrk8JSgjdQLHqR6ecoXLK1sF5zMdEmUgoxpkj_VdnBu4>
-X-ME-Proxy-Cause: dmFkZTGRwtOyrp6uT90haUXnINSUpWW3hZLGhebgzDLUAcyPUMAHJ5qTavIoS69BnEqKJC
-    ABVviF2r/3kxjjvdvY/4x2TVlImdMdLJS2ay0c/jWDAm1lYuUi5PwQSscpO9tsdu+WtRcC
-    4ThUD9z+bdY02rYKv3dgb5UFtqoO5oyskLLa3juycKeEerrjw+5BSrf1SFF1k0YnGH25M3
-    pnnusInZ0D7pDm8lVGxS90EiQ+NS4uC0ZKzCvVLqsshAek0GEZKVa9KeBThhpS1noOVNTY
-    yFciyH+tPog0Czxg3DTuBMJ9YrzN2QlEk/oCpZFEPCBcKulUkX5GlU72M8xdi1caNgQlSA
-    bFUJtH/j4XLD2YsxpDduo7OFkvb1UVVM83QJIq8xQTP0gY6h+TsOVKoj0AlNlsTzZtlidB
-    cfBK9G6+Xe4xeRUn+WMpZeZMlayRe2fe/kIooLGmJAmlecVa1T/BGaP3VGlCr09gDchvwd
-    6Sv4jDBtSheNnJoiDSGKRfjWSshTWU4qL4B6cAjBTTM9053z3VWZ5mB7bQbTjK3h60FqTg
-    4wRvB/YaySQ9pBV4TDhRJV/lCrfi9MX94KppwsE35l/PzkctU7yi8vziZ+Tkbxd9npJXQP
-    GYdWJ29OTE8YN26Mi7jcUtvt7B/hS+6BLZ2cbwDbt0rSr2kcwvEAz4cwGTFw
-X-ME-Proxy: <xmx:8ntOavjRkm6Up08mMW5nHPHkePmQpPLzqVLxgTe28jsy-IM5ce6dnA>
-    <xmx:8ntOaldsCUsqVodLdMe_41NYco3ptwjiHnp1TubvQwRp9Kzi1SR1MQ>
-    <xmx:8ntOauqYIwtyiMEbr_WuVrAqt2eW6mVq2S1_ENMF3Q7W_HGSY6l8SA>
-    <xmx:8ntOaiBrLSUZpr3E772K_VVe_AfYYIwxo6khzD96goVyisbu4QK2FQ>
-    <xmx:8ntOai_5yuzLQXhe8TcVgR2f2ABZSrZnjdGKJZFwNj09jp3_5Q4ECtb7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 12:33:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Weijie Yuan <wy@wyuan.org>
-Cc: Michael Montalbo <mmontalbo@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] SubmittingPatches: abandoning a series
-In-Reply-To: <ak3jl3vu_P8eBXa-@wyuan.org> (Weijie Yuan's message of "Wed, 8
-	Jul 2026 13:43:51 +0800")
-References: <CAC2QwmJ8Z7hZHk9SofRsprvAR3B=UXUkeyy7i4uofRi-xEymow@mail.gmail.com>
-	<xmqqechew0ap.fsf@gitster.g> <ak3jl3vu_P8eBXa-@wyuan.org>
-Date: Wed, 08 Jul 2026 09:33:52 -0700
-Message-ID: <xmqqwlv5v3tb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sDUzAObV"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7eb4d532e65so460235a34.0
+        for <git@vger.kernel.org>; Wed, 08 Jul 2026 09:56:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783529806; x=1784134606; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ykV1qPXL/5RTfhpzKzHoTzgtwvITWx+N0GJVrtZRszA=;
+        b=sDUzAObVO7yP5Eb+6vBV/vnp9PL6CRp1RX1LdXU1DS+kJKv6Une39iw5Rjhi1SFMPD
+         yq7gJj7CXtWjyqiLt6ykxvvy97NdGOzrmazQIqj+uLjrwShzL/iOzDIjJVb8P81D634b
+         1sCZtltVtIa+Dnm+9EzTScqSTXmxuOkgA1SEqX7Kme7GkCMYRnPGdUn9HscY9UyqCpZn
+         SYfWNtHdTQyCP2yczNfsh8D7Iv84DN/9lECIEoNpGb/SuDwjoZQUhaMxGPwbWRJth0OC
+         jL8z8xxEr7/58T0QRCBiPfjQaWFrR1h350fvHnglqlr10ms93GK2x63PGFAcCTNYJApR
+         a/5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783529806; x=1784134606;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ykV1qPXL/5RTfhpzKzHoTzgtwvITWx+N0GJVrtZRszA=;
+        b=knFd/XoJiLRDqdoOJUHcBnyU82NjyOT2Xfdyq7jAmP/hJmGhcMB3cjpMHbvNv6PtkX
+         dktRVYpEPKo97Th3/cUtbVOQwnLNHZyhcw0QY6KR9/aGT5/PTANGMT07R5n65ILfYD2E
+         AQ7wdbQUNdSXBlu+3xcb+QzMqiTX21Cz46xg5JNcclRFjNl0/DLcRGcdc+IKGTbB9s1V
+         2ROwxaAoFrYIbGK8JOoKspnmJ6GoQX4OzqSHw6UnHic14GJv2bAn/l8nJnmad53O39Lp
+         QfNO8B7MWafQ/gXjpLCK3v9VyrkHjKKmaOH2v8zaIcAmIk+fFB+DzMNpYGjzZTK3FKCe
+         4v8A==
+X-Gm-Message-State: AOJu0Yy45aSPGPc3M5UHhyiOBdzOQHPYbtMqBG+jO+Yp5sIktwMNj83P
+	T9DHYLv5ShEYts5e8zrUr/tKMKp6BSQq075FxnO/JFyqJ261oilPblIv
+X-Gm-Gg: AfdE7cnMryJgHbRr+RRz3rcpa/cffeWqzNmR+WEmW48+VCsd/U2/U/rfDA8Ui0wvqDr
+	bYTg/U8KYtAL6btbkPih+or5xCe2zw3qKxqIHJL4xNXEvkw6EXnP/jS1cQ6DymK0smg5J9ukZCZ
+	OB2K7ch1iUBf9LDZHuL/WehhPG+JGE3R5DDuk8Ch6EX1YMe93inWXynUaebPqt3DVc7MiN6N9vP
+	iaV7JYvILwCursfXAN37g2wq5/WxUsvVYRLDwz9oklyPuKqLGrm7n7QtRC+Z5VTQVZOzDTKPQR5
+	5Wa6UrsxRf/zBcYsQPYgFR2CUHDY4zB7SG8yTZ87XJ9dRGQ43ybip0GyGws6Xu0XoJmbtdnycWD
+	l0h8BW3XfrXEmLo1fc+JxAKwN+hsDC2NklEX18r09K9Hp2/amuZ6aDjyJdyai5ix09MFVoj+XuS
+	Z+6MkJwA==
+X-Received: by 2002:a05:6830:2b1f:b0:7e9:2d33:87eb with SMTP id 46e09a7af769-7ebcfe9592amr2089587a34.12.1783529806578;
+        Wed, 08 Jul 2026 09:56:46 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcafdf8f2sm2216971a34.11.2026.07.08.09.56.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2026 09:56:45 -0700 (PDT)
+Date: Wed, 8 Jul 2026 11:56:43 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 06/11] odb/transaction: propagate begin errors
+Message-ID: <ak57VEF56HkRKygQ@denethor>
+References: <20260624041920.2601961-1-jltobler@gmail.com>
+ <20260708041412.1157499-1-jltobler@gmail.com>
+ <20260708041412.1157499-7-jltobler@gmail.com>
+ <ak3xJFDqTSN1Naoy@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ak3xJFDqTSN1Naoy@pks.im>
 
-Weijie Yuan <wy@wyuan.org> writes:
+On 26/07/08 08:41AM, Patrick Steinhardt wrote:
+> On Tue, Jul 07, 2026 at 11:14:07PM -0500, Justin Tobler wrote:
+> > @@ -490,10 +491,12 @@ int cache_tree_update(struct index_state *istate, int flags)
+> >  
+> >  	trace_performance_enter();
+> >  	trace2_region_enter("cache_tree", "update", istate->repo);
+> > -	transaction = odb_transaction_begin(the_repository->objects);
+> > +	if (!inflight)
+> > +		odb_transaction_begin_or_die(the_repository->objects, &transaction);
+> >  	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
+> >  		       "", 0, &skip, flags);
+> > -	odb_transaction_commit(transaction);
+> > +	if (!inflight)
+> > +		odb_transaction_commit(transaction);
+> >  	trace2_region_leave("cache_tree", "update", istate->repo);
+> >  	trace_performance_leave("cache_tree_update");
+> >  	if (i < 0)
+> 
+> Callsites like this really make me wonder why we even care to create
+> a transaction in the first place if we basically just commit it
+> immediately anyway. And while it's a bit sad that we have so many sites
+> where we don't really know whether we even have a transaction, I think
+> it's a good change that we have now annotated them clearly. A subsequent
+> patch series may then eventually refactor those sites so that we stop
+> depending on `odb->transaction` and inject the transaction via a
+> parameter.
 
-> On Tue, Jul 07, 2026 at 09:52:14PM -0700, Junio C Hamano wrote:
->> Michael Montalbo <mmontalbo@gmail.com> writes:
->> [...]
->> > Finally, maybe a rule of thumb as to how old a topic a topic should get
->> > before a "staleness" update is provided would be helpful, or maybe that
->> > is too contextually dependent / would potentially introduce some
->> > unwanted scheduling contract?
->> >
->> > Overall, I think the explicit guidance is helpful.
->> 
->> I've been working on streamlining my workflow to manage the "What's
->> cooking" report, and writing down guidelines with concrete numbers.
->> 
->>  * When the discussion seems to reach rough consensus that the
->>    latest round looks good for 'next', the topic is immediately
->>    marked as "Will merge to 'next'?" in my draft copy (note: I do
->>    not want to spam the list with "What's cooking" too often, but it
->>    is the document I work from, and it is updated multiple times a
->>    day).
->> 
->>  * After no negative opinions are seen on a topic in "Will merge to
->>    'next'?" state for about 36 hours, the topic is marked as "Will
->>    merge to 'next'".  I will merge such topics during the next
->>    integration cycle (note: I can only have up to two integration
->>    cycles per day due to time constraints).
->> 
->>  * Imagine that a topic was last updated more than 4 weeks ago.  If
->>    there are review comments on the topic that are left unanswered
->>    by the author for more than a week, and if nothing happens in the
->>    discussion thread other than inquiry on the current status, the
->>    topic is marked as "stalled".  I will try to notice and ping a
->>    stalled topic once or twice, but after that I may discard such a
->>    topic (which by the way I really hate having to decide to do so).
->> 
->>  * After a topic is merged to 'next', if nothing negative that needs
->>    fixing is discovered for 7 calendar days, the topic is merged to
->>    'master'.  I may shorten this depending on how complex the topic
->>    is.
->> 
->> There may be more, but these are what I can think of offhand.
->
-> Integrating the above parts into the document seems like a good idea.
+Call sites like the one mentioned above are using ODB transactions as an
+optimization to batch the full fsyncs in bulk. In cases where the is not
+already a transaction, they start one to take advantage of it.
 
-It could be, but not to the document we are discussing.  The current
-document is about contributor's guide, telling them what to do and
-how, and "'next' usually holds a topic for 7 days" is not as
-interesting.
+I fully agree though that an ODB transaction should ideally be started
+at a higher layer and wired down to these call sites. I have a couple of
+patches in my tree that start to tackle this which I plan to send in
+another series. :)
 
-> btw, do we need to synchronize MyFirstContribution simultaneously?
->
-> Quoting Patrick's words [1]:
->
-> Overall it's a bit on the annoying side that we have to always make sure
-> to update both SubmittingPatches and MyFirstContribution in tandem.
-> Makes me wonder whether they are mostly redundant and whether it would
-> make sense to eventually merge them.
+> > diff --git a/odb/transaction.h b/odb/transaction.h
+> > index d52f0533ce..36032a5365 100644
+> > --- a/odb/transaction.h
+> > +++ b/odb/transaction.h
+> > @@ -1,6 +1,8 @@
+> >  #ifndef ODB_TRANSACTION_H
+> >  #define ODB_TRANSACTION_H
+> >  
+> > +#include "git-compat-util.h"
+> 
+> We typically don't include "git-compat-util.h" in header files.
 
-Surely, but that is outside the scope of this patch.
+Will remove. Thanks
 
-Thanks.
+> > @@ -36,11 +38,21 @@ struct odb_transaction {
+> >  };
+> >  
+> >  /*
+> > - * Starts an ODB transaction. Subsequent objects are written to the transaction
+> > - * and not committed until odb_transaction_commit() is invoked on the
+> > - * transaction. If the ODB already has a pending transaction, NULL is returned.
+> > + * Starts an ODB transaction and returns it via `out`. Subsequent objects are
+> > + * written to the transaction and not committed until odb_transaction_commit()
+> > + * is invoked on the transaction. Returns 0 on success and a negative value on
+> > + * error. Note that it is considered an error to start a new transaction if the
+> > + * ODB already has an inflight transaction pending.
+> >   */
+> > -struct odb_transaction *odb_transaction_begin(struct object_database *odb);
+> > +int odb_transaction_begin(struct object_database *odb,
+> > +			  struct odb_transaction **out);
+> > +
+> > +static inline void odb_transaction_begin_or_die(struct object_database *odb,
+> > +						struct odb_transaction **out)
+> > +{
+> > +	if (odb_transaction_begin(odb, out))
+> > +		die(_("failed to start ODB transaction"));
+> > +}
+> 
+> We could make it a bit simpler to use this function by continuing to
+> return the transaction directly. But on the other hand this results in a
+> more consistent interface.
+
+Ya, I was a bit back and forth about this myself. I ultimately landed on
+keeping a more consistent interface though. Happy to change if others
+feel differently though.
+
+-Justin
