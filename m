@@ -1,39 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9AA361662
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CDA315D40
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783482788; cv=none; b=IGdzSbePsXLwMSlLF3UhZFfeIpJ9rVC1BBxya5CagsKKWlHgm/uvJCvabmsRld/z1L+jM7xCn32rTNNOkZKQx/NYhqUT4S3H5YbUXVMugkEQRgvnIUfl/zqOsdpG7riUZiPfPtNR72XdBvM+qWbQYv53CvELx54OwFWTbuG8c/o=
+	t=1783482882; cv=none; b=IElyFQidfcfhGXh8RFyyVmojtgO09rs6rqMXpUN9D0YhJ8hhZZJqfPuz+KwOU1D3QZQvET5o858AvTSee+gu1UzzpOvoj3Jfb26owRkFAUEJ+Xj/pHL9owwOCOS9FtgkaSYL2eXTUc5Jk/KH4e9N5o+1vccvH6vepVuh6KPeZ/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783482788; c=relaxed/simple;
-	bh=SXM68dSUJG0eug5ECvM+ccJjjZQrgTZ7SfbNkj0OuMI=;
+	s=arc-20240116; t=1783482882; c=relaxed/simple;
+	bh=Fbi268XpCKCDAfOZFb6wWb5w281HdMgEAZzdmATdZVE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L65gqpycTyimwbOMRqqEWA1znuhL4PlEZRo+Xe03FN2xf3DK7H1RGxFmdwBorvBDUyJaUBnIAd+OPezugveNJPRssqjEcxGCZ4HLMe0/uHSAeTOB4IHzg8gm98T7FtR2FNSAKGGHnz7NzfSr/5ajgilye8Y7kpTo8u7JejGWLwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=K8uv1d3J; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=BEbB7FRyA5H0V5V15rBR75LQVODRa0Tav/sf4iZcekAnqgRGlfiSAB1NVLDhgAY+UT5dk/owdx2zSihN1q+Yp2LLY3r0SzUC0osb0uZWI4zxaTvHM8rquaLw8lwyb31bjHiHmFXeGdzCcfoBkSRlyOx1CUivatxuz4b4EZW8i+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=M8wCDMLl; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="K8uv1d3J"
-Received: (qmail 25478 invoked by uid 106); 8 Jul 2026 03:53:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SXM68dSUJG0eug5ECvM+ccJjjZQrgTZ7SfbNkj0OuMI=; b=K8uv1d3J4O4HhrYGfryY6oF3Ao8KHNPWQjFIBX1wcizy87fyh4M3BzifGlMWbVGXdvUciW5NBYaWQhPfpXoI5w0KqE4BUTLfrUln6yG1ABPqQmJMTCATBA7fGzg03niJeQ+V0kxIx/PC4N10iCFJ3Ugx/tsts4cH4MlOSAonld7LIRz8UG5OOZUfFSi/oFRkONUFjEdaEX7DFPI3pNN9ocubaK8RDsi7x0tCE12l41d6GaAQUKl6RM6ySu4CX7zuNe0kZpYsAyCd45a8FcScfTih2bSnJC5dULwBMe4J1umIj7CB9rA6+DslSXwbg1jEY87Kd24yRZDfo4CyN2Htng==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="M8wCDMLl"
+Received: (qmail 25506 invoked by uid 106); 8 Jul 2026 03:54:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Fbi268XpCKCDAfOZFb6wWb5w281HdMgEAZzdmATdZVE=; b=M8wCDMLlMUACQy6TTDT5XXbGoclJXW6sH6A6FRPbT7RXHoQLWdskobx94wKtkkzwt0NZwrwOAwS3CnntWx0u7zQInf2n6pKYD1prCgY+sbiZAfi8y8Gvweh0DHBKLA0JiOhwuvG2ZfY53cVvqeI6NzMRx/a52OXYJlg/jBbzVnlWBTzVh/nfEUODYmkNm0J+UD6OzavWjcJGpc+4XPGDLJNE1bz2RM9BTMN9XhLbqNchJuJzWZbBNS267GjMA6BtJc5bzhN35jrQfQdHcobNlvEZecK2ovm2Vvvj+kDuMSgSqwvLzLtPNznqhhS6Cv/qiZ/+5Uh9ihOz9QW0GtERDQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2026 03:53:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2026 03:54:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 41025 invoked by uid 111); 8 Jul 2026 03:53:05 -0000
+Received: (qmail 41054 invoked by uid 111); 8 Jul 2026 03:54:39 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 23:53:05 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2026 23:54:39 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 7 Jul 2026 23:53:05 -0400
+Date: Tue, 7 Jul 2026 23:54:39 -0400
 From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 7/7] hash: check ctx->active flag in all wrapper functions
-Message-ID: <20260708035305.GG41620@coredump.intra.peff.net>
-References: <20260708035235.GA41491@coredump.intra.peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/7] hash: use git_hash_init() consistently
+Message-ID: <20260708035439.GA41684@coredump.intra.peff.net>
+References: <20260707045556.GA1288172@coredump.intra.peff.net>
+ <20260707050141.GA1288294@coredump.intra.peff.net>
+ <ak1u25b2pmRAQIxD@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,79 +42,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260708035235.GA41491@coredump.intra.peff.net>
+In-Reply-To: <ak1u25b2pmRAQIxD@fruit.crustytoothpaste.net>
 
-It only makes sense to call git_hash_update(), etc, on a hash context
-that has been initialized but not yet finalized or discarded. This is an
-unlikely error to make, but it's easy for us to catch it and complain.
+On Tue, Jul 07, 2026 at 09:25:48PM +0000, brian m. carlson wrote:
 
-It's especially important because it would quietly "work" for many hash
-backends (like sha1dc, which is just manipulating some bytes) but would
-cause undefined behavior with others (like OpenSSL, which puts the
-context onto the heap). Checking the flag lets us catch problems
-consistently on every build.
+> On 2026-07-07 at 05:01:41, Jeff King wrote:
+> > We'd like to add more logic to git_hash_init(), but many callers skip it
+> > and call algop->init_fn() directly. Let's make sure we're consistently
+> > using the wrapper by adding a coccinelle rule.
+> > 
+> > Besides the coccinelle file itself, this is a purely mechanical
+> > conversion based on the patch it generates. There should be no bare
+> > init_fn() calls left (except for the one in the wrapper).
+> 
+> For context, the reason `git_hash_init` exists is that our Rust code
+> needs to initialize a hash context but it treats `const struct
+> git_hash_algo *` as `const void *` and doesn't have any access to the
+> contents of the structure.  We could fix this with `cbindgen` and
+> `bindgen`, but haven't done so yet.
+> 
+> So that's why everybody has been using `init_fn` instead of
+> `git_hash_init`.  Anyway, I have no objections to making this the
+> standard interface going forward.
 
-Note that we can't do the same for git_hash_init(). Even though it would
-cause a leak to call it twice (without an intervening final/discard),
-the point of the function is that the contents of the struct are
-undefined before the call. But calling it twice is an even less likely
-error to make, so not covering it is OK.
+Thanks, I remember there being some actual reason but couldn't recall
+exactly what it was. The use of bare algo->update_fn(), etc, in two
+spots was what really puzzled me. It's not wrong, but just harder to
+write than the usual way. ;)
 
-We leave git_hash_discard() alone, as its idempotent behavior is
-convenient for callers. We _could_ try to do something similar for
-git_hash_final(), allowing:
-
-  git_hash_final(result, &ctx);
-  git_hash_final(other_result, &ctx);
-
-but it does not make much sense. After the first final() call we have
-thrown away the state, so we cannot produce the same output. We could
-come up with some sensible output (the null hash, or the empty hash),
-but double-calls like this are more likely a bug, so our best bet is to
-complain loudly (whereas the current code produces either nonsense
-output or undefined behavior, depending on the backend).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- hash.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/hash.c b/hash.c
-index b1296f0018..82f7e24404 100644
---- a/hash.c
-+++ b/hash.c
-@@ -290,22 +290,32 @@ void git_hash_init(struct git_hash_ctx *ctx, const struct git_hash_algo *algop)
- 
- void git_hash_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
- {
-+	if (!src->active)
-+		BUG("attempt to copy from an inactive hash context");
-+	if (!dst->active)
-+		BUG("attempt to copy to an inactive hash context");
- 	src->algop->clone_fn(dst, src);
- }
- 
- void git_hash_update(struct git_hash_ctx *ctx, const void *in, size_t len)
- {
-+	if (!ctx->active)
-+		BUG("attempt to update an inactive hash context");
- 	ctx->algop->update_fn(ctx, in, len);
- }
- 
- void git_hash_final(unsigned char *hash, struct git_hash_ctx *ctx)
- {
-+	if (!ctx->active)
-+		BUG("attempt to finalize an inactive hash context");
- 	ctx->algop->final_fn(hash, ctx);
- 	ctx->active = false;
- }
- 
- void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
- {
-+	if (!ctx->active)
-+		BUG("attempt to finalize an inactive hash context");
- 	ctx->algop->final_oid_fn(oid, ctx);
- 	ctx->active = false;
- }
--- 
-2.55.0.459.g1b256877c9
+-Peff
