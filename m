@@ -1,133 +1,132 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C172E7631
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 17:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFC1242D9D
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 17:24:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783530592; cv=none; b=cvt8+gLCmQdMYaseLOgFKy6XQmLo9tCwT98iASvjN4aMh5Knr98bFCY1iuLV4tIPjrH52Qc5/s+awr+XqxntzsBo6H1LNC/3x8MXL9iRNzk0uBO0oRwppkeFp5tnYIU58uZsKc1W2iqepsHEmQ6sP1Lv2+vFCBt8e4T21EKwg/4=
+	t=1783531452; cv=none; b=jh2tjExSLYOLOgYnQK9J5gjyI/AWm97KZJtPP1w/x5yo27cIPZVj1E2AUdOK4c0mlP9GyXN2/ojnkwMD4ZqiDLpvA7y7uZNaio2cpPOKxLdmKUi2QyzqJZtrU9yrYHRDuHu4jahvIIgZNhAdmH6dsa3FtLn/930UhdfjsP/BWcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783530592; c=relaxed/simple;
-	bh=44UV+/XXoAhUTTnunbjX9/E74yG2elszc4YwKL/FEFw=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QTy/bFxRVt0pQsErYy6qabgvvzsSZbjzm3Q744uyeTcdBntaQtYWSHO/ritWBkPHFrba4Y5ZVepMhJssV09MsCFVWel7OYNVXo8rPcJXtMSEB7E/O7s2C21azsJfZxENynwenj3jGMbVWe6JLL/Ic/hFlyzuvmUL6UolEafY6Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hvWrchM9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hjPIxNyE; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783531452; c=relaxed/simple;
+	bh=vAq/zhm7z4q0sxTih+Npmnb2n10v4J71bcCYjMKPK7w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h4mBRiF2egntAKdW7DolvDvrAxBPWvldBvoDdwG/b69Rju5oYXieITYVjkG2bVBuWOa2ktKvZ2bMPeAF3c5LSPqL2v1hUXMW2SKHZlLuTY2wwzyaVJnqa4Fj20MCSJ7Gr5VhjyJT2tPKo3q+TBvczoYOkCbxAV/3tLRlwT+wnyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SZO6cxmI; arc=none smtp.client-ip=209.85.160.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hvWrchM9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hjPIxNyE"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id CED32EC010E;
-	Wed,  8 Jul 2026 13:09:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 08 Jul 2026 13:09:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783530590; x=1783616990; bh=42geA5sdkn
-	/dY46kaARjcTHi9qIoucFE3l2d7gHcjmQ=; b=hvWrchM99tUe/wFwu+8Ch0pNBq
-	ymx9y12skyctWqkl9fJUXO3ars0kfx83T6F9o1qFayuQaXpw48x4EBc5ifK2kBBV
-	D8oQcTqCqZ4gFTari1yyw6k9qKlrSYQ34dCpp2gQqfU6DneF9x42xPLwBElNdrCv
-	LZQv6wpbrpI27ClggKgm8A8azbddv4K7Y1kdeKt2AIFafetMdZhmfMKpFnHho2xF
-	iiE1T2ArAObWHcuHgLlqb7ba/2hlygQnNuagJ0Or/yfz+FIgAN/8CQTGxPoWT+8Z
-	ugAJ9EA5xI+q0jaPvB5SAz6ea7xwhFv/IpyXy4EgI/a7YEEsH4mnMpBg7ByQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783530590; x=1783616990; bh=42geA5sdkn/dY46kaARjcTHi9qIoucFE3l2
-	d7gHcjmQ=; b=hjPIxNyEqtcy43qRsfz1QrHP98QIq6Vo8Dw/6934jHBKsIiOxEQ
-	zRs0nw6MtzsbIJ/inpB1+4/nwwghmpt3Ia8A6A27q8fQ2S6+JffMYPhrshLAqwzh
-	jyEs8CmicTGxggF2Sr1jS1BTDjSpDF64e9a614QPB7fsyPmkr4GCtDNIwlWaAKiT
-	jr29cXTxWrhwrRBXVpDYZ3EGkxDBMzAh6luzviqvVRi8Ep5NajgNX0NZCwSeACwO
-	qlKb4lKO5Br1+VfL7GwbJncHggjELN+7lH6JIFW8MYNuFr5snfp8hvD7/5EGg2TM
-	nwqiaGuX00BEB56P13adTBIH2swgdYMr2Bw==
-X-ME-Sender: <xms:XoROapgu54TMXzAJOZHipyztcgTV2vc9UcnlXxuynPRvChcl7_l2TA>
-    <xme:XoROakAG_-a0QEGfpZhI4dsxIdA4le6BWxXt0xSOqdNGW89s0nn1-0zLKQYsEx-dA
-    hQmeXBLf_zNXK5tRfEWqtbAbLfeK8YhfaWAQAw-RWcnnlTCuHscGQ>
-X-ME-Received: <xmr:XoROamsffPHg4oE_JtQMK6AUexBZSc5v0q4kiVtGGpgxI8EI5LsQERXBNGakNwdHzd8U3MQuVZqyD6osbQcTdBk-Y25Oww0D9QnIhZs>
-X-ME-Proxy-Cause: dmFkZTGa9BPxQDyyDDSNa+K9zu4Q5wU1tUYhC7c61d3qV3nuMwBnLlUK+Wo8o/iXxnRN47
-    hPcTAasMOuMC3ap3ydWqEtxY0Wk4gBnEA2QU6Yr0+3GME1wcSODIdQwLkY0fqXYIdDdEhL
-    imtfhfuZlxg1auyztsrXvPsH7KTtHFy/lOM0ZPFoqdH1aIV64VOKP+o/Pox7c81urRKVfq
-    hS7Ga2xKcLGIqmJ8SOuOCtJHSlo/4hb2tWBigBnVDARMYZ6A/nqS4wjkEy/ba4eK0eHqtp
-    m55Ss/oQe2TlZ/ZftH+ESWGLQQuk7QnufItGSum2NqsETkMjMsNG07ovO8n76bPZatUIn5
-    9N8DnnhGg2wHnIYdW427GfvPjbxI+0l47TjrAqeTMHq70+f0SUu419RCpaSJNCaiQ1UgER
-    9vc4HoTo1T5GLRh9jQ4nwaQgT4gPzs35lUMJ0/q5QeCYhGKUJojYLqEsGBuMGqwcI/iQ74
-    FBich306dm22QgdXFqD/3+hRwgGvCAwd6OWRcAfQWStiq6Wny+2mJITjIRH6UP91BXKD1J
-    W8BeBNe+SWK6MJ6623ZeDlHz+dYMSGuyBJ3H4ofJEKTaMf/PoUzWaWEz6Be1CfRmwOvxXs
-    qe+8bSw7MUgmzd7aKlUn5zjkGl1Bx3hLeZVX7xj5zy+AEkYuJYvaK2Ndg3PA
-X-ME-Proxy: <xmx:XoROapbLkT4dVzHWhDSed2qt6QWOL3vp1FtsvGKNkSkh-k8KwbPyLg>
-    <xmx:XoROapXwCk0dXomBMmMMK41fuDvxU0l4qWRz5_9uFly1S5bPBQS0rg>
-    <xmx:XoROat44wj6VlqWCZKHtApR712oZTj_aN2T8eiZXIp_TLeZLQLfN_w>
-    <xmx:XoROakhdBgTmrDpF03K54Lp9nAC9Ag65VraBbhCx25Z8y2CDpyCS4A>
-    <xmx:XoROas5oL8E3TPA70-HHZkAf-dxcUx8bcci8ei8Af8eqSgHCTsUJKmpy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 13:09:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v2] SubmittingPatches: document how to retract a topic
-In-Reply-To: <xmqqzf02xonc.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	07 Jul 2026 18:20:55 -0700")
-References: <xmqqzf02xonc.fsf@gitster.g>
-Date: Wed, 08 Jul 2026 10:09:49 -0700
-Message-ID: <xmqqpl0xv25e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZO6cxmI"
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-44cf70de986so380241fac.0
+        for <git@vger.kernel.org>; Wed, 08 Jul 2026 10:24:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783531451; x=1784136251; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=eytUUEiyvGOtYx3Itkol4Sw3mDbFBJatXI38N6a/l78=;
+        b=SZO6cxmI5E6yaFg/nsutj0Dcfb/kEPgSc+3A08c0Rj42PPIV9kWmmVe1UpyBi3wB2o
+         v18E0ucsb7HDW+qrDy5yOqfo9F1iifOB4D5gpnLy42Fm3PeL8tYBunJjD7sK8qMxik0z
+         hn8kSpTsEMLq17Ui0lcRZNyEJW8yg4+u0s7eZRgz6Y8hd9l0rBtnqmlbDYyz6qaIdybe
+         N0hA/FNYXm+bAx5hCrBpmRMfSNPXM2aNCpRVpvnYDuGSFbg5aY8CaoyyY0t8BT7fM5IL
+         UkEoh69LHLFnXYYZyDGV5z7fnvL57P5tgueeNaHPrY8hSa/ASe0ZIkS9Ox+KAe0qDxdG
+         9+Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783531451; x=1784136251;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=eytUUEiyvGOtYx3Itkol4Sw3mDbFBJatXI38N6a/l78=;
+        b=B4r0cv1P9KekPmu4yk4dJuuv4qundM/OFbz+NmcrfTLfh+fa8V4UJbC8CJdL73Oi4+
+         qR0BDpbBgh9CDMV1ArkdSGP1EoJT81MGw/3Z4YYg4tZJcITRRL4+5Aoz+hff6sehWBZP
+         3yZj7hJxtt1kex7j/kCFFD+sNQ8HkkbuD/BS4TbVgHD1lfOoLCewfrHf0jd5q3NDKTTB
+         tTqN/nlc36oQ7tVpIMof0lnDnxfmUu7TUAnKgIfR49FJWw4V+GJujMPI08YDZeqdTnIq
+         Yfx4Hs183cyyY/8EaNCpp/FEvYd5btf40hKgocBgfBsXL5tHOVKRUV5O3ZUxiD1FWp5g
+         Mw3g==
+X-Gm-Message-State: AOJu0YyAVWuVlP197751XCuL6bIt4JX7+khG/ES9VbpqFXUg8oaz5mOZ
+	m98Dm7xWhVAt+x9juLvzRF9/NM0lR+vUjdMAxSsyH1AiK9w3VIwgynPy1/jTMg==
+X-Gm-Gg: AfdE7ckxZNEtLPjb4Xm01v0iOdP3AcACJcrl1MivmW8NI8Fc3ebglqyoqAQPQPTBkH8
+	0b2sCyQxVXdT2r/7avDVkc6MYBL26FAOGoKeGe7xPlr3CYfTx3biV6AGFVAFZOIcA13Lmj2wkSr
+	BchY4Xj09OCsZaUu0je5lBj1rZyB41yHjBFkxxcBt0XYlHMLv/iKTffFAPFOkPGHsOY/ES9DUEE
+	3BDarAPhJYJM1nFL33erWOuN52ByhVCZBXUoQBN2RnmRVV+nP8u4L+chqL6GPLUi9AgVHe6Hqnf
+	PWSyruj8ego54CAnwV4iL1VY/jGMT5sDgwSgRl/dGEfp+a0PTT+Qq16M0xOqHhQny6uyTh0zRak
+	KF2EaZtaQtn0PZDevIbiAq4MU9NGxl4/e5OXWOQ7SyGkAAsey6SUZxkQ9OBknLudhpBRqdnP+9x
+	nN8rst2w==
+X-Received: by 2002:a05:6870:2150:b0:449:bccf:bb6e with SMTP id 586e51a60fabf-451637bc19bmr2189139fac.7.1783531450518;
+        Wed, 08 Jul 2026 10:24:10 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44cfb13d624sm17201625fac.1.2026.07.08.10.24.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2026 10:24:09 -0700 (PDT)
+Date: Wed, 8 Jul 2026 12:24:04 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 07/11] odb/transaction: propagate commit errors
+Message-ID: <ak6FHKdfPyi4_DLX@denethor>
+References: <20260624041920.2601961-1-jltobler@gmail.com>
+ <20260708041412.1157499-1-jltobler@gmail.com>
+ <20260708041412.1157499-8-jltobler@gmail.com>
+ <ak3xKlQTPP5OXYRn@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ak3xKlQTPP5OXYRn@pks.im>
 
-While this document outlines an idealized lifecycle where an author
-develops a patch, refines it with reviewer feedback, and
-successfully merges it into Git, reality is rarely so seamless.
+On 26/07/08 08:41AM, Patrick Steinhardt wrote:
+> On Tue, Jul 07, 2026 at 11:14:08PM -0500, Justin Tobler wrote:
+> > diff --git a/odb/transaction.c b/odb/transaction.c
+> > index df4275151b..51af2c9a61 100644
+> > --- a/odb/transaction.c
+> > +++ b/odb/transaction.c
+> > @@ -16,19 +16,26 @@ int odb_transaction_begin(struct object_database *odb,
+> >  	return ret;
+> >  }
+> >  
+> > -void odb_transaction_commit(struct odb_transaction *transaction)
+> > +int odb_transaction_commit(struct odb_transaction *transaction)
+> >  {
+> > +	int ret;
+> > +
+> >  	if (!transaction)
+> > -		return;
+> > +		return 0;
+> >  
+> >  	/*
+> >  	 * Ensure the transaction ending matches the pending transaction.
+> >  	 */
+> >  	ASSERT(transaction == transaction->source->odb->transaction);
+> >  
+> > -	transaction->commit(transaction);
+> > +	ret = transaction->commit(transaction);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> >  	transaction->source->odb->transaction = NULL;
+> >  	free(transaction);
+> > +
+> > +	return 0;
+> >  }
+> 
+> Doesn't this cause a leak now?
 
-Sometimes, a topic must be abandoned. Doing so explicitly is far
-better than leaving it in limbo, especially since topics can always
-be resurrected later.
+Good call. Ya, if odb_transaction_commit() fails, we don't free the
+transaction. In the next version I'll go ahead and clear the transaction
+if we fail.
 
-Clearly state that we encourage contributors to retract any topic
-that does not pan out.
+> I think this interface here is doing the same mistake that our reference
+> transactions did, where we automatically released the transaction on
+> commit. That caused multiple lifetime issues with references all over
+> the place.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Ya, it probaby makes sense to introduce a separate
+`odb_transaction_release()` function to make this explicit and update
+callers accordingly. I have another series I working on that introduces
+`odb_transaction_abort()`. This might be a good place to add it in too.
 
- * Added the third bullet that talks about when and how a topic
-   becomes stalled and discarded.
-
- Documentation/SubmittingPatches | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index d2d82eb543..c269e474e3 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -123,6 +123,20 @@ of review.
-   top, it gets merged to the 'master' branch and waits to become part
-   of the next major release.
- 
-+But sometimes things do not work as planned:
-+
-+. If a mailing list discussion convinces you that your changes aren't
-+  ideal, please explicitly retract the topic to save the maintainer
-+  time and effort.
-+
-+. If you must drop a topic due to shifting priorities, lack of time,
-+  or other commitments, notify the list as a courtesy so others can
-+  take over. Anyone can resurrect the topic later when they have the
-+  capacity to do so.
-+
-+. Topics with unaddressed review comments that remain inactive for
-+  four weeks may be discarded by the maintainer.
-+
- In the following sections, many techniques and conventions are listed
- to help your patches get reviewed effectively in such a life cycle.
- 
--- 
-2.55.0-302-gdbd766b094
-
+-Justin
