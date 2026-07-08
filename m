@@ -1,70 +1,71 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083DD369D53
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D821F1932
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 03:21:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783480886; cv=none; b=PPzuTKHFoSftqEGr8/JnRCED7UMrYu9ZWfYOxKNcHJU/TvpqnOmWcAMYE1cAV3UrZ2dMiqJeIi8vsUO4UztkCdiw8GGk1xzycGT+Ocg3cYzaKERvcGJw10+rtcV3w92rRy11Pqphifk4wS/G/52m8+zuSX9Wfiz2MEAUt2sdz/4=
+	t=1783480888; cv=none; b=egF8pqoS+y73YcOq1GFWZefv7Cu07yJWHlKfShFO2MG8+yuNtRNWTwkOMqF0e0OjV7Nsekw2vErf62r6lN6VjNAqO9xwoR51PICXHJEEmk2AixL96BjMh5qkLX973d0+aPWIgGCDxX2Eru9AvLVkWTMsqmqT93L/J7wEN0PA1Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783480886; c=relaxed/simple;
-	bh=cuU8RC3W9Lk/hrx95nyzvsyc0i49Cy+2TnOdhozT9+g=;
+	s=arc-20240116; t=1783480888; c=relaxed/simple;
+	bh=HmsWv69cPQkPOBSnTaFWILphnsDWaw3WgOKjDS9RtwQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=oReco5EBBhdny9PzIn72SJt1AZpWcrKva8hzaDOxSx0uMSqXCdipwKf+/rUBddJ1DmFdxp7/Nftl5M13te1ZXOIPeSdEXuWsquFlBTO8J4h3ghkClGJPoubJ8ZQQwL0cqSZNFkgTX1bTIB7jYSJgQW3cmWjKzSKtKYBxB2mD7PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XopoCUyk; arc=none smtp.client-ip=209.85.160.169
+	 MIME-Version:To:Cc; b=skvbmoAcO4seUwPCp9iKEAcEdYnGIaG1ZxSLpshxO3N+q/XT+gbCUiJPRlu5YiKl0lRJfRgWBDdC0uFYLy9fyw26tLk0g68wObHSVHkYelVYc+d3eQk/vTNySShoy8sX51sCU5ayMCzVuCo9YzammEtAdgj0ziteF+FP23sTdvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UvZKYPv6; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XopoCUyk"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-51c2808dbc3so808461cf.1
-        for <git@vger.kernel.org>; Tue, 07 Jul 2026 20:21:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UvZKYPv6"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8f0e5e36912so1464366d6.2
+        for <git@vger.kernel.org>; Tue, 07 Jul 2026 20:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783480884; x=1784085684; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sUTcY/V2NbDHBGxFvmbXYYnLSIhm4RzPzbJApRVr2GU=;
-        b=XopoCUykYsPxo1J2IxRRp73ysJ0rC3BAjvzC2tbFjnp0UatnS6mIjLC3LTLRCvYJRa
-         YOADoPpQXbWjON2w/1tWPL75yArk5VWDVDWpqthfe0EFHTcrccb1D65ohKhaOK2RdfkW
-         Yn36wwLsxzDFuyZS/pmmJ5KcAWsjHMrS4XKsBOynL9/0dp560vVXHihfJEy8UbQpiFk6
-         rXjYqB0G+e0edFZKEADX9ZdN9nVI6EvR+JdeGDKSd8+QR+5V1H8LkXcfX2LCQmkYDxxa
-         kjHAoB/n4d31jOd6tvRIP+5k7z5F1XQdj4aPnsY/JwfYFr0rJGpDlegSrTS9cahOdp1z
-         16ZA==
+        d=gmail.com; s=20251104; t=1783480886; x=1784085686; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=h13bqto2Pab1aZKKptXYvGM0StAyaNXcTJzQ/1Qogpw=;
+        b=UvZKYPv6PhZUU1QQFdrW+/fgNRUt/FwtukScRribC3qLMPZJt1TtBgGYTv5Kgh21Oq
+         6fGNqdJbn3UpKfnHDo7ZndCx/DdrakVwTIAnpFRyHPLMlyoWYrP/6wboBY3Y9F9s0Fo/
+         AjHzvhsZ95loJ9WktwjQbDX8CDOu7wgoW1FEzqVUbHWG9w4lJX0xrP6jlCg2AM8HbPkG
+         tJQdIDmxXEC2JIzmZYMpPKdjgjIwWQWE4QuMSvsJ5u3up/jXPGO0sOSPVprsXf/oZqxt
+         QVW4Y09oPnFdannRpySjXykJFrty+zDr10Pv7CeZWuKjc/IC+FDj0NDT4e0M3id3Qqof
+         K2xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783480884; x=1784085684;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=sUTcY/V2NbDHBGxFvmbXYYnLSIhm4RzPzbJApRVr2GU=;
-        b=iIx8Wz4XR+OXX/BJBWC0dD7/EDNUQn3KQEDVAbgk1UK+A1mxVesog6CVjElk0XM9rm
-         KfoT5fwiIibpo0MGl3GMgRH/isfpo0kv7IdF2B9/B3DGL9Rzu8/QxKY31OMxCttrCR3G
-         IcYPLb4IKPGZGujlUqOUS/ZeV5cCwyU25mP3jP+7gNM9nCINhv4fCXzcJHNfgJxJ+8Ra
-         XQPp4ecj2dswIuJzXd77iH300YeWS6Z6+c0pXC74tGzR2pu574Zfb/Ops7UkvSbcz892
-         mOBvHY1BLpQkAWU8B8Usnex9qiI2xoFO2oHXRCk3NPyd6CoHeQ35rhH9h1vT4PN19x46
-         Q6mA==
-X-Gm-Message-State: AOJu0Yx/57zA9UvByhJq0ksGC+N8ssyfMj6Derme2fgevrE7mMtGaULQ
-	7wZPF0/d07yNpY0GgwDgQMWRmaREoBQ8HC0taQokHtVMdEuiYyOVy9a5DrqmM7f+
-X-Gm-Gg: AfdE7cnqX0hC7IdA+35/Zb0rCIImqDPCTeZoCj72bNzYZThiaE8CztL1CwBT+qT4zUG
-	bOvuYw5SHH8OPY4BGBPDrLoAXsNnPOD4zPHEuuYMK4eZxsmnbqxhqDQjbc0cagBoGzBKGVLiIj+
-	rM0OkjdqjobkLURUtPQrsaeH/93eER5wN+gLgJDbRQ4omGxKKi7bIz/bEsQC770uNmtoM5SmoMW
-	D4fCTV5AEpZuwz9L0+xf3mi1Nhja1aGfDwliWBaslTcnJeH5USQR+H4ehOrVU0D03othaq7/hz8
-	3fb4WYTdxsxL1lAYo7GLaqzJKJ1WNhLm8r6JQtP09j2/9pX4WlQum9PcbDfXj3D92g3hVqtSv70
-	wg7VyEglqDe+yoPU6tlFOV7UBHrQvRIAC4z5m6Q3shLi67S0BJeCUTmAtsfHQOYqnPE3HqVnufg
-	l5XgE4pyWDVkGX9Jc7TA==
-X-Received: by 2002:a05:622a:181a:b0:51c:1a17:eba0 with SMTP id d75a77b69052e-51c8b2aded6mr10040891cf.2.1783480883963;
-        Tue, 07 Jul 2026 20:21:23 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783480886; x=1784085686;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=h13bqto2Pab1aZKKptXYvGM0StAyaNXcTJzQ/1Qogpw=;
+        b=MviqQNmyM5hKloqTC/yIpyGzfipjl9yeE7S0gMI3UKGfDJExo4dYJnv7Vsa6SGBOVL
+         5/USPuSG9B48AuBNaK/nmHXMDEwmG7l6WfeZx4oDesVyvlqigslZRN96v+exAmLYf28p
+         ObbxnI6lZIYLkuDyfIP0+GqkQ6ERXD1Ga5U3wP1W+77WhTQUhr+ipnZl1sXBe2hYfVop
+         jZyHbEnXKAlSOWm6XhusZzdgMFuO6LVZZIGCA+Wkxd/co67CpKA2PLUlIEQVcvSStkpy
+         MvbMnovIuzt3VEyVqpwSdejC43ecWYMp9qyp7fesQQalvirn+wDYAMhBob5XaYccFyOO
+         elsQ==
+X-Gm-Message-State: AOJu0YyzN8VeAKGrIRarh8me5+VgtVhB48TwJvz9NZFr31Ld8sr0jC84
+	KHcSNlhwqo81RJSir0XUWF1mY6nvYv2VkSRjMdjWoptfv7KbKMcxvsTVOdmTH8cr
+X-Gm-Gg: AfdE7clXcjYaIQmo8VZ1ibOA7wbGEpqCJHwScSLqU+2iebHqgUsCntRm9uD96ybgcPN
+	PJtyNRwQdGWK+hFKVDeQuC+TKv1vWWfT/fDaNfJmCa5gsu90RvFIEdQvYWlBeimy0OmGmZWJSSh
+	JapZ5WFoITrrLQRoMagUj3IHlHjWZrQv2BsTy0zANAFUYxadQu++3Xpw0HKNECk8/uUNVO3FPYQ
+	4eEnz+R2Yk0rzg4CzPfk9PDvlaqU84G44bLitAUKvKTPZ/R1k25Xp8z9l9yCZ8mDQzOBXirc3CS
+	rVof1mRYZwJN2vSV9jJiGIyvuJAe4TRfMxvoe87h6srIUHN9SyOWF9kFC0DJGkRVGtaeZ0VW7HQ
+	Lkis+m4CJf7lwjGcmRFjxIOJmRI25/ba5pQ1jxanlMSiZw1H6Y0yRh+72vUWmzyaK/zuon19vd/
+	ISNlAb3+8Dcnq5AHJyig==
+X-Received: by 2002:a05:6214:449b:b0:8fd:6e12:970d with SMTP id 6a1803df08f44-8fec47de45amr3668376d6.59.1783480884992;
+        Tue, 07 Jul 2026 20:21:24 -0700 (PDT)
 Received: from [127.0.0.1] ([172.174.110.128])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41e084e8sm123427581cf.28.2026.07.07.20.21.22
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f74c399a40sm114666686d6.29.2026.07.07.20.21.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 20:21:23 -0700 (PDT)
-Message-Id: <a999be6939284e4fdd9781f01fb9b9214ebc6516.1783480879.git.gitgitgadget@gmail.com>
+        Tue, 07 Jul 2026 20:21:24 -0700 (PDT)
+Message-Id: <5659709ab4193ee4a63ea7f51cb7eb1b31fff5e0.1783480879.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2288.v8.git.git.1783480879.gitgitgadget@gmail.com>
 References: <pull.2288.v7.git.git.1783443745.gitgitgadget@gmail.com>
 	<pull.2288.v8.git.git.1783480879.gitgitgadget@gmail.com>
 From: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 08 Jul 2026 03:21:18 +0000
-Subject: [PATCH v8 2/3] Makefile: support universal macOS builds via
- RUST_TARGETS
+Date: Wed, 08 Jul 2026 03:21:19 +0000
+Subject: [PATCH v8 3/3] contrib: wire up osxkeychain in contrib/Makefile on
+ macOS
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,114 +86,65 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Shardul Natu <snatu@google.com>
 
-On macOS, Universal Binaries contain native executable code for
-multiple architectures (such as Intel x86_64 and Apple Silicon arm64)
-bundled into a single file. This is standard practice for macOS
-distribution and CI packaging (such as internal distribution packages
-or tooling like Burrito/Homebrew), allowing a single build artifact
-to run natively across all Macs without Rosetta emulation or
-maintaining separate packages.
+When running "make test" with TEST_CONTRIB_TOO=yes (which is default in
+macOS CI workflows), $(MAKE) -C contrib/ test is invoked. However,
+contrib/Makefile only invoked tests for diff-highlight and subtree,
+meaning git-credential-osxkeychain was never built or verified during
+standard CI test runs.
 
-When building Git C code for multiple architectures on macOS, the
-Apple toolchain (clang) natively supports universal builds via
-CFLAGS/LDFLAGS. When "-arch x86_64 -arch arm64" is passed, clang
-automatically compiles and links universal binaries for all C object
-files and executables out of the box.
+Add a "test" target to contrib/credential/osxkeychain/Makefile that
+depends on building git-credential-osxkeychain. Additionally, wire up
+credential/osxkeychain in contrib/Makefile under "all", "test", and
+"clean" whenever running on macOS (Darwin).
 
-Cargo and rustc, however, do not support multiple "-arch" flags or
-emitting universal binaries in a single invocation. Instead, Cargo
-requires invoking each target triple independently (e.g., passing
-"--target x86_64-apple-darwin" and "--target aarch64-apple-darwin").
-
-To bridge this gap when Rust is enabled:
-  1. Allow specifying space-separated target triples in RUST_TARGETS.
-  2. Introduce declarative pattern rules (target/%/...) to compile
-     each target-specific library slice via Cargo.
-  3. On macOS, if multiple targets are specified, use "lipo" (part of
-     the mandatory Xcode Command Line Tools) to combine the resulting
-     static libraries into target/release/libgitcore.a.
-
-Once $(RUST_LIB) is compiled into a universal static archive, the
-standard C linker seamlessly links it with the C object files to
-produce universal Git executables.
+This ensures that running "make test" or "make all" in contrib on macOS
+automatically builds and links git-credential-osxkeychain, preventing
+future build or symbol linking regressions from slipping through CI.
 
 Signed-off-by: Shardul Natu <snatu@google.com>
 ---
- Makefile | 39 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 35 insertions(+), 4 deletions(-)
+ contrib/Makefile                        | 12 ++++++++++++
+ contrib/credential/osxkeychain/Makefile |  4 +++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 7db38ecce9..9921af992b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -500,6 +500,14 @@ include shared.mak
- #
- # Building Rust code requires Cargo.
- #
-+# Define RUST_TARGETS if you want to cross-compile. If left unspecified, it uses
-+# the default Rust target on the system.
-+#
-+# On macOS, this supports specifying multiple targets, separated by a space.
-+# This will produce a Universal static library using `lipo`.
-+#
-+# Example: RUST_TARGETS="aarch64-apple-darwin x86_64-apple-darwin"
-+#
- # == SHA-1 and SHA-256 defines ==
- #
- # === SHA-1 backend ===
-@@ -941,16 +949,17 @@ LIB_FILE = libgit.a
- 
- ifndef NO_RUST
- ifdef DEBUG
--RUST_TARGET_DIR = target/debug
-+RUST_BUILD_CONFIG = debug
- else
--RUST_TARGET_DIR = target/release
-+RUST_BUILD_CONFIG = release
- endif
- 
- ifeq ($(uname_S),Windows)
--RUST_LIB = $(RUST_TARGET_DIR)/gitcore.lib
-+RUST_LIB_NAME = gitcore.lib
- else
--RUST_LIB = $(RUST_TARGET_DIR)/libgitcore.a
-+RUST_LIB_NAME = libgitcore.a
- endif
-+RUST_LIB = target/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
- endif
- 
- GITLIBS = common-main.o $(LIB_FILE)
-@@ -3022,8 +3031,30 @@ $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
- ifndef NO_RUST
-+ifeq ($(RUST_TARGETS),)
- $(RUST_LIB): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
- 	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
-+else
-+ifneq ($(words $(RUST_TARGETS)),1)
-+ifneq ($(uname_S),Darwin)
-+$(error Building universal Rust libraries requires macOS (lipo is not available on $(uname_S)))
-+endif
+diff --git a/contrib/Makefile b/contrib/Makefile
+index 787cd07f52..1203c7263d 100644
+--- a/contrib/Makefile
++++ b/contrib/Makefile
+@@ -1,10 +1,22 @@
++include ../config.mak.uname
++-include ../config.mak.autogen
++-include ../config.mak
++
++
++ifeq ($(uname_S),Darwin)
++OS_CONTRIB += credential/osxkeychain
 +endif
 +
-+RUST_MEMBER_LIBS = $(foreach target,$(RUST_TARGETS),target/$(target)/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME))
-+$(RUST_MEMBER_LIBS): target/%/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME): Cargo.toml $(RUST_SOURCES) $(LIB_FILE)
-+	$(QUIET_CARGO)cargo build $(CARGO_ARGS) --target $*
-+
-+$(RUST_LIB): $(RUST_MEMBER_LIBS)
-+	$(call mkdir_p_parent_template)
-+	$(QUIET_GEN)\
-+	if test $(words $(RUST_TARGETS)) -gt 1; \
-+	then \
-+		lipo -create $^ -output $@; \
-+	else \
-+		cp $< $@; \
-+	fi
-+endif
+ all::
++	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
  
- .PHONY: rust
- rust: $(RUST_LIB)
+ test::
+ 	$(MAKE) -C diff-highlight $@
+ 	$(MAKE) -C subtree $@
++	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
+ 
+ clean::
+ 	$(MAKE) -C contacts $@
+ 	$(MAKE) -C diff-highlight $@
+ 	$(MAKE) -C subtree $@
++	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
+diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
+index 219b0d7f49..d9fba07e8d 100644
+--- a/contrib/credential/osxkeychain/Makefile
++++ b/contrib/credential/osxkeychain/Makefile
+@@ -10,4 +10,6 @@ install:
+ clean:
+ 	$(MAKE) -C ../../.. clean-git-credential-osxkeychain
+ 
+-.PHONY: all git-credential-osxkeychain install clean
++test: git-credential-osxkeychain
++
++.PHONY: all git-credential-osxkeychain install clean test
 -- 
 gitgitgadget
-
