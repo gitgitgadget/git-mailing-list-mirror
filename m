@@ -1,49 +1,84 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24BA386C31
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 07:32:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452943E9C05
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 07:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783495982; cv=none; b=GD5BaMtjHBgT1nRrZ8Qpos7FEPnfZkfLUVgRWgAkZUhineR+bfc32mP6vxAYW3K7/poZCfYqNVNxcrLvYmsdoelf3sStktfMG+8ulrrFPtEe32XwKZNzRqbgmmRU/FXiciseqvnqqF8R3WpLwLJ3ghP6rySH0yq26uYzoMblEtM=
+	t=1783497332; cv=none; b=u8mk3Ize8BvjXnQ1EGNSUCkYxRcovE0joa6U6Gn1yeP4Fd3pNVajxFbMU+AqE8c3Aj09QU44pKa/Xz8ordcysDYCpYey9R/0NkuWSaDm1K6Y8qRHhQ5z/KU9cINm/rfA4kb/KLNoMERuxi4KzDSx4K3fLYZDO0u4zeJOk1lJH94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783495982; c=relaxed/simple;
-	bh=Y9ATKwJevMlPWcMhRG2w92ea6u9Dy0tSSj5gxj5z0yw=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=aDTNrMTlOeIM+6hGLiQ8Jf+DNCMhfoeyl5REi1TxcNjoXCZcAKsNMsXsazH/pNEm3QyUDvCDNkh4ynaqseX3IDlaXubXv3GQe0FFqqRc6GVGoirCOTY4UvJn4gp2N6nFt8FDL58kEHDTYvtN4kAXw3F7lQ4IPfyvGcxxJDaczMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=h2rLynZx; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1783497332; c=relaxed/simple;
+	bh=c46jIIQViKFqL5jW5plU34c66CqbW4saTIToMzNIORg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SyMMcShobRUMHUYPplZGjMyJ0DvvOdw42epJyyvaVuGdnCxq2/+cn+nJ9Gi8fM246RNh5dNgWJKLnHwQgRw0FIya0ob9f9m+FuK40vTktN02zSf68Vfk6KjmABaoSH8FbIVAfnknfJgAszrN9/TGTWit/FYd6n/SMWtiXY17fRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V3A0jGKs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iMM0JuYp; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="h2rLynZx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1783495960; x=1784100760;
-	i=johannes.schindelin@gmx.de;
-	bh=YLpuUpJAp3bZJIhXUtMzcPjIMWliDxQGUAI7vZxYBLk=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=h2rLynZxvmFPFyRHtFKQH243DY0OrMWZKzUeQy27FKG4AoEFjf9D1Gflf1MMMDpP
-	 DWso4IablcxyPM7pBwqyfseajb4gzR+wriCK+pOQgU2nPt8B12/upRhvMeRoT1kIL
-	 Uxlbad2JCd9AVBb47Z2M4IxRwp9PyNwgPdUWOw/dvgRhfMG5SEUZN5Mgwx8ggizEC
-	 AQnx0JLEANu8H0bFjRXsHdCyUsFm2FNrtJUhqDX7zuZxfCr/oq5rK/Zs3JZbHCkto
-	 ALPeqorNGjSdShgoiAglg6OkVal1DQw4L8rvYTr8jYe9YAGgv3qEtA9CwlGPMwZ+8
-	 Apd/ZwsACbAZZnmpqA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MbzyJ-1xDOGl04Qp-00gN5x; Wed, 08
- Jul 2026 09:32:40 +0200
-Date: Wed, 8 Jul 2026 09:32:41 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Junio C Hamano <gitster@pobox.com>, Joerg Thalheim <joerg@thalheim.io>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH v2] config: retry acquiring config.lock, configurable
- via core.configLockTimeout
-In-Reply-To: <agrIrGwSMFlKTx9x@pks.im>
-Message-ID: <b5c80d76-5ef4-cf1f-f4e1-78e63cfea81b@gmx.de>
-References: <409d05a5-235b-6b19-5a33-a4e613dd447c@gmx.de> <20260517132111.1014901-1-joerg@thalheim.io> <xmqqzf1xbl4i.fsf@gitster.g> <agrIrGwSMFlKTx9x@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V3A0jGKs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iMM0JuYp"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 02B8A14000FF;
+	Wed,  8 Jul 2026 03:55:22 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Wed, 08 Jul 2026 03:55:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1783497321; x=1783583721; bh=M+wEQI7Gr5
+	7g6wzLArp3a8Vm7EzTPW57uN0fH0IURfU=; b=V3A0jGKs2DzaAqVdSbX0e+ce1L
+	VIl556rlWt9QEczZwTEGk+nmo080YiodBkOG3aYt0fCR52+56pSX0QMj0TMrKBxC
+	t85IvDOOb0IuINxy6Ohau8zrTqBbxu8Cgp2nesJQfpVqZZDwuli26M3eBlbw0tux
+	7xj1l+1D/keVE8AZcuoV4vBdS19Bd4Q66slyr8fNJZMFx7rnzaQAM+FRP8HuP8yb
+	PAuK62jtdiDQQN8knZF6lFdmj2F6gxDaE7LDqUYEbRjQmXJGruM/7TIM70b2ciw+
+	454tih2DOeVUnz2bCs0u6rifZ6JIkZAw8U7mxeId/hEpVFC9Ld2Mt/uCJfCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783497321; x=1783583721; bh=M+wEQI7Gr57g6wzLArp3a8Vm7EzTPW57uN0
+	fH0IURfU=; b=iMM0JuYp6WroJfDvCXVUDt/l2Unp+2YGfJLRW29Z1IVkl1Aui5v
+	LeGk3w31oGF624i35jf7jdx9j424WOZ0wasjJcXnAEpOLKbLcbnpLHl2kqngbskA
+	FH0El+dt+C7+pg9qtxMEKWNlryRI4QA9TtDLvs9Lr/Pi9UqjOZVnRmN2dhgd0Pf5
+	+NHqleZHLH1HLD9nkH6dBjHJwF+j3FaGaMteJVRqgT2op6ORRlYptajbDyA917Gw
+	UPrv6PWz05yf/RaxKmzOOMH8eMwG/RwWyOPzOhgdW9smRyTSMtliSQ/h4ysXp767
+	sHzE0M6rEnjvvL8bzXZHc/gCtiHfJ6qdO+Q==
+X-ME-Sender: <xms:aQJOapT59lbhKPD_jV4NIeC9b81nd3KtU2MB_KaF4A_dRTVsHJxz3Q>
+    <xme:aQJOaozbZjC0sqX2Snke8W_cuyRbeNIqkj7tRUVP-MZC_GForqHRperVRrwKYZqVe
+    8p9NclyoP6z-Te9kn_DlQXRwHJRwtgkia5sXEob4wZNF3Ke3mmofgA>
+X-ME-Received: <xmr:aQJOasc4ZAZgbqQafqueyImBZ9jse26VTIx2qhap5qhLgriR6-EtjHZ1m5-Tv-BFOilRLVcD7y61slfBjW9EJbYRl1R8WhP0t75i4IqO>
+X-ME-Proxy-Cause: dmFkZTFsSy0LHgfgGKBuXQSum/x25oNl/apA/bNk6FvTVQrGy9inFyz/K/mkIrtXQN4/Sq
+    JKJvMs98CnxMPuUvZrmsbRX2eWc0uBu45329VVph5Kp0r2c7e/CXDvxtYp1AM2fGnBGBWl
+    hKO0h4UtG/v2nqspVeDnkUdMxcobeJBA86VkRl6KerVthy1Yxe56IwsPlrxLbPpDCQluLu
+    SeoQuA5k3cqk0yQ3SJ9bZxkOV0CxJoMa4QOMhxda8L0bRxCxImLVohNiZZJbdvacV/1NxU
+    ADR2Q5CGzA+IVDzYUDTHxpQ6bDt7tnZMapmyWQ1NUG5aoP16XvRPjFM3X8BSpavo6cS4MJ
+    tbUGJkcoSk7dnDb2gafbUeDsAkca9hgfoW/BhzYV/c/UZAMusB+brNP1asV7aL5QHCZxfO
+    5etVoo3tv3N9TFFkC7FOtXT2oOo93JPqov1vSfg1l3+WC/YeOhAwr3oW/yynFAhTkkO8hb
+    Ug76TagCrqzonQZ+3OtTcTEy9zUNhGmjGi61T547XZeHrRSAHQTNsocLkGTOabiUZDc57Y
+    prHLCQCvkEpZxOn5yBsW+I9WNRO4Ik1rqQZKvVCneV4R2kvwik/aM/8R/Dwa89SNp4d4pu
+    Ly0SIfQwoVk/17LixhR7yF/2hPa0MWsG9ZKF4M9Munn7QAYr0K3evUC78AzA
+X-ME-Proxy: <xmx:aQJOasI__dTpGVWWVcVhrpquPGCr1Lw6j7vkVhlYwK5W1m-233PrNQ>
+    <xmx:aQJOalHvuiPUSxgmJV9gGUmostjduSLQhvF5Ojz4ZAacFZfeT4LHkQ>
+    <xmx:aQJOauqW3qO_i6spXVjttpch4X9IJ9PmsC8aeOtwhLnONZ4CWsN_dQ>
+    <xmx:aQJOamQwqah2nULj9q0-tpnvmpPoXBpqAOIzWZGYDiFxZ0OVSLq8WQ>
+    <xmx:aQJOasphTJp-Q-7CEI54yW2Clb0_FxsZpMa81LeKPIa9AOfOSXc2cws1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Jul 2026 03:55:21 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 858b4fd2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 8 Jul 2026 07:55:19 +0000 (UTC)
+Date: Wed, 8 Jul 2026 09:55:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/11] odb: run "pre-auto-gc" hook for all maintenance
+ tasks
+Message-ID: <ak4CHGpIhVIT9sd2@pks.im>
+References: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
+ <20260707-b4-pks-odb-optimize-v1-1-aae607667be4@pks.im>
+ <xmqqo6gi1sng.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -51,163 +86,63 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:0Fzd2/8UapGj23+06+Hb71oXeumTFkAYHGkmZ/u/xrgVurGhhvK
- msZ3adPk4ik7dDlj4mwtY60FZyjRzogmNliUVX6KBwrP3PNt0HReOma2nGhn/bd9LtWGIv4
- Hi3zMpz2IK5eAZrlaSeJcyJeWf8osPiVlQjx2mKzOq7E+PyvCJ+0ErZpS5v1Fn8CwynV7Sb
- /8391a48gMcnjlB62AWgw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SuSGArr6iB4=;YMkNqMyl1Z7KCE8aKPoZeO0ZNGF
- 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
- q/QCjCZLFP7h4X1an1RioQ4G3dwngZDG3v3tYNR
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqo6gi1sng.fsf@gitster.g>
 
-Hi Patrick,
+On Tue, Jul 07, 2026 at 12:55:31PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> > index d7f82e1bec..1212b306b6 100755
+> > --- a/t/t7900-maintenance.sh
+> > +++ b/t/t7900-maintenance.sh
+> > @@ -740,6 +740,127 @@ test_expect_success 'geometric repacking honors configured split factor' '
+> >  	)
+> >  '
+> >  
+> > +test_expect_success 'pre-auto-gc hook runs exactly once' '
+> > +	test_when_finished "rm -rf repo" &&
+> > +	git init repo &&
+> > +	(
+> > +		cd repo &&
+> > +		write_script .git/hooks/pre-auto-gc <<-\EOF &&
+> > +		echo hook >>hook.log
+> > +		EOF
+> > +
+> > +		# Satisfy the auto condition for multiple tasks, both in the
+> > +		# foreground and in the background phase.
+> > +		git config set maintenance.reflog-expire.auto -1 &&
+> > +		git config set maintenance.geometric-repack.auto -1 &&
+> > +		git config set maintenance.rerere-gc.auto -1 &&
+> > +
+> > +		GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+> > +			git maintenance run --auto 2>/dev/null &&
+> > +
+> > +		# The successful hook does not inhibit any of the tasks...
+> > +		test_subcommand git reflog expire --all <trace2.txt &&
+> > +		test_subcommand_flex git repack <trace2.txt &&
+> > +		test_subcommand git rerere gc <trace2.txt &&
+> > +		# ... but it must only have been executed a single time.
+> > +		test_line_count = 1 hook.log
+> > +	)
+> > +'
+> 
+> Somehow I'd feel better if the hook used a full path to the append
+> only log file, but it is reasonably clear that these three commands
+> are unlikely to chdir around, so it may be OK.
+> 
+> Obviously not in scope of this topic, but I wonder if we have a
+> better way to test these three "housekeeping tasks" have run, than
+> casting in stone the current implementation that spawns these three
+> external command as subprocesses.
 
-On Mon, 18 May 2026, Patrick Steinhardt wrote:
+Yeah, this is awfully fragile indeed. Since 25914c4fde (maintenance: add
+trace2 regions for task execution, 2020-09-17) we already have trace2
+markers for each task that's running, so that may indeed be a much
+better way to figure out whether the task is running or not.
 
-> On Mon, May 18, 2026 at 09:46:05AM +0900, Junio C Hamano wrote:
-> > Joerg Thalheim <joerg@thalheim.io> writes:
-> >=20
-> > > +/*
-> > > + * How long to retry acquiring config.lock when another process hol=
-ds
-> > > + * it. Default matches core.packedRefsTimeout; override via
-> > > + * core.configLockTimeout.
-> > > + */
-> > > +static long config_lock_timeout_ms(struct repository *r)
-> > > +{
-> > > +	static int configured;
-> > > +	static int timeout_ms =3D 1000;
-> > > +
-> > > +	if (!configured) {
-> > > +		repo_config_get_int(r, "core.configlocktimeout", &timeout_ms);
-> > > +		configured =3D 1;
-> > > +	}
-> > > +
-> > > +	return timeout_ms;
-> > > +}
-> >=20
-> > The above design means whichever repository happens to be passed for
-> > the first time as "r" to this call will fix the return value from
-> > the function for the rest of the system, meaning that the lock timeout
-> > is a per-process property and the repository parameter passed to the
-> > function does not matter all that much.
-> >=20
-> > It may make sense to admit that this is not a per-repository
-> > property (due to the use of local caching), have the function take
-> > no parameter and use the_repository to the config_get call.  That
-> > would make the intention more clear.
-> >=20
-> > Of course the other end of the spectrum is to get rid of the
-> > "configured" caching here, and ask the config system to make a
-> > hashtable look-up every time the function is called.  That will keep
-> > the lock timeout per-repository, which is closer to what the current
-> > function signature suggests.
-> >=20
-> > I dunno.  My gut feeling is that there aren't valid reasons why you
-> > would want to specifically set different timeout values per
-> > repository, so the simplicity of using the_repository (i.e. the
-> > primary repository instance this process deals with) sounds like a
-> > better way to go.
->=20
-> There probably is no reason to have different values per repo. But to
-> me the question is whether there even are any use cases where we have to
-> lock the config file so often in quick succession that the caching
-> mechanism even matters. My gut feeling says no, also because parsing the
-> value from the configuration is going to be drowned out by actually
-> writing the lockfile and renaming it into place.
->=20
-> So I'd rather lean towards dropping the cache and keeping the repository
-> parameter.
+I've made some local changes, but will hold back with sending a v2 until
+there's more feedback.
 
-While the question whether or not to spend 5-ish lines on caching sounds
-like a topic that could be debated in splendor and at length over a couple
-of beverages in a cozy bar, I am starting to grow a suspicion that I want
-to doubt whether the cost of that cache was worth blocking this patch for
-over a month. Lacking such a cozy setting and at this time also lacking
-the leisure to enjoy said beverages, I'd rather go forward with the
-proposed version and move on to more exciting things.
+Thanks!
 
-In other words: I consider this patch fine as-is, and in the event that I
-would consider highly unlikely where the cache _really_ bothers anyone, it
-will be an easy patch to remove it.
-
-Ciao,
-Johannes
+Patrick
