@@ -1,88 +1,82 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9443C3AA504
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 00:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3834CB5B
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 01:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783472314; cv=none; b=JrMO1k6dP+ptVx2s82RSt4m7VDEolywegwknQfzb82gCmzA6PBRE+7GkLQGX0HT8cwV6lNV4jSMPZUebb791JciDtlo0SOHKyYi8kONRNvTl3w1UN3doHAaE+NMJmigSG7NWtPLFffy5F1APv7dIcKbX4GcYu+dblP9s7rxFK4U=
+	t=1783472536; cv=none; b=ajyn2daHuXgAhpXMhfcuus7gg5Hufp0gDU3nL/SBtWWGo5TVMssYAt+nWfuGXiC2MgYTqugt81LCMRkSU8XcS0IoxFl/ZHDCdaDXSUy5cnI4ad9GBFzogCwqxDATmx5kZfFRnaaQsxJ4h6D75vn+r2hewxtqmA9aNz6/AhnrUaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783472314; c=relaxed/simple;
-	bh=G01byKWw3FR7oRdEbruvHmOj01vUAsPC40yTCRulLto=;
+	s=arc-20240116; t=1783472536; c=relaxed/simple;
+	bh=Iq8uAzzvU/GAYXj7xHbfrYrQ11kcCkl5tD7U/EaITu4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RB6DnaSnqB729wHTF50SIr5LflGhEiHIIP2AaFV9Jew9clIwMxAFtExHHkhUDahRvlokvDb2nPyqW+qgv9PBBPECubSRVfWo3AWmZmgkBiMA52kcbzR+25Bb/fE6zj/GkDXiK4/Ct3dLnNq7/HSzrp9Dc7a6baSvO32aNnbkyhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ibZ0JbXL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CHDxEXRK; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=oUJQWJMkGM3Y/r+gWH9V3PQJTK+zVQ/kzn6ldJ+W0f0lfQeeZUPom9VWARlck8MxqXQJDJtO64wgp5x0jTnOGa7fhCbZH4AM2PiyvPutwMVoXxUZS70TpIfrxxQioHw6qQ65ZMlUtl77Q/QddArWgagmshtZfbXG9O5UwlzQj6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PLSaBaE3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b0EWqq9c; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ibZ0JbXL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CHDxEXRK"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id B81EEEC027E;
-	Tue,  7 Jul 2026 20:58:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PLSaBaE3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b0EWqq9c"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A41C140006C;
+	Tue,  7 Jul 2026 21:02:14 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 07 Jul 2026 20:58:31 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 07 Jul 2026 21:02:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783472311; x=1783558711; bh=u/hNemSJzy
-	wI8HyYGb7e16Ioax3lEfiqUXW/n9fcaJ0=; b=ibZ0JbXLEdybYCQCZyIW8WbOWk
-	uNc0Fl4gNi5Gx6WzR0AKzwXzfbnZ1EUo2qIAVy3qSVGKg0iAdWEt6kAPBMcqv6NW
-	bh9KfRlpQmXpTJUbljhjLRP+iN4ONpg0pZ5x6nCZJsYxEMKXfQtKlyMOHMZZue8c
-	kGGA0oVlBRLuetRCpV3IyL7gmb7yxzg9++YUem706QOExMlcCAE8ExBLtNu2+AUC
-	Hq5Dk9kG4LV+RMLmq2I0zfvenAJ4FRG6u3nqcXaykalIs3WTjRo5evJJm3AgWj1r
-	IeQ16vfk5bDQxUxQuMOLeJw0f9SvbobrajqObUJr01iZT+s17kDNP8x9tbhw==
+	:subject:to:to; s=fm1; t=1783472534; x=1783558934; bh=u2bsGxom/I
+	3GWteusCY1i9kvIgSxCrOZyMCYtC8ZB1M=; b=PLSaBaE3lrmszVn28M3nORNdGA
+	uOrfsYSfA0Cy+7i8DGKqUT8kjbFB+KogaUTHS0PI8TvDmwKHrAc6+52WEpqPcGCm
+	bmCvnZcA0f1TsQSq7sFrb5Q67D/ZjGj4xVXmha4KvmvoEuMIkesJn+CKadGif+36
+	IzIBbk4v+9a5nKrQYjWERCJ98Ijkn2Kq5m81REVW9IWoBpLBXlDAhSQrMbyfVYNx
+	flNLMeYetM1VXDFamqFHHlviPg2UAqRtPBNX9rq4rcqJUcZQi2pv0OdIrfdYayp/
+	3JS5KOkE+BlMOj0kCVkpJ1h2ez7L/wZVXxhUY6aNxObw8G8Za6G/OpA3cohQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783472311; x=1783558711; bh=u/hNemSJzywI8HyYGb7e16Ioax3lEfiqUXW
-	/n9fcaJ0=; b=CHDxEXRKyw2bRYQnfwdlL7a2CD3LuTRCQcJQ4cZZXSaJA35EiFf
-	cG28oJAJJ3z4BML2ItYCrFpUq3eIzTqNKW1tBY3EMPtDtZIRjFGCsnEUjpFZ45oj
-	2GC1pVB2Cj9VsYTr4Zm4P49n0gYa64D+GV9VDFqTphnGu8Wn1a9XzTo6uyumtyaE
-	M9a3MF6G/sFEfgF/nTwwvvoM/HWohzh6fAIBaEr4k/upl9ILNrE/eJhBDPW+56mZ
-	U0rBVVxcfgSdCGxUrM/fJtB+hnx1I243XRwR7li5USHLv5fqDRwQ3FuQkcvLNyb9
-	Av5/fSrkut7ucYh+lGUsYMxXrrwqw9fg2sw==
-X-ME-Sender: <xms:t6BNarq8Npk6FaJwy7wzrICWZGSHJjE7DNguLtE0Daq9QKu3NRQB9g>
-    <xme:t6BNaoNXCeRZH_7-zhoDA9f6LuEHd4-aSN1dXAYsX_KYqHyxoE4PiKdhFAWj-2Ivj
-    L4L32ZYrMVCip5aVn0P9tZowTP1eKRlYQcs0NbVuJpCqCrQdhBWuA>
-X-ME-Received: <xmr:t6BNar3Je0oivuRCvuybbHMZq_g4w4-VAeOT8Xu5IFmezPSztqPW2RBWBhBaYHxQES7klZ_SQR3-rGS0oc_sdzCsPKqe3Icbgkx10t4>
-X-ME-Proxy-Cause: dmFkZTEkHZ78TMqeurmVmCkUcjfLW4JpRwdlRkX8FvAXCHqDBofpR+tai28M/HBGrWCE8+
-    cvSnpZkQ7s5gvTS2GedQwnJmYt6LroDPYQLKaaabk1D8mRFkJXcHIL2uEdq8h2Fnck0dhM
-    PmM48P31bNETFnsPAsPx2QwXsqPhZrUs/Fmv6fj44/y/m1iuNqDVy4K3AGMiZvdpLkfveQ
-    8W6jz8bojc6lVFUIJWEwnSuF+pvjqaU2je/B/CVtsFPVD/ZqAocGoDO70h6AhKq2OH+HjI
-    xjyvatTOYe9G7jr4zVJXmX/mkliNqTSymD3mUyfgbvbNwsNrlJyYOtHDjSYovNDtDIOoqj
-    lbUMxvmP7gqmuJS1q5JyWqcDldnYI2HIov9/05g6QQxkOg4Ztln8PS4xM/3n8if8sAGH5V
-    rIVtSASEtA9Fg265R/6fQocHXmhA4plCc6/r851Sb394kueS5hjS3mbs5anj1dEbdwny5t
-    BoCPxodgTytptosVYrEbeT2Ev77h5lFwQ6pIZrzoYM7MhcYzIqv9ll7Jc5iJltrkyil0PZ
-    6gAq+9jmW0fMEpfv1BNNu73bsh16u8OjmH7SOJ9t224veG94GueKzoMdCF5kiPU8zBhuFp
-    GDDYl7zcurdb6eb82qOUsCR6okHw/Ccdmc6XEGn5I0a9OkLp1gkTsIayelNw
-X-ME-Proxy: <xmx:t6BNavBovducXNzcGhbPZWX1857rqJ-FigFpED8IJNM2H_m2QrhuXg>
-    <xmx:t6BNagJ-rRrruuJSutzubvrs8nmvLZDukyXFJx4iWfqC_Lf8wmeK5A>
-    <xmx:t6BNagkpjjI0GKOTURCzHlBLnxAsc9Io91h8WngyPUoJCG6jJhJWqQ>
-    <xmx:t6BNahaLuKrlraNB9qmf-Z7M3HHL5ZRVvIlzT6saC1X00cM6zSJvyQ>
-    <xmx:t6BNaumpka8TA2PIDD8EQUPZJni458i_8_01vaHiOTbYtL2xsIBm-mDs>
+	1783472534; x=1783558934; bh=u2bsGxom/I3GWteusCY1i9kvIgSxCrOZyMC
+	YtC8ZB1M=; b=b0EWqq9cZGBJYnX3owkx2+WzkxhJ6HyXCZCZRnqWBK3nJXiEd+Q
+	PRu+RR+/Ws9oWomsB6CK3PakVg0unfY8hgJiMz987DwevSOR2QrArvtnVOtQKzR8
+	vWC33pTHUALFToi9GjJ5mNygOaPjzxDRyfZHg1b4K/15Ad7oVXFvCDNDCJPafaGS
+	owfIilONlN/hp4gyjDnWD/RxwmIrRn/vuiTAOsODnHLvr+xDzAnNlrzgPPs6p+4L
+	BtGYrzdhTjLMRy2WyD4LfhhwBRE0r53NWMhndCZxrLFe49Eb/n4i2qYiT9uYI8fk
+	FtQaycnu7L3f+bOwvQ5elPh0+Vw7HX4QUWA==
+X-ME-Sender: <xms:laFNalPFiwB4X-4x0AjPfeJ5Lr_8M_t6HRptzcImJ7a72MblYvcrtg>
+    <xme:laFNau18fMz1mZ1LMBiV3E4hrijHYdZ2dROhmb4Hioay_L8VRISYzoT5SuV784nWc
+    CMbGlDPHWRtCJwVkyiMj2qz_aTnOl3I8ntPiien4wEJsgA-hnzzNw>
+X-ME-Received: <xmr:laFNasmxzDznBz2OBMFSA7KWWHyQCoyKz_f4dnej6nmYmE28hszkPUSXuKbM6iRU4UmC1SU8ghyjQde0AlHdh5M_HRglQ-NY13c7Q6w>
+X-ME-Proxy-Cause: dmFkZTFnt5GHLsuo2jnNAwzRF/Er4zKhJWPA0w5FN5SVgk2Aix8GS9hEYWd7Fza4gNn5o6
+    hiRILJiooNq7b2PzdfG0Kh5TLuO4oTN/7jWkFztWRRE3fyR+IlcZKaBw22f+C6tPLlWMzP
+    zkfjG/BHJfdI/+YHP2IwYLHGCRMu7JqJGnSQFGaZ86K9C2OnCkZkU2F4lnHhw/YwY6A+gU
+    lTCTBM6TM1GLOBb8Sk0NLZXqD52eQh1yyLayR+X9pZerqL8gdJzHesGz0+HfGonZOdgY+u
+    1i9V2R+8shPNxWXXK7YSOg0TcAZ7pcAA1hYWS8N1TVCNEcu9XKfgktq2TB/RNKd6rDmvmF
+    gj7ijamBBR8pVTZAF+oOu6exp9bPtALGv95kT0ovA3Bj1qTLCEIJxz48Gls3TOcZm/j4VU
+    q/gM0BMDu7z416GO/fNdCj+IZFWUHKYtq05uVzkkViM7rA9AmipIKboEtwrnMInV1uQcvn
+    iS0VFR82BnHnxBhorqatxlXC21zhuS78twNAaknXeKKNrfsQwiWCog1D03kqIb4oqMapJm
+    6QYFC2sKIX4UW6IOEaxnfOVMwqch+eC6/D6etcyuujnXGCry3KuUcxrhX+qoumLgphspWy
+    /duYRGWTCGmXGVCHQW7k0zIDDLSDhaUg6z0zjpBX6MYUutmWDJJaTK1XuoWQ
+X-ME-Proxy: <xmx:laFNatVyz4MW-y2jvfMijKlXrnjMzFAhq_tVOGzrnm1sK0uekZHOmQ>
+    <xmx:laFNaqv_8Ecdp84HZeXQWbJ7V8TGV72ZigKP5ce66dJpVY13rZB4-g>
+    <xmx:laFNaobX8CaiUr226HVHI03T-jrJjfMZp_TjU5ZpQjuofQ_Bne8QSg>
+    <xmx:laFNahVw7y9tVnFnHWTmOcvKXZuW1f7Dz6U9P2orRYlmk7FjK-YnXA>
+    <xmx:lqFNao-1lWPFyZIk5kFgQg8LnXQAEqOkS8yQORxyzCtyaD4FBCTkjnqz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 20:58:30 -0400 (EDT)
+ 7 Jul 2026 21:02:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Shardul Natu <snatu@google.com>,
-  Koji Nakamaru <koji.nakamaru@gree.net>,  Patrick Steinhardt <ps@pks.im>,
-  Shardul Natu <shardul.27591@gmail.com>,  Ben Knoble
- <ben.knoble@gmail.com>
-Subject: Re: [PATCH v7 3/3] contrib: wire up osxkeychain in contrib/Makefile
- on macOS
-In-Reply-To: <32af2c51a892c2fd646a867df7eb5224d5ea39c2.1783443745.git.gitgitgadget@gmail.com>
-	(Shardul Natu via GitGitGadget's message of "Tue, 07 Jul 2026 17:02:25
-	+0000")
-References: <pull.2288.v6.git.git.1783378333.gitgitgadget@gmail.com>
-	<pull.2288.v7.git.git.1783443745.gitgitgadget@gmail.com>
-	<32af2c51a892c2fd646a867df7eb5224d5ea39c2.1783443745.git.gitgitgadget@gmail.com>
-Date: Tue, 07 Jul 2026 17:58:29 -0700
-Message-ID: <xmqqa4s2z496.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v7 0/3] Teach git-replay(1) to linearize merge commits
+In-Reply-To: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
+	(Toon Claes's message of "Tue, 07 Jul 2026 21:07:24 +0200")
+References: <20260702-toon-git-replay-drop-merges-v6-0-78a07cdd0382@iotcl.com>
+	<20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
+Date: Tue, 07 Jul 2026 18:02:12 -0700
+Message-ID: <xmqq5x2qz42z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,76 +86,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> From: Shardul Natu <snatu@google.com>
+> This series might conflict with Kristoffer's series to make
+> documentation changes[2], but should be trivial to resolve. And I don't
+> think there's a conflict with Patrick's series on adding "drop" to
+> git-history(1)[3].
 >
-> When running "make test" with TEST_CONTRIB_TOO=yes (which is default in
-> macOS CI workflows), $(MAKE) -C contrib/ test is invoked. However,
-> contrib/Makefile only invoked tests for diff-highlight and subtree,
-> meaning git-credential-osxkeychain was never built or verified during
-> standard CI test runs.
+> dscho's series to replay merges[1] needs a bit of rework to fit on top
+> of this, but I'm happy to help figuring that out. We've been discussing
+> to either name the option --flatten or --linearize, but I've decided on
+> "linearize" because the documentation of git-rebase(1) also mentions
+> "linearize".
 >
-> Add a "test" target to contrib/credential/osxkeychain/Makefile that
-> depends on building git-credential-osxkeychain. Additionally, wire up
-> credential/osxkeychain in contrib/Makefile under "all", "test", and
-> "clean" whenever running on macOS (Darwin).
+> [1]: <pull.2106.git.1778107405.gitgitgadget@gmail.com>
+> [2]: <V3_CV_doc_replay_config.780@msgid.xyz>
+> [3]: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
 >
-> This ensures that running "make test" or "make all" in contrib on macOS
-> automatically builds and links git-credential-osxkeychain, preventing
-> future build or symbol linking regressions from slipping through CI.
->
-> Signed-off-by: Shardul Natu <snatu@google.com>
 > ---
->  contrib/Makefile                        | 10 ++++++++++
->  contrib/credential/osxkeychain/Makefile |  4 +++-
->  2 files changed, 13 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/Makefile b/contrib/Makefile
-> index 787cd07f52..7962a9ff12 100644
-> --- a/contrib/Makefile
-> +++ b/contrib/Makefile
-> @@ -1,10 +1,20 @@
-> +-include ../config.mak.autogen
-> +-include ../config.mak
-> +
-> +ifeq ($(uname_S),Darwin)
-> +OS_CONTRIB += credential/osxkeychain
-> +endif
+> Changes in v7:
+> - Allow --revert and --linearize to be used together.
+> - Because quite a lot of changes have been made since the original
+>   patch, change author from Johannes to Toon for the last commit.
+>   Johannes already told me he doesn't really care about authorship when
+>   he initially shared the patch with me.
 
-Is $(uname_S) defined here at this point with only the above two
-includes?  Don't you need to include ../config.mak.uname as well?
+Looks like all the previous review comments have been answered and
+the topic is in a good shape to be merged to 'next' (and allow us to
+polish incrementally as needed)?
 
-The top-level Makefile does this:
-
-        include config.mak.uname
-        -include config.mak.autogen
-        -include config.mak
-
-and so should this one, I think, in exactly the same order.
-
->  all::
-> +	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
->  
->  test::
->  	$(MAKE) -C diff-highlight $@
->  	$(MAKE) -C subtree $@
-> +	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
->  
->  clean::
->  	$(MAKE) -C contacts $@
->  	$(MAKE) -C diff-highlight $@
->  	$(MAKE) -C subtree $@
-> +	$(foreach dir,$(OS_CONTRIB),$(MAKE) -C $(dir) $@;)
-> diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
-> index 219b0d7f49..d9fba07e8d 100644
-> --- a/contrib/credential/osxkeychain/Makefile
-> +++ b/contrib/credential/osxkeychain/Makefile
-> @@ -10,4 +10,6 @@ install:
->  clean:
->  	$(MAKE) -C ../../.. clean-git-credential-osxkeychain
->  
-> -.PHONY: all git-credential-osxkeychain install clean
-> +test: git-credential-osxkeychain
-> +
-> +.PHONY: all git-credential-osxkeychain install clean test
+Thanks for working on the topic.  Let me mark it for 'next'.
