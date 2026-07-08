@@ -1,90 +1,44 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA02436BFC
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 12:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242DA3F54C5
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 12:09:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783512299; cv=none; b=Cw/LjoVJeIC8BowZavl47sQoJDaCpH5zG2hKf1hS5XqEYblG/XQ9xFNu6TSsrkbNIa4fi4s51JvBoBS2DUKMY/4qQXe2iOXx8HKuVXb+KNix4kf/2YgY8cvY8BlqzfrQ0tq6xAPW6n4zWE+ywD/vHE/SvORcMa2qNtlau4sx7BY=
+	t=1783512596; cv=none; b=U5cHx7zIKlGv+eQ/zIQVbBsoYFt/iC3Z4O00BcVDyfBVCRKDGMRseWh8hYRYzC+k++d3qHWeqWy8PZqrm0mFyn46QmbVWx5Dyc6uiVz8eNQyOqgp0YSceEAdyNQS6Ibr2dw9fvvvIEgquUUT214n9QpFa7Lv33nhxDgdNCrk0a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783512299; c=relaxed/simple;
-	bh=DulsshbJLjYMf+sqRNfZZXYJevgpUyMZXiligSZPoLY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JRA6jf1lzPL0D1lZe3C5o2l0E3WHXCMLeGW8tHXdomhsWIJl07HA1ESZ02YA84EXjWQyUoHrp6r7FSSmScHdnfprGEBAhS1n/7yJWYHkyH1vMukgE3xHePrrRU1o44UUWOv6S1qOs3tnav0mLeFwvozxmqJpRHoZzBwY4Bgo0bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G4KXWGal; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a4+NykLn; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783512596; c=relaxed/simple;
+	bh=Lu3BhBbXxrFgq/ujL7JtjSXtMHMNpcH0f40QbY3im9A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Jr2X8KDOP+37kZxfOg8PbUPPc2AWLy54cyq+LeaSc/H7KWSQVESP5oA4r6P87ENTsiLUpbJlAdO4Pub2Bt3BVYZN1gAi4YzmiKPMGNeaBBPapYcLmPcuxM6dNdiwdPqvMniyGYDxLLiw+IxVkKGZsc9TTFLrCTivfsHUQRIThVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Ta1TVPtp; arc=none smtp.client-ip=95.215.58.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G4KXWGal";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a4+NykLn"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 37B771D000F7;
-	Wed,  8 Jul 2026 08:04:56 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 08 Jul 2026 08:04:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783512296;
-	 x=1783598696; bh=BGwvGlAxF8SL94wafk23lmQIX220zbbkowWN5zANoaM=; b=
-	G4KXWGalOZ13Es+sYeI12VbuwAevAkpPmgkt2lIFZ1EHbEWmz+3Wau52AsF1IVOf
-	L7ECvEtKs0tkVEdT8Tr2eJyaqwFuIBUim8LbyDZ87RwVpcWRVxG2Y4G7roF3iA2P
-	jg2puM3Eqs2d/MFbq1xsL8nQhrzgLyp4IZNgfJ3KLS+DLkC0LxhZPOhpvX43DxCH
-	0RBqFtyCq/ZNOtWtNRoRoZqf2OiZzSXYFUUfgPJ/o8x7NbUR5+hcGcmi6KWbW3Nu
-	IvYYKFkg9HjYQ0VZe1Xpkfj63K65Ze5I27uz7e6wHsQ69qhO9i08tc7v/yJxwRec
-	rBKIWkmymEIF4AVmP/L0bA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783512296; x=
-	1783598696; bh=BGwvGlAxF8SL94wafk23lmQIX220zbbkowWN5zANoaM=; b=a
-	4+NykLn/7w3d3rLBb3Un+p8iaC4KKDrycPR7+VcvoA9G03XTv6mwsmeDlus58liq
-	dCGZ+j9/yXkNjMzrAxV0To/ajQm0EP3j6ZWQlYfhtySnegLF75zcAUpWgHEJPStu
-	kgeQ0JABVYdx8P9eKEh0Fd7cbJay9l1AxeIqgdZmkKe/7IxqiUiMynNX8w/xuoaY
-	eGKAN9tSpGHfGHkGvM7oeZ3KL74A+NsWfwy9cnqGZTxyM9uq5C5Fcm/3d4QtYZMB
-	x8MCJf3g9FIyK8cv4xTJ1qew1nv4fXPxIn5BCnqKvpU6oDwxO2gvx3/HjavIdM+Z
-	5Wjz1fTr9AECzn/dkKHpw==
-X-ME-Sender: <xms:5zxOamTBbFRDdx5hHbESjKJJ_r784CGIPVx0hqACXQ5nhfhO5yaHBw>
-    <xme:5zxOavdwr59fx8E9RfV8jmt0h3SkY8qMa9jWM5wK1ES-A9G46WTmVdKlvgfbT5_Jf
-    Qx9ZET1UiePbiI4tkdSkpmrcVJTAEDTSenJb2Sb_QElf2ahQWQ-Qw>
-X-ME-Received: <xmr:5zxOatpdqDtjcsESJigPzA-L2BKYzaBAGe2JVILriC6cPunJpUKMDZKMa7g-UJtxI4V8GMueknGsd1O4g0KAIbglTtXRmkGPsOAuqQan>
-X-ME-Proxy-Cause: dmFkZTEyxJwFmecR/bukEYZ7kicfTJzSg536p5BB+FWL3EOD9qaM9a2QmuNTe2JexRnOI5
-    cdlyw/nMkURM8ZUo9QyTW4vgaSZOc1vWjJmw20kCrjwBsrstDOZgPt+sY/ICI494hSxHGn
-    rV8869cof3XV74oPyS1ikvOC6mb7fIwNj/33O6Pc0NNIikSuwoa78GLS/KkaOi8FkAYbSQ
-    D0t20Vtp/++4pIvzcT2Bv8Q6KDmptuCHRBHmGanwanqtmTtEsGDYMd2GAratCcSmEaLKeQ
-    pmPAY77Je+/LHcnB+8JZIxWmWloV3x9rDnVy6ZLViBOveHZTK34PYT/xHzySiIIQ/DfHrb
-    xBBCnbpQzQW+EpjiZguJ2prs1pdgmV+TpyyBTMbWMElKGqntOZu6lRp8bB7YzQt2Eur9gd
-    DElkMhRA5XWAUooZLL+TwT1zMABd563JeYrbGg3kb4UDlHLq3HrV8a4M2cvyeec1plDePy
-    woqjYxrjf4ZyLLQCZmK/S4nzZ4AJVcb/qYuvhfEr3wE3In4FjNPJ6e5GP8/4tSHk8BNM5f
-    DzX0Ik9IuZ7CA3EMiizNcsdxpFPfajhu+7J2WYyanp7gwbDtVLgBLty1hdi3p209BUuny+
-    i5Xfa9Myv65SfG02D6nwAV9Acl6kb6qkNauiien3owcEfDbMNqGrbTEsSasQ
-X-ME-Proxy: <xmx:5zxOao9B5x9uHa-rc8Og_Tw_4LgQLBIMfQu_dRzSXmTIBTUBOaOs8g>
-    <xmx:5zxOahczpzKYL_lNjeVpzycc0K4PrxZopmqIA2qCHJNJkW_qAl2d_Q>
-    <xmx:5zxOaqKJe2PCm4OL7cfpXq3Zr9YVPcxDu6fB1cFiKHwr_sBK5hU-uA>
-    <xmx:5zxOapicocRVXf-ioHghE9En72d_5dlPI4JzSKLX8V3KQkyr6fyr0A>
-    <xmx:6DxOavVaHqslrdlwvSH0QtaiHZEtcOqevQ68BVWt1Oayo-Bi4Ag9NjyS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 08:04:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 008e7543 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 8 Jul 2026 12:04:52 +0000 (UTC)
-Date: Wed, 8 Jul 2026 14:04:49 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Dominique Martinet <asmadeus@codewreck.org>,
-	Pablo Sabater <pabloosabaterr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH RFC 2/2] builtin/history: print feedback after successful
- reword
-Message-ID: <ak484Ywk97k-8ULs@pks.im>
-References: <CAN5EUNQNj86Q+hi6PouOZNWo1T4QTQ6sE5Hs9USZXWpkTedTcw@mail.gmail.com>
- <9C91B027-C24A-4D7B-A3BC-5CF3B04D990C@gmail.com>
- <akyKDtuHTHZGEpFx@codewreck.org>
- <CALnO6CAjZfK3hPWn1vOxgw=4=cjRYEHabYJmJrpVVDU8yyQn_g@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Ta1TVPtp"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1783512592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tw6sSky3EL5k+PlkIhYBAk4YUBqEZyrbq/bvyMeT1l4=;
+	b=Ta1TVPtpEfjykXP5wut/iMuLRsi564TVUa1bCzNacfdZpj8RqmPRxtJ/ynN5YqF3uznYXL
+	7HuHPQyD2PrpliRiMERq/LD8IxtHNL8uzLzCSb7/7FwO/rwi1zfN2k2APqAL+17odE2XOm
+	h44zCzzBV7CaP09hxNMxYxcN6Ys+9Ug=
+From: Toon Claes <toon@iotcl.com>
+To: kristofferhaugsbakk@fastmail.com, Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, Siddharth Asthana
+ <siddharthasthana31@gmail.com>, git@vger.kernel.org, Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v3 4/4] doc: replay: move =?utf-8?B?4oCcZGVmYXVsdA==?=
+ =?utf-8?B?4oCd?= to the right-hand side
+In-Reply-To: <V3_default_RHS.784@msgid.xyz>
+References: <V2_CV_doc_replay_config.767@msgid.xyz>
+ <V3_CV_doc_replay_config.780@msgid.xyz> <V3_default_RHS.784@msgid.xyz>
+Date: Wed, 08 Jul 2026 14:09:44 +0200
+Message-ID: <87a4s1of7b.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,63 +46,101 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CAjZfK3hPWn1vOxgw=4=cjRYEHabYJmJrpVVDU8yyQn_g@mail.gmail.com>
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Jul 07, 2026 at 12:10:12PM -0400, D. Ben Knoble wrote:
-> On Tue, Jul 7, 2026 at 1:09 AM Dominique Martinet
-> <asmadeus@codewreck.org> wrote:
-[snip]
-> > So I agree with Pablo's suggestion: printing old/new short hash on
-> > success would help visualy confirming something worked.
-> 
-> I think we have the machinery for this (see --update-refs=print for
-> git-replay, for example), but I'm surprised to learn that we don't
-> accept --update-refs=print for history.
-> 
-> In any case, I second the "we should emit something"—I wonder what, though.
-> 
-> - In the case of rewritten refs, we might like to emit the list of
-> rewrites, a bit like a fetch or push will do: "+ $old...$new $ref
-> (forced update)" or something
-> - For new objects that aren't pointed to… maybe silence is a better
-> indicator that "we didn't do what you intended"? Or we could just
-> print the new commit objects "$new [unreferenced object]" or something
+kristofferhaugsbakk@fastmail.com writes:
 
-That's exactly my issue, as well. I'm slightly in favor of not writing
-anything, but if we're able to figure out how exactly to represent
-results to users in a nice and consistent way then I'm very happy to
-change my opinion.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> This is now a description list (see previous commit) and parentheticals
+> like this do not go on the left-hand side. Moving it to the other side
+> makes it stand out just as much and is also more consistent with the
+> rest of the documentation.
+>
+> Let=E2=80=99s also do the same for the `replay.refAction` description lis=
+t.
+> That makes the two desc. lists identical in the first sentence. Let=E2=80=
+=99s
+> add a comment about that for future editors.
 
-But that definitely needs to account not only for the case where the
-current HEAD gets rewritten, but it needs to account for any reference
-(including detached HEAD) that may be updated along the way.
+Ah, these quad slashes are comments? Well, that's a thing I've learned
+today.
 
-> > ... But it might be worth to ensure that the commit has any ref we can
-> > handle (if --update-refs is set then the commit we edit is ancestor to
-> > some branch, if not set then it must be an ancestor of HEAD)
-> >
-> > What do you think?
-> 
-> I don't think it's worth restricting the operation (I can imagine a
-> use case where someone creates an unpointed-to object and later makes
-> the ref, even if that's a bit weird), but
-> 
-> - we could have a "strict" mode that ensured inputs are pointed to
-> - we could warn when only unreferenced objects are rewritten
-> 
-> ? I see git-history as very "porcelain"/user-focused, so I think it's
-> feasible to add output niceties (and optionally a quiet mode to
-> suppress the messages).
+Makes sense.
 
-Yeah, I don't see any issue with having such a "strict" mode, either.
-But I definitely don't want to enforce "arbitrary" restrictions that
-require the user to work around them. It's intentional that you can
-rewrite history of commits that aren't even reachable from HEAD.
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>
+> Notes (series):
+>     v2:
+>     =E2=80=A2 It=E2=80=99s =E2=80=9Cdescription list=E2=80=9D, not =E2=80=
+=9Cdefinition list=E2=80=9D
+>       =E2=80=A2 (Same mistake I have done for =E2=80=9Cline continuation=
+=E2=80=9D (it=E2=80=99s =E2=80=9Clist=E2=80=9D))
+>     =E2=80=A2 It=E2=80=99s e.g. =E2=80=9Cright-hand side=E2=80=9D (drop =
+=E2=80=9C-side=E2=80=9D hyphen)
+>     =E2=80=A2 Change `replay.refAction` =E2=80=9Cdefault=E2=80=9D placeme=
+nt
+>     =E2=80=A2 Now that these two description lists are so similar, add an
+>       AsciiDoc comment about it for future editors. Note that I
+>       outright deleted this list in the previous version because I
+>       didn=E2=80=99t want to keep them in synch. But we can remain aware =
+of
+>       these with two comments.
+>=20=20=20=20=20
+>     ---
+>=20=20=20=20=20
+>     v1:
+>     > do not go on the left-hand-side.
+>=20=20=20=20=20
+>     At least I haven=E2=80=99t seen it.
+>
+>  Documentation/config/replay.adoc | 5 ++++-
+>  Documentation/git-replay.adoc    | 5 ++++-
+>  2 files changed, 8 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config/replay.adoc b/Documentation/config/repl=
+ay.adoc
+> index 7328da9537d..40d1695782a 100644
+> --- a/Documentation/config/replay.adoc
+> +++ b/Documentation/config/replay.adoc
+> @@ -3,7 +3,10 @@ replay.refAction::
+>  	The value can be:
+>  +
+>  --
+> -`update`;; Update refs directly using an atomic transaction (default beh=
+avior).
+> +////
+> +These use the first sentences from the description list in git-replay(1).
+> +////
+> +`update`;; (default) Update refs directly using an atomic transaction.
+>  `print`;; Output update-ref commands for pipeline use.
+>  --
+>  +
+> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+> index b4fe43ec687..ea4d14baddb 100644
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -80,7 +80,10 @@ incompatible with `--contained` (which is a modifier f=
+or `--onto` only).
+>  	Control how references are updated. The mode can be:
+>  +
+>  --
+> -`update` (default);; Update refs directly using an atomic transaction.
+> +////
+> +Expanded description list compared to 'replay.refAction'.
+> +////
+> +`update`;; (default) Update refs directly using an atomic transaction.
+>  	All refs are updated or none are (all-or-nothing behavior).
+>  `print`;; Output update-ref commands for pipeline use. This is the
+>  	traditional behavior where output can be piped to `git update-ref --std=
+in`.
+> --=20
+> 2.54.0.22.g9e26862b904
+>
+>
 
-It might be sensible to even make the strict mode the default, where you
-need to pass a switch to rewrite commits that are not reachable from
-HEAD. But if so, we need to have a switch that disables this mode.
-
-Patrick
+--=20
+Cheers,
+Toon
