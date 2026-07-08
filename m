@@ -1,82 +1,82 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3672A2F7F12
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 20:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960AD3CF054
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 21:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783543273; cv=none; b=Zpf+nztxtKusHJ/mvpwSE5c8OJow68ZkwtQSKpcQhvBuLjiiYN2c+j3rgOyj6U+J2mV//BP7hrndI8qMq7vT/gqfU4YBvHpjSYhLxDbhkWfQHv6KGkjOuRzDkhI+bPhJ08VZRmU3naHjH0sd2U8qpzcMxlEMeJAVLJViLC/UBG4=
+	t=1783545228; cv=none; b=ADHzrvj+78zkTXk/qQ4qHex8IxTCutCY8d3sgGWSBzw1VvPhwl6i/wUKMggsjBZ/tzYut73PHwxxYQul5PG+CvFaQe0XAeqyrvV0AFJdLcO4NL192rEOibE+mB9NzCXEWqmpvT3OKzTTvuWuLaQCxJXPKqdA6kV4WMrcK3oGPSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783543273; c=relaxed/simple;
-	bh=WNA8hZmDIsipFqFZvWKVMtudY0it8moD0sgT/sy5CkM=;
+	s=arc-20240116; t=1783545228; c=relaxed/simple;
+	bh=iNf5ihGm7GTuWnoNEwCN/uxcmuHd20tcRG++NTlfMP8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oq8C87F3nYV2TAbAT0EGDv7vieiQySA+InNj9/8nYKck0/3dQDq4zl0GD2y0qQCqbYm8IgWabRlGyFskA8pbHuES+yUjwBNmUYF4HgN7XU2bJjNjYPf7Q/vOrCBF3IDm8NKR/UQk4Bx3m4mday0AcHMKLeVFbl0S/kZIN7iFt1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qzZXZZd+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cobQSrLe; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=LZQ3Sq9NyHPNTbnP7WIzbQo+CusDRXZJIm5iML6j4+BYhlX21V1JcGBPf5d3YFqnU0XHAlLaOn7KQZeSF5ApzlwWI96aysrgxrtRkaOkF9+qbXBhGe6fHZDs5UJA21fJJEnXtqgiE+XPm4VnsC7Ef9dcTFz2rZ2It0sxnx1301M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A1LwQVgY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A5ablfPJ; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qzZXZZd+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cobQSrLe"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A1LwQVgY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A5ablfPJ"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 856BD7A00D9;
-	Wed,  8 Jul 2026 16:41:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 08 Jul 2026 16:41:11 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E27867A00FA;
+	Wed,  8 Jul 2026 17:13:45 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 08 Jul 2026 17:13:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783543271; x=1783629671; bh=X4nEzE7O2o
-	hMSpujqIRFQSXZCvN89bbgrtfoVQsEVTk=; b=qzZXZZd+bCZ4g+Fufl6RsEQ14b
-	4F5f6z7Hj+BUYu4DmKsNIQZ/8T758b+Ll6ArA8oez/NGmbVLFnJ5mwyDyjtd/aAA
-	ZXomealNe7LZf0YUL479OVC8Udlz2b79Ps+Of2K/hCXPmd3bvLSNxNH7s5mB9qky
-	TCNGuYg0UAps6k/K8eNSMOTQ7B5U/6BRT8qJDLme1HPuW2rwig9yNepnMx8kkRfB
-	uGO83Ef1WLpd/vIkDSZAv4vjj+fKPR/hvpRi1gyc4kTPkVAae1SkMOzaTJQdw1tr
-	DddcrUh6g8upoOFetLgW460XdU9KpT2DXSubuWDk/joFHJAXOI9AnAYpzAvA==
+	:subject:to:to; s=fm1; t=1783545225; x=1783631625; bh=kYSSKSJkJG
+	2ni05rZS91EO4VOGpbYRxSUoiUvZ3imoY=; b=A1LwQVgYYoeXz3MSt1skrCwHNM
+	78xiX023HPC4lV05JQtabULyaWqvFaIevl3yqkA2o8SfOUEBlC5qZcFj0qyjLAH+
+	o4YX2AB5QXOMyI06tTInQtgjTTmKsDCkBvGxSkiZXoCYokXPTok4v8CrHKAQN8NZ
+	r0jdFVj+oo4/cXquVpl6+MvrMcyupA5N3c1dr1DZcZAso+YwPni5geilqo1qp4zA
+	nT49AnTD/2dU0v1r/LQ+9ldbFkwCzpC8HgwfNcBDxIjDWQoypZfUUKOkrDs4I9Rm
+	mGRitLlMSjbCZc9aMSlHys2nzGboC/wItgeLvCZO3K69M4k16czAL4kg2xjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783543271; x=1783629671; bh=X4nEzE7O2ohMSpujqIRFQSXZCvN89bbgrtf
-	oVQsEVTk=; b=cobQSrLehD8sGJ1gBofMiMTGu65XThuw3+sDockRyfp/Lc8VgVS
-	7PWwxudOPyIzPeNhDWtShS0Is7ippla3bFD7sT7ncyfN46J3lvkYEOHWMN/ji4wn
-	gtwDi3jhHzCzOb9gLM40ufogHYfnWFhiK2aP2j0Lr9ppZwHrCiVw4cknHxmckr/R
-	yL1bhaUZcPyykvk0GMUfxjNhNPP0o+SH3VD50jO6LUZFvujasKMetrQSWoRcqT+A
-	RQN6/Iz5/FCs9wW5IxpmvNTzVlrmQEc16jZGBOXQYXoHyX6J7CdD9uodDh+28EIX
-	5Ff+sc2YnVT+btrYKff2C98AApmbf/wUBDw==
-X-ME-Sender: <xms:57VOaph8i-340XHBsQ6OXauKnHj-K1wbl1mGFAf09DPuEeOq3yhKMw>
-    <xme:57VOaleURtQChZnn37nQD0qxprk0gVwDIQFT6UnO-TNrwwsBY7yR6X420UuYlXArp
-    QZ4Loih7dL3niweM0NsYdGF47VVFwFIUCV_g9dpi5I6aFI_fx3c6fE>
-X-ME-Received: <xmr:57VOamdbBTJ3hkQnWGnf4nSnFf41t4oJPOjshs40vtHyjstHUSQd1AiEiDjcvkm7dXaVVMYDqwttdHYNHMbj82ECsFwzPY3jYpo2G-A>
-X-ME-Proxy-Cause: dmFkZTGLlq3GCpwMis+YTye1mUMCtgoEB8oLHmm/zc60nFvdMkfjMQuisJyZ9gYfAPuPho
-    PLVsLIqNfYbHxK5LNUHJRytXKAOoA0IGmHj5aWZu3V9vDWBXKHRKjD4BIhl6AzvkXYytNc
-    I0DuYDUrxCCEEB8r/jTWfNGbvmqsGdXj9J9jUEA9cezOIeUwjdV8rkzKZwj7DV3P1tPdgt
-    hsRQU5eZ86rC4rPvRtAHP7HhaQwpsMTO9db+amor4wxwu0dta8xR/eOk7WKVBE1Gyv0UC3
-    6TeEn57dF8DKAxqrhA9GqRiJokvK2M4sUZnyjT2RpAkd2sW0KKZC9bF9XaIS6Em5CQjYOt
-    0HM3Mgl0HSgb8HqWxPSVYSVAHdGDd6/7sab186X7VoxPPTFXVKY1ZmvhU6ozNx8qG1giL4
-    pQvgRRjNMhyIDxDx1sGHqqOT8t2LVzQ1ZAhV9+J5hWbOx7a7MxZtAH03rclXshJSqnMaM3
-    2NUQWlAG1/lx3n/LyJrW2CxAQLUoXwxxPUCoUO9VzzdVDpUUfdLi1jSwaWxN+mCSWmzhHo
-    kf0bKiK30r+L8djVvNhcijy6ALYPjARVkMMRrBp872mSrk+wgtvZrFtgR6Oq6pEsDKkrJO
-    JZkJKuYKKTrS0phA6obDuWh7SXQVVo5aZ8mHPg1zQmMCzq9bxdkTr2rUzh+A
-X-ME-Proxy: <xmx:57VOan_4JJpjSrTneuMvmGqYBo8ygnudh76B2IVOJITKY3NajrRe6Q>
-    <xmx:57VOaqljdXptlJ-VWNSG1Hc7ahKDWkgb81Jfj1IUJOq4gIsHXK3YJg>
-    <xmx:57VOah_G4hOQBIOD6k7vKFXKpgsd1GFkAR-1A48-ejM0eCTnbSiqag>
-    <xmx:57VOagk_9SkWzw_574MXOJpfBY698sKGR3xFUQ31qAQh6KcY-MGUZQ>
-    <xmx:57VOaldxIbDWrbbKzN8YwLqQp1J8705H7Flxef5MgW9NVca6lq-I-pNq>
+	1783545225; x=1783631625; bh=kYSSKSJkJG2ni05rZS91EO4VOGpbYRxSUoi
+	UvZ3imoY=; b=A5ablfPJh71jvYOJdf1LQJkXuFJ7NrhT0bw1DjRW4St8/rsQsBq
+	/wSvjapgWA+W0Tl+huu1ipJdhC7+V9TYkPo1JKlg135MHIwE2Sc4TlPlu4VaCgHz
+	VhgWaAx7h+k2QWrT9Q6iUrN881CCA6MZej/myxBWzCtKaz5AFy6iW78nLVcqAikq
+	OcU0zOXiz51OAo8p2fLRQCUbU1rxzhJJAQDimnVFWOujPTNALwUgqhcUjF2nLUU1
+	nq4Rs3Vgf5sPUKCRnBTrsmQ1fnz4GLISdWSJ3AciYtxGgYCyWT2QcE2f8QWqtNCT
+	z81pVReSiobR/wXKocWYMc3SylK038EGGAQ==
+X-ME-Sender: <xms:ib1OajzO3C45YI2b5zQs_zqnq7vECrjKC0JgLP3-C3fV8yqOOGfTXg>
+    <xme:ib1OaiR4zN888ROKMX8hSftln6Zi_pweoOUBpKeO3YbOW7ldBcCAS-lvJzmf6T-24
+    1PMYaPv91oGdWtWPa9JF_GMgOLXH9IE09cbv6FJbbyXtKhNCZlmFg>
+X-ME-Received: <xmr:ib1OaiWNGWWvcpbVHleqazsUUJKNU6q5WmDPsbGsm5RM2acR5ZfoenN-T_flq7pFnum48ve3h3cCacqXEWFqgYIi1jfHYV1mwf3Kd6c>
+X-ME-Proxy-Cause: dmFkZTFNJfGFyc2MYQeTUbxYJVF+sh2EaNSPlFqSk2hpX9sipNOa2kBqHG9al9XQUSo6jz
+    ugP3t3313jJHjegt1QINT676oUDP2lkXiuA41VF+XpMZFlxVSRoBLVn243n40Ahk1WMg8h
+    ZeHpc8e3n5Gf7Vy/RzY33PJh+wiC3CfAU76OPRXBM3mQtgcDnFOcDag1F7vfVrCmbGTcXv
+    mbsYyTi1LA9aPk75FVk/RrIMjmO3kZiyJOgq5CwLEXjDSgzaHVP3ahthlsMv2HD+vd6+sm
+    L3G3MFg1h26bqNNvUowFSmK/44/OXEQY+ZY1XfsGX6kukO+PvFvQg+z2zDri0JsYFDDuK4
+    LR1P9ki91SpFic9jqooS9qW/TXJdhy9vAJnEBaRQs9/29i2JPV0vhRtM2TpHj1SMBNLiAK
+    OnF2Va/ubnmB6ktQwcuTlqrW/NVye4P+x6L2F7Zlw4l2FriGgeB7J6TGFLcwSK28HLgy1h
+    W+fd/a5jefqNdYDkFuFMcSiMVMr1iAW9ZJQRYX9nqP+AADi8aUIzAgc9THV8p/A7Ranxry
+    YzbUfoJ1EyaFoJUtihppwZZ0etAzdhp6HO9blMbV+uFHE/dO0kDjBiTWdOFyrMx1nWmi5D
+    Wq3e2FLV3yoqpx4UbNFyLg8x5t4L+HqfaXPZB65oVVHcFlJj3wOBoca/BHYA
+X-ME-Proxy: <xmx:ib1OasZk7A0RAsdRkb777sMCqpBO0_zi2waIzOqMMFWzqQAsUdjEYw>
+    <xmx:ib1Oag0C-pfq0sunNr0JIlToWqTZIa6fGzUhrJ-Rl0VOOORjkf8tWw>
+    <xmx:ib1Oamjb3MuxpRRcWu4wRkLi3NstBmM7xBIph2RNfiQtUvdoXc3DWw>
+    <xmx:ib1Oasbu8zXMEiV7SLWKRPG5PsWXJq-v5AwNjMyKr67XdsLwiHI9bQ>
+    <xmx:ib1OahXHJuhPIKaJzId3DU9zYxZkQ0c9RIX-_jGg09cInCVdFJ_BID0d>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 16:41:10 -0400 (EDT)
+ 8 Jul 2026 17:13:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] t1410-reflog.sh: avoid suppressing git's exit code
- in pipelines
-In-Reply-To: <20260708092448.35776-1-gatlavishweshwarreddy26@gmail.com> (Gatla
-	Vishweshwar Reddy's message of "Wed, 8 Jul 2026 14:50:05 +0530")
-References: <xmqqechf8ryu.fsf@gitster.g>
-	<20260708092448.35776-1-gatlavishweshwarreddy26@gmail.com>
-Date: Wed, 08 Jul 2026 13:41:09 -0700
-Message-ID: <xmqqv7aprz8a.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 1/2] bundle-uri: drain remaining response on invalid
+ bundle-uri lines
+In-Reply-To: <20260708-toon-bundle-uri-no-uri-v2-1-09a03d8db556@iotcl.com>
+	(Toon Claes's message of "Wed, 08 Jul 2026 17:03:34 +0200")
+References: <20260708-toon-bundle-uri-no-uri-v2-0-09a03d8db556@iotcl.com>
+	<20260708-toon-bundle-uri-no-uri-v2-1-09a03d8db556@iotcl.com>
+Date: Wed, 08 Jul 2026 14:13:43 -0700
+Message-ID: <xmqqtsq9qj5k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,42 +86,124 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> Piping git commands directly to wc -l suppresses the exit code of
-> git, hiding potential failures from the test suite.
+> With this, clone now continues successfully if invalid bundle-URI data
+> was sent by the server. This is intentional, because since the inception
+> of `transport_get_remote_bundle_uri()` in 0cfde740f0 (clone: request the
+> 'bundle-uri' command when available, 2022-12-22) the return value of
+> that function is ignored in `cmd_clone()` so the clone can continue
+> without bundles.
 
-Correct.
+I am on the fence.
 
-> Capture the
-> output to a temporary file first, then count the lines separately
-> to preserve the exit code. Where the expected count is known ahead
-> of time, use test_stdout_line_count instead.
+Alternatively, we could terminate the connection immediately, given
+that we are clearly dealing with a broken server.
 
-Technically, the description is not telling any lies about the
-solution, but the patch no longer does the caputuring or counting
-itself at all.  Rather, it exclusively uses test_stdout_line_count,
-which internally does the saving to a temporary and counting the
-lines ;-)
+It is one thing to successfully parse the server's response (e.g.,
+'fetch the bundle from this address') but fail to follow its
+direction because, for example, the resource is unreachable. Since
+bundles are optional, ignoring the failure and continuing makes
+complete sense.
 
-The changes in the patch are mostly good, except for the loss of a
-blank line that separates two test pieces in the last hunk (below).
+But it feels different when we can't even parse what the server is
+saying.
 
-> @@ -319,13 +311,12 @@ test_expect_success 'git reflog expire unknown reference' '
->  	test_must_fail git reflog expire does-not-exist 2>stderr &&
->  	test_grep "error: reflog could not be found: ${SQ}does-not-exist${SQ}" stderr
->  '
-> -
->  test_expect_success 'checkout should not delete log for packed ref' '
-> -	test $(git reflog main | wc -l) = 4 &&
-> +	test_stdout_line_count = 4 git reflog main &&
->  	git branch foo &&
->  	git pack-refs --all &&
->  	git checkout foo &&
-> -	test $(git reflog main | wc -l) = 4
-> +	test_stdout_line_count = 4 git reflog main
->  '
->
->  test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
+While a malformed bundle-URI payload is benign enough to ignore
+today, future protocol extensions might introduce mandatory
+data. Eventually, we will need a robust way to tell ignorable and
+fatal errors apart so we can react appropriately. That
+classification can wait for a future topic, however.
+
+The patch looks good and matches what you designed well.
 
 Thanks.
+
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  connect.c                   | 15 ++++++++++++---
+>  t/t5558-clone-bundle-uri.sh | 29 +++++++++++++++++++++++++++++
+>  2 files changed, 41 insertions(+), 3 deletions(-)
+>
+> diff --git a/connect.c b/connect.c
+> index 47e39d2a73..1d74c1eda2 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -517,7 +517,7 @@ static void send_capabilities(int fd_out, struct packet_reader *reader)
+>  int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
+>  			  struct bundle_list *bundles, int stateless_rpc)
+>  {
+> -	int line_nr = 1;
+> +	int line_nr = 1, err = 0;
+>  
+>  	/* Assert bundle-uri support */
+>  	ensure_server_supports_v2("bundle-uri");
+> @@ -536,10 +536,19 @@ int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
+>  		const char *line = reader->line;
+>  		line_nr++;
+>  
+> +		/*
+> +		 * Do not parse if an error was encountered, but
+> +		 * continue draining the response so no stale data
+> +		 * is left in the reader for subsequent protocol
+> +		 * exchanges.
+> +		 */
+> +		if (err)
+> +			continue;
+> +
+>  		if (!bundle_uri_parse_line(bundles, line))
+>  			continue;
+>  
+> -		return error(_("error on bundle-uri response line %d: %s"),
+> +		err = error(_("error on bundle-uri response line %d: %s"),
+>  			     line_nr, line);
+>  	}
+>  
+> @@ -554,7 +563,7 @@ int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
+>  	check_stateless_delimiter(stateless_rpc, reader,
+>  				  _("expected response end packet after ref listing"));
+>  
+> -	return 0;
+> +	return err;
+>  }
+>  
+>  struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+> index 7a0943bd36..7cc8627e17 100755
+> --- a/t/t5558-clone-bundle-uri.sh
+> +++ b/t/t5558-clone-bundle-uri.sh
+> @@ -1302,6 +1302,35 @@ test_expect_success 'bundles with newline in target path are rejected' '
+>  	test_path_is_missing escape
+>  '
+>  
+> +test_expect_success 'bundles advertised with missing URI' '
+> +	git clone --no-local --mirror clone-from \
+> +		"$HTTPD_DOCUMENT_ROOT_PATH/no-uri.git" &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/no-uri.git" config uploadpack.advertiseBundleURIs true &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/no-uri.git" config bundle.version 1 &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/no-uri.git" config bundle.mode all &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/no-uri.git" config bundle.bundle-1.creationToken 1 &&
+> +
+> +	git -c transfer.bundleURI=true clone \
+> +		"$HTTPD_URL/smart/no-uri.git" target-no-uri 2>err &&
+> +	test_grep "bundle ${SQ}bundle-1${SQ} has no uri" err &&
+> +	test_grep ! "expected packfile" err
+> +'
+> +
+> +test_expect_success 'bundles advertised with empty URI' '
+> +	git clone --no-local --mirror clone-from \
+> +		"$HTTPD_DOCUMENT_ROOT_PATH/empty-uri.git" &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/empty-uri.git" config uploadpack.advertiseBundleURIs true &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/empty-uri.git" config bundle.version 1 &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/empty-uri.git" config bundle.mode all &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/empty-uri.git" config bundle.bundle-1.uri "" &&
+> +	git -C "$HTTPD_DOCUMENT_ROOT_PATH/empty-uri.git" config bundle.bundle-1.creationToken 1 &&
+> +
+> +	git -c transfer.bundleURI=true clone \
+> +		"$HTTPD_URL/smart/empty-uri.git" target-empty-uri 2>err &&
+> +	test_grep "bundle ${SQ}bundle-1${SQ} has no uri" err &&
+> +	test_grep ! "expected packfile" err
+> +'
+> +
+>  # Do not add tests here unless they use the HTTP server, as they will
+>  # not run unless the HTTP dependencies exist.
