@@ -1,237 +1,177 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazolkn19012063.outbound.protection.outlook.com [52.103.43.63])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EFD175A7E
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 01:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783475285; cv=none; b=KfuhLzgIxJ+oxHrucH4nXGiu+lJ7P8zvqmvKuLmmzU/5Y8znoMTBg0LRb9pVbL5LuxKGFRp5LgRat0oUGpxRUBNU0KIbgoTKlS8WCu6MpdtLbjcn9EA+poCVGc3nGR9yXTJpjsVWlThtzurgaVHLHMlZbXw/chBZJ3MMFR20X+k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783475285; c=relaxed/simple;
-	bh=PgK+ku1gI3RMhclCW7Esm2748/YR12P3k56BsG4evM8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MSm5Y9zj+lsweEFYssDvGp9A2ZlWwcuXWpvqrMRH4ThSOghXDGC8MnZ71+A8St/FR0paXIPrXDMXxR7yKzcDwampyXo6VfI+2gOC5h4VAMRAh2azckTPQiaOxwTW4cL/cSN3X/0B148AocpgHjlOHoFSnKI6AndhSGlHQzbD/W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rk8vXSFi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AUas04ji; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CC5175A7E
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 01:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.43.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783475483; cv=fail; b=XRs3lT5mkZLa96EkNBFQbxROH2xLH26yWXSDvTP8Lc9PYUMSD25Pj3hOVV+JFEmerNsVzNEkZDvPxPhHepPnbq09u8SFJ8fBLItFJcdenc9PZk87LqiBNkmFt1ibumwUlTiI22tZogGRqkfEP0QOxu7vVagKDW+jvQ5ZeEAGAMQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783475483; c=relaxed/simple;
+	bh=wBbf83AAUdkRLNjgyCpPE7v+sbaaMZ6OBjkX/CgfEjI=;
+	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=jMxI9JlccTdNgkWhiF1u8h/kxLGcKL4gXCCZPjtq34uO3yN/dwrfvELu1HaXvJ3fezKO/5Ya2S618ZSWjhKCHnU12iefcXoKAwOI5JVnfuVU97jsHi1f8GhQ5nPdv/QMZob+M6DtnV1iVIQQKuUlgEitnkH8EoURNgtglfDc0Cc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=diX34MFt; arc=fail smtp.client-ip=52.103.43.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rk8vXSFi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AUas04ji"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8364A140008F;
-	Tue,  7 Jul 2026 21:48:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 07 Jul 2026 21:48:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783475283; x=1783561683; bh=Vo6EUtzZ0i
-	YTUGIg0R67YMQKlrHnJgBVkD+p1iCgfSE=; b=rk8vXSFiWiCdGM619UivvPxsqD
-	9L3kEUnc/q5Sr+j0eqldtH2E1F/eI/TdWoUcgCZQFlwxq8kXaFqRObrT2UaWF53T
-	H/rsg3xOyY/HiE99Khgf2Dum7RkJUpYNz3M9Z3sp/tCdtIkWsk7JT4b0mUoNP+0F
-	i9XYI0haSRQRBreyTSjL2QrwGhcKF4w8UqPYq2NvTXBz43QIbCFO2gInhKc11lO1
-	DIdZ0GfbVaZWyTHeZzVRpl0zfIVFUEK084DYGbDZHqDi9tBKqdE9dQsvxwJIUF6h
-	Tk9fOOJwWfxt2/ctsXMqrL5vrBADnuGjPfYFjXJGrMbxMcbh4b8Gt1KY0fOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783475283; x=1783561683; bh=Vo6EUtzZ0iYTUGIg0R67YMQKlrHnJgBVkD+
-	p1iCgfSE=; b=AUas04jiCZYA7nRyXn0NEawO7hZ2FEPg4P6G6IVhDn0ZHIzLpUm
-	y2WgYFMIZl5aJeGZ/k5f6nB+Tf1SE3qskN3ocki1ZRRMptu85tABYse8jKdOMJWK
-	aAJQecX2lm7EMyllWvWr+B/nn17xAyFLvMA0LZlH5BhlkoNHA2qAmCJsIbXZfECs
-	6mdQNqbvg3UrsSCDQd80+Pha1OodJY6spw5lxnyZ6w2C1IZv7OWSLo94rCvtyRCI
-	rc6wUO56+FqBqtZBaOrOPoe1TobCykNrieWaJN/PkC0djpekwCNOLXlyYjXoWbym
-	+/DR3RIm1anJ2THtqqSXHXo1d6o5HCmfo4Q==
-X-ME-Sender: <xms:U6xNam7WoFb_nBjoUu2WA36fugVbXLZzs1qvkf-xqry8NWzuJBw7BQ>
-    <xme:U6xNanUYXCYfSswiUTy9Oy2T9fWQWXo8gG9Jx8wm4z0UXr86NG5MU0nEghixwTqYV
-    DYpNhJ3N1YOXIunNduaEnF9UHEXPQ_cFa7AuuJ-cpWaS6EgvYM2Iw>
-X-ME-Received: <xmr:U6xNai2QiUkso1OIIxX7mzb047yHc3DJ5-VzbSxoNF_NpRBvqtppb0ipuURxX2gcAZepYIyxLxrvBnrcDCDzzPTYCNxH3DZlUWIBNug>
-X-ME-Proxy-Cause: dmFkZTGF/AGJ4iW38ujjFBV0Vtq9hNhcYGoT+tT5oJwXq1FvtMRG8LLFWRzGWsbeVn4yoD
-    BCRPNGeUFI4wUv/CZ4fsIXd6KSPnZLCOgbHGZQE1Fsjk0z93T64lJgiljmzcwaqZ05MYVv
-    SfEC14WVJDko0Gv9N11S7Tjz4JRU1OoQTelBU7QyecoijwuuKiwBiJMdIsb/IBucuEN1fH
-    zPJbCkIMVpGU43XQ+fNa/goWRJaTG96JUOjOI4qffldgFAZG2jatx+ofStRFZUdcqHY7iU
-    J65O1CbbTzAjb+ZbgLSqRrw3grPnAQGbSWoUYKO/76qeoO6FrOW4VDGzU9fGdLniA4XRGx
-    c67RBI0TFnZ1NhHHuxt0TRqqWA5KJ2BRqYIL8TRmFld5ewcuX+UJ/4mdX7FCKK3nAIzNlG
-    4Rf4KVVF4jPGA2F4nKMFyNtZe8qeJr3TGV+qZ9hxzk9Lj+R0v4+NPwwD43IkO1hpXrUZnM
-    F0GtlE/7AVWRq2948ekmndHvUzcjFeUGc7XQJM3nz0fCO5EWez8xxmy7de96TIfgvjKhgT
-    8yUtvOLUbBYamlIjnLddzuZT7a7TAuo1pWhmAOKw3bQzbbrfIZr+zwgHsEiI9BDscquQOI
-    23UHWSnaWhEAr8r69hOSzYFMEXahHrAXoHK8CpABhNSI4CnRrYYAaPHhlF/w
-X-ME-Proxy: <xmx:U6xNas1UYb_A42NxGBugKAEeidM1xrOqyKi82W0mC30_B5gCPVOjcg>
-    <xmx:U6xNat_E_kts6vFS5KBHe0PL-IgiqhRQPo5Se9LyT3mBg9VlVdgkWA>
-    <xmx:U6xNah2ufypaXTXulyh0gPUi2kn3rSm-h6GyRwVUX1UqCVY0HvKFgA>
-    <xmx:U6xNai86WuWt5XXRJvR8UHgyuftQxppeDbtizloraRjuhYO6zMIqHg>
-    <xmx:U6xNavUG3M-cdqa464HkFrJOufCzOtfL7TMMVPBz6ee-M3VC7CuxBxOY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jul 2026 21:48:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] t1410-reflog.sh: avoid suppressing git's exit code
- in pipelines
-In-Reply-To: <20260707135530.17389-1-gatlavishweshwarreddy26@gmail.com> (Gatla
-	Vishweshwar Reddy's message of "Tue, 7 Jul 2026 19:25:30 +0530")
-References: <xmqqechf8ryu.fsf@gitster.g>
-	<20260707135530.17389-1-gatlavishweshwarreddy26@gmail.com>
-Date: Tue, 07 Jul 2026 18:48:01 -0700
-Message-ID: <xmqqh5maxne6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="diX34MFt"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QxN9QzgodIjHFnADm4Ic2B3MBQQmt3DjbsBFDqQvc0yf2TG9450tgtxRaC8zEn7VUzsxA9RwE8G83XiqSWzdduOkeLQIfXS1H1ZT3H9fj8s2D1F3hQ/XWO1OwkljztZLox/W01GLBcBG9+KczZMttQpW0pp65vex4RsyEJ6j/tt5+5+m6BM1RNEWuD6bW1UGnMeSiLN3uIOQ1nUs6HvZsfYTn+Y/sc1YmUPlJCqugHn/Hc37cexLwCqyFXxny6TUUtxR2SP9aV3LcKkgYnQQQM22IliCcESNRa8R3DGDKKaXgpVaPfmwKeJWCXsYR1MtpWxoBzkf6YRBUF00k8YgNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wBbf83AAUdkRLNjgyCpPE7v+sbaaMZ6OBjkX/CgfEjI=;
+ b=WxIol6UFx3/gfzKb++8WCBADMdwFtI+j6xMr3Ea6sXxkbJU6mxJk6pQ90xJkBUM4OA+Hz8i95oxxnNUg9iN7R9IfWAAgJsZsPjyGylrfG+MXlxkr6/I8y5OBjB8o5Yn0SkuBlSaClDH2wFNzEMfDIxGUdR9FkoYcb5yL6SF7n9bRIyPduE/orwgwAAyOP5CoC2ag17GQ4tdR+VVK6/fooG9Hx1Q7xeIxW/IZP7m3NbXQMlMaQ+fYHOUU8I077piz9Lv2PU1oxZaRn/0fZqLqKIZZkGA+jhAGniazKb3HGmScylXyqbQgp3Pn6OAVnnkjC90A3RTCeQtY6i3DboomvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wBbf83AAUdkRLNjgyCpPE7v+sbaaMZ6OBjkX/CgfEjI=;
+ b=diX34MFtdYY7p2A1hb8Va+JH7jUW/Dc+ZsDaJT8CmXyGouBNbL33/OXgnSz69epcATyP+oawhMOWB+r2oODTn6ket7Montqt4VeHo+jYpH5gAmWA5cTm3j3c0rrRlkO5809SYnt+EYPc4N8Ob0MonRszbKVgJy5aIo86ZdIH1ItkmU78tj7Lv477geCFONjwIYXsGjgINxuE7PhLr3OiJHJbt1qLWbNoTh39X//ByhRroptR1Iylu0arcYKc5VPOZbfp2DbySCem3S/PAg18FdoTwxDaE+nLrGXsPYYuRAOCbZCCOQ3XjU56H9EkKWz2yRdLUQCqrlf34q9ahy4y+Q==
+Received: from SI1PPF1BAF45F0F.apcprd02.prod.outlook.com
+ (2603:1096:f:fff6::748) by KL1PR02MB7855.apcprd02.prod.outlook.com
+ (2603:1096:820:138::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Wed, 8 Jul 2026
+ 01:51:19 +0000
+Received: from SI1PPF1BAF45F0F.apcprd02.prod.outlook.com
+ ([fe80::545e:d3ab:c3df:1b6b]) by SI1PPF1BAF45F0F.apcprd02.prod.outlook.com
+ ([fe80::545e:d3ab:c3df:1b6b%6]) with mapi id 15.21.0181.012; Wed, 8 Jul 2026
+ 01:51:18 +0000
+From: Kris Point <KrisPointCSGO@outlook.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+CC: "gitster@pobox.com" <gitster@pobox.com>
+Subject: [PATCH] merge --abort: don't delete autostash before reset succeeds
+Thread-Topic: [PATCH] merge --abort: don't delete autostash before reset
+ succeeds
+Thread-Index: AQHdDnwEkwvoW58hwUqUoRdVfynT8g==
+Date: Wed, 8 Jul 2026 01:51:18 +0000
+Message-ID:
+ <SI1PPF1BAF45F0FA46A6EED57B732BB04D7ABFF2@SI1PPF1BAF45F0F.apcprd02.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI1PPF1BAF45F0F:EE_|KL1PR02MB7855:EE_
+x-ms-office365-filtering-correlation-id: dd6e4031-3d97-470f-97ce-08dedc936793
+x-ms-exchange-slblob-mailprops:
+ KW6s2gPZH1dyipT8/XWlB5ovC7kO4cWumk4guOTeR9IxZvgWFKYmE1pDHiLA4PMv01IBc4Wdnxdw93O7qgLldYgW3QvdzCIu5R05KQPhIqQiDE89Z+JS+HN+jJbLxjA0NaJTmJQXsnlOdJbK263tUvSZIS3SMTB8qAWYqkBP7fYFt1UG1W5N2pv+gUspfbPEnHLYhNWbjksGWXb+mxfTcTEf8NleSrc0qbkg5GuyQigsNpk5ddAzk4VP3WnSzaYKDJ0aQeLbF/q3HID/0ruKUnmNRZLy9Vu7z13AEEy6EeC5RAKBCf7wlnUgTU2G2IbV8JjJAa/4ogLvdWXFRqiDvqu6drfUC9HnuMaHb3Qahe3y5QkUpkslzyQ+8v26Tfwh0Q2eWO656PNdD+wGSVCp3dwosMhv0SqSpYvrYYmApxTct3BIAtt6pnYAPBfiKmDnAPbolZ0e7osFSKomPI5aPcQBqQOWfCwyO2Xdsrn5YGFHN+iHSxeVp3OWPILNTlJL4qcD/t8C2lgnWB5rWHBdcmnEgOhH6oLhURAaxUpbKsQlk7M/sgZu3SX+gPM19ieYbaCR4ocZXdX5iUnX/zVCgRFSuXDT0YArRidagyWWg5L4k6u1VI4TLsNGFiDKJ3y0WPaFp14Dmlm/FCK4SA4udMVz1F/hUPzO+tBxotMYwwwOaa+aiP+YpbDKDTIdCd+uMufJRGvnu8TS3+Dj/DE6tia8hdjBHMkWassfRGRtE/4=
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|21061999006|8062599012|31061999003|19101099003|8060799015|19110799012|15030799006|15080799012|51005399006|5040399003|5062599005|3430499035|40105399003|12091999003|102099032|3412199025|440099028;
+x-microsoft-antispam-message-info:
+ =?gb2312?B?MFI1OHZBeE5iUUZiTUFvTWxFbnBVYmtudlBWemJIWW5wQTN3L0lTZURtdlU1?=
+ =?gb2312?B?U1VzNVViTFl1azFSVWVoTk1ON1hDNjUzYXJvR1A1UmhqakFyM085QktGYWIv?=
+ =?gb2312?B?WlI3M0VzaS9XQVhoa3VCQVBoN3dpVTJhLzNuM0dManVXVEUzRjEvS284aWNP?=
+ =?gb2312?B?N29SVDZ6cHRPai9YN3EwUUkrYXBWMVVIdlg4amFONzZSUjh4a0NnV3VPRjBB?=
+ =?gb2312?B?K25lN3g0WldPS3ZDWjA2bzMzWmpqRmxicnVHYk1ielZicFFGM0dVeGVoT25L?=
+ =?gb2312?B?V1RvekxIYXhlcTBnOHE1bGQ2VHViNUVYTlJHYURMMXdOTmRkakJwSmFDQUls?=
+ =?gb2312?B?VXp0MnJoSGJNMmJjYy9nTk9JNTc5S3BxcDFMdHBYei9PcGRTRUZtSW04K3ZC?=
+ =?gb2312?B?M1N2ajliaG9QVVdXVms4SXQ3YkVOMndiZUJYQXFYZXpYNkpTcHRUMUMzRjJr?=
+ =?gb2312?B?QS8wUkJyNnVHOVhzL1NtSG9ucjBCQjkvZVBCVkVnRkNEZmE5WDJsbUtjcVly?=
+ =?gb2312?B?ZlBZQmNYVTZrRDZZZFRBMGRaTjVpQkp3SldvTUp3L1ZKS0E1bzFzTHZIRmND?=
+ =?gb2312?B?STZyWSt2bm43dGFIVzRWc1NOd21pam1TRlc0ejMvMWtTMEwvRllaZ0lmcmpn?=
+ =?gb2312?B?UGhmMlRrc1hkTVpCZ3lVNWZreHd6dUlVQi83dVVSRDZ2c2IrZEdDQ09kTUdY?=
+ =?gb2312?B?MzJoT3hOT3RNdURJK1NqZ3dHODVMZU1MTThWS0RxWW1ibGh2RnFvaW5ua3Ro?=
+ =?gb2312?B?aUJtaTNQL3pmcHVBV3RUcTB5djN3bDdLZnkzdlRZWGQ5K1g5VzhuaGo3bG1o?=
+ =?gb2312?B?aGo0ZmRTVCtVL1FzTmlMSENFa2JkdWhTalR5VUlsK1dYaWNvS2Q2eW05UWVD?=
+ =?gb2312?B?UzVWUUUwaTdtc0U0SXV1RExTSWlENHBVODZ1aktrTWE5dzJMNk81WC9Xenpa?=
+ =?gb2312?B?UTJMN2VaUDBVeTErdWRoR1VrTkt3WC84Y29UbDRSZEZTeTQyaGQyK0NIUWJD?=
+ =?gb2312?B?cENrT2tnYVE2TVRwRWZBL2d0VXJndEFLR2trYUI2L2Q1eDZCaHBlZEZvWTRI?=
+ =?gb2312?B?bWxYZUxtY0tKZVlES3Z1TmhPUzZJNUx3SlhoejNPaEI5Wk1TaXAwanlXblYw?=
+ =?gb2312?B?SEZNTHZiWjdjUXd0MThYc0NjL3pCZ3ZYbTJiTDFEZmF5R2owUkRmeXlycUxa?=
+ =?gb2312?B?b29iMVU0SUREMFhvVW1rcHl6VUJGaS9jcmd4V1pvdHVPdlZjMmF0NW56a0FG?=
+ =?gb2312?B?dUN3UE9sbDgrOFRsdGRvS3lwdlhVVm0zOGF5VGtWcjRBekRIY0w0VzcrR2d4?=
+ =?gb2312?B?cG1yTHMvVVhJeTNwQXdNY0V1Y3RvL3dMbE9adFBFdTl0Ui9POWtEQzdXTkxu?=
+ =?gb2312?B?VEVkcEFsU2ZVNWg4UXdJU3kxcHk0d2pRTkNRTmVNS1d4azBQM1lKRjMwQXFs?=
+ =?gb2312?Q?DdOjLpJX?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?gb2312?B?aERlTmJHUG1ZQzNqUlgrUVBINXZORnJ0UHpoUUsyUVM1TlluOG5PMW5aVGh2?=
+ =?gb2312?B?c1JpRDJaT1d0VTB5SENjeDhGamZKbGpOY1dVcGp6eVU2eXJWZUJGbFY2ajdK?=
+ =?gb2312?B?Mk40SDZEM2dPWnJubUJPS1RVOXI4bnpHWG44WmxLS291QTZEWExSeHR3dUxD?=
+ =?gb2312?B?KzlSTmFBLzVyWVZIM3dpNHlPdmlQOVY5Y25DOVJxUjV0c0t6RWlhdDFkWEQ2?=
+ =?gb2312?B?b0dFdWZKSHdhTTlKNWp5Zk1tRUNwajcwZnFBVFVaaTIybmszVG95VEdnVmNY?=
+ =?gb2312?B?MFRGREs2YkpXb0RMWWh2aUovUm8xRHVhU2s3SlZ6OFljSTY4MUh6dkQ1cmJX?=
+ =?gb2312?B?TGt4dDhoSHAvRXNEaUFkSEVqcVFMNkRlWkNtdVhHdmtKWmhVdTFoQ093N0Nn?=
+ =?gb2312?B?TzNqWS9SajhyU2NSNThzemRTTDc3UFR4bmRxL014NGFFL2p6aEtKNzJzSWxh?=
+ =?gb2312?B?d3FQS1BPYVEvL2NrSTVkNDI3WXQ5ZUhsSUZtZUNjM2dMWjY5STZ0S2g0QWJD?=
+ =?gb2312?B?aUd0SWUzN0NQcCtzTjVReW5GZXlHNjNJL2FuZUpFUklReTViWGh0M0pqaU5I?=
+ =?gb2312?B?WkZ3NmJnVEVHbmttR2lReWVmd1ZweEE4Y0NZaTMxYjFmRTFPRlRiSFhpVVEz?=
+ =?gb2312?B?WEJLVVl2VHVLbWI2TnBDR1VEdnUrTzgxYzBzUmFIaTJaUVh3N0R1YjZzM3U2?=
+ =?gb2312?B?MnhMMEVXdHdwTVMralBveU9YRmtXY1BZYlhvU1BzUjYrSDV2SmRVb0F4VEMv?=
+ =?gb2312?B?ZW40QVFsK1Bua0Q3ZnorR2tXRElCSDdpNktSbmxiS0ZrZWRVOTZhZVk2Nkdl?=
+ =?gb2312?B?STBmdlJpV1lLNk1uMStlejlYV25qN1o5S3lqZ0k2TGo0ZE5CSiswZnFGQ28w?=
+ =?gb2312?B?MG1DY2FkR0NQcFhLTTlwQk93NWRPOU0wS0R6TEVYUittRGcxQjZIQjlqblZX?=
+ =?gb2312?B?TG5scFhIL0lYWlZDRjZOMldaNkp3YXdLYXU5VVE2ZC9yRGtENWVFSjhwNjl1?=
+ =?gb2312?B?WkZtQktiaFBWT2Y4UnJjK0JoVGVWTjliYXY3eTQrWi95Zk5FQlZ0MkFpYnZI?=
+ =?gb2312?B?dXV1MVpqSmxKbFA0THVML0hFcExJY0MvKzdjVHBoLzBLaFgzZ085NHZCTUhI?=
+ =?gb2312?B?M2dmZElRSE1ya2ZhMlR0VE81L3J0czl3Z0grbElvcnVwQW5VdXgwZGVmdnRi?=
+ =?gb2312?B?UFlOQXFLS2dHUUNxNE9PbXQvRDc2ekRVYVgyQjJ6WWtmQ2lXYmxCRlNDWCtP?=
+ =?gb2312?B?M1FUSnBrRWdiQ0tTU21rV1BGVlVjdjhzV1N2K1NtVW93Vm9taFNZZDhsdGZC?=
+ =?gb2312?B?dGYxSFl6VThndThTbTkrTDh3SzZKUTV0bStEVnhOa3BtTWVneHd0VnRsYnA5?=
+ =?gb2312?B?emVQblhvdXVzQlRDOHZwNTdmcGpnbWxEb24yVU9JTnRvbzduS0g1YUdIbHEy?=
+ =?gb2312?B?R2w4bXNPWkZqdjg3ejVpN0JOOTR1bTBzUSt2QXVUcXNDSFg5RnNpOEx0YnEv?=
+ =?gb2312?B?RkFlbVM1ckZPcjJvd1MydmlTeHhkSUpEVUYvL0ZmcUlSUEVPc1pLU1lJb2pE?=
+ =?gb2312?B?aitiTmZWMnFsUWk0M0hSb1hzcmtuRWg1SFRKNGxSUTk1Vms4RDhPSm5XZ25u?=
+ =?gb2312?B?aURteEFWUG1VcFFCR1FDdnc0ZXNQQS83bzB5cXVsM1FsVnV4NnJHMVpGMWZY?=
+ =?gb2312?B?VlA3clZZS1JPdko0NzZ2bm51RThraWJuY25mMXRZcUtIWDVQeEFyd0pheVp3?=
+ =?gb2312?B?Y3Y5clg1NUhOaE9xYXY4VUxjbUNIeU1VcDk0Kzh4Q3BGdzRyU0F3eVFMTTJ2?=
+ =?gb2312?B?VVk3QjV1cmFPeCtoTFUzd0lvNlNMZkFVZ2hOcllRVm8vWmpOMHJZc3NYbWI2?=
+ =?gb2312?Q?flOiE54ixT2IZ?=
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI1PPF1BAF45F0F.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: dd6e4031-3d97-470f-97ce-08dedc936793
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jul 2026 01:51:18.8753
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB7855
 
-Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
-
-> Piping git commands directly to wc -l suppresses the exit code of
-> git, hiding potential failures from the test suite. Capture the
-> output to a temporary file first, then count the lines separately
-> to preserve the exit code. Where the expected count is known ahead
-> of time, use test_stdout_line_count instead.
->
-> Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-> ---
->  t/t1410-reflog.sh | 29 ++++++++++++++++-------------
->  1 file changed, 16 insertions(+), 13 deletions(-)
-
-The above descripotion looks reasonble.
-
-By the way, Documentation/SubmittingPatches has this:
-
-    Before sending another version, make sure you have answered
-    meaningful review comments in the existing discussion.  Also
-    give reviewers enough time to comment before sending another
-    version.
-
-> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-> index ce71f9a30a..8e018d172b 100755
-> --- a/t/t1410-reflog.sh
-> +++ b/t/t1410-reflog.sh
-> @@ -244,26 +244,30 @@ test_expect_success 'delete' '
->  	test_tick &&
->  	git commit -m tiger C &&
->  
-> -	HEAD_entry_count=$(git reflog | wc -l) &&
-> -	main_entry_count=$(git reflog show main | wc -l) &&
-> -
-> -	test $HEAD_entry_count = 5 &&
-> -	test $main_entry_count = 5 &&
-> -
-> +	test_stdout_line_count = 5 git reflog &&
-> +	git reflog >reflog_output &&
-> +	HEAD_entry_count=$(wc -l <reflog_output) &&
-> +	test_stdout_line_count = 5 git reflog show main &&
-> +	git reflog show main >reflog_main_output &&
-> +	main_entry_count=$(wc -l <reflog_main_output) &&
->  
->  	git reflog delete main@{1} &&
->  	git reflog show main > output &&
->  	test_line_count = $(($main_entry_count - 1)) output &&
-> -	test $HEAD_entry_count = $(git reflog | wc -l) &&
-> +	git reflog >reflog_output &&
-> +	test $HEAD_entry_count = $(wc -l <reflog_output) &&
->  	! grep ox < output &&
-
-Now, you no longer have new consecutive blank lines in the above,
-but the above shares the same "what did the author meant to convey
-with this blank line?" puzzlement.
-
-The updated code somehow wanders around in many directions like a
-drunken man.  Let's comment on each line.
-
-> +	test_stdout_line_count = 5 git reflog &&
-
-This is "Does the reflog for HEAD have exactly 5 entries?" test.
-
-> +	git reflog >reflog_output &&
-> +	HEAD_entry_count=$(wc -l <reflog_output) &&
-
-As we already saw that HEAD_entry_count variable is exactly equal to
-5, it is puzzling why we want to perform this computation again and
-assign the result to the variable.
-
-> +	test_stdout_line_count = 5 git reflog show main &&
-
-And then we check "Does the reflog for 'main' have exactly 5
-entries?"
-
-> +	git reflog show main >reflog_main_output &&
-> +	main_entry_count=$(wc -l <reflog_main_output) &&
-
-And recompute what we already know and asssign to main_entry_count
-variable, which shares the same puzzlement.
-
->  
->  	git reflog delete main@{1} &&
->  	git reflog show main > output &&
->  	test_line_count = $(($main_entry_count - 1)) output &&
-
-Now, after a blank line, it goes on to test a completely different
-thing, which is "after deleting an entry in main's reflog, can we
-count how many there is, and does it match what we expect, which is
-the previous count minus 1"?  Why should we even need to do so, when
-
-	git reflog delete main@{1} &&
-	test_stdout_line_count = 4 git reflog show main &&
-
-would do just fine?
-
-> -	test $HEAD_entry_count = $(git reflog | wc -l) &&
-> +	git reflog >reflog_output &&
-> +	test $HEAD_entry_count = $(wc -l <reflog_output) &&
-
-And then it comes back to test what we already know, i.e. "does the
-reflog for HEAD have 5 entries?".  Which we tested earlier already.
-
-Are we interested in checking that "reflog delete main@{1}" does
-not affect the reflog for HEAD?  If so, doing
-
-	test_stdout_line_count = 5 git reflog &&
-
-again here would be simpler, no?  That way, there is no need to
-recompute and assign to the {HEAD,main}_entry_count variables in the
-earlier part of the tests.
-
-I guess the same comment applies to the remainder of this test,
-where it is checked that a removal from HEAD reflog does not affect
-the reflog of main.
-
-
-
->  	main_entry_count=$(wc -l < output) &&
->  
->  	git reflog delete HEAD@{1} &&
-> -	test $(($HEAD_entry_count -1)) = $(git reflog | wc -l) &&
-> -	test $main_entry_count = $(git reflog show main | wc -l) &&
-> +	git reflog >reflog_output &&
-> +	test $(($HEAD_entry_count -1)) = $(wc -l <reflog_output) &&
-> +	git reflog show main >reflog_main_output &&
-> +	test $main_entry_count = $(wc -l <reflog_main_output) &&
->  
-> -	HEAD_entry_count=$(git reflog | wc -l) &&
-> +	git reflog >reflog_output &&
-> +	HEAD_entry_count=$(wc -l <reflog_output) &&
->  
->  	git reflog delete main@{07.04.2005.15:15:00.-0700} &&
->  	git reflog show main > output &&
-> @@ -319,13 +323,12 @@ test_expect_success 'git reflog expire unknown reference' '
->  	test_must_fail git reflog expire does-not-exist 2>stderr &&
->  	test_grep "error: reflog could not be found: ${SQ}does-not-exist${SQ}" stderr
->  '
-> -
->  test_expect_success 'checkout should not delete log for packed ref' '
-> -	test $(git reflog main | wc -l) = 4 &&
-> +	test_stdout_line_count = 4 git reflog main &&
->  	git branch foo &&
->  	git pack-refs --all &&
->  	git checkout foo &&
-> -	test $(git reflog main | wc -l) = 4
-> +	test_stdout_line_count = 4 git reflog main
->  '
->  
->  test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
+RnJvbSBiZjRiMTI0MzhhODNkODFmMmM4ZGY2ZTM5ZjYxMTRkZGQ1MDAyNDMwIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBLcmlzUG9pbnRDU0dPIDxLcmlzUG9pbnRDU0dPQG91dGxvb2su
+Y29tPgpEYXRlOiBUdWUsIDcgSnVsIDIwMjYgMjA6MTA6MDAgKzA4MDAKU3ViamVjdDogW1BBVENI
+XSBtZXJnZSAtLWFib3J0OiBkb24ndCBkZWxldGUgYXV0b3N0YXNoIGJlZm9yZSByZXNldCBzdWNj
+ZWVkcwpUbzogZ2l0QHZnZXIua2VybmVsLm9yZwpDYzogZ2l0c3RlckBwb2JveC5jb20KCkluIGNt
+ZF9tZXJnZSgpJ3MgLS1hYm9ydCBwYXRoLCBNRVJHRV9BVVRPU1RBU0ggd2FzIGRlbGV0ZWQgYmVm
+b3JlCmNtZF9yZXNldCgpIHdhcyBjYWxsZWQuIElmIGNtZF9yZXNldCgpIGZhaWxlZCAoZS5nLiBk
+dWUgdG8gYSBsb2NrZWQKaW5kZXgpLCB0aGUgYXV0b3N0YXNoIHdhcyBwZXJtYW5lbnRseSBsb3N0
+LgoKSW5zdGVhZCwgcmVhZCB0aGUgTUVSR0VfQVVUT1NUQVNIIE9JRCB3aXRob3V0IGRlbGV0aW5n
+IHRoZSByZWYsIHJ1bgpjbWRfcmVzZXQoKSAod2hpY2ggaXRzZWxmIGNhbGxzIHJlbW92ZV9icmFu
+Y2hfc3RhdGUoKSAtPgpzYXZlX2F1dG9zdGFzaF9yZWYoKSB0byBwZXJzaXN0IHRoZSBzdGFzaCks
+IGFuZCBvbmx5IGFwcGx5IHRoZQphdXRvc3Rhc2ggb24gc3VjY2Vzcy4KClJlcG9ydGVkLWJ5OiBL
+cmlzUG9pbnQKU2lnbmVkLW9mZi1ieTogS3Jpc1BvaW50IDxLcmlzUG9pbnRDU0dPQG91dGxvb2su
+Y29tPgotLS0KIGJ1aWx0aW4vbWVyZ2UuYyB8IDExICsrKysrLS0tLS0tCiAxIGZpbGUgY2hhbmdl
+ZCwgNSBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4v
+bWVyZ2UuYyBiL2J1aWx0aW4vbWVyZ2UuYwppbmRleCA1YjQ2YTU5NmYwLi41ZDlhMjQyMDI3IDEw
+MDY0NAotLS0gYS9idWlsdGluL21lcmdlLmMKKysrIGIvYnVpbHRpbi9tZXJnZS5jCkBAIC0xNDI3
+LDE1ICsxNDI3LDE0IEBAIGludCBjbWRfbWVyZ2UoaW50IGFyZ2MsCiAJCWlmICghZmlsZV9leGlz
+dHMoZ2l0X3BhdGhfbWVyZ2VfaGVhZCh0aGVfcmVwb3NpdG9yeSkpKQogCQkJZGllKF8oIlRoZXJl
+IGlzIG5vIG1lcmdlIHRvIGFib3J0IChNRVJHRV9IRUFEIG1pc3NpbmcpLiIpKTsKIAotCQlpZiAo
+IXJlZnNfcmVhZF9yZWYoZ2V0X21haW5fcmVmX3N0b3JlKHRoZV9yZXBvc2l0b3J5KSwgIk1FUkdF
+X0FVVE9TVEFTSCIsICZzdGFzaF9vaWQpKQotCQkJcmVmc19kZWxldGVfcmVmKGdldF9tYWluX3Jl
+Zl9zdG9yZSh0aGVfcmVwb3NpdG9yeSksCi0JCQkJCSIiLCAiTUVSR0VfQVVUT1NUQVNIIiwgJnN0
+YXNoX29pZCwKLQkJCQkJUkVGX05PX0RFUkVGKTsKKwkJcmVmc19yZWFkX3JlZihnZXRfbWFpbl9y
+ZWZfc3RvcmUodGhlX3JlcG9zaXRvcnkpLCAiTUVSR0VfQVVUT1NUQVNIIiwgJnN0YXNoX29pZCk7
+CiAKLQkJLyogSW52b2tlICdnaXQgcmVzZXQgLS1tZXJnZScgKi8KKwkJLyogSW52b2tlICdnaXQg
+cmVzZXQgLS1tZXJnZScgKHdoaWNoIGFsc28gY2xlYW5zIHVwIG1lcmdlIHN0YXRlLAorCQkgKiBp
+bmNsdWRpbmcgc2F2aW5nIHRoZSBhdXRvc3Rhc2ggdG8gdGhlIHN0YXNoIGxpc3QpLgorCQkgKi8K
+IAkJcmV0ID0gY21kX3Jlc2V0KG5hcmdjLCBuYXJndiwgcHJlZml4LCB0aGVfcmVwb3NpdG9yeSk7
+CiAKLQkJaWYgKCFpc19udWxsX29pZCgmc3Rhc2hfb2lkKSkgeworCQlpZiAoIXJldCAmJiAhaXNf
+bnVsbF9vaWQoJnN0YXNoX29pZCkpIHsKIAkJCW9pZF90b19oZXhfcihzdGFzaF9vaWRfaGV4LCAm
+c3Rhc2hfb2lkKTsKIAkJCWFwcGx5X2F1dG9zdGFzaF9vaWQoc3Rhc2hfb2lkX2hleCk7CiAJCX0K
+LS0gCjIuNTMuMAoKSSd2ZSBhbHJlYWR5IGNoYW5nZWQgdGhlIGZvcm1hdCB0byBwbGFpbiB0ZXh0
+LiBJIGRvbid0IHRoaW5rIEkgZGlkIGFueXRoaW5nIHdyb25nLg==
