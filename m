@@ -1,145 +1,165 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB9438B140
-	for <git@vger.kernel.org>; Wed,  8 Jul 2026 11:46:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783511167; cv=pass; b=PhqGTgM1HB9JXPdJm40aRTFunSRQd4U4FXuc472KXypAtwipQdH4tULzAtQTRh5xDPqQnSLAjyR3Yt3jWtkjkQSbR4nKfq1l0Rr7O0Fan19CqZmwS+1d7LxcqEhAZ8O9KInLXIrEIiBkebWbea9KUCTAIle8qfSrR3rosJRtQ20=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783511167; c=relaxed/simple;
-	bh=jziAoF+p98LIHX+1C1Wtkg3gQ56qVMSux5GpcLriO1o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JtBInvcWgzgmAp2KsJWUBZlamoVHBGifyPpwK4BZZlvB0D93/ROoH3vaQDdW1soyXiE/vim+YEvJuosvgajtsoZ/A1OfXO/S5CwDp1wWdHIHxX4bpejEjBXIr6Us6UkRi9WhBdWdwWSGFaZTzfuknD9H3vMwJg9OT65WvAONN94=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=KhBnX0JK; arc=pass smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D763F432BDB
+	for <git@vger.kernel.org>; Wed,  8 Jul 2026 11:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783511740; cv=none; b=dyY7EenoQlcNbZPAyeTfNbpeH8NrAoXGGd8isz6eYjoAycsUXUbQ95faIznyFlRVDbPzcZwH2UVsgPe1Mh4+J5GgW03EfLIl9t8m2mKUP0DCL2IuXB6fPOickbsqZZZLBniIY/qIEkaAyqr3sJOCHXLdixQyVSVwB4UHIbB49Tk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783511740; c=relaxed/simple;
+	bh=cZ2+DHXrPbjueQuqqNHCpXuvX0qo0PfuudKUHwHshfE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U2hl171cAdZQimDdlrJgtv1cQLezuIJ7cmCi67hkRYgiQQRnO/9gj/YUCOrIAr4UAjZQEhAyJOOgZOEyO98Wb8zeqiRsUWMgo55iHJrTG2z/Uv/sq0IAPlOPhsHSRstraH4RW6GTr/Aqe4Xu6mJJX/o8bXkxHMb4sYhme0H10u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=STFQ5pm+; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="KhBnX0JK"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-664d78637f8so781556d50.3
-        for <git@vger.kernel.org>; Wed, 08 Jul 2026 04:46:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783511165; cv=none;
-        d=google.com; s=arc-20260327;
-        b=chulVBetdRu0zIJoQkvanpwDl5JQhgasBAYnNzeoyhmAtNQ2r3dzp+M4yljQhd+h6o
-         zfQbIikIkvln1/5J/xiJo4KKJkqocKazGYlfBcmgDqyaFIc9eUVou370h1Fa3Xyec5Cj
-         YVNXvNhF+q2ciCPxKD0MgOBadz7g7K4sm2B7QHX2J9zjSMUe2nbMFF29TFUXAhhY6V/i
-         LyZRPoEHEKjgI4SfzbP3L4r2STSjmGOqz9jZNfGMa9IvQ5cxiw4dnTBIMfv0l5uyZxXJ
-         P0Hx2IwWnemFl+DBaxD56beewsH3J/tcV2qoeBMdl6EelNzdBE9ZBXMK/3aAPELjusVJ
-         Ishg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ICF4rfebBGewdLg4o1wtn/ApyvLEADe0IwpeT/g/PYc=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=f7OwgrFhxAmX0ROpW/zgCgiFOZhVj5voQIxW8jdg9w2Qq6eEf2AV7Tk2ASCOYkRVXW
-         ZaByAHICdCtlLhdYl5H4/kPQJtIif7cPoG56QIaZmopRUbXCNzXoWB1Yw5a/7t3xAqNW
-         MGdvjLIkDp0Ag3AMJAabQ1dUj3y04d+hDFUDtsDeXiGqHSp+/ia6jCG1WWbfIY1nnzsz
-         Coo1CFBfevYXPjJuR9Jn/ost3YzUSQAAiMWB5my8gS6DAoTxjsid8d/vK2celli0aOTt
-         tyrsWjdQe6ptmZPTh9VRHhHyoC/l03e0aeSrZR6xaFwtBPLC9g2OC5c9VLjw7V8jN41s
-         4Ylw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1783511165; x=1784115965; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ICF4rfebBGewdLg4o1wtn/ApyvLEADe0IwpeT/g/PYc=;
-        b=KhBnX0JKIPnAwjaJlLdxZFcTsBkBY43qR2vonCHbMJ1gXQHWh6eco/GtDjJ22rLgxI
-         W4giwZjx4Ag/NLtJLXfsU9OfMav/OPSmGzKgTBQRoyS0wprFFRBZSei9c28BGCDw+fcf
-         A3c/FHqxK20fE8ccgCbHSy8GUxmPyZ7rXFh2U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783511165; x=1784115965;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ICF4rfebBGewdLg4o1wtn/ApyvLEADe0IwpeT/g/PYc=;
-        b=nPiiFN32sexoZWUwNQvM87RVudjMb+UljPSdxY6Xs6NqJc6y3cn9BfDpjgEIT0qpEP
-         T/IpcXN68x+KqO+m2hxcMiVZvofl4VFZH8xR4ZEZFwY0JG7koAAaNoPEZSL1z21b0ZGZ
-         1R5wyCMaTAQMyRjvFq8JDJditASpfOfzo8gnNiWyVXsqQp6Fg2HsCxJwg3NLzIBvxDxH
-         GNwMMq50lmhH8WBO+tiBBSkXAhJcj+i8XQ0gI4kGXGkiqC1qKRd89mBqyPWQMIUquHEE
-         s0QewtoyN8y7uIago11JxymkEPsMbh0FljhiCBhPdVQB95hLsX1QrHX8mic5k+ITU+7Y
-         +5cQ==
-X-Gm-Message-State: AOJu0Yx9MQm8WzAGKLQdNHL7jPr5vAp2THNmWErCVtRsL06enGLglhuv
-	E0WKgLTWwhnMpXpkhQkZ6VFxeTYSedwbNQTJIX3QkrxEt9p29Q6hjC9wopLMAahp7hEwDLfO2Io
-	8dPS6yU0xiLZwKfy5FYzbaXr365K42bJuFJnRFYZREuk1w2TFlAgfezaa6Q==
-X-Gm-Gg: AfdE7cnOAARBdK6vWyUJd8ObBYE0hMre3tXL1bvO6BBKJY69dl0p3+LZww6/3HP3ZJ+
-	DpvnjvTOZnDhhs+ftkwZHP8l38Dk01wW9em0HvQNl7dLYvkl5CK0tkUDhUgGgc4ZC2fzYuENBn8
-	Xq1Mp9ftkYsdfnPKieFdfxkLCiyKWyKocqFpXiJRhez2rDltA8a9kzE6+iPlpm8GLzG2EBXvl2U
-	aheLCgUIkxSk5oG+QVjzcVjAgCmrNQPdJ8CcV3FgXxzTRCUjCe7Cy60gaS+gAd4ByJmCCeCrA==
-X-Received: by 2002:a53:ac88:0:b0:662:c4c4:dabf with SMTP id
- 956f58d0204a3-6679f00484dmr1743919d50.16.1783511165108; Wed, 08 Jul 2026
- 04:46:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="STFQ5pm+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1783511736; x=1784116536; i=l.s.r@web.de;
+	bh=j2cr5Qw94jNtLPb65TB/IwPgQJn086pjV0JZAKFD2iw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=STFQ5pm+BcxAuxP0E6WTzkuso2fApgN4I19WF0hyNdxAi+kqglYnz85oK9eRfK0N
+	 ApkCKWZYYow9Y/3JlyNb9+8/DfPalDdd58Ap8so4S8y2jwwTPjy6Rv4OXPzEXyM7a
+	 FAFmLIljm+E/EDm1/vNg6VI3hB4R3UthDokF2E/fmOKAVqmxamsqJnAVRskA7ieBj
+	 SFsJaeVA3lcZOVqU7gF9exFhdWpH4JVWK/zfX/Ioe7JgBIEGJLgvYsfGPyVU+dEQB
+	 01JMuR+bD7VegJrqn+0sU1trXphSf2t3s5qFQNw9TQqU+Wd4xuOWdh3sBE6q1X6jx
+	 DABvMkJxMUvAgtGkiw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MCogs-1wqCIh3sDw-00AA5u; Wed, 08
+ Jul 2026 13:55:35 +0200
+Message-ID: <15fa1b16-b911-47b1-a843-400e320d7e4f@web.de>
+Date: Wed, 8 Jul 2026 13:55:35 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqeche67lr.fsf@gitster.g>
-In-Reply-To: <xmqqeche67lr.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Wed, 8 Jul 2026 13:45:54 +0200
-X-Gm-Features: AVVi8Cc43vl_UuY9UmA-WlpV1FujX8LKuQKxk3PuvNAeoAIXmHDFjC1t6I-UG24
-Message-ID: <CAL71e4MrQ25WJHp-08bTS2=y-gd36zs9CVYmYGeRv-6iCpdfdQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2026, #03)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] prio-queue: use cascade-down for faster extract-min
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2132.git.1780250236304.gitgitgadget@gmail.com>
+ <pull.2132.v2.git.1780301856444.gitgitgadget@gmail.com>
+ <90270818-c52b-4611-8da2-6cee20628fc2@web.de>
+ <CAL71e4Ob-B5MJ5DPY+_tzpj6nyrbQ5WutxED2T93SWJV6kJGPA@mail.gmail.com>
+ <CAL71e4PV-1aDvn1JnweMa3OR1xxB75fWjzJOBvM54KOWqC0stw@mail.gmail.com>
+ <1aa5b755-0f74-46d5-bd6e-a9cb7f3fbb12@web.de>
+ <CAL71e4NZYdpw5cvi6ARn1req8xaRGGg9X4xhZKp6S9Dz4K23aQ@mail.gmail.com>
+ <57bb0e9e-221d-4234-b5bc-a87610e8263c@web.de>
+ <CAL71e4NiSSRgxO_L7vb5=ohnchOCvuhEZwMc0Ls+Xu-Q+YytDg@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAL71e4NiSSRgxO_L7vb5=ohnchOCvuhEZwMc0Ls+Xu-Q+YytDg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:tc7os6igkIe8g0MvnKj7bxTrWEyC1terb7r9FGzm1ROyti+5jGz
+ tEAYAgMDdvjW7aJBYlpTZq9e6qKKTpnDrhSBFCC1DGR47RxHWuInZb+JBUXCdYn1ECd0NeE
+ 2p3/lz7OkJxUUST2lg+S5GuHdzqxDh15zBAWnsXXOxBTcPWAZ3ZumsnMLf6/oWzzSzfOi9D
+ uckeLckW/JTcda1CCCRcw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:nNCgpfTIrYg=;We1qLrpNNm26fIvH6VHK7A40jFp
+ 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
 
-On Tue, 7 Jul 2026 at 19:19, Junio C Hamano <gitster@pobox.com> wrote:
->
-> * kk/commit-reach-find-all-fix (2026-06-29) 2 commits
->  - commit-reach: guard !FIND_ALL early exit with generation ordering check
->  - t6600: add test for merge-base early exit with clock skew
->
->  The early-exit optimization in 'paint_down_to_common()' has been gated
->  on the queue being generation-ordered, fixing a bug where 'git merge-
->  base' (without '--all') could return incorrect results on repositories
->  with v1 commit graphs and clock skew.
->
->  Comments?
->  cf. <xmqqa4sdw55v.fsf@gitster.g>
->  source: <pull.2162.git.1782739162.gitgitgadget@gmail.com>
+On 7/8/26 12:59 PM, Kristofer Karlsson wrote:
+> On Wed, 8 Jul 2026 at 12:44, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>>
+>> I didn't
+>> find this method used anywhere else, which is a warning sign, but I
+>> can't find any catch.
+>=20
+> I am not sure why it's a warning sign to have no other usages,
+> especially when it's a file local static function.
+I meant that I didn't find this optimization in other priority queue
+implementations or papers, but admittedly I didn't do an exhaustive
+search.  Given it's benefits I would have expected to find prior art
+on it pretty easily, though.
 
-[snip]
+Ren=C3=A9
 
-> * kk/merge-base-exhaustion (2026-07-01) 10 commits
->  . commit-reach: remove commit-date ordering fallback
->  . commit-reach: move min_generation check into paint_queue_get()
->  . commit-reach: terminate merge-base walk when one paint side is exhausted
->  . commit-reach: introduce struct paint_state with per-side counters
->  . t6600: add clock-skew topologies and step counts for edge cases
->  . commit-reach: add trace2 instrumentation to paint_down_to_common()
->  . t6099, t6600: add side-exhaustion regression tests
->  . t6600: add test cases for side-exhaustion edge cases
->  . test-lib-functions: improve diagnostic output for trace2 data assertions
->  . Documentation/technical: add paint-down-to-common doc
->
->  The merge-base computation has been optimized by stopping the walk
->  early when one side's exclusive commits in the queue are exhausted,
->  yielding significant speedups for queries with one-sided histories.
->
->  Expecting a reroll.
->  cf. <CAL71e4PgcZDK-gJziJa_yjEqX9TE+PFMwZn0xbjAUzuUDDDBYA@mail.gmail.com>
->  source: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
-
-Small note regarding these two - kk/merge-base-exhaustion is
-(unfortunately) dependent on kk/commit-reach-find-all-fix
-before a reroll.
-
-I tried building v6 of kk/merge-base-exhaustion on top of
-kk/commit-reach-find-all-fix but since that one is based
-on kk/paint-down-to-common-optim it does not include
-the changes from kk/commit-reach-optim which I also depend
-on.
-
-I thus think the status of kk/merge-base-exhaustion should
-instead be:
-"On hold, waiting for kk/commit-reach-find-all-fix to land first."
-
-Alternatively you could rebase kk/commit-reach-find-all-fix
-on master (triggers a small conflict though) and that would
-also unblock a reroll (but I don't want to generate more work for you).
-
-Thanks,
-Kristofer
