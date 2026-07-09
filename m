@@ -1,111 +1,159 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D04C4499AC
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 21:44:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5698E36405C
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 22:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783633444; cv=none; b=uKzkxRO9lkWtjTYpdQRR1dGD8vb8+6JRnb2r64/KCRS6Bi7l5darJJbeoMpXVkboM7nEKbksEOXvN9TFfimIeBnmMAq1cW2PzT/WQpiHG952+i45xhrPAUj0ZEo7mC94BojiFpLpPeMpTF1wpqN7cirrIJmyqjtrOzFUJJzCT0A=
+	t=1783637013; cv=none; b=RC0njAajEExHoOZ7bXtwQcE2u3yBCtLiZDwktdrbwvVMumEbDeyRLhiRQVVT7AR1xzg+1Bd52lin0lnNY48ZVIw7A8FNPxHhlepAcTVAl/eG8iMHzIygpjKV0Y0yXz7fhcpQ1PcLAl4aQncmV6wzHZO3U0sfjYtURggjEjJ6rXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783633444; c=relaxed/simple;
-	bh=Ri8EueB59aQW8fItXfK1Wh4niyjn/vPWHLTkyGqJbAI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C+lv6LztMNCKtY/U2c/Tne40taH7goB+QZYHma2rMBNHsCvf6qkx9YEBGmZh5rqR0wcjkooeBYIQS0+wTqOVKnZf2MMITBA4F8yD+14mMgnkKZWBhUUyqhGmjgoswPnfeV+EGimMEYc4zjAzXKCqn7w8DWGbLWCJAm1/h4pJHLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I1FstsJa; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783637013; c=relaxed/simple;
+	bh=1MJH3I32HlBmrL4vZdqnVMbkzjbaT5rqJ7y6xi/b4SY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZggfiHaspcQP0BDrtSYLbyQOCACOsN2LiKXR2d2qTqQyo/RW0IQM/gRjeOkhR5/uNTZo9UJWN9VrKh7F3SqVcwQlxficgpPeZxmVWz+wnnfAAU7jSo7DG3yvdY7jfwS7Mg07lqU2/zesqUrl/C1no6nIvkvN2HZEUEX2R6c8nEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=neyR5QCJ; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1FstsJa"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6a373df7d4eso137911eaf.2
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 14:44:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783633442; x=1784238242; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=EB+xK7X/9QJ/O5EMChCo9hEr08NQwhNMIem09/CWt3c=;
-        b=I1FstsJaON6pzIPXl7D/KauioHSFM2V4fo3uWoq4SN6l19xodg6kb5746bjqxFnD+S
-         EfyVP+2/drtJ0DcVqjCH0EQMD5X5CNGeuyrZOgZwETfCKJy8I2mKtKHXaoBM1UI5tCZF
-         KMu/g1/vFcP5Xt7mqvrIfdNqjxQqAGENka6eUoz5741GvlgUn71yMEOnlRkGaNIe8nkt
-         fNaX22ssfyM/ihRD0p0Iq19Yz5pzkiOIrrj+BWjIAHfXAdW/Ko/Bth6n+Mn+ty+ZhlB3
-         xa292lqaR1wIWuLDUOA2TwG2KG8BZsPkegeOuJ3VAQm2sVu0t7maT+rhtnKsF3coBeos
-         ngdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783633442; x=1784238242;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EB+xK7X/9QJ/O5EMChCo9hEr08NQwhNMIem09/CWt3c=;
-        b=RO8ql/ntzNgCAgdUcT+iZv3x6uGeL77se1KLTJEkEfR49B14SA8Z02zYi37FIBcOOO
-         B2KQ3VgxtiZ/qogfht61TdTDiX5ibg7xLchep8rS4ugv2YVVGtnFQRzFy4kVFmI7y1Sc
-         X0xWAnoXRaoJAs+NBLzZxY0146YUzZ3KOl2ALV06DuW1v8tixObUN54NjxwTFBefa8Mq
-         68eOWHZjkxVFYcY+qKJ7HIO5RBOlbFmH4j+y9rtgf8EpsEDRAPlC57Mcj+EoXcEx2Ogg
-         8UFkQ0tsNe9nHcZlHaclV41opq29q9Vo3/MuBj+D5SjodnrLItiuvK8d4Lv3UHsDHuqw
-         /rAA==
-X-Gm-Message-State: AOJu0YzoOBM0LUq9EAcz1b2N4vT1W4CbsQ9+kzHKgweuuJ/v2tjGYUhc
-	jxbYtfkOZcmAxylgwqtUMl2JWW+cLny+KI1kDDiJEB4XLjNOO6NQmg0b
-X-Gm-Gg: AfdE7clyBfLSxX/wGaFxyGSMf1fc2D7dlnJrdgog7R/RdQmpj5b9nLR84n7HdqUp02C
-	aFtAUFy2qP2OYlKZMriU2VKYsvKubmkhKMhYCFGZU/HRaYOAexlKJ4srtRwoQVX+hRZq6AYTp3b
-	EfFPBigvi4Hnn0iP+/hgKiLTiZoNQuPYiEvF0rJkhuzX2JdQuwRgxJl9FXd8ZC9QowlKcRVpz2E
-	p1V1DRMJD8JIICU49sma7SpM/I1+WcfdTSq54XKINOePeoOkqmGdipK8Xj/iRRM2HZrydYV0/2Y
-	bSTc4ix7LbtTzFt9sb7BDzgicLVlsaAoNtbqP2bElPzfYBC5KpjbQGDXeZQogfM4yrjo4ZMtK/Q
-	9ZW1k+OAgzMMjpGRd6EANhDcMrmu8Y6jpFmpEehznKmJCTRuj3gZBU6d++gWfrZcbTaKuhfvPk5
-	2MY/ujsg==
-X-Received: by 2002:a05:6820:213:b0:6a3:8898:1811 with SMTP id 006d021491bc7-6a388981c7fmr1533473eaf.13.1783633442394;
-        Thu, 09 Jul 2026 14:44:02 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4519124d07dsm3129956fac.2.2026.07.09.14.44.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 14:44:01 -0700 (PDT)
-Date: Thu, 9 Jul 2026 16:43:58 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/7] odb: introduce object filters to
- `odb_for_each_object()`
-Message-ID: <alATd_YS2d_l3CHq@denethor>
-References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
- <20260709-pks-odb-for-each-object-filter-v1-6-82fe014b12b3@pks.im>
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="neyR5QCJ"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1whxSi-004CQZ-3J
+	for git@vger.kernel.org; Fri, 10 Jul 2026 00:43:20 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=4ytWG4C4D77oq2wQlIeHkTFNqJjtUTWCXIRO0IgBv5g=; b=neyR5QCJv8d5nzzk+Ed7yOwZxu
+	0rQTVe2DG+Q/VfI6swkw7IFF8noX/+/fnPdj8eUWuStEsRjbHA5kBKAqqwR2J848CXfNPOMzlkFm8
+	M889Znyabz2LBGb7bKR6DEKaG+ImIGb7YZeGiDVSyC4ecd4/re+dbU7mr6GGdui+R/DUAAaNFLBnm
+	r/AM7iv5EDOT9CofHUXVKS+pi4MR/ccEKwP7FdYZ1SPqS4vgyUspUoxvCpfWC+wMp9ndu/Ve8KHdV
+	aX+CoNyJgw9isGN+Odbcti/fV61HVfv3U0DwcIVnLLXBiQIgxexRPxuXGfSnrx7XaoYQQ/KMb+nmF
+	/HF7gqFg==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1whxSh-0004Pu-CT; Fri, 10 Jul 2026 00:43:19 +0200
+Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.95)
+	id 1whxST-002cDo-UW;
+	Fri, 10 Jul 2026 00:43:06 +0200
+Message-ID: <c8b81987-ab56-4d6b-a650-879b84597a17@howdoi.land>
+Date: Thu, 9 Jul 2026 17:43:02 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260709-pks-odb-for-each-object-filter-v1-6-82fe014b12b3@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust
+ rewrite [and 1 more messages]
+To: Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
+ <20260706115816.20267-3-ijackson@chiark.greenend.org.uk>
+ <9ef8cfcc-ab47-479b-9f23-71ba99e1e56b@howdoi.land>
+ <20260706115816.20267-2-ijackson@chiark.greenend.org.uk>
+ <f557bfcf-ffd2-4903-8015-97fff97dbe09@howdoi.land>
+ <27215.27575.968985.583226@chiark.greenend.org.uk>
+Content-Language: en-US
+From: Colin Stagner <ask+git@howdoi.land>
+In-Reply-To: <27215.27575.968985.583226@chiark.greenend.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 26/07/09 10:35AM, Patrick Steinhardt wrote:
-> The function `for_each_bitmapped_object()` can be used to iterate
-> through all objects covered by a bitmap. The benefit of this function is
-> that it allows the caller to efficiently handle some object filters. For
-> example, this can be used to filter out objects of a specific type with
-> some simple bitmap operations. But callers are currently required to
-> manually wire up the use of bitmaps though, and to do so they have to
-> reach into internals of a given object database source.
+On 7/9/26 04:36, Ian Jackson wrote:
+
+> Colin Stagner writes ("Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust rewrite"):
+>
+>> I think that subtree merge should only test the top-level project, as
+>> this patch does now.
+>
+> By "top-level" I think you mean what I've taken to calling the
+> "downstream": the project where the subtree is in a subdir, and whose
+> top-level has other stuff.  In which case I agree.
+
+Yes, I think we're talking about the same thing.
+
+In retrospect, "top-level" is ambiguous. "Upstream" and "downstream" may 
+be as well. Within git-branch(1), the phrase "upstream" refers to the 
+remote tracking branch set by
+
+     git branch --set-upstream-to=<upstream>
+
+git-merge(1) is consistent with this.
+
+     "If no commit is given from the command line, merge the
+      remote-tracking branches that the current branch is
+      configured to use as its upstream."
+
+git-subtree.sh doesn't really deal in "upstreams" in the git-branch or 
+git-merge sense.
+
+Less ambiguous language is available:
+
+For merge commits, there is the "first parent" and "second parent" (or 
+3rd or higher parents).
+
+For trees, there is the "root tree" and "sub-trees," like `git ls-tree -r`
+
+     -r     Recurse into sub-trees.
+
+Both of these deliberately ignore the dependency relationship between 
+the various projects and branches in question, which can potentially get 
+messy.
+
+>>> +	if git rev-parse --verify -q "$rev:$config"; then
+>>
+>> For subtree split, should we also test for this file in tree you are
+>> splitting: i.e., "$dir/$config"? The answer might be no.
 > 
-> Introduce a new `struct odb_for_each_object_options::filter` field so
-> that the interface becomes generic. When set, then a backend may
-> optionally use the filter to skip some objects that it would have
-> otherwise yielded.
+> You're right that we should consider this question.  The answer is:
+> no, we should not.  Briefly, whether to use the new or old algorithms
+> depends on whether the downstream has adopted the new git-subtree, not
+> on whether the upstream has added some optional config.
+
+Very well-reasoned; I like it.
+
+Let me ask this question in a slightly different way: does RIIR subtree 
+honor config files in locations other than the one you test for above? 
+That's
+
+     ${rev}:.git-subtree/config
+
+which is `.git-subtree/config` within the root tree of the rev that is 
+being manipulated?
+
+If this is the only config file RIIR subtree honors, the patch is 
+probably correct. If RIIR subtree honors config from other places, such as
+
+* the working tree
+* HEAD:.git-subtree/config
+* HEAD:./.git-subtree/config
+
+then consider testing for those if appropriate.
+
+>> Subtree merges can be performed without git-subtree, via the `-X
+>> subtree` merge strategy option.
 > 
-> Note that the respective backends are free to ignore this field if they
-> cannot meaningfully optimize for a given filter, and consequently
-> callers need to verify whether they actually want the returned objects.
-> While annoying, we cannot easily lift this restriction anyway as the
-> object filter infrastructure supports some filters that cannot be
-> answered by the object database alone.
+> This is what I'm calling an "unmarked subtree merge".  My rewrite is
+> not going to support this user behaviour.  The problem is that it is
+> not possible to reliably determine whetheer something is an unmarked
+> subtree merge.
 
-Huh, this feels rather awkward. So callers will always still have to
-ensure correctness by filtering the result a second time? IIUC, the idea
-is that the backend may be able to more efficiently process object
-filtering so we would want it to attempt the first pass.
+Thanks for looking at this.
 
-Is there a subset of object filters that we should expect any backend to
-be able to answer? If so, maybe we should define a separate list of
-object filter options specific to this interface? Any filtering not
-supported would have to be deligated to the caller then.
+> Combining manual -X subtree merges with git-subtree --squash merges
+> could easily produce quite weird and wrong results in the tree
 
--Justin
+I haven't tried it, but I think if --squash is in use, then attempting 
+an unmarked subtree merge will probably die with "unrelated history" 
+warnings.
+
+Looking forward to v2,
+
+Colin
+
+
