@@ -1,82 +1,83 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8173739B486
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 03:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5C631F98D
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 03:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783568181; cv=none; b=YW4l+AWewl1K/LNBj+pjIgq3EYIMPPvhbWJOEIhuMcv475FEEiuYU7q1yFOMYHVasexUB013y681R0OUo4S3MKlVDDAwQQSU6iEV2oQiRJ/ZLkoJkX0cgfKq7tmP/LLWlpY/JVqVBt1OBIDt57ufVFnwCvB7O648WSovmaQvgLg=
+	t=1783568957; cv=none; b=PbcfgtLgz9EV1qYYb+ODao8d5ao5xWo8dV8e6pyZ7q64oJabJIORkFTMi2Q9mzT2T1pI1gZiaE9NVDda0C47o6HTcdtHpsl/KWDby1RUxJzkwj2y2uY+h4tTfRQ6x0oGIydgcGeogMtJFT2FgQkoI36D6JJ5h6LJ48Rxpddd6AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783568181; c=relaxed/simple;
-	bh=bLx68/R795xKfIGoubVC6hb4MvCZeaO2L2CBUVsUkw8=;
+	s=arc-20240116; t=1783568957; c=relaxed/simple;
+	bh=pbfRTQQwH4Mhs/NE0zAifoojUGbI8nOzX1FVf2TrVdU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F1Zihtdbo97jBCxXxHGSj9fkeRFL76Nui+iGiffrRGo6p8eHrtKoDqapiHU+qqPZHG0O+0r6AuyPkFCab4gvXpapvd1xrur77J2jGL0ldN8xopd8VNQOa8Gdds95n84CB/ALfBZHWrvRco+iBvvtkQySdNNT6miROOJpfdnF6C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f1JAIGut; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ats+pKah; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=ELveMm8/xBtOBIsDfKNMS5vv6OLXxhluIq+yLqZEgnwiBVJ0V4JuL7PV0mr+iQ1heC3de6AnJ1Xo30w6IXH/rKpJjbwQxnd/cCbVfoIYLDo1ZrpkWfaEvSWyssHq+uKdue4rpwtC4MNMyaulyx7edWUckV+vqwe9MeHtDxDUFmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V7ZX0lLB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EdT/T1lm; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f1JAIGut";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ats+pKah"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id B68F01D00087;
-	Wed,  8 Jul 2026 23:36:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 08 Jul 2026 23:36:19 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V7ZX0lLB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EdT/T1lm"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E2FA7A00C9;
+	Wed,  8 Jul 2026 23:49:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 08 Jul 2026 23:49:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783568179; x=1783654579; bh=3trsLwmZvt
-	iGy/7s1HGg46qiTPei/CUjppGO8xLmgmo=; b=f1JAIGutEk0Fliy6XVDwCme2wb
-	UtX4y2XYAdfU+Pdd4/Mc+0+qLcm0/HwcJmEfaNmcPIw0QyGWPFShW+vTioaItt1f
-	OV1vsPAY57fS+4HCU5Wiy0JVAQEyZrYHlJtqwrMfOYMTW9kKwNnnJsQSj9LHXWHY
-	Wc1asuAXp2sCpIAW0Kj24s1+ibSmK4ECpUIS02d7H+dhcqGWnNxEXMgFOzdhmbnE
-	UYIec/flwEwEGhVkNDwKS/R3ueFdVszvsx31xViX/7jAQiCV7J82cJgc/lNYF4w/
-	+6ZGpqpRGuabN/okRUhaOv7q7WVBtHn6K2PjSroENB1CiuQ3mui8RNNvDf9w==
+	:subject:to:to; s=fm1; t=1783568955; x=1783655355; bh=v1pyOh7v8X
+	hopaQRaWCdEPRgVafb4jsFYyTXlz282Vw=; b=V7ZX0lLBCHfZR1LsXiVnvUybzY
+	biXXmSsh66LW9Mmq9ianKI38DeRD/iVVXVqUQW2nZCrDV8fDJ9TeSuRGb6SXWOXy
+	9juZ1a8RVcJmNLr+0UANcmrE/orRAnAjcSqbP1/Fpl1yNmZvWM4GMszG4GZED3Fp
+	Jb0c83mbjALceDgDbt+0N/drsmiFSXc4POLUZiFsFiXFP8lWH+JjkVjp3Enu6EnE
+	+FACjy51DQv9UjD426cu9xEkfhwvoihosLiYgjlKv40HhAbdjJyYH/RB2NpyWZsU
+	c7iTDvNLHG9o2iMFaZdbRnj5qw2q8KYG381edCMB+lITN/G275dO4eOhAyGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783568179; x=1783654579; bh=3trsLwmZvtiGy/7s1HGg46qiTPei/CUjppG
-	O8xLmgmo=; b=ats+pKahF4zAzxt3szlQlBxf20rJFV9Tnzz08HmcLiR8P3+wAKr
-	T3F0F4LA7uDGt7sxRafTcNBcumHAYuRqJW5aIYCGbiqQEScrAnZ72uD6Mhn4zORn
-	P3kRDnmpQTW1WkqzYyWdgfAQFO+/Y9J5xbfuz2/dk/7aS+b74JZoRKh5vIZFLE8L
-	u3OzxcTAIjeh0cz3arHNyVJ9RT8gbLetzWz2rYDMBp1Qlv8gqiVDbaKJP6syiZR8
-	/WryI9X7M4QmImMYHPOxEIkjI0RGOgrF41yVW1PHTCnO4YgPFR6NY/vNxG37fSkd
-	GaHTIzFQyRzJogveAV/9J1cPm5F/XQ3yeYA==
-X-ME-Sender: <xms:MxdPamMBUMXFynVOtXamwaooEgWsX6qOtmPb_QmGHMKkQZoDnwEVzg>
-    <xme:MxdPar9JwmgB6piNjguHAhzfYmtmq1XlthFGvKrQYHFttkv3ii0G-ncZxLQfc6dX1
-    E8g5PXnJwUw_ktthAIp4BRrpRiBFyW-oSydgjceAOV5TTpdr1y7Pg>
-X-ME-Received: <xmr:MxdPaiQO-TQpd8DtFkPtx_Hvji1ooNQTRy3ig4QrmA_pqHxP7dKHbpB4z_vjxl_V8_MRv_gHTb1t4fI1Ud8MpyEDMT7r-OLCEOrM4J8>
-X-ME-Proxy-Cause: dmFkZTELC10VNiyy/OsHUjg49fk/wtP+vft+W+B0C8luTWXy4bRT/N0rdJeWl7gLW4M+aG
-    IZEjBOsh9FrRmI/TMv19IINcnqm4l2zX55qCVQozxcqk20nvSGxxqwrTpKQDdK5m6lz6mU
-    P/T0e540j8PYS0mRmKksM+3uo4PGoIzLTmE1JVCQH/5bnUMys1/lHcIulxC8u4WXkiUN48
-    PJ/f8WNo75ydDVeA0cyZqu3eSvSxhgUgv5dWA5nlijvYfp1wr89kGZxJFdQHuDz+jqQ50j
-    9pbMtGtBLa1b9VgB2ggvkT7M2O82gpeilYsDlHBkedO/OZvkn4jykCEPWwBKl3e3VC1DBD
-    VmIwY+LyqfgrckO2nzMHin87KfF8fWv5vdZ5Tp+jC0NJIWTKfbbd8NR32/yI712l7bWevT
-    KPwjfyF4j2+zOmZK/I/fL7vHAM60sr6/Z2oMNh0wiXZISCcSlMzTKeYosAtfjMBg+H74Xf
-    ghhjBNH+rG9VITnwV1dEixtWQVUd6p8Q7lHWY6WDLLv85dmI5ZRbZy1ctdrrD3CUuEZFIw
-    TnFvqdDP9uipawDecauZbBM7482PewS/o+5g6+H+Imzu4Pn9sp+AN2eIcZk3gf5Pf4iPmV
-    kRsjfcP5ZuN0jq3/DmDaHQGAPkkbLPI82hGmGy1b4xkFSDIBHE8bG8nImS8g
-X-ME-Proxy: <xmx:MxdPallrD2s3ZLA6s7uC3Sxgs0KRDtoehGGcfWRgcpXpvY-EGSvRPA>
-    <xmx:MxdPaqTgT0HidvLdNRB4dSIy2DJrHpa5Y6iVy-rlnhMFG1xs9t7ADA>
-    <xmx:MxdParNLnDDLJbNL86T39hPfXtHDjLw71umN4HILJn5LPDxtuf6ZCQ>
-    <xmx:MxdParUgfqlzG0DWvBj5ZD7ew81w8nPfREFxpQEYQF2FS4FKnZzUzQ>
-    <xmx:MxdPalzJiW8UEtB3_oyy6CHKwclmTUKUpTlNU6D-gYXMT8Z50pGy8VOV>
+	1783568955; x=1783655355; bh=v1pyOh7v8XhopaQRaWCdEPRgVafb4jsFYyT
+	Xlz282Vw=; b=EdT/T1lm+vgDdDZ/yUujtmpF2/nTK2SO/LQpa2/9D7En7Bgdh8u
+	960Agq5RUMU+98fiJqIbO2iaFTZaHHSn1+arQlqnQTrY2vcHXYj4vO2grjZ0TYfg
+	Gox4cExXHX9hqfkXI0PhsMAthRWCzkGgzUbsPXo/vhKwQOVHXXcn8BBMjpdyPphl
+	f6oMF8pys1qqBq3OTJZ02b1l/L36ylO+eokgZmWFkB0jMh7C3ZRvLJRTw0H/SCno
+	VdrPOu8K4ov42T7ofhOC6+K55DMjr4huHPz6HoyrCUCbcWhceiqx9C24isWdP0Tg
+	N5EriTOc27NhcqffBWA/87mjOW6JCyxJRSA==
+X-ME-Sender: <xms:OxpPalL5FyS2tcCV__J1H3oA8HU8Lh8chdjZJ-1hr_SoHKR02olotQ>
+    <xme:OxpPaoKU-z5kbaKIPrjnDMtvnYz5Aq8_5wHW8q7mJD7grhLwK35WDo3uKhxn5C1nz
+    Wl7YXSmBvBcjcZ_WJoY-4x01g1WB7JXChJmk_goa7Irp6Q64P1bKg>
+X-ME-Received: <xmr:OxpPaisVTepG7NGgxxAW2P82D5dDVY-BwfVEo1tYFX0DxtE3H4mjUIE1SlOrPoeNthjPkzOsFwXvtCj2GvQeZBMN2IPREn-LBzJJmas>
+X-ME-Proxy-Cause: dmFkZTFFOxp+TUcinvAhIMiMSRKnusR01ZtRjx3gwRYm3oQZkyI3rjZYpM/DMdv2f3S0Dz
+    naWEHR6zRkwXgvSAxSfN1LSCwRkR+W/3Y7MDE/iyGYAWYoQE9hcoYgpLcGPkxAbwAkk7OX
+    aF6h3yBPSM7bUB6sbIXhgmsyMg6jWnn2K3prqtqKe4Z5IDI66YInZVsEu0fLD12zFRbd9z
+    UmNc7CA9ZZdp36oM0WoYjBiwwkymyUe+Smv9ID2ShAO2sB4Twc+Hm7wzLn0PrdOBCXCLhA
+    scGUrXk//SHdWqaEi186nOduatF6luBJLyboCkrqx/JGKJD4c1zPD4gQQbdHhFiiRpYBb2
+    /+N3aO3A7TDbNLf3UsRqvmey7keXkQO2FHfN3K2q7wr0wylIT3yqNcnKtMb4RXlPMRvOXx
+    02x2cDocagUqQy7Co93diRXU4Y5+ktArtmJJaB/F6blthMxmufrA+oJgGc6zLxVkhAQ3HU
+    pZgFZJ8oMrhy8nAXdbAIyflqg4WfYGpvPh774Ug8DugkIPzKAxwdYepa64SexdeRGyMSbG
+    qzgC5wy/UX0Zf3hOULybpmqa5jeyC0f3ra3PGs9ixpKRnD8JACULBm5pJtNmlRLuBYvBg4
+    Bo57x/8NPv6u6Pm3OiSeZ3V6hY92cEDqEGwamAJcVkMsvWyQz0wRC6B7gjqw
+X-ME-Proxy: <xmx:OxpPalSzmqpmFd61s-nd0RpDcsh-doxpgqvVKf3jXjowbyHz6uQd-A>
+    <xmx:OxpPaoMIrXf6QHvkaW4AWjD8aXJVchs6RIgMtEEorGpSg0rdRmpHZg>
+    <xmx:OxpPaqafrCv7DaAbcS2qOFqVrkfnHNecW3rYNYuspuLWP_T9x3P3kw>
+    <xmx:OxpPaiwx4lhI3H7eWDPhDfxogIoEXG2bxbiOwrMK6xTFjAaJziCSiQ>
+    <xmx:OxpPaiM_I3qia7TaNVW6_AQxOXTZMEZNcK98U_q4wgLpGsnSFfJw4Mwq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 23:36:19 -0400 (EDT)
+ 8 Jul 2026 23:49:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 08/11] odb/transaction: add transaction env interface
-In-Reply-To: <20260708235925.3992097-9-jltobler@gmail.com> (Justin Tobler's
-	message of "Wed, 8 Jul 2026 18:59:22 -0500")
+Subject: Re: [PATCH v3 11/11] builtin/receive-pack: stage incoming objects
+ via ODB transactions
+In-Reply-To: <20260708235925.3992097-12-jltobler@gmail.com> (Justin Tobler's
+	message of "Wed, 8 Jul 2026 18:59:25 -0500")
 References: <20260708041412.1157499-1-jltobler@gmail.com>
 	<20260708235925.3992097-1-jltobler@gmail.com>
-	<20260708235925.3992097-9-jltobler@gmail.com>
-Date: Wed, 08 Jul 2026 20:36:17 -0700
-Message-ID: <xmqqbjcgrg0e.fsf@gitster.g>
+	<20260708235925.3992097-12-jltobler@gmail.com>
+Date: Wed, 08 Jul 2026 20:49:13 -0700
+Message-ID: <xmqq33xsrfeu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,21 +89,78 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> +static int odb_transaction_files_env(struct odb_transaction *base,
-> +				     struct strvec *env)
-> +{
-> +	struct odb_transaction_files *transaction =
-> +		container_of(base, struct odb_transaction_files, base);
-> +
-> +	odb_transaction_files_prepare(&transaction->base);
+> @@ -2027,6 +2031,7 @@ static void execute_commands_atomic(struct command *commands,
+>  static void execute_commands(struct command *commands,
+>  			     const char *unpacker_error,
+>  			     struct shallow_info *si,
+> +			     struct odb_transaction *transaction,
+>  			     const struct string_list *push_options)
+>  {
+>  	struct check_connected_options opt = CHECK_CONNECTED_INIT;
+> ...
 
-Can this fail?  The caller of us would not notice that something
-went wrong, and ...
+Hidden in the context early in this function is an error return.
+When unpacker_error string is non NULL, we mark all the commands in
+the linked commands list as failed, and return early from this
+function.
 
-> +	strvec_pushv(env, tmp_objdir_env(transaction->objdir));
+> @@ -2105,14 +2115,13 @@ static void execute_commands(struct command *commands,
+>  	 * Now we'll start writing out refs, which means the objects need
+>  	 * to be in their final positions so that other processes can see them.
+>  	 */
+> -	if (tmp_objdir_migrate(tmp_objdir) < 0) {
+> +	if (odb_transaction_commit(transaction)) {
+>  		for (cmd = commands; cmd; cmd = cmd->next) {
+>  			if (!cmd->error_string)
+>  				cmd->error_string = "unable to migrate objects to permanent storage";
+>  		}
+>  		return;
+>  	}
+> -	tmp_objdir = NULL;
+>  
+>  	check_aliased_updates(commands);
 
-... happily ends up using transaction->objdir that may not be
-appropriate for it to use if it fails, no?
+In the "happy case", execute_commands() would commit the transaction
+before going on to do the execute_commands_{atomic,nonatomic}() that
+appears later in it.
 
-> +	return 0;
-> +}
+> @@ -2706,11 +2705,14 @@ int cmd_receive_pack(int argc,
+>  		if (!si.nr_ours && !si.nr_theirs)
+>  			shallow_update = 0;
+>  		if (!delete_only(commands)) {
+> -			unpack_status = unpack_with_sideband(&si);
+> +			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
+
+In the "main" program, we start a transaction here, and
+
+> +				unpack_status = "unable to start object transaction";
+> +			else
+> +				unpack_status = unpack_with_sideband(&si, transaction);
+
+then call unpack_with_sideband().  It may fail.
+
+>  			update_shallow_info(commands, &si, &ref);
+>  		}
+>  		use_keepalive = KEEPALIVE_ALWAYS;
+> -		execute_commands(commands, unpack_status, &si,
+> +		execute_commands(commands, unpack_status, &si, transaction,
+>  				 &push_options);
+
+And in such a case, execute_commands() returns without committing
+the transaction.  Is there a need to add and make an
+odb_transaction_abort() call or something in such a case?
+Everything should be cleaned up upon process exit, and on file based
+backends, we probably let the tempfile/lockfile API do their thing
+to clean up, but are there other things we may want to clean up?
+
+>  		delete_tempfile(&pack_lockfile);
+>  		sigchain_push(SIGPIPE, SIG_IGN);
+> @@ -2719,7 +2721,7 @@ int cmd_receive_pack(int argc,
+>  		else if (report_status)
+>  			report(commands, unpack_status);
+>  		sigchain_pop(SIGPIPE);
+> -		run_receive_hook(commands, "post-receive", 1,
+> +		run_receive_hook(commands, "post-receive", 1, NULL,
+>  				 &push_options);
+>  		run_update_post_hook(commands);
+>  		free_commands(commands);
