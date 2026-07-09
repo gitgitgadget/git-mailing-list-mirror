@@ -1,128 +1,123 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977D2370ADF
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 15:03:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC6737E2ED
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 16:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783609390; cv=none; b=bTJn+bXDOWOpG3tTicjMxzftl76rV2ZJwhVT2JxHVfTFXz6ebV5CE3o24X2e0IJDYC4MDVZI3mAs/+5oKeiUdvBAs2m4v3btQgqt38RpEpXUdicE4i1+17P3zb5Ao9jE6dyK5CR0g7FlYJboZdIYeegpxf9lk+YYfOAN3ms7bqA=
+	t=1783613522; cv=none; b=jWpz8QgfKxcONsC1dlvoOZ9q0/C5Sgxja7FXWr7X6j/JKIVZUKAr/B1dckB0RLsyBhQXScmycPxVmlbYA9H5H6VgGGCbGxbJ0PItWDUFaz9bw1h4EyEXd22ilMUJ366sI0uR/pFQsIOwdb5W3/ew0PzGgH8f/EfAx6ZzJURAa+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783609390; c=relaxed/simple;
-	bh=AUxUlr0F23A791cOb/62pxZ/QfnU2mIbl/TcBRx4RVw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ARafKhkCrTK7iuAz4i8Uk8QOiXJu5s57MS3A04PNQP7rufdvzq1ao2RINhriNYGqjsWI1J0/EWPu8T04ugzoMtXDotMFMEGING8uyqrL42OI8pKyM4hVbq4T5crZP+fC1B/f4oX51VM1NzECfO7PHMO9wDoi+0WjXQGiHqQU20M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LUjeAH7n; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783613522; c=relaxed/simple;
+	bh=xpdX2hCnD4Z9SOX1PA/0VdIkPMU7sNG5yhPEbxlAQsM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=J5VC098Y5dFa5vFgFfdG9TJBD5S6hcrzeZ3vLEhkcV/hl86a0XaagfLhYU/FVGjQ3zKEe0LZl9BDXvW3zPumPaoA5KZgp+GfPwwl3wyxXTPaOEwUa+ZABKhmpUBI9Suck5d6SQm+RrCOZGXIa2pwcn1+Iij6BckWAMsFHWVgk+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=ed2gxxX4; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=ODWrdnM5; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LUjeAH7n"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-92e5c9211d2so152567085a.1
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 08:03:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783609388; x=1784214188; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=CAgUd9Ss0JGVtNtTktw3iPy4qr+CjvIuMq+r3w0MlSo=;
-        b=LUjeAH7nbkZ/0mP+UzDcrOWRiw7/jcQ89+hqXih5V/9d2DSlRMHfjXEY7Ip83iAok9
-         AxvwdavV/DyNzpWS/CTexiOlHb0AskgFm1l/UhGP7gpu5N6n3VjfJL0V60fkP+H9OH29
-         a9bnOHvSDRjfx/aODskL2lbWxAeQHFjtVsqfNEBxzyVTv3O/FMsD+/kdZy61lRXk8PrB
-         clsjSYfEsTvZu3pC1Xb02rm2zoXfnGyZaSobRb31U2EeDKgmZOgym1lekUxyjUw66ZQ/
-         hQWAOBtxmhFs5LKyS5nwP5xMs5cOtmAlUvLjhm63Ftq7YRkYUCnW+2gvVGcrNZ+nE2o0
-         ugSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783609388; x=1784214188;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CAgUd9Ss0JGVtNtTktw3iPy4qr+CjvIuMq+r3w0MlSo=;
-        b=kTsn/s8Kq4YIz/f7rIFACkv2auEfTGcpMnXAQf9nvyNg3jLgm+HB3fO9a042yKfRfV
-         SxD/FKScKqY37iH1r2ko5+5w9jXRMgnJQM78mRKOxvKGQx40dVaDGSdrsl08+bJ1jlmE
-         YKEWizdFSfXlQO0V2MTOB4jnWyFBc1PSD1sgNA5xpXwK052D5JS+7g9dCID6fDBjYeRK
-         zgE8eIfVj5Ms8kYi8DH6SvT2gP7LuvD1ifGwLTabQ7k05gOhF1usjPyx7whwkJyRpOtA
-         9uPJpz9GbAGlWR7ru2WBZtK3Uxcccnx40Klkbat8zkyO/1pf9M1s7cXRnlLLRp45f8/7
-         Vg4Q==
-X-Gm-Message-State: AOJu0YxlK1PpldsDXgUOKPZVGkSKfOKN4UMS2Q38zaxTIXDl3sg3+Hj4
-	JAPRgdVVhFEXo6DS65ndAy7V4CgGy/bYtg6i/W6dajjtnCL7BRHTXuhVYSzqLw==
-X-Gm-Gg: AfdE7cn/3PNdE3ZesTSoL/BRrkGO1t9QZPh0KjFzDLQm2vqCRlgZ2iAJDLlZRNrVaWz
-	t7mEC95TDxdG4MxHfYVlm0rqzxy7EqSd5tlMHyVtftpcK/bexGGbsbgAEGyJflWz9T9WeCzC3+p
-	kbJPmbwPFURY4h2pMdgs17zrmbMMW6s0eM6bKsHLveXYlwOn8LVzJ0LaaexLYHC/u7JFRlSiV9Y
-	+i3++waLbzJ40/xsi99u6tMHwiwT8AilmUsI7fJm4DPmprtjAnhomn3PFjhLwqKxiwXpsisMd/G
-	vc6hHe20iFqQuFNNB7kX6AkV2v+ZDdabVxLzGdieDSzdbqpEs7xSuaVvFp/rkRvhypt+MbZi5BO
-	1HQAL7AnBRk4lKvXqW/cvJ3W0BsCHXIgaMCwArKYzDIFBPVJyqHaxFxhFntoY/v7UxT1zMz1P/B
-	HKh8N+EV2G09qJiuI=
-X-Received: by 2002:a05:620a:2b87:b0:92e:cc01:a67e with SMTP id af79cd13be357-92ecf91af9emr821825185a.76.1783609388136;
-        Thu, 09 Jul 2026 08:03:08 -0700 (PDT)
-Received: from [127.0.0.1] ([4.236.159.145])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92ecff35229sm400997685a.36.2026.07.09.08.03.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 08:03:07 -0700 (PDT)
-Message-Id: <679dd2e392b26b6a51f88b62d0a17cece71942ca.1783609382.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2170.v2.git.1783609382.gitgitgadget@gmail.com>
-References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
-	<pull.2170.v2.git.1783609382.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 15:03:01 +0000
-Subject: [PATCH v2 2/2] commit-graph: propagate topo_levels slab to all chain
- layers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="ed2gxxX4";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="ODWrdnM5"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=ed2gxxX4qRi0F0olVZ3NqdHvfA5Eq5CBNOh4h8Y4AWoxtRX+6v/bq+q2C+LU0mpfvwYXrg7wIrSEnCBWgtaCSzlKR0FsoOGeTdmTJmGhbf7Vf+ArhAhEGwARJw7gCqLztuquhOt7LinjawmOiP6wHMRtqmbMywMdcGJ50QnsbjeqH3+FFF3VprRNUVvDPXgRB8+VX+QhTjJG2tJ5811AzTrXyT6TXbRvRQWQS8g3TF5u43Jh8g/wqN4WhYZZirF9UotB+tSms2+BTYyiBHSHepYDuWYtIQ+MYHTVrPnw9fl5EG5Rt866MW5+9j1P4qp4pBB/DNsIa2/tLg2SwHbT/w==; s=purelymail1; d=malon.dev; v=1; bh=xpdX2hCnD4Z9SOX1PA/0VdIkPMU7sNG5yhPEbxlAQsM=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=ODWrdnM5Gwn9iAW6dd4OtCLWJQDP7KFSRWQ7zzZPUHcy4vMy45ki8ZRPtfHEMCaIbAuTYxqJBnZXaqGFoARuNlgerqxk/WRyA3Zk811XY2K6wor+3R0oG+7ftX/U1A0dwh5CnFlwLwbwLW+i1CF2lr5tGELtpULiVqPbU8KVz2+HZJpbg6aYa0XSAjQ23vHawivLiQEp8ev+riBj6uRayjTZxoFGUcKduxj1OTv1wqOQDYVmmD3gf9O4NT4+GRJj/odu4O6Lv42dDZ3F0sIi9VARELml/d0vnSNUVj6J372t/YVacVf2EWt0+Bf3K0qoW0RVScrSu/skFEQ7lk7nnw==; s=purelymail1; d=purelymail.com; v=1; bh=xpdX2hCnD4Z9SOX1PA/0VdIkPMU7sNG5yhPEbxlAQsM=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 872182701;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Thu, 09 Jul 2026 16:11:58 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: cirnovskyv@gmail.com,
+	szeder.dev@gmail.com,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v9 0/9] migrate more variables into repo_config_values
+Date: Fri, 10 Jul 2026 00:11:36 +0800
+Message-ID: <20260709161145.13349-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260708160300.8852-1-cat@malon.dev>
+References: <20260708160300.8852-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-From: Kristofer Karlsson <krka@spotify.com>
+Hi everyone,
 
-The topo_levels slab is only propagated to the topmost graph
-layer instead of all layers in the chain.  Commits from lower
-layers appear to have no generation numbers, so the DFS
-re-walks the entire ancestry.
+This patch series continues the ongoing libification effort by migrating
+a batch of global configuration variables into struct repo_config_values.
 
-Fix by making topo_levels visible to all layers, not just
-the first one.
+What does this series do:
 
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
- commit-graph.c                | 2 +-
- t/t5324-split-commit-graph.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+infrastructure & strings (commits 1-6):
+Introduce 'repo_config_values_clear()' to manage the lifecycle
+of heap-allocated configuration strings. This infrastructure is utilized
+to migrate string variables, including 'excludes_file', 'apply' whitespace
+configs, and external programs including 'editor', 'pager', 'askpass'.
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 702ba9731b..a0bca248ac 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2610,7 +2610,7 @@ int write_commit_graph(struct odb_source *source,
- 
- 	g = prepare_commit_graph(ctx.r);
- 	for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
--		g->topo_levels = &topo_levels;
-+		chain->topo_levels = &topo_levels;
- 
- 	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
- 		ctx.changed_paths = 1;
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index b41331e3dd..9e5ab7dbd0 100755
---- a/t/t5324-split-commit-graph.sh
-+++ b/t/t5324-split-commit-graph.sh
-@@ -718,7 +718,7 @@ test_expect_success 'write generation data chunk when commit-graph chain is repl
- 	)
- '
- 
--test_expect_failure 'incremental write reads topo levels from all layers' '
-+test_expect_success 'incremental write reads topo levels from all layers' '
- 	git init topo-from-lower &&
- 	(
- 		cd topo-from-lower &&
--- 
-gitgitgadget
+enums (commits 7-9):
+Migrate enumerations 'push_default', 'autorebase', and
+'object_creation_mode'. Care was taken to make these types available
+to the configuration structure without triggering circular header
+dependencies.
+
+RFC:
+
+Commit 3~5. Is it really necessary to migrate _program variables?
+https://lore.kernel.org/git/8e657184-ee0b-453a-9f2d-a98080d3582e@gmail.com/
+
+Commit 6~9. Previous related discussions on 'git_branch_track'.
+https://lore.kernel.org/git/CAD=3Df0L-mPX+KECUjXk-WBzEbTP7wCa8sB56GySQT0yh9=
+mfUOWw@mail.gmail.com/
+
+Note:
+
+Since a new getter 'repo_excludes_file()' is introduced, as previously
+promised, once it is finally merged into 'master', there will be a patch to
+update and squash the comments.
+
+Similarly, I've noticed that the classification and sorting of variables in
+'repo_config_values' don't seem to be correct. There will also be a patch
+to fix this, and I think it will form a commit series along with the commen=
+t
+patch?
+
+Change since v8:
+
+Fixed a memory leak in pager.c.
+
+Thanks!
+
+Tian Yuchen (9):
+  repository: introduce repo_config_values_clear()
+  environment: move excludes_file into repo_config_values
+  environment: move editor_program into repo_config_values
+  environment: move pager_program into repo_config_values
+  environment: move askpass_program into repo_config_values
+  environment: migrate apply_default_whitespace and
+    apply_default_ignorewhitespace
+  environment: move push_default into repo_config_values
+  environment: move autorebase into repo_config_values
+  environment: move object_creation_mode into repo_config_values
+
+ apply.c        | 20 +++++++-----
+ branch.c       |  2 +-
+ builtin/push.c |  8 ++---
+ dir.c          |  4 +--
+ editor.c       |  4 +--
+ environment.c  | 87 +++++++++++++++++++++++++++++++++++---------------
+ environment.h  | 75 +++++++++++++++++++++++++++----------------
+ object-file.c  |  2 +-
+ pager.c        | 26 +++++++++------
+ prompt.c       |  3 +-
+ remote.c       |  2 +-
+ repository.c   |  1 +
+ 12 files changed, 152 insertions(+), 82 deletions(-)
+
+--=20
+2.43.0
+
