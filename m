@@ -1,80 +1,83 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA683D1CBE
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 20:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1713E378839
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 20:40:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783629550; cv=none; b=V5fd464NHr5nS8JojVqL0AkOoIIICiT5PBvb/ZhXQaMefLAkrAEAeNVpt66/Su9hInKy5TMitqopxU20pWodOqngzzCwPZE/tImU5Wlv9YgeNKXH9WxDuoYsmrniCqHEy89YWvJ7rmNmCQAD6fUNpzPA3qFPyUTYiAQclqq9u9c=
+	t=1783629625; cv=none; b=j7b54+G/DtNQeo7uW1s0aMUFtCdxQKJ40Oh57T1nqpQiV3Z54UaChMYGKlEAb5KPS/ouomS2cdurcTcGKT1lJT+id991JTUWej0ZI0OxUDTKgZVjy/KlOnu+7D6GPipBh9Gy1sPGlMm7kcwnLAU6GMFbsH2pXIIIozodl2GXt44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783629550; c=relaxed/simple;
-	bh=k5xvlruqvKrYC90mXJADwJXEwltr5H4grA+ih7KyhzM=;
+	s=arc-20240116; t=1783629625; c=relaxed/simple;
+	bh=jTh2quWP4Xkf/6cyUOSQZg6d9sbRwD/XpWhHJOVIOVs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nl1t1naCkfx/f0jvJCz1FoEQa3Z93K/z5ETXMIkt8rw0DHL53hx7n/ZaBGxpCtpIAtsT4n6Nn9OjQdYKlOcSFZpKrD9veDXqfEpdGAKHNFbcZbYcTgmvxvGkzNjRpAPzv60uhfnulSxkcMSl0z1py5b3Ta2Zl+ZC3XM0yvLnsBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lpFt+tTG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FxPafs92; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=LrNajXip0HiM/WgfxAXkQ2PVHbU+UKgvntD019aPjODHcxN1FKTq9AGZMhZmPmYiXUOQEJV4SuH/AqwLd471R/7zKHfedMjIok+jtgf0Y+7YI720Q1wR2NFcR+m33DKL4cYgnj3xcM4pzoNgrlnY+P/GA6n6xHX7t6hqUNKieMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RxLo7H4W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=la1nq6Eb; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lpFt+tTG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FxPafs92"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RxLo7H4W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="la1nq6Eb"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 95CDE1400166;
-	Thu,  9 Jul 2026 16:39:05 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 4F3B0EC0040;
+	Thu,  9 Jul 2026 16:40:23 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 09 Jul 2026 16:39:05 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 09 Jul 2026 16:40:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783629545; x=1783715945; bh=HRNCXUgJcb
-	EqrZ7d+wZBhF6HT0ooOKsXuWTyD5Fr16I=; b=lpFt+tTGlFA5i3FJ1Ya+/Fl5gB
-	jxjaEpl9kMiWlJfHyWNjld+a4sYzlJFPepsslVBQCsDlY7HMVdNeRNFW+vwk3an1
-	zrJyJV7qkBFDCxT2i4fx+xqhNNDKn+4/jTXL6fcya7Hke/4PefBuqnnscXzdO4YD
-	h4ihzc2PTaOUUvYTLaMegZdogulKUlvzkY2qQBdFUKKOFhyG8AZGOVWkA+7tBE78
-	XttBuRZe5UD4TqkgDRoWLbkBZ4TiGKvoKu1U04YH8qRB6o9M2djn0EHTGtr/UDV+
-	UO5Y9TGWJjOU9Mcu32uRaravL+wNtxwKFkYvw4KqTjtUQOI85CLw6Eid+T9Q==
+	:subject:to:to; s=fm1; t=1783629623; x=1783716023; bh=UvfSlC15qa
+	cnb9Dxqaw6Eb5NUiYTCudXsUpg2HRD//M=; b=RxLo7H4WZDwrlaW3dNS7bTIOgG
+	BYUdQw+BiaDD6QvVI2AbJp+w4v/+MEzcNtOfipkkl3DqAM5XMeM5kDgHPSJs6SuF
+	4vAOg0+BPzr6DEXh86v1TWPMcPkZRr3506BW5afHzXE73dArtov+V9FTUczJItjh
+	ttjMU76d1GESGbQqDSDxmga/FnDQvkXL4xMX3FlIFIVbUu2AeYCof2rEktqGoh9T
+	qZpzcAqx0cewFJ/vOPjvhNsA9eQQBpwQEGpn1RmZO2NhO5uE0RtgZHdy6o4B/kLV
+	lL+vPAJYTODHejJKx7Bu7k00ZElIqDiarHlKGa2QCWaofaOG8gud8u1hHTKA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783629545; x=1783715945; bh=HRNCXUgJcbEqrZ7d+wZBhF6HT0ooOKsXuWT
-	yD5Fr16I=; b=FxPafs92qqVVvWBNZsBUHjx1g/n9d8IHxPFVTZ9NKGr8KAgn+YP
-	GDKbnlt1cNJHpm8ItNO6Fu9tk3L3NzhN1RaxjM2D0W+MDXNCRLnhTaO5si1X8KCY
-	9bmNCGtoB+ca/qSKeo4aRQaJ1hMLhCwPv/vZq87Uf/fqqjPq2ySEZiuveDXqeemw
-	VFBAzX/EyhwpDo4yLy/hqnLE6bce2dwkza4GEMR7V776lFDlp5y8+NuvZNHnXDuU
-	XuFOj6B6ww2gkzLVIM1dmlzyf0zNx8hoNsuCUAk6zAkecK54ae1mE47WMV8eXZ2Z
-	0ucwbmi1OcvDWukrr/l9fd27DIpOzv730Gg==
-X-ME-Sender: <xms:6QZQauU6GX7LHL5We58I0z5EKPOPXf-BSz9ucAVie_WTV3br0UJhiA>
-    <xme:6QZQaiDJle558WsReD3YVHUC9FPtoqB1TSV0yx5PvrLtgZ5xfM22fqEyLYt0nBoyF
-    AmX5hDfwXg41R8mExLXegzKBeqid7eH13TzGDpRfJW9LWPaGSZ9Sw>
-X-ME-Received: <xmr:6QZQavxqd4Zf3_w5dYhKSi9YnwtMlEyVzizUumEqLvFa8OAFGhk0fmL4qyrJldTrIQZUkOXt_8G7vdwfGzXLeZ2fGp0CdV2SPR9lMK0>
-X-ME-Proxy-Cause: dmFkZTEo+PGg59ez8bHF0fO4uc98iEhcEKRoHee25jfNZkEATjJ+N6IcyiQWK0IFrllqYO
-    OyNqU0fSEZ651TbJVXALwuuGfkSVMl34kfdoJQ1qAvizueht+HCOdm67nWlVoy8AJx3NEg
-    HyBy/frD/LiXnXTgPgTS/en9uvUXFPDP4RZYDFf0CH9vVN0hSO3R7QoF3OQbOHz0ZhGY1r
-    hSyOioI6iG7BnqKw3UmK33hZBvORoP256l6b+LKm7vxr0g/9wDfCKGpAUeCa92JHx45O1a
-    ECk2zWuyCF/9ElUkhVpxcgcj0dAQ75nv3XNeuClT5q3O3T1u9Ev7s+CQNiw/PpJKSTKDpA
-    gvMIj5cU4N6meedYJ/W2y/qYPGHDAHy3Q+0mpI4lfp6KAy+uii6fVYrjHgolRj0qaKPz95
-    mhjCZcGAzp0MvxuFi+EGDPjQWy0cs1DVGoj9j63y9S1B+omYparJ5WyH9+PyLHUAi0kGYY
-    VQn8fj4dkl3/3DMeW6OKF/ZQFKazgqTW6/v5BWdSbIzJJflUj1386Fg2kQbviHrHV8CcPh
-    q22BFXiG+jIcmbPZvSCc106IT8RkkC6mVVdWklMdLBzqgxVR8onlItP49bbyYXkx5oNRrv
-    D6Kb5Nkl3TXcHo7qaMCgrkW6bRVXE0+FEfCF3avapVsbE57yg3JitWq6LsIw
-X-ME-Proxy: <xmx:6QZQavB4EZy8oyfvtlAQkqyws-DBUd4xNGnLjSffqiI7zS8phRj8aQ>
-    <xmx:6QZQasaZuS0jbST7w82DGdc-roNVgWJSgwUmEKBIQStKZM71f0u1bg>
-    <xmx:6QZQanjeR7ngvqkBztClXKmVgt0Qy3cfAxWm2SoLEd2izlWHu0_Xfw>
-    <xmx:6QZQau6S7AkU_A8rOKV14EsD20DV2BkD0XklwM3cGgUwclF1xHfdGA>
-    <xmx:6QZQaiJHDASYLXPg_O4Dd0uvhqtY6i4-htUHjkJkqUeTwZdxL5Kv3j3->
+	1783629623; x=1783716023; bh=UvfSlC15qacnb9Dxqaw6Eb5NUiYTCudXsUp
+	g2HRD//M=; b=la1nq6EbF7IO7DVBNd5ts1NnVTmfcOIPO1gyeC/IxvtfhhZfLU4
+	6jyRseny3VaoCQ3NoXheNG8/LVZ3ZyvUk6pj1zzvZw5Vcuef8P+3YLHxCZW9AWAq
+	jgxVFOK7YkUIfsAcPz4QsqVu0XvRVupASMhVHYfssgBOpmLb0jlhJrQltsaCir0f
+	G9r1nEYGX1i7DJaQFbmof6UAePxx2pPJNvw23C/68dE3OKZ0zpcoH+DrWaWTyZI2
+	W3/w2nNqeBasaN+qWe1wZp8Hmuw096AfWaiH2ZUmy1GC8B4wnQpfox0AXxYCFzMP
+	bLsj0UI7qt+bVCv3EfshTfsqXgo3aA8+qsw==
+X-ME-Sender: <xms:NgdQat3nu0UnKX0XngmgwfHVhDQgTl-mHB09ny6opgIJsqOxpfuJqQ>
+    <xme:NgdQaky1vXfKLQFHWA4yJNT2nPTTLyosVpOVn-71d19fDQd4oR4xb84dYSuzkKF6-
+    GhgxxqcT99Qtr3RGkXnVX2CE0hhHeZJ0zAwp7-f0cC6HaGDimg4Tg>
+X-ME-Received: <xmr:NgdQasFNbb6t-pBsFjlx7UCRNUbqQdY_9kv0kQq8SgIXdcAgBxqpMUBuElxkM-brbPFINpUBhx0QFZ9B1oRbnbiZYxVHK0PJVgrIiSg>
+X-ME-Proxy-Cause: dmFkZTGp+yQ25DJ6PlgEbD5thZ8Mqzg47tNHYvWp+qm0hfhFdFOEQnLZkiNEXsRuR0R4Jx
+    qJU5Zr2oFcnsOVvSdFA2XzReIT8cbNiLQjErqppcNZO4YaXMRt2mOQyniP7P6WyqA/bzXb
+    QqaobRLxWkAweJC7i3zRBee6yZBjwZYy5coPq67+LITJyXXX59zT+WG+MhjBmhTDEPa6O9
+    MZI7AT4pgygcALSKmcA/tfUtIbtswDuGjhytywx/pt0fsvdpQjU330/8PPoKeP1IodnuT6
+    tHr2sg6JeK88dkohXxNaluDOU9GPbQVSa+gRgHk9CLhM7Bm0b5/g6y4IqvRLaU76BlHZFX
+    KA+oMt0xzAoFJr2bIPwFmH197GUjXZfEWjb1tT5SrANC+t6lzXik0DtnwkDbO67NXoTBR+
+    MiNA4IRJHNJEd+65vQ2IN4Rhf+gadJYeIXjiZxUn66vgKDs8xrDsA3Q0gDYr5fbLxN1G22
+    TJS1w4nGp5Fc0fMs1kP8j9IRxFnqXk/EFc1xUSu8VAFNoeCsZ7wW3ArTUTYT47k3tTo9u/
+    yOq4vfW5D4vRKvVwvRIyS3MhCFFKmYdhfaRK/NAqDEb7FmM3aQfDOTvy0OoW2gCRaQuoVJ
+    UPc1g68TEUdlC6GQAXjRIVr9kx/aeL4Awqcsko/ZthkFwwS0GOiDah6PDLyQ
+X-ME-Proxy: <xmx:NgdQavbgnqapCkmhOozeQNyleg4GQod-nSpKeqYyzPRQ9cnQ68rzqA>
+    <xmx:NgdQamAoZdqTWDZGrulh2aKah-2EVNEIqBerroxzwS8itj29tFho-A>
+    <xmx:NgdQavlrQeaJ_hHcupJe4qKOSv1ysu0awFNqcpJvPQM4_uk2Nd6BBg>
+    <xmx:NgdQavxs9dsFjCfXUehyTRcAICbk0OPikNqCMsShke-PuCT4AJzovA>
+    <xmx:NwdQaubUIItn36zmKEuixFgQzJ2V8BVf94joCzbZ3wLNiU9Ivp_rFGY_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 16:39:05 -0400 (EDT)
+ 9 Jul 2026 16:40:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] refs: remove use of `the_repository`
-In-Reply-To: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
-	(Patrick Steinhardt's message of "Thu, 09 Jul 2026 10:29:11 +0200")
-References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
-Date: Thu, 09 Jul 2026 13:39:03 -0700
-Message-ID: <xmqq5x2nlwyg.fsf@gitster.g>
+To: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,  Chen
+ Linxuan <me@black-desk.cn>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v7 0/3] includeIf: add "worktree" condition for matching
+ working tree path
+In-Reply-To: <20260709-includeif-worktree-v7-0-e87e705e8df6@black-desk.cn>
+	(Chen Linxuan via's message of "Thu, 09 Jul 2026 10:41:40 +0800")
+References: <20260709-includeif-worktree-v7-0-e87e705e8df6@black-desk.cn>
+Date: Thu, 09 Jul 2026 13:40:21 -0700
+Message-ID: <xmqqzezzkibu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,17 +87,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+writes:
 
-> The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
-> 2026-07-06) with ps/refs-writing-subcommands at 002fe677ca
-> (builtin/refs: add "rename" subcommand, 2026-07-06) merged into it.
-> Despite that, there's a small set of conflicts with "seen" that can be
-> merged like this:
+> The `includeIf` mechanism already supports matching on the `.git`
+> directory path (`gitdir`) and the currently checked out branch
+> (`onbranch`).  But in multi-worktree setups the `.git` directory of a
+> linked worktree points into the main repository's `.git/worktrees/`
+> area, which makes `gitdir` patterns cumbersome when one wants to
+> include config based on the working tree's checkout path instead.
 
-Thanks for a heads-up.
+Thanks.
 
-This seems to break so many tests when merged to either 'jch' or
-'seen', even though all of them pass standalone.  I did not have
-time to figure out what interactions with which other topic are
-causing the breakages.
+This seems to break t1305 when merged to 'seen', even though all of
+them pass standalone.  I did not have time to figure out what
+interactions with which other topic are causing the breakages.
