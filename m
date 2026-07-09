@@ -1,80 +1,80 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39813E8343
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 08:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE1D3EDE6A
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 08:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783585783; cv=none; b=X9930ZUAZnb8O500n3xMhiwQTdh/w/vGxAWk1Of5igloGFM8YNejllWmWI8Lx6AHk1zTEtgj656MUW81lHdAgFBXtl2wXJG9OnmKlHOziTcKYa9Bnt5kExKKRGTxKIeqVCl2Qd9vv5trW7Zc1+AmCN23/q7Q43p8MLQ0WtHZp+I=
+	t=1783585787; cv=none; b=I+RNq7Wd1X/08r5VU7AXL6WEU9Pr3QnrpSaEhODsmJYh0HLKrdKxSoMSl3xsfntMAv933LF5ZEYsNrFQIC0ES1vkLG+LzR6BlzH+WbhfI4d0XcCKUoGsjVaO8sRMuPiLueDxhkV3RELLcDqc4uaZrCSo6JF3eKa3oHeIF20GB8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783585783; c=relaxed/simple;
-	bh=0qmvbfg+Wahw20UVU0g+TPJXk/jbKMC/IMHp0vpaI9Y=;
+	s=arc-20240116; t=1783585787; c=relaxed/simple;
+	bh=120qwO0NFrizt1bpZCQUzEbZXatOt1vt6fd8flzWTbQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hiZoqskrA+7UPqYvSM+mDlCw7TCv2uU8T6URbHDuQQqmxpmUiSmJtyD9XsLcX5vg36Wn9jPX/amspTMjvxQOkX366uZE6ctrfmA2lL6pnNoXu/UaJKGFaBg4gKmr8/5UAlIZMGQEXLQQBNCsUIWLG1JUEqHNcQs+96K2i1VGcws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EfJ5KVd+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BWiTtfJ6; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=b/vBRACVcXsSz2y4qVdkvgfcuMZ631kqL2+8Abhz1BCYFnsbQ2O9uL+9AETKjhsp2VwTRgY/I7J+yGYXpS7fuRkIwYflCEKK69VcWsyzmkHO0ayYE8dJQ/Pjz8746dFgYJXhj9HtiqNJVlGLZ2NLCTb8iCS00g6jWov9fZfJCwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CF7RClKu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HxWbOOXx; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EfJ5KVd+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BWiTtfJ6"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 83EE77A0148
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 04:29:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CF7RClKu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HxWbOOXx"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7B89A7A0018
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 04:29:45 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 09 Jul 2026 04:29:41 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 09 Jul 2026 04:29:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783585781;
-	 x=1783672181; bh=fxIydexJcuDGSfaDHjH6aClFz5mc5+JFZ3Fa1fCQPgY=; b=
-	EfJ5KVd+xN7fKuGQWoGt4vH4ta/0X6Uk0HKc3pr8N+GGLGm6NHY3LM+x664W3p7y
-	sebG9dW4OySlE7noPEPF/ilVj80UhszdAaSoxVh2iJPf0HBJHX8g+n6/gIaK7ybQ
-	PPs8uZlDWBjSlwegfbIiwPFeWfLdWbEtKa7G8tueox23DcxpRfQ8O9hogHr4qt4C
-	gfG5CYIfe6rZxaqP+aBUuDGoUcspuXXKl+bBVZGH2YU666342+wgJ4RvKq9EvPSs
-	OuW5Vm6POJeSHGWbh+heeongbDE9DT97OmBPlhV9xg/zRfQ7TB4jUwXXYOmr+qB6
-	U7Qz/V9i1HGV6zeP6qen9A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783585785;
+	 x=1783672185; bh=zY1/MUOnbec7Ad9Ox8OifCfrYEaF92hYk8UhtlAJsBk=; b=
+	CF7RClKuzlmgwHSyy9MfKA37giz+rbqGBqTK5FM3a8OD5D+8ldjsLLm7pSTb49N/
+	O93hSfT7CH5MMDGu6f8Lkb/T0z5Gjh8TNqOkmkk/sBD14BPF29rOPUc8A79yFXba
+	de+QJ5Uuo00GA+bAy3GO9N/qVGlJVvtAGKvlH6U+2/ag2F3l5ktgoal1WKrANWnj
+	knB5FRUj6xiXIHzWuUBbiINNzMG+Q7Gd1FtlCaMpZYAAnxFQsLiMIhYnszVplKMM
+	OM8NDRqWbNzTVE8TNMSmQUXB+l333n8u/2Rov9VpMYIuxAgsqn2D+14I8dIWM++p
+	hE4bLV+8CbUtFNVGRvfYQg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783585781; x=
-	1783672181; bh=fxIydexJcuDGSfaDHjH6aClFz5mc5+JFZ3Fa1fCQPgY=; b=B
-	WiTtfJ6FsyQUnWPeIHgpaxf+/n20tE3cM8+f99vMDxVQllIM0WVn9qHBP0i48XST
-	8yPzu5jgHw7e/FCMEtW4bpsemToafxqpoVVS018fKKD6D+gv1knUYD4wQ16XMmVk
-	S/0iNLe8Zvb+HgWz3ap3NLY0vfo9q+5MaWR0O+ry1mlKpG9PPHlP8oRSc5Q/sgug
-	cxOK4u98JuCLN1qL0W2CUIHp2rl+pzsYhg36CkhNrKXrL9OPPMm43twazUTJuA38
-	WpYkXOVuzJyNCeFEdCYuEm73pHqMoPzZgAi21RlOArfZs/LAyfne8C+H8CrGbI87
-	o0zdawXqCVKOmymIIkcww==
-X-ME-Sender: <xms:9VtParol3d3AiWh8BnOQiMSksW94Sklg4askTs0KIVdU8Mf40U0m4w>
-    <xme:9VtPaslAJuFSSq_8CewK5RxGhPlnxf4I0qBwLGhCBGA2DFcV9cZhCaAmhfWyBMOIF
-    U-MBMHxm4j4R5wCJ0ysObc3NjdZxQ4nVyL_GBMW2jrMYxBy5kCQYQ>
-X-ME-Received: <xmr:9VtPat2W7L6RiWtDTlykvUNB29RPbQPm_RRzt7OaEYpYuJUg-engI-UrG_mtu8F8XVZrrNs4zDUiR5NNOOt4F58S0ytEKuPUcgfn4KkLxg>
-X-ME-Proxy-Cause: dmFkZTF2YEkw3GlKnf422ZK5xSDrgKWTJta7tPPIkHyWCqHXCKhy5rtZsPXLbbmOx11qNK
-    Pq4NZCgekSLabKFJ43kuYWKfKAOmDfq8N6a1JoNPhUlfj6dFYJE32jv/GWoLkGuvVFvYh1
-    zq5pAouDeRUsL7DtvG9WnhKri5//eSQZZjV205PnlKxfoMR2D8WKzcW+5Efuuzpr2cJnnS
-    iXk7lznZdezxn0TNtGMP215ib7jqCP9HQKWJoii0a3xtmubVd/K/r9f1knEQru8T7bU5Bc
-    MyK05X0vc4MRvefkx7V9jZuMzTITaSpZCVzHdgtKrnGLOgYuqJ/vCFTZ+NjzkcKPwIYZoH
-    cmQ/qJ6dPUycuqAfmNrYDj+SrdHzM072w5rcMvrSEcEyG3r7b3Octbz+HOwiATgLjWJtoz
-    +kLWi+0qaFkXCSHPHfanh1eJqEVZGVj8W80Hq8yRlS/Vvub7bPG1e/ZuPBPDehFF/qK55O
-    wHwrvKnGjWRVIeolq3wmmG5Fszn4FJ9UcnsRg+sfRbcawq3UB+Y+5pqBOWk1VpCQw0sc6w
-    chiMG0F4nAhCWAaE4CTHee9c0kq2Su0fil3YLC/tTADXTrXEx4qmS09XJjsJiLA3QLVo19
-    SzBrhA/g+Hw0bmJtoOUBHpvq9QTXjoR+2sT1MpOnqJTnb56WIl+oehK4RdSw
-X-ME-Proxy: <xmx:9VtPakBLePwrLdn4cefyJ-aUN35qmnptvXRNW7Bc4LW6NOvYM1sT_Q>
-    <xmx:9VtPaqx_-BKHvb7ON3ahnLsJYZ2bvIWnFuo578A5ok_JqMHqJD661w>
-    <xmx:9VtPainRvfLik3yvTSrEo2CvqnOYuLtX4yejqgEnRNzLFkjrEUnWtw>
-    <xmx:9VtPavHth1NYg7mwDXLKZQOOukhIoXLQNVavY3FZXzXC66TG6qFLYQ>
-    <xmx:9VtParLqFYarYHP-uPZf0AEmK0zUzylstcLyBxQ2OzL8pVAZpP6oesEe>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783585785; x=
+	1783672185; bh=zY1/MUOnbec7Ad9Ox8OifCfrYEaF92hYk8UhtlAJsBk=; b=H
+	xWbOOXxAAEz/EmfH7jYDGRxV7EYmAGq4RyouZ/tiC8fBty/0SBQF3lhejHaMnJ/2
+	9hpaICWqD5qncjG046Ul3v+kKTLfRCnuVuLfp2hEh43YAk+eEgrcz4N28CoeIzR/
+	mxLwzuUTx7vQhGWOhxORCJQp+vasEG5KEDsu3n6y5+a2P42Es74qysBIkL3DJLc3
+	FYBmX2flwldUJTgnzd6/R1gJqqy5kedLQr4YCrdTAwztRB69ZtbbyPXgqM0pcTUs
+	CFTk6AaYqc1ZtrtNMW0eDPJ28J1CoqIweOmgW/12n8EdRamQdpWDYrg0dzLQYzjZ
+	UxrQ2FUl6lrc46wOrG25Q==
+X-ME-Sender: <xms:-VtPakUeOu87GQhTyj1xqjzozKFQMJgwGqow0TPRtgtviojTf4ATKw>
+    <xme:-VtPavj1LHfzKfaFH--_WQ7bQ0w54ydgdfsQu31LEtZxrtqHsGrHfyaZZu--77FVx
+    wvbN3QbxX8e1WlAPfmeRlpW-lSCpWgGADl1Y2bcRZejmnVBxSSBmzw>
+X-ME-Received: <xmr:-VtPauD1429xLxw-qoRnnCVOtGLRbXRj_NZy3DkzQL2KZz7UK5PPtkTipaDo9jdm8pFHGQijzQ8Gqe7ILyuXmjZ0BJ1uRi6MLRqxD8RkqQ>
+X-ME-Proxy-Cause: dmFkZTGVX3wGpxpiSCWJAJLYw56uc7AsI8lzGGtirC1PyeoNkmCS9OJmVpj2C4zgT0w4Bv
+    fRRIRvb2Zgw11cWYDofZgFH3L8ZF9LsrJVYGp6LyzbEvhWT3LGZdU4A11BhGzHT71Yozqo
+    8bJhwHECnddG8lIqfrPNfvCfxUxE/oS1mFXHxRylUQj1j9URASU8hVG3yejfXf6fflQiuS
+    bLeSzH21T8lGztv+qF6FixffIjzLX7LOEToB+wMzSeOPg+ZmdRQOrM2RnxJ5HFz8KjjTBj
+    pcZnHacq2D3zm2wPW5y60IfhSgZnCjs5gOfOMOVVOkwDcsrHxYXboZUOONGkZnkoLLnIbE
+    DEoGSUmI+o0nUCMbG257mfZl1tJOipmtEyalw6AVNmy0DN2o8YIbVSvuogU+4ETFMpq89J
+    Kx37Ikzc80WSaPNOhrv/lU6IzvdDiLjmsQU5mXOlSdEGciLbeFFylaz9jhMV0alxQxMbOq
+    vOqO7K6zJuEUHGfzxKlhIj2AIkDGjkcSwvqqnxdVfb6L3v7Zis+AAeQ19yUc0ijd7JukUo
+    P6W2C3uyD8WtxCyMRVwnTv7+wUnJodlIB9ZuT4r+RnGXbJf+95fBwg5tzRWPygQn1Es8rz
+    8y+zQBERrDsLFRSJiYf9vJOHj4y0z2xocE/R1Q2L0TZbiMoMpaFtLnNFP/lQ
+X-ME-Proxy: <xmx:-VtPaodx7MXCwUA2OwbIwkFoVoMcHe0aLsfFRdLeObCr7KEnAng0cA>
+    <xmx:-VtPaueVRA-gYh-xdqmpy7YnolYcCrEV7kBUxm4i4-YS9hcIhFZYjg>
+    <xmx:-VtPakhKgGNThOenUfzfZZTdA54KDAJVTt9zwWQBBWiQT2I7Q4WLFg>
+    <xmx:-VtPaiRau5mdtiaUGtYpYkQYC3H4lCxt97ZmUpLrmu-rHTWc0YDumA>
+    <xmx:-VtParkwDI0Ian45gryKynmRc9smNAd5ozVZ9gw5UA-dvElAoWdmjN2I>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 9 Jul 2026 04:29:40 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 9 Jul 2026 04:29:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fe7447ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 5a7b0f8c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 9 Jul 2026 08:29:40 +0000 (UTC)
+	Thu, 9 Jul 2026 08:29:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 09 Jul 2026 10:29:15 +0200
-Subject: [PATCH 4/7] worktree: refactor code to use available repositories
+Date: Thu, 09 Jul 2026 10:29:16 +0200
+Subject: [PATCH 5/7] worktree: pass repository to file-local functions
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,86 +83,180 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-pks-refs-wo-the-repository-v1-4-1ad6f27529c9@pks.im>
+Message-Id: <20260709-pks-refs-wo-the-repository-v1-5-1ad6f27529c9@pks.im>
 References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
 In-Reply-To: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-In "worktree.c" we have lots of users of `the_repository` that already
-have a repository available to them. Convert all of them to use that
-repository instead.
+We have a bunch of file-local functions that use `the_repository`.
+Adapt them so that the repository is instead passed as a parameter so
+that we can get rid of this dependency.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- worktree.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ worktree.c | 47 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 21 deletions(-)
 
 diff --git a/worktree.c b/worktree.c
-index 30125827fd..8b10dea179 100644
+index 8b10dea179..ebbf9e27e9 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -392,7 +392,7 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
- 	if (!is_absolute_path(wt->path)) {
- 		strbuf_addf_gently(errmsg,
- 				   _("'%s' file does not contain absolute path to the working tree location"),
--				   repo_common_path_replace(the_repository, &buf, "worktrees/%s/gitdir", wt->id));
-+				   repo_common_path_replace(wt->repo, &buf, "worktrees/%s/gitdir", wt->id));
+@@ -111,27 +111,28 @@ static int is_main_worktree_bare(struct repository *repo)
+ /**
+  * get the main worktree
+  */
+-static struct worktree *get_main_worktree(int skip_reading_head)
++static struct worktree *get_main_worktree(struct repository *repo,
++					  int skip_reading_head)
+ {
+ 	struct worktree *worktree = NULL;
+ 	struct strbuf worktree_path = STRBUF_INIT;
+ 
+-	strbuf_add_real_path(&worktree_path, repo_get_common_dir(the_repository));
++	strbuf_add_real_path(&worktree_path, repo_get_common_dir(repo));
+ 	strbuf_strip_suffix(&worktree_path, "/.git");
+ 
+ 	CALLOC_ARRAY(worktree, 1);
+-	worktree->repo = the_repository;
++	worktree->repo = repo;
+ 	worktree->path = strbuf_detach(&worktree_path, NULL);
+ 	worktree->is_current = is_current_worktree(worktree);
+-	worktree->is_bare = (the_repository->bare_cfg == 1) ||
+-		is_bare_repository(the_repository) ||
++	worktree->is_bare = (repo->bare_cfg == 1) ||
++		is_bare_repository(repo) ||
+ 		/*
+ 		 * When in a secondary worktree we have to also verify if the main
+ 		 * worktree is bare in $commondir/config.worktree.
+ 		 * This check is unnecessary if we're currently in the main worktree,
+ 		 * as prior checks already consulted all configs of the current worktree.
+ 		 */
+-		(!worktree->is_current && is_main_worktree_bare(the_repository));
++		(!worktree->is_current && is_main_worktree_bare(repo));
+ 
+ 	if (!skip_reading_head)
+ 		add_head_info(worktree);
+@@ -182,7 +183,8 @@ struct worktree *get_linked_worktree(const char *id,
+  * retrieving worktree metadata that could be used when the worktree is known
+  * to not be in a healthy state, e.g. when creating or repairing it.
+  */
+-static struct worktree **get_worktrees_internal(int skip_reading_head)
++static struct worktree **get_worktrees_internal(struct repository *repo,
++						int skip_reading_head)
+ {
+ 	struct worktree **list = NULL;
+ 	struct strbuf path = STRBUF_INIT;
+@@ -192,9 +194,9 @@ static struct worktree **get_worktrees_internal(int skip_reading_head)
+ 
+ 	ALLOC_ARRAY(list, alloc);
+ 
+-	list[counter++] = get_main_worktree(skip_reading_head);
++	list[counter++] = get_main_worktree(repo, skip_reading_head);
+ 
+-	strbuf_addf(&path, "%s/worktrees", repo_get_common_dir(the_repository));
++	strbuf_addf(&path, "%s/worktrees", repo_get_common_dir(repo));
+ 	dir = opendir(path.buf);
+ 	strbuf_release(&path);
+ 	if (dir) {
+@@ -216,12 +218,12 @@ static struct worktree **get_worktrees_internal(int skip_reading_head)
+ 
+ struct worktree **get_worktrees(void)
+ {
+-	return get_worktrees_internal(0);
++	return get_worktrees_internal(the_repository, 0);
+ }
+ 
+ struct worktree **get_worktrees_without_reading_head(void)
+ {
+-	return get_worktrees_internal(1);
++	return get_worktrees_internal(the_repository, 1);
+ }
+ 
+ char *get_worktree_git_dir(const struct worktree *wt)
+@@ -707,7 +709,7 @@ static void repair_noop(int iserr UNUSED,
+ 
+ void repair_worktrees(worktree_repair_fn fn, void *cb_data, int use_relative_paths)
+ {
+-	struct worktree **worktrees = get_worktrees_internal(1);
++	struct worktree **worktrees = get_worktrees_internal(the_repository, 1);
+ 	struct worktree **wt = worktrees + 1; /* +1 skips main worktree */
+ 
+ 	if (!fn)
+@@ -752,7 +754,7 @@ void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path
+ 
+ void repair_worktrees_after_gitdir_move(const char *old_path)
+ {
+-	struct worktree **worktrees = get_worktrees_internal(1);
++	struct worktree **worktrees = get_worktrees_internal(the_repository, 1);
+ 	struct worktree **wt = worktrees + 1; /* +1 skips main worktree */
+ 
+ 	for (; *wt; wt++)
+@@ -786,7 +788,9 @@ static int is_main_worktree_path(const char *path)
+  *
+  * Returns -1 on failure and strbuf.len on success.
+  */
+-static ssize_t infer_backlink(const char *gitfile, struct strbuf *inferred)
++static ssize_t infer_backlink(struct repository *repo,
++			      const char *gitfile,
++			      struct strbuf *inferred)
+ {
+ 	struct strbuf actual = STRBUF_INIT;
+ 	const char *id;
+@@ -801,7 +805,7 @@ static ssize_t infer_backlink(const char *gitfile, struct strbuf *inferred)
+ 	id++; /* advance past '/' to point at <id> */
+ 	if (!*id)
+ 		goto error;
+-	repo_common_path_replace(the_repository, inferred, "worktrees/%s", id);
++	repo_common_path_replace(repo, inferred, "worktrees/%s", id);
+ 	if (!is_directory(inferred->buf))
+ 		goto error;
+ 
+@@ -842,7 +846,7 @@ void repair_worktree_at_path(const char *path,
  		goto done;
  	}
  
-@@ -414,12 +414,12 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
- 		goto done;
- 	}
+-	infer_backlink(dotgit.buf, &inferred_backlink);
++	infer_backlink(the_repository, dotgit.buf, &inferred_backlink);
+ 	strbuf_realpath_forgiving(&inferred_backlink, inferred_backlink.buf, 0);
+ 	dotgit_contents = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
+ 	if (dotgit_contents) {
+@@ -1017,12 +1021,13 @@ int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath,
+ 	return rc;
+ }
  
--	strbuf_realpath(&realpath, repo_common_path_replace(the_repository, &buf, "worktrees/%s", wt->id), 1);
-+	strbuf_realpath(&realpath, repo_common_path_replace(wt->repo, &buf, "worktrees/%s", wt->id), 1);
- 	ret = fspathcmp(path, realpath.buf);
- 
- 	if (ret)
- 		strbuf_addf_gently(errmsg, _("'%s' does not point back to '%s'"),
--				   wt->path, repo_common_path_replace(the_repository, &buf,
-+				   wt->path, repo_common_path_replace(wt->repo, &buf,
- 								      "worktrees/%s", wt->id));
- done:
- 	free(path);
-@@ -440,7 +440,7 @@ void update_worktree_location(struct worktree *wt, const char *path_,
- 	if (is_main_worktree(wt))
- 		BUG("can't relocate main worktree");
- 
--	wt_gitdir = repo_common_path(the_repository, "worktrees/%s/gitdir", wt->id);
-+	wt_gitdir = repo_common_path(wt->repo, "worktrees/%s/gitdir", wt->id);
- 	strbuf_realpath(&gitdir, wt_gitdir, 1);
- 	strbuf_realpath(&path, path_, 1);
- 	strbuf_addf(&dotgit, "%s/.git", path.buf);
-@@ -658,7 +658,7 @@ static void repair_gitfile(struct worktree *wt,
- 		goto done;
- 	}
- 
--	path = repo_common_path(the_repository, "worktrees/%s", wt->id);
-+	path = repo_common_path(wt->repo, "worktrees/%s", wt->id);
- 	strbuf_realpath(&repo, path, 1);
- 	strbuf_addf(&dotgit, "%s/.git", wt->path);
- 	strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
-@@ -727,7 +727,7 @@ void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path
- 	if (is_main_worktree(wt))
- 		goto done;
- 
--	path = repo_common_path(the_repository, "worktrees/%s/gitdir", wt->id);
-+	path = repo_common_path(wt->repo, "worktrees/%s/gitdir", wt->id);
- 	strbuf_realpath(&gitdir, path, 1);
- 
- 	if (strbuf_read_file(&dotgit, gitdir.buf, 0) < 0)
-@@ -1042,7 +1042,7 @@ int init_worktree_config(struct repository *r)
+-static int move_config_setting(const char *key, const char *value,
++static int move_config_setting(struct repository *repo,
++			       const char *key, const char *value,
+ 			       const char *from_file, const char *to_file)
+ {
+-	if (repo_config_set_in_file_gently(the_repository, to_file, key, NULL, value))
++	if (repo_config_set_in_file_gently(repo, to_file, key, NULL, value))
+ 		return error(_("unable to set %s in '%s'"), key, to_file);
+-	if (repo_config_set_in_file_gently(the_repository, from_file, key, NULL, NULL))
++	if (repo_config_set_in_file_gently(repo, from_file, key, NULL, NULL))
+ 		return error(_("unable to unset %s in '%s'"), key, from_file);
+ 	return 0;
+ }
+@@ -1058,7 +1063,7 @@ int init_worktree_config(struct repository *r)
+ 	 * _could_ be negating a global core.bare=true.
  	 */
- 	if (r->repository_format_worktree_config)
- 		return 0;
--	if ((res = repo_config_set_gently(the_repository, "extensions.worktreeConfig", "true")))
-+	if ((res = repo_config_set_gently(r, "extensions.worktreeConfig", "true")))
- 		return error(_("failed to set extensions.worktreeConfig setting"));
- 
- 	common_config_file = xstrfmt("%s/config", r->commondir);
+ 	if (!git_configset_get_bool(&cs, "core.bare", &bare) && bare) {
+-		if ((res = move_config_setting("core.bare", "true",
++		if ((res = move_config_setting(r, "core.bare", "true",
+ 					       common_config_file,
+ 					       main_worktree_file)))
+ 			goto cleanup;
+@@ -1070,7 +1075,7 @@ int init_worktree_config(struct repository *r)
+ 	 * upgrade to worktree config.
+ 	 */
+ 	if (!git_configset_get_value(&cs, "core.worktree", &core_worktree, NULL)) {
+-		if ((res = move_config_setting("core.worktree", core_worktree,
++		if ((res = move_config_setting(r, "core.worktree", core_worktree,
+ 					       common_config_file,
+ 					       main_worktree_file)))
+ 			goto cleanup;
 
 -- 
 2.55.0.175.ge4962bd3d5.dirty
