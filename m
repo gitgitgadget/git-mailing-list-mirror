@@ -1,71 +1,71 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BC23749E5
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 15:03:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977D2370ADF
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 15:03:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783609389; cv=none; b=H2myH0UXlm5XR4h2YZl4wXkJ0ONBvAlKdKSb1AOhgkBN1c+us2LtPH2eTVNGJNUUuvnAcrm9CX/Q08IQprOHApvOoae+3mYo+Ihb4bIUfY2QcPbAlH8QXSXzyNBj4GTVGsBiOlnrLKo952CAoDSs/rMTXedVGHETogy1C+syhAE=
+	t=1783609390; cv=none; b=bTJn+bXDOWOpG3tTicjMxzftl76rV2ZJwhVT2JxHVfTFXz6ebV5CE3o24X2e0IJDYC4MDVZI3mAs/+5oKeiUdvBAs2m4v3btQgqt38RpEpXUdicE4i1+17P3zb5Ao9jE6dyK5CR0g7FlYJboZdIYeegpxf9lk+YYfOAN3ms7bqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783609389; c=relaxed/simple;
-	bh=ZYc/Gycpg/awk++RrUZ7e5SROK7yE9xYUzYwo9JHOio=;
+	s=arc-20240116; t=1783609390; c=relaxed/simple;
+	bh=AUxUlr0F23A791cOb/62pxZ/QfnU2mIbl/TcBRx4RVw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HfFvXwCvSUfXwd9MvvxUgeSVZylYTZKLe3D9tgdtYHdaOnhnPiklsh/bW5C3KXHSWmlrMo7OqHIKV8Z5wZEwGYufDDzK/qQVi1eMTLWjBXgDJxb7Ip0RrpVqhq/4HOHDZ+5l9ZuUb+pVhzf49Sg7viuxLqOxzK5biaKrS3xxQy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LynWsced; arc=none smtp.client-ip=209.85.222.169
+	 MIME-Version:To:Cc; b=ARafKhkCrTK7iuAz4i8Uk8QOiXJu5s57MS3A04PNQP7rufdvzq1ao2RINhriNYGqjsWI1J0/EWPu8T04ugzoMtXDotMFMEGING8uyqrL42OI8pKyM4hVbq4T5crZP+fC1B/f4oX51VM1NzECfO7PHMO9wDoi+0WjXQGiHqQU20M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LUjeAH7n; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LynWsced"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-92b21f65b60so63236685a.1
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 08:03:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LUjeAH7n"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-92e5c9211d2so152567085a.1
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 08:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783609387; x=1784214187; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783609388; x=1784214188; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=k0sZdue0HNkjNvpj35gvOHyeCsbXm5uuxY9FIXuZQgc=;
-        b=LynWscedoLoyjIlIyI4kR0AqzDsZGsn/lPenp53lE1wIs7FO1AEuzLDRf+8n2p86rw
-         wW+my746hwjajwNPJzuRbKjpTVEQW/Pp/2/vWAZeWNEL4JLRGOmwlUCKdtiSOC1J0KCv
-         G/YT1k1cce18z8Cy2yFxqOXi7/9K2A1Umi0p6fI527eZXGY2/Ou+vWundDUvQ6UlOob0
-         i2wdH/Sjnz58cOq9GGC7MOSKmUru+VbHtfTDKmZaTom0raD8jKv9rubl/5BxzQbaIhn0
-         Pb/fma6MtNd3NXFtD1tAskjAoBu5s2bGDm6e59kOj5LyG7LeISd4JQxeaEuK6ihBzjTg
-         uMfw==
+        bh=CAgUd9Ss0JGVtNtTktw3iPy4qr+CjvIuMq+r3w0MlSo=;
+        b=LUjeAH7nbkZ/0mP+UzDcrOWRiw7/jcQ89+hqXih5V/9d2DSlRMHfjXEY7Ip83iAok9
+         AxvwdavV/DyNzpWS/CTexiOlHb0AskgFm1l/UhGP7gpu5N6n3VjfJL0V60fkP+H9OH29
+         a9bnOHvSDRjfx/aODskL2lbWxAeQHFjtVsqfNEBxzyVTv3O/FMsD+/kdZy61lRXk8PrB
+         clsjSYfEsTvZu3pC1Xb02rm2zoXfnGyZaSobRb31U2EeDKgmZOgym1lekUxyjUw66ZQ/
+         hQWAOBtxmhFs5LKyS5nwP5xMs5cOtmAlUvLjhm63Ftq7YRkYUCnW+2gvVGcrNZ+nE2o0
+         ugSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783609387; x=1784214187;
+        d=1e100.net; s=20251104; t=1783609388; x=1784214188;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=k0sZdue0HNkjNvpj35gvOHyeCsbXm5uuxY9FIXuZQgc=;
-        b=cpmvi/W89Nd16OmQR4a/vP4SibjBEFA2AQBR3TiRQnxQQNV7yHLsyJMy6pbht9VLdd
-         KcBWuLWRA/jqjQTLgMNwy2pG8Zv73omtzLiK1dN37/AFFaq2L8B/lGgHoQUXDFGUjiCi
-         5KEUbwdkG6SUvZ7+mHH0rp9ZMb27JOnM9plGSjbEr+y7Vir27Mb411keAs8eFhjN/Kaz
-         wKKE+l6abbm7b2bU4HgahvZZ+wdqCzIo9jRKr6c3PzhQ1kp8/t5dIoybauBSSZ6Cws28
-         +CCrhhkd8zShP9KozLbalMvCOTNlL48pUe4VmGImbkT8W8Tnc9jyFTRylixKbBIwodV0
-         NFaQ==
-X-Gm-Message-State: AOJu0Ywo4dWwA3Rx1vIWculHTlkMQCxQkybfnZoIRT0+F+AxdH4r1eB6
-	b2JWe6qDjQEPeFbzCuyW5EaGmQ8tZeG/UcmmgWGtfZL+J/01cQPU+Iinn3pZRg==
-X-Gm-Gg: AfdE7cmKConqdkUyQz0kqRnNo5M8DZzSeWkCUzIZaQzpJJmI+ARqspVArITdjzXB7LB
-	6xQym3WEZBCA8EQfCMScbWz4Ep0gBp2FF9PDytYy3dyl6go5NRspaOfTwWH8XLxcKx/yCbhiYDn
-	SWtg2DF+/BOZ/gZ6ayEVnABTRShOmQG6aC5YLIlg/bKz4I7kdrAqiWwJL1plYZ6skzTX2xQYyaO
-	0Gaw6BHj1GEYUOc7R0rX9W+jR/Ev2joJvOSvzV/GIiy1iqOcXMGVAAjS7fWo1Y+2qAYKT2BO9AP
-	TvmOV1odrV1Nzy/qBfs2Qq7yHYH1/OkjawA0wnJa300rCtG8kJYOOWqx9EX0M7AjNq6A7pnBU68
-	O8itvzAMVFT+d3SjIAC/24G3Nx7Ap1VNnMXNpVFZckN5zpBi+B2Ugk+1FTNnhP0S1BewrE7oxKf
-	c/mVq2p8/jwdFwJ4E=
-X-Received: by 2002:ac8:5a55:0:b0:51c:7aa7:e0e9 with SMTP id d75a77b69052e-51c9b986c97mr32527291cf.38.1783609386405;
-        Thu, 09 Jul 2026 08:03:06 -0700 (PDT)
+        bh=CAgUd9Ss0JGVtNtTktw3iPy4qr+CjvIuMq+r3w0MlSo=;
+        b=kTsn/s8Kq4YIz/f7rIFACkv2auEfTGcpMnXAQf9nvyNg3jLgm+HB3fO9a042yKfRfV
+         SxD/FKScKqY37iH1r2ko5+5w9jXRMgnJQM78mRKOxvKGQx40dVaDGSdrsl08+bJ1jlmE
+         YKEWizdFSfXlQO0V2MTOB4jnWyFBc1PSD1sgNA5xpXwK052D5JS+7g9dCID6fDBjYeRK
+         zgE8eIfVj5Ms8kYi8DH6SvT2gP7LuvD1ifGwLTabQ7k05gOhF1usjPyx7whwkJyRpOtA
+         9uPJpz9GbAGlWR7ru2WBZtK3Uxcccnx40Klkbat8zkyO/1pf9M1s7cXRnlLLRp45f8/7
+         Vg4Q==
+X-Gm-Message-State: AOJu0YxlK1PpldsDXgUOKPZVGkSKfOKN4UMS2Q38zaxTIXDl3sg3+Hj4
+	JAPRgdVVhFEXo6DS65ndAy7V4CgGy/bYtg6i/W6dajjtnCL7BRHTXuhVYSzqLw==
+X-Gm-Gg: AfdE7cn/3PNdE3ZesTSoL/BRrkGO1t9QZPh0KjFzDLQm2vqCRlgZ2iAJDLlZRNrVaWz
+	t7mEC95TDxdG4MxHfYVlm0rqzxy7EqSd5tlMHyVtftpcK/bexGGbsbgAEGyJflWz9T9WeCzC3+p
+	kbJPmbwPFURY4h2pMdgs17zrmbMMW6s0eM6bKsHLveXYlwOn8LVzJ0LaaexLYHC/u7JFRlSiV9Y
+	+i3++waLbzJ40/xsi99u6tMHwiwT8AilmUsI7fJm4DPmprtjAnhomn3PFjhLwqKxiwXpsisMd/G
+	vc6hHe20iFqQuFNNB7kX6AkV2v+ZDdabVxLzGdieDSzdbqpEs7xSuaVvFp/rkRvhypt+MbZi5BO
+	1HQAL7AnBRk4lKvXqW/cvJ3W0BsCHXIgaMCwArKYzDIFBPVJyqHaxFxhFntoY/v7UxT1zMz1P/B
+	HKh8N+EV2G09qJiuI=
+X-Received: by 2002:a05:620a:2b87:b0:92e:cc01:a67e with SMTP id af79cd13be357-92ecf91af9emr821825185a.76.1783609388136;
+        Thu, 09 Jul 2026 08:03:08 -0700 (PDT)
 Received: from [127.0.0.1] ([4.236.159.145])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41b7671csm172513911cf.13.2026.07.09.08.03.05
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92ecff35229sm400997685a.36.2026.07.09.08.03.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 08:03:05 -0700 (PDT)
-Message-Id: <100efa22a9a2bb82b85c95fa2ce933311ca09ee3.1783609382.git.gitgitgadget@gmail.com>
+        Thu, 09 Jul 2026 08:03:07 -0700 (PDT)
+Message-Id: <679dd2e392b26b6a51f88b62d0a17cece71942ca.1783609382.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2170.v2.git.1783609382.gitgitgadget@gmail.com>
 References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
 	<pull.2170.v2.git.1783609382.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 15:03:00 +0000
-Subject: [PATCH v2 1/2] commit-graph: add trace2 instrumentation for
- generation DFS
+Date: Thu, 09 Jul 2026 15:03:01 +0000
+Subject: [PATCH v2 2/2] commit-graph: propagate topo_levels slab to all chain
+ layers
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,88 +84,45 @@ Cc: Taylor Blau <me@ttaylorr.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-Count the number of steps taken in
-compute_reachable_generation_numbers() and expose it via
-trace2 to make it easier to detect performance regressions.
+The topo_levels slab is only propagated to the topmost graph
+layer instead of all layers in the chain.  Commits from lower
+layers appear to have no generation numbers, so the DFS
+re-walks the entire ancestry.
 
-Add a failing test for such a regression, introduced in
-199d452758 (commit-graph: return the prepared commit graph
-from `prepare_commit_graph()`, 2025-09-04), where incremental
-commit-graph writes do not see existing generation numbers
-from lower graph layers and fall back to walking the full
-ancestry.
+Fix by making topo_levels visible to all layers, not just
+the first one.
 
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- commit-graph.c                |  5 +++++
- t/t5324-split-commit-graph.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ commit-graph.c                | 2 +-
+ t/t5324-split-commit-graph.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index c6d9c5c740..702ba9731b 100644
+index 702ba9731b..a0bca248ac 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1653,6 +1653,7 @@ static void compute_reachable_generation_numbers(
- {
- 	int i;
- 	struct commit_list *list = NULL;
-+	intmax_t steps = 0;
+@@ -2610,7 +2610,7 @@ int write_commit_graph(struct odb_source *source,
  
- 	for (i = 0; i < info->commits->nr; i++) {
- 		struct commit *c = info->commits->items[i];
-@@ -1671,6 +1672,7 @@ static void compute_reachable_generation_numbers(
- 			int all_parents_computed = 1;
- 			timestamp_t max_gen = 0;
+ 	g = prepare_commit_graph(ctx.r);
+ 	for (struct commit_graph *chain = g; chain; chain = chain->base_graph)
+-		g->topo_levels = &topo_levels;
++		chain->topo_levels = &topo_levels;
  
-+			steps++;
- 			for (parent = current->parents; parent; parent = parent->next) {
- 				repo_parse_commit(info->r, parent->item);
- 				gen = info->get_generation(parent->item, info->data);
-@@ -1694,6 +1696,9 @@ static void compute_reachable_generation_numbers(
- 			}
- 		}
- 	}
-+
-+	trace2_data_intmax("commit-graph", info->r,
-+			   "generation-dfs-steps", steps);
- }
- 
- static timestamp_t get_topo_level(struct commit *c, void *data)
+ 	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
+ 		ctx.changed_paths = 1;
 diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index 49a057cc2e..b41331e3dd 100755
+index b41331e3dd..9e5ab7dbd0 100755
 --- a/t/t5324-split-commit-graph.sh
 +++ b/t/t5324-split-commit-graph.sh
-@@ -718,6 +718,30 @@ test_expect_success 'write generation data chunk when commit-graph chain is repl
+@@ -718,7 +718,7 @@ test_expect_success 'write generation data chunk when commit-graph chain is repl
  	)
  '
  
-+test_expect_failure 'incremental write reads topo levels from all layers' '
-+	git init topo-from-lower &&
-+	(
-+		cd topo-from-lower &&
-+
-+		for i in $(test_seq 5)
-+		do
-+			test_commit base-$i || return 1
-+		done &&
-+		git commit-graph write --reachable &&
-+
-+		test_commit extra &&
-+		git commit-graph write --reachable --split=no-merge &&
-+
-+		git checkout base-3 &&
-+		test_commit new-branch &&
-+
-+		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+			git commit-graph write --reachable --split=no-merge &&
-+
-+		test_trace2_data commit-graph generation-dfs-steps 1 <trace.txt
-+	)
-+'
-+
- test_expect_success 'temporary graph layer is discarded upon failure' '
- 	git init layer-discard &&
+-test_expect_failure 'incremental write reads topo levels from all layers' '
++test_expect_success 'incremental write reads topo levels from all layers' '
+ 	git init topo-from-lower &&
  	(
+ 		cd topo-from-lower &&
 -- 
 gitgitgadget
-
