@@ -1,141 +1,153 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f0.google.com (mail-pj2-f0.google.com [74.125.227.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127BB5B1EB
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 03:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE49837206E
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 05:12:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783569191; cv=none; b=E/3nrHtKFmETSKx9IV2mxGOUm7Y+054VWrp7FLBXplP1/aLAdfiH2dvQTDzqCDdF8iKY8wgEGOw5TRnxuKmfvX3byv50FGCFORkPt2xuK1DyIFHfLBuOqp8YMTPTMOSbjH6xGsQ8AXOSP0UDttTfzrTh3EhkB+IXx28HubnWsQI=
+	t=1783573967; cv=none; b=J7byQOcwSdWOfyvTscbzSoomMCIEqxharYnbCh2Gt/nBw7yjwIYyIGZ/AbmyqQ/F0z35NUEolAwHBrZD2FBtdCtjW7sAPZbXOfGbfkoO+L5u3KRTy0YIlQ0wke9TgcRk6dm7Unbjq1nK76UmgybGJNFXviBB2q1KYqzk8kTLaJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783569191; c=relaxed/simple;
-	bh=p/hIqefh9cFzTBJ0QbSr7bX2QvvTaTht1RccLbF2XiM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Tx9VCnWjbEWEzJR4UeK2KKXsxlG7Y9TCmvWM0AUvif7c1t8Rcv11PgOjqYxKRv5LBzX+m1CJjtKdVtfbyChSvj3zaRpjlkjK2weQ2bAbGAbjGPuEF3jBdV5qnJhuxrRI7o7okN1xLyNuBIAuobNhqNVB2YssRmkqoskUe07CLZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tz6udbI4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JNK9ZEkH; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783573967; c=relaxed/simple;
+	bh=6fYXnpTsqigK8Jg/mm9XoC2OkTmhJSKMIU5arttHmnY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UGcZnafhgOKrj2k7kFB0VWyEG+Kv8oVH8czw4YJn4toYpS7e5PeUyIA+wY7Z2vr9OWLDXlKxaal4lsHB+HKEjL8hU0SRVBnlwsTcfiA3iM4+3mMih4cjXeMZdsv5s4Xp0i4q2Bve9IM6iPUUabcuBjpNY+WJZ0bRc5OUw9gDzPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JIdk+iuQ; arc=none smtp.client-ip=74.125.227.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tz6udbI4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JNK9ZEkH"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 244EC1D00086;
-	Wed,  8 Jul 2026 23:53:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 08 Jul 2026 23:53:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783569188; x=1783655588; bh=+Q1/1Y2gib
-	zUqgbROMfmb4frGL7tYLe/S/NRp8u1uqA=; b=tz6udbI4dF1gWIZv8EOYj57OZM
-	MJqmPgZH6UBEVuNB3veL6VF1B0Kpfnc8Soyz/yWR539sMA8wfLJ19zimdYH3/Rmc
-	h6lNoYkDkGP8AUzJjgCFzqLQCQ0l7AQD1WVagK3Js9y8xq1n263dyQOkgvucLMwO
-	8GNv6Jqo4F6rV7uy+5MZq36MVPCcf9fTgN+MNE+K1GyPf5rnZrT6EtsaZeJpvKa7
-	vKsYE8FWtZXC+R+Ksq8K+pnvOeZrQTWRjfYSwYJNP4iqQyPSh4hBHyHpb02+VHnd
-	J/LaKDyeDFMZt9iBa1RCdx4dZa6cQ7OT5z0NOpFQgGf0A7ROkdIJwU8pm8Kg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783569188; x=1783655588; bh=+Q1/1Y2gibzUqgbROMfmb4frGL7tYLe/S/N
-	Rp8u1uqA=; b=JNK9ZEkH9dHw7Z8ZifXZKsswWm8aGYkMke4HLG6Ogfbgx1EFpuI
-	lwsi+RBobF0zYQFzXbUmBFBDHS6DJubGepsH0ArQvBu82ceabnjkO2T9ZNNjBsbU
-	n5J5WQfAEB6u+bh82jaqmJ3/G4zwsaEDPYLIubep2zHqlyOwX35aM3K7RXB5htTE
-	66EdjyIw+qDhL5ELQopLqlyF4CSXaXzNscxHqLAmxI6Wafele1HgTi4dQBjBU1HT
-	AtwQ2YRvv5LXWmn5SNZBjEr0QyUxpqPmgY+g3ZWQkW13bG5FyDam59ncv0v2Pos1
-	ckd5Vl4+xvNtRaczZNL/F23dMOb4OfzEIVg==
-X-ME-Sender: <xms:JBtPammDHoAAQXKT3KcqxcEP9_nFB5eTzRrnJoM4pWeewHEHoeH7_w>
-    <xme:JBtPas5EQ7gl5R7ILNDkFlzUKhv6AvNUsdiD6_GaiKUUUaHuSmg8ovchgvMQ2oYxk
-    X5fC2aHX_cUK_Lbvcifsqyx1xv4EBa-EKKI5tOV5CUdNNxrpLYd-Q>
-X-ME-Received: <xmr:JBtPaq0d6okVi_UvM-otptXsUZ0b5NBHEc2ciyGvZl4EixsrZti8xzX9NoXpIdGGpd2Tv-ueyihxFhCF9YUO8UR89rYlY-obOdERgc0>
-X-ME-Proxy-Cause: dmFkZTEhQ3jTf6uDbZ9r0GYcyEy2BFGAKOSXrQ+jx3Yr2+pSqCdFVW8nVpHj6Im6Rxaquw
-    Oanzg39gWWpR8Vl50E8fbYNipFzsHiZsDpApEKhjylmBUesMtwKFmPyf29wAeNCEo1R8bH
-    bzGyWsCemMq6nhjLgXtdGsXXdUD4dmqWMhx3HStVwqf1TFOG1zvYx+6fYOd0+fMtspnClt
-    I9RpO24lWa/BFRAutoVWCu5Mj1qqkTfMSnE4t977MSPtTm0+8frcztTYX9/LAiP9+VC4OD
-    2ii+0pjqQWzrp8x5j74C59eyiWG+kvrLo0rCAmO/ip8pA/xZ5uEQYU3ZOmihHn6TmOssDo
-    p1ODXKlCUi3pFTuxMB4POguRGXY9BXWPgwZb+GFSzGHP2GMjHQP6BtDNI3URwytxHvWp1u
-    kkHnwx4SYL+bfftJRjUifZdZGoQHftumVypgBC7MjuOiEMVqkFkxwbQqJ9npRa3BszUp9/
-    3NmXvcY9J3XnrFxdNmyG+GiANFenEHwE3+FRkKeqC/ePOsJ+Y+WuAkGr9Fa3Hl0o5i7H/f
-    Syj1jdi0inkHTKlWSO/+x9d9sILL3PVAbFkBlLZOeP6Dz2iNIBcmQB+TvFuhexyfA1wsnA
-    GgT4cu3CWZmfNoztXR3IJfI3akdB/OHB5/tNIsB2NldHJp8eAwdWSwbOcNkA
-X-ME-Proxy: <xmx:JBtPanEuveWer19RBMJGjwEVQrRRBiqIreFb_DkM-LuBp-vnlqnonw>
-    <xmx:JBtPapjasL8Obd_d-GGnAinijJJkSGiNLcXtcdNeD35tanwGKwkbiA>
-    <xmx:JBtPaqCgibf3mB4r8CEUYbixYXSrg9y-0fZ22arjBcaC0MvjD4bKBg>
-    <xmx:JBtParR0LCJ-Fq0LHxXnsLzLD7Jd-iFl7NrgPicvW9qX5QHZdS54mg>
-    <xmx:JBtPajTCTa1Ymh_suCY6C69IXaEEd1xxMAAJMw1f7gRALDu_YmVt5GPv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 23:53:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  cirnovskyv@gmail.com,  szeder.dev@gmail.com,
-  Christian Couder <christian.couder@gmail.com>,  Ayush Chandekar
- <ayu.chandekar@gmail.com>,  Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v8 4/9] environment: move pager_program into
- repo_config_values
-In-Reply-To: <20260708160300.8852-5-cat@malon.dev> (Tian Yuchen's message of
-	"Thu, 9 Jul 2026 00:02:55 +0800")
-References: <20260706142530.3681520-1-cat@malon.dev>
-	<20260708160300.8852-1-cat@malon.dev>
-	<20260708160300.8852-5-cat@malon.dev>
-Date: Wed, 08 Jul 2026 20:53:07 -0700
-Message-ID: <xmqqy0fkq0nw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIdk+iuQ"
+Received: by mail-pj2-f0.google.com with SMTP id d9443c01a7336-2cc2c6e0688so4402345ad.0
+        for <git@vger.kernel.org>; Wed, 08 Jul 2026 22:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783573965; x=1784178765; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=kADpcc24G1eBT+bapzybUjhis6ckiuRQpVm8IXeuB1Y=;
+        b=JIdk+iuQ0XSUOnLrSPSwbMqrR3NezHji6nmv1D7cr1coIdeDFFJj4D9NI/9ZfRWrjW
+         i1qc6h0rJTQazN7yHLh3x70a3ve6Ex/VCtcMME9usJ+2NgqpYaGQunyLU6P43psLopJD
+         GcQ3XNp8XLz3YfIa32bhQlPglviDpJrpvnlDcsYs0dyByQmwY4x+Tycz0jU0nKzH3Kta
+         yWsSI3/CfuSIwpa+rTVrjjm5L8OtVT9YlvHDuy/56OIH93SZjMBk4sS6qgC7/HH5x6UX
+         /7IMnW2GrqYGjHr4/dSdeRKFqUyZwQTro6K8RXSZm3qDZb3bg+a9wxKZMvVGGuTIGj8J
+         +Ukg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783573965; x=1784178765;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=kADpcc24G1eBT+bapzybUjhis6ckiuRQpVm8IXeuB1Y=;
+        b=TwxOUSN3L2SZVfLLacSxaqtwySB+SuJOtFZdozlJFYBa9AYVAwHOK50Dw0QsIOfwcQ
+         NLjrqfNeUVCivaKOLokRljhPzGRXwM0Fxwn/yRXJX6V5Drfuk3mLYN/9avMc5X89rbfn
+         tM4R5HqhGwGsTkP1jiy97seSgdIbmjf1p25kEIXixOvqzvn/xSyB6C9iUfIOOBuQgU9J
+         s+TOGRfYVXnxVww3zy5+6TN91ZYQtHzqjmqWz02AtthTLnqsiQIkCz2GzYSxGicsNwj7
+         NIjl46CoTF+LZD57CO+iIjoKdZe7qjCFCqI0QOeBRXOYCKaZAxQZZYuKQJmB3SL37tx4
+         Qszg==
+X-Gm-Message-State: AOJu0YyLB/XuzDuVIqK8wvSyaxp586a+682zN1KDY4N/yyapgfsrTkme
+	MIfSRZz6cmFlemJm1ivs4NO+XrAyCablgV3gQ2pq5WMBOsy5VUiIwj/Uh96aQgCOknI=
+X-Gm-Gg: AfdE7clIzcdd5RR+ka2Xr0nw1nxlhzuEf5Eueq0qyIsHAsRCFtlIqhffJr5B+c66rJS
+	JMyBDGTsNYV+MURfNia4xVTRy5jGaYrBR8tmwwcq9GNpIxxlgVWZ0ghAxq8OMBB0165MQIUoF5+
+	DHKU0TVyA7PVvakXJ76OvxMOPKzLOTv1X05YWaZ85B/cXOOh1nsZ192JS76WlRzGNXi40CRYZyT
+	ePmdTO+NNsic0FeFhzNS9CC42MGxY/uLbP3Ru6KQyAxY+yLKlGQ6o+Y+syUNblst8t8Jwp3trxZ
+	m4d3YC1YvT82ioeHg8yqF1pwg8O2h+x4ORDq2PcAxmB/uIQzzmM4mo3d6dw44Mrfh/pUoCcuumU
+	HVNVlkTLLp2lc7daiOPsASYDBcZxgtjch0bitrGYxAQ49e5BfAuSuinsXogKCgxu2xWHktCp29x
+	Y6j8MKZGjGpbuCKYwn14XOU0PAGWG3LoYk251Qibz1xRP1D/Upfewau89q0g==
+X-Received: by 2002:a05:6a21:4e02:b0:3bf:d1f9:b1db with SMTP id adf61e73a8af0-3c0bd158f8fmr6860981637.52.1783573964997;
+        Wed, 08 Jul 2026 22:12:44 -0700 (PDT)
+Received: from localhost.localdomain ([45.117.66.208])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b659666e7sm32086550c88.7.2026.07.08.22.12.42
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 08 Jul 2026 22:12:44 -0700 (PDT)
+From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+To: git@vger.kernel.org
+Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Subject: [PATCH v4] t1410-reflog.sh: avoid suppressing git's exit code in pipelines
+Date: Thu,  9 Jul 2026 10:39:35 +0530
+Message-ID: <20260709051229.40363-1-gatlavishweshwarreddy26@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <xmqqv7aprz8a.fsf@gitster.g>
+References: <xmqqv7aprz8a.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Tian Yuchen <cat@malon.dev> writes:
+Piping git commands directly to wc -l suppresses the exit code of
+git, hiding potential failures from the test suite. Use
+test_stdout_line_count instead, which handles exit code preservation
+internally while keeping the test logic clean and readable.
 
-> On top of that, fix a memory leak in pager.c while we are at it.
+Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+---
 
-Hmph.
+Changes in v4:
+- Restored blank line between test_expect_success blocks that was
+  accidentally removed in v2
+- Updated commit message to accurately describe the solution
 
-> @@ -75,10 +76,12 @@ static void wait_for_pager_signal(int signo)
->  
->  static int core_pager_config(const char *var, const char *value,
->  			     const struct config_context *ctx UNUSED,
-> -			     void *data UNUSED)
-> +			     void *data)
->  {
-> +	struct repository *r = data;
-> +
->  	if (!strcmp(var, "core.pager"))
-> -		return git_config_string(&pager_program, var, value);
-> +		return git_config_string(&repo_config_values(r)->pager_program, var, value);
+Thank you for the detailed review!
 
-Isn't this still overwriting what was in the .pager_program member
-of the config values struct?  In check_pager_config() below, there
-is a free() to avoid such a leak, but wouldn't this have the same
-issue?
+ t/t1410-reflog.sh | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
 
-> @@ -91,10 +94,10 @@ const char *git_pager(struct repository *r, int stdout_is_tty)
->  
->  	pager = getenv("GIT_PAGER");
->  	if (!pager) {
-> -		if (!pager_program)
-> +		if (!repo_config_values(r)->pager_program)
->  			read_early_config(r,
-> -					  core_pager_config, NULL);
-> -		pager = pager_program;
-> +					  core_pager_config, r);
-> +		pager = repo_config_values(r)->pager_program;
->  	}
->  	if (!pager)
->  		pager = getenv("PAGER");
-> @@ -302,7 +305,9 @@ int check_pager_config(struct repository *r, const char *cmd)
->  
->  	read_early_config(r, pager_command_config, &data);
->  
-> -	if (data.value)
-> -		pager_program = data.value;
-> +	if (data.value) {
-> +		free(repo_config_values(r)->pager_program);
-> +		repo_config_values(r)->pager_program = data.value;
-> +	}
->  	return data.want;
->  }
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index ce71f9a30a..5a40a62ba2 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -244,30 +244,22 @@ test_expect_success 'delete' '
+ 	test_tick &&
+ 	git commit -m tiger C &&
+
+-	HEAD_entry_count=$(git reflog | wc -l) &&
+-	main_entry_count=$(git reflog show main | wc -l) &&
+-
+-	test $HEAD_entry_count = 5 &&
+-	test $main_entry_count = 5 &&
+-
++	test_stdout_line_count = 5 git reflog &&
++	test_stdout_line_count = 5 git reflog show main &&
+
+ 	git reflog delete main@{1} &&
++	test_stdout_line_count = 4 git reflog show main &&
++	test_stdout_line_count = 5 git reflog &&
+ 	git reflog show main > output &&
+-	test_line_count = $(($main_entry_count - 1)) output &&
+-	test $HEAD_entry_count = $(git reflog | wc -l) &&
+ 	! grep ox < output &&
+
+-	main_entry_count=$(wc -l < output) &&
+-
+ 	git reflog delete HEAD@{1} &&
+-	test $(($HEAD_entry_count -1)) = $(git reflog | wc -l) &&
+-	test $main_entry_count = $(git reflog show main | wc -l) &&
+-
+-	HEAD_entry_count=$(git reflog | wc -l) &&
++	test_stdout_line_count = 4 git reflog &&
++	test_stdout_line_count = 4 git reflog show main &&
+
+ 	git reflog delete main@{07.04.2005.15:15:00.-0700} &&
++	test_stdout_line_count = 3 git reflog show main &&
+ 	git reflog show main > output &&
+-	test_line_count = $(($main_entry_count - 1)) output &&
+ 	! grep dragon < output
+
+ '
+@@ -321,11 +313,11 @@ test_expect_success 'git reflog expire unknown reference' '
+ '
+
+ test_expect_success 'checkout should not delete log for packed ref' '
+-	test $(git reflog main | wc -l) = 4 &&
++	test_stdout_line_count = 4 git reflog main &&
+ 	git branch foo &&
+ 	git pack-refs --all &&
+ 	git checkout foo &&
+-	test $(git reflog main | wc -l) = 4
++	test_stdout_line_count = 4 git reflog main
+ '
+
+ test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
+--
+2.54.0
+
