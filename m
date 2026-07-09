@@ -1,83 +1,85 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5C631F98D
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 03:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127BB5B1EB
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 03:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783568957; cv=none; b=PbcfgtLgz9EV1qYYb+ODao8d5ao5xWo8dV8e6pyZ7q64oJabJIORkFTMi2Q9mzT2T1pI1gZiaE9NVDda0C47o6HTcdtHpsl/KWDby1RUxJzkwj2y2uY+h4tTfRQ6x0oGIydgcGeogMtJFT2FgQkoI36D6JJ5h6LJ48Rxpddd6AE=
+	t=1783569191; cv=none; b=E/3nrHtKFmETSKx9IV2mxGOUm7Y+054VWrp7FLBXplP1/aLAdfiH2dvQTDzqCDdF8iKY8wgEGOw5TRnxuKmfvX3byv50FGCFORkPt2xuK1DyIFHfLBuOqp8YMTPTMOSbjH6xGsQ8AXOSP0UDttTfzrTh3EhkB+IXx28HubnWsQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783568957; c=relaxed/simple;
-	bh=pbfRTQQwH4Mhs/NE0zAifoojUGbI8nOzX1FVf2TrVdU=;
+	s=arc-20240116; t=1783569191; c=relaxed/simple;
+	bh=p/hIqefh9cFzTBJ0QbSr7bX2QvvTaTht1RccLbF2XiM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ELveMm8/xBtOBIsDfKNMS5vv6OLXxhluIq+yLqZEgnwiBVJ0V4JuL7PV0mr+iQ1heC3de6AnJ1Xo30w6IXH/rKpJjbwQxnd/cCbVfoIYLDo1ZrpkWfaEvSWyssHq+uKdue4rpwtC4MNMyaulyx7edWUckV+vqwe9MeHtDxDUFmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V7ZX0lLB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EdT/T1lm; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=Tx9VCnWjbEWEzJR4UeK2KKXsxlG7Y9TCmvWM0AUvif7c1t8Rcv11PgOjqYxKRv5LBzX+m1CJjtKdVtfbyChSvj3zaRpjlkjK2weQ2bAbGAbjGPuEF3jBdV5qnJhuxrRI7o7okN1xLyNuBIAuobNhqNVB2YssRmkqoskUe07CLZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tz6udbI4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JNK9ZEkH; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V7ZX0lLB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EdT/T1lm"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E2FA7A00C9;
-	Wed,  8 Jul 2026 23:49:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 08 Jul 2026 23:49:15 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tz6udbI4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JNK9ZEkH"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 244EC1D00086;
+	Wed,  8 Jul 2026 23:53:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 08 Jul 2026 23:53:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783568955; x=1783655355; bh=v1pyOh7v8X
-	hopaQRaWCdEPRgVafb4jsFYyTXlz282Vw=; b=V7ZX0lLBCHfZR1LsXiVnvUybzY
-	biXXmSsh66LW9Mmq9ianKI38DeRD/iVVXVqUQW2nZCrDV8fDJ9TeSuRGb6SXWOXy
-	9juZ1a8RVcJmNLr+0UANcmrE/orRAnAjcSqbP1/Fpl1yNmZvWM4GMszG4GZED3Fp
-	Jb0c83mbjALceDgDbt+0N/drsmiFSXc4POLUZiFsFiXFP8lWH+JjkVjp3Enu6EnE
-	+FACjy51DQv9UjD426cu9xEkfhwvoihosLiYgjlKv40HhAbdjJyYH/RB2NpyWZsU
-	c7iTDvNLHG9o2iMFaZdbRnj5qw2q8KYG381edCMB+lITN/G275dO4eOhAyGg==
+	:subject:to:to; s=fm1; t=1783569188; x=1783655588; bh=+Q1/1Y2gib
+	zUqgbROMfmb4frGL7tYLe/S/NRp8u1uqA=; b=tz6udbI4dF1gWIZv8EOYj57OZM
+	MJqmPgZH6UBEVuNB3veL6VF1B0Kpfnc8Soyz/yWR539sMA8wfLJ19zimdYH3/Rmc
+	h6lNoYkDkGP8AUzJjgCFzqLQCQ0l7AQD1WVagK3Js9y8xq1n263dyQOkgvucLMwO
+	8GNv6Jqo4F6rV7uy+5MZq36MVPCcf9fTgN+MNE+K1GyPf5rnZrT6EtsaZeJpvKa7
+	vKsYE8FWtZXC+R+Ksq8K+pnvOeZrQTWRjfYSwYJNP4iqQyPSh4hBHyHpb02+VHnd
+	J/LaKDyeDFMZt9iBa1RCdx4dZa6cQ7OT5z0NOpFQgGf0A7ROkdIJwU8pm8Kg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783568955; x=1783655355; bh=v1pyOh7v8XhopaQRaWCdEPRgVafb4jsFYyT
-	Xlz282Vw=; b=EdT/T1lm+vgDdDZ/yUujtmpF2/nTK2SO/LQpa2/9D7En7Bgdh8u
-	960Agq5RUMU+98fiJqIbO2iaFTZaHHSn1+arQlqnQTrY2vcHXYj4vO2grjZ0TYfg
-	Gox4cExXHX9hqfkXI0PhsMAthRWCzkGgzUbsPXo/vhKwQOVHXXcn8BBMjpdyPphl
-	f6oMF8pys1qqBq3OTJZ02b1l/L36ylO+eokgZmWFkB0jMh7C3ZRvLJRTw0H/SCno
-	VdrPOu8K4ov42T7ofhOC6+K55DMjr4huHPz6HoyrCUCbcWhceiqx9C24isWdP0Tg
-	N5EriTOc27NhcqffBWA/87mjOW6JCyxJRSA==
-X-ME-Sender: <xms:OxpPalL5FyS2tcCV__J1H3oA8HU8Lh8chdjZJ-1hr_SoHKR02olotQ>
-    <xme:OxpPaoKU-z5kbaKIPrjnDMtvnYz5Aq8_5wHW8q7mJD7grhLwK35WDo3uKhxn5C1nz
-    Wl7YXSmBvBcjcZ_WJoY-4x01g1WB7JXChJmk_goa7Irp6Q64P1bKg>
-X-ME-Received: <xmr:OxpPaisVTepG7NGgxxAW2P82D5dDVY-BwfVEo1tYFX0DxtE3H4mjUIE1SlOrPoeNthjPkzOsFwXvtCj2GvQeZBMN2IPREn-LBzJJmas>
-X-ME-Proxy-Cause: dmFkZTFFOxp+TUcinvAhIMiMSRKnusR01ZtRjx3gwRYm3oQZkyI3rjZYpM/DMdv2f3S0Dz
-    naWEHR6zRkwXgvSAxSfN1LSCwRkR+W/3Y7MDE/iyGYAWYoQE9hcoYgpLcGPkxAbwAkk7OX
-    aF6h3yBPSM7bUB6sbIXhgmsyMg6jWnn2K3prqtqKe4Z5IDI66YInZVsEu0fLD12zFRbd9z
-    UmNc7CA9ZZdp36oM0WoYjBiwwkymyUe+Smv9ID2ShAO2sB4Twc+Hm7wzLn0PrdOBCXCLhA
-    scGUrXk//SHdWqaEi186nOduatF6luBJLyboCkrqx/JGKJD4c1zPD4gQQbdHhFiiRpYBb2
-    /+N3aO3A7TDbNLf3UsRqvmey7keXkQO2FHfN3K2q7wr0wylIT3yqNcnKtMb4RXlPMRvOXx
-    02x2cDocagUqQy7Co93diRXU4Y5+ktArtmJJaB/F6blthMxmufrA+oJgGc6zLxVkhAQ3HU
-    pZgFZJ8oMrhy8nAXdbAIyflqg4WfYGpvPh774Ug8DugkIPzKAxwdYepa64SexdeRGyMSbG
-    qzgC5wy/UX0Zf3hOULybpmqa5jeyC0f3ra3PGs9ixpKRnD8JACULBm5pJtNmlRLuBYvBg4
-    Bo57x/8NPv6u6Pm3OiSeZ3V6hY92cEDqEGwamAJcVkMsvWyQz0wRC6B7gjqw
-X-ME-Proxy: <xmx:OxpPalSzmqpmFd61s-nd0RpDcsh-doxpgqvVKf3jXjowbyHz6uQd-A>
-    <xmx:OxpPaoMIrXf6QHvkaW4AWjD8aXJVchs6RIgMtEEorGpSg0rdRmpHZg>
-    <xmx:OxpPaqafrCv7DaAbcS2qOFqVrkfnHNecW3rYNYuspuLWP_T9x3P3kw>
-    <xmx:OxpPaiwx4lhI3H7eWDPhDfxogIoEXG2bxbiOwrMK6xTFjAaJziCSiQ>
-    <xmx:OxpPaiM_I3qia7TaNVW6_AQxOXTZMEZNcK98U_q4wgLpGsnSFfJw4Mwq>
+	1783569188; x=1783655588; bh=+Q1/1Y2gibzUqgbROMfmb4frGL7tYLe/S/N
+	Rp8u1uqA=; b=JNK9ZEkH9dHw7Z8ZifXZKsswWm8aGYkMke4HLG6Ogfbgx1EFpuI
+	lwsi+RBobF0zYQFzXbUmBFBDHS6DJubGepsH0ArQvBu82ceabnjkO2T9ZNNjBsbU
+	n5J5WQfAEB6u+bh82jaqmJ3/G4zwsaEDPYLIubep2zHqlyOwX35aM3K7RXB5htTE
+	66EdjyIw+qDhL5ELQopLqlyF4CSXaXzNscxHqLAmxI6Wafele1HgTi4dQBjBU1HT
+	AtwQ2YRvv5LXWmn5SNZBjEr0QyUxpqPmgY+g3ZWQkW13bG5FyDam59ncv0v2Pos1
+	ckd5Vl4+xvNtRaczZNL/F23dMOb4OfzEIVg==
+X-ME-Sender: <xms:JBtPammDHoAAQXKT3KcqxcEP9_nFB5eTzRrnJoM4pWeewHEHoeH7_w>
+    <xme:JBtPas5EQ7gl5R7ILNDkFlzUKhv6AvNUsdiD6_GaiKUUUaHuSmg8ovchgvMQ2oYxk
+    X5fC2aHX_cUK_Lbvcifsqyx1xv4EBa-EKKI5tOV5CUdNNxrpLYd-Q>
+X-ME-Received: <xmr:JBtPaq0d6okVi_UvM-otptXsUZ0b5NBHEc2ciyGvZl4EixsrZti8xzX9NoXpIdGGpd2Tv-ueyihxFhCF9YUO8UR89rYlY-obOdERgc0>
+X-ME-Proxy-Cause: dmFkZTEhQ3jTf6uDbZ9r0GYcyEy2BFGAKOSXrQ+jx3Yr2+pSqCdFVW8nVpHj6Im6Rxaquw
+    Oanzg39gWWpR8Vl50E8fbYNipFzsHiZsDpApEKhjylmBUesMtwKFmPyf29wAeNCEo1R8bH
+    bzGyWsCemMq6nhjLgXtdGsXXdUD4dmqWMhx3HStVwqf1TFOG1zvYx+6fYOd0+fMtspnClt
+    I9RpO24lWa/BFRAutoVWCu5Mj1qqkTfMSnE4t977MSPtTm0+8frcztTYX9/LAiP9+VC4OD
+    2ii+0pjqQWzrp8x5j74C59eyiWG+kvrLo0rCAmO/ip8pA/xZ5uEQYU3ZOmihHn6TmOssDo
+    p1ODXKlCUi3pFTuxMB4POguRGXY9BXWPgwZb+GFSzGHP2GMjHQP6BtDNI3URwytxHvWp1u
+    kkHnwx4SYL+bfftJRjUifZdZGoQHftumVypgBC7MjuOiEMVqkFkxwbQqJ9npRa3BszUp9/
+    3NmXvcY9J3XnrFxdNmyG+GiANFenEHwE3+FRkKeqC/ePOsJ+Y+WuAkGr9Fa3Hl0o5i7H/f
+    Syj1jdi0inkHTKlWSO/+x9d9sILL3PVAbFkBlLZOeP6Dz2iNIBcmQB+TvFuhexyfA1wsnA
+    GgT4cu3CWZmfNoztXR3IJfI3akdB/OHB5/tNIsB2NldHJp8eAwdWSwbOcNkA
+X-ME-Proxy: <xmx:JBtPanEuveWer19RBMJGjwEVQrRRBiqIreFb_DkM-LuBp-vnlqnonw>
+    <xmx:JBtPapjasL8Obd_d-GGnAinijJJkSGiNLcXtcdNeD35tanwGKwkbiA>
+    <xmx:JBtPaqCgibf3mB4r8CEUYbixYXSrg9y-0fZ22arjBcaC0MvjD4bKBg>
+    <xmx:JBtParR0LCJ-Fq0LHxXnsLzLD7Jd-iFl7NrgPicvW9qX5QHZdS54mg>
+    <xmx:JBtPajTCTa1Ymh_suCY6C69IXaEEd1xxMAAJMw1f7gRALDu_YmVt5GPv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jul 2026 23:49:14 -0400 (EDT)
+ 8 Jul 2026 23:53:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 11/11] builtin/receive-pack: stage incoming objects
- via ODB transactions
-In-Reply-To: <20260708235925.3992097-12-jltobler@gmail.com> (Justin Tobler's
-	message of "Wed, 8 Jul 2026 18:59:25 -0500")
-References: <20260708041412.1157499-1-jltobler@gmail.com>
-	<20260708235925.3992097-1-jltobler@gmail.com>
-	<20260708235925.3992097-12-jltobler@gmail.com>
-Date: Wed, 08 Jul 2026 20:49:13 -0700
-Message-ID: <xmqq33xsrfeu.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  cirnovskyv@gmail.com,  szeder.dev@gmail.com,
+  Christian Couder <christian.couder@gmail.com>,  Ayush Chandekar
+ <ayu.chandekar@gmail.com>,  Olamide Caleb Bello <belkid98@gmail.com>
+Subject: Re: [PATCH v8 4/9] environment: move pager_program into
+ repo_config_values
+In-Reply-To: <20260708160300.8852-5-cat@malon.dev> (Tian Yuchen's message of
+	"Thu, 9 Jul 2026 00:02:55 +0800")
+References: <20260706142530.3681520-1-cat@malon.dev>
+	<20260708160300.8852-1-cat@malon.dev>
+	<20260708160300.8852-5-cat@malon.dev>
+Date: Wed, 08 Jul 2026 20:53:07 -0700
+Message-ID: <xmqqy0fkq0nw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,80 +89,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Justin Tobler <jltobler@gmail.com> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> @@ -2027,6 +2031,7 @@ static void execute_commands_atomic(struct command *commands,
->  static void execute_commands(struct command *commands,
->  			     const char *unpacker_error,
->  			     struct shallow_info *si,
-> +			     struct odb_transaction *transaction,
->  			     const struct string_list *push_options)
->  {
->  	struct check_connected_options opt = CHECK_CONNECTED_INIT;
-> ...
+> On top of that, fix a memory leak in pager.c while we are at it.
 
-Hidden in the context early in this function is an error return.
-When unpacker_error string is non NULL, we mark all the commands in
-the linked commands list as failed, and return early from this
-function.
+Hmph.
 
-> @@ -2105,14 +2115,13 @@ static void execute_commands(struct command *commands,
->  	 * Now we'll start writing out refs, which means the objects need
->  	 * to be in their final positions so that other processes can see them.
->  	 */
-> -	if (tmp_objdir_migrate(tmp_objdir) < 0) {
-> +	if (odb_transaction_commit(transaction)) {
->  		for (cmd = commands; cmd; cmd = cmd->next) {
->  			if (!cmd->error_string)
->  				cmd->error_string = "unable to migrate objects to permanent storage";
->  		}
->  		return;
->  	}
-> -	tmp_objdir = NULL;
+> @@ -75,10 +76,12 @@ static void wait_for_pager_signal(int signo)
 >  
->  	check_aliased_updates(commands);
+>  static int core_pager_config(const char *var, const char *value,
+>  			     const struct config_context *ctx UNUSED,
+> -			     void *data UNUSED)
+> +			     void *data)
+>  {
+> +	struct repository *r = data;
+> +
+>  	if (!strcmp(var, "core.pager"))
+> -		return git_config_string(&pager_program, var, value);
+> +		return git_config_string(&repo_config_values(r)->pager_program, var, value);
 
-In the "happy case", execute_commands() would commit the transaction
-before going on to do the execute_commands_{atomic,nonatomic}() that
-appears later in it.
+Isn't this still overwriting what was in the .pager_program member
+of the config values struct?  In check_pager_config() below, there
+is a free() to avoid such a leak, but wouldn't this have the same
+issue?
 
-> @@ -2706,11 +2705,14 @@ int cmd_receive_pack(int argc,
->  		if (!si.nr_ours && !si.nr_theirs)
->  			shallow_update = 0;
->  		if (!delete_only(commands)) {
-> -			unpack_status = unpack_with_sideband(&si);
-> +			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
-
-In the "main" program, we start a transaction here, and
-
-> +				unpack_status = "unable to start object transaction";
-> +			else
-> +				unpack_status = unpack_with_sideband(&si, transaction);
-
-then call unpack_with_sideband().  It may fail.
-
->  			update_shallow_info(commands, &si, &ref);
->  		}
->  		use_keepalive = KEEPALIVE_ALWAYS;
-> -		execute_commands(commands, unpack_status, &si,
-> +		execute_commands(commands, unpack_status, &si, transaction,
->  				 &push_options);
-
-And in such a case, execute_commands() returns without committing
-the transaction.  Is there a need to add and make an
-odb_transaction_abort() call or something in such a case?
-Everything should be cleaned up upon process exit, and on file based
-backends, we probably let the tempfile/lockfile API do their thing
-to clean up, but are there other things we may want to clean up?
-
->  		delete_tempfile(&pack_lockfile);
->  		sigchain_push(SIGPIPE, SIG_IGN);
-> @@ -2719,7 +2721,7 @@ int cmd_receive_pack(int argc,
->  		else if (report_status)
->  			report(commands, unpack_status);
->  		sigchain_pop(SIGPIPE);
-> -		run_receive_hook(commands, "post-receive", 1,
-> +		run_receive_hook(commands, "post-receive", 1, NULL,
->  				 &push_options);
->  		run_update_post_hook(commands);
->  		free_commands(commands);
+> @@ -91,10 +94,10 @@ const char *git_pager(struct repository *r, int stdout_is_tty)
+>  
+>  	pager = getenv("GIT_PAGER");
+>  	if (!pager) {
+> -		if (!pager_program)
+> +		if (!repo_config_values(r)->pager_program)
+>  			read_early_config(r,
+> -					  core_pager_config, NULL);
+> -		pager = pager_program;
+> +					  core_pager_config, r);
+> +		pager = repo_config_values(r)->pager_program;
+>  	}
+>  	if (!pager)
+>  		pager = getenv("PAGER");
+> @@ -302,7 +305,9 @@ int check_pager_config(struct repository *r, const char *cmd)
+>  
+>  	read_early_config(r, pager_command_config, &data);
+>  
+> -	if (data.value)
+> -		pager_program = data.value;
+> +	if (data.value) {
+> +		free(repo_config_values(r)->pager_program);
+> +		repo_config_values(r)->pager_program = data.value;
+> +	}
+>  	return data.want;
+>  }
