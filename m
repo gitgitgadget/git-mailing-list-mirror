@@ -1,147 +1,125 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECFD387363
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 14:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783605845; cv=none; b=hycIk325LrQkMCtU5oeszHWr+OUUJr5kRDORhEMgwxJdu+wsoPBXdQ5BV0HmCT2WtSvbzYOpFR3B7SMr7hTuJVP8D3nxPv0acREMajbQWg0A1KtM02uJ04V7nyiKlh567+lCY0ewkEDc1deAs0dmaeesekQe4Gj/W1E/l2jF5rI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783605845; c=relaxed/simple;
-	bh=jDrJqkQD/vpTrFPDTc69V/S0X6IMU6xM4k0YAK3te4g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BAQwEZETPg1Y3pdudEZ9sgcJFczRqgL1ubSDpOshkwT0P3GUhHwTWw0E3Q06s5TWG9zUWLGIgyIKk+TyoJouH4Tpb9VJ3bA9hgc/eHc9sGCPGjZ0vY3/jJjGfgaIf6u8Vsepxemm+be7AU2jRNEKsOC/tj2bC3wNQgHbE3g6Bn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OR4WlQbw; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109CE31328C
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 14:48:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783608538; cv=pass; b=OFgO/an1WJTt5E7JG+4j7dLvadz0a/1j08q4cdIWUB913to3RbG8zIBXEN76q4VwUisFMGXEA1of3ZQFndF70sCAaZ2MVmY8+EQPKYtI+DzxGXEUjwiuYEv029ustvByS1Sf4JW9yRWwjOsONdQq8rcfNswKKdA2n4uocxowhcI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783608538; c=relaxed/simple;
+	bh=lbGmwDal36TWG6nO3SXC14RSBrWDTeEwq69BP++R5vk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A+7SL/zNC+U5oXD6qA8ciUaC+oyNDeirzqKS3IGnNslHYUhNC9WgRTWEnUBxIS8SJx21R58t8pkhME5wnqMTrwcIm6eomtemdP6wOPY19Z2ghZ1SfkN6u5YdlDpOeG2X0wJY5gO4AahmBc+cBFKEAREWy25V7Yqo2JR8V2pDWP0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=EjSAV+0S; arc=pass smtp.client-ip=74.125.224.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OR4WlQbw"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-495b250b01cso1415533b6e.0
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 07:04:04 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="EjSAV+0S"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-6647bc8f900so1714527d50.0
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 07:48:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783608536; cv=none;
+        d=google.com; s=arc-20260327;
+        b=XCmHQkUNTbLGEaqRYsiJUYMoE+iY8kOxW/3q/ikqiPljceodfXoLFzjk7hwXy/F792
+         ZQGWx3BZ4dun1O4nbAOkqXtu4NPcuI69PfNINbkaj7YcT8LxCyPier57q53yCYtTiXoV
+         7NweP3pER7pbzvAzsV+s3hh4IFMV3Ds+iiZWQ1Z27JOCnSBCRx7QqZ2PsycalYoUeHcw
+         0LwOU66O/l+JDqzKT+1ZwCavw3vsx3fWP7XDUGoUH0BzLE4+I5Cvby9CDG2RlVBmIuI9
+         J+7e9ZjWeQd2fokQ6wf9vz4HefRmsbW6bnwJjoxk9fVSXfKlLW0hWfLZnooYhV33x2vK
+         JWHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Y0iCR2UBnXmzy4YK+BN3M6iv23ChYdtXYGOWy8lTpas=;
+        fh=wH0Et2MRDzdFqohP+iZSN6SA4SeFK+CO4/su9//BY8s=;
+        b=ATU5XHLd0pl87EQfGQzjDtw5VZhGisMkIVrki9JQ3+raV/9XO4FEjdivPsCccNwFuT
+         T3w8j64foZhv1y2irnadc/isgOMGAciwQyWyBM0zJ83Qy3aVrPpKXnnGCtVpTV9Qei3U
+         IPtyWCAjeYi1yjnzjrAtYMkUoXesHB6FptnWWHoScI7dHN0TT6ZAIGXtOgA4l8SL5cRT
+         YNfrGoE3wIuQlNFzK9WgeRGHF6TSIiUMs/o4qqAAVDwRBLkdp0o7JJ/1N91M40IpxWyK
+         ihoxFQpNa4JAVvJzEpt5Apg0jS+L028p1mrKNYs1OrO3hO6VVy6nezt1OBFHbsnHjRTZ
+         dJTA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783605843; x=1784210643; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=t6bjH6eB6FhJ0Fp94eJtZ4d48uVAnKgch+M9HljhFJQ=;
-        b=OR4WlQbwi10qMQ1W0qkgBlcZX68yZwoX+hm1k+zrAqog6LuLg9COIK2h+KuCG74DCP
-         knvJb5fHEMg4hUMT4zfkZxh4GkugrX7JSF9Y4Kd52/+GSRp8VRK31W5VEux4okwqJqmv
-         0bs0GFzxXEWdICnardh09NXQqPbkcGbmPviIX1LkBupYtc/2YFdaz+N43SgeetK0u4ii
-         MlhfCjlg7bXF16YaR9B7uUZYTqlNsVZGmyKxXyJwcFs+bWdWjBz1Tppp2zYEwA/JAOcd
-         JAjxb/P7tOE9IDK7PqBqxIvhD7r8WdJSbDXYSQVrpvB5ygwe5LQnUF2khSCR4QD+CUdR
-         jW7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783605843; x=1784210643;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=spotify.com; s=google; t=1783608536; x=1784213336; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=t6bjH6eB6FhJ0Fp94eJtZ4d48uVAnKgch+M9HljhFJQ=;
-        b=XS8lPSFD9BKiVsJL7n6c5YEgpXyqcvRuGpVr1y+wNOvwcHgMvGVzZoSEBEEyxxRqE4
-         rzzeF6hi29MDiVC0KkVbCS0/VSiA6kTuvgbtD2BT8OdTLLqSHynBKfiKHrwKW5O2vyfT
-         gHVCPWrO62z4PUeWzSQw4dRuTsJCSgXO9JjhlUbqIOI0N8gFtK8aaOHhwe8yXJVwoE9f
-         dDBzKnoFsL4JWQQCQ4Rl+R+/jEbBlbUrj/cX2YzGQUDQKkSD6HnLfh6uhOjG7F92OBCj
-         Hh/IMqHJXUhrWmDWl706U5QyCV9ksJhkwBPzU7cfBxYgvHlZHFUzBB4JcsIldhxnmo+3
-         BAYw==
-X-Gm-Message-State: AOJu0YyXC4tfYAk5QYlwL6+JUqAIv9SU7JdkazXPGTNkkQ3qUqU1wL/n
-	dAPyhMcvo4VXG9yCFZEHKaxeja4Pl8rAWsj00vtpzVBBzZNBS4aFMWpX
-X-Gm-Gg: AfdE7clf43xiE5Rx3S83/Um0egx1FpkJ0C1dMAraMCcfoZw0070/FJdsl1eIDzZ6dE6
-	iwg2jEmVZLOOoaXZUwEaAIeBR1Lyq34OCVpIyRBKmFmlLMohyDfIcHziFoTWdwJM9iYYaUJbae4
-	dEuDhMU63ff2jNy6yOFkIuYSAa1LVwsFOIjHa9mc9uWy4zAkQxQwh1S6Qae2GCaAfdvXzRc1sbN
-	zx2stPy5AGXKuAx0Nr4ttd65S3ddHEg3DlR+sRJkpyQTj340Fjcj/gvFvPR+LtLL38LAQpKlFNR
-	Dx0JfdP0Zf5iNzzvIPjKi3To+wM3KxKhrMD8jd1urNLo/cqiDcGO+GNJTH65w4I5bVwfN8Q7rH+
-	3Z/4KjUPaw8kYWCupUIZ+ZjyQk5L9RxHbNz8BvdCv59QzAfRK+oejeVVbZ8VUzraYZv2FfLYA3m
-	q2Wz6SRg==
-X-Received: by 2002:a05:6809:303:20b0:4a3:2bd1:5216 with SMTP id 5614622812f47-4a32bd16148mr2104149b6e.43.1783605842989;
-        Thu, 09 Jul 2026 07:04:02 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4a1afbf92b1sm3555948b6e.10.2026.07.09.07.04.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 07:04:02 -0700 (PDT)
-Date: Thu, 9 Jul 2026 09:03:59 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v3 06/11] odb/transaction: propagate begin errors
-Message-ID: <ak-ntVKQ8XqMr6zv@denethor>
-References: <20260708041412.1157499-1-jltobler@gmail.com>
- <20260708235925.3992097-1-jltobler@gmail.com>
- <20260708235925.3992097-7-jltobler@gmail.com>
- <xmqqjyr4rg78.fsf@gitster.g>
+        bh=Y0iCR2UBnXmzy4YK+BN3M6iv23ChYdtXYGOWy8lTpas=;
+        b=EjSAV+0Sjo34ZbCXaYs6J64wU2W/tyd6WLr3FWVkVldp4FmEAVuym3jc3GfY8g+h0h
+         ao7hjebvr/9G/h/P7DgCcHAFPQ5DahZ0LCMk9LDurL3gQBuYcE/ipDzOpfHSpH2A5vCl
+         FUWbKwrnFy+8TIhOLUSGjgxlEcC4u6H9vf+r0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783608536; x=1784213336;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Y0iCR2UBnXmzy4YK+BN3M6iv23ChYdtXYGOWy8lTpas=;
+        b=FxRR55Xn7hakrsSc2Mt+Qlh3heJRLqXrema/WrH87DzQo2rxRDC3huSolc7JONZEfW
+         bZjgrWyKwuzcnhrMKQqOk9sJHlDTa+UOAYVs++Olvz9/2OS62B+QhIeabXGtv76/gwyi
+         jKm9ZpVKl1GuR/N8EHB2IlITT7XryfmML9ss6pOv3YAEOzeuPVKQ8Tlg/idJ2aPkH4Sv
+         oT+LKQLky8rGvAUOua4KxPP5h+1usjWrsw78jLhAqg2MApm9RIeSri5Ky0e3USDMmbX+
+         en8LnwzsTgI9E1LFadp8XsBuYzgqxYXhXPXeQ4MnVXwTZxBN5SfSh9VkGMNq7VK4W9pe
+         47uQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrEnuZamYujPcQIqhwFDZrrxXRh/jH4GLtgHBtd0jnFxExhix11HLEXuLq+D8HatZBIIww=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxkwq80+aogodC4T2GxYMgVk2JzXM0XQjYJIm3mTTg4D2+oK2s4
+	sHfDw+4gS+oM/9QNqLjeEIgvGtkNWvh2rXmc5e3hERNg+CZwh/13vvs7oMW6WhNn2Osl86IOozv
+	nx5pj98+ilBUBFfC7jF4wRXjHFHcd/G5vegcZsmJsyQ==
+X-Gm-Gg: AfdE7cnxrThydgYRqR5zV24FBN5nWU9WVVzvzt1choBZ/dhh4gTtrNZ2OB5u+0WoYAG
+	/L6VPNr0KLr2AigaNGebrfv39X5/TINijmrwkppA9vBVsWQhRXuL2Hk/H4HK+w33wr+igLw+VEI
+	rRmRWP1K3c/Rn1PYHTA2KSf4DjR9RkcdIlnenHfbK5/yq4CExaosX1Dd8/yGwKDhTj5NRkcCcSS
+	V1BbhTD3ZvsE3T0HkVc2zKVljhJB5GsXWlmmw81x1P9e8xyqtHFfy/I3dHzJxz7pPH6JcgXfg==
+X-Received: by 2002:a53:ed0f:0:b0:664:d93f:b5f0 with SMTP id
+ 956f58d0204a3-6679f1d50d7mr3401740d50.50.1783608535886; Thu, 09 Jul 2026
+ 07:48:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqjyr4rg78.fsf@gitster.g>
+References: <pull.2166.git.1783344957.gitgitgadget@gmail.com>
+ <pull.2166.v2.git.1783598912.gitgitgadget@gmail.com> <c13f15ddc20f721443fa1d462ea1b7c2356fbffc.1783598912.git.gitgitgadget@gmail.com>
+ <ak-n6K4heV2kHviZ@pks.im>
+In-Reply-To: <ak-n6K4heV2kHviZ@pks.im>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Thu, 9 Jul 2026 16:48:43 +0200
+X-Gm-Features: AVVi8Cc2mobzPz5ulXWmOq7P2K3d19TStgyFIDX7mOoFs3r0zb51_drLqVTjv0I
+Message-ID: <CAL71e4PrtZwB8TMg3eBj=LzC7ik+C8yxLYEEEP7SDgMPiWSs0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] reftable: fix quadratic behavior in the presence
+ of tombstones
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/07/08 08:32PM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > When `odb_transaction_begin()` is invoked, the function returns the
-> > transaction pointer directly. There is no way for the backend to
-> > signal that it failed to set up its state, such as when creating the
-> > temporary object directory backing the transaction.
+On Thu, 9 Jul 2026 at 15:53, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Thu, Jul 09, 2026 at 12:08:31PM +0000, Kristofer Karlsson via GitGitGadget wrote:
+> > diff --git a/reftable/stack.c b/reftable/stack.c
+> > index ab12926708..fd7d8f3f1e 100644
+> > --- a/reftable/stack.c
+> > +++ b/reftable/stack.c
+> > @@ -337,7 +337,6 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
+> >       /* Update the stack to point to the new tables. */
+> >       if (st->merged)
+> >               reftable_merged_table_free(st->merged);
+> > -     new_merged->suppress_deletions = 1;
+> >       st->merged = new_merged;
 > >
-> > In a subsequent commit, git-receive-pack(1) starts using ODB
-> > transactions and needs to be able to report such failures rather
-> > than silently ignore them. Refactor `odb_transaction_begin()` to
-> > return an int error code and write the resulting transaction into an
-> > out parameter. Also introduce `odb_transaction_begin_or_die()` as a
-> > convenience for callsites that do not need to handle errors
-> > explicitly.
-> >
-> > Note that `odb_transaction_begin()` now returns an error when the ODB
-> > already has an inflight transaction pending. ODB transaction call sites
-> > that may encounter an inflight transaction are updated to explicitly
-> > handle this case.
-> >
-> > Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> > ---
-> > ...
-> > diff --git a/odb/transaction.c b/odb/transaction.c
-> > index b16e07aebf..a5fba7f908 100644
-> > --- a/odb/transaction.c
-> > +++ b/odb/transaction.c
-> > @@ -1,15 +1,20 @@
-> >  #include "git-compat-util.h"
-> > +#include "gettext.h"
-> >  #include "odb/source.h"
-> >  #include "odb/transaction.h"
-> >  
-> > -struct odb_transaction *odb_transaction_begin(struct object_database *odb)
-> > +int odb_transaction_begin(struct object_database *odb,
-> > +			  struct odb_transaction **out)
-> >  {
-> > +	int ret;
-> > +
-> >  	if (odb->transaction)
-> > -		return NULL;
-> > +		return error(_("object database transaction already pending"));
-> >  
-> > -	odb_source_begin_transaction(odb->sources, &odb->transaction);
-> > +	ret = odb_source_begin_transaction(odb->sources, out);
-> > +	odb->transaction = *out;
-> 
-> Can odb_source_begin_transaction() ever fail?  If so, and when it
-> fails, would *out be left untouched?  
+> >       if (st->tables)
+>
+> Okay, we still retain the field after this patch. But the question is:
+> how would libgit2 now set it? I think we should rather extend the
+> `struct reftable_stack_options` so that the caller can control whether
+> or not to suppress deletions at stack creation time.
 
-In this patch there it not yet a way for it to fail, but it can return
-an error later in the series. When an error is encountered though, *out
-_is_ left untouched.
+You are right, I (still) missed the compatibility problem here.
 
-> I am wondering if we want
-> 
-> 	if (!(ret = odb_source_begin_transaction(odb->sources, out)))
->         	odb->transaction = *out;
-> 
-> or something like that.
+I started thinking about a way to make it fully backwards compatible,
+but then I looked at the libgit2 repo and realized it will need
+updating anyway since it predates the reftable_stack_options split.
 
-I think it is a good idea to for `odb_transaction_begin()` to ensure the
-repository transaction is only set on success though. Will update in the
-next version. Thanks
+I will add suppress_deletions to reftable_stack_options as you
+suggested.
 
--Justin
+Thanks,
+Kristofer
