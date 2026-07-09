@@ -1,69 +1,69 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A1E39A06A
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 16:49:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CC839A4D8
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 16:49:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783615785; cv=none; b=dGrmArByUnLGtSMmUjTm12auH4qYMULQPh2rkrZx+ynCE50eigGV9jEJjHg5DUeJqeKj4knFNItggvTfLH5DV3aMkMEpdM4A5t9nQoufQluJgV+atR+3pt3W7Dfx6vui1vDGR4IlqVbVq0VGc1eApPhXhVnFVLFH9rCu7g+E4Ts=
+	t=1783615787; cv=none; b=XiR6bSuQNJ8C/eNJmlzfKv3xS0Je2XcpkMpUQgCt3LLTtz4aV5u+J4eURj74Nvu3HbB2KYcABpxBVCkmf2ZAmpdycsDioEl3Dpo68oqDBDp3351+o7D3DCRzzpDx1YYLGPxsPeA1zMQNuPPpoTZxSmqoJoRg71gVMKeznawUxtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783615785; c=relaxed/simple;
-	bh=4uJWnHVsV1TdL4gA+G7hxTVvtbeNIjAtZ3AacwY+0DA=;
+	s=arc-20240116; t=1783615787; c=relaxed/simple;
+	bh=qDUr4PvyHnDTzho6MS04IIpzvc5908AWbnwKG7GtRXM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=E5xtglbjTRnrcnMhg3uq1TlDlk/n7Wcyr1W+ie9hubLO1Zc6AAL5DM5EMToVUFjtN4HTsODDN2TjdEzYLgU+Z2kQG6+YsXrrq4p9t9Z2pbRIj5fCIPlHby1DP74s3w0PGDetTkrbMwByxTjo2WyNbsn955e3wI1iGnRq7rf/Hz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=szqLZZNe; arc=none smtp.client-ip=209.85.214.173
+	 MIME-Version:To:Cc; b=IhmVLSOwKGtAvIIAcGTDhwE0wd2B6L2DyxWti0hF2vY9KBIcNZZ5JMVKll2OAiZGa6sANmNi1Sssrc98kVtsfzxheZwreaFgA0AWZIVad0aIeBkNFC3gwtPBPjfhzNBGhGKRBWI1uy6vWgcHXJtjIylOltbAoCRaUtdup5Ixu9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dAjSuuA/; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="szqLZZNe"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2cc61541f8cso16494175ad.0
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 09:49:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dAjSuuA/"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-381065a7a03so131156a91.0
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 09:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783615784; x=1784220584; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783615785; x=1784220585; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Oiwdp60r49JH/GsjUWAsYx8cv8tRH7kiWs5Ck9UUXAc=;
-        b=szqLZZNeNaFLZu51/e4Cz8SIk3A+vzRjpIVA4N/cIbTSWbX9esGcZfnG5+DvFX8IIz
-         FrQ/bz8iQmFzf3OfmK/HQwOibshF1lCxvS0yxHgjJgiRWaJLWHP8+1a6QL5cSSgY91Rj
-         oaq5iWvWjwwCRDsymkQAJ/k/gbC/O/fXV3iXHewIwIgfiGkZLKrer3nSGW3uafWTsk5o
-         btD8mMQlkZoBLmrUwHGkzrDV48kNY6aizccGH69BepGBMb7XVaLrFVGz3gRsav4Fv8Sb
-         7BylZ8Ap4JIDUF3uqhZfbRpIj+YwLza6MPBwvaAmU2p48kxie2Qcr4KLIuQONyBSfEWn
-         e0bw==
+        bh=rBJxsHNicIi1hWeD8Oht2inB0LivoFofKWLMSlWiLQw=;
+        b=dAjSuuA/pfdS7cF4G7sJRjqPvOLBee74pEu8GQkmpotQzF1BrdO7kB1YGRUS/o57O8
+         2UKuiXESsX9O1X5TkdCa5A3+eT2O3e2n4Qgw761oD3jZgyD8T3U4TMk7gpPUOa2AHubw
+         Rm5Rx03byrXJ/3nfP9n2aN6ANqO8jG4Dk8aLcNQd1jw676Ue6JjSjGVfItDWaDWnbAH+
+         r9JL2UkUF399FbpUZVcjeTUzvoFb7V4qBQ7VHk3iCvKfdlKPFbfO3uVRDEXmc6lhvQPv
+         L4SFMRcL0Qiq0aMvSVLdMjZyCEDlc+VEMQXgO/iCrdrmlm8hzyQVuUPdR608TB8ccqja
+         SWqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783615784; x=1784220584;
+        d=1e100.net; s=20251104; t=1783615785; x=1784220585;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Oiwdp60r49JH/GsjUWAsYx8cv8tRH7kiWs5Ck9UUXAc=;
-        b=g+xeqz3uiH/dQ7yvn/C5WLe3dO97/9f3e3MsEhmdAvDvNZwGzLqEtqRnF8o7EcG25K
-         SzpzCDsBZRSZMxQfNcRYzpMLpbxXKmoPIb2QNN6awj7WTm9PpxdF2MtTCJi2wmP3qTLr
-         VLu1U7s52d3QUxJpdizmE7lG0SKb/Js7qBgHMGnn19YzHwTwOJL7eg7JdBw5J2Wy4DKM
-         FM09PZtpGlkYd2cb7OzYdmT7zugHfacvmmApaAeMcluK0kVC87c0xMDM0ypaGRnTitYP
-         qJ64S67HXslTxO5EsQcobPOT2yAKLLS7O2Bh/tXBq8Q/jdjqSXv6D+GL1KHumpidshMI
-         djrQ==
-X-Gm-Message-State: AOJu0Yz4xp1FKaJg67Gb2n8TTa85fZtZdoZeJJNm0/2wgqoxknmleFnE
-	zZA8ZNY/nlVZCW8yi0hu6Jfqh3MLb2FzBCEssRRmDv+NbIdkGfm1laz3SrFWHA==
-X-Gm-Gg: AfdE7clgOKm9+wasTzRO/m2/GjxG69YMle2/+XVPTinFSH3ZqJ+eTs8j8UngOnTLJts
-	GGyP6H9p5xvhBIpFTHR3fc9PtORLSOucgJUgoJ8Nbfy4+kwVaFhbuc7l/UuR4bHwZX1B8lqkkIf
-	RYOoFqBAbqIjn0mm9ZcUO/hcwhnpdkdds6LDKUvxzETCK7sc1qnTzrrn2OFVKSdB9sNwksKXzJe
-	YLDOBu2XB6kL11In9fs2qRVa8vvSWo7habdIQl7G53Nf43r45z6yWfvTbVuGidpDaVFIo1/ugPm
-	bOq2xWLFF3Qq5G7yanA8V7TGxZKT/EJTKd0LC93hVKx4oPyrdvCSJeB+ZGqshVnbOL2tBHRwYVw
-	ev5ldSWKqHD1SAAvDoi+Hx5//kFo6gKJWQDh8llz31VefbC5j9Ubaf695d35sZABwEy0F+bbHAJ
-	MOiUhhg9ONDXSCJQA=
-X-Received: by 2002:a05:6a20:ac44:b0:3bf:a8fa:a7b1 with SMTP id adf61e73a8af0-3c0f0c2f4c1mr23503637.37.1783615783789;
-        Thu, 09 Jul 2026 09:49:43 -0700 (PDT)
+        bh=rBJxsHNicIi1hWeD8Oht2inB0LivoFofKWLMSlWiLQw=;
+        b=JJcjgPPLN5vdwLIr3RX31VgEBv7cDvN+1ZVoPN88sUb/1fcZm6HuWunKh1TOseXxXf
+         hZQ2zhiyuK8veP7rF+kEmpBzXcYWm++pIW1ceJcl9fyvSmjvbDyeqoKIl5o74xzJgXXw
+         Exm2WfEetL9KO40gWM/OTMk7yNwX+Y1BFmjrhF2w+nXAhXO8cx0zbPlgYuFuJbIL4U1f
+         U7fdrjoG91ryfqPOjMTVz0sEnTlyU0KrWziiPD7NeqKjRUYf5Eo9joMJT1dDbRg9muEy
+         Yl5sh5VFoQwf1MvelZfdcgFF1zRIWMLFPaqb4HUaCU+XI7/eC8EdPj4DV2aDup/VVJ+K
+         WLSQ==
+X-Gm-Message-State: AOJu0Yxye50eZoQLRE8bE3NA12FAK8c0ocxgSG0OrPbi1TaPv30q+J2v
+	pA2v4T6jSAMHoM9377/jj3VBYR0mM3T3DLFVkRF4N61+y6L6LVwFHJf4A0kveA==
+X-Gm-Gg: AfdE7cnxbvaswgfAWEXFEsEboZZ3dzg++bOl+Ry1H+q8AhntMCX8Bp3ieWAqmuwiJST
+	X11ikDoJ/EWAZFaAvTd5BRIAqUjfvyO2qxq2p3Qls0AjirgWKVXvCnxRTYAnYmGmS/Eejo+KIa9
+	yqu0YCGpVuzYWMYPdztMXeaqpRJ4BzBr97rPrcKz+rr4AaZ98naSdV+dCO/Vri146H/vBRe0Wq0
+	nOlVOJ8nCa2/LX5ZdtsMyG+T/4idH/MoxxxYpEovq2rLhLJ+Iil4ENpS9DN2BlsTpH6TrAKTBBY
+	612TiG2ZoA17xPn85uqtSHZFJrNga9kmAuBqZCgdYoByOl3zDF9e9KzCjWthejaNbmbPddHTkzN
+	Vh+hQ3lNd/kS1+2aWBkVXChKw4xCyOCBlAY+mJ5EX64yrPMvHiwIpugX582Of1HDLvK54Wj1O33
+	R/3q8iapjlaAWvPfk=
+X-Received: by 2002:a17:90b:56c3:b0:37e:1430:769b with SMTP id 98e67ed59e1d1-38941accfecmr7945489a91.24.1783615785414;
+        Thu, 09 Jul 2026 09:49:45 -0700 (PDT)
 Received: from [127.0.0.1] ([68.220.59.115])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b6596681fsm38360500c88.8.2026.07.09.09.49.42
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174839f89sm33160375eec.10.2026.07.09.09.49.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 09:49:43 -0700 (PDT)
-Message-Id: <69c2c21f05a2aec95f1ef61f861051c289b03dd4.1783615780.git.gitgitgadget@gmail.com>
+        Thu, 09 Jul 2026 09:49:44 -0700 (PDT)
+Message-Id: <d92a5d4dec8a87c412e9dbdb72285e8f7dca61ec.1783615780.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
 References: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 16:49:28 +0000
-Subject: [PATCH 01/12] diff-delta: widen `struct delta_index`' size fields to
+Date: Thu, 09 Jul 2026 16:49:29 +0000
+Subject: [PATCH 02/12] delta: widen `create_delta_index()` parameter to
  `size_t`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
@@ -80,49 +80,44 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Preparation for widening the delta-encoding API to `size_t` in
-subsequent commits, which is what lets pack-objects drop the
-`cast_size_t_to_ulong()` shims that 606c192380 (odb, packfile: use
-size_t for streaming object sizes, 2026-05-08) had to leave behind in
-`get_delta()` and `try_delta()` because their downstream consumers were
-still narrow.
-
-The struct is private to diff-delta.c, so widening its fields in
-isolation is a no-op at runtime: the values stored continue to fit in 32
-bits on Windows because the public API around it still truncates.
-Splitting it out keeps the API-change commit focused on caller updates.
+The sole caller (`try_delta()` in builtin/pack-objects.c) passes an
+`unsigned long`, which promotes safely, so no caller fixups are needed.
+Splitting it out keeps the `diff_delta()`/`create_delta()` widening,
+which does ripple to several callers, in its own commit.
 
 Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- diff-delta.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ delta.h      | 2 +-
+ diff-delta.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/delta.h b/delta.h
+index eb5c6d2fdb..a19586d789 100644
+--- a/delta.h
++++ b/delta.h
+@@ -14,7 +14,7 @@ struct delta_index;
+  * using free_delta_index().
+  */
+ struct delta_index *
+-create_delta_index(const void *buf, unsigned long bufsize);
++create_delta_index(const void *buf, size_t bufsize);
+ 
+ /*
+  * free_delta_index: free the index created by create_delta_index()
 diff --git a/diff-delta.c b/diff-delta.c
-index 43c339f010..b6b65d7607 100644
+index b6b65d7607..c93ac42594 100644
 --- a/diff-delta.c
 +++ b/diff-delta.c
-@@ -125,9 +125,9 @@ struct unpacked_index_entry {
- };
- 
- struct delta_index {
--	unsigned long memsize;
-+	size_t memsize;
- 	const void *src_buf;
--	unsigned long src_size;
-+	size_t src_size;
- 	unsigned int hash_mask;
+@@ -132,7 +132,7 @@ struct delta_index {
  	struct index_entry *hash[FLEX_ARRAY];
  };
-@@ -140,7 +140,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	struct unpacked_index_entry *entry, **hash;
- 	struct index_entry *packed_entry, **packed_hash;
- 	void *mem;
--	unsigned long memsize;
-+	size_t memsize;
  
- 	if (!buf || !bufsize)
- 		return NULL;
+-struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
++struct delta_index * create_delta_index(const void *buf, size_t bufsize)
+ {
+ 	unsigned int i, hsize, hmask, entries, prev_val, *hash_count;
+ 	const unsigned char *data, *buffer = buf;
 -- 
 gitgitgadget
 
