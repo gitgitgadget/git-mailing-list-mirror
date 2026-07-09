@@ -1,69 +1,69 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7973B37F8CC
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 09:42:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEEE3F1676
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 09:42:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783590170; cv=none; b=gL7c8YXim7H58op4WJ59O5pR5ITmc1FUbRDAnYRjSvS7tLsogI4DXwfs2Wh7YW2qdWo207a/ZJFGh6MzD+BI83QkDBz3ZuXFgfpE/HHW9LF9oIgc1icYXFeXf6IEtDNvjPXVi3oryCXYuzedp4GRO3StszW1ZT7J2hx1vB9yH9c=
+	t=1783590171; cv=none; b=fui0t7HXBaZU5w5PYh6+USi/jUeA5ILnH905jchbC08dest2v+z82Nk1IzZj9duNtfXhY6LUjzHRX/q3H2v8NAfyxMnnpu/JxV3SxcgJxd0IRLBE6tBw3ouH6xl85oA+aFWFPDSAcX74176JlgR/ePwSUJZxhpNb4po70gpiZN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783590170; c=relaxed/simple;
-	bh=xJocGTOJx1ooVuSXjqMR+t7OIeyRfHUiU/bRcseBxA8=;
+	s=arc-20240116; t=1783590171; c=relaxed/simple;
+	bh=NvBcLKW46sQygfbHhF9hpGOhLzRmY9qglO2y5pOJldk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Sbjn2dlY2kvd04l0JhAK8KgF2f5fwbBZclfMu1XaUp71mkWCuu3YtNSJ02mgt7se5VbMSBU6z1luJGL9IHd7vuZRkSZvxOtAqXpQpGt6h5NEJ0r5KrFu0fGbxgPx6bhCD+KHjvvkxe/IlwghANPdHciXNlfYl2Fp997zub/RdGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KZFf0Lj4; arc=none smtp.client-ip=209.85.222.170
+	 MIME-Version:To:Cc; b=jhoiNnt/0ky5eJlH7gECtSFhQKJoSoJT3Sm0AXpDzWf5rzS/1ldRWivQye39CpqaLHzbmRlMczymuoilnfP+zWmXE7KdisYWQqMwi7QX0TMR8aNAqiKZaiogIezioDFYpOWRiBoWyqB05eo4Xnl5vJgtbDMHztC75Fds1/ddrd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=juwmOOjm; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KZFf0Lj4"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-92e65e18969so56007985a.1
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 02:42:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="juwmOOjm"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8ee88fce572so14406116d6.1
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 02:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783590168; x=1784194968; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783590169; x=1784194969; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=4bW/16SzkpOP+eGRpsqHcn7Ty8WSLnQ4Gnhjbpi1NzE=;
-        b=KZFf0Lj4nzmwnpzG/MOtC7s8/5IMPxpAkmKiRYjdWTSms/VmGQlTnuig4xsBwIu0Tw
-         0vR3PPtGpBWCR3YJD9+1IBoyv7hHkav/YKCJiGtWwJLT4t0yvkU62wTFdZPGXEuMspf2
-         JINOtnHRPfwxHZiYGdcNwtAto6j38jhregvs9MO0kczvBWfaVdmVEfNn1FmZXCLOYanc
-         a+SnpOEbjrLRXe20DDW3SgxmDhX7QefsnrUJss5aelcbriW5SGd9NJ86uAQ8cGa7Dn8S
-         ewdcjv1KvSLrrRUd9RgtnymCqmrkjgWr6y5o5GTIsa+I2gidgh2qIoalmZwtJR6QJgKq
-         1UAA==
+        bh=Cq1HYGt0bUp1CHNLgn4gXZ+fGOCRjN7usVWEibfwjNc=;
+        b=juwmOOjmhq1t6HlR0rVmdkbxmZkZV69Kjs2ww258rksj6KzOc8cNJVZ2QdadBO/pzB
+         9aX/ZUArINfeOkY+2YRyqKCWHDMuesMs/RBIn2M7s5Zpiiw2TKNq4SdsUOYXqK6YcXwl
+         bp36/mj2g7wIq/YHcqjsED5x8uOmYpbz2EbzAx4HvLVAtl2I5ueZjhVtvgjLuCnaRXmE
+         Pzr+PXNI4X7eiNoJjrGk8sfvN+Zp3BRc6eBaOQmLYHVepISMUYF3bZ3mACXjhC6Hpt9Z
+         eWmO9tdCDvxFvzNIP0cYiWyZEViRMhcZfkT4oOpy01tV6Ec3tKF87LYG7ZZfU3GXNj66
+         FyKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783590168; x=1784194968;
+        d=1e100.net; s=20251104; t=1783590169; x=1784194969;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4bW/16SzkpOP+eGRpsqHcn7Ty8WSLnQ4Gnhjbpi1NzE=;
-        b=FcRK34UBX7BuvDTzb2gAsIEyJUkdpqPK3028JCmK2ORKPx5n1/GZeX8qGkKBE5VagR
-         c/LDIqoAC00kU/T9AQ5dLaKY989USsxxP0tF5vUIzFGX+FnyTgr5NeB0RUtx4ee5hKLK
-         ZqVI9STTsD/7+tx2zgtYiqtkHorKvH5XuJlZHgf9wrNk10UUwK+9W3IJSbyEPMOMt/7D
-         Zjn/sqM+voSy2P1Quq8gccHMPK3WfggnL0QLu/fjhihsTSfDmyVuht5gV2NzO5s+rWO/
-         DL6dgiRhphNLJxYSTNgeboP0fuQKxUHWFuQ6WyindzwiZbhBsanjR0jxzObMf+19i1e4
-         lpXg==
-X-Gm-Message-State: AOJu0Yz3Yug/qNj7DHwLbF6zzqs6yvA4hFbOoSCUmnRb24lVhkgafCTw
-	Npypb0BRts3M9MXRSX9pj3WpuUX9NZ02u8MVLbYJfWCAY5VXfd2dKuFN+/V4iCbc
-X-Gm-Gg: AfdE7cky6XaqekWoDzO8DLZQjM7HYFe6Qs4+cP4jnXi3iBGJMMpPKAbWGO5LmQBSTVL
-	uEiVbeVneSWzTcMvf702eQIYr3liN+owgClKBtrOianEJknJjRzE/NbYpXqoboh2AfVB3kCL0Rt
-	W1HXgtwBMinTYzw4LHl/aIs3HKEkIiQTZ2L/VeyBe17OUbbxhVU4/zyvmnOgVFCUBd3fbbjHvXS
-	LUiBTT2UwUm5k5cOBu6J90MHugHjy9J8VUqedhINttte6l0hySHX679iGB2RKQV660dSUjXvGDM
-	CHsTOvRiEamaEhtdyq51T1xlUdApEGOUYbQUxMsItfh/35vKA4LD3IU0+wEzDage0tVUuaC3Bvv
-	WgnVthGIIQxgBnPs2crCLeCIcP82SQz8b/4Ykv5s1dZXxlQCfMSyMRQ/fSacSVoFGcZc4Y877KR
-	YjIn/6UNLbtc+i
-X-Received: by 2002:a05:620a:40d1:b0:915:fc16:2ae0 with SMTP id af79cd13be357-92edac0d69fmr193192685a.25.1783590168432;
-        Thu, 09 Jul 2026 02:42:48 -0700 (PDT)
+        bh=Cq1HYGt0bUp1CHNLgn4gXZ+fGOCRjN7usVWEibfwjNc=;
+        b=Hnz7c96n7TkrDPzjC8qCYJy+WExQ9+LCiU0GT0eI6/oVTH/lc3AIFdUEBpJ/Za5pry
+         C/LtDAQJKRyBPb1kpdnpQnVGeaTeJbTQQL5JAeKNXqkD9H5H33AxaSJucNUV1jtiBIvn
+         dNEdMRtbVlJtPYgEyIFqDU3J0IDv43I6/37HFcXHDu/uKwJqZJNYT1X3XxD7Ct1Qvx6G
+         a9JrC0//QPRyNlnfYz+b5R2nSW4SZrwM931dooJ5M9n5pVKIcqlVnGE8QNBbXS40sB1f
+         Ueni3EeR+7OFTAFiS4ZpSZuWcWI7+YnGVBCKdCpSpc0iNJANST+CainspWoBAcMyrFa9
+         VBtg==
+X-Gm-Message-State: AOJu0Yxcfulvux0N/tUWjfyRgVewun+jL+c/13/1DJgw/nIC/jtkEwWj
+	y86KS4gKdVMU0LBhBrx0b+I73ATLfLGVlyfCVcR7Yznd4q71WsKZNgK13WqGHneF
+X-Gm-Gg: AfdE7cm2BiZoayQ+JE1pOS46d9ajbJFpslsLwqOa8jCPPluxv+tbJ6H0Bay+KSFeSdL
+	GeJyw585Re9mFdk3+6aqMMTuj8iPpU19bhVq/yJ4n3K5Rj95/r5gIkdJtJY9Gqe0GN4DE/L1TwX
+	Zm2pyBC9laXN2Z30Z34p2fsycp7BT1jlK+0ktMEg4xXoEh1hS99iCEX8pXv0cMyjUoHSXR1pijN
+	ZkSYoz9F8X4nxx8RGAD9Qta2cCIIkXB0FroGIZvy3LIaoeZryYsWSPWA7E+z7a4in8QG79K5tDz
+	QZ9lcrp1oZ6GMkojQPEKobXbM5hfqGuSxZyhr80EREqZI9VssKi4zzlyAvteLYcYDXPsaaVqLTv
+	ZERio1T+1598kbwsQ20nEvaa0RW7CoaYbPlLNWKGtuw73xIkIE6EvjgNLj9iN+aU4QBUBoyo1N1
+	7W7ayrqG80V9Lc
+X-Received: by 2002:a05:6214:3981:b0:8ee:88fc:e0ba with SMTP id 6a1803df08f44-8fec03f2064mr72969416d6.6.1783590169447;
+        Thu, 09 Jul 2026 02:42:49 -0700 (PDT)
 Received: from [127.0.0.1] ([20.84.47.35])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90cfa470sm1637570285a.44.2026.07.09.02.42.47
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd50e0811sm13586646d6.3.2026.07.09.02.42.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 02:42:47 -0700 (PDT)
-Message-Id: <704137510808ade246c6f1463e88a8e3041e0f7d.1783590159.git.gitgitgadget@gmail.com>
+        Thu, 09 Jul 2026 02:42:48 -0700 (PDT)
+Message-Id: <a7245cdffad651a423a4014c176f68c47231c62b.1783590159.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
 References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 09:42:33 +0000
-Subject: [PATCH 06/11] bisect: handle NULL commit in `bisect_successful()`
+Date: Thu, 09 Jul 2026 09:42:34 +0000
+Subject: [PATCH 07/11] replay: die when --onto does not peel to a commit
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,39 +79,43 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When `lookup_commit_reference_by_name()` is called to find the first bad
-commit, the result is passed to `repo_format_commit_message()`
-immediately, which dereferences commit without checking for NULL.
-
-However, the commit could be NULL, even though in practice this is
-unlikely because `bisect_successful()` is only called after a successful
-bisect run has identified the bad commit, but the ref could still become
-dangling due to a concurrent gc or repository corruption.
+The `peel_committish()` function calls `repo_peel_to_type()` to convert
+the given object to a commit, but does not check the return value. When
+the object exists but cannot be peeled to a commit (e.g., a tree or blob
+OID is passed as --onto), the return value is NULL. Add an explicit NULL
+check and die with a descriptive message in that case.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/bisect.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ replay.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index e7c2d2f3bb..6ff600c856 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -663,6 +663,11 @@ static int bisect_successful(struct bisect_terms *terms)
+diff --git a/replay.c b/replay.c
+index da531d5bc6..b38cd5efe4 100644
+--- a/replay.c
++++ b/replay.c
+@@ -36,12 +36,16 @@ static struct commit *peel_committish(struct repository *repo,
+ {
+ 	struct object *obj;
+ 	struct object_id oid;
++	struct commit *commit;
  
- 	refs_read_ref(get_main_ref_store(the_repository), bad_ref, &oid);
- 	commit = lookup_commit_reference_by_name(bad_ref);
-+	if (!commit) {
-+		res = error(_("could not find commit for '%s'"), bad_ref);
-+		free(bad_ref);
-+		return res;
-+	}
- 	repo_format_commit_message(the_repository, commit, "%s", &commit_name,
- 				   &pp);
+ 	if (repo_get_oid(repo, name, &oid))
+ 		die(_("'%s' is not a valid commit-ish for %s"), name, mode);
+ 	obj = parse_object_or_die(repo, &oid, name);
+-	return (struct commit *)repo_peel_to_type(repo, name, 0, obj,
+-						  OBJ_COMMIT);
++	commit = (struct commit *)repo_peel_to_type(repo, name, 0, obj,
++						    OBJ_COMMIT);
++	if (!commit)
++		die(_("'%s' does not point to a commit for %s"), name, mode);
++	return commit;
+ }
  
+ static char *get_author(const char *message)
 -- 
 gitgitgadget
 
