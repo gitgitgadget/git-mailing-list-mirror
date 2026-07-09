@@ -1,159 +1,223 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from mta200a-ord.mtasv.net (mta200a-ord.mtasv.net [104.245.209.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5698E36405C
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 22:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA714499A4
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 23:39:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.245.209.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637013; cv=none; b=RC0njAajEExHoOZ7bXtwQcE2u3yBCtLiZDwktdrbwvVMumEbDeyRLhiRQVVT7AR1xzg+1Bd52lin0lnNY48ZVIw7A8FNPxHhlepAcTVAl/eG8iMHzIygpjKV0Y0yXz7fhcpQ1PcLAl4aQncmV6wzHZO3U0sfjYtURggjEjJ6rXw=
+	t=1783640355; cv=none; b=LkWov6kFZAqfVQqN+wFWh3/nK+QKsoRcc+q8HXe48/l9903ypNYZeShsAf0p4pk+8yBMsukluq0PZdv3Cr4qNXEI5HpzhZx6WJn6yfFE53Q+jsUCbNshoMA5aAMkEDcq+NOTrnKI3TebMe+37q+q95KrjyHv+VCk3VrEv42oD94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637013; c=relaxed/simple;
-	bh=1MJH3I32HlBmrL4vZdqnVMbkzjbaT5rqJ7y6xi/b4SY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZggfiHaspcQP0BDrtSYLbyQOCACOsN2LiKXR2d2qTqQyo/RW0IQM/gRjeOkhR5/uNTZo9UJWN9VrKh7F3SqVcwQlxficgpPeZxmVWz+wnnfAAU7jSo7DG3yvdY7jfwS7Mg07lqU2/zesqUrl/C1no6nIvkvN2HZEUEX2R6c8nEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=neyR5QCJ; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1783640355; c=relaxed/simple;
+	bh=oD34PQnz3bfpr1kM2h4SSRWWY2dQda9hSZx9FNeEkjA=;
+	h=From:Date:Subject:Message-Id:To:Cc:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Q5foEOUcdJlbmxMTM/6ARgjvL1AohG/gq2yWNhHnMfjUu6uvhXeWK1rIVaneVISW75Rdx0rGewaXqsNiwVPx/1fU3uoCEiOAYJDLVGeQRwXYwuj/ZL5TG7MQYdHzQFQrGw/poZnCv2FQaUjnl4DARGiXD73I7nLJI5yZ0PF6JbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cachix.org; spf=pass smtp.mailfrom=pm-bounces.cachix.org; dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b=ZzBZAao/; dkim=pass (1024-bit key) header.d=cachix.org header.i=domen@cachix.org header.b=hrUWntmP; arc=none smtp.client-ip=104.245.209.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cachix.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm-bounces.cachix.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="neyR5QCJ"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1whxSi-004CQZ-3J
-	for git@vger.kernel.org; Fri, 10 Jul 2026 00:43:20 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=4ytWG4C4D77oq2wQlIeHkTFNqJjtUTWCXIRO0IgBv5g=; b=neyR5QCJv8d5nzzk+Ed7yOwZxu
-	0rQTVe2DG+Q/VfI6swkw7IFF8noX/+/fnPdj8eUWuStEsRjbHA5kBKAqqwR2J848CXfNPOMzlkFm8
-	M889Znyabz2LBGb7bKR6DEKaG+ImIGb7YZeGiDVSyC4ecd4/re+dbU7mr6GGdui+R/DUAAaNFLBnm
-	r/AM7iv5EDOT9CofHUXVKS+pi4MR/ccEKwP7FdYZ1SPqS4vgyUspUoxvCpfWC+wMp9ndu/Ve8KHdV
-	aX+CoNyJgw9isGN+Odbcti/fV61HVfv3U0DwcIVnLLXBiQIgxexRPxuXGfSnrx7XaoYQQ/KMb+nmF
-	/HF7gqFg==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1whxSh-0004Pu-CT; Fri, 10 Jul 2026 00:43:19 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.95)
-	id 1whxST-002cDo-UW;
-	Fri, 10 Jul 2026 00:43:06 +0200
-Message-ID: <c8b81987-ab56-4d6b-a650-879b84597a17@howdoi.land>
-Date: Thu, 9 Jul 2026 17:43:02 -0500
+	dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b="ZzBZAao/";
+	dkim=pass (1024-bit key) header.d=cachix.org header.i=domen@cachix.org header.b="hrUWntmP"
+X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoiZ2l0QHZnZXIua2VybmVsLm9yZyJ9
+DKIM-Signature: v=1; a=rsa-sha256; d=pm.mtasv.net; s=pm20250806; c=relaxed/relaxed;
+	bh=pRAQk5TrrStIp7aCYfMLI0Mywu+LONlqqUlunSesj/E=;
+	h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id;
+	t=1783640170; x=1784244970;
+	b=ZzBZAao/yUBZu6GDkJdIHYu17Fqx5xA/rNpjr9+FJ3Ar9rM/nsGSfwd2hG1fa9OZ9qrEmTdrc
+	OfAJRWETPdQvZWJMZqPoVIxo3uHlCg5EWBmBiimx2XfEwjATfbQ4EFBFOfhG2zFOPyuJ6dekRbK
+	NVJI2VivfedhtxFOeIThdISJXUQh+X9JMVQxPdgoWzHP/iT5JGMst2TKwATsOGaslRjWRkGlgFc
+	gDsI3EfyhN4vQnYvCksLUQB48Bbdi31/KneWUqpkqBuV1jKRKaglqNV17h0A/O5hPgmNzBqFQS+
+	wT7WGsGsqbtLX80LfS7NZCLGIAUrewc84f861lsWpHGA==;
+Received: from ip-172-26-33-70.us-east-2.compute.internal (172.26.33.70)
+  by production-pmta-useast2.internal.postmarkapp.com (KumoMTA 10.97.243.64) 
+  with ESMTP id f75dcd0f7bee11f1bf74023b8cb8aba3 for <git@vger.kernel.org>;
+  Thu, 9 Jul 2026 23:36:10 +0000
+DKIM-Signature: v=1; a=rsa-sha256; d=cachix.org; s=20250802170654pm;
+	c=relaxed/relaxed; i=domen@cachix.org; t=1783640170; x=1783812970;
+	h=date:date:from:from:message-id:reply-to:reply-to:sender:subject:subject:to:
+	to:cc:in-reply-to:references:feedback-id:mime-version:content-type:
+	content-transfer-encoding;
+	bh=pRAQk5TrrStIp7aCYfMLI0Mywu+LONlqqUlunSesj/E=;
+	b=hrUWntmP/nzrNLS5+Zscsohhw4ds8NU7WXzMjboVsaNBSIi2qJJSAwiVTXaifT7MQcWgPHxW5Tl
+	Vvd6RvGHOykPv9dSZinK6+TA1RZmZVdkkyINaCd9qMQHoDQ0BVkYrKrjirwDVfG7ieyJh0TlYi8Zo
+	LT4ltVVqV46j0iBvgDU=
+From: Domen =?utf-8?b?S2/FvmFy?= <domen@cachix.org>
+Date: Thu, 09 Jul 2026 23:36:10 +0000
+Subject: [PATCH v1 2/3] worktree: add post-worktree-remove hook
+Message-Id: <746fccc3-8700-4413-96a6-d98da7cf678a@mtasv.net>
+Reply-To: domen@cachix.org
+To: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>,
+ =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+ Caleb White <cdwhite3@pm.me>, Junio C Hamano <gitster@pobox.com>,
+ Domen =?utf-8?b?S2/FvmFy?= <domen@cachix.org>, Claude Fable 5
+	<noreply@anthropic.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260709233542.628628-1-domen@cachix.org>
+References: <20260709233542.628628-1-domen@cachix.org>
+Feedback-ID: s19907644-_:s19907644:a442084:postmark
+X-Complaints-To: abuse@postmarkapp.com
+X-Job: 442084_19907644
+X-PM-Message-Id: 746fccc3-8700-4413-96a6-d98da7cf678a
+X-PM-RCPT: |bTF8NDQyMDg0fDE5OTA3NjQ0fGdpdEB2Z2VyLmtlcm5lbC5vcmc=|
+X-PM-Message-Options: v1;1.8CQYBpMR7xfYfIJt4ckIpQ.PgIK1kWZnls00GCJ3290XXIGdHBlpqDe_rUynI58VCjRWO-fN1RusuUiQE6IPU_a7xoUEVZC4vw4lrUyEG-3vdx5-Utv2hoqptRgjg5IHpm63XUUFQCLUbuxfRmC_yZjLpdDoBoAlP0TyqlrDeaxJmGR6WAMO24R7v1smSHArOgi7mYcZxonTZNfrE7M9T6-
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust
- rewrite [and 1 more messages]
-To: Ian Jackson <ijackson@chiark.greenend.org.uk>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
- <20260706115816.20267-3-ijackson@chiark.greenend.org.uk>
- <9ef8cfcc-ab47-479b-9f23-71ba99e1e56b@howdoi.land>
- <20260706115816.20267-2-ijackson@chiark.greenend.org.uk>
- <f557bfcf-ffd2-4903-8015-97fff97dbe09@howdoi.land>
- <27215.27575.968985.583226@chiark.greenend.org.uk>
-Content-Language: en-US
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <27215.27575.968985.583226@chiark.greenend.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-virtual-MTA: ord-104-245-209-200
+X-PM-MTA-Pool: transactional-3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On 7/9/26 04:36, Ian Jackson wrote:
+External tooling has no way to learn that a working tree is gone:
+"git worktree remove" deletes both the working tree and its
+administrative directory without running any hook.
 
-> Colin Stagner writes ("Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust rewrite"):
->
->> I think that subtree merge should only test the top-level project, as
->> this patch does now.
->
-> By "top-level" I think you mean what I've taken to calling the
-> "downstream": the project where the subtree is in a subdir, and whose
-> top-level has other stuff.  In which case I agree.
+Introduce a post-worktree-remove hook that runs after "git worktree
+remove" has deleted a working tree. It is given the former absolute
+path of the working tree and its identifier as arguments. The hook
+also runs when only the administrative entry is deleted because the
+working tree directory itself had already disappeared, since the
+worktree is deregistered either way.
 
-Yes, I think we're talking about the same thing.
+Because the working tree no longer exists at that point, no special
+working directory or environment is set up; the hook runs wherever
+the command ran, like other post-command hooks.
 
-In retrospect, "top-level" is ambiguous. "Upstream" and "downstream" may 
-be as well. Within git-branch(1), the phrase "upstream" refers to the 
-remote tracking branch set by
+The hook runs once deletion is underway even if parts of it fail,
+since there is no going back at that point, but it does not run when
+the removal is refused (locked or dirty working tree, failed
+validation). It cannot affect the outcome of the command other than
+its exit status being reflected in the exit status of "git worktree
+remove".
 
-     git branch --set-upstream-to=<upstream>
+Signed-off-by: Domen Ko=C5=BEar <domen@cachix.org>
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+---
+ Documentation/githooks.adoc | 18 +++++++++++++++
+ builtin/worktree.c          | 10 +++++++++
+ t/t2403-worktree-move.sh    | 44 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+)
 
-git-merge(1) is consistent with this.
-
-     "If no commit is given from the command line, merge the
-      remote-tracking branches that the current branch is
-      configured to use as its upstream."
-
-git-subtree.sh doesn't really deal in "upstreams" in the git-branch or 
-git-merge sense.
-
-Less ambiguous language is available:
-
-For merge commits, there is the "first parent" and "second parent" (or 
-3rd or higher parents).
-
-For trees, there is the "root tree" and "sub-trees," like `git ls-tree -r`
-
-     -r     Recurse into sub-trees.
-
-Both of these deliberately ignore the dependency relationship between 
-the various projects and branches in question, which can potentially get 
-messy.
-
->>> +	if git rev-parse --verify -q "$rev:$config"; then
->>
->> For subtree split, should we also test for this file in tree you are
->> splitting: i.e., "$dir/$config"? The answer might be no.
-> 
-> You're right that we should consider this question.  The answer is:
-> no, we should not.  Briefly, whether to use the new or old algorithms
-> depends on whether the downstream has adopted the new git-subtree, not
-> on whether the upstream has added some optional config.
-
-Very well-reasoned; I like it.
-
-Let me ask this question in a slightly different way: does RIIR subtree 
-honor config files in locations other than the one you test for above? 
-That's
-
-     ${rev}:.git-subtree/config
-
-which is `.git-subtree/config` within the root tree of the rev that is 
-being manipulated?
-
-If this is the only config file RIIR subtree honors, the patch is 
-probably correct. If RIIR subtree honors config from other places, such as
-
-* the working tree
-* HEAD:.git-subtree/config
-* HEAD:./.git-subtree/config
-
-then consider testing for those if appropriate.
-
->> Subtree merges can be performed without git-subtree, via the `-X
->> subtree` merge strategy option.
-> 
-> This is what I'm calling an "unmarked subtree merge".  My rewrite is
-> not going to support this user behaviour.  The problem is that it is
-> not possible to reliably determine whetheer something is an unmarked
-> subtree merge.
-
-Thanks for looking at this.
-
-> Combining manual -X subtree merges with git-subtree --squash merges
-> could easily produce quite weird and wrong results in the tree
-
-I haven't tried it, but I think if --squash is in use, then attempting 
-an unmarked subtree merge will probably die with "unrelated history" 
-warnings.
-
-Looking forward to v2,
-
-Colin
-
-
+diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+index 2778f73f30..22b3263ff7 100644
+--- a/Documentation/githooks.adoc
++++ b/Documentation/githooks.adoc
+@@ -235,6 +235,24 @@ runs after the `post-checkout` hook, and is skipped if=
+ that hook fails.
+ This hook can be used to set up per-worktree development environments
+ or to register the new working tree with external tools.
+=20
++post-worktree-remove
++~~~~~~~~~~~~~~~~~~~~
++
++This hook is invoked by linkgit:git-worktree[1] after a working tree
++has been deleted by `git worktree remove`. The hook is given two
++parameters: the absolute path of the removed working tree and its
++identifier (the name of its former administrative directory in
++`$GIT_DIR/worktrees/`).
++
++The working tree no longer exists when the hook runs.
++
++This hook cannot affect the outcome of `git worktree remove`, other
++than that the hook's exit status becomes the exit status of the
++command.
++
++This hook can be used to tear down per-worktree development
++environments or to unregister the working tree from external tools.
++
+ post-merge
+ ~~~~~~~~~~
+=20
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 7b9d337234..01b62ed2fc 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -168,6 +168,14 @@ static void delete_worktrees_dir_if_empty(void)
+ 	free(path);
+ }
+=20
++static int run_post_worktree_remove_hook(const char *path, const char *id)
++{
++	struct run_hooks_opt hook_opt =3D RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
++
++	strvec_pushl(&hook_opt.args, path, id, NULL);
++	return run_hooks_opt(the_repository, "post-worktree-remove", &hook_opt);
++}
++
+ static void prune_worktree(const char *id, const char *reason)
+ {
+ 	if (show_only || verbose)
+@@ -1437,6 +1445,8 @@ static int remove_worktree(int ac, const char **av, c=
+onst char *prefix,
+ 	ret |=3D delete_git_dir(wt->id);
+ 	delete_worktrees_dir_if_empty();
+=20
++	ret |=3D run_post_worktree_remove_hook(wt->path, wt->id);
++
+ 	free_worktrees(worktrees);
+ 	return ret;
+ }
+diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
+index 0bb33e8b1b..b94f00e426 100755
+--- a/t/t2403-worktree-move.sh
++++ b/t/t2403-worktree-move.sh
+@@ -246,6 +246,50 @@ test_expect_success 'not remove a repo with initialize=
+d submodule' '
+ 	)
+ '
+=20
++test_expect_success '"remove" invokes post-worktree-remove hook' '
++	test_hook post-worktree-remove <<-\EOF &&
++	echo $* >hook.actual
++	EOF
++	git worktree add --detach wt-hooked &&
++	git worktree remove wt-hooked &&
++	echo $(pwd)/wt-hooked wt-hooked >hook.expect &&
++	test_cmp hook.expect hook.actual
++'
++
++test_expect_success '"remove" of missing worktree invokes post-worktree-re=
+move hook' '
++	test_when_finished "rm -rf wt-moved-away" &&
++	test_hook post-worktree-remove <<-\EOF &&
++	echo $* >hook.actual
++	EOF
++	rm -f hook.actual &&
++	git worktree add --detach wt-elsewhere &&
++	mv wt-elsewhere wt-moved-away &&
++	git worktree remove wt-elsewhere &&
++	echo $(pwd)/wt-elsewhere wt-elsewhere >hook.expect &&
++	test_cmp hook.expect hook.actual
++'
++
++test_expect_success 'refused "remove" does not invoke post-worktree-remove=
+ hook' '
++	git worktree add --detach wt-kept &&
++	test_when_finished "git worktree remove --force --force wt-kept || :" &&
++	test_hook post-worktree-remove <<-\EOF &&
++	>hook.ran
++	EOF
++	git worktree lock wt-kept &&
++	test_must_fail git worktree remove wt-kept &&
++	test_path_is_missing hook.ran
++'
++
++test_expect_success 'failing post-worktree-remove hook fails "remove", wor=
+ktree is gone' '
++	test_hook post-worktree-remove <<-\EOF &&
++	exit 1
++	EOF
++	git worktree add --detach wt-doomed &&
++	test_must_fail git worktree remove wt-doomed &&
++	test_path_is_missing wt-doomed &&
++	test_path_is_missing .git/worktrees/wt-doomed
++'
++
+ test_expect_success 'move worktree with absolute path to relative path' '
+ 	test_config worktree.useRelativePaths false &&
+ 	git worktree add ./absolute &&
+--=20
+2.54.0
