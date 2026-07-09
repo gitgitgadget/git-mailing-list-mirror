@@ -1,164 +1,106 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ED3432BC0
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 16:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8294D2DCF74
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 16:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783613561; cv=none; b=FPk2asEKuV8pOv7v6WXVd+DnVOx2NvwEGzZahvXH/VIKhSW/uOqMEXLkU/rtPER9KitMpq2Cm8P5XMud9j4w3i2PoUTy2dhFkPIjFnyvi/eeXE4XzS1Nek4sDLNxBMt/+eRUCJQeVqcyOTuRqkyMXp4gXleGoA0gxaBeNJ3bsKs=
+	t=1783613571; cv=none; b=PuhLRsSkG+qbjD0DPBLeXS0Sa5wgLnRBgpZMA+RPENT9ghuRUX5lYrow/8v0I5XaWEL1vg1vjpbIGFZI95TJMuS3FyjGd4FYI39lCPsoTWArmR45uQ5Cv4/01E2teDC12wBSQBOllER4CNBJ9umMpMCZmQtnJqLys3HVRam2nJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783613561; c=relaxed/simple;
-	bh=NDT9s/GCso2W3GSHIWKyKDZX2NwA4cijGAOsKkOrmvE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kzWIOZGYgZj/+Ynn3YO4oNqRyDBejMA68NWOXN1leXGW8sxVvjhzbrFzioNiPBgpRm5VItUdB9qOiOgaLw56QFYQjb3ITil6IcILZhoUA7KjoCsDOk1obNCc/GhMJfgSEnV54Xib9BevZwWRPdREcGm7aOLXhWOkW9+M1LouEDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=TfNvqXfI; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=UR6yxvov; arc=none smtp.client-ip=34.202.193.197
+	s=arc-20240116; t=1783613571; c=relaxed/simple;
+	bh=UnhqYWWQSBr1GerGDsjddfiBy5h/ZG6+sFE9E1MgdMA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ituolAH1HkzgFNbkUsvgwCNCoURFyDEqHCsZRc5z+rhj9xUCAf7cnDMZSHI86PiHeJ+RfD3aWop3TFq6XFpt+l/wBuIUdpF9f1H2+lhjvBc7sXXpQQYz00CvDUGKXUttsB87uczHkI01bWqvgNIEiM5QLNX7Gqpiy55DOTWURos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=LbLoylK+; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=X1Yvkn9i; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="TfNvqXfI";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="UR6yxvov"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=TfNvqXfIKOGwkr5ZrUj3N8xMARfJUwXiW3Ea0WjJgd8twWLzmax7jTgaZteUsyhqZ+bSjQr61qKYxTziEMSpRojPzNmicw9q1WNdj5VAcRDeZhA+juJ/Y3NPlpey2UUsjyVnXZcOHy30EoUJ1zT5F8/EZaKlOwoZjSv+1xmH18tsyqH3Fr60ztrKQap14/GbTxexs78iSWtZ+oKzoXsxIdRpfsZoCaya7fKFk78YtftE2/1y2NpiX+BZghxMQBPqkC0cRCSH3k34rOMh7pSEWiIAgSLvwUsG43wqMFCchYalsVMk3WDt8eVPNPWQFvEaEtuqLC7hBZ1BxlH2JCwJAw==; s=purelymail1; d=malon.dev; v=1; bh=NDT9s/GCso2W3GSHIWKyKDZX2NwA4cijGAOsKkOrmvE=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=UR6yxvovJHVtH4jfeSJWgXaTG3YOKROi5bAigmCIrHBLDmGd/vK5oyniPxQgy0UtGKp7luaYKIGK+QD7AdQqmd1T6EgfUQed9v7RZ3DUvUo1O0p8adHGTEWHsq7HdalWyOhf/iv2MPWp91Ww3bLzXjw5ksnnwWVvuQoZj9ekGSntUjfSGGXD2l0iTBPpvb4U8NGOGqOXNHMg/C+IwnPtvPE6uue6D4Ovj1daZavnNHlFQo3WQ1a7aqEwiT3XS3gbsrO6I3Z60ezPzv4Ryol8+iZjxGXQnsk4tIBZ8HT03VC9hmbAxgrSlEuwYetd5D7OId8iuhcJPw1qTYzsJE9pfw==; s=purelymail1; d=purelymail.com; v=1; bh=NDT9s/GCso2W3GSHIWKyKDZX2NwA4cijGAOsKkOrmvE=; h=Feedback-ID:Received:From:To:Subject:Date;
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="LbLoylK+";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="X1Yvkn9i"
+DKIM-Signature: a=rsa-sha256; b=LbLoylK+inW1IWiHiWTMK4hf9aEcRmJj/9besgPtzvmIj7KN8p0NkjNYDJY21Xwyy5R/juYaEgFj8zsIhtbQ/MQh3aqF337VftfVP4erQYZFVuMjqRyZqin0XNft7z73aVKTUNbE9LD8X82kPejsx2SNWdQUNyrP5pqJeF5UBNvMA2PyHtDGj4z2I2QAJrxYYBFgpUJKk73Pyhm/u9yKpxK6NFBN3i+rIspTQwijyX8miOZGDPsAlk2f5NlJx1dE5llDqDsCnyvZ4cTYq7rYnv8NiiWyCarDUx6g2+ITb7oOdI7CpkBzZUHg4X/3IhMFrcioj37vU3PdprlzwHKcOQ==; s=purelymail1; d=malon.dev; v=1; bh=UnhqYWWQSBr1GerGDsjddfiBy5h/ZG6+sFE9E1MgdMA=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=X1Yvkn9iQai9MBKSNSQuCd+liQPyQEZuLp3XKVPv9X9HGQ91+9hpBjJo/7cllmD1HIpMclEUgvheP3LUj0KkHRHQA+I7Jo20evvX7A/drLNeGrKXbvcLiqjtsr2Lw3gn7zSKDBL5gm/qR6rmf8klahmB9Z9fWeAATUyrk7zQrz+v0MrEXAQEzK/GKLIImYmF3b5UdlHOIPAx6WYjaTOUq0/wdIDIiJrHgPXrbwnwA0AzFRgOiki2PkGxQJb4eeGB1dOjWMKCtkvUXi51CncMZk06ANS3oJA9nnOKnr5a50QYOu/KMgMH81EE/QXU4jdo9tEE1mirRS85YAdho0a9Zw==; s=purelymail1; d=purelymail.com; v=1; bh=UnhqYWWQSBr1GerGDsjddfiBy5h/ZG6+sFE9E1MgdMA=; h=Feedback-ID:Received:Date:Subject:To:From;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 872182701;
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1595543774;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Thu, 09 Jul 2026 16:12:38 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
-To: git@vger.kernel.org
-Cc: cirnovskyv@gmail.com,
-	szeder.dev@gmail.com,
-	Tian Yuchen <cat@malon.dev>,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v9 9/9] environment: move object_creation_mode into repo_config_values
-Date: Fri, 10 Jul 2026 00:11:45 +0800
-Message-ID: <20260709161145.13349-10-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260709161145.13349-1-cat@malon.dev>
-References: <20260708160300.8852-1-cat@malon.dev>
- <20260709161145.13349-1-cat@malon.dev>
+          Thu, 09 Jul 2026 16:12:47 +0000 (UTC)
+Message-ID: <0da20189-4e5b-4af0-b504-e99ac16d40af@malon.dev>
+Date: Fri, 10 Jul 2026 00:12:41 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/9] environment: move pager_program into
+ repo_config_values
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, cirnovskyv@gmail.com, szeder.dev@gmail.com,
+ Christian Couder <christian.couder@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Olamide Caleb Bello <belkid98@gmail.com>
+References: <20260706142530.3681520-1-cat@malon.dev>
+ <20260708160300.8852-1-cat@malon.dev> <20260708160300.8852-5-cat@malon.dev>
+ <xmqqy0fkq0nw.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqqy0fkq0nw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The global variable 'object_creation_mode' controls how Git creates
-object files, specifically determining whether to use hardlinks or
-renames when moving temporary files into the object database. Move
-it into 'struct repo_config_values' to continue the libification
-effort.
+On 7/9/26 11:53, Junio C Hamano wrote:
+> Tian Yuchen <cat@malon.dev> writes:
+> 
+>> On top of that, fix a memory leak in pager.c while we are at it.
+> 
+> Hmph.
+> 
+>> @@ -75,10 +76,12 @@ static void wait_for_pager_signal(int signo)
+>>   
+>>   static int core_pager_config(const char *var, const char *value,
+>>   			     const struct config_context *ctx UNUSED,
+>> -			     void *data UNUSED)
+>> +			     void *data)
+>>   {
+>> +	struct repository *r = data;
+>> +
+>>   	if (!strcmp(var, "core.pager"))
+>> -		return git_config_string(&pager_program, var, value);
+>> +		return git_config_string(&repo_config_values(r)->pager_program, var, value);
+> 
+> Isn't this still overwriting what was in the .pager_program member
+> of the config values struct?  In check_pager_config() below, there
+> is a free() to avoid such a leak, but wouldn't this have the same
+> issue?
+> 
+>> @@ -91,10 +94,10 @@ const char *git_pager(struct repository *r, int stdout_is_tty)
+>>   
+>>   	pager = getenv("GIT_PAGER");
+>>   	if (!pager) {
+>> -		if (!pager_program)
+>> +		if (!repo_config_values(r)->pager_program)
+>>   			read_early_config(r,
+>> -					  core_pager_config, NULL);
+>> -		pager = pager_program;
+>> +					  core_pager_config, r);
+>> +		pager = repo_config_values(r)->pager_program;
+>>   	}
+>>   	if (!pager)
+>>   		pager = getenv("PAGER");
+>> @@ -302,7 +305,9 @@ int check_pager_config(struct repository *r, const char *cmd)
+>>   
+>>   	read_early_config(r, pager_command_config, &data);
+>>   
+>> -	if (data.value)
+>> -		pager_program = data.value;
+>> +	if (data.value) {
+>> +		free(repo_config_values(r)->pager_program);
+>> +		repo_config_values(r)->pager_program = data.value;
+>> +	}
+>>   	return data.want;
+>>   }
 
-Move the 'enum object_creation_mode' definition higher up in
-'environment.h' to ensure it is visible to the structure. Initialize
-the per-repository value to its default macro value
-OBJECT_CREATION_MODE inside 'repo_config_values_init()'.
+Nice catch, sorry for missing that!
 
-Update configuration parsing in 'git_default_core_config()' to write
-directly to the repository-specific configuration structure.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-Signed-off-by: Tian Yuchen <cat@malon.dev>
----
- environment.c |  6 +++---
- environment.h | 12 ++++++------
- object-file.c |  2 +-
- 3 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/environment.c b/environment.c
-index 7701aa3bc0..e50beda918 100644
---- a/environment.c
-+++ b/environment.c
-@@ -61,7 +61,6 @@ char *check_roundtrip_encoding;
- #ifndef OBJECT_CREATION_MODE
- #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
- #endif
--enum object_creation_mode object_creation_mode =3D OBJECT_CREATION_MODE;
- int grafts_keep_true_parents;
- unsigned long pack_size_limit_cfg;
-=20
-@@ -511,9 +510,9 @@ int git_default_core_config(const char *var, const char=
- *value,
- =09=09if (!value)
- =09=09=09return config_error_nonbool(var);
- =09=09if (!strcmp(value, "rename"))
--=09=09=09object_creation_mode =3D OBJECT_CREATION_USES_RENAMES;
-+=09=09=09cfg->object_creation_mode =3D OBJECT_CREATION_USES_RENAMES;
- =09=09else if (!strcmp(value, "link"))
--=09=09=09object_creation_mode =3D OBJECT_CREATION_USES_HARDLINKS;
-+=09=09=09cfg->object_creation_mode =3D OBJECT_CREATION_USES_HARDLINKS;
- =09=09else
- =09=09=09die(_("invalid mode for object creation: %s"), value);
- =09=09return 0;
-@@ -727,6 +726,7 @@ void repo_config_values_init(struct repo_config_values =
-*cfg)
- =09cfg->apply_default_ignorewhitespace =3D NULL;
- =09cfg->push_default =3D PUSH_DEFAULT_UNSPECIFIED;
- =09cfg->autorebase =3D AUTOREBASE_NEVER;
-+=09cfg->object_creation_mode =3D OBJECT_CREATION_MODE;
- =09cfg->apply_sparse_checkout =3D 0;
- =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
- =09cfg->trust_ctime =3D 1;
-diff --git a/environment.h b/environment.h
-index 464ff73136..eaa0aba7bc 100644
---- a/environment.h
-+++ b/environment.h
-@@ -109,6 +109,11 @@ enum rebase_setup_type {
- =09AUTOREBASE_ALWAYS
- };
-=20
-+enum object_creation_mode {
-+=09OBJECT_CREATION_USES_HARDLINKS =3D 0,
-+=09OBJECT_CREATION_USES_RENAMES =3D 1
-+};
-+
- struct repo_config_values {
- =09/* section "core" config values */
- =09char *attributes_file;
-@@ -120,6 +125,7 @@ struct repo_config_values {
- =09char *apply_default_ignorewhitespace;
- =09enum push_default_type push_default;
- =09enum rebase_setup_type autorebase;
-+=09enum object_creation_mode object_creation_mode;
- =09int apply_sparse_checkout;
- =09int trust_ctime;
- =09int check_stat;
-@@ -213,12 +219,6 @@ extern unsigned long pack_size_limit_cfg;
- extern int protect_hfs;
- extern int protect_ntfs;
-=20
--enum object_creation_mode {
--=09OBJECT_CREATION_USES_HARDLINKS =3D 0,
--=09OBJECT_CREATION_USES_RENAMES =3D 1
--};
--extern enum object_creation_mode object_creation_mode;
--
- extern int grafts_keep_true_parents;
-=20
- const char *get_log_output_encoding(void);
-diff --git a/object-file.c b/object-file.c
-index 9afa842da2..cbbfc8f1dc 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -415,7 +415,7 @@ int finalize_object_file_flags(struct repository *repo,
- retry:
- =09ret =3D 0;
-=20
--=09if (object_creation_mode =3D=3D OBJECT_CREATION_USES_RENAMES)
-+=09if (repo_config_values(repo)->object_creation_mode =3D=3D OBJECT_CREATI=
-ON_USES_RENAMES)
- =09=09goto try_rename;
- =09else if (link(tmpfile, filename))
- =09=09ret =3D errno;
---=20
-2.43.0
-
+Regards, yuchen
