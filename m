@@ -1,87 +1,73 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDCF2D594F
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 14:54:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A59244687
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 15:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783608861; cv=none; b=D7oCBfMSg1HbdxVd7+xjCurPTrrGqsGQgwEI0p9ipctUxd7UGldi9ETk/ikD5MM5DuZvsXmNpr6fVgHU8rUUglRjwnO+Qix8oNswD7mDzMXQGq3X5J5GTgo2jE4gKKlIvdBqawPHBYAwCpEPhwl3iRpwydMBuEh8FcNAOqVznSM=
+	t=1783609340; cv=none; b=eEaYlEZbI6hRhcof0LK/RSwpyWg0Dtxf5wqsMo+CRLb3MSALoOdYPlqDKzSaqA+ZD+DToFX0qG037kpBNLcBIMjVq/ZSqz+cbZDbxpQToY94jscj+p1hp6fq3ODabwBsIXyR0cfHAFa/lhX2Iw74UvZX77yTghn8qWnv28yvYuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783608861; c=relaxed/simple;
-	bh=e3PfZDmXTKVOWB9zyokJCOZqD6AD6lpXv/Sole2AYeM=;
+	s=arc-20240116; t=1783609340; c=relaxed/simple;
+	bh=/NTjsKW+6CL+vw9sah3VHXUmTBzWeqjYtVcDUc4keGQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MuR7p4OM8Myyd8slK3tuCBw2TcWFikGLvaVWMyP9W/nRILGcrk5kq0N7NDZlhZGUwK1COIucNzvnp39T84LqIvKzcTfjaHB7KKCo3dAsMJIz6xwOCv7xbWbnzgrXPPvkqs35MySe9yZ1bp8Uh+LOPZZFufMRkvGm5pEJqi6mpfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FBw8KiT7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lygsaObT; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=dGAJWFQ5xrsfeBH3f8uPduLnKKL4+v/WSfM/0UB66TsslBGPRc/W+pqJ9Wamrag10DALvR2WG6lxvot7gV4YBmYzzk9B9EjuLW+HUhQfIMI7qA97h6cJxQUmhAVEKd2/n7H6w97zmGrunyCHm15cw0qideQ4O61RhYYDSqyIAnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YV24voY0; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FBw8KiT7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lygsaObT"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 395E07A00D7;
-	Thu,  9 Jul 2026 10:54:19 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 09 Jul 2026 10:54:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783608859; x=1783695259; bh=ie4+ZUps1Z
-	VCCWs9JrQ7CnO1HaJvrXKX9+9k7aTtvVY=; b=FBw8KiT7ev7hXgRrtCIAV52JTq
-	K5gaoydFEfi91SG3HrowYOz4U+oZyHd182U9sBkLbluIOouXjEUpjsTrBG7y63Lm
-	Dwv6i8NyAPaYY0D80CncQ9jBSCae+a72p0aYK57CrPCsH3Sao+xiz7jTPhmIwUbv
-	dL7mmYNOmTz3rZwTPpArWq33jPpx/sPMJGNfjN+eeM+Mo9YbgCGUFNbuUVYrVSn5
-	ZlZ7/TU2rntCe++RSrUEg4j54A+QC8hu6UyIHkXLcOpjXbpWdh1ZW+jTX824Umr2
-	LtmLn/MiF3t1OQdsWYy4D05D/w5fe9Rd/cM9QyDQ5piHr8TaUlZ7iIIvcBCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783608859; x=1783695259; bh=ie4+ZUps1ZVCCWs9JrQ7CnO1HaJvrXKX9+9
-	k7aTtvVY=; b=lygsaObTBJzLQ8Eqzg1bQTyyfDEN91K8eiPxhqterjzNhmkCKZS
-	BoCdFFh/mmhXpnZ1lv4lPtk2MqDcMKy9l4EbzvjMT7kO54OFQrKgPhom/R2TL7fQ
-	coyDCSu+US2qjD7anZ7UJYRI/sR5cxbo0Oa7F4zTsETXHndXLEktgbhbl/7bQ2GG
-	IocR0vkWXu5i7S0KTX9s5mcsBswv0zd7Ll95s8jsVG4EQy+3YuofVIdfGji8qn03
-	Q4bp8b2y4KhqvNQ7WvvCVzCdE755sVrDkAUBbqEszgzZf8LAO1tMCHq9teIqNJN4
-	/DUl+b4ewBeYnvVTQjwBhljqGXGd5WgVRtA==
-X-ME-Sender: <xms:GrZPagVAivHAF2w0RQRXInkFu-NV3gS-eM3foHP8AsgZAKOLEaDpEA>
-    <xme:GrZPasC3zxkLqJETgVRtt3ueArZagnYDh5fHNDSv7VvCnRxv8CHejHxytyFz2o-o7
-    26wULnE_rzBV9-z0Kl6-BA2DdIQG09bGlZfuOevSgKlART3KU1c2w>
-X-ME-Received: <xmr:GrZPahzFBba2ISN__ZjefwBmmnpbHp3weuZZXs6wEdgMx6n-Q_WBgzHHXbe3JQL656Iqxl85DQcfdWtqfH-BtDSj1gTIAaug3aW3Kw8XmQ>
-X-ME-Proxy-Cause: dmFkZTGZWFRq+tWT8yZyHqwwQKOnucCl6iKIMkYqt+seP/hVNdAPejXHHVJM9CmJieibpX
-    QKjN3+azJsxbZag9MjRAOqS5P4vyVZca0muK/e8j84st3WB2MMPWoW/n46GwAWAWe+3DN5
-    f85Eqj9dSkix27Tr3ajxQFOy/5eNLPUK5EoDtXQq2wTWPm9kTjJ1W8C0ncq/ttp8QB6cuB
-    /6SaWjPrChNWNqDDMLN2ddGCErI7rN0Cu74OsMxXUb91T1S1OPF9vUFouNKq67uPTPEnKP
-    nKKcddJVgIlP4G+w4ElrYwJqjBMqaR9Zw3UJF2yfC/V7KT75+LQ3xvGOtaIm5w4iOBECNP
-    0C7QlnMHgaMXKPjc5lZOrmcD17NQLzuSAD94q+VRUDGsYt2EcRtCCq7FXZZuk8b9A+VewT
-    3fzunGUIiCO/8n0SiEIQkh9keSaJtOgTzw5uLYNsa0CnS0cFKHw9kPhXXQOEta0mJwHdGj
-    dvC+gakDPZLzIhTZymRRoRHfnmAhyY38j6CvPVRe0NpRBcCGKQpTh99SgxPK/4LtUrzeVv
-    Zy/h5VgoFscZcsoUZRDEKzJh9lZkdC+mphKiuX68FGI6Sq+4V9yyYxktkJjbgWrKewSU7a
-    l8vhI1sFV33RmiYehqh8LBew1Biw5prRN+oLDKNTCMoQ5yiEdjSOV2Ls7+uA
-X-ME-Proxy: <xmx:GrZPapCYJpbA4dh4hdB0_z0AmIOQt6Sofy-G4LY_XYO-HRCtsPlZnw>
-    <xmx:GrZPaubQoYoFRoPJom1YNKibxDuzIbKv5dmOJoxnnH2IlKNiHUSolA>
-    <xmx:GrZPahgXLnteIGlrpZNdo650BHxXRGBrjrY3fjvh1PWlcMlAeoI-Xw>
-    <xmx:GrZPag5vUmM1Sa8X2fkbJMgwtrfTxkXaiIiYCnu20LHuq0_ORz1FYA>
-    <xmx:G7ZPapQEPjeiYVd7CIhcTuux4MwgJI972MFp4HrGqbSJSDL52CYmGwlh>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 10:54:18 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c20feedd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Jul 2026 14:54:15 +0000 (UTC)
-Date: Thu, 9 Jul 2026 16:54:08 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] reftable: fix quadratic behavior in the presence
- of tombstones
-Message-ID: <ak-2EHY6YlFkW9p6@pks.im>
-References: <pull.2166.git.1783344957.gitgitgadget@gmail.com>
- <pull.2166.v2.git.1783598912.gitgitgadget@gmail.com>
- <c13f15ddc20f721443fa1d462ea1b7c2356fbffc.1783598912.git.gitgitgadget@gmail.com>
- <ak-n6K4heV2kHviZ@pks.im>
- <CAL71e4PrtZwB8TMg3eBj=LzC7ik+C8yxLYEEEP7SDgMPiWSs0Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YV24voY0"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-80814edb536so26840337b3.2
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 08:02:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783609338; x=1784214138; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ykmE2DQP+N2GTeEMMwnFQkkVK0OnEAmLMjKIBdzR6yI=;
+        b=YV24voY0FoO42+x0K3tiAUdln4Ox15OIoq9KKXlZjNHTOQjT5TvEyIVswCJJg5cGOQ
+         a/FeK029YDiamrYrN7j94fovrfuLjeMowQ7EcJGAzW7ZpOK8/cv5MQim4gSBSooSMdwC
+         95ZD9XlVjqr/27gs6O2rEqmal9NVwEKC6th5SJRPvUbBi0E917I/q2jS7dDteXRGqWk6
+         pqzMddkHa5cc3k6CEGv2w7lWZQPsjemrPSRx9RqZy0/cWGkeMCHUtg6qXz4lboYHTZyO
+         1OSPvWX574f7jZrF98Ew9sfzla3nR3jN+3cZ9T0lIfZquXcbe8qBLr99K6jBS7uTsJCg
+         rSoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783609338; x=1784214138;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ykmE2DQP+N2GTeEMMwnFQkkVK0OnEAmLMjKIBdzR6yI=;
+        b=rYbBGetnAFI3hIATuH1sTQ1M7mhTzkJYKi04TqYO3FjJPKekMa12TNIUlrUf8GiW2C
+         puhTvv2+Oo6wI3H9XB/W1EFc69sqMjtn+E3KG8YGmI56Xi57F6gGDon+88DBhMorOy/t
+         MIFRWqmo/hEF8AgtSCAjfKGBMUnAZVw8VM1u7b026XXlvqKZ2o9t1aKY+6b3XydANcI2
+         BBVERzwc8gSvqLSHYtDd5PD1bpn2AcqYWDI7StcHyW7mxX5+PW/py6W2qjxO6obu8Iu0
+         pyP5AR0rAJEpYsPPKi5ZaH7C6ZrC4pFl23l+nn7MG+zGHOihWdptjmN0M4KFjUNLmvFq
+         mbVw==
+X-Gm-Message-State: AOJu0Yy+Cdl7lLwTmJDgQYbfL9httskUN6NVQ4yAZ1yv80VqTr1trWng
+	jfFDxc4XlSJIAN8/3J9oxJWpFa2ETOtKJRqY84YKrmpkrlcmB4xUOOs6
+X-Gm-Gg: AfdE7cm8EnkQze+E9zN5nfhIzaufBQH3tiHGYvSg7neysSvv3h1Ag6sYxsUGKWp9wZn
+	fCCHnIfGGsRpIdQ53rIDxkVWb9PFlb7+npkSgd7c8tn1lnRtkxfIisGqYFViqurTTfJrki1akfc
+	Tk8e90lt6Cr2cR68WNUqAGEivr0xCjjn0OnfvpsJmsojmXw5dbO9ejIT57p9yhTyrRZnZozo/+V
+	YxhMm0cxF8EqexgcxxPanPM9DvjtUzGE3v0B4CgxPLFSNoTaOjj20DFZzIdg9fEKbomvK+M1CsE
+	2Db9ZVMPS5JfBcvW1tNeZPTBIkIvW0DHeDZ1SwG3fFvt+S5SWeeiGChMyhAz1jByCFKHBB7QDx1
+	p2EIfxr7gA6L3/2M3qKILB37YJOLMT2hjcukWbFA0Y5DZcuA7YkSTMtOn6HKo87OQXnUA+QYVrV
+	Qh8EFEmw==
+X-Received: by 2002:a05:690c:6c81:b0:814:5312:47bb with SMTP id 00721157ae682-81dc1e20a01mr55395377b3.69.1783609336754;
+        Thu, 09 Jul 2026 08:02:16 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81e6bf653desm20564877b3.17.2026.07.09.08.02.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2026 08:02:16 -0700 (PDT)
+Date: Thu, 9 Jul 2026 10:02:12 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v3 08/11] odb/transaction: add transaction env interface
+Message-ID: <ak-vJ2hlAHLbg8Zb@denethor>
+References: <20260708041412.1157499-1-jltobler@gmail.com>
+ <20260708235925.3992097-1-jltobler@gmail.com>
+ <20260708235925.3992097-9-jltobler@gmail.com>
+ <xmqqbjcgrg0e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,41 +76,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAL71e4PrtZwB8TMg3eBj=LzC7ik+C8yxLYEEEP7SDgMPiWSs0Q@mail.gmail.com>
+In-Reply-To: <xmqqbjcgrg0e.fsf@gitster.g>
 
-On Thu, Jul 09, 2026 at 04:48:43PM +0200, Kristofer Karlsson wrote:
-> On Thu, 9 Jul 2026 at 15:53, Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Thu, Jul 09, 2026 at 12:08:31PM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> > > diff --git a/reftable/stack.c b/reftable/stack.c
-> > > index ab12926708..fd7d8f3f1e 100644
-> > > --- a/reftable/stack.c
-> > > +++ b/reftable/stack.c
-> > > @@ -337,7 +337,6 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
-> > >       /* Update the stack to point to the new tables. */
-> > >       if (st->merged)
-> > >               reftable_merged_table_free(st->merged);
-> > > -     new_merged->suppress_deletions = 1;
-> > >       st->merged = new_merged;
-> > >
-> > >       if (st->tables)
-> >
-> > Okay, we still retain the field after this patch. But the question is:
-> > how would libgit2 now set it? I think we should rather extend the
-> > `struct reftable_stack_options` so that the caller can control whether
-> > or not to suppress deletions at stack creation time.
+On 26/07/08 08:36PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> You are right, I (still) missed the compatibility problem here.
+> > +static int odb_transaction_files_env(struct odb_transaction *base,
+> > +				     struct strvec *env)
+> > +{
+> > +	struct odb_transaction_files *transaction =
+> > +		container_of(base, struct odb_transaction_files, base);
+> > +
+> > +	odb_transaction_files_prepare(&transaction->base);
 > 
-> I started thinking about a way to make it fully backwards compatible,
-> but then I looked at the libgit2 repo and realized it will need
-> updating anyway since it predates the reftable_stack_options split.
+> Can this fail?  The caller of us would not notice that something
+> went wrong, and ...
+> 
+> > +	strvec_pushv(env, tmp_objdir_env(transaction->objdir));
+> 
+> ... happily ends up using transaction->objdir that may not be
+> appropriate for it to use if it fails, no?
 
-Yeah, that's something I'll handle soon(ish).
+Ya, `odb_transaction_files_prepare()` can fail here. In practice,
+failure results in no temporary directory being created which
+`tmp_objdir_env()` does handle gracefully, but we should ideally still
+be reported the failure back to callers. Will update in the next
+version.
 
-> I will add suppress_deletions to reftable_stack_options as you
-> suggested.
-
-Thanks!
-
-Patrick
+-Justin
