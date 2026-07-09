@@ -1,211 +1,158 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEB73EFFDC
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 08:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5D13EFFA2
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 09:37:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783586191; cv=none; b=sKId5v64IgWKGEBjRu8cksGzJHYbOFaVpSE1GtH7Zo1hi5iKiOnCx/xjLlBx1BcPPgKWIdkBrcWW6gnF8xbbD8h3gyMVnOhUe2kZQBLtDG8hrWou2v8AfdeN7I8CmjIuNbln5LFhiJVq3tXQVYvEoVilTdUaZNbiA0MF6CEQN+4=
+	t=1783589826; cv=none; b=j1ue4cGiV+2WxplxHExRuv7ZIV/ZqBgabk/NNQXQ1ztc6ob0nF0y5tMvKmKNH4HBcI+u6p4j5e+/6SJprzbPTScYXIkedxyplvWBNNGJA0I7pC5SsRslHvqyrU5YVpf0sTzG1S3JdKvT66wbgC4ouF8iFtYIp2wtnIau0mNBUG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783586191; c=relaxed/simple;
-	bh=ldIvxunXjxueKqIi20H8HRQ072jVqh8mghYQkM44lDI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NYupgeHMnwAC9Inma8iwn0NVf8if9w16C9S1jqsWdDm5jqV50MlalkwbXOhFFBQkxu75Ib9mewxWQF7UKi+XVk70+txgl2gpi2byfHvAX0ViDG0m3fPH9vWPBZsIEM3PJM/bWP2ccxSJL/FLQNA0ZgIT5WGFPsZsJQP7MjpqDE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XStbcTnq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ym+aEnQA; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783589826; c=relaxed/simple;
+	bh=2bSRSaYtetTMNp5HdC5vrv/oSr4CFLrtJTz/mefvp2o=;
+	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Cc:Subject:
+	 In-Reply-To:References; b=OiBNGJPP1905HWQQKyd21UbiQoz6dp+F5F6aO+zTS+0Lntv+Wt2o3oVz2LKUTXgBWAHug4Jv/lmMjlHL8PTT8ZKDNitgIDlvtpM29NvfqBPVWjKtgyNyZwshHbv+B3JInYAzFs2BxMud8TuRQKEixDVOUYODG4/R4ahO7mD2GUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=W14A7lT3; arc=none smtp.client-ip=93.93.131.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XStbcTnq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ym+aEnQA"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7B9AE1D00085
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 04:36:29 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 09 Jul 2026 04:36:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783586189;
-	 x=1783672589; bh=j8pGmfbEIEpTUOgCQ2GCS0OvFejMRh+zewjyoHiJHh0=; b=
-	XStbcTnqC9m/lqlbC3xa8YfXqvUwndh9JjUHKlraPHgV6RT7jKGeE/tN5gyS+meV
-	5uFrGcY450Ndre82+4njAcLpYkqMy4isgK99yGQe3gyebdHcle5P2xYO1Rl6XTWq
-	vZRPwbw51XuN8yOKUVAJdV0Cc7Mqa8Y3WgA1oZSPO/w9LkFGmasLdL16ES2et2Rv
-	EjXz8of63X9hxekEXMXqoriaPQZ/y+u8wy4PKwgESDhDRZJ6xCVpqqom8Ze71o/n
-	nAMblYYV7x69yGlnoobrJ9SUUGt3K0PvU29E4Nfl/oBsmKbdmRSYdI2El09qbSCr
-	aRw6G/NXWewAncf43Hs+wg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783586189; x=
-	1783672589; bh=j8pGmfbEIEpTUOgCQ2GCS0OvFejMRh+zewjyoHiJHh0=; b=Y
-	m+aEnQAEjbPCdzbNyTbV3cwolL0REbgAy0KXwK0BczSCeHEc1itpElVHB1g7WLzJ
-	FeC+uJLCcKXq+BTv6tp4HB4x2UnK/zk9M8CtpXAUS3s1T7ueYY1iIae5CEjDAH+F
-	liWatbd4j00DFOrgj7w56cDdCDdRlXqjM+SiAD1352xa8IAZlgfru0pv1CklO1Wp
-	RP3K1Mp3CUD7OrYGLQoXkSsCscURC5dh2cP2QD7qiDNOJcGXHu5RMHqP+6m1+K/W
-	2kaxeVE/QvyWJFa8w/ZoPzJ9risqcazMB+lkvI0TNVvmjK61hkpxvd0TyHt7FbTy
-	G8ArThQ6cBc1nSq2I5Onw==
-X-ME-Sender: <xms:jV1Pami_WKxK40RQs15jG-LpnzcN7-Zn9fdgEcI7zw4iVmAXegLvrA>
-    <xme:jV1Pat8DQWif56uG_E3kdr1B21xmvobc9HPzSsD_hZ086A7S0Ki1bO0oes_x3a8UP
-    2QtAm3mOQnRiuP3qHWZOJqmKn08_LqKwAhVL27kGsrQWkLrCrRx3g>
-X-ME-Received: <xmr:jV1Pajtr3zwhgXWd_v-_H4g59EyGdEGwVhRfc0XjLv88HbLchLGKKiZyeZSiMD-5D5MdzZZD42oOCxaFzrtqtvCZ2E2d_Dvj1OMPHYlwQA>
-X-ME-Proxy-Cause: dmFkZTFFQiIaXA2kJuzdxv+CB4EkHm+WkliQn2zzSje2lI+5hOJQNGxFJs7lGm1nu0zqS9
-    QgBfKnUvsr2XfbkruCqRbMwqlSeMEsVSsKjPmcedAnBj/q34E4uYlz7Cf74I1D+m45Awto
-    w60lDzKo7Xd2KirHxyPNi8grPToJ8exFqNeXEmnR5S+wmoJjnOYxjMDGq+o+SBFah2mQA9
-    jQEJN7iSFV1ikOuVWPaynX2XIEjC0KLcC5L61ObkMfQpp2zHFJnoHl/wjmaaCOXBjmVl+A
-    Kv9qfest66CSAWH4nHrWvX7yAfqyA3/UAOruRuvvQ0qNR28e1i5wP6fNJY86jZvR0PuqIs
-    +qXy4xziaIzPr+PmEYPIKLkYGIzMN99vcWYicHR0ShTssjb63aWuNTvYxc+CmGWsBrZ6Gz
-    foao2sWf29UyzNKRHvAWX8vU53+CLD0yQI5imqa6605NUKBuzEKUGec/GGcBRCMvLf9nW5
-    98R3ANTTSvIv4de/Zz/7/dO9cnmWkQM8wk7E3i2Nb5Jw2EOdwJ34KUf2ACVGhh55/Tiupf
-    nTHDD/8IX+QgcfqK/ju4ZergMLYNeZgEG4rQSt+rsWtgL8HIjIrUkFuXceEJn/pHqqLcrq
-    S51PfSHtr+Evx7mzicJHkUKpe7IyhZSsBOF2Ngd+uBhu46kh93BVnBYZm/Ew
-X-ME-Proxy: <xmx:jV1PakYrURJGyQ0eQAU8WkDcimr8e0DnWRMgzX_UU8LgQS1dglRQWw>
-    <xmx:jV1PajpGHfMp6gWAdo5Mk4Ww7x1zSbCP_R79ldYhUJdD3qdOq6coDg>
-    <xmx:jV1Pap_vsZuo5h5bgaFNZxhQ9YUrEhkZSNqBdrfwnu8cKX8_6RbXIQ>
-    <xmx:jV1Pai_qnv8fcM2mF_k-ex0YzB13cimxJOKQFRiW1opoAkhuUTxGew>
-    <xmx:jV1PajjYnoZvmLAoftP6K0W8heuF7orG-CaOvFLZYl9XeYnursWz5rs4>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 9 Jul 2026 04:36:28 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cd33d3dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 9 Jul 2026 08:36:28 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 09 Jul 2026 10:35:27 +0200
-Subject: [PATCH 7/7] builtin/cat-file: filter objects via object database
+	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="W14A7lT3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=chiark.greenend.org.uk; s=f.chiark; h=DKIM-Signature-Warning:References:
+	In-Reply-To:Subject:Cc:To:Date:Message-ID:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:From:Sender:Reply-To:Content-ID:Content-Description
+	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=1ecPNAnNEQLPB92m9EGTyEN+p76jVf4/MRpB9M2XbDU=; b=W14A7lT33+QQ
+	ezux2kTp5ov8pOwj0Yby9LpdKh+Ef7Yw2Emdr/tAucoJxM5hxgfDS3TU15o+FtIJ5o4xQbnoGlVO1
+	3CWi+buBzhRO32mXMoCgVyEHiEH/5Bg/rCURaWaXxzLzXbSUF3PSW1tE4aRZZNLrWCM1sAVKXdgUj
+	d971or+fmmjrXnKmEJ7Y+gPwCiCUQGD7scmuh7nLU75xRi9ZD4wDo1HU8BXxkBrhnPBo+qkCKiRhp
+	oIBLBnR6kmQ96LJw9JN2y+1V4GYnMasZv2Dkeh1OaHUz7vr3ot0XiBu7wkyVeX1nn5ZUKy9ZFf2tp
+	QFFuYKbck9rHiH+AUoQ/XQ==;
+Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
+	(return-path ijackson@chiark.greenend.org.uk)
+	id 1whlBg-0006d7-09; Thu, 09 Jul 2026 10:36:56 +0100
+From: Ian Jackson <ijackson@chiark.greenend.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-pks-odb-for-each-object-filter-v1-7-82fe014b12b3@pks.im>
-References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
-In-Reply-To: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
+Message-ID: <27215.27575.968985.583226@chiark.greenend.org.uk>
+Date: Thu, 9 Jul 2026 10:36:55 +0100
+To: Colin Stagner <ask+git@howdoi.land>
+Cc: git@vger.kernel.org,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust
+ rewrite [and 1 more messages]
+In-Reply-To: <f557bfcf-ffd2-4903-8015-97fff97dbe09@howdoi.land>,
+	<9ef8cfcc-ab47-479b-9f23-71ba99e1e56b@howdoi.land>
+References: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
+	<20260706115816.20267-3-ijackson@chiark.greenend.org.uk>
+	<9ef8cfcc-ab47-479b-9f23-71ba99e1e56b@howdoi.land>
+	<20260706115816.20267-2-ijackson@chiark.greenend.org.uk>
+	<f557bfcf-ffd2-4903-8015-97fff97dbe09@howdoi.land>
+X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
+DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/83/837009f527229b25a19cfaf2070e5217.pem
 
-Refactor git-cat-file(1) to use the new object filter option when
-batching all objects. This significantly simplifies the logic and
-ensures that we don't have to reach into internals of the "files" source
-anymore.
+Hi.  Thanks for the review.  I'll go through it point by point:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/cat-file.c | 76 +++++-------------------------------------------------
- 1 file changed, 7 insertions(+), 69 deletions(-)
+Colin Stagner writes ("Re: [PATCH 2/2] git-subtree: Bail out if we find output from Rust rewrite (test)"):
+> It may be slightly faster to create only one repo and just make orphan 
+> branches, like `test_create_subtree_add()` does.
+...
+> `test_commit()` from test-lib-functions.sh may be superior to manually 
+> writing and committing this file.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b4b99a73da..1458dd76d6 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -20,7 +20,6 @@
- #include "userdiff.h"
- #include "oid-array.h"
- #include "packfile.h"
--#include "pack-bitmap.h"
- #include "object-file.h"
- #include "object-name.h"
- #include "odb.h"
-@@ -844,28 +843,6 @@ static int batch_one_object_oi(const struct object_id *oid,
- 	return payload->callback(oid, NULL, 0, payload->payload);
- }
- 
--static int batch_one_object_packed(const struct object_id *oid,
--				   struct packed_git *pack,
--				   uint32_t pos,
--				   void *_payload)
--{
--	struct for_each_object_payload *payload = _payload;
--	return payload->callback(oid, pack, nth_packed_object_offset(pack, pos),
--				 payload->payload);
--}
--
--static int batch_one_object_bitmapped(const struct object_id *oid,
--				      enum object_type type UNUSED,
--				      int flags UNUSED,
--				      uint32_t hash UNUSED,
--				      struct packed_git *pack,
--				      off_t offset,
--				      void *_payload)
--{
--	struct for_each_object_payload *payload = _payload;
--	return payload->callback(oid, pack, offset, payload->payload);
--}
--
- static void batch_each_object(struct batch_options *opt,
- 			      for_each_object_fn callback,
- 			      unsigned flags,
-@@ -875,56 +852,17 @@ static void batch_each_object(struct batch_options *opt,
- 		.callback = callback,
- 		.payload = _payload,
- 	};
-+	struct odb_source_info source_info;
-+	struct object_info oi = {
-+		.source_infop = &source_info,
-+	};
- 	struct odb_for_each_object_options opts = {
- 		.flags = flags,
-+		.filter = &opt->objects_filter,
- 	};
--	struct bitmap_index *bitmap = NULL;
--	struct odb_source *source;
--
--	/*
--	 * TODO: we still need to tap into implementation details of the object
--	 * database sources. Ideally, we should extend `odb_for_each_object()`
--	 * to handle object filters itself so that we can move the filtering
--	 * logic into the individual sources.
--	 */
--	odb_prepare_alternates(the_repository->objects);
--	for (source = the_repository->objects->sources; source; source = source->next) {
--		struct odb_source_files *files = odb_source_files_downcast(source);
--		int ret = odb_source_for_each_object(&files->loose->base, NULL, batch_one_object_oi,
--						     &payload, &opts);
--		if (ret)
--			break;
--	}
--
--	if (opt->objects_filter.choice != LOFC_DISABLED &&
--	    (bitmap = prepare_bitmap_git(the_repository)) &&
--	    !for_each_bitmapped_object(bitmap, &opt->objects_filter,
--				       batch_one_object_bitmapped, &payload)) {
--		struct packed_git *pack;
--
--		repo_for_each_pack(the_repository, pack) {
--			if (bitmap_index_contains_pack(bitmap, pack) ||
--			    open_pack_index(pack))
--				continue;
--			for_each_object_in_pack(pack, batch_one_object_packed,
--						&payload, flags);
--		}
--	} else {
--		struct odb_source_info source_info;
--		struct object_info oi = {
--			.source_infop = &source_info,
--		};
--
--		for (source = the_repository->objects->sources; source; source = source->next) {
--			struct odb_source_files *files = odb_source_files_downcast(source);
--			int ret = odb_source_for_each_object(&files->packed->base, &oi,
--							     batch_one_object_oi, &payload, &opts);
--			if (ret)
--				break;
--		}
--	}
- 
--	free_bitmap_index(bitmap);
-+	odb_for_each_object_ext(the_repository->objects, &oi,
-+				batch_one_object_oi, &payload, &opts);
- }
- 
- static int batch_objects(struct batch_options *opt)
+Thanks for the suggestions.  I'll take a look.
+
+TBH I found this test framework quite awkward to work with.  Maybe
+folks here have some tips:
+
+One thing I was missing was a primitive for "check this fails *and
+produces an error message matching this regexp*".  test_must_fail
+makes it easy for a slips in the command (or some kinds of regression)
+to go undetected: the test then passes because the command *does* fail
+with a usage error or whatever.  And AFAICT there isn't a way to
+manually inspect the output when the tests pass?  I resorted to
+sabotaging the test by adding `&& false` to the end of the shell
+snippet string, and eyeballing t/test-results/t7900-subtree.out.
+
+Colin Stagner writes ("Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust rewrite"):
+> > +reject_if_v2_config () {
+> > +	local config=.git-subtree/config
+> 
+> This is a nit, but `local` is not specified by POSIX. I know it is used 
+> elsewhere within git-subtree, but it is specifically discouraged.
+
+There are 7 existing uses of `local`.  I think I prefer to use it here
+too.  In practice I think there are no shells we might want to use
+that don't have local.  The alternative is to change all the variable
+names to be obviously globally unique, which is clumsy and also seems
+to me to put us at greater risk of bugs.
+
+> > +	if git rev-parse --verify -q "$rev:$config"; then
+> 
+> For subtree split, should we also test for this file in tree you are 
+> splitting: i.e., "$dir/$config"? The answer might be no.
+
+You're right that we should consider this question.  The answer is:
+no, we should not.  Briefly, whether to use the new or old algorithms
+depends on whether the downstream has adopted the new git-subtree, not
+on whether the upstream has added some optional config.
+
+https://codeberg.org/diziet/git-subtree/src/branch/main/DATA-MODEL.md#control-of-unmarked-subtree-merges-guessing-config
+
+> I think that subtree merge should only test the top-level project, as 
+> this patch does now.
+
+By "top-level" I think you mean what I've taken to calling the
+"downstream": the project where the subtree is in a subdir, and whose
+top-level has other stuff.  In which case I agree.
+
+> On 7/6/26 06:58, Ian Jackson wrote:
+> > Another, bigger, reason is that current git-subtree generates unmarked
+> > subtree merges (ie, without any git-subtree trailers)
+> 
+> Subtree merges can be performed without git-subtree, via the `-X 
+> subtree` merge strategy option. While the design of RIIR git-subtree is 
+> outside the scope of this patch series, this may be worth thinking about 
+> in your rewrite.
+
+This is what I'm calling an "unmarked subtree merge".  My rewrite is
+not going to support this user behaviour.  The problem is that it is
+not possible to reliably determine whetheer something is an unmarked
+subtree merge.
+
+It is possible to guess based on tree similarity, but that's a
+heuristic.  It's also possible to guess based on root commits.
+Both of these approaches can go wrong in some cases.  I prefer to
+write reliable software, which doesn't guess.
+
+I'll advise against this practice in the documentation, but I'm
+reasonably confident that if a user does this anyway the results won't
+be terrible.  The upstream input to an unmarked subtree merge in a
+downstream that has already used my rewrite, will be treated as if it
+were a downstream branch that predates the subtree addition.  The
+effect on split (in most cases) is a missing parent relationship,
+which is undesirable but not catastrophic.I've made a note to add a
+test case for this scenario.
+
+Combining manual -X subtree merges with git-subtree --squash merges
+could easily produce quite weird and wrong results in the tree (even
+before anyone tries split, or something).  I don't think I can even
+reliably detect this situation after the user has done it, and of
+course since that user is using plain git, I certainly can't prevent
+it.  This is another reason why manual use of -X subtree should be
+discouraged.
+
+Regards,
+Ian.
 
 -- 
-2.55.0.175.ge4962bd3d5.dirty
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
 
+Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
+that is a private address which bypasses my fierce spamfilter.
