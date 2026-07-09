@@ -1,102 +1,110 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2633E47B
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 09:39:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65EA3EEACA
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 09:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783589979; cv=none; b=Y729r34JfLl7MEEfAinJjsAEMQtUQS7CYfyfCeCln35phhlxdqHyo5pGTgqjUzkCp0bS73wQsDXc0lU1mczovsQQ5Xw/ApzwLE7Waue7tU20v2QQLHuTN2dvFQI/nhG9v0+I3C9kTqdxQ4PLJ8XVi70ZaD7+tLnGR94be/bhEcs=
+	t=1783590163; cv=none; b=l+SHMYHaz+8Cl5VfP0A+MqbZ9MLOgbWR9wO/yi8hvidW1EzuDrzzhbaee2K9Q+k2YhxLc4Lb4ZONS+OjA/ACgoIzPc3uYQkg2dBd1dQ9Uz7rmWWwjyLvREq/8mgqNe5chHgrtnv/DZ6xP+IbGrn2+AIPou17+KoJOBh0NP3X/lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783589979; c=relaxed/simple;
-	bh=ocXnutBQ/CVRYAaregEuHDzRGXwfaLnxeWZ8SY938h8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kUq01oLdD/hi0ljFXHTwoOcXrAAUTiGRReQy1pwoEpVNv7N1mguG+NoW6YG7b546p6+DXsYQ6LSXc+QFAadZXd2h+ZXgyKH1s1NLjCZZy1txmqY66YCzlfTwoebmO9ynCl+/UNqtXUwqrOllpiDR1gSpxp8Wvm3bJdQVm7uaPy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HgWv6aiN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LWmI0iBN; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783590163; c=relaxed/simple;
+	bh=P8A/ipAGggZMJJsaF2W0P9RvWlkOA53Easnt4UoU/Ck=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=RKRxv987vo88h6WiQlhPw+wLHT7SYN7YpVwphTY5gfx/gbdkzlysk+5RJWXyg2So5KmFxbPuK39WFHffWFjopmRnfivc07/zTzNBzzu5hwa5DxnlXmpcS8Zc0J1Ii59fTLVl4dEV7B1n9oLwsaWEvrwvDGDcfgqChvAnc3259F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBpFaOU5; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HgWv6aiN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LWmI0iBN"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D09C7A0078;
-	Thu,  9 Jul 2026 05:39:37 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 09 Jul 2026 05:39:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783589977; x=1783676377; bh=2IVsnPM/y3
-	RdebdeP9G1V8H1l/n5BOdy520VwMlO4XQ=; b=HgWv6aiNY2oJQIO0yn+XFlMZZV
-	rldljWvO7YTm5kTDVmy/GhZIcdBvV+piLFQDbu9X7e1+XhHQwpl0hPD/QgABTD2k
-	WmPT8ErqtbkINK4GU96CjVMX4pluI4s3kqp6xvqdnVYKWt9UFicJBEv05psrzdWp
-	0EUHu6W0sZ6/HwPlLKUW5Y54Hl4stLOfeHPnfj2VTxq8c+/ERVuo9J5xotHBJbd9
-	nzS3M3nMEeadQcPSG4Oi7x8PeRGpERG22xQtujp4+ljT5jxLJaTlMjOt8NeAcmdI
-	juaOz70ex9Jo8dUeyXAq5bF2/bwalmJLUt3gom0pyQpSx60djaXncQZXRZVw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783589977; x=1783676377; bh=2IVsnPM/y3RdebdeP9G1V8H1l/n5BOdy520
-	VwMlO4XQ=; b=LWmI0iBNrMvlTNdIOc5kC2nEogS7005MUzUFtfKwBDNao4xSBB6
-	lBIW5zVvQn8o+j+jJ670yr/Zsiniqidl7xf75tS66Nl4RJ/zhAIu49C0RlMUOa3+
-	4Yf1OdQGmaIkJhmiBmXwZmEPFf77qqK5IOPj6dHY3AlCeNFyKdfcf/V4rX/c5DMd
-	ddQb4pVFK4RPKKSNatUPiOVlO2eeWz+y62J2HZYnKStqjC4Y7sYCahRgkSlFf54o
-	/t3DmzGNdX87exb6egRnFpVKnXudBd2sDjRvn4mRBi0zNNsNTBdNbOJvbmAlxXl7
-	/S0T54oFut5I+1aU2nA/I2ZWMeEOqHtaBRA==
-X-ME-Sender: <xms:WWxPatmDpH_G6Jw7ci93jaS14pv00BP-5NYBbdjXpmAdrYTh0zFkMg>
-    <xme:WWxPagQRX5PcY88MNYB-sfBFs0neiZW-Y_MrlGAG1-w3gieXeOm22qYGR1-qKX6MD
-    CoUjAWbnhhgNIS6RezjAsH5Aqydx4elTcl6Bt307blW87EmGNbk>
-X-ME-Received: <xmr:WWxPahDf8YRC0Lyb9MHqbifx1nHCI6zlYJzJct5Dgjne6tXt9CBilZBmSWivSfCcQBzqIm969PUl1rbr0NVwznKaFU_NTUchtUQiWsR8sw>
-X-ME-Proxy-Cause: dmFkZTGOksP55TLb5CHg9URKxxuvY7lH+GhlwrLgHsXqB8dwyukKEnjEj+gcaOiTl1B2WH
-    LFnhZR9I91NnvKOP8+89jTgXKAcvDSBUqEDlIDSp25rBT0yeVMWpiYkMXPFnvC0UHmdVgG
-    fccZXeys19ofZnCc7dC9ooZ8YMaALHMiC0FzhZufoN5oDI62RrxpEyBZECSYtxA4Qr1Wbv
-    K/6RT2lfQU4VmBPeDrvlcSaLzIoi+3DO7qJ8q0dNeNlJslknbfJNre3ZuM/FNTFf9IR3RZ
-    avgibVN73JEVvgSwlb6QwLJxeO8GZ1inVGAoZk6TYqApqZms/6gQ4Z2t+pGbVNH3/8xKNI
-    p321wQbayHY8TbNTAxzPY7ZpFbWWZiZs4hqoL74HijbqS8VLPtjNdGmr1jkO/0GKCCFtpk
-    Hvyoq2pCVqfXiKqhOSYYKsXTNnzEeCHSa9woGH74RUVva8PYwX607ZmBo4mooIFsvfdBmy
-    T1sj3HIiokbb+95jX9WoWVFS0y5p+mHKPbNlanJqpOBcDTRzIprd6riaqlIAzLAQgq1nvK
-    C04IIhIQLHoW1RR9hKWAeu+pOwGIM3ZmsB+oj1Exxp7V3s/HiLu8AS7XoYPJngX8PqGjyE
-    AkEboxB4hqUu1WYNfpHTzIJ5/BGcR9B+k3v1Jc4Nd5Es5+PlYTv+gHervGMA
-X-ME-Proxy: <xmx:WWxPanTd7lSyLRJmWKk1ya_5mnA4xetQfOrp0AXDG-Yq8y-iipQxSw>
-    <xmx:WWxPavr9--2bhnqdDmRLJA63qXbWPvE2bdv3Mp6wFuOPCCnf1XzcFw>
-    <xmx:WWxPapxAg7Mg5BCppzdkGte4UmlF6FM_B3u8CGxeKhHoBLTekVR2UQ>
-    <xmx:WWxPakK0kaDBz_uOu8I4EGOh7LFmuo7Waq_0Dn8T_ETCe-4K647g4Q>
-    <xmx:WWxPakSoJnHr0DfI2IVxlnYQh7jAEOgt59KnKC-VSVad5d9XhfG-SNIw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 05:39:36 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f8571a00 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Jul 2026 09:39:35 +0000 (UTC)
-Date: Thu, 9 Jul 2026 11:39:30 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v3 00/11] receive-pack: use ODB transactions to stage
- object writes
-Message-ID: <ak9sUt-mwXyoTDLj@pks.im>
-References: <20260708041412.1157499-1-jltobler@gmail.com>
- <20260708235925.3992097-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBpFaOU5"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-51c05dcdf49so15252721cf.0
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 02:42:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783590161; x=1784194961; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ogt0pWUzM5HqEwJ55FDItv18XmUzhvKSibZedsyoQg4=;
+        b=OBpFaOU5gj4WoTGd4BPKymMRtWijpXa1Zasa6hI8UtzmVhjkGgxovJ1O3HY2cQH+AJ
+         CF3qd+Ft1VX/8f8xG9X0Afq0q4L6c8m+akJsYqzce6Tc1D0RR/BhZrZufZAfOYwY3pG4
+         HhfUvKu1QyQiHWxGtN6GkzAHrfoLYPTsSx0eK8IaT3CkMdOjMHeqs2P5qHApQlE60Af2
+         xDoOmCARLkFNajxfPjLhJ+i3JhkWU9XJ3TU4TZHs72o1FSSwwszY4/rwlwxW9omK2x45
+         qrTHbYDuIsIqcSkUUIpQM+oO8kyYuRJGkLpYvBQJUMal19yruhqVBG/wHWgjJwTKrq27
+         8fEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783590161; x=1784194961;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ogt0pWUzM5HqEwJ55FDItv18XmUzhvKSibZedsyoQg4=;
+        b=LKEyhZS/UE/5cadyJvtjgzNlCBUAe6SmEqJD/2QlXR4ehCxmv1QopakV1pYveasph9
+         k/cN+U8KIF7ckpzBa5GCrGTBgRROzSZ0qUY9mCrBhLMg6RGYHiysyWZTxdgefzxs4Uhl
+         aZ+Ka1ZyHp4l4qC0ubVLWC8LkhCG37O+KCjrknGS37z8qHEEtS3K+Xl09N89Z3sne15g
+         3QqWdinhYVcJ6VKXLyufslFFnNY2H0uv7v5lgBCrwiEkO1Y2cTHLlLXWkP3uU9Pmclyc
+         QvwNg2eHZqDxrZiI0efjSPqfpbTEoJRjYbhqUA9z+ofjp1PcBj/qPrJTldTJUIjW9au5
+         R7SA==
+X-Gm-Message-State: AOJu0YxEH2bCm/95sm0h07q8GPSA0aKi4HtEon8x59QTrN5m76tHxnM8
+	MJLzS5TLPnyrT1fsPzqa3j5+9ZzTJdnEGdL39CzciKTohuxoiiO09crQRvy8/g==
+X-Gm-Gg: AfdE7cmwfNGpFPUSeFnFuYxzteBQpcnJlVQpA8stioCDGSLjf1BhvgkIKJsp7gNNcAx
+	9RWZrKtt2G0kHeW2uOtXp1CIRNiq9prKj/4GLc6KqjxCSqb0iJg0dF7q0WxfD113w3yIwknCAHX
+	CVFFet+GYu+h5+P5uSzdCxVMXe4xgrfautacj1MlWNPBV7nkmCIs4mFZfMrZs2HppXLm9ZVL8xh
+	sPLM+UoylXcTVGYH4/W3nataJogWcNUXBUd5E3O/AdYIVMXR7lZmreAR0rclVQnjjyima50MoBs
+	MY7x06ZwiS0gULxg5rA2STuP90doMyCrrFqtkbVaISU2II9G/W9vRc3HH76t4jbz2zjxPpas2Jo
+	9XnY+UBuEyHahx5mV7EhGyzH+zUUhvyVVdiGCSWLi5cpe4NDwU7kvI4U3GAWlydyO+ZuQ8sqi85
+	Hr6aqgz0M45Ajt4WHVLQ28R3c=
+X-Received: by 2002:ac8:5751:0:b0:51c:7b12:5fd3 with SMTP id d75a77b69052e-51c8b4382c1mr67446201cf.79.1783590160778;
+        Thu, 09 Jul 2026 02:42:40 -0700 (PDT)
+Received: from [127.0.0.1] ([20.84.47.35])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41d37426sm155650041cf.16.2026.07.09.02.42.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2026 02:42:40 -0700 (PDT)
+Message-Id: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 09 Jul 2026 09:42:27 +0000
+Subject: [PATCH 00/11] coverity: avoid dereferencing NULL
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260708235925.3992097-1-jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Wed, Jul 08, 2026 at 06:59:14PM -0500, Justin Tobler wrote:
-> Changes since V2:
->   - Clarified commit log reasoning for embedding
->     `flush_loose_object_transaction()` logic in commit function.
->   - Started printed some error messages on transaction errors.
->   - Removed include statement.
->   - Fixed transaction leak on `odb_transaction_commit()` error.
+This is a continuation of the effort I started in the patch series that
+became js/coverity-fixes. This next batch adds guards to avoid dereferencing
+NULL pointers and accessing NULL file descriptors.
 
-Thanks, the changes all look good to me and I don't have anything else
-to add.
+Johannes Schindelin (11):
+  diffcore-break: guard against NULLed queue entries in merge loop
+  diff: handle NULL return from repo_get_commit_tree()
+  remote: guard `remote_tracking()` against NULL remote
+  reftable/stack: guard against NULL list_file in stack_destroy
+  mailsplit: move NULL check before first use of file handle
+  bisect: handle NULL commit in `bisect_successful()`
+  replay: die when --onto does not peel to a commit
+  revision: avoid dereferencing NULL in `add_parents_only()`
+  pack-bitmap: handle missing bitmap for base MIDX
+  bisect: ensure non-NULL `head` before using it
+  shallow: fix NULL dereference
 
-Patrick
+ builtin/bisect.c    |  9 ++++++++-
+ builtin/diff.c      | 10 +++++++---
+ builtin/mailsplit.c |  6 +++---
+ diffcore-break.c    |  2 ++
+ pack-bitmap.c       |  4 ++++
+ reftable/stack.c    |  3 ++-
+ remote.c            |  2 ++
+ replay.c            |  8 ++++++--
+ revision.c          |  9 +++++++--
+ shallow.c           |  2 +-
+ 10 files changed, 42 insertions(+), 13 deletions(-)
+
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2174%2Fdscho%2Fcoverity-fixes-null-safety-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2174/dscho/coverity-fixes-null-safety-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2174
+-- 
+gitgitgadget
