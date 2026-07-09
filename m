@@ -1,130 +1,149 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6E94DB564
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 18:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783620648; cv=pass; b=GAPx85lutHAxfd4Lf4GOlWIMgwTPuTKmuaMdL/5sBQ7Go0uuqbm8bgn2YnblhycrbcIWEta0i35aeYtIWwjb4FNIhRlxkAf1hadlBLPS43YK6/EcU6ES/LhzoGLAQIetyvUDKfeF7MAap/XPFEKUswRt8ygENC3Fd8rWTtlr3H0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783620648; c=relaxed/simple;
-	bh=w5+ZhT1IbVHImQiGevO4qiXsXfuOF4AhlqFcxUIvGvY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u9XCF/PLv2aHzhaCYNewlmS19Vu7geq57VYKE8b/T8FzWTlAZZHnYAFA/FQY497guf6Eo6/NFtIgosnEs8992RsibcVM8C2rcrFmQE9X8B3EUYH67OMWba6MFT1iYP/6pZkwpHqvw5bw5GJBvJk3wtYCfScuY2xTVI6d5T0tGD0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q8j651Ad; arc=pass smtp.client-ip=209.85.161.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0534449984
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 18:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783623136; cv=none; b=iK5KAD7gz9T3kYxJhwyY0S6r1ii4+gY89FJC8cpfmX0fQT81WvkJqYUQjuRFD+2TvU0Z2FFbZV7WZFnlSF5f5bxH3eac4U7Csyf3GcGbdS549A3o1yHnhlAzGgHHwa/Aiao5stiU31OBUbBZyKvLpC1UYFWImoxnn/fv0vjIoYQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783623136; c=relaxed/simple;
+	bh=EPA0cwcxMV17GAf+LmjDTAN8xT6tXERQhvzIPjiYTEU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KzwOOV+/S21hJ4CjaKQlqWSy+skGeCdSV3t8A0quDflHrgznlCgC3VlrjxlWTiaZqmXlvSjL5r0x+yoM8+bQkjDxHvbo1T+qaFI/kn7c3wtj3rfzNRlELtY7+n/Z2j5cVyYkn/gS3hqPyCAV5wNFxpbDUDGCGX85+ilCv0CTPiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xbm53Y+G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZkNyWLnP; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q8j651Ad"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6a17e36fa79so88948eaf.1
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 11:10:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783620646; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mc0NI7ds6I34sIF+z9zBfoIpZh0Q3Aw/igrc517hAJbN/TDpKtP94VT5G9Hgn3/JXU
-         eMfzMlCKdzPInBxH4FNQKkLfQ0g45OkKmpOaIg5MPGuJOeX8HuhB+H2VX12gmkrlUhC4
-         evNlBFDowj0Go7O0ivQgsrINXzM9cwXe3znIh7U5GJLCK8G4CBWm9se0/BdQMtxn/RFY
-         HIVuyQcV/cXaCpchUYXFWjtnWtM8+Ceq/bpAkvBHRnzbn/InFTfubb7hGSN0aeibunjG
-         3tXm0YEluUvDeputPc5rOCpIdi2m/xYcL3KdtngObPXHEjTD4nJe7o0A8NohFdWEjrD6
-         Em6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=avfq8ANmZXgxainKBC4Rl0Ii1Ovk9lMs1qs/5YHkb3w=;
-        fh=WyEJY81f/SZDvT0g21X8N6FF2dNeijB81cqNX2/QnsY=;
-        b=fx5379+5/cDiQIon4+TWWnK5RU8zJzxW4x9hg8yvHRsI5oQp8VfOnk82PyivLEsHLm
-         gqMVOHsX0AodeuUlz1baJ2LM+5R8y03mlZGMhL3KP+60Rc0kZjz5U/zAteN7+DRUDHoa
-         JW3Vb5xGWRLJlIlU5mcEmlbpPRg0Efe3u2g331VBoI6gxpIQ+GI99V4SSZ33lLN5xDSl
-         wte3MM8A0n2LERFY3kcSSifj3RiJGI/oDbMbKTOEPKtz+p35h5NctE2RatlRChcAZVbI
-         iWho9gqUoGGVThS7oOvbzxqJ/9a4+VMoO0Z4/IBabCdRsT7rla5uFyHmwga1ijg1RX68
-         wMvg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783620646; x=1784225446; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=avfq8ANmZXgxainKBC4Rl0Ii1Ovk9lMs1qs/5YHkb3w=;
-        b=q8j651AdqQQBwWJ8iTtLT/03L8pe0WVR98g/bLp6DPsyKkzfYo9/BTKXOhhv1Q77gZ
-         iMjXd8rVRxXloTRS0UWeOfphJKKGAlppWnuNyrOyJuFW61wy8EvYiNRx+Vm4xOjiCJ3g
-         XTLaAoD0Rdx+3Tr4M5dGTr6tk1a4oQXBU1XTip/MTTLsOcPQMjKecudKDDlmMrOXeZjQ
-         K9D5cU/r463uZNfOzDMzFVCk3fcmydq61T/SvnKFqfmSeTqXzppFG034K9r3kRcdSEWT
-         g6d2GKQn4hfuA5aTVxxzZp3iLUmtinpTk9ebFXYGIIyN3ZXsRi0RnHjOtOrjsmFrFnKn
-         zc5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783620646; x=1784225446;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=avfq8ANmZXgxainKBC4Rl0Ii1Ovk9lMs1qs/5YHkb3w=;
-        b=mrmt44isL5SUj3obZfisoZUW/XPxXgzcpeIXfAPDTSJkZR19S2tRIwzLcQ4UDY4xS/
-         kc4TRnp0T3Yh2d9fefMyVmkDMOofvvKec0Q3duzSTPCCdTJvtWRyCry3XM7GZ5lrjR0J
-         eFnKL3qhJQqkR+Wx6aPKS1hvylNl/WDScIwiesGYTFzejjT0y8J+YgOVg07cjyYMX+DF
-         VtoQ3Rlp4Lj8VUAxy+1ar79Nlphqs82LVHXFHm/lhzyLffhL/SHQzq2VJTDm9O3omQaU
-         CZd5sn9E0c3QFApP5MKKlBvSeATC6mQqoJMiRxyGqKQ3GtbVThgjmn/VztuExrZIMIom
-         3tBQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/GCCzQrGJ1oMumkZOSDySVQ1rMluBaR1K+4Glaa72q261o9LwoJ5ITF0WQ3xmPyj7w4aY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4RIxac6li9AStm0QHhW7/0qHacpNH2QWJtWAiXEpOLWUfk744
-	Dqkb12yn7tlds5b9LYNAxxfAbbIHT7BOPJGg2T/WGC7SFjIdsE2JZZ2RxGctYiwgF1Ah0Bcf3pG
-	G8WcOsVFnp3LpjyWFQ1w+2CRztmdL1VU=
-X-Gm-Gg: AfdE7clbXn+QaNmCEQrHzgKUOs4OyRDyJgL1jAFvoctSpryog17c8451r2tV1ZEtQwu
-	a3jE1Xg2/epZ+UQeO6V8oCfYHFQq/As2IXKJ6v44WkLTW1UPQamCf5mjoKHrqrvM+Hmhz+mbdkq
-	TCRgBjMMRrZUzXPn+CP6W6axOZRejr7fYwJvdjeqxHIedVcr1BAS89C91X3L57p0K9Po5Tur0WJ
-	pFB/dTVw1rA1oraFOWFrKpbwLTNDoFnhxjC6LSL24z2d2AgvNDj5aa3rO6Fl1lR1c2NUcVuknJ0
-	5MYIruZLA1L32VtZm1FAGrwPSkExCXbmvfXV44q7islp3lVMHLuJ8EkNLQUo0Y8ofLAa76OQQpe
-	alLv1Eaizipx/a08UJy2LkxNA9Q==
-X-Received: by 2002:a05:6820:3405:10b0:6a3:7470:9af7 with SMTP id
- 006d021491bc7-6a37470a02emr3029878eaf.6.1783620645847; Thu, 09 Jul 2026
- 11:10:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xbm53Y+G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZkNyWLnP"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id E9BFFEC01F9;
+	Thu,  9 Jul 2026 14:52:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 09 Jul 2026 14:52:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783623133; x=1783709533; bh=zXfFeDvuew
+	HbDYaw06xBhKMnxQA8pD3TXouyGrvDNNc=; b=Xbm53Y+GmxX4DDdL24HppDTsGB
+	gR0dwwmnVnTqFfGMs+DsGZRBOWOrdoo7n5bTBRQooj0Ne/CRHQS8dEzV/72k3kTL
+	YuQDSh+AFi3UWlFhTERT0jrbhhePSOxLRO9hMphGr4qHXfdyaOXBONOwoIpVQHzu
+	450aLj1Fm2IM8Qf0gkOX0k34x/p8UJCZA2fsDTSNkJVTdwGGykEBCYekbI3IEvu+
+	JSAD+uaGfRp1I1tqtn8tx2icj1L20ptbgaWWtS1tYu4ighhSjegCaJYdgs2/Tm1Q
+	qs2yOS6g3eaYP8xFB2f2zihqm2CbdsXeacZdPWR9ud608fWRsRMwi1hzOD9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783623133; x=1783709533; bh=zXfFeDvuewHbDYaw06xBhKMnxQA8pD3TXou
+	yGrvDNNc=; b=ZkNyWLnPQQzzIRCwGsaUGtNDcMYCg9epG/fV/EoNr0PCF2RnKsu
+	oqmEy9jOMx1wcsDXPjP3dF9siwTMvI7hUMA+LotDvBhSO/Oij0Be8OBnPKsdAstM
+	/uC3MMPNcQnZsbPl+qTDKr23cd8/fbvtsVD/wK99DYemIg4y6A3deaw1uY4EStUW
+	on5nTpMQIGmz+fNA4H7tmX3aj4F5uu+1Td8qoHuhR/yClCbtIwXr5ImFZmOpuygR
+	J5MjOx2Q1P8x//Emg2KjnBI0qBxqMV80FsAuuxNKLvJ3RfrneM+cyebLTsa//PCJ
+	7JwvtwQcrksPoL1h3M79NKLYTCVfxqIVgYQ==
+X-ME-Sender: <xms:3e1Pamh1MdgYOICj3SmjEXg_YvRMlsygsdhrLojmeSEBhlhJWJOAlQ>
+    <xme:3e1PaudkPJoRXr4EDQ6s08yqJp-pRWiX0ErDfM3O21CwLcljn85F8_wz4OWbOIYyg
+    HdGPS_Ek3MmbnT0F6X80uuoVjfUuy3neS2HVDLqkyNdufo0eXLTdA>
+X-ME-Received: <xmr:3e1PareI0Hnqin-GGydRXMyeM19R2b-25yUPhYdLM3b_de-kRi7d9bNY_VSreSQ2UE5MgTJIXugfkR5MOQD0qED1FxGNq9wmkfLm9wM>
+X-ME-Proxy-Cause: dmFkZTGZKFLumNq4xFyECS8lZLwaZX/En1jGpUYFfoLnJA48j6SqsRT968jmPYFEiRYMA2
+    I4JMdcxmi/kiFCe3xSm6a4705/qrlZafNBCmBOX16PxC+IF9H9OZJMXJPW7pv56fKfH+n+
+    5fGSkih91DC6EHv68FMqz5ATdQjYoO2aka6RMPEuv2E/vgN2MJnvPzo+xv4Es9Cfwau5AP
+    2EhDcB5ranV/YDAdtO+wRmFuoYTETLLFTcZo5UktRHm1QfMgViezwadKWRFAb7FocuPrd2
+    kqJUsO3MglWxH1fC8/cH4E1V6kBU2IYKQCmCgf1DjjpKwJQhnfKCzwTUqWCw1BW7ppXxcQ
+    NUdGJIZNKFge5VT2bzbgEp8PYGscDekS/f0msz59Ij4ienZfVLRvF9zZhDzymkVgZ9qzr1
+    qfhlcHSvfCKnpDt1F921JzZ8Y2Kl6B4G2Pk2k3xZWC9mzjFR/SQ/WdLUCUrxGnM46lkUQp
+    /oefRPjToFcMQqhbTNYlep3kYMFxq5m4E23zQCGJfG59F1qsTIQ1J+9iWIiGSEUDPJgQR8
+    dvXX0W+XNyu8khi2VLL4qZeyQQPu0IJai52UeGQDvq8wf+jKuHU1UP8nc/q0Vxg4w4DSvP
+    ySpdVaJxgHb/n0wXhHvCUCNFTnzc5idpN2rSR4DyP3QUmDAoVt+d+Is+JeRA
+X-ME-Proxy: <xmx:3e1Pao8jHdxJ3Zh5MmYgwq9EiTwujyB1ycL9TMLg4SQAnMapB7KEQA>
+    <xmx:3e1PankZkBo_V1llPCNO8pmN_K2RqfO7G9Zg6moaDHHBrI9vG-2tOQ>
+    <xmx:3e1Paq8PWzoHryrFbgaRRUNhlwkph_hBmYJoa_TQqIRVtnSf5SZckQ>
+    <xmx:3e1PalnxA042ArwTqNhA2kYzCrpWhBz7xhBf54rv48oUvQrUHcGDfA>
+    <xmx:3e1PamlSZ8SyaaZM7-R_vvGAmpPWucuwdpe6YS4eCTwrYzT11-cl28rM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Jul 2026 14:52:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/7] refs/packed: de-globalize handling of
+ "core.packedRefsTimeout"
+In-Reply-To: <20260709-pks-refs-wo-the-repository-v1-1-1ad6f27529c9@pks.im>
+	(Patrick Steinhardt's message of "Thu, 09 Jul 2026 10:29:12 +0200")
+References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
+	<20260709-pks-refs-wo-the-repository-v1-1-1ad6f27529c9@pks.im>
+Date: Thu, 09 Jul 2026 11:52:11 -0700
+Message-ID: <xmqq7bn4ov1g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
- <efd34c17157b3183cdc851c8b17e7967b6c85506.1783479584.git.gitgitgadget@gmail.com>
- <xmqqcxwxtfkp.fsf@gitster.g>
-In-Reply-To: <xmqqcxwxtfkp.fsf@gitster.g>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Thu, 9 Jul 2026 11:10:33 -0700
-X-Gm-Features: AUfX_mxC2rTjuQ50FUMsgqMQlc1NLqrUiD3_OvqEChaCnjvi8v7o1Ky-dHN1-s4
-Message-ID: <CAC2QwmKuHUP6_287T9SOLdjLdb=b4EqV4qJ_NnYCkGP0-d6qHA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] t/lib-httpd: make http-429 first-request check atomic
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Jul 8, 2026 at 1:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > -# Check if this is the first call (no state file exists)
-> > -if test -f "$state_file"
-> > +# Apache can run this CGI for concurrent requests, so the script decid=
-es
-> > +# whether this is the first call with a single atomic "mkdir": it succ=
-eeds for
-> > +# exactly one of any racing requests and fails for the rest. "permanen=
-t"
-> > +# always rate-limits and records no state.
-> > +if test "$retry_after" !=3D permanent && ! mkdir "$state" 2>/dev/null
->
-> I think the last sentence in the above comment was meant to explain
-> why the new code checks the value of "$retry_after", but it is not
-> clear if it is needed for correctness (in other words, the original
-> was wrong to do "test -f && touch" but also was wrong to do so even
-> when "$retry_after" is set to "permanent), or if it is a mere
-> "optimization opportunity" you are taking advantage of.  In either
-> case, it would be nice to see it explained in the proposed commit
-> log message.
->
+Patrick Steinhardt <ps@pks.im> writes:
 
-It is needed for correctness, and I agree it is not very clear from the log
-message / comment. I will spell out the reasoning for the change more
-clearly in both.
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> index 499cb55dfa..5c49c06493 100644
+> --- a/refs/packed-backend.c
+> +++ b/refs/packed-backend.c
+> @@ -162,6 +162,13 @@ struct packed_ref_store {
+>  	 * `packed_ref_store`) must not be freed.
+>  	 */
+>  	struct tempfile *tempfile;
+> +
+> +	/*
+> +	 * Timeout when taking the "packed-refs.lock" file. configurable via
+> +	 * "core.packedRefsTimeout".
+> +	 */
+> +	bool timeout_configured;
+> +	int timeout_value;
+>  };
+>  
+>  /*
+> @@ -1233,12 +1240,10 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
+>  	struct packed_ref_store *refs =
+>  		packed_downcast(ref_store, REF_STORE_WRITE | REF_STORE_MAIN,
+>  				"packed_refs_lock");
+> -	static int timeout_configured = 0;
+> -	static int timeout_value = 1000;
+>  
+> -	if (!timeout_configured) {
+> -		repo_config_get_int(the_repository, "core.packedrefstimeout", &timeout_value);
+> -		timeout_configured = 1;
 
-Thanks for taking a look at this!
+In the original code, when core.packedrefstimeout is not configured,
+our call to repo_config_get_int() does not touch timeout_value.  As
+a result, we get the static 1000 and flip the "configured" flag to
+prevent this _value from further getting updated.
+
+> +	if (!refs->timeout_configured) {
+> +		repo_config_get_int(ref_store->repo, "core.packedrefstimeout", &refs->timeout_value);
+> +		refs->timeout_configured = true;
+
+But what happens in the new code when core.packedrefstimeout is not
+configured?  It is up to whoever initialised refs->timeout_value.
+
+If I am not mistaken, packed_ref_store_init() does xcalloc(), lets
+base_ref_store_init() initialise some members, initialises a few
+members itself (such as .store_flags and .path), and leaves other
+members, including .timeout_configured and .timeout_value,
+NUL-filled.  .timeout_configured starting as false is perfectly
+fine, but shouldn't we initialise .timeout_value to 1000 as before?
+
+Thanks.
+
+> @@ -1249,7 +1254,7 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
+>  	if (hold_lock_file_for_update_timeout(
+>  			    &refs->lock,
+>  			    refs->path,
+> -			    flags, timeout_value) < 0) {
+> +			    flags, refs->timeout_value) < 0) {
+>  		unable_to_lock_message(refs->path, errno, err);
+>  		return -1;
+>  	}
