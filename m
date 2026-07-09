@@ -1,69 +1,69 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946013F2108
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 09:42:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12903FBB69
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 09:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783590174; cv=none; b=DqQnxOhwhOf5nrntBz+M0BkCdEC7QZzxCShQ2boVxeSqqrrcY1iMtnXD5uXsYaqVa3fnGPZewl+b8g4rD99l3qQUKLf/84mm2xHwwS3w46NA1jGDRkURC1sY9yoAl+4wtkVqXllxifKN8cB3SasOgJ+3cesqajtXQWcJknxJRYU=
+	t=1783590175; cv=none; b=D/E3+77Ct49OEP344VPemIwb1EXI2WBDKphrzoZ6QMBqCZd1VqsX4xxXARYnk27pSa1tfI6FimV7OGduGNeT/n+c/PQTk2GSSJ5S6EjNRCWa+ybfD5iImVW10WZTM2GUP9E4KEIeo07/m/bQK0mqYUd1Z/mcg1rjetpqhmVcabU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783590174; c=relaxed/simple;
-	bh=WAxShR0w8gKQfjJ91ZwViTAI2DoYiX/ro1ouNW0ecmE=;
+	s=arc-20240116; t=1783590175; c=relaxed/simple;
+	bh=N+wscwtNjzPeNf2KN4DyWZKYBTkgtAN68z3GP4090iY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Odi+itHhCgrRgI68jK4uI3rTRcJywrdk4FlVeHon2n6sQKu/dn+xKbKdRoRlQnJNNDsXSoels86QgxSpNQIteoRb4sKguNeOQU74gH28SPxYjrDEh6BMj0pPrcv786mMjq3JPrrq0OkHBLoZFI6UVd+6Zor7gGad/nVr6hjEHiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JbDxxtjI; arc=none smtp.client-ip=209.85.222.171
+	 MIME-Version:To:Cc; b=PhlqegK+L4MNimTMQi/g0/gNQ7Iap4OCfW4QwUHbgUwRX+HVc9lmeNH9n0M37HxDD+0vuhxc3wRFCG2dFim10+ekUSGyNWnbcGSKWZ9PqQNWV6H8Xokf/HeW3MC1rKywBGcMU/wc1ATuqIEmXL22Zd6kh3VUh90V8P4iZpkpjPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WnNtbwaJ; arc=none smtp.client-ip=209.85.219.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JbDxxtjI"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-92e855da580so129469285a.1
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 02:42:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WnNtbwaJ"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8edda5d56a5so15122696d6.3
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 02:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783590171; x=1784194971; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783590173; x=1784194973; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ogkcqj0nUCKjt4z7HnkC+YFq1ZmeUss5+VCkLH7JXvM=;
-        b=JbDxxtjIWeAg5E2xaEbViqd2KLZ2qLF04m/8j2ijbyv+GPAipCJPbTez4JzNBGF7sf
-         N/1Xc98BS2LvJpfXb1/ALI7Pn5/SD4/ZuWL9JEWbsPQGyZ3O8/hYZZ93j3vIZTJ7RYcV
-         zCl8tbyrnwuohirNhNonYwkQHOVo2m32K3K5E85tNBHCnWQ7IyAMk+268wkbF2M4K09c
-         FKYjrUcZZdoxtrFNBi7yHg2w3dgy78Ln3hOoL6Fx4Tpuxa8AMceLhEnb2KTQgG03BZ21
-         WkaJFcYMJfdIRF5tWPGBq1BhkBk4iA2pmf7C+uAharhWSNIZPzB/ZMiBrhg5oP0gc369
-         ibZg==
+        bh=bGgD2GV2OjZiTVIn7M79yAEK4kBNMn3417ew6ks9gNM=;
+        b=WnNtbwaJUuUNMhNrG8mljSq9UoyrodTlpj6isGa/3rr8oX02c7y9Tl20+EFmOBd6Ge
+         9mLnPzek3ZAJVouotmo5D1Huu+7Ya3jYEUoe54kt9M52cFUMiP0FmWvEyjNzCpcVlZtn
+         K0EFmLA88X4tS+SJWVbDiETbE7JhhD5EFsBZzndnxA5j7NCCJfc9lyslphOE1dIv3H9o
+         lVEXbFOYpRt4zQB097BUnZ5xPpa4tzmwpIjt2JgDoEtewf3s6CwJJsbaR5cvgcEaXBEw
+         L+6OqvFT27VsT4+qg7i8ydJg7x8c1uABDTVwzvpIh500kRzQcxgHgroMSCWDnP8zdDsy
+         isXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783590171; x=1784194971;
+        d=1e100.net; s=20251104; t=1783590173; x=1784194973;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ogkcqj0nUCKjt4z7HnkC+YFq1ZmeUss5+VCkLH7JXvM=;
-        b=pburObIWa78c3TsyEmV01clQho8Aagz/9F1BOCNjTFHOUVhohvSH7OKwjz1Jgc/upw
-         woCrZnvFqYL/3Xg4TvTITrFsoNQfHCy+rke7E8wpKu7pwneA65TwXtcOmf5jCpSMY/jz
-         /48nhriqTRTSJFQxK4y46Z3rTQlp9JJ2+DV4E83HJbmjg28opKjxb2I3rpZw53BEZn1S
-         OnD7wHq3f2982vOQvj3zwSOvpgSvucfyXZzx0fFnfvIHc05cFR4/jqxMeoQCDdFrc6Hc
-         c3WALQAPuioOzyHNOzAAP9JL1aqSDyRR/oNsm2NRNKceZg2cMZlhbpK+nbcuuRL3XpW3
-         EpEA==
-X-Gm-Message-State: AOJu0Yz5+GWuQZcOoY7WOa9V5JgkgheGEMCzKOJB3Lyd/vzbGKX/TZHM
-	Jptu1eJFgMzNq/Penz0ad2Y/riAJJ6G4UoCJZXrWgMOKJVo1qEv7TMR9VWio0ECj
-X-Gm-Gg: AfdE7cmLMw9AXmQFtuqFRCDiy2AxTBAPWCqOOwhsptMUZrnDp4lOWK6eD5Z/hYaXjgo
-	nW2IUHGa4hKtNDkGK2JwCuliO1c2/0dtF81QnL5JLpN+CpqF+cQ4dkwYyhpLPmRj/U7sbJ6EILj
-	EG9YYKPjJZpdsI9fOPzfoXCkSr3kGuVGU8KTge4fojNxkMgaQAyQhqjl7frT/ZqpqLc7a5htaFy
-	jZH1fy786wDIga09ocVSqU1Vb1YlcSvYMH1eVtrIc1e/wvbyQu0daeBXCj2K+sDvcA02dzRM8cv
-	Qjii4mu47Stquoj4eMlNwPL3p7J1oS6UWrOC5JBXgwBA8uIPSuBy2OZLGSdvW8ZaOHGnIYrywuI
-	9gEdMYjn10FlstCyWTQqC3EX61a6pdtRJNA0rCnasMR/1LmI68IDBk6M8Ihq5LvIwLIWV6qw4Wv
-	gEOXzJDOfJJUQj
-X-Received: by 2002:a05:620a:404a:b0:92e:c117:9ea4 with SMTP id af79cd13be357-92ecf8fd18fmr640761885a.82.1783590171545;
-        Thu, 09 Jul 2026 02:42:51 -0700 (PDT)
+        bh=bGgD2GV2OjZiTVIn7M79yAEK4kBNMn3417ew6ks9gNM=;
+        b=LFIbxmRhXjr+ISWDXjhyrwuLRjkK0u40esmXRZS2NqVCqbyHH38kFPKZqfRauGQo7+
+         SYC4OJEUQdpC02vt4rICzli3T4eGZ8I4WIeQZ9QjAHtNpCMfcXKXU1mOIYmnD6KOnYIw
+         pQX14yS0wgXEa1gv0s7EGakOpSyxToc0rWCw5DXqeA4arF7sZLxhn5wGR8R0q78MBjo5
+         cGjUCKXdxjlKfmNjeHan+5oXJwJEGmq2QT2kSpUcuYjq/zyXcunTh4cwPZl4cMP4cWvN
+         AZH7QzEmFsCyOiSqbzS9aQ4393NzbcwPWIqfJepeYPxpoRjJSF8bY/npXQhcLccifLEO
+         8c+Q==
+X-Gm-Message-State: AOJu0YxCib26GVcszDqfOnud1NMn5CDP6285LleZNOVDg4zrTAOZmeMr
+	fPi/ObP03Gf/ObQrQZYzosHxCutb5NX+SifGpL3urzq6uBGVMja209cSzCSkGPxr
+X-Gm-Gg: AfdE7ckQFlznwxkocxVdYCVjY1qxzHfOmj0udpjzwo8tkQT/lUaWbiygqAfBLpEa4+b
+	diKzkoNNgtWBAdzPoYzSZ3Xm3ZqxGKO3jd9fN45Rz3DzWWgm9Td24LqO36fdQQZ0WmhT9jIgezA
+	Q2piPq8MOKIfZxa6lvn0tg4KrC8DZ41QEhu5yooxWdmr+4wdbW9boHdssaCkl1jyP9pByxqAJ7+
+	/v7NeDc3uH0VLdKoC9ptJbia/iD1ZN0UR2uAHmzUCCiy62Q3JohPvkVSJPSilmTAf6d52OHfKvR
+	fY/QlsQRCwVfOdsrJ8A+cAzHcUJrQvO7hp64hitXR5+SVPIfOoTCGOCj2qotDlAlr7i1R02dJuw
+	1wkrN9S4oNMy4wLR1vyYv8v5Vf0yTMn4qZ1G15GKZ28HDNFIe1XKBHfXl6GlnJkdUizA+W7DNfb
+	+8Pq2RHamT1E8x1bQG+nl/Y00=
+X-Received: by 2002:a05:6214:2521:b0:8e9:f5de:d611 with SMTP id 6a1803df08f44-8fec37187a9mr67691116d6.48.1783590172767;
+        Thu, 09 Jul 2026 02:42:52 -0700 (PDT)
 Received: from [127.0.0.1] ([20.84.47.35])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90ce5126sm1617174985a.41.2026.07.09.02.42.50
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd87cad3csm13389676d6.48.2026.07.09.02.42.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 02:42:50 -0700 (PDT)
-Message-Id: <0b27860478a284719755b8ac2386862c1fc3d0e7.1783590159.git.gitgitgadget@gmail.com>
+        Thu, 09 Jul 2026 02:42:52 -0700 (PDT)
+Message-Id: <428a3a006bbcb165a96495bbc2c5fc04e5b15db4.1783590159.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
 References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 09:42:36 +0000
-Subject: [PATCH 09/11] pack-bitmap: handle missing bitmap for base MIDX
+Date: Thu, 09 Jul 2026 09:42:37 +0000
+Subject: [PATCH 10/11] bisect: ensure non-NULL `head` before using it
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,45 +79,48 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When `prepare_midx_bitmap_git()` is called to load the bitmap for a
-chained MIDX's base layer, if the base MIDX does not have an associated
-bitmap file (e.g., it was not generated, or was deleted by gc), the
-return value is NULL. It is then stored in `bitmap_git->base` and
-immediately dereferenced on the next line.
+When `refs_resolve_ref_unsafe()` is called to resolve HEAD, and returns
+NULL (e.g., HEAD does not exist as a proper ref), the code falls back to
+`repo_get_oid("HEAD")` to try to resolve the OID directly. If that
+succeeds, execution continues with `head` still set to NULL.
 
-This can happen in practice with incremental MIDX chains: the base MIDX
-may have been written without `--write-bitmap-index`, or the bitmap may
-have been pruned while the incremental layer's bitmap still references
-it.
+Later, that variable is passed to `repo_get_oid()` and `starts_with()`,
+both of which would dereference the NULL pointer.
 
-Check the return value and go to the cleanup label (which unmaps the
-current bitmap and returns -1) so the caller falls back to non-bitmap
-object enumeration, matching the handling of other bitmap loading
-failures in the same function.
+The scenario "`refs_resolve_ref_unsafe()` returns NULL but
+`repo_get_oid()` succeeds" can happen when HEAD is a detached bare OID
+that the ref backend cannot resolve symbolically (a potential edge case
+with the reftable backend) but the OID itself is valid. In this case,
+the bisect-start file does not yet exist (this is a fresh "git bisect
+start"), so the else branch is taken with the NULL `head`.
+
+Simply assign "HEAD" to `head` as a fallback to address this.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- pack-bitmap.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/bisect.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e8a82945cc..ca7998c10b 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -523,6 +523,10 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index 6ff600c856..a69771c6d3 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -811,9 +811,11 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+ 	 */
+ 	head = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+ 				       "HEAD", 0, &head_oid, &flags);
+-	if (!head)
++	if (!head) {
+ 		if (repo_get_oid(the_repository, "HEAD", &head_oid))
+ 			return error(_("bad HEAD - I need a HEAD"));
++		head = "HEAD";
++	}
  
- 	if (midx->base_midx) {
- 		bitmap_git->base = prepare_midx_bitmap_git(midx->base_midx);
-+		if (!bitmap_git->base) {
-+			warning(_("could not open bitmap for base MIDX"));
-+			goto cleanup;
-+		}
- 		bitmap_git->base_nr = bitmap_git->base->base_nr + 1;
- 	} else {
- 		bitmap_git->base_nr = 0;
+ 	/*
+ 	 * Check if we are bisecting
 -- 
 gitgitgadget
 
