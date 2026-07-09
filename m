@@ -1,104 +1,235 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1713E378839
-	for <git@vger.kernel.org>; Thu,  9 Jul 2026 20:40:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C99133711D
+	for <git@vger.kernel.org>; Thu,  9 Jul 2026 21:08:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783629625; cv=none; b=j7b54+G/DtNQeo7uW1s0aMUFtCdxQKJ40Oh57T1nqpQiV3Z54UaChMYGKlEAb5KPS/ouomS2cdurcTcGKT1lJT+id991JTUWej0ZI0OxUDTKgZVjy/KlOnu+7D6GPipBh9Gy1sPGlMm7kcwnLAU6GMFbsH2pXIIIozodl2GXt44=
+	t=1783631317; cv=none; b=HZKH3q/t7CJWgV47udRGOhFh9z9cflJF8gcbr1y4GMqnuv/TN5P6fgZn1a6CTCpSXX8CIhTm4wz9IpNGqHL9IlzfmF+xO6swHOYtvP5d+F/UZkGBXyZDlL0jcRTcVgY1H3ScMxWFyxfmVxQD6HtmyO0/1MyAldEqk3V3OiUoTu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783629625; c=relaxed/simple;
-	bh=jTh2quWP4Xkf/6cyUOSQZg6d9sbRwD/XpWhHJOVIOVs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LrNajXip0HiM/WgfxAXkQ2PVHbU+UKgvntD019aPjODHcxN1FKTq9AGZMhZmPmYiXUOQEJV4SuH/AqwLd471R/7zKHfedMjIok+jtgf0Y+7YI720Q1wR2NFcR+m33DKL4cYgnj3xcM4pzoNgrlnY+P/GA6n6xHX7t6hqUNKieMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RxLo7H4W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=la1nq6Eb; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783631317; c=relaxed/simple;
+	bh=SDHHzK5u1nQ3pEFYALlKdqhoO4pNlSbbxKDaTx1D65A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ALk3aqEPjsyXyEur4eSV2BfwQctdgMLaDM+ae/g562rwzYVBKp9n6iEVbNYGGpjv7PauI8cp2GyaTO0SgASiwULe9V0AKvI/vWjqqs3/Glymq0zBSX22J5wKaUPPmoCdVhpBayfGKZ9zhlOgAlZREpdHn+urMd2v6BpmtlETbnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o4VXQWfA; arc=none smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RxLo7H4W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="la1nq6Eb"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4F3B0EC0040;
-	Thu,  9 Jul 2026 16:40:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 09 Jul 2026 16:40:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783629623; x=1783716023; bh=UvfSlC15qa
-	cnb9Dxqaw6Eb5NUiYTCudXsUpg2HRD//M=; b=RxLo7H4WZDwrlaW3dNS7bTIOgG
-	BYUdQw+BiaDD6QvVI2AbJp+w4v/+MEzcNtOfipkkl3DqAM5XMeM5kDgHPSJs6SuF
-	4vAOg0+BPzr6DEXh86v1TWPMcPkZRr3506BW5afHzXE73dArtov+V9FTUczJItjh
-	ttjMU76d1GESGbQqDSDxmga/FnDQvkXL4xMX3FlIFIVbUu2AeYCof2rEktqGoh9T
-	qZpzcAqx0cewFJ/vOPjvhNsA9eQQBpwQEGpn1RmZO2NhO5uE0RtgZHdy6o4B/kLV
-	lL+vPAJYTODHejJKx7Bu7k00ZElIqDiarHlKGa2QCWaofaOG8gud8u1hHTKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783629623; x=1783716023; bh=UvfSlC15qacnb9Dxqaw6Eb5NUiYTCudXsUp
-	g2HRD//M=; b=la1nq6EbF7IO7DVBNd5ts1NnVTmfcOIPO1gyeC/IxvtfhhZfLU4
-	6jyRseny3VaoCQ3NoXheNG8/LVZ3ZyvUk6pj1zzvZw5Vcuef8P+3YLHxCZW9AWAq
-	jgxVFOK7YkUIfsAcPz4QsqVu0XvRVupASMhVHYfssgBOpmLb0jlhJrQltsaCir0f
-	G9r1nEYGX1i7DJaQFbmof6UAePxx2pPJNvw23C/68dE3OKZ0zpcoH+DrWaWTyZI2
-	W3/w2nNqeBasaN+qWe1wZp8Hmuw096AfWaiH2ZUmy1GC8B4wnQpfox0AXxYCFzMP
-	bLsj0UI7qt+bVCv3EfshTfsqXgo3aA8+qsw==
-X-ME-Sender: <xms:NgdQat3nu0UnKX0XngmgwfHVhDQgTl-mHB09ny6opgIJsqOxpfuJqQ>
-    <xme:NgdQaky1vXfKLQFHWA4yJNT2nPTTLyosVpOVn-71d19fDQd4oR4xb84dYSuzkKF6-
-    GhgxxqcT99Qtr3RGkXnVX2CE0hhHeZJ0zAwp7-f0cC6HaGDimg4Tg>
-X-ME-Received: <xmr:NgdQasFNbb6t-pBsFjlx7UCRNUbqQdY_9kv0kQq8SgIXdcAgBxqpMUBuElxkM-brbPFINpUBhx0QFZ9B1oRbnbiZYxVHK0PJVgrIiSg>
-X-ME-Proxy-Cause: dmFkZTGp+yQ25DJ6PlgEbD5thZ8Mqzg47tNHYvWp+qm0hfhFdFOEQnLZkiNEXsRuR0R4Jx
-    qJU5Zr2oFcnsOVvSdFA2XzReIT8cbNiLQjErqppcNZO4YaXMRt2mOQyniP7P6WyqA/bzXb
-    QqaobRLxWkAweJC7i3zRBee6yZBjwZYy5coPq67+LITJyXXX59zT+WG+MhjBmhTDEPa6O9
-    MZI7AT4pgygcALSKmcA/tfUtIbtswDuGjhytywx/pt0fsvdpQjU330/8PPoKeP1IodnuT6
-    tHr2sg6JeK88dkohXxNaluDOU9GPbQVSa+gRgHk9CLhM7Bm0b5/g6y4IqvRLaU76BlHZFX
-    KA+oMt0xzAoFJr2bIPwFmH197GUjXZfEWjb1tT5SrANC+t6lzXik0DtnwkDbO67NXoTBR+
-    MiNA4IRJHNJEd+65vQ2IN4Rhf+gadJYeIXjiZxUn66vgKDs8xrDsA3Q0gDYr5fbLxN1G22
-    TJS1w4nGp5Fc0fMs1kP8j9IRxFnqXk/EFc1xUSu8VAFNoeCsZ7wW3ArTUTYT47k3tTo9u/
-    yOq4vfW5D4vRKvVwvRIyS3MhCFFKmYdhfaRK/NAqDEb7FmM3aQfDOTvy0OoW2gCRaQuoVJ
-    UPc1g68TEUdlC6GQAXjRIVr9kx/aeL4Awqcsko/ZthkFwwS0GOiDah6PDLyQ
-X-ME-Proxy: <xmx:NgdQavbgnqapCkmhOozeQNyleg4GQod-nSpKeqYyzPRQ9cnQ68rzqA>
-    <xmx:NgdQamAoZdqTWDZGrulh2aKah-2EVNEIqBerroxzwS8itj29tFho-A>
-    <xmx:NgdQavlrQeaJ_hHcupJe4qKOSv1ysu0awFNqcpJvPQM4_uk2Nd6BBg>
-    <xmx:NgdQavxs9dsFjCfXUehyTRcAICbk0OPikNqCMsShke-PuCT4AJzovA>
-    <xmx:NwdQaubUIItn36zmKEuixFgQzJ2V8BVf94joCzbZ3wLNiU9Ivp_rFGY_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 16:40:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,  Chen
- Linxuan <me@black-desk.cn>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v7 0/3] includeIf: add "worktree" condition for matching
- working tree path
-In-Reply-To: <20260709-includeif-worktree-v7-0-e87e705e8df6@black-desk.cn>
-	(Chen Linxuan via's message of "Thu, 09 Jul 2026 10:41:40 +0800")
-References: <20260709-includeif-worktree-v7-0-e87e705e8df6@black-desk.cn>
-Date: Thu, 09 Jul 2026 13:40:21 -0700
-Message-ID: <xmqqzezzkibu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o4VXQWfA"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6a3776acb16so200523eaf.2
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 14:08:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783631315; x=1784236115; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=k4l8++5O7TWv9Dqkaljiod3XR6GOsUUchjrDrGNC1hQ=;
+        b=o4VXQWfALxLq3S/mMcOM1HcSJlCe0JUScQlwzScqxRl2FlvMjaWuBBPyFloMa3Sese
+         uXD0Uu3zMgo6tNhMYYhZWRIp8R8Vnq7TFuzoz3njdWB+2OiqTVjdW2WXncTMBxQ3d3H8
+         YHml6NyL8Yq3+WZVhEW2LI0uCEi0/GIv7O5jRpVNndD2SlF/20140gay5Qu23aPiTspP
+         zUMQJybNK4wkOfhJ1okg6zfMgFcsmQIJIUko9KoNxbx+KSmmuAHELuNzFkuJkDI66Tap
+         gr97sCd5Lfkc2XJWo6Rq9OarDni/Y255Y/wJYj7hBnKP5Qs9m2y5MJItxTFNJyQjq0k3
+         xucg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783631315; x=1784236115;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=k4l8++5O7TWv9Dqkaljiod3XR6GOsUUchjrDrGNC1hQ=;
+        b=fcMPloGiSaEC+UF0vjLyMBLVnfNqgeTidIJI60muquysqOPLgzHOUUREY2Jd/EpuK1
+         xJofapeF7aj9tXr++o5tLmvkLoiUWAh7dHr4Q6JFi3J0w9OBJPY3+Jm6aHhii2LAzRY1
+         znUiz2wscdQfca9zL6EceFlFpYpIUiYExfunK3SkY7ee2MR8C0d3WRyyhlLtUnuKWgLo
+         kk/7VdtzSloQMcDOQIiH86AJCr9YED+M1ZE3QKtAncz99uU4QuixBbuQ0ir+93g1iGqM
+         rsLfXSnyBaqojoS0KnRczOWQiDojYpES9yQWtZCz/QhlivmgP08i1I2KMwQWZFWc9eJi
+         Rqiw==
+X-Gm-Message-State: AOJu0Yynp155uvhahc0bEoUpHtrHOD9GBHkGeMH9uDXEmViSPMUaMwcP
+	1sG8WywEaKcKWcvb6vwd5HqKbtgwhP8ohQzdJW/aIhVdP5C5h3bUZqywQuiXpQ==
+X-Gm-Gg: AfdE7ckTE9d4SpPIBhUFXL0xGEyGRSYbhqw9YV3ZtkV5BkEkLQADdal7eeVGNE3PI2k
+	SwOUo+7HKfs6zQFXdNqubaCUAJ1SYdnk6Kignqz++zlUB/G4UWDZPaZ+KjmCdhd6+Habo5ad1tH
+	UeUhmcIVQFh/GtQXFAEwrZeSbb0qiw1XxvwZm6dEBjPHyOvtfkVzE83OQ5Dv/wzMzWPyOSlgkml
+	9hEVb+4J0RbjP4LmCl5T4v7BY4rEZYBkbyLOBn6AZENfp6Q3cviKWuuDBuJT28nB7E0yYejvLh7
+	msbCvM8V62zmvSZfLCZ2hUVJV4BtmHL5bonlPEyS/oXBHiE1Xx9+SqXQTy5lPnAztjSyz3jHuv/
+	i+JyagYHWBLSACk77XAx6HyVy+3q7iYtCLxSYLpFpSoOBgI6G9lahyas78m1jWoMxmfdrxKCSgc
+	5SQfwtnA==
+X-Received: by 2002:a05:6820:1345:b0:6a1:5ca0:d529 with SMTP id 006d021491bc7-6a36d89a7f0mr7518763eaf.25.1783631315200;
+        Thu, 09 Jul 2026 14:08:35 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6a37b58f98csm2543691eaf.13.2026.07.09.14.08.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2026 14:08:34 -0700 (PDT)
+Date: Thu, 9 Jul 2026 16:08:31 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/7] pack-bitmap: iterate object sources when opening
+ bitmaps
+Message-ID: <alADU8qRZcPB0Zcv@denethor>
+References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
+ <20260709-pks-odb-for-each-object-filter-v1-4-82fe014b12b3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260709-pks-odb-for-each-object-filter-v1-4-82fe014b12b3@pks.im>
 
-Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-writes:
+On 26/07/09 10:35AM, Patrick Steinhardt wrote:
+> When opening a bitmap for a repository we perform two steps:
+> 
+>   - We first look for a multi-pack index bitmap in any of the object
+>     sources connected to the repository.
+> 
+>   - We then look for a packfile bitmap in any of the packfiles of any of
+>     the object sources.
 
-> The `includeIf` mechanism already supports matching on the `.git`
-> directory path (`gitdir`) and the currently checked out branch
-> (`onbranch`).  But in multi-worktree setups the `.git` directory of a
-> linked worktree points into the main repository's `.git/worktrees/`
-> area, which makes `gitdir` patterns cumbersome when one wants to
-> include config based on the working tree's checkout path instead.
+So IIUC, we generally stop searching for a bitmap once we find one.
 
-Thanks.
+> Both of these steps thus iterate through object sources themselves, one
+> via `odb_prepare_alternates()` and one via `repo_for_each_pack()`. This
+> layout makes it hard to introduce a way to open the bitmap of one
+> specific object source, which is functionality that we'll require in a
+> subsequent commit.
+> 
+> Reverse the loop so that we instead loop through all sources in the
+> outer loop, and then for each source we try to load its bitmap via
+> either the multi-pack index or via a packfile.
 
-This seems to break t1305 when merged to 'seen', even though all of
-them pass standalone.  I did not have time to figure out what
-interactions with which other topic are causing the breakages.
+Conceptually, I think this is a lot easier to follow too which is nice.
+
+> Note that this changes the precedence of bitmaps in one specific edge
+> case: when an earlier object source only has a packfile bitmap, but a
+> later source has a multi-pack index bitmap, we now pick the packfile
+> bitmap of the earlier source. Previously, a multi-pack index bitmap from
+> any source would have taken precedence over all packfile bitmaps. Given
+> that object sources are ordered such that the local source comes first,
+> this arguably is an improvement, as we now prefer local bitmaps over
+> bitmaps in alternates. Furthermore, we already warn about repositories
+> that have multiple bitmaps, so this setup is broken and thus arguably
+> not worth worrying about too much.
+
+I agree that the change in bitmap precedent is probably not a big deal.
+Having multiple bitmaps in a repository is already something we warn
+against so I think this should be fine.
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  pack-bitmap.c | 65 ++++++++++++++++++++++++++---------------------------------
+>  1 file changed, 29 insertions(+), 36 deletions(-)
+> 
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index eda38a5433..0e3e18a557 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -680,60 +680,53 @@ static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git,
+>  	return 0;
+>  }
+>  
+> -static int open_pack_bitmap(struct repository *r,
+> -			    struct bitmap_index *bitmap_git)
+> +static int open_bitmap_for_source(struct odb_source_packed *source,
+> +				  struct bitmap_index *bitmap_git)
+>  {
+> -	struct packed_git *p;
+> +	struct multi_pack_index *midx = get_multi_pack_index(source);
+> +	struct packfile_list_entry *e;
+>  	int ret = -1;
+>  
+> -	repo_for_each_pack(r, p) {
+> -		if (open_pack_bitmap_1(bitmap_git, p) == 0) {
+> -			ret = 0;
+> -			/*
+> -			 * The only reason to keep looking is to report
+> -			 * duplicates.
+> -			 */
+> -			if (!trace2_is_enabled())
+> -				break;
+> -		}
+> +	if (midx && !open_midx_bitmap_1(bitmap_git, midx))
+> +		ret = 0;
+
+Ok, open_midx_bitmap_1() returns 0 if it find a MIDX and -1 otherwise.
+Probably just a matter of preference, but I think writing out like below
+is a little bit easier on the eyes:
+
+  if (midx)
+    ret = open_midx_bitmap_1(bitmap_git, midx);
+
+it might just be that I find the return values a bit confusing though.
+Maybe we could instead use `found` like a bit later in this patch.
+
+> +
+> +	for (e = packfile_store_get_packs(source); e; e = e->next) {
+> +		/*
+> +		 * When tracing is enabled we want to keep looking to report
+> +		 * duplicates even if we have already found a bitmap.
+> +		 */
+> +		if (!ret && !trace2_is_enabled())
+> +			break;
+
+So if have already found a bitmap from the MIDX and tracing is not
+enabled, we don't continue searching for bitmaps in this source. 
+
+> +
+> +		if (open_pack_bitmap_1(bitmap_git, e->pack))
+> +			continue;
+> +		ret = 0;
+>  	}
+>  
+>  	return ret;
+>  }
+>  
+> -static int open_midx_bitmap(struct repository *r,
+> -			    struct bitmap_index *bitmap_git)
+> +static int open_bitmap(struct repository *r,
+> +		       struct bitmap_index *bitmap_git)
+>  {
+>  	struct odb_source *source;
+> -	int ret = -1;
+> +	int found = 0;
+>  
+>  	assert(!bitmap_git->map);
+>  
+>  	odb_prepare_alternates(r->objects);
+>  	for (source = r->objects->sources; source; source = source->next) {
+>  		struct odb_source_files *files = odb_source_files_downcast(source);
+> -		struct multi_pack_index *midx = get_multi_pack_index(files->packed);
+> -		if (midx && !open_midx_bitmap_1(bitmap_git, midx))
+> -			ret = 0;
+> -	}
+> -	return ret;
+> -}
+> -
+> -static int open_bitmap(struct repository *r,
+> -		       struct bitmap_index *bitmap_git)
+> -{
+> -	int found;
+>  
+> -	assert(!bitmap_git->map);
+> +		found |= !open_bitmap_for_source(files->packed, bitmap_git);
+>  
+> -	found = !open_midx_bitmap(r, bitmap_git);
+> -
+> -	/*
+> -	 * these will all be skipped if we opened a midx bitmap; but run it
+> -	 * anyway if tracing is enabled to report the duplicates
+> -	 */
+> -	if (!found || trace2_is_enabled())
+> -		found |= !open_pack_bitmap(r, bitmap_git);
+> +		/*
+> +		 * The only reason to keep looking after having found a bitmap
+> +		 * is to report duplicates.
+> +		 */
+> +		if (found && !trace2_is_enabled())
+> +			break;
+> +	}
+
+Ok, we only advance to the next source if tracing is enabled to print
+warnings for multiple bitmaps. Makes sense.
+
+Overall I quite like the direction of this patch.
+
+-Justin
