@@ -1,145 +1,116 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C6C200110
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13E423BCF7
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783695824; cv=pass; b=oJN7QC64j/KHZOCj5OmoQWyCecbsMHl2Pb5S+6GS7qgRUP3+cSYeTIU7tgSwVtm4v4JmapyZupXSfKF7HA7JXY+uceO1RB7B6ZkS4AqV5MsLYWsx6G606RcSOrOm/tlKNFFl+O8PBu0HUSdi3fqvaBdFjB8m/7B6vbqTqt3fK8M=
+	t=1783696104; cv=pass; b=QW478ZcrElQ7hOktxSnTyIO0Or60QSRJvA9BRVd3XgJOUKIiCR9QMLG+gCGpwxXR0Z127ZsaRrNCShoyyqyH65/pbD+nSebGDxqIQuvbNA9Yj7LxelUIlb/qFFs0MWqvyHz4jRct3qG6W+hBkJHRG36lE9YBLrtap44mPwZ0AyY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783695824; c=relaxed/simple;
-	bh=FeqPehOqH2BiSwBp5CkwM6zwpS49AyWcJgvn3R1a5BI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=POEvrIXNsqYG2paKxge5oexFOgahMkB0Jp4p87+hQvNyEqzjHLd/Gi6RMSM/ivX6zcFlSIpna9sm+nvNne/IMe2/4yiURPMW28Y39kl1F0DN/MoE4d4ryVACg8l+HthH/pnIESIHBTIHstuGBFV4wBek5SEln2Lm1TLAaYgQVYw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=IT/r2n6M; arc=pass smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	s=arc-20240116; t=1783696104; c=relaxed/simple;
+	bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Nz5QSC34+xi2wIoZ6s9Y8ALdEbJZyLfA9YO7XgHBEN+OitD/iOzA/um3ipJxCercUPN9LEc0RYe7tnp1dCjQo+G93gEDuIUAj/YB+stl+83PBsDsjhZokgH3mZf59TQHFRtMGSFbKiQdj3kXVStZs+LOGCLuJddw7xCP//s+SGI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sTgcAS1W; arc=pass smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="IT/r2n6M"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6611669cd16so1488002d50.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 08:03:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783695822; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sTgcAS1W"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-80a123ef90aso17226917b3.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 08:08:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783696102; cv=none;
         d=google.com; s=arc-20260327;
-        b=XZsBVluWMqsUXrDZ1+gteq3jYr9znw6QtJwbbQCph9UVdJ3SR3iB3ckpkXk1MaueZA
-         JKj1gIAGy+r1J0gLD03kFnPUpXxgd4ZtmnWzCn76WLiGhO5wn9Ml/uFvD15DGtWu+ekl
-         Dhv8u4pFcwQiutsGpR361j+jT2MC9vtdDcolmTbjPDkaLuXI9LSPNkt8onbIrSe2Jz6D
-         TQS83DdJgh6dnMunhEgVhS0ll/nPEOHRRjM943/8WIExjoutVSSnO9mVnkQ6db2bYQ/C
-         5WyVL4FMCMSoUe1yCjHmHHHkhJ+nuHIpsOyGOYpqgq+1UEYtoxJY4IJx0AkgJD8Rfo2U
-         ZPYQ==
+        b=MQyQf3pxvSgP+DFFjV/Y3t5cT5v6SF2TyT/JOz9z0kVkPTUOTUlsfCTpADazqM214x
+         m1rd5EZeE5wT2Sd8egQDZFah8mYzrtkJtbT8xHQ3BA7JvCRaeD2tixRZpcRIZFtJBuXj
+         lagXEmzDWlk5g5w0A1K/6kLqJmnCJqPn4JZhLb4aHqdfj82OGdCOOmejIEHnB81SBR3P
+         L5EWuXbd3Rx7ebqBnHJkjWEDTLoDbeLV38OBgBjR0HLrmEZzaPb9HgXXS3g1k5+cGkXf
+         h2UocAwybWhnU84zurtzJKzMd8tnEDf61U5EDn1/NPwJYjQ87BTSEX8rDavYfo9yjQTM
+         68UQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=b0VfQ+W+X/QzQ/GTnNSNAMAVPJ8VNCEol7NM/YA9i/o=;
-        fh=LQxUhKgAQB7PmSVkPtRVUXZQnA0nOfcU49Wj/8QHTtg=;
-        b=DEFeJaX7Z0/VS9ztC1ylQV2Qlzc7UaRuSND7BBzBsyb5WlRneRekSLX8lN46sCrS80
-         VFSrD0h9VrgHYM8Jlv0aXKucVUrZSAW1Ja0wak/bcChamln+LD7kyS8/v1jdLtIv0+pk
-         sOBTPiWEaLAauETPdcj8cEKprR0APDaPnoxk/lqirj5kj5atxSkMS/TqfP/59ot8w/mn
-         8SIu+GOVg6gX99aIvmG4/M/a1UXaz59yCPZy+Md4mJfPondAYj01qpfqd9DVmDbfSf6O
-         aREM+VEeSmQ62+ez5LS+CqtUit7ezxYcZ7NcLvF9MVquOlYZHIJnZDo8q07mXvRJNrcf
-         vsqA==;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=mTR/WXEiJgGI15Ck/rhMabsucLA99m+yi4YwCx3RS+IqICSMKhKzOfkUJKRUC4rdQO
+         76KQihqPbYl+wi4/hKxge1qmJjXgS9kzE2UJhI7VjdvTVNfea+jJ2zqlA9lbvWxt2VCN
+         21FhaHsIsy6Li4bN5cvmVvrWpH8pBPzd2h9HAHJ0FeSBFg6FTufVIlc+UmljdblOfRKJ
+         PDfS+35ex8osePmPBBsrGQo7Jew7leBmAcsrXPHnSVliN7NXrPxt2b1XyGzQAN2OkWFV
+         tahjluC+txgeFH6pMZ+TCsaZEacX4RNkEWWJMpcXhfoIHJf8Z6MGSi6zNoKzwlCkDtqc
+         fpRw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1783695822; x=1784300622; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=b0VfQ+W+X/QzQ/GTnNSNAMAVPJ8VNCEol7NM/YA9i/o=;
-        b=IT/r2n6MTgAgRgfAgT4mEx0/q/UAm5jCuMqNNQPsD9+tnwO2xTHYsIj681KcZx5Bsz
-         8TTeQ+3VfGmY2bcwCRxp+ShhqDEaYIXK2ju37vAuS7/OSASBSkb2RhW5I4lBcFYFKcIm
-         N4d5t0SX94pyyC23WhsVE5tzMwwnADTvTaweo=
+        d=gmail.com; s=20251104; t=1783696102; x=1784300902; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
+        b=sTgcAS1WyGIQj/0nlt8u2nQIaA2YIfyH3uMY5p0v5MNoCEznJNK1CbPYvaFPxRW2TL
+         iP9CHCgTwnuRCW/Wzq8I56zIyABxRuaJFRHWbu8NuIZlVVGdd2BNgPT8DhUymIvjoAf1
+         dDC6oO7yc5n6WoUFUZBa6pfpo/GE8GxltpVDXs5dNwpObYpL12BkcRn/F1q36v5PtLMJ
+         64YNf0VwAEV/+mXy80S0UIYC6ZmmQ6Eu1ZxHxGiYJF2I2doSjHZ9Q2eIb56OhR3OrFAY
+         R7Qf7Od4rj5tNTI4p8w8l9shszHckBbRUl8MExqKIM8afRnRJUoFUtsK7g6Rmlm5c36U
+         vUoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783695822; x=1784300622;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=b0VfQ+W+X/QzQ/GTnNSNAMAVPJ8VNCEol7NM/YA9i/o=;
-        b=ls3aRH1YNZgFSOnHl072OVMusKsxxHPzoRHnsXJy/Sf6lz47osSjBvORg4z+D/nMlf
-         qiM3TC9HHzt1noYhso6HyDKv1YTCYHhPP8gAeRBowVTYKuExBffNayyxLxZQCDfC2KhL
-         N+Rwz3q8zqdcNBuqbtXVDv+PgFxNK1Kl3MbFixQylEvGheBfw6ehJLT2OYiEMDdevyHm
-         0wZI4jP64S0GvSRRU3XYKYoe+foC7VPwQW6M6KfF3YHcWahX6ipeRdi/GEO/naMmNPYo
-         gZLPlwQCtys9px2FIqC2drIRyFuWgyOIiVpaUt+LZLPwD1bVc0sQ4zMZYhkWrRS469Ce
-         x0Ug==
-X-Forwarded-Encrypted: i=1; AHgh+RoJV7VbMT0Q9pk3txxmsJxvGVIdU3Awf2siUIkWX8aROl/I0vLVDlavznqjf2SPF6boN6Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCKzO23/V/LBHZ+zK7irrkaIqmUdMTgrpAJKah25QPslHM31Z/
-	mxbuWbhdihXyW9ve/Gn9wmF+2HZ5DSqBfpfFrCuZs+0u2mRM2nUIHDYYwcmSabTSfscZH9e/26T
-	d4TwNtkq0ib8+eM4oJpgnboCw+eTdoxXujx0oVoT2ng==
-X-Gm-Gg: AfdE7cnJ+qesfhT/bLQYVis8NbjkwDjAGQT7nKfxbwi+sh0uqFGb6JZKJUxjWZtM+hK
-	CmGEB8dosaHghMgLsSrphjrPZiXl7mm3Pfq7+5WeixaedvrQKikJYqItrNqklDWiguNGlAr3mUy
-	wBUMgAwjM9u7lM+JrjfjmWslTAF0G5qvn6tC4wJJQBBC4ox3vajrngAKrdSIY56pgrw6jjPyzPb
-	RLbERAWDixXwqMydynuwB7J/1vEGJNIRJo50SvGpJR0+RUEwScQbKFTWhfFFCEzy5YMv3E3kw==
-X-Received: by 2002:a05:690e:138b:b0:667:b7f0:e70e with SMTP id
- 956f58d0204a3-667b7f0fc57mr5087642d50.1.1783695820726; Fri, 10 Jul 2026
- 08:03:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783696102; x=1784300902;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
+        b=Te9IAdIlvxFrGr4yjofI/eM71ORQd68D0GdgoaH3GUoXuA3poeFRbhgZfq/fuwEfvd
+         S2j5Z9J6DyIkeGnl9lwWLDEirUoIXXFBvmXDdWl/DOdoIxPEIO2zGhCgmRButNlMUQYG
+         eDNTRSt9AQXit/NyEuNfCu9WyRP6jaA1LfIBSU2h+cfHOWlRP0RBxS6k1yhIIWuFAxpm
+         BjPyay+mLBZmFWOUJNfokM1wRPDAfIH/DUMJQBnol0MUwYlwFmmqorYja3PY6nNttEmg
+         rE6XPgXr+b7vaMxpOgcmt/flmVpqC2IoxsDSyR4OmR0uoFhNzO7frjjCXd0Kw734JHi7
+         HhIg==
+X-Gm-Message-State: AOJu0YzBhDIbEn2qp1npywSi7qJbyYY/in6kC4SASq0ylcRUsOngtpqW
+	347RqI/M4o1or7f2JFtSmDXIYuYcpNh154iqIlYrkbm7m4PynWaE8oBigouN8bpI+A2yBRgxYvt
+	eU7f0YGTHBG98unygirotTWVdAjV0loUp8M+h
+X-Gm-Gg: AfdE7cnyHQKckqL7InRk9s8wu19pQMr7oNg8DS3oXHKoizpHzHBHCRBi56qMCjAcNw2
+	xKKGnNxx6UVaSh1X9w43QSFX/32SmvHSkcRyS4xKLPlGzmNaUQ2AtS/BzytjUBaxUfh2g2BJi83
+	xuWKBlUP/RneSFvlp76L3lMXhQUk+Og0mb2W/ay4RIk/0FVSghjOd7GcRIjoITy7hMqu9ttNDvx
+	vb9hmwJ5qdLmws9kKIY4LMNedQwxEDbi+VN9aDHRfOlUoY/RROp44mhh1UTPkmfWtys+g==
+X-Received: by 2002:a05:690c:4a0a:b0:81e:5d2e:7a2a with SMTP id
+ 00721157ae682-81e7c006014mr28675487b3.17.1783696101894; Fri, 10 Jul 2026
+ 08:08:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2166.v2.git.1783598912.gitgitgadget@gmail.com>
- <pull.2166.v3.git.1783679767.gitgitgadget@gmail.com> <4fdcec84406431d56b7a7e593fd8e843c3b1ad52.1783679767.git.gitgitgadget@gmail.com>
- <alECc90WZ9RPqMaA@pks.im>
-In-Reply-To: <alECc90WZ9RPqMaA@pks.im>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 10 Jul 2026 17:03:28 +0200
-X-Gm-Features: AVVi8Cd4G_xhhCpLEqxAf_Ah_k6iwVX6qI2x0ggrhYmw7Nm4Vrx0fUv8xmARlzU
-Message-ID: <CAL71e4POhVpQ9FvLmjUc4ex_=T-DuCd7cas1D4uzqzg3RyDw+Q@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] reftable: fix quadratic behavior in the presence
- of tombstones
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+From: Omri Sarig <omri.sarig13@gmail.com>
+Date: Fri, 10 Jul 2026 17:08:11 +0200
+X-Gm-Features: AUfX_mzKSiRGZqgQZmBfzjzWdHrv97kbIvAlzvj1yaPQmccbYHAcMTZQ1IQKUss
+Message-ID: <CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJBf79RCNzgg@mail.gmail.com>
+Subject: Understanding why Git defaults to show author date and not committer date
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 10 Jul 2026 at 16:32, Patrick Steinhardt <ps@pks.im> wrote:
->
-> > This also requires adding deletion checks to the log iteration paths,
-> > since suppress_deletions applied to both ref and log iterators.
->
-> Nit: s/applied/applies/
+Hello,
 
-Language and using correct tense is always the tricky part --
-will fix if a reroll is needed for other reasons.
+I've had several discussions with fellow developers, and I found out that many
+of them are somewhat confused about the date shown when they look at the Git
+log.
+In our main workflow, we are mostly using a rebase strategy to get commits into
+a main branch, so I can understand their confusion when looking at the default
+log view - dates are moving back and forth, and it's not possible to know when a
+commit was introduced to the main branch.
+I understand this is one of many workflows, but in my personal experience, I
+find that in most workflows, the committer date is the one that I find relevant.
 
-> > +     int suppress_deletions;
->
-> A comment would've been nice, but I don't think this warrants a reroll.
+Within our teams, we usually end up creating aliases/updating configuration to
+make the Git log show the committer date by default, and find that it makes the
+log/commit viewing easier to understand for non-super-users.
 
-Agreed, the field name felt self-documenting to me, but I will
-add a short comment if there is a reroll.
-Something like this?
-"boolean: filters out tombstoned/deleted refs early if true"
+I understand the distinction between the 2 formats, and I can see the utility of
+both. I'm curious about the decision to show the author date and not the
+committer date as default one in Git commands.
+Are there some workflows where the author date is more relevant, or is that
+mostly a legacy decision?
 
-> > -     new_merged->suppress_deletions = 1;
-> > +     new_merged->suppress_deletions = st->opts.suppress_deletions;
->
-> Yup, this looks good to me.
+I'd be interested in hearing about workflows where the author date is the more
+useful one, as I use the committer date almost always.
 
-Thanks for the quick review.
+I've tried to look for information regarding this decision (both in the
+documentation and through the mailing list), but couldn't find any discussion.
 
-Another thing I have been thinking about: should we consider
-suppress_deletions a temporary stopgap, with the goal of
-eventually removing it?
-
-I took a look at libgit2's refdb_reftable.c to see what
-it would look like. It doesn't seem _too_ complicated
-(but I have been wrong about complexity before):
-
-reftable_stack_read_ref() and reftable_stack_read_log()
-already check is_deletion() after the seek+next,
-so the call sites that use those would work correctly
-without suppress_deletions too. (I think?)
-
-The other call sites that iterate would need the same
-type of filter as we have in this patch series.
-
-So the total cost for libgit2 to stop relying on
-suppress_deletions would be fairly small and it would maybe
-also got a nice performance boost for the edge cases,
-though I have not attempted to verify that.
-
-That said, it does not affect this patch - regardless
-of the future we will need this flag now.
-
-Thanks,
-Kristofer
+Looking forward to hearing your thoughts,
+/ Omri Sarig
