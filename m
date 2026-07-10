@@ -1,70 +1,70 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F017E43B4BE
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:37:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B841443C05B
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:37:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783701455; cv=none; b=jB4uOtk12N9lFUcFP6NqmaCnBfyV1Qt2lAVlctUUpWKPwlfaIeBshvhYFv72TV/lueUcl1P5r1WidpExwQ0qLPfT4GSLYAYfylSCW9ujlMO3nmAnBjLfaYWNFIGhbzSXAyu599EoF0lDUbFnuesiVkp/109T0KrzTAlKBS0hUsc=
+	t=1783701456; cv=none; b=AIPbSEvbLToWlaMD3wCgVYoOr7qGnuhimh4s7WluvU/ge+4SthuX9Cbjqq1R4cWUdzvmR4jeqH8YPt1fsj5v5CjmM6r1C95p4E9CtkjsleTg84evylXsgTlF7qgyZDagm43YCfnijucK/E8RDfspgYBojwNKtuBdE0Messjkh9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783701455; c=relaxed/simple;
-	bh=uZBzM+8gjGVgw/A3Say04SA085ysXNDTTdfP5SSUJts=;
+	s=arc-20240116; t=1783701456; c=relaxed/simple;
+	bh=C9fdSbgFRVUJoIOFRAHyz/EUUnf1uGaIOGRTg/Ldre8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qH1usLdbmbooEfZIlus5/A05N8uPuzd3IEWJswc9qm/8BotzrK1xRclIlC8Q9N5zjbwdJ/RLNmvrj/X+mRXLeEnICCu+v3wwMUKvq7L0FHwv3YWxyE9aud/rx/MIQ0OSZgkz56CqxWS7aeq+I8fPifHIcvJPcKWshdwmA0rYDDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fcOxlqTm; arc=none smtp.client-ip=209.85.210.49
+	 MIME-Version; b=CzyS3+RP34q77XBs+TsaKcFvmCqWxSzSo0l9pI0vX4YoAaaiHYEU1PS5MSlmeDLveMF+twzas3g5LcUeYH66uLmH4QQQ3mwMVfRVV7PKD+0SN8iXox2BzeNKNiiPwjFTdksI63v95ZDkKMvxwuOzOEhBQvTCmSCih7BW8o6m4aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PwtOnl+G; arc=none smtp.client-ip=209.85.210.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fcOxlqTm"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7e9f1f24cbcso1022776a34.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:37:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PwtOnl+G"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7e6b5737bb2so945950a34.1
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783701453; x=1784306253; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783701454; x=1784306254; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=g++5dVzCjxxggTyxhY66LGpErAqFtz5yR90wDHmzQzg=;
-        b=fcOxlqTm8/lzWoXmuYBQABpvjYD0EsrcfYrF1QeXXgR7onGsBkclqS2qCGlOHkdCiT
-         pa74TMcG7CUrVdSmpzHQlvLtqEO308b/3rLqV7/jJVE5G4aIR7BWCBvWS98jafK0o+hr
-         xtOytqoxmw0NiVSZTBWiQxVDU6xIfNHUEcIcdXbb+BiJ0yGnS8yV0A1NRgLR6J1UcPTd
-         SZjlLexX5iFjnh+kU66YhEwAbuZ1JmC748fTWVDrrXnmCyUgomY5NHnc8kCp4uCUttGr
-         vCkZnaErJQ2XCVSL+tNPSmexeFwaTgj9WWAVPca2aUOAGCrm0EVpHhi8gukt0gbOMKqX
-         ioIw==
+        bh=6FaxE8iCBm9tqcH9S1Gp5vbrfceqS6JS/Okl8fz/mlU=;
+        b=PwtOnl+GIOqCpvuvsYgoc9hRF45fz+bah8GfSH1Esqt2V/MIUinCv6jdC1OCq/eA/N
+         DqeUdp6veoep5kpfJi7/AMqRGRxtz6yOjAbME6hKXtToxL/qgS02JxiSaOGi9LOHenCd
+         KS+5Fzb3BVJniEz25m8JibB54BdkrlV3cyAr/qru2r22EL0cx4EXXMmlpxI9bkZHXUY5
+         JkOspGUkzIpOiyElreBZxm9r8VG6tZ9Ag8SiPazGnFR4MYfqGdpCEaJFnq1o7Rxes6kq
+         opQhzE9hL93CuyzJtKWlKTmF7223F4KPo80YqbU2WKA3iluIGP8c+KcFg5CIaRMAblab
+         q3dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783701453; x=1784306253;
+        d=1e100.net; s=20251104; t=1783701454; x=1784306254;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=g++5dVzCjxxggTyxhY66LGpErAqFtz5yR90wDHmzQzg=;
-        b=rA2iP9t7Ap3/UNKlaiBthELSrFuLKhYheFksjFhw4XT1xRf4Ze8LDofRropqpQcXRX
-         bsdu3zvk2qV2Q4uGYJ/+P//m98S1nDCXkL1VFhSZdOtmmHFbb7/hePsHLsWqytoeV8uO
-         47YWE8hN/098+e7oxrmjJIUeNIPO7Zf+yPHOGY128ULU6SmjvN3CnSTThe5POss1iTGY
-         8R+zferDHBiSicyoXickFJJXDTAgD4jyITGtjS9lMrOP0gFLR6zDZ1GLD87c2/4ci7iY
-         PB+w6g8Y3ue3Be0oFfiJu15t2Yg3NB+UVyVuvfYZ9e54Kt3aAE9KQ1Sx4RU5bnbc9z5k
-         aLbQ==
-X-Gm-Message-State: AOJu0Yx7sI5007kEXppwn6tRU953RTmsF600rW28++6icKB/iq6XMLsB
-	hAwK0+4HlHY/8DBnW4bkPho+6QZN3MTmMej/B7Jk8V5gl9WKafL0+1luGdR85g==
-X-Gm-Gg: AfdE7cmShkHzkYRTK8B7YMpLrJgWhRNvpbhSpT4lBmZ83VQz8iYwHGe/bRwL4LmYh2t
-	9/xovM4PmsqXG51ifxwe/sbQDMOhkp/buoDl5pTIr8B2mmTrcY3CgVNK9GqNWqO+bjdFvFUU4t8
-	tYYI3cjDkBjRABJt8K+BiyPYTODq+bVJzteYsaSu0ytbnxULkxuPN+WsjIl7Xk1o4XzL3dZaDWX
-	nbU0U3OBpLXD+vQSILkhNyrGfL8qGmAa9L+jIWbP3iBGoCq7vJ+ibBPzFOVwl2MPr2CUz9dbL08
-	rK6Qa/6gSDASdnocDrYHIEJlCdTNzfKl9gWKvlDUMP0XwH4GJQ1Vmv7AUHvL7dHSMtvis4gxlgt
-	imuPZ0DgYN4OLt5ZUXQYVBKtudUxfN9PPUiy+VDSr4EH72vdoqNb3Ijir4D7hwI2mf3zs9iBFpt
-	2DI2DM8bc8tFKlEb9prvVB8N+GsjQANLU=
-X-Received: by 2002:a05:6830:6aaa:b0:7e6:d003:929b with SMTP id 46e09a7af769-7ebf2c5636amr2197385a34.1.1783701452976;
-        Fri, 10 Jul 2026 09:37:32 -0700 (PDT)
+        bh=6FaxE8iCBm9tqcH9S1Gp5vbrfceqS6JS/Okl8fz/mlU=;
+        b=MmdWpn3FJdBs6qs17nl49Gkbvfo+lv2TxdyYrLgax0bTB3CoVxMOloFTtXL+sTNEEg
+         mKKto1/rAerdgqfE1jpfYi1eDVsPq33BDRebxizbZUpUraw8iid986azKGuM7C1UzZLq
+         hyO/hznfmJWdJVQMXomYGD1+IOdIFzK4ad3uzhZjteSnsVHk/6IsY+nJ3HNee7wP9MAv
+         T29flvc/p/xSWOt/xFgSjQimMT9M2R5fgUQ/4JCGp2hIsX0GwfldeZ08vQk+NnCPHWau
+         aEL0Ju0SIrucvcYbGTFDDoX+m5ySzbgqgntfFkMyivOLZ4Fo8tQuFaZ/enzPO4w+qef8
+         4KHQ==
+X-Gm-Message-State: AOJu0YwxSOEmMzI8fAsJDV+hgIvZ3gc3jyzWLVFZ7Ct+0Zpai8lrwfVR
+	ejm/IP34JKuR8bzwUOYIibOQLbKCm3R5oHzHOaKJR83PmCpT98GdGTwZe0Cmmg==
+X-Gm-Gg: AfdE7clNvExmLmBraYvQWWfs7AwYFlWWS7AmMlUwk2x5zoY9DNIvxfiB3N74OwhAaYh
+	7DC/3QSB7dGkQvicCZd4CwDiuzk0LRxtwAp4XWOnf9cXgJFmPpFAyZm1iqNN/irtA6pQ6sCyPG/
+	8o5alLJJdXF8wHszZJclnt+ODKxjy+uqcRVV7oGm1VTmy3+lahPsojNLhHCJ41nGNlOsaQbe6q2
+	RcHr3AeYmsrFcOT+okrLxxCEu7DHoO7rzDtDtGxad8SMoW/kJNK8OVBOQSBh2qJ/gzxmYdQEy7+
+	CobjR9/gL4jLZkTny3wliq4NIVl5oyQxm4jlYazvu4xB/I8oqlBWyJl46jGJ+Gw5N2S7JLo3Gm3
+	KWk1Z3xeCs+PgWUFvK0WwJE6rpNWsLhmmwj/aVh8R1led9SqpbTuY3MAbbJpOUYIiBAF8/um0TT
+	E0ddYiSbwn4FJ4LrncnjzX
+X-Received: by 2002:a05:6830:4987:b0:7e6:ed97:ce52 with SMTP id 46e09a7af769-7ebd02a1c31mr8609381a34.20.1783701453724;
+        Fri, 10 Jul 2026 09:37:33 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcaf742e1sm6882147a34.8.2026.07.10.09.37.32
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcaf742e1sm6882147a34.8.2026.07.10.09.37.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 09:37:32 -0700 (PDT)
+        Fri, 10 Jul 2026 09:37:33 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	gitster@pobox.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 07/11] odb/transaction: propagate commit errors
-Date: Fri, 10 Jul 2026 11:37:18 -0500
-Message-ID: <20260710163722.2962278-8-jltobler@gmail.com>
+Subject: [PATCH v4 08/11] odb/transaction: add transaction env interface
+Date: Fri, 10 Jul 2026 11:37:19 -0500
+Message-ID: <20260710163722.2962278-9-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.122.gf85a7e6620
 In-Reply-To: <20260710163722.2962278-1-jltobler@gmail.com>
 References: <20260708235925.3992097-1-jltobler@gmail.com>
@@ -77,74 +77,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When `odb_transaction_commit()` is invoked, the return value of the
-backend commit callback is silently discarded. A backend has no way
-to signal that committing failed, such as when the "files" backend
-cannot migrate its temporary object directory into the permanent
-ODB.
+The ODB transaction backend is responsible for creating/managing its own
+staging area for writing objects. Other child processes spawned by Git
+may need access to uncommitted objects or write new objects in the
+staging area though.
 
-In a subsequent commit, git-receive-pack(1) starts using ODB transaction
-to stage objects and consequently cares about such failures so it can
-handle the error appropriately. Change the commit callback signature to
-return an int error code and have `odb_transaction_commit()` forward it
-accordingly.
+Introduce `odb_transaction_env()` which is expected to provide the set
+of environment variables needed by a child process to access the
+transaction's staging area.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- odb/transaction.c | 10 +++++++---
- odb/transaction.h |  7 ++++---
- 2 files changed, 11 insertions(+), 6 deletions(-)
+ object-file.c     | 16 ++++++++++++++++
+ odb/transaction.c |  8 ++++++++
+ odb/transaction.h | 17 +++++++++++++++++
+ 3 files changed, 41 insertions(+)
 
-diff --git a/odb/transaction.c b/odb/transaction.c
-index b6da4a3942..249ef4d9b7 100644
---- a/odb/transaction.c
-+++ b/odb/transaction.c
-@@ -18,19 +18,23 @@ int odb_transaction_begin(struct object_database *odb,
- 	return ret;
+diff --git a/object-file.c b/object-file.c
+index 358684beae..39b92e275c 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -27,6 +27,7 @@
+ #include "path.h"
+ #include "read-cache-ll.h"
+ #include "setup.h"
++#include "strvec.h"
+ #include "tempfile.h"
+ #include "tmp-objdir.h"
+ 
+@@ -1687,6 +1688,20 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+ 	return 0;
  }
  
--void odb_transaction_commit(struct odb_transaction *transaction)
-+int odb_transaction_commit(struct odb_transaction *transaction)
- {
++static int odb_transaction_files_env(struct odb_transaction *base,
++				     struct strvec *env)
++{
++	struct odb_transaction_files *transaction =
++		container_of(base, struct odb_transaction_files, base);
 +	int ret;
 +
- 	if (!transaction)
--		return;
-+		return 0;
- 
- 	/*
- 	 * Ensure the transaction ending matches the pending transaction.
- 	 */
- 	ASSERT(transaction == transaction->source->odb->transaction);
- 
--	transaction->commit(transaction);
-+	ret = transaction->commit(transaction);
- 	transaction->source->odb->transaction = NULL;
- 	free(transaction);
++	ret = odb_transaction_files_prepare(&transaction->base);
++	if (!ret)
++		strvec_pushv(env, tmp_objdir_env(transaction->objdir));
 +
 +	return ret;
- }
++}
++
+ int odb_transaction_files_begin(struct odb_source *source,
+ 				struct odb_transaction **out)
+ {
+@@ -1696,6 +1711,7 @@ int odb_transaction_files_begin(struct odb_source *source,
+ 	transaction->base.source = source;
+ 	transaction->base.commit = odb_transaction_files_commit;
+ 	transaction->base.write_object_stream = odb_transaction_files_write_object_stream;
++	transaction->base.env = odb_transaction_files_env;
+ 	*out = &transaction->base;
  
- int odb_transaction_write_object_stream(struct odb_transaction *transaction,
+ 	return 0;
+diff --git a/odb/transaction.c b/odb/transaction.c
+index 249ef4d9b7..92ec8786a1 100644
+--- a/odb/transaction.c
++++ b/odb/transaction.c
+@@ -43,3 +43,11 @@ int odb_transaction_write_object_stream(struct odb_transaction *transaction,
+ {
+ 	return transaction->write_object_stream(transaction, stream, len, oid);
+ }
++
++int odb_transaction_env(struct odb_transaction *transaction, struct strvec *env)
++{
++	if (!transaction)
++		return 0;
++
++	return transaction->env(transaction, env);
++}
 diff --git a/odb/transaction.h b/odb/transaction.h
-index f5c43187c9..3b0a5a78e5 100644
+index 3b0a5a78e5..5e51ce5ca4 100644
 --- a/odb/transaction.h
 +++ b/odb/transaction.h
-@@ -54,10 +54,11 @@ static inline void odb_transaction_begin_or_die(struct object_database *odb,
- }
+@@ -34,6 +34,14 @@ struct odb_transaction {
+ 	int (*write_object_stream)(struct odb_transaction *transaction,
+ 				   struct odb_write_stream *stream, size_t len,
+ 				   struct object_id *oid);
++
++	/*
++	 * This callback is expected to populate the provided strvec with the
++	 * environment variables that a child process should inherit so that its
++	 * object writes participate in the transaction. Returns 0 on success, a
++	 * negative error code otherwise.
++	 */
++	int (*env)(struct odb_transaction *transaction, struct strvec *env);
+ };
  
  /*
-- * Commits an ODB transaction making the written objects visible. If the
-- * specified transaction is NULL, the function is a no-op.
-+ * Commits an ODB transaction making the written objects visible. Returns 0 on
-+ * success, a negative error code otherwise. Note that, if the specified
-+ * transaction is NULL, the function is a no-op and no error is returned.
-  */
--void odb_transaction_commit(struct odb_transaction *transaction);
-+int odb_transaction_commit(struct odb_transaction *transaction);
+@@ -69,4 +77,13 @@ int odb_transaction_write_object_stream(struct odb_transaction *transaction,
+ 					struct odb_write_stream *stream,
+ 					size_t len, struct object_id *oid);
  
- /*
-  * Writes the object in the provided stream into the transaction. The resulting
++/*
++ * Populates the provided strvec with the environment variables that a child
++ * process should inherit so that its object writes participate in the
++ * transaction, suitable for using via child_process.env. Returns 0 on success,
++ * a negative error code otherwise. Note that, if the specified transaction is
++ * NULL, the function is a no-op and no error is returned.
++ */
++int odb_transaction_env(struct odb_transaction *transaction, struct strvec *env);
++
+ #endif
 -- 
 2.55.0.122.gf85a7e6620
 
