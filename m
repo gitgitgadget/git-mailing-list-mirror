@@ -1,449 +1,166 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1160E40BCB0
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 13:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEDD24677B
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 14:32:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783690096; cv=none; b=B1Xpx/R8z00XDBlYHvbsC9Edil1ZA/X/DEFPiF0ajvzhFqNODRv+QKbgqSesKPAEiOlSycZidgA1g7IwGnnU/EKRlr4GvLWeT4Q8huABIWWkDsdTAc2pgzGInZ81qjTLLLbE57GOto+HPkLV1tazQZ7/oE9bH91oY7ipZ0/CQLs=
+	t=1783693948; cv=none; b=lCX4pQgLAZLGAOD94QyUVBQ8jE2pbBGJr/ZAfJFgdgN2+HD8Jg7KBX3xK7rYBDwSUWAYvSF7jsvw01Qg9dQkCFTzSjipSefvVfn2eRvS4nnGsEAxZiKj3aRDc2MHGBBp6dAI7MTOIp6jXv8jT+iyEfbZbsyOHGhylcsfBOuu5/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783690096; c=relaxed/simple;
-	bh=LWC4c6PTs/HBhBXA8xStyLeCBowJvHHZSGRrRYiNBPw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MtuwWQwCihwZ9WRdHdzDOSrht0iXLiO/t4n8+cHLeXJzgT20p1EAZV9EFGoyanUuUXKnxEKYYgsWaRUP/3xEsj+QSXy7SLAWh8AU2SJ5dgM3BHxm6ZTirRsw6s5AV1J/q8igPQK51OH8UTHRYywxgS+iGyk50T2+WRoFA52RGQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ivBS2vSe; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783693948; c=relaxed/simple;
+	bh=4Xo4wcyQXs0Nl1kcFrc7Lx5naZeMjg6FDy9zjB3jTUM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Na8pl2Ru0MKjvWunpm32qUhpc9KQ4utYHsiBEVq5VqiqByBhA8aKHsWmrtVbgKqEdt/0BzC0HNFiaHQAP+864va5V28kjWuxFRLTP/1Taz9PwZf2jCk2SqHZfZnBGHVnc440ubcdYRretNn2Io5J0o3SZBZhx9pu8JsnkYQgi84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JxKBEHPE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gXLpaGWW; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ivBS2vSe"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-493f75f7172so1122845e9.1
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 06:28:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783690092; x=1784294892; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zODjZII5/StAn4mG1FRXvuIpwc0lF40ucr+eJVesoto=;
-        b=ivBS2vSeZKJuetMyfVoLa80q0oHviErw370tBMVRurqOvtS6ZVk7zO/trGb2venpaw
-         hmYm+/gjTAOIHbewQwESoeh4QuRYaKOeMSNI6mw7wFjYNiB5Jnrzk4FQS5FsPKr9dIwc
-         JUqKOb7JE1dTu0kF9sD4X6ok++NlebU9eg7V3DbooP89FrNdpZ0nmVarm7++iK5Qk+pD
-         5tPrxYD3Wg4LKCuMTz/DPPJcieO8ajMfoxxVfIvkqyagq58ROMGiDJWz8l8nlciKHBQ2
-         CnIhiTQGCSyNSidgYbrkDO8Usdyhtnp4SvpBQD4S4rIQipH15OzWhj6aZRKVwUAFUeIn
-         Y0gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783690092; x=1784294892;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zODjZII5/StAn4mG1FRXvuIpwc0lF40ucr+eJVesoto=;
-        b=qfwZLRCtxxxGlM+iw4Sd1isJR5S14J0c7jQsXYuZ5i5sAqj4BhgLeLIAdZ0y6NgegC
-         0t9ONvYELigmxxE+hVVlcxEYGJdWHpxNWCwYLjDRqe96fd/yu/rqgjIhvxim1+7JKF2g
-         yKvAZ0f4E3q4rKDhwAm8IcjtZVXRPKCrsWJP2v2jQZB5tN2clGbKjGRWv3pRR06pb4DE
-         Rs+TOqHrnCWtGEwWXALX/7aPkKRqDaW8zldbEmcRcKqXmW90XXiW2vpcSGzOe8h3dtFd
-         ZOAfLr0o3zmgyK2jJBuKaO0sVFIOVZCrxrkf4gvmGXghwYAbVodBRhKeNbr8s1mf5PZX
-         X8Bw==
-X-Forwarded-Encrypted: i=1; AHgh+Rq1cUnL+inkkEAxd546sAJg25hkCFpxR4xZ7UE1OnyWdtHi3vSEN8QrTM0Ms92DtMCKy+8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yznp1VwTlFvgb+hRVCvPV8eFX7DhqZr9bLqnTx/9O122VK3sZX5
-	tgz62cPo/JjLp1Q/Z4LRMn2LFvh/WizKbEKssGJ5tGQ31t3096tRaL4tAotE1A==
-X-Gm-Gg: AfdE7cmn4p31Ughrxn5J8l14K9DQgpouDi+YJDKydEFxxY8RzLN/JolgUeVdPPa7zjY
-	L4EolOL7pFlS3YOgoP+SGMVizZ8zYKH0BrbLGtyt3wO8xYrITszgbeayDT+wvo2qU4y1f0+oBC6
-	6nb8H8XMRjmMy6+4focQn4LLcc/eoIRiGa8Bk/vtU6QXlL4rP5AXsfe/hVo8uQnU01OpdmfHeGA
-	s05dZYrHIjv4R6UwE94+CXNIHwuUEOviv9wKZS0p9/LNfRvnk7AOL1DssM6MIKnYUXLbV/0ZAJr
-	2gXCUR2NGky36nJKK4OYABFq+eu4XFiH7oTxVo/UwlQvF9Gg7IYWeCQl479Y/WjzViEjkgCiRVr
-	nTKs/ADJVWaaReXRF9rdLTqDD7D1D8aQ/r5kLp31UwupdGeJmraqUQAQ1L1vE9vXk+YQTgNyKT0
-	3qLmoqthXlayvn6ebbWtOpoPZyPRqBOGgJncxB8o8bOv2KddFFgIYUqACw5ijYSN0E0r2aMQ==
-X-Received: by 2002:a05:600c:a43:b0:493:d741:5d72 with SMTP id 5b1f17b1804b1-493e68db0fdmr123230965e9.38.1783690091571;
-        Fri, 10 Jul 2026 06:28:11 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:33f4:2760:38a0:c4f? ([2a0a:ef40:69a:b801:33f4:2760:38a0:c4f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493f2e0eff1sm37749055e9.0.2026.07.10.06.28.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2026 06:28:10 -0700 (PDT)
-Message-ID: <afb76b98-661a-4663-8e8b-fd00572db5ba@gmail.com>
-Date: Fri, 10 Jul 2026 14:28:09 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JxKBEHPE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gXLpaGWW"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D5EF97A00D8;
+	Fri, 10 Jul 2026 10:32:25 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 10 Jul 2026 10:32:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1783693945; x=1783780345; bh=f3yTbOxol0
+	1DnoC9V+jiokEk5/v+h+yU8LVIiLOJqjk=; b=JxKBEHPEwDmlXu0ANU1x31pZrW
+	4s7B4gfVJTyy2onv95pUnGVWU9aUZW2TjCBYK/vl6qK1Jm0/6Tfy64SymQfAhcYi
+	OMqcMWrS6SwgZfZLSu46acR8aguQZRAYBPK43poby6UNo2jC1I88sZVKsoWtW7hK
+	WmjIBl+cQ3sKb/wyqH6SIHOmTmJt2uRIiwS3UBkehE08VdDcRTbuu+RShy20lc/c
+	bkx4j6z6uepFFvN6eEToiB5HYomL02as1XGZU6s9LyarhDHvUOylHlvxBkuu50Ag
+	mVH4HgeIPlfw81MGBdJ2pKP+exsDgpj6nI8UjdUU0BuWtub1ILW4v/5lIWdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783693945; x=1783780345; bh=f3yTbOxol01DnoC9V+jiokEk5/v+h+yU8LV
+	IiLOJqjk=; b=gXLpaGWWE1glGvNM976jl56w/WnPmf4luEK2Pl0ub7JjihcTMgx
+	tq4vneAWGdF52eaQk9Z27U6gphs6kYq3g2gAvIEOeDaAId4vn3wOCMtuHKrgblz3
+	WZ2dtUA94xZRAAF+YZFuCEsvfHKGYsZAwbIKS8k51bSFR9c5wsk5/ZZfndMk0J0D
+	GqS3usET7unFi62Xefeu+K3xEAedugVLd5IOk0687Td743ph9wv75263SKzdIJib
+	fMljKrVmedvsik5EDGRgYTIJFSQwkTqijcG/rnetVAp6UQ88W/SHXRDT/jlfwW+G
+	MpMbytx4FlWGkuLT9lDvESZLX+QFGzjlPjA==
+X-ME-Sender: <xms:eQJRalE-r-l9qAhCMbu3ZxMjTIw5vYPetusH49j8UrOcBJ1gLllVKw>
+    <xme:eQJRahxGGFT84Z3DA7yu6GS3DesFUsBBqcIFUC5Jqe2Us_I6Xieq_6a_Pao4mDkKH
+    3Ntqhhzz6Ie2emlAuuAfGi3WmxpECIaSh3Ag3JFiw0mda3HFwPKEg>
+X-ME-Received: <xmr:eQJRakgKobvn43hsYd2nFOD8LK-806ohsPQ5qn6N4x4gMIipM5Q2Pdc7GCkg7OexA_IpLaeOytlWDC4BStvAXcCyWqzfyu79SDP7p-rEyxJddA>
+X-ME-Proxy-Cause: dmFkZTFCTSInU9TjQkwY+oTjXSNvmBnuk27x+aCgrwPH99kDaxTqfj7ZX5LGs1ExbItQtp
+    2pGjufr1YL29kfGKGiYg8JVotijWxN7QHWUg7cxHj4jyAX8kOuq2U9MPLpIXO/Fy4f5nQX
+    A4eN52w+nMP7E0gkcmYtbtuXOprBXTdzbfCHu0WVEZelVfgaye7dmC7qQ62JXINszrU04k
+    mKSTlG9t3nEO5QY2bH00UEQyStaIVlxVuQuT0T5Aa/J8ioWHZFIWInWd+BqijhGkic5NVx
+    3bHq5QbPgN5sQfTMilfNm8m5lhjUEJPvTRjUzgbicUqC+QCrSOum+2nCM8BKotoeqGeKe5
+    EJD6ydxUj1qx9U4AEHd0ZOhUlReFyX1SXBuzY8+1GeeWc4PIg/l97x6rxJCbsUS1J47hgl
+    fUs/s10XQlAB1BAGLVTJKlaXcLk3Ql4VqvPECzLfFXS1/YiOA33NZo0KH/pq1v6HFvEPMD
+    4pgagjrN9SsWKPDEO4n7417xrLK8gMDUhQF9PSF1Kqheka1TeFHW2ab/Mze2BcN5fkLU5g
+    8UGKYB0c3ovvuLDDIIs2I4U+/5tZ52OTRaQLXAoGjZLUYyaJq5HXdmZd3PUG/mrORZmXXp
+    EaIiI9BgzKV4+0KfKIiW5/glq+g17B1TYr0BPNMQmKMQouppA3OEommSlXNw
+X-ME-Proxy: <xmx:eQJRakyU-GXqne3L45npCnMWYnLT3poV4iOlxJ47Xq28EqBiz2PMqQ>
+    <xmx:eQJRavLnhMgtMjYfCI92kD2lYhoik7LyDYP3zqQ7DK2OIr2QHcBobg>
+    <xmx:eQJRajSvo4JevKl6qWPbLlVz5zFfHdAMmDKMAZo6_eraPiaCFbm38Q>
+    <xmx:eQJRavpa3bi-IdbSswMY3a4_E_7OJFM74VpVE946dkegqU3g1zfT8w>
+    <xmx:eQJRanCL2sM30CoERTZcvvtO6EpL7Ie_g4dgotAY_00U7OBdBY8lk4yU>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Jul 2026 10:32:24 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 905328db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Jul 2026 14:32:21 +0000 (UTC)
+Date: Fri, 10 Jul 2026 16:32:19 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH v3 2/2] reftable: fix quadratic behavior in the presence
+ of tombstones
+Message-ID: <alECc90WZ9RPqMaA@pks.im>
+References: <pull.2166.v2.git.1783598912.gitgitgadget@gmail.com>
+ <pull.2166.v3.git.1783679767.gitgitgadget@gmail.com>
+ <4fdcec84406431d56b7a7e593fd8e843c3b1ad52.1783679767.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] sequencer: honor --empty when a fixup!/squash! empties
- its target
-To: Farid Zakaria <farid.m.zakaria@gmail.com>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
- Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Junio C Hamano <gitster@pobox.com>
-References: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4fdcec84406431d56b7a7e593fd8e843c3b1ad52.1783679767.git.gitgitgadget@gmail.com>
 
-Hi Farid
-
-On 10/07/2026 05:13, Farid Zakaria wrote:
-> When "git rebase --autosquash" melds a "fixup!" or "squash!" commit into
-> its target, the result can be a commit that no longer changes anything
-> relative to its parent, for example when the melded change reverts the
-> target.  Rather than dropping or keeping this empty commit, the rebase
-> stops with
+On Fri, Jul 10, 2026 at 10:36:07AM +0000, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
 > 
-> 	You asked to amend the most recent commit, but doing so would
-> 	make it empty. ...
+> When many tombstones are present in a reftable, operations that need
+> to look up or iterate over refs exhibit quadratic behavior.  With
+> 8000 refs deleted and re-created, update-ref takes ~15s, quadrupling
+> for each doubling of input size.
 > 
-> and the "--empty" option has no effect on it.  This makes backing a
-> change out of a series awkward: reverting a commit as a "fixup!" and
-> running "git rebase --autosquash --empty=drop" ought to remove both the
-> commit and its revert, but it halts instead.
-
-I agree this is a use case that we want to support
-
-> The reason is that allow_empty() decides emptiness with
-> is_index_unchanged(), which compares the index to HEAD.  A "fixup!" is
-> applied by amending HEAD, so the commit it produces has HEAD's parent as
-> its parent; it is empty when the index matches the tree of that parent,
-> not of HEAD.  A meld that cancels out its target is therefore never
-> recognized as having become empty, and falls through to "git commit
-> --amend", which refuses to create an empty commit.
-
-and with this diagnosis.
-
-> Teach is_index_unchanged() to compare against the tree of HEAD's parent
-> when amending, and teach allow_empty() to classify the result as "became
-> empty" (and thus subject to --empty) unless the commit being melded into
-> was itself already empty, in which case it "started empty" and is
-> governed by allow_empty as before.
-
-However, I think that rather than changing the current check which 
-changes the behavior of a fixup commit that becomes empty we should add 
-an additional check to see if applying the fixup makes the target commit 
-empty. With the patch here a fixup commit that becomes empty is only 
-seen as empty if the commit being fixed up is empty in which case we 
-always accept the fixup, whereas the current behavior is always to 
-respect what --empty says. When I'm planning out a series of commits I 
-sometimes create empty commits where the messages says what I'm 
-intending to do and then I create fixups for them when I get round to 
-writing the code. If one of those fixups becomes empty I want to know 
-about it because it means I need to drop the empty commit that's being 
-fixed up as well.
-
-> When --empty=drop applies, the emptied commit has already been created
-> by the preceding "pick", so drop it by moving HEAD back to its parent.
-> Do so before the rewritten-commit list is flushed, so that --update-refs
-> and the other rewrite consumers map the dropped commit to its parent.
-
-If we're dropping the commit then we should not record it as rewritten 
-so we need to remove the rewritten-pending file. Any labels and 
-update-ref commands that come immediately after the dropped commit will 
-see HEAD pointing to the dropped commits rewritten parent.
-
-> Signed-off-by: Farid Zakaria <farid.m.zakaria@gmail.com>
-> ---
-> At Meta we maintain a fork of LLVM that we regularly rebase onto
-> upstream.  A set of internal patches rides on top, and we keep each one
-> as a single commit by folding follow-up changes into it with autosquash
-> "fixup!" commits.  That works well for evolving a patch, but not for
-> retiring one: to back an internal patch out today we delete it from the
-> history by hand with an interactive rebase and then force-push, which is
-> easy to get wrong on a shared branch.
-
-You'll still need a forced push though because you're dropping the 
-commit. I think the change you're proposing to git would be useful but 
-you could automate your existing workflow by setting GIT_SEQUENCE_EDITOR 
-to a script that drops the commit and it's fixups from the todo list.
-
-> One open question, for a possible follow-up.  A natural next step would
-> be a "revert!" autosquash directive (and a "git commit --revert" to
-> create it), mirroring "fixup!"/"squash!", so
-> that retiring a patch would not require generating the reverse diff by
-> hand.  I have deliberately left it out of this series, because its
-> semantics are not obvious: in particular, whether a "revert!" commit
-> should carry the reverse patch as its own content (and thus be an
-> ordinary fixup that this patch already drops), or be an empty marker
-> that instructs the rebase to revert the target commit during the meld.
-> Opinions on whether such a directive is wanted, and which of those two
-> shapes is preferred, would be welcome before I attempt it.
-
-I think having support for creating and squashing revert! (or possibly 
-drop!) commits is a good idea (I've a feeling there is some discussion 
-about that in the gitgitgadget issue tracker). Using an empty commit has 
-a marker has the advantage that applying it cannot create conflicts, so 
-you only have to deal with the conflicts caused by the commit being 
-dropped, not the by fixup not applying cleanly.
-
-Thanks
-
-Phillip
-
-> ---
-> base-commit: f60db8d575adb79761d363e026fb49bddf330c73
-> ---
->   Documentation/git-rebase.adoc | 12 ++++++
->   sequencer.c                   | 96 +++++++++++++++++++++++++++++++++++++++----
->   t/t3415-rebase-autosquash.sh  | 64 +++++++++++++++++++++++++++++
->   3 files changed, 163 insertions(+), 9 deletions(-)
+> The root cause is the merged iterator's suppress_deletions flag.
+> When set, merged_iter_next_void() silently consumes tombstone records
+> in a tight internal loop before returning to the caller.  This
+> prevents higher-level code from checking iteration bounds (such as
+> prefix or refname comparisons) until after all tombstones have been
+> scanned.
 > 
-> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-> index f6c22d1598..7eb8bbe95f 100644
-> --- a/Documentation/git-rebase.adoc
-> +++ b/Documentation/git-rebase.adoc
-> @@ -282,6 +282,11 @@ by `git log --cherry-mark ...`) are detected and dropped as a
->   preliminary step (unless `--reapply-cherry-picks` or `--keep-base` is
->   passed).
->   +
-> +A commit can also become empty as a result of `--autosquash`, when a
-> +`fixup!` or `squash!` commit cancels out all of the changes of the
-> +commit it is melded into.  Such a commit is treated the same way and is
-> +dropped, kept, or stopped at according to this option.
-> ++
->   See also INCOMPATIBLE OPTIONS below.
->   
->   --no-keep-empty::
-> @@ -591,6 +596,13 @@ changed from `pick` to `squash`, `fixup` or `fixup -C`, respectively, and they
->   are moved right after the commit they modify.  The `--interactive` option can
->   be used to review and edit the todo list before proceeding.
->   +
-> +If melding a `fixup!` or `squash!` commit cancels out all of the changes of
-> +the commit it is applied to, the result is an empty commit.  The handling of
-> +these empty commits can be configured with the `--empty` option: the emptied
-> +commit is dropped, kept, or stopped at.  This makes it possible to back a
-> +change out of a series by committing a revert of it as a `fixup!` and letting
-> +`--autosquash --empty=drop` remove both.
-> ++
->   The recommended way to create commits with squash markers is by using the
->   `--squash`, `--fixup`, `--fixup=amend:` or `--fixup=reword:` options of
->   linkgit:git-commit[1], which take the target commit as an argument and
-> diff --git a/sequencer.c b/sequencer.c
-> index 0fe8fed6c3..435b100e3d 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -823,7 +823,7 @@ static struct object_id *get_cache_tree_oid(struct index_state *istate)
->   	return &istate->cache_tree->oid;
->   }
->   
-> -static int is_index_unchanged(struct repository *r)
-> +static int is_index_unchanged(struct repository *r, int amend)
->   {
->   	struct object_id head_oid, *cache_tree_oid;
->   	const struct object_id *head_tree_oid;
-> @@ -856,7 +856,26 @@ static int is_index_unchanged(struct repository *r)
->   		if (repo_parse_commit(r, head_commit))
->   			return -1;
->   
-> -		head_tree_oid = get_commit_tree_oid(head_commit);
-> +		if (amend) {
-> +			/*
-> +			 * When amending (e.g. melding a "fixup!" or "squash!"),
-> +			 * the commit we are about to create replaces HEAD, so
-> +			 * its parent is HEAD's parent.  It is therefore empty
-> +			 * when the index matches the tree of HEAD's parent
-> +			 * rather than the tree of HEAD itself.
-> +			 */
-> +			if (head_commit->parents) {
-> +				struct commit *parent =
-> +					head_commit->parents->item;
-> +				if (repo_parse_commit(r, parent))
-> +					return -1;
-> +				head_tree_oid = get_commit_tree_oid(parent);
-> +			} else {
-> +				head_tree_oid = the_hash_algo->empty_tree;
-> +			}
-> +		} else {
-> +			head_tree_oid = get_commit_tree_oid(head_commit);
-> +		}
->   	}
->   
->   	if (!(cache_tree_oid = get_cache_tree_oid(istate)))
-> @@ -1786,7 +1805,7 @@ static int is_original_commit_empty(struct commit *commit)
->    */
->   static int allow_empty(struct repository *r,
->   		       struct replay_opts *opts,
-> -		       struct commit *commit)
-> +		       struct commit *commit, int amend)
->   {
->   	int index_unchanged, originally_empty;
->   
-> @@ -1798,13 +1817,33 @@ static int allow_empty(struct repository *r,
->   	 * drop_redundant_commits determine whether the commit should be kept or
->   	 * dropped. If neither is specified, halt.
->   	 */
-> -	index_unchanged = is_index_unchanged(r);
-> +	index_unchanged = is_index_unchanged(r, amend);
->   	if (index_unchanged < 0)
->   		return index_unchanged;
->   	if (!index_unchanged)
->   		return 0; /* we do not have to say --allow-empty */
->   
-> -	originally_empty = is_original_commit_empty(commit);
-> +	/*
-> +	 * When amending (melding a "fixup!"/"squash!"), the resulting commit
-> +	 * replaces HEAD, so whether it "started" empty or "became" empty is
-> +	 * decided by whether the commit being melded into was itself empty: if
-> +	 * HEAD had content that the fixup cancelled out, the commit became empty
-> +	 * and is subject to keep/drop_redundant; if HEAD was already empty, the
-> +	 * commit started empty and is subject to allow_empty as usual.
-> +	 */
-> +	if (amend) {
-> +		struct object_id head_oid;
-> +		struct commit *head_commit;
-> +
-> +		if (repo_get_oid(r, "HEAD", &head_oid))
-> +			return error(_("could not resolve HEAD commit"));
-> +		head_commit = lookup_commit_reference(r, &head_oid);
-> +		if (!head_commit)
-> +			return -1;
-> +		originally_empty = is_original_commit_empty(head_commit);
-> +	} else {
-> +		originally_empty = is_original_commit_empty(commit);
-> +	}
->   	if (originally_empty < 0)
->   		return originally_empty;
->   	if (originally_empty)
-> @@ -2260,6 +2299,30 @@ static const char *reflog_message(struct replay_opts *opts,
->   	return buf.buf;
->   }
->   
-> +/*
-> + * A "fixup!"/"squash!" that melds into HEAD may empty it out.  In that case,
-> + * with --empty=drop, we want to drop the commit entirely.  Since the commit
-> + * being amended has already been created (by the preceding "pick"), and the
-> + * index and worktree already match the tree of its parent, dropping it is a
-> + * matter of moving HEAD back to that parent.
-> + */
-> +static int reset_head_to_parent(struct repository *r, struct replay_opts *opts,
-> +				struct object_id *head)
-> +{
-> +	struct commit *head_commit = lookup_commit_reference(r, head);
-> +
-> +	if (!head_commit || repo_parse_commit(r, head_commit))
-> +		return error(_("could not parse HEAD commit"));
-> +	if (!head_commit->parents)
-> +		return error(_("cannot drop the root commit"));
-> +
-> +	return refs_update_ref(get_main_ref_store(r),
-> +			       reflog_message(opts, "fixup",
-> +					      "dropping emptied commit"),
-> +			       "HEAD", &head_commit->parents->item->object.oid,
-> +			       head, 0, UPDATE_REFS_MSG_ON_ERR);
-> +}
-> +
->   static int do_pick_commit(struct repository *r,
->   			  struct todo_item *item,
->   			  struct replay_opts *opts,
-> @@ -2493,7 +2556,7 @@ static int do_pick_commit(struct repository *r,
->   	}
->   
->   	drop_commit = 0;
-> -	allow = allow_empty(r, opts, commit);
-> +	allow = allow_empty(r, opts, commit, flags & AMEND_MSG);
->   	if (allow < 0) {
->   		res = allow;
->   		goto leave;
-> @@ -2506,9 +2569,24 @@ static int do_pick_commit(struct repository *r,
->   		unlink(git_path_merge_msg(r));
->   		refs_delete_ref(get_main_ref_store(r), "", "AUTO_MERGE",
->   				NULL, REF_NO_DEREF);
-> -		fprintf(stderr,
-> -			_("dropping %s %s -- patch contents already upstream\n"),
-> -			oid_to_hex(&commit->object.oid), msg.subject);
-> +		if (flags & AMEND_MSG) {
-> +			/*
-> +			 * The "fixup!"/"squash!" emptied out the commit it was
-> +			 * melded into; that commit was already created by the
-> +			 * preceding "pick", so drop it by moving HEAD back to
-> +			 * its parent.
-> +			 */
-> +			res = reset_head_to_parent(r, opts, &head);
-> +			if (res)
-> +				goto leave;
-> +			fprintf(stderr,
-> +				_("dropping %s %s -- resulting commit is empty\n"),
-> +				oid_to_hex(&commit->object.oid), msg.subject);
-> +		} else {
-> +			fprintf(stderr,
-> +				_("dropping %s %s -- patch contents already upstream\n"),
-> +				oid_to_hex(&commit->object.oid), msg.subject);
-> +		}
->   	} /* else allow == 0 and there's nothing special to do */
->   	if (!opts->no_commit && !drop_commit) {
->   		if (author || command == TODO_REVERT || (flags & AMEND_MSG))
-> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-> index 5033411a43..508dcc7527 100755
-> --- a/t/t3415-rebase-autosquash.sh
-> +++ b/t/t3415-rebase-autosquash.sh
-> @@ -510,4 +510,68 @@ test_expect_success 'pick and fixup respect commit.cleanup' '
->   	test_commit_message HEAD -m "something"
->   '
->   
-> +test_expect_success 'fixup! that empties its target is dropped with --empty=drop' '
-> +	git reset --hard base &&
-> +	test_commit --no-tag addX fileX 1 &&
-> +	test_commit --no-tag changeX fileX 2 &&
-> +	test_commit --no-tag later fileW hello &&
-> +	echo 1 >fileX &&
-> +	git commit -m "fixup! changeX" fileX &&
-> +
-> +	git rebase -i --autosquash --empty=drop HEAD~4 &&
-> +
-> +	git log --format=%s >actual &&
-> +	! grep changeX actual &&
-> +	grep addX actual &&
-> +	grep later actual &&
-> +	echo 1 >expect &&
-> +	test_cmp expect fileX &&
-> +	echo hello >expect &&
-> +	test_cmp expect fileW
-> +'
-> +
-> +test_expect_success 'fixup! that empties its target is kept with --empty=keep' '
-> +	git reset --hard base &&
-> +	test_commit --no-tag addY fileY 1 &&
-> +	test_commit --no-tag changeY fileY 2 &&
-> +	echo 1 >fileY &&
-> +	git commit -m "fixup! changeY" fileY &&
-> +
-> +	git rebase -i --autosquash --empty=keep HEAD~3 &&
-> +
-> +	git log --format=%s >actual &&
-> +	grep changeY actual &&
-> +	: "the retained commit is empty" &&
-> +	git diff --exit-code HEAD~1 HEAD &&
-> +	echo 1 >expect &&
-> +	test_cmp expect fileY
-> +'
-> +
-> +test_expect_success 'fixup! that empties its target stops with --empty=stop' '
-> +	git reset --hard base &&
-> +	test_commit --no-tag addZ fileZ 1 &&
-> +	test_commit --no-tag changeZ fileZ 2 &&
-> +	echo 1 >fileZ &&
-> +	git commit -m "fixup! changeZ" fileZ &&
-> +
-> +	test_when_finished "git rebase --abort" &&
-> +	test_must_fail git rebase -i --autosquash --empty=stop HEAD~3
-> +'
-> +
-> +test_expect_success 'squash! that empties its target is dropped with --empty=drop' '
-> +	git reset --hard base &&
-> +	test_commit --no-tag addS fileS 1 &&
-> +	test_commit --no-tag changeS fileS 2 &&
-> +	echo 1 >fileS &&
-> +	git commit -m "squash! changeS" fileS &&
-> +
-> +	git rebase -i --autosquash --empty=drop HEAD~3 &&
-> +
-> +	git log --format=%s >actual &&
-> +	! grep changeS actual &&
-> +	grep addS actual &&
-> +	echo 1 >expect &&
-> +	test_cmp expect fileS
-> +'
-> +
->   test_done
+> This affects any code path that seeks into a range containing
+> tombstones, including:
 > 
+>  - refs_verify_refnames_available() seeks to "refs/tags/foo-1/" to
+>    check for D/F conflicts and must scan through all subsequent
+>    tombstones before the caller can see that they are past the prefix
+>    of interest.
 > 
+>  - reftable_backend_read_ref() seeks to a specific refname and must
+>    scan through all subsequent tombstones before returning "not
+>    found", because the merged iterator skips the matching tombstone
+>    and searches for the next live record.
 > 
+> Fix this by making suppress_deletions configurable via
+> reftable_stack_options instead of unconditionally enabling it.  Git
+> no longer sets the flag, so tombstones are now returned to callers in
+> the reftable backend, which skip them after their existing bounds
+> checks.  This allows iteration to terminate as soon as a tombstone
+> past the relevant bound is encountered.
 > 
+> Downstream users of the reftable library (e.g. libgit2) can still
+> enable suppress_deletions through the stack options to retain the
+> previous behavior.
+> 
+> This also requires adding deletion checks to the log iteration paths,
+> since suppress_deletions applied to both ref and log iterators.
 
+Nit: s/applied/applies/
+
+> diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
+> index 11f9963f4f..5d22d84e80 100644
+> --- a/reftable/reftable-stack.h
+> +++ b/reftable/reftable-stack.h
+> @@ -42,6 +42,8 @@ struct reftable_stack_options {
+>  	 */
+>  	void (*on_reload)(void *payload);
+>  	void *on_reload_payload;
+> +
+> +	int suppress_deletions;
+>  };
+
+A comment would've been nice, but I don't think this warrants a reroll.
+
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index ab12926708..caaedf24d6 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -337,7 +337,7 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
+>  	/* Update the stack to point to the new tables. */
+>  	if (st->merged)
+>  		reftable_merged_table_free(st->merged);
+> -	new_merged->suppress_deletions = 1;
+> +	new_merged->suppress_deletions = st->opts.suppress_deletions;
+>  	st->merged = new_merged;
+
+Yup, this looks good to me.
+
+Thanks!
+
+Patrick
