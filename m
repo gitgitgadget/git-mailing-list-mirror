@@ -1,130 +1,235 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749BE823DE
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:43:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DABF271A71
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:47:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.175
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783654993; cv=pass; b=Ou32bRUaNC5QQL9/alIoGQbRnFJPvtjmCKiMbVoH2MIrYk5wvZD4QW//Hy8UObNKaqD6fDjmhCA5lSwkyBv/q1DnrT9TpZM+hHVrRshVfsho4U7QsV9IaYQY84vLUdlafWNR3z631DTRU7svYKrSDVFPl876kHTl7E0EIHGoFq4=
+	t=1783655273; cv=pass; b=JHaRe/BAKV0B3dpE8BGi6J05Z5F+1EZyN4h4JDN/+AHFQgfyxJ94T/YU/VCgUEZMEDjGvZj0kufXwSOciPFjYAKtG+89+hRBW86jzJlmfJb8X4lVH1jJpLVzG0xxwXLdPUxDL5KNJHFCnjnFDAf1n1B3ANw5FVZUAxqj8KCHGEs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783654993; c=relaxed/simple;
-	bh=HP75WplMHUYplEmQf7Bx4eJXJyvwY+ji2dWeRQCwquY=;
+	s=arc-20240116; t=1783655273; c=relaxed/simple;
+	bh=wbhsZekSemgfXLd3e5soDPfIR5j3ilAp9crVMmA+G6k=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DrYnfpOg/MntlrDaNYwjWvsnc6HkGMDuf42D2HBLJwTyDFdOyQz3MLV+n2ebPXNX3N9PXvYVEdEhrH99ytxysiwJ7sALma8iLeMss/KXkK5xBzc1H2Or+xPEodC0smAw9vayOQ2sFqHvWDVf1n0+9lmKe/XMu8b8TRzb1bb+zM0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n7dSX4VH; arc=pass smtp.client-ip=209.85.218.50
+	 To:Cc:Content-Type; b=aQzHqgxmffsAZQPXO8wE2zohdBk5o4UJPcAPZxbyy4w1alfLF3qPntDgtStsKoJmGIQZXmPpYbAqZVV0uQMYZxGBemJOxtX449o0fzRvbQ/NWeYCeYeHvfJT6GrsPAHhbqVh4Q/OrFuByQHef9a8ORQdjqJKngWaLp7JoSttlPk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R05h9usS; arc=pass smtp.client-ip=209.85.167.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n7dSX4VH"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c15b75c9e48so67243566b.1
-        for <git@vger.kernel.org>; Thu, 09 Jul 2026 20:43:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783654991; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R05h9usS"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-48a0ca07c38so292089b6e.2
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 20:47:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783655270; cv=none;
         d=google.com; s=arc-20260327;
-        b=Ksrzy1Rpw2oamxge336eWjG8bruC5rTr5YxlHG73ViMv9QJSSWDphGDzmyUCmz9BGJ
-         vJUh7l4DqkppI5z5DHs9nWSfgdZw+zZGHDem6WDJgKLnzZx69QS/Z/hjmyUn0Zzf+AUQ
-         4O17NijWocTuw+ibt0IEvztOH7Ly6cn9gdo2/4IsEF6HlmqYEL0L9+uDSZM3D/3G2AKs
-         t0EybJoAc5nX2ar0kcptH6Tb6NG/iuzXzyvMHSr2uiP9cRYe5NJ9R4dahYlPdhRruS91
-         CFj3Rd4q3w6FJZ5mIDQBmgtxPJ9o2ixRIJH/ng6rz+sSTucidOgUajarjUHMEyvtZxqy
-         yLAw==
+        b=V2B8+6C57OBRJc7iDjHpQxUIM5NDwVzCUJLcPb5iBA6jFOVluS3kOx4M4xyjwzJwsg
+         MRYOYgDSH5fp+fFYOORVkVxJ+2TmfAdPXxOL25irTl2Asa89qAWYHKQpr3o+F0skRKc9
+         mY8Z8r3x9X84lzGgXs2NZSxRgT+dg3I7yFO0uVT9khtw8jvqacFTbjh0g3hA4eiv8mcb
+         znM4mi602LpY9VTWGufBPe51NVO52hH5tSGFziOGspWxPqRxW7zHclV6+9ahuSZNy+95
+         qVYylZD9u8Si5Aipvpopmd6n5+xkWVtCLOSQXCK6oygFE6lbtTkZ/rRwBjXqFtFxdZE8
+         yjyQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=IeuURvsL+tT71wlb5J8tmXcz7M0Jql5iIfS7nB4beW0=;
-        fh=KtXoWdPy230Hiv+XXVVmyVGna/DRm+OQ7d9YphPzuv4=;
-        b=IENFEAAFBJaknwDb468ZNThjir/qjXUB+1slDN7NZyKpHe0B0zn+cF4lZZ8MjIJU2l
-         9d0dAamGuwjkTTcqhhYl3bopH9BBfTEq80cFlapzEa2gwIBhkY0HMtVsfjcyraOl6fUh
-         jti/p/qaL1FU87ni+jtomn1OVk5KSnPeRb3/CSZarI9yR4rjrYeayuFj8fDBioZL8/J1
-         tqQtdL5CXQWt4pYTeVuLuvv6EKlS9b2DJQKfhbJncfcycGhJBQkk7Bla5MFPyOWmPJqH
-         R7+jR/RNPgDyBxNZr+w2C8AbYSbF+3By6iRMXaAQcahYTKxcorxRo1V/oYNIsWU34Ptj
-         wIKA==;
+        bh=PL3q/AhNh0YDkFteRsR2Yb//i83CzvLW0+hHUa0cu9U=;
+        fh=YsDP8qhdejPnmdlVXvdly/uN84AbM1az0llqI3pfvq0=;
+        b=Xy8J+JS9asUtJLiAzTNCmyU5RvH1gD7ix5oN0R0qBgM4Ne5RvD1VoSSYVXqdfejxKY
+         A7YdCe6YLkQBSXBx9YbA+WbKzAw/XbJNCP8bgJ3iPr0KWkUVaVIRqc7oFBd/fzmgyS5o
+         Ky5Zy71fIJyRvpwvy228eqgu7sBQsHJZWgkdLVkhbhY9Pj+7pMtQUqE9U4rEMOSIQNa1
+         I0t0aokSbGbNYykDqYiwgpS94twQUng+3i7gWMGZrPpx54yXWBi7rIcHFqUhZXUfUifQ
+         IHSL95FRRjDXNaDtOx9zGgCU08F7xXME7U4e7qBQ5EMEJBgc97LTiQ5OU2VSn7gEhNUZ
+         tzZw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783654991; x=1784259791; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783655270; x=1784260070; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=IeuURvsL+tT71wlb5J8tmXcz7M0Jql5iIfS7nB4beW0=;
-        b=n7dSX4VH4yzSj8f2xN9MCnkz9vHXv7FHLIJF1Vu5FyyuSBc4Q53frxjlaq4CgUntXF
-         szXPob03Hu+ai4bM/htcWzr2QCpaocu6wLXAr7QP6mVf1pBh8Rz373iudSEMkvRytDkr
-         GEMkOaxtd67rQpqGy5xzN8lPPa4sQb8NxIix3YuBlXbYylP+QcShlD6vKqYrYpD2DW3H
-         s3TLPNn68csbPMRn0oMBZvMh83UpqeLqduriU/Q8DC1BMxSOEZprWt+Z9X0Xga4wDi0A
-         sPbwn7AP0d/xY2dIrVom//VBlVJqKttuRq5zlvPjVYfhfiYbWdwaJSMzI6Wjr0+VkAgC
-         TLKw==
+        bh=PL3q/AhNh0YDkFteRsR2Yb//i83CzvLW0+hHUa0cu9U=;
+        b=R05h9usSrDwwSVn1K0zeKwUKUlJZ8GRZ5f1Y0TiuZv3qDf2JdactAeeKiQhEOJqmMf
+         DeYJyQmaVlueN0GBklc9CkQpVmyVNDvoX6L6QWnK0VccBolRgozU9BWZInEqv6H05KIV
+         yshLRkFlNNnIDnyUhpj1abJ+3Z4KnB61kaKSfPuZigBUNAw9NREi41j2aWQFoOTH89rW
+         v77Ld7MBpuKgW+yW7hyL3kND2dAlnMav8XJPmw/8Tl+2ncjqZjq8I4Xx1wR6NpkYGkxx
+         1jyGLNl7/yvPXlusnF9FCJl2Z0J80yrlad1csDv0tnmEkVyDld/oEBPSfISAG90WGot7
+         18DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783654991; x=1784259791;
+        d=1e100.net; s=20251104; t=1783655270; x=1784260070;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=IeuURvsL+tT71wlb5J8tmXcz7M0Jql5iIfS7nB4beW0=;
-        b=K7J7z1HvShmYaAJpLK0vozVI5kqw+izdyPuq9lJaWUOdfSG7oj37P82CRLbucVyBOW
-         AM46qy4CHlPPpUmXYTI3X9tc4BPegoy+n84ZVQd22j99gQ7gPQQk1iUUoSEuNjEvRmz0
-         7PlCNKCwItxj1suSMu+a7r3SKh0K/XIIpgIAETBSsFEpnmaB6/Ny6sTAx1C37HqenoXv
-         /IXOSVGv9NRpWRdw/eILNjqnhlynHeCzwfXMmi/fI17goJUC3g9vca8v865rguDWfW3h
-         uVUUYc5cYMQfsCZZ+aSlA0d+OM2ktV0HI7ES3OQe+oSgfcZ4SDD0zfXV/v6e+83Z2x+p
-         NDWQ==
-X-Gm-Message-State: AOJu0Yyi3yksK2Ft6FaiQOEEZOpRo8cOqduQomhY4hY2FZF/c8MryH5H
-	ReOSb/02hY+VgyCnQaOKvpiLz6GZXFwbMyiBXie1SjG8z2t1rRW0gWRdcPGLndnvxyzT9OU/n7v
-	xCLyZeLO2PnA0Iom2+dF0NC3wc4j7uL8=
-X-Gm-Gg: AfdE7cko/2sYfgFgW9MPXNzIhtJPgKFapdIgM/GgQlRv0rwIN0vJPu4F90rkYMc3+pX
-	EzcJVWNXywQjR3h9uJo98x2hmWPFKWP2XC1B0Ee9vUdRSOP/GEFClRGwQGmgaayb0ptoNGGiINC
-	6ggPYeErDsNnPUDX6FAPcJopw5hI5xwhJnNfgN0LbrooVV2oAt8FwwKKpblkldpSNRVC4BcmOBn
-	Zn9KMEdYnig1jD4wi+dJmQoK9y9jcBwf5KTdPRA/1egorFMq3BG/6nOwrg12mer2KJt7UV5nkPb
-	4jetH+a3PfcU2D4vte6XdJ85K1SI
-X-Received: by 2002:a17:907:e153:b0:c12:5b6c:9b8c with SMTP id
- a640c23a62f3a-c15cdfe9aacmr294393266b.15.1783654990674; Thu, 09 Jul 2026
- 20:43:10 -0700 (PDT)
+        bh=PL3q/AhNh0YDkFteRsR2Yb//i83CzvLW0+hHUa0cu9U=;
+        b=mckBSnP8XKhoffzxLZgfezrLkU5SqEco9qaLzg2QjFUQvTF9zXSivI4AYlCCzGlZwi
+         Z7cSibOD+d6oZ8JW36/G7d28aUpDahKCeiCU4pa+CRhf47R3Bn2Hk61u3e7DX3PoyPCZ
+         zfUy2yG5ot1WG5jwEFwNdnK/9m068wtU65L/Dm4FjtcMmSxa2APd9ZvPuEmkOT85ew/S
+         XRSQRtMWuwwIziNZc1kBbKXh91/S2EoDII40YXqilatICvfStZcnfusZ82aRYtBRIHSu
+         VEkT+W5/I6DwvFPoL5QMKWc5u9L6P1o9h3wTglEykFZc1W10Iobdj3LExLtEEgMXxw49
+         4ixA==
+X-Gm-Message-State: AOJu0Yztp8GcG/sLtYWWaCshEUZmFyZfbcq/1EHAuYIs/oKrav10pkKS
+	jLpamnkbVza0Qb5Qmbj0nbmJFwkigKa69QE2mtPPUyCANPJFM7SPdJg+EnUteMAeb/pl9FVEume
+	pBnmINwFBzzvK7waErqIqxSD9HZGIdJ8=
+X-Gm-Gg: AfdE7ck4InN2H0OQdsKazeUw5MkyBVk2F+RMB5F6UDMHx59rhcX/z+7Q7QjIwFaEBZV
+	xy/QONZMeHxHdbDvy4uGiEo1jUJsShQm7WuVL9mOn9R0/2rOvgdnHWDUK2yhBAIwDrLk5pTjlZt
+	kFHMu4ViT5M4VUzTuBvJgYa9yS05TgxZUbk+eMZXvqHX0uEJLa5F6bco5FZYcqTInzd0GdkUlBh
+	jEau6GMmHAXoPdIvWReoMNbWOIK2fQiWACBHnvRVSdmef8RLeYpEr/8InP630wFXHDJ3EYGoYYm
+	nw6evU5n8TP+Q03r3yfQSfs4gwRtrUaqofrmX7IejUY1jkdxGA1yfFyJaMgIV0uwGOYeWFMghjv
+	aQyFFzf/pFc57UQ==
+X-Received: by 2002:a05:6808:13cb:b0:495:e30b:e2d6 with SMTP id
+ 5614622812f47-4a204e07becmr7697727b6e.37.1783655269974; Thu, 09 Jul 2026
+ 20:47:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260625194330.3711-1-graysontinker@gmail.com> <xmqqtsq7haev.fsf@gitster.g>
-In-Reply-To: <xmqqtsq7haev.fsf@gitster.g>
-From: Grayson Tinker <graysontinker@gmail.com>
-Date: Thu, 9 Jul 2026 20:42:59 -0700
-X-Gm-Features: AVVi8Ccm7WWD_gsrC5FF_VLrlZ5PH-5vAokU3WF7MUfeVu3bgv28sQX6GxTl_WQ
-Message-ID: <CAAr3fC29Mkn08B4-TWF9Vuhng0TcjV+mRGFa9DjkxgKixB_hXQ@mail.gmail.com>
-Subject: Re: [PATCH] gpg-interface: still print ssh signatures when allowed
- signers file is not set
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-	Fabian Stelzer <fs@gigacodes.de>, Jeff King <peff@peff.net>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+References: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com> <20260707-toon-git-replay-drop-merges-v7-3-808ab9b4afa6@iotcl.com>
+In-Reply-To: <20260707-toon-git-replay-drop-merges-v7-3-808ab9b4afa6@iotcl.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 9 Jul 2026 20:47:37 -0700
+X-Gm-Features: AVVi8CdL_eVionAG-DW4QU0VdD6xMOe394hNUmMU2Kyaux4CeMcSEXgVsGxyUYY
+Message-ID: <CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com>
+Subject: Re: [PATCH v7 3/3] replay: offer an option to linearize the commit topology
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 9, 2026 at 6:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+Hi Toon!
+
+Thanks for continuing to work on the series.  Sorry that I've been out
+on vacation for 3+ weeks and then playing catch up.  You addressed all
+my v2 feedback, and most things in this latest v7 look good.  I do
+have one substantive concern with this patch, which I'll cover in
+detail below.
+
+On Tue, Jul 7, 2026 at 12:07=E2=80=AFPM Toon Claes <toon@iotcl.com> wrote:
 >
-> If a user runs 'git log --show-signature -100', they will be spammed
-> with this message 100 times.  Because it bypasses the
-> advise_if_enabled() mechanism, there is no way for them to disable
-> it.
+> One of the stated goals of git-replay(1) is to allow implementing the
+> git-rebase(1) functionality on the server side.
+>
+> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
+> was given. This mode drops merge commits instead of replaying them, and
+> linearizes the history into a sequence of regular (single-parent)
+> commits.
+>
+> Add option `--linearize` to git-replay(1) to do the same.
 
-The downside to using advise_if_enabled is that this single line would get
-turned into three, with a newline in the middle, which would decently
-disrupt the view of the log until the hint is disabled. I'm not sure what t=
-he
-best solution is here; I lean towards keeping it as is to reduce the overal=
-l
-noise level, but perhaps those who use this feature more would disagree.
+Right, `--linearize` exists to change how merges are handled.  I'd
+argue that if there are no merges, then you should get the same
+behavior whether or not --linearize appears on your command line.
 
-(The previous message was also printed every time, FWIW. So at the
-very least this isn't worse behavior.)
+> Each replayed
+> commit is stacked on top of the previously replayed one. When a merge is
+> encountered, the commits reachable from all of its sides are replayed
+> into the single line and the merge itself is dropped.
+>
+> If a ref was pointing to a merge commit, that ref is updated to the
+> merge's last replayed ancestor.
 
-I'll make the hint disableable if you'd prefer.
+This is a good description of the net effect of linearizing a single
+branch.  I think it describes rebasing multiple branches at once much
+less well -- see below.
 
-> However, doesn't cryptographic verification still provide value on
-> its own?  Even without allowedSignersFile, the signature at least
-> guarantees the commit content hasn't been modified since it was
-> signed, even if the signer's identity remains unverified.  If some
-> users rely on this purely cryptographic validation, they probably
-> won't want to maintain an allowed signers file, and they would
-> definitely want a way to squelch this repetitive advice.
+> git-replay(1) accepts multiple revision ranges, for example:
 
-Allowing for this usecase was exactly the intent of this patch; I am
-this type of user and had some annoyance with this.
+I think I know what you mean, but this isn't quite right:
+git-replay(1) only ever accepts a single revision range.  From
+gitrevisions(7) (also in git-rev-parse(1)):
 
-Thanks!
+       Commands that are specifically designed to take two distinct ranges
+       (e.g. "git range-diff R1 R2" to compare two ranges) do exist, but th=
+ey
+       are exceptions. Unless otherwise noted, all "git" commands that oper=
+ate
+       on a set of commits work on a single revision range. In other words,
+       writing two "two-dot range notation" next to each other, e.g.
+
+           $ git log A..B C..D
+
+       does not specify two revision ranges for most commands. Instead it w=
+ill
+       name a single connected set of commits, i.e. those that are reachabl=
+e
+       from either B or D but are reachable from neither A or C.
+
+You could say that replay accepts multiple branches (references)
+within its revision range -- but even then that comes with an "in some
+cases" qualifier: `--advance` (and more recently, `--revert`)
+specifically reject multiple positive refs, precisely because (a)
+simply concatenating branches is surprising, and (b) the resulting
+order is ill-defined (or at least looks arbitrary to the user).
+
+>     $ git replay --onto main topic1 topic2
+>
+> Without `--linearize` this replays 'topic1' and 'topic2' onto 'main'
+> independently and updates both refs.
+
+And, if there are no merges anywhere in the range, I'd argue that
+adding --linearize either ought to do the same thing -- or else error
+out that multiple positive refs are not allowed with `--linearize`,
+the way `--advance` and `--revert` already do.
+
+> With `--linearize` the whole set is flattened into one line: the ranges
+> are stacked on top of each other rather than replayed side by side, so
+> both refs end up pointing at different points along that single history.
+
+To me, this is a significant principle of least astonishment violation.
+
+> Replaying all revision ranges into one single linear history is
+> intentional and it's the only way to ensure predictable results.
+
+I have to push back on both "only" and "predictable".
+
+Regarding "only", there are at least two other choices:
+  * make --linearize incompatible with multiple positive refs
+  * More involved implementation (quick sketch): (a) Track a
+last_commit per branch specified on the command line, (b) Make the
+revision walk keep track of which branches each walked commit is
+reachable from, (c) for each commit to be replayed, for each branch
+it's reachable from, update the appropriate last_commit[branch].
+(Except that when last_commit[branchA] =3D=3D last_commit[branchB] and a
+commit is reachable from both branchA & branchB, you only replay the
+commit once.)
+
+Regarding "predictable", I'd like to split predictability into two
+pieces: guessable by the user, and consistent with other replay
+commands.  This behavior gives us neither:
+  * guessable by the user:
+    * which of the multiple branches specified on the command line is
+first in your concatenated linearization?  It's decided by rev-walk,
+not what the user wrote.
+  * consistent:
+    * why does a merge-free topology behave differently with
+--linearize than without it?
+    * why do `--advance` and `--revert` both refuse multiple positive
+refs to avoid exactly this "which branch first" concatenation, while
+`--onto --linearize` embraces it?
+
+For what it's worth, looking back at the v5 thread, it seems the `base
+=3D last_commit` rule came in to fix the real bug Junio and Phillip
+pointed out there -- that without it, only one side of a linearized
+merge survived.  That fix is clearly correct for the single-branch
+case.  My worry is only that applying it unconditionally reintroduces
+the multiple-positive-refs ordering problem we deliberately avoid
+elsewhere.  Making `--linearize` reject multiple positive refs would
+keep the merge-flattening fix while sidestepping this entirely.
+
+> A user
+> who wants to linearize ranges independently is advised to use separate
+> git-replay(1) invocations.
+
+Which, to me, is another argument for just disallowing multiple
+positive refs under `--linearize`: if the recommended way to do it is
+separate invocations anyway, we may as well require them.
+
+> Linearizing is a distinct operation, and flattening merge commits is
+> just one aspect of that. Recreating merges would be a separate mode, so
+> rather than mirror git-rebase(1)'s `--rebase-merges[=3D<mode>]` interface=
+,
+> git-replay(1) uses its own `--linearize` option.
+
+No disagreement here on this point.
+
+
+Thanks,
+Elijah
