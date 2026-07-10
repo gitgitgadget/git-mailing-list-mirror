@@ -1,139 +1,149 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DF61F91E3
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 06:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0F03B19DB
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 06:41:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783664095; cv=none; b=iH1eMW+eWF4xgtd5+xBnP1M8OKnmzm++5dmOGO7DcGqLHM4kxg57ts235RXrTEAjmYrfYAXA5gAnenb+7T4Vn+E6TCamcT/Yhp0nC87q+PpvZHrPn33WkUy0r77vbObMpE6H44p8nDA/5+vTXBTOpC5nHVfd+JAjjcPwRmCL0i0=
+	t=1783665668; cv=none; b=V3pXOu+otScN6FOyoKspYRh6YPG5IIte4XFLbIitSXs7ggSSzVOdLxl+gi6fY7x5XvisJ1q11V7xqg+fYHhzt1qmJYHqF2jhWrMYHnfDLuR0/Ttgj0v21bIcIEeynsPbykQYSh2EerqO+VJBj72WoGQbI5JSbDeHFb7PTEbpakc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783664095; c=relaxed/simple;
-	bh=5FME86CcQQL2VCFV4b8vWHnPR7tYayhaPOyyGziwTJk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F7sO2h2GlBrol2Srknb7eMU9aUSXhcYfypf2WWD/FO3zoTKtHgYhtVUOnXihziHQmgWJvmTdeVh4QhANySZGmpUV8RmWrXbsZi/+G/HZHcacM0Psvqrsx2Siii5lOqa4loPstXi8ivwdS0OA3zS8XB4ctXfUMSbtDLnJ+UYtXzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m7B2nA7J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qjENvxfM; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783665668; c=relaxed/simple;
+	bh=+F2Xb/O2Ksf62wDRnqzT2Nu81eHheiCo+VUKzMQCGlM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=URN9kH8Ul9UnUatgqMiBBC0WDUz9imwG6ceB7Ma/Bt4SrcC6oRDhq59YELIo/AqX8Hh+OctDuirhh8KVkry6LiH7M+L1q3Kl+vvktcd31skSAX/rz0afMqKdgW9ood8a+J6Qh3fR9w2DDyhO94xK1Zsze3aOMzmSVgq4UCt7WuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n7QoepWP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HGsmfzf7; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m7B2nA7J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qjENvxfM"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id EDF02EC01D1;
-	Fri, 10 Jul 2026 02:14:52 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 10 Jul 2026 02:14:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n7QoepWP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HGsmfzf7"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 551A67A008A;
+	Fri, 10 Jul 2026 02:41:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 10 Jul 2026 02:41:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783664092; x=1783750492; bh=lJj7m3Nw+T
-	Vzmde1uy22YR0Mi852eSgF4FbVWHhDsno=; b=m7B2nA7JiwaNo4arlpM33S5rn9
-	DvAaANyI/ad4OfTd6AXsfhRiwdFqHuXDFqjckkw7Temt9ELRLIXXqWWtDJ0gYQm5
-	zn6HKDiJpem6Rzn+a3klMYXHJfEvf4C4voeXN+caEnIDlnkrleBBm3YFvPnyJl2S
-	soiwSnyNhzPAUYgg30LseWv7qv4di6ghti8krDYLr/buUfcx4P6d8nhguy4eP85B
-	w8YkN8ihWXJyu6wvYc6QTzWyip9ydexy4R3BHvsGp6edaZTMkkOdebR6+8zPVkSg
-	0iFPik9vSnIb/MjmCCM4cLF7hwnJRfmYZt2m3LErqnpUfDp/p6u4CrsclMSA==
+	:subject:to:to; s=fm1; t=1783665665; x=1783752065; bh=yxF0FsjfEK
+	SajqKTWKnYs8Zt9rTbhsMKSmaudQhvxzg=; b=n7QoepWPgzE1nbX3oAyEXT8Qj8
+	Zztv6m4FOVv09OwPZtJbKBmY493vyNAhAcNe2hdaOZVuu9K2DLdWyaZCdDuoH90E
+	9++J98vOB+zCUED0Szkpc2I8anygIrDSrOChn2Q26auG+DMnhQSVS/eFu/zcv1Xi
+	v5OVIlUoKjmISyZYsBGLCW2Gm0lt/THscnQjeK8Gd39cJu6hhUjhj4R8bJQHR8gM
+	ddYtne13iNfZ3MhYCJC5itkQnQu7JnGpgbR9igNKYJSg24h03eW07/KbrS57l21g
+	C/FQItPfxm3C0HJURxbRGq2YrY+wxNXBn6uJincNqP3UB/HjcDzrtk+haiTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783664092; x=1783750492; bh=lJj7m3Nw+TVzmde1uy22YR0Mi852eSgF4Fb
-	VWHhDsno=; b=qjENvxfMq3uXK47sVzZboVbOFmuxFwcwcOK7y0qQq/PE9htXdAn
-	7p95tweEg4YArJq+ogbPHx4GMKc1ceEtwTEodkc/6EPGxE2sKXTamWl90a1WgK4F
-	PdROQzmU381oEYM8yQR+7AKQeo+lzkvKXqEgli1hE+rviQzlCHxVsJiMZsaSjXjJ
-	3QImmoucDZNOJbb9ZpZz08RtnmdJ2atzJ2LN3ZOCNSTVkf5df2YaBQWjHs/xOKMc
-	ai4ocvMSjCz2U1aXmYjBTOlETceIyiJqRlucKtAZVqnT0t6Mp1UKhas31VhDK6pw
-	lJcMzxefno+K9G309Zex1ylEcTZR52GNimA==
-X-ME-Sender: <xms:3I1Qal0XJdbI8sVO6X8SKmnR8Hx6NsMi2jJUY8F0JZRAtK3x-4VhtQ>
-    <xme:3I1QaiEgGInh5kFBRPwZ9Qz-Ng3Kfi5ds3v2pvaR9nC2gsbqu5DyjDu1xx2Kg6ci5
-    Z0ZGIQnBrCXtXYR47BkV4XBVah074n_YLiROZVEj1jJ0z1FzMX0gQ>
-X-ME-Received: <xmr:3I1QajhK2HxWjCIIEzhrc4YKQhw24xG7DRDA0Gd-PUvRikGa8XZfI_a1ceNaNloHpyJKL4SG4qDhHD-Zd6Zpawaco6uDsVQtdeh5nmL5G1FItw>
-X-ME-Proxy-Cause: dmFkZTFosPH+PHKuFGZDx9uucJHmJzzKwF1Q6oyadSm4O6CY2pBSsO+9gjB22fobDbFNuS
-    xeplyMwn9JL3BzLVjNZ8j2DrZ17XefzWTpN0BOlE0vE2/YCcp/tr7ymB18qpqfxUU5cYrx
-    KQ/DRw+KBkMHG1Q0yA5A0+tN2inWRahkQQC8KkgqN7VGrDmCQF0tPFm3bFfUBuJijHU+Im
-    iIjONmZEGQRVxjTSQdxo+XySzsJ+SinoXAcM+k6xNxCjZowDhfWD1y/NULwzpEOVh5gJ//
-    Av8n++G5WMMY2xIX/wwmRZf4hoKAKfL3hFNxIXs5vLyzRPmuzfEF2yNI4b26kaacXxcEpu
-    wkuvbyt1bxZayL9i3sJX/96asrM9Fxpwdteci0nsAPXf+pDJvw3VK3oqzfUqFEdzDf76AG
-    ork2IhVwzDfW4aO3mAQyKRp7LHs/qUxeOfS2FE64ylEL2xo5xF6eAH9X5wosMI7ycuRDPj
-    yUL97bCcA70M7CX4XB3+4eHx4815uMcHtGsz2ebz27+CIV1sfryoLqHEAlUls7dyhQg8/f
-    887/cpsfATYmgtVcHmIg3XGLusMy8/OU7GftfLK9PJ/DuffVp2Q9aKMi23W4o/aTzFSEqJ
-    fsV4v+D6EquKgL2f34vfv0HKJ/R1kcUgVr7IgwDcYcTen1eLEMFXIO5MMl9w
-X-ME-Proxy: <xmx:3I1Qat8yQJ5QAVwTMxkT9vUvpTTPF46wJa8s1m8FerhWKFMLuTPI8A>
-    <xmx:3I1QaqqAZECGb4_p5rUmxjW5BTOrOnf5FoT2o3kDgSCxLtDNmrLMbA>
-    <xmx:3I1Qas9vs1yDsbCCmTZTv43Jr3K293ZOrIiY2hNIW38h5gKnwglIqQ>
-    <xmx:3I1QauVHQx-DZ76nUIlDjPuzNTcG9H8YF2sfvXDKTpR0Tycl5hLUPw>
-    <xmx:3I1QahMY8ndiI8TwJlHrzZkegL7mxyBaa1NNBMwkilpEE5WqJkjnNEN1>
-Feedback-ID: i197146af:Fastmail
+	1783665665; x=1783752065; bh=yxF0FsjfEKSajqKTWKnYs8Zt9rTbhsMKSma
+	udQhvxzg=; b=HGsmfzf7id6WL/y6mfd1UzLHrgUInqrsl6rgT9H6KcZoz6gCg8p
+	w8H7WPR1tlsadVg8wHG3MoxukIZzCAwIeSsw6upJnuJlbaYWP8Mome8lOf1pDaV8
+	QoUXyGhP0GdzFKoYCwdZDPuHmiVZ5RwhSiav0A2ym4QStVZZ5hWhAM3+jH9APH+l
+	8biypTX+MM3KKt9RQQ68G5Eyu/ru+79+xbGH+6i8flmf2mIbQmffLCHquWL3HJ5K
+	sGbahOHQ4p24ZgMhZDGNhKrqGOxy/jgOWpsEk3fLpa4gu6QBrhv9qJzkMq7pwYzy
+	ElCNBkNS9oaIpRo0lT6zcOpTuJnSMGrlKtA==
+X-ME-Sender: <xms:AZRQarUtNI_USF1-JylSYzf8VFFQyQIsTq3DW6HKgAtnCDSvB0oMWQ>
+    <xme:AZRQarAL9qSXRD_jr4n8L1G-TrHkNB4nyjZLAT8vF7QzUqZCIEg3IK1QX0jW35_Nt
+    ZCPd_5khXXZXiOshEAzWr_DrEQlTr_XJa9OdWhZXaf0Mbo36ny-4xY>
+X-ME-Received: <xmr:AZRQakwiAeZLWSE6b8vGaIVDRGemcnoQnUhiwernI6rJJRTTLmJ26I8fIXMh9Dg7qyq2ZcprNnrImDBMJhV3is89ASfgT0d5_4elVek>
+X-ME-Proxy-Cause: dmFkZTEqhU8LZ9RWy0shc1HAdvUH/LmbpXSzRT2OeEScdjTDReWI5qwPdfDYZ5Dj6TEeOx
+    c3WtVFhkA+BTMGdZUx9TCCLTAsjRjgFGbecM+I9J1T5/c9/qKv65l7uEsmdRb3AZw7qL4G
+    KJZmZkDqWyS9LCTj/0iE63GI1e+KMAi4VJsQ3gclZbEOlmP2IumvhSHvXV8fbRrdsVYuLF
+    FMHSSJjQp+aldVC6Dzr0srwEGqY7OqHhVniJiABXe9Ufa121IZBH4UIWyVbBGX6Z8h7VfT
+    /EsvLYdtQAQLPdSddmsk8SvIJZ5XL1A+Pb98KVOKQRDDP+TVtfSwXlmqfSSZ0kgpQR0aao
+    15pV1JQRQSz0hvWAVx2roi16YwYSmQQl4yC+LbVorT9XFBPbMuBzbardvPDyE+GjITxX9Y
+    zKkRqqnWNYRpv34J29fYlu0Ovmbkc5VqEEsBd0Xb7OHSHTpulTuMezL1Ci48VVxAxkiSF6
+    ghWk99zpCODGYPaLIuEZ4dMu37xh6v4sQfNLyOyI05hqIM1O445LUPEnt55f38owa/SuJt
+    I+0U8706XiVQUu075I6WpwStBuzcb9PQstpMQavfakjbVrWcdvTKLrbIk6BHAU4dh+V+j/
+    R0b6WdyV+/Dl0AeixR8/X1/+3jpxlV1d0U64fIcAoF+cB99ZHO/vy0tcZ97w
+X-ME-Proxy: <xmx:AZRQagBmJmLz02AAudYTq6x0VDIJguq4MGRcKtf9L90f8i49M9KqaQ>
+    <xmx:AZRQapbpXryaSw82GNJWrDP74taMUYoB6GjQS4apih_p1jm-d7SUnw>
+    <xmx:AZRQagi6H-90y5wJtSqZ50UThUWo051tjms2yr3EeKXGq6E1uz8-UA>
+    <xmx:AZRQaj5v2C7xRcoiZVK3KGkH0wFo-9Aese0s3caz3Xl5toeHopYdVA>
+    <xmx:AZRQavAxFUlaPYXmz9-6baSohGhWJZ11w4ot_hJMBjjJ7Jm8QTMsgdXS>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jul 2026 02:14:52 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 77533892 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Jul 2026 06:14:50 +0000 (UTC)
-Date: Fri, 10 Jul 2026 08:14:48 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+ 10 Jul 2026 02:41:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] refs: remove use of `the_repository`
-Message-ID: <alCN2Afi4gTSSajg@pks.im>
-References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
- <xmqq5x2nlwyg.fsf@gitster.g>
- <alCJgLcjXKEgNwFF@pks.im>
+Subject: Re: [PATCH] builtin/add.c: replace run_command() with direct
+ apply_all_patches() call
+In-Reply-To: <20260709192619.46791-1-gatlavishweshwarreddy26@gmail.com> (Gatla
+	Vishweshwar Reddy's message of "Fri, 10 Jul 2026 00:56:19 +0530")
+References: <20260709192619.46791-1-gatlavishweshwarreddy26@gmail.com>
+Date: Thu, 09 Jul 2026 23:41:02 -0700
+Message-ID: <xmqqmrvzfitd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alCJgLcjXKEgNwFF@pks.im>
+Content-Type: text/plain
 
-On Fri, Jul 10, 2026 at 07:56:19AM +0200, Patrick Steinhardt wrote:
-> On Thu, Jul 09, 2026 at 01:39:03PM -0700, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> > > The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
-> > > 2026-07-06) with ps/refs-writing-subcommands at 002fe677ca
-> > > (builtin/refs: add "rename" subcommand, 2026-07-06) merged into it.
-> > > Despite that, there's a small set of conflicts with "seen" that can be
-> > > merged like this:
-> > 
-> > Thanks for a heads-up.
-> > 
-> > This seems to break so many tests when merged to either 'jch' or
-> > 'seen', even though all of them pass standalone.  I did not have
-> > time to figure out what interactions with which other topic are
-> > causing the breakages.
-> 
-> Oh, interesting. I'll investigate what other topic this has interactions
-> with. Thanks!
+Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
 
-Hm, curious, I cannot reproduce any of these failures at all, everything
-is passing locally when merging "seen" into my branch. Did you maybe
-mismerge the changes in "setup.c" by accident? That seems like the most
-likely reason as you mention that it breaks lots of tests, and "setup.c"
-is of course involved with all of them.
+> When the user runs "git add -e", the diff of the working tree changes
+> is written to a temporary file, opened in an editor, and then applied
+> back to the index. The application step was done by spawning a child
 
-For reference, this is what the final result of the conflicting part
-looks like on my side:
+"was" -> "is"; in the first part of the log message that gives an
+observation, we describe the status quo in the present tense.
 
-	if (real_git_dir) {
-		struct stat st;
+> process running "git apply --recount --cached <file>", which is an
+> unnecessary subprocess since the apply machinery is available as a
+> native C API.
+> @@ -187,7 +186,6 @@ static int edit_patch(struct repository *repo,
+>  		      const char *prefix)
+>  {
+>  	char *file = repo_git_path(repo, "ADD_EDIT.patch");
+> -	struct child_process child = CHILD_PROCESS_INIT;
+>  	struct rev_info rev;
+>  	int out;
+>  	struct stat st;
+> @@ -217,11 +215,15 @@ static int edit_patch(struct repository *repo,
+>  	if (!st.st_size)
+>  		die(_("empty patch. aborted"));
+>  
+> -	child.git_cmd = 1;
+> -	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
+> -		     NULL);
+> -	if (run_command(&child))
+> +	struct apply_state state;
+> +	const char *apply_argv[] = { file, NULL };
+> +
+> +	if (init_apply_state(&state, repo, prefix))
+> +		die(_("could not initialize apply state"));
+> +	state.cached = 1;
+> +	if (apply_all_patches(&state, 1, apply_argv, APPLY_OPT_RECOUNT))
+>  		die(_("could not apply '%s'"), file);
+> +	clear_apply_state(&state);
 
-		if (!exist_ok && !stat(git_dir, &st))
-			die(_("%s already exists"), git_dir);
+Compared to existing callers of the apply_all_patches() API
+function, this implementation curiously lacks a prior call to
+check_apply_state().
 
-		if (!exist_ok && !stat(real_git_dir, &st))
-			die(_("%s already exists"), real_git_dir);
+Has this been tested, and do we have sufficient test coverage for it?
 
-		apply_and_export_relative_gitdir(repo, real_git_dir, 1);
-		git_dir = repo_get_git_dir(repo);
-		separate_git_dir(repo, git_dir, original_git_dir);
-	} else {
-		apply_and_export_relative_gitdir(repo, git_dir, 1);
-		git_dir = repo_get_git_dir(repo);
-	}
+Calling check_apply_state() should flip state->check_index on, given
+that state.cached is set to 1 above. If I remember correctly, having
+this bit enabled is required for apply_patch() to toggle the
+.update_index member, which in turn allows apply_all_patches() to
+update the index with the patch results. Please double-check this
+logic, since it has been a while since I looked at these specific
+code paths.
 
-Thanks!
+If my assumption holds, this patch might inadvertently stop writing
+the result to the index, even though the original intent of
+replacing 'apply --cached' was clearly to update it.
 
-Patrick
+Thanks.
+
+
+>  
+>  	unlink(file);
+>  	free(file);
