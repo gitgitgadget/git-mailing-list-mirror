@@ -1,99 +1,136 @@
-Received: from avasout-ptp-001.plus.net (avasout-ptp-001.plus.net [84.93.230.227])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB88F28373
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 18:38:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7485C37CD3C
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 18:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783708730; cv=none; b=lWpON1OhzBOJV5miMxXu2rIeUu5NyQKf4ohs485yitTJdS1Sbi1PYvr6lgs3remwuEbqPOoBYoGaMssq+0/4H6X6GbJTbo0+M4GXQDnLyuH4nTavFfmtA9lWtPBt5WqI4jQcCdnAn9jlxm7jWYuk5iw+JyhxHuGDCaE4c3BeEZU=
+	t=1783709467; cv=none; b=BWEDqqUcsX5p7L2qbU8IUZcWvLS+nq20Ua+1+YSqUX8mHMjoat2ZBi+1G6AVrnQa76UeyWAa6P5AbULyNSSNV6S1tmoSl3VwdVkC44uYzzqPwfaQ7TEGQyvY7Xmq8TlHM48WepThKL8U+NCLSghyDLWyOWUmcq+kTF8V/uNhnN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783708730; c=relaxed/simple;
-	bh=Z2cPrODQfNwBRLWEp+plAGrACon8BdDqNYRTOGo1Ibc=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=gtjaWOWWpx07HuVb13ffLAMP8PbDoeStbC0uJW0uqFftRNFGDv+VXgEAcLV9CGuEr7hBlM/NCNSbKl9DgWvaa1NZoT35gacuDISpHJtPFlGiKMWaX5WwgtssZpCD39e5ThX63p70sSwSSrI5RLg8LYwpJRbVh318+guYPcJ0qXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=TxX5rxMh; arc=none smtp.client-ip=84.93.230.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1783709467; c=relaxed/simple;
+	bh=LjP9+fU8vHAdNbSQ9m7UEu0d7jURfTad7t/Szn+HyDs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YUBdS4tgGbsKRlZvhjyzTnuD3kfOuSbAmVSjoXXYgaVzObfcTULkOvNr7ITkGpr25j17rr/DLo/Kj+umrR1UD01G/Gfe3xnJ19Ojy+vmMYcbtN3hLyIG0M+BaxKH4OkXBvOpt/D6pEsyICC8wOkfW8yowicsJ6h5Zbl47CKP6VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cwVxjazM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DCFbLC3u; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="TxX5rxMh"
-Received: from [10.0.2.15] ([195.99.11.174])
-	by smtp with ESMTPA
-	id iG7YwG9Y0kMb1iG7ZwGpzc; Fri, 10 Jul 2026 19:38:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1783708725; bh=mP/moTDXy6puberTGtdJkdHqLJuRnxqfMtOgKFKQZSw=;
-	h=Date:To:Cc:From:Subject;
-	b=TxX5rxMh67ggsQsRXjVeIrEpgdhbqnzwgxUQ95oTlbRTtCjfSt8lJM6Fk3ZnFlqRX
-	 xel6ATCFNFPf3GPzq0Ars3zeWheJLLHySPXFM+RWX0gDC5jHo3SE4H6D+JNjbNVCTq
-	 hKWbP4KDjmc/pmgglO4a3P1q9bmRJVmZi1Hs0ZMv+DPSQdmDOWHgOULuBmmhOgp5hA
-	 8w50XV7rI5b5ErfR47U6FuakOl1x0eSiWg8iameLwvRsDp3vlcSytFqIWYhoOXyJGt
-	 Izcn8z1lG0L+1S78rFAopwR3z1I4A29jwAx76PXb3RbHQCIzIy9cQZCfqPQb8tTLW0
-	 0E5qSKOtQTzLQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=AMGJABRe c=1 sm=1 tr=0 ts=6a513c35
- a=rWEfxJwGD0TuYe46u5FB7A==:117 a=rWEfxJwGD0TuYe46u5FB7A==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=VXpWQFiRVPoNdADV5XgA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <0c94331b-7eb1-4116-afa5-811082ad5854@ramsayjones.plus.com>
-Date: Fri, 10 Jul 2026 19:38:44 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cwVxjazM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DCFbLC3u"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 733CB1400090;
+	Fri, 10 Jul 2026 14:51:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 10 Jul 2026 14:51:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783709464; x=1783795864; bh=//wc+TXmOS
+	jauQzImL4gFXIzm0OaKoP/0RCTOgKM6e4=; b=cwVxjazMDi4W5iA4qTVFwCb6qX
+	aqYWXqZNn4bk1L62X0HPXTTbrB44wocr4y6rcn0KbQOLBPZYgVq1OeGFuetDKlE7
+	VP+ziB0Ncb8qUN3N5bBhslWQhN9rSl+z68L7JxUMGn+yZhgqMjNINFPhmuT7ruU2
+	265EBVVjdU+bPX9odWsdwmsRFqTz8PjQf97fZYVa17bvy7B3zCuWYtywNKvXRAup
+	RVuG5eOpTEEqVAX5pG1dAW1f8213Z+1UGz/WX5HA2ZlXvUVmJAMauUACksFANxy1
+	Bg+mQWhYwem/EvWC/QkGZGpQJeypFODY3nPAA+r+ESn9KB02MtZf27/d9nGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783709464; x=1783795864; bh=//wc+TXmOSjauQzImL4gFXIzm0OaKoP/0RC
+	TOgKM6e4=; b=DCFbLC3uF87YIX5rt5x45650ZbkLRhc12GrEoKRWW2ZXd4qU0/F
+	f0qBFUOgO3KhWb22KachOmlMoyyQCLxxNnzCSuedJeTX+9lNbPXzlqHegblowdr6
+	wyy7Ywd8c5oX5xR+zg1hphr9KvSfsyOiXEuHPxMQesTu0w6Sw/m5aYAD68b/Ch8A
+	GA30FGZmSi7JmC1ZxvqTyWNcki2NKVpUudUevaoYHXLUKLJeYHQCeBaC097KGuO2
+	gArMIVlLTVoOeitiKL/U9HiuFRbSPeGxpIS+OBdkqtxwN5QSKfkk1QAEJj6IzE6k
+	yOB9V2beEOBoeylPdT48UuqCAznO7uB6GiQ==
+X-ME-Sender: <xms:GD9RamvJQ8z3iOHDAYgZyx8Ju5fqPh-8F0OoF_I3QMQcRe11viOKog>
+    <xme:GD9Rai7cSArT-bYN25BJlWHqh4nutKdRiYN5deSR4PA5qJFYuGe52GxLCYBbP3ZQw
+    TnkfYz4TgJKj8lVh4DFsrMIN5ZELIZ0qkFREFWhoxVWh6nVDc8P>
+X-ME-Received: <xmr:GD9RavIbvelQvu3sDIYredgMro8bdQ5MzHWAqGqQfkEhWRLBrFnrQRvGnYOlDTDsAOeaF0uRzzKvUdi7c1XGKnBR5n31WZViB6BtHjs>
+X-ME-Proxy-Cause: dmFkZTGUsftvXTFmwKcLuLdON0RC6/rOVYoNCpYd+GblIlAPLjvTHPHmtldQw3ppMqBWYi
+    Yxu8+rzIoEgLtIoqY8xbpVEakvqQzyU9I3xX6VX34mIdywbG/W69XvEBl/DRKmStHjfpiZ
+    U2cUHde9WSV5QircNB9dX0MP8z466Y2iebnWEc9Bpkc2kII/3kEHcCkf9gnOAwSvED0KVZ
+    8VGwfQy4rCvJehgbLNyIet2HKV39w/5ZfkGZPOhjIIWuslOJ7arc9PV9Mdp34zxD47hwwN
+    BQpIxl9PTQ4VJDnlAyJbKEKAVYkZCX4Dov+81vAEkAB+cbIA01oenVSLHtw34bgFV2IgL1
+    kRLry90cH9kQftawO9w9MzWKwiokgXgnkzoR6rdWJ0RmKqOcKIJTy8m8o7DbxpF6pGM2wq
+    yNgtUnyMQRB8LVCu45qj5gAG/03rwKR4DtaZIMKlhc4mj3b8DGVzZds6PQdQzwYoYVe6VN
+    ByUm1y6IRM/Ypu6yWuUxrjojoRFHaw3yOmUJvSb6VH6qILJPAucMIwWF8ryLBspwsiSP76
+    hxjrZC7GSnaOMNvDsNXobRzHKPxBslUoIsVahahdvfvcf+pQalkBZlelkKmUTqA0ecP5rx
+    ccu/Ra0WclnSBM6XegHVfropaaMo2wwmg65qvcqGXd0siCYoHwTJ10CZ1GAQ
+X-ME-Proxy: <xmx:GD9Raq7VgvTcIIEponCyRYuaZRiGHHUV0KVd6jQxMfQa-OfFo53nPA>
+    <xmx:GD9RaqzKePJLfX8WFObm-c_5f-NtgsHXeBJhx0wwXq9rqU--8eAPJQ>
+    <xmx:GD9RamZUpsyXx5QxGlnvYk6msqlWtSv3mDpz7XfK-ys61WGJW3Kt9A>
+    <xmx:GD9RakSdgEL_Ps8y_9gMmqrMICduIsr_Ckr2Qwby1nMxPjR689Hg8g>
+    <xmx:GD9Rau5LpCgWu2sJZkyrGW0tUUhBNdse6VdqqWUXFgCS-4XXAwdtpF17>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Jul 2026 14:51:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] builtin/add.c: replace run_command() with direct
+ apply_all_patches() call
+In-Reply-To: <20260710074105.50737-1-gatlavishweshwarreddy26@gmail.com> (Gatla
+	Vishweshwar Reddy's message of "Fri, 10 Jul 2026 13:02:06 +0530")
+References: <xmqqmrvzfitd.fsf@gitster.g>
+	<20260710074105.50737-1-gatlavishweshwarreddy26@gmail.com>
+Date: Fri, 10 Jul 2026 11:51:02 -0700
+Message-ID: <xmqqechad6g9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] Makefile: fix up lib directory move
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfON8/1MHkGRzzpwety9btnkxdjxVN1rOxo6ARUh8642fyzb6U7XPFffYiTVZeQBKWt6FjtBKOUakYu5ceBphoyPFczRM4kbII1D5Ch20t8J7G84qv9Ax
- NUh8/mESqBqRGqV9F+DiGcKH/lj+jnSo4tmPLZFMGoZgDLXH9EeNMcrbDpDJXwUyq99YbAzkmIa3LPoAN+xwLbrkY3WFo/X0kCQ=
+Content-Type: text/plain
 
+Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
 
-Commit 9759608622 ("Move libgit.a sources into separate "lib/" directory",
-2026-06-22) moved some files into a lib directory, but forgot to update
-a sparse dependency in the Makefile, resulting in a sparse error:
+> @@ -187,7 +186,6 @@ static int edit_patch(struct repository *repo,
+>  		      const char *prefix)
+>  {
+>  	char *file = repo_git_path(repo, "ADD_EDIT.patch");
+> -	struct child_process child = CHILD_PROCESS_INIT;
+>  	struct rev_info rev;
+>  	int out;
+>  	struct stat st;
+> @@ -217,11 +215,17 @@ static int edit_patch(struct repository *repo,
+>  	if (!st.st_size)
+>  		die(_("empty patch. aborted"));
+>
+> -	child.git_cmd = 1;
+> -	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
+> -		     NULL);
+> -	if (run_command(&child))
+> +	struct apply_state state;
+> +	const char *apply_argv[] = { file, NULL };
 
-      SP lib/pack-revindex.c
-  lib/pack-revindex.c:78:17: error: memset with byte count of 262144
-  make: *** [Makefile:3446: lib/pack-revindex.sp] Error 1
+These are -Wdeclaration-after-statement violations; we should move
+them to the beginning of the function alongside the other variable
+declarations.
 
-Add the missing 'lib/' prefix to the pack-revindex.sp path.
+> +
+> +	if (init_apply_state(&state, repo, prefix))
+> +		die(_("could not initialize apply state"));
+> +	state.cached = 1;
+> +	if (check_apply_state(&state, 0))
+> +		die(_("could not check apply state"));
+> +	if (apply_all_patches(&state, 1, apply_argv, APPLY_OPT_RECOUNT))
+>  		die(_("could not apply '%s'"), file);
+> +	clear_apply_state(&state);
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+Does it work properly when run in a subdirectory, such as "cd t &&
+git add -e")?  The apply_all_patches() function adjusts the path to
+patch files by calling prefix_filename() to prepend state->prefix,
+which represents our current directory.
 
-Hi Patrick,
+This is not a rhetorical question, as I am unsure what "file"
+actually holds at this point after calling repo_git_path().  I don't
+know if it is ADD_EDIT.patch relative to a specific directory, an
+absolute path to the file, or something else entirely.  It would be
+highly beneficial to include a test or two verifying the behavour of
+'add -e' from within a subdirectory.
 
-If you need to re-roll your 'ps/libgit-in-subdir' branch, could you please squash
-this into the relevant patch. (This patch was created directly on top of the 'seen'
-branch, rather than on top of your branch).
-
-Thanks
-
-ATB,
-Ramsay Jones
-
-
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index 703772ba4f..a36d2c1942 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2974,7 +2974,7 @@ lib/gettext.sp lib/gettext.s lib/gettext.o: EXTRA_CPPFLAGS = \
- http-push.sp lib/http.sp lib/http-walker.sp remote-curl.sp imap-send.sp: SP_EXTRA_FLAGS += \
- 	-DCURL_DISABLE_TYPECHECK
- 
--pack-revindex.sp: SP_EXTRA_FLAGS += -Wno-memcpy-max-count
-+lib/pack-revindex.sp: SP_EXTRA_FLAGS += -Wno-memcpy-max-count
- 
- ifdef NO_EXPAT
- lib/http-walker.sp lib/http-walker.s lib/http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
--- 
-2.55.0
+Thanks.
