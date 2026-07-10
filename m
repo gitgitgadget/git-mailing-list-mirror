@@ -1,74 +1,73 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F7B3C4B9A
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 12:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7DB32BF41
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 12:27:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783686426; cv=none; b=kk6iTT8t4uA7+umwF86tvSJrgumYeX3pwnNaG33BJz/VvGt7ica+5+EAqjqlSqjcKbDsiTZEFR7srMGM0EHoOOl5xCQaF+74fksCUtenkLa2act+izEmsSczTWLDXj+fwWcCQlZFyEgY1ZVJ6Q8n/ldhn1JicnvVWxYTwfOxr3I=
+	t=1783686431; cv=none; b=No6LJCvNrdosGYtgWRoApMDcXkvNMSqfw+vQWcrUD8ngC62NCjgLMQVg/ZfHnZjDjkUalMiAI3mZi5VVUtj3Ig9mPpVKZnwsoeeWD1D/23jMspxm5K6a9ETCx54GgujGqNXZ35i4QKYII8B610VRcv5y7aqOo5CL7nrrhvDjnss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783686426; c=relaxed/simple;
-	bh=pHLof1hDxeD4OlU0qpd4dSQMhjfWDiekLgg+VoCyZ4s=;
+	s=arc-20240116; t=1783686431; c=relaxed/simple;
+	bh=ORQO5DwPWZ8x//NRSHD72UP620z4itL0yRdgslU6J8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoI8+IOSGaOSJeks5oFVdL6txiF5v56Q3/KEHspL+SW3G8eG9K07qOodBD2HfqDN45u9CXKAXAzeroqjDlAoaW+to9eAB4Gc4TSFVQUQFqGY4Td3zQmAE/iBnQXMcy1eeO4hQ77YF9wu5rOyJNhIw7ZPWFBH/apaFK4nOBq5dLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JWQeCVLY; arc=none smtp.client-ip=209.85.218.41
+	 MIME-Version; b=oVmf5Idh/irpwkPgGPEgH+rmkajN1SKMlkw9uJGabrs71w7tNfIYeW7Kpz4OCK44iIqCMYP03k0jY/NiHk6MYJRk+pyYFzMfzf3nwIobSqn+tAhDL6KkTucWk7nPbr7/jc0DpaRzeIxyDkGqyxiyRlkQO141VIIMFQ+Fk6XsKdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RdEyi6+c; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JWQeCVLY"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c15e3141d02so105747266b.2
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 05:27:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RdEyi6+c"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c15d5468673so119639166b.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 05:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783686423; x=1784291223; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783686427; x=1784291227; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=N0yyqNxPGiafPUm9MbK7RcUN5wIGZMAldLa74kmWIbE=;
-        b=JWQeCVLYlkuER69KxQvd99/zZ6VWTvEexbE7zdZVUnsqo95mVakC5lHMHd+nHUBTgR
-         /kpFoPWN9t9JtEeXEHl826DAezVB1ie5ugRNUqh10fvTHFH7lUidPSMU2tJ2SjV/cToh
-         sh+Bd2U8mnnqW/a5j0iisiXexsoyGL527+jbxUebAeXhZBC8JTiBQp+65aaRovrvv0Rv
-         uWHbHGQIWDaEzcpjynUBElsYhqOSPDK9plzibIUEWWpqAU5pHagBDEf8Y1VI+dPIBVj1
-         li8UmSsoTb+FdsFJRbp+gJ50RxG++VlkGbBFRWMRyPtInq9l9tKfHIyo34anz4LCRupH
-         xDyQ==
+        bh=nC/FaidRePA5EHh219joaeUoIPV26yFrciI+8xxeRdk=;
+        b=RdEyi6+cHRLFLH9nWCM6TLxpRAacEnJmhnrwpH5RQLtGLyFlfXs6U8chaPWJFZQQdv
+         RXQGmi1wHvvvxN2PUBazQYa22xAWZ7zIwHhZRZGI18fdCnMhzsGt+LCNqK0P7kLnS6zs
+         Lf71Jcdzy3BJPC6qkX2HOhqej/z4mXLFelo+ofSAEfBG5kyquwAgvFa+xvg9GYsyuEW0
+         5+GsVpLzOX3SYKRzIs5+WVEZgKSs3zY0QVkExLaEJZFdlhMIP6M8JtSSMeeNNhTl/Qna
+         H5yztgeEIx9qnNIPBglRHePCsaBsIcZ3h71O6dDYzlv5UIckEtwYi/8gW34gjiEOY7bM
+         5/mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783686423; x=1784291223;
+        d=1e100.net; s=20251104; t=1783686427; x=1784291227;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=N0yyqNxPGiafPUm9MbK7RcUN5wIGZMAldLa74kmWIbE=;
-        b=Sc1UNWbfQTDLRMToCsyfqIOgOwwHT1oMhW44NC+QXBxLmNg3tScKUjXnRoBT67kTi6
-         6A5L+Gsd0y6VKD+JYpb4dPiI+KG9hb05aNJ5Yienh31euyExMfZYDH4cGJopfvs25r4X
-         UviMM1qbWr+b9fXQw6vgoUqXVU1LeGg4LaQ8dCxiSo8/n0Noku/Wrr64yAKIwdSv5KQj
-         bCosXNmcdILtgBe4FCsURFcwMMOVkehWT50j8JRN2sUuPiWT3CFrjJZAjMGfMH9laC31
-         xkD8eVM43zscUVNixbTe8xbCi7WQFFUWe9gYw8TbLf+EWU/JzrQ5seTJgoniKJZ1wTod
-         rjbw==
-X-Gm-Message-State: AOJu0Yx/MTDJ+ZzSuodjCr7pZAqIT0ZE9GBou0RY1FLWuoOIFGzC+w+K
-	VZeroJ4STxEIsXElGPQm3UBwhWwcRfLpA61WGjGmMfCiEWq8bBlLDc9zjRFHfvk5
-X-Gm-Gg: AfdE7ckn3AGdDfjuSKQZmnHwbDde9K6YPqezDlqnNYipUsm+jIpALWwiGh08zsUhsqm
-	IoinJUH4QxMy6LhZAgq5T5Q7/DirzwoYBJ7vnFFGqBXj4qUPjQXfoN/+9Jm1WLNPJpOMa+HBN2W
-	fYyqJ9R02DdRSLM8gmsPTeUkf0neN0JIKTXFY8cQc10YOq8eiyJW33tHvDgWN3pStLoKGyyRQ/X
-	mWGd+LDjV0oDQapdamtkUfzyvSQCt7pxyIpxQMAOZ+gXNudyGOc9dar1QCBfvk0GfDiW1Il/RC0
-	CSuQSvOB3E0pFiruIhG67bQtSwib1snw9si1NRf6b03NLidGgp7rEGL+G43ROoG5W6xNI3QljKq
-	zD5DaN09QwAIxNJXoqjAtzgqQZDzNyq6DszkJ/sTYMvP7A5S3e6PUh4qdl+ziOjbW2AxnIT0oHV
-	XwrfJ64CnVx1h2S/xfdVSLR0GJyjvMHI3DJ7+dmFtIA11FeUa3lKjsPxkHyU2tlrwwdjI87Mgkz
-	OtnDhncaWOJwF8gkvYIZ0iQPkLtbjmHd+uwSDLazlpP+w==
-X-Received: by 2002:a17:907:7254:b0:c15:bc2d:e938 with SMTP id a640c23a62f3a-c15ce1867c1mr530548566b.32.1783686422466;
-        Fri, 10 Jul 2026 05:27:02 -0700 (PDT)
+        bh=nC/FaidRePA5EHh219joaeUoIPV26yFrciI+8xxeRdk=;
+        b=LFIT1aIPTkFAxSa7jNSrOJrAOga19bX7W0qbFXxWRjLD0vzhP/E2qsysDrcjIxOOoY
+         Flvc4I42i6q9RZITlwQuGuUH+T0oBD6IjT9K5oeYbwgxlWR2nYM5k8FXeUDzvS5bGccN
+         O9JdslvXqZREFauX51OFaL5d/Nk/6NzlO5lQGZU5mhrwZqM7UCiOB5lJyLR7YmYx2TEE
+         30wC/+UpSwG6isSvN1Ed21nvc8fsuhBHRcGjY7tjWgHawsZVTIsEX+Aq5ihZbr4nqXs9
+         OkWRoMwpvpYvAw+X6E4XRfI2gogiNk/5rXt2wam6iLsBeGC2VHAiaJ7aGl9nYEJY4WR1
+         wYng==
+X-Gm-Message-State: AOJu0YxAAnnRX0uuwtSFiqsagLCUVFkseLre4qCvwX44scaHN6JDAgv7
+	uLLivthtmgPUwZHv0Sv39kUv2LcEZjyWBvOGlwV1DqOelfHunyhL2MVl48aM4e9n
+X-Gm-Gg: AfdE7cmsMbNet8T43Rkd1feL3YHRhelieYOEmsqboNegNJgRbHJVjJS0Cn+4AIXSYsC
+	XVk7loOn+1ZQkD9ipDWEhE8wqMBxR+hf1/JJoqWLTalWazkrpsAuu3PKog+vEYws49kklxoK69l
+	gXfD8yQEQwbIuk82j/dORuLHWmokAXGdEyu7zMg9/BUyp4RTAcK5F2woaZfqjbmcd2eYLUDfYvY
+	ZfX1dwStnpN3I1wtS3OZr+LNOndNvvnkcmM4yZgLMkCZwFE6/umLxTVNqu/fxZk9MZQAtdxYgpp
+	3WF57fdUNGN2xla5gYarjfat3/lEE0vckpTQ663KxLQjeFimSKzpwoQArrCp+i4WB+1gupl/V7p
+	JoMXuiG8L0sje53HCSeS1cUFyUqYxnCZ5ti1+/QFqB3ZTEAxer1Exr0chQTIMaurUoxMnC5PiG2
+	fycb5YYmBhjrk0ErQBbXxT62GnBwwPbnIXYenGdfQbSTTDbhUnE2xVCoUZ9iAfzupxR9P7sXWbC
+	WzVnbnQXhzIf3tdspHJYZUNlrMYSgRTUHAEY+q4ofo4Gg==
+X-Received: by 2002:a17:907:bd81:b0:c12:a469:c with SMTP id a640c23a62f3a-c15cded3365mr493365366b.9.1783686427317;
+        Fri, 10 Jul 2026 05:27:07 -0700 (PDT)
 Received: from M-K2012N0113010.localdomain ([88.119.128.229])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ce1b374asm405212966b.60.2026.07.10.05.27.00
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ce1b374asm405212966b.60.2026.07.10.05.27.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 05:27:02 -0700 (PDT)
+        Fri, 10 Jul 2026 05:27:06 -0700 (PDT)
 From: Paulius Zaleckas <paulius.zaleckas@gmail.com>
 To: git@vger.kernel.org
 Cc: Paulius Zaleckas <paulius.zaleckas@gmail.com>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
-	Elijah Newren <newren@gmail.com>,
 	Glen Choo <glencbz@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 1/2] submodule: fix premature failure in recursive submodule fetch
-Date: Fri, 10 Jul 2026 15:26:52 +0300
-Message-ID: <20260710122655.3066377-2-paulius.zaleckas@gmail.com>
+Subject: [PATCH v3 2/2] fetch: add fetch.submoduleErrors to make submodule fetch errors non-fatal
+Date: Fri, 10 Jul 2026 15:26:53 +0300
+Message-ID: <20260710122655.3066377-3-paulius.zaleckas@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710122655.3066377-1-paulius.zaleckas@gmail.com>
 References: <20260710122655.3066377-1-paulius.zaleckas@gmail.com>
@@ -80,231 +79,339 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When git fetch --recurse-submodules encounters a failure fetching a
-submodule's refs (phase 1), it immediately marks the overall operation
-as failed, even though a subsequent OID-based fetch (phase 2) is about
-to be attempted for any missing commits.  If phase 2 succeeds, the
-overall result should be success, but the prematurely set failure flag
-makes it look like an error.
+When fetching with --recurse-submodules, a submodule commit that is not
+yet reachable from any of the submodule's remote refs causes the entire
+fetch to fail.  This is overly strict when the missing commit belongs to
+an upstream branch that is still being prepared (e.g. an in-progress
+merge topic): the local branch does not need that commit, so there is no
+reason to treat its absence as fatal.
 
-Restructure fetch_finish() so that a phase-1 failure does not record an
-error immediately.  Instead, the decision is deferred:
+Add a new config key fetch.submoduleErrors (values: fail/warn) and a
+corresponding --submodule-errors=(fail|warn) command-line option that
+control this behaviour.  The default remains fail (existing behaviour);
+setting the value to warn causes submodule fetch failures to be reported
+on stderr without affecting the overall exit status of git fetch / git
+pull.
 
- - If missing commits trigger a phase-2 (OID-based) retry and that
-   retry succeeds, no error is recorded.
- - If the phase-2 retry also fails, the error is recorded then.
- - If the submodule was fetched unconditionally (RECURSE_SUBMODULES_ON)
-   and is not in the changed list, a phase-1 failure is recorded right
-   away since there is no OID retry to fall back on.
- - If phase 1 fails but all required commits are already present
-   locally, there is no retry to defer to; the failure is still
-   recorded, since the fetch itself went wrong (e.g. a transport
-   error) even though the wanted commits happen to be available.
-
-This resolves the NEEDSWORK comment added by bd5e567dc7 (submodule:
-explain first attempt failure clearly, 2019-03-13).
-
-Extract the common error-recording logic into a helper
-record_fetch_error() and use it in fetch_start_failure() and for the
-"Could not access submodule" error in get_fetch_task_from_index() as
-well; the latter now also lists the submodule in the final error
-summary.
-
-Add a test ensuring a failed submodule fetch is still reported when
-the gitlinked commits happen to be present locally.
+Forward the option to child fetches in add_options_to_argv() so that it
+also takes effect for `git fetch --all` / `--multiple` (where per-remote
+child processes handle the submodule recursion themselves) and for
+nested submodule recursion.
 
 Signed-off-by: Paulius Zaleckas <paulius.zaleckas@gmail.com>
 ---
- submodule.c                 | 52 +++++++++++++++++++--------
- t/t5526-fetch-submodules.sh | 72 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 110 insertions(+), 14 deletions(-)
+ Documentation/config/fetch.adoc  | 14 ++++++
+ Documentation/fetch-options.adoc |  8 ++++
+ builtin/fetch.c                  | 41 ++++++++++++++++-
+ submodule.c                      |  8 +++-
+ submodule.h                      |  7 ++-
+ t/t5526-fetch-submodules.sh      | 76 ++++++++++++++++++++++++++++++++
+ 6 files changed, 150 insertions(+), 4 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index fd91201a92..8bcef68a42 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1562,6 +1562,13 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
- 	return NULL;
- }
+diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
+index 04ac90912d..5c9c942a70 100644
+--- a/Documentation/config/fetch.adoc
++++ b/Documentation/config/fetch.adoc
+@@ -10,6 +10,20 @@
+ 	reference.
+ 	Defaults to `on-demand`, or to the value of `submodule.recurse` if set.
  
-+static void record_fetch_error(struct submodule_parallel_fetch *spf,
-+			       const char *name)
-+{
-+	spf->result = 1;
-+	strbuf_addf(&spf->submodules_with_errors, "\t%s\n", name);
-+}
++`fetch.submoduleErrors`::
++	Controls how errors from submodule fetches are handled when
++	`--recurse-submodules` is in effect. When set to `fail` (the default),
++	any submodule fetch error causes the overall `git fetch` or `git pull`
++	to exit with a non-zero status. When set to `warn`, submodule fetch
++	errors are reported to standard error but do not affect the exit
++	status of the command. This is useful when working in repositories
++	where some branches reference submodule commits that are not yet
++	available on the submodule remote, but those commits are not needed
++	for the currently checked-out branch.
+++
++The value of this option can be overridden by the `--submodule-errors`
++option of linkgit:git-fetch[1].
 +
- static struct fetch_task *
- get_fetch_task_from_index(struct submodule_parallel_fetch *spf,
- 			  struct strbuf *err)
-@@ -1599,7 +1606,7 @@ get_fetch_task_from_index(struct submodule_parallel_fetch *spf,
- 							ce->name);
- 			if (S_ISGITLINK(ce->ce_mode) &&
- 			    !is_empty_dir(empty_submodule_path.buf)) {
--				spf->result = 1;
-+				record_fetch_error(spf, ce->name);
- 				strbuf_addf(err,
- 					    _("Could not access submodule '%s'\n"),
- 					    ce->name);
-@@ -1753,7 +1760,7 @@ static int fetch_start_failure(struct strbuf *err UNUSED,
- 	struct submodule_parallel_fetch *spf = cb;
- 	struct fetch_task *task = task_cb;
+ `fetch.fsckObjects`::
+ 	If it is set to true, git-fetch-pack will check all fetched
+ 	objects. See `transfer.fsckObjects` for what's
+diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+index 035f780e58..78525f6848 100644
+--- a/Documentation/fetch-options.adoc
++++ b/Documentation/fetch-options.adoc
+@@ -294,6 +294,14 @@ ifndef::git-pull[]
+ `--no-recurse-submodules`::
+ 	Disable recursive fetching of submodules (this has the same effect as
+ 	using the `--recurse-submodules=no` option).
++
++`--submodule-errors=(fail|warn)`::
++	Control how errors from submodule fetches are handled when
++	`--recurse-submodules` is in effect. When set to `fail` (the default),
++	any submodule fetch error causes the overall `git fetch` to exit with a
++	non-zero status. When set to `warn`, submodule fetch errors are reported
++	to standard error but do not affect the exit status of the command. Can
++	also be configured via `fetch.submoduleErrors`. See linkgit:git-config[1].
+ endif::git-pull[]
  
--	spf->result = 1;
-+	record_fetch_error(spf, task->sub->name);
+ `--set-upstream`::
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index c1d7c672f4..40daaf5cc7 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -110,6 +110,7 @@ struct fetch_config {
+ 	int recurse_submodules;
+ 	int parallel;
+ 	int submodule_fetch_jobs;
++	int submodule_errors;
+ };
  
- 	fetch_task_free(task);
- 	return 0;
-@@ -1779,18 +1786,12 @@ static int fetch_finish(int retvalue, struct strbuf *err UNUSED,
- 	if (!task || !task->sub)
- 		BUG("callback cookie bogus");
- 
--	if (retvalue) {
-+	if (retvalue && task->commits) {
- 		/*
--		 * NEEDSWORK: This indicates that the overall fetch
--		 * failed, even though there may be a subsequent fetch
--		 * by commit hash that might work. It may be a good
--		 * idea to not indicate failure in this case, and only
--		 * indicate failure if the subsequent fetch fails.
-+		 * This is the second pass (OID-based fetch) and it failed.
-+		 * The commits are genuinely unavailable from the remote.
- 		 */
--		spf->result = 1;
--
--		strbuf_addf(&spf->submodules_with_errors, "\t%s\n",
--			    task->sub->name);
-+		record_fetch_error(spf, task->sub->name);
- 	}
- 
- 	/* Is this the second time we process this submodule? */
-@@ -1798,9 +1799,17 @@ static int fetch_finish(int retvalue, struct strbuf *err UNUSED,
- 		goto out;
- 
- 	it = string_list_lookup(&spf->changed_submodule_names, task->sub->name);
--	if (!it)
--		/* Could be an unchanged submodule, not contained in the list */
-+	if (!it) {
-+		/*
-+		 * This submodule is not in the changed list (e.g. it was
-+		 * fetched because RECURSE_SUBMODULES_ON fetches all populated
-+		 * submodules). A phase 1 failure here has no OID-based retry
-+		 * to fall back on, so it is a genuine error.
-+		 */
-+		if (retvalue)
-+			record_fetch_error(spf, task->sub->name);
- 		goto out;
-+	}
- 
- 	cs_data = it->util;
- 	oid_array_filter(&cs_data->new_commits,
-@@ -1809,6 +1818,11 @@ static int fetch_finish(int retvalue, struct strbuf *err UNUSED,
- 
- 	/* Are there commits we want, but do not exist? */
- 	if (cs_data->new_commits.nr) {
-+		/*
-+		 * Schedule an OID-based phase 2 fetch to retrieve the missing
-+		 * commits directly. Defer any error from phase 1: if phase 2
-+		 * succeeds, the overall operation should still succeed.
-+		 */
- 		task->commits = &cs_data->new_commits;
- 		ALLOC_GROW(spf->oid_fetch_tasks,
- 			   spf->oid_fetch_tasks_nr + 1,
-@@ -1818,6 +1832,16 @@ static int fetch_finish(int retvalue, struct strbuf *err UNUSED,
+ static int git_fetch_config(const char *k, const char *v,
+@@ -152,6 +153,19 @@ static int git_fetch_config(const char *k, const char *v,
  		return 0;
  	}
  
-+	/*
-+	 * All required commits are already present locally (they were either
-+	 * fetched by phase 1 or existed beforehand), so there is no phase 2
-+	 * retry to defer to. If phase 1 failed, the fetch itself went wrong
-+	 * (e.g. a transport error) and must still be reported, even though
-+	 * the gitlinked commits are available.
-+	 */
-+	if (retvalue)
-+		record_fetch_error(spf, task->sub->name);
++	if (!strcmp(k, "fetch.submoduleerrors")) {
++		if (!v)
++			return config_error_nonbool(k);
++		else if (!strcasecmp(v, "fail"))
++			fetch_config->submodule_errors = SUBMODULE_ERRORS_FAIL;
++		else if (!strcasecmp(v, "warn"))
++			fetch_config->submodule_errors = SUBMODULE_ERRORS_WARN;
++		else
++			die(_("invalid value for '%s': '%s'"),
++			    "fetch.submoduleErrors", v);
++		return 0;
++	}
 +
- out:
- 	fetch_task_free(task);
- 	return 0;
+ 	if (!strcmp(k, "fetch.parallel")) {
+ 		fetch_config->parallel = git_config_int(k, v, ctx->kvi);
+ 		if (fetch_config->parallel < 0)
+@@ -2205,6 +2219,8 @@ static void add_options_to_argv(struct strvec *argv,
+ 		strvec_push(argv, "--no-recurse-submodules");
+ 	else if (config->recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
+ 		strvec_push(argv, "--recurse-submodules=on-demand");
++	if (config->submodule_errors == SUBMODULE_ERRORS_WARN)
++		strvec_push(argv, "--submodule-errors=warn");
+ 	if (tags == TAGS_SET)
+ 		strvec_push(argv, "--tags");
+ 	else if (tags == TAGS_UNSET)
+@@ -2464,6 +2480,19 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+ 	return exit_code;
+ }
+ 
++static int option_parse_submodule_errors(const struct option *opt,
++					  const char *arg, int unset)
++{
++	int *v = opt->value;
++	if (unset || !strcasecmp(arg, "fail"))
++		*v = SUBMODULE_ERRORS_FAIL;
++	else if (!strcasecmp(arg, "warn"))
++		*v = SUBMODULE_ERRORS_WARN;
++	else
++		die(_("invalid value for '%s': '%s'"), "--submodule-errors", arg);
++	return 0;
++}
++
+ int cmd_fetch(int argc,
+ 	      const char **argv,
+ 	      const char *prefix,
+@@ -2477,6 +2506,7 @@ int cmd_fetch(int argc,
+ 		.recurse_submodules = RECURSE_SUBMODULES_DEFAULT,
+ 		.parallel = 1,
+ 		.submodule_fetch_jobs = -1,
++		.submodule_errors = SUBMODULE_ERRORS_FAIL,
+ 	};
+ 	const char *submodule_prefix = "";
+ 	const char *bundle_uri;
+@@ -2491,6 +2521,7 @@ int cmd_fetch(int argc,
+ 	int max_jobs = -1;
+ 	int recurse_submodules_cli = RECURSE_SUBMODULES_DEFAULT;
+ 	int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
++	int submodule_errors_cli = -1; /* -1: not set on command line */
+ 	int fetch_write_commit_graph = -1;
+ 	int stdin_refspecs = 0;
+ 	int negotiate_only = 0;
+@@ -2527,6 +2558,10 @@ int cmd_fetch(int argc,
+ 		OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_cli, N_("on-demand"),
+ 			    N_("control recursive fetching of submodules"),
+ 			    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
++		OPT_CALLBACK_F(0, "submodule-errors", &submodule_errors_cli,
++			    N_("(fail|warn)"),
++			    N_("control how submodule fetch errors are handled"),
++			    0, option_parse_submodule_errors),
+ 		OPT_BOOL(0, "dry-run", &dry_run,
+ 			 N_("dry run")),
+ 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
+@@ -2616,6 +2651,9 @@ int cmd_fetch(int argc,
+ 	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
+ 		config.recurse_submodules = recurse_submodules_cli;
+ 
++	if (submodule_errors_cli != -1)
++		config.submodule_errors = submodule_errors_cli;
++
+ 	if (negotiate_only) {
+ 		switch (recurse_submodules_cli) {
+ 		case RECURSE_SUBMODULES_OFF:
+@@ -2833,7 +2871,8 @@ int cmd_fetch(int argc,
+ 					  config.recurse_submodules,
+ 					  recurse_submodules_default,
+ 					  verbosity < 0,
+-					  max_children);
++					  max_children,
++					  config.submodule_errors);
+ 		trace2_region_leave_printf("fetch", "recurse-submodule", the_repository, "%s", submodule_prefix);
+ 		strvec_clear(&options);
+ 	}
+diff --git a/submodule.c b/submodule.c
+index 8bcef68a42..da4ace751f 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1409,6 +1409,7 @@ struct submodule_parallel_fetch {
+ 	int oid_fetch_tasks_nr, oid_fetch_tasks_alloc;
+ 
+ 	struct strbuf submodules_with_errors;
++	int submodule_errors;
+ };
+ #define SPF_INIT { \
+ 	.args = STRVEC_INIT, \
+@@ -1565,7 +1566,8 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
+ static void record_fetch_error(struct submodule_parallel_fetch *spf,
+ 			       const char *name)
+ {
+-	spf->result = 1;
++	if (spf->submodule_errors == SUBMODULE_ERRORS_FAIL)
++		spf->result = 1;
+ 	strbuf_addf(&spf->submodules_with_errors, "\t%s\n", name);
+ }
+ 
+@@ -1851,7 +1853,8 @@ int fetch_submodules(struct repository *r,
+ 		     const struct strvec *options,
+ 		     const char *prefix, int command_line_option,
+ 		     int default_option,
+-		     int quiet, int max_parallel_jobs)
++		     int quiet, int max_parallel_jobs,
++		     int submodule_errors)
+ {
+ 	struct submodule_parallel_fetch spf = SPF_INIT;
+ 	const struct run_process_parallel_opts opts = {
+@@ -1871,6 +1874,7 @@ int fetch_submodules(struct repository *r,
+ 	spf.default_option = default_option;
+ 	spf.quiet = quiet;
+ 	spf.prefix = prefix;
++	spf.submodule_errors = submodule_errors;
+ 
+ 	if (!r->worktree)
+ 		goto out;
+diff --git a/submodule.h b/submodule.h
+index b10e16e6c0..c80b687d2a 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -90,12 +90,17 @@ int should_update_submodules(void);
+  */
+ const struct submodule *submodule_from_ce(const struct cache_entry *ce);
+ void check_for_new_submodule_commits(struct object_id *oid);
++/* Values for the submodule_errors parameter of fetch_submodules(). */
++#define SUBMODULE_ERRORS_FAIL 0  /* submodule fetch errors are fatal (default) */
++#define SUBMODULE_ERRORS_WARN 1  /* submodule fetch errors are non-fatal warnings */
++
+ int fetch_submodules(struct repository *r,
+ 		     const struct strvec *options,
+ 		     const char *prefix,
+ 		     int command_line_option,
+ 		     int default_option,
+-		     int quiet, int max_parallel_jobs);
++		     int quiet, int max_parallel_jobs,
++		     int submodule_errors);
+ unsigned is_submodule_modified(const char *path, int ignore_untracked);
+ int submodule_uses_gitfile(const char *path);
+ 
 diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 1242ee9185..188c674c89 100755
+index 188c674c89..b5db8fb5c2 100755
 --- a/t/t5526-fetch-submodules.sh
 +++ b/t/t5526-fetch-submodules.sh
-@@ -1262,4 +1262,76 @@ test_expect_success "fetch --all with --no-recurse-submodules only fetches super
- 	! grep "Fetching submodule" fetch-log
+@@ -1307,6 +1307,57 @@ test_expect_success 'setup for submodule fetch error tests' '
+ 	git config --global protocol.file.allow always
  '
  
-+# Create an isolated environment for submodule fetch error tests.
-+#
-+# Sets up sub_bare (the submodule upstream), super_bare (the superproject
-+# upstream), super_work (a working clone of super_bare with an initialized
-+# submodule), and clone (a clone of super_bare with an initialized submodule
-+# at a reachable commit). The caller can then create an unreachable commit
-+# and push the superproject to put the clone one commit behind a state it
-+# cannot fully fetch.
-+#
-+# Usage: create_err_env <envdir>
-+create_err_env () {
-+	local envdir="$1" &&
-+	mkdir "$envdir" &&
-+
-+	git init --bare "$envdir/sub_bare" &&
-+	git clone "$envdir/sub_bare" "$envdir/sub_work" &&
-+	test_commit -C "$envdir/sub_work" "${envdir}_base" &&
-+	git -C "$envdir/sub_work" push &&
-+
-+	git init --bare "$envdir/super_bare" &&
-+	git clone "$envdir/super_bare" "$envdir/super_work" &&
-+	git -C "$envdir/super_work" submodule add \
-+		"$pwd/$envdir/sub_bare" sub &&
-+	git -C "$envdir/super_work" commit -m "add submodule" &&
-+	git -C "$envdir/super_work" push &&
-+
-+	git clone "$envdir/super_bare" "$envdir/clone" &&
-+	git -C "$envdir/clone" submodule update --init
-+}
-+
-+# Push a commit to <envdir>/super_bare that records a submodule SHA that is
-+# present locally in super_work/sub but NOT pushed to sub_bare, making the
-+# submodule commit unreachable from clone's sub remote.
-+push_unreachable_commit () {
-+	local envdir="$1" &&
-+	git -C "$envdir/super_work/sub" commit --allow-empty -m "unreachable" &&
-+	git -C "$envdir/super_work" add sub &&
-+	git -C "$envdir/super_work" commit -m "point sub to unreachable commit" &&
-+	git -C "$envdir/super_work" push
-+}
-+
-+test_expect_success 'setup for submodule fetch error tests' '
-+	git config --global protocol.file.allow always
++test_expect_success 'fetch --recurse-submodules fails when submodule commit is unreachable (default)' '
++	test_when_finished "rm -fr env_default" &&
++	create_err_env env_default &&
++	push_unreachable_commit env_default &&
++	test_must_fail git -C env_default/clone fetch --recurse-submodules 2>err &&
++	grep "Errors during submodule fetch" err
 +'
 +
-+test_expect_success 'failed submodule fetch is fatal even when its commits are present locally' '
-+	# Create the same commit (unreferenced, via commit-tree with fixed
-+	# dates) in both super_work/sub and clone/sub, point the gitlink at
-+	# it, and break clone/sub'\''s remote. The commit exists in clone/sub
-+	# but is unreachable, so the submodule stays in the changed list; the
-+	# fetch failure must still be reported even though there is nothing
-+	# left to fetch by commit hash.
-+	test_when_finished "rm -fr env_phase1" &&
-+	create_err_env env_phase1 &&
-+	commit=$(GIT_AUTHOR_DATE="1234567890 +0000" \
-+		 GIT_COMMITTER_DATE="1234567890 +0000" \
-+		 git -C env_phase1/super_work/sub commit-tree \
-+			"HEAD^{tree}" -p HEAD -m present) &&
-+	present=$(GIT_AUTHOR_DATE="1234567890 +0000" \
-+		  GIT_COMMITTER_DATE="1234567890 +0000" \
-+		  git -C env_phase1/clone/sub commit-tree \
-+			"HEAD^{tree}" -p HEAD -m present) &&
-+	test "$commit" = "$present" &&
-+	git -C env_phase1/super_work/sub checkout "$commit" &&
-+	git -C env_phase1/super_work add sub &&
-+	git -C env_phase1/super_work commit -m "gitlink to locally-present commit" &&
-+	git -C env_phase1/super_work push &&
-+	git -C env_phase1/clone/sub remote set-url origin "$pwd/env_phase1/missing" &&
-+	test_must_fail git -C env_phase1/clone fetch --recurse-submodules 2>err &&
++test_expect_success 'fetch.submoduleErrors=warn: unreachable submodule commit is non-fatal' '
++	test_when_finished "rm -fr env_warn_cfg" &&
++	create_err_env env_warn_cfg &&
++	push_unreachable_commit env_warn_cfg &&
++	git -C env_warn_cfg/clone -c fetch.submoduleErrors=warn \
++		fetch --recurse-submodules 2>err &&
 +	grep "Errors during submodule fetch" err
++'
++
++test_expect_success '--submodule-errors=warn: unreachable submodule commit is non-fatal' '
++	test_when_finished "rm -fr env_warn_cli" &&
++	create_err_env env_warn_cli &&
++	push_unreachable_commit env_warn_cli &&
++	git -C env_warn_cli/clone fetch --recurse-submodules \
++		--submodule-errors=warn 2>err &&
++	grep "Errors during submodule fetch" err
++'
++
++test_expect_success '--submodule-errors=fail: unreachable submodule commit is fatal' '
++	test_when_finished "rm -fr env_fail_cli" &&
++	create_err_env env_fail_cli &&
++	push_unreachable_commit env_fail_cli &&
++	test_must_fail git -C env_fail_cli/clone fetch --recurse-submodules \
++		--submodule-errors=fail 2>err &&
++	grep "Errors during submodule fetch" err
++'
++
++test_expect_success 'fetch.submoduleErrors=warn does not suppress successful fetch' '
++	# A new reachable submodule commit (pushed to sub_bare) should be
++	# fetched without any error summary.
++	test_when_finished "rm -fr env_ok" &&
++	create_err_env env_ok &&
++	test_commit -C env_ok/sub_work reachable_ok &&
++	git -C env_ok/sub_work push &&
++	git -C env_ok/super_work submodule update --remote &&
++	git -C env_ok/super_work add sub &&
++	git -C env_ok/super_work commit -m "point sub to reachable commit" &&
++	git -C env_ok/super_work push &&
++	git -C env_ok/clone -c fetch.submoduleErrors=warn \
++		fetch --recurse-submodules 2>err &&
++	! grep "Errors during submodule fetch" err
++'
++
+ test_expect_success 'failed submodule fetch is fatal even when its commits are present locally' '
+ 	# Create the same commit (unreferenced, via commit-tree with fixed
+ 	# dates) in both super_work/sub and clone/sub, point the gitlink at
+@@ -1334,4 +1385,29 @@ test_expect_success 'failed submodule fetch is fatal even when its commits are p
+ 	grep "Errors during submodule fetch" err
+ '
+ 
++test_expect_success '--submodule-errors=warn is honored by fetch --all' '
++	# A second remote forces fetch_multiple(), which hands the submodule
++	# recursion off to per-remote child processes; the option must be
++	# forwarded to them.
++	test_when_finished "rm -fr env_all" &&
++	create_err_env env_all &&
++	push_unreachable_commit env_all &&
++	git -C env_all/clone remote add second "$pwd/env_all/super_bare" &&
++	git -C env_all/clone fetch --all --recurse-submodules \
++		--submodule-errors=warn 2>err &&
++	grep "Errors during submodule fetch" err
++'
++
++test_expect_success 'fetch.submoduleErrors=warn: inaccessible submodule is non-fatal' '
++	test_when_finished "rm -fr env_access" &&
++	create_err_env env_access &&
++	rm env_access/clone/sub/.git &&
++	rm -r env_access/clone/.git/modules/sub &&
++	git -C env_access/clone -c fetch.submoduleErrors=warn \
++		fetch --recurse-submodules 2>err &&
++	grep "Could not access submodule" err &&
++	test_must_fail git -C env_access/clone fetch --recurse-submodules 2>err &&
++	grep "Could not access submodule" err
 +'
 +
  test_done
