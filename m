@@ -1,162 +1,377 @@
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11022101.outbound.protection.outlook.com [40.107.200.101])
+Received: from avasout-ptp-001.plus.net (avasout-ptp-001.plus.net [84.93.230.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDA6379C2A
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 18:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.101
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783708222; cv=fail; b=mqj/kwn02cQlMiqVW4qC44dr3vasMG8LxSJfP/1iyKqzBpkJYhUC2oIYO196Wjxo5wPaggSJoQREb/eRuXAXa7fvUsV57Hv6t1Lb9fcm5erFae0lbFAyJZmDoIuu3moG7iUcK8+mvaWnQo4KOUMCa7KUhubEOuA2OGQzIzMHAao=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783708222; c=relaxed/simple;
-	bh=YwcYK9318/0cMUSXip+a/xCtt6rzdS/LJOUr98sI4wU=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=sHLQJThdtgWfG4JzWUpdNb+pYCpW5QNJG0HXyHlkgCX4hAnJdWucrY33U4zd08apueWO3gG4JiNzTo3gXSZSlhW+J0kS94/Is/b03rWiIglk4wRdQ+MPqzS8V7nEYVEY+pZDL6smDxLfg/iHjDziu6kcQge5UdpBUn3ZWmGQQWc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yuxuan.ch; spf=pass smtp.mailfrom=yuxuan.ch; arc=fail smtp.client-ip=40.107.200.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yuxuan.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yuxuan.ch
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CLoTzZc+SshlQTWYwASssVaHwJqRwXrp7SvP4OvigbNKBP9og9yUSr9IDZD3vxCZ0vzJ3Z6rryqubsrS0b4mHxKw87uKB27xAnkOBDTMfQkyTw9YJZpAdginUYmTOU0dNPI3QxqxX5+lY8r4hhTkPTBrgwR6C/eBkGizZ/+ucmFKxVkWP6zUnSIXOLnTRNzDieCMOhcN78cU69KwUNu5iQeYaxVmNTqCuFFj5yFZDSMM7QCDuF3FUU7nj65ADuptGNKRAqzUblVjh/tcP8PAmaohy7LVbYOrySD2oCVeb0uzKOU+bfbuavEDzIouYJpEzijypsgw7cpDdQQzLUCLCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YwcYK9318/0cMUSXip+a/xCtt6rzdS/LJOUr98sI4wU=;
- b=KR5bDYK6f7t+RYJ+oysJkJitDxcMrqpbgbXdMgHLcsRoJOq1PwjrjEyappQq5rZ/eptBcGK0s1k82Shosehy8sIFmHceQ3SkqUac09gNGZZplynU3/1SoecqbnE3dXNihMiuQG3ktH8Pkt1GkGRu3bYval3vN2yRAA7Vreh0IPAEXmQaVW4eGd6FaouoJCKeeVAeZFyvhJ5ZT5V7EQkqNLVQXLHWwpsGpUnRfDVcONjEL1JZ7Yf/xZ4ZXJnruoROhr+FsuHRZUlF7vhpmixic42liPbBa0IgP/CTn0D21OmJSz5GS829pbC+FM6HTGuPRy3CVX1QO1oqNK4ujEz9BQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=yuxuan.ch; dmarc=pass action=none header.from=yuxuan.ch;
- dkim=pass header.d=yuxuan.ch; arc=none
-Received: from DS7PR15MB5351.namprd15.prod.outlook.com (2603:10b6:8:72::6) by
- BY3PR15MB4881.namprd15.prod.outlook.com (2603:10b6:a03:3c0::5) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.18; Fri, 10 Jul 2026 18:30:14 +0000
-Received: from DS7PR15MB5351.namprd15.prod.outlook.com
- ([fe80::3eba:9867:ea41:c42c]) by DS7PR15MB5351.namprd15.prod.outlook.com
- ([fe80::3eba:9867:ea41:c42c%6]) with mapi id 15.21.0181.016; Fri, 10 Jul 2026
- 18:30:14 +0000
-From: Yuxuan Chen <i@yuxuan.ch>
-To: "phillip.wood123@gmail.com" <phillip.wood123@gmail.com>
-CC: "farid.m.zakaria@gmail.com" <farid.m.zakaria@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>, "gitster@pobox.com"
-	<gitster@pobox.com>, "newren@gmail.com" <newren@gmail.com>,
-	"phillip.wood@dunelm.org.uk" <phillip.wood@dunelm.org.uk>, "ps@pks.im"
-	<ps@pks.im>, Yuxuan Chen <i@yuxuan.ch>
-Subject: Re: [PATCH] sequencer: honor --empty when a fixup!/squash! empties
- its target
-Thread-Topic: [PATCH] sequencer: honor --empty when a fixup!/squash! empties
- its target
-Thread-Index: AQHdEJom6SdC0shX00adRh0gBYB3pg==
-Date: Fri, 10 Jul 2026 18:30:14 +0000
-Message-ID: <20260710182937.716304-1-i@yuxuan.ch>
-References: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
- <afb76b98-661a-4663-8e8b-fd00572db5ba@gmail.com>
-In-Reply-To: <afb76b98-661a-4663-8e8b-fd00572db5ba@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=yuxuan.ch;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS7PR15MB5351:EE_|BY3PR15MB4881:EE_
-x-ms-office365-filtering-correlation-id: a94aab90-0e1e-4a52-d160-08dedeb1488c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|7055299009|5023799004|4143699003|56012099006|18002099003|22082099003|38070700021;
-x-microsoft-antispam-message-info:
- pNPvzS8VQsoea7JuxH4K4wghRd4WrmvzQeoGAz8dvznZbULeY3qwOGmAIwq9oVdsH/5gUu25phdK9x7QlCvqPqUrQnpSot+rSXVzDLQx6NpC7JeZPnt9f5/QYpQwM2hU8PHe6s16jTowhzUfvJF8pZeKeapHSj0vUAkSCgl/nDXsWurgRJwJP0r3g1Ij34bgpMZPzNrCuknius18kWq5Bc8ZAGlKJHVI4t6J4x8Wlt/hh76oZuWUKZ2buLuusoG0SLKCEKNidSt/v+CjqZc7HEjQAryXrK5/03LrgxJEAyecxy3xLTGXAz6gD2UcEW/MBKKhRtvRbkDF5i9RQhrxPOPufxFWS2yYKrDwYjY3+Mm9n97a6uHJtwR86oUgKljUUegLR5W8mDOGWGCmDjJsEdefQgK6y8ME5Tez3l+Y4kiX4WHu8ctBslfvMyGyTdbS3rEU9EAdbxZPiGkSkFzGpmQ1eNwiAfdSThFg6zvajDGzJdpz2nHNLl5f+YrZEcYclGgTO6NBWw/amL7iwSIMqhaZvCZyJHCAnr+kk3aOd8gXY5iYO1XkqJxcsTP0oEpH0g4STQzQIKNfg0awS2vQPYcep7vJRQb7auBF/I0PyUu0qjZWp8H+i/BUImRUR9jXJulr/jLa6gw1Pmx2cqBdySG7SuPjAKA86AgJEGfAhHyZlNMFbxhmyrArLQPvWa2TG5aDNbLuRzSCD1L9PPylPU38kFhYVItvMu4vJY61DrAbaeaP5XPsgCbRg7zp2/J3
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR15MB5351.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(7055299009)(5023799004)(4143699003)(56012099006)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?jNZmPExNSXGQShvh2bi4xzKZHv++wVrE2MpxyI37bbXp8btr3/sQoEP97D?=
- =?iso-8859-1?Q?q+MlmhXVFt/RmR/e2BOZjmYBKc6M4RT4dVjyTFYY6bNNu8Ye57F6byvf14?=
- =?iso-8859-1?Q?EodkOrghRKdMorofOL0Of/OBE+L/M8Sz3d9j4lXL0EJ4272awg5+Kez1so?=
- =?iso-8859-1?Q?v1uKMcwOvwj2nvlidPGxNtW7+Eb6F3pz4m/fYxvg8QpD/vaw7qWMIbbwav?=
- =?iso-8859-1?Q?P9JwQorR3PSGsbLH5YGGC9TnmB4Hq3P8sKRVpnXGRfGruzm0UlmJUOqkG7?=
- =?iso-8859-1?Q?biW6h7g8qH1aCP8VklLFFKAiMPgV15GdXfk/Jmu668dujCx53JC8tcqkrj?=
- =?iso-8859-1?Q?zgMrphnyZaJsIWzM3jOsL3AXi9pla/lSdL3isVV8VBtbjp1p8qA2XH+J48?=
- =?iso-8859-1?Q?63p73vIrkw64DoyalW0Dr8JzKXK/YXXrDwCaQqIQ+7En6ikvjDrAzEmHPB?=
- =?iso-8859-1?Q?K38R1ydW9csQT3UXhJpDeUT4qi23RwhQVtPDG4iJoMSChvDa+GzBefg5yW?=
- =?iso-8859-1?Q?vdco0w/wwyn5L4Ko/PEL4aa5rWssaJ8EZU8DrV6kFrp268bwqUOhMlA1nn?=
- =?iso-8859-1?Q?rBQ2ySSoZ8E5/g+MGam3fqHhwpxtDrAyoVs8m/G0QbNLnGDenPaz5I/NAe?=
- =?iso-8859-1?Q?VhDKTRqCXGfqD47ePkJQHTr8wOcqk2Rbi7uNOk3MRvyc4+t93sB8wervR1?=
- =?iso-8859-1?Q?kTcRChLzM2ra8PIvntkfpg8H4ch3ejkTZgD9KHp+fQAMh7j47Ecqqr3lrv?=
- =?iso-8859-1?Q?cDYypoZ1bKUqBn+QkMnZrE1f/c/XbH+0p3Eti1SIg9ma87McM6DmZY444d?=
- =?iso-8859-1?Q?te6sv+a1jog2Ke9mZWf5hVuh2OG3KPM4z7XKPo5Kty/5MnUPNWtVJxTRVa?=
- =?iso-8859-1?Q?ybGHp2z2PP1LOy2KlmMJD2co2vlGDg+t82OM3CjaoJQTFIkhJPXxKOAKBc?=
- =?iso-8859-1?Q?celK760Om7WqdRObGmwtW+LDFM2WbzuNxIpVfBoxQhJs910hGPdX4MO37Y?=
- =?iso-8859-1?Q?r423xGws/NItzBpWXx8NCje30eq9TPjvmQPmRZVYmmiPOpnWMeZQmvvtO2?=
- =?iso-8859-1?Q?fdKj8Ys5omvDz0bUOH7A8dfNItHih84703iNmPosgMa0BffTQXPGvRYCtD?=
- =?iso-8859-1?Q?wcNOhZ2F2xfmcJ2vwLDJYQCiOJPr3sl0W3PP1wEWR+EQ7g3ttbVJgNlaRi?=
- =?iso-8859-1?Q?Ico6ac4IBSd/p/oYuhEuWbLeIwbiQ3k8gjrJqrASgEu/lSnZxuoklM25nC?=
- =?iso-8859-1?Q?MZ2ehWYU6bFNsKYPhT5uQLSbiok2yphY2TZj3dsYAZs55JLgYpADOQrdAu?=
- =?iso-8859-1?Q?BVW56jHdX6/r50RpwhjmKx1SxshgWRpfTz2NXIS5gpMepZ7s8yyEHfwlkI?=
- =?iso-8859-1?Q?+CxNOc9JS0K/qTgMerqanv7fXewe3boBrwgk0acdKzff8MuhHOjBEQBCtQ?=
- =?iso-8859-1?Q?hTTgKpnhnab0nbSA7eSJPPrlmh1UbZshHugqhELZMg82vInVutab4cNcA5?=
- =?iso-8859-1?Q?pteUZZSptP7B+iASCMIbeKhgJVOCYu3DWEGfJSgzXFSdRNXiBrNJ9V500X?=
- =?iso-8859-1?Q?SKyUDq/+K5+f0FevyJlkyfTEessr5hv0BAVE3Dt+eoeeeYHMN5xvY76k0+?=
- =?iso-8859-1?Q?fmTGKXBM6clOQUTKiTlr7U3S5q9/2mChj1SK0OASVj8fnEQYCGqzxPwuUQ?=
- =?iso-8859-1?Q?vD0H5eUBpgD0U5x6b/1FeG9KR64NIQsJ3f2w3sVd2XiJ8INDD4O+a7rnga?=
- =?iso-8859-1?Q?u+Z5su5ZlCEqPo+9ZF2/LfOI8=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8CE37FF63
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 18:35:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.227
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783708540; cv=none; b=p8b/r1cHFY1bCXmIzb02+rybHc63bxvibZc46K/G/YAcpztKb3ee6QyPmg0MXpFncfAdaw90wohq3OxE6IW6XXzv4csOh+RWtiTmSZZIbSbyhFGLzI5uXbHdoEilI2ljF0NcyyOV/nnlYZSMWXqfvjQEUNyoLK1q9dY05EUXS78=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783708540; c=relaxed/simple;
+	bh=rH49nZteaqWDENZLQRaxoidmXajpp9YQiJbr/SXhGXM=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=BXuQYfTkuDvT4EZgYwr6w3eLOh+5Kx5oRoa01Jj17Otn/yU+xidui2RcFSbCDbGltOQJAQnVal48dDvPf/0MH0BvDK7D+qt0k32VggUmeFKBYCr7eAcU43hTH8L3AWQZvmJfSzYeoYg4LaqyYip/PFMDcBCm2ArCCAe6nIDlUHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=jljmKnbN; arc=none smtp.client-ip=84.93.230.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="jljmKnbN"
+Received: from [10.0.2.15] ([195.99.11.174])
+	by smtp with ESMTPA
+	id iG1PwG91bkMb1iG1QwGpyP; Fri, 10 Jul 2026 19:32:26 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1783708346; bh=koT4wjMGlATgdPGvOzz9B+2q4mOEvZawc04SwxJrxT0=;
+	h=Date:To:Cc:From:Subject;
+	b=jljmKnbN074h3XpMeyWM2xLIwjWLOgoXD3r/3rAK9gp7zYZSOGVMxc1c+G57uTUDT
+	 3FNATGKwsnGb1+lJlhm71xI1nX5X3AoIY5Zs7L7YaQpWQeSRlcd5MCVchcUphARYdb
+	 bcQwdxiSum41m1RRk1u6vfd+cpwfyV5d8GL2YBFllKQXrqQagA30TQZRVhD/7kXVPy
+	 3gMKndxyD0gXMkWcXoZjQEnF1GR9N1Ivjb5cUXjLNAGJYrVPXV4q5Rr08IqueavCsD
+	 Q7pFJVNIAqioXK7kMbAB0KEJlkLDLlGBUpkUJRQ5jqmpgOWCpn0v9N87mGJLAyB+5r
+	 voXWODpA4jFZg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=AMGJABRe c=1 sm=1 tr=0 ts=6a513aba
+ a=rWEfxJwGD0TuYe46u5FB7A==:117 a=rWEfxJwGD0TuYe46u5FB7A==:17
+ a=IkcTkHD0fZMA:10 a=uSHI5plBiy8_ffmiS38A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <f65466c9-bede-472e-ad57-e72a5289be27@ramsayjones.plus.com>
+Date: Fri, 10 Jul 2026 19:32:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: yuxuan.ch
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR15MB5351.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a94aab90-0e1e-4a52-d160-08dedeb1488c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jul 2026 18:30:14.0718
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f65352e9-0dec-453a-946c-e154687f7702
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4ZVJrzieEBt8mJb8Iyx88gtMmRDZLnUZcAa6tiy2qUy8q3M8wOcoxDpXymf6egyn
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY3PR15MB4881
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ Johannes Sixt <j6t@kdbg.org>, Adam Dinwoodie <git@dinwoodie.org>,
+ =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: cygwin v2.55.0 test failures
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfI/RxqlFjHqSWHOCMAVMOaygCspo6tbyOMkY6WLpa1fYTPA4Qv7wbcP8eo4+uWd8lNlUe2fTUnddkL1kGbLwjYjxiuNn1Qa1qWcf6i4zv1wVnDuD3T5k
+ aYVjfgZIrG1shXu0j/JnmzStLmz6nj/x3d1eE7kWFhoihvOQ0acVAezg2R0LZIxDDpIiRuatsIEF0Aaa6WbBNqS/vswkBfnvUO4=
 
-From: Yuxuan Chen <i@yuxuan.ch>=0A=
-=0A=
-Hi Phillip,=0A=
-=0A=
-I'm Yuxuan, and I work with Farid at Meta. Thank you for reviewing this pat=
-ch.=0A=
-It addresses a workflow problem for us, and we appreciate your feedback.=0A=
-=0A=
-Regarding=0A=
-=0A=
-> Using an empty commit has a marker has the advantage that applying it can=
-not=0A=
-> create conflicts, so you only have to deal with the conflicts caused by t=
-he=0A=
-> commit being dropped, not the by fixup not applying cleanly.=0A=
-=0A=
-I am concerned, however, that representing a `drop!` commit as an empty mar=
-ker=0A=
-would be semantically unsound. We expect `rebase --autosquash` to drop the=
-=0A=
-target commit, but until that rebase happens, the repository is not in a st=
-ate=0A=
-where we consider the target commit dropped: the target's changes are still=
-=0A=
-present, and the empty marker changes nothing. Therefore, I think a `drop!`=
-=0A=
-commit should contain the inverse of the patch we intend to drop. That way,=
-=0A=
-the repository state reflects the intended removal even before autosquash=
-=0A=
-rewrites the history.=0A=
-=0A=
-I recognize that applying the inverse patch may cause conflicts. However,=
-=0A=
-this is not a new problem; `git revert` has the same issue when the inverse=
-=0A=
-patch does not apply cleanly. Such conflicts reflect the actual difficulty =
-of=0A=
-undoing the change at that point in the history.=0A=
-=0A=
-Thanks,=0A=
-Yuxuan=0A=
+
+Sorry for being a bit tardy, but I was somewhat unwell and, as a result,
+AFK for some weeks during the last part of the v2.55.0 cycle. So, I'm
+still catching up. As part of that, I found that the cygwin test-suite
+fails for v2.55.0, like so:
+
+  $ tail -13 test-out-2-55-rel
+  Test Summary Report
+  -------------------
+  unit-tests/bin/unit-tests.exe                    (Wstat: 256 (exited 1) Tests: 249 Failed: 1)
+    Failed test:  242
+    Non-zero exit status: 1
+  t9904-url-parse.sh                               (Wstat: 256 (exited 1) Tests: 53 Failed: 4)
+    Failed tests:  39, 42-43, 47
+    Non-zero exit status: 1
+  Files=1047, Tests=32848, 4584 wallclock secs (29.05 usr 85.59 sys + 9679.08 cusr 14883.94 csys = 24677.67 CPU)
+  Result: FAIL
+  make[1]: *** [Makefile:78: prove] Error 1
+  make[1]: Leaving directory '/home/ramsay/git/t'
+  make: *** [Makefile:3381: test] Error 2
+  $ 
+
+Unsurprisingly, the -rc0, -rc1 and -rc2 builds show the same failures.
+
+After a quick squint, the reason for the failure looked familiar ... ;)
+Indeed, I have been aware of the reason for this failure since v2.23.1
+at the end of 2019. For those who don't instantly recognize it, this was
+one of a series of security releases, which mainly affected GfW. From
+the release Notes:
+
+  Git v2.23.1 Release Notes
+  =========================
+  
+  This release merges up the fixes that appear in v2.14.6, v2.15.4,
+  v2.17.3, v2.20.2 and in v2.21.1, addressing the security issues
+  CVE-2019-1348, CVE-2019-1349, CVE-2019-1350, CVE-2019-1351,
+  CVE-2019-1352, CVE-2019-1353, CVE-2019-1354, CVE-2019-1387, and
+  CVE-2019-19604; see the release notes for those versions for details.
+
+For example, the test-suite for v2.25.0-rc0 looks like:
+
+  $ tail -17 test-out/test-out-2-25-rc0
+  Test Summary Report
+  -------------------
+  t5500-fetch-pack.sh                              (Wstat: 256 Tests: 369 Failed: 12)
+    Failed tests:  142, 145, 161-162, 239, 242, 258-259, 336
+                  339, 355-356
+    Non-zero exit status: 1
+  t5580-clone-push-unc.sh                          (Wstat: 256 Tests: 6 Failed: 1)
+    Failed test:  4
+    Non-zero exit status: 1
+  t5601-clone.sh                                   (Wstat: 256 Tests: 104 Failed: 4)
+    Failed tests:  62-64, 66
+    Non-zero exit status: 1
+  Files=890, Tests=21098, 16304 wallclock secs ( 0.48 usr  0.73 sys + 2374.33 cusr 7438.69 csys = 9814.24 CPU)
+  Result: FAIL
+  make[1]: *** [Makefile:52: prove] Error 1
+  make[1]: Leaving directory '/home/ramsay/git/t'
+  make: *** [Makefile:2754: test] Error 2
+  $ 
+
+[t5580-clone-push-unc.sh was later renamed to t5580-unc-paths.sh]
+
+From about that time, I had hacked up a 'fix' for cygwin, but hadn't decided
+how to proceed with an actual patch. :)
+
+So, I cherry-picked the 'fix' onto 'master' (then on v2.55.0 release). I was
+a little surprised it went without problem, given how much 'git-compat-util.h'
+has changed, but it just required a 'slide' from line 203 back to line 153.
+This patch is equivalent to the 'git-compat-util.h' only part of the patch
+given below.
+
+This fixed up the current test failures (unit-tests and t9904-url-parse.sh).
+
+Note that Patrick wanted to have a clean test-suite run on cygwin, so in
+commit 5f8af25ff9 ("t5500, t5601: skip tests which exercise paths with '[::1]'
+on Cygwin", 2024-10-16), he suppressed the test failures in t5500 and t5601.
+(that was about the time of the v2.48.0 release).
+
+The changes to tests t5500 and t5601, in the patch given below, essentially
+reverts Patrick's commit 5f8af25ff9. This fixes all of the tests in t5601 and
+ten of the twelve failures in t5500. (I don't recall what happened to t5580,
+the single failure - the push test - was fixed somewhere between v2.43.0 and
+v2.44.0-rc0).
+
+As luck would have it, I left a note to myself about the remaining two
+failure cases. This leads to the remaining hunk, to connect.c, in the patch
+below; ie. the removal of a conditional (which should only fire for GfW and
+cygwin). The '#ifdef DUMMY/#endif' should probably be replaced with an
+'#ifdef GIT_WINDOWS_NATIVE/#endif' so that GfW is not affected. (Having said
+that, I suspect that even GfW should drop it ['somebody was smoking something
+exotic'], but I have no way to test it, so ...).
+
+With this final hunk, this patch results in a clean test-suite run. :)
+
+So, what does this mean? Well, I should probably not leave it another five
+years, or thereabouts, before actually sending a real patch (series) to fix
+this up properly! ;)
+
+But what is properly? The 'fix' works, but the problem was principally caused
+by cygwin being a bit schizophrenic about the 'pathname utilities' and its
+support for POSIX only paths, WIN32 only paths or both.
+
+For example, f82a97eb91 ("mingw: handle `subst`-ed "DOS drives"", 2019-09-06)
+notes in the commit message:
+
+    Note: `[::1]:repo` is a valid URL, but not a valid path on Windows.
+    As `[` is now considered a valid drive letter, we need to be very
+    careful to avoid misinterpreting such a string as valid local path in
+    `url_is_local_not_ssh()`. To do that, we use the just-introduced
+    function `is_valid_path()` (which will label the string as invalid file
+    name because of the colon characters).
+    
+    This fixes CVE-2019-1351.
+
+Note that part of the fix involves a cygwin specific 'is_valid_path()' which
+would otherwise be defined, like Linux, as simply '1' in git-compat-util.h.
+I was a bit surprised that an IPv6 address was not parsed at a higher level
+and take priority over an (possible) '[' drive letter, rather than being a
+side-effect of calling an 'is_valid_path()' helper function. ;)
+
+The 'is_valid_path()' was also part of the security fixes to check for some
+'illegal' win32 paths which included those ending in spaces or periods or
+for names such as AUX, COM1, LPTn, NUL, PRN, CONIN$, etc,. I know that some
+of these paths are valid in cygwin (eg. those ending in spaces or periods)
+so the win32 version of that function cannot be used without change. (this
+could lead to one part of git allowing you to use said paths and other
+parts not)! Note that some of the CVEs may actually still apply to cygwin.
+I didn't check.
+
+Also, note that I replaced the win32 version of the 'offset_1st_component()'
+function. I can't quite remember why I did that, but I think the fact that
+the win32 version doesn't ensure that the 'path' consists of both the <server>
+and <share> component before returning the offset. (ie make sure that the
+'path' consists of "//<server>/<share>/" at the very least and return one,
+for '/', otherwise).
+
+Personally, I would be quite happy to rip out all win32 path handling and
+only support POSIX paths (I have been using cygwin since about 1996 and
+have only ever used win32 paths when testing git ... that is the whole
+point of cygwin! :) ), but I already know that that is a no-go. (there is
+always somebody that complains when you suggest it).
+
+So, for now anyway, it seems that I need to tidy up the patch and move in
+the opposite direction to e.g. commit 1cadad6f65 ("git clone <url> 
+C:\cygwin\home\USER\repo' is working (again)", 2018-12-15).
+
+Part of the reason for vacillating on the correct way forward with this
+patch, was because I have often thought that I should use the cygwin API
+to cater to both POSIX and win32 paths. For example, we could possibly use
+the 'cygwin_conv_path()' function to do the path conversion (somewhat
+similar to the macos pre-composed-utf8 stuff, minus the directory reading).
+However, I think that would open a different can of worms, including some
+potential memory leaks. So, not exactly a slam dunk.
+
+[I also had a note-to-self about 'mixed / and \ urls' in the config file
+which is exposed by these same tests. So, another patch may be needed?]
+
+Anyway, something to think about. Hmm, I suspect it would be best to just
+tidy up this patch first. ;)
+
+Just FYI. Thanks!
+
+ATB,
+Ramsay Jones
+
+
+----- >8 -----
+Subject: [PATCH] cygwin: fix up IPv6 scp urls
+
+---
+ connect.c             |  2 ++
+ git-compat-util.h     | 39 +++++++++++++++++++++++++++++++++++++++
+ t/t5500-fetch-pack.sh | 14 ++++----------
+ t/t5601-clone.sh      | 11 ++---------
+ 4 files changed, 47 insertions(+), 19 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index 47e39d2a73..6f5715e938 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1088,10 +1088,12 @@ static enum url_scheme parse_connect_url(const char *url_orig, char **ret_host,
+ 
+ 	if (scheme == URL_SCHEME_LOCAL)
+ 		path = end;
++#ifdef DUMMY
+ 	else if (scheme == URL_SCHEME_FILE && *host != '/' &&
+ 		 !has_dos_drive_prefix(host) &&
+ 		 offset_1st_component(host - 2) > 1)
+ 		path = host - 2; /* include the leading "//" */
++#endif
+ 	else if (scheme == URL_SCHEME_FILE && has_dos_drive_prefix(end))
+ 		path = end; /* "file://$(pwd)" may be "file://C:/projects/repo" */
+ 	else
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8809776407..645ff96048 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -153,6 +153,45 @@ static inline int is_xplatform_dir_sep(int c)
+ 
+ #if defined(__CYGWIN__)
+ #include "compat/win32/path-utils.h"
++
++static inline int is_valid_cygwin_path(const char *path)
++{
++	if (path && strlen(path) > 2 &&
++	    path[0] == '[' && path[1] == ':' &&
++	    strchr(&path[2], ':'))
++		return 0;
++	return 1;
++}
++
++#define is_valid_path(path) is_valid_cygwin_path(path)
++
++static inline int cygwin_offset_1st_component(const char *path)
++{
++	int ret = 0;
++
++	/* C: prefix */
++	if ((ret = has_dos_drive_prefix(path)))
++		return ret;
++
++	/* //server/share/ prefix */
++	if (is_dir_sep(path[0]) && is_dir_sep(path[1])) {
++		char *pos = strpbrk(path + 2, "\\/");
++		if (pos && *(pos + 1) && !is_dir_sep(*(pos + 1))) {
++			pos = strpbrk(pos + 1, "\\/");
++			if (pos && *(pos + 1))
++				return pos + 1 - path;
++		}
++	}
++
++	/* / prefix */
++	if (is_dir_sep(path[0]))
++		return 1;
++
++	return 0;
++}
++
++#undef offset_1st_component
++#define offset_1st_component cygwin_offset_1st_component
+ #endif
+ #if defined(__MINGW32__)
+ /* pull in Windows compatibility stuff */
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 649a615ec9..2c6c0a04be 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -774,7 +774,7 @@ do
+ 	# file with scheme
+ 	for p in file
+ 	do
+-		test_expect_success !WINDOWS "fetch-pack --diag-url $p://$h/$r" '
++		test_expect_success !MINGW "fetch-pack --diag-url $p://$h/$r" '
+ 			check_prot_path $p://$h/$r $p "/$r"
+ 		'
+ 		test_expect_success MINGW "fetch-pack --diag-url $p://$h/$r" '
+@@ -784,7 +784,7 @@ do
+ 			check_prot_path $p:///$r $p "/$r"
+ 		'
+ 		# No "/~" -> "~" conversion for file
+-		test_expect_success !WINDOWS "fetch-pack --diag-url $p://$h/~$r" '
++		test_expect_success !MINGW "fetch-pack --diag-url $p://$h/~$r" '
+ 			check_prot_path $p://$h/~$r $p "/~$r"
+ 		'
+ 		test_expect_success MINGW "fetch-pack --diag-url $p://$h/~$r" '
+@@ -806,17 +806,11 @@ do
+ 	p=ssh
+ 	for h in host [::1]
+ 	do
+-		expectation="success"
+-		if test_have_prereq CYGWIN && test "$h" = "[::1]"
+-		then
+-			expectation="failure"
+-		fi
+-
+-		test_expect_$expectation "fetch-pack --diag-url $h:$r" '
++		test_expect_success "fetch-pack --diag-url $h:$r" '
+ 			check_prot_host_port_path $h:$r $p "$h" NONE "$r"
+ 		'
+ 		# Do "/~" -> "~" conversion
+-		test_expect_$expectation "fetch-pack --diag-url $h:/~$r" '
++		test_expect_success "fetch-pack --diag-url $h:/~$r" '
+ 			check_prot_host_port_path $h:/~$r $p "$h" NONE "~$r"
+ 		'
+ 	done
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 3dd229c186..35e9f3eb0d 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -530,17 +530,10 @@ do
+ 	'
+ done
+ 
+-# Parsing of paths that look like IPv6 addresses is broken on Cygwin.
+-expectation_for_ipv6_tests=success
+-if test_have_prereq CYGWIN
+-then
+-	expectation_for_ipv6_tests=failure
+-fi
+-
+ #ipv6
+ for repo in rep rep/home/project 123
+ do
+-	test_expect_$expectation_for_ipv6_tests "clone [::1]:$repo" '
++	test_expect_success "clone [::1]:$repo" '
+ 		test_clone_url [::1]:$repo ::1 "$repo"
+ 	'
+ done
+@@ -553,7 +546,7 @@ test_expect_success !SANITIZE_LEAK "clone host:/~repo" '
+ 	test_clone_url host:/~repo host "~repo"
+ '
+ 
+-test_expect_$expectation_for_ipv6_tests !SANITIZE_LEAK "clone [::1]:/~repo" '
++test_expect_success !SANITIZE_LEAK "clone [::1]:/~repo" '
+ 	test_clone_url [::1]:/~repo ::1 "~repo"
+ '
+ 
+-- 
+2.55.0
