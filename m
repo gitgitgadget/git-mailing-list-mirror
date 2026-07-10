@@ -1,71 +1,70 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA6078F26
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 17:31:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CDB3749E4
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 17:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783704665; cv=none; b=WtRk4apyvFfUBDCyTc3/KnMi73476Q+sQFv26tHdxg2qzZAfqC/zBF9XA/ALaevTV4tecNRWLk75kwln4Fe5mSVxzbGfuwUjRsamkNWUZeYgeVi52zZTWegGCd9u0xcMAozhXk055C/B2ApuZf48pnhsPOGEqwyGpCwXqIxOh+E=
+	t=1783704667; cv=none; b=uk8XZJjPbPU9YKCTAJzItku6bF2Glk/HbdLfrzTC+W5TsRYds/ooM9eoDdO6LUGBfXT+dXEjAmuA2ct9H+SEQPjoQOIVsDliiFIS3Nxus6Axr5Ze9cP6b0dwj/qixlLvI7SJOyeBjU/AxvRzoqWNDOfgsnqH7hLutH9Sar8bUMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783704665; c=relaxed/simple;
-	bh=wmy5XcSclduvkSo9SBm03qwNbwLANfVNkaEtmhpL7XU=;
+	s=arc-20240116; t=1783704667; c=relaxed/simple;
+	bh=Rl/4UupZ59HqmaAbLKRVpGgyEeLRRpmoTJgyXxaECwA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jXpANPFHR7f+/1xw61fAE8gPqq2phLNGfsXwZ47ZTDPeAQh5tz62Alxy/V2J280Jw/z4jRfE8IkUrnfXVDzt0Cc+wYcmHHFST+caHAQnhM6oNoCPs1nyjPLZd9jbKVtKQnFPEcu+x9jGyyL0s+OjD/qUdUYLSJUors+eTj2k4c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBYZxsPc; arc=none smtp.client-ip=209.85.160.172
+	 MIME-Version:To:Cc; b=Ge3D4V5w3ztk9ubtaJkEyyqJKi3inK8r8GcY4eeAsdHuVFJK6rXfZjUSH9vMyKmTgb15Kd5RP+nxHIFLx8J2VlYonz+kMrFt+YEOuOQfaJLHsd99k00/KaeODlBlNSQmdoDMFt5q+d4Z2aZ3k3p4aKl8YAgI9dhYKIsiFo1oBXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eCFI/prF; arc=none smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBYZxsPc"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51c1d487f2cso12205031cf.1
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:31:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eCFI/prF"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8efb708b1a0so10813746d6.3
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783704661; x=1784309461; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783704662; x=1784309462; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=oyNuxj5YKFe6jqwNYqW+5/2BY5HqqmcgSEjuVUqU6Tc=;
-        b=nBYZxsPcrP40cF6ubrbB+4j/WWxCT4yjkqHGTWY2aTJPGh8O4r+dq1x0YK0mNHekMs
-         XRds5UJSEw74BarbGAVQvmGisA9a0ABaCkvOaCWbeQm7Mh54t3gIabm6ZbRANhV6pkZp
-         NH9OtIk2qx0jUaKAb0sqoRd9BGp7Ki8n5e5SnCM8jUS+P2O6J3ZJ/pP2akjJvXgewNRe
-         HcM8u/jNl5VAQxuzvLcfFeuI+/X2U9wsBz9Cr9zSSbrG15ZmGbxjOWLrMt5WcV6JzyjN
-         0kHdjENQqlrIjQVFZL/Kw5Y2I8wL854s8DsyZIwGkjvu/sSPbRiNQT7N4z2QuRULzS+N
-         9JZA==
+        bh=j7mMLYFCsBB7AUcbNojo6aqrgE8YRZnk68S0s1QKf5U=;
+        b=eCFI/prFgp+159rPnqdaxPjqa+ekbuoljDNFKMD1M8tGClbVI5eL/2kr72Pj1IgjIq
+         jMOBr0/2SOGeNEptpKNCmMZlDro0D5dkD9Ay5VCpPh7X3RCIypq2w8rNHGSQV+Jkyd/5
+         /bbNglRr3ltjpDkXcefCr8KFg9IRSz7o0ThQWNY5qb+L3YNqmFdm1RHQByhqdIhtVyg8
+         63r74dooa3+rBLVmXHnKGmVghV7rtzAoltcmzZx2u7yGesUVPYYbq6eewWETfRM2/hmZ
+         a1lReguJ2Q2aXAyonVehUiPruAMuI7WrxmxmYZ0VYgMyj0/m0WchH+0ZeC+bhrpM3nUG
+         Kw4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783704661; x=1784309461;
+        d=1e100.net; s=20251104; t=1783704662; x=1784309462;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=oyNuxj5YKFe6jqwNYqW+5/2BY5HqqmcgSEjuVUqU6Tc=;
-        b=Bc3yoUexme6Tef/0guWHfppN+r0MQnx5Cu0uPY9ln0oIEKr9KAxazfhxGAq6KxLGmP
-         Aw+6+KRIs+WTDwSIAn/9ygAcOw4sNaeWyOXihHVnTPGrkRaG/vvvQkWpad0Nu5iifJrC
-         BhU6XIVbBVzXEpMTry7802ESzIit8tVlBtSsGTuc4EA9n+7s+I234vleGCnW/RVNxSMN
-         2Ct7+/S6uKxwuT/rFLfZkM76qwkpVARc8xBAQaMBsM5sJyZDkdWkDDJFmXNmkEm2OJzu
-         4/22IpE1ch1YUZ0VhBxawKrLA/cJIixD0dd3nTqDy8B8A4tUm5tjDV5MYwYwg+kgIubX
-         rSpA==
-X-Gm-Message-State: AOJu0YzSwRrJ9KBiYKJHqEnrH//vDnN6TEHce7jAIywh6/t9EYOlqbSz
-	Jnl/i03OX8fb1C6NFr0/wmfbQQJwr+P8ZxKtbYvbVbdzEmANcZSLdVTVOwPXbQ==
-X-Gm-Gg: AfdE7cla81vBDCNTJh1azo/u3wn8XQrDUWeKKJA7Qu5tvG5RcSiJuGD9Ax3yHMuok3W
-	rWHekwgGyMn7NeqZbzTOQ7auVfjZQFjpSLkNSmnGsSbcrtmBg5NWY6KNpXFmkV/ZF6hY46fuOIm
-	3ofwDaOHLOAMlzhiYYq/97vrfjIa6T8gNppaqNmEPA/rtz7I2krkTft/0xZhdIH3/GBTutABRkD
-	6+bgX5g398h0JxiBI4r5muNplUrfrVqzQtUj21gDcJKbUefrU3b7ZGSt9gvuD9m2odJDrgLpg6D
-	EIW6U5GjAgs/Hrz6uM5PlDbLEEqvJH6TZvlrTl5HZBxw5CNxsazj+vdU7d65u3IEN+97z7RRX2b
-	vQ/DbD8HcAj3GCkrTCEgpk5YzOIdipulsDKa0jvtTIWThDZhFeDBVp1jeHRAzm1GaS0VaDdeYzb
-	tTSgyzEvHrRVn9EBv8
-X-Received: by 2002:ac8:7d87:0:b0:51c:2685:2964 with SMTP id d75a77b69052e-51c8b48e9e2mr134656691cf.43.1783704660405;
-        Fri, 10 Jul 2026 10:31:00 -0700 (PDT)
+        bh=j7mMLYFCsBB7AUcbNojo6aqrgE8YRZnk68S0s1QKf5U=;
+        b=N+7u8qIKbEaE6p6W/FE0ZNUISlAVxHYDU7w2XPOkQ4YKTPFa6+1PBu8uowILXGS6m0
+         1Eu2SU9S5KvJUYcR+8qxa6hzIAnOzj6lf1i7ARkSHhpTN7G4gsGY4C0vMPhh9qxgLKSq
+         34752GEDDi+7G29/1P+HJUGIvagUh17UuaBk/1HbjXJQ5v4jNDv8xshCNwz2Rk0CmuSo
+         gfd+j+mt+kcck5H1U6fbWZGDn/JQa9gU20h5fwiQbYhYXvznJKf0FvF+QH92ZCwrfkdc
+         MGInRe7XSOhIhlYLcveOCl5nPapOFy6TGPUS2DA8NJqX4GPV/S0BSqUff13I/7YN7Ty8
+         vtfA==
+X-Gm-Message-State: AOJu0Yw66He42AGEv9bKnHxDm495cYDS8cAct20EMKnhlhWBlfD16ERF
+	sGsqdvZv9gBMK/JY6VwhI2q/bXXicfvemfBGsOm/Su/Zk7xgdTTwCFhEwO3Bnw==
+X-Gm-Gg: AfdE7cnJDhXOlEpXbsjlipYTco5LfJOzlF3m0gcHbv++x0wJaPN5bdkclS8VmWhmd7h
+	5yb0H7QqS0l5GGhEMhTEE4GZxQqowDgWEEKeQDrIVEtoDNKYazJsGxpD6T89W8GE2mkhvu2AIFx
+	HsjqOiQ1JU5dTaD2TsOcIq3k4rC8qq3I44dgdSKNR/+aSuiXbsh4TiDKZCpTzYIdQBZ4rRU4Htm
+	pnGy9jszz8nArhSMwlvM09aNW1d5ZFFcFmeNXmpFnwD2KsrGuC89BZlcV1P3I5NycJckLkzMbYp
+	9se9UIVkHE+xsq5zXNbHxZgk5Ujo9PbBiVheaww14TlpUTxsia+HPvJFlMGGmOrBKhxxLx1uSAy
+	YGHS2H39cYolXa2UAmFMa6VzpXFExN/Qqpx3MnQSNHAfSVr6yziasvZKmdE0WimPH7+kVUNDNCe
+	H6v9zDRltE1oIWAbnZ
+X-Received: by 2002:ad4:5dc3:0:b0:8f1:440c:7f81 with SMTP id 6a1803df08f44-903fe450e71mr116376d6.4.1783704661500;
+        Fri, 10 Jul 2026 10:31:01 -0700 (PDT)
 Received: from [127.0.0.1] ([172.208.127.32])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd7c1d3acsm45765816d6.24.2026.07.10.10.30.59
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd7c1ec84sm46365876d6.29.2026.07.10.10.31.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 10:30:59 -0700 (PDT)
-Message-Id: <79b56402c0d5d8b709f41b25ca66aed98ebbb007.1783704657.git.gitgitgadget@gmail.com>
+        Fri, 10 Jul 2026 10:31:00 -0700 (PDT)
+Message-Id: <5f56f32a74b3d900148f02901bcd104927c5e088.1783704657.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
 References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
 	<pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Jul 2026 17:30:55 +0000
-Subject: [PATCH v2 1/3] t/lib-httpd: fix apply-one-time-script race under
- concurrent requests
+Date: Fri, 10 Jul 2026 17:30:56 +0000
+Subject: [PATCH v2 2/3] t/lib-httpd: make http-429 first-request check atomic
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,227 +80,101 @@ Cc: Michael Montalbo <mmontalbo@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-apply-one-time-script.sh checks for the "one-time-script" marker, runs
-it, captures the git-http-backend response in the fixed-name files "out"
-and "out_modified", and removes the marker only after it has finished
-serving the modified response. Because the client receives the response
-body before that removal, it can start its next request while the marker
-still exists. Apache can then run this CGI for two requests at once: a
-partial fetch that receives a REF_DELTA against a missing promisor
-object lazily fetches that base while the first response is still in
-flight. The second request passes the marker check, the first request
-then removes the marker, and the second fails to exec the now-missing
-marker, emits no output, and the server answers HTTP 500:
+http-429.sh records "already returned 429 once" with a "test -f"
+followed by a "touch" of a shared state file. That check-then-act is not
+atomic: Apache can run this CGI for several requests at once, and two of
+them can both pass the "test -f" before either "touch"es, so both treat
+themselves as the first request. The retry flow that drives this
+endpoint is mostly sequential, so this has not been seen to fail, but
+the race is latent.
 
-  fatal: ... The requested URL returned error: 500
-  fatal: could not fetch <oid> from promisor remote
+Decide whether this is the first request with a single atomic mkdir,
+which fails if the directory already exists, so exactly one of any
+concurrent requests is rate-limited and the rest are forwarded.
 
-This has been seen as a flaky failure of t5616.47 on the macOS CI
-runners.
+Skipping state for "permanent" is required for correctness, not just an
+optimization. The marker tells a later or concurrent request that a 429
+has already been served, so that it forwards to git-http-backend instead
+of rate-limiting. Since "permanent" must return 429 to every request,
+that marker must never become visible to another such request.
 
-Claim the marker atomically with a rename, and only once the one-time
-script has succeeded and actually changed the response; give the scratch
-files per-request names. A request that loses the rename, or whose
-script fails or leaves the response unchanged, serves the unmodified
-body and keeps the marker for a later request. No path emits an empty
-body, so the HTTP 500 no longer occurs.
+The original did not achieve this by staying stateless: its "touch" of
+the marker ran unconditionally, and the "permanent" case removed it
+afterward with "rm -f". That create-then-remove leaves a window in which
+a concurrent "permanent" request sees the marker and is forwarded. It is
+the same class of check-then-act race this patch removes from the
+first-request check, latent for the same reason: the flow is mostly
+sequential. This version fuses the check and the mark into one atomic
+mkdir and, rather than recreate the pattern as mkdir-then-rmdir, skips
+the mkdir for "permanent" with a "!= permanent" guard. No marker is ever
+created, so there is no window and every "permanent" request
+rate-limits.
 
-Running the one-time script more than once is fine; the only thing to
-avoid is serving a second, racing request's modified output. Two
-requests can both find the marker and run the script before either
-renames it away, but the rename is atomic, so exactly one of them wins:
-it serves its modified body and consumes the marker. The loser's rename
-fails because the marker is already gone, so it discards the modified
-output it produced and serves the unmodified body instead. The rename,
-not running the script, is what is serialized.
-
-Add t5567 to lock this down. The overlap depends on timing, so a live
-httpd test such as t5616.47 (the real code path) passes almost every
-time even against the buggy helper; t5567 instead drives the helper
-directly with a fake git-http-backend and forces the overlap with FIFOs.
-Against the pre-fix helper it fails with the same shell error seen in
-the field:
-
-  ./one-time-script: No such file or directory
+There is no accompanying regression test. The check and the set are
+adjacent commands with no external step in between to synchronize on, so
+the overlap cannot be forced deterministically, only reproduced
+probabilistically; the fix is preventive.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- t/lib-httpd/apply-one-time-script.sh | 44 +++++++++----
- t/meson.build                        |  1 +
- t/t5567-one-time-script.sh           | 96 ++++++++++++++++++++++++++++
- 3 files changed, 127 insertions(+), 14 deletions(-)
- create mode 100755 t/t5567-one-time-script.sh
+ t/lib-httpd/http-429.sh | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/t/lib-httpd/apply-one-time-script.sh b/t/lib-httpd/apply-one-time-script.sh
-index b1682944e2..adb9cec528 100644
---- a/t/lib-httpd/apply-one-time-script.sh
-+++ b/t/lib-httpd/apply-one-time-script.sh
-@@ -6,21 +6,37 @@
- #
- # This can be used to simulate the effects of the repository changing in
- # between HTTP request-response pairs.
--if test -f one-time-script
--then
--	LC_ALL=C
--	export LC_ALL
-+#
-+# Apache can run this CGI for concurrent requests (for example a partial fetch
-+# that lazily fetches a missing object while the first response is still in
-+# flight), so the helper claims the marker atomically with a rename, and only
-+# once it has decided to modify the response. A request that loses the race
-+# finds the marker already gone and serves its response unchanged; no request
-+# is left emitting an empty body, which the server would report as HTTP 500.
-+# Scratch files are per-request ($$) so concurrent requests do not clobber each
-+# other.
-+#
-+# The script may run more than once: the marker is consumed when the response
-+# actually changes (the rename after "cmp"), not when the script runs, so a
-+# request whose response is not the targeted one runs the script, sees no
-+# change, and leaves the marker for a later request. That is safe because the
-+# scripts are stateless filters over the captured response.
+diff --git a/t/lib-httpd/http-429.sh b/t/lib-httpd/http-429.sh
+index c97b16145b..9746ec67ae 100644
+--- a/t/lib-httpd/http-429.sh
++++ b/t/lib-httpd/http-429.sh
+@@ -26,14 +26,24 @@ repo_path="${remaining#*/}"  # Get rest (repo path)
+ # The repo name is the first component before any "/"
+ repo_name="${repo_path%%/*}"
  
--	"$GIT_EXEC_PATH/git-http-backend" >out
--	./one-time-script out >out_modified
-+test -f one-time-script || exec "$GIT_EXEC_PATH/git-http-backend"
+-# Use current directory (HTTPD_ROOT_PATH) for state file
+-# Create a safe filename from test_context, retry_after and repo_name
+-# This ensures all requests for the same test context share the same state file
++# Use current directory (HTTPD_ROOT_PATH) for state.
++# Create a safe name from test_context, retry_after and repo_name so that all
++# requests for the same test context share the same state.
+ safe_name=$(echo "${test_context}-${retry_after}-${repo_name}" | tr '/' '_' | tr -cd 'a-zA-Z0-9_-')
+-state_file="http-429-state-${safe_name}"
++state="http-429-state-${safe_name}"
  
--	if cmp -s out out_modified
--	then
--		cat out
--	else
--		cat out_modified
--		rm one-time-script
--	fi
-+LC_ALL=C
-+export LC_ALL
-+
-+out=out.$$
-+modified=out-modified.$$
-+"$GIT_EXEC_PATH/git-http-backend" >"$out"
-+
-+if ./one-time-script "$out" 2>/dev/null >"$modified" &&
-+   ! cmp -s "$out" "$modified" &&
-+   mv one-time-script one-time-script.$$ 2>/dev/null
-+then
-+	cat "$modified"
- else
--	"$GIT_EXEC_PATH/git-http-backend"
-+	cat "$out"
+-# Check if this is the first call (no state file exists)
+-if test -f "$state_file"
++# This endpoint returns 429 to the first request and forwards later ones to
++# git-http-backend, so the retry succeeds. Apache can run this CGI for several
++# requests at once, so a single atomic "mkdir" elects that first request: the
++# one whose mkdir succeeds returns 429 and leaves the directory behind as the
++# "already rate-limited" marker; every later request finds the directory (mkdir
++# fails) and is forwarded.
++#
++# "permanent" is the exception: it must return 429 to every request and never
++# succeed, so it skips the mkdir and records no state. A leftover directory
++# would make its own later requests find the marker and be forwarded, which is
++# exactly what "permanent" must not do.
++if test "$retry_after" != permanent && ! mkdir "$state" 2>/dev/null
+ then
+ 	# Already returned 429 once, forward to git-http-backend
+ 	# Set PATH_INFO to just the repo path (without retry-after value)
+@@ -52,9 +62,6 @@ then
+ 	exec "$GIT_EXEC_PATH/git-http-backend"
  fi
-+rm -f "$out" "$modified" one-time-script.$$
-diff --git a/t/meson.build b/t/meson.build
-index 3219264fe7..a118a4d719 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -707,6 +707,7 @@ integration_tests = [
-   't5564-http-proxy.sh',
-   't5565-push-multiple.sh',
-   't5566-push-group.sh',
-+  't5567-one-time-script.sh',
-   't5570-git-daemon.sh',
-   't5571-pre-push-hook.sh',
-   't5572-pull-submodule.sh',
-diff --git a/t/t5567-one-time-script.sh b/t/t5567-one-time-script.sh
-new file mode 100755
-index 0000000000..cd8e656005
---- /dev/null
-+++ b/t/t5567-one-time-script.sh
-@@ -0,0 +1,96 @@
-+#!/bin/sh
-+
-+test_description='apply-one-time-script CGI helper is safe under concurrent requests'
-+
-+. ./test-lib.sh
-+
-+HELPER="$TEST_DIRECTORY/lib-httpd/apply-one-time-script.sh"
-+
-+test_expect_success PIPE 'concurrent requests: one rewritten, one passed through, neither empty' '
-+	mkdir workdir fakebin &&
-+	ENTERED="$PWD/entered" &&
-+	GATE="$PWD/gate" &&
-+	export ENTERED GATE &&
-+	mkfifo "$ENTERED" "$GATE" &&
-+
-+	# Stand in for git-http-backend. The modify role returns a response
-+	# containing "packfile", which the one-time script rewrites. The
-+	# passthrough role returns a response that is left untouched, but first
-+	# announces that it has entered the helper and then blocks, so that it
-+	# is still in flight when the modify role claims and removes the marker.
-+	write_script fakebin/git-http-backend <<-\EOF &&
-+	printf "Status: 200 OK\r\n"
-+	printf "Content-Type: application/x-git-result\r\n"
-+	printf "\r\n"
-+	if test "$ROLE" = modify
-+	then
-+		printf "packfile\n"
-+	else
-+		echo entered >"$ENTERED"
-+		read -r released <"$GATE"
-+		printf "refs\n"
-+	fi
-+	EOF
-+
-+	# The transform that replace_packfile would install as one-time-script:
-+	# rewrite responses that contain "packfile", leave the rest alone.
-+	write_script workdir/one-time-script <<-\EOF &&
-+	if grep packfile "$1" >/dev/null
-+	then
-+		sed "/packfile/q" "$1" &&
-+		printf "REPLACED\n"
-+	else
-+		cat "$1"
-+	fi
-+	EOF
-+
-+	GIT_EXEC_PATH="$PWD/fakebin" &&
-+	export GIT_EXEC_PATH &&
-+
-+	# Hold GATE open read-write on fd 9 for the duration, so releasing the
-+	# passthrough request below cannot block even if that request has
-+	# already exited (it keeps a reader on the FIFO).
-+	exec 9<>"$GATE" &&
-+
-+	# Launch the passthrough request in the background. It enters the
-+	# helper, signals us through ENTERED, then blocks on GATE inside the
-+	# fake backend. The braces keep the && chain intact while backgrounding
-+	# only the subshell, so "wait" can reap it by pid; kill it on any exit
-+	# so a stray blocked child cannot hold the test output open and stall a
-+	# reader such as prove.
-+	{ (
-+		cd workdir &&
-+		ROLE=passthrough sh "$HELPER" >../passthrough.out 2>../passthrough.err
-+	) & } &&
-+	passthrough_pid=$! &&
-+	test_when_finished "kill $passthrough_pid 2>/dev/null || :" &&
-+
-+	# Wait until the passthrough request is past the marker check.
-+	read -r entered <"$ENTERED" &&
-+
-+	# Run the modifying request to completion while the passthrough request
-+	# is still blocked.
-+	(
-+		cd workdir &&
-+		ROLE=modify sh "$HELPER" >../modify.out 2>../modify.err
-+	) &&
-+
-+	# Release the passthrough request and let it finish. Ignore the helper
-+	# exit status here so a broken helper is diagnosed by the assertions
-+	# below rather than aborting the test.
-+	echo released >&9 &&
-+	{ wait "$passthrough_pid" || :; } &&
-+
-+	# Neither request may error out or produce an empty (HTTP 500) body,
-+	# and each must have played its role: the modify request rewrote its
-+	# response and the passthrough request came through untouched.
-+	test_must_be_empty passthrough.err &&
-+	test_must_be_empty modify.err &&
-+	test_grep "Status: 200 OK" passthrough.out &&
-+	test_grep "Status: 200 OK" modify.out &&
-+	test_grep REPLACED modify.out &&
-+	test_grep ! REPLACED passthrough.out &&
-+	test_grep refs passthrough.out
-+'
-+
-+test_done
+ 
+-# Mark that we've returned 429
+-touch "$state_file"
+-
+ # Output HTTP 429 response
+ printf "Status: 429 Too Many Requests\r\n"
+ 
+@@ -67,8 +74,7 @@ case "$retry_after" in
+ 		printf "Retry-After: invalid-format-123abc\r\n"
+ 		;;
+ 	permanent)
+-		# Always return 429, don't set state file for success
+-		rm -f "$state_file"
++		# Always return 429
+ 		printf "Retry-After: 1\r\n"
+ 		printf "Content-Type: text/plain\r\n"
+ 		printf "\r\n"
 -- 
 gitgitgadget
 
