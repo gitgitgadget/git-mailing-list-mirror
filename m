@@ -1,68 +1,66 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE0F136358
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:18:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3664D257824
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:18:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783696726; cv=none; b=URyhLANBJtPww4mt0dmyG7GSjE8auq/dmRdc2RUnjiIRsKbmkxFRw+o1syu4ukYHQu0KKdpcwhGkUQ+ujnuch1fP2LjkApvSPO9b1GxDkkEqk75BIER8CW+azCzRb4Q4s0D+DLpuy81zxX0cyqdyIzbu+xWwnx22hITIREJXL/E=
+	t=1783696736; cv=none; b=SwLdyYESzpaumT74IVQesr+KJUhDRUDclGPmC8Bc4dYhrl4M2JqupvUmyUXmPHQXoXzVG9EMgqPq3Lvki4eoi6dYR18tGE/jP+xNlVdvULP2QHwwglyQtU1p/LOpHBEX0cQx/aPzxLu5THiGE4vL5SDGE6YpnRAR+59R/EzbPVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783696726; c=relaxed/simple;
-	bh=BoiWUKQvJW+gG/pFAB1zZFyOB9WKAPG+s88ymIHjsJo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CafgGcXEiO8CePJPYF5jYVl64J5fmxUDH38TzPPg46VzOp0vCoOyqaUV4HLAlwtDmjNtdnQIF6YzQrScwAqkoDc+DDxYU6sYdvuoL0FxL8Lg34isDoEC/BsJyMDmkSjwU87/2xIpreGN3TcyxeU2DR0T2t+U3v0dLJE7V79+0vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O7IcTD3K; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1783696736; c=relaxed/simple;
+	bh=LIyOhkNFvDxN79PDGE1BajfgLRRPmzUD0+iwA/Kho+4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=i6y+Ybz9dhmF9bSsZWobkNEEN/UsHCTT55h2ahKgyxPxhKo+F0XVtSca/OOBUqLayP7JPNn3/lpgm8zwKq/JN0HTQSETyf6svnLN/MA9XKKFI5tkyTYcmGXJHvVvPrKIl3ZMZEB3EcdOjPk6j6qotbXKJx713eYQQDAQTdlR4Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iq2ZXaUz; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O7IcTD3K"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-698aa8d4dafso1083127a12.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 08:18:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iq2ZXaUz"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-69a5ecbbfb2so1653556a12.2
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 08:18:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783696723; x=1784301523; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:reply-to
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=TSduWjqUDnlO9oJjtglAsNd2gzUvyYScjyHvYQT5mok=;
-        b=O7IcTD3KJLvJLRwZfVAC4gTKb8UV7eS214onj8bvPXJkodF3z+q5Gn/cmiMGZUAzjL
-         k+QrjacQ9xqjMiRnlkKgTy0Aqxwz8xQXV3nZO6eLejacIKn4keY/OH9oWd/9rt9bganp
-         isiYMLieTX7tkQ7SI6tfzxLCHRtYwz93IuCO2xAkScx+yQlGtdl/ZRb9rgKacWxww8bp
-         ASIBIDcZKXcCf81Xo9m/emV1EUVIzTIfVqQ0duBwpunkvtiwzGB2oRZnl+6ycZOQh/TA
-         8LiXiy7bAHGLZZWJzUfy0TFKkq1036U3IPjbT3yDGjLs7TYXHiPSn66Y8kbeOtG1ruzb
-         rjKw==
+        d=gmail.com; s=20251104; t=1783696733; x=1784301533; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=JeK+Kr5HbuG2SxREM0dhvBE5ZB1yO7GuqwzmGVJPdls=;
+        b=iq2ZXaUz9h/E5cifOiuWEKqrgWGJ6twC1SbEQnbhGmmAxcs3suoqocUVVZwupQKpD0
+         renJ02+xDjSsczU9Ed4ponzH8EGQLxkkMruIBCZ95WpbuZr66+ePVWet5Ve/Z5NcX/ya
+         AptFTB94yuTj9/NdaJz3iQI5TtiKqNpmJXuXGDvX7YdldDwdnxJzVZGYy+lGZ78hw7iz
+         50YCSrcmLDQ0dJXobGslEACJqVAl+EWwTT7HPQKVWo0MRe8ZvM0uefkd1vlp2KHe46Us
+         uj8iL4XJGFDhHJksqNZ3b0gOLYca4USdZ+NY2tndBZl3BwjwjsoR9PAB5oTZtWZqYLsT
+         NY+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783696723; x=1784301523;
-        h=content-transfer-encoding:content-type:in-reply-to:reply-to
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=TSduWjqUDnlO9oJjtglAsNd2gzUvyYScjyHvYQT5mok=;
-        b=POzFpXutrZm+behwNq9HGWvN7lpGqvNwrEiQPLXwMYUPAbFo2Qa08hmxz9dFz2M6Mb
-         Y0vBNCtUFPoh8g4Bpw9DcrshXZ5GdBHcz+iuD+1aH5o0hsS6e0jp9FdQQAwRj4iaeeZH
-         GJvYzKB+xXLsV5kqQ6TdHWxbSnbcsHYPURzN8/FuHn2M65sZyzZkGZAtlye+ossMSXpz
-         13aVmQ1iijIWcTYI4+Fs3uR1AUj0DOk30/KYJFE0gQ3QcJ99iN+UQSl+rt2fvILfXOR5
-         dr2JIfpvTf3oOAHviXp5TzcB7p3gmSqQF1If9+cfSMqUoIdeQkfN2k57Yg6otuUAPe4G
-         Vz6w==
-X-Forwarded-Encrypted: i=1; AHgh+Rr90kzjH+5f4ho5n9BzNHhhf43bkqv1KBKjFB8WvKR+YR5LVdMMGlLRdLN5lL6jND1nulA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcbOYdTvdNXj+flxfRK79F3VPr1vD51Na+xzaeaRabrYxISFT4
-	WkemtBP6sGXLQ+f2nLkiQBBnrTYjX30q9+vlbUQf3bq+DtO/vVfUbh5e
-X-Gm-Gg: AfdE7ck5DwUDHfGTgGrPGTjhu/z4MK+/Y2Q/qCphvvQF3lGoc9eOwLwNRLr3XJBubXW
-	XOGnmjUHPzfHnvYOPbv3zOOsXxMBLcXxKB3GpSlVZh3GukqBa/TEg5QDlMd/ZT4H38cJdIuyjFH
-	TOnKwKCNT5nSCUaqErcQMirqUe+lgYKclB3mT5UHR06krG2b2tPSyvUCdzK7sWaw0vDxPrgeYVO
-	jv5/SqwE9dvy6gwlHG764bmN0wItLt7djQ3AdEmjL7lW+1YtsL7YS18hlGNDjpU0nuLzOv6Jv/a
-	cYKl3QP7DdwtusPxCbPhydrz5ges2INP189bNGInFhHGMcxTEaM2yxI3RJIO9/FkJZe+6uDfmni
-	nGEEezEvApVyq5E9Dgehr6Xu6cK+8j+VDBn4+eKjTutOG00sNufCYJC470kEUnqfD8P+qyN7oKK
-	cDZfObkHW6jjDzElIA9fol5HwO7YfsYfMOmFK+xYx0s5Njucc4a1obr/Vw9K6HgOka21hIyBXr6
-	n+jVg==
-X-Received: by 2002:a05:6402:e85:b0:698:81d7:b576 with SMTP id 4fb4d7f45d1cf-69ab4472359mr4546802a12.10.1783696722591;
-        Fri, 10 Jul 2026 08:18:42 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783696733; x=1784301533;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=JeK+Kr5HbuG2SxREM0dhvBE5ZB1yO7GuqwzmGVJPdls=;
+        b=reNhMOAOw7/VqMGGP+ywwNoXHlrmIHmZ6ZgLjICJ6X9qFdBhuFBxnbNKfxqJ2E0nON
+         IYFHVll2kiBG1eUppPOa/1Hcu2zqQ5NCpscw0Q0/J87gxgS/oRi92zPOIKVOKA1PP/pX
+         UTbSBcuspB5iTua7TWZV23Qa9AicDVQNXKrvFji0F2OsLuG+YLfkhTUwWnh6IewhFDhn
+         EpbRGYOUkKsuZJs1yuaizDOGqGwtNKuVKMKFBhPi7q3FKr+m7y6csoVu/hM+9YzCES7Z
+         8FRUEZcQH/jfg001HHFwcf5Ctfc5QVt7UsGzKT6JN5rdxEnTR8FRev8acxHGkHWvZI0r
+         ZsXA==
+X-Forwarded-Encrypted: i=1; AHgh+RrDddSuN/wRAhv4Gx3tx0KFAGZG5Ios0zq9M3e2R+y4x8HmCYwxGyeg9azMO/MFMn9cUG4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyL1GgVZdtYnd1mZvvBsoa4yqMDDbYVr9So0Rp002LZrs7RZmZT
+	n7kAondUMeLkKpyBlU9KD/9n5qLfCFcS/e5du2+Gn730kdwSM8Hm9+0/
+X-Gm-Gg: AfdE7clhdmdJdMbFbUFRd+AJtHxGcTxMX76yO+GEmAkGtAKBeclJDAdZHvvyAAV6ZrB
+	6sC4frLNwgsM4kSL4rUPVsjolSVhU9pY+yoiRVURnTutE/+dRFII22L0s2BugtS5sUlPk623Npw
+	Bj4X4hb7dMH3zXsNquidxlDgLB2ROrytC3kRU/ivkKeUhR1HIthfb+K8RODwIIzDaAGayl2voBS
+	N0TQiDldhfEYjpAdMB6WVwkj09lR9KIZT8iGnp5oIkQqMqf+RIs96ySmbSXc9ofZMtvoyzNmejR
+	fvzFzQryKu7PBPv6lmyb/UWNFYHrDDhff026SwVOuUeioVuJn7XtQpoyQoD3GsHp6z21FdSnrTY
+	mV00KprwxcUXIW+CA5FotyWMP0zZbqdNZdLEeQxh/NWk2/P92Dfmgw5TjSCTrt3W5DISlwq2gWd
+	Q5Rqj9MC4ZwD9qya4HirDUHgkhB2IAywTfiZwWSoHdPglKxtHyfIYU6KJ0Dx8fmyU4gI4=
+X-Received: by 2002:a05:6402:1f89:b0:69a:9355:ec35 with SMTP id 4fb4d7f45d1cf-69ab44b5e42mr5460842a12.41.1783696733467;
+        Fri, 10 Jul 2026 08:18:53 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69c5e29b061sm82358a12.19.2026.07.10.08.18.41
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69a19d786e7sm11958527a12.16.2026.07.10.08.18.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2026 08:18:42 -0700 (PDT)
-Message-ID: <8ee46e33-4eb8-4e01-800a-82cc7cefa3f9@gmail.com>
-Date: Fri, 10 Jul 2026 16:18:34 +0100
+        Fri, 10 Jul 2026 08:18:53 -0700 (PDT)
+Message-ID: <ed72dd31-5d68-4e78-9123-7061b388ecaa@gmail.com>
+Date: Fri, 10 Jul 2026 16:18:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,143 +68,128 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 1/7] branch: add --forked filter for --list mode
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v18 2/7] branch: convert delete_branches() to a flags
+ argument
+Reply-To: phillip.wood@dunelm.org.uk
 To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Johannes Sixt <j6t@kdbg.org>, Harald Nordgren <haraldnordgren@gmail.com>
 References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
  <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
- <3e29ff17bd703d8333c2d65d36b15c69ddfc2ab9.1782338106.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
+ <cdd4fea4a73e39a1f88127037d806c9b6182d01e.1782338106.git.gitgitgadget@gmail.com>
 Content-Language: en-US
-Reply-To: phillip.wood@dunelm.org.uk
-In-Reply-To: <3e29ff17bd703d8333c2d65d36b15c69ddfc2ab9.1782338106.git.gitgitgadget@gmail.com>
+In-Reply-To: <cdd4fea4a73e39a1f88127037d806c9b6182d01e.1782338106.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Harald
 
 On 24/06/2026 22:55, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
 > 
-> Add a --forked option to "git branch" list mode that lists only
-> branches whose configured upstream matches <branch>. The argument
-> can be a ref (e.g. "origin/main", "master"), a remote name like
-> "origin" for the branch its origin/HEAD points at, or a shell glob
-> (e.g. "origin/*"), and may be repeated to widen the filter.
-> 
-> It is an ordinary list filter, so it combines with the others:
-> 
->      git branch --merged origin/main --forked 'origin/*'
-> 
-> lists branches forked from origin that are already merged into
-> origin/main, and --no-merged inverts the question.
-> 
-> This is the building block for --delete-merged, which deletes the
-> listed branches once they have landed on their upstream.
+> -static int delete_branches(int argc, const char **argv, int force, int kinds,
+> -			   int quiet)
+> +static int delete_branches(int argc, const char **argv, int kinds,
+> +			   unsigned int flags)
+>   {
+>   	struct commit *head_rev = NULL;
+>   	struct object_id oid;
+> @@ -227,6 +233,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   	int i;
+>   	int ret = 0;
+>   	int remote_branch = 0;
+> +	bool force;
+> +	bool quiet = flags & DELETE_BRANCH_QUIET;
 
-The implementation looks good, I've left a couple of small comments on 
-the tests. One thought I had was whether we want a mode which recurses 
-so that if the upstream of topic2 is topic1 which has an upstream of 
-origin/main --forked=recurse origin/main would list topic1 and topic2. 
-So long as we don't think that is a sensible default we can add it in 
-the future if we want.
-
-
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index e7829c2c4b..3104c555f6 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -1717,4 +1717,126 @@ test_expect_success 'errors if given a bad branch name' '
->   	test_cmp expect actual
->   '
->   
-> +test_expect_success '--forked: setup' '
-> +	test_create_repo forked-upstream &&
-> +	(
-> +		cd forked-upstream &&
-> +		test_commit base &&
-> +		git branch one base &&
-> +		git branch two base
-> +	) &&
-> +
-> +	test_create_repo forked-other &&
-> +	(
-> +		cd forked-other &&
-> +		test_commit other-base &&
-> +		git branch foreign other-base
-> +	) &&
-> +
-> +	git clone forked-upstream forked &&
-> +	(
-> +		cd forked &&
-> +		git remote add -f other ../forked-other &&
-> +		git remote set-head origin one &&
-
-This is a bit strange because it does not match HEAD in the remote 
-repository but it is necessary for '--forked <remote> uses the branch 
-<remote>/HEAD'. I wonder if that test could be written to use main 
-instead but I guess this doesn't do any harm.
-
-> +		git branch local-base &&
-> +		git branch --track local-one origin/one &&
-> +		git branch --track local-two origin/two &&
-> +		git branch --track local-foreign other/foreign &&
-> +		git branch --track local-onbase local-base &&
-> +
-> +		git checkout local-one &&
-> +		test_commit --no-tag local-one-work local-one.t &&
-> +		git checkout local-foreign &&
-> +		test_commit --no-tag local-foreign-work local-foreign.t &&
-> +		git checkout --detach
-
-Why do we need a detached HEAD?
-
-> [...]
-> +test_expect_success '--forked composes with --no-merged' '
-> +	test_when_finished "git -C forked checkout --detach" &&
-> +	git -C forked checkout local-one &&
-> +	test_commit -C forked local-only &&
-
-The branch "local-one" already has a local commit so why do we need this?
-
-> +	git -C forked branch --forked "origin/*" --no-merged origin/one \
-> +		--format="%(refname:short)" >actual &&
-> +	echo local-one >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success '--forked rejects unknown branch/pattern' '
-> +	test_must_fail git -C forked branch --forked nope 2>err &&
-> +	test_grep "not a valid branch or pattern" err
-> +'
-> +
-> +test_expect_success '--forked requires a value' '
-> +	test_must_fail git -C forked branch --forked 2>err &&
-> +	test_grep "requires a value" err
-> +'
-
-It is a bit odd to have these two tests in the middle of the ones that 
-check the functionality works.
-
-> +test_expect_success '--forked <remote> uses the branch <remote>/HEAD points at' '
-> +	git -C forked branch --forked origin --format="%(refname:short)" >actual &&
-> +	echo local-one >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success '--forked narrows a <pattern> argument' '
-> +	git -C forked branch --forked "origin/*" "local-*" \
-> +		--format="%(refname:short)" >actual &&
-> +	cat >expect <<-\EOF &&
-> +	local-one
-> +	local-two
-> +	EOF
-> +	test_cmp expect actual
-> +'
-This is looking good
+This means we have two sources of truth because we modify "flags" later. 
+The idea of replacing the old function parameters with local variables 
+only works if we're not passing the flags variable on to another 
+function so I think we should replace all instances of "force" and 
+"quiet" with flags & DELETE_BRANCH_FORCE/QUIET. That way we have a 
+single source of truth and should avoid any future regressions like the 
+one we saw in an earlier iteration.
 
 Thanks
 
 Phillip
+
+>   	struct strbuf bname = STRBUF_INIT;
+>   	enum interpret_branch_kind allowed_interpret;
+>   	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+> @@ -241,7 +249,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   		remote_branch = 1;
+>   		allowed_interpret = INTERPRET_BRANCH_REMOTE;
+>   
+> -		force = 1;
+> +		flags |= DELETE_BRANCH_FORCE;
+>   		break;
+>   	case FILTER_REFS_BRANCHES:
+>   		fmt = "refs/heads/%s";
+> @@ -252,12 +260,14 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   	}
+>   	branch_name_pos = strcspn(fmt, "%");
+>   
+> +	force = flags & DELETE_BRANCH_FORCE;
+> +
+>   	if (!force)
+>   		head_rev = lookup_commit_reference(the_repository, &head_oid);
+>   
+>   	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+>   		char *target = NULL;
+> -		int flags = 0;
+> +		int ref_flags = 0;
+>   
+>   		copy_branchname(&bname, argv[i], allowed_interpret);
+>   		free(name);
+> @@ -279,7 +289,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   					     RESOLVE_REF_READING
+>   					     | RESOLVE_REF_NO_RECURSE
+>   					     | RESOLVE_REF_ALLOW_BAD_NAME,
+> -					     &oid, &flags);
+> +					     &oid, &ref_flags);
+>   		if (!target) {
+>   			if (remote_branch) {
+>   				error(_("remote-tracking branch '%s' not found"), bname.buf);
+> @@ -291,7 +301,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   									   | RESOLVE_REF_NO_RECURSE
+>   									   | RESOLVE_REF_ALLOW_BAD_NAME,
+>   									   &oid,
+> -									   &flags);
+> +									   &ref_flags);
+>   				FREE_AND_NULL(virtual_name);
+>   
+>   				if (virtual_target)
+> @@ -306,16 +316,16 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   			continue;
+>   		}
+>   
+> -		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+> +		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+>   		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+> -					force)) {
+> +					flags)) {
+>   			ret = 1;
+>   			goto next;
+>   		}
+>   
+>   		item = string_list_append(&refs_to_delete, name);
+> -		item->util = xstrdup((flags & REF_ISBROKEN) ? "broken"
+> -				    : (flags & REF_ISSYMREF) ? target
+> +		item->util = xstrdup((ref_flags & REF_ISBROKEN) ? "broken"
+> +				    : (ref_flags & REF_ISSYMREF) ? target
+>   				    : repo_find_unique_abbrev(the_repository, &oid, DEFAULT_ABBREV));
+>   
+>   	next:
+> @@ -872,7 +882,9 @@ int cmd_branch(int argc,
+>   	if (delete) {
+>   		if (!argc)
+>   			die(_("branch name required"));
+> -		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+> +		ret = delete_branches(argc, argv, filter.kind,
+> +				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
+> +				      (quiet ? DELETE_BRANCH_QUIET : 0));
+>   		goto out;
+>   	} else if (show_current) {
+>   		print_current_branch_name();
+
