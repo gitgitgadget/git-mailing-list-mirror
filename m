@@ -1,513 +1,158 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D213DB337
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:06:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84CA3F6613
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783674418; cv=none; b=mXWRuFWametfotTWNzX8qydW5UsXK8R2mVrdxO8/dm//N43pQAeBkCtWDFARh1p2C75CnvMyygUJoGkJRX8b+uLI6gZ3HurUKWvMWBt2xqJH2QK7EFnP+4teCSdh+wrkhXIg3hLhwJ7WRYSFUqN23mTul4lpYG3RHVZeklLOLAA=
+	t=1783676056; cv=none; b=S7kxQ/77OOFTTXCqOSBfP5WyNJp8kRsdNFKhsFevAeVAvXrVSYQ6HDvc4FNe4qZyv/yyuz6tf68qx0EiId76RSZ8m6rwaQUri624QEI6iormP2fhmW2lQiXhYXfIO+rv5eAazJ+XaPi9p1M/IU3Z7XHBvg7FE7x9kRUR/7sRPE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783674418; c=relaxed/simple;
-	bh=0GsdGa5JphLnEfjGkmER2S+NLaxURD7xKOGk/ecS1ks=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=UOy4I7VlTz7o25MKUN2DxG8fceBdrMq2fVSU9M681JwrabkUS6/ueA/3Yfk3BRJCaicR6qEU20imh4rXbo1Meg4ptEu0Wxx0ffhY26w8hReIHis8yK6Pa+YdgosT1RewA7gweQ5p+RT6cQCzHSy99M0XJgvD6GxfSUknmKr8DrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PPCNBfD/; arc=none smtp.client-ip=209.85.167.173
+	s=arc-20240116; t=1783676056; c=relaxed/simple;
+	bh=O5EV19wK8Pwf5iPQ1Fgob0tFVcwBe5HTwl7PzY1Kzx0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q72tUIZgjoGp1ekb2/QuCvEEwnYaFUbxDDzDBSjVj2IMpdwwGm9Akw7M4+2a2GyHrApUg5hBjS3pNAWtYX/TcrP1AxCSKGZhDr+yBzsHP4ZDaOgnmmJHbFyVDE3Z3mgI41EE6IgPjyGdMxPUmYfmmQG0S5LPvRM+IFTa/WNkDMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCDT6bma; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PPCNBfD/"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4a416619cb2so231391b6e.3
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 02:06:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCDT6bma"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-493ed9d8c5cso4497935e9.1
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 02:34:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783674415; x=1784279215; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=sNZ8NNlB8MujmetBy3a8qwhpLRFL4jadAIx1lxkBmHU=;
-        b=PPCNBfD/IAHGDmDlHIJ27+HZl7T08M7SZvGfXnODDC6Tofepz0iFFwxx3fhhh6CxDn
-         9Rqfp+pkj89fcn+0ogg+70Mkw4IxDizgOJHpzU5WoC7wvyW/xTLoDAfK+YCpm2A90Tvx
-         NjOhMQP3aaPGjP0wuJ3G+TBSerlIKoASkSsZaTPKb5Z8DKHDYEeGQs8VJyFVxNGAFYy7
-         zv0ZEMGmozYK/KiR7DDVC6687xslwl3/w1im1j+jNaZWFraqQGyFIm+UhKN/LJJ0fkuD
-         wbGrjXuD/CceC1sMcedlj5Di4hs6q3NJYoB0H+TDfzWVFVSXeXNiyjmXj2HeXmHEBnSm
-         p7CQ==
+        d=gmail.com; s=20251104; t=1783676053; x=1784280853; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=coyBKYPyudT+/wsX/maonO8+ZKzfYAjfDACXR0UKexs=;
+        b=RCDT6bmaYOIkeWq4qCsb2n9ZQWuOKCSEgpeL+UY5KRHwkEH+9PRTLhFEwO+LhLiUrQ
+         ve+fLtHSnQyxopjUba91RyBpLa7m4iKAh3/tLie3h/jF/t9FwssaWZHNkWSLDJGpvnx5
+         Q9eZAxiii8BXCK5PYqVciHinK5kFu5sMSavZYblHU2DFbBbQBTkUf561zNEfSj19RwPN
+         b13A6C3th7Cdf7ezPmS4jlkK1ofufBjXAfpi3PDAmavRjTVQrOkMhxnKuJ6sQoE36oEY
+         1R6tLu2brlqOxVN2stkY1iAIOyny/VnbOdP///8OVcynQrPQ80zMF6z5pg0CDhdPkWkR
+         f2JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783674415; x=1784279215;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=sNZ8NNlB8MujmetBy3a8qwhpLRFL4jadAIx1lxkBmHU=;
-        b=JkL8MljwvGMD7nlaDjW/z6aOsSuLHLGo04wQsNSSq1aq/1d2jmVEcjuy+h1Zln5UjC
-         dMWraHObYrUtfqYsQS9tWfRaDR+8pBEp62vIwle5+uJXjPHPYutSA/N+3sQAEiOs1mj+
-         K7AOZeADqEdN7hMH7wysh49uWgIv8+f7Ct6K7Cp/ATCw73TeY6UK4anhal989NaX9EkH
-         ZGoUUPsGP/IAUgYLM691Nw1GcUPwqlRv2nZnLhqniq487++tUGlL21BtX4JGWKoKTTWd
-         wjVU1S2qTSMOlqs2um/1yIfAHo4UZmmps65CbXH/ujs/1x4zQB37z+0h3/u/W2iHoSrx
-         C86w==
-X-Gm-Message-State: AOJu0Yz1bhrICCdJwhKjScpaGpLbOKwcR7+OuHinZcQO11aTzWJxxtKH
-	TiJuRyyvfMHj2D4HdacccKvrMGG+uyVWxwi+VHldIWC52XNVXzaYd2kT/ifbXg==
-X-Gm-Gg: AfdE7cnwax0R7oGauK6zVHh8M9ejUmfEoaC8QjZjGm83o/kNt6ttoiWHnMwYijFX1LZ
-	08ITWEk16p381c6cyBFTV2sJKVdUI3QV91UdQkOFnSFEq30vek+a5ukaH/jKUolHhXLokWaDZDO
-	IGrh32X1FCe6mdyPahM5WtjXz/ecdKcltU8sRnV79s6MKtmlqY6/q61kvvhhGYPshl5UcfLRLyR
-	F54fEsmqUm0i2lnjGmTkCI8MEUH+JOY4WdqApQu9Vrlwfk0T6rJV3lZFRJSYvT75KLeemweBaX5
-	9w3l8ZguDSg1ywECgw7EyNYQikamPxyS8EwHlyXF3lAZTcRSDaRbBskHgz8aFxu25FsYh5bO56/
-	dL8k0IYAzr9knpUBaDnxYHVHbdSTGMvs0sdrm2Hmi+aqK99GOKNvWqCauJsXxoqzTuTexLVo62h
-	orKwbCaUWyLHi4S2I=
-X-Received: by 2002:a05:6809:390:20b0:4a3:cea7:4ab2 with SMTP id 5614622812f47-4a3cea76b86mr2520029b6e.6.1783674415384;
-        Fri, 10 Jul 2026 02:06:55 -0700 (PDT)
-Received: from [127.0.0.1] ([52.154.20.197])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4a1afbfbb6esm5814773b6e.9.2026.07.10.02.06.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 02:06:53 -0700 (PDT)
-Message-Id: <baf7e6f0a6a901d4d5ca144e9f2906d4907ec1c9.1783674396.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
-References: <pull.2337.v7.git.git.1783327849.gitgitgadget@gmail.com>
-	<pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Jul 2026 09:06:36 +0000
-Subject: [PATCH v8 5/5] history: re-edit a squash with every message
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1783676053; x=1784280853;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=coyBKYPyudT+/wsX/maonO8+ZKzfYAjfDACXR0UKexs=;
+        b=M4yzi5RI9RUIoKV5FiW7YNfj48/QBt1LUlAfUkKRuETgdL/TC0YBP9bZWw6Ld3KJxP
+         /c7u89xf4v+c0ddFn0dXePVO0pml2UQ1XWGTDG0C40+aY+NCvvT2/Ho6yF3RMeg2zMwI
+         h+5gYUmO+DDWynubZoDj1G/hvXpU9/aQhEbgC/qhuXKRHeboUv/F6HE7QUtGZi7hDk1R
+         ldm1d+2d9nx8Dv2ZDnlrpOHU0P84Z6kl4PxtpGIqGm9foFI61uZdEKzOPYKRNz7Do0az
+         oyKQTQCQQkYecMFtHwlXgu02mmzLddSeZRMyHaNFSW7RPEZEqvuDDL8fMrJWLxl4/Cle
+         jPbg==
+X-Forwarded-Encrypted: i=1; AHgh+RosZrxmDApfSmTxK8b17LUF6zNiP3Gy+yuYmHS6hSCDY4QMyFHo8dEAVzXVWkSeIvWBTIc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyy09UpoypAWL0uh3b34kVdC2j4Ah1cNQWw+AdWfWeD4W3KWCLB
+	0V9t+Tmont6f5icdPucEPux+/u2RvrPTgKKN/Wa057fUlkcLazaigyXh
+X-Gm-Gg: AfdE7cm+HfpsbC5mIkxeJmxeAg6smTtj2Wpb1PjoSg9+sNVa45l5eKBYHmLFIZsjrbw
+	nQj2WPTa5zrKgTXzoYUdNcsc+rJ5rKHI1+UzV7yylHTwK6sxl6e03WLbNu4nJG4BeP0uGffbr0j
+	VBS13oK7sue0H42plU+QmReGC0lsunpFP0gdD2hy2vWoTYOU91JgYxrefGsiU+LRnzsnEpv64rs
+	9rNQFPVvkxHscaA68PVrwVG9i/QQtyJK3gPDPPjY/1qYMosKzp7JNvEYtDRoliXk03fQw4I9JAh
+	sdfta/vnXQedZRXxOqTwSzX8qCHWflwkOitmrxE2ciRgPNj6zAPfW/5erw4Io0vkYZl7/B4bn/b
+	Ts6if7NrdXDoi+tYk6hqcz4pH4ld19bbRRFW4gH2WOUN4XGa2Z0NGtv/dJZC0SGFOClkawyPOSI
+	ogo1OaKwwSCBMQrG1wd/EjZDyX33w3XgMXQwwdp3LsFHe2aH7hnZ/bxhzWZhOw4Ri3Ivg=
+X-Received: by 2002:a05:600d:8496:10b0:493:e034:a3b5 with SMTP id 5b1f17b1804b1-493e68c6eaamr80812125e9.24.1783676052851;
+        Fri, 10 Jul 2026 02:34:12 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493f4f09f89sm42810075e9.10.2026.07.10.02.34.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jul 2026 02:34:12 -0700 (PDT)
+Message-ID: <0f37a01d-c39e-47b3-b8e9-48cdd42672df@gmail.com>
+Date: Fri, 10 Jul 2026 10:34:05 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Matt Hunter <m@lfurio.us>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v1 0/3] worktree: add post-worktree-add and
+ post-worktree-remove hooks
+To: domen@cachix.org, git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>,
+ =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Caleb White <cdwhite3@pm.me>, Junio C Hamano <gitster@pobox.com>
+References: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Hi Domen
 
-By default "git history squash" reuses the oldest commit's message.
-When --reedit-message is given it only reopened that one message, so the
-messages of the other commits in the range were lost.
+On 10/07/2026 00:36, Domen Kožar wrote:
+> 
+> Today there is no reliable trigger to set that up when a worktree
+> appears: post-checkout does not fire for --no-checkout or --orphan
+> and cannot be told apart from a plain checkout. Nothing at all fires
+> when a worktree goes away, so stale databases and services pile up
+> after "git worktree remove" or a manual rm followed by "git worktree
+> prune". Wrapping the worktree commands only helps when every tool,
+> human or agent, goes through the wrapper.
 
-Gather the message of every commit in the range and build the same editor
-template that "git rebase -i --autosquash" shows for a squash, reusing
-add_squash_combination_header(), add_squash_message_header() and
-squash_subject_comment_len(). Feed the range through
-todo_list_rearrange_squash() so that each fixup!, squash! or amend! is
-grouped under the commit it targets rather than shown in commit order,
-exactly as autosquash would arrange them.
+I agree a hook that's run after the worktree is added is useful (I have 
+a patch for it that I've never got round to cleaning up and sending so 
+thank you for working on this). It is useful for copying across 
+untracked files to the new worktree like "config.mak".
 
-Only the message text differs, the changes are always folded in. A fixup!
-message is commented out in full under a "will be skipped" header, a
-squash! keeps its body with only the marker subject commented, and an
-amend! replaces its target's message unless a squash! already folded into
-that target, in which case it behaves like a squash!.
+> Patch 1 adds a post-worktree-add hook that fires after the working
+> tree is fully set up. Patch 2 adds post-worktree-remove for "git
+> worktree remove". Patch 3 extends it to "git worktree prune" so that
+> manually deleted worktrees are also observed.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-history.adoc |  15 ++-
- builtin/history.c              | 107 ++++++++++++++++-
- t/t3455-history-squash.sh      | 210 +++++++++++++++++++++++++++++++++
- 3 files changed, 328 insertions(+), 4 deletions(-)
+I don't have a strong opinion on a hook running when a worktree is 
+removed - an IDE that cares about that could set up a filesystem watch 
+on the directory but I guess adding a hook doesn't do any harm.
+> Two design points I would especially appreciate feedback on:
+> 
+>   * post-worktree-add runs after post-checkout and is skipped when
+>     post-checkout fails. An argument could be made that it should run
+>     whenever the worktree was created, regardless of the earlier
+>     hook's exit status, since tooling registering worktrees would
+>     otherwise miss one that does exist.
 
-diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index ad921ac2be..697155f5d8 100644
---- a/Documentation/git-history.adoc
-+++ b/Documentation/git-history.adoc
-@@ -117,8 +117,9 @@ given, for example `HEAD~3..HEAD ^topic` to additionally exclude what is
- already on `topic`. Rev-list options may also be given, but any that would
- change how the range is walked are overridden with a warning.
- +
--The oldest commit's message and authorship are preserved by default,
--unless you specify `--reedit-message`. A merge commit inside the range is
-+The oldest commit's message and authorship are preserved by default. With
-+`--reedit-message`, an editor opens pre-filled with the messages of all the
-+folded commits so you can combine them. A merge commit inside the range is
- folded like any other, but the range must have a single base, so a range
- that reaches more than one entry point (for example a side branch that
- forked before the range and was later merged into it) is rejected.
-@@ -127,7 +128,15 @@ A `fixup!`, `squash!`, or `amend!` commit is refused unless the commit it
- targets is also in the range, so the fold does not silently absorb a
- marker meant for a commit outside it. As an exception, a range made up
- entirely of markers for one target is combined into a single commit,
--keeping the last `amend!` message if there is one.
-+keeping the last `amend!` message if there is one. The changes from every
-+commit in the range are always folded in. Only the message text differs.
-+With `--reedit-message` the template mirrors `git rebase -i --autosquash`:
-+each `fixup!`, `squash!`, or `amend!` is grouped under the commit it
-+targets rather than shown in commit order. A `fixup!` message is dropped
-+(commented out in full), a `squash!` keeps its body with only the marker
-+subject commented, and an `amend!` replaces its target's message, unless
-+a `squash!` folded into that target first, in which case it keeps its
-+body like a `squash!`.
- +
- A branch or tag that points at a commit inside the range would be left
- dangling once those commits are folded away, so with the default
-diff --git a/builtin/history.c b/builtin/history.c
-index d3f535ded9..f82001508d 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -1211,6 +1211,102 @@ static int find_interior_ref(const struct reference *ref, void *cb_data)
- 	return 0;
- }
- 
-+static bool amend_replaces_target(struct todo_list *todo, int target)
-+{
-+	int i;
-+
-+	for (i = target + 1; i < todo->nr &&
-+			     todo->items[i].command != TODO_PICK; i++) {
-+		if (todo->items[i].command == TODO_SQUASH)
-+			return false;
-+		if (todo->items[i].flags & TODO_REPLACE_FIXUP_MSG)
-+			return true;
-+	}
-+	return false;
-+}
-+
-+static int build_squash_message(struct repository *repo,
-+				struct commit *base,
-+				struct commit *tip,
-+				struct strbuf *out)
-+{
-+	struct rev_info revs;
-+	struct commit *commit;
-+	struct strvec args = STRVEC_INIT;
-+	struct todo_list todo = TODO_LIST_INIT;
-+	struct replay_opts opts = REPLAY_OPTS_INIT;
-+	int i, nr_commits, ret;
-+
-+	repo_init_revisions(repo, &revs, NULL);
-+	strvec_push(&args, "ignored");
-+	strvec_push(&args, "--reverse");
-+	strvec_push(&args, "--topo-order");
-+	strvec_pushf(&args, "%s..%s", oid_to_hex(&base->object.oid),
-+		     oid_to_hex(&tip->object.oid));
-+	setup_revisions_from_strvec(&args, &revs, NULL);
-+
-+	if (prepare_revision_walk(&revs) < 0) {
-+		ret = error(_("error preparing revisions"));
-+		goto out;
-+	}
-+
-+	while ((commit = get_revision(&revs)))
-+		strbuf_addf(&todo.buf, "pick %s\n",
-+			    oid_to_hex(&commit->object.oid));
-+
-+	if (todo_list_parse_insn_buffer(repo, &opts, todo.buf.buf, &todo) < 0 ||
-+	    todo_list_rearrange_squash(&todo) < 0) {
-+		ret = error(_("could not prepare the squash message"));
-+		goto out;
-+	}
-+
-+	nr_commits = todo.nr;
-+	for (i = 0; i < nr_commits; i++) {
-+		struct todo_item *item = &todo.items[i];
-+		const char *message, *body;
-+		size_t commented_len;
-+		bool skip, squashing;
-+
-+		squashing = item->command == TODO_SQUASH ||
-+			    (item->flags & TODO_REPLACE_FIXUP_MSG);
-+		if (item->command == TODO_PICK)
-+			skip = amend_replaces_target(&todo, i);
-+		else
-+			skip = !squashing;
-+
-+		message = repo_logmsg_reencode(repo, item->commit, NULL, NULL);
-+		find_commit_subject(message, &body);
-+
-+		if (skip)
-+			commented_len = strlen(body);
-+		else if (squashing)
-+			commented_len = squash_subject_comment_len(body, 1);
-+		else
-+			commented_len = 0;
-+
-+		if (!i)
-+			add_squash_combination_header(out, nr_commits);
-+		strbuf_addch(out, '\n');
-+		add_squash_message_header(out, i + 1, skip);
-+		strbuf_addstr(out, "\n\n");
-+		strbuf_add_commented_lines(out, body, commented_len, comment_line_str);
-+		strbuf_addstr(out, body + commented_len);
-+		strbuf_complete_line(out);
-+
-+		repo_unuse_commit_buffer(repo, item->commit, message);
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	todo_list_release(&todo);
-+	replay_opts_release(&opts);
-+	reset_revision_walk();
-+	release_revisions(&revs);
-+	strvec_clear(&args);
-+	return ret;
-+}
-+
- static int cmd_history_squash(int argc,
- 			      const char **argv,
- 			      const char *prefix,
-@@ -1235,6 +1331,7 @@ static int cmd_history_squash(int argc,
- 		OPT_END(),
- 	};
- 	struct strbuf reflog_msg = STRBUF_INIT;
-+	struct strbuf message = STRBUF_INIT;
- 	struct oidset interior = OIDSET_INIT;
- 	struct commit *base, *oldest, *tip, *rewritten, *msg_source;
- 	const struct object_id *base_tree_oid, *tip_tree_oid;
-@@ -1279,6 +1376,12 @@ static int cmd_history_squash(int argc,
- 		}
- 	}
- 
-+	if (flags & COMMIT_TREE_EDIT_MESSAGE) {
-+		ret = build_squash_message(repo, base, tip, &message);
-+		if (ret < 0)
-+			goto out;
-+	}
-+
- 	ret = setup_revwalk(repo, action, tip, &revs);
- 	if (ret < 0)
- 		goto out;
-@@ -1287,7 +1390,8 @@ static int cmd_history_squash(int argc,
- 	tip_tree_oid = &repo_get_commit_tree(repo, tip)->object.oid;
- 	commit_list_append(base, &parents);
- 
--	ret = commit_tree_ext(repo, "squash", msg_source, NULL, parents,
-+	ret = commit_tree_ext(repo, "squash", msg_source,
-+			      message.len ? message.buf : NULL, parents,
- 			      base_tree_oid, tip_tree_oid, &rewritten, flags);
- 	if (ret < 0) {
- 		ret = error(_("failed writing squashed commit"));
-@@ -1308,6 +1412,7 @@ static int cmd_history_squash(int argc,
- 
- out:
- 	strbuf_release(&reflog_msg);
-+	strbuf_release(&message);
- 	oidset_clear(&interior);
- 	commit_list_free(parents);
- 	release_revisions(&revs);
-diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
-index 6bc0a89ebc..9b24f546e0 100755
---- a/t/t3455-history-squash.sh
-+++ b/t/t3455-history-squash.sh
-@@ -250,6 +250,216 @@ test_expect_success 'preserves authorship of the oldest commit' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--reedit-message offers every folded-in message' '
-+	git reset --hard start &&
-+	echo b >file &&
-+	git add file &&
-+	git commit -m "re-one subject" -m "re-one body line" &&
-+	test_commit --no-tag re-two file c &&
-+	test_commit re-three file d &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited &&
-+	echo combined >"$1"
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash --reedit-message start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 3 commits.
-+	# This is the 1st commit message:
-+
-+	re-one subject
-+
-+	re-one body line
-+
-+	# This is the commit message #2:
-+
-+	re-two
-+
-+	# This is the commit message #3:
-+
-+	re-three
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited &&
-+	echo combined >expect &&
-+	git log --format="%s" -1 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--reedit-message handles fixup!, squash! and amend! like rebase' '
-+	git reset --hard start &&
-+	test_commit --no-tag mark-base file b &&
-+	printf "fixup! mark-base\n\nfixup body\n" >msg &&
-+	echo c >file &&
-+	git add file &&
-+	git commit -qF msg &&
-+	printf "squash! mark-base\n\nsquash remark\n" >msg &&
-+	echo d >file &&
-+	git add file &&
-+	git commit -qF msg &&
-+	printf "amend! mark-base\n\namended message\n" >msg &&
-+	echo e >file &&
-+	git add file &&
-+	git commit -qF msg &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash --reedit-message start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 4 commits.
-+	# This is the 1st commit message:
-+
-+	mark-base
-+
-+	# The commit message #2 will be skipped:
-+
-+	# fixup! mark-base
-+	#
-+	# fixup body
-+
-+	# This is the commit message #3:
-+
-+	# squash! mark-base
-+
-+	squash remark
-+
-+	# This is the commit message #4:
-+
-+	# amend! mark-base
-+
-+	amended message
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited &&
-+	git log -1 --format="%B" >final &&
-+	test_grep ! "fixup body" final &&
-+	test_grep "squash remark" final &&
-+	test_grep "amended message" final
-+'
-+
-+test_expect_success '--reedit-message groups fixups under their targets' '
-+	git reset --hard start &&
-+	test_commit --no-tag alpha file a1 &&
-+	test_commit --no-tag beta file b1 &&
-+	printf "fixup! alpha\n" >msg &&
-+	echo a2 >file &&
-+	git add file &&
-+	git commit -qF msg &&
-+	printf "fixup! beta\n" >msg &&
-+	echo b2 >file &&
-+	git add file &&
-+	git commit -qF msg &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash --reedit-message start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 4 commits.
-+	# This is the 1st commit message:
-+
-+	alpha
-+
-+	# The commit message #2 will be skipped:
-+
-+	# fixup! alpha
-+
-+	# This is the commit message #3:
-+
-+	beta
-+
-+	# The commit message #4 will be skipped:
-+
-+	# fixup! beta
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited
-+'
-+
-+test_expect_success '--reedit-message lets amend! replace its target message' '
-+	git reset --hard start &&
-+	test_commit --no-tag mark-base file b &&
-+	printf "amend! mark-base\n\namended message\n" >msg &&
-+	echo c >file &&
-+	git add file &&
-+	git commit -qF msg &&
-+	printf "squash! mark-base\n\nsquash remark\n" >msg &&
-+	echo d >file &&
-+	git add file &&
-+	git commit -qF msg &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash --reedit-message start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 3 commits.
-+	# The 1st commit message will be skipped:
-+
-+	# mark-base
-+
-+	# This is the commit message #2:
-+
-+	# amend! mark-base
-+
-+	amended message
-+
-+	# This is the commit message #3:
-+
-+	# squash! mark-base
-+
-+	squash remark
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited &&
-+	git log -1 --format="%B" >final &&
-+	test_grep ! "mark-base" final &&
-+	test_grep "amended message" final &&
-+	test_grep "squash remark" final
-+'
-+
-+test_expect_success '--reedit-message aborts on an empty message' '
-+	git reset --hard three &&
-+	head_before=$(git rev-parse HEAD) &&
-+
-+	write_script editor <<-\EOF &&
-+	>"$1"
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	test_must_fail git history squash --reedit-message start.. &&
-+
-+	test_cmp_rev "$head_before" HEAD
-+'
-+
- test_expect_success '--update-refs=head only moves HEAD' '
- 	git reset --hard three &&
- 	git branch -f other HEAD &&
--- 
-gitgitgadget
+Looking at the existing code, if the checkout fails then we remove the 
+worktree because "is_junk == 1" when remove_junk() is called via 
+atexit() so I think it is correct to skip the new hook in that case.
+
+The new hook is run after the checkout, but before the post-checkout 
+hook - we should document their relative order. I see the hook is run in 
+the new worktree and passed the absolute directory and worktree id. I'm 
+wondering if either of those is useful if we're running the hook in the 
+new worktree.
+
+>   * for entries pruned because their gitdir file points to a location
+>     that no longer exists, the hook receives the recorded path; when
+>     the path cannot be determined at all (missing or corrupt gitdir
+>     file) it receives an empty string.
+
+So the hook knows a worktree was removed but not which one?
+
+Thanks
+
+Phillip
+
+> Thanks,
+> Domen
+> 
+> Domen Kožar (3):
+>    worktree: add post-worktree-add hook
+>    worktree: add post-worktree-remove hook
+>    worktree: run post-worktree-remove hook when pruning
+> 
+>   Documentation/githooks.adoc |  41 +++++++++++++
+>   builtin/worktree.c          |  73 ++++++++++++++++++-----
+>   t/t2400-worktree-add.sh     | 113 ++++++++++++++++++++++++++++++++++++
+>   t/t2401-worktree-prune.sh   |  88 ++++++++++++++++++++++++++++
+>   t/t2403-worktree-move.sh    |  44 ++++++++++++++
+>   worktree.c                  |   1 -
+>   worktree.h                  |   6 +-
+>   7 files changed, 347 insertions(+), 19 deletions(-)
+> 
+> 
+> base-commit: f85a7e662054a7b0d9070e432508831afa214b47
+
