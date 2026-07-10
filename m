@@ -1,133 +1,130 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117D7242D7B
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:41:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783654868; cv=none; b=nONQpM1zM7diL4XYg1ods36fmTnoy0krE9GoboTAX9qYNslw53XfERWSWkHXRe8v3NiapkhPu4KzMZVfCIm8tAsBEwkSFgzWBhMb/0UntXVWwGJAuaicylZ0tWpwPQLVm/x1O7xYZ2teynCFEA1OMaMx2zPqJnOn8R+IfbexzlE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783654868; c=relaxed/simple;
-	bh=IXAamxG95Sz2/yMkiAEiOTGedNoDAT7APPeiF2z3DM4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jJG2hpcj7bDr4lvoYGv8IL4y0XzLk0kZ6OKwzl5zIRDN1ieLY4FVywI0aP3cBhui5df1nwzGCoq4VbBY8VzMZzkoGAPBexKVsYaNUbVADCzo66SDYZq3m1bJ1166+wpX2VT+eYNZyolMJU8vPrzrMkxEYlo/VxkrGjI6VA9VFk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GJ2cYNqH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ghmT+jhO; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749BE823DE
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:43:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783654993; cv=pass; b=Ou32bRUaNC5QQL9/alIoGQbRnFJPvtjmCKiMbVoH2MIrYk5wvZD4QW//Hy8UObNKaqD6fDjmhCA5lSwkyBv/q1DnrT9TpZM+hHVrRshVfsho4U7QsV9IaYQY84vLUdlafWNR3z631DTRU7svYKrSDVFPl876kHTl7E0EIHGoFq4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783654993; c=relaxed/simple;
+	bh=HP75WplMHUYplEmQf7Bx4eJXJyvwY+ji2dWeRQCwquY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DrYnfpOg/MntlrDaNYwjWvsnc6HkGMDuf42D2HBLJwTyDFdOyQz3MLV+n2ebPXNX3N9PXvYVEdEhrH99ytxysiwJ7sALma8iLeMss/KXkK5xBzc1H2Or+xPEodC0smAw9vayOQ2sFqHvWDVf1n0+9lmKe/XMu8b8TRzb1bb+zM0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n7dSX4VH; arc=pass smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GJ2cYNqH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ghmT+jhO"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 606F97A001D;
-	Thu,  9 Jul 2026 23:41:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Thu, 09 Jul 2026 23:41:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783654866; x=1783741266; bh=dhDcrmQI7U
-	W0rmd1JxyrTKj61/km7WXvxYgaZdVnkqA=; b=GJ2cYNqHFPaS4Ncr++psUl8zkR
-	9K3btkPjZwkX4ZfSnnaaL9C0Q8nX0jwY/1HCayqhHDGJNVpdDP4e/HHLhuu7YIfb
-	cH63mPnOj6wYaYyD61WTGtEQodPaV4NF7URWby9G7Zcimcit4yC2SLv3Cpz5SLud
-	JhJCNAUXtOsCzzBw7bfePECQvc5ye3dmpQKJuPayEKhSGutwz8ENo1n+bbt6abQI
-	XzoYmt9X50cEa782WkgP9gZYc3thOt2bkLs9rHDNtzNPX4JKIX/cVHhSnyGw4+FU
-	y6VuHr5OvG8WQUiA17rnl3+9fQvnjrm8IDvbfrZQblwpzrh+EsnS7KR+zNOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783654866; x=1783741266; bh=dhDcrmQI7UW0rmd1JxyrTKj61/km7WXvxYg
-	aZdVnkqA=; b=ghmT+jhOjCAAaLc/GBbBegh0VKsPyVlSudp8MIDqXuFLuN+hojP
-	SfCW1sByyn75BlxQPUs1ZRhiop/626wMzHe8H+jMOWRlJUw91BYjgTCDHzfx699o
-	LCz2JIMGtnD0P7gxTGwdqIWMt89QOw3/tipA7/3ZeBymP5aUtJxtogC3Ui5kcuED
-	5orFnpW2dtcKWbsjRNQG3uaH4ix54jqmonjXhU4XFmBYLikZp+MzHX3OZgLUSGIH
-	zdxSPpUjGv6jaTGNoOHLdwbH8K70l/XtMIInFybSwDAFVQNbHtG1aSczlWZvvxAm
-	d27A+lc3+Yt/YYcPra3hhpC3inFU0NTzLIQ==
-X-ME-Sender: <xms:0mlQaqiewo1TqLWkYhnHLLpRH6N73RPg-TAzKnJLwjWdNkT74E-Rnw>
-    <xme:0mlQah5kdUQIrdFmEzTKX2csdZtx1QP15ISGreSoX247P6Jksu9sGoib3HYZ_GOXe
-    ZnBFTzjqf5APTtPyp5awOYO0b-3pJEgnZcZSQ9I4fY-OjuCh81axw>
-X-ME-Received: <xmr:0mlQaqYnqZBhyDLwvR6pZnUcvkC-aaNG5I2W2Auy-2NNk8K9E7CHERB0OmLJoAlCct3hsVTNe7VZGxfLajFbJCE6vmKj-6xmDBunao4>
-X-ME-Proxy-Cause: dmFkZTEr4DJuqNZhm/89b9qPkWGsbx/op1v76Cp4uMIe5wsx5O9ZWPQiUvdik3W8FKvi0N
-    2szFeVvg9JOOE22bGnU0QtkHWa+nTDXAGakWLtuNVqUwV6Omj1oON7C6UpbuCrM5j83SOn
-    pBEzzT+LYqlnYKV5mquYbnMocWOrT4Q/01UxsmMa1xj386hfYp1PBGS1WMj8LIlvAFQyNB
-    uHCsT0QFnaWENGSPHj5YJWiB60x7To2kzqPEQBUuRYWS6ocxBuB+yDP4LVZfgs0A+YRHI6
-    xk99wdld0hGl7y8fS8xVfroHX4h/rZF+DQMiSOzDnXvAKHEHymmpnVnUT7cnrqi3ecSTD/
-    tKpyVaBkKbPb0S741Sz2WT3XbSEgciHgE/ToXWoI7uuM9xfiRXb50F4JGFZ5m84ebj5SCZ
-    A5wcNb7oEHVWMI+WiejgcCWnD9DPeBzwidaUMY8j3srJQk5ZXvOoQX26SSf15RlrOUim8K
-    duOk3Ll9oMeyS2d8LgUVtu+lB6NitIoCIScmYYb5wEcv47bZsreGp4EpJ3La8Al7dXx9+P
-    jkot1UOp2OPsTTlcBnNQjiujA9dFg1N0i6saiBJpSUkJrmuNzKldorJ2/aq7rDMoIlL7rz
-    9B9cdMXUes0j9nH/BkzsgllvbqijOxH8BEGTjLroCe9ioaFyqEx2xdXSSLAQ
-X-ME-Proxy: <xmx:0mlQau4vTpjg6SgNhU52A0O7kF36yNXxExFK4uchNALlq5kfDKCsSg>
-    <xmx:0mlQalD51-CNqKomqllu1FAB6siNxtYWrdxcpVtSCLUJUC-3NPzBmQ>
-    <xmx:0mlQasdgr_-4sjKn7LRLk85MRT1v_g2kGpkK-aaGuYGSOW1oKvYCCQ>
-    <xmx:0mlQasJGTI7ahI1Mper46HF0jED1bM1lHb25zd4gRM8FeaF6kx_KcQ>
-    <xmx:0mlQavNKuXgmZ8rfV4TdVm5UI6atkcnoJsQ9vI-wl3mCMsOynOWvHtt8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 23:41:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 09/11] pack-bitmap: handle missing bitmap for base MIDX
-In-Reply-To: <0b27860478a284719755b8ac2386862c1fc3d0e7.1783590159.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Thu, 09 Jul 2026
-	09:42:36 +0000")
-References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
-	<0b27860478a284719755b8ac2386862c1fc3d0e7.1783590159.git.gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 20:41:04 -0700
-Message-ID: <xmqqv7anfr5b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n7dSX4VH"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c15b75c9e48so67243566b.1
+        for <git@vger.kernel.org>; Thu, 09 Jul 2026 20:43:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783654991; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Ksrzy1Rpw2oamxge336eWjG8bruC5rTr5YxlHG73ViMv9QJSSWDphGDzmyUCmz9BGJ
+         vJUh7l4DqkppI5z5DHs9nWSfgdZw+zZGHDem6WDJgKLnzZx69QS/Z/hjmyUn0Zzf+AUQ
+         4O17NijWocTuw+ibt0IEvztOH7Ly6cn9gdo2/4IsEF6HlmqYEL0L9+uDSZM3D/3G2AKs
+         t0EybJoAc5nX2ar0kcptH6Tb6NG/iuzXzyvMHSr2uiP9cRYe5NJ9R4dahYlPdhRruS91
+         CFj3Rd4q3w6FJZ5mIDQBmgtxPJ9o2ixRIJH/ng6rz+sSTucidOgUajarjUHMEyvtZxqy
+         yLAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=IeuURvsL+tT71wlb5J8tmXcz7M0Jql5iIfS7nB4beW0=;
+        fh=KtXoWdPy230Hiv+XXVVmyVGna/DRm+OQ7d9YphPzuv4=;
+        b=IENFEAAFBJaknwDb468ZNThjir/qjXUB+1slDN7NZyKpHe0B0zn+cF4lZZ8MjIJU2l
+         9d0dAamGuwjkTTcqhhYl3bopH9BBfTEq80cFlapzEa2gwIBhkY0HMtVsfjcyraOl6fUh
+         jti/p/qaL1FU87ni+jtomn1OVk5KSnPeRb3/CSZarI9yR4rjrYeayuFj8fDBioZL8/J1
+         tqQtdL5CXQWt4pYTeVuLuvv6EKlS9b2DJQKfhbJncfcycGhJBQkk7Bla5MFPyOWmPJqH
+         R7+jR/RNPgDyBxNZr+w2C8AbYSbF+3By6iRMXaAQcahYTKxcorxRo1V/oYNIsWU34Ptj
+         wIKA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783654991; x=1784259791; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=IeuURvsL+tT71wlb5J8tmXcz7M0Jql5iIfS7nB4beW0=;
+        b=n7dSX4VH4yzSj8f2xN9MCnkz9vHXv7FHLIJF1Vu5FyyuSBc4Q53frxjlaq4CgUntXF
+         szXPob03Hu+ai4bM/htcWzr2QCpaocu6wLXAr7QP6mVf1pBh8Rz373iudSEMkvRytDkr
+         GEMkOaxtd67rQpqGy5xzN8lPPa4sQb8NxIix3YuBlXbYylP+QcShlD6vKqYrYpD2DW3H
+         s3TLPNn68csbPMRn0oMBZvMh83UpqeLqduriU/Q8DC1BMxSOEZprWt+Z9X0Xga4wDi0A
+         sPbwn7AP0d/xY2dIrVom//VBlVJqKttuRq5zlvPjVYfhfiYbWdwaJSMzI6Wjr0+VkAgC
+         TLKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783654991; x=1784259791;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IeuURvsL+tT71wlb5J8tmXcz7M0Jql5iIfS7nB4beW0=;
+        b=K7J7z1HvShmYaAJpLK0vozVI5kqw+izdyPuq9lJaWUOdfSG7oj37P82CRLbucVyBOW
+         AM46qy4CHlPPpUmXYTI3X9tc4BPegoy+n84ZVQd22j99gQ7gPQQk1iUUoSEuNjEvRmz0
+         7PlCNKCwItxj1suSMu+a7r3SKh0K/XIIpgIAETBSsFEpnmaB6/Ny6sTAx1C37HqenoXv
+         /IXOSVGv9NRpWRdw/eILNjqnhlynHeCzwfXMmi/fI17goJUC3g9vca8v865rguDWfW3h
+         uVUUYc5cYMQfsCZZ+aSlA0d+OM2ktV0HI7ES3OQe+oSgfcZ4SDD0zfXV/v6e+83Z2x+p
+         NDWQ==
+X-Gm-Message-State: AOJu0Yyi3yksK2Ft6FaiQOEEZOpRo8cOqduQomhY4hY2FZF/c8MryH5H
+	ReOSb/02hY+VgyCnQaOKvpiLz6GZXFwbMyiBXie1SjG8z2t1rRW0gWRdcPGLndnvxyzT9OU/n7v
+	xCLyZeLO2PnA0Iom2+dF0NC3wc4j7uL8=
+X-Gm-Gg: AfdE7cko/2sYfgFgW9MPXNzIhtJPgKFapdIgM/GgQlRv0rwIN0vJPu4F90rkYMc3+pX
+	EzcJVWNXywQjR3h9uJo98x2hmWPFKWP2XC1B0Ee9vUdRSOP/GEFClRGwQGmgaayb0ptoNGGiINC
+	6ggPYeErDsNnPUDX6FAPcJopw5hI5xwhJnNfgN0LbrooVV2oAt8FwwKKpblkldpSNRVC4BcmOBn
+	Zn9KMEdYnig1jD4wi+dJmQoK9y9jcBwf5KTdPRA/1egorFMq3BG/6nOwrg12mer2KJt7UV5nkPb
+	4jetH+a3PfcU2D4vte6XdJ85K1SI
+X-Received: by 2002:a17:907:e153:b0:c12:5b6c:9b8c with SMTP id
+ a640c23a62f3a-c15cdfe9aacmr294393266b.15.1783654990674; Thu, 09 Jul 2026
+ 20:43:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260625194330.3711-1-graysontinker@gmail.com> <xmqqtsq7haev.fsf@gitster.g>
+In-Reply-To: <xmqqtsq7haev.fsf@gitster.g>
+From: Grayson Tinker <graysontinker@gmail.com>
+Date: Thu, 9 Jul 2026 20:42:59 -0700
+X-Gm-Features: AVVi8Ccm7WWD_gsrC5FF_VLrlZ5PH-5vAokU3WF7MUfeVu3bgv28sQX6GxTl_WQ
+Message-ID: <CAAr3fC29Mkn08B4-TWF9Vuhng0TcjV+mRGFa9DjkxgKixB_hXQ@mail.gmail.com>
+Subject: Re: [PATCH] gpg-interface: still print ssh signatures when allowed
+ signers file is not set
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
+	Fabian Stelzer <fs@gigacodes.de>, Jeff King <peff@peff.net>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> This can happen in practice with incremental MIDX chains: the base MIDX
-> may have been written without `--write-bitmap-index`, or the bitmap may
-> have been pruned while the incremental layer's bitmap still references
+On Thu, Jul 9, 2026 at 6:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> If a user runs 'git log --show-signature -100', they will be spammed
+> with this message 100 times.  Because it bypasses the
+> advise_if_enabled() mechanism, there is no way for them to disable
 > it.
->
-> Check the return value and go to the cleanup label (which unmaps the
-> current bitmap and returns -1) so the caller falls back to non-bitmap
-> object enumeration, matching the handling of other bitmap loading
-> failures in the same function.
 
-Nicely reasoned.  It would have been nicer to CC those who are more
-familiar with the area, though.
+The downside to using advise_if_enabled is that this single line would get
+turned into three, with a newline in the middle, which would decently
+disrupt the view of the log until the hint is disabled. I'm not sure what t=
+he
+best solution is here; I lean towards keeping it as is to reduce the overal=
+l
+noise level, but perhaps those who use this feature more would disagree.
 
-Cc'ed Taylor for incremental MIDX expertise just in case.
+(The previous message was also printed every time, FWIW. So at the
+very least this isn't worse behavior.)
 
-Thanks.
+I'll make the hint disableable if you'd prefer.
 
->
-> Pointed out by Coverity.
->
-> Assisted-by: Claude Opus 4.6
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  pack-bitmap.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index e8a82945cc..ca7998c10b 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -523,6 +523,10 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
->  
->  	if (midx->base_midx) {
->  		bitmap_git->base = prepare_midx_bitmap_git(midx->base_midx);
-> +		if (!bitmap_git->base) {
-> +			warning(_("could not open bitmap for base MIDX"));
-> +			goto cleanup;
-> +		}
->  		bitmap_git->base_nr = bitmap_git->base->base_nr + 1;
->  	} else {
->  		bitmap_git->base_nr = 0;
+> However, doesn't cryptographic verification still provide value on
+> its own?  Even without allowedSignersFile, the signature at least
+> guarantees the commit content hasn't been modified since it was
+> signed, even if the signer's identity remains unverified.  If some
+> users rely on this purely cryptographic validation, they probably
+> won't want to maintain an allowed signers file, and they would
+> definitely want a way to squelch this repetitive advice.
+
+Allowing for this usecase was exactly the intent of this patch; I am
+this type of user and had some annoyance with this.
+
+Thanks!
