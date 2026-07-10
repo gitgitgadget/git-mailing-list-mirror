@@ -1,83 +1,83 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245AE36728C
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353858248B
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:31:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783653669; cv=none; b=RCYi8DwWh6nv9Ngk5RETSI4jhizlKRDYJBBvj7d7R0HLa9rw3ThL8dQefSoJleBme4KrxqSHZ8sFZWPRxJbIwnMjmUNphuLRK5VGTGvORJSH/Cgt4VoNrIizOht0Cl77KW3euuxR4nP3oyRAXIHqFjx44tWTLN6GpNFWQzC+ULI=
+	t=1783654266; cv=none; b=CIPEf5yd8d0PcdNAAczrWbp5MGazvAlluI0P8S2ZJY5XMFIMqvHnSg2NY6zsZO+Cl5Cohd1FhV0QVTlucuskNlPrCKdycgZ/0jD4d1rdQbpTdKkWW4tCpHcste2oKQyRXZLSxHQXGhLOL0w6gExbdkzj8H3fdHBNVY6EyEdxNUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783653669; c=relaxed/simple;
-	bh=65rDFrompcDKtqkrJpI91+ghnyzo2ZYuJhej749Esak=;
+	s=arc-20240116; t=1783654266; c=relaxed/simple;
+	bh=70yPD/H2gbfjNLG1ptTEgUh9BLyHX+wHvqBqt7bX/b0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GVeYAARuphkc42RwaHnN8gQ8KHuOiL+33vrQRSQw+rVNe5BAfhsDqpQJfD9qmOiNj1gPueJlOBV1p3qM32nArSto92sQGfturSff9x6OoVF/v3a5Ugi7s9hmqjrQ8I8wkyCKRKpgqxma08ziXlIMfiHJ/JCr2G4GaAT+GVVKCmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rRIAZXxz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=myWzsklj; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=B7wXdDG1GlgDepWeCAQFHE9tO+fB/owhPrsLdL/FKdNu8ER1FuaXC4JK7wKOFlVF0hytfkIGKrM210wMLnPySLSvBrU7f/9vcKb8YiL0sYCrJbRqLy4HtAGJ8W/r9BoUfm3vyQev3DEpF5SCPfRXRswLo71/4P+nvJgBFFsStPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oQJUeXQ5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NYSR2L11; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rRIAZXxz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="myWzsklj"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 72ECB7A0025;
-	Thu,  9 Jul 2026 23:21:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 09 Jul 2026 23:21:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oQJUeXQ5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NYSR2L11"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 38B111D0004B;
+	Thu,  9 Jul 2026 23:31:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 09 Jul 2026 23:31:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783653667; x=1783740067; bh=7Cevu03v65
-	5jCS/KaQ9nbmPrSGqumlboRSl9UeKZp88=; b=rRIAZXxzXwIeXnWvqMqay+B/HE
-	XF2dDxt6bvwcSPtat8FOXPgzkVuYvnlGLCf8JqQqUmbd1S+da7zJqa/iTcLfbQOa
-	rY1tlNSdQBPCO+uO1Jgmjv1ZsDjwPadkGYiTiJQ93iy0szlxp1rvMSpMZGVjVEzW
-	E6qMFss+Lqk5KobDw6Kt7Iy2jYo+0rVk7m4eXESieUEPRwJ3ZahReT7Jw8l9zKP8
-	CmlhcHfnqFZTlsEVKqhvq6bRyTnf6DgYoPWkahN5WDrjD33+asxTMFKn7gjHEi63
-	IlHzE/BwV/dLOWDnw4015C6igInFec4kgERAMpFY01qaboZDn9iJwV1W/qbg==
+	:subject:to:to; s=fm1; t=1783654264; x=1783740664; bh=Y5IwHp/+ci
+	Sec3ixxVhMlawz6Sj9O7whc/K/huSQ3UE=; b=oQJUeXQ5VywcuaddraveDvtlue
+	56Q2ctGN9b1nsCOrRW9GW6leRXuE5L3ox2vz9DkzBsWcPM+1Be+BYwZT0vDGGsoo
+	AaqD8rSQUq8gOOopNWXjDN+YWCL8HCfSHmx1KsmBXoP8PCSk8Rgu6Sqc8Qt4tQQi
+	nLOH9q84SmbpIlNDbMjWZ4taLsBMwI2raJNSMBxHZTLn3puR+G21aNwVHCdG3Mvy
+	IkC8RqBGHj9We+kFTrqnjHuPWgkzqe2Hrah28wFrfxISZFSXDyIAUdVTBkfVdxUG
+	F7gHdNaNvypK3S6jTN5prjfr+GwzlNvDhn25xQPwWy8QsSea7JtG4xFpmu1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783653667; x=1783740067; bh=7Cevu03v655jCS/KaQ9nbmPrSGqumlboRSl
-	9UeKZp88=; b=myWzskljNckpj4JRKwD/Olmg8E3We25y0jW4a4WD4rfERiiR5Dh
-	G2EBQC0Y3LOzKF2MFaPHpT6+R2qQBzZk2DzINgdUul1PTucddw8aNYg06xji5+eq
-	ZMTUm1JAKDQLTaSxa9uVbhr1shqVRZ5BTLMN1W4AiKWcTYlNaIy+clubl641LgEd
-	3n3bifd2j2GSbTcx+IMH9IAx0h8KQCGr1wk9fKhvTYUJUwwAlkI29giTOIvXgpCS
-	/QVC/UMgbjk0Ow+nQycVgtq5Eeiz8USARuU6CdZeerQOfcj7ThlQ6rKB5dpeMJXE
-	o8OoSGIbXRH+veZlVIX0KMkApVMHMkOqXrg==
-X-ME-Sender: <xms:I2VQaoWc1BrAE3M7x3YwDcnwwjUmww3Lp9T6q741s4Mq9Xp9OZRghw>
-    <xme:I2VQajnj8HT4XioI1zdeBM3lfPGk3M-Dp7wey5RzC4Z6S-FpJW20_IKJY75M-7Uyk
-    _ZQT76mR4HG_lv81lyiGAoz9baTzvmYU4kxgZT1USATOnXrWsZj9A>
-X-ME-Received: <xmr:I2VQahYDLIs5ClvgnrVqbpibyOOi0NfHD53BLO3pQ7Es3R648cA8QLp_VX_rk6t9l-zuYIbIisQy6WRWiauMkTEcKSgYjpAqr19BjME>
-X-ME-Proxy-Cause: dmFkZTFZFoog+pdO07OLdl9we1Uq2I4DZjSBADHA8bYgbosVo3AAYtku+LXTn2h5LUYkdf
-    URIbWDf9u/kjTJs1SPnvITx0Mt9VCFiNVzROBuwxTg9zax0d5NFpHDCkTI2kRycvJQMDrf
-    3JSauyH8nuvPUATCn01AIg+bPr7Bk62deWJWrO5TkKhDOJ2NIZP4moa3YQwXIYyxTrZs1W
-    kzATX9/VkbG5aZ+1r/JQlt48z15zKZq95UZkL7qQFDSKZxx9CQs8HUZFEitLis/1h1rh59
-    zxs6j2E5rJmS/Jet04DzhF3WTFWG6tx2G9zwI/d+pC8H4jteTz9KptP6F7k2p6tcvSEFGb
-    unmCk5OhqVDAtoQMPkXJoSmGNBPdfVlK/Yv5DbCR6lx6N4isV4pd/5IREO8b4q0aoNqw1k
-    LLphNs0yrXI/8Yr/u4PG/R86xxUB1o0bQTQlF8FOBxMOhsbIbY4IUr906PXExnUX7oWfa/
-    ZTZqOYLkZI42Cqn8VesLL1flOCKcma8W2Qq2vLmAX+CSncB1/N9C03O6GtWxq2ibDApydF
-    7vMeD9KffvlgTw6ZRpGlweg43MxxKQytCO+c+H4+5gmtkQ1rRslm+AqLVkfgYKyOdRv0FX
-    yWD36dXNl+86zWGhqvmO9Ru94DvRdTcavxwvBIRUswWmUeefi4AuMwKia6pw
-X-ME-Proxy: <xmx:I2VQamMi65GGsm9kT0nwDUhIuEi9SWQXK5A7Gw3s3luQVYwz2mwimA>
-    <xmx:I2VQaubLh5zz9Ch19kwUrggwltTFhkpMnMAT-VUVghxKwjwPqoJP7Q>
-    <xmx:I2VQas3CoGGcqbyTUCd_s_E06eI2Kz_AdDaqSQ7E_-MfXvvEYLnipg>
-    <xmx:I2VQascyXuO54OQ75y3eFBzVCPsumkMcrcQXZC2ut67pF5fOHm8NaA>
-    <xmx:I2VQauwKPoQ7k6T6KCfjgZAAyvirA3QaEEBCUsvDAEES7yrWyuTVxXOj>
+	1783654264; x=1783740664; bh=Y5IwHp/+ciSec3ixxVhMlawz6Sj9O7whc/K
+	/huSQ3UE=; b=NYSR2L11DfAkikPccP+JYsyIxnXGl2NEjI+JdjcbXLEXTssc/um
+	LVT5oQ3SaGnCi8feoCbQiwxJIU9iPHdi9qhykaGlZ7ssmPWHUKp41W30C66kBeeg
+	4RIklwI8dMs1HeZnX9nZNFm230FyW1YgSGOSfnrPplFv7mRsEp0O14oqinc6Q/vW
+	BACV35FcaTcmvl9B3DJMuxSrpA7hvKhobBKi9Zfi335GMdfZyUp+oy3eCX2PMVjR
+	AF0/7TR70I+RXclNSoixYyiyIGafpOSkihY4p6D7XjKTnId+8FKfpfrAPC9MWB4J
+	zH2hV7BXL/bnhTRGuseG1vDfqSSzKJtSG2w==
+X-ME-Sender: <xms:d2dQao19QSFc_zG64LVkpgdYrhtNkdB64dD76h0FHkoXhh2RIo5fvg>
+    <xme:d2dQaqHj2WY6rPAqk949KOUSrdrdqzNiw-teA6nV88r1-QQM4spNbA6rxrI69eQmS
+    5-jGLVguxmcbWpDJX3nQw558_DIvMzjp_WJf-1YWxxPxdxXpG8K>
+X-ME-Received: <xmr:d2dQal6fnnGJp5bDA7HB4SFtzw10pPttVusFhnXm0-hlHDuz2lzm3watzB4KtELsl52vhKl90vFcUsklfTU6rtsOJt1Ab8GYK_JQJTk>
+X-ME-Proxy-Cause: dmFkZTGJ5+vXf5rEn+O3j4LP19EhYnFPG9z0L3zbaUU777r5HqCyj2IKi9M7Fvx0u8V87f
+    m0z/IvrfpnUwJLLFpVgJMgubluqAXwr/spI5R3A+avKtpnnw8A/yv4sVGueuMsRkMVb9SC
+    kjSnAz/AShkbF36AWvkFpEV+rTqIx8qmpTWbITA89/o22KvshCRGn7i1ssv8InnmYftTkI
+    ucIyfWN/ER2LXA+wf90pUfV4KNb0hTrHzOyuJriPEhBycFycIdBF6Yp9FoBApzkt9ERF7y
+    PNMO/to6K9N74eRScGAilRxHiIjsc3LPb3J/jhqGeiJxg60kfTzqRoGp2EGMJnvDg6oel6
+    iBulYCn2cLGUqXn6iIFMToQldu0/UeoK7q00ZkiNEmmR0ubzkK2IXfDkr2fvvBR4U+aQD/
+    FETsXN0/+pY4rCpTlemJ5q3FVxA5gjw95V3zLjXUwJEaZRQM/LuK5WzgJ7s9jXm5TkcSil
+    Nei/62cBJi5QqgQHPdRtXZTk8WxNnji5VKHb8Y8tmF8ZXIg24QLcpTBUgqOzAIgH4bZUpr
+    OcW5+Rxrw1y66Q6jtGtLCGxwGH+D2zIJpyZp/osbXbdI8A2H1wxwDy0mNXhoT+5bwCJD42
+    jOqMohmA2XTVHuX8xCjk8bCrNZFVR0cPRt+J4M1khQch5bzJbvvXpFnkIL1g
+X-ME-Proxy: <xmx:d2dQagtdgCuxUcloiqO0xW6kaJBiqwS3a5QFPBjHO0u6zMKfnkJqhw>
+    <xmx:d2dQam61pNZbv9wAnC8fhKm9q8g_jXj7ZnDVtmlFSVJcc0LWAKy1ew>
+    <xmx:d2dQarVhIFNJjtoaVX3E9Cj487lZweQ923cVKDcuj1Detlf6LTWZZw>
+    <xmx:d2dQao9LWQ0SLE7Bl2BDWsxC-4toDOzFETQe4gtwx-CN0TUC2JpNvg>
+    <xmx:eGdQajTzyc9I1lI3s7E8TbvVK_3GxNbZCmVBsL-RaAmfu0KTUQgoH-Sy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 23:21:06 -0400 (EDT)
+ 9 Jul 2026 23:31:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 04/11] reftable/stack: guard against NULL list_file in
- stack_destroy
-In-Reply-To: <d7bc7fce35bb169a20a4ae9a1630e7080e133b23.1783590159.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 05/11] mailsplit: move NULL check before first use of
+ file handle
+In-Reply-To: <41eef047ae6e3c332e1c8f96a9f9abf55d5004fc.1783590159.git.gitgitgadget@gmail.com>
 	(Johannes Schindelin via GitGitGadget's message of "Thu, 09 Jul 2026
-	09:42:31 +0000")
+	09:42:32 +0000")
 References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
-	<d7bc7fce35bb169a20a4ae9a1630e7080e133b23.1783590159.git.gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 20:21:05 -0700
-Message-ID: <xmqqcxwvh6n2.fsf@gitster.g>
+	<41eef047ae6e3c332e1c8f96a9f9abf55d5004fc.1783590159.git.gitgitgadget@gmail.com>
+Date: Thu, 09 Jul 2026 20:31:02 -0700
+Message-ID: <xmqq8q7jh66h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,44 +90,31 @@ Content-Type: text/plain
 "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> When reftable_new_stack() fails partway through initialization
-> (e.g., reftable_buf_addstr returns an OOM error before
-> reftable_buf_detach assigns p->list_file), it jumps to the error
-> path which calls reftable_stack_destroy(p). At that point,
-> p->list_file is still NULL because the detach never happened.
->
-> reftable_stack_destroy() passes st->list_file unconditionally to
-> read_lines(), which calls open(filename, O_RDONLY). Passing NULL
-> to open() is undefined behavior and will typically crash.
->
-> Guard the read_lines() call with a NULL check on st->list_file.
-> When list_file is NULL, there are no table files to clean up
-> anyway, so skipping read_lines is the correct behavior.
-
-Nice spotting and recovery.  Well done.
-
->
-> Pointed out by Coverity.
->
-> Assisted-by: Claude Opus 4.6
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  reftable/stack.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index 1fba96ddb3..3fc3c0b2d1 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -171,7 +171,8 @@ void reftable_stack_destroy(struct reftable_stack *st)
->  		st->merged = NULL;
+> diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+> index 264df6259a..0993418e63 100644
+> --- a/builtin/mailsplit.c
+> +++ b/builtin/mailsplit.c
+> @@ -225,14 +225,14 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
+>  	FILE *f = !strcmp(file, "-") ? stdin : fopen(file, "r");
+>  	int file_done = 0;
+>  
+> -	if (isatty(fileno(f)))
+> -		warning(_("reading patches from stdin/tty..."));
+> -
+>  	if (!f) {
+>  		error_errno("cannot open mbox %s", file);
+>  		goto out;
 >  	}
 >  
-> -	err = read_lines(st->list_file, &names);
-> +	if (st->list_file)
-> +		err = read_lines(st->list_file, &names);
->  	if (err < 0) {
->  		REFTABLE_FREE_AND_NULL(names);
->  	}
+> +	if (isatty(fileno(f)))
+> +		warning(_("reading patches from stdin/tty..."));
+> +
+>  	do {
+>  		peek = fgetc(f);
+>  		if (peek == EOF) {
+
+Ah, obviously correct.  Cannot believe nobody noticed this since it
+was first written in 7b20af6a06 (am/apply: warn if we end up reading
+patches from terminal, 2022-03-03).
+
+Thanks.
