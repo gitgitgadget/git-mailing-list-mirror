@@ -1,84 +1,74 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEDD24677B
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 14:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B55341AB8
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 14:37:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783693948; cv=none; b=lCX4pQgLAZLGAOD94QyUVBQ8jE2pbBGJr/ZAfJFgdgN2+HD8Jg7KBX3xK7rYBDwSUWAYvSF7jsvw01Qg9dQkCFTzSjipSefvVfn2eRvS4nnGsEAxZiKj3aRDc2MHGBBp6dAI7MTOIp6jXv8jT+iyEfbZbsyOHGhylcsfBOuu5/I=
+	t=1783694246; cv=none; b=o7ZAlkB2rjf9sMnnOECdv0LUQTkSVU1zhvLMrO852hKjnAryqOT7YDRSQWhAtAtSGLt81b2J4/5l5+gDUbf+uJwntpEpJ4Zk925HHPchoGnd2eoPSaFW3jZdJjX5YKgsK0CkZyq0F80DPyRYHUz1wrM+/D0CR7d/MGfKiukY+wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783693948; c=relaxed/simple;
-	bh=4Xo4wcyQXs0Nl1kcFrc7Lx5naZeMjg6FDy9zjB3jTUM=;
+	s=arc-20240116; t=1783694246; c=relaxed/simple;
+	bh=9A+/PuULkOOXDmhxmDwjUYvurXHspH3eZAemHqY95yM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Na8pl2Ru0MKjvWunpm32qUhpc9KQ4utYHsiBEVq5VqiqByBhA8aKHsWmrtVbgKqEdt/0BzC0HNFiaHQAP+864va5V28kjWuxFRLTP/1Taz9PwZf2jCk2SqHZfZnBGHVnc440ubcdYRretNn2Io5J0o3SZBZhx9pu8JsnkYQgi84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JxKBEHPE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gXLpaGWW; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=lp/2NOG0SKnFqr/0C1sHR+Tt5/8evnZ70/+eDEXwSf3vxl3nlZMa0pQVbpFnQUuGhk749R0Lf0aCIybItmANIVyg9AjUg4skyaYHpgZhiVvX4rkVP8J0MVyPnZ9Svu0wTnLBBkCnKpDTyk8zklIb+7SlkN4JS26W26rK+uHiZUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UV3zfM0w; arc=none smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JxKBEHPE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gXLpaGWW"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D5EF97A00D8;
-	Fri, 10 Jul 2026 10:32:25 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 10 Jul 2026 10:32:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783693945; x=1783780345; bh=f3yTbOxol0
-	1DnoC9V+jiokEk5/v+h+yU8LVIiLOJqjk=; b=JxKBEHPEwDmlXu0ANU1x31pZrW
-	4s7B4gfVJTyy2onv95pUnGVWU9aUZW2TjCBYK/vl6qK1Jm0/6Tfy64SymQfAhcYi
-	OMqcMWrS6SwgZfZLSu46acR8aguQZRAYBPK43poby6UNo2jC1I88sZVKsoWtW7hK
-	WmjIBl+cQ3sKb/wyqH6SIHOmTmJt2uRIiwS3UBkehE08VdDcRTbuu+RShy20lc/c
-	bkx4j6z6uepFFvN6eEToiB5HYomL02as1XGZU6s9LyarhDHvUOylHlvxBkuu50Ag
-	mVH4HgeIPlfw81MGBdJ2pKP+exsDgpj6nI8UjdUU0BuWtub1ILW4v/5lIWdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783693945; x=1783780345; bh=f3yTbOxol01DnoC9V+jiokEk5/v+h+yU8LV
-	IiLOJqjk=; b=gXLpaGWWE1glGvNM976jl56w/WnPmf4luEK2Pl0ub7JjihcTMgx
-	tq4vneAWGdF52eaQk9Z27U6gphs6kYq3g2gAvIEOeDaAId4vn3wOCMtuHKrgblz3
-	WZ2dtUA94xZRAAF+YZFuCEsvfHKGYsZAwbIKS8k51bSFR9c5wsk5/ZZfndMk0J0D
-	GqS3usET7unFi62Xefeu+K3xEAedugVLd5IOk0687Td743ph9wv75263SKzdIJib
-	fMljKrVmedvsik5EDGRgYTIJFSQwkTqijcG/rnetVAp6UQ88W/SHXRDT/jlfwW+G
-	MpMbytx4FlWGkuLT9lDvESZLX+QFGzjlPjA==
-X-ME-Sender: <xms:eQJRalE-r-l9qAhCMbu3ZxMjTIw5vYPetusH49j8UrOcBJ1gLllVKw>
-    <xme:eQJRahxGGFT84Z3DA7yu6GS3DesFUsBBqcIFUC5Jqe2Us_I6Xieq_6a_Pao4mDkKH
-    3Ntqhhzz6Ie2emlAuuAfGi3WmxpECIaSh3Ag3JFiw0mda3HFwPKEg>
-X-ME-Received: <xmr:eQJRakgKobvn43hsYd2nFOD8LK-806ohsPQ5qn6N4x4gMIipM5Q2Pdc7GCkg7OexA_IpLaeOytlWDC4BStvAXcCyWqzfyu79SDP7p-rEyxJddA>
-X-ME-Proxy-Cause: dmFkZTFCTSInU9TjQkwY+oTjXSNvmBnuk27x+aCgrwPH99kDaxTqfj7ZX5LGs1ExbItQtp
-    2pGjufr1YL29kfGKGiYg8JVotijWxN7QHWUg7cxHj4jyAX8kOuq2U9MPLpIXO/Fy4f5nQX
-    A4eN52w+nMP7E0gkcmYtbtuXOprBXTdzbfCHu0WVEZelVfgaye7dmC7qQ62JXINszrU04k
-    mKSTlG9t3nEO5QY2bH00UEQyStaIVlxVuQuT0T5Aa/J8ioWHZFIWInWd+BqijhGkic5NVx
-    3bHq5QbPgN5sQfTMilfNm8m5lhjUEJPvTRjUzgbicUqC+QCrSOum+2nCM8BKotoeqGeKe5
-    EJD6ydxUj1qx9U4AEHd0ZOhUlReFyX1SXBuzY8+1GeeWc4PIg/l97x6rxJCbsUS1J47hgl
-    fUs/s10XQlAB1BAGLVTJKlaXcLk3Ql4VqvPECzLfFXS1/YiOA33NZo0KH/pq1v6HFvEPMD
-    4pgagjrN9SsWKPDEO4n7417xrLK8gMDUhQF9PSF1Kqheka1TeFHW2ab/Mze2BcN5fkLU5g
-    8UGKYB0c3ovvuLDDIIs2I4U+/5tZ52OTRaQLXAoGjZLUYyaJq5HXdmZd3PUG/mrORZmXXp
-    EaIiI9BgzKV4+0KfKIiW5/glq+g17B1TYr0BPNMQmKMQouppA3OEommSlXNw
-X-ME-Proxy: <xmx:eQJRakyU-GXqne3L45npCnMWYnLT3poV4iOlxJ47Xq28EqBiz2PMqQ>
-    <xmx:eQJRavLnhMgtMjYfCI92kD2lYhoik7LyDYP3zqQ7DK2OIr2QHcBobg>
-    <xmx:eQJRajSvo4JevKl6qWPbLlVz5zFfHdAMmDKMAZo6_eraPiaCFbm38Q>
-    <xmx:eQJRavpa3bi-IdbSswMY3a4_E_7OJFM74VpVE946dkegqU3g1zfT8w>
-    <xmx:eQJRanCL2sM30CoERTZcvvtO6EpL7Ie_g4dgotAY_00U7OBdBY8lk4yU>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jul 2026 10:32:24 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 905328db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Jul 2026 14:32:21 +0000 (UTC)
-Date: Fri, 10 Jul 2026 16:32:19 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH v3 2/2] reftable: fix quadratic behavior in the presence
- of tombstones
-Message-ID: <alECc90WZ9RPqMaA@pks.im>
-References: <pull.2166.v2.git.1783598912.gitgitgadget@gmail.com>
- <pull.2166.v3.git.1783679767.gitgitgadget@gmail.com>
- <4fdcec84406431d56b7a7e593fd8e843c3b1ad52.1783679767.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UV3zfM0w"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7eb34c17b96so665324a34.2
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 07:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783694244; x=1784299044; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=mRYOQuoj4rE196pzgJaIelLalCCAfXKqm8yISJo5lco=;
+        b=UV3zfM0w8ZKrydm9drSXVkpSx9og1LpeqGOWVoEXWIUZeT0CpwBmE0sIvJ6RkUNY0d
+         JLwReIMfCVRbthrAMyRdDKuIDkogaCOveYKJq3si5wGaCKsn02b0S3JfXd/rzJZa4/cQ
+         jkWKuaODFIVYVoU8AZqoNZfnXtAralWtsk2Ko58rww8k+IBOwxwvsxHlkHsTEC398O1t
+         Zy6Cq7QxnznYIC2zqlPuv55wOfT1s6PSvGUi68EHkm1ihq6ONEb1jyD/Hr69lSRCOTAP
+         1L8MDJO8FnQ9lMuaZQ3GqbdALIvIxg7iosFXdjGUdhMhz+naZ1R0kw+amPnEIidy0Ujy
+         6Xhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783694244; x=1784299044;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mRYOQuoj4rE196pzgJaIelLalCCAfXKqm8yISJo5lco=;
+        b=hwQyna9ZdIrwGuqw8pFcxYg27ADQZNoImlAETvAyCKSw3iwfbuPo+zHuZzhbpJgTek
+         pptGEMxnC8AuzPLgjhp2cPkLGPu6pZnw0I8ciqRuCnU9m8T15jPShK/BJt2NlVLOyDKW
+         wtkK2PENm7fmTydcdavI1j/lZwFluq+o3BNLhcMUpL5uFecVn7GiOX86ZiXrUKW+uFTF
+         fszbISo7iw6iidg5vMYkvhmOaOcVLOb6pYq2YX07Hri4ZgBpnrk9qc3DFZ70LBtNFbXw
+         FSsuCLNL6D6ZkatWcu1/IFe83QXyPtfYq2yY5HqJSyE3XHuKoqYMbvBVqKPOpDzYJ43n
+         jMqQ==
+X-Gm-Message-State: AOJu0YzvXMSkKZNWySuE/vh+0lWYXrPaCwHVtKAwllmF5if5SlwKFnQI
+	njbzB0rFbTBq9+D7KNZKaEBsFIuBtr1yZacUvcNL4pVpY65Gb3BgE3Iu
+X-Gm-Gg: AfdE7ckotZAhYcFWV95plfWrZQglZ9IlIy6c2jl29yFJP6PyvviWMvkSINXbYcSUEPR
+	wfXAdDY0Ci4rQQ0AHeS/w7hYD03E8if49K8VYUv27kUIGhaAyEeWmcgAByZXCEhVB9B7qryN9/2
+	jE9LWY8EeH+Fb4JVLOUfXdssCXng223Fa2tGdg7WixXq0xHtCEvXOgDEcHTDVz+dgjJasUvUNDP
+	tSzOSFzaZmy36WW3QHujh0XBBW+1kQDd5K1KlwFnWpajUtmUJkrZEcbl6jML+s26uHvay4gTd0w
+	RAiVB1J7Wppu6YMVHHSsyHAunrSdP9LTnEUnvpHLY4rC+c7q2fppYUd8oSTJqC9sKHpN3k3JCa6
+	P2cxoTGQ7B6ryBNZhN1dCoiTmEQdohCn92yfGScW63EXk9AWMuMTaK1y6fEJRi8ry3iX4LsvyIx
+	8r7M9Bkw==
+X-Received: by 2002:a05:6830:81d3:b0:7e9:b4d0:539c with SMTP id 46e09a7af769-7ebd013a2cbmr7426355a34.29.1783694243929;
+        Fri, 10 Jul 2026 07:37:23 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcb262da7sm6429018a34.17.2026.07.10.07.37.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 07:37:23 -0700 (PDT)
+Date: Fri, 10 Jul 2026 09:37:19 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v3 11/11] builtin/receive-pack: stage incoming objects
+ via ODB transactions
+Message-ID: <alEBEbwOMFkVfuk9@denethor>
+References: <20260708041412.1157499-1-jltobler@gmail.com>
+ <20260708235925.3992097-1-jltobler@gmail.com>
+ <20260708235925.3992097-12-jltobler@gmail.com>
+ <xmqq33xsrfeu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,80 +77,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4fdcec84406431d56b7a7e593fd8e843c3b1ad52.1783679767.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqq33xsrfeu.fsf@gitster.g>
 
-On Fri, Jul 10, 2026 at 10:36:07AM +0000, Kristofer Karlsson via GitGitGadget wrote:
-> From: Kristofer Karlsson <krka@spotify.com>
+On 26/07/08 08:49PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> >  			update_shallow_info(commands, &si, &ref);
+> >  		}
+> >  		use_keepalive = KEEPALIVE_ALWAYS;
+> > -		execute_commands(commands, unpack_status, &si,
+> > +		execute_commands(commands, unpack_status, &si, transaction,
+> >  				 &push_options);
 > 
-> When many tombstones are present in a reftable, operations that need
-> to look up or iterate over refs exhibit quadratic behavior.  With
-> 8000 refs deleted and re-created, update-ref takes ~15s, quadrupling
-> for each doubling of input size.
-> 
-> The root cause is the merged iterator's suppress_deletions flag.
-> When set, merged_iter_next_void() silently consumes tombstone records
-> in a tight internal loop before returning to the caller.  This
-> prevents higher-level code from checking iteration bounds (such as
-> prefix or refname comparisons) until after all tombstones have been
-> scanned.
-> 
-> This affects any code path that seeks into a range containing
-> tombstones, including:
-> 
->  - refs_verify_refnames_available() seeks to "refs/tags/foo-1/" to
->    check for D/F conflicts and must scan through all subsequent
->    tombstones before the caller can see that they are past the prefix
->    of interest.
-> 
->  - reftable_backend_read_ref() seeks to a specific refname and must
->    scan through all subsequent tombstones before returning "not
->    found", because the merged iterator skips the matching tombstone
->    and searches for the next live record.
-> 
-> Fix this by making suppress_deletions configurable via
-> reftable_stack_options instead of unconditionally enabling it.  Git
-> no longer sets the flag, so tombstones are now returned to callers in
-> the reftable backend, which skip them after their existing bounds
-> checks.  This allows iteration to terminate as soon as a tombstone
-> past the relevant bound is encountered.
-> 
-> Downstream users of the reftable library (e.g. libgit2) can still
-> enable suppress_deletions through the stack options to retain the
-> previous behavior.
-> 
-> This also requires adding deletion checks to the log iteration paths,
-> since suppress_deletions applied to both ref and log iterators.
+> And in such a case, execute_commands() returns without committing
+> the transaction.  Is there a need to add and make an
+> odb_transaction_abort() call or something in such a case?
+> Everything should be cleaned up upon process exit, and on file based
+> backends, we probably let the tempfile/lockfile API do their thing
+> to clean up, but are there other things we may want to clean up?
 
-Nit: s/applied/applies/
+As you mentioned, if we exit before committing the ODB transaction, the
+temporary directory will get cleaned up when the process exits. I don't
+think there is anything else we need to cleanup that wouldn't be handled
+at exit though. Regardless, I do plan to add `odb_transaction_abort()`
+in a followup series and I think it would be nice to have an explicit
+"abort" here when we know that we are not going to commit anyways. I
+would like to defer this to my next series though.
 
-> diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
-> index 11f9963f4f..5d22d84e80 100644
-> --- a/reftable/reftable-stack.h
-> +++ b/reftable/reftable-stack.h
-> @@ -42,6 +42,8 @@ struct reftable_stack_options {
->  	 */
->  	void (*on_reload)(void *payload);
->  	void *on_reload_payload;
-> +
-> +	int suppress_deletions;
->  };
-
-A comment would've been nice, but I don't think this warrants a reroll.
-
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index ab12926708..caaedf24d6 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -337,7 +337,7 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
->  	/* Update the stack to point to the new tables. */
->  	if (st->merged)
->  		reftable_merged_table_free(st->merged);
-> -	new_merged->suppress_deletions = 1;
-> +	new_merged->suppress_deletions = st->opts.suppress_deletions;
->  	st->merged = new_merged;
-
-Yup, this looks good to me.
-
-Thanks!
-
-Patrick
+-Justin
