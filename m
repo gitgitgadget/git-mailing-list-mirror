@@ -1,329 +1,189 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE26443932F
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:37:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACBD3CC7FB
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783701458; cv=none; b=LdFsGDzckgfrz0KW8wE633P/MkInbznJoZEj89gqgZTWIm+HLrRNRmgleNqrm95YqO/O2W7E2d5p1ZTJK4rmKE81RKf/9hNF/uqaWaGReF7JX6JCYKe4dLJxqfTOx6wHKu2FOlH15zGC6a4YOK99CICxuTwfWm3nQbGLirL6yjk=
+	t=1783701685; cv=none; b=W8c39dklbBK8Min7nPzRF919ksOIR82Wjk4YZDkHIwB6ceiTm81ld1O4pXQk2fYnwj9QH/fzU1Oui9+McIm1wNz8G3pMn968wPrbuxhqcVM69birYJcjfwZ/boJa03SL65L9XnR0+RQm+pWfdgwRP6+aw8clR3ETy9j5wNrujGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783701458; c=relaxed/simple;
-	bh=ZPMusmpVJ+9p1ZI2K2IbEWU1Z3WFAPLrwpKdzoxBuc4=;
+	s=arc-20240116; t=1783701685; c=relaxed/simple;
+	bh=F4gUv9BmEzBWYb71z15DrQDplUW7djrmBlG8YqUm7bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWkX/hFIKMkJeWFohIjUFaEATm1LZkLHdG2zp7F0DzKuT984uJx43X+Br2FKPZ7Zi3j8I5Gl9t1XlSJubqQ5kqdLia74cm2dMWbOYKFtxf6c5sE0WMPoqHiT9+FyZV55Tx0cCGyujh0Zg/fW53EYclaVKdfrC9RokGTbItd4lFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DxsC2jCt; arc=none smtp.client-ip=209.85.161.49
+	 MIME-Version:Content-Type; b=KYzdacKpywZscvtdGRbJYFTK8qeuM+sxjaHt8tXrEy6u/X9Qd+n5m01N6oeKUhrZdn60pqSunMW/T0jYoNeTpc6euQns42yicf6JwFuye9ogp33XpPWVdaJjWAdPvV5YxZPoHqesc9LIUhkDj9EOJ6FAFMN3BHbY2RlCGx2b5Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XpifC60+; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DxsC2jCt"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6a3897109bfso431232eaf.3
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:37:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XpifC60+"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4938d5f86f3so8477665e9.1
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783701456; x=1784306256; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CmKmd5KMu8Ts9gO+brf0pjkR9F7NRby5t46IUKvQQ74=;
-        b=DxsC2jCtQ/AYmMQmk6Lx2AZ7yauOdxyC8uqGYKPspyyzZ5Sk9MfnjVJd6uTOkXTCS1
-         Zw/28hZwzFHKQke8pIfN/mvI20g/vWsrYYGkjfHx7b6vkci1cBPRfMWPqew0iI+CRsRp
-         Hz5JZganZHfG2JqJx9tJeTU1aYNLRfmze7YqZk4p2VudnJRC0/jERlPP0mEyETfWMQLR
-         hLavBVYkIDj8HcjBSBUrYDIzWX2D01q//LWYCw4WnLGxh1DB3z3PU4ozFkCZ5CePqHw5
-         njQU4oOdHYsoeVKrWBcF3YsdF+dWDm6bBj4O3ZVcfASzp43f7283IaRFGYcDR8E70fa4
-         9qzA==
+        d=gmail.com; s=20251104; t=1783701682; x=1784306482; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aSNzPhCi4k1WxxgGlC+UxEASre31S05D484mMsgaxKk=;
+        b=XpifC60+uxLGPT7OwPtkWs6UtC7BINETOLT6/SXYaOQYFIDoAP9vmZBePgatL5Cppn
+         zZoeOaasAn7S+x6EaHJPk0rSENXhDBgIa9Crfwl3NhtcufdMQKpmxemLyPaSs4UGMQks
+         bZ8f7tT33tjFnMxcASnTabVDrFVDDAsvDmLnAbTRi0uHLervBC2/mkJS2Bc+Gj9hfExq
+         wO8I0HaGjG/9kRKqzbLEosmsRlWhh1EGFNhH1tA+M+dsqpf2ea9bvlP4gLg8EWiIkNFX
+         VL80wONjLKpxvb05Qs6/3x9UI1r3DD6Dd8xq5vmUu79Jxggwr5efK9i7WeOqAgtQyEzo
+         aPBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783701456; x=1784306256;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=CmKmd5KMu8Ts9gO+brf0pjkR9F7NRby5t46IUKvQQ74=;
-        b=Ac05eLEIaUt4o65YFLHnjNk7Z+sKMuj4mqpzdYbQ9ELLf32qu9aHy+6O98wBc3nJgJ
-         DJuiwlRJdVA8CKHS2dKkcwydrNHNN9wvy/1g6wmtN8qGGOHSaSa7krVk5do74birVqrA
-         Hzjo5ZORKchapITwgAiJz6NkJYqLVPhV1dKU5b9gbu8M5gKwZA/aqSjm2CwdHJyhlMUK
-         Zi0+XHbA0WCwCbWEBFIjAbxD7f7y0P3TKbfluEgktFevPk9lPnwCM1E96mM4Pnthg2/D
-         zCrtIx8J0fqD/QT3uOLwX4JH0Ome4jrcDoLwQ1Tb3ATd4Q5YoWHEe74kcv+cO88U67Xf
-         HsPg==
-X-Gm-Message-State: AOJu0YwtL99FvTiUvxRXwwNv5tchLAIrcR0Pb6jOuT+jqVElCVXbKwet
-	crWrCBtoidX4+TsZbBFfckboo5arsemdwXyitQk4cvQxvh5PLEKc03o5z8ANrw==
-X-Gm-Gg: AfdE7cnMEwHhKHUwzES4Ef6hgBc/DBe/aMv5TiaTGVXCaKQK8THEhotSG4mv5tBpN4M
-	gG3YRg1fccIytNk17cln6h2TKLqIgTHEDcOVZGuTyZKwwglK8FnkELMYMSiy5nBOjkEDrmgZrpO
-	teC2wSIvPJ5FiYsaj/xwbxvbfw4iZa+Cb7S/uzEK+wVERQGTTYJSCiX4jTTRKQjpTTHxSNrFek2
-	RPs7X+h1ostZ48OzJ489/enIvIpMKfYTt2jWSiSMCpsosvGtlcGRAHSPxI1pyuf9IFmrH9OSDII
-	mn6avolmuMtkETxdN+GJUm+yObvz4vwN0DbTeyD2M864cFCRwB2a8U/YDBLca/P6hDNg6jEncx2
-	pLTlDB5PAZiMxlam+bvSqFxKr9Yw57/AHSJ/DN34YZYoQ19ZfqhAAHIAVbfKzqferW+ARR+mCpl
-	NRcREqDOEUiiXvMryamPNl
-X-Received: by 2002:a05:6820:168e:b0:6a3:2b61:61b4 with SMTP id 006d021491bc7-6a39a82ac59mr32018eaf.56.1783701455599;
-        Fri, 10 Jul 2026 09:37:35 -0700 (PDT)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcaf742e1sm6882147a34.8.2026.07.10.09.37.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 09:37:35 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
+        d=1e100.net; s=20251104; t=1783701682; x=1784306482;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aSNzPhCi4k1WxxgGlC+UxEASre31S05D484mMsgaxKk=;
+        b=dWquA/8gLkjN9bNNRRqDqAmuf/APV5c9mg0xefpGAo7Mmca0Pn1exxagOSXj8e1RT2
+         xgq4+aLGZq5drJM5Z7NRgkpplMH+u6y8mH4m+Xa2cmWAuo1E70gVMiQ5KifJ6tT6Xk6Y
+         QJtBIzBojUDsb1LJ8xqLzIpduISW7Kia149TkIs3cn1cYAYi7mzRJR+qDGRU5rCQOpIg
+         OOxgnGaaIAqIFb3tmGt83qmCsggVzFr+Jwp7Rb9jCJhbzqxGz41tzUm5fgILWPZtlLnK
+         0LygrwRGwRBhBohKP4RlcYn2cKn57Y1w1L0UJE7B/oCDxXpq8lgCRdSX6UjZzkkwq39/
+         LT/g==
+X-Gm-Message-State: AOJu0YxtR+Gk6z6dLkjZJfYr6a0yUZf8tSfNqY6pG8egqV14+lb0KQd/
+	dA61A/08K/eEBEJvoztGeOoc9OewWX31MAYfuobRlwx5FC2ugVcrynS0FYBTa8gM
+X-Gm-Gg: AfdE7cl/DTfHvFbvWKo9Xq3ZJashrdcgG6lqZM0LSW0It9KC0Q92N/7ztK2J4PNcEjd
+	4hlMGkGWrlgnMlKnVF4vnlHsztVuAAjnbGg1o4woZFerPU42CR8BvsjXxwnbonMEnTvxGcdy/i+
+	VPUddp5NziCB95Sgq0P6GvuH5KcaSzv2evW/7kFgQ/tpgSsF1la8ub5yUYrWGreDF5+0yQ4M8Mr
+	l6rFbh+wL+nkL5MhCQzE3ru8NVzFJDWMsiiJuIqwv0W8bCPDj0FjbmljlXWbu9YqnfH/IY4cj9a
+	oBo8M8R+emKeOcy9NtWzE9ABZaCAqSTSIrVGLS3yB/GSH1n5SF0WMkAqDON6I9e5ZwQXJNey5um
+	HDWH1bqDWsd+Kan/kVQfHiDlhJRMsMY3dtqfWHs6Bg7nmmyzFWJ2I6vUNJkDtKBPMwfUL4m0t5Q
+	tP+wkenS9iXB7RqYiy3fp8Ula41eHqXovTKNYpyd6kKQpt/cQFX85xLtyDUBrVJGdBo3yRJNfiX
+	cehDFN9j/TPhwTMDo8RquiIjfKBWFLlrD6okJFdbN0xnhW0KzNfPSCyIzUPc+uE40n4XERc9+Ye
+	24UN1wyCDrbB9qSGWnMCojtwGQdrAFpC/BL4u9wHw1ErD5x/PqAk2Rl1LKdpyCDdCd+JaLZxd98
+	0IK/UL39qTQ==
+X-Received: by 2002:a7b:cb46:0:b0:493:a87f:52e5 with SMTP id 5b1f17b1804b1-493f2ab772amr32759675e9.10.1783701682090;
+        Fri, 10 Jul 2026 09:41:22 -0700 (PDT)
+Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9de1d905sm63643639f8f.2.2026.07.10.09.41.20
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 10 Jul 2026 09:41:21 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
-Cc: ps@pks.im,
+Cc: pabloosabaterr@gmail.com,
+	chandrapratap3519@gmail.com,
+	chriscool@tuxfamily.org,
+	eric.peijian@gmail.com,
 	gitster@pobox.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 11/11] builtin/receive-pack: stage incoming objects via ODB transactions
-Date: Fri, 10 Jul 2026 11:37:22 -0500
-Message-ID: <20260710163722.2962278-12-jltobler@gmail.com>
-X-Mailer: git-send-email 2.55.0.122.gf85a7e6620
-In-Reply-To: <20260710163722.2962278-1-jltobler@gmail.com>
-References: <20260708235925.3992097-1-jltobler@gmail.com>
- <20260710163722.2962278-1-jltobler@gmail.com>
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	peff@peff.net,
+	toon@iotcl.com
+Subject: [PATCH GSoC v16 00/13] cat-file: add remote-object-info to batch-command
+Date: Fri, 10 Jul 2026 18:41:06 +0200
+Message-ID: <20260710-ps-eric-work-rebase-v16-0-66e07b58a8fe@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
+References: <20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260608-ps-eric-work-rebase-b73ae84ba671
 Content-Transfer-Encoding: 8bit
 
-Objects received by git-receive-pack(1) are quarantined in a temporary
-"incoming" directory and migrated into the object database prior to the
-reference updates. The quarantine is currently managed through
-`tmp_objdir` directly. In a pluggable ODB future, how exactly an object
-gets written to a transaction may vary for a given ODB source. Refactor
-git-receive-pack(1) to use the ODB transaction interfaces to manage the
-object staging area in a more agnostic manner accordingly.
+This patch series is a continuation of Eric Ju's
+(eric.peijian@gmail.com) and Calvin Wan's (calvinwan@google.com) patch
+series [1] and [2] respectively.
 
-Note that the ODB transaction is now responsible for managing the
-primary and alternate ODBs for the repository. One small change as a
-result is that the temporary directory is now applied as the primary ODB
-in the main process instead of an alternate. This does not change
-anything for git-receive-pack(1) though because it only needs access to
-the newly written objects and doesn't care how exactly it is set up.
+Sometimes it is beneficial to retrieve information about an object
+without having to download it completely. The server logic for
+retrieving size has already been implemented and merged in a2ba162cda
+(object-info: support for retrieving object info, 2021-04-20) [3].
+This patch series implement the client option for it.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
+Eric's series adds the remote-object-info command to cat-file
+--batch-command. This command allows the client to make an object-info
+command request to a server that supports protocol v2.
+
+If the server uses protocol v2 but does not support the object-info
+capability, cat-file --batch-command will die.
+
+If a user attempts to use remote-object-info with protocol v1, cat-file
+--batch-command will die.
+
+Currently, only the size (%(objectsize)) is supported end to end in this
+implementation. The type (%(objecttype)) is known by the client's
+allow-list and request path but is not supported on the server side
+nor the response parsing. A follow up series will add full end-to-end
+support for %(objecttype).
+
+The default format for remote-object-info is set to "%(objectname)
+%(objectsize)". Once %(objecttype) is supported, the default format will
+be unified accordingly.
+
+If the batch command format includes unsupported fields such as
+%(objecttype), %(objectsize:disk), or %(deltabase), the command will
+return empty strings for each unsupported field.
+
+This series completes Eric's work mainly with the refactor of the
+validation of the placeholder with an allow-list that filters what the
+client asks with what the server is capable of provide following Jeff
+King's idea [4].
+
+GitHub CI: https://github.com/pabloosabaterr/git/actions/runs/29091116939
+
+[1]: https://lore.kernel.org/git/20250221190451.12536-1-eric.peijian@gmail.com/
+[2]: https://lore.kernel.org/git/20220728230210.2952731-1-calvinwan@google.com/#t
+[3]: https://git.kernel.org/pub/scm/git/git.git/commit/?id=a2ba162cda2acc171c3e36acbbc854792b093cb7
+[4]: https://lore.kernel.org/git/20250313060250.GH94015@coredump.intra.peff.net/
+
+Changes since v15:
+- Completely dropped the static advertise_sid variable at fetch-pack.c
+- Split the hash_algo type change into its own commit.
+- Removed strtoumax_szt() from git-compat-util.h (and its commit) into a
+  static parse_object_size() helper.
+- Removed backquotes from commit message bodies and fixed typos.
+
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- builtin/receive-pack.c | 68 ++++++++++++++++++++++--------------------
- 1 file changed, 35 insertions(+), 33 deletions(-)
+Calvin Wan (3):
+      fetch-pack: move fetch initialization
+      serve: advertise object-info feature
+      transport: add client support for object-info
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 50bc05c70c..8b8c20dc1a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -37,7 +37,6 @@
- #include "sigchain.h"
- #include "string-list.h"
- #include "strvec.h"
--#include "tmp-objdir.h"
- #include "trace.h"
- #include "trace2.h"
- #include "version.h"
-@@ -112,8 +111,6 @@ static enum {
- } use_keepalive;
- static int keepalive_in_sec = 5;
- 
--static struct tmp_objdir *tmp_objdir;
--
- static struct proc_receive_ref {
- 	unsigned int want_add:1,
- 		     want_delete:1,
-@@ -926,6 +923,7 @@ static void receive_hook_feed_state_free(void *data)
- static int run_receive_hook(struct command *commands,
- 			    const char *hook_name,
- 			    int skip_broken,
-+			    struct odb_transaction *transaction,
- 			    const struct string_list *push_options)
- {
- 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-@@ -959,8 +957,8 @@ static int run_receive_hook(struct command *commands,
- 		strvec_push(&opt.env, "GIT_PUSH_OPTION_COUNT");
- 	}
- 
--	if (tmp_objdir)
--		strvec_pushv(&opt.env, tmp_objdir_env(tmp_objdir));
-+	if (transaction)
-+		odb_transaction_env(transaction, &opt.env);
- 
- 	prepare_push_cert_sha1(&opt);
- 
-@@ -1789,24 +1787,30 @@ static const struct object_id *command_singleton_iterator(void *cb_data)
- }
- 
- static void set_connectivity_errors(struct command *commands,
--				    struct shallow_info *si)
-+				    struct shallow_info *si,
-+				    struct odb_transaction *transaction)
- {
- 	struct command *cmd;
- 
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		struct command *singleton = cmd;
- 		struct check_connected_options opt = CHECK_CONNECTED_INIT;
-+		struct strvec env = STRVEC_INIT;
- 
- 		if (shallow_update && si->shallow_ref[cmd->index])
- 			/* to be checked in update_shallow_ref() */
- 			continue;
- 
--		opt.env = tmp_objdir_env(tmp_objdir);
-+		odb_transaction_env(transaction, &env);
-+		opt.env = env.v;
-+
- 		if (!check_connected(command_singleton_iterator, &singleton,
- 				     &opt))
- 			continue;
- 
- 		cmd->error_string = "missing necessary objects";
-+
-+		strvec_clear(&env);
- 	}
- }
- 
-@@ -2027,6 +2031,7 @@ static void execute_commands_atomic(struct command *commands,
- static void execute_commands(struct command *commands,
- 			     const char *unpacker_error,
- 			     struct shallow_info *si,
-+			     struct odb_transaction *transaction,
- 			     const struct string_list *push_options)
- {
- 	struct check_connected_options opt = CHECK_CONNECTED_INIT;
-@@ -2043,6 +2048,8 @@ static void execute_commands(struct command *commands,
- 	}
- 
- 	if (!skip_connectivity_check) {
-+		struct strvec env = STRVEC_INIT;
-+
- 		if (use_sideband) {
- 			memset(&muxer, 0, sizeof(muxer));
- 			muxer.proc = copy_to_sideband;
-@@ -2056,14 +2063,17 @@ static void execute_commands(struct command *commands,
- 		data.si = si;
- 		opt.err_fd = err_fd;
- 		opt.progress = err_fd && !quiet;
--		opt.env = tmp_objdir_env(tmp_objdir);
-+		odb_transaction_env(transaction, &env);
-+		opt.env = env.v;
- 		opt.exclude_hidden_refs_section = "receive";
- 
- 		if (check_connected(iterate_receive_command_list, &data, &opt))
--			set_connectivity_errors(commands, si);
-+			set_connectivity_errors(commands, si, transaction);
- 
- 		if (use_sideband)
- 			finish_async(&muxer);
-+
-+		strvec_clear(&env);
- 	}
- 
- 	reject_updates_to_hidden(commands);
-@@ -2084,7 +2094,7 @@ static void execute_commands(struct command *commands,
- 		}
- 	}
- 
--	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
-+	if (run_receive_hook(commands, "pre-receive", 0, transaction, push_options)) {
- 		for (cmd = commands; cmd; cmd = cmd->next) {
- 			if (!cmd->error_string)
- 				cmd->error_string = "pre-receive hook declined";
-@@ -2105,14 +2115,13 @@ static void execute_commands(struct command *commands,
- 	 * Now we'll start writing out refs, which means the objects need
- 	 * to be in their final positions so that other processes can see them.
- 	 */
--	if (tmp_objdir_migrate(tmp_objdir) < 0) {
-+	if (odb_transaction_commit(transaction)) {
- 		for (cmd = commands; cmd; cmd = cmd->next) {
- 			if (!cmd->error_string)
- 				cmd->error_string = "unable to migrate objects to permanent storage";
- 		}
- 		return;
- 	}
--	tmp_objdir = NULL;
- 
- 	check_aliased_updates(commands);
- 
-@@ -2325,7 +2334,8 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
- 		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
- }
- 
--static const char *unpack(int err_fd, struct shallow_info *si)
-+static const char *unpack(int err_fd, struct shallow_info *si,
-+			  struct odb_transaction *transaction)
- {
- 	struct pack_header hdr;
- 	const char *hdr_err;
-@@ -2350,20 +2360,7 @@ static const char *unpack(int err_fd, struct shallow_info *si)
- 		strvec_push(&child.args, alt_shallow_file);
- 	}
- 
--	tmp_objdir = tmp_objdir_create(the_repository, "incoming");
--	if (!tmp_objdir) {
--		if (err_fd > 0)
--			close(err_fd);
--		return "unable to create temporary object directory";
--	}
--	strvec_pushv(&child.env, tmp_objdir_env(tmp_objdir));
--
--	/*
--	 * Normally we just pass the tmp_objdir environment to the child
--	 * processes that do the heavy lifting, but we may need to see these
--	 * objects ourselves to set up shallow information.
--	 */
--	tmp_objdir_add_as_alternate(tmp_objdir);
-+	odb_transaction_env(transaction, &child.env);
- 
- 	if (ntohl(hdr.hdr_entries) < unpack_limit) {
- 		strvec_push(&child.args, "unpack-objects");
-@@ -2430,13 +2427,14 @@ static const char *unpack(int err_fd, struct shallow_info *si)
- 	return NULL;
- }
- 
--static const char *unpack_with_sideband(struct shallow_info *si)
-+static const char *unpack_with_sideband(struct shallow_info *si,
-+					struct odb_transaction *transaction)
- {
- 	struct async muxer;
- 	const char *ret;
- 
- 	if (!use_sideband)
--		return unpack(0, si);
-+		return unpack(0, si, transaction);
- 
- 	use_keepalive = KEEPALIVE_AFTER_NUL;
- 	memset(&muxer, 0, sizeof(muxer));
-@@ -2445,7 +2443,7 @@ static const char *unpack_with_sideband(struct shallow_info *si)
- 	if (start_async(&muxer))
- 		return NULL;
- 
--	ret = unpack(muxer.in, si);
-+	ret = unpack(muxer.in, si, transaction);
- 
- 	finish_async(&muxer);
- 	return ret;
-@@ -2622,6 +2620,7 @@ int cmd_receive_pack(int argc,
- 	struct oid_array ref = OID_ARRAY_INIT;
- 	struct shallow_info si;
- 	struct packet_reader reader;
-+	struct odb_transaction *transaction = NULL;
- 
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("quiet")),
-@@ -2706,11 +2705,14 @@ int cmd_receive_pack(int argc,
- 		if (!si.nr_ours && !si.nr_theirs)
- 			shallow_update = 0;
- 		if (!delete_only(commands)) {
--			unpack_status = unpack_with_sideband(&si);
-+			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
-+				unpack_status = "unable to start object transaction";
-+			else
-+				unpack_status = unpack_with_sideband(&si, transaction);
- 			update_shallow_info(commands, &si, &ref);
- 		}
- 		use_keepalive = KEEPALIVE_ALWAYS;
--		execute_commands(commands, unpack_status, &si,
-+		execute_commands(commands, unpack_status, &si, transaction,
- 				 &push_options);
- 		delete_tempfile(&pack_lockfile);
- 		sigchain_push(SIGPIPE, SIG_IGN);
-@@ -2719,7 +2721,7 @@ int cmd_receive_pack(int argc,
- 		else if (report_status)
- 			report(commands, unpack_status);
- 		sigchain_pop(SIGPIPE);
--		run_receive_hook(commands, "post-receive", 1,
-+		run_receive_hook(commands, "post-receive", 1, NULL,
- 				 &push_options);
- 		run_update_post_hook(commands);
- 		free_commands(commands);
--- 
-2.55.0.122.gf85a7e6620
+Eric Ju (3):
+      cat-file: declare loop counter inside for()
+      t1006: split test utility functions into new 'lib-cat-file.sh'
+      cat-file: add remote-object-info to batch-command
 
+Pablo Sabater (7):
+      transport-helper: fix memory leak of helper on disconnect
+      fetch-pack: fix hash_algo variable type
+      fetch-pack: drop static advertise_sid variable
+      fetch-pack: move write_fetch_command_and_capabilities() to connect.c
+      connect: make write_fetch_command_and_capabilities() more generic
+      cat-file: validate remote atoms with an allow-list
+      cat-file: make remote-object-info allow-list dynamic
+
+ Documentation/git-cat-file.adoc        |  29 +-
+ Documentation/gitprotocol-v2.adoc      |  11 +-
+ Makefile                               |   1 +
+ builtin/cat-file.c                     | 221 ++++++++++-
+ connect.c                              |  34 ++
+ connect.h                              |   8 +
+ fetch-object-info.c                    | 129 ++++++
+ fetch-object-info.h                    |  22 ++
+ fetch-pack.c                           |  58 +--
+ fetch-pack.h                           |   1 +
+ meson.build                            |   1 +
+ object-file.c                          |  10 +
+ odb.h                                  |   3 +
+ serve.c                                |   5 +-
+ t/lib-cat-file.sh                      |  16 +
+ t/meson.build                          |   1 +
+ t/t1006-cat-file.sh                    |  13 +-
+ t/t1017-cat-file-remote-object-info.sh | 699 +++++++++++++++++++++++++++++++++
+ transport-helper.c                     |  15 +-
+ transport-internal.h                   |   8 +
+ transport.c                            |  46 +++
+ transport.h                            |  10 +
+ 22 files changed, 1255 insertions(+), 86 deletions(-)
+
+base-commit: f60db8d575adb79761d363e026fb49bddf330c73
