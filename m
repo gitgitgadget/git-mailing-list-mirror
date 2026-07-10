@@ -1,82 +1,83 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F5534A797
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305691A5B9D
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783654268; cv=none; b=KUul7T48nBbaHQUs8p5mXhuEtUj2vGzY+qBH5b+BgYLJgfg5L5fEHdN82+JtJFO6AvLiGn86dSI3iT9Rb1AKAEDCQLZovmlUaRjjE+tGf/z+vdkFM2eJrMC+OiY52QAwT7YzmhtQsdY2eOMVRLAZISHUqFGYHyTIAQSBvKWuPwk=
+	t=1783654866; cv=none; b=TSBIOb3SD/0fXjl5V6335wtaqd3Vt/GthhVWkKcAWAnwdLWMCQlvEmUyiTEkpfzBsSAhtgO4IpsCbqma107eaCQv28N4Vg35rOMbIUCWx0S0aZwEr+50l8/9l9bfT9/uXZaWqBLi53QgFoHOFrSPA/UGNd7jOREQms3rcwfC9CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783654268; c=relaxed/simple;
-	bh=2HPtbtGICNJVnuPWjAWZeD42lqD5CLO6nZvTK6MFiyY=;
+	s=arc-20240116; t=1783654866; c=relaxed/simple;
+	bh=mklWZikDdOejd/rVZLmqRCJi52cA6HRJzNbxlujDo5Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V0o3IYJNLTN6CiMqTdNi89bzoY/sSgu4caejHiIvizOO80WbMmrbJN3lZStJeaZWoL1Y3zjoW4HeQSx8nY0V+xcdFLECU7eoHxBLRre9yTkH+G1pX/bn5KgpdX/9BASHzY34fLT7tXPQMHYSjctyOOFI4mJbIaWqt1PLCzJSTDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s0YAihRK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fisdGXzZ; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=lo9239f4XAN6hvy+czvP3lZFDv4kDlRxd7dBS4erHkyMnHJQi5ec/4u9VGXIOamewnDNC0eLbxA555P4ySoQ+qfzfDsG36A45nM+IeaXKLS0HG6S7lQp/xRrVv87EEUK9ciqJAo/eyFd82nPYWqMd7Q6onaNDIcSvlaRGJEfl+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rUUaxc8I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cxM/1UWT; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s0YAihRK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fisdGXzZ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1DC881D000D1;
-	Thu,  9 Jul 2026 23:31:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 09 Jul 2026 23:31:06 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rUUaxc8I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cxM/1UWT"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 89D6D1D00014;
+	Thu,  9 Jul 2026 23:41:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 09 Jul 2026 23:41:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783654265; x=1783740665; bh=5pzNVPXYuC
-	vSHkYXVBvVtlMtPqs2R58wVi7sS22+gM8=; b=s0YAihRKLQI3a6h2T+qA9OcKF7
-	gfNzITFdgLaYURFJJO0nTG1TVLjB2P7vJsNPyDUQmYVjJQ1yz3Zf/vEa+94LeUww
-	rVljNwZ/QZwtj/pMAwXztlQ/DzZ02LVEfMcX6cN6DFiDfnrZ62t6zLcl49YTVetC
-	+x2N4YEp6ATH674FkzoiY6amRn7IvnaYMau8OyNV+FFqlqeHxI/VfQLTsjU5QLyl
-	7LQ7NYueQyKfOdNuySQ62xoVaPoVtd1THVYdzjcoIw85Q4vZ9OKz/GU+aQdprOer
-	p2/iet5NOVbQHkNvbFmyzYTCH9LEPgPeMswX7RrU9pxIcN7WxMtSWfhVekEw==
+	:subject:to:to; s=fm1; t=1783654864; x=1783741264; bh=aBQSiXLdAs
+	Sm/moUSnlCAbX5fb7tprqDF/mYEKjYyO4=; b=rUUaxc8I3exJzYjjMWZl7XPJ1m
+	M3lzBf3lhCcpz+wYqQZc1HGiIVnnmxk6IP0zStvYwgUscwGpL3rF4EFSoWeysLzm
+	uf3QnrG3b6KCZkVSyDotkqcTP5A4Bnuusma3xE/U7AEqKFFxcleKI9c8S12Ie5+T
+	HTxxi2O/EyFRzXtlGStiesL9yEkrfHk6g7Py7MFj/mb4dWE72GXfjX78ODL29VFT
+	fzBSc9iaggmpf1+q/XKi1RYMhoI+AyW61q+FMLrsZVAAOTvWYKIq/WnGQhOJeum8
+	oPV2FqBw7ebksOeJxieu40iuDORZqoVdeqLErq8qi21q8LEuXF8GWZiOMpZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783654265; x=1783740665; bh=5pzNVPXYuCvSHkYXVBvVtlMtPqs2R58wVi7
-	sS22+gM8=; b=fisdGXzZTF0UgKlDasJ+oGuMlwWSPzVLKCQyP9dyFgpOseQg0lS
-	e9XjOHOB8PF3IN2kVr1PzZ8C9bbO1ItKaz37GkX7N47K5Rg9VudRgz5obkUWkVRs
-	Dy1gcaaNAQxtJwS5wB4cC8hyxm7lu/j2skfuhPogxgDnsauktehvyk1BfIbovoP+
-	jZfirdS9F9JI9W/UYzZTjdtTp2Ez5UFzwSA0Hx0tZVzhHBBATwZ1qNPCns2QNP54
-	vRU/BGMHPsf+U8pZN7inlnnEZoDEKwG+KdoyxlQSJ5ZVzi44Iqd42X/76WZLCKXF
-	KVulB4xL1SJuZQfvQzBxLJZZsRx+6PgKRWQ==
-X-ME-Sender: <xms:eWdQaiI8EK5kXelHi156SSdvxwGQUZY7IvETT2He3V9zjSd-KgX4ww>
-    <xme:eWdQahLndgFWPEsT8hpLykbKpYNEhL27FuLV30gInhZ_Dp0-6H2_kFnYhkJqz6lAJ
-    7DVsVI-w5kz4oOXA-Ubdu8d_rJ6B5BXZTaEsnxfkDJfvsFivpU5zg>
-X-ME-Received: <xmr:eWdQanucvIEDRpQkLFvPr6NQubnVgVx_aDx51Cr0QRYY8LOYVpsi6frydDNA1sVkl8onDpYzExhm0NDrcR5GsSeXW98dnBh_ZHDkoZk>
-X-ME-Proxy-Cause: dmFkZTGqzDp5xBm2vUu5jZhnvmMN1QEF0BOsaNyXsfjagJL+hG6s/gWgDTIXAIW2UR2sjO
-    Ybkk15vLoZpdXShTL9GSBSSGZITbF+6mmw+HtoQqUgOH7pEN4tg8OPAFxgvnD60WM2IaYm
-    6jSi4Uq6Rm3JQGmeyvC7aMiYA0t9UrTHcgfdB+VfQ7/x+pG/KDRo5z0OT1GtgLvuo7TmoJ
-    fE92/MYx2i0GVhtYxstLTpixXW3od2sKqDoiVczqwhzVO0mwGg3DxVj8uIRa1+q+wFOWoZ
-    I61ko3BV1aptmYt6YBBidCkRGjSbxIiC3Wt2zIZvtyGnmPfD+ExBzdlugSE6QOz9fWIOF3
-    ipiUFoqrTE/64UUsmUm2Y/jmqKQLo94ZZGWKuuN4FWMg5mM7QcxoijlxKv9GqrhQLBOe18
-    /hCrXWdfUjl8P0hGj9xZhzjmrc8eDmBBeD5R1TKbhrBJ3WdWzpNVnh95/stAc4ySBx70L9
-    30k/nPk5ejreyyIoy49FBD0Ov1luzB1CwoUXRk32czvM/FrF9oVSvfDDPsv0wjN1l7V9Aw
-    aX2mhpvmZq5L75uR7LkdSgEt48LyD1w62XbiOSVrT6olI3j8ymImXjhHF/cvCzfg41dFGk
-    r9NkXd2l5140j6cLAa8KbHKfFoVjORgK2YmNo8ZmW22w/GBrVUEqsfya7kLQ
-X-ME-Proxy: <xmx:eWdQamQwaXZexHvpRAg1t-a2HOw61eMXJbOU1cCDAm1as17YBp5hOQ>
-    <xmx:eWdQalOotO1p4qUN8ciGQfTu8UzukJb-w7qN2td7VjRdcGg5uMxFsw>
-    <xmx:eWdQajaLQPoJMe-CVFH8WLMD7DK6dSPGRhsM2Qv8jDglunL9jEeAzQ>
-    <xmx:eWdQanzdQDx7LzUumCFjK6O7QzKP-aFxIZ5Gtmsx9CV7n7Dcfvcy_w>
-    <xmx:eWdQahnyr9c4Wuy8V8S-wm6hfYxXZWiT62OdZpJa92eC2svP4FC1_Mpd>
+	1783654864; x=1783741264; bh=aBQSiXLdAsSm/moUSnlCAbX5fb7tprqDF/m
+	YEKjYyO4=; b=cxM/1UWTbL9LYOPvfKot01aM+M3Ca+JtLDgvC/WDGoc9TM4fmuF
+	D4uMHzTxWmZeUDwGtB+n87OjF1hUipgHz2eIxJiuLqmLARECbWGU93CQWTWEc2xM
+	dB6ERqDFJuUM10lRxJx97btr2fdnZCDHp25Td2mlWKk5RgAInvGtGOSCJtwMkWLt
+	QejNq+gHiOhNGqxsu9TZCGn7KaXMOjZJrj5644UCbNrKcj9VqQaeXjh4UsuAGOad
+	VN65KwA/2vUNCJhapKV+A4x0zGfOyvnM7dgr+qPIyk0b0ZBIaQKCMknmH25g2nRe
+	vWHNSbz9MVYw/JRMOQ6587k1B5b33AcC9tQ==
+X-ME-Sender: <xms:0GlQah8gNdE1V46GkigqavjpagQ__Y0g-8ThWB4IWn-I2To2nsi9ow>
+    <xme:0GlQastHPbCBD5uoTOZ_l948aPrJWY0H_PlnugQH1m79_20KPp-nZvVDxIxkhN0tV
+    p6hJW2EU46swB9SAGjMbMzvCUzkGgazWHVnBtne-DVlqtl-E0jonmw>
+X-ME-Received: <xmr:0GlQakABpr_4PbFEmus52hTNHtq-rm5mbNHuteii1QHzwMi6iCK-0kbWlrlVZx_FUsSwIsex8LcCUm436hvjLkMRZYk4_Xp0un7lbpQ>
+X-ME-Proxy-Cause: dmFkZTEMmxIDI/7Gp43Q8zw7mJZ6BPUaBrnFfya2kFjLxzvRlleVFpE+ZfMdIwC6qr36bm
+    120PBKRBXMY+xnXTOyVb10uoQNRCD/nWeWziBKYAYgcRFjtd2qgzngzOaO6wzW9uynfg3n
+    Jx+lYlkFclvuvtX8NEwh05nZmLbqZwjElEA/yDxK2sWmceAcof2HQ8AD2NdYUNRHrsIg0I
+    d6OkTPY5gQA0YU4nK1H9aVjpXPZw9VFRE1B+22Hz8B3ezjPYlEQy89BxOhNBg4GuCqgFOS
+    uoMsbCOxP3ucA/ROm13ioyg2oCwo7Wx87UQZ+Yvf7ozPUEqch8y0exm41M+A4qQxrORkXG
+    8YPGkrhnp13WHJQIWdtkWUMf7me+RWjQCh4jnq1mh76sKdOqvvbv369u5FxUuEXC1TKZyG
+    hPbMsG07qmlWeY8igbI/jmfHVf6YvrIblurvkSIR1R7jT4CY6N9nUNj39so2d1ynLCzphS
+    nV5wFYmUW8D2Cdmaxri2O4id0+CSZ509UIxgghuOO9tsTqACAN+eECdXU577ogPhv/WrMY
+    4jA2fR2IVPAUeaRECy+E2HLh0LgQTbtND0Lv6bBPgTWnAbFr5PURxxxv06JsybE+oYLqig
+    6iuLQ/ias/E9nsqnKjM6eNS/yOmRLzJyqgma+haDhJDYcVkDVy7f3U9fUtVA
+X-ME-Proxy: <xmx:0GlQakUW7j6UklPJ36WqyxisPnPA4mhME2DiWAJwYyd04avl8A27yA>
+    <xmx:0GlQaiCvPr62DrIrMuRMdSRh5Byiv7N4pGKWOdN0P-WHfYQjI3JgHA>
+    <xmx:0GlQan-eHdKJORLb0kGJmHEZU2oSNbIZFDgT8dDqy9VZCh4ht2G6Qg>
+    <xmx:0GlQapGpAdr0JVb-dfkG3yYQI18HLtdjpUONMaAggUypKDoTv3JBPA>
+    <xmx:0GlQahaghBCB250aF2orhGSHhJt2Xu6dhPP-0siPsh2Fd7jy4lUUvXyV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 23:31:05 -0400 (EDT)
+ 9 Jul 2026 23:41:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 06/11] bisect: handle NULL commit in `bisect_successful()`
-In-Reply-To: <704137510808ade246c6f1463e88a8e3041e0f7d.1783590159.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 08/11] revision: avoid dereferencing NULL in
+ `add_parents_only()`
+In-Reply-To: <0675767797f103b79ab936e01bfd06747725bcad.1783590159.git.gitgitgadget@gmail.com>
 	(Johannes Schindelin via GitGitGadget's message of "Thu, 09 Jul 2026
-	09:42:33 +0000")
+	09:42:35 +0000")
 References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
-	<704137510808ade246c6f1463e88a8e3041e0f7d.1783590159.git.gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 20:31:04 -0700
-Message-ID: <xmqq4ii7h66f.fsf@gitster.g>
+	<0675767797f103b79ab936e01bfd06747725bcad.1783590159.git.gitgitgadget@gmail.com>
+Date: Thu, 09 Jul 2026 20:41:02 -0700
+Message-ID: <xmqqzezzfr5d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,37 +90,40 @@ Content-Type: text/plain
 "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> diff --git a/builtin/bisect.c b/builtin/bisect.c
-> index e7c2d2f3bb..6ff600c856 100644
-> --- a/builtin/bisect.c
-> +++ b/builtin/bisect.c
-> @@ -663,6 +663,11 @@ static int bisect_successful(struct bisect_terms *terms)
->  
->  	refs_read_ref(get_main_ref_store(the_repository), bad_ref, &oid);
->  	commit = lookup_commit_reference_by_name(bad_ref);
-> +	if (!commit) {
-> +		res = error(_("could not find commit for '%s'"), bad_ref);
-> +		free(bad_ref);
-> +		return res;
-> +	}
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> This function resolves revision suffixes like commit^@ (all parents),
+> commit^! (commit minus parents), and commit^-N (exclude Nth parent). It
+> calls `get_reference()` in a loop to peel through tag objects until it
+> reaches a commit.
+>
+> The existing NULL check after `get_reference()` only handles the
+> ignore_missing case, but get_reference() can return NULL through three
+> distinct paths:
 
-Catching this case as an error is the right thing to do, but there is
-a bit of an impedance mismatch between the return value from error()
-and the status passed around in the bisect codebase.
-
-The bisect.h header defines an enum bisect_error type, and I think
-the sole caller of this function, bisect_next(), expects to see
-BISECT_FAILED.  It may happen to be the same -1 that error()
-returns, but for longer term maintainability, I would prefer to see
-it done more like:
-
-	error(_("..."));
-	free(bad_ref);
-	return BISECT_FAILED;
-
-or something along those lines.
+Nicely spotted.  It sounds like something a test can ensure does not
+to regress in the future, unless I am misreading this explanation.
+Could you include such a test?
 
 Thanks.
 
->  	repo_format_commit_message(the_repository, commit, "%s", &commit_name,
->  				   &pp);
+> diff --git a/revision.c b/revision.c
+> index e91d7e1f11..7f3999b551 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1903,8 +1903,13 @@ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
+>  		return 0;
+>  	while (1) {
+>  		it = get_reference(revs, arg, &oid, 0);
+> -		if (!it && revs->ignore_missing)
+> -			return 0;
+> +		if (!it) {
+> +			if (revs->ignore_missing)
+> +				return 0;
+> +			if (revs->do_not_die_on_missing_objects)
+> +				return 0;
+> +			return -1;
+> +		}
+>  		if (it->type != OBJ_TAG)
+>  			break;
+>  		if (!((struct tag*)it)->tagged)
