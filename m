@@ -1,119 +1,179 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84287423A67
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 22:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080CE322B7B
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 22:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783722494; cv=none; b=AG4wxueAoVqBSZtGUqisWqsNYU3VzB3qeHSrqPHWcSW5EiNnaHB5oo3Tv+jq5sGwcnQr8xp2/AYw/BSqx0IsKb2AqyJPbO8jxsjEF10eB5oiRvAzNlrJf4gEiVkZ2+1c1hJD9K1s/dcEjHaUteFFBL1S/pghcU2rDsNE7WP9bZU=
+	t=1783722899; cv=none; b=JurjvlddjV2QwyhS6r9qaVzT/ZAMyCwjxUXfE8rnR8Kq33rVXWoX5hb2/1/7oNQ+RTm+VX+vgXhPHcbRwruy74mk2MfDnwXGEPV8lhd4l5ISpE0xCN6JbadLTN1G0p2eTbE0gBYYcINBJuT4rB6SZv2zbNPLqd8seC/+jPZORpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783722494; c=relaxed/simple;
-	bh=H9yJS5XnOpOZ4sUyztGkdUbVl8ZuzoeT5NfLchxNn7Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FC6ZnEz31DtuTPw6r89ciefFb2oIqnOGEzpNulGUrtRWZGdZ8hG4XuS0IxXgzXJmfTu82Hui+27c6CTZxIrfYKLznMraUJ1FO/8VNvTLAWYLF4gz0FyTUN2pE8zwAFpUh2hchB910sgJSe2e/bwvddj7bajyxpsfBcAmL6KuQPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O3cj4izf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m1TW8LQC; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783722899; c=relaxed/simple;
+	bh=2ujNC79JB+5sfbpzrG+uout/V51nhzNa1cm7z0b+fZM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CMdSlofl1gLBnSTXIzEDmgbe3Xppon5ZpsdvjwvndTpms8GZg8aIZrXu8//WW+c0Y7UxqfMDRIvvKL+XNHwAJzXmmBuDI4ADyeQ2x2ncn/NkCE27r35C2V8Qa6SmLdkEeAVo5aI+VLnebFGY4GoXqyGHd3GpgI7/HI4HQ0o8Jpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=YqAaAgjt; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O3cj4izf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m1TW8LQC"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BEE2E140006C;
-	Fri, 10 Jul 2026 18:28:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 10 Jul 2026 18:28:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783722492; x=1783808892; bh=Cta0rxU3bI
-	weGUBMzhLiMsT6TCnsJ7Wz9P6BM5k6o0s=; b=O3cj4izfds+amOfb2tsQRi3v6d
-	L2sntPS6gdUDuPPiD9mpaJOB1rE5QaApXkL7moFbgDZLhD36E5IEebRP6aT20gq6
-	FqISEAwRjDMG8UsILr8C6UGVR21KNbBqyh9dSepxrcklv/S0GYTeVK6QVKtazTQ1
-	k9e1bOWBoNFRppI7ZJh8GKMwcG/CqwEbOePDm4ifa0U50/DirgYtoNhzKeMaDXiF
-	BcIP4FdkfZ++Z/dm155pYPU2TVNBdrXk/Q2DA6DEDAomv3ByLbgOJu3Yp3BoziPK
-	nZ1TdfeVoenbXb4XqvG6PU8q6+Q9UqwlVL+IJTa9SbQ/6J66INe2aTqqbFrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783722492; x=1783808892; bh=Cta0rxU3bIweGUBMzhLiMsT6TCnsJ7Wz9P6
-	BM5k6o0s=; b=m1TW8LQCx5FML7OvRcjvEwl4+f+ifApfnGcTQec+YuqQNo7ElTw
-	jn1JuNc/mAbcxAxgbUNePl04PW0wmc08FM/op2BcEQXAxyli2dGzzTnOlv/Tzs8y
-	MwdxsXXcS2KRYf5aH55iT5S4OPdTB6FZxdPwr0nb2ftVkss3PtR4RhxrkM5WQ53k
-	TbYZXgi7N0DXhlwgN7K2Q+PJeW9cmv6eB1fc/b9+P8sGSnBgUV7aSlnJMe+uyi3I
-	vowCUWylI7FgImS+uBkDlHihp7OKF/7xQXVdkg82S3fS1TyOMwUEPtnSuNCzkq4p
-	FibwzjZ+vpJfRAkOt3Q0IDck9hLEDX4rlBw==
-X-ME-Sender: <xms:_HFRajQhsgydMtI841TQv5xoeRpmaX0JL2Q92thp6f9_yg8kIxcJSQ>
-    <xme:_HFRaoccDh0fMRyi5qjUnIKJBtay_SDAbKflua0iuFmN6BSE2jXxyMp-tVI19SLX3
-    S0MvQuCGBDYF3eEZcbOSbNAAo9var2RpCueuKk0b03xJDHSXxDZnnY>
-X-ME-Received: <xmr:_HFRairK2rO7U6Jp18Fk7unRJAn9v1dhOwZlM2AkLQZCBNM_eS8YB7wAkPek3C6S_e1AFVkSdcTsG9ECmw03Uumyd4WCDHysMYlehhY>
-X-ME-Proxy-Cause: dmFkZTGZr6CvpcRnmsSXUNxDfZDwfCPmTVtYncoR7M2gr/toQQgdJbDgBNY+m0cf3AyEF5
-    r8Gw65rRBLrpusOhpPWw54hZncp+yxsrknvw4HoQVeQNSbQSYEdPJMPa7uLHrOrS1I0740
-    smuyQACAeRzrCWBD9BF0tBAkbJGBtd3H19VKdLdyDQzEXIa4ps09w+oXATgF+rz77CPuti
-    PLfPBsv/DXOQyFjkqYNR5wiarc2xx9DMmSvoyc/TekPlqrN8tdf+07KowwDssTarURVDig
-    3Sx9WursIliLZNIJZbQp3S4mu7ue3fMVOsgUyQPMSbaCU3JKT3fdGSVwDezfeKomFR7Ndj
-    xu8GhjijlNDSBkqdWAY8YlZhIREk1gKtZ1UeTAVR/o4Duqf8FTUWipeRR7k8yNhA8bNQac
-    2pjiCEVY4xubtOneuUSnnqzIcUZUYK7OcxyO3Gq2hC2M/rwQy+5BC4wYlk7wVW6juN99i6
-    4tHfubv8eB3EIXM56HQ+sDV/k56RJWFMMl8pKqQFIYwXeNhXaJ+xKeha0lzfl0rKMl57zX
-    KwjY1Swtvu2URV23kQiZFjCzYBqaIHpzOuU5eXU5ULydppw6kjUltjZ8fOiI81MzEJNDyu
-    2fb5837EwOX/aMvdx0ijabY4tnsWn50q/IuCXb1X+nY9SdAdajp8trzVfYQw
-X-ME-Proxy: <xmx:_HFRap8_b9TMkqGEjQKLXJyN5OKWczJqLAM3zAur2-DBAsFUuFIIPw>
-    <xmx:_HFRaue_kFWciO9ZCWHCt-iENYEvVd5lDclP7iYDD0JAPP3Hqw1sOQ>
-    <xmx:_HFRajJeL0WYv5I3Sabqtntasre39iP6UTnbAEh3No1O_5UsmkKj9g>
-    <xmx:_HFRauh97EOEPEUxyFoMy89hI_QpTUwTD8mBAFKy16kIyLMWtGBRgA>
-    <xmx:_HFRaon6PAHXP_dsCE_naQrkFQnUBldAAQLr4_5R4evi7x79XclhIO6P>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jul 2026 18:28:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: Kristofer Karlsson <krka@spotify.com>,  Taylor Blau <me@ttaylorr.com>,
-  Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 1/2] commit-graph: add trace2 instrumentation for
- generation DFS
-In-Reply-To: <alFthqGQjsowvpEz@com-79390> (Taylor Blau's message of "Fri, 10
-	Jul 2026 15:09:10 -0700")
-References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
-	<b865c2bcff53a32637aac426dd2c6ef4a4c27077.1783418384.git.gitgitgadget@gmail.com>
-	<ak0DUx5Y/5y1OINz@nand.local>
-	<CAL71e4PuD9D8LRbP3mfxxeMrM+1q--3sCp6oJs=hezdasZUPMw@mail.gmail.com>
-	<alFthqGQjsowvpEz@com-79390>
-Date: Fri, 10 Jul 2026 15:28:11 -0700
-Message-ID: <xmqqik6mbhtw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="YqAaAgjt"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-51c2a818fc4so9100691cf.2
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1783722897; x=1784327697; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=o5D6lLqM+NDPJbt+vbZaVchTMwfGNUi9lkyBUiQcvFY=;
+        b=YqAaAgjthD5KaSnX/r3tcWroCBJYLjF2BK3Hh78i/gB5aWBaUx5+uBYl9xYQ1Jb7Tu
+         a0I80yETmgs2GeTBLFmj+JnOYNHqUmLcrCGZh94FrfFC3meiWqe1x6qa3VmSjRThAGIV
+         QV8M6Uzef++DJ/CmP1Ghymob7uX7HQmwWPGkA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783722897; x=1784327697;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=o5D6lLqM+NDPJbt+vbZaVchTMwfGNUi9lkyBUiQcvFY=;
+        b=U43XfC93DTeBiy5/5BdfFuo1aVoJkjP+n2YxXbhMM+WZ3huDRWWYA+1OXY3vAWhJU/
+         3CUWyFq6DrPViLD+0HSamg80OkgdRnISl3i0lMbEy6ufRKprfserY2gh9BjgxBkvPrZ3
+         pBwH2bhLZQy8mbZvbCAhJLM6TgMvFFN0bTiq7LEf5S157LkVIXXxJzNuJNAHGq4jN6Yr
+         QV0oc3wAkzd3mC9rIintGd/GElx25Awlw36JN5vL6eRFl19I2WtQ4MGLIxf/FbvjbUsH
+         hh8/puXvgWH0i+xKrdwIDq27utZcx2IDcfyjb1U0yXKeiXQi++Oaq8j7lHreteW3+7nu
+         CaWQ==
+X-Gm-Message-State: AOJu0YxGjl1GqXXPmVTYAdhm++mYUSpauD/3HcvaPhyFkMKCZLLemxq5
+	LKIBcT87mDwozqDemH5E57AKDFc/aDeNg4hG8UVXXc/GhvtWEonUCp0KipwTV8J9waI=
+X-Gm-Gg: AfdE7cnezeqln0G857o3aGZfdT6O/qJ6/o0EnX0E7WcbL9KsS6B/zS1+abcg7YqJ34H
+	wZKUew9+vpMJnjw/vBEK9W/QVbAj/i5oxpxQabIEG8M+QydraQSPh/63i2usgEcmnxbj2pkVAH8
+	kh40HtUf2izdSm6E3dJeLUx3hglZkDDZQ1/QOFXJs/EsyRJsCeryNrw/hnxD3s+6sh78+ByFN7h
+	vxQ68J7kwqHp7KA2tiJuJaTzTDmGLKY6t4nueGQWAXDGJkAmtpqKMLau3KzmUUcCC3IKMYUGZYH
+	+DNNxV9Dcsto3A1oYYbulAKLRfLXvN2hu0Tf/QGLw0PMHrAF93AC6pWVQCuegT79l4bQBcQuvho
+	XGhCRGIKCd1KW4X6jjtlsAtgPAjgGUIuclQkRTLslF7koyCEbOC8Owy09VuWnELL5rR92Phj1lf
+	JKHgbUeaBniNQr17cM/wLmE1kE
+X-Received: by 2002:ac8:7e8b:0:b0:51c:7b12:5ffd with SMTP id d75a77b69052e-51cbf28857bmr8281751cf.73.1783722896796;
+        Fri, 10 Jul 2026 15:34:56 -0700 (PDT)
+Received: from com-79390 ([209.249.37.133])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51caae2068asm24797621cf.17.2026.07.10.15.34.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 15:34:56 -0700 (PDT)
+Date: Fri, 10 Jul 2026 15:34:53 -0700
+From: Taylor Blau <ttaylorr@openai.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/8] pack-bitmap: allow aborting iteration of
+ bitmapped objects
+Message-ID: <alFzja98avOoKjQE@com-79390>
+References: <20260710-pks-odb-for-each-object-filter-v2-0-3710a9cc165a@pks.im>
+ <20260710-pks-odb-for-each-object-filter-v2-3-3710a9cc165a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260710-pks-odb-for-each-object-filter-v2-3-3710a9cc165a@pks.im>
 
-Taylor Blau <ttaylorr@openai.com> writes:
-
-> On Tue, Jul 07, 2026 at 04:08:36PM +0200, Kristofer Karlsson wrote:
->> > Instead of writing "# BUG ..." and then an incorrect assertion, I
->> > would suggest that you write the assertion you expect:
->> >
->> >     test_trace2_data commit-graph generation-dfs-steps 1 <trace.txt
->> >
->> > , but mark the test as "test_expect_failure".
->>
->> I started with this actually and then changed my mind in order
->> to demonstrate exactly how the counter changed, not just that it
->> changed from failure to success. But I'd be happy to change this
->> too if needed - it would effectively reduce the second commit to
->> just the bugfix line and switching from test_expect_failure
->> to test_expect_success.
+On Fri, Jul 10, 2026 at 10:48:55AM +0200, Patrick Steinhardt wrote:
+> In a subsequent commit we'll lift iteration of bitmapped objects into
+> the "packed" backend and make it accessible via `odb_for_each_object()`.
+> The calling convention for that function is that the callback may return
+> a non-zero exit code, and if so we'll abort iteration. This is currently
+> impossible to realize though, as `for_each_bitmapped_object()` will
+> ignore any return value and just churn through all objects completely.
 >
-> Yeah, I think this would be ideal.
+> This doesn't matter to the callers of `for_each_bitmapped_object()`, as
+> there's only one of them in git-cat-file(1), and the callbacks we pass
+> always return zero. But once we move the logic into the generic
+> infrastructure it becomes a latent bug waiting to happen.
 
-If the test involved is longer than 3 lines, I would recommend
-against it, as "git show" of such a patch will show the full code
-change to implement a different behaviour plus "_failure" changing
-to "_success" in the test, with the body of the test hidden outside
-the context, which makes it hard to guess what the behaviour change
-is really about.
+Makes sense.
 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index ea5eab4cf8..8ff92c5272 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1909,7 +1909,7 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
+>  		return 0;
+>
+>  	create_object_entry(oid, type, name_hash, 0, 0, pack, offset);
+> -	return 1;
+> +	return 0;
+>  }
+
+I was initially rather surprised to read this diff. I suspected that
+this was a "we used to return non-zero to indicate success but now
+return zero to match the project conventions", but was stumped by the
+unchanged "return 0" in the context above.
+
+But I suppose that is demonstrating the thing that you're trying to fix
+here, which is that the caller doesn't actually care what is returned
+from the callback, so the change here (and analogous ones below) make
+sense to me.
+
+> -static void show_objects_for_type(
+> +static int show_objects_for_type(
+>  	struct bitmap_index *bitmap_git,
+>  	struct bitmap *objects,
+>  	enum object_type object_type,
+> @@ -1704,6 +1704,7 @@ static void show_objects_for_type(
+>  {
+>  	size_t i = 0;
+>  	uint32_t offset;
+> +	int ret;
+
+This has a broader scope than is strictly necessary, but I think that is
+OK.
+
+>  static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
+> @@ -2062,6 +2069,12 @@ int for_each_bitmapped_object(struct bitmap_index *bitmap_git,
+>  			      show_reachable_fn show_reach,
+>  			      void *payload)
+>  {
+> +	const enum object_type types[] = {
+> +		OBJ_COMMIT,
+> +		OBJ_TREE,
+> +		OBJ_BLOB,
+> +		OBJ_TAG,
+> +	};
+>  	struct bitmap *filtered_bitmap = NULL;
+>  	uint32_t objects_nr;
+>  	size_t full_word_count;
+> @@ -2086,14 +2099,12 @@ int for_each_bitmapped_object(struct bitmap_index *bitmap_git,
+>  		goto out;
+>  	}
+>
+> -	show_objects_for_type(bitmap_git, filtered_bitmap,
+> -			      OBJ_COMMIT, show_reach, payload);
+> -	show_objects_for_type(bitmap_git, filtered_bitmap,
+> -			      OBJ_TREE, show_reach, payload);
+> -	show_objects_for_type(bitmap_git, filtered_bitmap,
+> -			      OBJ_BLOB, show_reach, payload);
+> -	show_objects_for_type(bitmap_git, filtered_bitmap,
+> -			      OBJ_TAG, show_reach, payload);
+> +	for (size_t i = 0; i < ARRAY_SIZE(types); i++) {
+> +		ret = show_objects_for_type(bitmap_git, filtered_bitmap,
+> +					    types[i], show_reach, payload);
+> +		if (ret)
+> +			goto out;
+> +	}
+
+OK. So now we call this function in a loop instead of the unrolled
+version, presumably because we want to propagate a failure from any one
+of these before falling through to the remaining object types.
+
+That makes sense, and I think the clean-up is well justified here.
+
+However, the remaining `show_objects_for_type()` callers from within
+`traverse_bitmap_commit_list()` do *not* bother to inspect the return
+value, despite taking in an arbitrary 'show_reachable_fn', which itself
+may return a non-zero value.
+
+I guess this must be effectively OK in practice with respect to the
+existing code for the same reason you indicate in the commit message
+above, but we should change this function to *also* propagate non-zero
+return values to eliminate the foot-gun completely.
+
+Thanks,
+Taylor
