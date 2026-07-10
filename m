@@ -1,158 +1,113 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BF82D2495
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 17:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783704668; cv=none; b=H6TutgbJfQywRKhtNMYGb5/YJuOf7agyPWbt6SrspaGwIpuM7fDLPb+ZLnfL8876/ZPxFRAzg5LQr4Sm5Ii0zUIKjDAhfG8eaqDhQHN8KUbwps3V+OOSLlPNx/sxEY1s9pG1hDO6pRxd2DvqMG0oed/H+qD3aLyUJjRmScMmh6g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783704668; c=relaxed/simple;
-	bh=XFTg39389gYjl4DlYjrE6Fh95Gp/ZuhV6U1JCuP5HtI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XAM4w+CqwO/j9bBedzuSc0727vxc8Egy63u6pQdgRmqmw6Ar26lX0hn/WgyvoiNZjlT+JyjDgmpTWCrahwQRL2jJLOLJfkIBubgIshR9iHdDHrnc2Ap43uqI6tEQBXeXzbniKVreia8dDabwHBjRidUZDSCfUMatyvp91JldxSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yx5hAbVb; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1368F374A1C
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 17:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783705272; cv=pass; b=HWRHDa0tTd2aiFGhyMmH5y7DmPM55I4j8wCBk46rQx4Egd1MXB0dN+97cmA+nhsPFqBQa6nXmdZMfeBwkLTi8O8GKWgYOGe22bNIqgEIAZHRztWXW3vSwFOxqNGiOc1wSNCEFmd43QHXUKK88fvWlHX60jl83h7XrpAcSAVM9l8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783705272; c=relaxed/simple;
+	bh=8y2A7IybJ/U4HxbB4EiD1q1aKhXVtE1InUp1LqNHBQw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P70jPRk6bIIJyKHlAAshKWENe3gwcsYYGwkyATsc9IpHRE1T+3OOCKolGLFvWP1MibChJ1f7s5/QOYdiOO+kt5TowU06cji0OsbX7Z0Q4M1SMoxT6vKG1JltSXo8l1+3iLV20UoZgVEs4FuxGkhOQuvi1m7jysrHHPn3tikySEo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=GbPT3lF/; arc=pass smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yx5hAbVb"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8f186025973so12360866d6.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:31:04 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="GbPT3lF/"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-48a0ca07c38so696685b6e.2
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:41:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783705270; cv=none;
+        d=google.com; s=arc-20260327;
+        b=FxunAaHtME6Kotib0Unrj+BWBV7b8pkfmh1aGkU5YJyv+GOzVKI09mHya5yH+ZvgAr
+         AnXba/mT1nMJ50C40FDGQSwbqn+sLG3w+Eo/ouKIoIgT2KCdq6edQSK6UPxPAWv7E3ny
+         u+Z54ARiIl1FKx02fxlo9nakzt5YUQU+ru6cnm/uinzxLK4nDpJ8lf+PE+nLnT+SXewM
+         wH8hFTDI/BlTU25HivwHvGsNOHNNz1z8IS3x8bd/1C4Bn8xXjU1SYwjtJCIoQAPxb8ew
+         xbZ4wDdUloKG0gleHhzVaGE2jUExh2F+aYKwLnd5Xa9R+8poY+Gu/Kq5HD2DefBg7HRJ
+         cYyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=oagmaLudrO9dSlgXZk8w55igfOjIGTsVl5MQVreOUX8=;
+        fh=EZ/hgNMzy1C06Gvgm96O+kOu1SpUfE8e65ESjcT+CxU=;
+        b=B4tO0QVO6qdPt7AjBek9bLw4J7MnW/VZiQfDdJNPLZVrLnetW+AuSqJDTsX789J69u
+         p5TH67zP4iVgbrwVqEeBAxxbqQ+A7PKIiSCCqs0SyVld2bmlVXkEKs0klCVaL6w7t0Jw
+         YZrJ/FBnzyByQ7mvSnzQBv7OTvSH+cqgT1CDJ6qCHx5shlfn+2cLjNSd0WTpQM8aE9jj
+         hUWYfRjtL3T7+F9iE3eJnH0fx5Ihgm9VL5h1MviW5fFRNjiBMO51w6d5ILPicc4M986T
+         uRxTFWoMiefJTy/iAgkK9pi+rDlaOgStjwlvgwFg5+SgEL/OEI7hT59vqhX5rkUWI44C
+         V1+Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783704663; x=1784309463; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=cUabWVce8iHwnQPOo1Z1PgqpL5/OZl5hPyo2Jb0poJI=;
-        b=Yx5hAbVbE/Q36wpdPMIZARK96OWQAWwHlwMHxcvioPAE66VuLDE1+c997mHygACzU1
-         ukrHvjYUnvcaJtlt4FkFWXcQSjbRdiGK5wFUYVXGRkX3+U4HwUikxQRpXEBhITH9SNm7
-         sFHZ8PVELW83MPQ33NT6LUAL5bq1M/z36nUs3V0r6Nl3WqohvKcwnouFaidn52oFvnhY
-         r8OYo3S+nfvAgbNLA+r0Jim/eZlg/4nHeFcR6OcVpCob7kIp07gCZim8yGoFMf8ku6eB
-         fnhBajNro6cFb+q0r2Oxg1uUYviyKdtegedWcuDvJVgUu7+axe0FMqeojR4hV0ehVaeG
-         nusg==
+        d=spotify.com; s=google; t=1783705270; x=1784310070; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=oagmaLudrO9dSlgXZk8w55igfOjIGTsVl5MQVreOUX8=;
+        b=GbPT3lF/dKzU8O/nQC+3vBZo3kIwO4QU5P8B4Mgzl2pk4yCq/j2ydBLzdrYnpCUkUM
+         mlQ6fM3ftqVSEy9w2KRtM+J0yU88oEGf1Zees2K7p+Y9pU6NMxJu2JfeF2CSqTGiInUG
+         s3zx+MdbfUxEe7zu53DWS0mE0TuBX1AiNbcK4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783704663; x=1784309463;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1783705270; x=1784310070;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cUabWVce8iHwnQPOo1Z1PgqpL5/OZl5hPyo2Jb0poJI=;
-        b=OefM02ufDFm4SgcQx+KqTszQui0zog65F6IArjLDHUWhV8KfkQPU1oqyIdNqV+7BaP
-         SMpKI0xRYhOxFZTwgzLf1s7wjD+kBPFBzBQxzfWnGsaYV0n8CkK5tsMPIifvaSI7Eb0/
-         8f7t8yjEK/eDWarEak3gPBbKK/cCaduhD8vDjCHnzebGp1UejIRQfg4UfqWYffwe7153
-         0hDhgn1Te4B8u3klgzrZUUF5OseoJLpUYz4pwVJxQtiFuikYS+K26FFl7Qecy8OF14jd
-         E92fSBaJtIrhNfVsmNSSWiGayuF/7CBL1UmATu/4dRFvnf4RByQMisLAI7InzItGp3jw
-         qckA==
-X-Gm-Message-State: AOJu0YzphZHekbgB9cJgl9eM9zOE/4zP1TVMIS2GkTH7AE2CQeF/kqNg
-	Az10P0bTzFprekd5Q9pFz6K4vM4kfKfLwmJeWmrwhDZMQi+pLmtUxy2wUk9TkQ==
-X-Gm-Gg: AfdE7cnrz6vzBlvcphZQ/UquDSGxIIEwtvEk9YohoqGq53/zP/u4Y195wEOXDvnqqb6
-	SBfzPqdK9+yhFU2QBE4kXCVSz2DiYS+PnHoHod3u4WDURjPj1siEoNCMJZoiS1kvwBm5byNXrSk
-	/C741tVqQP8DFdBisIG8eMDek2hlUg5GIAoKX/OoJ60g616fCU0Z4/ckwM9YrW4J5x4euH1GHFA
-	JAbOwCMbnIHGX+uDy5vWHXVJmc+TmLYjzoCKiIq9qCR4AwHI+M/TMoUWV9DHatfLJMIxsFfYV1Z
-	kL9Dlr3O0NbLxDYWUl2jqTO3wALYt1Ok4IWZo8NrUcfP51wkucdlKmEQ1gQJLaThs7nQqtyZ80e
-	Dh78IDgbuHremuxhunV7qBBPImAjff4eIVDj/zg+0G7LJ8ePiZU0+BUkWei5G4CrQHaDYUw2SMS
-	XdfCsKEPMd+IP95n+VuvvnNrsxcTI=
-X-Received: by 2002:a05:6214:f24:b0:8fd:6e32:2bfd with SMTP id 6a1803df08f44-8fec3ff6ce9mr158455806d6.62.1783704662555;
-        Fri, 10 Jul 2026 10:31:02 -0700 (PDT)
-Received: from [127.0.0.1] ([172.208.127.32])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd7c1da1bsm45863386d6.30.2026.07.10.10.31.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 10:31:02 -0700 (PDT)
-Message-Id: <f158e1f92e9c586fca34faecaef23f9581d65478.1783704657.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
-References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
-	<pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
-From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Jul 2026 17:30:57 +0000
-Subject: [PATCH v2 3/3] t/README: document writing concurrency-safe helpers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=oagmaLudrO9dSlgXZk8w55igfOjIGTsVl5MQVreOUX8=;
+        b=gWRe75EY+oe/bVgQZZk6xECENAppcSjR/jS2kQ3gZsJ2SU5Cx5+YCvBAEQhFawNoLk
+         GTcbrJbdo+m/nqHGgU81f1JJa3J/YfrrEdr8jajoVICoCLMJoNMZxtCUuUW8C5UPilFt
+         1ITU4/hcZJTo8xh/ZPH/9LNOZFfzGGTPGaISGHxrJMl4i7FWtqaD3hwLjPj32oKHLOyc
+         L+xQPf9fbmsujDnDSwJ32srQPU11vNKMev3eXR+ttEfw+FyKza2tZARlFa5FxCyE8ODW
+         bP1a4+84dKXt4VU8Jk02cPzOo/kGm7NpxKBEfkU/iCxrFbXNZqTVxM5wd5g17+xQhEx6
+         xTEA==
+X-Forwarded-Encrypted: i=1; AFNElJ8nu6LuQp9/4YQT6DJMeOwAov9nx62/rg8nGz+r5J8ylu/7V72IKAA3ELDCgQi6bonywBY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1Pyi8EnHf3kMQtwtegaZKqQhiFi4tnwaX1Fxk8GYJmUElqplm
+	PQerwaghV3BDjwyseXz6gj5Pjs0a5Q/RatNNjsLjT+h0aitMqtfuXIkW3ygdXcMGatsIPsDfa1F
+	yKHl2m8VtaqT8RxRPs7o/PBkXSCyUY3bTIZd1bqkm4A==
+X-Gm-Gg: AfdE7ckhcSar5C1V2LFahd9K21QIhujDx/jkfMYXeXMWDXD+y1swa/Hdw9UiGt8RW9z
+	CLRpv8ZyK719/vHSHw7Ev96iW4am0r1p4UpaIP4XLfi0nVMAcce6bXl368rEqbhr6tLVdauM604
+	YbTkd5q6OcY0h23+yvTlNwml2XI6RYNaom7RMRYVSXzut6bf9B5BBcnW42gtJsp7C7PFxvq/3BM
+	pWCMhl/wmbM09FjRVuUZ4Wb34DmqjlM5QZ8LRb5MnmCIWe99UdTOjTB5Me/xi6uYLQ1nVhUqA==
+X-Received: by 2002:a05:6808:1b8c:b0:48b:5dcb:85ab with SMTP id
+ 5614622812f47-4a42abf9198mr166777b6e.8.1783705269942; Fri, 10 Jul 2026
+ 10:41:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Michael Montalbo <mmontalbo@gmail.com>,
-    Michael Montalbo <mmontalbo@gmail.com>
+References: <pull.2132.v2.git.1780301856444.gitgitgadget@gmail.com>
+ <pull.2132.v3.git.1783532989.gitgitgadget@gmail.com> <dfab9ff4-fbfa-4ea2-bea3-09c1d1b1cc18@web.de>
+In-Reply-To: <dfab9ff4-fbfa-4ea2-bea3-09c1d1b1cc18@web.de>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Fri, 10 Jul 2026 19:40:57 +0200
+X-Gm-Features: AVVi8CdndNaN_p3A1DSyciA0aHvzdW3Wtwbv6bBbRoJV_v6Mf6SimqV54tEer7g
+Message-ID: <CAL71e4PvOdH9-aER35f=OAEurNzM-coYr64A7GPckZ9AYctMtw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] prio-queue: use bottom-up sift for extract-min
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Michael Montalbo <mmontalbo@gmail.com>
+On Fri, 10 Jul 2026 at 18:37, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+> On 7/8/26 7:49 PM, Kristofer Karlsson via GitGitGadget wrote:
+> > Note: sift_up() currently uses swap, matching the existing code style. =
+It
+> > could be further optimized to use copy (hold the element in a temp, shi=
+ft
+> > parents down, write once), but that would require changing compare() to
+> > accept element values instead of array indices. Left for a potential
+> > follow-up.
+>
+> Same for sift_down_root(), I guess?  It could almost halve the number of
+> writes, right?  I wonder how much of that benefit will be eaten by
+> caching.
 
-The apply-one-time-script.sh and http-429.sh fixes addressed the same
-underlying problem: a test helper assuming it has exclusive access to a
-file when the web server can run it for several requests at once. The
-atomic idioms that avoid this are not specific to CGI or to HTTP, so
-document them generally, alongside the other guidance for writing tests,
-and leave a pointer from the lib-httpd helper list rather than a local
-comment. The note covers the anti-pattern (a "test -f" then a separate
-act) and the two safe operations (mkdir to elect a winner, rename to
-consume a one-shot marker), citing Git's own lockfile machinery and
-make_symlink() as precedent.
+Hm yes indeed, I stopped looking past sift_up() when I realized I should
+not expand the scope of the change. But I think the CPU cache
+effectively makes the swap almost as cheap in practice.
 
-Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
----
- t/README       | 32 ++++++++++++++++++++++++++++++++
- t/lib-httpd.sh |  3 +++
- 2 files changed, 35 insertions(+)
-
-diff --git a/t/README b/t/README
-index 085921be4b..a9d425f392 100644
---- a/t/README
-+++ b/t/README
-@@ -854,6 +854,38 @@ from the test harness library.  At the end of the script, call
- 'test_done'.
- 
- 
-+Writing concurrency-safe helpers
-+--------------------------------
-+
-+Some test code runs concurrently: a test may background work with '&',
-+and the helper scripts installed for the web server (in t/lib-httpd) are
-+run once per request, so the same script can execute for several
-+requests at once.  Such code cannot assume it has exclusive access to a
-+file.
-+
-+When exactly one of several concurrent processes needs to "win" a
-+decision, a single atomic filesystem operation can make it, rather than
-+a check followed by a separate action.  A "test -f X" then "touch X"
-+(or "rm X") races: two processes can both pass the check before either
-+acts.  Two atomic operations avoid this:
-+
-+ - "mkdir dir", which fails if the directory already exists, so that
-+   exactly one caller wins, electing a first or only request (see
-+   t/lib-httpd/http-429.sh).
-+
-+ - "mv src dst" (rename), which fails if the source is gone, so that
-+   exactly one caller consumes it, claiming a planted one-shot marker
-+   (see t/lib-httpd/apply-one-time-script.sh).
-+
-+A "$$" suffix on per-request scratch files keeps concurrent invocations
-+from clobbering each other's fixed-name files.
-+
-+This is a standard shell locking idiom, and the same reasoning behind
-+Git's own lockfile machinery, which creates its lock with O_CREAT|O_EXCL,
-+and make_symlink() in t/test-lib.sh, which uses an mkdir lock: an atomic
-+operation whose failure indicates that another process got there first.
-+
-+
- Test harness library
- --------------------
- 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index fc646447d5..d64f9c8c2d 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -159,6 +159,9 @@ prepare_httpd() {
- 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
- 	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
- 	cp "$TEST_PATH"/proxy-passwd "$HTTPD_ROOT_PATH"
-+	# The web server can run any of these CGI scripts for two requests at
-+	# once; a helper that keeps state between requests must do so with an
-+	# atomic operation. See "Writing concurrency-safe helpers" in t/README.
- 	install_script incomplete-length-upload-pack-v2-http.sh
- 	install_script incomplete-body-upload-pack-v2-http.sh
- 	install_script error-no-report.sh
--- 
-gitgitgadget
+- Kristofer
