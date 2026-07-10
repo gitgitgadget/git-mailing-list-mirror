@@ -1,158 +1,150 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84CA3F6613
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:34:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A04B3EE1E4
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783676056; cv=none; b=S7kxQ/77OOFTTXCqOSBfP5WyNJp8kRsdNFKhsFevAeVAvXrVSYQ6HDvc4FNe4qZyv/yyuz6tf68qx0EiId76RSZ8m6rwaQUri624QEI6iormP2fhmW2lQiXhYXfIO+rv5eAazJ+XaPi9p1M/IU3Z7XHBvg7FE7x9kRUR/7sRPE4=
+	t=1783679393; cv=none; b=grZBFvQEEhWZE/VfvFcjTN3D9SVKb1Gi7Mz4DicgIvPJB8o/cUw7efzquCpivcAC8iZSE/FLUSR3zLTO5EtX3amaGkrPHvjxGvEjnLQ7DkxwCnwYKG7WwOtIEk1V3wkgYRv5hZzhhPyzgTEq7K7lZHRKsmok9pPN65ftD+AN5AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783676056; c=relaxed/simple;
-	bh=O5EV19wK8Pwf5iPQ1Fgob0tFVcwBe5HTwl7PzY1Kzx0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q72tUIZgjoGp1ekb2/QuCvEEwnYaFUbxDDzDBSjVj2IMpdwwGm9Akw7M4+2a2GyHrApUg5hBjS3pNAWtYX/TcrP1AxCSKGZhDr+yBzsHP4ZDaOgnmmJHbFyVDE3Z3mgI41EE6IgPjyGdMxPUmYfmmQG0S5LPvRM+IFTa/WNkDMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCDT6bma; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783679393; c=relaxed/simple;
+	bh=CQo0eLbR6082CNxxs18zkZvqtSqwYvouq0klvEdJzig=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=S5wkjBcQ+fDSbtr5NRvTRCsPOCXZNvZERCD8McON32w0NKjU6Cz5T3bg0DQ90ALLzg6jnR8UP2vetbhTUg9DR83ZoUhm8506ntTtjF0bls+tn8n+tcYWsiNrN8fDttlXJtAZPs7Q2iDDy/e+f9q9X0VM3raEjbThwoNDJgJC03E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=T9YGMtkw; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCDT6bma"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-493ed9d8c5cso4497935e9.1
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 02:34:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783676053; x=1784280853; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=coyBKYPyudT+/wsX/maonO8+ZKzfYAjfDACXR0UKexs=;
-        b=RCDT6bmaYOIkeWq4qCsb2n9ZQWuOKCSEgpeL+UY5KRHwkEH+9PRTLhFEwO+LhLiUrQ
-         ve+fLtHSnQyxopjUba91RyBpLa7m4iKAh3/tLie3h/jF/t9FwssaWZHNkWSLDJGpvnx5
-         Q9eZAxiii8BXCK5PYqVciHinK5kFu5sMSavZYblHU2DFbBbQBTkUf561zNEfSj19RwPN
-         b13A6C3th7Cdf7ezPmS4jlkK1ofufBjXAfpi3PDAmavRjTVQrOkMhxnKuJ6sQoE36oEY
-         1R6tLu2brlqOxVN2stkY1iAIOyny/VnbOdP///8OVcynQrPQ80zMF6z5pg0CDhdPkWkR
-         f2JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783676053; x=1784280853;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=coyBKYPyudT+/wsX/maonO8+ZKzfYAjfDACXR0UKexs=;
-        b=M4yzi5RI9RUIoKV5FiW7YNfj48/QBt1LUlAfUkKRuETgdL/TC0YBP9bZWw6Ld3KJxP
-         /c7u89xf4v+c0ddFn0dXePVO0pml2UQ1XWGTDG0C40+aY+NCvvT2/Ho6yF3RMeg2zMwI
-         h+5gYUmO+DDWynubZoDj1G/hvXpU9/aQhEbgC/qhuXKRHeboUv/F6HE7QUtGZi7hDk1R
-         ldm1d+2d9nx8Dv2ZDnlrpOHU0P84Z6kl4PxtpGIqGm9foFI61uZdEKzOPYKRNz7Do0az
-         oyKQTQCQQkYecMFtHwlXgu02mmzLddSeZRMyHaNFSW7RPEZEqvuDDL8fMrJWLxl4/Cle
-         jPbg==
-X-Forwarded-Encrypted: i=1; AHgh+RosZrxmDApfSmTxK8b17LUF6zNiP3Gy+yuYmHS6hSCDY4QMyFHo8dEAVzXVWkSeIvWBTIc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyy09UpoypAWL0uh3b34kVdC2j4Ah1cNQWw+AdWfWeD4W3KWCLB
-	0V9t+Tmont6f5icdPucEPux+/u2RvrPTgKKN/Wa057fUlkcLazaigyXh
-X-Gm-Gg: AfdE7cm+HfpsbC5mIkxeJmxeAg6smTtj2Wpb1PjoSg9+sNVa45l5eKBYHmLFIZsjrbw
-	nQj2WPTa5zrKgTXzoYUdNcsc+rJ5rKHI1+UzV7yylHTwK6sxl6e03WLbNu4nJG4BeP0uGffbr0j
-	VBS13oK7sue0H42plU+QmReGC0lsunpFP0gdD2hy2vWoTYOU91JgYxrefGsiU+LRnzsnEpv64rs
-	9rNQFPVvkxHscaA68PVrwVG9i/QQtyJK3gPDPPjY/1qYMosKzp7JNvEYtDRoliXk03fQw4I9JAh
-	sdfta/vnXQedZRXxOqTwSzX8qCHWflwkOitmrxE2ciRgPNj6zAPfW/5erw4Io0vkYZl7/B4bn/b
-	Ts6if7NrdXDoi+tYk6hqcz4pH4ld19bbRRFW4gH2WOUN4XGa2Z0NGtv/dJZC0SGFOClkawyPOSI
-	ogo1OaKwwSCBMQrG1wd/EjZDyX33w3XgMXQwwdp3LsFHe2aH7hnZ/bxhzWZhOw4Ri3Ivg=
-X-Received: by 2002:a05:600d:8496:10b0:493:e034:a3b5 with SMTP id 5b1f17b1804b1-493e68c6eaamr80812125e9.24.1783676052851;
-        Fri, 10 Jul 2026 02:34:12 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493f4f09f89sm42810075e9.10.2026.07.10.02.34.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2026 02:34:12 -0700 (PDT)
-Message-ID: <0f37a01d-c39e-47b3-b8e9-48cdd42672df@gmail.com>
-Date: Fri, 10 Jul 2026 10:34:05 +0100
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="T9YGMtkw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1783679388; x=1784284188;
+	i=johannes.schindelin@gmx.de;
+	bh=CQo0eLbR6082CNxxs18zkZvqtSqwYvouq0klvEdJzig=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=T9YGMtkwGalU8e2KH/clMzwtsswQDEck9xnLrcxX0hzcjtGreN0h9VgVyixQIl5g
+	 +Snztiinfy2zj9xZdmYGr29tyjhBME1emPZilMpTYF66Fpb+e9QrJjYZQ0asPp9U1
+	 JhalA5QdCq22cNo+rc4mUgBM3KAT9OU5wWugw/Tc1xuhh7m+542WqERZWjI1vHoUG
+	 hhSn6a5SCkNLrkwUKZzcGWGel/80yUJe4Z2CEb0IboQZHKye5vaYXm6dKeYua3GN3
+	 hQd3nAAlpjCIt2k/6AdK/veamcFuoPuxr2T3ub+8NneB6MZp6q0YQ4Y9Dxz8OOCiK
+	 2+Zo6Xr0xrg3gPuVPw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MjS5A-1xSlyz3TDe-00fEvR; Fri, 10
+ Jul 2026 12:29:47 +0200
+Date: Fri, 10 Jul 2026 12:29:47 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Tian Yuchen <cat@malon.dev>
+cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com, 
+    stolee@gmail.com
+Subject: Re: [PATCH v3 0/2] environment: move ignore_case into
+ repo_config_values
+In-Reply-To: <20260619155152.642760-1-cat@malon.dev>
+Message-ID: <9ade3ca2-fdd9-c5da-3d87-a754a0643d6f@gmx.de>
+References: <20260618114207.605211-1-cat@malon.dev> <20260619155152.642760-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v1 0/3] worktree: add post-worktree-add and
- post-worktree-remove hooks
-To: domen@cachix.org, git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Caleb White <cdwhite3@pm.me>, Junio C Hamano <gitster@pobox.com>
-References: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:64PO7G6ipYIgwSEOcYhujypqx0I+MLY4+lXYzSEDY+CVAkFWRjV
+ kCej8l/43zkZLhhthVvWDKbCtNWGqr26OX+mJ+yM1fl5gFC1p6BKgXIYN/HphYJLK4KRrBR
+ t6TJ5lYEQ/vZcIIONRiwVH8bDfeony8Aj+2f7V5lqFQpurtF4Y/tdvLIpLfZTumVGbamMEB
+ F7vF7rV8PmVG2MqDdpS5g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:vUoynwSZV4w=;ln2W6YBOq9eFKw249+/P/zguwmH
+ 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
+ 96FtIKRZmJV6m43+hY+GoNrwdKA=
 
-Hi Domen
+Hi Yuchen,
 
-On 10/07/2026 00:36, Domen Kožar wrote:
-> 
-> Today there is no reliable trigger to set that up when a worktree
-> appears: post-checkout does not fire for --no-checkout or --orphan
-> and cannot be told apart from a plain checkout. Nothing at all fires
-> when a worktree goes away, so stale databases and services pile up
-> after "git worktree remove" or a manual rm followed by "git worktree
-> prune". Wrapping the worktree commands only helps when every tool,
-> human or agent, goes through the wrapper.
+On Fri, 10 Jul 2026, Tian Yuchen wrote:
 
-I agree a hook that's run after the worktree is added is useful (I have 
-a patch for it that I've never got round to cleaning up and sending so 
-thank you for working on this). It is useful for copying across 
-untracked files to the new worktree like "config.mak".
+> compat/win32/path-utils.c --- Is it appropriate to include the
+> repository.h header file?
 
-> Patch 1 adds a post-worktree-add hook that fires after the working
-> tree is fully set up. Patch 2 adds post-worktree-remove for "git
-> worktree remove". Patch 3 extends it to "git worktree prune" so that
-> manually deleted worktrees are also observed.
+Since path-utils.c implements logic that is repository-dependent (as your
+patch points out), including that header is appropriate.
 
-I don't have a strong opinion on a hook running when a worktree is 
-removed - an IDE that cares about that could set up a filesystem watch 
-on the directory but I guess adding a hook doesn't do any harm.
-> Two design points I would especially appreciate feedback on:
-> 
->   * post-worktree-add runs after post-checkout and is skipped when
->     post-checkout fails. An argument could be made that it should run
->     whenever the worktree was created, regardless of the earlier
->     hook's exit status, since tooling registering worktrees would
->     otherwise miss one that does exist.
-
-Looking at the existing code, if the checkout fails then we remove the 
-worktree because "is_junk == 1" when remove_junk() is called via 
-atexit() so I think it is correct to skip the new hook in that case.
-
-The new hook is run after the checkout, but before the post-checkout 
-hook - we should document their relative order. I see the hook is run in 
-the new worktree and passed the absolute directory and worktree id. I'm 
-wondering if either of those is useful if we're running the hook in the 
-new worktree.
-
->   * for entries pruned because their gitdir file points to a location
->     that no longer exists, the hook receives the recorded path; when
->     the path cannot be determined at all (missing or corrupt gitdir
->     file) it receives an empty string.
-
-So the hook knows a worktree was removed but not which one?
-
-Thanks
-
-Phillip
-
-> Thanks,
-> Domen
-> 
-> Domen Kožar (3):
->    worktree: add post-worktree-add hook
->    worktree: add post-worktree-remove hook
->    worktree: run post-worktree-remove hook when pruning
-> 
->   Documentation/githooks.adoc |  41 +++++++++++++
->   builtin/worktree.c          |  73 ++++++++++++++++++-----
->   t/t2400-worktree-add.sh     | 113 ++++++++++++++++++++++++++++++++++++
->   t/t2401-worktree-prune.sh   |  88 ++++++++++++++++++++++++++++
->   t/t2403-worktree-move.sh    |  44 ++++++++++++++
->   worktree.c                  |   1 -
->   worktree.h                  |   6 +-
->   7 files changed, 347 insertions(+), 19 deletions(-)
-> 
-> 
-> base-commit: f85a7e662054a7b0d9070e432508831afa214b47
-
+Ciao,
+Johannes
