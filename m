@@ -1,127 +1,171 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E9938C42F
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 19:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77CE38F64E
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 19:59:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783713031; cv=none; b=PYrALoVWXRk8V47+hlytHYrkvbQMuxivKJRXTBRKchpw+i1fEgLm94jJ5x86Y/h0TwjNtMTyJcY+6zxIoR7rr6w52GzXOxjHxmj4qLBX2cXUJGCYkfldt686KtvYoZRN06qFTpHt5q+dDEK3p7uowjxmW8G6EEpBCH159CnY/AY=
+	t=1783713599; cv=none; b=G34wGdvB39nEyeljX+wMizvTuP8ALWVeDDC42Z4hd0Bs5Du16ZB5mGOhDk/XrlWXSoiLzt7PKRGxR5xnl7R5ALBqLAx+pHzQtD+zzkngOBLryFt+ewiUKXlHFbgM+JUD5SfXnDZ2+k1t33I/foKHN7mxX41jecYn50TDiftlFxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783713031; c=relaxed/simple;
-	bh=BmNB9RsbaMe8cKt85fC/3RMZaicxc0XE1qqG5a0WUR4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TQmYuwBPiasD0QRKgHdgHbw0LIVzW5mK+rt3AraCWZJSoZwk4Js8mewLL6WBU8BqAyIsIvZS8u57XRQVJoQMNn5qrGS8jyKG2RYJNJs7gFKXWOiHpL9Ls6odngNLaYfwGZPtJdc7RmhwHra+mTl4x1LEk1JKn1DY+X9WN93lmho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=PdY+ra53; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1783713599; c=relaxed/simple;
+	bh=m+uYuOIEjIJkNSVghvCrxmkjQ1Z12/IaVhtyNHnCNrw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hkCMmBcwPqBR0fRvKjFYG0GYBPAZRIpfmEHgRYTXw8ZBSSrMNcKdr+YW097RanU6yRhnOYrhkdpN0U2MPTsgx1wrRTX2r++oQR1bhi7oiguRjrPUphyILDnNJGyBd7V+fPFKPtvjbECLxz1UUcEHezFYUMMiwFVNY02sUnkIqcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/TBB1Sf; arc=none smtp.client-ip=209.85.215.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PdY+ra53"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1783713021;
-	bh=BmNB9RsbaMe8cKt85fC/3RMZaicxc0XE1qqG5a0WUR4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=PdY+ra53mEWGuuNtBudW0IhAP0vgUWz7OotTJHB3q3isdaINgR2wV1LI7ihXk5buu
-	 0sVAziOeWg+DI5xPF3/gQ+bbWmCmoMjbbHmImUh9rCTw3dX8IqYDXFqhh6y0i//gua
-	 aDQnYFFl3SsKyRNKTHd9t6cfDgeyxL9v0p+bu5vv08jtdXTbtNlChNiNGK7x6q8w2T
-	 krVPFqMInToDNbUgWEdd3Z4ofFWynO7xeYFYlWagqCwNasq3RSHQM3NBTSAj+fe8PK
-	 BQUgMabDko5L8aVSaZFRHLugLB/+dGCDWkwwRc+Bi5Kxrd575HpKyU4YIsNOof0ofF
-	 IIL3CNXwuKZDSgFOPen4XafT5rqHkXO2ww2CKfmkhW2SR0FtPjIk9vBnaVFhMRL2aZ
-	 ZH5QexyXbJ3tP2HWZaolzLZzwGCVwJcPXjm2hVWKf6fd6vEBDTiJShz5P6hyoKA2al
-	 UjsddH/cBb96YfuS/rWbTyE8VRW595Qax8HbzTEKAbGysna3c51
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b043:f8a8:cf8:995e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E21A6200B0;
-	Fri, 10 Jul 2026 19:50:21 +0000 (UTC)
-Date: Fri, 10 Jul 2026 19:50:20 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/3] Introduce a 'fromAccepted' option to
- GIT_NO_LAZY_FETCH
-Message-ID: <alFM-4FJQfaEjyju@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>
-References: <20260710085137.4171240-1-christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/TBB1Sf"
+Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-c9c26a5fb98so851177a12.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 12:59:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783713597; x=1784318397; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=OCwZYVgHAsIllQ4a4V4EgJPR2HeOr06An1xWynDHdMg=;
+        b=e/TBB1SfqbePrDSBMpUkbjmokLgfwmDOItuexmF8S2aAuXDdqPIdWZU932LMI5bLWh
+         JNyELNLrLnT5HVZ7JBlWwYrMSmhhxUNt/ybYTaYb1+QRCNp0RLDbhelGuY7Xu5k2/X+2
+         PCVrcGE3l167ImvsmfKzIgXOM+2HxxuRcQBJ8d97DNj93BDHRaaa+IYluDoLv4mJmcXV
+         wbi/bW5zGMlm0751zc/IrX49vsRNZxei2E/1EqPc3Fs8vOVHcysLAOJeKysQjQisznu5
+         bHNqUYmcDHWTNu75eqISz0YThDDe8wEAfptMk3mq41kc3mdxHAJ3PgQxXQvTKZZGAxSK
+         4F8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783713597; x=1784318397;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=OCwZYVgHAsIllQ4a4V4EgJPR2HeOr06An1xWynDHdMg=;
+        b=XY5fsIFoOpC0Ef92CmPggK+dphj4+NSbSbYWWH7ZILUYtVF9Lc91w6r24GUkAvZFM3
+         RQDNqrM9d3jhGhezT8/ngeF3FRAqHjzGDpDpeai1JtRyjYiGIlow/2JUzNLNf2CHu2Hq
+         mw+2pnlZiy9m9gnQvd9kRk6kjZqNSp9AXCWvx3c0KVqDIv/VmLj7+USrmM16zQH0vupP
+         O45mG41ndXClVRlMizjKjQLovY81F5vucv0T7R5TyybqE+A/YdnLnHzB9Zflq/FyBqyC
+         QyxJgq5NSQsbBDZjy0j2alOIPmHz0fGOpMraw7/91VD+chL899tg4ccRAyG5c0wSZ65Y
+         a2zA==
+X-Gm-Message-State: AOJu0YxuTYKju0zsl6kenNtHuAU4t19/29Mu4DIu6BeS284ZYEMuTxex
+	gzffC6+HOdEZdT8rn/SQCN53JoNBrlqERYAKFndx4IeOb/DEEZXCdnZs3ODBoxqONXA=
+X-Gm-Gg: AfdE7cmS5tA9UDnO58oVyLJASwf1rcZoWp+OYx6tdmMJNbmXWRxerRIC9PSzXXZUbBD
+	uwyIbFX5IQfs/Dx9pGd4Dv68L7ZG35VqRWEp35ds2fuCRCzLKFaqMUpnuqW81/c4LUD8eOItJKY
+	lJC7M7JvAfVMmQ+iDZQF3kEnrD15UXtXX7NSdV/eu8IcSDS0DIAWJMaO/JLoRq6xkclISoYqKat
+	Y7DoPljRBtPZVB9dboAnA/KzyIv2rcQAZC426ECt6M7uJ8Ctcg+F7Pri/yCvbHFVLfaqeBFjuMf
+	NRLCgz75DwW/IQ/eWJM+L/cY4LABv+3YwmgOfPrs60ZEL+6DLBtW0wAerU85i/EBlb7JZjWdCJ8
+	8fEmyMw1OmwOi5OYAJ5yodm49tk+pplMYPgmB32kv1Bq83JnuK/TivakaiVW5ze9A3be1SjeChs
+	F0HSLruznWxo4EDU5sN5Yaek/Aldgj/qcpPFxxD/viEylCF7VqskpLT0TamA==
+X-Received: by 2002:a05:6a21:9cc8:b0:3b4:7459:85a0 with SMTP id adf61e73a8af0-3c0f0ae846fmr5483125637.18.1783713596927;
+        Fri, 10 Jul 2026 12:59:56 -0700 (PDT)
+Received: from localhost.localdomain ([45.117.66.208])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-311747f596asm43766879eec.2.2026.07.10.12.59.54
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 10 Jul 2026 12:59:56 -0700 (PDT)
+From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+To: git@vger.kernel.org
+Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Subject: [PATCH v3] builtin/add.c: replace run_command() with direct apply_all_patches() call
+Date: Sat, 11 Jul 2026 01:28:20 +0530
+Message-ID: <20260710195949.54928-1-gatlavishweshwarreddy26@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <xmqqechad6g9.fsf@gitster.g>
+References: <xmqqechad6g9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/XVXSmktqRKfXArG"
-Content-Disposition: inline
-In-Reply-To: <20260710085137.4171240-1-christian.couder@gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
+Content-Transfer-Encoding: 8bit
 
---/XVXSmktqRKfXArG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When the user runs "git add -e", the diff of the working tree changes
+is written to a temporary file, opened in an editor, and then applied
+back to the index. The application step is done by spawning a child
+process running "git apply --recount --cached <file>", which is an
+unnecessary subprocess since the apply machinery is available as a
+native C API.
 
-On 2026-07-10 at 08:51:34, Christian Couder wrote:
-> Since 7b70e9efb1 (upload-pack: disable lazy-fetching by default,
-> 2024-04-16), lazy fetching has been controlled by the
-> `GIT_NO_LAZY_FETCH` environment variable. This is currently an "all or
-> nothing" boolean that is set to 'true' by default when calling `git
-> upload-pack` for security reasons.
->=20
-> Recently the "promisor-remote" capability was added to protocol v2,
-> allowing servers and clients to agree on the promisor remotes they
-> can safely use.
->=20
-> This series leverages that capability to implement a pragmatic middle
-> ground. By setting `GIT_NO_LAZY_FETCH` to 'fromAccepted', lazy
-> fetching is allowed only when fetching from promisor remotes that are
-> both advertised by the server and accepted by the client.
->=20
-> Note that using an environment variable for this is probably not the
-> best from a usability perspective. An `upload-pack.allowLazyFetch`
-> configuration variable would likely be better.
->=20
-> Unfortunately the `GIT_NO_LAZY_FETCH` environment variable is the way
-> things currently work. It would be a much bigger and more invasive
-> change to implement `upload-pack.allowLazyFetch` in a way that is
-> compatible with `GIT_NO_LAZY_FETCH` which has to stay anyway for
-> backward compatibility. Therefore, transitioning to a configuration
-> variable is left for future work.
+Replace the run_command() call with a direct call to apply_all_patches()
+using an initialized apply_state with the cached and recount options set
+appropriately. This avoids the overhead of forking a subprocess, keeps
+the operation within the same process, and makes the intent of the code
+clearer to the reader.
 
-I don't think this is a good idea.  We get a lot of reports on the
-security list involving various tooling that isn't within the scope of
-our threat model.  This substantially increases the amount of code which
-is now subject to that threat model and therefore our security
-guarantees and I don't think we should do that as it stands, very
-especially while so much of our network-facing code is written in C.
+Remove the now-unused includes of "run-command.h" and "strvec.h" since
+no other code in this file requires them after this change.
 
-The fetch code by default reads lots of configuration information from
-the repository, including remote settings and information and we really
-want absolutely none of that code running in the context of an untrusted
-repository.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+---
 
---/XVXSmktqRKfXArG
-Content-Type: application/pgp-signature; name=signature.asc
+Changes in v3:
+- Moved struct apply_state and apply_argv declarations to the top of
+  the function to fix -Wdeclaration-after-statement violations
 
------BEGIN PGP SIGNATURE-----
+In response to review:
+- repo_git_path() returns an absolute path built from gitdir.
+  prefix_filename() in apply_all_patches() explicitly skips absolute
+  paths (see abspath.c lines 271-272 where is_absolute_path(arg)
+  causes the prefix to be skipped). Running "git add -e" from a
+  subdirectory is therefore safe.
+- A dedicated test for "git add -e" from a subdirectory would be
+  valuable. I looked but found no existing "add -e" tests in the test
+  suite to use as a reference. I would appreciate guidance on the
+  preferred approach, or I can attempt to write one if you can point
+  me to a similar test pattern.
 
-wr0EABYKAG8FgmpRTPsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ8dfwQs3Z/2ShqV2zAeoYkgQscj70sQLhSN1MFZwcfRW
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAABkWAQDFQqpfJUQrr7pxZmkPVgf7+GhI
-Z8CaPa0re+Y1zzSXQAD8C/bhrnfGN8oq9wWPSZo4vzeLtvJfHQm0NihqfZyzgQo=
-=6/Aw
------END PGP SIGNATURE-----
+ builtin/add.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---/XVXSmktqRKfXArG--
+diff --git a/builtin/add.c b/builtin/add.c
+index c859f66519..1858adf289 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -13,7 +13,6 @@
+ #include "dir.h"
+ #include "gettext.h"
+ #include "pathspec.h"
+-#include "run-command.h"
+ #include "object-file.h"
+ #include "odb.h"
+ #include "odb/transaction.h"
+@@ -23,9 +22,9 @@
+ #include "diff.h"
+ #include "read-cache.h"
+ #include "revision.h"
+-#include "strvec.h"
+ #include "submodule.h"
+ #include "add-interactive.h"
++#include "apply.h"
+
+ static const char * const builtin_add_usage[] = {
+ 	N_("git add [<options>] [--] <pathspec>..."),
+@@ -187,7 +186,8 @@ static int edit_patch(struct repository *repo,
+ 		      const char *prefix)
+ {
+ 	char *file = repo_git_path(repo, "ADD_EDIT.patch");
+-	struct child_process child = CHILD_PROCESS_INIT;
++	struct apply_state state;
++	const char *apply_argv[2];
+ 	struct rev_info rev;
+ 	int out;
+ 	struct stat st;
+@@ -217,11 +217,16 @@ static int edit_patch(struct repository *repo,
+ 	if (!st.st_size)
+ 		die(_("empty patch. aborted"));
+
+-	child.git_cmd = 1;
+-	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
+-		     NULL);
+-	if (run_command(&child))
++	apply_argv[0] = file;
++	apply_argv[1] = NULL;
++	if (init_apply_state(&state, repo, prefix))
++		die(_("could not initialize apply state"));
++	state.cached = 1;
++	if (check_apply_state(&state, 0))
++		die(_("could not check apply state"));
++	if (apply_all_patches(&state, 1, apply_argv, APPLY_OPT_RECOUNT))
+ 		die(_("could not apply '%s'"), file);
++	clear_apply_state(&state);
+
+ 	unlink(file);
+ 	free(file);
+--
+2.54.0
+
