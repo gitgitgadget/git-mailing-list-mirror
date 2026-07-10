@@ -1,171 +1,99 @@
-Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77CE38F64E
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 19:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE39F39F190
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 20:24:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783713599; cv=none; b=G34wGdvB39nEyeljX+wMizvTuP8ALWVeDDC42Z4hd0Bs5Du16ZB5mGOhDk/XrlWXSoiLzt7PKRGxR5xnl7R5ALBqLAx+pHzQtD+zzkngOBLryFt+ewiUKXlHFbgM+JUD5SfXnDZ2+k1t33I/foKHN7mxX41jecYn50TDiftlFxc=
+	t=1783715064; cv=none; b=E7IZ8AfLihpHR4r7u3yYBlXzWEUAfVq/LY2fz5b7HViJ3Ly/J8QIcO1qcURpih88iB0xDl6iPwW42hDVRylhIU9J5f5uzffWbNIIRGrg0yurJPnwCQplJG2uKg1MiMIPulyfP/M4P2UKxVeMjEqhGPHF7hmD8xckJjs539SyRew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783713599; c=relaxed/simple;
-	bh=m+uYuOIEjIJkNSVghvCrxmkjQ1Z12/IaVhtyNHnCNrw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkCMmBcwPqBR0fRvKjFYG0GYBPAZRIpfmEHgRYTXw8ZBSSrMNcKdr+YW097RanU6yRhnOYrhkdpN0U2MPTsgx1wrRTX2r++oQR1bhi7oiguRjrPUphyILDnNJGyBd7V+fPFKPtvjbECLxz1UUcEHezFYUMMiwFVNY02sUnkIqcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/TBB1Sf; arc=none smtp.client-ip=209.85.215.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783715064; c=relaxed/simple;
+	bh=hHCTOPAFyAW4rN0Y6AXQTy/qJNfuklWKX5dBtuWaLfE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nD8Tsxef0+uwldK6DTkkW1H1UkjME0CUVdy/CcNMk3z6U1fkjCp+mWS2ab5kX6m2Qd5d91BJhkesAp0lsWDDzqLtxfiQ2GwSgeb5VLz//+w3WXSWbqYIZV4iUuvD9K4Kvho62Qv0NvZqSPJjankOXncLRu7QVWl2DdgyPucYDsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AifjA2WF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MUhAPHRz; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/TBB1Sf"
-Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-c9c26a5fb98so851177a12.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 12:59:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783713597; x=1784318397; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=OCwZYVgHAsIllQ4a4V4EgJPR2HeOr06An1xWynDHdMg=;
-        b=e/TBB1SfqbePrDSBMpUkbjmokLgfwmDOItuexmF8S2aAuXDdqPIdWZU932LMI5bLWh
-         JNyELNLrLnT5HVZ7JBlWwYrMSmhhxUNt/ybYTaYb1+QRCNp0RLDbhelGuY7Xu5k2/X+2
-         PCVrcGE3l167ImvsmfKzIgXOM+2HxxuRcQBJ8d97DNj93BDHRaaa+IYluDoLv4mJmcXV
-         wbi/bW5zGMlm0751zc/IrX49vsRNZxei2E/1EqPc3Fs8vOVHcysLAOJeKysQjQisznu5
-         bHNqUYmcDHWTNu75eqISz0YThDDe8wEAfptMk3mq41kc3mdxHAJ3PgQxXQvTKZZGAxSK
-         4F8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783713597; x=1784318397;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=OCwZYVgHAsIllQ4a4V4EgJPR2HeOr06An1xWynDHdMg=;
-        b=XY5fsIFoOpC0Ef92CmPggK+dphj4+NSbSbYWWH7ZILUYtVF9Lc91w6r24GUkAvZFM3
-         RQDNqrM9d3jhGhezT8/ngeF3FRAqHjzGDpDpeai1JtRyjYiGIlow/2JUzNLNf2CHu2Hq
-         mw+2pnlZiy9m9gnQvd9kRk6kjZqNSp9AXCWvx3c0KVqDIv/VmLj7+USrmM16zQH0vupP
-         O45mG41ndXClVRlMizjKjQLovY81F5vucv0T7R5TyybqE+A/YdnLnHzB9Zflq/FyBqyC
-         QyxJgq5NSQsbBDZjy0j2alOIPmHz0fGOpMraw7/91VD+chL899tg4ccRAyG5c0wSZ65Y
-         a2zA==
-X-Gm-Message-State: AOJu0YxuTYKju0zsl6kenNtHuAU4t19/29Mu4DIu6BeS284ZYEMuTxex
-	gzffC6+HOdEZdT8rn/SQCN53JoNBrlqERYAKFndx4IeOb/DEEZXCdnZs3ODBoxqONXA=
-X-Gm-Gg: AfdE7cmS5tA9UDnO58oVyLJASwf1rcZoWp+OYx6tdmMJNbmXWRxerRIC9PSzXXZUbBD
-	uwyIbFX5IQfs/Dx9pGd4Dv68L7ZG35VqRWEp35ds2fuCRCzLKFaqMUpnuqW81/c4LUD8eOItJKY
-	lJC7M7JvAfVMmQ+iDZQF3kEnrD15UXtXX7NSdV/eu8IcSDS0DIAWJMaO/JLoRq6xkclISoYqKat
-	Y7DoPljRBtPZVB9dboAnA/KzyIv2rcQAZC426ECt6M7uJ8Ctcg+F7Pri/yCvbHFVLfaqeBFjuMf
-	NRLCgz75DwW/IQ/eWJM+L/cY4LABv+3YwmgOfPrs60ZEL+6DLBtW0wAerU85i/EBlb7JZjWdCJ8
-	8fEmyMw1OmwOi5OYAJ5yodm49tk+pplMYPgmB32kv1Bq83JnuK/TivakaiVW5ze9A3be1SjeChs
-	F0HSLruznWxo4EDU5sN5Yaek/Aldgj/qcpPFxxD/viEylCF7VqskpLT0TamA==
-X-Received: by 2002:a05:6a21:9cc8:b0:3b4:7459:85a0 with SMTP id adf61e73a8af0-3c0f0ae846fmr5483125637.18.1783713596927;
-        Fri, 10 Jul 2026 12:59:56 -0700 (PDT)
-Received: from localhost.localdomain ([45.117.66.208])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-311747f596asm43766879eec.2.2026.07.10.12.59.54
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 10 Jul 2026 12:59:56 -0700 (PDT)
-From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-To: git@vger.kernel.org
-Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Subject: [PATCH v3] builtin/add.c: replace run_command() with direct apply_all_patches() call
-Date: Sat, 11 Jul 2026 01:28:20 +0530
-Message-ID: <20260710195949.54928-1-gatlavishweshwarreddy26@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <xmqqechad6g9.fsf@gitster.g>
-References: <xmqqechad6g9.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AifjA2WF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MUhAPHRz"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 31EE7EC01F5;
+	Fri, 10 Jul 2026 16:24:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 10 Jul 2026 16:24:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783715061; x=1783801461; bh=c5/ytk8889
+	8le2zlBkG6BjHAmjVmejN3PAvOoyRwxUg=; b=AifjA2WFX08keGlr18iMD1wfJW
+	sWGXF+TihLix96mudQ9hWakuYSopGSxb07Nn8FbvpWiRRJq6IxOJI4a8YaSJpcWh
+	UClsb6BmczHWbcDGNva9yLY5Ni4h3d3Jg6b2WjIhSdLqbIWAbm6UjUY9Lrurcx7w
+	ImUN1PkLOMthLPzfhNQE3qe+jN7lncNF3VpV52YECkVoLDEiN0+nSdtmLe8dZfcv
+	Rt1aBWMnIvw1t8BHnlsOIIGQ1l9fPs4HTUFIMCs+FeryYrMhXY0dW/4dKqn5GQtW
+	LX1sZvyxnScXsyWICUVqp+RjdXA5kkhyh0RMWlBv4DSv5l5ZU4H9+EUM3Ruw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783715061; x=1783801461; bh=c5/ytk88898le2zlBkG6BjHAmjVmejN3PAv
+	OoyRwxUg=; b=MUhAPHRzj0xceHX7+AtZRUDWSucNmtyuYw1qHBZafN5fnU++WsA
+	jzhJPNSx4hYqJ6MHhbyRqeli8oPttByohBnILsRzb5RZrM/HGaD36x0WNLmXFHq0
+	wiurwl87WygDHCrtymgDek4IkBmffOKygVbw5s8My71zbLdMftIJxAbqJmA25ed3
+	+mGJ7uDGyyPQrSfHvqOrhMVwvZmhBn21kTdSeL2ScWeVo9z1VhXlLjlUEajQWR3E
+	NIf87f330JuqwMM29dqVm5NF29wMzSA/a3iYSFCVOWXyZFVd+7l6q7fPBJWC6xz5
+	dxpmQXvdIsW0IzVrtPTWix2RqLM2/aJvfHQ==
+X-ME-Sender: <xms:9FRRatQUFsIxVCLrswbmuQcqktaF5fo1QM401wkt_MlwnF8JZSPrUQ>
+    <xme:9FRRauNNXzebZmG-LemWiad55c2T7wscqi2qQllWVKJ68wf0OKH66BJ9gd8GcPsor
+    PJjl91H2XvY6mZCoXaO5MnQqCVJ4WRuQ4UDoa3WpNRN7rbxEFbn>
+X-ME-Received: <xmr:9FRRagMkUA_sbKkHgsjTVin9BLlHqKNrKNtR1yv7WZK1xrS4R0tV6dt81m_j1jK9L1r1XE8NFDnR_jRuj7mt3hzB2V7LsnYOljOqM00>
+X-ME-Proxy-Cause: dmFkZTEl8nvWUIkRNkrMKnmSiX/KfsYJ30xS6guD6s4ZsdmT4CtL36vl9mJF8OmLhq2ALf
+    ZueCAQ9Bg07Py2z6qo3jNPR+T7lQu0PwCyy0ecHikzEAIbIVnjXYe9aTcErDfNzEF7QBU8
+    FhnpD9B3txc+JgcqoNgh+ZxDRHrw5Q02FLhymIan9fQGMFB181NwzTXumOp6Hc3Eaus0qh
+    YdCl3D1yGncFQPK8U79fw30SJSNXIMk41Gla3F56Or5OOTUQEaqJwmfs2wqY30n9TWbcsS
+    9rx5LxyqV+kLxiFwK2xWiPQQAlblNiPMUO5OWpV3d0L6JYkgRcvzH7ADU1DYDfbW+iUsjg
+    zgS6lpA1mykUlyu3dSCitKlOvU2UvZjtrwPtFVB5ZyUUNfPsrw76BQAKmXWi+hT/L9qDHO
+    +wCBY/QE5G+JKU+ljFTu/UBs5qrXgQ9obrbdD5I61fxiqqQgwPH7yxMfJ+6C0NIWe9spIo
+    9hCEvMuAJmLtKwwhmQPCkM+1D4ZO0I1F6029QtCf+HGTqVkcxNzaWKALMJZSDPNCVBiYA+
+    k1hv7uwHFcY+kbEBf165VkNK86gukZJGZFe8KztmRCinTIIykxclA//I36/g3M7plDKjkt
+    IYAmoGD/UVOdHRqX7SJ3NMLZf4fd1R3zcZpfAkmD7V0tuer2Zcy9OuvHsqGQ
+X-ME-Proxy: <xmx:9FRRauuKCDuI0HYzKYD9mnB_nUmyZcuUdTrousL6TnUCgAn9_wtmFw>
+    <xmx:9FRRaqXDdxQGGi_SjMeYrl9albsLw8NpduPdcqolTgnHrpMbjN3trA>
+    <xmx:9FRRamsMcs1gEKcDQeWWtOaADQaqM3Dpg8buSW_EIil_dlRzS8ncWQ>
+    <xmx:9FRRamV1LpuKfmyuJ2VATeRH4En7Dlt4ywAxJQ8XxEx52ejmZ12onw>
+    <xmx:9VRRamVpfjbcGVCrnC9OJ5SrsTjhwN5Jp_XEXieireNsXAuj_zCbKo0c>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Jul 2026 16:24:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/7] refs: remove use of `the_repository`
+In-Reply-To: <xmqqo6gedbq2.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	10 Jul 2026 09:57:09 -0700")
+References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
+	<xmqq5x2nlwyg.fsf@gitster.g> <alCJgLcjXKEgNwFF@pks.im>
+	<alCN2Afi4gTSSajg@pks.im> <xmqqo6gedbq2.fsf@gitster.g>
+Date: Fri, 10 Jul 2026 13:24:18 -0700
+Message-ID: <xmqqa4ryd24t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When the user runs "git add -e", the diff of the working tree changes
-is written to a temporary file, opened in an editor, and then applied
-back to the index. The application step is done by spawning a child
-process running "git apply --recount --cached <file>", which is an
-unnecessary subprocess since the apply machinery is available as a
-native C API.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Replace the run_command() call with a direct call to apply_all_patches()
-using an initialized apply_state with the cached and recount options set
-appropriately. This avoids the overhead of forking a subprocess, keeps
-the operation within the same process, and makes the intent of the code
-clearer to the reader.
+> It is more than probable that it was what happened.  Will retry the
+> merge during the integration run I'll make later today.
+>
+> Thanks.
 
-Remove the now-unused includes of "run-command.h" and "strvec.h" since
-no other code in this file requires them after this change.
+And indeed, I had a mismerge.
 
-Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
----
-
-Changes in v3:
-- Moved struct apply_state and apply_argv declarations to the top of
-  the function to fix -Wdeclaration-after-statement violations
-
-In response to review:
-- repo_git_path() returns an absolute path built from gitdir.
-  prefix_filename() in apply_all_patches() explicitly skips absolute
-  paths (see abspath.c lines 271-272 where is_absolute_path(arg)
-  causes the prefix to be skipped). Running "git add -e" from a
-  subdirectory is therefore safe.
-- A dedicated test for "git add -e" from a subdirectory would be
-  valuable. I looked but found no existing "add -e" tests in the test
-  suite to use as a reference. I would appreciate guidance on the
-  preferred approach, or I can attempt to write one if you can point
-  me to a similar test pattern.
-
- builtin/add.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index c859f66519..1858adf289 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -13,7 +13,6 @@
- #include "dir.h"
- #include "gettext.h"
- #include "pathspec.h"
--#include "run-command.h"
- #include "object-file.h"
- #include "odb.h"
- #include "odb/transaction.h"
-@@ -23,9 +22,9 @@
- #include "diff.h"
- #include "read-cache.h"
- #include "revision.h"
--#include "strvec.h"
- #include "submodule.h"
- #include "add-interactive.h"
-+#include "apply.h"
-
- static const char * const builtin_add_usage[] = {
- 	N_("git add [<options>] [--] <pathspec>..."),
-@@ -187,7 +186,8 @@ static int edit_patch(struct repository *repo,
- 		      const char *prefix)
- {
- 	char *file = repo_git_path(repo, "ADD_EDIT.patch");
--	struct child_process child = CHILD_PROCESS_INIT;
-+	struct apply_state state;
-+	const char *apply_argv[2];
- 	struct rev_info rev;
- 	int out;
- 	struct stat st;
-@@ -217,11 +217,16 @@ static int edit_patch(struct repository *repo,
- 	if (!st.st_size)
- 		die(_("empty patch. aborted"));
-
--	child.git_cmd = 1;
--	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
--		     NULL);
--	if (run_command(&child))
-+	apply_argv[0] = file;
-+	apply_argv[1] = NULL;
-+	if (init_apply_state(&state, repo, prefix))
-+		die(_("could not initialize apply state"));
-+	state.cached = 1;
-+	if (check_apply_state(&state, 0))
-+		die(_("could not check apply state"));
-+	if (apply_all_patches(&state, 1, apply_argv, APPLY_OPT_RECOUNT))
- 		die(_("could not apply '%s'"), file);
-+	clear_apply_state(&state);
-
- 	unlink(file);
- 	free(file);
---
-2.54.0
+Thanks, the topic is back in.
 
