@@ -1,150 +1,204 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A04B3EE1E4
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:29:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9131E403AFF
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783679393; cv=none; b=grZBFvQEEhWZE/VfvFcjTN3D9SVKb1Gi7Mz4DicgIvPJB8o/cUw7efzquCpivcAC8iZSE/FLUSR3zLTO5EtX3amaGkrPHvjxGvEjnLQ7DkxwCnwYKG7WwOtIEk1V3wkgYRv5hZzhhPyzgTEq7K7lZHRKsmok9pPN65ftD+AN5AQ=
+	t=1783679772; cv=none; b=MLlRlTu9ZH5WG+haJZ0wIPQHUikJcQmmL0WzwYzurl9nhUEoHXO2YwKXGV3mC1KL9kNnMbzFNjfPwe/69M+/wf/vvZbnKPliQ+bEpDbVuV5OTD5w83qaiSKXEwlJqv59oeX6yKlZBv0LmQCucVMzCCE9XbJyoNzNhWi0U7Kf7qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783679393; c=relaxed/simple;
-	bh=CQo0eLbR6082CNxxs18zkZvqtSqwYvouq0klvEdJzig=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=S5wkjBcQ+fDSbtr5NRvTRCsPOCXZNvZERCD8McON32w0NKjU6Cz5T3bg0DQ90ALLzg6jnR8UP2vetbhTUg9DR83ZoUhm8506ntTtjF0bls+tn8n+tcYWsiNrN8fDttlXJtAZPs7Q2iDDy/e+f9q9X0VM3raEjbThwoNDJgJC03E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=T9YGMtkw; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1783679772; c=relaxed/simple;
+	bh=aDGZAgiPAnCR24AX91QPuP5je8Er2D/BfEJohjoJ7fw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=am6m1zkRKJOaOvqquilH/WE6P7e4CxlZFclVTXFWhE0lMVbO5sxSmwJbVv4rH5WXd010ZCVfdOAltpjj44D1+3gzpRiHW+p7U+HCSASEaa8S9znxuIAE05CdH3wkb9YQV98Q53A6yzX/u5VfeOCE03Xd2neKRpELRzzPVUMMxK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dOc9gg7r; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="T9YGMtkw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1783679388; x=1784284188;
-	i=johannes.schindelin@gmx.de;
-	bh=CQo0eLbR6082CNxxs18zkZvqtSqwYvouq0klvEdJzig=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=T9YGMtkwGalU8e2KH/clMzwtsswQDEck9xnLrcxX0hzcjtGreN0h9VgVyixQIl5g
-	 +Snztiinfy2zj9xZdmYGr29tyjhBME1emPZilMpTYF66Fpb+e9QrJjYZQ0asPp9U1
-	 JhalA5QdCq22cNo+rc4mUgBM3KAT9OU5wWugw/Tc1xuhh7m+542WqERZWjI1vHoUG
-	 hhSn6a5SCkNLrkwUKZzcGWGel/80yUJe4Z2CEb0IboQZHKye5vaYXm6dKeYua3GN3
-	 hQd3nAAlpjCIt2k/6AdK/veamcFuoPuxr2T3ub+8NneB6MZp6q0YQ4Y9Dxz8OOCiK
-	 2+Zo6Xr0xrg3gPuVPw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MjS5A-1xSlyz3TDe-00fEvR; Fri, 10
- Jul 2026 12:29:47 +0200
-Date: Fri, 10 Jul 2026 12:29:47 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tian Yuchen <cat@malon.dev>
-cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com, 
-    stolee@gmail.com
-Subject: Re: [PATCH v3 0/2] environment: move ignore_case into
- repo_config_values
-In-Reply-To: <20260619155152.642760-1-cat@malon.dev>
-Message-ID: <9ade3ca2-fdd9-c5da-3d87-a754a0643d6f@gmx.de>
-References: <20260618114207.605211-1-cat@malon.dev> <20260619155152.642760-1-cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dOc9gg7r"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8eefd0c5f59so5849536d6.3
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783679769; x=1784284569; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=aD7/I3d3oDMxysMD1EFRaadjTIyatIcX8hwBj+IBDC0=;
+        b=dOc9gg7rf2f0dQTPu/L62TjGWBeIlJE9/1asOeLOOvpFpmkVa+z6wU81c6aHWUu4T5
+         wuWz5G56pQeayw8xcAG1rKrrH0gQikIv0/Hv+df1brvl3R0VKjlc6gfL/DP17R1SeRHQ
+         IW0cfzU4HxeIxkhRYKT8kcyiiMYeVQNnnc1ggRAB7GyGyKRgFobw1E6PYynu2AWSyrPl
+         FogIdUTgyoiXRgMevoU0UOvY8B550RXWLnsbzhw3fO8PihnBFnYAA6UxuvPFyFXvktqy
+         5B6Ud/6T1p9dyP8taJhcrinTBBvTB06e3cAHqNHEe5JMD5omn76wpkLk/1OcbKkwksP6
+         O6Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783679769; x=1784284569;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aD7/I3d3oDMxysMD1EFRaadjTIyatIcX8hwBj+IBDC0=;
+        b=Dt4AQPxFfJ7En6eDw9l4S8r9dDuQhvXM1EvK1hTIt3Hirjga0GLRfc57TIPcHlHkOA
+         OMsnTng2+0URxZUG8tGg5HKksvtbjtB2yywyr/s+x1K6IMQAX9vgaVegSyfOESvRC0Sn
+         gQ61zOFxkEo2fq7evUPG3haGJtTpzcyA4ZtEAI+SSfjSxUTMA6XolTNEVGj3D8jCVuY/
+         69Lp5BXUlIeRm+252ke37SsLtOv3vONY16AJyJA7y27duqfmkIVgUxkvS1TVl8YXFHow
+         u2JehYu3zFf0zTa54qn1O1Jc9TjkjOQ2piD68V4bsAC0EFuLB/YTHZ/U2/A7arXDNrvZ
+         psZg==
+X-Gm-Message-State: AOJu0YzTZO1iXnrPigYmbi+jvrKgzYlml13hwtACvd4sH00GCwkjK4fE
+	O4AVACSulesUakLzQfmjkhBUkXVGXdPTfmINeLCWbkYnRMm4PRk0j+8mHNNUZw==
+X-Gm-Gg: AfdE7clGWZKjuVG5j5V5SjudWi4g7nLVi444IM1dUw9gM24EDbcoDhrGp9YgOe8Quhu
+	tOhgnj0eonD07/h5f/3j6Vpd535IBOBZkXc1Hy+JV7+M3vlyCSmOEPe3uLIoHD/BEm7V3LkSi46
+	HaFjv7mBNezr/oNZk00IkUTwyEh8Wqw7n/W5XZJQpAz1BtXCxLHIelThMwy3B8uuDgKvK4w6hLH
+	J2otxaOp9oskfpJ7t8GQWHI1EC1KO2xugO4kh3fbK0/J7UnHRXiWmu1MBIIjnjuS/PcppZyQXiW
+	pdx9eb+BzsZUVZQs+cxgd7hMRGagtZrulJNPLnTCkuu74itp7JkhqRJAa51R+kz7B5PKfS+0q9j
+	IzD/HXgr7Hxm0zfdOhR5cQ2dhuWYHhxZT6GKKkFh5URpaA9eubZRywqNQ0RDb0TTeARMPpDw8Qb
+	2qkiIBxmtFHOYMxIEZJVbFLGUaVA==
+X-Received: by 2002:a05:6214:2dc3:b0:8f0:65c7:3237 with SMTP id 6a1803df08f44-8fec02f1a14mr127331196d6.5.1783679769427;
+        Fri, 10 Jul 2026 03:36:09 -0700 (PDT)
+Received: from [127.0.0.1] ([4.246.134.183])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd82ea876sm38237536d6.40.2026.07.10.03.36.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 03:36:08 -0700 (PDT)
+Message-Id: <pull.2166.v3.git.1783679767.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2166.v2.git.1783598912.gitgitgadget@gmail.com>
+References: <pull.2166.v2.git.1783598912.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 10 Jul 2026 10:36:05 +0000
+Subject: [PATCH v3 0/2] reftable: fix quadratic behavior when re-creating deleted refs
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:64PO7G6ipYIgwSEOcYhujypqx0I+MLY4+lXYzSEDY+CVAkFWRjV
- kCej8l/43zkZLhhthVvWDKbCtNWGqr26OX+mJ+yM1fl5gFC1p6BKgXIYN/HphYJLK4KRrBR
- t6TJ5lYEQ/vZcIIONRiwVH8bDfeony8Aj+2f7V5lqFQpurtF4Y/tdvLIpLfZTumVGbamMEB
- F7vF7rV8PmVG2MqDdpS5g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:vUoynwSZV4w=;ln2W6YBOq9eFKw249+/P/zguwmH
- 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
- 96FtIKRZmJV6m43+hY+GoNrwdKA=
+To: git@vger.kernel.org
+Cc: Kristofer Karlsson <krka@spotify.com>
 
-Hi Yuchen,
+This series fixes quadratic behavior in the reftable backend when many
+tombstones are present. Any operation that seeks into a range containing
+tombstones is affected, including ref lookups and D/F conflict checks.
 
-On Fri, 10 Jul 2026, Tian Yuchen wrote:
+The root cause is the merged iterator's suppress_deletions flag, which
+silently consumes tombstone records in a tight internal loop. This prevents
+higher-level code from checking iteration bounds until after all tombstones
+have been scanned, making both refs_verify_refnames_available() and
+reftable_backend_read_ref() O(n) per call in the presence of tombstones.
 
-> compat/win32/path-utils.c --- Is it appropriate to include the
-> repository.h header file?
+The fix makes suppress_deletions configurable via reftable_stack_options
+(defaulting to off) and handles deletion records at each call site in the
+reftable backend, where prefix and refname bounds are available. This lets
+existing bounds checks terminate iteration early when encountering
+tombstones past the relevant bound.
 
-Since path-utils.c implements logic that is repository-dependent (as your
-patch points out), including that header is appropriate.
+Downstream users of the reftable library (e.g. libgit2) can enable
+suppress_deletions through the stack options to retain the previous
+behavior.
 
-Ciao,
-Johannes
+The first patch adds a perf test (p1401) exercising two tombstone scenarios
+with 8000 refs. The second patch is the optimization. Both p1401 tests go
+from ~13s to ~0.2s with the fix.
+
+Note that auto-compaction typically merges tombstones before they accumulate
+to this degree, so the quadratic behavior may not show up in every workflow.
+But the fix ensures correct time complexity regardless of compaction state,
+and the change is fairly contained.
+
+Changes since v2:
+
+ * Add suppress_deletions to reftable_stack_options so downstream callers
+   can control it at stack creation time (suggested by Patrick)
+
+Changes since v1:
+
+ * Keep suppress_deletions in the reftable library for downstream users;
+   only stop setting it in stack.c
+ * Broaden scope description to cover all readers, not just ref creation
+ * Use separate repositories in perf test to avoid cross-scenario state
+ * Drop correctness test (implicitly covered by t1400)
+
+Previous discussion:
+https://lore.kernel.org/git/20260701080014.GA3748390@coredump.intra.peff.net/
+
+Kristofer Karlsson (2):
+  t/perf: add perf test for ref tombstone scenarios
+  reftable: fix quadratic behavior in the presence of tombstones
+
+ refs/reftable-backend.c              | 54 ++++++++++++++++++++++------
+ reftable/reftable-stack.h            |  2 ++
+ reftable/stack.c                     |  2 +-
+ t/perf/p1401-ref-store-tombstones.sh | 46 ++++++++++++++++++++++++
+ 4 files changed, 92 insertions(+), 12 deletions(-)
+ create mode 100755 t/perf/p1401-ref-store-tombstones.sh
+
+
+base-commit: f85a7e662054a7b0d9070e432508831afa214b47
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2166%2Fspkrka%2Freftable-tombstone-perf-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2166/spkrka/reftable-tombstone-perf-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2166
+
+Range-diff vs v2:
+
+ 1:  889d0d38bc = 1:  889d0d38bc t/perf: add perf test for ref tombstone scenarios
+ 2:  c13f15ddc2 ! 2:  4fdcec8440 reftable: fix quadratic behavior in the presence of tombstones
+     @@ Commit message
+             found", because the merged iterator skips the matching tombstone
+             and searches for the next live record.
+      
+     -    Fix this by no longer setting suppress_deletions on the stack's
+     -    merged table and instead handling deletion records at each call site
+     -    in the reftable backend, where prefix and refname bounds are
+     -    available.  Tombstones are now returned to callers, which skip them
+     -    after their existing bounds checks.  This allows iteration to
+     -    terminate as soon as a tombstone past the relevant bound is
+     -    encountered.
+     +    Fix this by making suppress_deletions configurable via
+     +    reftable_stack_options instead of unconditionally enabling it.  Git
+     +    no longer sets the flag, so tombstones are now returned to callers in
+     +    the reftable backend, which skip them after their existing bounds
+     +    checks.  This allows iteration to terminate as soon as a tombstone
+     +    past the relevant bound is encountered.
+      
+     -    The suppress_deletions flag and its logic in the merged iterator are
+     -    retained for downstream users of the reftable library (e.g. libgit2).
+     +    Downstream users of the reftable library (e.g. libgit2) can still
+     +    enable suppress_deletions through the stack options to retain the
+     +    previous behavior.
+      
+          This also requires adding deletion checks to the log iteration paths,
+          since suppress_deletions applied to both ref and log iterators.
+      
+     -    Both tests in p1401 go from ~14s to ~0.2s with this change.
+     +    Both tests in p1401 go from ~13s to ~0.2s with this change.
+      
+          Reported-by: Jeff King <peff@peff.net>
+          Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+     @@ refs/reftable-backend.c: static int reftable_be_fsck(struct ref_store *ref_store
+       		case REFTABLE_REF_VAL2: {
+       			struct object_id oid;
+      
+     + ## reftable/reftable-stack.h ##
+     +@@ reftable/reftable-stack.h: struct reftable_stack_options {
+     + 	 */
+     + 	void (*on_reload)(void *payload);
+     + 	void *on_reload_payload;
+     ++
+     ++	int suppress_deletions;
+     + };
+     + 
+     + /* open a new reftable stack. The tables along with the table list will be
+     +
+       ## reftable/stack.c ##
+      @@ reftable/stack.c: static int reftable_stack_reload_once(struct reftable_stack *st,
+       	/* Update the stack to point to the new tables. */
+       	if (st->merged)
+       		reftable_merged_table_free(st->merged);
+      -	new_merged->suppress_deletions = 1;
+     ++	new_merged->suppress_deletions = st->opts.suppress_deletions;
+       	st->merged = new_merged;
+       
+       	if (st->tables)
+
+-- 
+gitgitgadget
