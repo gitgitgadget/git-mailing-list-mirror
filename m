@@ -1,74 +1,46 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE14374E6D
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 17:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525163793CC
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 18:14:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783706137; cv=none; b=lSVNtCWrbRkm7ahM6IpyAmwPn6L1WxxKGUAjVnbK3OKU1bKl860WAIkSjMC2h2OhY5nSu6rH2XiNBpN362oA/hle59u8IiWqkfgTnXKJKPBYnxv2t/vK5pJXl2XBOgGKIUKxLnCX5RcAoMtG+cbjOK5svhELX/uNJyKOuAIW7bY=
+	t=1783707299; cv=none; b=u5V0paJak2xw2NMnJ6nnCGFezYzjA1q7X7dcuLBh6W4Darw90c3WQpy8qVF5HhdIQD8JhKwBxVgMCBtKG/delizXtk1V9kTl9RnXJ+t4Xuvm/M0XZhxb0ZkGHksuonAGu4PhSxGKhNdwIYjU6wnV5Bic3xkPoJmoyHl00Znwqao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783706137; c=relaxed/simple;
-	bh=HrqOlz7w7ZpcnRUztRE+NSxOjCr+oaxV5bHOsoSjU80=;
+	s=arc-20240116; t=1783707299; c=relaxed/simple;
+	bh=+NDUl/11y15VSlt08/9TGFVR/zyQ+y/tjGqpWkWjU9U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qLbTOeGINPC6rkhyG45LjmIXZ90MqxTrDk/XgygNtwiz0x8FT1iRYqKVVFzJKyQttnS50Z9nCW8HlCOVq98fwFQI6OwLz8X1GeKPgZoTmZP3yHbBMFrFUfJi3p11tBCT1Gyr0jxQnZbaeTXrITxsFXRCHgxGpMrjV3V52pQ5N+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=faFAy+Mi; arc=none smtp.client-ip=209.85.215.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=hvwkKe1ganmQH0MR39kQzLrwHILkJvvjTkdjac0c78Ug7pmgtQj0bVJstHa6Ieji06ZXImQBVu/6/NZXfz4faUSqdxa6Jv6NjTWJgjCFZmwh1tF84u09sIDOo0kdeLRwKIyKRb+1SgyPJCS1vtR5zFPLe5HOJtPzu1TySPQyuHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=VFSiOj3r; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="faFAy+Mi"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c96c92c0980so725349a12.3
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 10:55:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783706136; x=1784310936; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=qQr8z+rhN3dja4ApIav7ERSmC6Sevh2k85cg0tvk8jA=;
-        b=faFAy+MiktchN7GIpIyxdC3pCUcnzeNWqAteYq3/oOah8nyj31n4OMfk5EkHIMxqRI
-         dBDv8qGJByEH+hNcvF8jjuZukMfmY6p8vKtRj1wR/FijalBLdpMzSkPuvzt/cYEpoXT+
-         ZMK88gWCb7WYyIMtAZ2s+xAWO+IxWlbOSGCb8INbEon2PyHHn0X37WGkcmUNi9IGFl7d
-         e8YRCJCauVa5bExfbIXnji8O1T/BsezCrWgcDxc7xnpEIH///ri0uNH1VcDC4dYWo2Ma
-         jiqQF8L7XP2J8ISp4LDZxrsd8qllZFgBPDw1M+xuuxd7H+iGJVHE28B4isX6JS9Uu4Ul
-         e6FQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783706136; x=1784310936;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qQr8z+rhN3dja4ApIav7ERSmC6Sevh2k85cg0tvk8jA=;
-        b=VOd4HOd2tBgIhR20/SJWo/TTdBrvrIPsDhPTd3GMkgctaRWb2m9r/Aq+uqRLveFQaC
-         BqWhuPAeafWbNpLnZYkGnqE9/6WAUh13hXlH/0JpEz1xmCyTsMNQv4VZChDC3XaS3R9q
-         vq6q8RNOwqF5CP8gDsOrADtwgRWibjv0IQ7GkvtJBsIfeC/lT4qiK9UOUVAKHKZ8cQyI
-         CPf+sXuzK6OFDmvOk2t+nS8LM3or9xaoV8Owqwj+Jv9PPrscsMitwrWP6y7Md0QaZYZf
-         CIVerDtTwaQt3TWQNTksCpBF++k4uAB4EIIGAmYX34XONX1UTgE3eW7e/ZypAfMjVX6w
-         OvHA==
-X-Gm-Message-State: AOJu0YxT3WoUmBmgl+KCGV+i8hkIy4kFZ80RD/G1DAMHOI1+tFwP0kJN
-	l02AkHjSiunY07w73itjQ8u7lUeRT5QJDlvXIh2O89BPUzvlD0aMyjm2
-X-Gm-Gg: AfdE7cnAPHynJfl8Nr8Sbp6bI77oh/D82P0zj1Va/MH+vZnL8VdPi+dhGyqb/zX+GaP
-	QG9mI3hv7Yg30G4RjGKcn1dchXWBqJgmBqlpyw0aTiNIg6qRfe3HrtNw5uXO30vncVVDcYoVB2u
-	bF3eLp8N1OmuJ/+l0DiHazRkW62Uin84o2LuTxoUW4kjcyA5rvIcmljRjh8TwEy+ZEmhOduIBfQ
-	7UPelMNsqkyDxrjYQAknEwhkdqbHw/XgHrnY047snGe8VCyAkreVFmlB0TlLeHcBcs1nKzXMaCy
-	GdOJyqK9UIlWN9DFkEd0ZF42+/tqj4iGnKg+04btgziUFhPy45ADqbmApmFiy2lFr8pH0Wnd48T
-	aBtVpvPRd3j+itLPIJnGKw4Azr+iopvGuSUrfeW34TNAkdwCJ7uL4SCJR57H9P4DmMPwlChRVKE
-	Ff9CT22J0pANS1B6o2YIqmPl18hAO0teUz8lRMC+dJNEJ3lhZ2j4Nlma8chFzrsjMNfvDCV4KeK
-	mCc9mM4BOFwLzidcNb1EKZTns5JXyZjojkpQdsMeFYbXWqtApyitBH/LtNjXQW9k520o0BQwA==
-X-Received: by 2002:a05:6a21:140a:b0:3c0:9c19:b27d with SMTP id adf61e73a8af0-3c110cfefa5mr48995637.75.1783706135810;
-        Fri, 10 Jul 2026 10:55:35 -0700 (PDT)
-Received: from localhost (192-184-169-91.fiber.dynamic.sonic.net. [192.184.169.91])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174ae6cd9sm46484490eec.31.2026.07.10.10.55.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 10:55:34 -0700 (PDT)
-Date: Fri, 10 Jul 2026 10:55:33 -0700
-From: Michael Montalbo <mmontalbo@gmail.com>
-To: Farid Zakaria <farid.m.zakaria@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] sequencer: honor --empty when a fixup!/squash!
- empties its target
-Message-ID: <alEw1Cxl_LkRQrx4@nixos>
-References: <20260710-fz-autosquash-empty-v2-1-fa1e277e05f8@gmail.com>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="VFSiOj3r"
+Date: Fri, 10 Jul 2026 20:07:07 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1783706830;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Bo5bStXI5DgHxr+nPvorEhVPZ8DFVf38XfR0NjW8aW0=;
+	b=VFSiOj3rhjuJ+HkTxSW9HtMn7GZ6z4Fasi4yyfohHSxRQ/ccnKOiaxjulawN7HjvrBXbfs
+	xBPJ43t5cw90F8NA+Rheu7Z4MXFQr4d+coyJUCy9Kerba05iAxjgo9gqqlbamqXnV1jI1V
+	+aRtklbWhvYQ78LN0+RcLkwFHXrAI4KjYNYQ8DY5mG4IJp7LGxa4NrxhTZYEyYmxqLIDl2
+	tIddSgfVdthyKNEuGvUyApXFqRgIt4SUKZwbFW74nQd6cAs9FfCqrlB6wcjWDMJDmt3p8K
+	5ebyqOnTYg/c29vWNceJGDu8P5xNIUWhOQqVij3OuxcVwDSrPOuEQ9Flr2lrzA==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org, ayu.chandekar@gmail.com, 
+	chandrapratap3519@gmail.com, christian.couder@gmail.com, gitster@pobox.com, 
+	jltobler@gmail.com, karthik.188@gmail.com, krka@spotify.com, peff@peff.net, 
+	phillip.wood@dunelm.org.uk, siddharthasthana31@gmail.com
+Subject: Re: [PATCH v8 4/4] graph: indent visual root in graph
+Message-ID: <alEroo_DhFaWm3DH@exploit>
+References: <20260704-ps-pre-commit-indent-v7-0-a94706cc8376@gmail.com>
+ <20260710-ps-pre-commit-indent-v8-0-d3b636463bf4@gmail.com>
+ <20260710-ps-pre-commit-indent-v8-4-d3b636463bf4@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,34 +49,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260710-fz-autosquash-empty-v2-1-fa1e277e05f8@gmail.com>
+In-Reply-To: <20260710-ps-pre-commit-indent-v8-4-d3b636463bf4@gmail.com>
+X-Spamd-Bar: -
 
-On Fri, Jul 10, 2026 at 10:42:37AM -0700, Farid Zakaria wrote:
+On Fri, Jul 10, 2026 at 12:37:07PM +0200, Pablo Sabater wrote:
+> When rendering a graph, if the history contains multiple "visual roots",
+> actual roots or commits that look like roots (i.e. have their parents
+> filtered out) can end up being vertically adjacent to unrelated commits,
+> falsely appearing to be related.
+> 
+> A fix for this issue was already attempted [1] a while ago.
+> 
+> This happens because the commits fill the space from left to right and
+> when a visual root ends, its column becomes free for the following
+> commit even if they are not related. Once this happens the unrelated
+> commit is rendered below the visual root. Because there is no special
+> character or way to identify when a visual root is rendered making the
+> graph confusing.
+> 
+> By indenting the visual roots when there are still commits to show the
+> vertical adjacency can be avoided.
+> 
+> Add is_visual_root flag to git_graph making it visible in all graph states,
+> give graph_update() a new function, graph_is_visual_root() to know if the
+> current commit is a visual root and set is_visual_root.
+> The different handled cases are:
+> 
+> - If a visual root has children: similar to GRAPH_PRE_COMMIT state when
+>   octopus merges need space, an edge row needs to be printed to connect
+>   the child with the indented visual root. A new state GRAPH_PRE_ROOT is
+>   needed to connect the child with the visual root:
+> 
+>     * child of the visual root
+>      \ GRAPH_PRE_ROOT
+>       * visual root indented
+> 
+> - If a visual root is child-less we can skip GRAPH_PRE_ROOT state and
+>   render the indented commit directly.
+> 
+>       * visual root indented
+>     * unrelated commit
+> 
+> - If two or more visual roots are adjacent: by having a lookahead to the
+>   next commit that will be rendered, if the next commit is also a visual
+>   root and we are on a visual root, meaning two visual root adjacent in
+>   the history, the top one can omit the indent, making the one below to
+>   indent only once, if there are more adjacent visual commits, the
+>   indentation will increase for each adjacent one, cascading.
+> 
+>     * visual root
+>       * visual root
+>         * visual root
+>     * last commit
+> 
+>   Even if the last commit is a root, because there is nothing that will be
+>   rendered below we can omit the indentation on purpose.
+> 
+> [1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+> 
+> Helped-by: Kristofer Karlsson <krka@spotify.com>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+>  graph.c                          | 235 +++++++++++++++++++
+>  t/meson.build                    |   1 +
+>  t/t4218-log-graph-indentation.sh | 473 +++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 709 insertions(+)
 
->  
-> +test_expect_success 'fixup! that empties its target is dropped with --empty=drop' '
-> +	git reset --hard base &&
-> +	test_commit --no-tag addX fileX 1 &&
-> +	test_commit --no-tag changeX fileX 2 &&
-> +	test_commit --no-tag later fileW hello &&
-> +	echo 1 >fileX &&
-> +	git commit -m "fixup! changeX" fileX &&
-> +
-> +	git rebase -i --autosquash --empty=drop HEAD~4 &&
-> +
-> +	git log --format=%s >actual &&
-> +	! grep changeX actual &&
-> +	grep addX actual &&
-> +	grep later actual &&
-> +	echo 1 >expect &&
-> +	test_cmp expect fileX &&
-> +	echo hello >expect &&
-> +	test_cmp expect fileW
-> +'
-> +
+This doesn't seem to work for every visual root e.g.
 
-Just a small drive-by comment. We should switch these from `grep`
-to `test_grep` (and `! grep` to `test_grep !`) here and for all
-the other tests. `test_grep` provides better error diagnostics,
-and bare `grep` used as an assertion in tests will be flagged by
-the linting process in the near future.
+    git log --graph --oneline --author="Mirko Faina"
+
+The visual roots are not indented.
+
+> +/*
+> + * A commit can be a visual root when:
+> + *
+> + * - It has no parents.
+> + *
+> + * - It has parents but they are all filtered out and
+> + *   commit->parents arrives NULL.
+> + *
+> + * - It is not a boundary commit. Boundary commits also have no visible
+> + *   parents, but they are not selected as visual roots because they cannot
+> + *   cause the ambiguity of being vertically adjacent because:
+> + *
+> + *   1. A boundary only appears because an included commit is its child.
+> + *      Children are always above, and the renderer draws an edge down to
+> + *      the boundary from that child. Rather than starting a column like a
+> + *      visual root would do, it inherits its child column.
+> + *
+> + *   2. Included commits cannot appear below a boundary. Boundaries are
+> + *      ancestors of the exclusion point; if an included commit were an
+> + *      ancestor of the boundary it would be excluded and not rendered.
+> + *      Boundaries therefore always sink to the bottom.
+> + */
+> +static int graph_is_visual_root_candidate(struct commit *c)
+> +{
+> +	return c->parents == NULL && !(c->object.flags & BOUNDARY);
+> +}
+
+I suspect this behaviour is due to these assumptions being too strict.
+
+When we use the --author option the parents are not filtered out, so it
+doesn't return NULL desipte being a visual root. We realize it is a
+visual root only on the next commit, but once we are on the next commit
+we can't indent as we have already printed this commit.
+
+We realize only on the next commit after hitting simplify_commit(), it
+calls get_commit_action() and checks if should keep the commit based on
+the regex we provided. If the regex is not matched the commit is just
+ignored (we do not filter parents based on regex when we expand a topo
+walk).
+
+At least that's what I gather, if anyone can confirm this...
