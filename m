@@ -1,70 +1,71 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298A93FC5AB
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 11:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFA4414A07
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 11:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783683615; cv=none; b=TY4hiSFJCzBbS1LsXYlBe8hHIfZmP+02uNl/hQb0Q6AUeH19W9YQgB3ZQQZUqdUzaAhIgf0J/naJQuoHYi1e0ZB0LQDVIo+fLgl9i1lVqaA/1zkxdZuTns4MG+Q3PMHwBchs5ro+TFFeiJvP8ExdxSefPivwLG7pvo587ztoq5U=
+	t=1783683614; cv=none; b=tliZz5Rn8gXxV0NwCxZJ+5lLoKX1caTaCR71ucqn8mUc0kqxBRr0GfBya+UYAqJiGCtXeKRsQxSqmci7rN5dZCEk7YhiheTl6asYKY8beRzYbkuGeO6JaamXRBQZRcL8ng1ICCvm7tsNWPsHvgeukwLJZXx0KctKMki6fBckPWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783683615; c=relaxed/simple;
-	bh=NvBcLKW46sQygfbHhF9hpGOhLzRmY9qglO2y5pOJldk=;
+	s=arc-20240116; t=1783683614; c=relaxed/simple;
+	bh=UqalL05URYmAOvl/p+Gaqm4cCOqgxV4yCB0nasYGJ3Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=qaQWxio8Pa/sxQU6IwPlQ7AR/LuqjRy9UMpIZUwzKt+5dw0wvCyRF0B6PooYfh6zNCU7IH5+gK8U4HtJlYbKRrdJm1C+TTCNXDqxLIxWywKtY57vp0a1vJ5+5NsZmPbbXCKlvj9TyqSPSQBWwh3+TrLv+XFGkviur3vTWaHxuW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FHvaeONt; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version:To:Cc; b=RfDyqXl53iWdmp5boaZ+9o2ubI6yC8xb5sa2lhs38lRKmGBa8+uYZs6gNuB04KvzQSghwAx84Cusybzl/exS9IYMJmtFHfd+qNda86Tazxe7466SKkgCknnHA2r3H4kCYPcPTT0hIlMG/ElFYnoCOOP3sBlE3p/778+IXUTLbzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CVKO9pmr; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FHvaeONt"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-84861fc51f5so648395b3a.1
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 04:39:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CVKO9pmr"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8485bd28dd0so790218b3a.2
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 04:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783683591; x=1784288391; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783683583; x=1784288383; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Cq1HYGt0bUp1CHNLgn4gXZ+fGOCRjN7usVWEibfwjNc=;
-        b=FHvaeONtOUzo9ewjxawU5yacn4lsNeGSyxwKrhHUkchqgaJBrjZOhu7jMuZ9AP7Yzc
-         Rm7j5qcr3r77V55T4XIj4gicTxfMesXNlOZSP25yd9D2JqNzl0ucwIIWO4g8dRvIU314
-         gzmcV5gReT84QxV1wRN2Fg5gY6wgeiKkxxm8jAmE60AV/U2DH+lg6VNjZdZp3I98hLqk
-         o9+TQ999ESm4LqxsxNZxoH4V5Jo8m0swVK117dkV9ARdQe8d3FDW1MWHlbWuOEUpirue
-         xyNb4WKnrNcSAu7SRgOesdqqdKAlKawKZFTKz0jKBHf/zNd1Fa2sNf0s/vCnsvohedQZ
-         MpwQ==
+        bh=a5eWBmiC1mAbY5f3P9iuefmqtIRV01BwfLsyEJtoebg=;
+        b=CVKO9pmrgHjCJFb4Q8ufAahqq/oZ3SQxoF8bZydWprg342/Q2GDbl+phLbbP4T28Ys
+         S9f7ThlL/pf9jgaFIL3ch0swfvjmnO0GkpSQVMzpjfhEDlAiJTpAe+8+gbNiIfX3DOt4
+         fids14fw00CRFw20x35IKCUqgH+hZhS9JWfGSbL22dF2vGIZzbC1yRW0SRMHHExWb7J2
+         +Vh2PoORDotVWFZeATrL01WfHkSj/hdKIlTqN4hVngdjjfBtwkJZtbXUK2JZLWD7S/yn
+         g0ascvrMI1ppuFkr6UAg8O7dAMoaRG7ImihJ4j74/KXDJkviUnsI9W5u4ShWe+W4m821
+         LUlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783683591; x=1784288391;
+        d=1e100.net; s=20251104; t=1783683583; x=1784288383;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Cq1HYGt0bUp1CHNLgn4gXZ+fGOCRjN7usVWEibfwjNc=;
-        b=BUbiuqzH91TUNrBi4GrEopTspzHs8o24wAtgIMGhh9ICUnP61aJgZ3CsNIJQ/Gwn96
-         fVtZCyhJtnwXCpaMFDkFSl2Jmqf98qKKELVn6OMiMuZRh1Fk+j20pcTRT2AdmDOFoiqZ
-         NEbNpFSOIhdU4wNTs/PAsJh38zVQdXJs2p3PNV4viZN9l9rIy0bzXnoVkQZJwWRw34GX
-         avckWyl7UlEFOwM1BDNMT9BLaP4Zx8j0Oj8FCmFVMdi3n+P0kSsu+iN5baxH4jhA/6Sf
-         RsUg1IgEZfMDVnDGL0xaJ85XEnl0zeR4aOh5jhuoIpO4zcRmKPqqLnwiuWIUVo5PMXdJ
-         2HVg==
-X-Gm-Message-State: AOJu0YzTy/BmcBb1eC9fNp5dzhXOHtK2L2RmVA3qd+K+00Y0huL6ZsqM
-	zEMxfbt6nnxpWlCKkh0Rbq4kGrPQQgYpRN6f4TSCOqlDg9gOMo04DOXvXx9xJw1e
-X-Gm-Gg: AfdE7cl6p/IFRMLb50aCKhsKJt7gg+sLrXAlmL+wblbXmUVMUYac+uKskWhAwdaileZ
-	mv1QkTrzvldFZ1nl7yLuvps18wZMxCnbQp7N+8BDlrmf3aR2TJ59ZrBpnV8USHqWGUJ5Tj3xuqX
-	s6r5eaQWsxG/4lXpvoUC/97dWnaGEySlHVxcPJJcRe15Jxve2CR8M84wInIvg5Yhc/sAjHK6BuV
-	8zeMjrcnb15p+qzzqTWeNKJUqGC98rvWvL4Lxp0CuplBohVTJ14ZH+JSWTIzryk9SVhUO05UsSJ
-	ygRor0RkEGDpkWOwUhy7Agd0SA3XuXz4iAJn7o+DCe9o5hLulJYvRNHV+yTwA3fz/S4gfKSek/c
-	KwRyQ4ZLtaDaNQzqsVhC2wRjPZCxhXctdU6t8HCZuaiicN9bRsOIjWX4EKc9qoQFA3LIBHaS/Y0
-	6ZSQOv2bAwRaDEsgD3
-X-Received: by 2002:a05:6a00:23c9:b0:847:8449:2bb6 with SMTP id d2e1a72fcca58-84842ebbe41mr11122194b3a.4.1783683590681;
-        Fri, 10 Jul 2026 04:39:50 -0700 (PDT)
+        bh=a5eWBmiC1mAbY5f3P9iuefmqtIRV01BwfLsyEJtoebg=;
+        b=GaAcjJroxpdLqsWFusRI/I30BLcB7qeceMkSPh1c2Ee9iICjD5k3BMzYt5Pz2pSkdG
+         DNNSnS5kTpoTL/B8hWlKz8iU7QXxpUNpFxC7dQDKyAbeQJTzfbdzPjNSM6wqJbP0aeXA
+         ovbHxcVj6vO+aTmIhKgXSDcFYrWzBz7kUQXMZihJXpHqJcjM8KQciKBn4O6Eqsy/v22W
+         0/rBFJSwxEc5GTD9TN5XTHtnHu/AOtDb4UEI1hq9PI6ArpbVUe689Q8lPCEIQU8LOcHf
+         RLaaFP0xbR4BTFfU0rsg1scUmYdVkRWlhGM3PvkQDouXaNR7MQUMZ1y4P7URV/ca9Q73
+         rwIA==
+X-Gm-Message-State: AOJu0YwDZMtLOxIZfqT0zitjFc7/eoRLHPO2B9yVxf4qiAh+xSpqFboe
+	RRbCl5G4WBeFczgKo+DGvULMKpB8SDUjpG8RlooBnJZ03eCPkZhivVqjJbUu2+Xp
+X-Gm-Gg: AfdE7clfIZo/ipkNhqinkdBHlqWWdRRzGpTwo4VoOPrzUvc5g5cdN6mwFlvtUn0Zpel
+	eCJH5eHevFlUnJrSDP21k30tn9aPxezVKUHJkSgIJeXbOhX7Zwrm4e3ROXqudMMrw5+pr+r3yEx
+	jAMgMiGmWdGRJrAyKkxTh+3Fmc3xuw2aOhQiVNSpfnQ6WeSqnI9LGy9sa3HsGrp3uvLStTAfY+x
+	frBcnMCteTyt3cJcckihmjfMyiOBiSi4zmS0HlkUnz7PuaRS4kDpHEa0M4r73GeFM9fPuPReFaw
+	a13ui6jVXfRgfsI59nS6WX4yQIKj9ATnG0kkFN2TTlp3irwcKMVgEqfXOKr2QraIUUr23R2jcST
+	ybGoi5dGa1Y7q38A+aHmJ7/PTLjIZ1IduAyGUmBj7B+t6D5OgDipXmbnvR4DldxHJZvO/fylim+
+	VR5tBIdT9dLq/mi2mo
+X-Received: by 2002:a05:6a00:3a0a:b0:847:9367:e054 with SMTP id d2e1a72fcca58-8484344d655mr9950141b3a.57.1783683581220;
+        Fri, 10 Jul 2026 04:39:41 -0700 (PDT)
 Received: from [127.0.0.1] ([172.185.47.202])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6b6057dsm10300815b3a.7.2026.07.10.04.39.49
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8485a18e996sm2588479b3a.56.2026.07.10.04.39.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 04:39:49 -0700 (PDT)
-Message-Id: <8216769be9eec7489f1039e0211f3e6d3388247b.1783683577.git.gitgitgadget@gmail.com>
+        Fri, 10 Jul 2026 04:39:40 -0700 (PDT)
+Message-Id: <df00334f8b8cb85a928e1ca22aa12dd6b87fb154.1783683577.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2174.v2.git.1783683577.gitgitgadget@gmail.com>
 References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
 	<pull.2174.v2.git.1783683577.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Jul 2026 11:39:31 +0000
-Subject: [PATCH v2 07/12] replay: die when --onto does not peel to a commit
+Date: Fri, 10 Jul 2026 11:39:25 +0000
+Subject: [PATCH v2 01/12] diffcore-break: guard against NULLed queue entries
+ in merge loop
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,43 +81,40 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `peel_committish()` function calls `repo_peel_to_type()` to convert
-the given object to a commit, but does not check the return value. When
-the object exists but cannot be peeled to a commit (e.g., a tree or blob
-OID is passed as --onto), the return value is NULL. Add an explicit NULL
-check and die with a descriptive message in that case.
+The outer loop in `diffcore_merge_broken()` sets `q->queue[j]` to NULL
+when it merges a broken pair back together, and has a NULL check to skip
+such entries on subsequent iterations. The inner loop, however, lacks
+this guard: when it scans forward looking for a matching peer, it can
+encounter a slot that was NULLed by a previous outer-loop iteration and
+dereference it unconditionally.
+
+In practice this requires at least two broken pairs whose peers
+both survive rename/copy detection and appear later in the queue,
+which is rare but not impossible.
+
+Add the same `if (!pp) continue` guard to the inner loop.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- replay.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ diffcore-break.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/replay.c b/replay.c
-index da531d5bc6..b38cd5efe4 100644
---- a/replay.c
-+++ b/replay.c
-@@ -36,12 +36,16 @@ static struct commit *peel_committish(struct repository *repo,
- {
- 	struct object *obj;
- 	struct object_id oid;
-+	struct commit *commit;
- 
- 	if (repo_get_oid(repo, name, &oid))
- 		die(_("'%s' is not a valid commit-ish for %s"), name, mode);
- 	obj = parse_object_or_die(repo, &oid, name);
--	return (struct commit *)repo_peel_to_type(repo, name, 0, obj,
--						  OBJ_COMMIT);
-+	commit = (struct commit *)repo_peel_to_type(repo, name, 0, obj,
-+						    OBJ_COMMIT);
-+	if (!commit)
-+		die(_("'%s' does not point to a commit for %s"), name, mode);
-+	return commit;
- }
- 
- static char *get_author(const char *message)
+diff --git a/diffcore-break.c b/diffcore-break.c
+index 17b5ad1fed..b5bcc956cc 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -289,6 +289,8 @@ void diffcore_merge_broken(void)
+ 			 */
+ 			for (j = i + 1; j < q->nr; j++) {
+ 				struct diff_filepair *pp = q->queue[j];
++				if (!pp)
++					continue;
+ 				if (pp->broken_pair &&
+ 				    !strcmp(pp->one->path, pp->two->path) &&
+ 				    !strcmp(p->one->path, pp->two->path)) {
 -- 
 gitgitgadget
 
