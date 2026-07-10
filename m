@@ -1,120 +1,223 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2C540683F
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AA81E531
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:37:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783698405; cv=none; b=q7eHzYW5fIgMdkr05cMdzz3iIJ3kjvRMaKjKbD5nQgUmDr7hFMn3GxkwDWqVi/zV2ZepKGZq6MxmKoyU/Ojh5dORWQuBBEN8tvJKA3zot5ja2dH+LMiseQff+nCThKZ+lGVJeglWpmeCk2PJ2GsAgcGMGStUxj7y42yndlGcr/M=
+	t=1783701450; cv=none; b=Vta7Tjqz0Ppm1aqxc7hOEf8foy2ozHIsOq2ZYJoP0Mylg6R4pzlSgeG8PO6OqeaOUk/YYhtd4IK+/fe3IEEXO8SYRONs0oHBg6AJEbJWEfulbzJ7+JLfcuz5yFG7cmJeOO4ljGcM4jYPEeMKz5HDzdgc0+vMNT2g0onuMnsizM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783698405; c=relaxed/simple;
-	bh=WhoE6WpgPTDeMZ5e1y4zDkTKtspKuOmMx79tBCT1rXk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E8VpMuRPLy5zlegaF2gYmwZMYja3Bp+LiV5VL5APVAav3xZuVLXgTfN9h547kiZi6gM07l6nIy1VJw8+l/Cf+nNugORrbKzKt5EgCvUaPymzU288Zzs5+B9G1D9okPZDtquZBV0qjNYx75r3QfgyXGSrGWGqt675cbf9acLwcuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wzjX5Ipn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DIctrg2A; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783701450; c=relaxed/simple;
+	bh=hJb2Hz72612uNfTb6BHOMmfNnQO3ILgpEI8PI0VQ5QM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=J3ghLqXqVe9DLGd+2v3mlupTnJxsluTYkjRYLQ28ZQuDB1116FXGbvLmFAgumZ84om4PSH9cYEAjVz81s7J1XvjXSRxS7JGT54ZEZAUPYP7OqnY7B2nwQ7vNxYBbA1OBsTGeKaldaqMCUbbUCldO3zViTSwbX7vddEiW61CVoTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TtFIDRQw; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wzjX5Ipn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DIctrg2A"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4E9501400068;
-	Fri, 10 Jul 2026 11:46:43 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 10 Jul 2026 11:46:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783698403; x=1783784803; bh=/4fEKmyQCV
-	10zA5imHA4AL7E6X+5y1R5ZVaTzG9q948=; b=wzjX5Ipn1nYen7sYZDDDvKnwjy
-	PSqTZ9KyT8zjQw/aZleuaiUJQOTqlGpQlGY7wos8O0TMw+mcdODxmaQCCKx7v5kB
-	nJvDbn59DFDpToG81Kbt3202u8RGSX5veLVF7xjFw6ki+Bv3nxAemxx7YrvN09Qc
-	2TwYO+ILbSX3WfhMm27tR36MbsD9uSyD169EmsxKT6ERa4kwFm/zJg5AtFgL0oww
-	v//QKQVZ7zn3GrA1JRLSz5LquyfeoBOw2qUqvrVECpWZzHhIMs6rFrGFXJ3UKPtU
-	RlsD35GmIx0/ssMqjaf6T7eJ/UJszby7zYEtfOSojfhAuG+KoUBV+WnjDDXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783698403; x=1783784803; bh=/4fEKmyQCV10zA5imHA4AL7E6X+5y1R5ZVa
-	TzG9q948=; b=DIctrg2AizunE9Ed3U3mbZLwE9qjVAJwABOoVjU9zGzpfs8qH2J
-	lZ2Mr8Cn2qIAU0hbGRabDQdYyoWYIm7745KtLL3TYm9hop4qc4uebS7WiLmAYux+
-	NfOIiw+ZQsepzNFHmzXKYoQJFujH4YblumoSg5DKGDqs+DcyBkIt14NMcu6jmnFW
-	/zoiiaK/NpxocwF6Ks3ELBpICzSeaeP+Rn/m1v5poPrlUbKjknLq4Dcru43Bv12P
-	8ICnmtkDHRxLT68t4oFdlbNVdJmROKdgpvgw8BmCzHq/IEAPOs/A7TcfaniHPgbE
-	OB9wpqN2Wep5Ay4yW4i33OiC//qDRe9tnrA==
-X-ME-Sender: <xms:4xNRaqyftZe8OExebKJQSOofb5yx7yM6MNyPyJ3gMqwIizQUZp7A0Q>
-    <xme:4xNRatREiIO-BqA5wdg6BVJnkUU_g4-fHbs73UsTpUw-OMx1Am5yxtU2A72iiBMqV
-    sSBaH7xcRoG8hU8VlDpJrfr8FYimTX2AXb9HRjAvxIQxpaujW2wnQ>
-X-ME-Received: <xmr:4xNRahXUNSjyhm4ieoWyi0R4HEuh3yEPNVHx-JzxEZbDgR9fkGmRtX95v2Uf2Q9t9KtUBpPVJ5A4JV9-rS2xZuSZt4UCY1oFypu8keM>
-X-ME-Proxy-Cause: dmFkZTFGQZeIEikGlyuxTuYEUkvuqVkz4RUQ7EHVIQSvI0GUYZvJhmCy1G6xtI2IuvKwcI
-    sQykLRbAohdfOv+NO3ugeJr3hmVz7AKzIJKEws9HuizoUmM25Jy6CAW3oe2jEYx3u+ptvV
-    /szYbS9oRXv9JrvuUpiKNs8quYo0QYuQxpj4CTTgwr6euszrxx3EQ5vWRaSHpEmhHCZOxb
-    8HD3w4+jmOdZLhoZQv/XJTREIus4DIrIazKR/YP8Q7FtfCo4q9QOJSCiNkVFrgaVECrmBs
-    I385syJV2ycvl0V+7nHjNpxSbIRVH32ZOTLxzJtwN9rc94TQqARiwMY5LS66AMjoBGMgtq
-    9ZONdVEKOiiDgwnCzzpvucOuOq9A1DNI1XXAm+YIRJPyLc0U49bM3iozRhZ8yKOiu+7ytp
-    yxr8bPOKH+R6fzAKUBVOLeB/466tMRuJLVaWsFMeEEXcejNBJn42MSNeWIud1RgXBpTKZn
-    RI5/yv/7LPKsuqPGZYxRIY4PONIxGZoxwdUHCkvAP3ep7AGQ+Qun0zWoHsKMAOKAA5RHXd
-    PY3E412STN18WKhHLlj9FQtQ6pBByk2KLbWCfPEBSgDI8BdA9Ng3uJNRF2v1SABIy+40Uh
-    VGXiwSOdEpoQWKkc4fGvZUv4UtJsxagwpI8pXrKBJg6FTGG/qB++LO5l8bcw
-X-ME-Proxy: <xmx:4xNRavY48g15qurBMAhALB1D8U3AIlkJExkiyqWtLMhg1lPE1LFkVg>
-    <xmx:4xNRan16WBO6fQo-DjJys6Xrb4ckh_yqVFgmnxbkyztsFq5meIPS-A>
-    <xmx:4xNRahjDiloo7Epahmrr7o-FqPMRG1cWK3T8Gc2SwJYZ9kfTjRNUlw>
-    <xmx:4xNRara0Z2r5oejL_kt60F2Xf5FIjAZUjTWbeOccxMjo51tNb5O4Zg>
-    <xmx:4xNRamte6fBDGZzc7seMCScbVUS8VPCkU-OQ4HYtfalAApkDGV0hxlUl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jul 2026 11:46:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/12] coverity: avoid dereferencing NULL
-In-Reply-To: <pull.2174.v2.git.1783683577.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Fri, 10 Jul 2026 11:39:24
-	+0000")
-References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
-	<pull.2174.v2.git.1783683577.gitgitgadget@gmail.com>
-Date: Fri, 10 Jul 2026 08:46:41 -0700
-Message-ID: <xmqqa4ryg84e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TtFIDRQw"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7eb34c17b96so763245a34.2
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:37:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783701448; x=1784306248; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=n1Md2pcpXHrnH+moAy7XgQ4j5IbBDAwBlJdzKofYeOk=;
+        b=TtFIDRQw4QoEkjDcauTT14UUBMeMw0E2P/p8SHXazVaO4KBauqa9JmPQyV+5b5K8zV
+         TSfaPyZeIadQ/DPlJypJZ8CW3TenQ6jQiGxMjuToWwc3H3yeOPgAUvArxI05+GXa4zYz
+         4r9/v4cm5E7lZx+6MCVMW4tHycnMCgrOAdQtGvCjiOf5WWOzVp+RDcAYSQSf77nyEvr8
+         XVMSwe13jM+zVq6vEHb1JQYCj7NJZqsxYS6OrkoBaqw2S6RQCaAik6U184eBT3Ncl7/m
+         zrcSg63UxqRoH8keaygjnD8pezoIK4dx0LijJvdPNk5P+uNdRnEQS765AQiX3jeXnlnR
+         cbkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783701448; x=1784306248;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=n1Md2pcpXHrnH+moAy7XgQ4j5IbBDAwBlJdzKofYeOk=;
+        b=qFFc5MQOWnCqjuPNQ/aokpBELQRuUP9Nuitd6dfRd5yKYX3rOrbtCqhid+JPQO+63z
+         Ry99Pb4e+czgXSq0rKaGgUS2lpAR5Fb+cle9JiQaAOGOUPqY527po/mkq5DgHYfYVTOB
+         OUHGdM+l8h/UCjS6Q3mAm1ysGCfZV1mIjjdp9j07Ad2oxc558I9Q/SFKxkJxiOmf4sk1
+         wwLXyeKmWy6DgUxaxlVYzS31uVR0SW6TWayF3fh4fBGbqFF3yGYs+/X8c/ZC5tmoAPRy
+         386irWfcr7UgUVRswNF7NeNAcFp9jaMkSMXy7o5wqVWysxi97VZX9meqvfpPYOhDeSGL
+         nuzg==
+X-Gm-Message-State: AOJu0YycWFaxQjPHPqv6ebbXfPo9t1h/63E1UgxZ7JGjOGeUa2WqPiKe
+	L58vRx7QhmkCmV33Epi9Swk98PZgu1HwK6Qz7lHDOAvdyqLCpYfL8HDEJi0BEg==
+X-Gm-Gg: AfdE7clZk+0c5R36iSIOq0a5gSu1/ArZd4854I12Stlq/eG/VA4iuATFmeoJEnv8O8e
+	V79B1Defwm2y/EtUfBhiIcKePbLnkTdwJwXjXXtVsTHz6ceyprNWqvoxln8cjo1YRuKYhdZbjF3
+	zS1w5400/DKO0B6YkQhsTykw60dS+JNvjDtUrtJPovr7wkghxCykN4wqAHp19IR9L56KbE2YAcK
+	sEFv7119hOHYzL9JB2BjBqeEhBQ1h4JJtnpuHNLRer6Mb31t+NeGbp3B+SG4ecJioyw6SN7MJ1Z
+	G5GezZHYyHOIH/r7WgkmnD6HMlzAmFU2vNljHSnqV8CEZqjQbfnoogXrKZpGaoqAI6sp1Uh39SW
+	WqkPWGFRTST8/0ssk9esCBiAM7IZs1fpaUbEZ+AxRvDKtcO+5SQ/p3Lh4Gv4VWObNWzHKyoHAjA
+	VJvlBRcyEqpzLKOQDrDFbW
+X-Received: by 2002:a05:6830:67fe:b0:7dc:c7aa:22bd with SMTP id 46e09a7af769-7ebcff349b0mr8640337a34.6.1783701447921;
+        Fri, 10 Jul 2026 09:37:27 -0700 (PDT)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcaf742e1sm6882147a34.8.2026.07.10.09.37.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 09:37:27 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v4 00/11] receive-pack: use ODB transactions to stage object writes
+Date: Fri, 10 Jul 2026 11:37:11 -0500
+Message-ID: <20260710163722.2962278-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.55.0.122.gf85a7e6620
+In-Reply-To: <20260708235925.3992097-1-jltobler@gmail.com>
+References: <20260708235925.3992097-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Greetings,
 
-> This is a continuation of the effort I started in the patch series that
-> became js/coverity-fixes. This next batch adds guards to avoid dereferencing
-> NULL pointers and accessing NULL file descriptors.
->
-> Changes since v1:
->
->  * Calling remote_tracking() no longer returns -1 when remote is NULL, but
->    instead BUG()s out.
->  * bisect_successful() returns with BISECT_FAILED instead of the -1 that
->    only worked by happenstance.
->  * The commit "revision: avoid dereferencing NULL in add_parents_only()" now
->    comes with a regression test.
->  * The commit "bisect: ensure non-NULL head before using it" no longer
->    claims that the fixed bug can be triggered with the current code base.
->  * The missing shallow commit's OID is no longer computed twice.
->  * A follow-up commit was folded into this patch series that lets
->    write_one_shallow() avoid the rolling buffers of oid_to_hex(), as
->    suggested by Junio. It technically does not fit the goal of this patch
->    series (fixing issues pointed out by Coverity), but was asked for
->    explicitly.
-> ...
-> Range-diff vs v1:
-> ...
+This patch series replaces direct usage of the `tmp_objdir` interfaces
+in git-receive-pack(1) to instead use the `odb_transaction` interfaces
+to create/manage a staging area to write objects to. The purpose of this
+change is to get git-receive-pack(1) one step closer to being ODB
+backend agnostic. For now, the object writes themselves are still
+"files" backend specific due to being handled by the git-index-pack(1)
+and git-unpack-objects(1) child processes. This will be tackled in a
+separate series though.
 
-I found everything including the new patch good.  Unless others find
-more issues in this round in a few days, let's mark the topic for
-'next'.
+Changes since V3:
+  - Removed ugly line break in commit message to prevent eye strain.
+  - `odb_transaction_begin()` now only sets the repository transaction
+    on success.
+  - `odb_transaction_env()` now bubbles up error when failing to create
+    the temporary directory.
 
-Thanks.
+Changes since V2:
+  - Clarified commit log reasoning for embedding
+    `flush_loose_object_transaction()` logic in commit function.
+  - Started printed some error messages on transaction errors.
+  - Removed include statement.
+  - Fixed transaction leak on `odb_transaction_commit()` error.
+
+Changes since V1:
+  - Adapted other "file" ODB transaction helpers to be more consistent
+    with current naming scheme.
+  - Removed redundant NULL transaction handling from
+    `odb_transaction_files_begin()`.
+  - `odb_transaction_begin()` now returns an error if there is already
+    an inflight transaction pending instead of setting the `out` pointer
+    to NULL.
+  - Updated `odb_transaction_env()` to return an error code and append
+    environment variables to a strvec provided as an argument.
+  - Removed redundant setting of tmpdir environment variables for child
+    processes after tmpdir has been migrated.
+  - Split changes adding ODB transaction flags into a separate commit.
+  - Consistently wire the ODB transaction throughout git-receive-pack
+    code instead of reading it from `the_repository`.
+  - Updated user facing error message.
+  - Updated some comments to better document functions/flags.
+  - Clarified some commit messages.
+  - Fixed typos.
+
+Thanks,
+-Justin
+
+Justin Tobler (11):
+  object-file: rename files transaction prepare function
+  object-file: rename files transaction fsync function
+  object-file: embed transaction flush logic in commit function
+  object-file: drop check for inflight transactions
+  object-file: propagate files transaction errors
+  odb/transaction: propagate begin errors
+  odb/transaction: propagate commit errors
+  odb/transaction: add transaction env interface
+  odb/transaction: introduce ODB transaction flags
+  builtin/receive-pack: drop redundant tmpdir env
+  builtin/receive-pack: stage incoming objects via ODB transactions
+
+ builtin/add.c            |   2 +-
+ builtin/receive-pack.c   |  69 ++++++++---------
+ builtin/unpack-objects.c |   2 +-
+ builtin/update-index.c   |   2 +-
+ cache-tree.c             |   7 +-
+ object-file.c            | 161 +++++++++++++++++++++++++--------------
+ object-file.h            |   8 +-
+ odb/source-files.c       |   9 +--
+ odb/source-inmemory.c    |   3 +-
+ odb/source-loose.c       |   3 +-
+ odb/source.h             |   9 ++-
+ odb/transaction.c        |  33 ++++++--
+ odb/transaction.h        |  59 +++++++++++---
+ read-cache.c             |   7 +-
+ 14 files changed, 244 insertions(+), 130 deletions(-)
+
+Range-diff against v3:
+ 1:  9c14b219ad =  1:  9c14b219ad object-file: rename files transaction prepare function
+ 2:  5703a9e93b =  2:  5703a9e93b object-file: rename files transaction fsync function
+ 3:  76204847f2 !  3:  70267741b0 object-file: embed transaction flush logic in commit function
+    @@ Commit message
+         subsequent commit, the transaction temporary directory is used to stage
+         packfiles and not just loose objects anymore.
+     
+    -    Lift the helper function logic directly into
+    -    `odb_transaction_files_commit()` to more accurately signal to readers
+    -    the operation being performed.
+    +    Lift the helper function logic into `odb_transaction_files_commit()` to
+    +    more accurately signal to readers the operation being performed.
+     
+         Signed-off-by: Justin Tobler <jltobler@gmail.com>
+     
+ 4:  c97eb7763f =  4:  34cd3822c5 object-file: drop check for inflight transactions
+ 5:  1f3a1f7714 =  5:  240aa3475f object-file: propagate files transaction errors
+ 6:  09d13272d5 !  6:  0d91310fac odb/transaction: propagate begin errors
+    @@ odb/transaction.c
+      
+     -	odb_source_begin_transaction(odb->sources, &odb->transaction);
+     +	ret = odb_source_begin_transaction(odb->sources, out);
+    -+	odb->transaction = *out;
+    ++	if (!ret)
+    ++		odb->transaction = *out;
+      
+     -	return odb->transaction;
+     +	return ret;
+ 7:  12833d6773 =  7:  5e4680ed75 odb/transaction: propagate commit errors
+ 8:  f2586f2f34 !  8:  babcf6b156 odb/transaction: add transaction env interface
+    @@ object-file.c: static int odb_transaction_files_commit(struct odb_transaction *b
+     +{
+     +	struct odb_transaction_files *transaction =
+     +		container_of(base, struct odb_transaction_files, base);
+    ++	int ret;
+     +
+    -+	odb_transaction_files_prepare(&transaction->base);
+    -+	strvec_pushv(env, tmp_objdir_env(transaction->objdir));
+    ++	ret = odb_transaction_files_prepare(&transaction->base);
+    ++	if (!ret)
+    ++		strvec_pushv(env, tmp_objdir_env(transaction->objdir));
+     +
+    -+	return 0;
+    ++	return ret;
+     +}
+     +
+      int odb_transaction_files_begin(struct odb_source *source,
+ 9:  9d082b5e47 !  9:  96f2a21eec odb/transaction: introduce ODB transaction flags
+    @@ odb/transaction.c
+      
+     -	ret = odb_source_begin_transaction(odb->sources, out);
+     +	ret = odb_source_begin_transaction(odb->sources, out, flags);
+    - 	odb->transaction = *out;
+    + 	if (!ret)
+    + 		odb->transaction = *out;
+      
+    - 	return ret;
+     
+      ## odb/transaction.h ##
+     @@
+10:  e11d8a6676 = 10:  56718f1190 builtin/receive-pack: drop redundant tmpdir env
+11:  fee57c2817 = 11:  5197a19fbf builtin/receive-pack: stage incoming objects via ODB transactions
+
+base-commit: ab776a62a78576513ee121424adb19597fbb7613
+-- 
+2.55.0.122.gf85a7e6620
+
