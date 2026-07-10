@@ -1,314 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1490F3AFD1B
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 06:44:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C931F3C0A10
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 07:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783665846; cv=none; b=jh4Y140FiX32pIP7GgG93Juy1zzBJZ9XzsbnqSoDSBLDyPmSnMPL13kX49wYjJCR2GVa+6Zq678sU87LdA/stEOrNryQp91j/JtYaIU/UyUxomHUczIsKc9Y+DUydaWvIfnqfEtEtnGpjxnvPn6B2YWYbSP9BVnWOGlNF9IV99E=
+	t=1783667327; cv=none; b=g+TMecoGxpzrRVRNxcC/pHiEB574hnlmYoG7iUlqIkrHB8as84E2O7axnsjxcwJNYnzmyPJsplwIWdHmwkQ6wzJS9KphFLs21mLAPkf8BQpx0Kg9A2h0kcLDRz/FuyjZ47lRyPCIWMs2ZfqwKbmVLr/ZAStK5V33+vrVU1c2VyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783665846; c=relaxed/simple;
-	bh=n7GOD6IGPr8DkW49FJfCjBeFSKjjwgYIQ7Qcm4Ti9Ew=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=r9E/ayjFUY1uZw8icu9Dzg/7tyntWBxaXqKLdqDcblkO/ez1Jz05zJ/c/GsVegb8DN3vfeqaMgc2I3SSuIgiSFmyJcWMEFtlIE6X6zd/x20G5DnY8sbnv+Nu4ED38odzOeeIZO3aINuwrXm5VCN13AX0UaiaE+WNV9Ot6t5K2ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJ60xvtV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1783667327; c=relaxed/simple;
+	bh=QBRDqueu/TjzSi3YOb6jZ6PFL/2r2M6R1ikcwUSnt5k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q37f3TfLq8cpdEYXZAWEitPKk4qbWj3do9YsRB914jq2EHo/DL6ev6s6Q7OArOjE2BWOR8ndxYEgWwryd8euir252C3C18IZxs5BGCE/Coil+zy8mVjmRgkEkDOXa66I0CynF3S/3W0TXAdv8bohxhQZ0d2VP/PaGUjmoPdS2iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Aldf6avD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BYgCgQdL; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJ60xvtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AC9CFC2BCB9;
-	Fri, 10 Jul 2026 06:44:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783665845;
-	bh=n7GOD6IGPr8DkW49FJfCjBeFSKjjwgYIQ7Qcm4Ti9Ew=;
-	h=From:Subject:Date:In-Reply-To:References:To:Cc:Reply-To:From;
-	b=TJ60xvtVLnLxKbgpscz6RXkGnKcGzYNWmadxXp8Re+a4cu2jicAud7dS+UsSx+XyQ
-	 2tFMCZXXEXhNgAo7tB7q8XBExLQv83rDGannY+sEkI+2O+vBDBUuAHRVipVV4iOQo3
-	 cONIrzLMRC3+AclR1Cwxt093xvRJdvLJkjkJhetzGdsuq4VffldB37hKuh5TnpQCwv
-	 1qbnREL09Mu7AWJSM+WhsKKwt2amaQPhWz9oG+0J5SGJpafZ/PbNKj7C26tbtb5MCG
-	 pFvZmfdqnh61mSoMAyClYX6a9JtESgCrAMFV7sRGf+3O6Gs6EL3x14FMdD9tXMyWaO
-	 8akiRy/YLUCJA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88C4CC43458;
-	Fri, 10 Jul 2026 06:44:05 +0000 (UTC)
-From: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-Subject: [PATCH v8 0/2] includeIf: add "worktree" condition for matching
- working tree path
-Date: Fri, 10 Jul 2026 14:43:28 +0800
-Message-Id: <20260710-includeif-worktree-v8-0-04686d8a616c@black-desk.cn>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Aldf6avD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BYgCgQdL"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0324E14000E3;
+	Fri, 10 Jul 2026 03:08:45 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Fri, 10 Jul 2026 03:08:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1783667324; x=1783753724; bh=+PiobdGOuQ
+	T2Gpdm2uppGWkHH6ewlhjY0gQd+fejzTo=; b=Aldf6avDiFquqlAQAinvppU+k5
+	svl4P0C4CLFTWkQ2o5Nu6kmKu/NsY/zhnPUetV9JaGRa8QAWJmGPam6iMMtECze9
+	V8/0Yrr5++f0AXsTkJaCdsjdHKGN4q/yoZJEwpVeGHmQtWNO88wAQoxm8a6fEURC
+	tP8uu40DbSnsJUdSM0lRD33S982D2cr4H0mwYnBSn370IIfu9fINvd6YyWH2wzLy
+	L9HVMCWvQmAazm5KlwdwQsqJf++SKrFbC+8G8Os5PWPFLIEl39QbQSH7ZjXSaDSO
+	31RMhv/zY3qqxyG3glNiZosrixMUSr4sGjNCAvZmZVSdP9y2i52y24xI0/OA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783667324; x=1783753724; bh=+PiobdGOuQT2Gpdm2uppGWkHH6ewlhjY0gQ
+	d+fejzTo=; b=BYgCgQdLcSW2izOJbJI644Ws57UIVHdEcUYA53g+aCok0JyZtgZ
+	ISSI4peUu5j20t+F1K5lQ+olbCcg88c9sS12HvEtF2D2vBdUl/gCrFB6Jb9LDYNF
+	+sXQ9Mdi5JXHAc2YaNP/coYDvHj1lEwNPF8ZAyB+yfqXDegdAcfWMWMZXbRek15n
+	2G2xdkRAE2I3zF6SxjjuzNXCtv4P/jvpyH2zlL1GD1gHR8gjVA/rWh2X0XRec3LX
+	IH1yZkgAUX4mJxhNX5IYfwisHpBA4Yb0whPhMbuDI4+FJLrKFHk8JGLD+mPuDQ8v
+	594O07sAHHanlAon2DZoZFCXx11DCE0jnAg==
+X-ME-Sender: <xms:fJpQaq2mWaG1YJ_jM4T3qTl9xAWTtXfSS-QMzUf-IMIySzNHMnY1vQ>
+    <xme:fJpQajEF-8Q-7STICokYFlHcnT0aMoEIG0TJ1ZvCBG_VNy2E0wjuw5Ql-cq5tbkxK
+    ZSnbGeZubHtP114DLCNKj_kX3DvmdrItIC4psUDFMT6-EeqYNE1bw>
+X-ME-Received: <xmr:fJpQaggyAOFf_nvYF2YVjJH8X8QqDYi3nFxvbmCC-6pxVE3_P14ExUc0Z6Pt9miw7RmsddMUVHY63mSqz33jZfgqdaEyQqa-igOwjzwtiQMHCw>
+X-ME-Proxy-Cause: dmFkZTEGzWF0KumW2c+ke85oX0TErXRs9sqhW8ursPvJjv+whhfnVn3GAZczbwBG6Ays9X
+    YucgkxvtFpJhiMajQeeOC1jFUVacskPLHdU0EI7R1tXz/jLkBV51LNuJfguqn8i/GsZ6JN
+    SvmM5YX3du48dcK6cntyvi4AWMrXgRJpom6tv8SJKB1LaP1bk7n+CwOo2A+lP7/ZepUtef
+    P0BnMVuyZQjp32LQ4EXVJTeniQF37BY8sYdAqNfdWDRt/GAdBpKT6b6GeIRhXS61bedCS8
+    /lcvPzebmnYRGnYpXNfbRglNbhO+0bz9Tnv0NKfEKgiwEUNWpv9IfOLtxF6Scrqvm5iGtb
+    ApZDvCsu3Fvrx2IasIIa6GQ/MUNlsXHrClDL6wZaJQnU9aKyHBCKnXRZtoJLFG8k+AzrOp
+    FZ84YYTW4MsK5pjfaDmawV8ZRB0LGtja8OnNuL6KNizkWU6sDawywnnakVLFLAU9dbcvNQ
+    SADlD6pjDaTz+Si7vnu6HiLuwmmq65/TpzZ1ONt+4fPF0B4fQFNQYv/yMIsX4DmgpfAP8V
+    58RsRcPS7NeEuMKwnmGL43HuS2FWo/sr3whBC51idRjChmn6/yMOUgEFN2SAdDO+HSUtAW
+    SELK7CdrLYQv95snph7JCV2DbaRlrJFECT+A4f6ih3PBWTQEiWN8AWyOWfVQ
+X-ME-Proxy: <xmx:fJpQam_GQjE_r7VNYPu1n58AyTAvrCC1xRw8p9HUKmMgOmPgLTDumw>
+    <xmx:fJpQavq00BFldQUWyr2osmX2yt6_Jvuifqyh8XuMZuGOfxd509w2zQ>
+    <xmx:fJpQat-VhViLS-4l0SNlkXFoYJONM16fmXjGLTcOMAP7MHqw6o3QVg>
+    <xmx:fJpQarXcrxxKmMOxn6Qdf0-vZtuw-noDbkEKrfL5LD2IDs5RTUgU9Q>
+    <xmx:fJpQanmEPt-NUjM7LCBAqEeCbUWDtJEvSE1gAKety41fL_62WWHydnnQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Jul 2026 03:08:44 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 0cd88d80 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Jul 2026 07:08:41 +0000 (UTC)
+Date: Fri, 10 Jul 2026 09:08:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/7] odb/source-packed: improve lookup when enumerating
+ objects
+Message-ID: <alCacqAl9gItMKo7@pks.im>
+References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
+ <20260709-pks-odb-for-each-object-filter-v1-1-82fe014b12b3@pks.im>
+ <ak_uXc0UxB_9Vk9z@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJCUUGoC/33QzU7DMAwH8FeZciYocZovTrwH4pAPh0WbWpSOA
- pr67ri7rEKB49+Rf7ZzZTO2ijN7OlxZw6XOdRopuIcDS8cwviGvmTIDAUYMQvI6pvNHxlr459R
- Ol4bIS4pm8FrkEgOjxveGpX7d0JdXysc6X6b2fZuxyK36L7dILrgXJkfjCyTrn+M5pBPPOJ8e0
- 8g2coE9A10GiFEGlfLReZdtj1F7RnUZRYwUPqG2DqJQPWa4M1r2mYGY4tCAhCzpo3qM3jGgu4z
- etsGC9J4F6C5j7oz94yhDTJDKeRWyD7b0GLtnfJexxKCzaIVGl4v5zazr+gOygD2xYgIAAA==
-X-Change-ID: 20260401-includeif-worktree-fcb64950dfba
-In-Reply-To: <20260709-includeif-worktree-v7-0-e87e705e8df6@black-desk.cn>
-References: <20260709-includeif-worktree-v7-0-e87e705e8df6@black-desk.cn>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
- Chen Linxuan <me@black-desk.cn>, Phillip Wood <phillip.wood@dunelm.org.uk>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11632; i=me@black-desk.cn;
- h=from:subject:message-id;
- bh=n7GOD6IGPr8DkW49FJfCjBeFSKjjwgYIQ7Qcm4Ti9Ew=;
- b=owEBbQKS/ZANAwAKAXYe5hQ5ma6LAcsmYgBqUJSf22cPxyS1Rqrd3R4jutE9AK6zKk8YceX+T
- oonNVt7E26JAjMEAAEKAB0WIQTO1VElAk6xdvy0ZVp2HuYUOZmuiwUCalCUnwAKCRB2HuYUOZmu
- i02mEAC7KfkIywKkc5Q/uV0XNeNQJL62oKs04wR5iSYKqhQMRITGnYiOPsr5gdLG41jVjS4zTpy
- deDIZ5Cg/FtCrf0sfQTHWr9+d1Y6IyKE/sjeWgaRX/t1QUuBxGeX5VYzXMxP7EEGxxPWJAuO0Cl
- SBA9GEQIlgcV5bEPx+zJem3XjvZvj6ppokRUlY3UPIn51DYIuyljWg7XOpACXQxYJd7Qom6vIV4
- QrRGXnuEx9OPB5uXuZnVrwlSaSD3OgNhBRIqU/DljxgpHfqJxSX8hfIBIHCA8tLIYNv7VcjgZ4I
- 3KteF1nbl0wV6kXUzq1zCwaonRa2W+bYHL/uy2CsXSCGTXhJU8WR9bq09pxyNUCePHN1VTmjqsq
- mybX3uC5dSNFH4TckTcGgqbxmfCJFQ24xWjCwg7EX/r2nLCMt9nn15Z++vxtxDkCGQNCw0IdcVR
- DhJfnh+sKSWVtAkNa0APF9eQAJEpX853CHm1MZD09vjjPVa66QSHxRik5myNa50LBRn5lbtFQPq
- Wejw1/aiRcYQ15pz63rPvOwRjeLY+BpGhP3f8xakYLosPMLfCZt6Hl09QbhZqVUbf7CmGPNuhVq
- WsLk+hxq5E37LevYzqnQ1w4z7ElALsVkEY2zKuumAZjwrgzZ0ry/iW7lQk1Wf+bPRsbChq4q5Pv
- +ZSCYNIwHdocbLA==
-X-Developer-Key: i=me@black-desk.cn; a=openpgp;
- fpr=D818ACDD385CAE92D4BAC01A6269794D24791D21
-X-Endpoint-Received: by B4 Relay for me@black-desk.cn/default with
- auth_id=573
-X-Original-From: Chen Linxuan <me@black-desk.cn>
-Reply-To: me@black-desk.cn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ak_uXc0UxB_9Vk9z@denethor>
 
-The `includeIf` mechanism already supports matching on the `.git`
-directory path (`gitdir`) and the currently checked out branch
-(`onbranch`).  But in multi-worktree setups the `.git` directory of a
-linked worktree points into the main repository's `.git/worktrees/`
-area, which makes `gitdir` patterns cumbersome when one wants to
-include config based on the working tree's checkout path instead.
+On Thu, Jul 09, 2026 at 02:54:17PM -0500, Justin Tobler wrote:
+> On 26/07/09 10:35AM, Patrick Steinhardt wrote:
+> > When iterating through packed objects via `odb_for_each_object()` we
+> > do so via two different mechanisms:
+> > 
+> >   - When a multi-pack index is available we use that one to efficiently
+> >     loop through all objects.
+> > 
+> >   - We then loop through all packfiles that aren't covered by a
+> >     multi-pack index.
+> 
+> To be specific, we are talking only about the for_each_object callback
+> for the packed source `odb_source_packed_for_each_object()` correct?
+> Also, this appears to only matter when we are enumerating OIDs with a
+> specific prefix.
 
-Introduce two new condition keywords:
+Yeah, true. I'll clarify this a bit.
 
-  - `worktree:<pattern>` matches the working directory of the current
-    worktree against a glob pattern.
-  - `worktree/i:<pattern>` is the case-insensitive variant.
+> > Regardless of which mechanism we use, we then iterate through all the
+> > objects indexed by the respective data structure. Curiously though,
+> > while we use the indices for enumerating the objects, we completely
+> > ignore it for the actual object lookup. Instead, we call into the
+> > generic `odb_source_read_object_info()` function, which will itself
+> > consult the indices to figure out where the object in question even
+> > lives.
+> > 
+> > This has two consequences:
+> > 
+> >   - It's inefficient, as we basically have to figure out the position of
+> >     the object a second time.
+> 
+> Since we already have the position from the index, there is no need to
+> start over. Makes sense.
+> 
+> >   - It's subtly wrong, as it may now happen that a specific object will
+> >     be looked up via a different pack in case it exists multiple times.
+> 
+> Naive question: Is there any real harm in reading the same object, but
+> from a different packfile here?
 
-Supported pattern features: glob wildcards, `**/` and `/**`, `~`
-expansion, `./` relative paths, and trailing-`/` prefix matching.
-The condition never matches in a bare repository.
+The answer is probably "no". At least I cannot think of any case where
+it'd really matter, but semantically it's the wrong thing to do anyway.
 
-Signed-off-by: Chen Linxuan <me@black-desk.cn>
----
-Changes in v8:
-- Drop the v7 symlink-preserving worktree path implementation.  Patrick
-  pointed out that the setup-side plumbing was too invasive and likely to
-  conflict with the ongoing setup discovery work.
-- Document the current limitation instead: includeIf "worktree:" matches
-  the realpath-resolved worktree location, so symlink spellings may not
-  match.
-- Return the series to two patches, based on v6 plus the documentation
-  update.
-- Link to v7: https://lore.kernel.org/r/20260709-includeif-worktree-v7-0-e87e705e8df6@black-desk.cn
+> > diff --git a/odb/source-packed.c b/odb/source-packed.c
+> > index 0edea5356d..9cfa02b7a2 100644
+> > --- a/odb/source-packed.c
+> > +++ b/odb/source-packed.c
+> > @@ -177,9 +178,8 @@ static int for_each_prefixed_object_in_midx(
+> >  			if (!match_hash(len, opts->prefix->hash, current->hash))
+> >  				break;
+> >  
+> > -			if (opts->flags) {
+> > +			if (opts->flags || data->request) {
+> 
+> I'm not sure I follow why the above condition needed to change.
 
-Changes in v7:
-- Preserve the symlinked spelling of the worktree path and match
-  includeIf "worktree:" against it, so the condition now matches both
-  the symlinked and the real path, consistent with "gitdir:"
-  (Patrick Steinhardt, v6 review).
-- Split the work into a preparatory commit that stores a non-realpath
-  worktree path and a follow-up that wires it into includeIf.
-- Extend symlink test coverage to subdirectories and linked worktrees.
-- Link to v6: https://lore.kernel.org/r/20260703-includeif-worktree-v6-0-a13893ad9a7f@black-desk.cn
+This needs to change because we now require access to the pack so that
+we can call `packed_object_info()`. Otherwise the pack would be not be
+populated if we're invoked without any flags.
 
-Changes in v6:
-- Rebase onto current `master` at Git 2.55.
-- Add an in-code comment explaining why the non-repository worktree
-  tests use the loose `**.path` pattern (suggested by Junio C Hamano).
-- Link to v5: https://lore.kernel.org/r/20260525-includeif-worktree-v5-0-1efe525d025a@black-desk.cn
-
-Changes in v5:
-- Fix Windows CI failure: use `**` glob pattern instead of `/` in the
-  "worktree without repository" tests, since `/` as a path pattern is
-  Unix-specific and does not match Windows paths.
-  Github CI pass: https://github.com/black-desk/git/actions/runs/26380466288
-- Add a test verifying case-sensitive matching by default, with the
-  `!CASE_INSENSITIVE_FS` prerequisite (suggested by Patrick Steinhardt).
-- Link to v4: https://lore.kernel.org/r/20260513-includeif-worktree-v4-0-f8e6212d1fba@black-desk.cn
-
-Changes in v4:
-- Deduplicate the worktree pattern documentation by referencing the
-  gitdir syntax instead of repeating the full pattern description
-  (suggested by Patrick Steinhardt).
-- Add documentation comparing includeIf "worktree:" with
-  extensions.worktreeConfig, including a concrete use case example
-  (suggested by Phillip Wood, Junio C Hamano).
-- Add a test verifying that the worktree condition does not match
-  during early config reading (suggested by Patrick Steinhardt).
-- Add tests for the non-repository (nongit) scenario (suggested by
-  Patrick Steinhardt).
-- Add a test for the case-insensitive "worktree/i" variant
-- Link to v3: https://lore.kernel.org/r/20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn
-
-Changes in v3:
-- Apply Junio's suggestion.
-- Link to v2: https://lore.kernel.org/r/20260402-includeif-worktree-v2-0-36e339b898d7@black-desk.cn
-
-Changes in v2:
-
-- Add missing signed-off-by lines.
-- Link to v1: https://lore.kernel.org/r/20260401-includeif-worktree-v1-0-906db69f2c79@black-desk.cn
-
----
-Chen Linxuan (2):
-      config: refactor include_by_gitdir() into include_by_path()
-      config: add "worktree" and "worktree/i" includeIf conditions
-
- Documentation/config.adoc |  53 +++++++++++++++++++
- config.c                  |  25 +++++----
- t/t1305-config-include.sh | 128 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 195 insertions(+), 11 deletions(-)
-
-Range-diff versus v7:
-
-1:  510f28d207f8 = 1:  731d928b1dfa config: refactor include_by_gitdir() into include_by_path()
-2:  0f83ffee0338 < -:  ------------ repository: keep a symlink-preserving copy of the worktree path
-3:  18d1abc325fc ! 2:  56c792090625 config: add "worktree" and "worktree/i" includeIf conditions
-    @@ Commit message
-     
-         Introduce two new condition keywords:
-     
-    -      - worktree:<pattern> matches the working directory of the current
-    -        worktree (the path returned by git rev-parse --show-toplevel)
-    -        against a glob pattern.
-    +      - worktree:<pattern> matches the realpath of the current worktree's
-    +        working directory (i.e. repo_get_work_tree()) against a glob
-    +        pattern.  This is the path returned by git rev-parse
-    +        --show-toplevel.
-     
-           - worktree/i:<pattern> is the case-insensitive variant.
-     
-    -    The implementation reuses the include_by_path() helper, passing
-    -    repo_get_work_tree_original() (added in the previous commit; it keeps
-    -    the symlink-preserving spelling of the worktree path) in place of the
-    -    gitdir.  As with gitdir, include_by_path() then matches both the
-    -    realpath and the original spelling, so a pattern may use either.  The
-    -    condition never matches in bare repositories (where there is no
-    -    worktree) or during early config reading (where no repository is
-    -    available).
-    +    The implementation reuses the include_by_path() helper introduced in
-    +    the previous commit, passing the worktree path in place of the
-    +    gitdir.  The condition never matches in bare repositories (where
-    +    there is no worktree) or during early config reading (where no
-    +    repository is available).
-     
-         Add documentation describing the new conditions, including a comparison
-    -    with extensions.worktreeConfig.  Add tests covering bare repositories,
-    -    multiple worktrees, symlinked and subdir-of-symlinked worktree paths,
-    -    case-sensitive and case-insensitive matching, early config reading,
-    +    with extensions.worktreeConfig and a note that worktree matching currently
-    +    uses the realpath-resolved worktree location.  Add tests covering bare
-    +    repositories, multiple worktrees, realpath-resolved symlinked worktree
-    +    paths, case-sensitive and case-insensitive matching, early config reading,
-         and non-repository scenarios.
-     
-         Signed-off-by: Chen Linxuan <me@black-desk.cn>
-    @@ Documentation/config.adoc: refer to linkgit:gitignore[5] for details. For conven
-     +`**/`, and trailing-`/` prefix matching). This condition will never match
-     +in a bare repository (which has no worktree).
-     ++
-    ++Unlike `gitdir`, the `worktree` condition currently matches only the
-    ++realpath-resolved worktree location. If the working tree was entered via a
-    ++symbolic link, a pattern that uses the symbolic-link spelling may not match;
-    ++use the real path instead.
-    +++
-     +This is useful when you want to apply configuration based on where the
-     +working tree is located on the filesystem. For example, a contributor who
-     +works on the same project both personally and as an employee can use
-    @@ config.c: static int include_condition_is_true(const struct key_value_info *kvi,
-      	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
-      		return include_by_path(kvi, opts->git_dir, cond, cond_len, 1);
-     +	else if (skip_prefix_mem(cond, cond_len, "worktree:", &cond, &cond_len))
-    -+		return include_by_path(kvi, inc->repo ? repo_get_work_tree_original(inc->repo) : NULL,
-    ++		return include_by_path(kvi, inc->repo ? repo_get_work_tree(inc->repo) : NULL,
-     +				       cond, cond_len, 0);
-     +	else if (skip_prefix_mem(cond, cond_len, "worktree/i:", &cond, &cond_len))
-    -+		return include_by_path(kvi, inc->repo ? repo_get_work_tree_original(inc->repo) : NULL,
-    ++		return include_by_path(kvi, inc->repo ? repo_get_work_tree(inc->repo) : NULL,
-     +				       cond, cond_len, 1);
-      	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_len))
-      		return include_by_branch(inc, cond, cond_len);
-    @@ t/t1305-config-include.sh: test_expect_success 'onbranch without repository but
-     +	test_must_fail git -C wt-prefix/linked config test.linkedvar
-     +'
-     +
-    -+test_expect_success SYMLINKS 'conditional include, worktree matching symlink' '
-    -+	mkdir sym-real &&
-    -+	ln -s sym-real sym-link &&
-    -+	git init sym-link/repo &&
-    -+	(
-    -+		cd sym-link/repo &&
-    -+		link_path="$(pwd)" &&
-    -+		real_path="$(test-tool path-utils real_path "$link_path")" &&
-    -+		cat >>.git/config <<-EOF &&
-    -+		[includeIf "gitdir:$link_path/.git"]
-    -+			path = gitdir-link
-    -+		[includeIf "gitdir:$real_path/.git"]
-    -+			path = gitdir-real
-    -+		[includeIf "worktree:$link_path"]
-    -+			path = worktree-link
-    -+		[includeIf "worktree:$real_path"]
-    -+			path = worktree-real
-    -+		EOF
-    -+		echo "[test]gitdirlink=1" >.git/gitdir-link &&
-    -+		echo "[test]gitdirreal=1" >.git/gitdir-real &&
-    -+		echo "[test]worktreelink=1" >.git/worktree-link &&
-    -+		echo "[test]worktreereal=1" >.git/worktree-real &&
-    -+		git config get test.gitdirlink &&
-    -+		git config get test.gitdirreal &&
-    -+		git config get test.worktreelink &&
-    -+		git config get test.worktreereal &&
-    -+		# from a subdirectory, the logical worktree path is recovered by
-    -+		# stripping the below-root suffix, so both spellings still match
-    -+		mkdir d &&
-    -+		cd d &&
-    -+		git config get test.worktreelink &&
-    -+		git config get test.worktreereal
-    -+	)
-    -+'
-    -+
-    -+test_expect_success SYMLINKS 'conditional include, worktree matching symlink of a linked worktree' '
-    -+	git init wt-main &&
-    -+	( cd wt-main && test_commit initial ) &&
-    -+	git -C wt-main worktree add --detach ../wt-real &&
-    -+	ln -s wt-real wt-link &&
-    -+	wt_main="$(cd wt-main && pwd)" &&
-    ++test_expect_success SYMLINKS 'conditional include, worktree resolves symlinks' '
-    ++	mkdir real-wt &&
-    ++	ln -s real-wt link-wt &&
-    ++	git init link-wt/repo &&
-     +	(
-    -+		cd wt-link &&
-    -+		link_path="$(pwd)" &&
-    -+		real_path="$(test-tool path-utils real_path "$link_path")" &&
-    -+		cat >>"$wt_main/.git/config" <<-EOF &&
-    -+		[includeIf "worktree:$link_path"]
-    -+			path = wt-link
-    -+		[includeIf "worktree:$real_path"]
-    -+			path = wt-real
-    -+		EOF
-    -+		echo "[test]wtlink=1" >"$wt_main/.git/wt-link" &&
-    -+		echo "[test]wtreal=1" >"$wt_main/.git/wt-real" &&
-    -+		test "$(git config get test.wtlink)" = "1" &&
-    -+		test "$(git config get test.wtreal)" = "1"
-    ++		cd link-wt/repo &&
-    ++		# repo->worktree resolves symlinks, so use real path in pattern
-    ++		echo "[includeIf \"worktree:**/real-wt/repo\"]path=bar-link" >>.git/config &&
-    ++		echo "[test]wtlink=2" >.git/bar-link &&
-    ++		echo 2 >expect &&
-    ++		git config test.wtlink >actual &&
-    ++		test_cmp expect actual
-     +	)
-     +'
-     +
-
----
-base-commit: f85a7e662054a7b0d9070e432508831afa214b47
-
-
+Patrick
