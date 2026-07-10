@@ -1,111 +1,168 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f1.google.com (mail-pj2-f1.google.com [74.125.227.129])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F231938F92D
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 07:22:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99813C7E0E
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 07:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783668146; cv=none; b=AfTArjeFPMXELhexFh9+bRym25k75cl0ozOYBn6vCY7Ef1kXAQW8aQCLpkqt+bmLMPIxLtPOjJ881xLDTiYZHKqSii/Mp7abxLAY7KKUesX929zaYo3uluiaNE8agPYdQKnd1rVTYY5zLZo1Trg9M9JrAZtLFWaKMPmxqGYrO88=
+	t=1783669311; cv=none; b=tloujOUce3IZkx6Jys6o3K8ulgd5Q6G4GMQUHazdUF4WjAJWzAc7felzQGyGT52m1fsDIskzC1naNOX21w3fzhIAQCT0EAWurHWkISc17RwUqmB/pRFO9z/KK5NMxnJKkwcwWbHoDp0+fKiphiGy4/bcvrzeNibhwKIg+wZcBKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783668146; c=relaxed/simple;
-	bh=mZs9++8NZI44wRKxDsBDqfVOEI9vv90srf5/tDuO72k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jycFb2ad8/DKLBRZkYT6oRriR4YFqTD29o3+tUU5AHxmNEThr5Uykl8/1Jj4YKUW4zyH9uYaf775DwCB7NXv8x4KLG+Oz+eckqEBJvvKLxn1ISNfZVX6ldKJdhuphKU1PDfWR4oSE0yo/3H4Si4Hj4KS9daetOW0gf7x6C4hTpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P075iswn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1783669311; c=relaxed/simple;
+	bh=hS6uk6jAtZMuVWM9mg/J8I8ai+JR73gRVk5yonylmhw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=H/Jrr8/MfF+id7p1NeR9rdOmQ5V+L5uaz3dAFrnf8yHElvpSNAES+NBMNg04ROsepQZTXyHsn1i8DWlWol5fMm9aj7SdwsrDx7JXdrOlmY8q1jFIKD+k/MY34/lC/GDUX4PUhA5YbBSXkHvzNaS/tJDN33SlVCyVTcBDJRrLDPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YLrDpqME; arc=none smtp.client-ip=74.125.227.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P075iswn"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 950B2C2BCB8;
-	Fri, 10 Jul 2026 07:22:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783668145;
-	bh=mZs9++8NZI44wRKxDsBDqfVOEI9vv90srf5/tDuO72k=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=P075iswnFgt7C36osYh0xWXDtTzgzUuzZXLzr4TdpYbLmxbpyLVSgAD8rwHv9wHDR
-	 jE7I5L7B0W7PPXyD2LMwkNupEsCB2kHp6kzpiqtUajNIUgj2WS1lhBsbv5mj+ty7Mm
-	 +21e+uI/U6zTivXkZSos6udefKAvkXTvEg6WkRXNw60YWpDzUjYHM8BYyrojO700oE
-	 uJ6ghbt7qJqLCohJgHvdVR5ptiE8pE2cwV1qKD3Y7cx5fBdw9N3pjzoDtVeQI5bZtP
-	 VpFcrpyKCnLV+6tLenohGqVttLQ8dlJ7Z1/0p/4WgS4cQEdVHuOw5nhFnAX29iSfbL
-	 isdpJLoIPaocA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 713D7C44501;
-	Fri, 10 Jul 2026 07:22:25 +0000 (UTC)
-From: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-Date: Fri, 10 Jul 2026 15:22:13 +0800
-Subject: [PATCH] b4: include change-id in cover template
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YLrDpqME"
+Received: by mail-pj2-f1.google.com with SMTP id d9443c01a7336-2cac634f921so2306705ad.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 00:41:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783669309; x=1784274109; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lvvMCwNjkl97pewu8xFfvc/ZaP9z2psOs5bbFGs9790=;
+        b=YLrDpqMEFS2L2HLZxmk/h2ELh7tHsWjWG1b/8oOkd1y3A5qNu8Z0Oa3rxrI1zzQ4ij
+         L6xHPdxxL2Zf+e4ZQ89ImpNQDErzdkavnTE0N0YBYFrR6ho4DdooN9Hg7oT1Xtnte7GX
+         zrryS3WKN4WdBt9QhnpenBtD7NLMcnti4GBWR8385BpEdLm3DsWi9wq6ks0FT0W/wbla
+         QT4lV8IzMlo54lWOR3zEQm7fmMCTpji0GlKZVlVxD2Zb8N46CPMkFr3ehfIXpTkTDbZs
+         R4OpfVoNF38X3Hq1zFELuw/iV8rWuZQPRDO883d2KmNF2TBkkASZqXqh6ShaGvuFnPvk
+         HD7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783669309; x=1784274109;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=lvvMCwNjkl97pewu8xFfvc/ZaP9z2psOs5bbFGs9790=;
+        b=HKan0owbUhStSes2O4sA7B/cYeogeYLuSpTRCkWUmTHBs5gx9T+HJiwO8sW7ag9n+W
+         O5V8qpbEysLKYJiOqh7s0Xoh0nIFsotzBFYjqVoPDwUQlfR7j8t3uNG7q21P8uG6AcJj
+         PrAtITLVNNC0OQXT/AmBF3YNtYYABGQbiyr6h1Z03BFOupYAKmvKuaRjbNgPTtK/lQXP
+         1tBuzdV+2N1aNZ9p4brqhskNikhVR1uWyGyiJTqFQQAbGkaDlQ65Sp8Ql9NDNuaJJImM
+         a6+uR8Dkxb5+FLV5uOLDVWzLPkzOCEq0r4+XJSXtYSTN26y+2JXBO5hCN49X1VVQTYr/
+         QsRQ==
+X-Gm-Message-State: AOJu0Ywxqn7w8Mbsi43MbbppYV5XR+gKpfMYqErXZplu3XwHxC0W1b2u
+	iXBOsucU08dmDeTrZsr0k2mto/WEM2cg9hiyVtyZBvEzyUAnzrtCNxKhFgkf22TJ2FQ=
+X-Gm-Gg: AfdE7cmIrUKC8EipjCvW8JF4CN4SJNX3ofrlOP3OTcOtfvTXAckq+IZ/N56mtKDhk+Y
+	4frP/t1rQbCYm8Tjvom1tj3djxD0D0IgtlaOWwH0JJT/xM+5Yjdr2Tt0mfs3kYuhIkR+fq7ASE9
+	O6XP6aByq3iVaLJoVep8GT+JwBaj937l1KCdgbT3kbUwHH5+ZMskQI73InyMpmdSmRQ1QqOnp/7
+	AmI7YRRY6BfQ0aY7TLysgaoouBdso8EEERjk9OfDzlWdJBKAnc/TiRpalhFPeukyfjcEmDXzmKq
+	lfs1b55vowaDmqgWKrFiOQ/ufgR9Ju87x2QYpvDfqsGxEqMzA7T5rzsxSdWid1hncrlXUuINXoP
+	BBoF+USB567vnD1lyNoV8vlna+FtvPqwCXVqhjjyXIHtQboh1tXs9o5oBJZ2GsySFqaHa3Bkp1+
+	YsCAbfGwTHumb0iFF9uj5vip4ksg34w+bhLD0jdVEigHAKD+hMb49HDpnVRw==
+X-Received: by 2002:a05:6a20:2d24:b0:3bf:836e:876e with SMTP id adf61e73a8af0-3c0bd0fa2d7mr13989149637.44.1783669308701;
+        Fri, 10 Jul 2026 00:41:48 -0700 (PDT)
+Received: from localhost.localdomain ([45.117.66.208])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-311935fd091sm21628522eec.24.2026.07.10.00.41.46
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 10 Jul 2026 00:41:48 -0700 (PDT)
+From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+To: git@vger.kernel.org
+Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Subject: [PATCH v2] builtin/add.c: replace run_command() with direct apply_all_patches() call
+Date: Fri, 10 Jul 2026 13:02:06 +0530
+Message-ID: <20260710074105.50737-1-gatlavishweshwarreddy26@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <xmqqmrvzfitd.fsf@gitster.g>
+References: <xmqqmrvzfitd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-add-change-id-to-b4-template-v1-1-1bd37a25064e@black-desk.cn>
-X-B4-Tracking: v=1; b=H4sIAKSdUGoC/z3MTQqDMBBA4avIrDswRmmwVyldRDPRKfWHJIog3
- t2o0OXHg7dBYC8c4JVt4HmRIOOQkD8yaDoztIxik0GRepLOCY21+C8YR6xLjNxPPxMZXeWsoqr
- QpDSkxeTZyXrt35/bYa6/3MTzCft+ALVVBJ+AAAAA
-X-Change-ID: 20260710-add-change-id-to-b4-template-f9fd20937027
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
- Chen Linxuan <me@black-desk.cn>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1265; i=me@black-desk.cn;
- h=from:subject:message-id;
- bh=HuviA3htWPIWMaE9A8vkJhpFqEe5gi8rdGO5ZW4cI1o=;
- b=owEBbQKS/ZANAwAKAXYe5hQ5ma6LAcsmYgBqUJ2lUMR26aObJXj05ciU5Hw4Y8fKpE7espKtp
- srPryG7qvaJAjMEAAEKAB0WIQTO1VElAk6xdvy0ZVp2HuYUOZmuiwUCalCdpQAKCRB2HuYUOZmu
- iz6gD/sHBmhNlHOvipXHFAXMpfmx71IcfCGZ2TzE9XTQQrX0sGy53+4zbijpRbwUxLyw/fKLi+e
- TuKBPHkXWuvqXhwgM3ycMjGrckAavYuWq5d51gb6mpy/GhJYyOX8V3IjJFkj5Yt50Q1yOpd5SZY
- 38/hkt9P/maNAWcNv/VT7Sfut3/XPkx+Cw9LeAyJOP6PyrLSPWR9Pg4Ktm8l0Ql+D0P4+rUijFu
- irIu00S0wIDQ5R+HD6GRFh74ZCn1JcfNED7VLdHybJMNZNdxzei93P0regAzndJvYKQjvE412+y
- V/PR0K5vfz+D8iI4Xrgei8MLlAjrfoO+qsWvqb/CQGukfGR6pU9mpgVH+YeCX3RRSOLmC7Nm2iQ
- 0Dqvx1z5qjzABkzcODwHWzTWh8OskM2DNNgSt/w3P/GOPc45Rh4Dnh0Xa/SLF516awpxMKV6Nm3
- 0Jkmi/CvDMFdHrkOVJhE9OMlOsthxSJS+geMYCKkbznSHsAX0BjssJRqeRIZB5A/bhJIh1ckGNv
- IPmAA7Pi4LOqP6MiGeMZ2JGRlL8pOGDKFRpScbIipBoJ5X5R4kKn/KbEtoB3wjdVzqSXrWGqQOp
- ZSNtzV6MwgR99pqVJ3XVayeXaNlh6hgIfKBXxR2i5YbBjoBIauhTbXazQT+ui5dvxhlFvW4xPiT
- pGHaZANG6kSnz6A==
-X-Developer-Key: i=me@black-desk.cn; a=openpgp;
- fpr=D818ACDD385CAE92D4BAC01A6269794D24791D21
-X-Endpoint-Received: by B4 Relay for me@black-desk.cn/default with
- auth_id=573
-X-Original-From: Chen Linxuan <me@black-desk.cn>
-Reply-To: me@black-desk.cn
+Content-Transfer-Encoding: 8bit
 
-From: Chen Linxuan <me@black-desk.cn>
+When the user runs "git add -e", the diff of the working tree changes
+is written to a temporary file, opened in an editor, and then applied
+back to the index. The application step is done by spawning a child
+process running "git apply --recount --cached <file>", which is an
+unnecessary subprocess since the apply machinery is available as a
+native C API.
 
-With b4 0.15.2, I hit a local failure after sending a series with the
-in-tree cover template.  The generated sent/<change-id>-vN tag contained
-base-commit, but did not contain change-id, and later b4 commands failed
-when trying to read it:
+Replace the run_command() call with a direct call to apply_all_patches()
+using an initialized apply_state with the cached and recount options set
+appropriately. This avoids the overhead of forking a subprocess, keeps
+the operation within the same process, and makes the intent of the code
+clearer to the reader.
 
-  CRITICAL: Tag sent/... does not contain change-id info
+Remove the now-unused includes of "run-command.h" and "strvec.h" since
+no other code in this file requires them after this change.
 
-Looking at b4's source, the sent tag message is derived from the rendered
-cover letter.  The same code later parses that tag and expects both
-base-commit and change-id to be present.  The default b4 cover template
-has both trailers, but our in-tree template only has base-commit.
-
-Add the missing change-id trailer next to base-commit so sent tags
-produced from the project template remain readable by b4's reroll and
-comparison logic.
-
-Signed-off-by: Chen Linxuan <me@black-desk.cn>
+Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
 ---
- .b4-cover-template | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/.b4-cover-template b/.b4-cover-template
-index ab864933b5c8..8168d8a10b3a 100644
---- a/.b4-cover-template
-+++ b/.b4-cover-template
-@@ -8,4 +8,5 @@ ${diffstat}
- ${range_diff}
- ---
- base-commit: ${base_commit}
-+change-id: ${change_id}
- ${prerequisites}
+Changes in v2:
+- Fixed commit message: "was done" -> "is done" (present tense)
+- Added check_apply_state() call after setting state.cached = 1,
+  which sets state.check_index = 1 required for index updates
 
----
-base-commit: f60db8d575adb79761d363e026fb49bddf330c73
-change-id: 20260710-add-change-id-to-b4-template-f9fd20937027
+In response to review:
 
+- check_apply_state() with cached=1 correctly
+  sets check_index=1, ensuring apply_all_patches() updates the index
+  as intended. Verified by reading apply.c lines 172-175.
+
+- Tested with t3700-add.sh: all 58 tests pass
+
+
+ builtin/add.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/add.c b/builtin/add.c
+index c859f66519..a7266020cd 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -13,7 +13,6 @@
+ #include "dir.h"
+ #include "gettext.h"
+ #include "pathspec.h"
+-#include "run-command.h"
+ #include "object-file.h"
+ #include "odb.h"
+ #include "odb/transaction.h"
+@@ -23,9 +22,9 @@
+ #include "diff.h"
+ #include "read-cache.h"
+ #include "revision.h"
+-#include "strvec.h"
+ #include "submodule.h"
+ #include "add-interactive.h"
++#include "apply.h"
+
+ static const char * const builtin_add_usage[] = {
+ 	N_("git add [<options>] [--] <pathspec>..."),
+@@ -187,7 +186,6 @@ static int edit_patch(struct repository *repo,
+ 		      const char *prefix)
+ {
+ 	char *file = repo_git_path(repo, "ADD_EDIT.patch");
+-	struct child_process child = CHILD_PROCESS_INIT;
+ 	struct rev_info rev;
+ 	int out;
+ 	struct stat st;
+@@ -217,11 +215,17 @@ static int edit_patch(struct repository *repo,
+ 	if (!st.st_size)
+ 		die(_("empty patch. aborted"));
+
+-	child.git_cmd = 1;
+-	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
+-		     NULL);
+-	if (run_command(&child))
++	struct apply_state state;
++	const char *apply_argv[] = { file, NULL };
++
++	if (init_apply_state(&state, repo, prefix))
++		die(_("could not initialize apply state"));
++	state.cached = 1;
++	if (check_apply_state(&state, 0))
++		die(_("could not check apply state"));
++	if (apply_all_patches(&state, 1, apply_argv, APPLY_OPT_RECOUNT))
+ 		die(_("could not apply '%s'"), file);
++	clear_apply_state(&state);
+
+ 	unlink(file);
+ 	free(file);
+--
+2.54.0
 
