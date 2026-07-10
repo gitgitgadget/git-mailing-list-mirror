@@ -1,139 +1,122 @@
-Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DF5425CD2
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 12:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E1B3C4B9A
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 12:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783686046; cv=none; b=PZVg88a0VdQyLtaQosnjimDpn9fHN5ic5Z9kvN+QbvS7E+HSJcz7SCgMKWakWyh60JPqfNxiwmX8hNdPuwAyM1uVQfJ0Zj3qz1jW8bb0CwGi7kyfw+b1dv7A/owsTfLKvYSnX0iHM5tuwMjX1lFKNXtEryf2pvACHi9WuJNGY8c=
+	t=1783686422; cv=none; b=RGc2sLOeBFe3OwX5ItxyiN7KompIeZEpVLhonBPM4Ip0TP7csAH1EJs9q+Njztxle5QN58MyyE5+IAQJYpFKZTj7dbXIDrTA4HLZj9mT+hbcOlnU82zFNM1LhHyY25wQ7G/tM4Z7VNVF9UYZc2efXPxLKCgv5xVz+H45b9jrJjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783686046; c=relaxed/simple;
-	bh=DOP5moCq4tzZI+1uiVnlopNnDFt6i7XOfNLbqeLkfxs=;
-	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Cc:Subject:
-	 In-Reply-To:References; b=Qe+9F8ALEcsnftLX33CPO8TL1HuzQ9YtF/TExz/WUdGYbzU7RT16V1TUfrafBFqYywSH12VkA86VaxfZAK0FWMDKOi+w+/wi/cHsnVyd3J8GMdPjkFEUb+dCbXH+NjbBJ84V2PTR66vopGkIfcOZZrWZm8Q1vU8gcGPJ8S+34+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=iadtJFoZ; arc=none smtp.client-ip=93.93.131.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
+	s=arc-20240116; t=1783686422; c=relaxed/simple;
+	bh=+zLo9CewiMTcGMYpjU8m0R2YFd1cWMBpegWPKMU47FI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FY+cvRfvqV86LI+djYTtpboOsMoMlStUgIp2f6WUv0iZ3XAEz17h676p9XDr9mzHb+OxCzDTuTbrDXijnWAJlZ4jhMLu4Z3xyWDA2muV5LHu3jGup4kBFbwTDx9GOUGUHUAPUylNlpTET2wKpssnWQCiku+Ud0HbUWmtBYkP+SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f04pbLT7; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="iadtJFoZ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=chiark.greenend.org.uk; s=d.chiark; h=DKIM-Signature-Warning:References:
-	In-Reply-To:Subject:Cc:To:Date:Message-ID:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:From:Sender:Reply-To:Content-ID:Content-Description
-	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=ltTf/LwnPs5XvWvEUaRGzBYs4a5c1CW3e457Mee/Kt4=; b=iadtJFoZcnbd
-	Q0EQ0pIejjucQcNK6LEaRH0qvu5JVzmC2DKYjM2R8/6F7g52+AlFVklksVb/PEETL4WpmWeaZvFj9
-	EdXD77HLLq9kjAuoqfEcy84fzV7sXx4di4OY3XvC4s1XxDUDoUAcadb6pfbe74mwC/qdAzKHhZIke
-	+qYEo4FsDm8NhCNQdNTJtBYYk0pJfNcc1gsi27FjKHJc16Hfb08CcH0/cVOi8Sdg+5oO5jmramT1E
-	7TRSdcET5ZHNbH0qE6lZ/iIkjODS1P++HHKtEiNSD+O3MB52UgfAODW2PHdrb80C11rbSIrzEPt/0
-	nfwW01HxWtAo/YBSWUwZnw==;
-Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
-	(return-path ijackson@chiark.greenend.org.uk)
-	id 1wiADb-0004wD-RS; Fri, 10 Jul 2026 13:20:35 +0100
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f04pbLT7"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c15b509c323so130416266b.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 05:27:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783686420; x=1784291220; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qSsg6T2KEuDgGe84ulcMMvsnXtpX3ybGUJg9pKd669Y=;
+        b=f04pbLT78F68FrKjO7+8qYxp0zTal4B2iQmFz2splDsoA7WNbLs7RDBaYnfby0kam5
+         LlHWhDoSygweK6XaMV0jjkCYjrePHRBJq3ofb8BZusc/LFkTq+chKD59r4KfFpkKYP1h
+         KexthLPDR/XS12TY4tobphCh3esYZ5+aWjt0bzarjP4V2/HOFQSSExqnSvEYYWZX3Gzs
+         hQCcKLFiG+gGYZ2HNinqfXYPOmbI/JJpJG2LvlF3XsP3lDouKgNbUkpYksHMpAF/t3YR
+         V6NHLtGYCfDPkdzgXlfJhFGomqRXIWq9S0Lre7gAoYiZcKBCrjzHfyGQHmIpKvkVQO4S
+         8ZgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783686420; x=1784291220;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qSsg6T2KEuDgGe84ulcMMvsnXtpX3ybGUJg9pKd669Y=;
+        b=g8W1+xm9+Q/Kr01b87loJi0DSIrVAD0Weg5w8q/+0M+XulQjVgGnXIvXw3xCVLqf6m
+         Is9oi/xzTMlCtF8Y35Ov6Dv0BQU87WSPEOTNnnKI38dAuO78/NNTyKQ+Jm6ZMdi0a05t
+         UPzfU1zoSiwIhiS9cv6fgsl7Z5xx26DpRXpqO8lnGq03UPEfTI77OMM/g/yhB0EnFmse
+         NoQZYx7lW94A9SxfqIZlEzxiRBBv/a3i3aEavNQHktDFIRiHeMiHUWRWIkGEPNHbRPAv
+         karg+3PX7KVNWSQKFvA+0SwOUa6Tc9owtHHXn/4Iuo9ihydpofQIjQBbnSiKDA4SriSx
+         wnFA==
+X-Gm-Message-State: AOJu0YzzwBLwSjZYNuLL15vUBWEbVty33IKxJ/hHeXct6hAK89Ma6BNS
+	b7e3S2//NrZuQ6L6o5pzNG3BW15Yw6IDNe5PwwTElkKjW4ZiSHhL48q6K52PlA==
+X-Gm-Gg: AfdE7ck/a3wFbjfrdLZdLznhpsMakl1+jhjqQeY9utZOliHqLJFAzhzkur3/BUV0mDV
+	dCaRNChbPDWCOrJ7WI18GUlxDHv253m6KjcuTwLuKIxAFw2dIfaTp2EEas5u5vHJNZKk8OxN7CL
+	3JcqF/ZSHAdvo5dE2vcVpsbqv+d+NagRc+1uNOGmnAbLmhDFTuy1T8iNHc1FyXbCsTkFFLWVqYN
+	ZgEcLsmTt3lQ6O8Z01HP8vZplqTXTce+5BiWy7EO+caAgJQI4SuBOVkbg62u7YPbUSHW0bA3j48
+	taqjxUtxnAEIv8ZEYVHDN+3RHCsSNHT9Vmo7JMQkhcnKBXd0QBIbgDDEJWCiho9RbgMLCBTUBfL
+	KyVBYfoSm/tEhwfwyafihFa2hAghwsW3XKe9zJDpGs4GFxWJj0JMWlF1+xtZqFFpCcw2oPiAV2K
+	1zHRU/fa5rfI9l+gHdvrrkjqEi5p5dpFDBt0qCkcFdSshEn09r7ib4nld1ngbZZ39mbO3+2PyTV
+	yT84u1AyrfacU0HQzw/Puia/h+84hoXZzn5gsip1F0ECw==
+X-Received: by 2002:a17:907:d041:b0:c15:d608:f112 with SMTP id a640c23a62f3a-c15d608f600mr511554866b.58.1783686419442;
+        Fri, 10 Jul 2026 05:26:59 -0700 (PDT)
+Received: from M-K2012N0113010.localdomain ([88.119.128.229])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ce1b374asm405212966b.60.2026.07.10.05.26.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 05:26:58 -0700 (PDT)
+From: Paulius Zaleckas <paulius.zaleckas@gmail.com>
+To: git@vger.kernel.org
+Cc: Paulius Zaleckas <paulius.zaleckas@gmail.com>
+Subject: [PATCH v3 0/2] fetch: make submodule fetch errors configurable
+Date: Fri, 10 Jul 2026 15:26:51 +0300
+Message-ID: <20260710122655.3066377-1-paulius.zaleckas@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <27216.58259.815175.923629@chiark.greenend.org.uk>
-Date: Fri, 10 Jul 2026 13:20:35 +0100
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: git@vger.kernel.org,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust
- rewrite [and 1 more messages]
-In-Reply-To: <c8b81987-ab56-4d6b-a650-879b84597a17@howdoi.land>
-References: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
-	<20260706115816.20267-3-ijackson@chiark.greenend.org.uk>
-	<9ef8cfcc-ab47-479b-9f23-71ba99e1e56b@howdoi.land>
-	<20260706115816.20267-2-ijackson@chiark.greenend.org.uk>
-	<f557bfcf-ffd2-4903-8015-97fff97dbe09@howdoi.land>
-	<27215.27575.968985.583226@chiark.greenend.org.uk>
-	<c8b81987-ab56-4d6b-a650-879b84597a17@howdoi.land>
-X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
-DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/96/9679f38b4e3b38fb6c06c1224458c133.pem
+Content-Transfer-Encoding: 8bit
 
-Colin Stagner writes ("Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust rewrite [and 1 more messages]"):
-> In retrospect, "top-level" is ambiguous. "Upstream" and "downstream" may 
-> be as well. Within git-branch(1), the phrase "upstream" refers to the 
-> remote tracking branch set by
+When fetching with --recurse-submodules, git currently exits with a
+non-zero status if any submodule references an OID that is not reachable
+from the submodule's remote.  This situation arises naturally when an
+upstream branch is still in preparation (e.g. a topic branch in a merge
+window): the local branch does not depend on the missing commit, so a
+hard failure is unnecessarily disruptive.
 
-Upstream and downstream are of course relative terms.  I think the
-git usage you cite isn't quite central.
+Patch 1 fixes a pre-existing NEEDSWORK in submodule.c where a phase-1
+fetch failure was recorded immediately, even when a phase-2 OID-based
+retry was about to be scheduled.  After this fix the existing fatal
+behaviour is preserved but the logic is now structured so that errors
+are only recorded when the phase-2 retry actually fails, or when there
+is no phase-2 retry to fall back on.
 
-> git-subtree.sh doesn't really deal in "upstreams" in the git-branch or 
-> git-merge sense.
+Patch 2 introduces fetch.submoduleErrors (fail|warn) and
+--submodule-errors=(fail|warn) to let users opt into non-fatal
+behaviour.  The default remains fail for full backwards compatibility.
 
-I'm using "upstream" in the wider sense; here, when you import a
-depedency you're downstream of it.
+Changes in v3:
+- Report a phase-1 failure also when the gitlink commits are already
+  present locally, instead of silently succeeding
+- Route "Could not access submodule" through record_fetch_error() so it
+  shows up in the error summary and honors the warn mode
+- Forward --submodule-errors to child fetches so it takes effect for
+  fetch --all/--multiple and nested submodule recursion
+- Add tests for all of the above
+- Documentation: don't imply git pull takes --submodule-errors, minor
+  wording and placement fixes
 
-I'm open to better terminology and now is a good time to be debating
-this, but I don't like the other suggestions so far.
+Changes in v2:
+- Fix option synopsis to use (fail|warn) instead of <fail|warn>
+- Add --submodule-errors documentation to Documentation/fetch-options.adoc
 
-I want a term that talks about the logical (even, social) relationship
-between the two projects; and it should be one that makes sense from
-the point of view of the upstream.  Talking about the file position
-within the downstream tree doesn't make sense from the upstream's
-point of view.
+Paulius Zaleckas (2):
+  submodule: fix premature failure in recursive submodule fetch
+  fetch: add fetch.submoduleErrors to make submodule fetch errors
+    non-fatal
 
-> Both of these deliberately ignore the dependency relationship between 
-> the various projects and branches in question, which can potentially get 
-> messy.
-
-I think the dependency relationship is inherent in git-subtree's usual
-use cases: suppose a project A gets merged with git-subtree into a
-subdirectory S of project B, so that B.git:/S/ is a copy of A.git:/
-
-Then I think almost invariably, this is because A has B as a
-dependency.  And A has B as an upstream:
-
-Code that's part of B flows from B to A, and can be edited in A, but
-the canonical version is that in B itself.  If there are multiple As
-incorporating the same B, they share via "split", which produces
-history "within" B.  Thios seems a classic upstream/downstream
-relationship.
-
-As I say, I'm open to other terminology but I don't think "root tree"
-and "subtree" are the general terms I need to describe the
-relationship.  In particular, from the point of view of the upstream
-project, it is its own root tree.
-
-> Very well-reasoned; I like it.
-> 
-> Let me ask this question in a slightly different way: does RIIR subtree 
-> honor config files in locations other than the one you test for above? 
-> That's
-> 
->      ${rev}:.git-subtree/config
-
-Yes, but not relevantly.  Different information is taken from
-different places (the design gets a little complex to make sure
-everything works in all the use cases).
-
-> > Combining manual -X subtree merges with git-subtree --squash merges
-> > could easily produce quite weird and wrong results in the tree
-> 
-> I haven't tried it, but I think if --squash is in use, then attempting 
-> an unmarked subtree merge will probably die with "unrelated history" 
-> warnings.
-
-I think that's not guaranteed if squash merges and non-squash merges
-are interleaved.
-
-> Looking forward to v2,
-
-Thanks for your support, and your critical consideration of the design
-questions.
-
-Ian.
+ Documentation/config/fetch.adoc  |  14 +++
+ Documentation/fetch-options.adoc |   8 ++
+ builtin/fetch.c                  |  41 ++++++++-
+ submodule.c                      |  58 ++++++++----
+ submodule.h                      |   7 +-
+ t/t5526-fetch-submodules.sh      | 148 +++++++++++++++++++++++++++++++
+ 6 files changed, 259 insertions(+), 17 deletions(-)
 
 -- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
+2.54.0
 
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
