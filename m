@@ -1,84 +1,82 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB23D43B498
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7CDEEC0
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783702336; cv=none; b=EKfItjlGm2vr5eM3npf9+Y+RnP2fRN9HKdoR5rQ7WYBhtGYknXumv7xLToya/ziX5mQl8qLropIaRUqIt/5P+NAkimnWk3yfuuUX02yhLJfMPg7IZCcfnqtCH0Hr5fwGqdqgUUqwR+8rx6L8c6JUTVXHSfqwOlYEhQZSnzSpifI=
+	t=1783702633; cv=none; b=oTg9oTbPpgyUMA9BoHqsxlW6lKhAL8AYcHBa1tnBZ1917lc9A7oB6G6GCsJQiqdN/ZtGoV6gxOZJoaFbKhty6wVsazqFMPmWXziXupDYHURoNvID/hibLEPw8BKH/dMj58beqUzYRiNxvi9cXhgS55iAYALH50+dWvGDk0M0fNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783702336; c=relaxed/simple;
-	bh=ojBXoqm2ONbR80i0AxcxuH6iYUf5ohvDoLarJw9cYMM=;
+	s=arc-20240116; t=1783702633; c=relaxed/simple;
+	bh=8MdhQ11Pd5r8TsjjXKGIPa6kIZ+mK9dkDV8lnMaPz7Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QFA4vUd61vPbl060yiQrvAJv9vzjTf7W4j5vxIAPFC2175dn7L1BQFjNUOxGQdnGid8Rg5Do2C31SMQ5tG+947T+QYNWJlWRyzEtf7RAlCyjOebLNeZIEatzPVjRrHMU4uJ9pUzKNPHQRxNqbAdBjHAzEPHqmvl8q/GPX37d/2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bBsBwukE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kEy6Y55O; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=UK4sqzJ+qkQwaPlrvmreVJmgYxvHX1vgV+pRxWKJTUYKUa2vDVvesJcb9wwAvOao4j/Q0bLfg70gAoyVv3tFMB7BLTmylR6h7DIGewtznhQ7KTsFelvVv1LE/DJzF7YbI6OdKOmbo2CsblTabVY7V4eEBgOj/0e/tIQHTiPwaaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OHBC16Hq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vkmwcbf7; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bBsBwukE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kEy6Y55O"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id B2DBEEC0183;
-	Fri, 10 Jul 2026 12:52:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OHBC16Hq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vkmwcbf7"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C3EA814000CB;
+	Fri, 10 Jul 2026 12:57:10 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 10 Jul 2026 12:52:13 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 10 Jul 2026 12:57:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783702333; x=1783788733; bh=00+54WCGhj
-	J/mJ0gE8LOUdwQX84A7kC3h2SCbsoMm3M=; b=bBsBwukEmW19AmnhzODbpR0daJ
-	tDoZ84Vbpf2Ik1/91sqaNxAzm1q8XUy7knP8eyJ/nsfYJf4Q2OIcQKuJBWFeZ8gE
-	VbQ5WjWJSHF37xkMS1rjq5X04aPosr49H0LqnsBoAptz8dTKUSh7lNltUf7BhR7z
-	lsHQeX5MHgpIs8x4swH+9BdCjQAaO3cWff76GILRxINWc4xlKEhr4Dj8ANw5BV2z
-	rZbqvZ1mJT/eZFlNxvPJiCzsf0MFlau2YrSW8Tqwd9u9RZcsh5T7NB1uy79h7ybO
-	PF1MqIA0XW8hngMI0HfHNqJQlnAnnN4sRVo0gp0fgeqPQhczjRk5b7sLcqjw==
+	:subject:to:to; s=fm1; t=1783702630; x=1783789030; bh=UHXcDii2Zo
+	zJK99Il8RT6yEls6bl7PjW4YZbvcz9gr0=; b=OHBC16HqjFN7/Y1Vbp//Y8ynui
+	6c4Sz6TMPxorSWJ+GU0XJkBFWIyupUpC5Jeh0+nmzyq3LTSMqW9jD6i+soAIUehe
+	8hcQtF00XZGoubuGtAKlmxUFJFJpo1RTnNSywEjK4G7pX5ff/87DAoCds2rJMaNT
+	MJZWMEoqoejLdKaOPb9GcDQtDTDd+pu2z1NB7/nV8FMFayy27i+QzDXdLCCp/m7x
+	ZMqC+hD+ZuJapNDQN2yWtTC36HghjUlyHZlX2AhcFgjRzIw8lFFNILOqa4WVK4SK
+	Fl4TUuOddlYMYUvrXBwIVcn2SYztZ5K6pP5lvUlCo4Cp42ahenUFCc67KMBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783702333; x=1783788733; bh=00+54WCGhjJ/mJ0gE8LOUdwQX84A7kC3h2S
-	CbsoMm3M=; b=kEy6Y55O6+ZkClPxe6s+Vg7ECJ3xpAzWhgn1ZgwYQeUFqg5Hq4h
-	gzUj1baiL4w4zpMpdLSRgtmtQZgXaWqrWRcwhgioNYFGgnWkvH5xmX8OOVoqFr6k
-	HVYRi3shrlaId7zCzPny3FPmHGXZWtrbFmY01cruUgOprp7fh4QSGxIWX2JSUuGH
-	C730y2hiAmB6Leh5ogQuc2p6g8tVMYkUt//sNhFYOX5k6tYTRYh+Ra0LG9LCyFsA
-	bKNfolfTCpdFFbFQxHGzwhV7Z/BffPytNNjHzwLiormKGzSn8NC6+RCEAT+jEC0R
-	3zNvTLxyhOeASQZdpvoYGquaP3gD7IDvPAw==
-X-ME-Sender: <xms:PSNRahn1qUhdgMs9c36Vq9Ez4xQ8nh0Q3q5nwIUhLRxoDN0qEjQkwA>
-    <xme:PSNRaj2SzKbzJLVK0l5jurzwV3qYvivddmTvMKS70JQYh_CbZDfKG9GlPeULLD-LJ
-    D3zwCwmRTl718SQTCKw4LuOvdZsI7YTCeFoNqmDnJjxhpL_-E7INA>
-X-ME-Received: <xmr:PSNRasofo_QjHJlCjsJBKoe9l8LdZa1prFIWDbvFGfwDkKiH0nd6W3r-VrpoRebMNYRG-TnPNLqaQ6eGjjKBDUWiUkxjPuW6fBmYjkc>
+	1783702630; x=1783789030; bh=UHXcDii2ZozJK99Il8RT6yEls6bl7PjW4YZ
+	bvcz9gr0=; b=Vkmwcbf7denbATsFR1Gch8T6PT0Cz5att9K3Kk9cgSofXOJxP5R
+	RAzs9kqeoklmmoFtsiGv4KSaoi+CLyEe9uCbS2Z2ROtrVaSGj8Mb0JRJNOi6xsQQ
+	FVd12vf5AWUaNhdblnyB0oaL/rqYlEZ6FUAEzkb4cwAGViid0DS0KIOZnyfTS8Se
+	JUWGvMOSUgllSxUqgQ06bbo+eZ5KJkQ+CcJXHansWLMqFGPOiQvVr+LLP7/ezmYj
+	wakWJpdVdWq+Aqyfti3SeP8V6/EpIiUr0SjjcdRAZU9HBNMaqlOLexGfy2jjbTxX
+	DQJbXS6CaM8qucTUptke2twOp7BL6qwGSDw==
+X-ME-Sender: <xms:ZiRRangMikCC7p-EeVKJ5xFahPH8qAPrGFBOr5k0TzDCwpBRhWkBVA>
+    <xme:ZiRRarcWbcJ430cOuhY0MNrSG_3dCoR1gzEAwpAZ_m1viJ934-MV4DLtAvYIAwnBI
+    I8xK3eB0zE-uNO6n1xRYMPR5uCp-yg95fMyRRox56E99ey-Tmsy>
+X-ME-Received: <xmr:ZiRRakceDaJp37nRlnHBrfSnexNnOA1Z7po89ntyeLWWvt6pcIw7sfYT4J4rQ4QlDkgUP5T7_UugzjisfNPJsK_bvPdkkU_zV9YOUvI>
 X-ME-Proxy-Cause: dmFkZTENMrUIag1y80ks3y6Gej5/2N5plugUEJes8kQ8t1JuCOCjIEcgNBFzrjyqCQ5vya
     NkAZq5Ch5vu7XjvYyen8sAyMB+xVHHOb2/563PRzWRDYjw0rfAotRTWirLNKDKhBqks3Im
     40LsktI+kNK1006XqIcDe1xRxyRogJsKuE8v993rYvDRmvhBzC1qjU2WzpK5dKmYO8UesJ
     eTEQ5KhoSzkqgd/gCbyFoY+OBYclmazAjq7wgK6TOD7Xim4QMYobFZbkOls3knv19gQ0z7
-    j8jFOVtqforaNM737cZPd16JrSnT6xMjrbhi65MJ8RbSWWzoA+kfqIXDHv7kTDZQM8kEGb
-    yCwtdHi8PIt1/X9/XpwNU2U0WPYGGrZmYTLWu52w0GmtNe6rGqOOl+oXLlf3cLxs1WSLZB
-    xFWfyCx1Bzkd/+OH0P2y95/dKgGPrPh+NCwXxf6bODTSFIWABb4X4Ca80GuhuFBBYPT+q8
-    QoV49CmG7wY03MFHt+08Rf2qnh4jhxthbJGhg9SiPwvAiwd5cW3onSUPgMlgf5+GNJgcB6
-    zWVYXvcfRVNJBm3YvhfITnBt94+0meHb6jmODSetGjG/J5JEFTMdncWMl+QbYIw9us9FDY
-    OrHpo/LzHhMbtwIy1cQ2+A4SeCKXMlmsM4tdQ7eFz9sCvC452N388DESNF4Q
-X-ME-Proxy: <xmx:PSNRagcTXAuaKVcZEBciK1PlU-XEiWr0O4iV8-6cF7vV4Ijqd1K9sg>
-    <xmx:PSNRarqZAdkxcfVezbVkVh64VZvtHhocYwFSgLnzUzKUfPxqx0e71Q>
-    <xmx:PSNRahHe2SePBzsSAUk0xTqBtiNTxGoWOQS_n8W9bCi2-EZTIdwC1A>
-    <xmx:PSNRarvm3bKlF7Wk-zd_y7Pu_AthpFGTiI0wZkKY5MzAzgAW5grQ9g>
-    <xmx:PSNRaoImdvzvvYlJUuEk4bdWTt54D8_175cTinQ9e_HPqhKH1aJgTE2D>
+    j8jFOVtqforaNM737cZPd16JrSnT6xMjrbhi65MJ8RbSWWzoA+kfqIXDHv7kTDZQM8kEVV
+    oJxNRnoKAcQjVS/1oSOceRzrCaKEw0XyGTAN/jbR2+Q83A103F81zw9yYET0i/2/SXJlSU
+    RRfvjnyv+htI9wAGwhJ/Piajya+2rNUsEhMQwj/OgKv2QP88BMw9zMiGdHt2UmhIqmS2la
+    UQKmLnXE87X+LiX/B2wfbU3GpcPsfVtD1zHrML0LIbp0oQWuLnoZ7OvfagdjPPNquQKbkR
+    NTCd013O4zeTAECCuYkmdLSaHLxDs5wDUBl+hLezxK7etv3R5P+KyCM3I8RRViW9fNdg/D
+    cVVO10x0T+Bz8bRsHajDRGpvUeet78yI2bYZUevY4Tp0c5z8FI0Qs0e3erQw
+X-ME-Proxy: <xmx:ZiRRat8xCC0K0KvwXVva2H0d755tXzQ45INKEexgoQFoqYQxXtOYlA>
+    <xmx:ZiRRaokRQU95F_VYEV6aL2-P2buAOOqJuhDJkfC8C5NDPr6iS5XEjw>
+    <xmx:ZiRRan8OUzd7mgK0U3Zom93k6nI6XGqyJT6kd6y14H-_ezoQyHc49g>
+    <xmx:ZiRRaulPShoH5VoghiMo76T_UM-N3A-eKJCn3NBxmZv80R1tDyekSw>
+    <xmx:ZiRRajksZZCt9yVJxNyEmQ2-4v318Kjux1k97QrXDsqW40w8x8OUIMKR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jul 2026 12:52:13 -0400 (EDT)
+ 10 Jul 2026 12:57:10 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 11/11] builtin/receive-pack: stage incoming objects
- via ODB transactions
-In-Reply-To: <alEBEbwOMFkVfuk9@denethor> (Justin Tobler's message of "Fri, 10
-	Jul 2026 09:37:19 -0500")
-References: <20260708041412.1157499-1-jltobler@gmail.com>
-	<20260708235925.3992097-1-jltobler@gmail.com>
-	<20260708235925.3992097-12-jltobler@gmail.com>
-	<xmqq33xsrfeu.fsf@gitster.g> <alEBEbwOMFkVfuk9@denethor>
-Date: Fri, 10 Jul 2026 09:52:12 -0700
-Message-ID: <xmqqtsq6dbyb.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/7] refs: remove use of `the_repository`
+In-Reply-To: <alCN2Afi4gTSSajg@pks.im> (Patrick Steinhardt's message of "Fri,
+	10 Jul 2026 08:14:48 +0200")
+References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
+	<xmqq5x2nlwyg.fsf@gitster.g> <alCJgLcjXKEgNwFF@pks.im>
+	<alCN2Afi4gTSSajg@pks.im>
+Date: Fri, 10 Jul 2026 09:57:09 -0700
+Message-ID: <xmqqo6gedbq2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,32 +86,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Justin Tobler <jltobler@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On 26/07/08 08:49PM, Junio C Hamano wrote:
->> Justin Tobler <jltobler@gmail.com> writes:
->> >  			update_shallow_info(commands, &si, &ref);
->> >  		}
->> >  		use_keepalive = KEEPALIVE_ALWAYS;
->> > -		execute_commands(commands, unpack_status, &si,
->> > +		execute_commands(commands, unpack_status, &si, transaction,
->> >  				 &push_options);
->> 
->> And in such a case, execute_commands() returns without committing
->> the transaction.  Is there a need to add and make an
->> odb_transaction_abort() call or something in such a case?
->> Everything should be cleaned up upon process exit, and on file based
->> backends, we probably let the tempfile/lockfile API do their thing
->> to clean up, but are there other things we may want to clean up?
+> Hm, curious, I cannot reproduce any of these failures at all, everything
+> is passing locally when merging "seen" into my branch. Did you maybe
+> mismerge the changes in "setup.c" by accident? That seems like the most
+> likely reason as you mention that it breaks lots of tests, and "setup.c"
+> is of course involved with all of them.
+
+It is more than probable that it was what happened.  Will retry the
+merge during the integration run I'll make later today.
+
+Thanks.
+
 >
-> As you mentioned, if we exit before committing the ODB transaction, the
-> temporary directory will get cleaned up when the process exits. I don't
-> think there is anything else we need to cleanup that wouldn't be handled
-> at exit though. Regardless, I do plan to add `odb_transaction_abort()`
-> in a followup series and I think it would be nice to have an explicit
-> "abort" here when we know that we are not going to commit anyways. I
-> would like to defer this to my next series though.
-
-Sounds good.  We cannot trigger receive-pack as a subroutine call in
-a long running daemon until that happens, but that is OK for now.
-One step at a time.
+> For reference, this is what the final result of the conflicting part
+> looks like on my side:
+>
+> 	if (real_git_dir) {
+> 		struct stat st;
+>
+> 		if (!exist_ok && !stat(git_dir, &st))
+> 			die(_("%s already exists"), git_dir);
+>
+> 		if (!exist_ok && !stat(real_git_dir, &st))
+> 			die(_("%s already exists"), real_git_dir);
+>
+> 		apply_and_export_relative_gitdir(repo, real_git_dir, 1);
+> 		git_dir = repo_get_git_dir(repo);
+> 		separate_git_dir(repo, git_dir, original_git_dir);
+> 	} else {
+> 		apply_and_export_relative_gitdir(repo, git_dir, 1);
+> 		git_dir = repo_get_git_dir(repo);
+> 	}
+>
+> Thanks!
+>
+> Patrick
