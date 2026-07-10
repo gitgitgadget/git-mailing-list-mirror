@@ -1,113 +1,111 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3A43B6BF4
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 07:09:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F231938F92D
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 07:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783667358; cv=none; b=fB2I4vYCKt3kSwsTRwVcsQMw+bAJGbbtzncYcH69Ptboz0RavOet176BVwLQh7x+yllV19Cbm511DAOR2BTBjrigb7HUc69ILe2KCBRil9DbDAI9rWtvI2AG6lQBWO2cqsYqJGhj7kX9myDYI0uE9GyQYKMri6ufqeZ+fytCR+c=
+	t=1783668146; cv=none; b=AfTArjeFPMXELhexFh9+bRym25k75cl0ozOYBn6vCY7Ef1kXAQW8aQCLpkqt+bmLMPIxLtPOjJ881xLDTiYZHKqSii/Mp7abxLAY7KKUesX929zaYo3uluiaNE8agPYdQKnd1rVTYY5zLZo1Trg9M9JrAZtLFWaKMPmxqGYrO88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783667358; c=relaxed/simple;
-	bh=zwhfLm4hw2lZQQcbylTni2aQVkA5XCpUV1nBzwN9+NI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xyhzo7fE792JbUXm8hHZ7af5H+ZLYAHBSDz8DxaMrPelX3FwHSC4BYolj+16sbQDIW2eGPmwMwRRbiYFCP9vK7VZn03GhOjKMm+d97T18tTdJNvJoIdddFzbCZz7UTXFqsqPtWV0gUSdQ67arNeKkzkoi3Mb+3hs6z1o5JNm6IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kqmTBUac; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bKSndQkC; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783668146; c=relaxed/simple;
+	bh=mZs9++8NZI44wRKxDsBDqfVOEI9vv90srf5/tDuO72k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jycFb2ad8/DKLBRZkYT6oRriR4YFqTD29o3+tUU5AHxmNEThr5Uykl8/1Jj4YKUW4zyH9uYaf775DwCB7NXv8x4KLG+Oz+eckqEBJvvKLxn1ISNfZVX6ldKJdhuphKU1PDfWR4oSE0yo/3H4Si4Hj4KS9daetOW0gf7x6C4hTpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P075iswn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kqmTBUac";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bKSndQkC"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7A4D914000F9;
-	Fri, 10 Jul 2026 03:09:16 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 10 Jul 2026 03:09:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783667356; x=1783753756; bh=kztKf2Vbph
-	kuolVwuzlW0C5bihHAv/B2BIiApGJRbgY=; b=kqmTBUacRgkC/2cwonoQ+xXcTj
-	80hxo5pqOQPeFUjDjWV+i3mwkg7LEDQ6ja8/F/73MdB2KTNduu8JHSRSCjKvLXVT
-	GsS0Hc26n32kP2gdSk/7UttN1lQjb6y/Aak5Crs9KL94fevxaD6MQFtJwUi83g76
-	hqkAWgiGVlOfe0InBntTI/No7jqAuFW5/muL+EjTkmJQANADmEWNYUQIfzUn5CZu
-	96VgDgHdXx2OoxYcnqKe1HgcPL2vkhu+wsh2ndOzTSgADlhy4FYOAd/2YmYW/skm
-	wuu4rVkhRLf4mpfKCnByCV9jK4m5EFN784fuKyWIKVHmR02WUhe/0gOaNOxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783667356; x=1783753756; bh=kztKf2VbphkuolVwuzlW0C5bihHAv/B2BIi
-	ApGJRbgY=; b=bKSndQkCFTnDjig7Kma4h+H4VsSfscpIa0so6sAnq9GowhrXwsa
-	hqutVc5sJBNOXxDUi/C1BBdlpCcw3BBRwCCxTaN+If20mYOz2HvKOOMj2qXOmeDi
-	Mn6y7LcCq6TPbAn9brru/oRt4wNwkeMInzM+l41NMZ5vKNyhwkCSyjcWSqSyYzr7
-	gNP0fgDLviJ98w/t8tRkESl2kblK34puvWLBAnZTrK6kqeKgcTexShfsdlyWVM30
-	ja/knfZFhoJfjRLoOg4i+21nByg4LZmp6ON+V48GwMegFvWg5NpQyv6f7VStcjou
-	7bENGRD332OhNvYuAVoC+1875cfbPhRY62A==
-X-ME-Sender: <xms:nJpQavr6SlCCS3pi2jky2d-v6b6c7VrQIHlQhUr_dnZaysOk0zgptw>
-    <xme:nJpQap1uKuwo4S8gJq62TkADjE20tdqxItr08Bvf2sT7bF9VrwVJkFhmt7ihJz3Xp
-    X8QlRdeTByX3450S_fwTPR2A3rzF8IZOHEvQBCvMNsS1Rlefr3p>
-X-ME-Received: <xmr:nJpQauBvCPQ5uGEJyzZH1MCK_T5dFCxve3j5tRMOiNTPcOltOliuUANepAKBJ6KrN__IPC-Wc2eXMrcRz7JSieaypGTnuLNPYP7dj3QLQU26Qw>
-X-ME-Proxy-Cause: dmFkZTFmTNRP0R48P5wb7cO0YdpXGGYfW63f5ZNyVaXq+93LM/EXDPDEGXJziJrlKzoLbj
-    WNPjpGbW/ePmtnBZeUA05dbe3uxQr5J4A8WtN9ffBsvDc48ELSYvQd8VgpRqwunlfLwp3n
-    mCiFiW+H9XlQzfv7oBRrS5qJ7ZTzxqJd7mpJGwYGgfTGicwWFxJFr9F2L93pen4SGSzqpd
-    OP4bcczGDnrKUfw4wj7oHzWqtFVaYSRfxXC14KJ4zOr35EaHtxn5vLcF0iWY2fvwSZtjSX
-    RSs2S6rURH/Zg24vduS7JAIAvEIzlprt16R25l7q6aNPVITAL6xaHQBUA1vTCXF0SrsMHR
-    pSoGQIBg2G6aw1UxQnLS1//1SilmVOE/qiB7txZlnSAQKVRqY1fNLjakJauQvUoaaPx31A
-    Mhvvod/O/cmYilKlJ0z+lIqQgz8mHFM6IxrHS6uaEbSr+4cjOZomwrNWOpADhgPE0qrnSW
-    64zUm3o0/sYRURtn/esiJlCwia3r7rm37AwS4xusUGk2IVdrtctqwNOG4gmiZkr//KKgQk
-    +OOxQri4rz9KrLZ6mVRC0AhrytMUXBN0jn6westB7d+boxhQ71iIpYAAs/mywqjDGFoQwL
-    YAU7YQYxZAdkLKCXk/eQ8BKUopVo6/aQ03gh/ilsthlQweJGLoP79QAV02kA
-X-ME-Proxy: <xmx:nJpQahdgYcizXVYwwr7d7lT9xztya00-cJM0buqzL2QtcvbOYzoRog>
-    <xmx:nJpQajh_lvK97ABz_RhuZh5nCCfhOW8z4zfqpREhCVmh0iJhEYbjGw>
-    <xmx:nJpQapotlTOeTtIQMvGJNasXM8flE9ybwBQD7Pf1_ZYKQGmN2cl6LQ>
-    <xmx:nJpQajG-RkVZiCQusd-gTlgFDJbvVhIxSr0bvrr4RuhxQ8RZhv8JWA>
-    <xmx:nJpQaqP7hvyrBqapuEZeDQ4foDS44vVHdz9b72J18Tx31lux_VRwpdXE>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jul 2026 03:09:15 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id aacd0418 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Jul 2026 07:09:15 +0000 (UTC)
-Date: Fri, 10 Jul 2026 09:09:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/7] builtin/cat-file: filter objects via object database
-Message-ID: <alCamGRrhBJgvMKQ@pks.im>
-References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
- <20260709-pks-odb-for-each-object-filter-v1-7-82fe014b12b3@pks.im>
- <xmqq33xsoupa.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P075iswn"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 950B2C2BCB8;
+	Fri, 10 Jul 2026 07:22:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1783668145;
+	bh=mZs9++8NZI44wRKxDsBDqfVOEI9vv90srf5/tDuO72k=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=P075iswnFgt7C36osYh0xWXDtTzgzUuzZXLzr4TdpYbLmxbpyLVSgAD8rwHv9wHDR
+	 jE7I5L7B0W7PPXyD2LMwkNupEsCB2kHp6kzpiqtUajNIUgj2WS1lhBsbv5mj+ty7Mm
+	 +21e+uI/U6zTivXkZSos6udefKAvkXTvEg6WkRXNw60YWpDzUjYHM8BYyrojO700oE
+	 uJ6ghbt7qJqLCohJgHvdVR5ptiE8pE2cwV1qKD3Y7cx5fBdw9N3pjzoDtVeQI5bZtP
+	 VpFcrpyKCnLV+6tLenohGqVttLQ8dlJ7Z1/0p/4WgS4cQEdVHuOw5nhFnAX29iSfbL
+	 isdpJLoIPaocA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 713D7C44501;
+	Fri, 10 Jul 2026 07:22:25 +0000 (UTC)
+From: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+Date: Fri, 10 Jul 2026 15:22:13 +0800
+Subject: [PATCH] b4: include change-id in cover template
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq33xsoupa.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260710-add-change-id-to-b4-template-v1-1-1bd37a25064e@black-desk.cn>
+X-B4-Tracking: v=1; b=H4sIAKSdUGoC/z3MTQqDMBBA4avIrDswRmmwVyldRDPRKfWHJIog3
+ t2o0OXHg7dBYC8c4JVt4HmRIOOQkD8yaDoztIxik0GRepLOCY21+C8YR6xLjNxPPxMZXeWsoqr
+ QpDSkxeTZyXrt35/bYa6/3MTzCft+ALVVBJ+AAAAA
+X-Change-ID: 20260710-add-change-id-to-b4-template-f9fd20937027
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+ Chen Linxuan <me@black-desk.cn>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1265; i=me@black-desk.cn;
+ h=from:subject:message-id;
+ bh=HuviA3htWPIWMaE9A8vkJhpFqEe5gi8rdGO5ZW4cI1o=;
+ b=owEBbQKS/ZANAwAKAXYe5hQ5ma6LAcsmYgBqUJ2lUMR26aObJXj05ciU5Hw4Y8fKpE7espKtp
+ srPryG7qvaJAjMEAAEKAB0WIQTO1VElAk6xdvy0ZVp2HuYUOZmuiwUCalCdpQAKCRB2HuYUOZmu
+ iz6gD/sHBmhNlHOvipXHFAXMpfmx71IcfCGZ2TzE9XTQQrX0sGy53+4zbijpRbwUxLyw/fKLi+e
+ TuKBPHkXWuvqXhwgM3ycMjGrckAavYuWq5d51gb6mpy/GhJYyOX8V3IjJFkj5Yt50Q1yOpd5SZY
+ 38/hkt9P/maNAWcNv/VT7Sfut3/XPkx+Cw9LeAyJOP6PyrLSPWR9Pg4Ktm8l0Ql+D0P4+rUijFu
+ irIu00S0wIDQ5R+HD6GRFh74ZCn1JcfNED7VLdHybJMNZNdxzei93P0regAzndJvYKQjvE412+y
+ V/PR0K5vfz+D8iI4Xrgei8MLlAjrfoO+qsWvqb/CQGukfGR6pU9mpgVH+YeCX3RRSOLmC7Nm2iQ
+ 0Dqvx1z5qjzABkzcODwHWzTWh8OskM2DNNgSt/w3P/GOPc45Rh4Dnh0Xa/SLF516awpxMKV6Nm3
+ 0Jkmi/CvDMFdHrkOVJhE9OMlOsthxSJS+geMYCKkbznSHsAX0BjssJRqeRIZB5A/bhJIh1ckGNv
+ IPmAA7Pi4LOqP6MiGeMZ2JGRlL8pOGDKFRpScbIipBoJ5X5R4kKn/KbEtoB3wjdVzqSXrWGqQOp
+ ZSNtzV6MwgR99pqVJ3XVayeXaNlh6hgIfKBXxR2i5YbBjoBIauhTbXazQT+ui5dvxhlFvW4xPiT
+ pGHaZANG6kSnz6A==
+X-Developer-Key: i=me@black-desk.cn; a=openpgp;
+ fpr=D818ACDD385CAE92D4BAC01A6269794D24791D21
+X-Endpoint-Received: by B4 Relay for me@black-desk.cn/default with
+ auth_id=573
+X-Original-From: Chen Linxuan <me@black-desk.cn>
+Reply-To: me@black-desk.cn
 
-On Thu, Jul 09, 2026 at 11:59:29AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Refactor git-cat-file(1) to use the new object filter option when
-> > batching all objects. This significantly simplifies the logic and
-> > ensures that we don't have to reach into internals of the "files" source
-> > anymore.
-> 
-> This would become more convincing if you spent a few lines before
-> presenting the solution to give an observation of what the current
-> code does, e.g.,
-> 
->     When batching all objects, git-cat-file(1) reaches into the
->     internals of the object database and manually manages bitmaps to
->     apply object filters. This creates coupling between the command
->     and ODB backend internals.
-> 
-> to highlight the perceived problem in it.  That would flow naturally
-> to the description of your solution.
+From: Chen Linxuan <me@black-desk.cn>
 
-Good point, will add.
+With b4 0.15.2, I hit a local failure after sending a series with the
+in-tree cover template.  The generated sent/<change-id>-vN tag contained
+base-commit, but did not contain change-id, and later b4 commands failed
+when trying to read it:
 
-Patrick
+  CRITICAL: Tag sent/... does not contain change-id info
+
+Looking at b4's source, the sent tag message is derived from the rendered
+cover letter.  The same code later parses that tag and expects both
+base-commit and change-id to be present.  The default b4 cover template
+has both trailers, but our in-tree template only has base-commit.
+
+Add the missing change-id trailer next to base-commit so sent tags
+produced from the project template remain readable by b4's reroll and
+comparison logic.
+
+Signed-off-by: Chen Linxuan <me@black-desk.cn>
+---
+ .b4-cover-template | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.b4-cover-template b/.b4-cover-template
+index ab864933b5c8..8168d8a10b3a 100644
+--- a/.b4-cover-template
++++ b/.b4-cover-template
+@@ -8,4 +8,5 @@ ${diffstat}
+ ${range_diff}
+ ---
+ base-commit: ${base_commit}
++change-id: ${change_id}
+ ${prerequisites}
+
+---
+base-commit: f60db8d575adb79761d363e026fb49bddf330c73
+change-id: 20260710-add-change-id-to-b4-template-f9fd20937027
+
+
