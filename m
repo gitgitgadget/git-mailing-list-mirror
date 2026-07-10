@@ -1,109 +1,191 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D9F200110
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 14:48:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649033191BA
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 14:54:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783694898; cv=none; b=lr098RRkEoq+jWXKl9XpAWOqOgaaxP+ViF+pKCISC6tvOZjGV1fLzaQpDbYBa+LQqALYbt47jj0f5Xz6KIDmVPhpmWsiEID5cQ+wD73teD1MU8c904ruL/b9lKb+SO0vK581zloqAKq7ofQXotSEpMj0MXmVcHqjSP4YbmG2Ee0=
+	t=1783695267; cv=none; b=ntYPKYo7VHhvi2m7P1FYjxNHdd8RMdLlqXExKXhUg94UYhRhzg6cufkbs2ZapZD1fbPJcQMz0Rqq7xdcktV2FkblRfjKsNv9SYPENKIAwcuaUgyzUMJ3KBqhgq/3tPLxNTVLG5gbAP+GA1tvdnf2byCz5KrLFosIggmW695/294=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783694898; c=relaxed/simple;
-	bh=uz7Dp/VDLQoqJ785MUjci5T+A8QXcp4eeAGs/c5MLVs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Uns5gnDQX2ZTbTNMXGCXDlZCI76PYVtB7eOoC+M2MMpLfw6C4LD0qBRnfpCNHGQWxuTzz5/aiE7TxE3TpRmJG5/46qqKSpgwsLSE339sI5IiRTILBbxlwWT81ivOsmWRcXJQnCGZmgoU1Kt3eJ96TzrHf5vu/SDG0b1darxsvoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IFe6H7e7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c904YjSg; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783695267; c=relaxed/simple;
+	bh=ZAe6kIBvVfal/BgoFncsiygWXoeFXrAKO052l8tLAf0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=e0vCpBp3kBLuKonxWUSaPxZWq0PupzKmIlb0K7m2lrbmL97QwEfYglSIfkAD7nS/Wra3PdQmWFktCF7Miq1nfDSK/mxhAtdjGKzY5A3SAG4wMuc5YKFgXZ4rNGr4y3dMAPnVqJiWGfGGzV5mOPmuzsAxMB+A18xNcGXBI12cUZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QdPJvQs7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HeYgABVY; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IFe6H7e7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c904YjSg"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id A8767EC010E;
-	Fri, 10 Jul 2026 10:48:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 10 Jul 2026 10:48:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783694895; x=1783781295; bh=hPTV0EBSCF
-	BiyrSQJtun0ETQ0vSJr69Z/ttyMkGqlDc=; b=IFe6H7e7xIpIyO9GaDV3NUKefc
-	wfpGTHITsyMPcbcv0U8SD89/sVYXyf7iyh7kLILpbKdbUJPZW5ArcHECn3SBPHwv
-	ISZ2+gXIY1tVyxw/Y66ZGWvQVyhP+u+W0Lz+NR32Gs3WQegdRkEMeOopgYL+++2N
-	I/cO62s67dTy2bFGXNhA6GDRZTwQhokxRvh44BGzLpu94/cjk/GBtbSY3SJgbStm
-	c5LHVp5DhX1+rsFBosYKI6+5Ps4JePoyeYyFGjw4DxJhVjTFElX5xUz2WzWESP+B
-	u1N9rVqU/fUQw4TTgokWX/m3or41kPyg0ocdri/q2XTczOvfhlkSYeZyp6FA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QdPJvQs7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HeYgABVY"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9B5CB7A00D8;
+	Fri, 10 Jul 2026 10:54:25 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Fri, 10 Jul 2026 10:54:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1783695265; x=1783781665; bh=r+ls8vx7j2
+	D7BrOo2ZD4fKh1tHzO1a2X2Dmpky8Q6So=; b=QdPJvQs7sScnwUv+OhLq/AMayH
+	HlFGWzGx5yZZzvY93ObvyeAIHgU/EzuvSDqxm/Ho2FUkF0Iwy5YhIQ4AQQtpdykV
+	uQOiaJM7VqJ3/VS5jCpY0q9klqHXcu4Vo/vA0k/85uIv6h3dfh6l15rJVnsbQzCt
+	n0R7xuU+O576F2B0mn0ZiBVw7MOZXd4/30v+bta7xzjj4F6Sv0WBTWKQbIrZ4Yhw
+	a0je1vH9AlWH8NiVjP9+b7AFJ3FUlxkMd3PmeYp651p8+OYS0QzQlNc031XaEst/
+	qabtMSdsxvb3ssHC02lVzyy4YFEj/nvQ33GwhV4DK4NlmIhBF/OPvUZZaOFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783694895; x=1783781295; bh=hPTV0EBSCFBiyrSQJtun0ETQ0vSJr69Z/tt
-	yMkGqlDc=; b=c904YjSgzRNR5hgYklGg/rkdR+fL5uttr7qHIT69Nb7uVIVUIPU
-	J+5ed3iVshOHMulOMCYX5CPG/2OFN9yMX0LX/Q+2frR1syGsUvIxWqWm8oXLidqH
-	4NynHDAv5HwEWjYX2t/MLeE3Cn782E0NJNxppSCxWcIsEz+V8AL1XLdeVmk5mZzS
-	p9KlCkdUO6pH340fLgsQpfKpf/1YCGIfd8QLGpoBwTWBgOiNkyxpg54to9djX9VW
-	+5IsSPscIPrzx3K/cpkiljLNegBM1w8GmbMh0hoaw4SAAlwOrVOFYTB9D7WF5hT6
-	8RPP9cfJEGlnmEK9DwzKVM+CmZk7075zrwA==
-X-ME-Sender: <xms:LwZRap9QfXxCHNI1vF6iYLbWc5Us-HHT_h4L1p8ScRAosYhFxR65wQ>
-    <xme:LwZRalIlMH5hwhq72vlhMViXeAkWZYpSSG_LlwrLBAPlnl2EoC-bYr_gdXLs0JixO
-    L6tgTcF57VPJeit943FQb9gf4_O9rW8Bopn67ywfjZ_CNeALrFeOaU>
-X-ME-Received: <xmr:LwZRakaYHbQyH_D2T6wxVrBP10oehZvjGLP6g8OuegtrE0JhSItoMSSIgsJ-uPjnSdTP8Hn1geXoUBNHbEGEe1odooWuRNf7ABJ35Kk>
-X-ME-Proxy-Cause: dmFkZTFFHJM8Wr8jhiMRMcryRd39xYvl1dWrHfI+0v7fkOrgvEAHNLwtbIOG8jp5n4nI+2
-    zGDa5T30yMQ+sZ5fhuzMEbGJyd6TiLOhhXfFfQnxgXQIwj0VB1KF492uIrkxHeVKE67iqX
-    x0j2Xfg3lDkte8IG/n8Vz8Sq71XvlJy1PHRjtO4nVBfDmEMVWvGLrTFPZ5Zm4AOQ9nKms/
-    8tbTSR/M/3FlG8/0Ixh3NqbZCBg8OOfrAH8X3Doa7Jxq0HnCUNRz7JkRlQNOWo2GYxpLkb
-    lRJ5p+ZgeTYuA9iC82xnmbwxyV/CyS+9GmYwU40AbbfZtyKV1g+6bzag+mjg0Shr9kCcOt
-    o3+qceWxSF7FgMqPjk1R+u9HcHpmDDhtZo4w8N6Tf0wz7Lq+MeZAW/UesuSEMYy4qTttBT
-    /Gd/4RZYzNd0d6KPWhUAOEoA55q/4wTxmsCM6ZzqJoxmMQhkyG302aZ2tWoQZojdP19P0G
-    u6Yh1VxI4B5eghUWsBgua5ptsY69Cy3EQjX4nb8/vwKJDSenk22u4mJMP+GFSnvLSdROfq
-    u+JY7hQ7Chgluf1i7Q4AAO9lL2H4qawu9XUQzwmGPVh4eqJtFcG9F3Uy82nobATsFDUl0k
-    m7M4nAQhWkRts0GbU7n78djeJ2eAPhksTR0d/fkQH/kWKEz31zlZFuxkmYgA
-X-ME-Proxy: <xmx:LwZRanI9u0QM_Z01cTVrxmVwU5gmLHMRhU_L4bltJk5ejvLr_IsZZQ>
-    <xmx:LwZRaiARZ2hrhpdAiMrx1ctQ0aBilMQEhipy6xJAUW_stDU2hcXWzQ>
-    <xmx:LwZRasqLVqEMdIqm3mC37IvjLQ1ytLCaeob9rgmLXwAWre9zn8sVTg>
-    <xmx:LwZRatgKfOseZBI_IXYdC6bNLm8sa_lwovAPktXGsqS2WhUK-5R5vg>
-    <xmx:LwZRalSkUj68MJu9QeD-6aPg4uXAvMo64rujuOmOz0bQ6VGXV0G9CV7U>
-Feedback-ID: if26b431b:Fastmail
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1783695265; x=1783781665; bh=r+ls8vx7j2D7BrOo2ZD4fKh1tHzO
+	1a2X2Dmpky8Q6So=; b=HeYgABVYF5/+RVg3FDERXiv38BZEh3RYKbUcvpuQBbfp
+	jqq5LBryXjgrIChkL6O29kt7wJv533wHaD6UUgh81p/aH07XnFfoiltRaWhkl4Dn
+	L0E9GpRHscdckcP4s9wRfD8mRYgjU3g+cB6bf8epz09tu43rbFTn/ZXN0g0weRRB
+	AnarcAxjO5A9fP7x3DKu/Vomu8q/tpDfuSDPBqejnLjKYH4HfM2ujw3nBu3t/0C6
+	5V/pr7PQm4SHwOHHBXCi1l7kl/PDazLu5/urfObJRlEsyTqqVGVTRpaB3wdgaepG
+	TCA3FKMzXEMrryliNAM6IZWh0pqRQcuKKojl6bvC0w==
+X-ME-Sender: <xms:oAdRauSHSbA8IUwLXTf0EJaEe_8AzHSwjEScXq1hK3TuracD78_86Q>
+    <xme:oAdRaqx0xIAzmuR8z-QA0XsBgpn9B4qUoJt4M_lFfTnsoqRhpmckbxbpVbjK8Bciu
+    ijgG17ysK-7vuGgdBjIkVtRW4s22_ufyRco1SXG2d39U42cWO5c>
+X-ME-Received: <xmr:oAdRag1D8njCRZCCCcoKI-UoDoHJnOeajI-bdiEUg1dFJRN4QVw9oJe74UlvJlK8LZOUkZOlxWSwhf0IBmmlM5Pgx4QHYtcHMR4n6LNzBdsyMA>
+X-ME-Proxy-Cause: dmFkZTF/vLSFUKHNHujkTDoBZWcJowHtHMI16Ops/Sb/kqqJqp+AbNEfb71WHDMs34Q0dB
+    h7t7o1F5oIe1mO6JghbpzscpWUNnbKRI9QgmeJXkRtZbbRuYMkBEgCBmgwAyzHtCL61nDq
+    jC8RetO0DP+wsyhW6+338OcFbzytRUbc6b8zVE9oO8WWC2TN/icna/yzOz5e61bNXLN4yL
+    lz91BvPv8cbiKKYDOJz81j/ogLkZJrCWUnOBtf4ouvY5LDVCR5+1T9/apxRJ3PVJ0rhux1
+    Ox/8y6EvKPM4aI5QfkPlfqvVq0xHgfhKnd2Z+Hp1qNwFuwgmRVEKS3JtEmEs5lAwZdMHnA
+    JgN+8qE9BteKAgaaMiqLbcf7DBEJYipusGgjFszGu81AmaXGCdJq0GTMjFL94OkQK5OMbV
+    fBXdiY8ua8DpB2Z3M7bZ7LhwccptXOXsqopXSmjafaRTx5pobdv88WbMOPpfbXc8Ww5W8s
+    b1MEFyNpT6kYK1tI/oJ+YE/og6Bg7RRtO4itMx1YRQwwJeiRP2I9cvu20kobizsHy2baT9
+    Hh6BZwMWhWz1vWpKe4ezp11+noQHfaHqdnZ9wp639i9wLMOMh6qNJ4s16EKhvmMbUtARnv
+    mWjsNnGgrz9YCoEHzGHWwHrLe0XEJvDwlOM0Nx2xqWuTFF6e+NVrXJeVYcfQ
+X-ME-Proxy: <xmx:oAdRao5IgBalWBOlJ3jAzLS0G-wwWWRT5-Is_D4SsG5xvWSnXYq5Kg>
+    <xmx:oAdRajWu94kHCpXbu4Ft0VcQjEyx7UNbr5JJWPvA_ybNNwmTZFGKJw>
+    <xmx:oAdRanAYayLhaVPYrPIMFZT7Ur8SZC83isaMiuH6KeyAe45Tjk-V2A>
+    <xmx:oAdRai4buQ4ZE3qhdrY0JBNHJylgbzMKJjC10zYk-BisZ8L_Kly8Fw>
+    <xmx:oQdRahDF07VvttYJHAF6-RefgZ0C9_NCQ-VW4pugEQ_WcNOsBO7OM09t>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jul 2026 10:48:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] refs: remove use of `the_repository`
-In-Reply-To: <alCJgLcjXKEgNwFF@pks.im> (Patrick Steinhardt's message of "Fri,
-	10 Jul 2026 07:56:16 +0200")
-References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
-	<xmqq5x2nlwyg.fsf@gitster.g> <alCJgLcjXKEgNwFF@pks.im>
-Date: Fri, 10 Jul 2026 07:48:13 -0700
-Message-ID: <xmqqik6mgatu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 10 Jul 2026 10:54:23 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id caee5309 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Jul 2026 14:54:21 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Fri, 10 Jul 2026 16:54:16 +0200
+Subject: [PATCH] object-file: fix closing object stream twice
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260710-pks-odb-stream-double-close-v1-1-d5fa233a37c7@pks.im>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMTQ6CMBAG0KuQWTtJi40Gr2Jc9OdDR5GSDhgTw
+ t2tunybt5KiCJROzUoFL1HJY4XdNRRvfryCJVVTa9qDOVrD00M5p8A6F/gnp7yEARyHrGDXRRe
+ c7/a9sVSHqaCX928/X/7WJdwR529J2/YBeXiFS38AAAA=
+X-Change-ID: 20260710-pks-odb-stream-double-close-49c4b4a93f01
+To: git@vger.kernel.org
+Cc: xuqing yang <rigelyoung@icloud.com>, Jeff King <peff@peff.net>, 
+ Toon Claes <toon@iotcl.com>
+X-Mailer: b4 0.15.2
 
-Patrick Steinhardt <ps@pks.im> writes:
+In 10a6762719 (object-file: adapt `stream_object_signature()` to take a
+stream, 2026-02-23), we have refactored `stream_object_signature()` so
+that it doesn't create the stream ad-hoc anymore. Instead, callers are
+expected to pass in a stream, which allows them to construct the streams
+from different sources.
 
-> On Thu, Jul 09, 2026 at 01:39:03PM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
->> > 2026-07-06) with ps/refs-writing-subcommands at 002fe677ca
->> > (builtin/refs: add "rename" subcommand, 2026-07-06) merged into it.
->> > Despite that, there's a small set of conflicts with "seen" that can be
->> > merged like this:
->> 
->> Thanks for a heads-up.
->> 
->> This seems to break so many tests when merged to either 'jch' or
->> 'seen', even though all of them pass standalone.  I did not have
->> time to figure out what interactions with which other topic are
->> causing the breakages.
->
-> Oh, interesting. I'll investigate what other topic this has interactions
-> with. Thanks!
+While the stream was previously managed by `stream_object_signature()`,
+the full lifecycle is now owned by the caller. Hence, it's the caller's
+responsibility to close the stream, and the called function shouldn't do
+that anymore.
 
-Thanks.
+And while the mentioned commit did drop one call that closed the stream,
+there's a second such call that was missed when reading from the stream
+fails. The consequence of this can be a double free of the stream.
+
+Fix the bug by dropping that leftover call to `odb_read_stream_close()`.
+
+Note that it was originally discussed whether this should be treated as
+a security vulnerability. But there are only two callers: once via
+`parse_object_with_flags()`, and once via `verify_packfile()`. Neither
+of these callers plays any role on the transport layer, so this issue is
+only relevant for objects that are already available via the local
+object database. Furthermore, a packfile that is corrupted in this way
+would be detected when receiving the packfile, so it's not easy for an
+adversary to plant such a packfile, either. Consequently, we decided
+that this is not covered as part of our threat model.
+
+Reported-by: xuqing yang <rigelyoung@icloud.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
+
+this patch fixes a double-free of object streams introduced via
+10a6762719 (object-file: adapt `stream_object_signature()` to take a
+stream, 2026-02-23). It was reported to the security mailing list, but
+because we couldn't find a way to abuse this issue remotely we decided
+that the issue can be fixed in the open.
+
+The fix is built on top of v2.54.0, which is where this issue was
+introduced. It merges cleanly to "master".
+
+Thanks!
+
+Patrick
+---
+ object-file.c   |  5 +----
+ t/t1450-fsck.sh | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/object-file.c b/object-file.c
+index 2acc9522df..610faba5b6 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -150,11 +150,8 @@ int stream_object_signature(struct repository *r,
+ 	for (;;) {
+ 		char buf[1024 * 16];
+ 		ssize_t readlen = odb_read_stream_read(st, buf, sizeof(buf));
+-
+-		if (readlen < 0) {
+-			odb_read_stream_close(st);
++		if (readlen < 0)
+ 			return -1;
+-		}
+ 		if (!readlen)
+ 			break;
+ 		git_hash_update(&c, buf, readlen);
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 54e81c2636..bc326a78f6 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -538,6 +538,23 @@ test_expect_success 'rev-list --verify-objects with bad sha1' '
+ 	test_grep -q "error: hash mismatch $(dirname $new)$(test_oid ff_2)" out
+ '
+ 
++test_expect_success 'rev-list --verify-objects with truncated loose blob' '
++	git init truncated-blob &&
++	(
++		cd truncated-blob &&
++		blob=$(test-tool genrandom one 5k | git hash-object -t blob -w --stdin) &&
++		obj=.git/objects/$(test_oid_to_path $blob) &&
++
++		# Truncate the loose blob such that its header can still be
++		# parsed, but reading the object data fails mid-stream.
++		test_copy_bytes 64 <"$obj" >obj.tmp &&
++		mv obj.tmp "$obj" &&
++
++		test_must_fail git rev-list --verify-objects "$blob" 2>err &&
++		test_grep "hash mismatch" err
++	)
++'
++
+ # An actual bit corruption is more likely than swapped commits, but
+ # this provides an easy way to have commits which don't match their purported
+ # hashes, but which aren't so broken we can't read them at all.
+
+---
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+change-id: 20260710-pks-odb-stream-double-close-49c4b4a93f01
+
