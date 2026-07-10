@@ -1,70 +1,70 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B145343B3CB
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0314F435EE3
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:37:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783701453; cv=none; b=S9/8B/00WOPAuNKJyJm0o5tQf58uM0Ypo1YiUEZSITWdHWHuC4X7rtL/uOFUl5lNsX9FW4NXwPJ6Sx7IlM2yvwWNd1+RmUxxouoWMoaHtNfra2SpG59aVdzRvNxXCQuBnZ+j/oBKqX7iZ1WhFHWSjxMKDbjqs2nWgNhvw66Dzvs=
+	t=1783701453; cv=none; b=u7TKnXDA45w2z2qORT8mHy47J6JvmAkzeKaxeeQEO5WwrYLg+N9mUUA8+/eMU0s97Cn94/Pyor7coYYZLqOFcfnf4yf9QpAjCZw8yhJ5l3UglstQEi7jvz3BS9zEepnUtMGCOG52t7uLQ6ojZF/NEWXVdtSvmO6+wpLgStv60oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783701453; c=relaxed/simple;
-	bh=LgJOvA37/dn989m/9nA4etAmFKnNL4+6BPFhTkQDyqQ=;
+	bh=8hTmgM/g3ErdRMecjsXI8ecFXOZySHY1ceeXwQutiVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVnhF4Q03PxY2JT6Uwi4nna+xUyNz6K3mR3XmN5oAoMSgSwqBnyk+AwF9TFaX14fvj5I8aOdFtVzFNw1RG5+asn+V2fvHNYVtkqN+JvZsiOd0nsM6DuyBgwbrCRAAUCgbhSs8gH/k5FsUwmhMhSDAdliM8a0WgFNoqHfV3TtF3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jPV9hI7s; arc=none smtp.client-ip=209.85.210.45
+	 MIME-Version; b=nxDpJGXp2HSZ7TtfxHAwOdk87MEaYisOcKv3rdeWBlSX3SxGhaeCmrXMmoI8MYpjDeOAVXCfXTDZpAUD2x5vksgvXtIg7J897nchXc2Ezc4ShBRdRrjSr4NixrKNSJLYhYBca95cJTFlk+hUhXd6LJiBjEsp1P37dMpEwuMJONI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MxlysqGg; arc=none smtp.client-ip=209.85.210.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jPV9hI7s"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7e9f5637634so757295a34.3
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:37:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MxlysqGg"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7ea9c6ea7deso951331a34.3
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:37:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783701451; x=1784306251; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783701450; x=1784306250; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=qDSOP+3BniZFgdUwWWr+Ikn6OeyHKX1hklh3zV0kIh8=;
-        b=jPV9hI7sailqwsgv9+Hr0LNwrTMV3rxcGUezJw0GdUWLbamWnSCH4uZaLBsFZN+k0C
-         D7oxHTP92eNXMWP4HVMUrxVjEO9R04QVoRWbc5v/TLmqyxOELvNpLOofTk1euI9cFX4n
-         A57RwSMo06gcU2IP3FmjTe8Fimr0n6twimo01FspDfFOcFEOdlIyM3xP7fIpmzV0dHBg
-         rLhLJjd/I229SFtadBQBbjmX34Jdmm64T/C8N+NN6PraNfSw7JquAjZXJ7Wgp8ErlQVa
-         gaQHW+Rek1BPtne+L41+l9Ijxw1pa6rGHS85aRQmE5m9wUg+kp941KC2aACB5WrFP47r
-         Jdyg==
+        bh=05iZUJQy6xYWWR4IulMLSmywaWrpuQZWdHjU1YpMrYU=;
+        b=MxlysqGgbHkr3fj6MqdzTT3+U2QhLvHEF7rpHT7x+pzxMfPdwS656YMmwvtmvB2EE7
+         0FQbNXq2bQ48IGSi56s/UNa3hAyc9R+3u7spzXmAUxdKJ66zHf7aOSj8Qzkegv5W4dL3
+         Ne+vJbYLVE83N+rKDnY6ApAmPrIs7pcV5igi4C6cvPXNOc5ZYxUSEzoBTB2HWBvBFBDf
+         jdEAZzRoP1Ya2kWJo8dxrCFRIHs9c5xFtJTmZ1v4bNlxcGTHkkhE3HyqzTk0dEn6Enu5
+         7Q+KByQjJnYCzqDHBaVPHTMyyZjErFjXMcT4vhgvbmEpskEOBudO5I/naSwmH9LJboYy
+         Ur6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783701451; x=1784306251;
+        d=1e100.net; s=20251104; t=1783701450; x=1784306250;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qDSOP+3BniZFgdUwWWr+Ikn6OeyHKX1hklh3zV0kIh8=;
-        b=g6HE4iOP90mEaCO7aZG8SiLQ/IB4fm5uHeGEBexHs/Ml1RMk8Izc/2lyK+RnjtXqoq
-         aBPcSDCz6oCXN1xiinFpeinjoEunRyHrcXygFADS/nemDiWXEc8BdjyaR/OqyFQv5Z2e
-         yLAv86WXo2hLqzFJzbQoZl5yetHNytrop6tXIuM71ADKt+weBcq6kaPe9uTMQ8I9NDyd
-         O8h0LoqJgc2cVNHFEY/yle83SJi4F7u0G3RMbkinIHFaO2oI5H/ziaBBvHLrPMW8r+4A
-         Lkj5ykqALC6FZr7bgJVmZRwX19hI4hBCrvd7+/DG6u+/h/Y/lWQhGMYC+cKafB31B1HJ
-         /XRw==
-X-Gm-Message-State: AOJu0Yy+h5Pg2bpF50nrxFqp6NA7VaPiaXGKReF0AAIrgAvq8WSMEerH
-	ruubbaplLwY1JJ2yQdC++/CTEHwQdftqSpnMwfTmoK93tNpG9J6ndfVRV7GK9A==
-X-Gm-Gg: AfdE7cm3zDH7WMsFD5jmS0jXqx2n+QJbIT7uuyn/llryJ8PfMnoab05vnXnJOPdOIn4
-	SwT1GR5SwnGYe4wJzGXI27ezPom9qzt1DMeA5nN5kC8s6Ox10B/kBbOz763z6mAQyRhC0D6S5i2
-	R3FFqskdyBq3DvuEatevfhu4U14aNbDyPg25urzxqdLM+zfK6CA8CoqtxYls99Fpo4ucCqz8TlA
-	WMT2q/0inMfBEzBXJdmSJlay7HTa7kfmCZfYBpr+Eu8QZLupfFOucegsyOjyy8ecD0kH801zPp4
-	fT7A8Yrd4Oblr8bAQTzjUJZf7MrQBoOkCVWUJJ1iMJ10NhM79kSPo+BKZogeidXXoVEPIV9Rjf8
-	ytRB1Z2phjcNkufAqjgWOHIBizxqRVcnS164iScZZufLmXVWHlMGPuE5VkPaxErY0ZOmwn8BrFa
-	IzOgEWJkr970gcoHkOrTyVHZMFe/90OjI=
-X-Received: by 2002:a05:6830:8389:b0:7e6:e162:915 with SMTP id 46e09a7af769-7ebcfe54156mr8328109a34.5.1783701450712;
-        Fri, 10 Jul 2026 09:37:30 -0700 (PDT)
+        bh=05iZUJQy6xYWWR4IulMLSmywaWrpuQZWdHjU1YpMrYU=;
+        b=J3/6aplFW1n4RcgN2o0opt8BXau5qxhMONTZEDx4hwIGmYrlekXa+6ZZM6PTlDTfPG
+         JUzgDgRSl9uRU0+9K8bKH/OH/Vzj5dIdcWWe5rbeEZRiQZu9K2M0m5bCf4Czb1OmZc83
+         oOyxqW5XJYCVeERQnl2qR+c2EagyrdSD4xPaVHz9VWb5nzqraPX6ACzYpj6K7ZX4f2CC
+         iZFWAdZ+X3Jd+GpBKg9bLPPw6M3C5hWRZ0BvNHclhq4TMfiAj32ebfGjoSDiLQYycw0f
+         4+iYa/q7tiVthqeaXoPu6Y3Xz6TQda+ZgWqN8rZokYILTiytnJEkbgu1D1s8YM/QQHKG
+         UX7g==
+X-Gm-Message-State: AOJu0YwyB+Wkk6H+lpcQ1gnSdbmkBxpPzZQrKjOrUwSUvYWSca1EHY0W
+	hwtReJ7P2RLQazu7puYnGeldsjp9Ac2yXkKJwM00fJWamBkiPjhRwQkUFhpDZA==
+X-Gm-Gg: AfdE7cl/QEU/VqYVxzc8RF1WOux7Tt5tMIWG3wW1A/g2opkuJZmoj0J64Pr8A/4at6N
+	l7n34SLnzSSct9TdxAS/K5Yv4Vku8fsbFEYMuTzFK4ygMSKF0ZvXTO+ie0MqaLaTLJc3U+lML9g
+	mIJGhS2xxdzNPCcOkTkXB32L+cKSSyHldK/bhzjiJbsKJ265MfIl4Atn855C4pN7VIY/eH9dRpS
+	+P1pFzhdrNU/GlQVpIZu2b9tT2MlAuoqXVur1BiDXSgOqtrpJ3TXFDCBLYQLSqL1icROD2xaWfg
+	6UI7QTuDT5UbjZ9zfaCdvhe8NXc0ET9p/wUcTh/VRTkdJ4dRhyxBZ2TiVWfV0iHbAHV3AtTOGOy
+	I5WMwlMllpiudo8/+9lfWRcPj8x+RvMRRRUuIznwomETymbVJNQ4DT+o1id9jy7klb2xPO5JD15
+	kJMIi3aWc15se9/pzKBav6
+X-Received: by 2002:a05:6830:3747:b0:7dc:d967:63de with SMTP id 46e09a7af769-7ebcfe4264dmr9696375a34.3.1783701449924;
+        Fri, 10 Jul 2026 09:37:29 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcaf742e1sm6882147a34.8.2026.07.10.09.37.30
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcaf742e1sm6882147a34.8.2026.07.10.09.37.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 09:37:30 -0700 (PDT)
+        Fri, 10 Jul 2026 09:37:29 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	gitster@pobox.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 04/11] object-file: drop check for inflight transactions
-Date: Fri, 10 Jul 2026 11:37:15 -0500
-Message-ID: <20260710163722.2962278-5-jltobler@gmail.com>
+Subject: [PATCH v4 03/11] object-file: embed transaction flush logic in commit function
+Date: Fri, 10 Jul 2026 11:37:14 -0500
+Message-ID: <20260710163722.2962278-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.122.gf85a7e6620
 In-Reply-To: <20260710163722.2962278-1-jltobler@gmail.com>
 References: <20260708235925.3992097-1-jltobler@gmail.com>
@@ -77,46 +77,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-ODB transactions are started via `odb_transaction_begin()` and contain
-validation to avoid starting multiple transactions at the same time. The
-"files" backend also has the same logic, but is redundant due to the
-generic layer already handling it. Drop this validation from the "files"
-backend accordingly.
+When a "files" transaction is committed,
+`flush_loose_object_transaction()` is invoked to handle performing a
+hardware flush along with migrating the temporary object directory into
+the primary and configuring the repository ODB source accordingly. The
+function name here is a bit misleading because the helper is doing a bit
+more than just "flushing" the transaction contents. Also, in a
+subsequent commit, the transaction temporary directory is used to stage
+packfiles and not just loose objects anymore.
+
+Lift the helper function logic into `odb_transaction_files_commit()` to
+more accurately signal to readers the operation being performed.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- object-file.c | 4 ----
- object-file.h | 3 +--
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ object-file.c | 64 ++++++++++++++++++++++-----------------------------
+ 1 file changed, 28 insertions(+), 36 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 33bd6c6810..e51389833a 100644
+index d68824bb44..33bd6c6810 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1678,10 +1678,6 @@ static void odb_transaction_files_commit(struct odb_transaction *base)
- struct odb_transaction *odb_transaction_files_begin(struct odb_source *source)
- {
- 	struct odb_transaction_files *transaction;
--	struct object_database *odb = source->odb;
--
--	if (odb->transaction)
--		return NULL;
+@@ -543,41 +543,6 @@ static void odb_transaction_files_fsync(struct odb_transaction *base,
+ 	}
+ }
  
- 	transaction = xcalloc(1, sizeof(*transaction));
- 	transaction->base.source = source;
-diff --git a/object-file.h b/object-file.h
-index 528c4e6e69..ea43d818f0 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -194,8 +194,7 @@ struct odb_transaction;
- /*
-  * Tell the object database to optimize for adding
-  * multiple objects. odb_transaction_files_commit must be called
-- * to make new objects visible. If a transaction is already
-- * pending, NULL is returned.
-+ * to make new objects visible.
-  */
- struct odb_transaction *odb_transaction_files_begin(struct odb_source *source);
+-/*
+- * Cleanup after batch-mode fsync_object_files.
+- */
+-static void flush_loose_object_transaction(struct odb_transaction_files *transaction)
+-{
+-	struct strbuf temp_path = STRBUF_INIT;
+-	struct tempfile *temp;
+-
+-	if (!transaction->objdir)
+-		return;
+-
+-	/*
+-	 * Issue a full hardware flush against a temporary file to ensure
+-	 * that all objects are durable before any renames occur. The code in
+-	 * odb_transaction_files_fsync has already issued a writeout
+-	 * request, but it has not flushed any writeback cache in the storage
+-	 * hardware or any filesystem logs. This fsync call acts as a barrier
+-	 * to ensure that the data in each new object file is durable before
+-	 * the final name is visible.
+-	 */
+-	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX",
+-		    repo_get_object_directory(transaction->base.source->odb->repo));
+-	temp = xmks_tempfile(temp_path.buf);
+-	fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
+-	delete_tempfile(&temp);
+-	strbuf_release(&temp_path);
+-
+-	/*
+-	 * Make the object files visible in the primary ODB after their data is
+-	 * fully durable.
+-	 */
+-	tmp_objdir_migrate(transaction->objdir);
+-	transaction->objdir = NULL;
+-}
+-
+ /* Finalize a file on disk, and close it. */
+ static void close_loose_object(struct odb_source_loose *loose,
+ 			       int fd, const char *filename)
+@@ -1679,7 +1644,34 @@ static void odb_transaction_files_commit(struct odb_transaction *base)
+ 	struct odb_transaction_files *transaction =
+ 		container_of(base, struct odb_transaction_files, base);
+ 
+-	flush_loose_object_transaction(transaction);
++	if (transaction->objdir) {
++		struct strbuf temp_path = STRBUF_INIT;
++		struct tempfile *temp;
++
++		/*
++		 * Issue a full hardware flush against a temporary file to ensure
++		 * that all objects are durable before any renames occur. The code in
++		 * odb_transaction_files_fsync has already issued a writeout
++		 * request, but it has not flushed any writeback cache in the storage
++		 * hardware or any filesystem logs. This fsync call acts as a barrier
++		 * to ensure that the data in each new object file is durable before
++		 * the final name is visible.
++		 */
++		strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX",
++			    repo_get_object_directory(transaction->base.source->odb->repo));
++		temp = xmks_tempfile(temp_path.buf);
++		fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
++		delete_tempfile(&temp);
++		strbuf_release(&temp_path);
++
++		/*
++		 * Make the object files visible in the primary ODB after their data is
++		 * fully durable.
++		 */
++		tmp_objdir_migrate(transaction->objdir);
++		transaction->objdir = NULL;
++	}
++
+ 	flush_packfile_transaction(transaction);
+ }
  
 -- 
 2.55.0.122.gf85a7e6620
