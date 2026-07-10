@@ -1,82 +1,83 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B0D30FF2A
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99E735C190
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 03:21:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783653068; cv=none; b=u9zbZG34E8Cxs8IqcILdWijfnz41tAWI/rOwlAG53v20JmNSIaHuTcbfND4XCznW9M2dTn+dqNL8I5oYtHZLZ5YUqLa0iaWVFSi7VwySK2PU2KGPKiitWL1bnmOD8l7XCItIcFGNGTs5i1sYbEp6+cEkyA/4Dtt/N3S1MeNblLg=
+	t=1783653667; cv=none; b=rZ15jgVpm0BG8jzFc35GBZ6SdB0d2urdUPv5jEH82HivirqjWGxeZ7g68Eagp5QEBy5PfNs/FK2imsuulIcoXl65Ul4k0vrl8a3m9O7AFglFGJuOQGCnVKHT6HFNlGH7kVh4elpe4/xCGaNWXKxDk8WMc6u9I4fYLsznKcuYtow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783653068; c=relaxed/simple;
-	bh=PWPG0huTeuo7kEqIXeg7vQmnWfaZ8Gq9GHkliRKaboo=;
+	s=arc-20240116; t=1783653667; c=relaxed/simple;
+	bh=UKRmo/3p2ADovyvz4sFrVeCbLN9BdO/PjTPb+MvMd2U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fHm1ZxqqVLGJookp50lzyyi+36pllP8HUmjFdybDL1f2azNOmyBdj8X2dO0Hr7on9V+6/3KS4VGfUDU7EUrZCfSVDKxypXbfSEXv2uxeVcBvjdJN48fFP6dTc1debQguDeKLMeGnLGOaLo7Y3cOmJ9EctCkPz/XFEGM4z1gS6BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KZzp2b84; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=faJnC4V3; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=YoDYST8LpD7Fpb9XWeSvSHINujksu+pTzV7Oc9ANPJY79fquK3eFFOz4iSnJEpBOTRrS0pVn8auTjo9mQ1A5MoKz1z+ylbhat1idnIIeBvZ2J8ARrdGUGtmyBVajLm4N6/A7J1YolerEhS3NHDwexrxqk5QnwBuvo3nrOx4H7lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vzsYfLe9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P8THtvp0; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KZzp2b84";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="faJnC4V3"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 50E2B7A00D4;
-	Thu,  9 Jul 2026 23:11:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 09 Jul 2026 23:11:06 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vzsYfLe9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P8THtvp0"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id B10F91D0000D;
+	Thu,  9 Jul 2026 23:21:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 09 Jul 2026 23:21:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783653066; x=1783739466; bh=PCXEZdbC6T
-	p/zjy+fy8hVfo2j9Mhm29ax1DWBTG1CIM=; b=KZzp2b84ZNxphTvXOaQ/3hrBJ0
-	pQ0qwB2xTm8K/MmzjMpJxFQrvPiyVsT7l5tl6LRF0q1vXjRpT7CWmeTBn6oKGVkI
-	A8V0Y3UV26YplG9CRRWdR8nXRzwonIRAJJybxEzgM+0EvBTcSHIfmSHT4qAweOfS
-	YycKtKAjl4I0lzRz5SfGkjO59jiZ8re4KA/AbSgjMrAn+dlgLQbg9SQHlbYY27mV
-	zvUQ8OCtv8SLJOtrRAFQko7Ox0RGCkQow+p6kNVWsfc+gfoqLL4uAidLZ1ryxyzW
-	qxvn++n3nJV8qNjYdawnicqTpLtQvWqQ5nEwUmMZ4l3VKEbafFUVa/H+Ms5A==
+	:subject:to:to; s=fm1; t=1783653664; x=1783740064; bh=de9+mx47P6
+	oziqu6zkj+iZpkCLOHVPjacKW1ramJDPw=; b=vzsYfLe9dPRt/GZJ+AugpnFc3u
+	hRjVcr1OnawQv7WWLnsW4MnkLBam/S/IFkDgq39BvaWOk6Omh7ryYEVyDD8x+9cM
+	6ydM69ZScIQIIXz7JyWCquWBJPmB9XVImpXE2vE1V0Ul7nixUlG1D4+4/r2NFcPK
+	ZN4lfeo/DPHwGSDNQK592CQ/LBUZ34sIiDyemc+/+QLJ4GDmLPO2aDR9qbLa1lAo
+	UfVsZdZuK9hLqPGtoSk+UWt9uCzKQOh+DORuQZnLbB6XmyS6NfX2DC7zSCUyBHu+
+	T43YIIOHeO3EssqPbM/dgOYTvkqCtHSlwpNhyVwcFRpmWATHTiEEm2HZbtDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783653066; x=1783739466; bh=PCXEZdbC6Tp/zjy+fy8hVfo2j9Mhm29ax1D
-	WBTG1CIM=; b=faJnC4V3NPJ1MRfwvlxeRChHdfbeAZf6Jr6DyWY7AjBHCyFiSF0
-	HKfqUlHoEMm/shCGUsdjOW3yyJ1bIC6aT3RIlfrjO/yFTmlsexDL0Md4L7YIHN3v
-	K4+fMmANp28uGjQHG4fSQtxM5YP3yEnbAx2KghLp+DYMAlYU+9AsY1f1y0b+Tgla
-	ZsSJzdBw9rL3J/M0MQaGnvv6qb2HYt5af0/aeI7unSQPt9QJb1L6r2/2yrYwLYzc
-	aS35pMoGckfaZuzbq4dCIAbKNzyhq6i0q7yj4BlWoSNEme5LZgfpfR9GmgxMA7Hm
-	LskKsQOcUkFLWYHjiYqL4vqd6Zj4LshWBZw==
-X-ME-Sender: <xms:ymJQahqbiEHfyYaq0Icl_LWxaKNgnAA5LPGsOBTZ-aafPWmal5iPPQ>
-    <xme:ymJQaqomqo3pqtNg_tfnHar_EA-A9Qp_cqRKTJIFH78skQWc2NQV3gBomdlIgVwk4
-    yhxj1IB9WdHd9JfYqYW0PnR7_v3v3okHblXdZvw8kZQdYo9oNhUPQ>
-X-ME-Received: <xmr:ymJQajNA0a68TESiWCP0xXXLZBPWTlxFqHUAocXsnWbAdRqbfyKVAdQxGk9OaY6zgD5p6J0n_Zqb0yOewGPW88qfdzTjYsChv-3Fz1s>
-X-ME-Proxy-Cause: dmFkZTGQoz0xqwSEdZMt6kNEgq4CGdR7DamQTWd6R3IxYDCw090RtDqoNA7HnrHiI39ZT7
-    mtf/P8+vqJIXB3sdVcvRZ6YgpiVqhqDIh88dmDqM9HZIxBp/fvf0i4ZTHAfLr+0vPis2sx
-    ctAVIytFoMFPPdc+nEC1SNjgNMsBpW6TAc08meo1ulnQBqXetKC0+AsVMJU6G8DATHDxzc
-    ExlHDf03y408OogqKLxvH/revi+3c65xnp5lAnktS50ZgLN4INou//Ovmc7tYllYIO0O3R
-    WobxAR9ItoXmEA7q1pA1+aMiaZuifNKQ7pMBGwQwKkyn8LmOl/56WEoOTSEZHnIZdn8jI7
-    TDSAyDiwoXHCOgVvywWAieD1qpTJ03ZgnxF+fDRW6nzEOj9nmta25Vi+sGIK4THOLkeeDC
-    w4QLSSJlmNLNXPkaIzRw+PRQrTmT7YAEiVeUQ64e5DVK2mQCZyhBUKpdWcvCzdIP1aRpRw
-    DyoBxYcHdkXPvv8kUN+Wz955N4mcB/XaTHzHgJsjlpaur3B11l7GLMNt3K2OMEIV69qq/t
-    wG6F6W4LqbpcS7b/EDCd87lqJxaUw1oNkqdvzMYh+mPRZGlQ28mtOB/yXh/RLnGgaBfPci
-    bQGbR2OTCyuADLmEvflkqq3rWWxzMN0yP5QIuZtA7v8sWTvbxcdO+DaH4mKw
-X-ME-Proxy: <xmx:ymJQarw16rAo1dobpactHUpAj9z1WGJcYp48vBaWugfvgyj0fZBaPw>
-    <xmx:ymJQasv-kP7OQjPmsEwOLpwneqN1M3Li6mMsJoGWhVUWfEibZc7ndQ>
-    <xmx:ymJQak4sYeTCN1VTYcR7qIRgfd8pdqcUOvd0NPrFFUFrY07-fNJ48g>
-    <xmx:ymJQarQEAY9rPELOYeA1mNmvqv3VTKlR8J9_cMiuKpyXceaKRnRl0w>
-    <xmx:ymJQaol_zoWzxDKVP6rdWaZm0SDSBMHSCocPyQUSPe8GsbF99SHnseYO>
+	1783653664; x=1783740064; bh=de9+mx47P6oziqu6zkj+iZpkCLOHVPjacKW
+	1ramJDPw=; b=P8THtvp08wHkMr3U5gnIhpHbJCWOGRv9SGavG6Ip+6n7dY/7zn9
+	qfmh9rMQBszsXNfiUkpLYtGQaRTMxT0WrrpsbWySk29a3ZiICGF45h5DVQUOwXn3
+	51TLcqoXPcJM3a3Kegh2umsSWGEVWnBvb1krKOhPK6G9mm79RefsvpmsGL2+vlZz
+	4L3LowVrNW6YLnjkTj/VMv43z22WNt1D8/UkoGzTS+TyEee7gPXiI65j+HCKj59w
+	oVsQSDO05w6DN2U2oV3i4vQBgFG5ZTfI0/S7KBaIU+nsld2VZT19VlbhCFx1KhAh
+	1R1HmyE6a1/nAJQ5Kzb/1xZENsfDdX6E/DQ==
+X-ME-Sender: <xms:IGVQanic-tUgndQ9sjbS6JcUpjfgYSFCYF_fqn54j_3qYBOINtEh1A>
+    <xme:IGVQarAvF_b9ItHRaSkHJ5e09HHtJxv7tBXeckJoMwIyDvgsMXqvJFzyFE4k-nOxq
+    hUne80X4QXjCeSSGyH8A-rwfxCnELBnFa4DaeKwto5bOZ0g71zD>
+X-ME-Received: <xmr:IGVQasF74aCwaOKj5wBbxJvxydW909-hzp_3K-OLFHvPsK9P8A8ojK6s9a8ZZv56fNnp2ywaXU7UbihSnew_kolFo_YRuBI7SoIh-J0>
+X-ME-Proxy-Cause: dmFkZTFZFoog+pdO07OLdl9we1Uq2I4DZjSBADHA8bYgbosVo3AAYtku+LXTn2h5LUYkdf
+    URIbWDf9u/kjTJs1SPnvITx0Mt9VCFiNVzROBuwxTg9zax0d5NFpHDCkTI2kRycvJQMDrf
+    3JSauyH8nuvPUATCn01AIg+bPr7Bk62deWJWrO5TkKhDOJ2NIZP4moa3YQwXIYyxTrZs1W
+    kzATX9/VkbG5aZ+1r/JQlt48z15zKZq95UZkL7qQFDSKZxx9CQs8HUZFEitLis/1h1rh59
+    zxs6j2E5rJmS/Jet04DzhF3WTFWG6tx2G9zwI/d+pC8H4jteTz9KptP6F7k2p6tcvSEFmk
+    DVa5w2Orpx10xMvS4TmNEKB0IvLalfg7WEoKtRkJPnl5HnpubT+RGHOPozqewjWFwsYsR2
+    eiozpd441BNb1RCkSFEfl1P0ja3untWXILihKEK3vFmDXIzB/jglidzEripW5CTh+6St9t
+    wqEpfKsqKcATFmO8kyhY0tvxt0SSytGvKhPOAY7dDSKC9jqB2Hd8zX5qCSFyNvofn0By2T
+    siFIvsO2+1nOz4Dja+8owfyPM7Nm/mJgnAKDjrdiecq6Zlmx/Ltkdztt+euuf0IUYlVatl
+    rArDIU2zQ2jewrEggoX2xPFJQlUpcYztA+F4QTkYVKEtfMdCTqC88mKUxmeQ
+X-ME-Proxy: <xmx:IGVQajIlPWKeoeO55RFmFy57ApAxuApsJfkkq6NoXCn7HRYISUF8gw>
+    <xmx:IGVQagn4zBbD-RDXUTNXhUUUB1BpJb4gY21bRbQMKWh5giG7rayumA>
+    <xmx:IGVQarT__6CmWInj9yvGUd75H40_wrhoRPzsLKM6Xu89-Alas0pOhQ>
+    <xmx:IGVQaiKrluZavV-phJLsIXiiIopHv0RGZsSYpPrU37hkqCHAh3bccA>
+    <xmx:IGVQahfY4XpqNWhSLY-Ww1pOmieN8l07-FPo523LczHu7ItjA6tNmuA9>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jul 2026 23:11:05 -0400 (EDT)
+ 9 Jul 2026 23:21:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 02/11] diff: handle NULL return from repo_get_commit_tree()
-In-Reply-To: <4fdba0542b3d643affe32ec35f27fdbabccf54d0.1783590159.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 03/11] remote: guard `remote_tracking()` against NULL
+ remote
+In-Reply-To: <dcaefc598779123cea19807877e074acb3e1575a.1783590159.git.gitgitgadget@gmail.com>
 	(Johannes Schindelin via GitGitGadget's message of "Thu, 09 Jul 2026
-	09:42:29 +0000")
+	09:42:30 +0000")
 References: <pull.2174.git.1783590159.gitgitgadget@gmail.com>
-	<4fdba0542b3d643affe32ec35f27fdbabccf54d0.1783590159.git.gitgitgadget@gmail.com>
-Date: Thu, 09 Jul 2026 20:11:04 -0700
-Message-ID: <xmqqldbjh73r.fsf@gitster.g>
+	<dcaefc598779123cea19807877e074acb3e1575a.1783590159.git.gitgitgadget@gmail.com>
+Date: Thu, 09 Jul 2026 20:21:02 -0700
+Message-ID: <xmqqh5m7h6n5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,26 +90,37 @@ Content-Type: text/plain
 "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> diff --git a/builtin/diff.c b/builtin/diff.c
-> index 4b46e394ce..18b1083e98 100644
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -579,9 +579,13 @@ int cmd_diff(int argc,
->  		obj = deref_tag(the_repository, obj, NULL, 0);
->  		if (!obj)
->  			die(_("invalid object '%s' given."), name);
-> -		if (obj->type == OBJ_COMMIT)
-> -			obj = &repo_get_commit_tree(the_repository,
-> -						    ((struct commit *)obj))->object;
-> +		if (obj->type == OBJ_COMMIT) {
-> +			struct tree *tree = repo_get_commit_tree(
-> +				the_repository, (struct commit *)obj);
-> +			if (!tree)
-> +				die(_("unable to read tree object for commit '%s'"), name);
-> +			obj = &tree->object;
-> +		}
+> However, it requires quite involved reasoning to reach that conclusion,
+> and is therefore fragile. Just return -1 ("no tracking ref") when there
+> is no remote to work with.
 
-Obviously correct.
+In a case like this, where the function is designed not to be called
+with NULL remote, I would prefer to have an explicit BUG() rather
+than sweeping the problem under the rug.  That would make sure your
+investigation and involved reasoning done here remain relevant if
+the BUG() triggers due to careless changes to the caller in the
+future.
 
->  		if (obj->type == OBJ_TREE) {
->  			if (sdiff.skip && bitmap_get(sdiff.skip, i))
+Thanks.
+
+> Pointed out by Coverity.
+>
+> Assisted-by: Claude Opus 4.6
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  remote.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/remote.c b/remote.c
+> index 00723b385e..34d0367f11 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2681,6 +2681,8 @@ static int remote_tracking(struct remote *remote, const char *refname,
+>  {
+>  	char *dst;
+>  
+> +	if (!remote)
+> +		return -1; /* no remote to look up tracking ref */
+>  	dst = apply_refspecs(&remote->fetch, refname);
+>  	if (!dst)
+>  		return -1; /* no tracking ref for refname at remote */
