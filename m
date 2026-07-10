@@ -1,66 +1,66 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6276343B48F
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCD043B484
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 16:41:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783701700; cv=none; b=ttMJslVuh+ugdA0wdlUPRGLPvw979PaE1XzuSMb+/WYFyAnAUsFD7j9ve0ZFcJ6cyimfRS23J43uyuTu4KVymD5dIfJJrIdnSy3LEEm9FmUQQrTOhbdTVzaSFnJcGqPEQC3YsXGRqgLwDk5k4z4dG4m2RC/lh/CvFC/0LCjx6oo=
+	t=1783701701; cv=none; b=f5HJ8/blYDMcz5TRYqWWD1WTxxJiOd8y/WWNll8GwoziFP/FMG2uqNuBQeXHVaIKu+pj/yK87rsFLhDuiSJpcp3wewZfLup7sjuZCeZs6IhiA9hJtJAa1AgJTxylbT16oJfjkFgrIAuGXgT73cYaCvqjzPYekqfP2988Lnr8rRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783701700; c=relaxed/simple;
-	bh=Efgcnlb6TVwCERuImF+vFw2z/Qcb1D1x5yA2xITFFw4=;
+	s=arc-20240116; t=1783701701; c=relaxed/simple;
+	bh=QcOgyY4H6bldKVYsT1VJv9DlmAj5JgvpGs2D1+lwCzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UKFQMnGkONXZ96J5bCUyE0j9y0IO2zhJB8DTNWrAQyULJvG/lDUOsW+e5A1UsBmdd4R5aYp+wObcjMpHdUwRuAhFWsQEiE1m9jo1/2loguiluaXZ7PrT9uOurQV/E+dFmvu8lh3Nuk9Z14eIG3zA6T7AZIjITm6RdwP7NPLPzQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZIZN7my; arc=none smtp.client-ip=209.85.221.44
+	 MIME-Version:Content-Type; b=lvK5MuS4bUci/CaYpKCcJuNWQAAqavSrqLKiaVm22GMbF0hZT0VTVe82u/8Z7XAeAGTRir+smXITvl0cEbZr/iZ6WGjG0P6kOTJAI7d0IXz054xe1r1qw4gz5oVL3k7wfrEJXu5ZE9XgJ2sy/Is83yE/PFaGgUCTCo6O/VITjGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qo1DNazo; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZIZN7my"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-47c6e9a694bso660095f8f.1
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:41:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qo1DNazo"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-493ece78b0cso9138345e9.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 09:41:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783701696; x=1784306496; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783701698; x=1784306498; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=eK7b46A+xtIzWtUp9akRGXQtrLmsil6xgtRWcwa9WXo=;
-        b=dZIZN7myIDKACTO9Tg0rmzfC0VFRGao/u6OFK63SU0xcFECGgO3R4a2bXMXCQXIuz5
-         mTB05QDshiWbqxUgahkK6jhl9lYhR6q1jKyV4ucu//92FcA+Sv5T72yIkott6O/vmOss
-         OkpZXvjX9d5qRNAftg/XAeNb+n04U/WnNbsxgPnpR+5zMbhgP1IH/vaoZKO6QfCg46Hc
-         u0a6ZHIgUSnScC/JXNC68gjp8VkgWqDF9Mbi4ec6vyMq3rCkYZZ6kdNL/F/WxXpuIjum
-         D+n/HMpJgbTRhhiy+D83Ds6vXNTipCJxvwmkBtXRlxtDQobDJjSsFZQdX+kLz9R1TAGo
-         r+/Q==
+        bh=BGhD57xwUgjscRN8Qmzjbu6VVG0b3sQWcOgA13cfSso=;
+        b=qo1DNazoebEK4Evk1cHs/tdy2wndjJpENZjSfRurLC9lusWq/S3xTe1D5Dndu8k8JD
+         L5eqo6JOcbetdTBxr24OjDYXQJeEiaDiAkRFJ+L4VHIES5/a0aG1/JsWfaonJ/uA2arE
+         JnY4htRKQe468Jzckw6v+SuDRki5yf5zjk1xH97QJhVutRhQtfuDsu2bxA6RMDGT83Wz
+         6NxhSFmw7We8PbFRpAf3IRaJ3Gm90IpBxk51rWxMYZItmJWH1fL/YUEVwyZx46rfSSs+
+         624h9ClrBR1xhhoVtC3yn7vr14BDz9GscM7ayH9oXP8Lc6q9Oaie+gKuhZAwiV4G70QC
+         h4NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783701696; x=1784306496;
+        d=1e100.net; s=20251104; t=1783701698; x=1784306498;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=eK7b46A+xtIzWtUp9akRGXQtrLmsil6xgtRWcwa9WXo=;
-        b=U2Chp4tS9Ih2l/3QA+Ntjoa/oZ11PJg8vZUxLTDk6tmoopVg+j/akiD1Uh3UhV/OJA
-         5NU+oRjqNQWiQ3CurrqlfygP+6m16t0OjPbDGJMlTvs2aFB5ZQj6808dahvtg5sacD7s
-         qymnfhhZFx685dRegI2m03BhsYnPeYKsypfs+2diOIVYYFlAGUX/sCJGDwrN0qJlceh0
-         SckqyCXvl8ucCDyAjG/wAL+ywTL2XbfBQFMiMona7Msph+jiD5hmlekZ4ePOymKfNKl7
-         Haa74r+yQz0Ltuog3FrDEbyoJJ7sHA6s85se59GFf6OPJmjIeKAnpAxeiW0Fi0bJp1gq
-         CYFg==
-X-Gm-Message-State: AOJu0YwRFchxiHr8kj6F0fZEwWMUz+iRawj0bE4rjnpgDTyISppjYFMO
-	pi7Ny4QBdwOOVQbvyrL1GuSXoX0C0/DEFGQtu8lsgywBL35po3J2cki50hRK2UIY
-X-Gm-Gg: AfdE7ckmDETHRNYDgqzWZVjcC3qhuo1k3MO7wkLHDn9pofzdkIJsf7h+seK9roWC2Az
-	XQloI3M9SeByI+fS5Q4vDtCJUkxK1jwX+0YbqvE4JQni5HaSZ2xMNRmjYV4gO7TPlCi3fJ1oG9I
-	LKU+TmRqUF5gnnI1Dfvl462CN6Ba80EfF1WAL4lM4S08PMOrRYSVUvV/lQsIc1s+yTvo1YCFMsv
-	Wt5mR0zvAijpi818smu0uT9m8ICIFvlHClqVu7zhGG3NnDaU4+mAANV+axahXkiGhHXPBHGYPQn
-	YGBUdyGJyfoZhyXYevCki57kHUiHz3D/e6H5II52YvIw9f4k5yHEf9zKANeius4Xf++lR1y70o0
-	eT7l00mmJeBTondpFuE1YFi2JKS3c7keuPqeTFBbvfOiyQEEj65PvlSAMZq0VzxKDdDLOXcjQ0y
-	pjrwC/ietENSPPxkhRUi9ZZmzZJ4VEC0nyJjmAmaLOMaq51XEw+2NbzuUh2cXRX4Qanqz8zdw4E
-	X7E7dEuk6u0/+d5h35VnXdO/Y1eAlyIVVFCyB88km5eG3eEMWrqssLoImAsh3gtJGQxNPvsZoQP
-	QUovnvlifbe7j/VI7WqBhDx9IwqvZZWRwZuWjtsNX8BkInR/6xFYWhrgPjwH1YtchBku91PsgLs
-	tEj0bmll04A==
-X-Received: by 2002:a05:6000:4b1d:b0:47d:ee7a:9306 with SMTP id ffacd0b85a97d-47df08251f6mr13674756f8f.61.1783701694930;
-        Fri, 10 Jul 2026 09:41:34 -0700 (PDT)
+        bh=BGhD57xwUgjscRN8Qmzjbu6VVG0b3sQWcOgA13cfSso=;
+        b=grf/IefmR2BkyEQsji98KoSxb6LsRTPs8wOtkvv6vYGg8lq/GdHuG7/QZrNkEWBwRo
+         zHPqM3110b11Mv2Q/+ZBSNkdJWWD3BeYTnf3O4r8fArFyKiZmI1aZMHN7KcFD0o+NUBQ
+         9t9y2qiJuNOZk6VeyfvsjjzlkRMhXEgFHCA11CviZWHtqclAIQ3BzDb+r+92qClzORMD
+         MsZJYKZQwxHNDYD2fqCGd1PYLJs2FE+zw4C8M6sB8q+O57sAvYh7MDCshf4P2cnADIuD
+         17Af3DaLVQxjPpyDT0dZt4039+ccseLzJXfXswIOAtX7/0jR5Ul76JCwgfI++35Zn1Tm
+         qNrw==
+X-Gm-Message-State: AOJu0YxKFg3PoK89p8OogbFXCO7Q1Llic6KtgZDPxwGTlbIi4SiBskPf
+	aLaXviaeBLWk8atEvNlBhQiPNNJtQPmi6MYfWpfC+jFhai5QmI+Th0ic2rbVER/B
+X-Gm-Gg: AfdE7cnO5ZDkUgIm8YfMYcGUwuGwjZpesPL9m3iNM+t8bCpgyws0IGKXL/MEo0W7LXf
+	emaFw3fJnti2EENaaZXvyLgxXKgrawucda5bv4Mo1PVHgMOcKXu2WNirPCiN3bH/cV9oD1qzi2I
+	JZX4XwDTG1BI0y20C46nHLXQuNtMxhRYtb1OOBfIFWgHCKbeNRz+Updx9yXMR+YvVR6iiNYqBHK
+	SZv751wne1KJ/ZnHC98mb0D1OlRazWaxcA8Cv0jrcLm0fiSL9T23gnsuG2adEt/Lp4SnjXjfLcS
+	kMbJtAH6WK1Y4JLFCZjVfxvox+/h0TwEUvmAqyUiEeeQtLJrPLzBmTeRoyJzHkDI6hN8khgvEm0
+	eQrhXgTZ5RK/avXgQGGDHAMpaVLI28cd4hiDas3Q17LixLDqcjnysnOdviKWPpSF/ZCN+ncS/Xy
+	CIrV3OJCw/kutQ+AQnByv1ZXPABZdLgPhk7Ht2ogIj4KlxxC0imCkqlyorSA9yOCTbFJImR6NhM
+	v5vcXPM5CYcp+twf1cgtZCWM9EwR/HSYPUGTdiuRUZikgKA3RV2idzSqgjwmu22ZYv1mCROEjBy
+	GhQ+UUx7qozO9ETqhxDWd2tIeEBemYCvyMq4jtWWwywcnph8vnFDOkUA4Zdhs5JhWbG+02GwESy
+	dJlhZX1UWtQ==
+X-Received: by 2002:a05:600c:8486:b0:493:e365:7630 with SMTP id 5b1f17b1804b1-493e6844d66mr157537695e9.14.1783701697314;
+        Fri, 10 Jul 2026 09:41:37 -0700 (PDT)
 Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9de1d905sm63643639f8f.2.2026.07.10.09.41.33
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9de1d905sm63643639f8f.2.2026.07.10.09.41.36
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 10 Jul 2026 09:41:34 -0700 (PDT)
+        Fri, 10 Jul 2026 09:41:36 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -71,11 +71,10 @@ Cc: pabloosabaterr@gmail.com,
 	jltobler@gmail.com,
 	karthik.188@gmail.com,
 	peff@peff.net,
-	toon@iotcl.com,
-	Calvin Wan <calvinwan@google.com>
-Subject: [PATCH GSoC v16 10/13] transport: add client support for object-info
-Date: Fri, 10 Jul 2026 18:41:16 +0200
-Message-ID: <20260710-ps-eric-work-rebase-v16-10-66e07b58a8fe@gmail.com>
+	toon@iotcl.com
+Subject: [PATCH GSoC v16 12/13] cat-file: validate remote atoms with an allow-list
+Date: Fri, 10 Jul 2026 18:41:18 +0200
+Message-ID: <20260710-ps-eric-work-rebase-v16-12-66e07b58a8fe@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710-ps-eric-work-rebase-v16-0-66e07b58a8fe@gmail.com>
 References: <20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com>
@@ -89,407 +88,187 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-From: Calvin Wan <calvinwan@google.com>
+strstr() is not enough to validate the format placeholders in
+remote-object-info causing two errors:
 
-Sometimes, it is beneficial to retrieve information about an object
-without downloading it entirely. The server-side logic for this
-functionality was implemented in commit "a2ba162cda (object-info:
-support for retrieving object info, 2021-04-20)." And the wire
-format is documented at
-https://git-scm.com/docs/protocol-v2#_object_info.
+1. Atoms recognized by expand_atom() but the remote doesn't returns 1,
+   but data->type contains garbage causing segfault.
 
-Introduce client-side support for the object-info capability.
+2. expand_atom() returns 0 for unknown atoms, calling
+   strbuf_expand_bad_format() which ends up dying, blocking local
+   queries if the same format is shared.
 
-Add its own function for object-info separate from existing fetch
-infrastructure.
+Add an allow-list with the supported atoms at the top of expand_atom().
+In remote mode, unsupported atoms return 1 leaving the buffer empty,
+honoring how for-each-ref handles known but inapplicable atoms.
 
-Currently, the client supports requesting a list of object IDs with
-the size feature from a v2 server. If the server does not advertise
-this feature (i.e., transfer.advertiseobjectinfo is set to false),
-the client returns an error and exit.
+As extra safety, initialize data->type to OBJ_BAD and add a NULL check
+for type_name() so uninitialized data doesn't cause segfault.
 
-Note that:
+Update tests that expect previous die() behavior to expect an empty
+string and add an explicit test for empty string return on unknown
+placeholder.
 
-1. the entire request is written into req_buf before being sent to the
-   remote. This approach follows the pattern used in the
-   send_fetch_request() logic within 'fetch-pack.c'. Streaming the
-   request is not addressed in this patch.
+Update cat-file command documentation regarding remote-object-info.
 
-2. When the server does not recognize an OID, following the v2 protocol,
-   the server returns "<OID> SP", when this happens,
-   fetch_object_info() sets the corresponding size pointer to NULL so
-   that callers can detect and handle it.
-
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Helped-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Calvin Wan <calvinwan@google.com>
-Signed-off-by: Eric Ju <eric.peijian@gmail.com>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- Makefile             |   1 +
- fetch-object-info.c  | 109 +++++++++++++++++++++++++++++++++++++++++++++++++++
- fetch-object-info.h  |  22 +++++++++++
- fetch-pack.h         |   1 +
- meson.build          |   1 +
- transport-helper.c   |  13 +++++-
- transport-internal.h |   8 ++++
- transport.c          |  46 ++++++++++++++++++++++
- transport.h          |  10 +++++
- 9 files changed, 209 insertions(+), 2 deletions(-)
+ Documentation/git-cat-file.adoc        |  2 +-
+ builtin/cat-file.c                     | 41 +++++++++++++++++++++++++++-------
+ t/t1017-cat-file-remote-object-info.sh | 27 ++++++++++++++++++----
+ 3 files changed, 57 insertions(+), 13 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 1f3f099f5c..cdabdb3771 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1159,6 +1159,7 @@ LIB_OBJS += ewah/ewah_rlw.o
- LIB_OBJS += exec-cmd.o
- LIB_OBJS += fetch-negotiator.o
- LIB_OBJS += fetch-pack.o
-+LIB_OBJS += fetch-object-info.o
- LIB_OBJS += fmt-merge-msg.o
- LIB_OBJS += fsck.o
- LIB_OBJS += fsmonitor.o
-diff --git a/fetch-object-info.c b/fetch-object-info.c
-new file mode 100644
-index 0000000000..91685cb355
---- /dev/null
-+++ b/fetch-object-info.c
-@@ -0,0 +1,109 @@
-+#include "git-compat-util.h"
-+#include "gettext.h"
-+#include "hex.h"
-+#include "pkt-line.h"
-+#include "connect.h"
-+#include "oid-array.h"
-+#include "odb.h"
-+#include "fetch-object-info.h"
-+#include "string-list.h"
-+
-+/* Sends object-info command and its arguments into the request buffer. */
-+static void send_object_info_request(const int fd_out, struct object_info_args *args)
-+{
-+	struct strbuf req_buf = STRBUF_INIT;
-+
-+	write_command_and_capabilities(&req_buf, "object-info", args->server_options);
-+
-+	if (unsorted_string_list_has_string(args->object_info_options, "size"))
-+		packet_buf_write(&req_buf, "size");
-+	else
-+		BUG("only size should be in object_info_options");
-+
-+	if (args->oids)
-+		for (size_t i = 0; i < args->oids->nr; i++)
-+			packet_buf_write(&req_buf, "oid %s", oid_to_hex(&args->oids->oid[i]));
-+
-+	packet_buf_flush(&req_buf);
-+	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-+		die_errno(_("unable to write request to remote"));
-+
-+	strbuf_release(&req_buf);
-+}
-+
-+static size_t parse_object_size(const char *s, size_t *res)
-+{
-+	uintmax_t uim;
-+
-+	if (!s[0] || s[strspn(s, "0123456789")])
-+		return -1;
-+	errno = 0;
-+	uim = strtoumax(s, NULL, 10);
-+	if (errno || uim > SIZE_MAX)
-+		return -1;
-+	*res = uim;
-+	return 0;
-+}
-+
-+int fetch_object_info(const enum protocol_version version, struct object_info_args *args,
-+		      struct packet_reader *reader, struct object_info *object_info_data,
-+		      const int stateless_rpc, const int fd_out)
-+{
-+	int size_index = -1;
-+
-+	switch (version) {
-+	case protocol_v2:
-+		if (!server_supports_v2("object-info"))
-+			die(_("object-info capability is not enabled on the server"));
-+		send_object_info_request(fd_out, args);
-+		break;
-+	case protocol_v1:
-+	case protocol_v0:
-+		die(_("unsupported protocol version. expected v2"));
-+	case protocol_unknown_version:
-+		BUG("unknown protocol version");
-+	}
-+
-+	for (size_t i = 0; i < args->object_info_options->nr; i++) {
-+		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
-+			check_stateless_delimiter(stateless_rpc, reader,
-+						  "stateless delimiter expected");
-+			return -1;
-+		}
-+
-+		if (!string_list_has_string(args->object_info_options, reader->line))
-+			return -1;
-+
-+		if (!strcmp(reader->line, "size")) {
-+			size_index = i;
-+			for (size_t j = 0; j < args->oids->nr; j++)
-+				object_info_data[j].sizep = xcalloc(1, sizeof(*object_info_data[j].sizep));
-+		} else {
-+			BUG("only size is supported");
-+		}
-+	}
-+
-+	for (size_t i = 0; packet_reader_read(reader) == PACKET_READ_NORMAL && i < args->oids->nr; i++) {
-+		struct string_list object_info_values = STRING_LIST_INIT_DUP;
-+
-+		string_list_split(&object_info_values, reader->line, " ", -1);
-+		if (size_index >= 0) {
-+			if (!strcmp(object_info_values.items[1 + size_index].string, "")) {
-+				FREE_AND_NULL(object_info_data[i].sizep);
-+				string_list_clear(&object_info_values, 0);
-+				continue;
-+			}
-+
-+			if (parse_object_size(object_info_values.items[1 + size_index].string,
-+					      object_info_data[i].sizep))
-+				die("object-info: ref %s has invalid size %s",
-+				    object_info_values.items[0].string,
-+				    object_info_values.items[1 + size_index].string);
-+		}
-+
-+		string_list_clear(&object_info_values, 0);
-+	}
-+	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
-+
-+	return 0;
-+}
-diff --git a/fetch-object-info.h b/fetch-object-info.h
-new file mode 100644
-index 0000000000..d35284bd6b
---- /dev/null
-+++ b/fetch-object-info.h
-@@ -0,0 +1,22 @@
-+#ifndef FETCH_OBJECT_INFO_H
-+#define FETCH_OBJECT_INFO_H
-+
-+#include "pkt-line.h"
-+#include "protocol.h"
-+#include "odb.h"
-+
-+struct object_info_args {
-+	struct string_list *object_info_options;
-+	const struct string_list *server_options;
-+	struct oid_array *oids;
-+};
-+
-+/*
-+ * Sends git-cat-file object-info command into the request buf and read the
-+ * results from packets.
-+ */
-+int fetch_object_info(enum protocol_version version, struct object_info_args *args,
-+		      struct packet_reader *reader, struct object_info *object_info_data,
-+		      int stateless_rpc, int fd_out);
-+
-+#endif /* FETCH_OBJECT_INFO_H */
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 6d0dec7f41..0fba340a84 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -16,6 +16,7 @@ struct fetch_pack_args {
- 	const struct string_list *deepen_not;
- 	struct list_objects_filter_options filter_options;
- 	const struct string_list *server_options;
-+	struct object_info *object_info_data;
+diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
+index a7fa6674c3..643eac9245 100644
+--- a/Documentation/git-cat-file.adoc
++++ b/Documentation/git-cat-file.adoc
+@@ -451,7 +451,7 @@ CAVEATS
  
- 	/*
- 	 * If not NULL, during packfile negotiation, fetch-pack will send "have"
-diff --git a/meson.build b/meson.build
-index ca235801cf..19fad57da9 100644
---- a/meson.build
-+++ b/meson.build
-@@ -347,6 +347,7 @@ libgit_sources = [
-   'exec-cmd.c',
-   'fetch-negotiator.c',
-   'fetch-pack.c',
-+  'fetch-object-info.c',
-   'fmt-merge-msg.c',
-   'fsck.c',
-   'fsmonitor.c',
-diff --git a/transport-helper.c b/transport-helper.c
-index f195070788..f97e6d7b29 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -727,8 +727,7 @@ static int fetch_refs(struct transport *transport,
+ Note that since only `%(objectname)` and `%(objectsize)` are currently
+ supported by the `remote-object-info` command. Using any other placeholder in
+-the format string will raise an error.
++the format string will return an empty string in its position.
  
- 	/*
- 	 * If we reach here, then the server, the client, and/or the transport
--	 * helper does not support protocol v2. --negotiate-only requires
--	 * protocol v2.
-+	 * helper does not support protocol v2. --negotiate-only.
+ Note that the sizes of objects on disk are reported accurately, but care
+ should be taken in drawing conclusions about which refs or objects are
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 77ecccdda3..af388b6238 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -333,8 +333,18 @@ struct expand_data {
+ 	 * optimized out.
  	 */
- 	if (data->transport_options.acked_commits) {
- 		warning(_("--negotiate-only requires protocol v2"));
-@@ -784,6 +783,15 @@ static int fetch_refs(struct transport *transport,
- 	return -1;
- }
- 
-+static int fetch_object_info_helper(struct transport *transport)
-+{
-+	get_helper(transport);
-+	if (process_connect(transport, 0))
-+		return transport->vtable->fetch_object_info(transport);
+ 	unsigned skip_object_info : 1;
 +
-+	die(_("object-info requires protocol v2"));
-+}
-+
- struct push_update_ref_state {
- 	struct ref *hint;
- 	struct ref_push_report *report;
-@@ -1330,6 +1338,7 @@ static struct transport_vtable vtable = {
- 	.get_refs_list	= get_refs_list,
- 	.get_bundle_uri = get_bundle_uri,
- 	.fetch_refs	= fetch_refs,
-+	.fetch_object_info = fetch_object_info_helper,
- 	.push_refs	= push_refs,
- 	.connect	= connect_helper,
- 	.disconnect	= release_helper
-diff --git a/transport-internal.h b/transport-internal.h
-index 051f3ab0dc..60db0bedcd 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -45,6 +45,14 @@ struct transport_vtable {
- 	 **/
- 	int (*fetch_refs)(struct transport *transport, int refs_nr, struct ref **refs);
- 
 +	/*
-+	 * Fetch object info (only size currently) from remote without
-+	 * downloading the objects.
-+	 *
-+	 * Uses object-info capability of v2 protocol.
++	 * Flags about when an object info is being fetched from remote.
 +	 */
-+	int (*fetch_object_info)(struct transport *transport);
++	unsigned is_remote:1;
++};
++#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD }
 +
- 	/**
- 	 * Push the objects and refs. Send the necessary objects, and
- 	 * then, for any refs where peer_ref is set and
-diff --git a/transport.c b/transport.c
-index fc144f0aed..3e0a6558b7 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1,3 +1,4 @@
-+#include "compat/posix.h"
- #define USE_THE_REPOSITORY_VARIABLE
++static const char *remote_object_info_atoms[] = {
++	"objectname",
++	"objectsize",
+ };
+-#define EXPAND_DATA_INIT  { .mode = S_IFINVALID }
  
- #include "git-compat-util.h"
-@@ -9,6 +10,7 @@
- #include "hook.h"
- #include "pkt-line.h"
- #include "fetch-pack.h"
-+#include "fetch-object-info.h"
- #include "remote.h"
- #include "connect.h"
- #include "send-pack.h"
-@@ -432,6 +434,48 @@ static int get_bundle_uri(struct transport *transport)
- 				     transport->bundles, stateless_rpc);
- }
- 
-+static int fetch_object_info_via_pack(struct transport *transport)
-+{
-+	int ret = 0;
-+	struct git_transport_data *data = transport->data;
-+	struct packet_reader reader;
-+	struct object_info_args args = { 0 };
-+
-+	args.server_options = transport->server_options;
-+	args.oids = transport->smart_options->object_info_oids;
-+	args.object_info_options = transport->smart_options->object_info_options;
-+	string_list_sort(args.object_info_options);
-+
-+	connect_setup(transport, 0);
-+	packet_reader_init(&reader, data->fd[0], NULL, 0,
-+			   PACKET_READ_CHOMP_NEWLINE |
-+			   PACKET_READ_GENTLE_ON_EOF |
-+			   PACKET_READ_DIE_ON_ERR_PACKET);
-+
-+	data->version = discover_version(&reader);
-+	transport->hash_algo = reader.hash_algo;
-+
-+	ret = fetch_object_info(data->version, &args, &reader,
-+				data->options.object_info_data,
-+				transport->stateless_rpc, data->fd[1]);
-+
-+	close(data->fd[0]);
-+	if (data->fd[1] >= 0)
-+		close(data->fd[1]);
-+	if (finish_connect(data->conn))
-+		ret = -1;
-+	data->conn = NULL;
-+
-+	return ret;
-+}
-+
-+int transport_fetch_object_info(struct transport *transport)
-+{
-+	if (!transport->vtable->fetch_object_info)
-+		die(_("remote does not support object-info"));
-+	return transport->vtable->fetch_object_info(transport);
-+}
-+
- static int fetch_refs_via_pack(struct transport *transport,
- 			       int nr_heads, struct ref **to_fetch)
+ static int is_atom(const char *atom, const char *s, int slen)
  {
-@@ -1004,6 +1048,7 @@ static struct transport_vtable taken_over_vtable = {
- 	.get_refs_list	= get_refs_via_connect,
- 	.get_bundle_uri = get_bundle_uri,
- 	.fetch_refs	= fetch_refs_via_pack,
-+	.fetch_object_info = fetch_object_info_via_pack,
- 	.push_refs	= git_transport_push,
- 	.disconnect	= disconnect_git
- };
-@@ -1169,6 +1214,7 @@ static struct transport_vtable builtin_smart_vtable = {
- 	.get_refs_list	= get_refs_via_connect,
- 	.get_bundle_uri = get_bundle_uri,
- 	.fetch_refs	= fetch_refs_via_pack,
-+	.fetch_object_info = fetch_object_info_via_pack,
- 	.push_refs	= git_transport_push,
- 	.connect	= connect_git,
- 	.disconnect	= disconnect_git
-diff --git a/transport.h b/transport.h
-index 7e5867cffa..9e85a4cd35 100644
---- a/transport.h
-+++ b/transport.h
-@@ -6,6 +6,7 @@
- #include "list-objects-filter-options.h"
- #include "string-list.h"
- #include "connect.h"
-+#include "odb.h"
- 
- struct git_transport_options {
- 	unsigned thin : 1;
-@@ -55,6 +56,10 @@ struct git_transport_options {
- 	 * common commits to this oidset instead of fetching any packfiles.
- 	 */
- 	struct oidset *acked_commits;
+@@ -345,14 +355,31 @@ static int is_atom(const char *atom, const char *s, int slen)
+ static int expand_atom(struct strbuf *sb, const char *atom, int len,
+ 		       struct expand_data *data)
+ {
++	if (data->is_remote) {
++		size_t i, allowed_nr = ARRAY_SIZE(remote_object_info_atoms);
++		for (i = 0; i < allowed_nr; i++)
++			if (is_atom(remote_object_info_atoms[i], atom, len))
++				break;
 +
-+	struct oid_array *object_info_oids;
-+	struct object_info *object_info_data;
-+	struct string_list *object_info_options;
- };
- 
- enum transport_family {
-@@ -309,6 +314,11 @@ int transport_get_remote_bundle_uri(struct transport *transport);
- const struct git_hash_algo *transport_get_hash_algo(struct transport *transport);
- int transport_fetch_refs(struct transport *transport, struct ref *refs);
- 
-+/*
-+ * Fetch the object info from remote
-+ */
-+int transport_fetch_object_info(struct transport *transport);
++		/*
++		 * On remote, skip unsupported atoms returning an empty sb,
++		 * honoring how for-each-ref handles known but inapplicable
++		 * atoms (e.g. %(tagger)).
++		 */
++		if (i == allowed_nr)
++			return 1;
++	}
 +
- /*
-  * If this flag is set, unlocking will avoid to call non-async-signal-safe
-  * functions. This will necessarily leave behind some data structures which
+ 	if (is_atom("objectname", atom, len)) {
+ 		if (!data->mark_query)
+ 			strbuf_add_oid_hex(sb, &data->oid);
+ 	} else if (is_atom("objecttype", atom, len)) {
+-		if (data->mark_query)
++		if (data->mark_query) {
+ 			data->info.typep = &data->type;
+-		else
+-			strbuf_addstr(sb, type_name(data->type));
++		} else {
++			const char *t = type_name(data->type);
++			strbuf_addstr(sb, t ? t : "");
++		}
+ 	} else if (is_atom("objectsize", atom, len)) {
+ 		if (data->mark_query)
+ 			data->info.sizep = &data->size;
+@@ -709,10 +736,6 @@ static int get_remote_info(struct batch_options *opt,
+ 	CALLOC_ARRAY(*remote_object_info, object_info_oids->nr);
+ 	gtransport->smart_options->object_info_oids = object_info_oids;
+ 
+-	/* 'objectsize' is the only option currently supported */
+-	if (!strstr(opt->format, "%(objectsize)"))
+-		die(_("%s is currently not supported with remote-object-info"), opt->format);
+-
+ 	string_list_append(&object_info_options, "size");
+ 
+ 	if (object_info_options.nr > 0) {
+@@ -842,7 +865,9 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
+ 			 */
+ 			data->size = *remote_object_info[i].sizep;
+ 			opt->batch_mode = BATCH_MODE_INFO;
++			data->is_remote = 1;
+ 			batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
++			data->is_remote = 0;
+ 		} else {
+ 			report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "missing");
+ 		}
+diff --git a/t/t1017-cat-file-remote-object-info.sh b/t/t1017-cat-file-remote-object-info.sh
+index 49b6660934..6bc863c391 100755
+--- a/t/t1017-cat-file-remote-object-info.sh
++++ b/t/t1017-cat-file-remote-object-info.sh
+@@ -236,6 +236,21 @@ test_expect_success 'remote-object-info does not die on missing oid like info' '
+ 	)
+ '
+ 
++# This tests depends on %(objecttype) not being supported yet, once supported
++# it needs to be updated.
++test_expect_success 'unsupported placeholder on remote returns empty string' '
++	(
++		set_transport_variables "$daemon_parent" &&
++		cd "$daemon_parent/daemon_client_empty" &&
++
++		echo "" >expect &&
++		git cat-file --batch-command="%(objecttype)" >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
+ # Test --batch-command remote-object-info with 'git://' and
+ # transfer.advertiseobjectinfo set to false, i.e. server does not have object-info capability
+ test_expect_success 'batch-command remote-object-info git:// fails when transfer.advertiseobjectinfo=false' '
+@@ -575,10 +590,12 @@ test_expect_success 'remote-object-info fails on unsupported filter option (obje
+ 		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 
+-		test_must_fail git cat-file --batch-command="%(objectsize:disk)" 2>err <<-EOF &&
++		echo "$hello_oid " >expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize:disk)" >actual <<-EOF &&
+ 		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid
+ 		EOF
+-		test_grep "%(objectsize:disk) is currently not supported with remote-object-info" err
++		test_cmp expect actual
+ 	)
+ '
+ 
+@@ -587,10 +604,12 @@ test_expect_success 'remote-object-info fails on unsupported filter option (delt
+ 		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 
+-		test_must_fail git cat-file --batch-command="%(deltabase)" 2>err <<-EOF &&
++		echo "" >expect &&
++
++		git cat-file --batch-command="%(deltabase)" >actual <<-EOF &&
+ 		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid
+ 		EOF
+-		test_grep "%(deltabase) is currently not supported with remote-object-info" err
++		test_cmp expect actual
+ 	)
+ '
+ 
 
 -- 
 2.54.0
