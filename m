@@ -1,116 +1,212 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13E423BCF7
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783696104; cv=pass; b=QW478ZcrElQ7hOktxSnTyIO0Or60QSRJvA9BRVd3XgJOUKIiCR9QMLG+gCGpwxXR0Z127ZsaRrNCShoyyqyH65/pbD+nSebGDxqIQuvbNA9Yj7LxelUIlb/qFFs0MWqvyHz4jRct3qG6W+hBkJHRG36lE9YBLrtap44mPwZ0AyY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783696104; c=relaxed/simple;
-	bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Nz5QSC34+xi2wIoZ6s9Y8ALdEbJZyLfA9YO7XgHBEN+OitD/iOzA/um3ipJxCercUPN9LEc0RYe7tnp1dCjQo+G93gEDuIUAj/YB+stl+83PBsDsjhZokgH3mZf59TQHFRtMGSFbKiQdj3kXVStZs+LOGCLuJddw7xCP//s+SGI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sTgcAS1W; arc=pass smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE0F136358
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783696726; cv=none; b=URyhLANBJtPww4mt0dmyG7GSjE8auq/dmRdc2RUnjiIRsKbmkxFRw+o1syu4ukYHQu0KKdpcwhGkUQ+ujnuch1fP2LjkApvSPO9b1GxDkkEqk75BIER8CW+azCzRb4Q4s0D+DLpuy81zxX0cyqdyIzbu+xWwnx22hITIREJXL/E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783696726; c=relaxed/simple;
+	bh=BoiWUKQvJW+gG/pFAB1zZFyOB9WKAPG+s88ymIHjsJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CafgGcXEiO8CePJPYF5jYVl64J5fmxUDH38TzPPg46VzOp0vCoOyqaUV4HLAlwtDmjNtdnQIF6YzQrScwAqkoDc+DDxYU6sYdvuoL0FxL8Lg34isDoEC/BsJyMDmkSjwU87/2xIpreGN3TcyxeU2DR0T2t+U3v0dLJE7V79+0vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O7IcTD3K; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sTgcAS1W"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-80a123ef90aso17226917b3.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 08:08:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783696102; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MQyQf3pxvSgP+DFFjV/Y3t5cT5v6SF2TyT/JOz9z0kVkPTUOTUlsfCTpADazqM214x
-         m1rd5EZeE5wT2Sd8egQDZFah8mYzrtkJtbT8xHQ3BA7JvCRaeD2tixRZpcRIZFtJBuXj
-         lagXEmzDWlk5g5w0A1K/6kLqJmnCJqPn4JZhLb4aHqdfj82OGdCOOmejIEHnB81SBR3P
-         L5EWuXbd3Rx7ebqBnHJkjWEDTLoDbeLV38OBgBjR0HLrmEZzaPb9HgXXS3g1k5+cGkXf
-         h2UocAwybWhnU84zurtzJKzMd8tnEDf61U5EDn1/NPwJYjQ87BTSEX8rDavYfo9yjQTM
-         68UQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=mTR/WXEiJgGI15Ck/rhMabsucLA99m+yi4YwCx3RS+IqICSMKhKzOfkUJKRUC4rdQO
-         76KQihqPbYl+wi4/hKxge1qmJjXgS9kzE2UJhI7VjdvTVNfea+jJ2zqlA9lbvWxt2VCN
-         21FhaHsIsy6Li4bN5cvmVvrWpH8pBPzd2h9HAHJ0FeSBFg6FTufVIlc+UmljdblOfRKJ
-         PDfS+35ex8osePmPBBsrGQo7Jew7leBmAcsrXPHnSVliN7NXrPxt2b1XyGzQAN2OkWFV
-         tahjluC+txgeFH6pMZ+TCsaZEacX4RNkEWWJMpcXhfoIHJf8Z6MGSi6zNoKzwlCkDtqc
-         fpRw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O7IcTD3K"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-698aa8d4dafso1083127a12.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 08:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783696102; x=1784300902; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
-        b=sTgcAS1WyGIQj/0nlt8u2nQIaA2YIfyH3uMY5p0v5MNoCEznJNK1CbPYvaFPxRW2TL
-         iP9CHCgTwnuRCW/Wzq8I56zIyABxRuaJFRHWbu8NuIZlVVGdd2BNgPT8DhUymIvjoAf1
-         dDC6oO7yc5n6WoUFUZBa6pfpo/GE8GxltpVDXs5dNwpObYpL12BkcRn/F1q36v5PtLMJ
-         64YNf0VwAEV/+mXy80S0UIYC6ZmmQ6Eu1ZxHxGiYJF2I2doSjHZ9Q2eIb56OhR3OrFAY
-         R7Qf7Od4rj5tNTI4p8w8l9shszHckBbRUl8MExqKIM8afRnRJUoFUtsK7g6Rmlm5c36U
-         vUoQ==
+        d=gmail.com; s=20251104; t=1783696723; x=1784301523; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:reply-to
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=TSduWjqUDnlO9oJjtglAsNd2gzUvyYScjyHvYQT5mok=;
+        b=O7IcTD3KJLvJLRwZfVAC4gTKb8UV7eS214onj8bvPXJkodF3z+q5Gn/cmiMGZUAzjL
+         k+QrjacQ9xqjMiRnlkKgTy0Aqxwz8xQXV3nZO6eLejacIKn4keY/OH9oWd/9rt9bganp
+         isiYMLieTX7tkQ7SI6tfzxLCHRtYwz93IuCO2xAkScx+yQlGtdl/ZRb9rgKacWxww8bp
+         ASIBIDcZKXcCf81Xo9m/emV1EUVIzTIfVqQ0duBwpunkvtiwzGB2oRZnl+6ycZOQh/TA
+         8LiXiy7bAHGLZZWJzUfy0TFKkq1036U3IPjbT3yDGjLs7TYXHiPSn66Y8kbeOtG1ruzb
+         rjKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783696102; x=1784300902;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=y34XuAcVPPsATPT/kzOeEKIqjakFszfska71z1pHdc4=;
-        b=Te9IAdIlvxFrGr4yjofI/eM71ORQd68D0GdgoaH3GUoXuA3poeFRbhgZfq/fuwEfvd
-         S2j5Z9J6DyIkeGnl9lwWLDEirUoIXXFBvmXDdWl/DOdoIxPEIO2zGhCgmRButNlMUQYG
-         eDNTRSt9AQXit/NyEuNfCu9WyRP6jaA1LfIBSU2h+cfHOWlRP0RBxS6k1yhIIWuFAxpm
-         BjPyay+mLBZmFWOUJNfokM1wRPDAfIH/DUMJQBnol0MUwYlwFmmqorYja3PY6nNttEmg
-         rE6XPgXr+b7vaMxpOgcmt/flmVpqC2IoxsDSyR4OmR0uoFhNzO7frjjCXd0Kw734JHi7
-         HhIg==
-X-Gm-Message-State: AOJu0YzBhDIbEn2qp1npywSi7qJbyYY/in6kC4SASq0ylcRUsOngtpqW
-	347RqI/M4o1or7f2JFtSmDXIYuYcpNh154iqIlYrkbm7m4PynWaE8oBigouN8bpI+A2yBRgxYvt
-	eU7f0YGTHBG98unygirotTWVdAjV0loUp8M+h
-X-Gm-Gg: AfdE7cnyHQKckqL7InRk9s8wu19pQMr7oNg8DS3oXHKoizpHzHBHCRBi56qMCjAcNw2
-	xKKGnNxx6UVaSh1X9w43QSFX/32SmvHSkcRyS4xKLPlGzmNaUQ2AtS/BzytjUBaxUfh2g2BJi83
-	xuWKBlUP/RneSFvlp76L3lMXhQUk+Og0mb2W/ay4RIk/0FVSghjOd7GcRIjoITy7hMqu9ttNDvx
-	vb9hmwJ5qdLmws9kKIY4LMNedQwxEDbi+VN9aDHRfOlUoY/RROp44mhh1UTPkmfWtys+g==
-X-Received: by 2002:a05:690c:4a0a:b0:81e:5d2e:7a2a with SMTP id
- 00721157ae682-81e7c006014mr28675487b3.17.1783696101894; Fri, 10 Jul 2026
- 08:08:21 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783696723; x=1784301523;
+        h=content-transfer-encoding:content-type:in-reply-to:reply-to
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=TSduWjqUDnlO9oJjtglAsNd2gzUvyYScjyHvYQT5mok=;
+        b=POzFpXutrZm+behwNq9HGWvN7lpGqvNwrEiQPLXwMYUPAbFo2Qa08hmxz9dFz2M6Mb
+         Y0vBNCtUFPoh8g4Bpw9DcrshXZ5GdBHcz+iuD+1aH5o0hsS6e0jp9FdQQAwRj4iaeeZH
+         GJvYzKB+xXLsV5kqQ6TdHWxbSnbcsHYPURzN8/FuHn2M65sZyzZkGZAtlye+ossMSXpz
+         13aVmQ1iijIWcTYI4+Fs3uR1AUj0DOk30/KYJFE0gQ3QcJ99iN+UQSl+rt2fvILfXOR5
+         dr2JIfpvTf3oOAHviXp5TzcB7p3gmSqQF1If9+cfSMqUoIdeQkfN2k57Yg6otuUAPe4G
+         Vz6w==
+X-Forwarded-Encrypted: i=1; AHgh+Rr90kzjH+5f4ho5n9BzNHhhf43bkqv1KBKjFB8WvKR+YR5LVdMMGlLRdLN5lL6jND1nulA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcbOYdTvdNXj+flxfRK79F3VPr1vD51Na+xzaeaRabrYxISFT4
+	WkemtBP6sGXLQ+f2nLkiQBBnrTYjX30q9+vlbUQf3bq+DtO/vVfUbh5e
+X-Gm-Gg: AfdE7ck5DwUDHfGTgGrPGTjhu/z4MK+/Y2Q/qCphvvQF3lGoc9eOwLwNRLr3XJBubXW
+	XOGnmjUHPzfHnvYOPbv3zOOsXxMBLcXxKB3GpSlVZh3GukqBa/TEg5QDlMd/ZT4H38cJdIuyjFH
+	TOnKwKCNT5nSCUaqErcQMirqUe+lgYKclB3mT5UHR06krG2b2tPSyvUCdzK7sWaw0vDxPrgeYVO
+	jv5/SqwE9dvy6gwlHG764bmN0wItLt7djQ3AdEmjL7lW+1YtsL7YS18hlGNDjpU0nuLzOv6Jv/a
+	cYKl3QP7DdwtusPxCbPhydrz5ges2INP189bNGInFhHGMcxTEaM2yxI3RJIO9/FkJZe+6uDfmni
+	nGEEezEvApVyq5E9Dgehr6Xu6cK+8j+VDBn4+eKjTutOG00sNufCYJC470kEUnqfD8P+qyN7oKK
+	cDZfObkHW6jjDzElIA9fol5HwO7YfsYfMOmFK+xYx0s5Njucc4a1obr/Vw9K6HgOka21hIyBXr6
+	n+jVg==
+X-Received: by 2002:a05:6402:e85:b0:698:81d7:b576 with SMTP id 4fb4d7f45d1cf-69ab4472359mr4546802a12.10.1783696722591;
+        Fri, 10 Jul 2026 08:18:42 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69c5e29b061sm82358a12.19.2026.07.10.08.18.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jul 2026 08:18:42 -0700 (PDT)
+Message-ID: <8ee46e33-4eb8-4e01-800a-82cc7cefa3f9@gmail.com>
+Date: Fri, 10 Jul 2026 16:18:34 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Omri Sarig <omri.sarig13@gmail.com>
-Date: Fri, 10 Jul 2026 17:08:11 +0200
-X-Gm-Features: AUfX_mzKSiRGZqgQZmBfzjzWdHrv97kbIvAlzvj1yaPQmccbYHAcMTZQ1IQKUss
-Message-ID: <CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJBf79RCNzgg@mail.gmail.com>
-Subject: Understanding why Git defaults to show author date and not committer date
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 1/7] branch: add --forked filter for --list mode
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Johannes Sixt <j6t@kdbg.org>, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
+ <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+ <3e29ff17bd703d8333c2d65d36b15c69ddfc2ab9.1782338106.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+Reply-To: phillip.wood@dunelm.org.uk
+In-Reply-To: <3e29ff17bd703d8333c2d65d36b15c69ddfc2ab9.1782338106.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Hi Harald
 
-I've had several discussions with fellow developers, and I found out that many
-of them are somewhat confused about the date shown when they look at the Git
-log.
-In our main workflow, we are mostly using a rebase strategy to get commits into
-a main branch, so I can understand their confusion when looking at the default
-log view - dates are moving back and forth, and it's not possible to know when a
-commit was introduced to the main branch.
-I understand this is one of many workflows, but in my personal experience, I
-find that in most workflows, the committer date is the one that I find relevant.
+On 24/06/2026 22:55, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> Add a --forked option to "git branch" list mode that lists only
+> branches whose configured upstream matches <branch>. The argument
+> can be a ref (e.g. "origin/main", "master"), a remote name like
+> "origin" for the branch its origin/HEAD points at, or a shell glob
+> (e.g. "origin/*"), and may be repeated to widen the filter.
+> 
+> It is an ordinary list filter, so it combines with the others:
+> 
+>      git branch --merged origin/main --forked 'origin/*'
+> 
+> lists branches forked from origin that are already merged into
+> origin/main, and --no-merged inverts the question.
+> 
+> This is the building block for --delete-merged, which deletes the
+> listed branches once they have landed on their upstream.
 
-Within our teams, we usually end up creating aliases/updating configuration to
-make the Git log show the committer date by default, and find that it makes the
-log/commit viewing easier to understand for non-super-users.
+The implementation looks good, I've left a couple of small comments on 
+the tests. One thought I had was whether we want a mode which recurses 
+so that if the upstream of topic2 is topic1 which has an upstream of 
+origin/main --forked=recurse origin/main would list topic1 and topic2. 
+So long as we don't think that is a sensible default we can add it in 
+the future if we want.
 
-I understand the distinction between the 2 formats, and I can see the utility of
-both. I'm curious about the decision to show the author date and not the
-committer date as default one in Git commands.
-Are there some workflows where the author date is more relevant, or is that
-mostly a legacy decision?
 
-I'd be interested in hearing about workflows where the author date is the more
-useful one, as I use the committer date almost always.
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index e7829c2c4b..3104c555f6 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -1717,4 +1717,126 @@ test_expect_success 'errors if given a bad branch name' '
+>   	test_cmp expect actual
+>   '
+>   
+> +test_expect_success '--forked: setup' '
+> +	test_create_repo forked-upstream &&
+> +	(
+> +		cd forked-upstream &&
+> +		test_commit base &&
+> +		git branch one base &&
+> +		git branch two base
+> +	) &&
+> +
+> +	test_create_repo forked-other &&
+> +	(
+> +		cd forked-other &&
+> +		test_commit other-base &&
+> +		git branch foreign other-base
+> +	) &&
+> +
+> +	git clone forked-upstream forked &&
+> +	(
+> +		cd forked &&
+> +		git remote add -f other ../forked-other &&
+> +		git remote set-head origin one &&
 
-I've tried to look for information regarding this decision (both in the
-documentation and through the mailing list), but couldn't find any discussion.
+This is a bit strange because it does not match HEAD in the remote 
+repository but it is necessary for '--forked <remote> uses the branch 
+<remote>/HEAD'. I wonder if that test could be written to use main 
+instead but I guess this doesn't do any harm.
 
-Looking forward to hearing your thoughts,
-/ Omri Sarig
+> +		git branch local-base &&
+> +		git branch --track local-one origin/one &&
+> +		git branch --track local-two origin/two &&
+> +		git branch --track local-foreign other/foreign &&
+> +		git branch --track local-onbase local-base &&
+> +
+> +		git checkout local-one &&
+> +		test_commit --no-tag local-one-work local-one.t &&
+> +		git checkout local-foreign &&
+> +		test_commit --no-tag local-foreign-work local-foreign.t &&
+> +		git checkout --detach
+
+Why do we need a detached HEAD?
+
+> [...]
+> +test_expect_success '--forked composes with --no-merged' '
+> +	test_when_finished "git -C forked checkout --detach" &&
+> +	git -C forked checkout local-one &&
+> +	test_commit -C forked local-only &&
+
+The branch "local-one" already has a local commit so why do we need this?
+
+> +	git -C forked branch --forked "origin/*" --no-merged origin/one \
+> +		--format="%(refname:short)" >actual &&
+> +	echo local-one >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--forked rejects unknown branch/pattern' '
+> +	test_must_fail git -C forked branch --forked nope 2>err &&
+> +	test_grep "not a valid branch or pattern" err
+> +'
+> +
+> +test_expect_success '--forked requires a value' '
+> +	test_must_fail git -C forked branch --forked 2>err &&
+> +	test_grep "requires a value" err
+> +'
+
+It is a bit odd to have these two tests in the middle of the ones that 
+check the functionality works.
+
+> +test_expect_success '--forked <remote> uses the branch <remote>/HEAD points at' '
+> +	git -C forked branch --forked origin --format="%(refname:short)" >actual &&
+> +	echo local-one >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--forked narrows a <pattern> argument' '
+> +	git -C forked branch --forked "origin/*" "local-*" \
+> +		--format="%(refname:short)" >actual &&
+> +	cat >expect <<-\EOF &&
+> +	local-one
+> +	local-two
+> +	EOF
+> +	test_cmp expect actual
+> +'
+This is looking good
+
+Thanks
+
+Phillip
