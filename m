@@ -1,420 +1,449 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7DB32BF41
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 12:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1160E40BCB0
+	for <git@vger.kernel.org>; Fri, 10 Jul 2026 13:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783686431; cv=none; b=No6LJCvNrdosGYtgWRoApMDcXkvNMSqfw+vQWcrUD8ngC62NCjgLMQVg/ZfHnZjDjkUalMiAI3mZi5VVUtj3Ig9mPpVKZnwsoeeWD1D/23jMspxm5K6a9ETCx54GgujGqNXZ35i4QKYII8B610VRcv5y7aqOo5CL7nrrhvDjnss=
+	t=1783690096; cv=none; b=B1Xpx/R8z00XDBlYHvbsC9Edil1ZA/X/DEFPiF0ajvzhFqNODRv+QKbgqSesKPAEiOlSycZidgA1g7IwGnnU/EKRlr4GvLWeT4Q8huABIWWkDsdTAc2pgzGInZ81qjTLLLbE57GOto+HPkLV1tazQZ7/oE9bH91oY7ipZ0/CQLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783686431; c=relaxed/simple;
-	bh=ORQO5DwPWZ8x//NRSHD72UP620z4itL0yRdgslU6J8g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVmf5Idh/irpwkPgGPEgH+rmkajN1SKMlkw9uJGabrs71w7tNfIYeW7Kpz4OCK44iIqCMYP03k0jY/NiHk6MYJRk+pyYFzMfzf3nwIobSqn+tAhDL6KkTucWk7nPbr7/jc0DpaRzeIxyDkGqyxiyRlkQO141VIIMFQ+Fk6XsKdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RdEyi6+c; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1783690096; c=relaxed/simple;
+	bh=LWC4c6PTs/HBhBXA8xStyLeCBowJvHHZSGRrRYiNBPw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MtuwWQwCihwZ9WRdHdzDOSrht0iXLiO/t4n8+cHLeXJzgT20p1EAZV9EFGoyanUuUXKnxEKYYgsWaRUP/3xEsj+QSXy7SLAWh8AU2SJ5dgM3BHxm6ZTirRsw6s5AV1J/q8igPQK51OH8UTHRYywxgS+iGyk50T2+WRoFA52RGQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ivBS2vSe; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RdEyi6+c"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c15d5468673so119639166b.0
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 05:27:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ivBS2vSe"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-493f75f7172so1122845e9.1
+        for <git@vger.kernel.org>; Fri, 10 Jul 2026 06:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783686427; x=1784291227; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=nC/FaidRePA5EHh219joaeUoIPV26yFrciI+8xxeRdk=;
-        b=RdEyi6+cHRLFLH9nWCM6TLxpRAacEnJmhnrwpH5RQLtGLyFlfXs6U8chaPWJFZQQdv
-         RXQGmi1wHvvvxN2PUBazQYa22xAWZ7zIwHhZRZGI18fdCnMhzsGt+LCNqK0P7kLnS6zs
-         Lf71Jcdzy3BJPC6qkX2HOhqej/z4mXLFelo+ofSAEfBG5kyquwAgvFa+xvg9GYsyuEW0
-         5+GsVpLzOX3SYKRzIs5+WVEZgKSs3zY0QVkExLaEJZFdlhMIP6M8JtSSMeeNNhTl/Qna
-         H5yztgeEIx9qnNIPBglRHePCsaBsIcZ3h71O6dDYzlv5UIckEtwYi/8gW34gjiEOY7bM
-         5/mw==
+        d=gmail.com; s=20251104; t=1783690092; x=1784294892; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=zODjZII5/StAn4mG1FRXvuIpwc0lF40ucr+eJVesoto=;
+        b=ivBS2vSeZKJuetMyfVoLa80q0oHviErw370tBMVRurqOvtS6ZVk7zO/trGb2venpaw
+         hmYm+/gjTAOIHbewQwESoeh4QuRYaKOeMSNI6mw7wFjYNiB5Jnrzk4FQS5FsPKr9dIwc
+         JUqKOb7JE1dTu0kF9sD4X6ok++NlebU9eg7V3DbooP89FrNdpZ0nmVarm7++iK5Qk+pD
+         5tPrxYD3Wg4LKCuMTz/DPPJcieO8ajMfoxxVfIvkqyagq58ROMGiDJWz8l8nlciKHBQ2
+         CnIhiTQGCSyNSidgYbrkDO8Usdyhtnp4SvpBQD4S4rIQipH15OzWhj6aZRKVwUAFUeIn
+         Y0gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783686427; x=1784291227;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=nC/FaidRePA5EHh219joaeUoIPV26yFrciI+8xxeRdk=;
-        b=LFIT1aIPTkFAxSa7jNSrOJrAOga19bX7W0qbFXxWRjLD0vzhP/E2qsysDrcjIxOOoY
-         Flvc4I42i6q9RZITlwQuGuUH+T0oBD6IjT9K5oeYbwgxlWR2nYM5k8FXeUDzvS5bGccN
-         O9JdslvXqZREFauX51OFaL5d/Nk/6NzlO5lQGZU5mhrwZqM7UCiOB5lJyLR7YmYx2TEE
-         30wC/+UpSwG6isSvN1Ed21nvc8fsuhBHRcGjY7tjWgHawsZVTIsEX+Aq5ihZbr4nqXs9
-         OkWRoMwpvpYvAw+X6E4XRfI2gogiNk/5rXt2wam6iLsBeGC2VHAiaJ7aGl9nYEJY4WR1
-         wYng==
-X-Gm-Message-State: AOJu0YxAAnnRX0uuwtSFiqsagLCUVFkseLre4qCvwX44scaHN6JDAgv7
-	uLLivthtmgPUwZHv0Sv39kUv2LcEZjyWBvOGlwV1DqOelfHunyhL2MVl48aM4e9n
-X-Gm-Gg: AfdE7cmsMbNet8T43Rkd1feL3YHRhelieYOEmsqboNegNJgRbHJVjJS0Cn+4AIXSYsC
-	XVk7loOn+1ZQkD9ipDWEhE8wqMBxR+hf1/JJoqWLTalWazkrpsAuu3PKog+vEYws49kklxoK69l
-	gXfD8yQEQwbIuk82j/dORuLHWmokAXGdEyu7zMg9/BUyp4RTAcK5F2woaZfqjbmcd2eYLUDfYvY
-	ZfX1dwStnpN3I1wtS3OZr+LNOndNvvnkcmM4yZgLMkCZwFE6/umLxTVNqu/fxZk9MZQAtdxYgpp
-	3WF57fdUNGN2xla5gYarjfat3/lEE0vckpTQ663KxLQjeFimSKzpwoQArrCp+i4WB+1gupl/V7p
-	JoMXuiG8L0sje53HCSeS1cUFyUqYxnCZ5ti1+/QFqB3ZTEAxer1Exr0chQTIMaurUoxMnC5PiG2
-	fycb5YYmBhjrk0ErQBbXxT62GnBwwPbnIXYenGdfQbSTTDbhUnE2xVCoUZ9iAfzupxR9P7sXWbC
-	WzVnbnQXhzIf3tdspHJYZUNlrMYSgRTUHAEY+q4ofo4Gg==
-X-Received: by 2002:a17:907:bd81:b0:c12:a469:c with SMTP id a640c23a62f3a-c15cded3365mr493365366b.9.1783686427317;
-        Fri, 10 Jul 2026 05:27:07 -0700 (PDT)
-Received: from M-K2012N0113010.localdomain ([88.119.128.229])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ce1b374asm405212966b.60.2026.07.10.05.27.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 05:27:06 -0700 (PDT)
-From: Paulius Zaleckas <paulius.zaleckas@gmail.com>
-To: git@vger.kernel.org
-Cc: Paulius Zaleckas <paulius.zaleckas@gmail.com>,
-	Glen Choo <glencbz@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/2] fetch: add fetch.submoduleErrors to make submodule fetch errors non-fatal
-Date: Fri, 10 Jul 2026 15:26:53 +0300
-Message-ID: <20260710122655.3066377-3-paulius.zaleckas@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260710122655.3066377-1-paulius.zaleckas@gmail.com>
-References: <20260710122655.3066377-1-paulius.zaleckas@gmail.com>
+        d=1e100.net; s=20251104; t=1783690092; x=1784294892;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zODjZII5/StAn4mG1FRXvuIpwc0lF40ucr+eJVesoto=;
+        b=qfwZLRCtxxxGlM+iw4Sd1isJR5S14J0c7jQsXYuZ5i5sAqj4BhgLeLIAdZ0y6NgegC
+         0t9ONvYELigmxxE+hVVlcxEYGJdWHpxNWCwYLjDRqe96fd/yu/rqgjIhvxim1+7JKF2g
+         yKvAZ0f4E3q4rKDhwAm8IcjtZVXRPKCrsWJP2v2jQZB5tN2clGbKjGRWv3pRR06pb4DE
+         Rs+TOqHrnCWtGEwWXALX/7aPkKRqDaW8zldbEmcRcKqXmW90XXiW2vpcSGzOe8h3dtFd
+         ZOAfLr0o3zmgyK2jJBuKaO0sVFIOVZCrxrkf4gvmGXghwYAbVodBRhKeNbr8s1mf5PZX
+         X8Bw==
+X-Forwarded-Encrypted: i=1; AHgh+Rq1cUnL+inkkEAxd546sAJg25hkCFpxR4xZ7UE1OnyWdtHi3vSEN8QrTM0Ms92DtMCKy+8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yznp1VwTlFvgb+hRVCvPV8eFX7DhqZr9bLqnTx/9O122VK3sZX5
+	tgz62cPo/JjLp1Q/Z4LRMn2LFvh/WizKbEKssGJ5tGQ31t3096tRaL4tAotE1A==
+X-Gm-Gg: AfdE7cmn4p31Ughrxn5J8l14K9DQgpouDi+YJDKydEFxxY8RzLN/JolgUeVdPPa7zjY
+	L4EolOL7pFlS3YOgoP+SGMVizZ8zYKH0BrbLGtyt3wO8xYrITszgbeayDT+wvo2qU4y1f0+oBC6
+	6nb8H8XMRjmMy6+4focQn4LLcc/eoIRiGa8Bk/vtU6QXlL4rP5AXsfe/hVo8uQnU01OpdmfHeGA
+	s05dZYrHIjv4R6UwE94+CXNIHwuUEOviv9wKZS0p9/LNfRvnk7AOL1DssM6MIKnYUXLbV/0ZAJr
+	2gXCUR2NGky36nJKK4OYABFq+eu4XFiH7oTxVo/UwlQvF9Gg7IYWeCQl479Y/WjzViEjkgCiRVr
+	nTKs/ADJVWaaReXRF9rdLTqDD7D1D8aQ/r5kLp31UwupdGeJmraqUQAQ1L1vE9vXk+YQTgNyKT0
+	3qLmoqthXlayvn6ebbWtOpoPZyPRqBOGgJncxB8o8bOv2KddFFgIYUqACw5ijYSN0E0r2aMQ==
+X-Received: by 2002:a05:600c:a43:b0:493:d741:5d72 with SMTP id 5b1f17b1804b1-493e68db0fdmr123230965e9.38.1783690091571;
+        Fri, 10 Jul 2026 06:28:11 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:33f4:2760:38a0:c4f? ([2a0a:ef40:69a:b801:33f4:2760:38a0:c4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493f2e0eff1sm37749055e9.0.2026.07.10.06.28.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jul 2026 06:28:10 -0700 (PDT)
+Message-ID: <afb76b98-661a-4663-8e8b-fd00572db5ba@gmail.com>
+Date: Fri, 10 Jul 2026 14:28:09 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] sequencer: honor --empty when a fixup!/squash! empties
+ its target
+To: Farid Zakaria <farid.m.zakaria@gmail.com>, git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-When fetching with --recurse-submodules, a submodule commit that is not
-yet reachable from any of the submodule's remote refs causes the entire
-fetch to fail.  This is overly strict when the missing commit belongs to
-an upstream branch that is still being prepared (e.g. an in-progress
-merge topic): the local branch does not need that commit, so there is no
-reason to treat its absence as fatal.
+Hi Farid
 
-Add a new config key fetch.submoduleErrors (values: fail/warn) and a
-corresponding --submodule-errors=(fail|warn) command-line option that
-control this behaviour.  The default remains fail (existing behaviour);
-setting the value to warn causes submodule fetch failures to be reported
-on stderr without affecting the overall exit status of git fetch / git
-pull.
+On 10/07/2026 05:13, Farid Zakaria wrote:
+> When "git rebase --autosquash" melds a "fixup!" or "squash!" commit into
+> its target, the result can be a commit that no longer changes anything
+> relative to its parent, for example when the melded change reverts the
+> target.  Rather than dropping or keeping this empty commit, the rebase
+> stops with
+> 
+> 	You asked to amend the most recent commit, but doing so would
+> 	make it empty. ...
+> 
+> and the "--empty" option has no effect on it.  This makes backing a
+> change out of a series awkward: reverting a commit as a "fixup!" and
+> running "git rebase --autosquash --empty=drop" ought to remove both the
+> commit and its revert, but it halts instead.
 
-Forward the option to child fetches in add_options_to_argv() so that it
-also takes effect for `git fetch --all` / `--multiple` (where per-remote
-child processes handle the submodule recursion themselves) and for
-nested submodule recursion.
+I agree this is a use case that we want to support
 
-Signed-off-by: Paulius Zaleckas <paulius.zaleckas@gmail.com>
----
- Documentation/config/fetch.adoc  | 14 ++++++
- Documentation/fetch-options.adoc |  8 ++++
- builtin/fetch.c                  | 41 ++++++++++++++++-
- submodule.c                      |  8 +++-
- submodule.h                      |  7 ++-
- t/t5526-fetch-submodules.sh      | 76 ++++++++++++++++++++++++++++++++
- 6 files changed, 150 insertions(+), 4 deletions(-)
+> The reason is that allow_empty() decides emptiness with
+> is_index_unchanged(), which compares the index to HEAD.  A "fixup!" is
+> applied by amending HEAD, so the commit it produces has HEAD's parent as
+> its parent; it is empty when the index matches the tree of that parent,
+> not of HEAD.  A meld that cancels out its target is therefore never
+> recognized as having become empty, and falls through to "git commit
+> --amend", which refuses to create an empty commit.
 
-diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
-index 04ac90912d..5c9c942a70 100644
---- a/Documentation/config/fetch.adoc
-+++ b/Documentation/config/fetch.adoc
-@@ -10,6 +10,20 @@
- 	reference.
- 	Defaults to `on-demand`, or to the value of `submodule.recurse` if set.
- 
-+`fetch.submoduleErrors`::
-+	Controls how errors from submodule fetches are handled when
-+	`--recurse-submodules` is in effect. When set to `fail` (the default),
-+	any submodule fetch error causes the overall `git fetch` or `git pull`
-+	to exit with a non-zero status. When set to `warn`, submodule fetch
-+	errors are reported to standard error but do not affect the exit
-+	status of the command. This is useful when working in repositories
-+	where some branches reference submodule commits that are not yet
-+	available on the submodule remote, but those commits are not needed
-+	for the currently checked-out branch.
-++
-+The value of this option can be overridden by the `--submodule-errors`
-+option of linkgit:git-fetch[1].
-+
- `fetch.fsckObjects`::
- 	If it is set to true, git-fetch-pack will check all fetched
- 	objects. See `transfer.fsckObjects` for what's
-diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-index 035f780e58..78525f6848 100644
---- a/Documentation/fetch-options.adoc
-+++ b/Documentation/fetch-options.adoc
-@@ -294,6 +294,14 @@ ifndef::git-pull[]
- `--no-recurse-submodules`::
- 	Disable recursive fetching of submodules (this has the same effect as
- 	using the `--recurse-submodules=no` option).
-+
-+`--submodule-errors=(fail|warn)`::
-+	Control how errors from submodule fetches are handled when
-+	`--recurse-submodules` is in effect. When set to `fail` (the default),
-+	any submodule fetch error causes the overall `git fetch` to exit with a
-+	non-zero status. When set to `warn`, submodule fetch errors are reported
-+	to standard error but do not affect the exit status of the command. Can
-+	also be configured via `fetch.submoduleErrors`. See linkgit:git-config[1].
- endif::git-pull[]
- 
- `--set-upstream`::
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c1d7c672f4..40daaf5cc7 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -110,6 +110,7 @@ struct fetch_config {
- 	int recurse_submodules;
- 	int parallel;
- 	int submodule_fetch_jobs;
-+	int submodule_errors;
- };
- 
- static int git_fetch_config(const char *k, const char *v,
-@@ -152,6 +153,19 @@ static int git_fetch_config(const char *k, const char *v,
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "fetch.submoduleerrors")) {
-+		if (!v)
-+			return config_error_nonbool(k);
-+		else if (!strcasecmp(v, "fail"))
-+			fetch_config->submodule_errors = SUBMODULE_ERRORS_FAIL;
-+		else if (!strcasecmp(v, "warn"))
-+			fetch_config->submodule_errors = SUBMODULE_ERRORS_WARN;
-+		else
-+			die(_("invalid value for '%s': '%s'"),
-+			    "fetch.submoduleErrors", v);
-+		return 0;
-+	}
-+
- 	if (!strcmp(k, "fetch.parallel")) {
- 		fetch_config->parallel = git_config_int(k, v, ctx->kvi);
- 		if (fetch_config->parallel < 0)
-@@ -2205,6 +2219,8 @@ static void add_options_to_argv(struct strvec *argv,
- 		strvec_push(argv, "--no-recurse-submodules");
- 	else if (config->recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
- 		strvec_push(argv, "--recurse-submodules=on-demand");
-+	if (config->submodule_errors == SUBMODULE_ERRORS_WARN)
-+		strvec_push(argv, "--submodule-errors=warn");
- 	if (tags == TAGS_SET)
- 		strvec_push(argv, "--tags");
- 	else if (tags == TAGS_UNSET)
-@@ -2464,6 +2480,19 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
- 	return exit_code;
- }
- 
-+static int option_parse_submodule_errors(const struct option *opt,
-+					  const char *arg, int unset)
-+{
-+	int *v = opt->value;
-+	if (unset || !strcasecmp(arg, "fail"))
-+		*v = SUBMODULE_ERRORS_FAIL;
-+	else if (!strcasecmp(arg, "warn"))
-+		*v = SUBMODULE_ERRORS_WARN;
-+	else
-+		die(_("invalid value for '%s': '%s'"), "--submodule-errors", arg);
-+	return 0;
-+}
-+
- int cmd_fetch(int argc,
- 	      const char **argv,
- 	      const char *prefix,
-@@ -2477,6 +2506,7 @@ int cmd_fetch(int argc,
- 		.recurse_submodules = RECURSE_SUBMODULES_DEFAULT,
- 		.parallel = 1,
- 		.submodule_fetch_jobs = -1,
-+		.submodule_errors = SUBMODULE_ERRORS_FAIL,
- 	};
- 	const char *submodule_prefix = "";
- 	const char *bundle_uri;
-@@ -2491,6 +2521,7 @@ int cmd_fetch(int argc,
- 	int max_jobs = -1;
- 	int recurse_submodules_cli = RECURSE_SUBMODULES_DEFAULT;
- 	int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
-+	int submodule_errors_cli = -1; /* -1: not set on command line */
- 	int fetch_write_commit_graph = -1;
- 	int stdin_refspecs = 0;
- 	int negotiate_only = 0;
-@@ -2527,6 +2558,10 @@ int cmd_fetch(int argc,
- 		OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_cli, N_("on-demand"),
- 			    N_("control recursive fetching of submodules"),
- 			    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
-+		OPT_CALLBACK_F(0, "submodule-errors", &submodule_errors_cli,
-+			    N_("(fail|warn)"),
-+			    N_("control how submodule fetch errors are handled"),
-+			    0, option_parse_submodule_errors),
- 		OPT_BOOL(0, "dry-run", &dry_run,
- 			 N_("dry run")),
- 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
-@@ -2616,6 +2651,9 @@ int cmd_fetch(int argc,
- 	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
- 		config.recurse_submodules = recurse_submodules_cli;
- 
-+	if (submodule_errors_cli != -1)
-+		config.submodule_errors = submodule_errors_cli;
-+
- 	if (negotiate_only) {
- 		switch (recurse_submodules_cli) {
- 		case RECURSE_SUBMODULES_OFF:
-@@ -2833,7 +2871,8 @@ int cmd_fetch(int argc,
- 					  config.recurse_submodules,
- 					  recurse_submodules_default,
- 					  verbosity < 0,
--					  max_children);
-+					  max_children,
-+					  config.submodule_errors);
- 		trace2_region_leave_printf("fetch", "recurse-submodule", the_repository, "%s", submodule_prefix);
- 		strvec_clear(&options);
- 	}
-diff --git a/submodule.c b/submodule.c
-index 8bcef68a42..da4ace751f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1409,6 +1409,7 @@ struct submodule_parallel_fetch {
- 	int oid_fetch_tasks_nr, oid_fetch_tasks_alloc;
- 
- 	struct strbuf submodules_with_errors;
-+	int submodule_errors;
- };
- #define SPF_INIT { \
- 	.args = STRVEC_INIT, \
-@@ -1565,7 +1566,8 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
- static void record_fetch_error(struct submodule_parallel_fetch *spf,
- 			       const char *name)
- {
--	spf->result = 1;
-+	if (spf->submodule_errors == SUBMODULE_ERRORS_FAIL)
-+		spf->result = 1;
- 	strbuf_addf(&spf->submodules_with_errors, "\t%s\n", name);
- }
- 
-@@ -1851,7 +1853,8 @@ int fetch_submodules(struct repository *r,
- 		     const struct strvec *options,
- 		     const char *prefix, int command_line_option,
- 		     int default_option,
--		     int quiet, int max_parallel_jobs)
-+		     int quiet, int max_parallel_jobs,
-+		     int submodule_errors)
- {
- 	struct submodule_parallel_fetch spf = SPF_INIT;
- 	const struct run_process_parallel_opts opts = {
-@@ -1871,6 +1874,7 @@ int fetch_submodules(struct repository *r,
- 	spf.default_option = default_option;
- 	spf.quiet = quiet;
- 	spf.prefix = prefix;
-+	spf.submodule_errors = submodule_errors;
- 
- 	if (!r->worktree)
- 		goto out;
-diff --git a/submodule.h b/submodule.h
-index b10e16e6c0..c80b687d2a 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -90,12 +90,17 @@ int should_update_submodules(void);
-  */
- const struct submodule *submodule_from_ce(const struct cache_entry *ce);
- void check_for_new_submodule_commits(struct object_id *oid);
-+/* Values for the submodule_errors parameter of fetch_submodules(). */
-+#define SUBMODULE_ERRORS_FAIL 0  /* submodule fetch errors are fatal (default) */
-+#define SUBMODULE_ERRORS_WARN 1  /* submodule fetch errors are non-fatal warnings */
-+
- int fetch_submodules(struct repository *r,
- 		     const struct strvec *options,
- 		     const char *prefix,
- 		     int command_line_option,
- 		     int default_option,
--		     int quiet, int max_parallel_jobs);
-+		     int quiet, int max_parallel_jobs,
-+		     int submodule_errors);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
- int submodule_uses_gitfile(const char *path);
- 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 188c674c89..b5db8fb5c2 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -1307,6 +1307,57 @@ test_expect_success 'setup for submodule fetch error tests' '
- 	git config --global protocol.file.allow always
- '
- 
-+test_expect_success 'fetch --recurse-submodules fails when submodule commit is unreachable (default)' '
-+	test_when_finished "rm -fr env_default" &&
-+	create_err_env env_default &&
-+	push_unreachable_commit env_default &&
-+	test_must_fail git -C env_default/clone fetch --recurse-submodules 2>err &&
-+	grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success 'fetch.submoduleErrors=warn: unreachable submodule commit is non-fatal' '
-+	test_when_finished "rm -fr env_warn_cfg" &&
-+	create_err_env env_warn_cfg &&
-+	push_unreachable_commit env_warn_cfg &&
-+	git -C env_warn_cfg/clone -c fetch.submoduleErrors=warn \
-+		fetch --recurse-submodules 2>err &&
-+	grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success '--submodule-errors=warn: unreachable submodule commit is non-fatal' '
-+	test_when_finished "rm -fr env_warn_cli" &&
-+	create_err_env env_warn_cli &&
-+	push_unreachable_commit env_warn_cli &&
-+	git -C env_warn_cli/clone fetch --recurse-submodules \
-+		--submodule-errors=warn 2>err &&
-+	grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success '--submodule-errors=fail: unreachable submodule commit is fatal' '
-+	test_when_finished "rm -fr env_fail_cli" &&
-+	create_err_env env_fail_cli &&
-+	push_unreachable_commit env_fail_cli &&
-+	test_must_fail git -C env_fail_cli/clone fetch --recurse-submodules \
-+		--submodule-errors=fail 2>err &&
-+	grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success 'fetch.submoduleErrors=warn does not suppress successful fetch' '
-+	# A new reachable submodule commit (pushed to sub_bare) should be
-+	# fetched without any error summary.
-+	test_when_finished "rm -fr env_ok" &&
-+	create_err_env env_ok &&
-+	test_commit -C env_ok/sub_work reachable_ok &&
-+	git -C env_ok/sub_work push &&
-+	git -C env_ok/super_work submodule update --remote &&
-+	git -C env_ok/super_work add sub &&
-+	git -C env_ok/super_work commit -m "point sub to reachable commit" &&
-+	git -C env_ok/super_work push &&
-+	git -C env_ok/clone -c fetch.submoduleErrors=warn \
-+		fetch --recurse-submodules 2>err &&
-+	! grep "Errors during submodule fetch" err
-+'
-+
- test_expect_success 'failed submodule fetch is fatal even when its commits are present locally' '
- 	# Create the same commit (unreferenced, via commit-tree with fixed
- 	# dates) in both super_work/sub and clone/sub, point the gitlink at
-@@ -1334,4 +1385,29 @@ test_expect_success 'failed submodule fetch is fatal even when its commits are p
- 	grep "Errors during submodule fetch" err
- '
- 
-+test_expect_success '--submodule-errors=warn is honored by fetch --all' '
-+	# A second remote forces fetch_multiple(), which hands the submodule
-+	# recursion off to per-remote child processes; the option must be
-+	# forwarded to them.
-+	test_when_finished "rm -fr env_all" &&
-+	create_err_env env_all &&
-+	push_unreachable_commit env_all &&
-+	git -C env_all/clone remote add second "$pwd/env_all/super_bare" &&
-+	git -C env_all/clone fetch --all --recurse-submodules \
-+		--submodule-errors=warn 2>err &&
-+	grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success 'fetch.submoduleErrors=warn: inaccessible submodule is non-fatal' '
-+	test_when_finished "rm -fr env_access" &&
-+	create_err_env env_access &&
-+	rm env_access/clone/sub/.git &&
-+	rm -r env_access/clone/.git/modules/sub &&
-+	git -C env_access/clone -c fetch.submoduleErrors=warn \
-+		fetch --recurse-submodules 2>err &&
-+	grep "Could not access submodule" err &&
-+	test_must_fail git -C env_access/clone fetch --recurse-submodules 2>err &&
-+	grep "Could not access submodule" err
-+'
-+
- test_done
--- 
-2.54.0
+and with this diagnosis.
+
+> Teach is_index_unchanged() to compare against the tree of HEAD's parent
+> when amending, and teach allow_empty() to classify the result as "became
+> empty" (and thus subject to --empty) unless the commit being melded into
+> was itself already empty, in which case it "started empty" and is
+> governed by allow_empty as before.
+
+However, I think that rather than changing the current check which 
+changes the behavior of a fixup commit that becomes empty we should add 
+an additional check to see if applying the fixup makes the target commit 
+empty. With the patch here a fixup commit that becomes empty is only 
+seen as empty if the commit being fixed up is empty in which case we 
+always accept the fixup, whereas the current behavior is always to 
+respect what --empty says. When I'm planning out a series of commits I 
+sometimes create empty commits where the messages says what I'm 
+intending to do and then I create fixups for them when I get round to 
+writing the code. If one of those fixups becomes empty I want to know 
+about it because it means I need to drop the empty commit that's being 
+fixed up as well.
+
+> When --empty=drop applies, the emptied commit has already been created
+> by the preceding "pick", so drop it by moving HEAD back to its parent.
+> Do so before the rewritten-commit list is flushed, so that --update-refs
+> and the other rewrite consumers map the dropped commit to its parent.
+
+If we're dropping the commit then we should not record it as rewritten 
+so we need to remove the rewritten-pending file. Any labels and 
+update-ref commands that come immediately after the dropped commit will 
+see HEAD pointing to the dropped commits rewritten parent.
+
+> Signed-off-by: Farid Zakaria <farid.m.zakaria@gmail.com>
+> ---
+> At Meta we maintain a fork of LLVM that we regularly rebase onto
+> upstream.  A set of internal patches rides on top, and we keep each one
+> as a single commit by folding follow-up changes into it with autosquash
+> "fixup!" commits.  That works well for evolving a patch, but not for
+> retiring one: to back an internal patch out today we delete it from the
+> history by hand with an interactive rebase and then force-push, which is
+> easy to get wrong on a shared branch.
+
+You'll still need a forced push though because you're dropping the 
+commit. I think the change you're proposing to git would be useful but 
+you could automate your existing workflow by setting GIT_SEQUENCE_EDITOR 
+to a script that drops the commit and it's fixups from the todo list.
+
+> One open question, for a possible follow-up.  A natural next step would
+> be a "revert!" autosquash directive (and a "git commit --revert" to
+> create it), mirroring "fixup!"/"squash!", so
+> that retiring a patch would not require generating the reverse diff by
+> hand.  I have deliberately left it out of this series, because its
+> semantics are not obvious: in particular, whether a "revert!" commit
+> should carry the reverse patch as its own content (and thus be an
+> ordinary fixup that this patch already drops), or be an empty marker
+> that instructs the rebase to revert the target commit during the meld.
+> Opinions on whether such a directive is wanted, and which of those two
+> shapes is preferred, would be welcome before I attempt it.
+
+I think having support for creating and squashing revert! (or possibly 
+drop!) commits is a good idea (I've a feeling there is some discussion 
+about that in the gitgitgadget issue tracker). Using an empty commit has 
+a marker has the advantage that applying it cannot create conflicts, so 
+you only have to deal with the conflicts caused by the commit being 
+dropped, not the by fixup not applying cleanly.
+
+Thanks
+
+Phillip
+
+> ---
+> base-commit: f60db8d575adb79761d363e026fb49bddf330c73
+> ---
+>   Documentation/git-rebase.adoc | 12 ++++++
+>   sequencer.c                   | 96 +++++++++++++++++++++++++++++++++++++++----
+>   t/t3415-rebase-autosquash.sh  | 64 +++++++++++++++++++++++++++++
+>   3 files changed, 163 insertions(+), 9 deletions(-)
+> 
+> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+> index f6c22d1598..7eb8bbe95f 100644
+> --- a/Documentation/git-rebase.adoc
+> +++ b/Documentation/git-rebase.adoc
+> @@ -282,6 +282,11 @@ by `git log --cherry-mark ...`) are detected and dropped as a
+>   preliminary step (unless `--reapply-cherry-picks` or `--keep-base` is
+>   passed).
+>   +
+> +A commit can also become empty as a result of `--autosquash`, when a
+> +`fixup!` or `squash!` commit cancels out all of the changes of the
+> +commit it is melded into.  Such a commit is treated the same way and is
+> +dropped, kept, or stopped at according to this option.
+> ++
+>   See also INCOMPATIBLE OPTIONS below.
+>   
+>   --no-keep-empty::
+> @@ -591,6 +596,13 @@ changed from `pick` to `squash`, `fixup` or `fixup -C`, respectively, and they
+>   are moved right after the commit they modify.  The `--interactive` option can
+>   be used to review and edit the todo list before proceeding.
+>   +
+> +If melding a `fixup!` or `squash!` commit cancels out all of the changes of
+> +the commit it is applied to, the result is an empty commit.  The handling of
+> +these empty commits can be configured with the `--empty` option: the emptied
+> +commit is dropped, kept, or stopped at.  This makes it possible to back a
+> +change out of a series by committing a revert of it as a `fixup!` and letting
+> +`--autosquash --empty=drop` remove both.
+> ++
+>   The recommended way to create commits with squash markers is by using the
+>   `--squash`, `--fixup`, `--fixup=amend:` or `--fixup=reword:` options of
+>   linkgit:git-commit[1], which take the target commit as an argument and
+> diff --git a/sequencer.c b/sequencer.c
+> index 0fe8fed6c3..435b100e3d 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -823,7 +823,7 @@ static struct object_id *get_cache_tree_oid(struct index_state *istate)
+>   	return &istate->cache_tree->oid;
+>   }
+>   
+> -static int is_index_unchanged(struct repository *r)
+> +static int is_index_unchanged(struct repository *r, int amend)
+>   {
+>   	struct object_id head_oid, *cache_tree_oid;
+>   	const struct object_id *head_tree_oid;
+> @@ -856,7 +856,26 @@ static int is_index_unchanged(struct repository *r)
+>   		if (repo_parse_commit(r, head_commit))
+>   			return -1;
+>   
+> -		head_tree_oid = get_commit_tree_oid(head_commit);
+> +		if (amend) {
+> +			/*
+> +			 * When amending (e.g. melding a "fixup!" or "squash!"),
+> +			 * the commit we are about to create replaces HEAD, so
+> +			 * its parent is HEAD's parent.  It is therefore empty
+> +			 * when the index matches the tree of HEAD's parent
+> +			 * rather than the tree of HEAD itself.
+> +			 */
+> +			if (head_commit->parents) {
+> +				struct commit *parent =
+> +					head_commit->parents->item;
+> +				if (repo_parse_commit(r, parent))
+> +					return -1;
+> +				head_tree_oid = get_commit_tree_oid(parent);
+> +			} else {
+> +				head_tree_oid = the_hash_algo->empty_tree;
+> +			}
+> +		} else {
+> +			head_tree_oid = get_commit_tree_oid(head_commit);
+> +		}
+>   	}
+>   
+>   	if (!(cache_tree_oid = get_cache_tree_oid(istate)))
+> @@ -1786,7 +1805,7 @@ static int is_original_commit_empty(struct commit *commit)
+>    */
+>   static int allow_empty(struct repository *r,
+>   		       struct replay_opts *opts,
+> -		       struct commit *commit)
+> +		       struct commit *commit, int amend)
+>   {
+>   	int index_unchanged, originally_empty;
+>   
+> @@ -1798,13 +1817,33 @@ static int allow_empty(struct repository *r,
+>   	 * drop_redundant_commits determine whether the commit should be kept or
+>   	 * dropped. If neither is specified, halt.
+>   	 */
+> -	index_unchanged = is_index_unchanged(r);
+> +	index_unchanged = is_index_unchanged(r, amend);
+>   	if (index_unchanged < 0)
+>   		return index_unchanged;
+>   	if (!index_unchanged)
+>   		return 0; /* we do not have to say --allow-empty */
+>   
+> -	originally_empty = is_original_commit_empty(commit);
+> +	/*
+> +	 * When amending (melding a "fixup!"/"squash!"), the resulting commit
+> +	 * replaces HEAD, so whether it "started" empty or "became" empty is
+> +	 * decided by whether the commit being melded into was itself empty: if
+> +	 * HEAD had content that the fixup cancelled out, the commit became empty
+> +	 * and is subject to keep/drop_redundant; if HEAD was already empty, the
+> +	 * commit started empty and is subject to allow_empty as usual.
+> +	 */
+> +	if (amend) {
+> +		struct object_id head_oid;
+> +		struct commit *head_commit;
+> +
+> +		if (repo_get_oid(r, "HEAD", &head_oid))
+> +			return error(_("could not resolve HEAD commit"));
+> +		head_commit = lookup_commit_reference(r, &head_oid);
+> +		if (!head_commit)
+> +			return -1;
+> +		originally_empty = is_original_commit_empty(head_commit);
+> +	} else {
+> +		originally_empty = is_original_commit_empty(commit);
+> +	}
+>   	if (originally_empty < 0)
+>   		return originally_empty;
+>   	if (originally_empty)
+> @@ -2260,6 +2299,30 @@ static const char *reflog_message(struct replay_opts *opts,
+>   	return buf.buf;
+>   }
+>   
+> +/*
+> + * A "fixup!"/"squash!" that melds into HEAD may empty it out.  In that case,
+> + * with --empty=drop, we want to drop the commit entirely.  Since the commit
+> + * being amended has already been created (by the preceding "pick"), and the
+> + * index and worktree already match the tree of its parent, dropping it is a
+> + * matter of moving HEAD back to that parent.
+> + */
+> +static int reset_head_to_parent(struct repository *r, struct replay_opts *opts,
+> +				struct object_id *head)
+> +{
+> +	struct commit *head_commit = lookup_commit_reference(r, head);
+> +
+> +	if (!head_commit || repo_parse_commit(r, head_commit))
+> +		return error(_("could not parse HEAD commit"));
+> +	if (!head_commit->parents)
+> +		return error(_("cannot drop the root commit"));
+> +
+> +	return refs_update_ref(get_main_ref_store(r),
+> +			       reflog_message(opts, "fixup",
+> +					      "dropping emptied commit"),
+> +			       "HEAD", &head_commit->parents->item->object.oid,
+> +			       head, 0, UPDATE_REFS_MSG_ON_ERR);
+> +}
+> +
+>   static int do_pick_commit(struct repository *r,
+>   			  struct todo_item *item,
+>   			  struct replay_opts *opts,
+> @@ -2493,7 +2556,7 @@ static int do_pick_commit(struct repository *r,
+>   	}
+>   
+>   	drop_commit = 0;
+> -	allow = allow_empty(r, opts, commit);
+> +	allow = allow_empty(r, opts, commit, flags & AMEND_MSG);
+>   	if (allow < 0) {
+>   		res = allow;
+>   		goto leave;
+> @@ -2506,9 +2569,24 @@ static int do_pick_commit(struct repository *r,
+>   		unlink(git_path_merge_msg(r));
+>   		refs_delete_ref(get_main_ref_store(r), "", "AUTO_MERGE",
+>   				NULL, REF_NO_DEREF);
+> -		fprintf(stderr,
+> -			_("dropping %s %s -- patch contents already upstream\n"),
+> -			oid_to_hex(&commit->object.oid), msg.subject);
+> +		if (flags & AMEND_MSG) {
+> +			/*
+> +			 * The "fixup!"/"squash!" emptied out the commit it was
+> +			 * melded into; that commit was already created by the
+> +			 * preceding "pick", so drop it by moving HEAD back to
+> +			 * its parent.
+> +			 */
+> +			res = reset_head_to_parent(r, opts, &head);
+> +			if (res)
+> +				goto leave;
+> +			fprintf(stderr,
+> +				_("dropping %s %s -- resulting commit is empty\n"),
+> +				oid_to_hex(&commit->object.oid), msg.subject);
+> +		} else {
+> +			fprintf(stderr,
+> +				_("dropping %s %s -- patch contents already upstream\n"),
+> +				oid_to_hex(&commit->object.oid), msg.subject);
+> +		}
+>   	} /* else allow == 0 and there's nothing special to do */
+>   	if (!opts->no_commit && !drop_commit) {
+>   		if (author || command == TODO_REVERT || (flags & AMEND_MSG))
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index 5033411a43..508dcc7527 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -510,4 +510,68 @@ test_expect_success 'pick and fixup respect commit.cleanup' '
+>   	test_commit_message HEAD -m "something"
+>   '
+>   
+> +test_expect_success 'fixup! that empties its target is dropped with --empty=drop' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addX fileX 1 &&
+> +	test_commit --no-tag changeX fileX 2 &&
+> +	test_commit --no-tag later fileW hello &&
+> +	echo 1 >fileX &&
+> +	git commit -m "fixup! changeX" fileX &&
+> +
+> +	git rebase -i --autosquash --empty=drop HEAD~4 &&
+> +
+> +	git log --format=%s >actual &&
+> +	! grep changeX actual &&
+> +	grep addX actual &&
+> +	grep later actual &&
+> +	echo 1 >expect &&
+> +	test_cmp expect fileX &&
+> +	echo hello >expect &&
+> +	test_cmp expect fileW
+> +'
+> +
+> +test_expect_success 'fixup! that empties its target is kept with --empty=keep' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addY fileY 1 &&
+> +	test_commit --no-tag changeY fileY 2 &&
+> +	echo 1 >fileY &&
+> +	git commit -m "fixup! changeY" fileY &&
+> +
+> +	git rebase -i --autosquash --empty=keep HEAD~3 &&
+> +
+> +	git log --format=%s >actual &&
+> +	grep changeY actual &&
+> +	: "the retained commit is empty" &&
+> +	git diff --exit-code HEAD~1 HEAD &&
+> +	echo 1 >expect &&
+> +	test_cmp expect fileY
+> +'
+> +
+> +test_expect_success 'fixup! that empties its target stops with --empty=stop' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addZ fileZ 1 &&
+> +	test_commit --no-tag changeZ fileZ 2 &&
+> +	echo 1 >fileZ &&
+> +	git commit -m "fixup! changeZ" fileZ &&
+> +
+> +	test_when_finished "git rebase --abort" &&
+> +	test_must_fail git rebase -i --autosquash --empty=stop HEAD~3
+> +'
+> +
+> +test_expect_success 'squash! that empties its target is dropped with --empty=drop' '
+> +	git reset --hard base &&
+> +	test_commit --no-tag addS fileS 1 &&
+> +	test_commit --no-tag changeS fileS 2 &&
+> +	echo 1 >fileS &&
+> +	git commit -m "squash! changeS" fileS &&
+> +
+> +	git rebase -i --autosquash --empty=drop HEAD~3 &&
+> +
+> +	git log --format=%s >actual &&
+> +	! grep changeS actual &&
+> +	grep addS actual &&
+> +	echo 1 >expect &&
+> +	test_cmp expect fileS
+> +'
+> +
+>   test_done
+> 
+> 
+> 
+> 
 
