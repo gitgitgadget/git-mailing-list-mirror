@@ -1,38 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D4A239085
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 07:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C2522AE65
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 07:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783755212; cv=none; b=g1UCA/D3HAR+DIWFbCFm4Xu13ux084XZhWhH0lp4v60hHAvkaCW5v/9lOfsoE6/juovgYph0vcxD76mGWgAb0Hrd1jHqNZP98B2XipOuq/7wNaEvhvTS7dteMIIY6Ky4NBGaG790y/DKHXJaZ4DzqhqDnGgpQsWjf5N6CIQXcHI=
+	t=1783756047; cv=none; b=tWJbPbAPL3A+ZGYIBjY7V7FyAmQ9p6eOev0vz3n5yGz4yXhLa7nSgSGqVwsOiyso0xiWvR8Uwthjyz+tD2hOkgE9BqxZoAKnyDTlNidT/0iCpqkZloWaCHm/wWhm/AMG+B2FWIhjilMVMFKsAhAyyQGKI+A7LG+ZtbHPD/aKFao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783755212; c=relaxed/simple;
-	bh=UItVukkiw2lAMfPOi1mJCl2jk243ZD0fIOjmaozeZ7c=;
+	s=arc-20240116; t=1783756047; c=relaxed/simple;
+	bh=4F9Q83c0kNW3WMoui1EHtz3U5ygIyW72DEULbOdTEXw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U/hPUYy2TIc3krwXezdzfmbNyEupdF2Vdu7KDdiL4x7+j2JPzVA+BA7Yp9Ldl+zCiKsoun7IneNew5EOlnwFzU537tzZEdywx4USyZrG07qblx1DaUgf027mY2pgsbx52qdk3mQROqQCSWv5OYjgeiR+MC2Smt0h2/e06lJm124=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=N5YzT4c8; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=LeAgA+qfa4Of1mDILNpenHHfielnX30JG209JqrkE4h0KlSmKkJr3UhoWgG+Jr1JWqIWHq5B+y59tytLtdXaaiJYFPm9ctu0RlOUAj5cX2fUFi6fGUuu4MFDm2qswZOz6En4C9j3ImCvN9Fs0TItaCzZqpK1guok4wUsgS/HeJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TPq5CcGB; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="N5YzT4c8"
-Received: (qmail 55680 invoked by uid 106); 11 Jul 2026 07:33:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=UItVukkiw2lAMfPOi1mJCl2jk243ZD0fIOjmaozeZ7c=; b=N5YzT4c8MdsMcj+4Fd6b1lW+MF12iNg8nhpXh/5cQ1ZTAoJ96l+wsUHXCE/Q7TA3du6x2s5I0+R2gShC8uc58G4zxdvBYOD3Xx7YqFKF86HxnGVjzMpRo/ajjoAI4Dhu55/RoZN58zPPIrjBLCY3HIdg15PQ/7fQOi8L7C/lukIbEDvzKPTToyF7m+JrccGFJokb9bu0JlqZx8fx4JYKTHhF0T1r+J61onre7u4lgue/cvG+660YExB/7Dmkb4q+x3gQMVY0xy3XISyDUq16RZpYF6gvTUrMpmPmKvuoSHTDxATjxsLlct0ItdBr3gyeEsMPfOxF/DS0vAJB5x5CMw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TPq5CcGB"
+Received: (qmail 55741 invoked by uid 106); 11 Jul 2026 07:47:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=4F9Q83c0kNW3WMoui1EHtz3U5ygIyW72DEULbOdTEXw=; b=TPq5CcGBepeA0bY9O9BL40Aihhn6KtS/22C6c/j0ECC7YW4lyL0f3RzlRruT5nqtBPFUlBJQmVSEaqgcngLgetByeZCpiozsR78rocQfUSv1ac5tNsTjZox0mDIfKK57FixhdpA2RYYj27ULQj6NPM52M/wJChqYPvhWx7ZvS/kDPlj+afkM0ghn5auLQgkY7L3RSjMn52yZzm9XCbWEWl9fXQd7pHJTZz+7IGFsFKaKeE/uwpVCtRvZab8I0a/5zjsg9RC9md1ZoVsYH17nFKCgCaxtkoK8GUzH/sQFFKXF6t7jUauELFNOcFkoy9g/8zp3xzGiG4t2ROT6AZHDhg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Jul 2026 07:33:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Jul 2026 07:47:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 95181 invoked by uid 111); 11 Jul 2026 07:33:21 -0000
+Received: (qmail 95345 invoked by uid 111); 11 Jul 2026 07:47:23 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jul 2026 03:33:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jul 2026 03:47:23 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 11 Jul 2026 03:33:20 -0400
+Date: Sat, 11 Jul 2026 03:47:23 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, xuqing yang <rigelyoung@icloud.com>,
-	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH] object-file: fix closing object stream twice
-Message-ID: <20260711073320.GA1457061@coredump.intra.peff.net>
-References: <20260710-pks-odb-stream-double-close-v1-1-d5fa233a37c7@pks.im>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/7] pack-bitmap: allow aborting iteration of bitmapped
+ objects
+Message-ID: <20260711074723.GB1457061@coredump.intra.peff.net>
+References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
+ <20260709-pks-odb-for-each-object-filter-v1-3-82fe014b12b3@pks.im>
+ <alAAN6_ZqLj9tlgV@denethor>
+ <alCafO91ZtFdikPg@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,35 +44,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260710-pks-odb-stream-double-close-v1-1-d5fa233a37c7@pks.im>
+In-Reply-To: <alCafO91ZtFdikPg@pks.im>
 
-On Fri, Jul 10, 2026 at 04:54:16PM +0200, Patrick Steinhardt wrote:
+On Fri, Jul 10, 2026 at 09:08:44AM +0200, Patrick Steinhardt wrote:
 
-> And while the mentioned commit did drop one call that closed the stream,
-> there's a second such call that was missed when reading from the stream
-> fails. The consequence of this can be a double free of the stream.
+> On Thu, Jul 09, 2026 at 03:19:52PM -0500, Justin Tobler wrote:
+> > > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > > index ea5eab4cf8..8ff92c5272 100644
+> > > --- a/builtin/pack-objects.c
+> > > +++ b/builtin/pack-objects.c
+> > > @@ -1909,7 +1909,7 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
+> > >  		return 0;
+> > >  
+> > >  	create_object_entry(oid, type, name_hash, 0, 0, pack, offset);
+> > > -	return 1;
+> > > +	return 0;
+> > 
+> > I wonder why this was even returning 1 to begin with? As you mentioned,
+> > the return value appears to be ignored anyways. I'm assuming it was
+> > signal that an object entry was created?
 > 
-> Fix the bug by dropping that leftover call to `odb_read_stream_close()`.
+> The function is only called from a single location, and the return value
+> was completely ignored until this commit. It has always been this way
+> since the function was originally introduced in 6b8fda2db1
+> (pack-objects: use bitmaps when packing objects, 2013-12-21), so it
+> never seemed to have any purpose. The commit message doesn't mention
+> anything either.
 
-Thanks, both the patch and the new test look good to me.
+I think it was copying the semantics of its non-bitmap counterpart,
+add_object_entry(). Of course nobody looks at that return value either!
 
-> Note that it was originally discussed whether this should be treated as
-> a security vulnerability. But there are only two callers: once via
-> `parse_object_with_flags()`, and once via `verify_packfile()`. Neither
-> of these callers plays any role on the transport layer, so this issue is
-> only relevant for objects that are already available via the local
-> object database. Furthermore, a packfile that is corrupted in this way
-> would be detected when receiving the packfile, so it's not easy for an
-> adversary to plant such a packfile, either. Consequently, we decided
-> that this is not covered as part of our threat model.
+Long ago there were callers that cared about whether we actually created
+an entry, but I think the last one went away in 5379a5c5ee (Thin pack
+generation: optimization., 2006-04-05), which was quite some time ago.
 
-I think this case probably would violate our "it is OK to clone from the
-local untrusted .git repo" goal (since you could perhaps get to this
-code path via upload-pack/pack-objects, though I didn't try it myself).
+So I think we could probably drop the return value from
+add_object_entry() entirely (but of course we can't do the same for the
+bitmap variant, because of its use as a callback).
 
-But the text in git(1)'s SECURITY section is pretty clear that it is
-more goal than promise, and that this scenario carries extra risk
-exactly because of the increased attack surface. And that you can
-mitigate by serving from an untrusted user.
+I mention this mostly as answering Justin's "I wonder why...", but it
+might be worth cleaning up add_object_entry() here, as its return value
+semantics have diverged from add_object_entry_from_bitmap().
 
 -Peff
