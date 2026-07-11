@@ -1,62 +1,151 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442AF495E5
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 08:03:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783757014; cv=none; b=rlZi53fUBcaEdCHex45dUHkodoO8S3Y0Jjsz51EZrCrjuzN4fE3esTidPghjTEyCJ2GP6TCfJ0JMMelwHxgNE5KyKSIAyEkZPmlO3groRt8+ADggsxBtsQBVDO0eFloaWm3yn+KYHpYUHi01U+iw4WAO9P/m7vzfNnligH6OpRk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783757014; c=relaxed/simple;
-	bh=ZfOCQNl6p6DOQaxY5E7qZ/wWWvHqO1LFLkPjiHVSVhw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e5Y42TC7xwM+mMTpWC0l7OQtObgYZjHjYMFaBW9bt7ww4VJvMlsbtC5ejaTVgFrCKvDiSN0vMkioTCZZCTonxSLf6yEEjD1QA3g98NLhtJcJIyR4OcxbQsvvaCgxgRhWYC1N/yruJWztRyp2RyMED9lV4NvNHXDtEG4Knv+07gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c79cY+M0; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4481547C0
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 12:31:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783773097; cv=pass; b=H1HgHt/V0d6WATLqaCcCVcc/Z7p2K8wuzaRmF2yAWugs+hafTKOt0HToLHwfbw/tBVHq+sZNvz2YPCBi/2c1YSDhpxsE3RP2kexdCbf9zn9mWPnpTofDIwfR7CBL2UY88XiZcwBRXrDl6a4BVTHSJZl8Jd9xIg+QWclzMhKeZSU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783773097; c=relaxed/simple;
+	bh=M7KcQAQLGrAx0SC4zx/uGYu4jJYlgFCAcl/jTDaYbnk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WjcmaJ33/2koQa/DWr/P8IqzOFLrJqhWoEqzc/se1MaJO0S3v7PDoxWkonBMHRXO/d832aXbHRDxsFcnR5IourCH8OTQ6PthqlO/Ff7pAUAAV+15GY6Lwctu2ILKpbbgWLtO7j0VPDNM4h2FFntm9JNyjy/imGmq0Sm0G839yX0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXWdVR43; arc=pass smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c79cY+M0"
-Received: (qmail 55818 invoked by uid 106); 11 Jul 2026 08:03:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZfOCQNl6p6DOQaxY5E7qZ/wWWvHqO1LFLkPjiHVSVhw=; b=c79cY+M0Dz/9W4G9UVKWNMiPvb0HOPE7EMORGS0wSwMErN4A+eK72SgXZIeIbQJvjkarz3vq9RibJaque8RzzdgE+nqUsoF/yxHtXvouoX8oKhoKikCxOnQFmXuRsqB5eH2UFkIX0rybBrqk7OJAtP9SHrCVSNHo/iqvpn6un2msdRkLlhfBM8A0jEFbXCQi21tLCoYPLOd4fj30bouXI1odG8oW1NKy7+iiIJRVXIBtLHM0Se6cRMlKW2XZwwM6RolsNWlNxn6RCayfDleq1k+802HcsrAsiU/bkaE833+FDfunFEHD5ciaJp1AcG99lqyKVEg8XmG77B/47Wx20Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Jul 2026 08:03:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 95529 invoked by uid 111); 11 Jul 2026 08:03:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jul 2026 04:03:32 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 11 Jul 2026 04:03:31 -0400
-From: Jeff King <peff@peff.net>
-To: Omri Sarig <omri.sarig13@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Understanding why Git defaults to show author date and not
- committer date
-Message-ID: <20260711080331.GB1470749@coredump.intra.peff.net>
-References: <CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJBf79RCNzgg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXWdVR43"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-697cee2eb6dso1794372a12.0
+        for <git@vger.kernel.org>; Sat, 11 Jul 2026 05:31:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783773095; cv=none;
+        d=google.com; s=arc-20260327;
+        b=sEaT64zXR1xtuDeqJRSImyAI3AAipq4uv+2ZdBRjxdV5KbE1iEDYclb+AWbtZ5F9/5
+         HgQrxzxXuwMJDajtxzkdiH2jQ04N+ageoK4zaNK/dYCbRJyEwDu9KJtiykknTGZ2J9uO
+         VBfKgplBY69jqn8nLFxzfZbAQIdMXyd33Vz/jWPr7cBewC+YVA0SbnnP2E8eyCAmN9LP
+         o/t5djgCrr4OqBJ1JoabrquEJN2/z4KO8sAZm9TjHIjjLzt0oiTVAX2ymWNJszYVKqaf
+         /BZsTi//I8e2lpV6FTzMyui8inyV6I+6d8KNThih54x9s7AMIg1Zy1GaNNYjEp4q3ETK
+         3EVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=mJWsELBq+MCNqLuFsAOH3SRYNzCMxLWfWE7dK7fTNaI=;
+        fh=CcbGVoWJx0NAAQ/b+nbmhKf9fq8wt0JzGcMrOmxzDVI=;
+        b=HTkUhAJ/xGWlX9K3U0RY2z04HKtwlQHOML9fRJum4pmdz7njRIupaKQO7e1YcIRDCc
+         Epcz0qywSk0/nPsvc2P5q+IQ9jO/TM8iu79Iw+qjQmRs6thHso9bsGz/5MMdwcHrGCcP
+         HmdwbDXCldtZGzb7U1M4jx4hdj853R4MrcM1kXm8Nv0D8fkEI1IABqmrUJQdNYEqY52B
+         0dgN5RtL/RCaTbJ1fG6aY8f9xBIUMTZyidgg2Uw3wtwERpNnzY3epA7DszAWWkP5yBUP
+         SMqWqV9gK9dW8mFXOxkaW63wKmMGYJSmzZOqfI4alqKq3K6qPGDLGTxz/yq/PWim7Dz2
+         OsKA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783773095; x=1784377895; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mJWsELBq+MCNqLuFsAOH3SRYNzCMxLWfWE7dK7fTNaI=;
+        b=MXWdVR43PytF2j3VIbMJ/bHInoFoXf/mfj9+O2oxpHbqjGO2LdAxA3YvXwvmQRbO3z
+         SeA9egVGX4X/GkqUVNA/8hrcTOlFW+gsibqWFYEHPMPHqaNL5rNAecIDlxOIk8RDQ/NE
+         C/saBjAi3K3hghbt5xlRPUxojxI2s4QGyIO8q11il86Wlz6e7c42gOehHV1pmZFbjQGc
+         uA6YKjKGFyqbu8iX47Tw0NgBHesTnQBcjw8+0ZM8j/L/JNrWjQSow80KhyAFi2M/Ya6/
+         AhkLLYUbhNxOl8fHrfd20GNvWidjRmiFiF09wjONu8pbDEqxAl18ONje+t63aM3o64BU
+         7Yqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783773095; x=1784377895;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mJWsELBq+MCNqLuFsAOH3SRYNzCMxLWfWE7dK7fTNaI=;
+        b=qcL5YUUfnsSuL0JJg97iojcNOn5nSJr8y9FgfHQxaIF8pkBLgEo+h86BxkBEnn6bfm
+         h7v/HSkovohDMj5JirA0DFaaJcBif5xvbqsJ84VNiHj2Iq7gIbfbux/Nx73PLNKxy6MK
+         4rzH7heAtz9ombhzUaoRRj4eQl7mnfR/7w+5kdwzft+0HSzc9hxApqzIk78fOEi61swm
+         9FvUvq/y8rvZvwFzJemFI7crmKR/MNNpu1hlRWHDayi/kOOt+X7WoR85B/S6qyH4LIUs
+         /xieXeQbmEobzkYvDTQblEZ2+e2IyshVs+FwQnC9XOVA818jIXRvDBLdioXFhKw5k8NM
+         nUjQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrV20qic3KRTm3CJQD1y9sUa2OioQxo0V2W+a/YKenOwEcTBM37pZL/wfmWxT6oBhXHVS0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhzEfl0fBb2zpB2zByL2dYFA3ZGb6cBeOxjdAn1C2N/MN0P0TK
+	DTbksixYv2Y4OowLws0s1Z/g1O0xGYMPgDu5DxhSIMqrMx4xCVOXcDEJVF+TWE36oZGlqQsuXnQ
+	pAhsz5Swdj9H1fWRm+TdbyNnhUmHg+7s=
+X-Gm-Gg: AfdE7cmf8H5cW+U1GXwzCMPyKVZQXbdWywDYYtOYoVWnLmw9ko1ULEQHeLquyjRcZkS
+	MRLHGPQnyOR4bAcHkrLdnTAWFXPew/PZ+oURg9x33Km38MZMXA4A1ekE2WkLfP1os4ubkYYIP3q
+	zRYb0gujmAr34galkgfEwaVxdKrpRXWIF6A4WQKmu9UgHsqFEAdnAobIdOiiaV/59OTVd2nuF4Z
+	6RKlYNiVww/z0W1UmNlCWg6dT2IssiyAfgZ0BqIF/vZZkI8RqTV6XJlr4zxkA6ixWKLEuVB
+X-Received: by 2002:a05:6402:26c6:b0:698:f7d:4e11 with SMTP id
+ 4fb4d7f45d1cf-69c5efb5b50mr1248646a12.1.1783773094555; Sat, 11 Jul 2026
+ 05:31:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJBf79RCNzgg@mail.gmail.com>
+References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
+ <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com> <3e29ff17bd703d8333c2d65d36b15c69ddfc2ab9.1782338106.git.gitgitgadget@gmail.com>
+ <8ee46e33-4eb8-4e01-800a-82cc7cefa3f9@gmail.com>
+In-Reply-To: <8ee46e33-4eb8-4e01-800a-82cc7cefa3f9@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Sat, 11 Jul 2026 14:30:56 +0200
+X-Gm-Features: AUfX_mzCgzJCEQKCB3W_5Cv6K7T1iPktooWOyCakh1gq29QxElra8-oDtlcJaDQ
+Message-ID: <CAHwyqnXq=gk=hKUWbFHWLZFKCTPTWqHRv=tH0BC3HaetoRG5Aw@mail.gmail.com>
+Subject: Re: [PATCH v18 1/7] branch: add --forked filter for --list mode
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jul 10, 2026 at 05:08:11PM +0200, Omri Sarig wrote:
+> The implementation looks good, I've left a couple of small comments on
+> the tests.
 
-> I understand the distinction between the 2 formats, and I can see the utility of
-> both. I'm curious about the decision to show the author date and not the
-> committer date as default one in Git commands.
-> Are there some workflows where the author date is more relevant, or is that
-> mostly a legacy decision?
-> 
-> I'd be interested in hearing about workflows where the author date is the more
-> useful one, as I use the committer date almost always.
+Thanks for all the help so far! Much appreciated!
 
-In a workflow based on mailing patches, the committer date is usually
-much less interesting. It is "when the maintainer happened to pick up
-your patch", as opposed to when you wrote it. Likewise, we show the
-author's name by default, not the committer's.
+> One thought I had was whether we want a mode which recurses
+> so that if the upstream of topic2 is topic1 which has an upstream of
+> origin/main --forked=recurse origin/main would list topic1 and topic2.
+> So long as we don't think that is a sensible default we can add it in
+> the future if we want.
 
--Peff
+I don't understand this one, but if we safely do it later then that
+sounds good considering we will soon be on v19.
+
+> > +             git branch local-base &&
+> > +             git branch --track local-one origin/one &&
+> > +             git branch --track local-two origin/two &&
+> > +             git branch --track local-foreign other/foreign &&
+> > +             git branch --track local-onbase local-base &&
+> > +
+> > +             git checkout local-one &&
+> > +             test_commit --no-tag local-one-work local-one.t &&
+> > +             git checkout local-foreign &&
+> > +             test_commit --no-tag local-foreign-work local-foreign.t &&
+> > +             git checkout --detach
+>
+> Why do we need a detached HEAD?
+
+The '--delete-merged honours branch.<name>.deleteMerged=false' ' and
+"branch -d still deletes a deleteMerged=false branch" ' tests need it,
+but it's not necessary here, deleting.
+
+> > +     git -C forked branch --forked "origin/*" --no-merged origin/one \
+> > +             --format="%(refname:short)" >actual &&
+> > +     echo local-one >expect &&
+> > +     test_cmp expect actual
+> > +'
+> > +
+> > +test_expect_success '--forked rejects unknown branch/pattern' '
+> > +     test_must_fail git -C forked branch --forked nope 2>err &&
+> > +     test_grep "not a valid branch or pattern" err
+> > +'
+> > +
+> > +test_expect_success '--forked requires a value' '
+> > +     test_must_fail git -C forked branch --forked 2>err &&
+> > +     test_grep "requires a value" err
+> > +'
+>
+> It is a bit odd to have these two tests in the middle of the ones that
+> check the functionality works.
+
+Good point, reordering.
+
+
+Harald
