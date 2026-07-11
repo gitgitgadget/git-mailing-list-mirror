@@ -1,134 +1,110 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B14B40861E
-	for <git@vger.kernel.org>; Fri, 10 Jul 2026 22:56:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B9C25B0A4
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 04:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783724211; cv=none; b=WKWq4WcHB9KtHZIZdEM5nLEY5aXPbABBM+ladDqkuQwrEJJw5kOtd5LUtEjAC8OjDJ34oWzPysDQ474w++nI7oTKg5m+Y0c8HFqpUk9CBX5zM5lxDM27zJ5fyYAMicFsRxI8Z7Cx9XAR8KQFvsRpDoXqiF6RAUC57BoWSLV1sYk=
+	t=1783745467; cv=none; b=qwuknqbMFaND/eTacT1eXRdoeTy8EjKxXuKJmkXMAL5Na1UnVm/Jxb2sPvvZfDGP81Sm0meJ+zic2IxEIg39eV9dPoYR9EdNuZrpAfu/cD0HYTIzK0MEhrOPnhFvd3ZzhvWMBzI4Gw7nSuzNnuM5lWNMwZPErIqN5WfYDSxjJco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783724211; c=relaxed/simple;
-	bh=nBrBRVZAFpH7+pje7A9A+xrorHl2HxXNYVddRT7b+Qo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fkV3q5CDFONekiEsvnRacMTZ42gP8hXTNBCkqdqUD3L4kW6s5aT+dzzf321XJWe9wbOCHdiimxeqs5AOq2HxwTXhOwpwlYL5C1QIwU1LH6sMId5kPqzecxhSL7a6F2ezjcwWTHPNCuo0cQgURp3m6BBDf2WScnTUo5AJsNL1r5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=P/dQDXow; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1783745467; c=relaxed/simple;
+	bh=6WcvuGo+1QOdDiBocyxjXrDb2zoJ3E2ZOEhb1gb6f2Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kRUjymd7uFh+ImOOfPbhrZNcvnzlXCNZV8rOK1wlliN8GmgbXk9Ej+5TCkuXwTR5ZMVjDU/yqBD2Oo+VKc1DFaoDJwH1D3OH7IvdkeA62MH9HRFORKx9DvLoRFC5oZRJLYcMznrBSN8wS0kghUNkfumY4COnUCjAL8cbsrBvhG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KU5tPHBf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bIM8YwHz; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="P/dQDXow"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-92c7a0a701aso71572585a.3
-        for <git@vger.kernel.org>; Fri, 10 Jul 2026 15:56:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1783724209; x=1784329009; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kvwWnyCbWtvcB2fdXrDz+3vYN6KAo6iNuXixZa2Cc9U=;
-        b=P/dQDXowlCHG4DSJluljy7JpbfoMa4JS7VbLiYgL8pbo1t4tJdQJKWJhKST1uw8LOF
-         rZ/6t+cdYTk/E2DxqDw578l6RrR8s0CTgc3wG2O5HT2QYnsPY5mchqo8dcqHeyu+BTzA
-         p9EhM62vPT3xzJmdJlYneasmjkuqHKpvVdJaY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783724209; x=1784329009;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kvwWnyCbWtvcB2fdXrDz+3vYN6KAo6iNuXixZa2Cc9U=;
-        b=icEFQkjwLopBZa6XWVpXB9mg+DX5QrkbRhbzPeiSFjjGVvG40w7aquqJzWROcq1sJN
-         9oZy7mxwbHasVmz6nuQaD9lgDffUk4C2LwFXnXnb2BQcjJFUw2vfpwtioNh9r/eObnMJ
-         b8AjdVZwu2X+VGiNlYcQ6FEgFZ7ypuPc9anSQbJ8ELTGU4lFJuUuVd5QzjV31bGmbPxE
-         rCyJj6MrNbdH5fGCpDIiIuNe5Y+Ic3uctPxm6uX3yxem/CWzWwXuXiHBKhepALVrUipM
-         7Sgulhk1RdYS6vUXRnk3fYoo+NJlmCS1esNvF2TZZCyc5DwIEFbWAAfSI4WrbvCyYgE7
-         Frdg==
-X-Forwarded-Encrypted: i=1; AHgh+RpkWo39xVL0pxV2H3PlvwpaRfE2CmlxYkLA9CMTbZZQGDbtEjWO895pPHG/Lea/3HDsgIA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6/EgIU+nH9dACXzx9uFKW0dZvU809KiMvs+ekDL4i5uT+23uJ
-	4rOcryaWDXEO2sjrDI3fcDVo+6gCuO7BPd7gG8VC6S6xsKAD7NQtPOUT7ZlRUcp51Ic=
-X-Gm-Gg: AfdE7cmu30aPKlf89EUVGWpTtL9u94Qw48Wc59MV4V3mwYlBfcOLIWeOp914OYipUDi
-	owS/LhMO76QeYHRIL3C5iSzQoo5V8coKj/wtNHqcnhDEXrYWDuOGrwhkj/rpsVUmQ3RMsrKWCeo
-	/SS/uO97ABIYe8vzTUzcteoV4z+sNfyxzNma14MFxfbk9FWfICac7l031T3mJa09q+QJcfJ3EUr
-	zUJH7OVi+LimT9kXqnNV/1cr9oRFeMhOJW5x81YuKKR+gnyra7znow9JzjWtSxeD9B8uqtbWov9
-	KMC3OzWrhmxTgPj1Zjr+KeXhNAGPHR/2xUw/ooFGSNz8PzkcsOTJH8vLAVKOYwCCFXYk4mfA716
-	DnUWwhVz/XfWdaNa7yCfuu0Lh2OvsCf6fo4ubqwzQeEUxkabL2QI0PwhY6IpQwEIgxB+pnXAJsc
-	OwY1DzgDreibEtyxyZUm1Uqg8prJYhkGLmCzY=
-X-Received: by 2002:a05:620a:7107:b0:916:15c3:cc6b with SMTP id af79cd13be357-92ef2c377c4mr146435885a.55.1783724209257;
-        Fri, 10 Jul 2026 15:56:49 -0700 (PDT)
-Received: from com-79390 ([209.249.37.133])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92ee5b88e40sm303474985a.14.2026.07.10.15.56.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 15:56:48 -0700 (PDT)
-Date: Fri, 10 Jul 2026 15:56:45 -0700
-From: Taylor Blau <ttaylorr@openai.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson <krka@spotify.com>, Taylor Blau <me@ttaylorr.com>,
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 1/2] commit-graph: add trace2 instrumentation for
- generation DFS
-Message-ID: <alF4rYSTxpQUC38K@com-79390>
-References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
- <b865c2bcff53a32637aac426dd2c6ef4a4c27077.1783418384.git.gitgitgadget@gmail.com>
- <ak0DUx5Y/5y1OINz@nand.local>
- <CAL71e4PuD9D8LRbP3mfxxeMrM+1q--3sCp6oJs=hezdasZUPMw@mail.gmail.com>
- <alFthqGQjsowvpEz@com-79390>
- <xmqqik6mbhtw.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KU5tPHBf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bIM8YwHz"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id EB6951D0008A;
+	Sat, 11 Jul 2026 00:51:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Sat, 11 Jul 2026 00:51:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783745464; x=1783831864; bh=aS83mUiyg2
+	/TPdvcZUsVeVhBcBtdNwyXuXSCYJDTo/I=; b=KU5tPHBfdxYANdZuStQLb3z/tr
+	sVHp5L0xVjKVaOxz4QaDPqUqFu5jDdQgeYSUyeyptBAzs7U5rSxbv6QxmtlsNN8I
+	QLb3oCfX7M7MHa0X3fVcuvMRuFzpx1yxLvzmuB9P6CIZDBezb8HLm7+7BHGNcDRt
+	qv542O/3HqzhVEfasfQFbaeOg8WIkzUV+4YDZiD6fyBYNyJpx+nv+6hfLy8/gcJj
+	HTkt7KTNYcrO0cwcVGc2fXL7T1o9bRiNF3dQ7uOpO6oiofRb7eOGBPuPHw5LEK93
+	bZZvbvQGB3xGZO02cONaxR/wG5T8PUxmNdd5q5beGR8e9iz6VcfN48ohr1HQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783745464; x=1783831864; bh=aS83mUiyg2/TPdvcZUsVeVhBcBtdNwyXuXS
+	CYJDTo/I=; b=bIM8YwHzi4SneQ+ggm2akKCA5/BJEable2aFO1lBwlro6cLoXtp
+	P8PF7iiIQFY12cLugD26ibGT/7H06v5lvgZk9QhKa97wZG+hoRTFf/KouKvmJVGk
+	VSCX2+6oZUjGhJ3wU0wikEapIUWCNME0orEV7Del470ycBuoQMTLHS1txZF3/2HH
+	+38dZvk9wb9cNjxF29uvymZuEj5LDBMq3reSvqtvnQ4u4C5vIUClllbk5zIYmTkH
+	WWqL6Bb1WQ+qo2f+eNSsPO39oKHTqj05yCgFpl/GROoFsz8ALbjwixspeUxh6uJm
+	dwC7cyhpv66xmHHGQTWNv+xOzlPZjMnFPyw==
+X-ME-Sender: <xms:uMtRakReFey13yLtsuyFDn8OsbzxN7-A9E-hKX07x9aWNWUrzI_AZQ>
+    <xme:uMtRapMyTEhlTkCmIXUf65oRMFiMyHXTEnj93x-2Ha6FeZvb1Upd3hO9tAuM6-dzO
+    nM4ofNVFOnWsiNtu2X4dK7SBJkdqWjPpy6i3AVBw76wPK3x9d-BHg>
+X-ME-Received: <xmr:uMtRavOi44vqNaD7pFPgemmAez0PuiVASZwMbDtZtZUtgS_CoJvv91KJXjTaRsKHjCqBFRLdh869SG4LvBTAMTN-Fej9BOR52UfVxjY>
+X-ME-Proxy-Cause: dmFkZTFcPIX1NUFl8bQ/CvPueQEyC2z1o9T054rQWiIrAtUa8PV0e99Vg5jNqJ/AkjCGIA
+    ofYZCOSLlmr57dEPCTpGGiMddPGxSm87Vxnbxs+6no49TPL9JmDCtO3YYmoUzDDvc4+/wk
+    /+nvBCUqfaYSUrJqAH65Mc/MCgtIbAZ7wWu6kMlYC9AYKp6QljB075SUPBiXB3D0hhrnLN
+    Ffdq9IPJ2EWtRGv9HFO00knqSTBShg/DoxJKZF7TGjczMJHhvlZ/LXS5u/Npu/YBhIK4Qt
+    PV6zqmrVycbg+uS4F3rWY6kAz5IU4r0JTs2FHiLPsa/Wltnsvq/bj1eYae+g3Zdw+1+HKy
+    TOqJruknjpRybHBCG5Lh2noFribiObE/JRiAsWeOrv5tQVf3Wg41JcsLgON9//vuNKTz1e
+    ZAEv22r8eMQ1WcOXTKuwtdAcUxVFwD2lykVWFeON8/VBLt4eaI8NatIkrxwbZSOke1Or8A
+    ntqJ+O71ufQAIgfWmb8F3eih1Z0XEHRhnqigcIkzrkMuVk+so1fhkRVdptSwGUQ+U0OaYU
+    xaumjD97AKEfFa3dQPQ+cgZ+2Hbg/xy/kN8GNvpnhaAgHovMGa2qb4dh9X138brBcf6ivi
+    a0zdMR+Tl4Q1ayfgLjuxihdcaRWIuxLVXupEpANCZQTuOolJyvpYrqWnFfKg
+X-ME-Proxy: <xmx:uMtRahs3Ie_BGElfO9B1e7IVarIPUiqxwwDwWh7tu7djK8QKPrRS9Q>
+    <xmx:uMtRahU07En44QU_vu6-aGka3itAKn6tKJYYDXIJruJ6Pa8Di4PBAw>
+    <xmx:uMtRahuMSvRKVrAkaeJ3FoXm0osqR1MFtKQjm13ErvNk6_hLt_RZbA>
+    <xmx:uMtRalXzVP7jhJXL1DRZq3Gk-BCBcBBWRsStqJzAiKLNRsniJrWk4A>
+    <xmx:uMtRapOySMwTM3olXaq1_DNra3YXdZHfjwEjYJmcxSjah4-7qgNThzEZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 11 Jul 2026 00:51:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3] builtin/add.c: replace run_command() with direct
+ apply_all_patches() call
+In-Reply-To: <20260710195949.54928-1-gatlavishweshwarreddy26@gmail.com> (Gatla
+	Vishweshwar Reddy's message of "Sat, 11 Jul 2026 01:28:20 +0530")
+References: <xmqqechad6g9.fsf@gitster.g>
+	<20260710195949.54928-1-gatlavishweshwarreddy26@gmail.com>
+Date: Fri, 10 Jul 2026 21:51:02 -0700
+Message-ID: <xmqqechab03t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqik6mbhtw.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Jul 10, 2026 at 03:28:11PM -0700, Junio C Hamano wrote:
-> Taylor Blau <ttaylorr@openai.com> writes:
->
-> > On Tue, Jul 07, 2026 at 04:08:36PM +0200, Kristofer Karlsson wrote:
-> >> > Instead of writing "# BUG ..." and then an incorrect assertion, I
-> >> > would suggest that you write the assertion you expect:
-> >> >
-> >> >     test_trace2_data commit-graph generation-dfs-steps 1 <trace.txt
-> >> >
-> >> > , but mark the test as "test_expect_failure".
-> >>
-> >> I started with this actually and then changed my mind in order
-> >> to demonstrate exactly how the counter changed, not just that it
-> >> changed from failure to success. But I'd be happy to change this
-> >> too if needed - it would effectively reduce the second commit to
-> >> just the bugfix line and switching from test_expect_failure
-> >> to test_expect_success.
-> >
-> > Yeah, I think this would be ideal.
->
-> If the test involved is longer than 3 lines, I would recommend
-> against it, as "git show" of such a patch will show the full code
-> change to implement a different behaviour plus "_failure" changing
-> to "_success" in the test, with the body of the test hidden outside
-> the context, which makes it hard to guess what the behaviour change
-> is really about.
+Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
 
-Hmm, I am not sure that I agree. Or, at the very least, that is now how
-I have written series in the past where I want to demonstrate and then
-subsequently fix an existing bug.
+> In response to review:
+> - repo_git_path() returns an absolute path built from gitdir.
+>   prefix_filename() in apply_all_patches() explicitly skips absolute
+>   paths (see abspath.c lines 271-272 where is_absolute_path(arg)
+>   causes the prefix to be skipped). Running "git add -e" from a
+>   subdirectory is therefore safe.
 
-When either the test setup or the bugfix is trivial, I think having it
-in the same commit is just fine. But I think there are two good reasons
-for splitting it out if the test or bug is complex:
+I agree that we are safe when it is absolute (no room for prefix to
+take part); my question was more about repo_git_path() that derives
+its value from repo->gitdir which may or may not be absolute.
 
- - If the test is complex, but the complexity is not directly related to
-   the bugfix, having to explain both in the same commit message can be
-   awkward, and makes it harder for a reviewer to reason about either
-   component of the patch.
+Does it always give you absolute, or sometimes it is relative and
+sometimes it is absolute?
 
- - If the bugfix is complex, having the failing test in a separate
-   commit demonstrates that the bug existed before, but is definitively
-   fixed in the following commit, as both would be expected to 'make
-   test' cleanly.
+> - A dedicated test for "git add -e" from a subdirectory would be
+>   valuable. I looked but found no existing "add -e" tests in the test
+>   suite to use as a reference.
 
-I am happy to change my style if you feel strongly. It would be nice to
-document this in CodingGuidelines (or SubmittingPatches?) if it is not
-already.
+"git grep -e 'add -e' t/" finds t3702.
 
-Thanks,
-Taylor
