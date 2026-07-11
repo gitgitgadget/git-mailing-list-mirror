@@ -1,82 +1,81 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681D3307492
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 20:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40194307492
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 20:55:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783803247; cv=none; b=ltkFXiW7Z2a9ZUouVRPeOD7Oz+BLq+XCiyndSGRCgFobt7qv2TyS7FF4mqLnNaPrqgv/qb9yzSjRAPqpm7np6Fp+1UAqmB3Z0kBJFGkm3qBPIxQOOa3fmRPI5Lfqeyv9J68bV0NHkgS/xi2bSdgt88UCpm7PzogXxlSkwv7xIYc=
+	t=1783803324; cv=none; b=ioEVq0b4hLyA3T/bJJRs4l9Yo+kO0uxoApzU3T5krp8QWCZpck5gpLfsq/f8ZoB/H15vL9t5VURdhRXv1t7oX6YSZLN87Ju1jidrw/d7Vj5u2dMHQPGHq5NlWshmO9E+P/IW4IdIJReel+qyHV76wiYclzXlq0ti+Km0EaiRZNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783803247; c=relaxed/simple;
-	bh=g+IaiKM3k1g/+iQmrZlN5figmC6PwFA+VjDFMOIJVbA=;
+	s=arc-20240116; t=1783803324; c=relaxed/simple;
+	bh=syqhr3fwhTnic8TOuAJWw60qoSXMDQLEMW6C2SoLZCg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NSOkaIt2Q3r0thp0gcOsdZokA9Vim6+bBSAzhh+88CScd1eDvCf31ReQ0SXVGNVP7kjMJet1KPjrhQIDLR9Ae0FN/NJXsg2tDsRmA5oVRdLOaPVFLYIOm9Po5QDQlKT/amT+zZUKLvHhhkslHHUGjrEGuw0I1up8z4hS7bpwuQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IM9MfRP1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H5xI/ilA; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=X8Rn/20zxxhu+wfHm/IZovlyTP7nTLcW83NMPMBqoXoTdSYy3JSOpWeM3SsNRd1YvNd12j0ZnJC3jH6rOoawi0M6RzmhsNKG43aWF12DTX9NhQComJy+HzBICjmR0ShKZT5TiDxqaHbmwT8cT5q2Sw3sUwugjBwM1TD+mWUWpRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pMO7KCzm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VcmQzukw; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IM9MfRP1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H5xI/ilA"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 97B4B1400052;
-	Sat, 11 Jul 2026 16:54:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pMO7KCzm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VcmQzukw"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 82FDAEC00B6;
+	Sat, 11 Jul 2026 16:55:22 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 11 Jul 2026 16:54:04 -0400
+  by phl-compute-05.internal (MEProxy); Sat, 11 Jul 2026 16:55:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783803244; x=1783889644; bh=3G2Ga1JkwL
-	h0FF7YmUOcOlSE3K6zvZQsXssI3Vqo9mc=; b=IM9MfRP1T7AXRyyZ0DWwe4bN2M
-	4RtPpi7htf23VJER8/jlDpBk2ukCE9TaWyknngcPWO8v83afHtHvc3XYKvswcUiX
-	H57zENCSliVg0nQWKntV8B4kvuz0mW4NiJRD93S6lYli8/N9IKR2eU6ibryRlpIf
-	rfKdPKW4HZ1HeEQqUDctFEWhpY7mEuAURIGI7l9D7nW4AZZLNNC/VFVd4TdKrGcW
-	snIILldMutf7KBNXQkKheWEYuNesqQTJdFeevQLhZc2THiuwGTZ46NESAxMOqbNk
-	JAwdiak0acwzPqaVH1icwcyGLXYDLnLvypccekFVwvnsuOuR6L9BpF17heNw==
+	:subject:to:to; s=fm1; t=1783803322; x=1783889722; bh=UOb3tbLr5r
+	gi9Wgldp+2TVAkK3OU9s8dAESjdbKVs+c=; b=pMO7KCzmsfYgn4+zkZlfjrFDbO
+	ADUIoJ20+dyx8AQ8nn5TNSiH2EDbRkUBCMNO3/2l+0OO7+CiuSVWYDqSYmPrRgr5
+	uyd/jRxh84Gj/3Y+hZnuM+ZdMF5AF82HV9twyKj3qGQx4beBQ/Si/F0JCq5MB0PR
+	Zg96qubSfF+x1DxrvUIldXDUJMIZXtySy3ecMiTrAR82eAA+TZVdVIXkEMej4c7G
+	iLnj2tTMLxuWdLx6084o8Rhkb1y82e34Cu2ny4/CpC/FjRFcqHdDpfblG+fqKC9R
+	QhsZOssUKLhUMArSvHlGb6P+13k/OLNmku40DNWKTAU9jiZN2/n8Tj+iwPwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783803244; x=1783889644; bh=3G2Ga1JkwLh0FF7YmUOcOlSE3K6zvZQsXss
-	I3Vqo9mc=; b=H5xI/ilAak1WS4gYGCLJltaA7jpf26IaPrrJO7IiMBP+2VbpBxC
-	l2MM5DgoNF13YQ/kdYpaXqVRRh1vr6goa+4YULEjp5xavjWG6cUqoTz1q++vovJx
-	Fit+ynZRCYud3nD4CW84bppqtgQB8U9jKxLMPHWQUOiYGCusmnksIRMOoWe7jsWo
-	6f6I3rjA3JYHdyhmf1O2uKQw0psSN/HGd2tVkj85BBMD9rvJyx61yHYdb+H2siDD
-	hb/mtyFp0u8etw4upp02F1Q28XIk27l7RNcU1bSGLCeo3OBZ6ZHS8Qkh5iG11OTe
-	SDSok0q+r+rDNlv9xDWHESJ6DeuXEiiYYEw==
-X-ME-Sender: <xms:bK1SalE1Fr1JD8EBe3_tw4uEk5QVpGs6F9m0Q0JIlCtMrWVL_HOhgQ>
-    <xme:bK1SahU6Nj69yzmgCYlBX8erwqV60-SpfRQ3lE9ZsQl14u2Iom4dCzrNAMR69OKF8
-    xqaSjOf0BhCa_w4j_Olvk_VnAJekqDvBasqHxwplHN0riDve5nreQ>
-X-ME-Received: <xmr:bK1SasKmi2Q2mt5GS71hb9_p_Bw4uKrsKiBPW2Jy279wmB3oHykb3ErsNvI8m9YNZvUHERyfLHgYcFP0LjExon1d0H6O2S6cnkMxoRY>
+	1783803322; x=1783889722; bh=UOb3tbLr5rgi9Wgldp+2TVAkK3OU9s8dAES
+	jdbKVs+c=; b=VcmQzukwYCfiBL5XeKB4n7Y+JFGcMoDRGv0temNZOybMEs9GhJI
+	neDlsJWc5Vhl5+C+Ga2nSi9GJZJT9q57T4TRTtfklxQlBnqTg4655STWHwWHvQU9
+	aFEz5qI8m8ZlNtfmVhctrRwkhM4G7c6O/To3nEbOitv+Kb5OUPnH8QIRda8hRX3+
+	S7iA8hcjByMgqqbYh1FcHNywUbzfzLQYdnA2bko0xBEJqSBpsEWsk0KYG+OPipOH
+	MTS3DJ49MbF9eZODoAQjCxOUDYgGb0M/DvFB34w+O+3jxQExKBlp+4c+jMX+2IaV
+	WlwSA703jXtGPnADMMPEjVhW+FRClnRpYQw==
+X-ME-Sender: <xms:uq1Sai3-ZkcOAejg_2EH1hOGBOXXyOQcFPbOPRNXC8PGrBqMNice7g>
+    <xme:uq1Sas0qfS_QtxnWU4KsLtSpGjnYpAifmhGS7n1aB2a1dHvz5pcOSeoyhhlOQ3Z76
+    ii7vvhXKeaILcOQ302A8UCjGOXJib8NNuQ2piYP8uZlswkeO8JtdQ>
+X-ME-Received: <xmr:uq1Sat_iHFKOJAumpASCLYFeBgC6DWHuztz2rkbQ9J9Kr32MlMnrWK3HOBBB8ibF8TzUKDshHOF-k8SCoiv2E7p1s6GGMB5JIctNToM>
 X-ME-Proxy-Cause: dmFkZTEaq+1GZw6Hp45sQcPmpj2vhjv+hpBjhYI9Xsd1Q45eEnlNGM7CYDh15eq8zptsug
     MiWPT7cmQtJUVs9EL4jv0AMYu0X3FgwrtFolHxmORHtK5D6RrgW9BYXV6jpyZUMzJLG8hc
     4zzIoDJbUsC/2jObTGEfb+3KGHxvcX7bMP67oOdecJDYI3iiwJEPJx3QfLVCI3xUgmOWNj
     7+SShF+TvZzh5LBKNAS963ocimVzOMEKs5BNsSbZH9ryW1y3ho2Kx9XFtqLVcTqvGuxKUu
-    9lCbreOtSk91YoarGM05dSVqOWCiQZ52nrN3+NOBz2zF7IPYNlVRbaBKgYcYXTGXs50nWw
-    vgrBQ+W1pT6ioP7BwwP0PvjtAnmuoD+dta/4IpkACumOA259AO8AB7AXn0HAXh8oNAAePW
-    o2Q/IRiZWDAmdrMQTswEfTsqLiHzouDBehQCcO0B+3Bpn/YWMbpZag0sORd/DVOQAfyeIU
-    qdMj9xBPrWRlF0qV1/TZopH9YvlCCb+luMSz25JrZWxd9sdjGZ9FM6fwbBCKyc8On/jTtH
-    eG0grqGJT3R3rhLaqr849Ww6rTNsU3tvJGlEOdcFq0ZmuLKt1DjYmVa1ktWtqMwgl2L4Qi
-    e7ZVsOniho7va74pNVEelUth9fbLW9sr029pSAghhj1HL4ovjqB+aJ42WOoA
-X-ME-Proxy: <xmx:bK1Sap9aQBenPCwMHW6DyxbKJo57NYc61bzQR4X-kovwn1W2q_Bnhg>
-    <xmx:bK1SanKlptHTJT6b2GtJIH-egwR5syiRjJxAQYBaqROCnjnDHYkyEw>
-    <xmx:bK1SamkrR6xVeKUDY9ZO6Hj8czAWluMzRXEOJ7VxMuAbUoRMIpfRZQ>
-    <xmx:bK1SajPlBOZCLTninSEhJSjf0z5j2Vj39jh6wnL0L5Mho2mBZfuo6Q>
-    <xmx:bK1SasG60wb9RkJsVlO1y02gVyi9h9aHJyZb34qgKmOKeLU-nD65b_DW>
+    9lCbreOtSk91YoarGM05dSVqOWCiQZ52nrN3+NOBz2zF7IPYNlVRbaBKgYcYXTGXs50nll
+    nRmxTCaYOFvkbwquwI41ZoML+wLnhu8Sq9WqmCnxEWLQyVjF3S0rOKnjdiL8NE5zI4PFvT
+    XKxKs86el0E5gO8mjykwNQXrTgOPHvJytFOlJo0tE4k+RborvqiSq9vRhcRfiAlIw7RuNl
+    Fja9XD7N6lqtDRZItJU4WmOtKBPdZy112yDLaXNt9IB330n2/Ed4eJo6bAA+SbPNzP30z1
+    nKlHar6Yrw8e1TvksPKjhE+DC7bsyKmwHlJCBtiO6bxHUCg/AGKCCDYgakW8J/Ibhc1f/G
+    HPp2HUvJiGwztIkgjNo0UhjiqTx90OU725YuoNJGMVhaoMUaA8oXUZG+K/1A
+X-ME-Proxy: <xmx:uq1Sah10Rnw4xcdQphgXDygaoQjfINnBboIKoql5f3omGiW1k9BYTA>
+    <xmx:uq1Sai-I4NQ6rsztWYShQs9f7jI6awgXIaQTKXmXNo5DEyU_piRaww>
+    <xmx:uq1Sapv2dg5eqBouRmjAACYD8MH-sh_ijzMsQ40P4fasDacbdtuV8A>
+    <xmx:uq1SatBPBDknkO7W7lEi3mdEdoopoHOUjc5CvmDcg7trBJPOVLvHdg>
+    <xmx:uq1SauFma3r53aAQVgAO-vdiY3mqXljNoQKI6KbYebjSdjxOR-1ZV-QB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 11 Jul 2026 16:54:04 -0400 (EDT)
+ 11 Jul 2026 16:55:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Omri Sarig <omri.sarig13@gmail.com>,  git@vger.kernel.org
-Subject: Re: Understanding why Git defaults to show author date and not
- committer date
-In-Reply-To: <20260711080331.GB1470749@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 11 Jul 2026 04:03:31 -0400")
-References: <CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJBf79RCNzgg@mail.gmail.com>
-	<20260711080331.GB1470749@coredump.intra.peff.net>
-Date: Sat, 11 Jul 2026 13:54:02 -0700
-Message-ID: <xmqq4ii5b639.fsf@gitster.g>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] fixup! fetch: add fetch.submoduleErrors to make
+ submodule fetch errors non-fatal
+In-Reply-To: <387a34d5-fdf5-4513-9aaf-4e73d9304c1d@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Sat, 11 Jul 2026 14:22:30 +0100")
+References: <387a34d5-fdf5-4513-9aaf-4e73d9304c1d@ramsayjones.plus.com>
+Date: Sat, 11 Jul 2026 13:55:20 -0700
+Message-ID: <xmqqzezx9rgn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,26 +85,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> On Fri, Jul 10, 2026 at 05:08:11PM +0200, Omri Sarig wrote:
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
 >
->> I understand the distinction between the 2 formats, and I can see the utility of
->> both. I'm curious about the decision to show the author date and not the
->> committer date as default one in Git commands.
->> Are there some workflows where the author date is more relevant, or is that
->> mostly a legacy decision?
->> 
->> I'd be interested in hearing about workflows where the author date is the more
->> useful one, as I use the committer date almost always.
+> Hi Junio,
 >
-> In a workflow based on mailing patches, the committer date is usually
-> much less interesting. It is "when the maintainer happened to pick up
-> your patch", as opposed to when you wrote it. Likewise, we show the
-> author's name by default, not the committer's.
+> You have probably already noticed, but just in case, I had to fixup commit df9481e6d6
+> ("fetch: add fetch.submoduleErrors to make submodule fetch errors non-fatal", 2026-07-10)
+> in order to get a clean test-suite run on the 'seen' branch (@a77a48500d) this afternoon.
+>
+> [this is part of the 'pz/fetch-submodule-errors-config' branch].
 
-True.  In mailing list workflow, the author date recorded is usually
-the date that the patch was sent to the mailing list, which may be
-later than when you wrote it, but is much more relevant as that is
-closer to the time when anybody other than the author have seen the
-patch for the first time.
+Thanks.  I am being lazy and expecting the author to send in a fix
+before my next integration cycle ;-)
+
+> -	grep "Errors during submodule fetch" err
+> +	test_grep "Errors during submodule fetch" err
