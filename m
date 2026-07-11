@@ -1,126 +1,102 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508C423E342
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 19:37:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D2D2D0603
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 19:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783798638; cv=pass; b=ueBq3WI0XbmuEpFLfLK+ebF8vGJr4CYq5+VnJTav63wKp5J9CEP+bWY3Sbo1BcxiizYRCuhhcCm2HE9f5XXAnW1+S+4mbbIPiIFkTY8wYOu/mkK2WG3mmnsxQ/HNb+hBfDruyowYO0Jz0NG10ttCKskU/wazNjQNvhAohUxnj9k=
+	t=1783798741; cv=pass; b=B3GorCRSznh2+nanvUJ+LcbPfQtdLqdVvw/tHSJJe6Iic4SdLQaj7/LWKJnTN9/YDhDmpJxy3apUJ6zNCa7pT248EyQqCgM1V/oL05RUZLH8pFL/X5hLeYqYIq33UVpHPqkVMjoNuf/2vp11NCOlZpsVLzENjCm1Phwd2v93cJc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783798638; c=relaxed/simple;
-	bh=/Zj6fVqDKcbM3A+90+wOBUsBpc9M2aauYBg3gc95B/k=;
+	s=arc-20240116; t=1783798741; c=relaxed/simple;
+	bh=SiHT350nezs8yxTIKwuMD+yU9frDh1IPZ5f2p/e+quE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=duAkUbBCKI0149lR0ydtXhHoU3uw+4q0KsRwQDzCsRzWpGD8thcckcOQM0idTj/j0gc7Ky4Jklo4y4rzgL+hz3O76kLAyUQoC6LPuWb+IFlGuH/GQsu9P+tZwQ7LuroBICP9eXYpd6yDsMbFAdTQ6YRLN/0yrbQDb1nv2bu4fY8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BB21arjA; arc=pass smtp.client-ip=209.85.208.52
+	 To:Cc:Content-Type; b=eTmvrisezkO2pTEdK6fIx8Q6Bdcq4q2rRB2Rp8Rcb2NGcHVRx2ofvjtpQGoZpj8WOFec+vCSQrwvpaG783pUYXFXZdQInuXjgkL5CYYbL88rhvZ5nWciy1+oVC9y1Qb258O2nurNIA1QhqDxHJgHmCUQilDgDO4G1j+4ERAF/4o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FVrDbhWX; arc=pass smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BB21arjA"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-698beff7178so3596153a12.3
-        for <git@vger.kernel.org>; Sat, 11 Jul 2026 12:37:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783798632; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FVrDbhWX"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-81e70159a27so16424157b3.0
+        for <git@vger.kernel.org>; Sat, 11 Jul 2026 12:39:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783798739; cv=none;
         d=google.com; s=arc-20260327;
-        b=bO0ObkmEZFTEgdFAp3iWYkqydKAerAN8G9E9Edzhj+1oO1NjKaG/7Qgu3AoWqjtvSf
-         YrI631Ov5pDF0H/L0EMhGJm1fdGg9+y1OWZZ0VQdNjMIoLOtLt1rxnYbYa+lpzVCj+vD
-         xZiVRrhPsvQ7JBDsnwTv3u/rXkGt0XN0NhOCfx3bARRLxOVtsB7uvzIXSFu+gLotHpQ0
-         pno97Sr2rE/IS3DMYh894BsSVYMtW+v76Vnl0iMVvcjSUGaHuEXRTx6vsTX/O5tgoigb
-         pxQTAgUmaTcPF9LkZjI1Qn0j16XdBjuMqln0g2awQ3G7tx8CQ/5UUJ3KHbb26CeyMv4r
-         TX6g==
+        b=OGL7jr26be5lMwTaDxW4GUaQRfiu+Q3y1ioePVlxUH6A2pzWz+dEs3SolLEFIY37PG
+         ML5QZYR+B2UmrBrbcbbAhDVFQwLQmpQsMBNYTQF0OdHXwPV/YkiUkYgWPhGdiv3oWQ3K
+         /DmkgJGyEX7qhkqK+23WAeg5g42zZHKc6plJxhJ177LqLmGPI73ppA6+UtQeo1d2fq+2
+         v5e1D8UbAg37+xupnEf/VqLQbby3nuBgPWGncLS/lp+tMXp/6ztnWiGH2QDknnC3dFcf
+         vsafnB55nfCxOdo2Y79JyBjj3QtIpHl140GvMeC87977wAdUP8XTmtHIkihgM0LPJubx
+         h0iQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=AkbHm1K5u6OAFqaysuk4AhQcdyDJkzg4v8txO7xC+30=;
-        fh=JW9NUcRUJhEPj4qHKqT/IDGB29ZLHQdGw0xcTpDn53w=;
-        b=R9XlhTloMgbcIFIvr3nzwltpYUgce6h5frkfI+7b//hxFy82nyqSy50zaq9P0UoCQT
-         Tt+Ozv6ifFf6XlrjOvcg/4y0qcBU6wo3jT+D2MrW3RwXemUaIfuIbXBwehYUne2qxCHa
-         WHWLQgWhqHDBZZLFM68BELAuLTUsgx6a4dROFELKvcczaSeIIEnAeeY55Tzp9FP7AKN5
-         r4vH9TrXRx8+e7ULR11/vRdX30tt7ipnZyuHj8q0amyrIHFnmmxzkzpnBo6/xHhyNxpv
-         xY1UGNqjN1ZDfIQ5bwkFa+RmA1RyxlkUsx6hmnkADf181cFhcy364vScp8aeb+Bz4waI
-         A6ag==;
+        bh=SiHT350nezs8yxTIKwuMD+yU9frDh1IPZ5f2p/e+quE=;
+        fh=tk9PMBi09uQBf+tFsCHlY/w1gItFGwM6zN3VIS1dNl8=;
+        b=njW8iM+3Y18hTXGrPdHFith+59t3T0ilZ4SgNGkUR+wu3I0IEnfEcIYjIr2JtDHAtL
+         eXkuySoJgUeP84ygx+V8BTnjtZ6fdUVWRUUaEyIBLAgdKWJZt7s8UBsTI/hQbMOEEDeD
+         U9Q1Y2oNizKj8tEpNPVVpNkqEg7jqT20oeSqRfQ19PxS4MKb3snUNFJP5nOAkp9gvazO
+         rhISTCPoS11SwpJRJF9buPXvH/JsVLBDV3Gu5u05C7gKiUKFkEKKt7xjWP6rNB3kVvGk
+         ABI0TQGN+u9hWF+bz2ux+gQEa8UaXoqkFQ/RC10iYSNoA4/SrMzWVSfA8UXu4Ul0dBJA
+         /LDw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783798632; x=1784403432; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783798739; x=1784403539; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=AkbHm1K5u6OAFqaysuk4AhQcdyDJkzg4v8txO7xC+30=;
-        b=BB21arjAznPjw3AQyI+7EknQ1ybqB3iVUnsQpFt9jdjHgDSu2W1zBrcevDBXDsPE12
-         SN+BRdl+u90ut1NpiQB3V5Glk57qA7gt7nVBNoNcj3JYiNONXfDkvel+hUBfyZqrBUOd
-         0desoffYJxWTc+JjV2Q2jBCt/qre+oCsU1HQjYx3BBeK1rIyulOwueIVNGspvWiO/sXT
-         xzjiq0ScoDkwXGIDGnOYQ8BJrsroZIw2LqmU5gbC8kUy2+KRC3R8vnaCK3qAik1czY6g
-         yTNl5ls/fR4KBd3XqIXKEx7fXbIK2sJcS5mNsG5tWHmbpNI/OpQeAyc10CmWJrLm/05t
-         Of8Q==
+        bh=SiHT350nezs8yxTIKwuMD+yU9frDh1IPZ5f2p/e+quE=;
+        b=FVrDbhWXLEIwpg7CFKcwtbD1RxZ19xxPboWZthG/ylxprTXMs7msPI4HonxCUOUt5x
+         0Axw6djQHt+Pd29MBEedEDQkTqK2vHeUtRMvkADtWAAyP6vn1VlXNV3f3TNvEaXeX1Ah
+         jFlHqRAJkLrPH9+Ht6cwAyL+ywpOpwX8jSQ3T5vvWAQa7rwGDLM4tpB7LaPuCZg1hmyk
+         rbnQHzlDQq3N9ZXVmG6cz4TrwqYSudEik1nfWXkLu/ecMvToYk+edO6yHyzQYWbwOmmK
+         JMoqSJtGDruA8GpIKmOVxohlQ4lYU/rGBCpF0n1c6+bZhODeK0VZGdBJX/dm+VO19mdD
+         fP4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783798632; x=1784403432;
+        d=1e100.net; s=20251104; t=1783798739; x=1784403539;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=AkbHm1K5u6OAFqaysuk4AhQcdyDJkzg4v8txO7xC+30=;
-        b=MyKxXsDJdblJhw7/VERPwH55N5TkPo0cVVt2ht7t6+hLvnDbubzU50AbWTdtCKNCGo
-         +zwSKa8KSlSpDq1VHheNNSo5bmA6mVDxx6BqXRv1rThfe5YqHdEkkVol4/aSUzJHMXtT
-         kA8SWTMLjvwpkPm0PY+L2uaVcOEMN4b8eVv4qx1pG2EQPrYSzSCkiAl+yDPgqOmIS3PG
-         aswGigGdjJvHWEo8+/0N6W/hUS797wWGuALuv8Y37UWjh9yKcRPRtCNPqXgkKFxHw7ob
-         kLgRQMX00bmAzdA0zIuxkRZdOfpmLVnP9MftVWtBtzU831CgzkHvuFusAcel8RqhYPEP
-         b/sw==
-X-Forwarded-Encrypted: i=1; AHgh+RqB7n55qHG3dmSIl1HJqK9MS0rGCgUj2baCszW65IYbWc7JyWXptCtBOJ4sPbaw5GK/PIQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwJoRY9RT8Xw77bGXId04MjLnFE4upQObkbU0wiXeS8AMLSDj25
-	bDpqMJMdrcdn+Szz7TL55VKg+3b1BxrOaoIMy536UIMnrQC4yQtV2p6TV/AQddK7jVLzEWcV7qT
-	F6bq2DpoVmgwedP/UIKsT+dxhvbQDDWs=
-X-Gm-Gg: AfdE7clD9sowGERMIjSrgvdVohHasPcHnfUZQb4yEZPk/gqEZCWD2rv9ofm8WdWhm2X
-	XxojgUot3wxGmjBJc6NVEHjfZG3wqQ50ZVY5yMTdQiUAObmFI94ADQB6ECWugr2+/n4oAnx8O+N
-	GKu79QHGz70Tkhh89XrTXvXot24nyOQHz98VajOD7B298Vya4g0pVj0ej622UWOl8U7WTDECwGu
-	ReX1P8J/+6SHg+z7k3IlkgtVdpmmq14LwF70M/aYZN7qUCqX/DXgyGtIk//33B5gu4tJ79F
-X-Received: by 2002:a05:6402:5190:b0:699:728e:48c0 with SMTP id
- 4fb4d7f45d1cf-69c5eeb867fmr1690242a12.0.1783798631513; Sat, 11 Jul 2026
- 12:37:11 -0700 (PDT)
+        bh=SiHT350nezs8yxTIKwuMD+yU9frDh1IPZ5f2p/e+quE=;
+        b=WID/2Fz+Qiptd9ieLSeqCFLpf03dzMPplLUPePCWuGQE8TpanYCBoRL4xm3xgQ6Yo4
+         nny29BmkQRiP9JsErYB9M2n5Q48cvyjpFTylOvgJ1LJi5mVD7zY4TQTzccAKmKATz27N
+         upmy7DfHDeLmo3U5Q7PSlDH0DVsL8T99ATLVBi3vNYbgpwN/HrU2vL7dNADfLQG3k7vm
+         STIKKc3EAMrCRveO1iZbUisVsuvtbKtErFEM6sq1SsrizomwhvSHh/38UfynXdfqUDcG
+         0ONBvLTJsaIoAYIWmH5W0Tyw2iJcRHMY94MQtq6QVrPh2bxedDYDs4iPZSJ8ootr7gOA
+         29cw==
+X-Forwarded-Encrypted: i=1; AHgh+Rryz7+S38bSNHzi21vdNDwoTkhP0cKKsURNJeigRzGOhqxz7Lvu05bXiynLnGf40V/NE28=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywt/OTkP+4bMT56NxZpjQyKOGy1C7KwJAWyVUxTG/6eE9GB56jx
+	Gtuxx3Z/iTEBXzFvjGWQBv3p/sqgEIjvKGVHErss42+1FdotUR+ekzbE797sEBuyUzmdVhukY3x
+	7IwIte5//J2waxxQg0GbtDowBXa9O6jU=
+X-Gm-Gg: AfdE7cl1scv56+QnhKBSXN/rbyT5CYcQkCeKuygAoEG2BO7V2IHOAm03OkL/BEFUAYy
+	Oj6b8qSu4gIyBNXWMLTUsxLari/rL5+IYSnO+M9Rdagal4BwtY8POVWzECC+MMyQM71ACJIw2vb
+	AuFnyRvcTcoAqWHcJVgVSDgsE/w1zZCLrMvRuXWKPWth8DGEr3ovqxu2lj4gLgY3/mPA97im1Xh
+	ug6EV9y84lbVdVTdyrXCdfV1/+MxvuwY1j+w6AwqkSiowxEKx5s8B1PLWr19sLsPDQrmMvEPfFM
+	p+TT1WWEYqaMI90evEcLdZE51kR3udhndykPP5EFBuKyeFqSyLZyIJAqexsS2PGbrBGMuGtUmuz
+	4EPP62N2Dxq5LRn8VACGniIpIn3zlb+096iHXUJoE7UuVpbsbs46CE64/t8qhISXPv73C1a4=
+X-Received: by 2002:a05:690c:4c05:b0:81e:7ff7:63 with SMTP id
+ 00721157ae682-81e902e0148mr27474187b3.67.1783798739253; Sat, 11 Jul 2026
+ 12:38:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
- <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com> <a84c555d99c98abcd4618833c14fa35b191fbda2.1782338106.git.gitgitgadget@gmail.com>
- <e35f1268-2518-4a44-9c7c-28ba13ca7b7b@gmail.com> <CAHwyqnU0ifHu0+GfMR9GqWKgFrTOyQn-FbUH0wTm_07nCa26tA@mail.gmail.com>
-In-Reply-To: <CAHwyqnU0ifHu0+GfMR9GqWKgFrTOyQn-FbUH0wTm_07nCa26tA@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sat, 11 Jul 2026 21:36:35 +0200
-X-Gm-Features: AUfX_mxmotIEypov-KKRfXt_SNVjaLQm0MnL0tz9p61JnEO4vrmpqKwvamiO0AQ
-Message-ID: <CAHwyqnWspUTSnqmkMyXtWuAnENDSzrRLhhUR=Ljtt1xer3tphA@mail.gmail.com>
-Subject: Re: [PATCH v18 5/7] branch: add --delete-merged <branch>
-To: phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>, 
-	Phillip Wood <phillip.wood123@gmail.com>
+References: <20260701180813.776173-1-cat@malon.dev> <20260706142530.3681520-1-cat@malon.dev>
+ <20260706142530.3681520-4-cat@malon.dev> <DJVZ5QPXBFY8.VBJN0TB3WROC@gmail.com>
+In-Reply-To: <DJVZ5QPXBFY8.VBJN0TB3WROC@gmail.com>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Sat, 11 Jul 2026 21:38:48 +0200
+X-Gm-Features: AUfX_mxG5ummTHyMYPhMZrQw-jLRsIR5Hbeao4jrNwwAhL9tw7M9Z1-rZjLc3Zg
+Message-ID: <CAN5EUNQpJWt_FD1DvH4qRn12PueNfjXcdqOcEk1eh6dbd_1i2Q@mail.gmail.com>
+Subject: Re: [PATCH v7 3/9] environment: move editor_program into repo_config_values
+To: Tian Yuchen <cat@malon.dev>, git@vger.kernel.org
+Cc: cirnovskyv@gmail.com, szeder.dev@gmail.com, 
+	Christian Couder <christian.couder@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Olamide Caleb Bello <belkid98@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-> > > +     (
-> > > +             cd repo &&
-> > > +             git checkout -b mainline main &&
-> > > +             git checkout -b on-local mainline &&
-> > > +             git branch --set-upstream-to=mainline on-local &&
-> >
-> > Why do we need on-local to track mainline rather than main? I'm a bit
-> > confused what the point of mainline is.
->
-> It's to have an indirection of a branch that is the same as main but
-> will be protected. I tried to delete it now and replace it with just
-> main, but then main was deleted and subsequent tests failed.
+Please ignore this. I replied to v7 by mistake. I've resent it correctly at:
+https://lore.kernel.org/git/DJVZP8E2GS7C.1X325XFFFZ6WR@gmail.com/#t
 
-Digging more into this, probably the most elegant solution is to
-replace mainline with main, but then also do this:
-
-    git config branch.main.pushRemote origin
-
-This exposes something that I don't love about this feature, which is
-that when using a pushDefault (like we do in the tests with 'git
-config remote.pushDefault fork') if not adding a special case for the
-main/master branch (like 'git config branch.main.pushRemote origin'),
-then it will get cleaned up as a forked branch.
-
-But there was a lot of discussion about this already, so I won't get
-into this again.
-
-
-Harald
+Pablo
