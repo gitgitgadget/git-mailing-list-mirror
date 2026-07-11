@@ -1,66 +1,66 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41FA296BCB
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 17:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748A913A244
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 18:21:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783790517; cv=none; b=YJH6sqVQQW7xhwWamMnI2FkqfGmVN1H2gkLlAXKh/q4594k3vdZktiPWaSh2lyipHHHWTkwDRs+8mj+zNp0ecTuIwFu0QaWCCyKqrlPPqQPM4o3nwYUocz1UKTC94Kji86oqxnVzZwMJYPuGFO5WnnVYYEQNgBD4/pbqIx/YLmc=
+	t=1783794074; cv=none; b=W63cELt3DrSI7xqQrieQHZ9MlkfXm/peLNO5uxmRFX/mwq+BWfDlbayoUotYDm9EFUAdxQBD0tC/77Whyu/uTIHZQBib3e/KBo0vzAtI46edGRlg7WEHQF3rBl4UGET+MVWxgsfIfxX6AKXi49/PDe0noMzXdqt7VjQiohnUKbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783790517; c=relaxed/simple;
-	bh=hZ1rfFy8pefjWVq74QXlODUgAPLS1WX/Mj8cpMI8ER0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=cQuNT1FveDEB8ayddN60xC3954yofL0NyscNIo39hO2VeZjYliDhGtD4AtPi6IuIe+11rXdD6oKYKzoNB3ww43js33QCKKsBZfUs57jtmF57iytxwZmEcGTUgvM/Oce52uFK8tB1eO6SFK2Tg5TAbFyLvNmev5fPa4bNnpkWSJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iRNKg5z8; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1783794074; c=relaxed/simple;
+	bh=/XnUHHO0yc+yg0ZIp7ulRolrFQv+UqWm2F5IAzZbxN8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=WsFqA2T2RUg5/pPx4uZavqeM1E9C1A6FgZrujYJJ3BwIlOSYNdRLsy1F7WSjt8DtGXKum/fzGwptuN/Zx1z6tS09X6b4AA1QgoICiugqId3v5+IMGBl4Fj+1jJXpLwg6YNEb774S8NNUo5zGvPEQZw1DpxPvcH2zKiFseZPF7t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k0mllEqd; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iRNKg5z8"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-493f4638f4aso18648855e9.3
-        for <git@vger.kernel.org>; Sat, 11 Jul 2026 10:21:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k0mllEqd"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-472326ca506so1495996f8f.2
+        for <git@vger.kernel.org>; Sat, 11 Jul 2026 11:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783790514; x=1784395314; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=gmail.com; s=20251104; t=1783794071; x=1784398871; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=BLUUSR+FgO6YabQc/1HjFoBesymHOCW2IFvNe+ruClg=;
-        b=iRNKg5z8ohQWPcs3dEqqjztTstuqOgRBKoo2Xv7OLz7Ve9oRW6Q0d+s5vABhGxpoKk
-         hC3tvFHCuSmC1IMBFUg0oI70jnU05UpKAgci9je15Ft5R5o6vC6anYe0qA/Xsgvb9EDU
-         cGM8YeXpBa4J6+owI5SKv6MjzisG7GwXFltoRYxqiaSZqZt3Iu62MCA9FIai+emMihh6
-         aMwu9vMmypnpcJVqIE7gFPvnGzv2PGFspI93ik7hxCqcYSOEL3loRjwXOMy+MEoSDtor
-         ejG+EFnDXr8163QJO2g4nLvNzt3AYliY7Dx+wk5+AuYh5mAKOkMurgRxVEa9h0ZjoFYo
-         DG7g==
+        bh=pgBtBrjAnoE9P15/zDp3Fn/xeHOIj+0akrv+W2J8mbk=;
+        b=k0mllEqdknTYM2BU3ivFPvEHqlEQ6un/nr8jaFFjFpEvSm45InjnYOdG355lPftWQO
+         dFSEFSJj65BWaVBPPmucB3LpM0a8pmKPazBt71e2UqyWhuJ7e8hSJ+EqQR3JkWLXYTSa
+         5vUvn+MGkv1Hxl0Cp+tYxax2B3o5ySwEUrEYlJbwWzXO/EFAbLDq7LUqYF6o19rortbV
+         CaKTAUOsgBiKiXpA0BZkNxLj5WPVwx0kVEJcQ+zAVnMYGnPGENIuSFBk71D37MUXipW8
+         DNtQs6XguNx3OZdQAKS22oDHTlPSCNQA8suLPPEzuXXvoO6AR4Yg9zML7CqRoetuz3M8
+         Imug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783790514; x=1784395314;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=1e100.net; s=20251104; t=1783794071; x=1784398871;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=BLUUSR+FgO6YabQc/1HjFoBesymHOCW2IFvNe+ruClg=;
-        b=H5CdwfrT2ujmob8r2rHlYf1NLy1dtzO3V4skPWFenoOW3H2IyAzGtQ9qfUeU2k5h0L
-         ltvbvEwqlBY5aukDs++vwvS7d6B5e6IY4lpsGrmttG2NHEJee6dKxVmLLFFTmYX6rC3C
-         y+QEuuozBF8tLXZV0530S75yU18wJIL3+9TVS89EvdWqZ32+mhYDSHy+qlbyzsPda+R9
-         6ZoCSoTitj9Hjcqy037vuuUfzLuv7XBOVWjZQ8AoF5uhc8BGgXpoVReP7C0FPr/dhXVm
-         4E7ISKVInLZtAtizuJkqbPeC1+2if8OlIToS9m2EfNjMPcuMAgWdJ0QghYDZ0QE1PsQh
-         6kBw==
-X-Forwarded-Encrypted: i=1; AHgh+Rp8GKL+BKLNhUqQcCMgcxnFJWJjV9EaSkff2c2jm8y3nSUzEboMo/aPhYFbAKGn+qJXkZM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGZ2vVUbuQzcH7EJlGOZlUglN4X9X10jIpModFdCQbgiAy/ZrK
-	K65qJvx/Vct2yM7QK/Kzl7JatMYvrMTTzeYjdG9VZU+a/bohEt6XuTm9
-X-Gm-Gg: AfdE7cllgjh5rMfCJzFO64wmW2gYtnIQfsP3OQhDKkWkfQPS888Dda/0c5eqIvt8Si+
-	YSPIjVduPqXdCOqGOk7HBUOHyRfPqJbVfUkXnafApFVqkuGwYG6qZbYcyjDSl5Xv6UZuuUifgRk
-	W43hGqvczAe0s7WSlaNKkUlQtgSzDrMb/HUiJeeOJnZ1prRN/I5ggE4UBIrU0fgEGXMxvtb3NOU
-	Sj06AxlmeqDax8AirX2efPgUl/h+AYCdhEsou63mWC590ogP9pRip4bxNIA0qRThVoGA4pJU53d
-	EZb87HlMWZ6UiPCTyijw+L90vnClEkvUrMJPYhwrmapcdK2EdwNgwTpDIbqRhKjQbpFQe0Jcc+t
-	HTEohHcMwL7eCvFDLCpamKn2uNwCcLSpPnVyQ96eCzcTUfkF1e+p228Rn7IrJiK1wjwtr0q4say
-	gmSNBHMDG3RSvoSstF/C/D3E4zuPvVf3lwqC++ushXquUFZ1xNSw15DEbQaePNC9t9UyOAKfQs5
-	fSOdEZKOyt7C3Zb1RpPGlIQU7fFpWovII26tD/HTtJyxod4wmUDmEebLOdkiAaquKJhIc8pS608
-	UTaKkOtU4labfthi78PIsaPcFc/CWxHs1wleF4dxc1vc0hPrbQnRwhUPoMZtqGBEVrM8dw==
-X-Received: by 2002:a05:600c:6d8c:b0:493:d0f7:69c3 with SMTP id 5b1f17b1804b1-493f882ec68mr19037395e9.33.1783790513798;
-        Sat, 11 Jul 2026 10:21:53 -0700 (PDT)
+        bh=pgBtBrjAnoE9P15/zDp3Fn/xeHOIj+0akrv+W2J8mbk=;
+        b=RYdibGGTVUB8+9LSxp9FIpO0fHcAB2UDjE+i/DTyf41ZVHKuN5hGW+rlNlk+RiymrG
+         Bq2MiMvXOMhUUT6jUDp+4vg0w2nl3ZqoDm9MTbkpqgCqUKvPfaG0tcfMk0Bh+nKAklMf
+         rIdkuWpL2us13lp0ngen2NgNV4Q5t8bwVszjyc93XuaGUoSgIeukwg5xV5sM5o70iC3X
+         vrUdinc3Kmd4fXXZEqRYyKm2I1ZSjOO9SyAZ52PNG4MIuA20yT3fvwWLl/Pk7jQWylEr
+         KJcd+2uUicQ+V/l+7sTnkD3IeWR15holaRKmAtfbOgtOM9dIEbFZHRndeV/KV38rDo58
+         bfSQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpgQXgpoLi5ym8GYutIWiZGTV3DteUGxbZ9k1TW2FSR+cVabPHzjo/6zOBnwckKFiVZJ1k=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz76iV+gizULS3cblNEnFyrahyms9ZuJzhoxeBfprcMYZjdGYXZ
+	O1hv/rMH64PavmEYUIF3OLXA/ubPWIRVaGVqldFbaYTkMU4tF+lSzPr+
+X-Gm-Gg: AfdE7cn5qolqjR7Z7UYcs/uKBo6NKnoRiKVyh4R1GcFq/75uOpfrMLD8qNf+PjqlpDY
+	Z3R5jyyHZdvo760ECvGNCyZTQb4YQfNeHZGD0qUdRx+qQC2OWhlfbC576dKP5DwMDDGfN/q9bSn
+	YM5+SG2YOfOX+YNB86KxrAIChYbkbCIPFbDd7XQoFZNr0v83RknmCIFgryfBtZ0AnTNjPWvv+qW
+	Bd7HPfBulZoyf8NMeSZTXQz1sg76dkT2nBSttJv4YPQaJOCGsJUReWjaVDOYxQUjhSnFWTgjnrd
+	WqUe/hJYGmy2Ug7xoYBMYJ2ZDkp+SMPXTSoKNO2aFv/hnrKgPS3VjWUeAAWgQQMwasE6sxGKSrd
+	btJ1I37QEaJdi/DDCIMqgC6VfaKIpE5i1ZY6XJ6yXeZhcjWqaPSiF5pFrsqdD3AJa5d7xLUePSj
+	WtZ9xKHRNKznP0O1NqeI0y2I96Tp225dLiMAAn3iIFBWbk5AIFEs/fhFTUz1B7WGlw0IMpmAJLg
+	tIXEIOkTDKPccguil/9HYLSCu4KzJXfVBTFvKsqwT5gpRXrBqCm1gEWJHeBdeklBterVnFjlLzd
+	QTpV7rixiXcDDtDD2eoiywijKbj91DGM6keyXHy/km1uZDbZOiF8gqM5weytzLqfd5enqA==
+X-Received: by 2002:a05:6000:717:b0:47d:df96:c9f4 with SMTP id ffacd0b85a97d-47f2dcb3aa2mr3518414f8f.10.1783794070613;
+        Sat, 11 Jul 2026 11:21:10 -0700 (PDT)
 Received: from localhost (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47df6a31dd5sm25557183f8f.16.2026.07.11.10.21.52
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa039bcdasm73654061f8f.21.2026.07.11.11.21.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Jul 2026 10:21:53 -0700 (PDT)
+        Sat, 11 Jul 2026 11:21:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,145 +69,171 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 11 Jul 2026 19:21:52 +0200
-Message-Id: <DJVWYOJNU0IW.1M107L4ABH54V@gmail.com>
+Date: Sat, 11 Jul 2026 20:21:08 +0200
+Message-Id: <DJVY828NHN8O.22CRAQOF73S6D@gmail.com>
+To: "Tian Yuchen" <cat@malon.dev>, <git@vger.kernel.org>
 Cc: <cirnovskyv@gmail.com>, <szeder.dev@gmail.com>, "Christian Couder"
  <christian.couder@gmail.com>, "Ayush Chandekar" <ayu.chandekar@gmail.com>,
  "Olamide Caleb Bello" <belkid98@gmail.com>
-Subject: Re: [PATCH v9 1/9] repository: introduce repo_config_values_clear()
+Subject: Re: [PATCH v9 2/9] environment: move excludes_file into
+ repo_config_values
 From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Tian Yuchen" <cat@malon.dev>, <git@vger.kernel.org>
 X-Mailer: aerc 0.21.0
 References: <20260708160300.8852-1-cat@malon.dev>
  <20260709161145.13349-1-cat@malon.dev>
- <20260709161145.13349-2-cat@malon.dev>
-In-Reply-To: <20260709161145.13349-2-cat@malon.dev>
+ <20260709161145.13349-3-cat@malon.dev>
+In-Reply-To: <20260709161145.13349-3-cat@malon.dev>
 
 On Thu Jul 9, 2026 at 6:11 PM CEST, Tian Yuchen wrote:
-> As part of the ongoing libification effort, dynamically allocated
-> global configuration variables are being moved into
-> 'struct repo_config_values'. To prevent memory leaks, we need a
-> destructor to free these heap-allocated variables when a repository
-> instance is torn down.
->
-> Introduce 'repo_config_values_clear()' in environment.c and invoke it
-> from 'repo_clear()' in repository.c. As a starting point, update this
-> new function to handle the cleanup of 'attributes_file'.
+> The global variable 'excludes_file' is used to track the path to the
+> global ignore file. If this variable is NULL,
+> 'setup_standard_excludes()'
 
-Makes sense.
+Nit: Strange line break here.
 
+> in 'dir.c' forcefully evaluates and assigns the XDG default path to it.
 >
-> Note:
+> Continue the libification effort by encapsulating this lazy-loading
+> fallback logic into a proper getter and moving the variable into
+> 'struct repo_config_values'.
 >
-> Submodules are currently not supported by repo_config_values(), which
-> explicitly BUG()s out if 'repo !=3D the_repository'. Since repo_clear()
-> cleans up all repository instances, we must bypass them to prevent
-> crashing.
+> Since 'excludes_file' is a dynamically allocated string, it requires
+> proper heap memory management. It is safely freed using the newly
+> introduced `repo_config_values_clear()` function when the repository
+> is torn down.
 >
 > Mentored-by: Christian Couder <christian.couder@gmail.com>
 > Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 > Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 > Signed-off-by: Tian Yuchen <cat@malon.dev>
 > ---
->  environment.c | 19 +++++++++++++++++++
->  environment.h |  9 +++++++++
->  repository.c  |  1 +
->  3 files changed, 29 insertions(+)
+>  dir.c         |  4 ++--
+>  environment.c | 15 ++++++++++++---
+>  environment.h |  4 +++-
+>  3 files changed, 17 insertions(+), 6 deletions(-)
 >
+> diff --git a/dir.c b/dir.c
+> index 7a73690fbc..4f87a52b3c 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -3481,11 +3481,11 @@ static GIT_PATH_FUNC(git_path_info_exclude, "info=
+/exclude")
+>
+>  void setup_standard_excludes(struct dir_struct *dir)
+>  {
+> +	const char *excludes_file =3D repo_excludes_file(the_repository);
+> +
+>  	dir->exclude_per_dir =3D ".gitignore";
+>
+>  	/* core.excludesfile defaulting to $XDG_CONFIG_HOME/git/ignore */
+> -	if (!excludes_file)
+> -		excludes_file =3D xdg_config_home("ignore");
+>  	if (excludes_file && !access_or_warn(excludes_file, R_OK, 0))
+>  		add_patterns_from_file_1(dir, excludes_file,
+>  					 dir->untracked ? &dir->internal.ss_excludes_file : NULL);
 > diff --git a/environment.c b/environment.c
-> index ba2c60103f..13677484de 100644
+> index 13677484de..5950592d63 100644
 > --- a/environment.c
 > +++ b/environment.c
-> @@ -726,3 +726,22 @@ void repo_config_values_init(struct repo_config_valu=
-es *cfg)
->  	cfg->sparse_expect_files_outside_of_patterns =3D 0;
->  	cfg->warn_on_object_refname_ambiguity =3D 1;
+> @@ -57,7 +57,6 @@ enum fsync_method fsync_method =3D FSYNC_METHOD_DEFAULT=
+;
+>  enum fsync_component fsync_components =3D FSYNC_COMPONENTS_DEFAULT;
+>  char *editor_program;
+>  char *askpass_program;
+> -char *excludes_file;
+>  enum auto_crlf auto_crlf =3D AUTO_CRLF_FALSE;
+>  enum eol core_eol =3D EOL_UNSET;
+>  int global_conv_flags_eol =3D CONV_EOL_RNDTRP_WARN;
+> @@ -134,6 +133,14 @@ int is_bare_repository(void)
+>  	return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
 >  }
-> +
-> +void repo_config_values_clear(struct repository *repo)
+>
+> +const char *repo_excludes_file(struct repository *repo)
 > +{
-> +	struct repo_config_values *cfg;
+> +	if (!repo_config_values(repo)->excludes_file)
+> +		repo_config_values(repo)->excludes_file =3D xdg_config_home("ignore");
 > +
-> +	/*
-> +	 * NEEDSWORK: Submodules are currently not supported by
-> +	 * repo_config_values(), which explicitly BUG()s out if
-> +	 * repo !=3D the_repository. Since repo_clear() cleans up all
-> +	 * repository instances, we must bypass them here to prevent
-> +	 * crashing.
-> +	 */
-> +	if (repo !=3D the_repository)
-> +		return;
-> +
-> +	cfg =3D repo_config_values(repo);
-> +
-> +	FREE_AND_NULL(cfg->attributes_file);
+> +	return repo_config_values(repo)->excludes_file;
 > +}
-> diff --git a/environment.h b/environment.h
-> index 6f18286955..c4a6a45704 100644
-> --- a/environment.h
-> +++ b/environment.h
-> @@ -135,6 +135,15 @@ int git_default_core_config(const char *var, const c=
-har *value,
->
->  void repo_config_values_init(struct repo_config_values *cfg);
->
-> +/*
-> + * Frees memory allocated for dynamically loaded configuration values
-> + * inside `repo_config_values`.
-> + *
-> + * As dynamically allocated variables are migrated into this struct,
-> + * their FREE_AND_NULL() calls should be appended here.
-> + */
-> +void repo_config_values_clear(struct repository *repo);
 
-I think that I'm not comfortable having the _init() and the _clear()
-functions with different signatures.
+repo_config_values() returns a pointer so there should be no need to
+call the function 3 times.
 
-_clear() takes struct repository to dodge a BUG().
+We could have the function be called once and use it then:
 
-I would like to have both signatures equal, why can't we just do directly:
-
-  void repo_config_values_clear(struct repo_config_values *cfg)
+  const char *repo_excludes_file(struct repository *repo)
   {
-  	FREE_AND_NULL(cfg->attributes_file);
+	  struct repo_config_values *cfg =3D repo_config_values(repo);
+
+	  if (!cfg->excludes_file)
+		  cfg->excludes_file =3D xdg_config_home("ignore");
+
+	  return cfg->excludes_file;
   }
 
-and call from repo_clear():
-
-  repo_config_values_clear(&repo->config_values_private_)
-
-I get that the workaround might be to not access directly to
-&repo->config_values_private_ which repo_config_values() returns but for
-example initialize_repository() access this _private_ field directly as
-well.
-
-Even with the NEEDSWORK it is a silent return, what will happen when
-submodules are supported? If no one remembers to change it we will leak
-the submodules silently.
-
-Also at repo_init(), initialize_repository() sets repo->initialized
-before anything can fail and call repo_clear() but
-repo_config_values_clear() should be able to free attributes_file even
-just after a memset() (which happens before initialize_repository()).
-But calling repo_config_values has a BUG() in case of
-!repo->initialized are we comfortable with this assert?
-
 > +
+>  int have_git_dir(void)
+>  {
+>  	return startup_info->have_repository
+> @@ -461,8 +468,8 @@ int git_default_core_config(const char *var, const ch=
+ar *value,
+>  	}
+>
+>  	if (!strcmp(var, "core.excludesfile")) {
+> -		FREE_AND_NULL(excludes_file);
+> -		return git_config_pathname(&excludes_file, var, value);
+> +		FREE_AND_NULL(cfg->excludes_file);
+> +		return git_config_pathname(&cfg->excludes_file, var, value);
+>  	}
+>
+>  	if (!strcmp(var, "core.whitespace")) {
+> @@ -715,6 +722,7 @@ int git_default_config(const char *var, const char *v=
+alue,
+>  void repo_config_values_init(struct repo_config_values *cfg)
+>  {
+>  	cfg->attributes_file =3D NULL;
+> +	cfg->excludes_file =3D NULL;
+>  	cfg->apply_sparse_checkout =3D 0;
+>  	cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+>  	cfg->trust_ctime =3D 1;
+> @@ -744,4 +752,5 @@ void repo_config_values_clear(struct repository *repo=
+)
+>  	cfg =3D repo_config_values(repo);
+>
+>  	FREE_AND_NULL(cfg->attributes_file);
+> +	FREE_AND_NULL(cfg->excludes_file);
+>  }
+> diff --git a/environment.h b/environment.h
+> index c4a6a45704..2e8352de7f 100644
+> --- a/environment.h
+> +++ b/environment.h
+> @@ -90,6 +90,7 @@ struct repository;
+>  struct repo_config_values {
+>  	/* section "core" config values */
+>  	char *attributes_file;
+> +	char *excludes_file;
+>  	int apply_sparse_checkout;
+>  	int trust_ctime;
+>  	int check_stat;
+> @@ -133,6 +134,8 @@ int git_default_config(const char *, const char *,
+>  int git_default_core_config(const char *var, const char *value,
+>  			    const struct config_context *ctx, void *cb);
+>
+> +const char *repo_excludes_file(struct repository *repo);
+> +
+>  void repo_config_values_init(struct repo_config_values *cfg);
+>
 >  /*
->   * TODO: All the below state either explicitly or implicitly relies on
->   * `the_repository`. We should eventually get rid of these and make the
-> diff --git a/repository.c b/repository.c
-> index 187dd471c4..b31f1b7852 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -388,6 +388,7 @@ void repo_clear(struct repository *repo)
->  	FREE_AND_NULL(repo->parsed_objects);
+> @@ -217,7 +220,6 @@ extern char *git_log_output_encoding;
 >
->  	repo_settings_clear(repo);
-> +	repo_config_values_clear(repo);
+>  extern char *editor_program;
+>  extern char *askpass_program;
+> -extern char *excludes_file;
 >
->  	if (repo->config) {
->  		git_configset_clear(repo->config);
+>  /*
+>   * The character that begins a commented line in user-editable file
+
+The rest looks fine.
 
 Regards,
 Pablo
