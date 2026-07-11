@@ -1,71 +1,71 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4AF3C5836
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 13:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827AC3C2B95
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 13:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783776481; cv=none; b=LI6SjEURCbq8T5Cm8DetKIRu3BD4CCQ1ERy2OLIeZEeD2jqdUqlqAn7vv+mObliRBihILw2mn5aFJJH9QqUVe083fdBQzdto6jjFOY7CDAHJ13e7O/InLrj9OQXmqREEsTx895Ehofx+sn239m06xSPgK27wZhxnY9xpdwcOBpM=
+	t=1783776484; cv=none; b=VOr5jNMEIZi3O3kQcAjbUHDU2602PDs3dL+fO4o5u4QmMaZIvIsd5KCTFMgG7VyAObsFBJvj8kwD+6RNSl2hpPH16M/USBLyN6XJRFkcRyTHy3qL0ivS3JCJkmTsMbQPCqZRfUvZICgDOE/Q9KHAx5ttT94yDXH3tNU0LW9uZA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783776481; c=relaxed/simple;
-	bh=DSho0eZDymbgbgTau2vrqaXmIE8WHvceCVsKEf7gFyw=;
+	s=arc-20240116; t=1783776484; c=relaxed/simple;
+	bh=0+WssLuoWASFEKFDgScKEC/8Bx5eaTKNGaVYeytXCCI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=RCLvgjlu6GQguClJ3lBFlMkcQgiy1T/K7WPdw1wBNz6+6JHLu5JQfcUo97lPlrSakUCay7AZQqgInzgIB0w5RgwPF1ai5/O9djHVYcFyJqW+J/Dsu+sRM/P04qDp4CbnA1hIJYAArz0mrSSzWEC0F/O3DAlJwsYP1ZrJF32W1iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U9b+XENX; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version:To:Cc; b=ae1LLCw1O+yAeUMiz6YD/JYxhZbYTfGQekspCHLIB088UiCK3/il48d9GQ4K1BCa3mvvbk2zv/ukLanCtJyn4+fY4OEXLdDnj1xvZZvB+dSqH2kwolt/p9qbFI2j8GLxmFx2AqX2YFLuri/OJIoaao8xcQn7e4q9fs5oreUb220=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N9ZV7gwr; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U9b+XENX"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38125cebfdaso2441232a91.1
-        for <git@vger.kernel.org>; Sat, 11 Jul 2026 06:28:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N9ZV7gwr"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2c6b67d5fa1so29304765ad.2
+        for <git@vger.kernel.org>; Sat, 11 Jul 2026 06:28:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783776480; x=1784381280; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783776482; x=1784381282; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=CVenBqXm686IFtz47gDc7myd2vA2Cfx7WnCIPhcwAn0=;
-        b=U9b+XENXPAwbWY5u+D7PNcKkTmyRvFzxKYG3aWeIbTmfEZfZCTsQZEhmvmebiVmOcP
-         9/jL2XWOTOJ6kZhDIw4p1EHB+OWvVJ6gmVj+XefGLMNWvZwQjWntaHxFSOnmC8nqJqDB
-         n6dpiT0rX2HjOCUSWRjHFKv1PwJkaF8Kk7NVA0f1Z2sy6vIwvc5M85pJv6uhpwY9DMjO
-         GKYwSu0a7ViMebwqNz72ElDJRNBOUBn0k0+esY5p4T4oHo8VoMwQk0uz1U/KwJdvIf+j
-         HIZuDUSg7kmLumY417mbfNNPM4c6ptkzKNxmm2sumJbbJVBH1cSPDByMKZTHZwlsFC9v
-         mmww==
+        bh=PdAYApUwskKTp5isWyj7neMvs5zQhF7CkkSEcEPCito=;
+        b=N9ZV7gwrNpH+cjQGxXD6c094ooWmR6j5O+UL52esZFooMkJo6sRRIWfB99oJ7oKe/L
+         di5XbYgv77MhoRBnMO6TBoBXVjYE5mbsHbLIVn3hBf+e69OESszdbpcDK7BhBjG99MqT
+         nIAGuUlq6i4s84MzS2tVbgqiNUy/esLtt6wo3DXWm0qhTWc9bV7Ti+sQPaXQ6AUbovYa
+         0xeHQuiF/HRfC1aFSLzJ992OVDKeqi2/nQ1mGEJAhhlPjo+IUUqk2MBpLEApjAhepKdX
+         Vw0Ucwq8DOrdf7Nj9KgURwFOGMB4Koh6y+koFtGqhGjn9OgEoFGu1xEPse45WpC4eSVz
+         KYsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783776480; x=1784381280;
+        d=1e100.net; s=20251104; t=1783776482; x=1784381282;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=CVenBqXm686IFtz47gDc7myd2vA2Cfx7WnCIPhcwAn0=;
-        b=NyYlckXCtEYHAmToF36u3qcNg/AHe2WPey/mU+qx6Uweq5LbX1xHLj5+uXpAiDnPxB
-         p7wYRHjpbjUPRfSnqJ9ueYJ4Q66ADV6//dF+Nr1lgWgTqY03pSu25yOtvJqQtEH+uciZ
-         iV+yReHGsUlW8ijjMBeiCsH+sEIMaNzBzHai5YAlhSe0jRycY7ViIC/qBbhhw2qynbs5
-         Ee7V2Tx27rnY4LTkfzSQr7GsVVyirYB2dyCnjSqgwBY9wjyS72agxKXumNS6b9f6XHrE
-         O9Kbas29aO5IcKcltAR85JK810rNrsX3p/Hcw8hctw59DAAVAVzRUB9XmX/5diViVb+s
-         ZSUA==
-X-Gm-Message-State: AOJu0YxHNNr9fZNw4TZDa68VwfcGnRX1SUcOY4+fEv1vA/BTBkNdNoLu
-	jFA0t9hYgSYZA9CA1TCU7dC7vXEl9zgC5/i6AH6NtkrZMWy4ZA7UjSZtL//Uyg==
-X-Gm-Gg: AfdE7clU681XLbpyhnVj8F0HX+QLliy+TijNEkJlg2l4ZpX/r9NHptWD198kMqlv0qi
-	oYhqxcZphuU3Uf6pO+jN24cj/6QdXemybBqlmeKvUZP9sTITO7mn9SX0Bt/BjMiW2solxAsZDc2
-	sgnk5k85FAD1iI87amSuMT/ufsCcUXycaSQRUPichpWJRcCLXznBM2XuBzaoQCSa1/H3cMh62rQ
-	A6ANFPfvdPKhmiPOpLxH3/kn09nJjCn8yqYHkJDKZF+jXU8IVxRXwSv6YQvOtFZY57IhIyTUEgD
-	qUnzbvY/+UnN04N/vaLjJW+8ucrvomyBQ2ubQE+zGoferGb2s+XskIkWIHfKKYoH9UHosOwFTtx
-	gkfY5Gp9ZvFakCZjSwvBSkZ349bfvkjUGgvDHXxIUpdrohqOiObOPRCa9DCdDrHjAY3SaGwqcbZ
-	zEel6X9VpO/gLrmG32cwe0ExZlPg==
-X-Received: by 2002:a17:90b:540d:b0:37f:9ce1:cda8 with SMTP id 98e67ed59e1d1-38dc7752969mr2917010a91.30.1783776479762;
-        Sat, 11 Jul 2026 06:27:59 -0700 (PDT)
+        bh=PdAYApUwskKTp5isWyj7neMvs5zQhF7CkkSEcEPCito=;
+        b=EJl7BRw14TuO38p4PI8PFU/vnxY4NycxkBRLtEZFd9Ni8NyDkccuwf+y8aNL4BlJUh
+         Xe8jaN23gu5YlBfpPEsGdxyZzU2+aZ1kKf8aYettCrGk4NDDThTUoidaxAITCyWTDVAS
+         6W8nXXpVHB1YkSzC7i+Nu0g4Gkx65U3HvcXc61pkLYrNkHbwk9aSWJkHgm2BxmxOt0D9
+         r3XKai2qEsgWcQri+hLdzmmpnvcyZ7dRItGTFOiU/2GjAVVezPP8h0XbzZdpt6C6k5uy
+         kaBDEPucH3msUNFddIYEstSW5yElOhge+wefRuQfDeke5zIKKP5LG1RaT4j/03WmkLqA
+         qxwA==
+X-Gm-Message-State: AOJu0YzHbP3TtFfkA7A0/ScNShHaIAUHtkUyjc3cKfrPnu5/NarmvaID
+	0wdU3XFO/OzTJwkwym+gcAoplDeBgfbdQdckX8nxx7tnawkRO84ysP5kIWgXfg==
+X-Gm-Gg: AfdE7cnyw1mf3juOjVjhKMEMliGym8loCwuL67TqRbzbNJBK8GWTGdv655WkY7+BwJQ
+	TpbcSRPi3fExSr/KtbfEkNhjyNKfmYBcYIkzERMNpbmCb3RwepP+9BpjXufa8whK5KziRrCupR1
+	8T0r3AyIx5C3f0mo9dEKGdyXe3GDtnorXhU1jR6xY8ltEDOpHfZMZ6qkZ6FyxBr61KpQtGMitXG
+	D/bjhivZcR2NTMRRchO7RwZqAk63g6wOrvJXOW/vOTnB7YQFPI4lInMUoIcquFvI4uzys9mcDzN
+	FmkcDXCESt5DRfHfBBAksB185ProLl/DXAF0tn+4YytaKSGNp9kB0zW9QjpTbQPlEaEJkpE1Tg3
+	iNDVffizBJnYu5nZuoJwu/ZhpGdLJ9sHu1mABuxQW4vkC1PgA0Xtbwsj/rIJ0mPSS6L+L36WbVB
+	cVndQbmgq8iUf/NSE=
+X-Received: by 2002:a17:90b:4ed0:b0:37f:bfd6:8b40 with SMTP id 98e67ed59e1d1-38dc74c25d3mr2796735a91.5.1783776481822;
+        Sat, 11 Jul 2026 06:28:01 -0700 (PDT)
 Received: from [127.0.0.1] ([20.169.76.184])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174ae6cd9sm55814223eec.31.2026.07.11.06.27.58
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-311a6115e61sm31872868eec.22.2026.07.11.06.28.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Jul 2026 06:27:58 -0700 (PDT)
-Message-Id: <9e76f5fb62ebcac1eec1318044af4b11ad517831.1783776466.git.gitgitgadget@gmail.com>
+        Sat, 11 Jul 2026 06:28:00 -0700 (PDT)
+Message-Id: <171b3cd3ae13f8dee724530b89f64c46ddbb3906.1783776466.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
 References: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
 	<pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 11 Jul 2026 13:27:40 +0000
-Subject: [PATCH v6 05/10] commit-reach: add trace2 instrumentation to
- paint_down_to_common()
+Date: Sat, 11 Jul 2026 13:27:41 +0000
+Subject: [PATCH v6 06/10] t6600: add clock-skew topologies and step counts for
+ edge cases
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,124 +86,153 @@ Cc: Derrick Stolee <stolee@gmail.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-Add a step counter and trace2_data_intmax() call so that the number
-of commits visited during the paint walk is observable via
-GIT_TRACE2_EVENT. This provides a way to measure the impact of
-future optimizations without relying on wall-clock benchmarks alone.
+Add topologies and tests exercising paint_down_to_common() under
+clock skew, where commit-date ordering (v1 commit-graph without
+corrected commit dates) violates the topological invariant that
+children are dequeued before parents:
+
+ - se-*: side-exhaustion fires too early when one paint side fully
+   drains from the queue while a low-date ancestor on the other
+   side is still queued
+
+ - se2-*: side-exhaustion returns a too-deep merge base because
+   the correct (closer) base never receives both paint sides
+
+Also add step counts to the edge-case tests from the previous
+commit, a mixed finite/INFINITY generation topology exercising
+the transition from INFINITY-generation commits to graph-backed
+commits, and step counts for the grid-based merge-base test.
 
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- commit-reach.c        |  5 +++++
- t/t6600-test-reach.sh | 44 ++++++++++++++++++++++++++++++-------------
- 2 files changed, 36 insertions(+), 13 deletions(-)
+ t/t6600-test-reach.sh | 98 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 96 insertions(+), 2 deletions(-)
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 778e11f5d3..ee1632d724 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -11,6 +11,7 @@
- #include "tag.h"
- #include "commit-reach.h"
- #include "ewah/ewok.h"
-+#include "trace2.h"
- 
- /* Remember to update object flag allocation in object.h */
- #define PARENT1		(1u<<16)
-@@ -113,6 +114,7 @@ static int paint_down_to_common(struct repository *r,
- 	};
- 	int i;
- 	int gen_ordered = 1;
-+	int steps = 0;
- 	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
- 	struct commit_list **tail = result;
- 
-@@ -138,6 +140,7 @@ static int paint_down_to_common(struct repository *r,
- 		struct commit_list *parents;
- 		int flags;
- 		timestamp_t generation = commit_graph_generation(commit);
-+		steps++;
- 
- 		if (min_generation && generation > last_gen)
- 			BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
-@@ -194,6 +197,8 @@ static int paint_down_to_common(struct repository *r,
- 	}
- 
- 	clear_nonstale_queue(&queue);
-+	trace2_data_intmax("paint_down_to_common", r,
-+			   "steps", steps);
- 	commit_list_sort_by_date(result);
- 	return 0;
- }
 diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index 698b831a6e..45aa26cd44 100755
+index 45aa26cd44..55aa220bb3 100755
 --- a/t/t6600-test-reach.sh
 +++ b/t/t6600-test-reach.sh
-@@ -153,24 +153,34 @@ test_expect_success 'setup' '
- '
+@@ -140,6 +140,48 @@ test_expect_success 'setup' '
+ 	git branch -f pi-X-br "$pi_x" &&
+ 	git tag pi-X "$pi_x" &&
  
- run_all_modes () {
--	test_when_finished rm -rf .git/objects/info/commit-graph &&
--	"$@" <input >actual &&
--	test_cmp expect actual &&
--	cp commit-graph-full .git/objects/info/commit-graph &&
--	"$@" <input >actual &&
--	test_cmp expect actual &&
--	cp commit-graph-half .git/objects/info/commit-graph &&
--	"$@" <input >actual &&
--	test_cmp expect actual &&
--	cp commit-graph-no-gdat .git/objects/info/commit-graph &&
--	"$@" <input >actual &&
--	test_cmp expect actual
-+	graph=.git/objects/info/commit-graph &&
-+	test_when_finished rm -rf "$graph" "${graph}s" &&
-+	rm -f trace-mode-*.txt &&
++	# Clock-skew topology for side-exhaustion testing.
++	# D is the correct merge base but has a higher committer date
++	# than C (its child).  With date ordering, D would be dequeued
++	# before C, causing side-exhaustion to fire too early.
++	# Generation ordering prevents this by visiting children
++	# before parents regardless of dates.
++	#
++	#   se-A (date 7000) --> se-C (date 3000) --> se-D (date 5000) --> se-root (date 4000)
++	#   se-B (date 6000) --> se-D
++	#
++	se_root=$(skew_commit 4000 se-root) &&
++	se_D=$(skew_commit 5000 se-D -p "$se_root") &&
++	se_C=$(skew_commit 3000 se-C -p "$se_D") &&
++	se_A=$(skew_commit 7000 se-A -p "$se_C") &&
++	se_B=$(skew_commit 6000 se-B -p "$se_D") &&
++	git branch -f se-A "$se_A" &&
++	git branch -f se-B "$se_B" &&
++	git tag se-D "$se_D" &&
 +
-+	for mode in none full half no-gdat
-+	do
-+		rm -rf "$graph" "${graph}s" &&
-+		cp "commit-graph-${mode}" "$graph" 2>/dev/null ||
-+		true &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace-mode-${mode}.txt" \
-+			"$@" <input >actual &&
-+		test_cmp expect actual || return 1
-+	done
- }
- 
- test_all_modes () {
- 	run_all_modes test-tool reach "$@"
- }
- 
-+test_paint_down_steps () {
-+	for mode in none full half no-gdat
-+	do
-+		test_trace2_data_singular paint_down_to_common steps "$1" \
-+			"mode=$mode" <"trace-mode-${mode}.txt" || return 1
-+		shift
-+	done
-+}
++	# Clock-skew topology with redundant ancestor for
++	# side-exhaustion testing.  MB1 is the correct merge base;
++	# MB2 is its parent.  A reaches MB2 via E (high date) and
++	# MB1 via C (low date).  B reaches MB1 via D.  With date
++	# ordering, side-exhaustion would fire before C is dequeued,
++	# missing MB1.  Generation ordering ensures both are found.
++	#
++	#   se2-A (date 8000) --> se2-C (date 2000) --> se2-MB1 (date 5000) --> se2-MB2 (date 4000) --> se2-root (date 1000)
++	#   se2-A              --> se2-E (date 6500) --> se2-MB2
++	#   se2-B (date 7000) --> se2-D (date 6000) --> se2-MB1
++	#
++	se2_root=$(skew_commit 1000 se2-root) &&
++	se2_MB2=$(skew_commit 4000 se2-MB2 -p "$se2_root") &&
++	se2_MB1=$(skew_commit 5000 se2-MB1 -p "$se2_MB2") &&
++	se2_C=$(skew_commit 2000 se2-C -p "$se2_MB1") &&
++	se2_D=$(skew_commit 6000 se2-D -p "$se2_MB1") &&
++	se2_E=$(skew_commit 6500 se2-E -p "$se2_MB2") &&
++	se2_A=$(skew_commit 8000 se2-A -p "$se2_C" -p "$se2_E") &&
++	se2_B=$(skew_commit 7000 se2-B -p "$se2_D") &&
++	git branch -f se2-A "$se2_A" &&
++	git branch -f se2-B "$se2_B" &&
++	git tag se2-MB1 "$se2_MB1" &&
 +
- test_expect_success 'ref_newer:miss' '
- 	cat >input <<-\EOF &&
- 	A:commit-5-7
-@@ -244,7 +254,8 @@ test_expect_success 'in_merge_bases_many:self' '
- 	X:commit-6-8
- 	EOF
- 	echo "in_merge_bases_many(A,X):1" >expect &&
--	test_all_modes in_merge_bases_many
-+	test_all_modes in_merge_bases_many &&
-+	test_paint_down_steps 45 2 25 3
+ 	git commit-graph write --reachable &&
+ 	mv .git/objects/info/commit-graph commit-graph-full &&
+ 	chmod u+w commit-graph-full &&
+@@ -323,7 +365,8 @@ test_expect_success 'get_merge_bases_many:pending-stale' '
+ 		echo "get_merge_bases_many(A,X):" &&
+ 		git rev-parse ps-B
+ 	} >expect &&
+-	test_all_modes get_merge_bases_many
++	test_all_modes get_merge_bases_many &&
++	test_paint_down_steps 6 6 6 6
  '
  
- test_expect_success 'is_descendant_of:hit' '
-@@ -329,6 +340,13 @@ test_expect_success 'get_merge_bases_many:infinity-both-sides' '
- 	test_all_modes get_merge_bases_many
+ test_expect_success 'get_merge_bases_many:infinity-both-sides' '
+@@ -337,7 +380,34 @@ test_expect_success 'get_merge_bases_many:infinity-both-sides' '
+ 		echo "get_merge_bases_many(A,X):" &&
+ 		git rev-parse pi-B
+ 	} >expect &&
+-	test_all_modes get_merge_bases_many
++	test_all_modes get_merge_bases_many &&
++	test_paint_down_steps 5 5 5 5
++'
++
++test_expect_success 'setup mixed finite/INFINITY topology' '
++	# Create a commit outside all saved commit-graph files so it always
++	# has INFINITY generation, while its parent (ps-X) is in the graph
++	# with a finite generation. Use the ps-* orphan topology so we do
++	# not pollute the grid-based rev-list tests.
++	git checkout ps-X &&
++	test_env GIT_TEST_COMMIT_GRAPH= test_commit pm-INF
++'
++
++test_expect_success 'get_merge_bases_many:mixed-finite-infinity' '
++	# One tip (pm-INF) is outside the commit-graph with INFINITY
++	# generation; the other (ps-B) is in the graph with finite
++	# generation. The walk starts in the INFINITY region and crosses
++	# into the finite region where side-exhaustion can fire.
++	cat >input <<-\EOF &&
++	A:pm-INF
++	X:ps-B
++	EOF
++	{
++		echo "get_merge_bases_many(A,X):" &&
++		git rev-parse ps-X
++	} >expect &&
++	test_all_modes get_merge_bases_many &&
++	test_paint_down_steps 3 3 3 3
  '
  
-+test_expect_success 'merge-base --all commit-walk steps' '
+ test_expect_success 'merge-base --all commit-walk steps' '
+@@ -347,6 +417,30 @@ test_expect_success 'merge-base --all commit-walk steps' '
+ 	test_paint_down_steps 81 80 81 81
+ '
+ 
++test_expect_success 'merge-base --all with clock skew (side-exhaustion)' '
++	# Verify correct merge base under clock skew.  se-D (the
++	# merge base) has a higher date than its child se-C.
++	# Generation ordering ensures se-C is visited before se-D,
++	# so P1 paint propagates correctly and se-D is found.
 +	>input &&
-+	git rev-parse commit-9-1 >expect &&
-+	run_all_modes git merge-base --all commit-9-9 commit-9-1 &&
-+	test_paint_down_steps 81 80 81 81
++	git rev-parse se-D >expect &&
++	run_all_modes git merge-base --all se-A se-B &&
++	test_paint_down_steps 6 4 6 6
++'
++
++test_expect_success 'merge-base --all with clock skew and redundant ancestor (side-exhaustion)' '
++	# Verify correct merge base when clock skew could cause a
++	# too-deep result.  MB1 is the correct merge base; MB2 is
++	# its ancestor.  A reaches MB2 via E (high date) and MB1
++	# via C (low date).  Generation ordering ensures C is
++	# visited before side-exhaustion fires, so MB1 is found
++	# and remove_redundant correctly discards MB2.
++	>input &&
++	git rev-parse se2-MB1 >expect &&
++	run_all_modes git merge-base --all se2-A se2-B &&
++	test_paint_down_steps 8 7 8 8
 +'
 +
  test_expect_success 'reduce_heads' '
