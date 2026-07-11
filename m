@@ -1,41 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C2522AE65
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 07:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF6C381E9A
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 07:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783756047; cv=none; b=tWJbPbAPL3A+ZGYIBjY7V7FyAmQ9p6eOev0vz3n5yGz4yXhLa7nSgSGqVwsOiyso0xiWvR8Uwthjyz+tD2hOkgE9BqxZoAKnyDTlNidT/0iCpqkZloWaCHm/wWhm/AMG+B2FWIhjilMVMFKsAhAyyQGKI+A7LG+ZtbHPD/aKFao=
+	t=1783756695; cv=none; b=S9vHkOCPCK7ef5wIIxTkjn2t9mf4NfrX7c5QFngNwKuM+6djSG58ywcUcFb8yZfXynzIJY9BEsJWNQh89X1HPBfigJrVg+yKhzWFgtG/39A4zh/xu67Lcp3uXA8VjEgJSnJ2z3JNvvpKTke1eTSW5EX9HiQqGjeEzlBrJp3asGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783756047; c=relaxed/simple;
-	bh=4F9Q83c0kNW3WMoui1EHtz3U5ygIyW72DEULbOdTEXw=;
+	s=arc-20240116; t=1783756695; c=relaxed/simple;
+	bh=3LmC/+B4FIAVvUpO9tQQrNDWs6yqVMflSTlWLwWzdRA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LeAgA+qfa4Of1mDILNpenHHfielnX30JG209JqrkE4h0KlSmKkJr3UhoWgG+Jr1JWqIWHq5B+y59tytLtdXaaiJYFPm9ctu0RlOUAj5cX2fUFi6fGUuu4MFDm2qswZOz6En4C9j3ImCvN9Fs0TItaCzZqpK1guok4wUsgS/HeJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TPq5CcGB; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z9sdKTQskAE9FHOHt6R6mOVZtt2snnaDdwer9fuAyWUxBjqA/vJhZYhOMFsdDDM2Fsj/bPimbnFAenbmiKYImONmMl14KyGFfMLO0viv1c4OHmbKh0WpbbQBGHWScLIchlOgeFqkQC043S6MIflgQ8I69SIgwWtr04oHv1Gv19I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Wc+akj9Z; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TPq5CcGB"
-Received: (qmail 55741 invoked by uid 106); 11 Jul 2026 07:47:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=4F9Q83c0kNW3WMoui1EHtz3U5ygIyW72DEULbOdTEXw=; b=TPq5CcGBepeA0bY9O9BL40Aihhn6KtS/22C6c/j0ECC7YW4lyL0f3RzlRruT5nqtBPFUlBJQmVSEaqgcngLgetByeZCpiozsR78rocQfUSv1ac5tNsTjZox0mDIfKK57FixhdpA2RYYj27ULQj6NPM52M/wJChqYPvhWx7ZvS/kDPlj+afkM0ghn5auLQgkY7L3RSjMn52yZzm9XCbWEWl9fXQd7pHJTZz+7IGFsFKaKeE/uwpVCtRvZab8I0a/5zjsg9RC9md1ZoVsYH17nFKCgCaxtkoK8GUzH/sQFFKXF6t7jUauELFNOcFkoy9g/8zp3xzGiG4t2ROT6AZHDhg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Wc+akj9Z"
+Received: (qmail 55778 invoked by uid 106); 11 Jul 2026 07:58:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3LmC/+B4FIAVvUpO9tQQrNDWs6yqVMflSTlWLwWzdRA=; b=Wc+akj9Z3hcm/w8iGx6AJxFGrzojthEy9RcPyg15nMRMAv4pUY26jxOdiOyFrPiJMk6liZMcM74Ykg4evpS1rzwOBS1S40jQYHHXotf6STqlcrKYiVXVBkS4n1siOtZqwzO/9KjCQ6qJ7tsJRXixHL8GeZjA/c1HVOEUDsh3E8VIR+i6XWjIrQVTtoHWrWvSp6DSZw0h7mZCgqeXVPzH/hiMlBWIuhFihH1s2RmeQfiC+Sgez1JTz/pdpJo83HtrWe+bPJymbLUYZ7/dR1XuTb83wd/gBUzve3uYuIU+k9ADgWhE/pCsVkyCA9J/oUliG8pcYdV72dIxHxNHu3kF0Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Jul 2026 07:47:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Jul 2026 07:58:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 95345 invoked by uid 111); 11 Jul 2026 07:47:23 -0000
+Received: (qmail 95474 invoked by uid 111); 11 Jul 2026 07:58:11 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jul 2026 03:47:23 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jul 2026 03:58:11 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 11 Jul 2026 03:47:23 -0400
+Date: Sat, 11 Jul 2026 03:58:11 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/7] pack-bitmap: allow aborting iteration of bitmapped
- objects
-Message-ID: <20260711074723.GB1457061@coredump.intra.peff.net>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 9/8?] pack-objects: drop unused return value from
+ add_object_entry()
+Message-ID: <20260711075811.GC1457061@coredump.intra.peff.net>
 References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
- <20260709-pks-odb-for-each-object-filter-v1-3-82fe014b12b3@pks.im>
- <alAAN6_ZqLj9tlgV@denethor>
- <alCafO91ZtFdikPg@pks.im>
+ <20260710-pks-odb-for-each-object-filter-v2-0-3710a9cc165a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,46 +43,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alCafO91ZtFdikPg@pks.im>
+In-Reply-To: <20260710-pks-odb-for-each-object-filter-v2-0-3710a9cc165a@pks.im>
 
-On Fri, Jul 10, 2026 at 09:08:44AM +0200, Patrick Steinhardt wrote:
+On Fri, Jul 10, 2026 at 10:48:52AM +0200, Patrick Steinhardt wrote:
 
-> On Thu, Jul 09, 2026 at 03:19:52PM -0500, Justin Tobler wrote:
-> > > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > > index ea5eab4cf8..8ff92c5272 100644
-> > > --- a/builtin/pack-objects.c
-> > > +++ b/builtin/pack-objects.c
-> > > @@ -1909,7 +1909,7 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
-> > >  		return 0;
-> > >  
-> > >  	create_object_entry(oid, type, name_hash, 0, 0, pack, offset);
-> > > -	return 1;
-> > > +	return 0;
-> > 
-> > I wonder why this was even returning 1 to begin with? As you mentioned,
-> > the return value appears to be ignored anyways. I'm assuming it was
-> > signal that an object entry was created?
-> 
-> The function is only called from a single location, and the return value
-> was completely ignored until this commit. It has always been this way
-> since the function was originally introduced in 6b8fda2db1
-> (pack-objects: use bitmaps when packing objects, 2013-12-21), so it
-> never seemed to have any purpose. The commit message doesn't mention
-> anything either.
+> The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
+> 2026-07-06) with ps/odb-drop-whence at 8a7ad23e11 (odb: document object
+> info fields, 2026-07-02) merged into it.
 
-I think it was copying the semantics of its non-bitmap counterpart,
-add_object_entry(). Of course nobody looks at that return value either!
+Here's a patch doing the cleanup I proposed upthread.
 
-Long ago there were callers that cared about whether we actually created
-an entry, but I think the last one went away in 5379a5c5ee (Thin pack
-generation: optimization., 2006-04-05), which was quite some time ago.
+-- >8 --
+Subject: pack-objects: drop unused return value from add_object_entry()
 
-So I think we could probably drop the return value from
-add_object_entry() entirely (but of course we can't do the same for the
-bitmap variant, because of its use as a callback).
+This function returns 0/1 to its caller to tell them whether we actually
+added a new entry (or if we considered it redundant). But nobody has
+relied on that behavior since 5379a5c5ee (Thin pack generation:
+optimization., 2006-04-05).
 
-I mention this mostly as answering Justin's "I wonder why...", but it
-might be worth cleaning up add_object_entry() here, as its return value
-semantics have diverged from add_object_entry_from_bitmap().
+The extra return does not hurt much, but it recently became a bit more
+confusing. We have a sister function, add_object_entry_from_bitmap(),
+which had the same return value semantics. That function recently
+changed to always return 0 (not void, because it must conform to a
+callback function interface). So now we have two related functions which
+both return an "int" but with different semantics.
 
--Peff
+Let's drop the unused "int" return from add_object_entry() entirely,
+which makes it more clear that the two functions have diverged.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I couldn't reference the commit by its id, since Junio has not yet
+picked up the v2 sent a few hours ago. ;)
+
+ builtin/pack-objects.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 8ff92c5272..3673b14b89 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1867,16 +1867,16 @@ static const char no_closure_warning[] = N_(
+ "disabling bitmap writing, as some objects are not being packed"
+ );
+ 
+-static int add_object_entry(const struct object_id *oid, enum object_type type,
+-			    const char *name, int exclude)
++static void add_object_entry(const struct object_id *oid, enum object_type type,
++			     const char *name, int exclude)
+ {
+ 	struct packed_git *found_pack = NULL;
+ 	off_t found_offset = 0;
+ 
+ 	display_progress(progress_state, ++nr_seen);
+ 
+ 	if (have_duplicate_entry(oid, exclude))
+-		return 0;
++		return;
+ 
+ 	if (!want_object_in_pack(oid, exclude, &found_pack, &found_offset)) {
+ 		/* The pack is missing an object, so it will not have closure */
+@@ -1885,13 +1885,12 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+ 				warning(_(no_closure_warning));
+ 			write_bitmap_index = 0;
+ 		}
+-		return 0;
++		return;
+ 	}
+ 
+ 	create_object_entry(oid, type, pack_name_hash_fn(name),
+ 			    exclude, name && no_try_delta(name),
+ 			    found_pack, found_offset);
+-	return 1;
+ }
+ 
+ static int add_object_entry_from_bitmap(const struct object_id *oid,
+-- 
+2.55.0.580.gbbcb530e9e
+
