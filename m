@@ -1,149 +1,140 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2FE2147E5
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 13:42:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783777328; cv=pass; b=Vyuz5yJVDDlvC7ifbmgRDuiDwDHX3ipmS4oFS6xD6eGCbdPQ7YzFnZZl/bk9wZpyahfYwEav8Z45Sd4H99ZEJwGKdffdv/d6sgzEnGkdwpKG7z7737/8+aMom3+H7rlEOJES5T9S8wxpJfqbIlVFnH7SnFrx14Q/3cT22b2ccjI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783777328; c=relaxed/simple;
-	bh=5eQdCSyM/CkI70doLBQfEbvtjDoom7u6RjXwjrzsO1Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FLzNn1EFVv83dWQQ4Y6kDWXATxciefVbtDsBxatnraDOneMw9Sgh+qmfZZMn6LNKXvg7ddWNU97l2sEcyGDo2x2LbSMEsz2heut8XkoH2qjhY7PPzbV8s/4p/iTogXh6+ED8b0PfGeVhW7OJ1vzQN+tSmIE/1Tks+oR95pIo6i8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=siqvA8Mi; arc=pass smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37881175A98
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 14:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783779338; cv=none; b=MJbXJg0VKJrZqdm/9out35ca998SBRheNLyyqRqIaA5TyAv8/UyZHV0Ac9YaMd6IqM4JP3/fHb4r9pg/MlScrFmYK8fffxuPr2RMEx+0VmZ6+jyvmxGE3oUlFuVvWl4zB0to+Aq4SurTvL6r4kr6wJL9hRT0fNWqfFISdc4rI6g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783779338; c=relaxed/simple;
+	bh=1HYstmwpWgnq8Es4YKgHjLDpji+bY8Gv9gpSysP6XK0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MmGgToisZgfM9Y+l7toOsTEmjwAxWyP13hyQDe1Y8wHsX8j3nJHZvjieXwtO/Qf+oMf2OWbCKn290lZEI9SMHJZjIsWofWqXy+dMc7laOefy9wIFY9VKueQwiCTSBZNDOrNgPjPqi7ciOYdeKf7CpW8j3+D73xwh9EbtA+HbO5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=hfSg90PB; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="siqvA8Mi"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38101f85591so2132902a91.1
-        for <git@vger.kernel.org>; Sat, 11 Jul 2026 06:42:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783777326; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LhkhrS9KPQ4ecXClpdNikFVxMQ8wOb3X6+8WAzbjK2IJchmyCNnWSdzclcX1klGBnt
-         j7ORRsy9ub2wPAhvQqt+T1xFYmlQUxKxcbWZ/ze/O7u0xQ71jH+i115FeLpIe1ujX6gr
-         HDIO3wYjNFtWou2CV/evglzMUaj4Y9iIU8MYlt3Aoe2vYXmlorRpZgHV00yaoKHxlhgh
-         VBcNpgaR+/UcO0Xuxa8pSqKnmPjA9EdXCN+xQsHEXxmldvQ2pi6i0Hqi62wlxtSgoITf
-         aiNxLZkVnkwKWx0o7Sa1CEDvIQMlvOKJ6NWRLUbfDgCI/WyDNOdEoze9gyfgthvg46vV
-         AX1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zZs6C/QifMZeepU3yz4lVwxYYE5eThpWZYYbyR4ZejY=;
-        fh=U/YVYVeITvHCiO3Eu2a0nYxfXh9Ry9hvWX81oqLYHl0=;
-        b=YqT0bX31Hisq9xbRrt5qMjw7/YIfjbjTRdBQcx7TDAaj9pOw0yMSGUWsAuhkOxri7D
-         oXdTrU8KfCtDn5GBduUsVfoOdOyRFKuoW9G589iKy+ZsnB7xtk73+hDi9RUgjk201lEJ
-         8vFoP1ak/Lq6k1pvGeVh4LCooNwOmGPvhnfXeV+6cv4Y5tZT9VXKSE3Vr8CC8KqEw3Yo
-         Sp+VkH8m3jkUb6EBQWpXhqpr1tZVRXYU0LUyMM8KJxnqApLVmjd91AJJg4i1MLeENAjG
-         iVyQCCfmiX3JGDZO/IEB77TcYDI0lSqIuz5zvyaNfXBSwnaZkoZ/KX4v16rdd/4uf638
-         mphw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783777326; x=1784382126; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zZs6C/QifMZeepU3yz4lVwxYYE5eThpWZYYbyR4ZejY=;
-        b=siqvA8MiPcxl4F9b5Cze0+GOjuSDVxYU1WkrzjbCIbS7dsmdX6tvSHbfDIxZu5zfUb
-         8qTNwKDNhP6v9dEJqz/GFGtwRn6/pbwvXGnA0J4Hp3Va0xVsttIk8yM2jkghqRJuzX28
-         NxNlWNHzd7yjWquhDGuBq3ygem74JWfYmjwYVuf2jDPSHqhaxpEHMZub5nX1G9mJPu6R
-         xEEhMInxvEZWcFp/Fi3hwXibemmOY07brTy/JJ6BttQ+sb9nfOcDKNU31jrFXJ5tJuAY
-         21rkFM6Q2opvkyvqLG/Nv6QUka/k8zoR/KZGW2q6FqvSWRhVtdKW0CKU8cxSZVNCvZPs
-         WEPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783777326; x=1784382126;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zZs6C/QifMZeepU3yz4lVwxYYE5eThpWZYYbyR4ZejY=;
-        b=DPnYSoMPzdAT7/+Gx/C+eOrmVIYHLsv6t09dftfWKs/PkNS4NuV6lp0H1Tf4eoEj50
-         Fpn/q7EolEZDBSnKJf3wPCBm0mbUok1RWVrYvvYOBoJXKa2vZbGC0Y5EjTstypQqeKoH
-         1w7r/0DsJmlNg5Wi9TGsdv/o6zyOXy0I7HT1aEflnOKLVQ/t3WDREZOY0L9Fa5maEdah
-         HACj5qlbua7uJvYD1lj+ZuelYdbZ9HJ4i5jbJSzaQDiUk+mtfTpELD3P6296deaIjOmT
-         DODIaJdUYHsMaMU345+Qz6ZkOjzroDAIxS0lmMSv7oLdnOe+smY4mTap7RuZcNV4t2jT
-         6CaQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rp4DJqnJhywuIWgY61SK1Qb6aoskXa0/pyYoMeYo5SUUKktTO7KMeiyenGGfQzNCGTqoy8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKfe16htjioyiZ6pXsNO0yQapcmKGQtyDaaPmTdkhshudZZiDg
-	nqnA6eech2CBrUsFj/kOWZfZ2HwIbUT3GxhzN7GdaVmImoXbD7Ql5vSRUpRP0j6z6GFzhGfoaxL
-	nn4ir7N7TlB7w2k7HoWjoL82gVKX6yO62ZQ==
-X-Gm-Gg: AfdE7ckcTajE5Niyxxu3/GEGEdC1IGqfIDBTzWv0Zy8D9CJLfDMsLx/dRc44A46KUyZ
-	BcQKP9rIt9VtpL/fh4yCx2QqsRGZIboajWNn0P2rBgV2Yty7WMMcQPsgnoeIxA1tFVQZdS/rQsd
-	AF4m8EfUQ4Q35rhl3ZG1lPmzAB/kjamcclm0Wgc2edQFR3hn9R/EoGf8qITXEp+6UNIb+F4tknv
-	y24c+A/ZqwVIUkdAdJ8D1yEzcnmm7zKkJPPI/Sj3tix/7UP63H+xH/MtkeoHEJdimSHPyW0r+gc
-	QiPzNDaic3LyhT92MXIpxO661XVFMRALMYkdVRGo0KmfCS+VBAmNrARRyms02ctNshg4qmIwA/w
-	day0kB6wMBiGMgtYuE7uuPzhfU+FiLMC8l4FbcPT+4SgbW2g=
-X-Received: by 2002:a17:90b:2646:b0:384:927f:3db9 with SMTP id
- 98e67ed59e1d1-38dc807217fmr2355462a91.1.1783777326250; Sat, 11 Jul 2026
- 06:42:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="hfSg90PB"
+Date: Sat, 11 Jul 2026 16:15:32 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1783779334;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YBlJkwNrYvhkdqkKFOFAjKcS/1BtSc2jyUKR1hoZLnI=;
+	b=hfSg90PBJw5rhiUaLIh45/CRQybTVEWoKIC2K64oCFptVwSOvKFDunxXV90z8gI5nYeHFD
+	OWlURm3J256VGP9u6Z0tTt6V98rXttcp2Sp18ESPQAQPhM7vLWovNsfuu9JVGaHXEe7AES
+	6TlbvBY34wAH16fFsApmDc7M7IJgpN2FsbfGGpZEm7Lm7SYQaT0WV8ZduTCNO2VhPlh32S
+	ohMICb5lDt6Hww8eLu0HVRGDU1jfClR3R/SfQqIZbcrt81sr7eg5+de83TCHi108dH/c4Q
+	lGO3VTIRNXSSpfscbGJjsVK6hGxwcD6gadzxNsi6EjnzapveRw0FVOPophn8+Q==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org, ayu.chandekar@gmail.com, 
+	chandrapratap3519@gmail.com, christian.couder@gmail.com, gitster@pobox.com, 
+	jltobler@gmail.com, karthik.188@gmail.com, krka@spotify.com, peff@peff.net, 
+	phillip.wood@dunelm.org.uk, siddharthasthana31@gmail.com, Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v9 0/4] graph: indent visual roots in graph
+Message-ID: <alJOgYmAfGg37hsB@exploit>
+References: <20260710-ps-pre-commit-indent-v8-0-d3b636463bf4@gmail.com>
+ <20260711-ps-pre-commit-indent-v9-0-eab6676e82f7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
- <20260706115816.20267-3-ijackson@chiark.greenend.org.uk> <20260706115816.20267-2-ijackson@chiark.greenend.org.uk>
- <f557bfcf-ffd2-4903-8015-97fff97dbe09@howdoi.land> <9ef8cfcc-ab47-479b-9f23-71ba99e1e56b@howdoi.land>
- <27215.27575.968985.583226@chiark.greenend.org.uk>
-In-Reply-To: <27215.27575.968985.583226@chiark.greenend.org.uk>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 11 Jul 2026 09:41:55 -0400
-X-Gm-Features: AVVi8CcCJN9tgX5pdK4k-9CjzU14QQOyv52BRmLOYdEArTPED-GzQsvcR8DwiRQ
-Message-ID: <CALnO6CAPMEjVsj-5X9VyUtGM1JipXj6g_0JrC5gk37s178G02A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust
- rewrite [and 1 more messages]
-To: Ian Jackson <ijackson@chiark.greenend.org.uk>
-Cc: Colin Stagner <ask+git@howdoi.land>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260711-ps-pre-commit-indent-v9-0-eab6676e82f7@gmail.com>
+X-Spamd-Bar: -
 
-Hi Ian,
+On Sat, Jul 11, 2026 at 03:37:49PM +0200, Pablo Sabater wrote:
+> When rendering a graph, if the history contains multiple "visual roots",
+> actual roots or commits that look like roots (i.e. have their parents
+> filtered out) can end up being vertically adjacent to unrelated commits,
+> falsely appearing to be related.
+> 
+> A fix for this issue was already attempted [1] a while ago.
+> 
+> This series adds indentation to the visual root commits, so they cannot be
+> vertically adjacent anymore making it easier to identify them.
+> 
+> Before indentation:
+> 
+> 	* A
+> 	* B1
+> 	* B2
+> 	* C1
+> 	* C2
+> 
+> After indentation:
+> 
+> 	  * A
+> 	* B1
+> 	 \
+> 	  * B2
+> 	* C1
+> 	* C2
+> 
+> Indents the visual root commits that have still commits to show after
+> them, and if they have children it connects them with an edge at a new
+> row.
+> 
+> If there are multiple visual roots adjacent in history, the indentation
+> starts with the second one, avoiding redundant indentation of the first
+> one and cascades after the second.
+> 
+> 	* A
+> 	  * B
+> 	    * C
+> 	* D1
+> 	* D2
+> 
+> This series first commit is a cleanup that brings a common function
+> from t4215 and t6016 to a graph functions file which they both use, so
+> the new test file for indentation, t4218, can use it as well.
+> 
+> GitHub CI: https://github.com/pabloosabaterr/git/actions/runs/29154333559
+> 
+> [1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+> 
+> V8 DIFF:
+> 
+> - Checking if the parents of a commit are NULL is not enough to know if
+>   the commit is a visual root due to options that filter the commit
+>   parents but they do not remove them (--author, --grep, etc).
+>   At graph_is_visual_root_candidate(), iterate the parents and call
+>   graph_is_interesting() for each of them to know whether they will be
+>   shown or not.
+> - Add a --author and a --grep test.
+> 
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> 
+> ---
+> Pablo Sabater (4):
+>       lib-log-graph: move check_graph function
+>       revision: add next_commit_to_show()
+>       graph: add a 2 commit buffer for lookahead
+>       graph: indent visual root in graph
+> 
+>  graph.c                                    | 295 +++++++++++++++++
+>  graph.h                                    |  17 +
+>  revision.c                                 |  48 ++-
+>  t/lib-log-graph.sh                         |   5 +
+>  t/meson.build                              |   1 +
+>  t/t4215-log-skewed-merges.sh               |  33 +-
+>  t/t4218-log-graph-indentation.sh           | 514 +++++++++++++++++++++++++++++
+>  t/t6016-rev-list-graph-simplify-history.sh |  25 +-
+>  8 files changed, 893 insertions(+), 45 deletions(-)
 
-On Thu, Jul 9, 2026 at 5:48=E2=80=AFAM Ian Jackson
-<ijackson@chiark.greenend.org.uk> wrote:
-[snip]
-> > On 7/6/26 06:58, Ian Jackson wrote:
-> > > Another, bigger, reason is that current git-subtree generates unmarke=
-d
-> > > subtree merges (ie, without any git-subtree trailers)
-> >
-> > Subtree merges can be performed without git-subtree, via the `-X
-> > subtree` merge strategy option. While the design of RIIR git-subtree is
-> > outside the scope of this patch series, this may be worth thinking abou=
-t
-> > in your rewrite.
->
-> This is what I'm calling an "unmarked subtree merge".  My rewrite is
-> not going to support this user behaviour.  The problem is that it is
-> not possible to reliably determine whetheer something is an unmarked
-> subtree merge.
->
-> It is possible to guess based on tree similarity, but that's a
-> heuristic.  It's also possible to guess based on root commits.
-> Both of these approaches can go wrong in some cases.  I prefer to
-> write reliable software, which doesn't guess.
->
-> I'll advise against this practice in the documentation, but I'm
-> reasonably confident that if a user does this anyway the results won't
-> be terrible.  The upstream input to an unmarked subtree merge in a
-> downstream that has already used my rewrite, will be treated as if it
-> were a downstream branch that predates the subtree addition.  The
-> effect on split (in most cases) is a missing parent relationship,
-> which is undesirable but not catastrophic.I've made a note to add a
-> test case for this scenario.
->
-> Combining manual -X subtree merges with git-subtree --squash merges
-> could easily produce quite weird and wrong results in the tree (even
-> before anyone tries split, or something).  I don't think I can even
-> reliably detect this situation after the user has done it, and of
-> course since that user is using plain git, I certainly can't prevent
-> it.  This is another reason why manual use of -X subtree should be
-> discouraged.
+Sorry, I know I'm a bit late to the discussion regarding the design,
+but, could we maybe have two different code paths for printing graphs?
+Having the old one as a default and this new one only when we're using
+--oneline (well, --format=reference would benefit too)? As it is now if
+I have multiple one-patch series in sequence the entries are
+unnecessarily indented.
 
-Just to make sure I understand you (I regularly use -X subtree with
-one project): the Rust rewrite won't support -X subtree merges, but we
-don't intend to discourage folks from using -X subtree merges in toto,
-right? Merely not support a mix of the 2?
+Thanks
