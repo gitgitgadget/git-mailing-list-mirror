@@ -1,77 +1,77 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76B4231A3B
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 19:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BD62E7398
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 19:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783798017; cv=none; b=SfEBzSSSpEJtzt1Wh0HKz/Qo+7+5pGHq4/fXv7+2sxBd6GlKYbgMpTPehrH8blBszq1UGZMTlRQL0RNW04djWnfPdDDFuawQ3UtxLAM2oj6psXr8wIolPRu78cvgzNkSRl+zENBXyFK+w02eK8//wbuEIg+3rnPlEYxbzUGR1EI=
+	t=1783798019; cv=none; b=M+qZcS6eghR80dRB6Htn6YuZiXQXyPRpFzud3rIQqUin6WIdk/U1ChiUMY/wPV2ZR2lHBGJnFKpzJAe1/Pbt9owt77PfT8d+WQ3MNsy3EnehSFB7VkkFTiIojySnJ65hhD8WpohFeKnwu3PfTtX3NaWuqKwx1KaPe7nw+CvtIUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783798017; c=relaxed/simple;
-	bh=cDsTZUTgQljqNlKMADx93GyDYoeXAuApdquDgGywuc8=;
+	s=arc-20240116; t=1783798019; c=relaxed/simple;
+	bh=SCaeR4cAK0GWSn8w7vwDEb7OhLy7C9mBIhR6XbBAguc=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+m537bJ7rSxsUSxk7LkAK1WXg7i4YtAMrXikGCXJpEDx6N9AWtMbA0kxsfMADyhAAZBhIw1sotRqvC6yobVO3WLxOjcs3ArhLZtPP7oXTz9h6FJsysKswMljo+WZN497T7IqOj3efxPBsOV2eRcydiAdqEXjDdzQKsMzkWNPXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ifrIK5uN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bhBhruZE; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version; b=BB+iqHzPdb1SvLGqfP0CY5z7aFyfjn5OvkWyshVjJ9jVGD5rg9XGV0j/3F0PZXX3U3QmA/JP31cZREClPVXlBKMcWAESj+T0qYi4jaPKdx4tAV5jF7jqoctlwo3O7tH0sKyKmEvuHkr/bKNbwbuexU5prZT13bZQ9zNrJWCaTZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KiO0OTIv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pah/wwBA; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ifrIK5uN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bhBhruZE"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 329E714000C1;
-	Sat, 11 Jul 2026 15:26:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 11 Jul 2026 15:26:55 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KiO0OTIv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pah/wwBA"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9CEB914000BF;
+	Sat, 11 Jul 2026 15:26:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Sat, 11 Jul 2026 15:26:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1783798015; x=
-	1783884415; bh=0EO1UK/BuIobh0Ol5MjR0tCcQWrYgn8TvlgPe+Os6qA=; b=i
-	frIK5uN2/C7b/aEn8U5fZJel8ZLTp4aCkqGcBcCouCqLb7bFtuT4cHb5+aaxl65E
-	4QGrEJHwncOzOwNT/k8F7SFdWaiaxNkudq/tCe3xcTEHsa18gvm/loR2awz+V4Yf
-	lOHC/qJDudi/nMGXi91bUmN6kMQlQcgYzONsJsyVEQCLR9i1F1ggvSeYpHjdOhBM
-	jd1IFdY7UWbaLFtN5te1xYTYvmdd3w1YIZKDJ5NjFYVCbgLYMDgcQ6oMv7wMrD54
-	QeDqN6iy20sNYh6c+r+0iRzvavPMmd/rcSpTIDIE2je3I6QyfcidlgQIl+rj2TwC
-	qcW5XwDJMauTOEF9FmZLA==
+	:reply-to:subject:subject:to:to; s=fm1; t=1783798016; x=
+	1783884416; bh=N+Thit00d7oY7yn+I4n/ICVa6P0zza3XRgERtbnOfoU=; b=K
+	iO0OTIv+3CS0ESEOnRYN1L7YTToQ5CxVhLibtc1SeqZ62E7ldBEWiKS4u6nzd3x5
+	wXfl+mB4idvkdje6U2b/WXhRYCB7Mfepvc0hkMdswyS2o7kUJQZ6hrlBfOR3vASx
+	UuV8y4IkasReiOtAQ5ISg/8qWCEmCHR3N3C9gjD77ugpYQOV9mHF8W+esd3ciMIm
+	PjG+EG7fY7CCO5W5pxd9bdZVrKwE1Byfg8ScPxLRutuuSUeZNNHYWDXA3MnVOKya
+	E2cJEV8FW8/MkuK3TbYDjF1Ritw6uA4KH0j7KW1BiIRAvY3OHkuTPKpRn3Grhqi5
+	eG8gMEH1P309n01dE2+jw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1783798015; x=1783884415; bh=0EO1UK/BuIobh0Ol5MjR0tCcQWrY
-	gn8TvlgPe+Os6qA=; b=bhBhruZEHDonL0pZwrNZ9i1PVXV+TKU80nSa5Mlft5qa
-	zpoUDfxPatChwU7dJD+ugyZziNBCHUr9USO3tF82L6N0PVqntNVo2T1uPAl3WEul
-	CimeeR387DoTuay2R4+WtqTprHJ607ES9cDFhhnTy4ksFqP4hICxLwAXO3NyPiKb
-	3KYP+xgKL5qwA0rdAzwnnoppU+eopychV9qk0JBDuPpw+QgCEoubhI7C7KktoFP1
-	Cy+pbVCBNvgomgphlvV5cdhwMb7w3R1AKTNe+UglHemQZnFFzyu7fM7/7dVsv4JI
-	dQ/BOtGCaW3ORamo5g5+72YpKcJLIbOW7Yp5tiJIOQ==
-X-ME-Sender: <xms:_5hSauL5Mwb9T4_FV-nkIEPDgmVfUpPAREH9zbiJDS9tXZC2MDo9wQ>
-    <xme:_5hSasIQjofrr7Jm1_orFuEmScpeoAlkq8wCECy85Bp2Z1ARPKX-Hz8wphpHS2PVp
-    GdhNTjqB2fdkVbGDmtiaC7MAXy792ACXh1WCu94PxDTsui5FAtX9n8>
-X-ME-Received: <xmr:_5hSasVkrD0Cqx0u6c7YLTj86UJl_22ERR11hC3EoAz8qk8Si5pu6DYfwBrTZNWs7mCug2YXL6w-0Qk90ZQGxacrgcrRsQ7-rxJ9Y6o>
-X-ME-Proxy-Cause: dmFkZTFJqDDiLOtZNK9IvspcieMba+1eLNTx4J7Cw7UAxOT6+ouPyrq6BGv8CmHUd2yp1c
-    3LMnbIMYWc/oetxfu+mKHTLz17Exy8hCJVcRjfraJGA6VV5ICpS2oZCzWdS24PVZ+aLY30
-    MyWDLG0gm/JKg0jlleOwkLmuavqw28VyOz2mUZP3kBlXWWbiFNtEgxOTnhjArRJLn4v9Wj
-    kHHNDOhwlLq9Ne68NTTJxEAZclo3E+temZV1Dtje6ypm11Jz6233+i5EmhGrzCZCODkNrq
-    f85z6kei2FP7RRJRW4N9tS+iJtQgbwn8ErEA7bx+HSh0jiSqZlcbsxbC3vQz5oeokJ9gjE
-    CxrHL6z6ivHqPdZZWHDM+kYmDb3/L91DL+YqCfU97B6Fqi3ziSVhPrUOr6L5MKBTM7n3Uu
-    jbn3fXQznWte/OeBX+iUEh5gtvVXbmrazquonyxlgGY1P9LinvatpjfSJV2ubnuinKp+KZ
-    5tqCVOYc+HP+3egJUKGrTzqwTVnV7pxgpnw2n9AhFGQgyjt9cK1YfX04yBVXPfIp5SdsVe
-    7c7PECkbBiPsj1+0R6sdjI5Jw0hynlxaHPo5pvLnu72xQDWi0Q6evGRzKhYuB1GGEH9hpd
-    TA6AYnBErvSMv67Hk0O3wkmJvwMCY0mtvKWZES9VHMdghf5aOwf+I2G8bJNw
-X-ME-Proxy: <xmx:_5hSauguZggJYvML6ZhhmZ3L3X-L2aJP5diVEyOcjvB6Y7ePfoNlXg>
-    <xmx:_5hSan_mTLknHFj3-68uNCBTDfe00gZYlCzV3cyovyP0c-hkcPxfFw>
-    <xmx:_5hSaoApgDksTOAYzuPLhPFMDO1NUiuWX9C05F9ZZOr-Z2iyZSO5-A>
-    <xmx:_5hSakJeb774vUde8-MkxMeh5EGMMcfJn5nJCRVkjoV1vHn2KyjLMA>
-    <xmx:_5hSahihRYBt9C__Hn8P6vOu_bfYy9KKLi6OtjrxgjzTl-xxcSB_UgnF>
+	fm2; t=1783798016; x=1783884416; bh=N+Thit00d7oY7yn+I4n/ICVa6P0z
+	za3XRgERtbnOfoU=; b=Pah/wwBAvYd81cp9XkO86OAF5XykNFNRH9MjQ++3zj9y
+	FbzaDNGLwA7NEYiO1x05vLAhosvFPL4LrQ0NR0jXoFweLH19tNN+iNQhNsygQD+V
+	k1X402hFhkQ68DYi7kaY7r2Lez5+jEE6NLgWBBBapIqLOOxJUeMDHZJ9nvFpWLw2
+	tB8eaozzY6P53tge4wncIdKbsS33oDfy2S529o407G1spJvDo/fpl0pyGG0c+9tx
+	2RMAPcNZ8omXdjkpKQN+AndKCJUIc8nSyt2Y77N/WqWTUNPZt9oUTHDrmPeFJVek
+	cuTJeKUqXxBHZk6p7g2OH7zzCxDkkDQQzMyV3wDirQ==
+X-ME-Sender: <xms:AJlSapyc8ExV_0u6wTI8XDgDjeh6iIES2atfEybywqb6vqAX9_FYWQ>
+    <xme:AJlSavR1im-1e4LBief5uF-n7XSv8Uofd0xuWzg_FkS4ctZOuCQ5kmOWGNjrB7i_e
+    cbdeiVvaAcNkryx0MKZWeT6F2ZW9yEOEvceCRCdZga2lpcuRvqcdg>
+X-ME-Received: <xmr:AJlSag9nJm0ZjsacwxPQTKsW8_qv0-aIymTg_OvdJtYLvX87m6Pq6SIn5eDLH6mWOQ8UZD0YM-WM4yaO8pFfCod41MmnU3rq31Yvzg8>
+X-ME-Proxy-Cause: dmFkZTE66fHZ5SLaRnFLnsGCBs8gsPs3exxSbmLQmu38nNeYtOqyk7ifaawX2l8M8A421K
+    QH2Ep+XavrE8WMoeChSYqazYV2JDRbKpIZLxzTKBen2Lj97G7VocIQ0HOXkOJ0nd0QYs6C
+    5OjVPdNOJPLHP7ZSDGWi0PK3jMHXoXVVMde+BSx0l0gHBL7Q7iWtW3+an00bdX8hKWkjBV
+    mn2BuTFvQiEOs9O6kXEhJ19jdHF3OybZ5gFZ08q6Gb4v70m//WTVCpSnD5tLa697SVvtfV
+    JrMSy4l1OBBp3CFJ2qJmWyWrIoMyN5A+ZJ5PEtvTwt94Ee32mxdz8AQe+XCQEz68UsFjpX
+    rhOhwwkKbC5QtYXS2QBHdz9+FcbyFLLcHW+Yae9RgD7Dmd2rVRMwszR1SKpUNycF0e4lQk
+    PNct82xUIoL4D0eltQ1qVqUjNKcWnBP1cdBRPRKa0Zlvjzk4qCNGMoYKEx0MgINsntURoU
+    5w7FhGrGPdnxWhL0T2pWeYeLSdXNMSgFYIyO/IEtxN+cpQLNiOyFPAo2xjlt5yFd9HHd2u
+    NY69qStoGjRic18lMIHiYda+X1zs1DAe1w2ZfCy6juwQBZPwh9f4//5lgVQyqFUJYGAL8K
+    vrBHyU43M7+N9MaK2/L8kYMUKzTcnFhWjYFO9xULG2dNN1KoubufFdJ/QPGg
+X-ME-Proxy: <xmx:AJlSamqknyWe_Oi1M1ZxByQERgI6RQdSuyxU_coZWc8rzeF6zivfVg>
+    <xmx:AJlSatm6Ltq9rNKgxQ2IiB629-cG1aK8WS_pknZvtRUcr8OcPy0CfQ>
+    <xmx:AJlSatJvaO282I-QD0PrWYV41oKTJNJ7aaO3CP-xLIUCNxQfQFMOzQ>
+    <xmx:AJlSaiz7GvcDeHKu6o5yhuc93SAROogijNjuDwx76UYWQQ4lExc2Ew>
+    <xmx:AJlSatIoPEwgN7CiQ1zNbxza7v7GA6sf1__6Py8DatzakZ5830ANJlLn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 11 Jul 2026 15:26:54 -0400 (EDT)
+ 11 Jul 2026 15:26:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 2/6] MyFirstContribution: what if I don't get a reply?
-Date: Sat, 11 Jul 2026 12:26:46 -0700
-Message-ID: <20260711192650.2417665-3-gitster@pobox.com>
+Subject: [PATCH 3/6] MyFirstContribution: carrying over trailers
+Date: Sat, 11 Jul 2026 12:26:47 -0700
+Message-ID: <20260711192650.2417665-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.55.0-391-gdf86bf5712
 In-Reply-To: <20260711192650.2417665-1-gitster@pobox.com>
 References: <20260711192650.2417665-1-gitster@pobox.com>
@@ -83,38 +83,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Tell readers that pinging is a perfectly sensible thing to do when
-they do not see a response.
+The maintainer will usually collect and add Reviewed-by and Acked-by
+trailers on the receiving end, but there are occasions when
+contributors can carry them over from previous iterations to the new
+iteration they are sending out.
+
+Document how this procedure works and how it helps the maintainer.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/MyFirstContribution.adoc | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ Documentation/MyFirstContribution.adoc | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 4832e5bad5..fc2ce2e785 100644
+index fc2ce2e785..988f0d4fba 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -1438,6 +1438,19 @@ substantial rework, and mention which parts of the current series will become
- obsolete so reviewers can avoid spending time on them until the updated series
- is ready.
+@@ -1509,6 +1509,28 @@ changing history, but since it's local history which you haven't shared with
+ anyone, that is okay for now! (Later, it may not make sense to do this; take a
+ look at the section below this one for some context.)
  
-+=== What if I don't get a reply?
++=== Handling trailers in subsequent versions
 +
-+If you don't receive any review comments after a week or two, do not
-+assume your patch has been accepted or merged.  In the Git project,
-+silence does not equal approval.  It usually means reviewers are busy
-+or haven't noticed your contribution.
++If a reviewer replies with an `Acked-by: Real Name <email>` trailer,
++carry it forward when preparing v2:
 +
-+If your patch is overlooked, it is perfectly acceptable to send a
-+polite ping to the thread.  You can do this by replying to your own
-+cover letter (or patch) to ask if anyone has had a chance to look at
-+it.  You can also CC additional people who might be interested; use
-+the `git-contacts` script (mentioned earlier) to find relevant contributors.
++- If your v2 changes are minor (e.g., fixing typos or making small
++  style tweaks) and do not affect the reviewed logic, add their
++  trailer to the commit message of the updated patch.  This lets the
++  maintainer know that the patch has received favorable review.
 +
++- If your v2 contains significant logic changes or rewrites to address
++  feedback, do *not* carry over the trailer, as the reviewer has not
++  seen the new logic yet.  Mention in your cover letter that you made
++  changes that require re-review.
++
++The rule for the `Reviewed-by:` trailer is more strict: you generally
++should not carry it over to a new iteration unless you are resending
++the patch without any change.  For example, a new iteration of a patch
++series might update other patches while leaving the reviewed patch
++that received the `Reviewed-by:` trailer untouched.
++
++
+ [[after-approval]]
+ === After Review Approval
  
- [[reviewing]]
- === Responding to Reviews
 -- 
 2.55.0-391-gdf86bf5712
 
