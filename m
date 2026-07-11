@@ -1,71 +1,71 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3727F3C2B95
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 13:27:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E8E3C8717
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 13:27:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783776473; cv=none; b=jb94wGb6UPuIQz0s2FXbTlQScNSVARA8NdJupgAnjc015iX3ZI4n6LGldpFU0VdEU8v3YOp4I6AYLpZWM2D0oxIjx5lQczzsZLSsSuGi6mfoYCbquvjYvaXOkhbwQw08tSVdxpHNR71Z3hCsjyGuf4KpbeaNQ7NFC1i7SIFVt6c=
+	t=1783776475; cv=none; b=IEp3n5dCeTNpWAhg9ZWMeuAa1sUKrLq65/gU0VehkU+wCUtIF8Ba7E/Z6PcZTKyN83FEg+MbXAVQ3bWoLxi4wAdNd3WmfzNwH7pYUDWaIGiy2uBvuR0C8t5sECwBtURDA2AN7d3Z8yDB+oOiYNCvEN3JbwPXfK0XibB2OJb/jcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783776473; c=relaxed/simple;
-	bh=5/RFJwQF2+587cdFiQwGHVpGbrLy/kfqLrKgi7CyKUg=;
+	s=arc-20240116; t=1783776475; c=relaxed/simple;
+	bh=34eNGhVokQjNuhnPR8/BjVA03cSQtxYYM1nlsamVJmU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=t8h8GbTEuWuy15imtgYZQdD9sk7V6R4NciXe3/VeswEl8gonotVvXvvuUlHOEpzOzhySRNSwop1/NYhfpTDkzFl1086DWE7l+gSaeEZmkHAXn9VqiI3GN4YUBWFhRO/t+P9jdlaWCk+FBM2abgqWXb+ixwTI472v2xJ3Im6/5ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DVaBUQmJ; arc=none smtp.client-ip=209.85.215.178
+	 MIME-Version:To:Cc; b=Z1PnTlet69rp1Jicx5VYe+QJT5XhuN3EBcjsKWJ/m9UIdAkFngxWaaQ/4PzLaiyq2feq92OIqltV6aVd/S8pSiOcnWtjyYoCPEpCSr1EbldImM5H5BWKp1c4vLTttHfqMnRulHujU5sCQR7QMrvhewLr9V/neodzA7S2iU5gX1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EscStzGw; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DVaBUQmJ"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-ca913a601fbso1281961a12.3
-        for <git@vger.kernel.org>; Sat, 11 Jul 2026 06:27:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EscStzGw"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c9ef3e1337fso1142793a12.2
+        for <git@vger.kernel.org>; Sat, 11 Jul 2026 06:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783776471; x=1784381271; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783776473; x=1784381273; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=86MXUuA8Vww5FfCovkUCtKUFxfQa1fFrzspvefGWXDQ=;
-        b=DVaBUQmJq9hgvYrwmdevr5IKrH9k5bRnFDAoIrO5NrOfSmljw45IAkwot2l/KI+rgW
-         FprJwRC2bcL1m5ijYlKflhLJK+xSzOa5WK0z+KSWRHboXkxBDxv1KsuUR205ZpEG1s1H
-         1XsXHJ5PG7I5UoWfNCzv/QqY2mwC8Y17kUZywwHYbbdjVaNhOcv1yVEVowrxKIhKZeBt
-         0Xojq4WMMyFC7fWqthI7nFGxxxe+HVRtGLEj8DqdzMsAAwR9xfJftXoIr9N7ROUU+fCs
-         z4BXRI5gBgsdHi8q0Th9aHUEBptmWxdLmMOM3rciw29UfzEE9OVRr+f+zR4TXypUQv82
-         yELg==
+        bh=7bIsbbyc5QAk1d3Wy4aol6HkBiyQBs4BLbMLfNYiJsg=;
+        b=EscStzGw1bmHC+ARl4eyytG2VKof3d4mLweiPhQfMRsYBdIW5H8LNi5w2udVzgD7Z5
+         2EsSCcV++4X456RY1B96XJ7kIZB9hdGUWCW8yur8S1S5ujvYh4LlXdu1A9zDrTQDp2qW
+         ocFWemsTvIZlcNKsyFpEDIYFtPHequKaNCyOHwxF6j+arw0rgs9lr1igW2kMK3uN40wJ
+         yRsKBVIZB9yU959XVtBtl9v2qPYHPwixUNTiiBiW22G7+1ZuIZO/NGWYImDphfbGRIv0
+         1TZnNsco6BNUKCxxv9nbV5Y449wLBHcFb8StDMs53F5kruLWj8BW5IrNOexsy3Lgd7Ya
+         dvMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783776471; x=1784381271;
+        d=1e100.net; s=20251104; t=1783776473; x=1784381273;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=86MXUuA8Vww5FfCovkUCtKUFxfQa1fFrzspvefGWXDQ=;
-        b=qVgCIx5wdbH1FfK+QWQY3CmZObnFT/la+kVmm8zi5heGj6QjBjWqcI/dFG2XOfkxIs
-         HUcKqdXU50qVgrN/IAr0DR41afLITGPkEvQw8KcF+74BObegs2uKLel2r5IumH9D2xTQ
-         HWEFETSYKHnIOiO8FJKFGeiQjGuq/I3o7zO+wE8CY10vJFLYJQu8Ht1JFHD9NlzTJI1N
-         /n0+87N7TFtb9IouB5nbNdOoHHh14zVpThqVVAZc71TtPPnEKFLlHeIv/3fNFlU6CAwM
-         qNPIsbV1nvME2s5rJoIKRz7YWVs/PqU+t16qC/tq1XzCqTRZ5X6CfBs+jeR9oUumcBY4
-         3srw==
-X-Gm-Message-State: AOJu0Yx6Q/lNfgVnmsIHTir2dwm+cL0VoVZtJOKreSZxTxL4/jZK13q6
-	aEnxN0ty9gBst38c/l4cueTvFfJhiK8jOoENZ83iwapkVS/IwsmLilHzMp+f/g==
-X-Gm-Gg: AfdE7clGHLJiZDCQAxmBfRr08rXMbAwRh21t8GwPaC/hiVs+czwQSP3CMdH9Z7Ur/xi
-	4tDiAnqwD8tzGrXeZhqf9ZLyx/JOb/cXbHGMMmE9h7iWCKS9LVz2ApeA3WQMu2MZ0tT3Y1ENcfR
-	u1UOxKnSbv6+xkfsGQ+6BJM7ICL/Xqgx0F5sFspCLySEkZOhVEpCq0j1McxP7bYERpmc42AKJXS
-	EOm2tFfDSwP7ypinj8AB1eB96+dnjim0oLKnLZ/Rgdnavqd6FcsiJdZTMWubBX9/QvZFV8OPbZC
-	IXJxHtW+xs9wzwhSIot0qXUFcnAjVwG9RaRxpJcPir2uI90H/Z7OLTWMc/dCJvFjCe3YD09WTm4
-	YZXysRpHEqtWQa72bW2yMUzc8XT0LEeJOL6m0jv3e8LbmArzIvi+pLDgGRx4YY+IfC+QgmiXzdB
-	6qwfPD5v399WDnbhk=
-X-Received: by 2002:a05:6a20:12d0:b0:3bd:3a53:c147 with SMTP id adf61e73a8af0-3c110b43718mr3364215637.45.1783776471424;
-        Sat, 11 Jul 2026 06:27:51 -0700 (PDT)
+        bh=7bIsbbyc5QAk1d3Wy4aol6HkBiyQBs4BLbMLfNYiJsg=;
+        b=O4O8//M+LxBMUFGzYGVtArQLKv/eUjaOgpkmXooqiCq/On+W1rl8igg4v71JOljVJT
+         4TE/G8r8TvSjIpduTPn0Tg9eZyB75X2KSjOU76zpAtH8oUqjqOwff8cknzYyYhlSQOJI
+         uGiD97AE5J1SnJkfnJk4Lb1zq9j4IHEJt4nUzdeGLtwF616BgnbghMfQR0jWN7/gajqO
+         cJjp7RKSqiOU+8kQpJ85NAi9VqC70PUcswwRSBzEopG7Zt2Taohgw98IKolYk2EzZcb9
+         x6qK6iGNM8lFA6hC5OoK2Vz2sav5WpBs4LooUnQvG7wOo7YGjEsGnZOMDdlG4xvPjMvf
+         2NYA==
+X-Gm-Message-State: AOJu0Yz/6m0RmtVCNUphvROJMw1+3RwOtDQp7AI0XO6oFuyVPJb+w2pz
+	zJ5GAR/HlrICm2vW6CbbN9KWS6SnVOcPTs1K3xCCjer0beEoZNEK83bBDAui2w==
+X-Gm-Gg: AfdE7cnXKEhm1BZfDpd57P34LE3BiebwQVtSSAmSrAiNIv2FlYDu9sFgnIPz4IGeCj6
+	N/oh2sYhIPQRfbFLpDk6C6JTK2D6qohMqURbTOSuVSuOc5E2Mc9RlLD+8co556fQNfxrkAHgBNL
+	xrhvTv4+d9wN+Bq37R1p8ZVwy4ilzs4ojl9HDD1FxGnvQZ+F27F+L2q7zUjJzgZINXTG8F1nXrP
+	1HaaVM0arVwBZFqd3/oKu8fLFbE4W+tiLciIHLpVjtY5nydIukPXthRAEVbON63jTq8GhgsWUem
+	HtIvWiRV4f7rmOzksMav2MRH2jhqT/+aiBT3L58b5ooBXsL7FQbDdCD5HnFm45nOZNKd6MEFMsJ
+	JiauvC9rS2kkDEpOt659fmD809a5kNGfDj4Yk39e1RsvE337etgPDwXM1MPCutkvSn5/AThcoC+
+	3Cdswd72muy7ApUy8=
+X-Received: by 2002:a05:6a20:4322:b0:398:9379:d04d with SMTP id adf61e73a8af0-3c110a6e39fmr3033762637.24.1783776473248;
+        Sat, 11 Jul 2026 06:27:53 -0700 (PDT)
 Received: from [127.0.0.1] ([20.169.76.184])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313b9ca880fsm11419937eec.23.2026.07.11.06.27.49
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3120c8e41fcsm19890349eec.15.2026.07.11.06.27.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Jul 2026 06:27:49 -0700 (PDT)
-Message-Id: <5ef4f08105bc5485444e824cec39e684692a9348.1783776466.git.gitgitgadget@gmail.com>
+        Sat, 11 Jul 2026 06:27:52 -0700 (PDT)
+Message-Id: <d0ee6d062ef60e2d9e4572ed2dd4d0968e1e29c3.1783776466.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
 References: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
 	<pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 11 Jul 2026 13:27:36 +0000
-Subject: [PATCH v6 01/10] Documentation/technical: add paint-down-to-common
- doc
+Date: Sat, 11 Jul 2026 13:27:37 +0000
+Subject: [PATCH v6 02/10] test-lib-functions: improve diagnostic output for
+ trace2 data assertions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,241 +86,77 @@ Cc: Derrick Stolee <stolee@gmail.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-Add a technical document describing the paint_down_to_common()
-algorithm used for merge-base computation, covering the paint
-walk, generation number regions, and termination conditions.
+test_trace2_data is a bare grep that silently exits on failure.
+Add a more informative variant that verifies the event appears
+exactly once and reports what went wrong: key not found, multiple
+entries, or value mismatch. Diagnostics go to FD 4 like test_grep.
+
+Before (value mismatch):
+
+  $ test_trace2_data status count/changed 999 <trace2.txt
+  $ echo $?
+  1
+  (no output)
+
+After:
+
+  $ test_trace2_data_singular status count/changed 999 <trace2.txt
+  error: trace2 data 'status/count/changed'
+    expected: 999
+    actual:   0
 
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- Documentation/Makefile                        |   1 +
- Documentation/technical/meson.build           |   1 +
- .../technical/paint-down-to-common.adoc       | 175 ++++++++++++++++++
- commit-reach.c                                |   6 +-
- 4 files changed, 182 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/technical/paint-down-to-common.adoc
+ t/test-lib-functions.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 2699f0b24a..f8dea4b395 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -129,6 +129,7 @@ TECH_DOCS += technical/long-running-process-protocol
- TECH_DOCS += technical/multi-pack-index
- TECH_DOCS += technical/packfile-uri
- TECH_DOCS += technical/pack-heuristics
-+TECH_DOCS += technical/paint-down-to-common
- TECH_DOCS += technical/parallel-checkout
- TECH_DOCS += technical/partial-clone
- TECH_DOCS += technical/platform-support
-diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
-index ec07088c57..9ce11d5e48 100644
---- a/Documentation/technical/meson.build
-+++ b/Documentation/technical/meson.build
-@@ -18,6 +18,7 @@ articles = [
-   'multi-pack-index.adoc',
-   'packfile-uri.adoc',
-   'pack-heuristics.adoc',
-+  'paint-down-to-common.adoc',
-   'parallel-checkout.adoc',
-   'partial-clone.adoc',
-   'platform-support.adoc',
-diff --git a/Documentation/technical/paint-down-to-common.adoc b/Documentation/technical/paint-down-to-common.adoc
-new file mode 100644
-index 0000000000..c203f14455
---- /dev/null
-+++ b/Documentation/technical/paint-down-to-common.adoc
-@@ -0,0 +1,175 @@
-+Merge-Base Computation and paint_down_to_common()
-+==================================================
-+
-+The function `paint_down_to_common()` in `commit-reach.c` computes merge
-+bases by walking the commit graph backwards from two sets of tips and
-+finding where their ancestry meets.
-+
-+Use cases
-+---------
-+
-+Computing merge bases is used in two different ways:
-+
-+ 1. *Finding all merge bases* (`merge-base --all`, `merge-tree`,
-+    `merge`, `rebase`). A merge base is a common ancestor that is
-+    not itself an ancestor of another common ancestor.
-+
-+ 2. *Ancestry checks* (`in_merge_bases`, used by `merge-base
-+    --is-ancestor`, `branch -d`, `fetch`). These ask: "is commit A
-+    an ancestor of commit B?" If a common ancestor equals one of the
-+    inputs, that input is necessarily the only merge base -- no other
-+    common ancestor can be both as recent and not an ancestor of it.
-+
-+Both use cases share the same algorithm and implementation.
-+
-+Algorithm
-+---------
-+
-+Given a commit `one` and a set of commits `twos[]`, the walk paints
-+commits with two colors:
-+
-+  - PARENT1: reachable from `one`
-+  - PARENT2: reachable from any commit in `twos[]`
-+
-+The walk uses a priority queue ordered by generation number
-+(highest first), breaking ties by commit date. Each step dequeues
-+the highest-priority commit (this is when we say a commit is
-+"visited") and propagates its paint flags to its parents, enqueuing
-+them if they gained new flags. When a commit receives both PARENT1
-+and PARENT2, it is a merge-base candidate. A candidate gains the
-+STALE flag so its ancestors propagate staleness -- any deeper common
-+ancestor is necessarily redundant.
-+
-+[[generation-regions]]
-+INFINITY and finite generation regions
-+--------------------------------------
-+
-+The properties in this section assume generation-number ordering (the
-+default comparator). They do NOT hold when the date-ordering fallback
-+is active -- see <<date-ordering-fallback>>.
-+
-+The commit-graph stores a generation number for each commit.
-+Commits not in the commit-graph have generation
-+`GENERATION_NUMBER_INFINITY`. The graph is closed under
-+reachability: if a commit is in the graph, all its ancestors are
-+too. This partitions the commit graph into two regions:
-+
-+....
-+    +---------------------------------------+
-+    |          INFINITY region              |
-+    |  generation = INFINITY                |
-+    |  queue order: heuristic (commit date) |
-+    +---------------------------------------+
-+                    |
-+                    v
-+    +---------------------------------------+
-+    |          Finite region                |
-+    |  generation = finite                  |
-+    |  queue order: topological             |
-+    +---------------------------------------+
-+....
-+
-+When the commit-graph is enabled, the INFINITY region is typically
-+very small -- it only contains commits added since the last
-+commit-graph refresh.
-+
-+All reachable INFINITY-generation commits are visited before any
-+finite-generation commit, because INFINITY is larger than any finite
-+value. Once the walk crosses into the finite region, it stays there.
-+
-+In the finite region, generation ordering guarantees topological
-+traversal: children are always visited before their parents. This
-+means that paint on already-visited commits is final -- no future
-+traversal step can add paint to them.
-+
-+In the INFINITY region, commit-date ordering can violate this: a
-+parent with a later date can be visited before a child with an earlier
-+date. Paint flags are therefore NOT final at visit time, and a
-+commit visited with only one side's paint may later gain the other.
-+
-+Paint flags are only added, never removed. Since each flag can be set
-+at most once per commit, the number of times a commit can be
-+re-enqueued is bounded by the number of flag transitions.
-+
-+Termination
-+-----------
-+
-+The walk uses a `nonstale_queue` wrapper around `prio_queue` that
-+tracks `max_nonstale`: the lowest-priority non-stale commit enqueued
-+so far. Once that commit is dequeued, every remaining entry is known
-+to be STALE and the loop terminates. Specifically, the main loop
-+ends when one of the following conditions holds:
-+
-+  1. The queue is empty.
-+  2. `max_nonstale` has been dequeued, meaning the queue only contains
-+     STALE entries.
-+  3. Generation cutoff: the dequeued commit's generation is below
-+     a caller-supplied `min_generation` threshold.
-+  4. Single result: the caller only needs one merge base, one has
-+     been found, and the walk has entered the finite-generation
-+     region.
-+
-+Stale entry condition
-+~~~~~~~~~~~~~~~~~~~~~
-+Once all queued entries are stale, no new merge-base candidates can
-+be discovered -- that requires at least one non-stale commit from
-+each side meeting. Continuing the walk could still invalidate
-+existing candidates by proving one is an ancestor of another, but
-+`remove_redundant()` handles that as a post-processing step, so it
-+is safe to exit early.
-+
-+Generation cutoff
-+~~~~~~~~~~~~~~~~~
-+Some callers (notably `remove_redundant()`) supply a `min_generation`
-+threshold -- the minimum generation of the input commits. No merge
-+base can have a generation below this threshold, so the walk
-+terminates as soon as it dequeues such a commit.
-+
-+Single result
-+~~~~~~~~~~~~~
-+When only one merge base is needed, the walk is in the
-+finite-generation region, and the queue uses generation ordering,
-+the first candidate found is necessarily the highest-generation
-+common ancestor. No remaining commit in the queue can be a
-+descendant of this candidate (generation ordering guarantees
-+children are visited first), so it cannot be redundant and the walk
-+can stop immediately.
-+
-+This optimization is NOT safe when the date-ordering fallback is
-+active, because commit-date order can visit a deeper ancestor
-+before a shallower one -- see <<date-ordering-fallback>>.
-+
-+[[date-ordering-fallback]]
-+Date-ordering fallback
-+----------------------
-+
-+When the commit-graph has generation numbers v1 and no
-+generation floor is specified, topological ordering
-+(via generation numbers) is disabled.  Topological levels are
-+correct but unbalanced -- ordering by such generation numbers
-+can sometimes cause the walk to detour too far before finding
-+merge bases.  Commit-date ordering typically reaches them in
-+fewer steps -- see this change for more details:
-+
-+   091f4cf3 (commit: don't use generation numbers if not needed,
-+   2018-08-30)
-+
-+With generation number v2 (corrected commit dates) we have the best
-+of both worlds and do not need this fallback.
-+
-+For v1, `paint_down_to_common()` falls back to pure commit-date
-+ordering via `compare_commits_by_commit_date`.  Because commit
-+dates are not monotonic (clock skew, rebases, etc.), the queue
-+may visit commits out of topological order.
-+
-+This disables the optimization that depends on generation ordering:
-+
-+  - *Single result*: the first merge-base candidate found may not
-+    be the shallowest, because a deeper ancestor with a higher
-+    commit date can be dequeued first.
-+
-+Related documentation
-+---------------------
-+
-+  - `Documentation/technical/commit-graph.adoc` -- generation numbers
-+    and the reachability closure property.
-diff --git a/commit-reach.c b/commit-reach.c
-index d7221fe389..778e11f5d3 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -96,7 +96,11 @@ static struct commit *nonstale_queue_get_dedup(struct nonstale_queue *queue)
- 	return commit;
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 809c662124..3521efe5d7 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1996,6 +1996,42 @@ test_trace2_data () {
+ 	grep -e '"category":"'"$1"'","key":"'"$2"'","value":"'"$3"'"'
  }
  
--/* all input commits in one and twos[] must have been parsed! */
-+/*
-+ * See Documentation/technical/paint-down-to-common.adoc
-+ *
-+ * All input commits in one and twos[] must have been parsed!
-+ */
- static int paint_down_to_common(struct repository *r,
- 				struct commit *one, int n,
- 				struct commit **twos,
++# Check that the given trace2 data event has the expected value and
++# appears exactly once.  Produces a diagnostic on failure.
++#
++#	test_trace2_data_singular <category> <key> <value> [<label>]
++test_trace2_data_singular () {
++	local category="$1" key="$2" expect_val="$3"
++	local label_suffix="${4:+ [$4]}"
++	local kv_pattern='"category":"'"$category"'","key":"'"$key"'","value":"\([^"]*\)"'
++	local actual
++
++	actual=$(sed -n "s|.*${kv_pattern}.*|\1|p") &&
++
++	if test -z "$actual"
++	then
++		echo >&4 "error: trace2 data '$category/$key'$label_suffix not found"
++		return 1
++	fi &&
++
++	case "$actual" in
++	*"
++"*)
++		echo >&4 "error: trace2 data '$category/$key'$label_suffix has multiple entries, expected 1"
++		printf '%s\n' "$actual" | sed 's/^/  actual:   /' >&4
++		return 1
++		;;
++	esac &&
++
++	if test "$actual" != "$expect_val"
++	then
++		echo >&4 "error: trace2 data '$category/$key'$label_suffix"
++		echo >&4 "  expected: $expect_val"
++		echo >&4 "  actual:   $actual"
++		return 1
++	fi
++}
++
+ # Given a GIT_TRACE2_EVENT log over stdin, writes to stdout a list of URLs
+ # sent to git-remote-https child processes.
+ test_remote_https_urls() {
 -- 
 gitgitgadget
 
