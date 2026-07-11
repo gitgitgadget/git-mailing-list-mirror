@@ -1,42 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4BC4499B8
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 08:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442AF495E5
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 08:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783756877; cv=none; b=Zf+jJDUf+DZgIFhNwuNPaQY5WrCqk9OSbaVk78akHtPUqr8hXNV4lDJ2Gtrl+foi1Kjx4DrD7raIVlXb1k99xILImNInLyJdZ5+Yd5rll6KUXBIMMfqHScAq8mbALCTJ2X9BPnpl29U43HMnIvqHFeQc+KUwyF3WRJ2w1Fm3ndw=
+	t=1783757014; cv=none; b=rlZi53fUBcaEdCHex45dUHkodoO8S3Y0Jjsz51EZrCrjuzN4fE3esTidPghjTEyCJ2GP6TCfJ0JMMelwHxgNE5KyKSIAyEkZPmlO3groRt8+ADggsxBtsQBVDO0eFloaWm3yn+KYHpYUHi01U+iw4WAO9P/m7vzfNnligH6OpRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783756877; c=relaxed/simple;
-	bh=ySd/TPm1aySx86sNSS+5nh6wwauwd9JogCKFpO8xMxw=;
+	s=arc-20240116; t=1783757014; c=relaxed/simple;
+	bh=ZfOCQNl6p6DOQaxY5E7qZ/wWWvHqO1LFLkPjiHVSVhw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h1K5FxNax2uOCxQQgEKC7omv5Bj8DHCTn7HwNuMqEiyWtEIgAPzT5tdYlT2mikI23BrSHo2Cv1VtnNQFtD8chS2fCNJuTMUB19o6UX+GMv18fe5PgtcMlaEjNc197JhHRBQ6tMWTTmn3aEOHRE1+TEnZR1P1Q2Dp3uFRuMSZ5Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aNNovB//; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=e5Y42TC7xwM+mMTpWC0l7OQtObgYZjHjYMFaBW9bt7ww4VJvMlsbtC5ejaTVgFrCKvDiSN0vMkioTCZZCTonxSLf6yEEjD1QA3g98NLhtJcJIyR4OcxbQsvvaCgxgRhWYC1N/yruJWztRyp2RyMED9lV4NvNHXDtEG4Knv+07gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c79cY+M0; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aNNovB//"
-Received: (qmail 55794 invoked by uid 106); 11 Jul 2026 08:01:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ySd/TPm1aySx86sNSS+5nh6wwauwd9JogCKFpO8xMxw=; b=aNNovB//adwlJbogMTIkHxRNGoLkjYmnHIBMwamlwT4darU1MKX3ZMf/nRaSLYMSJYCvysahrw1Eijr8NUUMqwKuzPYFLEkXUC3Fb9E4IZXneCPxUij+LufR0gnPpFgBYX+CW/X7f4PRiuQoiskNpnCN/wRRHbROlGELwW5hbHQRUcbOLn0shapeGmKFv5kJV7pZOZj8IMb1u20k/P8f0O+xtW+GU9SilJ20kMNF8i21iDSpbGPKn/SmGVmfGgt2oMsoGeEtNwfvM3Kn0qStfp7Vpq17FxDqRYIAKKK8jzXitP8xJVlUHzXCUXub5Aot37EyA25v59L+MHMHsnQiHQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c79cY+M0"
+Received: (qmail 55818 invoked by uid 106); 11 Jul 2026 08:03:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZfOCQNl6p6DOQaxY5E7qZ/wWWvHqO1LFLkPjiHVSVhw=; b=c79cY+M0Dz/9W4G9UVKWNMiPvb0HOPE7EMORGS0wSwMErN4A+eK72SgXZIeIbQJvjkarz3vq9RibJaque8RzzdgE+nqUsoF/yxHtXvouoX8oKhoKikCxOnQFmXuRsqB5eH2UFkIX0rybBrqk7OJAtP9SHrCVSNHo/iqvpn6un2msdRkLlhfBM8A0jEFbXCQi21tLCoYPLOd4fj30bouXI1odG8oW1NKy7+iiIJRVXIBtLHM0Se6cRMlKW2XZwwM6RolsNWlNxn6RCayfDleq1k+802HcsrAsiU/bkaE833+FDfunFEHD5ciaJp1AcG99lqyKVEg8XmG77B/47Wx20Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Jul 2026 08:01:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Jul 2026 08:03:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 95516 invoked by uid 111); 11 Jul 2026 08:01:14 -0000
+Received: (qmail 95529 invoked by uid 111); 11 Jul 2026 08:03:32 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jul 2026 04:01:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jul 2026 04:03:32 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 11 Jul 2026 04:01:14 -0400
+Date: Sat, 11 Jul 2026 04:03:31 -0400
 From: Jeff King <peff@peff.net>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/8] pack-bitmap: allow aborting iteration of
- bitmapped objects
-Message-ID: <20260711080114.GA1470749@coredump.intra.peff.net>
-References: <20260710-pks-odb-for-each-object-filter-v2-0-3710a9cc165a@pks.im>
- <20260710-pks-odb-for-each-object-filter-v2-3-3710a9cc165a@pks.im>
- <alFzja98avOoKjQE@com-79390>
+To: Omri Sarig <omri.sarig13@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Understanding why Git defaults to show author date and not
+ committer date
+Message-ID: <20260711080331.GB1470749@coredump.intra.peff.net>
+References: <CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJBf79RCNzgg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,25 +41,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alFzja98avOoKjQE@com-79390>
+In-Reply-To: <CAP9es6tyaGwfTguz5zgBmE5xN7MLDN3-rxRfo_JJBf79RCNzgg@mail.gmail.com>
 
-On Fri, Jul 10, 2026 at 03:34:53PM -0700, Taylor Blau wrote:
+On Fri, Jul 10, 2026 at 05:08:11PM +0200, Omri Sarig wrote:
 
-> However, the remaining `show_objects_for_type()` callers from within
-> `traverse_bitmap_commit_list()` do *not* bother to inspect the return
-> value, despite taking in an arbitrary 'show_reachable_fn', which itself
-> may return a non-zero value.
+> I understand the distinction between the 2 formats, and I can see the utility of
+> both. I'm curious about the decision to show the author date and not the
+> committer date as default one in Git commands.
+> Are there some workflows where the author date is more relevant, or is that
+> mostly a legacy decision?
 > 
-> I guess this must be effectively OK in practice with respect to the
-> existing code for the same reason you indicate in the commit message
-> above, but we should change this function to *also* propagate non-zero
-> return values to eliminate the foot-gun completely.
+> I'd be interested in hearing about workflows where the author date is the more
+> useful one, as I use the committer date almost always.
 
-The matching non-bitmap traverse_commit_list() does not allow aborting
-based on callback returns, either. In fact, its callbacks return void!
-
-Whichever direction we go, those two should probably stay in sync (so
-either both should allow aborting early with a non-zero return, or both
-should return void).
+In a workflow based on mailing patches, the committer date is usually
+much less interesting. It is "when the maintainer happened to pick up
+your patch", as opposed to when you wrote it. Likewise, we show the
+author's name by default, not the committer's.
 
 -Peff
