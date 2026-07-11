@@ -1,71 +1,70 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E8E3C8717
-	for <git@vger.kernel.org>; Sat, 11 Jul 2026 13:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCD738D6A2
+	for <git@vger.kernel.org>; Sat, 11 Jul 2026 13:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783776475; cv=none; b=IEp3n5dCeTNpWAhg9ZWMeuAa1sUKrLq65/gU0VehkU+wCUtIF8Ba7E/Z6PcZTKyN83FEg+MbXAVQ3bWoLxi4wAdNd3WmfzNwH7pYUDWaIGiy2uBvuR0C8t5sECwBtURDA2AN7d3Z8yDB+oOiYNCvEN3JbwPXfK0XibB2OJb/jcI=
+	t=1783776477; cv=none; b=lt0EV0NzWrBZXaNvZCRJjurulSlT/aJJpD0eN/EMkpXMdhhiy4vhg64vvn0jplkx7NL0qMxzZPu7xicrYqoxH8t1KgjctGVM0ZshjduJO87ouWDILdqRtIfj6FBef9pZ+i+CGQgweqPGhrab4+f5qHJU6hsHad+CtKw5IWiqd7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783776475; c=relaxed/simple;
-	bh=34eNGhVokQjNuhnPR8/BjVA03cSQtxYYM1nlsamVJmU=;
+	s=arc-20240116; t=1783776477; c=relaxed/simple;
+	bh=bdw/m3GdVULBaLWSYFZ4JcdX6BY+E8gwXb390oUqKxY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Z1PnTlet69rp1Jicx5VYe+QJT5XhuN3EBcjsKWJ/m9UIdAkFngxWaaQ/4PzLaiyq2feq92OIqltV6aVd/S8pSiOcnWtjyYoCPEpCSr1EbldImM5H5BWKp1c4vLTttHfqMnRulHujU5sCQR7QMrvhewLr9V/neodzA7S2iU5gX1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EscStzGw; arc=none smtp.client-ip=209.85.215.175
+	 MIME-Version:To:Cc; b=EhF6M2whPyGg7Siiu1qUcH0M64zAkY2y3yXwkGMB68G0VemZaFtTprcHyfk3SOuNCa8B2wWfJL+2uRmMrbd20ZP8x+rv1ZyrKVVWeZDxw9MoOxPeIGeDq1akGFwfMwDpIySRnSVeGC0xOHHEosucdjXq6P+yioE0H6XEB9XWhqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cKRfSrWh; arc=none smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EscStzGw"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c9ef3e1337fso1142793a12.2
-        for <git@vger.kernel.org>; Sat, 11 Jul 2026 06:27:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cKRfSrWh"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so722750a91.0
+        for <git@vger.kernel.org>; Sat, 11 Jul 2026 06:27:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783776473; x=1784381273; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783776476; x=1784381276; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=7bIsbbyc5QAk1d3Wy4aol6HkBiyQBs4BLbMLfNYiJsg=;
-        b=EscStzGw1bmHC+ARl4eyytG2VKof3d4mLweiPhQfMRsYBdIW5H8LNi5w2udVzgD7Z5
-         2EsSCcV++4X456RY1B96XJ7kIZB9hdGUWCW8yur8S1S5ujvYh4LlXdu1A9zDrTQDp2qW
-         ocFWemsTvIZlcNKsyFpEDIYFtPHequKaNCyOHwxF6j+arw0rgs9lr1igW2kMK3uN40wJ
-         yRsKBVIZB9yU959XVtBtl9v2qPYHPwixUNTiiBiW22G7+1ZuIZO/NGWYImDphfbGRIv0
-         1TZnNsco6BNUKCxxv9nbV5Y449wLBHcFb8StDMs53F5kruLWj8BW5IrNOexsy3Lgd7Ya
-         dvMw==
+        bh=mbm0PEz7Ej1bLUyZgbo3sVcWtr9TiArWRtokJZ/O60E=;
+        b=cKRfSrWhyo7rdMlUNoN2Iw4BWHMaRf+xheOWicxz3jjKppt5bdnkjM2MqjJBLa+xcX
+         ssaT2dTQ+DVjpg2dXt5yVyCTPuogrJFn+k+CPP3UJrcasOA7DSUGeAbgYJ9a1lRkJmMx
+         RvLk17F8u7icaG9K1O9naq+PRmI7GOf3OHZLzqpauaRApRw4QuWNLWMEo3rheJbhWZQI
+         c2rLb0PHpcC6yajQVRhSsPREMWGJGOZeka7asgMJPoIa5UEadCdubpKgDnG5BWnCIzA6
+         BIrmeqwixKlCojIiQ4sWzIwes3bIDIdle7RxXs8v6FdbI8ujwVPZFZQ5+X+XapoVr2Dv
+         +rVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783776473; x=1784381273;
+        d=1e100.net; s=20251104; t=1783776476; x=1784381276;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7bIsbbyc5QAk1d3Wy4aol6HkBiyQBs4BLbMLfNYiJsg=;
-        b=O4O8//M+LxBMUFGzYGVtArQLKv/eUjaOgpkmXooqiCq/On+W1rl8igg4v71JOljVJT
-         4TE/G8r8TvSjIpduTPn0Tg9eZyB75X2KSjOU76zpAtH8oUqjqOwff8cknzYyYhlSQOJI
-         uGiD97AE5J1SnJkfnJk4Lb1zq9j4IHEJt4nUzdeGLtwF616BgnbghMfQR0jWN7/gajqO
-         cJjp7RKSqiOU+8kQpJ85NAi9VqC70PUcswwRSBzEopG7Zt2Taohgw98IKolYk2EzZcb9
-         x6qK6iGNM8lFA6hC5OoK2Vz2sav5WpBs4LooUnQvG7wOo7YGjEsGnZOMDdlG4xvPjMvf
-         2NYA==
-X-Gm-Message-State: AOJu0Yz/6m0RmtVCNUphvROJMw1+3RwOtDQp7AI0XO6oFuyVPJb+w2pz
-	zJ5GAR/HlrICm2vW6CbbN9KWS6SnVOcPTs1K3xCCjer0beEoZNEK83bBDAui2w==
-X-Gm-Gg: AfdE7cnXKEhm1BZfDpd57P34LE3BiebwQVtSSAmSrAiNIv2FlYDu9sFgnIPz4IGeCj6
-	N/oh2sYhIPQRfbFLpDk6C6JTK2D6qohMqURbTOSuVSuOc5E2Mc9RlLD+8co556fQNfxrkAHgBNL
-	xrhvTv4+d9wN+Bq37R1p8ZVwy4ilzs4ojl9HDD1FxGnvQZ+F27F+L2q7zUjJzgZINXTG8F1nXrP
-	1HaaVM0arVwBZFqd3/oKu8fLFbE4W+tiLciIHLpVjtY5nydIukPXthRAEVbON63jTq8GhgsWUem
-	HtIvWiRV4f7rmOzksMav2MRH2jhqT/+aiBT3L58b5ooBXsL7FQbDdCD5HnFm45nOZNKd6MEFMsJ
-	JiauvC9rS2kkDEpOt659fmD809a5kNGfDj4Yk39e1RsvE337etgPDwXM1MPCutkvSn5/AThcoC+
-	3Cdswd72muy7ApUy8=
-X-Received: by 2002:a05:6a20:4322:b0:398:9379:d04d with SMTP id adf61e73a8af0-3c110a6e39fmr3033762637.24.1783776473248;
-        Sat, 11 Jul 2026 06:27:53 -0700 (PDT)
+        bh=mbm0PEz7Ej1bLUyZgbo3sVcWtr9TiArWRtokJZ/O60E=;
+        b=rkiLZh3fZmO0ZWfIG9luH0EZhnLAX/XrFENZi2RIy6lZvVeH4QCUoYB5pSmv7D8mSE
+         ZDNFbvrtnyEkE/kp0PZVoXV6zuONjt6NXkNnQraZEDsaITHWOCv4x6Q+WVLoXV/cHdmM
+         yhuR0Y5kDwF1SF2bZuH9BjbhIBi4wGPpwdgVzxSge1e6zSCsiKtJZlS/Qcwm08KRfNdj
+         snzc0s0nybooat7pkvYbky9ezHta4mFGt5Rw5S24HoVlxC2JEuRAynAUlqP+DzdB0EzR
+         +4y4+qhu7QKtveuSLZxVvJ76vzKFEcpWe1a7B9kv+ucKhU56Pf0KVJXi5gw8W7FHd1wj
+         Cwbg==
+X-Gm-Message-State: AOJu0YwKqexwKLowAgOLSemzPPsS4L4SYCuIjN1sk24GY7YGgQGcxCih
+	oi9yzACZqdLiEnaVsZ1XzmEywvo3AdrH/GXEvSKbuRTowx6Azea/0BqrdoVCrA==
+X-Gm-Gg: AfdE7ckA80aNGhtt2N8yf1lRXY0PSihTXcf4Rfrice4fT3XTIFA7Lpy1Oe/VfujPQAW
+	xWUX0AZe9eqiv1ikXC40qLyaGVEaK2VsNQZyYq4jBjoUsgDQqfo2cR0ACq4CWcxQiOgPB7UOIYu
+	F9gGIkxVc3UpNEemopw9hSP/RQZ610wRHUj4rVpvDEjvQFwlCyyryYXhKFdJoTQ42K71RWvCxJh
+	GcVUtQdjzmlkJb5ksJom0YkRFkxBB2+JjeEPiuATE/pYJ4gfpO4MGrIu35gblfsFGIF7VcYA2vm
+	6qW9YkdaYiomgVzqWnVHfTpQK0Sk4YJ+82O1zywDRkUpyYX1wxTGC1F+h0BFryORMA64doBEIWI
+	HDrqofcQEDdiV0XHVc9UHvbVcud08or6/Q6JoLCCLe+mSb9Op3L7GkkBHInO+Rjr0InqSUMK34L
+	i3mtTLCJkx73NJrAw=
+X-Received: by 2002:a17:90b:54c4:b0:381:dc88:7c09 with SMTP id 98e67ed59e1d1-38dc777c501mr2941458a91.33.1783776475553;
+        Sat, 11 Jul 2026 06:27:55 -0700 (PDT)
 Received: from [127.0.0.1] ([20.169.76.184])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3120c8e41fcsm19890349eec.15.2026.07.11.06.27.51
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31189cd8234sm42595221eec.9.2026.07.11.06.27.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Jul 2026 06:27:52 -0700 (PDT)
-Message-Id: <d0ee6d062ef60e2d9e4572ed2dd4d0968e1e29c3.1783776466.git.gitgitgadget@gmail.com>
+        Sat, 11 Jul 2026 06:27:54 -0700 (PDT)
+Message-Id: <21ecf6dc34289994ddc5d4b5d814af1bfc2a50ae.1783776466.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
 References: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
 	<pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 11 Jul 2026 13:27:37 +0000
-Subject: [PATCH v6 02/10] test-lib-functions: improve diagnostic output for
- trace2 data assertions
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 11 Jul 2026 13:27:38 +0000
+Subject: [PATCH v6 03/10] t6600: add test cases for side-exhaustion edge cases
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,81 +81,161 @@ Cc: Derrick Stolee <stolee@gmail.com>,
     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
     Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+    Elijah Newren <newren@gmail.com>
 
-From: Kristofer Karlsson <krka@spotify.com>
+From: Elijah Newren <newren@gmail.com>
 
-test_trace2_data is a bare grep that silently exits on failure.
-Add a more informative variant that verifies the event appears
-exactly once and reports what went wrong: key not found, multiple
-entries, or value mismatch. Diagnostics go to FD 4 like test_grep.
+Add test cases to t6600-test-reach.sh that exercise edge cases in the
+side-exhaustion optimization for paint_down_to_common():
 
-Before (value mismatch):
+ - in_merge_bases_many:self: commit is both A and one of the X inputs
+ - get_merge_bases_many:duplicate-twos: duplicate entries in X list
+ - get_merge_bases_many:pending-stale: STALE transition on an
+   already-painted commit (ps-* diamond topology)
+ - get_merge_bases_many:infinity-both-sides: both tips outside the
+   commit-graph with non-monotonic dates (pi-* topology)
 
-  $ test_trace2_data status count/changed 999 <trace2.txt
-  $ echo $?
-  1
-  (no output)
-
-After:
-
-  $ test_trace2_data_singular status count/changed 999 <trace2.txt
-  error: trace2 data 'status/count/changed'
-    expected: 999
-    actual:   0
-
+Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- t/test-lib-functions.sh | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ t/t6600-test-reach.sh | 110 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 110 insertions(+)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 809c662124..3521efe5d7 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1996,6 +1996,42 @@ test_trace2_data () {
- 	grep -e '"category":"'"$1"'","key":"'"$2"'","value":"'"$3"'"'
- }
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index 019fed9f5e..698b831a6e 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -85,6 +85,61 @@ test_expect_success 'setup' '
+ 	git branch -f skew-P2 "$skew_P2" &&
+ 	git tag skew-M2 "$skew_M2" &&
  
-+# Check that the given trace2 data event has the expected value and
-+# appears exactly once.  Produces a diagnostic on failure.
-+#
-+#	test_trace2_data_singular <category> <key> <value> [<label>]
-+test_trace2_data_singular () {
-+	local category="$1" key="$2" expect_val="$3"
-+	local label_suffix="${4:+ [$4]}"
-+	local kv_pattern='"category":"'"$category"'","key":"'"$key"'","value":"\([^"]*\)"'
-+	local actual
++	# Build a small side topology to exercise the (PARENT1|PARENT2) ->
++	# (PARENT1|PARENT2|STALE) transition in paint_down_to_common(); the
++	# 10x10 grid above does not exercise it because no merge-base candidate
++	# there is a descendant of another, so STALE never reaches a
++	# still-pending candidate.
++	#
++	#       ps-X
++	#       /|\
++	#      / | \
++	#   ps-Z ps-B ps-W
++	#     |  / \  |
++	#     | /   \ |
++	#     |/     \|
++	#   ps-T1   ps-T2
++	#
++	# where ps-T1=merge(ps-Z,ps-B), ps-T2=merge(ps-W,ps-B), so
++	# merge-base(ps-T1,ps-T2) = ps-B. During the walk, ps-X transitions
++	# to (PARENT1|PARENT2) via ps-Z and ps-W before ps-B is dequeued;
++	# then the STALE-walk from ps-B transitions ps-X to
++	# (PARENT1|PARENT2|STALE).
++	git checkout --orphan ps-orphan &&
++	test_commit ps-X &&
++	git checkout -b ps-B-br ps-X && test_commit ps-B &&
++	git checkout -b ps-Z-br ps-X && test_commit ps-Z &&
++	git checkout -b ps-W-br ps-X && test_commit ps-W &&
++	git checkout -b ps-T1 ps-Z &&
++	git merge --no-ff -m ps-T1 ps-B &&
++	git checkout -b ps-T2 ps-W &&
++	git merge --no-ff -m ps-T2 ps-B &&
 +
-+	actual=$(sed -n "s|.*${kv_pattern}.*|\1|p") &&
++	# Build a side topology that lives entirely outside the half
++	# commit-graph and has non-monotonic commit dates, to exercise the
++	# INFINITY-gate in paint_down_to_common. With both tips outside
++	# the graph, generation is INFINITY and the queue falls back to
++	# commit-date order, which here is non-monotonic.
++	#
++	#   pi-X (date 500, PARENT1 tip) --> pi-P, pi-D
++	#   pi-D (date 480) --> pi-C
++	#   pi-C (date 200) --> pi-B
++	#   pi-B (date 100, PARENT2 tip) --> pi-P
++	#   pi-P (date 450, root)
++	#
++	# merge-base(pi-X, pi-B) = pi-B (it is an ancestor of pi-X and is
++	# itself one of the queried tips).
++	git checkout --orphan pi-orphan &&
++	test_commit --date "@450 +0000" pi-P &&
++	test_commit --date "@100 +0000" pi-B &&
++	test_commit --date "@200 +0000" pi-C &&
++	test_commit --date "@480 +0000" pi-D &&
++	GIT_AUTHOR_DATE="@500 +0000" GIT_COMMITTER_DATE="@500 +0000" \
++		git commit-tree -p pi-D -p pi-P -m pi-X pi-D^{tree} >pi-X-oid &&
++	pi_x="$(cat pi-X-oid)" &&
++	git branch -f pi-X-br "$pi_x" &&
++	git tag pi-X "$pi_x" &&
 +
-+	if test -z "$actual"
-+	then
-+		echo >&4 "error: trace2 data '$category/$key'$label_suffix not found"
-+		return 1
-+	fi &&
+ 	git commit-graph write --reachable &&
+ 	mv .git/objects/info/commit-graph commit-graph-full &&
+ 	chmod u+w commit-graph-full &&
+@@ -182,6 +237,16 @@ test_expect_success 'in_merge_bases_many:miss-heuristic' '
+ 	test_all_modes in_merge_bases_many
+ '
+ 
++test_expect_success 'in_merge_bases_many:self' '
++	cat >input <<-\EOF &&
++	A:commit-6-8
++	X:commit-5-9
++	X:commit-6-8
++	EOF
++	echo "in_merge_bases_many(A,X):1" >expect &&
++	test_all_modes in_merge_bases_many
++'
 +
-+	case "$actual" in
-+	*"
-+"*)
-+		echo >&4 "error: trace2 data '$category/$key'$label_suffix has multiple entries, expected 1"
-+		printf '%s\n' "$actual" | sed 's/^/  actual:   /' >&4
-+		return 1
-+		;;
-+	esac &&
+ test_expect_success 'is_descendant_of:hit' '
+ 	cat >input <<-\EOF &&
+ 	A:commit-5-7
+@@ -219,6 +284,51 @@ test_expect_success 'get_merge_bases_many' '
+ 	test_all_modes get_merge_bases_many
+ '
+ 
++test_expect_success 'get_merge_bases_many:duplicate-twos' '
++	cat >input <<-\EOF &&
++	A:commit-5-7
++	X:commit-4-8
++	X:commit-4-8
++	X:commit-6-6
++	X:commit-6-6
++	X:commit-8-3
++	EOF
++	{
++		echo "get_merge_bases_many(A,X):" &&
++		git rev-parse commit-5-6 \
++			      commit-4-7 | sort
++	} >expect &&
++	test_all_modes get_merge_bases_many
++'
 +
-+	if test "$actual" != "$expect_val"
-+	then
-+		echo >&4 "error: trace2 data '$category/$key'$label_suffix"
-+		echo >&4 "  expected: $expect_val"
-+		echo >&4 "  actual:   $actual"
-+		return 1
-+	fi
-+}
++test_expect_success 'get_merge_bases_many:pending-stale' '
++	# Exercises the (PARENT1|PARENT2) -> (...|STALE) transition path in
++	# paint_down_to_common(). See the topology comment in the setup test.
++	cat >input <<-\EOF &&
++	A:ps-T1
++	X:ps-T2
++	EOF
++	{
++		echo "get_merge_bases_many(A,X):" &&
++		git rev-parse ps-B
++	} >expect &&
++	test_all_modes get_merge_bases_many
++'
 +
- # Given a GIT_TRACE2_EVENT log over stdin, writes to stdout a list of URLs
- # sent to git-remote-https child processes.
- test_remote_https_urls() {
++test_expect_success 'get_merge_bases_many:infinity-both-sides' '
++	# Exercises the push-time INFINITY-gate in paint_down_to_common(). See
++	# the pi-* topology comment in the setup test.
++	cat >input <<-\EOF &&
++	A:pi-X
++	X:pi-B
++	EOF
++	{
++		echo "get_merge_bases_many(A,X):" &&
++		git rev-parse pi-B
++	} >expect &&
++	test_all_modes get_merge_bases_many
++'
++
+ test_expect_success 'reduce_heads' '
+ 	cat >input <<-\EOF &&
+ 	X:commit-1-10
 -- 
 gitgitgadget
 
