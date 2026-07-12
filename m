@@ -1,202 +1,171 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B892773E5
-	for <git@vger.kernel.org>; Sun, 12 Jul 2026 05:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1934B25B090
+	for <git@vger.kernel.org>; Sun, 12 Jul 2026 05:56:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783834049; cv=pass; b=a2Z1jxBm544Ffn32lVwtAyeycSQuU4QxQp7TghrqVP9DeBE/N3KEIxACsRrssJ7qic/h9nJC1T5+NxcolVnL1xX5Db7LmgBiBsU+k6nLF0vpjZ5go2DKBdxRb+JQgIoaf+gJVnA7w/WdnWp9W7bRSDaEzyhMPXnghDm1g/C+uwg=
+	t=1783835817; cv=pass; b=FLas/FtRtvwTDe+WkCmzuzXxX1/NzyimPKBYOGL/4obuiipvgbtvAYeZ1+HW2ohV8LjwbzUK4vS0o3lv1X29dbLjf8gMeDKR0lsAcu+2B8xbFOe0hfdV3vcqEiOlgJg/52NuOf+Vl/fvihtzgSUqEeezEYqEdabGbabMKK+yhws=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783834049; c=relaxed/simple;
-	bh=VhDc51OwhAijsDXOcr2cZC1TBROS17OZCMj2C+ShJDo=;
+	s=arc-20240116; t=1783835817; c=relaxed/simple;
+	bh=944OGSyGSSzejJ8iXpdeSL40HwLx9h7hBOtgImfkuYk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LldgYSnxUj06o4QD9a9HyEVUXc0+ZZOEvh63PIdPfcu4o0TFf17rXq0P/6w6/rMbm4rgJE+3UGl711mhXRM1/Vr8N1rAtkla7EsHbBX3weAKwJSuC5DEM2tHmNiW0ChP2PF6AskO89YdBfxotPLXcd50gOP/SFgHCE+dkf+bun4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nj4Vn8/X; arc=pass smtp.client-ip=209.85.208.48
+	 To:Cc:Content-Type; b=EPjLlAvfUrXEZ6/SLif00EqufI6jV56j33uVoGg1KW+YaGKukJGlkdM3icoofqSWE8XjdD9AwOFcMHv9kADZzv3+OKHgpQWxoPhlzfJOaESc3ztsDLkxjGbyU252n2L+OuLU4XixqIIQu8f2FG9/55w7Axski9cbc6+/aSSof8s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJOLHpnb; arc=pass smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nj4Vn8/X"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6976b0c5adbso4418695a12.2
-        for <git@vger.kernel.org>; Sat, 11 Jul 2026 22:27:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783834047; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJOLHpnb"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-698aa7ba320so5264018a12.1
+        for <git@vger.kernel.org>; Sat, 11 Jul 2026 22:56:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783835814; cv=none;
         d=google.com; s=arc-20260327;
-        b=rHsjjh0Nul6AT3/hs/BupW2UV0VfXQNAmU3RLFLkBcRF/WyfPnhTUdwUF6zTiyxSuE
-         Gagb6MhUGoL7vRWJvkt6DZPYVE8V/V6D0IFbu5uc0dTnaWWLKPiY2/GCNMRucRGjmxr7
-         SA3EHb97KXEDwygTcr+PMcq/XnxWrY3JestalYi9HLtho4ndrnH7fG3Iv6VmVhrhOLKU
-         e2S0lfn+IPPiRQMoF44IAgR28f1I6Fr52T7xlFBN1vXmLAFbkyC1N5MqumD4xtlMEsNO
-         8qD6ccXtHJjbsbPi3jAaxJDIfuOOAMMKG8TNJ31XD4cpFi8I4TMRlmDidPfOwiiGxG8o
-         EPrA==
+        b=Ftc21DTeYK5IAGzz8Q7oG67MkEX0KNjleV/dNKtLTBkLKXAQG9lKsiagYnMLUY2f5+
+         CLyqxHVpElUSYQ4e2pqzEiyXJkNzKAKkooTQ6dbmUpL/xswk33dpm1n210WGOsSxWlSp
+         2dStPSUXSlD888k1iCqxt+ohVkkVAa0Gt6zynt9KjwYC0mtHhlL4EtUKn9cIfWdlRp0Y
+         1mF4Omc581Y168Wze/FQijUMk6V6YjOJvM1JL+sGMdXMMcX8O1DFVp080wbfcX8zjxq1
+         omYTtFrzsXA+8lcFIeF2tEG3NBu60imzZKkMWdOmQF+DAqgr6wgc6dZt/SIY4kx+1S0G
+         xCUQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=8BCdmcsuWqzefny5M8OIii/NdhGx+seDdLTHKR54rgw=;
-        fh=ISsVGTm4QTHCbZR9EK3a4pCu4r1LnmV8QgBu6/dlz7Y=;
-        b=jhes5saNvzkAtrpgFfnpYp7bi1IGpYwqJaHZTiMzQCpTypOsTpvjT/KhlWpJKuNKk1
-         S3IhopPX1X2ddfw45RqvMz217b/vkpUoxuj8sQ7wFu2zeJCZ7pJvrI6lOwrmwny8trS7
-         3fDD1+X4GWFpviLk2XZO3scPXWQGapW9lhsYlDjeI8RnAF2/daA2Bq7VJPqJyiuplNzr
-         w05clwRdiiMRPpHTSCddmqcxtb6TJgjIIOB7Ee8r/lyF8sFKWIAwB0p1G527bQF5X3Gu
-         3pFKf8EJWuRqgU4PmypJHggDFuP4p/PskKfBiYdYOWnwnFiY7MBfJhWyjR8DMPnMeBIK
-         RdGg==;
+        bh=SII2hySGQy8wAjeuWzEe5Sv36FO/AZWaL0ckBrEXu1A=;
+        fh=pks7SeV6havSBOYb9QFq91qaeoqWKp9lBTygpBFqwpk=;
+        b=kT5pjsiNKh6q7wKquOYQTkis+w0ifeGGMmIZnVeUA3cHNHayArav0iz7sY5EILcMnN
+         zW1wJqKJKyWZ3RkfxRt2g0VN4YRv3DmrCCTak6Y5p7gPiV7gxFuh3dwTStMtpJXkt351
+         ZCkBiU0KT4lsW51GQZBiW2NZ4sLGECQ5yE8VuTkuZok9r9QnqS35zByHyOlx+AaijHFI
+         6kprnDxdemGBd2Z4VVDXPjM1ztCSfEzGSMiqvk+ao6DE/xnGld4o4MD01GhdT6KEc7x3
+         250MgFY2W8NPbaJqfw3V4P52BuwhiDK08qjAyK9tEX/E4AAlhK0qcxD9/5vI0EXz1dMj
+         4hVA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783834047; x=1784438847; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783835814; x=1784440614; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=8BCdmcsuWqzefny5M8OIii/NdhGx+seDdLTHKR54rgw=;
-        b=nj4Vn8/X3HVHEYCfpl67zj29wQmz30LicbK/a3/2l4Cm+797I4jIGHfKygqVYYQgUY
-         j9bZ6p/g0nBwCpsLP0yyo7xknoyykpr4D+05Lkk0Q8bpodmuDzBGYkc0nVZuAydnyyEo
-         QZPVDYNEzvIyREAYgV+nGZ+WCfZZWmAZG01Ow1/90t4TkK9T/SAHKof8s3PbeITMZRXZ
-         z2e6XyqNVatnq08UYFbSJJ8aeocQvRVnOXkOLSfZPoFTQ0qj67CGHcT32d7UCjaP0yV2
-         ViBicZZQWqbQTFK0O3yPI+Hb7QB1OrcXdF7iqqyeVBQdmC6+GwyAZpKhF6/LIZbAkMED
-         RCLQ==
+        bh=SII2hySGQy8wAjeuWzEe5Sv36FO/AZWaL0ckBrEXu1A=;
+        b=BJOLHpnb/EVvzjfATMRgw7mDI325PzUXhRgnuO+uBDtm5yWKgitkcqd0Sfh5UNOtuk
+         n9wvuwB153atMnbyJI4p6/o9OBPAv3cS/EgGxAt+QSk9ZP3OR7I9wkfDE6Q+zsQqh3FK
+         epLJnfbXSx3+Q+T6Yjg9G7ukpZF/0DA71mwed10ewbyWNjKGLgdPzvCAyTatrpr6ovH5
+         18Zw5VxuAJHJxIdtb4ACfC6Qp7EjPx+bwmSBHXf2m73Ue35o1hjsIJvex6jkLyLUvaZi
+         0tEMFXXFiiAINpp9bDKlwEcRkfky7YSIHDeTXvmb2WgIm1dgSvKI5sLAORCMjquNzz3p
+         aALA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783834047; x=1784438847;
+        d=1e100.net; s=20251104; t=1783835814; x=1784440614;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=8BCdmcsuWqzefny5M8OIii/NdhGx+seDdLTHKR54rgw=;
-        b=fJV/2egvt5t/AA7bQKfYt0ekWtjhVxfUCCHPT5q3Aq/R2p/c+sdd8PIROrizzaeK6R
-         j2BfrZqh2+6ECKiKGl2etfJY7BQS6nXn97ff+gHKgLDcXQ83F1R2bRXSNuuRb5DfiKrj
-         5QxkWbEIgxSq7d5lHj3xcIF8WmblLBaPDziCZ+IKIvCOLda45VOb4lx0l3HPeElyIm8Y
-         ZkU3pxsjFBqxcXMgmHYfYk4MX3gZp7cpj2/kEe2Mn2ng6CT1+12bpw6M+P9Uk2ZUHsUj
-         nnhyhjiTI5du7jUERLo+vyaC9zvpn1aYX8WudH58eTZZ+4IhGpIaAnXNuhZD0QJVc+19
-         iqrg==
-X-Gm-Message-State: AOJu0YwSiBupiYPqHHaxdpV/c5NSp9wMKZTj2Ed7dpe50LiuAYdFK3Os
-	aMciHrpBs0fxnHd4zHpQMxitmSm7l1HJk4F0YzOSbbgAPPYFmOvwrWe/dOvQK9zFm2o8bJKBKIz
-	aTPyA/gcAVyxLlwbAgnBWd8GzA1vw02w=
-X-Gm-Gg: AfdE7cnu8iq/IPuM72Rv23hyaQyfu1hzun4Wle5KcBgScL7ELwwC4ScOBgjzoGSqN3+
-	2sbO8vBpiOj9GuZmf0cApaDuQ5q/vP/Nxi0xxRsBr16OAFZ6jWRLeboOUNBZHVxxnHUTcRX7K5F
-	53+l2fswgg/oNUSkWPW4JjoYlvEaxlgEKc17j40ab7KORIivoK89tcWUelfDsPNjtaOtDxKgr1i
-	OiK/evygGE8vmSZy6un4JdZW37TLo26eHdYaHMG/GMmstIT1CH9dfLIYm5AJ4rRv6x1cVuHzy7k
-	YzkoQ2pNAXPKQKUCUQSkmDm9aEPf+PmLKuye6I/Gw5/eXH6F76owsl4ptIQN19w1UvlTbc9Qqtf
-	s+y652T7IjsSMCmi/azcN
-X-Received: by 2002:a05:6402:a5ca:20b0:69c:7406:9492 with SMTP id
- 4fb4d7f45d1cf-69c740695c8mr798377a12.39.1783834046284; Sat, 11 Jul 2026
- 22:27:26 -0700 (PDT)
+        bh=SII2hySGQy8wAjeuWzEe5Sv36FO/AZWaL0ckBrEXu1A=;
+        b=Lz5Rl6iMo2Bibtso+3tDmg6fKbyarYlO+Lwqfu+fxxHT/pfFkcNVPYBfmoUcqGNqTL
+         83sNghykb8zeQP3wV53Rt/muy3yDZ5nFQmDYXCsz6Lb0cWtgloUX4jYBG677QWumMcGM
+         QSskiKmrJTFwqI+/WWRiQ/KKjFnMkgJhOzxaj7fDP127Ddht4/r+77M6mCSW15OFeINq
+         hyNNs+Y6Ow7LcvQWP60cZQ6Kr+nVXVc7jS1+0elO1rqvo1ZVomVpCv3hslwiNFs4+/u9
+         9I36KzgjTvq8c+LhmVCsxcxwijmz7DY6gSf224gA6YUiLheQS4OBEq5SC1Su1B5CSYfb
+         9raA==
+X-Forwarded-Encrypted: i=1; AHgh+RrgGQ97k5K7ugmBFH9DOvGBfN4Kq8A7yiOcqmSfQNVOGFO2DT/Ls0cf9Q3YQ+SbX5PLLrE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVaHO61aDYg1HPThJIIPs3iNn0cH/QicT1A3qcr/w/JZRZMaMu
+	g9+y+iht71epVYX9cmZHyCv6RNBxmLkzbbvgYRsPFIOwygKEdcEBqtYyprTkXXGA6YpF0AWXQ/q
+	/u/zJHFmcLQjxtAr6wy+BhEtRlVdVPPM=
+X-Gm-Gg: AfdE7cm5tffLhFdsKl1cJbVPmZ9VF7VMEE29gFdBZ9w9l8wFFtmX70LTqGuqTvSfZGv
+	FPa1m4m6H25qinO+ulJm77ctYoTCOmj3UwFp66KNI/QzZ89GiBqPSuwQTirQYlsxFek3KWBWv8J
+	tinbdM9oMth7a8sO9EGKg0KenpDxrL8iez6HG7iLMoXdKcdF8/zl97tnts+F/MlsiSwyxijssfz
+	UTIf63XWu/yBjZlGyQKmOvI2tZKLojIyJB+9u9uHsPffAuePcvr1K1N4dhjNgltodNGFr2jzklR
+	0H6E4VE18I1tNqT2+L3QYEXwuFQzKs7DL3o+nXJ2xQl7QXCBVA0L/jLd23EMHhXANhcxJGMRSYv
+	n/Jmv1xe1YW0xR5gGaSbm
+X-Received: by 2002:a05:6402:268c:b0:697:eb97:a4ed with SMTP id
+ 4fb4d7f45d1cf-69c62a77bb3mr1895743a12.7.1783835814395; Sat, 11 Jul 2026
+ 22:56:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260701-ps-eric-work-rebase-v15-0-c88a43b63917@gmail.com> <20260710-ps-eric-work-rebase-v16-0-66e07b58a8fe@gmail.com>
-In-Reply-To: <20260710-ps-eric-work-rebase-v16-0-66e07b58a8fe@gmail.com>
+References: <20260710-ps-pre-commit-indent-v8-0-d3b636463bf4@gmail.com>
+ <20260711-ps-pre-commit-indent-v9-0-eab6676e82f7@gmail.com>
+ <alJOgYmAfGg37hsB@exploit> <DJVUU76PUXR4.2BYRTA8SEEBVC@gmail.com> <alJpjTXfZmYQccwk@exploit>
+In-Reply-To: <alJpjTXfZmYQccwk@exploit>
 From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Sun, 12 Jul 2026 10:56:59 +0530
-X-Gm-Features: AUfX_mxMhgIWJe1w-FRWMfQEeCNPnxb0fU-H8Aonp_f5ynld8AlseyuN7BvIGqg
-Message-ID: <CA+J6zkSo3ZqLe7HLEXRAs+hOq2FuOVokMQWbABcW95wihNtCgA@mail.gmail.com>
-Subject: Re: [PATCH GSoC v16 00/13] cat-file: add remote-object-info to batch-command
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, eric.peijian@gmail.com, 
-	gitster@pobox.com, jltobler@gmail.com, karthik.188@gmail.com, peff@peff.net, 
-	toon@iotcl.com
+Date: Sun, 12 Jul 2026 11:26:27 +0530
+X-Gm-Features: AUfX_mwVTT8uBnXy-Ra73qRacGdX9t4jVn72aiv4uw6us1ByjnmDrmpHeHl6chg
+Message-ID: <CA+J6zkQcHu-LVKE-1ypfT=59gEzo4qBzi-pmhSJNC_udCDCJZg@mail.gmail.com>
+Subject: Re: [PATCH v9 0/4] graph: indent visual roots in graph
+To: Mirko Faina <mroik@delayed.space>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org, ayu.chandekar@gmail.com, 
+	christian.couder@gmail.com, gitster@pobox.com, jltobler@gmail.com, 
+	karthik.188@gmail.com, krka@spotify.com, peff@peff.net, 
+	phillip.wood@dunelm.org.uk, siddharthasthana31@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 10 Jul 2026 at 22:11, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
+On Sat, 11 Jul 2026 at 21:55, Mirko Faina <mroik@delayed.space> wrote:
 >
-> This patch series is a continuation of Eric Ju's
-> (eric.peijian@gmail.com) and Calvin Wan's (calvinwan@google.com) patch
-> series [1] and [2] respectively.
+> On Sat, Jul 11, 2026 at 05:41:58PM +0200, Pablo Sabater wrote:
+> > I think that this solves an ambiguity so it should be the default option
+> > and someone who doesn't want the indentation has to explicitly unset it
+> > maybe with something like '--no-graph-indent'.
 >
-> Sometimes it is beneficial to retrieve information about an object
-> without having to download it completely. The server logic for
-> retrieving size has already been implemented and merged in a2ba162cda
-> (object-info: support for retrieving object info, 2021-04-20) [3].
-> This patch series implement the client option for it.
->
-> Eric's series adds the remote-object-info command to cat-file
-> --batch-command. This command allows the client to make an object-info
-> command request to a server that supports protocol v2.
->
-> If the server uses protocol v2 but does not support the object-info
-> capability, cat-file --batch-command will die.
->
-> If a user attempts to use remote-object-info with protocol v1, cat-file
-> --batch-command will die.
->
-> Currently, only the size (%(objectsize)) is supported end to end in this
-> implementation. The type (%(objecttype)) is known by the client's
-> allow-list and request path but is not supported on the server side
-> nor the response parsing. A follow up series will add full end-to-end
-> support for %(objecttype).
->
-> The default format for remote-object-info is set to "%(objectname)
-> %(objectsize)". Once %(objecttype) is supported, the default format will
-> be unified accordingly.
->
-> If the batch command format includes unsupported fields such as
-> %(objecttype), %(objectsize:disk), or %(deltabase), the command will
-> return empty strings for each unsupported field.
->
-> This series completes Eric's work mainly with the refactor of the
-> validation of the placeholder with an allow-list that filters what the
-> client asks with what the server is capable of provide following Jeff
-> King's idea [4].
->
-> GitHub CI: https://github.com/pabloosabaterr/git/actions/runs/29091116939
->
-> [1]: https://lore.kernel.org/git/20250221190451.12536-1-eric.peijian@gmail.com/
-> [2]: https://lore.kernel.org/git/20220728230210.2952731-1-calvinwan@google.com/#t
-> [3]: https://git.kernel.org/pub/scm/git/git.git/commit/?id=a2ba162cda2acc171c3e36acbbc854792b093cb7
-> [4]: https://lore.kernel.org/git/20250313060250.GH94015@coredump.intra.peff.net/
->
-> Changes since v15:
-> - Completely dropped the static advertise_sid variable at fetch-pack.c
-> - Split the hash_algo type change into its own commit.
-> - Removed strtoumax_szt() from git-compat-util.h (and its commit) into a
->   static parse_object_size() helper.
-> - Removed backquotes from commit message bodies and fixed typos.
->
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
-> Calvin Wan (3):
->       fetch-pack: move fetch initialization
->       serve: advertise object-info feature
->       transport: add client support for object-info
->
-> Eric Ju (3):
->       cat-file: declare loop counter inside for()
->       t1006: split test utility functions into new 'lib-cat-file.sh'
->       cat-file: add remote-object-info to batch-command
->
-> Pablo Sabater (7):
->       transport-helper: fix memory leak of helper on disconnect
->       fetch-pack: fix hash_algo variable type
->       fetch-pack: drop static advertise_sid variable
->       fetch-pack: move write_fetch_command_and_capabilities() to connect.c
->       connect: make write_fetch_command_and_capabilities() more generic
->       cat-file: validate remote atoms with an allow-list
->       cat-file: make remote-object-info allow-list dynamic
->
->  Documentation/git-cat-file.adoc        |  29 +-
->  Documentation/gitprotocol-v2.adoc      |  11 +-
->  Makefile                               |   1 +
->  builtin/cat-file.c                     | 221 ++++++++++-
->  connect.c                              |  34 ++
->  connect.h                              |   8 +
->  fetch-object-info.c                    | 129 ++++++
->  fetch-object-info.h                    |  22 ++
->  fetch-pack.c                           |  58 +--
->  fetch-pack.h                           |   1 +
->  meson.build                            |   1 +
->  object-file.c                          |  10 +
->  odb.h                                  |   3 +
->  serve.c                                |   5 +-
->  t/lib-cat-file.sh                      |  16 +
->  t/meson.build                          |   1 +
->  t/t1006-cat-file.sh                    |  13 +-
->  t/t1017-cat-file-remote-object-info.sh | 699 +++++++++++++++++++++++++++++++++
->  transport-helper.c                     |  15 +-
->  transport-internal.h                   |   8 +
->  transport.c                            |  46 +++
->  transport.h                            |  10 +
->  22 files changed, 1255 insertions(+), 86 deletions(-)
->
-> base-commit: f60db8d575adb79761d363e026fb49bddf330c73
+> The reason I prefer the current way of printing as the default is
+> because the ambiguity arises only when each commit occupies exactly one
+> line. In any other case we can clearly see the edges connecting the
+> vertices. I'd rather have --oneline imply what would be --graph-indent
+> instead of having to pass --no-graph-indent on any other format
+> different from --oneline or --format=reference.
 
-This version looks fine to me.
+Tying graph-drawing logic to specific formatting flags could introduce
+inconsistencies. For example, if a user relies on a custom format like
+--format="%h %s", the output is functionally single-line and suffers
+from the exact same ambiguity, but it would miss the fix.
 
-Thanks,
-Chandra.
+Even in multi-line formats, relying on the absence of a '|' character to spot
+unrelated commits requires active effort. Indentation provides an immediate
+visual cue that breaks the vertical lineage, which is helpful regardless of the
+commit message length.
+
+I agree with Pablo: for users who strictly want the old behavior, an opt-out
+flag keeps the graph logic decoupled from the formatting logic.
+
+> > Apart from having an option to disable indentation.
+> >
+> > We could have the cascading to have a limit or make it zig-zag:
+> >
+> > instead of:
+> >
+> > A
+> >   B
+> >     C
+> >       D
+> >
+> > We could do:
+> >
+> > A
+> >   B
+> > C
+> >   D
+> >
+> > This would have its own edge cases like:
+> >
+> > A
+> >   B
+> > C <- if we zig-zag here C and D become ambiguous, currently we are
+> > D    indenting only the last commits (visual roots) here we would have
+> > D    to chose between continuing cascading or indenting the first of D.
+> >
+> > I'm not so sure if I like the zig-zag solution because we need to think again
+> > if it causes an ambiguity, but I wanted to mention it.
+> >
+> > I think we need some more opinions about the design.
+>
+> I don't dislike the the current solution but I can see it degenerating
+> if someone contributes a lot of one-patch series.
+>
+> Maybe you could indent commits that are both head and tail up to two
+> levels and then on the third go back to the beginning of the line. That
+> way you kind of have a zig-zag but without ambiguity. You'd only have to
+> add a counter to keep track of the level of indentation.
+
+Not sure about this. A zig-zag pattern visually mimics branching and
+merging, which makes unrelated commits look like a complex merge topology.
+
+I also have a feeling that this will end up recreating the exact ambiguity this
+patch series is trying to fix.
