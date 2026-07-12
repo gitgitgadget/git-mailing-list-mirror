@@ -1,119 +1,105 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163FE3AA1BB
-	for <git@vger.kernel.org>; Sun, 12 Jul 2026 13:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788E639A061
+	for <git@vger.kernel.org>; Sun, 12 Jul 2026 13:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783862924; cv=none; b=EKoNxccfEt87x3QxvOpN44TSG2YHhHCg6+UmC/6Frn478I/vuuOvZbUJ6lrFHv+xMr2l+KVTjxEC/FwStJrWieCKOBz/mTOoRbkMT0/o9qo9G35wlIbngFh7R/kUtGIz0JybI6Rfh8yEdrWvg5b7yRnrALrqkLnbJ4Uv57uc7zg=
+	t=1783863368; cv=none; b=eumuH2cwS37TJLpvTCWOBosxFqGfv3C5x9e3qD2AalJ5sqRlOuhHD11eb/ft+dIpXFULQqLLye6IuQheOkP50wydc7ZBoYprKspzRHnitsQCnLhWDuILipxYFgZFTmrW9jlbVxC9zCYe9vQJ+AXQQ7iWW2TC0KfmfijZabdLk00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783862924; c=relaxed/simple;
-	bh=kks46oO85WOO3UgKJUZ8Xqq7/rbfF6oApvMyVVYvz8A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KTQ+PJTA4SauthXmTHEfxK37F02JZzxBaNR95bAegrJaXYaB66Op0F3sgfF+FeDAqtZ6eSRcxuLHA1s7lbn3r3ntNGi+ZXnTNhj9uWFNTsb3mYOD6NKg9oSXIT1PIOWjeiRAHjBhhMr7xhiDrdBsejGLzqMlXKjN7J6f/ewMwcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KdRl+IAF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IlA/BRZ+; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783863368; c=relaxed/simple;
+	bh=CGCnA+ftoI31W3/3U8tdzCcWaUyIDFGeSjtfLmmv+3A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FMrnF9FwHlccmUoB9uc5snJk4LR1RvTEMRrhVmK6RJnc4uFELV8KJlTh0OE0uNOowzbLDsN3VzTkgfYJs/gMcZMDpoKQCdfNGR1XxmfTtvyCNfbjx4upc+5s+arvQ5dhzGYSF561szKxcTVXgJyhwEfBj1FNftrXqPx1ZC103WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Tku6xgdh; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KdRl+IAF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IlA/BRZ+"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 43D72EC00E3;
-	Sun, 12 Jul 2026 09:28:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Sun, 12 Jul 2026 09:28:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783862921; x=1783949321; bh=/Br9iQJLfL
-	1I/ddcGW4YGWMBXscjYxgcxcSwYkwEP4M=; b=KdRl+IAFAFLBHrTrWjPXzpaGr0
-	1ahchPfgmsbehUGR9+mjC7aNOOEsDobpQSJiOpdp378LHR98zeZmbAZQ/PXRne/o
-	f+M3TxTpYIdcNkqwN2JVt+g8Gp5jaKfgKTPqClFbXUFQyQOcv/mXLV11Eqatl140
-	Pq4KoEf0WUdtkUPWJuanGX9ImRU4ZfwZprf3yITMME1HJLNtmPNYH+gF/EYZMRxD
-	Dfhgp5a+7nvNruMahklynQ5K1O2s8aYX2DU5cLuUDnSPm/P82lEaeyN3qLIDM4Ku
-	FIpvhuzjSpJOBZExjssz1ln12V/k8zC83n8E5XMi8Me/dWvoj8ZI2Vg8Kr9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783862921; x=1783949321; bh=/Br9iQJLfL1I/ddcGW4YGWMBXscjYxgcxcS
-	wYkwEP4M=; b=IlA/BRZ+w7cHydGSl1pO14psegOZEsQkdwzEMkAWMxVNom7j82B
-	okO/QrdSCr3GeszeWXjqBiJtp19QBd/HchpMat8DzEdEAHR+un5/F+bDQq3uo8uL
-	6JnHoLBYufQYJf23lf1o4DRFIm941m7ZgHcFCJGeVt/BXmmRYpeomsvTmnrci9Er
-	Kku3kwvHWECy0ww9Qot0b0mfCQUNLBx6nxjeIl21OFgsPZX88a7dP3mmkcGViO+5
-	1Re2XVy9s/M50YYkJH52iE7AqGP3f14gumIBWCTkNfYpMvdhScFo0qsf6Z/4QMlg
-	nGerseBDiZTGnP2UwelhKutULMi9T9cS6zw==
-X-ME-Sender: <xms:iZZTapI2OkPeTa3rhKjJpeqgenSUHi2jmmHlERB17Erb8LKhG_j31g>
-    <xme:iZZTaslfOomRe5VaasFNqXXj-PmRGU0NBGIg-4vYX-Gh42wG_rYMJBYSbYox1GnRI
-    29K-dCyZMlvRBISLX3hBczd-_sftq6zd0xRLBLyaco2-ju-Tom2_A>
-X-ME-Received: <xmr:iZZTavFms6-YqeWhzU47eNM5cDlPkJ2IY0XRjJcXDqP-xoQo79-r8ibDXVOyvU9C2kpwq4zQDYLlxuQTSqJ7hyQK5Nh583r9XexHs4g>
-X-ME-Proxy-Cause: dmFkZTGvcWzblz3V/XxkSce1ZAJXcu0WFWFyMky/Ok3mgsqcN9s4ZidkiJVEBQzhdQ17SD
-    Sw/sAXTq78JQEsgFkDbQ2VevbAKQODyGiecftWeGvom+U664dqhu8lK+bxyRZiFOL8t3hN
-    FO5bnb6clOU/64pWSsi636G6zbIMXk0/No5/lmgyphmAVLhvli4Jzr3fuCtZSQjeHK3cZA
-    WWviFicqZ+HBRAZOugQ/qOuWibi8lT2LnVdTgzROtWHGyHDimnhAM/4OEhFsRgZnNA3N9R
-    at0b8LDDRSw4nX0m36pIYqlY7CGsL2k2nUD+DAp8zafPN+pi9XyS8Y05+rvSwtqGYJm4f3
-    CVoZAkyDMDbXUv9hEUbiCVvgnfaffOl03WDCO/J0yWzoqRWU47LlTf6y/o070TMsZiPsot
-    rYOQPOtYAWGKqGt4hWuYupB+P5b99kC6W2Q3FcthYhCMTcIMWsLy/JjSnnD2Mwe8x4cKId
-    Cq/oR9bT4ORjZrVpjLFOn2jsSqCoGKpG2HedfMDZ95WRl0hxB6MvASjxYPAfnTf4AB9Z1m
-    /mNn42pOTp601zGDFKJMqO4nlF6OoeKd4TvFpAX4dlt6jkv3rkZsIG24nhCt3vpuiBWQLI
-    CySsI2eNuEQhsBG2Ofg/A+W7IB3q8bQ9uJk6moduWi9SFaGUduBWpJ74G+Tg
-X-ME-Proxy: <xmx:iZZTakHe1coqoJjSfrjrIO_OUFZxqhn4SbViadhdceLQp72s3CJojg>
-    <xmx:iZZTakODCy8LLIrRJzx2xQo3iFRcXInXX0vAC3WuZVqnTiNRQebPLg>
-    <xmx:iZZTarGWKobCRe6JCg9aMkxQNISnrzgQ_KEA66kmZTJ1V3OmfYmY3g>
-    <xmx:iZZTajM5hDoOdFSWbvtmZaRkyp-tdFxBv0LUCXPlOnH-lIs2Oyw28Q>
-    <xmx:iZZTarxtmMPb5pxuXSJUAJx0fFmklqxu8hv9FkcVTdkOrWCjWVnkSo4K>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 12 Jul 2026 09:28:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Simon Richter <Simon.Richter@hogyros.de>
-Cc: git@vger.kernel.org
-Subject: Re: "discard!" commit message for commits that should be removed
- while cleaning up the history
-In-Reply-To: <07c9811e-41db-473e-ba0a-cdcbf8187be7@hogyros.de> (Simon
-	Richter's message of "Sun, 12 Jul 2026 14:54:48 +0900")
-References: <07c9811e-41db-473e-ba0a-cdcbf8187be7@hogyros.de>
-Date: Sun, 12 Jul 2026 06:28:39 -0700
-Message-ID: <xmqqbjcc72wo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Tku6xgdh"
+Received: from [10.0.2.15] ([195.99.11.174])
+	by smtp with ESMTPA
+	id iuLbwOmhp9RfhiuLcw8O31; Sun, 12 Jul 2026 14:35:57 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1783863357; bh=NXAKNH3uEP+GQSksn+iJyXE1Tn+1vDKFotSrVqtxNJc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Tku6xgdhPMgU5LYHiqmhdYrelXQKeSTnNQZu6VsOh8iTWEGWswXZhIwy2xlQ4hpIV
+	 j2UH38XDXxmZQvRjR7XgSZXlY6ecnAOIorDkvcLN9ITJXMqvsCZCNb0Bd3hFcr6mg5
+	 5oF7GOUWukyqrjjQrg27sht1jxWZNsgoPiGMMktgQsj9tN/ZR3lnqdlSflxt6UPUn3
+	 6F6Rhw1HvMSfcXJXOc9vdghHGCozjrEFs5xyI2xJPtDljHdzhUM7bivSHd5HAsxXqN
+	 e0TZeEAk+QEZRxBDWS/Mg5A4nyEgO2PNaA3xrGeTdAau1VwbpgNiJigSMssDO4SXoE
+	 wEqUJTCJz3ZWA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=S5R6w5sP c=1 sm=1 tr=0 ts=6a53983d
+ a=rWEfxJwGD0TuYe46u5FB7A==:117 a=rWEfxJwGD0TuYe46u5FB7A==:17
+ a=IkcTkHD0fZMA:10 a=jE0bcUDjuPr2hFfo9tkA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <94e744f1-12b1-4ba4-8f9b-266c1642b5ff@ramsayjones.plus.com>
+Date: Sun, 12 Jul 2026 14:35:55 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Makefile: fix up lib directory move
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Patrick Steinhardt <ps@pks.im>, GIT Mailing-list <git@vger.kernel.org>,
+ Junio C Hamano <gitster@pobox.com>
+References: <0c94331b-7eb1-4116-afa5-811082ad5854@ramsayjones.plus.com>
+ <ef422523-1c50-ec79-e89a-f43f02ba1ca7@gmx.de>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <ef422523-1c50-ec79-e89a-f43f02ba1ca7@gmx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfFLRcKHR3Eqf3qY0SMPa8Bp+VmMF/sBExtgDY/x5RdFxYztZz5l+adrTPCvZjyGXp9ZxFvNacy0kUlvgMQ+K0EyytjOQPLY9ZrliHxDK6aw5ruvXpI6u
+ byyLYcxl3+Je2m/2T8JzD3szbXGWLa0JVS2ZH4USBytiDdIi00TQ3AhUrFblhnVC+PEJzK8V8/f/9hUd+p5rQJCmvq5zZ+x/bRE=
 
-Simon Richter <Simon.Richter@hogyros.de> writes:
 
-> I often add printf statements during debugging, which obviously should 
-> not end up in the final submission. My usual approach is to commit these 
-> immediately, into commits with a message of "DISCARD", so that when I do 
-> a final rebase pass, I can remove the debug code easily.
->
-> Would it make sense to add a mechanism that autosquash understands 
-> directly, and that could be checked for by a push hook or CI rule?
 
-The sequencer machinery used by "git rebase [-i]" already knows how
-to react to commits with certain subjects.  For example, a commit
-with the subject "fixup! <title>" causes that commit to be moved
-next to the target commit, and its "pick" insn is turned into a
-"fixup" insn.  The "git commit" command itself helps you prepare
-such a specially formatted commit title with options like "--fixup".
+On 12/07/2026 11:15 am, Johannes Schindelin wrote:
+> Hi Ramsay,
+> 
+> On Fri, 10 Jul 2026, Ramsay Jones wrote:
+> 
+>> Commit 9759608622 ("Move libgit.a sources into separate "lib/" directory",
+> 
+> It's not your fault, but this commit is no longer reachable from any
+> official branch.
 
-So, it is not totally out of the question to add support for
-noticing a subject that begins with "drop!" (rather than your proposed
-"DISCARD", purely so that it matches the existing "fixup!" convention
-that instructs the sequencer to use the "fixup" insn).  This would
-automatically turn the "pick" insn into a "drop" insn when "git
-rebase -i" works on a history segment that includes such a commit.
+Ah, yes, sorry about that! :(
 
-On the "git commit" side, we likely do not want to add any support
-similar to the "--fixup" option (for example, "--fixup=drop"), as
-you can run "git commit -m 'drop!'" just as easily.
+I wrote this patch first, on Linux, when 'easing' myself back after the v2.55.0
+release. Then I found the cygwin failures ... :) When I eventually sent the cygwin
+email, some days later, I just tacked this on without thinking.
 
-Having said all that, you can use a custom GIT_SEQUENCE_EDITOR that
-notices commits you titled "DISCARD" and rewrites the "pick" insn for
-these commits into a "drop" insn in the todo list, without making
-any changes to Git.
+[Usually I send these kind of 'patches' within hours of the branch being published, so
+that commit IDs are still 'fresh'. However, even such a small window is no guarantee,
+of course! :) ]
+
+> 
+> Maybe a more stable way to refer to this right now would be to name the
+> topic: `ps/libgit-in-subdir`.
+
+Indeed. ;)
+
+>> 2026-06-22) moved some files into a lib directory, but forgot to update
+>> a sparse dependency in the Makefile, resulting in a sparse error:
+>>
+>>       SP lib/pack-revindex.c
+>>   lib/pack-revindex.c:78:17: error: memset with byte count of 262144
+>>   make: *** [Makefile:3446: lib/pack-revindex.sp] Error 1
+>>
+>> Add the missing 'lib/' prefix to the pack-revindex.sp path.
+> 
+> That reasoning and that patch make sense to me. Thank you!
+> 
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
