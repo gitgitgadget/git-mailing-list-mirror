@@ -1,128 +1,258 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B65B20D4FC
-	for <git@vger.kernel.org>; Sun, 12 Jul 2026 14:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF961DF261
+	for <git@vger.kernel.org>; Sun, 12 Jul 2026 14:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783864960; cv=none; b=MIvQov2m9q89trpE+2va/6efON+r7IG7t5BCiGAhpVXdzth5IGXQk+Ko7Uian3AsNO/wKiNyeY2q0U6g+Iz9qkWjKBXcZWiHrl1cC2kiD8uiweDh8kGFxx2BDkdQ9F7VXr5XXNKjOI+bGdRyO7WqS4GzmBh09jJKOFBDUq77G6I=
+	t=1783865554; cv=none; b=vClApvQV58l+KXfX6askElizD6nBX1n/iOMKjkiwSSQUjmRrzvjAxSIiIIpxAfBvNrA3tj8N5TauhaQQ3EuD1PlUQoB+iThl0edZE1JOGb+dEPzcq1V52UoRt6g8nqubP74lK7Cugi3REjeTNwNc8OzR1qOOfTiAVBb0yFuwCdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783864960; c=relaxed/simple;
-	bh=Ep6eJtzL11H6F64WXe+WCKApN7ctdq4X5cbRrbLBA4Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PYYVPNwcI6nUgK/gWSZou5XZUJdto0ttGO2cZzvlNG6fZAyV3GenxF81gU88XvnzXmf7Mw1oCG2Ht66NNwvFGp/MYplHWsKLOhQALND+MhzHoIHCPt/DbO8Ew3dU4gFP0jaKOpNszdVla3mhiX0ripzqgHPWgagfyDSVYyaHQi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jAC53weD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nSPQG0K6; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783865554; c=relaxed/simple;
+	bh=Q3UP1LTOHI1HRFDFUt+Qr6kI8cKfWwYujQ7vrq15vDU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=qwblcGFK/Jvpjbp/C+YeMZ047vi0FQJKNmaOj0qA+hK4csVBrtQ20jZNOP4ei7SeVyLd0Ty2To0+FC1kP12nUmLJoqzSPX24eZD9mfpNnoqb/6dzhRYebJ3RiR3JFAoo5W6cCJA9ry/SF706yyvDedws/I4zrA7lVgKAyNcv9oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cWFMfYbA; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jAC53weD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nSPQG0K6"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3623B14000F9;
-	Sun, 12 Jul 2026 10:02:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 12 Jul 2026 10:02:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783864957; x=1783951357; bh=5Eji3XmrIC
-	H1Tbz1Zeo3q0wiTvyP8Buj+LkUgYVNP0c=; b=jAC53weDczSFMm3TDEv/piNMoD
-	vEgT0gQLlwB2nmFPJfCGgyDrLsp01UscXW4qzcqmwurqx2REJQOShWrd/MJg9HCp
-	hDgll3mCZlE7THe6A7ZZ5P9f/Z6bzgkjIrJpccIxlZFZFjupMVYE/5OaFRou88Uo
-	Aulu0g7p3YvEy3jIN2ZkIls2g5SEa5n+O9b4wanNaeOxbAlj5af7OqyxZOd3kX7W
-	wP5wyrIpVH52+2ddeXAhVYrn4LI3jMWf5yjpnx9m1fcS0LgDHBv3jWerBrHzuL+/
-	GUXoKECb28XLJdFTReJ/LFbRgcI1KfTemWwoiRJKgNSMCubrh4lm8YalRrjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783864957; x=1783951357; bh=5Eji3XmrICH1Tbz1Zeo3q0wiTvyP8Buj+Lk
-	UgYVNP0c=; b=nSPQG0K60tNuHqqz/+rT1vuT5aLSXuVgC/ps6kzEv46CPUi+GQ/
-	rOk2ipTDUa1JvRAlwbmJ7qOqiL+3Z8KnibqLXp8T0DMAbpz8LbxDQIgNUaFtNIsx
-	8RUOSephNk/ycjRpWicAsjTY14gogqdSHjKUyxu5bMRUxDKr/X9q3QxKmtd2VB/O
-	Yqt+LzapQKv7BZeRi/jtOjgCmdiYaG3DoQre6PVMc2LaslY2HIS4CK89e5WRySMa
-	qpxMDv1s9cGFM4Eva3VGdcJk7fAPzVETT3CBVf+9XmtczhmBytWhiSNqsqIiW+5Y
-	27Iodxtk4Igl3/sQRNfZhgNauzvXLbjAonQ==
-X-ME-Sender: <xms:fJ5TatGWFdfaxWHz_li5kG9weWZPNriqr5SmfdoG013qN7BmTQhg0w>
-    <xme:fJ5Taj0n_sVGlTT7COygxkkVDRtCV6R6JfPJYZJm6PniTvck67eRDVM44dvdtpMrL
-    TayzdPVDqVnCVg6XQBZQS03xGfh3kfEa-OX-2V8CtbtzB1WjJjVAw>
-X-ME-Received: <xmr:fJ5TavM_yetxVTH-1efthjBarfsqlulekI1AQ2fse---BDz_l_HDVSH5bB7d9Ki8KJGVSGk4-tvTikL1raEhD1n5_9Tc8TVm4yPSE1k>
-X-ME-Proxy-Cause: dmFkZTGHt3FLkMZ6ZLHHjHbvrIuawf8ziTYSg6xuDYBhR3g7ZvLlr3HCuSgdIL7feJpz8L
-    C6TEps7HFK9MHLqhQ58ZbA9XJYFQjmRjG0OvcdQ4KEjZLnZ3MdfgQMpMRuECgeKwLnFAIK
-    qoQI8DbNgHfuOt6mn4mT6hRwKPY1gBxVv9pXx6/6eIMt7+ePrpPMVK6PMnesV6wUB+DaIJ
-    OGeRXbHfAYgiOKdFrgKXDmpSsF406azxamqd1ymkpxo8+hUBzVQXvD0KhVFITf2yTLVaSQ
-    0EAVn14LU8J/NfcUYbBw29CEEZXp8h6zZDVKapGbzxOUP/z1WMAPKZEd4z1NGP/2ovbvif
-    ACBH2Zsyu1esGpQ7ZrefeHyQrvJumEiwlnDmgeTrrhxGxkWhVSY4yHOf75Glm7hGso93Vn
-    A7oBIsrlCIjtYJZnDW9lmEYBGti1tuAVmTyXmgArQwDzO3gUGgIdov9fJd5+qvmyzB/3Oh
-    KQ5GjmXWSEnQt8IOVLEAjh7hRXlHUfnGAdDGqFtRP+XrJ+/lZpv4MF3fPJqVA+bvtbvfji
-    vZpQHBhzUSDhESvO21sglVLEGntYYRAK8TFUI/Tykm2NivyfDqQLjMEt1LfQYDbXba/ScS
-    zDNJiZXP2lCJj9i4kIt0VaN6HvML09dl6uv0d/6DfAAVmPJhFyd6hwKiBsBg
-X-ME-Proxy: <xmx:fJ5Tai7mJObL3WT08cpONQQ0a0wg_uV2KbPEHEaktF3NqSOJH7jT_A>
-    <xmx:fJ5Tap2dJJELz-Q_noK8aGfqfcs0suoSswTwT7fp4fVhvLlzhxt7YQ>
-    <xmx:fJ5TajxrXxxUYC0qXTHiOHe-hPsmIh66iVa3ZzSLEmx_jlR5PIvMbA>
-    <xmx:fJ5TajvrC_siaXFdyBEmxNqy51rq3_2SrZE1RVKYPypMrWAA9Me8Ng>
-    <xmx:fZ5Tal94V3Ea4l967_HnavCvKSTd6q87vyMLppr1td_un60nCel_V5hE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 12 Jul 2026 10:02:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  Patrick Steinhardt
- <ps@pks.im>,  GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] Makefile: fix up lib directory move
-In-Reply-To: <ef422523-1c50-ec79-e89a-f43f02ba1ca7@gmx.de> (Johannes
-	Schindelin's message of "Sun, 12 Jul 2026 12:15:23 +0200 (CEST)")
-References: <0c94331b-7eb1-4116-afa5-811082ad5854@ramsayjones.plus.com>
-	<ef422523-1c50-ec79-e89a-f43f02ba1ca7@gmx.de>
-Date: Sun, 12 Jul 2026 07:02:35 -0700
-Message-ID: <xmqqbjcc5mro.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cWFMfYbA"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-47db714766aso1621004f8f.0
+        for <git@vger.kernel.org>; Sun, 12 Jul 2026 07:12:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783865551; x=1784470351; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Z1/CF7KUHa66iEJZcGS5QGabWTiVX7GSiKvMUQbV+Co=;
+        b=cWFMfYbAkn+jkpg8OtZEjP84UnlXdpDgDqEMmvrtbuQibk68kNejgBhaGxlgmmOj2d
+         X3sLDC72Hk1/AvmQ5bgM8kcs6C+pSmduiGMg1BUY3JwnzsCv9t3UwGblxULTmH/q3kV4
+         tM6KJD0oK3lXt+xLFwCF35vLKMD4lGPTcrv6WvYRM60hz1trCco/qfYNA8Wuc0AqPf2e
+         4MaxLnn5h+pQktqD4DSjVzQlVBN+qdUia5fzgSZOyE3OB9/HO7cMV/ZKFbvL/jv/HWLu
+         0GgqQ/xGEaWpDJHAXTy5FGjh43tg8sBC1y9r9m4GuRXKDzc4Mvcd+ywRrSTzMAjzcLh4
+         KZaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783865551; x=1784470351;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Z1/CF7KUHa66iEJZcGS5QGabWTiVX7GSiKvMUQbV+Co=;
+        b=WnHbxm4LvT1CuIxNO177JY27WnodV/wWiqv7Xtx6/64wT5aZZP+h9hX8R+leL9xw9R
+         3wCNC9f3qKYujxpqYCjb/HxL+yFXMkM8XkdLGojtpKEZPj2crUK7p9v2i9mONVMfGfRB
+         LdkOmVcPCMwixbYSBrvxUZB8+bwfYzXZqI11RnnoPTDT5op+Bp41/IbWHSyxqMfWCz9w
+         PXixK+G+7dgAGv6ofSKgjKWrBfOTjg/eMWhyFEqgpVKhP7ZhrS48CTWoRcVcGouh2XVk
+         JWuv7Xpf79ua5p4lZTkSu5yCV4J5+H/8CK1L9yFqv7gEU26UazzzThXZApGhc+8AShhX
+         9WBg==
+X-Forwarded-Encrypted: i=1; AHgh+RrEFMp3C6qkQqStSvq+21QN9bRloUwDLamZLnhC5Jdjb2HV7Iv+rTlR60YhNBMyYcu3VSc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYrAkkVXuciyz5q7NuZzc5jYhyI3CjUtU7AivYi9VYJ3l4kFYi
+	vSUZJVIx80uRWdMkgZIm3ljWls3j6BRWS9mICftQFOOqUVxdDXJ99zJQ
+X-Gm-Gg: AfdE7clKhiUePPGVArgi/bouFqOs42CKbqAoxJTDd3+L5kNvYHjkO2v3PCXwhxcCMzY
+	KzDNaiJ3KcD/TNI9u00kQiKKE9w+mKdJk7l3qcmffvxcSwfjMfahrK+FnN0tE5FZVaWd8mnaYy0
+	rWosy5Oizq+oNgvKXNV+KbnMSqAgdmA8zdgx17XOGb6RZY97E25wgb+1z3CFJ6aUwjg+nbqysSX
+	w1iW3QysLAR9lhv1ZlRioaN7Qh+CeXM0YlLnBvmcUm4e+KxCEsldbW5N26FidVxPtCOM1b8QBmy
+	siwkSkp2zrphvmEMuw4UIhyFcIOwRhCS+ao/ol0zNw5P6jBSf2j0hiBftV5RKHVT0ZFYa54E6FA
+	di+FyPD3vTx6wN7cTcJvUqei0EZ8GBjXl5nEkqsh/MOkm78rGhZPWmQXAn38umlsXQezxBWoYzw
+	zu9jlSBwz4ICKYduhsI4tEVMGZYdU+kQg9KnBh5Dfsc2ZDi0MpHnX9t3JKUTP5GfcHO4ykqn2P/
+	VE/gs3jgshZWR/T7AWZBJs7A11J2vLlw8kfrN1L9S626AOE2yoaUCun75DgD28VITQ5/tQ9kWWu
+	bYN6qcVljBKTZ74dzEqgqjxlTwuUpPmCoezy9AAIkmevw8lw9igYJDKpsoww822ycYmRoNmbQY5
+	DZQKI
+X-Received: by 2002:a05:6000:250d:b0:473:fc10:f675 with SMTP id ffacd0b85a97d-47f2dcc0fe2mr5480850f8f.18.1783865551235;
+        Sun, 12 Jul 2026 07:12:31 -0700 (PDT)
+Received: from localhost (62.174.240.101.static.user.ono.com. [62.174.240.101])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa09608d4sm78161198f8f.25.2026.07.12.07.12.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Jul 2026 07:12:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 12 Jul 2026 16:12:29 +0200
+Message-Id: <DJWNK8BOFIAW.3VVAROHMKVDWE@gmail.com>
+Cc: <pabloosabaterr@gmail.com>, <cirnovskyv@gmail.com>,
+ <szeder.dev@gmail.com>, "Christian Couder" <christian.couder@gmail.com>,
+ "Ayush Chandekar" <ayu.chandekar@gmail.com>, "Olamide Caleb Bello"
+ <belkid98@gmail.com>
+Subject: Re: [PATCH v10 4/9] environment: move pager_program into
+ repo_config_values
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Tian Yuchen" <cat@malon.dev>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20260709161145.13349-1-cat@malon.dev>
+ <20260712111734.1073514-1-cat@malon.dev>
+ <20260712111734.1073514-5-cat@malon.dev>
+In-Reply-To: <20260712111734.1073514-5-cat@malon.dev>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Ramsay,
+On Sun Jul 12, 2026 at 1:17 PM CEST, Tian Yuchen wrote:
+> The 'pager_program' variable is currently defined as a file-scoped
+> static string in pager.c. Move it into 'struct repo_config_values'.
 >
-> On Fri, 10 Jul 2026, Ramsay Jones wrote:
+> The configuration parsing logic remains strictly within pager.c to
+> respect subsystem boundaries. The read/write operations are simply
+> redirected to the repository-specific structure using
+> 'repo_config_values()'.
 >
->> Commit 9759608622 ("Move libgit.a sources into separate "lib/" directory",
+> Similar to the recent editor_program migration, no standalone getter
+> is introduced to keep the code minimal. The dynamically allocated
+> memory is now managed by 'repo_config_values_clear()'.
 >
-> It's not your fault, but this commit is no longer reachable from any
-> official branch.
+> On top of that, fix a memory leak in pager.c while we are at it.
 >
-> Maybe a more stable way to refer to this right now would be to name the
-> topic: `ps/libgit-in-subdir`.
-
-Yes, citing the object name alone would have been useless.
-
-On the other hand, it is good to have it as a sanity-checking
-clue.  If or when the patch does not apply cleanly, we can tell
-that the fix-up was written based on an older iteration.  The
-"reference" format used here carries more information than the
-topic branch name alone, and with the commit title, we can run
-
-    $ git show 'origin/seen^{/^Move libgit\.a sources into}'
-
-when 9759608622 cannot be found.
-
->> 2026-06-22) moved some files into a lib directory, but forgot to update
->> a sparse dependency in the Makefile, resulting in a sparse error:
->> 
->>       SP lib/pack-revindex.c
->>   lib/pack-revindex.c:78:17: error: memset with byte count of 262144
->>   make: *** [Makefile:3446: lib/pack-revindex.sp] Error 1
->> 
->> Add the missing 'lib/' prefix to the pack-revindex.sp path.
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+> Signed-off-by: Tian Yuchen <cat@malon.dev>
+> ---
+>  environment.c |  2 ++
+>  environment.h |  1 +
+>  pager.c       | 26 +++++++++++++++++---------
+>  3 files changed, 20 insertions(+), 9 deletions(-)
 >
-> That reasoning and that patch make sense to me. Thank you!
+> diff --git a/environment.c b/environment.c
+> index a65d575af4..975c9cb9eb 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -725,6 +725,7 @@ void repo_config_values_init(struct repo_config_value=
+s *cfg)
+>  	cfg->attributes_file =3D NULL;
+>  	cfg->excludes_file =3D NULL;
+>  	cfg->editor_program =3D NULL;
+> +	cfg->pager_program =3D NULL;
+>  	cfg->apply_sparse_checkout =3D 0;
+>  	cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+>  	cfg->trust_ctime =3D 1;
+> @@ -742,4 +743,5 @@ void repo_config_values_clear(struct repo_config_valu=
+es *cfg)
+>  	FREE_AND_NULL(cfg->attributes_file);
+>  	FREE_AND_NULL(cfg->excludes_file);
+>  	FREE_AND_NULL(cfg->editor_program);
+> +	FREE_AND_NULL(cfg->pager_program);
+>  }
+> diff --git a/environment.h b/environment.h
+> index 8178ebab76..39b6691b47 100644
+> --- a/environment.h
+> +++ b/environment.h
+> @@ -92,6 +92,7 @@ struct repo_config_values {
+>  	char *attributes_file;
+>  	char *excludes_file;
+>  	char *editor_program;
+> +	char *pager_program;
+>  	int apply_sparse_checkout;
+>  	int trust_ctime;
+>  	int check_stat;
+> diff --git a/pager.c b/pager.c
+> index 35b210e048..bc55546670 100644
+> --- a/pager.c
+> +++ b/pager.c
+> @@ -5,6 +5,8 @@
+>  #include "run-command.h"
+>  #include "sigchain.h"
+>  #include "alias.h"
+> +#include "repository.h"
+> +#include "environment.h"
+>
+>  int pager_use_color =3D 1;
+>
+> @@ -13,7 +15,6 @@ int pager_use_color =3D 1;
+>  #endif
+>
+>  static struct child_process pager_process;
+> -static char *pager_program;
+>  static int old_fd1 =3D -1, old_fd2 =3D -1;
+>
+>  /* Is the value coming back from term_columns() just a guess? */
+> @@ -75,10 +76,15 @@ static void wait_for_pager_signal(int signo)
+>
+>  static int core_pager_config(const char *var, const char *value,
+>  			     const struct config_context *ctx UNUSED,
+> -			     void *data UNUSED)
+> +			     void *data)
 
-Yes, indeed.  It is queued on top of the topic.
+Could this change behaviour that a caller expects?
 
-Thanks.
+(looking at the hunk below) we are now using repo_config_values() which
+contains the condition 'repo !=3D the_repository'. This means that if there
+is a caller that sends anything but the_repository, it will BUG() out.
+
+Before this patch it would have worked, it worked because callers were
+sending the correct repository. Now we enforce it.
+
+If we check the callers we can see that everyone sends the_repository,
+so this new assert is fine and prevents sending submodules by mistake.
+
+Makes sense.
+
+I think it's worth mentioning that on the commit body/function.
+
+>  {
+> -	if (!strcmp(var, "core.pager"))
+> -		return git_config_string(&pager_program, var, value);
+> +	struct repository *r =3D data;
+> +
+> +	if (!strcmp(var, "core.pager")) {
+> +		FREE_AND_NULL(repo_config_values(r)->pager_program);
+> +		return git_config_string(&repo_config_values(r)->pager_program, var, v=
+alue);
+> +	}
+
+Ok. Now that pager_program is not file-scoped we drop the UNUSED and
+pager_program now lives in the per-repo field.
+Then we change the address where ->pager_program (which we access through
+repo_config_values()) points to.
+
+FREE_AND_NULL() is new, before this patch it must have been leaking,
+good job.
+
+Similar to previous patches, let's change the pattern to only call
+repo_config_values() once and use the pointer it returns.
+
+> +
+>  	return 0;
+>  }
+>
+> @@ -91,10 +97,10 @@ const char *git_pager(struct repository *r, int stdou=
+t_is_tty)
+>
+>  	pager =3D getenv("GIT_PAGER");
+>  	if (!pager) {
+> -		if (!pager_program)
+> +		if (!repo_config_values(r)->pager_program)
+>  			read_early_config(r,
+> -					  core_pager_config, NULL);
+> -		pager =3D pager_program;
+> +					  core_pager_config, r);
+> +		pager =3D repo_config_values(r)->pager_program;
+
+Same as above, let's call repo_config_values() once.
+
+>  	}
+>  	if (!pager)
+>  		pager =3D getenv("PAGER");
+> @@ -302,7 +308,9 @@ int check_pager_config(struct repository *r, const ch=
+ar *cmd)
+>
+>  	read_early_config(r, pager_command_config, &data);
+>
+> -	if (data.value)
+> -		pager_program =3D data.value;
+> +	if (data.value) {
+> +		free(repo_config_values(r)->pager_program);
+> +		repo_config_values(r)->pager_program =3D data.value;
+
+Same pattern. This also frees, but the log says "a" memory leak is fixed
+in this patch, should we change it to two?
+
+> +	}
+>  	return data.want;
+>  }
+
+I peeked at later patches of this series and the multiple calls of
+repo_config_values() pattern keeps appearing.
+I haven't finished reviewing 5-9. If you reroll before I get to those
+patches, it may be worth fixing this pattern across the whole series.
+
+Regards,
+Pablo
