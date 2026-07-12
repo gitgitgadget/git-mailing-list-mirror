@@ -1,151 +1,294 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3F532C8B
-	for <git@vger.kernel.org>; Sun, 12 Jul 2026 15:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33DF25B083
+	for <git@vger.kernel.org>; Sun, 12 Jul 2026 15:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783871226; cv=none; b=Hkb3DPRMuEafobeIIAQmLEDgHSaQfAHwpM8G6pboamQYQZyYQBlrnjqZnJmbAvJtcYzinHu1NAeYNyGZO9mCavpIYYzWD7MJpfCodZPW8v8GnehTEMawzwOHQlvTaVmDT1FHOummUGo28hsVIdIjSXapb9mecMoq0xA0qiNpD+U=
+	t=1783871375; cv=none; b=V3pJYEvMKwbbzND6FhXbYtlGa3uF5q6mYcLrDSle7uHAyrKI9YmaF29TbW5ONvbFX+sn/g/MnDM5q7e7InpOAlzteoeOmKWXjesbCqNWkKiL6dcn401iCX2PzE7dYZIbJq1OV6eMbf5ZtUVDre2L+u2KV8hqYfgqn37WpuXpT8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783871226; c=relaxed/simple;
-	bh=/VNM76b0LiXIX3r2GvjmOcyJxHZsmtpT2HKqJW3sY8w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SEFtUWkQSeTOdaWzHEGGUadqnwxZezvvh0jM6XDPovqVbc5p4/Nsdm6PbLwGbb3d8jFNfdF+cNFWYbwF8jJp4t1rgjRbbhq86wen84ZVaYujDs0OgpovYiymfKnMfP5mpO0Trk7jKqrSV6V8fqbahrYrKIEvhUJNH0VOYuH6sbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Psi/RLPt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cLKXE/a2; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783871375; c=relaxed/simple;
+	bh=TrX6sezLssPE8DW8/aKT9L+/OyqSGUSvjiraaR5ww/g=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=F7ijXSXw3epwCetElWFRAS1MxTUkcRcC/d+i+xobNpk0lznf5jus/Q/8jP8wUG+Kta9eMSMEJaBrgLj8rR/Zjx3Gfia3XS95v7ik/1OJXZZgkW+xuQTkGNLWOKc3QEA/H0Ktw51DrACagyVJKgP3wX2C77v7XI5g1COpWfimXwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bx3lzEW/; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Psi/RLPt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cLKXE/a2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C22D1400050;
-	Sun, 12 Jul 2026 11:47:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sun, 12 Jul 2026 11:47:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783871224; x=1783957624; bh=eUdr0Isv9N
-	hKtnXeigBGPCNSJ28iF1rYBz1y+owKfRk=; b=Psi/RLPtcb74puwdmtHBLPszeT
-	2NmWStSqzgjmSE4Jna636/qJRwgSIFMzM2Xt6H/ov4eCHv3omk5Z/X89UpZpOamg
-	kLPc7lYtTD/CNCEvuwHGFyV08etqYO4Iiu4nGuiRANsCw1VZTb4GydfQBED+3TiK
-	FvvlMhhEZJaSSPAf/LhMh9O8Z/CiHM9cnaV1PbyDuil81E9Mczeo9I2xyB/oeGgt
-	ZwsIH3zja2+1ntzVU0IkCZggYXisqHc/BwRJgRDAtz73/y6xxZ/muEk5gktdY9dY
-	iHF95zPmB4J91KmJmX+UI+QZNi4a5dPEhVv68Pr+ZHHxqcRYZFpsvO9YpOJw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783871224; x=1783957624; bh=eUdr0Isv9NhKtnXeigBGPCNSJ28iF1rYBz1
-	y+owKfRk=; b=cLKXE/a29PZvFKbMfBa73OWsm80UT+0UicqDZk+mMf1VfFr4GF1
-	xJedaYoZ9yl5PPhPgX+u2lhqir0+wUk92kPjXtKE7lUcnQAW5dW4CjrfuM2a2ljK
-	Bz7l3NcwNJFaBn0/kBCiyd8heDH0riH+lGHWK06f9gfSWU4h+HRc9QBRfGCjfF93
-	eodmSNXaBFYwE1mCTQh8GVdbk8/C4+PuwOXxtY5R6tqLo0u1JZuvwhYyAcfUhvdJ
-	V74qS5/DSuUc+GCRl+atpmF9N4UBnaoRB9/QP398y8095CguBXUBaVNS9LaN9Xfq
-	5iki2UVkDmI+X2IFTme+UlG/5S6IksHSvWQ==
-X-ME-Sender: <xms:-LZTajJBx5aaPn7bySLbOJlOSyfnAN4qkForDS0MEka0tVG_VLA8AA>
-    <xme:-LZTapuONeCuw8VWmQv7arGgZLHSDW0GrLkBNAd4bKz9askD3N80i2PuKB8Wqgq_A
-    qNFIRpT8t6MjxV1Nk_lndOYxymU3m-5LZLWDtFovI-pgRJbKWk96CY>
-X-ME-Received: <xmr:-LZTavXO7vwCrvT3g433G413Hx318RII9NroEnI6SLtdV5WgZIM5fBl1FeHRDkjhfyXvExHYehx4XuxlZtXnbIdrFSJpVqUV9CyM720>
-X-ME-Proxy-Cause: dmFkZTE9kgmIAxx+hHA+sVxlNd3XvdUalUh892dZeb/2fOsr1GS72EVrji+qTdAiop7ib4
-    aKAYf8uGItfzQMrJLfVXM6zonshHsFG8dxECiSpjqsCXgyP7ndH1h7FBAHvCvNLxYjsrYE
-    YQQ1VEOKklTAmXTHKvQODaryunj7zJvRerPt6VzCewi91jMD84x9V5VH5ymmYTWGCqbUmT
-    qaCeqlFqshDbaxwcIUeAxrW6oLOlvPOvyeakQIRQbD6lV8GnWcUtHs3gaPZE6639Wsj5eB
-    WyYYnklzcQy6AA1cGR0qRhoQivR8rQyzUHZ3oiwFkkihbdqHJiDdA2BZXIJxTj55gFo4nm
-    iXVRIKqIUFbFw77M8nc3RDmNWsXLeVsE1/yETKt2deVkdUb6l19HBU/JsKA0x/vl07ABDU
-    xo5rF9sC0O2mWGeD2cuf5TalggafFrli/4xFvF0EG3NltlnkeXvQtf6usY6udo9w8p0IiV
-    qoDqI5axyQAMegyN6MzYO8H+mOK7YZBVHQsqb5f1NHOmfQ027oegMCsBUQARalpq0dkHmU
-    vPXEYpat4stdLUoJ2o/r26HjWJzFQSWtGWV6IGuj+Qxcb3tf/tC9mfD4J7QUCUYmDuYutE
-    o/ulFjwD9udJ7inamxxi+XQODw5dba0N0FNhG8/nS/dsKLsXQG9+Vyt05Cxg
-X-ME-Proxy: <xmx:-LZTasjxBo0HVZEztVWOuJdiHS-jmhir807ktn8wW__dK3jSeiTtlw>
-    <xmx:-LZTavrRDh_Ey9M1tSO8dV2zrnTvRt73scYOp1_mKCrJDafhI1EwvQ>
-    <xmx:-LZTaqG5D_rB4wa6umgARADbAGUf0-ijKOcDBswLReApspTw3rxuSQ>
-    <xmx:-LZTas6r6yAfrr2rHyxDM7swbcz6Ql6696K5hiNOvd23TZ4ugPXuGw>
-    <xmx:-LZTagR9B3YfcJYa1_9PIxUh2y0WG1jeG0nJQv3yjoONtqAAXfGqDrQt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 12 Jul 2026 11:47:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  pabloosabaterr@gmail.com,  cirnovskyv@gmail.com,
-  szeder.dev@gmail.com,  Christian Couder <christian.couder@gmail.com>,
-  Ayush Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
- <belkid98@gmail.com>
-Subject: Re: [PATCH v10 5/9] environment: move askpass_program into
- repo_config_values
-In-Reply-To: <20260712111734.1073514-6-cat@malon.dev> (Tian Yuchen's message
-	of "Sun, 12 Jul 2026 19:17:29 +0800")
-References: <20260709161145.13349-1-cat@malon.dev>
-	<20260712111734.1073514-1-cat@malon.dev>
-	<20260712111734.1073514-6-cat@malon.dev>
-Date: Sun, 12 Jul 2026 08:47:02 -0700
-Message-ID: <xmqqfr1o43d5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bx3lzEW/"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-4629051c9d1so1245126f8f.2
+        for <git@vger.kernel.org>; Sun, 12 Jul 2026 08:49:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783871372; x=1784476172; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=51xr8bL/xng7vcjc4jmvFuX+Kd5sEh0EYUBACBR6s5U=;
+        b=bx3lzEW/B4gFPjQ35Ooczi0oh3LJqeBUwYlUYYpNuYw2gTz/cNYHndtzhefT5HyeVJ
+         to2X/RPLMupt5yIDgxMM9mIJl3cSDSrynjK8pFbB92eVV9+PZ0l1wCdswEJ+7ntp8AH5
+         SS/VLjBcnZMXAPOT/Vo6YwQq8cdUUB6bnbPu+hVLxvDt5T30IM0z3FP3f/KRG+X/Aga1
+         b05SHcmPMLv6jC2RL6AXimjRpcKvbKW0UpKMMjkD0IuBbd4typIqE3Wu4qp0HJI1rlcE
+         NGwCKXPA4SLWwk1pwbEWJCssjW7Y+Ra+HNftemr/Hu7kkfncLHA+ROCC1r15dvzlhpF+
+         2CjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783871372; x=1784476172;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=51xr8bL/xng7vcjc4jmvFuX+Kd5sEh0EYUBACBR6s5U=;
+        b=G7abSpd1BvVZwTjeUjml9yA79gIIevszptANWJBbzB3YscK+BLr0uMYpWJQDWnaerr
+         6D7A6rJ6RPliVpAg1WpBhKk/afVeLeYtyetwLeO82q2hayT28rsAivTNGBuH1d8pOTPE
+         IEKZkPtEpiC4f/eK6Sqg31xUS9UQjWx+qS5EmGs88aRbukWidMbsVMR3QUEBZ0D39+og
+         LsyA1mhTwXddBG05XsWZKjWg9ao93Z/YXctGK9BQ2O9h5aL9o0rkcVMLQJHtKad5os6e
+         gt7DKx8CPrtnZ4sQvOdsjs8lgBaVGTdn/nOS6WdCAyJXqNkkHxnwb1WV09MBA15vsHKA
+         1/3Q==
+X-Forwarded-Encrypted: i=1; AHgh+RqB+DHC1XdeoCLY/BGgVaAv8RKUFkWVAmY2NCcPCrSezYddcbHvu4yX4ro1IxGLmQqiLHk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWS39OMRG6Vua7u+kZikALL1lisA47nkirot/D2PDzKnODrGuy
+	BRVIBKgheyqFJ5rbwrYJLinyGwoSbXFAovQxraXyk7Qcsg6oYZTsYSb8SjDequJV
+X-Gm-Gg: AfdE7cnFx4V1VMSMfHYIL8PB1NFdyzR5u2ePvqPghMSCgjdn04nL/bB5gWg9IdKjvB8
+	NmQ7NRXEN/IgUAL2xA7TKMFdUNTPwSAiq3AFwh8oEAqD6CcY6LAjEqx/4IYBf5OZKH1s1kOb0O7
+	VjTUsnMFf545Sc0Lp1EPxECLvrbxfkoto9shUvhJn3vqa88hq8DY5AUvwGBO2hvU4ntL8BbERJz
+	fbT41m1/4yfmHpa9S7k6gM2HzCUKkG7bLLrk8c6HFpC0rkX+LWlo0OorFz3BBXr5iSHx10FI0hs
+	10Fkt8XnERsy617KlI1gF1ItFA3+eFCc+CwTqYhP6+Pe3LkKpzoNPW1w2sm34vDNCxG1yGrzCDV
+	7CZ+I10fzmeuQ1XQBzcGqi9tL+oPj7yXNb0XWWy1HB+1n3p0VwrEdtGqlNPk2YBGh3iuj/DVW0v
+	/kOl4ildukaO3pBttzsimMjPJRcVUmRceIi++6n090v44JgcCizZaM6Y1R6njqhwXgNYlzglz6V
+	JSkEVIsKkwDsMJohjlubrvF4wLYA8GGnKW0e6R5D3xhweTpahpuZxK8zxH4/UDIEkEKYPCcocNI
+	o5CXXCkiZNfP0iLcp4yVmdD1sxUgipF63wlF/8gWKvVBHlkYAIf2LRGNHOIkb8uaRfHugg==
+X-Received: by 2002:a05:6000:4020:b0:474:d7a5:4b7a with SMTP id ffacd0b85a97d-47f2dcd7881mr6492440f8f.28.1783871371923;
+        Sun, 12 Jul 2026 08:49:31 -0700 (PDT)
+Received: from localhost (62.174.240.101.static.user.ono.com. [62.174.240.101])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa0960af0sm72703376f8f.30.2026.07.12.08.49.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Jul 2026 08:49:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 12 Jul 2026 17:49:30 +0200
+Message-Id: <DJWPMI6GXV28.1LRVLX04M49GC@gmail.com>
+Subject: Re: [PATCH v10 7/9] environment: move push_default into
+ repo_config_values
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Tian Yuchen" <cat@malon.dev>, <git@vger.kernel.org>
+Cc: <pabloosabaterr@gmail.com>, <cirnovskyv@gmail.com>,
+ <szeder.dev@gmail.com>, "Christian Couder" <christian.couder@gmail.com>,
+ "Ayush Chandekar" <ayu.chandekar@gmail.com>, "Olamide Caleb Bello"
+ <belkid98@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260709161145.13349-1-cat@malon.dev>
+ <20260712111734.1073514-1-cat@malon.dev>
+ <20260712111734.1073514-8-cat@malon.dev>
+In-Reply-To: <20260712111734.1073514-8-cat@malon.dev>
 
-Tian Yuchen <cat@malon.dev> writes:
-
->  environment.c | 6 ++++--
->  environment.h | 1 +
->  prompt.c      | 3 ++-
->  3 files changed, 7 insertions(+), 3 deletions(-)
+On Sun Jul 12, 2026 at 1:17 PM CEST, Tian Yuchen wrote:
+> The global variable 'push_default' specifies the default behavior of
+> 'git push' when no explicit refspec is provided. Move 'push_default'
+> into 'struct repo_config_values' to continue the libification effort.
 >
+> While 'enum push_default_type' ideally belongs in 'remote.h', moving it
+> there introduces a circular dependency chain:
+>
+>   remote.h -> hash.h -> repository.h -> environment.h.
+>
+> Therefore, the enum definition is kept in 'environment.h' just above
+> 'struct repo_config_values' with a NEEDSWORK comment for future cleanup.
+>
+> Modify the configuration parsing in environment.c to update the
+> per-repository structure directly, and update caller across the
+> codebase to access the value via 'repo_config_values()'.
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+> Signed-off-by: Tian Yuchen <cat@malon.dev>
+> ---
+>  builtin/push.c |  8 ++++----
+>  environment.c  | 16 +++++++++-------
+>  environment.h  | 26 ++++++++++++++++----------
+>  remote.c       |  2 +-
+>  4 files changed, 30 insertions(+), 22 deletions(-)
+>
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 6021b71d66..6dc3224b60 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -88,7 +88,7 @@ static void refspec_append_mapped(struct refspec *refsp=
+ec, const char *ref,
+>  		}
+>  	}
+>
+> -	if (push_default =3D=3D PUSH_DEFAULT_UPSTREAM &&
+> +	if (repo_config_values(the_repository)->push_default =3D=3D PUSH_DEFAUL=
+T_UPSTREAM &&
+
+Can we extract cfg from repo_config_values() to shorten this line?
+If we look at the hunk below, we can see this pattern. let's do the
+same.
+
+>  	    skip_prefix(matched->name, "refs/heads/", &branch_name)) {
+>  		struct branch *branch =3D branch_get(branch_name);
+>  		if (branch->merge_nr =3D=3D 1 && branch->merge[0]->src) {
+> @@ -160,7 +160,7 @@ static NORETURN void die_push_simple(struct branch *b=
+ranch,
+>  	 * Don't show advice for people who explicitly set
+>  	 * push.default.
+>  	 */
+> -	if (push_default =3D=3D PUSH_DEFAULT_UNSPECIFIED)
+> +	if (cfg->push_default =3D=3D PUSH_DEFAULT_UNSPECIFIED)
+>  		advice_pushdefault_maybe =3D _("\n"
+>  				 "To choose either option permanently, "
+>  				 "see push.default in 'git help config'.\n");
+> @@ -232,7 +232,7 @@ static void setup_default_push_refspecs(int *flags, s=
+truct remote *remote)
+>  	const char *dst;
+>  	int same_remote;
+>
+> -	switch (push_default) {
+> +	switch (repo_config_values(the_repository)->push_default) {
+>  	case PUSH_DEFAULT_MATCHING:
+>  		refspec_append(&rs, ":");
+>  		return;
+> @@ -252,7 +252,7 @@ static void setup_default_push_refspecs(int *flags, s=
+truct remote *remote)
+>  	dst =3D branch->refname;
+>  	same_remote =3D !strcmp(remote->name, remote_for_branch(branch, NULL));
+>
+> -	switch (push_default) {
+> +	switch (repo_config_values(the_repository)->push_default) {
+>  	default:
+>  	case PUSH_DEFAULT_UNSPECIFIED:
+>  	case PUSH_DEFAULT_SIMPLE:
 > diff --git a/environment.c b/environment.c
-> index 975c9cb9eb..1a26c9c6d6 100644
+> index 41ba013c86..0080012f31 100644
 > --- a/environment.c
 > +++ b/environment.c
-> @@ -464,8 +464,8 @@ int git_default_core_config(const char *var, const char *value,
->  	}
->  
->  	if (!strcmp(var, "core.askpass")) {
-> -		FREE_AND_NULL(askpass_program);
-> -		return git_config_string(&askpass_program, var, value);
-> +		FREE_AND_NULL(cfg->askpass_program);
-> +		return git_config_string(&cfg->askpass_program, var, value);
->  	}
-> @@ -726,6 +726,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
->  	cfg->excludes_file = NULL;
->  	cfg->editor_program = NULL;
->  	cfg->pager_program = NULL;
-> +	cfg->askpass_program = NULL;
->  	cfg->apply_sparse_checkout = 0;
->  	cfg->branch_track = BRANCH_TRACK_REMOTE;
->  	cfg->trust_ctime = 1;
-> @@ -744,4 +745,5 @@ void repo_config_values_clear(struct repo_config_values *cfg)
->  	FREE_AND_NULL(cfg->excludes_file);
->  	FREE_AND_NULL(cfg->editor_program);
->  	FREE_AND_NULL(cfg->pager_program);
-> +	FREE_AND_NULL(cfg->askpass_program);
->  }
-
-The 'askpass_program' global variable has been removed.  Instead, 
-the member in repo_config_values is correctly initialized to NULL 
-and properly cleaned up when finished.
-
+> @@ -59,7 +59,6 @@ enum eol core_eol =3D EOL_UNSET;
+>  int global_conv_flags_eol =3D CONV_EOL_RNDTRP_WARN;
+>  char *check_roundtrip_encoding;
+>  enum rebase_setup_type autorebase =3D AUTOREBASE_NEVER;
+> -enum push_default_type push_default =3D PUSH_DEFAULT_UNSPECIFIED;
+>  #ifndef OBJECT_CREATION_MODE
+>  #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
+>  #endif
+> @@ -621,21 +620,23 @@ static int git_default_branch_config(const char *va=
+r, const char *value)
+>
+>  static int git_default_push_config(const char *var, const char *value)
+>  {
+> +	struct repo_config_values *cfg =3D repo_config_values(the_repository);
+> +
+>  	if (!strcmp(var, "push.default")) {
+>  		if (!value)
+>  			return config_error_nonbool(var);
+>  		else if (!strcmp(value, "nothing"))
+> -			push_default =3D PUSH_DEFAULT_NOTHING;
+> +			cfg->push_default =3D PUSH_DEFAULT_NOTHING;
+>  		else if (!strcmp(value, "matching"))
+> -			push_default =3D PUSH_DEFAULT_MATCHING;
+> +			cfg->push_default =3D PUSH_DEFAULT_MATCHING;
+>  		else if (!strcmp(value, "simple"))
+> -			push_default =3D PUSH_DEFAULT_SIMPLE;
+> +			cfg->push_default =3D PUSH_DEFAULT_SIMPLE;
+>  		else if (!strcmp(value, "upstream"))
+> -			push_default =3D PUSH_DEFAULT_UPSTREAM;
+> +			cfg->push_default =3D PUSH_DEFAULT_UPSTREAM;
+>  		else if (!strcmp(value, "tracking")) /* deprecated */
+> -			push_default =3D PUSH_DEFAULT_UPSTREAM;
+> +			cfg->push_default =3D PUSH_DEFAULT_UPSTREAM;
+>  		else if (!strcmp(value, "current"))
+> -			push_default =3D PUSH_DEFAULT_CURRENT;
+> +			cfg->push_default =3D PUSH_DEFAULT_CURRENT;
+>  		else {
+>  			error(_("malformed value for %s: %s"), var, value);
+>  			return error(_("must be one of nothing, matching, simple, "
+> @@ -727,6 +728,7 @@ void repo_config_values_init(struct repo_config_value=
+s *cfg)
+>  	cfg->askpass_program =3D NULL;
+>  	cfg->apply_default_whitespace =3D NULL;
+>  	cfg->apply_default_ignorewhitespace =3D NULL;
+> +	cfg->push_default =3D PUSH_DEFAULT_UNSPECIFIED;
+>  	cfg->apply_sparse_checkout =3D 0;
+>  	cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+>  	cfg->trust_ctime =3D 1;
 > diff --git a/environment.h b/environment.h
-> index 39b6691b47..a2e9def89d 100644
+> index 553f87adee..6a5c8bd06f 100644
 > --- a/environment.h
 > +++ b/environment.h
-> @@ -93,6 +93,7 @@ struct repo_config_values {
->  	char *excludes_file;
->  	char *editor_program;
->  	char *pager_program;
-> +	char *askpass_program;
+> @@ -87,6 +87,21 @@ extern const char * const local_repo_env[];
+>  struct strvec;
+>
+>  struct repository;
+> +
+> +/*
+> + * NEEDSWORK: It would be better if these definitions could be moved to
+> + * other more specific files, but care is needed to avoid circular
+> + * inclusion issues.
+> + */
+> +enum push_default_type {
+> +	PUSH_DEFAULT_NOTHING =3D 0,
+> +	PUSH_DEFAULT_MATCHING,
+> +	PUSH_DEFAULT_SIMPLE,
+> +	PUSH_DEFAULT_UPSTREAM,
+> +	PUSH_DEFAULT_CURRENT,
+> +	PUSH_DEFAULT_UNSPECIFIED
+> +};
+> +
+>  struct repo_config_values {
+>  	/* section "core" config values */
+>  	char *attributes_file;
+> @@ -96,6 +111,7 @@ struct repo_config_values {
+>  	char *askpass_program;
+>  	char *apply_default_whitespace;
+>  	char *apply_default_ignorewhitespace;
+> +	enum push_default_type push_default;
 >  	int apply_sparse_checkout;
 >  	int trust_ctime;
 >  	int check_stat;
+> @@ -197,16 +213,6 @@ enum rebase_setup_type {
+>  };
+>  extern enum rebase_setup_type autorebase;
+>
+> -enum push_default_type {
+> -	PUSH_DEFAULT_NOTHING =3D 0,
+> -	PUSH_DEFAULT_MATCHING,
+> -	PUSH_DEFAULT_SIMPLE,
+> -	PUSH_DEFAULT_UPSTREAM,
+> -	PUSH_DEFAULT_CURRENT,
+> -	PUSH_DEFAULT_UNSPECIFIED
+> -};
+> -extern enum push_default_type push_default;
+> -
+>  enum object_creation_mode {
+>  	OBJECT_CREATION_USES_HARDLINKS =3D 0,
+>  	OBJECT_CREATION_USES_RENAMES =3D 1
+> diff --git a/remote.c b/remote.c
+> index 00723b385e..d48c01d375 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1933,7 +1933,7 @@ static char *branch_get_push_1(struct repository *r=
+epo,
+>  	if (remote->mirror)
+>  		return tracking_for_push_dest(remote, branch->refname, err);
+>
+> -	switch (push_default) {
+> +	switch (repo_config_values(repo)->push_default) {
+>  	case PUSH_DEFAULT_NOTHING:
+>  		return error_buf(err, _("push has no destination (push.default is 'not=
+hing')"));
+>
 
-Wait, wasn't there an extern declaration for that global variable in 
-a header file somewhere?  There must also be an actual definition 
-for it.  Both should be removed to ensure no one accesses a stale 
-variable; doing so allows the compiler to help you spot any 
-leftover users.
+I haven't checked how doable fixing the dependency cycle of the
+NEEDSWORK is.
 
-Thanks.
+Similar to other patches where we add repo_config_values() to functions
+that didn't have it before. We need to check that there's no caller that
+could pass a repository different from the_repository. I haven't checked
+it this time.
+
+Regards,
+Pablo
