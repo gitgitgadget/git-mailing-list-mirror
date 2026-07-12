@@ -1,87 +1,86 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E3D28DC4
-	for <git@vger.kernel.org>; Sun, 12 Jul 2026 15:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3F532C8B
+	for <git@vger.kernel.org>; Sun, 12 Jul 2026 15:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783870569; cv=none; b=bHkWHQG/71L650B9MWRWMAKOQ/OqSdde4+64wxqtwBVR5EkyUjoJUEHgChq+MAa3TFT5UV0sgdEB2ymitkN9E+BeGE6C7A+E4D8LvWUMNJDyGJ11A1aGrM4aa6mIGOiJS0X1I/ppw+zKN7DXEMQ/fSEzd12y/MGOso70UXLwkbg=
+	t=1783871226; cv=none; b=Hkb3DPRMuEafobeIIAQmLEDgHSaQfAHwpM8G6pboamQYQZyYQBlrnjqZnJmbAvJtcYzinHu1NAeYNyGZO9mCavpIYYzWD7MJpfCodZPW8v8GnehTEMawzwOHQlvTaVmDT1FHOummUGo28hsVIdIjSXapb9mecMoq0xA0qiNpD+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783870569; c=relaxed/simple;
-	bh=HCEbX079r4nE0T48QlsW+4YnA/d4ZC6DKfqIuvEgrhs=;
+	s=arc-20240116; t=1783871226; c=relaxed/simple;
+	bh=/VNM76b0LiXIX3r2GvjmOcyJxHZsmtpT2HKqJW3sY8w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pUlIqQpx6iKHbm1LLk2aqllhPAYkOUBfydya3IaDKx1BUwYQmTSEagS4mo5FusVCJf6adjlfgsVXitbTJP5tHI2n04MG+MrV62qWQYiARPR7O62GW6V5KAnzGRit+jjO3XJkQ+xKQFYrq+QBZo7L/5Ew2xTIz4bPvJw3kIzzAGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WuSiWRzN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wi8Sdr9+; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=SEFtUWkQSeTOdaWzHEGGUadqnwxZezvvh0jM6XDPovqVbc5p4/Nsdm6PbLwGbb3d8jFNfdF+cNFWYbwF8jJp4t1rgjRbbhq86wen84ZVaYujDs0OgpovYiymfKnMfP5mpO0Trk7jKqrSV6V8fqbahrYrKIEvhUJNH0VOYuH6sbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Psi/RLPt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cLKXE/a2; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WuSiWRzN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wi8Sdr9+"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AE99914000B7;
-	Sun, 12 Jul 2026 11:36:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Psi/RLPt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cLKXE/a2"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C22D1400050;
+	Sun, 12 Jul 2026 11:47:04 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 12 Jul 2026 11:36:06 -0400
+  by phl-compute-04.internal (MEProxy); Sun, 12 Jul 2026 11:47:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783870566; x=1783956966; bh=b3Q32XpC/S
-	t2GlgJ8N99OKqbUeak7rUQw83rU6baSj0=; b=WuSiWRzNogWUjH22HUzRd1llQk
-	EwtcMHP6wMGJHXR665xIbrozGu8Ynlu5hNtdBaGZTm3Hwd1E3xx8q3T4thYVxXmk
-	Z5OQ9doUbBqKs2Yk0dflMaDJRy1hla9gXOL3Zl5zsJgndePTZj9YYbkLtBa158S6
-	UtLWn5Pym8v5zta9RaKAT4FGS23Lidihy+OrjsNZL+RYEOgtFAFKZHQqlE9bXgrU
-	JTGe+FtBJy1FnE40n0qIqoPJGEDZjok5vUnUGvCAiDla2UydAgODiHkzz/y//bKi
-	5WSSlKIADR55qMHkbnRlXsEsOqjCpcVso0jF1uplmdJ5/VkDvBnFk0D3Sh+Q==
+	:subject:to:to; s=fm1; t=1783871224; x=1783957624; bh=eUdr0Isv9N
+	hKtnXeigBGPCNSJ28iF1rYBz1y+owKfRk=; b=Psi/RLPtcb74puwdmtHBLPszeT
+	2NmWStSqzgjmSE4Jna636/qJRwgSIFMzM2Xt6H/ov4eCHv3omk5Z/X89UpZpOamg
+	kLPc7lYtTD/CNCEvuwHGFyV08etqYO4Iiu4nGuiRANsCw1VZTb4GydfQBED+3TiK
+	FvvlMhhEZJaSSPAf/LhMh9O8Z/CiHM9cnaV1PbyDuil81E9Mczeo9I2xyB/oeGgt
+	ZwsIH3zja2+1ntzVU0IkCZggYXisqHc/BwRJgRDAtz73/y6xxZ/muEk5gktdY9dY
+	iHF95zPmB4J91KmJmX+UI+QZNi4a5dPEhVv68Pr+ZHHxqcRYZFpsvO9YpOJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783870566; x=1783956966; bh=b3Q32XpC/St2GlgJ8N99OKqbUeak7rUQw83
-	rU6baSj0=; b=Wi8Sdr9+bn+Y89vzbXqE9MjtCq5z+6qRwr6TFsB1o00No7wuisx
-	5WN1HITBRXrbiZ6iarZwC2z9cUnqtyfOYGNbgtSgEwViVDMAX1sQkgT07GnKrvqt
-	XA0qOWaI3SWSH0NN+dWZ+a0w9REK07evbDRQe1MYrsakucfdDRlKSu3tHHszXFDP
-	oh4AXCI9eeTa4G1AcicuNeEi7BVlaEjG81jXy9NDXQejlWRMe/NF6a40QuD+FYM3
-	7ZTC3QdfKz3yrIHnXnMzi8zCCL2s7LMHO3Fg51ycuuPV1Feue/iSiBNICXUNJp6u
-	zoYOHUPgsqiEkFI1oMmSX035Tgm//9Y9XyQ==
-X-ME-Sender: <xms:ZrRTai1Hgxi_Gmcjhl5tuZGhvJpV01avonznQY9QRizaFlSIjtrOlg>
-    <xme:ZrRTanqcBzha1c1oHFjFbh_uXxwHKOkMlI6BIpwNWA5X9MJZfPu36e98744g84m6m
-    kG1kzPkroiw2ZbksrM19j8giVy2BQT7ap_b61hQ0tTuhWcZxbmZTw>
-X-ME-Received: <xmr:ZrRTaugQaUWzTD-QioIHaIrvOQqsGNUW8r97O_FD3Mvfb75PrFXR-GT_WVoN7ksXoSBs2Y8pI30I1RQEew0YH_3ZtwOiCsr_ZfcXyX4>
-X-ME-Proxy-Cause: dmFkZTEahxN9B/24xAOGTGcBH+7g74vqQn1DKTSBx7VePk21Foic38NPVTG4DAu6Cfw4fX
-    OVq7uZGOFwd4GDZ4T7qFhGgtpSg2xvvgADurdIHEHoojTBWc2Sdxd5t3MHO4edUsCxwwfy
-    3smzB49rfhPm4Fs6szzD55sch//MTw5htiMpQNaXsX0z0dq+VuK3dDpC/QCvCn/flyBs4U
-    gX1V0qcMg2XNWoOA+HoXPjtKGkldnx4+kuwHi3K/HpIucOMRvnFpL6ZC6uSTV6SOI3z+n1
-    MIswRgfgoPUys07Pek5fOrvpWL/U7R6k6kIgkBMWSpHwSrK0FdyBgQjq50BKoU+Liw0lfJ
-    3y9OdZK6NDUraZU/O0MdjEUsygFUyzi3vQPat7/jjgwi6P0xfa4a9MEsWf6NiaP5pI/piP
-    Yq8aXI1TXXRnqwGphq74I+fWu+cQSDQkShbh8D/kxOc3fhwx4WLelOogp/A1pzgwThC+RR
-    ktlwt+OgaQSWIIoIJwRFK4Lrh9022rmk6P/9wJPlXnUsC5WSOs1b0S2dcCKA4KFYng9sPK
-    2TtIIloPAyc3UnYNel3Aw2k+Q5F9I25d2BmdQ6EFHYmREL7ohu3jpFzaqyHSsMu1NSNF7u
-    e1kBAsheWhaGP87ntmo+hkyeut/XnqYdI3g9CK9KoeByq86lZBGulom8VU2Q
-X-ME-Proxy: <xmx:ZrRTaj9YWcYT86yjtGcHGaXSeAiy5e_rtacFh69mqjHsN7ONsgFHuQ>
-    <xmx:ZrRTaqVc5zaZ37kcE-Vt8dhzTg5XNgUwpxaOd1GAaEvAB4l2df99dw>
-    <xmx:ZrRTanBmfM384brjKdOeueefQs9RHEj1rl1sFD1eYT0ysrNpt3GWWw>
-    <xmx:ZrRTavE5R5rbndCgo2KToRYCZFvi4bY2jaTWvQ-GL89WhnNCCkQovA>
-    <xmx:ZrRTanMlExKerU58UR9Ou4tK8_a5QcWD27kjMgmQLc2_iOnPd3X-DviO>
+	1783871224; x=1783957624; bh=eUdr0Isv9NhKtnXeigBGPCNSJ28iF1rYBz1
+	y+owKfRk=; b=cLKXE/a29PZvFKbMfBa73OWsm80UT+0UicqDZk+mMf1VfFr4GF1
+	xJedaYoZ9yl5PPhPgX+u2lhqir0+wUk92kPjXtKE7lUcnQAW5dW4CjrfuM2a2ljK
+	Bz7l3NcwNJFaBn0/kBCiyd8heDH0riH+lGHWK06f9gfSWU4h+HRc9QBRfGCjfF93
+	eodmSNXaBFYwE1mCTQh8GVdbk8/C4+PuwOXxtY5R6tqLo0u1JZuvwhYyAcfUhvdJ
+	V74qS5/DSuUc+GCRl+atpmF9N4UBnaoRB9/QP398y8095CguBXUBaVNS9LaN9Xfq
+	5iki2UVkDmI+X2IFTme+UlG/5S6IksHSvWQ==
+X-ME-Sender: <xms:-LZTajJBx5aaPn7bySLbOJlOSyfnAN4qkForDS0MEka0tVG_VLA8AA>
+    <xme:-LZTapuONeCuw8VWmQv7arGgZLHSDW0GrLkBNAd4bKz9askD3N80i2PuKB8Wqgq_A
+    qNFIRpT8t6MjxV1Nk_lndOYxymU3m-5LZLWDtFovI-pgRJbKWk96CY>
+X-ME-Received: <xmr:-LZTavXO7vwCrvT3g433G413Hx318RII9NroEnI6SLtdV5WgZIM5fBl1FeHRDkjhfyXvExHYehx4XuxlZtXnbIdrFSJpVqUV9CyM720>
+X-ME-Proxy-Cause: dmFkZTE9kgmIAxx+hHA+sVxlNd3XvdUalUh892dZeb/2fOsr1GS72EVrji+qTdAiop7ib4
+    aKAYf8uGItfzQMrJLfVXM6zonshHsFG8dxECiSpjqsCXgyP7ndH1h7FBAHvCvNLxYjsrYE
+    YQQ1VEOKklTAmXTHKvQODaryunj7zJvRerPt6VzCewi91jMD84x9V5VH5ymmYTWGCqbUmT
+    qaCeqlFqshDbaxwcIUeAxrW6oLOlvPOvyeakQIRQbD6lV8GnWcUtHs3gaPZE6639Wsj5eB
+    WyYYnklzcQy6AA1cGR0qRhoQivR8rQyzUHZ3oiwFkkihbdqHJiDdA2BZXIJxTj55gFo4nm
+    iXVRIKqIUFbFw77M8nc3RDmNWsXLeVsE1/yETKt2deVkdUb6l19HBU/JsKA0x/vl07ABDU
+    xo5rF9sC0O2mWGeD2cuf5TalggafFrli/4xFvF0EG3NltlnkeXvQtf6usY6udo9w8p0IiV
+    qoDqI5axyQAMegyN6MzYO8H+mOK7YZBVHQsqb5f1NHOmfQ027oegMCsBUQARalpq0dkHmU
+    vPXEYpat4stdLUoJ2o/r26HjWJzFQSWtGWV6IGuj+Qxcb3tf/tC9mfD4J7QUCUYmDuYutE
+    o/ulFjwD9udJ7inamxxi+XQODw5dba0N0FNhG8/nS/dsKLsXQG9+Vyt05Cxg
+X-ME-Proxy: <xmx:-LZTasjxBo0HVZEztVWOuJdiHS-jmhir807ktn8wW__dK3jSeiTtlw>
+    <xmx:-LZTavrRDh_Ey9M1tSO8dV2zrnTvRt73scYOp1_mKCrJDafhI1EwvQ>
+    <xmx:-LZTaqG5D_rB4wa6umgARADbAGUf0-ijKOcDBswLReApspTw3rxuSQ>
+    <xmx:-LZTas6r6yAfrr2rHyxDM7swbcz6Ql6696K5hiNOvd23TZ4ugPXuGw>
+    <xmx:-LZTagR9B3YfcJYa1_9PIxUh2y0WG1jeG0nJQv3yjoONtqAAXfGqDrQt>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 12 Jul 2026 11:36:06 -0400 (EDT)
+ 12 Jul 2026 11:47:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Tian Yuchen <cat@malon.dev>
 Cc: git@vger.kernel.org,  pabloosabaterr@gmail.com,  cirnovskyv@gmail.com,
   szeder.dev@gmail.com,  Christian Couder <christian.couder@gmail.com>,
   Ayush Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
  <belkid98@gmail.com>
-Subject: Re: [PATCH v10 4/9] environment: move pager_program into
+Subject: Re: [PATCH v10 5/9] environment: move askpass_program into
  repo_config_values
-In-Reply-To: <20260712111734.1073514-5-cat@malon.dev> (Tian Yuchen's message
-	of "Sun, 12 Jul 2026 19:17:28 +0800")
+In-Reply-To: <20260712111734.1073514-6-cat@malon.dev> (Tian Yuchen's message
+	of "Sun, 12 Jul 2026 19:17:29 +0800")
 References: <20260709161145.13349-1-cat@malon.dev>
 	<20260712111734.1073514-1-cat@malon.dev>
-	<20260712111734.1073514-5-cat@malon.dev>
-Importance: high
-Date: Sun, 12 Jul 2026 08:36:04 -0700
-Message-ID: <xmqqy0fg43vf.fsf@gitster.g>
+	<20260712111734.1073514-6-cat@malon.dev>
+Date: Sun, 12 Jul 2026 08:47:02 -0700
+Message-ID: <xmqqfr1o43d5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,88 +92,60 @@ Content-Type: text/plain
 
 Tian Yuchen <cat@malon.dev> writes:
 
-> The 'pager_program' variable is currently defined as a file-scoped
-> static string in pager.c. Move it into 'struct repo_config_values'.
+>  environment.c | 6 ++++--
+>  environment.h | 1 +
+>  prompt.c      | 3 ++-
+>  3 files changed, 7 insertions(+), 3 deletions(-)
 >
-> The configuration parsing logic remains strictly within pager.c to
-> respect subsystem boundaries. The read/write operations are simply
-> redirected to the repository-specific structure using
-> 'repo_config_values()'.
-
-By redirecting to repo_config_values(r), we now enforce that the
-passed repository must be 'the_repository' (due to the assertion in
-repo_config_values()).  All current callers of git_pager() and
-check_pager_config() indeed pass 'the_repository', so this new
-enforcement does not harm them.  However, it paves the way to later
-lift the assertion and allow us to configure different pagers for
-different repositories, which is a welcome improvement.
-
->  static int core_pager_config(const char *var, const char *value,
->  			     const struct config_context *ctx UNUSED,
-> -			     void *data UNUSED)
-> +			     void *data)
->  {
-> -	if (!strcmp(var, "core.pager"))
-> -		return git_config_string(&pager_program, var, value);
-> +	struct repository *r = data;
-> +
-> +	if (!strcmp(var, "core.pager")) {
-> +		FREE_AND_NULL(repo_config_values(r)->pager_program);
-> +		return git_config_string(&repo_config_values(r)->pager_program, var, value);
-> +	}
-
-It may be just me, but I would have preferred to see this written
-more like
-
-
-	if (!strcmp(var, "core.pager")) {
-		struct repo_config_values *values = repo_config_values(r);
-
-		FREE_AND_NULL(values->pager_program);
-		return git_config_string(&values->pager_program, var, value);
-	}
-
-which will make it easier to see that we are freeing the same thing
-immediately before we overwrite it.  It also shortens the lines.
-For a temporary variable with a very short scope like this one that
-is introduced solely for readability, it is OK to use even shorter
-name like 'v' if you want to ('r' certainly has a much longer
-lifespan that it, and I would probably have preferred to see it
-called 'repo').
-
-    Side note: we might want to give a hint in the coding guidelines
-    document that a variable with larger lifespan should get longer
-    names, or something.
-
->  	return 0;
->  }
->  
-> @@ -91,10 +97,10 @@ const char *git_pager(struct repository *r, int stdout_is_tty)
->  
->  	pager = getenv("GIT_PAGER");
->  	if (!pager) {
-> -		if (!pager_program)
-> +		if (!repo_config_values(r)->pager_program)
->  			read_early_config(r,
-> -					  core_pager_config, NULL);
-> -		pager = pager_program;
-> +					  core_pager_config, r);
-> +		pager = repo_config_values(r)->pager_program;
+> diff --git a/environment.c b/environment.c
+> index 975c9cb9eb..1a26c9c6d6 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -464,8 +464,8 @@ int git_default_core_config(const char *var, const char *value,
 >  	}
-
-Same here.
-
->  	if (!pager)
->  		pager = getenv("PAGER");
-> @@ -302,7 +308,9 @@ int check_pager_config(struct repository *r, const char *cmd)
 >  
->  	read_early_config(r, pager_command_config, &data);
->  
-> -	if (data.value)
-> -		pager_program = data.value;
-> +	if (data.value) {
-> +		free(repo_config_values(r)->pager_program);
-> +		repo_config_values(r)->pager_program = data.value;
-> +	}
+>  	if (!strcmp(var, "core.askpass")) {
+> -		FREE_AND_NULL(askpass_program);
+> -		return git_config_string(&askpass_program, var, value);
+> +		FREE_AND_NULL(cfg->askpass_program);
+> +		return git_config_string(&cfg->askpass_program, var, value);
+>  	}
+> @@ -726,6 +726,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
+>  	cfg->excludes_file = NULL;
+>  	cfg->editor_program = NULL;
+>  	cfg->pager_program = NULL;
+> +	cfg->askpass_program = NULL;
+>  	cfg->apply_sparse_checkout = 0;
+>  	cfg->branch_track = BRANCH_TRACK_REMOTE;
+>  	cfg->trust_ctime = 1;
+> @@ -744,4 +745,5 @@ void repo_config_values_clear(struct repo_config_values *cfg)
+>  	FREE_AND_NULL(cfg->excludes_file);
+>  	FREE_AND_NULL(cfg->editor_program);
+>  	FREE_AND_NULL(cfg->pager_program);
+> +	FREE_AND_NULL(cfg->askpass_program);
+>  }
 
-Same here.
+The 'askpass_program' global variable has been removed.  Instead, 
+the member in repo_config_values is correctly initialized to NULL 
+and properly cleaned up when finished.
+
+> diff --git a/environment.h b/environment.h
+> index 39b6691b47..a2e9def89d 100644
+> --- a/environment.h
+> +++ b/environment.h
+> @@ -93,6 +93,7 @@ struct repo_config_values {
+>  	char *excludes_file;
+>  	char *editor_program;
+>  	char *pager_program;
+> +	char *askpass_program;
+>  	int apply_sparse_checkout;
+>  	int trust_ctime;
+>  	int check_stat;
+
+Wait, wasn't there an extern declaration for that global variable in 
+a header file somewhere?  There must also be an actual definition 
+for it.  Both should be removed to ensure no one accesses a stale 
+variable; doing so allows the compiler to help you spot any 
+leftover users.
+
+Thanks.
