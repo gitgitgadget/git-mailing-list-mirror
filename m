@@ -1,244 +1,130 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28FA426692
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 13:17:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43B4229CA
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 13:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783948675; cv=none; b=IK3H1j5E1WGW/aohiWQQgeGEI1X+io3U4jNg6r/6/VNqHsKaMdnodG4ubBCTWG2JoWPS5CwQZFMPjNrSQzK2B8XcMPPDbSDeBQNHXY5dRYypooyHyZTwaeCGeqdsz70Phm/irYAEmFWzkyaHPNmKFg2pqMpZdKzN5OMHlpPNtMI=
+	t=1783948695; cv=none; b=PY+YDgh5Wx+89OgWvE5ml1IzNApzvPd9kali6kHyvmRgkXzPsK5/BvHGA0xXW/JPUGToxnmPxeDytzyp9QLPxXXgShOlbNY1VHrBT2uWm7e5FL6m1QMLTRQrD95oAAPA/Z3rfgr010V24smuZF7iJDxTcFzJmOHWMaCD8ac7Ylc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783948675; c=relaxed/simple;
-	bh=5kTI6p6RWgDduCj+CW+4qqMyjJmy/gEEX35PFH0g+d8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HBUZcymDvfTUAkUDFSUoP2UkdXWkyOSwFsyjDBmRNO0Dh0LITe5e3Ktrb4bxGrvlvCJozGqHsKSspFPs6LTTdYFVnZSrdzrnR2kwXgeLR7UOv6PLROdpviEK+7v7Pfgoz0M2PNG/UiYtLfci2Bh1GxwB6DeNf8LjHREJp+KU5gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pskqUWt5; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1783948695; c=relaxed/simple;
+	bh=L1ZDlkj+blim8OKCBLllRx6CIVqcZOX4/pnVn8kqIuQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kMQ2lHSwvBqvE7DiLoh+hSbyV1SJz34i9fr0oiNANnqR4y4Qa2Swo7OiYMRLvPbRf2FDtq8q7ktdirhUVEkTUtNVkg8HQ19VKglElsKFi1XfKxnTD+GBmITfCctt2xP9hMDCz8czwmxqMuxReTKjeledK+4IHSA8oex/7K70Z0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FMZobh/c; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pskqUWt5"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-493c52cde9eso28421675e9.3
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 06:17:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMZobh/c"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c15fd3a299eso396538266b.2
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 06:18:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783948672; x=1784553472; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:reply-to
-         :references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=IGk29DXiFE7FrLTksaAULMDMifmobVYebAyqdbHHBy8=;
-        b=pskqUWt5AodbcHY+6Cjh34Xwq+aECt5/nyoQNEcQ2MPxwNihM9ejbFt4s0E0I13Q8a
-         a2SskOyW4lQbNTllRrshWjabGbyBhREOAKRdhUWtaS8AJXhxsLWYVQXrcWAr8fVuE4RN
-         64TQpzJfWy+wErixXC0AcIHfsO35lRyBvszTMqGHpSWmseVoHfEZZDXg3ZvM4UcS2cWf
-         sxu41pAwRuWMvMuvxo992N0lCMzd5heiWIfsMYs0XkHFJKbj3w5uEwLQeYOh/nAsC4Vq
-         EmNkWcpESnYd3tIahfNZkdpLtdTztyDSU+qW+ruNJMbBxxHDrUm4RF82CuwlJ0owLlK9
-         9uUg==
+        d=gmail.com; s=20251104; t=1783948692; x=1784553492; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZjvjserDcXe7DOv0+ZKJBXSg4aVp0sYWWuj3KOqIrqs=;
+        b=FMZobh/csRVWTd3kQJhQMqqaodfe7ZTt11uVmM8/AtQegc+rLskJstTF4TojYxcDRJ
+         bLoX9m3V6mRRjrKhzI9ORK0bhGtGfyDtOfJuPHwiPwZkNRZOCmTf9e4MDS/uAHLgc8Bs
+         LvyAtxIHoev5OKZpLE6hcJolSe2m1inYEVdacvcAhM5iDsgrel/wpjVcs/vF3kI9WtaD
+         d5i8OSm9y8bp3uGDgGv8HG5FV3stJ2BNHcAn0BhWnzqv48QuqQea/w3qcmnaqOWa2Vlc
+         G+LKbuHA4EcRaiT9y4GYtLFb+FJjqVoczFqaDi3Kzk82WeGjncnW7sthXvhkZgtUxrIi
+         PY0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783948672; x=1784553472;
-        h=content-transfer-encoding:content-type:mime-version:reply-to
-         :references:in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IGk29DXiFE7FrLTksaAULMDMifmobVYebAyqdbHHBy8=;
-        b=G45mOaG1abU5h4f4B2EUqznvJqkbiQt1LclUpw/0vjIyOFvHjS8UceBEtF6sVPJvmM
-         puQs1nGgEMZYuMgn6InatBOX2vmKrezt5bhCXvBVRNBxJWqWlPzICyix9yLSjyhPB7vb
-         bRrC4Yud+aGZJokr/JqRlm0xMpbAFtYK3PcZB4qoGnw+mG/ThVaxi0yjIce2GLv5F8Jv
-         F8DeD48xwZ2zRYsHQNjF1aZd+KEgTBvdSQQoX7RisKBV7VtQHQo+X1YhZbiAj5rg2Asc
-         gvFGEFWRpRvai3l3Y2qdLv9CsPQ11jLzIFkpVUBHJ2SBZYFuRdBeirfUDMAvyeL/6Diz
-         gQYg==
-X-Gm-Message-State: AOJu0Yx8bDVteiKmxTDI95QIeKftnGRkQVge72V0IDFbRZ4rydSRBcdx
-	9IFiY4jiQc1vNQ6ttqMaeqDkB1nrqt3V3/6vliOz3pW765xFLeDzxhDkNuaR0A==
-X-Gm-Gg: AfdE7cnzi5mC3so9I63AG3hfViLfhbELdJVNTuWzTHo3p7/3xEiW8uPUG1ZMeUt58C5
-	s50JUvjWG8vas3r92FNS4/tlLh//gPJ3eSDLoH2oF7VNvqFdCeap0DTJc4jMh4t0JBq3JWm0li3
-	dHx2aWed0ncNsYc1Gnv8MN/TFQzUxI2GSMEbNC7dI6UqwJeknWKKUnzXNmzRWTylf1BpkvhiYbM
-	TnhL0wGCqW/1dkN/K4+fh7s6n+j6Sq2Fr1956ujLeFOYntzjK8d5qpYxt2RlKDwv00wlYszy9Qh
-	K0dfVoV5Q6M/e9/+fSl6Grwq0yCfeI+H+P5Xo89xvgh1YKagmE6cOZl1pi3crXSDF+myqnBumxi
-	k/JW0X1CvqBGL0RAJHDPIzknFvOXDl9UGaCr7NZakDWgMQYgoyUl02JzmI6jBIn3gp/x8y61kVm
-	9u6NoM0e7lIhYkPu3j
-X-Received: by 2002:a05:600c:63d0:b0:493:af56:8e64 with SMTP id 5b1f17b1804b1-493f882e94emr67165755e9.32.1783948671876;
-        Mon, 13 Jul 2026 06:17:51 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493f4cbc620sm251653145e9.13.2026.07.13.06.17.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 06:17:51 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Farid Zakaria <farid.m.zakaria@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 10/10] sequencer: do not record dropped commits as rewritten
-Date: Mon, 13 Jul 2026 14:17:27 +0100
-Message-ID: <c89234dd949f59ce150f0fb5d7442e1f46e3fef3.1783948637.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
-In-Reply-To: <cover.1783948637.git.phillip.wood@dunelm.org.uk>
-References: <cover.1782833268.git.phillip.wood@dunelm.org.uk> <cover.1783948637.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        d=1e100.net; s=20251104; t=1783948692; x=1784553492;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZjvjserDcXe7DOv0+ZKJBXSg4aVp0sYWWuj3KOqIrqs=;
+        b=rM/WKI0SEwBcwEbqks1GC1hPEbGTblo9WDPjsYHM71N2tvb4Po9/BsIMhKw+GFcjL5
+         7/LtMNumDSzMmGsMFvkmN4AXm0/EBYwP270FwstXZsWFw9UGBzMPPb34gZtkkdP6naod
+         SjNYWCOJjXpNlXe4yzf97KtQUr46DmZagV1B+GSm/Z/kRWObMN6JEGVHr1F+C7wkvdWc
+         Uel0fgikNKtUxdIhIX1EVoNOzWCKxfeG69CLnaDODeQo84z35peBxJSAHhWJ/G5wzwMG
+         Yxd3XDdH7gIzO7qRjcydesjkDyBGYWdGmSwptzsm9Nksr0/CP+7MyZQylWOqgekbh+Cc
+         1koA==
+X-Forwarded-Encrypted: i=1; AHgh+RonyFnUq1GnhsTlqmni8gtGDKTbBH3lt8NOfCuK4+j0RuTmTK1LhxDQ/gtL3z25AtsibLI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMrexw6qVmVWgWiAUND22rf0QiQ5pR0YGt/oS8622FV/De7fsB
+	sgB03Tl/Fcg2TMzd1WfbHrE8SoCJxan8L/ppwrL2PhN7t0sYDSYX4WCq
+X-Gm-Gg: AfdE7clWqC4Me1+cvts4uck16OMZZVVUyJ2BOYUviGZMU9NzMXLdXJ0QEkyoHoSfP9Q
+	IbklI+QjxN0HZ3dH9VqEty7N2Uc1q0Umhg4NO40ghnHQ1EywswFEmJ7elEtzkpvhPshn8Gpaxw8
+	F2D3f1JRlihjHMPALVwXVgzuw0V0MfLLNPThEH5LSbserQGivwNxAIdfh9XifsRjWzBgWD5Fokv
+	DKWEqHuINKtS+fYtxV7S8b02e9+kGmZffYtdXIdp0IcxCgX9H8390YMrLbj4EeXwyLs9q+OXOYY
+	T9DuM/jlimNikmJJQhDCX0Yv16xgOgVrnm5VXsq0asz3WWdvKzUld7QN2qiav8Vek3li3NMGIQm
+	gKeTYtP3y6ByPLiedP13I3pre4DijoUZjFIWpJd9ngtsLAPP2JO9jwdCHHKX1ba796kZIVyG6P6
+	yxFSUyypHHdli8IDBUu4DmdKgqK/UJAoVKU5gDcr28ibO6EreRFWQvlxbTJHNNHq7VWUc=
+X-Received: by 2002:a17:907:8997:b0:c12:7b3f:6c15 with SMTP id a640c23a62f3a-c161f3faad2mr398624066b.62.1783948692118;
+        Mon, 13 Jul 2026 06:18:12 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15cfac0f76sm820600066b.33.2026.07.13.06.18.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jul 2026 06:18:11 -0700 (PDT)
+Message-ID: <a8d78707-ef0d-439c-ba0a-52a494967046@gmail.com>
+Date: Mon, 13 Jul 2026 14:18:07 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: "phillip.wood123@gmail.com" <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sequencer: honor --empty when a fixup!/squash! empties
+ its target
+To: Yuxuan Chen <i@yuxuan.ch>
+Cc: "farid.m.zakaria@gmail.com" <farid.m.zakaria@gmail.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ "gitster@pobox.com" <gitster@pobox.com>, "newren@gmail.com"
+ <newren@gmail.com>, "phillip.wood@dunelm.org.uk"
+ <phillip.wood@dunelm.org.uk>, "ps@pks.im" <ps@pks.im>
+References: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
+ <afb76b98-661a-4663-8e8b-fd00572db5ba@gmail.com>
+ <20260710182937.716304-1-i@yuxuan.ch>
+Content-Language: en-US
+In-Reply-To: <20260710182937.716304-1-i@yuxuan.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Hi Yuxuan
 
-If a commit gets dropped because its changes are already upstream
-then we should not record it as rewritten. As well as confusing any
-post-rewrite hooks this means we end up copying the notes from the
-dropped commit to the commit that was picked immediately before the
-one that was dropped.
+On 10/07/2026 19:30, Yuxuan Chen wrote:
+> 
+>> Using an empty commit has a marker has the advantage that applying it cannot
+>> create conflicts, so you only have to deal with the conflicts caused by the
+>> commit being dropped, not the by fixup not applying cleanly.
+> 
+> I am concerned, however, that representing a `drop!` commit as an empty marker
+> would be semantically unsound. We expect `rebase --autosquash` to drop the
+> target commit, but until that rebase happens, the repository is not in a state
+> where we consider the target commit dropped: the target's changes are still
+> present, and the empty marker changes nothing. Therefore, I think a `drop!`
+> commit should contain the inverse of the patch we intend to drop. That way,
+> the repository state reflects the intended removal even before autosquash
+> rewrites the history.
 
-While we do not want to record the dropped commit is rewritten, if
-it is the final commit in a chain of fixups then we need to flush
-the list of rewritten commits. The behavior of an "edit" command
-where the commit is dropped is changed so that "rebase --continue"
-will not amend the previous pick. However, as the code comment notes
-it will still be erroneously recorded as rewritten when the rebase
-continues. That will need to be addressed separately along with not
-recording skipped commits as rewritten.
+That's a good point. Looking at the gitgitgadget issue tracker [1], 
+there is a suggestion to add a new option to revert that behaves like
 
-The initialization of "drop_commit" is moved to ensure it is initialized
-when rewording a fast-forwarded commit.
+     git revert -n <commit> &&
+     git commit -m 'drop! '"$(git show -s --oneline <commit>)"
 
-Reported-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Tested-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c                  | 24 +++++++++++++++++++-----
- t/t3400-rebase.sh            | 12 ++++++++++++
- t/t5407-post-rewrite-hook.sh | 23 +++++++++++++++++++++++
- 3 files changed, 54 insertions(+), 5 deletions(-)
+and then "git rebase --autosquash" would replace "pick" with "drop" for 
+the commit we want to drop and drop the "drop!" commit as well. That 
+avoids conflicts when dropping the commit and means anything built on 
+top of the "drop!" commit before the rebase does not see the changes in 
+the commit that we want to drop because it has been reverted. That seems 
+to be the best of both worlds.
 
-diff --git a/sequencer.c b/sequencer.c
-index 4b89349251b..7bc885085f9 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2264,6 +2264,7 @@ enum pick_result {
- 	PICK_RESULT_ERROR = -1,
- 	PICK_RESULT_OK,
- 	PICK_RESULT_CONFLICTS,
-+	PICK_RESULT_DROPPED,
- };
- 
- static enum pick_result do_pick_commit(struct repository *r,
-@@ -2279,7 +2280,7 @@ static enum pick_result do_pick_commit(struct repository *r,
- 	const char *base_label, *next_label, *reflog_action;
- 	char *author = NULL;
- 	struct commit_message msg = { NULL, NULL, NULL, NULL };
--	int res, unborn = 0, reword = 0, allow, drop_commit;
-+	int res, unborn = 0, reword = 0, allow, drop_commit = 0;
- 	enum todo_command command = item->command;
- 	struct commit *commit = item->commit;
- 
-@@ -2509,7 +2510,6 @@ static enum pick_result do_pick_commit(struct repository *r,
- 		goto leave;
- 	}
- 
--	drop_commit = 0;
- 	allow = allow_empty(r, opts, commit);
- 	if (allow < 0) {
- 		res = allow;
-@@ -2574,6 +2574,8 @@ static enum pick_result do_pick_commit(struct repository *r,
- 		return PICK_RESULT_ERROR;
- 	else if (res > 0)
- 		return PICK_RESULT_CONFLICTS;
-+	else if (drop_commit)
-+		return PICK_RESULT_DROPPED;
- 	else
- 		return PICK_RESULT_OK;
- }
-@@ -4994,18 +4996,30 @@ static int pick_one_commit(struct repository *r,
- 	} else if (item->command == TODO_EDIT) {
- 		struct commit *commit = item->commit;
- 		int res = pick_res == PICK_RESULT_CONFLICTS;
-+		int to_amend = pick_res != PICK_RESULT_CONFLICTS &&
-+				pick_res != PICK_RESULT_DROPPED;
- 
--		if (pick_res == PICK_RESULT_OK) {
-+		/*
-+		 * NEEDSWORK: Do not record the commit as rewritten when
-+		 * continuing if it was dropped. Does it even make sense
-+		 * to stop if the commit was dropped?
-+		 */
-+		if (pick_res == PICK_RESULT_OK ||
-+		    pick_res == PICK_RESULT_DROPPED) {
- 			if (!opts->verbose)
- 				term_clear_line();
- 			fprintf(stderr, _("Stopped at %s...  %.*s\n"),
- 				short_commit_name(r, commit), item->arg_len, arg);
- 		}
--		return error_with_patch(r, commit,
--					arg, item->arg_len, opts, res, !res);
-+		return error_with_patch(r, commit, arg, item->arg_len, opts,
-+					res, to_amend);
- 	} else if (pick_res == PICK_RESULT_OK) {
- 		record_in_rewritten(&item->commit->object.oid,
- 				    peek_command(todo_list, 1));
-+		return 0;
-+	} else if (pick_res == PICK_RESULT_DROPPED) {
-+		if (is_final_fixup(todo_list))
-+			flush_rewritten_pending();
- 		return 0;
- 	} else if (pick_res == PICK_RESULT_CONFLICTS &&
- 		   is_fixup(item->command)) {
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index f0e7fcf649a..1d09886ea35 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -274,6 +274,18 @@ test_expect_success 'rebase --apply can copy notes' '
- 	git reset --hard n3 &&
- 	git rebase --apply --onto n1 n2 &&
- 	test "a note" = "$(git notes show HEAD)"
-+'
-+
-+test_expect_success 'rebase drops notes of dropped commits' '
-+	git checkout n1 &&
-+	echo n3 >n3.t &&
-+	echo n4 >n4.t &&
-+	git add n3.t n4.t &&
-+	git commit -m n34 &&
-+	git rebase HEAD n3 &&
-+	test_commit_message HEAD -m n2 &&
-+	test_must_fail git notes list HEAD >actual &&
-+	test_must_be_empty actual
- '
- 
- test_expect_success 'rebase commit with an ancient timestamp' '
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index ad7f8c6f002..51991956d1d 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -306,6 +306,29 @@ test_expect_success 'git rebase -i (exec)' '
- 	cat >expected.data <<-EOF &&
- 	$(git rev-parse C) $(git rev-parse HEAD^)
- 	$(git rev-parse D) $(git rev-parse HEAD)
-+	EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'rebase with commits that become empty' '
-+	cat >todo <<-\EOF &&
-+	pick H
-+	pick E
-+	fixup I
-+	fixup H
-+	pick G
-+	pick I
-+	EOF
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i --empty=drop A A
-+	) &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<-EOF &&
-+	$(git rev-parse H) $(git rev-parse HEAD~2)
-+	$(git rev-parse E) $(git rev-parse HEAD~1)
-+	$(git rev-parse I) $(git rev-parse HEAD~1)
-+	$(git rev-parse G) $(git rev-parse HEAD)
- 	EOF
- 	verify_hook_input
- '
--- 
-2.54.0.200.gfd8d68259e3
+> I recognize that applying the inverse patch may cause conflicts. However,
+> this is not a new problem; `git revert` has the same issue when the inverse
+> patch does not apply cleanly. Such conflicts reflect the actual difficulty of
+> undoing the change at that point in the history.
+I agree conflicts are a fact of life when rebasing, but I think it is 
+worth avoiding them where we can.
 
+Thanks
+
+Phillip
+
+[1] https://github.com/gitgitgadget/git/issues/259
