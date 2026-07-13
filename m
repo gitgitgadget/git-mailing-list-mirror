@@ -1,116 +1,144 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270283382C9
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 21:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783978466; cv=pass; b=KFR2f3hg54yMN4U95tgog+gLzct7ZtKffuBYi5rb+bHlKmLjqenWXgRVaLWFJQPkd/kRZsQUzBbJpBRhwzO9KQBlfKJ0NEaXZyN3yNkrIZHsyT4cFhHGuwLjVzndmw0nuzr+UVRsWcpQKuRqr0k6FwpYbHzRQqO+a/3tO9YHGX8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783978466; c=relaxed/simple;
-	bh=XMeEX+FL4k2ujOEkDIiythOIbswFPufH0c6Ex5OoULc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LUXmnbg/CK2G5vH/BfMgmkudu2ZXCSZasRvzPpIZqo1W/cj1lCO+I04u8OA03DKdq21dgE6MzkJCMWQdAW254F8coZVjZIHHrRBY3J1iUPuRW2XP6xGxhUJ03utl9Kv45sLfc6QDNFmlRw2O1rW0kKUPK6PyDQ8IaFjf0QZxbng=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ODr1fIYd; arc=pass smtp.client-ip=209.85.167.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799F5342532
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 22:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783980567; cv=none; b=JIFyfuns0DZKcVb9Obgs8qXcaXp0cdz1/HdHzRhturD3p3R1j+8F4kFyDLZaaRtAeAl6RD4WU+u37DqMpT5Bft2om9jCunm+QEFmjEzUVAj5YlWJ77+PEdtJj92O87UuqMckK5PLJC3DQEoQ5gNXokVIT20AvuwVBXqbks1Rk+s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783980567; c=relaxed/simple;
+	bh=bQlFVpZNpk0dL/rfjbHGsWmoM+g8b/pCViE1NHu2scA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=T6hO2Mle2RuXxEJobjBM4yH7TUzLyUANl9a4eYYtkX8VsL/XGW0cBKaFzaI8A6z1u8TvFKi/zvjUMSa4fEkpoPqkysFMN4pwHzpQL0VnS11ndIHXb/yWivbOzKcSNxeHe3QOBsJZyKz4dNhPNl9HwqG6gDgBMklmRPtUNgvI3Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SDhl+daZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rfOpK2ts; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ODr1fIYd"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-4a451915d8aso255099b6e.2
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:34:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783978464; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PT3beBtZhzjFXVVGP9zCkpjwlys2WG6RIpoFeqj0xQOKtc2Yp4VJKjBGTDDSX7iCiB
-         BSnImlAcT++gdgienewMU0j7F6VVjoitsUamoYHmX47hUrFeDGn1Igmu4n2to7kWqSqY
-         ibiNSnUWciHBJ0PB4IH0HR4IPDW+6Bc4/FiQ8ArF54/ZJY6Tvn0pbqIBNSJsS/LYxYW0
-         H+6VI6EBhz5rrSta4E6KgnkIcFVSMhPaUg2c2+63rrn2xr4sHT+V1JT9zgiXzY+OmX+f
-         kM1wNK1gbd8GLeUMY+T2VQCjOSjZVs/zYZ9wtUiT8hr5NV8ztehuZmhGSG4lKL2m54ce
-         g5RQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Zuafqt4lfPo63yyPcb/0gm7sGGLEfNiUS7CIKOVfmYI=;
-        fh=VHDmUbx8fjkdN75VWN5CTjkglZBzVlasQgJGlwhruOQ=;
-        b=cjc5WolKIGTSCp2vWPYN9LyXoK4MD5IXwJlSDX4UlBgq9Nk+7uu3pyi6vPtpSZaFJp
-         4FnYb7XTHlsxl09yjuOfPYdHlJ/akCNDp41W/ZnPIM4RSuPutNZ3IhvQ0UUvlLAhf6+f
-         nCj1oLbXFzc90+4rH+Rm9t9oEtPPAZodNnguQRyD1c7p3MUI3FcFizR1l54H+pXhVS/K
-         53+omLemChW0S5i5rShTY7XyafieJuhB74iR6EcJGOJQZ//iMxHhfEXQ74mBi/A6EsiT
-         l3LytteAKD3ehxT5VB/nu8dI3e+41PahlpyCuW9M3B/zPvz9sePN2uVnM4LP24a4hf5R
-         vYzA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783978464; x=1784583264; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Zuafqt4lfPo63yyPcb/0gm7sGGLEfNiUS7CIKOVfmYI=;
-        b=ODr1fIYdZLn3d8cq7D9TtpY6T9UcgruzzCS9Mbh6lxtn5JXr0KUOk3vsJ963wMaErT
-         pa8UhzKjAPhaIjENL/fj694VXn5LOaXy1QTddF3ZxcJBh3bD3MjdDnODr++G2dbWC3Q4
-         /Nf+0eBGLLLSeXrX3KfL69nH6/3T3e99XdIAkdLPXAl3aXH1xj+AAOSG2loLiy2ua6s9
-         UwrKhOTvhmPT7mHhHLFB5ZNfnsc9MW25axEs7hyL7XIa1WhEwRp7SPqTMiNFzUcfrWYY
-         iAhly0B+NbSFjSSZnbenCan5jrml7RxXz4xwZFOtDB+22KQk+fIywDlop8i1WTSJ46Wn
-         SHzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783978464; x=1784583264;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Zuafqt4lfPo63yyPcb/0gm7sGGLEfNiUS7CIKOVfmYI=;
-        b=CsS76icPDAC+uVUpXQpPibXEm/03qjbcAbBdqWrPkDdHH0G7FWrIQuhTEIoQN2qQCa
-         52tDu43+Fl9IWDTeaLjq7yT1BvV5Rkl5Wse5HN4kmtbKenAaqfwql3Wu4d2EH1r05PI2
-         XQUsJvFYjVC1IAnO2+xYssVR+grXJTdB7VyD0EcsnlcO0G0N0s5HwVrDR/34O5yGP404
-         LjyELARHaBCZKt90+vo1LJRrxE+gOi9QZpxbwkUNM4v5lrLQuC4DNign+ElLaWxWwm57
-         +pXsio6zapjX/BYrEdjgEtwtRxf6zxoJyyw6ExLCSeqLoZEkv0DtvDLSGn07QGPWgKG4
-         uUxQ==
-X-Gm-Message-State: AOJu0YwpgiTzz/CJoqffXyRdVrFGERhA+RrUE+jYZbAv04XoRt0dm49/
-	F/mvj6jHwz5scZGpsezAgviCGCTCOBjqMf92Ba3TnOYXm0Htdk8OBBozz6/73/uCobyrzpJfFa5
-	oeUF53cDztn862hs3EUH/fWzFC/3kjUs=
-X-Gm-Gg: AfdE7clNe/N5S0ijM2FeNtiL2GX4A6kjm1FEXHkhWL8bw709DRtDzO2mpO6DC/gjl+1
-	BVuu0jV6ORiGnEczE5wdZrGlym3e16W1TonzW+dqCA+zwfpk89ZVud5Y4pD4FAt+gxt5/pJk376
-	GaR167i0ISptNG5Ce06/zuwTpEyEYAVuHFTzWzG3A6vnxNmUYEgZOLiR1wq6rIi6v+Y+OjmBdPo
-	w/C3cxG8QbRXxOZUQULru/wu4qNZWgg++BVIf3HEbS4cWWsVm1WPEbhhaGk+Ux5QuBS8W9OjK4b
-	BOELsDHGZX2XNJAnl4/5ot8S1o7+vo0UqA3R5/xZ+0up0Tc8WvfpbuaDXfmTeUCxrauJLyrdoAW
-	IZbCtmFA+5X6Ig/U=
-X-Received: by 2002:a05:6808:1452:b0:4a4:12c4:9c16 with SMTP id
- 5614622812f47-4a42abac221mr7357821b6e.7.1783978463973; Mon, 13 Jul 2026
- 14:34:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SDhl+daZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rfOpK2ts"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id BBE3C1D0004E;
+	Mon, 13 Jul 2026 18:09:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 13 Jul 2026 18:09:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783980564; x=1784066964; bh=lSxxsvKQjc
+	KrzvsvlpJ39MGy2vffDpM40siTkOnsbF8=; b=SDhl+daZ6AL22dirWZWXA2tTDE
+	F91RMk2W/l9wYzWnzTdZknp/g2f+5BZwd7oqX8Hs8oiKoaqMScwjlh9+1hORvC6N
+	XKDzghqbMVFee9dew5RWWGXt6Tq6tDlYgkHArNfC/+50FA6F0r757QVY7ZlMawcQ
+	GOkA5bYxRgzHOjZoMvQB10czETnVqXxQP1vSSuk6NDJxpP42A0sytzksv3tncfuk
+	g8onBym8U40pL31aQfD4Kjrq7zi4tB4oSAxmSzm+Sk/0ClFD+N8XjcsXeLmRqDUN
+	tvnTwFAO6A4gG4/Z8UCLEDpGBtxGrZegh8oicem2YDUVKTsSsc4Chnj1rKpw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783980564; x=1784066964; bh=lSxxsvKQjcKrzvsvlpJ39MGy2vffDpM40si
+	TkOnsbF8=; b=rfOpK2tseKAjhoaIZBIEA+Ja+XxxbaOMRJtywSjR2dUB5TdK1we
+	aS1240kWtrR6g+ciu2Xmues32o7V9nFRgZyN2HhDqhZNFjGy8qBI7RNZtUKkX4Ql
+	vIwqDqZlq+BeJKpvT1dnm0u/6riBQ0wzGA+h8+6+gijyV7bmRJAwCklh27M2wU2N
+	WcSFxp1zOOUHQVYJqKDJRXvyU98VWuqZeI67vJ17BG9jw7JNbQMBYs7l5Sj9XOAo
+	iSS+QQmyF1DJJg+A+X0AGAn3NnTqA64Bz4Zi7oCq92BGG+JZODPKA8JzqE918IK4
+	9GatNrhtfIspgV5JHlJPV1OPcX9rFo+3ZDw==
+X-ME-Sender: <xms:FGJVahzuLUPDpow0rPCJrtYp6eJzPu1kI8ioiJx8XrZL09aiIStnAA>
+    <xme:FGJVaoJweMOI1SWmp88uFjBgoOW67KHbCDCMBq39Z3E-UcfxwGMZd8-pQNslhXmq4
+    Ft-BbBQ13_L2LV8MLaS8m5TZ_u3PuCmmt0wdwgLe_WT_D0u4vz3>
+X-ME-Received: <xmr:FGJVajpGR4b6BxVSziCYv2-mk7umNoi8aTnqYLMKP1jO79VaKVROv1tjEf2TNzqFZu8jrtYfmHgW9mHsLejMqNHU7cKxHQgvryU7ygI>
+X-ME-Proxy-Cause: dmFkZTGltB9xKWuVOd5v7olHQU8clLoIlcjqghq1Ri/UGwtFJ8R8c8CrMbi3qCVcn3zkM+
+    tuziEJfZGzXHHMNbIJ8p78evRPwOGf691vQK+X98DkiJXEM78Ja5GPxteJGdKt1s7W2Nz9
+    IZIkA6hX9Og/rIQNIl90siL6OtGMCUvQTgvJVee8OncmHwCgy9dQGKv+5CKQ01ycOt6oEd
+    NrWdJ7YlLyJAz6ByKEA72VBgQoJSOOyd8/osexxGVRxwTjzFw0z55OuXH4tKhOgIBCUKJe
+    FIQi7gUwSLluwEj3IVWwZcpycomzmUXaPtzKU0hDbCfHjBWr9GGP85U3a+K6kl0z5tAhIn
+    ban7kshjBBdsdeVord4GtKh4egOQ1OY7uioIe4+jSdBvjgrUfoSUFC6nKyHCm44WfEpfU/
+    ul2bKumt4qme1OaWvWW6U7Ce7tImy56/5lu75qaznLuhAjJx7Q48KpQH5DRb1ngYxw06En
+    LNnBVR9PNidqoBO0S4FLREVihhX48L+FoT34Sse33zzdCCjmpQm4QnzReOB2WK/K+YuMx0
+    ok6QUmGmblRIvQchem9aIZ3+ojk1dZQudRuHxNrzaGFyQ6plcw4sGdiNIvnj5g0McJBhe5
+    8GHWqx7YXMklGlzwFRtD6BYqjmfxGILR0iF/Plnl4KTZcWA31NNJHatk7DuQ
+X-ME-Proxy: <xmx:FGJVavIsisRR3ySJxprlUUDKP3wiTeY7Es0MpOwMQH-GobASGnwmVA>
+    <xmx:FGJVagRMZFMWrl5gHqWOeF4IZU7UANJKVU4x6ngIV2E7XbxHJVH9GA>
+    <xmx:FGJVamtPrC2U9PIdyL0593nZ0l_OqLT18AVAwC9iCnahnSx4A0uFOw>
+    <xmx:FGJVapY6lZiONpGxhESRE7ceCTu5eq9QJoKIUM6x0Mlh3qZ9SfLW6A>
+    <xmx:FGJVapwEsNuparoq8L6VAvvJZ-J6I-NctKJdx2jabIFwkaPqIbB227X7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jul 2026 18:09:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v7 3/3] replay: offer an option to linearize the commit
+ topology
+In-Reply-To: <CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com>
+	(Elijah Newren's message of "Thu, 9 Jul 2026 20:47:37 -0700")
+References: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
+	<20260707-toon-git-replay-drop-merges-v7-3-808ab9b4afa6@iotcl.com>
+	<CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com>
+Date: Mon, 13 Jul 2026 15:09:22 -0700
+Message-ID: <xmqqbjcawnhp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqik6j1m7u.fsf@gitster.g>
-In-Reply-To: <xmqqik6j1m7u.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 13 Jul 2026 14:34:13 -0700
-X-Gm-Features: AVVi8CfWN2Pz-KcOsEYuK-6KsGawwkDZUlfBxeS1Sayrzmob1akvHQNcLGWHVi0
-Message-ID: <CABPp-BHFZsdNpYWEWq-r+BqKeFQ6uh1MAbSfWQRPL8-diw6NOA@mail.gmail.com>
-Subject: tc/replay-linearize [Was: Re: What's cooking in git.git (Jul 2026, #05)]
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, Jul 12, 2026 at 10:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> * tc/replay-linearize (2026-07-07) 3 commits
->   (merged to 'next' on 2026-07-09 at 371c2e9c3b)
->  + replay: offer an option to linearize the commit topology
->  + replay: resolve the replay base outside pick_regular_commit()
->  + replay: add helper to put entry into replayed_commits
->
->  The 'git replay' command has been taught the '--linearize' option to
->  drop merge commits and linearize the replayed history, mimicking 'git
->  rebase --no-rebase-merges'.
->
->  Will merge to 'master'.
+Elijah Newren <newren@gmail.com> writes:
 
-Could we hold off on that until there's a response to
-<CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com> ?
- I think the third patch has a pretty serious principle of least
-astonishment violation, and there's two alternatives that weren't
-previously considered -- one of which would be simple to implement.
+> For what it's worth, looking back at the v5 thread, it seems the `base
+> = last_commit` rule came in to fix the real bug Junio and Phillip
+> pointed out there -- that without it, only one side of a linearized
+> merge survived.  That fix is clearly correct for the single-branch
+> case.  My worry is only that applying it unconditionally reintroduces
+> the multiple-positive-refs ordering problem we deliberately avoid
+> elsewhere.  Making `--linearize` reject multiple positive refs would
+> keep the merge-flattening fix while sidestepping this entirely.
+>
+>> A user
+>> who wants to linearize ranges independently is advised to use separate
+>> git-replay(1) invocations.
+>
+> Which, to me, is another argument for just disallowing multiple
+> positive refs under `--linearize`: if the recommended way to do it is
+> separate invocations anyway, we may as well require them.
+
+Hmph.  To me, this is slightly different.  It acts more like an
+escape hatch: "if you really do not want to mix unrelated things
+into a single linear history, you can do this other thing."
+
+Stepping back, the unpredictable order of multiple merged lines of
+history exists even without multiple positive refs.  If you have
+independent lines of development that were merged and you linearize
+them, someone must choose which line comes first.  If you let the
+machinery make that decision, the resulting commit order may not
+reflect your preferences.
+
+While I rarely perform octopus merges anymore, in situations where an
+octopus merge is appropriate (e.g., when you have N independent
+branches and their merge order does not matter), linearizing such
+a history into a random sequence of N segments, built on top of
+one another in an unspecified order, could actually be considered a
+feature.  You do not have to make a decision about something that is
+inconsequential.
+
+So, I am not convinced we should forbid this behavior to avoid
+dealing with a history containing merges or multiple positive tips.
+
+When achieving a strictly linear history is the user's goal under
+the "--linearize" option, is it not inherent that there is no single
+"correct" order for these independent segments of history to appear
+in the final linear result?
+
+Perhaps I am not reading you correctly, but that is how I read that
+escape hatch explanation.
+
+Thanks.
+
+
+
+
