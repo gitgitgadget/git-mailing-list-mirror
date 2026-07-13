@@ -1,217 +1,165 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E126143C04C
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD222F8BEE
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 15:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783953717; cv=none; b=dAp6VEaykIbDhhFWaWh/Lz/21IJaqRk3HcLy7NZ1nqbUpo9sOPo+wbUd41YyFPPzWGgAUtP9SbUXIdL0hJRFAWbFPz3kvUiyg9xOPkr3yYM9OPt5PwZffH5V4rq/m2sVwVtguj0LSoKEh9EHRsfLRA/mQ7oOa4tKqHqLlP89NEI=
+	t=1783956458; cv=none; b=Ju3rfCgTI3fRo6ktqY/bNahH0cTKaZsYwHcl7KMN1FRaZ31A+t2Gc9BkQVZ01D5/Ebex3CNwY5y+KaHpmw/UWTFwrJ2J6WmGvmQPWjwXX4UFxpZdoST120UmWzilCAzwmd8BwW48krVkg0eTQ5mV8RGDuV3S23HU0v8eA+97OMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783953717; c=relaxed/simple;
-	bh=qba9Tx5IHISGgmVNTeqh9uYvcbeCWakCuaot9ihk/zg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N8R7CiIEgCWXP9OghYBLBa5ElAg1GFF7LWJM5N3Ngtp/ls54RgASyM/zG2QkXVsVZ3IrBoH6WxjozN5netSOntBz3ZzUrm9KlDWFEoSMarr51Q+0IrbVXhEQRfVIkh+op2YGh0zElgeY2VJw4hfE+jJeu7/r7Y/LDrdM97twvB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ssj2k9nj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EznPe5yI; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783956458; c=relaxed/simple;
+	bh=poPx52Kj5pBeWN4nvm9qoNTnXXP5R18kescKx9S6Lg0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XmxFrGwac4X4HHyN2OGvoIQRzzacHEbwT016cUZVwiNREm8cZkR9rne8w/anpQtG+5Pj3KrhqoR/Ion0fMsMDRyiX9/Ok+2tmpYeNFzZ0HO+r5fLJQyGWzODn0Mf+dKiMg0ao0ulz7bgqKr9cZPpf83ZB02Ta9eYSilqBwoDphU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=el9t7rq5; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ssj2k9nj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EznPe5yI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D8117A00DC;
-	Mon, 13 Jul 2026 10:41:55 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 13 Jul 2026 10:41:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783953715;
-	 x=1784040115; bh=b0PhXLhU8CiPYYskVIl05ljLfAF8cFGMGYIs9boMYmc=; b=
-	Ssj2k9njp4gqvZMWfNirOAkCYq0QEj/+vtfr7drmocf7wdS6MechN2+X0gwhxFDp
-	Ao7acJKHWR9IWbmlZL5PBo+hwbZVn4E3UWQE9UuegXIEpY09ybddrrXFGzdZcZj4
-	dN9lCJg9/eKzoahFru1rZFP9O0lrwLKWtRxFacPnZReKr2VTac/acW1skSiroKC8
-	AJNhSuOKF3meRSXASuH1fMDLkVKBwGxfViBdAXyRzXqvSYp2UlgJP6SvFRyqNBVx
-	uuE3slM0LaK8cWZe781a/eaowS8+zX99/qDlrWbVXzjmQfRFb1qf/OPJcMB4mF1M
-	vBGuIoygXCHkiLhJ+XtmVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783953715; x=
-	1784040115; bh=b0PhXLhU8CiPYYskVIl05ljLfAF8cFGMGYIs9boMYmc=; b=E
-	znPe5yIr036GGX5ne5mh7mW3gL3MZEGC8a8Pa3HxgMv00CjYMBVAovlpPpkce0Vz
-	tSWVJV2apeNlMiGWwXAidp8uCLGehIA1yI/ZgYit3dhXaNjiIr4jrIqZjk9MoNlO
-	rM0n7KcaInqNH3UCucPWQguj6N8Wt8CqeIlUcwinjf8f9IQD0ZFoJQzNVWVXPFXG
-	+LwI0AzwmA3ai80YhCMB8B1cwdn6JtdZOSK004pds1jBOpW3x8u+jqbT0kUJIT7N
-	GaTI/ezvW5+LWaB3XwB+ejR68CO8NMfjjWhJELpl05XLAvaIfP/5ClipifgP9kou
-	ubz/ZCYdoKXlPfHf+B/tA==
-X-ME-Sender: <xms:MvlUamOnCV9h9TS0tMZl8XS25hJx_ijJGh0MNWrphopwaw_6sNqGeQ>
-    <xme:MvlUar0d8GeemOAS2t-78x-XBkmBFKSMCXzp_H8d8anc2DFpo989sQrQfO11o6XY3
-    4ItCUJ9JTVYEZSL4QUsIUs_F2jFJeJ5WfXS0hxNPEY3OpjqpexJqQ>
-X-ME-Received: <xmr:MvlUalkKQ-_Xo1UxJpAzE0PDuetGBMZY_SN81nhElsQ2Ay--ZvDtjn9gogirWMsdEXhC3kxc-D26qsr_bc-OXDONEh_ElsmX-p-TuPFp>
-X-ME-Proxy-Cause: dmFkZTEQFI6EIs86vsGniSFo/i+zUpd/VWvrb9jxGzILEdXtmZycl73xbCE91lPUPVeS4f
-    lt4T/NwZ9gyO/ZAnSUjwXLObW/sZbJJUYr9IQgbVmBYJoUyOoEKYMrB7YiHLHOvVI4hd16
-    AewehM6HcbjQ4NWMsondWRJRVrj7Qpjbjj8ak+MePMr6rV6+gvOP+1ctGFG+0B85CPVxZA
-    mrpCGjv8EgZQzCYk76hxQRCFDwEmP5cTKRBwPFJWE8ofEdk3PegPUsbONN9cXbBh/Qhz/h
-    UNK7lnzA00X8El50mB1BDNvelBjjyTa/VzizSkWfIPgxxoA01GrYVfRjJUobZd2NhRV0Eb
-    U0s5jdkATBip0vKZd4W9fOO/2O+aGx4JMdmXyO7ee35Cx9riJqcobQDXBGAryzczuv3tld
-    0KVT4SEIrKhDZHHQ0vTcYalFfHVsG6DZRRZ3MIdFA3POVdwU41A9c66V04ZkHDEcw+quge
-    CXPBUDvoFPWL7+7q0OXhK3Kq+rXnkz4fxSQFaapfBnhTzzxP0nMP8CFZ7Yns5uKj9VXNCi
-    aXeI6zO9Uj9210DqcGw3Dx2zfUTv6f+XLQZ4kRDkGlVMxv6thwtTslbYu+3BuXRukUDuww
-    mcqgXLh1UQZtNt/rGp8/65njRiMG+0LIvaYHl4K3FiUqBjzaVtn1bhaVmdoQ
-X-ME-Proxy: <xmx:MvlUaiWIhFg_Hus58Sf9TNZKMFp7b9msuD9JQSevLyt1wB-FwtqAxA>
-    <xmx:MvlUarvy8I-cKDNEegtpVQ6FZaROU3vsQTpy0yMafrAb_r3FRqB36w>
-    <xmx:MvlUala1C7aKRf0CGaXBcecNG1CHdLWhMIXOpc-3lbBPsbHPvgnqcQ>
-    <xmx:MvlUaqXBaB1zQ8WxIEAAwF3LcDhpwrDj8baeh8cuWh5awX6jtZxz3w>
-    <xmx:M_lUaoi1t2yHLABlsNSiTM_KZhF3GuzFgh7DdPGELPirjIPoGwFzT9RU>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 10:41:53 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ee017812 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jul 2026 14:41:53 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 13 Jul 2026 16:41:33 +0200
-Subject: [PATCH v3 9/9] builtin/cat-file: filter objects via object
- database
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="el9t7rq5"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-493b77b150aso379525e9.2
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 08:27:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783956455; x=1784561255; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=PhEf1m9sHksKrR0EnJ9+jexRUa/R3RU20x6Wub+nlFo=;
+        b=el9t7rq53D8Cf/XvzOxSdQ3YGtpohmBsxopWnHxoVdXNwJHfl1uCQ7inWHkMa2y4GK
+         kj6ZW6DSdP9KN7oKUaonrvGMFLHxTLrRlHsqAblqHnEiyfHlraUkz+WBXKEuLQ376iIG
+         kf8KV/naKYadZ5FSBQA+grJ4uJ+eJYvU09CNM9O7AbDNCdFUe/t0Tk3h42cQ/txFheCR
+         2UkSfS3logkZCuuFmLebT6IW6UJ0tQTKkRiyA81cM7Dyi49234ItsyLKhQbLmx07UgtF
+         /oV+fJ7+taiC9zThzOz7J/CVDAnb4zLW13NO9faJps34qfqEIYT6sLftr0djO6EjNvQo
+         sdEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783956455; x=1784561255;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=PhEf1m9sHksKrR0EnJ9+jexRUa/R3RU20x6Wub+nlFo=;
+        b=EGwo5orP/lL6hcOxVOjeTZV6nq3mmdKKgkuUBrD+tP7/yPss6rjPuJ1VKMCgLfMms5
+         L4GzVLhuvKWHR0sUKFr+UjAUIE0s8i9BNRu1bosKgNGDoNR8vXCUXmxvW7WDkIw3fsXv
+         hH9Nj6N+d51I0EzZTb9PNCzA3y2s88afuVEMHFsEXhaBHFgjftMiv7q7IQy9zIsbHO/w
+         nTodniV1X/+SeGRYIrVkr9UhuEYQHXy2cJsS+79kKgGaAYbA18ZCWINXA4jeL9PIZ6Du
+         oiCjcI4W1qTuokq8/9UFDqlsQdCkVyeAfklxwmuAdqPB77NVIsXdWmFAo3WIsJqGnHcB
+         mVSw==
+X-Forwarded-Encrypted: i=1; AHgh+RohH/73mIEVM37i+JLDAykaD9b1ORPtFLllUUHl5X5HACG7pZFlWEEDlCdwFk4eOQNxsiE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2N2H7nKfhEP01DjS6F2LQzxMDfQKyFwP10xpvdU5cFCOvaSGX
+	XnoDUYUKTAIanFMiv4LkguR6rhaSrxIUYkuPLsWtren1KHuqsIziM7Y1
+X-Gm-Gg: AfdE7ckGtlr3aHo/3dqSRlDETaClnqpTBDS5PWvBzwvyw61T3bRkHJ/boQoYxYF3OC0
+	ZQYxys23QznbNfnDyxeTaCLXb1/I7vqZ9890USVzcG15yTDvzew9Hj2K7y2H9qgFsKVSwjeYZ06
+	rB41NeWqvSYeyqt/a9rrOopg/CrR76vkgjtVcReWqtNFrakqG+m5NFtTn/076uLG/oiDuu8YZEb
+	Da8Fd9fc+l7gTF77cjSMSDeE934IO+ZooYlBy33bitF8F0qwRPMbBTWTiOrcLB4cVLKHEvZF7qE
+	mlrYJWKd66G2FF11bbiqmzl39bBA9EiZMDhVFETo3nxDY4YMDDTezvUYSOJ+BaYJsEGCD//N/wH
+	zPhy1SPnV6PU6+1Cd3g9CcVCsqhTzLeIgPxEjCkpXWMEkzuT8XPxyQE2pTp7tsDAFkYRlFCp+/j
+	lToVpTujS5pOlXQQXyYi2otsr4oHgSBKMS6EAwUHzAEn6ZOt8wMWl04wJsCju+FElIe8Wfo2MwS
+	TtxpQ==
+X-Received: by 2002:a05:600c:8518:b0:493:d100:b487 with SMTP id 5b1f17b1804b1-493f8780997mr94221625e9.0.1783956454854;
+        Mon, 13 Jul 2026 08:27:34 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493fd3ccfd4sm126744355e9.2.2026.07.13.08.27.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jul 2026 08:27:34 -0700 (PDT)
+Message-ID: <278df7ad-caf1-40fa-b5f9-34d78f435fd0@gmail.com>
+Date: Mon, 13 Jul 2026 16:27:29 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v18 7/7] branch: add --dry-run for --delete-merged
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Johannes Sixt <j6t@kdbg.org>, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
+ <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+ <8d0323f4b30cdfed134ff2840cc8a9ab32f9db53.1782338106.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <8d0323f4b30cdfed134ff2840cc8a9ab32f9db53.1782338106.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260713-pks-odb-for-each-object-filter-v3-9-b3c65c641073@pks.im>
-References: <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
-In-Reply-To: <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
- Jeff King <peff@peff.net>, Taylor Blau <ttaylorr@openai.com>
-X-Mailer: b4 0.15.2
 
-When batching all objects, git-cat-file(1) reaches into the internals of
-the object database and manually manages bitmaps to apply object
-filters. This creates coupling between the command and the internals of
-the respective backend.
+Hi Harald
 
-Refactor git-cat-file(1) to use the new object filter option when
-batching all objects. This significantly simplifies the logic and
-ensures that we don't have to reach into internals of the "files" source
-anymore.
+On 24/06/2026 22:55, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> With --dry-run, --delete-merged prints the local branches it would
+> delete, one "Would delete branch <name>" line each, and exits
+> without touching any ref. The same filtering applies, so the output
+> is exactly the set that the real run would delete.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/cat-file.c | 76 +++++-------------------------------------------------
- 1 file changed, 7 insertions(+), 69 deletions(-)
+The same filtering as what? I think something like
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b4b99a73da..1458dd76d6 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -20,7 +20,6 @@
- #include "userdiff.h"
- #include "oid-array.h"
- #include "packfile.h"
--#include "pack-bitmap.h"
- #include "object-file.h"
- #include "object-name.h"
- #include "odb.h"
-@@ -844,28 +843,6 @@ static int batch_one_object_oi(const struct object_id *oid,
- 	return payload->callback(oid, NULL, 0, payload->payload);
- }
- 
--static int batch_one_object_packed(const struct object_id *oid,
--				   struct packed_git *pack,
--				   uint32_t pos,
--				   void *_payload)
--{
--	struct for_each_object_payload *payload = _payload;
--	return payload->callback(oid, pack, nth_packed_object_offset(pack, pos),
--				 payload->payload);
--}
--
--static int batch_one_object_bitmapped(const struct object_id *oid,
--				      enum object_type type UNUSED,
--				      int flags UNUSED,
--				      uint32_t hash UNUSED,
--				      struct packed_git *pack,
--				      off_t offset,
--				      void *_payload)
--{
--	struct for_each_object_payload *payload = _payload;
--	return payload->callback(oid, pack, offset, payload->payload);
--}
--
- static void batch_each_object(struct batch_options *opt,
- 			      for_each_object_fn callback,
- 			      unsigned flags,
-@@ -875,56 +852,17 @@ static void batch_each_object(struct batch_options *opt,
- 		.callback = callback,
- 		.payload = _payload,
- 	};
-+	struct odb_source_info source_info;
-+	struct object_info oi = {
-+		.source_infop = &source_info,
-+	};
- 	struct odb_for_each_object_options opts = {
- 		.flags = flags,
-+		.filter = &opt->objects_filter,
- 	};
--	struct bitmap_index *bitmap = NULL;
--	struct odb_source *source;
--
--	/*
--	 * TODO: we still need to tap into implementation details of the object
--	 * database sources. Ideally, we should extend `odb_for_each_object()`
--	 * to handle object filters itself so that we can move the filtering
--	 * logic into the individual sources.
--	 */
--	odb_prepare_alternates(the_repository->objects);
--	for (source = the_repository->objects->sources; source; source = source->next) {
--		struct odb_source_files *files = odb_source_files_downcast(source);
--		int ret = odb_source_for_each_object(&files->loose->base, NULL, batch_one_object_oi,
--						     &payload, &opts);
--		if (ret)
--			break;
--	}
--
--	if (opt->objects_filter.choice != LOFC_DISABLED &&
--	    (bitmap = prepare_bitmap_git(the_repository)) &&
--	    !for_each_bitmapped_object(bitmap, &opt->objects_filter,
--				       batch_one_object_bitmapped, &payload)) {
--		struct packed_git *pack;
--
--		repo_for_each_pack(the_repository, pack) {
--			if (bitmap_index_contains_pack(bitmap, pack) ||
--			    open_pack_index(pack))
--				continue;
--			for_each_object_in_pack(pack, batch_one_object_packed,
--						&payload, flags);
--		}
--	} else {
--		struct odb_source_info source_info;
--		struct object_info oi = {
--			.source_infop = &source_info,
--		};
--
--		for (source = the_repository->objects->sources; source; source = source->next) {
--			struct odb_source_files *files = odb_source_files_downcast(source);
--			int ret = odb_source_for_each_object(&files->packed->base, &oi,
--							     batch_one_object_oi, &payload, &opts);
--			if (ret)
--				break;
--		}
--	}
- 
--	free_bitmap_index(bitmap);
-+	odb_for_each_object_ext(the_repository->objects, &oi,
-+				batch_one_object_oi, &payload, &opts);
- }
- 
- static int batch_objects(struct batch_options *opt)
+"git branch --dry-run --delete-merged ..." prints one line per ref that 
+would be deleted without modifing any refs.
 
--- 
-2.55.0.313.g8d093f411d.dirty
+would be sufficient
+> --dry-run is only meaningful together with --delete-merged and is
+> rejected otherwise.
 
+Good
+> @@ -346,13 +348,20 @@ static int delete_branches(int argc, const char **argv, int kinds,
+>   		free(target);
+>   	}
+>   
+> -	if (refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+> +	if (!dry_run &&
+> +	    refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+>   		ret = 1;
+>   
+>   	for_each_string_list_item(item, &refs_to_delete) {
+>   		char *describe_ref = item->util;
+>   		char *name = item->string;
+> -		if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+> +		if (dry_run) {
+> +			if (!quiet)
+
+This matches what we do without '--dry-run' but what use is '--dry-run 
+--quiet' if it does not print anything?
+
+> +				printf(remote_branch
+> +					? _("Would delete remote-tracking branch %s (was %s).\n")
+> +					: _("Would delete branch %s (was %s).\n"),
+> +					name + branch_name_pos, describe_ref);
+> +		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index b7595610d9..cddcde341d 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -1892,8 +1892,12 @@ test_expect_success '--delete-merged deletes merged branches and spares the rest
+>   	) &&
+>   	sha=$(git -C repo rev-parse --short merged) &&
+>   
+> -	git -C repo branch --delete-merged origin/next >actual 2>&1 &&
+> +	git -C repo branch --dry-run --delete-merged origin/next >actual 2>&1 &&
+> +	echo "Would delete branch merged (was $sha)." >expect &&
+> +	test_cmp expect actual &&
+> +	git -C repo rev-parse --verify refs/heads/merged &&
+>   
+> +	git -C repo branch --delete-merged origin/next >actual 2>&1 &&
+
+I was wondering why the diff shows the line above being deleted and then 
+added, it is because previously there was a blank line after it. The 
+test for --dry-run looks good.
+>   	echo "Deleted branch merged (was $sha)." >expect &&
+>   	test_cmp expect actual &&
+>   	git -C repo for-each-ref --format="%(refname:short)" refs/heads/ >actual &&
+> @@ -2050,4 +2054,9 @@ test_expect_success "branch -d still deletes a deleteMerged=false branch" '
+>   	test_must_fail git -C repo rev-parse --verify refs/heads/kept
+>   '
+>   
+> +test_expect_success '--dry-run without --delete-merged is rejected' '
+> +	test_must_fail git -C forked branch --dry-run 2>err &&
+> +	test_grep "requires --delete-merged" err
+
+Nice
+
+Thanks
+
+Phillip
