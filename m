@@ -1,82 +1,81 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BEE3093DD
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AF53290D0
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783960086; cv=none; b=MXqX9AzOK1gnOq7v5DPHlEZofSU40pTveQ18vpPNYSCdpzZoorrhe2e7WM1v1t1m6CxoFAJjHp6FSZbN8pe33uf2DSKKbU70NtaIGnf/HTPryzWsq21HisCRoGyMDNpoF9YonBZrFt3jGmV/+5fb0gJg/DXtwZYbPGLOnQDIrPQ=
+	t=1783960225; cv=none; b=Tx1Tbl1cCv9IT1wUdmU1eKZJu8T1SFieQ2JRi0tXUNWwEN5HrWxVTb4TRwWS6BtEEvsolGxrfm1Z/v2+Cvt8BKwfxmwQmzDms/GH/ydKUgtcmT/oYMSsOMPBxh0a/f3bzRznB4jSAC5Y/BbVZoaCHhjP8CUrQd5SuquoVvw8fLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783960086; c=relaxed/simple;
-	bh=4KBcAR5Vfl+gQx+tb8EMyEniHmsHTUyRoJUaYJrmd0M=;
+	s=arc-20240116; t=1783960225; c=relaxed/simple;
+	bh=GAaW9aVaIn6iKBb+5EC17adC27/uKxg5S5D5SPHLpw0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PfyeMFCxGUXjoZa1GkHQD5YyKeSGrLFTh8AtcXrLvpsKSw3JaGe2w7A7cwnd+XVd1a/9GvLzJfBhSbYGzWODRait7HhNJJ7ZVwdoqW6BBOKFtczKDleBh7FymumdMDB3xNIP7RbJkqR9sn08PdBYfSft2VHgxoNesJvyIk3xo6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XfKHdJG1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ewQVKeFu; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=o7dDtHI3LOOGzBh4TQJEzE35upqlJ6ZomLQhJtuFHx6CQbqW0pIbaBkCcsTjoTbhNTZeIZZjNsfKnOizBpPZF45sEmhTs+eM5w4/zWqYDrNH8BcMExQBU9wySX6gK8N7DYu6ysvnl6NkpXMOOeUVBHKcg9r9fLmV3lGHnJiNKBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PUacfmJo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xez6GKm7; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XfKHdJG1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ewQVKeFu"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 524B21400181;
-	Mon, 13 Jul 2026 12:28:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PUacfmJo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xez6GKm7"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C38D1400155;
+	Mon, 13 Jul 2026 12:30:23 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 13 Jul 2026 12:28:04 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 13 Jul 2026 12:30:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783960084; x=1784046484; bh=QMyb5HTu7Y
-	FmmvSOcvb4YJ/dlo93/B2EEIYQ1VrsjWg=; b=XfKHdJG1fnmCZMkdWR/G2i4h1F
-	1W269MLyUY+JMD2Vfa9/avldIFgCqL2MpXG6Vaq/HEF2gYbr7GKyneJJJWtxDN0a
-	obFIdbLDDLBSPOLwnAVJLcewtRiCDY3UR7osUdkv2y4t9WU8XJK2AdZsLsJaX0wO
-	LBY6VTbh1rZ7COaEzQJhTQtEm/GJ5cmAyPFFsdHsL/HIY5FzbUpAOGCVYkUur07Q
-	VF/TViqGqSnWUv2xBMxtHYIALF+oKqlQFCIfNRtcFniHbkpy1AqQvBgDFErChxmy
-	LQ5xSaemSXBEGBYspoyF+e3V6qpLrk5H5a8ojkXAXgOY+fcr6unalBLFw5dg==
+	:subject:to:to; s=fm1; t=1783960223; x=1784046623; bh=3ScYj7hEsf
+	vvEPZPEO6s3WIHR4oMO2s5UWdh3l+gKyM=; b=PUacfmJofyCxU8NxA4qYQgLVQK
+	Ay8NMyL+H891IrQqaEvoHjtPUTtQ1d7ae0mHfukPlLctc8Ip023BApzlcMf1ST/4
+	9qHfLzGBryVbKp6axneE1WJjoaf9D1N9EjcGUl2Q2zeXNx6OR/jIC0icuZdAgOJ6
+	wwnnTRsQ/fxu+FivI1tyguX01FPbpQ1G44y/zMffO2Ah4Lqdj5Bge5V2Ed6Q/2XE
+	jemGY19S3aRiT8AFOjeEDmFXqb465auqD5fiZhY0Q58UT0Gf1Y9WUz2tloCF4h5c
+	1wcopwMKjecZiJ+yu3ZoHkL7RizHqQG2rf9XLl7F0KFVoP41v/tbXs9rSEng==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783960084; x=1784046484; bh=QMyb5HTu7YFmmvSOcvb4YJ/dlo93/B2EEIY
-	Q1VrsjWg=; b=ewQVKeFu3HIg3mR08vVf1WiG83ZmSS6sOIki4vZf4TCNZkvWCaQ
-	lbCMU7vLKP1IJRgOFyqAi4f07I6Dix/rIwBhUImttDlKmeSdjjCpMKH9FoiTfu1/
-	Wtnd9Q8K2Yb7DyAYiXxghCEaE9H9IlDBmYR2xRk5KJQGK185Cau4fFy68TzpQATl
-	OsMR10xxQLkUQ0tssEONx4BA/aN4it8SEEymfaJphUKgO6llMzvdmZUdCHQfR6V3
-	v5fvuwWUL3YmGqEOnSKWim3BMGDFJw6AULbnhf3iWetEO84aTqZPNGhFLU+nQvjK
-	nKRKp1SPNQ7Iwn1OwC5vwd6dylgqtnSkrhg==
-X-ME-Sender: <xms:FBJValop3Iy64HludWHC1kxRiEuaM7rCPg7a7wVbufryBaL5npE71w>
-    <xme:FBJVavFurqOjSP5tY6-xK-HFZjj1InMGClMkv4TnMDqhmqrVYBXUY4R9Qrn07ELHY
-    1TIa9vviqthTM6IY2gcTB0KSxP04UfzCMBpGhjYooqmqiZD_C0HPg>
-X-ME-Received: <xmr:FBJVavnKm-EsP0cZLV6KWP3TwU8HAdIIDoStBXsDCBY0FiEIvJwY_0Drfl1_2fSg2WYKj3DlbW-sph1ydhCE1YPWuJYfaDodxvITuQY>
-X-ME-Proxy-Cause: dmFkZTF7t2Cn6MpKm20ZKO9t/fANSlJFIj1iUffTvHxDGx7hE8ADv5CvxxSqcMy1TzN7L8
-    d9OlUGN8CQZOH65Ss3M72cTRK5V/r31AABJR42OvCH3fF0M/gtVsN7d0FUpz/dRuFuD2PY
-    8l68VY79kasdDrlbWTB/eZC1iMTH5sHk6x3XtdPo6lNAPumc8CutVtY84+3yqYdN1wJb4Z
-    7P9YbdlZO3r/4b0uO3vBebT8X1wdh3bJE0DwDkiy6fcqbAAZf56dqNS0LeHVZC24hxomuq
-    K71Hsk+88TRR5wGozX4TO5+2Pw/QkuRcHv/ZgIhkm4+OAwVSCRQ2NS0op/9lJKOKdrICih
-    1K34vV3Nk3w8Or3+f0lbhVGHCb3pXRvURylLkX88trTGgUkBqKVfRDDPiSPIlKp3QtHAP+
-    ogiik1eYWnY9O+NUc3WaFCG441DpVRakOFEk86YT7vBgxn6fB6qoDqQkcqkXRcuHaGDJvd
-    KcFuQJ3wrR4qSpwfcKy3FkFPv0XzOOAr8kM/e3g+RQUDK8TkTnjTQLyh5RNWfaq+FSkoX7
-    ACAYEc/HdlztyVTkR/AhWrtIPfSkOSc3g6QnZqA0s4Nbfcmxk/hH/1HHTDa8Bs5b3GT25h
-    MUAPj7ez9Vh/0Btb4ShzD6HWCCMi4lBavOnFxr+myRovcdN40TZ4qPrzgvig
-X-ME-Proxy: <xmx:FBJVaqmlB_zOpibgluEY9o1SiWZOTsrXpVueP3HpvyMydcnJQ-D6dw>
-    <xmx:FBJVaovaRN47r31zDHS-1PechfOdSc98uDr2FO6PoTQt-1O8f4181A>
-    <xmx:FBJVallwX4yJ61Qt69juacR9wLABvblg6UbpeXmcbjhKwmctfXyyqw>
-    <xmx:FBJVarvVcbHBPVuVHqQgnd4rMbnxXCLipLFV_JYEibB3880miHS-qQ>
-    <xmx:FBJVanMp6Z6A8KHou7bhu4F4rp_9Se7m0txDkQgsD2K8iKer32EMx0_9>
+	1783960223; x=1784046623; bh=3ScYj7hEsfvvEPZPEO6s3WIHR4oMO2s5UWd
+	h3l+gKyM=; b=Xez6GKm7qNeP//9ZAWhtQum93IxndhSw/+EsQYhDTZhjdL3fZik
+	hE3VZ+NL/tKHxwLm5x/t/JA3wac6iEQq6yOmnF8YtQyGkhQcbVzOU+DGgIqqM024
+	kpGjt6Jz4hqbOD7OmUSTKGchiOt7ftpp6fBhuQpGvZ9hDKyTR3Xr4PsTlE5nyMm5
+	EGLE8ujq0e5bb162iol14j9OfwC/OGIq1C3vD1XSCk6yFRwHMgd3OLz7KeX1RH0Q
+	buQ8c/3x3GFYv4gjhRDnC/onS6xb4pVGD5gG7TXrYDPKTrsVIi5/STgDkcEvaQ+i
+	V2swQAC+6lpjZdCgEkpFJfvp8F7B5cSALfg==
+X-ME-Sender: <xms:nxJValSwtIGeGSQU878vCDulK2aNfRpyQnaDTXKCToMGskdNLTxSbg>
+    <xme:nxJVamODnKeBDNZP8pYvhoEVCBxeHod0p-yamXc8ibunP634poTTN9yHbgOre8sx3
+    fystWU_E826Zv2Bxi7TSZrpjkep_xG2R0WdNAZoZjpKAsijkbW1pA>
+X-ME-Received: <xmr:nxJVaoPrcClU60giSJCF5u5ATCNXO3m5uUwCH0CD6TGmmnejqiRxjOmGuI52dvrYEx3MX1O0Fcmw_EVO8kuB4TT9ZNvMjzbSY5l_BNk>
+X-ME-Proxy-Cause: dmFkZTEsLG7eN+0eLA6y+b8/KlKZxBUwS5f23sBf8kcLrQguH058U/YNmibI5NPNVqVNKK
+    GE2f6YXulFwQr1aYEMlVrINBuPS170fnGim0viamx9HtHo005NLZ1B33SuDm+L2tMIiOFx
+    EXcwbBcKeUAzR6kPakZ9a+6qOlnxIH7GsSDZcQTHj61IH/9SeUExvuqssNsoYUWtvW+GcF
+    XC2z1nPRzKCq6VpVkvrqoix9beXODBgmUVsAgbzsE2+se/3Y0wekPlL4xEZpVASRWFTY8I
+    KQHYTbLWL+jwM1eb+CqwNJUYzKqE5D+A5dsVHmwWppzFJ2L35aHeK9Qs+aS0HZKyV7HpS/
+    2aIAqJCyp4LIEZyq6OAszI/pJg2hxv95rxGLD9Q+nfaGIkGQ+Tx4HIgB4fMq7+7W+Ymba+
+    swzf28/D3DXPXGZGtHR5a/ZYdbiMK753fy7vkoMT2/8CGNFtGq0i3OaWEfmHgMmXhRqzQ0
+    kn2/KCmp5T2VN6njpwQ3hw/jo1iu4eP9juq9j4ef0zed5rkAstxM9yZcSeI/cFa9b8t9RN
+    JZmd2Rt+zjkgatRaczLxVCOx/b2Qiaxv/UcsRe33DUH61C9V4QfhQcVS0F8/vFzY5qwn8M
+    waauEwa9lsnJuygD5KHvGMw36jBe6POgbE1d1qLZQ+b76Z5liN868IK4LDDQ
+X-ME-Proxy: <xmx:nxJVamt8Oriaiqy9tbTtrRNqnmoIjFwm7GdzHomsBDq2NwOtTRL2Fw>
+    <xmx:nxJVaiWXtONv6M5JbYXHdTkYAFMa5aU7Fh0W5SQfZgIPuqrsWgKJBg>
+    <xmx:nxJVausZXaorPLjDH5FgZW3gt4uhLOTRBIXZkijINTgpDqmn-5nUCw>
+    <xmx:nxJVauU0ZEtEy_wZic7eIhEPSZKdJmGyGjPkYgA4YP8hDqvley37xQ>
+    <xmx:nxJVas3BytR39nKZwCght4JWvaPaRaL2KxJ47siu1V6phSW8hZCVmrTi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 12:28:03 -0400 (EDT)
+ 13 Jul 2026 12:30:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+To: Shlok Kulshreshtha <diy2903@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 11/12] builtin/gc: fix signedness issues in
- ODB-related functionality
-In-Reply-To: <20260713-b4-pks-odb-optimize-v2-11-9c2c3ee94b38@pks.im> (Patrick
-	Steinhardt's message of "Mon, 13 Jul 2026 07:52:14 +0200")
-References: <20260713-b4-pks-odb-optimize-v2-0-9c2c3ee94b38@pks.im>
-	<20260713-b4-pks-odb-optimize-v2-11-9c2c3ee94b38@pks.im>
-Date: Mon, 13 Jul 2026 09:28:02 -0700
-Message-ID: <xmqqwluyyhv1.fsf@gitster.g>
+Subject: Re: [PATCH 1/2] t1100: modernize test style
+In-Reply-To: <20260713140142.27898-2-diy2903@gmail.com> (Shlok Kulshreshtha's
+	message of "Mon, 13 Jul 2026 19:31:40 +0530")
+References: <20260713140142.27898-1-diy2903@gmail.com>
+	<20260713140142.27898-2-diy2903@gmail.com>
+Date: Mon, 13 Jul 2026 09:30:21 -0700
+Message-ID: <xmqqpl0qyhr6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,86 +85,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Shlok Kulshreshtha <diy2903@gmail.com> writes:
 
-> There are a couple of signedness issues in ODB-related functionality.
-> These are not a problem because we disable -Wsign-compare in this file,
-> but once we move these functions into "odb/source-files.c" they will
-> result in warnings.
+> The tests in this script use the old style in which the test title and
+> body are passed as separate backslash-continued arguments, with bodies
+> indented using spaces:
 >
-> Fix those issues:
+>     test_expect_success \
+>         'title' \
+>         'body'
 >
->   - In `too_many_loose_objects()` we receive a signed limit, but compare
->     it with the unsigned actual number of loose objects. This is fixed
->     by bailing out immediately when the limit is smaller than or equal
->     to zero, which we also do similarly in other places. The warning is
->     then squelched via a cast.
+> Convert them to the modern style in which the body is a single-quoted
+> block on its own lines, indented with a tab:
 >
->   - In `find_base_packs()` we compare the signed size of the pack
->     against the unsigned limit. As the pack size is always going to be a
->     positive file size it's safe to cast it to an unsigned value.
+>     test_expect_success 'title' '
+>         body
+>     '
 >
->   - In `odb_optimize()` we compare the unsigned `keep_pack.nr` value
->     against the signed `gc_auto_pack_limit`. We only reach this code
->     when `too_many_packs()` returns true-ish, and that can only happen
->     when `gc_auto_pack_limit > 0`. Consequently, we can fix the warning
->     by casting the limit to an unsigned value.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/gc.c | 20 +++++++++++---------
->  1 file changed, 11 insertions(+), 9 deletions(-)
+> This is a style-only change; no test logic is modified.
 
-Yuck.  The -Wsign-compare strikes again X-<.
+Cleanly done.  Running "git show -w" on this patch clearly
+demonstrates that no code has changed.
 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 3207182488..8cf3781313 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -430,19 +430,21 @@ static int rerere_gc_condition(struct gc_config *cfg UNUSED)
->  
->  static int too_many_loose_objects(struct odb_source_files *files, int limit)
->  {
-> -	/*
-> -	 * This is weird, but stems from legacy behaviour: the GC auto
-> -	 * threshold was always essentially interpreted as if it was rounded up
-> -	 * to the next multiple 256 of, so we retain this behaviour for now.
-> -	 */
-> -	int auto_threshold = DIV_ROUND_UP(limit, 256) * 256;
->  	unsigned long loose_count;
->  
-> +	if (limit <= 0)
-> +		return 0;
-> +
->  	if (odb_source_count_objects(&files->loose->base, ODB_COUNT_OBJECTS_APPROXIMATE,
->  				     &loose_count) < 0)
->  		return 0;
->  
-> -	return loose_count > auto_threshold;
-> +	/*
-> +	 * This is weird, but stems from legacy behaviour: the GC auto
-> +	 * threshold was always essentially interpreted as if it was rounded up
-> +	 * to the next multiple 256 of, so we retain this behaviour for now.
-> +	 */
-> +	return loose_count > (DIV_ROUND_UP(((unsigned long) limit), 256) * 256);
->  }
-
-OK.  It is trivially correct (if rounding up is correct, that is).
-
-> @@ -456,7 +458,7 @@ static struct packed_git *find_base_packs(struct odb_source_files *files,
->  		if (e->pack->is_cruft)
->  			continue;
->  		if (limit) {
-> -			if (e->pack->pack_size >= limit)
-> +			if ((uintmax_t) e->pack->pack_size >= limit)
-
-Here, just like in too_many_loose_objects(), 'limit' is of type
-'unsigned long'.  While it makes sense to convert both sides of
-the comparison to an unsigned type, casting only the left side
-to a type that differs from the right side puzzles me.
-
-Presumably, the other side is of type 'off_t', which is signed,
-explaining the desire to cast it to an unsigned type.  But I am
-not sure what happens if 'off_t' is wider than 'unsigned long'.
-
-Otherwise looking good.
+Thanks.
