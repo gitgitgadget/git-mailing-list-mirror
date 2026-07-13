@@ -1,66 +1,68 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5826313B5B3
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 01:11:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A2113B5B3
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 01:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783905113; cv=none; b=C5NdyTeUskSlyY8YNlxv2Ucj/EvooWEe2FINElfB/MiPHTzx3DhZNDjYnpNm9Oqhyorc/yQwebW5TdhjiweBVCLFj5jOST+ckuJmAKl3de9Q1fwX+qcNG4X5f3b0kIIsiCjO0hVtQcHYUMn/pswKO+2jwt7S9sVZxuM2mOrQ0QU=
+	t=1783905118; cv=none; b=hqTW3asfL7zJ5TAVfeNllBlhi4lUiKuxrfp1lMdI5QN6QxO2w9iUR04/HADz2q6VHNBi45+Jq8+Up+iLRxm1A5SmgJRNecBwccZcx4aappFA+K9hP3j7qaQgkk4sRG325NKH8lX+YDVILDuSXRLWU7cFTzQcYZ0xvnXF3NAyzFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783905113; c=relaxed/simple;
-	bh=aT19HDlk/Nh86gaaSOuwCOxsb14QJ3vSlLZ1DWOTV14=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=MxjYdcq6o7bIOhrGTw5EmS9hP+/7AY49kIUgzZsKOJW6ua9gHHXvzaAtBcgsfWmsSFlxc1BWwH/giI9gg6CMQy8miaqN13SZJvjy9BY72tRhwAtPA9JFPBCKCrgbNM4b2++jVT4K/AE/k7kg53CRIz2Vc/rjAtqEn2sIIsL9NpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=SlEMRB1x; arc=none smtp.client-ip=209.85.128.177
+	s=arc-20240116; t=1783905118; c=relaxed/simple;
+	bh=kk5AZ+xfEy/VmM/D4FJUjEt2YaDI6OswBqbf+sBfd3E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iebC6CnHBegoxCjW1DwY5vy7oMOFy4jXl4yPCAY9ETpDHDYj2jNUdf4yI0MceH5ZbS1nSx8t8qWMwodloE7h1DV3cykUIQeiRABXlvM3SkurR8kjcOUtivTRKED0lmUa6oVcaK8Gb3EthuIewfHvB81MqH82o3RlRSyueU0nQmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=C78/8Wwn; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="SlEMRB1x"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-81062fdeaf5so56182897b3.0
-        for <git@vger.kernel.org>; Sun, 12 Jul 2026 18:11:52 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="C78/8Wwn"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-809b19a7f25so32516417b3.3
+        for <git@vger.kernel.org>; Sun, 12 Jul 2026 18:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1783905111; x=1784509911; darn=vger.kernel.org;
-        h=content-disposition:content-type:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=K48V7iaZ+zLszoIbFidEJqSmPV7PBbcCv/kcn2aoEpg=;
-        b=SlEMRB1xdVpzktuO35HnvCN/X2vfCdkjrk+6JMpgcGxtTE+pKiP0h1a6WZfYBJzao8
-         XqI3CN0QdxD+O06oSF3aCXImY2vdHJJbQ5gK9cz4p4H6gEjuvVOOi+U0u0nKjdi4g27J
-         +WrDkXcyyXYusOK5sGU+U9asZpzHwWZH2KsFs=
+        d=openai.com; s=google; t=1783905116; x=1784509916; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=487VG6fZhHK/F7imib2P5aU06RFEniuC8U+9xQZueKk=;
+        b=C78/8WwnC9V/cy2NSD95H0kFTO8WnNSWUvtnvnWGpnZEwrpmQwG/fWXKeVa4j5yeq3
+         EA1Nxg8yKg8+jLzGxvbTto+SDC0zHAKzRbOnAPngbT/N+E6ld6nbafDjE+gPvbSIn+GY
+         GRFyvo3qLQFwnok/Ct2k8Lu8Os81n6SOXPON0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783905111; x=1784509911;
-        h=content-disposition:content-type:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=K48V7iaZ+zLszoIbFidEJqSmPV7PBbcCv/kcn2aoEpg=;
-        b=OhCx/Aknn4+KmaNZJCPC0voWA3RDMDa/k0p5ySEoqJ//Bqm8yyYxFbxaYbmSb8koCB
-         RvqT9tKt8IvQGow1BjV1H6Xs5KhWA0GCFrzPgwH6Lh6fc4WScdKLXwz9R8NOhk+LRi6z
-         +fSQRb/+xURr1WX+vuDLCiIPfAEemh8AxSZRKiKHrhpt4DDzpJw/xnfuf/gL3VxkUZS8
-         UC1uP1K4N/Hgds5Ab5taodGyZKOavw2Cytgk/bzTVgyVjz2DbqA+GeTLBQijivvJ1qUY
-         YyaKTw17ECOpJ4bTQFT1ClYlU79xQHmiNln+ff7uOYjGAHeHwu1sVtvFFJff0XpwgeV9
-         MNhw==
-X-Gm-Message-State: AOJu0YyVUQseZguRMJh0tP3qnnioJFoz1HYpJ4IPAXVUS+USKpQfWYH6
-	3iYTz+Lv10MBEn76A8IM9zILVwgS1xpQBSZlZO+4oyqnse/gBfk7Mo6HvbkCXKUdW7DmYUeRPCi
-	K60D5eIC9Mw==
-X-Gm-Gg: AfdE7cloxojBSaXn+CIF3E/SOLGgyn7M+F0sRHEtzRwGeNdDJZhagO9YlR7NMLEDY04
-	FF5xAjAmP9DZLFj8p5o5KkDQYGmzRnt6KES8su5m/gQBhG3jQGPCp8DhAchqjXCgbeJD3CtuG1l
-	3rWhI6+FO7b3kC8G3OfqaYxMt+Io56iLXMjouVX8jIRkSIhGGr3TSY6Ce+PfYQnNbH1z1pYjXRb
-	rnrtT4FrVrdAt6Y9dinzDLBLbWm5s7SGmZdCn4rIpR75S6UpIuRhf9nHDtqUX1hRKTk3AZINSwu
-	Dn/2eyAVeG4V6+kSOGvFO4Q3Hhod8fmbdT6QzaDAuWzPhil31/NhYEWPa4YgjznXjl2PFbMBBLx
-	v5vk0PRUiRjRzW7OHASqeDwtylwqRHFAQHHKybUvTRxe3jYdp2VE5RkfepamTqCLsR0rD/o3i0z
-	l/pY+Cw3y0dRwWyYa0Hwzmhw==
-X-Received: by 2002:a05:690c:c507:b0:80b:b76d:650 with SMTP id 00721157ae682-81e7bcc3679mr89235757b3.31.1783905111225;
-        Sun, 12 Jul 2026 18:11:51 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783905116; x=1784509916;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=487VG6fZhHK/F7imib2P5aU06RFEniuC8U+9xQZueKk=;
+        b=YdVvFeUIRWSk4T/HHe2KJkJozwDhB9BzQHMsxCLVgzGzaM2JkgBbt1TWzuWQq/PNq9
+         8Q62zEAjwLnzFb4rJmMGCrU6x7XtpGpfag3sQvxpm+HLe4nyR/fGmwRQW2uaHk5lAHHt
+         fZtPHjamZWQ2yQX1FKHEoxuWE/guATgdWcLpLqA/Nvu42nSOUnLRnnHM0xGGOjkpQZMM
+         CLYJJYPWq7M4z6RXzaPPfutOoha9Qf6dtmNJ05DT1I/DRi1d/EgCoYjYHJYjCFJ+lsHH
+         3ru0zR6K+FCyGqyKZlcQVJ61I9yN/VL5YMl/K6DnqNnM328HQroUxRyLWwNH5MHdy350
+         WyQQ==
+X-Gm-Message-State: AOJu0YxSaBRo5vLci/8n355eVpN1zSey+c1fEr2drkm8/Sss1lJ9txah
+	TrP05rDJqTKGVAxzCf97TN0V82qSsnxlg0s/Q6J1x9v91JA/C67naSOljYoan6XPmKnVFAe+KrF
+	v11PRFOXheQ==
+X-Gm-Gg: AfdE7cnfq9OhJ36CE90BWC0vnWHSuAj06N8DbLvbw2NSeMxdJ0ztnKsZuM4ixYSrGQ2
+	HTlNMVrNpIhpeUrHle/DZJ7A3k7ZB0cgi9/yloBWz6iixMHu9Vx+JXrd578f6tsmqPODLWWt1Op
+	Szvvuoojyi+temeDVQfnI5HyaqExc0io9TnQrwieZ13KeCf9OS2ShaH1NJEgRSNG7XAwB3CJM6n
+	nUHeLHb1Qv3LiOETBuXj3FqtQHUSUsLhuk44/xk+jlBpCWaiVmB1bTc2PzwjR5lQNcDCq/Ob1TL
+	bKqfaaXrhtYv3MbpH8bjhW6cjsNvM6QHkxF2To5c8l/tsGq2I0+t3vpyOYIBIZMrlv57Anvb2hF
+	HwhBV4JntbmizTtzOdrDsVrn2ayJWOEaZxyA0KX6nS22HVEcc6Nl36FXhRtGlzevMDB2ZhHnprp
+	VyikU+IHZSX2YXMHpMnQO9yg==
+X-Received: by 2002:a05:690c:d90:b0:81e:77e4:e77e with SMTP id 00721157ae682-81e902eb311mr50069017b3.70.1783905116034;
+        Sun, 12 Jul 2026 18:11:56 -0700 (PDT)
 Received: from com-79390 ([12.187.141.7])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-81e6c1a44e1sm103902127b3.29.2026.07.12.18.11.50
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81e6c1e5706sm102812857b3.34.2026.07.12.18.11.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2026 18:11:50 -0700 (PDT)
-Date: Sun, 12 Jul 2026 18:11:47 -0700
+        Sun, 12 Jul 2026 18:11:55 -0700 (PDT)
+Date: Sun, 12 Jul 2026 18:11:53 -0700
 From: Taylor Blau <ttaylorr@openai.com>
 To: git@vger.kernel.org, git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/4] send-pack: introduce a `no-ref-delta` capability
-Message-ID: <alQ7U8TOWjhasaWk@com-79390>
+Subject: [PATCH 1/4] t/helper: teach pack-deltas to list delta entries
+Message-ID: <alQ7WKITYDXfiVn9@com-79390>
+References: <cover.1783905084.git.ttaylorr@openai.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,72 +71,159 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1783905084.git.ttaylorr@openai.com>
 
-This series teaches 'send-pack' to avoid writing `REF_DELTA` entries
-when the receiving end asks it to.
+In the following commit(s), some tests will need to distinguish between
+`REF_DELTA`s and `OFS_DELTA`s to exercise a new '--no-ref-delta' option
+for 'pack-objects'.
 
-Some 'receive-pack' implementations may wish to retain the incoming pack
-without first building an object ID index, in which case requiring delta
-bases to appear earlier in the same pack makes them easier to locate.
+Existing tools report delta relationships, but not how their bases are
+represented in the pack.
 
-The new `no-ref-delta` capability is deliberately independent of
-`ofs-delta`, and thus asking the sender not to write `REF_DELTA` entries
-does not by itself mean that the receiver understands `OFS_DELTA`
-entries. The corresponding `pack-objects` option therefore controls
-`REF_DELTA` without changing whether `OFS_DELTA` is allowed.
+Teach 'test-tool pack-deltas' a '--list-deltas' mode. For each delta
+entry, print the object ID, its REF_DELTA or OFS_DELTA type, and the
+base object ID or pack offset, respectively. This lets tests inspect
+pack headers without open-coding a parser.
 
-The main complication is reuse. Ordinary delta reuse reuses the
-compressed delta instructions, but rewrites the entry header and base
-reference. It can therefore write an existing `REF_DELTA` as an
-`OFS_DELTA` when `--delta-base-offset` is in effect and the base has
-already been written in the output pack. Deltas against preferred or
-external thin-pack bases cannot be reused in this way, since those bases
-do not appear in the output at all.
+Signed-off-by: Taylor Blau <ttaylorr@openai.com>
+---
+ t/helper/test-pack-deltas.c | 69 +++++++++++++++++++++++++++++++++++++
+ t/t5300-pack-object.sh      |  8 +++--
+ 2 files changed, 75 insertions(+), 2 deletions(-)
 
-Bitmap pack reuse is different, since it copies entries directly from
-an existing pack. Under `--no-ref-delta`, it must inspect candidate
-objects individually, omit `REF_DELTA` entries from direct pack reuse,
-and leave them to the normal object-writing path.
-
-The patches are organized as follows:
-
- - The first patch teaches 'test-tool pack-deltas' to list each delta's
-   representation and base. I originally wrote the series without this,
-   but found that writing tests demonstrating which specific *kind* of
-   delta representation was chosen to be awkward without having a
-   dedicated test helper.
-
- - The second patch introduces the `--no-ref-delta` option in
-   'pack-objects', though initially with delta- and bitmap-reuse
-   disabled for the sake of simplicity.
-
- - The third patch re-enables ordinary delta- and bitmap-reuse where it
-   is safe to do so.
-
- - The final patch advertises and consumes the new `no-ref-delta`
-   capability.
-
-Thanks in advance for your review!
-
-Taylor Blau (4):
-  t/helper: teach pack-deltas to list delta entries
-  pack-objects: introduce `--no-ref-delta`
-  pack-objects: support reuse with `--no-ref-delta`
-  send-pack: honor `no-ref-delta` capability
-
- Documentation/git-pack-objects.adoc         |  8 ++-
- Documentation/gitprotocol-capabilities.adoc | 17 ++++-
- builtin/pack-objects.c                      | 29 ++++++--
- builtin/receive-pack.c                      |  5 ++
- pack-bitmap.c                               | 30 +++++---
- pack-bitmap.h                               |  3 +-
- send-pack.c                                 |  4 ++
- send-pack.h                                 |  1 +
- t/helper/test-pack-deltas.c                 | 69 ++++++++++++++++++
- t/t5300-pack-object.sh                      | 79 ++++++++++++++++++++-
- t/t5332-multi-pack-reuse.sh                 | 16 +++++
- t/t5516-fetch-push.sh                       | 14 ++++
- 12 files changed, 252 insertions(+), 23 deletions(-)
-
+diff --git a/t/helper/test-pack-deltas.c b/t/helper/test-pack-deltas.c
+index 840797cf0d..4ba6fe2dd3 100644
+--- a/t/helper/test-pack-deltas.c
++++ b/t/helper/test-pack-deltas.c
+@@ -7,6 +7,7 @@
+ #include "hash.h"
+ #include "hex.h"
+ #include "pack.h"
++#include "packfile.h"
+ #include "pack-objects.h"
+ #include "parse-options.h"
+ #include "setup.h"
+@@ -15,6 +16,7 @@
+ 
+ static const char *usage_str[] = {
+ 	"test-tool pack-deltas --num-objects <num-objects>",
++	"test-tool pack-deltas --list-deltas <pack>.idx",
+ 	NULL
+ };
+ 
+@@ -80,19 +82,86 @@ static void write_ref_delta(struct hashfile *f,
+ 	free(delta_buf);
+ }
+ 
++static int list_delta(const struct object_id *oid,
++		      struct packed_git *p,
++		      uint32_t pos,
++		      void *_w_curs)
++{
++	struct pack_window **w_curs = _w_curs;
++	off_t obj_offset = nth_packed_object_offset(p, pos);
++	off_t cur = obj_offset;
++	size_t size;
++	enum object_type type = unpack_object_header(p, w_curs, &cur,
++						      &size);
++
++	if (type < 0)
++		die("unable to parse object at position %"PRIu32, pos);
++	if (type != OBJ_REF_DELTA && type != OBJ_OFS_DELTA)
++		return 0;
++
++	if (type == OBJ_REF_DELTA) {
++		struct object_id base_oid;
++		const unsigned char *base = use_pack(p, w_curs, cur,
++						     NULL);
++
++		oidread(&base_oid, base, p->repo->hash_algo);
++		printf("%s REF_DELTA %s\n", oid_to_hex(oid),
++		       oid_to_hex(&base_oid));
++	} else {
++		off_t base_offset = get_delta_base(p, w_curs, &cur,
++						   type, obj_offset);
++
++		if (!base_offset)
++			die("unable to read base of object %s", oid_to_hex(oid));
++		printf("%s OFS_DELTA %"PRIuMAX"\n", oid_to_hex(oid),
++		       (uintmax_t)base_offset);
++	}
++
++	return 0;
++}
++
++static void list_deltas(const char *idx_name)
++{
++	struct packed_git *p;
++	struct pack_window *w_curs = NULL;
++
++	p = add_packed_git(the_repository, idx_name, strlen(idx_name), 1);
++	if (!p || open_pack_index(p))
++		die("unable to open pack index %s", idx_name);
++
++	if (for_each_object_in_pack(p, list_delta, &w_curs,
++				    ODB_FOR_EACH_OBJECT_PACK_ORDER))
++		die("unable to iterate over objects in %s", idx_name);
++
++	unuse_pack(&w_curs);
++	close_pack(p);
++	free(p);
++}
++
+ int cmd__pack_deltas(int argc, const char **argv)
+ {
+ 	int num_objects = -1;
++	int list_deltas_mode = 0;
+ 	struct hashfile *f;
+ 	struct strbuf line = STRBUF_INIT;
+ 	struct option options[] = {
+ 		OPT_INTEGER('n', "num-objects", &num_objects, N_("the number of objects to write")),
++		OPT_BOOL(0, "list-deltas", &list_deltas_mode,
++			 N_("list REF_DELTA and OFS_DELTA entries")),
+ 		OPT_END()
+ 	};
+ 
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, usage_str, 0);
+ 
++	if (list_deltas_mode) {
++		if (argc != 1 || num_objects >= 0)
++			usage_with_options(usage_str, options);
++		setup_git_directory(the_repository);
++		list_deltas(argv[0]);
++		return 0;
++	}
++
+ 	if (argc || num_objects < 0)
+ 		usage_with_options(usage_str, options);
+ 
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 73445782e7..4bee490ff6 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -190,7 +190,9 @@ test_expect_success 'unpack without delta (core.fsyncmethod=batch)' '
+ 
+ test_expect_success 'pack with REF_DELTA' '
+ 	packname_2=$(git pack-objects --progress test-2 <obj-list 2>stderr) &&
+-	check_deltas stderr -gt 0
++	check_deltas stderr -gt 0 &&
++	test-tool pack-deltas --list-deltas test-2-$packname_2.idx >deltas &&
++	test_grep " REF_DELTA " deltas
+ '
+ 
+ test_expect_success 'unpack with REF_DELTA' '
+@@ -204,7 +206,9 @@ test_expect_success 'unpack with REF_DELTA (core.fsyncmethod=batch)' '
+ test_expect_success 'pack with OFS_DELTA' '
+ 	packname_3=$(git pack-objects --progress --delta-base-offset test-3 \
+ 			<obj-list 2>stderr) &&
+-	check_deltas stderr -gt 0
++	check_deltas stderr -gt 0 &&
++	test-tool pack-deltas --list-deltas test-3-$packname_3.idx >deltas &&
++	test_grep " OFS_DELTA " deltas
+ '
+ 
+ test_expect_success 'unpack with OFS_DELTA' '
 -- 
 2.55.0
+
