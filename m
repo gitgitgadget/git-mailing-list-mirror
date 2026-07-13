@@ -1,143 +1,214 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2832339EB7C
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 09:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BD23815E9
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 10:44:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783936496; cv=none; b=CdZDGzPZDqQ06Liy1xO5p779o/mgD3d84aY6gDvpcE1cCdYrFTQ2ZqsJuVODPSbAOADF/goJkIu7uODlJHTe0vbc1hqN9t7f38S7EfaUPeplDmIjGt9UGK3O6Cq7hqIVNSsi0XWmVwkgayNcI+AOiuutaL+2/pWYo+f8BDU+0GY=
+	t=1783939499; cv=none; b=VbXsukhVZ2TJhln00HJK0mVeLltot9hRzCcZVFwuBY0miTbikhHCrKR8Fn5gp6pM5v7ftmcnNmZweCwftvr5OpStBr8JQ0tAspAVpv79jBBsK0i9bzlH9Don6RkqEEez8Iezk8OokUYcIyp3zxywaGA4JRoI6kGoOq7LZlQUg3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783936496; c=relaxed/simple;
-	bh=juIMkfdpGP2/h3vMKUFq5PgvkwuqQTswDNTT4/RUpYM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UfJ1ngFBcyJmt7IOBx8AySau+WUZN5N892LKpszuvm2WJoeMLZ0MvvOnvffFFeNFkLppDAk6dKabSPwOvINcFMrWmF2pd7x6PXix6sOAI4pBbFs/eHTSyhox6nbpPPqiuB9jO3h0W2MmKGlqiClB9BlpFUdloH4recc+E324de8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JJOQWi3O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EuGcpCrq; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1783939499; c=relaxed/simple;
+	bh=ddEn6mLBsLJuKy4DGHfEmuqkyU7hyII0OmyPvcKcvI0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=naxeMUfCGQMd/nhClROENg1zhMpou1EdWfRkjyIxk8pYHldqCTeX3r9vlZcCqsqDMsMCpKBY+cpL0tZ/2w7aI+EWmuCkALbfXlaMEVwr3P5LMMm0NsJ4WCwhKuzFAbjFlBPY02Ja2PfJD1dck25i34s4F+BUbObS7lfMpevP12Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DWxLjIgK; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JJOQWi3O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EuGcpCrq"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 40C7F7A0088;
-	Mon, 13 Jul 2026 05:54:49 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 13 Jul 2026 05:54:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783936489; x=1784022889; bh=XJPE8Jouc2
-	ef3ekLrf2UBPBOEJCzNvyUFa6G4n5xRcM=; b=JJOQWi3Ob4zZSK+X4P03+UvOsm
-	geupD/712lxEK7y7/JFzYUt5NDEOk9yT4jzE6XqVcxIFAxi9LcAAg1fU7qAZNAd1
-	oDhwXjPyRQdZDm92vDtaKVETPJiYF4oWLctwCEFG2L62ZHg7PrT2E2x7x4O65Qs0
-	1hS4o8ik9pq6b3XMXV3KUMNJxPds8Xkb9hJoxTE+JmZf/Bn42zDvQhjZMxxt3J9V
-	W1wLhqgYCD6/WZXCs2xQc4qHh812MEwKkFNucLSSMUxIi3yh+BCqXAKG0obe9THc
-	964QoMxOzfwKp9HAKhVD6u2WAOeh9aC3TFZIhSLjRtTuRdEJzVwHNs/Avu4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783936489; x=1784022889; bh=XJPE8Jouc2ef3ekLrf2UBPBOEJCzNvyUFa6
-	G4n5xRcM=; b=EuGcpCrqvLxcC8Ab15cAjKiNl7s/qLaqU+Fog9iVCPxCulZdm2g
-	M+kScEnlaiMsIOPHRRB0TFXJKoaffxYemW1k0kw1qInzLW3azxH09LnaITK2N9dT
-	iUxM3nlO1+g2l9gwtEyDN1RA24L6g/v09Ls+PigZJEz2aQBN4qqHm5VDFqQ7AlLV
-	ntV8vZOE5V8n1xwlLAZAMYrtCrK2M1Cg0NuBI+1WIfLLHcPVUjqh+JP467L9I4go
-	r14f2kU7vNYxuc8gkGAx9SnCtrAuVnTYsRMuekr3dUJb7kItwVpDWkp8pn2Zl32/
-	BeTiDbP2jJo5lnnTyaIgXm24A1MiohUetfg==
-X-ME-Sender: <xms:6bVUatM5DaaiKUl6fabG_zu6-s5IJjmtf3MqE8YuHtl3olKF_UhvmA>
-    <xme:6bVUam_xR0Hfu1mMBLfIdWDGJK3-4n2AkDl6uLVWdQAxJEMnXuUNv0BAoMkWISpHw
-    zQzhqmT6NCyhP8auA_0MsXr5Rh0K5bhJZKr7REc-fQAJnyYFnvldFQ>
-X-ME-Received: <xmr:6bVUahSUybCq9tHYT2BnLooLqFo_5fBwbIyRGIuV6zSNqC_uLmv0JpdDgqUbw4DmLW4Cgn8CxD6MEkYAs1QSdB0h-OBUNX5t2DCdge1A>
-X-ME-Proxy-Cause: dmFkZTFpIvDtKCle0paMOTLD0Kj8Oq9aX8qs2vJ3RujWphZpwLxj5eUN5W65KNRjPmNmlr
-    IvyN/7a5XWWGK1Rzvj7XPar25XEHOBoqZeHXY/2d3NA8gKNzfRhrI3b+MFnPsVnzWrBaY2
-    vWRKWYQTjUvo8p44ONKNwjAQOHBa2U3gm8/Xp9oMIDu3cl1XV8ya353vI3HtgkAcKVTYSl
-    rmrr4EAI7vzh5FYlQ7EyKyO6SWKyJQsQh0YgR5n0iuX7XgKj0Y0v03LXQREDXZBxrAD9bF
-    yW/WxykMLpRFl/z8Q0WnlSwyce+dLeXxDVmdy9m5bzxB3n+60+RXDJPQ7wuOqj1Akq1eIX
-    MhN+FnbLD81xRlSnmqwHTAYrfFGwzq/xJt6ED6TWY2nr08Nb477+pwazML7XHLCMB+dJp+
-    Fo4Dpt13l0TBeboA3jhA3dB1LMLrOFdrHzq4ra6tCvClwKn7JOo7IVs0/PPtJopF8yUS79
-    QohYP1gbOZEJkWVBrgngfyAY5aLFsemfGf+UTDoA6qURPqqIZd/r2gkEkcFlt2lxbzHunT
-    em4YT4UKydX1B8WfR6yQ2bPxm3CZpzi0BkzYe9AcAwXikackt57Ii7M/w7exTX3iyIepq9
-    H98IwwghoXnYtx+XdjGIWjSGLuUDcBZZIBRyu6q2K8Tbm1re3qgb76Qjmypw
-X-ME-Proxy: <xmx:6bVUaokSbhROpHiBsu2ILiExylaCmvWuWyzriSp9dvN5NljLICjUZA>
-    <xmx:6bVUahQwEilwsRlvl4UDJ0Ug9p5mcVsiEKkAg-mcWYIt6CxaoaLLkA>
-    <xmx:6bVUamO-9syFelW9_5t2wn_O-4APTkp8NbS37WcMVP6U2uSmut8XdQ>
-    <xmx:6bVUaqUVS9kTEtG5eojVx_8-JtLvjbs_Vvy-mjtCxt9oiWWdo7bStg>
-    <xmx:6bVUarz-X7HW4FxPdevNkqwoEVk0_UVhBhTt5fra6naxRZPr4dneBo2g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 05:54:47 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fe344d88 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jul 2026 09:54:46 +0000 (UTC)
-Date: Mon, 13 Jul 2026 11:54:43 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/8] odb/source-packed: improve lookup when
- enumerating objects
-Message-ID: <alS1440iifvTvGKP@pks.im>
-References: <20260710-pks-odb-for-each-object-filter-v2-0-3710a9cc165a@pks.im>
- <20260710-pks-odb-for-each-object-filter-v2-1-3710a9cc165a@pks.im>
- <alFxRvkfNgJRCQTB@com-79390>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DWxLjIgK"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-493f75f7172so17971795e9.1
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 03:44:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783939496; x=1784544296; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=GY6IbiS5AO90iKqlfxLzz6Vph+r4oKCYpJpZmPhxfjc=;
+        b=DWxLjIgKYqCIPVo7vSh3JO+U+WbmlSskMt+dE6ADjKqBBDCxzN9MNtMOpbkdgm5GQj
+         8EVkZZDMhicFZ92Hq0Tdr5hOjcV4/L8TKOF3XLx0XBrDb1+xWNOwQ2q+PHy6FxQsxxe0
+         1CFlobhknU/RMXmj/5OqHsqioMvAgBAGWhrk+s7iwlOZzWpBifs38gxz2ggvyRde5nfm
+         C9PbufXDjSMEgSsZaz6Dh0kz7kSq4uvBYVwzHaUjA0Jt/clj1A5LO+9fkfpXU8i2iFIv
+         kM2s3cTEm5XVzm3ZuoMxnzd/hYfM46cTgctkAhYAPtEfCc05L1+4AptBbfUn312uWEts
+         Zhyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783939496; x=1784544296;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GY6IbiS5AO90iKqlfxLzz6Vph+r4oKCYpJpZmPhxfjc=;
+        b=Qe6FjyXHXfA3QSsT3lbZqCAAW1av5rBljyasnitQXEQpR8IIH49Ut29a0ZDTKheqJJ
+         1Qt2vNZBAlbDw0AMYDHOI969Y70U/V2cIdjbA/lxvZ7/hNVt3V7r1oqJwoyT6jszBx2M
+         8eTDIbA5luU2/za57qrZfLScLtYXwwkTkk6b/2qeJZH9pPHX+EXKqHxFKCO6O5PZQAXG
+         vsfx7TNv5IYZqXmPoy10vl+HRcznVsgJjG7SVAQ8Jz2sRts3Gse2mpEjI6yg543D6+VW
+         b8GaovkxtyVzYxV8C7YRK884diOORpoaOgxFum3roiRYi6WSlM8L8jDADSnfkKwbWRZt
+         AeZw==
+X-Gm-Message-State: AOJu0YzqzizMADN5fVNpa2Torq1Co1tUBCyAX0FaMtzUoM0hZ9Dw2ie7
+	Xae4tdLRbEx9EWIDZJL7KrzHk2A8PUuMg2cE4+/EBl+VBkMxWJmFP4PJCpqynosz
+X-Gm-Gg: AfdE7cl8+Rvr84LOw/v6y+fWCWC4JUyHO+aWD4HO7njdGLjhX0IWAfR/M7NCtP+jR9q
+	BW/xImbh5aYSyPD3xOrlebBu0e38x4rxikhA8jbTxUAYj/I0ChLzAc6psTN+AUpQC6dDRI5Ephz
+	DWxeDnGULNSkYIeaCk/ZKU+dRCLcFZgBEWCGPT2iRuhUnGK0SLXrLOHa06ROZ/HcWl8w80S5FPq
+	rqPaBfZgT9+WxanVHRT/xexEm7q5PcVeU7QAfdXRaO+HCqCwy6HDD40buXiJ7OSV5ueOKRFnWXY
+	PegdnnVSmU+gq2ZsEMonVuzR18PeUTS3hYgLt43jSfp+6MxHYV/YyM9z9SDyrvMVdV0pOx080Bv
+	NC9Cw8fwEcavUj7Fl3kCWK2caAYkSaypPmnm5vJnnWsuUNjkkT6wRCs+Z/HqRRUFMTGr0PjPiB9
+	P7Ep4onsSlFJN9A5U2cVk5LMPaKnUX20TKHMNHnCA7RkAUPDEXmfhf8vFoRZkRGbD0ltvVGvpHr
+	dqfKpVLum8FNl1bq8mwaqgFtnlzxlhegzQMI2YcpY1VBYk0xgcZcnKiMkCMbyrzZZhQ2DCGtZZ9
+	0xVNrpdYZZfW5nQpDaAq0460TLJwmcF/RyV1Cerdgck1RCZmTorMMAzWDcvyIQJk7fYdxEDYvj6
+	Clrr4UQVaVg==
+X-Received: by 2002:a05:600c:314a:b0:493:e404:3727 with SMTP id 5b1f17b1804b1-493f8818d5dmr91060765e9.23.1783939495698;
+        Mon, 13 Jul 2026 03:44:55 -0700 (PDT)
+Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493eb73b161sm318564645e9.9.2026.07.13.03.44.54
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 13 Jul 2026 03:44:55 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: pabloosabaterr@gmail.com,
+	ayu.chandekar@gmail.com,
+	chandrapratap3519@gmail.com,
+	christian.couder@gmail.com,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	krka@spotify.com,
+	mroik@delayed.space,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk,
+	siddharthasthana31@gmail.com
+Subject: [PATCH v10 0/7] graph: indent visual roots in graph
+Date: Mon, 13 Jul 2026 12:44:35 +0200
+Message-ID: <20260713-ps-pre-commit-indent-v10-0-82ddab26bc96@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260711-ps-pre-commit-indent-v9-0-eab6676e82f7@gmail.com>
+References: <20260711-ps-pre-commit-indent-v9-0-eab6676e82f7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alFxRvkfNgJRCQTB@com-79390>
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260612-ps-pre-commit-indent-39ca72816382
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 10, 2026 at 03:25:10PM -0700, Taylor Blau wrote:
-> On Fri, Jul 10, 2026 at 10:48:53AM +0200, Patrick Steinhardt wrote:
-> > Fix the issue by using `packed_object_info()` directly.
-> 
-> What you wrote here makes sense to me insofar as I understand the
-> pluggable ODB code.
-> 
-> However, I am confused by the way this function is written in general.
-> We use `bsearch_one_midx()` to locate the first possible MIDX position
-> in which an object matching the given prefix may exist, which is
-> sensible. However, we go from that position up to "num", where "num" is
-> the total number of objects in the MIDX!
-> 
-> Functionally this is not incorrect as we will happily discard objects
-> that do not match the prefix. But it causes us to waste CPU cycles
-> repeatedly calling `match_hash()` (at least for the first byte of the
-> prefix) for objects that we know will match.
+When rendering a graph, if the history contains multiple "visual roots",
+actual roots or commits that look like roots (i.e. have their parents
+filtered out) can end up being vertically adjacent to unrelated commits,
+falsely appearing to be related.
 
-That's not quite true though, as we abort iteration as soon as
-`match_hash()` tells us that the prefix doesn't match anymore.
+A fix for this issue was already attempted [1] a while ago.
 
-Or do you mean that `num` should only be `m->num_objects` instead of
-also iterating through `num_objects_in_base`? I have to admit that I'm
-alwas struggling with the chained MIDX. It's never quite clear to me
-whether a given function cares about the complete chain or whether it
-really only cares about a single MIDX.
+This series adds indentation to the visual root commits, so they cannot be
+vertically adjacent anymore making it easier to identify them.
 
-In any case, this code ultimately derives from 3f5f1cff92 (midx:
-introduce `bsearch_one_midx()`, 2024-08-06). If one squints a bit you
-can see that it's still roughly in the same shape.
+Before indentation:
 
-> How often do we call this function with a prefix longer than a
-> single byte? I have no idea, but I would suspect that it makes up the
-> majority of calls. If we read the OID fanout chunk, we could narrow the
-> range that we enumerate through, and only compare the second byte
-> onwards of the given prefix, if one exists. In the single-byte prefix
-> case, this means that we shouldn't have to do any memory comparisons at
-> all.
+	* A
+	* B1
+	* B2
+	* C1
+	* C2
 
-The function is currently used to find unique prefixes and to
-disambiguate object names. So whenever we either want to abbreviate a
-object ID or in case we cant to figure out whether a given object ID
-prefix is unique we'll end up calling it.
+After indentation:
 
-If this logic is currently wrong (or at least wasteful) though I'd
-propose to fix this in a separate series, as it's been this way for
-quite a while.
+	  * A
+	* B1
+	 \
+	  * B2
+	* C1
+	* C2
 
-Thanks!
+Indents the visual root commits that have still commits to show after
+them, and if they have children it connects them with an edge at a new
+row.
 
-Patrick
+If there are multiple visual roots adjacent in history, the indentation
+starts with the second one, avoiding redundant indentation of the first
+one and cascades after the second.
+
+	* A
+	  * B
+	    * C
+	      * D
+	* E
+	  * F
+	    * G
+	      * H
+	  * I
+	* J1
+	* J2
+
+The indentation wraps after cascading columns and when wrapping back to
+the initial column if the next commit is a non-visual-root commit, force
+the indentation one extra level.
+
+Series explanation:
+
+- Cleanup to bring a common function from t4215 and t6016 that will be
+  used in t4218.
+
+- Logic extraction of the chose of from where the commit source comes
+  from.
+
+- Add a buffer for lookahead purposes.
+
+- Principal commit. Implement the logic to get the visual roots
+  indented.
+
+- Make visual root cascading wrap after 4 columns
+
+- Add --[no-]graph-indent and log.graphIndent options.
+
+GitHub CI: https://github.com/pabloosabaterr/git/actions/runs/29241054418
+
+[1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+
+V9 DIFF:
+
+- visual roots cascading now wrap after 4 columns. This was introduced
+  into a new commit to make reviewing easier because the Main one is
+  already big and has gone through multiple rounds already.
+
+- Made a new graph_read_config() function where the calls to
+  repo_config_get_*() live to leave graph_init() simpler.
+
+- Added --[no-]graph-indent and log.graphIndent options so a user can
+  set his preferences about the graph indentation.
+
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+
+---
+Pablo Sabater (7):
+      lib-log-graph: move check_graph function
+      revision: add next_commit_to_show()
+      graph: add a 2 commit buffer for lookahead
+      graph: indent visual root in graph
+      graph: wrap cascading commits after 4 columns
+      graph: move config reading into graph_read_config()
+      graph: add --[no-]graph-indent and log.graphIndent
+
+ Documentation/config/log.adoc              |   4 +
+ Documentation/rev-list-options.adoc        |   8 +
+ graph.c                                    | 332 +++++++++++++++-
+ graph.h                                    |  17 +
+ revision.c                                 |  57 ++-
+ revision.h                                 |   2 +
+ t/lib-log-graph.sh                         |   5 +
+ t/meson.build                              |   1 +
+ t/t4215-log-skewed-merges.sh               |  33 +-
+ t/t4218-log-graph-indentation.sh           | 595 +++++++++++++++++++++++++++++
+ t/t6016-rev-list-graph-simplify-history.sh |  25 +-
+ 11 files changed, 1031 insertions(+), 48 deletions(-)
+
+Range-diff versus v9:
+
+1:  22ab444372 = 1:  9541b410b7 lib-log-graph: move check_graph function
+2:  ebb88c8b29 = 2:  4f8fb2cc1d revision: add next_commit_to_show()
+3:  0705ee321e = 3:  b50574bbe1 graph: add a 2 commit buffer for lookahead
+4:  fa2e60fb3f = 4:  fc3a8253fd graph: indent visual root in graph
+-:  ---------- > 5:  204aae5061 graph: wrap cascading commits after 4 columns
+-:  ---------- > 6:  1b42ed86a1 graph: move config reading into graph_read_config()
+-:  ---------- > 7:  737331b68d graph: add --[no-]graph-indent and log.graphIndent
+
+---
+base-commit: f60db8d575adb79761d363e026fb49bddf330c73
