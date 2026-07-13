@@ -1,133 +1,113 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0468D23C4FA
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 22:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783981042; cv=pass; b=BJN4KUSqMiX5VeZqYdTKqx+ONaKEO0yVviaGuIkRSNdr//itX1uftDlxuek4VSu8B4WK4gTKzWdPApJXzsI7JJqTHdqKxdGJaLJ1FHnendOS0xKRu0ncUUDykHkRbOqn98DKXQ+yX4qHyMSWJ7Rrmkq+AwqIXP6HYbWyw3mRdGw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783981042; c=relaxed/simple;
-	bh=GSDmgXOAs5nasX+qYBvOjuL2mXtSfUvsp6PYih1SAaE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rDKW9TFLtzJ3/ziTZrG4j0GrWv7l5+uWK3Gvk0w9KAiIhbcyJoZF8ZGyxYKU/rNUFA4nc3QPx+Rv6VpkzcZ5XHsazjv6RlSz3LWN+OeOhdvJoVGZVZ1F9MO6Q4dtVXiu7CbrJsbd5HQcaYhLRmmEcORSOTELptF8CvQ7vKfBPQw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=HQ/sgVh5; arc=pass smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A0D35AC03
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 22:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783981072; cv=none; b=tn7t/Iyr2PqtHHcSUPMvNNKyzwpihTP8UACTTpeUTtP3ix8h/qgiT2ZlM9iEgNLRwGuKREC+qQuPMMtMqmqaXL1PKaUyzXUSFJJSuPL+XdomxoNRBWgHo5YRVAUSwa9nOE+/vZ8qq1Syx8er4pi/m7EXqtZCtYSpddJr9x7kKvc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783981072; c=relaxed/simple;
+	bh=gh/+L6PchYJ7xMsy+bVDXeLeFIlWDaNeI/y8jP9ed2A=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=gaudqpPKMUAwJcvBszq9mzhiMwsRxaBAC3kQ01OPXEJhx1DHEhnna5jeEqhGLiBT7DaDScO806zvx3QbLtkggsR9QOkFPSfREsJGc11/kGL6EVp+Ebe3/HyWLq+XBjHjmUL9CLERTUSrlbue9Dte9Wr1pcgDdsprmXUKm2BVXMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DZGqNGqz; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="HQ/sgVh5"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-667971437d6so5870604d50.2
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 15:17:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783981040; cv=none;
-        d=google.com; s=arc-20260327;
-        b=re6BVCZsMymUP/yxTrQxcyFGPsbHLUc+yL1BnAsubv2Wf4O1RJ5ooCHw71Ljd2C5EI
-         DVQFehvc8RPNAhdcC3Ou4tXNdwonV7DhEN+ottDB9bsewUfIh1Mj5WxC7zlvllGKWxDD
-         1szHvDlUj9wG0jVlOi1BPD1OoDDyXnfoPK02oPBBrIwcKomQ4cqhcRDtGlEmKF4oypAt
-         JIQ1LBKW9gI4nMwuKL348Hgvu+BjkzGppzLZcwnxvrHJYAatLy9IsWd2WL/yg1dXRyrs
-         +AWFJQxIMKe8EEvh+THpCBZIP5yStoxtbe7gPikwIZHqV3d08g6d+23gmUDZZxaWEqFW
-         +n+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=/F7wGg5E2dXY5+62i753ZdhUGytc03TWuz6CJ8E9Njo=;
-        fh=pFPjargKWfayp2AfdRSMz2KZkQSSHiw63+NeEvmFViY=;
-        b=OQCI/i4qT7dtDabskHIWqiY0qcr+HhSRUdYEDlWovOWjZHMxMk7s/YrntNISCpIjUj
-         8s+zW/oMqSOw2GdGb9iSW7owRmGSDWfxRAc+4+wdJ0i20NKtTz+V4ggvCFzAuJOxEZp3
-         IzpaYkwLiGR/bdfwj6GG++zDZAPeKT6FAXEsoC3z/XSxHVzaz9sGpPUPCP3Uv9u/tN++
-         q0oWfQZk/QL8Y03eR6KbqSd2y2Zn7rh2Qbb7Fy6ofj3FwrnV4zT7N/NuiqWGr3j9Dcig
-         Cb3Rbi3X75S7rFa8J0dmoqU9nK1/kF8YT0bj0AJtU6nlp9ldNpAjYKgsKslS0iyTUsXZ
-         ykNQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZGqNGqz"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7dbcb505578so3942707b3.3
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 15:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1783981040; x=1784585840; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/F7wGg5E2dXY5+62i753ZdhUGytc03TWuz6CJ8E9Njo=;
-        b=HQ/sgVh5icux/RQzg1yuUYWtQynhJyW/bF9sZzQXA4rv3vIPxxTxaMXDGSB8JC0NUM
-         uzg/qY3RIFNWgcRByylreNSebP9gwauMChm/JcuWnGtWiaU8x95L7yW37ZJdeMpMKOHa
-         NuCD84VarhZqFF51ASOwWXcK7WTIVb9M6216Q=
+        d=gmail.com; s=20251104; t=1783981070; x=1784585870; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gh/+L6PchYJ7xMsy+bVDXeLeFIlWDaNeI/y8jP9ed2A=;
+        b=DZGqNGqzFfac3kPMIqzON33PrJ60U5X93KtyIlhBpx9CTXwyBYR43WUmSLJ5yVjUcO
+         gEgdhFUgt9rsuJkwGWffcivun0roXckAZKho4WL5ab9/N+vmhtWdmDoym2/TlhUDRutw
+         XPNcjwYajKTIO9CR4iwa3rKT1gYBpkAhzlMwzER8qjP6jPudI2pv9oMp/WNkwsWBoy+G
+         TWihz1QLk9SZl9GYTfjVBZ3T8ZIuVdJ3dIfely0vKzb/SYuq1Ky6jzYW77Oujt5s9LSJ
+         A8hD36iVuGWhIC1fEW4mfCV4HG11EnHhhz04Z92OrpK9SPgbwNqPNiV6j3E2eCvW5J1/
+         Vn6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783981040; x=1784585840;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=/F7wGg5E2dXY5+62i753ZdhUGytc03TWuz6CJ8E9Njo=;
-        b=Wi6iWB2KUCw2YRxbrZa1UD6bfO4Z6RiFKd+6EB4WzRwydI0sHxXkB78zLt7OaVq9Eh
-         TMz7oq7HCS01KNb+QcrTbDrx8I8qFmWDPAQcSYVSusdbsToiZyDcfEf0To72P/OVmChx
-         hC/W+jQH2N6huDIjDEtyK19V2FGXZasmbYz53TYKK31LoRTMA1n6nQdBQ0s+B0FU3NzW
-         DJOv38WfZ7qQW+AXatACL5rDk7m+TirOugD40/Vgh7E/5DmrrTZeL11Sflq0z2gl9XXQ
-         b5cZGsqEgmQ6p0BbcSDfkHOUuu1fw6X0DrsIUTbR/czwSQ9c9SxE+l7LCmvRD8xGREGT
-         BOFQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rq7rsbwN3/qeS6JGPvc/FkJGMQdsupc/fAJnNTXEvfkMw0c0SY6OrxBeYPCjcPHW1AoNWg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yynj1AOvyda6QAS+7B5Lg8NcciE9IoUTZyL4kctWIYDY3lqeYX8
-	z/ykL1onlP88Aot3U1eFCeE3xa9HSUjnddM0J+iyKVpkzrtIb/IhV144Dg2Z8IFMASbPMN8y5ZB
-	CNoMnGFTJ1Mu3AxVf/es1YZBrKD9uAAcPpcdTR5Inpg==
-X-Gm-Gg: AfdE7ckAuGtOCirteJUJ1Hq6nYVFGxutb8NPLCff0vqL6LFjzldzISimxbn+NuBI1P9
-	HJly56EoBCFVaNH06z7k7xkxUP7QQuedGTRJ2zsqinW52yAZOcKN9lEmyR9XLJcxk/RqlK6qvBb
-	+eMKgJDhW8y23RjO9u+1MEfKSO5NM/QtsVo3/2D7s2WLj3EdnqpAE2UKEo75AW+YFogvGxOPJXV
-	AhgOENq87GW75+KqpKEvPPhOt74R38x77dy9MMy6pTQrvzJ0fU3/drbQ2cFHkauBM2aSDdzcmlM
-	sW8WJZZ7
-X-Received: by 2002:a05:690e:4803:b0:667:a82d:4b1f with SMTP id
- 956f58d0204a3-667d7b7d0damr5276912d50.32.1783981039864; Mon, 13 Jul 2026
- 15:17:19 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783981070; x=1784585870;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gh/+L6PchYJ7xMsy+bVDXeLeFIlWDaNeI/y8jP9ed2A=;
+        b=n4LX5EBjqDqfCB6BYJYg4mBwwgLBv0XQdcihOsypH+yJAbp5Bpia6ASP2/+4Y1IYHr
+         QZR2oSpCo/+f75qBVcowXcu8vFQeout8bzDDkQOtYMAP9PuOtWGkIbSr8HAumLGcVxTg
+         omJzDKqdjUYyeAbMyMmuiGoiFzORjJ0BSDy7YkxMyrkFVkfKG2bo27Xg0xu/vHr14pfC
+         pSd0rOF2TgL4ADjGFLN7CqduTpCqG4JBL5x/pl8gK66d5uqPXDu1eTuuaGRRlbasQWQf
+         X0kj+MW3V8BVSPtV9Ixei1YPqFsKZPLiQrKwbUYUqk3JPsB8L5UfXoHnf24kEnaGszCt
+         zWAg==
+X-Forwarded-Encrypted: i=1; AHgh+RqyF9DmFh/sHHkEh2APWfUNMSyS+g86FFBdMH2ZDqD7ukwkB/RAFccpq5Z6ZGCtWO5RJI4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxh47YydA91r2WZX3k6JWgbSf9aSK0Z2snf25jwz7zXYL6mm0wx
+	nFAr85GvuxBB/e0Y6xBNpj70dMzBGKM31CrBpGeZ4JKJiTApyFeC+fMN
+X-Gm-Gg: AfdE7cmXyzQs/kjNC8U4U4Hhp75cBOV6ySZECk5qpuWMRBiwHqQw/adMEokQ22J3JaB
+	s0NosomnJGM3T5uPvt5BQgAIPlmYQsgg9OiKJ88VLvJVrWQfTynHXPZ+a7Cln/C3828S5x5LC5P
+	N4dgWm3NRISmYqGFjBPy8kwTY5wAf0BK80rtty14cAVLUVRcVELuoqAHE+jIh9PyCQzDqNIZsfa
+	3zPGlotB+4nKnQEYJBtgMaJE73S/3L+n/vm4MVK1MIRC1EBmaNLLFOdr7XGGZvK5yBVomwUKUrN
+	mWqkMVyzMa7GrRBpOKvz8BLb6LzKpc6cVSkaApxM9W4NM3Hd+uCERSc3ib8pFTZ9BZKTExL/BIZ
+	qmf5OWjl/dKlHFQXWJd+ss/Vaqb5UdnR+V3p/7KL4praI1ChV+ovkG5sCH5i+D5F1at/TGBB356
+	nOLlqCWZv0mcyefw6Lr3KVf1LAgiqZKRLnyOBKDor8+vYO1goHeqp5iFXwY0OnG6pfQryfL+/0u
+	/3n0M7Xc70SVfKJF2fsGYNF2SqQhWSNvmd8xRFNcl8tEAN4+rXL2gk35ZF3s4lTIQ==
+X-Received: by 2002:a05:690c:e152:10b0:81e:bba7:30f6 with SMTP id 00721157ae682-81ebba73673mr6194627b3.64.1783981070308;
+        Mon, 13 Jul 2026 15:17:50 -0700 (PDT)
+Received: from smtpclient.apple ([2601:740:8400:2ae8:c430:b8cd:4a51:dc5c])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81ebe67d857sm2032387b3.28.2026.07.13.15.17.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2026 15:17:49 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
- <b865c2bcff53a32637aac426dd2c6ef4a4c27077.1783418384.git.gitgitgadget@gmail.com>
- <ak0DUx5Y/5y1OINz@nand.local> <CAL71e4PuD9D8LRbP3mfxxeMrM+1q--3sCp6oJs=hezdasZUPMw@mail.gmail.com>
- <alFthqGQjsowvpEz@com-79390> <xmqqik6mbhtw.fsf@gitster.g> <alF4rYSTxpQUC38K@com-79390>
- <xmqqech99qe3.fsf@gitster.g> <CAL71e4M8-KtnkC5qQP2iuhON=ROoOTVZfbZB8UhJ-+3KgEP9=g@mail.gmail.com>
- <xmqqldbewriu.fsf@gitster.g>
-In-Reply-To: <xmqqldbewriu.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Tue, 14 Jul 2026 00:17:08 +0200
-X-Gm-Features: AUfX_mzUsrkqdUJaHqK8Mmh7uvaxMo-VczV71BUzy81N9tbNp_8JfnJNKILAekw
-Message-ID: <CAL71e4MOz1PqAAdGCnKsdkWkOs+HN_Q1d4mpZc_g1Mi2+2czgg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] commit-graph: add trace2 instrumentation for
- generation DFS
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] meson: wire up USE_NSEC build knob
+Date: Mon, 13 Jul 2026 18:17:39 -0400
+Message-Id: <45F2C180-1DE1-4371-869B-BF605B64E01A@gmail.com>
+References: <xmqqa4rx9mb5.fsf@gitster.g>
+Cc: Patrick Steinhardt <ps@pks.im>,
+ "D. Ben Knoble" <ben.knoble+github@gmail.com>, Jeff King <peff@peff.net>,
+ git@vger.kernel.org, brian m carlson <sandals@crustytoothpaste.net>,
+ Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqqa4rx9mb5.fsf@gitster.g>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <ttaylorr@openai.com>, Taylor Blau <me@ttaylorr.com>, 
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: iPhone Mail (23D8133)
 
-On Mon, 13 Jul 2026 at 22:42, Junio C Hamano <gitster@pobox.com> wrote:
->
-> I do not quite understand.  Even if you fix the code and add a
-> passing test, the commit remains atomic.  With an artificial
-> split, you only increase your commit count while making the changes
-> harder to review.  When grouping a code fix with a newly passing
-> test:
->
->   * "git show" displays both the implementation changes and the
->     test.  You can review both, and if you agree with the behavior
->     expected by the test, the change is complete.
->
->   * If the pre-fix behavior is unclear, it is easy to check by
->     running:
->
->       $ git show ':!t/' | git apply -R && make test
 
-That's quite neat, and it matches the local
-development flow if you write the failing test first.
+> Le 11 juil. 2026 =C3=A0 18:46, Junio C Hamano <gitster@pobox.com> a =C3=A9=
+crit :
+>=20
+> =EF=BB=BFPatrick Steinhardt <ps@pks.im> writes:
+>=20
+>> I don't think we'd necessarily need a way to detect this. Our current
+>> build default is to have this disabled, so I'd keep it this way, but
+>> automatically compile nsec-support into Git if available. And then we
+>> provide a way for users to opt-in to the new behaviour via the config.
+>>=20
+>> An automated test would of course be nice to have so that we know to
+>> enable this in cases where we can determine that it works. But with the
+>> above we'd already make the feature more accessible than it currently
+>> is, because I'd expect that most distros simply don't enable the build
+>> toggle at all.
+>=20
+> In any case, the discussion tells me that if we were to pursue this
+> topic further, it would not primarily be about adding the build knob
+> to meson.build file, but rather a bit more involved to affect the
+> product for everybody regardless of the build framework used.
+>=20
+> So I think it is safe for me discard this topic from my tree for
+> now, with an invitation to resurrect it as a topic with shifted
+> focus.
+>=20
+> Thanks.
 
-I can see the advantages of grouping the test and bugfix in the
-same commit, and I'm happy to follow that convention going forward.
-
-> > Too late for this round, but I might give that a try in the future
-> > if I run into a similar scenario again.
->
-> The existing tooling already supports this workflow (as demonstrated
-> by the command above).  Please avoid artificially making the context
-> larger, as doing so increases the likelihood of merge conflicts with
-> other changes.
-
-Thanks, that makes sense. It was an interesting thought experiment,
-but I'll leave it there.
-
-- Kristofer
+Yep, I=E2=80=99d been meaning to send a =C2=AB please discard =C2=BB message=
+ per the new guidelines ;) been on vacation.=20=
