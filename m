@@ -1,110 +1,159 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AF53290D0
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:30:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560B0285CA4
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:30:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783960225; cv=none; b=Tx1Tbl1cCv9IT1wUdmU1eKZJu8T1SFieQ2JRi0tXUNWwEN5HrWxVTb4TRwWS6BtEEvsolGxrfm1Z/v2+Cvt8BKwfxmwQmzDms/GH/ydKUgtcmT/oYMSsOMPBxh0a/f3bzRznB4jSAC5Y/BbVZoaCHhjP8CUrQd5SuquoVvw8fLM=
+	t=1783960244; cv=none; b=UQyjwmR7Z+2uUW1v8Ut79iA7w7PvOOPTPShYcgp+WomELaYYPpgzUiRjX13Tkkh8IgdYSJwUAwSIFv+U9e9tTwUXLTQwjyxNEgsqvJv6QgI5GRbTX0ycRRpX5TEjoqxN0W5g5Okgw9XTjpFq65o6doTo3EWuGpPDZaq37WzNxTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783960225; c=relaxed/simple;
-	bh=GAaW9aVaIn6iKBb+5EC17adC27/uKxg5S5D5SPHLpw0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o7dDtHI3LOOGzBh4TQJEzE35upqlJ6ZomLQhJtuFHx6CQbqW0pIbaBkCcsTjoTbhNTZeIZZjNsfKnOizBpPZF45sEmhTs+eM5w4/zWqYDrNH8BcMExQBU9wySX6gK8N7DYu6ysvnl6NkpXMOOeUVBHKcg9r9fLmV3lGHnJiNKBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PUacfmJo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xez6GKm7; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783960244; c=relaxed/simple;
+	bh=SYpWDO3jwFCroYE77JuyXPN8TvkUeD74fugmEjkM0QE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=q9d2xV9eWCTYJgXHuc1ztE2aPCOIVeyhMz0cz9nLv6kDET4O1KNeTZIhIK5Fpj0A0+n2tY60htxnn+youmh5EmAj1dAnhHh3cET+C7Sjw8Mm7OFQ576KrakIh/gtSuXgyg/pt60pKf4euGFkUTA/8zMPUuLeEg51bqLKgTNxdoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nw5QzIF1; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PUacfmJo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xez6GKm7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C38D1400155;
-	Mon, 13 Jul 2026 12:30:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 13 Jul 2026 12:30:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783960223; x=1784046623; bh=3ScYj7hEsf
-	vvEPZPEO6s3WIHR4oMO2s5UWdh3l+gKyM=; b=PUacfmJofyCxU8NxA4qYQgLVQK
-	Ay8NMyL+H891IrQqaEvoHjtPUTtQ1d7ae0mHfukPlLctc8Ip023BApzlcMf1ST/4
-	9qHfLzGBryVbKp6axneE1WJjoaf9D1N9EjcGUl2Q2zeXNx6OR/jIC0icuZdAgOJ6
-	wwnnTRsQ/fxu+FivI1tyguX01FPbpQ1G44y/zMffO2Ah4Lqdj5Bge5V2Ed6Q/2XE
-	jemGY19S3aRiT8AFOjeEDmFXqb465auqD5fiZhY0Q58UT0Gf1Y9WUz2tloCF4h5c
-	1wcopwMKjecZiJ+yu3ZoHkL7RizHqQG2rf9XLl7F0KFVoP41v/tbXs9rSEng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783960223; x=1784046623; bh=3ScYj7hEsfvvEPZPEO6s3WIHR4oMO2s5UWd
-	h3l+gKyM=; b=Xez6GKm7qNeP//9ZAWhtQum93IxndhSw/+EsQYhDTZhjdL3fZik
-	hE3VZ+NL/tKHxwLm5x/t/JA3wac6iEQq6yOmnF8YtQyGkhQcbVzOU+DGgIqqM024
-	kpGjt6Jz4hqbOD7OmUSTKGchiOt7ftpp6fBhuQpGvZ9hDKyTR3Xr4PsTlE5nyMm5
-	EGLE8ujq0e5bb162iol14j9OfwC/OGIq1C3vD1XSCk6yFRwHMgd3OLz7KeX1RH0Q
-	buQ8c/3x3GFYv4gjhRDnC/onS6xb4pVGD5gG7TXrYDPKTrsVIi5/STgDkcEvaQ+i
-	V2swQAC+6lpjZdCgEkpFJfvp8F7B5cSALfg==
-X-ME-Sender: <xms:nxJValSwtIGeGSQU878vCDulK2aNfRpyQnaDTXKCToMGskdNLTxSbg>
-    <xme:nxJVamODnKeBDNZP8pYvhoEVCBxeHod0p-yamXc8ibunP634poTTN9yHbgOre8sx3
-    fystWU_E826Zv2Bxi7TSZrpjkep_xG2R0WdNAZoZjpKAsijkbW1pA>
-X-ME-Received: <xmr:nxJVaoPrcClU60giSJCF5u5ATCNXO3m5uUwCH0CD6TGmmnejqiRxjOmGuI52dvrYEx3MX1O0Fcmw_EVO8kuB4TT9ZNvMjzbSY5l_BNk>
-X-ME-Proxy-Cause: dmFkZTEsLG7eN+0eLA6y+b8/KlKZxBUwS5f23sBf8kcLrQguH058U/YNmibI5NPNVqVNKK
-    GE2f6YXulFwQr1aYEMlVrINBuPS170fnGim0viamx9HtHo005NLZ1B33SuDm+L2tMIiOFx
-    EXcwbBcKeUAzR6kPakZ9a+6qOlnxIH7GsSDZcQTHj61IH/9SeUExvuqssNsoYUWtvW+GcF
-    XC2z1nPRzKCq6VpVkvrqoix9beXODBgmUVsAgbzsE2+se/3Y0wekPlL4xEZpVASRWFTY8I
-    KQHYTbLWL+jwM1eb+CqwNJUYzKqE5D+A5dsVHmwWppzFJ2L35aHeK9Qs+aS0HZKyV7HpS/
-    2aIAqJCyp4LIEZyq6OAszI/pJg2hxv95rxGLD9Q+nfaGIkGQ+Tx4HIgB4fMq7+7W+Ymba+
-    swzf28/D3DXPXGZGtHR5a/ZYdbiMK753fy7vkoMT2/8CGNFtGq0i3OaWEfmHgMmXhRqzQ0
-    kn2/KCmp5T2VN6njpwQ3hw/jo1iu4eP9juq9j4ef0zed5rkAstxM9yZcSeI/cFa9b8t9RN
-    JZmd2Rt+zjkgatRaczLxVCOx/b2Qiaxv/UcsRe33DUH61C9V4QfhQcVS0F8/vFzY5qwn8M
-    waauEwa9lsnJuygD5KHvGMw36jBe6POgbE1d1qLZQ+b76Z5liN868IK4LDDQ
-X-ME-Proxy: <xmx:nxJVamt8Oriaiqy9tbTtrRNqnmoIjFwm7GdzHomsBDq2NwOtTRL2Fw>
-    <xmx:nxJVaiWXtONv6M5JbYXHdTkYAFMa5aU7Fh0W5SQfZgIPuqrsWgKJBg>
-    <xmx:nxJVausZXaorPLjDH5FgZW3gt4uhLOTRBIXZkijINTgpDqmn-5nUCw>
-    <xmx:nxJVauU0ZEtEy_wZic7eIhEPSZKdJmGyGjPkYgA4YP8hDqvley37xQ>
-    <xmx:nxJVas3BytR39nKZwCght4JWvaPaRaL2KxJ47siu1V6phSW8hZCVmrTi>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 12:30:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shlok Kulshreshtha <diy2903@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] t1100: modernize test style
-In-Reply-To: <20260713140142.27898-2-diy2903@gmail.com> (Shlok Kulshreshtha's
-	message of "Mon, 13 Jul 2026 19:31:40 +0530")
-References: <20260713140142.27898-1-diy2903@gmail.com>
-	<20260713140142.27898-2-diy2903@gmail.com>
-Date: Mon, 13 Jul 2026 09:30:21 -0700
-Message-ID: <xmqqpl0qyhr6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nw5QzIF1"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-848882fdb18so2587006b3a.0
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 09:30:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783960243; x=1784565043; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MRRX9ujLspnHq9rxWqOfQgqut2zVTTagO8zZqq12Jr0=;
+        b=nw5QzIF1DdozINVJywCMYkUsVVgyNUkbJL4D4DvepnwWBNELbebKkpzcpWNXXhgpkq
+         xryLmHPJ6ACg3qe+KfWKnwRy4XYcu/cyBWoLL4u/Sr9PDTUYwZwmXwn68EZxqUx9fJgR
+         m+aaeDGOuO41kBUIO4IlE+QKsEcsG5oGBYU+SETj9x3n/cC5ti9gECO2tM8Xf6/P+qkw
+         ykOHOE9hoKZuHmHsWDvkpe6iwwYzsRZdfA/iDkA2vg3n9yWbAvtyKFZ87yTeqHJuoMer
+         fcwSGqxiH2R1I0tN0ymAkFvkMDSu2O2WoBPtSdBLPDDWt5cs4+PjaGF1OFAiFkdHX5Lt
+         3Fwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783960243; x=1784565043;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MRRX9ujLspnHq9rxWqOfQgqut2zVTTagO8zZqq12Jr0=;
+        b=h+naAuASPLSVADJS2wShgyaI/5zmAblCHwOIdvd1JE2gVqF2clly0stPjwdKkm2MnF
+         bzy44gEJIjIpDN6A57zXj7/P/86Eb83wDSbvG0SQXNs9l4oz4kTktYooSyhcvii7FliJ
+         lKjuIrao6NbEP9EmkS/KuXhhA+oHU2LyIxP48H00f1nnMRAMQeU481juj6J9NdG5oPkc
+         72IX+T6qfCr0eBWzRaUwVKUJzd4OSVLQN0FScARPh4gB9mm6fsY9iggtd9FKStq66yct
+         3si5AqUi+5XuZH3E6D0n1GgS+rwDAJrq1+qJ7krQECMJIWOMIaB/IJ+8baKLn2SanfZi
+         VPLA==
+X-Gm-Message-State: AOJu0Yxcs3Eb5SosJQfxgxQpr8cdZDJshN2MNj0zBLkXRfTs5WeXIgAT
+	07Lrz5+HtD/ExBRWcSNe/kr2rxbjcpGJ1Ait/M8zp5tACMaje2oNjpRq
+X-Gm-Gg: AfdE7ckKwa57B2rXNBhCjjFQ3PFNbSiRikEnoNxODaBjahT9ivznPa7VwSIuh/N7FT2
+	dv8keU5s05l73iT2/EWH6C8WNYSkQssnId+bb89glasaE5UIgUTFVLQJwzmUA1PcjKMYzij/Yjw
+	wErpKubPq8iXvSq5Xdl0EE3fZcjSObbZ7aCGct1SQSjGrktpaG1LQHeuf3R46TT+yv77CImTJK5
+	UPx1ghbfJWl60hRm7Yduep7DlUr/oecbyhtdPkkQ867+rgLUs3TXBm0kd6Mblh7hqp9nT0SSZL/
+	3wh5ndNmGvL1GD9mUR8kKBEfraCjzbjMzvBl+Mkks2wr2Mc+ww5e/MVHspRW0GQJ/U4/jpc5N/l
+	pFazMU+3r7uSWRxMkgXRJuPvfFaH53+ROFLD939aiv0ly3mnqS73xOQCa/5Z16147exOl9qiZcR
+	7PXRZB7eVJQQkoszwmQdiBEkU+
+X-Received: by 2002:a05:6a21:6f12:b0:3bb:21ad:40d8 with SMTP id adf61e73a8af0-3c1108c79c7mr10693096637.39.1783960242669;
+        Mon, 13 Jul 2026 09:30:42 -0700 (PDT)
+Received: from localhost ([98.35.8.117])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b659d8da9sm122707354c88.14.2026.07.13.09.30.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jul 2026 09:30:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 13 Jul 2026 09:30:40 -0700
+Message-Id: <DJXL4KSUEAD4.1EE4ERHJZ00TR@gmail.com>
+Cc: <git@vger.kernel.org>, "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "Elijah Newren" <newren@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v3] sequencer: honor --empty when a fixup!/squash!
+ empties its target
+From: "Farid Zakaria" <farid.m.zakaria@gmail.com>
+To: "Phillip Wood" <phillip.wood123@gmail.com>, "Junio C Hamano"
+ <gitster@pobox.com>, "Farid Zakaria" <farid.m.zakaria@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260711-fz-autosquash-empty-v3-1-d227b63eb511@gmail.com>
+ <xmqqh5m494yh.fsf@gitster.g>
+ <7a1e5111-185e-4390-afa1-c19908c9bd86@gmail.com>
+In-Reply-To: <7a1e5111-185e-4390-afa1-c19908c9bd86@gmail.com>
 
-Shlok Kulshreshtha <diy2903@gmail.com> writes:
+On Mon Jul 13, 2026 at 6:18 AM PDT, Phillip Wood wrote:
+> On 12/07/2026 06:01, Junio C Hamano wrote:
+>> Farid Zakaria <farid.m.zakaria@gmail.com> writes:
+>>=20
+>>> When "git rebase --autosquash" melds a "fixup!" or "squash!" commit int=
+o
+>>> its target, the result can be a commit that no longer changes anything
+>>> relative to its parent, for example when the melded change reverts the
+>>> target.  Rather than dropping or keeping this empty commit, the rebase
+>>> stops with
+>>>
+>>> 	You asked to amend the most recent commit, but doing so would
+>>> 	make it empty. ...
+>>>
+>>> and the "--empty" option has no effect on it.  This makes backing a
+>>> change out of a series awkward: reverting a commit as a "fixup!" and
+>>> running "git rebase --autosquash --empty=3Ddrop" ought to remove both t=
+he
+>>> commit and its revert, but it halts instead.
+>>> ...
+>>> Changes in v3:
+>>>   * Switch the new tests' assertions from grep to test_grep for better
+>>>     diagnostics (per review).
+>>>   * Link to v2: https://lore.kernel.org/r/20260710-fz-autosquash-empty-=
+v2-1-fa1e277e05f8@gmail.com
+>>=20
+>> I see you are already working well with Phillip, which is great.
+>>=20
+>> This topic, when merged to 'seen', seems to have quite a lot of
+>> overlaps with his pw/rebase-drop-notes-with-commit topic.
+>
+> Oh, I should have thought of that
+>
+>> We are
+>> expecting the topic to be rerolled, and I was under the impression
+>> that the remaining issues in that topic were all minor (Phillip,
+>> correct me if I am wrong) and hopefully we will see it in 'next'
+>> not in so distant future.
+>
+> I've just sent a new version and cc'd Farid, I'll try and take look at=20
+> this patch tomorrow
+>
 
-> The tests in this script use the old style in which the test title and
-> body are passed as separate backslash-continued arguments, with bodies
-> indented using spaces:
->
->     test_expect_success \
->         'title' \
->         'body'
->
-> Convert them to the modern style in which the body is a single-quoted
-> block on its own lines, indented with a tab:
->
->     test_expect_success 'title' '
->         body
->     '
->
-> This is a style-only change; no test logic is modified.
+Thanks for cc'd. I'm not familiar with the workflow (I read the docs)
+but is there an email reply when it's accepted into 'next' that I will
+just look-out for ? I'm not subscribed to the mailing list in general
+otherwise.
 
-Cleanly done.  Running "git show -w" on this patch clearly
-demonstrates that no code has changed.
+>> So it might make sense for you to coordinate with Phillip, and wait
+>> for his topic to be merged to 'next'.  After that happens, you would
+>> prepare a merge commit of the other branch into f85a7e6620 (Start
+>> Git 2.56 cycle, 2026-07-06) or some other stable point, and rebuild
+>> this patch on top of it.  That way, it will be much less likely that
+>> I'd make stupid and unnecessary mismerges when attempting to
+>> integrate this topic into my tree.
+>
+> That makes sense, assuming no-one has any more comments on=20
+> 'pw/rebase-drop-notes-with-commit' it should in be 'next' fairly soon.
+>
+> Thanks
+>
+> Phillip
 
-Thanks.
+Phillip,
+
+Let me know if you have any more comments. I suspect not much will
+changes logic-wise once I rebase it onto 'next'.
+
+For clarity, is the f85a7e6620 commit the 'next' branch ? I would have
+thought to just rebase ontop of 'next' and I'm a bit confused with this
+commit hash.
+
+If there is anything else I should be aware of, I would appreciate a CC
+if you can remember :)
+
+Thank you!
