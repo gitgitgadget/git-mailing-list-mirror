@@ -1,196 +1,106 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C55A367F5E
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 03:58:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4ABC8EB
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 04:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783915092; cv=none; b=XpevyN9nunvHu8HwniHpkT1+GDHB5qOTvKaE31EAsne28NHVyGp7C/bjiXsWgodcZU8g9hsR5D6oU2JOHCN4zeyYkDfe6maWFimo05/s7YZEYDlb9PAYzjlGsuLAmegSLakUczLrzTIWT1QMu2ppZcZYNopx8hls1zB5bHGSmvw=
+	t=1783916426; cv=none; b=LUFHG7J8SqVZvVLWDE5tSDqnHPUNKyzMdKRylGRSuZoxf+EeItYT5yvHVkm6PwtzTdqsaJxQD1fjY186rkYhXWA1yisDyRIaKwK1XynMCsGESB4wSptPdXJHU8LDXr/pyPw3fBrsdO7IsG6iQPld9GCYfaMqMnl0m8tAd+/xIVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783915092; c=relaxed/simple;
-	bh=J4nGHhjheGgAkFLGhL4deljLDusGQ82RzvbdPQO51+0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cC6Nkl/u8cRRqVK799uLYYgubhi/dC7F81XfVRbUnaJgacAkdubV0H1wZvRDtoOZ0kPqDeLNJV/lq4ekamdsj1Ye/0W5yMBtzYDnW2v5ynyWekeJhxKDd6V+my6ZPC/ekIqg35pftpkZoF3dNsxobcRtv9eE2i6Udx6PelaHcBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=FIkQMCq6; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=dl0A86VK; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1783916426; c=relaxed/simple;
+	bh=nkEZeX3UI4CPEu6b+V4EkV32AdV1fBIy2BUfTivi3ns=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U5W7DW/2iPG7+XuiIcFkZgfoeWVOEKkiUtjHS8VPZClo9jlLlQhMHbjeZvY/CQ82idUMR32NQSpfRZzPxIAQysaHDV84Oo6+7yglLDlpQ94zijc8sP9yPEUU0nTHmzHwky9AkCdqyEbIMojHG6YqJqvKqK6XVQwLDrTtcMD0MJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ER74sB7x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fuxiM9X0; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="FIkQMCq6";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="dl0A86VK"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=FIkQMCq6Rqw+Vv/fPCBadCpHuVaRmM8LkEuYYnxlJUXKscFebsCXrK4OY0SATU3W+jWSXCb7pR1UPmsDEmF8znxrUnTskOJvHSAhAZF+c1PzbdUQie64AdixJA46e/zhehaepF3YbJcix6VYBMjr3IecUEto6gQpfJ/LKmp89cqlnNnVK3nC9At1zbQ6xEi4gwF6mlaRWoFBI+ms84FdCbl/T/LwruswiiqT6RugVWD7lBAvbcAGf1f3RaBwgKXc6M+CNNi3lbNdD4qywDaVU2zf3ngm5Au6NPNf2pG2+DrubZ2/7fO4EwyFyz11LCh8cywgF0H5YH+a7QNjt1NPdw==; s=purelymail1; d=malon.dev; v=1; bh=J4nGHhjheGgAkFLGhL4deljLDusGQ82RzvbdPQO51+0=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=dl0A86VKx4C7Kfq5zBU/stU0wt8Yyqfxh8Xt66luAwtPmF9Fflyz0e44m9DKr5ilp7cNVh4b/vN3COob3ITWObimH5k8ZAr8O8Zge/73GADYbFcpqi42pW3TLq+Y/OraNK6vJzJjYeNUWm4LG/JO8wBF35x6vqfOGvMzmdnv5AzVwmPb5poSmHml5T2SkK7f/poIJ1hA7GfiWgKE4lXymNm8K8cr+/1mtb7EQXct7BRQdqwxzpgUoXHCYv9aLsMjc8n46fNNUnoj7WsFfdQrMm5dIxTBnczu151xezun45qoaJY1CZ+HLj/ZqPoOooKRWxrOiliGO2DLLrsiZzf4pQ==; s=purelymail1; d=purelymail.com; v=1; bh=J4nGHhjheGgAkFLGhL4deljLDusGQ82RzvbdPQO51+0=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1573664722;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 13 Jul 2026 03:58:07 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
-To: git@vger.kernel.org
-Cc: pabloosabaterr@gmail.com,
-	cirnovskyv@gmail.com,
-	szeder.dev@gmail.com,
-	Tian Yuchen <cat@malon.dev>,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v11 06/10] environment: migrate apply_default_whitespace and apply_default_ignorewhitespace
-Date: Mon, 13 Jul 2026 11:57:34 +0800
-Message-ID: <20260713035738.1606138-7-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260713035738.1606138-1-cat@malon.dev>
-References: <20260712111734.1073514-1-cat@malon.dev>
- <20260713035738.1606138-1-cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ER74sB7x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fuxiM9X0"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id D00C51D0004D;
+	Mon, 13 Jul 2026 00:20:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 13 Jul 2026 00:20:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1783916423;
+	 x=1784002823; bh=ezNhZDDg6GAZbqAguvWMMCGLtiPigRMZXxvgjg5z+HM=; b=
+	ER74sB7xqwixoBKYiMjYEyHgdGynFuWx2aIsUU85qsaG9CJUMEKcR76Vp65ebzIg
+	CG7rl11CNUshvp95dO+Qhzlc08ld7csg7JNbuHGNloLET2EJataTp7btrhfabEex
+	NHHbSHUH1s1bh+GcXp9540HbWzXLBADdQABoZejzyeMuV+W1AEcgcK2s6j4X2Z9V
+	1fro1wI4xkS6kkBTp8nCXXSWxihv4mpuXU5pT4mWW9X3NCeRMY4uVwnxV/yyFfJG
+	pf5IrIzYYL2igaXufWwnrpcAWVuUQiyjdDo4fIkz8gjggPSR2LfhwRdS0uHg1FzN
+	FNmwVVFCzBc9ZmkjmLKqng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783916423; x=
+	1784002823; bh=ezNhZDDg6GAZbqAguvWMMCGLtiPigRMZXxvgjg5z+HM=; b=f
+	uxiM9X0++TU0pv5Fl33B7l+G/MvR+L7k8gxl5+1BoOCkLIDTCDj1AEy+27SgLs9K
+	G9bpOzISQfB64I2yL8pm7NlGg0h4QWl6Wp0sb94ZuIkJnBi58gWIu5eeLm59YCNT
+	RqX6bwGgIjSOGfHi9mz016E3aIYZWPv3WCv8Nrerhyx6WvXDabEcV6+aLBVphD+F
+	wsXUD6rgLvsVnSdveLktsSszhwSwpEsPdxjDUHcVFgOFRj+kDxJlPhIZZu3EFNRf
+	yS+PwJt/tKAJLKT6oviByx6K06F6S21Ui2AReBsO6nfBuvb3LEzG0hqCiCp70n/1
+	r0Tcxb/K9ISFNvgZ9u+SQ==
+X-ME-Sender: <xms:h2dUasPnxvqwvpaaQnbAFAw3KvVQIQRrEmFzeeRimXpmLFWNQRnFqQ>
+    <xme:h2dUaqbXf-5lUcVL538YMiPMpvdBBjRazFpOh0Ul4BswZbGoQFK5xbYVeV1HK0Ofj
+    Ebf3gafd6AhN6zvlQ2geN5Uxs4-5hfesqL0aJZsPJi5lMo9NzVVWg>
+X-ME-Received: <xmr:h2dUagr-s13lWbmnRRZwDmEZla68PUAXI234p79NLFEvWSbke8Rg2rIqeY05rD6Lly84FVgcDxNz_pugD61ICOK4u1Cmyi_ur0HjIaU>
+X-ME-Proxy-Cause: dmFkZTEkZ0GsLTFrNttTNk1kDnL0fzyOzjUABnzBn7UPaZDCfF9cdgqp1VjsqqlF6URVCm
+    GxNMg2/CHF/Ytwy11v/tbXqV0Mt/iOlRk99RCKVvsk6R62AaaHXH/BERYaURKavdOqAN4v
+    9VplIkuwwROQH/Pd2Lt+hTv1rhtw+SyMR+ZCSqPjVqYFEM5BfZZqS7jHCTn7j5IFXT+XAF
+    gbVHpj3EZqZriUzp9duTk5dUnQFsYru0G9FgvM8jCOJRBFbSCu0M/ncSj0JBEGuuKhY1/d
+    oA6bayBsxx6KJfLj8Ltc+9l6a7UqF3laJy6ZUjibxUgAWRQ/x8ddppqIy8/C1c3ZK+jcit
+    mYPYwIl2FCqSV2zVzg8cr656il60UH+1gADuf72FtXdfInYOo2260GkFu7MVI/ZvcV9C2n
+    6t35lSH622WsGCQ7eyDVSD3yfZ6bGpEcafweFSU0v04jMGIf4YhBey6bU5VqKnfftj++9p
+    Fg2EGJceZ/QkxrTeiRNYC5MR3oPzbmXLVFLMtz5ptehuKZXf5WKeWqLVGRZ605EfhEZz4i
+    8uu0qfeuK22vqTN380vH9To35RsE4jLnrT2bszxWIrA7j0UG8+U9+srWks+9MSORL2eZ1O
+    RHVXcSgjZOjb2TGRRKxsrjEFwcEHG7yATUY5wviyJeLPoDR1rKAkYECXGKCQ
+X-ME-Proxy: <xmx:h2dUauap4mFibAu3FFRUmM-FTzipL5AZ42GHYxZoyxQvjlOFumW61w>
+    <xmx:h2dUaoR2kNA6zXo0tbpSXCWkVq3ew4VD-FoYzLBS0Q-s53s_0H6L_Q>
+    <xmx:h2dUal6PPlzt_A6oOLoIdoByJuCTnprdIJdVl6r1HYsb-8VV6NC2_g>
+    <xmx:h2dUatyI7JeZ0WWSc05XIXYNqxXeCLdaXYn8Kdz-Jol9yDdtBHG7ug>
+    <xmx:h2dUamZNo8KZUHQmIcQlGGrch4ppP1G51GnVnPQjCDZD5c1JxAhqcTGn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jul 2026 00:20:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/6] SubmittingPatches: clarify the writing style of
+ whats-cooking
+In-Reply-To: <CAC2Qwm+30zeMQKHc3onqhXG90wgrdvba28TadF=N3-dD1Ah8zw@mail.gmail.com>
+	(Michael Montalbo's message of "Sun, 12 Jul 2026 13:41:22 -0700")
+References: <20260711192650.2417665-1-gitster@pobox.com>
+	<20260711192650.2417665-7-gitster@pobox.com>
+	<CAC2Qwm+30zeMQKHc3onqhXG90wgrdvba28TadF=N3-dD1Ah8zw@mail.gmail.com>
+Date: Sun, 12 Jul 2026 21:20:21 -0700
+Message-ID: <xmqqmrvv1px6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-The global variables 'apply_default_whitespace' and
-'apply_default_ignorewhitespace' are used to store the default
-whitespace configuration for 'git apply'. Move these variables
-into 'struct repo_config_values' to continue the libification
-effort.
+Michael Montalbo <mmontalbo@gmail.com> writes:
 
-Dynamically allocated strings fetched via 'repo_config_get_string()'
-are now tracked per-repository and safely freed in
-'repo_config_values_clear()'.
+> On Sat, Jul 11, 2026 at 12:27 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> +TIP: When proposing a topic summary in your cover letter, write it in...
+>
+> super nit: It seems like the precedent in this file is to use "NOTE" instead
+> of "TIP".
 
-As part of this transition, update 'git_apply_config()' to accept a
-'struct repository *' argument rather than relying on the
-'the_repository' global.
+Yeah, and not just locally in this file; "TIP:" is actually
+not used anywhere in the Documentation/ directory, whereas
+"NOTE:" is frequently used.  I will switch to "NOTE:" as
+there is no point in having variety in something like this.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-Signed-off-by: Tian Yuchen <cat@malon.dev>
----
- apply.c       | 28 ++++++++++++++++++++--------
- environment.c |  6 ++++--
- environment.h |  4 ++--
- 3 files changed, 26 insertions(+), 12 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index 249248d4f2..f0cfd76190 100644
---- a/apply.c
-+++ b/apply.c
-@@ -47,11 +47,17 @@ struct gitdiff_data {
- =09int p_value;
- };
-=20
--static void git_apply_config(void)
-+static void git_apply_config(struct repository *repo)
- {
--=09repo_config_get_string(the_repository, "apply.whitespace", &apply_defau=
-lt_whitespace);
--=09repo_config_get_string(the_repository, "apply.ignorewhitespace", &apply=
-_default_ignorewhitespace);
--=09repo_config(the_repository, git_xmerge_config, NULL);
-+=09struct repo_config_values *cfg =3D repo_config_values(repo);
-+
-+=09FREE_AND_NULL(cfg->apply_default_whitespace);
-+=09repo_config_get_string(repo, "apply.whitespace",
-+=09=09=09       &cfg->apply_default_whitespace);
-+=09FREE_AND_NULL(cfg->apply_default_ignorewhitespace);
-+=09repo_config_get_string(repo, "apply.ignorewhitespace",
-+=09=09=09       &cfg->apply_default_ignorewhitespace);
-+=09repo_config(repo, git_xmerge_config, NULL);
- }
-=20
- static int parse_whitespace_option(struct apply_state *state, const char *=
-option)
-@@ -126,10 +132,15 @@ int init_apply_state(struct apply_state *state,
- =09strset_init(&state->kept_symlinks);
- =09strbuf_init(&state->root, 0);
-=20
--=09git_apply_config();
--=09if (apply_default_whitespace && parse_whitespace_option(state, apply_de=
-fault_whitespace))
-+=09git_apply_config(repo);
-+
-+=09struct repo_config_values *cfg =3D repo_config_values(repo);
-+
-+=09if (cfg->apply_default_whitespace &&
-+=09    parse_whitespace_option(state, cfg->apply_default_whitespace))
- =09=09return -1;
--=09if (apply_default_ignorewhitespace && parse_ignorewhitespace_option(sta=
-te, apply_default_ignorewhitespace))
-+=09if (cfg->apply_default_ignorewhitespace &&
-+=09    parse_ignorewhitespace_option(state, cfg->apply_default_ignorewhite=
-space))
- =09=09return -1;
- =09return 0;
- }
-@@ -192,7 +203,8 @@ int check_apply_state(struct apply_state *state, int fo=
-rce_apply)
-=20
- static void set_default_whitespace_mode(struct apply_state *state)
- {
--=09if (!state->whitespace_option && !apply_default_whitespace)
-+=09if (!state->whitespace_option &&
-+=09    !repo_config_values(state->repo)->apply_default_whitespace)
- =09=09state->ws_error_action =3D (state->apply ? warn_on_ws_error : nowarn=
-_ws_error);
- }
-=20
-diff --git a/environment.c b/environment.c
-index 3857818da3..20500658a2 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,8 +49,6 @@ int assume_unchanged;
- int is_bare_repository_cfg =3D -1; /* unspecified */
- char *git_commit_encoding;
- char *git_log_output_encoding;
--char *apply_default_whitespace;
--char *apply_default_ignorewhitespace;
- int fsync_object_files =3D -1;
- int use_fsync =3D -1;
- enum fsync_method fsync_method =3D FSYNC_METHOD_DEFAULT;
-@@ -726,6 +724,8 @@ void repo_config_values_init(struct repo_config_values =
-*cfg)
- =09cfg->editor_program =3D NULL;
- =09cfg->pager_program =3D NULL;
- =09cfg->askpass_program =3D NULL;
-+=09cfg->apply_default_whitespace =3D NULL;
-+=09cfg->apply_default_ignorewhitespace =3D NULL;
- =09cfg->apply_sparse_checkout =3D 0;
- =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
- =09cfg->trust_ctime =3D 1;
-@@ -745,4 +745,6 @@ void repo_config_values_clear(struct repo_config_values=
- *cfg)
- =09FREE_AND_NULL(cfg->editor_program);
- =09FREE_AND_NULL(cfg->pager_program);
- =09FREE_AND_NULL(cfg->askpass_program);
-+=09FREE_AND_NULL(cfg->apply_default_whitespace);
-+=09FREE_AND_NULL(cfg->apply_default_ignorewhitespace);
- }
-diff --git a/environment.h b/environment.h
-index 856dc70cc4..f450242ac0 100644
---- a/environment.h
-+++ b/environment.h
-@@ -94,6 +94,8 @@ struct repo_config_values {
- =09char *editor_program;
- =09char *pager_program;
- =09char *askpass_program;
-+=09char *apply_default_whitespace;
-+=09char *apply_default_ignorewhitespace;
- =09int apply_sparse_checkout;
- =09int trust_ctime;
- =09int check_stat;
-@@ -182,8 +184,6 @@ extern int has_symlinks;
- extern int minimum_abbrev, default_abbrev;
- extern int ignore_case;
- extern int assume_unchanged;
--extern char *apply_default_whitespace;
--extern char *apply_default_ignorewhitespace;
- extern unsigned long pack_size_limit_cfg;
-=20
- extern int protect_hfs;
---=20
-2.43.0
-
+Thanks.
