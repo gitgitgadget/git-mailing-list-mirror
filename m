@@ -1,291 +1,137 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35A63D891F
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 10:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F06237A83B
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 11:06:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783939508; cv=none; b=FafTMQiMa7EumGiWEIyDaRW6abA2BcyRoaltWeXFrgD0Xe59aRjvzn8SK4cbbwcWEn7LRKlIXhZkpVBMuv57hfo6J88A2QteRjb0WRiTDG8YZfIt78qDEHFOOho/e2WWTN6Qhz4n0J+BvohEI+/vj2gH7bJ+HY0oxetoi+KMSS0=
+	t=1783940790; cv=none; b=o6otCdQb9lDEF97UbWs1T78SI1yAIwNMn5V+H9Xc2NZukLWJIQy/LrtWgz/P8RzcEJTKCybBUWumqkFqzTKZrBR2WjC5xfgPkTpyMo39jP6iczvxmlphFXNnTY5kWtYDOdM9ySozebCZAf9vDHO/LSAst1BsMxoEdhvXnp9p1yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783939508; c=relaxed/simple;
-	bh=OjKplq/8uX1lLdTKG+gGTiT84L1WMMTmBuf9O6Iw0Gc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZpUtkf6qbVtbQiWBa81VlKOqBz8kUb0IKYO+G3iR7xEqf2HMd8ODdyBk+pat3t1s+BYLyrII7et3Fo9hcmvIBFXkhSPCE2giOSldBaPzcCfaghvSSTK5U/TXSVSZuYDebu2FszSFtpzuFe9JgRDIwkd1rKkics8RZ9jDHEl47XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PWra7WqW; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783940790; c=relaxed/simple;
+	bh=7PgK/B580HAFbLfrE9uQgsnvE7x2i8hUoX70Mt2DB1s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hTpRR3D+tI+KQkLE4hUwhldQXBjusDAvjlZRMoOJ7ef9559gqdoxoapoaxfctVMC0Mt3RcJTaF72x+NibAtVxrXJ9iVWJ73Id0ATkMzbQq1Luqp6paC3uLHPAWvk9Jb7B+IOV0CO3w+pejlrdcXBfHDSVqo5Z3dtIu1x5C8F8b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jNcwtbT4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W4nQcUcZ; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PWra7WqW"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-493ce08a75bso11186955e9.1
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 03:45:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783939505; x=1784544305; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Gfouj1eb0Dv/RXnyOxK1pyu6aLxwoPWQWiRc+NG3v2M=;
-        b=PWra7WqWgg7xCy7YhVWjvFnPIpUOyhtlaW5kemsgmkrSHAcLUR57YtmdEocHbh5fL8
-         hd6c55IwbvrNkzW/JZ7oNgRpEJ0DS+EYf10dNq2TiC9pupYn5V1JmBqkHcI7aJArFm0q
-         In5s2AVlLgpo4sI8edq/B7gQTecaIZaaaOkIrcYBBWjObE7smGbzATaQLsYVnni2kAKv
-         qARH4uFEh6vOwdIscTnQ5viNLgEE+0+KcQc0huqoNOWiHxOh7xTgDYiIEuueEfmm0BYC
-         735891UsN3lns802dLy6qGw1z4l0EFvZwqWBU0/QigRCh1aeVNgN8C2GsTfT7qEdKSzJ
-         1hVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783939505; x=1784544305;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Gfouj1eb0Dv/RXnyOxK1pyu6aLxwoPWQWiRc+NG3v2M=;
-        b=rLAKGHmEkeiP1DzOjOXK+UPM4TfBc4YhA1OnIDh/v/tHdVnqqe4c6Wba/3DSuYJJCo
-         BhI+Rb8T1PEp+rh5uuoGzzT9zYT2x4NbrNBX4fU+p9Xq/NW/o/Dh/xbUYpK+xwkdJTgX
-         4fSfH5G8EgbTkBJbhbDbh+LbQXJO8m8cDidRTqgZeneRqsvl3EmJ3HrnO06RwzsA/TaQ
-         ZCx2qOiLabDI0AZkH5alpzRY4HuZyruTFD+akZvG7KvYIDp8D8X9N/GxP8ZVxxdKgNuJ
-         wvopNqB6B8HPxxiM1nAjk+zx+NZoYdaPTO1fzRMKRmSamK0+p00bKj8FuaXeldh+A8hl
-         N9+w==
-X-Gm-Message-State: AOJu0YwdSnoxOjYr2/qqfMB0veYTFdtZhE8qHh1LXSH6c5KGzQba9PNV
-	fAqgBiL9NcgLihUubjLOnXiswNm8yWwtX1jhokrpWGjA3i5VRJg5hr/oqlPsVLEy
-X-Gm-Gg: AfdE7cmjGBwzdwgJPaf9KeCG8k/zscDcJ6IfdgR+a2YvqV3JqvjlKCD6jR5JWT5w0k0
-	kQXBnFsO2Smx+9MHq/ji4pZPT0UvgzQUfWTTHBZ+vQXL/SGkOkHMEcN71NHsv6VeMAK5w9NLWcr
-	EVkkLpi0idigXAgi0tpRmrYjd9gZWDqHFyHxRsucHHvZWf+cFEbS26hJsqzW0qo2KLW/1Ni8mrK
-	VPak5i5HyPAkopVOALWthFUFNqPzjxL4KMixjKQiuOKy63nGoYuTYwegW2va4t2P0XrhbFKaVXB
-	GP9/jiSGFNX3vh3SUDVzPITQ845Q7WJfgzO/x8SKAO+L6zlHe1EiSYYJGZG7h9U/BtnAYnEQ0jQ
-	114YUlf9chkcnzwwmcMUrLCDSr+Y9BfHJrhUVp9zwKaWncogg0/UEJyMc/NK4+u2nUWdMCHVs71
-	TwdOg4KY7cJZAP0GXsM4U07F4hn5v8HuanMPzypNkTCOgzMPq9qwJQlmI24fI1QpQ1eCDkl4bC6
-	O+Ao9zVzfVC2JFf72mzTTWdUK5GEdOBIxNnIyN5gSolMQEdSl4n+5AGVbA4Lp5k0AXCZnBMZKBd
-	KMWMJSi++K63Lr55gGOpjF7svx4cPeQDuj7xZXSSgZIIe0f+kQvxGCcbfclcAZCbSlM1TRU/BfF
-	kKxDWWjAwPA==
-X-Received: by 2002:a05:600c:528d:b0:490:44eb:c1ea with SMTP id 5b1f17b1804b1-493f881d39cmr93242935e9.24.1783939504786;
-        Mon, 13 Jul 2026 03:45:04 -0700 (PDT)
-Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493eb73b161sm318564645e9.9.2026.07.13.03.45.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 13 Jul 2026 03:45:04 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: pabloosabaterr@gmail.com,
-	ayu.chandekar@gmail.com,
-	chandrapratap3519@gmail.com,
-	christian.couder@gmail.com,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	karthik.188@gmail.com,
-	krka@spotify.com,
-	mroik@delayed.space,
-	peff@peff.net,
-	phillip.wood@dunelm.org.uk,
-	siddharthasthana31@gmail.com
-Subject: [PATCH v10 7/7] graph: add --[no-]graph-indent and log.graphIndent
-Date: Mon, 13 Jul 2026 12:44:42 +0200
-Message-ID: <20260713-ps-pre-commit-indent-v10-7-82ddab26bc96@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260713-ps-pre-commit-indent-v10-0-82ddab26bc96@gmail.com>
-References: <20260711-ps-pre-commit-indent-v9-0-eab6676e82f7@gmail.com>
- <20260713-ps-pre-commit-indent-v10-0-82ddab26bc96@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jNcwtbT4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W4nQcUcZ"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 91DA37A0079;
+	Mon, 13 Jul 2026 07:06:25 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 13 Jul 2026 07:06:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1783940785; x=1784027185; bh=U8Qwkp8Nj5
+	iKSEI+vNC3W8CfUwT3XlJbkjg28Z4y7Rs=; b=jNcwtbT4lLaThce87I3I/SXDpv
+	DNZptuMGi1jxGm+Pd5P/VxitDt+9dd0nP4qiKH8+sEvAU7cV8+aZXcHiGIbgENYB
+	LcQ/wEEjzvRztVfP97UMc4HBAcWIwrbrgV2DieY/aKmy9vaxjGX0RTBhBAxrVW0f
+	4AB7qhT1ZRxOeUd+c7p8mKIixi0IF+DfZ/IpPh8kOQXQmLom0FAiTmEBGnE+WfZY
+	WMwTv0nfGn/NYXSPDUpr482qCAA+rgSYV8itwI/shGZoPArrrpD1GSdwUWCgdUb3
+	loGWgVI4wtfGdtikK+L490yWCApclAPMy+VnJOF/K3m4ifjskq4qLzy+rOQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783940785; x=1784027185; bh=U8Qwkp8Nj5iKSEI+vNC3W8CfUwT3XlJbkjg
+	28Z4y7Rs=; b=W4nQcUcZxGrZ5YCAvntAyvjUuN3DEY3tFsQ6W+QLSlTOF+fPH+r
+	Iwd6iKbDf3kDqtLOMloS4Is1p4D6L0ayXiDVXHBuvfLMO8MIT1AGgbpFxnqWphQo
+	3jl5ggxW4KXKFZ20QK/PbOZMq4lVwBwDvn7eniuvDga1nGMKJgL8TuqQYXtWacPN
+	aMnfd+YjGAZktTiHF+/h3amSqsJGt+WGsO66i9TYo04R4SdYUwh69j7dDcXtQus0
+	5l2V+58EfFw2FLWCjIq+7G1tg/mxbQyfgpGs24Yot+lOBu60ESqemGF2MBFol01K
+	seqHn2UP7EeVfwMHR+d7Kr6CtoKZ7yQ2YpA==
+X-ME-Sender: <xms:sMZUalaG4lrRawZTpsjRPkrXAu9VgYtJOACC0swX9iv7xY1Uo-AdVg>
+    <xme:sMZUatHkGzFVIVadl3xhM_rXl-WBiRpGjkOqiYqmc2r3hoBRzGhuBbhSmJE8OfAmw
+    ZNsu91cnZAbQMH0m3-nsdC3qXYX-5qp0vB4url_kZnyeASAFsU0WA>
+X-ME-Received: <xmr:sMZUamIH1W7GAbzPM60S03Bnb4yrVI6ix7QVQGgdhTHvhvhIqmTRI8vMciGp_DxgGtzmRpeu79y2zGbZGWnsq3x3Wi1bxl329GbLZ43P>
+X-ME-Proxy-Cause: dmFkZTFSRZe2YKKBBDN9/O5vlZiAs+IFvBXVmI8TWzhL/tNYodMlYg6NYueRHRRIp98xI0
+    X7sHrbWdRvshgNT+WNJgzqO8Fq1NTUrcpyWsJsf2QFCkE0lxtx2uT5rnQhE0+Es+mOZMY+
+    vwDZSXrbqt3uF9PI/KbD8V9KN0qaipF/tc2+KfCefyZ35Jd81EdKBdhHzTqtVVfMuvSyga
+    Lhi4IR7olVU1ljXYJkcL2WqRXY1uzHcgv11Zvv6U0P8YzZaFaFbyWbVl7qeGascqJB21pT
+    ZPxZMhjjhAd7ElRMaXHRbG+oAnQyXyxpJtw8JFskKIpZJb/GY4v/8eu9cY7es+EGgc+4uG
+    LyN5RQ4gWjBDrbhctKeJBRVUMY7SmXrgSWGjQ5x6r2cZZz/loa8HQqaQvgKaF1TV1dB/Q6
+    gF8oXBAYUaukTGS715lgYXXbx/nNCbFk634WeRBBw2vWfCvnaqKdMW+Taj/v9Kw8cqgACu
+    uLHhuz4JCknhC61aP5de6RcCDICaHcIckaBEfzOUJW1HnWMs3ewBJUT7C4Hv2hKv7iXUCj
+    K4PI0gr7bYVoAHEU4+pmAS1S3X6x13ACf7i5gyNo4DNkPVHE9kZvSJX/tWz0xR8EgnhDzk
+    ByfbYHVo+0+4swEIFVBVuEeu1xQ10tD1IoDyDVeeLXELuFj/OwPd05mx5AsA
+X-ME-Proxy: <xmx:sMZUaoOQ-7F9_icULCEwEJhcIQXOPrbwTD1RK8dP6YJPb4u0TOKzkg>
+    <xmx:sMZUammVkBLIhSoFJWmBV40WyBHWSJL0nGuYAE4NvsLSUWD8jIQWzg>
+    <xmx:sMZUas7uACd0L4zhFoIFlvE9zv5rR0IOi2PWkPyV5hXz2aBqKHfByA>
+    <xmx:sMZUaq1_Z89k1MTRemYKKyEVBAcA4Z7PdelSvbvxTkM0lw-J3YzOsQ>
+    <xmx:scZUakokThPh-h-fwnjP3RyDn8r7H82TL_JbIA4HlCGf3NxOyNTez32z>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jul 2026 07:06:23 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 03595036 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jul 2026 11:06:20 +0000 (UTC)
+Date: Mon, 13 Jul 2026 13:06:17 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Adam Dinwoodie <git@dinwoodie.org>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: cygwin v2.55.0 test failures
+Message-ID: <alTGqS2_RmfGHvfV@pks.im>
+References: <f65466c9-bede-472e-ad57-e72a5289be27@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f65466c9-bede-472e-ad57-e72a5289be27@ramsayjones.plus.com>
 
-Some users may prefer to not have graph indentation.
+On Fri, Jul 10, 2026 at 07:32:23PM +0100, Ramsay Jones wrote:
+[snip]
+> Note that Patrick wanted to have a clean test-suite run on cygwin, so in
+> commit 5f8af25ff9 ("t5500, t5601: skip tests which exercise paths with '[::1]'
+> on Cygwin", 2024-10-16), he suppressed the test failures in t5500 and t5601.
+> (that was about the time of the v2.48.0 release).
+> 
+> The changes to tests t5500 and t5601, in the patch given below, essentially
+> reverts Patrick's commit 5f8af25ff9. This fixes all of the tests in t5601 and
+> ten of the twelve failures in t5500. (I don't recall what happened to t5580,
+> the single failure - the push test - was fixed somewhere between v2.43.0 and
+> v2.44.0-rc0).
 
-Add "log.graphIndent" config variable to graph_read_config() to read the
-default preference. By default is graph indentation is true.
+Yeah, this was merely papering over issues. I'd very much welcome a
+revert and proper fix for this.
 
-Add --graph-indent and --no-graph-indent options to overwrite the
-default preference.
+> As luck would have it, I left a note to myself about the remaining two
+> failure cases. This leads to the remaining hunk, to connect.c, in the patch
+> below; ie. the removal of a conditional (which should only fire for GfW and
+> cygwin). The '#ifdef DUMMY/#endif' should probably be replaced with an
+> '#ifdef GIT_WINDOWS_NATIVE/#endif' so that GfW is not affected. (Having said
+> that, I suspect that even GfW should drop it ['somebody was smoking something
+> exotic'], but I have no way to test it, so ...).
+> 
+> With this final hunk, this patch results in a clean test-suite run. :)
 
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- Documentation/config/log.adoc       |  4 +++
- Documentation/rev-list-options.adoc |  8 ++++++
- graph.c                             | 10 +++++--
- revision.c                          |  9 +++++++
- revision.h                          |  2 ++
- t/t4218-log-graph-indentation.sh    | 52 +++++++++++++++++++++++++++++++++++++
- 6 files changed, 83 insertions(+), 2 deletions(-)
+Nice :)
 
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index 757a7be196..f7dfce69b5 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -59,6 +59,10 @@ This is the same as the `--decorate` option of the `git log`.
- 	A list of colors, separated by commas, that can be used to draw
- 	history lines in `git log --graph`.
- 
-+`log.graphIndent`::
-+	If `true`, indent visual roots when rendering the graphs with `--graph`.
-+	Set true by default. It can be overriden with `--[no-]graph-indent`.
-+
- `log.showRoot`::
- 	If true, the initial commit will be shown as a big creation event.
- 	This is equivalent to a diff against an empty tree.
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index eaee6ee839..af74f10bb4 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -1269,6 +1269,14 @@ This implies the `--topo-order` option by default, but the
- 	By default it is set to 0 (no limit), zero and negative values
- 	are ignored and treated as no limit.
- 
-+`--no-graph-indent`::
-+`--graph-indent`::
-+	When used with `--graph`, indent visual roots (commits with no parents
-+	or whose parents are not shown) to differentiate them from commits that
-+	are vertically adjacent but unrelated. Enabled by default. Use
-+	`--no-graph-indent` to disable or set `graph.indent` to set a deafault
-+	preference.
-+
- ifdef::git-rev-list[]
- `--count`::
- 	Print a number stating how many commits would have been
-diff --git a/graph.c b/graph.c
-index c14be934a0..28bef1b88f 100644
---- a/graph.c
-+++ b/graph.c
-@@ -419,6 +419,8 @@ void graph_setup_line_prefix(struct diff_options *diffopt)
- 
- static void graph_read_config(struct rev_info *revs)
- {
-+	int val;
-+
- 	if (!column_colors) {
- 		char *string;
- 		if (repo_config_get_string(revs->repo, "log.graphcolors", &string)) {
-@@ -435,6 +437,9 @@ static void graph_read_config(struct rev_info *revs)
- 						custom_colors.nr - 1);
- 		}
- 	}
-+
-+	if (!repo_config_get_bool(revs->repo, "log.graphIndent", &val))
-+		revs->no_graph_indent = !val;
- }
- 
- struct git_graph *graph_init(struct rev_info *opt)
-@@ -999,7 +1004,8 @@ static void graph_peek_next_visible(struct git_graph *graph,
- static int graph_needs_pre_root_line(struct git_graph *graph)
- {
- 	return graph->commit_in_columns && graph->is_visual_root &&
--	       graph->num_columns > 0 && !graph->visual_root_cascade;
-+	       graph->num_columns > 0 && !graph->visual_root_cascade &&
-+	       !graph->revs->no_graph_indent;
- }
- 
- void graph_update(struct git_graph *graph, struct commit *commit)
-@@ -1344,7 +1350,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
- 
- 		if (col_commit == graph->commit) {
- 			seen_this = 1;
--			if (graph->is_visual_root) {
-+			if (graph->is_visual_root && !graph->revs->no_graph_indent) {
- 				int depth = graph->visual_root_depth;
- 				/*
- 				 * Each visual column is 2 characters wide.
-diff --git a/revision.c b/revision.c
-index 258c3cf782..215cf11071 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2627,6 +2627,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->graph = NULL;
- 	} else if (skip_prefix(arg, "--graph-lane-limit=", &optarg)) {
- 		revs->graph_max_lanes = parse_count(optarg);
-+	} else if (!strcmp(arg, "--graph-indent")) {
-+		revs->no_graph_indent = 0;
-+		revs->graph_indent_set = 1;
-+	} else if (!strcmp(arg, "--no-graph-indent")) {
-+		revs->no_graph_indent = 1;
-+		revs->graph_indent_set = 1;
- 	} else if (!strcmp(arg, "--encode-email-headers")) {
- 		revs->encode_email_headers = 1;
- 	} else if (!strcmp(arg, "--no-encode-email-headers")) {
-@@ -3201,6 +3207,9 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	if (revs->graph_max_lanes > 0 && !revs->graph)
- 		die(_("the option '%s' requires '%s'"), "--graph-lane-limit", "--graph");
- 
-+	if (revs->graph_indent_set > 0 && !revs->graph)
-+		die(_("the option '%s' requires '%s'"), "--[no-]graph-indent", "--graph");
-+
- 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
- 		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
- 
-diff --git a/revision.h b/revision.h
-index 569b3fa1cb..49e1380b80 100644
---- a/revision.h
-+++ b/revision.h
-@@ -314,6 +314,8 @@ struct rev_info {
- 	/* Display history graph */
- 	struct git_graph *graph;
- 	int graph_max_lanes;
-+	int no_graph_indent;
-+	unsigned int graph_indent_set;
- 
- 	/* special limits */
- 	int skip_count;
-diff --git a/t/t4218-log-graph-indentation.sh b/t/t4218-log-graph-indentation.sh
-index d4c850c0d4..b69730e7ba 100755
---- a/t/t4218-log-graph-indentation.sh
-+++ b/t/t4218-log-graph-indentation.sh
-@@ -540,4 +540,56 @@ test_expect_success 'visual root cascading gets wrapped after 4 columns' '
- 	EOF
- '
- 
-+test_expect_success '--no-graph-indent disables indentation' '
-+	lib_test_check_graph --no-graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-+	* 67_A
-+	* 66_A
-+	* 65_A
-+	* 64_A
-+	* 63_A
-+	* 62_A
-+	* 61_A
-+	* 60_A
-+	* 59_A
-+	* 58_B
-+	* 58_A
-+	EOF
-+'
-+
-+test_expect_success 'log.graphIndent config disables indentation' '
-+	test_config log.graphIndent false &&
-+	lib_test_check_graph _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-+	* 67_A
-+	* 66_A
-+	* 65_A
-+	* 64_A
-+	* 63_A
-+	* 62_A
-+	* 61_A
-+	* 60_A
-+	* 59_A
-+	* 58_B
-+	* 58_A
-+	EOF
-+'
-+
-+test_expect_success '--graph-indent forces indentation when graph.indent is unset' '
-+	test_config log.graphIndent false &&
-+	lib_test_check_graph --graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-+	* 67_A
-+	  * 66_A
-+	    * 65_A
-+	      * 64_A
-+	* 63_A
-+	  * 62_A
-+	    * 61_A
-+	      * 60_A
-+	  * 59_A
-+	* 58_B
-+	* 58_A
-+	EOF
-+'
-+
-+# graph.indent true and no --option is the default state.
-+
- test_done
+By the way: I was pondering multiple times over whether or not we should
+add Cygwin to our CI matrix. It seems to be sufficiently different from
+both MSYS2 and native Win32 to have its own set of compatibility issues,
+so that could be worth it?
 
--- 
-2.54.0
+>  connect.c             |  2 ++
+>  git-compat-util.h     | 39 +++++++++++++++++++++++++++++++++++++++
+>  t/t5500-fetch-pack.sh | 14 ++++----------
+>  t/t5601-clone.sh      | 11 ++---------
+>  4 files changed, 47 insertions(+), 19 deletions(-)
+
+For the record: I don't really have much of an opinion on this given
+that I tend to not use Windows, except when I (once again) break some
+tests there. Especially the path handling si something that tends to
+cause lots of confusion on my side.
+
+Patrick
