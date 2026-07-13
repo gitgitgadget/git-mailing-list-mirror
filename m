@@ -1,80 +1,79 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA37814883F
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7411643746A
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783953698; cv=none; b=ErBO8EG7aBVRDg0ZLeGLgRRTAmm9+PxruZqQRDhJnkd+CvkHhuNXFNelLbmw5h/Bl7Cozusr2jz16WocboQBWdNSnRCoHM26PsTIlHTuBG8OErrAlA9WeRznE3arbOBr10w4GLCVYGet+w5kZiixkUY+yTxE4tCb9l66C4ubdiY=
+	t=1783953700; cv=none; b=YKMPS3FwNwkjRx2bs8aKBtDlW6cDoBh+IFljP75txEMcjl2MbZx7HRjDyaD8HCPGGCX6Nm0TXwfua+LB1OdlcW3r4MOxDXojJOkqTK6zBbzMQXcSYS44P/stv55xy9Yrg8m6K0cZL8YJ9hif09mUAVXAob4p7JL3ifdzXuqViQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783953698; c=relaxed/simple;
-	bh=/hMSysPlI8knV3KeQJ0AcPKsr8dChrKP2cVFd0LS5sI=;
+	s=arc-20240116; t=1783953700; c=relaxed/simple;
+	bh=2k6eG7izsuTKtzWIWvUs2riQ5qW8MC1CZv3O72OqVWs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=E5VaVZ4gzTo9ycTSmSoaJQ9Qm25vRTYvBX83YY911QKtngRULsvwM4ULNxv5Grl/aMT7v6dZGXDs1G8PRTm6CGzUTnjazLA2K+KJ6VNe3rh1QqfCwkxnu9EYVUZMLY3itm7RQTVgZMZ6i/QWC/FO21wO5am8KSTlk3CgVvcAR3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hwdqsyRl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EW77+9A/; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=Ths5oAed7bKfAKtB5ktD8HhBYEdWifMkhBk5rn0tK7qOw0qp9zutuzxBkG/ka5GdAbETzeSwDRR7/Wr01R5JKtDsd/FCdhDF63TcV7xekPCm7uEtNe7r4wWSNCfjmlWEzspP8+aKLGjpA2N1fzxtZH2ZFd6mHGSMAD0gmNonLBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dVtOtrSp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AfsxR39X; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hwdqsyRl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EW77+9A/"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1899E7A00D5;
-	Mon, 13 Jul 2026 10:41:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dVtOtrSp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AfsxR39X"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B95397A00D8;
+	Mon, 13 Jul 2026 10:41:37 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 13 Jul 2026 10:41:36 -0400
+  by phl-compute-11.internal (MEProxy); Mon, 13 Jul 2026 10:41:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783953694;
-	 x=1784040094; bh=u/KYJs4R6UmAlSxz1SZtqf9XD2+tbp6s9JuW/cdNqvA=; b=
-	hwdqsyRlLjxqKFPReb55Ui38imarX3rR4YNftyP8sgEvZqHT23IB1etrv3fko5Uy
-	HkG/AvR8MBj8P77HKRILdNn6sE1AhMhknLKM/O+XECQmfmvMh0tMhxcWbYruW47g
-	AL6iIQsTXglmy8g5+FhL9B0CXAqWyqPNAQMIBYtnrIIrSzISD50rE7u3NdIXLQ4s
-	a05pB90Pkq2gBKKHxUVwMFQtLR53mQIgEd14nR40PqUuT29XSYqPxiMkXnWRvkTo
-	xY0S1s3vJGQ0bB8cremfKFLK5r4MOe1XaJrCihDWUtmoUUdVUozl1miIe0vApMOG
-	b93wK+1GgB+sAOjS14gaOg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783953697;
+	 x=1784040097; bh=nArudGxJoN4ZWZKhKe9nGn2oeDPxEgYaIdunfOfZtQY=; b=
+	dVtOtrSp+rFnO4ZP1oYc/8Fk0GF4sGIr4NVdgVlBL202X9qHqAiBQeJs/02y6nlc
+	5g1PfnLSQPqBwLDbKnEuoLQR5ndwGatWBetFy8417VkAE+OjNav/rFZPedhp8Jli
+	7B51Ji5WJTyJ+ao8/4LUC0m8Bzz/1CjvK+dVx7GpPmkzz0Fc8l4sfOWo9V2KG6C8
+	5Bk6qQfPgAr0DSISg6fbOrY4skhVR97EI8tLap9b7CUQ12rMRsCfcHwSPPO+QPsS
+	+8OAuZE7F/UTUvDsSUw4trA2VxaKgL6QImipBtajL4N+/X9jUz0LhOdrZ1pRbYLr
+	53hr1DW8a3UglLJG3+sLtw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783953694; x=
-	1784040094; bh=u/KYJs4R6UmAlSxz1SZtqf9XD2+tbp6s9JuW/cdNqvA=; b=E
-	W77+9A/8t9ee1f6R2DAA5mEvVdg9+FxTsOuve48k9Po3sYhaDqx/4NMT5Id6iHtI
-	DUmGaJy9JcABnOKnLO7wysyTn76qch9JCKbgwMnj4cPfx5cl0MDyJ7DFB9JuyyTq
-	yNrsy/cHZ9+gW5mpaLrj19w+WeEGlUGb6GRaZ+hW5mgvG5eUi0IXw6lcy/1fNzAr
-	qOL8yX/4vCLdth6YVeCsvr1OPm58QHS6PZVHGdBnm0kQkvCzISWlepRaJ6W93SGY
-	20JX0Anb+NEHMAb0EgWK49P24sl0M+VjKoMvzBQS+JviIm0nVGpKBxyxOxl2XIPh
-	JOmTbM64oZ/l8co1xoIXw==
-X-ME-Sender: <xms:HvlUat-ZuThuYjja8-dQEiEikmUgPu6NIyQbgaDMMokW6QttDqt5nQ>
-    <xme:HvlUaonEBT7lCddpj1r_FnBlL9kXdrADSIWG96ct95B0GLpXZ9KBeFjRbzRrrtVZ0
-    kFfLduyCoRN0Z5G7tg62GfT2fyOcjSFs5hYM2QUPaHFS0yGw4ym5Q>
-X-ME-Received: <xmr:HvlUajVXZjaH3IyHhTwI7MlJoR-Qq0WhH_T4-HJ8I11RqU-duN30I4oXDqs60ad_TDd3C0aP3eJOtZree6Xjn__eCgYygszv2Z_SH2VI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783953697; x=
+	1784040097; bh=nArudGxJoN4ZWZKhKe9nGn2oeDPxEgYaIdunfOfZtQY=; b=A
+	fsxR39XJSJwd0o6GRj5qiDpqin3EKB9VLA8WMjblVd7xAhVZm+Bzf4j40qqRLUgR
+	skUvnEpkW6PFMs4SGNjgiiRB2xgvr73XLj4TGx+LUNafqcyjOWevJHf0XQMCXF/E
+	0iMBzXcaigHzEpVob4K6IDH7XFJgd/B2H7i1PDNfjHIP/H/PdwiI1lKY7tBS5Jst
+	fEUHr2uFgw8kIDdoHkK/3D+YbgvVMgMuBCl2kgEtAQ69Ejg6h181wzQ/HDGFp4wT
+	CnQbmRX4QBjE9XMgnfBQBHP/PLh2kS0h0coUfOCk+jIUmrhlzsY6jy8rtIJFazD2
+	iV4k1dtMkwcYpJH52c37Q==
+X-ME-Sender: <xms:IflUaq3S8LSj_qNdNwpdY6U7G14O9zlv5Wnp7_PQsw3AaT-8K04dXw>
+    <xme:IflUaj8IesBBB43T0ttf8JPPVoVZ5Qm6zQjQccsGRl5fwlR1fLcFLcRBx8-pQx0RA
+    sdnBbUq5JBsSHzbrqFfdLCy31r_5zI_caSRXENUO7MOsLnTsa9nDA>
+X-ME-Received: <xmr:IflUarOvhHZDHCkEPKzgYn_dzg6GZ29qblecflLUqwQubZbH7dMXO9v5sSusNihM1F4hepL58BUPN-WaIKHL-12Murr68cW09O9bD5f2>
 X-ME-Proxy-Cause: dmFkZTExU3AaOgeG5BObJ1W8JdQQ7fecPK0PCMuQHCnglnCgDOzkQC0YGMEj1qcLJSgMeY
     LASbvC4Tndv63coRGptPYG0Us/QPdorbjTjJ5eG4DbvGXhIArpLYSfP1Equ8XG1heJbryq
     UDpFgrp5VTZtDpEG/07Jwy4Ag/vYtEFOYaVrF84nTGMkk2meJjHZ4oqMYl9DO/bcxScRj0
     raM+378SqfjY/MjDn56wLasjqjj0AnRoiM+HE2+qWeFjm8zVJqFwrMNDwJJ51dMxeJILN0
-    DY3JMGfUUBMmVXNdlp1KiUwRzg3BnBn+tX0Xx+zOe7dMF8plSZ04smH2o1tFL5zomOi5MJ
-    dR+9ZWLD6i9DlUTfs7sk1h/TeXlO9ZlZ5yDJ/36Yz7gEIeRf/us0qMOfFKaZPdnd2QqRyJ
-    gViT3vywkfyDUxrfIVfR5PKzLq+ajz2y3IFFmOy6z5KalYZOZYVtWdCjoj/O7Qwj7psu9M
-    pYBYTcf/YzJB+wUetzDmu0aEd6OBQLU3ylf/4YC2hVEfw5Jsg0rK4BqV7B9s9w2nAMG4lr
-    IuT1hcwsVJuF9B1MwUNn+aSeIVnzvpUMUcLbORNy6XEmrHbCnF0iYNSRd7qLahBWaObKvf
-    wz9up+U1nLWsNYs7S/iFpGkG94BQ7po5cze9n4wMxPcsBwGAjqKdklPbszYA
-X-ME-Proxy: <xmx:HvlUatHpafzhU1jW0UKVJenwp6HJ7AMB4u009jR-gTtw0tEf78oCJg>
-    <xmx:HvlUavcQ7KAv9K6F-CiNTqpEL-8Qa-v5UckIuoQ6p79aq0SAQun5sg>
-    <xmx:HvlUauJ8cXVyEiT-E-P2m8v4tR1aaa-VbXshQ9McrJ0MUeQzj1Rlhw>
-    <xmx:HvlUakGAFmrHI5Lr_IKrQ_WbQxoiaM-gy1kO6KbzsqEh7flL3qeL4Q>
-    <xmx:HvlUajY0gy-USZ3PPdja9ikqeWOClWCJOLxmvD3CuuXz_MH2FtZH9kv0>
+    DY3JMGfUUBMmVXNdlp1KiUwRzg3BnBn+tX0Xx+zOe7dMF8plSZ04smH2o1tFL5zomOi5IZ
+    /9u6/0gJ2mup7gbIb9KmHMWjOjELO17HXK7wEaP0Wi3fpYr10rJJet6nxJLxvaZCJhQFoD
+    6lMrroPhup9lpCjuWVex29BqN1IpzBPkPxw8Qg7lp5xKxCQI4n4VGnl1qKMdZF84EvIvDi
+    uUxA9KEij/03XEtTMLeCd7LKr/rpqnQirb+9i2L2jagEOCq418XhjtupD6K27wn/jdmHj/
+    fF28WSNwhX7P1Qx+B3TtwI4kuWo6i2157GU4urEp8o35qMCxnPwx7T5fnLfTBzenuvqiGR
+    eyhwLN071QcxgeJJ8muWdunCNwCagLnhDcB1S+4rRrRUa+ZzUPz8Oj3w1XqA
+X-ME-Proxy: <xmx:IflUanfL_mRWyh577SKAhgK2p5MvKTYg0HuFIpYZHtQxlIql1fVuTg>
+    <xmx:IflUaqVIE-S8Ce6p2_uRWopUcOjDG41lAuB59NGHvOGZXglmTXeQ8Q>
+    <xmx:IflUaviFkoE9ai6QaJWaI6zQu_kDGu3lBdySWVq4lzpeUkpLdHOMxw>
+    <xmx:IflUap8imbZI3qcOeRlM2WyzCJlHDY7SR4vFVCD7vMHAQ1wqLaLiuQ>
+    <xmx:IflUapwQuvDzKEvieGDjlhQ4JSLZwj7KWeAMo4Didt4G7vYkV1zj_1-1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 10:41:33 -0400 (EDT)
+ 13 Jul 2026 10:41:36 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0320676b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jul 2026 14:41:32 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ef2ef249 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jul 2026 14:41:35 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 13 Jul 2026 16:41:25 +0200
-Subject: [PATCH v3 1/9] odb/source-packed: improve lookup when enumerating
- objects
+Date: Mon, 13 Jul 2026 16:41:26 +0200
+Subject: [PATCH v3 2/9] pack-bitmap: mark object filter as `const`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260713-pks-odb-for-each-object-filter-v3-1-b3c65c641073@pks.im>
+Message-Id: <20260713-pks-odb-for-each-object-filter-v3-2-b3c65c641073@pks.im>
 References: <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
 In-Reply-To: <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
 To: git@vger.kernel.org
@@ -91,104 +90,59 @@ Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Jeff King <peff@peff.net>, Taylor Blau <ttaylorr@openai.com>
 X-Mailer: b4 0.15.2
 
-When iterating through objects of a packed source that have a specific
-prefix we do so via two different methods:
-
-  - When a multi-pack index is available we use that one to efficiently
-    loop through all objects.
-
-  - We then loop through all packfiles that aren't covered by a
-    multi-pack index.
-
-Regardless of which mechanism we use, we then iterate through all the
-objects indexed by the respective data structure. Curiously though,
-while we use the indices for enumerating the objects, we completely
-ignore it for the actual object lookup. Instead, we call into the
-generic `odb_source_read_object_info()` function, which will itself
-consult the indices to figure out where the object in question even
-lives.
-
-This has two consequences:
-
-  - It's inefficient, as we basically have to figure out the position of
-    the object a second time.
-
-  - It's subtly wrong, as it may now happen that a specific object will
-    be looked up via a different pack in case it exists multiple times.
-    This is unlikely to have any real-world consequences, but it's still
-    the wrong thing to do.
-
-Fix the issue by using `packed_object_info()` directly. While at it,
-rename the `store` variable to `source`.
+The function `for_each_bitmapped_object()` accepts an optional object
+filter. This filter is never modified by the function, but is not
+declared as `const`. Fix this.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-packed.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ pack-bitmap.c | 6 +++---
+ pack-bitmap.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/odb/source-packed.c b/odb/source-packed.c
-index 0edea5356d..9cfa02b7a2 100644
---- a/odb/source-packed.c
-+++ b/odb/source-packed.c
-@@ -143,7 +143,7 @@ static bool should_exclude_pack(struct packed_git *p, enum odb_for_each_object_f
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 35774b6f0c..a47c231632 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1976,7 +1976,7 @@ static void filter_bitmap_object_type(struct bitmap_index *bitmap_git,
+ static int filter_bitmap(struct bitmap_index *bitmap_git,
+ 			 struct object_list *tip_objects,
+ 			 struct bitmap *to_filter,
+-			 struct list_objects_filter_options *filter)
++			 const struct list_objects_filter_options *filter)
+ {
+ 	if (!filter || filter->choice == LOFC_DISABLED)
+ 		return 0;
+@@ -2027,7 +2027,7 @@ static int filter_bitmap(struct bitmap_index *bitmap_git,
+ 	return -1;
  }
  
- static int for_each_prefixed_object_in_midx(
--	struct odb_source_packed *store,
-+	struct odb_source_packed *source,
- 	struct multi_pack_index *m,
- 	const struct odb_for_each_object_options *opts,
- 	struct odb_source_packed_for_each_object_wrapper_data *data)
-@@ -170,6 +170,7 @@ static int for_each_prefixed_object_in_midx(
- 		 */
- 		for (i = first; i < num; i++) {
- 			const struct object_id *current = NULL;
-+			struct packed_git *pack;
- 			struct object_id oid;
- 
- 			current = nth_midxed_object_oid(&oid, m, i);
-@@ -177,9 +178,8 @@ static int for_each_prefixed_object_in_midx(
- 			if (!match_hash(len, opts->prefix->hash, current->hash))
- 				break;
- 
--			if (opts->flags) {
-+			if (opts->flags || data->request) {
- 				uint32_t pack_id = nth_midxed_pack_int_id(m, i);
--				struct packed_git *pack;
- 
- 				if (prepare_midx_pack(m, pack_id)) {
- 					pack_errors = true;
-@@ -193,9 +193,9 @@ static int for_each_prefixed_object_in_midx(
- 
- 			if (data->request) {
- 				struct object_info oi = *data->request;
-+				off_t offset = nth_midxed_offset(m, i);
- 
--				ret = odb_source_read_object_info(&store->base, current,
--								  &oi, 0);
-+				ret = packed_object_info(source, pack, offset, &oi);
- 				if (ret)
- 					goto out;
- 
-@@ -219,7 +219,7 @@ static int for_each_prefixed_object_in_midx(
+-static int can_filter_bitmap(struct list_objects_filter_options *filter)
++static int can_filter_bitmap(const struct list_objects_filter_options *filter)
+ {
+ 	return !filter_bitmap(NULL, NULL, NULL, filter);
+ }
+@@ -2058,7 +2058,7 @@ static void filter_packed_objects_from_bitmap(struct bitmap_index *bitmap_git,
  }
  
- static int for_each_prefixed_object_in_pack(
--	struct odb_source_packed *store,
-+	struct odb_source_packed *source,
- 	struct packed_git *p,
- 	const struct odb_for_each_object_options *opts,
- 	struct odb_source_packed_for_each_object_wrapper_data *data)
-@@ -246,8 +246,9 @@ static int for_each_prefixed_object_in_pack(
- 
- 		if (data->request) {
- 			struct object_info oi = *data->request;
-+			off_t offset = nth_packed_object_offset(p, i);
- 
--			ret = odb_source_read_object_info(&store->base, &oid, &oi, 0);
-+			ret = packed_object_info(source, p, offset, &oi);
- 			if (ret)
- 				goto out;
+ int for_each_bitmapped_object(struct bitmap_index *bitmap_git,
+-			      struct list_objects_filter_options *filter,
++			      const struct list_objects_filter_options *filter,
+ 			      show_reachable_fn show_reach,
+ 			      void *payload)
+ {
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 19a8655457..47935eb24e 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -96,7 +96,7 @@ struct list_objects_filter_options;
+  * not supported, `0` otherwise.
+  */
+ int for_each_bitmapped_object(struct bitmap_index *bitmap_git,
+-			      struct list_objects_filter_options *filter,
++			      const struct list_objects_filter_options *filter,
+ 			      show_reachable_fn show_reach,
+ 			      void *payload);
  
 
 -- 
