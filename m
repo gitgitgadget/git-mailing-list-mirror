@@ -1,80 +1,80 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB27360EDC
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 05:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75044356749
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 05:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783921938; cv=none; b=czj5K00C9wJCzLzktGTdtm59WFQ8T1O3zqS8ypQohUYVqkcnY0IgkOR0hzVV2CFsDjBty+euyz1hIJ2J4Nb4WjkYiRvhnHmUb/ASTjiM2fSkj4zRH/HY277dRCJ2qBF0S8+UCFi2FCbSQk/hRddG7w6rz3nwFMwYXcjBPZvobzQ=
+	t=1783921940; cv=none; b=CrLFntDs9vJvzx+vNkTmB1UOTllvj4dCRT2eFYB5iopY9V0dVo1BlYrJZmO6/xlZVuqrz17H71Aph8+aL+lQNwsOWOJopPSYq4ogOAWoqxEaGod73ojJgUZW+paWEz3/TuuS/MlEhyjANv3JSDKASNJnJAy1QNaaZHzsYhtChH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783921938; c=relaxed/simple;
-	bh=xaOwnW5WOksrYAKPJy0T7xL8zLNBVZcq1KXdvrcoJJ4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=DLBGDtp/WHZgd6LMRPT2SnqLX4gPx7rtvaNcOgV4Fz0AlSpbr+4Z4Y7Z+JwRTTgbERyhUC5f/5mZ2BWU9Ln5+hhQ4aNehEXNuZM5wrBkXHjNnp9qO9CEdgzryr1HgPtqWsJM3+whyapwQDtDm8SdqppBcZQ8Jxn4SZHUJZENy78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bep+Eh7i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5jOHC2K; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1783921940; c=relaxed/simple;
+	bh=ayiiLcLYb91JfZiSc5/D282/xoFvTVKq38BYrB4ckzI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=JzLzbX08sTubboYEyQgw+pj8v5YL6krVDeXH9G7vNjRVICisHoyF9DscuC14cS7Y73d1KD9B6J+2zGPRP2e9Iqz0iKmfyshj9wQk+teSv75Rqns2zvIY4hA/5118+y6HmIrNRfRr1A7pVlWb4SFqt7rMhy5Csxqk+z/CYLB+LxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pcpmi0fs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PVqTxBiP; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bep+Eh7i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5jOHC2K"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BE4421400071;
-	Mon, 13 Jul 2026 01:52:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pcpmi0fs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PVqTxBiP"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 996411400074;
+	Mon, 13 Jul 2026 01:52:17 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 13 Jul 2026 01:52:16 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 13 Jul 2026 01:52:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783921936;
-	 x=1784008336; bh=9BU990uUikONb1R+OHDFinCAjF2pWQ08HyFAhS2IUrY=; b=
-	bep+Eh7iw6cJCtKxQhRZ7vZGJlpU/GizY/Q4TriO+4SkBu4RugZY7Det7ujMRX8A
-	qW3cnr49nrPbAqqWVWDPrIbPmUg4RneTeCYE1UiZ5KrUcIfqVOYNRlOu2AP6AUg2
-	yxEZu66C2/icZ7SQCWdbN0zSt9AcqheO7WUsM9WVzMKBnrb3ZYk8LBGAviHH0xo/
-	Plv4uZFNKA22jEcf2HedDNy/GHBji+AiUbljtA5cttNAgUcjYzoLEdRFzEE+0wn6
-	JbQIi4ypm7kGUC0M6aqGFh1p86ju6y6d0CNbvQX0N6BVLTTtn02RuKy9P+Y5U7/2
-	0KAiADwLnY4IF6dgYQqR6g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783921937;
+	 x=1784008337; bh=LeGN4den3s1sQSaVgofz+nUYZG5nG8qQRXPmIlptPBA=; b=
+	Pcpmi0fsI9zta7xM2xKIa0OdrZf04vQCy7NBu5Q7PUIYTqTiYQ2NncUkGlO1+mbG
+	BccbmH6zhEIlNNkGI2UpEtYY3/mKbUxRu0jOI76ujb8AU0klgXbBXARjd97ho2WP
+	old9EYMckgjLRxAQoVvbdieIV0Q3Wv25aWJvK8QYlDYb8wHEMebQIhxRR44lgoK2
+	57PDJeLqa8gbmejnYSkPiMhhMb9A9bAOlki9rleQqLlHe955E9+7DTbzlj+1HkEo
+	QO+MtXrUTNKVED4SslfhZLcCsFr7L++p7bpNKTRu5tIqP03FCnrglk5G9CRA2HxE
+	XVXQXnceXXPT/TaR7gtCPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783921936; x=
-	1784008336; bh=9BU990uUikONb1R+OHDFinCAjF2pWQ08HyFAhS2IUrY=; b=W
-	5jOHC2KJ1rvS8CKqhE+jDdNInEJwRtN95HUa1fu9R73lvZn2oLI19/fACrW1jchP
-	5h+72P/MUcoAsYabIfhfX7KKogeL747Ikbd0fxwQOlmUzn4PNXnyjtylOxvAVAFK
-	tZw9Ko4eVm/Xmj2SC8BtloVCqEBCa/0HAOi3mTddWGdXvhovrsI6PKv9mjZij1cu
-	DcAHN4LLxXJwKMexKC5YBy2flmCXN0X2g18/Ee+sTJyXt8DsG2beAlIpxRR1lQZL
-	kSlZmORaNcqsgk9HPONkDYoXrLb65w0Yyt9pxP9qeKFFRHgh0Hd1e8QvZxf97Mli
-	80PhtqrlPMOCZaMt/HiCw==
-X-ME-Sender: <xms:EH1UalNukQn44YVEeZCLGgaVVKn1-XlBX7aYg6RiW4lSYaYHUxJqUQ>
-    <xme:EH1Uat8qIkN8dloDHxjLHsUE8wSq02v4Rg0Jx7wUoEoPumOSnM26Hi2VEhObODpEw
-    HSJl5Du6SanR6eHN0lmyqoOFQnZVKTW2kQNndEC48YMDw6YBa9viA>
-X-ME-Received: <xmr:EH1Uah6R7WMCpcAyAB9Fs8A-eLV3CnEQ0woeqc6_qvqWlii70Ws16ObflaKkIMA01WWFj4SU700ne1th9sw0R3FT3OfXML1Hy8KRiSxS>
-X-ME-Proxy-Cause: dmFkZTF45doL5xfI+4x3dE0vweFcanQ1/Lj+u5DIsdYP5M55IRVVeSMtE3IvZr+4Czqczo
-    AgVyLyeUW7wW+5IMO9RwnTzljsTLD4H22AjG3hOczS+i/BBAf+NlQ5KigKnzM86XRv2dAo
-    GfUwgt238sro/0rjAQfnzbXMPv7XD+U6qGaAESKNVrL2G+O8YmPrpMUQqZtood9AnZWX0D
-    DxqrleuToQtExbvxbNDhIDi5bOBrWtHhWAohQfF6+PxWlyP06Rp72JqOP+o1I8y+N+ihFZ
-    EQGlMRf85sKgVZBUQsAEjOpMG3ooauBNmLk38touq24cR3Ojm8sSox0c/Jz+dUWbCTkFQy
-    iOzhTbSBl1ap9XioBbqWuxH0oex2+mJtNn24QDanQq9blahsKckeqxkdu+hftHKvoaJqG7
-    11je8G0LEICzmOU4loFGzyunNyrLGLNE2FmqkaJmZxihQmGUOBnxD7vA8/6u3wIMTItf3I
-    ubM1h9VoEmfitsLfZ5JDzI9ybB4asstVdkllLQmembcdi/SPdbAFZIGayp2K/ecz9wA11o
-    LJ/aFqhTjhVCn6rjFNPymInWxpTHunLXcvBRdp9sbBYkoomIq5/lVzShZTEfKsEnEUkx7u
-    4PV4yGlzuI5QKRT5YpXPLWjGvffQfkOGjV7yZMWfvHR4T4X4mIJQVvxxBSmQ
-X-ME-Proxy: <xmx:EH1Uas0GCvBAJfA2XLYV1VzvAlDYmbd_RAWo4YEbh0b2h-H53nO7oA>
-    <xmx:EH1UagCRIyuuWS3wPoSlz1A00yvUa0hj8IG-m-Krp2ShmtyO9J7eFQ>
-    <xmx:EH1Uam2oApzMzx29FAp-XPrdkBAnMiupugOjXU_dZCjsChstYZ-sIg>
-    <xmx:EH1UaitXhHY8z7YPZ0jvRKJ6cP1rdqVi2iH7jb8v81Khd2sM0C6jqA>
-    <xmx:EH1UagkiE3apokCMPN5De0ZKMEl1SZBF-FpTwPlyyNJDLSh8bXSqoZT5>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783921937; x=
+	1784008337; bh=LeGN4den3s1sQSaVgofz+nUYZG5nG8qQRXPmIlptPBA=; b=P
+	VqTxBiPFNyEF5645qG5ZGDPbmeCpJmpn766wg9giaUBSdwBo1hsLQPVz/nHykUA+
+	I58SqA8Zi5gTMMKkLFd+EsQtJC1Ry1MJNTYNWD98dXjn/2QCSLEzpw8cqyM46W3q
+	c+iT26mzf6J/DFwuRpue/0MAXXGy1PQ/cMAfBsQHXNnrRAaNzz0W+SOzYT2Tf33L
+	SY3PP3Ij+0ulnv3DjPxb6uXElbXltS/wSQpGnNDbJ+eloWAwtDF5BVqpMGBugiDW
+	ipYR0fZU2UoJCSeFsg0r9fbQjnDS9HkFSnfqUIziRgKQJjzqJwpP1YCoWD0ThvTq
+	0k7FMlD/Tf1D8Cx6MQBRg==
+X-ME-Sender: <xms:EX1UakUJmP7BOxgXj700GEELUKwx1OF_IpyKoeESdgmpr7Bx3at_Tg>
+    <xme:EX1UaumPPzm3v3wQhgY_Bsw3Ok0--x8VQiY50yFJmMDJ88RfX6JRNWDr3_PSzHQWn
+    bfzn28uxPNuF7IyuzQvhcIZLo_P9EkNHxz1qT7ifEy4dHZt9iLMVQ>
+X-ME-Received: <xmr:EX1UamCScGjufWzcHrwMnvntBB3RxQLRcV5muXcvvs7uXXdiYwHe_gskn1-SxctRgR71CYQAkQIXYwDMFMhOJMvRIwSU5vXoD-rlIkwk>
+X-ME-Proxy-Cause: dmFkZTFVlBlgcNjg2o3p/KkL+66ltXy35IqcBFfLR5CO3tjSjgJ8ng54RTzVt55TpxWFuU
+    7Mb/JTp2qz4tEGM568oYlRNYiubDFZUIXnLW4rLV3Iz49kvP1nXixbbkycdUBWMhp4Yvkk
+    951s8qYicEoFHrtapi4FKxCcp9810/t5wFq+xtRSrY2Df5k/T1z+PRpD59P3O0lcmkXiGS
+    mzf8Lp7wRXywPSgiOLAlbFIltJnX4TseHUuTn94fi31ah83g1HDzgTQPE97iK7nDpVsGAq
+    kPKoQz78ZbQWxjW6I5M5SUjBDS9Ew1gFWvJ30kKVUz+WZQDpLBCgJ5tzmwZhDdxzTirjeh
+    9689iLOpmT055OJ7OAlTELMImxMANOgitaS92sqE4Zrj8y3gbMLSdZbycXJopOmAwcrf+b
+    3BQLt2Gj7Y2qQBsXxkIYkGtOPPZ+xMs4IqWmXsKfEr/Fgd0LIMg5s4sEPxbXQ38j17yucm
+    FOvF8VCTxL0eY9GVGxi8fjflIZr6zgHDhmRJSfz8blbDkvkS3eIlVQrX9GLoK9GgztOCCq
+    Jle8kQo7ACvW+v9YwTJZYyBH+ZfCdZ5Df9ELqbBWzg72tnAy0WajnGLy/knZCFVNlMS14s
+    NK7qESxjwxNrsCy/SpJzxQK9KCJ1/Mw/0n17RHYVffg14z554C8rMRx6SMsQ
+X-ME-Proxy: <xmx:EX1UaufbyvPnOUX1tPrpil7HFay5kCpP0Sx2unpqgrBoxqAFYwqbkg>
+    <xmx:EX1UahKpqwMElpKu1rnnCJXakdKTINHDUHEMIz4pmUm1uRt2RxA7UQ>
+    <xmx:EX1UahcULeAdhAEDc2NNjSDj2CIGxSxGnf6qCrDxa5TWl-et5l28_Q>
+    <xmx:EX1Uao3qBkatt0I_wFkNEpzunFxR2KrLcLxgmKK281qzmPiDPA0img>
+    <xmx:EX1UavsdjNipYElySjae1pfEEMJa-EDjceuMP74mlm_cegRNLvzdh6Hv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
  13 Jul 2026 01:52:16 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 07cd7494 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jul 2026 05:52:14 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 6aa7492d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jul 2026 05:52:16 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 00/12] odb: make optimizations pluggable
-Date: Mon, 13 Jul 2026 07:52:03 +0200
-Message-Id: <20260713-b4-pks-odb-optimize-v2-0-9c2c3ee94b38@pks.im>
+Date: Mon, 13 Jul 2026 07:52:04 +0200
+Subject: [PATCH v2 01/12] t7900: simplify how we check for maintenance
+ tasks
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,130 +83,328 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22NQQ6CMBBFr0Jm7ZhSoE1ceQ/CgpZRRgNtWiQq4
- e4W2Lp8yfv/LRApMEW4ZAsEmjmyGxPIUwa2b8c7IXeJQQqphMolmhL9M6LrDDo/8cBfwqKUyla
- aKlsISEsf6Mbv/bVuDo4v8yA7bVeb0XOcXPjs2TnfvKOghf5bmHMU2LaUDKW0ofKalDMP0Kzr+
- gPK0FNpxQAAAA==
-X-Change-ID: 20260612-b4-pks-odb-optimize-3426c57e5c30
-In-Reply-To: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
-References: <20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im>
+Message-Id: <20260713-b4-pks-odb-optimize-v2-1-9c2c3ee94b38@pks.im>
+References: <20260713-b4-pks-odb-optimize-v2-0-9c2c3ee94b38@pks.im>
+In-Reply-To: <20260713-b4-pks-odb-optimize-v2-0-9c2c3ee94b38@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+We have several tests in t7900 that verify whether specific maintenance
+tasks did or did not run. This is done rather ad-hoc by checking for
+spawned Git commands, which is awfully fragile:
 
-this patch series converts object housekeeping to become pluggable.
-There isn't really anything else to say about this.
+  - We have to adjust tests whenever arguments to the spawned Git
+    commands change.
 
-The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
-2026-07-06).
+  - We don't have a way to verify that negative matches are still
+    working as expected.
 
-Changes in v2:
-  - Make tests in t7900 a bit more robust by not checking for exact
-    commands, but instead by checking for executed tasks.
-  - Link to v1: https://patch.msgid.link/20260707-b4-pks-odb-optimize-v1-0-aae607667be4@pks.im
+  - We rely on maintenance tasks spawning a Git command in the first
+    place.
 
-Thanks!
+We can do much better though, as we already have trace2 regions for each
+of the maintenance tasks. Introduce a helper function that extracts all
+such regions so that we can get a direct list of all maintenance tasks
+that a certain command ran.
 
-Patrick
+Adapt tests that care about whether or not a specific task ran to use
+this new helper. Note that many tests still use `test_subcommand`
+though, as they really care about the exact command that was executed.
 
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (12):
-      t7900: simplify how we check for maintenance tasks
-      odb: run "pre-auto-gc" hook for all maintenance tasks
-      builtin/gc: move worktree and rerere tasks before object optimizations
-      builtin/gc: extract object database optimizations into separate function
-      builtin/gc: make repack arguments self-contained
-      builtin/gc: inline config values specific to the "files" backend
-      builtin/gc: introduce object database optimization options
-      builtin/gc: move geometric repacking into `odb_optimize()`
-      builtin/gc: introduce `odb_optimize_required()`
-      builtin/gc: refactor ODB optimizations to operate on "files" source
-      builtin/gc: fix signedness issues in ODB-related functionality
-      odb: make optimizations pluggable
+ t/t7900-maintenance.sh | 194 ++++++++++++++++++++++++++-----------------------
+ 1 file changed, 102 insertions(+), 92 deletions(-)
 
- builtin/gc.c           | 534 ++++++++-----------------------------------------
- odb.c                  |  12 ++
- odb.h                  |  45 +++++
- odb/source-files.c     | 470 +++++++++++++++++++++++++++++++++++++++++++
- odb/source-files.h     |  15 ++
- odb/source.h           |  36 ++++
- t/t7900-maintenance.sh | 338 +++++++++++++++++++++----------
- 7 files changed, 894 insertions(+), 556 deletions(-)
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index d7f82e1bec..129829f1f4 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -23,6 +23,12 @@ test_xmllint () {
+ 	fi
+ }
+ 
++test_maintenance_tasks () {
++	cat >expect &&
++	sed -ne "s/.*\"region_enter\".*\"category\":\"maintenance\([^\"]*\)\".*\"label\":\"\([^\"][^\"]*\)\".*/\2\1/p" "$1" >actual &&
++	test_cmp expect actual
++}
++
+ test_lazy_prereq SYSTEMD_ANALYZE '
+ 	systemd-analyze verify /lib/systemd/system/basic.target
+ '
+@@ -180,8 +186,9 @@ test_expect_success 'maintenance.<task>.enabled' '
+ 	git config maintenance.gc.enabled false &&
+ 	git config maintenance.commit-graph.enabled true &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-config.txt" git maintenance run 2>err &&
+-	test_subcommand ! git gc --quiet <run-config.txt &&
+-	test_subcommand git commit-graph write --split --reachable --no-progress <run-config.txt
++	test_maintenance_tasks run-config.txt <<-\EOF
++	commit-graph
++	EOF
+ '
+ 
+ test_expect_success 'run --task=<task>' '
+@@ -189,16 +196,20 @@ test_expect_success 'run --task=<task>' '
+ 		git maintenance run --task=commit-graph 2>/dev/null &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-gc.txt" \
+ 		git maintenance run --task=gc 2>/dev/null &&
+-	GIT_TRACE2_EVENT="$(pwd)/run-commit-graph.txt" \
+-		git maintenance run --task=commit-graph 2>/dev/null &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-both.txt" \
+ 		git maintenance run --task=commit-graph --task=gc 2>/dev/null &&
+-	test_subcommand ! git gc --quiet --no-detach --skip-foreground-tasks <run-commit-graph.txt &&
+-	test_subcommand git gc --quiet --no-detach --skip-foreground-tasks <run-gc.txt &&
+-	test_subcommand git gc --quiet --no-detach --skip-foreground-tasks <run-both.txt &&
+-	test_subcommand git commit-graph write --split --reachable --no-progress <run-commit-graph.txt &&
+-	test_subcommand ! git commit-graph write --split --reachable --no-progress <run-gc.txt &&
+-	test_subcommand git commit-graph write --split --reachable --no-progress <run-both.txt
++	test_maintenance_tasks run-commit-graph.txt <<-\EOF &&
++	commit-graph
++	EOF
++	test_maintenance_tasks run-gc.txt <<-\EOF &&
++	gc foreground
++	gc
++	EOF
++	test_maintenance_tasks run-both.txt <<-\EOF
++	gc foreground
++	commit-graph
++	gc
++	EOF
+ '
+ 
+ test_expect_success 'core.commitGraph=false prevents write process' '
+@@ -235,12 +246,19 @@ test_expect_success 'commit-graph auto condition' '
+ 	GIT_TRACE2_EVENT="$(pwd)/cg-two-satisfied.txt" \
+ 		git -c maintenance.commit-graph.auto=2 $COMMAND &&
+ 
+-	COMMIT_GRAPH_WRITE="git commit-graph write --split --reachable --no-progress" &&
+-	test_subcommand ! $COMMIT_GRAPH_WRITE <cg-no.txt &&
+-	test_subcommand $COMMIT_GRAPH_WRITE <cg-negative-means-yes.txt &&
+-	test_subcommand ! $COMMIT_GRAPH_WRITE <cg-zero-means-no.txt &&
+-	test_subcommand $COMMIT_GRAPH_WRITE <cg-one-satisfied.txt &&
+-	test_subcommand $COMMIT_GRAPH_WRITE <cg-two-satisfied.txt
++	test_maintenance_tasks cg-no.txt <<-\EOF &&
++	EOF
++	test_maintenance_tasks cg-negative-means-yes.txt <<-\EOF &&
++	commit-graph
++	EOF
++	test_maintenance_tasks cg-zero-means-no.txt <<-\EOF &&
++	EOF
++	test_maintenance_tasks cg-one-satisfied.txt <<-\EOF &&
++	commit-graph
++	EOF
++	test_maintenance_tasks cg-two-satisfied.txt <<-\EOF
++	commit-graph
++	EOF
+ '
+ 
+ test_expect_success 'commit-graph auto condition with merges' '
+@@ -910,24 +928,28 @@ test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
+ 
+ 	GIT_TRACE2_EVENT="$(pwd)/hourly.txt" \
+ 		git maintenance run --schedule=hourly 2>/dev/null &&
+-	test_subcommand git prune-packed --quiet <hourly.txt &&
+-	test_subcommand ! git commit-graph write --split --reachable \
+-		--no-progress <hourly.txt &&
+-	test_subcommand ! git multi-pack-index write --no-progress <hourly.txt &&
++	test_maintenance_tasks hourly.txt <<-\EOF &&
++	prefetch
++	loose-objects
++	EOF
+ 
+ 	GIT_TRACE2_EVENT="$(pwd)/daily.txt" \
+ 		git maintenance run --schedule=daily 2>/dev/null &&
+-	test_subcommand git prune-packed --quiet <daily.txt &&
+-	test_subcommand git commit-graph write --split --reachable \
+-		--no-progress <daily.txt &&
+-	test_subcommand ! git multi-pack-index write --no-progress <daily.txt &&
++	test_maintenance_tasks daily.txt <<-\EOF &&
++	prefetch
++	loose-objects
++	commit-graph
++	EOF
+ 
+ 	GIT_TRACE2_EVENT="$(pwd)/weekly.txt" \
+ 		git maintenance run --schedule=weekly 2>/dev/null &&
+-	test_subcommand git prune-packed --quiet <weekly.txt &&
+-	test_subcommand git commit-graph write --split --reachable \
+-		--no-progress <weekly.txt &&
+-	test_subcommand git multi-pack-index write --no-progress <weekly.txt
++	test_maintenance_tasks weekly.txt <<-\EOF
++	pack-refs foreground
++	prefetch
++	loose-objects
++	incremental-repack
++	commit-graph
++	EOF
+ '
+ 
+ test_expect_success 'maintenance.strategy inheritance' '
+@@ -946,29 +968,25 @@ test_expect_success 'maintenance.strategy inheritance' '
+ 	GIT_TRACE2_EVENT="$(pwd)/incremental-weekly.txt" \
+ 		git maintenance run --schedule=weekly --quiet &&
+ 
+-	test_subcommand git commit-graph write --split --reachable \
+-		--no-progress <incremental-hourly.txt &&
+-	test_subcommand ! git prune-packed --quiet <incremental-hourly.txt &&
+-	test_subcommand ! git multi-pack-index write --no-progress \
+-		<incremental-hourly.txt &&
+-	test_subcommand ! git pack-refs --all --prune \
+-		<incremental-hourly.txt &&
+-
+-	test_subcommand git commit-graph write --split --reachable \
+-		--no-progress <incremental-daily.txt &&
+-	test_subcommand git prune-packed --quiet <incremental-daily.txt &&
+-	test_subcommand git multi-pack-index write --no-progress \
+-		<incremental-daily.txt &&
+-	test_subcommand ! git pack-refs --all --prune \
+-		<incremental-daily.txt &&
+-
+-	test_subcommand git commit-graph write --split --reachable \
+-		--no-progress <incremental-weekly.txt &&
+-	test_subcommand git prune-packed --quiet <incremental-weekly.txt &&
+-	test_subcommand git multi-pack-index write --no-progress \
+-		<incremental-weekly.txt &&
+-	test_subcommand git pack-refs --all --prune \
+-		<incremental-weekly.txt &&
++	test_maintenance_tasks incremental-hourly.txt <<-\EOF &&
++	prefetch
++	commit-graph
++	EOF
++
++	test_maintenance_tasks incremental-daily.txt <<-\EOF &&
++	prefetch
++	loose-objects
++	incremental-repack
++	commit-graph
++	EOF
++
++	test_maintenance_tasks incremental-weekly.txt <<-\EOF &&
++	pack-refs foreground
++	prefetch
++	loose-objects
++	incremental-repack
++	commit-graph
++	EOF
+ 
+ 	# Modify defaults
+ 	git config maintenance.commit-graph.schedule daily &&
+@@ -980,30 +998,26 @@ test_expect_success 'maintenance.strategy inheritance' '
+ 	GIT_TRACE2_EVENT="$(pwd)/modified-daily.txt" \
+ 		git maintenance run --schedule=daily --quiet &&
+ 
+-	test_subcommand ! git commit-graph write --split --reachable \
+-		--no-progress <modified-hourly.txt &&
+-	test_subcommand git prune-packed --quiet <modified-hourly.txt &&
+-	test_subcommand ! git multi-pack-index write --no-progress \
+-		<modified-hourly.txt &&
++	test_maintenance_tasks modified-hourly.txt <<-\EOF &&
++	prefetch
++	loose-objects
++	EOF
+ 
+-	test_subcommand git commit-graph write --split --reachable \
+-		--no-progress <modified-daily.txt &&
+-	test_subcommand git prune-packed --quiet <modified-daily.txt &&
+-	test_subcommand ! git multi-pack-index write --no-progress \
+-		<modified-daily.txt
++	test_maintenance_tasks modified-daily.txt <<-\EOF
++	prefetch
++	loose-objects
++	commit-graph
++	EOF
+ '
+ 
+ test_strategy () {
+ 	STRATEGY="$1"
+ 	shift
+ 
+-	cat >expect &&
+ 	rm -f trace2.txt &&
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+ 		git -c maintenance.strategy=$STRATEGY maintenance run --quiet "$@" &&
+-	sed -n 's/{"event":"child_start","sid":"[^/"]*",.*,"argv":\["\(.*\)\"]}/\1/p' <trace2.txt |
+-		sed 's/","/ /g'  >actual
+-	test_cmp expect actual
++	test_maintenance_tasks trace2.txt
+ }
+ 
+ test_expect_success 'maintenance.strategy is respected' '
+@@ -1017,48 +1031,44 @@ test_expect_success 'maintenance.strategy is respected' '
+ 		test_grep "unknown maintenance strategy: .unknown." err &&
+ 
+ 		test_strategy incremental <<-\EOF &&
+-		git pack-refs --all --prune
+-		git reflog expire --all
+-		git gc --quiet --no-detach --skip-foreground-tasks
++		gc foreground
++		gc
+ 		EOF
+ 
+ 		test_strategy incremental --schedule=weekly <<-\EOF &&
+-		git pack-refs --all --prune
+-		git prune-packed --quiet
+-		git multi-pack-index write --no-progress
+-		git multi-pack-index expire --no-progress
+-		git multi-pack-index repack --no-progress --batch-size=1
+-		git commit-graph write --split --reachable --no-progress
++		pack-refs foreground
++		prefetch
++		loose-objects
++		incremental-repack
++		commit-graph
+ 		EOF
+ 
+ 		test_strategy gc <<-\EOF &&
+-		git pack-refs --all --prune
+-		git reflog expire --all
+-		git gc --quiet --no-detach --skip-foreground-tasks
++		gc foreground
++		gc
+ 		EOF
+ 
+ 		test_strategy gc --schedule=weekly <<-\EOF &&
+-		git pack-refs --all --prune
+-		git reflog expire --all
+-		git gc --quiet --no-detach --skip-foreground-tasks
++		gc foreground
++		gc
+ 		EOF
+ 
+ 		test_strategy geometric <<-\EOF &&
+-		git pack-refs --all --prune
+-		git reflog expire --all
+-		git repack -d -l --geometric=2 --quiet --write-midx
+-		git commit-graph write --split --reachable --no-progress
+-		git worktree prune --expire 3.months.ago
+-		git rerere gc
++		pack-refs foreground
++		reflog-expire foreground
++		geometric-repack
++		commit-graph
++		worktree-prune
++		rerere-gc
+ 		EOF
+ 
+ 		test_strategy geometric --schedule=weekly <<-\EOF
+-		git pack-refs --all --prune
+-		git reflog expire --all
+-		git repack -d -l --geometric=2 --quiet --write-midx
+-		git commit-graph write --split --reachable --no-progress
+-		git worktree prune --expire 3.months.ago
+-		git rerere gc
++		pack-refs foreground
++		reflog-expire foreground
++		geometric-repack
++		commit-graph
++		worktree-prune
++		rerere-gc
+ 		EOF
+ 	)
+ '
 
-Range-diff versus v1:
-
- -:  ---------- >  1:  b05988c150 t7900: simplify how we check for maintenance tasks
- 1:  df9ed71c10 !  2:  734d3c6d17 odb: run "pre-auto-gc" hook for all maintenance tasks
-    @@ t/t7900-maintenance.sh: test_expect_success 'geometric repacking honors configur
-     +			git maintenance run --auto 2>/dev/null &&
-     +
-     +		# The successful hook does not inhibit any of the tasks...
-    -+		test_subcommand git reflog expire --all <trace2.txt &&
-    -+		test_subcommand_flex git repack <trace2.txt &&
-    -+		test_subcommand git rerere gc <trace2.txt &&
-    ++		test_maintenance_tasks trace2.txt <<-\EOF &&
-    ++		reflog-expire foreground
-    ++		geometric-repack
-    ++		rerere-gc
-    ++		EOF
-     +		# ... but it must only have been executed a single time.
-     +		test_line_count = 1 hook.log
-     +	)
-    @@ t/t7900-maintenance.sh: test_expect_success 'geometric repacking honors configur
-     +		# is expected to be the only child process being spawned, and
-     +		# it must only run a single time.
-     +		test_grep "child_start.*pre-auto-gc" trace2.txt &&
-    -+		test_subcommand_flex ! git trace2 &&
-    ++		test_maintenance_tasks trace2.txt <<-\EOF &&
-    ++		EOF
-     +		test_line_count = 1 hook.log
-     +	)
-     +'
-    @@ t/t7900-maintenance.sh: test_expect_success 'geometric repacking honors configur
-     +		# is expected to be the only child process being spawned, and
-     +		# it must only run a single time.
-     +		test_grep "child_start.*pre-auto-gc" trace2.txt &&
-    ++		test_maintenance_tasks trace2.txt <<-\EOF &&
-    ++		EOF
-     +		test_subcommand_flex ! git trace2 &&
-     +		test_line_count = 1 hook.log
-     +	)
- 2:  ba358cede1 =  3:  a61f01a1c1 builtin/gc: move worktree and rerere tasks before object optimizations
- 3:  ffbaf71f46 =  4:  3d6ea9927b builtin/gc: extract object database optimizations into separate function
- 4:  7b568dcd0c =  5:  de2c2c084d builtin/gc: make repack arguments self-contained
- 5:  e18465b4b2 =  6:  0b4f6a553d builtin/gc: inline config values specific to the "files" backend
- 6:  4ee5a61e44 =  7:  e231c437ba builtin/gc: introduce object database optimization options
- 7:  2b428d4516 !  8:  b015c35c8a builtin/gc: move geometric repacking into `odb_optimize()`
-    @@ t/t7900-maintenance.sh: test_expect_success 'geometric repacking honors configur
-      	)
-      '
-      
-    -@@ t/t7900-maintenance.sh: test_expect_success 'maintenance.strategy is respected' '
-    - 		test_strategy geometric <<-\EOF &&
-    - 		git pack-refs --all --prune
-    - 		git reflog expire --all
-    --		git repack -d -l --geometric=2 --quiet --write-midx
-    -+		git repack -d -l -q --geometric=2 --write-midx
-    - 		git commit-graph write --split --reachable --no-progress
-    - 		git worktree prune --expire 3.months.ago
-    - 		git rerere gc
-    -@@ t/t7900-maintenance.sh: test_expect_success 'maintenance.strategy is respected' '
-    - 		test_strategy geometric --schedule=weekly <<-\EOF
-    - 		git pack-refs --all --prune
-    - 		git reflog expire --all
-    --		git repack -d -l --geometric=2 --quiet --write-midx
-    -+		git repack -d -l -q --geometric=2 --write-midx
-    - 		git commit-graph write --split --reachable --no-progress
-    - 		git worktree prune --expire 3.months.ago
-    - 		git rerere gc
- 8:  79c3d77210 =  9:  426a06b349 builtin/gc: introduce `odb_optimize_required()`
- 9:  15f65ab0bf = 10:  cfb6014c30 builtin/gc: refactor ODB optimizations to operate on "files" source
-10:  9035d7d679 = 11:  a478e0e0b3 builtin/gc: fix signedness issues in ODB-related functionality
-11:  8fa84c3aa0 = 12:  5383b9027c odb: make optimizations pluggable
-
----
-base-commit: f85a7e662054a7b0d9070e432508831afa214b47
-change-id: 20260612-b4-pks-odb-optimize-3426c57e5c30
+-- 
+2.55.0.313.g8d093f411d.dirty
 
