@@ -1,30 +1,30 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EBD36B07C
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 03:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266DC37FF61
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 03:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783915079; cv=none; b=T5WMesJHt8PXVDYbZ/Je5lPkoqlhupkmp+S7dVy9mE9O4yHxILi2RIl8/BZ/BfmL8aMg8PjZbBOLz+4q4FZ70tx+21etNRxz/l8BhbZ9WsLr+IsDjS6k/VI6B5fDncHVV9lYHUrbYBIYiKtq1t1aRYuRzrDUbCerl3wW4PAZzF8=
+	t=1783915083; cv=none; b=jEKFa2nASDvNdSDH+U/ulv/QXpSWC4qykzyaGs0u2J1cYPjBOr6BrpP1QNksm+p3nQuUjssgpgd9XMEv5MGN6HV6BEH/7sbCJGNUGTSpbU/qT2TZaAar3+awN87bfQqro2k+KCGWmkO5SheRNrxI89fScKIeC+OvPu2nEXbA1sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783915079; c=relaxed/simple;
-	bh=sAPZx9Gckpvfq5xy5fZcTHo9aJoceNju/Lyt6XXmpkM=;
+	s=arc-20240116; t=1783915083; c=relaxed/simple;
+	bh=yMMVR+ouRmQDm8T5aVmzbjGBr3laEiPWRIy5CsJwrLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BSj8yKEL7u5EhpopK2zWFyKYg2ABJ3xoX4KDTjnZly04w7Vdgl7Bft/vnnEPx51PxxJ2BSkorrqQV9Gqq0hcIIx6epUrZGAGGSDpYiKMoqTYwogxXA6gANvIi1ZUkUa7Rc5YqBK26kXJ/Mog1St5uXrSQsls8SW2nr5o4zhtZnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=E7NdI0q6; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=A16BoH+J; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=WsJdesg3nanbLM6t+7Ti99pIwcPDJZWfYt/4avsIetILqlYHgc1p3MYwcSU8GamBBCjiQdOpHtwA5Cf2gbB8ZM9TVY9GDxJIAzhWT6qt+LK6p7Y5D3HmhzULQFG7C/dTp5fWe496mQpnBp8f8eTuX9fyltn4pCrMGadaSck1RwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=RFhNnCCy; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=AYGLc+db; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="E7NdI0q6";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="A16BoH+J"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="RFhNnCCy";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="AYGLc+db"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=E7NdI0q6L7nbh0wDT+wuA1mNn0aYpcFNdfWjcT1WZJxfrbcLLdCaVDSVat11gVr2autX+43+LxdvYSD0011mOHMbfBd7PtA6uyi1Qsa8jXT5Wc44lO/MpCm/rLPvR9aDFaYRR8KgeVNpE622qYf8D1laTXr+BmlX4N/oKy2Qs1NJvA/J6rQSUcPnm7B7T5jKaUtnMuoNKBodjk9gsucjerqBlf037MT908AH1wvNoQ4whzAvJCTpZKrEXn6vwIdaUhsCJTvlN7xTEn2tCpPdoQ+He1qvsGEAV/eDXA5y35YEjv/08+KRs63bHsEds/Kj6ZqteVm6z31HHen1u6k5Ow==; s=purelymail1; d=malon.dev; v=1; bh=sAPZx9Gckpvfq5xy5fZcTHo9aJoceNju/Lyt6XXmpkM=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=A16BoH+J9vAGX3Kc0t57bT72GGJ/gYNd4MeYlmmyxq7CYrd8fX92iyByPqMXx4qugbsWYKCBXSLJiwGvvgXM/MFFwHUDn3W/g9tIBjKNue+2FXFHvJUdIrfPEN2IdvZY0I1KlZ6d/PaTZT6E5oVSIgoGwd9+V8/nMULl0TVvGE2bdRoMsiey01kh4JHe2KFUqoPDn5ROptDd44SM4gzCmqUR5+KB5Cbau5C5K7KlP0Uv2YzwlGsYhxAiJklc6I4o7C10V5jM4ZQQtlJJoprh/7T27mFd1QbEL/RhYc6/ZOq0bLvnhpSZKjP1S+iW2QyEZ8rEgLqUYyfKkLIcjruCCA==; s=purelymail1; d=purelymail.com; v=1; bh=sAPZx9Gckpvfq5xy5fZcTHo9aJoceNju/Lyt6XXmpkM=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=RFhNnCCyRtzobHE8xNwCV5LXvjPrIj7Fyy4D0k0HD8XtekBa9v5u3jrSC0hT0VYJ6wvu82kbsN0UrpICX1rMHzbxkts037EB2t0HSrAHUSp7KSa/hNfOUtNFEbqRJFMBLkBUyy0PJTH0RawJfZOINust0ij+H3ZuHD7ZDOIq3iOZnHOl1drrlcoa04ajcnb3Mh6tpWZxbJYpI09pTTQq00rvyH86OihjSWD0kbOJPbD2lxMpaeuwZ+NfXU3+9kQTKtzBE8cHiZBKaY/Tu8cWC2RwI8TdnajWBwtI4XAq67gq+8HSuCm+nL0BCAv6Du4ueDbg0dwsTfHjwQAa/HDGDg==; s=purelymail1; d=malon.dev; v=1; bh=yMMVR+ouRmQDm8T5aVmzbjGBr3laEiPWRIy5CsJwrLs=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=AYGLc+dbZ0q/QW4Y8CBGDdptYYrjV5gZCfzH2NTmzAEFyi42hAqCjbz9G7hmJ4dvJ6WJFnZrCiu29VlnsFof1AaZedAWxvLZ66GjnJUsbqc9Maq6gdyAIl310b1TS0oB+9aoGfPzmuJQFEGmetkXJA9Sqhip0Kzp28+2K1AsVYj+09sOrFJ2syuD3Lw238LvL6WiT48zPCVIp6InSpPAPirIHVpRpsq2pp23huesDMOlFb8u/beu7lasaUAYdyEShYsDMx2apKmPaKnpR9a8hza47H/eZxIsEZxGwkzuEQ8Ijeb1qgDD81bil9y/sW1uToFQntESBfrM+xN53dcerw==; s=purelymail1; d=purelymail.com; v=1; bh=yMMVR+ouRmQDm8T5aVmzbjGBr3laEiPWRIy5CsJwrLs=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1573664722;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 13 Jul 2026 03:57:56 +0000 (UTC)
+          Mon, 13 Jul 2026 03:57:59 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -34,9 +34,9 @@ Cc: pabloosabaterr@gmail.com,
 	Christian Couder <christian.couder@gmail.com>,
 	Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v11 03/10] environment: move editor_program into repo_config_values
-Date: Mon, 13 Jul 2026 11:57:31 +0800
-Message-ID: <20260713035738.1606138-4-cat@malon.dev>
+Subject: [PATCH v11 04/10] environment: move pager_program into repo_config_values
+Date: Mon, 13 Jul 2026 11:57:32 +0800
+Message-ID: <20260713035738.1606138-5-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713035738.1606138-1-cat@malon.dev>
 References: <20260712111734.1073514-1-cat@malon.dev>
@@ -51,112 +51,137 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-The global variable 'editor_program' holds the path to the user's
-preferred editor. Move 'editor_program' into
-'struct repo_config_values' to continue the libification effort.
+The 'pager_program' variable is currently defined as a file-scoped
+static string in pager.c. Move it into 'struct repo_config_values'.
 
-There have been discussions on whether external programs like
-editors truly need to be configured on a per-repository basis within
-the same process. While a single process might rarely invoke
-different editors, this migration is necessary for two reasons:
+The configuration parsing logic remains strictly within pager.c to
+respect subsystem boundaries. The read/write operations are simply
+redirected to the repository-specific structure using
+'repo_config_values()'. All current callers indeed pass
+'the_repository', so this new enforcement does not harm them.
 
-1. Developers frequently use different toolchains for different
-   projects. Per-repo configuration respects this.
+Similar to the recent editor_program migration, no standalone getter
+is introduced to keep the code minimal. The dynamically allocated
+memory is now managed by 'repo_config_values_clear()'.
 
-2. Moving this string into 'repo_config_values' eliminates mutable
-   global state. As the codebase moves toward becoming a long-running
-   processes, managing multiple repositories concurrently must
-   not overwrite each other's program configurations.
-
-No standalone getter function is introduced. Callers directly access
-the field via 'repo_config_values()'. Heap memory is safely reclaimed
-in 'repo_config_values_clear()'.
+On top of that, fix memory leaks in pager.c while we are at it.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 Signed-off-by: Tian Yuchen <cat@malon.dev>
 ---
- editor.c      | 4 ++--
- environment.c | 7 ++++---
- environment.h | 2 +-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ environment.c |  2 ++
+ environment.h |  1 +
+ pager.c       | 32 +++++++++++++++++++++++---------
+ 3 files changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/editor.c b/editor.c
-index fd174e6a03..0d1cb8768d 100644
---- a/editor.c
-+++ b/editor.c
-@@ -29,8 +29,8 @@ const char *git_editor(void)
- =09const char *editor =3D getenv("GIT_EDITOR");
- =09int terminal_is_dumb =3D is_terminal_dumb();
-=20
--=09if (!editor && editor_program)
--=09=09editor =3D editor_program;
-+=09if (!editor)
-+=09=09editor =3D repo_config_values(the_repository)->editor_program;
- =09if (!editor && !terminal_is_dumb)
- =09=09editor =3D getenv("VISUAL");
- =09if (!editor)
 diff --git a/environment.c b/environment.c
-index 275931c213..a65d575af4 100644
+index a65d575af4..975c9cb9eb 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -55,7 +55,6 @@ int fsync_object_files =3D -1;
- int use_fsync =3D -1;
- enum fsync_method fsync_method =3D FSYNC_METHOD_DEFAULT;
- enum fsync_component fsync_components =3D FSYNC_COMPONENTS_DEFAULT;
--char *editor_program;
- char *askpass_program;
- enum auto_crlf auto_crlf =3D AUTO_CRLF_FALSE;
- enum eol core_eol =3D EOL_UNSET;
-@@ -437,8 +436,8 @@ int git_default_core_config(const char *var, const char=
- *value,
- =09}
-=20
- =09if (!strcmp(var, "core.editor")) {
--=09=09FREE_AND_NULL(editor_program);
--=09=09return git_config_string(&editor_program, var, value);
-+=09=09FREE_AND_NULL(cfg->editor_program);
-+=09=09return git_config_string(&cfg->editor_program, var, value);
- =09}
-=20
- =09if (!strcmp(var, "core.commentchar") ||
-@@ -725,6 +724,7 @@ void repo_config_values_init(struct repo_config_values =
+@@ -725,6 +725,7 @@ void repo_config_values_init(struct repo_config_values =
 *cfg)
- {
  =09cfg->attributes_file =3D NULL;
  =09cfg->excludes_file =3D NULL;
-+=09cfg->editor_program =3D NULL;
+ =09cfg->editor_program =3D NULL;
++=09cfg->pager_program =3D NULL;
  =09cfg->apply_sparse_checkout =3D 0;
  =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
  =09cfg->trust_ctime =3D 1;
-@@ -741,4 +741,5 @@ void repo_config_values_clear(struct repo_config_values=
+@@ -742,4 +743,5 @@ void repo_config_values_clear(struct repo_config_values=
  *cfg)
- {
  =09FREE_AND_NULL(cfg->attributes_file);
  =09FREE_AND_NULL(cfg->excludes_file);
-+=09FREE_AND_NULL(cfg->editor_program);
+ =09FREE_AND_NULL(cfg->editor_program);
++=09FREE_AND_NULL(cfg->pager_program);
  }
 diff --git a/environment.h b/environment.h
-index 4776ccc657..8178ebab76 100644
+index 8178ebab76..39b6691b47 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -91,6 +91,7 @@ struct repo_config_values {
- =09/* section "core" config values */
+@@ -92,6 +92,7 @@ struct repo_config_values {
  =09char *attributes_file;
  =09char *excludes_file;
-+=09char *editor_program;
+ =09char *editor_program;
++=09char *pager_program;
  =09int apply_sparse_checkout;
  =09int trust_ctime;
  =09int check_stat;
-@@ -218,7 +219,6 @@ const char *get_commit_output_encoding(void);
- extern char *git_commit_encoding;
- extern char *git_log_output_encoding;
+diff --git a/pager.c b/pager.c
+index 35b210e048..543ef12936 100644
+--- a/pager.c
++++ b/pager.c
+@@ -5,6 +5,8 @@
+ #include "run-command.h"
+ #include "sigchain.h"
+ #include "alias.h"
++#include "repository.h"
++#include "environment.h"
 =20
--extern char *editor_program;
- extern char *askpass_program;
+ int pager_use_color =3D 1;
 =20
- /*
+@@ -13,7 +15,6 @@ int pager_use_color =3D 1;
+ #endif
+=20
+ static struct child_process pager_process;
+-static char *pager_program;
+ static int old_fd1 =3D -1, old_fd2 =3D -1;
+=20
+ /* Is the value coming back from term_columns() just a guess? */
+@@ -75,10 +76,17 @@ static void wait_for_pager_signal(int signo)
+=20
+ static int core_pager_config(const char *var, const char *value,
+ =09=09=09     const struct config_context *ctx UNUSED,
+-=09=09=09     void *data UNUSED)
++=09=09=09     void *data)
+ {
+-=09if (!strcmp(var, "core.pager"))
+-=09=09return git_config_string(&pager_program, var, value);
++=09struct repository *r =3D data;
++
++=09if (!strcmp(var, "core.pager")) {
++=09=09struct repo_config_values *cfg =3D repo_config_values(r);
++
++=09=09FREE_AND_NULL(cfg->pager_program);
++=09=09return git_config_string(&cfg->pager_program, var, value);
++=09}
++
+ =09return 0;
+ }
+=20
+@@ -91,10 +99,12 @@ const char *git_pager(struct repository *r, int stdout_=
+is_tty)
+=20
+ =09pager =3D getenv("GIT_PAGER");
+ =09if (!pager) {
+-=09=09if (!pager_program)
++=09=09struct repo_config_values *cfg =3D repo_config_values(r);
++
++=09=09if (!cfg->pager_program)
+ =09=09=09read_early_config(r,
+-=09=09=09=09=09  core_pager_config, NULL);
+-=09=09pager =3D pager_program;
++=09=09=09=09=09  core_pager_config, r);
++=09=09pager =3D cfg->pager_program;
+ =09}
+ =09if (!pager)
+ =09=09pager =3D getenv("PAGER");
+@@ -302,7 +312,11 @@ int check_pager_config(struct repository *r, const cha=
+r *cmd)
+=20
+ =09read_early_config(r, pager_command_config, &data);
+=20
+-=09if (data.value)
+-=09=09pager_program =3D data.value;
++=09if (data.value) {
++=09=09struct repo_config_values *cfg =3D repo_config_values(r);
++
++=09=09free(cfg->pager_program);
++=09=09cfg->pager_program =3D data.value;
++=09}
+ =09return data.want;
+ }
 --=20
 2.43.0
 
