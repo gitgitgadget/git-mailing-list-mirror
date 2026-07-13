@@ -1,90 +1,140 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA7313B5B3
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 01:14:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E2C34E75A
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 03:57:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783905267; cv=none; b=oxF1HFjrx3fkqmnefZHPN2es5dYsY405u5V4eNQUe2WTLVHaaUO5RwDrz8R5rNE8uKO3omcL3KAAMRRGU2xlWPyc7tc8iHXTXj2gWlQtPBI08iLndiZBEysWUmJo8XbzXaWNOYLT3e0l33pF7dKqi4BCyYW3Z9dtR5upV2XMwuM=
+	t=1783915070; cv=none; b=dp97RKgAw1TB5UQ2w07UHDc9dANGVGRpvQnTnRkjmKxlgKtT6F1enWYP0SLe+XrNvhDL8VIXd2RIz+u+oSrXuGu8f1Tc3M84iYka13bMveHnzcXOY93u/zhrA9EMgjyenLoSb2cLXaCa0L8VQRCXBV8zKtXzclhQhJ1Dh4lCKLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783905267; c=relaxed/simple;
-	bh=beqLdTAXeQ8ka/VL4nkbKwC0Nk6Wy7Js0Us+/m/HDJM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T5VVf1pL5URiXrwO0+uqE9KuiifBWTPfZj9CAarlsLRhj5J6TrHnZziCSQzpPg3bRsvR7wvWof/D8rsD+kfDVROaJS+//OwZtjsmWgUtEngPJCIKd6udCpIgpGLaiQdNturQjs8r9HE2lK/AfUvjI5XqSII4RGMUlsIcgqlwNPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=bHLno2Yx; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1783915070; c=relaxed/simple;
+	bh=DAWlwSGa5xZ+DvEHf3fpEP+kWCUmZNwzuouN4+/HhK4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GHP3k40PMr6sTJ40PLh0w9zb2X2SaYjsNEagwd4/266I6YxKp6KKqRmulLHiAvSIVrUOFHUCk/DaHe3GaH0xLtgXnbtYaRTrfvcQSGkWdMJ+aiGHv5v/x5MOqQs2PX1FIOwRXf9Q75RueT+jsL/smM3jhrp4tCIc8vG9Uy6TRws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=COgN5ULi; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=KzYeywPP; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="bHLno2Yx"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-81e851aebeeso29786567b3.0
-        for <git@vger.kernel.org>; Sun, 12 Jul 2026 18:14:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1783905265; x=1784510065; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8IGF+oJUp/h32UUkBdhW7BkEGyqQdTLT52x94nVHut4=;
-        b=bHLno2YxIsQ2A7sxCTT4OKemNtYdDfW4xtpsBLZsMSjmGse8EN2BwE8/Y5fEzNjNL6
-         WRTXpUMIUcxKNN1Xo0IYVJcRcFq1vOQmKqkUFyHGPWrq8SVd7G9HrlRYto2IUAyYpytS
-         bi2XuHOWnsdv3eapqRrqWF55yEAFop4ykx2WU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783905265; x=1784510065;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8IGF+oJUp/h32UUkBdhW7BkEGyqQdTLT52x94nVHut4=;
-        b=V0eoygdif8bA1A/jyH/6pEab9ygbv18Hctr33suQoJSJChT/ZlVONoS+qHgklDdher
-         XAf/JuGGzLxmEhHxFnIkZFa/SmxwwDaqf/TZ+wFYrnmWP8xcqzcfuJPEvxj2up/TxlWf
-         gOKIM9zgd0zp5m82KkK9C5WjB9l+NVZjjYJM1pgLiD2VCY6pASlJR2RJP0+NJ+i84YLm
-         Sculw4yaVW98exkyNzSsCjzpgbfp9ryTwKtYc7TBl8fbkDQgakNMYPmJj4Uq3AjKCWl1
-         AfRj3iAyDG/5AWXpUexbe/WkNT8GwXlzk9G9PLxNQALRr7wON6GYOVnMSoHHEhCJgFJG
-         ciSw==
-X-Gm-Message-State: AOJu0YwQdR9e7sk1f7uHRVBipqo9b9OgJUXJvEB46Ie+s5m4ynta1DD8
-	qjoEvLKrpGESA7JN7ClSnlkt+E7zvDLVnuTcIixQQm/zbSs85v++H82vmBKcD7P/GeNG5Bdvh3t
-	r5Lvp8ipVxQ==
-X-Gm-Gg: AfdE7cmMLkqOOXzKJlmvqVTdHJItKi3zr58tppfa46Ap883FvZIUnM1NP1zU1gEwOl1
-	u2nI2ncZHaEWgJaY5WHClboe1YXYlVn3etDYS9R0Zrk2FmuRq93wVxgO/mOoKJP0WsjTEVe5X6w
-	sMUoYoCyQir3zwSkgvespik9AUlKqBPUZ7V1AfOcQT0PUm+EQYP+u7O1ntEZab8s+ODLdZFt0v3
-	yPW7+/xwHDHVQHYJWoHVepoRYxQZd+HpPowZHF3Fb9V9UYKacHCxOnfNy8dEJ8D1YYcoQV+KTpS
-	rUEoNrCF1Oy47WzDeB+CW/QbTJrEfJoKdNDfJytWrPs7LCTZ48OEuH4FS4EnujRB77XxIw2IW6e
-	s7BSSv4RI7OGIfd2PLMG6SCPT3Xt96zFse8zS8+ZFJ4+vwnF8668PGDrYGVzS0kSVLHh8nHwYI3
-	5081Ruh2fwVvysX9p0zydzxQ==
-X-Received: by 2002:a05:690c:670e:b0:80c:550e:7dd3 with SMTP id 00721157ae682-81e900eca6cmr56809827b3.44.1783905265066;
-        Sun, 12 Jul 2026 18:14:25 -0700 (PDT)
-Received: from com-79390 ([12.187.141.7])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-81e6be98397sm103095537b3.6.2026.07.12.18.14.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2026 18:14:24 -0700 (PDT)
-Date: Sun, 12 Jul 2026 18:14:22 -0700
-From: Taylor Blau <ttaylorr@openai.com>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="COgN5ULi";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="KzYeywPP"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=COgN5ULiwznay7YSogxmyufM59RuQ0cA5OMiCk/qAKg7GtuLTJWw7EiA68dFecbZhgqP7VFQRi0Ox/M31dfieVg8oxmT1/yiAP71OrGJrRW+EVm5atgzuuN3dOhmcd+z8SFg0Esq0od1lfTEtbzeLUOHGttts+CK1J5y+xmTfG2ca9Lir8Tem1NVvGIFitPYJnC+0w3d1Z+CRVo2exD7ilP0Z1UzvacfVyWGEx2sKbKgk4MG6AbJnWpEOFnY/ESek2HOFVOSb+t7FlFL2Jupk6tu+2lQOxQUw4ANg3cXowLDubszEhsgxJrDVcpFNWk0gWblbdqU2Vl2asRbUlqAsg==; s=purelymail1; d=malon.dev; v=1; bh=DAWlwSGa5xZ+DvEHf3fpEP+kWCUmZNwzuouN4+/HhK4=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=KzYeywPPsZ+HdVeDmN1a1b+msgD7NzoYF9tUMUkWeSZFiZ/Rp9z1I5QuLd60092rs4KTHWIL5kPPoG2PK4lYeTVbMHo35aNNdH/dQ3itYoaDusMYE9NizrmqbzV4SKVXmDFby88K1gKaTNkmpnHV1im4FR8OJfb9wypvLnWfd1JTanguoGUSphYCpiJlRYc++yU7wjz2LXeo97NnSzKweH7FPyRY4qRv0UVMbJtY9nmSnYi56GCsBwUwKHrXNtubzFaH8awgdZzV0kgFeXsFke5+BzZO21umGNTuwXMHlyL1IEhVVQ6kUhVDFUtc7JzIMvaXtVxAWekW0oTEEx4TEw==; s=purelymail1; d=purelymail.com; v=1; bh=DAWlwSGa5xZ+DvEHf3fpEP+kWCUmZNwzuouN4+/HhK4=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1573664722;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 13 Jul 2026 03:57:45 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] send-pack: introduce a `no-ref-delta` capability
-Message-ID: <alQ77hSJw4VCDBl7@com-79390>
-References: <alQ7U8TOWjhasaWk@com-79390>
+Cc: pabloosabaterr@gmail.com,
+	cirnovskyv@gmail.com,
+	szeder.dev@gmail.com,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v11 00/10]  migrate more variables into repo_config_values
+Date: Mon, 13 Jul 2026 11:57:28 +0800
+Message-ID: <20260713035738.1606138-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260712111734.1073514-1-cat@malon.dev>
+References: <20260712111734.1073514-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alQ7U8TOWjhasaWk@com-79390>
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-On Sun, Jul 12, 2026 at 06:11:47PM -0700, Taylor Blau wrote:
-> This series teaches 'send-pack' to avoid writing `REF_DELTA` entries
-> when the receiving end asks it to.
+Hi everyone,
 
-Hmmph. ISTM that my scripts for sending patches to the list somehow
-broke the Message-ID of the cover letter, so the patches themselves are
-not properly connected to this thread.
+This patch series continues the ongoing libification effort by migrating
+a batch of global configuration variables into struct repo_config_values.
 
-I'll investigate why that is separately, but in the meantime, the actual
-patches may be found beginning here:
+What does this series do:
 
-    https://lore.kernel.org/git/alQ7WKITYDXfiVn9@com-79390/T/#meaec3602fcf2e3c6d05f7248239c1b167a1e6ddf
+infrastructure & strings (commits 1-6):
+Introduce 'repo_config_values_clear()' to manage the lifecycle
+of heap-allocated configuration strings. This infrastructure is utilized
+to migrate string variables, including 'excludes_file', 'apply' whitespace
+configs, and external programs including 'editor', 'pager', 'askpass'.
 
-Thanks,
-Taylor
+enums (commits 7-9):
+Migrate enumerations 'push_default', 'autorebase', and
+'object_creation_mode'. Care was taken to make these types available
+to the configuration structure without triggering circular header
+dependencies.
+
+edit comment (commit 10):
+Adjust the comment for config_values_private_ in repository.h.
+
+RFC:
+
+Commit 3~5. Is it really necessary to migrate _program variables?
+https://lore.kernel.org/git/8e657184-ee0b-453a-9f2d-a98080d3582e@gmail.com/
+
+Commit 6~9. Previous related discussions on 'git_branch_track'.
+https://lore.kernel.org/git/CAD=3Df0L-mPX+KECUjXk-WBzEbTP7wCa8sB56GySQT0yh9=
+mfUOWw@mail.gmail.com/
+
+Note:
+
+Since a new getter 'repo_excludes_file()' is introduced, as previously
+promised, once it is finally merged into 'master', there will be a patch to
+update and squash the comments.
+
+Similarly, I've noticed that the classification and sorting of variables in
+'repo_config_values' don't seem to be correct. There will also be a patch
+to fix this, and I think it will form a commit series along with the commen=
+t
+patch?
+
+Changes since v10:
+
+ - use repo_config_values *cfg to avoid multiple calls to
+ repo_config_values() and avoid overly long lines.
+
+ - drop the extern declarations for askpass_program.
+
+ - in the commit message of pager_program migration, mention that the
+ new assertion is fine since current callers pass the_repository only.=20
+
+ - add FREE_AND_NULL()s before repo_config_get_strings() calls.
+
+ - create a new commit to adjust the comment for config_values_private_
+ since it was no longer true.
+
+Special thanks to Pablo and Junio!
+
+Tian Yuchen (10):
+  repository: introduce repo_config_values_clear()
+  environment: move excludes_file into repo_config_values
+  environment: move editor_program into repo_config_values
+  environment: move pager_program into repo_config_values
+  environment: move askpass_program into repo_config_values
+  environment: migrate apply_default_whitespace and
+    apply_default_ignorewhitespace
+  environment: move push_default into repo_config_values
+  environment: move autorebase into repo_config_values
+  environment: move object_creation_mode into repo_config_values
+  repository: adjust the comment of config_values_private_
+
+ apply.c        | 28 ++++++++++++------
+ branch.c       |  2 +-
+ builtin/push.c | 10 ++++---
+ dir.c          |  4 +--
+ editor.c       |  4 +--
+ environment.c  | 76 ++++++++++++++++++++++++++++++++-----------------
+ environment.h  | 77 ++++++++++++++++++++++++++++++--------------------
+ object-file.c  |  3 +-
+ pager.c        | 32 +++++++++++++++------
+ prompt.c       |  3 +-
+ remote.c       |  2 +-
+ repository.c   |  1 +
+ repository.h   |  2 +-
+ 13 files changed, 158 insertions(+), 86 deletions(-)
+
+--=20
+2.43.0
+
