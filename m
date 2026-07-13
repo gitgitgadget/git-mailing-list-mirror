@@ -1,133 +1,130 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534B631A572
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:39:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D040C439006
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783960790; cv=none; b=UpG2OKxIwl52MEhoTYHstjRL87rdlZo5X9Rput34QJKyUVMwg4NaA73E1j9jmjVDOg1g/emM85Rovac88CyOrg2rqRSES8faW8sn+e5hijM54th+Nr28R2hXO1OaOTpvqsnNKK21BPlSRmDTfiVn7Zj2L69iNotuJhyj3XhMznQ=
+	t=1783960797; cv=none; b=l8R4spXMTuYAJImP78UN1UsTvY593ziY2brH6HXoI7qF5iYs+6dm380pdwhrylUJxw30G1Iio02SvLYsgY+foo6IWdwrF185gr8Anz3FbZSLq1PLW1uQzT5hPOl11HBuymye1WBb4onW5SL7Ky9Qiv/lxuFOpWAGiQ9Q3KsrvYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783960790; c=relaxed/simple;
-	bh=5dD+Ncg3fI60Wv6RQeI/mNCFdTNW6XniT8QUdrFIQeM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JWv4nLZo1JhFKbtkxp+1cVCDWLdVdBltr69ZA8iHORu6eXOmEQL9t94NRH/Ti+SZOHmVyPO5UDrY0/kUdmtmwrbxvqoy34YyTFMf5vOdTU4yQ+I5wGaRY1tMe1FoCQCN9KDOx0GY3LIopEf+GVdegECI7EDWSq6wwn1Po4tclFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dHkId5No; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xm707ooI; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1783960797; c=relaxed/simple;
+	bh=sjgxKRthNhIVJh1hp3CusUttM1sa/opX6zd8UqLSVx0=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=dpsmYlakv4goWQxf2shMWDQ7NIw+xBAMP4OTHsHpnvMH9GeV0qjb7xI+BJuZxXWVMRoa9GJqtXTpccvjRrNhOvuu1WT+pLCzmXcfAyFpdkc3k0TZ7zf3fKF/uCTcyyjzTVqKQweBn+R47J11No48zdw2+2piIFmGsGI/7hvrYZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9K0NhS8; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dHkId5No";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xm707ooI"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5F0DAEC02CF;
-	Mon, 13 Jul 2026 12:39:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 13 Jul 2026 12:39:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783960788; x=1784047188; bh=2pjA2ZZWnp
-	hMxHzmvyNnvL8PNcsM436Lqto5nJbyfuA=; b=dHkId5NoDYOpUpMftlALyVs2q0
-	ncrQK8Rtf21Yk8Pva3Fis0kMis/UqBKdCmZZp4ZSJS1qH0ohJLMVRFJYvBOoCSdo
-	CTiUZYhjIJP1byEj8NTxR8I9nE8b33kVRBFNTlUR3XS0wu34bkCgGrTlhKtT9TvB
-	Nc240HYRoKtCG1VpfvHcPpJLWygKi9990V0mGEsC4oDFyLpmIfQy10wbfnZUjRDH
-	LmQ3T9mxt+kciiia6NMgSTkxjb+Ls9qAS79QZTtSH5cwEBM2T9n1cloqx/OzLWid
-	XN0ggIh8+V5gqvb4/Hv4SfpEKRLof0/vl2I3fmZjLakudWQ0Lmnx/9M3+3FA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783960788; x=1784047188; bh=2pjA2ZZWnphMxHzmvyNnvL8PNcsM436Lqto
-	5nJbyfuA=; b=Xm707ooI0YAsG6OenftHGTJPg9mLgs0avdT/BX9IEF1DPNYG1vU
-	JoMhtpeyc9Qeq9czSG3Kziqtbj5ngO7RraIskWS/d4PweEfowaWrY1H23FkTWyIq
-	PpConBeWZDEl0eIu6P8LJ/GyC4nEfo3Sbw9+uRMgUb0N27Hv7QuALWurD+UMw5KL
-	hmMhUqewpo5+jn0XRm3QOAVZwK+JbNNjHQ+hsg6QOQ2yRf7av3j2mzYmaeVveQvq
-	4fBXF5l/D0osmZLMf6G76qWWr843d8TNSTLp31/9/642ZC2vNCHMPEiJsub9tE3G
-	0nJrF7t7a7v0GHoG6WiJYXJMp/pSYBTHjmg==
-X-ME-Sender: <xms:1BRVakExPwk5GAqu_PkqziUecbmiVcHCSJkkmcyrLpjWrHjMzMdXKg>
-    <xme:1BRVav4-yK7amNvpUfS0JWa-i6ngPqNGLUjJMsJJdG5TbDLrtJ3kTaUVGKsWL3aZI
-    c9qwg_BSNhuxj911hwQPcbVmZ8b6v2eCtlLRsAia5_uT_4taHJtMg>
-X-ME-Received: <xmr:1BRVahzbIDHw7D4Osj9eHo1QIS7jk-YB86fpM_bGf3dnM2FohAS4Dy8MNRw9gdCsMOCo4OCMxIdcemcD4zIbBSMyv7VkCEP7Ywtsnhk>
-X-ME-Proxy-Cause: dmFkZTEvW8Utf0RCtDmmLS73arfXWp21xNekA85b964ZvdzPO6rnYnYz7pVqQby1fZuvJu
-    puJW60rKD2T0KXYdUOdH4jQrDpaeiJQgLcyNzxn9Kqbc9jLn+yzlFTl5s+E5M7rWcW3uIn
-    PbQoFfI53I0Ir+LzpXHtXiQgWCnhsPnr9s7Gj4CUooLuy1/SXMvowrZikwPdVbFMVd4WNr
-    h1erWK2dr4GbqXOSeAY/e3Gq7JafA2lComf2I++fJ4nehLVXTMhoKSEFd5EDOQLF6wx33W
-    chF6Ry8KiKKJ2x7mAjbmy3VgQjGriL6USZTBst14oEk+dMUR3LN34KN9hLlZMe4tStIwMQ
-    pRDxa1BIUSkd/BLfIqxBwSoCNgXb8eLb9n+87vIJmxjOt+jCbNNZX3AwlkQne3NBNPTXdP
-    T8aJGtBHeyNKYisU/elnnPyFBY25JJ2qh5LxqI6LbsCGnkqQYsO9BFUAwzd8eJlAYtu12A
-    xp74FhdNcttdvjqlRPvYU6H2Fseox+j/84kU6oMhHhkfIW3gMI1RdbiqxVcy79022wPH1M
-    oG7C3YZPdqhmIYpDyUB81vZrycmZ6OYXFZKNfGAi+nBwMmt8j2OcfxJRO5EPTA9rSB/rhQ
-    9JrwvZGkjNOSEV3a95H8D5yKlwk1Epg5S+jM393AnY9Xa/UkZLk4Wjktwp1w
-X-ME-Proxy: <xmx:1BRVamMoNcMVF8uZFCA3DXn8ZkWJhNrzjPyW9s4Vr6rTtNXmr8cTPg>
-    <xmx:1BRVavlTr3bzXxIUb1C4uDRbKzsC-fptMrWgMeJZMtCYegF49L0qbA>
-    <xmx:1BRVajQtRncd2E72KF-VWD6gcj7x3ZDOFJqv5R-9tWBl54dxehgamg>
-    <xmx:1BRVamXzdGLcHj6cDRPzXG38nyX6xJpur8pRpyEz3bFrqQ_FI0XRng>
-    <xmx:1BRVare9YhJy6q3_9uS2EzjjYJNAy75ik2qA5hKWTM2zc4562V0ndOwS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 12:39:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  pabloosabaterr@gmail.com,  cirnovskyv@gmail.com,
-  szeder.dev@gmail.com,  Christian Couder <christian.couder@gmail.com>,
-  Ayush Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
- <belkid98@gmail.com>
-Subject: Re: [PATCH v11 06/10] environment: migrate apply_default_whitespace
- and apply_default_ignorewhitespace
-In-Reply-To: <20260713035738.1606138-7-cat@malon.dev> (Tian Yuchen's message
-	of "Mon, 13 Jul 2026 11:57:34 +0800")
-References: <20260712111734.1073514-1-cat@malon.dev>
-	<20260713035738.1606138-1-cat@malon.dev>
-	<20260713035738.1606138-7-cat@malon.dev>
-Date: Mon, 13 Jul 2026 09:39:46 -0700
-Message-ID: <xmqqa4ruyhbh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9K0NhS8"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-493c19bad03so30909645e9.2
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 09:39:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783960793; x=1784565593; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:reply-to:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=rUy9eNG8i8pbnsstLruukP7VNt05PUytnLscmHlguUA=;
+        b=P9K0NhS86HEVM9RIVdPtB4gKCm0rwyObLuNl2Nw51bvXzHcTX29glLtEiPWGXCBbo1
+         3nrcAypjbuk4ahcLbTSL7wjPCcqbGRJXorIDlM9l0Fg25+z84yJBI/RL9/PhBkaDrKUW
+         +lsCkMOQv0sefeBrcwm732XPJ3j8+2ArccehDWm3gH5rUuUDVgLy0eVQEJiAwv4P40pa
+         mugOqgbuz/62Pn3qbBueU/RuFrafbvv93JwHcp1bg7Me8NKgAGUC3s+7kcwTJE7SGCig
+         8xGp6vI5SLzZK8qOYCRhp6oYQlWVBgNWG5n2R5IYCj/Cawz+aVIdnoQP2uTsRfZrfBtq
+         aw5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783960793; x=1784565593;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:reply-to:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rUy9eNG8i8pbnsstLruukP7VNt05PUytnLscmHlguUA=;
+        b=Nn7gjLhmXdmXRVchtkc4XOwNP2yY3HZZP+Pyyqfs2iweWfEvNgb4YooA/nXRFySu40
+         zQoNsjZ1sgMnb43k9nLIOd1f36lNmJl/5buCbc4d383bkumc3CEXVxM2Wg8lOFqN4st2
+         2CpIfiPDqu0F0UyhMLMVo0fmEfUdaODR9admNM4w/RoHgGz8KNXGRLFya2velVkuuyQs
+         FDg5H0kMQbwfl4DmH7nXNemPYk1gHgommqfwr4UWADjl9GO7Qj5QiZi0jMcuh26z2jR8
+         H2LjA2cVRp6ltM2+BH126vDImJ9OCcr1sFERl8x5W8vbMGuhi24kSm7SZH2LP7GoI/mo
+         m0pg==
+X-Forwarded-Encrypted: i=1; AHgh+Rqdq4EHlul8Ms6ZhxIL90s1MiousGoEmsgmHok3sIQkcv3MJp8Tsb2gSXAwZLVZ2y6CnnQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyhs+kdc+wptkFLL5YjGFwzkpFwXJsSmWZBlAsGkDgBfJDjqI+v
+	waiBOgtRyqJtAXZWl/qXrYiau6jiRvFxcE/Z+mSspnCNZ1Euuep1J3ti
+X-Gm-Gg: AfdE7clDEDDJ28/9TTdBAdjnGRhFhXaORkPz/MeCr6CWJhxd6eU4MwC3hyTgEAmL8+p
+	gXD/L9DqCo0v3ucyXng1QDcLWGWf4wuEc4kJy0mTeA7pL5RRFsUvv+BI+Xh4dfrCeqrEaYguWvb
+	nlli3yi+ZpJYjUq8RsnJIydO6XHarf6RJ3Pd6HDiHZVU7rMwNr2tvVm9D7gjBJASrerUpxmkn7g
+	rHeZS+7xN/vlQcW73+TJ05KMIPOK3xE78hKyPqhi3IPUcSp6KyvPPjxLdAaMc/iVTOr3/Iu7+Du
+	UKbJlorjJLIKMZ8D/o2r1xXDNN9CYrcWeRHaJ6vKHSNSxwViT/ah7/rxAX740zvCoQ1cfP7JaPw
+	+TkJEl9BAwU/2Q5gYmWF/KCPbupvSy0irYYiJPwN/QRUZkQe3j8vGfOrwhliY5KYaptDjWW79a5
+	q4/2veNhgGNobOMX9cC4a33GZVoHTi0WiW3HjBKAO5bjYNuc4jE2nMTAosHPuuOubEZgxXeWM1
+X-Received: by 2002:a05:600c:4708:b0:492:67df:3dfa with SMTP id 5b1f17b1804b1-493f883a7ffmr100280125e9.34.1783960792894;
+        Mon, 13 Jul 2026 09:39:52 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:79cf:bdf1:be6e:e3d6? ([2a0a:ef40:69a:b801:79cf:bdf1:be6e:e3d6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4950873270esm7379055e9.6.2026.07.13.09.39.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jul 2026 09:39:52 -0700 (PDT)
+Message-ID: <279e6d69-191b-437a-b1b1-ecd879343f3d@gmail.com>
+Date: Mon, 13 Jul 2026 17:39:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 5/7] branch: add --delete-merged <branch>
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+Reply-To: phillip.wood@dunelm.org.uk
+References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
+ <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+ <a84c555d99c98abcd4618833c14fa35b191fbda2.1782338106.git.gitgitgadget@gmail.com>
+ <e35f1268-2518-4a44-9c7c-28ba13ca7b7b@gmail.com>
+ <CAHwyqnU0ifHu0+GfMR9GqWKgFrTOyQn-FbUH0wTm_07nCa26tA@mail.gmail.com>
+ <CAHwyqnWspUTSnqmkMyXtWuAnENDSzrRLhhUR=Ljtt1xer3tphA@mail.gmail.com>
+ <5212d968-6121-466c-8225-36b4bad6b211@gmail.com>
+Content-Language: en-US
+In-Reply-To: <5212d968-6121-466c-8225-36b4bad6b211@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Tian Yuchen <cat@malon.dev> writes:
+Hi Harald
 
-> Subject: Re: [PATCH v11 06/10] environment: migrate apply_default_whitespace and apply_default_ignorewhitespace
+On 13/07/2026 16:39, Phillip Wood wrote:
+> On 11/07/2026 20:36, Harald Nordgren wrote:
+>>
+>> Digging more into this, probably the most elegant solution is to
+>> replace mainline with main, but then also do this:
+>>
+>>      git config branch.main.pushRemote origin
+>>
+>> This exposes something that I don't love about this feature,
+> 
+> by "this feature" do you mean "git branch --delete-merged"?
+> 
+>> which is
+>> that when using a pushDefault (like we do in the tests with 'git
+>> config remote.pushDefault fork') if not adding a special case for the
+>> main/master branch (like 'git config branch.main.pushRemote origin'),
+>> then it will get cleaned up as a forked branch.
+> 
+> Oh, so because the default push remote is not "origin" we need to 
+> override that for the branches that we do push to "origin". That's a 
+> pain, but even if we did add a special case for the default branch, it 
+> would not protect other branches like "next" and "seen".
 
-Are there patches 7..10/10 posted somewhere else?  I didn't see them
-in the thread (neither did "b4").
+Thinking about this a bit more, rather than protecting branches where 
+$branch@{push} == $branch@{upstream}, perhaps we should be protecting 
+branches that are merged into their upstream but
 
->  
-> -static void git_apply_config(void)
-> +static void git_apply_config(struct repository *repo)
->  {
-> -	repo_config_get_string(the_repository, "apply.whitespace", &apply_default_whitespace);
-> -	repo_config_get_string(the_repository, "apply.ignorewhitespace", &apply_default_ignorewhitespace);
-> -	repo_config(the_repository, git_xmerge_config, NULL);
-> +	struct repo_config_values *cfg = repo_config_values(repo);
-> +
-> +	FREE_AND_NULL(cfg->apply_default_whitespace);
-> +	repo_config_get_string(repo, "apply.whitespace",
-> +			       &cfg->apply_default_whitespace);
-> +	FREE_AND_NULL(cfg->apply_default_ignorewhitespace);
-> +	repo_config_get_string(repo, "apply.ignorewhitespace",
-> +			       &cfg->apply_default_ignorewhitespace);
-> +	repo_config(repo, git_xmerge_config, NULL);
->  }
+     git push branch.$branch.remote $branch
 
-OK.
+would update $branch@{upstream}. So we'd apply the push refspec to the 
+branch name, then apply the fetch refspec to that and check the result 
+did not match the name of the upstream branch.
 
->  static int parse_whitespace_option(struct apply_state *state, const char *option)
-> @@ -126,10 +132,15 @@ int init_apply_state(struct apply_state *state,
->  	strset_init(&state->kept_symlinks);
->  	strbuf_init(&state->root, 0);
->  
-> -	git_apply_config();
-> -	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
-> +	git_apply_config(repo);
-> +
-> +	struct repo_config_values *cfg = repo_config_values(repo);
+Does that make sense?
 
-Doesn't "-Wdeclaration-after-statement" complain on this, declaring cfg
-after calling "git_apply_config(repo)" on the line before?
+Thanks
+
+Phillip
 
