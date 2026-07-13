@@ -1,130 +1,216 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D040C439006
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7A943B6EB
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 16:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783960797; cv=none; b=l8R4spXMTuYAJImP78UN1UsTvY593ziY2brH6HXoI7qF5iYs+6dm380pdwhrylUJxw30G1Iio02SvLYsgY+foo6IWdwrF185gr8Anz3FbZSLq1PLW1uQzT5hPOl11HBuymye1WBb4onW5SL7Ky9Qiv/lxuFOpWAGiQ9Q3KsrvYc=
+	t=1783961050; cv=none; b=Se/llQn+lRo8ET2g7okrhzlWN8PfFAhbCYNUR+wY4dWZdJBR+E/aaNksRco+Zve5txIufa6FxQJPjDJeDi+6+Hxh1fE3iCF5Ybps+sPcTwVXV37NxHI9y3DNwf1FU8Q5qaRCHF6uDCbTrSmEeUYMNpWYT6/ihmb/bpbWrePQAus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783960797; c=relaxed/simple;
-	bh=sjgxKRthNhIVJh1hp3CusUttM1sa/opX6zd8UqLSVx0=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dpsmYlakv4goWQxf2shMWDQ7NIw+xBAMP4OTHsHpnvMH9GeV0qjb7xI+BJuZxXWVMRoa9GJqtXTpccvjRrNhOvuu1WT+pLCzmXcfAyFpdkc3k0TZ7zf3fKF/uCTcyyjzTVqKQweBn+R47J11No48zdw2+2piIFmGsGI/7hvrYZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9K0NhS8; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1783961050; c=relaxed/simple;
+	bh=K6dSdSJaFEmhHwc5c3B6OnInMh3DblNdUn40wxV6RLU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=N0N7/s2sjYBUBB3+UDCaLbDTZl20StEqZUITZNtq9w2TbbMg6K6NBB594kOmaJwI1vJB3E83PoRpK3nZYW0M40nrwvWhejTBp9ECNWprcZxYp9eRbKZKlFKOoM98dE8HCaktDiGqK41hHkwZ4ILRvFPNCVkeEypSWHNNPjWXsWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W79hLpIS; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9K0NhS8"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-493c19bad03so30909645e9.2
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 09:39:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W79hLpIS"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-493bf73ec2aso23490535e9.2
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 09:44:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783960793; x=1784565593; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:reply-to:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=rUy9eNG8i8pbnsstLruukP7VNt05PUytnLscmHlguUA=;
-        b=P9K0NhS86HEVM9RIVdPtB4gKCm0rwyObLuNl2Nw51bvXzHcTX29glLtEiPWGXCBbo1
-         3nrcAypjbuk4ahcLbTSL7wjPCcqbGRJXorIDlM9l0Fg25+z84yJBI/RL9/PhBkaDrKUW
-         +lsCkMOQv0sefeBrcwm732XPJ3j8+2ArccehDWm3gH5rUuUDVgLy0eVQEJiAwv4P40pa
-         mugOqgbuz/62Pn3qbBueU/RuFrafbvv93JwHcp1bg7Me8NKgAGUC3s+7kcwTJE7SGCig
-         8xGp6vI5SLzZK8qOYCRhp6oYQlWVBgNWG5n2R5IYCj/Cawz+aVIdnoQP2uTsRfZrfBtq
-         aw5w==
+        d=gmail.com; s=20251104; t=1783961047; x=1784565847; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gKAEihuGdZsACZ5emAdiZM1GeqAeWEYJHNDuR7Ej5m4=;
+        b=W79hLpIScJ+crAq00CVTi+uK8h5Kqz1tJohkp8+mQmTyc6xa7VFlX4tKLZy+9WHF01
+         o51sxuhC3ohymCIn9r2p/hNhes70BJSTiMSm7fk2h4w5XFEQ5OGOPNDGMMt9Vfq8cevL
+         /mp+tLa7lvqtOSHPjJNd7B9xud+ZcHKWa+Z4aRnSk+awMUUWpX7WW1iLeCiD+sLOtoKV
+         GAQ0g3uDOZr+zOB0XrqjkIDn4bZ8nDkXjKrrVzP65pIYeyLzPeEV5WmvyaN59WyKSFJz
+         B1Ou/D/hIKoG16l7fQ5kWnPeqpNCvd5iNnhRzkkk3jaaDE8yuNTGBBFb+U6IuUHnE/fY
+         0Vsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783960793; x=1784565593;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:reply-to:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=rUy9eNG8i8pbnsstLruukP7VNt05PUytnLscmHlguUA=;
-        b=Nn7gjLhmXdmXRVchtkc4XOwNP2yY3HZZP+Pyyqfs2iweWfEvNgb4YooA/nXRFySu40
-         zQoNsjZ1sgMnb43k9nLIOd1f36lNmJl/5buCbc4d383bkumc3CEXVxM2Wg8lOFqN4st2
-         2CpIfiPDqu0F0UyhMLMVo0fmEfUdaODR9admNM4w/RoHgGz8KNXGRLFya2velVkuuyQs
-         FDg5H0kMQbwfl4DmH7nXNemPYk1gHgommqfwr4UWADjl9GO7Qj5QiZi0jMcuh26z2jR8
-         H2LjA2cVRp6ltM2+BH126vDImJ9OCcr1sFERl8x5W8vbMGuhi24kSm7SZH2LP7GoI/mo
-         m0pg==
-X-Forwarded-Encrypted: i=1; AHgh+Rqdq4EHlul8Ms6ZhxIL90s1MiousGoEmsgmHok3sIQkcv3MJp8Tsb2gSXAwZLVZ2y6CnnQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyhs+kdc+wptkFLL5YjGFwzkpFwXJsSmWZBlAsGkDgBfJDjqI+v
-	waiBOgtRyqJtAXZWl/qXrYiau6jiRvFxcE/Z+mSspnCNZ1Euuep1J3ti
-X-Gm-Gg: AfdE7clDEDDJ28/9TTdBAdjnGRhFhXaORkPz/MeCr6CWJhxd6eU4MwC3hyTgEAmL8+p
-	gXD/L9DqCo0v3ucyXng1QDcLWGWf4wuEc4kJy0mTeA7pL5RRFsUvv+BI+Xh4dfrCeqrEaYguWvb
-	nlli3yi+ZpJYjUq8RsnJIydO6XHarf6RJ3Pd6HDiHZVU7rMwNr2tvVm9D7gjBJASrerUpxmkn7g
-	rHeZS+7xN/vlQcW73+TJ05KMIPOK3xE78hKyPqhi3IPUcSp6KyvPPjxLdAaMc/iVTOr3/Iu7+Du
-	UKbJlorjJLIKMZ8D/o2r1xXDNN9CYrcWeRHaJ6vKHSNSxwViT/ah7/rxAX740zvCoQ1cfP7JaPw
-	+TkJEl9BAwU/2Q5gYmWF/KCPbupvSy0irYYiJPwN/QRUZkQe3j8vGfOrwhliY5KYaptDjWW79a5
-	q4/2veNhgGNobOMX9cC4a33GZVoHTi0WiW3HjBKAO5bjYNuc4jE2nMTAosHPuuOubEZgxXeWM1
-X-Received: by 2002:a05:600c:4708:b0:492:67df:3dfa with SMTP id 5b1f17b1804b1-493f883a7ffmr100280125e9.34.1783960792894;
-        Mon, 13 Jul 2026 09:39:52 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:79cf:bdf1:be6e:e3d6? ([2a0a:ef40:69a:b801:79cf:bdf1:be6e:e3d6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4950873270esm7379055e9.6.2026.07.13.09.39.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2026 09:39:52 -0700 (PDT)
-Message-ID: <279e6d69-191b-437a-b1b1-ecd879343f3d@gmail.com>
-Date: Mon, 13 Jul 2026 17:39:56 +0100
+        d=1e100.net; s=20251104; t=1783961047; x=1784565847;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gKAEihuGdZsACZ5emAdiZM1GeqAeWEYJHNDuR7Ej5m4=;
+        b=PGtdDqXI0Ih8frQwT87REMEqyZ+0Jw2/iSae8zFhDxOk1/mwfRknayUxFUPqwZRM3p
+         P9I4aXSuRxiMJtp5J4VQ2+ZV8ixPHKaJnSmx5hvvk8SOysXMzBLdsTpi4f1bXNZtjrAM
+         UuQvchgiMRVSVR/DuxzWrTG8NSuBEZHmUa+IzgN3O9RJcsiSI3S4qKeT++KEGfRI25T8
+         K5rHdJey5prA+9cHkUfRo47gp9pjHNNctQw6nRb7vtastBbuvl/pJCzmubqAGXGFybIy
+         tFQlYsgevO4JkdsY6oz6+SxCAcQuSdyfC3H6zcBcJiBOW7AJbHohWymUvHUgaqReY/aw
+         MeXg==
+X-Gm-Message-State: AOJu0Yxgm2rQs8viX/952pYOjdwDH6SE4ypiiDPieLVKcxe7a1/584qx
+	1EkN+l1BrHkQQ3yO9toJo2umnG7Ti1keTD+M6xH5sC+DLfh7AWkPHBa65yTA7HHV
+X-Gm-Gg: AfdE7cmE0Zfkb3HiXtVxWoKNQLidEIVNY3P8jPiC340wWCPSAM57JDPf84jAyL6DGdH
+	+IdQePC7kaYrdCH2dY1mKutuBB9IbvxbMkFouv7PfeIJJPFI7dRPhG+lhJfeLYxbQXQB4DWP80p
+	v9QtxH5kxIsg+K8yZF69VgpWezEIhl0CMJSfvERyARnDtf+yI32WtI/L7ogekxox7LWLQRcLEom
+	JfWL0Vdvayl0IFSAMcqCF5h+/WStRLzVZd4ZngSAvOojcVTUGNZhoX+t9wu+oLEnAx807xxdY2K
+	qF4jFMi1Gj/TEZX5dmwLLKBanpRbTZBRfDz/E7dBe95SyoXO5hObkZymLEZeqp/n7THzcrmUMdm
+	iOVi/QxuM1ue3UQt+enIX1+b9sSKN9H6WXG0LQoJXth+XWyiJYw/71vDKVGuPp4ZDsegIJj2k6w
+	v7PNG/hjBYdieKsMtva1lL5wqsXxIrnyVT/Ab6Ny0erCpz5uoqGWeE/Rfee0HWz1+Vms71RcuxJ
+	v5HfXWbSGgqAodxWKBVs+5YYgVOJirak4VL/pWGPNawabKL1UEBYjr89nmaGzmI9kzolWGzNzJX
+	Ah5xd/roWpXj7QwZoIEB9r4J6dssT55Fom8y1GPHe8CMjFwrHfCo1QnUs1CZ2F0qihFT6AZeaAO
+	b4Xsa/75YyA==
+X-Received: by 2002:a05:600c:4746:b0:493:e034:a3b5 with SMTP id 5b1f17b1804b1-493f8818cb0mr113020615e9.24.1783961047460;
+        Mon, 13 Jul 2026 09:44:07 -0700 (PDT)
+Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f464a96fdsm653768f8f.24.2026.07.13.09.44.06
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 13 Jul 2026 09:44:07 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: pabloosabaterr@gmail.com,
+	ayu.chandekar@gmail.com,
+	chandrapratap3519@gmail.com,
+	christian.couder@gmail.com,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	krka@spotify.com,
+	mroik@delayed.space,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk,
+	siddharthasthana31@gmail.com
+Subject: [PATCH v11 0/7] graph: indent visual roots in graph
+Date: Mon, 13 Jul 2026 18:43:57 +0200
+Message-ID: <20260713-ps-pre-commit-indent-v11-0-dcb65bc4ba99@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260713-ps-pre-commit-indent-v10-0-82ddab26bc96@gmail.com>
+References: <20260713-ps-pre-commit-indent-v10-0-82ddab26bc96@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 5/7] branch: add --delete-merged <branch>
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
-Reply-To: phillip.wood@dunelm.org.uk
-References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
- <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
- <a84c555d99c98abcd4618833c14fa35b191fbda2.1782338106.git.gitgitgadget@gmail.com>
- <e35f1268-2518-4a44-9c7c-28ba13ca7b7b@gmail.com>
- <CAHwyqnU0ifHu0+GfMR9GqWKgFrTOyQn-FbUH0wTm_07nCa26tA@mail.gmail.com>
- <CAHwyqnWspUTSnqmkMyXtWuAnENDSzrRLhhUR=Ljtt1xer3tphA@mail.gmail.com>
- <5212d968-6121-466c-8225-36b4bad6b211@gmail.com>
-Content-Language: en-US
-In-Reply-To: <5212d968-6121-466c-8225-36b4bad6b211@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260612-ps-pre-commit-indent-39ca72816382
 Content-Transfer-Encoding: 8bit
 
-Hi Harald
+When rendering a graph, if the history contains multiple "visual roots",
+actual roots or commits that look like roots (i.e. have their parents
+filtered out) can end up being vertically adjacent to unrelated commits,
+falsely appearing to be related.
 
-On 13/07/2026 16:39, Phillip Wood wrote:
-> On 11/07/2026 20:36, Harald Nordgren wrote:
->>
->> Digging more into this, probably the most elegant solution is to
->> replace mainline with main, but then also do this:
->>
->>      git config branch.main.pushRemote origin
->>
->> This exposes something that I don't love about this feature,
-> 
-> by "this feature" do you mean "git branch --delete-merged"?
-> 
->> which is
->> that when using a pushDefault (like we do in the tests with 'git
->> config remote.pushDefault fork') if not adding a special case for the
->> main/master branch (like 'git config branch.main.pushRemote origin'),
->> then it will get cleaned up as a forked branch.
-> 
-> Oh, so because the default push remote is not "origin" we need to 
-> override that for the branches that we do push to "origin". That's a 
-> pain, but even if we did add a special case for the default branch, it 
-> would not protect other branches like "next" and "seen".
+A fix for this issue was already attempted [1] a while ago.
 
-Thinking about this a bit more, rather than protecting branches where 
-$branch@{push} == $branch@{upstream}, perhaps we should be protecting 
-branches that are merged into their upstream but
+This series adds indentation to the visual root commits, so they cannot be
+vertically adjacent anymore making it easier to identify them.
 
-     git push branch.$branch.remote $branch
+Before indentation:
 
-would update $branch@{upstream}. So we'd apply the push refspec to the 
-branch name, then apply the fetch refspec to that and check the result 
-did not match the name of the upstream branch.
+	* A
+	* B1
+	* B2
+	* C1
+	* C2
 
-Does that make sense?
+After indentation:
 
-Thanks
+	  * A
+	* B1
+	 \
+	  * B2
+	* C1
+	* C2
 
-Phillip
+Indents the visual root commits that have still commits to show after
+them, and if they have children it connects them with an edge at a new
+row.
 
+If there are multiple visual roots adjacent in history, the indentation
+starts with the second one, avoiding redundant indentation of the first
+one and cascades after the second.
+
+	* A
+	  * B
+	    * C
+	      * D
+	* E
+	  * F
+	    * G
+	      * H
+	  * I
+	* J1
+	* J2
+
+The indentation wraps after cascading columns and when wrapping back to
+the initial column if the next commit is a non-visual-root commit, force
+the indentation one extra level.
+
+Series explanation:
+
+- Cleanup to bring a common function from t4215 and t6016 that will be
+  used in t4218.
+
+- Logic extraction of the chose of from where the commit source comes
+  from.
+
+- Add a buffer for lookahead purposes.
+
+- Principal commit. Implement the logic to get the visual roots
+  indented.
+
+- Make visual root cascading wrap after 4 columns
+
+- Add --[no-]graph-indent and log.graphIndent options.
+
+GitHub CI: https://github.com/pabloosabaterr/git/actions/runs/29266560903
+
+[1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+
+V9 DIFF:
+
+- Changed boolean variables to be bit fields.
+
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+Pablo Sabater (7):
+      lib-log-graph: move check_graph function
+      revision: add next_commit_to_show()
+      graph: add a 2 commit buffer for lookahead
+      graph: indent visual root in graph
+      graph: wrap cascading commits after 4 columns
+      graph: move config reading into graph_read_config()
+      graph: add --[no-]graph-indent and log.graphIndent
+
+ Documentation/config/log.adoc              |   4 +
+ Documentation/rev-list-options.adoc        |   8 +
+ graph.c                                    | 332 +++++++++++++++-
+ graph.h                                    |  17 +
+ revision.c                                 |  57 ++-
+ revision.h                                 |   2 +
+ t/lib-log-graph.sh                         |   5 +
+ t/meson.build                              |   1 +
+ t/t4215-log-skewed-merges.sh               |  33 +-
+ t/t4218-log-graph-indentation.sh           | 595 +++++++++++++++++++++++++++++
+ t/t6016-rev-list-graph-simplify-history.sh |  25 +-
+ 11 files changed, 1031 insertions(+), 48 deletions(-)
+
+Range-diff versus v10:
+
+1:  9541b410b7 = 1:  dd0bb0d215 lib-log-graph: move check_graph function
+2:  4f8fb2cc1d = 2:  07e239533d revision: add next_commit_to_show()
+3:  b50574bbe1 = 3:  4d71f674a1 graph: add a 2 commit buffer for lookahead
+4:  fc3a8253fd = 4:  48ad2562f0 graph: indent visual root in graph
+5:  204aae5061 = 5:  45be69d11b graph: wrap cascading commits after 4 columns
+6:  1b42ed86a1 = 6:  8ce53ae21b graph: move config reading into graph_read_config()
+7:  737331b68d ! 7:  c1fa81022e graph: add --[no-]graph-indent and log.graphIndent
+    @@ revision.h: struct rev_info {
+      	/* Display history graph */
+      	struct git_graph *graph;
+      	int graph_max_lanes;
+    -+	int no_graph_indent;
+    -+	unsigned int graph_indent_set;
+    ++	unsigned int no_graph_indent:1;
+    ++	unsigned int graph_indent_set:1;
+
+      	/* special limits */
+      	int skip_count;
+
+---
+base-commit: f60db8d575adb79761d363e026fb49bddf330c73
