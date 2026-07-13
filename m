@@ -1,144 +1,133 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799F5342532
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 22:09:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783980567; cv=none; b=JIFyfuns0DZKcVb9Obgs8qXcaXp0cdz1/HdHzRhturD3p3R1j+8F4kFyDLZaaRtAeAl6RD4WU+u37DqMpT5Bft2om9jCunm+QEFmjEzUVAj5YlWJ77+PEdtJj92O87UuqMckK5PLJC3DQEoQ5gNXokVIT20AvuwVBXqbks1Rk+s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783980567; c=relaxed/simple;
-	bh=bQlFVpZNpk0dL/rfjbHGsWmoM+g8b/pCViE1NHu2scA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T6hO2Mle2RuXxEJobjBM4yH7TUzLyUANl9a4eYYtkX8VsL/XGW0cBKaFzaI8A6z1u8TvFKi/zvjUMSa4fEkpoPqkysFMN4pwHzpQL0VnS11ndIHXb/yWivbOzKcSNxeHe3QOBsJZyKz4dNhPNl9HwqG6gDgBMklmRPtUNgvI3Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SDhl+daZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rfOpK2ts; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0468D23C4FA
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 22:17:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783981042; cv=pass; b=BJN4KUSqMiX5VeZqYdTKqx+ONaKEO0yVviaGuIkRSNdr//itX1uftDlxuek4VSu8B4WK4gTKzWdPApJXzsI7JJqTHdqKxdGJaLJ1FHnendOS0xKRu0ncUUDykHkRbOqn98DKXQ+yX4qHyMSWJ7Rrmkq+AwqIXP6HYbWyw3mRdGw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783981042; c=relaxed/simple;
+	bh=GSDmgXOAs5nasX+qYBvOjuL2mXtSfUvsp6PYih1SAaE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rDKW9TFLtzJ3/ziTZrG4j0GrWv7l5+uWK3Gvk0w9KAiIhbcyJoZF8ZGyxYKU/rNUFA4nc3QPx+Rv6VpkzcZ5XHsazjv6RlSz3LWN+OeOhdvJoVGZVZ1F9MO6Q4dtVXiu7CbrJsbd5HQcaYhLRmmEcORSOTELptF8CvQ7vKfBPQw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=HQ/sgVh5; arc=pass smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SDhl+daZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rfOpK2ts"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id BBE3C1D0004E;
-	Mon, 13 Jul 2026 18:09:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 13 Jul 2026 18:09:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1783980564; x=1784066964; bh=lSxxsvKQjc
-	KrzvsvlpJ39MGy2vffDpM40siTkOnsbF8=; b=SDhl+daZ6AL22dirWZWXA2tTDE
-	F91RMk2W/l9wYzWnzTdZknp/g2f+5BZwd7oqX8Hs8oiKoaqMScwjlh9+1hORvC6N
-	XKDzghqbMVFee9dew5RWWGXt6Tq6tDlYgkHArNfC/+50FA6F0r757QVY7ZlMawcQ
-	GOkA5bYxRgzHOjZoMvQB10czETnVqXxQP1vSSuk6NDJxpP42A0sytzksv3tncfuk
-	g8onBym8U40pL31aQfD4Kjrq7zi4tB4oSAxmSzm+Sk/0ClFD+N8XjcsXeLmRqDUN
-	tvnTwFAO6A4gG4/Z8UCLEDpGBtxGrZegh8oicem2YDUVKTsSsc4Chnj1rKpw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783980564; x=1784066964; bh=lSxxsvKQjcKrzvsvlpJ39MGy2vffDpM40si
-	TkOnsbF8=; b=rfOpK2tseKAjhoaIZBIEA+Ja+XxxbaOMRJtywSjR2dUB5TdK1we
-	aS1240kWtrR6g+ciu2Xmues32o7V9nFRgZyN2HhDqhZNFjGy8qBI7RNZtUKkX4Ql
-	vIwqDqZlq+BeJKpvT1dnm0u/6riBQ0wzGA+h8+6+gijyV7bmRJAwCklh27M2wU2N
-	WcSFxp1zOOUHQVYJqKDJRXvyU98VWuqZeI67vJ17BG9jw7JNbQMBYs7l5Sj9XOAo
-	iSS+QQmyF1DJJg+A+X0AGAn3NnTqA64Bz4Zi7oCq92BGG+JZODPKA8JzqE918IK4
-	9GatNrhtfIspgV5JHlJPV1OPcX9rFo+3ZDw==
-X-ME-Sender: <xms:FGJVahzuLUPDpow0rPCJrtYp6eJzPu1kI8ioiJx8XrZL09aiIStnAA>
-    <xme:FGJVaoJweMOI1SWmp88uFjBgoOW67KHbCDCMBq39Z3E-UcfxwGMZd8-pQNslhXmq4
-    Ft-BbBQ13_L2LV8MLaS8m5TZ_u3PuCmmt0wdwgLe_WT_D0u4vz3>
-X-ME-Received: <xmr:FGJVajpGR4b6BxVSziCYv2-mk7umNoi8aTnqYLMKP1jO79VaKVROv1tjEf2TNzqFZu8jrtYfmHgW9mHsLejMqNHU7cKxHQgvryU7ygI>
-X-ME-Proxy-Cause: dmFkZTGltB9xKWuVOd5v7olHQU8clLoIlcjqghq1Ri/UGwtFJ8R8c8CrMbi3qCVcn3zkM+
-    tuziEJfZGzXHHMNbIJ8p78evRPwOGf691vQK+X98DkiJXEM78Ja5GPxteJGdKt1s7W2Nz9
-    IZIkA6hX9Og/rIQNIl90siL6OtGMCUvQTgvJVee8OncmHwCgy9dQGKv+5CKQ01ycOt6oEd
-    NrWdJ7YlLyJAz6ByKEA72VBgQoJSOOyd8/osexxGVRxwTjzFw0z55OuXH4tKhOgIBCUKJe
-    FIQi7gUwSLluwEj3IVWwZcpycomzmUXaPtzKU0hDbCfHjBWr9GGP85U3a+K6kl0z5tAhIn
-    ban7kshjBBdsdeVord4GtKh4egOQ1OY7uioIe4+jSdBvjgrUfoSUFC6nKyHCm44WfEpfU/
-    ul2bKumt4qme1OaWvWW6U7Ce7tImy56/5lu75qaznLuhAjJx7Q48KpQH5DRb1ngYxw06En
-    LNnBVR9PNidqoBO0S4FLREVihhX48L+FoT34Sse33zzdCCjmpQm4QnzReOB2WK/K+YuMx0
-    ok6QUmGmblRIvQchem9aIZ3+ojk1dZQudRuHxNrzaGFyQ6plcw4sGdiNIvnj5g0McJBhe5
-    8GHWqx7YXMklGlzwFRtD6BYqjmfxGILR0iF/Plnl4KTZcWA31NNJHatk7DuQ
-X-ME-Proxy: <xmx:FGJVavIsisRR3ySJxprlUUDKP3wiTeY7Es0MpOwMQH-GobASGnwmVA>
-    <xmx:FGJVagRMZFMWrl5gHqWOeF4IZU7UANJKVU4x6ngIV2E7XbxHJVH9GA>
-    <xmx:FGJVamtPrC2U9PIdyL0593nZ0l_OqLT18AVAwC9iCnahnSx4A0uFOw>
-    <xmx:FGJVapY6lZiONpGxhESRE7ceCTu5eq9QJoKIUM6x0Mlh3qZ9SfLW6A>
-    <xmx:FGJVapwEsNuparoq8L6VAvvJZ-J6I-NctKJdx2jabIFwkaPqIbB227X7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 18:09:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v7 3/3] replay: offer an option to linearize the commit
- topology
-In-Reply-To: <CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 9 Jul 2026 20:47:37 -0700")
-References: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
-	<20260707-toon-git-replay-drop-merges-v7-3-808ab9b4afa6@iotcl.com>
-	<CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com>
-Date: Mon, 13 Jul 2026 15:09:22 -0700
-Message-ID: <xmqqbjcawnhp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="HQ/sgVh5"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-667971437d6so5870604d50.2
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 15:17:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783981040; cv=none;
+        d=google.com; s=arc-20260327;
+        b=re6BVCZsMymUP/yxTrQxcyFGPsbHLUc+yL1BnAsubv2Wf4O1RJ5ooCHw71Ljd2C5EI
+         DVQFehvc8RPNAhdcC3Ou4tXNdwonV7DhEN+ottDB9bsewUfIh1Mj5WxC7zlvllGKWxDD
+         1szHvDlUj9wG0jVlOi1BPD1OoDDyXnfoPK02oPBBrIwcKomQ4cqhcRDtGlEmKF4oypAt
+         JIQ1LBKW9gI4nMwuKL348Hgvu+BjkzGppzLZcwnxvrHJYAatLy9IsWd2WL/yg1dXRyrs
+         +AWFJQxIMKe8EEvh+THpCBZIP5yStoxtbe7gPikwIZHqV3d08g6d+23gmUDZZxaWEqFW
+         +n+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=/F7wGg5E2dXY5+62i753ZdhUGytc03TWuz6CJ8E9Njo=;
+        fh=pFPjargKWfayp2AfdRSMz2KZkQSSHiw63+NeEvmFViY=;
+        b=OQCI/i4qT7dtDabskHIWqiY0qcr+HhSRUdYEDlWovOWjZHMxMk7s/YrntNISCpIjUj
+         8s+zW/oMqSOw2GdGb9iSW7owRmGSDWfxRAc+4+wdJ0i20NKtTz+V4ggvCFzAuJOxEZp3
+         IzpaYkwLiGR/bdfwj6GG++zDZAPeKT6FAXEsoC3z/XSxHVzaz9sGpPUPCP3Uv9u/tN++
+         q0oWfQZk/QL8Y03eR6KbqSd2y2Zn7rh2Qbb7Fy6ofj3FwrnV4zT7N/NuiqWGr3j9Dcig
+         Cb3Rbi3X75S7rFa8J0dmoqU9nK1/kF8YT0bj0AJtU6nlp9ldNpAjYKgsKslS0iyTUsXZ
+         ykNQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1783981040; x=1784585840; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/F7wGg5E2dXY5+62i753ZdhUGytc03TWuz6CJ8E9Njo=;
+        b=HQ/sgVh5icux/RQzg1yuUYWtQynhJyW/bF9sZzQXA4rv3vIPxxTxaMXDGSB8JC0NUM
+         uzg/qY3RIFNWgcRByylreNSebP9gwauMChm/JcuWnGtWiaU8x95L7yW37ZJdeMpMKOHa
+         NuCD84VarhZqFF51ASOwWXcK7WTIVb9M6216Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783981040; x=1784585840;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=/F7wGg5E2dXY5+62i753ZdhUGytc03TWuz6CJ8E9Njo=;
+        b=Wi6iWB2KUCw2YRxbrZa1UD6bfO4Z6RiFKd+6EB4WzRwydI0sHxXkB78zLt7OaVq9Eh
+         TMz7oq7HCS01KNb+QcrTbDrx8I8qFmWDPAQcSYVSusdbsToiZyDcfEf0To72P/OVmChx
+         hC/W+jQH2N6huDIjDEtyK19V2FGXZasmbYz53TYKK31LoRTMA1n6nQdBQ0s+B0FU3NzW
+         DJOv38WfZ7qQW+AXatACL5rDk7m+TirOugD40/Vgh7E/5DmrrTZeL11Sflq0z2gl9XXQ
+         b5cZGsqEgmQ6p0BbcSDfkHOUuu1fw6X0DrsIUTbR/czwSQ9c9SxE+l7LCmvRD8xGREGT
+         BOFQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rq7rsbwN3/qeS6JGPvc/FkJGMQdsupc/fAJnNTXEvfkMw0c0SY6OrxBeYPCjcPHW1AoNWg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yynj1AOvyda6QAS+7B5Lg8NcciE9IoUTZyL4kctWIYDY3lqeYX8
+	z/ykL1onlP88Aot3U1eFCeE3xa9HSUjnddM0J+iyKVpkzrtIb/IhV144Dg2Z8IFMASbPMN8y5ZB
+	CNoMnGFTJ1Mu3AxVf/es1YZBrKD9uAAcPpcdTR5Inpg==
+X-Gm-Gg: AfdE7ckAuGtOCirteJUJ1Hq6nYVFGxutb8NPLCff0vqL6LFjzldzISimxbn+NuBI1P9
+	HJly56EoBCFVaNH06z7k7xkxUP7QQuedGTRJ2zsqinW52yAZOcKN9lEmyR9XLJcxk/RqlK6qvBb
+	+eMKgJDhW8y23RjO9u+1MEfKSO5NM/QtsVo3/2D7s2WLj3EdnqpAE2UKEo75AW+YFogvGxOPJXV
+	AhgOENq87GW75+KqpKEvPPhOt74R38x77dy9MMy6pTQrvzJ0fU3/drbQ2cFHkauBM2aSDdzcmlM
+	sW8WJZZ7
+X-Received: by 2002:a05:690e:4803:b0:667:a82d:4b1f with SMTP id
+ 956f58d0204a3-667d7b7d0damr5276912d50.32.1783981039864; Mon, 13 Jul 2026
+ 15:17:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2170.git.1783418384.gitgitgadget@gmail.com>
+ <b865c2bcff53a32637aac426dd2c6ef4a4c27077.1783418384.git.gitgitgadget@gmail.com>
+ <ak0DUx5Y/5y1OINz@nand.local> <CAL71e4PuD9D8LRbP3mfxxeMrM+1q--3sCp6oJs=hezdasZUPMw@mail.gmail.com>
+ <alFthqGQjsowvpEz@com-79390> <xmqqik6mbhtw.fsf@gitster.g> <alF4rYSTxpQUC38K@com-79390>
+ <xmqqech99qe3.fsf@gitster.g> <CAL71e4M8-KtnkC5qQP2iuhON=ROoOTVZfbZB8UhJ-+3KgEP9=g@mail.gmail.com>
+ <xmqqldbewriu.fsf@gitster.g>
+In-Reply-To: <xmqqldbewriu.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 14 Jul 2026 00:17:08 +0200
+X-Gm-Features: AUfX_mzUsrkqdUJaHqK8Mmh7uvaxMo-VczV71BUzy81N9tbNp_8JfnJNKILAekw
+Message-ID: <CAL71e4MOz1PqAAdGCnKsdkWkOs+HN_Q1d4mpZc_g1Mi2+2czgg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] commit-graph: add trace2 instrumentation for
+ generation DFS
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <ttaylorr@openai.com>, Taylor Blau <me@ttaylorr.com>, 
+	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Elijah Newren <newren@gmail.com> writes:
-
-> For what it's worth, looking back at the v5 thread, it seems the `base
-> = last_commit` rule came in to fix the real bug Junio and Phillip
-> pointed out there -- that without it, only one side of a linearized
-> merge survived.  That fix is clearly correct for the single-branch
-> case.  My worry is only that applying it unconditionally reintroduces
-> the multiple-positive-refs ordering problem we deliberately avoid
-> elsewhere.  Making `--linearize` reject multiple positive refs would
-> keep the merge-flattening fix while sidestepping this entirely.
+On Mon, 13 Jul 2026 at 22:42, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> A user
->> who wants to linearize ranges independently is advised to use separate
->> git-replay(1) invocations.
+> I do not quite understand.  Even if you fix the code and add a
+> passing test, the commit remains atomic.  With an artificial
+> split, you only increase your commit count while making the changes
+> harder to review.  When grouping a code fix with a newly passing
+> test:
 >
-> Which, to me, is another argument for just disallowing multiple
-> positive refs under `--linearize`: if the recommended way to do it is
-> separate invocations anyway, we may as well require them.
+>   * "git show" displays both the implementation changes and the
+>     test.  You can review both, and if you agree with the behavior
+>     expected by the test, the change is complete.
+>
+>   * If the pre-fix behavior is unclear, it is easy to check by
+>     running:
+>
+>       $ git show ':!t/' | git apply -R && make test
 
-Hmph.  To me, this is slightly different.  It acts more like an
-escape hatch: "if you really do not want to mix unrelated things
-into a single linear history, you can do this other thing."
+That's quite neat, and it matches the local
+development flow if you write the failing test first.
 
-Stepping back, the unpredictable order of multiple merged lines of
-history exists even without multiple positive refs.  If you have
-independent lines of development that were merged and you linearize
-them, someone must choose which line comes first.  If you let the
-machinery make that decision, the resulting commit order may not
-reflect your preferences.
+I can see the advantages of grouping the test and bugfix in the
+same commit, and I'm happy to follow that convention going forward.
 
-While I rarely perform octopus merges anymore, in situations where an
-octopus merge is appropriate (e.g., when you have N independent
-branches and their merge order does not matter), linearizing such
-a history into a random sequence of N segments, built on top of
-one another in an unspecified order, could actually be considered a
-feature.  You do not have to make a decision about something that is
-inconsequential.
+> > Too late for this round, but I might give that a try in the future
+> > if I run into a similar scenario again.
+>
+> The existing tooling already supports this workflow (as demonstrated
+> by the command above).  Please avoid artificially making the context
+> larger, as doing so increases the likelihood of merge conflicts with
+> other changes.
 
-So, I am not convinced we should forbid this behavior to avoid
-dealing with a history containing merges or multiple positive tips.
+Thanks, that makes sense. It was an interesting thought experiment,
+but I'll leave it there.
 
-When achieving a strictly linear history is the user's goal under
-the "--linearize" option, is it not inherent that there is no single
-"correct" order for these independent segments of history to appear
-in the final linear result?
-
-Perhaps I am not reading you correctly, but that is how I read that
-escape hatch explanation.
-
-Thanks.
-
-
-
-
+- Kristofer
