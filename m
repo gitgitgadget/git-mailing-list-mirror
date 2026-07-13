@@ -1,81 +1,80 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6B2276038
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA37814883F
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783953697; cv=none; b=Pb8H5CaC6yhW2fwlCo+6OTadzrWoApTCZrln5NVdVn+RjzbW+mhgDQK6SiDJUZX/DUb+O6CeRNgwOaZxA4zAGJ6fPgDyN47WePr2C6pvYmJj+ON+q1u7GC/JEVxweQ8QPMqh4ghzSwy2BdTGp7F/tKtm6iLaXU3sRFDp5/2u2BM=
+	t=1783953698; cv=none; b=ErBO8EG7aBVRDg0ZLeGLgRRTAmm9+PxruZqQRDhJnkd+CvkHhuNXFNelLbmw5h/Bl7Cozusr2jz16WocboQBWdNSnRCoHM26PsTIlHTuBG8OErrAlA9WeRznE3arbOBr10w4GLCVYGet+w5kZiixkUY+yTxE4tCb9l66C4ubdiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783953697; c=relaxed/simple;
-	bh=u55JSlCLUKGWUJr9BndZOCnTo4oFSryBihKy7RKKHLM=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=WCY0MN9wUywibYHf6xtLX8XHpTxQVtDn3rnDvezmwtVkHT1qQ4bKZhQSVDs8Gt1HSyNU38teNrLq/ZLc/Uc3YWOgwtq0/cy81Yo9Qltw2SpW2wfO3mf+3VXlPTC9EQ44PHkYje7+ViLb3eD1qWJVHT0RnpAJA962g96YJc5qfRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BeUI5gVa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fxbx9NG+; arc=none smtp.client-ip=202.12.124.153
+	s=arc-20240116; t=1783953698; c=relaxed/simple;
+	bh=/hMSysPlI8knV3KeQJ0AcPKsr8dChrKP2cVFd0LS5sI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=E5VaVZ4gzTo9ycTSmSoaJQ9Qm25vRTYvBX83YY911QKtngRULsvwM4ULNxv5Grl/aMT7v6dZGXDs1G8PRTm6CGzUTnjazLA2K+KJ6VNe3rh1QqfCwkxnu9EYVUZMLY3itm7RQTVgZMZ6i/QWC/FO21wO5am8KSTlk3CgVvcAR3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hwdqsyRl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EW77+9A/; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BeUI5gVa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fxbx9NG+"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0B3BD7A0042;
-	Mon, 13 Jul 2026 10:41:34 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 13 Jul 2026 10:41:34 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hwdqsyRl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EW77+9A/"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1899E7A00D5;
+	Mon, 13 Jul 2026 10:41:36 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 13 Jul 2026 10:41:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1783953693;
-	 x=1784040093; bh=Ru+OuMwTRgeIsq8iVZPOp3f8Da3lHw+gPafX84f222c=; b=
-	BeUI5gVa5z5ngB3BfCCLViBz42KhP8BdG/n/ZB0Vm6K2wNlw6FTEkDXoeerKG4ec
-	unNlk7xs3g2HnT0VeWGIV5GUuPggwAO6PKNsIDwqX0M4O1x59hMOTuSrD1q/K8HZ
-	5WCY8G0I6OqXzZRAO+DniIB4dnxjt8GZhVzVUNsM18gKXDXG2isfOZFpQydNMSJi
-	TExbL0c/t+IpmlmYJOltzI4ugvd4VG2c7LMDV+C2SXdfE+eCT4xwR4ZeLflS2iTZ
-	YHeMUaCQeoJZtyQKSAJhXb/fyT9SmyIg2HvMm0R6pxTdlYZI2m65PfSDjwXIiNEl
-	pFBZze1RkNfMy7IeyjtDgw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1783953694;
+	 x=1784040094; bh=u/KYJs4R6UmAlSxz1SZtqf9XD2+tbp6s9JuW/cdNqvA=; b=
+	hwdqsyRlLjxqKFPReb55Ui38imarX3rR4YNftyP8sgEvZqHT23IB1etrv3fko5Uy
+	HkG/AvR8MBj8P77HKRILdNn6sE1AhMhknLKM/O+XECQmfmvMh0tMhxcWbYruW47g
+	AL6iIQsTXglmy8g5+FhL9B0CXAqWyqPNAQMIBYtnrIIrSzISD50rE7u3NdIXLQ4s
+	a05pB90Pkq2gBKKHxUVwMFQtLR53mQIgEd14nR40PqUuT29XSYqPxiMkXnWRvkTo
+	xY0S1s3vJGQ0bB8cremfKFLK5r4MOe1XaJrCihDWUtmoUUdVUozl1miIe0vApMOG
+	b93wK+1GgB+sAOjS14gaOg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783953693; x=
-	1784040093; bh=Ru+OuMwTRgeIsq8iVZPOp3f8Da3lHw+gPafX84f222c=; b=f
-	xbx9NG+tTC7kBCTKJdj0zh4W9LbH06sk53MZc0HWyjSwFjBya/uhKWYO6wdLy1o4
-	TbFdSKyMUhB3/8pPfX39o/EKQbn5tC7Cx4CEkU9B6xBRImkM5zEGiGWUiBH0uYtm
-	rN/4k2t5c5AYuMAM0HyQugAfkS5OOTfCBDZvIcivPbjSfYRB6vmVql6NeTeAZmmB
-	mcoreubA1jbO0U6dF+/9dtw/oc71Iwnw0lKbJDkzCYn3DkRU8TFY0KLVnG8IZT93
-	qPYIyXWQFplnt5oSVL8MYVBjxpCxKWqN9VR4ffgudpa6ScPDUGhAAj1vZ1EmJSbz
-	b/4kAmxa0ygAf4yTdDOmQ==
-X-ME-Sender: <xms:HflUagOVXRDO143z5YNkryIXY2ErdRL_5u7EqDPyEyVcPGioSxkjYA>
-    <xme:HflUat0Kqh8Ei7Q8M13opHNrWMDw-kMzdn5jgSh519R_IhcFa8iHZbrncKDPyZ-Iw
-    qUl_W-gnCQHv7g69txdqA1FL6PggdpTwIbDH1ElEzxxohPGR0senww>
-X-ME-Received: <xmr:HflUavnA942b839faloauz7qQHKx__UW2J7GI7iwO5bfaiqq-CkHHOGUxXNe5rmpk2RQ6fL2jDszoifFF_jjII-1Uj0W7dawvkEoUjd1>
-X-ME-Proxy-Cause: dmFkZTF5sKcG50b18tDlCuyiQS9rLMg25TAnByyzukGN9SarjvNV8mvcv4nvyU+UMMFTwj
-    VEcFN67a2/jw7fo9RXLwbDJdCubDF13OmP8DEiHNSM3pdfcqXPDNRfEWPJ4Q+ORRblM5ab
-    sb+bSXtU0H8A5qtMzq3fxZ4PdBk+WpO2qHYL7FXtXCkBISKoD4J/++5ArK+YtQMzNmj/UI
-    baeoTFSOO5Y7Axqjj8o7elaLr46/GT4ImWLT98I09MZwe8FHOlB5dX6OYyUsarF6Ph2wgf
-    eykHy22l6WiHHMC1cRqYFPtySQyvn2yhzsjnD6sUGLD6hiXZnPmQE9F1i4ZC7MxbvJUnRR
-    71EPZGoeS2jOnUNBttmEJshvAYHu8IfZ6P0zfbqPvPR4d/pmjc5CBiYLIU97tfRR/zvVcy
-    pEvee6zOrSRaw7qM3HG7flT8ogn5Rw1O2N5o0u2M+pqlNi4sQl1+01vy3KkIb+1wKtUbEb
-    1GWaxvQlbMLp6911bFNKw3aTSwgQUaLgXXUuUYx88Cj9eaNaQU/xdmXORQgKcLktQZBKjW
-    P25kOYrmdEHsyzN37R8OPtueySQKwe3Pwi41N3kI7DlKxNHqCLPjKLkMr1ce926LJsMPXp
-    yBrS39u0KAz5OyHiuXluPXOeQBEvaxQcXhKG1NEi7l7PQHvLrpYMLY+PdTLg
-X-ME-Proxy: <xmx:HflUakUKCmOUXanX8n1vWBQi2t29V5aRsYF09jVXdvLu8oAx_1t1vg>
-    <xmx:HflUalsaMrPz-zDNNQeq0SbLqTfYWxanHlMKrlPHcXbwbZTx5qOtUA>
-    <xmx:HflUanZU44lUq9rJGVzUShcKnhut1fcd-cz2si_IMGb4jgIgn4nDwQ>
-    <xmx:HflUakVCrnrPcNd2v807hdvE1imYKqZT5QZ0CZKHBhFysEzdQ6fH8A>
-    <xmx:HflUaiqX02kvvH-3MaLng0JhDZnmffEAXY_TWAK9MMzZgmkOTdb2J86L>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783953694; x=
+	1784040094; bh=u/KYJs4R6UmAlSxz1SZtqf9XD2+tbp6s9JuW/cdNqvA=; b=E
+	W77+9A/8t9ee1f6R2DAA5mEvVdg9+FxTsOuve48k9Po3sYhaDqx/4NMT5Id6iHtI
+	DUmGaJy9JcABnOKnLO7wysyTn76qch9JCKbgwMnj4cPfx5cl0MDyJ7DFB9JuyyTq
+	yNrsy/cHZ9+gW5mpaLrj19w+WeEGlUGb6GRaZ+hW5mgvG5eUi0IXw6lcy/1fNzAr
+	qOL8yX/4vCLdth6YVeCsvr1OPm58QHS6PZVHGdBnm0kQkvCzISWlepRaJ6W93SGY
+	20JX0Anb+NEHMAb0EgWK49P24sl0M+VjKoMvzBQS+JviIm0nVGpKBxyxOxl2XIPh
+	JOmTbM64oZ/l8co1xoIXw==
+X-ME-Sender: <xms:HvlUat-ZuThuYjja8-dQEiEikmUgPu6NIyQbgaDMMokW6QttDqt5nQ>
+    <xme:HvlUaonEBT7lCddpj1r_FnBlL9kXdrADSIWG96ct95B0GLpXZ9KBeFjRbzRrrtVZ0
+    kFfLduyCoRN0Z5G7tg62GfT2fyOcjSFs5hYM2QUPaHFS0yGw4ym5Q>
+X-ME-Received: <xmr:HvlUajVXZjaH3IyHhTwI7MlJoR-Qq0WhH_T4-HJ8I11RqU-duN30I4oXDqs60ad_TDd3C0aP3eJOtZree6Xjn__eCgYygszv2Z_SH2VI>
+X-ME-Proxy-Cause: dmFkZTExU3AaOgeG5BObJ1W8JdQQ7fecPK0PCMuQHCnglnCgDOzkQC0YGMEj1qcLJSgMeY
+    LASbvC4Tndv63coRGptPYG0Us/QPdorbjTjJ5eG4DbvGXhIArpLYSfP1Equ8XG1heJbryq
+    UDpFgrp5VTZtDpEG/07Jwy4Ag/vYtEFOYaVrF84nTGMkk2meJjHZ4oqMYl9DO/bcxScRj0
+    raM+378SqfjY/MjDn56wLasjqjj0AnRoiM+HE2+qWeFjm8zVJqFwrMNDwJJ51dMxeJILN0
+    DY3JMGfUUBMmVXNdlp1KiUwRzg3BnBn+tX0Xx+zOe7dMF8plSZ04smH2o1tFL5zomOi5MJ
+    dR+9ZWLD6i9DlUTfs7sk1h/TeXlO9ZlZ5yDJ/36Yz7gEIeRf/us0qMOfFKaZPdnd2QqRyJ
+    gViT3vywkfyDUxrfIVfR5PKzLq+ajz2y3IFFmOy6z5KalYZOZYVtWdCjoj/O7Qwj7psu9M
+    pYBYTcf/YzJB+wUetzDmu0aEd6OBQLU3ylf/4YC2hVEfw5Jsg0rK4BqV7B9s9w2nAMG4lr
+    IuT1hcwsVJuF9B1MwUNn+aSeIVnzvpUMUcLbORNy6XEmrHbCnF0iYNSRd7qLahBWaObKvf
+    wz9up+U1nLWsNYs7S/iFpGkG94BQ7po5cze9n4wMxPcsBwGAjqKdklPbszYA
+X-ME-Proxy: <xmx:HvlUatHpafzhU1jW0UKVJenwp6HJ7AMB4u009jR-gTtw0tEf78oCJg>
+    <xmx:HvlUavcQ7KAv9K6F-CiNTqpEL-8Qa-v5UckIuoQ6p79aq0SAQun5sg>
+    <xmx:HvlUauJ8cXVyEiT-E-P2m8v4tR1aaa-VbXshQ9McrJ0MUeQzj1Rlhw>
+    <xmx:HvlUakGAFmrHI5Lr_IKrQ_WbQxoiaM-gy1kO6KbzsqEh7flL3qeL4Q>
+    <xmx:HvlUajY0gy-USZ3PPdja9ikqeWOClWCJOLxmvD3CuuXz_MH2FtZH9kv0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 10:41:32 -0400 (EDT)
+ 13 Jul 2026 10:41:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5fc9426e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jul 2026 14:41:29 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 0320676b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jul 2026 14:41:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 0/9] odb: introduce object filters to
- `odb_for_each_object()`
-Date: Mon, 13 Jul 2026 16:41:24 +0200
-Message-Id: <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
+Date: Mon, 13 Jul 2026 16:41:25 +0200
+Subject: [PATCH v3 1/9] odb/source-packed: improve lookup when enumerating
+ objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,82 +83,114 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WOyw7CIBREf8Ww9hoetrau/A/jAujF4qM0UImm6
- b8LNRp3XU4yc86MJKC3GMh+NRKP0QbruhTEekV0K7szgm1SJpzyku5oBf01gGsUGOcBpW7BqQv
- qAYy9DeiBCV6VRoqCi4YkSO/R2OcsOJ4+OTzmRabmRmvD4PxrfhBZ7n1l9ZIsMqBQcYOUbRXjS
- hzSYGPvJJsi/2MxusjiiSVSUdZas7KQP9Y0TW/bIYVwJwEAAA==
-X-Change-ID: 20260708-pks-odb-for-each-object-filter-13286fa3523d
-In-Reply-To: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
-References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
+Message-Id: <20260713-pks-odb-for-each-object-filter-v3-1-b3c65c641073@pks.im>
+References: <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
+In-Reply-To: <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
  Jeff King <peff@peff.net>, Taylor Blau <ttaylorr@openai.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+When iterating through objects of a packed source that have a specific
+prefix we do so via two different methods:
 
-this patch series introduces object filters to `odb_for_each_object()`.
-The intent of this is to make `git cat-file --batch-all-objects` work
-with pluggable object databases. Right now it doesn't because it reaches
-into internals of the "packed" backend to efficiently handle bitmapped
-objects.
+  - When a multi-pack index is available we use that one to efficiently
+    loop through all objects.
 
-The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
-2026-07-06) with ps/odb-drop-whence at 8a7ad23e11 (odb: document object
-info fields, 2026-07-02) merged into it.
+  - We then loop through all packfiles that aren't covered by a
+    multi-pack index.
 
-Changes in v3:
-  - Weave Peff's patch into the patch series.
-  - Link to v2: https://patch.msgid.link/20260710-pks-odb-for-each-object-filter-v2-0-3710a9cc165a@pks.im
+Regardless of which mechanism we use, we then iterate through all the
+objects indexed by the respective data structure. Curiously though,
+while we use the indices for enumerating the objects, we completely
+ignore it for the actual object lookup. Instead, we call into the
+generic `odb_source_read_object_info()` function, which will itself
+consult the indices to figure out where the object in question even
+lives.
 
-Changes in v2:
-  - Add another patch to drop the `_1()` prefixes that aren't required
-    anymore.
-  - Change the approach in `open_bitmap_for_source()` to also use a
-    `found` boolean instead of a confusing integer.
-  - Add some more explanations to commit messages.
-  - Link to v1: https://patch.msgid.link/20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im
+This has two consequences:
 
-Thanks!
+  - It's inefficient, as we basically have to figure out the position of
+    the object a second time.
 
-Patrick
+  - It's subtly wrong, as it may now happen that a specific object will
+    be looked up via a different pack in case it exists multiple times.
+    This is unlikely to have any real-world consequences, but it's still
+    the wrong thing to do.
 
+Fix the issue by using `packed_object_info()` directly. While at it,
+rename the `store` variable to `source`.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Jeff King (1):
-      pack-objects: drop unused return value from add_object_entry()
+ odb/source-packed.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-Patrick Steinhardt (8):
-      odb/source-packed: improve lookup when enumerating objects
-      pack-bitmap: mark object filter as `const`
-      pack-bitmap: allow aborting iteration of bitmapped objects
-      pack-bitmap: iterate object sources when opening bitmaps
-      pack-bitmap: drop `_1` suffix from functions that open bitmaps
-      pack-bitmap: introduce function to open bitmap for a single source
-      odb: introduce object filters to `odb_for_each_object()`
-      builtin/cat-file: filter objects via object database
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 0edea5356d..9cfa02b7a2 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -143,7 +143,7 @@ static bool should_exclude_pack(struct packed_git *p, enum odb_for_each_object_f
+ }
+ 
+ static int for_each_prefixed_object_in_midx(
+-	struct odb_source_packed *store,
++	struct odb_source_packed *source,
+ 	struct multi_pack_index *m,
+ 	const struct odb_for_each_object_options *opts,
+ 	struct odb_source_packed_for_each_object_wrapper_data *data)
+@@ -170,6 +170,7 @@ static int for_each_prefixed_object_in_midx(
+ 		 */
+ 		for (i = first; i < num; i++) {
+ 			const struct object_id *current = NULL;
++			struct packed_git *pack;
+ 			struct object_id oid;
+ 
+ 			current = nth_midxed_object_oid(&oid, m, i);
+@@ -177,9 +178,8 @@ static int for_each_prefixed_object_in_midx(
+ 			if (!match_hash(len, opts->prefix->hash, current->hash))
+ 				break;
+ 
+-			if (opts->flags) {
++			if (opts->flags || data->request) {
+ 				uint32_t pack_id = nth_midxed_pack_int_id(m, i);
+-				struct packed_git *pack;
+ 
+ 				if (prepare_midx_pack(m, pack_id)) {
+ 					pack_errors = true;
+@@ -193,9 +193,9 @@ static int for_each_prefixed_object_in_midx(
+ 
+ 			if (data->request) {
+ 				struct object_info oi = *data->request;
++				off_t offset = nth_midxed_offset(m, i);
+ 
+-				ret = odb_source_read_object_info(&store->base, current,
+-								  &oi, 0);
++				ret = packed_object_info(source, pack, offset, &oi);
+ 				if (ret)
+ 					goto out;
+ 
+@@ -219,7 +219,7 @@ static int for_each_prefixed_object_in_midx(
+ }
+ 
+ static int for_each_prefixed_object_in_pack(
+-	struct odb_source_packed *store,
++	struct odb_source_packed *source,
+ 	struct packed_git *p,
+ 	const struct odb_for_each_object_options *opts,
+ 	struct odb_source_packed_for_each_object_wrapper_data *data)
+@@ -246,8 +246,9 @@ static int for_each_prefixed_object_in_pack(
+ 
+ 		if (data->request) {
+ 			struct object_info oi = *data->request;
++			off_t offset = nth_packed_object_offset(p, i);
+ 
+-			ret = odb_source_read_object_info(&store->base, &oid, &oi, 0);
++			ret = packed_object_info(source, p, offset, &oi);
+ 			if (ret)
+ 				goto out;
+ 
 
- builtin/cat-file.c     |  76 +++--------------------------
- builtin/pack-objects.c |  11 ++---
- builtin/rev-list.c     |   2 +-
- odb.h                  |  12 +++++
- odb/source-packed.c    |  77 ++++++++++++++++++++++++++---
- pack-bitmap.c          | 129 +++++++++++++++++++++++++++----------------------
- pack-bitmap.h          |  10 +++-
- 7 files changed, 175 insertions(+), 142 deletions(-)
-
-Range-diff versus v2:
-
- 1:  baf2adb012 =  1:  7c0dc1be0d odb/source-packed: improve lookup when enumerating objects
- 2:  57eecf3031 =  2:  2e5908c9c3 pack-bitmap: mark object filter as `const`
- -:  ---------- >  3:  f4d66ccfc6 pack-objects: drop unused return value from add_object_entry()
- 3:  92dd6a6f6e =  4:  af475654b8 pack-bitmap: allow aborting iteration of bitmapped objects
- 4:  92fe41577d =  5:  6ca42587c9 pack-bitmap: iterate object sources when opening bitmaps
- 5:  e5d59959e3 =  6:  f62c3bbc81 pack-bitmap: drop `_1` suffix from functions that open bitmaps
- 6:  ab3547ac2b =  7:  b2d25b6e9b pack-bitmap: introduce function to open bitmap for a single source
- 7:  026f21f522 =  8:  a5bf309bec odb: introduce object filters to `odb_for_each_object()`
- 8:  534b25c817 =  9:  600b15a907 builtin/cat-file: filter objects via object database
-
----
-base-commit: 3c8e2790f2ce15e8b5d4b4e6ced711b12649f32a
-change-id: 20260708-pks-odb-for-each-object-filter-13286fa3523d
+-- 
+2.55.0.313.g8d093f411d.dirty
 
