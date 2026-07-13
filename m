@@ -1,83 +1,82 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8F335FF5B
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 05:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF06361DDA
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 05:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783919942; cv=none; b=ZOGkNN0Zs0ZdyV/jwnHw1hAIFItvwzVJGP2FqHgCYkjBwUSQw212f0zai79yVI0xAD46a8JX9phZ5eEjYnxBbJiDy9OEY+yk4S2bG0G3DLyzQjnjtMm8j1h4Sg8z2BytBw52slNXubMUfhK2dV0AQ9LVFN76lNXTvOHEqF8MMvQ=
+	t=1783920185; cv=none; b=uYRpTOULHhOXLk9IZYj1tTii7/tNbDXfsV9Xq6GP66+xgSRRl+0m3WFAjv6b0pdz4Qau6U3ASo2UAwIu41zkwX6asnwQuWvV1hbxKqE4eE2vIY+lohziaUVXYoQ5aDphJEV31wKXkH3BKfWRFtSMbkCfqZ4pecUbJRSD53mCX24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783919942; c=relaxed/simple;
-	bh=Z7YhhR+QvbAfScUEvqpj/c0c33SiHDAFpQO+xfmqeQI=;
+	s=arc-20240116; t=1783920185; c=relaxed/simple;
+	bh=CjIOkFwayt8e2CH203eapDHL3a22i+d8u/yv0a3p0MM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UAV7sr/VZUtZtg3VhriG6r9pP965ehf+g1Eodt1qTcMYCZzSEP83rsQmKBVOWNSzIEnrINNTYpSNQPViEcbDUX0DFSsfA8VZ+cH9IJliKPWCUnjhKjjh+zWjOCOr4LIsINbQj6zpVze3ZYnEBQRIg2D9MZiHyJzhXl+B704MMtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aNnIxEoH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IR530e1A; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=mOR365O+DnckytF93YviATulbB5dGwuz3kGKSyqz5dbv6BHeivZ7FPsPrc5MRNiESz/JBwcC1++f/euWiQGgIWKlDBVV7naYoqYcHrY5EToQDiufsQyOpnLVOg10udUowjUFOibIUCGH3Too0S8KbuhKxB3ofK6R3gLgOa7QvM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nqmtdtlH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qRi4wkFL; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aNnIxEoH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IR530e1A"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nqmtdtlH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qRi4wkFL"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A295B1400098;
-	Mon, 13 Jul 2026 01:19:00 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 13 Jul 2026 01:19:00 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 462DD1400096;
+	Mon, 13 Jul 2026 01:23:03 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 13 Jul 2026 01:23:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1783919940; x=1784006340; bh=21tHUpdTjD
-	AFiWoeE7MstRfXkUNov2WvEaw4/lypURA=; b=aNnIxEoHflvZrTZyDfuQxzWeSD
-	Ecgnt4oIwy776Va5vTYiquRrieYwGiAVL/jkx+9YrIfqzIsYMutFVW//aJ96Ird/
-	+2d6cWYNftZ8lcO1h0rJg0ql69PB0vrr9htPNeryHXCTKiAj+UblqT91FDURYLh/
-	9Q2Husw++FsfFYJl7h/08UqEW5fLsRUaBqqGAfCbWkb0W2iUJdiJDkgKsEITIkaE
-	rBCeQHFQB8eys4feb6SoE+vPGpeT1B6GScQGx7b4BMe6CS0+dzVNHmMPf9a/bj4i
-	nQ293FLkkHE/lWeHvXCGuv3kadEuOBdktBn8tUlr0RCIowJRFrsrLBVEhuRg==
+	:subject:to:to; s=fm2; t=1783920183; x=1784006583; bh=CjIOkFwayt
+	8e2CH203eapDHL3a22i+d8u/yv0a3p0MM=; b=nqmtdtlHM3tUF9/0vWUlmblx95
+	N5yHwVGF+XaE+eEcE3utI9qc/E6f1zdlNjQ9fX8OYPW+dmeIlp5XXahWJRdEMWFb
+	4TLT1tJ2fgOoOL2I0o1jkJSxqPdpoZ3W9K0JLWxO3bU1WAU0T4eGR0gc6DkyJbIR
+	w93F8bBl0De3Cj5QGm+jcbnO2jv/dR/t/rwrqMcYHwzpixEM645eIij/kP0DLGEk
+	8c0RT5Tw5nfRg6lFGGfBlrZR42QuqtFn7MVIkojuqKZ1bmt7iTiyxdf2u/eUSfB2
+	NxNXrjYyHDscpgQnalGf7/zfvxlZGioa3OnHE66zJonkviig0KZwRQfyPc/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1783919940; x=1784006340; bh=21tHUpdTjDAFiWoeE7MstRfXkUNov2WvEaw
-	4/lypURA=; b=IR530e1A0DK0OkuxlC9AJZfl4a1Od9sHwfhx5LAKC2TvzLje4tN
-	kwz3ouOI0LFLwTDqm2QkHcRU3PNarFBU1lt4gSp9pg4Y6BiPdBwNPnlepIhosTCq
-	MoeIbY8+H4eyR7AJZ2b5PQjLMT7DvTMHVRzXxfMTeScZ/1IS6u1Z6VasWkxale2Z
-	AFGgC02odtB1+kIRdbacQMXvKvxuydG/3+pq8NQLzt1z/sRAsEIQCME+ZcuUHqrL
-	48CjQdbTn5En3e6d/JZB0PxxA+uHU/lIT2HaRBc6LYFQj5WKAxjQQAESl4kv/2p5
-	4Ob0r9WUO2v7M59EozIzLkJWzuZpZ1Grz6g==
-X-ME-Sender: <xms:RHVUamed5WG1qQWh0nLorpQM_7a__ZXj36WDD-159HBBFsk7-qqtdQ>
-    <xme:RHVUanqG9Bj-0iDx119T_zEH5asU076UIWWMU11ar8XgrEbsu-6kOUN13OE6FSs_W
-    Cgul8L4EONu_6DjcjXVVBfjXHyT5-x1xJdYlZq-M1K4PMHS0M-2KA>
-X-ME-Received: <xmr:RHVUak7m5Eny96gjmkH3EmpJu_cZaKtMD97DoOkH2t8ZKwLa_AOFfnhjBYw0Fy2vGFVoKqxgay7IK4vLELHTH0nXC9r9Tuxmbrdp7p8z>
-X-ME-Proxy-Cause: dmFkZTGsUIFH299Vf9XiqzoR2Z10BXjkxoFHiSb1MiWIhxtJQ6gSkG8RmWvsW06yC5JnQI
-    OuM0vo17MRsrgb4qlgYRHt0Xr68VhiIxS0mpaxR8gyC3k7YJZbia/vszW+FTW0xUq2yU9H
-    U29gdBh/Iq8igQJnxIHpTwZbwSbhkYxUD+LfoVDqmlvxdDZcTJ/3QyNdO2REa0NiUfUfCf
-    XwkvE5ZRJbyRekZ7tU0bkkf2OY/hoCkH93MIS0pMeOjvVsRghmC01st7CJ9DCOrW1vkBpD
-    ljdNF1Mg5jTJN6WTNGPJdDcFaqSMvAhg1tGggaK8y6kVDXWujJ0UpNryRkb6S2KtWfXchW
-    o69Op75017Zwv00LTLdk+OygWRvKCqeL2nyq98xw5RENX1A2tX01MMGRi1SsWFm2jA9IuB
-    WaPpaW/jVTADSk5Jus3QvVvlkBYyzyoR/fYYM4RDzDRMjEMYpvlS0ykq9+NH37FUzv04Mq
-    fo/mDAfX//WIHsrU2oclolBm4/C31psTR7FiHhnFqR9QO1+q2JgxZqT+z7ygg2vocP3iGd
-    uYuyJoX6wuIim47Ix5hBvyDZQ0QTVAjbmGQxiejt/fnlEB44/upHSwg7yz3k+x/0u0OBys
-    m3jwmdpt6tHIydwbZU1t7j3oSsAZu9s9tdHgKMtlM+4vS523W5uX639OEVmg
-X-ME-Proxy: <xmx:RHVUatqmEvriMlwX_JD0g7kf_EODGbIUFYxYmmDBI06BTIi9rhDhsA>
-    <xmx:RHVUamhiMoN4fnt8DYI7HrcPRRx-aCOM-EP4bHqU49GB4l0JcxOxmw>
-    <xmx:RHVUanLXThM6x0z4xqjg-ha1-dlKHaHV3oRFyHnMhnAwKdzgW3-uNg>
-    <xmx:RHVUamAxDfXVU2w5MQrCISlAFaCgUodxbc8HGUlO3eTKKBQbjIwykw>
-    <xmx:RHVUalgITSB6vQV6jCvDKZtZ4RQ2tYvQ7df9X_7aZmyc7mCqIGmV9_O2>
+	1783920183; x=1784006583; bh=CjIOkFwayt8e2CH203eapDHL3a22i+d8u/y
+	v0a3p0MM=; b=qRi4wkFL0am57JpTymfdopnnrYSfqU5/zEweC+ZdzRsw7M4shih
+	EDRUmNYbj9gRVlPH04pq2tXXLhlxWVJZ9xNYuNpXS2G7qHcAzM1Og/LcRb/9iQpQ
+	uQP3CEAIw5eYfedq2voZ6lTN4YS34Vt8zaWOY84VbPZfnuT7RC7DvAxNJb9xV4Nq
+	infKz4FLSRNtWKyKuI0PBVDq4P4qnfD41KI3B8k6G6WK89vOariFyxOCq6GB0e8F
+	Ih+3PB05yhZCFNLpSD96NSRqRnxyDfiSoyUk/wWOMik3fCNRfB8Smi3xwpk2WL5j
+	N3Kyqb3eGNbSOMnoSFBiPAvSwKbWEt85HuQ==
+X-ME-Sender: <xms:NnZUagX9wz-JOEABkDXKeyfTCqQ_fkumVQt892nMQBz5gC7sfhnh6g>
+    <xme:NnZUare0wjygpGw0a7HETBfHz_lDyYvha9tWbPCVE_S95we1okU-UgVKtN_oUKh_K
+    qbpK2CmH6dq9jTdm70D1c6BvsT9L2n2ihPuZAqKncEXKdaeUjMrjAM>
+X-ME-Received: <xmr:NnZUahXdiCJ_2CD1dfKvhK4G1ToUmohnTBc0NUVOr6WYKm36MmD54I5P7BmawwYsh9_iX6hWEt0Yb0AdcGUT5IZEk2hq_3dARlpxn-ld>
+X-ME-Proxy-Cause: dmFkZTFuuUvd+wD8s2NA+QnZebw2zmjngSTg0hHYjI/vpOS+fuGsP4BEUqDMRyoijqp6Qs
+    XH2d2TCRfglym2tZbNf0lTOwdoRonsUk520wOY2s4viTdsKf8E0E5vwz/fZa5ssyBRfju7
+    YZvVQGWWJsDkgoj7ulAuo+QBAKbgFmvoxVtX68pLhCJpfP0fLZY1AbC/h5hKI6UB5sPoQU
+    H86nhx2jvEr3DYxKwb1AEXIWnF5zKfC5lrI9vs7q2TZ2FoD08FAOd6DMUWw9taO3dXR/an
+    fy0kiYEd9A0I6WCP65hMY2X08CdMyMi8+7uXSOi8fOu7xSPbb5kD/dqTktC5h/VsE9qAVR
+    R7gZ4aRhL670JybW0sASh9vjGLBAFBeBI98JvMBt+ZUzGAMVYg327ZdA/tP78cPzySIkwc
+    F5PK9nk71Nl6cpOMOktBkDTRXhIcLJshGUah3VRKxWRaol7yHMLOs3P/Mcc1KF62GG5W5E
+    ZFH6fhCr3E5MehstwyXR7wahp+axZZ4YCzJi2gdaKym3BgzgwrUabKUyUxGYA8YieDtvbe
+    uLI6QwCEU4bBM6bLixJCxIncMveP4Ttm/eW2RpLCwnW8+C9wM/5t5jlrIXh9TJlESEALyq
+    x7Wr/GhHgCrblchB8rZ+R2VL7Lh0GezhOD1S70bfxMRn7tWtyl8hGrS5uerw
+X-ME-Proxy: <xmx:NnZUascJFh7vtYxGKFbaJMOmFZ4TH9493zrxYDNfAtBskLwNXuTxyw>
+    <xmx:NnZUalO0zZTc2mFFnp1OsVanFPY4y32UqKHZee256arJwY1yDta9rQ>
+    <xmx:NnZUaihnBtBznKzy9kPeNpVkMxbLBO12UGLE5sADu7f5ENkzzrHEHA>
+    <xmx:NnZUag3qZ_VopC75bvc-VrrLjLFCIlC5DgY1LJDlZWlDgkgDhI2ZBw>
+    <xmx:N3ZUaiZfWBZr0VPsrg7JrwrHZMurNVjCROcWYYGmWADXBKQMJ2GUAbpy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 01:18:59 -0400 (EDT)
+ 13 Jul 2026 01:23:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6d79ebe2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jul 2026 05:18:58 +0000 (UTC)
-Date: Mon, 13 Jul 2026 07:18:55 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e35ad423 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jul 2026 05:23:00 +0000 (UTC)
+Date: Mon, 13 Jul 2026 07:22:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v4 00/11] receive-pack: use ODB transactions to stage
- object writes
-Message-ID: <alR1P-RGZNmjyiUE@pks.im>
-References: <20260708235925.3992097-1-jltobler@gmail.com>
- <20260710163722.2962278-1-jltobler@gmail.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: fix up lib directory move
+Message-ID: <alR2MbquROPkcm1O@pks.im>
+References: <0c94331b-7eb1-4116-afa5-811082ad5854@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,17 +85,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260710163722.2962278-1-jltobler@gmail.com>
+In-Reply-To: <0c94331b-7eb1-4116-afa5-811082ad5854@ramsayjones.plus.com>
 
-On Fri, Jul 10, 2026 at 11:37:11AM -0500, Justin Tobler wrote:
-> Changes since V3:
->   - Removed ugly line break in commit message to prevent eye strain.
->   - `odb_transaction_begin()` now only sets the repository transaction
->     on success.
->   - `odb_transaction_env()` now bubbles up error when failing to create
->     the temporary directory.
+On Fri, Jul 10, 2026 at 07:38:44PM +0100, Ramsay Jones wrote:
+> If you need to re-roll your 'ps/libgit-in-subdir' branch, could you please squash
+> this into the relevant patch. (This patch was created directly on top of the 'seen'
+> branch, rather than on top of your branch).
 
-Thanks, all the changes here look good to me and I'm happy with the
-state of this patch series.
+Thanks, let me squash this in and send another version.
 
 Patrick
