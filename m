@@ -1,131 +1,130 @@
-Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2EE306776
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 20:15:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96742BE02C
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 20:28:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783973742; cv=none; b=hous0bHMg+whkuDQ7o7sIqO0Ah8/lY+MtUd57EWXMs4sv08TxXef391RcBxt3hK3iHXVwHmDigDUF+fbxwBM9k+6jRRE2CqGFIJdKMmrfcvbFAt9awT22kbaMnhbl+8+uHO7YGajCyLGy0EoCaPL48QZRJdRMCXf6WLatvEHvkY=
+	t=1783974499; cv=none; b=cRv7arggmBQHaIZxRGMknP26OzEJ88vAunDfyXkfy7FsZFq8MrWEybvYUZu2Scdl/ZffGtUOPE/TxG3DMpjyJPWDjKY2bQwNQM7aQbagzqPbcKPYbbFIMulEIA5N6FD6/nFDHAt5ZPpAxVyH+y608sN2jvpgUrX00QvfEt2U/0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783973742; c=relaxed/simple;
-	bh=PBOa5mabiptJeJTLYqzE/WcRbNWLWG7J3v3LgAnZMYg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NNxuuynqeQMlrAwoZloHliYd7ETVXYQ43dNPMso5Jbq6Hse26YFB6bxQHC92883jrMarTQtwUChbQ83hmT5eKhztUtj+EE4rrVP+mNtCKqhEcMgBRidOUmk0aHGhbeSa/1KkFeGxhx9aCJjU0hzKXYrG9jscCfUJVfJ3EQYjnJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=AOqMQbkn; arc=none smtp.client-ip=212.159.14.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1783974499; c=relaxed/simple;
+	bh=k638VykDQLGAcmf5qcDw/8/eZCcNtW8VR7Zo8y7M6RQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hzkTtSTIEI9nR0PqyS9mFZUyzz+NO/LfKg65QjaxIZ8316bSya4zzh3eeZvEeedmZTH8K7Xwu4s9OEOhFccvN4p15lk8+UdtG4tgPvLzG7qV5X3j46a+O62xMaFQtAncztsdtk78gUBruKR5xT46+XXJ/S+8Iu2hgejDdM280k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e6xpz7a5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kd8jLKrE; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="AOqMQbkn"
-Received: from [10.0.2.15] ([195.99.11.174])
-	by smtp with ESMTPA
-	id jN3owZQyI9RfhjN3qwIxqO; Mon, 13 Jul 2026 21:15:31 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1783973731; bh=IbANVzFz15qQr/YDxGitxE3kCNNxqpNs9UmTLKsPAcU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=AOqMQbknNqsIzJBqcsp+q6fu1jaFsfPrpJi0mBgmjaTFN8lga2mv0pVDdHerMs15A
-	 J1+5+fo+DHrAcL40n+fW6D2f+PFm7PAf8ITSZbp5wRjMPIBhBJ2OKFKOggPsClp2ui
-	 uLQLwwtM10dWk0HG8F2xruZSj2c3oQhAKJOIQZBWabiO6mRP+8hQjPVEfvKiQ01UZN
-	 vUt1iLx+KJA9NOkQ1fyrGv9zdqkQRnEmXJXbj5H7LnzAqPZki0KG/HVkviPk0UYNKf
-	 gv1h/jD5V3Hj9bcNPyV0phrtkxYlNEzYCzQYNFNCn7YuVdabKpZw4kvwZPSEWzApx9
-	 dxM4Yvp9v7R/Q==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=S5R6w5sP c=1 sm=1 tr=0 ts=6a554763
- a=rWEfxJwGD0TuYe46u5FB7A==:117 a=rWEfxJwGD0TuYe46u5FB7A==:17
- a=IkcTkHD0fZMA:10 a=8pif782wAAAA:8 a=48vgC7mUAAAA:8 a=yMhMjlubAAAA:8
- a=ECa1zBsbeb-itsmtN84A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=c8AP_gY5QSoA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <82ef71fc-8099-48dd-b841-87188bd39fa0@ramsayjones.plus.com>
-Date: Mon, 13 Jul 2026 21:15:28 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e6xpz7a5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kd8jLKrE"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 923E37A010D;
+	Mon, 13 Jul 2026 16:28:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 13 Jul 2026 16:28:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783974496; x=1784060896; bh=jBzz6HW8bQ
+	HbR1L6URaStppjb+TTitndckKFjtkb0NY=; b=e6xpz7a57GhI/t+C4D9hOS0hIa
+	P1C9mqW33X3kU4QhewApn9VJB9kv6Mw6GS3UxfkL7qHSE9+uVT6+Bh6c7FeX/egg
+	ROwCOkq3TVJ+RYtO5uzolVAvJStjUN0PORxFDIabnJeG6vumuoUAIuEbDViMbNx8
+	CSN/MD9Jo3EWYEOjp20s7VJuTW4PYFHAelNb1tmZ2f1CFHaGlmnExi7wLAP2zuq0
+	7m4y4qKIhU9ZGsE5oy8vhR1eKy+ZTpfe3gI/vveieEdZy9yFLYF/Q//pGZ1WK1jn
+	+hit9jXo4WXWYKS4i5HjlxmttsMSXqYyrup6IJL9238in+o+I0pnT+5Td6SA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783974496; x=1784060896; bh=jBzz6HW8bQHbR1L6URaStppjb+TTitndckK
+	Fjtkb0NY=; b=Kd8jLKrEOQ80+2LXMsx+cWZi2v6M+kOPCucVUT4kLx8r2FL2VU+
+	x5yS+koA29ST1Eh1bAA1x41GXns4W4lr1ggblUqu/JVUkYK6m62h5QtgqQQd+Esc
+	KuBrB6AMCa1FRlYbRBLFBRpFfvQ27CJCOeYaWmd2IGOqB+cKV/3BCLTOdRwhG1ID
+	qBkJEmhB6JwqLSO1PsIZwS0yUHKydYtzKbBqpwyCSQg5aMqQTQSI6W4WywNN8niR
+	/2Q5wL5U9p9YkVrDuPAOlc+MWmXOE9P7jGRmeCiCA1/rvflxihWqM4+WjoXC2RRp
+	HVqgq6FGUH29ZUOuAhT4/Zpt54QeYV8zW1w==
+X-ME-Sender: <xms:X0pVatJKMDP-qz5KOKxJ29N5q4a7o9n5QwzGA22C0w9-CksF7WvUWQ>
+    <xme:X0pVavomzqnoF2_rN0KqSY5tkTyGLmaGiGkTd3wf104AvxcR0evNjQZo2Y0yLkF9Q
+    JXlywh2_NMLpiLtJXJD4lVxL1CQZqGTM6Lgk1iz_utNMYPATCb9MQ>
+X-ME-Received: <xmr:X0pVajs_Ldcj4npiWG9otUGLefdMvGxUxwz-ZxgnzeglUR_cibTIkNzeIHamxOctIOnLmW744CwSfgyl2zfGOfZaPVtOqMhwrKiWN-Y>
+X-ME-Proxy-Cause: dmFkZTEcHcWa+DZLdkHqQo+0padWSyE2MEFZoPK1Dfym0Z+quRQHo1S2mlwSEdzFEPl3qY
+    Yjx/r0pnQ0PbXJSrx3WzIoPyEaG499JVYTsFT5y6AYC9du2mcxK5KgfdhxzGMlbbE9E04l
+    oCxJiGxJB8rQv5fKV9LT3dhXe3bXS3Alviq9UMBJTOn5r04xXaRk8MzL/awuwNGRPj/XPM
+    fB0svncwpp3UyqZ2GgoUYucuk7ilgonBuDbt2Xo70UxczpgC4F4QeHtan57yHAYnid0Yu2
+    Z7hgSRugEYkgLdIw6yrNKnBAhp7TNpJBa7TLPJ80THkbGSPGK1mVRfY327Q2laDcBKyFOi
+    P1c4xrk8+5/oXsOpWdJ9BBkGF0MWDlHblYwPSknRx9s1sH4CWbWLU/xO8lOK/MZRpwYoMR
+    uNz5GmVxqv7d3GLLt5J91tV2Na9OV1kydTlbXSz269nv/n15PFdBr70bAM063ufWEsuCKb
+    AyXjTuaoPMPpqF/1mWxxvp3998PCsNotK0tJBMlgS6QRGxvLodeOp2HQ0jlki9WI5aGDRo
+    usH17quON35qPuCILlC5UEFGI7GVhB3B481Zm6qIJTeAaMsjHTrTktxmxYI5zkl7RLmibv
+    Hku7qRNY5xaZfQ6h68oYt2vwu9abqK9J4RspSrWvwxwgrIe1h9KkVfnTA9FA
+X-ME-Proxy: <xmx:X0pVahI6IcepZ4tbQKEZrw_lpf2zEtIOsrBBBzA5QUH3vzjD8B4ejQ>
+    <xmx:X0pVaqrI10Eoz13TCybLyGml2ZlQUdC7d38oQ5-SOUpMknEoAw2bTA>
+    <xmx:X0pVasUfp-39HVFRhTwUU50L_1QPktczrkcrx7V0nnOdmF_SHGCnrg>
+    <xmx:X0pVan3Sxj2bG9hAOPkEQNyPt1FHDMrpIrxFUchvcXponjZ4wezuZA>
+    <xmx:YEpVagAJiVUp4Q1ylTj_ioYcX_YmI4EWraLErTiwB__eRihiVc0e3P8d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jul 2026 16:28:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  ayu.chandekar@gmail.com,
+  chandrapratap3519@gmail.com,  christian.couder@gmail.com,
+  jltobler@gmail.com,  karthik.188@gmail.com,  krka@spotify.com,
+  mroik@delayed.space,  peff@peff.net,  phillip.wood@dunelm.org.uk,
+  siddharthasthana31@gmail.com
+Subject: Re: [PATCH v11 0/7] graph: indent visual roots in graph
+In-Reply-To: <20260713-ps-pre-commit-indent-v11-0-dcb65bc4ba99@gmail.com>
+	(Pablo Sabater's message of "Mon, 13 Jul 2026 18:43:57 +0200")
+References: <20260713-ps-pre-commit-indent-v10-0-82ddab26bc96@gmail.com>
+	<20260713-ps-pre-commit-indent-v11-0-dcb65bc4ba99@gmail.com>
+Date: Mon, 13 Jul 2026 13:28:14 -0700
+Message-ID: <xmqqy0fews69.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: cygwin v2.55.0 test failures
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Johannes Sixt <j6t@kdbg.org>, Adam Dinwoodie <git@dinwoodie.org>
-References: <f65466c9-bede-472e-ad57-e72a5289be27@ramsayjones.plus.com>
- <20260712200426.GA11328@tb-raspi4>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20260712200426.GA11328@tb-raspi4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfPWyNwLVn5h24nd5BtrBnPPdUOwc8XQB9rbGIjqmzMSGj3/hPNXQSMiQpj3Q0tYZV7kCT73b/eAlAI0goue5nbD/AYE7l17H5UBTvmLVutvURaVN90B8
- xprQl0bmd6pbBBK6+FXaH9m/qjgZFD82INb6ImQBmfv2Gjl8aBDr/R4fpca32H06tIBU/C3IfzyUuUX3OsBmSXK4PDKJDFQHApg=
+Content-Type: text/plain
 
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
+> V9 DIFF:
+>
+> - Changed boolean variables to be bit fields.
 
-On 12/07/2026 9:04 pm, Torsten Bögershausen wrote:
-> On Fri, Jul 10, 2026 at 07:32:23PM +0100, Ramsay Jones wrote:
-[snip]
->> [I also had a note-to-self about 'mixed / and \ urls' in the config file
->> which is exposed by these same tests. So, another patch may be needed?]
-> Not sure if I follow. cygwin allows mixed / and \ . What should be patched ? 
+v11???
 
-Yes, maybe nothing needs patching - it was a note-to-self to check that the
-mixed urls don't cause any issues and, maybe, normalize the urls before
-writing them to the config.
+>
+> 7:  737331b68d ! 7:  c1fa81022e graph: add --[no-]graph-indent and log.graphIndent
+>     @@ revision.h: struct rev_info {
+>       	/* Display history graph */
+>       	struct git_graph *graph;
+>       	int graph_max_lanes;
+>     -+	int no_graph_indent;
+>     -+	unsigned int graph_indent_set;
+>     ++	unsigned int no_graph_indent:1;
+>     ++	unsigned int graph_indent_set:1;
 
->>
->> Anyway, something to think about. Hmm, I suspect it would be best to just
->> tidy up this patch first. ;)
->>
->> Just FYI. Thanks!
->>
->> ATB,
->> Ramsay Jones
->> diff --git a/connect.c b/connect.c
->> index 47e39d2a73..6f5715e938 100644
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -1088,10 +1088,12 @@ static enum url_scheme parse_connect_url(const char *url_orig, char **ret_host,
->>  
->>  	if (scheme == URL_SCHEME_LOCAL)
->>  		path = end;
->> +#ifdef DUMMY
->>  	else if (scheme == URL_SCHEME_FILE && *host != '/' &&
->>  		 !has_dos_drive_prefix(host) &&
->>  		 offset_1st_component(host - 2) > 1)
->>  		path = host - 2; /* include the leading "//" */
->> +#endif
-> 
-> This very lines come from
-> 
-> commit ebb8d2c90fb0840a0803935804e37e2205505f23
->   mingw: support UNC in git clone file://server/share/repo
-> 
-> ...and I can not see a reason to remove it.
+OK.  References to these occur primarily in a boolean context, and
+all assignments to them are either 0 or 1.
 
-Heh, I just read a few references [1][2][3] about file URIs to refresh my
-memory (I read the RFCs many many moons ago ... and they seem to have
-changed in the meantime? At least I don't remember it said that! :) ).
+graph.c:442:		revs->no_graph_indent = !val;
+graph.c:1008:	       !graph->revs->no_graph_indent;
+graph.c:1353:			if (graph->is_visual_root && !graph->revs->no_graph_indent) {
+revision.c:2630:		revs->no_graph_indent = 0;
+revision.c:2631:		revs->graph_indent_set = 1;
+revision.c:2633:		revs->no_graph_indent = 1;
+revision.c:2634:		revs->graph_indent_set = 1;
+revision.c:3209:	if (revs->graph_indent_set > 0 && !revs->graph)
 
-I seem to have misremembered the 'number of slashes' after the 'file:'
-prefix as three or four, not two (specifically with a windows UNC or
-absolute path). However, I was clearly wrong!
+You may want to rewrite the last conditional check to:
 
-[The 'non-standard' rules on win32 are wild - git clearly doesn't support
-all the edge cases].
+	if (revs->graph_indent_set && !revs->graph)
 
-OK, so I probably need to look at the two failing tests again - maybe I
-need to mark them with !CYGWIN.
+This avoids confusing readers into thinking the member can be set
+to 2 or greater.
 
-Anyway, more work to do! ;)
-
-ATB,
-Ramsay Jones
-
-[1] https://en.wikipedia.org/wiki/File_URI_scheme
-[2] https://datatracker.ietf.org/doc/rfc8089/
-[3] https://learn.microsoft.com/en-us/archive/blogs/ie/file-uris-in-windows
-
-
-
-
+Thanks.
