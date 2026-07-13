@@ -1,67 +1,72 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A9843B491
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C68643B3DB
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 14:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783951356; cv=none; b=Y+Dgur6dwEZ3jPN5OA8fT9G6D6cxr27LQY9FNHmQ+9i4XztToquzgVezQjBZhbfpdwrxaZ+YoHMdjSsN+sqOUUNdirJ5w5nuseKR2w858bIE+gNgCQl1A7n0AdfnCVQ4QCG1X4/0wGEwJvJZ8QhhCKUjT3FYe48DNEk4ZvvQor8=
+	t=1783951362; cv=none; b=dH7tHFZUwMSov6PmBZbh3ciBdX8PztEE/Le4WYxO/az/VypDOmq9PKH5HMwmCqeenPvLG2oeTRo3IB/f754DX/p8CcJXkXswKLdJiOJepF+qJi3haOFamL87jyFliIvYlQclhGr4n4TGYDn5AxBks8q46zpMjuDPSKDKS2HuKeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783951356; c=relaxed/simple;
-	bh=GQqCVt51Lg5AYHL3m0boK1JVKGYvFeF7mC4NWFIOkW8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IEBQvKZyeDkEKdQ6RAj1ewjUaGtoKlM6guWHIzGmWQzkbd9tA80gBpaxAejnL3qm9gTN2zXtEdy58AYi8mjVKNLL6kTxGwwzle8Ui1OohgZIhKLl1fsCcLHKLrWtgHKVXH/KEw9X3wac1+w574zBwKVUWgr0IDURwWdSjRfh0vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y2LQOJtw; arc=none smtp.client-ip=209.85.215.177
+	s=arc-20240116; t=1783951362; c=relaxed/simple;
+	bh=lq58gOSiBNZ6RBj+QVSE8ZG4/ffMfAudM8yRCHeHuFg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Xc/Z0kUFCwn6zXwquCoGlMAJViUm5XA+usgEj/BIYQUYXsI9gzUqVsB+kAVJJiuZjrSgVVyrURF1mAAROyOiUY14cJGgX2r6XAdE1YA1YkvY2y6hUPPeIqYGuTR73oAxZeyw20Wu1QJMHoSKMOQgqHPoTqiMzDA1lsIW8HDYQj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RBq33YOT; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y2LQOJtw"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c9e0b89e228so1894794a12.1
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 07:02:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RBq33YOT"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-ca7bea5e5b3so2314521a12.1
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 07:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783951355; x=1784556155; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=A/pLS34LkTqqEQJIoeYHBO3lxl720HeH5FwGyNLbgAs=;
-        b=Y2LQOJtwAPEHicd592MwzUFohO7+bWIGgBz7nnkXIKB0KBoKUI8gLO+OAWU0i16w1+
-         ppb+RlcFZmRZrtCb8QBvz+NX6tCas9hCW9bvSQ/6sm3uS0amjgA+fiHzZ49qyyoFv0Os
-         lIrl9HXACeWBZMVN9QTPWzGfFZtLdIXm0/5/hucDA6D2NEdKowxpAntVWJB1ZHbLrBzd
-         MpcNrzm6cIvR0k4UyhrC0ctFyQ0NuvlFSJxoy++ZxrJFY7vwGvge6l3a7J8bTZTLrnFX
-         9aJwpk27uuE/sN3Y9tqyQV6FK9WaPNEyi4/dbUMR49r4fcha0uVE9p5J+mFYFCu5qjln
-         4Q2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783951355; x=1784556155;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1783951361; x=1784556161; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=A/pLS34LkTqqEQJIoeYHBO3lxl720HeH5FwGyNLbgAs=;
-        b=QsrupE1iICp6ldF64tSXXXgGbAi3CLkfufJShyggkLy+G9YsDcNZtwZlkEcW6siV1x
-         Rk1uK0e2EiWtVSGjgX/F/i4BCKCOZNIbQg0RxO7vASvu8L5TkOi64RttEuX14PWWhMBJ
-         3QDR993Y825aSYCM4mfZ5j+rB5y4n31pkfRtceMmJoKJVrT08L2QSe88rZa7qiCTY/GL
-         Ujbgn2DFrWipP+frMoF3igBp3F7z+lhbwmgckF4JuLcrhX/t4IkSxDqbX7pVz3IKKDTf
-         PZtU+tqY8oflgm+0ge3ZmcFt4nmXVu/b0E8m+9Bi0H93qmx3029hrRS7AatOO8muIAIO
-         27Ug==
-X-Gm-Message-State: AOJu0Yz4ZLiXGjLYaQPJMi+NcEUTjpTfUew/LfRWlqlmvdYzQZLYOHyx
-	dQpEp/B01UE36ZIvN2odPriyxB1b931iyQQTpKDifbSj+9XhEt+mGKbI1zuEYQ==
-X-Gm-Gg: AfdE7ckJxls7ugauRdgitQXGlzPTQdezE1xZ3dngIzU+pYJZ5Rkv50dI/8WcozAG9UJ
-	oGBHK0wlV1mctEJX4w7y8dWLVXO1lvjND7yn2pCtFbSqpnRbmhRkOGkdy6RfOukQ4iyoBB+fevg
-	XaMN4RV8P0ANK2i/F/Zdso23xJ5ASNJgN5mZtI4zYOf+c6OWTQryemN3KcDh0Qe9J2KKU/t0ZB4
-	Vo/zy9m4YxfYGHZ9FBslfahhy8suXJf9w5kq/F86zvTn2CwQ7TAVaS520xyh9nuqwCEIsCvCLAf
-	lPmI0PWjYmgRIzuW5D6gZxz0tt7c7DYehpExKIwbVvzGKys7+TKchJls4qSUfHRDXkoHzBVLo2w
-	nhAke9BNCZBouOucTDm9Y9AmZpr8vgtAIq+W7Anv4L5/8et386fQedFPqjxB3h50BTS3+KHJYR+
-	szcc+ERPpbFi91WmpJRzZl1SdsRq81xM6gC8/Z2VlvwcQkrg==
-X-Received: by 2002:a05:6a21:7701:b0:3c0:9c1a:8951 with SMTP id adf61e73a8af0-3c110b34ff1mr9202045637.73.1783951354731;
-        Mon, 13 Jul 2026 07:02:34 -0700 (PDT)
+        bh=b3pISDEew1EQhBb7L9Ud1J6yQ6j23VMjHYkme6H5rqo=;
+        b=RBq33YOT6RBZa6BifnVXtSFIHcDc8o5EnKpK108umh+CfQE8GVYOTlWsO1Sz7tc66q
+         bfpR0DZ/3/H+sH39cI4OlzxKpTpFm59Gkz7Fmr3ZDWxAfAuqf3O4EivsaJy6hWyBrD4o
+         6oLau9pbONjAVc9S8nfJgA/BKlJmcwPLGfLNtYfS2T4ezpV1Cp9ufNaJNtNyeBIgseTx
+         eLeknhBeWMiS5BDFD9HJZcex7rsYzGB/LEPQshaFx6oYs4S71S4UewIGmH9zVGbMbuSJ
+         KVGlSPK4wDZYzUUR20JfY82f5uG/KoSoEhcinm7o8itGV2e1Nafhm/NVsFUozW2+jvHE
+         UPhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783951361; x=1784556161;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=b3pISDEew1EQhBb7L9Ud1J6yQ6j23VMjHYkme6H5rqo=;
+        b=Hs12A5/iWtWWSMAF/eFTZJSRntEL7co/0qMa3AxDPgsLpowzvXf+b70IGd6Mwpbr1f
+         RfTeMLtHqDxGno1s2K0Ig+aU6OMo2XjrBdRT2VOU1sGhPPNHfRlWGzbp3toPwVgyzJYa
+         Lz1nx05zTkCVX7Jjay5m8mdqHHvnvS5UgVk8neKyLHu5Z/rfe0diNUS39NCzqjNPHOsZ
+         vt+qg6Chy181uBSELY8hY2OWjqBPq4dRqqrdaHPBF71eRChYcTPXIRjJeSp5Y2c3G4mT
+         nSxBbJMOUQJbFNwbX0w5WF5RmQxMgVtP8oA1VVfK3tznrjpBf4IQEzgzcZiN72VvcXjX
+         qnmw==
+X-Gm-Message-State: AOJu0YzopOK5HBIaEiawfjV79dgXMxIWoPwfvSXNxIW4OcI6Nhb4xajP
+	Uxsd9fDAJA/xw5fiZZPjvYFAlHYbOAVQ2+wb4Ya2mcHQLSnTUZyAsj0a6pC8HiwG
+X-Gm-Gg: AfdE7clIGqu3A0kWktYV+xqPxC4d7l+Sb9Tfyw4eY/cFMHEakwInSejYJRsxpfX6tto
+	E0MLps74JTly1um0mRKEcUbEzXCA6+GRulMFaQzxIErgYSc4Xh2tsf2uzr6KvwVZXKyjmfTJitW
+	jp1YyhXG2AK8SxDw8Q6Qj0vTbiAYYpiCSVTfUD8zqjd5SRZlIUP9xc6VIf592F9nnXrnnahZqRm
+	y+iRr+2Akc8R5ZuVaw3kR6Hhr/r1YKPfJxcPuE/C7/iGWPS1XEQy/gy8weJCQ94pDgDr3VI7yLG
+	bWcjbKa04X86bYV4ZfdAhDfIAOP8q6M88iTzLHU4DdLMYuiEyiERQEh4sflxPcl9+QXkMgGPyuC
+	2PVumAdUZGfTEwSaK8JLRNiUwGJvyDrqbBKMnjIk9TjXrCrQbXJRINaG/+t0OAp4J0AmKuxyq6Y
+	1nApwGNhb0Xp5wYo7Wq95P33pBYCK4wYX9TcAZrcrexI9vbg==
+X-Received: by 2002:a05:6a21:b8c:b0:3bf:983d:e9b4 with SMTP id adf61e73a8af0-3c1104e577cmr9412580637.33.1783951360808;
+        Mon, 13 Jul 2026 07:02:40 -0700 (PDT)
 Received: from localhost.localdomain ([2405:201:5c10:3a1b:ac91:58ec:550:f309])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b93ae3b45sm19600646c88.15.2026.07.13.07.02.32
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b93ae3b45sm19600646c88.15.2026.07.13.07.02.38
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 13 Jul 2026 07:02:34 -0700 (PDT)
+        Mon, 13 Jul 2026 07:02:40 -0700 (PDT)
 From: Shlok Kulshreshtha <diy2903@gmail.com>
 To: git@vger.kernel.org
-Cc: Shlok Kulshreshtha <diy2903@gmail.com>
-Subject: [PATCH 0/2] t1100: modernize test script
-Date: Mon, 13 Jul 2026 19:31:39 +0530
-Message-ID: <20260713140142.27898-1-diy2903@gmail.com>
+Cc: Shlok Kulshreshtha <diy2903@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] t1100: modernize test style
+Date: Mon, 13 Jul 2026 19:31:40 +0530
+Message-ID: <20260713140142.27898-2-diy2903@gmail.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260713140142.27898-1-diy2903@gmail.com>
+References: <20260713140142.27898-1-diy2903@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,40 +75,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi,
+The tests in this script use the old style in which the test title and
+body are passed as separate backslash-continued arguments, with bodies
+indented using spaces:
 
-This is a GSoC/Outreachy microproject ("Modernize a test script").  It
-cleans up t/t1100-commit-tree-options.sh following the guidance Eric
-Sunshine gave for t7001 in:
+    test_expect_success \
+        'title' \
+        'body'
 
-  https://lore.kernel.org/git/CAPig+cQpUu2UO-+jWn1nTaDykWnxwuEitzVB7PnW2SS_b7V8Hg@mail.gmail.com/
+Convert them to the modern style in which the body is a single-quoted
+block on its own lines, indented with a tab:
 
-Each patch makes a single kind of change:
+    test_expect_success 'title' '
+        body
+    '
 
-  1/2 converts the tests from the old backslash-continued
-      test_expect_success style with space-indented bodies to the
-      modern quoted-body form indented with tabs.
+This is a style-only change; no test logic is modified.
 
-  2/2 moves the here-doc that creates the "expected" file out of the
-      script's top level and into the existing setup test, so it runs
-      under the protection of the test harness.
+Signed-off-by: Shlok Kulshreshtha <diy2903@gmail.com>
+---
+ t/t1100-commit-tree-options.sh | 44 +++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-There is no change to what the tests actually verify; t1100 continues to
-pass all 5 tests after each patch.
-
-I confirmed t1100 does not appear to be currently claimed on the list;
-please let me know if someone is already working on it.
-
-Thanks,
-Shlok
-
-Shlok Kulshreshtha (2):
-  t1100: modernize test style
-  t1100: move creation of expected output into setup test
-
- t/t1100-commit-tree-options.sh | 59 +++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 30 deletions(-)
-
+diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
+index ae66ba5bab..fabe5a97cb 100755
+--- a/t/t1100-commit-tree-options.sh
++++ b/t/t1100-commit-tree-options.sh
+@@ -22,28 +22,28 @@ committer Committer Name <committer@email> 1117150200 +0000
+ comment text
+ EOF
+ 
+-test_expect_success \
+-    'test preparation: write empty tree' \
+-    'git write-tree >treeid'
+-
+-test_expect_success \
+-    'construct commit' \
+-    'echo comment text |
+-     GIT_AUTHOR_NAME="Author Name" \
+-     GIT_AUTHOR_EMAIL="author@email" \
+-     GIT_AUTHOR_DATE="2005-05-26 23:00" \
+-     GIT_COMMITTER_NAME="Committer Name" \
+-     GIT_COMMITTER_EMAIL="committer@email" \
+-     GIT_COMMITTER_DATE="2005-05-26 23:30" \
+-     TZ=GMT git commit-tree $(cat treeid) >commitid 2>/dev/null'
+-
+-test_expect_success \
+-    'read commit' \
+-    'git cat-file commit $(cat commitid) >commit'
+-
+-test_expect_success \
+-    'compare commit' \
+-    'test_cmp expected commit'
++test_expect_success 'test preparation: write empty tree' '
++	git write-tree >treeid
++'
++
++test_expect_success 'construct commit' '
++	echo comment text |
++	GIT_AUTHOR_NAME="Author Name" \
++	GIT_AUTHOR_EMAIL="author@email" \
++	GIT_AUTHOR_DATE="2005-05-26 23:00" \
++	GIT_COMMITTER_NAME="Committer Name" \
++	GIT_COMMITTER_EMAIL="committer@email" \
++	GIT_COMMITTER_DATE="2005-05-26 23:30" \
++	TZ=GMT git commit-tree $(cat treeid) >commitid 2>/dev/null
++'
++
++test_expect_success 'read commit' '
++	git cat-file commit $(cat commitid) >commit
++'
++
++test_expect_success 'compare commit' '
++	test_cmp expected commit
++'
+ 
+ 
+ test_expect_success 'flags and then non flags' '
 -- 
 2.52.0
 
