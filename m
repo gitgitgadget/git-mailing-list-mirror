@@ -1,66 +1,65 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43B4229CA
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 13:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3F94229CF
+	for <git@vger.kernel.org>; Mon, 13 Jul 2026 13:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783948695; cv=none; b=PY+YDgh5Wx+89OgWvE5ml1IzNApzvPd9kali6kHyvmRgkXzPsK5/BvHGA0xXW/JPUGToxnmPxeDytzyp9QLPxXXgShOlbNY1VHrBT2uWm7e5FL6m1QMLTRQrD95oAAPA/Z3rfgr010V24smuZF7iJDxTcFzJmOHWMaCD8ac7Ylc=
+	t=1783948722; cv=none; b=aqReqm9+f2afGIymRkCJ1qTlVt5MqU1aYRo7rRysQ47tj7P213W9eBfm+ZXKokfzSEMckVt72XCEY1K0Pei3ZJ1D19bTjrvMDfbBMA5xhj6kaE6Qm8fQ1qhV/YHAfrssixYZ3qBff9D7Sx1hZCr92zmXcf4GsfpjxUX7AU6WT2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783948695; c=relaxed/simple;
-	bh=L1ZDlkj+blim8OKCBLllRx6CIVqcZOX4/pnVn8kqIuQ=;
+	s=arc-20240116; t=1783948722; c=relaxed/simple;
+	bh=wyfy2pzcqOVzGcaSAs3g4f9VYNFDGfa2KiwQCapVTjA=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kMQ2lHSwvBqvE7DiLoh+hSbyV1SJz34i9fr0oiNANnqR4y4Qa2Swo7OiYMRLvPbRf2FDtq8q7ktdirhUVEkTUtNVkg8HQ19VKglElsKFi1XfKxnTD+GBmITfCctt2xP9hMDCz8czwmxqMuxReTKjeledK+4IHSA8oex/7K70Z0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FMZobh/c; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=ovOIUkZdRxMQi1U8mNXHtMeP9pTP33Hd6X5DbNmITG3jChXNGDh4sZWay9Eh/WsL01zVm7aHhZUznWetMWPxU/roFp8pRMSukS+EUc3L7lk9MMmOXtwQfMGVPEQTyjhFGNHnd00h+JaxZ1cE043/ypx6BoxgvWMIjGW1CI5lGro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SWB0q0eB; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMZobh/c"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c15fd3a299eso396538266b.2
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 06:18:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SWB0q0eB"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-69c5fda04a8so4151065a12.1
+        for <git@vger.kernel.org>; Mon, 13 Jul 2026 06:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783948692; x=1784553492; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783948720; x=1784553520; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ZjvjserDcXe7DOv0+ZKJBXSg4aVp0sYWWuj3KOqIrqs=;
-        b=FMZobh/csRVWTd3kQJhQMqqaodfe7ZTt11uVmM8/AtQegc+rLskJstTF4TojYxcDRJ
-         bLoX9m3V6mRRjrKhzI9ORK0bhGtGfyDtOfJuPHwiPwZkNRZOCmTf9e4MDS/uAHLgc8Bs
-         LvyAtxIHoev5OKZpLE6hcJolSe2m1inYEVdacvcAhM5iDsgrel/wpjVcs/vF3kI9WtaD
-         d5i8OSm9y8bp3uGDgGv8HG5FV3stJ2BNHcAn0BhWnzqv48QuqQea/w3qcmnaqOWa2Vlc
-         G+LKbuHA4EcRaiT9y4GYtLFb+FJjqVoczFqaDi3Kzk82WeGjncnW7sthXvhkZgtUxrIi
-         PY0A==
+        bh=YEnv++11IEepc76LF8yWQUhgF/7/Lywm1mJViHWCYhc=;
+        b=SWB0q0eBfmEq+osdXX2Jrmj+2t3qqHl4rqu8gMGdwSWY/a5uZvqnIim9CzVObD+WSp
+         +98CKgIGvg1GrH3XRmAiIyQf4MqZMR7T9GlsCkbNCZ6rFfB0k8BGmASbi0d1XEUUOG+5
+         2/T0yQ88roW7dZhURgwjaAdw8QGSrdGC30b9Kv3Ro7LHW1oIpyVbEXDyo5Xam7LwDKqD
+         lPH5Hnq0EDCx4dALJonY2nq77Y1ADNyFaHpIpsfIT42zbYAmZYTEahTdisXPCrvc9nLA
+         Oo47EuCwic/Sn+TtzgdLxsfBRBLX+flzCP/2FAuAMW0qojQ+KhDEvNXqtHL0/LtM0K85
+         2aLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783948692; x=1784553492;
+        d=1e100.net; s=20251104; t=1783948720; x=1784553520;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ZjvjserDcXe7DOv0+ZKJBXSg4aVp0sYWWuj3KOqIrqs=;
-        b=rM/WKI0SEwBcwEbqks1GC1hPEbGTblo9WDPjsYHM71N2tvb4Po9/BsIMhKw+GFcjL5
-         7/LtMNumDSzMmGsMFvkmN4AXm0/EBYwP270FwstXZsWFw9UGBzMPPb34gZtkkdP6naod
-         SjNYWCOJjXpNlXe4yzf97KtQUr46DmZagV1B+GSm/Z/kRWObMN6JEGVHr1F+C7wkvdWc
-         Uel0fgikNKtUxdIhIX1EVoNOzWCKxfeG69CLnaDODeQo84z35peBxJSAHhWJ/G5wzwMG
-         Yxd3XDdH7gIzO7qRjcydesjkDyBGYWdGmSwptzsm9Nksr0/CP+7MyZQylWOqgekbh+Cc
-         1koA==
-X-Forwarded-Encrypted: i=1; AHgh+RonyFnUq1GnhsTlqmni8gtGDKTbBH3lt8NOfCuK4+j0RuTmTK1LhxDQ/gtL3z25AtsibLI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMrexw6qVmVWgWiAUND22rf0QiQ5pR0YGt/oS8622FV/De7fsB
-	sgB03Tl/Fcg2TMzd1WfbHrE8SoCJxan8L/ppwrL2PhN7t0sYDSYX4WCq
-X-Gm-Gg: AfdE7clWqC4Me1+cvts4uck16OMZZVVUyJ2BOYUviGZMU9NzMXLdXJ0QEkyoHoSfP9Q
-	IbklI+QjxN0HZ3dH9VqEty7N2Uc1q0Umhg4NO40ghnHQ1EywswFEmJ7elEtzkpvhPshn8Gpaxw8
-	F2D3f1JRlihjHMPALVwXVgzuw0V0MfLLNPThEH5LSbserQGivwNxAIdfh9XifsRjWzBgWD5Fokv
-	DKWEqHuINKtS+fYtxV7S8b02e9+kGmZffYtdXIdp0IcxCgX9H8390YMrLbj4EeXwyLs9q+OXOYY
-	T9DuM/jlimNikmJJQhDCX0Yv16xgOgVrnm5VXsq0asz3WWdvKzUld7QN2qiav8Vek3li3NMGIQm
-	gKeTYtP3y6ByPLiedP13I3pre4DijoUZjFIWpJd9ngtsLAPP2JO9jwdCHHKX1ba796kZIVyG6P6
-	yxFSUyypHHdli8IDBUu4DmdKgqK/UJAoVKU5gDcr28ibO6EreRFWQvlxbTJHNNHq7VWUc=
-X-Received: by 2002:a17:907:8997:b0:c12:7b3f:6c15 with SMTP id a640c23a62f3a-c161f3faad2mr398624066b.62.1783948692118;
-        Mon, 13 Jul 2026 06:18:12 -0700 (PDT)
+        bh=YEnv++11IEepc76LF8yWQUhgF/7/Lywm1mJViHWCYhc=;
+        b=eaNm8fQozB2KyvWqN4jzNm8+83LeXSSWsNObUIBzK/fCe+LZGr/6fgaBIiqO3qo7cx
+         1EhCbfv6kUrn+bPysA9eJXlHgWR9T0ypZCvOhflhxoAK8MLUTRccaspkkOmwLxi4dGI4
+         cFNy9DoJZj4NRo3Ei8+xco8yvDbbWJNF67Q4PSQeVGB03qhulC+AQxll18vnKqaBc8PP
+         ScHa81zr+jCuAsPYBENxsKFt/suqodQuU/t6/LbojXAsbpI1BgP2JMobZEZzCLZiGPtF
+         9jq0SSQMadO1oSKv4kwjjt+fL0hwLzAYubxqRLtjzaO1rIoeafaBFZS5gVPe5RRjKDqQ
+         bE3g==
+X-Gm-Message-State: AOJu0YyokkzBAYVlLLcb1VEjSHG9UB/mSQTdFQTt5T0Y5O7JVPEDs5Lf
+	OOK3Avz1sQineFIvHq2VvQnVYI8Or2p73t1li3Wt4ehUfZO0t1ZvZyum
+X-Gm-Gg: AfdE7ckgXucfDYbknlom8ysdq3dyw8gCkfSRA/VGjoRXqyOMQ3WozTDKOrhad4EAi1M
+	ja50Id3U07efKckJONLX2OHMz3IZM3Dik/vtC0vdLqH4m91TA4JKIcltHvEDsYv5Fy57a7+NAA5
+	WHmyS+nI0CsbTf1DoDPE4wwirDGaehWc1r8xBZCaJ+kItpCsQ63QzLTvb3qg5R5y3iTrHiBrNgG
+	y2VSjnH8HZCDJAlqxjHwJG8PyXNQDAqsSaZdmDmFqDlTpAQd0Rdcj+ul4ZMLAWdbocQGxUa41T+
+	Zfz41yKo8FYBE74e9QANfvEiMHUdbD8HQfQfujMHliO15GBFCZgr6h9kBBPwUkR7Ls0FWLTLSvt
+	SUIYl+MwnAYi5GebhGbtcgjmu/png/Ms4lFxryzIW7zrNZ/cJFwSk6OqTAiChg8ZBRSGZyOz4bh
+	gUevuIUWwwxGTXkkmDmWRKn+wOdbeVJkxwDpPNwG8e1p4/l2wTYk5duasnnvFe9/pKteE=
+X-Received: by 2002:a05:6402:3586:b0:69a:a827:7477 with SMTP id 4fb4d7f45d1cf-69c5f247ea7mr3750275a12.39.1783948719518;
+        Mon, 13 Jul 2026 06:18:39 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15cfac0f76sm820600066b.33.2026.07.13.06.18.11
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69a19d799dfsm16637693a12.17.2026.07.13.06.18.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2026 06:18:11 -0700 (PDT)
-Message-ID: <a8d78707-ef0d-439c-ba0a-52a494967046@gmail.com>
-Date: Mon, 13 Jul 2026 14:18:07 +0100
+        Mon, 13 Jul 2026 06:18:39 -0700 (PDT)
+Message-ID: <7a1e5111-185e-4390-afa1-c19908c9bd86@gmail.com>
+Date: Mon, 13 Jul 2026 14:18:34 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,63 +67,69 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: "phillip.wood123@gmail.com" <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: honor --empty when a fixup!/squash! empties
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3] sequencer: honor --empty when a fixup!/squash! empties
  its target
-To: Yuxuan Chen <i@yuxuan.ch>
-Cc: "farid.m.zakaria@gmail.com" <farid.m.zakaria@gmail.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>,
- "gitster@pobox.com" <gitster@pobox.com>, "newren@gmail.com"
- <newren@gmail.com>, "phillip.wood@dunelm.org.uk"
- <phillip.wood@dunelm.org.uk>, "ps@pks.im" <ps@pks.im>
-References: <20260709-fz-autosquash-empty-v1-1-84cb494c3613@gmail.com>
- <afb76b98-661a-4663-8e8b-fd00572db5ba@gmail.com>
- <20260710182937.716304-1-i@yuxuan.ch>
+To: Junio C Hamano <gitster@pobox.com>,
+ Farid Zakaria <farid.m.zakaria@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <20260711-fz-autosquash-empty-v3-1-d227b63eb511@gmail.com>
+ <xmqqh5m494yh.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <20260710182937.716304-1-i@yuxuan.ch>
+In-Reply-To: <xmqqh5m494yh.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Yuxuan
-
-On 10/07/2026 19:30, Yuxuan Chen wrote:
+On 12/07/2026 06:01, Junio C Hamano wrote:
+> Farid Zakaria <farid.m.zakaria@gmail.com> writes:
 > 
->> Using an empty commit has a marker has the advantage that applying it cannot
->> create conflicts, so you only have to deal with the conflicts caused by the
->> commit being dropped, not the by fixup not applying cleanly.
+>> When "git rebase --autosquash" melds a "fixup!" or "squash!" commit into
+>> its target, the result can be a commit that no longer changes anything
+>> relative to its parent, for example when the melded change reverts the
+>> target.  Rather than dropping or keeping this empty commit, the rebase
+>> stops with
+>>
+>> 	You asked to amend the most recent commit, but doing so would
+>> 	make it empty. ...
+>>
+>> and the "--empty" option has no effect on it.  This makes backing a
+>> change out of a series awkward: reverting a commit as a "fixup!" and
+>> running "git rebase --autosquash --empty=drop" ought to remove both the
+>> commit and its revert, but it halts instead.
+>> ...
+>> Changes in v3:
+>>   * Switch the new tests' assertions from grep to test_grep for better
+>>     diagnostics (per review).
+>>   * Link to v2: https://lore.kernel.org/r/20260710-fz-autosquash-empty-v2-1-fa1e277e05f8@gmail.com
 > 
-> I am concerned, however, that representing a `drop!` commit as an empty marker
-> would be semantically unsound. We expect `rebase --autosquash` to drop the
-> target commit, but until that rebase happens, the repository is not in a state
-> where we consider the target commit dropped: the target's changes are still
-> present, and the empty marker changes nothing. Therefore, I think a `drop!`
-> commit should contain the inverse of the patch we intend to drop. That way,
-> the repository state reflects the intended removal even before autosquash
-> rewrites the history.
+> I see you are already working well with Phillip, which is great.
+> 
+> This topic, when merged to 'seen', seems to have quite a lot of
+> overlaps with his pw/rebase-drop-notes-with-commit topic.
 
-That's a good point. Looking at the gitgitgadget issue tracker [1], 
-there is a suggestion to add a new option to revert that behaves like
+Oh, I should have thought of that
 
-     git revert -n <commit> &&
-     git commit -m 'drop! '"$(git show -s --oneline <commit>)"
+> We are
+> expecting the topic to be rerolled, and I was under the impression
+> that the remaining issues in that topic were all minor (Phillip,
+> correct me if I am wrong) and hopefully we will see it in 'next'
+> not in so distant future.
 
-and then "git rebase --autosquash" would replace "pick" with "drop" for 
-the commit we want to drop and drop the "drop!" commit as well. That 
-avoids conflicts when dropping the commit and means anything built on 
-top of the "drop!" commit before the rebase does not see the changes in 
-the commit that we want to drop because it has been reverted. That seems 
-to be the best of both worlds.
+I've just sent a new version and cc'd Farid, I'll try and take look at 
+this patch tomorrow
 
-> I recognize that applying the inverse patch may cause conflicts. However,
-> this is not a new problem; `git revert` has the same issue when the inverse
-> patch does not apply cleanly. Such conflicts reflect the actual difficulty of
-> undoing the change at that point in the history.
-I agree conflicts are a fact of life when rebasing, but I think it is 
-worth avoiding them where we can.
+> So it might make sense for you to coordinate with Phillip, and wait
+> for his topic to be merged to 'next'.  After that happens, you would
+> prepare a merge commit of the other branch into f85a7e6620 (Start
+> Git 2.56 cycle, 2026-07-06) or some other stable point, and rebuild
+> this patch on top of it.  That way, it will be much less likely that
+> I'd make stupid and unnecessary mismerges when attempting to
+> integrate this topic into my tree.
+
+That makes sense, assuming no-one has any more comments on 
+'pw/rebase-drop-notes-with-commit' it should in be 'next' fairly soon.
 
 Thanks
 
 Phillip
-
-[1] https://github.com/gitgitgadget/git/issues/259
