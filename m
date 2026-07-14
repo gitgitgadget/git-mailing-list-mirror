@@ -1,293 +1,143 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C0239B972
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 12:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CA33D9525
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 12:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784030994; cv=none; b=ux2kY0knVlMbhkkPTdY9B+Eov6+ohOXW+G6JXorpQIcFSYXs0WWFTwcSvG4APuOGXjl3eEGGUPjALrbtjTSwzWpogaJ04wX1iLWDzq1IZHZ/9tpiN0QO0ePZEJ+WCN9tDU9/W08LngjK/YKaCR6OSXuaml2mKxWS/RNl9+BlqLw=
+	t=1784031644; cv=none; b=Edux6RAhPHO0tvcC8RHD6lbDsIgpG/OXY1JtFi0r3xNTmLS9cEzy03g5AkSxynfpGJgPeJKfq4rgweiarlkR3Rbp0ZBX9OFxLF0iPy4U5Wuvxsjp5FHovhCkdAxpzDxRjklfw343grJDrwCNrwoBy440b4XSbTEQEVaw81FEKes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784030994; c=relaxed/simple;
-	bh=t2R0qB053lYY9NPw5jFXxNKYt7hUyhDGmIxkmYOz0QM=;
+	s=arc-20240116; t=1784031644; c=relaxed/simple;
+	bh=7rsX3jD2eLlVDAydUd2NEQvp5JPNMBnLzJpZDhpctLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RazjR+fFeCKmtG5XbF1hp+PbPLfzUI5W50ntAdQVaUTgoM4j0Ios/vBGcAUdz80wxSgsCZ7Cisk/oFwRYAnHwm6vSU44Ld7w+uj5k3fBMOqJ6BYiJD/tz79ItKK+uXXA2c9BGuSGOqpHuXmXcy5s9APrqILDV6pZ/QSJ92f1BWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eX/q2fjN; arc=none smtp.client-ip=209.85.221.48
+	 MIME-Version; b=ikKqCdDix3272cnkhigQJPj0LMp8zaFRIddTWnH9lbZCw5JdACwLTLgwt67UiG8kuRmHS37BeFcxIzt89feLrhsaPqZEPq+VYMudvRNPnWuFFQKbsIp0QUF3LNT97NiKYvY1sTFIa8HsdRepe8UAR0qO1ghcPnUyr7jLKbRoXxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oGOCIAAa; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eX/q2fjN"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-475cb71a4ebso4039638f8f.0
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 05:09:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oGOCIAAa"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cab973140bso47765995ad.3
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 05:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784030990; x=1784635790; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=g0R8cf6kw54e6vzNht8ICDtAjZ3R4787DPNT/LyxjTI=;
-        b=eX/q2fjNlBFiZR4kZqMKAF/lW+BjssYXm2m+nPCV/RCnewdD7Y1Y2VF3mcVqh5gm5/
-         eR8SoUuGv0qUA3fqxc2aMm5O1rE5rFU2Lb7b9JsbkwdH7vqp912rUUBt/qg4Gjw9nhA/
-         81XYlK+V90KfKJ/DWzMjrkqtlyA/8E5Yp1ZgwgCjsqRNFIHGSv19llqYEZh0YyqIFOym
-         pOCIDdVTGs4oZ0TA7qu1qgjd18U45JAPvd9/NT5525jZv6A7AG4k7f2DAJoSn0DXTX1J
-         nVtBj1Sad7GIjErqM0xIaRZR3m/1i/YBf0HF4r7fjIsoiSTUd5O7mXZ1kU7pp0dm8b/B
-         GdqA==
+        d=gmail.com; s=20251104; t=1784031640; x=1784636440; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=1CF33/zrpAgaK6vguTAkTq4eXRL6n9CpHctv/7fg0wI=;
+        b=oGOCIAAaqw5VGeXe4O8syIzr34oxf9HCVYMjMKAiGp4K8hAVP7BhiKUX1hUqy4DTh3
+         vgud2NBL2JuIBoPQ98fe5mGGeKuIEFwMcQYQFSlGIYI1ZoOvffUhj8bMPY9Xk11uJ+mj
+         RAL2+bHF/iozCTRG/4IOvryPZihyc9iEXSt1CGL0Uk6p36DyrK7W1T5fvTsofaoQqw+8
+         FJljVui7RfMCpeIBER2lcIiq/ljYk1O42ZN/QWqXGV4ZEB4xWm3NYV2iOKeyCMDlz/0N
+         29K8a4T2I6JsYZJ/XOaJMSSp6vTQxNQ/n3XLDXLZraMCrZ8fLwXlreZJ2/vbpdL0TYeE
+         nggg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784030990; x=1784635790;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=g0R8cf6kw54e6vzNht8ICDtAjZ3R4787DPNT/LyxjTI=;
-        b=cSUwppiRcyRn6hOsQ2XtQ8Uua1P7MAsKjYUGRMcjgzM9JVp96xHBMVeorfdQc+Dv/n
-         ayf32QY55sc+L40azmuKPtpoTKDZUC56nzxlog9L3+zirCfAipzTNVZt65ovOe4HuY1f
-         UGiH1Y9Ca7rpIGk6bB5c/IkEM1cCuneqCDGmVuzDlhqX2FqzB3gvuernO/H+4isT+Aps
-         qyBABwuXDzwPAHGna4gbpy7/3MPC1vqFrZj5t3TuMgYAQoN/BV4ktHqaUqsZeGzuJ0jg
-         HQcRLNbfsqCciEfYxZaAq6DT6ebnecuZzIKh5QfQ4+o06rZbCSs+VO/NfXdqFwNVO/wP
-         EsRg==
-X-Forwarded-Encrypted: i=1; AHgh+RoU1Mvo4OPGfcKde89mDbEjCIj6BYGjXmRT6hWLVHloIS/lOnGcqdLv8mSb5vGsNtvzzm4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxnj8VUH245xxEkEIhNfC/XuH4o/FDJ4AbtPOpqUjfp/Y8GqDTZ
-	aDTw7TNkAiMK4sgI5ZM8SmRQXLVUb/DmJoPnd+VCwki8JWq54f7uwEWx
-X-Gm-Gg: AfdE7cnbZSTkM38J/bCprEgBW7v9p8aR7g5MhZtBz3LuapCbit88LLyRPuvnv89kbm6
-	iHWmH8yh+Bp3+FTM+ff4woXcyU29VoVXzwo/n6aidKE88XJdpTN653uSjqxGAM4RRdDCxzYXGFc
-	u+c8RzLifRaOXC1Cimg+dlUMxf0MwxSD23Y/5OPsM41IMI6mrgwVGFpwmMYOLE6cykiEORJhxJH
-	YQKrYHWAEYO8xKn4IbvxobFoMlOjald0X9Kgw5Rb8aU0gOPhpFCIoOWyPH8txV96qpgyyqm7XUg
-	FNiF1245HJ77VfIngDA1TeQDHOIVP0u/Q2+9wwS3U80aBxjrpvJQnKBYOIV7xODarACPJ1DXttc
-	dPcwVMKZXNM52Vas0YFBoeQilixrdtAg7MSlBYpEkAqjXn4aDnFgmHFypOt8v/c5M2obBaKpLNP
-	B9LBxsDlrJ4II8gCbEBexKJBJX1Hiangq7UaH7iZ/hQ7dwqt/69JI9ejFbdCEP0Gso0aP7BQruL
-	9Tt/AeKo/QKwwHsFskyXT0AEbs3bAWk7ZktKN3VvZauS80Bt2gWAbFSwxFRMUgdnsFkyFzRe+io
-	t2e7EhAsKyAtjeVXhcuM0c2W4HelGLOY3/8oJvexfboqPNJtczAgdGncP9mEFwULkRiU3BtRH2B
-	d/vGQAfltskObLDUQ3y1p
-X-Received: by 2002:a05:6000:4b09:b0:477:f5c:9bf2 with SMTP id ffacd0b85a97d-47f2dd02397mr14669440f8f.51.1784030990244;
-        Tue, 14 Jul 2026 05:09:50 -0700 (PDT)
-Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f464c89e5sm7749939f8f.34.2026.07.14.05.09.49
+        d=1e100.net; s=20251104; t=1784031640; x=1784636440;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1CF33/zrpAgaK6vguTAkTq4eXRL6n9CpHctv/7fg0wI=;
+        b=kv1dUtZIlb7K9rFY8ALH4okAC67hZe8fHBgPNkyDSZCeczwdAjBULNBgYWgzsjh5AK
+         PU1zd5PXIUvE160OZdv9EfBPOd4Sk/v1jjj5MPdQxAPS5WcdANPp7E7NeUY+d7nWxPeo
+         rjerR+F9j5ZwumzhRbISPBl+SgKYg5jnYCnSyyr5qsSIEbf4zSlLbYJoJ6utt2l2RNgs
+         69/ScJ60JL/IK5QVsoAELVe1q2JP3+oyFSN+B99x79xqbWsYynT7CoQQ4EF5wSWrJVz9
+         22aOmsl+IaUzUcUai5V5toPImM0bD2bEaZGERKL5CvvNoXuyunwJZ1C41P5flsUUSMI1
+         vUkw==
+X-Gm-Message-State: AOJu0YyH+NeALEICVPY4LdvoEG59Gz1/4GGzJWuDCqmieDuRzQjErcJq
+	K5rxhiy9YStuoqUbQnAJMae1v9z+JKwSbUMaWa5YaK+BeWtF3TGYrw3s/4K11K/d
+X-Gm-Gg: AfdE7cn1J+ldPRMrgCQTg7TSJA6P1/u1t5OkVcQgtcWEI1vEtGh3163atscRING8B9J
+	Ws4HjBlltc9JpS9dN0HzpPek2HPEAwTuriphx3h990dpYZU8DQq07pb+rAyzNvChCr+/hyV+Q/0
+	LA/zofH7D7dhi9pKerwSmWZ7eUnKIEHIlEW244/hgbXO0Uce3xPC1dv1R72NnIcY/YYHFmf6fiw
+	RROoL9OhCT006zyju9cKyMqyXr+4hjNqQrbXJxurHsuANVi7Yq+IRHFZ10pPKnIB4RwfxtI5yLp
+	Oy0IvfpiR9E7JaaY/b9hmuu6JnRGeBYYStOVPLPuJF4u07pehcwFLemFq3T04qy6XjTiYO9p9HV
+	BKov17bBkduyN56rbtCWYUBpC2s8ETBfxsSvWfZy316OMll0yaM0JLhKMZN04FEMygeGOVG8J2v
+	ccaxhVudo0uBuY46pf1LEWpUHx0b5UpMTxvfYZIgKkOAXwAJD5
+X-Received: by 2002:a05:6a21:113:b0:3bc:5284:5445 with SMTP id adf61e73a8af0-3c1102894e6mr14749912637.21.1784031640210;
+        Tue, 14 Jul 2026 05:20:40 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c0a:50c7:895a:a6b8:b3bb:5640])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313b4cbafa1sm74390182eec.6.2026.07.14.05.20.37
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 14 Jul 2026 05:09:49 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: pabloosabaterr@gmail.com
-Cc: ayu.chandekar@gmail.com,
-	chandrapratap3519@gmail.com,
-	christian.couder@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	karthik.188@gmail.com,
-	krka@spotify.com,
-	mroik@delayed.space,
-	peff@peff.net,
-	phillip.wood@dunelm.org.uk,
-	siddharthasthana31@gmail.com
-Subject: [PATCH v12 7/7] graph: add --[no-]graph-indent and log.graphIndent
-Date: Tue, 14 Jul 2026 14:09:38 +0200
-Message-ID: <20260714-ps-pre-commit-indent-v12-7-d50938e006df@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260714-ps-pre-commit-indent-v12-0-d50938e006df@gmail.com>
-References: <20260713-ps-pre-commit-indent-v11-0-dcb65bc4ba99@gmail.com>
- <20260714-ps-pre-commit-indent-v12-0-d50938e006df@gmail.com>
+        Tue, 14 Jul 2026 05:20:39 -0700 (PDT)
+From: Shlok Kulshreshtha <diy2903@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Shlok Kulshreshtha <diy2903@gmail.com>
+Subject: [PATCH v3 0/2] t1100: modernize test script
+Date: Tue, 14 Jul 2026 17:50:31 +0530
+Message-ID: <20260714122033.61947-1-diy2903@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260714071633.35446-1-diy2903@gmail.com>
+References: <20260714071633.35446-1-diy2903@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Some users may prefer to not have graph indentation.
+This is v3 of the microproject cleaning up
+t/t1100-commit-tree-options.sh ("Modernize a test script").
 
-Add "log.graphIndent" config variable to graph_read_config() to read the
-default preference. By default is graph indentation is true.
+Apologies, v2 crossed with Patrick's review of v1. This v3 folds in his
+feedback as well.
 
-Add --graph-indent and --no-graph-indent options to overwrite the
-default preference.
+Changes since v2:
+  - Patch 1/2: also drop the extraneous blank line before the "flags
+    and then non flags" test, as Patrick suggested.
 
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- Documentation/config/log.adoc       |  4 +++
- Documentation/rev-list-options.adoc |  8 ++++++
- graph.c                             | 10 +++++--
- revision.c                          |  9 +++++++
- revision.h                          |  2 ++
- t/t4218-log-graph-indentation.sh    | 53 +++++++++++++++++++++++++++++++++++++
- 6 files changed, 84 insertions(+), 2 deletions(-)
+Changes since v1 (carried over from v2):
+  - Patch 2/2: reword the commit message to use the present tense, as
+    Junio suggested.
 
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index 757a7be196..f7dfce69b5 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -59,6 +59,10 @@ This is the same as the `--decorate` option of the `git log`.
- 	A list of colors, separated by commas, that can be used to draw
- 	history lines in `git log --graph`.
- 
-+`log.graphIndent`::
-+	If `true`, indent visual roots when rendering the graphs with `--graph`.
-+	Set true by default. It can be overriden with `--[no-]graph-indent`.
-+
- `log.showRoot`::
- 	If true, the initial commit will be shown as a big creation event.
- 	This is equivalent to a diff against an empty tree.
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index eaee6ee839..fd831f0ec6 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -1269,6 +1269,14 @@ This implies the `--topo-order` option by default, but the
- 	By default it is set to 0 (no limit), zero and negative values
- 	are ignored and treated as no limit.
- 
-+`--no-graph-indent`::
-+`--graph-indent`::
-+	When used with `--graph`, indent visual roots (commits with no parents
-+	or whose parents are not shown) to differentiate them from commits that
-+	are vertically adjacent but unrelated. Enabled by default. Use
-+	`--no-graph-indent` to disable or set `log.graphIndent` to set a
-+	default preference.
-+
- ifdef::git-rev-list[]
- `--count`::
- 	Print a number stating how many commits would have been
-diff --git a/graph.c b/graph.c
-index c14be934a0..28bef1b88f 100644
---- a/graph.c
-+++ b/graph.c
-@@ -419,6 +419,8 @@ void graph_setup_line_prefix(struct diff_options *diffopt)
- 
- static void graph_read_config(struct rev_info *revs)
- {
-+	int val;
-+
- 	if (!column_colors) {
- 		char *string;
- 		if (repo_config_get_string(revs->repo, "log.graphcolors", &string)) {
-@@ -435,6 +437,9 @@ static void graph_read_config(struct rev_info *revs)
- 						custom_colors.nr - 1);
- 		}
- 	}
-+
-+	if (!repo_config_get_bool(revs->repo, "log.graphIndent", &val))
-+		revs->no_graph_indent = !val;
- }
- 
- struct git_graph *graph_init(struct rev_info *opt)
-@@ -999,7 +1004,8 @@ static void graph_peek_next_visible(struct git_graph *graph,
- static int graph_needs_pre_root_line(struct git_graph *graph)
- {
- 	return graph->commit_in_columns && graph->is_visual_root &&
--	       graph->num_columns > 0 && !graph->visual_root_cascade;
-+	       graph->num_columns > 0 && !graph->visual_root_cascade &&
-+	       !graph->revs->no_graph_indent;
- }
- 
- void graph_update(struct git_graph *graph, struct commit *commit)
-@@ -1344,7 +1350,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
- 
- 		if (col_commit == graph->commit) {
- 			seen_this = 1;
--			if (graph->is_visual_root) {
-+			if (graph->is_visual_root && !graph->revs->no_graph_indent) {
- 				int depth = graph->visual_root_depth;
- 				/*
- 				 * Each visual column is 2 characters wide.
-diff --git a/revision.c b/revision.c
-index 258c3cf782..37f7ea45d1 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2627,6 +2627,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->graph = NULL;
- 	} else if (skip_prefix(arg, "--graph-lane-limit=", &optarg)) {
- 		revs->graph_max_lanes = parse_count(optarg);
-+	} else if (!strcmp(arg, "--graph-indent")) {
-+		revs->no_graph_indent = 0;
-+		revs->graph_indent_set = 1;
-+	} else if (!strcmp(arg, "--no-graph-indent")) {
-+		revs->no_graph_indent = 1;
-+		revs->graph_indent_set = 1;
- 	} else if (!strcmp(arg, "--encode-email-headers")) {
- 		revs->encode_email_headers = 1;
- 	} else if (!strcmp(arg, "--no-encode-email-headers")) {
-@@ -3201,6 +3207,9 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	if (revs->graph_max_lanes > 0 && !revs->graph)
- 		die(_("the option '%s' requires '%s'"), "--graph-lane-limit", "--graph");
- 
-+	if (revs->graph_indent_set && !revs->graph)
-+		die(_("the option '%s' requires '%s'"), "--[no-]graph-indent", "--graph");
-+
- 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
- 		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
- 
-diff --git a/revision.h b/revision.h
-index 569b3fa1cb..acf6d06b24 100644
---- a/revision.h
-+++ b/revision.h
-@@ -314,6 +314,8 @@ struct rev_info {
- 	/* Display history graph */
- 	struct git_graph *graph;
- 	int graph_max_lanes;
-+	unsigned int no_graph_indent:1;
-+	unsigned int graph_indent_set:1;
- 
- 	/* special limits */
- 	int skip_count;
-diff --git a/t/t4218-log-graph-indentation.sh b/t/t4218-log-graph-indentation.sh
-index d4c850c0d4..24dc9b497d 100755
---- a/t/t4218-log-graph-indentation.sh
-+++ b/t/t4218-log-graph-indentation.sh
-@@ -540,4 +540,57 @@ test_expect_success 'visual root cascading gets wrapped after 4 columns' '
- 	EOF
- '
- 
-+test_expect_success '--no-graph-indent disables indentation' '
-+	lib_test_check_graph --no-graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-+	* 67_A
-+	* 66_A
-+	* 65_A
-+	* 64_A
-+	* 63_A
-+	* 62_A
-+	* 61_A
-+	* 60_A
-+	* 59_A
-+	* 58_B
-+	* 58_A
-+	EOF
-+'
-+
-+test_expect_success 'log.graphIndent config disables indentation' '
-+	test_config log.graphIndent false &&
-+	lib_test_check_graph _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-+	* 67_A
-+	* 66_A
-+	* 65_A
-+	* 64_A
-+	* 63_A
-+	* 62_A
-+	* 61_A
-+	* 60_A
-+	* 59_A
-+	* 58_B
-+	* 58_A
-+	EOF
-+'
-+
-+test_expect_success '--graph-indent forces indentation when graph.indent is unset' '
-+	test_config log.graphIndent false &&
-+	lib_test_check_graph --graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-+	* 67_A
-+	  * 66_A
-+	    * 65_A
-+	      * 64_A
-+	* 63_A
-+	  * 62_A
-+	    * 61_A
-+	      * 60_A
-+	  * 59_A
-+	* 58_B
-+	* 58_A
-+	EOF
-+'
-+
-+# log.graphIndent unset and no --option (which activates graph indentation) is
-+# the default state.
-+
- test_done
+The patches themselves:
 
+  1/2 converts the tests from the old backslash-continued
+      test_expect_success style with space-indented bodies to the modern
+      quoted-body form indented with tabs, and removes an extraneous
+      blank line between two tests.
+
+  2/2 moves the here-doc that creates "expected" out of the script's top
+      level and into the existing setup test, so it runs under the
+      protection of the test harness.
+
+t1100 continues to pass all 5 tests.
+
+Shlok Kulshreshtha (2):
+  t1100: modernize test style
+  t1100: move creation of expected output into setup test
+
+ t/t1100-commit-tree-options.sh | 58 ++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 30 deletions(-)
+
+Range-diff against v2:
+1:  45f590f110 ! 1:  e299f096b9 t1100: modernize test style
+    @@ Commit message
+                 body
+             '
+     
+    +    While at it, remove an extraneous blank line between two tests.
+    +
+         This is a style-only change; no test logic is modified.
+     
+         Signed-off-by: Shlok Kulshreshtha <diy2903@gmail.com>
+    @@ t/t1100-commit-tree-options.sh: committer Committer Name <committer@email> 11171
+     +	GIT_COMMITTER_DATE="2005-05-26 23:30" \
+     +	TZ=GMT git commit-tree $(cat treeid) >commitid 2>/dev/null
+     +'
+    -+
+    + 
+     +test_expect_success 'read commit' '
+     +	git cat-file commit $(cat commitid) >commit
+     +'
+    @@ t/t1100-commit-tree-options.sh: committer Committer Name <committer@email> 11171
+     +	test_cmp expected commit
+     +'
+      
+    - 
+      test_expect_success 'flags and then non flags' '
+    + 	test_tick &&
+2:  36ea70be9d = 2:  5a54427820 t1100: move creation of expected output into setup test
 -- 
-2.54.0
+2.52.0
+
