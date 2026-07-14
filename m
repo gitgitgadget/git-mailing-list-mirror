@@ -1,105 +1,132 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D28E25783C
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 03:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E73535E937
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 03:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783999187; cv=none; b=J6SCAcHVZ7qUpBS62J4IPkA6NksozM6/uTIrVB5+FTJ5l6MXihQXT5ZxPTL9i86JtYa9Q2zYK2v8hX6wZJjNh6EEwzuwWt2VRhK6A0KJsFhIJYF4pE2RyEG/TCO71qVl5rJA5pzDpAp7+VJ2YseOTJ7dauQrYrVWHkriAln0OZg=
+	t=1783999534; cv=none; b=RkOb4NmyPP4k9XbKjctX7oKygfVNNeNZyMl6UwQ6xzlqyKgjiyvnPcANk+ye9pVq+rDuqz/1Nefd+npIO+a0v4zucanqLkGuFvrKytv3pq9S181ie3q8AOijiZUlqFrmAZ+gjXsoXnLXKqKL4iSd+pw+zPPy9ZXGbbj/ovXLmrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783999187; c=relaxed/simple;
-	bh=87UUNd1qQyCK/uxyENhbOHQac8cs/jlNwb7xJtDPYHQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RPdvaUVqkiZGXYeIcark4NKORnFaTrwhYCnGIaqIqxk4swGMJ0G/wxliP1ljaqeNYhUFoJQLdOE+EVhGKI3Ytp6pSBiTO7oGRfjeqJi+24yi23p0BwttkuGYXMvO3PRWU5uFy1t/+EeGsJSirWeRwav1L6af3sESLcioOosw9Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=MnqJ9yK0; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=LE4yHduE; arc=none smtp.client-ip=34.202.193.197
+	s=arc-20240116; t=1783999534; c=relaxed/simple;
+	bh=bXly1VUKeQ/x6nFmaz4H8hZ/SbjXrsAAhTpvr6OSNaU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=J5Luhfsd9gB81sbhvQq3HFo7zff4UsfKHlLGZncKlGmasvahOA6nU5um5ez7v/lOH2ZxjHPuxL8DiML39JjXo8hez02kD2XxpLRWKxKB5SamfDSXCwLFsNSLDVi9OuL1rWCZxJ53x0w65bIuI1XauoaPd3ksoqlmFEquU95rc6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=AL+I3c9A; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=gBeCjgEo; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="MnqJ9yK0";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="LE4yHduE"
-DKIM-Signature: a=rsa-sha256; b=MnqJ9yK0zOxq+f+PasLMUgc05t6qKGriXI64Aj4fUnPOs+p2sTIf0XnCmVE30IEajn76XMSxJgZDmIUhzJJNkfBf+A/NkBccFAn9uvBFpp/vo+FyQh9C5fgb4KhQ7GmrMUXWCR5GbinpM4Oi3VLmmjih8E2tnoW5YOgahmrIiBDVdUAUU9OcbDCmpwhRArtP8M8679bSCOPXPrrJ9/gIbHBnXjRs/MAdTVfS3Qk6uSWIcyhjrrdkl18CTp2p4bfjDpfxTK1tFnsSbINHUercxRJACDnZ0mKoQGcapZrb74yOjDtZOJqflyDvl3OyqgdvWwFz2j1CCi8mG2hrHXq1LQ==; s=purelymail1; d=malon.dev; v=1; bh=87UUNd1qQyCK/uxyENhbOHQac8cs/jlNwb7xJtDPYHQ=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=LE4yHduER6gioWlfetAD6QOyy8ki4u3+speWIWsuoP87fu1K2ymZMUpBZMxBZfbe190w2QEJqHrwwWwrX44xjz9ka4sBqURm22qxd4B6/qHG9e6WK8Wf7ClbNpJLyOsjIIekI003NQw+tNFqMIhJ7dcR6sXZfshKAvkOklpqtJ7djQr4nnh2Dnnj/27H65CPTCZxKfzbkSp1itkCXbYANJBDsueqZX3rmziB/uyerpcblgjREwrCPZyoUkSof5JmPWwj+OJ3/mRoXTfNDGcEzwCo2wHTGcLz1gq2BSJlYJ4Ym7jdgBcKzFXZJVhbylmuWT9jCraIAfCOxZhLgMzsgA==; s=purelymail1; d=purelymail.com; v=1; bh=87UUNd1qQyCK/uxyENhbOHQac8cs/jlNwb7xJtDPYHQ=; h=Feedback-ID:Received:Date:Subject:To:From;
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="AL+I3c9A";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="gBeCjgEo"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=AL+I3c9Am3ILvMUJTOAj51x6syQNGPieYeQVjiltSVBDGjK3qhU8qZshOPLleqZNzFzZXZqnSqZYfySjkQTBfscla8v57FkCw9Kybyc36SIKbXV0zw1sQO9fJP6XnbgXi5hTvGoZsclPDwXpQPnv3mg+xHGd+rS/BVrAKsMdGZc8UzZL/TnftSmrL+rMCF3h2zuEhQiSA3aiHlRSKdZ3jKJXo+1sDJfrrNpflyF6KoX3H6jgY1Osjos+pcIuTeHQlXqMjFjBSmYRxXignkGb8GL8G9k5vnD462H3J0C/BiK6GXyJZPtuzKQH4VWZuDvtA3V65Y5WoxSP4y8P0DW3WA==; s=purelymail1; d=malon.dev; v=1; bh=bXly1VUKeQ/x6nFmaz4H8hZ/SbjXrsAAhTpvr6OSNaU=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=gBeCjgEovtU1bsEKmdrtLyBW1i0jTL8YkV3yBcShwMIPTEyGm8m94f3BBPLrsrrKScCY/p/H7Y6JB3YlzUV9S/er6v3We04GIhT8vim2X8Y/MzYR+MxskrCAx++RLP0YmQDEzuXDR/SwyeHLOmDN443zMqO2Y6KoBJQIEQKgKUcKCQndL67GKzpT4oKsqRIjaRmCMVajgc58Qu1xt6uqP8gPMcE2tiyVhc3L+4nwWNMgIF0gOrvDtsv/T/+LCtn/OH8MfoDVLYiKWHPNvRh6vKxgMGIPUpUGStdG8gJ8516dbawPlhv7oB0jXwfRqfdZI6ujRct1uagPL/boNYqAGw==; s=purelymail1; d=purelymail.com; v=1; bh=bXly1VUKeQ/x6nFmaz4H8hZ/SbjXrsAAhTpvr6OSNaU=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1097288267;
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1695711826;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Tue, 14 Jul 2026 03:19:42 +0000 (UTC)
-Message-ID: <61ef1b0a-72e8-45b3-b6e8-46eb5b34ea91@malon.dev>
-Date: Tue, 14 Jul 2026 11:19:37 +0800
+          Tue, 14 Jul 2026 03:25:30 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: pabloosabaterr@gmail.com,
+	cirnovskyv@gmail.com,
+	szeder.dev@gmail.com,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v12 00/10] migrate more variables into repo_config_values
+Date: Tue, 14 Jul 2026 11:25:15 +0800
+Message-ID: <20260714032525.1611141-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260712111734.1073514-1-cat@malon.dev>
+References: <20260712111734.1073514-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 06/10] environment: migrate apply_default_whitespace
- and apply_default_ignorewhitespace
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, pabloosabaterr@gmail.com, cirnovskyv@gmail.com,
- szeder.dev@gmail.com, Christian Couder <christian.couder@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Olamide Caleb Bello <belkid98@gmail.com>
-References: <20260712111734.1073514-1-cat@malon.dev>
- <20260713035738.1606138-1-cat@malon.dev>
- <20260713035738.1606138-7-cat@malon.dev> <xmqqa4ruyhbh.fsf@gitster.g>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <xmqqa4ruyhbh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-On 7/14/26 00:39, Junio C Hamano wrote:
-> Tian Yuchen <cat@malon.dev> writes:
-> 
->> Subject: Re: [PATCH v11 06/10] environment: migrate apply_default_whitespace and apply_default_ignorewhitespace
-> 
-> Are there patches 7..10/10 posted somewhere else?  I didn't see them
-> in the thread (neither did "b4").
-> 
+Hi everyone,
 
-Oh, I didn't notice that:
+This patch series continues the ongoing libification effort by migrating
+a batch of global configuration variables into struct repo_config_values.
 
-	Died at /usr/lib/git-core/git-send-email line 1665.
+What does this series do:
 
-Will resend very soon.
+infrastructure & strings (commits 1-6):
+Introduce 'repo_config_values_clear()' to manage the lifecycle
+of heap-allocated configuration strings. This infrastructure is utilized
+to migrate string variables, including 'excludes_file', 'apply' whitespace
+configs, and external programs including 'editor', 'pager', 'askpass'.
 
->>   
->> -static void git_apply_config(void)
->> +static void git_apply_config(struct repository *repo)
->>   {
->> -	repo_config_get_string(the_repository, "apply.whitespace", &apply_default_whitespace);
->> -	repo_config_get_string(the_repository, "apply.ignorewhitespace", &apply_default_ignorewhitespace);
->> -	repo_config(the_repository, git_xmerge_config, NULL);
->> +	struct repo_config_values *cfg = repo_config_values(repo);
->> +
->> +	FREE_AND_NULL(cfg->apply_default_whitespace);
->> +	repo_config_get_string(repo, "apply.whitespace",
->> +			       &cfg->apply_default_whitespace);
->> +	FREE_AND_NULL(cfg->apply_default_ignorewhitespace);
->> +	repo_config_get_string(repo, "apply.ignorewhitespace",
->> +			       &cfg->apply_default_ignorewhitespace);
->> +	repo_config(repo, git_xmerge_config, NULL);
->>   }
-> 
-> OK.
-> 
->>   static int parse_whitespace_option(struct apply_state *state, const char *option)
->> @@ -126,10 +132,15 @@ int init_apply_state(struct apply_state *state,
->>   	strset_init(&state->kept_symlinks);
->>   	strbuf_init(&state->root, 0);
->>   
->> -	git_apply_config();
->> -	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
->> +	git_apply_config(repo);
->> +
->> +	struct repo_config_values *cfg = repo_config_values(repo);
-> 
-> Doesn't "-Wdeclaration-after-statement" complain on this, declaring cfg
-> after calling "git_apply_config(repo)" on the line before?
-> 
+enums (commits 7-9):
+Migrate enumerations 'push_default', 'autorebase', and
+'object_creation_mode'. Care was taken to make these types available
+to the configuration structure without triggering circular header
+dependencies.
 
-Nice catch, thanks!
+edit comment (commit 10):
+Adjust the comment for config_values_private_ in repository.h.
 
-Regards, yuchen
+RFC:
+
+Commit 3~5. Is it really necessary to migrate _program variables?
+https://lore.kernel.org/git/8e657184-ee0b-453a-9f2d-a98080d3582e@gmail.com/
+
+Commit 6~9. Previous related discussions on 'git_branch_track'.
+https://lore.kernel.org/git/CAD=3Df0L-mPX+KECUjXk-WBzEbTP7wCa8sB56GySQT0yh9=
+mfUOWw@mail.gmail.com/
+
+Note:
+
+Since a new getter 'repo_excludes_file()' is introduced, as previously
+promised, once it is finally merged into 'master', there will be a patch to
+update and squash the comments.
+
+Similarly, I've noticed that the classification and sorting of variables in
+'repo_config_values' don't seem to be correct. There will also be a patch
+to fix this, and I think it will form a commit series along with the commen=
+t
+patch?
+
+Changes since v11:
+
+ - Resending commit 7~10/10, which were not sent in V11 due to network
+ issue.
+
+ - In commit 6/10, fix a declaration-after-statement error in apply.c
+
+Special thanks to Pablo and Junio!
+
+Tian Yuchen (10):
+  repository: introduce repo_config_values_clear()
+  environment: move excludes_file into repo_config_values
+  environment: move editor_program into repo_config_values
+  environment: move pager_program into repo_config_values
+  environment: move askpass_program into repo_config_values
+  environment: migrate apply_default_whitespace and
+    apply_default_ignorewhitespace
+  environment: move push_default into repo_config_values
+  environment: move autorebase into repo_config_values
+  environment: move object_creation_mode into repo_config_values
+  repository: adjust the comment of config_values_private_
+
+ apply.c        | 28 ++++++++++++------
+ branch.c       |  2 +-
+ builtin/push.c | 10 ++++---
+ dir.c          |  4 +--
+ editor.c       |  4 +--
+ environment.c  | 76 ++++++++++++++++++++++++++++++++-----------------
+ environment.h  | 77 ++++++++++++++++++++++++++++++--------------------
+ object-file.c  |  3 +-
+ pager.c        | 32 +++++++++++++++------
+ prompt.c       |  3 +-
+ remote.c       |  2 +-
+ repository.c   |  1 +
+ repository.h   |  2 +-
+ 13 files changed, 158 insertions(+), 86 deletions(-)
+
+--=20
+2.43.0
 
