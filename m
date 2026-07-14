@@ -1,70 +1,69 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452A741B8E6
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AD73438BD
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:48:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784069337; cv=none; b=RfxhVuYWc2g78CSIFM5pQHpqqCM4XdYCkfgoxvGH4oyfPYXSlY4z7Bl/oLgPjJUvXci9eI699+HF3SchyK29zfjOfExe3Rjez8gjGZaflbN1+2uyxMCB3ZAgQw56e6fBYUFUrasGBAi+7U81jVE5jVnmZbNN7i8z7W/rJrdW5QI=
+	t=1784069339; cv=none; b=stSgDtM645VTSXEXi656GgzY8scxreOajwiPa5iu/+XmaWVI+Moul/b9gb+ce5KPtzaNHTvILitHW93u6DImtV25j/XjXI8zN0pc1P/ik3/jrpE37eFfzpirM9sHtV739VX82pVxzUjmpr6lhJzS03bLX7GgtVw3Wu47Y43JUDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784069337; c=relaxed/simple;
-	bh=YuZdmJtWAH56WLbqJWyweyHSW7QAabiH0PVEsHBdonc=;
+	s=arc-20240116; t=1784069339; c=relaxed/simple;
+	bh=FHJtZwXM763J6rK20oCoJUORCLdf13QJ1IX6mvfI+8A=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PZ7OQvHMx5pbd4Is7/2QTwW/HW+hZuWzE0/e+dqXeGe3HLTdjBQm8hhTmG9vlfm2G1BXi2kYqL9PZG4JjuGPh71Yr7eIW1pUdyUQnmj/bIZocthr+9x2GIJ5tCJxqVKFldgwbjQAclMJjywoRiUKna0Usibey0cVq3eFngBcB8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J5A0Q4bQ; arc=none smtp.client-ip=209.85.210.51
+	 MIME-Version:To:Cc; b=L16eVZwHI/3UGUv8PyJQtJcyUwmNu0OvR3DDHAYxAoqSguvGzaL0EdHQqWX6QsY1X3wUbqnfEBisTwQY+1t2h5GIqyTfaKOhHhaLPPyni0+JKpbEvqJsUNvAcUlSYnn3JSl60TloMqFI6pSuaDpfIrP7Qqml3UUcMlC6Pjp47gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k9aKze+r; arc=none smtp.client-ip=209.85.160.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J5A0Q4bQ"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7ec58fa3e01so107287a34.1
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:48:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k9aKze+r"
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-44cedfaab6bso2083212fac.3
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784069335; x=1784674135; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784069337; x=1784674137; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=qyFuMK1yo/xnP5V6pKD1c36GCJ+o2ocvuldTJW4PwWE=;
-        b=J5A0Q4bQoCfFPugZ/Pg1WoDcXD1KHPiGA3Y5CqGRznAMUUBRFY8U5areu/ltuMJGMd
-         mdUihKDs1tznTSDnNN54Ug0ImYitL6F3tVNNw2JriQZ29HwU2telJo6ALCbY9SGU7P+D
-         IFXQLPDN2ZR7CR0/rYo3UiB/hwpUNOpVXoEJphtfCuhPRHbTwDamz0U9XMZNNrmAhhJS
-         NFifVxXGBOZmwp+c+sKp1K3E7Ds3LBGKIhOPKo5tZ4+q7+tm99RNnWjsrGCVRh2p8vY6
-         QUDHnWoZnwdslgPT1K9Qx17oT6+TmEvj8d1N3clWWjhbET9mFG9YR0nAGvq1VUgkbLvl
-         nM8A==
+        bh=tBdP5DiDMvSqBRQAHDiyt/CeK8aRleTlQldUt9cBpmU=;
+        b=k9aKze+rDBoyQmAngj0boxK6drMzUd/0Y50+eJWpvYW41ovmd8LGHydCU34XZhwTKy
+         vRWt+xwTFuZ7ioNTH1ILsmcUoXH1terbLJA+C1J/p8uYBdx/dE99HeWPAYBFh8uzfQRk
+         aomhpp3DXCGs9R314MltC8cowtKez6cqu9G9V/4xrJUH65rmqKP5WalLGD8WPN7Wc2lz
+         Gceb4/yKiri1fyDz2PiwzGFQJlf1wJkNBg8gIrF9fyj8RiWS+SGoCbijX0ovf7DufnUC
+         iSsgx3MojtWnE5/R7rfmKgO0eL1zw6aVQxa38d/HPCJvNDn/eaEr7Btzt5/9UmEqiBoC
+         sc6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784069335; x=1784674135;
+        d=1e100.net; s=20251104; t=1784069337; x=1784674137;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qyFuMK1yo/xnP5V6pKD1c36GCJ+o2ocvuldTJW4PwWE=;
-        b=e9p1wrSxkQSvlYmwgQrf/HqBJ3/3rbhBOcfxQKNd6y0h0Ht2spr44vTnqJeAyUe15s
-         o6rATV1WMXNzf3sEpm7BYomXnfC9YZx0x5OOEBJcgsL7nEM22/VTOnzeI+C/MY3g+lAN
-         wcZ3wPeSv5awnwb4MxAU8SZKtRwIfShA8MSCm3W8UkEcR90CNxk3EsY+/nWY84pCniTQ
-         w+0WR0zxLgrQwBmQWqNL9wAcPkf9ik0S7daWfxOffDUIU3TNMqrPC7EQfHfGDn3fU1R2
-         heSSEpYAEsysIiogIFsd2genoqm5IDJOmSnTa9O5EsxqcujR4eE6SS276uDTw5+TmOKR
-         Rj4g==
-X-Gm-Message-State: AOJu0YwIttRgOZJdFIvGOup2Zek7aUbgvE2d3kvmbMl3pfAyXgc648Yy
-	J619HEeVOVWBksFApBwvKD14vetkl8bkWb8/C7MIxPKQ2Lu/mNCluALWNFXfJQ==
-X-Gm-Gg: AfdE7clkChMxdUZ7SG512hmxghKV+axmZqoUXuikKo3dnCbvyBQzz12NWgGG5fxtIAZ
-	pcWMt2YjA88sVc/223fY05bvddY3fwL7o9cyKzqrnXRKhkUBwr3ewyMckVKPHfgXsCoDfF7va//
-	oZc3TJbkV3dCzRyfIlk0RnLrsDDfuk2J0DhwJjKJz6SBTwudD6Z8e6iCQXb+oQlnnYTvcFvCPH9
-	DV2NKoxsj2NEol0EATPVMeWkgQia45ZDguK0su3bsB6wgU2UpAHjVvcw5gbvkgzrAHLijryhKJi
-	GLXj/tW2VIoB5wC8UGzxDUci+o6Ucy2jvDQu+fKw+RVt0UFF/tRdCbnaZa0QjR1jb8qlG29stoQ
-	Tuyv/D1/WJm2VBI3831rFdqfwk+cv81h3zCdzoz8YOweM3XTNihK42xbSX1CUH/uUdVSccCLPmp
-	aPz96oWXqRujt7Vtvn
-X-Received: by 2002:a05:6830:608d:b0:7e6:fa1b:d99d with SMTP id 46e09a7af769-7ec097a383amr9838768a34.17.1784069335012;
-        Tue, 14 Jul 2026 15:48:55 -0700 (PDT)
+        bh=tBdP5DiDMvSqBRQAHDiyt/CeK8aRleTlQldUt9cBpmU=;
+        b=OfC5AXgU14EPOqNzey6JaIny79b4qzRPupu6C9rREEsxKkjpCIffcb12eN4tklzJu2
+         009hiDZ+UoROacz0ZDID0hbhg5tTMLis2iG1cy3pBeUZqi4BxCt/I7EGtuG1pz+TjI67
+         4j2I2vOI4Q3/0kvvviTezVE+SsJZVev/Gtwo4AwgbW5dwKs8gA1ZqzM22CeXSbZwT+Xs
+         cQ55BFiLmSeUWQNMTSk1U2mZbumc0TaLDba3bLP5daA0BNmELxd3OXqtFjDiLIbxHxJ6
+         t8BT+SKGO32Y61e6yhy6eyd9qiocYuodIXBLrkmEp+f3RmibUtiFj6LaD4sRBq3aXPvI
+         mgLA==
+X-Gm-Message-State: AOJu0YwqmkM5X7/dbnEifOsZtPxw3aac2TBeigwja+TAs+KfXH3oq3oI
+	SjXUWLeHr/SD8KME50RmqPl7oSF8uAVuqNkzeIbW2d0EhfZs6P7YeiYKtKR9tg==
+X-Gm-Gg: AfdE7ckQxgxuBzp3bP+Mh+aXxb4un60rLa4aV0QELnJNZNWEei49IQDShEoNg51p4ql
+	3mjmR1qrMN3bm+Nd7QPPXWhin8h8ycJ6QNxEF3yRQ87XSOajhHirGWFKUABqtQq8Mqm5O+WqqF+
+	nO2SZqf90pMprqp/DnUGqV1vPSSnRTAB0rpCw/ENXfyBFIZ4d9egAGxhhBGJXiYv0JuF4OuIdW3
+	oTGkVjIGJJewix8GNs5vAoVQpeG47Jir/EAfThbBUOBe6bYzdTNQhYefoNLXJMPnmI4DqM/AZTA
+	gJ31KTUUS6RjYYksVVAovzWVHjT44zXmpwK8KQcV4WKdgdi3AYN8OsTx0G67EwW/0J1IVyB7mBY
+	UAj+rRTR7Y68E6xY5bYDBrQsZMcvtggQwIjlgyiel6Ut5hOB43e8MBMnHorhR/bCeqrRpXFxU9+
+	LCY1JD/dsgsiheG8x8
+X-Received: by 2002:a05:6870:1763:b0:447:48b6:83c6 with SMTP id 586e51a60fabf-4562b5054b1mr479282fac.24.1784069336710;
+        Tue, 14 Jul 2026 15:48:56 -0700 (PDT)
 Received: from [127.0.0.1] ([52.173.178.217])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcb2bae7fsm17585574a34.21.2026.07.14.15.48.53
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-451916ce98dsm17523877fac.13.2026.07.14.15.48.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 15:48:54 -0700 (PDT)
-Message-Id: <711671c3abac64d9bb0872a69d45df4f103afc66.1784069325.git.gitgitgadget@gmail.com>
+        Tue, 14 Jul 2026 15:48:55 -0700 (PDT)
+Message-Id: <f728be4dacb0b9781ef6589a0d2c48009aa31e9e.1784069325.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 14 Jul 2026 22:48:37 +0000
-Subject: [PATCH 04/11] reftable tests: check
- reftable_table_init_ref_iterator() return
+Date: Tue, 14 Jul 2026 22:48:38 +0000
+Subject: [PATCH 05/11] last-modified: handle repo_parse_commit() failures
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,54 +79,73 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-test_reftable_table__seek_once() and test_reftable_table__reseek()
-both call reftable_table_init_ref_iterator() without checking its
-return value. This function returns an int error code (0 on
-success, negative on failure). Every other reftable function call
-in these same tests checks the return via cl_assert_equal_i() or
-cl_assert(), making this omission inconsistent.
+last_modified_run() and process_parent() call repo_parse_commit()
+without checking the return value at three sites. When a commit
+object is corrupt or unavailable (e.g., a shallow clone boundary
+or a missing object in a partial clone), the parse fails and the
+commit's internal fields (parents, tree, date) are not populated.
 
-If the iterator initialization ever fails (e.g., due to a memory
-allocation failure in the reftable internals), the test would
-proceed to seek and read with an uninitialized iterator, producing
-misleading test results or crashes rather than a clear assertion
-failure.
+The consequences depend on which call site fails:
 
-Check the return value via cl_assert_equal_i(ret, 0), consistent
-with the surrounding code.
+At line 417 (the main walk loop), c->parents stays NULL after a
+failed parse. The parent-walking loop at line 440 simply does not
+execute, silently treating the unparsable commit as a root commit.
+This produces incorrect "last modified" results: paths changed in
+ancestors beyond the corrupt commit are attributed to the wrong
+commit or not reported at all.
+
+At line 423 (the --not exclusion walk), n->parents stays NULL,
+causing the exclusion walk to stop prematurely. Commits that
+should be excluded from the output may be incorrectly included.
+
+At line 293 (process_parent), the parent's tree and parents are
+unavailable, so diff operations against it produce wrong results
+and the parent's own ancestors are never enqueued for walking.
+
+Skip unparsable commits by checking the return value and
+continuing to the next iteration (or returning early in
+process_parent). This matches the defensive pattern used in other
+revision walkers such as limit_list() and get_revision_internal().
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/unit-tests/u-reftable-table.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ builtin/last-modified.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/t/unit-tests/u-reftable-table.c b/t/unit-tests/u-reftable-table.c
-index fae478ee04..6f444f8cf9 100644
---- a/t/unit-tests/u-reftable-table.c
-+++ b/t/unit-tests/u-reftable-table.c
-@@ -29,7 +29,8 @@ void test_reftable_table__seek_once(void)
- 	ret = reftable_table_new(&table, &source, "name");
- 	cl_assert(!ret);
+diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+index 5478182f2e..fe012b0c2e 100644
+--- a/builtin/last-modified.c
++++ b/builtin/last-modified.c
+@@ -290,7 +290,8 @@ static void process_parent(struct last_modified *lm,
+ {
+ 	struct bitmap *active_p;
  
--	reftable_table_init_ref_iterator(table, &it);
-+	ret = reftable_table_init_ref_iterator(table, &it);
-+	cl_assert_equal_i(ret, 0);
- 	ret = reftable_iterator_seek_ref(&it, "");
- 	cl_assert(!ret);
- 	ret = reftable_iterator_next_ref(&it, &ref);
-@@ -71,7 +72,8 @@ void test_reftable_table__reseek(void)
- 	ret = reftable_table_new(&table, &source, "name");
- 	cl_assert(!ret);
+-	repo_parse_commit(lm->rev.repo, parent);
++	if (repo_parse_commit(lm->rev.repo, parent))
++		return;
+ 	active_p = active_paths_for(lm, parent);
  
--	reftable_table_init_ref_iterator(table, &it);
-+	ret = reftable_table_init_ref_iterator(table, &it);
-+	cl_assert_equal_i(ret, 0);
+ 	/*
+@@ -414,12 +415,14 @@ static int last_modified_run(struct last_modified *lm)
+ 		 * Otherwise, make sure that 'c' isn't reachable from anything
+ 		 * in the '--not' queue.
+ 		 */
+-		repo_parse_commit(lm->rev.repo, c);
++		if (repo_parse_commit(lm->rev.repo, c))
++			continue;
  
- 	for (size_t i = 0; i < 5; i++) {
- 		ret = reftable_iterator_seek_ref(&it, "");
+ 		while ((n = prio_queue_get(&not_queue))) {
+ 			struct commit_list *np;
+ 
+-			repo_parse_commit(lm->rev.repo, n);
++			if (repo_parse_commit(lm->rev.repo, n))
++				continue;
+ 
+ 			for (np = n->parents; np; np = np->next) {
+ 				if (!(np->item->object.flags & PARENT2)) {
 -- 
 gitgitgadget
 
