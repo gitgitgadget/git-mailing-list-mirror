@@ -1,105 +1,103 @@
-Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD77C2E22BD
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 04:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B78732B127
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 05:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784004307; cv=none; b=Mn9DQwWJMCrmGmVt6QTNSvHGAeGl7cv2zr6FUz0u6bbH5/jlNL+20NspGvCseAkPx83WyYeRUwI/jLt/lyQlKuWQFp5f+bms/OeCf+bEdU+gWgQvYYfP7WYBrQzR9NucN64j6oaldFaJoO7WjUCMjad4bvsYTGu6Sgyrao8/nV0=
+	t=1784006924; cv=none; b=bxUkg5M5nbzKRNRI/Ge8Q8iZG9LXnnQhp57HmhRp5ssteTReC6w0YtTK/lxQ0IHHtE/RctsTNto9CxmVOB27R/VvH+FoAOX9DsZGF3uyi9S54z0LIsYgkdg9868fm9m9HPcYcc1ak6a2WbVK0ieRpxG68MltjSTlhFqabV0UggU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784004307; c=relaxed/simple;
-	bh=8/Li1pd1HHWsyzKeM255anIcsKIP+QjvVdA9np1m8bA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=ntcM1YbRw4ECsKg3zUZywkK4eDygsNGmARhhcM0fgGyTqKQQfTH6wF708P5k8f+sz+ALRRHDRqyeXtl/pJ9reYQl0/gI0TwR4ZhfE1YQ66x2v4dAp9aofRpIkHlnUP8dJH8CB814MjkCcvfEAie6LBioMVVknAkJJVt6AMQSMKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=nJjxKd+g; arc=none smtp.client-ip=157.230.60.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
+	s=arc-20240116; t=1784006924; c=relaxed/simple;
+	bh=Z4MgvCiG/BXA0YEP2UUv7Ha2sY2uD33EzsqyIP2nv4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qijy5i2W2vFKl4Mj7pavszcM7vxuxBwpvEsAyZMZHRuw0DhB7bt6TCi67KEcYV9UD4Bdliz0Hx1e4DHzdhiL38Ef+CqjGXur9LfaocJzO12gmioxG/UnbotnZD4hDVGchpDIWkOGYFgTVqNdqlw4RodFgV0ClRpzvun1g0FT5Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=I6FK0xb4; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="nJjxKd+g"
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id 3273E60006;
-	Tue, 14 Jul 2026 04:44:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1784004299; bh=8/Li1pd1HHWsyzKeM255anIcsKIP+QjvVdA9np1m8bA=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=nJjxKd+gX786ZccfMq8viIUD2Uim04StiYaF+MlMbx33A7TMlEDuMs/uVORZWAujg
-	 SJPfM64mpr/2sEkApAl/FevqqC5/USPoSkeMlaVKMNDrmO5wYKWDx/hY5qP/qd8/lq
-	 zuJioG9cnuUxsnsVNXLiJz7FEySmJqlYvsrGraNc=
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="I6FK0xb4"
+Received: (qmail 20995 invoked by uid 106); 14 Jul 2026 05:28:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Z4MgvCiG/BXA0YEP2UUv7Ha2sY2uD33EzsqyIP2nv4E=; b=I6FK0xb4zYNuy5w1o8VIH9LwvYi5GuY0raXNjXtyOBJNXvByRA8tx6asWMFxQMOR3Yj9t+cSTAjOhBzhYyI6DiPZ5eprUqpmg7IscPzPsv1tAWHMbM27nY8enl2Muapnh8baI3PUoLYG5yRhTgf3Prl9W2X7H57TtH9+9c0ljkAcy6B1UBcGQyRIlAwrQt4OwoIC0dv89DnqkFxWuvOCARokZ5wzZaJugMXA0alGQUl46H1+2fLOYXS/dffJAjiP2gC6MHYb0sBqJYrCIKLq4/hnUaxxpZvae6YH41DuiqSBAAZySEk3e57mthf9/FqXeQFDyWrLbewcaG2kJZgFLA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Jul 2026 05:28:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 41786 invoked by uid 111); 14 Jul 2026 05:28:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Jul 2026 01:28:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 14 Jul 2026 01:28:33 -0400
+From: Jeff King <peff@peff.net>
+To: Ted Nyman <tnyman@openai.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 1/2] http: use unique tempfiles for packfile URI downloads
+Message-ID: <20260714052833.GA2516582@coredump.intra.peff.net>
+References: <cover.1783982021.git.tnyman@openai.com>
+ <alVn-QmK3K91_tkH@com-76773>
+ <xmqqse5mv10a.fsf@gitster.g>
+ <alWXwAGWgXSXoRJv@com-76773>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 14 Jul 2026 00:44:58 -0400
-Message-Id: <DJY0QSJYNG0J.210HZQH198Y1N@lfurio.us>
-Subject: Re: [PATCH v8 0/5] history: add squash subcommand to fold a range
-Cc: "Phillip Wood" <phillip.wood123@gmail.com>, "D. Ben Knoble"
- <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>, "Harald Nordgren"
- <haraldnordgren@gmail.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>,
- <git@vger.kernel.org>
-From: "Matt Hunter" <m@lfurio.us>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <pull.2337.v7.git.git.1783327849.gitgitgadget@gmail.com>
- <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alWXwAGWgXSXoRJv@com-76773>
 
-On Fri Jul 10, 2026 at 5:06 AM EDT, Harald Nordgren via GitGitGadget wrote:
-> Adds git history squash <revision-range> to fold a range of commits.
->
-> Changes in v8:
->
->  * --reedit-message now builds the same editor template as git rebase -i
->    --autosquash: fixup!, squash! and amend! commits are grouped under the
->    commit they target instead of shown in commit order, and an amend!
->    replaces its target's message.
->  * A fixup!, squash! or amend! is refused only when its target is outside
->    the range, so several fixups for an in-range commit fold together. A
->    range that is entirely markers for one below-range target is combined
->    into a single commit, keeping the last amend! message.
->  * Merges inside the range are folded when the range has a single base, w=
-ith
->    no dedicated opt-in flag, --ancestry-path ensures only commits descend=
-ed
->    from the base are folded, and a range reaching more than one base is
->    rejected.
->  * Rev-list options are accepted and sanitized the way git replay does,
->    forcing the walk order back with a warning, which also fixes git histo=
-ry
->    squash -- --reverse slipping past the previous option check.
->  * Kept this as an explicit squash subcommand rather than making
->    --reedit-message the default or renaming the command.
+On Mon, Jul 13, 2026 at 06:58:24PM -0700, Ted Nyman wrote:
 
-This feature looks like it's coming together pretty well imo.  I just have
-one observation I want to comment on:
+> > Are there better ways for these processes to coordinate with each
+> > other? Instead of appending to the file, what if the second process
+> > uses a predictable temporary name (which we already use) to open a
+> > new file with O_CREAT | O_EXCL to avoid this redundant work?
+> 
+> Using the existing pack-<hash>.pack.temp name with O_CREAT | O_EXCL
+> would prevent concurrent writes, but EEXIST alone would not
+> distinguish an in-progress download from one left by an earlier
+> failed or interrupted invocation. The existing .pack.temp name is not
+> covered by the tmp_* pruning path, so simply waiting for it to
+> disappear could leave a fetch stuck after a crash.
 
-I noticed that 'git history squash <range>', when --reedit-message is
-omitted, will ignore any amend! message in the range that targets the
-first folded commit.
+A few thoughts:
 
-On the surface, this makes sense.  The feature is pretty explicit that
-it will faithfully stick with the first commit's message, unless
-modified by use of --reedit-message.
+  - Using O_EXCL makes this essentially a lockfile. So we could apply
+    the logic used elsewhere for lockfiles, like auto-removing files
+    with ancient mtimes. Or we could even go all-in with a pid check for
+    liveness; most of Git's lockfiles don't do that, but at least one
+    does (the background auto-gc lock).
 
-However, this edge case is a little surprising, given that
-'git history squash' seems to be aware of the semantics of fixup!, amend!,
-and squash! messages whether --reedit-message was given or not.  For instan=
-ce,
-the default command notices when the range contains a squash! commit whose
-target is elsewhere (a useful feature).  It seems consistent then, that the
-default command would incorporate an amend! it is aware of when placing the
-"first commit's" message in the resulting squash.  This seems useful to me
-as well.
+  - If we're not already using a name which is auto-cleaned during
+    maintenance, we probably ought to be. Leaving aside concurrency
+    issues, nobody would ever clean up the on-disk cruft.
 
-At the same time, I can understand why the current implementation does
-what it does.  So I'm not entirely sure what the correct answer is here.
+    But of course the original code here is intentionally _not_ using a
+    name we'd clean up, because it wants to be able to resume an
+    interrupted transfer.  And you're explicitly breaking that for the
+    packfile URI case.
 
-I'll mention as well that I really like the decisions made for how this
-command handles squashing a bunch of related fixups.  This "fixup
-consolidation" is a use-case that this command may steal away from rebase
-for me.  And the way a final amend! is handled in this case is what got me
-thinking about it in the general case.
+    Is that a cost we're OK with paying? Fixing it opens up that same
+    coordination can of worms. You have to tell the difference a
+    concurrent writer and a previous dead one (whose work you can
+    resume).
 
-Thanks for the work on this topic!
+    It does feel weird that we'd do one thing for dumb-http and another
+    for packfile URIs. Wouldn't they suffer from the same concurrency
+    and resumption problems?
+
+> The unique tempfile preserves the existing "download, index, then
+> install" behavior for each invocation and fixes both the
+> concurrent-append and EOF-resume failures. Avoiding the duplicate
+> transfer would be useful for large packs, but I would prefer to keep
+> that as a follow-up unless you think it is necessary for this
+> correctness fix.
+
+If we're OK with killing the ability to resume, then yeah, I think it
+would make sense to start simple and un-break things. And then put a
+coordination layer on top later (or never if nobody cares enough).
+
+-Peff
