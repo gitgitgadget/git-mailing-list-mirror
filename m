@@ -1,89 +1,105 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD303BB9FE
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 04:13:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD77C2E22BD
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 04:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784002400; cv=none; b=sxM8zcdWN8+yl2EgzZKBcCEfiYujJKPWqtpTzOYlsYqWVFwke1w+eYPN/IY5ADk+vKTPDc1q5zHyJ7fhtf4xNDsG0+I4f5fixgSCkJjmRMm+z6CG1OGuOhGZpbCPG34isIpPUGQNE45dtVlEhalFkGcGM9l+tl0QiPSDwMmJRSA=
+	t=1784004307; cv=none; b=Mn9DQwWJMCrmGmVt6QTNSvHGAeGl7cv2zr6FUz0u6bbH5/jlNL+20NspGvCseAkPx83WyYeRUwI/jLt/lyQlKuWQFp5f+bms/OeCf+bEdU+gWgQvYYfP7WYBrQzR9NucN64j6oaldFaJoO7WjUCMjad4bvsYTGu6Sgyrao8/nV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784002400; c=relaxed/simple;
-	bh=7ByowW7JJRNpUo58osAGf9XCRuKj0RwhR+tLH8a+WaQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dToZlBQuWXg18124s/w1KTlzOwDP0MkWMW9o8PrJbyjXVjgsnM8zHN0wQYGSeKaGbuKu+HdzpDPDqsqiwYFxdvP/Mqc6X3EOEYrKkrR87g2eZB8Dn3USI6eQbjK8jyzk83lhvD4ryhdtx5ehOQjdGltRx7zcH2WTiMSDVazjjYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=ery79Ni2; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1784004307; c=relaxed/simple;
+	bh=8/Li1pd1HHWsyzKeM255anIcsKIP+QjvVdA9np1m8bA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=ntcM1YbRw4ECsKg3zUZywkK4eDygsNGmARhhcM0fgGyTqKQQfTH6wF708P5k8f+sz+ALRRHDRqyeXtl/pJ9reYQl0/gI0TwR4ZhfE1YQ66x2v4dAp9aofRpIkHlnUP8dJH8CB814MjkCcvfEAie6LBioMVVknAkJJVt6AMQSMKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=nJjxKd+g; arc=none smtp.client-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="ery79Ni2"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-8ee88fce572so7310126d6.1
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 21:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1784002397; x=1784607197; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ncCe1YJhfG5NWneH7iCAK9AJeSuZBJuXJSC/GQJJnGg=;
-        b=ery79Ni2rf4MgXJtsMSU6y0D1J7kKBDvSvCwBL2Rxm3T2IfW6fICUQcdFW2836uRb7
-         XLe5NR5/EfxWocJK3bE2H+2fTSXM2rxzj1w8Gw9ISlZB7NWK6v9L4T0xbX3EJMY9Tdc/
-         SnLtXdYe3SdT5z+65DJcLio+yhL0G9IEF+QTw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784002397; x=1784607197;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ncCe1YJhfG5NWneH7iCAK9AJeSuZBJuXJSC/GQJJnGg=;
-        b=YZynB9Bw6rCoY3w1LIQrLLXEdJa+HFwRNH4HTPF2/BFMGhEMjiBpWLyvnFSU1SFmwh
-         ZFBl5QS5TDT0CGsy4eBpBmDOyppc0fnI8WbSiOr86x/ajQlnjjnc1INBec+Mw1d+LPgs
-         6miLlBzys1YfZgFTLLvkLNkYpI5QR894O7cv6oCE7UpizYVOfIoJlawX1kWZQ9b3AE++
-         37OPnPh7l0H4uH85JRP5XmSdlRkuEagKsXUeSzVWm4Mux/YlLXXzagBVtRnWV7DzEIPm
-         xx3k1lLl/pmMhkVYr7rMdVNvPNYt5iLGkxq5C3Zc0pH98Od7lNsqE6bBkXZGV0CRUkVY
-         oEzQ==
-X-Gm-Message-State: AOJu0YwzrQiUswf4BUwjn6xoG1Uc0rA3W/HYkTJm1URR8nMsZBfylDGn
-	reWIVvVi3So90T/lSiXT6v/hpt9pHlfz1rWbAb+KXxiOsRIyMl5xoN96xWAoHrNVU+w=
-X-Gm-Gg: AfdE7cmPN4XF9sEVWQ4JR720WcUvDCqjPLPKHuyZamiBIJzpmQt8uPBmIFJTJkUaDE7
-	fv7rVtc+3TYalo+D8FcgrACaXBzvFvW/cahkokqb2k4WZwawzzMqEHy3yu5tL6r0p9K9o/MMz7p
-	Vpwy7jk6YWM0/pxQASyX3+q2As5YzDUbvEBoccpwjhi0BV+zkjE/j1F/RJgPz7beY30EXzA2+3I
-	Xl3McKvebQxrZGuMOulvE6VDa96ApLXL8LNmgVbmB2YvXQ2Knl6O18cHWkL3986PNY9MIoQUQ8I
-	rRHs5uI/zYiuAjaGFua8aiEzAVRoITIYI09lG1AHNrU4S/PBxOLm3ELCvNxCqG8hnY70gtLSbiz
-	QtshfdE4n6j3xCdUO2K5eTq2nKeiFMJZRuSV8ZAKi07XAJg1olIzZcDdjCtUxxILmLDAYWLc/c5
-	KZQmywWYwie+ipWr6CI4loyaoY
-X-Received: by 2002:a05:6214:3202:b0:8f3:4ea2:427f with SMTP id 6a1803df08f44-90400b8ac03mr139904466d6.1.1784002397650;
-        Mon, 13 Jul 2026 21:13:17 -0700 (PDT)
-Received: from com-79390 ([209.249.37.131])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd81f4bbdsm150909976d6.36.2026.07.13.21.13.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 21:13:17 -0700 (PDT)
-Date: Mon, 13 Jul 2026 21:13:14 -0700
-From: Taylor Blau <ttaylorr@openai.com>
-To: Ted Nyman <tnyman@openai.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 0/2] packfile URIs: support concurrent downloads
-Message-ID: <alW3Wm2scg8TjPXy@com-79390>
-References: <cover.1783982021.git.tnyman@openai.com>
+	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="nJjxKd+g"
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id 3273E60006;
+	Tue, 14 Jul 2026 04:44:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1784004299; bh=8/Li1pd1HHWsyzKeM255anIcsKIP+QjvVdA9np1m8bA=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
+	b=nJjxKd+gX786ZccfMq8viIUD2Uim04StiYaF+MlMbx33A7TMlEDuMs/uVORZWAujg
+	 SJPfM64mpr/2sEkApAl/FevqqC5/USPoSkeMlaVKMNDrmO5wYKWDx/hY5qP/qd8/lq
+	 zuJioG9cnuUxsnsVNXLiJz7FEySmJqlYvsrGraNc=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1783982021.git.tnyman@openai.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 14 Jul 2026 00:44:58 -0400
+Message-Id: <DJY0QSJYNG0J.210HZQH198Y1N@lfurio.us>
+Subject: Re: [PATCH v8 0/5] history: add squash subcommand to fold a range
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>, "D. Ben Knoble"
+ <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>, "Harald Nordgren"
+ <haraldnordgren@gmail.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>,
+ <git@vger.kernel.org>
+From: "Matt Hunter" <m@lfurio.us>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <pull.2337.v7.git.git.1783327849.gitgitgadget@gmail.com>
+ <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
 
-On Mon, Jul 13, 2026 at 03:37:58PM -0700, Ted Nyman wrote:
-> Ted Nyman (2):
->   http: use unique tempfiles for packfile URI downloads
->   fetch-pack: accept "pack" output for packfile URIs
+On Fri Jul 10, 2026 at 5:06 AM EDT, Harald Nordgren via GitGitGadget wrote:
+> Adds git history squash <revision-range> to fold a range of commits.
+>
+> Changes in v8:
+>
+>  * --reedit-message now builds the same editor template as git rebase -i
+>    --autosquash: fixup!, squash! and amend! commits are grouped under the
+>    commit they target instead of shown in commit order, and an amend!
+>    replaces its target's message.
+>  * A fixup!, squash! or amend! is refused only when its target is outside
+>    the range, so several fixups for an in-range commit fold together. A
+>    range that is entirely markers for one below-range target is combined
+>    into a single commit, keeping the last amend! message.
+>  * Merges inside the range are folded when the range has a single base, w=
+ith
+>    no dedicated opt-in flag, --ancestry-path ensures only commits descend=
+ed
+>    from the base are folded, and a range reaching more than one base is
+>    rejected.
+>  * Rev-list options are accepted and sanitized the way git replay does,
+>    forcing the walk order back with a warning, which also fixes git histo=
+ry
+>    squash -- --reverse slipping past the previous option check.
+>  * Kept this as an explicit squash subcommand rather than making
+>    --reedit-message the default or renaming the command.
 
-I left one pretty minor style-nit on the first patch, but otherwise this
-looks good to me.
+This feature looks like it's coming together pretty well imo.  I just have
+one observation I want to comment on:
 
-Thanks,
-Taylor
+I noticed that 'git history squash <range>', when --reedit-message is
+omitted, will ignore any amend! message in the range that targets the
+first folded commit.
+
+On the surface, this makes sense.  The feature is pretty explicit that
+it will faithfully stick with the first commit's message, unless
+modified by use of --reedit-message.
+
+However, this edge case is a little surprising, given that
+'git history squash' seems to be aware of the semantics of fixup!, amend!,
+and squash! messages whether --reedit-message was given or not.  For instan=
+ce,
+the default command notices when the range contains a squash! commit whose
+target is elsewhere (a useful feature).  It seems consistent then, that the
+default command would incorporate an amend! it is aware of when placing the
+"first commit's" message in the resulting squash.  This seems useful to me
+as well.
+
+At the same time, I can understand why the current implementation does
+what it does.  So I'm not entirely sure what the correct answer is here.
+
+I'll mention as well that I really like the decisions made for how this
+command handles squashing a bunch of related fixups.  This "fixup
+consolidation" is a use-case that this command may steal away from rebase
+for me.  And the way a final amend! is handled in this case is what got me
+thinking about it in the general case.
+
+Thanks for the work on this topic!
