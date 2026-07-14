@@ -1,99 +1,103 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from aburayama.m.codeberg.org (aburayama.m.codeberg.org [217.197.91.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311653264FB
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 18:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C5B444713
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 18:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.197.91.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784054038; cv=none; b=YU5D50VnLk9K2lcg2sMTSZUotEnJJK+d9gOzJMlIyfHNLQbBvCih6td4uLImk/2r/Wqzx6W/SzcNmObpnaMsf10DuMtDRdGvIjs52qQxNZX/NRa/rGeIYEnViWxovBu1O5rikqa0nxoO0EohxFlj6a+FWr9T6yya4r2fqXm/gtw=
+	t=1784054179; cv=none; b=HmZ1dFE+u+GEuR9gpRQ1hmjWDnFr1EWodlMhn3HucEvH27O1NytPACCX9SYPkjl1rPJcEg2abO6vithXR11ubU13lDMfDuX5acqCfJadYLo555ycv8JZl0EBWl+8QLshEQ4DoFX6EEIdafHLARp2VizZs8y/k4C4FCz3F984pK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784054038; c=relaxed/simple;
-	bh=BGb43MaVKWCicfMtLX57eTnBSsy9LMhSPGGAeXb/ry0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fgaktErPUMj/mre8gM8d7bZIJnP8IHdPnPIFSTvp6TiX9FE52KnrPk/lzvnf90N4pe6RA/DR88EKAaeQwcMijaTnVxauGRpP8fD99zgNE41G3RJkbGqYY59gy/laRd+VKz5aL5TIa36ErVuigY8UiDZXGDE8yGEKky8ZLXrLZt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KD2hQejX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WIV/yV7K; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784054179; c=relaxed/simple;
+	bh=61KgB8s8Z5guv6AkceE2LDb1vRPpvP+KuOKe8YGOWNM=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=ei0b+3yUlnIEvyechMRY2yNbuy08DtJlfOEcDT5KmAwow3bxJhzfxGMNFB0vdNtGyOcBUmjoOx3Jk0eA6cYRcmFNLE+3eAU1EF5BZk6R0UZ76gyJPGN4zmJgIdcO3RoLO4FsD2x2sMiq9TvanF4qxyczlw7kTz6vqqzgCdmB3WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org; spf=pass smtp.mailfrom=codeberg.org; dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=vGfNW9VW; dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=F1rkk3tC; arc=none smtp.client-ip=217.197.91.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codeberg.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KD2hQejX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WIV/yV7K"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4DF88EC01ED;
-	Tue, 14 Jul 2026 14:33:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 14 Jul 2026 14:33:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784054036; x=1784140436; bh=fX0LdKslYb
-	JX2acQjmvTDOHZ++FwspEVAgcDL2VzP6M=; b=KD2hQejXdcbC0KlI5ZjZufJjD2
-	fI149dac3WIH6boHRVu+5KaOavJjjebgx8wLnPJJSe7KiiittvA74U8ivC9OS/Cy
-	Gehoy+UZxiuVmcg0ePlZwkHoBkGnTkrynowbNR91tzQ0FA/rqM4malXJYkdRasa0
-	ccBocN9LvTTTtm+rOMW9uXIk2TlyCt6QCM/hA/lNLKnNRbXx7UwiH3+5ulBnIfkC
-	byQcLkNfBUT4RsufZHQBHLeq5a8JfoADizBHLE3O30qs2+s4vH3f8Wi/Os0MNGFF
-	XdFbSIpHqO9fTdTUoHm1wG9rqXvgvNZxqnMHnBNxAM3ijpBG9xwm+VQzqFPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784054036; x=1784140436; bh=fX0LdKslYbJX2acQjmvTDOHZ++FwspEVAgc
-	DL2VzP6M=; b=WIV/yV7KQarYaY/xFUupGb/seeEOlUKYNh8OD3UgpKCUtv7UaEv
-	MhHbzR3nEj8ZXhmNR+S3KmS9258LhCRQL0Gmq4w4qd61pj4Y9g6VadWzYVUIZxA6
-	eh9p3wZzJCzJgz+ZWcqPMS5c3P5fybuzZVpRmr86AR8mHkznbi/H9+bH4BOqpu+S
-	MSTZ679JVzNnhuQiwaxzaP2eFTYoLoSBV5fojNu+CFVN3IXhlV+SN1iDaw1W0WlW
-	UV+MqAwsM9MCSEAMCGRiKNaneY/buzPSzai8k7kEpN5GWwPhWxLG5mVr2jCr+Y6X
-	7SS/G9hT9D+amW49wY0pTrXjmFdEFJ/Cm5Q==
-X-ME-Sender: <xms:E4FWavJd0IAok2Ox9STvF5sM7ZWzBfrWcVm3IYnQo4_98CbI4cwoEw>
-    <xme:E4FWavtSA_zDB6sRkzrzayVk_u1xPsoxhghw5FseZL7jMrrmT-81jn99X2b5usqPv
-    RX1htR2OHzjgM6bas6pJ5wcUTQKymd7AEnXMgqqfyvJqhXPzVEJXA>
-X-ME-Received: <xmr:E4FWasIPAue1yFw2S6CFHMLj91mvWdTwsFOqFxEAPi4DlMEJQTlqJLbcOMdq05XMXa5RDl5q7a9ao1LMxeG9IgOdXqxjc2trmX4j1oQ>
-X-ME-Proxy-Cause: dmFkZTGN1KCLDcciECrP0OOtDtoktsqrzkHvfFngSscYdjgs5L047vM1VApZkqdFKiaEY3
-    gJBaF7iKMhgA/6RZgqgMAdb0QLNEPUQBwDgJ0uJEJwVhfFaAFa7upL4XtIIbetJ1u0EZzn
-    54yuCH2pplyoHPQjPfSbb4La+iI3+Kf9RJKwfQkHMvCuW7qBwEpEfoHm05ARZoP6Y2mA5E
-    0u4R8vb9EtFMUVtJh7cXnj6Qbz6/OAsDZVC4KThLgWIXA32VQL7F6vwSWkYkV1XkC3Vlh7
-    ysvWUqlOBX6Fa6zISh/c9QqTePIHno7Xp3fPfFskqqjyuLruC8BgHZA63ug+5LWeoOK/Np
-    6Vku1l93Tgb5zAAmogt0c74bskYrU4g1xGqZTBAXS07efLvZacMIgxjJRTp4+Lu5SW+Gf1
-    x+GYoDE+4RLHxaPcCwAbZPl3DbyRiQDjp6tEGN88YjTZ37CMf89xctnfAejbNZEc8pgC/i
-    mTQgkzdZ97CalN7b+Vzz+U9dpldaRv1efYzO28ztgKw+lPTtQBJvDpuxRxscPrXUoZSl4b
-    CHA7LadTRvfkJ1OMijK7354JF3MiuLdsDaf3z3fR+VCNzRVEJwJhCkXBLXLFbw1CRhGjYG
-    0Yr358K0iBYk+GPGMqc+TZ7DNkVU6R6t6c/zzfz7o9dSykQ9qZ+DLiiSHZ1A
-X-ME-Proxy: <xmx:E4FWavMCVinGfllhUiT_JuX7ZMmbLj2lkfabkuMrilUGQsYXysaa-g>
-    <xmx:E4FWanVrZ65Tav4DAN54R22jdzMJbYzlQBhKzvInWSUaOc0rWxfrIw>
-    <xmx:E4FWallWcovL3LeZ0hopFyLRtwL5k_orY28L7XR_A634wFXoOg7yOg>
-    <xmx:E4FWauMiD3XVnCj_0ZIAUQasjRkfo2QYkaZ9q1tFQpuIR45VAWbfbg>
-    <xmx:FIFWaqSB7dvmYtfaUS-bWuv54OZT9lrAaIaVUnGgvjvEZNiE-m_o3LK7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jul 2026 14:33:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: chandrapratap3519@gmail.com,  chriscool@tuxfamily.org,
-  eric.peijian@gmail.com,  git@vger.kernel.org,  jltobler@gmail.com,
-  karthik.188@gmail.com,  peff@peff.net,  toon@iotcl.com
-Subject: Re: [PATCH GSoC v17 00/13] cat-file: add remote-object-info to
- batch-command
-In-Reply-To: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
-	(Pablo Sabater's message of "Tue, 14 Jul 2026 13:44:56 +0200")
-References: <20260710-ps-eric-work-rebase-v16-0-66e07b58a8fe@gmail.com>
-	<20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
-Date: Tue, 14 Jul 2026 11:33:54 -0700
-Message-ID: <xmqq8q7dto8d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="vGfNW9VW";
+	dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="F1rkk3tC"
+DKIM-Signature: v=1; a=ed25519-sha256; s=202510e; d=codeberg.org; c=relaxed/relaxed; r=y;
+	h=Subject:To:From:Date:Message-ID; t=1784054039; bh=61KgB8s8Z5guv6AkceE2LDb
+	1vRPpvP+KuOKe8YGOWNM=; b=vGfNW9VWzsUsCZdIZtYSSPB/jTwrlv3gTrlEc/HavICnjN17QU
+	DcbfYHxAbb9SUjWsHhREYOVflz9RAIiY/jCw==;
+DKIM-Signature: v=1; a=rsa-sha256; s=202510r; d=codeberg.org; c=relaxed/relaxed; r=y;
+	h=Subject:To:From:Date:Message-ID; t=1784054039; bh=61KgB8s8Z5guv6AkceE2LDb
+	1vRPpvP+KuOKe8YGOWNM=; b=F1rkk3tCrSjMzfoBjAnIUEXg5d9pSr98otfFAh52eIaSgNg1Gi
+	PJBzt7FFZSTDMZbjwj6QrshhuX6PNmClNghUKqww+pAYf0JLBZOQ4bF2rdTilYVaRuQ20F+wYhM
+	FYPN6CkBgHxeHpdMRAkiEgCRutgZzG1kqYPph7k47Ns2mIdPqwNX4zk4R/D0JqQP8TreZqNunta
+	HO4/U+bnJU04OXSvjXt8xq2h5xPT/bMb3h6tRl0x1QE8AjnFatjynkDsRpMswX5K7pNvSRDmiYY
+	Yyr9+DAR3vFuqD70mgNOHyz/2Q9GejUgdY5xba3cjZLS+b0aOFg31kNKYaTOZ1lKnUQ==;
+Message-ID: <17f356ff-7bfb-47f5-b714-62a95cc8b821@codeberg.org>
+Date: Tue, 14 Jul 2026 20:33:59 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Gusted <gusted@codeberg.org>
+Content-Language: en-US
+To: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
+Subject: git-last-modified(1) slower than git-log(1)?
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Hi,
 
-> This patch series is a continuation of Eric Ju's
-> (eric.peijian@gmail.com) and Calvin Wan's (calvinwan@google.com) patch
-> series [1] and [2] respectively.
+I'm working at switching Forgejo's implementation of getting the last
+modified commits in a directory to git-last-modified(1). I'd expected
+equal or better performance than the current implementation, but have
+not yet been able to get this and I'm a bit puzzled as to why.
 
-Yuck.  I thought we had this marked as "Will merge to 'next'?" for
-some time and this morning I pushed out a merge to 'next' of v16.
-I'll revert the merge and replace.
+The current implementation of Forgejo (inherited from Gitea) works
+roughly like this:
+1. Run `git log --name-status -c --format=commit%x00%H %P%x00" --parents
+--no-renames -t -z $OID -- :(literal)some/path`, the output of this is
+quite complex and possible outputs more information than necessary.
+2. The output of this is piped to some code to a parser and reconstructs
+what commit ID last modified each file in the directory.
+3. Via `git cat-file --batch` get each unique commits information.
+
+With git-last-modified(1) (-z --show-trees --max-depth=0) this replaces
+step 1-2, but is slower. I've isolated the degraded performance to the
+fact that git-last-changed(1) takes more time to finish. So from my
+perspective it does not seem worth it to replace the current
+implementation with git-last-modified(1), and I would like to know if
+I'm missing something here or if git-last-modified(1) possibly could see
+a speedup?
+
+The repository I'm currently using to evaluate the performance is
+https://codeberg.org/ziglang/zig
+
+Reproduction steps:
+1. `git clone https://codeberg.org/ziglang/zig $(mktemp -d)`
+2. cd to tmp directory.
+3. `git commit-graph write --changed-paths`. As git-last-modified(1)
+makes good use of the bloom filters.
+4. `hyperfine 'git last-modified -z -t --max-depth=0
+80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- doc/langref/' 'git log
+--name-status -c "--format=commit%x00%H %P%x00" --parents --no-renames
+-t -z 80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- ":(literal)doc/langref"'`
+
+With as output:
+Benchmark 1: git last-modified -z -t --max-depth=0
+80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- doc/langref/
+ Time (mean ± σ): 66.5 ms ± 0.6 ms [User: 60.6 ms, System: 5.2 ms]
+ Range (min … max): 65.3 ms … 67.7 ms 44 runs
+
+Benchmark 2: git log --name-status -c "--format=commit%x00%H %P%x00"
+--parents --no-renames -t -z 80d06578ac66bce3aa0a21e9610cdb782b9a0593 --
+":(literal)doc/langref"
+ Time (mean ± σ): 26.2 ms ± 1.0 ms [User: 17.3 ms, System: 8.4 ms]
+ Range (min … max): 24.3 ms … 30.1 ms 110 runs
+
+Summary
+ git log --name-status -c "--format=commit%x00%H %P%x00" --parents
+--no-renames -t -z 80d06578ac66bce3aa0a21e9610cdb782b9a0593 --
+":(literal)doc/langref" ran
+ 2.54 ± 0.10 times faster than git last-modified -z -t --max-depth=0
+80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- doc/langref/
+
+Kind Regards
+Gusted
