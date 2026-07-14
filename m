@@ -1,103 +1,134 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B78732B127
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 05:28:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4643A329C7B
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 05:36:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784006924; cv=none; b=bxUkg5M5nbzKRNRI/Ge8Q8iZG9LXnnQhp57HmhRp5ssteTReC6w0YtTK/lxQ0IHHtE/RctsTNto9CxmVOB27R/VvH+FoAOX9DsZGF3uyi9S54z0LIsYgkdg9868fm9m9HPcYcc1ak6a2WbVK0ieRpxG68MltjSTlhFqabV0UggU=
+	t=1784007368; cv=none; b=VgNPkvTnnJZqn1KgmMluzbXADN8IUy5LvTL67/odXs7BI6P6f+JzMLUQ1hy4wXtujPRZ6mGTj3HNPio9rRPvDXAiK0779Hsc9N/G3O8C/mlltpjqZ8lDdbu/feNplBHPKKVxQEMdwJBZ8hbw0pKpG64plLVougnl6jLtZZ0XZQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784006924; c=relaxed/simple;
-	bh=Z4MgvCiG/BXA0YEP2UUv7Ha2sY2uD33EzsqyIP2nv4E=;
+	s=arc-20240116; t=1784007368; c=relaxed/simple;
+	bh=XfFN1NYBW3cf4068viioA+tLKc9WEt7FqLJpB2Fl/4w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qijy5i2W2vFKl4Mj7pavszcM7vxuxBwpvEsAyZMZHRuw0DhB7bt6TCi67KEcYV9UD4Bdliz0Hx1e4DHzdhiL38Ef+CqjGXur9LfaocJzO12gmioxG/UnbotnZD4hDVGchpDIWkOGYFgTVqNdqlw4RodFgV0ClRpzvun1g0FT5Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=I6FK0xb4; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=rpWqJ/OwedsPNlfA/lLwEM6aDsfcxgGrTkU4DZhoJXndxUQGfuOQQujAob/IptWWqoMD8wUix2f+G4vPvJ7g49QE6eHHxxpzFeV2Hk3+76KaILCQ595PhyukG+IRWRNsyMwPpiCIA5l5kQXcfiNSd67Wkagw+3XRnceOtmPnfeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oFa4ZtsP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S2AuINVi; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="I6FK0xb4"
-Received: (qmail 20995 invoked by uid 106); 14 Jul 2026 05:28:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Z4MgvCiG/BXA0YEP2UUv7Ha2sY2uD33EzsqyIP2nv4E=; b=I6FK0xb4zYNuy5w1o8VIH9LwvYi5GuY0raXNjXtyOBJNXvByRA8tx6asWMFxQMOR3Yj9t+cSTAjOhBzhYyI6DiPZ5eprUqpmg7IscPzPsv1tAWHMbM27nY8enl2Muapnh8baI3PUoLYG5yRhTgf3Prl9W2X7H57TtH9+9c0ljkAcy6B1UBcGQyRIlAwrQt4OwoIC0dv89DnqkFxWuvOCARokZ5wzZaJugMXA0alGQUl46H1+2fLOYXS/dffJAjiP2gC6MHYb0sBqJYrCIKLq4/hnUaxxpZvae6YH41DuiqSBAAZySEk3e57mthf9/FqXeQFDyWrLbewcaG2kJZgFLA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Jul 2026 05:28:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 41786 invoked by uid 111); 14 Jul 2026 05:28:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Jul 2026 01:28:37 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 14 Jul 2026 01:28:33 -0400
-From: Jeff King <peff@peff.net>
-To: Ted Nyman <tnyman@openai.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 1/2] http: use unique tempfiles for packfile URI downloads
-Message-ID: <20260714052833.GA2516582@coredump.intra.peff.net>
-References: <cover.1783982021.git.tnyman@openai.com>
- <alVn-QmK3K91_tkH@com-76773>
- <xmqqse5mv10a.fsf@gitster.g>
- <alWXwAGWgXSXoRJv@com-76773>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oFa4ZtsP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S2AuINVi"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5134D7A00EC;
+	Tue, 14 Jul 2026 01:36:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 14 Jul 2026 01:36:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1784007365; x=1784093765; bh=6m4GCFw817
+	O0LYgMrh0M4JcV88Fe3s8D3LLLwzxVoF4=; b=oFa4ZtsPRTF9FxwLeH4gHfikNq
+	2fot8cbBIZSJs2k1brpUpZZV1zF+homg8xZ3B+dYeUuWcbfSGQd5EkppkVkw3kpr
+	0xOq30ECzLf+3G7GqWha5Rj+jhTNIUpnb3UWADTKwr+YNdRc/frR7RMptaZdpxBP
+	rQsMHBseBMwQxxpRUiSZwUNRXIOGznTdKwGzotQc/QibhzcCtdPcoUWRYMxVcz2e
+	xblmyBVpNTna65M8ks0vaqLhmUsadschOcVFcAm+X/jGjUBQTcfJp3EXGaoudyNW
+	KXQ30ZWkK6fy0VzkoG+FnB22KxV0XoMgRpFiXGCIvw/CxmGZZ2gCCd0ZWxog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784007365; x=1784093765; bh=6m4GCFw817O0LYgMrh0M4JcV88Fe3s8D3LL
+	LwzxVoF4=; b=S2AuINVimX1o6ytx6ZwxfhgpYVG3TKAd/bI2e0Ml9dAK/9pj/Ce
+	95rXzQBRSWNH3SOerJmFbIACLmCjlFrHD72eexxZIek8qFGuhP35RRO8q7b+gSuz
+	2aDXAlD+p8Ib5Tk3BVLnGaieUQXQaGmGEjseG7XUrr/XL/GswHymh1Ikj5lrCaFs
+	wS1tGcnSK6mwdym+BatcdpQf239H53iCU9XmTp7wkFvIK1vJXeHaQsGenmLbCpaO
+	F4Daj4co9axC5JmIvD0udgy/augeqGVnWLu9TF2gFullQYDAda3HP0YHCdM8OL43
+	XQbHC5VUOJSr4NZJZBwkkYO45ZyMcWeOgsQ==
+X-ME-Sender: <xms:xMpVaiQbBC-K4oMLDE4_T3CZCbXpIByCyj668pFHwqMQ93-6roa-8w>
+    <xme:xMpVauymgFWkvN8mGN8Uk34iuD7848Q3C1JR4mAV-UiRm85hUu_01aPBSDbUM9o_4
+    CTWmx9rl_P13NZ4EzJQOPEgtvBnkgZwpMfKaS_LW-ph-CTKY6lLuA>
+X-ME-Received: <xmr:xMpVak0oOfXE5fI240X3Lrezsi42cC6UnUPBb8xS6lseFIT8yjTkZUFiedy_8K6Qqi56kXqePR_NB5cHI9JW8y3qU1di_Lm9LNRbOYKSRw>
+X-ME-Proxy-Cause: dmFkZTGEJ1/ngIffSYMvIdj2AQoX+rw+liJBviAIz+kkkS2YPfbp//479VZMXmP6N3h95N
+    CnZ1TllbkMHfnnqEHIDuhnB5gMiZicqyrs6idK9l4lPyK0eHFlYJVLg22jl5jqvHpaT6Gg
+    Au9UYW0nsPYkhw1CZQL/eWL2oUldy9llJdlKGRty7Ufp+p4g6+pGYBGllLj0MP1R072MeW
+    vQKGW9s5twHTQLVa+fiHZq27HSXfOUbpCrYT2Hd8iS5Zpj1/RDGqQejOFoktl9BoDMdY88
+    BkcOCu7caiyYAWZ49KQbz9PnVvb40abu78MfIzaCy47Sm51soExrhLYo99UgIxqTmtsIV5
+    FLPdFRfq47oZ4HfCvEUDy4NckbKGVORFHObgvrbFwLATFDWJvqxc+Ye4H+e4NyZVWl1pgm
+    ib5cRMCcxyDmtUHawXqxSbMJ/j8EaKnsOUo+XkVs3R/4oyL/h+qrF9fenQUGr21jomPM/Z
+    M+tm30+/l2JFgEmbGD54K+I50XnjuODAxOOeJFWGDMOHkgaHg3taj3af3XLxy8uWpY1ReK
+    AbiQAj6SmPFVsfop7yjCEVdOwkCs3P370VTd8m3ouoTPydyYT7LKeMrtmJOa8McGDj/i1J
+    x3U/ZPwwCgFQsydKzS44q6ksOpkYOLvW/qo3aVQApTKxHZYNPBuZCkfRkVQg
+X-ME-Proxy: <xmx:xMpVas5kp4likOTg1GR7VxIt55EuxzOr7SD-JN-k_77wDDM2iEOgAA>
+    <xmx:xMpVanU1AEAqrsJ0mYlU090gu1yTTJ-7IsqTd2UIyT_N6qkaBmFimw>
+    <xmx:xMpVarAukHwuBwLv5dX7ENWqoU00VooGKC7cJTBa40VhzGZkG4cbKg>
+    <xmx:xMpVam4UgcWBvRLIeNc0J2eDYhjUWujDlMiy_X-rSdlSN9tapMXdwQ>
+    <xmx:xcpVavVUS6Qp7qbusYN4GJy_TL7xV6ojnwBKTKiAWSFc9qO51I3rsplx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Jul 2026 01:36:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bc0f3fd7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Jul 2026 05:36:01 +0000 (UTC)
+Date: Tue, 14 Jul 2026 07:35:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/8] odb/source-packed: improve lookup when
+ enumerating objects
+Message-ID: <alXKvlzBASmRDtQr@pks.im>
+References: <20260710-pks-odb-for-each-object-filter-v2-0-3710a9cc165a@pks.im>
+ <20260710-pks-odb-for-each-object-filter-v2-1-3710a9cc165a@pks.im>
+ <alFxRvkfNgJRCQTB@com-79390>
+ <alS1440iifvTvGKP@pks.im>
+ <alWx1wj1bc48g11X@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <alWXwAGWgXSXoRJv@com-76773>
+In-Reply-To: <alWx1wj1bc48g11X@com-79390>
 
-On Mon, Jul 13, 2026 at 06:58:24PM -0700, Ted Nyman wrote:
-
-> > Are there better ways for these processes to coordinate with each
-> > other? Instead of appending to the file, what if the second process
-> > uses a predictable temporary name (which we already use) to open a
-> > new file with O_CREAT | O_EXCL to avoid this redundant work?
+On Mon, Jul 13, 2026 at 08:49:43PM -0700, Taylor Blau wrote:
+> On Mon, Jul 13, 2026 at 11:54:43AM +0200, Patrick Steinhardt wrote:
+> > On Fri, Jul 10, 2026 at 03:25:10PM -0700, Taylor Blau wrote:
+> > > On Fri, Jul 10, 2026 at 10:48:53AM +0200, Patrick Steinhardt wrote:
+> > > > Fix the issue by using `packed_object_info()` directly.
+> > >
+> > > What you wrote here makes sense to me insofar as I understand the
+> > > pluggable ODB code.
+> > >
+> > > However, I am confused by the way this function is written in general.
+> > > We use `bsearch_one_midx()` to locate the first possible MIDX position
+> > > in which an object matching the given prefix may exist, which is
+> > > sensible. However, we go from that position up to "num", where "num" is
+> > > the total number of objects in the MIDX!
+> > >
+> > > Functionally this is not incorrect as we will happily discard objects
+> > > that do not match the prefix. But it causes us to waste CPU cycles
+> > > repeatedly calling `match_hash()` (at least for the first byte of the
+> > > prefix) for objects that we know will match.
+> >
+> > That's not quite true though, as we abort iteration as soon as
+> > `match_hash()` tells us that the prefix doesn't match anymore.
 > 
-> Using the existing pack-<hash>.pack.temp name with O_CREAT | O_EXCL
-> would prevent concurrent writes, but EEXIST alone would not
-> distinguish an in-progress download from one left by an earlier
-> failed or interrupted invocation. The existing .pack.temp name is not
-> covered by the tmp_* pruning path, so simply waiting for it to
-> disappear could leave a fetch stuck after a crash.
+> Right, we neither iterate through more objects than necessary once we
+> know that `match_hash()` will stop returning true, nor do we emit
+> objects that don't actually match the prefix.
+> 
+> What I was trying to say above is that in the special case where our
+> prefix is a single byte long, we don't have to call `match_hash()` at
+> *all*, since we can enumerate just the portion of the fanout for that
+> specific byte, and we know that all such entries will match.
 
-A few thoughts:
+Oh, now that's what you're getting at. I don't think that this case ever
+happens at all right now. I think the shortest prefix that we're ever
+using should be at least 2 bytes, as we don't treat anything shorter
+than 4 hex characters as an abbreviated object ID.
 
-  - Using O_EXCL makes this essentially a lockfile. So we could apply
-    the logic used elsewhere for lockfiles, like auto-removing files
-    with ancient mtimes. Or we could even go all-in with a pid check for
-    liveness; most of Git's lockfiles don't do that, but at least one
-    does (the background auto-gc lock).
+Thanks for clarifying!
 
-  - If we're not already using a name which is auto-cleaned during
-    maintenance, we probably ought to be. Leaving aside concurrency
-    issues, nobody would ever clean up the on-disk cruft.
-
-    But of course the original code here is intentionally _not_ using a
-    name we'd clean up, because it wants to be able to resume an
-    interrupted transfer.  And you're explicitly breaking that for the
-    packfile URI case.
-
-    Is that a cost we're OK with paying? Fixing it opens up that same
-    coordination can of worms. You have to tell the difference a
-    concurrent writer and a previous dead one (whose work you can
-    resume).
-
-    It does feel weird that we'd do one thing for dumb-http and another
-    for packfile URIs. Wouldn't they suffer from the same concurrency
-    and resumption problems?
-
-> The unique tempfile preserves the existing "download, index, then
-> install" behavior for each invocation and fixes both the
-> concurrent-append and EOF-resume failures. Avoiding the duplicate
-> transfer would be useful for large packs, but I would prefer to keep
-> that as a follow-up unless you think it is necessary for this
-> correctness fix.
-
-If we're OK with killing the ability to resume, then yeah, I think it
-would make sense to start simple and un-break things. And then put a
-coordination layer on top later (or never if nobody cares enough).
-
--Peff
+Patrick
