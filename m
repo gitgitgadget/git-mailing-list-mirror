@@ -1,69 +1,69 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6CE33260C
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5582F25CC57
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784069353; cv=none; b=YDgwiCc3rfTCTTUU0EGItZvZQveoXsajqOX4+b/jrrd8M6h3HBGeXmaRcLMLraJ9ILc6eE/RzodUMeTl/yMnzYcxy086nZWI/hsu9OIa0HTXwWR/0kkqoeGp322NdKy1ZgLgv57Viv70PZbzys5lSGpqw0FMJp27QAqHuHCQ/2c=
+	t=1784069354; cv=none; b=jYTQXwhSIK5XtuumAJ5wDyv1sWCWiWrJ/5qsT+0NaXdrGYYhpOklKindgKGyytQvxzk1QX+cBvsfw5Eb5xwqcjaRCqvFP6A8yYy3YHJutbKeVfjaiy0jXgjqj5w0Su1q9jBh42U7mO0kDZ5gsxg7JTgnwBglw48FzHDvCkZMEt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784069353; c=relaxed/simple;
-	bh=c5CGyTg10bI35hg2oQE1HDuI87935rVEMv6Xgxl/bEM=;
+	s=arc-20240116; t=1784069354; c=relaxed/simple;
+	bh=Bw6RRPOxvB/XgWM8bOr/THxwZ60aPAOn6N924jU/Xx0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=H3LwG1Uz7DoVeQSvbwGs4ouGeoMergSeVKJUyc3n1TFwoL5DLLPgnfbZOGTe8Pu2pXd9W392kLathamdszfM8Ecg88SXxojP9ldnvo+qaQ8DBfOggiqgZbMVSHoyGVqSJrB6G7/jSfJ+mynAgzEN5kCueiLZpNVH3IVCK4/H/qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhO3joyp; arc=none smtp.client-ip=209.85.210.44
+	 MIME-Version:To:Cc; b=tKQk7zN5AJTIz4uaV3GwSR1Y69xX9xZuayCaBQEhb5hp++p5e07aQrKoGTggVWMzU5C9gyW2rRv0e4UkjKEV6oj6qyDpMhIqj/F26/vYtrTZthZS8uMN2pmN/9CStou7JeSiQxnvoiDsgOD8uuUlVPyS8Y313lYPeebbpcmYJFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vh71j93b; arc=none smtp.client-ip=209.85.161.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhO3joyp"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7eb42a2f5feso1975941a34.1
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:49:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vh71j93b"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6a397db52c1so2517380eaf.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:49:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784069350; x=1784674150; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784069352; x=1784674152; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=g7Jy7MAbqvlHYEaanvBXADASWw58ecTwefp+2DZCMBA=;
-        b=MhO3joypP5uScEynB2m+jpXotmyysA4yTknrFr4B0M793bPfXEPKFHTwyzyiA1faX+
-         8zZ5SDvRE5aVtLv0KgR0k53gnrXWiWrI+1JajmvQINHHsQ5OVkG6gVdrRU6rvJ3I5Qri
-         XPYxlovT+TmLF3/QPaTvefqbvnOwcP+vLv5Lxiwo04yxOHEWECF+PIEeRYTKeB17oulr
-         LIC39Qi2tiPGsk+glhZ8tGcC7Vn1os9oQDHk+YbZ6xC3Kw/B5j1ot9m7cIB/L55IPmbB
-         7eki8le53LZR5Lt8VZeUSwjrmZ1n+eu90yulBhqTN/FbhAj9X6AXP2Uj+r6ci8W29g40
-         r4JQ==
+        bh=po/WE42MbnQ1mFJEpBbDU562tsK3HqFI/2OZaylzs5s=;
+        b=Vh71j93bHOSZPlTAtFDeKAUdbMqjt2zGK1tw82nczPKnBNzu60VYsA/eI9cB5jv6/a
+         AlPVwDUmJhMLXfxCB3ldHcHOMgZOUS6szDp5wTyIwYWwFlCP409i1ogb1r/oqm/Q6Yop
+         MznPDn2Wh9vkG0gCs3Bp2A2S5rjz3wyrHfNFqiQNIUZSdcbKzB+XPjKukfPeJLNbdDyJ
+         Yz5FyqT07WEXRSs45+4ILbPP3ddIAd0j+FSJ/BlKJyYt0S65rcXZUAyaEkxQMUiGkvBn
+         mSfNLBapBXQTlhc6ytu9K4jfHUGK+E5iyRod56qXJQgj6KxKKK/2C6UM/MQIOpxFvPmH
+         Y6OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784069350; x=1784674150;
+        d=1e100.net; s=20251104; t=1784069352; x=1784674152;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=g7Jy7MAbqvlHYEaanvBXADASWw58ecTwefp+2DZCMBA=;
-        b=a/RGkC97PYJICu6OOWAdrT/f4dkbKDkxBRtzHnjJdTbB0+wT4MoXvU1M594AvEPZ5N
-         LpTPYH3ZDjzYCz5Bs1jw8fbOkGlnPHFE/NDMZJdiML9jwwGldA6wj77mV0ZmjDsjTp3B
-         7KqFAsmfVrlxjFOaiaocuPB4Bta6+33Mk6M8skM2ltboVOtFvi4cjQpKfgg7vT09m8/d
-         UScSr344FZs7iwk8TdS9WtuJG/dxN78tTdrqjxqDDuw60MYqYK89zB72Jx8CWG/ZmB77
-         Rffhwx7dPivSCgp+4MI3joIXxpDtVNcMaccw2K4uVD5Qo+3rs9eOTnNqKjYHm8GWm6eW
-         xo2Q==
-X-Gm-Message-State: AOJu0YwRT2REUea6tsWQHZFUZpz69P9zMu9hxUd7apl+q6TUtvKsrA98
-	3yVxT0NX0jLEKi5syQQ4v6ljRtKfIxF4HkNV6f/6XGRHfj15xnBuA8w3qellZQ==
-X-Gm-Gg: AfdE7ck3Qy2DXH5ad4Ufnle618H6jdKjE2nPpmQc+YWtfLK7mMvhtIhkIW1jl6AYnNO
-	G+CIN23lXc+hlFXj5uAffvcs+7Mdiuqpp4NDnO6bdqdjsgTpEfC3LmsSCEaUW96ABSMv5hDG2kP
-	BkIHxyNrkkIbhMnmW6w+m07YQj5f8kL3mfj4+tbs0WAJpDKfBzgeVbI8n9W5mmoQ0acEtfT1iXX
-	Vxmu2uCjbGEYTwvvt9r0fM3KqNrm0N/yHrNsQofLR4HhBVVMknFjb2BAQg8H/+ZHJH1noap7MN7
-	Slv+fNn8mkw1Tn0ZZeDMI+Cz2VTdJibq9fG0TC3gz9lQRKCOQFZ//2bQUbKjBz4+pxuSKY/u/CN
-	f6mAeWAbkbsTBAvhpIxvIPoxVgg5OoQmQ2oh6ggAuR+uN7Dn8j9D7Svub4O9jX+8uVJnSH9m2oT
-	MN0wtBt24ZtS0G2njA
-X-Received: by 2002:a05:6830:6aae:b0:7e9:ef39:1caf with SMTP id 46e09a7af769-7ec4a8a2c7bmr2558758a34.16.1784069349711;
-        Tue, 14 Jul 2026 15:49:09 -0700 (PDT)
+        bh=po/WE42MbnQ1mFJEpBbDU562tsK3HqFI/2OZaylzs5s=;
+        b=VGjyRJ3rXJFVD7lmOwpnxGqYpuVTLTKTIgW+qKDWie6IhGvOI1e84D683QiVHpMHl/
+         /ALcP6AioZuybX23yj6l2QtZIAuF+XNDzwVbHCTH/wM9DeK7ANOuHUA/5teAgbm1uzaQ
+         Je2gfBLrOVmRFZFYq2OaA1YWNWixiSRKmf3BWJneQK+aAU3ugrG4+XP7P6kiE02YDWMW
+         //zQXWclJxxnAwzBs+zVSkPjaCfhKe4dRVmSyRIojeygX/Eet9RuHhQ6QuuFwUPuo+5m
+         uaytmZmr9iincrkiS1UUpMr0A93B84WWPLWbeXJBnvyvyNybSx+LpBFGarMp9RyDAf2S
+         UIOQ==
+X-Gm-Message-State: AOJu0YyuT4bTaByCqg5oVou+S2duciEFxvAWhAhsCXsqVd2XxPjrUwTU
+	MYCBogvhbr5xSK7r2MDIWK1bPWl6oMjNkrgYhDYLEBIKOeB5bbQ6ctA8Ohuwpg==
+X-Gm-Gg: AfdE7cnFZ42gYcpN52uYHD99hCwhAruDbObNPNoVMAf5GMeM7cHIW95G+izVGZb1UKw
+	yYKtmMbD/GixjJLehuE3kQL2NltUlubfFGEDjCLUxRW3V20WJwQFC+I6PjFnRMMSKDvIGlMH5w1
+	1zYL8tUb79GBlpoBFaWCw2y350Ilhzy7WvEb7RstL+HNrVXYdqvjPdu7cM3alQts1RSBuyBfKBc
+	RhSyoxXJpkuDlmk1uO8oh8JMcOFT/XGuCNozfLPi8m+Ra0jmzRtjxNMfi28Hh4NSo3facHE7TFT
+	PlS3Rbw/b5AJ3pRk1teMidcJiDcc+2SkUfy9vY40p/7DQJwQSUYE5P9EeziNGucpdZVz347nJd+
+	Dfa4St9iZ0bWChqKeprYVc2cuMz2zZvS/kUMT0YtdMaGTj+KOXXvUCaNezPoC24OjwUS8R0rbTU
+	ZgLufwS87dLJPbulDt
+X-Received: by 2002:a05:6820:2904:b0:6a3:9373:1f49 with SMTP id 006d021491bc7-6a3d9e70972mr443505eaf.10.1784069352282;
+        Tue, 14 Jul 2026 15:49:12 -0700 (PDT)
 Received: from [127.0.0.1] ([52.173.178.217])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ebcafda2ffsm16057244a34.12.2026.07.14.15.49.06
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6a36a5eee0fsm15134363eaf.5.2026.07.14.15.49.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 15:49:07 -0700 (PDT)
-Message-Id: <c0827a79476d02f2b09ded919b44860e3743fbe0.1784069325.git.gitgitgadget@gmail.com>
+        Tue, 14 Jul 2026 15:49:11 -0700 (PDT)
+Message-Id: <2da452e39cbe1bd53da9d76fa7f7615c1a453634.1784069325.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 14 Jul 2026 22:48:43 +0000
-Subject: [PATCH 10/11] bisect: check get_terms return at all call sites
+Date: Tue, 14 Jul 2026 22:48:44 +0000
+Subject: [PATCH 11/11] bisect: handle dup() failure when redirecting stdout
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,86 +79,44 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Six callers of get_terms() silently discard its return value. When
-get_terms fails (missing or truncated BISECT_TERMS file), the term
-strings remain NULL or empty, causing confusing downstream
-behavior: commands like "bisect next" or "bisect run" proceed with
-empty term strings, producing nonsensical ref names (refs/bisect/
-with no suffix) and misleading error messages.
+To capture the output of each verdict command, bisect_run()
+temporarily redirects stdout to a temporary file via the classic
+dup(1) / dup2() pair, restoring it afterwards. The return value of
+dup(1) is not checked, however. When it fails, the saved descriptor
+is -1, which is then passed to close() (the issue Coverity flags),
+and the matching dup2() that is meant to restore stdout also fails,
+leaving the process with stdout still pointing at the temporary file
+for the remainder of the run.
 
-Add checks at each call site so that a failed get_terms produces a
-clear "no terms defined" error, matching the pattern already used
-in bisect_terms() at line 512. The check tests the term pointers
-rather than the return value because some callers (bisect skip,
-legacy bad/good) call set_terms before get_terms, and the
-set_terms values should survive a get_terms failure.
+Treat a failed dup(1) as a fatal error for this bisect step: close
+the temporary file descriptor, report the error via error_errno(),
+and break out of the loop so the existing cleanup path handles the
+rest, just as on other failure paths in this function.
 
-Pointed out by Coverity.
+Reported by Coverity as CID 1508242 ("Improper use of negative
+value").
 
-Assisted-by: Claude Opus 4.6
+Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/bisect.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ builtin/bisect.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/builtin/bisect.c b/builtin/bisect.c
-index fe66d84382..15a2a30f89 100644
+index 15a2a30f89..801daf8c78 100644
 --- a/builtin/bisect.c
 +++ b/builtin/bisect.c
-@@ -1057,6 +1057,8 @@ static int process_replay_line(struct bisect_terms *terms, struct strbuf *line)
- 	*word_end = '\0'; /* NUL-terminate the word */
+@@ -1308,6 +1308,11 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
  
- 	get_terms(terms);
-+	if (!terms->term_bad || !terms->term_good)
-+		return error(_("no terms defined"));
- 	if (check_and_set_terms(terms, p))
- 		return -1;
+ 		fflush(stdout);
+ 		saved_stdout = dup(1);
++		if (saved_stdout < 0) {
++			res = error_errno(_("could not duplicate stdout"));
++			close(temporary_stdout_fd);
++			break;
++		}
+ 		dup2(temporary_stdout_fd, 1);
  
-@@ -1383,6 +1385,8 @@ static int cmd_bisect__next(int argc, const char **argv UNUSED, const char *pref
- 		return error(_("'%s' requires 0 arguments"),
- 			     "git bisect next");
- 	get_terms(&terms);
-+	if (!terms.term_bad || !terms.term_good)
-+		return error(_("no terms defined"));
- 	res = bisect_next(&terms, prefix);
- 	free_terms(&terms);
- 	return res;
-@@ -1417,6 +1421,8 @@ static int cmd_bisect__skip(int argc, const char **argv, const char *prefix UNUS
- 
- 	set_terms(&terms, "bad", "good");
- 	get_terms(&terms);
-+	if (!terms.term_bad || !terms.term_good)
-+		return error(_("no terms defined"));
- 	res = bisect_skip(&terms, argc, argv);
- 	free_terms(&terms);
- 	return res;
-@@ -1429,6 +1435,8 @@ static int cmd_bisect__visualize(int argc, const char **argv, const char *prefix
- 	struct bisect_terms terms = { 0 };
- 
- 	get_terms(&terms);
-+	if (!terms.term_bad || !terms.term_good)
-+		return error(_("no terms defined"));
- 	res = bisect_visualize(&terms, argc, argv);
- 	free_terms(&terms);
- 	return res;
-@@ -1443,6 +1451,8 @@ static int cmd_bisect__run(int argc, const char **argv, const char *prefix UNUSE
- 	if (!argc)
- 		return error(_("'%s' failed: no command provided."), "git bisect run");
- 	get_terms(&terms);
-+	if (!terms.term_bad || !terms.term_good)
-+		return error(_("no terms defined"));
- 	res = bisect_run(&terms, argc, argv);
- 	free_terms(&terms);
- 	return res;
-@@ -1482,6 +1492,8 @@ int cmd_bisect(int argc,
- 
- 		set_terms(&terms, "bad", "good");
- 		get_terms(&terms);
-+		if (!terms.term_bad || !terms.term_good)
-+			return error(_("no terms defined"));
- 		if (check_and_set_terms(&terms, argv[0]) ||
- 		    !one_of(argv[0], terms.term_good, terms.term_bad, NULL))
- 			usage_msg_optf(_("unknown command: '%s'"), git_bisect_usage,
+ 		res = bisect_state(terms, 1, &new_state);
 -- 
 gitgitgadget
-
