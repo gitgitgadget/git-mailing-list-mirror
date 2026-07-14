@@ -1,145 +1,133 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF8B32B12A
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 07:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784015787; cv=none; b=BQSTFMLLW/evBzFypA5v3jWwovi7D5pmMQ8CUWL3QyqsS/eDb6YKa3wYqEA7117gZq71hYn51ZkdwhgwmqgZFY3pJKc7qKJtXz984nmuF6IAvhwbX38wDdQOHCgYoLp5Vsv1z0I/aKB1kC8x2qS5yuPgpYjrpRNowuJ4k9RF3ec=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784015787; c=relaxed/simple;
-	bh=HlcNZacqHSf2gZZU6da3FGbe4/TRhlLyvDQMyK7qvjw=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=CcIGyqMkpysFWuYIEpOkyJMLnqYUIchvHYOx/+S/NLIwzSU/QFNj75CbGCWJb2xVv849kZ/zyEbXEf+jvJtVSPMWZ+3Ryhd+GhmIcb3/JQZ3InHdwPyc7td3G6bUD/6kbM5shNphmSOUnVDwEKEY+m+MmvtfJqUJEsMupR56yCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=mNDB2c8s; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FAB3FD122
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 08:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784018363; cv=pass; b=FISkACkeqUTU/3r8wIwOi+FUXFTR2qDRZQX7wgvTODnU+f95leMjisD3IN0uAgkly/ELvhRisixOJSaeHbu9fOJNxAGU/ECWb6v2uhCXqq/7/0wWxoaXkMpAujwt4igcaoquej5Duyb8o0l2HHrHSP0TNPLNir3ub7DI/hMCuaI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784018363; c=relaxed/simple;
+	bh=83HARVbQEAM/XpuCsnyzhczgbRUPf86p2MsA3h5OWDs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e9gZTQnmHXpm+NN4IomZBBYeDatosIDPPJ8fRahse3Jtx9C2H+9uiqHcKl0SdgeaXSgoX9ytAJW5+Rb5LdHjxjGgGWItC8+EdIPqpqzWzGDOn1yIJh3EUWDdHJUeleKiVEJSEkOaN62+IkwVcO+05AfXDDNXoROglvn4KLMzMtM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GI3bEoxo; arc=pass smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="mNDB2c8s"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so34675585e9.0
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 00:56:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GI3bEoxo"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-697de23bd7dso938963a12.1
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 01:39:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784018354; cv=none;
+        d=google.com; s=arc-20260327;
+        b=pjdEk/iqshlg9q2SrvlwX1hLSQ8V43lb9qk2X00z+18VwrDOyuaYk1XdMJbnUYcPK3
+         Mq039Y7xAeYs+5uJlv90dksx96ixXBaUKmDboy4LpNDDCeOaMz/UT+BVgsQsrdl6zd8x
+         nVfXD+zFpC00avNHtaxOY29ojgj+ihUxhOQzvD5uyWNIwOdcQmjqWZ902WN6RjLlKuaf
+         EyH92unbHzuAza48NEcA3exto6oQKmuQjVbL9N8w8bAXC6AtnIa8VjKpodNnOdmzEyRs
+         Xt3t647OAXVB3WpZNRYVCQwQQXGu2wxbheGfjStcz/u4yxMt2XUGn3bNEDRuA6WVdcbO
+         lkog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=tjV2M+5+orVfS/OAI6varhK1ATN1ZquhXbaVOnTTvmc=;
+        fh=ayBK/zvxnSCS1xlJxvXb/e09F9tHSiZpxzr0ykCeYiU=;
+        b=FKq8IsVLBAXVL4fpl0L8co5Uocm3sclDEc8By9pmQG3TR5S2t/ulsNX2c+ORai56Um
+         R4MMunh/sITJiXQaYW2TMLh7inKp1knW1Q6qdTGnm6EeunHjDcFVbevFZqAJpOQl8t2T
+         O0fl5GptNd5tZQOX/68kp7ImRAL9jlFT13HV+FOInCKDtNBm7NHkVDFL/jUEsoZxpu5H
+         mEdH6b9UrjBal4X3ZoQ3q3V5cSn69/fu6OhbQGw3lvSs4SpZrM0FFnFfM9lvUUjCKa2o
+         kcA3rA3sbWYuEtOB2owVXX7JwEYtiVSQysxKzn1FroGCQ30kDwM1xm1uDv2aS/5UDOaE
+         MJvg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1784015783; x=1784620583; darn=vger.kernel.org;
-        h=content-disposition:content-type:mime-version:message-id:subject:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=w4f/H4h6x7i59ZwBdYNdylRnT2vh+xtmbhHpHJ3cGC8=;
-        b=mNDB2c8saRjK3gz0ef24LQjQ9yQlz5mkzKCVCH73zkq6zKhK/duyiIxRNZopghdJ4k
-         qzVpQXziqnTPxx3yu04VpL6Z61op6lBPIzUqNya7iNQutURvHm1E5EUd1fOuIU9uKP5C
-         J0MCvW6nTlLcHtqWuv6SRAsJ/+Fi2Pp2coCVrk2B1Y/Z6bCxxpL0EA6z38HfoUdQN5gC
-         zSXOba6CMfUZyELGNyzqZwmSfqwHPPdqv/dxadg2dhn+wzq1rGR73nSiVN4LOBp2nEEL
-         23/hqke3zD3cEUWtWZtCgK1KNDODwqcxfq6CdvOvDgXP5jyrJbB9dsgjjWRp7wpLjqOD
-         3ktQ==
+        d=gmail.com; s=20251104; t=1784018354; x=1784623154; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tjV2M+5+orVfS/OAI6varhK1ATN1ZquhXbaVOnTTvmc=;
+        b=GI3bEoxoiPSbjY0eD1sHVgUcb0WvhEIvliarp0NRs5RdePVdeISqsvfUTnwwoaQATI
+         z0qLhQNzBTFNaScqF35WZUAh1lqKiS1hlr4VNbZl/KTyDcwb5jHGAP8uyyKwFWDO9bUx
+         F9a+FSYJHhsXh+zTnsr/ouoErmN2VbS7vqLTOnInN1R4qfdgIo9dW36Fh3aQrjB/Nj7k
+         fBcm7YFLuwCND+gVRIvDbCMxXKbQGCMROPOnxdtWK8pfBf5c8h7Eee7LF2WxS9fhH4iZ
+         JA42GTNuSvXIyYOvanzYFBlLWdUykYifaBGsPvFLS3O5uGq7rHUVyqwRjnetLZoAjoq1
+         rINA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784015783; x=1784620583;
-        h=content-disposition:content-type:mime-version:message-id:subject:to
-         :from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=w4f/H4h6x7i59ZwBdYNdylRnT2vh+xtmbhHpHJ3cGC8=;
-        b=osHnMJYBUWWJ2UzTHn7Y9eChgdYz7FdgTjMBMDLZrOLEKMjUeru+mUsPegHtVK0OGG
-         T0I/qFztQd+Vh0WqPKshKMDlqNiTgVBO3o8kGH3o2aHYktuwI/6kfUIW9pRKTSgq1Mp9
-         RlHIElHHbNQ5d0x579cI8D5m11145fS9ggcdUl7kHtKcP5OnWJs+Aj+2GQJVyFlT/Fo1
-         tSIe+6uso0BPoFDd8Dxuh6K3DT80mZM7D9r8nkAnGizNxwu0EcqgHOjwCSz1xdRBHZrQ
-         m2uHgNEIspUq36LlacHbxK0KUHVjaSdHisIhTUYdbgp7gfBf31/JLtFa2mzA8xzWUkC4
-         hwcA==
-X-Gm-Message-State: AOJu0YxSE5Ci6f7zKAXZ3606GcsFf2DpZYQyxIp3yg2gQq9Wfzrk3T4w
-	IExjNYs1xnvjmlcpTm3mYNEdGZ4bYqCUuiBOQ9fgM32GlWjvyl1dXLsPoBDpHlur9yxq/mU3SM6
-	vR+zq
-X-Gm-Gg: AfdE7ckfSdCSzroeG+D3ROIl29ecNmDkyid+vI06o6GhiOZ2dc5ur9G+N95Wuq0AjVw
-	2w9M1PeA24DAGmNR8Xr0LhFv3xkd0tpN4vyB9t4FeqmE5mshZdpp0a/YnHOrOI0wWtylkOVhg2h
-	l3i13K3XklampvG3hnhSMg7mnRrsNcsjE+qmKSkcbcDoNKqMpXZZ0Xx155p33r4bhIZQAxRZhTC
-	ry1PUurrfqqFqDMLE0WXMsXEqqTJbEjL3Dxv/uEsvEC1mY13OxlG+0TizrAyLcL35AHk/98t4/W
-	dc+8WYq57sEi1J8pJYDCzDqsklSuNJ0WDAu5piB1eBOhTo+UweqoJQ2r4lmWy+s3t5uUSdlhaaP
-	qmU7Zxopr+FC/1XKQ+NIw1W5kD473bqb4MA1zpx/6UKlUCj8NFSdwPzCet7I3C+1RE+eT3qTNO2
-	GWdVdqp+oXp2043eYg2tM+F47bAD85hkPyMlLWo7Tw+ylalATU+JiMOHZYhfjUxGcgM2q+AQqjf
-	kk3
-X-Received: by 2002:a05:600c:628f:b0:493:d1e0:a4f1 with SMTP id 5b1f17b1804b1-49538ff8272mr9698715e9.0.1784015782628;
-        Tue, 14 Jul 2026 00:56:22 -0700 (PDT)
-Received: from localhost (p200300f65f47db04b44a80421173aa03.dip0.t-ipconnect.de. [2003:f6:5f47:db04:b44a:8042:1173:aa03])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4950a2ed840sm54728615e9.10.2026.07.14.00.56.21
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 00:56:21 -0700 (PDT)
-Date: Tue, 14 Jul 2026 09:56:20 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: git@vger.kernel.org
-Subject: bug in `git log --cherry-mark`
-Message-ID: <alXmoXCs1VtE-KVr@monoceros>
+        d=1e100.net; s=20251104; t=1784018354; x=1784623154;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=tjV2M+5+orVfS/OAI6varhK1ATN1ZquhXbaVOnTTvmc=;
+        b=WOdozHFyeNiH9EZXr+mqbog2Yyby7e7LKlzu+UO4uRXvZKy7SRx0LI/uJ+ZTBZVaOO
+         tB1NqMM5ZoBDn/71TZjzho/MdcIMKbekCtJXgCo4BcvS6fRxHA1e8qFyhVJfNXGyXb11
+         4vxaKYSmuIJsnbuvoH0ORoNhOoBw1gsIfhpF1SB2kPhSLOyJOAs2aTTYZ1V54aymJ42k
+         +fT6L0KLL9oDhrh7tKIKMgaWERHb4X4stBnp8Svj5MtZuSNTeky9he70Nb0HU9AiCE/e
+         Qwngc3fzQnB8Yf4y98o0DgnjR5aNcuFT31WaxGw5QnlOxdNhAbRxKqmFrw4jKfT8a0lM
+         F6NQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpliWdoBMhSHOjgXWLSGS1ANUThDk6qBz45UuklXyTaPkAqyXMw4D40VR4ffkcg+Hfkn2o=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywh1Ql1TfbtIVjHfIdu9EoBQZazyX7Rr3ljAI3n+QCc/DgWkFuy
+	p1OVuwIeg749z5bldByuLzE5P98WTW1TFSKe3wUPbfIqJY94icW4XiDB/Qr1jXzRW2TcjvAfr0U
+	eM4L4KeOkURmgGu2UKKowk1423ZfjaB4poSwicJE=
+X-Gm-Gg: AfdE7cn1XMxidD6ATuZM2I6NAlrzN82b3XAWjCPTPY5PRLuiO0k0c5MhlsugnrLkFjk
+	5trqHPv5BRbwhp4sMMmKOsdSRt1JNSpQtmOoRfo9kvFXhlfFGfUFW2SvAUjZucku1KdmKf4kNi2
+	VPucijWbGxj31iier5hUULji7aw5WpbeDQHycVtC6nNw+Lz1SJN7R14TQXxH7rTBW+bOrzg/EPn
+	v4JJtwNxWY2BV3laXYEgiZaWkntKJMZUoLJVv13gXTLGR2OxwowhBUrsgD82tCnU8WKQpOR
+X-Received: by 2002:a17:907:1ca7:b0:c12:9b98:209e with SMTP id
+ a640c23a62f3a-c161ea32f77mr558253966b.23.1784018353937; Tue, 14 Jul 2026
+ 01:39:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="akj5aumjn6bzlxmm"
-Content-Disposition: inline
+References: <pull.2337.v7.git.git.1783327849.gitgitgadget@gmail.com>
+ <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com> <DJY0QSJYNG0J.210HZQH198Y1N@lfurio.us>
+In-Reply-To: <DJY0QSJYNG0J.210HZQH198Y1N@lfurio.us>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 14 Jul 2026 10:38:34 +0200
+X-Gm-Features: AUfX_mxmZdl9q-abdEuun9zZXRRZQjvnZXKnOady0xwZlhhIWA4u24XgNt-wy1M
+Message-ID: <CAHwyqnVVYMqYTD=Hri1gYW6CvkjKgTMv8AGP59bkOOd+-huwbg@mail.gmail.com>
+Subject: Re: [PATCH v8 0/5] history: add squash subcommand to fold a range
+To: Matt Hunter <m@lfurio.us>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+
+> This feature looks like it's coming together pretty well imo.  I just have
+> one observation I want to comment on:
+>
+> I noticed that 'git history squash <range>', when --reedit-message is
+> omitted, will ignore any amend! message in the range that targets the
+> first folded commit.
+>
+> On the surface, this makes sense.  The feature is pretty explicit that
+> it will faithfully stick with the first commit's message, unless
+> modified by use of --reedit-message.
+>
+> However, this edge case is a little surprising, given that
+> 'git history squash' seems to be aware of the semantics of fixup!, amend!,
+> and squash! messages whether --reedit-message was given or not.  For instance,
+> the default command notices when the range contains a squash! commit whose
+> target is elsewhere (a useful feature).  It seems consistent then, that the
+> default command would incorporate an amend! it is aware of when placing the
+> "first commit's" message in the resulting squash.  This seems useful to me
+> as well.
+>
+> At the same time, I can understand why the current implementation does
+> what it does.  So I'm not entirely sure what the correct answer is here.
+>
+> I'll mention as well that I really like the decisions made for how this
+> command handles squashing a bunch of related fixups.  This "fixup
+> consolidation" is a use-case that this command may steal away from rebase
+> for me.  And the way a final amend! is handled in this case is what got me
+> thinking about it in the general case.
+>
+> Thanks for the work on this topic!
+
+Thanks!
+
+That's an interesting observation, I'll see what I can do about it.
 
 
---akj5aumjn6bzlxmm
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Subject: bug in `git log --cherry-mark`
-MIME-Version: 1.0
-
-Hello,
-
-in a linux tree I have a bunch of commits that I sent out for
-application to the mainline. A part of that looks as follows:
-
-	$ git version # that's 2.55.0 + Phillip Wood's series addressing my previous bug report
-	git version 2.55.0.11.g153666a7d9bb
-
-	$ git log --pretty=oneline --abbrev-commit --decorate --boundary --graph --cherry-mark --right-only next/master...a54cadc575df
-	*   a54cadc575df merge mod_devicetable.h cleanups
-	|\
-	| * fc69191474ff virtio-pci: Drop inclusion of <linux/mod_devicetable.h>
-	| * 80964227feed greybus: Drop #include of <linux/mod_devicetable.h>
-	| * ede7ce64f20e Documentation: Update after split of <linux/mod_devicetable.h>
-	| * c8efa35aeff7 HID: wacom: #include <linux/device-id/hid.h> instead of <linux/mod_devicetable.h>
-	| * baead64db0b9 checkpatch: Adapt comment to mod_devicetable.h split
-	| * ca270a534d0f net: phy: Drop #inclusion of <linux/mod_devicetable.h> from <linux/mdio.h>
-	* | 9874577217c5 WIP: Don't build XFS on m68k due to https://gcc.gnu.org/bugzilla/show_bug.cgi?id=122438
-	* | 554e345d3223 s390: export memory encryption helper functions
-	* | 41d6dc9f88ec Add defconfigs for x86 and arm64 to yield stable builds
-	* | 9a6220166a5e drm/vmwgfx: Don't use UTS_RELEASE directly
-	o | 49362394dad7 (tag: next-20260713, next/master, next/HEAD) Add linux-next specific files for 20260713
-	 /
-	o 8cdeaa50eae8 (tag: v7.2-rc2) Linux 7.2-rc2
-
-So this suggests that all the commits are not yet in next. But if I look
-at the right branch only, one actually is:
-
-	$ git log --pretty=oneline --abbrev-commit --decorate --boundary --graph --cherry-mark --right-only next/master...a54cadc575df^2
-	* fc69191474ff virtio-pci: Drop inclusion of <linux/mod_devicetable.h>
-	* 80964227feed greybus: Drop #include of <linux/mod_devicetable.h>
-	* ede7ce64f20e Documentation: Update after split of <linux/mod_devicetable.h>
-	* c8efa35aeff7 HID: wacom: #include <linux/device-id/hid.h> instead of <linux/mod_devicetable.h>
-	* baead64db0b9 checkpatch: Adapt comment to mod_devicetable.h split
-	= ca270a534d0f net: phy: Drop #inclusion of <linux/mod_devicetable.h> from <linux/mdio.h>
-	o 8cdeaa50eae8 (tag: v7.2-rc2) Linux 7.2-rc2
-
-I would have expected that ca270a534d0f is marked with = already in the
-upper dump. Is my expectation wrong here, or is that a bug?
-
-If you want to look at it, I can provide the relevant commits in a
-bundle via private mail.
-
-Best regards
-Uwe
-
---akj5aumjn6bzlxmm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpV66IACgkQj4D7WH0S
-/k7Zawf+JwGvIR2ZkFxQQSjp/2YB18SGSdfFWge/Kk8ZYGjZfSH2+e7OSN0OC3CP
-eg+atgDp6bVt4DWKcN+EgJk+gOnrgGLzMOoCivC3jlHTtE0YiC3lZc0SDconuJeP
-cIUfbcnTE7RiKzJwzTbiKra/BlhVl3z1VvjjP/yyWJs04Am8W1FGvrbGdpoQa9fz
-svuPxpfK54J2iuKwJgnK+UyQVhMnroyvXdpR3U4PUAcPpro0OYzOlJ/YPYqpSUQv
-LocV3l69YNX/PwQrLztj0mguhBeU8qNivF4t6hWmY7Q+nQykVMYEDFr4jMLKWXr/
-XDU9gtElzPcJIogiic7VFc5uxyXzPg==
-=30+K
------END PGP SIGNATURE-----
-
---akj5aumjn6bzlxmm--
+Harald
