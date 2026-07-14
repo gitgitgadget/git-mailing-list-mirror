@@ -1,122 +1,113 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5582F25CC57
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D03A25CC57
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784069354; cv=none; b=jYTQXwhSIK5XtuumAJ5wDyv1sWCWiWrJ/5qsT+0NaXdrGYYhpOklKindgKGyytQvxzk1QX+cBvsfw5Eb5xwqcjaRCqvFP6A8yYy3YHJutbKeVfjaiy0jXgjqj5w0Su1q9jBh42U7mO0kDZ5gsxg7JTgnwBglw48FzHDvCkZMEt4=
+	t=1784069456; cv=none; b=EDSA+etx4SaWVkFW387c0izNrmd1xaYZ8gUj6TJG/K/fKUMs8cY3hsWT10qBUoL04mVQihmkYdSnTSlrip0L/9CatPYqzrD2zByUlmp7VPOueTd/8C+s4ZekAXB0AM7A7bdvaJOCHu4NL0qRj8EHeO8zZqBp77qlT6HcQ8VXfMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784069354; c=relaxed/simple;
-	bh=Bw6RRPOxvB/XgWM8bOr/THxwZ60aPAOn6N924jU/Xx0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tKQk7zN5AJTIz4uaV3GwSR1Y69xX9xZuayCaBQEhb5hp++p5e07aQrKoGTggVWMzU5C9gyW2rRv0e4UkjKEV6oj6qyDpMhIqj/F26/vYtrTZthZS8uMN2pmN/9CStou7JeSiQxnvoiDsgOD8uuUlVPyS8Y313lYPeebbpcmYJFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vh71j93b; arc=none smtp.client-ip=209.85.161.43
+	s=arc-20240116; t=1784069456; c=relaxed/simple;
+	bh=35bqttjp6C6R6kCvBs9wEUccC1ypYlrbW5tflQJzKXg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=qzD0npbBbdY9YZ8oYWEh1+hN5JIzC4WX7d05OEBWTluPFfpexM0DCvvmiphGXtqLo+oA28Gr5GThvhnV16oj7bDsyb5diuNHp5SP0iC+oGBzVfIckK/WHlLoC7bDs+z+sTgSDXnQzpayQ4UhzSax17UvTFAwSn/WJFgvvtXVLh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DcowI2vY; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vh71j93b"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6a397db52c1so2517380eaf.2
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:49:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DcowI2vY"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-47f3e6cc44aso2386715f8f.3
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784069352; x=1784674152; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+        d=gmail.com; s=20251104; t=1784069453; x=1784674253; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=po/WE42MbnQ1mFJEpBbDU562tsK3HqFI/2OZaylzs5s=;
-        b=Vh71j93bHOSZPlTAtFDeKAUdbMqjt2zGK1tw82nczPKnBNzu60VYsA/eI9cB5jv6/a
-         AlPVwDUmJhMLXfxCB3ldHcHOMgZOUS6szDp5wTyIwYWwFlCP409i1ogb1r/oqm/Q6Yop
-         MznPDn2Wh9vkG0gCs3Bp2A2S5rjz3wyrHfNFqiQNIUZSdcbKzB+XPjKukfPeJLNbdDyJ
-         Yz5FyqT07WEXRSs45+4ILbPP3ddIAd0j+FSJ/BlKJyYt0S65rcXZUAyaEkxQMUiGkvBn
-         mSfNLBapBXQTlhc6ytu9K4jfHUGK+E5iyRod56qXJQgj6KxKKK/2C6UM/MQIOpxFvPmH
-         Y6OQ==
+        bh=pJejCFl8LZp0n3SAHwEGmp8QyI4QLZDzTxSUXUJIHxo=;
+        b=DcowI2vYwSk7vdnehJxli1mLRebsz1MQlYMVnkq0XUvy8hCb6utTqq4wuRGfxHC4gS
+         t01ON+Ully2DQfvotUfSPgOFknaGguBlavocSEDdQdWL44Ellkks52xT9pUWwd/BdDY2
+         ub+H44pjsHC90ga0py3hHOQxhvUvL0kQ59jo+VIFKIBKGC5b02ZEYL4UoWC+uHG0h5Vc
+         Up5xy/1HJPH/LYQYaBv+MQydK33tH6uCNgDf88mzG4l4gb4c/RvODTU/Jagn8NwTPqa+
+         7jvIOaJNwDtS+8p4TnH4lPfT0/TUEpl3omSlhQ2FBEWaZpo0wXdCvig5AO7g54xlfnFS
+         C11Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784069352; x=1784674152;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1784069453; x=1784674253;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=po/WE42MbnQ1mFJEpBbDU562tsK3HqFI/2OZaylzs5s=;
-        b=VGjyRJ3rXJFVD7lmOwpnxGqYpuVTLTKTIgW+qKDWie6IhGvOI1e84D683QiVHpMHl/
-         /ALcP6AioZuybX23yj6l2QtZIAuF+XNDzwVbHCTH/wM9DeK7ANOuHUA/5teAgbm1uzaQ
-         Je2gfBLrOVmRFZFYq2OaA1YWNWixiSRKmf3BWJneQK+aAU3ugrG4+XP7P6kiE02YDWMW
-         //zQXWclJxxnAwzBs+zVSkPjaCfhKe4dRVmSyRIojeygX/Eet9RuHhQ6QuuFwUPuo+5m
-         uaytmZmr9iincrkiS1UUpMr0A93B84WWPLWbeXJBnvyvyNybSx+LpBFGarMp9RyDAf2S
-         UIOQ==
-X-Gm-Message-State: AOJu0YyuT4bTaByCqg5oVou+S2duciEFxvAWhAhsCXsqVd2XxPjrUwTU
-	MYCBogvhbr5xSK7r2MDIWK1bPWl6oMjNkrgYhDYLEBIKOeB5bbQ6ctA8Ohuwpg==
-X-Gm-Gg: AfdE7cnFZ42gYcpN52uYHD99hCwhAruDbObNPNoVMAf5GMeM7cHIW95G+izVGZb1UKw
-	yYKtmMbD/GixjJLehuE3kQL2NltUlubfFGEDjCLUxRW3V20WJwQFC+I6PjFnRMMSKDvIGlMH5w1
-	1zYL8tUb79GBlpoBFaWCw2y350Ilhzy7WvEb7RstL+HNrVXYdqvjPdu7cM3alQts1RSBuyBfKBc
-	RhSyoxXJpkuDlmk1uO8oh8JMcOFT/XGuCNozfLPi8m+Ra0jmzRtjxNMfi28Hh4NSo3facHE7TFT
-	PlS3Rbw/b5AJ3pRk1teMidcJiDcc+2SkUfy9vY40p/7DQJwQSUYE5P9EeziNGucpdZVz347nJd+
-	Dfa4St9iZ0bWChqKeprYVc2cuMz2zZvS/kUMT0YtdMaGTj+KOXXvUCaNezPoC24OjwUS8R0rbTU
-	ZgLufwS87dLJPbulDt
-X-Received: by 2002:a05:6820:2904:b0:6a3:9373:1f49 with SMTP id 006d021491bc7-6a3d9e70972mr443505eaf.10.1784069352282;
-        Tue, 14 Jul 2026 15:49:12 -0700 (PDT)
-Received: from [127.0.0.1] ([52.173.178.217])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6a36a5eee0fsm15134363eaf.5.2026.07.14.15.49.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 15:49:11 -0700 (PDT)
-Message-Id: <2da452e39cbe1bd53da9d76fa7f7615c1a453634.1784069325.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
-References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 14 Jul 2026 22:48:44 +0000
-Subject: [PATCH 11/11] bisect: handle dup() failure when redirecting stdout
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=pJejCFl8LZp0n3SAHwEGmp8QyI4QLZDzTxSUXUJIHxo=;
+        b=GcS96EdQ3WvQ6Flnsvq6QmyFNJuYWXWofL6jgVkKGHwKoUevB3RWJBM9J2Uk4U21Fc
+         xBjjpwrwGuCiTNcGY1b/yewrskUvRDL523tNs7wdbDVCSQf6H2pQs+iOlzJ1h7iJueDO
+         FMSSwSPbYc+wheR/o9FaFmRHV0B5tOD7io9iyOt4xQ4gCp++hh7jx5aWE7fY1TXfRknr
+         BXTmlaOTbuimfj6Hwcy7BTmlo0g3Ms4FN/h4hghZiAzd/DWfWHhWvFq5VvnNJ86f10dI
+         HjvBCz/IF4ZG2Tj+ETu/myM4UaE5pucmFOOdHUDFFC+27s9wc+H6oZetSWtdBRWWYOur
+         irZg==
+X-Forwarded-Encrypted: i=1; AHgh+RrgWsCRpDIxTrnC3qgCZoicND4eXq8H4XAR1Ew5T1abjH0OlvkHtTaVqXBKJI/8cbex4Mo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/+HUL/YPmEzCpDzV8jAKc4srAZO4Q9vVIw0jNmCGGkpVzVnkA
+	Y6HdnAFCQkdotbBhvhhzBS7Jsa/LK1gW3yQleAfmQj4tXO75UdNSVLgA
+X-Gm-Gg: AfdE7ckbxAAsRK+ySaVXLEaS38KKUZfX1UfBBua9GpMrgkBur2C9HZYKWmrh+wd7XBc
+	TAPAzSMa09wYZ0hOMQ4sSYY5qrrh/+1jfd1wW4+OzehZ3I/pS2COsKGocK3wMCNyOnUGeSi2WP4
+	o+YEUkKV/7Arab3jw8s4wZVMAUJv2hnBBmHmIYkwHWtmIKD3M+KrJwRi1sg83K02PmgKDS+4cjK
+	PaDd1AnbMFwYECuuR0kx/Liuqne40vyOjYPtYfTxF0xA0D44w4LQ2RRhtOjxC2P1TzDK3NzyZrh
+	uEnKdGVvJWO1rS8HI8vHD0R+4GjW6PzES9DvIBoIIYypJcFSuMDiGYZdSQLeohpJQfPJzPBcvPr
+	Niuc8kgiAoBpVvwFr03LrzuzbmlSXQzjFIT83/RxBqHW9slAV7CZz6pwVDwaQjPnnD4W555m4SB
+	2NPgHeIuTzMwkBRn7qaR+FOwDR+behs3H43l7Vc/opqdOvP8ydya7M/pQ5MksrWUudf96/bmvxz
+	srNnW0m+UHAXGZc7pcwQ2TINQo9XopotrzTqpXoYA+d98JkYbz1B+2X5LvWXL2Ew8riTZ85niis
+	JTqjOx8uIrlFL5DO1OLYy75WaVB4TWj/KigvjLkiiDu9q36PjwFMGtxr54GWxnS5P8jbqg==
+X-Received: by 2002:a05:6000:230c:b0:47d:fa32:c895 with SMTP id ffacd0b85a97d-47f488aca25mr5124882f8f.50.1784069453242;
+        Tue, 14 Jul 2026 15:50:53 -0700 (PDT)
+Received: from localhost (62.174.240.101.static.user.ono.com. [62.174.240.101])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f4635a63esm12053832f8f.9.2026.07.14.15.50.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jul 2026 15:50:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 15 Jul 2026 00:50:51 +0200
+Message-Id: <DJYNU7D4A7C8.3Q2Q4DX27RXC0@gmail.com>
+Cc: <chandrapratap3519@gmail.com>, <chriscool@tuxfamily.org>,
+ <eric.peijian@gmail.com>, <git@vger.kernel.org>, <jltobler@gmail.com>,
+ <karthik.188@gmail.com>, <peff@peff.net>, <toon@iotcl.com>
+Subject: Re: [PATCH GSoC v17 00/13] cat-file: add remote-object-info to
+ batch-command
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
+ <pabloosabaterr@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260710-ps-eric-work-rebase-v16-0-66e07b58a8fe@gmail.com>
+ <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
+ <xmqq8q7dto8d.fsf@gitster.g>
+In-Reply-To: <xmqq8q7dto8d.fsf@gitster.g>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue Jul 14, 2026 at 8:33 PM CEST, Junio C Hamano wrote:
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>
+>> This patch series is a continuation of Eric Ju's
+>> (eric.peijian@gmail.com) and Calvin Wan's (calvinwan@google.com) patch
+>> series [1] and [2] respectively.
+>
+> Yuck.  I thought we had this marked as "Will merge to 'next'?" for
+> some time and this morning I pushed out a merge to 'next' of v16.
+> I'll revert the merge and replace.
 
-To capture the output of each verdict command, bisect_run()
-temporarily redirects stdout to a temporary file via the classic
-dup(1) / dup2() pair, restoring it afterwards. The return value of
-dup(1) is not checked, however. When it fails, the saved descriptor
-is -1, which is then passed to close() (the issue Coverity flags),
-and the matching dup2() that is meant to restore stdout also fails,
-leaving the process with stdout still pointing at the temporary file
-for the remainder of the run.
+Hi!
 
-Treat a failed dup(1) as a fatal error for this bisect step: close
-the temporary file descriptor, report the error via error_errno(),
-and break out of the loop so the existing cleanup path handles the
-rest, just as on other failure paths in this function.
+Sorry, I'm confused about the last line about 'next' and the replace.
 
-Reported by Coverity as CID 1508242 ("Improper use of negative
-value").
+You gave me feedback for v17 10th commit:
 
-Assisted-by: Opus 4.7
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/bisect.c | 5 +++++
- 1 file changed, 5 insertions(+)
+https://lore.kernel.org/git/xmqqik6htpv4.fsf@gitster.g/
 
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 15a2a30f89..801daf8c78 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -1308,6 +1308,11 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
- 
- 		fflush(stdout);
- 		saved_stdout = dup(1);
-+		if (saved_stdout < 0) {
-+			res = error_errno(_("could not duplicate stdout"));
-+			close(temporary_stdout_fd);
-+			break;
-+		}
- 		dup2(temporary_stdout_fd, 1);
- 
- 		res = bisect_state(terms, 1, &new_state);
--- 
-gitgitgadget
+Should I send a v18 or a new patch on top of 'next'?
+
+The fix is simple and I already have it on my local, I just want to do
+whatever is better.
+
+Regards,
+Pablo.
