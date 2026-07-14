@@ -1,78 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE27E3EB0E8
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 07:13:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C760368282
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 07:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784013215; cv=none; b=g48ebPznt3A/E6ZVy8BW8WLZKya3qwXj+Nv2g5A6zomUVBRm4LKV6asCvNmc8jIl+sTXUj7RQgaNrH/z7rK1dI7XTsksOyHMI6sZCzHUVcE8vqHBZ5SmilpV9TZop5MFtgmsIhOBJATH6stCZkAcx/WWPK6cBIQjF2IivlsEDHk=
+	t=1784013402; cv=none; b=NVh1kXojptpFSk01H8cyFkWrHg3qsl99ETnEJOyHpEuLBsW9c4dGBxPauAVOaUGrGh+5KQqttD9MS2QKux3/8EJvB1WCXxdrLSGLswFdwWZESc+3ifJoXr2uoErlqIYxfQXS+o5Z8skZ8mZ31P+yDw7xWkroufrEebMBMtHCR8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784013215; c=relaxed/simple;
-	bh=tOXg+uvrOkCqWjwQgBIqUdAvu60FKfiG7k59Ja4Tqak=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fMkn4cjETB4AosuDOyPhdyLPMaYCA0gYKBd080cm85icnq0zZFX7M7btNel1XSqatNDg6gqFML8YEknXc1gelkZ2ptMVRRX4XNJG+k7dWkms5t8UijjNfA7W3pYBWx68c62lDjy9WfNpMPeowT09p8DgEzD3GQ+3vixaOEr2Z8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dbzykRtg; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1784013402; c=relaxed/simple;
+	bh=LNciG4Xbq8k4n0CrM8m5M2iAAqAGTzJsCmftMlzi6p4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UnKvgGo3lqBbPuYs5PWszLI2f2Q8vVrEKO+1X5QzFLiP8Y37zFAYB0QJbFnhl+avdrSXOBUM78FJjOqqgFqB5zW4Jj8R9NKjVzZ78rddP79PWfoGdocszNsVVq3OBeu/LLSzBI2ac+gMH7RrJd0Wj9QveFwIZtiEaJO9YyIpEMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qRi0JwuC; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dbzykRtg"
-Received: (qmail 21737 invoked by uid 106); 14 Jul 2026 07:13:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tOXg+uvrOkCqWjwQgBIqUdAvu60FKfiG7k59Ja4Tqak=; b=dbzykRtg1llaUAzwUpr2ivuIiOHLuZkSFSVh/MkIgQ/lU4+saarwExPXF5UoMFSBdiGZy/wpSD2Rf8hJLbaXBzTydoOJyb7srtJPEcKC2dazh3hGASaQNu9z1xp9oiC+9J3/1X0yH8hQx6Fgl29B0ceOIMzs7fQT0by+/dM8U3FtKUovTe/mL7wwW9qEmDb72vMaGQqMTNmRS0OARMPb2UKVnA9wtP/GyNjDE049cgfPH2kSSRB/TAs9+Cp5pEBvXgGZVFOHFHrQRQwwh4DI9vsxE5gcOhfHqKYuOSEdFCXxL4+d46dI+6LupoHX5+N9Z/yLXO7mjvlbOioeVBJamQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Jul 2026 07:13:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 42750 invoked by uid 111); 14 Jul 2026 07:13:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Jul 2026 03:13:36 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 14 Jul 2026 03:13:31 -0400
-From: Jeff King <peff@peff.net>
-To: Ted Nyman <tnyman@openai.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] fetch-pack: accept "pack" output for packfile URIs
-Message-ID: <20260714071331.GA4058163@coredump.intra.peff.net>
-References: <cover.1783982021.git.tnyman@openai.com>
- <alVoA5-fDDPwKPZZ@com-76773>
- <20260714071231.GD2516582@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qRi0JwuC"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2ceaf8a1265so27891745ad.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 00:16:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784013400; x=1784618200; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=uQWje2rmnSnmFOoDvQOjywle7MjFOSMIyJ9OJpqMCDU=;
+        b=qRi0JwuCPEuYKQKDVynCsCOyNI1+9YIipT/z0nxkHXf7Jd1DctWxbvG4CYZETOoNx8
+         OintUV4fYxNzTiyUmSv+JItYeQmOv4xIfyJbbCunmq2FomJz9rdb8gJqyVfQBtw21Nki
+         fGVzLCOOIyEijlO3gHeuRfFyh0GlYIR73quYOOoeY+xVXDEcFYkOJlod50BpYrVj60JQ
+         Wd21NDnDerofqqOAMyb1nN8Y+bzRsvDHpqvEBL7pjE2xsBOslJvnjFuHfYRj/83WyPuz
+         1fiyyGAthfa08iIGxGmAi1W7XYpF2hBuCEgHjSvupEDlYB6ociSK9UHlRdNsbfOFeSi6
+         qdnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784013400; x=1784618200;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=uQWje2rmnSnmFOoDvQOjywle7MjFOSMIyJ9OJpqMCDU=;
+        b=YERjLXGAX06596z8p9KYP6AVlJCsnewUtQT4FJJcYsopO5+C9/fGFViIQzHSQRqo++
+         qVUbYhv2/dHXFehC9P3f5ShACuzkl/QgrVXkwqDya8dw2YNs5lMED8j+RLQK1H35V+o9
+         o68huTD/jyrsSbhpFrUFHNkwMNEEzR/sTgPIsQXJZ6utkZv/ihgse003T34O2at8AvkL
+         iysqCX3hO7xlp2YVmKZwc9GDHWwtie7nkQ+vjf6M/r2kUnX5avscfvtcSauFmiovqHsG
+         mp+qnoh1hWU5lHH89nT6J+tewRJ9ITBpr3MJiH5vcZG/TJ0sb1w/gMEMtrSCN/4gOyY8
+         LiWw==
+X-Gm-Message-State: AOJu0YyxjkIoANmR/EEN33andjx3pPO9CWEDlagU8KblvwFEO+3bXGCr
+	PdqroaJzk8j7KSUlp+4p6hl78fHQ8ccJufH1s1QwuDbTyO4M641hdtICW0K1pzz5
+X-Gm-Gg: AfdE7cmVLjmvW11mXzMYvDolMIVRxva3RBkam5ZDSa/MiPKDgm5VbPem/GNfYG5ZVQs
+	joYeThUXwwjTbYgSBrLz/+Lq/Qo39sBvkf8ijascnIggKfiYP+4GvfmZV7jje+tb+hd6mNLUl8Y
+	8ivyt5C+8GWoDsg28UXX3+N4mT08nQTx2x0F93Y4BbHfIu1R+by9rjkmh4b/+ne/zFsEYX/g/uz
+	SzMwzgGsdzZiF2tAgA9VlnP2cvhJloYAuqx22Ji17T7oAB7TYVd4eGc+66EK13o3A9WwykNJ9rx
+	phnATq9o9l/OJSrt+LDssBoPn360DiXwp/byMoc+aZzlURIhECbllejnpvtsDXjSAw1yu7/ZazH
+	TzytRYJ6JPVuRFfTdqjaR3uZMqfZovKIHgxf9H4SWvQQaAwu1jh4wPKhO6Uq1IKSofw4mkS+yJb
+	c7FisnEKp1ZeL2sBTXgj+ZKbkdmAOitD0x1OowmQ==
+X-Received: by 2002:a05:6a21:9d91:b0:3bf:a0e5:99a5 with SMTP id adf61e73a8af0-3c35754e3c6mr1493573637.47.1784013400294;
+        Tue, 14 Jul 2026 00:16:40 -0700 (PDT)
+Received: from localhost.localdomain ([14.141.116.242])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174a583bcsm83465759eec.19.2026.07.14.00.16.38
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 14 Jul 2026 00:16:39 -0700 (PDT)
+From: Shlok Kulshreshtha <diy2903@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Shlok Kulshreshtha <diy2903@gmail.com>
+Subject: [PATCH v2 0/2] t1100: modernize test script
+Date: Tue, 14 Jul 2026 12:46:31 +0530
+Message-ID: <20260714071633.35446-1-diy2903@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260713140142.27898-1-diy2903@gmail.com>
+References: <20260713140142.27898-1-diy2903@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260714071231.GD2516582@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 14, 2026 at 03:12:31AM -0400, Jeff King wrote:
+This is v2 of the microproject cleaning up
+t/t1100-commit-tree-options.sh ("Modernize a test script").
 
-> Would a more generic name like "cmd_output" or something make sense? I
-> also think this would all be much nicer with a strbuf (which would let
-> us get rid of the magic numbers), but that is a slightly larger
-> refactor:
-> 
-> diff --git a/fetch-pack.c b/fetch-pack.c
+Thanks to Junio for reviewing v1.  The only change since v1 is in the
+commit message of patch 2/2: it now uses the present tense ("is
+created") to describe the current behavior of the script, as suggested.
+Patch 1/2 is unchanged.
 
-In case anybody does pursue this, it is obviously missing this bit:
+  1/2 converts the tests from the old backslash-continued
+      test_expect_success style with space-indented bodies to the
+      modern quoted-body form indented with tabs.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 5f94f35c30..359740f231 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1935,6 +1935,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 						 xstrfmt("%s/pack/pack-%s.keep",
- 							 repo_get_object_directory(the_repository),
- 							 packhash));
-+
-+		strbuf_release(&cmd_output);
- 	}
- 	string_list_clear(&packfile_uris, 0);
- 	strvec_clear(&index_pack_args);
+  2/2 moves the here-doc that creates "expected" out of the script's
+      top level and into the existing setup test, so it runs under the
+      protection of the test harness.
 
-to avoid a leak.
+t1100 continues to pass all 5 tests.
 
--Peff
+Shlok Kulshreshtha (2):
+  t1100: modernize test style
+  t1100: move creation of expected output into setup test
+
+ t/t1100-commit-tree-options.sh | 59 +++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 30 deletions(-)
+
+Range-diff against v1:
+1:  45f590f110 = 1:  45f590f110 t1100: modernize test style
+2:  f74c71c104 ! 2:  36ea70be9d t1100: move creation of expected output into setup test
+    @@ Metadata
+      ## Commit message ##
+         t1100: move creation of expected output into setup test
+     
+    -    The "expected" file was created at the top level of the script, outside
+    +    The "expected" file is created at the top-level of the script, outside
+         of any test. Code that runs outside of a test is not protected by the
+         test harness: a failure there is not reported as a test failure and is
+         easy to miss.
+-- 
+2.52.0
+
