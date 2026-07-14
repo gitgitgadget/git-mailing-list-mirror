@@ -1,92 +1,130 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67F13546C5
-	for <git@vger.kernel.org>; Mon, 13 Jul 2026 22:55:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEC93C1F
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 01:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783983334; cv=none; b=u3OGMowS4Sud3wMRTugNZ9AFyvthOAQAjOSPLQoRQty16G8+90iXbCaECTf8+yiYWFo4ktZeJvQ2ghsPqAKn9afwVtaQTDKOmzpw/SznKsVIAsRQ2Jcb8p9sjCiLKWc6RkNu80OzeIJ4nxkoH015mhxgyhRBvtCt7cNfj3Te89c=
+	t=1783990827; cv=none; b=BTz3vpWFx5UVSYRT1OEB9eOz952scUnq7zdp9HGEtnIs+XXLGCChecFLZ/226NnCJ2+bTHqBcDGKMB4TWYgvKhruB/yl3JYqnK6KgReSRJXLSxlQfjARIlmMFbYMW+OhhNA+FHTGCjzLt7bHxrdYtdiFl5ZfDJNA2UDAtZnQS/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783983334; c=relaxed/simple;
-	bh=QMLfcr2ZfX4fMLJS4Gv9Smzs223dvFVTlZNfmdYvpek=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P9CRzcHrfrC18yqauuUELwlJXnQG3P+Xt6m7DbrN8wlo5XPh27pb9PTKVjn4QvH8AVqH1au4Dp3kcrBVVNcaWISubdSmExZlnA7RIp6byq2j8a+KLJIhAI7fGSOvrVpivRbuiBvh2pPYbR02AwCfMmFFDieyrmvLEInqMxQrmco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=TIQCKR21; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1783990827; c=relaxed/simple;
+	bh=8a5HLrKTomoPPpR1R5LRKjPRWyaiM1H2y8UDdJ6w8x0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fJVZte/XHVtcHnpyz6nWWSStcnMYUP+0UjDDlDlNlW+uwS1AuXRk/mqmC1tNvLkNm//WGVybb2itwkg/C6XNG7uyWSgugRROMb+O68CjGtdAkrzxWL4ucpsrDBA1xPUNAV5cMDLa5rTFbSNJhd4svpOIH1EmQ7eXEtBABWG52Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=t/VsbxQG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jr+lMu1L; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="TIQCKR21"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-92e68de4f9aso35484985a.1
-        for <git@vger.kernel.org>; Mon, 13 Jul 2026 15:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1783983333; x=1784588133; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=fmpn4JDwpvQvZWkvf/lfYpWJNRy9gwKd78LhILrkCk4=;
-        b=TIQCKR21ONJ0i1Ek/2LknWNYrouha7DKQ/ZT3y8OKjZDvIeHk1JWoh2wAp9RkXiTRn
-         s+r7/WhgfhVdWxvVtaXME8QKfer+QXMx/896y1U/Ifw1WUUywnti1qED/f5q7JPDusqh
-         b5fvDMRm7GcIKZp9ZnzT2Afl875D+3AG2a2CA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783983333; x=1784588133;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fmpn4JDwpvQvZWkvf/lfYpWJNRy9gwKd78LhILrkCk4=;
-        b=cmdaQZlK7VPjCUvW5N4T/E/t1bTxIcVsH4miRFXVWE8dGadAxACXZmSyq4wZgFl+OZ
-         rH5nlg6WbE8XA0/y6ymXnkde6L3UbAmZyz9wUR0oD/WEK336bWhnREQW8ABqlkvpVNh2
-         NHnVXOOoELJrfJl95EL6OqbJ9ccRNx2h5x1rD2DSfFanJ+59kPdJ8ZDrMbFAK+1bIopa
-         dZrEy73qQWppTCDOsd4NHQzbf+oOqYPTI2YvvxXZQYZErj/IASr7wKBi279bUuCIof7w
-         gj+XnhtxUmcn/qs9yaC9Cld0tBE4A6qhg/hrDFmYECvoOWI0+zLJb9+Xs4EFAitCe0Z0
-         UwdQ==
-X-Gm-Message-State: AOJu0YxQ4/ZUjMzmpHdPXiU7SsZ1MgY1GjG+jyc9rVv3oq0TEUofiKAU
-	Q5opsl963iIEGrNAS3CIvR5iT2hZkZqkSCZS6r97eHqXmdgT4+hQ80RkGYPJx3lkS8s=
-X-Gm-Gg: AfdE7cm3clEpx5IyiMmk0Re3I46Wk9mNgoZcvE0G5FeNjRZKM6OXGz30C88ntJ/yB0v
-	EdHyGBpBgiGrIEDHlr5N4eBtUcehe1SBdhDeJuuddPycFOIxMLrkYJ0pFrFcB2pgA3EcadbIIst
-	3/FiItwdsc2h5CDvXYLteOsBMqalhNQ668s6AKd9BvZf5XLrVcPmoV28ekgy57KdL/1XI0zbpx9
-	FMwE3ca9J8EjXN9KGcF5vYtma+KYiBpGi+ynP1GNwxwM5roxJACJotUkUUqDR3QWlCmS68hQE+Q
-	S/a9Jt1XNJ8x38zExZwRFVgSgkPWbQ7fbBGFOgt46ZQM6lCZO8D2t/JHR4D9xsJcQTz49xAudMR
-	1zD/HWaELPiBUFovO5gLUcwgk1clKWgyJ/X41jyCe3hFWrRU+gm7iSr1xsGfhpxY5PV6AcFsIx9
-	X7sM3xuo2FWq3coNjTP/0/xoRwPQfwsITogJnIT/dEOMF6uBVdDbY59gsJPCWfwOFFpEEv
-X-Received: by 2002:a05:620a:440e:b0:926:e8e6:3c28 with SMTP id af79cd13be357-92ef2cb409bmr752278085a.7.1783983332501;
-        Mon, 13 Jul 2026 15:55:32 -0700 (PDT)
-Received: from com-76773 ([209.249.37.148])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92ee5b88e40sm1207972885a.14.2026.07.13.15.55.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 15:55:32 -0700 (PDT)
-Date: Mon, 13 Jul 2026 15:55:28 -0700
-From: Ted Nyman <tnyman@openai.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 0/2] packfile URIs: support concurrent downloads
-Message-ID: <alVs4JO9BNQrXsnO@com-76773>
-References: <alVn7UWvdWRAG-Vv@com-76773>
- <xmqq4ii2wlo1.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="t/VsbxQG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jr+lMu1L"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0339D7A0158;
+	Mon, 13 Jul 2026 21:00:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 13 Jul 2026 21:00:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1783990823; x=1784077223; bh=43Ew/P1oVp
+	etwCKHZxWqjg30w8bWD8pSxxTNCtj1CVM=; b=t/VsbxQGRrZ/0nniUgZUHbZPHt
+	aAaJ5rV1u1AdWYkZBu8w9AVuRAdr6GPnypdhSAdkrZkZvyuLGOCQqAAsWcoeZJp+
+	MXuPN/k3IvR/0Kc6gEjoj42eMWg0eIjcp8iv7rjoTVBp/jU0muCCjQwz1qURC2PE
+	Q1VtA1f20YBsWqEh4HNmSRiBH3RT01E4Q8gDCKOOSGXJc3ZnaJ7HUIYnd06TR52+
+	ZNfSq7IOxfFUeNjXILhTzIRFhKArB4n5BrGPuWuHwsTphVURrAfzopUvseiE10kp
+	h/80/TMukHGEqmTOjeiPQuvQgSk7mYcNLqE5k+DyJRwbhkIeL7TTyFVblWlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1783990823; x=1784077223; bh=43Ew/P1oVpetwCKHZxWqjg30w8bWD8pSxxT
+	NCtj1CVM=; b=Jr+lMu1LwwmkyzVQfutopP2FtRj9N58AdmRr0LoOGDt1PTBnB8J
+	iLbVu89NH2hlGt+U16QlKlFRjjTgeZ93K6BATfpXXeGchibndPIXIdf3/H9Jn4wh
+	FXpHZ5vj2l0hTHi7DK7M7j3e88W2uKXeHVn9vJNCi3GM1EqkMASo5cUinPyM8IJv
+	RZHxMO5QPuCuokhOsPA9t4upjZ0DyYbEuLqcQwRaZdwMihoT9qvaJkN6oBLNpkLV
+	Neik04/a9DI+cP1vGC8jSGRw+i9NThNEnA9+S5KOcqb8aK2tYckZ9X1+FM7Hv9cw
+	w2VmGDpiGFlAvmRJDO0ZO5i9nw2GcfCWbow==
+X-ME-Sender: <xms:J4pVapU4KJN34AoCQ6itj4idI527zy19q-WTDTqfDknOfWwwY0zcxQ>
+    <xme:J4pVasLVBV08KMkP2yzTfiOK7iw8-b0wJEe45ajqz6GQXeBoqi46CXruzWzf44VCJ
+    OobqP3v2x_a2zyCHywv0NMS9RzxT2JoPTDMmimEal5Z8vR24FsMvyQ>
+X-ME-Received: <xmr:J4pVapAkfqsccnIvaQJQPV6-uyYGtSRwyok8E5xMw0jrMxds7mq_B9rpFmG7En3QjE9ZipFu2cuhsxT_fAzN9jFdxSLJKYBcTMKNZPA>
+X-ME-Proxy-Cause: dmFkZTFj9FpmbEJ1h8aF1yoRSaHLpI1qZsmQyl2tPPmHn4J/+PnO/gWUp2bgL/ZPFgbctw
+    bHgkPluPRV9TVwTsxdYBUWL916Dv5QnQzDpaGRsNg9IftgJ8wPlHBJ9lMaMUCG+vH4jine
+    PS8A65THbY1SyiJXTDQgA3qGZTfTxLdQPn0UJZBaMBOzMXaLn4zLFiVxtuZk4fFkcm7Vom
+    hfzTjPyiW38sdDXXWqdL7+M+S87FyF0st97wlhBDIuE1bQxfl76qzjnTFwcKtcSIO6DaUs
+    wuksxvqanLD+mto5RAi3Foz/gviHUyzk8yuWBptmYP1vxQ+QZDDtEgbCrA3LhmeITKXsiQ
+    YwmzoG8Q9ib3Vhr8CwXo0jMlqhwejSZWCHzW94IxVydSN/kn1cQZ7vp2rOYCvk7VSMzdZu
+    1OGufB2oNs6uqcI1h1KguL8nJo8Z2vMIzNyUAeT3HQwSEYgKR5AFaI/GktWhqqKJWRpxUs
+    RXkFNx6OjCNr/XDjdtaI+Wm13/C22OYlzl+jJyC8/5Wp7IdfjKHotFoqTQT+VhLzPCp+Qk
+    kbxGL4QCghBOMcm4HpXm2iUmSSa9lUTIhp1i9JI0Hnvyq0ZCUVTmsAVy+krVKK2criY1K8
+    jvu52dCoQ3y7WALFa4asdk/AGrX1llz24qDpP6s78H9HwZmkX9q1gGLYWBwg
+X-ME-Proxy: <xmx:J4pVasem2_u6J2OUijw1d01IxNZye5tNaEcyEiVRNeiXP1H4FkfB9w>
+    <xmx:J4pVao38UGfVCqCHuedILaXwyJTt5bhuAWnDsypf8RflTO6Eu7boYQ>
+    <xmx:J4pVajjs_-ksy8COSlL7jG09NI8zB8gRCmr61Il3sDNyPAwTy8HstA>
+    <xmx:J4pVahng2KwYn_8gIP3-O2no7p0E0AoJrnDNsbdDAimjLBN4m-js2g>
+    <xmx:J4pVakqMtuJvPZbbwFUvbM6CFFM4qkuVbp4qU7Oa7F7zgMEehMULmoUg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jul 2026 21:00:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ted Nyman <tnyman@openai.com>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Jeff King
+ <peff@peff.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH 1/2] http: use unique tempfiles for packfile URI downloads
+In-Reply-To: <alVn-QmK3K91_tkH@com-76773> (Ted Nyman's message of "Mon, 13 Jul
+	2026 15:34:33 -0700")
+References: <cover.1783982021.git.tnyman@openai.com>
+	<alVn-QmK3K91_tkH@com-76773>
+Date: Mon, 13 Jul 2026 18:00:21 -0700
+Message-ID: <xmqqse5mv10a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4ii2wlo1.fsf@gitster.g>
+Content-Type: text/plain
 
-> And "b4 am" seems to be having problem grabbing the patchset X-<.
+Ted Nyman <tnyman@openai.com> writes:
 
-Sorry for the noise -- Mutt rewrote the original cover-letter
-Message-ID. The patches reference the corrected cover:
+> Since 8d5d2a34df (http-fetch: support fetching packfiles by URL,
+> 2020-06-10), packfile URI downloads have been staged at
+> objects/pack/pack-<hash>.pack.temp.
+>
+> The path is derived from the advertised pack hash. Two processes
+> fetching the same pack into a shared object database therefore open the
+> same file for append. Their writes can corrupt the temporary pack. If
+> one process arrives after the other has completed the download, it may
+> instead try to resume at EOF, which some HTTP servers reject with 416.
+>
+> Use the tempfile API to give direct packfile URI downloads unique
+> temporary files. Keep the deterministic path for ordinary dumb HTTP
+> pack requests, which use it to resume a partial download left by an
+> earlier invocation.
+>
+> This means that a packfile URI download cannot be resumed by a later
+> invocation. A retry starts with an empty temporary file instead.
 
-  https://lore.kernel.org/git/cover.1783982021.git.tnyman@openai.com/
+While that does sound like a safe and correct approach, stepping
+back briefly, would it not be wasteful for the second process to
+download the same packfile that the first has already started
+downloading?
 
-I confirmed that this retrieves both patches:
+Are there better ways for these processes to coordinate with each
+other?  Instead of appending to the file, what if the second process
+uses a predictable temporary name (which we already use) to open a
+new file with O_CREAT | O_EXCL to avoid this redundant work?  If the
+open call fails because the file already exists, the second process
+can detect that another process is active and wait for it to finish
+rather than initiating its own network request.
 
-  b4 am cover.1783982021.git.tnyman@openai.com
+Doing so might require setting up a trigger or polling mechanism to
+wait for the first process's download to complete (and detecting if
+the other process dies without cleaning up), though that may open a
+can of worms.
 
-Thanks,
-Ted
