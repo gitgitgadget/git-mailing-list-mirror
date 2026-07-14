@@ -1,65 +1,70 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2113625CC57
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:48:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD89425CC57
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 22:48:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784069329; cv=none; b=eFsHgd6qxUpWx/XRJTTD4fQVNJQbXQPHKBAQ6V826BY1vN1LEHHM7zOQ44jlT3LwnkS5kVhkia1a9KnJJZlmeYXNjULUYj4RVid0fSN+MrMjQN8/C6CdlSfvLqzYZesVhO9Gj22kFiELZqjj+qkZzmAFBquY8hxFVDiuvJ5X4m4=
+	t=1784069332; cv=none; b=J7IOPI4azaFqC36iLZmoCoqSkOVDAcR+fO3JXGgF4ScRxMk/PYqffnlkF1Rk/EWCv3vm9RwHuRor1joNQx/M3ogTkqejylneQ4OM6zU8yMbSdF3OZA+6wzEci07ZxAVt4bIyq+nJBcJ1LW776cK6/Uzz+KfQvM6gUYziW5NvXvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784069329; c=relaxed/simple;
-	bh=gJUtsSBUi85KC7z3MS+dj9FCXXfWkxB8muf0f1li4aM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CtH6RT0K+sjnjTHctqHTK5P0D/iYh40vbQ5eCWlhFgKS2x66O1rps+MGR7Rkv3YcZy2BnifzfjWatCDI2uqbUdy9d0kaf3wPhRQZRvySCVf27bC2OzvfjmYG7wVxSA4TxTVdADHlgyNzq3yoWlBRZ6zxinhtLE4AtW69Gl0iZb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eWbeXKW9; arc=none smtp.client-ip=209.85.161.54
+	s=arc-20240116; t=1784069332; c=relaxed/simple;
+	bh=hmSbXH2EWUKB9j1xDAwuEwUIYytbLmXsmJidgaGXjgs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ku3f9pvd9sW04YmzKpGUAg89Zni+lgTcMdZqSjSycioq11/OHX7HGG2Kw3mSuzfCKY1DEtD518TmhzDLghjj+WRkC+vVXCfRYttL1wj658MqL+pQfUA60hs6/7pH9VjNo8OaJs0N/GzAFHTX0AGww7AxAppwDYzzr2l3QbCnguM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a9M9JbDj; arc=none smtp.client-ip=209.85.167.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eWbeXKW9"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6a378f187bbso736851eaf.0
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:48:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a9M9JbDj"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-491bc1d4e6bso3343721b6e.0
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 15:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784069327; x=1784674127; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784069330; x=1784674130; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ZHsh3SSTk6wQMxb8j0lnzVzNiBpEZiF0YzRnlYdkXqQ=;
-        b=eWbeXKW9lE0bnKyofJTEWAV2u7k1ikUxgCnnmmpdUvW3zT8nAkwNML4MufrjaRd3LD
-         /pIgGOCYmGcTHtKAxBTKBke0BpyPzhen2bfJ3OQNptABlZJ4oF4q16zb+i7eVQ1a7d9a
-         w+WyQkvNgC4olj80tupvkEvzwQJQkr5Wy7kfY31ivVWpU41TJLxntA4o3WFOmaMCBRx0
-         479zBJKXlBQ23aW499LAjSSpa1Fzmw36bsHtcAVED5Vf7ZeS/vQ3FalkZrm3d7YdDEao
-         BqZNz+6yW/OciC3ihzEwxxb2zeWOqfdapdperOIC9NgCvBfn27y90qeZKA1hiEappGVK
-         jSHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784069327; x=1784674127;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ZHsh3SSTk6wQMxb8j0lnzVzNiBpEZiF0YzRnlYdkXqQ=;
-        b=bRkMGACa0Uw48+9nCodd1ty5DYjAyd+f+If1AYDHUyTuKyDVixwkEPre3aPBr8J6A/
-         5yd5f+dOqIOWy5j0C/CDxSGHvVYr+LqF+G4YqUG9KMiXQnNlAKtdyTM6v0dSf/ASgIaK
-         8/yqGEAvqbpuGJJS3XOUOJ5uXLTHsk+aqLBDeGwlkQI1MszZ5lzZJeVfLy6vTRRJ5k3G
-         z0O2J5PfSmHWgeNCz+qYB1lVD69kNsL9yLOXAxBx7EL3f5Ef7VLFvY8nepSsvADsp16s
-         mmKzY2BG8K0X5qhQFbeLvBhICQCcmHya3mqHzF2663X4QG3vhinG0J0n+O/4vskFRqDr
-         Z6tw==
-X-Gm-Message-State: AOJu0YwIddpa+a9Mj983WOhAM4qxogiGk+TIS74ETkWV999x73g5zcXF
-	WujPOLKiT1QAlebF5zzkWUm7AeDeWXKFU7oLSVSNX95gKOqGW6GLg26kjFoWzA==
-X-Gm-Gg: AfdE7cm0IXKLZfIiT98KL9eImdlW2kRlMQ/GsE/KuGwfiHBKDvaqjUtHIvXCC5NW8id
-	rd5MnlJUOWVbnhL7CrXilTXfnBEzpaV+LrTEDh7zuqnPXhASFBu1xejz0AfJQt2JxmODdBGyBjL
-	XoQOsoKqjGk1dl74xY8pb7p7/glWU+rJVBf+37eiYq+RHZ81Sv6/rqNyKDoyyC9I7EV3P5ZbDsk
-	LYZUHfa8c1TnNNwUKk4WWh0AnpHfGK0T6GGX8KF9jtAdo/tinepKafZkMtm4B61dfZh2wJ00PdL
-	auL+msCoIhN43CqRVDeg5GK/1dR32j7Ydv1YtFFhkqmUceUy+wDMTUyksLWs2Ylbj12A389xLI7
-	uZ5i/Fi123yP0SKAYRhVExovTjkNiSG+Uc3WMIQjTZGj0MLsNl1RN1atsSchjjCVd4DlDWuUqcG
-	NFf9eS9zZh/lJeRE/5FGKJEJqXIF0=
-X-Received: by 2002:a05:6820:2088:b0:6a3:bdc5:591a with SMTP id 006d021491bc7-6a3bdc562f2mr4589857eaf.32.1784069326906;
-        Tue, 14 Jul 2026 15:48:46 -0700 (PDT)
+        bh=v1F/2hg5z+y7GQEVMdvNrsCJfqGQgTDTAC1VrdddO8g=;
+        b=a9M9JbDj458UifEF0TEk3sPn0CVvxzLPmYzjCL3f4jl1axhkGuXo5bq0mp48UoU0lm
+         e/1I2ik2s8SKptpjq93V1ESallPLkWUmSyoO9i7HQgDMQu9mt7rMtLf7F5VZYiX/o3iQ
+         97Z5Fb9w+1Aeq51YchkMnXZRRQedKHKkUR8F5y0ebh3OGfKc4FWX33oD4BJsiobnZX0C
+         bfFOi99A+8xPatFIyjQCOXOOar1zoLeyrcBDu9GAnvyNNigwYG8O6e1PFe9RELQubGQT
+         OZCLG1n1hys0rQPEsUteOxaJKgm2OfLhpLtELKP0NxYjVP6lb4kDvK9ywhcpkTBBPAMy
+         ouOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784069330; x=1784674130;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=v1F/2hg5z+y7GQEVMdvNrsCJfqGQgTDTAC1VrdddO8g=;
+        b=jO3X1DUQenP9cK0QESFxVk6zd4qE4j2DVAGEtmmsNNv5EnHXH8rY8YV6H0jaMwSBHk
+         Yrsq/Vt+CZD27TjFxIeXnKigaAlS9rCHzgE4N/fIEwXqbi1zGykDULDnZQgQv54hOENm
+         HActP+u70gCz0kNkh3fj5VA22hClMQrK5awOTsTw59K1/fu/QpBNh3gqs9BBBSJIfJmF
+         co3ssWii3mu1tjs36l2kfuoxcZhZL6t6yB+JWZvoo70LNJUgtCI25vkhs1OtUYq1jVsO
+         WAAoBh1o/RZmfiosSasZaTe2pXHQtKP8yFHkYIikJjG3xLYYU3X4dhDn1/ireMxaCXnY
+         bVkA==
+X-Gm-Message-State: AOJu0YwENor5NsOJHyAg49La3kt2c/QMVoIYgufpRAAYF/0LejOaFeGY
+	C0vjAYq2Xs5mAPePxCtyrWv+kmwlflbglRQ4Dd7KuBVFlUll3QQGMKdSh5wYFA==
+X-Gm-Gg: AfdE7cm3XZ8IRaZfnH9Onqu9fwQXDIyIw/jcdYF+dTsA+6YO6Mo0JGWRhFL0Me+74HQ
+	fyL34KxuxqJXNN5qnEwsua+8t/I/wI7QdryNFw3xbWND9QJtRvAk1v5wPX73+rpPZ0qNaP0QMjk
+	zw+cXa2QP35BANRwJDmP2/kAikzVO6ppyuaeOevH3DpNUEwMyk7Nglys93gIJ53ZZ9SEbeaOi9r
+	R3L3XCjzlaIFIrwdwTxI+WMnIIEHDCxZWO0lgj9aTcl8IWfwPfggxRXRoJc4ttwdtpVAwyAyBUE
+	R9VhIxeLlo+iIeqxLSG7WKhqhYJXvPJRvhDG4iTx2Ps9HNC4PzxSS3S15haVAyoJ+6b3OREbdfr
+	CzgEzMVjLNQDfmCKcr6Q+2dRTVfd0IngmsfJvbQM5hGvlq/9d4/Js/rptWq1Lpbo2laSpbM1XiR
+	lVkbuskfaw4Ldca9gbWx9EtlczUsU=
+X-Received: by 2002:a05:6808:191d:b0:485:4396:91a3 with SMTP id 5614622812f47-4a47a65cf7dmr2851983b6e.30.1784069329657;
+        Tue, 14 Jul 2026 15:48:49 -0700 (PDT)
 Received: from [127.0.0.1] ([52.173.178.217])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6a36a5eee0fsm15133798eaf.5.2026.07.14.15.48.46
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4a1ad4ac92csm15223188b6e.5.2026.07.14.15.48.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 15:48:46 -0700 (PDT)
-Message-Id: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
+        Tue, 14 Jul 2026 15:48:48 -0700 (PDT)
+Message-Id: <e653255de19decfe45d4ef8d3277aaf69c44c391.1784069325.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
+References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 14 Jul 2026 22:48:33 +0000
-Subject: [PATCH 00/11] coverity: fix unchecked returns
+Date: Tue, 14 Jul 2026 22:48:34 +0000
+Subject: [PATCH 01/11] http: die on curl_easy_duphandle failure in
+ get_active_slot
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,38 +75,52 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is the next batch of fixes in response to issues reported by Coverity.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (11):
-  http: die on curl_easy_duphandle failure in get_active_slot
-  config: propagate launch_editor() failure in show_editor()
-  reftable/block: check deflateInit() return value
-  reftable tests: check reftable_table_init_ref_iterator() return
-  last-modified: handle repo_parse_commit() failures
-  compat/pread: check initial lseek for errors
-  transport-helper: check dup() return in get_exporter
-  transport-helper: warn when export-marks file cannot be finalized
-  bisect: check strbuf_getline_lf return when reading terms
-  bisect: check get_terms return at all call sites
-  bisect: handle dup() failure when redirecting stdout
+get_active_slot() duplicates the default curl handle via
+curl_easy_duphandle() to create a per-slot session handle. The
+return value is stored directly in slot->curl without checking
+for NULL. curl_easy_duphandle() can return NULL when memory
+allocation fails internally, and the libcurl documentation
+explicitly states this possibility.
 
- bisect.c                        |  6 ++++--
- builtin/bisect.c                | 27 +++++++++++++++++++++++++--
- builtin/config.c                |  5 ++++-
- builtin/last-modified.c         |  9 ++++++---
- compat/pread.c                  |  2 ++
- http.c                          |  2 ++
- reftable/block.c                |  3 ++-
- t/unit-tests/u-reftable-table.c |  6 ++++--
- transport-helper.c              |  6 +++++-
- 9 files changed, 54 insertions(+), 12 deletions(-)
+When this happens, slot->curl is NULL and the very next operation
+(curl_easy_setopt on line 1632 for CURLOPT_COOKIEFILE) passes
+NULL as the curl handle, which is undefined behavior in libcurl
+and typically crashes.
 
+Every HTTP operation in git goes through get_active_slot(), so
+this affects all remote-https, remote-http, and HTTP-based
+operations (clone, fetch, push over HTTP, bundle-uri downloads).
 
-base-commit: 55526a18268bbc1ddaf8a6b7850c33d984eac9e9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2179%2Fdscho%2Fcoverity-fixes-unchecked-returns-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2179/dscho/coverity-fixes-unchecked-returns-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2179
+Add a NULL check and die() with a clear message. There is no
+reasonable recovery from a failed handle duplication: the process
+is out of memory and cannot perform any HTTP operation.
+
+Pointed out by Coverity.
+
+Assisted-by: Claude Opus 4.6
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ http.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/http.c b/http.c
+index b4e7b8d00b..8f1d6d1f56 100644
+--- a/http.c
++++ b/http.c
+@@ -1608,6 +1608,8 @@ struct active_request_slot *get_active_slot(void)
+ 
+ 	if (!slot->curl) {
+ 		slot->curl = curl_easy_duphandle(curl_default);
++		if (!slot->curl)
++			die("curl_easy_duphandle failed");
+ 		curl_session_count++;
+ 	}
+ 
 -- 
 gitgitgadget
+
