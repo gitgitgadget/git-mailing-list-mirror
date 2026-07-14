@@ -1,112 +1,132 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F242448D14
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 12:36:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D1145BD6B
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 13:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784032584; cv=none; b=Hod29NIIklQGrX5IUBRJ991WrrDwgrxLemPwiFKEpvRaGsrm0jbfQd/huirdMSbcKzKoGbd3jqhUciqLMVjavGMiNXJfyqK4Ber0bWIS2qe9IvCSWmUqW2Ve2I18yV7l7XwrOE+Dim9irZlgDs5oatXxTAPB8HIAknP63YX3t0c=
+	t=1784034101; cv=none; b=Nmyn8o5q4ZCDT0J5h3+8xsxg5+7+qRmoSGfAjlWmuPqNba7Z9YmnOcnvHg7i2VVM40Wca+fBF7IGD5LbrEKnn99D+IPNl0js+deLensPmPguBxU7ciiH1UwJqPC38UNMsMLkcYDg5qn09KLxhfTS48bkzav6YjPlh8Ihv3JkgmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784032584; c=relaxed/simple;
-	bh=WpMK1O+9ZZuscNmahyyasV6tDzJZDg8yrgdOwepvToc=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=JtrFjx++C6QCX6WQtTQi8d+E4FRgY1vTKwCP4w5S8vH/W1sgGca19HAnP0bfhExKakT5k36y/kUjyceOeLyqnhf0V6Ru6mObSaYbRf159BrciK+C5lwO7B42PkYVEjHVnmShLynhjU3CcKLhNXNf6YGAMyrU5V2UJnf1ivUz9tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FjNIzh5V; arc=none smtp.client-ip=209.85.219.41
+	s=arc-20240116; t=1784034101; c=relaxed/simple;
+	bh=LoJg4om8B9f6QLZ8z59p7OEhSrZjcK3NqFPfScIVwv8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X//tLCHWPnGLhaOVbl8aty0ucLy7JMUXn5FYimnZLrjrksCh2pTmdDbruCY7BV4Xf0RoXnHcHuaEom6E3n+PC97qCJPqrCg+SJj+JhU1zx7FN742EzBNQLEhKIs/BGfDl6nV7oRQB4A7lHf6/cHpAWjUCNuyI537i73FMqdOboY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BW83H+PI; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FjNIzh5V"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8efcef23d21so39064026d6.2
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 05:36:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BW83H+PI"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6974a6e54dbso1248156a12.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 06:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784032578; x=1784637378; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=c2ayaNkA+5ehuYfK6PGB1IntvbYa4KvC2GhiX++QzrM=;
-        b=FjNIzh5V5vJDEyfTkCy6TdSuDw3CR3SbH96NR596tI1WLnszKzLaE1TcULu8v20JkK
-         DrLBYmBIUkcsEQDU4LpTHy+9vcck+4hT0JeIp5BlYbdAR8zn6ZegYST+5kQlwmKl+qZ5
-         e9aa+87H4W6H4SDDa9Hg+Q9BiJyBvVfRJelYcmLB7e0GKeenXRBLsVpwJEG2BnV80Wgp
-         qzuaM3q7lyK8TZKCteYXguyp424eQ9nWLUA0RO4VrXNoToVVstDNquVob6POpFwsRT5E
-         ZnH67yvs9o5KZNFa/lAfeaEMtTumUvVV/BTkjaQ7veWzH49HkwYEV3ZKUniGWloOYAmD
-         DZTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784032578; x=1784637378;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1784034098; x=1784638898; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=c2ayaNkA+5ehuYfK6PGB1IntvbYa4KvC2GhiX++QzrM=;
-        b=Kw+4aAlaRKzhl5h5B0kCKlOodd/eBGfBcOgiFLwbp7Uw8abC4QWuzZJgX9XZagvvqu
-         tdwY7axnCk7x/lOjU5zh8sZOIYnFRfdhtdt8OGyTSTSuVw694fG1qpsAWZqdyR7IBhbv
-         JB6oI6CHReiKB1fClrpzIouSN6WD9I4MilEqTroSJOHCfqI8JMOswFqgc9p7sHTCDdq8
-         HepOlgx/suv6KzPjFO3EZqpljnMtxvhev9qbGFLXhJO2UV/9WdCJLCumPaOJI7zak9Jd
-         P2ohdVEW7qr3X6niYCS8R2qB+l7z1/xX7QQKGKkN9+g4+m4w7CQ87LQTP4n4u7BZefeV
-         wLZw==
-X-Forwarded-Encrypted: i=1; AHgh+Rr2ovxQnn2KMIfD/JvSF0j3qYUJkQf2R4RBxr2qkpoMQ6rchcT/yxrLpMqZTk9X+P3wDMk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxC4XVHGGiBeiIAW+zxOyVeD4qmgwXpta7ZkQ/8i+GGhcqpRU+O
-	EcAGYqZ2JxCAeBwLBTFmX786Hj/OZzX+DlDLxDCOI1iiixrOEKJzSRluo7ureH4e
-X-Gm-Gg: AfdE7cl2yDuPUqxplwmgLX0MgOlOU22MI93q47iwcFabzB7Qxjm6vZTE3RUKaXG8iGN
-	Z9hDcj89xiehO4CCB7SgioRcZvXsDX5rTPfmWJUIqSitR8PkNynOhzdbc4Fqn7WwPSVGMpBlPxD
-	6DubYUTChh7vsFIr7+bd9fvLHZV8FKGN4xmLljoxMx431QLUpJECr3/dLsxBtW1pOe25JA0dSww
-	XdXRbSLIgEXHY/zurGlSR3KYR7v81W9k6taWevxkv6Tc9u9SDSIaVAIMFwEfnt5OTYvLTYQUsT6
-	o1a963v3COS9dNdYx0oVcdqg4EJdgNxjznFOjx3sVCCN2Ccg66w8P/6VUzN4zldnpAnSBc8BcQY
-	IkbFktdFLmvsGovZ1REdXJeon8vTqNbsAP0uAXZjdy0MFSPpYA2E+s6qUYr9XuInbvxy/3ZG4Ba
-	CRdxsl6ORLKolMlu+3LIPJaLXTS4kXCZStzuV202BljVt9F02L6DTd6IQxigNkSCxK9bsiawFHw
-	KCsCEpW3v87SXz+6pICKTPPW2fhFOp3tDNo0WTh79zR2Eo7NrUY/IcnXdDPbK/Qe44=
-X-Received: by 2002:a05:620a:470a:b0:92e:64af:3e59 with SMTP id af79cd13be357-93086c25339mr184814185a.67.1784032578460;
-        Tue, 14 Jul 2026 05:36:18 -0700 (PDT)
-Received: from smtpclient.apple ([2600:1004:b089:8e47:18ef:4edf:c98d:d587])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92ee5d04e3csm1452548685a.27.2026.07.14.05.36.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2026 05:36:17 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=KwzUksHFbUKqB8Wbmj+Sz9DPTo7hACl/Y0WzMz9zKz4=;
+        b=BW83H+PIsob9E78DH7arhAUleMMsFDaKjYsNyau/JM3xE69y0vaedwnr2V1IYb7tk4
+         RCr//fpLYoNcEGe3suvjra0WTyxUICHqaGHrW7G07SegGSCw2ZPUCd5Uc+kBuAOtzWk/
+         rQXn2pZN4IQlXPYBdJiq4TsdkEiG1XeXODoSpGrHJwr1QrHrT5udoKYCBAQXqrtK8VEB
+         ExLA/LdwcR+ReKpJIxcP6LSIZ095svHEHzz6MaK56QAppXvAfOt4co0Vp9ChEWzDMsHq
+         BoWgUJPVTi1UWEJRvtwcsPWz+UejYLa2JNppgu8aPGs00/p1NwGpYK1FqSvfG53PAY7t
+         Ba5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784034098; x=1784638898;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=KwzUksHFbUKqB8Wbmj+Sz9DPTo7hACl/Y0WzMz9zKz4=;
+        b=Bq7OFAnj7gySON1fh7h9wzOdTa1JfYQOF+HSpa49IGeWgwPWcluRdg738KjM66SYhD
+         z3X1PrdFsILhmsHKTYNKRXu9fBiD04bMVZ0I/6UhKyeTIEnOHLuuxSnUJWUnVTKRmEay
+         dOPCbF3+337Kf6pOlGw6YQ+Sb+F+nvXWFxleC3Of8j5SDzQeIEFWneQYnbc62oh9n4SF
+         Il0VtJeFXlMh3ixxavNo+5ZcSkDJw9YQlwT4Ux3V2y+XvpaudQVJsaZlKpsGELwBbPAx
+         WNP9/rvBumNKyVEH6b4e7CvfQbiqxKTOW/Edz4WZmAHSklWePdwVNDVHSpLOZxXsaGXa
+         TqlQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rpivgz684pYPnJlEAVgEOA45hum/hIyRhUUYZ/+Vfqn+QJcNpRHU3nIsAxrGA5K0fi958g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDIo+NiRroBqXZJ53cz5sF1qoC490Pp+fhvZ7J48uQSs6//o7J
+	t4Uh6KZChipX6/Ar8tL/mSwO9ykxazCeVhSnuUEtY5Y20NWB6CAbB1Gz
+X-Gm-Gg: AfdE7cmSp/HTaXEKdyQ27QCHHA/PU9y3CJCeW5dJGbIjfl+ZWS+UOaNGdPo/i4Zc4ZQ
+	gHE4qA3RrnLvQig/4StqN/rEnqvWig13P31o5hiO1im2R8Wn1EqhyVS0kJol5hkfD45CoT2bOt/
+	FkytULssPLs7XBYJ9r6hIYd+33trjifkEAfgf7Pzu3nelxy6DREEQRCz6GCNh9ZKN4WV9/trzAk
+	dOZ+mHaypNkRy1P6ADmz03RPcQ2coxhLWlmxrZryZLvODjwt2k238z7ATEKuCJFHLH0i+eqAL2F
+	Yk6e/lQQlj0VDbFUM/N9tQoh5/VVn0ImtzXeKxGtDloeKBpICrQ8Kw1A0Kj3LXMYXlhm2o3YuhZ
+	QSY4qJ7VqUG7c7S6nZ4cDDKMYrNkFbH+W0oADJ7jqXshAAPvebqUY6rdKfzQuTtXh48oWGsCjxu
+	4tY7hBxCY5410ywyQSkothe7K+rizHA4x46N7AJ8adqA90IjbUaL2UoF3q2XXVgFgnL770jF+r
+X-Received: by 2002:a05:6402:158c:b0:695:572a:7abb with SMTP id 4fb4d7f45d1cf-69c5f1040b6mr6169733a12.22.1784034097033;
+        Tue, 14 Jul 2026 06:01:37 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:79cf:bdf1:be6e:e3d6? ([2a0a:ef40:69a:b801:79cf:bdf1:be6e:e3d6])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69cd295663esm1500368a12.30.2026.07.14.06.01.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jul 2026 06:01:35 -0700 (PDT)
+Message-ID: <2fe8c5e0-96d1-46ce-8fda-1b8f521d3c4b@gmail.com>
+Date: Tue, 14 Jul 2026 14:01:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v8 0/5] history: add squash subcommand to fold a range
-Date: Tue, 14 Jul 2026 08:36:07 -0400
-Message-Id: <0ECE2A94-0537-42E0-A525-FA16184D7735@gmail.com>
-References: <DJY0QSJYNG0J.210HZQH198Y1N@lfurio.us>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 5/7] branch: add --delete-merged <branch>
+To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
 Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, Harald Nordgren <haraldnordgren@gmail.com>
-In-Reply-To: <DJY0QSJYNG0J.210HZQH198Y1N@lfurio.us>
-To: Matt Hunter <m@lfurio.us>
-X-Mailer: iPhone Mail (23D8133)
+ git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+References: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
+ <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+ <a84c555d99c98abcd4618833c14fa35b191fbda2.1782338106.git.gitgitgadget@gmail.com>
+ <e35f1268-2518-4a44-9c7c-28ba13ca7b7b@gmail.com>
+ <CAHwyqnU0ifHu0+GfMR9GqWKgFrTOyQn-FbUH0wTm_07nCa26tA@mail.gmail.com>
+ <CAHwyqnWspUTSnqmkMyXtWuAnENDSzrRLhhUR=Ljtt1xer3tphA@mail.gmail.com>
+ <5212d968-6121-466c-8225-36b4bad6b211@gmail.com>
+ <279e6d69-191b-437a-b1b1-ecd879343f3d@gmail.com>
+ <CAHwyqnUKSD=G1jkdc6n5mVA-NvCgL+c9zCEW_Lr8OBP5q2fKkw@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAHwyqnUKSD=G1jkdc6n5mVA-NvCgL+c9zCEW_Lr8OBP5q2fKkw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 13/07/2026 19:17, Harald Nordgren wrote:
+>>>> This exposes something that I don't love about this feature,
+>>>
+>>> by "this feature" do you mean "git branch --delete-merged"?
+>>>
+>>>> which is
+>>>> that when using a pushDefault (like we do in the tests with 'git
+>>>> config remote.pushDefault fork') if not adding a special case for the
+>>>> main/master branch (like 'git config branch.main.pushRemote origin'),
+>>>> then it will get cleaned up as a forked branch.
+>>>
+>>> Oh, so because the default push remote is not "origin" we need to
+>>> override that for the branches that we do push to "origin". That's a
+>>> pain, but even if we did add a special case for the default branch, it
+>>> would not protect other branches like "next" and "seen".
+>>
+>> Thinking about this a bit more, rather than protecting branches where
+>> $branch@{push} == $branch@{upstream}, perhaps we should be protecting
+>> branches that are merged into their upstream but
+>>
+>>       git push branch.$branch.remote $branch
+>>
+>> would update $branch@{upstream}. So we'd apply the push refspec to the
+>> branch name, then apply the fetch refspec to that and check the result
+>> did not match the name of the upstream branch.
+>>
+>> Does that make sense?
+> 
+> This makes a lot of sense and fixes my major gripe. Seems very
+> possible to implement as well, I'll give it a shot.
 
-> Le 14 juil. 2026 =C3=A0 00:45, Matt Hunter <m@lfurio.us> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Fri Jul 10, 2026 at 5:06 AM EDT, Harald Nordgren via GitGitGad=
-get wrote:
->> Adds git history squash <revision-range> to fold a range of commits.
+That's great
+> Are you done with the rest of your review so I can push out the next version?
 
-[snip]
+Yes, though I've just remembered that when we were discussing protecting 
+branches that are the upstreams of another branch Junio was keen for us 
+to extend that protection to "git branch -d" as well.
 
-> I'll mention as well that I really like the decisions made for how this
-> command handles squashing a bunch of related fixups.  This "fixup
-> consolidation" is a use-case that this command may steal away from rebase
-> for me.  And the way a final amend! is handled in this case is what got me=
+Thanks
 
-> thinking about it in the general case.
->=20
-> Thanks for the work on this topic!
-
-Ditto! I suspect that using a combination of =C2=AB git history squash =C2=BB=
- and =C2=AB git replay =C2=BB to emulate =C2=AB git rebase =C2=BB in non-int=
-eractive autosquash mode will be much faster, too, due to the differences in=
- implementation. If that proves to be the case and we can safely do so with f=
-eature compatibility, I wonder if it will be worth making the non-interactiv=
-e autosquash rebase actually delegate through a history squash + replay.
-
-I=E2=80=99m sure there=E2=80=99s a few instances that couldn=E2=80=99t be do=
-ne (for example when the special! commits cross the current range and upstre=
-am; that is, a fixup! for an upstream commit or some such oddity;; there are=
- also conflicts to consider), but in the cases it can be it ought to be a pe=
-rformance win.=
+Phillip
