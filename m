@@ -1,84 +1,44 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D886742BC58
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 20:45:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A35429CF6
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 21:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784061909; cv=none; b=btYjOBbHRf05XmurLqaFVwwVGYrjUn/AM4XYrkE4oMgHZyBB3fCbBKou0E34BK91OhxLM4/s0S6jxMwHt600sWyW/m3Kexg71s2oqtI0gcdE0k7CCWcWGPmdDgIwehkghI5yvRfJEwUKOjwBAJI7GNOUxQWpAcowtXrpOPgzJ7w=
+	t=1784065636; cv=none; b=qRIfIPP8GKm7q0OBreA44x4xEMgPMWokRANYA4mcnTWHZEKj7etmgGq1T3lkjLP3EiKRLAxM3Y0CbHjYxy81Sb05TYl3yrkczCA/tc8IxMKx6NkL+MbxRYO4z/wImBhnml8G0vE6jw9yQQBP8uXdj6/DtUaZx9e0zTlEDDgpqDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784061909; c=relaxed/simple;
-	bh=nzQ5pZ6E+KylD/HeswZhgvJJJ50tVtZr+ebLEIrt+tE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jB9neWlmLGIbROv6y56PJ6mC+CToWRyasVM6NLsIbh8UzPhZVYQMx1wxzUmyeT05aj9L5drcGh+gzN0O/qZY+z0wP34Ya6DwN/06cyQGkByRn9CnZfbZtgNgtEslB+nXqviupDwnICcbzenrPqA3SV43jhcIub8f08EAr+ZLUxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SCOQV6RL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DEjDDANS; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784065636; c=relaxed/simple;
+	bh=M3zNxPS5H4h+KzRtXoUbwAefKS9jElHgZh49TUpIWm4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GVuqpWQFMwMZkbvIAiCwevSvOLQbAxUrv5p4BatUDvb9NydlSUjbXOPyBnXO63faLhWbB5srEjhD4kVASXyIZiC/RBrg3BPXo/WO9jdhQvrMfOjIlpFjM7lEku3e+u+gx6atmUS4CrKi7s7d63g4OQUxAmsEuIwK+WCKB4GcM6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=iKQPvUva; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SCOQV6RL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DEjDDANS"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id DC79FEC0116;
-	Tue, 14 Jul 2026 16:45:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 14 Jul 2026 16:45:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784061906;
-	 x=1784148306; bh=hpUC+ZkqPL7x+nzf3USNqtFHDGHkSWmQ2ft3GayWp+0=; b=
-	SCOQV6RLRsepLArg8lBwMCUeZD6JChcs8o4ypwmSGBEpQIfBYJUyGRGMQH9uxFNe
-	V4M74Ro/bsVYF1E/7SqW4eQA6qlVRsrpzbDMAfYYQHk9IXpOELeFff5M96VlWQzF
-	nhNlKHcG363Pe+3aNAeYHU5e2+EGA+V7qc/JpsEKF6beJh04qVU5EQlF0IZC2kdV
-	8scIuqzQLc6X6R5V43JC5uXbMBIo0jWI8rjBuePsQcCJYlHZXPg6aT1IXAjIv1xZ
-	4i6VlbW7zyGJVsaRMxJQcxf8Fhb5OweZXkEJrmJmhfhVl+gR4vjSMCwLTbaAlJAq
-	HgHCx33kcechKpPYRA+AYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784061906; x=
-	1784148306; bh=hpUC+ZkqPL7x+nzf3USNqtFHDGHkSWmQ2ft3GayWp+0=; b=D
-	EjDDANSu/I5z1ZvNPmxtbflcdBTA0cfFgVfRny3NjA3Pq/jGSBNa+IvOCWO1uaWI
-	qpgSpFjVee9m2qyHEQ3Dpw/vOXpPR0MLQKPwBaURRo48qNwjAC+P1PNiRvNYPirc
-	OxOHTbvO9KdvqcPz/Bn/tA/2v8rJJa8mLzyU9fEE4iOVIMhWMg1ovRr3eZTvdkMK
-	9FNbYAgDBHl+GyKMZ8h7M4DIFcNhpjQh9C4N65paOd/v0ofrG1KN/xuYVFJVzMt/
-	oBDy+H0iD0OjdWmpg9ruoOEt5DRNm1jNOXlL7MKyVT4ng8fCH4OACxrOE5rlCIXo
-	vRwgg+X5r5DscWMjD9pQg==
-X-ME-Sender: <xms:0p9Wap55Gr4324cchylmp8SF4Rku5YCamaf2qDgl17KdzMVovsCAow>
-    <xme:0p9WauWzA45q0h1ERi8l_PBboCODpE_0B1ad6YPGDOlbEfHnqK5ikWRXGIOmH13NN
-    QwOAbFfIP8H_U1uYpDAxfc96nv9czhacA3QOIJw6tPRlgS-n1PRE4M>
-X-ME-Received: <xmr:0p9Wat1ezWwa9w5QBdXsSrET-4QqrSeSPQFtT3Ki0VA8J-2AbKN39asJVFgGpv3Vl0tJb_f5xhjVtty6df00_E9kJ1rE8ItljadBgaM>
-X-ME-Proxy-Cause: dmFkZTEg16wEBidHMT+fcLYdX4CdYqOcqmvtnMhJif4wwrN+vfy2gjnBCMJa2okd6vrdUe
-    qQhVWn+rnkLkArae1a19WLpmvfNk1zwdXXKaDBpMGqIC0Y349EoY6zpken/c8XPPZ868bD
-    jozZYkeqS2StkBuDwF0AMPKzQrKgwl4BTxb5j6QAuqfSEOI51VALtuw6k19QrU7X4i2R/8
-    bt0WJwLdowXPzinb9VpOes6NYhJHGvEhp1RPoOZ2qB2v4WIyL2b4+oVLKS+XztU92dubHL
-    V6P9a0HBj9JhUgegbuJnAACyoNE6yxJf98109Uha2MbmIQUML3RPS/G15iNRb7UyXdnzRW
-    myGPGuoHlc6r6u2Zis8QfWJ8WSBu3bZZBXxuJtz2EoN2knVUSsfUfR+xm3hySDy4tg2DbB
-    MAvzgUVPCbu8aQXyNtx/oZWBhkcxdniypE2ra82V8FkewW5dn/TsEFpHpkqQfaOySdfnkt
-    I2+EhxUPB2irfSyFfDYvlmljw1hTKsR66Nz2XAZxRtgKD215S5ZqelCmHW7pOzvGftXf/f
-    kkq/EjjKgkI6qo2SEos8RNkXpkQu8IZvsoDb569vUjkzLoKjZjrJfxn0ycz3Lna8AFV4fD
-    +H76zvo+Qw6cEIil/2ZjcU0wWtDBMMfQjHTa+kB3x65gRlpNnZE9huH+o3aQ
-X-ME-Proxy: <xmx:0p9War11MtlIsR2v65CHWZbvvShpB1_CLQ_MU_AFqp7rweBXl-vylw>
-    <xmx:0p9Wag9r4aqFHDSaVRozCjO6oQPNtJKr0mDIUj_QNXU54sRS5gRm5g>
-    <xmx:0p9Wao2QjwYkS4VreBAmHdez4dzwUaP2zrSznp6UneYowmxpjTY44g>
-    <xmx:0p9Wat9Dzrzn3GMA5uh-rFtsUQIKnqKtQsmPP0ZomAF0j8b3v4sgBA>
-    <xmx:0p9Wai_z3c4UdHLGzu6XCdgeAkCZzh2bVEQ5OkDwjxLPPidyjQ8-rK7z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jul 2026 16:45:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/5] tempfile: stop using the_repository
-In-Reply-To: <20260714175956.54601-1-l.s.r@web.de> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message
-	of "Tue, 14 Jul 2026 19:59:51 +0200")
-References: <20260714175956.54601-1-l.s.r@web.de>
-Date: Tue, 14 Jul 2026 13:45:02 -0700
-Message-ID: <xmqq8q7ds3ld.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="iKQPvUva"
+Received: (qmail 25869 invoked by uid 106); 14 Jul 2026 21:47:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=M3zNxPS5H4h+KzRtXoUbwAefKS9jElHgZh49TUpIWm4=; b=iKQPvUvaezAHvToNXZjyJbPJDGECQ4achLMeQLPdfLNlNPdApfdCNfzQB0Ju4jxi63FYO4BN2i1AWINPyCo/mMtLXlwOhxEX2Bx9ViIxF/hfLwvW/AvgvIgMvKDkyJPNCjoAvkAHpph9enzgLehnj8gK2fQDPz76HwKPCgSTPkbbHp3KAJ9aRRFWBTrvMwynYBQPAtU4TTwpASaazk6JzCxK+vUgB3F10Miq5U5dKdW++MqmMsGlx6LjRn1nDf+YrAnqijdiDiyq0quIbAdhJLpFaQ6cgI/Fx3dF6Zm6y6kbCGDzjMrcod3g8o+5G7OsdtzSweQXlufaqppQkT1N3g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Jul 2026 21:47:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 53424 invoked by uid 111); 14 Jul 2026 21:47:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Jul 2026 17:47:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 14 Jul 2026 17:47:09 -0400
+From: Jeff King <peff@peff.net>
+To: Ted Nyman <tnyman@openai.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] fetch-pack: accept "pack" output for packfile URIs
+Message-ID: <20260714214709.GA4095533@coredump.intra.peff.net>
+References: <cover.1783982021.git.tnyman@openai.com>
+ <alVoA5-fDDPwKPZZ@com-76773>
+ <20260714071231.GD2516582@coredump.intra.peff.net>
+ <alaCQKXKcWr723Ij@com-76773>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,51 +46,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <alaCQKXKcWr723Ij@com-76773>
 
-René Scharfe <l.s.r@web.de> writes:
+On Tue, Jul 14, 2026 at 11:38:56AM -0700, Ted Nyman wrote:
 
-> create_tempfile_mode() and create_tempfile() use the_repository
-> internally to call adjust_shared_perm().  Expose that dependency and
-> push it out to their callers.
->
-> Patch 5 is a bonus; it converts lockfile users that already work with
-> other repositories.
->
->   tempfile: add repo_create_tempfile{,_mode}()
->   refs/packed: use repo_create_tempfile()
->   lockfile: add repo_hold_lock_file_for_update{,_timeout}{,_mode}()
->   tempfile: stop using the_repository
->   use repo_hold_lock_file_for_update{,_mode,_timeout}() with custom repos
+> > I also think this would all be much nicer with a strbuf (which would
+> > let us get rid of the magic numbers), but that is a slightly larger
+> > refactor:
+> 
+> Using a strbuf makes sense. One wrinkle, I think, is that with
+> transfer.fsckobjects enabled, index-pack can emit dangling .gitmodules
+> OIDs after the initial pack/keep line, which parse_gitmodules_oids()
+> still needs to read from cmd.out. Would strbuf_getwholeline_fd() be a
+> better fit here, so we don't consume those with strbuf_read()?
 
+Ah, yeah, I didn't think about whether it might have more output. I
+_think_ it actually works just fine with more output because the
+memcmp() is limited to the hash algo's hex_sz. For the same reason what
+I posted works even though it has the trailing newline.
 
+It is a bit subtle, though. Using getwholeline_fd would work (though you
+still have the trailing newline subtlety). Or maybe just using
+strbuf_setlen() to cut off the output (ironically it is probably more
+efficient to read the whole thing in and then chomp it, since
+getwholeline_fd will read() one char at a time).
 
-Will queue.  If I have a chance I may revisit the topic a bit
-deeper, but nothing stood out as glaringly wrong to my cursory
-reading so far.
+The "cleanest" thing is perhaps xfdopen() followed by strbuf_getline(),
+but maybe that's overkill.
 
-Thanks.
+I'd be happy with any of the solutions. Or even just keeping the magic
+numbers but maybe with a comment explaining what the heck "6" means.
 
->
->  apply.c                   | 10 ++++++----
->  builtin/difftool.c        |  2 +-
->  builtin/gc.c              |  2 +-
->  builtin/history.c         |  2 +-
->  builtin/sparse-checkout.c |  3 ++-
->  bundle.c                  |  4 ++--
->  commit-graph.c            |  9 +++++----
->  config.c                  |  4 ++--
->  lockfile.c                | 30 ++++++++++++++++++++++--------
->  lockfile.h                | 31 +++++++++++++++++++++++++++++++
->  loose.c                   |  6 ++++--
->  midx-write.c              |  7 ++++---
->  odb/source-files.c        |  3 ++-
->  refs/files-backend.c      | 10 ++++++----
->  refs/packed-backend.c     |  9 ++++-----
->  refs/packed-backend.h     |  2 +-
->  repack-midx.c             |  3 ++-
->  repository.c              |  2 +-
->  rerere.c                  |  6 +++---
->  tempfile.c                |  7 +++----
->  tempfile.h                | 10 +++++++---
->  21 files changed, 110 insertions(+), 52 deletions(-)
+> I'll also fix the --index-pack-args documentation while rerolling.
+
+Great, thanks.
+
+-Peff
