@@ -1,82 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F9542BC2D
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 20:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D886742BC58
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 20:45:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784061686; cv=none; b=tVyAKFLT3Ii8d8+LJGeYFp6/FpIh8+W4Hd05irf0kl4EhP0ILhW1rB/sMn5lqY+oxjiwHTrTsZH/f+CqkjWPTn2u0M9+8ugvdDOSO63FA/iTguao+ki4P+zRem4i7nWJjmbvqAfCfX68eqPDjHVzrk76MUkDK2Scx413wPoYyOs=
+	t=1784061909; cv=none; b=btYjOBbHRf05XmurLqaFVwwVGYrjUn/AM4XYrkE4oMgHZyBB3fCbBKou0E34BK91OhxLM4/s0S6jxMwHt600sWyW/m3Kexg71s2oqtI0gcdE0k7CCWcWGPmdDgIwehkghI5yvRfJEwUKOjwBAJI7GNOUxQWpAcowtXrpOPgzJ7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784061686; c=relaxed/simple;
-	bh=0d1rcYeK7vcjkAP+b7wAl1c0aEtHoECdByjWReWDTdc=;
+	s=arc-20240116; t=1784061909; c=relaxed/simple;
+	bh=nzQ5pZ6E+KylD/HeswZhgvJJJ50tVtZr+ebLEIrt+tE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L/Qnqt5IQfDGKqvZrCKGaib7odAeZx1MkvRU56nC+NFi9rVna5KgzwEcDCSQehgVQG2AldrFD/+Y5ppji4EGzFYKtapQS+brNmc6MCh1zCc84nE9KwNJkptRFDrNMYhRKg0bN8l6YBpTbp89MWvWIaLeQXOZVk9CyuqSSuQV4mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IRn9n8PS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BZ+yE8J0; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=jB9neWlmLGIbROv6y56PJ6mC+CToWRyasVM6NLsIbh8UzPhZVYQMx1wxzUmyeT05aj9L5drcGh+gzN0O/qZY+z0wP34Ya6DwN/06cyQGkByRn9CnZfbZtgNgtEslB+nXqviupDwnICcbzenrPqA3SV43jhcIub8f08EAr+ZLUxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SCOQV6RL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DEjDDANS; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IRn9n8PS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BZ+yE8J0"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 04B9A14000F4;
-	Tue, 14 Jul 2026 16:41:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SCOQV6RL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DEjDDANS"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id DC79FEC0116;
+	Tue, 14 Jul 2026 16:45:06 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 14 Jul 2026 16:41:17 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 14 Jul 2026 16:45:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784061677; x=1784148077; bh=Ftw2eANbRM
-	3ki1oB70bqs6/Lrq+yILZr1FAA4wv6X/8=; b=IRn9n8PSYO0WCuR8TWNijTkNVr
-	MX9eVSLamaLfRucalY3sbVe5knYYnDUP0t5e8XlFkKDEOrHZvEDBENgFw9plc7Bu
-	oufweAydDhDHNEHApJQKe2YvLOkL4mPAclyI7t1BIrrUhKkuBykQezXqcKgvfk2e
-	4/IxJyfbshyFVnVAe/FjTHJKEsGf7QTvNKTQXQ/SMIqLQixq4+YIhz1rxcVCHZg0
-	N04WXydjJdxfpTPFB7TFtMTOjxo3l+QI38PnR+XNOFq2yoquPnJpCaZpQrmeSM3o
-	2CkJnvgsCmjLMMwF5/hUg6qbOvtI+qA92umMGFW95cVF5ZQ3yml8B8Thwunw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784061906;
+	 x=1784148306; bh=hpUC+ZkqPL7x+nzf3USNqtFHDGHkSWmQ2ft3GayWp+0=; b=
+	SCOQV6RLRsepLArg8lBwMCUeZD6JChcs8o4ypwmSGBEpQIfBYJUyGRGMQH9uxFNe
+	V4M74Ro/bsVYF1E/7SqW4eQA6qlVRsrpzbDMAfYYQHk9IXpOELeFff5M96VlWQzF
+	nhNlKHcG363Pe+3aNAeYHU5e2+EGA+V7qc/JpsEKF6beJh04qVU5EQlF0IZC2kdV
+	8scIuqzQLc6X6R5V43JC5uXbMBIo0jWI8rjBuePsQcCJYlHZXPg6aT1IXAjIv1xZ
+	4i6VlbW7zyGJVsaRMxJQcxf8Fhb5OweZXkEJrmJmhfhVl+gR4vjSMCwLTbaAlJAq
+	HgHCx33kcechKpPYRA+AYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784061677; x=1784148077; bh=Ftw2eANbRM3ki1oB70bqs6/Lrq+yILZr1FA
-	A4wv6X/8=; b=BZ+yE8J0ECzImFxNIsdN0Od+7HBr9OmhLf8njNatsVYDOEIASBQ
-	8v1kwairMVZOZu8iNiNVZ040pN9Act+NrldSRE72HMFgeJQxzLd73fuQghsDtibV
-	qnxHZ+srUbI5Zeew2xZjcXCqUxd7CodlsaF+oFG1Q17o2a68YlHCRohLYWRO10FC
-	zYlsG0RbfDSi56Lan2fzlmVmArDaH8UxAiZ8IOo/ftFPwgLcTap0khHsikawAezH
-	bEUXO4aNQujpqzE89vAIqIIQcBeeQWX8eIPIKbcJWP2hK0MmUtFXHzj+xSurwOI7
-	MBcTBMBlDQVIx5liyb4trffRzpNayjIvvoQ==
-X-ME-Sender: <xms:7J5WamRPPcSy3Yi9RmYhWH4f_dNT4OmKAlOIx0Z9flaENuAmA9s22Q>
-    <xme:7J5WajOdcD3MOf8QojGEnKa-7qvStpEUv1zvNEFion4biV3P-TQigzMR0nfb79ysK
-    hvtxJfPKf8GML07cU76lo4o6BGJfD4OCRuC3HSHzoCAu2vQdnUS7IY>
-X-ME-Received: <xmr:7J5WahPJsK-b75nkgqREWkeOonoOgu_z_ndRiwWKqflvrgc0kBACWeepdxqH0T8QXRTT7Y7ojs0RDYXIPT2eNH-9CBJmbJcDJdBKO-s>
-X-ME-Proxy-Cause: dmFkZTGlCOFUNznOpzI2IrI8J8aBQN9HHOLWZCF8xU/EyiTGj/o8g2rpBmK5bqrXTpSiFB
-    VcrcKnNXZEX4naA5JWqTDxmMKQBVzTDSZfSFJl/GWvznuLOFmmz5I6Lenn7EyhQ8hf+v1U
-    Hedng1gnT9MnxDWRTdmsPKpHIzyUfRbmqoY9RcycUT5OfTKVEH5lCZHefzHSNcemNJnrn3
-    pQTfYZ+NskbVeYM0t4jrnR/3g7QhUQ+w/8tl7GBJ0ln3lFiV2EoeN3O2rqUdDV2H+beb/m
-    7Ki4fpXCNr9lnfoqMJ7p8VkkRIjJ93XV2iIp9q5sZGfRje4gUSWztcp6ENU8/6oGcN0yo7
-    1hMD43HCeqHVgBXK4A/bcM6CEEpBhQD5lJkIaDVEe+qG+q4o7QDT35qDFFCcpyeo2YW+xL
-    F0GtjsDa7p8wGrq10x9n1vmCGFxfj6rl2h+iYuy9EyCWvHnaM420WmICV6jqn5gYz4xFT3
-    HT2vgVeU17LAypfa/lAE9Jcq8jFK/GdO7c+3eKFDHdNVe5qGKzLjd3ghbh14vrWh8zRlQh
-    RUdouJiii9KsAjPZ+2RJG6SO+5FtRmkHrGhRzmWmkD+X70WsI4oKZQ3rVyPvvZB6qCx925
-    bfWJSDpvUv6pZkOW4jiE15LjBpigi2kHqCD0xJtLGjmc7B7PSEqdJuUdpNHQ
-X-ME-Proxy: <xmx:7J5WarsyO2PMNmU0n8UZn22lBWjc8if4vgAjNSZBK-F75ymwJ6zbng>
-    <xmx:7J5WajUXjsikiGCF1AjlqSCHP3uSpbc5btC1_8TwwjkH1zXdoc6SrQ>
-    <xmx:7J5WarsAx3KhIMeXFNobsYBCjRO-pX5oyAGHymM0bqynt6Zx8ckQIQ>
-    <xmx:7J5WanVbmu2XY_kQ1zdxZQTHWJTIe7hDZzZv-q0_jrOo67Za1toleg>
-    <xmx:7Z5WajOlgKRu7aAsG1CZkRRjgp43M26nOCeO82NIA2C0e-3hohAkfG3F>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784061906; x=
+	1784148306; bh=hpUC+ZkqPL7x+nzf3USNqtFHDGHkSWmQ2ft3GayWp+0=; b=D
+	EjDDANSu/I5z1ZvNPmxtbflcdBTA0cfFgVfRny3NjA3Pq/jGSBNa+IvOCWO1uaWI
+	qpgSpFjVee9m2qyHEQ3Dpw/vOXpPR0MLQKPwBaURRo48qNwjAC+P1PNiRvNYPirc
+	OxOHTbvO9KdvqcPz/Bn/tA/2v8rJJa8mLzyU9fEE4iOVIMhWMg1ovRr3eZTvdkMK
+	9FNbYAgDBHl+GyKMZ8h7M4DIFcNhpjQh9C4N65paOd/v0ofrG1KN/xuYVFJVzMt/
+	oBDy+H0iD0OjdWmpg9ruoOEt5DRNm1jNOXlL7MKyVT4ng8fCH4OACxrOE5rlCIXo
+	vRwgg+X5r5DscWMjD9pQg==
+X-ME-Sender: <xms:0p9Wap55Gr4324cchylmp8SF4Rku5YCamaf2qDgl17KdzMVovsCAow>
+    <xme:0p9WauWzA45q0h1ERi8l_PBboCODpE_0B1ad6YPGDOlbEfHnqK5ikWRXGIOmH13NN
+    QwOAbFfIP8H_U1uYpDAxfc96nv9czhacA3QOIJw6tPRlgS-n1PRE4M>
+X-ME-Received: <xmr:0p9Wat1ezWwa9w5QBdXsSrET-4QqrSeSPQFtT3Ki0VA8J-2AbKN39asJVFgGpv3Vl0tJb_f5xhjVtty6df00_E9kJ1rE8ItljadBgaM>
+X-ME-Proxy-Cause: dmFkZTEg16wEBidHMT+fcLYdX4CdYqOcqmvtnMhJif4wwrN+vfy2gjnBCMJa2okd6vrdUe
+    qQhVWn+rnkLkArae1a19WLpmvfNk1zwdXXKaDBpMGqIC0Y349EoY6zpken/c8XPPZ868bD
+    jozZYkeqS2StkBuDwF0AMPKzQrKgwl4BTxb5j6QAuqfSEOI51VALtuw6k19QrU7X4i2R/8
+    bt0WJwLdowXPzinb9VpOes6NYhJHGvEhp1RPoOZ2qB2v4WIyL2b4+oVLKS+XztU92dubHL
+    V6P9a0HBj9JhUgegbuJnAACyoNE6yxJf98109Uha2MbmIQUML3RPS/G15iNRb7UyXdnzRW
+    myGPGuoHlc6r6u2Zis8QfWJ8WSBu3bZZBXxuJtz2EoN2knVUSsfUfR+xm3hySDy4tg2DbB
+    MAvzgUVPCbu8aQXyNtx/oZWBhkcxdniypE2ra82V8FkewW5dn/TsEFpHpkqQfaOySdfnkt
+    I2+EhxUPB2irfSyFfDYvlmljw1hTKsR66Nz2XAZxRtgKD215S5ZqelCmHW7pOzvGftXf/f
+    kkq/EjjKgkI6qo2SEos8RNkXpkQu8IZvsoDb569vUjkzLoKjZjrJfxn0ycz3Lna8AFV4fD
+    +H76zvo+Qw6cEIil/2ZjcU0wWtDBMMfQjHTa+kB3x65gRlpNnZE9huH+o3aQ
+X-ME-Proxy: <xmx:0p9War11MtlIsR2v65CHWZbvvShpB1_CLQ_MU_AFqp7rweBXl-vylw>
+    <xmx:0p9Wag9r4aqFHDSaVRozCjO6oQPNtJKr0mDIUj_QNXU54sRS5gRm5g>
+    <xmx:0p9Wao2QjwYkS4VreBAmHdez4dzwUaP2zrSznp6UneYowmxpjTY44g>
+    <xmx:0p9Wat9Dzrzn3GMA5uh-rFtsUQIKnqKtQsmPP0ZomAF0j8b3v4sgBA>
+    <xmx:0p9Wai_z3c4UdHLGzu6XCdgeAkCZzh2bVEQ5OkDwjxLPPidyjQ8-rK7z>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jul 2026 16:41:16 -0400 (EDT)
+ 14 Jul 2026 16:45:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] show-branch: convert object.flags to commit-slab
- with uint64_t
-In-Reply-To: <20260714200237.70509-1-gatlavishweshwarreddy26@gmail.com> (Gatla
-	Vishweshwar Reddy's message of "Wed, 15 Jul 2026 01:31:22 +0530")
-References: <20260714183028.67857-1-gatlavishweshwarreddy26@gmail.com>
-	<20260714200237.70509-1-gatlavishweshwarreddy26@gmail.com>
-Date: Tue, 14 Jul 2026 13:41:15 -0700
-Message-ID: <xmqqcxwps3ro.fsf@gitster.g>
+Subject: Re: [PATCH 0/5] tempfile: stop using the_repository
+In-Reply-To: <20260714175956.54601-1-l.s.r@web.de> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message
+	of "Tue, 14 Jul 2026 19:59:51 +0200")
+References: <20260714175956.54601-1-l.s.r@web.de>
+Date: Tue, 14 Jul 2026 13:45:02 -0700
+Message-ID: <xmqq8q7ds3ld.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,86 +85,52 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> show-branch uses commit->object.flags to store per-commit data:
-> the UNINTERESTING bit and per-branch reachability bits. Using the
-> shared object.flags field for this purpose is fragile as it
-> conflicts with other users of the same field, and limits the
-> number of branches that can be shown to MAX_REVS (27).
-
-The command was written with the understanding that it would not
-allow other parts of the system to touch these per-object flag
-bits.  Therefore, fragility is not a relevant issue.  The primary
-problem with this design is that the flags word has only a fixed
-number of available bits, meaning it cannot process hundreds of
-branches simultaneously.
-
-This limitation is precisely where the concept of using a commit
-slab shines.  However, to truly take advantage of a commit slab, the
-slab stride must be variable.  If the tool is handling more than 80
-branches, for example, each commit requires a `uint64_t[2]` array
-allocation (since a single `uint64_t` provides only 64 bits, while
-`uint64_t[2]` can store up to 128 bits).
-
-> Convert this usage to a dedicated commit-slab using uint64_t as
-> the element type. This is the canonical way to associate per-commit
-> data in Git without polluting the shared object flags. Using
-> uint64_t instead of unsigned int lifts the MAX_REVS limitation
-> from 27 to 62 branches, as suggested in prior review discussions.
-
-I do not understand the reference to 62.  As I previously noted,
-storing a fixed uint64_t[1] instead of variable-length uint64_t[n]
-in each slab entry fails to realize the full potential of using
-commit slabs.  Furthermore, we should be able to utilize all 64 bits
-of a uint64_t word.  There is no need to pollute this dedicated,
-one-bit-per-branch slab with the UNINTERESTING bit, which is used
-for the command's revision walking.  Revision walking can continue
-using the UNINTERESTING bit in the standard object.flags instead.
-
-> @@ -511,18 +523,20 @@ static int rev_is_head(const char *head, const char *name)
+> create_tempfile_mode() and create_tempfile() use the_repository
+> internally to call adjust_shared_perm().  Expose that dependency and
+> push it out to their callers.
 >
->  static int show_merge_base(const struct commit_list *seen, int num_rev)
->  {
-> -	int all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
-> -	int all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
-> +	uint64_t all_mask = ((UINT64_C(1) << (REV_SHIFT + num_rev)) - 1);
-> +	uint64_t all_revs = all_mask & ~((UINT64_C(1) << REV_SHIFT) - 1);
->  	int exit_status = 1;
+> Patch 5 is a bonus; it converts lockfile users that already work with
+> other repositories.
 >
->  	for (const struct commit_list *s = seen; s; s = s->next) {
->  		struct commit *commit = s->item;
-> -		int flags = commit->object.flags & all_mask;
-> +		uint64_t flags = get_rev_flags(commit) & all_mask;
->  		if (!(flags & UNINTERESTING) &&
->  		    ((flags & all_revs) == all_revs)) {
->  			puts(oid_to_hex(&commit->object.oid));
->  			exit_status = 0;
-> -			commit->object.flags |= UNINTERESTING;
-> +
-> +or_rev_flags(commit, UNINTERESTING);
-> +
->  		}
->  	}
+>   tempfile: add repo_create_tempfile{,_mode}()
+>   refs/packed: use repo_create_tempfile()
+>   lockfile: add repo_hold_lock_file_for_update{,_timeout}{,_mode}()
+>   tempfile: stop using the_repository
+>   use repo_hold_lock_file_for_update{,_mode,_timeout}() with custom repos
 
-What's this funny indentation?
 
-> @@ -607,9 +621,9 @@ static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
->  	for (i = 0; i < n; i++)
->  		if (rev[i] == commit)
->  			return 0;
-> -	flag = commit->object.flags;
-> +	flag = get_rev_flags(commit);
 
-Has the definition of local variable "flag" in omit_in_dense() been
-updated to u64?  If it is still "int", then this would not work
-well on platforms whose "int" is still i32.
+Will queue.  If I have a chance I may revisit the topic a bit
+deeper, but nothing stood out as glaringly wrong to my cursory
+reading so far.
 
->  	for (i = count = 0; i < n; i++) {
-> -		if (flag & (1u << (i + REV_SHIFT)))
-> +		if (flag & (UINT64_C(1) << (i + REV_SHIFT)))
->  			count++;
->  	}
->  	if (count == 1)
+Thanks.
+
+>
+>  apply.c                   | 10 ++++++----
+>  builtin/difftool.c        |  2 +-
+>  builtin/gc.c              |  2 +-
+>  builtin/history.c         |  2 +-
+>  builtin/sparse-checkout.c |  3 ++-
+>  bundle.c                  |  4 ++--
+>  commit-graph.c            |  9 +++++----
+>  config.c                  |  4 ++--
+>  lockfile.c                | 30 ++++++++++++++++++++++--------
+>  lockfile.h                | 31 +++++++++++++++++++++++++++++++
+>  loose.c                   |  6 ++++--
+>  midx-write.c              |  7 ++++---
+>  odb/source-files.c        |  3 ++-
+>  refs/files-backend.c      | 10 ++++++----
+>  refs/packed-backend.c     |  9 ++++-----
+>  refs/packed-backend.h     |  2 +-
+>  repack-midx.c             |  3 ++-
+>  repository.c              |  2 +-
+>  rerere.c                  |  6 +++---
+>  tempfile.c                |  7 +++----
+>  tempfile.h                | 10 +++++++---
+>  21 files changed, 110 insertions(+), 52 deletions(-)
