@@ -1,103 +1,94 @@
-Received: from aburayama.m.codeberg.org (aburayama.m.codeberg.org [217.197.91.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C5B444713
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 18:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.197.91.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BCE377A8D
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 18:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784054179; cv=none; b=HmZ1dFE+u+GEuR9gpRQ1hmjWDnFr1EWodlMhn3HucEvH27O1NytPACCX9SYPkjl1rPJcEg2abO6vithXR11ubU13lDMfDuX5acqCfJadYLo555ycv8JZl0EBWl+8QLshEQ4DoFX6EEIdafHLARp2VizZs8y/k4C4FCz3F984pK8=
+	t=1784054358; cv=none; b=TMgJsjq/mtHARbBaaKWGoNtXyS1ibGw8oiCJH7TNWUN7X/cv9HlC1d5sveANQ24TPfm/X4Oze9+O8yMHqbffJKcsawkRCzfU2l+oagn+Iso5D9UdHg9HcXaI9fXH7bX+twRIT8OereG154O73K1wxzwDObEMOt20qgwAUzH1pSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784054179; c=relaxed/simple;
-	bh=61KgB8s8Z5guv6AkceE2LDb1vRPpvP+KuOKe8YGOWNM=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=ei0b+3yUlnIEvyechMRY2yNbuy08DtJlfOEcDT5KmAwow3bxJhzfxGMNFB0vdNtGyOcBUmjoOx3Jk0eA6cYRcmFNLE+3eAU1EF5BZk6R0UZ76gyJPGN4zmJgIdcO3RoLO4FsD2x2sMiq9TvanF4qxyczlw7kTz6vqqzgCdmB3WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org; spf=pass smtp.mailfrom=codeberg.org; dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=vGfNW9VW; dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=F1rkk3tC; arc=none smtp.client-ip=217.197.91.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codeberg.org
+	s=arc-20240116; t=1784054358; c=relaxed/simple;
+	bh=47y0eFKk4FNTU+qHgvkwWU66NuLBsgPfLCT84jZE3qg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e2vRBnwWXx9I+jkFU8N9hzGyez9+II7GSYX7PVd2Keh58qhilzTX2MfES3Y/bjMAgBZu6sFKaJklPYRLPutRcCqFYf+rUjKGEexyHp6Cm5kFRJsqvEVyldSvsnzHAhyD/vIHZSIcDPCcdSaLXwowpFh6ofr5dYV03m6gMlufGF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=TLJOkx9t; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="vGfNW9VW";
-	dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="F1rkk3tC"
-DKIM-Signature: v=1; a=ed25519-sha256; s=202510e; d=codeberg.org; c=relaxed/relaxed; r=y;
-	h=Subject:To:From:Date:Message-ID; t=1784054039; bh=61KgB8s8Z5guv6AkceE2LDb
-	1vRPpvP+KuOKe8YGOWNM=; b=vGfNW9VWzsUsCZdIZtYSSPB/jTwrlv3gTrlEc/HavICnjN17QU
-	DcbfYHxAbb9SUjWsHhREYOVflz9RAIiY/jCw==;
-DKIM-Signature: v=1; a=rsa-sha256; s=202510r; d=codeberg.org; c=relaxed/relaxed; r=y;
-	h=Subject:To:From:Date:Message-ID; t=1784054039; bh=61KgB8s8Z5guv6AkceE2LDb
-	1vRPpvP+KuOKe8YGOWNM=; b=F1rkk3tCrSjMzfoBjAnIUEXg5d9pSr98otfFAh52eIaSgNg1Gi
-	PJBzt7FFZSTDMZbjwj6QrshhuX6PNmClNghUKqww+pAYf0JLBZOQ4bF2rdTilYVaRuQ20F+wYhM
-	FYPN6CkBgHxeHpdMRAkiEgCRutgZzG1kqYPph7k47Ns2mIdPqwNX4zk4R/D0JqQP8TreZqNunta
-	HO4/U+bnJU04OXSvjXt8xq2h5xPT/bMb3h6tRl0x1QE8AjnFatjynkDsRpMswX5K7pNvSRDmiYY
-	Yyr9+DAR3vFuqD70mgNOHyz/2Q9GejUgdY5xba3cjZLS+b0aOFg31kNKYaTOZ1lKnUQ==;
-Message-ID: <17f356ff-7bfb-47f5-b714-62a95cc8b821@codeberg.org>
-Date: Tue, 14 Jul 2026 20:33:59 +0200
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="TLJOkx9t"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-92e5b2193b0so50380185a.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 11:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1784054341; x=1784659141; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=47y0eFKk4FNTU+qHgvkwWU66NuLBsgPfLCT84jZE3qg=;
+        b=TLJOkx9tOqV+iDQvUaoFvPvJIJURfaAj1LByXSuTKNqZ7SGwDj5XyFJVBIxmnq5rBA
+         /Darpwk8bOQ6iT9F/kwCX6EZWIUuUnLk6MStfwoAdgDXwu8umGZUqIGfDOTV2JNOu/+e
+         5lSTWRFjyUNuvBcw8hDR+LHzVDG/ky8H1XF8w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784054341; x=1784659141;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=47y0eFKk4FNTU+qHgvkwWU66NuLBsgPfLCT84jZE3qg=;
+        b=Jl+PBztF3GOyzmO/q3Rvj1+YiVVkhDR47C7mwcL0rNOgzKM7XNl8lHEwLpMmionyBk
+         WgUyYyVsyY1xt7GrKkZvBwEPAmh0D04Kpi4C65fzP6STlVSFEAGkbtO8CDy+8URq1YSd
+         BR15/Uk0wyfSWOISmzG/3q7/eqyr325E3x0+pBjHTbYB50NLqSiox9UBSt+OI8JXVpOU
+         17pyanLbh9BQCMJ5KtLQcaDuXi1mqzCCIrpbdjT2PL3Sd7pvDFhsK9QX9ajurDFRrpvW
+         7bXP8/tiOzgh46EKLbii6zf48/Ctq4MSgXxto50jkIz6RXauRJReUCuXNq1z1myo6rIN
+         MGYQ==
+X-Gm-Message-State: AOJu0YyLrMOOUHvgpvtRvnyyhw9qCbvO2Yk6vmUbcWKt+HMnrOgNg0a8
+	cn5fTtG+u9npmtYvtITsuSgZ38iN4o6fnKmEhMfGWJm0y8zJtk2xu7jA8L/NxZQ8iZo=
+X-Gm-Gg: AfdE7cl8otb4gsbUfrM4+KPDcpddIzv2E8hXJRnIT42mAaKA0q2zxi5jxG5bIM/YaK5
+	s/jqTa9OQU+c0ySnNZTCrl3hHBovkxJsPpsU4N1Z11XZjq99eUXE424iZGWhLQ8kFUrjM07FU0T
+	CrBiNypw2bYmUVe2qStORDrWJBlgURKH4d7X5pL0apLZh03RrbOjKC1Aep6+zCkshGId2UYR4If
+	H89pvpdGOmP/GfZQMlsf9WVccR6tCu4KDsPA2jlB7J/cIjR/Y4zcJxzRzKgdYgiJ6VkJm/dWbWW
+	BvjtATbqdGNm7dPuCe8gF580cSMJnS51DVV/yUaJe3KGPmHA6B4FE/Lr9hDMajWjaW3oYWVBuEm
+	WkwRe/1St8KWfWtUxpH9cM3mtI0WTB4T6XuW9cecox6wYEWaY+ZNbcDrrhm4mhXLj4KutMklj7y
+	WiIhLFHgiULwMn4IS76HDD+2Wxu8WH8uTuoT9t0H7Xc5owM6oRrY5chyMrI79WK27DClsZ
+X-Received: by 2002:ac8:5985:0:b0:51a:8079:795e with SMTP id d75a77b69052e-51cbf1066b0mr115652261cf.4.1784054341425;
+        Tue, 14 Jul 2026 11:39:01 -0700 (PDT)
+Received: from com-76773 ([209.249.37.132])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51caafd8b44sm118156911cf.30.2026.07.14.11.38.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2026 11:39:00 -0700 (PDT)
+Date: Tue, 14 Jul 2026 11:38:56 -0700
+From: Ted Nyman <tnyman@openai.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] fetch-pack: accept "pack" output for packfile URIs
+Message-ID: <alaCQKXKcWr723Ij@com-76773>
+References: <cover.1783982021.git.tnyman@openai.com>
+ <alVoA5-fDDPwKPZZ@com-76773>
+ <20260714071231.GD2516582@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Gusted <gusted@codeberg.org>
-Content-Language: en-US
-To: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
-Subject: git-last-modified(1) slower than git-log(1)?
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260714071231.GD2516582@coredump.intra.peff.net>
 
-Hi,
+> I also think this would all be much nicer with a strbuf (which would
+> let us get rid of the magic numbers), but that is a slightly larger
+> refactor:
 
-I'm working at switching Forgejo's implementation of getting the last
-modified commits in a directory to git-last-modified(1). I'd expected
-equal or better performance than the current implementation, but have
-not yet been able to get this and I'm a bit puzzled as to why.
+Using a strbuf makes sense. One wrinkle, I think, is that with
+transfer.fsckobjects enabled, index-pack can emit dangling .gitmodules
+OIDs after the initial pack/keep line, which parse_gitmodules_oids()
+still needs to read from cmd.out. Would strbuf_getwholeline_fd() be a
+better fit here, so we don't consume those with strbuf_read()?
 
-The current implementation of Forgejo (inherited from Gitea) works
-roughly like this:
-1. Run `git log --name-status -c --format=commit%x00%H %P%x00" --parents
---no-renames -t -z $OID -- :(literal)some/path`, the output of this is
-quite complex and possible outputs more information than necessary.
-2. The output of this is piped to some code to a parser and reconstructs
-what commit ID last modified each file in the directory.
-3. Via `git cat-file --batch` get each unique commits information.
+I'll also fix the --index-pack-args documentation while rerolling.
 
-With git-last-modified(1) (-z --show-trees --max-depth=0) this replaces
-step 1-2, but is slower. I've isolated the degraded performance to the
-fact that git-last-changed(1) takes more time to finish. So from my
-perspective it does not seem worth it to replace the current
-implementation with git-last-modified(1), and I would like to know if
-I'm missing something here or if git-last-modified(1) possibly could see
-a speedup?
-
-The repository I'm currently using to evaluate the performance is
-https://codeberg.org/ziglang/zig
-
-Reproduction steps:
-1. `git clone https://codeberg.org/ziglang/zig $(mktemp -d)`
-2. cd to tmp directory.
-3. `git commit-graph write --changed-paths`. As git-last-modified(1)
-makes good use of the bloom filters.
-4. `hyperfine 'git last-modified -z -t --max-depth=0
-80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- doc/langref/' 'git log
---name-status -c "--format=commit%x00%H %P%x00" --parents --no-renames
--t -z 80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- ":(literal)doc/langref"'`
-
-With as output:
-Benchmark 1: git last-modified -z -t --max-depth=0
-80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- doc/langref/
- Time (mean ± σ): 66.5 ms ± 0.6 ms [User: 60.6 ms, System: 5.2 ms]
- Range (min … max): 65.3 ms … 67.7 ms 44 runs
-
-Benchmark 2: git log --name-status -c "--format=commit%x00%H %P%x00"
---parents --no-renames -t -z 80d06578ac66bce3aa0a21e9610cdb782b9a0593 --
-":(literal)doc/langref"
- Time (mean ± σ): 26.2 ms ± 1.0 ms [User: 17.3 ms, System: 8.4 ms]
- Range (min … max): 24.3 ms … 30.1 ms 110 runs
-
-Summary
- git log --name-status -c "--format=commit%x00%H %P%x00" --parents
---no-renames -t -z 80d06578ac66bce3aa0a21e9610cdb782b9a0593 --
-":(literal)doc/langref" ran
- 2.54 ± 0.10 times faster than git last-modified -z -t --max-depth=0
-80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- doc/langref/
-
-Kind Regards
-Gusted
+Thanks,
+Ted
