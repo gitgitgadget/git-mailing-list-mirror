@@ -1,164 +1,431 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f9.google.com (mail-pj2-f9.google.com [74.125.227.137])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4090141B8D0
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 19:45:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0196041D632
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 20:03:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784058307; cv=none; b=r3CoQeHwfbdeadJsSPCRAfiE2A8ZHV3BZOTyXJvBJwYMzx6oOWIpOOEgiTHgLwB9K5KTvA7SGgUWozdRn5zShgHaT0YzkE8wosYMHdS+EYcMrdoNZEWhcYktEyJSee9TUux2q86k3jcg73QQBFurWg4INzIWZXqV14rqFCVy7X8=
+	t=1784059422; cv=none; b=tcXxlzfLvPcCduTlzI+i82KZF78vd35RhkEXSXgsXgavu2YumqrvDuKNjEij5vPhkainhQ/HSiB+Y9HxuK+heg117fCLBtbINErr0NErdex4SHKg66nXUpmaSurMSPEpATzFaavIIy67PUmJe+f90a+5QUZ5NB3nPOLBln+BFHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784058307; c=relaxed/simple;
-	bh=AYZ9+v9MnLp7o4tnEUxvjSGHqVyIEi5jpGA1Awrrz+w=;
-	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=U1bjGs6mtNMkU27BzmJHNdNb+XM0lJNplG25lg6vUEXcXCGDbKxXMi0sKtuJSJrQxxocGRzbbz4hoh6ELVYymJwahlKAucH6wCNy78lnJbmWC3xP0+MIWtHK/a5ag0WIDCE+l9oOkE9+6b2B6KLljZPpyzEdt3I82ckHz9AaR/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=N0jTgjiH; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1784059422; c=relaxed/simple;
+	bh=8WtgHnnzeeMKVm16IiYV5lvgFJBdDd9LdzEIL0G2Er0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=K7r3vJ941S/0k67iTOm1lLCS3fTfpIY7zjn8XawcdNYLxdRI4eBMzz+S9aftJqgF/huZeqabq/uQgk9zj+Qn4LGx4kfvwFuQ3wU+CWj4rNtkCW6WEhcEqG3IVp7H1e584QlnOStVvD5pFuWbawxXlSiohcfOuFkjmPmRuHhEvgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXi8oHnu; arc=none smtp.client-ip=74.125.227.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="N0jTgjiH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1784058297; x=1784663097;
-	i=johannes.schindelin@gmx.de;
-	bh=8jI42sVywkprCZE1do3HO/6bKoIBs4lYI87HXFFKtCU=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=N0jTgjiHm+xNV0yBnnALQ6i6UpmcbU/SGpxte1LFWZQV7Y36437MEhG9yTolMdFz
-	 iLFpb+DlU5ZdhjEStqZXeBGXH8zCNUCApj57XzGbKrMiTJCT4Ba7/WmNNNZZ82ozE
-	 8yI6ahFIGndhJrJ1tMbc5wr0B1kZMfFPuq6R8H8Miij5r+g/Ozf9pyG72b8NPvSHm
-	 41EUZ4VrdYR1h2UzQRnv6yQmCI9nU2AUP970bX8I7TL1L5IiWBlmGUqPes5Rt+Q95
-	 hiVOkdP6SSr3E7xFlXUDyCoQ1YuqPuoa9DoQL13PUwKZyUYU7syt5l23Wuokb2ML5
-	 8MCK7y/MGpqdXydHmA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MN5iZ-1wRNGP42gn-00UsZN; Tue, 14
- Jul 2026 21:44:57 +0200
-Date: Tue, 14 Jul 2026 21:44:56 +0200 (CEST)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.55.0(3)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXi8oHnu"
+Received: by mail-pj2-f9.google.com with SMTP id 98e67ed59e1d1-38dc7618a1dso1038552a91.0
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 13:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784059412; x=1784664212; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GQ8FGnV3cxRx8pDnvChWybu6d6E3KWnlyNPmEpNONEo=;
+        b=MXi8oHnu/+rGiwaZu+zJvqIBjDDnHICnuwaiFLnEqGVmwX2GImX5ID+cM3b3oeVoXa
+         rTm/KgxWbVFjz1qZ4rDN/46oymp1RV7cytyiXdsuoB1ZGiYo8CPrxIcWWmOm+JVGLClc
+         vns6URD01xq0ZdfDquFvT885HER+nkE85w4c4P4835gipaXPekiLSInhSy9IKXsvFwYC
+         kVDfyCDF8lvm4JSSihiHTsh9xe8HmzzUTqEgjFBdzGMGzaDNJWMdVz/8x8q9lORrutcV
+         ewH+LYI3oAvY1nUR41gLv+ev6kHHbG0cicWjGO1fuanzsqi+jCbH6TyW48KK8HLhxp8D
+         Nm7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784059412; x=1784664212;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GQ8FGnV3cxRx8pDnvChWybu6d6E3KWnlyNPmEpNONEo=;
+        b=I08uCvkqjsBStdQKMyOs5BqO+U+lseedwM+IFi0X8HkU6MjEexsusQHgT8Afd8IFzt
+         5zmSGeRa3LedRf5px+WqlDpjUIg2kk8TuH6FxFn5OP4dyXLlynoKbfFfkoC7RcJ0cbjP
+         yaMlprAdiVfoJY9sl/YhQKVsJc/tIfBXojb5K9f3tN1HgCgklHYXP7VlVT1IMun1mAVG
+         d+EKJ78GdInP2Rcki5WznVzyapevLLFLUo8HB5czpmrqvNER0mfLHcMQoWP+RFyKoJrj
+         AdE8RcuLo4XZejx+gPpL6gTGExirgxBJuVEwW/lkLWFqS4MTkcAJWEXJUPwBJ1Fa4TVc
+         fE0w==
+X-Gm-Message-State: AOJu0YzyT9u21BhMpe56UgUohZwZvRTwE7OO65yCIkIO5CO6Iivk3YrX
+	BG/nihd8QRgrVpE/BSkRnvsHeavBDHnNCM2/+T4TaovcCQoznulxxepSSDranydrqTY=
+X-Gm-Gg: AfdE7cmqVvyItXsGBz7A2MCEJdIoDHSvmsuJ3Pfc91NTfyjGqcKLrrvr6/ffXxDhTrM
+	dd9gKSDxUnysvUJj/aBRkcUPUrB++S9Wp1+BLnNkOWP7uYwVQU5+X6JIYHxMOK4A8HsK5h/78YN
+	7lB91X8CcuHVZYWmvkfKzaAuV0E/qrDlJOn5ymTihLgf0r3V7HYkL0oQv4pBxc+GyrST1a7mbOm
+	Lr47lhmWNq3zgOm+BqWT8F7nwsvTN86H5VS0+Svu/SNfADGWK3IRKOZ2vIXjWD9NNDbpkCAkBgU
+	C3J9g923/iByyx3MdgLx/kMJR0Uz8Mt8Faq5E7BRJFyFluA3aegseehjxLvt7SMtI1r6O32TFt7
+	W66x0cmPmNtgqQNRHTBQ1rVO7aYKhx987lAtzEZLnwtFc+C6AoyXihnghZHsvQUcNLook85QsKw
+	XI7eQROPz49lO5pwhrIqbgsXFjvQzSFdtrVnZfsr2P97ZoTxsWQuj2YozoYQ==
+X-Received: by 2002:a17:90b:5443:b0:37f:9ce1:cda6 with SMTP id 98e67ed59e1d1-38dc7735b02mr15074532a91.28.1784059411560;
+        Tue, 14 Jul 2026 13:03:31 -0700 (PDT)
+Received: from localhost.localdomain ([45.117.66.213])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174839f89sm82525840eec.10.2026.07.14.13.03.29
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 14 Jul 2026 13:03:31 -0700 (PDT)
+From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+To: git@vger.kernel.org
+Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Subject: [PATCH v2] show-branch: convert object.flags to commit-slab with uint64_t
+Date: Wed, 15 Jul 2026 01:31:22 +0530
+Message-ID: <20260714200237.70509-1-gatlavishweshwarreddy26@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260714183028.67857-1-gatlavishweshwarreddy26@gmail.com>
+References: <20260714183028.67857-1-gatlavishweshwarreddy26@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Message-ID: <1MS3mz-1wcxpy02cl-00Px95@mail.gmx.net>
-X-Provags-ID: V03:K1:e4qWn+8Hjuj3eQsYLi2dvZcrK/EhpcbdeWOu3iKZIpBdoi524rZ
- MFyByEINLtioroyWLo5ctXILWB3PNYlLTAiQLel8+RI3xGBfExjclxMdf2Ti3lXhBCo89lV
- OroaRzdMtEwcjcoFubLZb69d3+AFzf3W61QKTw19JivEItCQDFUIaQWRkgHtnrLdUQSMQ5+
- eZRBU4trs0ax0Ma8hIk+Q==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:s1bBJfeRRwA=;LKB4qNpS9FoBIbHGGnSmp+3dKJB
- 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
+Content-Transfer-Encoding: 8bit
 
-Dear Git users,
+show-branch uses commit->object.flags to store per-commit data:
+the UNINTERESTING bit and per-branch reachability bits. Using the
+shared object.flags field for this purpose is fragile as it
+conflicts with other users of the same field, and limits the
+number of branches that can be shown to MAX_REVS (27).
 
-I hereby announce that Git for Windows 2.55.0(3) is available from:
+Convert this usage to a dedicated commit-slab using uint64_t as
+the element type. This is the canonical way to associate per-commit
+data in Git without polluting the shared object flags. Using
+uint64_t instead of unsigned int lifts the MAX_REVS limitation
+from 27 to 62 branches, as suggested in prior review discussions.
 
-    https://gitforwindows.org/
+Add helper functions get_rev_flags() and or_rev_flags() to
+encapsulate slab access cleanly. Update all bit operations to use
+UINT64_C(1) instead of 1u to ensure correct 64-bit shifts.
+Initialize and clear the slab in cmd_show_branch() to avoid
+memory leaks.
 
-Changes since Git for Windows v2.55.0(2) (July 2nd 2026):
+Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+---
 
-New Features
+Changes in v2:
 
-  * Comes with Git Credential Manager v2.9.0.
+- Use uint64_t instead of unsigned int for the slab element type.
+  This lifts MAX_REVS from 27 to 62 branches since uint64_t provides
+  64 bits instead of the 32 bits available in unsigned int.
+- Update all bit shift operations from 1u to UINT64_C(1) to ensure
+  correct 64-bit shifts without undefined behavior.
+- Update printf format specifiers from %d to %zu for MAX_REVS since
+  sizeof() expressions produce size_t, not int.
 
-Bug Fixes
+I noticed the prior RFC by Meet Soni (Feb 2025, Message-ID:
+<20250217055024.3978-1-meetsoni3017@gmail.com>) which Junio C Hamano
+and Jeff King reviewed. That patch did the basic conversion but did
+not lift the MAX_REVS limitation. This v2 addresses Junio's feedback
+where he suggested "using a slab whose element is still a bag of bits
+that is wider than object.flags word is the most straight-forward way
+to lift MAX_REVS limitation." We use uint64_t as that wider element.
 
-  * Fixes heap overflows in the credential helper wincred, see
-    GHSA-rxqw-wxqg-g7hw for full details.
+ builtin/show-branch.c | 106 ++++++++++++++++++++++++------------------
+ 1 file changed, 61 insertions(+), 45 deletions(-)
 
-Git-2.55.0.3-64-bit.exe | af12577d0fdff74243a5988197aa49b957d5044edc17004f6ddf0768996f1dca
-Git-2.55.0.3-arm64.exe | e3d7f5a2214f214f0a93cf0d8915dab236a0e91c7de6de70a7dbde9a61c794db
-PortableGit-2.55.0.3-64-bit.7z.exe | ab00566336b5472120f9a52d34f2e79c5406535792acb0548001ffd0bd090e5d
-PortableGit-2.55.0.3-arm64.7z.exe | 3bf26b94d9399b16a890776e468334f501742861576cbcdea2d9134643c374bd
-MinGit-2.55.0.3-64-bit.zip | f48e2d2dc74a24454adc6d8fd0ac25bf9c2386f19cfb06202b9465aaad4f9f05
-MinGit-2.55.0.3-arm64.zip | f7748965d5068e81ad93ca1923650db6742d6e22332b1ae7567a841c59f6bde5
-MinGit-2.55.0.3-32-bit.zip | 352380d06caa45e569a3b3967b6d1d6c605d564c29f37ef059b59e657a522ef4
-MinGit-2.55.0.3-busybox-64-bit.zip | cbb2ade2bf690b62f0d692ec64733cb26c6b4ea294b0b9752a705446f011b41f
-MinGit-2.55.0.3-busybox-32-bit.zip | 88a703c92b8af980d6bbbdeb3b4a531c6d615879ec8c16ddac16cd5d3dbabd49
-Git-2.55.0.3-64-bit.tar.bz2 | 4ee071816e424f928f493c4b42e5486d05344a371665c82f1802ebcecaa1d19a
-Git-2.55.0.3-arm64.tar.bz2 | ff753aa49b9baeafda33470128ee799b19e48b06736d3c555585bc926dc13b2d
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index f02831b085..625e456411 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -34,15 +34,13 @@ static enum git_colorbool showbranch_use_color = GIT_COLOR_UNKNOWN;
 
-Ciao,
-Johannes
+ static struct strvec default_args = STRVEC_INIT;
+
+-/*
+- * TODO: convert this use of commit->object.flags to commit-slab
+- * instead to store a pointer to ref name directly. Then use the same
+- * UNINTERESTING definition from revision.h here.
+- */
+ #define UNINTERESTING	01
+
++static uint64_t get_rev_flags(struct commit *commit);
++static void or_rev_flags(struct commit *commit, uint64_t flags);
++
+ #define REV_SHIFT	 2
+-#define MAX_REVS	(FLAG_BITS - REV_SHIFT) /* should not exceed bits_per_int - REV_SHIFT */
++#define MAX_REVS	(sizeof(uint64_t) * 8 - REV_SHIFT)
+
+ #define DEFAULT_REFLOG	4
+
+@@ -64,7 +62,7 @@ static struct commit *interesting(struct prio_queue *queue)
+ {
+ 	for (size_t i = 0; i < queue->nr; i++) {
+ 		struct commit *commit = queue->array[i].data;
+-		if (commit->object.flags & UNINTERESTING)
++		if (get_rev_flags(commit) & UNINTERESTING)
+ 			continue;
+ 		return commit;
+ 	}
+@@ -79,11 +77,25 @@ struct commit_name {
+ define_commit_slab(commit_name_slab, struct commit_name *);
+ static struct commit_name_slab name_slab;
+
++define_commit_slab(commit_rev_flags, uint64_t);
++static struct commit_rev_flags rev_flags_slab;
++
+ static struct commit_name *commit_to_name(struct commit *commit)
+ {
+ 	return *commit_name_slab_at(&name_slab, commit);
+ }
+
++static uint64_t get_rev_flags(struct commit *commit)
++{
++	uint64_t *f = commit_rev_flags_peek(&rev_flags_slab, commit);
++	return f ? *f : 0;
++}
++
++static void or_rev_flags(struct commit *commit, uint64_t flags)
++{
++	*commit_rev_flags_at(&rev_flags_slab, commit) |= flags;
++}
++
+
+ /* Name the commit as nth generation ancestor of head_name;
+  * we count only the first-parent relationship for naming purposes.
+@@ -215,7 +227,7 @@ static void name_commits(struct commit_list *list,
+
+ static int mark_seen(struct commit *commit, struct commit_list **seen_p)
+ {
+-	if (!commit->object.flags) {
++	if (!get_rev_flags(commit)) {
+ 		commit_list_insert(commit, seen_p);
+ 		return 1;
+ 	}
+@@ -226,15 +238,15 @@ static void join_revs(struct prio_queue *queue,
+ 		      struct commit_list **seen_p,
+ 		      int num_rev, int extra)
+ {
+-	int all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
+-	int all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
++	uint64_t all_mask = ((UINT64_C(1) << (REV_SHIFT + num_rev)) - 1);
++	uint64_t all_revs = all_mask & ~((UINT64_C(1) << REV_SHIFT) - 1);
+
+ 	while (queue->nr) {
+ 		struct commit_list *parents;
+ 		int still_interesting = !!interesting(queue);
+ 		struct commit *commit = prio_queue_peek(queue);
+ 		bool get_pending = true;
+-		int flags = commit->object.flags & all_mask;
++		uint64_t flags = get_rev_flags(commit) & all_mask;
+
+ 		if (!still_interesting && extra <= 0)
+ 			break;
+@@ -246,14 +258,14 @@ static void join_revs(struct prio_queue *queue,
+
+ 		while (parents) {
+ 			struct commit *p = parents->item;
+-			int this_flag = p->object.flags;
++			uint64_t this_flag = get_rev_flags(p);
+ 			parents = parents->next;
+ 			if ((this_flag & flags) == flags)
+ 				continue;
+ 			repo_parse_commit(the_repository, p);
+ 			if (mark_seen(p, seen_p) && !still_interesting)
+ 				extra--;
+-			p->object.flags |= flags;
++			or_rev_flags(p, flags);
+ 			if (get_pending)
+ 				prio_queue_replace(queue, p);
+ 			else
+@@ -278,8 +290,8 @@ static void join_revs(struct prio_queue *queue,
+ 			struct commit *c = s->item;
+ 			struct commit_list *parents;
+
+-			if (((c->object.flags & all_revs) != all_revs) &&
+-			    !(c->object.flags & UNINTERESTING))
++			if (((get_rev_flags(c) & all_revs) != all_revs) &&
++			    !(get_rev_flags(c) & UNINTERESTING))
+ 				continue;
+
+ 			/* The current commit is either a merge base or
+@@ -292,8 +304,8 @@ static void join_revs(struct prio_queue *queue,
+ 			while (parents) {
+ 				struct commit *p = parents->item;
+ 				parents = parents->next;
+-				if (!(p->object.flags & UNINTERESTING)) {
+-					p->object.flags |= UNINTERESTING;
++				if (!(get_rev_flags(p) & UNINTERESTING)) {
++					or_rev_flags(p, UNINTERESTING);
+ 					changed = 1;
+ 				}
+ 			}
+@@ -410,8 +422,8 @@ static int append_ref(const char *refname, const struct object_id *oid,
+ 				return 0;
+ 	}
+ 	if (MAX_REVS <= ref_name_cnt) {
+-		warning(Q_("ignoring %s; cannot handle more than %d ref",
+-			   "ignoring %s; cannot handle more than %d refs",
++		warning(Q_("ignoring %s; cannot handle more than %zu ref",
++			   "ignoring %s; cannot handle more than %zu refs",
+ 			   MAX_REVS), refname, MAX_REVS);
+ 		return 0;
+ 	}
+@@ -511,18 +523,20 @@ static int rev_is_head(const char *head, const char *name)
+
+ static int show_merge_base(const struct commit_list *seen, int num_rev)
+ {
+-	int all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
+-	int all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
++	uint64_t all_mask = ((UINT64_C(1) << (REV_SHIFT + num_rev)) - 1);
++	uint64_t all_revs = all_mask & ~((UINT64_C(1) << REV_SHIFT) - 1);
+ 	int exit_status = 1;
+
+ 	for (const struct commit_list *s = seen; s; s = s->next) {
+ 		struct commit *commit = s->item;
+-		int flags = commit->object.flags & all_mask;
++		uint64_t flags = get_rev_flags(commit) & all_mask;
+ 		if (!(flags & UNINTERESTING) &&
+ 		    ((flags & all_revs) == all_revs)) {
+ 			puts(oid_to_hex(&commit->object.oid));
+ 			exit_status = 0;
+-			commit->object.flags |= UNINTERESTING;
++
++or_rev_flags(commit, UNINTERESTING);
++
+ 		}
+ 	}
+ 	return exit_status;
+@@ -530,17 +544,17 @@ static int show_merge_base(const struct commit_list *seen, int num_rev)
+
+ static int show_independent(struct commit **rev,
+ 			    int num_rev,
+-			    unsigned int *rev_mask)
++			    uint64_t *rev_mask)
+ {
+ 	int i;
+
+ 	for (i = 0; i < num_rev; i++) {
+ 		struct commit *commit = rev[i];
+-		unsigned int flag = rev_mask[i];
++		uint64_t flag = rev_mask[i];
+
+-		if (commit->object.flags == flag)
++		if (get_rev_flags(commit) == flag)
+ 			puts(oid_to_hex(&commit->object.oid));
+-		commit->object.flags |= UNINTERESTING;
++		or_rev_flags(commit, UNINTERESTING);
+ 	}
+ 	return 0;
+ }
+@@ -607,9 +621,9 @@ static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
+ 	for (i = 0; i < n; i++)
+ 		if (rev[i] == commit)
+ 			return 0;
+-	flag = commit->object.flags;
++	flag = get_rev_flags(commit);
+ 	for (i = count = 0; i < n; i++) {
+-		if (flag & (1u << (i + REV_SHIFT)))
++		if (flag & (UINT64_C(1) << (i + REV_SHIFT)))
+ 			count++;
+ 	}
+ 	if (count == 1)
+@@ -648,10 +662,10 @@ int cmd_show_branch(int ac,
+ 	char *reflog_msg[MAX_REVS] = {0};
+ 	struct commit_list *seen = NULL;
+ 	struct prio_queue queue = { compare_commits_by_commit_date };
+-	unsigned int rev_mask[MAX_REVS];
++	uint64_t rev_mask[MAX_REVS];
+ 	int num_rev, i, extra = 0;
+ 	int all_heads = 0, all_remotes = 0;
+-	int all_mask, all_revs;
++	uint64_t all_mask, all_revs;
+ 	enum rev_sort_order sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 	char *head;
+ 	struct object_id head_oid;
+@@ -714,6 +728,7 @@ int cmd_show_branch(int ac,
+ 	int ret;
+
+ 	init_commit_name_slab(&name_slab);
++	init_commit_rev_flags(&rev_flags_slab);
+
+ 	repo_config(the_repository, git_show_branch_config, NULL);
+
+@@ -759,7 +774,7 @@ int cmd_show_branch(int ac,
+ 		struct object_id oid;
+ 		char *ref;
+ 		int base = 0;
+-		unsigned int flags = 0;
++		uint64_t flags = 0;
+
+ 		if (ac == 0) {
+ 			static const char *fake_av[2];
+@@ -779,8 +794,8 @@ int cmd_show_branch(int ac,
+ 			die(_("--reflog option needs one branch name"));
+
+ 		if (MAX_REVS < reflog)
+-			die(Q_("only %d entry can be shown at one time.",
+-			       "only %d entries can be shown at one time.",
++			die(Q_("only %zu entry can be shown at one time.",
++			       "only %zu entries can be shown at one time.",
+ 			       MAX_REVS), MAX_REVS);
+ 		if (!repo_dwim_ref(the_repository, *av, strlen(*av), &oid,
+ 				   &ref, 0))
+@@ -870,11 +885,11 @@ int cmd_show_branch(int ac,
+
+ 	for (num_rev = 0; ref_name[num_rev]; num_rev++) {
+ 		struct object_id revkey;
+-		unsigned int flag = 1u << (num_rev + REV_SHIFT);
++		uint64_t flag = UINT64_C(1) << (num_rev + REV_SHIFT);
+
+ 		if (MAX_REVS <= num_rev)
+-			die(Q_("cannot handle more than %d rev.",
+-			       "cannot handle more than %d revs.",
++			die(Q_("cannot handle more than %zu rev.",
++			       "cannot handle more than %zu revs.",
+ 			       MAX_REVS), MAX_REVS);
+ 		if (repo_get_oid(the_repository, ref_name[num_rev], &revkey))
+ 			die(_("'%s' is not a valid ref."), ref_name[num_rev]);
+@@ -889,13 +904,13 @@ int cmd_show_branch(int ac,
+ 		 * and so on.  REV_SHIFT bits from bit 0 are used for
+ 		 * internal bookkeeping.
+ 		 */
+-		commit->object.flags |= flag;
+-		if (commit->object.flags == flag)
++		or_rev_flags(commit, flag);
++		if (get_rev_flags(commit) == flag)
+ 			prio_queue_put(&queue, commit);
+ 		rev[num_rev] = commit;
+ 	}
+ 	for (i = 0; i < num_rev; i++)
+-		rev_mask[i] = rev[i]->object.flags;
++		rev_mask[i] = get_rev_flags(rev[i]);
+
+ 	if (0 <= extra)
+ 		join_revs(&queue, &seen, num_rev, extra);
+@@ -958,12 +973,12 @@ int cmd_show_branch(int ac,
+ 	if (!sha1_name && !no_name)
+ 		name_commits(seen, rev, ref_name, num_rev);
+
+-	all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
+-	all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
++	all_mask = ((UINT64_C(1) << (REV_SHIFT + num_rev)) - 1);
++	all_revs = all_mask & ~((UINT64_C(1) << REV_SHIFT) - 1);
+
+ 	for (struct commit_list *l = seen; l; l = l->next) {
+ 		struct commit *commit = l->item;
+-		int this_flag = commit->object.flags;
++		uint64_t this_flag = get_rev_flags(commit);
+ 		int is_merge_point = ((this_flag & all_revs) == all_revs);
+
+ 		shown_merge_point |= is_merge_point;
+@@ -973,14 +988,14 @@ int cmd_show_branch(int ac,
+ 					  commit->parents->next);
+ 			if (topics &&
+ 			    !is_merge_point &&
+-			    (this_flag & (1u << REV_SHIFT)))
++			    (this_flag & (UINT64_C(1) << REV_SHIFT)))
+ 				continue;
+ 			if (!sparse && is_merge &&
+ 			    omit_in_dense(commit, rev, num_rev))
+ 				continue;
+ 			for (i = 0; i < num_rev; i++) {
+ 				int mark;
+-				if (!(this_flag & (1u << (i + REV_SHIFT))))
++				if (!(this_flag & (UINT64_C(1) << (i + REV_SHIFT))))
+ 					mark = ' ';
+ 				else if (is_merge)
+ 					mark = '-';
+@@ -1010,6 +1025,7 @@ int cmd_show_branch(int ac,
+ 		free(reflog_msg[i]);
+ 	commit_list_free(seen);
+ 	clear_prio_queue(&queue);
++	clear_commit_rev_flags(&rev_flags_slab);
+ 	free(args_copy);
+ 	free(head);
+ 	return ret;
+--
+2.54.0
+
