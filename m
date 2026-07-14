@@ -1,85 +1,86 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426EE39CCE0
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 17:14:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4109308F32
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 17:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784049258; cv=none; b=QuSb6R/qSvm/6dgZa8FG0fDRVma3A+ch06Yjb3Sz+F7ErAKzsetaepgkI0qqUA1oNEJCxJbLhe7llJ4oWMjxlTE6KAwg9jvqg3JzOjCkrA7mjt2g0+/yWFL8jcHG6mkzBT51XSA39gagXqyKS9cKZd1qyGmY0mbt7yOfhE6MU9c=
+	t=1784051926; cv=none; b=hCwgbwra9Ucp450wO8YqW/d7fVmPGM0GhuTj540OsfaEBmkik5NKYTLQfpKx/iT8GL5UJFRjsy8ER97hf8FL2ncK7/sGe5p8V2qTZM+4jVEl2XqWcdF9NcGcOavKoqgInQl6aGkoDkEKsmfWAZEQs3nPCmGYL9HqWFM8EN0BdKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784049258; c=relaxed/simple;
-	bh=VWb2lsXjHWDWzBBPQSqIcqvFzduIUvvGnotFyq4ykdo=;
+	s=arc-20240116; t=1784051926; c=relaxed/simple;
+	bh=DmkEFQZssZepaqS8EEyMcKRyqfoF0jcD2df0cZGczwA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QAPejbLfYsqMmIInTO7U+MRLk1quzFAavHiHaCYe1U+20A9YyJtxE3HRHAwJxaYJ0kuaOSWtA6EXNQ8AKUjnI1qv1wDu10WwQvLYFsID2npSLgxgQlxJrFcxk05zIH7OlPlCVoFYAw2cflcPUlfKDaw95YPpHaddaOp+g+zq6g0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WYu/lSX7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bejiOaFJ; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=lFG9VnB45sl9CVaV3qtFMSsQFF7++bsHEGcj2OS22UCHEqd1KRUJ4ckFJTBmWpT57PUScaQEvkZLSm138f4tfTlDdVTvNVXpSYNapQEPVtYrGBFhE3XlRTmg6yYAhlGSGz4UsUxWbUaCcG8Y3wI1wnkV6yluBPeqJ5Da3LZz68g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gdVANPWA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dOTqhtAF; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WYu/lSX7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bejiOaFJ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3E257EC01CD;
-	Tue, 14 Jul 2026 13:14:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gdVANPWA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dOTqhtAF"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 04E491400111;
+	Tue, 14 Jul 2026 13:58:42 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 14 Jul 2026 13:14:16 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 14 Jul 2026 13:58:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784049256; x=1784135656; bh=4ivqfi2fLQ
-	SnPWkqw/uEYGYQMqedOCQtYljoKqtKMbM=; b=WYu/lSX7uPWjeQ8bBu42fswR/V
-	sGyGOA4edXW919gyz/X4SPCGkvLN2/hbQ2yOdDbb4xYEPfYE6Q4udch2CmT/YTRT
-	X3Reoc/Y6JxS2M2AspqanVNonQjye7lqMyCETRL+W11jJoP0vFRmxYDja1wIknPG
-	VEMZLxAIOdoE8wPqDjKgPq9OZ+wUb54AYFQFMYmGVjsiAKdrVz+POj3ESQPIsMqh
-	i2lzDc+POhaFLeRqLZVkZGuK09mBqTRh8bYbtvUMoUwgpnDXsQjEYk2QIUVmSwbu
-	RCDtZfI4jJMh0ImVOuA7HOwVcCdAYs7BhQRYgbXjqqVzLQygEu4PVLS5ziug==
+	:subject:to:to; s=fm1; t=1784051922; x=1784138322; bh=VXqDwIlbV2
+	uJKn8FYVnvbcakcCOeNACBggDGg7QNeeg=; b=gdVANPWAE0E1UX6SsNVo4I6/gD
+	83lyj2Jldm1Xr/4uM3D6et6mD0V0QQrGnMng5ZTdsNUah7xsqatsYnGygcCPJlrn
+	Aa/gXKrrOnkNTPzgw4Bg7Nm8PtyTW7x6moaCpHKwbrNULhwzR4gpJ1YPQsXK2iVz
+	lJMHksEMbpE+DpZQNNbGdWZgRvlewZV53bzDpsj4tzL5BLSY747pY5pV5DcMa/Gq
+	03rCtlaPHwrrvrJ7h5fph7cxivh4R3Iqooi84JdsRwCKIAWy/fwqABijjVGG3gAm
+	NgudhkxinbIUlL8gbUUiqRvxQ1AKVg2pt2UMQFUeiiKeqqPpGw8HDMcXMQ/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784049256; x=1784135656; bh=4ivqfi2fLQSnPWkqw/uEYGYQMqedOCQtYlj
-	oKqtKMbM=; b=bejiOaFJ07GVaBlDuW4o4YAuHCynvznDKk84coJ32gu1Q1mxOFa
-	h1hbKV+gvRk1hIfBsP+hBrf3aH6BUtjR6vz/MYv0jJG3Fro17E6cxlN26u2p9Iuj
-	RV0LNe3ijDe6DyH1f525d9fUvnmJ1rrsb8kxo3BtcvSw6ywCs6GwItDgfUJNw8Ul
-	HBjfnwtyyNprBuukjOwK2m6yFbEbVC0Aj8AU7xN9yLrL+yMxdmnKymZAtbtWGNXk
-	MfkOM5ZdFlYIwl00hqEVZl4xIJYvQZ7vFQ4FvBwn/IyEAGYZhluKT9vz4iSXEhIS
-	bYSbocZmoCuJx42Yz89SLE2sZPI0qeOWArA==
-X-ME-Sender: <xms:Z25Waj5lvM1M9D8XdwDqw07afNPLlyBC0ed4lC9PNvYp0FECnYZA3Q>
-    <xme:Z25WaskQxuwHYosv9VjwjeE13fxjn-btO3Ew3W98OAeJfPmO0l6tGLVk75HGu6qqq
-    ontIUlgALXhFyW-G3tvpVBkg--FmJuuGqtef0JYgihyG-eoxhyu9w>
-X-ME-Received: <xmr:Z25WakQWedN61BG0s9SHJb_saqLCmsFMoV17TFATHPlimmHeRBIFlDo9mXEFuF2Spmo8oqQep98TUV_F-_-5t_UOjIL-duH1zrv5gqs>
-X-ME-Proxy-Cause: dmFkZTFyviTLrc/AyuKroyet2L4nxmO4Fvuwjn/+XGxHu5LpB0dVpAzVBc12ws1AZC6Oqs
-    7Geqhk897NnfQPF2D85OHwDiZI8Ab5Iq/SaXwXnRMBDDf9TJ3YtgsuVa/LrEOMXwAYCPEa
-    1mtcBt2Fet1/pd331KmBjAM8QF4tMMbbSpctD6s67QJvHazsN8tnnjaJYvTZwHt0qqG0nP
-    CoXHUgElKHZlM9dinQVNCtjUcpn6MNIW52Lj2pPDalZTGikwaeSPsaeO5rSaUw6nNqz02U
-    5DN/DIU1atqV8D38VA4KS38yXiXi04A72T1cEJjgSOaUZOrLG2eOtEBeNhMiSthF6auSXS
-    /RyL+jVughVIYHYVU2+JQAMOXb9VCkeoLRRs+IQ9LgDPPw5HYpHuKUV2zcmSjOw2jVvFiN
-    eV3oCtN4yoiOqkB3AYbunM/+U7dArUNfajJhSzBgyMru5ytzJtpR0K80QopOTru7ZEH1fm
-    0LLgWGdQK3BNkkkxIf2agvmEMcL1PK88RaSpRG9X66aUX8BPh88kXEJXCjTdPzNC1cjROJ
-    M8VZE6B8u9d+5GU4Y3FC9F8IwZVCgr04m1YxM6CCK/VNn1+GECtSRrCaUlqVozEO5zpQhp
-    nHeC78mw4mZB58ycZ8uUW9y6spldmaDYeFR0O4Tw5+kG4PfsjUAqUe4zSlvg
-X-ME-Proxy: <xmx:Z25WarECLTegQnJa_8DJLi0--comTZk5UEwNEdVoFdCniQq6sK9VUA>
-    <xmx:Z25WapH6Nk5F_sWW57ItkbKG0MBtmVXDFUXKyRoVzOJikgX8YArWwA>
-    <xmx:Z25WapQUY_0nUBhHEUhCKQWDtFKjWj0EgQ0a7WomUbi_FVrl8h-vZQ>
-    <xmx:Z25WaqIxJUbWK2mAwGEPti4YXp-zDshaV2uaeFQiyY5DeXZbw0Qhdw>
-    <xmx:aG5WavcdXDhbPji26WIonnFAe1vUVQw1i6DWTi5TRi-iczNwuiVO4-0Y>
+	1784051922; x=1784138322; bh=VXqDwIlbV2uJKn8FYVnvbcakcCOeNACBggD
+	Gg7QNeeg=; b=dOTqhtAFi03q710wOBPC0irI6NiZNwy7Z6pYDLDAfCBvEYHHDOB
+	PcXUCAXDno4PEy1rMC/ifoXnnWsXuhJl2jc6RJwZqwJ81wzdIibdDft1S0Fcy3q0
+	OP0bGo1+gK/eXMVjD+iIjgMImzrQue505SDC0fTYPAfhexivyeC06R/CYntPAKOY
+	VTAHr1NRFiRu4s2A572brg7m5lr1Q1FWUWeePoxorT15p8ck4eXeLei7zMmKtASF
+	o6ceXPFdR9LKSD/armDK4yEoflvcLpIlcE6EoOqpl2HnAN6bKaGaj2kO1TA/hPjV
+	gDJa5974OEVz9BsmKnGBG7DWh2wmjK92ALw==
+X-ME-Sender: <xms:0XhWai-VYAqxrQNuj4JGQkCUOE8UchXlX4XPrdixyk8AwBTgHtk0PA>
+    <xme:0XhWaugprTd623AcFpLGBWwlZyEeu3lF2eOKhXi_igJNV9jYW8gmVP7e0CKGmMKoW
+    Tdx5NR_xktRgAoAHUUkmYOwED0ohkMXzdP_HMqHTfE1I7SWt_DLNA>
+X-ME-Received: <xmr:0XhWajaBkuI7376jnarKavGRYbKY33YBr0nH8lXZQhbHsbWu5x_SUT7yp_wnui3KutLQNbfu-OCMRkuuky9Zm9AfdHmGJZSwEjtLoEU>
+X-ME-Proxy-Cause: dmFkZTFpoQyltCrBsrqgLmotkiAoNZgnSagQh70PWw3LfCHsHdm2gseo+a8/xuKCh3mOTa
+    WYlwzwY07N+yI7NubZmxH218LLIiyeSfd6GF8fRJWAhqjcmxmfHz5QYjhGatcePqM0PqOG
+    AMllVT9q5qS5S/1H4JnWxR35hPQGk9fnXl6blYlXJrmpBzehU77GwaI9EPRetvvlT5oTiZ
+    Ld5WWFxoJWgZNlQwXCmd47sImf8k6hSS6LLLbd0+4ZqWJQlor/VUcN1YKzTJjjRHQLgMvX
+    qwqCSql/8iagNFcDaxw3lV2zt7QWWUmRiiAsfmanqExew2BgThMaqNLjMPwpoLJ9SKShVA
+    ZLQNyc4hzl1zSOKq5r1c/1Wz4ZS+aO/4/a6bPgMHUGdRNFPyyhtGnF755du9l7wG4mOh6a
+    D/ydVYxzis0jDXJlIyyU6/vkNMjD0l3O01RaHsMLFpsy4+QiR2JrHCDPcDJ2YagDdEEvnd
+    FdoXT/sdlsr2uO8NmA0VjXtikEv7teWpK+tVJTmIywe6tIcSTCwomqzmssGWJKaCMG937S
+    nZNXIH6LC6EwEKzCUttsJL6L1i9L+KO37bP8HJq5JsF/hrYpa7qgfFvfEoEino82uj8oKR
+    umChWTX76MltYc27W6Qgn+qiR6jrfFmjxWfN9chei2O/9DNxX2iBxMYlZdyA
+X-ME-Proxy: <xmx:0XhWaj_F7Ty8fh8v3bJWGrISm_ATpR4vyITMKdyUjjW1_73dIuNxcw>
+    <xmx:0XhWalMsEk9Zf38R3x7eljo7jez9w-d1-rRxjF1nbF8D-3K1dYUKow>
+    <xmx:0XhWagFDEgC8CxsflpvAvmuFEmqFrLmz7rzosEbCKcppIZ2_ulBddA>
+    <xmx:0XhWajx7ftytlaNbFkTvTa5NRsKHnWF7lIDSDz-4QJe5aSsMznvebw>
+    <xmx:0nhWarW_Dr3y_2lIEkgzXYi9NOiHvbzFo0NwIT66sVqCHGcXvNujns3p>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jul 2026 13:14:15 -0400 (EDT)
+ 14 Jul 2026 13:58:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Paulius Zaleckas <paulius.zaleckas@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,  Glen
- Choo <glencbz@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 2/2] fetch: add fetch.submoduleErrors to make
- submodule fetch errors non-fatal
-In-Reply-To: <20260714132959.3368867-3-paulius.zaleckas@gmail.com> (Paulius
-	Zaleckas's message of "Tue, 14 Jul 2026 16:29:57 +0300")
-References: <20260710122655.3066377-1-paulius.zaleckas@gmail.com>
-	<20260714132959.3368867-1-paulius.zaleckas@gmail.com>
-	<20260714132959.3368867-3-paulius.zaleckas@gmail.com>
-Date: Tue, 14 Jul 2026 10:14:14 -0700
-Message-ID: <xmqq1pd5trx5.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: chandrapratap3519@gmail.com,  chriscool@tuxfamily.org,
+  eric.peijian@gmail.com,  git@vger.kernel.org,  jltobler@gmail.com,
+  karthik.188@gmail.com,  peff@peff.net,  toon@iotcl.com,  Calvin Wan
+ <calvinwan@google.com>,  Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH GSoC v17 10/13] transport: add client support for
+ object-info
+In-Reply-To: <20260714-ps-eric-work-rebase-v17-10-afabfc83260e@gmail.com>
+	(Pablo Sabater's message of "Tue, 14 Jul 2026 13:45:06 +0200")
+References: <20260710-ps-eric-work-rebase-v16-0-66e07b58a8fe@gmail.com>
+	<20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
+	<20260714-ps-eric-work-rebase-v17-10-afabfc83260e@gmail.com>
+Date: Tue, 14 Jul 2026 10:58:39 -0700
+Message-ID: <xmqqik6htpv4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,118 +90,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Paulius Zaleckas <paulius.zaleckas@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> +	if (!strcmp(k, "fetch.submoduleerrors")) {
-> +		if (!v)
-> +			return config_error_nonbool(k);
-> +		else if (!strcasecmp(v, "fail"))
-> +			fetch_config->submodule_errors = SUBMODULE_ERRORS_FAIL;
-> +		else if (!strcasecmp(v, "warn"))
-> +			fetch_config->submodule_errors = SUBMODULE_ERRORS_WARN;
-> +		else
-> +			die(_("invalid value for '%s': '%s'"),
-> +			    "fetch.submoduleErrors", v);
-> +		return 0;
-> +	}
+> +	for (size_t i = 0; packet_reader_read(reader) == PACKET_READ_NORMAL && i < args->oids->nr; i++) {
 
-Two points.
+An overly long line.  Format it like this, perhaps?
 
- * Do not use strcasecmp() on the value.
+	for (size_t i = 0;
+	     packet_reader_read(reader) == PACKET_READ_NORMAL && i < args->oids->nr;
+	     i++) {
 
-   While "fetch.submoduleerrors" may be case-insenstive, the value
-   does not have to be.  We do not want to encourage users to write
-   "[fetch] submoduleErrors = Fail", as some people may want to
-   write third-party add-on scripts that parse "git config --get
-   fetch.submoduleerrors" output.  For example:
+or even:
 
-	error_handling=$(git config --get fetch.submoduleErrors)
-	case "$error_handling" in
-	fail)
-		... do something ... ;;
-	warn)
-		... do something else ... ;;
-	esac
+	for (size_t i = 0;
+	     packet_reader_read(reader) == PACKET_READ_NORMAL &&
+	     i < args->oids->nr;
+	     i++) {
 
-   We should not force them to write extra code to handle the value
-   case-insensitively.
 
- * Since you need to convert between the enum and the string here,
-   in option_parse_submodule_errors(), and in add_options_to_argv(),
-   defining a pair of parse/format functions would be cleaner.
+> +		struct string_list object_info_values = STRING_LIST_INIT_DUP;
+> +
+> +		string_list_split(&object_info_values, reader->line, " ", -1);
+> +		if (size_index >= 0) {
+> +			if (!strcmp(object_info_values.items[1 + size_index].string, "")) {
+> +				FREE_AND_NULL(object_info_data[i].sizep);
+> +				string_list_clear(&object_info_values, 0);
+> +				continue;
+> +			}
+> +
+> +			if (parse_object_size(object_info_values.items[1 + size_index].string,
+> +					      object_info_data[i].sizep))
+> +				die("object-info: ref %s has invalid size %s",
+> +				    object_info_values.items[0].string,
+> +				    object_info_values.items[1 + size_index].string);
+> +		}
+> +
+> +		string_list_clear(&object_info_values, 0);
 
-	/* really private - use accessors to parse and format */
-	static const char *submodule_errors_[] = {
-        	[SUBMODULE_ERRORS_FAIL] = "fail",
-        	[SUBMODULE_ERRORS_WARN] = "warn",
-	};
+Is this not trusting the other side too much?
 
-	static const char *submodule_error(int num)
-	{
-		assert(0 <= num && num < ARRAY_SIZE(submodule_errors_));
-		return submodule_errors[num];
-	}
+If the other end returns fewer values than expected (e.g., if a
+buggy or malicious server returns only "<oid>" without a trailing
+space for an unrecognized object, or if we request multiple
+attributes in the future and the server returns fewer values than
+expected), string_list_split may return a list with fewer elements
+than size_index + 1.  Accessing object_info_values.items[size_index
++ 1] will then result in an out-of-bounds read/crash.
 
-	static int parse_submodule_error(const char *name)
-	{
-		for (int num = 0; num <	ARRAY_SIZE(submodule_errors_); num++)
-			if (!strcmp(submodule_errors_[num], name))
-				return num;
-		return -1;
-	}
-
-The configuration parsing block would then become:
-
-	if (!strcmp(k, "fetch.submoduleerrors")) {
-		int num;
-
-		if (!v)
-			return config_error_nonbool(k);
-		num = parse_submodule_error(v);
-		if (num < 0)
-			die(_("invalid value..."), ...);
-		fetch_config->submodule_errors = num;
-		return 0;
-	}
-
-This approach is much more maintainable.  You only need to keep the
-submodule_errors_[] array up to date with respect to the error-handling
-preprocessor macros.  Some reviewers might suggest converting these macros
-into a proper enum.  I would not object to that change, but I would not
-bother doing it myself as I do not personally care much about the
-distinction between an enum and a preprocessor macro in this context.
-
-> @@ -2205,6 +2219,10 @@ static void add_options_to_argv(struct strvec *argv,
->  		strvec_push(argv, "--no-recurse-submodules");
->  	else if (config->recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
->  		strvec_push(argv, "--recurse-submodules=on-demand");
-> +	if (config->submodule_errors == SUBMODULE_ERRORS_FAIL)
-> +		strvec_push(argv, "--submodule-errors=fail");
-> +	else if (config->submodule_errors == SUBMODULE_ERRORS_WARN)
-> +		strvec_push(argv, "--submodule-errors=warn");
-
-This part then becomes:
-
-	if (config->submodule_errors < 0)
-		; /* nothing */
-	else {
-		const char *name = submodule_error(config->submodule_errors);
-		strvec_push(argv, "--submodule-errors=%s", name);
-	}
-
-This is, again, much more miantainable.
-
-> +static int option_parse_submodule_errors(const struct option *opt,
-> +					  const char *arg, int unset)
-> +{
-> +	int *v = opt->value;
-> +	if (unset || !strcasecmp(arg, "fail"))
-> +		*v = SUBMODULE_ERRORS_FAIL;
-> +	else if (!strcasecmp(arg, "warn"))
-> +		*v = SUBMODULE_ERRORS_WARN;
-> +	else
-> +		die(_("invalid value for '%s': '%s'"), "--submodule-errors", arg);
-> +	return 0;
-> +}
-
-Updating this function is left as an exercise ;-)
+By the way, from a stylistic standpoint, "size_index + 1" reads a
+bit more naturally than the "1 + size_index" used in the current
+patch.
