@@ -1,147 +1,456 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1DD3CF207
-	for <git@vger.kernel.org>; Tue, 14 Jul 2026 18:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C350124A076
+	for <git@vger.kernel.org>; Tue, 14 Jul 2026 18:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784052647; cv=none; b=UmYW9K6qCyRnZfUF437WZKp6k5NsF5f9TspFgx3mDF1DS3D60VtU9IfjV4d3ykmyVZb/R9Kr5/oebxWOqUTw2fqpgRR2EsEZaEXXvzyrKYnDXZD5vOoAf3m29GtrOUBthg9oyI4WX3PXl/36mggmQAyOwN/5RPOwLE+BuukVw/Y=
+	t=1784053502; cv=none; b=JRtKYl02eXu+0xOeeRjkB9u7TIn3TAn/AoS090S4UHvtQCLUsOdlSP/ogktcFT1rBvFcivRuT4AylhX2pA3BMkLqs5ug+Y9rIkwYEpZuSfagbqvxSYltH/lgfTCwYlKI0eejWP/bZhRNZxV10ZfHcWXSeQ6OXXEXCNGjyzAXens=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784052647; c=relaxed/simple;
-	bh=kd+UXivXCNsdWrGwiS15ofn85M9Fo//TPJHIedGXpJc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bw3Vr7nG2PSSjDvewF9y3mi/Y7KJyGJNJfiifuxzPFoHEqxZux/xRBbzznjcO5P2d+AmD4b8pj1DwiVGYFfXbyooyC6gQiABmGYsM0Mb73t2JQHw341qOYj0ajbom/pnkoe5IQsr+Smzm8H+elV5SZSdvcusdTCCil16vIzexWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UFZ3TJWs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YN5YlGU7; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784053502; c=relaxed/simple;
+	bh=YCDIgxjT0U4hk2TUozaBMcFrLFh5e665sIgPRXnzqMs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=InVWE1BX0ERuNHrYDMt10/ZW1jsuZpXiQtkF1/dbKJdYlcF7N95lkk1r1o8Y4kim/G/nOHR5RVl6is9PW2A4S61bc7mz6vvBpPSYuwc6dTBrrd59C8pcP4a67cJXBK+0Mj2C/5oXckRIDhbDagn4r0hljOwS8LTxMw4dFpWiFG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o3cIjiGN; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UFZ3TJWs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YN5YlGU7"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 888131400045;
-	Tue, 14 Jul 2026 14:10:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 14 Jul 2026 14:10:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784052645; x=1784139045; bh=fcrzmUjiR+
-	GJK4NDR4r6jF3+/mCAPceYk8eKJwKFf8E=; b=UFZ3TJWsCuQ7KR96U0zbqzvNES
-	QDXeLArjjEfxmOGTvbe3yO9kRj/zPMCzkbGCWJFa7vp1KUQviPaUa4XMg/6WUhIP
-	zGSM35Aqxvk52QRHqz9dex+Ld5m2alRCgZCSFUtY351MJu56qq9HTty5Tares+f0
-	H6gZUfuwA6icbqnGg7uvce2/NFE+wQmjUzEklWDPzrQNSAyHu6XioTYD4MYmrPsi
-	/z06YcmwrGdeN+n23wFtFW0fxkscLCcG8+tyryYoxHzRb8eW0a1tydI2xuVXjMDC
-	Chjg5TUn5/tYi/Xd4iciZ0Kqyo4GdQ6j+PJ1nvALY5l1XrjrbvkUvKVAVJhA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784052645; x=1784139045; bh=fcrzmUjiR+GJK4NDR4r6jF3+/mCAPceYk8e
-	KJwKFf8E=; b=YN5YlGU7//c4WqXp1Es8jbsBOY180caH3pHJAOnzAECpvw9pDDd
-	4z28cMbhplHfMKu02uJxfNoYGykwaVqUKasLzIfqONriZ058i9ToyHy2odRlkJNR
-	gzDcR5vJcPhn9SFTnKZea985z5HbVuWQDdyiyYe70ZSKyamLwvNB5blP9aNMQKXY
-	m8UxZ3Wq38ODpsp/EHewn+CITsNCwVvU4X49OfqJOI876dVqb4IZujpvWU4i1RRI
-	LfbZEV/hEVPMOoM7oAnuJdZI/FHguCUiGKUdzakZwZwpX4TtU11uyINcFFC1j9OS
-	y7GJZJ9TrJurq72c2M3+Xgq44dKuhcrQpkQ==
-X-ME-Sender: <xms:pXtWauvp4neQYyWSbLHIbE24S860lgfIkfeucatpZddk6bhDwHwUVQ>
-    <xme:pXtWamCbHovrJ6ZhL2vy325Kt_FFf_ENitQjUYpwkpCAo6I_WLImorgxYNzZtOtr6
-    gHqvv4WtkU-Iy_HvRbVsrhiGgdIL7_XyUAUaN1aXyLpRKpuxPUGJA>
-X-ME-Received: <xmr:pXtWatY8Pr_-VKhH5OoU3JHP3lzeF402IovmFtP6uy_tUYKU77QU9emILlmGXDPKP__I38Tb7lCn9-CGzI0TOHS02Y7Jo8SZ0JSJP-Y>
-X-ME-Proxy-Cause: dmFkZTGOXhzcjXuOajg7x3zgdsf+MYOq36uoYJOoS3+CWDG4s78HTIhXIHySKAwnsKAL+w
-    Lex2I4zDTievT0aeDF06RVVuTp6zu66rXuOLzbDk8DI+mpZr2j8Hu/KX0jEDKreTbtrIh9
-    4lPQU2gXc8zFh8dHq/LOqNt5joJSi3gR1XffTo7vJCKpHksq8L5A3H7mwoj8z55CzwFCZg
-    YzrVS03J+50OW6u7IaPle9SZCBZZQhd8wpGUqX68PTt/bjG3D38QzG/J9HI1SQeXuzJeSH
-    xwLyFlfaN0mgY1dcFnyiEktCbWqrCrPcl6nrek8JtN4HuK6sFDwt/Y+Vs2bfDbQ04FRULy
-    cXGcsvdObri91vBxWrbK0FaOVEcEYAKmfQIQNBPuYu0q2sYo/ldY9uuycQ3K9xL/s0RCCi
-    pI2kHD+zNMuGCS7E/+/Xz9zPZtr8M/7TAxqEEV+oFoUhcmZLeTAPpZM335ZoMqmqt3uDEI
-    u5KarGDRpuA9YxOm3ybw8wz+a6d0g+nlkcuaNU13hYnFcwY68b1homYuvVRS3j7ThYwbYU
-    6UnixOw2MGLsfHAaxXoQjxMbJNVEqJVTkfDZuW/q1t+pElofwh5afNpqrgPvKRb7syuYWw
-    tZ1RgWQOzXZmTCXnWZvD2aHGDHrZXWpefqFkTe+LeCU6OytO0l5zaTptVv2Q
-X-ME-Proxy: <xmx:pXtWapXg_A7MwsaGaxje41LXClWp1yLkL0C538j-NSpQe5G4jAAEZg>
-    <xmx:pXtWakOtTVR8jr26IRrgi-OU-fj_oKnl8_1aQB0uDOdZXaM2QXKMog>
-    <xmx:pXtWaratIpTOffsvVpyIawc8KE3Lc1bqbzYWanfwt57_hHxW_pVFnA>
-    <xmx:pXtWar92pPteA5BgTeVG0PD5gxIUk5wK7-_kzZTCkOE0tFk3IWd9Kg>
-    <xmx:pXtWaugUCGTbwp1iAV8pHaaA56ESO9_IOwjp4bZAUWKrjARfmxbqd3DV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jul 2026 14:10:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Ted Nyman <tnyman@openai.com>,  git@vger.kernel.org,  Taylor Blau
- <me@ttaylorr.com>,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH 1/2] http: use unique tempfiles for packfile URI downloads
-In-Reply-To: <20260714052833.GA2516582@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 14 Jul 2026 01:28:33 -0400")
-References: <cover.1783982021.git.tnyman@openai.com>
-	<alVn-QmK3K91_tkH@com-76773> <xmqqse5mv10a.fsf@gitster.g>
-	<alWXwAGWgXSXoRJv@com-76773>
-	<20260714052833.GA2516582@coredump.intra.peff.net>
-Date: Tue, 14 Jul 2026 11:10:43 -0700
-Message-ID: <xmqqcxwptpb0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o3cIjiGN"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-84864086bfeso4859227b3a.1
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 11:24:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784053497; x=1784658297; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+WU5cztNDm7iera6y26IeMKt7pECrwhZ/HU9y7Rjppo=;
+        b=o3cIjiGNrpyBtYR81i/rxo8JTaMT640VKvqNECj6tWosJD5LDBUb/VWR0tSUzBwtmI
+         mfMMV641nnimv2AIoeLktaLsTqXBmYD24VykEUIJcC//j3MYmB00qOh0B7YQTap9JZW0
+         KREvR9vobcCuB1x+UmXuMemeD1ZOtY1Mw8Fj3QFxr8avO8KK5+czhMevVTO4UajI8fOn
+         BABdOmorxOWqCRb17m82Gbq1hdoxjWJkKcQqvGPU8rxqFbvdT632OUht9TcdogBCD8Dh
+         /jeJ6S2zpuFPlI5QhybfgDo4PhkSVivt0rHZfiuvA8fj2gfwC1fpM9Zs3cWoSMIu8pkf
+         Ns4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784053497; x=1784658297;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+WU5cztNDm7iera6y26IeMKt7pECrwhZ/HU9y7Rjppo=;
+        b=pn+pTqfy1uKqAS0/GTb3VNsNo/YtKFx9Ko9HfSj785iCEer7MT976xV+j7yuhA9CWv
+         499e2zSLShYcGlKE+qYX3fQakg/8wpc9QB4n1bGj+C/HwQcw1uRNW+tqGD/w0hNzzNKN
+         3JLZIxv/HGgZw27glLWuadUtwBZBpsQzn+GtM4F3Wi8gW+ZAYJKS8d7VF/wbsqcBGmGJ
+         X5TGTPpeRrLDvQ7LV/zF+sibSqNPW5Tm+G8fiSwJpf8zJxRiTumeCsIJx9BLK34RdTFI
+         L/rhYD0La2x4kpzga8y+XnuUTUvvvshPfUhzVNZCvFHvU80nGj12bYW6Qh/H9BtOvenz
+         0IHg==
+X-Gm-Message-State: AOJu0YzVLUportb7IbuWmi8fUFFiS55dw6rpte4PLOC2ZNxhyGPY1o70
+	nOhtuRyZ9nzPzKovmEG/CSeJdGDsIW8PZ1/Dq1N0J31QLsJg9iTVIb3YieSlTg==
+X-Gm-Gg: AfdE7ck24rwCOaVuHmLxPYFq8m9+XTofU2iNi0f/E7O0SOCFy9GtHgYcBt0sYiqrhJn
+	oSM8O9psxIuxUkouC22gYOSlnCFYs9fiSylgB9RvomoLbhnf1novESDePl9u8n9a5JqsNY9w1tO
+	mYAihscxwBOHmHKyumm5ewwhBV3oGEt7o2Ga6GyWHGmAVOa+Ev+XUTUCMdRpW0h7vTc7gutckZC
+	6TRTrsur6nk6S4DT+o2FYFlk5PO/QPvN4SUauNpmkh87AsLhjcsehT1ift0pwDkLT4RAofs8I8A
+	tEY74LppIPMx+ZsELL3TaeM9ld/c6dUrHiNlIEaBYZDYihdRf3GBAyLadA8CGACXrWl8qGYu7OH
+	b3n0CLxwRy3YxmnzvU8nOzdhE9ba3rOCjoPeRZRd8YIHEV/XITwFS6EItzYmsDsAcANdgltvnYr
+	sXiMqfyEyO0LIFmioB
+X-Received: by 2002:a05:6a20:9f04:b0:3c0:b3f7:e5e5 with SMTP id adf61e73a8af0-3c3573959c8mr4617319637.25.1784053497158;
+        Tue, 14 Jul 2026 11:24:57 -0700 (PDT)
+Received: from [127.0.0.1] ([172.184.211.71])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13ba16d46dfsm16594916c88.7.2026.07.14.11.24.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2026 11:24:56 -0700 (PDT)
+Message-Id: <562648132d19eb729fb80395fb4f1528d98b8b32.1784053493.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
+References: <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+	<pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 14 Jul 2026 18:24:47 +0000
+Subject: [PATCH v19 1/7] branch: add --forked filter for --list mode
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Jeff King <peff@peff.net> writes:
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-> On Mon, Jul 13, 2026 at 06:58:24PM -0700, Ted Nyman wrote:
->
->> > Are there better ways for these processes to coordinate with each
->> > other? Instead of appending to the file, what if the second process
->> > uses a predictable temporary name (which we already use) to open a
->> > new file with O_CREAT | O_EXCL to avoid this redundant work?
->> 
->> Using the existing pack-<hash>.pack.temp name with O_CREAT | O_EXCL
->> would prevent concurrent writes, but EEXIST alone would not
->> distinguish an in-progress download from one left by an earlier
->> failed or interrupted invocation. The existing .pack.temp name is not
->> covered by the tmp_* pruning path, so simply waiting for it to
->> disappear could leave a fetch stuck after a crash.
->
-> A few thoughts:
->
->   - Using O_EXCL makes this essentially a lockfile. So we could apply
->     the logic used elsewhere for lockfiles, like auto-removing files
->     with ancient mtimes. Or we could even go all-in with a pid check for
->     liveness; most of Git's lockfiles don't do that, but at least one
->     does (the background auto-gc lock).
->
->   - If we're not already using a name which is auto-cleaned during
->     maintenance, we probably ought to be. Leaving aside concurrency
->     issues, nobody would ever clean up the on-disk cruft.
->
->     But of course the original code here is intentionally _not_ using a
->     name we'd clean up, because it wants to be able to resume an
->     interrupted transfer.  And you're explicitly breaking that for the
->     packfile URI case.
->
->     Is that a cost we're OK with paying? Fixing it opens up that same
->     coordination can of worms. You have to tell the difference a
->     concurrent writer and a previous dead one (whose work you can
->     resume).
->
->     It does feel weird that we'd do one thing for dumb-http and another
->     for packfile URIs. Wouldn't they suffer from the same concurrency
->     and resumption problems?
-> ...
->
-> If we're OK with killing the ability to resume, then yeah, I think it
-> would make sense to start simple and un-break things. And then put a
-> coordination layer on top later (or never if nobody cares enough).
+Add a --forked option to "git branch" list mode that lists only
+branches whose configured upstream matches <branch>. The argument
+can be a ref (e.g. "origin/main", "master"), a remote name like
+"origin" for the branch its origin/HEAD points at, or a shell glob
+(e.g. "origin/*"), and may be repeated to widen the filter.
 
-I share that sentiment.  I am not entirely convinced by Ted's
-response, since a major goal of the packfile URI feature, as I
-understand it, is to allow the use of resumable protocols for
-large transfers.  The proposed change deliberately closes the
-door on resuming interrupted transfers, whether manually or,
-with additional code in the future, automatically.
+It is an ordinary list filter, so it combines with the others:
+
+    git branch --merged origin/main --forked 'origin/*'
+
+lists branches forked from origin that are already merged into
+origin/main, and --no-merged inverts the question.
+
+This is the building block for --delete-merged, which deletes the
+listed branches once they have landed on their upstream.
+
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ Documentation/git-branch.adoc |  12 +++-
+ builtin/branch.c              |  18 +++++-
+ ref-filter.c                  |  70 ++++++++++++++++++++
+ ref-filter.h                  |  10 +++
+ t/t3200-branch.sh             | 117 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 224 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index c0afddc424..b0d66a6deb 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -13,6 +13,7 @@ git branch [--color[=<when>] | --no-color] [--show-current]
+ 	   [--column[=<options>] | --no-column] [--sort=<key>]
+ 	   [--merged [<commit>]] [--no-merged [<commit>]]
+ 	   [--contains [<commit>]] [--no-contains [<commit>]]
++	   [(--forked <branch>)...]
+ 	   [--points-at <object>] [--format=<format>]
+ 	   [(-r|--remotes) | (-a|--all)]
+ 	   [--list] [<pattern>...]
+@@ -51,7 +52,8 @@ merged into the named commit (i.e. the branches whose tip commits are
+ reachable from the named commit) will be listed.  With `--no-merged` only
+ branches not merged into the named commit will be listed.  If the _<commit>_
+ argument is missing it defaults to `HEAD` (i.e. the tip of the current
+-branch).
++branch).  With `--forked`, only branches whose configured upstream matches
++the given branch or pattern will be listed.
+ 
+ The command's second form creates a new branch head named _<branch-name>_
+ which points to the current `HEAD`, or _<start-point>_ if given. As a
+@@ -311,6 +313,14 @@ superproject's "origin/main", but tracks the submodule's "origin/main".
+ 	Only list branches whose tips are not reachable from
+ 	_<commit>_ (`HEAD` if not specified). Implies `--list`.
+ 
++`--forked <branch>`::
++	Only list branches whose configured upstream matches
++	_<branch>_. The argument can be a ref (e.g. `origin/main`,
++	`master`), a remote name like `origin` for the branch its
++	`origin/HEAD` points at, or a shell-style glob (e.g.
++	`'origin/*'`). The option can be repeated to widen the
++	filter. Implies `--list`.
++
+ `--points-at <object>`::
+ 	Only list branches of _<object>_.
+ 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 1572a4f9ef..c159f45b4c 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -30,7 +30,7 @@
+ #include "commit-reach.h"
+ 
+ static const char * const builtin_branch_usage[] = {
+-	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
++	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
+ 	N_("git branch [<options>] [-f] [--recurse-submodules] <branch-name> [<start-point>]"),
+ 	N_("git branch [<options>] [-l] [<pattern>...]"),
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+@@ -673,6 +673,16 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	free_worktrees(worktrees);
+ }
+ 
++static int parse_opt_forked(const struct option *opt, const char *arg, int unset)
++{
++	struct ref_filter *filter = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	if (ref_filter_forked_add(filter, arg) < 0)
++		die(_("'%s' is not a valid branch or pattern"), arg);
++	return 0;
++}
++
+ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+ 
+ static int edit_branch_description(const char *branch_name)
+@@ -770,6 +780,9 @@ int cmd_branch(int argc,
+ 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_MERGED(&filter, N_("print only branches that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
++		OPT_CALLBACK_F(0, "forked", &filter, N_("branch"),
++			N_("print only branches whose upstream matches <branch> (repeatable)"),
++			PARSE_OPT_NONEG, parse_opt_forked),
+ 		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
+ 		OPT_REF_SORT(&sorting_options),
+ 		OPT_CALLBACK(0, "points-at", &filter.points_at, N_("object"),
+@@ -815,7 +828,8 @@ int cmd_branch(int argc,
+ 		list = 1;
+ 
+ 	if (filter.with_commit || filter.no_commit ||
+-	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
++	    filter.reachable_from || filter.unreachable_from ||
++	    filter.points_at.nr || filter.forked.nr)
+ 		list = 1;
+ 
+ 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
+diff --git a/ref-filter.c b/ref-filter.c
+index 284796c49b..cbdac1a19a 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2744,6 +2744,72 @@ static int filter_exclude_match(struct ref_filter *filter, const char *refname)
+ 	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
+ }
+ 
++static const char *short_upstream_name(const char *full_ref)
++{
++	const char *short_name = full_ref;
++	(void)(skip_prefix(short_name, "refs/heads/", &short_name) ||
++	       skip_prefix(short_name, "refs/remotes/", &short_name));
++	return short_name;
++}
++
++/*
++ * Match the configured upstream of a branch against the registered
++ * --forked patterns. Exact patterns are compared against the full
++ * upstream refname so they are unambiguous; glob patterns are matched
++ * against the abbreviated upstream so that a glob such as origin/...
++ * works as typed.
++ */
++static int filter_forked_match(struct ref_filter *filter, const char *refname)
++{
++	const char *short_name;
++	struct branch *branch;
++	const char *upstream;
++	int i;
++
++	if (!skip_prefix(refname, "refs/heads/", &short_name))
++		return 0;
++	branch = branch_get(short_name);
++	if (!branch)
++		return 0;
++	upstream = branch_get_upstream(branch, NULL);
++	if (!upstream)
++		return 0;
++
++	for (i = 0; i < filter->forked.nr; i++) {
++		const char *pattern = filter->forked.v[i];
++		if (has_glob_specials(pattern)) {
++			if (!wildmatch(pattern, short_upstream_name(upstream),
++				       WM_PATHNAME))
++				return 1;
++		} else if (!strcmp(pattern, upstream)) {
++			return 1;
++		}
++	}
++	return 0;
++}
++
++int ref_filter_forked_add(struct ref_filter *filter, const char *arg)
++{
++	struct object_id oid;
++	char *full_ref = NULL;
++
++	if (has_glob_specials(arg)) {
++		strvec_push(&filter->forked, arg);
++		return 0;
++	}
++
++	if (repo_dwim_ref(the_repository, arg, strlen(arg), &oid,
++			  &full_ref, 0) == 1 &&
++	    (starts_with(full_ref, "refs/heads/") ||
++	     starts_with(full_ref, "refs/remotes/"))) {
++		strvec_push(&filter->forked, full_ref);
++		free(full_ref);
++		return 0;
++	}
++	free(full_ref);
++	return -1;
++}
++
+ /*
+  * We need to seek to the reference right after a given marker but excluding any
+  * matching references. So we seek to the lexicographically next reference.
+@@ -2979,6 +3045,9 @@ static struct ref_array_item *apply_ref_filter(const struct reference *ref,
+ 	if (filter->points_at.nr && !match_points_at(&filter->points_at, ref->oid, ref->name))
+ 		return NULL;
+ 
++	if (filter->forked.nr && !filter_forked_match(filter, ref->name))
++		return NULL;
++
+ 	/*
+ 	 * A merge filter is applied on refs pointing to commits. Hence
+ 	 * obtain the commit using the 'oid' available and discard all
+@@ -3764,6 +3833,7 @@ void ref_filter_init(struct ref_filter *filter)
+ void ref_filter_clear(struct ref_filter *filter)
+ {
+ 	strvec_clear(&filter->exclude);
++	strvec_clear(&filter->forked);
+ 	oid_array_clear(&filter->points_at);
+ 	commit_list_free(filter->with_commit);
+ 	commit_list_free(filter->no_commit);
+diff --git a/ref-filter.h b/ref-filter.h
+index 120221b47f..9361296e2a 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -67,6 +67,7 @@ struct ref_filter {
+ 	const char **name_patterns;
+ 	const char *start_after;
+ 	struct strvec exclude;
++	struct strvec forked;
+ 	struct oid_array points_at;
+ 	struct commit_list *with_commit;
+ 	struct commit_list *no_commit;
+@@ -110,6 +111,7 @@ struct ref_format {
+ #define REF_FILTER_INIT { \
+ 	.points_at = OID_ARRAY_INIT, \
+ 	.exclude = STRVEC_INIT, \
++	.forked = STRVEC_INIT, \
+ }
+ #define REF_FORMAT_INIT {             \
+ 	.use_color = GIT_COLOR_UNKNOWN, \
+@@ -172,6 +174,14 @@ void ref_sorting_release(struct ref_sorting *);
+ struct ref_sorting *ref_sorting_options(struct string_list *);
+ /*  Function to parse --merged and --no-merged options */
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
++/*
++ * Register a --forked <branch> pattern on the filter. The argument is
++ * either a ref, which is resolved to its full refname, or a shell-style
++ * glob. Branches are kept only when their configured upstream matches
++ * one of the registered patterns. Returns -1 if the argument is not a
++ * valid ref or pattern.
++ */
++int ref_filter_forked_add(struct ref_filter *filter, const char *arg);
+ /*  Get the current HEAD's description */
+ char *get_head_description(void);
+ /*  Set up translated strings in the output. */
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index e7829c2c4b..0c5a4ca62b 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1717,4 +1717,121 @@ test_expect_success 'errors if given a bad branch name' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--forked: setup' '
++	test_create_repo forked-upstream &&
++	(
++		cd forked-upstream &&
++		test_commit base &&
++		git branch one base &&
++		git branch two base
++	) &&
++
++	test_create_repo forked-other &&
++	(
++		cd forked-other &&
++		test_commit other-base &&
++		git branch foreign other-base
++	) &&
++
++	git clone forked-upstream forked &&
++	(
++		cd forked &&
++		git remote add -f other ../forked-other &&
++		git branch local-base &&
++		git branch --track local-one origin/one &&
++		git branch --track local-two origin/two &&
++		git branch --track local-foreign other/foreign &&
++		git branch --track local-onbase local-base &&
++
++		git checkout local-one &&
++		test_commit --no-tag local-one-work local-one.t &&
++		git checkout local-foreign &&
++		test_commit --no-tag local-foreign-work local-foreign.t
++	)
++'
++
++test_expect_success '--forked <upstream-tracking-branch> filters by upstream' '
++	git -C forked branch --forked origin/one --format="%(refname:short)" >actual &&
++	echo local-one >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <glob> filters by wildmatch' '
++	git -C forked branch --forked "origin/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-one
++	local-two
++	main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <local-branch> matches branches with local upstream' '
++	git -C forked branch --forked local-base --format="%(refname:short)" >actual &&
++	echo local-onbase >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked can be repeated to widen the filter' '
++	git -C forked branch --forked origin/one --forked other/foreign --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-one
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked combines literal and glob arguments' '
++	git -C forked branch --forked local-base --forked "other/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-onbase
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked "*/*" covers every remote-tracking upstream' '
++	git -C forked branch --forked "*/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-one
++	local-two
++	main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked composes with --no-merged' '
++	git -C forked branch --forked "origin/*" --no-merged origin/one \
++		--format="%(refname:short)" >actual &&
++	echo local-one >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <remote> uses the branch <remote>/HEAD points at' '
++	git -C forked branch --forked origin --format="%(refname:short)" >actual &&
++	echo main >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked narrows a <pattern> argument' '
++	git -C forked branch --forked "origin/*" "local-*" \
++		--format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-one
++	local-two
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked rejects unknown branch/pattern' '
++	test_must_fail git -C forked branch --forked nope 2>err &&
++	test_grep "not a valid branch or pattern" err
++'
++
++test_expect_success '--forked requires a value' '
++	test_must_fail git -C forked branch --forked 2>err &&
++	test_grep "requires a value" err
++'
++
+ test_done
+-- 
+gitgitgadget
+
