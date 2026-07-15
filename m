@@ -1,42 +1,40 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3884D3C73D9
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 12:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B00244C65F
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 12:28:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784117352; cv=none; b=D1JfGJXeYsvlMAlnAbSakXnJk0+Ni/NcmosUbqnrbG3Q76re4Zxe/SbqPk+ZRwqDHYHdbWSUHp7KlLRLa93KbzvdjCUKvlY5O7bI1kSSD9H6cMqzx/WWG3cvwvtIwaJXtlo3D73QJrJgkJdp5bXyVpbE3FzvhnM09P/nuJxlWp4=
+	t=1784118511; cv=none; b=dbb+x7nGk9E53UYL0hjUZ5cnhKoyKNGhLnt4omgoFHiIpDoDKa0wUn8qvj1uTQ18woja+tMfIgtLNYIrZoHxGZVXYjLsviiTLm1N/WmnO9mRGCyJuV7NOcldnuvY/Fs/AflJGugw6IlKx26Qad4S/6+BxGKOtnKuL9KXraccppc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784117352; c=relaxed/simple;
-	bh=MySaOadOmT86nGJi4OKCxYhq3m64aRT8R5y24aSXz8E=;
+	s=arc-20240116; t=1784118511; c=relaxed/simple;
+	bh=pgmJwkcHP444Drtwf4d0HIvsuUJPsPTRCkLib6gVtlo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HaYM6uhI8CUWwzPD1zZ7RU4I+cZW/NfXR4rlIqk4V+kLa1nSoPAPjv8ZLINnToXTSLgaqqWv741/oj6MM54tqowoSUOuNlmOnWuVkXCcbJpySnrgMZSrTAJSLpTNUpGEy/UL+r3SXJPUvaKVAJvEkC4Qy4c4hEbv244R13fsBpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=3NNQkwTf; arc=none smtp.client-ip=95.215.58.186
+	 MIME-Version:Content-Type; b=uIAoOP+3sVQ8zxq/7GVntZPPJnZO1RPRuxc8mjRjZBLNmWWWqiCaI77YI/HNahZvnSOXYR1mPeuZ8tOVEVlKLeMGbZ1jPbrOFUOmd8aXiy27K1l3xyJsx/KDPq4lA9XZ8CUeWBZY35rpJsV8rWUZzSXiVIHilDP86wEW3qczn68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=H4ZEfal4; arc=none smtp.client-ip=95.215.58.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="3NNQkwTf"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="H4ZEfal4"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1784117340;
+	t=1784118505;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=mBDwEev8xhf71wW1Uj8eUO6gYPiTtFHKRnORsMVeQtc=;
-	b=3NNQkwTfnWX5JTAe9QzabH6E0zATJBBzNGDSmjoeGwfZB1PdPtbMmLsqxk56mNIiDvXSfS
-	hgyZabNCT758CpMfR2nLzd4sUHdu7xwbUVrNiVPT9AY8gNBF5ZZNX/53gInlRganok2gMr
-	wga3curigIoavbY4pO35LoIjiorrlg8=
+	bh=TjJDUrGuVS2Yt5lu+Akk8zoapmj+J5WT1x6aFQ3u4T0=;
+	b=H4ZEfal4uM71wsJ6g+eTiMgLktqeR3hrhGB9j08W2Sfvsmu2pf290sfn/xqhgCW8uQiFw2
+	x9jvpezaKDMNod0pPgTm2THrxHebwITzQtQSLBl4KCrNnLY12vKC2LHp79lGbu0pe1F7z1
+	e9gCGaNGUm4ADIO93+/S0KVik/LmLOU=
 From: Toon Claes <toon@iotcl.com>
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
- Jeff King <peff@peff.net>, Taylor Blau <ttaylorr@openai.com>
-Subject: Re: [PATCH v4 0/9] odb: introduce object filters to
- `odb_for_each_object()`
-In-Reply-To: <20260715-pks-odb-for-each-object-filter-v4-0-616d7adf7fb7@pks.im>
-References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
- <20260715-pks-odb-for-each-object-filter-v4-0-616d7adf7fb7@pks.im>
-Date: Wed, 15 Jul 2026 14:08:56 +0200
-Message-ID: <874ii0h2uf.fsf@emacs.iotcl.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/7] refs/packed: drop `USE_THE_REPOSITORY_VARIABLE`
+In-Reply-To: <20260715-pks-refs-wo-the-repository-v2-2-d00d364f5a3e@pks.im>
+References: <20260715-pks-refs-wo-the-repository-v2-0-d00d364f5a3e@pks.im>
+ <20260715-pks-refs-wo-the-repository-v2-2-d00d364f5a3e@pks.im>
+Date: Wed, 15 Jul 2026 14:28:20 +0200
+Message-ID: <871pd4h1y3.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,22 +46,33 @@ X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi,
->
-> this patch series introduces object filters to `odb_for_each_object()`.
-> The intent of this is to make `git cat-file --batch-all-objects` work
-> with pluggable object databases. Right now it doesn't because it reaches
-> into internals of the "packed" backend to efficiently handle bitmapped
-> objects.
->
-> The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
-> 2026-07-06) with ps/odb-drop-whence at 8a7ad23e11 (odb: document object
-> info fields, 2026-07-02) merged into it.
->
-> Changes in v4:
->   - Fix references to an old function name in commit messages.
+> There's a single user of `the_repository` in the "packed" reference
+> backend. Convert it to instead use the backend's repository and drop
+> `USE_THE_REPOSITORY_VARIABLE`.
 
-Thanks for fixing that! This version looks fine by me.
+Well, this was removed in the previous patch. I'm fine keeping this as a
+separate commmit, but the messaging is a bit confusing.
+
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs/packed-backend.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> index 14b27d24ec..c5d96793fa 100644
+> --- a/refs/packed-backend.c
+> +++ b/refs/packed-backend.c
+> @@ -1,4 +1,3 @@
+> -#define USE_THE_REPOSITORY_VARIABLE
+>  #define DISABLE_SIGN_COMPARE_WARNINGS
+>  
+>  #include "../git-compat-util.h"
+>
+> -- 
+> 2.55.0.313.g8d093f411d.dirty
+>
+>
 
 -- 
 Cheers,
