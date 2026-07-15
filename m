@@ -1,121 +1,121 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F322F616B
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 06:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784096513; cv=pass; b=Fv6+hH3MZJUpYsoas6fXwaC1QkZqh0WcfYqSI0wRFs07CG1C3QmIP25KkeUXJ7s1VYtxhb+sI6AxkynxcQ0QDoxjaWdQT9QU6QjQ6qeZUsWX2DrAy+XkM20uOpEvXBvLRQ0ZJyWOR8ixg7cjht0tebKg98HyfZX5GJhZ/UGAYZ8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784096513; c=relaxed/simple;
-	bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CYfGCBkUG3WV87TWFZa02wJrvzz+BTuiiJMf0/Qs+XoXRqyNSyKzRACcvC4gCqo5jsUtc/Sx8nlBBPKjV3+8j6eGK3m5zJ0eydbohJJZ9mvfGeQP0r4n6EmlJHF3CzG7ungp8rRfDgtq4oyODFTTDq7ivkmjGGOUTOrZEbOPxd4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+k+kCs5; arc=pass smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF192F616B
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 06:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784096526; cv=none; b=mybkKReQ9UucIJjjI8edk6YQVdq8rx5BayxCft4PiYjZSmLpVkrbvogZRWNSVIPv40e+lVz0fZtcl8B3rvzwdWOq/MU512WJzJrI9kPmBJQng2A0lTjTZi7sN2i+JM2Y07s+VNjHtg3X9nqoMK6gb80QrGH7u7oyz3artN7OWbg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784096526; c=relaxed/simple;
+	bh=DMidcWG9qZi8ZEftQMpknNnvB7C4i7DPdxMyqlLyizE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EW+L/3v/GKoCz0IGhbQA4qgUQeM/gRoLdnuw8wDHc/vo3Z40z0gGJPEUSy+u+cPtpb+dYyH4LnR+8LCWoIlVHlERnlq+kWomkZ56LWhzNKHI/RrlAyT31CDbnuGyQigCOQ/KL+RoTwJm+z6wp7mFebxMl6ai4hDBpSp56L5f45Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GPs0qLnU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PkEc+KYS; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+k+kCs5"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-ca913a601fbso3570924a12.3
-        for <git@vger.kernel.org>; Tue, 14 Jul 2026 23:21:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784096512; cv=none;
-        d=google.com; s=arc-20260327;
-        b=qD/WaZSsAOdDDlITT/Wm/b7kkwpH62LKnKpNAaxr5ViIA08YWd0mqOKGzvMr3jw3Iu
-         P40RxTaTEewDQ5baJ7/h/M218SVJB43yBndPPKT7SeIwQMUyZlPLUwR8iChgn9f7BnmG
-         967oE0AtSLn9hS0rYB6kMMPWPkehlJtr+31+nJomNF/daOAdkv51On8mDN+YF5O01zsj
-         oEdKC8dQTWgCwtdzdU5/vxP6xBeLtnb1lJtbRiGWqHJkuQoMgPkYNz3L/dzQL0QejXh1
-         TjXG6DWFvqMff2V20xhPeHSmcuijdFq2z7xTo59wMpyslAdKnYTv3kono7FGpf4zhw4O
-         WCcA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
-        fh=Tvs0ahFb//Xsx8i0PmWtUZX+CoNvl7c1xpDc4NgL7HE=;
-        b=gQEmcdkRN/QOKguMxxiytTETRmHhxCnrFjGfSVsOcJXBbNk5Vszizg9okkARwu7j8d
-         sXnvpB6jSLCiWgRFfindUGEOq9WyCRH9F4g2t76S5nnRSjknAB41bcDmoR5lP2m57XLk
-         ZQ/bOMQUh+n7rFReLBl4auRaMnBZbUZCFy0i6XCyWAIi9oAgSuUCOzvI8IMh5M0zo14I
-         GEqPypw5moOu4dtWev9QX+RpA+Z/GhQphD17zxXTssAeyTKFM/6sU6hRacuTDCFo+YBF
-         V5E8Hnj+fddiQWN8/XF3cRqfZQZeIkd4ApnwzH8SIVp7MTeO0A4hTLhueCE81+asseyB
-         4G1g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784096512; x=1784701312; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
-        b=B+k+kCs5vHGwoAPKTD/adosDygCalh8zou4ajeasbwcMUtZJMx7xrMeEePEhKrlzdR
-         DBbgID9Xs/mJaYSp3gHy2Sne0+N/U4TutB+H5w8tT5F5KJZSmscLKeO4F3reFraKkRj3
-         M9vKPvRBJXdihWygXtgxv00uGze5ceU9YV/xq0lKyHU4pPutYpHMscfiEW4Z7OKgdmR9
-         rtY3BIK9Vd63hDuZaFCtMunNIoNkigomDYYfBemG9w+9GFjn9CuhY52MO6OmFBXJS17s
-         /El296S66213ymDngYSAqlKWFHaSUu/EKbVAQpEFngto674WcHcXvax4wSUietgVcPZT
-         6EUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784096512; x=1784701312;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
-        b=KzLT+zQLXtpO6wEDw4LsytWF+NF7UVekSkSKpxz9JHYBBG/hGUfAJNimTMihiJktLM
-         CSo06grjRPB5z614PQG+IUfCo48Hf1U9daFt6sfzmaHZGk1sutztuKez7w4rQe70sjb8
-         GF3T7W/rJ7Prpif7cfDFhxADBRyHyltB2QJzoD11toNchA/0zRgE4TQfXyvDXQXHc3Xs
-         w9Ly4ZNaFQrB2XSs1LVKK9vr1ndsWcvrfTWvHXHHmem+nYxHEjxrcjZbOKx3yKzI1Lu7
-         TAIRR8MijW0XBui+1wVqGZA4CZsY70Vnb2cwgZSzFwWZM+lmvXUJ2CuBQF0+7YuwhmXq
-         vfNQ==
-X-Gm-Message-State: AOJu0YzUnMWWz2Wx1+rGwmQ5vjYaz2CQ3kIEoMkh7NzAWpXdEp1ZdJBY
-	sE1cGGfYaUPd7zLDMWn8HjBxTPTFQRHHbGEfm67NndGCDK85mu89DkunEynbf6X0pN14v9bvgEW
-	LxhUdErgj2hwLvDpHRNvCK2aR0joAZtY=
-X-Gm-Gg: AfdE7cm8/gpyfrIx1vX72PWxj/RktwBjz98CfTW1Li0PEtHDBru6G6Bo9eRIkO5NoG4
-	KwGBdIUPtVWxYSc0z9ztZTnM3GtotoaslL4vrfVpLj2bqx85WkcpakHDCrUmzC5DcVtORfZX+VR
-	vHJLoqOzm9NDqHvAPRR5Cyc00f+AMyXpQey9CYvdG2coOoQ/AcUbDlQTyGbr558uKK0MTslOBgD
-	ApKrLYrcBbhxFJ/ZwjymjBUFM5WRDxl81w0h7uzRrQ21FvdeufMNR+bOzDuUuDChZB7aCf9WtBh
-	CSk0axOKbuLTn6NrgjILSTYfRZvMGowtqJ210ODl3l+xKcLD1trfPTfAxQ==
-X-Received: by 2002:a05:6a21:608a:b0:3b2:8675:4866 with SMTP id
- adf61e73a8af0-3c35741c148mr5469099637.31.1784096511663; Tue, 14 Jul 2026
- 23:21:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GPs0qLnU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PkEc+KYS"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7A17A1D00015;
+	Wed, 15 Jul 2026 02:22:04 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Wed, 15 Jul 2026 02:22:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1784096524; x=1784182924; bh=t2mFdZQIJE
+	hlKWcFZG92Va0NNnNLUUwufNJjoBJMSmc=; b=GPs0qLnUfqc3aM0J7YN9/bjYH0
+	iBfpa/6wc4QyaJZd/cg5zk9wm2e5HGpb4exGhVJzTSw1J4lfXm8rk1SqYZVhGMXW
+	nhOrKo+YgE3NgiHXbdZKViU+4choxcy/eDloK+VOuztLZlge970Z4lCEAfWZEO6u
+	ZjFP7RzaeQDLDlccYBTgnKgtPcJJOc3jPFzcQpKD+iKRwf7lcRzxcmrWQwEGaui2
+	OA8lTFBCnvjQkHk5TljbHxm9/Wwz35iCejAKLPcShorvHeWLKGSqjgNwo5j3dPFp
+	LAMKcepfdP0csiAfQm23qhFDVIG9Cf4iGE7e1ItsDP5vssI0uQN0ZkW5deWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784096524; x=1784182924; bh=t2mFdZQIJEhlKWcFZG92Va0NNnNLUUwufNJ
+	joBJMSmc=; b=PkEc+KYS8X5KsRflYBaoCSwe6eUOVq1jtjRelffU7U7GqlLRioW
+	zjeL4IrWhDjjykJWyHqDlM0lFeG99wkvx6x9pfJkf4hFBQL7Mmfh/l3tkzNg7BjE
+	4SFHQUUa/9y86E5dN3U/0w5JBVysSDfOFEBf/AfjfO4EAu4kb3Z4L4FpgzECOPzD
+	Yfbue+gNsf3HpWAwIX7pBEPeb0gZs7wSWEnZOCLbZ6ipu8bxJE6rvdWDs8ahmR5a
+	q2F5maJDL/g1+/iuoeVD3s4jn3qZXa01PBSLD+ZqeuAQSZ4/jTT/8DoIufVHf3ea
+	afJ/CusxwRPnCBEqlSh6NnBu4G0dlXsY08A==
+X-ME-Sender: <xms:CydXao49qp8FJEDunIJK_O9O_Pl8uDThbN051Y2bcHXp8zf5NMSi-Q>
+    <xme:CydXatkKI8k9lwzM5m8ap_6c1UruSIFANiEpG8WFElA17c5lN3mIuatf2BycZSRDi
+    Oc0ecFXP1OZnk89lGgo0-kZW2ZxWrSgKC1xqArhXALyAFWmXCZ5>
+X-ME-Received: <xmr:CydXahTveZYasMALBXlhhYz62xx8BA_fHS9kFIoz9WvnQvtzllD158EXufkbG4kvVgzl1z6gbXMwp68Gak-82qbWE_iBfDkV6zcIMfuBLfA>
+X-ME-Proxy-Cause: dmFkZTGfiWP82Rq5w3ZS3de41GSewmvtskoPx9VtlpvYYkcuPNQw34SGOds/RHmQZ2UtG+
+    5oE7Lp72y+Oyx8Af1CXPoOjq6oKDd3cnNMVepeQfSU/S9v8XPXrvsr8+oukwVOMKeF3XGw
+    7mm4fa7eCZqUY8aF0UYB9A9jeZg7EpLn4A7Y6c7wAFQSlGu2txok/93LaEdpf1y84fBWut
+    MhGGDrlZYNs0YJ48Hloq6v4r5T344EFzvk9ZBCGOgqxooJqNgd6hWPMfhQrfECFqJwWCYg
+    Rfw9Cm7gouR6w5cB+2m59+6rfusWPtg8jD/pG4eDfAJlkUFPOzePiw3d4/+uLv5+HmyPnK
+    vv6xCnD6w7Ad6eMT0Iv2cPNjxqSLlnq2rvhT7KBattu8t6y1dEYGzgAzq0BxC8xld0Dzs/
+    cTKAp3MQkYdJXPI1cuB58C2y08xxhWUwJ+x/01tYc8OuqzGEAD7C3VWaD49u4NJxqTcMJm
+    VpRPPYDWkTzyCIeBssEHxd70yK95ZpMsJVSehTvXtrmNC8E/FmfoJxcrUvdr5mkZ78vzFS
+    sP15txdXI00YAAQvTQ6l9YLGcWL4KqMWec87TUz62Q7ytHW5RGEjwJVCDbiRH3FjG111Wh
+    K913owOUzu5Kgwjk2euEspWc16WfqkEptT/r3TCAq0pNwuJ4qmjxN7L8Wunw
+X-ME-Proxy: <xmx:CydXakEzFEHlWIUsP0T_SbjOHsMuV92vf7tCqgNy61vjXunPXca9Ug>
+    <xmx:CydXauEHCOB4DzQlAOwjWZRsWQtOiw6fjb6D3QEMiSPGBsnUl0QX4Q>
+    <xmx:CydXaqSfG4v3qaKdlrNRmk3BPqWSpHSwsjRF3oJ-TLfJG2KQ2BO_yA>
+    <xmx:CydXanLHaH3C8V0dEtpAocNfpVusjvMgwrM2CeKytUPJikXJx0FS4Q>
+    <xmx:DCdXahwyjAh3C2wgZRueOvsSxe4V5OFrmI76tCL7iDPCIetyXEXK90er>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Jul 2026 02:22:02 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 56aae93c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 15 Jul 2026 06:21:59 +0000 (UTC)
+Date: Wed, 15 Jul 2026 08:21:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: Taylor Blau <ttaylorr@openai.com>, git@vger.kernel.org,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/9] odb: introduce object filters to
+ `odb_for_each_object()`
+Message-ID: <alcnBXTLa7cqrL-d@pks.im>
+References: <20260709-pks-odb-for-each-object-filter-v1-0-82fe014b12b3@pks.im>
+ <20260713-pks-odb-for-each-object-filter-v3-0-b3c65c641073@pks.im>
+ <alW0KzSZuZnHmOZD@com-79390>
+ <alXKzb-GHodV6uGj@pks.im>
+ <87wluwlsdf.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260619162105.648495-1-cat@malon.dev> <20260715035501.48271-1-cat@malon.dev>
- <20260715035501.48271-5-cat@malon.dev>
-In-Reply-To: <20260715035501.48271-5-cat@malon.dev>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 15 Jul 2026 08:21:40 +0200
-X-Gm-Features: AUfX_mzTmLXESsa7uBTqjAzJjygRDcl5uIxlFyTSGqLdkE9YM1mRTBdgz2uEB04
-Message-ID: <CAP8UFD2=FbbnCqWkTLEGBpz=90sh=j_70h2UJR=p4uj6u3tqMQ@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] environment: move has_symlinks into repo_config_values
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org, ps@pks.im, cirnovskyv@gmail.com, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Olamide Caleb Bello <belkid98@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87wluwlsdf.fsf@emacs.iotcl.com>
 
-On Wed, Jul 15, 2026 at 5:55=E2=80=AFAM Tian Yuchen <cat@malon.dev> wrote:
->
-> Move the global 'has_symlinks' configuration into the
-> repository-specific 'repo_config_values' struct.
->
-> To ensure code readability, the getter function
-> 'repo_has_symlinks()' has been introduced. Callers access
-> this configuration by passing in 'repo' when possible,
-> and explicitly fall back to 'the_repository' the rest
-> of the time.
->
-> Note:
-> To support early platform-specific (MinGW) overrides
-> before repository initialization, a global variable
-> 'default_has_symlinks' fallback is introduced as a fallback
+On Wed, Jul 15, 2026 at 07:43:56AM +0200, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > On Mon, Jul 13, 2026 at 08:59:39PM -0700, Taylor Blau wrote:
+> >> On Mon, Jul 13, 2026 at 04:41:24PM +0200, Patrick Steinhardt wrote:
+> >> > Range-diff versus v2:
+> >> >
+> >> >  1:  baf2adb012 =  1:  7c0dc1be0d odb/source-packed: improve lookup when enumerating objects
+> >> >  2:  57eecf3031 =  2:  2e5908c9c3 pack-bitmap: mark object filter as `const`
+> >> >  -:  ---------- >  3:  f4d66ccfc6 pack-objects: drop unused return value from add_object_entry()
+> >> >  3:  92dd6a6f6e =  4:  af475654b8 pack-bitmap: allow aborting iteration of bitmapped objects
+> >> >  4:  92fe41577d =  5:  6ca42587c9 pack-bitmap: iterate object sources when opening bitmaps
+> >> >  5:  e5d59959e3 =  6:  f62c3bbc81 pack-bitmap: drop `_1` suffix from functions that open bitmaps
+> >> >  6:  ab3547ac2b =  7:  b2d25b6e9b pack-bitmap: introduce function to open bitmap for a single source
+> >> >  7:  026f21f522 =  8:  a5bf309bec odb: introduce object filters to `odb_for_each_object()`
+> >> >  8:  534b25c817 =  9:  600b15a907 builtin/cat-file: filter objects via object database
+> >> 
+> >> Thanks, this version looks good to me.
+> 
+> I only posted a nit about function name in the commit messages 7 & 8
+> isn't correct, but other than that I'm happy with these patches too.
 
-It seems a bit redundant to use "fallback" twice in the above sentence.
+Thanks for your review! I'll send one more iteration that fixes these
+nits.
 
-> in environment.h. The *writer* in compat/mingw.c can only
-> access this variable.
-
-Otherwise this series looks good to me.
-
-Thanks.
+Patrick
