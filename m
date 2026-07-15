@@ -1,339 +1,234 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06BA30674C
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 07:34:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784100857; cv=pass; b=BUAxryjrVTM2OsqtNNvKYC67HP8jHCeU+MQtt7+TyPTSk0jlAWhNkgSijuby2CUQm8nXMLwXzMP2WO7ORA69sMC0ij29qhddqVNLmzd/ZmVIbz2bTod1L5/ym0kX5ERR+bDp9Fr/p+h12YInlv/2LoE0LvlNzuxGcuAqcp6bfmM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784100857; c=relaxed/simple;
-	bh=nkqX/3iBc1QJchto2ToaD+90dLviy7OLoaSJcgZStb4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dUJCYnu6jAelecX5lDMnTM9GybI1YfmFv74fn1ELhHUXe45CAaKYpf6Rhh5JXbzRzxP6Rbgm09BOSbXp8WB0RuV2HPt1OfySocGROYaZWQsdgEyAgaHmfa7NEKlaiSHgQAXaydMyYjEAyoT456daPxZeGuFcAxacNYh0LuvCeS4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZThw5aC0; arc=pass smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B233B840E
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 07:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784101183; cv=none; b=HLlJm0tDUKauoG22y9K1e4qWkj83WMscPzwMHRgwEr4P6m8r1t3/k+Tzibxsb7wimXDpmx+4LMSmX26DlixFcsncfjpj/Hq6hc2qUHq2XixdIag4KtHBJwpS3NznqZY35yuLzlY/vRPvXwMEG5I7IBOfj+9YEtNvOISeRQqSjyU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784101183; c=relaxed/simple;
+	bh=spg3HXt7RQtWdZ7ufl5/DQ0qnkj5Q0osOK4rvOp2Do4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=TjV2fCjnfd8f944KS0HsXQjzOb/0h/7nzxN4BcOEV0a98NB3oDt4MX02iBOqAc9cj1Jj2zPtsHQs3GDTpz6N4AfLoZ0MBGDyy6GoHxDiUQPa62LrMoCsMpPL7p4asBT4I0lOd4h2dTdaseD/e96A7flNhcos4cuA8LIL9LlNTlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SDnyWckN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IR3+Pdfe; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZThw5aC0"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-4a496b6cc3dso200444b6e.0
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 00:34:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784100854; cv=none;
-        d=google.com; s=arc-20260327;
-        b=A/AaQkp6kuGDhXri4sjGtNv2R7F7YZ+AFARoLygZdx6rkpdNwX4kqSbEqcWnl0eAOk
-         v9AJEOAxs0bqAyelOc+ShD9IjdAJCSDT4fO4cx+Twamj1t7ypMOHEwLSkojp8wWs2zZn
-         FjST3p++n1vQ+882pW2KTUDQh1d1MOy0J8D4UqMQFN5TvHdhNpbu9ayBDJeKXFf4Isp1
-         NI3NXyodfkLIPj5sbXcmQjdICc0KH0Te6Ca6orA2UZAS8aHVkQTjj/6O/Xp2CN3NjXub
-         JSx52frjbCX0amEY++THheJehNUPTun0/EM86UcMoCvZmrs1SHnJx3fjJykK40pK7B9B
-         IKmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3RxiEP3r8smoGLg/67CggFzsOc2L6kcaTcIpDDCscDQ=;
-        fh=2Dele137u37qXXeFCCIikMNeufKjrNFBHGs2HZtAyEI=;
-        b=P6J655Qa9CMsAwJub+0hKIL9esW/wlRkEyRFpk7oCMhw4ZBHH3QN20vcU/6mtz06DM
-         hDA57kjolcToTzDzNfqMuxDRaMgdiW1BKJQOagIBgDRmqHrwQ0HwI+s2UxJ7lELwx7Fs
-         exK55HLvyTINpxF4Hq5eQIoZi+fByiT91glMncwPB0phWg+7mqoPkV9mUlfGPNosn6mw
-         IERRGQugDxFi3Z3lJChXoTvLiHAn5UzDUlcqR+VgX873Ly2D8nARBOJX3Z3wn4f7AL2H
-         YIiesSDOk2BtaWyr37jiHtA9hjjI7IaaSgietV2Rs4Dr6AhA4V+FV4vPOrAMl5xeRjCB
-         mpQA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784100854; x=1784705654; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3RxiEP3r8smoGLg/67CggFzsOc2L6kcaTcIpDDCscDQ=;
-        b=ZThw5aC0wIgsLv1+nJniE7UBM4aleey6dYF7MxGqEo+K1hbXby0YSoRU+MryFE8CHm
-         svOS+Th0BWMJotY+lSSGvQWZ7vdBYftmHMxQbl0EWqKqTZ/wvNmVL3zSVzXaIfFvjLyh
-         f2vZj4Qmr0hv+idSbtl1Zrfxvi6t4JNcXcEI5nZo0y8lJ+eGmDIy3zkDphD45h7Np9Tp
-         oI5ClA3a5ltuJSEQF/i4CzAeCR2pmbUcqjXAuqQv0dtc6TKlEf7dDw1lA4tRQtbBNrdA
-         7brjl5jN12FUxEjPPakyeJfFTfK3O2IJ3G6ICarrRNI4MR8v2FLF2c159QBv3pajV98h
-         QaNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784100854; x=1784705654;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3RxiEP3r8smoGLg/67CggFzsOc2L6kcaTcIpDDCscDQ=;
-        b=UsMUJg8Hfl0I7iJm7LNFlM+TR4YoFyGylOi5ty2OftREhkRNNpS+1mU9wdT7s45hE/
-         MKY+9f3RT7vwpfVK1st7rpAJO/yLz8UHc9UcnXGreF/OELeEuemAxjN6+fK85b4/n5bK
-         /jBzSWvNpRGez/5uUNJedDiCMl3h4vEUHfTweOkYbF1AT73b7126+4C91WMQXFmZzp7T
-         dcVGa37LFfPLVoy5+z99xU0iQFYM3Oy9qzWM6s4KW49beIpC9URIpXo5ZTGDzNI228Ju
-         Vp6tYQxS0t7qHe3yxL9VT0/7HGpVPTF5WNTr6Hb9qCz0ytzrmhs5fW+8cVWaI+8CBs2i
-         m0kg==
-X-Forwarded-Encrypted: i=1; AHgh+RpLEhhWc5ZyVg82bC+o+f0OWtLZIJd1jMZK7s89yYgIDtOFHkUdRcS5p7XNWbX5ZHavL20=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWxLhQrGt0VqSnrHvB3Teu1scqX7rTIsPLM5uHtEY7eKAZU6XB
-	46znbHJPihrmL2uI7vya+mnE975s46wvuoCqdBiAGzp/iWU7S9APx+vPVNM4JjGQKH5bsDCg/om
-	SG9ZmaNxkC/N2VXEgpvm4fzWNua2Z1y5/XSPR
-X-Gm-Gg: AfdE7clBFf3KcZYDpCcSM3SXafnWuqu8T3hRqv3R7LbTsBVzL8JTEH8p+2C6GZEZDVH
-	fyVrB+eTmRa/w7/hX46lC9fFg0GXw5jVOM7cWC5QGJiambdZISmH/XrkL+bane/fsD2zVap535O
-	0lccGpZwjmzIbxGN7hGjewGC3af56gg9OZBwCFiDhL4LKIr7LxJUVjLFy0PbodMmo7nwGYFwrqJ
-	pArf6u544it/v08aRVPM6ShxUwvnA9pegbsPZod/ta3k5Qib7zCyTfQdN61UqYCJDueq6cihEne
-	YxLKtV8G7BVbLHFFyxCCwKDfE/oLUL2ZXkGHL6caOxhR1GESPPv1Sgbw4NlpDQm2zUYdlHJY+Cj
-	2sd6xixeTrV6nVjc=
-X-Received: by 2002:a05:6808:3083:b0:48a:bb5d:292b with SMTP id
- 5614622812f47-4a47a73238cmr4004342b6e.32.1784100854452; Wed, 15 Jul 2026
- 00:34:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SDnyWckN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IR3+Pdfe"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1FC197A0145;
+	Wed, 15 Jul 2026 03:39:41 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 15 Jul 2026 03:39:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1784101180;
+	 x=1784187580; bh=ucI6mLam9Xv/HKWkNWtQATRxQNLZyY2bn+9vMfVoZjs=; b=
+	SDnyWckND7GamspkgEWVcOTUbvAd7KAKZO04G1QA9mjMZrWo5xZcNCH05cQtN5hl
+	4G+mNM/IFYc4+dnZbpDs0YCe9v+SQ9XuoiJEfeIK91puH789AgZqdyjRjgrjpcjT
+	9OwrhpYwFl2oZ6tDGiTXQXnLTmJx2Q/cat/+xxHBNdHpB6u72FO8qJiZ3dJknfyB
+	5hwR6dUnKxYdB81OS7FM6clptlHI1sHqqw/XivIzTgFbD0nWpXSAdAHgwESKLSge
+	AHzfDJpy+MdbtYMYhqhCqb/u+oLxryMBxWUbKeiwfbOg3gfYRJdsrPmTz6MJd/YB
+	3k0Vo2TALSRInmRbiv+JHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784101180; x=
+	1784187580; bh=ucI6mLam9Xv/HKWkNWtQATRxQNLZyY2bn+9vMfVoZjs=; b=I
+	R3+Pdfe+dNQTPiZ3agQQKckVBzE6a1xJk87RgOKs1BgZnL1TKqyrfjZXhWy07CSe
+	or3AKb6zQowHxrrag/Ysn+0dBTsf6Ix4OIqoSpYc791o3i9pd0mFU9rf6W7jj+4X
+	Whr/xRJIdlwWlEIuozBNroqF46Lbmtg4gwp1RUOfraN5/2F7jgoXq2YMixVDxAf8
+	Hj8krSXwHVCTydnpBRflsyQp43AhjHYkxL2enzky5cy7RKpmnAWP4TyYp/ixoIeN
+	HrUnNNoxifY7rg1231LE1JndN7EnodGFHzUaHH3YdR/HRVUjwDTLsU+8/YtKGo5L
+	zAu8LFbdRMuanZzwOqQnQ==
+X-ME-Sender: <xms:PDlXakQb_F0Kmeh70KFgBUvpWFveaOlgHQwM0nXusS73kFE4P9VYCA>
+    <xme:PDlXanxTGnjTsWFdsyK1jLm2pMv5H1lATa1lvpybffWS1gGAtzecUdCVN0l5_JdOO
+    YfNbkIb6OWHPut_gENvmFA4yU_SdfPbhiJ3sqMQnnjCn-wzKZQYKQ>
+X-ME-Received: <xmr:PDlXavfpz3wmUzrf7sWjka6FSB-9MFB1RdkxV6Jk9XLlXkJukkU_GzEIfSy-lU83dJNaUxlSPtEAJiuR7wM3inDYs5-MYhgGL5lcx7V89W4>
+X-ME-Proxy-Cause: dmFkZTEzS/jgR00b5+DXoPUP3mtI43VjrUGozDTexj+td1SQBI/NFq+e6k1/FXlhXBhpfr
+    IwimbypJRQg6+4vUqZ921Plhe1XpjbOpj2TFs4+aMc97OC7dJ1hErcdTLx3V/xTQjMXelJ
+    CfGDuvTtNM697k7PuTrRWBK5dK+qmIFf4N7vj5wtMnAcR5mM7cY5dCwAvFDQz8OCAkmkMZ
+    eCI5y37XSPXB6ghrfD9eI/gB5VMjaFRi27U0s7vt84E1FTedblkGB+44lUdW7s4Y13O8Ml
+    3VYLOOEk5BLw2VkpR59eKJvdGDD0NPIBnZzSRF1mBEh0PIgLUKdeqytfmpIBqjD2JxiVO9
+    1Rri5fYsaY10YSHX5nWSeZCPznEq0oi4maFhI8oYNEibGcC++kvgq/ddS0SKM/GCV57+wp
+    +QBOyicbwOa7xi92NeqhDRNv4DEThW+H+M/dxA+8DgYFNIPkTJNOVjMwYzcMoJBZnM+C2Y
+    k4qIA06TDAbe4tQRU1Y3t1GzGJFIQxCc2UQPFzCiOCrHWFByEnp6pM2zawyGE44eEk+PWX
+    FQOBxWU9ktwZEPE4NGolKnWRM7xI43vTP2Cmk+LksIG0IWoUkh6++ZrJbx2NWf8ollDcWh
+    Wgbaiy5YZUCe0kp6GGCUeA5bD4yaw79r8NaH2tL4iyYD8giiLpYNr2DtElvA
+X-ME-Proxy: <xmx:PDlXajLRSPrqsJWeQhZMe2tDc2ob-CTV2dh3ivRhMGAhqZtYVxKA6w>
+    <xmx:PDlXagF80hzHR67p-S2GM9HsX1Y487b4P3s-GEFRMcQo6W9WPg3rIA>
+    <xmx:PDlXatqdiy1qHSDaQY0ZpBMHJfKmztoUxwmugNXoa_DQaZ0GHPf04g>
+    <xmx:PDlXapTE0EAQtiAnLGwxny8hw-p_q9Av_x7Rh7g_oRTmBCFYY_YCtA>
+    <xmx:PDlXanobdJrEMT8Dx1U2HQNsBfKlNoYm9yFbT97ZI82Moy6AKQNQ4oCn>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Jul 2026 03:39:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ffb70c8b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 15 Jul 2026 07:39:37 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/7] refs: remove use of `the_repository`
+Date: Wed, 15 Jul 2026 09:39:33 +0200
+Message-Id: <20260715-pks-refs-wo-the-repository-v2-0-d00d364f5a3e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
- <20260707-toon-git-replay-drop-merges-v7-3-808ab9b4afa6@iotcl.com>
- <CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com> <xmqqbjcawnhp.fsf@gitster.g>
-In-Reply-To: <xmqqbjcawnhp.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 15 Jul 2026 00:34:02 -0700
-X-Gm-Features: AUfX_mwHedr4EpqqYVzn0RU2tYP8iXvxrincvfaXY2Y3Bw5bwP5ZNHQh55RAJkU
-Message-ID: <CABPp-BGxO0bd3UzDYNnhNUgDSKYwcFVCFsJ9rCzmNX7Q0xBrow@mail.gmail.com>
-Subject: Re: [PATCH v7 3/3] replay: offer an option to linearize the commit topology
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32NQQ6CMBBFr0K6dkxblFpW3sOwwDLIaKSkg6gh3
+ N0W9u7mJW/enwVjIGRRZrMIOBGT7yPoXSZcV/c3BGoiCy11IQt1guHBELBleHsYO4z34JlGH75
+ g8JCjtrlRtRMxMESPPmv8Um3Mr+sd3ZiKyeiI0+e6PqnkbUNG2n9DkwIJqm6KVpujts6eo7ynp
+ 6iWZfkBQOaqONMAAAA=
+X-Change-ID: 20260618-pks-refs-wo-the-repository-7e43e29371ac
+In-Reply-To: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
+References: <20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.2
 
-On Mon, Jul 13, 2026 at 3:09=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > For what it's worth, looking back at the v5 thread, it seems the `base
-> > =3D last_commit` rule came in to fix the real bug Junio and Phillip
-> > pointed out there -- that without it, only one side of a linearized
-> > merge survived.  That fix is clearly correct for the single-branch
-> > case.  My worry is only that applying it unconditionally reintroduces
-> > the multiple-positive-refs ordering problem we deliberately avoid
-> > elsewhere.  Making `--linearize` reject multiple positive refs would
-> > keep the merge-flattening fix while sidestepping this entirely.
-> >
-> >> A user
-> >> who wants to linearize ranges independently is advised to use separate
-> >> git-replay(1) invocations.
-> >
-> > Which, to me, is another argument for just disallowing multiple
-> > positive refs under `--linearize`: if the recommended way to do it is
-> > separate invocations anyway, we may as well require them.
->
-> Hmph.  To me, this is slightly different.  It acts more like an
-> escape hatch: "if you really do not want to mix unrelated things
-> into a single linear history, you can do this other thing."
->
-> Stepping back, the unpredictable order of multiple merged lines of
-> history exists even without multiple positive refs.  If you have
-> independent lines of development that were merged and you linearize
-> them, someone must choose which line comes first.  If you let the
-> machinery make that decision, the resulting commit order may not
-> reflect your preferences.
->
-> While I rarely perform octopus merges anymore, in situations where an
-> octopus merge is appropriate (e.g., when you have N independent
-> branches and their merge order does not matter), linearizing such
-> a history into a random sequence of N segments, built on top of
-> one another in an unspecified order, could actually be considered a
-> feature.  You do not have to make a decision about something that is
-> inconsequential.
+Hi,
 
-You're right that when flattening merges within a single branch, the
-machinery must pick an order, and that's fine =E2=80=94 unavoidable, even. =
- My
-objection isn't that; it's primarily the concatenation of distinct
-branches named on the command line into one chain, and, as a secondary
-point, the ignoring of the order of branches explicitly specified by
-the user on the command line.
+this patch series refactors the ref subsystem to drop uses of
+`the_repository`. These patches were part of a discarded attempt to
+make the initialization of the refdb eager. I guess they make sense by
+themselves though, so here we go.
 
-Concretely: I have three branches to rebase onto master; one of them
-happens to contain a merge I'd like flattened. I add  --linearize  for
-that one merge =E2=80=94 and now all three branches are silently concatenat=
-ed
-into a single chain.  That makes no sense to me, and I think won't to
-most users.
+Note that these patches contain a slight tangent to also adapt
+"worktree.c". This is one of the subsystems that caused problems with
+eager refdb initialization because of `has_worktrees()`, so I refactored
+this subsystem while at it.
 
-Anyway, I think I must have explained my position rather poorly; your
-response suggests I buried my main points, so let me try to restate
-them:
+The series is built on top of f85a7e6620 (Start Git 2.56 cycle,
+2026-07-06) with ps/refs-writing-subcommands at 002fe677ca
+(builtin/refs: add "rename" subcommand, 2026-07-06) merged into it.
+Despite that, there's a small set of conflicts with "seen" that can be
+merged like this:
 
-TL;DR version; my problems with the current implementation of
-`--linearize` are that it:
-  * Makes the rare usecase easy, and ignores the common usecase
-  * Makes it asymmetrically difficult to recover for those that wanted
-the common usecase instead of the easy
-  * Makes `--linearize` mean something other than "remove non-linearity"
-  * Turns multiple branches into one, but updates several branches anyway
-  * Ignores order specified by the user on the command line
-  * Introduces an inconsistency within git-replay between `--advance`
-and `--linearize --onto`
-(The last three items being minor compared to the first three.)
+diff --cc lib/setup.c
+index 505e8d7bf2,d31808130b..0000000000
+--- a/lib/setup.c
++++ b/lib/setup.c
+@@@ -2822,15 -2847,16 +2848,16 @@@ int init_db(struct repository *repo
+  		if (!exist_ok && !stat(real_git_dir, &st))
+  			die(_("%s already exists"), real_git_dir);
+  
+- 		set_git_dir(repo, real_git_dir, 1);
++ 		apply_and_export_relative_gitdir(repo, real_git_dir, 1);
+  		git_dir = repo_get_git_dir(repo);
+ -		separate_git_dir(git_dir, original_git_dir);
+ +		separate_git_dir(repo, git_dir, original_git_dir);
+- 	}
+- 	else {
+- 		set_git_dir(repo, git_dir, 1);
++ 	} else {
++ 		apply_and_export_relative_gitdir(repo, git_dir, 1);
+  		git_dir = repo_get_git_dir(repo);
+  	}
+- 	startup_info->have_repository = 1;
++ 
++ 	if (worktree)
++ 		set_git_work_tree(repo, worktree);
+  
+  	/*
+  	 * Check to see if the repository version is right.
+diff --git a/lib/refs/files-backend.c b/lib/refs/files-backend.c
+index f672059333..3ba1b4eac4 100644
+--- a/lib/refs/files-backend.c
++++ b/lib/refs/files-backend.c
+@@ -859,7 +859,7 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+ 		} else {
+ 			unable_to_lock_message(ref_file.buf, myerr, err);
+ 			if (myerr == EEXIST) {
+-				if (repo_ignore_case(the_repository) &&
++				if (repo_ignore_case(refs->base.repo) &&
+ 				    transaction_has_case_conflicting_update(transaction, update)) {
+ 					/*
+ 					 * In case-insensitive filesystems, ensure that conflicts within a
+@@ -973,7 +973,7 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+ 		 * conflicts between 'foo' and 'Foo/bar'. So let's lowercase
+ 		 * the refname.
+ 		 */
+-		if (repo_ignore_case(the_repository)) {
++		if (repo_ignore_case(refs->base.repo)) {
+ 			struct strbuf lower = STRBUF_INIT;
+ 
+ 			strbuf_addstr(&lower, refname);
 
-Longer version:
+Changes in v2:
+  - Fix default value for "core.packedRefsTimeout".
+  - Link to v1: https://patch.msgid.link/20260709-pks-refs-wo-the-repository-v1-0-1ad6f27529c9@pks.im
 
-Consider the following history
+Thanks!
 
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-    \   \
-     \   \  A1  A2  A3  A4
-      \   \-*---*---*---* <- branchA
-       \        \
-        \        -*---* <- branchC
-         \        C1  C2
-          \
-           \-*---*---* <- branchB
-            B1  B2  B3
+Patrick
 
-git replay was designed to allow you to update all your branches at once.
-For example, with this above history, running
-    git replay --onto master branchA branchB branchC
-will rebase all three branches onto master (and handles the shared portion
-of history between branchA and branchC in the obvious way):
+---
+Patrick Steinhardt (7):
+      refs/packed: de-globalize handling of "core.packedRefsTimeout"
+      refs/packed: drop `USE_THE_REPOSITORY_VARIABLE`
+      refs/files: drop `USE_THE_REPOSITORY_VARIABLE`
+      worktree: refactor code to use available repositories
+      worktree: pass repository to file-local functions
+      worktree: pass repository to public functions
+      refs: remove remaining uses of `the_repository`
 
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-                |
-                |  A1  A2  A3  A4
-                |--*---*---*---* <- branchA
-                |      \
-                |       -*---* <- branchC
-                |        C1  C2
-                |
-                \-*---*---* <- branchB
-                  B1  B2  B3
+ branch.c                   |   6 +-
+ builtin/branch.c           |  16 +++--
+ builtin/check-ref-format.c |   2 +-
+ builtin/checkout.c         |   2 +-
+ builtin/config.c           |   2 +-
+ builtin/fsck.c             |   6 +-
+ builtin/gc.c               |   2 +-
+ builtin/merge.c            |   2 +-
+ builtin/notes.c            |   2 +-
+ builtin/receive-pack.c     |   2 +-
+ builtin/reflog.c           |   4 +-
+ builtin/refs.c             |   2 +-
+ builtin/worktree.c         |  32 +++++----
+ reachable.c                |   4 +-
+ ref-filter.c               |   2 +-
+ refs.c                     |  23 +++----
+ refs.h                     |   5 +-
+ refs/files-backend.c       |  31 +++++----
+ refs/packed-backend.c      |  20 ++++--
+ revision.c                 |   6 +-
+ setup.c                    |   7 +-
+ submodule.c                |   2 +-
+ t/helper/test-ref-store.c  |   2 +-
+ worktree.c                 | 166 +++++++++++++++++++++++++--------------------
+ worktree.h                 |  27 +++++---
+ 25 files changed, 206 insertions(+), 169 deletions(-)
 
-With the current implementation of --linearize, adding that flag, i.e.
-    git replay --linearize --onto master branchA branchB branchC
-would instead give something like:
+Range-diff versus v1:
 
-M1  M2  M3  M4  M5  B1  B2  B3  A1  A2  C1  C2  A3  A4
-*---*---*---*---*---*---*---*---*---*---*---*---*---*
-                ^           ^               ^       ^
-                |           |               |       |
-              master     branchB         branchC  branchA
+1:  e2de4a7ae9 ! 1:  5c9df5ce44 refs/packed: de-globalize handling of "core.packedRefsTimeout"
+    @@ refs/packed-backend.c: int packed_refs_lock(struct ref_store *ref_store, int fla
+     -		repo_config_get_int(the_repository, "core.packedrefstimeout", &timeout_value);
+     -		timeout_configured = 1;
+     +	if (!refs->timeout_configured) {
+    -+		repo_config_get_int(ref_store->repo, "core.packedrefstimeout", &refs->timeout_value);
+    ++		if (repo_config_get_int(ref_store->repo, "core.packedrefstimeout",
+    ++					&refs->timeout_value))
+    ++			refs->timeout_value = 1000;
+     +		refs->timeout_configured = true;
+      	}
+      
+2:  3c96ed5d22 = 2:  39d91a88ad refs/packed: drop `USE_THE_REPOSITORY_VARIABLE`
+3:  a724abf676 = 3:  5d3d4c505f refs/files: drop `USE_THE_REPOSITORY_VARIABLE`
+4:  ce64ae5edd = 4:  cff8c31110 worktree: refactor code to use available repositories
+5:  fa5b6c95e2 = 5:  b53b5f67f7 worktree: pass repository to file-local functions
+6:  89b0263583 = 6:  0927572842 worktree: pass repository to public functions
+7:  e4ac64f7c2 = 7:  bb3b3b1e80 refs: remove remaining uses of `the_repository`
 
-This topology strikes me as something that users would very rarely ever
-want.  Further, it:
-  * Makes one question why branchB and branchC were kept instead of
-    deleted; if the whole point is to concatenate the branches, then
-    since whichever branch lands on top contains the other two, why not
-    just get rid of the others?
-  * Makes the command behave differently on *already linear* history
-    when --linearize is added, which makes no sense to me.
-  * (Minor point, but still confusing to me) Ignores the order of
-    branches the user employed on the command line
+---
+base-commit: f035246f779167db3506394141b59472d544af65
+change-id: 20260618-pks-refs-wo-the-repository-7e43e29371ac
 
-Of course, the above involves no merges, so let's introduce one; consider
-the following alternate initial history:
-
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-    |   \
-    |    \  A1  A2  A4  A6  A7  A8
-    |     \-*---*---*---*---*---* <- branchA
-    \            \     /    \
-     \            *---*      -*---* <- branchC
-      \           A3  A5      C1  C2
-       \
-        \-*---* <- branchB
-          B1  B2
-
-Replaying the three branches,
-    git replay --onto master branchA branchB branchC
-we would expect the base of the branches to simply be updated to current
-master:
-
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-                |
-                |   A1  A2  A4  A6  A7  A8
-                |---*---*---*---*---*---* <- branchA
-                |        \     /    \
-                |         *---*      -*---* <- branchC
-                |         A3  A5      C1  C2
-                |
-                \-*---* <- branchB
-                  B1  B2
-
-If you were to add --linearize, i.e.
-    git replay --linearize --onto master branchA branchB branchC
-I personally would expect:
-
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-                |
-                |   A1  A2  A4  A3  A5  A7  A8
-                |---*---*---*---*---*---*---* <- branchA
-                |                       \
-                |                        -*---* <- branchC
-                |                         C1  C2
-                |
-                \-*---* <- branchB
-                  B1  B2
-
-In other words, `--linearize` should remove the non-linearity in the graph.
-Instead, the current implementation will return something like:
-
-M1  M2  M3  M4  M5  A1  A2  A4  A3  A5  A7  C1  C2  B1  B2  A8
-*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*
-                ^                               ^       ^   ^
-                |                               |       |    \
-              master                         branchC branchB branchA
-
-I can only imagine this rarely being useful to the user.
-
-But to make it worse, please consider the difficulty of someone who
-wanted the bottom graph but got the top one, vs. the difficulty of
-someone who wanted the top graph but got the bottom one:
-  * (wanted bottom, got top) Just rebase branchB and branchA again; easy
-  * (wanted top, got bottom) You need to meticulously figure out the common
-    points of history and which sets of commits belong to each branch in
-    order to sequentially rebase each branch into the expected result.
-In particular, the need to meticulously track start and endpoints with
-individual
-rebases was one of the reasons that led to `git replay` rather than improve=
-ments
-to `git rebase`; the latter was so focused on single branches, that it
-wasn't really
-possible to extend to multiple branches.  It's thus rather
-disappointing to see new
-flags for `git replay` that make handling multiple branches more painful.
-
-There's actually one more (admittedly minor) issue as well: it creates
-an inconsistency within git-replay itself.  The `--advance` flag has a
-check to error out when multiple positive refs are specified solely
-because I thought it was weird to override the order of branches the
-user specified on the command line (and didn't want to implement
-something that could force the ordering of the revision walk); the error
-message even states "because the ordering would be ill-defined".  For
-consistency, either both should be fine with ignoring the order of
-revisions specified by the user, or neither should be.
-
-
-So, what to do?
-
-Both paths I have in mind end at the same place; the only real question
-is whether the desired behavior lands in this series or as follow-up.
-
-The minimal move is to make --linearize reject multiple positive refs for
-now (exactly as --advance and --revert already do), unblocking this series
-so it can merge down nearly as-is, and leave per-branch linearization as
-future work.
-
-The complete move is to implement that desired behavior now, by tracking a
-last_commit per command-line branch so each branch is linearized
-independently.
-
-The reason I am comfortable with erroring out as a stopgap: turning an
-error into working behavior later never breaks anyone, whereas letting the
-current concatenation semantics reach 'master' risks users coming to
-depend on them, which would make switching to the better behavior a
-compatibility break.  Erroring now keeps our options open; merging as-is
-quietly closes them.  (git-replay is still EXPERIMENTAL, so this is not
-fatal either way, but it seems better not to paint ourselves into a
-corner.)
-
-For this series I would be perfectly happy with just the error; the
-per-branch last_commit tracking can come later.
