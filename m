@@ -1,80 +1,80 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC8C311C35
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 06:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AFD32FA1B
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 06:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784096581; cv=none; b=iHn+NI3yu8evKTrn+B8yMqLbCfbBG7fzCqdYjh3yI+zw7zrz/GbiKWrfAzxOrD9arONMMVmMOQ21AdUdBj1cwNOAXR1NFk1qz74NUGDQPFLxyTlE3IV3OsJDYgDcWSaJd2ZRc8/u7gDywoFDumaZiEq4rwVHNBCk9/m7c9x89GY=
+	t=1784096584; cv=none; b=qYnugWOt3xpJlCVS9rUNSFACAW9+hNx3Zhe7+UiwLXitzh6tv+fll8GbSTRmZNSJpGtG85P5O52vs47dbavmfGsNc5Wr5ob0SliCrbUll4fzI2LKs5wGy0aafjq3iKWsfzxyxZFkMRhsF/YkTj4nSYKkOQKZ5p4eASkfxmyqJfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784096581; c=relaxed/simple;
-	bh=MFGRcc7qOAJik/zCOlTunMmC/P4gnzjsRbSNrlv1EY8=;
+	s=arc-20240116; t=1784096584; c=relaxed/simple;
+	bh=qba9Tx5IHISGgmVNTeqh9uYvcbeCWakCuaot9ihk/zg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Jex6WVozqyR2/imZpOY8UbKXDMTKU2V8bkAjb0IrPk8e9iq2gkSfNs5ti9H+SAmD3dPlybT2sEqMGm79a2cNo9qNeu/3NthrCPny5dBsR+Ccp0ZVaBrA4mfNzIzxHuV30NY54HRg1w/O7IgWfLu8pwWXYCLABHigOJsux+ezH1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ptp+eDs+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NH1e4c3/; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=rxM0o8PY+27FZrIHH6bqX/wYYmjQbOnBBXOy3TFMu/qq7yd4n1EXVAP++3hDnS3p20NyZ9LU97vG5FqFjhX6CTRqlqthZQYMwHWg8onEH0G4opLZlqo/H0gFEwRUefd+i1TlfZwYBO5Ezgc1YeI98bOQnrnzt53ZVED1qS61Rb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HvjzU9xW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h6N7COy2; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ptp+eDs+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NH1e4c3/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F04347A013B;
-	Wed, 15 Jul 2026 02:22:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HvjzU9xW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h6N7COy2"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BE2567A0144;
+	Wed, 15 Jul 2026 02:23:01 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 15 Jul 2026 02:22:59 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 15 Jul 2026 02:23:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1784096578;
-	 x=1784182978; bh=iDEamwJKxikHtvvuoyXhCBDbKzR7zemyj74XrtmlUMA=; b=
-	Ptp+eDs+hG2CdMIRL8mQvV6V8t7N4lWnKUo/YM6vTpcVVsi3tdV3sNu1/QTjP3Wq
-	d7gFQUThyk4yLNxFKzNrY/SC4qNkSYIqg2FxI4mnjfjFm2eXe4dYR3n1kJWBCsyr
-	U0Mn/3GmOgz2iPwIPsJBDHjKnE1AdWsTs1lfO4yIvxAfy0ICvEuRpBZRfP0R4j06
-	7P6cnv1iSKJNS8C5/YAZa437jU92oWS1ZrlmCpd/8mryp2fANVxpP2XFH+cHpqr9
-	GwJEiNu96kK+uV3dWGFqraQ9SPs0M14GfUCoJ6mgq8Hw81w1X4Ol4QQnNneu+6/9
-	o3nZmdWoGO/Tr2vGxWZ4GA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1784096581;
+	 x=1784182981; bh=b0PhXLhU8CiPYYskVIl05ljLfAF8cFGMGYIs9boMYmc=; b=
+	HvjzU9xWgwfQNyAjTPGuOGgkU/0uJ1cqNWXA/cSSBGhcQISKNfm+w8TTxi9+rFVx
+	n3W6Aw3viTUOWiOa3NHOvbixgfqfGUWhTWBDYdE7zCrUu3nuySWVlWRC/PrEPpei
+	1si1tLHb2oRxF2ns9K2A2I0vvgOaCDnWvM8L0YHVnFZyfc/RfjKjHycXDtvqPTrB
+	HZf17nYIsRxvObyjPbkn55JnA9umnJpXavhlZb4fjR2yHszl9XUEbCRT5xnGhI0l
+	9sB6LCexpQFASElnNgHO12SIWGjoEm1rPeu/hPAp6y8+BDEHj33ZK2/oyHTPI6Rv
+	lbcHAzyO/gq902B/EJ5Ubg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784096578; x=
-	1784182978; bh=iDEamwJKxikHtvvuoyXhCBDbKzR7zemyj74XrtmlUMA=; b=N
-	H1e4c3/CrDmJpvBOcXrPenjI24jpRqHx/9XunFnLfmuW3PYyi8xHdpqyv+n36eRw
-	7pOmS0zimJHkU/coPLFCC1Rc6D3y1CuyfNSHO9no129pVHMnwMZA8jEvl5naClmd
-	Xvo/BBSy/8H30nG+7lQyFZDAcsIgKBey+9wbsmevEXholbVCWS3s6rj3HR2GcvZ+
-	DIO1trN0QC+78lsNF3nd8kddr9lKYm2pGgmwema+871cXbA4w9cyE+MS2A7LXfeC
-	nz9JT8OAZnNQO1brOfOy3EYhcr8WfGBiaVWnBYSkny+ZFKmD95QjjSs/YNnwCkSj
-	7F3BMFrxn9lUhmACu4JWA==
-X-ME-Sender: <xms:QidXaj2uMq0LVAHgrrl__Yp-zXZde-V-HvD-YCcTBhyl6IJdhRXoCA>
-    <xme:QidXalw_zMR0OXBLzSSCLIiXqbRhFJhwEzV3fRnP99Dw2wFgiCsRXu4vfAIwsSkNB
-    tjZ1rNqDivfOzMnvDzLt37rigWoh_59ljWTtsH8lnzlbnpTRzHCWQ>
-X-ME-Received: <xmr:QidXatv8dsWoRDs5VNn-MPbm0hKnGDQYCOkHbYawR5j79aFa29Xq1ocznmSlrwAnfGqw5vGU89AD3wEiCXZwWr2zoLJsE_D-zxZG1IPNLGU>
-X-ME-Proxy-Cause: dmFkZTEH99AV7eEZSs2OrOj8lIdDEmZ++yUrgwG/3l15NJxWw1X9JW1nKaJkUzGZD5Drwb
-    NxKZLdfzpfYhiQ5kLvu4XK6nj8cp1osIJSWmS+X0U63O7I5s05fepgAyrAhTwH/Kxx2zRZ
-    kbGcZaIk8JtfvvT7jn+zW27xywc/mpV2/V95rEUYF5fFy9FxW/ag9TztQM7IS7UFltfPp7
-    ToxrHdgvRq480ekyPulhgsam/R7QRbX5xGsJ0sMTbs3w9GmR+sEG6IP0nkOJa+epbNCxLH
-    vs4EzRh2Ec+nzmQaryBOMVj1DXK65yl/4QArGIQ35NWqYXAYpkAfDDi6DHWsNAraoLprrL
-    yAmuxbBmjIQYCGpy3ZGy2aX6HAwHuMdYRKd1/R6c9iYbixp4nA7ob+PHhdi5/4lxx1bWx5
-    nn+xLBCLWrtbrkynbAJfgMjQu5lCvxqPoevvjPNdaJgLn5o2xGn7OgsnOficxMSK0UW+9x
-    TfmEv03rr1NT/jgkcBnbwh2lXTktRD8HhpsJ+QN2dtOxtGHdW28/yUBY1jUAFlRaL8+eW1
-    hymY54YDW+JCFAcnhepsUmG82D0XVf3rFxF18gxGpY25CeVdR5qOzUfe0ZZysjtsiDmzNO
-    0PWGeVlvA+CHHGtOz4nVTwWEWpVytcUPf6Z8p63kO2B4L7mYWi9OXZOnH9Ig
-X-ME-Proxy: <xmx:QidXavzap-LeDbOwKry9Y2CEhwhwF07e95M_QBvYMNQtj6lmEw0Kfw>
-    <xmx:QidXaoB0_B6iICkzZyvXDIN6cW5_prcm5U1As0XJnV9PiMZox5MVGQ>
-    <xmx:QidXale5WPcMRaapITTnPAPWWN5a1EryZAi7q-jJi0J20l-cIVYWzg>
-    <xmx:QidXaqmKh2Py-jSycpG5c3foloSO7tVK1ad32ht3bj1rcc73wbP4Hg>
-    <xmx:QidXams5OTYNDA6Q_7UuUSbUaUT_yrSJRG7Di7AJRaPwit4F9TjAMBgr>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784096581; x=
+	1784182981; bh=b0PhXLhU8CiPYYskVIl05ljLfAF8cFGMGYIs9boMYmc=; b=h
+	6N7COy2XWMICcy0I1fsOkTRuloaoARPfe0ZeeT9DHjkFh4IrNIwDANwIJaJRozXf
+	4+mppuZ9hhiuScaP80/HLgXPNhZ3p2kuJ3BwCVXfhXkRq1gFV2eN55ZLK4XEMXNY
+	EgMjixKqBqWegpF7fRSx/ocNNPxzL2JFz8wM2PoBVcHIiyujZ2SXXK8P9OFNmftp
+	oFOfNbZuFS9AA1FPbs+OE3UUtATCUDXsufwheKELhR2uLsgLaKX7JhcP4tewopu8
+	wmHCqwbrYlN5Ol4qI8q0Gf+RwvvQ8jPWWXSzGTDSQSXC+QOiBARr6T49enAgEB6f
+	0TQMxxVrbSCkVfn6gpcUw==
+X-ME-Sender: <xms:RSdXal9iz1jUBiaAuTsu4cjs_zB_y4i3uBv_C723b2-1kFrblPdQcg>
+    <xme:RSdXaiKXBX3Ulyo3XyXR-DkVdq-FB3CFy7KEKjSoRpeyhtrK6NBsTDbO14aCOlpcc
+    NFz0YSSGhiimAToW5Y39lorqAEj9PA7qVidzK0vFZneH9p7NvKc1g>
+X-ME-Received: <xmr:RSdXajdVb_TM3HHU-WePK3cCDMoqSyaJ49nKlS2Yz4og47H6KQ0f6A1j4Abo-MDlvwUK9ssM1vib5KLWqt41A9y849nfICedux4x2jEK8Ow>
+X-ME-Proxy-Cause: dmFkZTEQYQwCz9KUQ/yBYnsuppgPaPKAJyyViWG5j0ZP7V1tl+11JRvXkZezmWq5tXHE72
+    QMhu63gQtg3Egl6ZZwWQ3LmMghtll0A4CSZnlOHwAvmaiKI22qqZYHOZYwVPvUKXMIyFjF
+    oTKhXyE3luAhKdymIfeWPgVRb8nit3T4/2gYsWI+Xt/VEmFb2avs5qq2cA/HnRVsRSfZPS
+    ylGKZFkNe7PckkJTHJEZ+bDuY5AVBUhGfTU9nacVV8unWH5qmTEUi7eSJNrsJyb8+Lhttv
+    quQ5cSmcS5deC/b77HpW4cAQy0a34173yb3oKlxoDL5ku30XbAAWfgQ1cIBc/lY9wijHYn
+    o17y2NRSMkHtVvc7uoqQBtlC1KKFsYgd/tcmYM0/EzFaXe1TCDoo/MGknw75bvh3QtBzMH
+    JbLEVhDtne3CKp7IFAzHHax6aIt1t3xXr0/pH/qqGuWTdBXeeeqYGpuseicz7hLQaEwVM/
+    qJdteqWw61gopWZ3A0Ai/WiAbB42pqfX86mvliGG69mff6xx3O1iqvCgg9pLw71gGBz36N
+    AKqQ6H8joTdw+3LSUy8rJv6LrSg7xjVtJWrbNwHQ/er+1QpajU5pgHugE+b9nx0SlJdjnb
+    1mPt5nGHg5OrYHxUlgytdsQutGtW9nS41FqJq6IPpawtUcm2vKxBLbiJ4KIg
+X-ME-Proxy: <xmx:RSdXap-BIMFJ30Fy_4sX6JLdLe8m8dTXWV_ghSA-J-xyMEvUsFtyhQ>
+    <xmx:RSdXaoopEF9tfuBfLhHCw9rDf9WNwjsXij5VD4b7CHU5tj8BV9qv0w>
+    <xmx:RSdXamAidATap-qZSTF2khG-tJKYujKw4xJS5gOUhhoRVSBZL9_TBA>
+    <xmx:RSdXaiznoivoiN3WDStOI33OPCRDfKPN5pnOdu8dQCtZWF2yFDEj7Q>
+    <xmx:RSdXakmLRn8Y0d7jvoPtJsBcLHkzc-6I3qHd8y_iS4e6SCm-Wp7pJHDA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jul 2026 02:22:57 -0400 (EDT)
+ 15 Jul 2026 02:23:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9a810041 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 Jul 2026 06:22:57 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 06d5e92f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 15 Jul 2026 06:22:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 15 Jul 2026 08:22:38 +0200
-Subject: [PATCH v4 8/9] odb: introduce object filters to
- `odb_for_each_object()`
+Date: Wed, 15 Jul 2026 08:22:39 +0200
+Subject: [PATCH v4 9/9] builtin/cat-file: filter objects via object
+ database
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260715-pks-odb-for-each-object-filter-v4-8-616d7adf7fb7@pks.im>
+Message-Id: <20260715-pks-odb-for-each-object-filter-v4-9-616d7adf7fb7@pks.im>
 References: <20260715-pks-odb-for-each-object-filter-v4-0-616d7adf7fb7@pks.im>
 In-Reply-To: <20260715-pks-odb-for-each-object-filter-v4-0-616d7adf7fb7@pks.im>
 To: git@vger.kernel.org
@@ -92,224 +92,126 @@ Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.15.2
 
-The function `for_each_bitmapped_object()` can be used to iterate
-through all objects covered by a bitmap. The benefit of this function is
-that it allows the caller to efficiently handle some object filters. For
-example, this can be used to filter out objects of a specific type with
-some simple bitmap operations. But callers are currently required to
-manually wire up the use of bitmaps though, and to do so they have to
-reach into internals of a given object database source.
+When batching all objects, git-cat-file(1) reaches into the internals of
+the object database and manually manages bitmaps to apply object
+filters. This creates coupling between the command and the internals of
+the respective backend.
 
-Introduce a new `struct odb_for_each_object_options::filter` field so
-that the interface becomes generic. When set, then a backend may
-optionally use the filter to skip some objects that it would have
-otherwise yielded.
-
-Note that the respective backends are free to ignore this field if they
-cannot meaningfully optimize for a given filter, and consequently
-callers need to verify whether they actually want the returned objects.
-While annoying, we cannot easily lift this restriction anyway as the
-object filter infrastructure supports some filters that cannot be
-answered by the object database alone.
-
-An alternative might be to limit the filters to only those that _can_ be
-answered by backends. But ultimately, the filters that can be answered
-efficiently by the "packed" backend are completely disjunct from those
-that can be answered by the "loose" backend, and consequently the set of
-filters supported by all backends would be empty. Furthermore, it would
-require us to make assumptions about capabilities of future backends,
-which may be able to efficiently handle more filters than current ones.
-So in the end, this alternative would only limit us artificially.
-
-Implement the logic for the "packed" source. Note that we use the new
-function `prepare_bitmap_git_for_source()` to open the bitmap: as the
-backend operates on a single object source, we must only use bitmaps
-that belong to that specific source. Otherwise we might yield objects
-that are not part of the source at all, and with multiple sources we
-would enumerate the same bitmap once per source.
+Refactor git-cat-file(1) to use the new object filter option when
+batching all objects. This significantly simplifies the logic and
+ensures that we don't have to reach into internals of the "files" source
+anymore.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.h               | 12 +++++++++++
- odb/source-packed.c | 62 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- pack-bitmap.c       |  3 +--
- pack-bitmap.h       |  3 +++
- 4 files changed, 78 insertions(+), 2 deletions(-)
+ builtin/cat-file.c | 76 +++++-------------------------------------------------
+ 1 file changed, 7 insertions(+), 69 deletions(-)
 
-diff --git a/odb.h b/odb.h
-index a1e222f605..67d0b34942 100644
---- a/odb.h
-+++ b/odb.h
-@@ -8,6 +8,7 @@
- #include "thread-utils.h"
- 
- struct cached_object_entry;
-+struct list_objects_filter_options;
- struct odb_source_inmemory;
- struct packed_git;
- struct repository;
-@@ -490,6 +491,17 @@ struct odb_for_each_object_options {
- 	 */
- 	const struct object_id *prefix;
- 	size_t prefix_hex_len;
-+
-+	/*
-+	 * Optional object filter that allows backends to skip yielding
-+	 * objects that are excluded by the filter as an optimization. The
-+	 * filter is a best-effort hint: backends may use it to skip
-+	 * excluded objects (e.g. by consulting a reachability bitmap), but
-+	 * are also free to ignore it entirely and yield every object. As a
-+	 * consequence, callers must re-apply the filter on yielded objects
-+	 * if they require strict filtering semantics.
-+	 */
-+	const struct list_objects_filter_options *filter;
- };
- 
- /*
-diff --git a/odb/source-packed.c b/odb/source-packed.c
-index 9cfa02b7a2..4777395053 100644
---- a/odb/source-packed.c
-+++ b/odb/source-packed.c
-@@ -3,11 +3,13 @@
- #include "chdir-notify.h"
- #include "dir.h"
- #include "git-zlib.h"
-+#include "list-objects-filter-options.h"
- #include "mergesort.h"
- #include "midx.h"
- #include "odb/source-packed.h"
- #include "odb/streaming.h"
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index b4b99a73da..1458dd76d6 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -20,7 +20,6 @@
+ #include "userdiff.h"
+ #include "oid-array.h"
  #include "packfile.h"
-+#include "pack-bitmap.h"
- 
- static int find_pack_entry(struct odb_source_packed *store,
- 			   const struct object_id *oid,
-@@ -315,6 +317,37 @@ static int odb_source_packed_for_each_prefixed_object(
- 	return ret;
+-#include "pack-bitmap.h"
+ #include "object-file.h"
+ #include "object-name.h"
+ #include "odb.h"
+@@ -844,28 +843,6 @@ static int batch_one_object_oi(const struct object_id *oid,
+ 	return payload->callback(oid, NULL, 0, payload->payload);
  }
  
-+struct bitmapped_for_each_object_data {
-+	struct odb_source_packed *packed;
-+	const struct object_info *request;
-+	const struct odb_for_each_object_options *opts;
-+	odb_for_each_object_cb cb;
-+	void *cb_data;
-+};
-+
-+static int bitmapped_for_each_object(const struct object_id *oid,
-+				     enum object_type type UNUSED,
-+				     int flags UNUSED,
-+				     uint32_t hash UNUSED,
-+				     struct packed_git *pack,
-+				     off_t offset,
-+				     void *cb_data)
-+{
-+	struct bitmapped_for_each_object_data *data = cb_data;
-+
-+	if (should_exclude_pack(pack, data->opts->flags))
-+		return 0;
-+
-+	if (data->request) {
-+		struct object_info oi = *data->request;
-+		if (packed_object_info(data->packed, pack, offset, &oi) < 0)
-+			return -1;
-+		return data->cb(oid, &oi, data->cb_data);
-+	}
-+
-+	return data->cb(oid, NULL, data->cb_data);
-+}
-+
- static int odb_source_packed_for_each_object(struct odb_source *source,
- 					     const struct object_info *request,
- 					     odb_for_each_object_cb cb,
-@@ -328,12 +361,33 @@ static int odb_source_packed_for_each_object(struct odb_source *source,
- 		.cb = cb,
- 		.cb_data = cb_data,
- 	};
-+	struct bitmap_index *bitmap = NULL;
- 	struct packfile_list_entry *e;
- 	int pack_errors = 0, ret;
- 
- 	if (opts->prefix)
- 		return odb_source_packed_for_each_prefixed_object(packed, opts, &data);
- 
-+	if (opts->filter &&
-+	    opts->filter->choice != LOFC_DISABLED &&
-+	    can_filter_bitmap(opts->filter))
-+		bitmap = prepare_bitmap_git_for_source(packed);
-+	if (bitmap) {
-+		struct bitmapped_for_each_object_data bitmap_data = {
-+			.packed = packed,
-+			.request = request,
-+			.opts = opts,
-+			.cb = cb,
-+			.cb_data = cb_data,
-+		};
-+
-+		ret = for_each_bitmapped_object(bitmap, opts->filter,
-+						bitmapped_for_each_object,
-+						&bitmap_data);
-+		if (ret)
-+			goto out;
-+	}
-+
- 	packed->skip_mru_updates = true;
- 
- 	for (e = packfile_store_get_packs(packed); e; e = e->next) {
-@@ -342,6 +396,13 @@ static int odb_source_packed_for_each_object(struct odb_source *source,
- 		if (should_exclude_pack(p, opts->flags))
- 			continue;
- 
-+		/*
-+		 * Objects covered by the bitmap have already been yielded
-+		 * above; skip them here to avoid duplicates.
-+		 */
-+		if (bitmap && bitmap_index_contains_pack(bitmap, p))
-+			continue;
-+
- 		if (open_pack_index(p)) {
- 			pack_errors = 1;
- 			continue;
-@@ -357,6 +418,7 @@ static int odb_source_packed_for_each_object(struct odb_source *source,
- 
- out:
- 	packed->skip_mru_updates = false;
-+	free_bitmap_index(bitmap);
- 
- 	if (!ret && pack_errors)
- 		ret = -1;
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 09ba15d26b..f55a0859ea 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -2039,12 +2039,11 @@ static int filter_bitmap(struct bitmap_index *bitmap_git,
- 	return -1;
- }
- 
--static int can_filter_bitmap(const struct list_objects_filter_options *filter)
-+bool can_filter_bitmap(const struct list_objects_filter_options *filter)
- {
- 	return !filter_bitmap(NULL, NULL, NULL, filter);
- }
- 
+-static int batch_one_object_packed(const struct object_id *oid,
+-				   struct packed_git *pack,
+-				   uint32_t pos,
+-				   void *_payload)
+-{
+-	struct for_each_object_payload *payload = _payload;
+-	return payload->callback(oid, pack, nth_packed_object_offset(pack, pos),
+-				 payload->payload);
+-}
 -
- static void filter_packed_objects_from_bitmap(struct bitmap_index *bitmap_git,
- 					      struct bitmap *result)
- {
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 9f20fb6e56..1385027c1f 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -92,6 +92,9 @@ int test_bitmap_pseudo_merge_objects(struct repository *r, uint32_t n);
+-static int batch_one_object_bitmapped(const struct object_id *oid,
+-				      enum object_type type UNUSED,
+-				      int flags UNUSED,
+-				      uint32_t hash UNUSED,
+-				      struct packed_git *pack,
+-				      off_t offset,
+-				      void *_payload)
+-{
+-	struct for_each_object_payload *payload = _payload;
+-	return payload->callback(oid, pack, offset, payload->payload);
+-}
+-
+ static void batch_each_object(struct batch_options *opt,
+ 			      for_each_object_fn callback,
+ 			      unsigned flags,
+@@ -875,56 +852,17 @@ static void batch_each_object(struct batch_options *opt,
+ 		.callback = callback,
+ 		.payload = _payload,
+ 	};
++	struct odb_source_info source_info;
++	struct object_info oi = {
++		.source_infop = &source_info,
++	};
+ 	struct odb_for_each_object_options opts = {
+ 		.flags = flags,
++		.filter = &opt->objects_filter,
+ 	};
+-	struct bitmap_index *bitmap = NULL;
+-	struct odb_source *source;
+-
+-	/*
+-	 * TODO: we still need to tap into implementation details of the object
+-	 * database sources. Ideally, we should extend `odb_for_each_object()`
+-	 * to handle object filters itself so that we can move the filtering
+-	 * logic into the individual sources.
+-	 */
+-	odb_prepare_alternates(the_repository->objects);
+-	for (source = the_repository->objects->sources; source; source = source->next) {
+-		struct odb_source_files *files = odb_source_files_downcast(source);
+-		int ret = odb_source_for_each_object(&files->loose->base, NULL, batch_one_object_oi,
+-						     &payload, &opts);
+-		if (ret)
+-			break;
+-	}
+-
+-	if (opt->objects_filter.choice != LOFC_DISABLED &&
+-	    (bitmap = prepare_bitmap_git(the_repository)) &&
+-	    !for_each_bitmapped_object(bitmap, &opt->objects_filter,
+-				       batch_one_object_bitmapped, &payload)) {
+-		struct packed_git *pack;
+-
+-		repo_for_each_pack(the_repository, pack) {
+-			if (bitmap_index_contains_pack(bitmap, pack) ||
+-			    open_pack_index(pack))
+-				continue;
+-			for_each_object_in_pack(pack, batch_one_object_packed,
+-						&payload, flags);
+-		}
+-	} else {
+-		struct odb_source_info source_info;
+-		struct object_info oi = {
+-			.source_infop = &source_info,
+-		};
+-
+-		for (source = the_repository->objects->sources; source; source = source->next) {
+-			struct odb_source_files *files = odb_source_files_downcast(source);
+-			int ret = odb_source_for_each_object(&files->packed->base, &oi,
+-							     batch_one_object_oi, &payload, &opts);
+-			if (ret)
+-				break;
+-		}
+-	}
  
- struct list_objects_filter_options;
+-	free_bitmap_index(bitmap);
++	odb_for_each_object_ext(the_repository->objects, &oi,
++				batch_one_object_oi, &payload, &opts);
+ }
  
-+/* Check whether the filter can be computed via the bitmap. */
-+bool can_filter_bitmap(const struct list_objects_filter_options *filter);
-+
- /*
-  * Filter bitmapped objects and iterate through all resulting objects,
-  * executing `show_reach` for each of them. Returns `-1` in case the filter is
+ static int batch_objects(struct batch_options *opt)
 
 -- 
 2.55.0.313.g8d093f411d.dirty
