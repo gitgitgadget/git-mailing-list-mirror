@@ -1,51 +1,51 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazolkn19010006.outbound.protection.outlook.com [52.103.20.6])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azolkn19012008.outbound.protection.outlook.com [52.103.23.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2453EFD2D
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 09:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.20.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025223EF658
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 09:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.23.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784106718; cv=fail; b=U87TMYDIYKE5oEr/RQY/h7JJzzu7sHSQK0PsRbifuPcQZz/UaW9Ji8IUVdIPFuZIl0SYBGKGZx+JV2730hcbKKMKJKT4SXpvmARdvyClZE0uyN6+OK4SXfBotEzskObOkHKnZ/jdtqHqS1dODVOwjugj9t7wb0uhLtDA2MYFh/8=
+	t=1784106719; cv=fail; b=HU+TE2XWnCs3musUzO+oYks1vpMtKNdBVwDtNMcDgsFF5zpPfxLWzNuJOnWmTS4iaHJTDppkZ+n0am/Pf2ffNWNk796Ov3uAc6jof94N8yNgMAfDqdTvf0L7Iw8t97Tq2b6gIbmBW2TnjEFq++qwY0yct0LDEtXeXNNqvsEcl7M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784106718; c=relaxed/simple;
-	bh=CiSf/XQmejh6EkHOVzBjDJqHuVxvEXQ5BQbFQhJXf0c=;
+	s=arc-20240116; t=1784106719; c=relaxed/simple;
+	bh=0kJHC5s73PZd/bmo0H+zfmN58KBj5jAdJCOEbRbZBq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=u3CEwmr3NH6spcLm8yb00mn0dY/Bnkp5KNDLMbAJAvfZHKPk4k7gH+WSMcwpW5cvIftQYSs3mb7OvBb579cVqPWtH+4lTobSoYZwt0Dlih53A5eusJ3VVVR3xH5F2XRyCw7HQ/5SpyZ31hV8O9Xa1Y1A6B0n2QlTBhPoooSwiyk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=TjZzVYm3; arc=fail smtp.client-ip=52.103.20.6
+	 Content-Type:MIME-Version; b=sV/NbAzrfPBYLZHjxZtIvC2h59r3LgR5OVGSvRsRkxlnjWqv2NRZkKx5T37yOAmsJJkLBPg5EvCgnUw11IgYWEXkEhZFx/v+BW66Z+b+NnHuAMRJ/u3wntoGHFlUi3Tr9rns4uk3jtPJVco7kUfC8HwVmJFPJDz+cqYydj1MQlE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=shrqtBr7; arc=fail smtp.client-ip=52.103.23.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="TjZzVYm3"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="shrqtBr7"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KJ6g15gIPAUyPArMblXobbC5uHVheR2FrBDk6U0ljkAMfBOm0nDETlm6jozLrUKblF7PalWFe3R0ex2+5hDPCZ4794g77MC+Zluf5tSaAcN91u2h4q7J4oXhEZaBY+ZJSDETo8oDRKlQb6lrFjbbjKhJv7zEjFl1GgWpel6KrgNikabVe2H3gw3S9bgWdbH1uuS2BG3lXVwT9gnodtYtngUnx2jL670wWLXxSROUSY0Toc49FIGN/smqYeuQ0RqlVflLp0zknmj0Gr1UDuCwoqE6hk4JedVP7gQJ7yCRAomAwL4TxFLMTJIZOKJJGEjMayQvksRfFWdEfjEQtN6cwQ==
+ b=XjxxDaKSRkJbBwhl7s4PEQLRVetLO0Pt8APKZS3cBZtmV58XJn7xKs9R6bLH0aCKYlx/iF4e2fnJuWAAEK3O8QZ187j/ZI/5BUOhoaoUSvzIcoSeAUFxMI1oScSfhPmT9dLDeUK0A8gxkgt4h4Yi8dEX02hoXlaT/MYAUeuWq+r6/slDIEzw4fT+Omio4C5zWPQJFWNYC5Nuo9tx0HeJN6RP6wgFmDrmgEKHIxdaOWqgbc2Ah2geZcQ749+WfOlxz3ZjUBctskZhHP4nqpqLHm28wX80zx1596Ary7r13dbtnhCmQGvjwtDFFxXBA5297sxGU2C8L5DGHqv+YII6LQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=A6jWbFv+S/kTtNxXcdqBNKN4qI4ZZK23LI5TmZE+748=;
- b=jzz9q6Bps0YupPP9oKltLgaJmh1WGul4Fu3IRka3nkr9bnpGX3TRFrwgiMtEb/Se2alC6PFSphh7lNMz2/Q/GTlRovCIMl+EX5bxbcD/vnPGcICe9K0E5cbibae9lUDDK/2GSnhBSZ+s7PWdeaELgXX+vp05MIz8eAasymrKbO/i+69Qxabwa/6HWUM012KokiwE3dexIL3eorqoMhgxX5fHvM4sSOEeHCGQQ683fPyZfEIOf34KOEKNpm0NcgKrIxviPMCyPVD3INVsodmecExE51NFpa3LBt3l58PV9rc3BGQC9jSdHer77/YG6xjw+OC3SfEvEYOwMAuMRcNzxQ==
+ bh=GGXV49vElgXK9oZcGPp1b++LP9St0A6/Oe5xyYb20YQ=;
+ b=ZOGD6TUPS2gY2snMQYGWjfxb4/Qj2qrFFGN8z1cE+JEu9tY1rnjlhC+/9KqUnu5uxswB1/TOPuIk3r2EMFayfy2+9s/lanRfkywKCa2d7rMk2iVuTtNrv5S69uCFV3XBTSyTZ4UTkNpGmtFoEAFZd011GFQ1lCvzhEo+N5i3t5NFvso2XiSAKzq4e1iOsowalZk0a3sobmAPaTKtAgXmo/vWEEBld5w4ApuUEftA+/3iH1dvyCXl+vwgF95KPEbVe5nz1245uJLHEmHqr3FjSbeqpT5np9FJsVgtZUrfA6vhSrise2SiTf6OEfOiQOmYna83QaMk+gaqlpO5W1dMJg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=A6jWbFv+S/kTtNxXcdqBNKN4qI4ZZK23LI5TmZE+748=;
- b=TjZzVYm3tOJtpeklCR5A7N4l/Q/8lRTXo9o4x4Lmf/EnHYfQpWdu1XDJeVBobLujkcADTW/BXBFWBm26B95GQCUEUdhU0zQ75HY2w/SuVIijF+HvJTE+uPPMz/UmH45HvpB6jxqoZV/vIgcis/lOYaCLuCpKKI+CTJVkcLaey0gaADXUi0UZuMG7AIrcRM+CWViBMf8AJiIIcGwF0aSZPQn4txdtmIUyn16Hy9NCYaC93XimMivFSfbbY0M0K1XSgvPcJjlr2Mg9FQfLr3QROZCx1vcsrWsWxajn8y3mHMIwnkm35i390a0ysXTcl+zbRIGirpZf/aWVdD5pWOFdKQ==
+ bh=GGXV49vElgXK9oZcGPp1b++LP9St0A6/Oe5xyYb20YQ=;
+ b=shrqtBr7okysE3TFd7yHIi5rx5BuF/I2IPDhSIp1pUJ5g5KC5ceY9DlQdAYs2EIwUNc4wkZ7xCIu1jPBSYz1w4+DUgvSyFAlsjJnP1Wd10ru31TePKUSoWy+q7JOjhduOuN8Bjk3cOW042AsIZcMYGALYcPOHV9AWSZRdoasxbG9jKvtKCXHvxskDm0ZnM2DipDatsW+vk32pvN0qKEMkCzfRY7kghdXSoclaPLMNbKu4mGetZ6HjyjeLhCd6wXU9Qam6quCnp5DDQTO1V25SzgA0Uk9q+ACxMA7IJE1iSwIucEV8f5DeNjgNGoLW3nXVQHrh/bXKe+D5ixhAuePuQ==
 Received: from SA1PR10MB997715.namprd10.prod.outlook.com
- (2603:10b6:806:4c0::9) by CO1PR10MB4658.namprd10.prod.outlook.com
- (2603:10b6:303:91::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Wed, 15 Jul
- 2026 09:11:49 +0000
+ (2603:10b6:806:4c0::9) by BN0PR10MB5160.namprd10.prod.outlook.com
+ (2603:10b6:408:115::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.10; Wed, 15 Jul
+ 2026 09:11:52 +0000
 Received: from SA1PR10MB997715.namprd10.prod.outlook.com
  ([fe80::4963:e69b:5c7f:404f]) by SA1PR10MB997715.namprd10.prod.outlook.com
  ([fe80::4963:e69b:5c7f:404f%6]) with mapi id 15.21.0181.017; Wed, 15 Jul 2026
- 09:11:49 +0000
+ 09:11:52 +0000
 From: Travor Liu <travor_lzh@outlook.com
 To: git@vger.kernel.org
 Cc: Travor Liu <travor_lzh@outlook.com>
-Subject: [PATCH 1/2] gitweb: shorten index hashes with trailing file modes
-Date: Wed, 15 Jul 2026 17:11:29 +0800
+Subject: [PATCH 2/2] t9502: test gitweb index hash formatting with modes
+Date: Wed, 15 Jul 2026 17:11:30 +0800
 Message-ID:
- <SA1PR10MB997715CF1DAE615A9C166BE3ABF1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
+ <SA1PR10MB9977159B51766C2D9FFE98FD37F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <SA1PR10MB997715AD62D7F2AF64EB1A9887F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
 References: <SA1PR10MB997715AD62D7F2AF64EB1A9887F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
@@ -55,7 +55,7 @@ X-ClientProxiedBy: SEWP216CA0080.KORP216.PROD.OUTLOOK.COM
  (2603:1096:101:2bc::16) To SA1PR10MB997715.namprd10.prod.outlook.com
  (2603:10b6:806:4c0::9)
 X-Microsoft-Original-Message-ID:
- <20260715091130.83934-2-travor_lzh@outlook.com>
+ <20260715091130.83934-3-travor_lzh@outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,134 +64,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR10MB997715:EE_|CO1PR10MB4658:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1e03ef63-0bce-4b67-c871-08dee25119f3
+X-MS-TrafficTypeDiagnostic: SA1PR10MB997715:EE_|BN0PR10MB5160:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e4935c4-9185-417a-bff8-08dee2511bbe
 X-MS-Exchange-SLBlob-MailProps:
-	WaIXnCbdHrO+2YmbT5jW+WUSUt4IT5vRboKkWKHDBilO6HR4POzbB70rb0sNxuEidfH3Mzfd1Ye0DBzaEmXjutxDkF2T94vNQ+VhdtXwdvNrsd5qXsjN+r5AK48YTYnfrvq5UCkXDkLlSImo1EibzadXcMzpekuAYfsViG8MAW38RrIQcsG+CSsrpQo4EPj+kLJ1iCQZtKi6vC0JLFv6mMUMN2pcA+QrtoqY465qmRTiMhKsxnLKZqhb491b/EI3YKUwk7taK2U0YW+mu8VjldN+bSHLgYELItc/sp98z+yOT9wxNhRUgCjoxIe5+mUp8+PVDlT9Z4vPGFkjFSp28s0sF67wuBLmy70HdNF4mVSb4e3Oe/3AKCQ+modOF/9DfoO03R/jF7VlSvjEOEEHbRNUzA5ALc3/ILgZTXIOB6nva1ZlkxPKoNNcxetjbS573hf8zEGoV+fK5WZiG1YHlghVvMBWmgxFodgH1jTTy5dqA+3IghGiRdJhrBgV6GOT7vgTOU0agFJ6f6s1/MOwFFs3e01n96nYelkiB8vxZBi2tujngV81w6OejzWv26Xs6noOuZbENTTubcpGmDDoLrSAXpDqMR/EQ0u+vaz7byYA1t2ZR1+r9PQR0gZzkUS4UZNlH3NyFyH/hWIX4WO+/eBItXucjvWc4QEw/Ma77QYCxrmZspdGZYz/3Y072z/oJae437D7zuJJQ9/XDAXP2UbrsSJJ2KfGlX6EFbRgUfTmT8wte/+oFRHQcb/jAX+UorcQTKPCahY=
+	WaIXnCbdHrO+2YmbT5jW+WUSUt4IT5vRxvIF0HYi2KlobIe7Jcq3pgKOfUYZi5hlZilrXcIiD1sPsFrd4ue98GXuPzLxkDhtDB5KWXRZOZ2tai1+LDz2ou2ZMVf1QQtcISIl47NwL19bsUC4UHBlZUET00PRueyCZ+QgTnwcgbd8HSg7rH2gTBt3g3ISHuA18wnAKE1RjW53lXIs6JwlkRy79J4TKOiQBMbyAt+vzz8D+lwTKh6U5OJgSzlrYUjEKCeGVTxvPPK/XePqhc7ZwSzaJZwZqtG9/0rq3r2lXulg2aDGzPAJ6DNbHZHBLXH9YQbptw8HV2i7Gks4rWH89ZWZsFAOmm772diKYaxaziKzcur+KnIH+v9cViizZ9rrqv7lWPYEeBu6oZqy1DxcHSvivmpfpOE0Io8ckcp0VVIOV6+k+FRH6yArIkrKhfta4Pkv3fHoxIDXtBmwkvtN3RkTIcumSlzCTMNUVTEiObXdJdDDBh3WFbo924UR0q5Vvy2Yimtsecg6z1oTBrggjOEqyz/pQAvwORyoT38YHhQ2GhqxPqF9vfakRGJqZFzh+1ExjNvlDikw/+cfC2CjgL7NJKQzb7xidxzEe9TwWhmZOc4SF61+43uK6SZi21Ekdlx91ALYAJ1C3nr3DOhyJnZ25f+TSxPctsWLFfURv6j3b+NbwU0yNBYiFc/lbW9jpDPlQ8pQ6TBeMZsxm7pafGdYQqTwuty+Zg3kAIUG/ZlelDq2Y9+1nWjfeoShOYI3l/yrO1vLMOs=
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|51005399006|19110799012|41001999006|8060799015|24021099003|25010399006|23021999003|25031999004|15080799012|5072599009|40105399003|440099028|3412199025;
+	BCL:0;ARA:14566002|12121999013|25010399006|24021099003|25031999004|23021999003|5072599009|51005399006|8060799015|19110799012|15080799012|3412199025|440099028|40105399003;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?pI3VLwKVOEeohi5mrGabW6JMXHfTKhl4e5BwKVSL0DnRNDMBSHoZII7bvnes?=
- =?us-ascii?Q?gOfv04ReWAveVMnvfZmejf/g52ni0a5JqCQ4gS87aPXeGBdrlxOAYd4W1ndZ?=
- =?us-ascii?Q?UHh0xuUV1C6Iy94iPh8GWO6tV+QlGMzcj9lEtfyC95Sffc4HlSuilvP9Luzt?=
- =?us-ascii?Q?NWKLrmFllf6DbgVAP4Kq0anh1xO2zV9LuSfcB8h2ai7lq5Q2x7p08cUZGX4N?=
- =?us-ascii?Q?s+G42Yv/04hHyqf+D4XBGHI5iuZaJx8tPRVSSg59h+0qtFMNYWF+8fDBL4L6?=
- =?us-ascii?Q?n7N30Olo+M2Lbj9rPoqUXLZ+Z7lTrzqpTCA7SqfmDYiIaiF4A4Y2fFFAVvkE?=
- =?us-ascii?Q?FDZ3w6x1r9RO+eZFIx3sOiI6hTWRFOsaW320omkI+I2QehXFvNjrxdnyCKS0?=
- =?us-ascii?Q?k97X189yZjd74R/Vhkp3NngWUEi7a/WLTsFCpY+xfAf+qP2/d8//f/90aw8H?=
- =?us-ascii?Q?zXB7YVj1XPkHLTaqDG0rSQoKpkcRpcR1KUUcb9Pg8nxsgFodukDBdusWS6pn?=
- =?us-ascii?Q?yFu7vW/BIBzlj9jqlWtqKkNzc4DQsYXp3lZLHBWEkArODZq0QH99ajFDZCS+?=
- =?us-ascii?Q?CEQYDRZZB/30jY5+UA4cCg1xFA1oXcI//Dg7mUHsG9xkxC0cdRMckgqsg9ov?=
- =?us-ascii?Q?/ScuHtn6SWtZ0IAdllg2wdX6naVf0a9nEjLVLcDS8yQJRLkZV9944fPuhFRg?=
- =?us-ascii?Q?lvyhhZndRM495W2jnEPHmT9cBUlEl5bsrHmVZstmB/17e6M+suYpj2KeEZbr?=
- =?us-ascii?Q?GGRz1uOTR3wREmLhZh2nfsQooV3nezlUMq4K2lXKgoCC4tzNtEuHCCRKfpTr?=
- =?us-ascii?Q?VyWHgFkmGq2pNB+owiUpDcHJQFdLTPhvdmR9jfYyYlnPQbpUNCJlyM0ombPM?=
- =?us-ascii?Q?gxF8xCUbyR2eGXScDlGWN+HZLVD+6AciNyvAGqC6h/y5YH6fdlgk8PtFRLRR?=
- =?us-ascii?Q?ief6LXWwh+UP+J1Z+UIyUT/H0Wbq70T1jJYssLv6gDe2Mo4Ugneiq9IZLqkT?=
- =?us-ascii?Q?zFX/?=
+	=?us-ascii?Q?xJLe3FwQfZpcVPvyfWCzxAEnDf42VFXoDQSnEzuVxTSbyH9d2mSM9LYSPyXv?=
+ =?us-ascii?Q?yiQfeN0W4tCL+ICpJVsiJyRksDfbBJrKNFT7bZQKWbkvEcZXk4D6OVQ6IlTA?=
+ =?us-ascii?Q?9R7uxsB3EkkJgu+P8MAAoFWxyOrohJUircmxu4zCtZOzPb2RrA12KXuSFrsf?=
+ =?us-ascii?Q?o3FCIZ7mX7x4IrDYSlKOWHUTt2y29QvDgi0gQZ3q1ZVFMp2MWmHs7hRCj6B+?=
+ =?us-ascii?Q?HEoX6m5cd7UKHsYUGihiJVwn5D9OcCggmH7SJk6hofRVIdFMTnbXOXzwGaWO?=
+ =?us-ascii?Q?IlfvKpDL01aG0QBodp29ZLGll4F01LzNs8Y9aNDOucgB3TP2QjzBshNhCeBm?=
+ =?us-ascii?Q?LBa1ahuU9ZyY9A+0XOBYI80MhzT/Pw9kpQy0iGaKFQbHppN3cHqpEaXJ29SN?=
+ =?us-ascii?Q?ZqIIATJs8HVR6hvz0qgLakqtrs6RjUeUIOmocnhdxGOGfVbZWIFW8bvAmNgU?=
+ =?us-ascii?Q?Wy/ouSVCNz+HXBZQNrIJPlZcrQkFsuUWVVcT/CmIDp7xt6ZtocfgwomFcg5R?=
+ =?us-ascii?Q?EcopArr9PbGXdSh4LPxiRNYCi8xSndjXaL6BoMB6HkeDyVPbINZ4ufs7npEI?=
+ =?us-ascii?Q?+X7yO1oWqwJKvtPu4s94UW7HKfOUcAXeO4oF/lSF8fpjS9grFP/9jexH1pgb?=
+ =?us-ascii?Q?/ZS3Ud3y2RTP01x2WQPlt4vpzmcMXExB72++zku/bZLIIXNmw5vD5WSCJEi6?=
+ =?us-ascii?Q?Oq3KcsNI+naSAVLhs0DOEGQ8WCX0iZXsFaPesmrIeVzTaAa5bFeK7DBhfowM?=
+ =?us-ascii?Q?ATUXTJ8smBu/QSqm13ens+OR16l+hxcXrdaAp32vpAmxmoD5Y8pS8oHmfyCd?=
+ =?us-ascii?Q?lKT5WklqRXL/TVN+JNkZLow8rPMks5udBEC/XNzcCbuefSUPUWe1RBAys+u7?=
+ =?us-ascii?Q?8cfmKKyM9D4HxKccAYTL+P93AWQGLph+M41egYHaePK/QZDjRamr/toYNsDE?=
+ =?us-ascii?Q?BhE6+LZ6ef+EvXFIZZqbkhrj+eQT/bdq6PXH2gAe6gPxnmHP2PRIJFxT99jl?=
+ =?us-ascii?Q?mvMC?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Dezm7D0jxvNp10h2pG00mNS+3xmUwHPvXb1ynBYB1CpGJI0FWQLL7bNgd4W4?=
- =?us-ascii?Q?sjn9JQC0iLDa9UGhMECv7XOqSwzSppNmF0iCiobJPujR0cVZNJqpRKQG6cop?=
- =?us-ascii?Q?tLqRSke4gBGkXTY33707vGV/IPT2CFg7A/5Jx3Mbm+6Ybv09MEi91gub6QMU?=
- =?us-ascii?Q?R0zL9pws+pT3qVuo/MuRBrcJvfyJeeRtHqGfDNbOV7C3q7V3mbQtL/P4uml8?=
- =?us-ascii?Q?QlBrx5HKFkGgHPcqE8AvM/8o7iJ7EjqgREEB3rb+3guW8JlQ8bNsd0CFyMPe?=
- =?us-ascii?Q?SUjuTU1Zp0bPxGTl1y4qTcXOqsjPPlBFc6Xkw3nfcHs4Vu6JpJIdlQCcANZb?=
- =?us-ascii?Q?4rmKe5ynxmVe0Bo0IG/IglsWRrlLlajXil7HMgUWXlZJcyFOHhreUMzg1B/s?=
- =?us-ascii?Q?rqvYWV6O3npPVpYMD6RzcU4iO+FNSejvCmAeWT/z2KLvKVAx1mlqRUNiWqIW?=
- =?us-ascii?Q?sdGjUbhG3H7kjp3ynHkevtuu0CP1+vUIiUQ1/mvkYfbtkPIMpfMRim+Axzd/?=
- =?us-ascii?Q?EnCWZT8ezNrjv6pPBCmwmMkfmPIHoxHKHa+AH5TERnWTekaBks6iQzFKa4OS?=
- =?us-ascii?Q?rFhXfeMBYaMBCihbkCRHc9vGHtaSBBcEBL7RKz2IgOy3BjY4w0ywOa+EBXI5?=
- =?us-ascii?Q?7ouEaJoYX80NKtDqFOZZW22iCWCNUw4Os+yQvggyDdeS2qlmNIutluUuByTv?=
- =?us-ascii?Q?KXXMfIBGUUc7hsn1JjQ2JSKMTBz3xOPm+RywVS8u51GUgLC6IADL56VCvosm?=
- =?us-ascii?Q?XnWjKm+mBThH10hMDPXceOJnwOnO02Ozy4YiBKK9uMs9b1XOEhTuWFrceqNL?=
- =?us-ascii?Q?AN98NDWg8GmH+On04UP/qOV4xaGrfUnWyd9qATPIhyY1vubDOnMQQpPT8npY?=
- =?us-ascii?Q?HEoE9K5sqRkuP4ZjofP1daAb4kftlvwG+ZVp83s4GLfrgAKd0vPOalMsJ2uo?=
- =?us-ascii?Q?E/kz7CpwTU5Aytvdd8LvDVXK48VjtpvFqSQ7+miFK1Ls5mWSI60FBmzXmxXR?=
- =?us-ascii?Q?Egt2zxUGw343pip4KJMkY2WIIbb/QBLwfwMsHayYpUdoAUy4RoOs6yV7Ce2R?=
- =?us-ascii?Q?JwfX4ZKrWjkU4jXirdy4jD/CqrA2VXgIbvD6cTvvMJZOb5ATEhIWk+XMNZG1?=
- =?us-ascii?Q?CZUWaF0TBtPcPlzQHVM8r+gulenPinO94yiMAqEtGEjU4jFbj0l3gjPrbQSg?=
- =?us-ascii?Q?lwNvTVTAiYm2nH6cPUf4bM/kUQmEzwHVwMEC7EevBFRcuNwJLh2Yhl808AnN?=
- =?us-ascii?Q?WH6JZux9+Xd/JPQ47gwiX3tlRU+9G6Dm8dN0UMLD5ox2VqrBAgG+c7p8iE/c?=
- =?us-ascii?Q?0r1oFSSFRJ43MQ5RJjQoeT7rOapiC28gez/ydI+aBfAZSbDbm30kAjLgg93J?=
- =?us-ascii?Q?NS4dfmRnxLHwdLxRLIphy7uTjnT8?=
+	=?us-ascii?Q?0qY13DEyLXkAhH+F2n8yG/WA1v0PA1C26tbgPU/004ORovjWpxKFdSFDKU9P?=
+ =?us-ascii?Q?bDUKF5UlpOkmlfWr2YdPnYUmeCgJSB5RuPtOu0lxfwsifa6UoTzDG15nDfT0?=
+ =?us-ascii?Q?PDfoE5TQnTom4XVkbbwkm7V4BuUisnCYugoNXfOMELdCZJS3zSHbfer0EYtA?=
+ =?us-ascii?Q?oy5ts7PyCleC/MW22/OQg5SodH4zJRuLymjxC2GDtQsKnVy3PJG9aPXlNmrx?=
+ =?us-ascii?Q?Ln6Dfjn73V5rvuapAKT0L72v99R+7H93D+qiDRlWQ29F2A72CZLtErsfeOsU?=
+ =?us-ascii?Q?RL/gTUck5OuIfEzjQW8GzqaaVLWrghnBaulv0klVBE3NmPJs/A/Sqj2ZBfx8?=
+ =?us-ascii?Q?B76Rc51495V+XEZ2YqZrMgKucJocX6UyorSrsBBR1Ihnesb3iOScuK8VX428?=
+ =?us-ascii?Q?k0/L6i4rrxggEQmkbpbM3CwgCwbR7El9sNoLlix6kUfHk8PMq5HymXYn/Tbw?=
+ =?us-ascii?Q?TSwsub+2Md7fWQH0U4vRc+a0kvjH0bfIA0DweoGPwiQbS/JOWZtPvfUBDUbl?=
+ =?us-ascii?Q?UXcuTw1Ko29pEg+xTB3kRQ44lsCAYgxwkpwyAGsmv/IoW31esXkeMPvN02Tz?=
+ =?us-ascii?Q?CadYB7ZNEKFPH4d/eKcEnXUAD8zdhEDMkbCNMAn5YX9pvTdspkglFkalP/pQ?=
+ =?us-ascii?Q?im5Py0qiUmv7K9CQxGco3PmVsogWQgD0u5wykda/0OrruPo234BhYZ1UsjXu?=
+ =?us-ascii?Q?0ZBKaqOw6+fnmRz9/7qCKzblq5Xlj25ozZT47iuXID/dpZO7kgjesncDU4DD?=
+ =?us-ascii?Q?oMBmVPKk+gK0IjB5MfmtnTv3zGz2DafJ5dTj1wXz3l0zBYUiXk+XL3nwVvwD?=
+ =?us-ascii?Q?zhBx3bYkp+LVG2oTSt2ZbzpUo/+uP/w4ui3twBnAFaCzqPZT2JDFRsF6TdjC?=
+ =?us-ascii?Q?3OXDqzFlupBDj+QSsOsJ9K6eJBV9bZ0hoV2jlUHCJtSEJsFeKGzv3s3CXPfX?=
+ =?us-ascii?Q?XCnTnG6B/a1pBq/NMueD3ihTgNOUlZBkCKCZo1NNLsEi5UXHm0mhQ8JskcRj?=
+ =?us-ascii?Q?6838ZGhMiaW8WmTCBZNAqNwD7PFq9Cy2MOo799ZEM00Z9HYpu1/UioSYY4k7?=
+ =?us-ascii?Q?BFQ1S0H+WWF4iJ/13yAMIvUA0Y/9QDyHYhY4AFQxZdPyRv8SSBHlSD0in+gX?=
+ =?us-ascii?Q?kWxMw6UVWnkatry+8CmGc5uLC54hOZMOqBVOOFuSj5HNxHIMjLnjjjKAIsen?=
+ =?us-ascii?Q?axIQ5w7joPSFAbiVBjt7FlFhjX38KiH72JPAomVUtucXW5AX3k+bSdUs9Zck?=
+ =?us-ascii?Q?lFCfquROi4j1/tP/s2BtKMXMvUJzIm+ExwobnphaE5di0XwrLVZAKTbrfPus?=
+ =?us-ascii?Q?65u+tA3wol+47Ntf8vJ+XrxRTp1OXdbtPq6gYCAv9+PZ1Wib4a6QIJPAyJrA?=
+ =?us-ascii?Q?9nhUbWOAoVAkUzaNS448G8PZ5eRd?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1e03ef63-0bce-4b67-c871-08dee25119f3
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e4935c4-9185-417a-bff8-08dee2511bbe
 X-MS-Exchange-CrossTenant-AuthSource: SA1PR10MB997715.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2026 09:11:49.5613
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2026 09:11:52.1387
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR10MB4658
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR10MB5160
 
 From: Travor Liu <travor_lzh@outlook.com>
 
-Diff index lines have included a trailing file mode since ec1fcc16af
-(Show original and resulting blob object info in diff output,
-2005-10-07) when the old and new file modes match:
+gitweb should shorten and link the object IDs in commitdiff index lines
+even when Git includes the trailing file mode:
 
     index <old>..<new> 100644
 
-gitweb recognizes that trailing mode before it tries to shorten and
-link the object IDs.  This appends the file-type annotation first, but
-the object-ID matcher requires the ID range to end the line.  As a
-result, this common form keeps both full object IDs as plain text.
-
-That is inconsistent with other hash displays and makes commitdiff
-output wider than necessary.  Recent gitweb changes have fixed mobile
-overflow in log, commit, blob and diff views; leaving two full object
-IDs in this header preserves an avoidable long line in the diff header.
-
-Remove the trailing mode before matching the index IDs, then append it
-again after the IDs have been shortened and linked.  This preserves the
-mode display while letting ordinary and combined index lines use the
-existing object-ID formatting paths.
+Add coverage for that common form by rendering a commitdiff for a
+regular file modification.  Check that the visible index line contains
+linked short blob IDs followed by the mode and file-type annotation,
+and that the full unlinked form is not emitted.
 
 Signed-off-by: Travor Liu <travor_lzh@outlook.com>
 ---
- gitweb/gitweb.perl | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ t/t9502-gitweb-standalone-parse-output.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index fde8045..8c2d9b8 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2339,12 +2339,14 @@ sub format_extended_diff_header_line {
- 		$line .= $cgi->a({-href=>$to->{'href'}, -class=>"path"},
- 		                 esc_path($to->{'file'}));
- 	}
--	# match single <mode>
--	if ($line =~ m/\s(\d{6})$/) {
--		$line .= '<span class="info"> (' .
--		         file_type_long($1) .
--		         ')</span>';
-+
-+	# Temporarily remove a trailing <mode> so an index line ends with its
-+	# object IDs and can be shortened below.
-+	my $mode;
-+	if ($line =~ s/\s(\d{6})$//) {
-+		$mode = $1;
- 	}
-+
- 	# match <hash>
- 	if ($line =~ oid_nlen_prefix_infix_regex($sha1_len, "index ", ",") |
- 	    $line =~ oid_nlen_prefix_infix_regex($sha256_len, "index ", ",")) {
-@@ -2388,6 +2390,12 @@ sub format_extended_diff_header_line {
- 		my ($from_id, $to_id) = ($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
- 		$line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
- 	}
-+	if (defined $mode) {
-+		$line .= " $mode" .
-+		         '<span class="info"> (' .
-+		         file_type_long($mode) .
-+		         ')</span>';
-+	}
+diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb-standalone-parse-output.sh
+index 81d5625..7f37e26 100755
+--- a/t/t9502-gitweb-standalone-parse-output.sh
++++ b/t/t9502-gitweb-standalone-parse-output.sh
+@@ -115,6 +115,20 @@ test_expect_success 'snapshot: hierarchical branch name (xx/test)' '
+ '
+ test_debug 'cat gitweb.headers'
  
- 	return $line . "<br/>\n";
- }
++test_expect_success 'commitdiff: index line shortens hashes with mode' '
++	old_blob=$(git rev-parse HEAD:foo) &&
++	old_short=$(git rev-parse --short=7 HEAD:foo) &&
++	echo changed >foo &&
++	git commit -am "change foo" &&
++	new_blob=$(git rev-parse HEAD:foo) &&
++	new_short=$(git rev-parse --short=7 HEAD:foo) &&
++	gitweb_run "p=.git;a=commitdiff;h=HEAD" &&
++	grep ">${old_short}</a>\\.\\.<a [^>]*>${new_short}</a> 100644" \
++		gitweb.body >index_line &&
++	grep "<span class=\"info\"> (file)</span>" index_line &&
++	! grep "index ${old_blob}\\.\\.${new_blob} 100644" gitweb.body
++'
++
+ # ----------------------------------------------------------------------
+ # forks of projects
+ 
 -- 
 2.52.0
 
