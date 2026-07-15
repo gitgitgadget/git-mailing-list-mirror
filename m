@@ -1,492 +1,166 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF27442115
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 10:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21AF441607
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 11:25:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784111729; cv=none; b=SKFWJSvtef6Cr/GzmF78rd85cosc3J3ArEAIesXtaf0cVi7s0cYC1aJehVvuWNJJXQGyCUlrbacM5uYQGSd+p710CPo8qZJHSea7fYBAXnkqCi9lKX61p8oDN4hKJFlIm1lFBSQSDN1FfpW4E+EgqU4aSSmLpJDQz7PrNLmCRtU=
+	t=1784114733; cv=none; b=ArSjeN9R9qaiuyLk3RpqbjO9Kj4xRtBKMwGLZZH0N+VwQirfqKfcCiY5N0/2KOJDVbJE8wnzXGpa9PnmFCyYLDD3DFGulcHSepXRNTC+5sMIyIl5nUx7LiGH0WIZu+XfQ0sUAPNkTCahJIOW6iESnFOeKGsqtS+yrRli9w5ngn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784111729; c=relaxed/simple;
-	bh=OlGhm5hd/Ees9yFkA/eMwTsJQ0ydqmhPjEC7YYiK54c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O38YPx5aWCTufaRE2ScOIa4VNg7e/FP27YH8TkzkiaPlBtSodRkjRCL1JNOldB7pfrgS/6xtU/2kpHxREBkTNlU3fLa75s+gOdB1oRAdeXNSzDn7OaAkNq7YA7+uE5BJXCpk1/8R0yG+9E+feanLLQSzm2eYmx37iKH5xAA51LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZGypAbeI; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784114733; c=relaxed/simple;
+	bh=fL8ihTe52rdEdu/3CtLqsa0ml0snVnFuaAGL7ibvtiQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=i59rTdspwmr2CV6sXvCEHslHdzWa8ZjmB2h+roNxRdxx0uudBKqeGsrNR5BBBq/SMsNV9vxxwsAQ3qfGrX+bjJK068HNy6bODpyptmGeb5sySTUbIpFYTGF48P5PW6mQxK+WNqmNdlhUhcCTITojeWTDRU4pJgFrQnhCoJp4caM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=k506Uyuj; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZGypAbeI"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c15b1da6b82so222044566b.1
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784111725; x=1784716525; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=HbkIe0Yo7J9UKyo+XJclze/CmEmZiwDpI6QdI/8Lmh4=;
-        b=ZGypAbeIz/2XfDe90JmM3fv43WFaN06OXlWdRDGBCGJWqtYBz6oWLAKniDRpzYHHK/
-         bcfRTtJ6cacOh9pjRdWrNvI2nB3VRPex6HJ+7YV4RLI6id/PHm0n4sOOZfYXCBtH77if
-         k6tyWjAA+ON6qp/JqZlmdSRB8vFH7Txdk278WPxsylj1VrM2a/vYDaefu+/vpbc7KiE5
-         u+T+aMT5K2BvNHfZ1t1/D77xMuwuhvFvlURV44+CGYTaBpE68MfZTeXngXzbynUmzXAh
-         Ajya4MlStmtDJT7UNY1J5mPBApdxVgnWT9wTu10csbFveFHBNSCb+dQjGM9oYXozjTD5
-         eFrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784111725; x=1784716525;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HbkIe0Yo7J9UKyo+XJclze/CmEmZiwDpI6QdI/8Lmh4=;
-        b=MKdqQhTiYnGfGxqDodrLG1Yn6+sxlBgmJ+zavdhnXOl7RLkycciOoM2eYtRGmBwX2J
-         t+D7Np/5fDRRgfXqgEBaiAm6jj3pm/6/WWg9IbWq52M3QfpEdIjv6TAjJ8g3vszImMzW
-         WLbGz8eXUn3wWEVI8OECSQs0QZuR5K/En04Cbf1oPdh8Xk8Q7h4zXUtkSRmakrJ9fe4g
-         +AgJ9IoVZnf8S0yxDbOLILqkRQfN5L2txIK/4ZXBu4AeWjGYS+orJIX2OIsCdBeqEcOJ
-         ja9yyAYXV/XDUiX7s+OW6X+0SEHBPSwrq9RIU49TTalutckpcXu99DchAnsb9i4mEmnJ
-         gkqA==
-X-Gm-Message-State: AOJu0YxuAhGJb7VdkvOjUNapmzSCA+FfE/bdAkZSCzzNcbNBvWE12an1
-	msLfzj48IJpvMn3T7MPbPYd4ZThMMRecQ35MR5H4dnfXmecKvAXva9/nmh2tzT9q
-X-Gm-Gg: AfdE7cnfWrgY4dr3US41TKRzexbasE43pIslwSiv2Nr3LPUxSyitD1bysl2pZ4+oH5q
-	LMSh3kMdhRIqAOwfE2LxdvQkyPdzlLj2OefC1uV70NFEU1i7UcFBDoTbZcO/ppeK9UbhAdh+Xrq
-	cpEBu6wlkzWFEr2L3BC0VAEyiLivnpx2FHidja2gc3CUNBXeP9BRLEVXeSSLEaDOt0xL2AMkYdr
-	VSZ2zaEmDlbsqK3xpQGMCE0K8tFFT9jIaZ0p9rKRE3IjsOAWRwIx38F5iVRdeMKOTyoUzAaYSBL
-	cKeFWhdS24mVG9aLXt1f37YTw1D6k4EbhHm80RJ4xcnglYK8mzx9f+JEWdwVG3R6eNh4L7qUJWN
-	q9gnx1Nt3QDJsIslZ+u+5nzJ5tdjf3g7wyamjC6HaUSdIUQuRDvEyLPnXbOsIEBrb9Ou2SYiVDh
-	boOy/S4e4zwgR0z1snq6r3VOJiLbVxa7b5YrjtyHJzJB0vFFdfF/zu9FACw4rH1GKSYqEBIeC8y
-	OJX7kj7HVkIf0xQc8/vB88cysiJN3MFlGKIgkw/qTtYAw==
-X-Received: by 2002:a17:906:398b:b0:c0b:e9c1:93a7 with SMTP id a640c23a62f3a-c161ea7c914mr636641866b.29.1784111725244;
-        Wed, 15 Jul 2026 03:35:25 -0700 (PDT)
-Received: from M-K2012N0113010.localdomain ([88.119.128.229])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c168716aa07sm1765566b.14.2026.07.15.03.35.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 03:35:24 -0700 (PDT)
-From: Paulius Zaleckas <paulius.zaleckas@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Paulius Zaleckas <paulius.zaleckas@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <avila.jn@gmail.com>,
-	Glen Choo <glencbz@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v5 2/2] fetch: add fetch.submoduleErrors to make submodule fetch errors non-fatal
-Date: Wed, 15 Jul 2026 13:35:16 +0300
-Message-ID: <20260715103518.526326-3-paulius.zaleckas@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260715103518.526326-1-paulius.zaleckas@gmail.com>
-References: <20260714132959.3368867-1-paulius.zaleckas@gmail.com>
- <20260715103518.526326-1-paulius.zaleckas@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="k506Uyuj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1784114723; x=1784719523; i=l.s.r@web.de;
+	bh=W4Po3KFwNx91aobsVCo5gk7lrIe2xNSEMSZQpwN1IIc=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=k506UyujPsRJ9RoK56qSP+JHi7PXH97ALZBUH8/7eQbjq8QXdGgkEBmSJk6X08Uy
+	 e1NTA4RVD/n+0eeoAS6+bQcfktIUWS9N3BtvQW0H4DA3NTHQCDX83/Ir6zTjfyR2k
+	 IyLdik1tMahXVVIwc5wQbD2j4yMsR9sE2EBUqB6dYRfh81c7p81f82jij4nyycC/w
+	 8DYlCm1B+amC5l3u2TpV/2pimBiwfES77iz5BKNRQbrh0eyMNSInRarRgqxtOepeO
+	 KUCQeUE+lYeiRjyNx1L2N3gKlRaT8XZmuqIL+9na1BOu/Q2HFpRATMWwMn05fbqo/
+	 L5+Ys58KwqMH45xMrA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MY5fb-1wXUUg0vAj-00NrxB; Wed, 15
+ Jul 2026 13:25:23 +0200
+Message-ID: <a84437e9-6a7d-41b9-b638-30c81eecd672@web.de>
+Date: Wed, 15 Jul 2026 13:25:22 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] tempfile: add repo_create_tempfile{,_mode}()
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+References: <20260714175956.54601-1-l.s.r@web.de>
+ <20260714175956.54601-2-l.s.r@web.de> <aldYTuMvN-8EMvYK@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <aldYTuMvN-8EMvYK@pks.im>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:fkVkpe2tbimag2dmtblhOVpGIEe9slLs7s/3Pw5+uCcM5/2C5eU
+ CjD07K5T8d/RZA1W/3Scdb8Eus4AHRlUmmAvKc9c7n62Y/nJCU7ZWi3DKZld8vFTI1g4Q6n
+ qIXAxFr7c4PZaIplBwkcf+SaSppzfVm3td4lU2/8XOIlI4D7/rWgAj3Zd4yE/bboguVQyR9
+ bzoz0lOIsAnY/WnQy0Zqw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:QVsPcwD1vqo=;sHxXhaSKyfJrPMaDQ5EwIzcHxtz
+ 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
 
-When fetching with --recurse-submodules, a submodule commit that is not
-yet reachable from any of the submodule's remote refs causes the entire
-fetch to fail.  This is overly strict when the missing commit belongs to
-an upstream branch that is still being prepared (e.g. an in-progress
-merge topic): the local branch does not need that commit, so there is no
-reason to treat its absence as fatal.
+On 7/15/26 11:52 AM, Patrick Steinhardt wrote:
+> On Tue, Jul 14, 2026 at 07:59:52PM +0200, Ren=C3=A9 Scharfe wrote:
+>> Add variants of create_tempfile_mode() that handle arbitrary
+>> repositories.
+>=20
+> One thing I was wondering is whether it really makes sense to pass in a
+> full repository. All we require it for is `adjust_shared_perm()`, and it
+> feels quite extreme to require a full-blown repository.
+>=20
+> An alternative would be to let callers pass in the setting by
+> themselves, but that would likely lead to lots of duplicated code. So
+> maybe this is a good first step, and we could eventually create another
+> API where users can pass in the configuration instead of a repository if
+> we ever gain callers that don't have a repository available.
+Had the same thought.  I think it's because create_tempfile() sounds
+quite generic, but is actually for creating temporary files within a
+repository, not just anywhere or just for the duration of the creating
+process, so shared access matters (if enabled).
 
-Add a new config key fetch.submoduleErrors (values: fail/warn) and a
-corresponding --submodule-errors=(fail|warn) command-line option that
-control this behaviour.  The default remains fail (existing behaviour);
-setting the value to warn causes submodule fetch failures to be reported
-on stderr without affecting the overall exit status of git fetch / git
-pull.
+I didn't find a case where a caller would not have at least
+the_repository to pass in, so while a repo-less adjust_shared_perm()
+or create_tempfile() might seem cleaner, we probably won't need it in
+practice.  We'll find out..
 
-Forward the option to child fetches in add_options_to_argv() so that it
-also takes effect for `git fetch --all` / `--multiple` (where per-remote
-child processes handle the submodule recursion themselves) and for
-nested submodule recursion.  The resolved value is forwarded whenever it
-was set explicitly, in either direction: the per-remote children re-read
-the repository configuration, so a command-line --submodule-errors=fail
-must be passed down to them to override fetch.submoduleErrors=warn from
-the configuration.  When neither the configuration nor the command line
-sets a value, nothing is forwarded and the child processes fall back to
-their own configuration.
-
-Helped-by: Jean-Noël Avila <avila.jn@gmail.com>
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Paulius Zaleckas <paulius.zaleckas@gmail.com>
----
- Documentation/config/fetch.adoc  | 14 +++++
- Documentation/fetch-options.adoc |  8 +++
- builtin/fetch.c                  | 72 +++++++++++++++++++++++++-
- submodule.c                      |  8 ++-
- submodule.h                      |  7 ++-
- t/t5526-fetch-submodules.sh      | 89 ++++++++++++++++++++++++++++++++
- 6 files changed, 194 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
-index 04ac90912d..5c9c942a70 100644
---- a/Documentation/config/fetch.adoc
-+++ b/Documentation/config/fetch.adoc
-@@ -10,6 +10,20 @@
- 	reference.
- 	Defaults to `on-demand`, or to the value of `submodule.recurse` if set.
- 
-+`fetch.submoduleErrors`::
-+	Controls how errors from submodule fetches are handled when
-+	`--recurse-submodules` is in effect. When set to `fail` (the default),
-+	any submodule fetch error causes the overall `git fetch` or `git pull`
-+	to exit with a non-zero status. When set to `warn`, submodule fetch
-+	errors are reported to standard error but do not affect the exit
-+	status of the command. This is useful when working in repositories
-+	where some branches reference submodule commits that are not yet
-+	available on the submodule remote, but those commits are not needed
-+	for the currently checked-out branch.
-++
-+The value of this option can be overridden by the `--submodule-errors`
-+option of linkgit:git-fetch[1].
-+
- `fetch.fsckObjects`::
- 	If it is set to true, git-fetch-pack will check all fetched
- 	objects. See `transfer.fsckObjects` for what's
-diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-index 035f780e58..78525f6848 100644
---- a/Documentation/fetch-options.adoc
-+++ b/Documentation/fetch-options.adoc
-@@ -294,6 +294,14 @@ ifndef::git-pull[]
- `--no-recurse-submodules`::
- 	Disable recursive fetching of submodules (this has the same effect as
- 	using the `--recurse-submodules=no` option).
-+
-+`--submodule-errors=(fail|warn)`::
-+	Control how errors from submodule fetches are handled when
-+	`--recurse-submodules` is in effect. When set to `fail` (the default),
-+	any submodule fetch error causes the overall `git fetch` to exit with a
-+	non-zero status. When set to `warn`, submodule fetch errors are reported
-+	to standard error but do not affect the exit status of the command. Can
-+	also be configured via `fetch.submoduleErrors`. See linkgit:git-config[1].
- endif::git-pull[]
- 
- `--set-upstream`::
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c1d7c672f4..b0eb1eb301 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -110,8 +110,32 @@ struct fetch_config {
- 	int recurse_submodules;
- 	int parallel;
- 	int submodule_fetch_jobs;
-+	int submodule_errors;
- };
- 
-+/* really private - use accessors below to parse and format */
-+static const char *submodule_errors_names[] = {
-+	[SUBMODULE_ERRORS_FAIL] = "fail",
-+	[SUBMODULE_ERRORS_WARN] = "warn",
-+};
-+
-+static const char *submodule_errors_to_string(int mode)
-+{
-+	if (mode < 0 || (size_t)mode >= ARRAY_SIZE(submodule_errors_names))
-+		BUG("invalid submodule errors mode %d", mode);
-+	return submodule_errors_names[mode];
-+}
-+
-+static int parse_submodule_errors(const char *name)
-+{
-+	size_t i;
-+
-+	for (i = 0; i < ARRAY_SIZE(submodule_errors_names); i++)
-+		if (!strcmp(submodule_errors_names[i], name))
-+			return i;
-+	return -1;
-+}
-+
- static int git_fetch_config(const char *k, const char *v,
- 			    const struct config_context *ctx, void *cb)
- {
-@@ -152,6 +176,19 @@ static int git_fetch_config(const char *k, const char *v,
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "fetch.submoduleerrors")) {
-+		int mode;
-+
-+		if (!v)
-+			return config_error_nonbool(k);
-+		mode = parse_submodule_errors(v);
-+		if (mode < 0)
-+			die(_("invalid value for '%s': '%s'"),
-+			    "fetch.submoduleErrors", v);
-+		fetch_config->submodule_errors = mode;
-+		return 0;
-+	}
-+
- 	if (!strcmp(k, "fetch.parallel")) {
- 		fetch_config->parallel = git_config_int(k, v, ctx->kvi);
- 		if (fetch_config->parallel < 0)
-@@ -2205,6 +2242,9 @@ static void add_options_to_argv(struct strvec *argv,
- 		strvec_push(argv, "--no-recurse-submodules");
- 	else if (config->recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
- 		strvec_push(argv, "--recurse-submodules=on-demand");
-+	if (config->submodule_errors != -1)
-+		strvec_pushf(argv, "--submodule-errors=%s",
-+			     submodule_errors_to_string(config->submodule_errors));
- 	if (tags == TAGS_SET)
- 		strvec_push(argv, "--tags");
- 	else if (tags == TAGS_UNSET)
-@@ -2464,6 +2504,23 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
- 	return exit_code;
- }
- 
-+static int option_parse_submodule_errors(const struct option *opt,
-+					  const char *arg, int unset)
-+{
-+	int *v = opt->value;
-+	int mode;
-+
-+	if (unset) {
-+		*v = SUBMODULE_ERRORS_FAIL;
-+		return 0;
-+	}
-+	mode = parse_submodule_errors(arg);
-+	if (mode < 0)
-+		die(_("invalid value for '%s': '%s'"), "--submodule-errors", arg);
-+	*v = mode;
-+	return 0;
-+}
-+
- int cmd_fetch(int argc,
- 	      const char **argv,
- 	      const char *prefix,
-@@ -2477,6 +2534,7 @@ int cmd_fetch(int argc,
- 		.recurse_submodules = RECURSE_SUBMODULES_DEFAULT,
- 		.parallel = 1,
- 		.submodule_fetch_jobs = -1,
-+		.submodule_errors = -1, /* unset */
- 	};
- 	const char *submodule_prefix = "";
- 	const char *bundle_uri;
-@@ -2491,6 +2549,7 @@ int cmd_fetch(int argc,
- 	int max_jobs = -1;
- 	int recurse_submodules_cli = RECURSE_SUBMODULES_DEFAULT;
- 	int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
-+	int submodule_errors_cli = -1; /* -1: not set on command line */
- 	int fetch_write_commit_graph = -1;
- 	int stdin_refspecs = 0;
- 	int negotiate_only = 0;
-@@ -2527,6 +2586,10 @@ int cmd_fetch(int argc,
- 		OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_cli, N_("on-demand"),
- 			    N_("control recursive fetching of submodules"),
- 			    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
-+		OPT_CALLBACK_F(0, "submodule-errors", &submodule_errors_cli,
-+			    N_("(fail|warn)"),
-+			    N_("control how submodule fetch errors are handled"),
-+			    0, option_parse_submodule_errors),
- 		OPT_BOOL(0, "dry-run", &dry_run,
- 			 N_("dry run")),
- 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
-@@ -2616,6 +2679,9 @@ int cmd_fetch(int argc,
- 	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
- 		config.recurse_submodules = recurse_submodules_cli;
- 
-+	if (submodule_errors_cli != -1)
-+		config.submodule_errors = submodule_errors_cli;
-+
- 	if (negotiate_only) {
- 		switch (recurse_submodules_cli) {
- 		case RECURSE_SUBMODULES_OFF:
-@@ -2819,11 +2885,14 @@ int cmd_fetch(int argc,
- 	if (!result && remote && (config.recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		struct strvec options = STRVEC_INIT;
- 		int max_children = max_jobs;
-+		int submodule_errors = config.submodule_errors;
- 
- 		if (max_children < 0)
- 			max_children = config.submodule_fetch_jobs;
- 		if (max_children < 0)
- 			max_children = config.parallel;
-+		if (submodule_errors < 0)
-+			submodule_errors = SUBMODULE_ERRORS_FAIL;
- 
- 		add_options_to_argv(&options, &config);
- 		trace2_region_enter_printf("fetch", "recurse-submodule", the_repository, "%s", submodule_prefix);
-@@ -2833,7 +2902,8 @@ int cmd_fetch(int argc,
- 					  config.recurse_submodules,
- 					  recurse_submodules_default,
- 					  verbosity < 0,
--					  max_children);
-+					  max_children,
-+					  submodule_errors);
- 		trace2_region_leave_printf("fetch", "recurse-submodule", the_repository, "%s", submodule_prefix);
- 		strvec_clear(&options);
- 	}
-diff --git a/submodule.c b/submodule.c
-index 8bcef68a42..da4ace751f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1409,6 +1409,7 @@ struct submodule_parallel_fetch {
- 	int oid_fetch_tasks_nr, oid_fetch_tasks_alloc;
- 
- 	struct strbuf submodules_with_errors;
-+	int submodule_errors;
- };
- #define SPF_INIT { \
- 	.args = STRVEC_INIT, \
-@@ -1565,7 +1566,8 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
- static void record_fetch_error(struct submodule_parallel_fetch *spf,
- 			       const char *name)
- {
--	spf->result = 1;
-+	if (spf->submodule_errors == SUBMODULE_ERRORS_FAIL)
-+		spf->result = 1;
- 	strbuf_addf(&spf->submodules_with_errors, "\t%s\n", name);
- }
- 
-@@ -1851,7 +1853,8 @@ int fetch_submodules(struct repository *r,
- 		     const struct strvec *options,
- 		     const char *prefix, int command_line_option,
- 		     int default_option,
--		     int quiet, int max_parallel_jobs)
-+		     int quiet, int max_parallel_jobs,
-+		     int submodule_errors)
- {
- 	struct submodule_parallel_fetch spf = SPF_INIT;
- 	const struct run_process_parallel_opts opts = {
-@@ -1871,6 +1874,7 @@ int fetch_submodules(struct repository *r,
- 	spf.default_option = default_option;
- 	spf.quiet = quiet;
- 	spf.prefix = prefix;
-+	spf.submodule_errors = submodule_errors;
- 
- 	if (!r->worktree)
- 		goto out;
-diff --git a/submodule.h b/submodule.h
-index b10e16e6c0..c80b687d2a 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -90,12 +90,17 @@ int should_update_submodules(void);
-  */
- const struct submodule *submodule_from_ce(const struct cache_entry *ce);
- void check_for_new_submodule_commits(struct object_id *oid);
-+/* Values for the submodule_errors parameter of fetch_submodules(). */
-+#define SUBMODULE_ERRORS_FAIL 0  /* submodule fetch errors are fatal (default) */
-+#define SUBMODULE_ERRORS_WARN 1  /* submodule fetch errors are non-fatal warnings */
-+
- int fetch_submodules(struct repository *r,
- 		     const struct strvec *options,
- 		     const char *prefix,
- 		     int command_line_option,
- 		     int default_option,
--		     int quiet, int max_parallel_jobs);
-+		     int quiet, int max_parallel_jobs,
-+		     int submodule_errors);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
- int submodule_uses_gitfile(const char *path);
- 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 7ad274ce04..19d17440cf 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -1307,6 +1307,57 @@ test_expect_success 'setup for submodule fetch error tests' '
- 	git config --global protocol.file.allow always
- '
- 
-+test_expect_success 'fetch --recurse-submodules fails when submodule commit is unreachable (default)' '
-+	test_when_finished "rm -fr env_default" &&
-+	create_err_env env_default &&
-+	push_unreachable_commit env_default &&
-+	test_must_fail git -C env_default/clone fetch --recurse-submodules 2>err &&
-+	test_grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success 'fetch.submoduleErrors=warn: unreachable submodule commit is non-fatal' '
-+	test_when_finished "rm -fr env_warn_cfg" &&
-+	create_err_env env_warn_cfg &&
-+	push_unreachable_commit env_warn_cfg &&
-+	git -C env_warn_cfg/clone -c fetch.submoduleErrors=warn \
-+		fetch --recurse-submodules 2>err &&
-+	test_grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success '--submodule-errors=warn: unreachable submodule commit is non-fatal' '
-+	test_when_finished "rm -fr env_warn_cli" &&
-+	create_err_env env_warn_cli &&
-+	push_unreachable_commit env_warn_cli &&
-+	git -C env_warn_cli/clone fetch --recurse-submodules \
-+		--submodule-errors=warn 2>err &&
-+	test_grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success '--submodule-errors=fail: unreachable submodule commit is fatal' '
-+	test_when_finished "rm -fr env_fail_cli" &&
-+	create_err_env env_fail_cli &&
-+	push_unreachable_commit env_fail_cli &&
-+	test_must_fail git -C env_fail_cli/clone fetch --recurse-submodules \
-+		--submodule-errors=fail 2>err &&
-+	test_grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success 'fetch.submoduleErrors=warn does not suppress successful fetch' '
-+	# A new reachable submodule commit (pushed to sub_bare) should be
-+	# fetched without any error summary.
-+	test_when_finished "rm -fr env_ok" &&
-+	create_err_env env_ok &&
-+	test_commit -C env_ok/sub_work reachable_ok &&
-+	git -C env_ok/sub_work push &&
-+	git -C env_ok/super_work submodule update --remote &&
-+	git -C env_ok/super_work add sub &&
-+	git -C env_ok/super_work commit -m "point sub to reachable commit" &&
-+	git -C env_ok/super_work push &&
-+	git -C env_ok/clone -c fetch.submoduleErrors=warn \
-+		fetch --recurse-submodules 2>err &&
-+	test_grep ! "Errors during submodule fetch" err
-+'
-+
- test_expect_success 'failed submodule fetch is fatal even when its commits are present locally' '
- 	# Create the same commit (unreferenced, via commit-tree with fixed
- 	# dates) in both super_work/sub and clone/sub, point the gitlink at
-@@ -1334,4 +1385,42 @@ test_expect_success 'failed submodule fetch is fatal even when its commits are p
- 	test_grep "Errors during submodule fetch" err
- '
- 
-+test_expect_success '--submodule-errors=warn is honored by fetch --all' '
-+	# A second remote forces fetch_multiple(), which hands the submodule
-+	# recursion off to per-remote child processes; the option must be
-+	# forwarded to them.
-+	test_when_finished "rm -fr env_all" &&
-+	create_err_env env_all &&
-+	push_unreachable_commit env_all &&
-+	git -C env_all/clone remote add second "$pwd/env_all/super_bare" &&
-+	git -C env_all/clone fetch --all --recurse-submodules \
-+		--submodule-errors=warn 2>err &&
-+	test_grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success '--submodule-errors=fail overrides warn config for fetch --all' '
-+	# The per-remote child processes re-read the repository config, so
-+	# the command-line override must be forwarded to them explicitly.
-+	test_when_finished "rm -fr env_override" &&
-+	create_err_env env_override &&
-+	push_unreachable_commit env_override &&
-+	git -C env_override/clone remote add second "$pwd/env_override/super_bare" &&
-+	git -C env_override/clone config fetch.submoduleErrors warn &&
-+	test_must_fail git -C env_override/clone fetch --all --recurse-submodules \
-+		--submodule-errors=fail 2>err &&
-+	test_grep "Errors during submodule fetch" err
-+'
-+
-+test_expect_success 'fetch.submoduleErrors=warn: inaccessible submodule is non-fatal' '
-+	test_when_finished "rm -fr env_access" &&
-+	create_err_env env_access &&
-+	rm env_access/clone/sub/.git &&
-+	rm -r env_access/clone/.git/modules/sub &&
-+	git -C env_access/clone -c fetch.submoduleErrors=warn \
-+		fetch --recurse-submodules 2>err &&
-+	test_grep "Could not access submodule" err &&
-+	test_must_fail git -C env_access/clone fetch --recurse-submodules 2>err &&
-+	test_grep "Could not access submodule" err
-+'
-+
- test_done
--- 
-2.54.0
+Ren=C3=A9
 
