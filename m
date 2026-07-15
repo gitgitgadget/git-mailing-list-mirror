@@ -1,147 +1,122 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADD5377ABD
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 20:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A18306752
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 21:02:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784147541; cv=none; b=LZki/U6c0ltNlt7D/a2zM4ijWbMcbIzBaMdm3rDZmpzA7u7MxTQtBeyejNlckkTAJUfYSgHmnImGsbixYLFrlyZn1dqbHBFzXXfeUhSF+3xibaEuRfXlYztb82wo1IE7PHwL9brAPE0GO92migKwSGm2VZQ2wtQn69RGbnoWTZ0=
+	t=1784149329; cv=none; b=snumSviSOPiKBLa4ql6hZpySZYZwIEZTZy60SqiuX7H/vY9qDPVDVLYjRhNA7K3p3kP5sHlAvivBSFhua79tUAnsUajfl2tXl9NopQZUfhCU+m9e9Ie8Z9zmTovYRC7+OL/NgD9UFtlSmC/ibkym7vGx6M2jvcKIADEXaBVbKls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784147541; c=relaxed/simple;
-	bh=ityhvNri7BxKzdjkOINB1kFmPgLRsL/ZYmS0RPVX/b0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gtyhhgoGqyfrZXUy2XkhuYl44hynU3eJRbQUVkbtWp8rLmfWNV5ZtyltFO2hKzD5p1G8XXwnxpGiMH9r80IXyCi55X4GRNy+g4l2fQPTL6xgCmfLYcFaBbRx+bIaoJPlQCk2xNkz/MXy6fWlWhTleutkhTIXeCWD5rsL8BvhjME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=axeKzWn1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NyzpUEA0; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784149329; c=relaxed/simple;
+	bh=QtdmL+gWbDnszPFL3rdQ7vT5v8e8YiJzIiPdXEiKV+E=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=GGb5Kcxvf01NCiC6tTVPpgX5gjGA6KUdqMRXp8j1xOp/tlMEzEMskTY2YbINbUfT5MopTRRdgyzq6B705CSd/Dv2+IlAy2J31gz634JxdZ+M4Hzw3cxs/Jx0hX29lTmWqp6XiQNH70KvB1ATDZRq/S9818YgKod2WO9EtFoqUcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yuv4bxJT; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="axeKzWn1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NyzpUEA0"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4730E1D000A6;
-	Wed, 15 Jul 2026 16:32:18 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Wed, 15 Jul 2026 16:32:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784147538; x=1784233938; bh=LrhESlyhIc
-	4C9MfAh+OQ0GP67XvIrGTJ4fKOrNbTi+A=; b=axeKzWn1suw+LE324poxDjhLdM
-	6AVqrpLZS6aKpn2+O7BN3NQWJVQi1gxGrSXjSdJrkDp98YE19TUKSOgJhZo79CUJ
-	iBs99WH3MP6WFGGP+EK+we4run0lVeMPxJBxX6CAOcjDYRZDgEfBeYFIm8xWGenc
-	Mnn+pdEA0sVkujDM6TLxWeHu5zINNSfmdSEoBjwuhz7tktao++O4VcvtvRjd0R+B
-	v4wMhlvgmSLrLIFekQ5Zlw8CHDrl7vPJp4pyRj7YzCdejgzwjvf7v3MOsEYTyJMb
-	tQ1LgbcwmwPgOzzFYoUX6O28Dvfzjf8+YZ6TcwD1ovttTtasPwuAUVYpRdww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784147538; x=1784233938; bh=LrhESlyhIc4C9MfAh+OQ0GP67XvIrGTJ4fK
-	OrNbTi+A=; b=NyzpUEA0o/FVcYJUVz4ygiV7Orj3RyLJNpz6mSwd8HCFnHGDxJB
-	LQYrDhZ3ySBr5/XgmJyyS36Ea8Caj8aiQyxuc1UcbtCry0fPRLk0eHhGD/hi9AXX
-	DR1PgJaohINq34mr8N5CUB5NUBMypIqYv7ZrXfBEi+H3RKE5b8c+elv1TvLo/Tj9
-	aW1NkCCRtSYmdCNkIAlJCEYlResZoA7oPtYRWRlXHJZ9UzD1q/YT1irlNVJby4R1
-	fCsfHxSMZNK38r+LZDB8xQK48U5sroH4aemS2NxvE3rfovJfXbBW/MvoPIef6a5I
-	Vclee6QmtcdsBJUxgAXQ0p9De7fhRm3Wf9w==
-X-ME-Sender: <xms:Ue5XatJrTeBeHQpXL0-nVPO0EOVHQAyDj_61uxazSOJNYwAbdUIIPQ>
-    <xme:Ue5Xalt7OQk01izjjdVOW-57YgSHIeqjAqLWGzVyZT5S6QI3xWBpcgIoVM7tk9MK0
-    bybIVAOFnyaUiAkdb-xADgdNdAaUfD7_GVmDXtsbOdOQPdIEVkhEw>
-X-ME-Received: <xmr:Ue5XaqKA16exRXA2osBs6R3_YwTRPro4zQ-bnspb7V0XMnZujoddgAvbAfZcehKmQDheKk9jWj1yPxzJj9ClH5Onhxj0JPk2dlLxx4M>
-X-ME-Proxy-Cause: dmFkZTGLu6BpFFP/6EMarrVOJkO+7Vs1j3dDuJ8LDAE9LBJRdH0PkSjOlHQm60IFc3DeKo
-    t0U0VdSJdzSemWVvhnyC3uj/psdpKElbSvQz4ih5F1nSZoiPn5uVBkvpxUtMVaAa9Q81mY
-    HFIMHJTcoXbBlalbIp1JyX4piNyuUxCNrqz+cds7yUnahO07yVZ5qYUvaKwpU/G+wfNom6
-    KDNL8TgjTfor2Hp9RJ0qEPjaJ8sIcc4jhyaNnB8tAHgG6zmtYCbpPHormX5YY6YZVvrdir
-    tkj9rnqEGGJtEcz4JnZiELT2JZiFt+b6D61+KCLI4RBuFq+gOe6iNfQFCIjr4bo9gQTAYf
-    kJU7i6NnovcThgLrY3DsI8uKaCfp5IALW5p6WZ5hF2XeAEKCfLSN2Y+gdzqb4CuESkwB1Y
-    SzD1rKhI8NhesRFnVfeM0KJ42IKwd+OZ7vEmTkqKMAO4jSRDuTMizB35qgeUb2PNyZjjYO
-    fKj8lkVNjChoOOlNpE/StElMuQ9r150SuRhjAugwJVJpvld7L4o/Wuccg21lI2T+oq1fLq
-    n2FZvcHxwQi6RKF+ycVVatUQGGgfGOZp+3wMf6ioOf6pj4maW18WPrpu9LkzTTjlfsvncm
-    FWqNTzhlSZH4IF9VdtOiC3mSZBuFZ3nmzUVXxWMdpP1iwbTI1QpDlpolFFpw
-X-ME-Proxy: <xmx:Ue5XalNSIFa2UXUf6FuZb19vp5MXs1fqSZYljHmBy8ywJLIbikIJnA>
-    <xmx:Ue5XalV3W_BNnX6VzjsUukbSZ54JYJzMqcFDLHTY6xW6ekpc6OMqyA>
-    <xmx:Ue5XarmkhhVeBUIMX_BnLF9Qa3kBEpBp0BV_3ZzJcFX1llYGfqNdOA>
-    <xmx:Ue5XasPBnv7sPOzMn7_ov9cRum2JRfJ5nUTXcggO1LZq3idCrshz8A>
-    <xmx:Uu5XaoTzQzRE67DCbyjo5zvY5YQ-1MQD55eo4CPrDwtgkpn0OIanRVd6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jul 2026 16:32:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Pablo Sabater" <pabloosabaterr@gmail.com>
-Cc: <git@vger.kernel.org>,  <chandrapratap3519@gmail.com>,
-  <chriscool@tuxfamily.org>,  <eric.peijian@gmail.com>,
-  <jltobler@gmail.com>,  <karthik.188@gmail.com>,  <peff@peff.net>,
-  <toon@iotcl.com>
-Subject: Re: [PATCH GSoC v18 13/13] cat-file: make remote-object-info
- allow-list dynamic
-In-Reply-To: <DJZDEE0G6ZRS.2RT8JTQQ6CUXB@gmail.com> (Pablo Sabater's message
-	of "Wed, 15 Jul 2026 20:52:40 +0200")
-References: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
-	<20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
-	<20260715-ps-eric-work-rebase-v18-13-34d7adb051bb@gmail.com>
-	<xmqqcxwonnkx.fsf@gitster.g> <DJZDEE0G6ZRS.2RT8JTQQ6CUXB@gmail.com>
-Date: Wed, 15 Jul 2026 13:32:16 -0700
-Message-ID: <xmqqwluwj8of.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yuv4bxJT"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-90327237340so18653616d6.1
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 14:02:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784149327; x=1784754127; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=TE7tDKBkdwisr1c9mLpYjFAaDuwy96fYtPG8oo1KLmg=;
+        b=Yuv4bxJTGqsxFy7RIWP/LNqHKymny8EXrDP12CKch6+B/kI7kFO6b3T9dKFCUInPnG
+         VO4f7RwmiYahdEoddJKUpLMt3C3ScbpdtCukIZbNyGVQwGfvDMwCWlsA2uTVLb1W2lZ4
+         A6RWHWhiEpdEe8NiBq4GCY3a016OANYcD0sBWoipRBugDCwYSh5Uov6RzI/xjm4ArURm
+         dvXNLZXzxYxE7J+YGIfUHdOM5p26lNba3UZh+L6TLYgo1N1L0DL+nr9QMEW8ZWiT1txC
+         uupXFDYx3I1D3Mh0Y+c71hVm9bUTAES6XosQ+/VfPrTPH1cwm1WPV73+d+VPZyg9ggGl
+         NjkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784149327; x=1784754127;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TE7tDKBkdwisr1c9mLpYjFAaDuwy96fYtPG8oo1KLmg=;
+        b=qeJEkQmIWdZ0HGtcvzDtEGKExP0sskQSFW97pdTpCp0TYdctqkEJGlTFItN5n4DjXW
+         Shz2xGBg3OJKFJYPcHoK6ZS1OPxMw4uo9SjgpH5aY+XXzBBNLTr0RjzaFiVMkOMVeJjV
+         SqYc8yBxOEjDYDhVZl6waTnWSE4qEUTiHB6nGw0rs2xwwofdrF8WXsVoBAQ4b1TVu99D
+         IbkAHB4qxnaA9KD74Zg9v1CW+4O+eArgqdkdf3W50GWauVsj0CInPweimDARU/LsZH5u
+         CXKL8617/wX38bfEwpeyLk3ZQ35unXq2rDGJA8Spo4H41iQG1EL/WGaWOPlmPUTUguAP
+         fJwA==
+X-Gm-Message-State: AOJu0YzTFq+tZ4pcJw6LIArI8QZtZJDfzcj7Zj4PSIGo/+tcq2dUJCXq
+	R1eFZYkuhUQectQSa4P/6I+56HyOgKCB561/eRA3ljdJmWzgt5/t0mM+QWMI7A==
+X-Gm-Gg: AfdE7clmZEi46yKzenE8dLtC6vmdCfd7OjXmMcXFdANllCVVRN+5KEgm9kUS67HJ+DG
+	MRZ427Ci53zzU5s3vocHbK5cVe4xKn8rxPh9SKrflTUd8CI2Cdr4FqsEeSyqh65qOf9DV9PMP2R
+	JsJZVWx49tbRpu/IuPGEJGr3s/nT5iSTxxYJb9ZChgaCgKHJdZi6HHyBCaNxQsxni3DVuqG8g10
+	/9cdTnqoPPu1vzOHnDyQ5djQFUEZdBCTvE1wnVkH7tpbgZpQ65dTiBUziwjpDzGIQ0ZEdCCT6RP
+	0OQBREhYO6K+lL5MSEzLI0FJQp/TsY+//DbbrCmLcdnwWITMpnxSXvFMHfUqG6+IVg6NGA/mtJc
+	lyrPpXuPXsasNbRRQbN/ykAK+D/Lp6lNCGp6NHhAoeXVC2iDgRCIJrhxXYJkQ1ULCQ5MAcKw4wc
+	karmlSFw==
+X-Received: by 2002:a05:6214:3384:b0:8ef:2d29:699 with SMTP id 6a1803df08f44-907653c9d2dmr13582676d6.12.1784149326912;
+        Wed, 15 Jul 2026 14:02:06 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.193.33])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-902de1fdb3bsm177210456d6.23.2026.07.15.14.02.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 14:02:06 -0700 (PDT)
+Message-Id: <0fd994a3d3c7b226d0c63124133268f65a2eb339.1784149323.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
+References: <pull.2120.v4.git.1781463564.gitgitgadget@gmail.com>
+	<pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
+From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 15 Jul 2026 21:01:54 +0000
+Subject: [PATCH v5 1/9] gitattributes: document how external diff drivers
+ relate to diff features
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Michael Montalbo <mmontalbo@gmail.com>,
+    Michael Montalbo <mmontalbo@gmail.com>
 
-"Pablo Sabater" <pabloosabaterr@gmail.com> writes:
+From: Michael Montalbo <mmontalbo@gmail.com>
 
->>> 2. Filters the request in fetch_object_info() dropping any option that
->>>    the server does not advertise.
->>>
->>> 3. After the fetching, the options that haven't been dropped are the ones
->>>    fetched and supported by the server, these supported options are
->>>    mapped and remote_allowed_atoms is populated with the placeholders.
->>>
->>> 4. expand_atom() checks remote_allowed_atoms with the same behaviour as
->>>    the static allow_list had.
->>
->> I am not sure I follow the above entirely.  Could you add a
->> concrete example to the commit message?
->>
->> For instance, if the client wants "%(objectsize) %(objectcolor)" and
->> the server only supports 'size' but not 'color', the filtering in
->> step (2) prevents the client from asking about the color, requesting
->> only the size instead.  When the server says the size is 42, step (3)
->> uses that to substitute '%(objectsize)'.  Would the end result then
->> be "42 %(objectcolor)"?
->
-> You've gotten everything right until the last step, because we have only
-> size from the server there is no data to match %(objectcolor) and the
-> end result is an empty string for %(objeccolor):
->
-> "42 "
->
-> Note that %(objectcolor) doesn't exists and it would have die(), the
-> empty string is only for known but unsupported placeholders.
+The "Defining an external diff driver" section explains how to
+configure diff.<driver>.command but not how the driver relates to the
+rest of Git's diff machinery.  In particular, the command only
+replaces the textual patch: word diff, function context, color, and
+the like cannot apply to its output, while the summary formats, blame,
+and git log -L do not run it at all and keep using the builtin diff.
 
-It was not clear there is a distinction between "unknown" and
-"known but unsupported".  The proposed log message needs to be
-clarified to make this distinction obvious.
+Spell this out so the scope of an external diff driver is clear.
 
->> And if the request is only for "%(objectname)", an empty
->> object_info_options is given to get_remote_info().
->
-> Right now 'name' is not part of the protocol as 'type' or 'size' are,
-> 'objectname' is always allowed but only shown if it's present on the
-> format.
-> If the format is only "%(objectname)" then there's nothing to ask the
-> server for.
->
-> The current code avoids making the request if there's only objectname or
-> nothing supported, but still goes through the connection work. I will
-> add an early return to just output the oid back without any connection.
+Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+---
+ Documentation/gitattributes.adoc | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-I think you are heading in the opposite direction.  Rather, when
-only the object name is requested, I was hoping we would pick
-something cheap to retrieve and ask the remote side for it, if
-only to catch a bogus or missing object name.
+diff --git a/Documentation/gitattributes.adoc b/Documentation/gitattributes.adoc
+index bd76167a45..2c4fbfd7f1 100644
+--- a/Documentation/gitattributes.adoc
++++ b/Documentation/gitattributes.adoc
+@@ -784,6 +784,16 @@ with the above configuration, i.e. `j-c-diff`, with 7
+ parameters, just like `GIT_EXTERNAL_DIFF` program is called.
+ See linkgit:git[1] for details.
+ 
++An external diff driver replaces the patch Git would otherwise
++produce for the path: Git runs the command and shows its output in
++place of its own.  Output features that post-process Git's diff do
++not apply to it; word diff, function context (`-W`), `--color-moved`,
++and coloring all act on Git's builtin diff, not the driver's output.
++The driver is consulted only when Git generates a textual patch.  The
++summary formats (`--stat`, `--numstat`, `--shortstat`, and
++`--dirstat`), `git blame`, and `git log -L` do not run it and
++continue to use Git's builtin diff.
++
+ If the program is able to ignore certain changes (similar to
+ `git diff --ignore-space-change`), then also set the option
+ `trustExitCode` to true.  It is then expected to return exit code 1 if
+-- 
+gitgitgadget
 
-Thanks.
