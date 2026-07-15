@@ -1,41 +1,66 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E3B48A2A8
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 15:39:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7122745BD60
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 15:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784129998; cv=none; b=XBXSRyk7sk6MiJCAE2LyX3lSw9ugIjajE381iTJ3sxvH3RWtInj6K5wjWOugmW6PEr9hloo2JIU4tWNxw61zuqVOzTBTFbSs4BEYafogfJolcypdTQ2hStDJXsm9AzAnEi2YM9Ef9ChqZXaPLp+gaZKN5kCe7t1SsgPWi9fuNLg=
+	t=1784130281; cv=none; b=Rj0eNIpypGsDwJLdZ7S3f1+jCJ/3cn5jyJHhhZ3X4aRnNrL4IGIswajwzu5NXVohwnKPOAu0OV8KF9m7mbS+6b8Ppdq6Ml8F1PMC/T7mLkjS109mBH/mkn0D8x649a+RUv9g9583yrPA3rynXHAoQFzO9i+3eCDM7pBwOPkxFa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784129998; c=relaxed/simple;
-	bh=g011v1QyepWc4jxRVKOnYDijPCyy7KQ7iUYn53MJyPM=;
+	s=arc-20240116; t=1784130281; c=relaxed/simple;
+	bh=rarNrZxIjC01eWc5YH444loLrZUarapHnGF8l869G4g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YkoCz5SGpfVd1x9SWpJXkX8mPQnRUqW2J7IbM28z9CJgkuSLUQDr7jaRwMGIDGStYBzHT8W2a1WQ+nE8tDPunAoTt9UpjrCduCcHoyTJwlQXV1ppwQPFBYh74n9Xd7CmA98G2DXzh6u0xzHFZIpFPmPXUJUefkmP8+iHjFUQfIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=BAYimpgs; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	 In-Reply-To:Content-Type; b=b/lOiKC12+rlSGhrNeOUkbbcb8tmbjA1W+iELJC9dHWa45Z+v1EnwNnLxJWcYzBC4zSp/0v4X0aCXFf0/A8fv2Dk+T3yLnLGd2aUgGIOkGcHCKMsEH6FLPAeSpwM8+3t217d94r2vfzQYyFVii4rtWMzf3pwTYdEpXoJK60v/Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hG310Ndv; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="BAYimpgs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1784129992; x=1784734792; i=l.s.r@web.de;
-	bh=rje+LmYTEZ+bSYh4AHpX6l785tBGCi4QfQus/IpXyr8=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=BAYimpgsyWRchhg1SZ8LN2RmXjDUMyMljj11q1v1lntIQHdAw1rXfZ0FLKAw89Az
-	 r0y4ojSxYpKy/UhLSFlZ15UVntrjwZE/7XyENqr2dGMAeSyy+47RqNwrVop0rnpGQ
-	 LemEqd6zH7aqnWT08srU2pwOqiQh9Xg8BptxOsDv2Iu7U4c4IIUwBMDgfshpbndXO
-	 kym3aMZDYegVnodg9kW0u3NCfeAEr4ex8GZXaHSjj03/QU6AQFeR3giN7BKN0QU3n
-	 1RfUe4BhI80UIivSkCwO7uC0nEgd7tEQpMstWijro32oGGmJmSA/2tg7RdQGJpfYT
-	 5EVer6DDze24It0kSQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N30dV-1xB8mj13SX-0106l3; Wed, 15
- Jul 2026 17:39:52 +0200
-Message-ID: <3b29757e-abcd-4235-a829-ea67c19e71d0@web.de>
-Date: Wed, 15 Jul 2026 17:39:51 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hG310Ndv"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-698aa7ba320so1521319a12.1
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 08:44:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784130277; x=1784735077; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=mRdHjgRRls9H6XRnDnFFOzZw+EiZfFQZ7kLK9hDuE8k=;
+        b=hG310NdvcSUlzaFE4dLQFajxHMPGINtw0U2FckQ40n03SLlZxtBr3boxMzx01tFy4e
+         YicqRmLG7K8H91dr+eUe0gGbWFg7edxw6f6FBugmxxIIDW+YSVwByILYSfbfzwlaWWZo
+         oDT6/gGoCCmj6sC8qYlUwDf0jUl2tNGc6jaObLNNeDMWHp6m+BO+tO9gPaaBOCJY31/p
+         6IiuC9JwIYV/CulR+XD34oXMrjhnZrtaRCTZ2Xflx3JHrUckcGfMr94pIG6nrMpCt6es
+         hfU+m41T3/AIFaCCkDfHg7DFZORb4jTXTvCd9POQ15tupLVKl0vSajXVXzY8S47PMXh+
+         gykA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784130277; x=1784735077;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mRdHjgRRls9H6XRnDnFFOzZw+EiZfFQZ7kLK9hDuE8k=;
+        b=I232sALbBRJY+e+foza4UJpOCaRLDjTjST4edXtG9Xwcp0oDRDSm+CLTHXAq4LrRKf
+         ctSCaYpMs+i3VcGGPE5OzbECdfW0RNO6eGx661Oz/+JW27z9M4YDQwt+abVkbTetC7Nd
+         n1yvBEm2VDhZMDyKUREEaYi/j1tmZoag+MSOkWibIQjjQpeezuNJ0McJfa9pQg3byetL
+         vkomsc8ESBZemHQ3v43/O7oFZNKYeTDdRZ60qZJ6b1qCAtXwN5DJ2vZBak8sTFdO8Sk6
+         +9+Fgii4rixqXgo7v7zXFl73Adl5v8oSsv0Sca4qetK82NtqxjS6yPtpvqjPC4GVlF8O
+         NEUQ==
+X-Gm-Message-State: AOJu0YzK8fl99jXJLwA33/rmUbGsou1T6QHOTHdIuSzNReng3QJvkel+
+	SKUwHwWvOo56y1kmJxGlTSLN5BDVbgfSDRfipMotWZ4D4cHuUIAv/epm
+X-Gm-Gg: AfdE7cl4dp0BcFOUtGgtDBBv4RRmbZVmyL2udmHs4O70ooFV4k3j8UF0CIAr3M68Dco
+	/XkqY6Ku6VahJVyJTXp1daMYB0MeUoSqvuDq9lCQ6PK4HtxcQsuZ4pcBsD+GiPgMQb1mvbCNzG6
+	EePozWPrDQgipNE6Y3WmDyQnSLyvVg/00RwvjczQ5c0fdOfFtl4koV1q13ucoFb5cIa7pLm/2Hj
+	zseTXelhVTd7Fa+dHPYa1AJu6XHWORks9AoCqnb66Jf8VbwlvRdNGYTg0HTs1gbtfowVuqeEKa4
+	65r9K2T8UOKHwRpxbLEner21VnQ00JFjTnznYfjm8vWlxJZ95hqYdOTbpFdOLTSf52EDZOwDnFf
+	DvntV48JgTlenJaLuW02LOVbUWDB1YWBLBnpaYkJsBsujIDDWBE4F2BiQ5Q0Y1MQ+mgADExEvs1
+	tSMgIe8lA7iJAir3as3wDFacbQc2Ntce85wLm2rUVCyCycrK6Di2ku1BOt15uozpf2Q2D1Ei620
+	YyHKA==
+X-Received: by 2002:a05:6938:a084:10b0:c16:744f:5bec with SMTP id a640c23a62f3a-c16744f7843mr253605866b.0.1784130277549;
+        Wed, 15 Jul 2026 08:44:37 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c16871265d3sm58446666b.9.2026.07.15.08.44.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jul 2026 08:44:37 -0700 (PDT)
+Message-ID: <b4cf8f14-1ffa-4395-bc3e-936538574665@gmail.com>
+Date: Wed, 15 Jul 2026 16:44:35 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,153 +68,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] remote-curl: simplify passing of push specs
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Git List <git@vger.kernel.org>
-References: <935883f3-3be4-4c51-9711-5208b9ef9ca1@web.de>
- <alcrhGUCVMCnm2-i@pks.im>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3] sequencer: honor --empty when a fixup!/squash! empties
+ its target
+To: Farid Zakaria <farid.m.zakaria@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <20260711-fz-autosquash-empty-v3-1-d227b63eb511@gmail.com>
+ <xmqqh5m494yh.fsf@gitster.g> <7a1e5111-185e-4390-afa1-c19908c9bd86@gmail.com>
+ <DJXL4KSUEAD4.1EE4ERHJZ00TR@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <alcrhGUCVMCnm2-i@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:SmwB0cj72xgWTEmohq0+y85kMT2KswwuBl/8AKjoSyM1RACYMGM
- JPqbXSpkMfLEevYiyVbhkMS9Kr+iqJ55ML4R49gz5mIK3lrnp2BIm8yZV6xyl2e9Sy8gyrG
- OO441/+aFhc2kVybDtBzfYHwC/DjwBSxeX27Y+GLYGvVq6SoS0vcYHBBeZQB11OnYnGXXpJ
- Ao8L4nLI5zapGOOqYkQAA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:9xEjrgfAub8=;JxPCPfwuslOEkFWSa1vMPnjROCr
- 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
+In-Reply-To: <DJXL4KSUEAD4.1EE4ERHJZ00TR@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 7/15/26 8:41 AM, Patrick Steinhardt wrote:
-> On Wed, Jul 15, 2026 at 06:41:17AM +0200, Ren=C3=A9 Scharfe wrote:
->> diff --git a/remote-curl.c b/remote-curl.c
->> index 9e614c5567..2c35dd5240 100644
->> --- a/remote-curl.c
->> +++ b/remote-curl.c
->> @@ -1340,10 +1340,9 @@ static void parse_get(const char *arg)
->>  	fflush(stdout);
->>  }
->> =20
->> -static int push_dav(int nr_spec, const char **specs)
->> +static int push_dav(const char **specs)
->>  {
->>  	struct child_process child =3D CHILD_PROCESS_INIT;
->> -	size_t i;
->> =20
->>  	child.git_cmd =3D 1;
->>  	strvec_push(&child.args, "http-push");
->=20
-> I wonder whether the interface would be even better if we simply passed
-> around a `const struct strvec *` directly. That makes it explicit what
-> kind of guarantees we have, and all transitive callers already have one
-> available anyway.
+Hi Farid
 
-You mean that passing a managed array instead of a plain NULL-terminated
-one would make more places visibly safer at almost no cost?
+On 13/07/2026 17:30, Farid Zakaria wrote:
+> On Mon Jul 13, 2026 at 6:18 AM PDT, Phillip Wood wrote:
+>> On 12/07/2026 06:01, Junio C Hamano wrote:
+> 
+> Thanks for cc'd. I'm not familiar with the workflow (I read the docs)
+> but is there an email reply when it's accepted into 'next' that I will
+> just look-out for ? I'm not subscribed to the mailing list in general
+> otherwise.
 
->> @@ -1353,15 +1352,14 @@ static int push_dav(int nr_spec, const char **s=
-pecs)
->>  	if (options.verbosity > 1)
->>  		strvec_push(&child.args, "--verbose");
->>  	strvec_push(&child.args, url.buf);
->> -	for (i =3D 0; i < nr_spec; i++)
->> -		strvec_push(&child.args, specs[i]);
->> +	strvec_pushv(&child.args, specs);
->=20
-> I thought that we had something like `strvec_pushvec()` that knew to
-> also optimize for this case so that we don't have to reallocate the
-> vector multiple times. And if we had that function it would even be more
-> efficient to pass it down the stack. But we seemingly don't have it, so
-> that argument is kind of moot.
-We could add one.  Not sure it would make a measurable difference; if
-the number of specs is huge there are probably other costs that dwarf
-pushing them to a strvec.
+There isn't a specific notification for each topic, but the status of 
+all topics is in the regular "what's cooking in git.git" email on the list.
 
-I have to admit that the simplicity of strvec_pushv() nudged me towards
-using a NULL-terminated array here, though.  So just having a
-strvec_pushvec() available could guide towards using the length-limited
-strvec instead of a simpler NULL-terminated array (which explodes if
-left unterminated).
+>>> So it might make sense for you to coordinate with Phillip, and wait
+>>> for his topic to be merged to 'next'.  After that happens, you would
+>>> prepare a merge commit of the other branch into f85a7e6620 (Start
+>>> Git 2.56 cycle, 2026-07-06) or some other stable point, and rebuild
+>>> this patch on top of it.  That way, it will be much less likely that
+>>> I'd make stupid and unnecessary mismerges when attempting to
+>>> integrate this topic into my tree.
+>>
+>> That makes sense, assuming no-one has any more comments on
+>> 'pw/rebase-drop-notes-with-commit' it should in be 'next' fairly soon.
+>>
+>> Thanks
+>>
+>> Phillip
+> 
+> Phillip,
+> 
+> Let me know if you have any more comments. I suspect not much will
+> changes logic-wise once I rebase it onto 'next'.
 
-Ren=C3=A9
+I've left some comments on the patch in a separate mail.
 
+> For clarity, is the f85a7e6620 commit the 'next' branch ? I would have
+> thought to just rebase ontop of 'next' and I'm a bit confused with this
+> commit hash.
+
+In general it is better to base patches directly on top of the topic 
+they build on rather than on top of next. Once a topic is merged to next 
+it should be stable, whereas the tip of next is periodically rebuilt and 
+force-pushed. The tip of pw/rebase-drop-notes-with-commit is currently 
+7e70d12417d (sequencer: do not record dropped commits as rewritten, 
+2026-07-13) but that will change when Junio picks up v3. I find the 
+branch tips in seen and next with
+
+     git show $(git log --merges --format=%H --grep 'pw/.*drop-notes/' \
+                -1  origin/seen)^2
+
+> If there is anything else I should be aware of, I would appreciate a CC
+> if you can remember :)
+Elsewhere you asked about using AI. There are some notes about that in 
+Documentation/SubmittingPatches. TLDR it is fine so long as it does not 
+conflict with your obligations under the Developer Certificate of Origin.
+
+Thanks
+
+Phillip
