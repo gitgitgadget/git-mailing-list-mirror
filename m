@@ -1,146 +1,246 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7122745BD60
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 15:44:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9353AFCEA
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 16:12:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784130281; cv=none; b=Rj0eNIpypGsDwJLdZ7S3f1+jCJ/3cn5jyJHhhZ3X4aRnNrL4IGIswajwzu5NXVohwnKPOAu0OV8KF9m7mbS+6b8Ppdq6Ml8F1PMC/T7mLkjS109mBH/mkn0D8x649a+RUv9g9583yrPA3rynXHAoQFzO9i+3eCDM7pBwOPkxFa4=
+	t=1784131943; cv=none; b=pWSzZ9VtbU56wBbwVsNAyWQLt2el/TvZAsXDpB+eITr/CBVz2Wu88mmjJ8uBpskbhCkbduxHJ8gcJnyxhFYoyihgaups5dVnza0mHa8IT9a5M6cHN8nHUDhdjLq0S68XUOxdFmR6VUKGWIXcWObWVXFgj50vZueEjCBfE9x2gw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784130281; c=relaxed/simple;
-	bh=rarNrZxIjC01eWc5YH444loLrZUarapHnGF8l869G4g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b/lOiKC12+rlSGhrNeOUkbbcb8tmbjA1W+iELJC9dHWa45Z+v1EnwNnLxJWcYzBC4zSp/0v4X0aCXFf0/A8fv2Dk+T3yLnLGd2aUgGIOkGcHCKMsEH6FLPAeSpwM8+3t217d94r2vfzQYyFVii4rtWMzf3pwTYdEpXoJK60v/Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hG310Ndv; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1784131943; c=relaxed/simple;
+	bh=Wd1zxyubi9P0DQQod7IxFQFpehmHIl2lfbZeEHSz+w4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=NNu7/T0VmsGpe6P3Hi2IrmZgji1cebDJTjVKrFczO+1jO9zmmv4gLQQ2OZSoOigTplYEQ+mgHmGnp60X2ndRTGFuvMpYlHeUZAAYVy0hiNi2HkXBUiHcNVOA8S8qNNAeFPjZulAxMYF8YmGkZ3SjJyMMNTxF6+kmnTfO3L6KM8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gtcx8kzC; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hG310Ndv"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-698aa7ba320so1521319a12.1
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 08:44:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gtcx8kzC"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-51c0c68aa31so23460171cf.3
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 09:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784130277; x=1784735077; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mRdHjgRRls9H6XRnDnFFOzZw+EiZfFQZ7kLK9hDuE8k=;
-        b=hG310NdvcSUlzaFE4dLQFajxHMPGINtw0U2FckQ40n03SLlZxtBr3boxMzx01tFy4e
-         YicqRmLG7K8H91dr+eUe0gGbWFg7edxw6f6FBugmxxIIDW+YSVwByILYSfbfzwlaWWZo
-         oDT6/gGoCCmj6sC8qYlUwDf0jUl2tNGc6jaObLNNeDMWHp6m+BO+tO9gPaaBOCJY31/p
-         6IiuC9JwIYV/CulR+XD34oXMrjhnZrtaRCTZ2Xflx3JHrUckcGfMr94pIG6nrMpCt6es
-         hfU+m41T3/AIFaCCkDfHg7DFZORb4jTXTvCd9POQ15tupLVKl0vSajXVXzY8S47PMXh+
-         gykA==
+        d=gmail.com; s=20251104; t=1784131934; x=1784736734; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=RjRtMnK+grdOBysjyRjoeXY+d6gE313ckoGV4OHWeb4=;
+        b=gtcx8kzCrJ207bfzgbV0q+YV8HhdFpSh9ShcSD6jecrqe/lHTjfGjwh5c9GnF7GPFW
+         4uhYCd66hYlRq8sz3KhIEAFQaTjBUlIsfxrF2eahrsHdUJrMpNnQFPeRw19qSmn7x/gg
+         yF8ZtSUSI1PxIeYsvRnT44LLNG5Ft/+tTP+MZzEOHjcI+804KKPyee2oXaItmL8PR8lf
+         n7sOaXDIIlk8RGmhDk0/1uwwsi9ZaWmAUOEe5Ubx+TnlEU0xFuh+oSZsOQgeeJ8toW2p
+         sgOF3+7eAUL1k8bkiYM49RN0edQIYEaywFOfMhnE6cPlQp5JrEuilCBCT4DGf6P5ecSJ
+         H1DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784130277; x=1784735077;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mRdHjgRRls9H6XRnDnFFOzZw+EiZfFQZ7kLK9hDuE8k=;
-        b=I232sALbBRJY+e+foza4UJpOCaRLDjTjST4edXtG9Xwcp0oDRDSm+CLTHXAq4LrRKf
-         ctSCaYpMs+i3VcGGPE5OzbECdfW0RNO6eGx661Oz/+JW27z9M4YDQwt+abVkbTetC7Nd
-         n1yvBEm2VDhZMDyKUREEaYi/j1tmZoag+MSOkWibIQjjQpeezuNJ0McJfa9pQg3byetL
-         vkomsc8ESBZemHQ3v43/O7oFZNKYeTDdRZ60qZJ6b1qCAtXwN5DJ2vZBak8sTFdO8Sk6
-         +9+Fgii4rixqXgo7v7zXFl73Adl5v8oSsv0Sca4qetK82NtqxjS6yPtpvqjPC4GVlF8O
-         NEUQ==
-X-Gm-Message-State: AOJu0YzK8fl99jXJLwA33/rmUbGsou1T6QHOTHdIuSzNReng3QJvkel+
-	SKUwHwWvOo56y1kmJxGlTSLN5BDVbgfSDRfipMotWZ4D4cHuUIAv/epm
-X-Gm-Gg: AfdE7cl4dp0BcFOUtGgtDBBv4RRmbZVmyL2udmHs4O70ooFV4k3j8UF0CIAr3M68Dco
-	/XkqY6Ku6VahJVyJTXp1daMYB0MeUoSqvuDq9lCQ6PK4HtxcQsuZ4pcBsD+GiPgMQb1mvbCNzG6
-	EePozWPrDQgipNE6Y3WmDyQnSLyvVg/00RwvjczQ5c0fdOfFtl4koV1q13ucoFb5cIa7pLm/2Hj
-	zseTXelhVTd7Fa+dHPYa1AJu6XHWORks9AoCqnb66Jf8VbwlvRdNGYTg0HTs1gbtfowVuqeEKa4
-	65r9K2T8UOKHwRpxbLEner21VnQ00JFjTnznYfjm8vWlxJZ95hqYdOTbpFdOLTSf52EDZOwDnFf
-	DvntV48JgTlenJaLuW02LOVbUWDB1YWBLBnpaYkJsBsujIDDWBE4F2BiQ5Q0Y1MQ+mgADExEvs1
-	tSMgIe8lA7iJAir3as3wDFacbQc2Ntce85wLm2rUVCyCycrK6Di2ku1BOt15uozpf2Q2D1Ei620
-	YyHKA==
-X-Received: by 2002:a05:6938:a084:10b0:c16:744f:5bec with SMTP id a640c23a62f3a-c16744f7843mr253605866b.0.1784130277549;
-        Wed, 15 Jul 2026 08:44:37 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c16871265d3sm58446666b.9.2026.07.15.08.44.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jul 2026 08:44:37 -0700 (PDT)
-Message-ID: <b4cf8f14-1ffa-4395-bc3e-936538574665@gmail.com>
-Date: Wed, 15 Jul 2026 16:44:35 +0100
+        d=1e100.net; s=20251104; t=1784131934; x=1784736734;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=RjRtMnK+grdOBysjyRjoeXY+d6gE313ckoGV4OHWeb4=;
+        b=MWI/01dYM7ujCMn3Jsijv7CPYku4OvCENb98WxjLNteDAZna0aHMZwLgeauSxlyX8u
+         OvxRAAJFO6gh20zJ780cCzi/d1wTkp3TBKWVxg+gBfsWq8m/784deYw4aL7Gby+1aDJX
+         W1KOx3fMg039W5K9b5RyK3Xqn4U58dHLqFaWWq4/VgIvpeRC1SqNDse0CULXtEsSV3TR
+         cT9S3duaqyHxlopKP1Vtg2Hw+beDHrPQP7EQRAsVHP99K4suu/3GI5KAxZVCZBFpnpNy
+         WNzKI7tpRGScCCqWLJNJGoYMxtTWncH5W9BLIwMIoupgdrlPNEuyop4farHqQeB+ppZI
+         i7Dg==
+X-Gm-Message-State: AOJu0YzD0iUuql2sI0xrMISB7q3ClMCn/M81Do2SFcFGNQgY940PgDvO
+	sqjXm1lhlk2awSY/f16ptcWwDv1Rj6AaRYJkaMb76fyIaUjTOh8eJC2IoqOvZg==
+X-Gm-Gg: AfdE7cmokfrr++fq3/E7srnNX8SB04IM4WEt431glpVntDwtZ5axB/W7Z/O7TvIDgNT
+	pE3ihCN0YJptmtNDvoqqe+vW2S5cp8O5HrUYNo4yp6enGZis5FyVTAJ07blVC1bBvaHZWjKhniv
+	aV1MPESKNr4po513h7885vXfWQ66fRByjvvZhsUjVrZvREWX7fjUhjzmtukPHcaDnb6SQw9blvf
+	s60IIFYACZ0HRiEGxpA9JXQURFmzRPU3wdF8OTOwh1ZNLZXniev/AiHkXRkSxQIOd2nSjRTUaLE
+	08dWp0zaRXVS7YlbMkpnhou5+ViQfKDwp1GpO7oTd3NPTSwX0SdZUvwsIQ51FIQYxCTIDUhf1tm
+	/wrQ22Klxu0HboA9DmajSYjqWB/gDWEjG8DGappVYNQG8fdc9m0fL4H9wZks/3tk7PjMwztN6Tb
+	EzqfCNHuZy2HsNI4KQtWvpbZcl4Q==
+X-Received: by 2002:a05:622a:250b:b0:51c:a2ca:3fc0 with SMTP id d75a77b69052e-51cbf1ec189mr179297041cf.23.1784131933497;
+        Wed, 15 Jul 2026 09:12:13 -0700 (PDT)
+Received: from [127.0.0.1] ([52.150.29.105])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-903083910d1sm166460026d6.12.2026.07.15.09.12.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 09:12:12 -0700 (PDT)
+Message-Id: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 15 Jul 2026 16:12:11 +0000
+Subject: [PATCH] trace2: tolerate failed timestamp formatting
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] sequencer: honor --empty when a fixup!/squash! empties
- its target
-To: Farid Zakaria <farid.m.zakaria@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
- Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-References: <20260711-fz-autosquash-empty-v3-1-d227b63eb511@gmail.com>
- <xmqqh5m494yh.fsf@gitster.g> <7a1e5111-185e-4390-afa1-c19908c9bd86@gmail.com>
- <DJXL4KSUEAD4.1EE4ERHJZ00TR@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <DJXL4KSUEAD4.1EE4ERHJZ00TR@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    Derrick Stolee <stolee@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-Hi Farid
+From: Derrick Stolee <stolee@gmail.com>
 
-On 13/07/2026 17:30, Farid Zakaria wrote:
-> On Mon Jul 13, 2026 at 6:18 AM PDT, Phillip Wood wrote:
->> On 12/07/2026 06:01, Junio C Hamano wrote:
-> 
-> Thanks for cc'd. I'm not familiar with the workflow (I read the docs)
-> but is there an email reply when it's accepted into 'next' that I will
-> just look-out for ? I'm not subscribed to the mailing list in general
-> otherwise.
+Some users reported issues of repeated messages:
 
-There isn't a specific notification for each topic, but the status of 
-all topics is in the regular "what's cooking in git.git" email on the list.
+  fatal: recursion detected in die handler
 
->>> So it might make sense for you to coordinate with Phillip, and wait
->>> for his topic to be merged to 'next'.  After that happens, you would
->>> prepare a merge commit of the other branch into f85a7e6620 (Start
->>> Git 2.56 cycle, 2026-07-06) or some other stable point, and rebuild
->>> this patch on top of it.  That way, it will be much less likely that
->>> I'd make stupid and unnecessary mismerges when attempting to
->>> integrate this topic into my tree.
->>
->> That makes sense, assuming no-one has any more comments on
->> 'pw/rebase-drop-notes-with-commit' it should in be 'next' fairly soon.
->>
->> Thanks
->>
->> Phillip
-> 
-> Phillip,
-> 
-> Let me know if you have any more comments. I suspect not much will
-> changes logic-wise once I rebase it onto 'next'.
+This wasn't happening every time, but we eventually captured a
+GIT_TRACE2_PERF log file with this issue and revealed an interesting
+internal detail, failing with this message:
 
-I've left some comments on the patch in a separate mail.
+  unable to format message: %4d-%02d-%02dT%02d:%02d:%02d.%06ldZ
 
-> For clarity, is the f85a7e6620 commit the 'next' branch ? I would have
-> thought to just rebase ontop of 'next' and I'm a bit confused with this
-> commit hash.
+This specific format string tracks to tr2_tbuf_utc_datetime_extended()
+in trace2/tr2_tbuf.c. This logic began as tr2_tbuf_utc_time() in
+ee4512ed481 (trace2: create new combined trace facility, 2019-02-22) but
+was later split in bad229aef23 (trace2: clarify UTC datetime formatting,
+2019-04-15).
 
-In general it is better to base patches directly on top of the topic 
-they build on rather than on top of next. Once a topic is merged to next 
-it should be stable, whereas the tip of next is periodically rebuilt and 
-force-pushed. The tip of pw/rebase-drop-notes-with-commit is currently 
-7e70d12417d (sequencer: do not record dropped commits as rewritten, 
-2026-07-13) but that will change when Junio picks up v3. I find the 
-branch tips in seen and next with
+This use of xsnprintf() is writing a very specific datetime format into a
+32-character buffer. The format requires that the input data will not
+overflow the format digits or the buffer will not hold the result. Since
+we are using xsnprintf() here, those failures turn into die() events.
 
-     git show $(git log --merges --format=%H --grep 'pw/.*drop-notes/' \
-                -1  origin/seen)^2
+This method and its siblings, tr2_tbuf_local_time() and
+tr2_tbuf_utc_datetime(), are used in the tracing library. The extended
+form is used only for the 'event' format, which these users were using
+via a config setting for use in client-side telemetry. The non-extended
+form is used to help generate the 'SID' that defines the process in the
+traces.
 
-> If there is anything else I should be aware of, I would appreciate a CC
-> if you can remember :)
-Elsewhere you asked about using AI. There are some notes about that in 
-Documentation/SubmittingPatches. TLDR it is fine so long as it does not 
-conflict with your obligations under the Developer Certificate of Origin.
+Not only are these inappropriate times for a failure, but the extended
+method is called specifially during the 'atexit' event, which was
+triggering this problem in a loop as the 'atexit' event would be
+retriggered by the die().
 
-Thanks
+I could not determine the exact cause of why these errors started
+occuring in a bunch. My best guess is that these users are dogfooding an
+early operating system version that is more likely to fail in the
+gettimeofday() function and thus leaves the structures uninitialized and
+potentially violating the expected values.
 
-Phillip
+However, for full defense-in-depth I made several modifications:
+
+1. Both 'tv' and 'tm' structs are initialized with zero values, allowing
+   an erroring gettimeofday() or gmtime_r() method to leave them
+   zero-valued. A zero-valued date is better than a die() here.
+
+2. Replace the use of xsnprintf() with snprintf() to avoid the
+   possibility of calling die() here. Instead, check the response to see
+   if there was a failure. On failure, put a blank value into the buffer
+   instead of possibly allowing a value that would not format correctly
+   for a trace2 consumer. This value should be seen as obviously wrong
+   and therefore signals a problem.
+
+As the core issue in this code seems to require a system method
+returning an error, no test accompanies this change.
+
+This change removes all uses of xsnprintf() from the trace2/ directory.
+There are two uses of xstrdup() that could be considered for removal,
+but they only die() on out-of-memory errors instead of formatting
+issues. I chose to leave those in place for now.
+
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    trace2: tolerate failed timestamp formatting
+    
+    As mentioned, this is based on real trace logs of failed commands users
+    are seeing.
+    
+    I wish I had a better way to test this or to be 100% sure that the
+    system call was failing. But users were seeing failures and these seemed
+    like appropriate changes.
+    
+    Thanks, -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2178%2Fderrickstolee%2Ftrace2-dont-die-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2178/derrickstolee/trace2-dont-die-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2178
+
+ trace2/tr2_tbuf.c | 49 ++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 34 insertions(+), 15 deletions(-)
+
+diff --git a/trace2/tr2_tbuf.c b/trace2/tr2_tbuf.c
+index c3b3822ed7..ef57376f3c 100644
+--- a/trace2/tr2_tbuf.c
++++ b/trace2/tr2_tbuf.c
+@@ -3,45 +3,64 @@
+ 
+ void tr2_tbuf_local_time(struct tr2_tbuf *tb)
+ {
+-	struct timeval tv;
+-	struct tm tm;
++	struct timeval tv = { 0 };
++	struct tm tm = { 0 };
+ 	time_t secs;
++	int len;
+ 
+ 	gettimeofday(&tv, NULL);
+ 	secs = tv.tv_sec;
+ 	localtime_r(&secs, &tm);
+ 
+-	xsnprintf(tb->buf, sizeof(tb->buf), "%02d:%02d:%02d.%06ld", tm.tm_hour,
+-		  tm.tm_min, tm.tm_sec, (long)tv.tv_usec);
++	len = snprintf(tb->buf, sizeof(tb->buf), "%02d:%02d:%02d.%06ld",
++		       tm.tm_hour, tm.tm_min, tm.tm_sec, (long)tv.tv_usec);
++
++	if (len < 0 || (size_t)len >= sizeof(tb->buf)) {
++		const char *blank = "00:00:00.000000";
++		strlcpy(tb->buf, blank, sizeof(tb->buf));
++	}
+ }
+ 
+ void tr2_tbuf_utc_datetime_extended(struct tr2_tbuf *tb)
+ {
+-	struct timeval tv;
+-	struct tm tm;
++	struct timeval tv = { 0 };
++	struct tm tm = { 0 };
+ 	time_t secs;
++	int len;
+ 
+ 	gettimeofday(&tv, NULL);
+ 	secs = tv.tv_sec;
+ 	gmtime_r(&secs, &tm);
+ 
+-	xsnprintf(tb->buf, sizeof(tb->buf),
+-		  "%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ", tm.tm_year + 1900,
+-		  tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,
+-		  (long)tv.tv_usec);
++	len = snprintf(tb->buf, sizeof(tb->buf),
++		       "%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ",
++		       tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
++		       tm.tm_hour, tm.tm_min, tm.tm_sec, (long)tv.tv_usec);
++
++	if (len < 0 || (size_t)len >= sizeof(tb->buf)) {
++		const char *blank = "1900-00-00T00:00:00.000000Z";
++		strlcpy(tb->buf, blank, sizeof(tb->buf));
++	}
+ }
+ 
+ void tr2_tbuf_utc_datetime(struct tr2_tbuf *tb)
+ {
+-	struct timeval tv;
+-	struct tm tm;
++	struct timeval tv = { 0 };
++	struct tm tm = { 0 };
+ 	time_t secs;
++	int len;
+ 
+ 	gettimeofday(&tv, NULL);
+ 	secs = tv.tv_sec;
+ 	gmtime_r(&secs, &tm);
+ 
+-	xsnprintf(tb->buf, sizeof(tb->buf), "%4d%02d%02dT%02d%02d%02d.%06ldZ",
+-		  tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour,
+-		  tm.tm_min, tm.tm_sec, (long)tv.tv_usec);
++	len = snprintf(tb->buf, sizeof(tb->buf),
++		       "%4d%02d%02dT%02d%02d%02d.%06ldZ",
++		       tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
++		       tm.tm_hour, tm.tm_min, tm.tm_sec, (long)tv.tv_usec);
++
++	if (len < 0 || (size_t)len >= sizeof(tb->buf)) {
++		const char *blank = "19000000T000000.000000Z";
++		strlcpy(tb->buf, blank, sizeof(tb->buf));
++	}
+ }
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+gitgitgadget
