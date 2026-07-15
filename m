@@ -1,80 +1,76 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8DE3B2FFF
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 19:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9AA44685A
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 20:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784144193; cv=none; b=Ok4MjvsBboWopOHfCoRNy0BKK8wQgrNY9hOgUeI+JR2TZVQ2+bxz6eKZw/hHorp7lpHEGZAZ7dQlYLy1Q84q0Ih/YFzlu2xz9gYeGgfXxjGRBpUKuOmrfV+2v97t5QX0IDTTBjnyPxSV5Lvotwcwp2Z50IR/aKJIsPUcaOqb4eo=
+	t=1784146211; cv=none; b=s65ol4zQeAZyHmViq2O1XAA+fxtbi+iFvFnwDyftB4aMzvW0cNi0zc2aR9p+GUmQ8WGotDhGZBKNNdhNpbFwf4Nde8n1Z7hTf3wjD4JzVZ4H4F6cKmhc8ZxEAJNAn5A840w5P9zyeMVvu7n1XYpRuLPYrP8msHv4zHCsPLLKLeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784144193; c=relaxed/simple;
-	bh=2G0tzAthOAUjhytm+RgRdI4MlTbNVZrNgcnCJkBVeNo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e1D8vnhkbp4Qs04p2j+ros7dkm9wzcc0LSkMsSwmShzHXajkDYZbqE8okblfj4LWSQzINjViuXATwzrnoUGL18+VJiVS3gaYaM1F45ac+MuM3HHOJLBtYnl/OVIcjkrV6A9h7vzZHweM4QW+07L0XRN9cxWtjxScu+OV4DkYYZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YZJ08ycs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OpEeI2Tm; arc=none smtp.client-ip=202.12.124.153
+	s=arc-20240116; t=1784146211; c=relaxed/simple;
+	bh=1q+0qx/yvthBPXWjxMH1BWStECVUsH6WrsGVD9HqSa8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QoFMVRvVVAn3sbd9OkixZwORdqOeLYZSIfpgRBnIJ2LEXEnYs6IjfGGGkMD4RyJ2u5iiBCvjhHEGUdG/FP8Fep2SG+ODUjffzeM4VUwm/xs2NfJerg4v/Ff5SbKQjrxXUj8zKNqBfaMXCWzA6VganGojBbpb7Yj2AhdKbgIv3g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jY0Rnobj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YtcYqXhP; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YZJ08ycs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OpEeI2Tm"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jY0Rnobj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YtcYqXhP"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D5F87A0074;
-	Wed, 15 Jul 2026 15:36:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 15 Jul 2026 15:36:31 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id DD4321D00072;
+	Wed, 15 Jul 2026 16:10:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 15 Jul 2026 16:10:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784144190; x=1784230590; bh=/nbBNY5OPp
-	ImP7LvXgW8s2vYCrHNwoIF+PTVPEAKrgY=; b=YZJ08ycsNuEhREFFuaqIvrnvtx
-	MwXrwKYfjSNwYKQmjPGDbf2MlWZHy/9pzbGpMvGkCm+LFu3UIC5/X5gJioWE+6+9
-	5z+wDvzm8zLp+8VK8dVes84+e/O9SZYjfrItSHfoTtEiEl+86h847u5/DmHduaHs
-	BnyF6sNPKp5mYv42j1dlcOK5OSoGIzR3dWeby3AJYQBGVwyeGu6m7gwecKWyHJsJ
-	7RuX7t6rjq7zr4NTByd2y04CslTspBCA1+zqdlTk7JqHnZSm8p++66JEXn99/dOD
-	ayvE1TmO9zGnGsMiV+SKNUoweGgJgb1RSSY46S7mV/PqaMtaCs3jQgGF4N4g==
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1784146208; x=1784232608; bh=odEcVxrAl/2yLJMXorm42nfpDg7FND6s
+	uBTxkqVQ/L4=; b=jY0Rnobj5ynZ8VCdTCLHkMJM5ORsMrz4KLIdnnfPHWa4cfCB
+	BE/OB2fUAIviLlfd2vUJd7t11nTF1UxMaB2KeJVyc/8xF2ik2dvXWwcoYSvPqpQe
+	W2uRkSymgF7LKZnS/Y2t6ZdtgC6rTdb31b8BHtg85jiwgGdqU5lH3PMVv7fLJqPT
+	xLfHaqUYWBhV5vzFsnoC03j2QQDtMzA1Gq94WLvvGwPK8TQ1DAbliYjjxSTbix3Q
+	rDoYeJwpklHc07icW2tA/wq/YR+Mqa0CzRij73arCoqfTi06Rkqc+86+JoT9P4sv
+	SMfxe6xk1ujDkE1o9L5vg5zCPJbg7PLD9jwL6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784144190; x=1784230590; bh=/nbBNY5OPpImP7LvXgW8s2vYCrHNwoIF+PT
-	VPEAKrgY=; b=OpEeI2TmVJ7CIVDM1/256cN3pigs8NZ92k6YmM6uMNd5GbfFm+G
-	G3P3FiRZxKkVTgMaXD1fzjhsnJ8VIquf0q4pBlI4Whbb9DvSHObndYBkCX4Smcz5
-	DX4ThXS0lfsUgH5swbYzy+trlVC0BEM9BJJNBSUpfbkgoHMR9mwc2NI0NLfoQxFb
-	SCCDMdml+XWUTOAcZ9uNp2hkiNNqGsy223/xQON0ktk7GauSP2rqBLwYkPF1vGxR
-	wO82Vin4omHQeqGSEmDCLIiLL0YV+q5hp3wuz2nEXM1CFnNuHRGrM9JIVNz5DLJk
-	0ghfxK/R6aI51Avmys3HXQCMvptKzcl1lCA==
-X-ME-Sender: <xms:PuFXavVmgBmdIXsE9aizZ-kLQOIb-eF0EbXdJiKIr1MZgqEKNl2Upg>
-    <xme:PuFXavDr2Umhc6U_m2YSVI3kMV01ORiJucgAzu4l6p3A8qlCPk4wpqvGgM5NGoUzA
-    UMjUow7C1YdjYc9aJm-OKwC7TFY9o0FfgKSQfeufuuEvpx-allFmfg>
-X-ME-Received: <xmr:PuFXaowdgRF6tw4nyBxyZJYYyAk_kq8ojoUid975NSlsO3HR_n8dYq-CFGG4fa22NKfI4IvTBa_zFoh7BVqeP2Y4AdIc3vnSo4qUGZo>
-X-ME-Proxy-Cause: dmFkZTGgyRKMOaT/ljo8EmcM6nL77NuSMR3+H95dQPxmjIZsecGphecr097WCjK+i8KYxj
-    M9jqdLL5K2zvER+1sWP+QeBIvL+UzAFBX3NJmVMgxy/bTrFtmpIOPVrci6HhecPvt9nX9+
-    PzC5dU5QYY3Kc3VgBxb2I6TH/fpUuva7xEHIEC8DyK5GY3yXN6QD+xJ53A3e9E096+Vsw4
-    qDp23rcTzRGGcLzsfXpCdhwucOQpHW5Jb7PlMFW3ikQVeJKW4ezUhrWyAOgGtKKOqwje+h
-    JFtTrr4VOzwXgGqc9MjFtMNY0Sw6sXAzJSgFk/x50kJzt7P8Tm969/LJ9CrmDE6zpr5nlR
-    tQXlajvE2eczT6bdEipsAyyOHxih6T2fjLjD6A1vLS/7JD491UKQMsYNaqPpGg4JvLp2x5
-    qNPh1+6uSFL1bN6nkQBJLASYLtqOzHHTijKNT+c22lnSTZu7h5MwQr2dSm3c6pPRcS26iK
-    zhTg5bOiTQcj+4/sdXmHjQLPTdqC8+MF7uIeKMxWDzhaD8NWesZDygRa7/CjFx+pu0ssLq
-    d1K0LJiHrlfHbdhv2bkdg6BQp99/UOm6r2WGenZb44t/bvN6oLB3ed2RwuHyRA2iPgY6j2
-    NDoMxVNdOW+zgqZnN366l/I7wtwR3IhUq5OE977RMoZi1C8vPGV0Bz087HVA
-X-ME-Proxy: <xmx:PuFXakDgXwI_xZIfgxRpLvWc8ErK9BTS6JXbNZTnBz5zJDfxx2fzrA>
-    <xmx:PuFXatZ2rct515N1JZckGtF8swhRrvFTIEicYcmiub8IUTM2YnI47Q>
-    <xmx:PuFXakheeb0KswQiNvOL_GpwFNNOz_B69TFLIRsaH9iFfkldpzPkDQ>
-    <xmx:PuFXan7elH9NByUJysJRHiiR44u0AMa_i9e8y_GCYRc7k2ewwK3WHg>
-    <xmx:PuFXajDiO_WK_ak7Ru4-2SHdWtvWAgfFQaa_LlwquG2mod2tz9HoAg_o>
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784146208; x=
+	1784232608; bh=odEcVxrAl/2yLJMXorm42nfpDg7FND6suBTxkqVQ/L4=; b=Y
+	tcYqXhPo8KHoLVGfCQssGQbAgeQJrXgWpknYD6qYbcdFUsFd1mApiS8piYk99Lom
+	Dccz8+tMhK+QoDksoF+K17Q2oM6Q5sW5GM+5GkfRVMPGHIU3L4kYqQmTFzjnkvO0
+	Li9Z5IfCSyVBLIYI/CqAVyj74j8QRKBeIW/FYcT0dWNc82f6W5N+nYKWFEAzaOvu
+	06ojeuAyfNKHie3N/1C68basYw4FwrmvCzBpEsZLMZEL3LGcFRR2j+gi3x/WaL2f
+	05bu/pTRzqQ/MZV6KSIEDjsn/jsCGpYhDlh3DAb39sCqLnT8++/knJqsWayCOj4p
+	Sj0npXqyYQv6nUI4xoZJw==
+X-ME-Sender: <xms:IOlXar8MzXflR0nI3NMAOu9MoXERDTGRNlncd7cn_fYjwBcSPduZow>
+    <xme:IOlXavL-p0-2PBtNAk7XXW768826yA11QEYKT459dLRgbTc9JNASJjSwT9YiqOlTT
+    UVc87uemlYwHt_ov6CP7FM7diTiqUEMwOQ2DOt6f-Z1uuJFucgHdQ>
+X-ME-Received: <xmr:IOlXamYBK_GeCxEY_XuyUYZ4pvpQfCvB0rb04JOPq8pjkE9KZT3VLvwxqMSYKa3BBZxpwwn5KvCd7bM9xsCXNoE3uMDsYncp19I0dW0>
+X-ME-Proxy-Cause: dmFkZTGgrhd7e0r2chsrDdFDaFRUvSRxkRCxepQlrZfu2jLAzolp7v8EsZ/KkwwL6VMVV0
+    /yn18QBlZSbzJ2OifsGqb7ZYB/aAFrNVWU/3faH/BrgCtYwifZcHabzsp6qOAVo7r5s4LD
+    2+Irio3+N5rchONC+B6ki7jWP5XHwQyIbq0v9+RRvYUjxJTLgWtkT7yzR7wZrfoU8AF5je
+    epBxBJz4P5Q90mLzFinFgYSCTZVMcVP1UA9OmM8m+uDMbjIuiz5H+7YNE3VWouZQfMg1DE
+    Xo9e7+SNo9wh3nqGB/Q1I3KwtFZz6w8K/3GF1Tjqq3/9sDBLcz3KX+xjBMpRBsjYYtLCVL
+    HzKWpa7+btOurrRqY7rup9PEEfOjuSQ8MuYYdG1qEa321MsMewUOyawfhFHShtVF9K0t5m
+    V6fw/K4PMrB0yNJF04yPiG/wd0LjAgs06UBOwrRsl0dy4d1GR+MqS0jhGfVpCVt4gojGWy
+    /6vMSUhZskZpSVXTi4CXyd4mxzCoqCZSY1OkQ0YMBpPU7re7L1jytYD22plxPSufkOyFro
+    cnXxIsuLv75fzXyFwiooMqoCwbnOkdrPouHIEtCYB0QqnwxpazlcWx78uhXqwPfAXyKkfT
+    STWUa9KQt6ImYfZ3V+PVFFB401hux5EnvnPLlV0kRr+Wb90UB8ztRpgcfZSw
+X-ME-Proxy: <xmx:IOlXahLAY_m4WRdcrUFwgM1E7REchYi-5Abi2kVVMwsqxpfeQG6WlQ>
+    <xmx:IOlXakBvAuV4-WV0XQpFTLWqYktmbH2ZL2gZYoScpqAODPIEzz-bTw>
+    <xmx:IOlXampfjstbhh9u0nXyqxfeKj8fPVVUw74CKoGkGEhAxy0nETYwRA>
+    <xmx:IOlXavjl4uQ3I9X7ZytuC38TeySUbTsFYrjE9VPthQ0fYGeK5P3UJA>
+    <xmx:IOlXagZi4bOB2C4tUHvm7rwgyxRawV01FY-1in4_12M0iDI_hIAgteNV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jul 2026 15:36:30 -0400 (EDT)
+ 15 Jul 2026 16:10:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Shlok Kulshreshtha <diy2903@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t7614: avoid hiding git's exit code in a pipe
-In-Reply-To: <20260715113344.3490-1-diy2903@gmail.com> (Shlok Kulshreshtha's
-	message of "Wed, 15 Jul 2026 17:03:44 +0530")
-References: <20260715113344.3490-1-diy2903@gmail.com>
-Date: Wed, 15 Jul 2026 12:36:29 -0700
-Message-ID: <xmqq1pd4m4ea.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH] submodule--helper: avoid use of %zu for now
+Date: Wed, 15 Jul 2026 13:10:06 -0700
+Message-ID: <xmqq4ii0ko9t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,88 +80,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Shlok Kulshreshtha <diy2903@gmail.com> writes:
+Since d7d850e2b9 (CodingGuidelines: mention C99 features we can't
+use, 2022-10-10), our CodingGuidelines document has explicitly
+forbidden the use of '%z' and '%zu' printf() format specifiers,
+even though C99 does support them.  However, a new instance crept
+in via 82c36fa0a9 (submodule: hash the submodule name for the
+gitdir path, 2026-01-12).
 
-> The exit code of the upstream command in a pipe is ignored, so in
->
-> 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual
->
-> a crash of "git cat-file" would go unnoticed: the exit code of the
-> pipeline is that of "sed", which happily succeeds on empty input. The
-> test would thus pass even though "git cat-file" failed.
->
-> Write the output of "git cat-file" to a file first and run "sed" on
-> that file, so that the exit codes of both commands are checked by the
-> &&-chain.
->
-> Signed-off-by: Shlok Kulshreshtha <diy2903@gmail.com>
-> ---
-> This is a microproject ("Avoid suppressing git's exit code in test
-> scripts"), applying the same fix as c6f44e1da5 (t9813: avoid using
-> pipes) to another script. A search of the list did not turn up anyone
-> working on t7614; please let me know if it is already taken.
+We could claim that this is an unintentional weather balloon that
+nobody has complained about for the past six months since Git 2.54,
+proving that it is now safe to use these format specifiers.  But
+(1) it is probably too early to make that claim, as distributions
+often stick to a stale version for several releases, and (2) it is
+unlikely that a failure in this code path would manifest as a
+major user-visible breakage that would trigger a failure report to
+percolate down to us.
 
-All look trivially correct.
+Instead, let's stick to the established workaround recommended by
+our CodingGuidelines, which is to cast the value to (uintmax_t) and
+format it with PRIuMAX, at least for now.  Even if we eventually
+perform a bulk update using a Coccinelle script to transition to %z
+and %zu in the future, adding one more instance to the pile that
+will need such a conversion is hardly a tragedy.
 
-Two clean-up possibilities that are clearly outside the scope of
-this patch are
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/submodule--helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- * There is no need to backslash-quote the dollar sign.
-   t7604-merge-custom-message.sh next door uses "1,/^$/d" just fine.
-
- * This "cat-file the commit object, and strip away the object
-   header with sed" pattern appears quite often throughout the test
-   suite.
-
-   $ git grep -B1 -e 'sed -e "1,/^\\*$/d"' t/
-
-   shows quite a few hits.  It might make sense to give them an easy
-   to use helper script
-
-	commit_body () {
-		git cat-file commit "$1" >.commit &&
-		sed -e "1,/^$/d" .commit &&
-		rm -f .commit
-	}
-
-   or something like that.
-
-But again, these are clearly outside the scope of this patch.
-
->
->  t/t7614-merge-signoff.sh | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t7614-merge-signoff.sh b/t/t7614-merge-signoff.sh
-> index fee258d4f0..e58bf07b7a 100755
-> --- a/t/t7614-merge-signoff.sh
-> +++ b/t/t7614-merge-signoff.sh
-> @@ -45,7 +45,8 @@ test_expect_success 'git merge --signoff adds a sign-off line' '
->  	test_commit main-branch-2 file2 2 &&
->  	git checkout other-branch &&
->  	git merge main --signoff --no-edit &&
-> -	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-> +	git cat-file commit HEAD >commit &&
-> +	sed -e "1,/^\$/d" commit >actual &&
->  	test_cmp expected-signed actual
->  '
->  
-> @@ -55,7 +56,8 @@ test_expect_success 'git merge does not add a sign-off line' '
->  	test_commit main-branch-3 file3 3 &&
->  	git checkout other-branch &&
->  	git merge main --no-edit &&
-> -	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-> +	git cat-file commit HEAD >commit &&
-> +	sed -e "1,/^\$/d" commit >actual &&
->  	test_cmp expected-unsigned actual
->  '
->  
-> @@ -65,7 +67,8 @@ test_expect_success 'git merge --no-signoff flag cancels --signoff flag' '
->  	test_commit main-branch-4 file4 4 &&
->  	git checkout other-branch &&
->  	git merge main --no-edit --signoff --no-signoff &&
-> -	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-> +	git cat-file commit HEAD >commit &&
-> +	sed -e "1,/^\$/d" commit >actual &&
->  	test_cmp expected-unsigned actual
->  '
+diff --git i/builtin/submodule--helper.c w/builtin/submodule--helper.c
+index 1cc82a134d..92e38106c1 100644
+--- i/builtin/submodule--helper.c
++++ w/builtin/submodule--helper.c
+@@ -549,7 +549,8 @@ static void create_default_gitdir_config(const char *submodule_name)
+ 	}
+ 
+ 	/* Case 2.4: If all the above failed, try a hash of the name as a last resort */
+-	header_len = snprintf(header, sizeof(header), "blob %zu", strlen(submodule_name));
++	header_len = snprintf(header, sizeof(header),
++			      "blob %"PRIuMAX, (uintmax_t)strlen(submodule_name));
+ 	the_hash_algo->init_fn(&ctx);
+ 	the_hash_algo->update_fn(&ctx, header, header_len);
+ 	the_hash_algo->update_fn(&ctx, "\0", 1);
