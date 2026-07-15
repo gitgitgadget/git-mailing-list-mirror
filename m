@@ -1,30 +1,30 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5216A3B3BFA
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B546A3B38B6
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784087714; cv=none; b=Muc7Ag1diWgzYL54kkngNq4tMIQ4du4EthDt1zX3hX9ArYQTNvQKn6IfIOtq+YcMnnEq4Bwv9wk9krCihAIvgqKkvtDfG7jNVqxANsiRms15amxRCqrrn0ats/KdpP7H5NQJd2O8BYKYY6dJPUWvGSoqI9Ybcl8mZQicpjfDAmM=
+	t=1784087717; cv=none; b=jdt6zC3FtdaMHM+i5hIdx55aHRwI9OGKl+d3C6T1j8qKjjN9K12xZ8qdTQoCbTjZH97J32XDgZoIrmPr4fb+J7jgYpgRMCUoj+LbWVlauG91GGcx9oRtrZ5zFVRbwbGrdWn46s2Hek5txb8SRQIRejImE8JkDuvRzBzv32Q+QyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784087714; c=relaxed/simple;
-	bh=Tx5a9uTp4ac/kZBXRghvhh8wX/Yo263WVhEq7ZBjQkI=;
+	s=arc-20240116; t=1784087717; c=relaxed/simple;
+	bh=xOqTjDQM5VBtNunLG7fXaE95Q00MHQq19H+p9wGxr2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JoiuZK/F6EteyAoZ7nDuAFvxnwSzG7lQBepJJUZ4/IiA+0ngPZdFIGatG6KmNJJZ5D8yHdlRSZQ2LIkvPyLWKXBtflpJDDOgvYbdiAG51KzW4KhRMOGCPrpDexpVe7i6xJsezkkU7WUjLc7b6za1Gj5dpQ9Y+gN0n3gytn0TRHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=bEVvvWcQ; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=YpR53dM2; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=K/1wMvYgfY9j7D5pkSPmHXl20l0Gj4stvmfaP83JR7OeBdcHFbdfcpoup7upVY5XZ0E4mkhdMsfU1CoUWUdvb6l0MgVof4sc5WDdaw+UE4Q6NzwKE9B/m1/UCbXFf1fMmuB0sBDUr1z56CRmwIFbW7VbLWnWh9oeVwN+dnz/hj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=KcJY18cB; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=T1u5zorZ; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="bEVvvWcQ";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="YpR53dM2"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="KcJY18cB";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="T1u5zorZ"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=bEVvvWcQ/F2lPOsMVT/jEc1bh6KJUX5hs6x5ocsYFrSSmQtlkwY/MbaRf3EX4YiPVwrVTgrnXdgchMJahvKF2upXLrf1rlY0VHJ6Qnftao21ZNCpzoNUJsq65HWdkM99rbA+eKN6PEjoPKLYT81Ah76I8VEb4Cj0oS80Uy01x0S3Jzr4L7HQ5iFNubcEdNDNKoyIKR6ewYXGW6INGrkGCF7p/c8DeRYN68fPmuRnAPQ9BH4E4UH5rvcGjUSyI9C4leClqpzL7cc65iFANGa3hOen4q9jBXR7XCvk92T1oAQ9y3PP0ymMiWDXAy6OJ+6kFT1wQKkUH5gx/5nrs46kSQ==; s=purelymail1; d=malon.dev; v=1; bh=Tx5a9uTp4ac/kZBXRghvhh8wX/Yo263WVhEq7ZBjQkI=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=YpR53dM2x8DGgmclMsru42UsmiPIHI83wPH9L4BcY6tZU2xQWK6ddORN9wDMgmYSGGXabHvRNAxIhvOYSLAoHKFpGJ3k/jLWTAjrL+q4ruFa4JVgkxi2gV1gsxv/Wk3UsLdbtd1XOOg7hNL8bOFqCWEnzxUDXuylqQPOqubAjXPR8ogBTi+LNEGhBekdlleu8w6SkerZkubrLqSf/A9jivkhcOmY5QerZ2uo59X7JRbHBNy8TrwJegaFTSuVEtlLIEYSw4Xb5TkQEmI/CNDmVDu5gaSL1BVxI1zSigrWxaxzCKer5UCxbl5GXZNHMw5cfJFqf8V2d3mNs94khBa+8w==; s=purelymail1; d=purelymail.com; v=1; bh=Tx5a9uTp4ac/kZBXRghvhh8wX/Yo263WVhEq7ZBjQkI=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=KcJY18cBoKd1Dtg5nZMCa1tI55a9RPjCCzFSsqBPkvCTT55YKFChpwtRU3q25Ggbf3a1NUvaxOZjyK9tcvIj5E3kpSZzeKITnrn2tSgtV8am0CuxAeomGtNQmwWUMLS59ZpR0Xab84bWxo9UN5LyvKhSYpRpdEKNAc9xoqkGy0Db/XTE9reonDrE52oippCMgQic6PmTipN+D83+wbcfxcjxOOsK6KcgN2PpWsOLDI66LjPFEQgXdft7G02amZ1Sh5QULChDOEFhBK/koJhPSo9YFU+O2ZbI1OwIK+iL+i7b/kTZuzLbw0fob7+snkq+kcbKOd9/T94OIsVOlv7qbw==; s=purelymail1; d=malon.dev; v=1; bh=xOqTjDQM5VBtNunLG7fXaE95Q00MHQq19H+p9wGxr2k=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=T1u5zorZYNSoG9tJrdIMJqTfi9mkd4eVHyNmRBwKNnbHzZv5lprZ08DL6u75zo0G35MIJ4L36gNtx3pif2Pp46B6AnJ1zWTsBYn+VkFb+ZFpYrOpfSr2i2jwC/J7ocncrPafDKDn7yQ3OhglSaGnvQfRsEn+wOLxaAHW30vPad+TojX6xiMHgReVHX+kan7Wod5e6Jgz3mRdpQ3qXxhgOBk2tDnmqRv7cNXN6hrutm0G5vjhbs0Vdauep1ABni0mdKfPkrOMKphT9v17FLmG2YX+rKC0PFqPxp2qykDpWRYtegQo3F1SVaCZODq7+HT8IP2j/fxCqts7sMUwQ+VFeA==; s=purelymail1; d=purelymail.com; v=1; bh=xOqTjDQM5VBtNunLG7fXaE95Q00MHQq19H+p9wGxr2k=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1876003495;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 15 Jul 2026 03:55:10 +0000 (UTC)
+          Wed, 15 Jul 2026 03:55:13 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -33,9 +33,9 @@ Cc: ps@pks.im,
 	Christian Couder <christian.couder@gmail.com>,
 	Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v5 1/4] read-cache: remove redundant extern declarations
-Date: Wed, 15 Jul 2026 11:54:58 +0800
-Message-ID: <20260715035501.48271-2-cat@malon.dev>
+Subject: [PATCH v5 2/4] read-cache: move 'ce_mode_from_stat()' to 'read-cache.c'
+Date: Wed, 15 Jul 2026 11:54:59 +0800
+Message-ID: <20260715035501.48271-3-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260715035501.48271-1-cat@malon.dev>
 References: <20260619162105.648495-1-cat@malon.dev>
@@ -50,35 +50,89 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-The 'read-cache.c' file already includes 'environment.h', which provides
-the extern declarations for variables like 'trust_executable_bit' and
-'has_symlinks'.
+The ce_mode_from_stat() function is declared as a static inline function
+in 'read-cache.h'. As we want to migrate configuration variables, this
+helper function will need access to corresponding repository-specific
+configuration logic. Move the implementation to 'read-cache.c' to
+cleanly encapsulate its dependencies.
 
-Remove the redundant extern declarations inside 'st_mode_from_ce()' to
-clean up the code.
+Note that the 'extern int trust_executable_bit, has_symlinks;' line is
+discarded because it's not necessary when the function lives in
+"read-cache.c".
+
+At present, this change has no visible impact, but it is crucial
+for our future plans to pass in the repo context. Comment
+has been added whilst we are at it.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 Signed-off-by: Tian Yuchen <cat@malon.dev>
 ---
- read-cache.c | 2 --
- 1 file changed, 2 deletions(-)
+ read-cache.c | 20 ++++++++++++++++++++
+ read-cache.h | 16 ++--------------
+ 2 files changed, 22 insertions(+), 14 deletions(-)
 
 diff --git a/read-cache.c b/read-cache.c
-index 38a04b8de3..c44e4d128f 100644
+index c44e4d128f..cb4f4878c8 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -204,8 +204,6 @@ void fill_stat_cache_info(struct index_state *istate, s=
-truct cache_entry *ce, st
+@@ -202,6 +202,26 @@ void fill_stat_cache_info(struct index_state *istate, =
+struct cache_entry *ce, st
+ =09}
+ }
 =20
++/*
++ * Determine the appropriate index mode for a file based on its stat()
++ * information and the existing cache entry (if any).
++ *
++ * This function handles degradation for filesystems that lack
++ * symlink support or reliable executable bits.
++ */
++unsigned int ce_mode_from_stat(const struct cache_entry *ce, unsigned int =
+mode)
++{
++=09if (!has_symlinks && S_ISREG(mode) &&
++=09    ce && S_ISLNK(ce->ce_mode))
++=09=09return ce->ce_mode;
++=09if (!trust_executable_bit && S_ISREG(mode)) {
++=09=09if (ce && S_ISREG(ce->ce_mode))
++=09=09=09return ce->ce_mode;
++=09=09return create_ce_mode(0666);
++=09}
++=09return create_ce_mode(mode);
++}
++
  static unsigned int st_mode_from_ce(const struct cache_entry *ce)
  {
--=09extern int trust_executable_bit, has_symlinks;
--
  =09switch (ce->ce_mode & S_IFMT) {
- =09case S_IFLNK:
- =09=09return has_symlinks ? S_IFLNK : (S_IFREG | 0644);
+diff --git a/read-cache.h b/read-cache.h
+index 043da1f1aa..3c4af2faeb 100644
+--- a/read-cache.h
++++ b/read-cache.h
+@@ -5,20 +5,8 @@
+ #include "object.h"
+ #include "pathspec.h"
+=20
+-static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
+-=09=09=09=09=09     unsigned int mode)
+-{
+-=09extern int trust_executable_bit, has_symlinks;
+-=09if (!has_symlinks && S_ISREG(mode) &&
+-=09    ce && S_ISLNK(ce->ce_mode))
+-=09=09return ce->ce_mode;
+-=09if (!trust_executable_bit && S_ISREG(mode)) {
+-=09=09if (ce && S_ISREG(ce->ce_mode))
+-=09=09=09return ce->ce_mode;
+-=09=09return create_ce_mode(0666);
+-=09}
+-=09return create_ce_mode(mode);
+-}
++unsigned int ce_mode_from_stat(const struct cache_entry *ce,
++=09=09=09=09unsigned int mode);
+=20
+ static inline int ce_to_dtype(const struct cache_entry *ce)
+ {
 --=20
 2.43.0
 
