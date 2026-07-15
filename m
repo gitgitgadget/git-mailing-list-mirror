@@ -1,63 +1,63 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8784480DED
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 15:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D263480DF3
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 15:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784128944; cv=none; b=ZXiHkipLvqFs+rDNTcX04pUoN/bU5stZjTRWdBAxQ01so3PaxVCq6Bwv4PntkW42HI2mVXdpMAagUtGYIOsdfjUOnQ0BXWCTtP54b8gTmdja+9MDI4wgqMdYg7QNtLONNtPRnWd4WbNKqsl5igwuwu0iCpp/JvO+XsL3jtEGtD8=
+	t=1784128944; cv=none; b=CAosJ3rtJr4cwLHlnzhyVTM8NRQ0Cx46Wh37Rufnkt3PtUmQ+QGIymWNMpLV7c7nSNA9TQElTZ3CGEr7F9Sp0rovuRBfaIFcVOv/88x7CsaMmI1X5x+eO8HO6tmEGSaii/W5oqtxtuGr4CsUQw/dceOGDROhOdVdd3CZL32W8cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784128944; c=relaxed/simple;
-	bh=GQVDveUlBuIyPPYiyJDIvuJeGdmDWSlrSLVvHIX3yTY=;
+	bh=N7D8OBpqHQPyu/hF/bqxYt3Y9ODFTbl5DSWT5lgjjrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GS6plYjIg8skYrbO/sOxOxtHE1QcT+2vFNvw5QZ/J1sjWjMhvl/67QopxCA1XoY88MI3p+gMluCmP6bOvdP/1o7aHDOiVS/9qqazA1+wr/DyJTlK4MEFJNo4A4QFJ6limicNRtybJsMY4tmTPiC7zv3EaNG5GshebRgXQJvpN/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QX8GnR2+; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version; b=F+tYrktgTH+nJFqZzLtxCzTd6M/HCT0EqJ+qGobAX93z0/0by2WDnW8IGPgIMN98rui7Q68gks4Binn1VOIwFlsnEO8OK3pvMWyFP9f2ZDl/w3yPk8LQB0616/H9rxkSRQYC657++C3mc6j6hwtYZ6786hY9PeOBK1EbmuADjvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pGkmcP0J; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QX8GnR2+"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-493b779003fso24276945e9.3
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 08:22:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pGkmcP0J"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493f6de72faso12633175e9.0
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 08:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1784128941; x=1784733741; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=ojf+QdLqPPWEpUjqH9f9zplWcWiaFP+DWqvQdBdqRkQ=;
-        b=QX8GnR2+4fFV8FgMgUZa0WVC2u0GQe2pbxlwi5K6HA/dtc1krgXkUr2G4AvsI3LNnL
-         6TNA+1Kt/tlrkp+IORvUc99LkX9Mzz8lfsX0hmSQGrHNsZexUedD9TP7aKkTL6F3Ff7F
-         kVpJhdbtjyyr2gTtowyhlYWj1/uigJC6vX5TyFm2m3N6Bgg4kXNY91ycZths4LwnEZIL
-         VvFm+rh8ZBqkOAVemfTMWuUPS4cNJtSDNs+ifiV0TLKoyDAkZtBapx5jQp3F7wG2ctLS
-         c+loejDzLa1qHlLbepa8Kc5jipSjII5SXHrvP+gX40XlhcSQLYQmsdCgFj4OnLEkSqmX
-         fh+Q==
+        bh=z+lrHLxxqvmPM5JXF1z86/MRGVzft+No7Ozkf6ncRYg=;
+        b=pGkmcP0JDbb2ZBKw1t15nRI1dInflVC7tsjEhG7NPnWUh70p0PAj2kuTqmbZ3qHHXE
+         PWmkjLL0cfVnedDznS4C436RCBjMwDhAjAkMbqIl3vhQTHfQpexuGeZF+QMM7EOhki63
+         MdcXSfCuIvKWGJ1NjXtrNdoSsCUHAXacBSBiWP3669Ym4/l9idn0ZHFXkPQBaNseEN9A
+         QFD62fV4BZDrDqwPDWV4ErcaJtqcgw9ypJX9mEg/5M7UqL+c73lT0jFbHJzrtOA/7yua
+         3+Xk6TId48uly6UAgh6dX4RY4m2nF7jEXwwrJjryfa9waumt33wovdWvX9a53EVIyEz7
+         Y9Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1784128941; x=1784733741;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ojf+QdLqPPWEpUjqH9f9zplWcWiaFP+DWqvQdBdqRkQ=;
-        b=KasUwhJEL4K0iF8pjB39gcvmJxQa6t4ZVW1nFxwCuu2sCmy622BOUGhS9dA/SdDXgw
-         v8FQp1iLj41xZ7hSUzzYYMBW6ntKhaT+d6vLT0Ft30Ik/s7wBnd18pe7eTiMivajRy9i
-         T5XVGJHgbV02D5XSz71OEiUK0ssZquVFqRxRaxx3asNVS1GL7Qov45A5b1o7ENhbjgju
-         VW2OLTRy63Xn5P4VU0w8RdD6/IqJG4PL3zU5BA7SdpmqV4UG/QzzknY7YZWhof2nrtGU
-         nMb5Y8L2mm0O9VhtBZr+R5Jx8PxIGOA8TzSJcPa/yehcFr0yIbkiVY+SMBMSQdvMOWFV
-         1gBg==
-X-Gm-Message-State: AOJu0YwwOKNI86G0M12QzHCTStLHPB+H6Dne7qzKQVKFnEt+gu9mt3zs
-	YaBcNxisshAmb+AsQwqocXMy6JViWs2/hCcvuYSFs22dMYH87yJynP8niAvyIA==
-X-Gm-Gg: AfdE7ckHT/gIdBVU4OnyQbjmLnHrem5OVWroaLUjcZ0ipG5eZkeKikeA2fwZciI9udC
-	VGE5FnsFc2qWgDV6ovRXR3QOKb/tn6hO6BtVjTgjpj1Txwo0dHFEvfzIz8myYoqX39cwbgls5pV
-	XEa6drNASdEIcJmaG2gevKA9bhrXhmnozBQNMB2oTBz++Wgr+vkw1/JOCjz3R2J47cMaasZqirz
-	h4IQe+rIT3mk05qttz4IrP8M51vh7+UPLWTnmeeCQuEgxu6th+CjqG3LydqV/ltQ9hZTZe6ABjQ
-	fUzIfHhZ8ohscNh5/bckkUTTnuaA4HbkfLFU47EeS10q8eFa7JzjE9Z1mfrQwi6hC2DWLexdKyw
-	dtHs734ZAnnq3NIeMWIWDIqhK0nAcXBu6jt/RqH//Cv5idxsmtaEYEf7ejSxU1DN2prDwaoRxCe
-	DnxKgWnw54Q9EV1gFDsn8jKZd1t/c=
-X-Received: by 2002:a05:600d:108:20b0:495:401d:9f4f with SMTP id 5b1f17b1804b1-495401da1a5mr10332025e9.25.1784128941026;
-        Wed, 15 Jul 2026 08:22:21 -0700 (PDT)
+        bh=z+lrHLxxqvmPM5JXF1z86/MRGVzft+No7Ozkf6ncRYg=;
+        b=X9t+WhtoqNhim3o6YPcxAU5opvpu9e7wF+nJ0uTCXr02u/j6SpEOimF9kBymz0J54L
+         gaVmV+UDiUNwpRugBYIMXkuO3nlvxSug79D1aJ3n8HXLpbNhHVC53q3AYeoEfJDg9JVL
+         pjzb5OpptnuSn4yR+xfJ8Znxepndp5HVomaMK4irwpj9JdQXQZY7nPWjqqPaOEyAtloV
+         47m9SwOpoGLRte/6iWyaP0gtiQtW07pFNRV4am7FHcF1sRN6/DAj7ZSbVJw4vWlMDENV
+         z/emZGIpnAa9GD1VHUsFmRjTnOt4cImz9DE6HhukEPj85Bz/EaylBW5e8wBxZZ0YOtWU
+         7u1g==
+X-Gm-Message-State: AOJu0YzFm4+up6QkdEDJtmJUpEylKilsv41jHh8jdRC155m48qnXsSmx
+	tItHtLBjjUpT4MD5Vzn4e+aFoyBX0l9ika34xamY+zhXVenjr3gnB5Y0WNI7bQ==
+X-Gm-Gg: AfdE7ckf5cfRsLw/y7+2OfqaKcVRTBueLM45fcYswD4TIGL2TE+NW15pTSGcU0LCYte
+	9w+B6CQ35gKgOXZZAAtA61cSPZd6KscfZLWjDg1SXZiAeIC3PZjD5BuGn+uIzuBe46zACZcrCrQ
+	/W6Cm7ku9EF4vRaiowIZ16FS/3T3iNa7omucxqbRlcbGv+XxGmWmdHYnZgZ5U5CdgZGUa/n8LlB
+	TM94OHaQkx3hswOwDm3JsgITRCkiML++EaNeVWvlPhoZY8xLN7no6OVewUchH/kIvdNTlWAC6oN
+	T0ntdyoFtyAJWF+fjyVDgVLfRJ5EWo2f7SvdWDxvUJQA0qRPbGFwQryh1eZnF0j/gTy2m/aDbhA
+	7HEdLPb7Q2HkAa0ByGSOp4KDSVz2CG6pScsZodsTmOY28wp4/UtQv8WurqzKJHL1FQ1LxhR7jz7
+	0pzKg+JLyD4UMKqzRgKJTVS1Z/maU=
+X-Received: by 2002:a05:600d:8496:10b0:492:6f5c:fd8c with SMTP id 5b1f17b1804b1-493f88c6d2emr131275145e9.15.1784128939901;
+        Wed, 15 Jul 2026 08:22:19 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4953df0fc6esm51043395e9.9.2026.07.15.08.22.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4953df0fc6esm51043395e9.9.2026.07.15.08.22.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 08:22:20 -0700 (PDT)
+        Wed, 15 Jul 2026 08:22:19 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
@@ -66,9 +66,9 @@ Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Farid Zakaria <farid.m.zakaria@gmail.com>,
 	Andrei Rybak <rybak.a.v@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 3/9] sequencer: never reschedule on failed commit
-Date: Wed, 15 Jul 2026 16:21:57 +0100
-Message-ID: <bff5f319e91b2b5ea13a32906d0d76bd688183fa.1784128921.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 2/9] sequencer: be more careful with external merge
+Date: Wed, 15 Jul 2026 16:21:56 +0100
+Message-ID: <947bb77e44f2087c5f148e887c280bb54d648b03.1784128921.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
 In-Reply-To: <cover.1784128921.git.phillip.wood@dunelm.org.uk>
 References: <cover.1782833268.git.phillip.wood@dunelm.org.uk> <cover.1784128921.git.phillip.wood@dunelm.org.uk>
@@ -83,34 +83,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If "git commit" fails to run then run_git_commit() returns -1 which
-causes the current command to be rescheduled. This is incorrect as
-we have successfully picked the commit and have written all the state
-files we need to successfully commit when the user continues. Fix this
-by converting -1 to 1 which matches what do_merge() does.
+If an external merge strategy cannot merge (for example because it
+would overwrite an untracked file) it exits with a non-zero exit
+code other than 1. This should be treated differently from a merge
+with conflicts, which is signaled by an exit code of 1, because, as
+the merge failed, we need to reschedule the last pick. The caller
+expects us to return -1 in this case. Also reschedule without trying
+to merge if the commit message cannot be written as that prevents us
+from successfully picking the commit.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sequencer.c                   | 19 +++++++++++++++----
+ t/t3404-rebase-interactive.sh | 11 +++++++++++
+ 2 files changed, 26 insertions(+), 4 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index eaffa8ebb84..1db844100ad 100644
+index 57855b0066a..eaffa8ebb84 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2542,6 +2542,12 @@ static int do_pick_commit(struct repository *r,
- 			res = run_git_commit(NULL, reflog_action, opts, flags);
- 			*check_todo = 1;
- 		}
+@@ -2453,14 +2453,25 @@ static int do_pick_commit(struct repository *r,
+ 		struct commit_list *common = NULL;
+ 		struct commit_list *remotes = NULL;
+ 
+-		res = write_message(ctx->message.buf, ctx->message.len,
+-				    git_path_merge_msg(r), 0);
++		if (write_message(ctx->message.buf, ctx->message.len,
++				  git_path_merge_msg(r), 0)) {
++			res = -1;
++			goto leave;
++		}
+ 
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res |= try_merge_command(r, opts->strategy,
+-					 opts->xopts.nr, opts->xopts.v,
++		res = try_merge_command(r, opts->strategy,
++					opts->xopts.nr, opts->xopts.v,
+ 					common, oid_to_hex(&head), remotes);
 +		/*
-+		 * If "git commit" failed to run then res == -1, but we don't
-+		 * want reschedule the last command because the picking the
-+		 * commit was successful.
++		 * If there were conflicts, try_merge_command() returns 1,
++		 * any other no-zero return code means that either the merge
++		 * command could not be run, or it failed to merge.
 +		 */
-+		res = !!res;
++		if (res && res != 1)
++			res = -1;
++
+ 		commit_list_free(common);
+ 		commit_list_free(remotes);
  	}
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 58b3bb0c271..297b84e60d5 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1249,6 +1249,17 @@ test_expect_success 'interrupted rebase -i with --strategy and -X' '
+ 	git rebase --continue &&
+ 	test $(git show conflict-branch:conflict) = $(cat conflict) &&
+ 	test $(cat file1) = Z
++'
++
++test_expect_success 'failing pick with --strategy is rescheduled' '
++	test_when_finished "rm -rf bin; test_might_fail git rebase --abort" &&
++	mkdir bin &&
++	echo exit 2 | write_script bin/git-merge-fail &&
++	git log -1 --format="pick %H # %s" HEAD >expect &&
++	test_must_fail env PATH="$PWD/bin:$PATH" \
++		git rebase --no-ff --strategy fail HEAD^ &&
++	test_cmp expect .git/rebase-merge/git-rebase-todo &&
++	test_cmp expect .git/rebase-merge/done
+ '
  
- 
+ test_expect_success 'rebase -i error on commits with \ in message' '
 -- 
 2.54.0.200.gfd8d68259e3
 
