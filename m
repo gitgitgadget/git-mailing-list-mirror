@@ -1,234 +1,306 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3119933CE80
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 21:48:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EC73D45CF
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 22:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784152127; cv=pass; b=tkGclBCsF8t9zwdUWH79yZB5tOlPMXs9OKRAbYcQGEDg7ohN8H0FRFlcpSL/osh9LLadfP3vLrTDMjRaIJUsd6POBTu6rWdhh1dF/mdzxH5/DOIojJK+PJQMaJJ6QJHp/7pAmJdjZrLR6fGPJ278S7Bck5UDP5m8kh14dGkmJ9c=
+	t=1784154482; cv=pass; b=RkUIEm4fQaeg9ZhlBEjg9/ChRkgGe17ayiCUgV78+n6PAKPkCGKaKLMPPopxuDMSuQDb9djepVmssIBSDG4vFmldX5aUyGXfeRveIRaQR2ysSWDkA5kr6N2okD4uBHmqPyJJeuArPy7IEHJok/ZaJv9d2OVzMQMzl0X3wP9fQuU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784152127; c=relaxed/simple;
-	bh=SRO/lnLU8iKrHfLEK7sGJEIz1FSJJJv7GzTboQCytJo=;
+	s=arc-20240116; t=1784154482; c=relaxed/simple;
+	bh=49EIJiZxkslBJTicdbShz3rnhPqoMU/ixnWyhkKsAEw=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qxhjQTN053NpYHBpOGm2O3M3DNsiEkzT4wte070QnVx36j9yfL6k3sMsxQKw5tPLpUyCPeBO771OVCbZC/U+I6GDNGfzKaErWKlNMW+prnxxz9lXvCq3JKpmUWbFEsCWq/Z3FCywl2trN7ZrJqSt/3vlOiXTIc67PwK25NyV3Sg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F7mRIUpq; arc=pass smtp.client-ip=209.85.222.45
+	 To:Cc:Content-Type; b=R26Ogs8MR21qiZYkpbQdpG297Tl0rg0UOR07URbU7IhSI5YCjBSBwDzl0Hlb9uNEzDra+lc+UwfyBSroc9FevGxcOU/G4BhaOM68hjDfJbXA2jy1LqloDwE7cGeHYSgNKQdQMfJvmjimaPGqo68yGumTUr0WLvFda7WIA0UZt0g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qgBNaQyH; arc=pass smtp.client-ip=209.85.222.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F7mRIUpq"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-9696319e14dso2340622241.3
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 14:48:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784152123; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qgBNaQyH"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-966e7380109so1297488241.3
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 15:28:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784154480; cv=none;
         d=google.com; s=arc-20260327;
-        b=n6bBBBEhP4wQ3ufWfDzvuE9mKkCkwEziJFl1DSENPe4qU6tFEOPu/4fI+CksNyzF/y
-         gH6/Qa1TAdYxlM0PppHijNY7QV8NUffdJnUpmKc3C7Zp+cCLwaGr44KVCsALf4xioTtt
-         k57FBHCHN/dY6feu/EZm/RaTynqr1T5YBN32BGlGCWPFqzL4xODpQn3etOoBeTBtkTUH
-         pGV1Qpc+KT1iK2DmieOl6avNLZ9RQfsYRGnVnGwhea+6uEddljQv7i/umdBGUAYaAiBN
-         f6BSC0zmWUeyn4DkcBjPgWps23/b4rbcwjmx5b/wo5m3bCYx2d28g8FPhDn+gW4lSxk2
-         kJug==
+        b=HFSVYCuomosBi/LQji6ObbGnIdob2oXpB/Um4GoDfV/LU0nIZt09Z90/zAf49NV0wH
+         vB7bYXATvmhZNq4CYfj9ukuRp2E0Y/W80rhBanex7vPvZ9i/k2zbIyEg6t3tBkbg659k
+         aXmX1eKUnWwxbPFjpaagrsZqWWOeFNV6+NFZnQegJtZZ6kaBjt7nYV5UEP6K8i6azFlG
+         8zZNhw2UaQaqxtBt0n+d4ZTSQgrL/QXbqQDpa4r9MYb0cmYa4urSC6Nxa5WXGV8jXW+F
+         +oRzeW1BlepRvzwIgP7r1GHDf9g2bAEcr59O1AMNOLphaR1hB6hh5Gl6CPNeHYI9AIB2
+         Zfbw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=VmYfSLs2jnrrbaU5ft3pMhJA/NJfDyqO7v35fEG9pLQ=;
-        fh=J3KKJi2VWy7vHpl4osSlR0h9kOFHSk+7Fif24PUGDO8=;
-        b=mVi2YGE9LDCIXsL/i/PMVw/jYja3HzWJCNplt/CYWnuVwDUdlILr6PS3roIsLqTxW0
-         dnvM341UorK4WfIDOMyMnn2zeY1M43GDdlMIFuc8xyfZF+C0F0eoTtJBfh7KwV85iNbm
-         gBxcdDUXt1rqMQsM8UYLwK9ApwN6W5zFxU/0zhBxxigxAayfomXTnJWCqVtRI/n7e0Y+
-         WsjlqBf3ACr2/djkZH9lLS+k4uABjOSbLDc5cy09w60pqcFdDNQHdgTS+3UJMzn+dSCB
-         J332uobf63idMWRpIUrkOGaXn7FHIP5kibtxoBxzuMYyGWQb8XFRjHZw6YX11mwQa0DN
-         wXpQ==;
+        bh=QdXp8urdc7PUcM2Va3sQ4c1a0YdTsopjaSd8o2bSgVA=;
+        fh=nvC0uII0/KWCUaxkhkD37M9WHFOdWRdpkNI+FzicL3U=;
+        b=fM9fTpgt6Il53RbtPWDmPGkz2e0qEsyr1eEscyFLN8EDGEeyE5hD3sUxhyIf2rMHCc
+         gjwCmrPaSODX98rB6IrR38OMIhJR8zkWCzyJTjPff3qvr4ma65fZMqOhe7No/Ee0F46v
+         yXGDfh+hThzbCnfTVs0mgGNoZqOI26S8C19ZSi+hPTwyIvlnnIiV35/4Ln8VsI5mJoeF
+         leFO/nZxrxp80mXk6YKzNDDWO4gTcLeSnUZokz4Zz/t7f6OCWvbrJl8wm6F+Io6nuu0q
+         JgFPdMSxBVQxGwbYOY56j75QkojZZ2p4UbyOPMTXWZcr9bO/I6iRj+YRTsE8m/21b3g2
+         KySg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784152123; x=1784756923; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784154480; x=1784759280; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VmYfSLs2jnrrbaU5ft3pMhJA/NJfDyqO7v35fEG9pLQ=;
-        b=F7mRIUpq72jdxVLxsT1M4uD7avZCvoEBYrTTXGO1jzLPGArOQabx8OvFPgFUlP4MR9
-         IDaNrs2aBH1pOSxMn4gn5A46wS8hYG9YPd6kgXIgQPhzwebMsgfwXxxCueLE8O89aIAr
-         cDwBoACN7Btgg3x4ObmC3hxH4Dt8YzkYwy8KoRskg3E1kXSjEGyOQEXwgxxQO5BBPdHt
-         Cn/cxxPauYMIVPJN3dTVYXNh0fOfJnbZCrfjjjrq++TBt4ugYTgsJy/Fl/q1NOYKHtr0
-         2Q0Wl/NaTZwpLaPW8Y2rsneedkFnB8Q1Dt+OPS1KrbUjT0SHOIYjIQ4V5aqx1rBVh1Tm
-         wcQg==
+        bh=QdXp8urdc7PUcM2Va3sQ4c1a0YdTsopjaSd8o2bSgVA=;
+        b=qgBNaQyHq77gl/ZJX/QIi4I1gaAIETi1VYiIRBbC3QOzWbjjGNfOTIPdhvqrJX3xjS
+         FpJMoOOtNMxSViPwkfB4SHTLEr47H5NxADd+arKwvIXuAZDX4OBRytQKuVg4qolUVceE
+         IRwQ66LNF6UKcuugDrYaQ1shgmOhliQu+3ww/3FNhxBUiYvBRKUjKYw6fwPF2pvAFriw
+         u93vxtiP67wcA4eTb5KX2rIuLhvyRBUfHwGP+D7XmBwwpOVY9qglHfeo/4QTfQ4Gs8Lu
+         WahFKj0v1fa2V090CZWO56y7hElQv078jgvdloi2upeovcoXu8eeh+M41yvmV5EyaJ5L
+         69Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784152123; x=1784756923;
+        d=1e100.net; s=20251104; t=1784154480; x=1784759280;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=VmYfSLs2jnrrbaU5ft3pMhJA/NJfDyqO7v35fEG9pLQ=;
-        b=XYyImk9/lq9Ntz6K+6OYsCX37LY6eloYBjHpFW3rUqEfLTGC5X1xYHJEtHvBEyWio/
-         CL4C1L+A494ohaSTs0asoscJP6Zv227oP+Q5oBi13An0vwwTMkXZQzn0gVlvAYiX5p0b
-         DWnUMb4qmS2gJfustzwjVpjWVxhAuKBQxyYEMul4OHCg51P6vY1iYUZrgX5QczuCiH8X
-         HJgRccvw6y+56QlxEn9xtE8GtVhnagLYPGwLMShQr71DzcTsDhPKltPNeCWudY37quUZ
-         S3RprWvGOvdGXqvIX2yYkkJN6A2lf+UbZWvGyX1EdUymGF/ScznPJ9B4Fvo9sQVDmXis
-         I93Q==
-X-Forwarded-Encrypted: i=1; AHgh+RpVkNPOHAtgQQgbU0GNfx5RmA4i4/AfO1Cj0zOI8tvSFj3JgzIWE9yEhv4G6vcBELCh7YE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDzqEvRH9H/brQWlCu/L4LiJEmmCsFjzdpjg6lCs4kD+wNnTcJ
-	4y216p3OUNbI8gsxWjPjcj1/W/+1oVgDDzmcvMbq8aRttBcBCKiAYKAYMl+TCLkWLG7T6tc7sZc
-	TTszcUGqZkiDsuH96BGsJ9Xys2BqDuIU=
-X-Gm-Gg: AfdE7clJnLRnZLsK6Z+arYo2mYJOXpIw/K60rjQok1MDBiYLSQXkM3jd7BRJEnc+gQq
-	r8W3LJkv94pVFXjC2CfygLTGL3YdGAbKz8HXmyd8bKXULK0DM2q9GQ3WjHl/gKn+Zp/MTv2tHgv
-	MxGyAIVrvNdCeVaVRo6rGW5atyA5NFbjiBYVDiNEHGyoTzqkHaj1ErLctuu4V+YHnTmZIcYjvP3
-	rLzzY5C5vscIEEkGrBC/x7lewLdsFmcZsTRmacEX5rqKvW8IQjKCuPfmzhX/ZrSv2UYkeflPWhF
-	PNBKZxukffDq6aqmQ9k=
-X-Received: by 2002:a05:6102:2ad6:b0:73a:9949:df89 with SMTP id
- ada2fe7eead31-7457e9b8e51mr5223092137.24.1784152123447; Wed, 15 Jul 2026
- 14:48:43 -0700 (PDT)
+        bh=QdXp8urdc7PUcM2Va3sQ4c1a0YdTsopjaSd8o2bSgVA=;
+        b=Un+JSn/rjEMwu69sPEBIkr6Y3UmFE95aCOEgmulgzAj2XEQRDzqnTwGj/jPc5Y5PeD
+         eDJkscsxaAAcH7mDkp9AD4cPcn7GtwgKKBY2ZWXLN4c5q8oGRgMy1DQqoXokppp8CwNq
+         ktbZGI0rjVhcIhQmpk5Ca0nCgCKhLH4RJl2xPHo4+JW8+UN1A0nMLQiKbS8JsS7UgCAH
+         hiYJU2E8A1QFIYzvG8NsMRZy86kabwrel77is3EVrdkoE9PHhr2ndjpuAbXRyGR87oce
+         3Hou0GtwC3M4kN7Y5DgybyQ78VUE4vsN6+CImhaHmSkN4t5AXSy/RYhq5IQagPtKwkaA
+         X7Og==
+X-Forwarded-Encrypted: i=1; AHgh+RoMVGW8fd6BBDA7yc/bqC+RcX5CLQOeQL+1L/3oDworfg99/jcLXWE0uwrCCmOfL31uH7E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxTGSepUVQu/4JR3WnR5mgo/HNQswsO0kbaIb0VyAAXLdAyCqj9
+	jpztO/HHIX6ep/E6CpT44ZCTkNZk0kZ86DGd6pd9AHfBc/ALDtYJL18kocthJzQOT4O4UhflNfe
+	cz8u+UUyyIHtnTNq9GHooxFFko3DwcnYTwg==
+X-Gm-Gg: AfdE7cmi1O1ztzLD+wNp9QKuCm69cLGPXq69Bp4WTZsMOABkJsZl/rI79ce9PredG8t
+	36tIZBW/ie2Rgsu3TLddcD8BpBEZGfIbm3zEkJNXicBBWqmFt7uZssLvu11Emj2IwYfdeyHDajM
+	ksx7brxCEKicW0bWK/JxZ2r5lEdA9HQjahc8VIiPlz1CXUXg6pPlm/wDt2pFE2vDxH9PW+vvPG6
+	H+8yii+zSgGjUomTuiW9ngFjbvO1xw2LrSXbI2QPPm3hy/SpNJsG+2O+ha5hrItVniVtwhcMwkC
+	dDlLJyTJG8TKvoO7oUhIZK4OPjRA6pqPI+Jyi3CUEQe/nhUvBzle
+X-Received: by 2002:a05:6102:5e8f:b0:740:127:c81b with SMTP id
+ ada2fe7eead31-74533bee3eemr13386962137.7.1784154480132; Wed, 15 Jul 2026
+ 15:28:00 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Jul 2026 17:48:42 -0400
+ HTTPREST; Wed, 15 Jul 2026 18:27:58 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Jul 2026 17:48:42 -0400
+ HTTPREST; Wed, 15 Jul 2026 18:27:58 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260715-ps-eric-work-rebase-v18-5-34d7adb051bb@gmail.com>
+In-Reply-To: <20260715-ps-eric-work-rebase-v18-11-34d7adb051bb@gmail.com>
 References: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
- <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com> <20260715-ps-eric-work-rebase-v18-5-34d7adb051bb@gmail.com>
+ <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com> <20260715-ps-eric-work-rebase-v18-11-34d7adb051bb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 15 Jul 2026 17:48:42 -0400
-X-Gm-Features: AUfX_mzrt5vR29fB3Rp8zwGzlZewSPCDFyhp102DnkylwsiJ8LKBHvfZLq_V0_U
-Message-ID: <CAOLa=ZSy1Z-R38cqFiz-Ejj9CNJkp4x_6rFk_wdfhyBytYH9fw@mail.gmail.com>
-Subject: Re: [PATCH GSoC v18 05/13] fetch-pack: drop static advertise_sid variable
+Date: Wed, 15 Jul 2026 18:27:58 -0400
+X-Gm-Features: AUfX_mydrw4x27RqrtDCJ3F9AFZfD_G_mXEdlLqZeH8WWR9uAQhFIpC8nu3VSmQ
+Message-ID: <CAOLa=ZSzgsxA0ysJ6hMv9OJNVHco0YHmwQWwirD0ZTDJKMSWfQ@mail.gmail.com>
+Subject: Re: [PATCH GSoC v18 11/13] cat-file: add remote-object-info to batch-command
 To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
 Cc: chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
 	eric.peijian@gmail.com, gitster@pobox.com, jltobler@gmail.com, peff@peff.net, 
 	toon@iotcl.com, Jonathan Tan <jonathantanmy@google.com>, 
 	Calvin Wan <calvinwan@google.com>
-Content-Type: multipart/mixed; boundary="0000000000008b40f90656ad4921"
+Content-Type: multipart/mixed; boundary="000000000000036da00656add6e7"
 
---0000000000008b40f90656ad4921
+--000000000000036da00656add6e7
 Content-Type: text/plain; charset="UTF-8"
 
 Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> write_fetch_command_and_capabilities() is moved to 'connect.c' in a
-> subsequent commit. To prepare for that, drop the static variable usage
-> of advertise_sid. Currently advertise_sid is used in two places:
+> diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
+> index 86b9181599..a7fa6674c3 100644
+> --- a/Documentation/git-cat-file.adoc
+> +++ b/Documentation/git-cat-file.adoc
+> @@ -169,6 +169,13 @@ info <object>::
+>  	Print object info for object reference `<object>`. This corresponds to the
+>  	output of `--batch-check`.
 >
-> 1. In function do_fetch_pack():
->         if (!server_supports("session-id"))
->                advertise_sid = 0;
->
-> 2. In function fetch_pack_config():
->         repo_config_get_bool("transfer.advertisesid", &advertise_sid);
->
-
-Nit: But #2 isn't a usecase, it's where it is set no? Looking at the
-usecase, it seems like we have two:
-
-  #1 like you stated
-  #2 within `write_fetch_command_and_capabilities()`. But the flow is
-    that, the variable is set in `fetch_pack_config()`, right?
-
-> About 1, it is only relevant for v0/v1 protocol, move it into
-> find_common().
->
-> About 2, call repo_config_get_bool() inside of
-> write_fetch_command_and_capabilities() and find_common() replacing the
-> static variable.
->
-> Because repo_config_get_bool() leaves advertise_sid as is if it is not
-> set, initialize it to 0 matching its default.
->
-> Helped-by: Jonathan Tan <jonathantanmy@google.com>
-> Helped-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Eric Ju <eric.peijian@gmail.com>
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
->  fetch-pack.c | 13 +++++++------
->  1 file changed, 7 insertions(+), 6 deletions(-)
->
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index eea72b2500..8e04db8640 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -49,7 +49,6 @@ static int fetch_fsck_objects = -1;
->  static int transfer_fsck_objects = -1;
->  static int agent_supported;
->  static int server_supports_filtering;
-> -static int advertise_sid;
->  static struct shallow_lock shallow_lock;
->  static const char *alternate_shallow_file;
->  static struct strbuf fsck_msg_types = STRBUF_INIT;
-> @@ -363,6 +362,9 @@ static int find_common(struct fetch_negotiator *negotiator,
->  	size_t state_len = 0;
->  	struct packet_reader reader;
->  	struct oidset negotiation_include_oids = OIDSET_INIT;
-> +	int advertise_sid = 0;
+> +remote-object-info <remote> <object>...::
+> +	Print object info for object references `<object>` at specified
+> +	`<remote>` without downloading objects from the remote.
+> +	Raise an error when the `object-info` capability is not supported by the remote.
+> +	Raise an error when no object references are provided.
+> +	This command may be combined with `--buffer`.
 > +
-> +	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
+>  flush::
+>  	Used with `--buffer` to execute all preceding commands that were issued
+>  	since the beginning or since the last flush was issued. When `--buffer`
+> @@ -301,7 +308,8 @@ one per line, and print information based on the command given. With
+>  `--batch-command`, the `info` command followed by an object will print
+>  information about the object the same way `--batch-check` would, and the
+>  `contents` command followed by an object prints contents in the same way
+> -`--batch` would.
+> +`--batch` would. The `remote-object-info` command followed by a remote and
+> +objects IDs prints object info from the remote without downloading the objects.
 >
->  	if (args->stateless_rpc && multi_ack == 1)
->  		die(_("the option '%s' requires '%s'"), "--stateless-rpc", "multi_ack_detailed");
-> @@ -414,7 +416,7 @@ static int find_common(struct fetch_negotiator *negotiator,
->  			if (deepen_not_ok)      strbuf_addstr(&c, " deepen-not");
->  			if (agent_supported)    strbuf_addf(&c, " agent=%s",
->  							    git_user_agent_sanitized());
-> -			if (advertise_sid)
-> +			if (advertise_sid && server_supports("session-id"))
->  				strbuf_addf(&c, " session-id=%s", trace2_session_id());
->  			if (args->filter_options.choice)
->  				strbuf_addstr(&c, " filter");
-> @@ -1160,9 +1162,6 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
->  				      (int)agent_len, agent_feature);
->  	}
+>  You can specify the information shown for each object by using a custom
+>  `<format>`. The `<format>` is copied literally to stdout for each
+> @@ -324,15 +332,12 @@ newline. The available atoms are:
+>  	reports).
 >
-> -	if (!server_supports("session-id"))
-> -		advertise_sid = 0;
+>  `objectsize:disk`::
+> -	The size, in bytes, that the object takes up on disk. See the
+> -	note about on-disk sizes in the `CAVEATS` section below.
+> +	The size, in bytes, that the object takes up on disk.
+>
+
+Why did we remove the second sentence here? Cause the caveat still
+exists and holds good.
+
+>  `deltabase`::
+>  	If the object is stored as a delta on-disk, this expands to the
+>  	full hex representation of the delta base object name.
+> -	Otherwise, expands to the null OID (all zeroes). See `CAVEATS`
+> -	below.
 > -
+> +	Otherwise, expands to the null OID (all zeroes).
 
-So earlier we'd set the `advertise_sid` to 0 if the server didn't support
-'session-id'. But we could directly check where it is needed, which is
-`find_common()`. Is `find_common()` only called in v0/v1 as stated in
-the commit message?
+We also remove the newline here...
 
->  	if (server_supports("shallow"))
->  		print_verbose(args, _("Server supports %s"), "shallow");
->  	else if (args->depth > 0 || is_repository_shallow(r))
-> @@ -1380,6 +1379,9 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
->  						 const struct string_list *server_options)
->  {
->  	const char *hash_name;
-> +	int advertise_sid = 0;
+>  `rest`::
+>  	If this atom is used in the output string, input lines are split
+>  	at the first whitespace boundary. All characters before that
+> @@ -340,8 +345,14 @@ newline. The available atoms are:
+>  	after that first run of whitespace (i.e., the "rest" of the
+>  	line) are output in place of the `%(rest)` atom.
+>
+> +The command `remote-object-info` only supports the `%(objectname)` and
+> +`%(objectsize)` placeholders. See `CAVEATS` below for more information.
 > +
-> +	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
+>  If no format is specified, the default format is `%(objectname)
+> -%(objecttype) %(objectsize)`.
+> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands which
+> +use `%(objectname) %(objectsize)` because "%(objecttype)" is not supported yet.
+> +WARNING: When "%(objecttype)" is supported, the default format WILL be unified,
+> +so DO NOT RELY on the current default format to stay the same!!!
 >
->  	ensure_server_supports_v2("fetch");
->  	packet_buf_write(req_buf, "command=fetch");
-> @@ -1998,7 +2000,6 @@ static void fetch_pack_config(void)
->  	repo_config_get_bool(the_repository, "repack.usedeltabaseoffset", &prefer_ofs_delta);
->  	repo_config_get_bool(the_repository, "fetch.fsckobjects", &fetch_fsck_objects);
->  	repo_config_get_bool(the_repository, "transfer.fsckobjects", &transfer_fsck_objects);
-> -	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
->  	if (!uri_protocols.nr) {
->  		char *str;
+>  If `--batch` is specified, or if `--batch-command` is used with the `contents`
+>  command, the object information is followed by the object contents (consisting
+> @@ -438,6 +449,10 @@ scripting purposes.
+>  CAVEATS
+>  -------
 >
+> +Note that since only `%(objectname)` and `%(objectsize)` are currently
+> +supported by the `remote-object-info` command. Using any other placeholder in
+> +the format string will raise an error.
+> +
+>  Note that the sizes of objects on disk are reported accurately, but care
+>  should be taken in drawing conclusions about which refs or objects are
+>  responsible for disk usage. The size of a packed non-delta object may
+> be
 >
-> --
-> 2.54.0
 
---0000000000008b40f90656ad4921
+[snip]
+
+
+> +static void parse_cmd_remote_object_info(struct batch_options *opt,
+> +					 const char *line, struct strbuf *output,
+> +					 struct expand_data *data)
+> +{
+> +	int count;
+> +	const char **argv;
+> +	char *line_to_split;
+> +	struct object_info *remote_object_info = NULL;
+> +	struct oid_array object_info_oids = OID_ARRAY_INIT;
+> +
+> +	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
+> +		die(_("remote-object-info command too long"));
+> +
+> +	line_to_split = xstrdup(line);
+> +	count = split_cmdline(line_to_split, &argv);
+> +	if (count < 0)
+> +		die(_("remote-object-info: %s"), split_cmdline_strerror(count));
+
+Nit: Should we provide some context here? Otherwise no point being
+marked for translation?
+
+> +	if (count - 1 > MAX_ALLOWED_OBJ_LIMIT)
+> +		die(_("remote-object-info supports at most %d objects"),
+> +		    MAX_ALLOWED_OBJ_LIMIT);
+> +
+> +	if (get_remote_info(opt, count, argv, &remote_object_info,
+> +			    &object_info_oids))
+> +		goto cleanup;
+> +
+> +	data->skip_object_info = 1;
+> +	for (size_t i = 0; i < object_info_oids.nr; i++) {
+> +		data->oid = object_info_oids.oid[i];
+> +		if (remote_object_info[i].sizep) {
+> +			/*
+> +			 * When reaching here, it means remote-object-info can retrieve
+> +			 * information from server without downloading them.
+> +			 */
+> +			data->size = *remote_object_info[i].sizep;
+> +			opt->batch_mode = BATCH_MODE_INFO;
+> +			batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
+> +		} else {
+> +			report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "missing");
+> +		}
+> +	}
+> +	data->skip_object_info = 0;
+> +
+> +cleanup:
+> +	for (size_t i = 0; i < object_info_oids.nr; i++)
+> +		free_object_info_contents(&remote_object_info[i]);
+> +	free(line_to_split);
+> +	free(argv);
+> +	free(remote_object_info);
+> +	oid_array_clear(&object_info_oids);
+> +}
+> +
+>  static void dispatch_calls(struct batch_options *opt,
+>  		struct strbuf *output,
+>  		struct expand_data *data,
+> @@ -748,8 +889,9 @@ static const struct parse_cmd {
+>  } commands[] = {
+>  	{ "contents", parse_cmd_contents, 1 },
+>  	{ "info", parse_cmd_info, 1 },
+> -	{ "flush", NULL, 0 },
+>  	{ "mailmap", parse_cmd_mailmap, 1 },
+> +	{ "remote-object-info", parse_cmd_remote_object_info, 1 },
+> +	{ "flush", NULL, 0 },
+
+Why do we move this? we remove the alphabetical ordering by doing s
+
+>  };
+>
+>  static void batch_objects_command(struct batch_options *opt,
+> diff --git a/object-file.c b/object-file.c
+> index 6453b1d6fa..07f019a0f6 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1694,3 +1694,13 @@ struct odb_transaction *odb_transaction_files_begin(struct odb_source *source)
+>
+>  	return &transaction->base;
+>  }
+> +
+> +void free_object_info_contents(struct object_info *object_info)
+> +{
+> +	if (!object_info)
+> +		return;
+> +	free(object_info->typep);
+> +	free(object_info->sizep);
+> +	free(object_info->disk_sizep);
+> +	free(object_info->delta_base_oid);
+> +}
+
+[snip]
+
+--000000000000036da00656add6e7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 4507baa296ba6853_0.1
+X-Attachment-Id: 11f1cea90527e225_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wWUFEWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNmJyQy93UGxKZmpXWEsySFBVZFhHazVnVkN0UDRKNwpDZGxqTXo2Z1Uy
-aERNanIya2ZmY1l3YW40YVhxSVp4QWo3SDZ1c1BFbUkwaUZvelE5b1RPOE96SGZJcHYzeklYClRk
-c1FxQ01sejViK2UyWThIZXdPWTRvcUcrS1hwQkllY2hPbGVtZ0lLaUpWWmN4b1BUdGJsWkIxNEhL
-Ukg3SUsKQjdFY3RUZSs1SEd0bHJPNHZVd1pBWFlFS3hrOG83YWRrYmNoZVNzMVNDY0ZrQVFxckgz
-SGQ0elo1bWlqTUszLwpCUVN4NmRrSlBHUE8wak1JVC9DYzlkOUp4a1VOK3J4d3BCQ2RuMUZLVUUw
-MlJaWlRDY3hpOWRIVm5aL0lveThaClRHV1lzRnRuNlpxK3VJa0xGVk1hMmlBZ2I2NHp6Qmlzb3hO
-a2hYbEl0Z3FtUVFyKzFYa1FpM3R1L0RlcVpxbnIKdkhGdTJKcGxIRFFVaXR5ZUNxMmg2SEhDZXpD
-OXdPbmY1ZnZjVkhDM2xSYTRlbnJOWlM3a3V6R21jQUxrMzhsMApKck5hclRiOGszRmsrWXc4dHJw
-ZVJRZlBuNHRaclJyT2I3OHpsVjZSWXNhSHJ5a2I2cmNGYWFkKzdsS3BUbUIzCmhHd1BVYXByeGlh
-aGN6ZVZoK0VYcUxtWlJXdjhJZW9welZvNlMrcz0KPVl5UzEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1wWUNXc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK1pNQy85aWk2ZXYzaWR6cTNSZHR6QkxCYnRzK2JwWQpZeDlFNHllMlQw
+MkkzNExDKzFaTHZDdzJHRW9yZWlLdUhZbkUxTXRLWlkvYU5JT0ZuQm9TT0V1SlgzUTZEc1NZCmh0
+MkhNUlN6WHQzUTJwOWovWHd6Z0IxYnBydmJZNkpKTFBwZ0s4WVJFNXR5Y0hJakxwWUtwRGdhc1lH
+dnNNd2wKMG9HMU4rZnBjcXNCTnRtRGxLZEgzTjN0c1NROXhnWXQ5UnVqQ05pYmlQRnNOcmw3WFlQ
+QlQ4WHFjc1dscDY2NQpWK2tnM2c1TjFTUGVyUXU3UWdXL0NxOWFxbUJZMUhJNDN1YzVVcmp3SVlG
+ek1Za21xMWQ2U0ZrVFdCRUJNNmlECnE1aWhyNzJjTDhKU2xFbTJCODNJOXljYXlHeHF5ZXYxVFhs
+UDRkR3lqR2pBY2JpZWMwcjd2YmtPNHZNTmNEQUMKajhLNnRWN0wvZGtPZHIycXRkMkJ5TDA1L1Fo
+bHZJTzF1dXp3K2NhV3JZOXhuL215SmJOWFRkL2hZd3hvY0lZZgpoYjRLRVo4Z0tMWmhUVmZoR2F0
+YW9Tbk41V2ZCMll6Q0lFbG9odVdxdGorUVc2cEZXdWdPUHo2cUxLcGs0OFFICk1wb3JqRjZQeG5o
+S2FDZ3oxWWxQbVE5SGVWYmc5RFZlcTdLVUxWaz0KPTFhbGMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000008b40f90656ad4921--
+--000000000000036da00656add6e7--
