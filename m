@@ -1,130 +1,121 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D7B2DA757
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 06:05:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784095533; cv=none; b=NlEKNtfhlCmmC3FAEa5Tp+x3cLkTnPYa4wQT1dLDYqrr6kdXaoTNGFNyW6AFJyV0Rd3j0x+mXk7WhdC29HOPm6IuPshkG9kCgDbvZz2vweR9Wt+Ujq/ccI4AGTPqqPafuIEbPiu/bjbVrUiKx00y5j6VTjzQGH0KPgSecnfJ1kw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784095533; c=relaxed/simple;
-	bh=+T9R6kGaXbv2SNWtRcE05OH+zG2mkusTQjoW7gyPV7M=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=JpCpyyeaXF1I8gMCRwwbVyweXLMa1ZoX22Y843THrPDU9QBvfb5B/laYRsS3SDfzoiqig2aiTODtcQEv4AK4GGN5ocZAVwHdz/2YG5f+sCGqNkxMxetoOqMRtcFdpaIE/zEvJmQ7vT6eXegxgeedmrW2qqAQa8AXeX3PPYclP1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aDwiNIR6; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F322F616B
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 06:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784096513; cv=pass; b=Fv6+hH3MZJUpYsoas6fXwaC1QkZqh0WcfYqSI0wRFs07CG1C3QmIP25KkeUXJ7s1VYtxhb+sI6AxkynxcQ0QDoxjaWdQT9QU6QjQ6qeZUsWX2DrAy+XkM20uOpEvXBvLRQ0ZJyWOR8ixg7cjht0tebKg98HyfZX5GJhZ/UGAYZ8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784096513; c=relaxed/simple;
+	bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CYfGCBkUG3WV87TWFZa02wJrvzz+BTuiiJMf0/Qs+XoXRqyNSyKzRACcvC4gCqo5jsUtc/Sx8nlBBPKjV3+8j6eGK3m5zJ0eydbohJJZ9mvfGeQP0r4n6EmlJHF3CzG7ungp8rRfDgtq4oyODFTTDq7ivkmjGGOUTOrZEbOPxd4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+k+kCs5; arc=pass smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aDwiNIR6"
-Received: (qmail 29521 invoked by uid 106); 15 Jul 2026 06:05:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=+T9R6kGaXbv2SNWtRcE05OH+zG2mkusTQjoW7gyPV7M=; b=aDwiNIR6If/M+VzgB7bRdxgII3d3ADPrZ0gLN/zmYT1hm95FdR2sv+smTxpvWeFgO8ec0clkY4cLktknSY9zT20B1Y8HyC7t25LmyPXxQbwF43eypqVGshmokYlfsDBgHf9Epx6hlL0/08hyw8Y7m6z1nOsn3v++1x30ZzridlYBvAzdQOm4OGrQUJs8J6HkI/afc48gimgUwG50T6xqbl3Hw76V6yuA6a5PQy2CQKiqZ0K/74uKgIvCt3F6neYuzxpIC8acg6WLvVkN1/BT91GLMMd5hDobZZFriDwqF/r6d1v6XjugmYKRSxIcwQNe2Z8hA9FrZgScr7ooXoKFOg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Jul 2026 06:05:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 59115 invoked by uid 111); 15 Jul 2026 06:05:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Jul 2026 02:05:28 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 15 Jul 2026 02:05:23 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] diff: ignore unmerged paths outside prefix with --relative
- --cached
-Message-ID: <20260715060523.GA517940@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+k+kCs5"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-ca913a601fbso3570924a12.3
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 23:21:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784096512; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qD/WaZSsAOdDDlITT/Wm/b7kkwpH62LKnKpNAaxr5ViIA08YWd0mqOKGzvMr3jw3Iu
+         P40RxTaTEewDQ5baJ7/h/M218SVJB43yBndPPKT7SeIwQMUyZlPLUwR8iChgn9f7BnmG
+         967oE0AtSLn9hS0rYB6kMMPWPkehlJtr+31+nJomNF/daOAdkv51On8mDN+YF5O01zsj
+         oEdKC8dQTWgCwtdzdU5/vxP6xBeLtnb1lJtbRiGWqHJkuQoMgPkYNz3L/dzQL0QejXh1
+         TjXG6DWFvqMff2V20xhPeHSmcuijdFq2z7xTo59wMpyslAdKnYTv3kono7FGpf4zhw4O
+         WCcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
+        fh=Tvs0ahFb//Xsx8i0PmWtUZX+CoNvl7c1xpDc4NgL7HE=;
+        b=gQEmcdkRN/QOKguMxxiytTETRmHhxCnrFjGfSVsOcJXBbNk5Vszizg9okkARwu7j8d
+         sXnvpB6jSLCiWgRFfindUGEOq9WyCRH9F4g2t76S5nnRSjknAB41bcDmoR5lP2m57XLk
+         ZQ/bOMQUh+n7rFReLBl4auRaMnBZbUZCFy0i6XCyWAIi9oAgSuUCOzvI8IMh5M0zo14I
+         GEqPypw5moOu4dtWev9QX+RpA+Z/GhQphD17zxXTssAeyTKFM/6sU6hRacuTDCFo+YBF
+         V5E8Hnj+fddiQWN8/XF3cRqfZQZeIkd4ApnwzH8SIVp7MTeO0A4hTLhueCE81+asseyB
+         4G1g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784096512; x=1784701312; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
+        b=B+k+kCs5vHGwoAPKTD/adosDygCalh8zou4ajeasbwcMUtZJMx7xrMeEePEhKrlzdR
+         DBbgID9Xs/mJaYSp3gHy2Sne0+N/U4TutB+H5w8tT5F5KJZSmscLKeO4F3reFraKkRj3
+         M9vKPvRBJXdihWygXtgxv00uGze5ceU9YV/xq0lKyHU4pPutYpHMscfiEW4Z7OKgdmR9
+         rtY3BIK9Vd63hDuZaFCtMunNIoNkigomDYYfBemG9w+9GFjn9CuhY52MO6OmFBXJS17s
+         /El296S66213ymDngYSAqlKWFHaSUu/EKbVAQpEFngto674WcHcXvax4wSUietgVcPZT
+         6EUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784096512; x=1784701312;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4/kzTBwHihsynJ95AxD1yIQO1RcBHY2ecdi0nicmB7w=;
+        b=KzLT+zQLXtpO6wEDw4LsytWF+NF7UVekSkSKpxz9JHYBBG/hGUfAJNimTMihiJktLM
+         CSo06grjRPB5z614PQG+IUfCo48Hf1U9daFt6sfzmaHZGk1sutztuKez7w4rQe70sjb8
+         GF3T7W/rJ7Prpif7cfDFhxADBRyHyltB2QJzoD11toNchA/0zRgE4TQfXyvDXQXHc3Xs
+         w9Ly4ZNaFQrB2XSs1LVKK9vr1ndsWcvrfTWvHXHHmem+nYxHEjxrcjZbOKx3yKzI1Lu7
+         TAIRR8MijW0XBui+1wVqGZA4CZsY70Vnb2cwgZSzFwWZM+lmvXUJ2CuBQF0+7YuwhmXq
+         vfNQ==
+X-Gm-Message-State: AOJu0YzUnMWWz2Wx1+rGwmQ5vjYaz2CQ3kIEoMkh7NzAWpXdEp1ZdJBY
+	sE1cGGfYaUPd7zLDMWn8HjBxTPTFQRHHbGEfm67NndGCDK85mu89DkunEynbf6X0pN14v9bvgEW
+	LxhUdErgj2hwLvDpHRNvCK2aR0joAZtY=
+X-Gm-Gg: AfdE7cm8/gpyfrIx1vX72PWxj/RktwBjz98CfTW1Li0PEtHDBru6G6Bo9eRIkO5NoG4
+	KwGBdIUPtVWxYSc0z9ztZTnM3GtotoaslL4vrfVpLj2bqx85WkcpakHDCrUmzC5DcVtORfZX+VR
+	vHJLoqOzm9NDqHvAPRR5Cyc00f+AMyXpQey9CYvdG2coOoQ/AcUbDlQTyGbr558uKK0MTslOBgD
+	ApKrLYrcBbhxFJ/ZwjymjBUFM5WRDxl81w0h7uzRrQ21FvdeufMNR+bOzDuUuDChZB7aCf9WtBh
+	CSk0axOKbuLTn6NrgjILSTYfRZvMGowtqJ210ODl3l+xKcLD1trfPTfAxQ==
+X-Received: by 2002:a05:6a21:608a:b0:3b2:8675:4866 with SMTP id
+ adf61e73a8af0-3c35741c148mr5469099637.31.1784096511663; Tue, 14 Jul 2026
+ 23:21:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20260619162105.648495-1-cat@malon.dev> <20260715035501.48271-1-cat@malon.dev>
+ <20260715035501.48271-5-cat@malon.dev>
+In-Reply-To: <20260715035501.48271-5-cat@malon.dev>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 15 Jul 2026 08:21:40 +0200
+X-Gm-Features: AUfX_mzTmLXESsa7uBTqjAzJjygRDcl5uIxlFyTSGqLdkE9YM1mRTBdgz2uEB04
+Message-ID: <CAP8UFD2=FbbnCqWkTLEGBpz=90sh=j_70h2UJR=p4uj6u3tqMQ@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] environment: move has_symlinks into repo_config_values
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org, ps@pks.im, cirnovskyv@gmail.com, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Olamide Caleb Bello <belkid98@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-A diff using --relative ignores entries outside the current directory.
-This results in a segfault when we try to process an unmerged entry
-that's outside of our prefix, since we end up with a NULL diff_filepair
-and use it without checking that it's valid.
+On Wed, Jul 15, 2026 at 5:55=E2=80=AFAM Tian Yuchen <cat@malon.dev> wrote:
+>
+> Move the global 'has_symlinks' configuration into the
+> repository-specific 'repo_config_values' struct.
+>
+> To ensure code readability, the getter function
+> 'repo_has_symlinks()' has been introduced. Callers access
+> this configuration by passing in 'repo' when possible,
+> and explicitly fall back to 'the_repository' the rest
+> of the time.
+>
+> Note:
+> To support early platform-specific (MinGW) overrides
+> before repository initialization, a global variable
+> 'default_has_symlinks' fallback is introduced as a fallback
 
-I think this bug goes back to 76399c0195 (diff.c: return filepair from
-diff_unmerge(), 2011-04-22). Prior to that, diff_unmerge() knew to skip
-entries outside of our prefix, due to cd676a5136 (diff --relative:
-output paths as relative to the current subdirectory, 2008-02-12). Back
-then the caller didn't care that we hadn't added anything to the queue.
-In 76399c0195 that changed; we now returned the pair (or NULL), and the
-caller in do_oneway_diff() was then called fill_filespec() itself. And
-it does so without checking for NULL, causing a segfault.
+It seems a bit redundant to use "fallback" twice in the above sentence.
 
-The obvious fix is to skip the fill_filespec() call (after which we just
-return), which this patch does.
+> in environment.h. The *writer* in compat/mingw.c can only
+> access this variable.
 
-There's another call to diff_unmerge() in run_diff_files(). That case
-was already fixed by 8174627b3d (diff-lib: ignore paths that are outside
-$cwd if --relative asked, 2021-08-22), but of course it didn't help us
-for --cached.
+Otherwise this series looks good to me.
 
-That commit also claims that checking the result of diff_unmerge() is
-not enough, as we'd want other code paths to skip the entry, too (even
-if they wouldn't segfault). But as far as I can tell, that is not true
-for --cached. We eventually end up in diff_queue_addremove() or in
-diff_queue_change(), both of which know to return early when we're
-outside of the prefix.
-
-Arguably we could be checking at the top of oneway_diff() whether the
-path is interesting at all. That would not only avoid this code path
-entirely, but would also possibly save a small amount of work. But since
-everything else appears to work OK, I went for the smallest fix here to
-avoid any regression.
-
-Specifically, a comment in oneway_diff() claims we're supposed to
-advance o->pos, which we might fail to do if we return early. Though
-that "advance" seems to have gone away in da165f470e (unpack-trees.c:
-prepare for looking ahead in the index, 2010-01-07), so it is possible
-the comment is simply out of date.  We can explore that separately;
-checking for a NULL return from diff_unmerge() seems like a sensible
-thing to do regardless.
-
-We can piggy-back on the tests added by 8174627b3d; we're just checking
-the --cached variant.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-+cc Junio, as you may have some wisdom on that further exploration.
-
- diff-lib.c               | 2 +-
- t/t4045-diff-relative.sh | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/diff-lib.c b/diff-lib.c
-index ae91027a02..a23119b852 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -467,7 +467,7 @@ static void do_oneway_diff(struct unpack_trees_options *o,
- 	if (cached && idx && ce_stage(idx)) {
- 		struct diff_filepair *pair;
- 		pair = diff_unmerge(&revs->diffopt, idx->name);
--		if (tree)
-+		if (pair && tree)
- 			fill_filespec(pair->one, &tree->oid, 1,
- 				      tree->ce_mode);
- 		return;
-diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
-index 2c8493fe66..167be0bdcc 100755
---- a/t/t4045-diff-relative.sh
-+++ b/t/t4045-diff-relative.sh
-@@ -245,4 +245,13 @@ test_expect_failure 'diff --relative with change in subdir' '
- 	test_cmp expected out
- '
- 
-+test_expect_success 'diff --relative --cached with change in subdir' '
-+	git switch br3 &&
-+	test_when_finished "git merge --abort" &&
-+	test_must_fail git merge sub1 &&
-+	echo file0 >expected &&
-+	git -C subdir diff --relative --name-only --cached >out &&
-+	test_cmp expected out
-+'
-+
- test_done
--- 
-2.55.0.612.g68473ef936
+Thanks.
