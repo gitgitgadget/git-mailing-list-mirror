@@ -1,117 +1,168 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931993B6359
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:34:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7FA378D8C
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:47:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784086486; cv=none; b=Zm2XtlWfKdqEfMnqxGHT4DkWGLJpIBmSyS9s6x6gUujorT7+j0Y7yQRi33Fq4te+merEhRQFqrfnLDSdyQPDfSOQZaniQzpWYHQs5/sp2oRiJbPMLgI3GLImgB49gkie+TpCDlZOgCl4swocUHyQwyGwxpN/w0DvFDJrhjJqFwg=
+	t=1784087264; cv=none; b=MeHEBUtvq2vKYgE4KIo/a2Tu3f9eefoeJoHUySd83xm+4vGUPKu20WFHQe0loWuJ3ND9OmhzYWxPsGorIJzn9uW0ugaQ7DtFCBdZlUKZr/UeLPBSgfWhLwfQYxCDrpEqQWk4RmNBUeT8bc7dhCtM9Vr1fOLP1yiI7txGMp1mR+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784086486; c=relaxed/simple;
-	bh=D1YKYY2MJ7Q/n//h91ofZd3ZBneqtIvgFW/HEiU2gBQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l+KPbo2oW8Z6CWGWWNog4ha6+9WZ8dvqZCzo/QRNM3nWjO2X3abLGS3Xbuy0vl7kkZByoNJTqJoxJTzlrRAdIfTx6a0EOy/q7mYyEshZh9o4wXTZFKIUrNs4CnjSKMWweT7VSlc+V2LyTOETEWnRUQ3AnJ3qo2PAeDyuOual9Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZjlqD8iP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XADMMnrn; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784087264; c=relaxed/simple;
+	bh=NY0UKV89Zilq+8aP6l+YYiofJbNzzFTLo3FOs0JlLpk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aKUPHsseqc13f3ubUoCUp18pAchtIauKwqglkRRlFg8DI/JGHw7OcfDfKsDFxrVStUKty747RDn4BkJxt6IIxKXouMxfVOUspBynw4hehohcYOB/mtSXNT2X90HfHjvL0UWclKcyurGwr02ChJ98bYzcZsPGRelg4iUnTWvhP5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=BeeNXjB3; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZjlqD8iP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XADMMnrn"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id E66C91D0018C;
-	Tue, 14 Jul 2026 23:34:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 14 Jul 2026 23:34:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784086450; x=1784172850; bh=Bi5prdebVQ
-	bZMzj+h5c7OxqAKGWZydEa4ct0auoaSl8=; b=ZjlqD8iPOcUHgSMNtxh0f6QTCH
-	9ftKaRme0weFRdyVuKEmL4CP6BlfpY41sZgxlPcQlLC+9E+WZcnpMVTeaE10IznQ
-	K4TTBzjK9huWQ72AmE7xTd/CxAIzeuHxVLwfW44h2NavYBz7KrUaGBqXqZFSMYpF
-	gXKtMWAmvecyQTgQVcdkavgRQckNao8D98jfjCC42P7ZOtdUV5ps4mj/aIkVkh+a
-	p7W5dh1/HXyHFhxRF9M3kZH7P92cSIpLeG3eUaPVKg4WiEqSBbzN/TLPZczbi2C3
-	t3d7Lzv8b52G8lYkgmexOUSr43yb6Eup/MOTwnOj+YYo9fe2W3ivR3nZD0rw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784086450; x=1784172850; bh=Bi5prdebVQbZMzj+h5c7OxqAKGWZydEa4ct
-	0auoaSl8=; b=XADMMnrnnHCZGwyVRawjwljxG0pVZ/Qo9lLcEPMkQ5C1jpilR71
-	QX7KAKHQtiaBaoz08bo21Tev3pS+Uczms6cAh1xLyywawud+ycGKvPNf9UaoXspB
-	815ZkQD2oUzkHwTWvHSkh+yMa5LSgzvUcajT4wxD/w4pnbVKudiWSVNBQCph/dYR
-	Zu8ePCAG2DSAKcQsVJUBcWW2helVs9OCYLeW2+LmPE7Bc2RZ2cl56peaD9h+hl2Q
-	EyAEkyoOSExCcDdR5uBKqgwzDJJ7EGQQXXDJ6F3Fv5+pGtk9ys4EnwHPfkjm7YCD
-	n9qXEks8Uis6Z9BZF+wXAB60ujWOx/TAu9A==
-X-ME-Sender: <xms:sv9WamxscYUMmIoRd-C8y_kCfuGjyqSmQsP9KHSRnHSsj_4MKc5N6g>
-    <xme:sv9WapspFgbhbbMUTXqQ3RNFkUDp3VYYVMf1wy5DWC2FPNWKWEB6MGI_q25amCwNn
-    4dopCkR6pvrEkpTA4GkxMSMXs8utx548kT9oF1cON_2Ef-zwuhJ>
-X-ME-Received: <xmr:sv9WalsBM3ohw-BWm9vUeVesdsyOcVt6-PNmY-PX176HmFhLf2uQe5wVho2uSreiAceGuc0RebfAXReBqkORCKo6jeC3d62DMWMO_aM>
-X-ME-Proxy-Cause: dmFkZTF1fXVasC9XrxyX2O8MpSzggKxsZuzG6OUoVxVosqgZhvDXecFg0MmuKk8TZOiAId
-    exN+ERzFUKMeByndECbpGAYIgZh9i34auPjt86BaPfIcFeTik4ee+vYbdIYyeb9J72UMsI
-    YN4tWbjm5O0bFGh47f2blyGlqSFg4qvO9fnJ90v/q39aTUnf/nybWER2WlG6Tg5o6969Hh
-    a5D3Z1Di/B+MX2tBWxH3RkKENZWgPGiIQ1+QI25mqmUKo4c8aKD1m1145w0tSV3gauGqqh
-    ocH8KjAJnwwicoZF3FD3uFOfw9f9dTSGaXglUNj+X9G7YOuoWHgscpkDjf+4A4C66SNmJo
-    nzS5TDAxgz0CaSxmgWKMm6/hU6ToAPeazomptM2pLtgFp79PAlDpcHsM0hf4tl0I5PoCb4
-    nGtZXTu94uUhurTHLm1ZTTh94n6Q9LXawd/Z8HxUgEhMY3QCyXsYBzE+vl7RLF+WnPo2eO
-    FmLT0S0FR5BNxvY47vAnMZq7CBFjsVfT/aMiEEhnnOyoRuCmu7nHHhDxabo0g4dAmmlnug
-    bH2VTVu/NHnUpmBCRyTOe74NwnB5JPhGzeBl3qK5x5Fj9GkFOT7OYRX4yWi5b7Y3k+UNQY
-    1dVXcPoCKZxaChuxy3+UHbO+0f1OZGGgLZyj0Eog20yZla/afSI9Hycx1T4w
-X-ME-Proxy: <xmx:sv9WamPZne2de0O7lb4ach_sfsY5AbyclNWtcFApNTtk8S2ZJaYHYQ>
-    <xmx:sv9War38KanIVM7FoexGpv1YUGqwCTo00o9Cd6mRx6mrO9LJJnUHNQ>
-    <xmx:sv9WaqPrv65ODXGtx_WBKJOhWufASsI_sE9qUg2XqyXUScqrS7OgYA>
-    <xmx:sv9Waj3Qgtf5Ew3JF8uAJFHOq2waK8i34RGSm8NVl_-iOcP__JkC3w>
-    <xmx:sv9WapvDgoHQyFY5mNrW9sOzF39ZVkxHTFPVo5sQI6SRhgv9Q4LY-jTM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jul 2026 23:34:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] show-branch: convert per-branch flags to commit-slab
-In-Reply-To: <20260715015158.48559-1-gatlavishweshwarreddy26@gmail.com> (Gatla
-	Vishweshwar Reddy's message of "Wed, 15 Jul 2026 07:17:22 +0530")
-References: <20260714220042.GC4095533@coredump.intra.peff.net>
-	<20260715015158.48559-1-gatlavishweshwarreddy26@gmail.com>
-Date: Tue, 14 Jul 2026 20:34:09 -0700
-Message-ID: <xmqq1pd5q632.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="BeeNXjB3"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1wjqap-00161B-OO
+	for git@vger.kernel.org; Wed, 15 Jul 2026 05:47:31 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=k7Zbx6dosBW8ymNsBBhpv+52N/B5L4mVScu6owqD8CM=; b=BeeNXjB3j0AmC5kgjGXxq6pkHE
+	Cpk0C0IVbEjq6mI3nlWAr63YeITyBylyYEMgdI2sm+uoojoogsZ4VUKDqG56oyd3JrX8+vkivbg3N
+	vWtyvQSIIGUUC8kpsjZ5K3vOdXEdiPK8Jamdx/ncs5CvI1IVWoZDC4CGLVYDfkyRtkDjj5BnQbv/X
+	ToX1iwNXEG4PMk5WZhFJVSN92jYIhaQooP9+IDvf0nTDT7IKGpJx+SJV1t34QJpWR3gjza1yUh6Jx
+	OCkaHQaabKed1GWAedk0FFgLEpWyHbrtxixvgdB+uJF8X3QOJZlb6+xz34d5RPAP48JoaWAN0V5jE
+	YHIZoN5g==;
+Received: from [10.9.9.72] (helo=submission01.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1wjqap-0005ll-DW; Wed, 15 Jul 2026 05:47:31 +0200
+Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.95)
+	id 1wjqaW-00Gtpt-Ig;
+	Wed, 15 Jul 2026 05:47:12 +0200
+Message-ID: <b2e0142c-f8d3-442d-b3e7-63233ab88a17@howdoi.land>
+Date: Tue, 14 Jul 2026 22:47:09 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust
+ rewrite [and 1 more messages]
+To: Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20260706115816.20267-1-ijackson@chiark.greenend.org.uk>
+ <20260706115816.20267-3-ijackson@chiark.greenend.org.uk>
+ <9ef8cfcc-ab47-479b-9f23-71ba99e1e56b@howdoi.land>
+ <20260706115816.20267-2-ijackson@chiark.greenend.org.uk>
+ <f557bfcf-ffd2-4903-8015-97fff97dbe09@howdoi.land>
+ <27215.27575.968985.583226@chiark.greenend.org.uk>
+ <c8b81987-ab56-4d6b-a650-879b84597a17@howdoi.land>
+ <27216.58259.815175.923629@chiark.greenend.org.uk>
+Content-Language: en-US
+From: Colin Stagner <ask+git@howdoi.land>
+In-Reply-To: <27216.58259.815175.923629@chiark.greenend.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
+Nothing here impacts the patch under review, so this is a bit OT, but...
 
-> +static int show_independent(struct commit **rev, int num_rev)
->  {
->  	int i;
+On 7/10/26 07:20, Ian Jackson wrote:
+> Colin Stagner writes ("Re: [PATCH 1/2] git-subtree: Bail out if we find output from Rust rewrite [and 1 more messages]"):
+> 
+>> git-subtree.sh doesn't really deal in "upstreams" in the git-branch or
+>> git-merge sense.
+> 
+> I'm using "upstream" in the wider sense; here, when you import a
+> depedency you're downstream of it.
 >
->  	for (i = 0; i < num_rev; i++) {
->  		struct commit *commit = rev[i];
-> -		unsigned int flag = rev_mask[i];
-> -
-> -		if (commit->object.flags == flag)
-> +		if (test_rev_flag_bit(commit, i))
->  			puts(oid_to_hex(&commit->object.oid));
->  		commit->object.flags |= UNINTERESTING;
->  	}
+> I want a term that talks about the logical (even, social) relationship
+> between the two projects; and it should be one that makes sense from
+> the point of view of the upstream.  Talking about the file position
+> within the downstream tree doesn't make sense from the upstream's
+> point of view.
+It may be useful to differentiate between command documentation like 
+git-merge(1) and tutorial documentation like gitworkflows(7).
 
-These two perform different actions, do they not?  The original code
-insists that the commit is reachable from only one tip (i.e., that
-the commit's flag word has only a single bit set, corresponding to
-the i-th revision).  This is why the implementation does not use:
+The man page for `merge` reads like: "So you want to merge THIS into 
+THAT? Here's how to do it." The banner-line example is merging a topic 
+branch into master, but the "social" aspect of this is not front-and-center.
 
-		if (commit->object.flags & flag)
+Other common terms used in merges include "ours" (HEAD) and "theirs" 
+(MERGE_HEAD, "branch head," "commit [that is being merged]").
 
-By contrast, the updated version merely checks whether the bit for
-the i-th revision is set, without verifying that all other bits are
-cleared.
+gitworkflows(7) discusses the social relationships of branches, 
+including the "merge upwards" workflow. Here is where we find more 
+social terms like "upstream" and "downstream:"
 
-Or am I misreading the patch?
+     The merge workflow works by copying branches between
+     upstream and downstream. Upstream can merge
+     contributions into the official history;
+     downstream base their work on the official history.
 
-Thanks.
+But "upwards" or "upstream" is merely in the direction of increasing 
+stability or acceptance. This makes the terms "upstream" and 
+"downstream" very broad and inclusive. An upstream branch might be in 
+the same repo, a parent repo of a fork, or an entirely different repo. 
+The repo might be yours or belong to someone else.
+
+Branches are branches, wherever they are.
+
+
+> I think the dependency relationship is inherent in git-subtree's usual
+> use cases: suppose a project A gets merged with git-subtree into a
+> subdirectory S of project B, so that B.git:/S/ is a copy of A.git:/
+> 
+> Then I think almost invariably, this is because A has B as a
+> dependency.  And A has B as an upstream.
+
+"Dependencies" are perhaps a bit beyond Git's usual scope as I 
+understand it.
+
+For subtree merges, it is possible that "largely unrelated" minirepos 
+are being collected together just to make them a monorepo. I have also 
+used subtree merges within a single repo. This is handy to keep a 
+subproject isolated on its own branch for reuse elsewhere.
+
+For splits, it's possible that history is split just to meet the needs 
+of some other build system. I've observed this in the wild with AUR. 
+I've seen multiple AUR packages stored together [1], but they must be 
+`subtree split` first with aurpublish [2]. AUR users have been on-list 
+before to report trouble with `subtree split` that I inadvertently 
+caused [3]. They may be very interested in your rewrite.
+
+In conclusion,
+
+* Documentation is hard!
+
+* Consider focusing "command-level" documentation more on mechanics. Use 
+very specific terms like "branch," "(sub)tree," "merge-base," etc.
+
+* Consider using "upstream" and "downstream" in the context of the 
+"merging upwards" workflow from gitworkflows(7). It is not necessary for 
+these to be in another repo or even a different "project."
+
+These are just my recommendations, and they're not relevant for this 
+patch series.
+
+
+>> I haven't tried it, but I think if --squash is in use, then attempting
+>> an unmarked subtree merge will probably die with "unrelated history"
+>> warnings.
+> 
+> I think that's not guaranteed if squash merges and non-squash merges
+> are interleaved.
+
+Probably true.
+
+
+Colin
+
+[1]: https://github.com/christian-heusel/aur
+
+[2]: https://github.com/eli-schwartz/aurpublish
+
+[3]: <755578cb-07e0-4b40-aa90-aacf4d45ccaa@heusel.eu>
+
+
