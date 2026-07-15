@@ -1,41 +1,45 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4ED3B27E2
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5216A3B3BFA
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784087710; cv=none; b=fO1TJQYoKMkk2GZ046ixLxqNlJeteqGBUZc4cN3BNKj2jdqVQJKUCPOFRkFam9LtOo5lukexj7GzJlmtDni0An1tI0EIVzIK7tjwzVo6ZwCLVAvvlrNk6NY8Depr629ejP4OUzE27sU+r3uRQRIEBt7HKtKP5br4WBNsLITilMM=
+	t=1784087714; cv=none; b=Muc7Ag1diWgzYL54kkngNq4tMIQ4du4EthDt1zX3hX9ArYQTNvQKn6IfIOtq+YcMnnEq4Bwv9wk9krCihAIvgqKkvtDfG7jNVqxANsiRms15amxRCqrrn0ats/KdpP7H5NQJd2O8BYKYY6dJPUWvGSoqI9Ybcl8mZQicpjfDAmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784087710; c=relaxed/simple;
-	bh=V3l0vRaNsb+KxcFpVRCPW94I6B8ykPoj+jjgvioMF+U=;
+	s=arc-20240116; t=1784087714; c=relaxed/simple;
+	bh=Tx5a9uTp4ac/kZBXRghvhh8wX/Yo263WVhEq7ZBjQkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FOLDf9yhiEHFx1qioQkRnWv/bfgFQATh5oSCabotIwoy6EMHkS5RWPe1ace5TSamNSM36R0Me34BzuhvoYvApdGTb+mEmggROSr8JiYpz1X7m126ZtNm8UVZuFwFehzgYZhbgJQyoZPfwROGROMmNWQPSKxPDjoWx5367VHcQsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=DqFUkwpp; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=RO4ngr4W; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=JoiuZK/F6EteyAoZ7nDuAFvxnwSzG7lQBepJJUZ4/IiA+0ngPZdFIGatG6KmNJJZ5D8yHdlRSZQ2LIkvPyLWKXBtflpJDDOgvYbdiAG51KzW4KhRMOGCPrpDexpVe7i6xJsezkkU7WUjLc7b6za1Gj5dpQ9Y+gN0n3gytn0TRHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=bEVvvWcQ; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=YpR53dM2; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="DqFUkwpp";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="RO4ngr4W"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="bEVvvWcQ";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="YpR53dM2"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=DqFUkwppUW3enCfkOXACFYv/3Egq1ppbV7gDoiyFeAaQJoyTwB0FmGONAls6slpFea1yN/eckhzmbJTe5EjQxaVlp0eAUCPCMeY/a7+9vCopsnM74r4+H/qhUpozyuaCQVCbitWIjREk00HbaLOqWyVPMYec+STiZYwwNVach8IXxlV3iuJk3VQjoVpLkjtGzCm+4arh/V4AaS1d9oQO8TYw07WHxtUMslSnnyvHGQxsMmQFuXVwgXmlouviqP+G0R6K+BDWZbLob6PpwX3Qn6fkWNmYCUNuve5G0AF7jIGZzIzwD184eTl0MgNNIHLpulw3APgGuXcGj1wXK9VXdA==; s=purelymail1; d=malon.dev; v=1; bh=V3l0vRaNsb+KxcFpVRCPW94I6B8ykPoj+jjgvioMF+U=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=RO4ngr4WqJvPZqj/23oXwnvprtrOqavh9A/J/I15OCsGOtCroazatGhsYXid8qdbhhRXM+aqaPTxXVJgUH2zZd+hS1X5kfhSfq9alL3NawY1pjD+LiLUT3jKOG5SU0oPL2YTVjr3PGQQMLyp19iFJGyXufgYlDtXNcHbNntGmDteF8mFia6+7ztTgAVuSjA2eTUTmTNmK9No+QI9vDyQbu95Bifo4VomYHqEHUn8CHv1bf0sIS039zq0Q0CBAGbjXIF9uVo/JvqcUROgJPbI4zHNRahbc3nVdqIx7KADYZOw3xSJ9gW/gSXdH4Ft6HB9mdb38Q5i9Os6D/7TYmyJug==; s=purelymail1; d=purelymail.com; v=1; bh=V3l0vRaNsb+KxcFpVRCPW94I6B8ykPoj+jjgvioMF+U=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=bEVvvWcQ/F2lPOsMVT/jEc1bh6KJUX5hs6x5ocsYFrSSmQtlkwY/MbaRf3EX4YiPVwrVTgrnXdgchMJahvKF2upXLrf1rlY0VHJ6Qnftao21ZNCpzoNUJsq65HWdkM99rbA+eKN6PEjoPKLYT81Ah76I8VEb4Cj0oS80Uy01x0S3Jzr4L7HQ5iFNubcEdNDNKoyIKR6ewYXGW6INGrkGCF7p/c8DeRYN68fPmuRnAPQ9BH4E4UH5rvcGjUSyI9C4leClqpzL7cc65iFANGa3hOen4q9jBXR7XCvk92T1oAQ9y3PP0ymMiWDXAy6OJ+6kFT1wQKkUH5gx/5nrs46kSQ==; s=purelymail1; d=malon.dev; v=1; bh=Tx5a9uTp4ac/kZBXRghvhh8wX/Yo263WVhEq7ZBjQkI=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=YpR53dM2x8DGgmclMsru42UsmiPIHI83wPH9L4BcY6tZU2xQWK6ddORN9wDMgmYSGGXabHvRNAxIhvOYSLAoHKFpGJ3k/jLWTAjrL+q4ruFa4JVgkxi2gV1gsxv/Wk3UsLdbtd1XOOg7hNL8bOFqCWEnzxUDXuylqQPOqubAjXPR8ogBTi+LNEGhBekdlleu8w6SkerZkubrLqSf/A9jivkhcOmY5QerZ2uo59X7JRbHBNy8TrwJegaFTSuVEtlLIEYSw4Xb5TkQEmI/CNDmVDu5gaSL1BVxI1zSigrWxaxzCKer5UCxbl5GXZNHMw5cfJFqf8V2d3mNs94khBa+8w==; s=purelymail1; d=purelymail.com; v=1; bh=Tx5a9uTp4ac/kZBXRghvhh8wX/Yo263WVhEq7ZBjQkI=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1876003495;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 15 Jul 2026 03:55:06 +0000 (UTC)
+          Wed, 15 Jul 2026 03:55:10 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	cirnovskyv@gmail.com,
-	Tian Yuchen <cat@malon.dev>
-Subject: [PATCH v5 0/4] environment: migrate 'trust_executable_bit' and 'has_symlinks' into 'repo_config_values'
-Date: Wed, 15 Jul 2026 11:54:57 +0800
-Message-ID: <20260715035501.48271-1-cat@malon.dev>
+	Tian Yuchen <cat@malon.dev>,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [PATCH v5 1/4] read-cache: remove redundant extern declarations
+Date: Wed, 15 Jul 2026 11:54:58 +0800
+Message-ID: <20260715035501.48271-2-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260619162105.648495-1-cat@malon.dev>
+In-Reply-To: <20260715035501.48271-1-cat@malon.dev>
 References: <20260619162105.648495-1-cat@malon.dev>
+ <20260715035501.48271-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,67 +50,35 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-This series moves 'trust_executable_bit' and 'has_symlinks' into
-'struct repo_config_values' to tie them to the specific repository
-instance they were read from. Eager parsing is maintained because
-these two flags are heavily consulted in hot paths.
+The 'read-cache.c' file already includes 'environment.h', which provides
+the extern declarations for variables like 'trust_executable_bit' and
+'has_symlinks'.
 
-Note: 'repo_config_values()' still does not support any struct
-repository other than the_repository due to how deeply these flags
-are accessed. In other words, this series of patches is laying
-the groundwork for the eventual elimination of the_repository.
+Remove the redundant extern declarations inside 'st_mode_from_ce()' to
+clean up the code.
 
-Previous related work:
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+---
+ read-cache.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-[PATCH 2/6] config: add trust_executable_bit to global config [1]
-[PATCH] Refactor 'trust_executable_bit' to repository-scoped setting [2]
-(This previous attempt was unsuccessful because the target location
-selected was 'struct repo_settings', which our analysis indicated
-was not the optimal choice. For further details, please see: [3])
-
-[PATCH 5/6] config: move has_symlinks [4]
-
-RFC:
-
- - I wonder if there is a better way to deal with compat/mingw.c in
- commit 4/4. Is it possible not to introduce a fallback variable?
-
-Change since V4:
-
- - the migration of has_symlinks is back [5], as a commit 4/4;
-
- - drop the comment for repo_executable_bit();
-
- - do not always pass the_repository to the getters. Use 'repo' when possib=
-le.=20
-
-Thanks!
-
-[1] https://lore.kernel.org/git/837b5360b40f992351f489a0ae05fedf49884c6e.16=
-85716420.git.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/20260301190017.53539-1-dronarajgyawali@gmai=
-l.com/
-[3] https://lore.kernel.org/git/xmqq1pht6nyx.fsf@gitster.g/
-[4] https://lore.kernel.org/git/a154008619790f7a60f2bba91db7b0fe29e67e1a.16=
-85716420.git.gitgitgadget@gmail.com/
-[5] https://lore.kernel.org/git/xmqq7bokebct.fsf@gitster.g/
-
-Tian Yuchen (4):
-  read-cache: remove redundant extern declarations
-  read-cache: move 'ce_mode_from_stat()' to 'read-cache.c'
-  environment: move trust_executable_bit into repo_config_values
-  environment: move has_symlinks into repo_config_values
-
- apply.c        |  4 ++--
- combine-diff.c |  2 +-
- compat/mingw.c |  7 ++++---
- entry.c        |  2 +-
- environment.c  | 28 ++++++++++++++++++++++++----
- environment.h  |  9 +++++++--
- read-cache.c   | 33 ++++++++++++++++++++++++++-------
- read-cache.h   | 16 ++--------------
- 8 files changed, 67 insertions(+), 34 deletions(-)
-
+diff --git a/read-cache.c b/read-cache.c
+index 38a04b8de3..c44e4d128f 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -204,8 +204,6 @@ void fill_stat_cache_info(struct index_state *istate, s=
+truct cache_entry *ce, st
+=20
+ static unsigned int st_mode_from_ce(const struct cache_entry *ce)
+ {
+-=09extern int trust_executable_bit, has_symlinks;
+-
+ =09switch (ce->ce_mode & S_IFMT) {
+ =09case S_IFLNK:
+ =09=09return has_symlinks ? S_IFLNK : (S_IFREG | 0644);
 --=20
 2.43.0
 
