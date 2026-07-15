@@ -1,434 +1,455 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f0.google.com (mail-pj2-f0.google.com [74.125.227.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687D5371D14
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 01:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA81238AC8E
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 01:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784078351; cv=none; b=HEXT/EkweyQg5kNssk57Pqjb5iEZKLa2orrlaaqOljd8SHz1KtyiI9BHe8puUGe+LkPp0b+OrImivUa3gBfIs5T4TFHvy83MJe7yylntV+nfm7BIptQDam1fXJ1Xu72sw1uOwuxsAo2HiEdEycZyQkLQARS5toBgXF2vAllnVQg=
+	t=1784080340; cv=none; b=tpxuYP32I7Vb1eqIuH+iUOiMOqQXmoeSIeuC7l411nU0Fw1d30oQd0DlJOI9nEsdBQD9I8CTNBrWW0ITsv33TLp5fiTu9AJ0LdFPJEmOtHWnpo0oLOPkhmlHwXuZv4n9vCMz0xTChCBRwV0nb8m0iTCdXyqOJS67r9L4uU+Si24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784078351; c=relaxed/simple;
-	bh=WWEUodUOZ4neRf/D3WsXoftuykC8Jj4/QCwLiEYEvac=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Tw8YQmFhWwtm2e37rQcfO94ppl5M/V4IX43/H9jz77xgKO7LeAJeazgS+Ae/PBA2KRTB23WAyQ/STsPvlLvmLBPyfwvtwEnnSFIKFuTYVakAG6823bY/9ptT4hd8iHRtmzfefM4fz6I7pnc49AYNSx1O6K31kF83JPN8214nl74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=enV3DgCe; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=T5CjbRjQ; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1784080340; c=relaxed/simple;
+	bh=fB0ldps/5XlhN+8YiZiGa+kasYD+dbC7NBUEomLYEdk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ojwfWZXFQwxBL+Fs115qZiLMVoWZDVUI+wURy/CUqmfpyzHa+xXdnzqbKUe+xvfZUnVc1T1DHd2xpj7XvoMUCcAqfCIg2xRsFb2hXxW6MhEQC0eFRqDtWwPUgtNp07BFiy4LkEP17qM8YvqhOkIrPMOhcc6GdAe2EpXR+I/4Qmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VtVDsa0Y; arc=none smtp.client-ip=74.125.227.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="enV3DgCe";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="T5CjbRjQ"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=enV3DgCebj6plUagqVQhzThuLNQ5JreCCBaK5j2xT72TBTlcfmSdoKnpDcmb0P+xdRHfD3lW0dHhNg8ujkK0i21E2x/64l9Oy7JGr4vNb8wsT1ALNE4I92fAsgXrFlPj6ZYgafKMe0k9uTG6hMb1cqx/hx8UD4qkR6FtfHTtk4tyefMHsVd3h/h+5RFPU2UmV4ytBIuuftjDE3o0Um9nabZ6g8oAQGu9Yc/QQI2m//a+3cIS9dFdqBd500ptqVNeqc5RsL0AZSwTP7sIbKQj0JMOX84wkjeLD/L7/6N3OK9aWdNelJF69xWd1T89Y9W5mFB7glxykT9y6JTYCGDKFA==; s=purelymail1; d=malon.dev; v=1; bh=WWEUodUOZ4neRf/D3WsXoftuykC8Jj4/QCwLiEYEvac=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=T5CjbRjQa4upuu1tcvqWQqvKt+9EQQmOc0ZhTSaNjjTIKxgnwWmSCUPYhH6I/tc5tqixdVnswSkdWsVgFUO+9nMKdp9cRTt+1a+LVSyWs0YnVQHptggwcG3WzgTisPqTVTNV8eTDcbN8YPg33gwlM1M1iudW7Ek4P6axLgRzD8aw6FpsJok8hNssOy7g/HLaiDt6ld6tfLXetCiMSCxN7lU4YFlPWKvE/uzZZwqFa9lTpZrCB6SQjz1Wp+6ed9gw8yYADhLkGazSd3OYyNg5qV9K1OMFwMMow7E4rKmqtxql3LNPXPh0w+SApx2puN0sx3IRFykhgPqxlHQXgQ0L7Q==; s=purelymail1; d=purelymail.com; v=1; bh=WWEUodUOZ4neRf/D3WsXoftuykC8Jj4/QCwLiEYEvac=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1283426547;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 15 Jul 2026 01:19:06 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VtVDsa0Y"
+Received: by mail-pj2-f0.google.com with SMTP id 98e67ed59e1d1-380f4166f80so926870a91.1
+        for <git@vger.kernel.org>; Tue, 14 Jul 2026 18:52:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784080325; x=1784685125; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=4fHyGbVRtQXGp2zA/A9Mixr1GUFccuNZ39HwvUr14wU=;
+        b=VtVDsa0Y/o/3CqjazivjVIWX/MFDgLuFegYJKQyAUhTQ7GLLTpjqO99LXRK0rjfFhR
+         0RU6jxUzPOayG/OE2FDKAnykoBybEVAquhcXDywQN3ACVN1zJ76dc7xZMgcoCLmC41ZB
+         rxhjwdp62yB97oMJnF4P/7VYhglAvih9eiSQ8HOikBIn6SU6C78yRSqLPyAG6te6t6b8
+         wTK1Mvt2sUqLvYzqJjMB1WxfPnGRnyhCEbg3ACsRH5SQ1IO7HuCkJy2e/WfsvFtJN8NC
+         El0C/9kuUYw/jifa1+9ONNLKpMCe1zXZuhqSXosFqWKa9J7XxRaXh+p0soBFGjtSCGlC
+         mffQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784080325; x=1784685125;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=4fHyGbVRtQXGp2zA/A9Mixr1GUFccuNZ39HwvUr14wU=;
+        b=NL4B15DhJCml1qt3eq/VwS2t3Cs7H31WGf9vVMrMjomuHYEVcNq9aogfWTWXfD5Np3
+         zKhY+eY65OyRF4L9KTE2+ZfX0gXElEfFrtD0R4buEyL7XnQbrxn8vOpRvZs3jmA5pVYd
+         FtuCEQ+f5PwCQn/+JPvMUWe1ddMTnHadKoE34OVfGcL9T/3S64Nmr7QXHPuamMtlHOW2
+         O5655933+uTf9DUxazD95pc57SAbvuf6ApBh2rhzb9kqjMkaRdK+Pb2jIoGXfchhYuJ+
+         mLUf0cLCB/dcTMxhgzrRvYXjY49uX+DqCnQb5PXLkQdI5sRf1dmzspImsUKyoODd+sTW
+         x+LA==
+X-Gm-Message-State: AOJu0YxbKGKNVJL+xRWbgQRJH9LueR4Zfp4sWrY+RBb07UizZ294tobn
+	1zeW38+NS73o75o4S6UxbU8iQdgqUcU3oqg8U3wcuLhQDlYuxd4MEhhhbgeCC5fRnYM=
+X-Gm-Gg: AfdE7cmGskGBet8e1utxt7fgwNa3lpJf55Zto+SIjArJn4CqJ7Ii/4RVpPbgeKLvswo
+	nzww1QqIKkrflGGe/ZESo3idR02+KLr2DcXLAuHRap6HX2tcBYkwIF8RDRR4Ez+buWRc65AK5u8
+	kbrkoMckxljO5HDK0/F87VgjTdIhpr2w1LXKI9g21bauEx7vvisP6cp3MbXnlnxYjeqRjXe6g+w
+	tQ3nikOOMwfXlwOTf7B/3fmp18hY3wfgla61gV5QwfcIKrawsZyOedcjWtyTpwFMd/T6LaBXYdB
+	sQedGjO7M6nW9x4uuYqcHC9B7gzsIFwpBwjwP6LVNIDP2Dp8tXSxmnQG2zi6z/AthUsW6IrkWKs
+	fAEdUbTxHQd5ZqowKldhtL1lkQj6D1G61BEs9x+hzwL52C/ouokotaEjMbU+O/7TcDY85GeME8n
+	WZ/qnny9djGWH7RbgEuXthho/IRnsllG6jI5IVWPCdsNbaJZciMKBQ0PnyIw==
+X-Received: by 2002:a05:6a21:a346:b0:3bf:9e25:1a19 with SMTP id adf61e73a8af0-3c1108c014dmr17550726637.52.1784080325096;
+        Tue, 14 Jul 2026 18:52:05 -0700 (PDT)
+Received: from localhost.localdomain ([45.117.66.213])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174a583bcsm91343313eec.19.2026.07.14.18.52.03
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 14 Jul 2026 18:52:04 -0700 (PDT)
+From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
 To: git@vger.kernel.org
-Cc: ps@pks.im,
-	five231003@gmail.com,
-	hariom18599@gmail.com,
-	Tian Yuchen <cat@malon.dev>,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v1] repository: move fetch_if_missing into struct repository
-Date: Wed, 15 Jul 2026 09:18:50 +0800
-Message-ID: <20260715011850.3181131-1-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
+Cc: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Subject: [PATCH v3] show-branch: convert per-branch flags to commit-slab
+Date: Wed, 15 Jul 2026 07:17:22 +0530
+Message-ID: <20260715015158.48559-1-gatlavishweshwarreddy26@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260714220042.GC4095533@coredump.intra.peff.net>
+References: <20260714220042.GC4095533@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The global variable 'fetch_if_missing' controls whether a missing
-object check should prompt a lazy fetch from a promisor remote.
-In order to continue the libification effort, move it into
-'struct repository' and initialize it to 1 by default to keep the
-previous behavior.
+show-branch uses commit->object.flags to store per-branch
+reachability bits, one bit per branch starting at REV_SHIFT.
+The flags word has only a fixed number of available bits, limiting
+the number of branches that can be shown simultaneously to MAX_REVS.
 
-Subsystems that already pass around a repository pointer, are
-updated to read this flag directly from their respective 'repo'
-instances. For the rest, we access 'the_repository'.
+Convert the per-branch bits to a dedicated commit-slab using uint64_t
+as the element type, initialized with a stride via
+init_commit_rev_flags_with_stride(). Keep the UNINTERESTING bit in
+object.flags where it belongs, as it is used for revision walking and
+does not need to be in the per-branch slab. With UNINTERESTING removed
+from the slab, REV_SHIFT becomes 0 and all 64 bits of uint64_t are
+available for branch tracking, lifting MAX_REVS from 27 to 64 branches.
 
-Note that in builtin/fsck.c and builtin/index-pack.c, when running
-related commands with the '-h' parameter, the 'repo' pointer is not
-passed in. To prevent null pointer dereferences, we defer
-operations on the repo in until after parameter parsing is complete.
+Add helper functions get_rev_flags_ptr(), peek_rev_flags_ptr(),
+has_any_rev_flags(), or_rev_flag_bit(), test_rev_flag_bit(), and
+has_all_rev_flags() to encapsulate per-bit slab access cleanly.
+Update all bit operations to use UINT64_C(1) for correct 64-bit shifts.
+Initialize and clear the slab in cmd_show_branch().
 
-Additionally, update the partial clone documentation to reflect
-that this is now a per-repository flag.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-Signed-off-by: Tian Yuchen <cat@malon.dev>
+Signed-off-by: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
 ---
- Documentation/technical/partial-clone.adoc |  2 +-
- builtin/fetch-pack.c                       |  2 +-
- builtin/fsck.c                             |  6 +++---
- builtin/index-pack.c                       |  9 +++++----
- builtin/pack-objects.c                     | 14 +++++++-------
- builtin/prune.c                            |  2 +-
- builtin/rev-list.c                         | 10 +++++-----
- git.c                                      |  2 +-
- midx-write.c                               |  2 +-
- odb.c                                      |  4 +---
- odb.h                                      |  8 --------
- repository.c                               |  1 +
- repository.h                               |  6 ++++++
- revision.c                                 |  2 +-
- setup.c                                    |  2 +-
- 15 files changed, 35 insertions(+), 37 deletions(-)
 
-diff --git a/Documentation/technical/partial-clone.adoc b/Documentation/tec=
-hnical/partial-clone.adoc
-index e513e391ea..18718a3840 100644
---- a/Documentation/technical/partial-clone.adoc
-+++ b/Documentation/technical/partial-clone.adoc
-@@ -159,7 +159,7 @@ and prefetch those objects in bulk.
- - `repack` in GC has been updated to not touch promisor packfiles at all,
-   and to only repack other objects.
-=20
--- The global variable "fetch_if_missing" is used to control whether an
-+- The per-repository flag "fetch_if_missing" is used to control whether an
-   object lookup will attempt to dynamically fetch a missing object or
-   report an error.
- +
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 316badd969..c5edd7b80f 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -67,7 +67,7 @@ int cmd_fetch_pack(int argc,
- =09struct packet_reader reader;
- =09enum protocol_version version;
-=20
--=09fetch_if_missing =3D 0;
-+=09the_repository->fetch_if_missing =3D 0;
-=20
- =09packet_trace_identity("fetch-pack");
-=20
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 248f8ff5a0..aa31c69486 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -1017,15 +1017,15 @@ int cmd_fsck(int argc,
- =09=09.ref =3D NULL
- =09};
-=20
--=09/* fsck knows how to handle missing promisor objects */
--=09fetch_if_missing =3D 0;
--
- =09errors_found =3D 0;
- =09disable_replace_refs();
- =09save_commit_buffer =3D 0;
-=20
- =09argc =3D parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
-=20
-+=09/* fsck knows how to handle missing promisor objects */
-+=09repo->fetch_if_missing =3D 0;
-+
- =09fsck_options_init(&fsck_walk_options, repo, FSCK_OPTIONS_DEFAULT);
- =09fsck_walk_options.walk =3D mark_object;
-=20
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 0793dc595c..721d576938 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1881,7 +1881,7 @@ static void repack_local_links(void)
- int cmd_index_pack(int argc,
- =09=09   const char **argv,
- =09=09   const char *prefix,
--=09=09   struct repository *repo UNUSED)
-+=09=09   struct repository *repo)
- {
- =09int i, fix_thin_pack =3D 0, verify =3D 0, stat_only =3D 0, rev_index;
- =09const char *curr_index;
-@@ -1898,15 +1898,16 @@ int cmd_index_pack(int argc,
- =09int report_end_of_input =3D 0;
- =09int hash_algo =3D 0;
-=20
-+=09show_usage_if_asked(argc, argv, index_pack_usage);
-+
- =09/*
- =09 * index-pack never needs to fetch missing objects except when
- =09 * REF_DELTA bases are missing (which are explicitly handled). It only
- =09 * accesses the repo to do hash collision checks and to check which
- =09 * REF_DELTA bases need to be fetched.
- =09 */
--=09fetch_if_missing =3D 0;
--
--=09show_usage_if_asked(argc, argv, index_pack_usage);
-+=09if (repo)
-+=09=09repo->fetch_if_missing =3D 0;
-=20
- =09disable_replace_refs();
-=20
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8a1709a1ab..c6536b1f65 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4059,7 +4059,7 @@ static void add_unreachable_loose_objects(struct rev_=
-info *revs);
-=20
- static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpa=
-cked)
- {
--=09int prev_fetch_if_missing =3D fetch_if_missing;
-+=09int prev_fetch_if_missing =3D the_repository->fetch_if_missing;
- =09struct rev_info revs;
-=20
- =09/*
-@@ -4067,7 +4067,7 @@ static void read_stdin_packs(enum stdin_packs_mode mo=
-de, int rev_list_unpacked)
- =09 * walk is best-effort though we don't want to perform backfill fetches
- =09 * for them.
- =09 */
--=09fetch_if_missing =3D 0;
-+=09the_repository->fetch_if_missing =3D 0;
-=20
- =09repo_init_revisions(the_repository, &revs, NULL);
- =09/*
-@@ -4115,7 +4115,7 @@ static void read_stdin_packs(enum stdin_packs_mode mo=
-de, int rev_list_unpacked)
- =09trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
- =09=09=09   stdin_packs_hints_nr);
-=20
--=09fetch_if_missing =3D prev_fetch_if_missing;
-+=09the_repository->fetch_if_missing =3D prev_fetch_if_missing;
- }
-=20
- static void add_cruft_object_entry(const struct object_id *oid, enum objec=
-t_type type,
-@@ -4451,14 +4451,14 @@ static int option_parse_missing_action(const struct=
- option *opt UNUSED,
-=20
- =09if (!strcmp(arg, "allow-any")) {
- =09=09arg_missing_action =3D MA_ALLOW_ANY;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09fn_show_object =3D show_object__ma_allow_any;
- =09=09return 0;
- =09}
-=20
- =09if (!strcmp(arg, "allow-promisor")) {
- =09=09arg_missing_action =3D MA_ALLOW_PROMISOR;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09fn_show_object =3D show_object__ma_allow_promisor;
- =09=09return 0;
- =09}
-@@ -5247,7 +5247,7 @@ int cmd_pack_objects(int argc,
- =09=09=09=09  exclude_promisor_objects_best_effort,
- =09=09=09=09  "--exclude-promisor-objects-best-effort");
- =09if (exclude_promisor_objects) {
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
-=20
- =09=09/* --stdin-packs handles promisor objects separately. */
- =09=09if (!stdin_packs) {
-@@ -5256,7 +5256,7 @@ int cmd_pack_objects(int argc,
- =09=09}
- =09} else if (exclude_promisor_objects_best_effort) {
- =09=09use_internal_rev_list =3D 1;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09option_parse_missing_action(NULL, "allow-any", 0);
- =09=09/* revs configured below */
- =09}
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 55635a891f..a7e4678d11 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -194,7 +194,7 @@ int cmd_prune(int argc,
- =09if (show_progress =3D=3D -1)
- =09=09show_progress =3D isatty(2);
- =09if (exclude_promisor_objects) {
--=09=09fetch_if_missing =3D 0;
-+=09=09repo->fetch_if_missing =3D 0;
- =09=09revs.exclude_promisor_objects =3D 1;
- =09}
-=20
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 8f63003709..a6a0c5559e 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -509,25 +509,25 @@ static inline int parse_missing_action_value(const ch=
-ar *value)
-=20
- =09if (!strcmp(value, "allow-any")) {
- =09=09arg_missing_action =3D MA_ALLOW_ANY;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
- =09if (!strcmp(value, "print")) {
- =09=09arg_missing_action =3D MA_PRINT;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
- =09if (!strcmp(value, "print-info")) {
- =09=09arg_missing_action =3D MA_PRINT_INFO;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
- =09if (!strcmp(value, "allow-promisor")) {
- =09=09arg_missing_action =3D MA_ALLOW_PROMISOR;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
-@@ -745,7 +745,7 @@ int cmd_rev_list(int argc,
- =09for (i =3D 1; i < argc; i++) {
- =09=09const char *arg =3D argv[i];
- =09=09if (!strcmp(arg, "--exclude-promisor-objects")) {
--=09=09=09fetch_if_missing =3D 0;
-+=09=09=09the_repository->fetch_if_missing =3D 0;
- =09=09=09revs.exclude_promisor_objects =3D 1;
- =09=09} else if (skip_prefix(arg, "--missing=3D", &arg)) {
- =09=09=09parse_missing_action_value(arg);
-diff --git a/git.c b/git.c
-index 36f08891ef..315d2e160e 100644
---- a/git.c
-+++ b/git.c
-@@ -202,7 +202,7 @@ static int handle_options(const char ***argv, int *argc=
-, int *envchanged)
- =09=09=09if (envchanged)
- =09=09=09=09*envchanged =3D 1;
- =09=09} else if (!strcmp(cmd, "--no-lazy-fetch")) {
--=09=09=09fetch_if_missing =3D 0;
-+=09=09=09the_repository->fetch_if_missing =3D 0;
- =09=09=09setenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 1);
- =09=09=09if (envchanged)
- =09=09=09=09*envchanged =3D 1;
-diff --git a/midx-write.c b/midx-write.c
-index 19e1cd10b7..e7313c9d2c 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -865,7 +865,7 @@ static void find_commits_for_midx_bitmap(struct commit_=
-stack *commits,
- =09 * complain later that we don't have reachability closure (and fail
- =09 * appropriately).
- =09 */
--=09fetch_if_missing =3D 0;
-+=09ctx->repo->fetch_if_missing =3D 0;
- =09revs.exclude_promisor_objects =3D 1;
-=20
- =09if (prepare_revision_walk(&revs))
-diff --git a/odb.c b/odb.c
-index 965ef68e4e..664256e1a4 100644
---- a/odb.c
-+++ b/odb.c
-@@ -528,8 +528,6 @@ void disable_obj_read_lock(void)
- =09pthread_mutex_destroy(&obj_read_mutex);
- }
-=20
--int fetch_if_missing =3D 1;
--
- static int register_all_submodule_sources(struct object_database *odb)
- {
- =09int ret =3D odb->submodule_source_paths.nr;
-@@ -595,7 +593,7 @@ static int do_oid_object_info_extended(struct object_da=
-tabase *odb,
- =09=09=09continue;
-=20
- =09=09/* Check if it is a missing object */
--=09=09if (fetch_if_missing && repo_has_promisor_remote(odb->repo) &&
-+=09=09if (odb->repo->fetch_if_missing && repo_has_promisor_remote(odb->rep=
-o) &&
- =09=09    !already_retried &&
- =09=09    !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
- =09=09=09promisor_remote_get_direct(odb->repo, real, 1);
-diff --git a/odb.h b/odb.h
-index 0030467a52..1dca583fcb 100644
---- a/odb.h
-+++ b/odb.h
-@@ -14,14 +14,6 @@ struct repository;
- struct strbuf;
- struct strvec;
-=20
+Changes in v3:
+- Keep UNINTERESTING in object.flags as suggested by Junio
+- Slab stores only per-branch bits with REV_SHIFT=0
+- All 64 bits of uint64_t available for branches, MAX_REVS=64
+- Fix uint64_t flag in omit_in_dense() (was int)
+- Fix indentation in show_merge_base()
+- Replace all_mask/all_revs with has_all_rev_flags() helper
+- Use UINT64_C(1) for all bit shifts
+
+In response to Junio:
+- UNINTERESTING kept in object.flags; slab is per-branch bits only
+
+In response to Jeff King:
+- init_commit_rev_flags_with_stride() is used as foundation.
+  Current stride=1 gives 64 branches. Dynamic stride for >64
+  branches can be added as a follow-up.
+
+ builtin/show-branch.c | 143 ++++++++++++++++++++++++------------------
+ 1 file changed, 83 insertions(+), 60 deletions(-)
+
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index f02831b085..70436007ec 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -34,16 +34,9 @@ static enum git_colorbool showbranch_use_color = GIT_COLOR_UNKNOWN;
+
+ static struct strvec default_args = STRVEC_INIT;
+
 -/*
-- * Set this to 0 to prevent odb_read_object_info_extended() from fetching =
-missing
-- * blobs. This has a difference only if extensions.partialClone is set.
-- *
-- * Its default value is 1.
+- * TODO: convert this use of commit->object.flags to commit-slab
+- * instead to store a pointer to ref name directly. Then use the same
+- * UNINTERESTING definition from revision.h here.
 - */
--extern int fetch_if_missing;
+ #define UNINTERESTING	01
 -
- /*
-  * Compute the exact path an alternate is at and returns it. In case of
-  * error NULL is returned and the human readable error is added to `err`
-diff --git a/repository.c b/repository.c
-index 187dd471c4..b959f7a028 100644
---- a/repository.c
-+++ b/repository.c
-@@ -73,6 +73,7 @@ void initialize_repository(struct repository *repo)
- =09ALLOC_ARRAY(repo->index, 1);
- =09index_state_init(repo->index, repo);
- =09repo->check_deprecated_config =3D true;
-+=09repo->fetch_if_missing =3D 1;
- =09repo_config_values_init(&repo->config_values_private_);
-=20
- =09/*
-diff --git a/repository.h b/repository.h
-index 36e2db2633..e8bd6ef0e7 100644
---- a/repository.h
-+++ b/repository.h
-@@ -169,6 +169,12 @@ struct repository {
- =09/* True if commit-graph has been disabled within this process. */
- =09int commit_graph_disabled;
-=20
-+=09/*
-+=09 * Controls whether the repository should lazily fetch missing
-+=09 * objects from promisor remotes. Defaults to 1.
-+=09 */
-+=09int fetch_if_missing;
+-#define REV_SHIFT	 2
+-#define MAX_REVS	(FLAG_BITS - REV_SHIFT) /* should not exceed bits_per_int - REV_SHIFT */
+-
++#define REV_SHIFT	 0
++#define MAX_REVS	(sizeof(uint64_t) * 8)
+ #define DEFAULT_REFLOG	4
+
+ static const char *get_color_code(int idx)
+@@ -79,11 +72,56 @@ struct commit_name {
+ define_commit_slab(commit_name_slab, struct commit_name *);
+ static struct commit_name_slab name_slab;
+
++define_commit_slab(commit_rev_flags, uint64_t);
++static struct commit_rev_flags rev_flags_slab;
++static int flags_stride; /* number of uint64_t words per commit */
 +
- =09/*
- =09 * Lazily-populated cache mapping hook event names to configured hooks.
- =09 * NULL until first hook use.
-diff --git a/revision.c b/revision.c
-index e91d7e1f11..bb645654c3 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2714,7 +2714,7 @@ static int handle_revision_opt(struct rev_info *revs,=
- int argc, const char **arg
- =09=09revs->ignore_missing =3D 1;
- =09} else if (opt && opt->allow_exclude_promisor_objects &&
- =09=09   !strcmp(arg, "--exclude-promisor-objects")) {
--=09=09if (fetch_if_missing)
-+=09=09if (revs->repo->fetch_if_missing)
- =09=09=09BUG("exclude_promisor_objects can only be used when fetch_if_miss=
-ing is 0");
- =09=09revs->exclude_promisor_objects =3D 1;
- =09} else {
-diff --git a/setup.c b/setup.c
-index b4652651df..ce2a80ac31 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1064,7 +1064,7 @@ static void setup_git_env_internal(struct repository =
-*repo,
- =09=09set_alternate_shallow_file(repo, shallow_file, 0);
-=20
- =09if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0))
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
+ static struct commit_name *commit_to_name(struct commit *commit)
+ {
+ 	return *commit_name_slab_at(&name_slab, commit);
  }
-=20
- static void set_git_dir_1(struct repository *repo, const char *path)
---=20
-2.43.0
+
++static uint64_t *get_rev_flags_ptr(struct commit *commit)
++{
++	return commit_rev_flags_at(&rev_flags_slab, commit);
++}
++
++static uint64_t *peek_rev_flags_ptr(struct commit *commit)
++{
++	return commit_rev_flags_peek(&rev_flags_slab, commit);
++}
++
++static int has_any_rev_flags(struct commit *commit)
++{
++	uint64_t *f = peek_rev_flags_ptr(commit);
++	int i;
++	if (!f)
++		return 0;
++	for (i = 0; i < flags_stride; i++)
++		if (f[i])
++			return 1;
++	return 0;
++}
++
++static void or_rev_flag_bit(struct commit *commit, int branch)
++{
++	get_rev_flags_ptr(commit)[branch / 64] |= UINT64_C(1) << (branch % 64);
++}
++
++static int test_rev_flag_bit(struct commit *commit, int branch)
++{
++	uint64_t *f = peek_rev_flags_ptr(commit);
++	return f && !!(f[branch / 64] & (UINT64_C(1) << (branch % 64)));
++}
++
++static int has_all_rev_flags(struct commit *commit, int num_rev)
++{
++	int i;
++	for (i = 0; i < num_rev; i++)
++		if (!test_rev_flag_bit(commit, i))
++			return 0;
++	return 1;
++}
+
+ /* Name the commit as nth generation ancestor of head_name;
+  * we count only the first-parent relationship for naming purposes.
+@@ -215,7 +253,7 @@ static void name_commits(struct commit_list *list,
+
+ static int mark_seen(struct commit *commit, struct commit_list **seen_p)
+ {
+-	if (!commit->object.flags) {
++	if (!has_any_rev_flags(commit)) {
+ 		commit_list_insert(commit, seen_p);
+ 		return 1;
+ 	}
+@@ -226,34 +264,34 @@ static void join_revs(struct prio_queue *queue,
+ 		      struct commit_list **seen_p,
+ 		      int num_rev, int extra)
+ {
+-	int all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
+-	int all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
+-
+ 	while (queue->nr) {
+ 		struct commit_list *parents;
+ 		int still_interesting = !!interesting(queue);
+ 		struct commit *commit = prio_queue_peek(queue);
+ 		bool get_pending = true;
+-		int flags = commit->object.flags & all_mask;
+
+ 		if (!still_interesting && extra <= 0)
+ 			break;
+
+ 		mark_seen(commit, seen_p);
+-		if ((flags & all_revs) == all_revs)
+-			flags |= UNINTERESTING;
++		if (has_all_rev_flags(commit, num_rev))
++			commit->object.flags |= UNINTERESTING;
+ 		parents = commit->parents;
+
+ 		while (parents) {
+ 			struct commit *p = parents->item;
+-			int this_flag = p->object.flags;
+ 			parents = parents->next;
+-			if ((this_flag & flags) == flags)
++			if (has_all_rev_flags(p, num_rev))
+ 				continue;
+ 			repo_parse_commit(the_repository, p);
+ 			if (mark_seen(p, seen_p) && !still_interesting)
+ 				extra--;
+-			p->object.flags |= flags;
++			{
++				int _b;
++				for (_b = 0; _b < num_rev; _b++)
++					if (test_rev_flag_bit(commit, _b))
++						or_rev_flag_bit(p, _b);
++			}
+ 			if (get_pending)
+ 				prio_queue_replace(queue, p);
+ 			else
+@@ -263,7 +301,6 @@ static void join_revs(struct prio_queue *queue,
+ 		if (get_pending)
+ 			prio_queue_get(queue);
+ 	}
+-
+ 	/*
+ 	 * Postprocess to complete well-poisoning.
+ 	 *
+@@ -278,7 +315,7 @@ static void join_revs(struct prio_queue *queue,
+ 			struct commit *c = s->item;
+ 			struct commit_list *parents;
+
+-			if (((c->object.flags & all_revs) != all_revs) &&
++			if (!has_all_rev_flags(c, num_rev) &&
+ 			    !(c->object.flags & UNINTERESTING))
+ 				continue;
+
+@@ -410,8 +447,8 @@ static int append_ref(const char *refname, const struct object_id *oid,
+ 				return 0;
+ 	}
+ 	if (MAX_REVS <= ref_name_cnt) {
+-		warning(Q_("ignoring %s; cannot handle more than %d ref",
+-			   "ignoring %s; cannot handle more than %d refs",
++		warning(Q_("ignoring %s; cannot handle more than %zu ref",
++			   "ignoring %s; cannot handle more than %zu refs",
+ 			   MAX_REVS), refname, MAX_REVS);
+ 		return 0;
+ 	}
+@@ -511,15 +548,12 @@ static int rev_is_head(const char *head, const char *name)
+
+ static int show_merge_base(const struct commit_list *seen, int num_rev)
+ {
+-	int all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
+-	int all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
+ 	int exit_status = 1;
+
+ 	for (const struct commit_list *s = seen; s; s = s->next) {
+ 		struct commit *commit = s->item;
+-		int flags = commit->object.flags & all_mask;
+-		if (!(flags & UNINTERESTING) &&
+-		    ((flags & all_revs) == all_revs)) {
++		if (!(commit->object.flags & UNINTERESTING) &&
++			has_all_rev_flags(commit, num_rev)) {
+ 			puts(oid_to_hex(&commit->object.oid));
+ 			exit_status = 0;
+ 			commit->object.flags |= UNINTERESTING;
+@@ -528,17 +562,13 @@ static int show_merge_base(const struct commit_list *seen, int num_rev)
+ 	return exit_status;
+ }
+
+-static int show_independent(struct commit **rev,
+-			    int num_rev,
+-			    unsigned int *rev_mask)
++static int show_independent(struct commit **rev, int num_rev)
+ {
+ 	int i;
+
+ 	for (i = 0; i < num_rev; i++) {
+ 		struct commit *commit = rev[i];
+-		unsigned int flag = rev_mask[i];
+-
+-		if (commit->object.flags == flag)
++		if (test_rev_flag_bit(commit, i))
+ 			puts(oid_to_hex(&commit->object.oid));
+ 		commit->object.flags |= UNINTERESTING;
+ 	}
+@@ -603,13 +633,12 @@ static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
+ 	 * Otherwise, if it is a merge that is reachable from only one
+ 	 * tip, it is not that interesting.
+ 	 */
+-	int i, flag, count;
++	int i, count;
+ 	for (i = 0; i < n; i++)
+ 		if (rev[i] == commit)
+ 			return 0;
+-	flag = commit->object.flags;
+ 	for (i = count = 0; i < n; i++) {
+-		if (flag & (1u << (i + REV_SHIFT)))
++		if (test_rev_flag_bit(commit, i))
+ 			count++;
+ 	}
+ 	if (count == 1)
+@@ -648,10 +677,8 @@ int cmd_show_branch(int ac,
+ 	char *reflog_msg[MAX_REVS] = {0};
+ 	struct commit_list *seen = NULL;
+ 	struct prio_queue queue = { compare_commits_by_commit_date };
+-	unsigned int rev_mask[MAX_REVS];
+ 	int num_rev, i, extra = 0;
+ 	int all_heads = 0, all_remotes = 0;
+-	int all_mask, all_revs;
+ 	enum rev_sort_order sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 	char *head;
+ 	struct object_id head_oid;
+@@ -713,7 +740,8 @@ int cmd_show_branch(int ac,
+ 	const char **args_copy = NULL;
+ 	int ret;
+
+-	init_commit_name_slab(&name_slab);
++	flags_stride = (MAX_REVS + 63) / 64;
++	init_commit_rev_flags_with_stride(&rev_flags_slab, flags_stride);
+
+ 	repo_config(the_repository, git_show_branch_config, NULL);
+
+@@ -779,8 +807,8 @@ int cmd_show_branch(int ac,
+ 			die(_("--reflog option needs one branch name"));
+
+ 		if (MAX_REVS < reflog)
+-			die(Q_("only %d entry can be shown at one time.",
+-			       "only %d entries can be shown at one time.",
++			die(Q_("only %zu entry can be shown at one time.",
++			       "only %zu entries can be shown at one time.",
+ 			       MAX_REVS), MAX_REVS);
+ 		if (!repo_dwim_ref(the_repository, *av, strlen(*av), &oid,
+ 				   &ref, 0))
+@@ -870,11 +898,11 @@ int cmd_show_branch(int ac,
+
+ 	for (num_rev = 0; ref_name[num_rev]; num_rev++) {
+ 		struct object_id revkey;
+-		unsigned int flag = 1u << (num_rev + REV_SHIFT);
++		int first_seen;
+
+ 		if (MAX_REVS <= num_rev)
+-			die(Q_("cannot handle more than %d rev.",
+-			       "cannot handle more than %d revs.",
++			die(Q_("cannot handle more than %zu rev.",
++			       "cannot handle more than %zu revs.",
+ 			       MAX_REVS), MAX_REVS);
+ 		if (repo_get_oid(the_repository, ref_name[num_rev], &revkey))
+ 			die(_("'%s' is not a valid ref."), ref_name[num_rev]);
+@@ -885,17 +913,15 @@ int cmd_show_branch(int ac,
+ 		repo_parse_commit(the_repository, commit);
+ 		mark_seen(commit, &seen);
+
+-		/* rev#0 uses bit REV_SHIFT, rev#1 uses bit REV_SHIFT+1,
+-		 * and so on.  REV_SHIFT bits from bit 0 are used for
+-		 * internal bookkeeping.
++		/* rev#0 uses bit 0, rev#1 uses bit 1,
++		 * and so on.  All bits are available for branch tracking.
+ 		 */
+-		commit->object.flags |= flag;
+-		if (commit->object.flags == flag)
++		first_seen = !has_any_rev_flags(commit);
++		or_rev_flag_bit(commit, num_rev);
++		if (first_seen)
+ 			prio_queue_put(&queue, commit);
+ 		rev[num_rev] = commit;
+ 	}
+-	for (i = 0; i < num_rev; i++)
+-		rev_mask[i] = rev[i]->object.flags;
+
+ 	if (0 <= extra)
+ 		join_revs(&queue, &seen, num_rev, extra);
+@@ -908,7 +934,7 @@ int cmd_show_branch(int ac,
+ 	}
+
+ 	if (independent) {
+-		ret = show_independent(rev, num_rev, rev_mask);
++		ret = show_independent(rev, num_rev);
+ 		goto out;
+ 	}
+
+@@ -958,13 +984,9 @@ int cmd_show_branch(int ac,
+ 	if (!sha1_name && !no_name)
+ 		name_commits(seen, rev, ref_name, num_rev);
+
+-	all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
+-	all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
+-
+ 	for (struct commit_list *l = seen; l; l = l->next) {
+ 		struct commit *commit = l->item;
+-		int this_flag = commit->object.flags;
+-		int is_merge_point = ((this_flag & all_revs) == all_revs);
++		int is_merge_point = has_all_rev_flags(commit, num_rev);
+
+ 		shown_merge_point |= is_merge_point;
+
+@@ -973,14 +995,14 @@ int cmd_show_branch(int ac,
+ 					  commit->parents->next);
+ 			if (topics &&
+ 			    !is_merge_point &&
+-			    (this_flag & (1u << REV_SHIFT)))
++			    test_rev_flag_bit(commit, 0))
+ 				continue;
+ 			if (!sparse && is_merge &&
+ 			    omit_in_dense(commit, rev, num_rev))
+ 				continue;
+ 			for (i = 0; i < num_rev; i++) {
+ 				int mark;
+-				if (!(this_flag & (1u << (i + REV_SHIFT))))
++				if (!test_rev_flag_bit(commit, i))
+ 					mark = ' ';
+ 				else if (is_merge)
+ 					mark = '-';
+@@ -1010,6 +1032,7 @@ int cmd_show_branch(int ac,
+ 		free(reflog_msg[i]);
+ 	commit_list_free(seen);
+ 	clear_prio_queue(&queue);
++	clear_commit_rev_flags(&rev_flags_slab);
+ 	free(args_copy);
+ 	free(head);
+ 	return ret;
+--
+2.54.0
 
