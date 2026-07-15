@@ -1,255 +1,119 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D9E439911
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 18:52:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B57F43F0AE
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 18:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784141568; cv=none; b=VhfnyVzMkVhKCAZ9HC4OsMghoYZWBm7v140W2bd+brncrMaOD7p1z7LszqQlGB8F3+dN3yticdeM8RegGUD8zT3GwT+l0Al+2S86LxiNsTfyz/KXUbXhBSphprNxLl/DgL1XcrmsAfzO0tsgLA/G4TNUnRp1yW9JHHkgelEKQwQ=
+	t=1784141640; cv=none; b=twZGYoqbVLXtFHnCv9NEqcoDrAWrHjBToaPL1UloBpx0B51s9Q5OpT8Dr9mG9mWattqToZJBtT7uBLRsqUBG6zp+t92BMZjJJB/Vbglub/x3kV+iia80bkXeqrQtZGMbULZHtTez8+M7yz6T+coHCcHZjC0EXESYsfOEr61x/qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784141568; c=relaxed/simple;
-	bh=4z9tTqfs98Mhx4lftFZvNk2HdXBvPDSuDRBsrZwW9W8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=TwbclbuBqK+j6Vt27tFafBRW537nGWR3b++ttaAGgSQ7B7oe/44ht0z9HV+kf+kqGu4owZLDfPA4Ig0fL3L1QVbCrikrYcMjLvZCd+l0yUwXC1/43UlymRqg4bmTQPhF3ljPjMsF3DgRIwZQWjJdGQ4Rxt9X8FD80QoO9sHr4Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oCjq0OWj; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784141640; c=relaxed/simple;
+	bh=d8dKv1FbKTaAYHvSx1yCSHzE+2xTvgLp/cXVIlygjP0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EQA59j2wopD8ZPW44oJwybbRsax+xwr3xmAi9QP2cd3qbpvd9qwBLhVRpV+5kTJ6dNBTxegGu6t3pJUXhjwgxWBSR7jgntZU4G+v8HibqiZ0J5aG9yUbkdeahGA48mrii+oOm0lMn5Y1d7PvnuHclqx+bLz8IQ5Ee3m05bAy6m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IFcZh0KL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bpFwPjn3; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oCjq0OWj"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493ce08a75bso23776815e9.1
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 11:52:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784141563; x=1784746363; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=vZGWAusLCTeSmWa7gU5SNseS82IIoXSybNaU+pMMWY4=;
-        b=oCjq0OWjiHx0P0rrGGQW89uTwMIn2vNUEi0UFWt3nGA2QIvh4T8tJz1vCH184voHH8
-         ReGI0JdiNhGXOFPo1Tn98WY8VuMMLVojUkJz5Yax0gZGt7IkDDCebH7N93tu/elGyinR
-         jGcuIgaEOzUnRIXjsfKhfYwkrIuwCJZO0vs34d1pdCIBWR9RGhUl+996bSp5yS1JZyRz
-         hteT90dtx5Dw+q38hvL2bVT/9oqdKi9J/6xVhg37gv06Q8m1dFYkdZ50HHIod7hjkjED
-         eIGPPk0LU9VT/KFSDRko2TMvzkvHdxJUp69PXHHZDRgnAV3D2YOKuXcje/PU+55Tjelt
-         nBlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784141563; x=1784746363;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vZGWAusLCTeSmWa7gU5SNseS82IIoXSybNaU+pMMWY4=;
-        b=Fb/9f8V5nkhWER4GDpRPmnhyqXNvmjGUtHXeZwSEHYSt1GHo3HG6imZWFcA8fDjCU0
-         L/70nVdJIZ4AeFdK5ax6lxpSw7ivqna5BEM3vdvBSdn/qWw0QvbiR+LV5oKg2gYcYKdb
-         BuyqSZvEv8mhtiGUbCzUN2Rt/bzd2nPHxeATbVbogndRI06Oon7rEBP0ZYNQA32gxsKy
-         kxYSFltI8uFOE+sIU9DbyC1j1HeL9mtmePLOl8Ne9bKmLrAp4RynKjbtdZqMANBk1Qs0
-         gHgNjcf6rxLVbhtXADkLzoZ3Oq/s/e0EckTkaXchZoQWT9KKwhYhHEKjRohHKcTRkP38
-         VNOQ==
-X-Gm-Message-State: AOJu0YzjztliVq+aHwV/MMPJaVbcvMp4q8imZHvnMiL1LubDiaVYkPRY
-	+9O+q4zaNCOb4CqlbJ2jjnkAKeYinGh7kYbXjzw0naEoHYKpjj4vsJzU
-X-Gm-Gg: AfdE7cn5JhX68jLQg4tNeQldaxuROdGFj7CPoQj8A9sNM4YGmcsqOZYCt43Yk20vX6M
-	NCMMerp5u0UX1YNax/VZa7bpk9K5daPEcpj9F81cWaE7ugcVgmgux+Jrt4/u4hL5hGwteFZOHAW
-	3T30bUZJOTSqVJXJVV+bbrflkhvchlylzCiNzz8WLCXolrmk3Ru7UEPWEk190yKUpGq8nasPAIo
-	T0KyQm9fRNnosJj4G4YdEu1Wz3h7abvTEwgZUsXFZqI0mvmpC1Mo/DN/dl9dzKnLPosbuemwdMV
-	Tx0tnKhR4g2FU4dclz5Pr0RHxYZ8fj8gtRWuFtftdkU8cdKMWaGTpSQHGvc4hSJv/QdjjLaDJOz
-	50caJBoQ0WorX+jDqai3LJGq3L3Jqpj6oCXpe6iH/BDT+vvZHmZYgSwg7iqsaEdeSIzzacX7aNV
-	phwv6VzzhCGDqBE2sdaHK2/YEHi+LYjyfaxmrwEO+PIEo0LwfWdN9jnW1STb4Zp0hfYLtjJyuqi
-	hhY9cK0oWOkGSXe0eTL1Etpgyg8019tzBeM9LzUU4/ZhYT+MjK8P7GATMxGkratFa+iVkCxzS2m
-	ekWVL+CJxmu66S1XIR38sdiABZ/cgL/qkmx15jO9Xvja7vbMzeFsrrnu3YWSovb8mqMzFA==
-X-Received: by 2002:a05:600c:2b06:b0:492:45a0:dcef with SMTP id 5b1f17b1804b1-495158c6a10mr74017355e9.5.1784141562480;
-        Wed, 15 Jul 2026 11:52:42 -0700 (PDT)
-Received: from localhost (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f464c1f84sm18887423f8f.29.2026.07.15.11.52.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jul 2026 11:52:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IFcZh0KL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bpFwPjn3"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 574907A0097;
+	Wed, 15 Jul 2026 14:53:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 15 Jul 2026 14:53:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784141635; x=1784228035; bh=Gyao1W52SC
+	W3kDqRDxPf3jJLeZAVsHieIjz2huji5vc=; b=IFcZh0KLxJtWQEymBnHmKGGO0x
+	1nLJ89oV7smz3K428niXaUmu7nKQcDEO2aKbQ0BFSIrgG6gkhFZUa7EGCsvSoksM
+	+ZlQA/lVL2UuoGJeSGGWTRm8fVFchcXxBhSBCRVp2T3Mw1LTCJbfPtsw7pwDyT3Y
+	qeO6vtzlGZkFFCVdEwHScmGHMYaovFuwG2GNDX0cgWCCxrZylbMO/RH2HulADlax
+	cgMwPjHILjOII48ZpjFlq7PbYlrEyWQlt6E2anIDmfvdt6eY5S6fP9XcMuacgWLP
+	ZowM5uQfCBkERwJ5Xy6amJB1vXpE+j4llFb/PnJsdfABDupvUR1rWeihfbbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784141635; x=1784228035; bh=Gyao1W52SCW3kDqRDxPf3jJLeZAVsHieIjz
+	2huji5vc=; b=bpFwPjn3EW+uvwSGKbpfRBl7Jm3lrPnudckD1jCjmVfh26Ndwwy
+	zA7l/eBXpbJq9j4TljFXuAfj2REL2D1CysGBpsXhhX7rsXed6g9UBJD+lCO62q5L
+	UX5q/4jF29SUoEm/g5r57m0FhXOUwTbW4gbPqlxO8d6+ndVglfdWL6KWqCjhfbUm
+	dj4d3xeD0IVpAkXlyBeORYD9+UKJGD8wdSJkVhNPpIP5HoZrxLLYOstECYeCmWzj
+	fwPDT54ZgvWgFonOAiq/xSogcOG9KRn/c9CIiF+Dbcot/mFIjekarOf1aWHqBwk2
+	1+/yJZgrVqI/vD/CEmK96GcVNAF9DRbLR8Q==
+X-ME-Sender: <xms:QtdXauJIDSto1wSuJJDRONOx3ICZ5Ukkk_jCQbfpoxbjBi36O6yqBA>
+    <xme:QtdXam2CKv-VzPtpEEKjRv0gx0fIMXbfHICS1wqOVSMTmvWqN6BTjjzqD3ykM_yFh
+    8FeYQu__ijIZW9eVj3JFfAFoZvhTCWj-6Y7yEzmSlln2q9ox19J1g>
+X-ME-Received: <xmr:QtdXas5KeOAECKsuioR_bP2BWvUfDeeZwrMi3ctZ--Kroyt_Jt87bNy-bvNfkhLTOViMizaap9-jMlcnIBDXbT2m1CRim-TB6j5gLQ8>
+X-ME-Proxy-Cause: dmFkZTE87TVnWrdP8nnCv8zOPbj5lrD0nvHpK9yZcxznjDkTZw7LWRAHkOXhFmwKL7Tt84
+    D3iEsoJDsd6xRDKAope8WYRc8xzPrC7P4fnZw+4oNrScz9frtOSGqBrf+oaPaX3bK65VsY
+    X3rHvpSGdOQAAVO3XVsFy9+f4kGfTC9sVbJmGCJgI6xWNssQdS5gBNe+jumTpu71jKxgTZ
+    Drvm/C3VydHvtGcxxauz9Wl+fV2/VAW4aaHmnI8OX/yapAObf9afh8mPj1JK3v1h4wHhOa
+    p/wCBOYYj5DrFNyiYfwTU5TE6FlcnaDnjwhPv+P/R39Xw2pR0CGVTHfUuNnW1hM7Pr9Eoi
+    D4rVqunic+jCJ5hhjf84isK+IHKCadcMmU3wY4tHHP1DCg9onFILdGS/TGiNZowAgkWVG9
+    R9aKYBh7/EGd/8JBbDqAKGnTYDV0tKTQfWlsu9taUzYUEpto4oXavKYiC5S2UOgTU0fBBN
+    AvRLAPQJWQHic4BExVhHhgeKRmvSJ0ruAeGtisp2yWE5vJrValT81C4AcuTlOB+dhXeTki
+    YMSq8mR0xzaiIDjhCey/HXLGk5YjdOA/y3+ciWzo9F406f8SG1k0z670V2OFvPF90Ql/6b
+    qY9ETqm1+7DreSnsnYG5vdTFru7exTg0zhxtccYGIHcVNEcrHk4E8Q6k0jKQ
+X-ME-Proxy: <xmx:QtdXan9NopIrY1bsYF7kXgYQlO3mG13P6Mq7YdO81Tqln9f4a7pyng>
+    <xmx:QtdXarV0qUdk2z76f4TLKDTuIbAuw_zdgzaOmf_TqMMDRBPobSBl2Q>
+    <xmx:QtdXaipKRt2DWM7exocFQ2QVNwuk8YfVPWo0JnqcfD7tynVDjBJ0mQ>
+    <xmx:QtdXatkN1LuE6yUoXC4orM8GUUNx_I1T0hlqn4D8kNq5PMnEBBcjBg>
+    <xmx:Q9dXalgKWeC8R3_SEtJuyO0WG-YLWG1voaQWOkr_SJnXju0DSRb4iw5z>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Jul 2026 14:53:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org,  Uwe =?utf-8?Q?Kleine?=
+ =?utf-8?Q?-K=C3=B6nig?=
+ <u.kleine-koenig@baylibre.com>,  Farid Zakaria <farid.m.zakaria@gmail.com>
+Subject: Re: [PATCH v2 03/10] sequencer: be more careful with external merge
+In-Reply-To: <6cdccc2b-c0b4-497f-8408-a18bd0981505@gmail.com> (Phillip Wood's
+	message of "Wed, 15 Jul 2026 10:42:55 +0100")
+References: <cover.1782833268.git.phillip.wood@dunelm.org.uk>
+	<cover.1783948637.git.phillip.wood@dunelm.org.uk>
+	<3d79362332c1208eed1fb7f8b0d431ee92fe45c5.1783948637.git.phillip.wood@dunelm.org.uk>
+	<alTvtOc39bLR4ocx@ugly.lan>
+	<58c488c1-139a-4b56-9f80-2492b081f659@gmail.com>
+	<6cdccc2b-c0b4-497f-8408-a18bd0981505@gmail.com>
+Date: Wed, 15 Jul 2026 11:53:53 -0700
+Message-ID: <xmqqo6g8m6da.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 15 Jul 2026 20:52:40 +0200
-Message-Id: <DJZDEE0G6ZRS.2RT8JTQQ6CUXB@gmail.com>
-Cc: <git@vger.kernel.org>, <chandrapratap3519@gmail.com>,
- <chriscool@tuxfamily.org>, <eric.peijian@gmail.com>, <jltobler@gmail.com>,
- <karthik.188@gmail.com>, <peff@peff.net>, <toon@iotcl.com>
-Subject: Re: [PATCH GSoC v18 13/13] cat-file: make remote-object-info
- allow-list dynamic
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
- <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
- <20260715-ps-eric-work-rebase-v18-13-34d7adb051bb@gmail.com>
- <xmqqcxwonnkx.fsf@gitster.g>
-In-Reply-To: <xmqqcxwonnkx.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Wed Jul 15, 2026 at 7:56 PM CEST, Junio C Hamano wrote:
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
->> The static allow-list in expand_atom() is hardcoded to only allow
->> "objectname" and "objectsize" for remote queries. This works because
->> up to this point all servers will either support object-info with name
->> and size or they do not support them at all, but we cannot expect that
->> in a future different servers with different git versions to have the
->> same object-info capabilities. Therefore, the allow_list needs to be
->> dynamic depending on what the server advertises.
->>
->> The client will now:
->>
->> 1. Request the protocol option that the placeholder refers to (i.e.
->>    "size" when "%(objectsize)").
->
-> "when" -> "for"?
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Will change.
+> On 15/07/2026 10:35, Phillip Wood wrote:
+>> Hi Oswald
+>> 
+>> On 13/07/2026 15:01, Oswald Buddenhagen wrote:
+>>> On Mon, Jul 13, 2026 at 02:17:20PM +0100, Phillip Wood wrote:
+>>>> If an external merge strategy cannot merge (for example because it
+>>>> would overwrite an untracked file) it exits with a non-zero exit
+>>>> code other than 1. This should be treated differently to a merge
+>>>>
+>>> s/to/from/, i think?
+>> 
+>> Both are valid - the internet tells be "different to" is more common it 
+>
+> sigh s/be/me/
+>
+> Phillip
+
+sigh s/it/in/ ;-)
 
 >
->>
->> 2. Filters the request in fetch_object_info() dropping any option that
->>    the server does not advertise.
->>
->> 3. After the fetching, the options that haven't been dropped are the one=
-s
->>    fetched and supported by the server, these supported options are
->>    mapped and remote_allowed_atoms is populated with the placeholders.
->>
->> 4. expand_atom() checks remote_allowed_atoms with the same behaviour as
->>    the static allow_list had.
->
-> I am not sure I follow the above entirely.  Could you add a
-> concrete example to the commit message?
->
-> For instance, if the client wants "%(objectsize) %(objectcolor)" and
-> the server only supports 'size' but not 'color', the filtering in
-> step (2) prevents the client from asking about the color, requesting
-> only the size instead.  When the server says the size is 42, step (3)
-> uses that to substitute '%(objectsize)'.  Would the end result then
-> be "42 %(objectcolor)"?
-
-You've gotten everything right until the last step, because we have only
-size from the server there is no data to match %(objectcolor) and the
-end result is an empty string for %(objeccolor):
-
-"42 "
-
-Note that %(objectcolor) doesn't exists and it would have die(), the
-empty string is only for known but unsupported placeholders.
-
-This is what for-each-ref does for known but unaplicable placeholders (atom=
-s).
-
-I'll add an example to the commmit log so it is clearer.
-
->
->> -static const char *remote_object_info_atoms[] =3D {
->> -	"objectname",
->> -	"objectsize",
->> +	struct string_list remote_allowed_atoms;
->>  };
->> +#define EXPAND_DATA_INIT  { .mode =3D S_IFINVALID, .type =3D OBJ_BAD, \
->> +			    .remote_allowed_atoms =3D STRING_LIST_INIT_NODUP }
->
-> Hmph, is this list expected to change over time?  One-line-per-item
-> format would be more suited for updates if it is the case.
-
-Will format like so.
-
->
->> @@ -683,12 +675,12 @@ static int get_remote_info(struct batch_options *o=
-pt,
->>  			   int argc,
->>  			   const char **argv,
->>  			   struct object_info **remote_object_info,
->> -			   struct oid_array *object_info_oids)
->> +			   struct oid_array *object_info_oids,
->> +			   struct string_list *object_info_options)
->>  {
->>  	int retval =3D 0;
->>  	struct remote *remote =3D NULL;
->>  	struct object_id oid;
->> -	struct string_list object_info_options =3D STRING_LIST_INIT_NODUP;
->>  	struct transport *gtransport;
->>
->>  	/*
->> @@ -736,15 +728,12 @@ static int get_remote_info(struct batch_options *o=
-pt,
->>  	CALLOC_ARRAY(*remote_object_info, object_info_oids->nr);
->>  	gtransport->smart_options->object_info_oids =3D object_info_oids;
->>
->> -	string_list_append(&object_info_options, "size");
->> -
->> -	if (object_info_options.nr > 0) {
->> -		gtransport->smart_options->object_info_options =3D &object_info_optio=
-ns;
->> +	if (object_info_options->nr > 0) {
->> +		gtransport->smart_options->object_info_options =3D object_info_option=
-s;
->>  		gtransport->smart_options->object_info_data =3D *remote_object_info;
->>  		retval =3D transport_fetch_object_info(gtransport);
->>  	}
->
-> This is not a new issue, but if the caller does not ask for
-> anything in object_info_options, no call to
-> transport_fetch_object_info() is made here.  This is so even
-> though we went through quite a lot of work, including the
-> connection establishment and teardown below.
->
-> By failing to contact the remote side, we wouldn't even know if
-> the objects being queried actually exist there, which is
-> probably even worse.
-
-[Answered below]
-
->
->>  static void parse_cmd_remote_object_info(struct batch_options *opt,
->>  					 const char *line, struct strbuf *output,
->>  					 struct expand_data *data)
->> @@ -839,6 +843,7 @@ static void parse_cmd_remote_object_info(struct batc=
-h_options *opt,
->>  	char *line_to_split;
->>  	struct object_info *remote_object_info =3D NULL;
->>  	struct oid_array object_info_oids =3D OID_ARRAY_INIT;
->> +	struct string_list object_info_options =3D STRING_LIST_INIT_NODUP;
->>
->>  	if (strlen(line) >=3D MAX_REMOTE_OBJ_INFO_LINE)
->>  		die(_("remote-object-info command too long"));
->> @@ -851,32 +856,57 @@ static void parse_cmd_remote_object_info(struct ba=
-tch_options *opt,
->>  		die(_("remote-object-info supports at most %d objects"),
->>  		    MAX_ALLOWED_OBJ_LIMIT);
->>
->> +	if (data->info.sizep)
->> +		string_list_append(&object_info_options, "size");
->> +	if (data->info.typep)
->> +		string_list_append(&object_info_options, "type");
->
-> And if the request is only for "%(objectname)", an empty
-> object_info_options is given to get_remote_info().
-
-Right now 'name' is not part of the protocol as 'type' or 'size' are,
-'objectname' is always allowed but only shown if it's present on the
-format.
-If the format is only "%(objectname)" then there's nothing to ask the
-server for.
-
-The current code avoids making the request if there's only objectname or
-nothing supported, but still goes through the connection work. I will
-add an early return to just output the oid back without any connection.
-
-Returning the oid is what the client expects for which we don't need a
-connection, but this means that we skip the existence check that
-we would get if we asked for size.
-
-The server is not ready to support a bare oid for existence check, it
-could be done but that work belongs to a future series.
-
->
->>  	if (get_remote_info(opt, count, argv, &remote_object_info,
->> -			    &object_info_oids))
->> +			    &object_info_oids, &object_info_options))
->>  		goto cleanup;
-
-Regards,
-Pablo
+>> British English, whereas "different from" is more common in American 
+>> English. I guess for an international audience "from" would be the 
+>> better choice.
