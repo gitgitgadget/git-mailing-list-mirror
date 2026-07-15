@@ -1,348 +1,145 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBB52931C8
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 09:52:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BAE423E8C
+	for <git@vger.kernel.org>; Wed, 15 Jul 2026 10:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784109167; cv=none; b=KhZ4mL+6kcdsL9sXCY3uyyZGBext/trOlzVwFWBrgZsa0/xRs/ssUgoi6+JNx00sOUFN1kWEVv1sxt4YqJ8V1Neih77PR4nK6F9GF8BdlrXWPhnRg4BnPv7Xg0IfqX40MyyFFjZe10K83z7bW686NhNPcyZf/aleOOLQrxJqwkA=
+	t=1784111725; cv=none; b=muh5QsGFSAjlgUimuNMrfuxmCtZa8IcBoEzPgjwGmTjmqg1Uk1gxPiAVk9Ba/pfJy04JFgi2+m7B50hbad4PHOx2QUw1gHybUW9ShnsZ4UifUDl0zkjgP8bNhGOZyKQU5nGvvkRXcbYcM0mSqKmOHj35ObojP6FQBgbWrJwL3G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784109167; c=relaxed/simple;
-	bh=xK8V6Xq4ExkQN+leSC3GqcmWQ3oSwueEqNFrXTS7Y+A=;
+	s=arc-20240116; t=1784111725; c=relaxed/simple;
+	bh=fPGBWeAGlv+szsh176Yfb79LmJcVeGL+cIXxfrJu9V8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uvLWbSJOINZ37Jwgz4jrgbspybc8MB0yOH378sNXNRrzSeWlJyj5Rs0oNsMRtDrzPrG7lNpBsJmU+mvAV8r66tkQuxfTfEYXTI7wEwTKdapkk1c4F9z04fHlZhcDwl6nNptPfqLz0dREpjGTM1qVwYZVsMvGGTrEv1Z+ehQKs8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cyUSO/W7; arc=none smtp.client-ip=209.85.221.43
+	 MIME-Version:Content-Type; b=mSjNjDr6AVzc1LECiXKdDQo7JRW0M/Awy4sn/wDdf889dvpoYtdjiTxXLaDTHHsFvh5d1VsNFyKT8h6Q7Uq4g+8vajHAruIuXkHBUT4fxkQMiD6WNqZOltx4fK66JwIH2oRUpVbQ/Y+b4iQoajT4/+wpTVJMgAqxq8m4Z0coz6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U260ZMEx; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cyUSO/W7"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-47f36a122fdso2063025f8f.2
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 02:52:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U260ZMEx"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c1677c91969so86185166b.1
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 03:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784109164; x=1784713964; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784111722; x=1784716522; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=X6KHlCfCma1xg6Wk/EIQI8lfwCDRHTGMgvClYMOmi1s=;
-        b=cyUSO/W7jot7nFUjCDOT9Lw0mmeNmhjbPJ6P/E6oKL3KXk5IGne0SoTu65LqLrfFF/
-         YvvWLwC9Vkhs+LFJs3orVk5eOJbrkXRqR9rk/tCYjBGumKrW+QbUc/l8JCqm2QFBmqLG
-         iowPbEPkLYBfgQ0gwKw6FQQz2MkDiSW+uiIbZG0vk8CusWMLWbxrfdMUK4xxzrD10rVm
-         1J9AYZ/syBcMn+pM1MCUTmFg1mDks2dBXzNX7nPZgTkfq+qm7EJ74l7I4whd1/akXmEs
-         MNHWNhQtufMnAQNMHdMP3cuGa5BW864g5sr199oDrF20Pd+r/fKhuRQW0ZGWR9uh2vdM
-         BGRg==
+        bh=y+vSayVLjS84vEi+EegAeGTWI2uZAq5g2jzJha58MSs=;
+        b=U260ZMExpzuQ54AfKbEaJyeIKk8+TFJ7D2zI5Cu0VOLdVmJWXqOh2kwr6Rm8j6Q0VL
+         Z7zFAsiMRCf3b25ASJmoxY1O20uvFYSzO/DncFtsPVF/xw6AErLb8e8sVGFkp7adTwhQ
+         DEfWJ9N5p39Tvx1C06kYOIjROg8vGtYZfUFDLd2rIKGggRRtQ0KVATqfIjBkIStcf4pw
+         aKg7XrljqEme7YzqmIF9hTOeMhxeXKnDFXqVOQaFE+BCKiYrDtSRRh3evzLFU50r/5dv
+         xzX2LfoowF/mLai1H9AI/4mlqDbkLvuqA2oVupKEZB76woLLUo/joEKx07gyEn+PdI3h
+         egMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784109164; x=1784713964;
+        d=1e100.net; s=20251104; t=1784111722; x=1784716522;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=X6KHlCfCma1xg6Wk/EIQI8lfwCDRHTGMgvClYMOmi1s=;
-        b=CEQZ54Vkp4nLrEudneK5UL9mMl9Hk0LLWmFzjrqFs37ZNLiI2x69+tqtMWotf0uGWp
-         D+sfbpdHIKTMNS8VggEFdtyzSCLrkyYpDKQ58e3MJF1zBDuLbWdfCwip9J9wVlyDx5Rp
-         k6M25bT9un9RvpC7BW/HlWsQJPD0FyLXS3oOYNZevoW8Abv6xWE/Zl/bGpW2MwtE7H5+
-         r5GM2rR/VioCeBcwhdU6x84blxkiby4UEIQKH4p+Ye/GqelZple4m5DzYyN13wQ0IrVe
-         aPIxhHak/WNSCye6GBESgHa46s0NX86+c5Utw23PFzvhnEvcTxyBUbcma5kFvEgUKoBv
-         krHg==
-X-Gm-Message-State: AOJu0YwxLY2xEp9VVFre+8U2ZFRfQY1SG1kY+j3qkOwQaXd1ZIqRBQ4p
-	xZ9hIOeNvdkVYaVO+ig1vVMlHIprmkr560s8cu0KWoAUUMAjRgFZd25alv/GCKeK
-X-Gm-Gg: AfdE7cke87eSeRSpG59XqfBGDgd1yPxQPxKWXGO07NLvjeptbPoH4WymC3XIw+BJxH5
-	KL8fsLOTkLyptqm9SFERQ5Ua/szpumhFE3X45Jocg+HT1IJouoJRqrst90IaZudFeQzCzaQAY/x
-	sz+UsLVx7b85at5JNdlKkpnYaNIRmz561FOeH21BC5z68P4S6yBi6d/r5Ouc4pmFsSyi5NSfI8b
-	QZb+UL6IC4ohZYSCdx0JmieRnSYDJKUsMCAMYOxkhi49O40ODWpmHw5ACNiO53ENJ7ryMrNm8r7
-	K1I4EJ+1ayqhPK6Jro1wTGbNMhVmtSYHnMF0FJMWaLjmnuuWS5eqrzQUY1tKKSxiKR6GEp1rsdD
-	7Pa5oKuv7sxehM4Elc67NA3yxdFobeVcR8Y5Bzkt/HJjLUiKo8jfFA48SzOUKPxBWocEGn69CUi
-	JKrqTFL9f8FOHR07PfIAanEIRN8MdbtUfy5t40KENTdoD1RrTG7HeFRRmh08m6di5UA7w7SvpaC
-	9DJ+bzDObrxqhKFg7xpp4cT0Sv+nkg32nzovhU6HnQNHSmnaRavjOlC+M4XrlcpU6xUqL7HpBKC
-	eLzvKszZ9N5TnOEJ43RX+pHZbpvWH0K9vX6hT2j+S6VH2WWWTIMH+U5PPVuYP4e9XFolx3oX6vh
-	9nhctTZ5r0g==
-X-Received: by 2002:a05:6000:719:b0:475:f100:35f4 with SMTP id ffacd0b85a97d-47f2dd37a6fmr19823892f8f.49.1784109163551;
-        Wed, 15 Jul 2026 02:52:43 -0700 (PDT)
-Received: from localhost.localdomain (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f464c9cc3sm15630419f8f.35.2026.07.15.02.52.42
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 15 Jul 2026 02:52:43 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
+        bh=y+vSayVLjS84vEi+EegAeGTWI2uZAq5g2jzJha58MSs=;
+        b=U+mTBZEgd5IR4y9JDd04tdv3hN/HoXpU4eIyEdSTSfgnT5ria+dt2Oon9NulIx4ZoH
+         LqFc4tZrFgliOV9xl2+pQOeLgnHVdFETYem9/ydx6Wh8rS1E2MX8ZrPpci8SfKWzKXzc
+         zwzcUpLArALs+QtWzdqnqgFteUf/spIzPovh+DCggKUNCcV+SPpNGTJiK1MKCJ6upIJE
+         M4U43zu5mTYwpTj//sRAlP0g1obIGKI8vQo9MINTm6VKxe/5wv8plUWADyRbh853vmx/
+         S5cMF6nCW8SRvPhJ6u8JsB6bPQ9KEwtDmkE/NcBWGlWLa41eNxbSlNlisR4dUmuqVOIA
+         gy+Q==
+X-Gm-Message-State: AOJu0YyR28l9xulFljnBA9IqSGyPwZq2KWY+xIeQ9cX8Rbb5vqorKF2S
+	ilGqfiUwYllTTbrrbpSQv6lq0BC5UZNcdun4htyZXmTXUvhacI2+h+SIFDoXURWe
+X-Gm-Gg: AfdE7cmU9Bd3yMdUHnxsjGpK4TeCpU9rpUWuPS/J+4xOcZWjYlbJMBQNEyWnYN42dof
+	t3uLNzDBRcNbxAk4C+xffFu5DOj9nmIoL9eEXKKli8TBuf3COTiFeXyGIHrVwRn+7xF0MdpBj4A
+	RHQfpB+0C5MvZ2sg6TMqgCj+q0XGEiXrmvW6qiXVefWchx6l73e+2xwF6DBFMy9WF7HKYeiNIT4
+	WHlcNNaj+z0ImqWiJn5+2GlgTIQ2NWucc5B2/w0Arej/WOhnlaIcp084+jVI+YANIhswSkM339Y
+	Sa9u0olNVKJrBSrjK9m+OfTWK48E/cQrsuqYoPX0fPBDevVMVc3U6LhIvMsbIoipIU9Cw66FAft
+	P5nh2tqFY3SZserXMfSDGXmFutvSp6mPZbAvt/lnrSexFXpBzJoCjNSdDlk7pZ/FLMm78LJyJj/
+	AZxYaZilY0lHK9W6j+GrixcMn1lv/dnWQqsgEzbmjX1bMHgKFXD1QeiO2YSP1CWtdOh3qU3SeZj
+	6AZcMolIRv7aKlAE+GDB0FRjgucj+/PiuYwkXbd85t0f8OEKuLan4UM
+X-Received: by 2002:a17:907:7b83:b0:c15:a30f:82df with SMTP id a640c23a62f3a-c16794618bfmr145097866b.49.1784111720916;
+        Wed, 15 Jul 2026 03:35:20 -0700 (PDT)
+Received: from M-K2012N0113010.localdomain ([88.119.128.229])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c168716aa07sm1765566b.14.2026.07.15.03.35.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 03:35:19 -0700 (PDT)
+From: Paulius Zaleckas <paulius.zaleckas@gmail.com>
 To: git@vger.kernel.org
-Cc: pabloosabaterr@gmail.com,
-	chandrapratap3519@gmail.com,
-	chriscool@tuxfamily.org,
-	eric.peijian@gmail.com,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	karthik.188@gmail.com,
-	peff@peff.net,
-	toon@iotcl.com
-Subject: [PATCH GSoC v18 13/13] cat-file: make remote-object-info allow-list dynamic
-Date: Wed, 15 Jul 2026 11:52:21 +0200
-Message-ID: <20260715-ps-eric-work-rebase-v18-13-34d7adb051bb@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Paulius Zaleckas <paulius.zaleckas@gmail.com>
+Subject: [PATCH v5 0/2] fetch: make submodule fetch errors configurable
+Date: Wed, 15 Jul 2026 13:35:14 +0300
+Message-ID: <20260715103518.526326-1-paulius.zaleckas@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
-References: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
- <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
+In-Reply-To: <20260714132959.3368867-1-paulius.zaleckas@gmail.com>
+References: <20260714132959.3368867-1-paulius.zaleckas@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The static allow-list in expand_atom() is hardcoded to only allow
-"objectname" and "objectsize" for remote queries. This works because
-up to this point all servers will either support object-info with name
-and size or they do not support them at all, but we cannot expect that
-in a future different servers with different git versions to have the
-same object-info capabilities. Therefore, the allow_list needs to be
-dynamic depending on what the server advertises.
+When fetching with --recurse-submodules, git currently exits with a
+non-zero status if any submodule references an OID that is not reachable
+from the submodule's remote.  This situation arises naturally when an
+upstream branch is still in preparation (e.g. a topic branch in a merge
+window): the local branch does not depend on the missing commit, so a
+hard failure is unnecessarily disruptive.
 
-The client will now:
+Patch 1 fixes a pre-existing NEEDSWORK in submodule.c where a phase-1
+fetch failure was recorded immediately, even when a phase-2 OID-based
+retry was about to be scheduled.  After this fix the existing fatal
+behaviour is preserved but the logic is now structured so that errors
+are only recorded when the phase-2 retry actually fails, or when there
+is no phase-2 retry to fall back on.
 
-1. Request the protocol option that the placeholder refers to (i.e.
-   "size" when "%(objectsize)").
+Patch 2 introduces fetch.submoduleErrors (fail|warn) and
+--submodule-errors=(fail|warn) to let users opt into non-fatal
+behaviour.  The default remains fail for full backwards compatibility.
 
-2. Filters the request in fetch_object_info() dropping any option that
-   the server does not advertise.
+Changes in v5:
+- Use test_grep instead of raw grep in the new tests (Ramsay, Junio)
+- Parse and format the fail/warn values through a single name array
+  shared by config, option parsing and option forwarding; values are
+  now matched case-sensitively (Junio)
+- Credit Jean-Noël for the v2 documentation fixes, which I forgot to
+  do back then
 
-3. After the fetching, the options that haven't been dropped are the ones
-   fetched and supported by the server, these supported options are
-   mapped and remote_allowed_atoms is populated with the placeholders.
+Changes in v4:
+- Forward an explicit --submodule-errors=fail to child fetches as well,
+  so the command line overrides fetch.submoduleErrors=warn config in
+  the per-remote children of fetch --all/--multiple (noticed by Junio)
 
-4. expand_atom() checks remote_allowed_atoms with the same behaviour as
-   the static allow_list had.
+Changes in v3:
+- Report a phase-1 failure also when the gitlink commits are already
+  present locally, instead of silently succeeding
+- Route "Could not access submodule" through record_fetch_error() so it
+  shows up in the error summary and honors the warn mode
+- Forward --submodule-errors to child fetches so it takes effect for
+  fetch --all/--multiple and nested submodule recursion
+- Add tests for all of the above
+- Documentation: don't imply git pull takes --submodule-errors, minor
+  wording and placement fixes
 
-Move object_info_options out of get_remote_info so the caller which has
-data can select what options will be requested instead of requesting
-always size.
-Move batch_object_write() out so there will always be an output even if
-all the placeholders are not supported by the server (returns an empty
-line).
+Changes in v2:
+- Fix option synopsis to use (fail|warn) instead of <fail|warn>
+  (Jean-Noël)
+- Add --submodule-errors documentation to Documentation/fetch-options.adoc
+  (Jean-Noël)
 
-Include "type" in the object_info_options so once the server supports
-it, the clients know already how to request it.
+Paulius Zaleckas (2):
+  submodule: fix premature failure in recursive submodule fetch
+  fetch: add fetch.submoduleErrors to make submodule fetch errors
+    non-fatal
 
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- builtin/cat-file.c  | 97 +++++++++++++++++++++++++++++++++++------------------
- fetch-object-info.c | 20 +++++++++++
- 2 files changed, 84 insertions(+), 33 deletions(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index af388b6238..20d9705a7f 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -338,13 +338,11 @@ struct expand_data {
- 	 * Flags about when an object info is being fetched from remote.
- 	 */
- 	unsigned is_remote:1;
--};
--#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD }
- 
--static const char *remote_object_info_atoms[] = {
--	"objectname",
--	"objectsize",
-+	struct string_list remote_allowed_atoms;
- };
-+#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD, \
-+			    .remote_allowed_atoms = STRING_LIST_INIT_NODUP }
- 
- static int is_atom(const char *atom, const char *s, int slen)
- {
-@@ -356,17 +354,11 @@ static int expand_atom(struct strbuf *sb, const char *atom, int len,
- 		       struct expand_data *data)
- {
- 	if (data->is_remote) {
--		size_t i, allowed_nr = ARRAY_SIZE(remote_object_info_atoms);
--		for (i = 0; i < allowed_nr; i++)
--			if (is_atom(remote_object_info_atoms[i], atom, len))
-+		size_t i;
-+		for (i = 0; i < data->remote_allowed_atoms.nr; i++)
-+			if (is_atom(data->remote_allowed_atoms.items[i].string, atom, len))
- 				break;
--
--		/*
--		 * On remote, skip unsupported atoms returning an empty sb,
--		 * honoring how for-each-ref handles known but inapplicable
--		 * atoms (e.g. %(tagger)).
--		 */
--		if (i == allowed_nr)
-+		if (i == data->remote_allowed_atoms.nr)
- 			return 1;
- 	}
- 
-@@ -683,12 +675,12 @@ static int get_remote_info(struct batch_options *opt,
- 			   int argc,
- 			   const char **argv,
- 			   struct object_info **remote_object_info,
--			   struct oid_array *object_info_oids)
-+			   struct oid_array *object_info_oids,
-+			   struct string_list *object_info_options)
- {
- 	int retval = 0;
- 	struct remote *remote = NULL;
- 	struct object_id oid;
--	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
- 	struct transport *gtransport;
- 
- 	/*
-@@ -736,15 +728,12 @@ static int get_remote_info(struct batch_options *opt,
- 	CALLOC_ARRAY(*remote_object_info, object_info_oids->nr);
- 	gtransport->smart_options->object_info_oids = object_info_oids;
- 
--	string_list_append(&object_info_options, "size");
--
--	if (object_info_options.nr > 0) {
--		gtransport->smart_options->object_info_options = &object_info_options;
-+	if (object_info_options->nr > 0) {
-+		gtransport->smart_options->object_info_options = object_info_options;
- 		gtransport->smart_options->object_info_data = *remote_object_info;
- 		retval = transport_fetch_object_info(gtransport);
- 	}
- cleanup:
--	string_list_clear(&object_info_options, 0);
- 	transport_disconnect(gtransport);
- 	return retval;
- }
-@@ -830,6 +819,21 @@ static void parse_cmd_mailmap(struct batch_options *opt UNUSED,
- 		load_mailmap();
- }
- 
-+struct protocol_placeholder_entry {
-+	const char *option;
-+	const char *atom;
-+};
-+
-+static const struct protocol_placeholder_entry remote_atom_map[] = {
-+	{"size", "objectsize"},
-+	{"type", "objecttype"},
-+	/*
-+	 * Add new protocol options here. Even if the server doesn't support
-+	 * them the allow_list will drop them if the server doesn't advertise
-+	 * them.
-+	 */
-+};
-+
- static void parse_cmd_remote_object_info(struct batch_options *opt,
- 					 const char *line, struct strbuf *output,
- 					 struct expand_data *data)
-@@ -839,6 +843,7 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 	char *line_to_split;
- 	struct object_info *remote_object_info = NULL;
- 	struct oid_array object_info_oids = OID_ARRAY_INIT;
-+	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
- 
- 	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
- 		die(_("remote-object-info command too long"));
-@@ -851,32 +856,57 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 		die(_("remote-object-info supports at most %d objects"),
- 		    MAX_ALLOWED_OBJ_LIMIT);
- 
-+	if (data->info.sizep)
-+		string_list_append(&object_info_options, "size");
-+	if (data->info.typep)
-+		string_list_append(&object_info_options, "type");
-+
- 	if (get_remote_info(opt, count, argv, &remote_object_info,
--			    &object_info_oids))
-+			    &object_info_oids, &object_info_options))
- 		goto cleanup;
- 
-+	string_list_clear(&data->remote_allowed_atoms, 0);
-+	string_list_append(&data->remote_allowed_atoms, "objectname");
-+	for (size_t i = 0; i < ARRAY_SIZE(remote_atom_map); i++)
-+		if (unsorted_string_list_has_string(&object_info_options, remote_atom_map[i].option))
-+			string_list_append(&data->remote_allowed_atoms,
-+					   remote_atom_map[i].atom);
-+
- 	data->skip_object_info = 1;
- 	for (size_t i = 0; i < object_info_oids.nr; i++) {
-+		int found = 0;
- 		data->oid = object_info_oids.oid[i];
-+		/*
-+		 * When reaching here, it means remote-object-info can retrieve
-+		 * information from server without downloading them.
-+		 */
- 		if (remote_object_info[i].sizep) {
--			/*
--			 * When reaching here, it means remote-object-info can retrieve
--			 * information from server without downloading them.
--			 */
- 			data->size = *remote_object_info[i].sizep;
--			opt->batch_mode = BATCH_MODE_INFO;
--			data->is_remote = 1;
--			batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
--			data->is_remote = 0;
--		} else {
--			report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "missing");
-+			found = 1;
- 		}
-+
-+		if (remote_object_info[i].typep) {
-+			data->type = *remote_object_info[i].typep;
-+			found = 1;
-+		}
-+
-+		if (!found && object_info_options.nr > 0) {
-+			report_object_status(opt, oid_to_hex(&data->oid),
-+					     &data->oid, "missing");
-+			continue;
-+		}
-+
-+		opt->batch_mode = BATCH_MODE_INFO;
-+		data->is_remote = 1;
-+		batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
-+		data->is_remote = 0;
- 	}
- 	data->skip_object_info = 0;
- 
- cleanup:
- 	for (size_t i = 0; i < object_info_oids.nr; i++)
- 		free_object_info_contents(&remote_object_info[i]);
-+	string_list_clear(&object_info_options, 0);
- 	free(line_to_split);
- 	free(argv);
- 	free(remote_object_info);
-@@ -1192,6 +1222,7 @@ static int batch_objects(struct batch_options *opt)
-  cleanup:
- 	strbuf_release(&input);
- 	strbuf_release(&output);
-+	string_list_clear(&data.remote_allowed_atoms, 0);
- 	cfg->warn_on_object_refname_ambiguity = save_warning;
- 	return retval;
- }
-diff --git a/fetch-object-info.c b/fetch-object-info.c
-index 5f98840c7c..160c29507a 100644
---- a/fetch-object-info.c
-+++ b/fetch-object-info.c
-@@ -55,6 +55,26 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
- 	case protocol_v2:
- 		if (!server_supports_v2("object-info"))
- 			die(_("object-info capability is not enabled on the server"));
-+		/*
-+		 * When removing an element from the list it gets swapped by the
-+		 * last element, iterate backwards to prevent elements skipping
-+		 * evaluation.
-+		 *
-+		 * object_info_options->nr can be safely casted without overflow
-+		 * beacuse the number of options is a small known number (the
-+		 * supported placeholders which currently are size and type).
-+		 */
-+		for (int i = (int)args->object_info_options->nr - 1; i >= 0; i--)
-+			if (!server_supports_feature("object-info",
-+						     args->object_info_options->items[i].string, 0))
-+				unsorted_string_list_delete_item(args->object_info_options, i, 0);
-+		/*
-+		 * If no options are left after the filtering, avoid unnecessary
-+		 * request to the server.
-+		 */
-+		if (!args->object_info_options->nr)
-+			return 0;
-+
- 		send_object_info_request(fd_out, args);
- 		break;
- 	case protocol_v1:
+ Documentation/config/fetch.adoc  |  14 +++
+ Documentation/fetch-options.adoc |   8 ++
+ builtin/fetch.c                  |  72 +++++++++++++-
+ submodule.c                      |  58 ++++++++---
+ submodule.h                      |   7 +-
+ t/t5526-fetch-submodules.sh      | 161 +++++++++++++++++++++++++++++++
+ 6 files changed, 303 insertions(+), 17 deletions(-)
 
 -- 
 2.54.0
+
