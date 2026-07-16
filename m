@@ -1,182 +1,106 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82143314AC
-	for <git@vger.kernel.org>; Wed, 15 Jul 2026 22:35:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784154906; cv=pass; b=KGlVB43YX7aqVP6yeovGQp9YiXTOvKWjWqzHai1RrELana+GiLS3Zqgv3jEvLkct3MoQJ0QABVrk5GRihuAtNhuewbdFhWKE+AM7JbNHe935Dh9GgU7x8wfvY8T2zF42QHxIUW3IuqwjUwzj1fC+l6iWIUU5RIz3g53+BnmjyUQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784154906; c=relaxed/simple;
-	bh=gAdcuxGgqgb32USPrBW9m8OzuqzP4+OgEAdrLpHt/7M=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ikR411yBKJ6X5oGsvbmWNP0dnRFLoS0shLvWmNt7NDVweftOz8v3zFDaKpmqCvh1Dt0Zm05H3gSGMMWPzJELti+7rL0Uo9xEaRDfPctIvyB9KwtSERZ4WpP1MvZRWJ0eFr1LG13XGHKoTknWli94LNoHjF/WCSd8xcYkV5qxurE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pkbEBS2H; arc=pass smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA8032A3EC
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 01:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784164965; cv=none; b=alL7vXsZhHUCQEms/HghaX89sewv+bE5GSYU0Dyy6uyrN3mTdG2h2hVoRz8e8wvsvHrNHMRxH1w7BmNt//h9AaycXc6a9lz3jMS/Vi4ckL6r2Cax+YvO08e+m1blEXgj+mU0FhkGO/7gV0MfGGsGUfISBGVEQB8jZinoZZtBSTg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784164965; c=relaxed/simple;
+	bh=QVlzf0FG34Rar8nogHVdHCGh2gwgPlpUolFRoUT0gyI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TZZhp56DkfxuNyaRmu0yoIaMUBK8lrfoiUL60Tf9c5N0e9b2ljvqq2hGTgVDt2+RJ2ZbGTmsE+XEZOLecHfrqih1d6zD3m/5G551vH/e+ieIrDSMlYrXHPmBW1M/Y8dP9NcTcd00IiwFq4aNXRQT4eT2XTZ16g5cYAqbGt+kLuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rzHk1NfY; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pkbEBS2H"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-7387ac7d28cso757980137.1
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 15:35:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784154904; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pkKBhyU184K0MkcCzFRfZcKEwwT0NSyXNuiYUbLLGjxKeLL3lBb39dqpPxGu6SPQTl
-         ublhzq/7tKpsILgG3kHJV078kGP/J0Y9Yd2syWRb+RUFQOoge2BmQJwh5Ru20Bg6uIFZ
-         JN24T4NnDAlVio0XZHXgPaoD3N+oVp8vt2aXzUXixkx+4F9rC/ZqUj7AHBC4BV+SnDfp
-         ry9Yp1x5nMPQXCeDhIck8CdwQFgDFFVnnABIRrcou2d7tV6a0ZDxa878MGo0gsr6ugoo
-         f6Axi2ltYA9CJb4wHirLYXv9HjViXwRbKbwQurR/O+1N4GOWyd2RM0NATzEJ+N3XLIqI
-         FIZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=8MdQeSrO4ll6BZeHOOeOR4SP4zzYVQ/Lj16pozCFx1U=;
-        fh=lLoXjCJojwsix744p+NHGfDKtsr4p6Zk3TYkGgrPzEY=;
-        b=I0UV2WjEubqo7HW3fOZj8rdFIV9VUn94K8HBKPczHQ2Yis+OxqaugGXJ9R62jWOf6k
-         Kt/JBtIhTUQ4SpTbP4ywdo12yr9ocB3/rJ6fCHcAR/GiSfIJ7YJdLqWnjcBv1YjCZ4lm
-         7zdgNZDB9wKTVe+SH+y3I8ykJmShhefnWF2MNFlayXDj6ZHB+vNDgQ0u8MRXGM65ZYIq
-         Pumi8GrJPKEntFx1sSKI1AsonW+pmhbeEYPbZDpxgGOVMYMNosn5jqGmdvzhXtffTVex
-         FVPjxdXIadY1KBLiTVAOgxMddnwzGq+wF7oO1uWwA/NKlWciV+vZfAB0x9N63w5Z8MFp
-         n0uw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rzHk1NfY"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38a0c7e841fso2986875a91.2
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 18:22:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784154904; x=1784759704; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8MdQeSrO4ll6BZeHOOeOR4SP4zzYVQ/Lj16pozCFx1U=;
-        b=pkbEBS2HbLBCfZUwjHZTmcOCepWS3WLB+qKB+mMwulNY6X8z2ybfhnx37yFS+eV+fT
-         pExTsbcJ+Dwmko1OTC83BVb5mjbylcDyltL73DK3e/jA6VU/69hzJi9mfZu7HZnW1eVZ
-         B7//tKNfbNdcw0s6vaNwdug52isBH45fn+ABMxcQe45DltRaMXROlYP5fdED4iWG4kDv
-         LAd1/tV35rNo7HNg4g0hiyWtsQ9WTAYKovTjgNDc/TM1DDfiOz7rM3npgk+x3nPGod+e
-         QWMTjx/AD/mfSydIyy5oxDrdSXGf8k8lrLwcYR4bA9Pe672EYb1K8kubtYsO1qN0sGDa
-         TJZQ==
+        d=gmail.com; s=20251104; t=1784164955; x=1784769755; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=l4poJZyUA2EqcrTwxDUJpNVk18lInmKGYgYz62wNZRA=;
+        b=rzHk1NfYVUXmn/r4NTX0zv+Le0MOxOg4mtu8vMhV9RMN20jaB99dOWYn3+Kxx/Wrph
+         8pKiK5EoJhqNy8N7KDXU0CZa96rSz7/HMktNrEOLKR36wVXCfecJNoJklA0nSNcORZvM
+         B0ZJsjJShYTBGCX66ErFNwYXsp6bnatUiXOMPQ2aTG3E+gjhmdIRHoWlqVDMJqZWA4ud
+         L5gbv5GgEGQyc2yYiSCNc5KY/7eZq4BJ91cNQwX5MuLU7hL4vpRDiTQJ3SbQT/z6FUC/
+         HGiAty75OKSXMojOGEY/17axyl/Gp+rMuk9y+aPsFC1spl0ARmNWJZ5zTLaemMDSkltL
+         l7Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784154904; x=1784759704;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1784164955; x=1784769755;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=8MdQeSrO4ll6BZeHOOeOR4SP4zzYVQ/Lj16pozCFx1U=;
-        b=CnS199E9hI3G6/o+Y27CbZJyXhVWQO0aVdDmTptjQnXZ4289iZD4lnHJEztJDj431X
-         fiAdA4v1asdu/MMOdwvmdkNqb0K4J6URSe4P/bnmGZ+5MMP3MISVywfWeaS72ga1MzpP
-         k6oaiW2ETZa1j07Ku5WBGo1Le4quyirb2IlerYc1vpLl7mU6AVgzSgKqQYAbM0mueLtr
-         rskqXJJRjDAt2q6bOczz/UFtkGMUNjQIUAGjOBQ9sdA3or3fjbVo5m3CbQs83CgH+cvH
-         vTa3N1OaUW+7NVaoXemQJnjoXEWJbtOCKqQjxj1qjRelvpDaKJtU9Wzqg7Mr6CJq4bAJ
-         VeSQ==
-X-Forwarded-Encrypted: i=1; AHgh+RroPf/T7HPgo10kxpc0yDZw6NJz2d7QQX8eVtGySppHUf8qVXmFuBetCUVzZEjJiiwveOE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbPUUCI0GSatVQ1aA3BejUd777k2XQEoqWizHz9tGjaUkfmAE9
-	JLqrYMmWAlZ6UolmvmbAFNCZQhK1m57sHaxNYCLKs71OovFJE8WwHaPTMt5qq168TcD0ma38azR
-	R3pW2JgMB96ZvkOIRjyXnMLaIl+kb02Y=
-X-Gm-Gg: AfdE7clX2h0Haeebp0olW+QfhA6fL80DPS61v19a04FBj4HrCXAHYauc75jvwcvDX44
-	UGGMcNHFk/6ZuwyHstqNVYjHV6njeWEIUZbGk+nOtOdJ3s9romAlzBP+JWonFc/Bd8FReRxEOh+
-	4lwjxwYQwJMwvrRqZ8uM7JazSr/uBLSsPE3n6g9sySRzYXuP4RVy98b0R9yQ71NDW1vVrMCshyb
-	BmhvZ9YBF8bt8Pqw0aDMyYscX+Yw8JDZExh3rEJ3oNh522wte8fg1ly3GTxDF/+HYnGxBMjUe2u
-	Lmy/WYOGf/atpMUebcC2zu07VT2tkPV+RyHn3DwsGtU0sjIm0ObY
-X-Received: by 2002:a05:6102:548b:b0:73a:322d:1bb4 with SMTP id
- ada2fe7eead31-74533dffae6mr11322862137.22.1784154903723; Wed, 15 Jul 2026
- 15:35:03 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Jul 2026 18:35:03 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Jul 2026 18:35:03 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
-References: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com> <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
+        bh=l4poJZyUA2EqcrTwxDUJpNVk18lInmKGYgYz62wNZRA=;
+        b=HGOKEgkxaIcdl4/LWQUuR2YpRueb+EcwS4tS0yTt5ZtfhlursJpY5nWnX+lFOZQdmL
+         3qeBdUgadWD56gXTdRRlWWYCxALTh8rQUSzfQJW4iznsdHpDtjSENc1//xLyFCAgOZlW
+         J8AYuNxTVYtj3+kb6sJaEf7csFAZLXXi4810DRrZzdNn/C6SFAxwfLZybSu2NBpsMhjr
+         nSqA2+2oPVZ+V6glpZ/ld+oCkNrisZyo5RlpRtTOFjSAy1iFc/ClEHCxyHzvBN4Cf4dD
+         hNqRA91TI3COgHSDjgo+RRJfAiVT5XRKloK91OwgYH0PENQxwMj+7kcLtpAFlptGLp8l
+         j1tA==
+X-Gm-Message-State: AOJu0Yx4tLy9f+97ZLg3OcAgjAYsz5rUCIDKOtuTfHZ2RZhaj/+WCZok
+	HOfS6vn3AOg2gwI9K2yDTB9TxEPFnNfCWB1n53XaUCKNNtjiep8WMNP9+HKDxQ==
+X-Gm-Gg: AfdE7clx7+2V+wn4pHKoJ7OYOBt1N/LR9i09fF45udqNo4whDZblxzwe81BdqvfV0B4
+	o+PqDUJmIMYyVfopa6RqgweYF8kpUX2mkqnseU7Y2mLZtATCKiR9+0kHWZhQeDuexiztobaJRZT
+	rrgbkK5VhOI7AWC09oORtQHmiT8IgEUg0lUBk4z/xcujrvyFU1Fe/eKg34aKTm9wGrWJRKpx+h0
+	1kh2AdB7CBDV8CTf15MuyIFOfMdJoqdXPE+/aE8/EWjWozJ9Gv82uYhfQ3cSpsXJoowPrAyZYzc
+	7u5y7qUco1zvBwwk39EAwFWUo9f4fsCBUBimMb/Ith7Ou8EW6LqMk1SFDYVlvzPjw+dA30clsRX
+	EoluejLZihOgLFf3RhPXmVU9rpAbFmjJ8fwlhT+2xp+J9tEvZ87xsnHqUjOLRGEcqS5Gio6qtT6
+	CzNsxXNfiDANSdSnw+ChvtqbAL9GFrsPuKiGNnmuMcuvsCk/mCVzq07/lzOG9qEw77ClggAvLa4
+	iWY1XrU8hcv
+X-Received: by 2002:a17:90b:4c89:b0:387:e0db:3fb2 with SMTP id 98e67ed59e1d1-38dc779ac27mr18226787a91.43.1784164954635;
+        Wed, 15 Jul 2026 18:22:34 -0700 (PDT)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e6e9edfsm5377490eec.28.2026.07.15.18.22.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2026 18:22:34 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: jltobler@gmail.com,
+	lucasseikioshiro@gmail.com,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Subject: [GSoC Patch 0/7] repo: add more path keys to git repo info
+Date: Thu, 16 Jul 2026 06:51:31 +0530
+Message-ID: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.55.GIT
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 15 Jul 2026 18:35:03 -0400
-X-Gm-Features: AUfX_mxS7J-0XWgckv-45LU2pOxc5scaNpOkVDZQgClvA6wirvMFBdindymi_5I
-Message-ID: <CAOLa=ZSoAPCG5R3+By4N1z5AdoJwsKnv1s96rYeMheo-H310DQ@mail.gmail.com>
-Subject: Re: [PATCH GSoC v18 00/13] cat-file: add remote-object-info to batch-command
-To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
-Cc: chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
-	eric.peijian@gmail.com, gitster@pobox.com, jltobler@gmail.com, peff@peff.net, 
-	toon@iotcl.com
-Content-Type: multipart/mixed; boundary="00000000000042e0d40656adeff1"
+Content-Transfer-Encoding: 8bit
 
---00000000000042e0d40656adeff1
-Content-Type: text/plain; charset="UTF-8"
+Series adds keys to git repo info.
+Keys output paths of repository components:
+* path.toplevel: repository tree.
+* path.superproject-working-tree: superproject tree from submodules.
+* path.objects: repository objects.
+* path.hooks: repository hooks.
+* path.index: repository index.
+* path.grafts: repository grafts.
+* path.git-prefix: prefix offset.
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Keys support suffixes for format.
+Commits contain documentation and tests.
 
-> This patch series is a continuation of Eric Ju's
-> (eric.peijian@gmail.com) and Calvin Wan's (calvinwan@google.com) patch
-> series [1] and [2] respectively.
->
-> Sometimes it is beneficial to retrieve information about an object
-> without having to download it completely. The server logic for
-> retrieving size has already been implemented and merged in a2ba162cda
-> (object-info: support for retrieving object info, 2021-04-20) [3].
-> This patch series implement the client option for it.
->
-> Eric's series adds the remote-object-info command to cat-file
-> --batch-command. This command allows the client to make an object-info
-> command request to a server that supports protocol v2.
->
-> If the server uses protocol v2 but does not support the object-info
-> capability, cat-file --batch-command will die.
->
-> If a user attempts to use remote-object-info with protocol v1, cat-file
-> --batch-command will die.
->
-> Currently, only the size (%(objectsize)) is supported end to end in this
-> implementation. The type (%(objecttype)) is known by the client's
-> allow-list and request path but is not supported on the server side
-> nor the response parsing. A follow up series will add full end-to-end
-> support for %(objecttype).
->
-> The default format for remote-object-info is set to "%(objectname)
-> %(objectsize)". Once %(objecttype) is supported, the default format will
-> be unified accordingly.
->
-> If the batch command format includes unsupported fields such as
-> %(objecttype), %(objectsize:disk), or %(deltabase), the command will
-> return empty strings for each unsupported field.
->
-> This series completes Eric's work mainly with the refactor of the
-> validation of the placeholder with an allow-list that filters what the
-> client asks with what the server is capable of provide following Jeff
-> King's idea [4].
->
-> GitHub CI: https://github.com/pabloosabaterr/git/actions/runs/29404390713
->
-> [1]: https://lore.kernel.org/git/20250221190451.12536-1-eric.peijian@gmail.com/
-> [2]: https://lore.kernel.org/git/20220728230210.2952731-1-calvinwan@google.com/#t
-> [3]: https://git.kernel.org/pub/scm/git/git.git/commit/?id=a2ba162cda2acc171c3e36acbbc854792b093cb7
-> [4]: https://lore.kernel.org/git/20250313060250.GH94015@coredump.intra.peff.net/
->
-> Changes since v17:
->
-> At 10th commit: transport: add client support for object-info
-> - style
-> - enforced the server response handling, not allowing bare "<oid>" or
->   responses with a different number of attributes different from the
->   number asked.
->
+K Jayatheerth (7):
+  repo: add path.toplevel with absolute and relative suffix formatting
+  repo: add path.superproject-working-tree with absolute and relative
+    suffixes
+  repo: add path.objects with absolute and relative suffix formatting
+  repo: add path.hooks with absolute and relative suffix formatting
+  repo: add path.index with absolute and relative suffix formatting
+  repo: add path.grafts with absolute and relative suffix formatting
+  repo: add path.git-prefix path key validation
 
-Some small comments/nits from my side, mostly looks good otherwise :)
+ Documentation/git-repo.adoc |  58 +++++++++++++
+ builtin/repo.c              | 167 ++++++++++++++++++++++++++++++++++++
+ t/t1900-repo-info.sh        | 108 +++++++++++++++++++++++
+ 3 files changed, 333 insertions(+)
 
---00000000000042e0d40656adeff1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 54633bd558471af4_0.1
+-- 
+2.55.GIT
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wWUN4VVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL1BPQy80bXdZdDAyc2tYWHBUcW9aajdIbS9ZL05tMwphNWxmclorWnM2
-MEFOdjNlNGoyUGtYQWRKdXFKcXlUY0FSWmR4QUsrMEM5MU1UVmJvTUI4NTZVd2VGNFJqWnpnClh5
-Z0EzU2dsVURCTTVqSEppTGdMMEw1c0p5bGo5L1Ruc3poL0tvM2U2QkdUeFB3NUFmRVQ2QnlTU1dX
-UmhaK2YKajBrdmw2VVJuMHJsNmhXYlJ4a2NYT2s4RzIvMUZEOUUvaS9MUmVJdld4QXZ3dnpmbmt2
-YVdzR1Y5b2w0a0V1UgowWGxVMlc4dU9hRFZwRmVLb0lYZzFidkZ5ZzVtdzZJU3QrbmJTQk5TMnRU
-ODYrM05VWlRsdG9PbU9WTEhtMnJOCmtidng0clg5ZUlZZEt1RU9Fc0NYZTl6N24vM2NsazdBQ0Ny
-MXV2KzBBdW1NQ1pWOEswVXlDTUpQamxGc2IxaDAKTFBUc2I4UWt4TG9zZzFSYVExN2N0cXNXVmZ2
-ZXBEU0dxQk9sVFJCNDczOTNRQ01zRGc4WVhtTGVxcGh3VGxkZwpmSldQeVJYM1RrRnNwZU5Uc29t
-Z2pjN2pVajZCU3J3c1RMQ2hWNlVPbDBPdmk1SnMrNU1ES0F2dVJlL3E0WVNzCmZkdFBjLzZsZUtR
-dDAwNGlpK0srSVFMWE4rWTUzdGdvVHl4M2Z3bz0KPTRxUGIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000042e0d40656adeff1--
