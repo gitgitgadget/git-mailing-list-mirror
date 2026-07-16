@@ -1,235 +1,128 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D65AEAC7
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 14:52:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85BD5A79B
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 15:06:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784213554; cv=none; b=Qmc0RAYy4hPOdtYvWsfu64JBOLu05rrbiJd+Em82Bzz17uyGHr+ybyUmiq1/6eHAizYgNKEIoyCecmQgbLDQRCWjkyalrYwvaYqKyNzxqADUHqkNxiJJc6NkB0YC8fwx8T9GXugHcW2qeuNWBswfPwqG9PQ70vDRamICPA7fJRk=
+	t=1784214383; cv=none; b=cjd2pU2xqvga+xqwjZWcPwgu4vYhWWCl6UErDedtU0oKgtgcboMYD+nGi7czOq0thJSBXAnKA/Zg3+HuP+Mr8on+EqE30NtV+YKigApj/st98YORWrDgh6D55r9547tvbHkZl1UoQW4MUzn49zZ2G1//KjG0y0WePo4x7ARVHoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784213554; c=relaxed/simple;
-	bh=TexfXZcyfEQipwiCrHw8UTM2Bx/UPTTOY4QsGH4d/pg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=YmEPt462vMaXPCDsbik2DDdDJ/ZnogITvhHjNJryYSe4/qD//KxJaRYTw+vsoXp1HdWUR5vEFijDvr4UijbKcJjEyvWyBcs42wbFx1gTSIed39oAQNjYG6Mo9Bd94uAwyznrP2mGUvM0s0+3frL5C5IvUK2ij5PdW2RZMuX0uG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nhP09ahl; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784214383; c=relaxed/simple;
+	bh=kKwkrHP7mMcVMm9nquDuXxHDK6o+YTLgSFk9D1/OPQQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q4bAnebTyuSLG6e+IUXFZ+/e3aMmHZiR6zFaEB+UwPzgfYSkdK9HB+YBCwFOnl84q8qywTtuPhNRJGClBJvwYCC2jX59zCUKmMvrzCOSAd6T4h+KPy5LPbRxp/bztOxuubpaa4sXzyGKW8MeqJ1tKZZTMLBrph6PFQGtwJytlj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UWWFfcBS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJtB9L/H; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nhP09ahl"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c15c42a45adso61360266b.0
-        for <git@vger.kernel.org>; Thu, 16 Jul 2026 07:52:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784213551; x=1784818351; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ikERiIyYrUt7EPi2x9m5hAHzc+arFCUdIZqKtdQ664w=;
-        b=nhP09ahlxf8KOH8x7l+8ExsXhrdYyoanyXD+evB6exFGw+Tl+qQPp27iUEj46KS0l9
-         6+zji2lN2Y9r3wufzgBY1L1ACxeJlgENruTsjQm3yNgZ8ABpkJQMWTyh3MsTal8Gg37S
-         MsyZAAfZbl2L8YNo9Rxf2Cr5U13dMyJ4Jdug7g9EkY3JS3HPLjRt0bdygCReFVrt6rQC
-         LFajstZOpsJceOaQh3UjGI6iy7UnWMNBxd9sPBnag3VTC6n0Y3lNjkJMz2Jth5cqCDtH
-         jUuZk7a1DoOik5rSxbiemxvuWvIT28dM+42YYh70kGj6fN0ZQpdpKg8h5IPhCIoYa9VE
-         9KTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784213551; x=1784818351;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ikERiIyYrUt7EPi2x9m5hAHzc+arFCUdIZqKtdQ664w=;
-        b=gbV6kAx+T06YkndFE1FLxmWqAUMPmClEdimoBiN/58MvRvsntfXFznM7LsbaCc+oOe
-         UjKJTHgYSRvZvABhuOlDNI+ApcqsADZncmGtqeH75KXs8tARcXAOledO9bbBahIiB1eX
-         HnDFoyZnE+cp/w9J9u95Rvu6WxitH7RLfpYasRxV2RXTJt0/FObHQ9sM85PoSopm/cWU
-         x1pIff7AzlklcFYi+aP9g1y4boFO9xnBE3e7b6eYQvCEEoIgrihNlUxJlXHsQJIa4oi1
-         aITE8XEcVbTw06T9rI68837jHJ3AT/w021gqejKjET4hM5Mnw3DBcPHzvhgDFzBooirk
-         C3Cg==
-X-Forwarded-Encrypted: i=1; AHgh+RogejjXGK0eTo2Iaz/rBuSz2SsAkkhMeQuwLh73hxKe8BznzwGtSDOj8KpyPdnQfADwHpo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywse9xR4oWaIP0jWJO4NX7HCyD3OzRYDxoFkLg5/Pqx/v4S5Q1W
-	P2jMp1yebebSE4h+EdX437Eeuf5flaP503Kv3hbQZNJuqBHeLObxPTFp
-X-Gm-Gg: AfdE7cnyKWgq+pT9srqWTJvPcFLnKNbD0aLSi2Buj/LmWxr35Y9J/JxBbmdahfWwVsA
-	LPy7LiiiCmAO8VL7+Z3cfeOicizxWuU0oQulvSpmx3SB+y2HGEXG0pjMmKAge/T5v+2VgqD2OvQ
-	6iZfIBNtRKii6rlkD6weK3b4/hPuSwaECrAxfxRrcFWtNPs2cb5wbn6gFfHqMbQlf9c549gMl/e
-	6wDlsN0BpW4svAyWnR3x3Gagzxdcq35Thdb2pJLUro7zM7IEHWTVAZHEzkPtF6LpAPrUBzVyDhi
-	RJaYDTtJiZvcV/Y0oLzEfelU4ib0XKZ9mILCjiH0jyARQdNxRxfcegsP4EDsNP2ITMyMLuY2LQq
-	E7l8npGpR1uhkprh6+EX536FV21lh+i1vvM9MefE3rhI4Klr1PkCd5FScNFEz6aN8Jv/qCcTy9l
-	/laxfwOOLSvtdzsuOjAn1v8M6fdo1YUjhFF57wks501O0BvL8R2816Cr4020XsC6WqfLStY0mlo
-	7RZIsx9r0BB9E6GmF+B3l5JEkNJg2DQm9cynANqQ2mxUEnpqqa1Pq3fLaSKdOYROX9dDyituKlh
-	R8fwhv4mmN9cEJGYLemvIyce4GZg0zjGqp+Gb5b00C6E2shlDVFXxgc9oV0=
-X-Received: by 2002:a17:907:c21:b0:beb:d461:7b09 with SMTP id a640c23a62f3a-c16920c8c00mr149409266b.11.1784213550736;
-        Thu, 16 Jul 2026 07:52:30 -0700 (PDT)
-Received: from localhost (62.174.240.101.static.user.ono.com. [62.174.240.101])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c16874a3f86sm226315066b.59.2026.07.16.07.52.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2026 07:52:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UWWFfcBS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJtB9L/H"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id BB0ECEC012D;
+	Thu, 16 Jul 2026 11:06:20 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 16 Jul 2026 11:06:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1784214380; x=1784300780; bh=OrjmJEYJ6r
+	cTW4Tv2zC5PhH2HzcTohkW2WoS81nyO8Y=; b=UWWFfcBSV9r6a1ymqPDOuSnLWW
+	JPZFCENXePnKPFRvwsD940NKVg6i1yAW/GLdxWVaUG1Ki62pgOOhCggk4hmjs9M1
+	DgvcQ4GmDZDyfVydgffEzSrTlSzL+i5H5mHDvSTJvr1AGGKuRBCnHc+zYb9ygljb
+	G0YmUj0NzAKyalXv9Rddrurv6+lnbJf/Tu9zZ24mJ7IP8xdiRRnROxftxiAoXFNx
+	QkEz6HBH3ePvl1QmFlTmAV6DpnzczkaJyjA32g5M9sLPemGHVwQJmk3nH/kcDYOC
+	ItDKdvY4eg7J4Ju2qShm7viGL7o3NU4vNKdDJm9YyoxrqnUwST/0xuT2fYcw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784214380; x=1784300780; bh=OrjmJEYJ6rcTW4Tv2zC5PhH2HzcTohkW2Wo
+	S81nyO8Y=; b=nJtB9L/H0n+Z7hhEZSYgrZx3oBr9V0Gp60wnoZqe07tjuWaM671
+	gAuyowQSsJmyIaAuXcCVTAWPyddT27hZo6L32J0WGROf/Ler+KiuZL75ceKq2NXP
+	dLng6igjFYrh7blivuobRADf/ro+yFiN+UmihoWhwr7mJnx+4FXad9uvWKpTwH7Q
+	GVBz+lWJVubt8khhAyUJW/ddobybRmeTjqvCNwA37iF5hRvyaDwLyyH6wIthO/cJ
+	q+dw7Xj/4/r7Tbjw+esIyDZTn2s7PCnDIJzSI+n5h/nwqxBCTTbYy2Z7y5y/xiUb
+	zaZwKokAzMK2YosPv/kYDgyfr8gAOSgyvSQ==
+X-ME-Sender: <xms:bPNYakEuoqKrB1d1SvNkkFWacLlD8rML3I65hvvg7hlPXv5b6xj4zA>
+    <xme:bPNYarRgYh7AQRINSUsRk5FxvMevIkDNfS5A5hIBZgSA4U2YSsratiHMhEjtQk8rC
+    fNT2Zr743YNaSpOEOTmyWkGyfb4od2VBA8OVQk2rRrZrD6s10AmFQ>
+X-ME-Received: <xmr:bPNYaltie3qKqd0ND5CemTzdTRuNY-gtTxgQptK2wPpVk_WDtBK3X3jaNBJnesyv9LThoflViqLYeO3sXvjYV2ZvZ75xqYNEsY6qC1dM>
+X-ME-Proxy-Cause: dmFkZTGcgH1QDQSaUAKq1ONBf6e/v/+Qx6i2XGH05BYb+qf7d2Bkpkgme8OcSvTkyW8nlQ
+    kn0dFrCBMrtjUVoRbVkRz3q3DKtve65jHcdwz/m0jPAu8R2zUUpgvnjc8szwX5ZHXqjeuP
+    7Ti+aIMSV78gkdCp4XJH+F7TiRqE2GThTEHhQkUyRRpZZfCmCV+7qYL2TntCfg/WXSIltF
+    LtBjdfneoEDdhUf7I1HiAv/HiD6vUj7emn6SX0r00WxWE86r4ux0PB+G6mONWQ2JB6O4ci
+    fAdtGXwdqtbuXsljZ63Ux0u9PsXL0BWrWXFlXzl+LtAd0xjNxAdsaBmspXD1l35D9ulTE/
+    uZXE7u3OOwesMxn2xcGCANNHVWcheupQHwGjIzLPExSsgeQbRlRRJBwafkwfi1q41MJTru
+    eQBfOd8pUIfXn+RdpNedtWAR9d5cC14REaSfQkDs8oklM8qhso1WLkZ5Fr33QFnsZi9ViG
+    KKRUt247fhTEz5FjyJy3kJIP2lWi9XWt1lSWliDcSsMjcV4ke/SqcOYdQ9t+r0YgYEnr8R
+    u5elDYlmJTfRu78CkMYiW/DdikkQCypg8TLE9CwLbtLsMSDJzirWYH5Z8IytG8N/97BDkW
+    vHFN7jf9zuVyWHJyOCbtEA7IK5j9ovf4oxCkiC3b331h5y+Vdk3vw9u0V6Hw
+X-ME-Proxy: <xmx:bPNYaiyOYjQ7EyMwzkWZrRJU1lLn5BdZPVjGwwml0n1fpLfwNYYncA>
+    <xmx:bPNYan7D1u1CPoBmcgeeKPi2ykWWDYozIuMJ42QONO62sQvD_gckYQ>
+    <xmx:bPNYakVoDmbrx4jgSO0N8J76zc71-ldxCI6YpcpjHG0NVH9VRLa6sw>
+    <xmx:bPNYar1r6o9fANGm7uGjXFAAuGkroaEjuhKlwSI8ARW0KwVkiKiW9A>
+    <xmx:bPNYaoIP1kQLP4168igqSnL0OIAB97yFtSxF87TJUd_NDPyQZGYhIe-M>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Jul 2026 11:06:19 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 83f5e606 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jul 2026 15:06:16 +0000 (UTC)
+Date: Thu, 16 Jul 2026 17:06:13 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] copy: drop dependency on `the_repository`
+Message-ID: <aljzZar4sG6IE4-h@pks.im>
+References: <20260716-pks-copy-wo-the-repository-v1-1-8f1e078bb82f@pks.im>
+ <27d4d72f-1ab5-4dc3-8cf6-1a9b6883a631@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 16 Jul 2026 16:52:28 +0200
-Message-Id: <DK02X0ULSX7S.24CCVGDZC6W9Y@gmail.com>
-Cc: <chandrapratap3519@gmail.com>, <chriscool@tuxfamily.org>,
- <eric.peijian@gmail.com>, <gitster@pobox.com>, <jltobler@gmail.com>,
- <peff@peff.net>, <toon@iotcl.com>, "Jonathan Tan"
- <jonathantanmy@google.com>, "Calvin Wan" <calvinwan@google.com>
-Subject: Re: [PATCH GSoC v18 05/13] fetch-pack: drop static advertise_sid
- variable
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Karthik Nayak" <karthik.188@gmail.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>, <git@vger.kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
- <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
- <20260715-ps-eric-work-rebase-v18-5-34d7adb051bb@gmail.com>
- <CAOLa=ZSy1Z-R38cqFiz-Ejj9CNJkp4x_6rFk_wdfhyBytYH9fw@mail.gmail.com>
-In-Reply-To: <CAOLa=ZSy1Z-R38cqFiz-Ejj9CNJkp4x_6rFk_wdfhyBytYH9fw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <27d4d72f-1ab5-4dc3-8cf6-1a9b6883a631@gmail.com>
 
-On Wed Jul 15, 2026 at 11:48 PM CEST, Karthik Nayak wrote:
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
->> write_fetch_command_and_capabilities() is moved to 'connect.c' in a
->> subsequent commit. To prepare for that, drop the static variable usage
->> of advertise_sid. Currently advertise_sid is used in two places:
->>
->> 1. In function do_fetch_pack():
->>         if (!server_supports("session-id"))
->>                advertise_sid =3D 0;
->>
->> 2. In function fetch_pack_config():
->>         repo_config_get_bool("transfer.advertisesid", &advertise_sid);
->>
->
-> Nit: But #2 isn't a usecase, it's where it is set no? Looking at the
-> usecase, it seems like we have two:
->
->   #1 like you stated
->   #2 within `write_fetch_command_and_capabilities()`. But the flow is
->     that, the variable is set in `fetch_pack_config()`, right?
+On Thu, Jul 16, 2026 at 02:41:44PM +0100, Phillip Wood wrote:
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 1355a99a09..c9ede9c02d 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -2419,7 +2419,7 @@ static int do_pick_commit(struct repository *r,
+> >   		} else {
+> >   			const char *dest = git_path_squash_msg(r);
+> >   			unlink(dest);
+> > -			if (copy_file(dest, rebase_path_squash_msg(), 0666)) {
+> > +			if (copy_file(the_repository, dest, rebase_path_squash_msg(), 0666)) {
+> 
+> The path for "dest" is obtained using a local repository instance "r", but
+> we're using "the_repository" to set the permissions on that path. While that
+> matches the current behavior it is clearly better to use the same repository
+> instance to obtain both the path and and permissions for that path. In the
+> hunk below we even have "the_repository" and "r" on the same line which
+> seems confusing. This patch uses a local repository instance in
+> refs/files-backend.c and setup.c, lets do the same here.
 
-Completly true, fetch_pack_config() is where it's set, but not where
-it's used.
+Makes sense. In that case though I'll also adapt the two uses of
+`the_repository` below. Thanks!
 
-I'll fix #2 to be where it is used.
+Patrick
 
-Thanks.
-
->
->> About 1, it is only relevant for v0/v1 protocol, move it into
->> find_common().
->>
->> About 2, call repo_config_get_bool() inside of
->> write_fetch_command_and_capabilities() and find_common() replacing the
->> static variable.
->>
->> Because repo_config_get_bool() leaves advertise_sid as is if it is not
->> set, initialize it to 0 matching its default.
->>
->> Helped-by: Jonathan Tan <jonathantanmy@google.com>
->> Helped-by: Christian Couder <chriscool@tuxfamily.org>
->> Signed-off-by: Calvin Wan <calvinwan@google.com>
->> Signed-off-by: Eric Ju <eric.peijian@gmail.com>
->> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
->> ---
->>  fetch-pack.c | 13 +++++++------
->>  1 file changed, 7 insertions(+), 6 deletions(-)
->>
->> diff --git a/fetch-pack.c b/fetch-pack.c
->> index eea72b2500..8e04db8640 100644
->> --- a/fetch-pack.c
->> +++ b/fetch-pack.c
->> @@ -49,7 +49,6 @@ static int fetch_fsck_objects =3D -1;
->>  static int transfer_fsck_objects =3D -1;
->>  static int agent_supported;
->>  static int server_supports_filtering;
->> -static int advertise_sid;
->>  static struct shallow_lock shallow_lock;
->>  static const char *alternate_shallow_file;
->>  static struct strbuf fsck_msg_types =3D STRBUF_INIT;
->> @@ -363,6 +362,9 @@ static int find_common(struct fetch_negotiator *nego=
-tiator,
->>  	size_t state_len =3D 0;
->>  	struct packet_reader reader;
->>  	struct oidset negotiation_include_oids =3D OIDSET_INIT;
->> +	int advertise_sid =3D 0;
->> +
->> +	repo_config_get_bool(the_repository, "transfer.advertisesid", &adverti=
-se_sid);
->>
->>  	if (args->stateless_rpc && multi_ack =3D=3D 1)
->>  		die(_("the option '%s' requires '%s'"), "--stateless-rpc", "multi_ack=
-_detailed");
->> @@ -414,7 +416,7 @@ static int find_common(struct fetch_negotiator *nego=
-tiator,
->>  			if (deepen_not_ok)      strbuf_addstr(&c, " deepen-not");
->>  			if (agent_supported)    strbuf_addf(&c, " agent=3D%s",
->>  							    git_user_agent_sanitized());
->> -			if (advertise_sid)
->> +			if (advertise_sid && server_supports("session-id"))
->>  				strbuf_addf(&c, " session-id=3D%s", trace2_session_id());
->>  			if (args->filter_options.choice)
->>  				strbuf_addstr(&c, " filter");
->> @@ -1160,9 +1162,6 @@ static struct ref *do_fetch_pack(struct fetch_pack=
-_args *args,
->>  				      (int)agent_len, agent_feature);
->>  	}
->>
->> -	if (!server_supports("session-id"))
->> -		advertise_sid =3D 0;
->> -
->
-> So earlier we'd set the `advertise_sid` to 0 if the server didn't support
-> 'session-id'. But we could directly check where it is needed, which is
-> `find_common()`. Is `find_common()` only called in v0/v1 as stated in
-> the commit message?
-
-Yes, find_common() is only called from do_fetch_pack() which is the v0/v1
-path, if we take a look at fetch_pack():
-
-	if (version =3D=3D protocol_v2) {
-		[snip]
-		ref_cpy =3D do_fetch_pack_v2(args, fd, ref, sought, nr_sought,
-					   &shallows_scratch, &si,
-					   pack_lockfiles);
-	} else {
-		[snip]
-		ref_cpy =3D do_fetch_pack(args, fd, ref, sought, nr_sought,
-					&si, pack_lockfiles);
-	}
-
->
->>  	if (server_supports("shallow"))
->>  		print_verbose(args, _("Server supports %s"), "shallow");
->>  	else if (args->depth > 0 || is_repository_shallow(r))
->> @@ -1380,6 +1379,9 @@ static void write_fetch_command_and_capabilities(s=
-truct strbuf *req_buf,
->>  						 const struct string_list *server_options)
->>  {
->>  	const char *hash_name;
->> +	int advertise_sid =3D 0;
->> +
->> +	repo_config_get_bool(the_repository, "transfer.advertisesid", &adverti=
-se_sid);
->>
->>  	ensure_server_supports_v2("fetch");
->>  	packet_buf_write(req_buf, "command=3Dfetch");
->> @@ -1998,7 +2000,6 @@ static void fetch_pack_config(void)
->>  	repo_config_get_bool(the_repository, "repack.usedeltabaseoffset", &pre=
-fer_ofs_delta);
->>  	repo_config_get_bool(the_repository, "fetch.fsckobjects", &fetch_fsck_=
-objects);
->>  	repo_config_get_bool(the_repository, "transfer.fsckobjects", &transfer=
-_fsck_objects);
->> -	repo_config_get_bool(the_repository, "transfer.advertisesid", &adverti=
-se_sid);
->>  	if (!uri_protocols.nr) {
->>  		char *str;
->>
->>
->> --
->> 2.54.0
-
-Thanks for the feedback, will make it clear next reroll,
-Pablo
+> > @@ -3864,11 +3864,11 @@ static int error_failed_squash(struct repository *r,
+> >   			       int subject_len,
+> >   			       const char *subject)
+> >   {
+> > -	if (copy_file(rebase_path_message(), rebase_path_squash_msg(), 0666))
+> > +	if (copy_file(the_repository, rebase_path_message(), rebase_path_squash_msg(), 0666))
+> >   		return error(_("could not copy '%s' to '%s'"),
+> >   			rebase_path_squash_msg(), rebase_path_message());
+> >   	unlink(git_path_merge_msg(r));
+> > -	if (copy_file(git_path_merge_msg(r), rebase_path_message(), 0666))
+> > +	if (copy_file(the_repository, git_path_merge_msg(r), rebase_path_message(), 0666))
+> >   		return error(_("could not copy '%s' to '%s'"),
+> >   			     rebase_path_message(),
+> >   			     git_path_merge_msg(r));
