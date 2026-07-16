@@ -1,38 +1,85 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AFA26ED3D
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 04:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652E2386C3B
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 05:28:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784176093; cv=none; b=J1xty0gjbd8BuO2jY3pV9vm7qfSPRlSdjSLK9Qv08EfqqGjaZUbXTYQUtBQm5c0RhIC07RaEhzj+sYfzDvdeITL2Djib1/3rYZvvVP0S2CgYINoEjjXTma6zb9N0RyCuRij9j6H++fxX/Cti3NRAqEPAxL0iiRHUtm2q+b9WagY=
+	t=1784179682; cv=none; b=CbK4vDYV2QnmCTcreqinFn/H0g8hvYrQFAq8zpA2gBkN7NKeQE7EFMQWU7K5IW5ytyZCZwJ5k19e+RAZGdwXnTFDhmPFRaVFzMf+hjKFglJRpJAlnrnq9pbttalfhfOh4kBdluMzYkv4lSVWRo2XrkTpkg59Yp4WZ9TCrbgDdNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784176093; c=relaxed/simple;
-	bh=iEYglrFnwSuD+KsjvriYQX4Uv26j/hpV/s+GISPlLuA=;
+	s=arc-20240116; t=1784179682; c=relaxed/simple;
+	bh=nFIiWZKiMWRJoBg4soZBIsyF7BjAX+CNOLLgEOnYBL0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OwCXb1J2tUUKY3tMM6RgnCwjHtVvqviJuMWHCwLOgO6Z6eOH2+Cx6nJIfgbzWBXuL08Fnm054U5Dj7buuiRQdXw6l0OqED9wNsSlYdOeURBUQsc9sS16TjEkfTV/aPA05DnRJSWjcwYmFAGqd1ooz38cxQb4dbcRgCj5wSb3GSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PJ0saUAo; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=qDh5xMama8jutvRecD3ifvgUniFVbHwLYTuVl01sm+B8URRUtbl3vMaaIDz8hxJIRFQr/u0OLdZ/Q6mPWsiP2euLT/OwD9piUWrmeFvqXPR83Qjz8LBVQOmi5JQsi039ikW1AIESHiLE3tJ7qKqI6bLNp8krtciyf561uk3XUmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FNZg9RAh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jefg9kMl; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PJ0saUAo"
-Received: (qmail 39557 invoked by uid 106); 16 Jul 2026 04:28:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=iEYglrFnwSuD+KsjvriYQX4Uv26j/hpV/s+GISPlLuA=; b=PJ0saUAomh3rNT4CIwf/nzMxQemIRgH56+V4USmEpBVRrV2ReYJh8dmNBYilM6HKselY53XEpKn0K0hasFSZ84r1Q1le6yN19/AhfYJrlIbkU4ocJcWNseTDm4ja7oCyY4HvpRGTTWjmuVAimZH0RPWfXxfzCwCq5uiK/IHuYxcJj21lRp8YsDsRmT4skolapt8FsYMUWV8TrQ4EGa4oTltHxXirqfiTUazoDVNnSMmZiPhRcxVT8OmNVt0c2d8W7xanppmCaLzQHvUpvV+YTCiEdtqq+zuW3q8d2Xg0ClrHJd7cjRpem28Q/VCa5voNXwHIeB0tb/3+RpDG0lh36w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jul 2026 04:28:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 74516 invoked by uid 111); 16 Jul 2026 04:28:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Jul 2026 00:28:12 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 16 Jul 2026 00:28:08 -0400
-From: Jeff King <peff@peff.net>
-To: Gusted <gusted@codeberg.org>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: git-last-modified(1) slower than git-log(1)?
-Message-ID: <20260716042808.GA1151612@coredump.intra.peff.net>
-References: <17f356ff-7bfb-47f5-b714-62a95cc8b821@codeberg.org>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FNZg9RAh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jefg9kMl"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7D2171D0010D;
+	Thu, 16 Jul 2026 01:27:59 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Thu, 16 Jul 2026 01:27:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1784179679;
+	 x=1784266079; bh=DdJa57rN0xKLQFlwtk63UsY0/TLTMf/ff89ZU3S77kI=; b=
+	FNZg9RAhXvaQP+Id9myDmEyPOwMKC7TJ1O1jd7JDKALpDhSp/5bcirCiTzAG9p/y
+	QhBtfEAaeIVjNC/tIsrN1GrpLUVdqOsp2akGWrqhgQEUYwD056b3BK7DbY1PC6oF
+	K1RdKBNyQzfTyAFsVg67uQKT5a+asIZ9KhK7DjZkaER+iS7mhe3cN++ZStIXMyFf
+	Hva0xPjxostlFXcrL8ol8Wd+ZAwbT6yMrxytOglHVN6efyymuyzaKJtWUKvISmfo
+	0cRewMKGIv2Mu+2YVEuV8T7MCxfKZEBnAfJx6OIuDxEZxKBNwKMTy56aSLdS9FYj
+	7CdfQkjSu3L/z8dLdZWCHQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784179679; x=
+	1784266079; bh=DdJa57rN0xKLQFlwtk63UsY0/TLTMf/ff89ZU3S77kI=; b=J
+	efg9kMlyGoIs0NBgKZAnNmE7NcOR4jKYuYX0fmPcxxQLMpnPXUm7Yy53W+vR/uD4
+	WKuZQPBYDBpiEtmzrKalAqLAGhOH0Ns3r/XINzR9KexfdpmsG80iGq1TAOCfzmWl
+	ofTSbQwSYb2aI3LGnaSQmay4rcuW1Vmo6OG4SNg6kxn2hQBewRxCYmyp4Wx/823H
+	7DO778ueJtx5R765mV77djT42F6ETtxe2aUW7sLZFT+hDoor0Y2x048xGmfCqdZf
+	Szm4WDyJW1zObRlk0ID2tVnWlJIqYi17ps+c6W/y2fwrOZ6LiSvkBDjGbiCLowjR
+	KKiLAe2AqYI7yKtEhHX0w==
+X-ME-Sender: <xms:32tYatUUpEDKo32Kb3d9E-svS_h5n2es_2Li8iQmynyvDdF1Jchc5g>
+    <xme:32tYajncg7O7ZrVw8f9ytlN2_0n6saZwPtuHGux6nYxBMnF8LkJeDAbAjZ_4ZLUHp
+    RhT4ZgmTK4jg-HpxnpgQFkQptaB-TD089IHpd7WnYeflfcao12kZ6E>
+X-ME-Received: <xmr:32tYanDw1I1rYhnB0CC9IUicCQmttwtHiRNceQn528UGWS_srCMEaJQuqivloZPpdh__nTbo6p8bH0FrtrVlZSqLlvrLnQIcyu4fLEF0>
+X-ME-Proxy-Cause: dmFkZTGvQj+dHLiq/qLlM4R544QC+W6xkcXNO5YVn5t+OwVWqDkDL6fCddJBVvhKFR86Rp
+    R9DTZTpJrebpjZUnQqwGTS12iLsFPB3lSxuMpX/Go/K4yBt2sFS9b2m78ebE5e5nIN3JHM
+    4B/rxT04lB8L3ey4uE0aft7g3nA8NZ/fDuy/RJR8Bjc6WuXxDhJ7uV76vCg4KqJiymyWfC
+    ZU/QQK4Esg6jNubc1VY/31xgGSY1m2ZDhV0Oc+Zu8dSlMO/cql4Tu3QwnkBrnVUkNTDbeo
+    unHfYFA126UgURRLoDbHTDHuTtyzytpvkdvChTEzPjCYTZXtMI2/0z9v1ySZOfiSjMKQto
+    tgz0UjzecsGy2fFt7DJb2MW8z6xxv27Enog3HDi8kBZCs9sJ92FBWeX5yyySv741T8cclj
+    Ko0ybq6V6O0dZZArMvrahz1TEHIUK7C6nLy53GAQQjT8JlOBb69vtlRT72A12lNtQoHHHz
+    EwKDMwwh7pXgnPmdbUIVA9xISFI5tCXDKaRraG2ix1y9VIh/3bLdmk1SsXVaOkwJbjfbZA
+    11D3ZMy5FWrKSnPrnRGOw55Vd/YO8EHTvhFqu77Y3XHulY4GhpAr7FCBddRr1TO1Q/lhGj
+    NI1I+8gP8gG6iMNKyRC1toj0IRtFAqZhbh0U6P86l8act0ijcFRy6UPv8nbw
+X-ME-Proxy: <xmx:32tYardIyaJl9HW1DybIlqMooW5So8E5C4e8ThV4jvMmQEjw0mozRg>
+    <xmx:32tYaqLdgsv6UZuVjjwgFsIjDlBgHk2aKux9_fiKisE18WkS9OLywg>
+    <xmx:32tYamfVx6TrrHFozlTVkrsGp3_z6mts7Nv7ZhE19r6wy7kBFxK5Zg>
+    <xmx:32tYap0ZWZvsQV10I0LWtDP_oxxqFpubGJqzrQ0OdwUs4OQzw71VSQ>
+    <xmx:32tYaosx1WWYqUMR2bTUhoI0l8fDcTjuK0AIoof3O9A8S0myP40Xw5Md>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Jul 2026 01:27:58 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id de47d0e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jul 2026 05:27:56 +0000 (UTC)
+Date: Thu, 16 Jul 2026 07:27:53 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] remote-curl: simplify passing of push specs
+Message-ID: <alhr2bb0lUTHtvjO@pks.im>
+References: <935883f3-3be4-4c51-9711-5208b9ef9ca1@web.de>
+ <alcrhGUCVMCnm2-i@pks.im>
+ <3b29757e-abcd-4235-a829-ea67c19e71d0@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,215 +88,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <17f356ff-7bfb-47f5-b714-62a95cc8b821@codeberg.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3b29757e-abcd-4235-a829-ea67c19e71d0@web.de>
 
-On Tue, Jul 14, 2026 at 08:33:59PM +0200, Gusted wrote:
-
-> The repository I'm currently using to evaluate the performance is
-> https://codeberg.org/ziglang/zig
+On Wed, Jul 15, 2026 at 05:39:51PM +0200, René Scharfe wrote:
+> On 7/15/26 8:41 AM, Patrick Steinhardt wrote:
+> > On Wed, Jul 15, 2026 at 06:41:17AM +0200, René Scharfe wrote:
+> >> diff --git a/remote-curl.c b/remote-curl.c
+> >> index 9e614c5567..2c35dd5240 100644
+> >> --- a/remote-curl.c
+> >> +++ b/remote-curl.c
+> >> @@ -1340,10 +1340,9 @@ static void parse_get(const char *arg)
+> >>  	fflush(stdout);
+> >>  }
+> >>  
+> >> -static int push_dav(int nr_spec, const char **specs)
+> >> +static int push_dav(const char **specs)
+> >>  {
+> >>  	struct child_process child = CHILD_PROCESS_INIT;
+> >> -	size_t i;
+> >>  
+> >>  	child.git_cmd = 1;
+> >>  	strvec_push(&child.args, "http-push");
+> > 
+> > I wonder whether the interface would be even better if we simply passed
+> > around a `const struct strvec *` directly. That makes it explicit what
+> > kind of guarantees we have, and all transitive callers already have one
+> > available anyway.
 > 
-> Reproduction steps:
-> 1. `git clone https://codeberg.org/ziglang/zig $(mktemp -d)`
-> 2. cd to tmp directory.
-> 3. `git commit-graph write --changed-paths`. As git-last-modified(1)
-> makes good use of the bloom filters.
-> 4. `hyperfine 'git last-modified -z -t --max-depth=0
-> 80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- doc/langref/' 'git log
-> --name-status -c "--format=commit%x00%H %P%x00" --parents --no-renames
-> -t -z 80d06578ac66bce3aa0a21e9610cdb782b9a0593 -- ":(literal)doc/langref"'`
+> You mean that passing a managed array instead of a plain NULL-terminated
+> one would make more places visibly safer at almost no cost?
+> 
+> >> @@ -1353,15 +1352,14 @@ static int push_dav(int nr_spec, const char **specs)
+> >>  	if (options.verbosity > 1)
+> >>  		strvec_push(&child.args, "--verbose");
+> >>  	strvec_push(&child.args, url.buf);
+> >> -	for (i = 0; i < nr_spec; i++)
+> >> -		strvec_push(&child.args, specs[i]);
+> >> +	strvec_pushv(&child.args, specs);
+> > 
+> > I thought that we had something like `strvec_pushvec()` that knew to
+> > also optimize for this case so that we don't have to reallocate the
+> > vector multiple times. And if we had that function it would even be more
+> > efficient to pass it down the stack. But we seemingly don't have it, so
+> > that argument is kind of moot.
+> We could add one.  Not sure it would make a measurable difference; if
+> the number of specs is huge there are probably other costs that dwarf
+> pushing them to a strvec.
 
-Thanks for this concrete reproduction. I can see the same problem here.
-Interestingly, if we turn off changed-paths, we get very different
-results.
+Yeah, I don't expect it to make a difference here, either. But by having
+it we could use it in more places going forward, and that might lead to
+tiny savings here and there that ultimately add up. So it'd be nudging
+folks to "do the right thing".
 
-Without a commit graph at all, last-modified wins (this is using the zig
-repo and the commands above):
+> I have to admit that the simplicity of strvec_pushv() nudged me towards
+> using a NULL-terminated array here, though.  So just having a
+> strvec_pushvec() available could guide towards using the length-limited
+> strvec instead of a simpler NULL-terminated array (which explodes if
+> left unterminated).
 
-  - log: 150ms
-  - last-modified: 79ms
+And that's not a huge issue by itself. I think the version you have here
+is totally fine, and I won't insist on a reroll. But I think it gives us
+a good opportunity to improve the status quo, if we want to take it.
 
-But with a graph and no changed-paths, they're about equal:
+Thanks!
 
-  - log: 61ms
-  - last-modified: 61ms
-
-And then with changed-paths, the log command gets much faster but
-last-modified gets slower!
-
-  - log: 20ms
-  - last-modified: 64ms
-
-I think there's a tradeoff in the way that last-modified uses the bloom
-filters. It makes a key for every path we're interested in, and then for
-each commit, we check each key to say "is this in the commit's filter?".
-
-So if you have a subdirectory with a non-trivial number of entries (like
-doc/langref here which has 290), but most commits don't touch that path
-at all (only 120 out of ~39k in this case), we'll spend a lot of time
-checking each key against each filter. We save ourselves opening the
-trees, but at the cost of 290*39k filter comparisons).
-
-Whereas in the git-log case, we make a filter key out of the single
-pathspec we're given, and then check each commit against that. So we
-only do a single filter check for each commit to narrow it down to those
-120 that matter (modulo a few filter false positives).
-
-But I don't see any reason that last-modified couldn't _also_ do that:
-pre-filter the commits with a commit matching the original pathspec, and
-discard most commits with a single filter check.
-
-The hacky patch below does this, and brings my last-modified runtime
-down to 16ms (a 4x improvement, and just a bit faster than git-log).
-
-It tries to reuse the logic from revision.c, so it's doing the exact
-same filtering that git-log would do. I think there are other ways to do
-it. E.g., we could make our own "root" bloom key that contains all of
-the paths and pre-filter with that. But it seemed to be a little slower
-when I tried it (~24ms). I'd guess that the problem is that because the
-bloom filter is probabilistic, if you shove too many items into a single
-key you'll end getting more and more false positives. So putting all 290
-entries into one key is too much, and we are better off just considering
-the shared prefix.
-
-Anyway, here's the patch. Toon, I'm not planning to take it further
-immediately, but you may be interested in poking at it. It probably
-needs at least:
-
-  - some light refactoring of revision.c
-
-  - tests? We don't seem to cover last-modified with changed-paths at
-    all, and just rely on the test-vars CI job which sets
-    GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS. It did pass for me with that
-    flag, so surely I didn't introduce any bugs. :)
-
-  - more timing exploration; e.g., might it make things worse if
-    doc/langref were touched in 99% of the commits? Probably not, but it
-    might be nice to check timings against a few repo shapes and request
-    depths.
-
-  - Not all pathspecs can support bloom filters (e.g., "*.c" would not).
-    So in theory:
-
-       git last-modified HEAD -- "*.c"
-
-    could work, but wouldn't be optimized. I don't think it _does_ work
-    now, because last-modified's max-depth logic complains. So it might
-    be a non-issue.
-
-    But I think it is solvable if we really wanted. Rather than
-    traversing looking for "*.c", we actually expand the pathspec in the
-    tip commit to a set of literal paths, and then as we traverse we
-    look for those paths. So we could collect all of "*.c" and then
-    add bloom keys for the shared prefixes. I think this does get tricky
-    in the general case, though. If you have "a/b/c" and "a/b/d",
-    looking for "a/b" is reasonable. But what if you also have "a/e"?
-    Should you just have a key for "a/", or both "a/b" and "a/e"?
-    There are some tradeoffs between how often uninteresting things in
-    "a/" will give us a false positive, versus the cost of checking
-    extra keys.
-
-    So maybe an interesting area, but given that in practice most people
-    will feed a single pathspec to last-modified, it's a lot easier to
-    just use that.
-
-  - I know that last-modified was derived from GitHub's blame-tree
-    implementation (which I originally wrote, but stopped paying
-    attention to well before it learned about changed-path filters). I
-    don't know if the problem was solved separately there, but it would
-    be worth checking. +cc Taylor
-
--Peff
-
----
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index 5478182f2e..c07169258f 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -254,6 +254,29 @@ static void pass_to_parent(struct bitmap *c,
- 	bitmap_set(p, pos);
- }
- 
-+/*
-+ * revision.c already has this functionality, but it is not public
-+ * and it looks up the filter itself. But probably some refactoring
-+ * could make it available at the right level?
-+ */
-+static bool filter_contains_keyvec(const struct bloom_filter *filter,
-+				   struct rev_info *rev)
-+{
-+	/*
-+	 * If we have no keys, we must pessimistically assume a match.
-+	 */
-+	if (!rev->bloom_keyvecs_nr)
-+		return true;
-+
-+	for (int i = 0; i < rev->bloom_keyvecs_nr; i++) {
-+		if (bloom_filter_contains_vec(filter,
-+					      rev->bloom_keyvecs[i],
-+					      rev->bloom_filter_settings))
-+			return true;
-+	}
-+	return false;
-+}
-+
- static bool maybe_changed_path(struct last_modified *lm,
- 			       struct commit *origin,
- 			       struct bitmap *active)
-@@ -272,6 +295,9 @@ static bool maybe_changed_path(struct last_modified *lm,
- 	if (!filter)
- 		return true;
- 
-+	if (!filter_contains_keyvec(filter, &lm->rev))
-+		return false;
-+
- 	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
- 		if (active && !bitmap_get(active, ent->diff_idx))
- 			continue;
-@@ -499,7 +525,22 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
- 		return argc;
- 	}
- 
--	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
-+	/*
-+	 * Load the bloom settings, but also convert our pathspec into
-+	 * bloom_keyvecs that can be used later. This helper should
-+	 * probably be factored out, but we don't want to do it ourselves.
-+	 * There is logic about which pathspecs are allowed or not that
-+	 * we would not want to duplicate.
-+	 */
-+	prepare_to_use_bloom_filter(&lm->rev);
-+
-+	/*
-+	 * Even if our initial pathspecs forbid using bloom filters, we'd still
-+	 * use them for the literal paths we expand below in
-+	 * populate_paths_from_revs().
-+	 */
-+	if (!lm->rev.bloom_filter_settings)
-+		lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
- 
- 	if (populate_paths_from_revs(lm) < 0)
- 		return -1;
-diff --git a/revision.c b/revision.c
-index 137a86d33b..f5b36ea2cc 100644
---- a/revision.c
-+++ b/revision.c
-@@ -705,7 +705,7 @@ static int convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
- 	return res;
- }
- 
--static void prepare_to_use_bloom_filter(struct rev_info *revs)
-+void prepare_to_use_bloom_filter(struct rev_info *revs)
- {
- 	if (!revs->commits)
- 		return;
-diff --git a/revision.h b/revision.h
-index 569b3fa1cb..1f761b85d0 100644
---- a/revision.h
-+++ b/revision.h
-@@ -576,4 +576,6 @@ int rewrite_parents(struct rev_info *revs,
-  */
- struct commit_list *get_saved_parents(struct rev_info *revs, const struct commit *commit);
- 
-+void prepare_to_use_bloom_filter(struct rev_info *revs);
-+
- #endif
+Patrick
