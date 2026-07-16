@@ -1,79 +1,80 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBCE32F757
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 05:33:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1F82EEE84
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 05:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784180002; cv=none; b=BYZyyeBfUcIAEVmLoCtQDOHriBcOIe7B77ZKYvs0JxLYp0PUmOLkkFoa5/ei7RizfFm/pKPWfbb83lau9zJREd2JytNdBeYxry8ajjvBc+xdF6AdghSkriXU8uGQC/m7AELm+3nhDWHWlEFGRs0IWBFdnjUe248VF9oMFC+bq7k=
+	t=1784180004; cv=none; b=T388DZm9Z0VIIQ9I1m1KywQN+h8JwOS6YfFUy+yyg5cEcqO99DuEjlD6Js7V4X7K7yHgQMlu5lHvMeZCXrVIjGGrtd8GlYp2yRkcZll6smM1z2r75gRR9MIDOc5TkV+YSp936ZCYvVpJtFmXqqatE25firX7htX9aeuAfPvECBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784180002; c=relaxed/simple;
-	bh=5n4lvk57bdBw4z0nVz7VcHlKczhryq5yTWSd9Shj57g=;
+	s=arc-20240116; t=1784180004; c=relaxed/simple;
+	bh=/7OeZX+aS1+yAx24DCO39vgd1nOUxUZv4+5GhWWtVJs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=b/6XhJ6WZ1zyW6vyZBpYyaNIbisH7YE9vndNUtyqZFFH3WbsnqJ3BL9xxEcBnNd4Bsghrm9s9DE5yayFqghSUPX837gs2AXbFNCmsIlp/VurajQGXhe/JPZgwr7nVd3W7zhnfjc6HuXlhOVfju4IfPdx79eevTvqhrcKqKOaYXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QCX5DJa4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R14US3fj; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=uQKxsySRhHR5Q7kHwm2sV6LdkOPp99sbxDDmh8v4izRbOO/KlY4zfk0FbzlUrjQvVQQH32ZWv0h8yV681EbC1auBtYOxdp+uPo90HZ6/IYS18+3/MxZwS8eB5hzZ5feaqd9JfsMvS59Crs3k4v47xZ3Wa/PJ6byuoEGJE3CZOF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h0CZy7md; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PepLTbX8; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QCX5DJa4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R14US3fj"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1FD487A0010;
-	Thu, 16 Jul 2026 01:33:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h0CZy7md";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PepLTbX8"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6ED961D0010C;
+	Thu, 16 Jul 2026 01:33:22 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 16 Jul 2026 01:33:20 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 16 Jul 2026 01:33:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1784179999;
-	 x=1784266399; bh=mg4ttO/8p8OVV8gDdvbXsPZIf3Ney2brnz1yGEwjGKE=; b=
-	QCX5DJa4V3f9JYf4d0amaTj+JhOTQyh17asKIJkgpGMotCYYn9UeQXq+iNuy7Oo9
-	kSetuIfJH0aEUFwADSJSZdUXa9IBUCF94Y9ouRm+jBRqAxq5bnPp+4ySi7/VQl9o
-	P83xwsvUHvbgPInbKHDBE879W2Y0x4hXxO5wLXhtK/NVj489eCukBRy92ZhlP+Vk
-	LcCas1rs/UFE5dSebbovgjMna1ZgbSADEMO5XNBu4TBR+0b+FinybcNhlO2O2A85
-	LRUTLMb0A9SXVxZioxA+L697P4+Ve+WpUZgBbxo3bHutT6Q3TVmXc1JpFhRGabSI
-	Nx5qerI16Qg282RXQBAQ8A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1784180002;
+	 x=1784266402; bh=WCVaJmA8MaWpmCzERrVhKCq3pVzhyir5SV2a+rKzCp8=; b=
+	h0CZy7mdjAqz5GvghOKOjMkbxvZa5+cpu+NTuZw00I9JKRZMpzgNEwOe1nyth+WM
+	6vwuQrgvKHHASweLA3X0fXfPuR9jG4d0X+OUVC2Sr5+Xw6iRKUoj3Ed444K3mzRt
+	LyncL+1g48/SqD0XTAYFeWxFd8929NGQIOfjGucDcYJJgo0bSk6PLbyyBmSG5uSv
+	xcp2az8wTp5p9euxYfcpCsYlYXSzN6SXiPOW7mEv+IBVJGUXSuQwysT3EachfgDV
+	NEWhs6m1FniZGNNuNo9eo2Myw+S15e111aaWE9ZYr7qmPaML6xlSnbCIOqLGxMCp
+	cTF7lk//pbk3kWVryR/5sw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784179999; x=
-	1784266399; bh=mg4ttO/8p8OVV8gDdvbXsPZIf3Ney2brnz1yGEwjGKE=; b=R
-	14US3fj6F12CvqSiTvlTM8CMu+o7n5Kz9Ky2GhQAcc1JEWm7HN90FuBt2WwtUZxa
-	El4NLGYS0RRVtGcXI1h0Xv/x3eY/8U3E09MJnGE65d1srFyP6ygfx0Alfy8SJghD
-	7SKX9zc/aLqC3vvZyXKw9OBpObfsapYlnPAMQ9unEUljPDAMJgUc3SF/dCDMWxv/
-	hvlbaKrtE/HRTkkp0Bdc2FN63kWi9eaJD36M1isqoO/aVoJnX5s0H6QylJQqaVLl
-	ESE2glSoPW1uuyhHxWY+lmZRZ3kgozltrOXMg985uSK47Hsy5JaRQTmnmK3vedgV
-	G7kuvk3W5O41p9+rPJtUA==
-X-ME-Sender: <xms:H21YatEwnS9LY0kY7aUwgpUBhwlOoLtwxQScBkJNqEjQCf1z-7n82A>
-    <xme:H21YapyGR3AVlp5a4vT-CDy8sjRTi4Yb5AV-G9rVcP5T-KT_6XH05yNIfts6NTlwf
-    v5n97sw_AvZ5JjglC-1aFmowWTNLmvEYMc3UvGh9kH8HsNd7qWAnA>
-X-ME-Received: <xmr:H21YasiAsqXV08WBumzr93pKR31UVaxwa8Zep9JkLFrBzFNGc_QRFVdTsAKqA-6IdQCfBQtoWxj5jeYH1OojaA7Y7pMH0_FowzAq5k0R>
-X-ME-Proxy-Cause: dmFkZTF/nOZMhQgUkg9G1MLY4kq5azmscwMLtZjOrrS14Tk3AsRc1pPUnqc8E78hcFINR8
-    ji8v8mmxeUSCJI/mG7IrTUQemUJlSwXqowYfdaf1y+xFPM8XCPLNbNWNnw/I68ut4t1I1c
-    rfiA4Lhhtw/2BHU763a7pjeWeGSL6erYwbSGxYCmRZJgwYJH9VfDD+EwWEt/lXqpIa4xQ0
-    4n3xputboOqY/h6Eks+/0qvn1SKu2BLrhe9A3ShwF56R+kPnjeegXWLCNGCa8tvr0cYYcN
-    tQSOGU+/Hfs/06ImYOEX1MHeAHv/fD9kx7F9OOgj2FYiApBbRdacDL9eBYBB60ODZmTFcP
-    HLz90b84J9mEYshgPsCSgvX6kHBkHQlHpPAn1ZbQCNudeKXkjJgw7cnLeb9LZ5pHupw5xU
-    wHlgc2l+YZinQc+nDGR8XX+BkHDc+6TcfJnRycyJyP1M5xDHuJHTzOzVL9XjBqM2r8We6L
-    XWxqB45E1fq+r9npxUnBQbe5O721RB3A3zaCy0TcY1nU2/71uKxe9KTifFfteEgpqMvUX4
-    sIgf0eddz3vg7HwCXbZ0TkdrLuUdv9btsdctY5BGjdp9T2XMLucTsyFshamDkU6rwjcfcI
-    foKFnzWL1Jct7Dr+6jNleuEUZKmfxj7qpDADMwi8XOct6kcfySukf4x2dflg
-X-ME-Proxy: <xmx:H21YaswI3_2ExC2Su7_G3Z_R9YIcTslp6ocbyw61vShqxr7sdBqQKw>
-    <xmx:H21YanKCT-gtiKo_vB4hvUnfObVdPifbHvnkCZJ1wxZ--02x2mC_GA>
-    <xmx:H21YarR3toD4YvOO9-PTQf3PrgIVER9vgMWs0HeYUtSXcSOzpx9-UQ>
-    <xmx:H21Yanq5_5wsDRblR3isp7pOOLACYVIB2sVRNq4mt4Y-kEALptpjcg>
-    <xmx:H21YarYH-AKbnXp_FB_3lAukZAJiaI67O-gg-LD7ZsOndPGIn6egUHFl>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784180002; x=
+	1784266402; bh=WCVaJmA8MaWpmCzERrVhKCq3pVzhyir5SV2a+rKzCp8=; b=P
+	epLTbX8ux0lRCO9YucmxjVMhrL/TEG0QvF+DTzs7d+BXIhsZAoLncfEnBeNM4Fvm
+	pEPbg8uCtTvVa6X1ltm/nBwl2Sfn7WaaMNs+rH6qVWdcxZykJS8iOnbbe3BWTUdU
+	WlvScgvhalz8Ij27LxRIGQX642iNlZ0IQWnAQNeo3hIua7tmkBn9nrYBtV23e3mk
+	5UqNhtZ5YNuyifUdpFCRNHJxnKwQzDHVoAeCY7iyh7s+M9hdtVidvkpOlAXKgo04
+	aIQmn+i1uIox+PJ8iFuTFevo1qJ1llzmS6BZSMwvTjj/K3NHP2mr2emu7UvuGMf7
+	mSHikskfo1zvh8QdDoEOA==
+X-ME-Sender: <xms:Im1Yas2VL3ap7bSC9Z3HY1EKVskg_MQl5j8zDUTje-2zGBDM1ai9kA>
+    <xme:Im1YaujtpqN0ktBNaPrS6jPY5-j2QUxtQuLrVAORDv2Ip0_TV1mjL_yMAHc3zLOVs
+    91EHjn6nnDCKSTAzjrVZ2Wa0HrQd-xEPC-tClZYT4baUe8pqdMadA>
+X-ME-Received: <xmr:Im1YaiTEL14QB1dIgCPo3uCUZmC9PapMml6YpN2ky9VxvXQFIPaCvH5Bmq74hI_-OAz7KTs4cxdPKt6u_uIAJ8A23ioi7sIsu3343Ac3>
+X-ME-Proxy-Cause: dmFkZTE3sd9Rgq0aRyFtptZUq81EFixIPvqz3pxNdSCnN20LGThertVtMVbre27mftpmEH
+    qGs+EpopQa2hsq1ogJehRFK/z5tOf9MQPhGL0+9xQ9ejaxOniWyxLQkI1zFZ6RSnjjvvJf
+    L1NdgMe137p63bb/fu7hdzzHAIDzMSB5Wwnt3+iFZyE8bMuRZlWaA/5BCJ1a1ayI5QuR8P
+    D8sp9u17MkpxUCCq5pJuwtzLCi0Bb6TEpRusMhhPMKUeiiEi4ErvBD0vBiFniU/3WdI9F2
+    898u8vaP4WMsA7FyLLF5BfnREOORK9tSe+kpbdjyzGV6ZTqZ2c5Qnzzdbw7ZNn9bhG8mfR
+    XVbXgqTxKf3Xo1Q8C8Q/sfT1k9ILt5nJYhoK6QpjhYPJB7Q+YM6+lm1uKht+MvjjxfERQD
+    ktHgkDON/E7wUbw3SItabgHJErTibkqxY6cdQwXsowYXQ3M45EcsI5/iQzulFvVRPpe82e
+    htYj9co6YCyndtnjHSLB4YOk3e0TgVvSQnaz9f/6tW+/xIwb3LgVk7q6LNi61xSKsSYFVI
+    JeglD/W01o0Omhlw9YVECvXnPVtfgYANlYdaVUN6TC7LlRhkbwzWlPhHXAROLy6DLTVBkX
+    0Mp918Ra7NXuRYbrb6Lfujt1vhsKWoNK/InceWsRTcLZszUOHG0wUKwd7CxQ
+X-ME-Proxy: <xmx:Im1Yavheifb8KBS1g_Zt_nQ35TnkxXBgif0DbeOLuVp24_H3FwcMAg>
+    <xmx:Im1Yai670WpVzjedmi8wBVopymnHKlq_BmeAudX2D_Rx4lUXy6ZEfg>
+    <xmx:Im1YasCHcWaPxr2ENU9BXx8ERlttPC107DW-kUbzH6ihxC4RLiEyzQ>
+    <xmx:Im1YapZWILE-OxVpcOJoPM_joLX1hk1UNRwX8LmS_JCNzTh1faV3Jg>
+    <xmx:Im1YakJDFuIvtZ7E0VstQio67IKr-faedZlVZNgFNETvP9b8ZS0ye06O>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 01:33:19 -0400 (EDT)
+ 16 Jul 2026 01:33:21 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2683fd69 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jul 2026 05:33:18 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ad26124e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jul 2026 05:33:21 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Jul 2026 07:33:03 +0200
-Subject: [PATCH v3 2/6] refs/files: drop `USE_THE_REPOSITORY_VARIABLE`
+Date: Thu, 16 Jul 2026 07:33:04 +0200
+Subject: [PATCH v3 3/6] worktree: refactor code to use available
+ repositories
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,156 +83,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260716-pks-refs-wo-the-repository-v3-2-db0a804e0224@pks.im>
+Message-Id: <20260716-pks-refs-wo-the-repository-v3-3-db0a804e0224@pks.im>
 References: <20260716-pks-refs-wo-the-repository-v3-0-db0a804e0224@pks.im>
 In-Reply-To: <20260716-pks-refs-wo-the-repository-v3-0-db0a804e0224@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.15.2
 
-We have a bunch of users of `the_repository` in the "files" backend, all
-of which are trivial to convert to instead use the backend's own repo.
-Do so.
-
-There is one more dependency on global state though via `ignore_case`,
-and thus we can't trivially remove `USE_THE_REPOSITORY_VARIABLE`. But
-this is the only use of global state, and we want to ensure that we
-don't unwittingly reintroduce a dependency on `the_repository` going
-forward.
-
-Add an extern declaration for `ignore_case` so that it becomes
-accessible even without `USE_THE_REPOSITORY_VARIABLE` and drop the
-define itself.
+In "worktree.c" we have lots of users of `the_repository` that already
+have a repository available to them. Convert all of them to use that
+repository instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ worktree.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 3df56c25c8..09e1be838a 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "../git-compat-util.h"
-@@ -29,6 +28,9 @@
- #include "../revision.h"
- #include <wildmatch.h>
- 
-+/* So that we can drop `USE_THE_REPOSITORY_VARIABLE`. */
-+extern int ignore_case;
-+
- /*
-  * This backend uses the following flags in `ref_update::flags` for
-  * internal bookkeeping purposes. Their numerical values must not
-@@ -788,7 +790,7 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
- 	files_ref_path(refs, &ref_file, refname);
- 
- retry:
--	switch (safe_create_leading_directories(the_repository, ref_file.buf)) {
-+	switch (safe_create_leading_directories(refs->base.repo, ref_file.buf)) {
- 	case SCLD_OK:
- 		break; /* success */
- 	case SCLD_EXISTS:
-@@ -1164,7 +1166,8 @@ typedef int create_file_fn(const char *path, void *cb);
-  * recent call of fn. fn is always called at least once, and will be
-  * called more than once if it returns ENOENT or EISDIR.
-  */
--static int raceproof_create_file(const char *path, create_file_fn fn, void *cb)
-+static int raceproof_create_file(struct files_ref_store *refs,
-+				 const char *path, create_file_fn fn, void *cb)
- {
- 	/*
- 	 * The number of times we will try to remove empty directories
-@@ -1220,7 +1223,7 @@ static int raceproof_create_file(const char *path, create_file_fn fn, void *cb)
- 			strbuf_addstr(&path_copy, path);
- 
- 		do {
--			scld_result = safe_create_leading_directories(the_repository, path_copy.buf);
-+			scld_result = safe_create_leading_directories(refs->base.repo, path_copy.buf);
- 			if (scld_result == SCLD_OK)
- 				goto retry_fn;
- 		} while (scld_result == SCLD_VANISHED && create_directories_remaining-- > 0);
-@@ -1289,7 +1292,7 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 	cb_data.lk   = &lock->lk;
- 	cb_data.repo = refs->base.repo;
- 
--	if (raceproof_create_file(ref_file.buf, create_reflock, &cb_data)) {
-+	if (raceproof_create_file(refs, ref_file.buf, create_reflock, &cb_data)) {
- 		unable_to_lock_message(ref_file.buf, errno, err);
- 		goto error_return;
- 	}
-@@ -1383,7 +1386,7 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
- 	ref_transaction_add_update(
- 			transaction, r->name,
- 			REF_NO_DEREF | REF_HAVE_NEW | REF_HAVE_OLD | REF_IS_PRUNING,
--			null_oid(the_hash_algo), &r->oid, NULL, NULL, NULL,
-+			null_oid(refs->base.repo->hash_algo), &r->oid, NULL, NULL, NULL,
- 			NULL, NULL);
- 	if (ref_transaction_commit(transaction, &err))
- 		goto cleanup;
-@@ -1629,7 +1632,7 @@ static int rename_tmp_log(struct files_ref_store *refs, const char *newrefname)
- 	files_reflog_path(refs, &path, newrefname);
- 	files_reflog_path(refs, &tmp, TMP_RENAMED_LOG);
- 	cb.tmp_renamed_log = tmp.buf;
--	ret = raceproof_create_file(path.buf, rename_tmp_log_callback, &cb);
-+	ret = raceproof_create_file(refs, path.buf, rename_tmp_log_callback, &cb);
- 	if (ret) {
- 		if (errno == EISDIR)
- 			error("directory not empty: %s", path.buf);
-@@ -1916,13 +1919,13 @@ static int log_ref_setup(struct files_ref_store *refs,
- 	char *logfile;
- 
- 	if (log_refs_cfg == LOG_REFS_UNSET)
--		log_refs_cfg = is_bare_repository(the_repository) ? LOG_REFS_NONE : LOG_REFS_NORMAL;
-+		log_refs_cfg = is_bare_repository(refs->base.repo) ? LOG_REFS_NONE : LOG_REFS_NORMAL;
- 
- 	files_reflog_path(refs, &logfile_sb, refname);
- 	logfile = strbuf_detach(&logfile_sb, NULL);
- 
- 	if (force_create || should_autocreate_reflog(log_refs_cfg, refname)) {
--		if (raceproof_create_file(logfile, open_or_create_logfile, logfd)) {
-+		if (raceproof_create_file(refs, logfile, open_or_create_logfile, logfd)) {
- 			if (errno == ENOENT)
- 				strbuf_addf(err, "unable to create directory for '%s': "
- 					    "%s", logfile, strerror(errno));
-@@ -1955,7 +1958,7 @@ static int log_ref_setup(struct files_ref_store *refs,
+diff --git a/worktree.c b/worktree.c
+index 30125827fd..8b10dea179 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -392,7 +392,7 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
+ 	if (!is_absolute_path(wt->path)) {
+ 		strbuf_addf_gently(errmsg,
+ 				   _("'%s' file does not contain absolute path to the working tree location"),
+-				   repo_common_path_replace(the_repository, &buf, "worktrees/%s/gitdir", wt->id));
++				   repo_common_path_replace(wt->repo, &buf, "worktrees/%s/gitdir", wt->id));
+ 		goto done;
  	}
  
- 	if (*logfd >= 0)
--		adjust_shared_perm(the_repository, logfile);
-+		adjust_shared_perm(refs->base.repo, logfile);
+@@ -414,12 +414,12 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
+ 		goto done;
+ 	}
  
- 	free(logfile);
- 	return 0;
-@@ -3672,8 +3675,8 @@ static int files_ref_store_create_on_disk(struct ref_store *ref_store,
- 	 *   they do not understand the reference format extension.
+-	strbuf_realpath(&realpath, repo_common_path_replace(the_repository, &buf, "worktrees/%s", wt->id), 1);
++	strbuf_realpath(&realpath, repo_common_path_replace(wt->repo, &buf, "worktrees/%s", wt->id), 1);
+ 	ret = fspathcmp(path, realpath.buf);
+ 
+ 	if (ret)
+ 		strbuf_addf_gently(errmsg, _("'%s' does not point back to '%s'"),
+-				   wt->path, repo_common_path_replace(the_repository, &buf,
++				   wt->path, repo_common_path_replace(wt->repo, &buf,
+ 								      "worktrees/%s", wt->id));
+ done:
+ 	free(path);
+@@ -440,7 +440,7 @@ void update_worktree_location(struct worktree *wt, const char *path_,
+ 	if (is_main_worktree(wt))
+ 		BUG("can't relocate main worktree");
+ 
+-	wt_gitdir = repo_common_path(the_repository, "worktrees/%s/gitdir", wt->id);
++	wt_gitdir = repo_common_path(wt->repo, "worktrees/%s/gitdir", wt->id);
+ 	strbuf_realpath(&gitdir, wt_gitdir, 1);
+ 	strbuf_realpath(&path, path_, 1);
+ 	strbuf_addf(&dotgit, "%s/.git", path.buf);
+@@ -658,7 +658,7 @@ static void repair_gitfile(struct worktree *wt,
+ 		goto done;
+ 	}
+ 
+-	path = repo_common_path(the_repository, "worktrees/%s", wt->id);
++	path = repo_common_path(wt->repo, "worktrees/%s", wt->id);
+ 	strbuf_realpath(&repo, path, 1);
+ 	strbuf_addf(&dotgit, "%s/.git", wt->path);
+ 	strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
+@@ -727,7 +727,7 @@ void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path
+ 	if (is_main_worktree(wt))
+ 		goto done;
+ 
+-	path = repo_common_path(the_repository, "worktrees/%s/gitdir", wt->id);
++	path = repo_common_path(wt->repo, "worktrees/%s/gitdir", wt->id);
+ 	strbuf_realpath(&gitdir, path, 1);
+ 
+ 	if (strbuf_read_file(&dotgit, gitdir.buf, 0) < 0)
+@@ -1042,7 +1042,7 @@ int init_worktree_config(struct repository *r)
  	 */
- 	strbuf_addf(&sb, "%s/refs", ref_store->gitdir);
--	safe_create_dir(the_repository, sb.buf, 1);
--	adjust_shared_perm(the_repository, sb.buf);
-+	safe_create_dir(refs->base.repo, sb.buf, 1);
-+	adjust_shared_perm(refs->base.repo, sb.buf);
+ 	if (r->repository_format_worktree_config)
+ 		return 0;
+-	if ((res = repo_config_set_gently(the_repository, "extensions.worktreeConfig", "true")))
++	if ((res = repo_config_set_gently(r, "extensions.worktreeConfig", "true")))
+ 		return error(_("failed to set extensions.worktreeConfig setting"));
  
- 	/*
- 	 * There is no need to create directories for common refs when creating
-@@ -3685,11 +3688,11 @@ static int files_ref_store_create_on_disk(struct ref_store *ref_store,
- 		 */
- 		strbuf_reset(&sb);
- 		files_ref_path(refs, &sb, "refs/heads");
--		safe_create_dir(the_repository, sb.buf, 1);
-+		safe_create_dir(refs->base.repo, sb.buf, 1);
- 
- 		strbuf_reset(&sb);
- 		files_ref_path(refs, &sb, "refs/tags");
--		safe_create_dir(the_repository, sb.buf, 1);
-+		safe_create_dir(refs->base.repo, sb.buf, 1);
- 	}
- 
- 	strbuf_release(&sb);
+ 	common_config_file = xstrfmt("%s/config", r->commondir);
 
 -- 
 2.55.0.313.g8d093f411d.dirty
