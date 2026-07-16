@@ -1,81 +1,81 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8293B43F4AE
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 17:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B4243E079
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 17:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784224090; cv=none; b=awVruN52Vf1WHt1o7yF3V4woEblW6b8CvuQSDLlYDuijydIJZ7vLL4CWOyY64ayMiAhJE0fSd7NRY0hNfDjcF8Rot5d9QPUe2Ykgi9AfF+ddjibYgrVt3PZlDvy0oVAeKOZKUqjFvou/phosoXeTW3I4SwXvvHwpKA3/maDJgZM=
+	t=1784224153; cv=none; b=L4tOwZC6Xn1o8X0C02v3EOwTazc6wptvQRcezHYPdmajBFuVHOiL+zCmYaCJZ1JjoMDpCpemD8/OK6X3GUWW1y2ZN37Aq4s+Uqoe7y2bgGMJXrlY/+ht2C7EWsCf53eSF733qtkalWmy1OeW4SNERmQmBRna2MsQIQBO6azr3iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784224090; c=relaxed/simple;
-	bh=EvAVDHnCtddXNxrAZAOTgebSSHLv8df6W/x/YtUVXQI=;
+	s=arc-20240116; t=1784224153; c=relaxed/simple;
+	bh=XvJk3Di9QZi8yiwlTtojexk8OSt6wPEba+9/sD8LpoY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Sva8QglmdN6EwleT54T6hp53M8dW8SAP7RT1LEekNNYPP/oq4tMT5es0l1wLcqbkjLaudjz5rd/7tbwiJyKryxgr/4I1jrKOmJGIN7q6uzH4rRPNep8whaoegiiVyFAfTxo1qlsc5lHSXNnaiG5l/iluQXzpmq4eWFw9B91ZfpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vmTd16t0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jL+Q5RdE; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=JBaCde2B9kFwSuFN6XzBUKIBuBizVyRWLtqH08CrZLwDDubKeZ7oazd0WuhpjitaMn9vKlgfutTbbJJOWL84k/N9B55XZrnFNvlT6nJayWV74e20/XYVRmL36DlERXxG/r6J2KH+2OH8uZ5TcjtlIiUz/jJw/bs5xowQayk/1XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=APHIOryo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AW/HBlVC; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vmTd16t0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jL+Q5RdE"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 39BD214000E9;
-	Thu, 16 Jul 2026 13:48:07 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 16 Jul 2026 13:48:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="APHIOryo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AW/HBlVC"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 36869140005D;
+	Thu, 16 Jul 2026 13:49:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 16 Jul 2026 13:49:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784224087; x=1784310487; bh=uvNwa8v7Ko
-	K8vWOBquDfz0V+LPX2+T0quVmSxsTFS+I=; b=vmTd16t0kEz/hsejoQEbpxC6p7
-	cuLkBWtq5EOmWZvqpb+6Vj07oCqCvyHvouX27W0yBBakhxtQ9S2ezK+mOu1soGFo
-	mv/NZDRA04GvAjwlqWme0KEQB5mNjcXoRu+I+NxDW8c85RvEAhNTo/EBo6K0z/yo
-	uXLUMWl5HEedsEwlmtylD5Mh1sKmsmZkW947WlEFzehFSC2TqsQhVrB7JAfDXiQO
-	PlVyvLYPzsEDQqpm8GDF9Lvc/et8muz4JiBL63/BYUQ0NBh8yy27yvFEGKitL0u8
-	/2YLIlTgORZ8T1zCz3YJAoRNgE5lxYmmLZ5nujCvUKvQB5/p2mdrjL0zeL8g==
+	:subject:to:to; s=fm1; t=1784224150; x=1784310550; bh=GkjZiGv/JL
+	Oi/j2Sne0ihaYSERoIxGfFINVDnBmm8W8=; b=APHIOryohp6YQlcW236rcs5iUY
+	R18xWVuBIxd2TSSwyHgo3CA8LHcPhNeKKJ9c46TnJz3s7YjrF2vFA1wxmdqt59zM
+	fXED3kRpR0iEqgIPG+hI5seikuPMPFRICog/moS2DyUdUZcGALjPWOav/AjHInxW
+	OK3/Mu7Dl5+csJfni3EFM6ETMvM4m0KBKQiz/etr37zzfZf6TZSsJ4WQOPr9xsQ0
+	qX4VoXA/Q0xxrYeBkWzMEssXCO2lUeSA3dfsOn4UlrJSL7kPXwwnQaFo6MQMw2Gg
+	emCYhAjIKiv+YJM5JjxweCd2bRVOhtWtglstJVLnJQ+26leUzQb6cAU8cdtQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784224087; x=1784310487; bh=uvNwa8v7KoK8vWOBquDfz0V+LPX2+T0quVm
-	SxsTFS+I=; b=jL+Q5RdEUT3R/lQh3p91XdWHCGCWU6B0BQa1rs4OoMJi4SuIfDy
-	/AzqzQcIEC8GJ2tpFNB69kTVZDXTI9Aby2G4gS4+u6NfdF/7FAodrqLCPshLoPIH
-	o17QN3loUjcqB5Ch2KgsRI2Qh4C9QGLgUiENMRZh5Z+tKhjydtneo7jOKkCXB66u
-	FSco8ypqsU+UCfLXVnsW2AIfVpQuNT8IHmMWzffCfjo/Bc5uefeFmj8gwROfCqHX
-	DrncqToG3RaEi9/oalFPf8VXFgzlU3EI/sBmKqFORKiIYHmGw6IuB0rZiJjdSmi/
-	WsL/AFB+HlUa3iwy4Mq0ziT3sJUmGiNSISg==
-X-ME-Sender: <xms:VxlZavkX4zK_B-SKJ9v1k-gxOeh-kk5NB82rt0ysBM_Iyu_aNHbLJQ>
-    <xme:VxlZap2r9RxX_EO6zko4yN1qIqhee4E_nuX2LnVWR8QX3E1uP2iNxVb584fT8ioyK
-    uv9g69B_R0ZXgsW9xxygWd3EBWtpm3Zm0Rvbmx4Fr5OuSG98xo-OQ>
-X-ME-Received: <xmr:VxlZaqotb9X_17DrS4DYMUlMXolQnfP2dMNNw_4WboV5bxrYTGBqwb92iG41I3vrVdnxVtmlzdIESENBt1P_j6wz9QugQcjVHcvlJZk>
-X-ME-Proxy-Cause: dmFkZTENJsG12q7mtBj8npXJljYShm1edvrdtZbhwKCmpZE6Es9tC7fj3pX7eRZW2isPiQ
-    Be8EEJPnAgb6DyV4l1CLkdrhNaLznymiS4tq5Qn0dHrG2UYAA8tmpfSn5mkd3iXoTmrUIE
-    W0ivNzqsGw45ZkAxBOWxzjSiQDdw/KtW0ba4MzjgTGtQB98oNI0al5yQ3A/jIblfuPWUBi
-    xtKfvKaO5Xjd96xGebQtalsCLOULbUPQI22h8gJGdjfIo0fdUvqOGv9Ox6MADKrcRLOn/b
-    ggVOtdI/HTRiElusuqZh/4DD1L72Hy3/5E+rwNp22uItVw+zypaVUn3wPKSgdL/a1NOzOY
-    kCn41X82ntuJY1BHCxvfANoLb847+3ZvV1eaGM3ueEnxtPhGHJWyL8+SN6+y8dZtXa3/Pp
-    kfGoXZbwBRd/1jF6heM0Ykpd3olp7iNOqAiIk8qWk0nsC6k7xVs4nb2I2t0pFNxKVaJhqa
-    DTKf+4uVgvKmN5U4K0+sXYD5SEk/mIK0dCamm5h5w0qNRxMw/SM7ZlxG/Rl5oJ8b6VlpKO
-    GzPvKIvspoNcgrdkp36/XQLgImgPM1FjnUrMtJ0J0nNtPYcX0fnzWF5vZnIMUId7rLCzET
-    9fRulcnoOqKF8gr8bm8RGCZ6oaoBztvNIM54fv6LaktNAjWuTp8KfH8t0bNQ
-X-ME-Proxy: <xmx:VxlZamc7NSHH-mAi3kCXgSUmH8rcRm8QDQJINEsBbwMYlEu1NwMTww>
-    <xmx:VxlZapoKPrnPNydrabEyCtYj_DP8ZRa2z9F1VYMatFYy0JhWBrgrgg>
-    <xmx:VxlZanEtfz0NAQ0TlAhHVFgDp57Zp5PR42wd9bYuBfIyLj7sfFedhw>
-    <xmx:VxlZapvyENyqh_7uSqiRaq4BrFEg5TwolSvioWlXImOugjiQmSBqYA>
-    <xmx:VxlZajHnjezSUTrUwi_eOSnZsZ4rhsSRZ9XUCK_F8EacuDjHuu9Gvw3i>
+	1784224150; x=1784310550; bh=GkjZiGv/JLOi/j2Sne0ihaYSERoIxGfFINV
+	DnBmm8W8=; b=AW/HBlVClpslidxPRgE2gewTvR5guz3RVq/zAuL+uQ5SbO93TjU
+	hUFlTkrUd6rgTv5jaKCwxVBTjhsaeiZ39WH08kwhCLCzu6x05vi2s3oqKCAeP+qI
+	ggNqfmQ+/oHUCReezXU8GsoRKKYJFxGhxJPUJcQen/CDZdwl9IVf8ZvLgnmynODW
+	jO/n+dI6GkGK242MmzugDclmxht+2J07E6mKDyYebuZQrPjmvHFEa8+EcojSP5mj
+	TXmd5pQy2ELQL0Xa82A+YgBfiUvcdpjoDK2Y/Fbp1giw7AmF0KNqquQ3g/k6nyHk
+	GRJ2wKTW0OmLXbCPN0BaUCqTAM6Xwhp1Qkg==
+X-ME-Sender: <xms:lhlZamITZQdyqz6bVZcmHlDWX-6g37CZvdNRQB0VJqxm6aIkE-KAIA>
+    <xme:lhlZallEnYHMqGiQ-4cE1PzPNpuvOOhxCY4LxnJ1YmN9YUFMqp9M9Atx3I4WsO6EV
+    kP2xAJR8q_GUjwMHl-HVO8hfcc56pnzvAk8D0hMo4HCg1EuPWPHZw>
+X-ME-Received: <xmr:lhlZakEY6N-Cg6AjHloa3IKWXRs5S7q_p7oaeShIdccD1WHqbceF9JLzeeSMq87NsC6rE7GQ-x7MFi7Mj8ja2NRIwddAn7LGdji3do8>
+X-ME-Proxy-Cause: dmFkZTElUK4Dv3ifhBYzZt6fRtZ5nsH3u7AhdPQW+8SqQst0crYr7o2jvHxzFQk6lY/OHD
+    UwcZmUYj0Wu50Vz3bLmVPBIyUBVGNunK1Sn+tNVUMPy8eRwuxLqh0UX3ite26a6F/eItsm
+    MlGGfen/761wiXGEinTKZaDdYobarTsrUt8J1ZhAobZbQ+MF+oKGC1tw8FCNPRKDOefk6T
+    YevXwmp3gfCDu+jDVzCcea1Q/FO+oqYbpe5vu6didLkdZASoPpax0WfOqFt8TYfMcOG8zg
+    aezJB7ltnAuMepd13qDImRIBvFQvD8eEPMZVewpc+X0loaNKFVzWHJfcB2R56zZOayqHeb
+    u0+FjAfJ7jxYXFIBk8qfiWKIkBTU79TKaNg2WhpREBmyqobSC2d40YhEl9o/FWi/iUxL0g
+    MEd4ZlAHB/lUwlL1tekw0rUU+niSMeuGapunBdPMARswDx6csaXy38ys+CuoT3CaXRrCWj
+    bEtDIeTFX5rlsHCQh1H9Mith++5KJMHJysBmWfF1W7TOUciocgYucoajaQDpqO/WKlGpH5
+    wAqnPUtqsroMHfCQLtPOhe8l6/S2qi+1Axh65391FZg0gBWeYfnPxxmk+GGnc/Q6yfEv4F
+    ZhqECx0+/K3i3+Y08u8VwRE2aUCgcpxVD88xGPMYsL3Qdpnv5Q2nKKcHrOgQ
+X-ME-Proxy: <xmx:lhlZalE9U35sXmPmyiNJZZ_BmlY7dfhaQ0ktsmDcalxM1FCkUTrFZA>
+    <xmx:lhlZahNdlcFyFDhym-vrRlbXI4PVfwsJoMVCxnMK-DKT4sytE3FiDw>
+    <xmx:lhlZakE0TfBl2HXvdRLdveKf1ZeRgbfaF0r39OOqTPrermTvo9D8lQ>
+    <xmx:lhlZaoOvkKVXTCqH5fXPWrIPHmIk1t5YxGHxMLaAv8b6mH6_WhoCSQ>
+    <xmx:lhlZasz14ySDT1urzC4vc7-Y1ncqScLCHehCwXae32YjVhnBEm1hQ00X>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 13:48:06 -0400 (EDT)
+ 16 Jul 2026 13:49:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Johannes Sixt <j6t@kdbg.org>
-Cc: Git Mailing List <git@vger.kernel.org>,
-    Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [GIT PULL] gitk: Bulgarian+Spanish translations, silent make -s
-In-Reply-To: <fdef432d-0b84-4b58-9915-83eb4d7dae87@kdbg.org> (Johannes Sixt's
-	message of "Thu, 16 Jul 2026 10:59:30 +0200")
-References: <fdef432d-0b84-4b58-9915-83eb4d7dae87@kdbg.org>
-Date: Thu, 16 Jul 2026 10:48:05 -0700
-Message-ID: <xmqqcxwmhlm2.fsf@gitster.g>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: [GIT PULL] git-gui: larger commit msg field, Bulgarian
+ translation, silent make -s
+In-Reply-To: <c177a717-28c3-41f7-95d7-45fec5b304bb@kdbg.org> (Johannes Sixt's
+	message of "Thu, 16 Jul 2026 11:13:30 +0200")
+References: <c177a717-28c3-41f7-95d7-45fec5b304bb@kdbg.org>
+Date: Thu, 16 Jul 2026 10:49:08 -0700
+Message-ID: <xmqq8q7ahlkb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,36 +87,36 @@ Content-Type: text/plain
 
 Johannes Sixt <j6t@kdbg.org> writes:
 
-> The following changes since commit bad83ada0ebf9e293d570e6e7ca4f1cd7877f482:
+> The following changes since commit 1b2c2a2edbaa1638becef4c3755b3e0633b9c304:
 >
->   Merge branch 'horizontal-scroll' of github.com:ramcdona/gitk (2026-06-12 11:30:22 +0200)
+>   Merge branch 'ml/repo-discovery' (2026-06-12 11:05:28 +0200)
 >
 > are available in the Git repository at:
 >
->   https://github.com/j6t/gitk.git master
+>   https://github.com/j6t/git-gui.git master
 >
-> for you to fetch changes up to f1de86371cb85dd09d55070d139e5fcdc595f026:
+> for you to fetch changes up to 5dcb97869546d600a114ef422a135e2e909c923c:
 >
->   Merge branch 'spanish_pr_bis' of github.com:basuradeluis/gitkbis (2026-07-16 10:53:01 +0200)
+>   Merge branch 'master' of github.com:alshopov/git-gui (2026-07-16 11:05:03 +0200)
 
-Pulled, thanks.
+Thanks, pulled.
 
 >
 > ----------------------------------------------------------------
-> Alexander Shopov (1):
->       gitk i18n: Update Bulgarian translation (329t)
+> Alexander Shopov (2):
+>       git-gui i18n: Update Bulgarian translation (562t)
+>       git-gui: allow larger width for the commit message field
 >
 > Harald Nordgren (1):
->       gitk: make "make -s" silent
+>       git-gui: drop msgfmt --statistics output
 >
-> Johannes Sixt (2):
->       Merge branch 'master' of github.com:alshopov/gitk
->       Merge branch 'spanish_pr_bis' of github.com:basuradeluis/gitkbis
+> Johannes Sixt (4):
+>       Merge branch 'master' of github.com:alshopov/git-gui
+>       git-gui: reduce complexity of the quiet msgfmt rule
+>       Merge branch 'hn/silence-make-s'
+>       Merge branch 'master' of github.com:alshopov/git-gui
 >
-> basuradeluis (1):
->       gitk: spanish translations
->
->  Makefile |   6 +-
->  po/bg.po |  45 ++++--
->  po/es.po | 488 +++++++++++++++++++++++++++++++++++++--------------------------
->  3 files changed, 321 insertions(+), 218 deletions(-)
+>  Makefile       |  5 ++---
+>  lib/option.tcl |  2 +-
+>  po/bg.po       | 37 ++++++++++++++++++++++++++-----------
+>  3 files changed, 29 insertions(+), 15 deletions(-)
