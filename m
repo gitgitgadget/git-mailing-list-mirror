@@ -1,69 +1,69 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DF1386C2C
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 05:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1BF38886F
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 05:36:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784180165; cv=none; b=qShxXbFjpnZAL3xcRs/dDWnkWSjm4FmMuL/mKaOR7srROWjpyaiuuk3qbYLdMy+YrEwBQwUVP5RFlErk7MKKmxTYwdJCKjnnsZeX1huEj0zJdgzH14ccXc/dLiQuZXLPlNQ5GVj6IG3IutYddIq3eS6UpD/AyVVaUBIm4Joo5Gg=
+	t=1784180167; cv=none; b=dAV/9v85gmh2ARO9zF6ALbfWD1usGv01YCZi3CBOljEuGqBj2kjW0+0lq/n/U1IYxlkjD5xmp9BhyqlQ9bXG1tWn9pmqm17nFVAjKKRKThrYycXRYmgY0K1gYUXsmPSNEnE0fh9pEQXqOQaNlkrbjUi31pPNZh9YE2JEUN/jed8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784180165; c=relaxed/simple;
-	bh=Wp565g0K3EpTPpJgj6hd5W2+WZMKJVVHJcCVIOCiQno=;
+	s=arc-20240116; t=1784180167; c=relaxed/simple;
+	bh=wlTXlqdWWHdxTDxerfw35wA//DUa3HH+HbGl338nSBg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=CBK0xTHN7p63x7At14ECA4pYvQwlS2aCaANH2ZTy2lgHtaxWnagh0TaNdW0BI7ws7g4z+3HFWsyZWSObCgOUc+JFjb5GUJwn0t39CHyaZIG9YTEhlZD1n9ya0IKUA4P1MHVOz5ryx+FNt0Kom6FB8aJEioBemN6konAVm15Chlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=emFgeBNi; arc=none smtp.client-ip=209.85.222.174
+	 MIME-Version:To:Cc; b=iT4fdQx8yjHcrZh+8u6ZM7qZeVYbSEsKrhAn3Z7ye2p2a8jeWSWa3SGhxmQTac1BiCrKyC8ORmpJ1z9s9YPICqS4A3vDT0Chak0+JR3K8mf38REmQ51DVTueTnotDTwxLo1LJcYHcWaGmV+x4vnVATJ/CN8o7Dukgt1sqqfOZ5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SStyiYih; arc=none smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="emFgeBNi"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-92edb12cdf2so185224385a.3
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 22:36:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SStyiYih"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-9305a2121a1so266037085a.2
+        for <git@vger.kernel.org>; Wed, 15 Jul 2026 22:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784180163; x=1784784963; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784180164; x=1784784964; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=usIVp1Fv6LSY793WCYZnUqWb6edzyCO1wZ0vD0cVZ6I=;
-        b=emFgeBNihy8RRm26vsNBz3LSSfXtVYZTb24Me8a2kRLRzoNH+xA0bk7PUVFEYv3oOC
-         9UQrT+OvhzhNnwA9MmB4g5de4jn8PL8GLz6MICKTzKgsdsaU0YhM46tRpq+zWH7lUn8J
-         ihrl0gj/uUi1yPANj7L64kEOgIViF9bpgt65FEsHq88m+GOV8h1yuD76TnwdTrENXraS
-         h9O4wTKkGqUByhxiZ3ng9wYpB3XXqYxo8ckdPd1v1XLtIc5tlXV10yIJ5QJ3tAfkLccA
-         fErhFdVpcpos+UK9Ez4+TNzGn07D3L/nfQrq+8wl6mRGEtFGiEUyQ7S/edwjcna1Gz00
-         gFrg==
+        bh=C53GgDGJlkHtno0UpCIlRfx22LmfK0j+WIrZ/7IXECA=;
+        b=SStyiYih3sb9TMqZAj9tR9e9MMQsshvVU9bipOI+7vbmWNEYidoI4df8kdGdJX7oGE
+         uh7+buMYhkvRIHqCAxx2WZ5bBEBVnpyUELmXJeVLFgcMo2YfpyzHEuaUB5vWRYoZfIQ0
+         5x2WhKUMxsgHLVAk0ulffUV92t/udGxAc6HS1o4EnCVl9CheLZyR8IxVhBbtfFAtq39B
+         K9cu1Cc2HMUhenUH7qozZ3CY2fhEc5eDzDFMjOTwDp5AUGuRAuZbLYYoSJriZVCfLzHg
+         vYq6ko160n/QcWovhHJXLK0iOqktGZ0JyPz1o4PMRSyK72NLwww+qvjq93Zmymv6EHhq
+         JHJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784180163; x=1784784963;
+        d=1e100.net; s=20251104; t=1784180164; x=1784784964;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=usIVp1Fv6LSY793WCYZnUqWb6edzyCO1wZ0vD0cVZ6I=;
-        b=SXO58xHwXrFzPn9BmY19TdvY6Fj95m3ZOKOYveKTTkheS1zv7/KwFC3zJu0mkzm1OX
-         NShnFwLSH8z7fe90bDDooFNEHsT9FoptpRYpDeGQobkViEKRXx+bYpiMJ57lsMWbQvS0
-         yeRjDqQXCfNbm+yXMomeuZQhoBE0i5JVyaqMAa4JYWS4RalvHHqW/zHyPgb5pVNlUzei
-         GXVgQ0v6gRmvEfyl4XenozamFPeiU8pCkhA5LbrhnDFvWYr0ptjG093YxIuPLDDR95TY
-         65zS9VyTc296LMW+PYChq7t7TNL0y1INdlNUUrm6H6XBkiuOPKv179UE128yjI/y6oG5
-         R7KQ==
-X-Gm-Message-State: AOJu0Yz86Hrm5g0DRkkw8krxZpdduqbJ/WfC+JZBK8GAD+h4gkNvNspt
-	u0kfzzsk31LbdVebt3k34V21GAI3lobTMMlxL30R9X7SmC1OlWBJ4HZ2xUptIi7b
-X-Gm-Gg: AfdE7cnjUhQfhQq8c7+zuhO1SO5vn49mdP3kPWKfxBNyNS12Og0kr1rTI0qBKjjmq2e
-	en83LACeJl8P1Jj3Tii30s28uU4RZ2JBJrqaMFMYH1j4N92l5bipetMXmcvtYS+NsX45CGDvjVZ
-	EERwiy4lEcfeh+HdfAdcGiXfmIMwbAMaKfQb+UG7iqtHhU4NzIggta8e9xaKvdBKVMo/c1Pchom
-	Un2FFSzTIomhMDPjX2T1EgyuYcyaUlgrxUH3FLrhRJhlKnFpaU9A3Uc6VEFrXDXwvSrVri0jYQ2
-	i5RUWTpzkXlPGZkI2YZ+bYzZRZ5jVkl0SsHx/2JiN4FmHL7+VwfrcLXZK3EGO1c1EDIBIv8edlq
-	RtzAvO13nsMfArWrVqXvrrSxCTbcfcMQFUdemo8RnbT6HGA4HZ0ghYxiJkztC7cuDWVJeH6RJUR
-	ZdKqXbXnuXEzYf
-X-Received: by 2002:a05:620a:2889:b0:915:f96b:8f5a with SMTP id af79cd13be357-92ef2c3faf8mr1866027585a.36.1784180163261;
-        Wed, 15 Jul 2026 22:36:03 -0700 (PDT)
+        bh=C53GgDGJlkHtno0UpCIlRfx22LmfK0j+WIrZ/7IXECA=;
+        b=nZwIAEjdEK4kmKUjdj5pvb00AFlpRjTYBW7aXAiY3J8Wl1AvuEKxKDSVXEf0ozbboy
+         skrOLTaq3RwnsSvZ1l257yw1tt9YtRVPu61i5EYxX5VkGmm2wKgyG3Sn6SzwwfjBESS4
+         01WsI+TNNbONfkdjw+gaV2XliH/8fB6n6Yx2wyglPPuAB9wyjrL7PGbTAXcFediy7CY4
+         FuKue4Yy9nsMl9UhF3U2Qo9aR/3MYSW2BA/f+75dHeB5IkYzpA7s1EQflicTXKJxn6PR
+         PetA8EBnnHRRz9UGrY4kKUChFcxrpUnqMgXJT5tJdb2uS7dioTZXh3fDDJLC46Dr1uyq
+         lTdw==
+X-Gm-Message-State: AOJu0YxnUJ6Y6RrM/mawK2rK8pONxD76bFc+2EV9stblMzGgtRLNQZAg
+	LyeIcTtSyYuPl1rFYcx1p+A3ozxhtrL6uHwbiiN6cm2NP94uWASTHloQRr/ICpKz
+X-Gm-Gg: AfdE7cnEmyLCnCx8n2RCPR+GC4+ayb7LlGJPsrf8QK4EYb2FHjylnIG6VIJrcT3J/bE
+	47Os/zVM4vixUsZBflWYOnL+MWBum4vCmQx/SDmoQr8D2YNY/Gt6V54IoxVJi0Czo5uh4WpnvJU
+	GAcYh9m3/zsw8vpyr+6kL1Lo+CCgmWDvEi0eocJyx5X9QBnKLIUhoR4lsW6vnXhQP0KqriYR7Q5
+	AUEZlqkWUxlKY4eYFjRCHERxExRpMLj6SyH6v9iXvazxLLC8YeFNKwCNboWDvon5TCvn/ReQ4uO
+	K1EbQiMrHNCWbTN/7DePL9vtvtkNZqjkB+VTo4vXRNi0tLESJuwbMPHnQqy/YYMfj76rPn/1Xcv
+	nnyHqPfDEGb4tnnu/RTPYHCxnx1e3+bq/OE73Vvs3wV5v/zloww25cuqO+Jrfme8f5INaccNs7l
+	lJ1A==
+X-Received: by 2002:a05:620a:4415:b0:915:efa6:d718 with SMTP id af79cd13be357-93096375ae0mr652377785a.47.1784180164308;
+        Wed, 15 Jul 2026 22:36:04 -0700 (PDT)
 Received: from [127.0.0.1] ([20.51.199.2])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92ee5d61facsm1912276185a.42.2026.07.15.22.36.02
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd87cacb8sm214911496d6.49.2026.07.15.22.36.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 22:36:02 -0700 (PDT)
-Message-Id: <a7670baafc01a8a016486f634f59a3193560e2bb.1784180159.git.gitgitgadget@gmail.com>
+        Wed, 15 Jul 2026 22:36:03 -0700 (PDT)
+Message-Id: <a9194b1d00b260a7a7852eccec54c872618b5fdf.1784180159.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2335.git.git.1784180159.gitgitgadget@gmail.com>
 References: <pull.2335.git.git.1784180159.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 16 Jul 2026 05:35:58 +0000
-Subject: [PATCH 2/3] bisect: let bisect_reset() optionally check out quietly
+Date: Thu, 16 Jul 2026 05:35:59 +0000
+Subject: [PATCH 3/3] bisect: add --auto-reset to leave when done
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,61 +79,200 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Add a "quiet" parameter to bisect_reset() that passes "--quiet" to the
-checkout restoring the original HEAD, suppressing its progress and
-branch-status output.
+When a bisection finished, "git bisect" reported the first bad commit
+but left the session active until "git bisect reset" was run by hand.
 
-No caller sets the flag yet, so behavior is unchanged.
+Add an "--auto-reset" option, accepted by both "git bisect start" and
+"git bisect run", that resets as soon as the first bad commit is found,
+returning to the commit checked out before "git bisect start". The flag
+is persisted in a BISECT_AUTO_RESET state file and the restoring
+checkout is done quietly.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/bisect.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ Documentation/git-bisect.adoc | 12 ++++++++++--
+ bisect.c                      |  2 ++
+ builtin/bisect.c              | 19 +++++++++++++++++--
+ t/t6030-bisect-porcelain.sh   | 34 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 63 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-bisect.adoc b/Documentation/git-bisect.adoc
+index d2115b2990..1b03dbba7a 100644
+--- a/Documentation/git-bisect.adoc
++++ b/Documentation/git-bisect.adoc
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [synopsis]
+ git bisect start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]
+-		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
++		 [--no-checkout] [--first-parent] [--auto-reset] [<bad> [<good>...]] [--] [<pathspec>...]
+ git bisect (bad|new|<term-new>) [<rev>]
+ git bisect (good|old|<term-old>) [<rev>...]
+ git bisect terms [--term-(good|old) | --term-(bad|new)]
+@@ -20,7 +20,7 @@ git bisect reset [<commit>]
+ git bisect (visualize|view)
+ git bisect replay <logfile>
+ git bisect log
+-git bisect run <cmd> [<arg>...]
++git bisect run [--auto-reset] <cmd> [<arg>...]
+ git bisect help
+ 
+ DESCRIPTION
+@@ -385,6 +385,14 @@ ignored.
+ This option is particularly useful in avoiding false positives when a merged
+ branch contained broken or non-buildable commits, but the merge itself was OK.
+ 
++`--auto-reset`::
++	Once the first bad commit is found, clean up the bisection state and
++	return to the commit that was checked out before `git bisect start`,
++	as if `git bisect reset` had been run. The first bad commit is still
++	reported before resetting.
+++
++This option may be given to `git bisect start` or to `git bisect run`.
++
+ EXAMPLES
+ --------
+ 
+diff --git a/bisect.c b/bisect.c
+index 94c7028d2a..a34309dd35 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -488,6 +488,7 @@ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
++static GIT_PATH_FUNC(git_path_bisect_auto_reset, "BISECT_AUTO_RESET")
+ 
+ static void read_bisect_paths(struct strvec *array)
+ {
+@@ -1211,6 +1212,7 @@ int bisect_clean_state(void)
+ 	unlink_or_warn(git_path_bisect_run());
+ 	unlink_or_warn(git_path_bisect_terms());
+ 	unlink_or_warn(git_path_bisect_first_parent());
++	unlink_or_warn(git_path_bisect_auto_reset());
+ 	/*
+ 	 * Cleanup BISECT_START last to support the --no-checkout option
+ 	 * introduced in the commit 4796e823a.
 diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 69ea14b1b6..27d30b549e 100644
+index 27d30b549e..b80eccb635 100644
 --- a/builtin/bisect.c
 +++ b/builtin/bisect.c
-@@ -230,7 +230,7 @@ static int write_terms(const char *bad, const char *good)
- 	return res;
- }
+@@ -24,11 +24,12 @@ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
++static GIT_PATH_FUNC(git_path_bisect_auto_reset, "BISECT_AUTO_RESET")
+ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
  
--static int bisect_reset(const char *commit)
-+static int bisect_reset(const char *commit, int quiet)
+ #define BUILTIN_GIT_BISECT_START_USAGE \
+ 	N_("git bisect start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]\n" \
+-	   "                 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]")
++	   "                 [--no-checkout] [--first-parent] [--auto-reset] [<bad> [<good>...]] [--] [<pathspec>...]")
+ #define BUILTIN_GIT_BISECT_BAD_USAGE \
+ 	N_("git bisect (bad|new|<term-new>) [<rev>]")
+ #define BUILTIN_GIT_BISECT_GOOD_USAGE \
+@@ -48,7 +49,7 @@ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+ #define BUILTIN_GIT_BISECT_LOG_USAGE \
+ 	"git bisect log"
+ #define BUILTIN_GIT_BISECT_RUN_USAGE \
+-	N_("git bisect run <cmd> [<arg>...]")
++	N_("git bisect run [--auto-reset] <cmd> [<arg>...]")
+ #define BUILTIN_GIT_BISECT_HELP_USAGE \
+ 	"git bisect help"
+ 
+@@ -688,6 +689,8 @@ static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
+ 
+ 	if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+ 		res = bisect_successful(terms);
++		if (!res && !is_empty_or_missing_file(git_path_bisect_auto_reset()))
++			res = bisect_reset(NULL, 1);
+ 		return res ? res : BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
+ 	} else if (res == BISECT_ONLY_SKIPPED_LEFT) {
+ 		res = bisect_skipped_commits(terms);
+@@ -711,6 +714,7 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
  {
- 	struct strbuf branch = STRBUF_INIT;
+ 	int no_checkout = 0;
+ 	int first_parent_only = 0;
++	int auto_reset = 0;
+ 	int i, has_double_dash = 0, must_write_terms = 0, bad_seen = 0;
+ 	int flags, pathspec_pos;
+ 	enum bisect_error res = BISECT_OK;
+@@ -743,6 +747,8 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+ 			no_checkout = 1;
+ 		} else if (!strcmp(arg, "--first-parent")) {
+ 			first_parent_only = 1;
++		} else if (!strcmp(arg, "--auto-reset")) {
++			auto_reset = 1;
+ 		} else if (!strcmp(arg, "--term-good") ||
+ 			 !strcmp(arg, "--term-old")) {
+ 			i++;
+@@ -857,6 +863,9 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+ 	if (first_parent_only)
+ 		write_file(git_path_bisect_first_parent(), "\n");
  
-@@ -251,8 +251,10 @@ static int bisect_reset(const char *commit)
- 		struct child_process cmd = CHILD_PROCESS_INIT;
- 
- 		cmd.git_cmd = 1;
--		strvec_pushl(&cmd.args, "checkout", "--ignore-other-worktrees",
--				branch.buf, "--", NULL);
-+		strvec_pushl(&cmd.args, "checkout", "--ignore-other-worktrees", NULL);
-+		if (quiet)
-+			strvec_push(&cmd.args, "--quiet");
-+		strvec_pushl(&cmd.args, branch.buf, "--", NULL);
- 		if (run_command(&cmd)) {
- 			error(_("could not check out original"
- 				" HEAD '%s'. Try 'git bisect"
-@@ -1085,7 +1087,7 @@ static enum bisect_error bisect_replay(struct bisect_terms *terms, const char *f
- 	if (is_empty_or_missing_file(filename))
- 		return error(_("cannot read file '%s' for replaying"), filename);
- 
--	if (bisect_reset(NULL))
-+	if (bisect_reset(NULL, 0))
++	if (auto_reset)
++		write_file(git_path_bisect_auto_reset(), "\n");
++
+ 	if (no_checkout) {
+ 		if (repo_get_oid(the_repository, start_head.buf, &oid) < 0) {
+ 			res = error(_("invalid ref: '%s'"), start_head.buf);
+@@ -1242,6 +1251,12 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
+ 	if (bisect_next_check(terms, NULL))
  		return BISECT_FAILED;
  
- 	fp = fopen(filename, "r");
-@@ -1334,7 +1336,7 @@ static int cmd_bisect__reset(int argc, const char **argv, const char *prefix UNU
- 	if (argc > 1)
- 		return error(_("'%s' requires either no argument or a commit"),
- 			     "git bisect reset");
--	return bisect_reset(argc ? argv[0] : NULL);
-+	return bisect_reset(argc ? argv[0] : NULL, 0);
- }
++	if (argc && !strcmp(argv[0], "--auto-reset")) {
++		write_file(git_path_bisect_auto_reset(), "\n");
++		argc--;
++		argv++;
++	}
++
+ 	if (!argc) {
+ 		error(_("bisect run failed: no command provided."));
+ 		return BISECT_FAILED;
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 081116220a..5389ba388c 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -453,6 +453,40 @@ test_expect_success '"git bisect run" simple case' '
+ 	git bisect reset
+ '
  
- static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNUSED,
++test_expect_success '"git bisect start --auto-reset" leaves the bisection' '
++	test_when_finished "git bisect reset" &&
++	git bisect start --auto-reset $HASH4 $HASH2 &&
++	git bisect bad &&
++	test_path_is_missing "$(git rev-parse --git-path BISECT_START)"
++'
++
++test_expect_success '"git bisect run --auto-reset" leaves the bisection' '
++	test_when_finished "git bisect reset" &&
++	write_script test_script.sh <<-\EOF &&
++	! grep Another hello >/dev/null
++	EOF
++	git bisect start $HASH4 $HASH2 &&
++	git bisect run --auto-reset ./test_script.sh >my_bisect_log.txt &&
++	grep "$HASH3 is the first .bad. commit" my_bisect_log.txt &&
++	test_path_is_missing "$(git rev-parse --git-path BISECT_START)"
++'
++
++test_expect_success 'without --auto-reset the bisection state is kept' '
++	test_when_finished "git bisect reset" &&
++	git bisect start $HASH4 $HASH2 &&
++	git bisect bad &&
++	test_path_is_file "$(git rev-parse --git-path BISECT_START)"
++'
++
++test_expect_success '--auto-reset does not leak into a later bisection' '
++	test_when_finished "git bisect reset" &&
++	git bisect start --auto-reset $HASH4 $HASH2 &&
++	git bisect bad &&
++	git bisect start $HASH4 $HASH2 &&
++	git bisect bad &&
++	test_path_is_file "$(git rev-parse --git-path BISECT_START)"
++'
++
+ # We want to automatically find the commit that
+ # added "Ciao" into hello.
+ test_expect_success '"git bisect run" with more complex "git bisect start"' '
 -- 
 gitgitgadget
-
