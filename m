@@ -1,251 +1,151 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5B742376D
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 13:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1740D42376D
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 13:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784208595; cv=none; b=qkEXKqk+fF4zN4efDaebbJGLOgEnSJDFR1TpHjaCfHCq8FJlvB3KrgyEhAlWobtvpvXP3DT449U4JB+of/QwkFTePyJYJfag7LYmeqPlGjhFufVAtQadkf6Y7AsqAUiXSCn5eWyG7YIswJA5odW7REU5URyUDlNFD1QAP0bnxRE=
+	t=1784209311; cv=none; b=V5ZJzWsGq2HV+Xw2sxcoUJXB2Xk5r/ahkBqDVfDlcow34nLkrHCkz4JEYnKfDo/yjpC1q6tIi94HXTQWg/CtBWAciXxeDTn6Cic3FI4s4lny81BEL//UZRDgvR1oRYBvqCbnQiQ5NarKUJ4QC74+RdwOUtjL+yqEM5FZXzWKPZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784208595; c=relaxed/simple;
-	bh=r8xRyergcMPpd28sawiXLwl6QuEiHJOnDYGkN24GA7M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVxOsg13ORMf+4bvwf45qXTzYSve4auXiD+mS+giCV765q4CnfLvBHXxND2p6NfHrrLWyT/bqW5WmYmff/hdccYL0c4ygF5uUdRTAcfjApyOsf6/qeCN82Er2VUNzANLkiRs0sxcWq270JLDQrzZFUhSsE6+/sf70DNXQBDOcCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Um5f4pih; arc=none smtp.client-ip=209.85.216.41
+	s=arc-20240116; t=1784209311; c=relaxed/simple;
+	bh=z2kIVYHknYSUVftDsjxSRq4hOzLW0zf9WSLo70CBpFM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=VyT4y2DWnWKqnrfG4Q3jkGEcB80hTJcryzVj+jcciQqWh4SJOR+lYVwcs8UhayBoWxcbwnqSll0PTWiZfG5fieMznXvHsJWipKFSYspZlqQrjJYVZDBH/K8DIVszbDMg96SzliBPQ4hFJdcg0hcVFWJvULEc//LHeY9RuY64vU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PV7aTOTJ; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Um5f4pih"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38dc69c74b8so4721757a91.0
-        for <git@vger.kernel.org>; Thu, 16 Jul 2026 06:29:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PV7aTOTJ"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c15ba5b151dso439053166b.3
+        for <git@vger.kernel.org>; Thu, 16 Jul 2026 06:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784208593; x=1784813393; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FccEfatxn6XHWSzeAE2GEWCe8Dy9NDoCF9K/8q4XAVM=;
-        b=Um5f4pihTz4AGulXw1rf9ZKlnsRovbf52l518vu41FIQ/gRAh5sC9pNZWPxe5P4K2U
-         95xxZybu+BQsmp9FLMl1SZ/aQQ5nGT7q3P+1PTwvIadTBPfXgU3OMdzip5y5bkqzErCr
-         QwcFpsdu/WRgkLbnIvDIgKMJdM4cmkcMU6Tc8kt9C+ijrrk0kxg1Dcs8ihf8883gnMkq
-         vJ5tVMdMXkFDyGUHpBba1oNLjPw32aQbyQseG0rGsT2A28qhN/O22Ke8qEciYWgiGG81
-         Lqs1XhZi+7iEWllKB1R8uf8vZttu1sMTkk8bTvelN00ueDlFrG/YusNe2t71PWRW5bvh
-         A2rQ==
+        d=gmail.com; s=20251104; t=1784209308; x=1784814108; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=kiBN/XdT9CDNGLOz1Q8GvyWzKMIY3GNA7tFFs76Xvow=;
+        b=PV7aTOTJ2xnHe9MQq1EOZMbAHErFRTcvgGgnSsa0sp1rT0Ppw8Y9Uww/vm92u3CLmv
+         LWERCPbm7dcxEQSVV2Es9bKlxOysuQmePBNC+EAyzJLpQBGMonZtTT6/7mv9zOOYv3nI
+         /qdSHNLyB0GIatmBlc2+i/nqnCCbj5AAdBusfSvsw1wA7IBy7GWfveB1mzNJ965b9ip4
+         zf/4tDURPA2+Nld/OndqUPQ8//sQh0ctQR2F9HOEYNl+J04BNuCRfgrdk5y/7VHojvA3
+         lOv8JagnVYZc53+B4nb7JTNXdvvmx92iuN+wg6Fsam2huYjKXq8Yyf7SjCNh5aYXWjBW
+         us+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784208593; x=1784813393;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FccEfatxn6XHWSzeAE2GEWCe8Dy9NDoCF9K/8q4XAVM=;
-        b=D38DKIBDRPi5vuzrpCoxGTbuqfh4H17AOKD43vaCBPpamk4rDSAKPWaJpkp3FodYRc
-         7e7bq6gQvhoR/mhqzTQzkQMgHTt9WZriX2w9ws0RAHNk0n/cSDaHL03u/npNdZKLCtHZ
-         13nwdKoQuBjhX2hWHk9ZnrRSvMK97Yy/LYqMYvJYBL5Hy9KrfijBaRobUKyy7LUwDVj9
-         oopQmNmroTM8I/jGRlDeZy282TVDcvaREMA0cjXuBC78M5nSbMO/k7cEv2vnchuShJd7
-         bE2lFEY3UBh0IjN1jMWy/lMhn/TuGPLRbunzDD19VgzjFeYwu45R4D9FnwHdkXnrAdAf
-         m29A==
-X-Gm-Message-State: AOJu0YxVHdKNwiv56noIWmF1FpB9ftVDH5vDI6b+tNyzRR9jcO1t7OBv
-	FwtpNlrNt94fsSvFR9Ecs0Ga9aRsqvKGC7f6ch8pPQfPgQpT3U7ECv4eIiCr5niT
-X-Gm-Gg: AfdE7cmN91chCbqj32pb7RR5HGFSfsxSnEGGDrUgPir59XQkcIUZY88kOTeN8G+wWN3
-	liobV6FloLlbKts1s6lA+JDXW7mAtmfJnYa4s/KG+4awjL6LgdTsC24KxIR0EmLxARhJF8uVIjh
-	f0xj8CQPFBUDC22KGKd/HDVJLtQIU94n7DgcqpXONcA4UHoyH/iKgQM3UluPXLeKfzG42Lp0VUN
-	dT4TDW+0brT0CzbZm9rM1FMutdb5kst2jocl7pFpqu0bCkJllqIrLUMzp4Y67SUo/rUkT6tEEq+
-	nPqwPEYhGjNYj//1IODJ4Z26oTrbMjWfPYu76j60OjVOmbJEJqYWaMzJF+ji+4Qq8Jeb09/wZqV
-	p6r2CtAt+Jw94ATgynQkfPjJL19UoQyIe4waaUOmZdi7dbEC/iR3S5Cx+5TNBYv0dWXRjRCU8eI
-	JMTinAs4+QdVayen+iZooOy7Z2ZD+07p9i/JLVYF0Jm2ap+HFJ36/5r+CNQBvyUnNe6+12+Eo3z
-	NImwy1AGMRaYpiBL4HEdbLKsTV5ZYM9g96Gg1B1fnl5
-X-Received: by 2002:a17:90b:3c91:b0:37f:9ce0:af36 with SMTP id 98e67ed59e1d1-38e2a0e6a24mr6952857a91.33.1784208593241;
-        Thu, 16 Jul 2026 06:29:53 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:88fb:4543:3010:936c:4da8:7aa1])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e4fcd31sm13291188eec.4.2026.07.16.06.29.49
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 16 Jul 2026 06:29:52 -0700 (PDT)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	me@ttaylorr.com,
-	ps@pks.im,
-	johannes.schindelin@gmx.de,
-	l.s.r@web.de,
-	r.siddharth.shrimali@gmail.com
-Subject: [RFC PATCH 7/7] repack-promisor: record dropped objects in a drop log
-Date: Thu, 16 Jul 2026 18:58:48 +0530
-Message-ID: <20260716132848.95982-8-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
-References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
+        d=1e100.net; s=20251104; t=1784209308; x=1784814108;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=kiBN/XdT9CDNGLOz1Q8GvyWzKMIY3GNA7tFFs76Xvow=;
+        b=AXEIOQwUmmk1wWhQXt6SoYN0cAYhHulg2qC/Po04v2v5LADHx7ESXNtjylVdp9kLYW
+         N5rYAHB2x4e9+1vE0NqnKRsogv5tUeizcMR2tH76MI9HToektk0DuVcslOG8zcekHrn7
+         mJK7oX2twGVQNd+cSnk7hUE7QfMeAlyRRgEpcnycrkg00SFq+fMUQr5mDUwdnf77vtNV
+         Z6jYdIus8iuuJ6eliqnxcNWLc/FIvRUzGmUf8gTKanvkBtgphsrF4wJAKrOsN76/sLY4
+         md6YNVva8zsSQ+hsmBQ7a8GGaASGfKIUQWY41Gziakk/KH5wNxhlNkAGLyDd5HXKcZ9K
+         OJXw==
+X-Forwarded-Encrypted: i=1; AHgh+Rq/b6cyMNioLLC1oQcCMrkqXx3oktzA4Sfo4W6O1s4bJONmCgcOdT08RXRvSphW72CjLUo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWXQ4MiU6gqGmpEkKUoktTovvI50zU/VzMY7T1T/R43XZgLul4
+	P4nHmmp7WPvnFB1b8U9+eXLj0C0nyq6dFvKnimXRs57dY1xAZl/sRoIENGAsfw==
+X-Gm-Gg: AfdE7claPN0KwsWIikLBY1UbWhG+ux5iXmVmXdQ7sj8A7zx22H3c9CM6Wr4T+LNjMTb
+	OykZF7zRAo+BTOwKimBjiHxkLK6ig7j96738jTzmb1GhY8MNAPYZ7CW9Q14VLtFrKGQUimOFQ/0
+	/HVgXlEB6In8F3dc1AS00oxGZtXSU4jJQZGP4fjFkZJ2mP5RCxSE5VPR9a6xkLa5BgYfSpOLywL
+	wfv8r0dRiXzAq7B70EH8cyBych0ojibT/8DtpGBrlAP4YPoUsi5qFjAtBGx9B8CGrVzYFPp7G5s
+	ILjvbsBlQy9NsE6a4phk8pHpE+ykl5Tmw3kS5gQcVkWXMsuo9k07HlG4q8+v8LYkPOxUZpf9AKV
+	UPp8tKSkpRT4oiegY8Z3gWI0RYuZ0IuObuguWbqQnbArM+qsVbWgEBYsMFmPNuMpJ2/E1r6CK1+
+	goqeDwqa/KWd6eFpkHIQlHcvo48vq3+nnpQ/Ip0fm2Pc7ltKgU+7Et0Ksv
+X-Received: by 2002:a17:906:6847:b0:bf1:118b:d5e2 with SMTP id a640c23a62f3a-c161f3df364mr821863166b.46.1784209307870;
+        Thu, 16 Jul 2026 06:41:47 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c16874a27f7sm209646566b.57.2026.07.16.06.41.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Jul 2026 06:41:47 -0700 (PDT)
+Message-ID: <27d4d72f-1ab5-4dc3-8cf6-1a9b6883a631@gmail.com>
+Date: Thu, 16 Jul 2026 14:41:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] copy: drop dependency on `the_repository`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20260716-pks-copy-wo-the-repository-v1-1-8f1e078bb82f@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260716-pks-copy-wo-the-repository-v1-1-8f1e078bb82f@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-After --drop-filtered removes promisor blobs, append a record of each
-dropped object to $GIT_DIR/objects/info/promisor-dropped. Each line
-records the object ID, a reflog-style timestamp (Unix seconds and
-timezone), the filter spec, and the promisor remote it was attested
-recoverable from like the following:
+Hi Patrick
 
-  <oid> <time> <tz> filter=<spec> remote=<name>
+On 16/07/2026 10:56, Patrick Steinhardt wrote:
+> When copying a file we need to potentially adapt permissions of the new
+> file based on whether or not "core.shared" is enabled. Parsing this
+> configuration makes us implicitly depend on `the_repository`.
+> 
+> Refactor the code to instead require the caller to pass in a repository
+> so that we can remove `USE_THE_REPOSITORY_VARIABLE`.
 
-If a dropped object later becomes unrecoverable (for example, the
-branch holding it is deleted on the promisor remote), a lazy fetch
-fails with a generic error. This persistent record lets a later change
-explain that the object was dropped deliberately, when, under which
-filter, and from which remote it was expected to be recoverable.
+Sounds sensible
+> diff --git a/sequencer.c b/sequencer.c
+> index 1355a99a09..c9ede9c02d 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2419,7 +2419,7 @@ static int do_pick_commit(struct repository *r,
+>   		} else {
+>   			const char *dest = git_path_squash_msg(r);
+>   			unlink(dest);
+> -			if (copy_file(dest, rebase_path_squash_msg(), 0666)) {
+> +			if (copy_file(the_repository, dest, rebase_path_squash_msg(), 0666)) {
 
-The remote field lists all configured promisor remotes rather than the
-specific one each dropped object is recoverable from. Determining the
-exact remote would require asking the remote whether it has the object.
-A "remote-object-info" command is being added to the "git cat-file
---batch" protocol for this kind of query, but it is not available yet.
-A NEEDSWORK marks this for a follow-up.
+The path for "dest" is obtained using a local repository instance "r", 
+but we're using "the_repository" to set the permissions on that path. 
+While that matches the current behavior it is clearly better to use the 
+same repository instance to obtain both the path and and permissions for 
+that path. In the hunk below we even have "the_repository" and "r" on 
+the same line which seems confusing. This patch uses a local repository 
+instance in refs/files-backend.c and setup.c, lets do the same here.
 
-The log is written only on a real run, i.e. --dry-run changes nothing.
+Thanks
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
- builtin/repack.c  |  4 +++
- repack-promisor.c | 91 +++++++++++++++++++++++++++++++++++++++++++++++
- repack.h          |  4 +++
- 3 files changed, 99 insertions(+)
+Phillip
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index aa3257a98a..49dcbbc567 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -702,6 +702,10 @@ int cmd_repack(int argc,
- 		write_midx_file(files->packed, NULL, NULL, flags);
- 	}
- 
-+	if (drop_filtered && !dry_run)
-+		append_drop_log(repo, &drop_oids,
-+			expand_list_objects_filter_spec(&po_args.filter_options));
-+
- cleanup:
- 	string_list_clear(&keep_pack_list, 0);
- 	string_list_clear(&names, 1);
-diff --git a/repack-promisor.c b/repack-promisor.c
-index fabfdc168a..60913a5150 100644
---- a/repack-promisor.c
-+++ b/repack-promisor.c
-@@ -7,6 +7,97 @@
- #include "repository.h"
- #include "run-command.h"
- #include "oidset.h"
-+#include "date.h"
-+#include "promisor-remote.h"
-+#include "strbuf.h"
-+
-+/*
-+ * Append the drop-log entries to the already-computed path.
-+ * Returns -1 on any I/O failure so the caller can warn once.
-+ * Keeping this in a separate helper avoids goto-based cleanup
-+ * in append_drop_log();
-+ */
-+static int write_to_drop_log(struct repository *repo,
-+			     const char *path,
-+			     const struct oidset *dropped,
-+			     const char *stamp,
-+			     const char *filter_spec,
-+			     const char *remotes)
-+{
-+	struct oidset_iter iter;
-+	const struct object_id *oid;
-+	FILE *fp;
-+
-+	if (safe_create_leading_directories(repo, (char *)path)) {
-+		warning(_("could not create leading directories for '%s'"), path);
-+		return -1;
-+	}
-+
-+	fp = fopen(path, "a");
-+	if (!fp) {
-+		warning_errno(_("could not open '%s'"), path);
-+		return -1;
-+	}
-+
-+	oidset_iter_init(dropped, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		if (fprintf(fp, "%s %s filter=%s remote=%s\n",
-+				oid_to_hex(oid), stamp,
-+				filter_spec ? filter_spec : "",
-+				remotes) < 0) {
-+			warning(_("could not write to '%s'"), path);
-+			fclose(fp);
-+			return -1;
-+		}
-+	}
-+
-+	if (fclose(fp)) {
-+		warning_errno(_("could not close '%s'"), path);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+void append_drop_log(struct repository *repo,
-+		     const struct oidset *dropped,
-+		     const char *filter_spec)
-+{
-+	char *path;
-+	struct strbuf stamp = STRBUF_INIT;
-+	struct strbuf remotes = STRBUF_INIT;
-+	struct promisor_remote *pr;
-+
-+	if (!oidset_size(dropped))
-+		return;
-+
-+	datestamp(&stamp);
-+
-+	/*
-+	 * NEEDSWORK: we temporarily record all configured promisor remotes rather
-+	 * than the specific one a given object is recoverable from because there
-+	 * is currently no way to determine that locally. it would require
-+	 * asking the remote whether it has the object. A "remote-object-info"
-+	 * command is being added to the "git cat-file --batch" protocol for
-+	 * this kind of query. Once it is merged in the codebase, this should
-+	 * record the exact promisor remote that has each dropped object.
-+	 */
-+	for (pr = repo_promisor_remote_find(repo, NULL); pr; pr = pr->next) {
-+		if (remotes.len)
-+			strbuf_addch(&remotes, ',');
-+		strbuf_addstr(&remotes, pr->name);
-+	}
-+
-+	path = repo_git_path(repo, "objects/info/promisor-dropped");
-+
-+	if (write_to_drop_log(repo, path, dropped, stamp.buf,
-+			filter_spec, remotes.buf))
-+		warning(_("could not record all dropped objects in the drop log"));
-+
-+	strbuf_release(&stamp);
-+	strbuf_release(&remotes);
-+	free(path);
-+}
- 
- struct write_oid_context {
- 	struct child_process *cmd;
-diff --git a/repack.h b/repack.h
-index 61e554e4ed..33309548ce 100644
---- a/repack.h
-+++ b/repack.h
-@@ -171,6 +171,10 @@ int enumerate_promisor_blobs(struct repository *repo,
- 			     const struct list_objects_filter_options *filter,
- 			     struct oidset *to_drop);
- 
-+void append_drop_log(struct repository *repo,
-+		     const struct oidset *dropped,
-+		     const char *filter_spec);
-+
- int write_cruft_pack(const struct write_pack_opts *opts,
- 		     const char *cruft_expiration,
- 		     unsigned long combine_cruft_below_size,
--- 
-2.54.0
+>   				res = error(_("could not copy '%s' to '%s'"),
+>   					    rebase_path_squash_msg(), dest);
+>   				goto leave;
+> @@ -3864,11 +3864,11 @@ static int error_failed_squash(struct repository *r,
+>   			       int subject_len,
+>   			       const char *subject)
+>   {
+> -	if (copy_file(rebase_path_message(), rebase_path_squash_msg(), 0666))
+> +	if (copy_file(the_repository, rebase_path_message(), rebase_path_squash_msg(), 0666))
+>   		return error(_("could not copy '%s' to '%s'"),
+>   			rebase_path_squash_msg(), rebase_path_message());
+>   	unlink(git_path_merge_msg(r));
+> -	if (copy_file(git_path_merge_msg(r), rebase_path_message(), 0666))
+> +	if (copy_file(the_repository, git_path_merge_msg(r), rebase_path_message(), 0666))
+>   		return error(_("could not copy '%s' to '%s'"),
+>   			     rebase_path_message(),
+>   			     git_path_merge_msg(r));
+> diff --git a/setup.c b/setup.c
+> index 0de56a074f..91d61a5939 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -2331,7 +2331,7 @@ static void copy_templates_1(struct repository *repo,
+>   			strbuf_release(&lnk);
+>   		}
+>   		else if (S_ISREG(st_template.st_mode)) {
+> -			if (copy_file(path->buf, template_path->buf, st_template.st_mode))
+> +			if (copy_file(repo, path->buf, template_path->buf, st_template.st_mode))
+>   				die_errno(_("cannot copy '%s' to '%s'"),
+>   					  template_path->buf, path->buf);
+>   		}
+> 
+> ---
+> base-commit: d35c5399e3e54ac277bb391fc2f6be3e816d312b
+> change-id: 20260716-pks-copy-wo-the-repository-aa01ccdbed76
+> 
+> 
 
