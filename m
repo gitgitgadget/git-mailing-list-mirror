@@ -1,162 +1,169 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454E543F092
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 21:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784237728; cv=none; b=a6Bs2xFU9zlbyN/Ptr0d8oOkJJK6DsDJER15RHsqPCk0zSWsO5CQBUjum7Fm+svVHHqUbau5oEEOANdhbFuMOm61YaAUWazSKD6qW/5/ed6nRvb9/etuo0FfXJSfuEJH1STNCwH6F4MwzY2h9iec1cJFWRjqv7KmGEPpkpuM6hw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784237728; c=relaxed/simple;
-	bh=jAjwMvhWVro87coMjdYjJjml7xW+nFCGj1qQThb/sRY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nx/F5mQ2TlFEe6BmB0gVW0+0SrPRUC6rXSWtVKRNH/AiU4dHSYMkjA/XV9+DkE7Oo2A2ZvK6RSCPAUoiQz2C7qEStAEaXDiPrFhYcPrzfOGg5yluRlW4YbfUBM3PhMsOVBDFlyVLuF/7qgmxgdsorLwX0qTmhAdQqP1+4VdFX8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N9c2uy7Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jiuwGsQy; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F4934751B
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 22:08:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784239741; cv=pass; b=txIa2RQdaYeb8oJJlmkp5lunmoosWrfMCnP23fNqNxLKMUYZyzPupHaAnWpeS85nvNeYEzJ95a8qygTx6ZLrOKiDxN6l9ChsDAtqpcWf2eG4h3W2AM3QUP1OwZE5taMwbS5uy5eRNlok13sENNmyLpkdl4Kh9dbj79E9MYKphEA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784239741; c=relaxed/simple;
+	bh=g2eZ0wJuzOQLL3MRhmg30Fo+oTGxWbGtiS7QUDVgReA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JaSaY/IXYzBG5Yc4QVRDGeEd5SNwDt6ESpIRAQo1bjyBibXKtDoROc3tpepXYk66DDEALbthKDGuYxgQoKI4yb+ChZVU3yTFOCaaurX5W+RUsnAKTgd/ANRmxffFX3QlyryyYxhhH4NLFlXfzcTpEmz7Qc1W8rhVZk3P+id4PTM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=efBhB88G; arc=pass smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N9c2uy7Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jiuwGsQy"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6C053EC011C;
-	Thu, 16 Jul 2026 17:35:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Jul 2026 17:35:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784237726; x=1784324126; bh=ErqwiAxqGl
-	GR+YF9DUw1hd/zorZmiVtWFT7laFbebTE=; b=N9c2uy7Qw2HwbMdbiiVOjGyIm+
-	82yrGKRLTAdTFovQb2sYrnL2UU5YQFmD7nyiBGC3wgwPmkKNdamvDl+m6EU886fn
-	5Z0+qWcsQu8TpqZm8WftlsMBN1F336DnfY5zJDZODqWrn+om4cTHnykoEe3UzFDZ
-	V0WelUEEdxc7LDlGHamhLZBCdzGDB14lOdxL/cndgXSPVMng3mWm37VC9QgJrvLS
-	9bVrBlJLgMM963cR/K0nPkIMxZbDtaTelwEil/NlvQS84arPTvwgS12VDYcJmgtm
-	knDW1KWQlrQ2lXY3gz5RngpVSBe9Sn4ELP7nm/U2J4dDKq/YqScAkbBAJ49Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784237726; x=1784324126; bh=ErqwiAxqGlGR+YF9DUw1hd/zorZmiVtWFT7
-	laFbebTE=; b=jiuwGsQy2BT0GJ+yMaqCLn9JkHsfzYJdKaSnBsKFA0eRLu88WXv
-	JNQSaOoOy1c4UBCGBH30yVfkyfDikpOXQie8JsJROmLO16VgHdeP3AasGtqC1UMZ
-	P7D8MlxEYPmycBY1jzr1ltIzpwm3JXZEdiXqsXnZtleWW33eZPS2vMMU3z0IG/ez
-	SFbW4Qmf3EJXVLaXz3SiUYKW0q2zy8kX4gXfQgnSMp8jo/h+LxnI4hoVTs3W4sSu
-	vOwpE/rxa/nIcaxgRzoKHNcmQBIJa2gxMSd3mrFfJ7CK73prOMHnsoIb/9kFnl9F
-	UQ9ktQ8JH4nMaei1vfuYcWqcRGFDbhLhr7A==
-X-ME-Sender: <xms:nU5ZanSzHMWMar5ews2Kz7dJk12fnjrBWpex_VKT7WEfPNtiKIQmEA>
-    <xme:nU5ZalWHLjX6BRbUvKbx_lSh-UALq863Z24FgEinEA86YNq1alX1efWjneSpsUt_H
-    w7fjcjTbqnYH1kwaogzOjc0HtMlAZA_30uzIf0wypOq-czpmWQVcg>
-X-ME-Received: <xmr:nU5ZahQ2aF5DTW2N1GWBxhq1TGMTwzvU7STtE_-9o4p0CppUBwAaYu3K5W-usIz-KGQrUT3pNBvjSXeNOf0dyaSMCVH1aQa71ZoyZBY>
-X-ME-Proxy-Cause: dmFkZTEU4nnSNHJy1a+QYAUgNOeLZSfCslycrmoIILNICGXvn0S6TQighRzbUYqXEjTCiU
-    0QdS7SMTK31wFhmrcr7doGeKzYbyqzWx/t0BoF3ZFzNdH2htNItPwtJ4XbqucMTse7rew0
-    EEf4E3QJLaNcUsoNUsXfbiQoL2tkH6s+2g5pzw31q9sRmLqqnNAKnXYv7TDz8qw8GGs/dj
-    thCdm27RfwQ5ubnNPIPZqpnu3Ern+bttfQbeF+YJU0Lvlht8NSVR69vxySRcOsaTgfTwUM
-    qDXGeTmYOnbbDX5UFmgvVfSR1D45Ab3UGrstJX1mzdm4oXPqqICQD9mYagawzl/3/HjaEl
-    fZSGjvfl8CuZ8i2CDYLVxocPrrTJA3/Nc4UhfhnTXMGRl/5IRfbmi8Ls3nOElFVhUsvdHO
-    kV8iWKH8LE5UBnouldyO8KqoVQA880LqK3I2LMYXGifAt4bjSMXrFyDjDLzXmH7qh+6ORB
-    y4AxP+xYE4kqfgEiFQirwCOw6MxuSjcr7MXNT2vlKeki+6lyW0pSdNdSNr7qLvkgwdOIrU
-    2XYmkcnjOzTa4yFKa2pFgp03wTIS21BekJft0yR0rNfTkwKGPubNvJn00s7YlMOX8A4aeA
-    E/+mBE+JMgPj3dm60FvESnlg0TIaLTNNjjQVUCyrAOeGDStc+hG29Z4zQuJw
-X-ME-Proxy: <xmx:nU5Zat3_2TUD6itIjOO0hYKZAl34euXrzAcL20arR4ezOEvLU3dh_w>
-    <xmx:nU5ZahdXjKulqz7iMNxqgxXDLnfNkWIc8j1qphXU4DEaG46Tza5DxA>
-    <xmx:nU5ZalM2NjXKEl_Q4M7W2FsOX6wlhhzPmWCKsRGvl0tpJoqkJkMXaQ>
-    <xmx:nU5ZalUcKP_qADDg1fVIZbL6BREd3Vso_8FpQQ52yLe3SPZt8QDEsA>
-    <xmx:nk5Zar-D4ruq70TBjE_v2tab7CoC0g8PrEWeChS-XVuVNJR9zYiXKLWK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 17:35:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Justin Tobler <jltobler@gmail.com>,
-  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 7/7] fast-import: use struct option for usage string
-In-Reply-To: <20260716165517.433849-8-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 16 Jul 2026 18:55:17 +0200")
-References: <20260716165517.433849-1-christian.couder@gmail.com>
-	<20260716165517.433849-8-christian.couder@gmail.com>
-Date: Thu, 16 Jul 2026 14:35:24 -0700
-Message-ID: <xmqq4ihyehyb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="efBhB88G"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-ca7bea5e5b3so5229172a12.1
+        for <git@vger.kernel.org>; Thu, 16 Jul 2026 15:08:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784239739; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YeYPEXaYe7DbbtXREosL3p4n7UR743EeC5h0rlgsRdZ2W2h1Q9LI5/qygPe388pnCL
+         OCixIrgXrUbC8y5iwuTGViDqDPW2IZVRx3Qj4YMAKB01fFwR+/xVu6GNbCFYCt9z3wrK
+         XeAguuukNn0or6AddVhjaU3pOG0gGoz9gPX4dspTxDqRJEUItojpOUSKesDBUdMQpKSO
+         Tnf7DOPP+DROLP72Dpzf5LX5bIjLmEC2DkCVtVpOuMx9XEqNHV60f4NrUnG7xFK1T7/r
+         pai3nh30Xnesg1/AnhDUVyWlx3UbknhoZNfr4qSQ0Q95sWiYGpjm3x2heDJFLwW5I4gj
+         qG2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=wBCjL+yWuJDxacVYwt1FoHkb31v3yNJMBrxfQEtjX+E=;
+        fh=mbYdZHTebbYaBBYQkZIVh8VihZ6hUyQ1gvkc0araN6w=;
+        b=eZRY2f3BuLoIxruYVBgaUT40xU+306p6VZZ+NBg9S6CVkdINBuGJ67FQ9MdZsxO/qb
+         WmAi0BcPfdyhr4hPxjurYiSytj0U2YYQa8FyrgAswLcND+AEP1uxpJdSqYpX1qOm3nmw
+         bfmBKCIO3+M6X34JDqhbxa7AALg3jc178zTJUJSzHZmBaHu5dU/Opp2PMyM7nSiXgamW
+         W73XUFtxrNbHUWnljj/RBQ/qJjr9XFNFfEVK+4iQ/0uuBePozHBeM9Kb4ONxixWqILCv
+         mQt9Ms2DpdaFwuHmOAzlj4C2mSwRNghq99pH6Xi3w37IavDO57uT9EWRWI+/E4pBv3WL
+         zZ8g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784239739; x=1784844539; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=wBCjL+yWuJDxacVYwt1FoHkb31v3yNJMBrxfQEtjX+E=;
+        b=efBhB88GeuXwv0FPyTWATvMjvkPqt8cpEs33bd0a2GJUc3edAkWy1vdDnfWGCUCt5B
+         DpVVcrqbrOlknaqxxosCdeJWE2prIqbLPSxGctTdQKH3xU2sHY+3PHxSrvEcA55m5Q4o
+         yhUPY3jVkdEKOB6h8W2D7X7I9yJX0JDqBiwBJHEE+m/t2hjkhnDUQTKHZa+zI2YqGsHM
+         s0OOGGMKGk9GcmdFeoYKAPN5Tv7sVmeJaRlW9B5kGRaG3En9cqu9qfbNg9FtHKkvbSX2
+         YGGTkua9t2iEghAgwnq2aGnky6FC2EBG0QDVk8g5GUTdtqrcjkI4u00PjhJriixKUWEI
+         KypA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784239739; x=1784844539;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wBCjL+yWuJDxacVYwt1FoHkb31v3yNJMBrxfQEtjX+E=;
+        b=IUQ8nfMuicwrmgKV/sGFjcINeb56SmO28zkkIr3BeGfXVBcook8UTW7JlboR7Ryvip
+         DFYL1wt0WTeP8agd4jxi67ioiy3A8IJdfCbDTUTJRxAEfzxprznDruK8CB3BFR92HjJI
+         xNupY6r1YnICCZY37AiT3O33RXijUy5wvwh0aOXHtGaNp9S5S3YrTnOtQiYAn53ZP+kj
+         zEnLXBuTEitEgyum2AzOzTwoIKGv1auToMwQae7EHJe+e1FvvFdfJ/IBY0ahn7iV795c
+         fs8+L+LonGXn7cJd1I6a51gzW59mOKU93zqbgqeJtcdoBsOBeGDHa+CYfw7xLyhiwCAb
+         pI8Q==
+X-Gm-Message-State: AOJu0YxYdsrr5pWOZ5t+q0dxYUbSdfH/b/lo/h1ShlYlfj1gJJA8kXg5
+	6Jw2MtTFOx5nkUW4Z9YBxqSR9VPcoAmQP8nSfRJRdKnpbWZxOqUrRALgx7+2iUE9rC+y70OUYto
+	Ar/HOAsnMkR2w+16CjOXjcNPlblql7J+924I1
+X-Gm-Gg: AfdE7cm6GGs8LRtVMLXCPtWQNjTTH+1ToeO40abL4HseolOdXF+/CmWpr9chaJZt1xz
+	ydgRMfXn28fxDMcKWcApWm84YVEBkKiflQmxWU8Op+chAGMmNjwI6rYR0KWHefL9FCQU+h+t1+D
+	v20HeluCaaMevirozYYXZfbM4vzFmVjfhkh62DD8FwlEXoQnqndVw7+484j7XC9T1/tn/ccm5c3
+	3QJisG8Xa/6E9aAAOBQ/BWza+V89l60A2SEf1KKtOifHiR6wxKcBe/sp0tv5c/2VHyha55TueBQ
+	I7Ci9yCWaXrH/9G0EsFVLqRdjxtIizcY4TrVWIVia70xjmCosbQqTdJFv8/HM3eQ02pNzkO7KUo
+	fglHsCFR3mAW6CH6v/HdB4zgzq8qBIXukYx57HgfnkjEs
+X-Received: by 2002:a05:6a21:489:b0:3bf:9c93:ac44 with SMTP id
+ adf61e73a8af0-3c36c1923d0mr9931930637.19.1784239739119; Thu, 16 Jul 2026
+ 15:08:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <BY5PR06MB6548F18EA532E3EF021AA93DBAC72@BY5PR06MB6548.namprd06.prod.outlook.com>
+In-Reply-To: <BY5PR06MB6548F18EA532E3EF021AA93DBAC72@BY5PR06MB6548.namprd06.prod.outlook.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 16 Jul 2026 18:08:47 -0400
+X-Gm-Features: AUfX_mw03V-DLm2McliPRnbBsGIzyoyFCY1Cd3ctY8Dnst3emGTsEXwouB4RHrQ
+Message-ID: <CALnO6CDGkAzu4Xz2o=VaCfwsF1WEcBw2k3-JqmkGqj1+ZpRQyA@mail.gmail.com>
+Subject: Re: Please provide help with how to fix
+To: Randy Kroeger <kroegerr@cseasy.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Thu, Jul 16, 2026 at 4:52=E2=80=AFPM Randy Kroeger <kroegerr@cseasy.com>=
+ wrote:
+>
+>
+> I am having a bit of an issue trying to figure out the best route in fixi=
+ng the following.
 
-> +	unsigned long pack_size_limit, big_file_threshold, depth, active_branches;
-> +	char *edges, *signed_commits, *signed_tags, *date_format, *import_marks;
-> +	char *import_marks_if_exists, *export_marks, *submodules_from, *submodules_to;
-> +	int opt_quiet, opt_show_stats, opt_relative_marks, opt_force, opt_done;
-> +	int opt_allow_unsafe;
-> +	int cat_blob;
->  
-> -	fast_import_state_init(&state, argc, argv, prefix);
-> +	/*
-> +	 * NEEDSWORK: For now this is used only to render
-> +	 * `-h`/`--help-all` usage messages. The actual parsing is
-> +	 * done by parse_one_option()/parse_one_feature().
-> +	 */
+The advice I give my colleagues:
 
-OK, I am a bit torn on this.  On one hand:
+1. Don't panic
+2. Figure out where you are
+3. Figure out where you want to go
+4. Decide how to get there
 
- (1) I do agree that it would be nice to eventually have
-     fast_import_state_init() (or some other helper that groks
-     argc/argv) use this options array to parse the command line
-     arguments.
+> What happened is on my second machine, in which was out dated (source cod=
+e), I upgraded to VS 2026 (from 2022), then tried to do  a pull.  What happ=
+ened was that I received a bunch of modifications, which was confusing. All=
+ I want is to pull all changes since I did last on this machine.  I then ha=
+d a bit of a problem with the gitignore file, so I decided to just commit i=
+t (my train of thought is it is a file being committed to source control - =
+that is it).  However, what happened is this file took on a life and decide=
+d to make itself the head and bypass all changes to the head in which it kn=
+ew about last.  Please see image below where the history shows a line from =
+this commit to the parent below.  This by passes a bunch of chances.
 
- (2) I am sympathetic to the position that doing so is a bit
-     outside the scope of this series, whose focus is strictly on
-     "git fast-import -h" and nothing else.
+A suite of helpful "where am I" commands:
 
- (3) I suspect that when fast_import_state_init() does start using
-     the options array to initialize the state, the parsed results
-     will not be stored in the variables this caller currently holds,
-     but will instead live inside the fast_import_state structure.
+- git status: is the repo clean? before we go further, let's not lose work
+- git log --graph [--oneline]: what's the shape of commits? (this
+would be useful to copy/paste, optionally with annotations, in place
+of your diagram below)
+- git reflog HEAD: what operations brought me here, and what are some
+interesting recent checkouts?
 
-So in that sense, the huge list of unused function-local variables
-above are merely throw-away placeholders.  When the real code is
-written, they will disappear, and the references to them in the
-fast_import_options[] array will have to be updated to point to
-members of the structure (or global variables).
+Then (repeating a line from a previous quote):
 
-Still, seeing all of those variables left uninitialized leaves a
-slightly sour taste.  And because of (3), it would be a clear waste
-of time to go through the motions of initializing these throw-away
-locals.
+>  All I want is to pull all changes since I did last on this machine.
 
-Perhaps we would end up in a better position if we bent (2) a bit.
-After all, my hesitation likely stems from the feeling that this
-series stops short at a slightly awkward spot, having already
-completed 90% of the journey.
+Once we know where you are, we can talk about where you want to go.
+When you say "pull all changes," do you mean a "fetch" (update my
+local repository's notions of where remote branches are) or a "pull"
+(merge or rebase local branches with/on their upstreams)?
 
-For example, instead of inventing a local, throw-away
-"pack_size_limit" variable, wouldn't it make more sense to refer to
-the existing global "max_packsize" variable from the options[]
-array below?
+> Question: How can I fix this issue?  I would like to restore all my chang=
+es again and remove this bypass.   I have been reviewing your documentation=
+, but am very hesitant as my understanding, once again, may not match how G=
+IT actually functions.
 
-> +	struct option fast_import_options[] = {
-> +		OPT_GROUP(N_("Common")),
-> +		OPT_STRING_F(0, "date-format", &date_format, N_("fmt"),
-> +			   N_("format of the commit/tag dates"), PARSE_OPT_NONEG),
-> +		OPT_BOOL_F(0, "stats", &opt_show_stats,
-> +			   N_("display some basic statistics (objects, packfiles and memory)"),
-> +			   PARSE_OPT_NONEG),
-> +		OPT_BOOL_F(0, "quiet", &opt_quiet,
-> +			   N_("disable the output shown by --stats"), PARSE_OPT_NONEG),
-> +		OPT_BOOL_F(0, "force", &opt_force,
-> +			   N_("force updating modified existing branches"), PARSE_OPT_NONEG),
-> +		OPT_BOOL_F(0, "done", &opt_done,
-> +			   N_("require a terminating 'done' command"), PARSE_OPT_NONEG),
-> +		OPT_UNSIGNED(0, "max-pack-size", &pack_size_limit,
-> +			     N_("maximum size of each output pack file")),
-> +		OPT_UNSIGNED(0, "big-file-threshold", &big_file_threshold,
+Only when you know where you are and where you want to go can you find
+appropriate fixes ;)
 
-Thanks.
+> I greatly appreciate the help!
+>
+> In this example, Commit 3 was done on July 12 and since it was on a machi=
+ne that had done its last pull on 6/09/2026, the commit created a new paren=
+t below Commit 5.  Now when I pull, the changes for Commit4, Commit5 are no=
+t included in the pull.    I am assuming I need to do a rebase, but am not =
+100% confident and in reading the documentation, I am still not confident.
+>
+> --Commit6 7/14/2026
+> --Commit5  7/13/2026
+> |<-Commit4  7/12/2026  -child
+> |  --Commit2  6/11/2026
+> |  --Commit1  6/10/2026
+> |>-Commit4   7/12/2026  -parent
+>
+> Randy
+
+I'm not sure how to interpret this diagram; perhaps you could use "git
+log --graph --oneline" to show your current and desired states?
+
+--=20
+D. Ben Knoble
