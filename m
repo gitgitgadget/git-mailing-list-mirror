@@ -1,69 +1,69 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C93A3F074A
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 09:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F633451B0
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 09:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784193227; cv=none; b=lhyGmyyFkcR210a6VTCoBLoMOLEiWCAMgsTOVp2NDbI0Z+tpxOQ0/n3N+uTBfruhSE5n0nx2kY4+eXtjU1JWu3q3xLpeWZXZjR2632MxcBCt3dlUlvptaVdMQ/xPXqNAq2Jn37Gv3xDOupVl9I2c1kfHMDqnO9gV/VjLgnRd23k=
+	t=1784193506; cv=none; b=i1bzg53UcOw90UNOSf8W+yol4hFDpUNKfiNUlU+Qxm0gavcnpdP/qswFAIEVmDAbPw+YvosvtdzmMuz2cPt9ihIcgKe9c/XCzS6o1sBY/iDWq0je3udUs8CU3FicQZMegy4bjNa5hMpOl/fPHrGH5lr3jOjw9t7fdxOE2VMDgzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784193227; c=relaxed/simple;
-	bh=B0W8R1RX40Br7qWovquWNYphcUOwMBVwC3RT4GBlO5I=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=s8Eo9EDVcFG5S/CEuqddBIHJFabzn4NX8wB+2wsYJi63l6LRWx+ojV/llE4sYn/TW/pQvf92swYzgWz6HOGjxVO/YLwwpqVe1qRWrrRQCRYi/pStqEdtdUrEIlnBWlzT9HYm291JJWo0p+2VupCsDbJhY5eQT456gybeMENYoss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.104])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4h16m36X6Xz7R5Mk
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 11:13:39 +0200 (CEST)
-Received: from [192.168.1.102] (213-147-165-249.nat.highway.webapn.at [213.147.165.249])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4h16lt6SC5zRpWV;
-	Thu, 16 Jul 2026 11:13:30 +0200 (CEST)
-Message-ID: <c177a717-28c3-41f7-95d7-45fec5b304bb@kdbg.org>
-Date: Thu, 16 Jul 2026 11:13:30 +0200
+	s=arc-20240116; t=1784193506; c=relaxed/simple;
+	bh=RzwcvFm/qOwC5XiRTIYqeswVBFDPAP7Vkno0cyxsga0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Racfj3UslyQc/HfnUp7H8Tn1DLjDgPYnV26eW/3c+iEUbyzxRhsBjSE1ReRC/HFLxQuKBB0APC10gd16Px/hBRwz4di32DMN6cdB6uRGSBJruTatITXArPzGl+l6Rxf6XcTwn10kbLzFQgJxOtk7apE2OZTx+bki3UBJOu/ET3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ENt53w0t; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ENt53w0t"
+Received: (qmail 42810 invoked by uid 106); 16 Jul 2026 09:18:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=RzwcvFm/qOwC5XiRTIYqeswVBFDPAP7Vkno0cyxsga0=; b=ENt53w0txVnMv2CEExDPb8viGs7YKoebP2sIpHuFr86SYcIfKtvFn2XRMP2MM6or3Np1JKjt/CUpbyQwEHu91CQKlU2Rxti3adXOZiBXkG0S3kDq4UT1+n91JNJbv9+r7JZibYuyZSEzE296E7PWrqkQ9DYWHGVOfcrJtwEKw30k+S+YlSqLWwLC80jvUFkAO32WvetSpYFyVirES7IFicZnH5gqp4XtaXKeWb3wHWo6AK3TFRO0xy3S9QCikQZQHuesk4N4pks+DBbXslW3FME5yGtWyRTtvzEm7WfSVJ+wsD8mGSP3m/3lVV33kFhPVNWW5/2iTsJ0vshGWCH14Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jul 2026 09:18:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 77700 invoked by uid 111); 16 Jul 2026 09:18:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Jul 2026 05:18:27 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 16 Jul 2026 05:18:22 -0400
+From: Jeff King <peff@peff.net>
+To: Tamir Duberstein <tamird@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>,
+	Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH v4 3/3] commit-reach: die on contains walk errors
+Message-ID: <20260716091822.GA1212956@coredump.intra.peff.net>
+References: <20260612-ref-filter-memoized-contains-v4-0-5ed39fd001dd@gmail.com>
+ <20260612-ref-filter-memoized-contains-v4-3-5ed39fd001dd@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [GIT PULL] git-gui: larger commit msg field, Bulgarian translation,
- silent make -s
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260612-ref-filter-memoized-contains-v4-3-5ed39fd001dd@gmail.com>
 
-The following changes since commit 1b2c2a2edbaa1638becef4c3755b3e0633b9c304:
+On Fri, Jun 12, 2026 at 05:49:14PM -0400, Tamir Duberstein wrote:
 
-  Merge branch 'ml/repo-discovery' (2026-06-12 11:05:28 +0200)
+>  int commit_contains(struct ref_filter *filter, struct commit *commit,
+>  		    struct commit_list *list, struct contains_cache *cache)
+>  {
+> +	int result;
+> +
+>  	if (filter->with_commit_tag_algo ||
+>  	    generation_numbers_enabled(the_repository))
+>  		return contains_tag_algo(commit, list, cache) == CONTAINS_YES;
+> -	return repo_is_descendant_of(the_repository, commit, list);
+> +
+> +	result = repo_is_descendant_of(the_repository, commit, list);
+> +	if (result < 0)
+> +		die(_("failed to check reachability"));
+> +	return result;
 
-are available in the Git repository at:
+Makes sense. And we can see from the test that repo_is_descendant_of()
+will already have printed the real reason for the error.
 
-  https://github.com/j6t/git-gui.git master
-
-for you to fetch changes up to 5dcb97869546d600a114ef422a135e2e909c923c:
-
-  Merge branch 'master' of github.com:alshopov/git-gui (2026-07-16 11:05:03 +0200)
-
-----------------------------------------------------------------
-Alexander Shopov (2):
-      git-gui i18n: Update Bulgarian translation (562t)
-      git-gui: allow larger width for the commit message field
-
-Harald Nordgren (1):
-      git-gui: drop msgfmt --statistics output
-
-Johannes Sixt (4):
-      Merge branch 'master' of github.com:alshopov/git-gui
-      git-gui: reduce complexity of the quiet msgfmt rule
-      Merge branch 'hn/silence-make-s'
-      Merge branch 'master' of github.com:alshopov/git-gui
-
- Makefile       |  5 ++---
- lib/option.tcl |  2 +-
- po/bg.po       | 37 ++++++++++++++++++++++++++-----------
- 3 files changed, 29 insertions(+), 15 deletions(-)
+-Peff
