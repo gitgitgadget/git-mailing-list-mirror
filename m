@@ -1,156 +1,105 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652E2386C3B
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 05:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C7C13AA2D
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 05:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784179682; cv=none; b=CbK4vDYV2QnmCTcreqinFn/H0g8hvYrQFAq8zpA2gBkN7NKeQE7EFMQWU7K5IW5ytyZCZwJ5k19e+RAZGdwXnTFDhmPFRaVFzMf+hjKFglJRpJAlnrnq9pbttalfhfOh4kBdluMzYkv4lSVWRo2XrkTpkg59Yp4WZ9TCrbgDdNE=
+	t=1784179951; cv=none; b=hB4/X0XVHMaVMZk1vBr72WPElNZirwfMhCzN0iyqTGmOBysWqd0Yi0NIRnePI+MAnuiYEShs/70hWsRvjm1GwEZM9i874HTBY/mxU23un3KfMMdWeRO9A6kOr1O3TV0b8zGHhrKxihdXjQn/4z3q9fv/KEOFKF/VdvCCvafFwSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784179682; c=relaxed/simple;
-	bh=nFIiWZKiMWRJoBg4soZBIsyF7BjAX+CNOLLgEOnYBL0=;
+	s=arc-20240116; t=1784179951; c=relaxed/simple;
+	bh=/qyj78hiPdFvmsuexUxTAvR39J5rozV2sq5XluGZGgU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qDh5xMama8jutvRecD3ifvgUniFVbHwLYTuVl01sm+B8URRUtbl3vMaaIDz8hxJIRFQr/u0OLdZ/Q6mPWsiP2euLT/OwD9piUWrmeFvqXPR83Qjz8LBVQOmi5JQsi039ikW1AIESHiLE3tJ7qKqI6bLNp8krtciyf561uk3XUmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FNZg9RAh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jefg9kMl; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=ejQ19q7vf5bgcys4mdfjhe9Mpa763Rg7lDEJJkM7rBkiT6du21lgA73GjMyVRr+EkdPjlw8eNIJft+WEgSskP1ZAY98ZZLKbS+i33pfX15pbZqS0fwnYsGkvQJeB8d5JqwNWGq+Nzj0CFkfWIlyeb3TzqwESooUickIMQPOxhtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SW+DaLpB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nhh9hLTv; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FNZg9RAh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jefg9kMl"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7D2171D0010D;
-	Thu, 16 Jul 2026 01:27:59 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 16 Jul 2026 01:27:59 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SW+DaLpB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nhh9hLTv"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 38DD91D0010C;
+	Thu, 16 Jul 2026 01:32:29 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 16 Jul 2026 01:32:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1784179679;
-	 x=1784266079; bh=DdJa57rN0xKLQFlwtk63UsY0/TLTMf/ff89ZU3S77kI=; b=
-	FNZg9RAhXvaQP+Id9myDmEyPOwMKC7TJ1O1jd7JDKALpDhSp/5bcirCiTzAG9p/y
-	QhBtfEAaeIVjNC/tIsrN1GrpLUVdqOsp2akGWrqhgQEUYwD056b3BK7DbY1PC6oF
-	K1RdKBNyQzfTyAFsVg67uQKT5a+asIZ9KhK7DjZkaER+iS7mhe3cN++ZStIXMyFf
-	Hva0xPjxostlFXcrL8ol8Wd+ZAwbT6yMrxytOglHVN6efyymuyzaKJtWUKvISmfo
-	0cRewMKGIv2Mu+2YVEuV8T7MCxfKZEBnAfJx6OIuDxEZxKBNwKMTy56aSLdS9FYj
-	7CdfQkjSu3L/z8dLdZWCHQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1784179949; x=1784266349; bh=vjzO2btpuU
+	Qkj3O55NOqykjZRXzpCNYspWBYoWrYSaI=; b=SW+DaLpBiyB24EhBnTP7elbL3E
+	y4VbQvI+vYkus5aJ2cHwXUJYw5MnAog0LPx95rFOKIvhXfF1XL12RAiDvGNNAwaM
+	uePmmZrLVHGx9DHNkjk9L7RclBs6svvZ1RSDXqp9tmHLWmohw5U4aKpradoxIoYg
+	grH/v76mkbd5LgzRkPWav9/3IqexPnGfV3bP1UnDlePfl0BlwtpsAwiuWlHbqhKB
+	8izfRc6aKlPZBDdXnUmqi5XJuemZKa311ULFm8v2ZZH+E4UMI0xHahfZL6i1k5Um
+	oTqh2IhWzy5fYNyNS+X8Y1uads7iAe2WVe6W/GLxDegkiwffqruVlpYaKVPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784179679; x=
-	1784266079; bh=DdJa57rN0xKLQFlwtk63UsY0/TLTMf/ff89ZU3S77kI=; b=J
-	efg9kMlyGoIs0NBgKZAnNmE7NcOR4jKYuYX0fmPcxxQLMpnPXUm7Yy53W+vR/uD4
-	WKuZQPBYDBpiEtmzrKalAqLAGhOH0Ns3r/XINzR9KexfdpmsG80iGq1TAOCfzmWl
-	ofTSbQwSYb2aI3LGnaSQmay4rcuW1Vmo6OG4SNg6kxn2hQBewRxCYmyp4Wx/823H
-	7DO778ueJtx5R765mV77djT42F6ETtxe2aUW7sLZFT+hDoor0Y2x048xGmfCqdZf
-	Szm4WDyJW1zObRlk0ID2tVnWlJIqYi17ps+c6W/y2fwrOZ6LiSvkBDjGbiCLowjR
-	KKiLAe2AqYI7yKtEhHX0w==
-X-ME-Sender: <xms:32tYatUUpEDKo32Kb3d9E-svS_h5n2es_2Li8iQmynyvDdF1Jchc5g>
-    <xme:32tYajncg7O7ZrVw8f9ytlN2_0n6saZwPtuHGux6nYxBMnF8LkJeDAbAjZ_4ZLUHp
-    RhT4ZgmTK4jg-HpxnpgQFkQptaB-TD089IHpd7WnYeflfcao12kZ6E>
-X-ME-Received: <xmr:32tYanDw1I1rYhnB0CC9IUicCQmttwtHiRNceQn528UGWS_srCMEaJQuqivloZPpdh__nTbo6p8bH0FrtrVlZSqLlvrLnQIcyu4fLEF0>
-X-ME-Proxy-Cause: dmFkZTGvQj+dHLiq/qLlM4R544QC+W6xkcXNO5YVn5t+OwVWqDkDL6fCddJBVvhKFR86Rp
-    R9DTZTpJrebpjZUnQqwGTS12iLsFPB3lSxuMpX/Go/K4yBt2sFS9b2m78ebE5e5nIN3JHM
-    4B/rxT04lB8L3ey4uE0aft7g3nA8NZ/fDuy/RJR8Bjc6WuXxDhJ7uV76vCg4KqJiymyWfC
-    ZU/QQK4Esg6jNubc1VY/31xgGSY1m2ZDhV0Oc+Zu8dSlMO/cql4Tu3QwnkBrnVUkNTDbeo
-    unHfYFA126UgURRLoDbHTDHuTtyzytpvkdvChTEzPjCYTZXtMI2/0z9v1ySZOfiSjMKQto
-    tgz0UjzecsGy2fFt7DJb2MW8z6xxv27Enog3HDi8kBZCs9sJ92FBWeX5yyySv741T8cclj
-    Ko0ybq6V6O0dZZArMvrahz1TEHIUK7C6nLy53GAQQjT8JlOBb69vtlRT72A12lNtQoHHHz
-    EwKDMwwh7pXgnPmdbUIVA9xISFI5tCXDKaRraG2ix1y9VIh/3bLdmk1SsXVaOkwJbjfbZA
-    11D3ZMy5FWrKSnPrnRGOw55Vd/YO8EHTvhFqu77Y3XHulY4GhpAr7FCBddRr1TO1Q/lhGj
-    NI1I+8gP8gG6iMNKyRC1toj0IRtFAqZhbh0U6P86l8act0ijcFRy6UPv8nbw
-X-ME-Proxy: <xmx:32tYardIyaJl9HW1DybIlqMooW5So8E5C4e8ThV4jvMmQEjw0mozRg>
-    <xmx:32tYaqLdgsv6UZuVjjwgFsIjDlBgHk2aKux9_fiKisE18WkS9OLywg>
-    <xmx:32tYamfVx6TrrHFozlTVkrsGp3_z6mts7Nv7ZhE19r6wy7kBFxK5Zg>
-    <xmx:32tYap0ZWZvsQV10I0LWtDP_oxxqFpubGJqzrQ0OdwUs4OQzw71VSQ>
-    <xmx:32tYaosx1WWYqUMR2bTUhoI0l8fDcTjuK0AIoof3O9A8S0myP40Xw5Md>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784179949; x=1784266349; bh=vjzO2btpuUQkj3O55NOqykjZRXzpCNYspWB
+	YoWrYSaI=; b=nhh9hLTv1j5OBzIiTGvR6z4ES+cFhLZr5EOukiWbLOM2iN6Og4X
+	6rUYeLq5cYFEiR6RckroFHZOzEk9v+KMVsy8MZ5gdTfUhy2u8+wvj2vKvCfaNNmK
+	5vsJgkbri2D2hC8jYmaFR9vAP/sBV6y0VGgqNCVgWC1fEpZLFIjcMxCzllXNXmOF
+	Hs/v+ajREoG6DZbMrjpCBMoUqfQw3W5UBlij2M20UJjWLCMd10snaNhenmtVcYjX
+	ldPPcGl3i+MbGpLsD+Dgti8TUJ4H2WzcLFgrt8rVOTaDS651GLhy2SGgj4Dmvw9L
+	wtPJx0LScPsrh14FDlC9PaP3VOTVu4TPL3Q==
+X-ME-Sender: <xms:7GxYaskXO0lZ4MtK05Gh8mvI55pM-lYmZovAKyVJ3-_RyP2gudMgXg>
+    <xme:7GxYajSupTIFP4vc9WY644GbsbsWUtCOMNM2wbBOYC_b-0fk9E4f59LuLcsSUcF2f
+    AK9iTBDfYqLzVWI8cDDfJd2H3TWIJULufbOM1Xs4fDGWnuGXAcnzw>
+X-ME-Received: <xmr:7GxYaoDse096AaoIJ4IZUe4yPUfD8d_xP0_jI5OrauBj2olr0NRxwhR54zStzxu_VzmJ1o_bvX5Dvoz-SSZ5jV1Ws6VZZLEmmg7-x7Yc>
+X-ME-Proxy-Cause: dmFkZTGwW/cOfQ01DyE//b6CZGQa8Bh+7x51sMU9Jt9n940pH0MFZo5PFEhXVqUbdZ7JCk
+    Vqd3y9S0fCGSpYs0agf9vPQuPqKjEwN5WbzL0RBgo4chl0VEy6iCElIWxWDi8iH/30YL7t
+    ipjEkVZhenQhCcTFiW1KDzqdwZdnAP8A0I4DjW+TO8A4CDhfGc3kEJZeDCdPx0ig6Fz2mF
+    SSkLMWVDv4SP1wdKkPn9BsassRQZCqQ5rWjQtjiwdY7lP5iRFGALR4RpijU9D1ETYZpIbC
+    WcDejWnGLoi3Ib0wFMlzOVwEsEFZoNhvbuyxCIMZ9C1GP/Zb24jOQ23xWYwCAbYx4KNedu
+    thJ2hU+/eyYDs6ZdyeFAZFJOWDnPtTfsx59I9w28e6Up9cH1+MGTWjr7WEfCrOdrfM9N72
+    98CD9v5421rmSlmKSWNxzF/T+xSIc0l6dTNkKUALIvVpxjNHAst0Ap7nQT0rBOqUKCGB20
+    mSRlptP9acts6EMvY1eMj2X+AQjBifSBFZfJ4XUamok70t+qkSiIDTcj23XzIa+YW7QDFB
+    hbNCNfm/mDkHgTk1LOaaQzDNEyWyjumslepKKQs2G97dL6k+gUjorCbJCEvRAneaVsAZzx
+    IrwKHmDfUp+pgY/l4PgnbWAlHtW0m+Wevb42IIuger9LEl8NoC1xkm+I/RBw
+X-ME-Proxy: <xmx:7GxYaiQ2CR3nseVqnAEmvfvzMZbEkVGwxG9pUrZ2LA_uElvpO9GJ4w>
+    <xmx:7GxYaurgIS8NHKsRBw9tHgGY24c4TR0qbYg2_kf5uK0FsbZjjsH7Ig>
+    <xmx:7GxYasyAyM-T3t2xIViwPKx0nW3KPbWFjWU4-lQytZlbUEsgQb8KtQ>
+    <xmx:7GxYarIo-a1jWY7JUnK2poaWk0ZpU78XZrvp1gzpuWtWtp4VHGLSmg>
+    <xmx:7WxYas4HvbgapB87el6ILg-7OIhXg1tQ0xu9rkgLZXXnG7F8Zeqfm_fD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 01:27:58 -0400 (EDT)
+ 16 Jul 2026 01:32:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id de47d0e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jul 2026 05:27:56 +0000 (UTC)
-Date: Thu, 16 Jul 2026 07:27:53 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 76222803 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jul 2026 05:32:26 +0000 (UTC)
+Date: Thu, 16 Jul 2026 07:32:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] remote-curl: simplify passing of push specs
-Message-ID: <alhr2bb0lUTHtvjO@pks.im>
-References: <935883f3-3be4-4c51-9711-5208b9ef9ca1@web.de>
- <alcrhGUCVMCnm2-i@pks.im>
- <3b29757e-abcd-4235-a829-ea67c19e71d0@web.de>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/7] refs/packed: drop `USE_THE_REPOSITORY_VARIABLE`
+Message-ID: <alhs5wDFGWbzp2Zs@pks.im>
+References: <20260715-pks-refs-wo-the-repository-v2-0-d00d364f5a3e@pks.im>
+ <20260715-pks-refs-wo-the-repository-v2-2-d00d364f5a3e@pks.im>
+ <871pd4h1y3.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3b29757e-abcd-4235-a829-ea67c19e71d0@web.de>
+In-Reply-To: <871pd4h1y3.fsf@emacs.iotcl.com>
 
-On Wed, Jul 15, 2026 at 05:39:51PM +0200, René Scharfe wrote:
-> On 7/15/26 8:41 AM, Patrick Steinhardt wrote:
-> > On Wed, Jul 15, 2026 at 06:41:17AM +0200, René Scharfe wrote:
-> >> diff --git a/remote-curl.c b/remote-curl.c
-> >> index 9e614c5567..2c35dd5240 100644
-> >> --- a/remote-curl.c
-> >> +++ b/remote-curl.c
-> >> @@ -1340,10 +1340,9 @@ static void parse_get(const char *arg)
-> >>  	fflush(stdout);
-> >>  }
-> >>  
-> >> -static int push_dav(int nr_spec, const char **specs)
-> >> +static int push_dav(const char **specs)
-> >>  {
-> >>  	struct child_process child = CHILD_PROCESS_INIT;
-> >> -	size_t i;
-> >>  
-> >>  	child.git_cmd = 1;
-> >>  	strvec_push(&child.args, "http-push");
-> > 
-> > I wonder whether the interface would be even better if we simply passed
-> > around a `const struct strvec *` directly. That makes it explicit what
-> > kind of guarantees we have, and all transitive callers already have one
-> > available anyway.
+On Wed, Jul 15, 2026 at 02:28:20PM +0200, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> You mean that passing a managed array instead of a plain NULL-terminated
-> one would make more places visibly safer at almost no cost?
+> > There's a single user of `the_repository` in the "packed" reference
+> > backend. Convert it to instead use the backend's repository and drop
+> > `USE_THE_REPOSITORY_VARIABLE`.
 > 
-> >> @@ -1353,15 +1352,14 @@ static int push_dav(int nr_spec, const char **specs)
-> >>  	if (options.verbosity > 1)
-> >>  		strvec_push(&child.args, "--verbose");
-> >>  	strvec_push(&child.args, url.buf);
-> >> -	for (i = 0; i < nr_spec; i++)
-> >> -		strvec_push(&child.args, specs[i]);
-> >> +	strvec_pushv(&child.args, specs);
-> > 
-> > I thought that we had something like `strvec_pushvec()` that knew to
-> > also optimize for this case so that we don't have to reallocate the
-> > vector multiple times. And if we had that function it would even be more
-> > efficient to pass it down the stack. But we seemingly don't have it, so
-> > that argument is kind of moot.
-> We could add one.  Not sure it would make a measurable difference; if
-> the number of specs is huge there are probably other costs that dwarf
-> pushing them to a strvec.
+> Well, this was removed in the previous patch. I'm fine keeping this as a
+> separate commmit, but the messaging is a bit confusing.
 
-Yeah, I don't expect it to make a difference here, either. But by having
-it we could use it in more places going forward, and that might lead to
-tiny savings here and there that ultimately add up. So it'd be nudging
-folks to "do the right thing".
-
-> I have to admit that the simplicity of strvec_pushv() nudged me towards
-> using a NULL-terminated array here, though.  So just having a
-> strvec_pushvec() available could guide towards using the length-limited
-> strvec instead of a simpler NULL-terminated array (which explodes if
-> left unterminated).
-
-And that's not a huge issue by itself. I think the version you have here
-is totally fine, and I won't insist on a reroll. But I think it gives us
-a good opportunity to improve the status quo, if we want to take it.
-
-Thanks!
+That's fair indeed. I don't quite remember why I split it up -- I assume
+that originally I had to do some more changes? Anyway, I think it's
+sensible to just merge these two commits.
 
 Patrick
