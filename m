@@ -1,146 +1,206 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99480367B77
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 19:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784228646; cv=pass; b=FVb6Truv/RYiXfF3ZXeh46R3XxkYMxkOENKaEH3LyMSmfJEv+1mlzWZQiujPTKtGUpt2fC1b8eDNHZkaqS3K+XZVW2oKwSqzbNqF5VfrcOO8M8qTcv+9LrKIxPMittgGWrZm6DlA7NQNC8GRWqkVKtcyhOl5J7c244SUJx1Lxj4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784228646; c=relaxed/simple;
-	bh=U2k23L3iqxeSdEESUfwxRH/r/W++5iEb5kDlrbciDQw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sO+1FADavmxTLu2KP7o8nhjBZy/IitHIoxL/KREAfMxVeWgqLqJ6Cfo7Z8FXkpUHebSixN+KOGiCgxCdiCY3aEDAUxONyrCLWJXtIqao1SIyMhg9at9Bpuni0OhRG/zEbCMp+fGWVzYvlEoXnMV5XK2ma1R1rEzCzZJb9cLHTe8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HU/CNFu/; arc=pass smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A04F2FFFB5
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 19:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784230557; cv=none; b=Rg+TxLNdKELcWJfryPoxIsHHmiwIJDaCwuL61l7aEUc++Q9lkG+oircnoqjaK+RyBP6h54m/axmNcaXVt16l3jhvWy2dNornaiGn58UH5+rPgvCxgkt8Gi9OumzaUCm6FdXWUKJjpG3f1XxbRrzzUT5k6Kltw541pVBN3O5Mhj8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784230557; c=relaxed/simple;
+	bh=sT0LcYcEpeXvIFckqqLOlRFeASXnoRIdozRaPGfCFUI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jj5EHLjs/Hz6z4LHop3tiTGL5ey+0OwJTy2X1F+lT2YB/vEJpIyPgsaCJvWSXUILd1Qm/O2MIXRBDKLDFYF3D/6poAu4KFpMC7vsl3/SLHtmggWquEh54X70X9kUWJOOj3opFOs3DAfAZeQDC0QDgmTwbc0Ab9UjVyCd/INLTEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ST7ExO1F; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=P3BrglYU; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HU/CNFu/"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-69a50b818c8so11697019a12.2
-        for <git@vger.kernel.org>; Thu, 16 Jul 2026 12:04:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784228643; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OLdWJCLNot+EuukjUn3kdrN7Va61iiXeIXKpWTGYL1R3GtsRIwco2EQyDoaWl1SLTk
-         CgeV+vHOL+OUwLg/g56eiAiM+JsWXh9xfx/s0zPp4oc/B8pVXCgbuwwkl+4l+6pGGNnE
-         HIoNJT/qLJJONsJeZxewcmOxdFdUwCy8plzvidDje27BnSWEMdykncb22Y1MlXnJ5ZYZ
-         ICq1zHR886H6N4M9K2jUOIWbMamf1tij4iD230/mWgAI/+DGew2mnqr6V4k2x4lgIA6M
-         vRE4lZWhlIJmp2DRe/kUA4moSZe1ew09kPYODYJuJqtohCPRXyr/vYhzRgjh1xbX1KQO
-         A2Eg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=2P47fPW3Wp4tZq9vE5ZzbOXJ+X38+AM1J6Z11hp840I=;
-        fh=c5FA8AoPXGSaHDdBJBNnqj6ExBoNqgvTy8aQWHU7tzY=;
-        b=jMXSHIvTeGlLuS8j4xF42loVDN5cl8+3mGt/w1QqSRwtadXd5kDckzv/QCXgogQ2bx
-         t0jysC3iU2K6xXLYlxLqsTNz78eD3PE+WM9u54hiHH2kDwNVF5Ct6f8KTFrxMm5TRc9d
-         swEzKtC+397oVflgkmr86YnEdlGUGirmcrpBdoZqzbc/W57u/5Z6thj1NOWJb27Tnlz7
-         qr+rLKySNwQ/87Ynblzf05Nw5Blqxeu2gGDGyDgPk9v5msgIU6VugUZ+pG7RcnjPiIlq
-         LPofMkhvA4dnwu0/56Z10UkfIB6fG6BfCrM/ejptrPN/2BTJAyYdY6QEnQVAd+F1cY9b
-         vAqw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ST7ExO1F";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="P3BrglYU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1784230554;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=iuCrzX1JBcnU7x37u5l2XjtD8UIP2PystMQpvNhnRT0=;
+	b=ST7ExO1FFvkO5iJaT9U4dlxFxdu1geZJa9tW0JAEqWnvq4GnWbh3mNHLElxls8CntYUcE9
+	yNIvUVYNrM1NGwGm+vXGrbnXaRPXns+nWMbXZUD8jbOWN2CHimzAKaC/TMMk2zOSyryMvW
+	nc4r0poT8GI0KeQ4o3Sb2PUReC36Geg=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-Im5CfvDiO-WdrRoFxXrpMg-1; Thu, 16 Jul 2026 15:35:52 -0400
+X-MC-Unique: Im5CfvDiO-WdrRoFxXrpMg-1
+X-Mimecast-MFC-AGG-ID: Im5CfvDiO-WdrRoFxXrpMg_1784230552
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-5174a23afcbso44088081cf.3
+        for <git@vger.kernel.org>; Thu, 16 Jul 2026 12:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784228643; x=1784833443; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=redhat.com; s=google; t=1784230552; x=1784835352; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=2P47fPW3Wp4tZq9vE5ZzbOXJ+X38+AM1J6Z11hp840I=;
-        b=HU/CNFu/Fe46Nv6KxC1qkjck7XWA84tqN2sOSc50eJn40nkCMpxdcFHvl5Z7oX1CRE
-         eS6N5gOvfCjH03TeX1ejPMTRA1HbJIVD6Bsxn6GCI4L76LVK3J9aAN/g5LmXihQxUD8d
-         27d9fxE85XmbLFhob2z+NSV/wfxeiungqXkLiJm9Sk31kU4lPcpwjtqYEZ6BqdOXmZz/
-         VE8JSRN3NjNta3hbw0iokuoIbPIEVa0UfmVxGJarLrqEJplkqBMW6iWX/KMoWmAokU9L
-         awQKoNYuq6JOIvMBOuEUDSPKN4sLvEf6SPXIGX9Egzq19OD4CWZZiy0ilfKy+cxgUkSm
-         88JA==
+        bh=iuCrzX1JBcnU7x37u5l2XjtD8UIP2PystMQpvNhnRT0=;
+        b=P3BrglYU9x7bxpMDEcuB3XOhz+ymmixs9uVH3LVZtq/LKaPOVaWdQKrJ5oGYWFMwmb
+         3OHH2k152lsrwrjy8ecjpapQ63WWck3NmFW2sBP5gPmVonDpvpcCZNWn3FoUgF7tAMAc
+         Aj5t1g6BbGtJyY5owYPCVpolvpxd7JlrZm+wyMo9Niaxv6CTMwnUjkZ7fPrNbFcZ62Tm
+         JgnXVvLZJYdbOPMOx8Yb121cbOfvvqeJYKQZEM8gZSPnTBolvW+sr5keOQpI+2M76ITG
+         sDvJCYy5XGeAQE4KVYmXc6cc36GjuqmuVYLvqXvnavv1HiVWEgV/RNjSlhS1Ns3D19DL
+         IsRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784228643; x=1784833443;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1784230552; x=1784835352;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2P47fPW3Wp4tZq9vE5ZzbOXJ+X38+AM1J6Z11hp840I=;
-        b=sC6TsErLTNKtYY6R0cYSTsz8JcyNMvm4VU1jvLIDxAPvqqu1OAIRz0uw6Kzr7Vuw+5
-         RC47mkPKb296ku4UWXwRGokxF2mWd2MOXWkUxAqswt72aK2SzAseMnHxwiiFbSrpSGcv
-         GJGKddYXL2fEPPbWkuoLZf6SFIFMgSyoDn86C4kcD247kIbC1kAO93IHnTYLzzai3W0y
-         y19VZCEK9MnNnNaqGLfR8jtMsAcIO+8NEuf3MDPluzRbeYIsdYVlscc5QoMwODEt776T
-         vrvZGpk7PKmJt27v9P38W1UlRqlHTO4S/1YvZFgr7V1mtkdpaY23iWamMJ/0U90969lb
-         IOCg==
-X-Forwarded-Encrypted: i=1; AHgh+RpPCiDs13/O42y4qSZBXPnqo3xj3srwNvxV2M31GdaTmggb7LA9JozclpcvDotO8mKubF8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvsPSEKWgcowBDotvJLYWbclU7kxlW6gHvP3m2Z7FAghtnuPAC
-	pdic1eUebeXkRMMmEru77GECBaS5+HQnoNqvbBVZSJb3SVSK8QzhTjTUVmeoM0Sf9cjM6blVK/a
-	BHwNyt7aKsuRtcDcN19hokDd2DvOz3UAPRbuDwL0=
-X-Gm-Gg: AfdE7ckOW55OjJBpCHFQ9jTp7HRUfqVyfA9evrsfTi0/47X3BUOf+h4+xXL5YBinigj
-	ZMALM27LhG5qB4w7tvObpUo3+Nrdxt4EuV3LRo5HBB/s/Hd+ZVzEmGruKYk4uvtWOFmL2hsS3Y/
-	b3hvbh/J78CC1uYDyS7TXBcXwsMJ6niv3NVTCZ6B2pNrj225/vDfU94AmerfmPyYb5PWluCILzO
-	+yIftyNsJeF5SOO9v7JPEqP3N9q5wOy94Ll0OADNcrJ4cZLER+XSR/WH2e2DpTO1spQ5PxQ
-X-Received: by 2002:a05:6402:510e:b0:698:8f3c:bfb7 with SMTP id
- 4fb4d7f45d1cf-69e19ddcfa4mr5001505a12.31.1784228642582; Thu, 16 Jul 2026
- 12:04:02 -0700 (PDT)
+        bh=iuCrzX1JBcnU7x37u5l2XjtD8UIP2PystMQpvNhnRT0=;
+        b=s2jEdMPTN3xLF1F4KzAKDuN7JpxK11IUQUw9sTmhfQU+2c9WjEDOJ0ePZY0Xk0xD+4
+         Py5xx+ffSMgQIAEiBmJhPC2uMZVWpiVyjnZuceVBZTjWuY76sG7RKPCIz17T9g0CLlEE
+         sxpnE4EEXShte1xDAma9oluUy5MXVCjPRVJn6qS0cceQgSHgbveNLq1t8nRJilnsjE5o
+         OSSYnhA2M8/id5jCQzQKAg4mOd+GsXOIjAkZ3O4GegmDMlrcmNgh46woAa3T9D67ac1i
+         T2dHArV26jhmD8NyLXDNGKIGlsAXwmr7HfJTdFedChMpdqi7UhrlbIwc1sxsQsM4/iiE
+         Vk7w==
+X-Gm-Message-State: AOJu0YyhHrY1D4T7ak1ykV3yevM2Ys+P0GrWct51CRF6DTevu7gjTSNF
+	GhEs7fdzd+R5TdzeugNsKOBq4iI6+s/oJwOW4MpoQmbG4QdaOLy+RFfD5AFW5wyTnlixMJzDsZ2
+	9qOge1DMU0VLv1sobprHmd9KFz/SlTLVgv5wd7nA4nlqoaX5jBzs9JQ==
+X-Gm-Gg: AfdE7ckZWJ97s4nVoiRDGlnHoGgIisdpuk60Unpp/cJ3D2gOCbYTLYS8XHlpq6P+p1/
+	w10M+Vd4L315XJqaQ61eJYqr2kRh+77d+aJFOq7gclksELcSQglqq6TkhLV/JfB4XUMHMfbGLvf
+	xb2iz28y9wI2jCgs8LyKzxk2m+EN9IeRdU/B75zV10vUDTOH8c5NR6k9HQI2WQbBN79M9fT/CEb
+	RQ/7ZPfqeXYyp9TL5WWH0DWq62erUjh8zPkPeNXnUTQiLapA3kRGFsbCNpo4KiFKdkBwCeLnFQi
+	+REekwXmUcapDanmZ700u6BjyiWQnAwZgS0eCp2B/2EXiEdAlSaQDHIL91M0q9nh+sqYvz88CfB
+	r
+X-Received: by 2002:a05:622a:241:b0:51c:17cd:1fe8 with SMTP id d75a77b69052e-520bc41ed11mr11579041cf.33.1784230552042;
+        Thu, 16 Jul 2026 12:35:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:241:b0:51c:17cd:1fe8 with SMTP id d75a77b69052e-520bc41ed11mr11578551cf.33.1784230551339;
+        Thu, 16 Jul 2026 12:35:51 -0700 (PDT)
+Received: from localhost ([2607:f2c0:b108:7100:7e55:563f:1c7f:5ae5])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-8ffd50e082csm244573306d6.5.2026.07.16.12.35.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jul 2026 12:35:50 -0700 (PDT)
+Date: Thu, 16 Jul 2026 15:35:50 -0400
+From: Peter Colberg <pcolberg@redhat.com>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] revision: fix --no-walk path filtering regression
+Message-ID: <alkylqTvbci7AKLe@earendel>
+References: <pull.2181.git.1784198879711.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <fdef432d-0b84-4b58-9915-83eb4d7dae87@kdbg.org> <xmqqcxwmhlm2.fsf@gitster.g>
-In-Reply-To: <xmqqcxwmhlm2.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 16 Jul 2026 21:03:25 +0200
-X-Gm-Features: AUfX_mx-3OD1W1msc0H6gJNGdQZQMAOKvZGvs_1geRn2IHtHjV4doQ31GyxMWis
-Message-ID: <CAHwyqnXwGGn2r-TMnEaYsjuJgM9f-RgU4s+SP4a6DH1EC9DouQ@mail.gmail.com>
-Subject: Re: [GIT PULL] gitk: Bulgarian+Spanish translations, silent make -s
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2181.git.1784198879711.gitgitgadget@gmail.com>
 
-Thanks!
+Hi Kristofer,
 
-Do these changes eventually go into mainline Git under
-`gitk-git/Makefile` or how does it work?
+On Thu, Jul 16, 2026 at 10:47:58AM +0000, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
+> 
+> Since dd4bc01c0a (revision: use priority queue for non-limited
+> streaming walks, 2026-05-27), "git rev-list --no-walk <commit>
+> -- <path>" ignores the path arguments and outputs all commits
+> regardless of whether they touch the given paths.
+> 
+> That commit introduced a REV_WALK_NO_WALK enum value to separate
+> --no-walk from the streaming walk in get_revision_1(). The new
+> case skips process_parents(), which is correct for not enqueuing
+> parents, but also skips try_to_simplify_commit() which
+> process_parents() calls to evaluate whether each commit touches
+> the given paths.
+> 
+> Add a call to try_to_simplify_commit() for the
+> REV_WALK_NO_WALK case, folding it into the existing
+> REV_WALK_REFLOG case which already does the same.
+> 
+> Add tests for --no-walk path filtering to t6017. The
+> "single commit, match" test is defensive and passes without
+> the fix, while the other two fail without it.
+> 
+> Reported-by: Peter Colberg <pcolberg@redhat.com>
+> Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 
+Thank you very much for the fix, which passes as well for my use case.
 
-Harald
+Peter
 
-On Thu, Jul 16, 2026 at 7:48=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Johannes Sixt <j6t@kdbg.org> writes:
->
-> > The following changes since commit bad83ada0ebf9e293d570e6e7ca4f1cd7877=
-f482:
-> >
-> >   Merge branch 'horizontal-scroll' of github.com:ramcdona/gitk (2026-06=
--12 11:30:22 +0200)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://github.com/j6t/gitk.git master
-> >
-> > for you to fetch changes up to f1de86371cb85dd09d55070d139e5fcdc595f026=
-:
-> >
-> >   Merge branch 'spanish_pr_bis' of github.com:basuradeluis/gitkbis (202=
-6-07-16 10:53:01 +0200)
->
-> Pulled, thanks.
->
-> >
-> > ----------------------------------------------------------------
-> > Alexander Shopov (1):
-> >       gitk i18n: Update Bulgarian translation (329t)
-> >
-> > Harald Nordgren (1):
-> >       gitk: make "make -s" silent
-> >
-> > Johannes Sixt (2):
-> >       Merge branch 'master' of github.com:alshopov/gitk
-> >       Merge branch 'spanish_pr_bis' of github.com:basuradeluis/gitkbis
-> >
-> > basuradeluis (1):
-> >       gitk: spanish translations
-> >
-> >  Makefile |   6 +-
-> >  po/bg.po |  45 ++++--
-> >  po/es.po | 488 +++++++++++++++++++++++++++++++++++++------------------=
---------
-> >  3 files changed, 321 insertions(+), 218 deletions(-)
+> ---
+>     revision: fix --no-walk path filtering regression
+>     
+>     Fix for a regression reported by Peter Colberg [1] where git rev-list
+>     --no-walk <commit> -- <path> ignores path arguments since dd4bc01c0a.
+>     
+>     Verified against linux.git with the exact example from the report:
+>     
+>     git rev-list --topo-order v7.0..v7.1 -- drivers/gpu/drm/ |
+>     git rev-list --stdin --no-walk=unsorted -- ':!drivers/gpu/drm/'
+>     
+>     
+>     Without fix: 2026 commits (all pass through unfiltered) With fix: 146
+>     commits (correctly filtered)
+>     
+>     [1]
+>     https://lore.kernel.org/git/CAL71e4NjDTHbKR8z7pSrPpzDrX19JOTR04sArm7P=m5ivqkskA@mail.gmail.com/T/#u
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2181%2Fspkrka%2Fkk%2Fno-walk-pathspec-fix-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2181/spkrka/kk/no-walk-pathspec-fix-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2181
+> 
+>  revision.c                |  2 +-
+>  t/t6017-rev-list-stdin.sh | 18 ++++++++++++++++++
+>  2 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/revision.c b/revision.c
+> index ccbe2e03d1..e990e3f96b 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -4419,6 +4419,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
+>  
+>  		switch (mode) {
+>  		case REV_WALK_REFLOG:
+> +		case REV_WALK_NO_WALK:
+>  			try_to_simplify_commit(revs, commit);
+>  			break;
+>  		case REV_WALK_TOPO:
+> @@ -4432,7 +4433,6 @@ static struct commit *get_revision_1(struct rev_info *revs)
+>  					    oid_to_hex(&commit->object.oid));
+>  			}
+>  			break;
+> -		case REV_WALK_NO_WALK:
+>  		case REV_WALK_LIMITED:
+>  			break;
+>  		}
+> diff --git a/t/t6017-rev-list-stdin.sh b/t/t6017-rev-list-stdin.sh
+> index 4821b90e74..32284f1831 100755
+> --- a/t/t6017-rev-list-stdin.sh
+> +++ b/t/t6017-rev-list-stdin.sh
+> @@ -148,4 +148,22 @@ test_expect_success '--not via stdin does not influence revisions from command l
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success '--no-walk filters by path (single commit, match)' '
+> +	git rev-parse side-1 >expect &&
+> +	git rev-list --no-walk side-1 -- file-1 >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--no-walk filters by path (single commit, no match)' '
+> +	git rev-list --no-walk side-2 -- file-1 >actual &&
+> +	test_must_be_empty actual
+> +'
+> +
+> +test_expect_success '--no-walk with pathspec exclusion' '
+> +	git rev-parse side-3 side-2 >expect &&
+> +	git rev-parse side-1 side-2 side-3 >input &&
+> +	git rev-list --stdin --no-walk -- ":!file-1" <input >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+> 
+> base-commit: d35c5399e3e54ac277bb391fc2f6be3e816d312b
+> -- 
+> gitgitgadget
+> 
+
