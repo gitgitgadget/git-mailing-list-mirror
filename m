@@ -1,180 +1,106 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162451A6824
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 01:26:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B743321A2
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 01:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784165176; cv=none; b=PJCc8GYzZmcc7udbRb0CdmmQRdRUZKuymBLR5NSG/Ei/kF6riG+2LQ4GjsPByUn+zF6jgOSjtffANsK8QXV42pMA+Hv7U5tHbS1qbgjuDQeC1EVkC6HfRwh9RvhWwZDB7dpE1DxrkHuNIxm0az7M6/Xxlk9GNt3IVjfzzH+Kfh8=
+	t=1784165416; cv=none; b=FtEqhLq6cLZYGuTAZecHQLLDRF+vBn2eVS8J3SGnoSDpEuyPN5rXHrk/ub9bk8YXsC1XV4wbMuJmi9Fk/dtoC5j/TKyoswru3E8uCWOID+KWZ0HlNyH7LekN+cbMQjdWXJkH9xoFNa23tg+EGw42oVmIEDMtWxYGh3WBhhh7jCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784165176; c=relaxed/simple;
-	bh=I7vO3Ne4kXN2XZOxsLCBS6MHBpCnE6+8Vx9im4BNZTY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZM/wbG0gCQ61pJvwABwyyKg4j9s7lLKtiSscP9P3t4ybmdMOqmDi3xlgo6YIZjX8HmtxOOG+nfkJxTDriBJiRHaueZekrds0hyslnxSpgcdh0XKdjTZMXQcNRGpikTAi6z4abq+Fsqh0JVo/kXIja/A2vEjSxSP78XjbTbG/BIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qBS2T92Z; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784165416; c=relaxed/simple;
+	bh=LxqeOSq/UQSvtUEZBbh72O4varJOnDodqCaoJbQVK7g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HuZ9/BRfN3OdXI/qusBOJbQ1swV86+JK+0raVRFOP9qhgC17tYcXAkvQHeuUuuxjuVK9trX5UNgQfBVm6iKaCQhJPxB9CICqQa4OPTpDVddRvcxETq3YQcomQGn+FcsVHEZJjmmcFXNSBciGNFd3/Md8112hIYEFpa7pQtvgJbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H4Fm2XVW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nz4LMYzI; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qBS2T92Z"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38511175ad3so5070021a91.2
-        for <git@vger.kernel.org>; Wed, 15 Jul 2026 18:26:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784165174; x=1784769974; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+wbpnJXzmU6wneD1pJdG0DAs5Db0sojcNnK2txEQsCc=;
-        b=qBS2T92ZODkmA/Ms9NzUv63IMooqU5IYW6T4n1Pq1f9MdTMMNtVCMi2DuaRswJT5kJ
-         k4aBdIZjD6P1jXYDCIb9wf9UWHZD/a/Cslj7qEoNR9KILcp/WYyMq6WfewMVLId+2N+g
-         6KJYJccJsGJCkReygH2GI8GznJj1SUN6UNZlYwSdf44HMNE3XK/1nNXrb/4capHq53mV
-         NXLUXLNQXGg/W/+eqa0g1Iy4ZQ5wNJqgN5VeMTAtrWZn8Oc7ucIUreAtPsl0yiDPEcik
-         Vg7WZ2Hzingu4vV5HtZbjXthmT0q+ENQBBrwTJR7KJ8Wkl5bxx8HS0GLDT3Zr1BF8cHU
-         pKTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784165174; x=1784769974;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+wbpnJXzmU6wneD1pJdG0DAs5Db0sojcNnK2txEQsCc=;
-        b=Dxb69rQ0p+wVX8up+P+UDeVMNHt9mE4NdV7mCZMHv1wdLwuRWhyqxwviX68OXHiFvE
-         dQSO8PKzUkL9D7ymWtV45vbKnPpLfS0qzcoz3er4i1Uv4URSByB7wjy8g6XIKEskxkHe
-         xu9p/jqJmA6m996FBiFE9rJyVHeMioHzJyqnhiV9ymgfstti4+thb4cIJ4JBQU0gMJxR
-         zGNqIuNz03GY9J6j4cVccRiwGT8G8haOqunUNqCJEq7ZKvdSzSyaBB0pBQsuggFsa74K
-         Ypa6K1rXlLD0jHiHuOPce9COFXJYXGYNGnWINHCSK64M1j9+nI7hRhRxoL7RVg4EZ//H
-         cVqw==
-X-Gm-Message-State: AOJu0Yy+qinuXKplBJ2lvdoAXbb2ThSYcPGbPHY04pVkkfuAxdP/lhey
-	b8cF+jtSDuB79sL/k23XlI1vqFIT2Wwsem/Qx1EFcda71I/lfWltDrLUyVPoTQ==
-X-Gm-Gg: AfdE7cnavdaOd6uVocnUmXjThrqi5W5wfHFzqdKBwBud8bmpJDTjzcss98PJpaGn97I
-	kZChVn1M5D0dATLNYAiEdd8sVxaRa7k7L6pMUwyjvElaiaL6w4rF7MSefKWSHnW3soQG0BEbdUm
-	1ipJJ3OvnQCDkDBE2gXlPrWh9wgLWXI2vo+ojqHsUnUrYrswYYa73B6G5jx5VUBO8ObUWl9VslX
-	DuOGURwUTTqdhl6WvIzZ2uQpZe2gBJTlBuWWb3U82PARUGL8mBEr2fHLh2hVtShncJgD8+s09On
-	00ikXEWMZEIHmGpXF3Cxn/BlAswn/us60i8+zSXKwyrm+m3l/1pRUrxLsdyWN6lfxJh8QasHVZ2
-	/FiDXDbSKsLJgl4QXp0kBcne80BuTkifwqiOEWoKYYCVNDauqg8U7uCn8jKyP2PS+7cpuEQU1oe
-	u8hmRohkA/IWXpidK+s7rlhzU/esI21UrgiKmiAmrTX77uzM921SHMrySORuE6bG3Sv6MEn1YCT
-	VBSdOTL88Ft
-X-Received: by 2002:a17:90a:f947:b0:38d:ecfe:41aa with SMTP id 98e67ed59e1d1-38e1b015ed4mr6997802a91.43.1784165174371;
-        Wed, 15 Jul 2026 18:26:14 -0700 (PDT)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e6e9edfsm5377490eec.28.2026.07.15.18.26.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 18:26:13 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: git@vger.kernel.org
-Cc: jltobler@gmail.com,
-	lucasseikioshiro@gmail.com,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: [GSoC Patch 7/7] repo: add path.git-prefix path key validation
-Date: Thu, 16 Jul 2026 06:51:38 +0530
-Message-ID: <20260716012138.6714-8-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.55.GIT
-In-Reply-To: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H4Fm2XVW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nz4LMYzI"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DCA14140014F;
+	Wed, 15 Jul 2026 21:30:13 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 15 Jul 2026 21:30:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784165413; x=1784251813; bh=5mpElsVI43
+	157uPsLdB55bz/ZEibj7fO3Nhlk5s3X4c=; b=H4Fm2XVWT6oirCFOsje19irguq
+	rBLuij6Z1LWUW2FqJb1sYBkBCrVsi9SeObb7VYM63/Rdjishjvlpq67/xbvnSH0Z
+	QiMBc/+wXJEeZlFtAB3JkzyPTgjKGUT8+ForuNIHfZ/Scn6uvPYnqhpIcWG8fPhl
+	wbvh91mBeRXrwjyfkGHzgfZcm6H9v/3yMEqBQpvmzU6KggbuYArPEj9RqGQ+19Uj
+	AnMt1YX/buy8nK8crA/dmhcOveWYBZ7caf+4vGaxKTXbolGjpr88+u274LLp2jSU
+	b99Dr3Jmn60korJeVgwDtp/cN5IwCOtsVvXuo+N0bj+ozUoYX23YUMhFfVKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784165413; x=1784251813; bh=5mpElsVI43157uPsLdB55bz/ZEibj7fO3Nh
+	lk5s3X4c=; b=Nz4LMYzIExycKdo+/aVTF+jNcDga+Gu3xZStvE/yb91HYw1lrEX
+	4Rxs7soQdfjqf2Nnjph7iAZiNSF9E7fBCQQqT9o7TRxLlkk8b4kHWDV0DZH1rHjp
+	JCmdmVWZxaoqJClKhsw7yEF8Fzdpt+mSST+6HFcDpRb9iSdB4tYXTSf0jd4BTi4U
+	s+Jl74VkQNDvGAnD+V4aseU7ele9qFAsmhjB7my+w55Ox32kcqo2/ANSE4Qb1LFL
+	hEmQJ87x83HdzLNyhcfngoLamqXtIaJ60NSSnPMFlK6vu2mgh71U1iytKKNEIq8U
+	G1pEOjV3AUyKf+Yd5tZ2vqVfp/WCuS31+3g==
+X-ME-Sender: <xms:JDRYamlaJZOVf7zWFBk-nmoXRC8jYRdIoPfRM9VIYBxU3O0w1b9Ggw>
+    <xme:JDRYaqa7uRRl8sc-6fvHWzbek55ciyyWedJ1Xx-sS1py9H-9W4sijceW3cgcokbIF
+    7iXlfl_exC2qUQBW9LuiVYr1Ia2paoX7_JRQggYevIoayu9FM3FIg>
+X-ME-Received: <xmr:JDRYapFCWhZgW6k6LkvYJhfs1TglyJrBGXx62uZ5usxcpcD4x-VJnnWKjwh4GJUO7UjDiZ8Ufx6SkvRUeX5Huk8BLR_ZSlb1UBCiP7Q>
+X-ME-Proxy-Cause: dmFkZTFJl+fxLR0zkxbZW/MYuD4Q7oG2mFNS4vrmAPyIMkErsKxHFP1giIbFUvfoyrEeWW
+    7cWkv5r0nGmeKsocJIk524tKR8TMjDiaisVIIxnLXE6GgmmevAiqQx5T1uZw2aqnFj/6U4
+    QQ344FP/F0hn0xLS6H/DfzO7eMXBN5uauDdWpEQOxTyIVOI0nFdLrznEzf/wEf7rVyrlJP
+    MWoW3fnOYawRiv4/qMgcyFCO1IAr3F/7AzaDmtM4kJC6gBaYno0ZzdHkgafHxQW53JHAA4
+    i3DuIP5WrYLgnKoVkasncE4oeVLXMnfrOqWtK6rVo6nAFXSs2csiQS9f5sGoqotQHWr3jU
+    OE2QJVqvXOd2SyRLpeBOHbX1utPdRN2ruFuiL2Q9t/qUumz7TXue3QepBh+rxlXMd84Nht
+    HCHVbbqMOKb13I/4nR5qSz755G1ZFa0nedR/G0cXlHx4pAs+mmJczcKYPKhRqECEahJOMW
+    Nw2sxU5jTl6/vKIeADVHPhXcg5PoVlX2IqNtmln7bQnxqZNBeNFOXm2EsYkV9QXiGUpz6t
+    dGvM1rqwcI1lUEk9i0kJioN9zgaz5mK/3bLLo9WR7nJtnIxI5UXAM/DAJinOChTRH46UkU
+    6MqKKpnp5j8C2pOio7Eo5ErA68VOOHUH4WBXKTN9YiNc1ftAGRHbxgTi+oFA
+X-ME-Proxy: <xmx:JDRYahafXeh8ofQPXYkRFAm53anlJP_H3wlqVxgGpYVER2SZldpB4A>
+    <xmx:JDRYalxYMCUuI8wrM2dladwt0oYISFoARPNK5jm_DATxUL5lRZ5IqA>
+    <xmx:JDRYarS-ylqEmQiDyRsKNCTV1NC9YHRORGw0Vb9UvieeXLzuM4Cncw>
+    <xmx:JDRYaqJTWUnoNfytLuSoTRPBavdtmEJTAyvUdj4TEadCbNhI8qtyrA>
+    <xmx:JTRYajuAlFVzAgo3YP4iFiVN0Wph0YCMNUfYHo-pUFjorCcniEJ3AA_u>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Jul 2026 21:30:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Pablo Sabater" <pabloosabaterr@gmail.com>
+Cc: <git@vger.kernel.org>,  <chandrapratap3519@gmail.com>,
+  <chriscool@tuxfamily.org>,  <eric.peijian@gmail.com>,
+  <jltobler@gmail.com>,  <karthik.188@gmail.com>,  <peff@peff.net>,
+  <toon@iotcl.com>
+Subject: Re: [PATCH GSoC v18 13/13] cat-file: make remote-object-info
+ allow-list dynamic
+In-Reply-To: <DJZH1PLDC08G.1XTK39BO8YOVS@gmail.com> (Pablo Sabater's message
+	of "Wed, 15 Jul 2026 23:44:11 +0200")
+References: <20260714-ps-eric-work-rebase-v17-0-afabfc83260e@gmail.com>
+	<20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
+	<20260715-ps-eric-work-rebase-v18-13-34d7adb051bb@gmail.com>
+	<xmqqcxwonnkx.fsf@gitster.g> <DJZDEE0G6ZRS.2RT8JTQQ6CUXB@gmail.com>
+	<xmqqwluwj8of.fsf@gitster.g> <DJZH1PLDC08G.1XTK39BO8YOVS@gmail.com>
+Date: Wed, 15 Jul 2026 18:30:09 -0700
+Message-ID: <xmqqmrvrk9ge.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Scripts and command-line prompt integrations frequently need to know their
-relative depth inside a repository working tree layout. Currently, this
-is retrieved using `git rev-parse --show-prefix`.
+"Pablo Sabater" <pabloosabaterr@gmail.com> writes:
 
-Introduce the `path.git-prefix` key to `git repo info`. This mirrors the
-prefix location tracking framework as a standalone key, returning the
-exact relative path offset complete with a trailing slash, or an empty
-string if run directly at the repository working tree root.
+> We can force "size" when only %(objectname) is requested so the
+> server validates the OID, and discard the size on the client side.
+>
+> Because this is a cheap fix, I'll add a NEEDSWORK for the existence
+> check to be done regardless of the attributes requested.
 
-Mentored-by: Justin Tobler <jltobler@gmail.com>
-Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- Documentation/git-repo.adoc |  5 +++++
- builtin/repo.c              | 12 ++++++++++++
- t/t1900-repo-info.sh        | 19 +++++++++++++++++++
- 3 files changed, 36 insertions(+)
-
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 6c962620ec..5ba2ab1612 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -113,6 +113,11 @@ values that they return:
- 	The path to the Git repository's common directory relative to
- 	the current working directory.
- 
-+`path.git-prefix`::
-+	The relative path from the top-level directory of the working tree to
-+	the current working directory (including a trailing slash). Outputs an
-+	empty string if executed at the root of the working tree.
-+
- `path.gitdir.absolute`::
- 	The canonical absolute path to the Git repository directory (the `.git` directory).
- 
-diff --git a/builtin/repo.c b/builtin/repo.c
-index a97ad71649..00d5064281 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -1,3 +1,4 @@
-+#include "compat/posix.h"
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "builtin.h"
-@@ -100,6 +101,16 @@ static int get_path_commondir_relative(struct repository *repo, struct strbuf *b
- 	return 0;
- }
- 
-+static int get_path_git_prefix(struct repository *repo UNUSED, struct strbuf *buf)
-+{
-+	/*
-+	 * startup_info->prefix is NULL if we are at the working tree root.
-+	 * We add an empty string to ensure the buffer is cleanly initialized.
-+	 */
-+	strbuf_addstr(buf, startup_info->prefix ? startup_info->prefix : "");
-+	return 0;
-+}
-+
- static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
- {
- 	const char *git_dir = repo_get_git_dir(repo);
-@@ -278,6 +289,7 @@ static const struct repo_info_field repo_info_field[] = {
- 	{ "object.format", get_object_format },
- 	{ "path.commondir.absolute", get_path_commondir_absolute },
- 	{ "path.commondir.relative", get_path_commondir_relative },
-+	{ "path.git-prefix", get_path_git_prefix },
- 	{ "path.gitdir.absolute", get_path_gitdir_absolute },
- 	{ "path.gitdir.relative", get_path_gitdir_relative },
- 	{ "path.grafts.absolute", get_path_grafts_absolute },
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index 6c47989df7..3e5e42f6d3 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -207,6 +207,25 @@ test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
- 	'.git' \
- 	'GIT_DIR="../.git" && export GIT_DIR'
- 
-+test_expect_success 'path.git-prefix at root and in a subdirectory' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo "path.git-prefix=" >expect.root &&
-+		git repo info path.git-prefix >actual.root &&
-+		test_cmp expect.root actual.root &&
-+
-+		mkdir -p sub/dir &&
-+		cd sub/dir &&
-+
-+		echo "path.git-prefix=sub/dir/" >expect.sub &&
-+		git repo info path.git-prefix >actual.sub &&
-+		test_cmp expect.sub actual.sub
-+	)
-+'
-+
- test_repo_info_path 'gitdir standard' 'gitdir' '.git'
- 
- test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
--- 
-2.55.GIT
+Hmph, why NEEDSWORK?  Not doing so would mean that the result
+lacks correctness.  Why should the first version of this series
+deliberately produce an incorrect result?
 
