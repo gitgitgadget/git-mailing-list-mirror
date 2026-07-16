@@ -1,85 +1,87 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73F02045AD
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 20:27:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6483128B8
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 20:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784233669; cv=none; b=BtFxADWr7V7o/40Q4bT5dEN7qD8MUgKugHC6GZ3Q/beHrRctoQgYt3QwHy8ucsRs+dEGnDiHzlKZrtcbFukybUd7cfCx7i7RmU0O8JJYraFE2g4vDejjyTcajA7Z/M9c99PNunTj6eFdCfBc7JfBPNV0ZVrKWdKQqERG0IT/dEs=
+	t=1784234663; cv=none; b=RQkDF/IVvjueX1OWvwzDfgzmd/LXTSOWBf3x1ML4/8TZ9acG0vxlKDyramVh48jCYsQqWQeE2GmHJSQk/tU+fMm3Fa/r+dRVtke0Sh1BkCM/oe6IFiQfNZ+93l9GIO+DrSeaFz35EjKPsRt2GRBmfWF1TzGc6wVYuEnfAmMoKUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784233669; c=relaxed/simple;
-	bh=XPWVNop8CU9wrprEqVc1CiWppIycu866gG34h0L9oao=;
+	s=arc-20240116; t=1784234663; c=relaxed/simple;
+	bh=xznT3ShfJ3YAtTglTHDZk0FWhAD8XgdOYrpqP93TqlQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JKFrRsojUvmvU7gXNevGOy/QiBJffdlpxyMGGZLJDrIRpZWFv416JaA/nugIphHVfJEbpbsjGajygc+HU3sdiIMYJzOFlm2SRSPDejqvzb7NuNxhOfv0WanpU5sSO8rjCYYZs01VqXLUMsSkiFg3WOuHZxzJvmDd9DV/cK5ZebE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ULOg59Qq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BwWYDvwu; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=ikB8CKd+7sIfH6rT33WWfX84zbPI/Ami+tH4A7Ofn5uc21jw1irIelBtYcCnwNvO6DETDoQIXgV81/hBYCdyB/M0MCS6wQFVu1+sZX/QpTvphSz+0x5GjTawow2TSi6if3bt+TbscIDAu9PUR3M7m8Iy4zpXfZdltO/2F0IDf14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MSb1KjS4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ci0fR+mZ; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ULOg59Qq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BwWYDvwu"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MSb1KjS4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ci0fR+mZ"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id F35CAEC00A2;
-	Thu, 16 Jul 2026 16:27:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Jul 2026 16:27:47 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id E7951EC009F;
+	Thu, 16 Jul 2026 16:44:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 16 Jul 2026 16:44:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784233666; x=1784320066; bh=v+5zHBVbiW
-	7tWox7Ia+2LjFbh0m3jc9zZdJFt01wuIs=; b=ULOg59QqU0AQSYRwjiRhLrHK0A
-	bfJZDlHC/Nsr/tkovugXiNi1RTXCQH0nz8hJxqe9fEbatBRVt4jB6vQsDDsW80Sv
-	zane/dFyDZUDPgoaXK6QNDxiEj/3ubUhwTkM/8IWB71oVwEwg6PNB8ibPImY+yqX
-	RriQNN+/jPPylGMDvUBY9498aqDfmDRm4xk3D9gdekdGFzZW+ef6j/V0MXAcZTkb
-	IP7loClWotOY827/ezAi1fjNOe3zqELvNrfxvCJb89ZyG1UvuhmaHcXtHiHUmukZ
-	DWA96eWb5x0h0eQIvC6vvs9MnfqoU6EE9K8m8gT1ArsmarWSDRhUJg61h8VQ==
+	:subject:to:to; s=fm1; t=1784234660; x=1784321060; bh=kOo89yzhXG
+	Cb43f0K/gDXhEfydurct/vw74a9y/hK10=; b=MSb1KjS44pIripOK+pndRph4bL
+	G/0/mu8LnuOuEt6b4Z4nZYT4WK0BL4FVPUP6hedGaWtl8Sn3GbPu5OAqYyQG2PJn
+	l5ByTW7UWJ8wzlI7BrkgR+LMAoCmV+R0kiOCSSTZQYptIpP0gXw6Q371Ozi2v5Ns
+	eQvGjJAl0yX5h5Ow4D7+iAa+ltqK8EMokAm30gq45w7MPslPb8ywIPrZIObGty4u
+	SvzY9eOg1b0F4AFIuvKZmBIcMR763+Z54bnK5BvU31F4ifBtDLQnIiPNbU9hwMik
+	mhfy+LFUPehjY+u2JLD1ChostVEMwssKSMnF77rZ5G2U6J5iVoUD69Xys4/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784233666; x=1784320066; bh=v+5zHBVbiW7tWox7Ia+2LjFbh0m3jc9zZdJ
-	Ft01wuIs=; b=BwWYDvwu6r63VXzkgRS5S8R64rKwJ7eXwBYh97FHfqRh9tNO9Yn
-	b9TEpFQ9p/4u2zKtYanMj9lFU2e/e3tk0LrmFsqiWG1LYW7foEVgsrIDYZg2dHLg
-	dKG1r1GnK8Gu4PVeZErziTtXsYlOybY6ag+T9zsBX7zpkFB+Vi03SLLVfGDJ3RkM
-	v9pDdT0KMMuWA72rraT8OcVoL2eO0wntDFANPEnoexEEipO6o6sJ3No38Ex0N+Lg
-	hhZu2FK0xUDko0iEJNN0IlSJI15fOMvJpOvEXPb4Iy7xecie6xgjVq0TlZ1p75hn
-	m0p+AuIXMZLdL9yXYe3/ukDNxl5zLq2OcUQ==
-X-ME-Sender: <xms:wj5Zard-IxAqV8KtEX9aZFtBCoFoHeYmVgUNL17uMBxpG8jC9UFc_A>
-    <xme:wj5Zajdid0QJJAyPPcQWjOC38hqiZGGKU7F7IPeVQ2BRq1BorQZNy8xKovhYjTJb9
-    vLfXcQL7rJKArSd8lQvkvTaxXL9ZcvzwbDPc1g5drACQrjTMKA9>
-X-ME-Received: <xmr:wj5ZamwXCpHBQvRyMAGYYrVyKYRlUBu7wEf7fRKba0_ybSADZC1a40GnvW3HuZxqHPvOb2THzphKrxsohTjBrdPuYcz1G3EOLVzK-Z8>
-X-ME-Proxy-Cause: dmFkZTERffS6eR1GMn+JpBnh1jqn7GvCcEFQOfyCnzo5eL7YbTDaZu27umrULcizlVRl1V
-    2In721mSNoW66HsFkO6JRh/9lwrOklhAFNL+eDMz6asW2RAS06XOgWzhBh4grME4HpR7je
-    dRAVd1H3iTrZAUuKFubG957BsYTko+/nDjbhDKCAsk0SohEreovINUXztmXwGIbDKPzI6Y
-    nYKK7mtGhrfJI60r90LIZ/rJpBzB1/98rNQ4kVULrtkANWgmEyjcBzeT7VHQJF1Ut+eHPR
-    smSMSoKkaoF4w7Kr9/YA+km55UZNeH8IHHJqaYJk9amXeRc62WSSCfbgdUuAOKXeKMURnj
-    CP/qlZLXTkT2v1b4ND2gqqHvYQ07qVgPZiB0ECkt4Yw4nfHFb1d7TlkpufL9aeKsiiYiTI
-    MG9WwvUg6IFcaalKXTwcRFkn5ABofU7nRYLZjZ/cclJ5jpGm77eVD0jlSYCqkywmn0Xi8w
-    bgCJVpEF1b9lyTAc7pxvSepQRMu6wLYrQAGnYeKNdJ5TA5MmttlwLGNlrbljzso61LFW+t
-    auQtutM8HeLWXmwcREgPwqbHrQtFweLgEYBv9n1EVzUm4xbqHSg2MYqmP9C5akxbb3YVqi
-    1eRB0kagb81p5EOUhMnbelfJ2ZcnLMw0Hf3JiOxvADDSgFMT+FqUq8+SjzrQ
-X-ME-Proxy: <xmx:wj5Zai9vlqAoI-ZH_bUy5xs_k8YXisZp3WE4WMY-iHSs0OBUSpB-jQ>
-    <xmx:wj5Zamhl-hACX0aR71VQlTtKdiVsMJ5Rl93IUrnz1--eRF_86KAVoQ>
-    <xmx:wj5ZahH95S-kET_lmx-yao-PCOd2E8CtAqmmPjl5PapSUZy1C9oCKg>
-    <xmx:wj5Zat9h0IPIZTuMCR2h0WAK4E1dMP52KGnVsGhF6jQzkLFXjuykMA>
-    <xmx:wj5ZaopG9eB1HUkoY78vmTSgz65uKVTdtz6H8qSqEQLV79Q65axyoBuu>
+	1784234660; x=1784321060; bh=kOo89yzhXGCb43f0K/gDXhEfydurct/vw74
+	a9y/hK10=; b=ci0fR+mZzbtp8Bzi2J9GQlkhpR4tzg4VlNEqt+WlnVQO4xaxxCR
+	f+9zLIwDgZyAPLNtmQqLATJEGSogOxiyOJ1ctHYIwQ2+3zQymzfri8WZ5ji36LK1
+	HxYsozcrqZ63gd7FZzUi/NNo6doe7zR6S/OaLCUHk4of/Ey7PgagSFBCuA4k/v/P
+	LlSbTpUlRlcpTFn1p4h2NMOB0KXEZNsE6J3smPlWu9xWZQbZP+BrXBIYCeC2Geha
+	9uS4XbiLXIFI9aWQPEGQGAQrm3evtkUzsOJdjTvAOiT+Q4b168hkxmEFhdRGhN3o
+	5AYMaXLIYI/6pu2k0YwEtpEUyXsxr8sVANA==
+X-ME-Sender: <xms:o0JZapassBs3PFTjYv5XTWNq31ne8pvVRDUVnJWxYT8_bU6NSB0QKA>
+    <xme:o0JZajdBBeT5sXWoAACXocRE0mO8RCnQX9m4ve6jXWvvIO_8O8YfcQyw0MGMUHr94
+    WByCyJ7Tl_Gnk9LJvc--SAsw83zrMVjHnXJmQOaiYvFfZ13sCl0>
+X-ME-Received: <xmr:o0JZamkGpvs8mliIKy2TMUmpnzrQgHSbQQyNKYT9mSWb9BWWXkrtSvVOD9YZRzn7XUuXFzq4xuwpmEpx0go_-aXRxoOlpnOj5k7fRsI>
+X-ME-Proxy-Cause: dmFkZTFg9t/+sauawYJ4BdnOcN1jIdl4RgVwFbTdHMsKnBK/7Mo64O9uureL6OaQ11tXPU
+    5TmVUrwItlB+Hrx0YYltXbDIfgU8t1UUrnQdGbA+6YIdkqffgXDKwX7h0nrSfx7Cv4YZ7I
+    layJYJdyx/4zk6qDZHknC2pfCjkm+xwuCi/beNd6EqULn1zXXJJDqqVpb2Un+hI7eNxLoM
+    tGuHbLFTynPNZV8IOL6+YeD++i7RdjqNWKtC+cnJEbdVOd8i9pSMp7RRMBKyeP4xBvtd2Z
+    tKnbcb1ar1/2iZsX/F4NOu7w0GEI3AaEcSJJ4C3NNZ74+BSfuDmrk2+hOtOJbvVOitZ+e4
+    ikBNGz5qx22roupezBcPWVZDH44wIq308CBoQDWUGY62MG1YlgXmlttgHdxNNVUU5tq19Z
+    MTFirdBYSMdY8xCyWejfhRa/jLbNH1Tn6SxXHHd3WaFgb/wC17KtiUssoqKG8C362w1zuw
+    emLajV59xn9Df/F28Hqg+vEoQGTiCYn83TtYxxNMAr76D3cNt0KbcQhR7cT+dhgssO3p+g
+    Adv+ICHUN5Dq0CA0Hkpy3o6uwE9R4RRdvkRKJ/UbpLAdC8duUBU3+NX1cXhXNnDonuk/Zl
+    VdHxFP2x6gOwBPnaEAnUDcjacZdGFT0qvjMBp5I7arauPBr7u/q314xd7PPA
+X-ME-Proxy: <xmx:o0JZaj2IQR8r9AH3hZhJgOm7lBq121EhfBDIj4GEjUIGOeUCAESRbg>
+    <xmx:o0JZavc4SkHn2UvoUw2QsZIn22nY8kUJchdEqUAkhIDhg9o14G8Nuw>
+    <xmx:o0JZatY77vONnTGC4rILWSpLqPyYqoUVhGCHAWGJbBNN6QHOPyM45A>
+    <xmx:o0JZakGA9CxuVmm4BfZvaLc1hxuLQpXmF6AZWkZFNtwXgYqMyW1sgQ>
+    <xmx:pEJZaqlx4eYzZfXJw0EOioh4031YyCxa3JawJdgk0havmey5uzl9-8nr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 16:27:46 -0400 (EDT)
+ 16 Jul 2026 16:44:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  ps@pks.im,  Christian Couder
- <christian.couder@gmail.com>,  Ayush Chandekar <ayu.chandekar@gmail.com>,
-  Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v6 4/4] environment: move has_symlinks into
- repo_config_values
-In-Reply-To: <20260716084941.1101918-5-cat@malon.dev> (Tian Yuchen's message
-	of "Thu, 16 Jul 2026 16:49:41 +0800")
-References: <20260715035501.48271-1-cat@malon.dev>
-	<20260716084941.1101918-1-cat@malon.dev>
-	<20260716084941.1101918-5-cat@malon.dev>
-Date: Thu, 16 Jul 2026 13:27:45 -0700
-Message-ID: <xmqq33xifzni.fsf@gitster.g>
+To: Simon Richter <Simon.Richter@hogyros.de>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Ben Knoble
+ <ben.knoble@gmail.com>,  Jeff King <peff@peff.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  "Randall S. Becker"
+ <randall.becker@nexbridge.ca>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/5] compat/posix: introduce writev(3p) wrapper
+In-Reply-To: <xmqqfr1ig0hv.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	16 Jul 2026 13:09:32 -0700")
+References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
+	<20260716-pks-reintroduce-writev-v1-1-ea9038c884bc@pks.im>
+	<a2676ec6-39d5-4220-8549-10a17daec668@hogyros.de>
+	<xmqqfr1ig0hv.fsf@gitster.g>
+Date: Thu, 16 Jul 2026 13:44:18 -0700
+Message-ID: <xmqqwluuekbh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,35 +91,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tian Yuchen <cat@malon.dev> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Move the global 'has_symlinks' configuration into the
-> repository-specific 'repo_config_values' struct.
+> Simon Richter <Simon.Richter@hogyros.de> writes:
 >
-> To ensure code readability, the getter function
-> 'repo_has_symlinks()' has been introduced. Callers access
-> this configuration by passing in 'repo' when possible,
-> and explicitly fall back to 'the_repository' the rest
-> of the time.
+>> Hi,
+>>
+>>> +		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
+>>> +		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
+>>
+>> That feels like it could overflow.
 >
-> Note:
-> To support platform-specific overrides (MinGW) before
-> repository initialization, the 'platform_has_symlinks()'
-> macro is introduced in git-compat-util.h. Platforms can
-> override this in their respective headers.
+> Isn't it checking if it would overflow (and dying if so)?
+>
+> Ah, wait.  The addition "(iov[i].iov_len + sum)" can indeed wrap
+> around, and comparing it with the maximum value of ssize_t wouldn't
+> catch that.  Is that what you mean?
+>
+> Would something like this:
+>
+>     if (maximum_signed_value_of_type(ssize_t) < iov[i].iov_len ||
+> 	iov[i].iov_len + sum < iov[i].iov_len ||
+> 	maximum_signed_value_of_type(ssize_t) < iov[i].iov_len + sum)
+>
+> work better to catch the three cases independently?
+>
+>  (1) The value is already too large on its own.
+>  (2) Adding them together would cause an unsigned wrap-around.
+>  (3) The sum does not wrap around, but it exceeds the maximum
+>      representable value of ssize_t anyway.
 
-This shouldn't be a mere "Note:" but should be treated as an
-integral part of the implementation details.
+Actually, looking at it again, I think the original code is safe
+after all, because:
 
-    Move the global variable 'has_symlinks' into the
-    'repo_config_values struct.
+ * "sum", even though it is a size_t, is checked inside the loop to
+   ensure it stays below the maximum value of ssize_t each time it
+   gets a new value.
+ * iov[i].iov_len is checked to ensure it does not exceed the
+   maximum value of ssize_t by the first part of the condition.
 
-    Introduce 'repo_has_symlinks()' getter for readability,
-    and 'platform_has_symlinks()' macro to allow platform
-    specific customization, primarily to help MinGW.
+If both values are less than or equal to the maximum value of
+ssize_t, their sum is at most twice that limit.  For an N-bit
+size_t, this sum is at most (2^N - 2), which can be computed safely
+without any unsigned wrap-around.
 
-may be sufficient.
-
-The changes to compat/ looked reasonable to me.
-
-Thanks.
+So...?
