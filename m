@@ -1,94 +1,156 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AB341F5CD
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 13:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32D4423EBB
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 13:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784207896; cv=none; b=ih33XUkIjD++DxXs2Z98tAEhrdli7mwLmjQ5ooOCGqpEUT2F2GSttHyQc6Q98Cc9BdMYHUGYPNH83hNHpOXoy6veIjnUrU2s8PTIPeNwXzeFYaZrr0aszvwKIZJuFynMw3oGK+shF9cXPk3kdD/TX+DKaX+BDIu5jFsJe2XYbw4=
+	t=1784208551; cv=none; b=uPrjxZ+5+Ak4tU48A/DMXhn/Dpf+ahZc4/C1T9GxiC/OD2WeMdpX4wKyEUGUEO86iJgdMAkv9D0EoUvGhI+PoL6/+Ntv26q+0dmER69OUYPvKuox0mTOB6a0L5UfVFC/l+wUOWJx6vEp90ydDxhvzD1P1ulZfj18EDi4QVnfxAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784207896; c=relaxed/simple;
-	bh=GZ0X+MCyI30dMbQxcSYGU/XF7HDSRI2WNcXRZpmQyPM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i43aT3ymxe9V6zmpevAcXSlTWvSdBoiMV2gAJcW9I+Ry28HV5VklKqdRvjt7D9x5rXpL7MvyFK2P6Q6H55TQ4TC5cm/B6I0Z9z2gZ2cAiRwML0UFaPpxerSPUj2uBykEAplhcXXsBfWWYG9wzoVkmTrK134ot5RxZwxlfqLI8TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iXCRLNSI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WYdwW9IF; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784208551; c=relaxed/simple;
+	bh=lNqW2PsWHh2IMqJPykR+xyjPW1Fo6zdrLQEr7Pif2uk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Mk5w/A4ig4OcBHqs94SBWodr6gUOGGlFLtl4vITbHB2V1YM3ScHbMniPUPeEGB3HVDYuYWN1D9MDBAG4ZcB2XQIHij38WXixPzzT4XiHiZqehwcNEJchABNXpQ2dPtWvnYcJA5v7h6esMLpZj7cMnBt7AkNSfGNLCihrTHSCsPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hoe4XTGz; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iXCRLNSI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WYdwW9IF"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 62EE9EC01BF;
-	Thu, 16 Jul 2026 09:18:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 16 Jul 2026 09:18:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784207894; x=1784294294; bh=ZN2zerriec
-	c3j619qxdqX1ZT3FU+f17RuYr8wUbVh5s=; b=iXCRLNSIE9fGZ3EklCQdfsYic3
-	FrYnCNDmqR26eW9/u9B8skAYEACys1YdbTfS97zAxGzHC6Rpv8hpvfuI9cBjPEeH
-	DB3u4JO6hJ4wtZuKTXk/IDd50BvyiFrVZBrsUqoSUqlOV8Q9nS/3A2+Q3J6vlSG8
-	pudj4ezSkwUPtN1l16Zxi+gJIkVwoKjlSATU1iBzpx0DC+C1nVMc35Ru5H7w41re
-	2Y6dkt+XwJl2gqpsSMjwbCb7kp24b5RFHIGNphXughtAodFYahPOZd7kg5+QLpR1
-	T8YO3EusvZtHkQABUyL4oHZ2cf5SOWEl92F12Envs87ViMUmtbbl8MnC88hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784207894; x=1784294294; bh=ZN2zerriecc3j619qxdqX1ZT3FU+f17RuYr
-	8wUbVh5s=; b=WYdwW9IFxUQ6ZnryzAb1vKBw1Y1esVx0n3tIufuS8sm8unFJDOh
-	tQk9W3EW1Xp1oIgZWR0cPHiRrqtTSM2EM0Xn/yn7kl1aZGoPFJPXCTHSfZB5w7t5
-	dRIG4h6bYECNx91zBjG/4yhCWjUdrvIUgSAiuucqOpy9oXoY4SofzR2p4ZL4oSfj
-	pczz6vNUp196ry7Am1ZAjyN3cUVVsXkWNWh6gwzNPyC3aIPsD9gKALMVz9EmtzoA
-	yZCQdTWJkpnHXZ5A9fHk7NyHh+OsEKnWjb2LQyFY4ifUIev2QAqXmG8K/ADi1Rcg
-	B/4/FHhapE84hf65S7DCT6yCfkS6uejznzA==
-X-ME-Sender: <xms:FtpYaqhKLsyh92E47pq6QoTCArBjfj1pNWdnKeDyVMTRDARB3-Q30g>
-    <xme:FtpYaiexersv7C836cJ_1pIutWsVKGg1RbZr0t_3PWxnfTht6Gmbbs1Vlvw3cXOes
-    Xi9Pdyz2GpEhDPRxnNKeW9S6WEHpRQBz9K61zxQ4X3oF2HDX-d-Sw>
-X-ME-Received: <xmr:FtpYavd_2GRH-S9YCYQVUQd98jHkhdKZpyCn1JT07IVM7olkN-yI1KD2b3MKbOM9kqwd-eqz1L6QfiKzk3I9TIGQRraFwCc6KZrdVpM>
-X-ME-Proxy-Cause: dmFkZTENWC/DaWBoihv1K2/UXwFpYRoFN7YtOv6qym4sswsaARUV5owBDlmjyVF68syp+N
-    R6zizGlqC/xScE1J/r2JEsDkq0MjKX7zV3PRI5JTvN08qryKmhrl3I1GF3wmO1PKDXWIrV
-    NBdt3v8N9fjdPVKTnIB4ztrTmLG7ZmNubsmupn1Doq2Tc4OCwvIf3QUfiW2UneZ/Mcx1a2
-    LY4qjEyw1/d3l1nbeWtUQ8xuwwzFvdgkb3ENkvWH6IQg63kB+JY8Axhnth4JNv1AigKkzO
-    zASR6yswxC0W2w4BcaN0tL3t1wfGBX1qUGTI4x4Gd1JIMRhV3gN2mv6nCdQHYTqwpUuHNU
-    q2Rc4Tqnjas/uHuWrOiYjv+VfOT5C4PdpUNjtLiaBYFon8nisfYGAH4V6dhhWYbEui51k3
-    vOAvF2j0Oq6OmfUxMpdZFLQew/fOT0HNt26ptwJv6PX8Yop+8fv0OOQu8gzSrtZXHpV6mW
-    oSuoxB0oXPvguITD9cTv7dB29jSw3zpQ9cmMmsayDR3hrXFrJbu9uhFkMJqQ1YFcsm7Own
-    yX7BsFfJe785w+hMRG2++gyS7e5pvghNrIQAl6uxThhkQ042ibvbSYfEkkNCF2LqOJxJmz
-    7hmPMdoy770jb4Ba2aY4jRsrVCB0YlhAVh8mjTycF+eMso3CIHMVEYJgHEEA
-X-ME-Proxy: <xmx:FtpYas_ppIUJ4GNVAYMeodEh2sAvEXr_LbS_UDPA6KJ7ChC4XYUlMA>
-    <xmx:FtpYarkCfYi96FQWAnb9X0kAGcm-memvJ26eHym-f71VQlP70j_GYw>
-    <xmx:FtpYau_fyWhrMrqbLsDYMFu1ZKzJflvAkslHYB5VuoCZGeXMfAoVUw>
-    <xmx:FtpYapkcTB1VbP3pm_0i_NnFGkMr_OwRiAqIkup05tC3t_FHecRprw>
-    <xmx:FtpYaoO3olH0vDZWwa6mGgObyaQYp6iaWOP3Lr9v_DB6P7FRZYYJI8oC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 09:18:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] submodule--helper: avoid use of %zu for now
-In-Reply-To: <87a4rrxg3r.fsf@gentoo.mail-host-address-is-not-set> (Adrian
-	Ratiu's message of "Thu, 16 Jul 2026 15:40:24 +0300")
-References: <xmqq4ii0ko9t.fsf@gitster.g>
-	<87a4rrxg3r.fsf@gentoo.mail-host-address-is-not-set>
-Date: Thu, 16 Jul 2026 06:18:12 -0700
-Message-ID: <xmqqa4rrjcob.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hoe4XTGz"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-381216921aaso6731158a91.1
+        for <git@vger.kernel.org>; Thu, 16 Jul 2026 06:29:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784208549; x=1784813349; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+GcMWAu7nDKWeKOlpsYHNaNIvxdreCi47KuCYpPMFTY=;
+        b=Hoe4XTGzzf7jOa7949cqLYlSG03uyheqHLUcTyeZN+qWnhC4JtuI06qe4+MkTW2JsP
+         ngJ+33ccC3ocfabfAJz2gGcut4lFmrJ8+MuvbLCBzTpntGGx56c7AZuLV+vBZh430GSY
+         qpB0/muXCNxkFH4tDd1KrG74gRD/A2/K4Qm7kYgTVx9YNH4JgU2u2ygcohCx0UkH7N2g
+         nATVt6Tamg5j8vAjunLlTG/NjStLbQSGq3d7DBvTFBvAA9iTy8qfxhAXClkzcDwBZB6C
+         1EwXDs+bhIpMTPpO7OfiDdTDW1+NbC6MCfkFxxzahM27YexcOw6vK/6If96TYusEP/40
+         VaVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784208549; x=1784813349;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+GcMWAu7nDKWeKOlpsYHNaNIvxdreCi47KuCYpPMFTY=;
+        b=Vd0VM9yzCu8itUnfqm8xDvORKi4XhTSdncpV3gipy2vUgLsqZOCoEo/U7haM7iWoRl
+         e20TVOQ4p0V6E7y673/9Es9YpXZUgkkeQnGKkPGLbAmAAjufH1XAoHOFTWDcVql3Uz7h
+         zjnF2OJOTTZcm34pQgxHGVwHUFabghjGMl8yuQG5SmjuJlHKExndxVa4STPy4CPdeiB7
+         bb/gFFGVkCKFqsynKQ5Y7nwYi039dbZt8vdZtpqw6JB+0rqpoOXPzfEdRv6a15NNOzd+
+         4wUo4DOvge36s2p1+QfCM1InzF2vFsFugm9rwhOvi+Gp+T7oBOMwrnY7jeistTF2NfQE
+         fkXg==
+X-Gm-Message-State: AOJu0Yw8puNdg9m+VMy+3BvclcbH/9IwpI2EybJ1T6GMPXURbeFQuWf6
+	h0NjzSr/tA0uHFeXreqVPwFSeO0MvemNd3OvnhM+W8yvPSR2vRoLsHolqc3mAwkG
+X-Gm-Gg: AfdE7cnjKf72lt4/la0nDxv3N8+9C9fX9nLNv9Ij8YVSOT5zLS8Meg82wQh5LUk8c2Y
+	aGxdAX+dhM/BBz4kPdovF4kIkOowZF1n+GUjZuOQ9IZKXBhNibMoK5/yQ66rO5Lrv1Jz1Fo0CHi
+	+KmFaH3+FsFRGSKaDxOHfWZEXmg7mqHjmPfIKeXXIdZpD28Vc5qKHt93aMfZX40QohMYoAaxt05
+	en+6zm4/Cf4QCBImHailVy057O5wRUapIrOq4yeiaahRGfInmvQ7tWEihBnBFp1+3/NIVCEgAEA
+	xBONU4CoKTKQTN0OBqosL8lgJgE2DtGj77B4xlmF86j5wFj4aWORBaV/2hTwsKvGx5waF3VbzKL
+	aKrdgfU4oY+RydAg9IM5xJX197WOTQylhYOss8Z9S+tjyelf4/tA1vzYiN5YUc7FamEt1TgMFNr
+	MeAy7HowPl1zgYGJsvugsubmGWAN7JVXEoDFKKz36xfjujOdJ4gCwwM1OIG+10KmLOsmHLVfGXD
+	XkVeAAfPXhFys3HUSWZ/f9hKCFX6w5Zc/f32YSItsSP
+X-Received: by 2002:a17:90b:58a3:b0:38e:2e16:859b with SMTP id 98e67ed59e1d1-38e2e1688fbmr3319380a91.20.1784208548891;
+        Thu, 16 Jul 2026 06:29:08 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:88fb:4543:3010:936c:4da8:7aa1])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3140e4fcd31sm13291188eec.4.2026.07.16.06.29.04
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 16 Jul 2026 06:29:08 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	me@ttaylorr.com,
+	ps@pks.im,
+	johannes.schindelin@gmx.de,
+	l.s.r@web.de,
+	r.siddharth.shrimali@gmail.com
+Subject: [RFC PATCH 0/7] repack: add --drop-filtered to reclaim space in partial clones
+Date: Thu, 16 Jul 2026 18:58:41 +0530
+Message-ID: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+This is an RFC series seeking feedback on the design and approach.
+Several pieces are still missing (noted below) and the commit
+organization needs cleanup.
 
->
->
-> LGTM and sorry for not following the guideline. :)
+Partial clones let you work with large repositories without downloading
+every blob up front and the missing blobs are lazily fetched from the promisor
+remote on demand. Over time, though, these lazily-fetched blobs
+accumulate locally and there is currently no safe, built-in way to
+reclaim that disk space instead of re-cloning.
 
-Thanks, and no worries.  We all make mistakes.
+This series adds a "git repack --drop-filtered --filter=<spec>" command
+that removes large, locally-held promisor blobs that are recoverable
+from the promisor remote. The dropped blobs become absent locally but
+remain lazily re-fetchable, making the partial-clone still reversible.
+
+How it works:
+  * Enumerate promisor objects directly (ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)
+    and select the blobs exceeding the filter threshold. Because every
+    enumerated object is a promisor object, it is guaranteed recoverable and
+    locally-created objects are never candidates.
+
+  * Rebuild the promisor pack without the selected blobs, reusing the
+    existing repack machinery, so the drop is crash-safe.
+
+  * Record each dropped object in a drop log
+    ($GIT_DIR/objects/info/promisor-dropped) so a later change can
+    explain a failed lazy fetch (when it was dropped, which filter
+    matched, which remotes) instead of a bare "could not fetch" error.
+
+  * --dry-run lists the candidates and changes nothing.
+
+Planned follow-ups:
+  * Safety guards: refuse to run while a merge/rebase/cherry-pick is in
+    progress, and refuse to drop blobs referenced by the current index.
+
+  * Authoritative remote verification: the drop log currently lists all
+    configured promisor remotes rather than the exact remote each object
+    is recoverable from, because there is no client-side way to query a
+    remote for object availability yet. A "remote-object-info" command
+    is being added to the "git cat-file --batch" protocol for this. Once
+    available, the exact remote can be recorded.
+
+Known issues to address in v2:
+  * There is churn between "enumerate promisor blobs" and "actually drop
+    filtered promisor blobs". The former introduces
+    enumerate_promisor_blobs() with an interim signature that the latter
+    rewrites. These will be reorganized so the function is introduced
+    in its final form.
+
+  * The tests are in a standalone commit. They will instead be
+    distributed into the commits that introduce the behavior they test.
+
+Siddharth Shrimali (7):
+  builtin/repack.c: add --drop-filtered and --dry-run options
+  list-objects-filter: add list_objects_filter__filter_oidset()
+  repack-promisor: allow excluding objects from the rebuilt promisor
+    pack
+  builtin/repack: enumerate promisor blobs for --drop-filtered
+  t7706: test --drop-filtered enumeration and validation
+  builtin/repack: actually drop filtered promisor blobs
+  repack-promisor: record dropped objects in a drop log
+
+ builtin/repack.c                |  76 ++++++++++++++++-
+ list-objects-filter.c           |  45 ++++++++++
+ list-objects-filter.h           |  16 ++++
+ repack-filtered.c               |  81 ++++++++++++++++++
+ repack-promisor.c               | 106 ++++++++++++++++++++++-
+ repack.h                        |  12 ++-
+ t/meson.build                   |   1 +
+ t/t7706-repack-drop-filtered.sh | 145 ++++++++++++++++++++++++++++++++
+ 8 files changed, 478 insertions(+), 4 deletions(-)
+ create mode 100755 t/t7706-repack-drop-filtered.sh
+
+-- 
+2.54.0
+
