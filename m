@@ -1,138 +1,147 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11021122.outbound.protection.outlook.com [40.93.194.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6483128B8
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 20:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784234663; cv=none; b=RQkDF/IVvjueX1OWvwzDfgzmd/LXTSOWBf3x1ML4/8TZ9acG0vxlKDyramVh48jCYsQqWQeE2GmHJSQk/tU+fMm3Fa/r+dRVtke0Sh1BkCM/oe6IFiQfNZ+93l9GIO+DrSeaFz35EjKPsRt2GRBmfWF1TzGc6wVYuEnfAmMoKUI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784234663; c=relaxed/simple;
-	bh=xznT3ShfJ3YAtTglTHDZk0FWhAD8XgdOYrpqP93TqlQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ikB8CKd+7sIfH6rT33WWfX84zbPI/Ami+tH4A7Ofn5uc21jw1irIelBtYcCnwNvO6DETDoQIXgV81/hBYCdyB/M0MCS6wQFVu1+sZX/QpTvphSz+0x5GjTawow2TSi6if3bt+TbscIDAu9PUR3M7m8Iy4zpXfZdltO/2F0IDf14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MSb1KjS4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ci0fR+mZ; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MSb1KjS4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ci0fR+mZ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id E7951EC009F;
-	Thu, 16 Jul 2026 16:44:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Jul 2026 16:44:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784234660; x=1784321060; bh=kOo89yzhXG
-	Cb43f0K/gDXhEfydurct/vw74a9y/hK10=; b=MSb1KjS44pIripOK+pndRph4bL
-	G/0/mu8LnuOuEt6b4Z4nZYT4WK0BL4FVPUP6hedGaWtl8Sn3GbPu5OAqYyQG2PJn
-	l5ByTW7UWJ8wzlI7BrkgR+LMAoCmV+R0kiOCSSTZQYptIpP0gXw6Q371Ozi2v5Ns
-	eQvGjJAl0yX5h5Ow4D7+iAa+ltqK8EMokAm30gq45w7MPslPb8ywIPrZIObGty4u
-	SvzY9eOg1b0F4AFIuvKZmBIcMR763+Z54bnK5BvU31F4ifBtDLQnIiPNbU9hwMik
-	mhfy+LFUPehjY+u2JLD1ChostVEMwssKSMnF77rZ5G2U6J5iVoUD69Xys4/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784234660; x=1784321060; bh=kOo89yzhXGCb43f0K/gDXhEfydurct/vw74
-	a9y/hK10=; b=ci0fR+mZzbtp8Bzi2J9GQlkhpR4tzg4VlNEqt+WlnVQO4xaxxCR
-	f+9zLIwDgZyAPLNtmQqLATJEGSogOxiyOJ1ctHYIwQ2+3zQymzfri8WZ5ji36LK1
-	HxYsozcrqZ63gd7FZzUi/NNo6doe7zR6S/OaLCUHk4of/Ey7PgagSFBCuA4k/v/P
-	LlSbTpUlRlcpTFn1p4h2NMOB0KXEZNsE6J3smPlWu9xWZQbZP+BrXBIYCeC2Geha
-	9uS4XbiLXIFI9aWQPEGQGAQrm3evtkUzsOJdjTvAOiT+Q4b168hkxmEFhdRGhN3o
-	5AYMaXLIYI/6pu2k0YwEtpEUyXsxr8sVANA==
-X-ME-Sender: <xms:o0JZapassBs3PFTjYv5XTWNq31ne8pvVRDUVnJWxYT8_bU6NSB0QKA>
-    <xme:o0JZajdBBeT5sXWoAACXocRE0mO8RCnQX9m4ve6jXWvvIO_8O8YfcQyw0MGMUHr94
-    WByCyJ7Tl_Gnk9LJvc--SAsw83zrMVjHnXJmQOaiYvFfZ13sCl0>
-X-ME-Received: <xmr:o0JZamkGpvs8mliIKy2TMUmpnzrQgHSbQQyNKYT9mSWb9BWWXkrtSvVOD9YZRzn7XUuXFzq4xuwpmEpx0go_-aXRxoOlpnOj5k7fRsI>
-X-ME-Proxy-Cause: dmFkZTFg9t/+sauawYJ4BdnOcN1jIdl4RgVwFbTdHMsKnBK/7Mo64O9uureL6OaQ11tXPU
-    5TmVUrwItlB+Hrx0YYltXbDIfgU8t1UUrnQdGbA+6YIdkqffgXDKwX7h0nrSfx7Cv4YZ7I
-    layJYJdyx/4zk6qDZHknC2pfCjkm+xwuCi/beNd6EqULn1zXXJJDqqVpb2Un+hI7eNxLoM
-    tGuHbLFTynPNZV8IOL6+YeD++i7RdjqNWKtC+cnJEbdVOd8i9pSMp7RRMBKyeP4xBvtd2Z
-    tKnbcb1ar1/2iZsX/F4NOu7w0GEI3AaEcSJJ4C3NNZ74+BSfuDmrk2+hOtOJbvVOitZ+e4
-    ikBNGz5qx22roupezBcPWVZDH44wIq308CBoQDWUGY62MG1YlgXmlttgHdxNNVUU5tq19Z
-    MTFirdBYSMdY8xCyWejfhRa/jLbNH1Tn6SxXHHd3WaFgb/wC17KtiUssoqKG8C362w1zuw
-    emLajV59xn9Df/F28Hqg+vEoQGTiCYn83TtYxxNMAr76D3cNt0KbcQhR7cT+dhgssO3p+g
-    Adv+ICHUN5Dq0CA0Hkpy3o6uwE9R4RRdvkRKJ/UbpLAdC8duUBU3+NX1cXhXNnDonuk/Zl
-    VdHxFP2x6gOwBPnaEAnUDcjacZdGFT0qvjMBp5I7arauPBr7u/q314xd7PPA
-X-ME-Proxy: <xmx:o0JZaj2IQR8r9AH3hZhJgOm7lBq121EhfBDIj4GEjUIGOeUCAESRbg>
-    <xmx:o0JZavc4SkHn2UvoUw2QsZIn22nY8kUJchdEqUAkhIDhg9o14G8Nuw>
-    <xmx:o0JZatY77vONnTGC4rILWSpLqPyYqoUVhGCHAWGJbBNN6QHOPyM45A>
-    <xmx:o0JZakGA9CxuVmm4BfZvaLc1hxuLQpXmF6AZWkZFNtwXgYqMyW1sgQ>
-    <xmx:pEJZaqlx4eYzZfXJw0EOioh4031YyCxa3JawJdgk0havmey5uzl9-8nr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 16:44:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Simon Richter <Simon.Richter@hogyros.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Ben Knoble
- <ben.knoble@gmail.com>,  Jeff King <peff@peff.net>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  "Randall S. Becker"
- <randall.becker@nexbridge.ca>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] compat/posix: introduce writev(3p) wrapper
-In-Reply-To: <xmqqfr1ig0hv.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	16 Jul 2026 13:09:32 -0700")
-References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
-	<20260716-pks-reintroduce-writev-v1-1-ea9038c884bc@pks.im>
-	<a2676ec6-39d5-4220-8549-10a17daec668@hogyros.de>
-	<xmqqfr1ig0hv.fsf@gitster.g>
-Date: Thu, 16 Jul 2026 13:44:18 -0700
-Message-ID: <xmqqwluuekbh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570073AA1BD
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 20:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.122
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784235156; cv=fail; b=EO+KpinZFv+R7OQgfE7xhQ2zsUU7tqQgHhRqCoojDRUCQcKVPVoEu4Iw0hxM7ImbIrnSQHk0Z7Wg/ocFko+CoD9EbUS1BhXSM5gtZLI9hJJYQ6YnJG695mYIpw9Cx69YtHheEf/BDjSxlurh88ZUUnhf42MUv3133NUef7Icf8Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784235156; c=relaxed/simple;
+	bh=8Xg1kPfvKR+/FCEDuWlWwJgdTvSYRWxFtnd3pCrDHxI=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=uwqzJn/pZq6FAMpLVCONS6YtPTz/NYdM87/PfvjCoHZyJurDH+/pfQHCGCHv4XshZru2MTsoxhjSbKlFrwpLSO3rYGJAp2NuIxZWAQZRLjHiXp7K82QOQofoYQ7x10n1nv9MMNjKL6mC5xizx4iDyKU5kgmju5OMzsgl9uFKdU8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cseasy.com; spf=pass smtp.mailfrom=cseasy.com; arc=fail smtp.client-ip=40.93.194.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cseasy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cseasy.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mSw6zK29/44/btm6YAFKmn5CUGJWFKzqqvGL0eUg2Hfmw9FkPwi0IP5pTtPjjp6CzzPB63Usc2WVjFqglZB4Npz5MEeB0UnCejrHOXEwfIqaca6NIeyUvdj4Wlmvjer790fLZ6Y+7r/CzGAJDEz8AZU7JPwmL3HBDhJzzPLqHlngKqSUyfnNLEN3nGLkJldvFWDAIpS2JctbMdBypMbSzP8zFzXN/gG/bJiIL8l52rVZIXdJb6gCKLC1Wkn06Fxqjau+SuvaimWccWbOzyCKisgNZSulszsP7sUf/shoF1WJWR4OyhrGzQqQVzX5ihzwpFTlMT1FucmruaJZcmxcGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6dG5ED1m1rai8pRg/tPVHLbFYltNzOC+q1bjMD7iSlM=;
+ b=RSA1ymFO3dixltPlqCZcjdrXOI9MxXda4yUw4UgxHwhvEf6CsFlvYABsYv1xjXnUvBjRVbmruCpPwsVb+TRdJh3fpG9LXgc9TMuvRRwghesaHaCZjYq1PNLT1pDLCdxCdrObPs0jHTyewY3deMuF3Bc7+I5ObciJHe7T6iMUvfayIFSFZmgyUh/jYhpJoBv4IFQ37B9+C3pPGD7kupQtluxrB0wQuDA90dLlmtQxLm0OSOwLYxRESnfF8nNVTU8t8aBCS4jdchveL9MTLI4ACZGJVHPcr1SlIp8kQSYTDq1DWdawmHn0Pi6lS7RFqOBAcTSHuR56UVZLUle2pNEx2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cseasy.com; dmarc=pass action=none header.from=cseasy.com;
+ dkim=pass header.d=cseasy.com; arc=none
+Received: from BY5PR06MB6548.namprd06.prod.outlook.com (2603:10b6:a03:235::8)
+ by CO1PR06MB8010.namprd06.prod.outlook.com (2603:10b6:303:e1::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.5; Thu, 16 Jul
+ 2026 20:52:32 +0000
+Received: from BY5PR06MB6548.namprd06.prod.outlook.com
+ ([fe80::a1a6:27d9:74f9:8d2c]) by BY5PR06MB6548.namprd06.prod.outlook.com
+ ([fe80::a1a6:27d9:74f9:8d2c%4]) with mapi id 15.21.0245.003; Thu, 16 Jul 2026
+ 20:52:32 +0000
+From: Randy Kroeger <kroegerr@cseasy.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Please provide help with how to fix
+Thread-Topic: Please provide help with how to fix
+Thread-Index: AQHdFWTyKDAQC6hyGkO8jU2+2+Bnig==
+Date: Thu, 16 Jul 2026 20:52:32 +0000
+Message-ID:
+ <BY5PR06MB6548F18EA532E3EF021AA93DBAC72@BY5PR06MB6548.namprd06.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cseasy.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BY5PR06MB6548:EE_|CO1PR06MB8010:EE_
+x-ms-office365-filtering-correlation-id: 12e2960e-b3b8-4eb1-1856-08dee37c2845
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|18002099003|38070700021|10067099003|7055299009|56012099006|6133799003;
+x-microsoft-antispam-message-info:
+ tAH7l+d2Om7yd4hiPJDHfwC0kvzR/iwULOMj9MSnXf2Y0QTxrEEWzPa0L/RxmLOr7vdkID52Lrzdi06fFwqv2a8edgYHW6TFOFlEe6BfBy0rpDeM9+42O/rqLq/56DYdillCLGQmTZTa7ikTLQnvNul0IIqPzP9gw5rr+SY746wQq4tc4qzah8fHdWnWfT4bwIc+dVIE+jp6yLcbvj6A/A3X80h0WM7MFi7edQOIEEhPUyoI9vrqDDOsc7kaXQ7w9vPP03PIsOcvZWDE/l4Nu+uITJKPPQ/7/OCI2ISyM47DlCEJhqMxYLgoHW32LM/VPsP/t1GDs0WeoVdAonXS6lWeRjWHZgRGKuwbnhdiCGIHTA+l6JtPa2dzfdEc6tQEgiXkSJCVi1JELGsY4LKJYX8MmbD2JIpKeAakB+SxMZycXGUgW+cKq5t6a8tsYYlk1vMc7yTVKeuf14VTn7/9QjmhYlatRMUbCrI0C5daLJYj8S5oo7jk5m+LffoHk7lpIXCJ+xPxai5ziPGiuCiu96PGZ6lEuGilueNX5qu10s6gkUCFOw91NlEjtwvyV9RlSMq6Ll37k/lk2G6xIn1QmHmoARnpSZfTk79O4R2i/+inOng//ckzsexrAWnctHFCTiprnrEGND15ATQKqAbhd/kUk+WENTngJ3XK7v00PBvNHuUxWYx0AoXr6c8IBg0DqjyDYqBLquhDUOwVOM+xCk5WnPXGTEVBih60JaDnhKesXEZa8HqGObNQIpXA+dCH
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR06MB6548.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(18002099003)(38070700021)(10067099003)(7055299009)(56012099006)(6133799003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?5s/Li6XDQlXBUGqf026OLA7TuOqto2zLEskIndl0ukUSNzy261VxnZK11o?=
+ =?iso-8859-1?Q?wwrvYAHOs5sPaSj3OF5Hi8ZOComdue1GL+7gZUcplqPznBScuKkcjxf7P7?=
+ =?iso-8859-1?Q?sKtkXzDPOL8TnrTTXRpgaq9uKXkJkbMVJlNFEtUacLvrL0VcCdIk+fx3ZG?=
+ =?iso-8859-1?Q?Pn8H65vZXzj/4mT6cExcxC0N7ejtKUYipsky01Bu4Pf8fZ62HXz8TYViVR?=
+ =?iso-8859-1?Q?gKwlRPyIJDusbj/S/cGMPORrsKtThUiA9Wn2vOoGLUHbDP1+8dl6l5ILtf?=
+ =?iso-8859-1?Q?JTtEi8pfk61WMXRRteh9v7slfm7nDJNz3PMRK25PaWoyM4ZPGetXdMVinY?=
+ =?iso-8859-1?Q?/qanWU+hwsfvvY5x95/0q3y8Ph+MBntW2Io46PkWRVEhb0hdAb3z8ZHLYy?=
+ =?iso-8859-1?Q?jrV5BiXIBLtjLafC7zxqDB2mR+1337AUrrGmLLQbBFpHtEWhEh4akLqOIy?=
+ =?iso-8859-1?Q?jPP/NQcgv55L7sNEjqRY+NpNvj2sg+SthD7QxOrSjw4YH7MUnDlsEG5rrs?=
+ =?iso-8859-1?Q?P+BldrrHHA1BcOjnCXI7G/zTcMQpSBcura4UXaZvSRXMHuL3CFRcxciyBn?=
+ =?iso-8859-1?Q?SRkOQ9FZYomV1FQRMucuPlE4+EO0sIJEtB14AnBLasJHBdAw3fXOZlnoTA?=
+ =?iso-8859-1?Q?3DDQ8/e+B3E+S5uc85HbmXHg9w/C1ZMOPLhtIDhYkNUi59f83PEpANN7NT?=
+ =?iso-8859-1?Q?lXKD7lVooRnBP+sPJn9Zx3TWuTw3KPN6AWCmgfi0sHQemON1ZEfFn2Zy0Y?=
+ =?iso-8859-1?Q?0axoFDTmmbGgV4Kbn3IEhUqJEfUY9x2yqNgR4LnxFJ2sFSihXpV8Di5xON?=
+ =?iso-8859-1?Q?skgJrew+KzfyGlDvJQOiPpD2phz9ZQQ2X40AqQL0PTflhWL/yaYSbAitBa?=
+ =?iso-8859-1?Q?m4lx74byBJP8w3ZVSz01pfTMcAeegyydW8xe9oghNqQAhr8vrEJdWlDzYh?=
+ =?iso-8859-1?Q?T3M7FgNLgAqd6PRCS7Rzdfzvana5J0MWz7MA8mUSzW/n/R2aRfeqlor7IS?=
+ =?iso-8859-1?Q?TaiZptBDy5DkLGd6neOeGlX1SuoJ+T5oeIJTWvi0O2ToQxou4Ma2Uo+apH?=
+ =?iso-8859-1?Q?YZX/vkuHsVrId7ticSPvnluz6x/opGAy+zQY/FUaArKaSsSmxZwF0cVXHn?=
+ =?iso-8859-1?Q?4FitcEKDmGzoWHfS5wRt9km4daQ6IOHpnQN2IM5ZFewZjecUHPBb48iZxG?=
+ =?iso-8859-1?Q?8TF6x83c5QJSetYTFnAMvSLJp+0aP6tmX3r+jxbs2FPre+eqv9WStrAZ39?=
+ =?iso-8859-1?Q?cwseQmbsi1T8lbLvDWEibqrg6IYUgM9arW8aOSj6tstvBKBbYKZQq2NhuZ?=
+ =?iso-8859-1?Q?ui0p33nM3luZ5Wl92upLDIBfl3gesl8xil/7Ja0UGqa/Bwg8ntYPfyONvo?=
+ =?iso-8859-1?Q?ToVD2NDVeqTfcfmZf/jajzRvBsMoBWi6CAScAMsj7PXR7ORT3ShGofdJfY?=
+ =?iso-8859-1?Q?eg+Ov0X6RmbsimmSicj3KITfIxMdrKdFGBDLLFVJw+pKMUgur+gD+CrO5B?=
+ =?iso-8859-1?Q?aSwIm46jML9A4+iyndq/sMvhNknxpQEZx5Nw+aEkn9RoyikIfinZqEfVW9?=
+ =?iso-8859-1?Q?XcSxdlhXBGmclqrZHakG9Uv1z7Rl3kczgym87BKakkOokuu4tcrWMTxV0E?=
+ =?iso-8859-1?Q?CjtTOLPUpkwMD76pzS0FLjAvO2sXoM1bCrAwA0egtrnOotnQDoihDu7xMS?=
+ =?iso-8859-1?Q?vGhB7x2cRkFfyaX/OFUroVTebSWoTY9H3rkOUGYh+k9MoL51b6inBd/IyA?=
+ =?iso-8859-1?Q?FId0b7dG8i7Xx0BrFBLxGn+i4W17b1B0oWXz3zZctigvO6?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-OriginatorOrg: cseasy.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR06MB6548.namprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 12e2960e-b3b8-4eb1-1856-08dee37c2845
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jul 2026 20:52:32.4023
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: de9b6050-2664-45a4-9dec-fde78d7e4237
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5xUhm36UusTpwmGq5cXY1WXBN20OrB7Xp781772OSLMfuVX/IXlhDpL8iwX0Kw28rDvGuxa/DkK+pN+rn8oI4Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR06MB8010
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Simon Richter <Simon.Richter@hogyros.de> writes:
->
->> Hi,
->>
->>> +		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
->>> +		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
->>
->> That feels like it could overflow.
->
-> Isn't it checking if it would overflow (and dying if so)?
->
-> Ah, wait.  The addition "(iov[i].iov_len + sum)" can indeed wrap
-> around, and comparing it with the maximum value of ssize_t wouldn't
-> catch that.  Is that what you mean?
->
-> Would something like this:
->
->     if (maximum_signed_value_of_type(ssize_t) < iov[i].iov_len ||
-> 	iov[i].iov_len + sum < iov[i].iov_len ||
-> 	maximum_signed_value_of_type(ssize_t) < iov[i].iov_len + sum)
->
-> work better to catch the three cases independently?
->
->  (1) The value is already too large on its own.
->  (2) Adding them together would cause an unsigned wrap-around.
->  (3) The sum does not wrap around, but it exceeds the maximum
->      representable value of ssize_t anyway.
-
-Actually, looking at it again, I think the original code is safe
-after all, because:
-
- * "sum", even though it is a size_t, is checked inside the loop to
-   ensure it stays below the maximum value of ssize_t each time it
-   gets a new value.
- * iov[i].iov_len is checked to ensure it does not exceed the
-   maximum value of ssize_t by the first part of the condition.
-
-If both values are less than or equal to the maximum value of
-ssize_t, their sum is at most twice that limit.  For an N-bit
-size_t, this sum is at most (2^N - 2), which can be computed safely
-without any unsigned wrap-around.
-
-So...?
+=0A=
+I am having a bit of an issue trying to figure out the best route in fixing=
+ the following.  What happened is on my second machine, in which was out da=
+ted (source code), I upgraded to VS 2026 (from 2022), then tried to do  a p=
+ull.  What happened was that I received a bunch of modifications, which was=
+ confusing. All I want is to pull all changes since I did last on this mach=
+ine.  I then had a bit of a problem with the gitignore file, so I decided t=
+o just commit it (my train of thought is it is a file being committed to so=
+urce control - that is it).  However, what happened is this file took on a =
+life and decided to make itself the head and bypass all changes to the head=
+ in which it knew about last.  Please see image below where the history sho=
+ws a line from this commit to the parent below.  This by passes a bunch of =
+chances.=0A=
+=0A=
+Question: How can I fix this issue?  I would like to restore all my changes=
+ again and remove this bypass.   I have been reviewing your documentation, =
+but am very hesitant as my understanding, once again, may not match how GIT=
+ actually functions.=0A=
+=0A=
+I greatly appreciate the help!=0A=
+=0A=
+In this example, Commit 3 was done on July 12 and since it was on a machine=
+ that had done its last pull on 6/09/2026, the commit created a new parent =
+below Commit 5.  Now when I pull, the changes for Commit4, Commit5 are not =
+included in the pull.    I am assuming I need to do a rebase, but am not 10=
+0% confident and in reading the documentation, I am still not confident.=0A=
+=0A=
+--Commit6 7/14/2026=0A=
+--Commit5  7/13/2026=0A=
+|<-Commit4  7/12/2026  -child=0A=
+|  --Commit2  6/11/2026=0A=
+|  --Commit1  6/10/2026=0A=
+|>-Commit4   7/12/2026  -parent=0A=
+=0A=
+Randy=0A=
