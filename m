@@ -1,79 +1,79 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4873B8920
-	for <git@vger.kernel.org>; Thu, 16 Jul 2026 07:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9826C3BAD94
+	for <git@vger.kernel.org>; Thu, 16 Jul 2026 07:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784188377; cv=none; b=HARRVgKlokcQsFKoQE9PdcelszpwcGKyfFwAUYfYtmoIRNIsr6p3/6LkL+g9ZUqyP3F7Tr57SIW6Mn8YYhpPtcRr4HwoFlhSDxBRMUFjopUzps/GsifZE6jBVO00AnPMmmwbHNLNYTxDGVhs0Ov66vcA8if4o89RjmfUj0F+V+g=
+	t=1784188378; cv=none; b=ENsuqu4T2WoPpsahHriQp111Ng+FqpMY+Tczi0VbgtXW4r+cDn+iXG1PrO0TfXqj4MKLTsSb4L5lA1Zt6hhpxYXZQb1oPd7ZBC9VwFi4hvUXnRyNH1EMQH+EOoRACLDI54KfpaRlclSkWsUOBezxbbxX3DDX0Uc/iy7k0oMvek8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784188377; c=relaxed/simple;
-	bh=/18vg7Up6H8BKUNVGdJ91usz9AGvBKb82HzeMqUFoHc=;
+	s=arc-20240116; t=1784188378; c=relaxed/simple;
+	bh=pBxQg5aONwPv9Ts0/6cPwKNu6FSAOhOoElG4F0fUBwc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C7IUfDVX5MlMQd13o/aHYnxCXtbNXjeQSff7neBDMmrMQbPQj7VjfVhcClLCnrrOtdNqUJTW8vgTiGpFZWRZq37fl1jOgLoVH7IWeRvPKXYa9LszG1HspRlVWOxfZy9+5Sii0U/x40VvG+0LlPkJLF8tb43IpQTEU7wUgn2XPCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e8o0lsKz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KQcBu09U; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=EVi6h0btu6jxi//NZExzgyIS+T5qLaWpQGSgU94pIbQj/8Uq3WIY+EEJkU7Z/vzJRfBSzFHBklrysSO8vH0Yg830mqdWmlpmHl2Db0FvVAauG3jGUUsscAw/KDGQnUOw51iKoehmsdrcNFSpMLu//7yPqpOdRVy8Hr5GzqO+vbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gw8gOvBV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dUauPt7i; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e8o0lsKz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KQcBu09U"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gw8gOvBV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dUauPt7i"
 Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C0DBC7A0172;
-	Thu, 16 Jul 2026 03:52:46 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id B59D11D00103;
+	Thu, 16 Jul 2026 03:52:40 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 16 Jul 2026 03:52:47 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 16 Jul 2026 03:52:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1784188366;
-	 x=1784274766; bh=kyMQzYXgN5BdHHp9E0w+4yOkrNbObHp0FYTWvjy51x4=; b=
-	e8o0lsKzDdBCclgPAU+iPE7k6QkL6f4u0U7Qc2azWRGmgR9M6yBjqWEY3AoNev6o
-	D6SnbWZPvGGaAaKflKBLPBcuw36+9cVxzGBcF4nEEYpg5BQuiPkWe0rG96HpD8kC
-	wfr8u9OKLkCbKyNmVBeMdLUlkbS8J8TnW30WxhXiyMzOvYJ9TEHu5mMPqp2gLUF4
-	8vXAXV4Ifyw9htOZdxcdgNlZAstdlu7+o9jpD84NPz4Z5W5nINcLjGm9jcMdnOMe
-	med1I290uSP/kjRMCFhbaIJguXRcLZ/Q+O6O0FfhSyrxWFXRJQCtkGd8UBigU0iv
-	fm2kxv5L9rVaGIjNUja6MQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1784188360;
+	 x=1784274760; bh=GvBrljHv9QukJeJKe4V8XsOckhLzeAefGMUjwRFjzXw=; b=
+	Gw8gOvBVFQHdCzPDLL3g1jdQ1hghQuQPdQoAmFhRDtaAnYMzwYiOOyO2AFQBl87L
+	doaKl2LQZ74b8gHCLnnCrCqy3dc2TBf0CgEHzdI8T9+JbmSuKNRKnoGLK/tS/Wf5
+	Si2Iwk/7E9QmZSB+yDffwYrVx66CeRv3/lJDzkCQ1BPhAgErDhv13tLpj61wB7pY
+	esFTR/IAKKSYqjb0MOrMdTMEgVgKaPmLYkxZ+n/aO8T6rOuQbfs/zH1+1+CQNXfn
+	qABW6nOgyosREM096LepigyPp7MvXZ3cvCYeF5C7VKQ3Sp4SRqhucIpHu6Jz8VB7
+	IjAZR+yzvkhp6c201yoLwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784188366; x=
-	1784274766; bh=kyMQzYXgN5BdHHp9E0w+4yOkrNbObHp0FYTWvjy51x4=; b=K
-	QcBu09USahpt5zn0Ci42B5dSokPvjvmdQik3d4Cgqm6DnCcrb8wshjZtubDB9uDP
-	qJ8sLkSanLjMhpGJ6njv6h9QXsmV7qEPNg5khSAek9YVVKmiRUA+GIfLZr3hHtX2
-	ZzWCFF5JnC1YW4kxGfOiUW7WBAFklOJkiJsPghxiq9TA01LcH/R3bG3utVkRPK2L
-	j9ASG49ca+YD2TsrfhhTUS78MIM+o4LV/sv0/mvoDSlNzwE9nVzfzKwDge2c6abM
-	FEPLnL+a9rTrhyINr+MCEYLuJxk7RC4z19jz0VW9fSZ/f0UkgRRfj/h3yXDH/+x8
-	rp75bFkUk8rho7s/hCAbA==
-X-ME-Sender: <xms:zo1YarQVJD5MaMrggckcYDwQ4ge8XT898TfBKM0oQ5UGPLLombE7jg>
-    <xme:zo1YamwTtm-jqUq98N-FeLt48DpOlk7JbXv4NM4yIyjkF09gXgaW1xZeKUmek_UCl
-    PM1pEDhguU7RwT7BJzoj69vCD50RpEKW9Ws-HlXuDjAkp8I2nxr9Q>
-X-ME-Received: <xmr:zo1Yanfbx91_V_VOb--4bc76lmFnUDg7ZropyYQNqALyn1akb2aySLoleRP4FfyuDF1OFt5Sc1cj7aNHoK24iQbrfjcvHkdAsk0eGao->
-X-ME-Proxy-Cause: dmFkZTGOlf285yZ3X+c/PJV9ag1wkWbR4p0TW8If2NqMRC5DdpBVEtYULU0iA9An6BQ0XE
-    gB+V1kBLkJLxHM/6+gp13MPHat3k5j8e68HDZU84RgaFaYzihmDZtE8E9rRu+mfm2wYv9w
-    AVJGqcTVb90ULT67061l4kPa1H4un9Dh2Q3UeQOcTggB2CIdSYZl8Oksw9hVPPeCpPH4r2
-    8+nW6PNLh50A7T6vRyAu0SI7GZ/VrcWGc2vW/vsgp2kVtyCxx2bQOd2FaoXbAvV4qh5cXb
-    iB69vy5FVQycrTgC4KANegzRElFJIgUwI1DGtRr9vjqHVj3XmusehvWNhew2snbwJ+Onth
-    i99heAsPKnj7KaSvLtL85lp2aRu1Ph6G/9UltzOC+hbnBlQCWIIESL5k7eEzcLcGmTtEIV
-    fZYGkwTc1daTB8vxA71KQo6QGp2+QfebS+4mFOOJnTeCRHQV+G1dlwwbku6Iq/zJDUMrjw
-    RfGoY6bj6FlYg0r5RfB6DusesD/oc50FyCWMMNqO2TIJQ7GOePsGD5RWhg66KglXAahwIo
-    9QPpju3+ruZsLTIXOy5hOA/dHGaWHoJB0h16wme/ctphg3ws688qN8+qXE8Etq8yA7YmUg
-    pqC9GYcKSEQDQavYhArnBTBV5X6kOLnPEpJCsQu+GIoOaCibZfLDIVftXTiQ
-X-ME-Proxy: <xmx:zo1YapNZsWEC_ZGUwjXY_an4wV8JxMr4sYJ09lHcPOo7WsM6AjOlbw>
-    <xmx:zo1YaiuGRH996HbKW2-i7xbcI3HtUmcjrAhDSEvX4NV7iG_gL16Pig>
-    <xmx:zo1YaqCiD-3FouVXRLCOZISO1WvXwSJsZBqTo8WDkTzTdXRxK68ndw>
-    <xmx:zo1YahbTYS6IBMxIPjPPU-59EPOQkrd5zfSbsBHQxKFiuhs61Z9CPQ>
-    <xmx:zo1YahCxsmPkhNFaqi1EoX3eeGzYUP_t2bIL5DyKZ8EdQxiWfnNd-AN9>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784188360; x=
+	1784274760; bh=GvBrljHv9QukJeJKe4V8XsOckhLzeAefGMUjwRFjzXw=; b=d
+	UauPt7iXKh+V4NP+UG2fpceR4rW7Pja42uoWaOduPTk4+QFdIsdJHpYyyiOca0dW
+	n2sYhnvMQjA0C7y6QQSt3Suzb84S15lh8mBL0NB9T6hAVOPeUdM/n1ImOHuI+0ji
+	n/Uh15OQGKOlR4OFzWeRSYZFVuYonEOa1ahIxfngI4H79QzYCWC8aaS7zeplN/Hm
+	47OjEIyDoAHrN5E+1HGPMMDJqe53rzXvqjPELLPTBhxi7bgPmWLosaq3vF1CYu2L
+	1qTlWs+sU/3n5jfnensMsXhp37FCpFQbBlZca0Fmp06cdLeiB4/emdIy2B9YHmOI
+	nD8Af2nE1W5BDFvEVYFgw==
+X-ME-Sender: <xms:yI1YakbXxEZ_lmK7BXo9MDYgcu-Q-TVn06Ism6CI1yRbG3vESlJq8w>
+    <xme:yI1YapaqqZgjc5REcaSx8ZUo1rpBWjzK3kqjYzia3qrIY2-Hssw_GNgYVq-36hoJI
+    C6uOXoZJ37S845_Lg0IwaGI7j3m5-I4P0licoG2a1-1qFUpV6ausw>
+X-ME-Received: <xmr:yI1Yaln0Bu7-6miqeZGI8cpr4GgAnc1WCVzOfIXnFiZFuk6RuHS9hf4C3seGyDLcKbAfekuhoGQKjMn9kinN8M0so8F_wdDB3qs1OpdI>
+X-ME-Proxy-Cause: dmFkZTEWPZ6Mjn9lv9iRED9aHvuplvBZxrqFeZgQpnFuPCiWJDrp0I8/1GwxLWM37qMYpv
+    9RZdLeFpeOT1ZL/JFzFeagaRvJeyj9G5x86XB6A6EEU2dlBIurcd1xRjtBUFMENtsBkZ83
+    iGXNMS9u0H2TkRjKYEFnGccL8qth43KASmQign1cf7apthC+4YUUUscnpTr6uN+sYkucbc
+    hoK3ms19i362cUnQEY0cvoC6wQ1NaiVKVdPBYA1TMmnDZFSM1djFPqtx9IZq/L4ag6cPEv
+    eE4EZb2Dk1S11RzGZEC4E2CF5RaIDJGK7XOCR3tlQLZe3sPpQ7TrrtqtJwJQIwKkoGrpOp
+    PoDJ3dlRfmQVY45mW4hG92MVKJnbV6D1EMN9mUlfx3VBltc4vNKoBUEnF5RQ42tsBbQISS
+    hjJjmQ5xV+x0A6sMEVn8cB1CBgDd1ytnkg7oQqXqx2OOC1sERu6lPrI3qnzUlDYzJP6RS1
+    paCxg8xjwmzPLhVV22FuCGRcxpXLAq61NR5djpSr7I8CrireRK2eCskv3fl5QWU10UJ+JV
+    LZ4klVsBiqA0clNbUXoHOHCH97TPg9LSGHjaAlwVJlh1Cdr0Ux2GCtnQgCH57p96mAe/F1
+    UNnEBZJOFhmg5QWWKuo0w0RcjSE+hLhYByfb7+T/HmboG9WswAPFyPoR29mg
+X-ME-Proxy: <xmx:yI1Yas39QemKUX4Rz5_WkmJI5C1Z4hVlOqRoe_0pBF2QbKxfXEEGcQ>
+    <xmx:yI1Yat2O3tzn3dmZ3Ptm_FQfiTe0_S0e703_9G-tWEQvPC0OWRba_w>
+    <xmx:yI1YampCjYtUXMRfIohj1cfx1Hc4EtnUgYiOXnpfesgoeS9GqteCyA>
+    <xmx:yI1YahhYpgEbjjxxqUdWYBXj7q1ktT8BicWUobpOIBOT12uBdpey4w>
+    <xmx:yI1YanIq1t1perH5oIcb7pmjV0KDEYN04bqSDt5HOuoPe5jmtjnAy5I3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 03:52:45 -0400 (EDT)
+ 16 Jul 2026 03:52:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8a57fa97 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jul 2026 07:52:44 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d6551bbb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jul 2026 07:52:36 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Jul 2026 09:52:22 +0200
-Subject: [PATCH 4/5] sideband: use writev(3p) to send pktlines
+Date: Thu, 16 Jul 2026 09:52:19 +0200
+Subject: [PATCH 1/5] compat/posix: introduce writev(3p) wrapper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,8 +81,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260716-pks-reintroduce-writev-v1-4-ea9038c884bc@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260716-pks-reintroduce-writev-v1-1-ea9038c884bc@pks.im>
 References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
 In-Reply-To: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
 To: git@vger.kernel.org
@@ -94,103 +94,181 @@ Cc: Ben Knoble <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-Every pktline that we send out via `send_sideband()` currently requires
-two syscalls: one to write the pktline's length, and one to send its
-data. This typically isn't all that much of a problem, but under extreme
-load the syscalls may cause contention in the kernel.
+In a subsequent commit we're going to add the first caller to
+writev(3p). Introduce a compatibility wrapper for this syscall that we
+can use on systems that don't have this syscall.
 
-Refactor the code to instead use the newly introduced writev(3p) infra
-so that we can send out the data with a single syscall. This reduces the
-number of syscalls from around 133,000 calls to write(3p) to around
-67,000 calls to writev(3p).
+The syscall exists on modern Unixes like Linux and macOS, and seemingly
+even for NonStop according to [1]. It doesn't seem to exist on Windows
+though.
 
-This change leads to a performance improvement for git-upload-pack(1),
-but we have to cheat a bit to really make it measurable. Usually, the
-time is strongly dominated by generating the packfile itself. But if we
-precompute the pack and serve it via the pack-objects hook then we can
-essentially eliminate that overhead. The following setup is executed in
-the Git repository:
+[1]: http://nonstoptools.com/manuals/OSS-SystemCalls.pdf
+[2]: https://www.gnu.org/software/gnulib/manual/html_node/writev.html
 
-  $ cat >request <<-EOF
-  0048want 5ce91c059e41090e7d2cffad39c04af8acf98dc1 side-band no-progress
-  00000009done
-  EOF
-  $ echo 5ce91c059e41090e7d2cffad39c04af8acf98dc1 | git pack-objects --revs --stdout >pack
-  $ cat >hook <<-EOF
-  #!/bin/sh
-  cat >/dev/null
-  cat "$(pwd)"/pack
-  EOF
-  $ chmod u+x hook
-  $ git -c uploadpack.packObjectsHook="$(pwd)"/hook upload-pack . <request
-
-Benchmarking the last command leads to the following results:
-
-  Benchmark 1: HEAD~
-    Time (mean ± σ):     192.9 ms ±   0.6 ms    [User: 106.5 ms, System: 95.3 ms]
-    Range (min … max):   191.7 ms … 194.1 ms    50 runs
-
-  Benchmark 2: HEAD
-    Time (mean ± σ):     141.1 ms ±   0.7 ms    [User: 63.2 ms, System: 86.6 ms]
-    Range (min … max):   139.8 ms … 142.7 ms    50 runs
-
-  Summary
-    HEAD ran
-      1.37 ± 0.01 times faster than HEAD~
-
-This might not be impressive in absolute numbers when you also take into
-account the time it takes to generate the packfile itself. But GitLab
-(and supposedly other forges) have caching mechanisms in place that work
-exactly like the above setup, where repeated incoming requests can be
-served from the same cached packfile. And in those cases, the impact is
-sizeable.
-
-More importantly though, as hinted at above, GitLab has observed in the
-past that with enough cache hits we eventually start to saturate a
-semaphore in the Linux kernel itself in the pipe write path. This
-bottleneck is being moved a bit by having to do less syscalls.
-
-Suggested-by: Jeff King <peff@peff.net>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- sideband.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ Makefile                            |  4 ++++
+ compat/posix.h                      | 14 ++++++++++++
+ compat/writev.c                     | 44 +++++++++++++++++++++++++++++++++++++
+ config.mak.uname                    |  2 ++
+ contrib/buildsystems/CMakeLists.txt |  6 ++++-
+ meson.build                         |  1 +
+ 6 files changed, 70 insertions(+), 1 deletion(-)
 
-diff --git a/sideband.c b/sideband.c
-index 1523a53e1d..94e5b56172 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -441,6 +441,7 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
- 	const char *p = data;
+diff --git a/Makefile b/Makefile
+index 1f3f099f5c..eda5ecc5b4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2033,6 +2033,10 @@ ifdef NO_PREAD
+ 	COMPAT_CFLAGS += -DNO_PREAD
+ 	COMPAT_OBJS += compat/pread.o
+ endif
++ifdef NO_WRITEV
++	COMPAT_CFLAGS += -DNO_WRITEV
++	COMPAT_OBJS += compat/writev.o
++endif
+ ifdef NO_FAST_WORKING_DIRECTORY
+ 	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
+ endif
+diff --git a/compat/posix.h b/compat/posix.h
+index e2e794cad7..71cc731620 100644
+--- a/compat/posix.h
++++ b/compat/posix.h
+@@ -148,6 +148,9 @@
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
+ #include <sys/statvfs.h>
++#ifndef NO_WRITEV
++#include <sys/uio.h>
++#endif
+ #include <termios.h>
+ #ifndef NO_SYS_SELECT_H
+ #include <sys/select.h>
+@@ -334,6 +337,17 @@ int git_lstat(const char *, struct stat *);
+ ssize_t git_pread(int fd, void *buf, size_t count, off_t offset);
+ #endif
  
- 	while (sz) {
-+		struct iovec iov[2];
- 		unsigned n;
- 		char hdr[5];
++#ifdef NO_WRITEV
++#define writev git_writev
++#define iovec git_iovec
++struct git_iovec {
++	void *iov_base;
++	size_t iov_len;
++};
++
++ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt);
++#endif
++
+ #ifdef NO_SETENV
+ #define setenv gitsetenv
+ int gitsetenv(const char *, const char *, int);
+diff --git a/compat/writev.c b/compat/writev.c
+new file mode 100644
+index 0000000000..ab2e223634
+--- /dev/null
++++ b/compat/writev.c
+@@ -0,0 +1,44 @@
++#include "../git-compat-util.h"
++#include "../wrapper.h"
++
++ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt)
++{
++	size_t total_written = 0;
++	size_t sum = 0;
++
++	/*
++	 * According to writev(3p), the syscall shall error with EINVAL in case
++	 * the sum of `iov_len` overflows `ssize_t`.
++	 */
++	for (int i = 0; i < iovcnt; i++) {
++		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
++		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
++			errno = EINVAL;
++			return -1;
++		}
++
++		sum += iov[i].iov_len;
++	}
++
++	for (int i = 0; i < iovcnt; i++) {
++		const char *bytes = iov[i].iov_base;
++		size_t iovec_written = 0;
++
++		while (iovec_written < iov[i].iov_len) {
++			ssize_t bytes_written = xwrite(fd, bytes + iovec_written,
++						       iov[i].iov_len - iovec_written);
++			if (bytes_written < 0) {
++				if (total_written)
++					goto out;
++				return bytes_written;
++			}
++			if (!bytes_written)
++				goto out;
++			iovec_written += bytes_written;
++			total_written += bytes_written;
++		}
++	}
++
++out:
++	return (ssize_t) total_written;
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index 9ebd240378..95ef6e64dc 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -483,6 +483,7 @@ ifeq ($(uname_S),Windows)
+ 	SANE_TOOL_PATH ?= $(msvc_bin_dir_msys)
+ 	HAVE_ALLOCA_H = YesPlease
+ 	NO_PREAD = YesPlease
++	NO_WRITEV = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	NO_LIBGEN_H = YesPlease
+ 	NO_POLL = YesPlease
+@@ -697,6 +698,7 @@ ifeq ($(uname_S),MINGW)
+ 	pathsep = ;
+ 	HAVE_ALLOCA_H = YesPlease
+ 	NO_PREAD = YesPlease
++	NO_WRITEV = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	NO_LIBGEN_H = YesPlease
+ 	NO_POLL = YesPlease
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index a57c4b464f..8f56203f34 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -378,7 +378,7 @@ endif()
+ #function checks
+ set(function_checks
+ 	strcasestr memmem strlcpy strtoimax strtoumax strtoull
+-	setenv mkdtemp poll pread memmem)
++	setenv mkdtemp poll pread memmem writev)
  
-@@ -450,12 +451,19 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
- 		if (0 <= band) {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
- 			hdr[4] = band;
--			write_or_die(fd, hdr, 5);
-+			iov[0].iov_base = hdr;
-+			iov[0].iov_len = 5;
- 		} else {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
--			write_or_die(fd, hdr, 4);
-+			iov[0].iov_base = hdr;
-+			iov[0].iov_len = 4;
- 		}
--		write_or_die(fd, p, n);
+ #unsetenv,hstrerror are incompatible with windows build
+ if(NOT WIN32)
+@@ -423,6 +423,10 @@ if(NOT HAVE_MEMMEM)
+ 	list(APPEND compat_SOURCES compat/memmem.c)
+ endif()
+ 
++if(NOT HAVE_WRITEV)
++	list(APPEND compat_SOURCES compat/writev.c)
++endif()
 +
-+		iov[1].iov_base = (void *) p;
-+		iov[1].iov_len = n;
-+
-+		writev_or_die(fd, iov, ARRAY_SIZE(iov));
-+
- 		p += n;
- 		sz -= n;
- 	}
+ if(NOT WIN32)
+ 	if(NOT HAVE_UNSETENV)
+ 		list(APPEND compat_SOURCES compat/unsetenv.c)
+diff --git a/meson.build b/meson.build
+index ca235801cf..613828ff25 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1446,6 +1446,7 @@ checkfuncs = {
+   'initgroups' : [],
+   'strtoumax' : ['strtoumax.c', 'strtoimax.c'],
+   'pread' : ['pread.c'],
++  'writev' : ['writev.c'],
+ }
+ 
+ if host_machine.system() == 'windows'
 
 -- 
 2.55.0.313.g8d093f411d.dirty
