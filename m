@@ -1,100 +1,166 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D219036A01D
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 09:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784279818; cv=pass; b=onsxCYwqZ1BLKTd978HVg52bBK/zCShQ+4qVFYbTKu1CMTNfwoUcWjrTGSO460upvOKBr1ZxzBXRPsE0NHDxQ7iou7qHNJ1lAfXVxZyLDQRPYw1rqaMQeLPmDzmPoK90js5ozhFOfQqE6wzg4/Yl2uMAwaRQ+JPRwjFG+AMAJCc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784279818; c=relaxed/simple;
-	bh=OKxip/hAP5t0Tm+nE41CLfap/W4bZ3reKzBbda4QlW0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IIDtXGE/PhHFGuxb2i+WCSOasR+rmZDdP901AukGG5MuRv4oTRExWw56mH+Lh28Stu4WWx6qIJZpz6eA1dmyJ609r7hcqHoen4TfW6HdWWz7rnwUQXONuCxGKhBGIbZiyd0ZRDvOk/HMn8lvCqZxFu4tsHdy5Uj3rQ4Ns+UL2EI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bVaGq+/G; arc=pass smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015CC3BE15E
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 09:32:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784280741; cv=none; b=frop+mIpzIf1gpbNpYpCN99c3UNO5Bxhn+za2ChQ2DeFZ4T8mpItGEuKUD3Z77aV4/TwbE4wGeyd6yDXa3xHfkk69ezitk7EhtzrVhZluasXS08kTApocnMyhBF3KmSTr1PAl/epXE5JANy+Jg/V4/UnUg1HN2vDJKU6pBwNuzw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784280741; c=relaxed/simple;
+	bh=3hYdb9YJ2PDcRLKUBiG1CW9JbtuUFfvDrNHNaYyZuTQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ZIH5ebe6SuZejK2By2znlQTyzQk+hTRqZnk+xKOkKOFJgC94WN51Z/ldX6ejhdC/bnU5BXMNQ+DSrRziwAqH5dbolJ04lVJ+fV8dhL8kx5Jgbuv9OqJC7l8d1G87eOJUHvWLI2WTJ4QhFQqxS8SKAEg5Wei6S0j+bgBxwaAo+ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RYGFNzNv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DnkvQ5v+; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bVaGq+/G"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-69c600f76ccso6948639a12.0
-        for <git@vger.kernel.org>; Fri, 17 Jul 2026 02:16:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784279815; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NJSEd81y68Q2SLUCavSSFbG62Loow4JBk4IPfSVM68DmEVXnHyNcw9isj7lcalzPmr
-         Gkf6kRxYQe+FG3nPlDhDROlMTu6zCVoeGyV6d4XfbTONqRGTWl72AvWGF2/uBPQ9BXYj
-         6/qCRI577H0rkcwjEhTBM51DfKcBWc9RhSYSpZZeCccyOleWsWhcQ4uAFVTbTe41A53B
-         WDfp1FjfYlQ27fpViO5PwhrnKiBKZd/yG26ILldu/3ddtDf4bIfgdjvm78769w9fnnrS
-         b5e7diGRceIwelHHH91u2lvIKQ2119qhbfkK6OKt23Kk5q47CcHhAk11dLRM2LSQoGYW
-         8yqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=OKxip/hAP5t0Tm+nE41CLfap/W4bZ3reKzBbda4QlW0=;
-        fh=lCg1EB8RLwX/h2jyJY8GeyJ2LFy8ccNlMLCfrMJANgw=;
-        b=QK/q/IbTFZ6EosAhBLo4HhOmUn4837h83SeLElwIz5YzISQIqXruFyPp77RhHpyaiU
-         Mq0JEGls4d/igcNf3iAmIwrgV8nRUQez+BWYYMMZnpJu7wWcesFdGKqjL2znTMrZaSWj
-         7loJ4xm8QsGY3NO95Ek0+ZHjkCqL828+Hxtn/6Evvlw3wUa4/C4ohoIjGZ1QaGvoh2s1
-         mVBb8DAh8zU93hr/lL7eSZC36mw1/FedSDbvnpL6iRDX3iy+M7mJH+ieqlciE2xox7rz
-         LKFAM7HS+UBuJED09b+gh0FUYgCzJMTrAmrAxQmCojriAG7nR+XETyDOlEWm8h6hvjbF
-         q2JQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784279815; x=1784884615; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OKxip/hAP5t0Tm+nE41CLfap/W4bZ3reKzBbda4QlW0=;
-        b=bVaGq+/GuyHsc3AtROYha6mA8NdzuOTheDJPPYKEkbCrERNsN68jM8QyGp5s8qOwty
-         qH1UJyKAhBFSKWrNVmcGKHekDnppazpjRqDYP4A2dcq3g0tjm553W3Y7m/rx2LlWgYwS
-         htnc7kYyWZnCj1tKza2a+Do4gNNxWiKxUnkQb3g0zBUGmt418mFkVzvN8jBsF2NbaeQe
-         qspfRmCdstmpEA0Y5I0Mo76snHXjTFesY1fzxRVe4e9vvnVbKoJDBApikQYHGXvm78MK
-         eC6yeE60AACHOXhxl0HnHajmewe6kOapKtsPaxKINhVw833BeqyZo+X5JzHd0vvnc1rI
-         A1DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784279815; x=1784884615;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=OKxip/hAP5t0Tm+nE41CLfap/W4bZ3reKzBbda4QlW0=;
-        b=OLo6WjheNuIN3GpW4ex3KJ3Y7/cxWBmjiiy2sBPd/QctBm8DrhQW8gHBAFyPwjLuso
-         FT+3g1hHSMwqKcBmAHBpYYzI25UbThONiph9YV+TDzNIgPRfMcAIQLGBHi+OETCbbgLR
-         hVLMwMG+GGEGeulJ0cLbgDoaNBXR2L6ebr9hI1NHA/QGtaUcMIjjNed8VAlQGIYo76T3
-         xteqiOVxUQuD8R3uGjUdbSYryIInZTFfEU5xZ6IPmyb8A6UeLF9z7qkrVZEmILRj3Tln
-         2ku0+v9yIDmVi32s+macNJ7P+gVNX1iPsPV3rDVcUTRiq6NpJaSX+FYHvG9WyicSBEyE
-         9fsg==
-X-Forwarded-Encrypted: i=1; AHgh+RoP3Z9rV9AhvlJYl0ieu3R4QC7+ibQTYLknZLuwzk3Fdtwf20YNaCNN6djnKnK+qvUKj84=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNGEgvQbUy0KAlhBy+8nzN4PtYgGuJCDU2P1IVmYAgsI2GkXiD
-	qI4ptZXHG0/2dfs7J/hSBT0nTFiP0uw0W1ymRTOSaH61F2J+9SniisV8ynNI986ZMUq2yQ90S8f
-	ircUWvA5KzDpl5M+/DlVW16oHzKQF/FI=
-X-Gm-Gg: AfdE7cnngMwkGILKEXnA3rxWr98NxGH+50N1Er4jozXK1BdmNldoWDm3YN8ssyDZI+v
-	2JouwJ3GSX5v4B87stiRgmqYbiXveO1o7BHNHSnnTM+Tg/Qm8ulyOMIa+GfrDW4puLDsw/YKDbE
-	q1FCiGHXMo8QyJ9l9vfNheuLYT26l8TKDUD8O/bj9ruyyv5u0wU7QqhtossbIjlIICowqN1z+h/
-	8oL6lVR0DM+UI2DvV+eAs7e25xcvSUqsBpxBQCSztlN1PH27/XPS3s3h1LdJg==
-X-Received: by 2002:a05:6402:354a:b0:697:7f9a:8652 with SMTP id
- 4fb4d7f45d1cf-69e652e27a5mr607454a12.27.1784279814742; Fri, 17 Jul 2026
- 02:16:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RYGFNzNv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DnkvQ5v+"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 477D77A00B7;
+	Fri, 17 Jul 2026 05:32:19 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Fri, 17 Jul 2026 05:32:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1784280739; x=1784367139; bh=dbnPcBaPSF
+	WV4prLxtk3QY4sidcJAhiTRncmSCaeeUM=; b=RYGFNzNvNn1IUcYTpy6yMso6Wj
+	AdjnNu3gce1QwtQQ/uHyFJpaQX7fJ+u0Agh2qy/Lqb56LSBse2B9aOXUGQhAn6yi
+	n9fGrkCiNGQP1vaN+CS2isDgTzmjq20OQFoNUF+0He76Xzv5fFH10ciNIVooL6hT
+	BYuIDahwqK11ZX6qviAWt8H7EI6R0kzOH3N43n8I7OhUO6aEbgHUy6qtW8dOzR4l
+	VW5DY7XdZh7xAI8n4GrailS3d2DZ7VQE+tnOKYzmJc+q8aKWyY1CDGdxmU6w3GQ1
+	4koeoA9pQ/NBgJ6L3SWljMwRdukhgJTJ5VGtIlfIKMXVv9IWVg24B05LkthA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1784280739; x=1784367139; bh=dbnPcBaPSFWV4prLxtk3QY4sidcJ
+	AhiTRncmSCaeeUM=; b=DnkvQ5v+A3od2BWpDobTwl/taDPQ0eZ5igiD930sZgkn
+	lxQAKODch5p0iRI9Dkg+llJw1SNiJVbNUb/ozqfDo1d7Al6qU1FnZCbhyDducjY4
+	INmE4dh7TMzVsuG3FiIUzjVe2PnP/OiRKMqppuVx4sZssGmuHw88kMdWl9lHCnDD
+	KtMbuxgzFwxVKGtUoBTv4+AbCdho0foSL2TOLCdRFUAyffKOgqGw0JxAikRzPmzI
+	/xN7NS5A7PY7vhLeV6x1zXJKsRpQO7gQWVA/IjJv6bhCpORcyljXEqB1r+axOL2x
+	T67P5WpygUge1l6xs2u5UZy8/QglT/WbwEfDGh2q6w==
+X-ME-Sender: <xms:ovZZah89T1fTDBW8792c3zBgre-tlsoiLZu2KZkikXkADIgplO7j4Q>
+    <xme:ovZZart_znCuEyyjVRreY1M03YZW0h6TOAkXNK0hu6Cjgch_H5SB7URV2ILzSZW5o
+    LeAsiQKV1fEaw-hwRZTfh9-nDOWE7CS3HAnICbVBL2d-TvLppA>
+X-ME-Received: <xmr:ovZZaspaW63ezZvbMJZh-f7YbdOqjlZBG25bXIrwVo9rAXkTZr-0sLGZbNoqJ55-VMOydj0EVGA0Fq5PcwdeOiljEz3xARjcbXzmBjIDznU>
+X-ME-Proxy-Cause: dmFkZTFqxvuVIrtFfD5O470Y7bnuGQ1S334X1OT3Tur2C1/LzaMcaE2Ee+sdViSInTwyz9
+    pZYYOtOJlN/DW04P4YZqY4WmlEfxUe5sNQkV/8wBgzlJ78SqKzZdlDqdz/7bEV0/VVDH/J
+    Bu0qi647OKoFF8IVozrPBP/GA9T+c25kMZwIMVk+exsBLqWNrkqkyWlv1K5ElcmNFWMVpk
+    APRJVqB3XbKnDfQMKgWqi0+luGyr53kuaC54c/c4hd2UdPPToAK5tz8GX8uD2XaS8ZMfX4
+    FC5FPhvk7L6uyZH6ysiT5Ll9m7AxeK9AIkLbeXz2gUbxCuBs34I1ZQicO01dncXcMIdJjs
+    aj3plYFHHhlMHcLgHL4MQslEVORCtZiP4j25xIqcm6NvDIaUQL0L1T50nnF5q0mxQR2HNx
+    kobNsfoB/n5Drltb2lCTb6Xv/WhaVGKvMIpE8o0zB+r65V7h/RjScqoT/FIHPXv70ngQkl
+    nYuSSNNzEdWB3Lem1HR0HfltQzSQvo4PNPl0lAFHVjDmJwzC1Nu3Wm+Nl3BHCy1CPR35mZ
+    /PL9PiT3xvDcLhHQ8Nh9ELDY6uHBqr+WixfLD1/QdUsbw0daRE8R+42x9jQbXaLctYBBvI
+    EivA/QO69HlNzEpxXBE4S9EndsxIkq8Yl0kkCzGbvLLuN7PMCtBrqJU9oREQ
+X-ME-Proxy: <xmx:ovZZagltiekk08Yo_168lPDEcRvhYBXWN1HoGbELbNuaSUkZ9mJlbA>
+    <xmx:ovZZaowAjCOPIqyznoPmYRGxlEfdmAE2DMz8VetnkVpclfTSAqxncQ>
+    <xmx:ovZZagnvwXHY2Wzizq_ji8R523ZXkdshSJFqc1VkN9JizpCpmxsIwQ>
+    <xmx:ovZZapePNbKjipJFCXrCKwF6W2Aq4cm-HpIax5I0blV0wtk6GKZ8Lg>
+    <xmx:o_ZZaguy1My07dpEjKma0Ykn6R0NmFzlH8Nzol7uNSwtubTTMBj-VG_7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Jul 2026 05:32:18 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3150a412 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jul 2026 09:32:16 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/9] object-file: move writing of loose objects into
+ "loose" source
+Date: Fri, 17 Jul 2026 11:32:08 +0200
+Message-Id: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2335.git.git.1784180159.gitgitgadget@gmail.com>
- <a9194b1d00b260a7a7852eccec54c872618b5fdf.1784180159.git.gitgitgadget@gmail.com>
- <xmqqse5ihmsz.fsf@gitster.g> <CAHwyqnUFfewFm7tr-Busv1rKP=4Rqnq+vJ7mEdgbaRLKbpbo=g@mail.gmail.com>
- <xmqqpl0m9pnq.fsf@gitster.g>
-In-Reply-To: <xmqqpl0m9pnq.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Fri, 17 Jul 2026 11:16:17 +0200
-X-Gm-Features: AUfX_mynUNFvegDXBq-C_o_2DcRmbjXRMPf0O-6Q7SVI9-RDpDU50HZmt0Q9W1w
-Message-ID: <CAHwyqnWOnDoMpMP7gwrQWRmaJqBrSDpdLN0Dp7U6vPU0GKSmEg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] bisect: add --auto-reset to leave when done
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNyw6CMBCF4Vchs3aSFkSNr2Jc2HaK46VDOoAmh
+ He34PJbnP/MoJSZFM7VDJkmVpZUYHcV+PstdYQciqE29cEcTYP9U1GCw7dMhC8RJRT3ID/gJ/P
+ AqcOT89HG1jqzD1A6fabI3+3jcv1bx22yhmFZfoVMqgyFAAAA
+X-Change-ID: 20260703-pks-odb-move-loose-object-writing-8bcf1f51b04d
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.15.2
 
-That's a great idea!
+Hi,
+
+this patch series refactors "object-file.c" so that we can move the
+logic that writes loose objects into "odb/source-loose.c". This ensures
+that the logic to read and write loose objects is mostly self-contained
+within that source's implementation now.
+
+To achieve that, this series first refactors `force_object_loose()` so
+that it can work on top of the generic `odb_source_write_object()`
+instead of having to call into `write_loose_object()`. This is the bulk
+of the patch series.
+
+This patch series is built on top of 44de1520f0 (Merge branch 'master'
+of https://github.com/j6t/git-gui, 2026-07-16) with the following two
+topics merged into it:
+
+  - jt/receive-pack-use-odb-transaction at bdee7b3013
+    (builtin/receive-pack: stage incoming objects via ODB transactions,
+    2026-07-10).
+
+  - jk/git-hash-cleanups at 9e396aa553 (hash: check ctx->active flag in
+    all wrapper functions, 2026-07-07).
+
+Note that jt/receive-pack-use-odb-transaction requires an evil merge:
+
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 06b31dd743..cbb06da038 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -545,7 +545,8 @@ static int odb_source_packed_write_object_stream(struct odb_source *source UNUSE
+ }
+
+ static int odb_source_packed_begin_transaction(struct odb_source *source UNUSED,
+-                                              struct odb_transaction **out UNUSED)
++                                              struct odb_transaction **out UNUSED,
++                                              enum odb_transaction_flags flags UNUSED)
+ {
+        return error("packed backend cannot begin transactions");
+ }
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (9):
+      odb: compute compat object ID in `odb_write_object_ext()`
+      t/u-odb-inmemory: implement wrapper for writing objects
+      odb: compute object hash in `odb_write_object_ext()`
+      odb: lift object existence check out of the "loose" backend
+      odb: support setting mtime when writing objects
+      object-file: fix memory leak in `force_object_loose()`
+      object-file: force objects loose via generic interface
+      object-file: move `force_object_loose()`
+      object-file: move logic to write loose objects
+
+ builtin/pack-objects.c        |  48 ++++-
+ object-file.c                 | 449 +++---------------------------------------
+ object-file.h                 |  32 +--
+ odb.c                         |  39 +++-
+ odb.h                         |  10 +-
+ odb/source-files.c            |  14 +-
+ odb/source-inmemory.c         |  14 +-
+ odb/source-loose.c            | 402 +++++++++++++++++++++++++++++++++----
+ odb/source-packed.c           |  17 +-
+ odb/source.h                  |  20 +-
+ read-cache.c                  |   2 +-
+ t/unit-tests/u-odb-inmemory.c |  53 +++--
+ 12 files changed, 551 insertions(+), 549 deletions(-)
 
 
-Harald
+---
+base-commit: 8061f1ea286318fbf976f58df3985bd60237b8a7
+change-id: 20260703-pks-odb-move-loose-object-writing-8bcf1f51b04d
+
