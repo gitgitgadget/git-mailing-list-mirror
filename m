@@ -1,186 +1,130 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF4737E5F6
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 06:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FF936E48D
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 06:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784268016; cv=none; b=I7QqmuIzhjgkLQMdUX04f1X11LpTDf2U53nUa4t/f6HKG4GawgokedD0qZlteYBExEal+hES9eiTICLyWUrWBTk4Gtrx8JBeFqntjvAcr+TsbO9u6oT3AMlpFDHyqp6QJgC5M2WxNzF4mzc/sx75U0jw35yaiLpUArsWJU12cyo=
+	t=1784268150; cv=none; b=pikPmWutTQeZH3ord/sdgbidjDfR6FEU7DBh8YFPJySa9Mc0XbMZWwLbbZ/ZElrKKTm7cKLZRmlEyGrq4fYI/8zHkTCjFmzVqELO5e/9nyAa3JDwkgYf7Tu9jwHB1tuO8r5Bp3gWiVxeBrgLVAS6nyK9hmjVSZzTCb8aJwfBhgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784268016; c=relaxed/simple;
-	bh=0aoCE7hxNuH8f6pndNzGNH7E+8s4yDYCvcDMBjl/bsE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fwjss9zbAVwXV2MYrau1lqqud/ZRSJ1AyD8ei5SQTaY6xtyRC8UoSq5xGJEHiq4HpaQkfhzGnIhPBjX1l1go2BV+8Q6npq28orB4KWBnQoY3HXaecMJWQprpRkr/RfmbHqndVs2htnciwLz9g5U/4yV7xFfiCXlE7CAo+j0JY5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vUC62shg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g3MXfTIZ; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784268150; c=relaxed/simple;
+	bh=4je0w5EVH9Geflylv6Hpln2kPXCe/3YhqY40HXDzgtY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g2RHYgZtCuAaKSiAb5/ViQC37J/e9ohYl9EpCP67hh+HWtvMNTnvvpz8Z8sbz+3+b6GPmTEUpizHCv5sB4A7GTpkQf/Lc8i57cjFLMDKU3gbxfV/x3jtqyrIE3Zs0ilF1eA0WrMRmLD1WgvCbdjCbWfFE0JbhgTvy8yLILqDky8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RdLaiGOx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UHCeaGxm; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vUC62shg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g3MXfTIZ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id D593C1D00105;
-	Fri, 17 Jul 2026 02:00:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 17 Jul 2026 02:00:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RdLaiGOx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UHCeaGxm"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 19D557A011F;
+	Fri, 17 Jul 2026 02:02:24 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Fri, 17 Jul 2026 02:02:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784268012; x=1784354412; bh=7QOQPq4ID1
-	t6I/NNe2iPunTraxk8pO++nglq2kPrc2M=; b=vUC62shgBW2saNvKLry6c+FoZr
-	M4jiRhnYd8LkVmTHceZMlBRJdxRe4OoHIv5/FgjWeX7+v1Gl6TFgujceor8WTkgU
-	De6xfu6/B6P/qI/mgg9ArXSWO61e0caoVTIoGi+sTIuZSgxeSo0w5TV99AHRZx7P
-	cr1THoDcwk1TWNwc2Fy4RUWCmu6YvXYzFghxoyFXo2o5D5GcY7GbTtz5ZfIhD9dM
-	dEJFqGFNCPMb2u8rL9tfjIuSCgq5f07oogpDTElCzgYzpMicu7+m+/oSiKyXf8XY
-	zPox3mrDOW81x22VIcEcqvPeKLnq8OJSvwXGI+JCawsv6Hvzt0Elwt656F3g==
+	:subject:to:to; s=fm2; t=1784268143; x=1784354543; bh=6Br7tHJZtA
+	1cO7VqC2HRkuV2t9c+ZJr8QmMW1Ci5dzc=; b=RdLaiGOxsvQV95ODiVa0MfHLCW
+	6ssFAxHHzDoIONAmnvl5pqIxFFDgNIZ63JjR6VQlOchRzss1N5cBpkP+5JUzMgeF
+	1571cUxHWl/r+lrgjPtyhObJFNXtBzoeOJTEauHfcpQyeKV98xg5aWQRP9yIR726
+	AdPAMbr2tzaulA5mb8zX4RBAdimv3bqJfBTeWV+u1+cCVQPEODt5BIhk/7bXjAE0
+	1UznVuaxY8flp+QEOOQ4dvQ7i3bJCdNBmbjz4Si+hoLEx7EGAWPCrgYVNTU22EqN
+	g+7Ywz3VKCI/6zZ8pABLZ0b/mYFGhoLmjX4EBy0Tp3p3vOxJyodj0dJGCQRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784268012; x=1784354412; bh=7QOQPq4ID1t6I/NNe2iPunTraxk8pO++ngl
-	q2kPrc2M=; b=g3MXfTIZPdnJO4osPqhTWzYtR7ZxlB1P9++YQitKoMQym6C6Tv6
-	VCmyK8vDx6lYjb8aa4Mkg/xAcLO6ZdEFWt+EMu3mAtSr5HA4iWpvQqBqT248eIbp
-	EQPhpEq50yMe8L60Bnxyi1ww+RtziHj1Q3CFCeFkBU3Ws22KbbGhZeevecDkZhk3
-	BIhxajrNFbOb5dvcuCB+TMv9Q6mj2tZ5nzwvqdjSnTJxa/G5hKIuYGqgStejwgIz
-	z1XwOVJqdMU9GGg9nJklXhcIFQGP6RdiWiWULbUxAJIRn9S07LpxIzkkENGOAEVt
-	Y89oT5Ngcxc4FY4cpTI8AMhEqbTpBb+Dc6A==
-X-ME-Sender: <xms:7MRZalk3_t_ngz5eX_fmUlH8MrO7rbtPHIoSzJVIIGFcDscKde0zew>
-    <xme:7MRZaoR-1ao5FRQ-CzqPemEoKjaJlCa1sHGVTBwdghwVSZsqa16IfKD2Pa_GETI5U
-    YFTgb7ZFEv_3J4Z5sTWeYR-Nrdz7Zl6C8AeKCZjRIVkEPedHIGosCI>
-X-ME-Received: <xmr:7MRZapB-v9pB1flfOfPQtMfvgxUV6onCJp0Cyga4M3wlr_3BHHFzhX71y229p_DVTYWB77yaoOdkRCpRrHShg64gSYFhd5nvQ8nFiWE>
-X-ME-Proxy-Cause: dmFkZTGSGbCnRcRjdiAMN6ee8+ubuM+KG8vYkS6RSO76HVzxbuumoa3fjsY2XdudLb4EH5
-    nrzJuY6RUM3YzpuXDabXHoPm1AqpkokL3UbvUtIXUET+PhCkDNN17jos3lGQEnM1D3INcs
-    CsK01Brye2Y+UQrImV5tLQkR4hgj8QzziqXl+Io2MJMQ6SB5B4fCU1ivR66OvJAn0ITqP5
-    +9twFiyMEVdbQpyEwxx932KapVeVgArhr0tnzHryhrWBKw+OSZu7ayrsPoH4VwZ4QLG8MK
-    pM4BWLH5BdGGhsfpxh3NoKnajRRcU01ltmhkF4H5wUEyub5GBvmtvyLr5lQBkGtTHaFNmv
-    TBDi9Mr4ZX07BS4OQwsVwrretnMQ32OJt1XKWuHp0EcOJ7iGmrVuBkAeriPqUKQIlq1cpC
-    tB9ri6Zp7dUzulnadn6XJlhmm4VodrN01AjVWSbD+j9hPAFtHxk+/rU+YasvZYPzjF+AjD
-    cIaJw1CmmCYYckFtwv66I+J643OeLTMa0pjJPT75lZEb4hm0hAb49dIFkIyHAoqdllyiiD
-    pZOZOwbn2oBGF6AhvcRmdO17VPFQALWlsPjBeijMse7zg4ItYl6sysI/LACGuvwWO8Q+RB
-    cuxkdF9JTDf8sd2g6oNGeERKFcEckHQdly9qbK30NuW8Ppu4FCZ0gTfw5AGQ
-X-ME-Proxy: <xmx:7MRZavTGyKSpmtju9ehnnmtTbr1w1jG3HrHjfsQfxJb3FOX7rFfEBg>
-    <xmx:7MRZanppjffPRYNsycOwnmCW3loQEiCmZDQBssJt3c-YCRZGIM-UOA>
-    <xmx:7MRZahwGA4dbxt25Ys6hABqRKIxFv2eFJm4AbuIFbYKb-wJlPVO9kw>
-    <xmx:7MRZasLLaYseuA3sYqMam3UqYFRUaNRM8fqMvonEID9RTvL_TnuL6A>
-    <xmx:7MRZahrHvU2uc4H-vLb4iCeOE-Mi35Ha7K7rKuOEvukR3CreitIuTXtW>
-Feedback-ID: if26b431b:Fastmail
+	1784268143; x=1784354543; bh=6Br7tHJZtA1cO7VqC2HRkuV2t9c+ZJr8QmM
+	W1Ci5dzc=; b=UHCeaGxmkETs2KCr4oX9eeiJJo3UXKEQ+pFYhLwJ0z+g5L0Q0BQ
+	0B3pKKeVzpc8SA3+KI2uLjD1FRcCvTd9dBsLR8ohVlu+htdwrv2/Gtsdx2y4BtTr
+	pbA0H08k7qnrC+YNMbHalUQAL42a0P2k4Sxih0xaxDoDs0W1ICXUOFDD/q4qFdzD
+	AqbZ+YrYrK/UmDOqJRxbRcKCm7lQN5iGs2SqNj3BtNwkPErkxY3HQijrhSDC81FQ
+	hal9PaXQTTR00xXiIIfQvbadRHBFPj3rDkdhLCgVbc+h9GtV+4P0uZdNapxkszvp
+	lsFCVrCnEvk21EAuUcdG2ON1R2GMIgZJK4g==
+X-ME-Sender: <xms:b8VZap3kFbeAcN3kR88iuL88ZXnpFqnxpqk8_wBAUKqUFCDnFgTzJQ>
+    <xme:b8VZamEEB18n4pmwRUwwut0qbtTherfwMSNkn-WkqhxCffqK8FIWYGwqIhhUPNlX_
+    L1A79OlhU_0vG5Mng7MQmpSANEtMdApWXJUHRoSApKMRfO9jvP2>
+X-ME-Received: <xmr:b8VZanj5oB-rhDRAbpSNzTyHnkE83C8hcOrp7lWs7ZKt0Wl1r27UAo7QpIIEgil7rTj-5Shm5Le9Jz3_ClMWluBrBUJclR8Z_Nwaed69Dc4>
+X-ME-Proxy-Cause: dmFkZTF6IF5PdRTGnvTZmVGAz+KzfY7uZgmlRBrZBpYqAh4lCKPljfYFmTkKF6gvfX9w8U
+    41Mx4SV2jb3iowXl1Nm8pbWgyW5Y5X1qND3s84RfK3FdOw795CoJVWE1egxQBzx3RwOhoZ
+    UsXA3MKmP8ASAGUoCSwGx403Xtt98HpVwpkqORVhbM9LFDusubltQgdi/pRXVQNKqaXGtW
+    5bd7y48Lo8G6GiKzgMe/8ZkD0qice/4o1b9AgTb2ZNLmAlEgB5bkf5ubTgqKjdg+A3s97m
+    pxJIPsBGUsrFubl8K7RMayN9NP/WeMVc89LdE923VmGySsNCwqNIs74oEm4yVxmRZEzkjO
+    Pu+rZUjqadJ32dKP9TTar6ImpDKdp1GEZL+Hvt74dvht7B1E85Z1sosAlzIxfsNHrcHG3M
+    z3V+PvYM3mhdCoM8VsWF3KN6QhzkZOFCT1loD8CGrw/Lf1BWoXn0QLwJFLt36ebmkENbFI
+    ZR1fJJgUonbE8wv6bgcF/2gzkb8b9gAHWAOnfHYKfZxK7Yf+tR/j9PJZLelbokPParNkqb
+    QQBMZj1qAyDgU1mDhcYqHwVXno+NO0h4a7uCSYcXCL9R2o0MHAfdJ0gTxAH3s8qX9wWZhV
+    hQt9SuCUKI8SLJ/xJ4ijQ6CvBZjMbJO4UH/aYTQYf8owaM4P07V30e3d6HwQ
+X-ME-Proxy: <xmx:b8VZah9RJkpREObq6QVrwkDJc1Lmch08PDl67y6ERAztbid4ssv5hQ>
+    <xmx:b8VZaurhjJOgn6AxrxZHNPEcWmaYrBwnUxlv-qRdtQci9PvB-kMnTQ>
+    <xmx:b8VZag9YRDMT2ryK235JH59F8C9OG3O9jSBvtUjnYaXdXd4TeikpsA>
+    <xmx:b8VZaiWrn0b-8P191inUOqMNTz72-K8EICJRywERj7vYcoXEofZfwg>
+    <xmx:b8VZalOFkiWiID15aQZQnEjWn74KE9zF-09c5gURpCpVEEd-KqfkmeMK>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jul 2026 02:00:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+ 17 Jul 2026 02:02:23 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 451fd001 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jul 2026 06:02:20 +0000 (UTC)
+Date: Fri, 17 Jul 2026 08:02:13 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v6] show-branch: convert per-branch flags to commit-slab
-In-Reply-To: <20260715184241.56635-1-gatlavishweshwarreddy26@gmail.com> (Gatla
-	Vishweshwar Reddy's message of "Thu, 16 Jul 2026 00:12:41 +0530")
-References: <xmqqy0fcnpee.fsf@gitster.g>
-	<20260715184241.56635-1-gatlavishweshwarreddy26@gmail.com>
-Date: Thu, 16 Jul 2026 23:00:09 -0700
-Message-ID: <xmqqfr1i6tqu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH 3/3] refspec: stop depending on `the_repository`
+Message-ID: <alnFZe5jqvFdHQdh@pks.im>
+References: <20260716-pks-refspec-wo-the-repository-v1-0-aa40844d067f@pks.im>
+ <20260716-pks-refspec-wo-the-repository-v1-3-aa40844d067f@pks.im>
+ <xmqqpl0mejlc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqpl0mejlc.fsf@gitster.g>
 
-Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
+On Thu, Jul 16, 2026 at 01:59:59PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The only remaining user of `the_hash_algo` in "refspec.c" is
+> > `refspec_append()`, which needs to know the hash algorithm so that it
+> > can parse the appended refspec item. In contrast to the functions
+> > adapted in the preceding commit, this function always operates on a
+> > `struct refspec`. As that structure is expected to only ever contain
+> > refspecs that all use the same hash function it doesn't make sense
+> > though to adapt each caller.
+> >
+> > Instead, adapt the structure itself so that it gets initialized with a
+> > hash function and use that hash function to parse new refspec items.
+> > Adapt callers accordingly.
+> >
+> > This removes the final dependency on the global repository variable in
+> > "refspec.c", so we can drop `USE_THE_REPOSITORY_VARIABLE`.
+> 
+> While we lost some references to the_repository, we gained
+> more references to the_hash_algo in exchange.  Because
+> the_hash_algo is defined in terms of the_repository->hash_algo,
+> it is only available when the_repository is still in use.
+> So these changes do not really help callers, and only leave
+> more for them to clean up later.
+> 
+> Which is probably fine.  We have to start somewhere, and
+> refspec parsing is a fairly well-isolated corner of the
+> universe that serves as a good starting point.
 
-> show-branch uses commit->object.flags to store per-branch
-> reachability bits, one bit per branch starting at REV_SHIFT.
-> The flags word has only a fixed number of available bits, limiting
-> the number of branches that can be shown simultaneously to MAX_REVS.
->
-> Convert the per-branch bits to a dedicated commit-slab using uint64_t
-> as the element type, initialized with a stride via
-> init_commit_rev_flags_with_stride(). Keep the UNINTERESTING bit in
-> object.flags where it belongs, as it is used for revision walking and
-> does not need to be in the per-branch slab. With UNINTERESTING removed
-> from the slab, REV_SHIFT becomes 0 and all 64 bits of uint64_t are
-> available for branch tracking, lifting MAX_REVS from 27 to 64 branches.
+Yup, this patch series follows our typical approach of making one
+subsystem `the_repository`-clean, but bumping that dependency up into
+the next-higher level.
 
-Thanks.  This version looks much cleaner.  I appreciate your
-addressing the correctness issues around UNINTERESTING
-propagation that we spotted in the previous round.
+I've got a bunch of follow-up patch series that'll also convert some of
+those higher-up dependencies. Most importantly, I'm converting all
+subsystems that relate to the transport layer, as I'm on a very naive
+quest to try and get git-clone(1) working without `the_repository`.
+Let's see how far I get.
 
-I do have a slight worry about a potential performance regression,
-though.  We might run the risk of slowing down the traversal in
-how we skip parents.
-
-> @@ -226,39 +285,43 @@ static void join_revs(struct prio_queue *queue,
-> ...
-
-In the original code, we avoided parsing and re-queueing the parent 'p'
-if we knew it already had all the flags we were trying to propagate.
-
-> -			int this_flag = p->object.flags;
-> -			parents = parents->next;
-> -			if ((this_flag & flags) == flags)
-> -				continue;
-> -			repo_parse_commit(the_repository, p);
-> ...
-> +		{
-> +			int commit_is_merge_base = has_all_rev_flags(commit, num_rev);
-> +			parents = commit->parents;
-> +
-> +			while (parents) {
-> +				struct commit *p = parents->item;
-> +				parents = parents->next;
-> +				if (has_all_rev_flags(p, num_rev) &&
-> +				    (!commit_is_merge_base || (p->object.flags & UNINTERESTING)))
-> +					continue;
-
-With the new slab-based approach, we skip only when 'p' already has
-all possible revision flags, num_rev.  If 'p' already carries all
-the flags that the current 'commit' has (even if it lacks some of
-the other num_rev flags), the traversal could be pruned early, but
-the proposed change fails to do so.
-
-Consequently, we proceed to propagate the flags (which amounts to a
-no-op on the slab anyway) and, worse, re-queue 'p' for further
-processing.  In a densely tangled history with many merges, this
-would lead to significant redundant work and queue thrashing.  We
-instead should check whether the flags of 'commit' are a subset of
-those of 'p'.  Since the flags_stride is known, introducing a
-helper, perhaps has_subset_rev_flags(commit, p), to perform this
-check should be a straightforward exercise.
-
-Also, looking at the bigger picture ...
-
-> -#define REV_SHIFT	 2
-> -#define MAX_REVS	(FLAG_BITS - REV_SHIFT) /* should not exceed bits_per_int - REV_SHIFT */
-> -
-> +#define REV_SHIFT	 0
-> +#define MAX_REVS	(sizeof(uint64_t) * 8)
-
-While lifting the limit from 27 to 64 is a welcome improvement, I
-wonder why we stop there and still tolerate a hardcoded MAX_REVS
-limit.
-
-The introduction of flags_stride and init_commit_rev_flags_with_stride
-already lays the groundwork for supporting an arbitrary number of
-flags.  The only remaining blockages that keep MAX_REVS alive are:
-
- - The static ref_name[] array; and
-
- - The stack-allocated arrays rev[] and reflog_msg[] in the
-   cmd_show_branch() function.
-
-If we
-
- - dynamically grow the ref_name[] array (perhaps using the
-   ALLOC_GROW macro),
-
- - dynamically allocate rev[] and reflog_msg[] in cmd_show_branch()
-   once options are parsed (and thus ref_name_cnt and the reflog
-   flag are known), and
-
- - calculate flags_stride at runtime as (ref_name_cnt + 63) / 64,
-
-then we can get rid of MAX_REVS and the associated boundary checks
-entirely.  Since the proposed patch already does 90% of the work
-needed to support an arbitrary stride, it feels like a missed
-opportunity not to take that final step.
-
-Thoughts?
+Patrick
