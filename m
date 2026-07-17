@@ -1,88 +1,84 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9C4194C96
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 01:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B17231E83A
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 05:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784250693; cv=none; b=NDeFU4PCTHMqxKuegpr72cwXjZGUvG/zYBS1DkRRlNmL6gwGZrpGUJ86oZj9JDPjTxZmlVKV0SLsuu1H0GfwSciBr7Pt3Brc6dozyIaJNbSN2DIE44ZmpVpnDAZjBO2vpDbwe7mRnfOT6krdkvPpn4hBwW5YEz618eviE2GkcEQ=
+	t=1784264415; cv=none; b=f/i6qhMAcEL8dmlBqEYaA5lDygbCO8EKRM/mAtp7ofnUI0fDLhyFl2JBQ9gsnXj3NMadjVs/VL+SpZWPOepDvvuWj54J9+HBUMCO8BBbyDz74pR2cBUq1vuE1DRdmAlr1s/Eg2vYubkytunYw4jqE0zu8qb0iep0kTXp7AsNqns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784250693; c=relaxed/simple;
-	bh=JzWEYzdcVfDPTOaWmVApJjitbjAgB7gR5DYVFnQdOvM=;
+	s=arc-20240116; t=1784264415; c=relaxed/simple;
+	bh=czZNTwq+WWVT59ukBRReahkjWTnSSojKg11jkqLGfJ0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BgClU8NrGggsO5Z3D53v7VxtjzvuKjkGNuakCORpNPCiD+i94HVD1fF8tfleehow+FxVdWgcXO0ub8m+Ven82tyF/aYe+miii/WXQJ4npUTV6Z8TgCXXXAHimrVeO6eyL1bKAig6PT0kwUPNYnoFqNJw6Lco3l1MM8GAVhNbXLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PWEAAHNv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AMAFSOE3; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=LOOpAsPuqQUVTY/7Xkj9FFc7gCr/cMreWsgofDoZnGhrK+AQK8PW485G+JG3y/GjfD2i3zU9Ugov7AfR3ZRU9Sa8qpQ5NovOCwIuwVUnUpADbf5QjIbA+iWJ463spW9k+zTfI06nAos47GXO7SxI6f0uXelSFdc8SiEYlyDKYo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ElPm0Ijn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JJF/ssOT; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PWEAAHNv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AMAFSOE3"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0123E140007E;
-	Thu, 16 Jul 2026 21:11:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 16 Jul 2026 21:11:31 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ElPm0Ijn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JJF/ssOT"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 90E4C1400086;
+	Fri, 17 Jul 2026 01:00:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Fri, 17 Jul 2026 01:00:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784250690; x=1784337090; bh=L2TQl9Srsu
-	nS/WYx5pobWwf42KRLdUvWJq+NU3Agi8A=; b=PWEAAHNvIeXnRd6piP89AXz/Lo
-	8S05iHDSB/bnvrPACKWLF5HLt0mfSWUzgNQaBLbwgzwPHBTXjqiKqK3pIsaU7gUZ
-	x+AIOttLl+aKsuRXmzkwJpOW7QtTg+evaB9+bE7THZxB5deq/2PgTvzaWDVaVfst
-	UR2XICVYer68HfybBKMLoIoobsMCdXleHzcrjiWK11ESxG4n/WgcQCC1BlhGORic
-	TcFQ7UqwqMvgKIPZchDSKE8E1jEyQtjYL8JVqMiKB739uJsaU+OckB1FQWUY9Lrx
-	h1Wm9RFPdsp0h2Sp8Q5f1hZzXrDgkt7+M/C287ICoJ1Remrjs2AneHb4lYhw==
+	:subject:to:to; s=fm1; t=1784264412; x=1784350812; bh=W6CB2m2Gwo
+	C+pK3D1zsycTZh79DnYwPEvlAwsdkocP8=; b=ElPm0IjnE4bUG+9I03AU742pAb
+	M7iwcZ0Bbj4Vhj3rrddem8vi2kh2Kw7FB90B13o9M3gw7/hOxYYocLZnh6TkWIYj
+	6vLNchGOtArWOnVwjyLSqa9J+sShQ4jGgo4vyijzVG/aeJ0UN1T3E0MOUfacU+t5
+	Jufc1blWWDaJ2TWNhcmMIIjWVtNP/iHowVQbMrUlSNGRpe3Skwprffvxu9hX+zH9
+	pQrn/8t7ucKt2f56CH/9MchehP/xGOSXvWnvZMXjYDApxU8fQOMObxnKn472nueT
+	i61m/oqgfl41gvtpX7dzmsQPYoxQMn100WyvGo3h8oc9iIHr63RuBavpB62w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784250690; x=1784337090; bh=L2TQl9SrsunS/WYx5pobWwf42KRLdUvWJq+
-	NU3Agi8A=; b=AMAFSOE3bxYnfJwuwk5RTwBKbG0fkoCEf3ApVrmhZmryitROws0
-	JvHA+FV9FELcneWCRccrYZbhR/lX5JTYchMRiveUFSjQnJmiuLkrjXlskaTaN+6z
-	MnFiz718d2d5LHS+Og+6ekyBx/LxddyIJp13DXfHmdVIveAtxvnf/m46RlVzTwN2
-	L0WNCe3j6U524+1/dMsIb9/Lfj+qYA+0cuAANwpslFT1UI8WrykuDKAqJ9p7eeHv
-	ws/NLeku+deiQICY2J9p5m/pOJZG8x/L/OAI8+KkhhfNh1MVhgYZT2Az4Bjwt0Uk
-	dPFGt9cNlGCi4o5BDiB1to4jz1Ju6cnmwYw==
-X-ME-Sender: <xms:QoFZaqdSIx8uNfLTU6GP5Lh03YME3c57GlWKFYnglNzTOa1jSxZTgA>
-    <xme:QoFZanQ8tTLW8Gxo9Nb1inhdXQ7U_8ztZB8UIrIarRmzNu3GcLCECzUXEHc98vH5a
-    a7H_6ehM7eOd7GkLPM4KCUlWN5UBKgejZVGPwy1VHJIthCPiYx4>
-X-ME-Received: <xmr:QoFZamLNiBrc9QsL5n86opuOlI6WPkIkxXqfswht2A3WytUjauCT_3RPQIsJ-Yp_aEZcA3i17mjxPnByQTd7PJAn-NtiLOaGaebi_H4>
-X-ME-Proxy-Cause: dmFkZTEAA1/MbY33+/6Dd0OR0qEZOZUMyOe9HOSJYVECg4jEv5fynlBfMGKasttuUPzYwF
-    VnIvE250F56to5maKrP3ZDk7R6Cooqk6OOMCZJB9TJUNu2H7WBTyiqzpy6LiLU4UQSICKk
-    Bzf2TjK8voDzXYAeGlwjXK/iCS0q8KhwUlDeqenXBcArN3ISebrVE7NjflihGztqnihdYX
-    LJro46BRKgADbUNQlNTMtSUNNsM2wkP1ploX37B7VbWJmvd6LzqYrq1Rd8DnPhbY5TQ21Y
-    NyjDxGZEEyE4V6Be1FsrrmS2iQLM/OfVsQ9LH/+sWakYeoToyIZs+XNHAf8ssjqJUzCmcZ
-    Vo9wcXFsFh7+MwiFW+zpO3tGiMCpYp3QKufEYonVrosLc8KBDuIk26KICwwmIdY674AF4G
-    lxalZ2AW0lhwAydXbj2qhm4mA+Ehm3mp6lfM5qLW0Oofn1XEIVnWEsVjdVEeQUGjFifvty
-    Pc+UzNoPfPqw/tp92v1mmiqA5isWXDg6P0DTotVo/lHgqx5QkFbnfjcdUkGiuqnTA+AD3D
-    kDzLCZIxGqI76DU6hY8idfWGHupd/Oexu09sQSJmPlWfVQhFATpDkAHKZWDCRGZY+Zxt3s
-    ukpLZTovPsVqfS8NVaK+2gmtzM2k7J1yt3qyeiEmAQZSacdlhwAwkZHOp0PQ
-X-ME-Proxy: <xmx:QoFZakL2H2AdKMKlx2zQH29KIiy0R9oNipqRtTFIbQ63xNdDfbCMdQ>
-    <xmx:QoFZahiPc3nmiGqxMinqqw9T1qVfGkchM4UhCtWt0JtDGXhBV60Uvg>
-    <xmx:QoFZauONVQXlJy8YJ57ZfoAR6IgOpzIepIVg8xxwlxccy0qYWoL4XQ>
-    <xmx:QoFZasodplPrJt-q-vpJakDcPI0-NEHkhgoRQs2hUiw0wnlzsXiuvQ>
-    <xmx:QoFZalI2hU1w2bR7k4FuSEC1U16qxsySJVPxDjMec96WZsEFngW8BMZ->
+	1784264412; x=1784350812; bh=W6CB2m2GwoC+pK3D1zsycTZh79DnYwPEvlA
+	wsdkocP8=; b=JJF/ssOT8Fjw+EKiJsmUiIJ1xh8Di3qQ39bnAjXBYoHBFJj3/w7
+	1B4GqlbyIXhI2wvT7l3N42ydoTzNsuASPB56QGYk5E3Ih/xdc/H0zPzVYWHlH6V2
+	ANw14T9JJrPzLCBBa4FDFDq70UwJqZ69GcYQtGWs/rjfxnWkMinlfJZLlsV0BF5D
+	JhKoY6Z5YZpJFKbJ/ZojrRJXj37Vo2EabJV9Np1+YVqMna0VsXswP9Wki7p5JzlY
+	yAWZBCLUiufk6mUcRJdkuCwisSNKLfY/Frsz0meytM5UGk6fd0kJAtN9GS/RW904
+	RAIZvZ/8TDj2JXQ+mOdygY8L5pYyhdwvBvA==
+X-ME-Sender: <xms:3LZZau-JkzJEcgsVQeyZAuV_QKs6A3ZVBDvWUnVxJOtrUKQWxhWe1Q>
+    <xme:3LZZals1QeT-C6zX7Osx8oQklJxqZGhJp56iXrE-foYoN2rlm5audqRRRPotbJ8yI
+    6VB5SbtEs4SEMGLkZHa25wn48BvOlQtVs6tbsIViO5Soqfee4_K>
+X-ME-Received: <xmr:3LZZapCHgU0hpGQGac2LnS7P4wyY0I5yo_vQmMy_OAxURjhlUYBYOwrWUnluRo-pxije2ILgDwrnyfo3h0AP2ctgHorZTfiBq9Y4RIY>
+X-ME-Proxy-Cause: dmFkZTGigsjdgOJJpBgn5udUK+UtGmyga19B0DJ7aVV8+xC19XlKr+hv11aTMS7ypwUwRm
+    NX3zsjH3LT+yqtPmeJ1cuUhLg3HEFbaSpLANr7Xd9eP69Tkv0ZXVQ64mVllkeqRUTK0++O
+    tPg9JIYQB3mteeQTN89Qj8EaETXEd81VyhhfpEs2YXZVhgMkv2Lx/dqYvbJ5+znTAkkiiv
+    /4/PGeNq0BHHM5Hj4xaFgJaabgku/4BarvcFerA1BKlKcIELXwCljHbozkRF+GMHgzFfIC
+    Ez8tLi6nIXqTKen402HYyrWUcmoJviSB1iS585wUJ8gFlzWQ/+ZUoATIBjJPIBOnK85XTS
+    BLynpTtTFx+GGrTDSXXauyH1n8uAZ2/9BIxraRF3cMK1/QHwucFGxW/gBxoBzzmU4u2E5i
+    Kwcrw5xPzUIRXfqcSx4b8192dRQ7yzwLfW5/Kcl3G9rRtrHAXXawyBIG7qxKv94K/ThyW8
+    GWDp6ALTClTDtNQp/XoUjujRQg37FXOpbFeN43RPJTa2GfRaS1WOV54IVOpaSNwAuwClNo
+    6W8gNJOapBfnw2H7aZcNT670hpts6G+pdTZjuPYaaayY9vYpDRs7AQ1KcYillrSRKYMZiK
+    T0VnBO6PtgUE7wUqLiLn9XzyCllWXpyjUc4PrWBGndEeOc14jLIevqNtv9CQ
+X-ME-Proxy: <xmx:3LZZalUm0hFyuxq6qdBXi9Gywtfh3aBCPkBP25uCwIGvO1snB6idNg>
+    <xmx:3LZZavDlhx55zCWuSFmlVeMcdQTbfRVfdxpG-PG5fAUAsEM7Zn1Tnw>
+    <xmx:3LZZag_VSICrhs_QmL-cwyYpCpPuG8_WBSpssk6z55IhbUQyx8WOVg>
+    <xmx:3LZZauFELQLRKBnNzqJGceZE4MAFNFhIVe5xJEJjUUmpNBMUR1xxrA>
+    <xmx:3LZZasjB86SiWFrQMiRcLSZZ6LS251ldwFO8JsGErXvRGQSR-AmVQIa9>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jul 2026 21:11:30 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Jul 2026 01:00:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  Emin =?utf-8?Q?=C3=96zata?= via
- GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Greg Hewgill
- <greg@hewgill.com>,  Micheil Smith <micheil@brandedcode.com>,  Michael
- Haggerty <mhagger@alum.mit.edu>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason
- <avarab@gmail.com>,  Emin =?utf-8?Q?=C3=96zata?= <eminozata@proton.me>
-Subject: Re: [PATCH] stash: add 'rename' subcommand
-In-Reply-To: <allISNh-b6Sc6y5-@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Thu, 16 Jul 2026 21:08:24 +0000")
-References: <pull.2180.git.1784190706028.gitgitgadget@gmail.com>
-	<alitkCsplW_DIaRw@pks.im> <xmqqh5lyhlp6.fsf@gitster.g>
-	<allISNh-b6Sc6y5-@fruit.crustytoothpaste.net>
-Date: Thu, 16 Jul 2026 18:11:28 -0700
-Message-ID: <xmqqpl0mbetb.fsf@gitster.g>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH 3/3] bisect: add --auto-reset to leave when done
+In-Reply-To: <CAHwyqnUFfewFm7tr-Busv1rKP=4Rqnq+vJ7mEdgbaRLKbpbo=g@mail.gmail.com>
+	(Harald Nordgren's message of "Thu, 16 Jul 2026 23:22:24 +0200")
+References: <pull.2335.git.git.1784180159.gitgitgadget@gmail.com>
+	<a9194b1d00b260a7a7852eccec54c872618b5fdf.1784180159.git.gitgitgadget@gmail.com>
+	<xmqqse5ihmsz.fsf@gitster.g>
+	<CAHwyqnUFfewFm7tr-Busv1rKP=4Rqnq+vJ7mEdgbaRLKbpbo=g@mail.gmail.com>
+Date: Thu, 16 Jul 2026 22:00:09 -0700
+Message-ID: <xmqqpl0m9pnq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,35 +88,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-> I have a large number of stashes in my git.git repository (211 at
-> present) and it may be that I, in a mad rush to solve some problem or
-> another, went with the default message.  I do this kind of thing with
-> repositories at work all the time.  But it's inconvenient to have to
-> search through `git stash list -p` to see which change it was and which
-> stash I need to pop to resume my work, so I can see the utility of this
-> approach.
+>> > Add an "--auto-reset" option, accepted by both "git bisect start" and
+>> > "git bisect run", that resets as soon as the first bad commit is found,
+>> > returning to the commit checked out before "git bisect start". The flag
+>> > is persisted in a BISECT_AUTO_RESET state file and the restoring
+>> > checkout is done quietly.
+>>
+>> I often find myself, after the culprit is found, running 'git
+>> reset --hard' or 'git bisect reset' to jump to the problematic
+>> commit to investigate further.  If '--auto-reset' leaves me
+>> checked out on that bad commit, that would be a very welcome
+>> change.
+>
+> No it's the opposite, returns to where we started before the bisection.
+>
+> I don't mind changing it assuming no one likes the original idea. I
+> guess the name shouldn't be '--auto-reset' then.
 
-Hmph, are you saying that you are going to wade through 211
-stash entries one by one and reword them?
+Since "git bisect reset <goto>" is just as common as a plain "git
+bisect reset" (which implicitly uses the original branch as the
+target), I suspect that an option like "--auto-reset=<where>" with
+values like "original" or "found" might be appropriate.  And I would
+not mind if omitting the value defaulted to "original".
 
-> In my case, the stash is likely on an existing branch (such as my
-> sha256-interop branch), so I don't want to create another branch right
-> now, but I do want to distinguish a couple of different stashes.
+The point I was trying to make is that where to reset depends
+more on the situation the user is in, rather than on their
+personal preference.  I would mind if you changed it to always
+reset to the culprit, just as much as I would mind if it always
+reset to the original.
 
-This is not necessarily related to what Emin's patch does or tries
-to do, but it suggests to me that it would be ultra-nice if we could
-have a stash that is associated with each individual branch.  It is
-as if we have been living in a world with only detached HEADs and
-you suddenly invented named branches.  ;-)
-
-Well, the original design motivation behind "git stash" was the
-"boss is here" emergency mode, and the expectation was that such
-an emergency would not nest to leave anyone with more than a
-handful of entries.  Thus, a single stash shared repository-wide
-across your branches was not a huge problem.  But our workflows
-have evolved, so our tool support may have to evolve alongside
-them.
-
-Thanks for the food for thought.
+Thanks.
