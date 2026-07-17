@@ -1,233 +1,349 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazolkn19013087.outbound.protection.outlook.com [52.103.7.87])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D020530E835
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 13:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.7.87
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784296397; cv=fail; b=qHIGXUrQQo+A15f2Cw51l0wMm75L3u8MaonaZL7AarW2myEuA+i16TRTjgoTmfxd0Ti3KXWNeqlOTM2XXwo5+Hm8qSy9r2Bypuca0w5srGlFkKNMaSCgd+ORwjQDpNOFpmgpM0+1JIBqGRHkXnBq3pc9sPcykvDQfHorkhdYeWg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784296397; c=relaxed/simple;
-	bh=AzMDArr+vZJuyh9dMIi37Qbdk08LGoGKORu6fN0h+es=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=VKt1a/6hkW8WQYjezCz4gp64cq51g/ymssuVcqRNX1c1TnvXEnD/7i7iqZRiMqHQcplMzuGoWdHY8d3MWuDAU14/fmaHdteseS1rKEnu/EJnAIugjEWZCcga6Yls4ZnIperLSbBL64zDcnqUg2tPattDXcuUt3IUanl/Lw4tU1M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=sYHEk4N3; arc=fail smtp.client-ip=52.103.7.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986722749E6
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 14:02:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784296966; cv=none; b=EPlkx7C5vsGuiIz73HS/DKtV4hs/KiepX4KC/nAQN/wNRTdDerYiENSfzZIH5oH4uny60d4O87dPTcIFVsz+zZHqhsc8+yrTfPPjcu59ZcD2yjzs2kMgEiGS9CMF8QfnmA8HiTG799Hrp3AYUZX3QLzsnetc2xgVKqWFZYFDEfI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784296966; c=relaxed/simple;
+	bh=QMLLGcJjUACOT5NkbbX3jQMLl8u9FBZHWAQ95CgntS0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lb11Dfx2TxYmy8X60krnkoBR2RvA0ass3KXjJaYDf+DL1WWJTi3gjRaWfZ3YSd6hdeXKToouR9WnWGD669fMbDJmFlbu5CtFEoj5BuNbqG7xTdtMM4EPxMJpBsIunX8KqHErmjY7HD+zHu6mCWavmt4Wb0A3gSElGtBxCBe842I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lsz3njXQ; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="sYHEk4N3"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ab/QSZx+0Uz3WJhodlxi6g6bxtQMYr1EYPQp1M5+X6c7mGCpaQt46SfpNSaFuhN1AoWk9BFHFbwA1qaJ3DYmLhQCwq/FnmN5KqWHsGEhtTO3ccho0A20xjX6CW7O6f80hz1H38Q2DhlnEVdU4uWJucPsHtn/3pxcgui8QaEvL9HpZd552zbviNUm4NgsJX9TfIbW6OKaO1Sz+T/oCj4+8NtCde5Ra+EQFboxxJxlg1uXkul3KtN/v04mZxJwF6YGmuZmqhyNadeXHsqWHj2bfBLD3LDcNmufcO5HTzZ5UZss/g4x/Z6bdiGtft2OeMesn2QPe5DRR4FqDuY2C97tIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yuy6sOv0bpt17ek+sBVjTIZ2Ofx2jiawuwnKQscuBVM=;
- b=kcmES3xOFg5mwy4Pb7LEy5VlsX82nLloZZbw8dyHGjL3hpLXwMUUBG7zcBMEI59vpNrY2LqDOuKGKDq/gnT8mTDfFYfmzTNAOQs0FwH66TPKplMQ8YeB9Qkv1CovIu3rMIRZzvVs64pcajiBYSe6T5Ei1+ffkVWfxcVV8fmc27rX08KJ0rXbPGzDTesTmi9OyfBFyp9HefDByJcPsAQehxPLM0jOdUtLyTubDnT7Ahhdhw7MoptjOgGAVtkovFy5etI+8ngDkm3PZ0TK2RwONdObV5LwZXsXuQMoAMOYhr0ijphPi3BtmQXXK+0nyMArnF7UGUl8agpDiikg7mUQHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yuy6sOv0bpt17ek+sBVjTIZ2Ofx2jiawuwnKQscuBVM=;
- b=sYHEk4N38SCAaJmIFBtHbI4cJaNi/EnLTfy2aSlUUwdM/5EKmmqamXVdMJBUh17218piOMmo5Px1s3D4voVBN5yEf0ghpRHyzf28nX+d5Y3p4E0wQZDqRRuCP6NyZIFniTHC7VPEokDQmHWYsN6zMnN7hRAJaxNPcz55jPy5dlQP9EomF8DTMfaXc/eA2fUz4K6R/2uBCYrCgTt+DXG7+t/umyDfVHefxnBYVltn7NRFj873hdWuCD0PWWjhArPX7irBoO+z74jN8sQlr+g8eCke3JNs4ULN5C1Xv2NkEx+NQXmBi5jPw5WoyQ+1+YgmednLft88waJnat2N55mQsw==
-Received: from SA1PR10MB997715.namprd10.prod.outlook.com
- (2603:10b6:806:4c0::9) by BLAPR10MB4980.namprd10.prod.outlook.com
- (2603:10b6:208:334::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.10; Fri, 17 Jul
- 2026 13:53:13 +0000
-Received: from SA1PR10MB997715.namprd10.prod.outlook.com
- ([fe80::4963:e69b:5c7f:404f]) by SA1PR10MB997715.namprd10.prod.outlook.com
- ([fe80::4963:e69b:5c7f:404f%6]) with mapi id 15.21.0223.011; Fri, 17 Jul 2026
- 13:53:13 +0000
-From: Travor Liu <travor_lzh@outlook.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lsz3njXQ"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-caf45fc5202so5187275a12.1
+        for <git@vger.kernel.org>; Fri, 17 Jul 2026 07:02:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784296964; x=1784901764; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=r98toiZbnpzcuXHybVsgAW75dipvlZqKNrwID5L/yL4=;
+        b=Lsz3njXQxlatJgYzz0e/IdG1782Ie2fzyQtYh12s9T6OUIw4l5a9TTpjpsEz8N44TD
+         p+4LH5N3RjzMtkDh+qwLuolTy3Tk49qvhTijpt4b12U2FmlooAu9OhVZaxTcpHoJLffO
+         Ki9+VUY5zfkxkVFRUhgnAhMAXtwoCnXSAwnkDDY5Pbakk10oKTAi4HRqH1YY7Hn9kzRa
+         auA7JFHVgFEpXr7E94AV0B3Atb2iJoBpjttNzbhrJddaGQTLCgh0dSWqSiDZIY0oCSf8
+         iXJT+/w69mqinpd/rCCRtAdQDZF9qvYrugLZHXGzIIcRJ2Jvazm5pxS4pp3Uz9vFXjrC
+         6r3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784296964; x=1784901764;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=r98toiZbnpzcuXHybVsgAW75dipvlZqKNrwID5L/yL4=;
+        b=KBMnio90KQ5mosod+Rfkmr99zHse+GQauNddsplEFueBECgdKyNF5Dmjv+QeeVO4a3
+         /jfIv2EL+K3HMEvfKqe6FqYw87xxKkX98G1OyuhQxjeFrIQaWfIy2L72YxZB2BFAwy68
+         HA4PmddtHnK1xyymxOIDxlQZYQBNgGXt3SlwfWI2mFNym8vLR6Pk0sTRqQZ5doYHsOXE
+         QT4Ckgc3vmtU2GA+i5eX6uCrMKl6g+zd5aOohtz3vybqcs6HwUOjPDlao0MKl928pmU0
+         8wsJO52AuVhnFr7ZdLq4OdaE8pLb1Y1X6WUmwbYRMuTzXsEQMnpcZBdulRYvDDIQXwsj
+         wdUw==
+X-Gm-Message-State: AOJu0Yx6S9Ildeo8P9NS0Kz85RBXDM46GufAfDnIfBzYMuebDCi3m/DZ
+	OW4Kos+AZuLoTYjWDQH1GNPtLvgA7pv6/3Pgzr7nq+Ur4CF/38bgPC08SSSCCbRI
+X-Gm-Gg: AfdE7ckt3Q+7vyZAQfsvK3+2kZ3meGM5wlXgEqYRY0yjgLA+clXIJ/Mz1osab03QcaO
+	HcGEpqs9N00mHuRtHgdhj/RQz59DveXl5+Ztf2GN+HybdcVP8dkhlW85nAfbS3yNSgouBMfZ9ZZ
+	WoC/v+34txfCVaYt3b71OB190gXflnp1HZE4Yy431OFhy38DngHj/6an4OD/J4Tqc9P5M1jVszq
+	s4flgKaHTIJ2cNzh0g0b3bhhKYRbzO+toUlUs++LfeA/92D2fDvBifQftXGI8jkNRefcWuup4Q2
+	LESMxvr6no1B0f6poDYbtwcIBHiO2l3R/iXsg3c/d0p1+F0ewH5rJ3n0EUpXTbM6ZKhZMlJmxC7
+	zYhuhLN0wMBRN6muJnZlYiFaSsibfF0swfh+nnN765FqJzIb7j0jIlExqPhr+nZuk4+YAKuJKRC
+	GIaMykLFe8iSqcHQMdrz5upG/HlGpuM9VHQD62ZYZOnKIxdqU=
+X-Received: by 2002:a17:90b:48c4:b0:368:9da3:c496 with SMTP id 98e67ed59e1d1-38e4b51bd8fmr3032057a91.24.1784296963169;
+        Fri, 17 Jul 2026 07:02:43 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c54:99f5:e868:2959:a4c:3254])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a210571sm7886418eec.31.2026.07.17.07.02.38
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 17 Jul 2026 07:02:42 -0700 (PDT)
+From: Shlok Kulshreshtha <diy2903@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Travor Liu <travor_lzh@outlook.com>
-Subject: [PATCH v2] gitweb: shorten index hashes with trailing file modes
-Date: Fri, 17 Jul 2026 21:52:45 +0800
-Message-ID:
- <SA1PR10MB9977150C823C0751E53B150D5AF1C62@SA1PR10MB997715.namprd10.prod.outlook.com>
+Cc: Shlok Kulshreshtha <diy2903@gmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	"Scott L. Burson" <Scott@sympoiesis.com>
+Subject: [PATCH] userdiff: add support for Swift
+Date: Fri, 17 Jul 2026 19:32:29 +0530
+Message-ID: <20260717140232.6722-1-diy2903@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <SA1PR10MB997715AD62D7F2AF64EB1A9887F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
-References: <SA1PR10MB997715AD62D7F2AF64EB1A9887F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SL2P216CA0147.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:35::12) To SA1PR10MB997715.namprd10.prod.outlook.com
- (2603:10b6:806:4c0::9)
-X-Microsoft-Original-Message-ID:
- <20260717135245.22452-1-travor_lzh@outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR10MB997715:EE_|BLAPR10MB4980:EE_
-X-MS-Office365-Filtering-Correlation-Id: 83bab902-e379-4f0f-1fb5-08dee40abea2
-X-MS-Exchange-SLBlob-MailProps:
-	WaIXnCbdHrO+2YmbT5jW+WUSUt4IT5vRoSyndlTT92K84OJqLUkneIMcigVYzdWPzVpqIU0M9EUDOQc3imVu/obGLPU+Nbq3WZ+53QbBl/bv1MKUM016nSbYTntC+I1vrBeyhu0HIdUcUMvpVGpykteTzAk4gM5AIPBpBcJrsS1HRUq6j2f4EKijsFynZUGsq8opPYpcDE5MjEBPzASSpTlr+vs0m/W3XZgWJOP6DRc6ZfOz/1AirXE9xu781aJ8d/SBzDVd0envw4fkBwibR1Ak6GE57hnz/CA+B0pA6Byc0U2/xYVZzyBk1NZvtyL7MvUW4JKTm4Jlny6g7dwTwNWPtZ+CWXYbOu8PeCViXjimV235heKE1i1Hb9vPvaONfaIwvC+okB87WkzZS3jOySB9Cf30RiB0DtbcRAVJNu7ofHqMq5VICTu1B9hJLw22XbKDexJpzueSh0Q8vibG6xFEb69e6PPBMKD/MUPMjI4w9zTfQHrAOg9oQMNVoMKiPZZSGAfbXYu1CYrN5Qi5EbrIH1cI13lZh5ButPJ1zzPs1ZoqiaMmaNLLz3URmQIggHHOx8dpwwrf9HHRlVh6/Nl2hmxK/pkGbebPdbsbkawENaVxXAXbVbn+H3XAUCyX50zgSh8rYchL/mbgr+PHWd48jAOAdzxmMaFE8Bnv69+CL0mbsnzW/PWYxQlgrh+mZ3LWci0+JcqYE7+leUf78fCRzH97lEe7Pt5pu27HdnV8SzQ1Mifct5N6MzHvBSZIlKFvG87UHoY=
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|25031999004|19110799012|15080799012|5072599009|25010399006|24021099003|23021999003|41001999006|51005399006|8060799015|12121999013|3412199025|440099028|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?DnMCMxd9jaIqqImfnr9wrtbr8kx2xd3B+8FPQWE5V+zTz9FbncLtpLTcsazj?=
- =?us-ascii?Q?nZ/7GQfQXebXxUcgJR2H6mSINOCVqF/uirqTE1lljoPjNdNXvqmotnuoA8yx?=
- =?us-ascii?Q?dxIVqXPFwys3A3VzvecEKzTz+ZqpF4eaN44PBpG7Otkrjyt/d0q8H+3P8jXL?=
- =?us-ascii?Q?V6c/9doNq/uAV3QM39SzJaWmRuqF4ICW6qKIVBeHAgljHD0Fmc7l2910wYjU?=
- =?us-ascii?Q?rkfn6yR2bX2Wmy1ElFuFlIvaTWHSx07chb4RxrFRsvGj33NIrb2vHJm3exK8?=
- =?us-ascii?Q?utH2vJ1FtCykT2WiUFEIDwNypzr/0YSKppGT9XW6xgxVr2chihshv3wKzlPL?=
- =?us-ascii?Q?aa+2bP45dkjEeQ0RiTaEsl7zaWzDpAGEc1cPVPhAsSL2lHpHBYTk7Mu6QviC?=
- =?us-ascii?Q?YV0Ln8ZPL1gCvuG6bxyGgGmzYBmTJn3xJARZ3PmUGsFbGKxHj54Wcvlj4vzT?=
- =?us-ascii?Q?rttGOhn0nzoeGx/lDjhriFPIvtZgEYDqWe/yHmlc8hyCiFyCYyMZuPQiPqe/?=
- =?us-ascii?Q?j7Rlc7Y0+jSPInn6pbXbGaEPTtJUuAcQ4Tx+CVyMVeImevRzAplgqvk1QR0E?=
- =?us-ascii?Q?JeYhJKQI22wHCEqd+AuB49XIeoQv1tnb+ws8Dwh7KCP89o4BLDgMfEMsAFEU?=
- =?us-ascii?Q?lFsBRNN65Ytwuqxal0LrB4CzAQhQWw0J4SeAX2Nsaf3VgcsC+hEClxFhox1L?=
- =?us-ascii?Q?fmiECWoWc0g7QYgaxz9495RRdU+9My8vN5YJYQ0L9HPO5C4M684ivQ4KCvL/?=
- =?us-ascii?Q?27RbwfNT1EyTCB+/RTIOIxz2/qK+3yu+JK6bs8dwxZ27RzXwQCzAOvg57T8p?=
- =?us-ascii?Q?GbwUrqcaKq+7wmNkOzgL80TVNtqd6R0Gw2M9u/QajeJqnLId6n8ZVw0GSLx7?=
- =?us-ascii?Q?mcMwaSVZ1Sd/7KHl5h6waOTKgClRhaVg9R34lt5mU08a7HT1WhU0ro9tjWv9?=
- =?us-ascii?Q?PyOlsc6fs6SGMFBzbDzLEcvw4jf863dcC788GVNW5M+tLDd7Q0gHIReGR2hB?=
- =?us-ascii?Q?Q2CbwBbhsAHrRCIRIaxcfJHB8lnGwcOZlSfV2In6uR0JNzw=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?XwnvZppzfbNseWvARDz9W99rDBST+qY90M+0e+MLxhNiXypH5+kgt7L0k7Nj?=
- =?us-ascii?Q?tp5WMDLDPwBEZqN6SfX41rO7rMSoWGFthNbgXUfMIPv7Sbma5/kMCILZ6GST?=
- =?us-ascii?Q?F/M2rdjyFHJ3qUAsIN67q3VYsNFbixIbvQgdvwI0h23aDeMBYZ09baqlTzuI?=
- =?us-ascii?Q?1e9eUXb0ShDACvv59gd2Fy7SAftnUBbvHXj6Bbw2ujC2Ao6ubGToiAzfiJ7S?=
- =?us-ascii?Q?v0LgpLg06fcYbmMkDmytIJpj4VWiUvf93jy+fzch4/dzodeZqoH7fTJBcoKT?=
- =?us-ascii?Q?zYSRUhZyoIOmJSRIYPSdli4qk3ao1J/RJ+qOg4jM+5LT/d7F+LeseD15OJJy?=
- =?us-ascii?Q?2KDunrOpcQxdZQHpSt2pW2epV2kFgzKkkdrTOCerZXl8U7pc+Vo3XMusG4u9?=
- =?us-ascii?Q?1ayb9rsN2JDPhmGoCgE+WEkOaxG6B0MevtYfTZzUICRDIso0ZtOXtf4VX5rn?=
- =?us-ascii?Q?JjZtRaokLmdeJHFYEOWweggXkPitT6v6w3EkfdEKvPcjMnnjrtjamj+t2Mtv?=
- =?us-ascii?Q?IRHfmRJo4kU0PD7yqk0dd3VTVoFju9x3jpSw/bsETgjuMZQp5LuwQoddoeTK?=
- =?us-ascii?Q?zgBj+uU7G7TFz9+1pmXL86Nya60nTnwNmLviHmBDZ1tWIB7lh4MzoFfrWaVM?=
- =?us-ascii?Q?vlMO+Qoy0j1yBkuiNswf7ICK3FJbxTY/Z5rll//5Pk3NUvkxy+asvrBodRv4?=
- =?us-ascii?Q?Q3wZlQGx1LVONnyMW6XRMUdmvndIsP+ecNTe3vRauWl39hpDMurT4/pw3F7M?=
- =?us-ascii?Q?c3JA0vKLo99zXK/saFnq3T5CgU3+ugI6w8Q4YqIkGnOB1vlem9bVfJ8NKJ30?=
- =?us-ascii?Q?vGGrDIvcBlQSF0DjhzT+PsemHZ4qvqyeK1hEaBaYstKYJfeSmbbgUvei04QF?=
- =?us-ascii?Q?qRS0WHutH6jx2o9ToCSlqv5Fhevzqa2SNZKFuGb2i8q+P4fG4xYrcciNI2Wb?=
- =?us-ascii?Q?oR6UYViUSXQ4wA6f/gLi0S9Ws+l7hnVG7i3nee2iVjFM+HuVHIOtrIL0jxfF?=
- =?us-ascii?Q?SG6XeJbFc9Y6jk/Y4g9W1Gxcvw5lt0ew9o+PwiOlpSZJKCUytxfJ2gRx1UsJ?=
- =?us-ascii?Q?74NSJ+i+kRIb7QRMWiRQUlNckYSJY7N8W3Q9RMBQMeBfP9CXWIYMpjRU4hHg?=
- =?us-ascii?Q?6CiKZAjU+eunps0cKZePq+GqgrGr71YPY3Po7eSW+IuMN62//0bCxjJxFhEI?=
- =?us-ascii?Q?tgvyoj+SYM0BhpCqSkg7CjlV1aR7PWRhTsaBSC2lAuoE3xyPKGrVbA78jI3h?=
- =?us-ascii?Q?TuLlZLwhdF50/d7vaOGCrK835uw0JCYLqGKuOLoSFhVA0WebdkuS2t7/Ct1L?=
- =?us-ascii?Q?tbfS22/h4EiSX/3myzgQRDuYxKAgbc8k6jAKI31MdXE4H/65abAGQI+agsyp?=
- =?us-ascii?Q?dDDE8+ukdfsKqGIHqNCzgFTtWZ/i?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 83bab902-e379-4f0f-1fb5-08dee40abea2
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR10MB997715.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jul 2026 13:53:13.6613
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLAPR10MB4980
+Content-Transfer-Encoding: 8bit
 
-From: Travor Liu <travor_lzh@outlook.com>
+Add a built-in userdiff driver for the Swift programming language so that
+diff hunk headers and word diffs work out of the box for ".swift" files.
 
-Diff index lines have included a trailing file mode since ec1fcc16af
-(Show original and resulting blob object info in diff output,
-2005-10-07) when the old and new file modes match:
+The funcname pattern is built for Swift's own declaration grammar: an
+optional run of attributes ("@objc", "@available(iOS 13, *)", ...),
+followed by an optional run of lowercase modifiers ("public", "static",
+"final", ...), followed by a declaration keyword (func, class, struct,
+enum, protocol, extension, actor, init, deinit, subscript). The keyword
+is followed by a boundary that allows whitespace, "(" (init/subscript),
+"?" or "!" (failable init), or "<" (generics), while still acting as a
+word boundary so e.g. "initialize(" does not match.
 
-    index <old>..<new> 100644
+The word regex recognizes Swift identifiers, hexadecimal, octal, binary,
+integer and floating-point literals, and the language's operators.
 
-gitweb recognizes that trailing mode before it tries to shorten and
-link the object IDs.  This appends the file-type annotation first, but
-the object-ID matcher requires the ID range to end the line.  As a
-result, this common form keeps both full object IDs as plain text.
-
-That is inconsistent with other hash displays and makes commitdiff
-output wider than necessary.  Recent gitweb changes have fixed mobile
-overflow in log, commit, blob and diff views; leaving two full object
-IDs in this header preserves an avoidable long line in the diff header.
-
-* gitweb/gitweb.perl: Remove the trailing mode before matching the index
-IDs, then append it again after the IDs have been shortened and linked.
-This preserves the mode display while letting ordinary and combined
-index lines use the existing object-ID formatting paths.
-
-* t/t9502-gitweb-standalone-parse-output.sh: Add coverage for that
-common form by rendering a commitdiff for a regular file modification.
-Check that the visible index line contains linked short blob IDs
-followed by the mode and file-type annotation, and that the full
-unlinked form is not emitted.
-
-Signed-off-by: Travor Liu <travor_lzh@outlook.com>
+Signed-off-by: Shlok Kulshreshtha <diy2903@gmail.com>
 ---
-Changes since v1:
-- Squashed the regression test into the implementation patch.
-- Replaced raw grep invocations with test_grep.
+This addresses the "add a userdiff driver for a language" microproject.
+Swift is not covered by a built-in driver yet, and I did not find an
+in-flight patch adding one on the list; please let me know if one exists.
 
- gitweb/gitweb.perl                        | 18 +++++++++++++-----
- t/t9502-gitweb-standalone-parse-output.sh | 13 +++++++++++++
- 2 files changed, 26 insertions(+), 5 deletions(-)
+Motivation: without a Swift driver, ".swift" files use the generic
+funcname heuristic, so "git diff" hunk headers name the enclosing type
+instead of the changed function.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index fde8045..8c2d9b8 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2339,12 +2339,14 @@ sub format_extended_diff_header_line {
- 		$line .= $cgi->a({-href=>$to->{'href'}, -class=>"path"},
- 		                 esc_path($to->{'file'}));
- 	}
--	# match single <mode>
--	if ($line =~ m/\s(\d{6})$/) {
--		$line .= '<span class="info"> (' .
--		         file_type_long($1) .
--		         ')</span>';
-+
-+	# Temporarily remove a trailing <mode> so an index line ends with its
-+	# object IDs and can be shortened below.
-+	my $mode;
-+	if ($line =~ s/\s(\d{6})$//) {
-+		$mode = $1;
- 	}
-+
- 	# match <hash>
- 	if ($line =~ oid_nlen_prefix_infix_regex($sha1_len, "index ", ",") |
- 	    $line =~ oid_nlen_prefix_infix_regex($sha256_len, "index ", ",")) {
-@@ -2388,6 +2390,12 @@ sub format_extended_diff_header_line {
- 		my ($from_id, $to_id) = ($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
- 		$line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
- 	}
-+	if (defined $mode) {
-+		$line .= " $mode" .
-+		         '<span class="info"> (' .
-+		         file_type_long($mode) .
-+		         ')</span>';
-+	}
+The pattern is built directly from Swift's declaration grammar rather
+than adapted from another language's driver, so it covers a few things
+that a straight port would miss:
+
+ - attributes, with or without arguments, whether on their own line
+   ("@objc" above a "func") or inline with the declaration
+   ("@objc func foo()", "@available(iOS 13, *) public func bar()");
+ - modifiers ("public", "static", "override", "mutating", ...) in any
+   combination, before or after attributes;
+ - failable initializers, "init?" and "init!";
+ - generics, "init<T>" and "subscript<T>";
+ - the keyword boundary still acts as a word boundary, so e.g.
+   "initialize(" is not mistaken for "init".
+
+I verified all of the above against a built binary, including generic
+functions with "where" clauses, multi-line signatures, and operator
+functions such as "static func ==". I did not find a real case this
+pattern misses; the ones I intentionally left out are one-line
+declarations ("typealias", "associatedtype") and rarer forms
+("operator", "precedencegroup", "macro"), which would not make useful
+section headers anyway.
+
+The word regex covers Swift identifiers; hexadecimal, octal, binary,
+integer and floating-point literals; and operators including "<<=" /
+">>=", "??" and the range operators. All of t4018 passes, including the
+sorted builtin_drivers check and the new swift-* fixtures.
+
+ Documentation/gitattributes.adoc  |  2 ++
+ t/t4018/swift-actor               |  5 +++++
+ t/t4018/swift-attribute-with-args |  7 +++++++
+ t/t4018/swift-class               |  5 +++++
+ t/t4018/swift-enum                |  5 +++++
+ t/t4018/swift-extension           |  5 +++++
+ t/t4018/swift-failable-init       |  7 +++++++
+ t/t4018/swift-func                |  5 +++++
+ t/t4018/swift-generic-subscript   |  7 +++++++
+ t/t4018/swift-init                |  7 +++++++
+ t/t4018/swift-inline-attribute    |  7 +++++++
+ t/t4018/swift-modifiers           |  4 ++++
+ t/t4018/swift-protocol            |  5 +++++
+ t/t4018/swift-struct              |  5 +++++
+ userdiff.c                        | 10 ++++++++++
+ 15 files changed, 86 insertions(+)
+ create mode 100644 t/t4018/swift-actor
+ create mode 100644 t/t4018/swift-attribute-with-args
+ create mode 100644 t/t4018/swift-class
+ create mode 100644 t/t4018/swift-enum
+ create mode 100644 t/t4018/swift-extension
+ create mode 100644 t/t4018/swift-failable-init
+ create mode 100644 t/t4018/swift-func
+ create mode 100644 t/t4018/swift-generic-subscript
+ create mode 100644 t/t4018/swift-init
+ create mode 100644 t/t4018/swift-inline-attribute
+ create mode 100644 t/t4018/swift-modifiers
+ create mode 100644 t/t4018/swift-protocol
+ create mode 100644 t/t4018/swift-struct
+
+diff --git a/Documentation/gitattributes.adoc b/Documentation/gitattributes.adoc
+index bd76167a45..9fea75f96f 100644
+--- a/Documentation/gitattributes.adoc
++++ b/Documentation/gitattributes.adoc
+@@ -914,6 +914,8 @@ patterns are available:
+ - `scheme` suitable for source code in most Lisp dialects,
+   including Scheme, Emacs Lisp, Common Lisp, and Clojure.
  
- 	return $line . "<br/>\n";
- }
-diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb-standalone-parse-output.sh
-index 81d5625..85f7716 100755
---- a/t/t9502-gitweb-standalone-parse-output.sh
-+++ b/t/t9502-gitweb-standalone-parse-output.sh
-@@ -115,6 +115,19 @@ test_expect_success 'snapshot: hierarchical branch name (xx/test)' '
- '
- test_debug 'cat gitweb.headers'
- 
-+test_expect_success 'commitdiff: index line shortens hashes with mode' '
-+	old_blob=$(git rev-parse HEAD:foo) &&
-+	old_short=$(git rev-parse --short=7 HEAD:foo) &&
-+	echo changed >foo &&
-+	git commit -am "change foo" &&
-+	new_blob=$(git rev-parse HEAD:foo) &&
-+	new_short=$(git rev-parse --short=7 HEAD:foo) &&
-+	gitweb_run "p=.git;a=commitdiff;h=HEAD" &&
-+	test_grep ">${old_short}</a>\\.\\.<a [^>]*>${new_short}</a> 100644<span class=\"info\"> (file)</span>" \
-+		gitweb.body &&
-+	test_grep ! "index ${old_blob}\\.\\.${new_blob} 100644" gitweb.body
-+'
++- `swift` suitable for source code in the Swift language.
 +
- # ----------------------------------------------------------------------
- # forks of projects
+ - `tex` suitable for source code for LaTeX documents.
  
+ 
+diff --git a/t/t4018/swift-actor b/t/t4018/swift-actor
+new file mode 100644
+index 0000000000..e4852f40a7
+--- /dev/null
++++ b/t/t4018/swift-actor
+@@ -0,0 +1,5 @@
++actor RIGHT {
++    let a = 1
++    // a comment
++    let b = ChangeMe
++}
+diff --git a/t/t4018/swift-attribute-with-args b/t/t4018/swift-attribute-with-args
+new file mode 100644
+index 0000000000..22b1ee32f1
+--- /dev/null
++++ b/t/t4018/swift-attribute-with-args
+@@ -0,0 +1,7 @@
++struct View {
++    @available(iOS 13, *) public func RIGHT() {
++        let a = 1
++        // a comment
++        print(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-class b/t/t4018/swift-class
+new file mode 100644
+index 0000000000..c3a9336027
+--- /dev/null
++++ b/t/t4018/swift-class
+@@ -0,0 +1,5 @@
++class RIGHT {
++    let a = 1
++    // a comment
++    let b = ChangeMe
++}
+diff --git a/t/t4018/swift-enum b/t/t4018/swift-enum
+new file mode 100644
+index 0000000000..0a84302993
+--- /dev/null
++++ b/t/t4018/swift-enum
+@@ -0,0 +1,5 @@
++enum RIGHT {
++    case first
++    // a comment
++    case ChangeMe
++}
+diff --git a/t/t4018/swift-extension b/t/t4018/swift-extension
+new file mode 100644
+index 0000000000..cbc18ab6ef
+--- /dev/null
++++ b/t/t4018/swift-extension
+@@ -0,0 +1,5 @@
++extension RIGHT {
++    static let a = 1
++    // a comment
++    static let b = ChangeMe
++}
+diff --git a/t/t4018/swift-failable-init b/t/t4018/swift-failable-init
+new file mode 100644
+index 0000000000..5e4091d97c
+--- /dev/null
++++ b/t/t4018/swift-failable-init
+@@ -0,0 +1,7 @@
++class Bar {
++    init?(RIGHT: Int) {
++        let value = RIGHT
++        // a comment
++        print(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-func b/t/t4018/swift-func
+new file mode 100644
+index 0000000000..1fecae0911
+--- /dev/null
++++ b/t/t4018/swift-func
+@@ -0,0 +1,5 @@
++func RIGHT(x: Int) -> Int {
++    let y = x
++    // a comment
++    return ChangeMe
++}
+diff --git a/t/t4018/swift-generic-subscript b/t/t4018/swift-generic-subscript
+new file mode 100644
+index 0000000000..565f93cd6c
+--- /dev/null
++++ b/t/t4018/swift-generic-subscript
+@@ -0,0 +1,7 @@
++struct Container {
++    subscript<RIGHT>(index: RIGHT) -> Int {
++        let a = 0
++        // a comment
++        return ChangeMe
++    }
++}
+diff --git a/t/t4018/swift-init b/t/t4018/swift-init
+new file mode 100644
+index 0000000000..f683e74794
+--- /dev/null
++++ b/t/t4018/swift-init
+@@ -0,0 +1,7 @@
++class Foo {
++    init(RIGHT: Int) {
++        let value = RIGHT
++        // a comment
++        print(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-inline-attribute b/t/t4018/swift-inline-attribute
+new file mode 100644
+index 0000000000..2374c4b603
+--- /dev/null
++++ b/t/t4018/swift-inline-attribute
+@@ -0,0 +1,7 @@
++class Service {
++    @objc func RIGHT() {
++        let path = "/api"
++        // a comment
++        log(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-modifiers b/t/t4018/swift-modifiers
+new file mode 100644
+index 0000000000..9d80685a78
+--- /dev/null
++++ b/t/t4018/swift-modifiers
+@@ -0,0 +1,4 @@
++public static func RIGHT() -> Int {
++    // a comment
++    return ChangeMe
++}
+diff --git a/t/t4018/swift-protocol b/t/t4018/swift-protocol
+new file mode 100644
+index 0000000000..07c39ec2a3
+--- /dev/null
++++ b/t/t4018/swift-protocol
+@@ -0,0 +1,5 @@
++protocol RIGHT {
++    var first: Int { get }
++    // a comment
++    var second: ChangeMe { get }
++}
+diff --git a/t/t4018/swift-struct b/t/t4018/swift-struct
+new file mode 100644
+index 0000000000..e399ed7759
+--- /dev/null
++++ b/t/t4018/swift-struct
+@@ -0,0 +1,5 @@
++struct RIGHT {
++    let a = 1
++    // a comment
++    let b = ChangeMe
++}
+diff --git a/userdiff.c b/userdiff.c
+index b5412e6bc3..df37dd78a6 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -362,6 +362,16 @@ PATTERNS("scheme",
+ 	 "\\|([^|\\\\]|\\\\.)*\\|"
+ 	 /* All other words should be delimited by spaces or parentheses. */
+ 	 "|([^][)(}{ \t])+"),
++PATTERNS("swift",
++	 "^[ \t]*((@[A-Za-z_][A-Za-z0-9_]*(\\([^()]*\\))?[ \t]+)*([a-z]+[ \t]+)*(func|init|deinit|subscript|class|struct|enum|protocol|extension|actor)[ \t(?!<].*)$",
++	 /* -- */
++	 "[a-zA-Z_][a-zA-Z0-9_]*"
++	 /* hexadecimal, octal, and binary literals */
++	 "|0[xX][0-9a-fA-F_]+|0[oO][0-7_]+|0[bB][01_]+"
++	 /* integers and floating-point numbers */
++	 "|[0-9][0-9_]*([.][0-9_]+)?([eE][-+]?[0-9]+)?"
++	 /* unary and binary operators */
++	 "|[-+*/%<>=!&|^~?]=?|&&|\\|\\||<<=?|>>=?|\\?\\?|\\.\\.[.<]|->"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|([a-zA-Z0-9]|[^\x01-\x7f])+"),
+ { .name = "default", .binary = -1 },
 -- 
 2.52.0
 
