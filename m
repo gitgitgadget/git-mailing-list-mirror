@@ -1,149 +1,113 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59783264D1
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 06:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8111E2BDC26
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 06:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784269638; cv=none; b=W0uf4IhnVnp+Jx7xfdVYv7f5KYWLnVFJNpp23UM/Pk/FxcPL7zeS7udVNugkOUmrA9VTwMfzCKzF05I04uYXBh2HPifUCLo7dMXReXK7GzTW0UzokfknWI++Xi1tMcUfmyJ6je6lj5Ud7XQEU6xOr+QA6kJ5g140eCSSi1WcUNA=
+	t=1784270182; cv=none; b=sPm5jU3BmwqGiKgEFOW3dW/dppoP46KhiLhLnbn2Ae0MIW5Vjwfy58/DrGTlPVL6pgDtcDkeyNhANUrnKYshK5TRV93T6OaMLJK/zf9ZytTEhx3U5Rj/lkKwc/4UgYH6GF31ewcG3fGKXOj1yUtutKscPGcxWIu05PIJma8ZmLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784269638; c=relaxed/simple;
-	bh=Lj0q3q67t6bBA3FzlbewRDLW9CuuWFsmdErwvHDQfAA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oOPv7DRmbTOC2cI58X8aVnK4zmqAjE8xYxUR5VkQnrZttKzGkNC6lqj3l4cff0b3BXfTIOjMWyyzNpZaPO/27kYgxjhLjf/AZUQuge/ATDzh5dreWead7M9IuMK9EQrYloWPbbl0InW31B7CnPhFDvC3+4to7mO+/z55ace4cUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PkCrkoMk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gRZtFAaR; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1784270182; c=relaxed/simple;
+	bh=Jim4ASB0DdQs3CwxI994JJ1V/neFuYXTht4qUgRdaFk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HlqpqpeCeu9l98TRLN5tKVC9MAr0kH0L9HNphs5VqeGgblSCNVp/Uy6Uo2uMMSRKHd+MBQLBySSZBqCH3zjyJ8IOiaoiD4d1A+gBSjopuOLhACelsEULWbYUPhufVDIrhuU3HvpbkWPr/GjHo89TbxJOn6uGozycGQtb/hMrf/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=pbgbdrNn; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=lxwRE/6G; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PkCrkoMk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gRZtFAaR"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EC4AB7A0089;
-	Fri, 17 Jul 2026 02:27:15 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 17 Jul 2026 02:27:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1784269635; x=1784356035; bh=nB6URXvQaM
-	1Lg6tVl9GhQBHWvEAouYDbpkpLjlA7mw4=; b=PkCrkoMk92lB+JYIlB4uFTdu4q
-	qHdMZ2TehPl3x8YeaQ7PubsvW+2yoPlwf21lhIgZ7mlj/dBO1FG4f5kfJCxdMdqG
-	0ZkltqpEps3YBYHGX4jo+D9gAcF0CSRlz1Pe3iH04qlDDCcoxMxoLBmB6GikeqKr
-	mjetqdihPhjb9Yl1QwG6NQLNWzNYzdpbMb4Zzk9X2C3mivB8wMMtXqEHy7/7muCI
-	A+JLtKBZRnpsoavUlsgukR6MWew06wL1HXgSjQzlJzomxGD3X85d8bH2mMZcu+px
-	hk4Qo09YMTK+7XV6e0juPsEJ2OctpWLDcCnzJ6gdLDusBWfEWm9BncEJVGwg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784269635; x=1784356035; bh=nB6URXvQaM1Lg6tVl9GhQBHWvEAouYDbpkp
-	LjlA7mw4=; b=gRZtFAaRUO0MA/aIfTUPw52oyU9PjzOacZIPNIHtsrY3e1kNcWq
-	0DTR/KtOzq6U6F8Jtq5g+V15PZRXqlaWf/QfcB4I18ZSjT9ILuU4yMDgH9ZyZTDE
-	ceGgMEedo5bG0vSXxHmiEc0xhH2fD+VeLSxXYMMzU9ypa9bVod8G2yhLgm1V55ou
-	UqE8k+freqgrSPb2kWJENlrVdHm0kJhcrj285VedKMHr+jxhZ6Yw2vXLzbrm6hYD
-	3I+yKklV/QmSgyYsmV1O2lCbLOup7cyKjCSvs/81K+m1x7GmSvs10LtLPNj2DUKq
-	5PDaOk05KIx8H6kNg2LK/GuDAUWwR62Di2g==
-X-ME-Sender: <xms:Q8tZajE4V8-pR3cCg2OSuaRukGNh226_-ysyFDNkF8GOjCaGL8uQ8Q>
-    <xme:Q8tZakA0POeUJ04-MoN2RO8l4smr0tvaEt4e76sF05Ip_8Mx_vVOxPtSnbO14Kds8
-    4aw3EByGWHwTa6Mr_zWdd27zzSLTSe65EP08CJDiELTG31Ae7So>
-X-ME-Received: <xmr:Q8tZau8ZV3-HBAzwEZVGY_PijPRiEkSsYc2_neKvEmhiiBOTfLem8grJqJEkQ8uvUVVZyWfvCHhlTi6t4fzOGocAwacd-8rw-0Z4ErGwVLY>
-X-ME-Proxy-Cause: dmFkZTEIwOnnMsiIG7Ug4ADT75Wb9z/4DUo9UzjClcbZNjFN+vYuPWY9CxQ7whjAFZcnVU
-    ie8Os46njz6y+q57WNy5v7++SB1qI8s3/J8dwKFUbvjbQgyg2gnsheCj+njj9/CPeMm50L
-    KORXi6JXnWJGwb9iqw3f8LQSy4sLEaGuGnmo8kQ0QLy7a4wZj3q6n2HzbrWq1iXmH5dpWn
-    Fs6UD0rhH0PlNUAXhaQ8gbJcgV60RIL+qCcYBWF0M7bzuTd/LLWH0nVtlnB9uvKlKn1sJu
-    9prtM27j3o8FoByNWsWhy5j0YSti1sjeiiyC9fm+XXpYaw6Y5Zu/TAsYyxgsG6IfkWmVZx
-    hOPSS4yHGlkFx0S45TsfiZ3pFV9PIlgPPlWWYANeAGKdklROS11I9rPWCj9F0B2BcptNnQ
-    dAXwnEGecG76HeNbyJITeQkX1pZFO01sApfyicCoq8oFAeZWBxqCyb1J/2F9MNfVe9XNAY
-    z+eKgoUrMbT0tVLVBo1PAOXRQTM9feXjkrZcYKX+J0Wa5fWmjqhtv18HHbEU/nZpbXoaiq
-    qlKAGw0RZEASbtoH8Wx5fNWsNf4vtOvgFE/2fuOMZi0wGf5LlHwwx8FetNPOTXzbGInjJD
-    zQzCTnkQiLJKhkNxlUZRXjGwaJ3R655E7SU3XVjJwEAuXva6EZNIiVJG+w5Q
-X-ME-Proxy: <xmx:Q8tZaoA0pIcySNoDz-avkjz3eZ0tv_k3m4ZyPL0w3cBy28-EIySSWw>
-    <xmx:Q8tZarQpixTaD68rfxHGOwdExIUxlJjgvcZ1pbWiWZ3w9JpjeXDS5g>
-    <xmx:Q8tZanuY2N-VlLStmkXB6CTrDl65cSdyVqSLcy392x8MyMFM4TNwoQ>
-    <xmx:Q8tZav3kozEda76iDqpyWPSVWzgTb1wdPy8jOjs2IarcDkkDM9Etvw>
-    <xmx:Q8tZap0JrPNmaSxHwrUROGysqzqEHCI0gE7ScW1w9iwJBj2YTRz9S-ZF>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jul 2026 02:27:14 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 85a0029d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jul 2026 06:27:12 +0000 (UTC)
-Date: Fri, 17 Jul 2026 08:27:09 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Sahitya Chandra <sahityajb@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-	stolee@gmail.com, peff@peff.net
-Subject: Re: [PATCH] wt-status: avoid quadratic insertion for untracked paths
-Message-ID: <alnLPSnOt_Sf7cA5@pks.im>
-References: <20260716185045.229320-1-sahityajb@gmail.com>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="pbgbdrNn";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="lxwRE/6G"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=pbgbdrNnOTzms9SSf4CGkQX6itkJ/Rz/P9KkPKbvYBEgX0oDfdxHnkbI6pIV+rX1m07Ushj8V5c0Uky88ypxS+wV3GivWqVRKqGUpIoesIkPbQH6iOI2/jG97eE3hfMAK6S7hX6nthACZKpx91PBGjIHP2lI0Qe5ao4n5oKeTyU0m27ID6IXe7SembPsNqMCy5oQ4ffKq8rI6F5YajaLHBAl9H5S7jVPU4cmrPEkxa/FGxALrppJgtLlguhUsPB/gshMNiJawK3XUoM8m0485oi0DT78yLtWsU34ZNjcr0/AJH3mReJCNlUnxysweT1KLkbb/oeSMc/u2i1YLAKwrA==; s=purelymail2; d=malon.dev; v=1; bh=Jim4ASB0DdQs3CwxI994JJ1V/neFuYXTht4qUgRdaFk=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=lxwRE/6G9LDc6cCwt9p95XK4EP6BtEJ8a504qSm6alefmjEM2Ewu/07V+CmMcPpe47MnGbSxWsAuGVzxoL2leCeem/uhC548gM6xTtzfYA4TLFsDakshrGozv4GOecT+tH+UhKGXN0/n/NieABmdZs6KIEymzisSt+ecsqxjuhmIMccpcCIcg8KQEEFFGvsK+bq/Yu2ur795haIB3lnBhHRF6BuEJ7V10Ka79F5HRX1Tn6ljOOO5+5eYwSYsDyYHzYy/xEUeiNDP6ks9TzZPvds6LAdBFxihdcZxtrUSk2NABeEG2Sb527su7rwU6Lvw4+PVyzey79veaT1ZJz4Bpw==; s=purelymail2; d=purelymail.com; v=1; bh=Jim4ASB0DdQs3CwxI994JJ1V/neFuYXTht4qUgRdaFk=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 894201780;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Fri, 17 Jul 2026 06:36:12 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v7 0/4] environment: migrate 'trust_executable_bit' and 'has_symlinks' into 'repo_config_values'
+Date: Fri, 17 Jul 2026 14:35:55 +0800
+Message-ID: <20260717063559.1633567-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260716084941.1101918-1-cat@malon.dev>
+References: <20260716084941.1101918-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260716185045.229320-1-sahityajb@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-On Fri, Jul 17, 2026 at 12:20:45AM +0530, Sahitya Chandra wrote:
-> wt_status_collect_untracked() copies entries from dir.entries and
-> dir.ignored into string_lists using string_list_insert(). That keeps the
-> destination lists sorted and deduplicated, but each insertion may shift
-> the backing array, making construction O(n^2) in the number of paths.
-> 
-> Collect the entries with string_list_append() instead, then sort and
-> deduplicate each list once. This preserves the sorted, duplicate-free
-> result while reducing the construction cost to O(n log n).
-> 
-> Signed-off-by: Sahitya Chandra <sahityajb@gmail.com>
-> ---
-> Notes for reviewers:
-> 
-> fill_directory() currently sorts dir.entries and dir.ignored
-> before returning, so another possible approach would be to append the
-> entries directly and rely on that order, reducing this copy step to O(n).
-> That would require relying on these arrays not containing duplicate
-> entries, though, which I have not been able to verify yet. This patch
-> takes the safer approach of preserving the existing duplicate-removal
-> behavior from `string_list_insert()` by sorting and deduplicating once
-> after appending.
+This series moves 'trust_executable_bit' and 'has_symlinks' into
+'struct repo_config_values' to tie them to the specific repository
+instance they were read from. Eager parsing is maintained because
+these two flags are heavily consulted in hot paths.
 
-Out of curiosity: is this something that you have encountered in the
-real world as inefficient, or is this rather a theoretical inefficiency?
-If the former it would be great to add a small benchmark to the commit
-message.
+Note: 'repo_config_values()' still does not support any struct
+repository other than the_repository due to how deeply these flags
+are accessed. In other words, this series of patches is laying
+the groundwork for the eventual elimination of the_repository.
 
-> diff --git a/wt-status.c b/wt-status.c
-> index 58461e02f8..13a7cf7946 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -832,14 +832,18 @@ static void wt_status_collect_untracked(struct wt_status *s)
->  	for (i = 0; i < dir.nr; i++) {
->  		struct dir_entry *ent = dir.entries[i];
->  		if (index_name_is_other(istate, ent->name, ent->len))
-> -			string_list_insert(&s->untracked, ent->name);
-> +			string_list_append(&s->untracked, ent->name);
->  	}
-> +	string_list_sort(&s->untracked);
-> +	string_list_remove_duplicates(&s->untracked, 0);
+Previous related work:
 
-Instead of sorting and then deduplicating you can call
-`string_list_sort_u()`. It does the exact same thing as you do here, but
-I guess it makes sense to use that interface anyway.
+[PATCH 2/6] config: add trust_executable_bit to global config [1]
+[PATCH] Refactor 'trust_executable_bit' to repository-scoped setting [2]
+(This previous attempt was unsuccessful because the target location
+selected was 'struct repo_settings', which our analysis indicated
+was not the optimal choice. For further details, please see: [3])
 
->  	for (i = 0; i < dir.ignored_nr; i++) {
->  		struct dir_entry *ent = dir.ignored[i];
->  		if (index_name_is_other(istate, ent->name, ent->len))
-> -			string_list_insert(&s->ignored, ent->name);
-> +			string_list_append(&s->ignored, ent->name);
->  	}
-> +	string_list_sort(&s->ignored);
-> +	string_list_remove_duplicates(&s->ignored, 0);
+[PATCH 5/6] config: move has_symlinks [4]
 
-Likewise.
+RFC:
 
-Overall this looks like a sensible thing to do though. Thanks!
+ - Is the locations of the newly introduced definitions/macros
+ appropriate?
 
-Patrick
+Changes since V6:
+
+ - In commit 2/4, keep ce_mode_from_stat() static inline. Teach it to
+ take a 'struct repository *' parameter instead.
+
+ - In commit 4/4, reword the commit message.
+
+Thanks!
+
+[1] https://lore.kernel.org/git/837b5360b40f992351f489a0ae05fedf49884c6e.16=
+85716420.git.gitgitgadget@gmail.com/
+[2] https://lore.kernel.org/git/20260301190017.53539-1-dronarajgyawali@gmai=
+l.com/
+[3] https://lore.kernel.org/git/xmqq1pht6nyx.fsf@gitster.g/
+[4] https://lore.kernel.org/git/a154008619790f7a60f2bba91db7b0fe29e67e1a.16=
+85716420.git.gitgitgadget@gmail.com/
+[5] https://lore.kernel.org/git/xmqq7bokebct.fsf@gitster.g/
+
+Tian Yuchen (4):
+  read-cache: remove redundant extern declarations
+  read-cache: pass 'repo' to 'ce_mode_from_stat()'
+  environment: move trust_executable_bit into repo_config_values
+  environment: move has_symlinks into repo_config_values
+
+ apply.c                |  6 +++---
+ builtin/update-index.c |  2 +-
+ combine-diff.c         |  2 +-
+ compat/mingw.c         | 17 +++++++++++++----
+ compat/mingw.h         |  3 +++
+ diff-lib.c             | 10 +++++-----
+ entry.c                |  2 +-
+ environment.c          | 27 +++++++++++++++++++++++----
+ environment.h          |  8 ++++++--
+ git-compat-util.h      |  4 ++++
+ read-cache.c           | 15 +++++++--------
+ read-cache.h           | 16 ++++++++++++----
+ 12 files changed, 79 insertions(+), 33 deletions(-)
+
+--=20
+2.43.0
+
