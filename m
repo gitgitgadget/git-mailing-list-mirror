@@ -1,97 +1,103 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6A53793A5
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 08:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E041F393DDB
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 08:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784278333; cv=none; b=BKRt49PnkK1CkCD5Xx6crl51nMqISQtzfb0A0CWrVltcm7E2gJjZ/g+vKQO/F8EErvDr2+SEteBas0LVOmfmRcU2l0pXdc2OkDvcOiaf1xDec78L+qtc5+414DIg0mfulUvFd+alSHwrXKJioJsrUpzbMUz3iK1rHZ6xwFGe3bk=
+	t=1784278338; cv=none; b=SVHmWvjctIXEEBPDZ0+8raE7McmhNjHFttcw9aONSRrWGp6NX5YP5teXlvXr9ZWpc8wmcJXsvptt+yuKIELvT9QwCsMwp5uAxaucZsyZlxLMlyziHr4bQcBhUN1rgLpVopc9lqCtktGNkYGAYKdVQ/mlAXCa6FlENFKU27ggIts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784278333; c=relaxed/simple;
-	bh=HU2THjUh697Tlx45NKIWhw+4GGpGBqU6HCVZ5yBaiZA=;
+	s=arc-20240116; t=1784278338; c=relaxed/simple;
+	bh=PjUO1k7uDackg/IlezpHYLqnxIE2VRzRaAl5XGiPoQ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XoNTsJ0AEKsHGFx1nMX9RredkTVY09qKWhI6Vc9cvXQuO4t/8rYt3NGpcXaaq7paz5mkl09EyoYi2FfH4kO+mvPJPKfrCVuz+N71y6Cc5TsiBm4HFzNGBr+N2s0ayOj346sStDC+4aRBCg784lzfHp1FaRUW7yQG4Sp68wmWHts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JVMd88iE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i4y27VWY; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=bxAHfAzakYlJ5lkY06ddqOuWzNBbx14kkovkshRQJyx6U4ap9ocaAOvqm0rxodjmeVyutEn0zIbzMKknEIzvRNGeU9puazguCpqfApj1+H2Og5MerW9NCjNgHD2KDdi1EIwBUQqNHX6q3H7U9mD4XHFjK9+I7+3lhV5W3RE+qDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ARnuTzU2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L0acNA5Q; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JVMd88iE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i4y27VWY"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AFFCA7A00B7;
-	Fri, 17 Jul 2026 04:52:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ARnuTzU2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L0acNA5Q"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 234477A00AC;
+	Fri, 17 Jul 2026 04:52:16 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 17 Jul 2026 04:52:10 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 17 Jul 2026 04:52:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1784278330; x=1784364730; bh=HU2THjUh69
-	7Tlx45NKIWhw+4GGpGBqU6HCVZ5yBaiZA=; b=JVMd88iEofXa3WyokJEpZOT+qw
-	SDEts1jXerUNCFKbrtk0YsSez+CgT+uq5SRDZt0+xthqMLS+llmAa7c/D4bRsvxP
-	gnWB3QazBQqS+OceL6237ozhaGl5c75Z6/EPokRkyr1PfaMdwcl3Bq6TZXtjxV1J
-	AElk1FAq8x/tH2fUB65OKK95td0sJPjTsEB8BYRmfEc0ix8bTRLD167w9eZ/ZTuP
-	9NqbtQkFH/1zCa7EEPjMahxbqMHR6by69ooSa5PyUGFbBe0IkTkD3za/q9xD9+kw
-	J27Q1+/Dk5KU78xAs2qDxXaUkCpieN15niPfI9FnDhfZWTkkUNfeCs05jdow==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1784278335;
+	 x=1784364735; bh=PjUO1k7uDackg/IlezpHYLqnxIE2VRzRaAl5XGiPoQ0=; b=
+	ARnuTzU2BuvhUdzN5saG/fAfpJd1VwgpSqn3yzgR53c6EjbVHtVVksqGk4DtrzLo
+	kBU7FKL1dHisN0KV8ErdK1dd4Tq4o3znH0KoqfGx/GRHJdq3OveLMvm92DB0YTYG
+	p0zKuOfPIWJI1vzkizjnONNun5b5V2aqXdOuNdQo1D+ttTnTo6N487Pivl1S2CL3
+	yiVnbAuqgF/sqQnbla8YWO7DfXxKYIbxutpyfP/L8h6Ka6QdtZnIw1zQ2X4yX5dO
+	zCeWN+StIyLoiT21lETNvL2QY7+BaivPY0ajEhoT2FIfRO09hx4iJF02IsMpmN03
+	EHFu3lBaen4rb5Vg85RkYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784278330; x=1784364730; bh=HU2THjUh697Tlx45NKIWhw+4GGpGBqU6HCV
-	Z5yBaiZA=; b=i4y27VWYkn+hxUr5IFk5g0Jm03Gr8ToHCf3MKWsJCmAXvhOv4D2
-	nymmlq5m54NfKSKNBHfwz4psp/bmjRhowKjbMSn6CG509MliBqo7FS30Xkp3ujKo
-	4zX3S/v8dUm8fLFcoO/3Lqw3xmJEKYmK3NgjG6SUAbzFOaONV4EB07uPH+3XT6f8
-	NxTTXeCH+69FxCLUXUogg5G7mz/wsN4jI51P9ml+Dr++EPdJbLWLni50enkhABUY
-	d1GrHfuYfH1BaZ9OBIKCXG1bI3dC/8/6exf3mrPoV6Nf10JCA2lUUaPCn/AU6di4
-	729d8wqD5EFxLooggXNelG2Liddiy/Jo1cg==
-X-ME-Sender: <xms:Ou1ZatnoU6zYAXdMm8fLjxD-hJ_ztvTiTEoPi-KWzFn5ktTRDmO8oA>
-    <xme:Ou1ZagQSy0r9Q7KV4VUmWvWcMSadpCJRy2EJhee0v8uzx8oq156yDKZXxihw0fvBy
-    XOIDcf034Kj_3nvjEwtu9Fgeuh73cKc2ZCO3desBTPuNd1mrC8KrO0>
-X-ME-Received: <xmr:Ou1ZahBM1JIgkrRKnL1NOFFX78Zg3AGPVM-jC3opqFIsiqzcxYSorbY-cMWpRY8_W5xZWhy2tVkBQfF2_wefS0GzMkAA8r-TvjCRNl_LjnE>
-X-ME-Proxy-Cause: dmFkZTFuFJnQqHxf2umRrE5cciPYuToQ341WjrLTeAmR4BUlZHGFP6+k4e+SLJQTc2LEtT
-    1O+ZCgVrQ+7FvEmonHdOxOzaxq51ujVjHMvtffq56jckPhvTv6XjESeLsyz/Z4wO0s4yOp
-    wF//CRRBgRigQb3EFYeNhTvTBoFQkhYiqAvM/HLNO760I+I22bt+01WaulG/UPmWVPkEcz
-    e2kgo+T4t/3990PLGz9IOjxeFLDOUDKE9Fpqfd7O6FH4+h2Jyl367MWtd5IdpljFfrygw1
-    z+DcOCVU2GS+uYgXk/65hPeZ+C39ZdHRGxTNUM6I07zqCrP2+myWART1i4CIUOj2yvjSIc
-    bJWb8Nej3+zIi7g2ZOfVckGBWM+vJOf6Ls42baWulAA0QJnSqWi3R+MJGChfh/vY4pWDrF
-    e1dhvxCjG0dEh/S3+ZmxqQ1JOBqF7xUI2kGnKT91wQlD1noXUCBfDpx6zAngIMqrXwr6oc
-    PzRMLtr6yBkxuaZNxG1w+YDxvjS/x5/83fa4/nTG6ljNfWZ1xRzzyy6paiOIFdkkq/Xszk
-    w/Gtlu7R0Ut6pPU2LfDN5dAzFzhA9P0zd+zUzzn7igXyuudvpmOvrqHO6PhTzH1hoTAQvc
-    2YAfMaNd+CNx/UWSnV+d9nR0a6IoOJKM2yUIgRDJ75M5XB1xQuRddTdbXaIQ
-X-ME-Proxy: <xmx:Ou1ZanRGRSi7gDaSD6eJMVNXmLSwmhAZ_5DTUELOWqGtHXeRgr5N4Q>
-    <xmx:Ou1ZavqyHFi1jJBm42PKh_n0Pmpdvf1VCh7RZgvJlSnyWUGBHRvibg>
-    <xmx:Ou1ZapxRDiLTKhM8AWZ5QzxO5J5gLIvpCy3ChZvfVMVO4S5k-XpK8w>
-    <xmx:Ou1ZakLxDU9NV6SKkApEyb4gBpmYxIwFaxZyHS6Nc96q_8cw0xrFUg>
-    <xmx:Ou1ZakTpPYZVeXVcuX7r8U5uqxNZ8v1xA-EV8T3TtFd1eIwqidXmPt_N>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784278335; x=
+	1784364735; bh=PjUO1k7uDackg/IlezpHYLqnxIE2VRzRaAl5XGiPoQ0=; b=L
+	0acNA5QEFQ3g57166WYqz5LKFVDZkkTVvav5rxkD4McVpoYq95xYByP6vpnb6y6S
+	wQApiqPDIvNhxU2F6HhGBln/gQdd7R6qDH5lcQdrf/GzRe8M9y192N6PLvzfyqJ+
+	421dBea6TzQ55+Yf/QvyolNyOxKqKPn6VP/v6FrxqeSVfu2fT1kRzyRzUCITHCQ0
+	NCMGZJa0/xl4fOtXYa4YYiHbjF/xmAVC8+J/umAGzZvqgapxNpI0lHH09AzonmGa
+	Ddgt1fgt4wDOk84gNFlVfKJ61CCiT7gFJv10elG7W3pLB0xcShlAYZkaBGlmi+71
+	YAioTVsIzcQUDXBjq8/Lg==
+X-ME-Sender: <xms:P-1ZajQkeLivgkEOQCgXom9-7BHVrNyOry-DGFCoMSuqNLoTbrfzKA>
+    <xme:P-1ZasMZcKWatYFZEmxB4RTzJBhX6UDjgw-iOWTCMr0C_vAcBdnmg-VY8x3YN5787
+    VAymZkUUdTz_EyZMMYTFU2LoxTzr1pzwSPSKV7yHkXomUQdmnr3>
+X-ME-Received: <xmr:P-1ZamMyIjY5-5dWOFiX26r7UhrCZI5vH1kITnLWeypRzdEOrNtkg6rqYVhQUm581LmTCc1xNlDon7nKpuyTC8c4cSZLlo55zz_iH39x7QU>
+X-ME-Proxy-Cause: dmFkZTFR67wIySSZqoPi7TByp6rHdtUMg0NDa5Q5dtdCwjlvrlZ4KlWG0JK283nZxQxETL
+    RTppaBEm3Y+hnn2c/hHyEuhe/mQ1kHw0DK8JDgHa2Z2YCJdW9dWlfL3Vqt+hDuV9P3Un34
+    MGEoDyDrfhAFY4KWME5pYpy9LuZjmnQnKWGJKRb/m7FPS5ZumwZ8HdvTBs6rxf8toOPKGV
+    1WkcHZO/Mtj00NmMdVSHEaG4LnDb2HMulo3p2gIIJOg0Uinnh2nvxCt+E5JoAH4eDUUk26
+    zTSXsWpym8/V1tJdPYC2s3lH3FbyJj/2INkwJvkC8bfa0DdB4/Kl2uB4rBkvq769a2STWv
+    QeJ8nT8ZOFmCiqIYoSr0EP7ePclwR1ew6R2yjiVZWgbJLxYr19tMB8F0FvjWhocbRgtL7v
+    KdDSYhApbN1P2kkOXtPK9Tz1+ZNIbpnWCuU45lNPztUbB06l1mgGUyjB9ClF7C0953N/lN
+    S4szOu7A5G5qsHf3bJPvBswIUEsUMZtONDgNqbqZgIBB/ZHRw6emGH9ZPx/WueS+K4fa80
+    JhDYMTnzei56t1dw9HYRc6bSldduAFnrDtg2r3kmZID/ydQMNg5g2iet+d/szIboRv1LHb
+    YAtI5uc/NoPaZmeWjOE8A8W4glcNQm0FeTQv/vjXEkRMgFeL3zaxnTCPY01w
+X-ME-Proxy: <xmx:P-1Zasvp4vv9IvOi24LQXoFN_Cjz7oebnLtgQhK2kkFF_Tmee9q1Kw>
+    <xmx:P-1ZagVpLxl9cmuNXkL08CEo5H6HRWkvJqcms7qUT9bbokpOKEG5nA>
+    <xmx:P-1Zaku2t4KgSR4onehJ2J8G3kAE5rLCKqGX73xyUWysqfgQB_YRqQ>
+    <xmx:P-1ZasUJ9zoRZG3ikg0WCXlH0DHP1Dgloo3WON7PguNTY7t_1nC-ow>
+    <xmx:P-1ZasN1c8GWTn77DVjRtvWCSMS3f6nayAoy9-n01KiR5fCLj5gZJr6u>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jul 2026 04:52:09 -0400 (EDT)
+ 17 Jul 2026 04:52:14 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7b3ef10b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jul 2026 08:52:06 +0000 (UTC)
-Date: Fri, 17 Jul 2026 10:51:59 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 76079606 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jul 2026 08:52:14 +0000 (UTC)
+Date: Fri, 17 Jul 2026 10:52:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
 Cc: gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH v5] show-branch: convert per-branch flags to commit-slab
-Message-ID: <alntL6SFroH1hOic@pks.im>
-References: <xmqqwluwpvme.fsf@gitster.g>
- <20260715120156.53025-1-gatlavishweshwarreddy26@gmail.com>
+Subject: Re: [PATCH v7] show-branch: convert per-branch flags to commit-slab
+Message-ID: <alntPJy2VwVK75qj@pks.im>
+References: <xmqqfr1i6tqu.fsf@gitster.g>
+ <20260717074208.61303-1-gatlavishweshwarreddy26@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260715120156.53025-1-gatlavishweshwarreddy26@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260717074208.61303-1-gatlavishweshwarreddy26@gmail.com>
 
-On Wed, Jul 15, 2026 at 05:31:56PM +0530, Gatla Vishweshwar Reddy wrote:
-> Apologies to Patrick for not replying inline to the review before
-> sending v4. For previous review threads I did reply inline; for that
-> round I mistakenly folded the response into the annotation only.
+On Fri, Jul 17, 2026 at 01:12:06PM +0530, Gatla Vishweshwar Reddy wrote:
+> Thank you very much for the thorough and insightful review —
+> the performance observation about subset checking and the
+> suggestion to remove MAX_REVS entirely were both excellent
+> points that significantly improve this patch.
 
-Apologies but I'll ignore that advice anyway...?
+Sorry, but are we merely chatting with an AI or is there a human
+anywhere between us and the prompt? I feel like this thread is becoming
+a waste of time.
 
 Patrick
