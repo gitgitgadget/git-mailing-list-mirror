@@ -1,83 +1,81 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD673A9850
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 05:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF4737E5F6
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 06:00:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784267417; cv=none; b=VlZIxgReksOfgpVSSP9mo5XagQWKxSVLzNLOlsFu0a5uKxrG+DIHrxZNfJHeJIhNDrhZWZ0Ynq3Z9hKcWLpUe6pPmVS3iy+LL9Zz9Ep57bqte+r8x1FWV5Gsjk22E9z9QWL+fNM/Wx+D4Nm/nZTQC5oKbCmjOaNBJGggmmTRfY4=
+	t=1784268016; cv=none; b=I7QqmuIzhjgkLQMdUX04f1X11LpTDf2U53nUa4t/f6HKG4GawgokedD0qZlteYBExEal+hES9eiTICLyWUrWBTk4Gtrx8JBeFqntjvAcr+TsbO9u6oT3AMlpFDHyqp6QJgC5M2WxNzF4mzc/sx75U0jw35yaiLpUArsWJU12cyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784267417; c=relaxed/simple;
-	bh=E+Gvru1yZAgZ2jIsF+EJGzHL+1I583U/REwVxhftHxI=;
+	s=arc-20240116; t=1784268016; c=relaxed/simple;
+	bh=0aoCE7hxNuH8f6pndNzGNH7E+8s4yDYCvcDMBjl/bsE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SxvnVV6tfnF+XvaA1lvlQHK62dFf9yDW/YkoxRNxn7A4Z+F1Ll5XApt1Y2vA4Vgkxk39T5O/5oBOxBBnisop4VsYAZollUtCaK4WxxWXl9h4fKaMzsfe8a67etZ1najj5Wer4b5gK1jQV0Yb+rmxvcf/6/Ce1s8my9jBHtpF6hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HNIooBDA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MNxf/bcU; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=Fwjss9zbAVwXV2MYrau1lqqud/ZRSJ1AyD8ei5SQTaY6xtyRC8UoSq5xGJEHiq4HpaQkfhzGnIhPBjX1l1go2BV+8Q6npq28orB4KWBnQoY3HXaecMJWQprpRkr/RfmbHqndVs2htnciwLz9g5U/4yV7xFfiCXlE7CAo+j0JY5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vUC62shg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g3MXfTIZ; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HNIooBDA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MNxf/bcU"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vUC62shg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g3MXfTIZ"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 99387EC00AD;
-	Fri, 17 Jul 2026 01:50:12 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id D593C1D00105;
+	Fri, 17 Jul 2026 02:00:12 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 17 Jul 2026 01:50:12 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 17 Jul 2026 02:00:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784267412; x=1784353812; bh=YZTFBxZ8sk
-	pqH+D50cx/ETmvg6pxEOOCdD6ceGPBhHI=; b=HNIooBDAVlFws6nXGhwRLyux9K
-	Yygl3e2dYO6sZ2AyJD+YENJTYhPx9QD1lFwIdm0wqC9uCydv3xFwbm/ZLcQaB93M
-	1xPqoMIWkUH4tkjc5Vi1rrMYpi6jF8jDqz851wGYrMgAqH8N4bTnuqoBbpGoOrdS
-	vLUW0GvtZGgveR476HaaghwA9A8KqqHMc+zPBw1KXpBG1c/NoZ6YgqLSo/k9+oeM
-	PoXWSmWY1tqwVkNHLhurvm4VcOkTsMnyYDsXJqbA8EHqYlLK/2T2uElyMTPUYpiR
-	uM4RIoFnsYp9QpwFZ8uy3e4S7UDRgF6dt21ASTHeQpKVOfAXdoIoGpkb/nxA==
+	:subject:to:to; s=fm1; t=1784268012; x=1784354412; bh=7QOQPq4ID1
+	t6I/NNe2iPunTraxk8pO++nglq2kPrc2M=; b=vUC62shgBW2saNvKLry6c+FoZr
+	M4jiRhnYd8LkVmTHceZMlBRJdxRe4OoHIv5/FgjWeX7+v1Gl6TFgujceor8WTkgU
+	De6xfu6/B6P/qI/mgg9ArXSWO61e0caoVTIoGi+sTIuZSgxeSo0w5TV99AHRZx7P
+	cr1THoDcwk1TWNwc2Fy4RUWCmu6YvXYzFghxoyFXo2o5D5GcY7GbTtz5ZfIhD9dM
+	dEJFqGFNCPMb2u8rL9tfjIuSCgq5f07oogpDTElCzgYzpMicu7+m+/oSiKyXf8XY
+	zPox3mrDOW81x22VIcEcqvPeKLnq8OJSvwXGI+JCawsv6Hvzt0Elwt656F3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784267412; x=1784353812; bh=YZTFBxZ8skpqH+D50cx/ETmvg6pxEOOCdD6
-	ceGPBhHI=; b=MNxf/bcUyyzYzVsZE1gy6qQOfaSUPa7CaB+MafWUr3o6CWNF8MT
-	Q8foypnNexECyluol9j3drH+f3/mRk7AIWLv/S4ti1QAN1WU+BzvmxPYKGv2lCu2
-	mRgL/lvUINdPbxOBX3uTyb6IZ3e07P9rZoJlsQbFoPtlu6F23eviU+oCkPsJml0t
-	eyMt7HpWjzI3kgNVqHquFnYVdoDes43ntAkeEQGcnpJkE8NcoySHjCOfbFhgn4uT
-	hVBb37q7ILTMPHEPO5g3LLpArgoJtX4KDWzV3kX3iFcVtesVoJnxFKWhcNYx+XMf
-	6FPQ84ANc4qbgfB5i4O2s0jQDP3NrP0hkHA==
-X-ME-Sender: <xms:lMJZaoxIbOQX1ur84JpN_2lY7TgRrsyWI9cNFA4oPPnMTZVvjwkChQ>
-    <xme:lMJZapZobgmMbU8n5m7XnjCKKjJQtzsMpCHYpANo1B1O_4zhXEBDRHEj5qcwo6Ggc
-    z7A8DiQckagAYDcBRDniZMnkRaUDo4qmEmz7dF63ns_RjUpNSThAqc>
-X-ME-Received: <xmr:lMJZapWlPbg5Kz6UkTNvQwKWkkgnjISRLLwOufXCZIXo1AkfI5419waPofReJLh2FkTl88DFHCxkABT3UMR_XGgB5IIJxkbz63IwNwA>
-X-ME-Proxy-Cause: dmFkZTEPYxb3yURENJvmPwwq3SmI848wpPjusdqnGhwD6qCa7xNu9757C8M14+7eRY1I9T
-    Qn6uaM+ZME8kIYsI44e8QQd31OMg52t18dln/CzgKfry+Dh2K83Za/hizOLAGSOmzCdXTN
-    ykNHVPQ/lf61GJYMngEwoWGhrvDknRum0E0ncnoQ3qtfjb5fxTPG1REWRPMmSY2JJkVqdQ
-    NPXsm64QqUPj+wE2hvRTVOtKLWGRIzg+U9TVOrYGXhBLZUTPVcDKJ1hguSQJXkHVfIMLr5
-    zBLeS/HCgGS7bKpCs83lAFkUjzZAn9dd4KPW4YWeqE0dsj+e+/3R89ApP//+GKaUiEX6sb
-    9EvV8i/M5Qc6zl0ivP+17sw3d846deF2tUJH1lwaVCDCIIpDgJYrqvWRzt+g7gbkR2x4Uo
-    /ILweJqz0TXOdF0sI39d2snNmcHUOptU46YxSMOkfQw+t7/ZlsEoPNLyxTBEgWFKfOrmUK
-    RsGCthpIFYJ9DpH2C2zaIdRSyCwI5KJycO3GCiDOdMgmeDFlD6xldjfjybbo2weA372PfP
-    +TyNT4aB2sYNI3KxD834fedbmI9UCen5Oku8T8WTQy26pLhjj5mX8sz8+O4Qple7ZKjjCD
-    6AtwDekfInTJuIqPcCQYPqKv79EKkDraRjA+uVZ+WQ8jMFWmmK0FGsW1Sa2A
-X-ME-Proxy: <xmx:lMJZanimmAbUkC2kiuZZUYrp1jzqcaLtE4QRfy6gqA45N2xhuyeexA>
-    <xmx:lMJZanvyn3JWMkHGlSvdkVFluIeTzufPtUWuU3nx-Fg3b4c4X3Lq2Q>
-    <xmx:lMJZag4bHP6FbsMPA1d_kLttorrcz_lj-a8fbzC6FC5uXa18K-jlzQ>
-    <xmx:lMJZarOIG2ulj1-dam2-ZceZcV-44XAmK04Ex-oPn-Ecc317Ds2VJw>
-    <xmx:lMJZanKUM9bIyWdfzvVdak2nvIA2Grw5ig3cPZuOMOSWOJtej3iUsvJI>
+	1784268012; x=1784354412; bh=7QOQPq4ID1t6I/NNe2iPunTraxk8pO++ngl
+	q2kPrc2M=; b=g3MXfTIZPdnJO4osPqhTWzYtR7ZxlB1P9++YQitKoMQym6C6Tv6
+	VCmyK8vDx6lYjb8aa4Mkg/xAcLO6ZdEFWt+EMu3mAtSr5HA4iWpvQqBqT248eIbp
+	EQPhpEq50yMe8L60Bnxyi1ww+RtziHj1Q3CFCeFkBU3Ws22KbbGhZeevecDkZhk3
+	BIhxajrNFbOb5dvcuCB+TMv9Q6mj2tZ5nzwvqdjSnTJxa/G5hKIuYGqgStejwgIz
+	z1XwOVJqdMU9GGg9nJklXhcIFQGP6RdiWiWULbUxAJIRn9S07LpxIzkkENGOAEVt
+	Y89oT5Ngcxc4FY4cpTI8AMhEqbTpBb+Dc6A==
+X-ME-Sender: <xms:7MRZalk3_t_ngz5eX_fmUlH8MrO7rbtPHIoSzJVIIGFcDscKde0zew>
+    <xme:7MRZaoR-1ao5FRQ-CzqPemEoKjaJlCa1sHGVTBwdghwVSZsqa16IfKD2Pa_GETI5U
+    YFTgb7ZFEv_3J4Z5sTWeYR-Nrdz7Zl6C8AeKCZjRIVkEPedHIGosCI>
+X-ME-Received: <xmr:7MRZapB-v9pB1flfOfPQtMfvgxUV6onCJp0Cyga4M3wlr_3BHHFzhX71y229p_DVTYWB77yaoOdkRCpRrHShg64gSYFhd5nvQ8nFiWE>
+X-ME-Proxy-Cause: dmFkZTGSGbCnRcRjdiAMN6ee8+ubuM+KG8vYkS6RSO76HVzxbuumoa3fjsY2XdudLb4EH5
+    nrzJuY6RUM3YzpuXDabXHoPm1AqpkokL3UbvUtIXUET+PhCkDNN17jos3lGQEnM1D3INcs
+    CsK01Brye2Y+UQrImV5tLQkR4hgj8QzziqXl+Io2MJMQ6SB5B4fCU1ivR66OvJAn0ITqP5
+    +9twFiyMEVdbQpyEwxx932KapVeVgArhr0tnzHryhrWBKw+OSZu7ayrsPoH4VwZ4QLG8MK
+    pM4BWLH5BdGGhsfpxh3NoKnajRRcU01ltmhkF4H5wUEyub5GBvmtvyLr5lQBkGtTHaFNmv
+    TBDi9Mr4ZX07BS4OQwsVwrretnMQ32OJt1XKWuHp0EcOJ7iGmrVuBkAeriPqUKQIlq1cpC
+    tB9ri6Zp7dUzulnadn6XJlhmm4VodrN01AjVWSbD+j9hPAFtHxk+/rU+YasvZYPzjF+AjD
+    cIaJw1CmmCYYckFtwv66I+J643OeLTMa0pjJPT75lZEb4hm0hAb49dIFkIyHAoqdllyiiD
+    pZOZOwbn2oBGF6AhvcRmdO17VPFQALWlsPjBeijMse7zg4ItYl6sysI/LACGuvwWO8Q+RB
+    cuxkdF9JTDf8sd2g6oNGeERKFcEckHQdly9qbK30NuW8Ppu4FCZ0gTfw5AGQ
+X-ME-Proxy: <xmx:7MRZavTGyKSpmtju9ehnnmtTbr1w1jG3HrHjfsQfxJb3FOX7rFfEBg>
+    <xmx:7MRZanppjffPRYNsycOwnmCW3loQEiCmZDQBssJt3c-YCRZGIM-UOA>
+    <xmx:7MRZahwGA4dbxt25Ys6hABqRKIxFv2eFJm4AbuIFbYKb-wJlPVO9kw>
+    <xmx:7MRZasLLaYseuA3sYqMam3UqYFRUaNRM8fqMvonEID9RTvL_TnuL6A>
+    <xmx:7MRZahrHvU2uc4H-vLb4iCeOE-Mi35Ha7K7rKuOEvukR3CreitIuTXtW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jul 2026 01:50:11 -0400 (EDT)
+ 17 Jul 2026 02:00:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Travor@web.codeaurora.org
-Cc: "Liu <travor_lzh"@outlook.com,  git@vger.kernel.org,  Travor Liu
- <travor_lzh@outlook.com>
-Subject: Re: [PATCH 2/2] t9502: test gitweb index hash formatting with modes
-In-Reply-To: <SA1PR10MB9977159B51766C2D9FFE98FD37F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
-	(Travor@web.codeaurora.org's message of "Wed, 15 Jul 2026 17:11:30
-	+0800")
-References: <SA1PR10MB997715AD62D7F2AF64EB1A9887F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
-	<SA1PR10MB9977159B51766C2D9FFE98FD37F1F82@SA1PR10MB997715.namprd10.prod.outlook.com>
-Date: Thu, 16 Jul 2026 22:50:09 -0700
-Message-ID: <xmqqjyqu6u7i.fsf@gitster.g>
+To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v6] show-branch: convert per-branch flags to commit-slab
+In-Reply-To: <20260715184241.56635-1-gatlavishweshwarreddy26@gmail.com> (Gatla
+	Vishweshwar Reddy's message of "Thu, 16 Jul 2026 00:12:41 +0530")
+References: <xmqqy0fcnpee.fsf@gitster.g>
+	<20260715184241.56635-1-gatlavishweshwarreddy26@gmail.com>
+Date: Thu, 16 Jul 2026 23:00:09 -0700
+Message-ID: <xmqqfr1i6tqu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,59 +85,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Travor@web.codeaurora.org, "Liu <travor_lzh"@outlook.com writes:
+Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
 
-> From: Travor Liu <travor_lzh@outlook.com>
+> show-branch uses commit->object.flags to store per-branch
+> reachability bits, one bit per branch starting at REV_SHIFT.
+> The flags word has only a fixed number of available bits, limiting
+> the number of branches that can be shown simultaneously to MAX_REVS.
 >
-> gitweb should shorten and link the object IDs in commitdiff index lines
-> even when Git includes the trailing file mode:
->
->     index <old>..<new> 100644
->
-> Add coverage for that common form by rendering a commitdiff for a
-> regular file modification.  Check that the visible index line contains
-> linked short blob IDs followed by the mode and file-type annotation,
-> and that the full unlinked form is not emitted.
->
-> Signed-off-by: Travor Liu <travor_lzh@outlook.com>
-> ---
->  t/t9502-gitweb-standalone-parse-output.sh | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+> Convert the per-branch bits to a dedicated commit-slab using uint64_t
+> as the element type, initialized with a stride via
+> init_commit_rev_flags_with_stride(). Keep the UNINTERESTING bit in
+> object.flags where it belongs, as it is used for revision walking and
+> does not need to be in the per-branch slab. With UNINTERESTING removed
+> from the slab, REV_SHIFT becomes 0 and all 64 bits of uint64_t are
+> available for branch tracking, lifting MAX_REVS from 27 to 64 branches.
 
-If the new test added by this patch validates the "fix" in
-[PATCH 1/2], reviewing the change might be easier if the two
-were squashed into a single patch.
+Thanks.  This version looks much cleaner.  I appreciate your
+addressing the correctness issues around UNINTERESTING
+propagation that we spotted in the previous round.
 
-> diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb-standalone-parse-output.sh
-> index 81d5625..7f37e26 100755
-> --- a/t/t9502-gitweb-standalone-parse-output.sh
-> +++ b/t/t9502-gitweb-standalone-parse-output.sh
-> @@ -115,6 +115,20 @@ test_expect_success 'snapshot: hierarchical branch name (xx/test)' '
->  '
->  test_debug 'cat gitweb.headers'
->  
-> +test_expect_success 'commitdiff: index line shortens hashes with mode' '
-> +	old_blob=$(git rev-parse HEAD:foo) &&
-> +	old_short=$(git rev-parse --short=7 HEAD:foo) &&
-> +	echo changed >foo &&
-> +	git commit -am "change foo" &&
-> +	new_blob=$(git rev-parse HEAD:foo) &&
-> +	new_short=$(git rev-parse --short=7 HEAD:foo) &&
-> +	gitweb_run "p=.git;a=commitdiff;h=HEAD" &&
-> +	grep ">${old_short}</a>\\.\\.<a [^>]*>${new_short}</a> 100644" \
-> +		gitweb.body >index_line &&
-> +	grep "<span class=\"info\"> (file)</span>" index_line &&
-> +	! grep "index ${old_blob}\\.\\.${new_blob} 100644" gitweb.body
-> +'
+I do have a slight worry about a potential performance regression,
+though.  We might run the risk of slowing down the traversal in
+how we skip parents.
 
-Can we use "test_grep" (for positive "this string must be there") and
-"test_grep !" (for negative "it is an error if this string appears"
-(note that exclamation point comes after test_grep))?  It would make
-it easier to diagnose a failing test.
+> @@ -226,39 +285,43 @@ static void join_revs(struct prio_queue *queue,
+> ...
 
-Also, there is a topic in flight that enforces the use of test_grep in
-these test scripts, and use of raw grep like the above would break
-under those stricter rules.
+In the original code, we avoided parsing and re-queueing the parent 'p'
+if we knew it already had all the flags we were trying to propagate.
 
-Thanks.
+> -			int this_flag = p->object.flags;
+> -			parents = parents->next;
+> -			if ((this_flag & flags) == flags)
+> -				continue;
+> -			repo_parse_commit(the_repository, p);
+> ...
+> +		{
+> +			int commit_is_merge_base = has_all_rev_flags(commit, num_rev);
+> +			parents = commit->parents;
+> +
+> +			while (parents) {
+> +				struct commit *p = parents->item;
+> +				parents = parents->next;
+> +				if (has_all_rev_flags(p, num_rev) &&
+> +				    (!commit_is_merge_base || (p->object.flags & UNINTERESTING)))
+> +					continue;
 
+With the new slab-based approach, we skip only when 'p' already has
+all possible revision flags, num_rev.  If 'p' already carries all
+the flags that the current 'commit' has (even if it lacks some of
+the other num_rev flags), the traversal could be pruned early, but
+the proposed change fails to do so.
+
+Consequently, we proceed to propagate the flags (which amounts to a
+no-op on the slab anyway) and, worse, re-queue 'p' for further
+processing.  In a densely tangled history with many merges, this
+would lead to significant redundant work and queue thrashing.  We
+instead should check whether the flags of 'commit' are a subset of
+those of 'p'.  Since the flags_stride is known, introducing a
+helper, perhaps has_subset_rev_flags(commit, p), to perform this
+check should be a straightforward exercise.
+
+Also, looking at the bigger picture ...
+
+> -#define REV_SHIFT	 2
+> -#define MAX_REVS	(FLAG_BITS - REV_SHIFT) /* should not exceed bits_per_int - REV_SHIFT */
+> -
+> +#define REV_SHIFT	 0
+> +#define MAX_REVS	(sizeof(uint64_t) * 8)
+
+While lifting the limit from 27 to 64 is a welcome improvement, I
+wonder why we stop there and still tolerate a hardcoded MAX_REVS
+limit.
+
+The introduction of flags_stride and init_commit_rev_flags_with_stride
+already lays the groundwork for supporting an arbitrary number of
+flags.  The only remaining blockages that keep MAX_REVS alive are:
+
+ - The static ref_name[] array; and
+
+ - The stack-allocated arrays rev[] and reflog_msg[] in the
+   cmd_show_branch() function.
+
+If we
+
+ - dynamically grow the ref_name[] array (perhaps using the
+   ALLOC_GROW macro),
+
+ - dynamically allocate rev[] and reflog_msg[] in cmd_show_branch()
+   once options are parsed (and thus ref_name_cnt and the reflog
+   flag are known), and
+
+ - calculate flags_stride at runtime as (ref_name_cnt + 63) / 64,
+
+then we can get rid of MAX_REVS and the associated boundary checks
+entirely.  Since the proposed patch already does 90% of the work
+needed to support an arbitrary stride, it feels like a missed
+opportunity not to take that final step.
+
+Thoughts?
