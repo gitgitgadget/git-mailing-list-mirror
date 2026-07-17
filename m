@@ -1,208 +1,121 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11020089.outbound.protection.outlook.com [52.101.46.89])
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCB22C11C4
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 15:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.89
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784302860; cv=fail; b=e9ex6DArAx/fj9C05sNSDRkz6JTaMSOuqW2uzMfgj3VhQuvJt1wtlYAc56+5C5TZcJoc8rnhfq3yg+QJBDom75GR4+/tQF0WulIeuDnOybHytyUotMhD45JuomBWUMIc05qGQhdgzxq/zgNJYGd70BStpEobFGXwcRzpKMrMHZY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784302860; c=relaxed/simple;
-	bh=hMGPvkPojowepG+V2ewUek0C5NlnYB2ZQnTPKfDcpMA=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=IRiCZO1rHpGkdStvtM1v2VceMpdgBzuc6gkJH+QBAFPfxj+gztC8Q6FfobztopBW9tERD8lYsCaUJyRS1gyQdXw9y3aYIgvcOPAMbJkbSeg4ZjHBfWi9zJB2k1DwRo2rkHLW1qsQAf4kwRwenwIfYThsl9ETB0lOMsgEN/6P3l4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cseasy.com; spf=pass smtp.mailfrom=cseasy.com; arc=fail smtp.client-ip=52.101.46.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cseasy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cseasy.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cVMAFRhfAB65h0lsDhhaLKmaXboebhraXGZ3AW3JdP4l0fen7AZho2DNVb/EQfSU/IMwGGo7q7ErQODqyEUUVCylmGklaow0y2XUOB6n6nr9G4GCag9q2XoQ/71ETL3FUdpu7wuxIoV3LAnzexHZDtvOjEhqBz21Ci8A7NT2zWOtUsTW+PQ4kJHKZ2HeuTFBqqIHlV+wxDOyBxEpC97L0NqPqJO16pkkaE7qcErJnsJNul3aQAuaD4O1TijtJZbEJC49Zb5XsFo3Z1VtpZqfNSNqd6PQfVEzJZ2c0bxDMTLe+TYbvrJdI7EGstOLFxOv+eigF2DJUn3ayJ0Al9swFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hMGPvkPojowepG+V2ewUek0C5NlnYB2ZQnTPKfDcpMA=;
- b=EH83AAXHU5KdTmSjBHnTnnI14MQm6x7qCemvbl2GCOIC0BWgH4cZdbOk424BBlWg4d3QSBzgOUThzy4KfMW9AGeoRRCWs9lk9DpkLY3IEaJpOyc82hcHhAbz1WmF4RhlL3KpPurcJCQpCCWKR2HHF0Xr4hRBgxH3C6VhqFI4NYm4X4W10bY6vkao1SNo5Y6CFexmM72w3k0axrB7I5e945+yjSBMuiXQdNo+V94ERZ451+0GIYB1O1P9Czv+/g9yV7j3rq8kocSO0pXq364SPBwwR+ikn4RCq4bGU8IJuTi0LnWJNotrPwZG5oJIJaivM2yGZ5SDgFL3g5jzHLEGSw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cseasy.com; dmarc=pass action=none header.from=cseasy.com;
- dkim=pass header.d=cseasy.com; arc=none
-Received: from BY5PR06MB6548.namprd06.prod.outlook.com (2603:10b6:a03:235::8)
- by DS1PR06MB10559.namprd06.prod.outlook.com (2603:10b6:8:220::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.8; Fri, 17 Jul
- 2026 15:40:56 +0000
-Received: from BY5PR06MB6548.namprd06.prod.outlook.com
- ([fe80::a1a6:27d9:74f9:8d2c]) by BY5PR06MB6548.namprd06.prod.outlook.com
- ([fe80::a1a6:27d9:74f9:8d2c%4]) with mapi id 15.21.0245.003; Fri, 17 Jul 2026
- 15:40:56 +0000
-From: Randy Kroeger <kroegerr@cseasy.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Please provide help with how to fix
-Thread-Topic: Please provide help with how to fix
-Thread-Index: AQHdFWTyKDAQC6hyGkO8jU2+2+BnirZwtI+AgAEgd7E=
-Date: Fri, 17 Jul 2026 15:40:56 +0000
-Message-ID:
- <BY5PR06MB6548A6BD9BFC90367098FC6EBAC62@BY5PR06MB6548.namprd06.prod.outlook.com>
-References:
- <BY5PR06MB6548F18EA532E3EF021AA93DBAC72@BY5PR06MB6548.namprd06.prod.outlook.com>
- <CALnO6CDGkAzu4Xz2o=VaCfwsF1WEcBw2k3-JqmkGqj1+ZpRQyA@mail.gmail.com>
-In-Reply-To:
- <CALnO6CDGkAzu4Xz2o=VaCfwsF1WEcBw2k3-JqmkGqj1+ZpRQyA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=cseasy.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY5PR06MB6548:EE_|DS1PR06MB10559:EE_
-x-ms-office365-filtering-correlation-id: 26613756-4976-44e7-cfa3-08dee419caf1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|23010399003|10070799003|366016|376014|38070700021|10067099003|3023799007|6133799003|7055299009|4143699003|56012099006|18002099003|22082099003|5023799004;
-x-microsoft-antispam-message-info:
- y4IMrkuzxEF/zF8dLYuh3i9pCqwd2fz8uxhnGNMNCR/+wkBJMeqTYMgvUXEuJ2X+RiSDBxmiHyToNDq1WpeHvoZZabJEhG/FlEYQJcYyuwFq5ZCZ6pBqCO3hlaBs1qSbzNZUULdZdNjw9O0Gvrg3D9vVs5EQhnpGWEsuD+ROEl+qk7tEsDpUp6hFtEuigNAaGC1SaBMWffi/dPcsSI3u7jRlI/JYJo0Xm9mCrs/YhH1mX/YV1dHBjHhDYGMXhZGhElaNLqdyiU2OziiGn6m0sLXYYM5DeWRD7jbWGi5huPJLC8/ClS9CcT76gPD9hkVy8XKBE2DsllDSInW0TBjg1EW+0ZWTRUy6U8G7QbogV0aaCrnjUBigD4Bqc1d1M7JYnhci9/+tWMM/8AULrNFezuOJUrRsqOKRk2n2Li5JWCmq9Vh1M5Sbd8CrlyiX/cv3GUFYtFthVnDVNKDwGHxzF5fyfCKeOucSIqNyl5SVDc+Eth7JjtHpA9gLCXODdswi0rsfyrl+BopjyXqHfYuWg8wpqCLbqhJ6aWPx+JtcZ30QStTCYUGFNBkr4pWNJlvO3pfs+o9BlhY76mCaFigaG9Y9UomvRJLBTc5vBWII9KwaWBFAUkLTr+e9WHaZsa5YccoTAEYTSImr9rAH4Wpxs+EoKmmF5RIPioVIJboP4S+GIwCulD7GyaetnOYRpRo33CvoM5tqQ7FgPe6j88ODXco3IdOtY3V3IkbPSD1aDe72JgwSDcoPZUp3ryfEqSBH
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR06MB6548.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(10070799003)(366016)(376014)(38070700021)(10067099003)(3023799007)(6133799003)(7055299009)(4143699003)(56012099006)(18002099003)(22082099003)(5023799004);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?bUs1K2xYV25LSkUxMFMvYVZpUzg0VXd4OUJlL01JR21UZWFyMGlyR3hyc2Mr?=
- =?utf-8?B?T3VCblVTUEV2Ym42YVNqWmExOHQyK09ud2dTL3oyMHdUcXVlWWNrQTFZeERt?=
- =?utf-8?B?Um9MYUQxUTRKVjVMYWRtdWY5VjFTWWRBUjNkQXlNcGozTlRZdndZZDRhMmp5?=
- =?utf-8?B?aDFOLzlZUi9pdGdpanBHanJGM3BwRGkrZTZiR3BPbytjYUd4QTNzUDY2L3ZL?=
- =?utf-8?B?MjNUQzZoWUdFNjBsZVpIQTZEcFhqcVJnMkIwK3dLRkNJOUxtaVUvTVhoZ3RK?=
- =?utf-8?B?dlNma2p3cjNtTW80NlRSc2NvSWwwcExobUFDOWRQbDlFZmpxS3NlYnBTR200?=
- =?utf-8?B?b0dDYy9ISCtraDBzWU00Sllpa1gxWXhPTkplNG92R0N5REJEUHd4ZElOai9Z?=
- =?utf-8?B?S0ZlN1ZJYkpmRitUZG52aVF5dTN3Qi9FWERxWVBTbW1EV09vNmpvZWZYbjk5?=
- =?utf-8?B?SjBTYkYzL2JtdkdPN0RQK1BlVXVxNEphVkxnY1lzNXk0TGNaZ21vNERGNzc4?=
- =?utf-8?B?MW5lN1FYdzNqTXV2dk9BMkREM1NOTUgwdjBMRFVJRm5yY0lrb0UzNDJkRkx1?=
- =?utf-8?B?UXd3MmpqWlNaOVhKS1h6WE0zcWF6dkppYzd6UjVGN3BHSjBOZGVueGlmSGxS?=
- =?utf-8?B?US9NUUEvV0hsU3h1RVVSdXJkSkJjdnFITEtRWFVoY2tRSUtuZ3dJSm5sc0Y4?=
- =?utf-8?B?MnZISERZL1JtWldLcU9OSThKMm44UjUyKzczSEpoZjRTb0dqNllxVVBhTlRN?=
- =?utf-8?B?M2tjdFhpV3F5ZzhDS3JCWFpvVzBTT01tZEN3SkEwL2FXRU5MTkc0bnoyTFB2?=
- =?utf-8?B?QkhaU0ZwL2luWUthWWxJSlc1aE0wdmNvQjA2MGFvVVhodFRpTlMxQ0ZPK2sz?=
- =?utf-8?B?cmdMUVo5Zm5RSnF6ajlBTnNkenBWZUZUdWVnajMrVjMxSVUvTCtiME0zNU9n?=
- =?utf-8?B?NkRkYjRxTm9XNzRwK1NiTlQzcVhmWk4wS0tlY3VrVWl0V0hkTUx1MkNNQjFF?=
- =?utf-8?B?cjFPaG5qZUJoS1RTV1lMQ2NiYk9JTkdYQUk0dXBkMU4ybmFWMHpxN2lMYStL?=
- =?utf-8?B?ZzM3TFEyWHJTRHJoaTFtczhmVWxtUUZtUjl4UlZITUh4bkZHektHakROOHRN?=
- =?utf-8?B?MmRiTjJzV3p6M2F3S01VRjZVcjZrK3lNZHVRN1hCTUxPa1JGNXA4RVc1QkJC?=
- =?utf-8?B?MjdmaGVxNWVwSWtpN1JRblNnVGFVbFZxRmVJUmY0akc2ckYxVTRUK09wcG5l?=
- =?utf-8?B?eWlwUTU5Sk4rTHp6aEJkeGEvYUJFbEYzaks2ZGxOWVBUdFdQeUlKNkNic0RL?=
- =?utf-8?B?OTZqZ0JZczFZZFZETXRrdmtLbjBpUVVQYXF0V2FzQjczSUtwb0YzLzRaNTFq?=
- =?utf-8?B?SHE5OVNQOHBKMmlyZEY0bHRhVFBITDZJUVVXY0tjYVR3bnI3aVJiQ3hlbjVy?=
- =?utf-8?B?RFJsZmJXQzhjQXlaU2QvV3B1Vy9EbFFEMEYzVU5JYlNmMlhIdmx0b2tvakhU?=
- =?utf-8?B?b3gvZ2hxTGlBL2laYndHaVFDWWVhL1FEV0I4eWZMSUhsN0s4VFhMNVNXNHI4?=
- =?utf-8?B?L2dEZlJDSDBuQXNXQTZDR1MvZXFuSk5zZDd5clpTSE5LQjZ0S3JsVnhpNHMr?=
- =?utf-8?B?alBKVXhhZVVOcmgyRGUyZmw4K1hCWFhET2gzOGxGakRsMmxwcVY3M3J0RGZH?=
- =?utf-8?B?a0hOMzg0ekVOS1JvSGgwYkNVTjNOS0Zjai9ZMjlFd2hFbVc2TUVMWHc4R2JU?=
- =?utf-8?B?cE11SXRwaVV1a0VSNTk1djdhbUgzWUN0RWRhZ0p6REE0Wm9iQ29yRTRzbVBv?=
- =?utf-8?B?ZjZJNUpMNysvTEZRWngwWm5JM1A1ZDVHb1dzb2lCUUxDNldkb3FuVVRMblVx?=
- =?utf-8?B?MGZsSEFDdmpUNFQ4M0VJdytzVnJpUU9wOFZIV1FLTndQZk9EeDgzU3pHQ1o3?=
- =?utf-8?B?TVBSYUg5UWVEbnpsWjBxYmRIQkFrdDRUMlpvZ0hoZjZQalJ5NjlaV0lycFNV?=
- =?utf-8?B?eDkyVHpZd1cyZkJxM3lsakZVRC9hdkVWcjdVQzBBRHlFL1ZSZEdsU2c1WTRx?=
- =?utf-8?B?UXZVbDNwcGJnKzFXVGJNRzBSOVFOVDFZVFJsTEVKL2FaU2oxL0lxSUhhUzZU?=
- =?utf-8?B?WU0xWXYvc2NGaFZML0JUN3AvTFNVOVJOQVFzaWdPVktKOHpsSXIvZDhaZktw?=
- =?utf-8?B?U054S2tZUDhIZ3B5cWJ5YjFxTysxS21FN0pocXN4eWZhTG4ySnVwNDdDeVRz?=
- =?utf-8?B?dlQ1Qko2cTBSVHN6OWlyNGlWUkVRQjZiZjVzd0J0bmdWTDFCcFJwbG5YNUIw?=
- =?utf-8?B?SC9pM293TkxvZ0FnR1dmZE1XdDM2c1Z2VUlWNGFTQlU3eGdLSldVOTdadzNI?=
- =?utf-8?Q?7sNyN3eoQ76QxryR6/rUKytrQWMAntUMC+AAA?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB01636A35E
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 15:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784303232; cv=none; b=ZCNxky/BcI2j2gC1oydeFcsHQOohBfncPsw23pIjZjIN1PIDQ/bGU0LVLCfWa3RkW8CspOHJb5XF+LBAKmadIUBU2QPoZsw47frz7U2M/RlBu9RrMwfwhBJwyLXmcRv51t/b5RTzC81KLsNkpt/LDyPt0ibFyuLIeNVqlzJVDCI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784303232; c=relaxed/simple;
+	bh=b+bjbsnbc+AFaPj/7g+AbZmMv+taL59N50vW0Gq8ISE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GH6B1f5kVusK83I4APu0BF0kaNQVZ+wa7Iervq3XO4s0HNvcQbQAJ/0sfqqeYwK9J7h3EVtnJ80EbRJwWN1ejStTXn0DUSnqrPpbxwGQQmoXQIFEGH6yDI/VfLgWvYt1JwxEkCJLwmyYLWW5qk8+j2v4AW/Vy3jp0NByVKpTDZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=S15r+Luk; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="S15r+Luk"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1784303226;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=DT54apKhbjpeBaUZwx6GSdmrdT+PGbgpqcI6WEmfLhM=;
+	b=S15r+Lukhn9P3jAtFfzUcEiSe1wofs/hpMFxLNSp+4FoEBIGMEr3lZ+ZzyjVuw41HHRTM0
+	r7aqeytnM6pjO9gzE01FflkBzirvneMAbiML079Pw3Lg7uBKAkbl8YBFAYLKaDZNj2EvHT
+	jxFnmq2ptzMb4pZKr4JMcke/aVY5/k8=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH 0/4] last-modified: use the pathspec's Bloom key to
+ pre-filter commits
+Date: Fri, 17 Jul 2026 17:46:58 +0200
+Message-Id: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: cseasy.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR06MB6548.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 26613756-4976-44e7-cfa3-08dee419caf1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jul 2026 15:40:56.2786
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: de9b6050-2664-45a4-9dec-fde78d7e4237
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 79gTAq5yJVXnrmWt8/c0sCmK0QT2p0UKjJGETJEYMoB4npqOFp1M/RLvjyhQ+c7d/+6K8klFWnKBEGPJdXKZKA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS1PR06MB10559
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrCMBBA0auUWTuQiaWKVxEXaTPREU1CJi1C6
+ d0bdfn+4q+gXIQVLt0KhRdRSbGBDh1MDxfvjOKbwRo7mBMNWFOKqJnZ45zx5bTiO3kJ0sJoenY
+ ULJ2PBO2QCwf5/O7X2986j0+e6ncJ27YDwM9SYX8AAAA=
+X-Change-ID: 20260716-toon-speed-up-last-modified-b04ea1f21831
+To: git@vger.kernel.org
+Cc: Gusted <gusted@codeberg.org>, Jeff King <peff@peff.net>, 
+ Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-SEkgQmVuLAoKSSBoYXZlIGJlZW4gYSBzb2Z0d2FyZSBkZXZlbG9wZXIgZm9yIDMwIHllYXJzIGFu
-ZCBpbiB0aGUgbGFzdCBzZXZlbiwgaGF2ZSBiZWVuIGFuIGluZGVwZW5kZW50IGNvbnRyYWN0b3Iu
-ICBUcnVzdCBtZS4gIFlvdSByZWFkIHRvbyBtdWNoIGludG8gbXkgaW50cm8gaW4gZ2l2aW5nIGFk
-dmljZS4gICBIb3dldmVyLCBJIGNhbiBvZmZlciBhZHZpY2Ugd2hlbiBpdCBjb21lcyB0byBlbWFp
-bHMgaW4gdGhlIG9sZCBmYXNoaW9uZWQgdGV4dCBmb3JtYXQsIHBsZWFzZSBhdm9pZCBpbnRlcmxl
-YXZpbmcgeW91ciByZXNwb25zZXMuICAgRGVwZW5kaW5nIG9uIHRoZSBkZXZpY2UgdG9kYXksIGl0
-IGlzIGFzIGNvbmZ1c2luZyBhcyB3aGF0IHlvdSBtZW50aW9uZWQgbXkgZGlhZ3JhbSBiZWluZy4u
-LiBoYWhhLi4uICAKCklmIEkgbWF5LCBsZXQgbWUgZXhwbGFpbiB0aGUgaXNzdWUgdGhpcyB3YXk6
-IAoKWW91IGhhdmUgdHdvIHNldHMgb2YgcGFyZW50cy4gICBTZXQgb25lIChBMSBCMikgYW5kIHNl
-dCB0d28gKEEyIEIyKS4gICBFYWNoIHNldCBvZiBwYXJlbnRzIGxpdmUgb24gb25lIHN0cmVldC4g
-IEJldHdlZW4gdGhlIHR3byBob21lcywgdGhlcmUgYXJlIG1hbnkgaG9tZXMgKGkuZS4gbmVpZ2hi
-b3JzKS4gIFBhcmVudHMgQTEgYW5kIEEyIG9ubHkgd2FudCB0byB0YWxrIHRvIGVhY2ggb3RoZXIg
-Y2F1c2luZyBib3RoIGhvbWVzIHRvIGlnbm9yZSBhbGwgdGhlIG5laWdoYm9ycyBiZXR3ZWVuIHRo
-ZW0uICBIZW5jZSwgaWYgSSBwdWxsLCBJIG5vIGxvbmdlciBzZWUgdGhlIGNoYW5nZXMgYmV0d2Vl
-biB0aGVzZSB0d28gY29tbWl0cy4gICBNeSBnb2FsOiAgSSB3YW50IHRvIGhpZ2hlciBhIGhpdCBt
-YW4gdG8gZ2V0IHJpZCBvZiBBMSBhbmQgQTIgKGxvbCkgc28gdGhhdCBCMSBhbmQgQjIgY2FuIHRh
-bGsgdG8gdGhlIG5laWdoYm9ycyBiZXR3ZWVuIHRoZW0sIGhlbmNlLCB3aGVuIEkgY2FuIGRvIGEg
-cHVsbCwgSSBzZWUgYWxsIG15IGNoYW5nZXMuICAKCkkgYW0gdW5kZXJzdGFuZGluZyB5b3Ugd291
-bGQgbGlrZSBsb2dzLCBidXQgdGhlIHNpemUgaXMgbm90IHNtYWxsLiAgIElmIG15IGV4cGxhbmF0
-aW9uIHRoaXMgdGltZSBpcyBub3QgY2xlYXIgZW5vdWdoLCBjYW4geW91IHRlbGwgbWUgaWYgeW91
-IGFyZSBvayB3aXRoIGEgc2hhcmVkIGxpbmsgZnJvbSBPbmVEcml2ZT8gICBJIGNhbiBwYXN0ZSBh
-IHNjcmVlbiBzaG90IGZvciB5b3UgdG8gc2hvdyB5b3Ugd2hhdCBpcyBnb2luZyBvbiBhbmQgZXZl
-biBtYWtlIGNvcGllcyBvZiB3aGF0IHlvdSBtaWdodCBuZWVkIGVhc2llci4gIAoKSSBkbyBhcHBy
-ZWNpYXRlIHRoZSBoZWxwLgoKVGhhbmsgeW91LgpSYW5keSBLcm9lZ2VyCgpfX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fCkZyb206IEQuIEJlbiBLbm9ibGUgPGJlbi5rbm9i
-bGVAZ21haWwuY29tPgpTZW50OiBUaHVyc2RheSwgSnVseSAxNiwgMjAyNiA1OjA4IFBNClRvOiBS
-YW5keSBLcm9lZ2VyCkNjOiBnaXRAdmdlci5rZXJuZWwub3JnClN1YmplY3Q6IFJlOiBQbGVhc2Ug
-cHJvdmlkZSBoZWxwIHdpdGggaG93IHRvIGZpeAoKT24gVGh1LCBKdWwgMTYsIDIwMjYgYXQgNDo1
-MuKAr1BNIFJhbmR5IEtyb2VnZXIgPGtyb2VnZXJyQGNzZWFzeS5jb20+IHdyb3RlOgo+Cj4KPiBJ
-IGFtIGhhdmluZyBhIGJpdCBvZiBhbiBpc3N1ZSB0cnlpbmcgdG8gZmlndXJlIG91dCB0aGUgYmVz
-dCByb3V0ZSBpbiBmaXhpbmcgdGhlIGZvbGxvd2luZy4KClRoZSBhZHZpY2UgSSBnaXZlIG15IGNv
-bGxlYWd1ZXM6CgoxLiBEb24ndCBwYW5pYwoyLiBGaWd1cmUgb3V0IHdoZXJlIHlvdSBhcmUKMy4g
-RmlndXJlIG91dCB3aGVyZSB5b3Ugd2FudCB0byBnbwo0LiBEZWNpZGUgaG93IHRvIGdldCB0aGVy
-ZQoKPiBXaGF0IGhhcHBlbmVkIGlzIG9uIG15IHNlY29uZCBtYWNoaW5lLCBpbiB3aGljaCB3YXMg
-b3V0IGRhdGVkIChzb3VyY2UgY29kZSksIEkgdXBncmFkZWQgdG8gVlMgMjAyNiAoZnJvbSAyMDIy
-KSwgdGhlbiB0cmllZCB0byBkbyAgYSBwdWxsLiAgV2hhdCBoYXBwZW5lZCB3YXMgdGhhdCBJIHJl
-Y2VpdmVkIGEgYnVuY2ggb2YgbW9kaWZpY2F0aW9ucywgd2hpY2ggd2FzIGNvbmZ1c2luZy4gQWxs
-IEkgd2FudCBpcyB0byBwdWxsIGFsbCBjaGFuZ2VzIHNpbmNlIEkgZGlkIGxhc3Qgb24gdGhpcyBt
-YWNoaW5lLiAgSSB0aGVuIGhhZCBhIGJpdCBvZiBhIHByb2JsZW0gd2l0aCB0aGUgZ2l0aWdub3Jl
-IGZpbGUsIHNvIEkgZGVjaWRlZCB0byBqdXN0IGNvbW1pdCBpdCAobXkgdHJhaW4gb2YgdGhvdWdo
-dCBpcyBpdCBpcyBhIGZpbGUgYmVpbmcgY29tbWl0dGVkIHRvIHNvdXJjZSBjb250cm9sIC0gdGhh
-dCBpcyBpdCkuICBIb3dldmVyLCB3aGF0IGhhcHBlbmVkIGlzIHRoaXMgZmlsZSB0b29rIG9uIGEg
-bGlmZSBhbmQgZGVjaWRlZCB0byBtYWtlIGl0c2VsZiB0aGUgaGVhZCBhbmQgYnlwYXNzIGFsbCBj
-aGFuZ2VzIHRvIHRoZSBoZWFkIGluIHdoaWNoIGl0IGtuZXcgYWJvdXQgbGFzdC4gIFBsZWFzZSBz
-ZWUgaW1hZ2UgYmVsb3cgd2hlcmUgdGhlIGhpc3Rvcnkgc2hvd3MgYSBsaW5lIGZyb20gdGhpcyBj
-b21taXQgdG8gdGhlIHBhcmVudCBiZWxvdy4gIFRoaXMgYnkgcGFzc2VzIGEgYnVuY2ggb2YgY2hh
-bmNlcy4KCkEgc3VpdGUgb2YgaGVscGZ1bCAid2hlcmUgYW0gSSIgY29tbWFuZHM6CgotIGdpdCBz
-dGF0dXM6IGlzIHRoZSByZXBvIGNsZWFuPyBiZWZvcmUgd2UgZ28gZnVydGhlciwgbGV0J3Mgbm90
-IGxvc2Ugd29yawotIGdpdCBsb2cgLS1ncmFwaCBbLS1vbmVsaW5lXTogd2hhdCdzIHRoZSBzaGFw
-ZSBvZiBjb21taXRzPyAodGhpcwp3b3VsZCBiZSB1c2VmdWwgdG8gY29weS9wYXN0ZSwgb3B0aW9u
-YWxseSB3aXRoIGFubm90YXRpb25zLCBpbiBwbGFjZQpvZiB5b3VyIGRpYWdyYW0gYmVsb3cpCi0g
-Z2l0IHJlZmxvZyBIRUFEOiB3aGF0IG9wZXJhdGlvbnMgYnJvdWdodCBtZSBoZXJlLCBhbmQgd2hh
-dCBhcmUgc29tZQppbnRlcmVzdGluZyByZWNlbnQgY2hlY2tvdXRzPwoKVGhlbiAocmVwZWF0aW5n
-IGEgbGluZSBmcm9tIGEgcHJldmlvdXMgcXVvdGUpOgoKPiAgQWxsIEkgd2FudCBpcyB0byBwdWxs
-IGFsbCBjaGFuZ2VzIHNpbmNlIEkgZGlkIGxhc3Qgb24gdGhpcyBtYWNoaW5lLgoKT25jZSB3ZSBr
-bm93IHdoZXJlIHlvdSBhcmUsIHdlIGNhbiB0YWxrIGFib3V0IHdoZXJlIHlvdSB3YW50IHRvIGdv
-LgpXaGVuIHlvdSBzYXkgInB1bGwgYWxsIGNoYW5nZXMsIiBkbyB5b3UgbWVhbiBhICJmZXRjaCIg
-KHVwZGF0ZSBteQpsb2NhbCByZXBvc2l0b3J5J3Mgbm90aW9ucyBvZiB3aGVyZSByZW1vdGUgYnJh
-bmNoZXMgYXJlKSBvciBhICJwdWxsIgoobWVyZ2Ugb3IgcmViYXNlIGxvY2FsIGJyYW5jaGVzIHdp
-dGgvb24gdGhlaXIgdXBzdHJlYW1zKT8KCj4gUXVlc3Rpb246IEhvdyBjYW4gSSBmaXggdGhpcyBp
-c3N1ZT8gIEkgd291bGQgbGlrZSB0byByZXN0b3JlIGFsbCBteSBjaGFuZ2VzIGFnYWluIGFuZCBy
-ZW1vdmUgdGhpcyBieXBhc3MuICAgSSBoYXZlIGJlZW4gcmV2aWV3aW5nIHlvdXIgZG9jdW1lbnRh
-dGlvbiwgYnV0IGFtIHZlcnkgaGVzaXRhbnQgYXMgbXkgdW5kZXJzdGFuZGluZywgb25jZSBhZ2Fp
-biwgbWF5IG5vdCBtYXRjaCBob3cgR0lUIGFjdHVhbGx5IGZ1bmN0aW9ucy4KCk9ubHkgd2hlbiB5
-b3Uga25vdyB3aGVyZSB5b3UgYXJlIGFuZCB3aGVyZSB5b3Ugd2FudCB0byBnbyBjYW4geW91IGZp
-bmQKYXBwcm9wcmlhdGUgZml4ZXMgOykKCj4gSSBncmVhdGx5IGFwcHJlY2lhdGUgdGhlIGhlbHAh
-Cj4KPiBJbiB0aGlzIGV4YW1wbGUsIENvbW1pdCAzIHdhcyBkb25lIG9uIEp1bHkgMTIgYW5kIHNp
-bmNlIGl0IHdhcyBvbiBhIG1hY2hpbmUgdGhhdCBoYWQgZG9uZSBpdHMgbGFzdCBwdWxsIG9uIDYv
-MDkvMjAyNiwgdGhlIGNvbW1pdCBjcmVhdGVkIGEgbmV3IHBhcmVudCBiZWxvdyBDb21taXQgNS4g
-IE5vdyB3aGVuIEkgcHVsbCwgdGhlIGNoYW5nZXMgZm9yIENvbW1pdDQsIENvbW1pdDUgYXJlIG5v
-dCBpbmNsdWRlZCBpbiB0aGUgcHVsbC4gICAgSSBhbSBhc3N1bWluZyBJIG5lZWQgdG8gZG8gYSBy
-ZWJhc2UsIGJ1dCBhbSBub3QgMTAwJSBjb25maWRlbnQgYW5kIGluIHJlYWRpbmcgdGhlIGRvY3Vt
-ZW50YXRpb24sIEkgYW0gc3RpbGwgbm90IGNvbmZpZGVudC4KPgo+IC0tQ29tbWl0NiA3LzE0LzIw
-MjYKPiAtLUNvbW1pdDUgIDcvMTMvMjAyNgo+IHw8LUNvbW1pdDQgIDcvMTIvMjAyNiAgLWNoaWxk
-Cj4gfCAgLS1Db21taXQyICA2LzExLzIwMjYKPiB8ICAtLUNvbW1pdDEgIDYvMTAvMjAyNgo+IHw+
-LUNvbW1pdDQgICA3LzEyLzIwMjYgIC1wYXJlbnQKPgo+IFJhbmR5CgpJJ20gbm90IHN1cmUgaG93
-IHRvIGludGVycHJldCB0aGlzIGRpYWdyYW07IHBlcmhhcHMgeW91IGNvdWxkIHVzZSAiZ2l0Cmxv
-ZyAtLWdyYXBoIC0tb25lbGluZSIgdG8gc2hvdyB5b3VyIGN1cnJlbnQgYW5kIGRlc2lyZWQgc3Rh
-dGVzPwoKLS0KRC4gQmVuIEtub2JsZQo=
+We have received a report[1] git-last-modified(1) is slow compared to
+git-log(1) if you want to find the last commit for all entries in a
+directory. For example running the following command on ziglang/zig[2]:
+
+   $ git last-modified -t --max-depth=0 $OID -- doc/langref/
+
+Turns out to find results about 2.5 times slower than:
+
+   $ git log --name-status -c --format=commit%x00%H %P%x00" \
+       --parents --no-renames -t -z $OID -- :(literal)doc/langref
+
+Now the latter needs some post-processing to come to the same results,
+the total solution still is faster than integrating
+git-last-modified(1).
+
+After some research we've discovered the Bloom filters aren't used
+optimally. But it turns out the code powering git-log(1) can fairly easy
+be reused. We do this in a few steps:
+
+ - Patch 1 moves a condition around so it becomes deduplicated and
+   eventually can be reused by git-last-modified(1).
+ - Patch 2 exposes a helper from revision.c publicly. The function is
+   split out so the Bloom filter wouldn't be looked up twice from
+   git-last-modified(1).
+ - Patch 3 uses this new helper in git-last-modified(1).
+ - Patch 4 is bonus change, which optimizes when working with wildcard
+   pathspecs.
+
+Below are benchmark on the ziglang/zig repository for the `doc/langref/`
+directory (with commit-graphs writting using `--changed-paths`):
+
+    Benchmark 1: master last-modified
+      Time (mean ± σ):      52.6 ms ±   4.0 ms    [User: 49.2 ms, System: 3.0 ms]
+      Range (min … max):    48.2 ms …  73.8 ms    62 runs
+
+    Benchmark 2: HEAD last-modified
+      Time (mean ± σ):      14.3 ms ±   1.8 ms    [User: 12.0 ms, System: 2.1 ms]
+      Range (min … max):    10.5 ms …  18.9 ms    182 runs
+
+    Benchmark 3: git log
+      Time (mean ± σ):      17.4 ms ±   1.4 ms    [User: 13.5 ms, System: 3.7 ms]
+      Range (min … max):    15.0 ms …  26.1 ms    185 runs
+
+    Summary
+      HEAD last-modified ran
+        1.22 ± 0.18 times faster than git log
+        3.66 ± 0.55 times faster than master last-modified
+
+Similar timings are seen across a few other repositories (like GitLab's
+monolith gitlab-org/gitlab)
+
+[1]: https://lore.kernel.org/git/17f356ff-7bfb-47f5-b714-62a95cc8b821@codeberg.org/
+[2]: https://codeberg.org/ziglang/zig
+
+---
+Toon Claes (4):
+      revision: move bloom keyvec precondition into function
+      revision: expose check for paths maybe changed in Bloom filter
+      last-modified: check pathspec against Bloom filter first
+      last-modified: keep per-path Bloom filters for wildcard pathspecs
+
+ builtin/last-modified.c | 11 +++++++++++
+ revision.c              | 32 +++++++++++++++++++++++---------
+ revision.h              | 17 +++++++++++++++++
+ 3 files changed, 51 insertions(+), 9 deletions(-)
+
+
+
+---
+base-commit: 55526a18268bbc1ddaf8a6b7850c33d984eac9e9
+change-id: 20260716-toon-speed-up-last-modified-b04ea1f21831
+
