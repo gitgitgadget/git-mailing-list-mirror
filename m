@@ -1,128 +1,110 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCEC3BBFDB
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 11:12:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC1A388E7A
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 12:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784286736; cv=none; b=qNZpFKIooSOhBiXAD0voYsXktxydokzHokyLgXYq2QdnXWSjBG/nn+b3owBJIApaCUr1VMBagWX509cp2X9dthwswln1UVuXwXz1sJfxbI9k5Y6ZH1LauUaOrtV5C38WXvdZPlf/jgmSdEgishdZDf4Vu8nhdCo9DyKFe81emBk=
+	t=1784292185; cv=none; b=QicwoAFjAHgOxldgysbwz/WOlVAFPXown9mlevaF9cBkKcznXOMsh1eUx+S8IDCj1oAPDE73Rk1U7iuyvabZg7gVE0w77H97GTBZkX8AOmES/6DrNpPZPdS1s0HAw0kkkE00y0XHtpXzU3VpjiA9OQhzrnELeCLvs4VR7Z+eaqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784286736; c=relaxed/simple;
-	bh=XHzmaryGnqmtbh3RgTAjNLXcqKczbbM1P+UrHnV2m4o=;
+	s=arc-20240116; t=1784292185; c=relaxed/simple;
+	bh=zo2ue/qnGrVVoAQCtcbx5ZyYotWQF4uxeDch+9Zh5Us=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iQabB7zS8ewDinfujEojrBHGnAZG55toSPTJ0Yn1lvbKUSvHmPl46333vcu8GTyoI7CRoJOP7weBzJf7Vff2Ik5aXYYqh0Y0xLjJxi3+0YadGvxo9/vXtcIDQL41lWqiQaFowkHNlm4DueaTQBjHIBSHlmGUVBVeY91MxBGgqi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dWhvzPPA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DKWZfGuG; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=g9dJO+SH40eDZBSEb6PMsQKPLbJRjc0bP4yDIZPNCFqGiV2M40Jw7PvYjymEy4NqBOYSsSIqzo9weTOu0Jd+WxM3rwjwSGeGi3kCADpm94mbGyJgG3gpxT52vNIZ+UBsCWq+bk+MfmiR0+00FTOsjb/Mh6s39s23PA7NvaUsPlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=PVZ+7VKh; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dWhvzPPA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DKWZfGuG"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E2DB57A008A;
-	Fri, 17 Jul 2026 07:12:08 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 17 Jul 2026 07:12:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1784286728; x=1784373128; bh=fLf6rxqo+k
-	+JCz4uM0Eq8m++Ptts7PkbntWO3Q+ukeA=; b=dWhvzPPA5MQMtOX61tE/QZvfCN
-	0oqD243LtDZyl4ng79r6a9wtVa8WhaLQhzPjDf4Ab6bJtDNiEvMDhqWrpWQeQrWT
-	G6kQ6UvTPl1z8TKMhXJYUFMYl+6/DA02j1NXiaWEx0Dj1z+jzULTLFshOG2t0kw3
-	RDPBbapisqHd85LtWkWEUXLS3+e8G0VICt4xWsz4cBuQMwhPzGcZevNo7jnAXlb1
-	OEOaN9W2ExfXMlkc+RJU4V9v14aRT93oUwX7t1PdPKCiouUe21frrhb7V8I52xZk
-	iLrLSOMSBEwbtAlUJrIHDZh07KsJWPdYptWAdNkVi6cP9lAJhEYBlQ8Mg7Og==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784286728; x=1784373128; bh=fLf6rxqo+k+JCz4uM0Eq8m++Ptts7PkbntW
-	O3Q+ukeA=; b=DKWZfGuGj9N4ngOyXdPuE9389F5P5f8medVUxieD+PL2aOrWhvt
-	PsAj3Yxc8gkYrWRzCtyMCmvuDRvZEOuxQPAkmsJauA1n4ieMD8vkyWgNfV//fA3n
-	R1WcFD05/ftgoryQGMBoDPFLgQzd+B1vRPhUWqCNl1vhnJw8evIyXRbxJLJUMw1M
-	6rrCcFPwx8wAc8lwHPJa5xlY6lZ3Ma+uE7aGckQBtu+8rEaeQhOHPK/xldjEyCvx
-	EX+BXd1m+N45xNuYG13EFxXSvKtfiz/qe/vn8umwUXO3ZASEn+xK0AbD9MpDeOs6
-	ZzHKKlsHLOewmpPhr1PptYKUD5P4HdYkwKQ==
-X-ME-Sender: <xms:CA5aavIYvKsw_oMXlj0-_MOxX59-VA3UoI3uIsbpvUSr0DXEovHY8g>
-    <xme:CA5aapKqK9FqUXXiKojnVumYcMCDrWxQQDDNznshyOrs-D_dKuPaepZ8JkMLJAfME
-    afcGbunSQ-PJ_e49bgBialwk0KoBZowFgs82F8NdStYoQIC12qj>
-X-ME-Received: <xmr:CA5aalXCt1nUL_pca7ifidPSfSwiIVFkw-jt_TOiq9EWkrsZLPHN_gTxcw-UPvtfli-iPlSKjWJPgFy6i8vLgofL02I106weMHhVL_JWk2A>
-X-ME-Proxy-Cause: dmFkZTFymHFrJFnCuwK/ACpk39t2pEtDtlK/faysvqUbB6yv2/B9NYUD+7qoSLSxhaWncn
-    w6vAmGObsuDeDBRPvkW3/AVvzCS/uUE2f6+I+2ZMjCH5XbT98LSvgNiTaY/gYWd3NGtvzn
-    3nvYdLWIqQTVCBRxH+uC11BwFKEWxLNuqY8jbIHDiqVoRM6dxkva82qxdyYplitJ+K/RLY
-    WjGhrdGJYR1dbW/pyt7OO515XvQ6p2Qnoyei/D4YZvQLii57AZvPXPIVC6NjG+ItEhS24/
-    hfZqL4e4/pJRSclUXLJp7GHY3mymJ5YXO3SXClR+xagBQ17OZ2hfX/VZV8kot9oc1TitAc
-    E8uLodV055K7COvvdA7l+2ZKNgyYZs+YCi4q3DZGn6wKaX5J3zr791C822UYseYWp+Hc3c
-    UMW4x8LG9GyeVR/sOaENlovaYvLlF8laWpggPhRCWwwPIsidkmSnSxncegeUwHCEP5VaXa
-    IJtErKvZwzya5We8Bbu39XjSJ4I03huBjc4KpRyYxGtl/HUSrXpXz8oiwytCq1RuE+1pnA
-    h1pFsoKIlY7T1DhHOOtyGKjWlBgwccOBYW59ijBrCoh4kzU5mi4L7DCbtInH1JfN+n2UKc
-    WxAnzL2xBBy8ZKpHCzefGLp90R4+7MwJoGRz4BQR2t8tFdR09AWxJ5+Hm4TQ
-X-ME-Proxy: <xmx:CA5aajhlDFD86xB-D34SLe-QkhEJKLtkCzHEdTLni_yvFvfBE0lcbg>
-    <xmx:CA5aao_mnQGHOVOnLX_sNwb7S0t51fBJv7zoSzPaJOzYsEEB7-6iUA>
-    <xmx:CA5aalCQy7gzmGlkttkukkYlV5CRmsXm0I9drv9xUUi7sz8A1j4H7A>
-    <xmx:CA5aatIEqdfDQfzdY-bOGa93MZR7lGdCFod_34YsAEWTednEDjQ6Tg>
-    <xmx:CA5aaiiIGu6UJncay22gUDi4cnd-VMvDO8lfmebVSlGAYM-5Gu0cK8Uv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jul 2026 07:12:07 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e3cc33e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jul 2026 11:12:06 +0000 (UTC)
-Date: Fri, 17 Jul 2026 13:12:03 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] MyFirstContribution: what if I don't get a reply?
-Message-ID: <aloOAwOtutgPbJu2@pks.im>
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="PVZ+7VKh"
+Date: Fri, 17 Jul 2026 20:42:53 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
+	t=1784292180;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=T8L3MmyXqjrYrEVQ7K3GZn0VIsxV3BhNU4Stm63KZCM=;
+	b=PVZ+7VKhJ2vi3Xoi4ppNbRjELDIitW6E1qGbFM0pVs1FXO8qrDrOd71+rG7s0G+AMBLI8h
+	drXeQtPen5aiVoAXTAdv+9m8jeZt3915/s1RWUB775IqWXlIYbLTu7rU3BGJqE2jVVlpUe
+	X3wc8ubit0fKB+gjCoIVp2YwddveKX4ttA/TP3yXGi1Vlp4jb0MvBw5P0+u5d7qVMxJawP
+	AT+It2ghdBrR8VYmuNa1pzvDZrUxXS9+KjJyHQMKk6h/UcvLlbesSIKAFxtZpoYjnF2UJf
+	NpuLuA8pN2iHuBK7j4WsDE6c4QJ1xEhWuk03PwcTsiirVEESOCLdtBGLL9K8+Q==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Weijie Yuan <wy@wyuan.org>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/6] SubmittingPatches: clarify expected structure of
+ commit log message
+Message-ID: <alojTem4a5q1Xu4X@wyuan.org>
 References: <20260711192650.2417665-1-gitster@pobox.com>
- <20260711192650.2417665-3-gitster@pobox.com>
+ <20260711192650.2417665-2-gitster@pobox.com>
+ <CAC2QwmL05MbVS=jtk7ARj6jJUT461Ws7BcYqUAUrywvDDXjJqg@mail.gmail.com>
+ <xmqqcxwr3g7r.fsf@gitster.g>
+ <alTy306FaTAe2E8w@wyuan.org>
+ <CALnO6CD8HFWaeN-4Gccopy0nw601cMyak_LSXfTsAa8xwOjKpQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260711192650.2417665-3-gitster@pobox.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CD8HFWaeN-4Gccopy0nw601cMyak_LSXfTsAa8xwOjKpQ@mail.gmail.com>
+X-Migadu-Flow: FLOW_OUT
 
-On Sat, Jul 11, 2026 at 12:26:46PM -0700, Junio C Hamano wrote:
-> Tell readers that pinging is a perfectly sensible thing to do when
-> they do not see a response.
+On Tue, Jul 14, 2026 at 06:46:05PM -0400, D. Ben Knoble wrote:
+> On Mon, Jul 13, 2026 at 10:42 AM Weijie Yuan <wy@wyuan.org> wrote:
+> >
+> [snip]
+> > I think this might confuse readers. Now you place these points in
+> > parallel:
+> >
+> >  1. Title
+> >  2. Body
+> >  3. Observation (The Status Quo)
+> >  4. Solution Design (The Approach)
+> >  5. Implementation (The Execution)
 > 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/MyFirstContribution.adoc | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+> Without commenting on "confuse," I find this style of heading
 > 
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-> index 4832e5bad5..fc2ce2e785 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -1438,6 +1438,19 @@ substantial rework, and mention which parts of the current series will become
->  obsolete so reviewers can avoid spending time on them until the updated series
->  is ready.
->  
-> +=== What if I don't get a reply?
-> +
-> +If you don't receive any review comments after a week or two, do not
-> +assume your patch has been accepted or merged.  In the Git project,
-> +silence does not equal approval.  It usually means reviewers are busy
-> +or haven't noticed your contribution.
+>     Thing (The Other Thing)
+> 
+> needlessly suggests an LLM's involvement with the text.
 
-Should we also add the third reason: reviewers are simply not interested
-in the patch? It's a bit brutal, but that's quite a common reason, too.
-In the best case we'd of course tell the submitter that we don't want
-the patch to not leave them hanging.
+Aha, kind of. But I guess Junio didn't use LLM here ;-)
 
-> +If your patch is overlooked, it is perfectly acceptable to send a
-> +polite ping to the thread.  You can do this by replying to your own
-> +cover letter (or patch) to ask if anyone has had a chance to look at
-> +it.  You can also CC additional people who might be interested; use
-> +the `git-contacts` script (mentioned earlier) to find relevant contributors.
+> That by itself is not grounds for my objection; instead, I'll note
+> that often the parenthetical restates the original header in some way.
+> That makes it redundant. (In some cases in the wild I have seen
+> examples where the 2 were not synonymous, which _is_ confusing :)
 
-And this paragraph here can remain as-is regardless of which of the
-three reasons applies.
+True.
 
-Patrick
+> > But acatually you mean:
+> >
+> > 1. Title
+> > 2. Body
+> >    The body typically follows three parts:
+> >    a. Observation
+> >    b. Solution Design
+> >    c. Implementation
+> >
+> > But I haven't written much about adoc, so I don't know its syntax and
+> > how to write it.
+> 
+> This is nice. If I had to suggest anything further, it would be "don't
+> be afraid of long headings":
+> 
+> 1. Title: Summarize the change
+> 2. Body: Describe [Justify?] the change
+>     a. Observe the status quo
+>     b. Explain your approach [solution/design/etc.]
+>     c. Command the code to change [or: Describe the implementation/execution]
+> 
+> ?
+
+I agree. More explanatory descriptions here are very likely to enable
+contributors to express their ideas more clearly and understandably.
