@@ -1,36 +1,36 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEC02D949F
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 15:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEB9371885
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 15:47:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784303241; cv=none; b=gDwtlK3bDZuhqXPTxtoBAJumrjPXH2XpNj3yf0WT24opl2GsuLElYUPDpTUkzAZpg2e9iG2bDimRFY7RDIP//dWV6TEyPN657KiSljyM/Kw/nu63ZLhDoIEVisCAAut7iDo3bpEGy6GTydQCOuQi2SM646v+oXm1xbgD053hd6g=
+	t=1784303251; cv=none; b=nXwPdClAs32HVWebONmb/3OUigPBmz/sk4BqG86CfzKRbRu5qcxMehkXB7noCc/4tJJrA9Qp4CisGUH3/Sg8zn646MlM4MoqPRHXsCMeE767jjm1yIWiV8PbrLT279D5nh9h0WYq4Ys5O1J1Modsf+LQEbq7wFAuuaKW29NMbgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784303241; c=relaxed/simple;
-	bh=Ui8D39/p+Pn0mkVe403OBMwYnCy2xQSfblBwxbgq6oo=;
+	s=arc-20240116; t=1784303251; c=relaxed/simple;
+	bh=DTu2MVgbI2wnGp/b4X+gdkqtC6xS4OHGo9gNfxIEC+0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T7+vtFbjbXLXXndA/miPTAh3Ez5C1kIPyNRBeV5NTnU7rwvVFKmYSr24+IFNmJgKHTA4Uffs/ZKU8JSzUNAluF83IQZ5eN5INMQNC3VzRVdxw19SzaAV1rU59TvJQgRyf3KmPxWM5q2SdIr2K7++GGCEFVJpNP37+ERaw4wwCFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=oWQ3CqID; arc=none smtp.client-ip=95.215.58.170
+	 In-Reply-To:To:Cc; b=HY3DEn9K6YggmrepP6mS9Y/ZyWFBg9cL5wS5flomLdsUXVJp/LxSXzxnflWR5T9uy+IYRcm2bhvxW3OmcgH8fx18xzS+V61CSuCJmAjANVyZzwDvyFz4rW8OzjsrpsQ96kbPOAQtNBiGhyeXRsRyNdVDMSFfKTrkzrRSjK7juQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=1TDUhrpP; arc=none smtp.client-ip=95.215.58.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="oWQ3CqID"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="1TDUhrpP"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1784303237;
+	t=1784303247;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=4znqxcEoptAr8NGbnT35Q5wP7rkffVWG09Wi11gOJIg=;
-	b=oWQ3CqIDp2qjK8qPOWh7zI4ZDYn4R6Z8p76JVlj+iq/TzFhuPL4dfaOy2Q2CNHwfXLFmfN
-	+vcHSsdS2Yg+qmK3MYbC+lUW1Ps6+kZp7Ip4M0h+VEMgMDF8vXY0SgMeRlcpzNjJ7KTL/z
-	nTNQRgpVB6Eis4YX0VbdfVH2SgsZ0Fc=
+	bh=ov0cmUt/8Vu7iqA++xVMTskzbhqoxeEOjCxnrQPJW84=;
+	b=1TDUhrpPYUkwZi2CB6Cf7b6UX2LSORlhGfDfK1ol3Fplxaqf5uXTw51oBH7yfpAx0ZFtJh
+	Xu90Qtl8HekVq9Nd7iffi2+o9/VoW2raoMIYBBXA6k3IqVttOK3bilwyOXSxJxhDAIVpF5
+	iYggHI5V+RuDyVEdXoAcysqps5ZcHB0=
 From: Toon Claes <toon@iotcl.com>
-Date: Fri, 17 Jul 2026 17:47:00 +0200
-Subject: [PATCH 2/4] revision: expose check for paths maybe changed in
- Bloom filter
+Date: Fri, 17 Jul 2026 17:47:01 +0200
+Subject: [PATCH 3/4] last-modified: check pathspec against Bloom filter
+ first
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,7 +39,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260717-toon-speed-up-last-modified-v1-2-410418f18614@iotcl.com>
+Message-Id: <20260717-toon-speed-up-last-modified-v1-3-410418f18614@iotcl.com>
 References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
 In-Reply-To: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
 To: git@vger.kernel.org
@@ -47,124 +47,50 @@ Cc: Gusted <gusted@codeberg.org>, Jeff King <peff@peff.net>,
  Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-check_maybe_different_in_bloom_filter() looks up a commit's changed-path
-Bloom filter and consults it to see whether the commit might have
-modified any of the paths in the pathspec that `revs` was set up with.
-In a follow-up commit we want to reuse this logic from another builtin.
+When git-last-modified(1) starts, it builds a list of all the paths
+matching the pathspec it needs to find the last modifying commit for.
+For example, every file and subdirectory listed by:
 
-That caller, however, has already looked up the commit's Bloom filter
-for its own purposes, so having the function look it up again would mean
-a redundant lookup.
+    $ git last-modified -t --max-depth=0 -- src/
 
-Extract the filter-consulting part into a new public function,
-revs_maybe_changed_in_bloom(). This function takes an already looked-up
-`struct bloom_filter` instead of a commit.
-The existing check_maybe_different_in_bloom_filter() becomes a thin
-wrapper that looks up the filter and delegates.
+As it resolves a commit for each path during the revision walk, it drops
+that path from the list.
 
-Expose the new function via revision.h so other builtins can reuse the
-exact same filtering that `git log <pathspec>` performs.
+To avoid diffing trees for every commit, Bloom filters are used when
+available. For each remaining path, the commit's Bloom filter is checked
+to see whether the commit changed that path. The Bloom filter says
+either "no" or "maybe", and only in the latter case is the diff
+calculated.
+
+git-log(1) does this differently. It does not expand the pathspec but
+checks the Bloom filter against the pathspec itself. This way, commits
+not touching any path matching the pathspec can be discarded as a whole.
+
+Apply this same check to git-last-modified(1). In a previous commit the
+function revs_maybe_changed_in_bloom(), used by git-log(1), was made
+public. Use this as a pre-filter in git-last-modified(1). After this
+pre-filter, paths are still checked one-by-one to only find those which
+don't have a "last commit" yet.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- revision.c | 31 +++++++++++++++++++++----------
- revision.h | 17 +++++++++++++++++
- 2 files changed, 38 insertions(+), 10 deletions(-)
+ builtin/last-modified.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/revision.c b/revision.c
-index f3c9407a66..040b30b5ee 100644
---- a/revision.c
-+++ b/revision.c
-@@ -748,26 +748,20 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 						 struct commit *commit)
- {
- 	struct bloom_filter *filter;
--	int result = 0;
--
--	if (!revs->bloom_keyvecs_nr)
--		return -1;
-+	int result;
+diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+index 5478182f2e..e8ee610404 100644
+--- a/builtin/last-modified.c
++++ b/builtin/last-modified.c
+@@ -272,6 +272,9 @@ static bool maybe_changed_path(struct last_modified *lm,
+ 	if (!filter)
+ 		return true;
  
- 	if (commit_graph_generation(commit) == GENERATION_NUMBER_INFINITY)
- 		return -1;
- 
- 	filter = get_bloom_filter(revs->repo, commit);
--
- 	if (!filter) {
- 		count_bloom_filter_not_present++;
- 		return -1;
- 	}
- 
--	for (size_t nr = 0; !result && nr < revs->bloom_keyvecs_nr; nr++) {
--		result = bloom_filter_contains_vec(filter,
--						   revs->bloom_keyvecs[nr],
--						   revs->bloom_filter_settings);
--	}
-+	result = revs_maybe_changed_in_bloom(revs, filter);
-+	if (result < 0)
-+		return result;
- 
- 	if (result)
- 		count_bloom_filter_maybe++;
-@@ -777,6 +771,23 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 	return result;
- }
- 
-+int revs_maybe_changed_in_bloom(struct rev_info *revs,
-+				struct bloom_filter *filter)
-+{
-+	int result = 0;
++	if (revs_maybe_changed_in_bloom(&lm->rev, filter) == 0)
++		return false;
 +
-+	if (!revs->bloom_keyvecs_nr)
-+		return -1;
-+
-+	for (size_t nr = 0; !result && nr < revs->bloom_keyvecs_nr; nr++) {
-+		result = bloom_filter_contains_vec(filter,
-+						   revs->bloom_keyvecs[nr],
-+						   revs->bloom_filter_settings);
-+	}
-+
-+	return result;
-+}
-+
- static int rev_compare_tree(struct rev_info *revs,
- 			    struct commit *parent, struct commit *commit, int nth_parent)
- {
-diff --git a/revision.h b/revision.h
-index 569b3fa1cb..7569c210cc 100644
---- a/revision.h
-+++ b/revision.h
-@@ -68,6 +68,7 @@ struct string_list;
- struct saved_parents;
- struct follow_pathspec_slab;
- struct bloom_keyvec;
-+struct bloom_filter;
- struct bloom_filter_settings;
- struct option;
- struct parse_opt_ctx_t;
-@@ -493,6 +494,22 @@ void reset_revision_walk(void);
-  */
- int prepare_revision_walk(struct rev_info *revs);
- 
-+/**
-+ * Take in a changed-path Bloom filter that belongs to a commit, and consult it
-+ * to see if it might have modified any of the paths in the `revs`.
-+ * The caller should look up `filter`, probably with get_bloom_filter().
-+ * prepare_revision_walk() needs to be called in advance to ensure
-+ * pathspec key vectors are set up.
-+ *
-+ * Returns -1 if no sensible answer could be given because of missing
-+ * preconditions (no pathspec key vectors).
-+ * Returns 0 if the commit definitely did not change any of the paths and 1 if
-+ * the commit maybe has changed one of them, although that might be a
-+ * false-positive.
-+ */
-+int revs_maybe_changed_in_bloom(struct rev_info *revs,
-+				struct bloom_filter *filter);
-+
- /* Drain the commits linked list into the priority queue. */
- void rev_info_commit_list_to_queue(struct rev_info *revs);
- /**
+ 	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
+ 		if (active && !bitmap_get(active, ent->diff_idx))
+ 			continue;
 
 -- 
 2.53.0.1323.g189a785ab5
