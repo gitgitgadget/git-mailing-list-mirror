@@ -1,78 +1,80 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015CC3BE15E
-	for <git@vger.kernel.org>; Fri, 17 Jul 2026 09:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FA23BE144
+	for <git@vger.kernel.org>; Fri, 17 Jul 2026 09:32:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784280741; cv=none; b=frop+mIpzIf1gpbNpYpCN99c3UNO5Bxhn+za2ChQ2DeFZ4T8mpItGEuKUD3Z77aV4/TwbE4wGeyd6yDXa3xHfkk69ezitk7EhtzrVhZluasXS08kTApocnMyhBF3KmSTr1PAl/epXE5JANy+Jg/V4/UnUg1HN2vDJKU6pBwNuzw=
+	t=1784280743; cv=none; b=kUZUMXjKZNn6zx5QlisR3pYfaa4flNFhDE/GIUHz38cE8Eu41HZglHnaZB06gaGJilq3UZ9ToRRi04H05XEEAGlYleiqMKIXe6prWSgw7Bizio6/2IHM/Il5Jm3Ko1KaQW1neiddOc8j1MLuhCYRTA7LOEN62vFZe411KeKyyWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784280741; c=relaxed/simple;
-	bh=3hYdb9YJ2PDcRLKUBiG1CW9JbtuUFfvDrNHNaYyZuTQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ZIH5ebe6SuZejK2By2znlQTyzQk+hTRqZnk+xKOkKOFJgC94WN51Z/ldX6ejhdC/bnU5BXMNQ+DSrRziwAqH5dbolJ04lVJ+fV8dhL8kx5Jgbuv9OqJC7l8d1G87eOJUHvWLI2WTJ4QhFQqxS8SKAEg5Wei6S0j+bgBxwaAo+ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RYGFNzNv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DnkvQ5v+; arc=none smtp.client-ip=202.12.124.152
+	s=arc-20240116; t=1784280743; c=relaxed/simple;
+	bh=OfdzP9Z6/rkLTOsJw/4Z6unFgzkzSeC/wVvcodfnRvg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=iO3A/2GjbmISApEInB05885pWKxz+6KCpJUPo9mrnQN0H1NIZL+0R6r/YtifDB2F3UEmMCLQjYQ1aZFj6gsXVtI6+gyBP+JURYEnT3y6zuBj/SODfKRfu7XeDMLf97XUt/gddcPGkAejAKLaML22b7G0VJqvdavK8hJjwKGhJAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ReA7bcyW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A4BJEhSJ; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RYGFNzNv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DnkvQ5v+"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 477D77A00B7;
-	Fri, 17 Jul 2026 05:32:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ReA7bcyW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A4BJEhSJ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6E6241D000D0;
+	Fri, 17 Jul 2026 05:32:20 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 17 Jul 2026 05:32:19 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 17 Jul 2026 05:32:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1784280739; x=1784367139; bh=dbnPcBaPSF
-	WV4prLxtk3QY4sidcJAhiTRncmSCaeeUM=; b=RYGFNzNvNn1IUcYTpy6yMso6Wj
-	AdjnNu3gce1QwtQQ/uHyFJpaQX7fJ+u0Agh2qy/Lqb56LSBse2B9aOXUGQhAn6yi
-	n9fGrkCiNGQP1vaN+CS2isDgTzmjq20OQFoNUF+0He76Xzv5fFH10ciNIVooL6hT
-	BYuIDahwqK11ZX6qviAWt8H7EI6R0kzOH3N43n8I7OhUO6aEbgHUy6qtW8dOzR4l
-	VW5DY7XdZh7xAI8n4GrailS3d2DZ7VQE+tnOKYzmJc+q8aKWyY1CDGdxmU6w3GQ1
-	4koeoA9pQ/NBgJ6L3SWljMwRdukhgJTJ5VGtIlfIKMXVv9IWVg24B05LkthA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1784280740;
+	 x=1784367140; bh=cWjm+0v+2yxH/AmHRV+Fv4XOjagL2oqO4MoZAFYAcfw=; b=
+	ReA7bcyWX/bxTCSEOpimpLJ7acFx7luJ5igcpkmTeCHjH58ugUH+Fq85xFhcGwY2
+	Ld0U+dntMm6whJ4ilW01lp7V7QGC6hIwkawxeZ1ImZkrd52r7lHdkH73jbe4S8L0
+	BSx03ViV0dpxVPupbwpVUSpRbHc2mLInFFHIZme7u3/52wYGxlyfsV5kO59KXVxt
+	FzTTPQcr4MUg8T8W5toUhP7PF+A3m30i3I5Hn4D1OVO7+6TDnj3nyR8n1fnKNhb+
+	I2iHvMWMZ+CL/QzHfZrP0H6ZXzRJV0nlziBBRC5/RxTlG4VQFzU9859WylQzuL71
+	PUPBNVoKVOZXyj/jNwsX8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1784280739; x=1784367139; bh=dbnPcBaPSFWV4prLxtk3QY4sidcJ
-	AhiTRncmSCaeeUM=; b=DnkvQ5v+A3od2BWpDobTwl/taDPQ0eZ5igiD930sZgkn
-	lxQAKODch5p0iRI9Dkg+llJw1SNiJVbNUb/ozqfDo1d7Al6qU1FnZCbhyDducjY4
-	INmE4dh7TMzVsuG3FiIUzjVe2PnP/OiRKMqppuVx4sZssGmuHw88kMdWl9lHCnDD
-	KtMbuxgzFwxVKGtUoBTv4+AbCdho0foSL2TOLCdRFUAyffKOgqGw0JxAikRzPmzI
-	/xN7NS5A7PY7vhLeV6x1zXJKsRpQO7gQWVA/IjJv6bhCpORcyljXEqB1r+axOL2x
-	T67P5WpygUge1l6xs2u5UZy8/QglT/WbwEfDGh2q6w==
-X-ME-Sender: <xms:ovZZah89T1fTDBW8792c3zBgre-tlsoiLZu2KZkikXkADIgplO7j4Q>
-    <xme:ovZZart_znCuEyyjVRreY1M03YZW0h6TOAkXNK0hu6Cjgch_H5SB7URV2ILzSZW5o
-    LeAsiQKV1fEaw-hwRZTfh9-nDOWE7CS3HAnICbVBL2d-TvLppA>
-X-ME-Received: <xmr:ovZZaspaW63ezZvbMJZh-f7YbdOqjlZBG25bXIrwVo9rAXkTZr-0sLGZbNoqJ55-VMOydj0EVGA0Fq5PcwdeOiljEz3xARjcbXzmBjIDznU>
-X-ME-Proxy-Cause: dmFkZTFqxvuVIrtFfD5O470Y7bnuGQ1S334X1OT3Tur2C1/LzaMcaE2Ee+sdViSInTwyz9
-    pZYYOtOJlN/DW04P4YZqY4WmlEfxUe5sNQkV/8wBgzlJ78SqKzZdlDqdz/7bEV0/VVDH/J
-    Bu0qi647OKoFF8IVozrPBP/GA9T+c25kMZwIMVk+exsBLqWNrkqkyWlv1K5ElcmNFWMVpk
-    APRJVqB3XbKnDfQMKgWqi0+luGyr53kuaC54c/c4hd2UdPPToAK5tz8GX8uD2XaS8ZMfX4
-    FC5FPhvk7L6uyZH6ysiT5Ll9m7AxeK9AIkLbeXz2gUbxCuBs34I1ZQicO01dncXcMIdJjs
-    aj3plYFHHhlMHcLgHL4MQslEVORCtZiP4j25xIqcm6NvDIaUQL0L1T50nnF5q0mxQR2HNx
-    kobNsfoB/n5Drltb2lCTb6Xv/WhaVGKvMIpE8o0zB+r65V7h/RjScqoT/FIHPXv70ngQkl
-    nYuSSNNzEdWB3Lem1HR0HfltQzSQvo4PNPl0lAFHVjDmJwzC1Nu3Wm+Nl3BHCy1CPR35mZ
-    /PL9PiT3xvDcLhHQ8Nh9ELDY6uHBqr+WixfLD1/QdUsbw0daRE8R+42x9jQbXaLctYBBvI
-    EivA/QO69HlNzEpxXBE4S9EndsxIkq8Yl0kkCzGbvLLuN7PMCtBrqJU9oREQ
-X-ME-Proxy: <xmx:ovZZagltiekk08Yo_168lPDEcRvhYBXWN1HoGbELbNuaSUkZ9mJlbA>
-    <xmx:ovZZaowAjCOPIqyznoPmYRGxlEfdmAE2DMz8VetnkVpclfTSAqxncQ>
-    <xmx:ovZZagnvwXHY2Wzizq_ji8R523ZXkdshSJFqc1VkN9JizpCpmxsIwQ>
-    <xmx:ovZZapePNbKjipJFCXrCKwF6W2Aq4cm-HpIax5I0blV0wtk6GKZ8Lg>
-    <xmx:o_ZZaguy1My07dpEjKma0Ykn6R0NmFzlH8Nzol7uNSwtubTTMBj-VG_7>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784280740; x=
+	1784367140; bh=cWjm+0v+2yxH/AmHRV+Fv4XOjagL2oqO4MoZAFYAcfw=; b=A
+	4BJEhSJj64bda2CG1tKU3ghF/81YA42gS2xEYHNCMW9XNfOI79yQTZ65eYsma8j1
+	iIhlrHSmAZx/z4QbKNDWwn+zU5QQRNmu/MtMr27SZJeSJ+N3S8JuluvatjIROS/B
+	aMTq3F5AaAmhV7RtVFJrLBUBDNWMdK/fhA1d6K06TQ7DNx4bC0yJxuFFY84pxJDZ
+	D89PE30mcp/3NTmfVx4niZX30IoB3+5ii229WWEQlYiFkCPVbhfDS+PkvJF92phW
+	e0ZN2kiF+LkDFZxfA4zilrsfkVfBRaxb9autkwGddMdUpe8AdkwI3B2EUnqrWVrZ
+	YJaJSYM04fm+DaiXUSUVw==
+X-ME-Sender: <xms:pPZZanaq9mskBJ5A9qdBQhchGpghXXM4tv3mTwph7myHZWCGFQ3mRQ>
+    <xme:pPZZasY3iOZXNt_M5JcJYbK2w_NGiCPzopk6YIuTQfwt16ziUKPWthhY_w2Y_MA2M
+    _IelvpeqpbU53pIv9EaigIzHlGPZW6p-0biKaDAs70F6keIl1z9>
+X-ME-Received: <xmr:pPZZanmZ7Nzmt9adiIPe1EZe431mkBYwKk81YZc5JPbmYJvWmpcKeGn_YnyT1jE-BGxFtl2rRE-qSu8q5ajfdp2CdPjjg7uA-jfxZRz2ldM>
+X-ME-Proxy-Cause: dmFkZTEPgWsCPQv+zxSWEft837Na6Ert1SlmN3P5ZmZ6YVgwDD0i8FWTKtTHRWTsiWlqAf
+    Ee3/fhnAtu7H1tpfszCQ9TpTtYDRq9/Ej+1toGtU2M4Btlsq1pdMD6WQ1yGfoiLr4szbCI
+    waU9J+ehUfgAu5Wanq56c7n6wqTMKgid98yVYjCsZ3lgk6w6eA2/c75Y8tf8tburLwkElo
+    WIveSLuviSET+E2Li1iK4PFXEMXOIYmHGdAPQjQZ/ZM4k+MBe94Ic0rS1bAkMoxhgnze0d
+    MvjikpHRu8nDYV0sOz9NDUBG04xBQks3AtbvI4iyZ3NLFDV9y0pp6sScxFsmkkVul8Tkjr
+    LiweA9kyQoVaScXfFxgHmNtLyulbSCHhISXi+0kpFaw6XoAnIGKRngbL1JfkKCbQK+W6yV
+    FssF5BaQSEaKhcbU1w42LILxHddu2OTDh1lksPtiGCUKPanIb/78p4StltlDfv27dOIVBX
+    Oie/Qlf9+fG1LPE/6BS8U18pO+rDUCKBQjiW30SHmft0Z68KHw+Zqfui8xckqhu4Ymj9W6
+    pHgZ7QcWdm1v1FVimzB1gmTYQpIm9ziPzbPvpPnjQKzCtwm4KwIzozc/nVS7aYAgOZnvGu
+    tdntSnB5BpWt0gioDEmaQ3jWiBGbglLpCUDYmKfOnlDjF0Tq8fkdfNmGBVSw
+X-ME-Proxy: <xmx:pPZZaoxXBjTw7Y_9s2HPmccZnx7D6XtG2Fx2mAwsUEY2wNcdxNxlIg>
+    <xmx:pPZZalOMMeCj5cZxcRja2c6aYGpTnYaD40ay8gRtwpGZ2ZTDkpzrHA>
+    <xmx:pPZZasQ8R-0vPm7XpQZ3E1wZPuOn7Pqite85deSrWM81eKBtpFWhnw>
+    <xmx:pPZZajaqMeCNBQiOMKrunzp59_wUreCwCzwLOD62hVkbj7myegntdw>
+    <xmx:pPZZatLcwA_xvD6UUvYVbCqnCCtEizn4cZ574gQHtiJL5RSfjoqIr8-_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jul 2026 05:32:18 -0400 (EDT)
+ 17 Jul 2026 05:32:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3150a412 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jul 2026 09:32:16 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 53d2678a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jul 2026 09:32:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/9] object-file: move writing of loose objects into
- "loose" source
-Date: Fri, 17 Jul 2026 11:32:08 +0200
-Message-Id: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
+Date: Fri, 17 Jul 2026 11:32:09 +0200
+Subject: [PATCH 1/9] odb: compute compat object ID in
+ `odb_write_object_ext()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,86 +83,222 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNyw6CMBCF4Vchs3aSFkSNr2Jc2HaK46VDOoAmh
- He34PJbnP/MoJSZFM7VDJkmVpZUYHcV+PstdYQciqE29cEcTYP9U1GCw7dMhC8RJRT3ID/gJ/P
- AqcOT89HG1jqzD1A6fabI3+3jcv1bx22yhmFZfoVMqgyFAAAA
-X-Change-ID: 20260703-pks-odb-move-loose-object-writing-8bcf1f51b04d
+Message-Id: <20260717-pks-odb-move-loose-object-writing-v1-1-46446a3cb5b7@pks.im>
+References: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
+In-Reply-To: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+Repositories can have a compatibility hash configured, which means that
+such a repository is expected to maintain a mapping between canonical
+and compatibility object hashes. Maintaining this mapping is the
+responsibility of the object database sources, where we either store
+them as part of the loose objects map or in packfile indices v3 (once we
+gain support for this feature).
 
-this patch series refactors "object-file.c" so that we can move the
-logic that writes loose objects into "odb/source-loose.c". This ensures
-that the logic to read and write loose objects is mostly self-contained
-within that source's implementation now.
+But besides storing these compatibility hashes, the sources are also
+responsible for generating the compatibility hash in the first place.
+This is somewhat unnecessary though, as the compatibility hash should be
+computed the same no matter which source is being used. The consequence
+is that we need to duplicate this functionality across the different
+backends, which does not make a lot of sense.
 
-To achieve that, this series first refactors `force_object_loose()` so
-that it can work on top of the generic `odb_source_write_object()`
-instead of having to call into `write_loose_object()`. This is the bulk
-of the patch series.
+Refactor the code so that we instead compute the compatibility hash in
+`odb_write_object_ext()` and then pass the computed value to the
+sources. No callers need adjustment as there are none that write objects
+via the source interfaces directly.
 
-This patch series is built on top of 44de1520f0 (Merge branch 'master'
-of https://github.com/j6t/git-gui, 2026-07-16) with the following two
-topics merged into it:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ odb.c                 | 26 ++++++++++++++++++++++++--
+ odb.h                 | 10 ++++++----
+ odb/source-files.c    |  2 +-
+ odb/source-inmemory.c |  2 +-
+ odb/source-loose.c    | 24 +++---------------------
+ odb/source-packed.c   |  2 +-
+ odb/source.h          |  4 ++--
+ 7 files changed, 38 insertions(+), 32 deletions(-)
 
-  - jt/receive-pack-use-odb-transaction at bdee7b3013
-    (builtin/receive-pack: stage incoming objects via ODB transactions,
-    2026-07-10).
-
-  - jk/git-hash-cleanups at 9e396aa553 (hash: check ctx->active flag in
-    all wrapper functions, 2026-07-07).
-
-Note that jt/receive-pack-use-odb-transaction requires an evil merge:
-
+diff --git a/odb.c b/odb.c
+index cf6e7938c0..1d6538163b 100644
+--- a/odb.c
++++ b/odb.c
+@@ -989,11 +989,33 @@ int odb_write_object_ext(struct object_database *odb,
+ 			 const void *buf, unsigned long len,
+ 			 enum object_type type,
+ 			 struct object_id *oid,
+-			 struct object_id *compat_oid,
++			 const struct object_id *compat_oid_in,
+ 			 enum odb_write_object_flags flags)
+ {
++	const struct git_hash_algo *compat = odb->repo->compat_hash_algo;
++	struct object_id compat_oid, *compat_oid_p = NULL;
++
++	if (compat) {
++		const struct git_hash_algo *algo = odb->repo->hash_algo;
++
++		if (compat_oid_in) {
++			oidcpy(&compat_oid, compat_oid_in);
++		} else if (type == OBJ_BLOB) {
++			hash_object_file(compat, buf, len, type, &compat_oid);
++		} else {
++			struct strbuf converted = STRBUF_INIT;
++			convert_object_file(odb->repo, &converted, algo, compat,
++					    buf, len, type, 0);
++			hash_object_file(compat, converted.buf, converted.len,
++					 type, &compat_oid);
++			strbuf_release(&converted);
++		}
++
++		compat_oid_p = &compat_oid;
++	}
++
+ 	return odb_source_write_object(odb->sources, buf, len, type,
+-				       oid, compat_oid, flags);
++				       oid, compat_oid_p, flags);
+ }
+ 
+ int odb_write_object_stream(struct object_database *odb,
+diff --git a/odb.h b/odb.h
+index 94754643d2..066560113e 100644
+--- a/odb.h
++++ b/odb.h
+@@ -585,9 +585,11 @@ enum odb_write_object_flags {
+ 
+ /*
+  * Write an object into the object database. The object is being written into
+- * the local alternate of the repository. If provided, the converted object ID
+- * as well as the compatibility object ID are written to the respective
+- * pointers.
++ * the local alternate of the repository. If provided, the object ID of the
++ * final object is written into `oid`.
++ *
++ * If the caller provides a `compat_oid`, then this compatibility object hash
++ * will be stored instead of computing the compatibility hash ad-hoc.
+  *
+  * Returns 0 on success, a negative error code otherwise.
+  */
+@@ -595,7 +597,7 @@ int odb_write_object_ext(struct object_database *odb,
+ 			 const void *buf, unsigned long len,
+ 			 enum object_type type,
+ 			 struct object_id *oid,
+-			 struct object_id *compat_oid,
++			 const struct object_id *compat_oid,
+ 			 enum odb_write_object_flags flags);
+ 
+ static inline int odb_write_object(struct object_database *odb,
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 4138758511..3d9f5eca32 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -163,7 +163,7 @@ static int odb_source_files_write_object(struct odb_source *source,
+ 					 const void *buf, size_t len,
+ 					 enum object_type type,
+ 					 struct object_id *oid,
+-					 struct object_id *compat_oid,
++					 const struct object_id *compat_oid,
+ 					 enum odb_write_object_flags flags)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+index e47bfd8fcc..e727aba427 100644
+--- a/odb/source-inmemory.c
++++ b/odb/source-inmemory.c
+@@ -231,7 +231,7 @@ static int odb_source_inmemory_write_object(struct odb_source *source,
+ 					    const void *buf, size_t len,
+ 					    enum object_type type,
+ 					    struct object_id *oid,
+-					    struct object_id *compat_oid UNUSED,
++					    const struct object_id *compat_oid UNUSED,
+ 					    enum odb_write_object_flags flags UNUSED)
+ {
+ 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index 3f7d04a56e..ca223109cd 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -585,32 +585,14 @@ static int odb_source_loose_freshen_object(struct odb_source *source,
+ static int odb_source_loose_write_object(struct odb_source *source,
+ 					 const void *buf, size_t len,
+ 					 enum object_type type, struct object_id *oid,
+-					 struct object_id *compat_oid_in,
++					 const struct object_id *compat_oid,
+ 					 enum odb_write_object_flags flags)
+ {
+ 	struct odb_source_loose *loose = odb_source_loose_downcast(source);
+ 	const struct git_hash_algo *algo = source->odb->repo->hash_algo;
+-	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
+-	struct object_id compat_oid;
+ 	char hdr[MAX_HEADER_LEN];
+ 	size_t hdrlen = sizeof(hdr);
+ 
+-	/* Generate compat_oid */
+-	if (compat) {
+-		if (compat_oid_in)
+-			oidcpy(&compat_oid, compat_oid_in);
+-		else if (type == OBJ_BLOB)
+-			hash_object_file(compat, buf, len, type, &compat_oid);
+-		else {
+-			struct strbuf converted = STRBUF_INIT;
+-			convert_object_file(source->odb->repo, &converted, algo, compat,
+-					    buf, len, type, 0);
+-			hash_object_file(compat, converted.buf, converted.len,
+-					 type, &compat_oid);
+-			strbuf_release(&converted);
+-		}
+-	}
+-
+ 	/* Normally if we have it in the pack then we do not bother writing
+ 	 * it out into .git/objects/??/?{38} file.
+ 	 */
+@@ -619,8 +601,8 @@ static int odb_source_loose_write_object(struct odb_source *source,
+ 		return 0;
+ 	if (write_loose_object(loose, oid, hdr, hdrlen, buf, len, 0, flags))
+ 		return -1;
+-	if (compat)
+-		return repo_add_loose_object_map(loose, oid, &compat_oid);
++	if (compat_oid)
++		return repo_add_loose_object_map(loose, oid, compat_oid);
+ 	return 0;
+ }
+ 
 diff --git a/odb/source-packed.c b/odb/source-packed.c
-index 06b31dd743..cbb06da038 100644
+index 8d9ce197cc..af0d533375 100644
 --- a/odb/source-packed.c
 +++ b/odb/source-packed.c
-@@ -545,7 +545,8 @@ static int odb_source_packed_write_object_stream(struct odb_source *source UNUSE
- }
-
- static int odb_source_packed_begin_transaction(struct odb_source *source UNUSED,
--                                              struct odb_transaction **out UNUSED)
-+                                              struct odb_transaction **out UNUSED,
-+                                              enum odb_transaction_flags flags UNUSED)
+@@ -530,7 +530,7 @@ static int odb_source_packed_write_object(struct odb_source *source UNUSED,
+ 					  size_t len UNUSED,
+ 					  enum object_type type UNUSED,
+ 					  struct object_id *oid UNUSED,
+-					  struct object_id *compat_oid UNUSED,
++					  const struct object_id *compat_oid UNUSED,
+ 					  unsigned flags UNUSED)
  {
-        return error("packed backend cannot begin transactions");
- }
+ 	return error("packed backend cannot write objects");
+diff --git a/odb/source.h b/odb/source.h
+index cd63dba91f..b3c1ca3a66 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -207,7 +207,7 @@ struct odb_source {
+ 			    const void *buf, size_t len,
+ 			    enum object_type type,
+ 			    struct object_id *oid,
+-			    struct object_id *compat_oid,
++			    const struct object_id *compat_oid,
+ 			    enum odb_write_object_flags flags);
+ 
+ 	/*
+@@ -417,7 +417,7 @@ static inline int odb_source_write_object(struct odb_source *source,
+ 					  const void *buf, unsigned long len,
+ 					  enum object_type type,
+ 					  struct object_id *oid,
+-					  struct object_id *compat_oid,
++					  const struct object_id *compat_oid,
+ 					  enum odb_write_object_flags flags)
+ {
+ 	return source->write_object(source, buf, len, type, oid,
 
-Thanks!
-
-Patrick
-
----
-Patrick Steinhardt (9):
-      odb: compute compat object ID in `odb_write_object_ext()`
-      t/u-odb-inmemory: implement wrapper for writing objects
-      odb: compute object hash in `odb_write_object_ext()`
-      odb: lift object existence check out of the "loose" backend
-      odb: support setting mtime when writing objects
-      object-file: fix memory leak in `force_object_loose()`
-      object-file: force objects loose via generic interface
-      object-file: move `force_object_loose()`
-      object-file: move logic to write loose objects
-
- builtin/pack-objects.c        |  48 ++++-
- object-file.c                 | 449 +++---------------------------------------
- object-file.h                 |  32 +--
- odb.c                         |  39 +++-
- odb.h                         |  10 +-
- odb/source-files.c            |  14 +-
- odb/source-inmemory.c         |  14 +-
- odb/source-loose.c            | 402 +++++++++++++++++++++++++++++++++----
- odb/source-packed.c           |  17 +-
- odb/source.h                  |  20 +-
- read-cache.c                  |   2 +-
- t/unit-tests/u-odb-inmemory.c |  53 +++--
- 12 files changed, 551 insertions(+), 549 deletions(-)
-
-
----
-base-commit: 8061f1ea286318fbf976f58df3985bd60237b8a7
-change-id: 20260703-pks-odb-move-loose-object-writing-8bcf1f51b04d
+-- 
+2.55.0.407.g700c83d4f3.dirty
 
