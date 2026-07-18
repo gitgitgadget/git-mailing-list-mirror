@@ -1,65 +1,65 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBBA34CFAB
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212E736682A
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784411420; cv=none; b=sIFAA45P4U1mTJp0jSlBFg+sDjhWjz+S/DIcnuhrp8+oyOg/4O19IARCEhSXWkiBJe8MtFHzeSJLw4WktIDpaXO839eEN5nW2Py885SKlZnmw9L/9flIVQxSAyJertWWyCCoP7zRdK7gnzZIVr1idN+VyTwKdLo0FgGLg2pNPKc=
+	t=1784411422; cv=none; b=frZZrRUIxMvIxfdbPS988DrEYuJQRctu2Ucac/N+69m1+wbLWV99lbDDKk5YOSJmvlFLGcv6arMu1rubFuUeeh4KCL8pgMzr8zKEzfCp77XKrmTJfymsJ/tzxGeWqzCSrGEm6PUzph+iBE/+Bs2kbeJjkWEG3rIoHp3ZD+ge8+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784411420; c=relaxed/simple;
-	bh=oXtxDnl426mCBMPlUhOyy8NVZLhLhwJa64vE4bdrdoQ=;
+	s=arc-20240116; t=1784411422; c=relaxed/simple;
+	bh=GnUJXHZE790eQnLxUVyhpOxXpxrPVS0DpL9MT6Xb1Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e48tHVhc/qnwr3qwK6kOKPmn96aDzzJLqLLQgR8a/1YNR/At45Mjseb2XGGu0/FIMpQ/L8K/gf9MjNACAJKVCSeAzkmKCQ4qvtjnE5xuBs64vQPNkoSPGxBSrEq1I+r7w5kAGPzjhcAtSF0zk7S/RGjAyf4KmpD+WlCs9uWsbEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IbGGP4vQ; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version:Content-Type; b=fY1yoT5jTqOJPXfM9O6Rud6fqDY2G9CjQBGqRA707MqcrMQNBcqNr6T4+VUoDPR9w4W8l7ikxzB3zLO8IDHutYZvVxSq5rnYnded7zcZJConMFsUPZasIdwZYJEt72oEQ76p72yPbVan0CHfQbhfKfaRW4eA/tICVEhtVOm6514=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dj6PLWP6; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IbGGP4vQ"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4953ddae026so28331885e9.3
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dj6PLWP6"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4954a32cf1eso6787705e9.3
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784411417; x=1785016217; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784411419; x=1785016219; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=cPpkno0dnDFbDUeSKUTmunU0vTYn4E6RJVsYyov0Ils=;
-        b=IbGGP4vQtQfUSsDfo9w8D6oVifdSltTrC7pNqhxfFdGTRhb1S3oRYeuiU04J5Y2o71
-         MuCoLvs44gZdCGXES8Y75U1ZK1glMgKUwyRyhLGSj8T3A+v4tiHx/6ZawJYtoabm08T3
-         Z0GoEd/8S5CF1FNOi36MWIrI7qO19qSnIie386G3v26hp5iQbw3fjKrNwDewLY2UmCWd
-         BXuPBF3hBwlfOsQKUJoI9GbivPcw5xdVrQQU/i+jWs6f7IUGwwHFeVjHMkBMtZCo8K9h
-         9yJNYnnGVphkdLtR4kNJdSUpv6J/cg1JGP97XmN0Ba8kV7NqzofXfJHu46WBn7J/1L8j
-         Mbdg==
+        bh=6wXA3r8XOJMXVM4IQaZkcMiiWJEnDFhSXXWQcDmyLH0=;
+        b=dj6PLWP6rvhkjbtQ1VBFx27r1mguTTew8YJDq0X+Fr+DvJkmhzTx+iDac3PwLM49Nb
+         OY3v34QB1AJfetfSwPzIhNHdIy5bFe5Ao0/yfBdo+XFSIrfImdalmbC1esdCIJLhH+u6
+         ZBZ7ZbTU+nrrwAXh5Tq19PElcMCJtBXv8YAG5iEQxyjKcKz+DvahkQbLHQjS+biQyKWO
+         rqfOxPoeXDjaT+fhvfeSAuw3D0Dy/jHyzYoxJe2HzxDnBEEUa+6VxX51c5OdvdpLIsbr
+         IeqL7uP/6AJPAtwm37Nn2NiZ4uutykHfzDtbT6+iYAzNNtsGVyQAsmd/LVcTJvsiAUVJ
+         WICw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784411417; x=1785016217;
+        d=1e100.net; s=20251104; t=1784411419; x=1785016219;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cPpkno0dnDFbDUeSKUTmunU0vTYn4E6RJVsYyov0Ils=;
-        b=K3hnAFn3BlBb/cHDP/1RzTk4a6Nr+VW77oPr8cFDtukmYOoinKO0LeFmFRppE3lf2t
-         4NS5WmD77G+bpN7ytpCBEhhOW5eV5Vjzp7gquvdJfxzxvgEMimdfKqyTHkvKRaXUyLtd
-         jIPCYYjBFuUExojY584Z4AUqQPTI65T8ffxKryVV14zcoT/8ZVDmRtf8QC7Msc58Q0fd
-         2gePAwjEInbIkmNt5sT0YGKnJTw3tYGfP8c0T6nQX6+xGZTskE4J2tTXO5m/c+ACVJ1J
-         bdjQ6hYtKzTsmohnf31F0LdBDnE0IvSGdnMbDEg+Exe+4AOZcDYes9dXdFDM3xBUKGI4
-         /Whw==
-X-Gm-Message-State: AOJu0YyeI9oWeyc6ta931v+tdqR+K+qIX1Ad85ffmYVw2CrwBev3yvyr
-	TZo/Qhf+6S7hauq0uFm6QzjwkzIDq4EPQpCRBXjScWIHjXfQVmkOAk7r6+UbZ2JP
-X-Gm-Gg: AfdE7cmoWk+/7PIFDMQ6yfo3isiwEW7nT/+0nMaH6G0HIZM9tSPkDWACrZddrF7gqSI
-	xR1GjLQ7TefDRR1ZLeBcPgSgIp1nA0JD2IxQPM5B2866AObhe0vnlbZzxRT+r8PPkMqYKzXip25
-	DRKVmhN2XGvwNinqFNA/lYrW33aQzLiMase1BExYy0ukT6aSPhcvBiLXbIqANmV4MoLLUfbcEqX
-	OYJCktAG7XIrOGiYzJvS+YEBO1dwiXyuhix3tmngpsHvYzgH5uM+xeWMIMJaZgrwENgzsIH4I1R
-	309NgAR6O2nDSFRCUBCwBUF4NEHpBYN4iisDwBGcop9LxeViPFamWLaQcqDf42bPmSNHQTLclgQ
-	pfW4TdeWf3VBntUW44buEp+Ymqh+c+9CDtNrDIyrMS69QkYPoZXbZFRKqH2fEHRoyzi4H6dzbb5
-	7sb9pCK63tVihPEjKuNXffvwLY8KQ8ParcUxUGlZ7JSj6ismpSTviYt/LzLPNTUF/9izLW1Ds5P
-	MB0TkMBbiazBSRIOcPZ40n4t5n+rS95/kSws9Pf2GXXCHwOY5Ct3nNceqCkrZQ6rzzzlvGwvLQN
-	P+A42U6B2sd6wuMewfhuORtnOTzkLH/X
-X-Received: by 2002:a05:600c:1d18:b0:495:3e08:ad19 with SMTP id 5b1f17b1804b1-4954aa1a264mr86001675e9.9.1784411416771;
-        Sat, 18 Jul 2026 14:50:16 -0700 (PDT)
+        bh=6wXA3r8XOJMXVM4IQaZkcMiiWJEnDFhSXXWQcDmyLH0=;
+        b=Y/OeZVLE+fzG0bHREWdK/LprYUMEZMJj08pLJeDhYcOhLOLnbWyMPVQH0qhrdNPf34
+         bljmsSmVFB3tweBZYEO3RFcN/mwiPVqxT2IErBh7QUUIlxyacxxnSbJ87ubswq5qtIkW
+         Hq9QDN69aBECQbd6AAce0IO7SNkOWyKnY4YQc7a1jxE7nqPBe7kHn0Xk95FAxLQ+etvn
+         cN+no5qotV3VjJmnsalFwm5bZZlZC3KIbXIKcOy/+I3B6lyqi79SR6C0eBhPK5lceh53
+         +4AxgLqwvgJ4cnPxzP8Dx2sG5Y6cbR/y3u+jz9Gf/PZARysZoDBONkRkEvneL0Jovddh
+         Ujwg==
+X-Gm-Message-State: AOJu0Yz3CcafDxkRWgv0rBQpBfQ7Us+If2Hy1btadKEFMuSAgfLGyy2q
+	HSs/gbe9/CJXvriiGq9HjERIFKsVrRYDlTzJ55xUCkiLJ0ej55cWH0PtBLg4JESC
+X-Gm-Gg: AfdE7cl8Ue9W4G3WHsWbra3pMpgjctaF5pO8FMDayfBtpm+hs6fPyeuYaTvpiUoj1A3
+	xfzo20XLR8Zy+vS706qmDUy+fcJjjsxCoUQdy2pmUqfgz4dSNjw06ZE6+MVLqIMy9Z7Jxh5QDYQ
+	UKMHIREl0SBJf16jVGuP1kymGQD2Pj6gP9Fd8PETEqZrQ90/ar9qytDPxiBv+pkb21KSMolVNhu
+	Ah+gV9WwANfCKaOn0nUhJdgjPHfw/ukOkYeNFjtFydQZayYFi7w+t6Y/ePOd6gxyq8Np6Sxhcui
+	cIt/UP8a3655vAF9unyjM54i0l6npkZQJubNCdRWw9ce4dcjJ+jYKWCbEhLhL21V+PuOGVLCD4p
+	vZJOnMdjYYng98LP6GqCvAuJOvFV13WDxnsG4adK1wCpGMwPVinZHBFK/aR4auvEoBMHm6JckT6
+	rbv9MS8PB5iIdJakw4VQq95LfbJIsSEjyIznNORG1RDEBvNTN8q/Z7fxJKAuhy1gTkEObJISTeF
+	qTCPODBmcbAxHmZEQVY9eEUlwbIm4nxTs9Ffacu8z3VP4IRExSMQlqT1FUeqAMXvvqEQILHjrqM
+	2QDpe2yuLYX+3CNPLLkxUUfX2d1m5Pas
+X-Received: by 2002:a05:600c:45d3:b0:495:503f:cf9a with SMTP id 5b1f17b1804b1-495503fd2a0mr41241675e9.9.1784411419263;
+        Sat, 18 Jul 2026 14:50:19 -0700 (PDT)
 Received: from localhost.localdomain ([47.58.6.31])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.17
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 18 Jul 2026 14:50:16 -0700 (PDT)
+        Sat, 18 Jul 2026 14:50:18 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -72,9 +72,9 @@ Cc: pabloosabaterr@gmail.com,
 	peff@peff.net,
 	toon@iotcl.com,
 	szeder.dev@gmail.com
-Subject: [PATCH GSoC v20 07/13] connect: make write_fetch_command_and_capabilities() more generic
-Date: Sat, 18 Jul 2026 23:49:56 +0200
-Message-ID: <20260718-ps-eric-work-rebase-v20-7-0c13962ac532@gmail.com>
+Subject: [PATCH GSoC v20 08/13] fetch-pack: move fetch initialization
+Date: Sat, 18 Jul 2026 23:49:57 +0200
+Message-ID: <20260718-ps-eric-work-rebase-v20-8-0c13962ac532@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
 References: <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com>
@@ -88,17 +88,21 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Refactor write_fetch_command_and_capabilities(), enabling it to serve
-both fetch and additional commands.
+From: Calvin Wan <calvinwan@google.com>
 
-In this context, "command" refers to the "operations" supported by
-Git's wire protocol Documentation/gitprotocol-v2.adoc, such as a Git
-subcommand (e.g., git-fetch(1)) or a server-side operation like
-"object-info" as implemented in commit a2ba162cda
-(object-info: support for retrieving object info, 2021-04-20).
+There are some variables initialized at the start of the
+do_fetch_pack_v2() state machine. Currently, they are initialized in
+FETCH_CHECK_LOCAL, which is the initial state set at the beginning
+of the function.
 
-Refactor the function signature to accept a command instead of the
-hardcoded "fetch".
+However, a subsequent patch will allow for another initial state,
+while still requiring these initialized variables.
+Move the initialization to be before the state machine,
+so that they are set regardless of the initial state.
+
+Note that there is no change in behavior, because we're moving code
+from the beginning of the first state to just before the execution of
+the state machine.
 
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
@@ -106,76 +110,38 @@ Signed-off-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- connect.c    | 8 ++++----
- connect.h    | 8 ++++++--
- fetch-pack.c | 4 ++--
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ fetch-pack.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index c09947cc56..127ed4a2e6 100644
---- a/connect.c
-+++ b/connect.c
-@@ -700,16 +700,16 @@ int server_supports(const char *feature)
- 	return !!server_feature_value(feature, NULL);
- }
- 
--void write_fetch_command_and_capabilities(struct strbuf *req_buf,
--					  const struct string_list *server_options)
-+void write_command_and_capabilities(struct strbuf *req_buf, const char *command,
-+				    const struct string_list *server_options)
- {
- 	const char *hash_name;
- 	int advertise_sid = 0;
- 
- 	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
- 
--	ensure_server_supports_v2("fetch");
--	packet_buf_write(req_buf, "command=fetch");
-+	ensure_server_supports_v2(command);
-+	packet_buf_write(req_buf, "command=%s", command);
- 	if (server_supports_v2("agent"))
- 		packet_buf_write(req_buf, "agent=%s", git_user_agent_sanitized());
- 	if (advertise_sid && server_supports_v2("session-id"))
-diff --git a/connect.h b/connect.h
-index c4f6ea4b0a..957e5fe2b9 100644
---- a/connect.h
-+++ b/connect.h
-@@ -35,7 +35,11 @@ void check_stateless_delimiter(int stateless_rpc,
- 			       const char *error);
- 
- struct string_list;
--void write_fetch_command_and_capabilities(struct strbuf *req_buf,
--					  const struct string_list *server_options);
-+/*
-+ * Write a protocol v2 command request, along with the capability
-+ * advertisements, into req_buf.
-+ */
-+void write_command_and_capabilities(struct strbuf *req_buf, const char *command,
-+				    const struct string_list *server_options);
- 
- #endif
 diff --git a/fetch-pack.c b/fetch-pack.c
-index f7789e8456..3695059cd5 100644
+index 3695059cd5..922a9b2581 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -1386,7 +1386,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 	int done_sent = 0;
- 	struct strbuf req_buf = STRBUF_INIT;
+@@ -1735,18 +1735,18 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		reader.me = "fetch-pack";
+ 	}
  
--	write_fetch_command_and_capabilities(&req_buf, args->server_options);
-+	write_command_and_capabilities(&req_buf, "fetch", args->server_options);
++	/* v2 supports these by default */
++	allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
++	use_sideband = 2;
++	if (args->depth > 0 || args->deepen_since || args->deepen_not)
++		args->deepen = 1;
++
+ 	while (state != FETCH_DONE) {
+ 		switch (state) {
+ 		case FETCH_CHECK_LOCAL:
+ 			sort_ref_list(&ref, ref_compare_name);
+ 			QSORT(sought, nr_sought, cmp_ref_by_name);
  
- 	if (args->use_thin_pack)
- 		packet_buf_write(&req_buf, "thin-pack");
-@@ -2253,7 +2253,7 @@ void negotiate_using_fetch(const struct oid_array *negotiation_restrict_tips,
- 					   the_repository, "%d",
- 					   negotiation_round);
- 		strbuf_reset(&req_buf);
--		write_fetch_command_and_capabilities(&req_buf, server_options);
-+		write_command_and_capabilities(&req_buf, "fetch", server_options);
- 
- 		packet_buf_write(&req_buf, "wait-for-done");
- 
+-			/* v2 supports these by default */
+-			allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
+-			use_sideband = 2;
+-			if (args->depth > 0 || args->deepen_since || args->deepen_not)
+-				args->deepen = 1;
+-
+ 			/* Filter 'ref' by 'sought' and those that aren't local */
+ 			mark_complete_and_common_ref(negotiator, args, &ref);
+ 			filter_refs(args, &ref, sought, nr_sought);
 
 -- 
 2.54.0
