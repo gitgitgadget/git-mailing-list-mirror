@@ -1,65 +1,65 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0300C346A13
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D74F378825
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784411413; cv=none; b=XTtrEo5ImE3/KVYUgjTYOpISCuoFdTzHvPOEwqoRgzohVXDbaQg3h6VaR5Pw5EkdHUg5y+6mB/uF2ddHTzTlPXPbZ1P85YNGW9H/izma+celB3cLOhb+WII5HO5JiGKyEjg2lb2eAgG/DNc8wlGwpXk1ivT+F0uLnNPNc4tI428=
+	t=1784411415; cv=none; b=KHFAOotvEZK0Z89WcVWE2rV+m/O30pCRp65P/2FWbAiV32Kfs8Bc/EMOLtJtUo3LwKwqC57h4eBArDJZxEPQtjYNAxXGsWUMulDoSfXVkL6BbAVm160SHuGIFLr6lp+Aze08ja8lNZ+mIBnwrPe29sFd8aQeTPWOi/6jyDdJpPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784411413; c=relaxed/simple;
-	bh=28lTF/ifyxrgdadUS9u2NqYqbwnbxbAIOg6GhAfrNQM=;
+	s=arc-20240116; t=1784411415; c=relaxed/simple;
+	bh=Xpz/gWkgxXqWwmr0E7ukCF9AUfrougib6MMg7TPM7A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ujmj/LYKrScPkscH882fzHdLszVOpqTMUSwc78pHPWVGQlby7A57GJSJH6JDH8HIt7ZEBanTiRhIate79HsPvlAFI+YmVCTbsgjlA4C9nERYrworlyubE5+7v+zZhLbr8Qr+pZnViVRC1h/r9TKH9EMbrBPRVV5jFhJLHkJWdg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LvWzySFe; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version:Content-Type; b=Xz2SIpS1k/BjAdgYJmo+s4HuHIGIfGqK7xogrD9yJoXlA+8UO2Ugoz/ZjM0rv43jNeETsQaA3JUvqHArZ2ruOwbCt7/hitcfe2lMcuwJ41SPiehZDsxs15apWqS35ekP4PLH448c8XhNvEfH2/kGJaun/oSpkrvasGwKUUprEVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fdd55wSz; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LvWzySFe"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-495590ba856so524135e9.2
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fdd55wSz"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4954df200ddso6974615e9.0
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784411410; x=1785016210; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784411412; x=1785016212; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=aguJPFOuBRD1FGqAqH+g2i2aIRYIXaBJfAkzQOYH1Ns=;
-        b=LvWzySFei7EqKkSb+i+D8E/ULLuy9rsQb3RPVJdP24WL95IxDH2YJUg58iKbVEVgz3
-         bTO3QBwvVdkNcNBrI2GB2A3Jy3DKt1zuTX7OAIoHIqsdLyThQYF/3xQN3JirB01g4KrR
-         s4uZ7ArYJBXMRWGRmPe968SAJ1b64NUVm8dcZIPfxVxNQSGM+rDl5ayxsCiNhtOCjhF8
-         hasdZWEOq1N5XmhIH2mC18yC3Gy9peehx+x/xbzTfINg5nK2hTV4nhOTKAs1BykphOZw
-         6TIp2vm2co/jCkopCkp/mXN5ifnWqj7ASe/xN4qEEWQARAQ7MtEQ1lowamB9JLOKc+cX
-         IvXQ==
+        bh=QOkJx3ugz5N9zJ8XaZJ2Od8TyKPVP0/tsmC+V5aQhWg=;
+        b=Fdd55wSzgyYKJuz81ZCBWH2KWzZTBfgAK0orFvyZIKILa8TXAxps3dm9r33aKzGOdd
+         lrslVVEI1XBAZ0MKptj9twXYEy/jStdoiEPeODwl+/CvlvVX3nfWFJeGESbUvl2Ru/R6
+         U9sIDP2GMLc5N1ZPyq7se0sRxz8/QOimsis+JVC4g7rK6lehcQ/5h+ocaWeQeoSGqc3c
+         Mlt7ta7evLzle/KS598IOr1M+59DLRWzd4iGBqkSs3FySPbSybye02dOyc1U8EzBFjjq
+         7kiVo9YM54QZJf/CJF1lbyr7s9AaJm/IR8mAfu5JlOmyAoN169MHDu46e0pcncdXxaBR
+         ckeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784411410; x=1785016210;
+        d=1e100.net; s=20251104; t=1784411412; x=1785016212;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=aguJPFOuBRD1FGqAqH+g2i2aIRYIXaBJfAkzQOYH1Ns=;
-        b=GGyAhEjOf/HH+JSK03+X0A4Bf3y26BrPBJsAP2uzuWkMkXgru4U9bESgzF++f2lnlK
-         HbvnOWmhHAuxHBu88qnGR1jmeS+dksCJzAB/V6QXlvhKq1FX9mbkZv4F6BFklZ2L+Fik
-         TyzukqJ0KDTLTxUNb5flxCqtsbyKLApfnQPsBZADJPD10G8nazTG0ZgaegIcjof/EB8B
-         izsFpA6uj8d7i4I7dqnLMaQ1tN5QAjyrMkYqy2vWGeC/8hGAD/aT18+YxXNzqM2XhlbS
-         rO/KG/73ERN4Zf+xz+B1T+liMQhlVMVO0dB3FMlPu+AmmAekGzq+W4MUJMjwxozGaBns
-         f52g==
-X-Gm-Message-State: AOJu0YwXx3Gohv0ssfKFl6dELEMW3e6qZEyuRazRa0m+lOibHgW5eKDO
-	MO6h8adJr0m7WbUJmZXaH9a98qppI67BsryERLuJRpn4PMEjy00R7ixgcQRimHeW
-X-Gm-Gg: AfdE7ckgN+T0XRwgORYlNlhuGCBbpkpKa/7dUoOwKfgpcZCCVscyyHOCzmeBa3q9JjO
-	LBeLuOO3c2d28qtj5Zd9oNHWXV2Fxero+P/V1csEjZbUYOCyWPFB8WoIuRdCFcLe7hiX85psVjc
-	frXAYbkIGWcR/e1Ck0ILdiPPLzR7ok4r6LLPXi17LA6Lnt26mWO/JEeErufQasLT+aawf/thIES
-	kEZBbkBcqytUzoSqbC4IkGFjqt9j7mBecL71V2Z5HzUDr9VRLqbfNwxoNWSfH2vZtCxT+ECn9VA
-	sXEJhBSiGYrcpGxa0rUj+4GwLxnBBKCI+WdkJBdGEFZ8HuGGrfjlv0ru6kTaNQnEi8LyjG/SDbE
-	CInRwU3iCl7luTMmP0LQKj8cNhrmPrnVCNCdJkcg+o+aOtrz0ThbPi5VfrLwScSiafputJgI6v/
-	mFSzANNa6HkwDrNCINUwbeWJcUlCBuUaLJL8Cct3AgPcrmYsWVxD7AmYALJ/+lT7wcpZYpjI3iG
-	sVZm0+qHZ15JruFni8zn7CeVys8MFV7IX2ZLd5LuHEry08XovYGVLETPKN3GWi2xUx6HQO7wCVA
-	XzcCYP7FAix0xXp9iKKZDH4xMn54Oyxx
-X-Received: by 2002:a05:600c:5247:b0:495:573e:1c54 with SMTP id 5b1f17b1804b1-495573e1da1mr14522935e9.9.1784411410200;
-        Sat, 18 Jul 2026 14:50:10 -0700 (PDT)
+        bh=QOkJx3ugz5N9zJ8XaZJ2Od8TyKPVP0/tsmC+V5aQhWg=;
+        b=KoHTux7Pra/7vpejsF7Pdh6j55Idn7fsRzAn2Ko/KmQglz00JQKB+7jK1en1thYK4u
+         BYzXwcYMj4aCVVqs2AQnm56Bg154XpobC3+CPdU/ZCp8BpXqggp2CXjfe27gRdygOk+U
+         mahGnAWYVX2FyJbHooD2RfA6xHdMVIILQpYCthyaD1BKCBwPloQ4qUdKHh9+MsbuPKV6
+         xbjqmDhrgopKzyuqeIkm98h6dAFmzazpuS70JQsJQmnlwaZ4i0A+AOw1A6rvxNszxpeR
+         h5Ds/wpT45/erlKK5ELBDlsHhSpJHtzG7q3Ij+1EIXLCJWnykDTddWg/ClEuS9pKpa3i
+         EUxQ==
+X-Gm-Message-State: AOJu0YwelqA7AmfxQQBZNpk3psljxBzNezJHOJ264mZoNPprm981KgnI
+	evYtvvsabAsOuYQKL0XBAW0UvmRxHjQvpjvrOCLKFKO5RDqK9gGwuZF50/h3qmqV
+X-Gm-Gg: AfdE7cm3H/9xgMF+bUSOBhRV3JJ9NxQpt5XRlSFb8Pb5r3mXS7tFSbpWoRmblahlhrV
+	dRMBvG4vpVwUTsiid9SAnV40w2HmS74waKizncE/WgAzTY+Uyo8gy99Y3igwu661iXCRRFvO00u
+	vHCB6IyrJ0TAJO29rdxIXHTbkEINITV932SyxWtzPzlaQhkMvj8k4S3P0OsHJe1sawcvF+tqPue
+	Jr36fxp2FuayXhnEE7KQUtiqq2saZkaxYo+0f6LPmO1YTMGyq/uSn3TlEXxqTWUFa5n4NaQdmpi
+	n93UFXCG+FXQSVLKsm94S5m4gP4hjbWnj/K4dFAmKqRzwiyA2BCP2TPyHYqOjeTBTljzCbamoq4
+	+h2Vz2aFliemNTR0jBqqGAbcaZtwDa8Kd7AoTx3nGVc/fF9emt/rHesbgVbmtwX7+Uc3aGWQhFJ
+	4Ua5ZjpizstT94E1rOxrxIeXxn8vzrV25Nkw8trK+TXQAVR79be/Sst/pnHQdMvQWUqBYUNQric
+	HjO82lRpAdB8akRnToCKxAq5dpjVrSeA2uoUSbsLYyUJbUXblHkIKE8I0mD4wbBZs38I11S7Vlm
+	XrEie6eBfaX5CtDMF7c7JylfQvFaHyRc
+X-Received: by 2002:a05:600c:b96:b0:493:f6f0:d66b with SMTP id 5b1f17b1804b1-4954a3ec771mr87828665e9.1.1784411411939;
+        Sat, 18 Jul 2026 14:50:11 -0700 (PDT)
 Received: from localhost.localdomain ([47.58.6.31])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.09
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.10
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 18 Jul 2026 14:50:09 -0700 (PDT)
+        Sat, 18 Jul 2026 14:50:11 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -72,9 +72,9 @@ Cc: pabloosabaterr@gmail.com,
 	peff@peff.net,
 	toon@iotcl.com,
 	szeder.dev@gmail.com
-Subject: [PATCH GSoC v20 03/13] t1006: extract helper functions into new 'lib-cat-file.sh'
-Date: Sat, 18 Jul 2026 23:49:52 +0200
-Message-ID: <20260718-ps-eric-work-rebase-v20-3-0c13962ac532@gmail.com>
+Subject: [PATCH GSoC v20 04/13] fetch-pack: drop the static advertise_sid variable
+Date: Sat, 18 Jul 2026 23:49:53 +0200
+Message-ID: <20260718-ps-eric-work-rebase-v20-4-0c13962ac532@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
 References: <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com>
@@ -88,86 +88,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-From: Eric Ju <eric.peijian@gmail.com>
+write_fetch_command_and_capabilities() is moved to 'connect.c' in a
+subsequent commit. To prepare for that, drop the static variable usage
+of advertise_sid.
 
-Extract utility functions from the cat-file's test script
-'t1006-cat-file.sh' into a new 'lib-cat-file.sh' dedicated library file.
+Currently advertise_sid is set in fetch_pack_config() by reading
+"transfer.advertisesid". It is used in three places:
 
-A subsequent commit will need these functions. This improves the code
-reuse and readability, enabling future cat-file tests to share these
-helpers without duplicating code.
+1. In do_fetch_pack(), to clear it when the server lacks support:
 
-While at it update the style of this line to follow coding
-guidelines:
+        if (!server_supports("session-id"))
+               advertise_sid = 0;
 
-. "$TEST_DIRECTORY/lib-loose.sh"
+2. In find_common(), to advertise the session id over protocol v0/v1:
 
-to
+        if (advertise_sid)
+                strbuf_addf(&c, " session-id=%s", trace2_session_id());
 
-. "$TEST_DIRECTORY"/lib-loose.sh
+3. In write_fetch_command_and_capabilities(), to advertise it over
+   protocol v2:
 
+        if (advertise_sid && server_supports_v2("session-id"))
+                packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
+
+About 1, the check only guards the v0/v1 path, and the v2 path
+already checks server support inline in its condition. Follow the
+same pattern and fold the check into the condition in find_common().
+
+About 2 and 3, replace the static variable with a local read via
+repo_config_get_bool() in each function.
+
+Because repo_config_get_bool() leaves advertise_sid as is if it is not
+set, initialize it to 0, matching its default.
+
+Helped-by: Jonathan Tan <jonathantanmy@google.com>
+Helped-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- t/lib-cat-file.sh   | 16 ++++++++++++++++
- t/t1006-cat-file.sh | 15 ++-------------
- 2 files changed, 18 insertions(+), 13 deletions(-)
+ fetch-pack.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/t/lib-cat-file.sh b/t/lib-cat-file.sh
-new file mode 100644
-index 0000000000..7c2e877016
---- /dev/null
-+++ b/t/lib-cat-file.sh
-@@ -0,0 +1,16 @@
-+# Library of git-cat-file related test functions.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 9eb8fc5399..65ebfec09f 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -49,7 +49,6 @@ static int fetch_fsck_objects = -1;
+ static int transfer_fsck_objects = -1;
+ static int agent_supported;
+ static int server_supports_filtering;
+-static int advertise_sid;
+ static struct shallow_lock shallow_lock;
+ static const char *alternate_shallow_file;
+ static struct strbuf fsck_msg_types = STRBUF_INIT;
+@@ -363,6 +362,9 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 	size_t state_len = 0;
+ 	struct packet_reader reader;
+ 	struct oidset negotiation_include_oids = OIDSET_INIT;
++	int advertise_sid = 0;
 +
-+# Print a string without a trailing newline.
-+echo_without_newline () {
-+	printf '%s' "$*"
-+}
++	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
+ 
+ 	if (args->stateless_rpc && multi_ack == 1)
+ 		die(_("the option '%s' requires '%s'"), "--stateless-rpc", "multi_ack_detailed");
+@@ -414,7 +416,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 			if (deepen_not_ok)      strbuf_addstr(&c, " deepen-not");
+ 			if (agent_supported)    strbuf_addf(&c, " agent=%s",
+ 							    git_user_agent_sanitized());
+-			if (advertise_sid)
++			if (advertise_sid && server_supports("session-id"))
+ 				strbuf_addf(&c, " session-id=%s", trace2_session_id());
+ 			if (args->filter_options.choice)
+ 				strbuf_addstr(&c, " filter");
+@@ -1160,9 +1162,6 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 				      (int)agent_len, agent_feature);
+ 	}
+ 
+-	if (!server_supports("session-id"))
+-		advertise_sid = 0;
+-
+ 	if (server_supports("shallow"))
+ 		print_verbose(args, _("Server supports %s"), "shallow");
+ 	else if (args->depth > 0 || is_repository_shallow(r))
+@@ -1380,6 +1379,9 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+ 						 const struct string_list *server_options)
+ {
+ 	const char *hash_name;
++	int advertise_sid = 0;
 +
-+# Print a string without newlines and replace them with a NUL character (\0).
-+echo_without_newline_nul () {
-+	echo_without_newline "$@" | tr '\n' '\0'
-+}
-+
-+# Calculate the length of a string.
-+strlen () {
-+	echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
-+}
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 8e2c52652c..cf65bfc88f 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -3,7 +3,8 @@
- test_description='git cat-file'
++	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
  
- . ./test-lib.sh
--. "$TEST_DIRECTORY/lib-loose.sh"
-+. "$TEST_DIRECTORY"/lib-loose.sh
-+. "$TEST_DIRECTORY"/lib-cat-file.sh
+ 	ensure_server_supports_v2("fetch");
+ 	packet_buf_write(req_buf, "command=fetch");
+@@ -1998,7 +2000,6 @@ static void fetch_pack_config(void)
+ 	repo_config_get_bool(the_repository, "repack.usedeltabaseoffset", &prefer_ofs_delta);
+ 	repo_config_get_bool(the_repository, "fetch.fsckobjects", &fetch_fsck_objects);
+ 	repo_config_get_bool(the_repository, "transfer.fsckobjects", &transfer_fsck_objects);
+-	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
+ 	if (!uri_protocols.nr) {
+ 		char *str;
  
- test_cmdmode_usage () {
- 	test_expect_code 129 "$@" 2>err &&
-@@ -99,18 +100,6 @@ do
- 	'
- done
- 
--echo_without_newline () {
--    printf '%s' "$*"
--}
--
--echo_without_newline_nul () {
--	echo_without_newline "$@" | tr '\n' '\0'
--}
--
--strlen () {
--    echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
--}
--
- run_tests () {
-     type=$1
-     object_name="$2"
 
 -- 
 2.54.0
