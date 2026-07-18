@@ -1,131 +1,110 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC133822A3
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2338537AA97
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784362532; cv=none; b=V69d46/xy+tF19Gv/NUKq0lVIpvlmT59tfDxJr5udt3Nd7Qzj7Up5yELpomneLIub+oZ2i6PODHmbfS5c7oXMxNfMv5M97HiFXLLwvq5O5EL462T69bv/QQI5aTWG8NnjkPrVGR8kBY3Fv7tSWyxnHJBQ8mLHV4rJ2bNfE3RtHk=
+	t=1784363880; cv=none; b=cTrQyw+IDPDF5WKSYVrAGEE8nFtYPc0mONzO/iYiQ+CtqboiwmykuTH8e2tKALij6uj/zgvy7petdR6cAXE40KK8uwgqQQFxgqgBc0Bcm72vCOscf+8pV8mSqzJZ4Z+jE3Uo+qLbGxi389/wlxvUTwNM3bquvfbz3W4oxAzBgrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784362532; c=relaxed/simple;
-	bh=z04NoBm2aMAs+x2ZS+yto/sgHJhcHh5x6b5VAzaKRC4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fk+0rbJGh0lb9JSfxkpHFF1N0uo2Orna0nP0QXuIp1gUdNw+JsigqDKGuWALBeTjlepGceRtaf3JokLpvPzxbTNAmSJPtjMsMxTuv4fMPR0/4CSOgZUlIluSoPmLBCQTa4qlc7XgLKELJKhci6pkEtLA7rKpUvmjO4LPsjV38o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KAG/yPyk; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784363880; c=relaxed/simple;
+	bh=68u1KOpUQVcnGeqzJf9JfjQcOnQcROc7MlD0tqZJpBU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jGyiJAp/T4qW2WI5aF78I7PFg8wAc9JO32JcsWwQ1EYt6Uilk7MM8GvSvhJqYm2iwbJ+sgbrwRCh6sfLGiNIK0iFL2rBTSbCBlbaJgxpdEx4d2PER2VoKOblkFX1IgqHahDqZv0h1LTht70KVgpluwqUBeFl7yXBGM4U9EX7ziQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SgAoSD9z; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KAG/yPyk"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-caf707e3a70so1406502a12.1
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 01:15:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784362527; x=1784967327; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5aVVCOxIumcQc9fx8QZlzndWDO9gn7zuNtUIBwDoKGE=;
-        b=KAG/yPykSb/VBs73uMONc+cSxy/IO8PL6GBcJAH9FpIJby0puHmx6AQz7qHEcrpQMs
-         8QqJh2Bgn3+CSDEOmknMDIAFEnslFoGjx69fVFLKI8lZCFU2TsInQ/S9Eq3cMADAuLkz
-         IOSF71+qoA+KfUD8GQ9lRehd1Jr8+t20VRTEK68bGc0tlCLEfHYENOav89QzMqSuud4U
-         SLYq45Iv2ZtFP6E9L8KyPFPaMt8AJEL4KNShllD7TEqXp0NvHYQS+J7NEtoIpTLetZC4
-         DpVuo4v4OrYW0PyuESAqQkYOBTjU7TGeNHCsTC1K7tk6aQwq4IIZ1a0w0xV57/2Tn3ar
-         p4kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784362527; x=1784967327;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=5aVVCOxIumcQc9fx8QZlzndWDO9gn7zuNtUIBwDoKGE=;
-        b=j3v/G5cyxRv0ftnJuYcC95DwD8HI0Cu+pi8KabYA08zX7wAGujatreIscnWlqORSgB
-         kKiPggylPnoFFPmw/DjURFezVfoUiMrRD9JCRaZSKlmL5e/4YGR9kA5kfElVB79kQhZ4
-         Ql198MM0NI1d7KtDGygHTKP1Hj7kgxwJ+R+WJt+D3Gdf+5zsLjEDNNM2O0bnnOtl5yTa
-         F6muinJOoUfdsM/7aRUTVHIcvhN8vJr6xTutjaPiK4HVyHfSDBHy460NPizjX4+Sms31
-         ee0/xwgqn8f6xY8biUnU17U5RAwq7rx9TSd7+7VSVnGFIK5SK2Vr0bKiAnNoZcbyI949
-         G6OQ==
-X-Gm-Message-State: AOJu0YxNVZw63FENdaz4L+DxSO0nNjjj3TyzyYqOg3yBRn7+DldjTsqt
-	5/Pk5OALI5VWqu71dpRQqAX66eVsOMDew/aEwoXetsCqfA6z5OJJyoKNEycsnvem
-X-Gm-Gg: AfdE7cleKZYcwLeCO5xWndg3Xf3rS9S6XEguH2DJ56+WoJF7C7Af1PZ8tJeQNWfc4mo
-	fRyzvTRkdZSdf/kkaguuG+1AOZ6ZrssdCCKDZlELPn6d9WuDabBNt6holRFxkvooTxRGBaS8mh7
-	3XDSC1q+ruIWoSfHGLmI5zpgwwXrQ6HVLC3ds054BKRPKF4PcJOUXMwI0++E/Sl40Z7Gxa48+4I
-	qZxEeO6aVDEtYcE1xCJZgIpDnv8tnnktEq7gvd3M2MFcRTKIyamOuo+iQoUoERpnqsmFUhuieT2
-	Gmbn4g7rH0N+H4oRn0eJQZ2Kt4ckolEJ7aOrNh8H5wtZ0/GXKpVD3J9VUznunIjsYrMROFwW6iS
-	wAYP+fmgZft4Wzt1cvQxz50yPJj6/oBeSn7KrL1/rcdycIX70TzHms9fUOpZWb7+LY8t/mg5t+y
-	g5asQumiJDmLG06/vyHZJ5aA/o31E=
-X-Received: by 2002:a05:6a21:6197:b0:3a0:c246:bb98 with SMTP id adf61e73a8af0-3c38dbbd1d3mr10180720637.29.1784362527304;
-        Sat, 18 Jul 2026 01:15:27 -0700 (PDT)
-Received: from sahitya-07.tail6abcb.ts.net ([2401:4900:8fba:f9ce:4201:ec66:99f2:ce40])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a1de301sm14831922eec.24.2026.07.18.01.15.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Jul 2026 01:15:26 -0700 (PDT)
-From: Sahitya Chandra <sahityajb@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	avarab@gmail.com,
-	stolee@gmail.com,
-	peff@peff.net,
-	ps@pks.im,
-	Sahitya Chandra <sahityajb@gmail.com>
-Subject: [PATCH v3] wt-status: avoid repeated insertion for untracked paths
-Date: Sat, 18 Jul 2026 13:44:49 +0530
-Message-ID: <20260718081449.26747-1-sahityajb@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260717144620.259031-1-sahityajb@gmail.com>
-References: <20260717144620.259031-1-sahityajb@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SgAoSD9z"
+Received: (qmail 60622 invoked by uid 106); 18 Jul 2026 08:37:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=68u1KOpUQVcnGeqzJf9JfjQcOnQcROc7MlD0tqZJpBU=; b=SgAoSD9zUQT4pEPbC69LNjJOTZaW5cIDwoQ1LfVgPk9nq/LUoszWqiaClTnPoyaTz57XRlzNkPJ99jUAbKMBPpVxIQRCFWs8RTYRuYyDVvKn51IiweRis4rPxHfwlkU0ZIw1SkQ2miuAOeuXgmTiutzDeKfYe7sx4nm8HNKM3ZrTLzQa/POMfgo/imCEwFFCVCP5HezWq82lclsRoWDl2wF4djgvZ2G7o3voAQ9sGx1NuWiOotLKmi1pmiOEyQYXE6XKJjb8qE0iyaJyKvCfovsuJmnMorCaFtnn5w4T9QfI7yuP5J+l51xThZ17e+YHAF+kEHNvfPQzcV/DnPk1QA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jul 2026 08:37:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 107126 invoked by uid 111); 18 Jul 2026 08:38:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jul 2026 04:38:02 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 18 Jul 2026 04:37:57 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Gusted <gusted@codeberg.org>
+Subject: Re: [PATCH 3/4] last-modified: check pathspec against Bloom filter
+ first
+Message-ID: <20260718083757.GD22588@coredump.intra.peff.net>
+References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
+ <20260717-toon-speed-up-last-modified-v1-3-410418f18614@iotcl.com>
+ <alq1Q55ezuN9ZI9j@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alq1Q55ezuN9ZI9j@com-79390>
 
-wt_status_collect_untracked() copies entries from dir.entries and
-dir.ignored into string_lists using string_list_insert(). At first glance
-this seems quadratic, because inserting into the sorted list may shift the
-backing array, incurring O(n) work for each insert.
+On Fri, Jul 17, 2026 at 06:05:39PM -0500, Taylor Blau wrote:
 
-In practice, though, the entries in the dir struct are already sorted, so
-we should not have to shift the array and only pay the O(log n) lookup cost
-for each insertion. But this is subtle and depends on the behavior of
-fill_directory().
+> > diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+> > index 5478182f2e..e8ee610404 100644
+> > --- a/builtin/last-modified.c
+> > +++ b/builtin/last-modified.c
+> > @@ -272,6 +272,9 @@ static bool maybe_changed_path(struct last_modified *lm,
+> >  	if (!filter)
+> >  		return true;
+> >
+> > +	if (revs_maybe_changed_in_bloom(&lm->rev, filter) == 0)
+> 
+> Nit: please prefer 'if (!foo())' over 'if (foo() == 0)'.
 
-Collect the entries with string_list_append() instead, then sort and
-deduplicate each list once with string_list_sort_u(). This preserves the
-sorted, duplicate-free result while making the collection strategy explicit.
+Yeah, though there is some subtlety here because of the tristate return
+I described elsewhere in the thread. I think if we switch to a boolean
+return then a straight "!" becomes even more desirable.
 
-Signed-off-by: Sahitya Chandra <sahityajb@gmail.com>
----
-Changes since v2:
-- Reword the commit message to explain the quadratic concern while noting
-  that the current sorted input avoids array shifts in practice.
+> I don't think this is safe with '--show-trees'. The original pathspec
+> does not cover every entry in 'lm->paths', since the function
+> 'populate_paths_from_revs()' also adds ancestor tree entries.
 
- wt-status.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Hmm, interesting. I am surprised to learn that "-t" includes "d" when
+the pathspec asked for "d/a". I thought it was mostly about showing
+"d/a" when we recurse to find "d/a/b". But I guess it does not make a
+distinction between the two (probably because it is just telling the
+diff code to show trees, and it does not further apply the pathspec to
+the output).
 
-diff --git a/wt-status.c b/wt-status.c
-index 58461e02f8..57772c7501 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -832,14 +832,16 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 	for (i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
- 		if (index_name_is_other(istate, ent->name, ent->len))
--			string_list_insert(&s->untracked, ent->name);
-+			string_list_append(&s->untracked, ent->name);
- 	}
-+	string_list_sort_u(&s->untracked, 0);
- 
- 	for (i = 0; i < dir.ignored_nr; i++) {
- 		struct dir_entry *ent = dir.ignored[i];
- 		if (index_name_is_other(istate, ent->name, ent->len))
--			string_list_insert(&s->ignored, ent->name);
-+			string_list_append(&s->ignored, ent->name);
- 	}
-+	string_list_sort_u(&s->ignored, 0);
- 
- 	dir_clear(&dir);
- 
+Does this mean there is also a bug in "git log"? I guess not, because it
+is purely pruning based on the pathspec, and only shows "d/" for those
+commits.
 
-base-commit: 41365c2a9ba347870b80881c0d67454edd22fd49
--- 
-2.43.0
+>         git -c core.commitGraph=false last-modified -t HEAD -- d/a \
+>             >expect &&
+>         git -c core.commitGraph=true last-modified -t HEAD -- d/a \
+>             >actual &&
+
+A minor side note: the documentation claims "-t" has no effect without
+"-r", but it clearly is not true (it tells us to show "d", even when we
+are not recursing).
+
+> I think that the conditional is otherwise correct, if guarded when we
+> know that 'lm->show_trees' is false, like so:
+> 
+>     if (!lm->show_trees &&
+>         !revs_maybe_changed_in_bloom(&lm->rev, filter))
+>             return false;
+
+Hmph. That makes this optimization all but useless, because the intended
+use case of last-modified is almost always going to use "-t" to be able
+to mark the interior trees. And most callers are not going to care about
+seeing "d" here; their purpose was to find out about the things _inside_
+"d".
+
+Would we consider removing "d" from the output for this case? Presumably
+by double-checking the pathspecs again in add_path_from_diff(). That
+gives less surprising output (to me, anyway) and would enable this
+optimization. And the command is still marked as experimental, and I
+think this is exactly the kind of corner case that is meant to cover.
+
+-Peff
