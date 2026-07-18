@@ -1,158 +1,131 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07089381B05
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC133822A3
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784362451; cv=none; b=ET/AsrAocz1U9dVWTD6s8SBv7TXPcHjtaKoC0++stP1M33p0825rWuvuQOkmWw5UAQ79oA3Nai3jbsxMox0b5Me2ra4MR9Q2uyhytO+GqStng9kDID/3K8Xh6tqDiq8h7u01Bqho3iLscMOckNb3saibzQN194A+dh0l5AbLz/s=
+	t=1784362532; cv=none; b=V69d46/xy+tF19Gv/NUKq0lVIpvlmT59tfDxJr5udt3Nd7Qzj7Up5yELpomneLIub+oZ2i6PODHmbfS5c7oXMxNfMv5M97HiFXLLwvq5O5EL462T69bv/QQI5aTWG8NnjkPrVGR8kBY3Fv7tSWyxnHJBQ8mLHV4rJ2bNfE3RtHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784362451; c=relaxed/simple;
-	bh=MDX+KL3by4dPjfyfEFvJKdn6Zz0BbGNTKy+2N1dyJjA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XaHoxaU4GZ4JYmvoxm2VpNfyeA6ihnrf7XIGUCuzq0GdoMJsnDXDI/aqgjs4mQ6QLbPPwgtchpY0PRWHnSp89+Ng1NFra7D3QvIfbzJvP0ZIyffsFpCOwOupcsgWzzS5NnuDEaT75cO00McsbgBiOOtsbrzI9mi2lz2vBsEizVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CID1Eizz; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1784362532; c=relaxed/simple;
+	bh=z04NoBm2aMAs+x2ZS+yto/sgHJhcHh5x6b5VAzaKRC4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Fk+0rbJGh0lb9JSfxkpHFF1N0uo2Orna0nP0QXuIp1gUdNw+JsigqDKGuWALBeTjlepGceRtaf3JokLpvPzxbTNAmSJPtjMsMxTuv4fMPR0/4CSOgZUlIluSoPmLBCQTa4qlc7XgLKELJKhci6pkEtLA7rKpUvmjO4LPsjV38o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KAG/yPyk; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CID1Eizz"
-Received: (qmail 60392 invoked by uid 106); 18 Jul 2026 08:14:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=MDX+KL3by4dPjfyfEFvJKdn6Zz0BbGNTKy+2N1dyJjA=; b=CID1EizzF9olkNh/dchrJj+GgNKuvAe761eRyHusL5KRlnE+FiAsQoX82kqkY/XOzIFl/kicXNxXbq83da8BM7xJdUS9sGJ7zmGqtGxxvu/oTFDUQCbQ9mp4iLlGCE0uTudxOH1NRiNObEszg1/tMtyyfv8ZmyXsY3cPDz8psNsmGpt6TJ/zcPfhzK4qO5p4oWER/LOUeTgxWqfw/g+8EYBNWqXOHs9elkv3tgykqSEzC+bUP0dxJSvjoiWY8ixS3WJWbCBsW1P/DI1LxkwaL3b1kQmBXNwyxSy/39arOw6PWFMKhHRajAQIrfO2N2idk8FWojGdYH71oegLFA3dFQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jul 2026 08:14:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 106824 invoked by uid 111); 18 Jul 2026 08:14:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jul 2026 04:14:12 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 18 Jul 2026 04:14:07 -0400
-From: Jeff King <peff@peff.net>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH 4/4] last-modified: keep per-path Bloom filters for
- wildcard pathspecs
-Message-ID: <20260718081407.GC22588@coredump.intra.peff.net>
-References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
- <20260717-toon-speed-up-last-modified-v1-4-410418f18614@iotcl.com>
- <87a4rp1l65.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KAG/yPyk"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-caf707e3a70so1406502a12.1
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 01:15:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784362527; x=1784967327; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5aVVCOxIumcQc9fx8QZlzndWDO9gn7zuNtUIBwDoKGE=;
+        b=KAG/yPykSb/VBs73uMONc+cSxy/IO8PL6GBcJAH9FpIJby0puHmx6AQz7qHEcrpQMs
+         8QqJh2Bgn3+CSDEOmknMDIAFEnslFoGjx69fVFLKI8lZCFU2TsInQ/S9Eq3cMADAuLkz
+         IOSF71+qoA+KfUD8GQ9lRehd1Jr8+t20VRTEK68bGc0tlCLEfHYENOav89QzMqSuud4U
+         SLYq45Iv2ZtFP6E9L8KyPFPaMt8AJEL4KNShllD7TEqXp0NvHYQS+J7NEtoIpTLetZC4
+         DpVuo4v4OrYW0PyuESAqQkYOBTjU7TGeNHCsTC1K7tk6aQwq4IIZ1a0w0xV57/2Tn3ar
+         p4kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784362527; x=1784967327;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5aVVCOxIumcQc9fx8QZlzndWDO9gn7zuNtUIBwDoKGE=;
+        b=j3v/G5cyxRv0ftnJuYcC95DwD8HI0Cu+pi8KabYA08zX7wAGujatreIscnWlqORSgB
+         kKiPggylPnoFFPmw/DjURFezVfoUiMrRD9JCRaZSKlmL5e/4YGR9kA5kfElVB79kQhZ4
+         Ql198MM0NI1d7KtDGygHTKP1Hj7kgxwJ+R+WJt+D3Gdf+5zsLjEDNNM2O0bnnOtl5yTa
+         F6muinJOoUfdsM/7aRUTVHIcvhN8vJr6xTutjaPiK4HVyHfSDBHy460NPizjX4+Sms31
+         ee0/xwgqn8f6xY8biUnU17U5RAwq7rx9TSd7+7VSVnGFIK5SK2Vr0bKiAnNoZcbyI949
+         G6OQ==
+X-Gm-Message-State: AOJu0YxNVZw63FENdaz4L+DxSO0nNjjj3TyzyYqOg3yBRn7+DldjTsqt
+	5/Pk5OALI5VWqu71dpRQqAX66eVsOMDew/aEwoXetsCqfA6z5OJJyoKNEycsnvem
+X-Gm-Gg: AfdE7cleKZYcwLeCO5xWndg3Xf3rS9S6XEguH2DJ56+WoJF7C7Af1PZ8tJeQNWfc4mo
+	fRyzvTRkdZSdf/kkaguuG+1AOZ6ZrssdCCKDZlELPn6d9WuDabBNt6holRFxkvooTxRGBaS8mh7
+	3XDSC1q+ruIWoSfHGLmI5zpgwwXrQ6HVLC3ds054BKRPKF4PcJOUXMwI0++E/Sl40Z7Gxa48+4I
+	qZxEeO6aVDEtYcE1xCJZgIpDnv8tnnktEq7gvd3M2MFcRTKIyamOuo+iQoUoERpnqsmFUhuieT2
+	Gmbn4g7rH0N+H4oRn0eJQZ2Kt4ckolEJ7aOrNh8H5wtZ0/GXKpVD3J9VUznunIjsYrMROFwW6iS
+	wAYP+fmgZft4Wzt1cvQxz50yPJj6/oBeSn7KrL1/rcdycIX70TzHms9fUOpZWb7+LY8t/mg5t+y
+	g5asQumiJDmLG06/vyHZJ5aA/o31E=
+X-Received: by 2002:a05:6a21:6197:b0:3a0:c246:bb98 with SMTP id adf61e73a8af0-3c38dbbd1d3mr10180720637.29.1784362527304;
+        Sat, 18 Jul 2026 01:15:27 -0700 (PDT)
+Received: from sahitya-07.tail6abcb.ts.net ([2401:4900:8fba:f9ce:4201:ec66:99f2:ce40])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a1de301sm14831922eec.24.2026.07.18.01.15.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jul 2026 01:15:26 -0700 (PDT)
+From: Sahitya Chandra <sahityajb@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	avarab@gmail.com,
+	stolee@gmail.com,
+	peff@peff.net,
+	ps@pks.im,
+	Sahitya Chandra <sahityajb@gmail.com>
+Subject: [PATCH v3] wt-status: avoid repeated insertion for untracked paths
+Date: Sat, 18 Jul 2026 13:44:49 +0530
+Message-ID: <20260718081449.26747-1-sahityajb@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260717144620.259031-1-sahityajb@gmail.com>
+References: <20260717144620.259031-1-sahityajb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87a4rp1l65.fsf@emacs.iotcl.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 17, 2026 at 09:16:34PM +0200, Toon Claes wrote:
+wt_status_collect_untracked() copies entries from dir.entries and
+dir.ignored into string_lists using string_list_insert(). At first glance
+this seems quadratic, because inserting into the sorted list may shift the
+backing array, incurring O(n) work for each insert.
 
-> > +	/*
-> > +	 * prepare_revision_walk() clears bloom_filter_settings for pathspecs
-> > +	 * without a Bloom key. Restore it so the per-path check keeps working.
-> > +	 */
-> > +	if (!lm->rev.bloom_filter_settings)
-> > +		lm->rev.bloom_filter_settings =
-> > +			get_bloom_filter_settings(lm->rev.repo);
-> > +
-> 
-> @Peff, as far I could tell:
-> 
-> * This change was not needed to be able to use the Bloom filters with
->   the pathspec.
+In practice, though, the entries in the dir struct are already sorted, so
+we should not have to shift the array and only pay the O(log n) lookup cost
+for each insertion. But this is subtle and depends on the behavior of
+fill_directory().
 
-Ah, right. In my earlier attempt I came at it from the bottom up: I
-found the bloom_keyvec, saw how it was populated, and then worked my way
-back to prepare_to_use_bloom_filter() without going further.
+Collect the entries with string_list_append() instead, then sort and
+deduplicate each list once with string_list_sort_u(). This preserves the
+sorted, duplicate-free result while making the collection strategy explicit.
 
-But it is much nicer if we can rely on prepare_revision_walk() here, as
-we don't need to make an additional function public.
+Signed-off-by: Sahitya Chandra <sahityajb@gmail.com>
+---
+Changes since v2:
+- Reword the commit message to explain the quadratic concern while noting
+  that the current sorted input avoids array shifts in practice.
 
-> * Only restoring bloom_filter_settings was needed. In your patch you're
->   calling prepare_to_use_bloom_filter(), but that is being called by
->   prepare_revision_walk(). Thus the restoring of the filter settings
->   I've added after that function.
+ wt-status.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Hmm, OK. The "clearing" done by prepare_revision_walk() is kind of
-weird. The bloom settings are a const pointer, not a resource we own, so
-there is really no need to clear them.
-
-But accepting for a moment that we do clear them, is this maybe an
-indication that we are abusing rev_info.bloom_filter_settings? It is
-really an internal implementation detail that revision.c uses for its
-own bloom filters. Wouldn't it be cleaner for last-modified to keep its
-own, like this:
-
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index fe012b0c2e..5e176bbeed 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -61,6 +61,8 @@ struct last_modified {
- 	size_t all_paths_nr;
- 	struct active_paths_for_commit active_paths;
- 
-+	struct bloom_filter_settings *bloom_filter_settings;
-+
- 	/* 'scratch' to avoid allocating a bitmap every process_parent() */
- 	struct bitmap *scratch;
- };
-@@ -114,9 +116,9 @@ static void add_path_from_diff(struct diff_queue_struct *q,
- 
- 		FLEX_ALLOC_STR(ent, path, path);
- 		oidcpy(&ent->oid, &p->two->oid);
--		if (lm->rev.bloom_filter_settings)
-+		if (lm->bloom_filter_settings)
- 			bloom_key_fill(&ent->key, path, strlen(path),
--				       lm->rev.bloom_filter_settings);
-+				       lm->bloom_filter_settings);
- 		hashmap_entry_init(&ent->hashent, strhash(ent->path));
- 		hashmap_add(&lm->paths, &ent->hashent);
+diff --git a/wt-status.c b/wt-status.c
+index 58461e02f8..57772c7501 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -832,14 +832,16 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 	for (i = 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent = dir.entries[i];
+ 		if (index_name_is_other(istate, ent->name, ent->len))
+-			string_list_insert(&s->untracked, ent->name);
++			string_list_append(&s->untracked, ent->name);
  	}
-@@ -262,7 +264,7 @@ static bool maybe_changed_path(struct last_modified *lm,
- 	struct last_modified_entry *ent;
- 	struct hashmap_iter iter;
++	string_list_sort_u(&s->untracked, 0);
  
--	if (!lm->rev.bloom_filter_settings)
-+	if (!lm->bloom_filter_settings)
- 		return true;
- 
- 	if (commit_graph_generation(origin) == GENERATION_NUMBER_INFINITY)
-@@ -277,7 +279,7 @@ static bool maybe_changed_path(struct last_modified *lm,
- 			continue;
- 
- 		if (bloom_filter_contains(filter, &ent->key,
--					  lm->rev.bloom_filter_settings))
-+					  lm->bloom_filter_settings))
- 			return true;
+ 	for (i = 0; i < dir.ignored_nr; i++) {
+ 		struct dir_entry *ent = dir.ignored[i];
+ 		if (index_name_is_other(istate, ent->name, ent->len))
+-			string_list_insert(&s->ignored, ent->name);
++			string_list_append(&s->ignored, ent->name);
  	}
- 	return false;
-@@ -502,7 +504,7 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
- 		return argc;
- 	}
++	string_list_sort_u(&s->ignored, 0);
  
--	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
-+	lm->bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
+ 	dir_clear(&dir);
  
- 	if (populate_paths_from_revs(lm) < 0)
- 		return -1;
 
-It's mostly academic, as both of the pointers (if not NULL) would always
-point to the same setting that ultimately come from the repository
-object. But it feels cleaner for them to keep their own pointers,
-because that pointer may also signal "do we have usable bloom filters".
-We are a little lucky in dodging a bug here: last-modified uses the
-pointer for that purpose, but if revision.c did so also, they'd
-conflict.
-
-  Side note: this is really a repository property, so it would be nice
-  if we could just do:
-
-    repo_bloom_filter_contains(filter, &ent->key);
-
-  without managing the settings pointer ourselves at all. But the cost
-  to fetch it from the graph linked list is not totally trivial, so we'd
-  probably end up having to cache it somewhere. I don't know if that's
-  worth it (plus last-modified would still have to keep a boolean
-  somewhere to decide whether it is using bloom filters or not).
-
--Peff
+base-commit: 41365c2a9ba347870b80881c0d67454edd22fd49
+-- 
+2.43.0
