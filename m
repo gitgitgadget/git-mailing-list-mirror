@@ -1,118 +1,158 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F1335555
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784361991; cv=pass; b=bQnFwFmTO+bF/7qtUw8luJHVlhqN9WkhinRynpOIk8GadN9w5pBSSsOkqISLFwTrpfMhKlNpe82TfrmzNr5PJjDZmS5wbwPn9ovjpfzHfdEhMsbR49LHnUOBbOXtg8Ds425XZP3M7XUGzjg38szt2CqY5RO+EWY1/NN9Wj95n6k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784361991; c=relaxed/simple;
-	bh=qlKCY1CKMjVOOZbC+Z+dOc8ozykPfNLnEtPQPk8lSHE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eaJbehREBP46FGX6QfSa7+QlAVYbSDotedvXHt5WKcPSwby646RT6lEw5q+xFDx2mgTBXeR6hEarjKStu2jVeAlRJuNRpUSRzC2cRypScUm5Gi4pO4xCCIKaHNAmwReXmc2BpHaaeVANTJiHadSthzfmzhw1effvG39610bSW4k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FynB4Uft; arc=pass smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07089381B05
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784362451; cv=none; b=ET/AsrAocz1U9dVWTD6s8SBv7TXPcHjtaKoC0++stP1M33p0825rWuvuQOkmWw5UAQ79oA3Nai3jbsxMox0b5Me2ra4MR9Q2uyhytO+GqStng9kDID/3K8Xh6tqDiq8h7u01Bqho3iLscMOckNb3saibzQN194A+dh0l5AbLz/s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784362451; c=relaxed/simple;
+	bh=MDX+KL3by4dPjfyfEFvJKdn6Zz0BbGNTKy+2N1dyJjA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XaHoxaU4GZ4JYmvoxm2VpNfyeA6ihnrf7XIGUCuzq0GdoMJsnDXDI/aqgjs4mQ6QLbPPwgtchpY0PRWHnSp89+Ng1NFra7D3QvIfbzJvP0ZIyffsFpCOwOupcsgWzzS5NnuDEaT75cO00McsbgBiOOtsbrzI9mi2lz2vBsEizVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CID1Eizz; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FynB4Uft"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c1670dad7a8so733892066b.3
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 01:06:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784361988; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BVmKQSTNBC9faRQMMpjXINYU5fl51ey/Kb18OFRno3XTrECc7ExJ1Pk4/8FArpXfDH
-         axVuazA55mU8NW8DujL4aXqbPNIs931u7f9qACT/wWNHHWwgKBpZNMxE7l+PszOkKt7W
-         obsi2owP/MaA+Q97ZOwHlWICZ0NrkropdVLKq9JtfkqYGxWyGgmBglS2J7HvxIFwaElO
-         LpQtLMdZIb/7fH8d3hsIM2Ay7yj2ymJJLPU/Y/o23R5A9nVoJH8ss4qDEYcgSokTE5AQ
-         jM/6wy432E2D/3o5IkGE1idlAeoY4nIEQR2hB/pR1dqB8Y+cwUFx4GmNIIXh2X8l/6bv
-         y+0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=VVO7zddHXUCm/r0qGzdYLkySyNX5PXtWVNmm0avlw8E=;
-        fh=TuT/6feVugnbynNihU+MwG1Et8PY0SGbHUzduH9WzBg=;
-        b=rwmiPxUQaJQYZhjBRSfscZpu5s6IcJ+jkX+FiO05Qv0FO4V4eSU9NP2LQT+zBhPpD+
-         9MeR7VG46Iej0Sn52emdZEtUDRHYtyfUt9RmbxjIhw877bIdoDP0IRlxYcU92+hrWxQa
-         e9RjWkqAsqZAR1TjfuGJymSeLMspO5h3eCMC4ayoa/bBc7x+/CN4xNeOIEKvjRQtKIks
-         zFCwWb8RwKCvpWnlGFdAEKdewk3YfqKnVRpHY2a5iW6lymmnIaAOJuVdlw9z48pgSEkG
-         oMX0BZKwToRGk/uIYkBLkb8RlyRppVWIEpyDwXvmv8SrzTgKrewkKneBiJXoLNx+UCzi
-         wzLQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784361988; x=1784966788; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VVO7zddHXUCm/r0qGzdYLkySyNX5PXtWVNmm0avlw8E=;
-        b=FynB4Uft6/8GriXH97cYgOy5spIszqKht/t/mMV1hFHNrVlknO9s/sfFYSSFtp8E/M
-         Rc3SHBLi5JlOHBuyFuhK2GXMCN7ctiGUR3m04tTeuOOlJs6r8LXNlM7qqSBF9WyKz4Eg
-         5V9WUG76HX5LPhLPLdeKwY7LQvk/bBJAjq2t95AMvtkL2vWfJJB9mc74PHlc6NUHCGfj
-         o7C9/nzvIJg3aTEhwfl3yXrT3mw5BLp/TmCqLd78V4UW6QtDwT0rz+aHXgQCJGaJ6Ns+
-         yTTRhNiG/jhgwn+91HdXlJiUUw64Sqe5fsJJGVKAk4J0tMgL2gkSDlD3uBIOPgB0euu9
-         lQkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784361988; x=1784966788;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=VVO7zddHXUCm/r0qGzdYLkySyNX5PXtWVNmm0avlw8E=;
-        b=JXDoOkJJHxhzTE7K4xYShBIDOypw+xEiBzfEmV//cn8d34zMliBtfSWLziSo413BWG
-         IlxioDdqEWLcbx8SVz/qjF68MIOUluVvEwQ8mmjKYC49NeOnH5dFBEQyJ4j3mhQdv1Qt
-         sdq3nAcIcpmuh7TZq2EhDBl54Mi2GmTSI9XiBIrkm+cmnloypjgXi3pZl63PNLjMxX/5
-         FwBiKEe3ovInS+HB8kC9nfP3cIaDGuivIpk0NBz1R9J1f1U0sPMXwBqR8Rw5RS15Ml5p
-         HCdb42NbD1Qby/CnzzFkWrs+4A763tgThoPWF/RIh0MNYDY6Vw6wVX03qcgwYKqqhj+u
-         jDSw==
-X-Forwarded-Encrypted: i=1; AHgh+RpYM++7QlZEN19uz3BWRl9E7OL75kmBSLL0ok539tCMbYCNEJGlcv3cCNfk4iyWJCSECWA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzh0dOOcTbzLxZQJa1H0YEGem05+WE6S1bC8w5lgoaOIzBizvv1
-	9Pv4dq6cFi/BWUq5forvn0eICPrG9tLXN6zzF38feWqMIJVqJKYwuuQR7EaMjf8Dfqrz05Z4uPv
-	mvJaAo9KTcbo0rqvtNwvkcQXS4soo6Sc=
-X-Gm-Gg: AfdE7cnR5OFk/Hgl0iWv1oLFsZnP7PPiwfZ+TC7gbhM5qHIin2oHf3KxUJmFsbdjCYR
-	G9BWySga41vXvWbJK6dyBQiXQSNLvAUDsDUVSKOPhWe4UqeWp2jlbnHwzz0NwVtfdWTR7DfQV7m
-	y38wsxkmj6k4FvplWD8jVEr2HApS8CzdvxzMz7e465rzgJznDZhjN469AAFhjfanPuHhM4fRZzN
-	Psx7J2wd7GshrjXBQCtYyqVV+wN2P/yml6/CePcF/6DB5H4pfT4W/V/0uXbRg==
-X-Received: by 2002:a17:906:4790:b0:c16:8adf:f183 with SMTP id
- a640c23a62f3a-c16b4752c42mr259856166b.14.1784361987851; Sat, 18 Jul 2026
- 01:06:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CID1Eizz"
+Received: (qmail 60392 invoked by uid 106); 18 Jul 2026 08:14:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=MDX+KL3by4dPjfyfEFvJKdn6Zz0BbGNTKy+2N1dyJjA=; b=CID1EizzF9olkNh/dchrJj+GgNKuvAe761eRyHusL5KRlnE+FiAsQoX82kqkY/XOzIFl/kicXNxXbq83da8BM7xJdUS9sGJ7zmGqtGxxvu/oTFDUQCbQ9mp4iLlGCE0uTudxOH1NRiNObEszg1/tMtyyfv8ZmyXsY3cPDz8psNsmGpt6TJ/zcPfhzK4qO5p4oWER/LOUeTgxWqfw/g+8EYBNWqXOHs9elkv3tgykqSEzC+bUP0dxJSvjoiWY8ixS3WJWbCBsW1P/DI1LxkwaL3b1kQmBXNwyxSy/39arOw6PWFMKhHRajAQIrfO2N2idk8FWojGdYH71oegLFA3dFQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jul 2026 08:14:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 106824 invoked by uid 111); 18 Jul 2026 08:14:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jul 2026 04:14:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 18 Jul 2026 04:14:07 -0400
+From: Jeff King <peff@peff.net>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Gusted <gusted@codeberg.org>
+Subject: Re: [PATCH 4/4] last-modified: keep per-path Bloom filters for
+ wildcard pathspecs
+Message-ID: <20260718081407.GC22588@coredump.intra.peff.net>
+References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
+ <20260717-toon-speed-up-last-modified-v1-4-410418f18614@iotcl.com>
+ <87a4rp1l65.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2330.git.git.1781551170529.gitgitgadget@gmail.com>
- <89d72342-5aa1-4dcf-951b-d0c791f91738@gmail.com> <xmqqpl1q2xw5.fsf@gitster.g>
- <bd7dc183-6597-4fd0-ae64-682d46480cd4@gmail.com> <xmqqo6h9z7e6.fsf@gitster.g>
- <CAHwyqnV8je6gCTExr=CFCdYskN1dVaEDVSKDLUo5A4Ukv=qhiA@mail.gmail.com>
- <xmqqa4srnwfa.fsf@gitster.g> <CAHwyqnVy=4oHBTmtDJ6jX38Kh1aLYYXHR-_12DdiiUxpXZ5kNg@mail.gmail.com>
- <4d150f21-46ea-4bf7-b516-c1763c152b34@gmail.com> <xmqqmrvqhmpp.fsf@gitster.g>
-In-Reply-To: <xmqqmrvqhmpp.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sat, 18 Jul 2026 10:05:51 +0200
-X-Gm-Features: AUfX_myaUCnSQCrv0aFh6cHmp7b7t0PQTArwycaotjkdJv3Xusw0kxWeEMAC-Zw
-Message-ID: <CAHwyqnVwDsdvvg6a2BtAYw+hYRdgKvRXwHE+uzAZjherfu5B=Q@mail.gmail.com>
-Subject: Re: [PATCH] rebase: mention --abort alongside --continue
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87a4rp1l65.fsf@emacs.iotcl.com>
 
-> I wonder if the workflow that benefits from this "if exec fails,
-> give up and forget the whole thing" behavior is actually quite
-> different from what we consider the "normal" use of the command?
-> Perhaps the user is not interested in "rebasing" the history at
-> all, but is instead running a check on each and every commit.
-> That is, a more expensive version of:
->
->         for commit in $(git rev-list bottom..top)
->         do
->                 git reset --hard "$commit" &&
->                 do the exec command || break
->         done
->
-> that just happens to be shorter to type?
+On Fri, Jul 17, 2026 at 09:16:34PM +0200, Toon Claes wrote:
 
-Sure, that's exactly right.
+> > +	/*
+> > +	 * prepare_revision_walk() clears bloom_filter_settings for pathspecs
+> > +	 * without a Bloom key. Restore it so the per-path check keeps working.
+> > +	 */
+> > +	if (!lm->rev.bloom_filter_settings)
+> > +		lm->rev.bloom_filter_settings =
+> > +			get_bloom_filter_settings(lm->rev.repo);
+> > +
+> 
+> @Peff, as far I could tell:
+> 
+> * This change was not needed to be able to use the Bloom filters with
+>   the pathspec.
 
+Ah, right. In my earlier attempt I came at it from the bottom up: I
+found the bloom_keyvec, saw how it was populated, and then worked my way
+back to prepare_to_use_bloom_filter() without going further.
 
-Harald
+But it is much nicer if we can rely on prepare_revision_walk() here, as
+we don't need to make an additional function public.
+
+> * Only restoring bloom_filter_settings was needed. In your patch you're
+>   calling prepare_to_use_bloom_filter(), but that is being called by
+>   prepare_revision_walk(). Thus the restoring of the filter settings
+>   I've added after that function.
+
+Hmm, OK. The "clearing" done by prepare_revision_walk() is kind of
+weird. The bloom settings are a const pointer, not a resource we own, so
+there is really no need to clear them.
+
+But accepting for a moment that we do clear them, is this maybe an
+indication that we are abusing rev_info.bloom_filter_settings? It is
+really an internal implementation detail that revision.c uses for its
+own bloom filters. Wouldn't it be cleaner for last-modified to keep its
+own, like this:
+
+diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+index fe012b0c2e..5e176bbeed 100644
+--- a/builtin/last-modified.c
++++ b/builtin/last-modified.c
+@@ -61,6 +61,8 @@ struct last_modified {
+ 	size_t all_paths_nr;
+ 	struct active_paths_for_commit active_paths;
+ 
++	struct bloom_filter_settings *bloom_filter_settings;
++
+ 	/* 'scratch' to avoid allocating a bitmap every process_parent() */
+ 	struct bitmap *scratch;
+ };
+@@ -114,9 +116,9 @@ static void add_path_from_diff(struct diff_queue_struct *q,
+ 
+ 		FLEX_ALLOC_STR(ent, path, path);
+ 		oidcpy(&ent->oid, &p->two->oid);
+-		if (lm->rev.bloom_filter_settings)
++		if (lm->bloom_filter_settings)
+ 			bloom_key_fill(&ent->key, path, strlen(path),
+-				       lm->rev.bloom_filter_settings);
++				       lm->bloom_filter_settings);
+ 		hashmap_entry_init(&ent->hashent, strhash(ent->path));
+ 		hashmap_add(&lm->paths, &ent->hashent);
+ 	}
+@@ -262,7 +264,7 @@ static bool maybe_changed_path(struct last_modified *lm,
+ 	struct last_modified_entry *ent;
+ 	struct hashmap_iter iter;
+ 
+-	if (!lm->rev.bloom_filter_settings)
++	if (!lm->bloom_filter_settings)
+ 		return true;
+ 
+ 	if (commit_graph_generation(origin) == GENERATION_NUMBER_INFINITY)
+@@ -277,7 +279,7 @@ static bool maybe_changed_path(struct last_modified *lm,
+ 			continue;
+ 
+ 		if (bloom_filter_contains(filter, &ent->key,
+-					  lm->rev.bloom_filter_settings))
++					  lm->bloom_filter_settings))
+ 			return true;
+ 	}
+ 	return false;
+@@ -502,7 +504,7 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
+ 		return argc;
+ 	}
+ 
+-	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
++	lm->bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
+ 
+ 	if (populate_paths_from_revs(lm) < 0)
+ 		return -1;
+
+It's mostly academic, as both of the pointers (if not NULL) would always
+point to the same setting that ultimately come from the repository
+object. But it feels cleaner for them to keep their own pointers,
+because that pointer may also signal "do we have usable bloom filters".
+We are a little lucky in dodging a bug here: last-modified uses the
+pointer for that purpose, but if revision.c did so also, they'd
+conflict.
+
+  Side note: this is really a repository property, so it would be nice
+  if we could just do:
+
+    repo_bloom_filter_contains(filter, &ent->key);
+
+  without managing the settings pointer ourselves at all. But the cost
+  to fetch it from the graph linked list is not totally trivial, so we'd
+  probably end up having to cache it somewhere. I don't know if that's
+  worth it (plus last-modified would still have to keep a boolean
+  somewhere to decide whether it is using bloom filters or not).
+
+-Peff
