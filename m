@@ -1,65 +1,65 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79466377A95
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435BC378D74
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784411425; cv=none; b=RcTpdxJPfaiWwlvAwMjGhsRnLlwHdBeuhyHRkmEsL6Cw9l97XhNCC5+0FV2BPMqG7s50AsYr27ibnOEA1vB3NPKyyXawKfdslu6JMS2FCxnAzHAJ9Gwh7kt1G/ZGtheaQoNgl9Six8kh0V7ppdebbvfm/u8T7yv65JpH7tHwN2A=
+	t=1784411427; cv=none; b=qrGv5LfKkHEXkKW9HtBa0ljLbeGh4xnaSDDDi+3yWFoTJjTd8aQTkQep8g5frhp6Igg42jcVCvQtiBnZz+NeTqEd5vbELZx84izABx3B3COylob4D0tsFvB9CfloylFLzk7WEylq3FF8NZIQH06ZPh/soVOSh3p/QQpgkrrRAzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784411425; c=relaxed/simple;
-	bh=cv5HJASiONpTpIcycrY2pdOotFxWIuHn0b95+qtpCg4=;
+	s=arc-20240116; t=1784411427; c=relaxed/simple;
+	bh=7R5lPx1h9vPMbKIqpPhCO21OWUdtq1b/9pV8dY/N2JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CWdX2kHMpiRbVoP1hMP6BSglkTL2ez4D6/Fi1xMTe9LmYGXaN3gXXjRAq7jLMIyQjMjYjVn26wkYwAfKYGlxT65dB31duL+Wj5BQAneXv5rEY+Pq61YtRPWZQMhuzMAx2H5V8FpNez1GJ/i3mtYAd4ilNGBP6QqoeX/sgvAs4FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a9EOvPFs; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version:Content-Type; b=Kc2ZHW6fG+u+DZNty4ulT7tqsF9PFBs3MVpXAknHMuOMBHVXnMabF9jvX8clTWFukRq82Iwc2jXViGRB3t+FgnKFv+1ttzkw/HU+AGl3wqz8GhUXpy7aBi6VbD408yCRROvjDDIKX4QmFpK0N4piSC+7DYM9L90Lr3PJqxmasQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G4IDZblh; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a9EOvPFs"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-493b966dd74so36534395e9.3
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4IDZblh"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-493c733f15aso77398825e9.0
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784411422; x=1785016222; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784411424; x=1785016224; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=YyxJKZiLu8AWu4foef14yuiqLa5SqL7NQDlxxBlKXKk=;
-        b=a9EOvPFsdo8MFBrmysuSPNqxqAkNIBsvySaN+3xkL12rqpbiPJr6mP+CLMnsv5TJzD
-         w8IS2EzOnPh4iplSCSLcSxe7yUi1C5y/V686xz1btgXrgahOi1c3Qisf2X6kTARRs518
-         +0P1panhh7JzdaY2ZuYcim+Ust2NUuCshTK+z/XEF2Gd50G/yyYxf7cjhC3nqJ3sj8FU
-         5Lb31XYF9hrAXSl1OXJeHrlitZ4aci+VGzuEjTxd56fuj30hESmIOAfWy2zZ+VkVfYxw
-         pKspEnfZKq5011i1pGCbM7b3U5H7RFCCglyl0TkA4aOKzANs+u0rN33v1MnEGGTyBlqX
-         Eh0A==
+        bh=1WWvImKuevgwQO7wSsxmfyADqWZ9fs366ywo6QqDaRc=;
+        b=G4IDZblhN9mkBMNLH1dhCjaHezG5NRXNAM4FgRe6eiYsCDZJc/SfJ6xG7JY/DeqVEX
+         BRvbWfiHmglIi9COp6ldYpW0iurfFtk1hGTWfn7tYcPxzcdnmSufTFVWbp6XKpvWqTBx
+         G95OjJT2MCwbGH9AXabG2AovNevWzwui2diy4fRpVV4IiDDPGhbTa/iFmRKYOLk2plaP
+         wOcNZzDEtSRx+wizwr1bKMczNW1W6D+yky51zxwhMog06jFy1GGMH1OjmelACMb71xWF
+         d6XA4bQ2+R1XFFBChuSZnyqyy+pKlQXk78ZeR4rD0S97RI1leUwpc9uuEVP314FJKsFj
+         Pj1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784411422; x=1785016222;
+        d=1e100.net; s=20251104; t=1784411424; x=1785016224;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YyxJKZiLu8AWu4foef14yuiqLa5SqL7NQDlxxBlKXKk=;
-        b=k+G/umhilk2ByAqZPsiaw7kZYhytTVFMaXrfW2z6nuy+qrqcBz02ANzSxyzHV6rN8R
-         bUWj8zziCsQN5LoSyjuVMIjApcpZaDDzQYGPgVwuttFJCtl2yHipl/Ox/jN9SnSp3QD2
-         2xo6Wv8wMKE5ATy4KN38TdGTkB1Khb2oRHK0HAMeg1Kz7MGdy+Q41I3Q8isYo/PXXRjF
-         wpi3d8ArwR1nFe09kLSLtC6xcI2+ztug0Mb1GgRuw5MLXEYohz3IlTNYfH3mub1iOPGk
-         RC4cDI6pSlUitXFcTMHDBOwQVIoCjSIp9Xlv5oqyr6dBn/OP7UicoBdZYtpjkV8sXnV7
-         XvAw==
-X-Gm-Message-State: AOJu0YzPXIBzRFuYhtc2fReqdPKU9FblnGbMPmgz3cMoVftpIPplFcML
-	ehmzVJncEJFbZYn6K9ZesCUx3Jd0abH7pGmOKRxboEC8WdQw84A1dR8vqxU0FvP/
-X-Gm-Gg: AfdE7cmLEqE/D2j9J1GVych4aVGYC7HMBesAHI86wfqMYOJ8IHwMamHlEmcmkblw8qn
-	bGfYw5rI4X/CXieF4iTVdhvLfyy2UjljvTU999J+UGTJQDwxM7lqacoQzUcKw+IWbdjWOaI081H
-	J5XFcr/A8N5e1lazOh6S8dDkyczeCB0ftTor3EtYUBhypptmMZP3RJrXFkuWz10EmNSNFGSfg7i
-	zWXbp7WE9vg26DuKUzs3CqLZUBxDncjAv7utk3qU0ms9cbsnlwnsPPmSbga+J0fXGzJqzmTsFgv
-	AlHT4BAByTKXfQOrX/WVB+H9krOHfYbzuoHAxK1E3kyM34MHSCRSpxpxcD8QIDGOX7nRwljHEsu
-	Yv+v3+CpJh2OwOZWd8I5s7kLdYj2NBwKG6YtS1Y4r9s0X2SkyhM2DHjF/iB/ksapPURhtJmSr1s
-	o3qfwsvaQH0j9jpBmf5UvLzBd+zAxNGRlxZzCsyi05gwfoxutzyH9Y1VvtEQsUg2I+KfljRNPHQ
-	AIo+fhMPHWKR2NxWsuLiGo8ef/bENYXyCgyYbwzFAss43iu9gMVp4dwQSyAhPVt8wyM3UmsbTHz
-	BCgHAdq01RoXkH4JaI/cBuoXBcCMpMM0
-X-Received: by 2002:a05:600c:1d1e:b0:493:b6ee:fcb7 with SMTP id 5b1f17b1804b1-4954a3f39ffmr81416655e9.14.1784411421534;
-        Sat, 18 Jul 2026 14:50:21 -0700 (PDT)
+        bh=1WWvImKuevgwQO7wSsxmfyADqWZ9fs366ywo6QqDaRc=;
+        b=a2/Xm9znqWwuyCTaXbr1cki8u28G3Qmk4XSsBI4NZnDvolqkzhu8c95KuqTuDLrm/7
+         MAf1WW36dsyQQYZjSGLdNsnGQjXheDMACBYTZ60zQADQ7gqz0ST5qm76ijhNdVArQ8mb
+         iaAT3C38NSRp8H2zPbpT6YutcHC3hemA6wUA70R9ZfEFMl+7A/QAHisAGUFCiTBWhuk3
+         ajbF9WiqK5Y0QCalI5oVytE28mYpjlCjnd7VR3werFbtLfNYvnyisUdBOTO+hU74Ul2O
+         kI7I4Qlcnp3VHXQOm3v6kMw2uwnOP1jAs+NWmtafytNUZGr9+9ygF7CQcdMd9nvp3DYg
+         ku6w==
+X-Gm-Message-State: AOJu0YwEkE+pPJAF2eq+CUtfVNrZ3jLneDvfSe805Z8zzBaj25HqU1hF
+	nWjzT091Q2tBrUfn46Y7I6axo6eZNdG3VaOW4f1KjqmAydKQziq9Q7JoZokt92EN
+X-Gm-Gg: AfdE7clIM4j5XTudC3tilvA5voY+gCvH4jxre/nxTwcdO8fgE1y0lbEKQ2a81THppPx
+	5ASJhPw2g8nqY/YXYTJgJrgsMo16YVkrAxIePzugyZ67rFDZP2PKaMsgbxuQ21AI2FDjvXtg30a
+	hv/7mT7b97zu2G4B6smJV8JkXvsXKCXO7xQvD/ElenTCyuzWJZ+t1a37wP4ldQa6CWOiF49Es0o
+	zQkvnj1jw/59uX19zFgq06+0OGrT6RtULtkONVuaroyCZ1A9J2YHX9K6+IJPYLtGONvlwCskgSX
+	nH1ML6sbhVXcbnKBRcKdyxuQXgfNWAiA/gshvyvDSyV8wFKzyN5xt3+x4UfzFKD+mSBEKzgygwB
+	SsjiMzc87lPVW4iXvZ6yw9dwjGF0e4XQn3YaennmtRE0T5ru5K8fL7ZLsdEwHCRu542tkTB3oM2
+	bPhPvbRvWUjoUI81G0pm0K9GLsKJK1za1GSo8WGIruVhEZr5+YYgUzDPzDjqodxywuBZptjua1I
+	U+UmfDUjS9i+kNTQ2M2XMuovaaEzxdojUB/ZlCfuBolabOaaoYQ9W6ivX3gLaC05a/P3ud5Cu3+
+	gd45IsYJyO9TMCmfirefi3myHW/xVizh9IuGFBvQhH0=
+X-Received: by 2002:a05:600c:630d:b0:493:f261:d295 with SMTP id 5b1f17b1804b1-4954a3d6565mr79745225e9.4.1784411424282;
+        Sat, 18 Jul 2026 14:50:24 -0700 (PDT)
 Received: from localhost.localdomain ([47.58.6.31])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.19
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.22
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 18 Jul 2026 14:50:21 -0700 (PDT)
+        Sat, 18 Jul 2026 14:50:23 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -72,9 +72,9 @@ Cc: pabloosabaterr@gmail.com,
 	peff@peff.net,
 	toon@iotcl.com,
 	szeder.dev@gmail.com
-Subject: [PATCH GSoC v20 09/13] protocol-caps: check object existence regardless of the attributes requested
-Date: Sat, 18 Jul 2026 23:49:58 +0200
-Message-ID: <20260718-ps-eric-work-rebase-v20-9-0c13962ac532@gmail.com>
+Subject: [PATCH GSoC v20 10/13] serve: advertise object-info feature
+Date: Sat, 18 Jul 2026 23:49:59 +0200
+Message-ID: <20260718-ps-eric-work-rebase-v20-10-0c13962ac532@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
 References: <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com>
@@ -88,234 +88,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Currently, send_info() only checks for existence when the attribute
-'size' is also requested. Requesting a bare OID, without attributes only
-echoes back the OID.
+From: Calvin Wan <calvinwan@google.com>
 
-Extract the existence check to be done regardless of the number of
-attributes requested.
+In order for a client to know what object-info components a server can
+provide, advertise supported object-info features. This allows a client
+to decide whether to query the server for object-info or fetch as a
+fallback.
 
-While at it, introduce a wrapper called get_object_info() similar to
-odb_read_object_info() that returns OBJ_BAD on fail and adds
-OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK flags.
-OBJECT_INFO_SKIP_FETCH_OBJECT is so a server with a partial clone
-doesn't trigger fetching objects when it gets an object-info request
-with an OID that is not available locally. A server should only report
-what it has locally.
-
-Tighten the condition used to determine whether an object is
-recognized. get_object_info() returns OBJ_BAD for unknown objects,
-but OBJ_NONE (0) can also mean "not found". Change the check from '< 0'
-to '<= OBJ_NONE' to cover both as unrecognized.
-
-With this patch, a bare OID has two possible responses:
-
-1. Recognized OID: the server answers with "<OID>"
-
-2. Unrecognized OID: the server answers with "<OID> SP"
-
-Update the object-info section in 'gitprotocol-v2.adoc':
-- Require full obj-oid explicitly.
-- Fix parentheses.
-- Define obj-size explicitly.
-- Make obj-size optional in obj-info and document the behavior
-  for unrecognized object IDs.
-- Describe the attr header as zero or more pkt-lines, one per attribute,
-  matching what the server implements. A request with no attributes gets
-  no header.
-
+Helped-by: Jonathan Tan <jonathantanmy@google.com>
+Helped-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Calvin Wan <calvinwan@google.com>
+Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- Documentation/gitprotocol-v2.adoc | 21 ++++++++-----
- protocol-caps.c                   | 45 ++++++++++++++++++++++++----
- t/t5701-git-serve.sh              | 63 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 115 insertions(+), 14 deletions(-)
+ serve.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
-index 2beb70595f..7bf62014c3 100644
---- a/Documentation/gitprotocol-v2.adoc
-+++ b/Documentation/gitprotocol-v2.adoc
-@@ -568,21 +568,26 @@ An `object-info` request takes the following arguments:
- 
- 	oid <oid>
- 	Indicates to the server an object which the client wants to obtain
--	information for.
-+	information for. They must be full OIDs.
- 
--The response of `object-info` is a list of the requested object ids
--and associated requested information, each separated by a single space.
-+The response of `object-info` consists of one pkt-line per requested attribute,
-+echoing the attributes the server will report, followed by one pkt-line per
-+requested object id with its information, each field separated by a single
-+space.
- 
- 	output = info flush-pkt
- 
--	info = PKT-LINE(attrs) LF)
--		*PKT-LINE(obj-info LF)
--
--	attrs = attr | attrs SP attrs
-+	info = *PKT-LINE(attr LF)
-+	       *PKT-LINE(obj-info LF)
- 
- 	attr = "size"
- 
--	obj-info = obj-id SP obj-size
-+	obj-size = 1*DIGIT
-+
-+	obj-info = obj-id [SP [obj-size]]
-+
-+If the server does not recognize the OID, the response will be `<oid> SP`
-+regardless of the number of attributes requested.
- 
- bundle-uri
- ~~~~~~~~~~
-diff --git a/protocol-caps.c b/protocol-caps.c
-index 8858ea4489..02261be14d 100644
---- a/protocol-caps.c
-+++ b/protocol-caps.c
-@@ -30,6 +30,32 @@ static int parse_oid(const char *line, struct string_list *oid_str_list)
- 	return 1;
+diff --git a/serve.c b/serve.c
+index 49a6e39b1d..2b07d922b3 100644
+--- a/serve.c
++++ b/serve.c
+@@ -89,7 +89,7 @@ static void session_id_receive(struct repository *r UNUSED,
+ 	trace2_data_string("transfer", NULL, "client-sid", client_sid);
  }
  
-+/*
-+ * odb_read_object_info_extended() wrapper. Similar to odb_read_object_info()
-+ * but uses the flags:
-+ *
-+ * - OBJECT_INFO_SKIP_FETCH_OBJECT so a server won't fetch an object when a
-+ *   object-info request asks for an OID that it doesn't have.
-+ *
-+ * - OBJECT_INFO_QUICK to avoid re-scanning packs when the object is not found.
-+ */
-+static enum object_type get_object_info(struct object_database *odb,
-+			   const struct object_id *oid,
-+			   size_t *sizep)
-+{
-+	enum object_type type;
-+	struct object_info oi = OBJECT_INFO_INIT;
-+
-+	oi.typep = &type;
-+	oi.sizep = sizep;
-+	if (odb_read_object_info_extended(odb, oid, &oi,
-+					  OBJECT_INFO_LOOKUP_REPLACE |
-+					  OBJECT_INFO_SKIP_FETCH_OBJECT |
-+					  OBJECT_INFO_QUICK) < 0)
-+		return OBJ_BAD;
-+	return type;
-+}
-+
- /*
-  * Validates and send requested info back to the client. Any errors detected
-  * are returned as they are detected.
-@@ -62,15 +88,22 @@ static void send_info(struct repository *r, struct packet_writer *writer,
- 
- 		strbuf_addstr(&send_buffer, oid_str);
- 
-+		/*
-+		 * Check the existence of the object first.
-+		 * If an object is not recognized by the server append SP to
-+		 * the response.
-+		 */
-+		if (get_object_info(r->objects, &oid, &object_size) <= OBJ_NONE) {
-+			strbuf_addstr(&send_buffer, " ");
-+			goto write;
-+		}
-+
- 		if (info->size) {
--			if (odb_read_object_info(r->objects, &oid, &object_size) < 0) {
--				strbuf_addstr(&send_buffer, " ");
--			} else {
--				strbuf_addf(&send_buffer, " %"PRIuMAX,
--					    (uintmax_t)object_size);
--			}
-+			strbuf_addf(&send_buffer, " %"PRIuMAX,
-+				    (uintmax_t)object_size);
- 		}
- 
-+write:
- 		packet_writer_write(writer, "%s", send_buffer.buf);
- 		strbuf_reset(&send_buffer);
+-static int object_info_advertise(struct repository *r, struct strbuf *value UNUSED)
++static int object_info_advertise(struct repository *r, struct strbuf *value)
+ {
+ 	if (advertise_object_info == -1 &&
+ 	    repo_config_get_bool(r, "transfer.advertiseobjectinfo",
+@@ -97,6 +97,9 @@ static int object_info_advertise(struct repository *r, struct strbuf *value UNUS
+ 		/* disabled by default */
+ 		advertise_object_info = 0;
  	}
-diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index d4c28bae39..cacff4456c 100755
---- a/t/t5701-git-serve.sh
-+++ b/t/t5701-git-serve.sh
-@@ -7,6 +7,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
- 
-+unknown_oid=$(printf "test" | git hash-object --stdin)
-+
- test_expect_success 'setup to generate files with expected content' '
- 	printf "agent=git/%s" "$(git version | cut -d" " -f3)" >agent_capability &&
- 
-@@ -364,6 +366,67 @@ test_expect_success 'basics of object-info' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'bare OID request' '
-+	test_config transfer.advertiseObjectInfo true &&
-+
-+	test-tool pkt-line pack >in <<-EOF &&
-+	command=object-info
-+	object-format=$(test_oid algo)
-+	0001
-+	oid $(git rev-parse two:two.t)
-+	0000
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	$(git rev-parse two:two.t)
-+	0000
-+	EOF
-+
-+	test-tool serve-v2 --stateless-rpc <in >out &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'object-info with bare unrecognized OID' '
-+	test_config transfer.advertiseObjectInfo true &&
-+
-+	test-tool pkt-line pack >in <<-EOF &&
-+	command=object-info
-+	object-format=$(test_oid algo)
-+	0001
-+	oid $unknown_oid
-+	0000
-+	EOF
-+
-+	printf "%s \n" "$unknown_oid" >expect &&
-+	printf "0000\n" >>expect &&
-+
-+	test-tool serve-v2 --stateless-rpc <in >out &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'object-info with size for unrecognized OID' '
-+	test_config transfer.advertiseObjectInfo true &&
-+
-+	test-tool pkt-line pack >in <<-EOF &&
-+	command=object-info
-+	object-format=$(test_oid algo)
-+	0001
-+	size
-+	oid $unknown_oid
-+	0000
-+	EOF
-+
-+	printf "size\n" >expect &&
-+	printf "%s \n" "$unknown_oid" >>expect &&
-+	printf "0000\n" >>expect &&
-+
-+	test-tool serve-v2 --stateless-rpc <in >out &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'test capability advertisement with uploadpack.advertiseBundleURIs' '
- 	test_config uploadpack.advertiseBundleURIs true &&
++	/* Currently only size is supported */
++	if (value && advertise_object_info)
++		strbuf_addstr(value, "size");
+ 	return advertise_object_info;
+ }
  
 
 -- 
