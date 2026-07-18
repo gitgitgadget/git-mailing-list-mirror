@@ -1,182 +1,174 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F72217704
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 19:00:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDE5346A1C
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 19:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784401242; cv=none; b=uNHF+i6CGNK3py6z5ZokvQ6htCqOU9hM3Bdb60CzJEU/7jafpf2Qhwz2GmyDmL1k3PSoLSHYgEgenw6GWOZJHA51rMntyKaDNuJ62jkVT/ZcUcyjluBOubm0RfNiQLZ6JCINNcGPYRAZ7lpWDUScTZ+sHMyEuskZzZfyg3WFdX0=
+	t=1784401340; cv=none; b=fmZSA8oXyWmMY3TsM/Kxsjw3XpwcNSdc4JyUx6uqa5JED/s+j3myfRWq2ueE+jt2VL+j9tvDpYtj7mhQMr4yy5YtLnPXgFhv/15ObQHouWsGrw/XlmUF3hpwTklbqgiNf7odKpq61ZvnIXt9ZmGpq4M5V8LXfRNqt0XVqTUsK8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784401242; c=relaxed/simple;
-	bh=lPKZ9vmQuhGsEIXwnbStCwV5NAJggEzAUnDcRrZAG1Q=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=GQb1ho1fyPRmOB9nMl6/4kHzLnAnko0p6rBFSJGF8eeUNRwtkqxFmsC4J2GUYpGQqMFjl5PRqLo5TG9OM4htLO03ms39X8F0Z8nhEwlzR0ig9NYBmTJDHXSxqnxCm4j1QIvyZPRRrCTGLz5pzzERSj2aoJ28hdhPZ2M6Up5dp54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dBKk9zfJ; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1784401340; c=relaxed/simple;
+	bh=iYllHKPcNhaj3DvalJgLicqcabqDo3inDneAxcGibyg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=okbBM3Qa6ydRTtI4X8uhOvRPEPVDqeBjD7QAt9aNuUmzOUbqOB194gQMskCJXwlhTkLo0gL3B4Qbl2snZpD+2msVBuMxaSAsNfMmHT6tTXUfoLbMHIjfnV16Vua2qyvTJrYBIJz8wCQSjXui2lvG/m2aBZMCZ2WEip5+7LEl8hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XTYExzBy; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dBKk9zfJ"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49556f97a9dso1044475e9.1
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 12:00:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTYExzBy"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-47dec32798aso9128383f8f.1
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 12:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784401239; x=1785006039; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=QQLK+t6tEPsefVMN+6IwFcXrtdnsCrexDij1qxySa4U=;
-        b=dBKk9zfJNtf7sPU85ZnCZtNpZ16U7v+wq5oU4R2obp5ZIz8hFBz6HWCYlH2Ysl5WCO
-         nUN4HGA8Pkl1JljPbtb9llpapGEqUBa+i4Ss3sIoClxJonrW7yvN/x1ft+QI+w+cj//j
-         im8aWAsCUrXaARtPYlhS0F2ryzsnTBwlAE4+mKFRJKe4l1eSbPICkPi4qNNHb37vBPXf
-         MRppm1GeB7LuUBijq1NCbIq7bbeIi7BcRaaLqnG7b3M7qQ6XQZbUdfmyAWwM1Lulnmkk
-         IDPowsZYwQ+LhKyuI6Cn8e1xnNR/qqC5uuZAVkv+NepO5BQ+J7qvE06acaRAlLz2xQu2
-         52gg==
+        d=gmail.com; s=20251104; t=1784401325; x=1785006125; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=XTxDCa1vE6jUbbFKmnlSEYF3J9xfhulrDekb52Iloco=;
+        b=XTYExzBymAZcwEKrTZixH9nZcJc33B8+aF1tHmjjOeVKmncEnwI61DmY8dI3TbRXso
+         v6uh24RLBRxKzg/6WDxEhT7Ux2jfcFREXgfx5gq+aZl+CYn/cQ+AFbp/BTNGRAUvYM5T
+         kFFObpeJIsROCFycvC2r4eONdHS5ygXDfGQCdjhxhOx16Wzllh80x+99EfZGg8+XY6m8
+         d+QfDi5Wwgeynrq1PxIB66YAhgdsrFKGO2MNpDxVq/P3g3wOYMPTsLCu62rOmkbnjLSH
+         FzLT/NsmX0tvRWdAW6gR5SLZyNunET3ugBBYLZyxGSUoh2OjSksDI/h2Cn3pRS0lQod1
+         Irtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784401239; x=1785006039;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QQLK+t6tEPsefVMN+6IwFcXrtdnsCrexDij1qxySa4U=;
-        b=YezxUSiweZOHmD1f3zgkKzAk5eY+46tXq4UI1TPrhOThhR/ojf8dZwK1x73FYNVVvL
-         d2NZATiKI65NL45AIKHwq7splzafntJ4MaY0ELDHi1wcYg56QC+NU+FU6VOTl4yZpE0f
-         mx6hIJZ44htxFdUwVQnHf6Xi54wBzi96vLqvvS4QQePlhTUI5Zzd/Mhwef0dfPKx5sC9
-         WwDebMwk/FcbJiQ4yER7iyiHuXSzw79V3L+fsBI+jhTKv/uf67yA+T6+9p48yYMpXghW
-         lneyvhlDdCNfIsCKuxHSTpwXpSs8ymlmb8poMfQ4Y6wUHMasSrrCT/Klr19OG/ne9GrP
-         Ndqg==
-X-Gm-Message-State: AOJu0Yz4opWnmLWFcxsVzqIz+Q0J/YGmTxoiVm0aZLKO1JdoAc5Ij5Yv
-	4LR2RPVXeZ6MMOQZ/twukeF0AOBI+pPFAheW7v47zSxgMPATYhClJV23
-X-Gm-Gg: AfdE7ckWNXERsXfKmKRVq6RhNg1vbc95qXrBt8Zp96cReYLJdPrU5ZrK5L04AcnZUlk
-	AL/ka/V+qJ1xatJnn8FljjxlmPFqmB/OlSVl5VZpqteBwWNo1BJhQsx0qrw7lzsTAl898T1fPJI
-	kNM9g2n3NgTBIre9zTDLVwgNoE2IjqsbqSHAcEwaREnHICd0hWcSQwuuTNKVeFilF99vKC6oV0w
-	rpoLuRMC9wkVG5PRkkqM83e57b107u64QIsPxmUPq0aSXYl0yFuP77LUnn3WYD3zUuABfdeHg8P
-	zVtV8F2W1JlhV4pValW3LPLoAbXbTEMvB8eqWU+QmLuWGyMSHLz7LiC9Q3cOiTgglHQan9SLKGV
-	trxiihylyI4JvnuabOgAomTZmKOCxfZbqZ0kFlgl6zsbyI5urE+gZbsVn9NWnL14oPhCLyco3fZ
-	gCvx/OxaS5EgRf/0FCfNU5gLCzD6EWTTrbEgP3TfrvKRVi5Dji7U3fPa2MaLYtbLbYO85u2O65k
-	j7dWEPeuuSFyRHaRkn6V6vNo4StsGsICg+GvdlGp+A9mGEKAkEB7oacfw62Xp91qyFjtpkSQAIu
-	Tv34JC1fBk/i3j3frIyCM7ryGn8=
-X-Received: by 2002:a05:600c:19cd:b0:493:f764:1f69 with SMTP id 5b1f17b1804b1-4954a3d0889mr94855935e9.8.1784401238388;
-        Sat, 18 Jul 2026 12:00:38 -0700 (PDT)
-Received: from localhost ([47.58.6.31])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63e51986sm16383205f8f.11.2026.07.18.12.00.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Jul 2026 12:00:37 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1784401325; x=1785006125;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=XTxDCa1vE6jUbbFKmnlSEYF3J9xfhulrDekb52Iloco=;
+        b=Kb/hMtWKo4J8eFchtblFFckAKcvqm4X6JJjxjM1s+GNoSTN271CLbhTq3Y5Puuzlkj
+         PMur6ty41yDx5Q6dVDg8TtJXlE0ltj6s8XJgTU7suCUkRP3IDFfV6vxDCYWH9T6scoKD
+         zQnZynvkdRlex/FCjKrgFfxutt2XUyYu6CN6qBoN+Wurjb9oHPVU6tDi8ImVI55xRrMe
+         ph5U++zPw4mgizRAr+CU/MMJoC7fvMmGqSBOJMf/61tXzFTx4QQIxX2aCNY/f/wpBUgs
+         eE9jKZn9sDUQ87n1BnFXYxC75olqBc9ZBUppGIgcNU2/T9nTnKmyi7tZX1WQytueXBfg
+         T0Vg==
+X-Gm-Message-State: AOJu0YwLYnbMmEyFoKiQUGvqeOnntPNO5Q/zGfIKaAcgi3D+BTlMyvi4
+	ZH4AULq2MkDKTpEhnopOJBQijOTHH7Xhj7GybBpMaoaFTLdWEuGTOFlo
+X-Gm-Gg: AfdE7cn5fg8Ury0ID0tTGIotar8KSAucskkg+wx7AUbX8g/1cHz0vpcrZG2Dgjo181D
+	VMo8vD9sDOprCT81Pkh+utnYXYNzXxKKhvhpaE/WWBybZTeFYNerrdQjDxA4llL0lsnpB4prn+I
+	ZZO0cOhv386LkNQeEhwgsxWGOl+g57xnMv7jJ6MlcSdfV5qKx3Za9beKOywX6mvbYBBiyHLnc99
+	aHWJi07J8AGljxYcJ7bpqczIAMcFInsOhPdoab1X0eVYH3W3QcWE9qeme5VL2lq4RRbxcARWSXR
+	QS8SDt8ONFmxDlGXh1X1V2JGOoYWCEjgqW1CG9X5JEjfRqzn/+C9rJi3plmYuN1x+YKknsyVn0z
+	UZqDxu3V675jlhbGoyewXMvzBAyrfn5HFxvT6mIBqdSxrOV1utZubYABXgt2i7Sj3XT7c27J6Kq
+	Sh1WN0eVrJNNrAQp6VvvkagDOIaQzG
+X-Received: by 2002:a5d:5d0a:0:b0:475:f0d1:eb6b with SMTP id ffacd0b85a97d-47f62343e6bmr9622521f8f.56.1784401325179;
+        Sat, 18 Jul 2026 12:02:05 -0700 (PDT)
+Received: from localhost (94-21-29-149.pool.digikabel.hu. [94.21.29.149])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63e496ffsm14956794f8f.3.2026.07.18.12.02.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jul 2026 12:02:04 -0700 (PDT)
+Date: Sat, 18 Jul 2026 21:02:03 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org, ps@pks.im,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: Re: [PATCH v7 2/4] read-cache: pass 'repo' to 'ce_mode_from_stat()'
+Message-ID: <alvNq8rXF/jofqUc@szeder.dev>
+References: <20260716084941.1101918-1-cat@malon.dev>
+ <20260717063559.1633567-1-cat@malon.dev>
+ <20260717063559.1633567-3-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 18 Jul 2026 21:00:34 +0200
-Message-Id: <DK1XG2LQP0PS.33L27O783LXE4@gmail.com>
-Cc: <git@vger.kernel.org>, <chandrapratap3519@gmail.com>,
- <chriscool@tuxfamily.org>, <eric.peijian@gmail.com>, <gitster@pobox.com>,
- <jltobler@gmail.com>, <karthik.188@gmail.com>, <peff@peff.net>,
- <toon@iotcl.com>
-Subject: Re: [PATCH GSoC v19 05/13] fetch-pack: move
- write_fetch_command_and_capabilities() to connect.c
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260715-ps-eric-work-rebase-v18-0-34d7adb051bb@gmail.com>
- <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com>
- <20260717-ps-eric-work-rebase-v19-5-d4faee35764b@gmail.com>
- <alvHUX68McwlEau2@szeder.dev>
-In-Reply-To: <alvHUX68McwlEau2@szeder.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260717063559.1633567-3-cat@malon.dev>
 
-On Sat Jul 18, 2026 at 8:34 PM CEST, SZEDER G=C3=A1bor wrote:
-> On Fri, Jul 17, 2026 at 05:05:15PM +0200, Pablo Sabater wrote:
->> In a subsequent commit write_fetch_command_and_capabilities() will be
->> refactored to a more general-purpose function, making it more accessible
->> to additional commands in the future.
->>
->> Move write_fetch_command_and_capabilities() to 'connect.c', where
->> there are similar purpose functions.
->>
->> Because string_list is only used as a pointer, use a forward
->> declaration [1].
->>
->> [1]: https://lore.kernel.org/git/Z0RIqUAoEob8lGfM@pks.im/
->>
->> Helped-by: Jonathan Tan <jonathantanmy@google.com>
->> Helped-by: Christian Couder <chriscool@tuxfamily.org>
->> Signed-off-by: Calvin Wan <calvinwan@google.com>
->> Signed-off-by: Eric Ju <eric.peijian@gmail.com>
->> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
->> ---
->>  connect.c    | 34 ++++++++++++++++++++++++++++++++++
->>  connect.h    |  4 ++++
->>  fetch-pack.c | 34 ----------------------------------
->>  3 files changed, 38 insertions(+), 34 deletions(-)
->>
->> diff --git a/connect.c b/connect.c
->> index 47e39d2a73..31e5ab958b 100644
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -700,6 +700,40 @@ int server_supports(const char *feature)
->>  	return !!server_feature_value(feature, NULL);
->>  }
->>
->> +void write_fetch_command_and_capabilities(struct strbuf *req_buf,
->> +					  const struct string_list *server_options)
->> +{
->> +	const char *hash_name;
->> +	int advertise_sid =3D 0;
->> +
->> +	repo_config_get_bool(the_repository, "transfer.advertisesid", &adverti=
-se_sid);
->> +
->> +	ensure_server_supports_v2("fetch");
->> +	packet_buf_write(req_buf, "command=3Dfetch");
->> +	if (server_supports_v2("agent"))
->> +		packet_buf_write(req_buf, "agent=3D%s", git_user_agent_sanitized());
->> +	if (advertise_sid && server_supports_v2("session-id"))
->> +		packet_buf_write(req_buf, "session-id=3D%s", trace2_session_id());
->> +	if (server_options && server_options->nr) {
->> +		ensure_server_supports_v2("server-option");
->> +		for (size_t i =3D 0; i < server_options->nr; i++)
->> +			packet_buf_write(req_buf, "server-option=3D%s",
->> +					 server_options->items[i].string);
->> +	}
->> +
->> +	if (server_feature_v2("object-format", &hash_name)) {
->> +		int hash_algo =3D hash_algo_by_name(hash_name);
->> +		if (hash_algo_by_ptr(the_hash_algo) !=3D hash_algo)
->
-> hash_algo_by_ptr() returns an unsigned integer, and comparing that to
-> a signed integer results in:
->
->   connect.c: In function =E2=80=98write_fetch_command_and_capabilities=E2=
-=80=99:
->   connect.c:726:53: error: comparison of integer expressions of different=
- signedness: =E2=80=98uint32_t=E2=80=99 {aka =E2=80=98unsigned int=E2=80=99=
-} and =E2=80=98int=E2=80=99 [-Werror=3Dsign-compare]
->     726 |                 if (hash_algo_by_ptr(the_hash_algo) !=3D hash_a=
-lgo)
->         |                                                     ^~
->   cc1: all warnings being treated as errors
->   make: *** [Makefile:2924: connect.o] Error 1
->
-> This was not an issue while the function lived in "fetch-pack.c",
-> because that file uses #define DISABLE_SIGN_COMPARE_WARNINGS, but
-> "connect.c" doesn't.
->
-> I think as a preparatory step the type of the 'hash_algo' variable
-> should be changed to unsigned int while the function is still in
-> "fetch-pack.c" to avoid this; you'll convert it in the next
-> patch anyway.
+On Fri, Jul 17, 2026 at 02:35:57PM +0800, Tian Yuchen wrote:
+> The ce_mode_from_stat() function is a performance-critical static
+> inline helper in 'read-cache.h'. As we migrate configuration
+> variables into the repository struct, this helper needs access
+> to the repository context.
+> 
+> Update the signature of ce_mode_from_stat() to take a 'struct
+> repository *' parameter, and update all callers to pass the
+> appropriate repository instance.
+> 
+> To prepare for the overhead of replacing cheap global variable
+> accesses with getter functions, the boolean expressions are
+> reordered to evaluate 'S_ISREG(mode)' first.
+> 
+> While at it, add a comment for ce_mode_from_stat().
+> 
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+> Signed-off-by: Tian Yuchen <cat@malon.dev>
+> ---
 
-Thanks for noticing it.
+> diff --git a/read-cache.h b/read-cache.h
+> index 043da1f1aa..94b8d3e547 100644
+> --- a/read-cache.h
+> +++ b/read-cache.h
+> @@ -4,15 +4,24 @@
+>  #include "read-cache-ll.h"
+>  #include "object.h"
+>  #include "pathspec.h"
+> +#include "environment.h"
+>  
+> -static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
+> +/*
+> + * Determine the appropriate index mode for a file based on its stat()
+> + * information and the existing cache entry (if any).
+> + *
+> + * This function handles degradation for filesystems that lack
+> + * symlink support or reliable executable bits.
+> + */
+> +static inline unsigned int ce_mode_from_stat(struct repository *repo,
 
-Yes, then the prep patch needs to be done in fetch-pack.c before moving
-it to connect.c.
+This new parameter is not yet used in this function, which causes
+compilation errors in all source files which include "read-cache.h"
+when trying to build this commit using DEVELOPER=1, e.g.:
 
-I had it after because 2 hunks of that patch fixes calls for connect.c
-so this way there were all for connect.c instead of mixing.
+      CC pathspec.o
+  In file included from pathspec.c:11:
+  read-cache.h: In function ‘ce_mode_from_stat’:
+  read-cache.h:16:65: error: unused parameter ‘repo’ [-Werror=unused-parameter]
+     16 | static inline unsigned int ce_mode_from_stat(struct repository *repo,
+        |                                              ~~~~~~~~~~~~~~~~~~~^~~~
+  cc1: all warnings being treated as errors
+  make: *** [Makefile:2921: pathspec.o] Error 1
+      CC preload-index.o
+  In file included from preload-index.c:16:
+  read-cache.h: In function ‘ce_mode_from_stat’:
+  read-cache.h:16:65: error: unused parameter ‘repo’ [-Werror=unused-parameter]
+     16 | static inline unsigned int ce_mode_from_stat(struct repository *repo,
+        |                                              ~~~~~~~~~~~~~~~~~~~^~~~
+  cc1: all warnings being treated as errors
+  make: *** [Makefile:2921: preload-index.o] Error 1
+      CC read-cache.o
+  In file included from read-cache.c:34:
+  read-cache.h: In function ‘ce_mode_from_stat’:
+  read-cache.h:16:65: error: unused parameter ‘repo’ [-Werror=unused-parameter]
+     16 | static inline unsigned int ce_mode_from_stat(struct repository *repo,
+        |                                              ~~~~~~~~~~~~~~~~~~~^~~~
+  cc1: all warnings being treated as errors
+  make: *** [Makefile:2921: read-cache.o] Error 1
 
-[snip]
+I think the new parameter should be marked as UNUSED in this patch,
+and then the UNUSED should be dropped in the next, where you start
+using the parameter.
 
-Thanks,
-Pablo
+> +					     const struct cache_entry *ce,
+>  					     unsigned int mode)
+>  {
+>  	extern int trust_executable_bit, has_symlinks;
+> -	if (!has_symlinks && S_ISREG(mode) &&
+> +	if (S_ISREG(mode) && !has_symlinks &&
+>  	    ce && S_ISLNK(ce->ce_mode))
+>  		return ce->ce_mode;
+> -	if (!trust_executable_bit && S_ISREG(mode)) {
+> +	if (S_ISREG(mode) && !trust_executable_bit) {
+>  		if (ce && S_ISREG(ce->ce_mode))
+>  			return ce->ce_mode;
+>  		return create_ce_mode(0666);
+> -- 
+> 2.43.0
+> 
