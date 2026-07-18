@@ -1,89 +1,129 @@
-Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D935128BAB9
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30235369D4E
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 09:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784364757; cv=none; b=VwxYbSjstluMm41H0XUzYoR1MSIRtsR1AnQaeNYuEgoumQon0HPTIGVfVoAkszp0eMXDn5hyrgiYnHhHoIZjqAvFCMDXk891KX0F27ij5/wF3xxccBpmCLFSpRUtOyqGR4+lYuN7LMJ+3nnAtV43wZS85V0UJZHhWoRn1uZwo3E=
+	t=1784365530; cv=none; b=fVY0uWIcoV7Pf/Fy4kY8fkrQJ7GBgbz/1dcI/KDNrkg6EDvtttO92BSCwWImGXZ0BvMOZQAGe5ATlAG0oA1ac9eby1THqZexeGCyXuElhm6m9Xt8x/5Z1BSNs6dLkfn2pV61StBkAwaj3kLK8zld9kr8+eBwiMExdcCWUXAaxos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784364757; c=relaxed/simple;
-	bh=KoivnmfQWSf3dhQSUAmEgWGP1cMK+sAW6Mt1nQja/HQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=J1zhjkEN6tinIKAfjaZychyY4sDe2AYZC83JhwRgjvHuCcffGCZrgvk/Hp7RRJgO3HTWUsqO7zww5XMSEKzsZIEmhsYUUm2ze5ayVcEZO5JM9emjLUSXAUgmPw00nst8ALz25Y0E5WNemEMrGy7aLLIPnHFTTXY6OqT6N/luyGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=UQ+KZT2u; arc=none smtp.client-ip=157.230.60.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
+	s=arc-20240116; t=1784365530; c=relaxed/simple;
+	bh=GJtz4yeSmaE5iiBj60d+C0x2h0ZqmBTvQy7lpKtc9nw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=byYmQQOZ6JMEw6DInlBoSxbp+RT0xasLUrAQvfHpoKj4wqaXUzYKIYOqrL0C20yWyfb4gR8u4Fw6VzowEIOcm1s6sKJh0F2zXN44Bs3QwzotgYyRo1cN1idOz8gobbv65fTq1tzJ9zG7xLYqYBlDBIuOpV0GVZmQx2aH1/ctGu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Qc7MNs8w; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="UQ+KZT2u"
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id 19DEE60E1F;
-	Sat, 18 Jul 2026 08:52:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1784364749; bh=KoivnmfQWSf3dhQSUAmEgWGP1cMK+sAW6Mt1nQja/HQ=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=UQ+KZT2u6gM+P07IiDpaC1t2nhiq7BZyL16K64Sw8dDnFCcQACfQyhcJHwgZkeIhR
-	 bZcmdUDEqJr8SFDgHSGIaWsCWaU2rjWDX7EtPDFcMXJAaqDhHD3zaLleeuO6VXk3O6
-	 vQWdV+HPcXHsbUAEH2B2Q40Y30kd/SpEMmbjBje8=
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Qc7MNs8w"
+Received: (qmail 60807 invoked by uid 106); 18 Jul 2026 09:05:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GJtz4yeSmaE5iiBj60d+C0x2h0ZqmBTvQy7lpKtc9nw=; b=Qc7MNs8whQDTvqcsy0IAgEiDYDDDCol4zUaS8L1oo841e7r2Y89E8/rlSMlFyVgNJU/w6mjFlfCgV5Tx2rrVXafpvKXwLdhFNXhdolFNvRuJ0RQmmqbQGDCiSqqVCfNyCPqxZwwRFVOT/GkfEQEycd5IkRVtsFLOH00TXRG7q/Q+mcVr3TehoCWnZLBkFJOGT5SyA3GzGwgHSAgajPhvGvwnRgx7XJ6j4s3odZE4o3d5J6clXQ94ikfxn5aPl9I4smVTuUXeg6JHRJ8qISdAFPbGrSpIGHBOH0EGkbdB/CPhRMYxdWTxYza7VeaFTa9L4QYhBSUaUsvdK/bffM2zCg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jul 2026 09:05:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 107396 invoked by uid 111); 18 Jul 2026 09:05:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jul 2026 05:05:32 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 18 Jul 2026 05:05:27 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] send-pack: introduce a `no-ref-delta` capability
+Message-ID: <20260718090527.GA30873@coredump.intra.peff.net>
+References: <alQ7U8TOWjhasaWk@com-79390>
+ <20260714074506.GD4058320@coredump.intra.peff.net>
+ <alaxDPps6mg32C0g@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 18 Jul 2026 04:52:28 -0400
-Message-Id: <DK1KIH6CXW0X.1U2V3GU8L6HB7@lfurio.us>
-Subject: Re: [PATCH v9 5/5] history: re-edit a squash with every message
-Cc: "Phillip Wood" <phillip.wood123@gmail.com>, "D. Ben Knoble"
- <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>, "Harald Nordgren"
- <haraldnordgren@gmail.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>,
- <git@vger.kernel.org>
-From: "Matt Hunter" <m@lfurio.us>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
- <pull.2337.v9.git.git.1784128573.gitgitgadget@gmail.com>
- <fb76afe31c98833582d2b6be764fa3a1c8b71bbe.1784128573.git.gitgitgadget@gmail.com>
-In-Reply-To: <fb76afe31c98833582d2b6be764fa3a1c8b71bbe.1784128573.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alaxDPps6mg32C0g@com-79390>
 
-On Wed Jul 15, 2026 at 11:16 AM EDT, Harald Nordgren via GitGitGadget wrote=
-:
-> @@ -130,6 +131,15 @@ marker meant for a commit outside it. The body after=
- an `amend!` subject
->  replaces the oldest commit's message when the marker targets that commit=
-. As
->  an exception, a range made up entirely of markers for one target is comb=
-ined
->  into a single commit, keeping the last `amend!` message if there is one.
+On Tue, Jul 14, 2026 at 02:58:36PM -0700, Taylor Blau wrote:
 
-> +The changes from every commit in the range are always folded in. Only th=
-e
-> +message text differs.
+> > So I have the feeling that there's some ulterior motive, or that this is
+> > part of a larger system, but I don't quite understand what it is. And so
+> > it's hard to say whether this is a sensible approach.
+> 
+> The implementation motivating this is write-through in the sense that it
+> first parses and spools the incoming pack, then replays those exact
+> bytes together with the same ref commands to an upstream receive-pack.
 
-This sentence kept puzzling me when I re-read this part.  That isn't to
-say that it doesn't make sense on its own, or isn't correct.  But in
-this context, I wasn't sure why it was included.
+OK, that kind-of makes sense. But is that intermediate layer not
+indexing at all? As in, it does not know which OIDs are present in the
+incoming pack?
 
-For whatever reason, the diff from your v8 made it click, and I believe
-you're trying to explain the previous sentence about the last `amend!`,
-stating that all the other _effects_ of the other fixup!s are also kept
-even though the message changes.  Is that right?
+It sounds like you _do_ index it based on this:
 
-If so, I might suggest removing this sentence too.  At least to my
-brain, it doesn't contribute to my understanding of the command, and
-makes the paragraph feel like it changes subject in the middle.
+> In retrospect, I don't think the cover letter distinguishes this well.
+> The pack that we receive over the wire is stored byte-for-byte as an
+> immutable artifact, and the per-object physical index is derived
+> asynchronously. That indexer is designed to operate in a single pass
+> forward over the pack.
 
-> +With `--reedit-message` the template mirrors `git rebase -i --autosquash=
-`:
-> +each `fixup!`, `squash!`, or `amend!` is grouped under the commit it
-> +targets rather than shown in commit order. A `fixup!` message is dropped
-> +(commented out in full), a `squash!` keeps its body with only the marker
-> +subject commented, and an `amend!` replaces its target's message, unless
-> +a `squash!` folded into that target first, in which case it keeps its
-> +body like a `squash!`.
+So I can see how REF_DELTA makes a single streaming pass harder. But can
+you actually do a single pass even with OFS_DELTA? You'll need to look
+at earlier bytes in order to resolve each new object. And possibly
+recursively. So you must maintain random access to the new pack data,
+and you must maintain some kind of in-memory structure, at least for
+each delta family (especially if you want to avoid re-generating deltas
+over and over as you satisfy a long chain).
 
-This bit that comes right after would possibly do better as its own
-paragraph imo.
+> (Supporting REF_DELTA there during the indexing process is possible in
+> theory, but requires keeping an OID lookup around, delaying resolution,
+> taking another pass, or rewriting the retained pack. This design avoids
+> all of those.)
 
-Thanks!
+Right, for each new OID you discover, you need to ask "is this an OID I
+was looking to resolve". But the size of that table scales with the
+number of objects in the pack. And if you are generating a pack index
+with one OID per object in the pack, doesn't that also scale?
+
+I.e., I am having trouble understanding what makes REF_DELTA more
+expensive than OFS_DELTA, either in terms of random-access to the pack
+or in terms of indexing memory. It's more _complicated_ for sure,
+though.
+
+I guess maybe you are also trying to send the resulting .idx to each of
+the child receive-packs, and you want to be able to stream it to them as
+you go rather than waiting for final REF_DELTA resolution at the end?
+You can't send a literal .idx as you generate it (because it's sorted),
+but presumably you're mostly trying to offload the hash computation, and
+it's OK if the receivers still have to sort the set of (oid,offset)
+pairs themselves.
+
+That doesn't seem all _that_ compelling to me. I think the more
+interesting thing is that in the worst case, a single REF_DELTA can kill
+your pipeline entirely (assuming you are trying to do as much CPU-heavy
+resolving work as possible while the pack is transferring). Imagine a
+pack like this:
+
+  0: REF_DELTA(abcd)
+  1: OFS_DELTA(offsetof(0))
+  2: OFS_DELTA(offsetof(1))
+  3: OFS_DELTA(offsetof(2))
+  ...
+  N: base object with hash "abcd"
+
+You can't resolve a single delta until you hit object N, after which you
+must then resolve each of 0..N-1 sequentially because they all depend on
+each other.
+
+The problem there is not REF_DELTA itself, but the fact that REF_DELTA
+allows you to place a base after the delta which depends on it.
+
+If _that_ is your main concern, would it be worth a tighter capability
+advertisement that insists that bases come before their deltas (if they
+are in the pack at all)? We already generate packs that way by default,
+and it would really just give the server a license to reject these
+non-standard packs.
+
+But now I'm about 3 levels deep in guessing at your real issues, so I'll
+stop for now and see how close I got. ;)
+
+-Peff
