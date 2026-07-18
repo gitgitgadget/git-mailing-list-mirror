@@ -1,118 +1,130 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18031DED63
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 12:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784377866; cv=pass; b=MPt1ydVPIJ+qJAltvAZQ1XKx3XgB9AgnHfb4dGDuKIUF9+ndld78+iCh03XPSiaSG94brEvxkQxD21WYVHUYpoIjkghnjbQhfTcrFNGxryeY0mQtolcHTyh3f0HnUZ0TkegpVAk0LioHBOpSB++u67+qxcP7RNwy1udnu9AtTWU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784377866; c=relaxed/simple;
-	bh=QAJKSCzCkcXNosaPNO8eBy9UTqyQzDt/mlrTPt+8e6Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SYqTJgiJIZKyLJqAgBqb4uKNY8PYWDDayMJLxnXHMruAMzFzj8POsqNmIY1kGLagYtBj5l9TMUowdKnrN8V2UkxDFOUpyW73JzezrDVGhmByJhx/LmTmBT3Aru500Z4Onjju+RL8Py7CGI1OWWEjIRMXd2zJsom0RdZpHFNgGIM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BvzhdKMF; arc=pass smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911765733E
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 15:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784386867; cv=none; b=HUirL5HCEI9+Rr3M/wQqSRrOC8j8iJtyKMveJqDCqU7OMLbC1RfA0n6zS/JTUJNHck4nw+BONu0xjziAbclQfPIcf2bgbz/4BNjtLrhedlawps/tEeE2ipr5Ro6YuJLXJ95O71mOtDCaQV1QTVbsoxH4lai/Nqalb6Viwo1fMNg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784386867; c=relaxed/simple;
+	bh=S1P9MXKpF7IkmKQ0R9waEIvKhxZnLTBpaDmcKSJAJXM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ieQ73Lp0i2vJ7Z5yeWFbrb/lnObxniEjGcIF7T03lbBQ7MpLDXccitrAjFa1F5VTVXwbHN5toIvwo3rCEYWtIoHhH968JrwYH4OZcNNZIBPO8O0CKJpNaidA+aGBpHdH4mab4Er9KmYUcHYxJTc/ysWXkR73oyuczfIhAWnr1Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9f0AAWM; arc=none smtp.client-ip=74.125.224.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BvzhdKMF"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38dc69c74b8so6638811a91.0
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 05:31:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784377864; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AmwXIAdFkaaut6nPnPxLg2xld/K7k+szBqvDxFsYDTBIUvvflSjFVYN6RTzJmjEur0
-         s2jikjX0xvkaUhzqQ7GlR/pPV92t+JYZS9LxPpKTfYpktdvYutsxwN7YRrzTezFMs5Y4
-         WskOYD/tn9z2giA979Vm/JffY1vpIIGIrWiWOejh8igTqiMBwJKlFiu8WublZqru5li7
-         Q+11MBljHwCMMsS/dXSrVENJwrSN9APkA7AcLDXZfuzwyn/5XaLIY0fY6dhFxlHPvfmc
-         sN3tI2YYPLGSnRgEiP9KlqA0SiD1lo2aj/1JvDJFMxtZODPciWAfVzsKbGqMD76v01nE
-         +Vbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZgIa2nvlAYASx0A3Vy396EFcyG+Ae8Xu0EszFJ8wQ0M=;
-        fh=rFiNvNQNxUrLN5f3zmV2oTcIFmz47YHTSOdr52yHbjE=;
-        b=N7et3MxtSZwIyxkcKs5D+h8cS/rcZQ6za/jIrq1hePuYUBjc1RiJGuuqCNS8Efmnnv
-         QmdiKZuHzNdq7eO7qbXlZfIHKorw0HAOuJmRGYpJxpedVRtZ0kX69VsAozKdUD7c1r80
-         /+kKMQcLj6PYzTSR8QbbMqrnhc3kyCkzpuLfe72Cw+5BdAdwW53kKOoZjUQR9iPmRJfz
-         CENNphURl4PDBGK7MGBIfA3v7dX2CLlbClptqZAz9q8Zrb0sXEw42yyP0CPom0RfghRe
-         /JgBD4k7obrmrB15Y3K0xBi8yoD4A7HC4jq23HHzYy+GlsqFmEa/KsXSf/uxxBTHF2LT
-         QzOQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9f0AAWM"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-66810946e63so3630236d50.1
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784377864; x=1784982664; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ZgIa2nvlAYASx0A3Vy396EFcyG+Ae8Xu0EszFJ8wQ0M=;
-        b=BvzhdKMFWVbkr7jgdWYmDcNMCdIVsLh8ImGzsjcoYz+pwcgpoy6trp/oIFx0/3Od1F
-         UZOpl/86pmCJssA6dSM0QLewtg0ADWCu25HYBebB2e34/o4mj4OUWiYdR63DC1vv9icx
-         6e+tZ6Hbj7MDX7dDNbdYBTFc+WW7MaJs92cY7vQ46UoKA9488AEMaReOw9Q5iAmijbdm
-         KTgiWh4u0GkY+DGRgoZe3Iskwg3RJ7zKGGlBkoA6dcX/9RTX6R+qtlKJuGDxlmEhLCt7
-         I9OCdQkg4wyXfmavAurdZobM2YsJQLc9GZgccjaNNJa2RikvZnQw1i0/Nh6L50gstC2D
-         1O5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784377864; x=1784982664;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1784386865; x=1784991665; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ZgIa2nvlAYASx0A3Vy396EFcyG+Ae8Xu0EszFJ8wQ0M=;
-        b=GAIB3t+3x89RapUJSLTAhMmTVryG21B8809at/M5VcVbSvBw0YXU7SaP0h4UoPH/yW
-         LLEB8bbWu2qv5BA9KFuG1lfGADdwiGJKbs5bDD+1Ty7PTUIN0vzy5FbDarqJLmfT7aIm
-         NeyjJkCDyfX9Jhe/Us817IwydU2t0AYpkE9j7P8Jb1VgsFjdjrcoDPwZkPBYda22q3Ag
-         do+huqg+7LhZff4Yvk/pEzqIIV+3Ton/OnLaiJ1CUzsjwoEvnrz0W7dbY0uUF6TcXScm
-         +pNx0ibS1e0CDybYWPytr290dNQQ7xND/B68u9KlHFVwZWXlOQhTkFkEV1dDO360aV8u
-         CmvA==
-X-Gm-Message-State: AOJu0YxOGqvwxTNO9ATDyzVLojl0BK933AE3X4uLYI7WEvG4nMDetL5y
-	rnX+NWn/oGFECp79bsEaDJsvDYBQXlEXauWiNqvKavf/5hSkppwlzXbQaQC8yZeu7hRuhFW/MgS
-	f8b+ewxukftrJ5eUBQjQsr6aUX/+L3cZcY301
-X-Gm-Gg: AfdE7ckbsLmg4UVsaIS73sinVFtoyHXuxyaGdu16C/+JqTyLjvYdeJ/1XM2aoj0UXTy
-	MzXJYBjLTI1Ijub6h8PYi/ZJoMFjZb2o6+Tu8VLccgV+/uYMstR3s5+Gocrk1Ndro5o+Xzeq/8o
-	lMdxmOwrG3brsFCwKbRVbcq5Hig6tJhPyVcPnPy5/oDfgVMuze4FqjvmWpETqj0t1omW/43nu65
-	PXVMlR+yqfniKK9lcR9phZp+3iezgS7YtVSi97xbv+JIuUhMLv3wE00vELjGHN0TB8XjUaSyJCD
-	N8Hi4g75pRcxeg5d8ie4xl6QixBgXA7IwRE/k7MQ62R2DYs=
-X-Received: by 2002:a17:90b:3942:b0:387:e0bb:57ff with SMTP id
- 98e67ed59e1d1-38e4b5d99a6mr6926716a91.38.1784377864036; Sat, 18 Jul 2026
- 05:31:04 -0700 (PDT)
+        bh=AjCM0F24bYlH8VI7lmxFaWC95xVZry4IO4ZS+S6ayPM=;
+        b=b9f0AAWMcBMHwewpO/2uJqb4coMVLaqJm7M5NscGAJEwqJ0O8RljgFIiaeldHi3gBP
+         sVIEK8Cn3h90V39NzNvVZzGrir4dH3Dc+H8jLReaHctOp6bnmHLBs+wKEWzzwqk5KsHC
+         mR3z06OsQaHzbNJ72dkpJM+7X6vcGsRWuwTKBdFwD7oSzM3OBl+k+e4CRB4ODuvdsi8x
+         Y1OEzWpHdsAWHgHyjxtqom97T3l7ZfTPyiFjPp9Qwfwol8HmjllJI1aPyvIIG61ewKHR
+         jzsziNFm0FrysspsXTxtr4ptf3nWReF+012yhpe5nUohKWB8wrThAW1En+tkzibnIf4u
+         kpHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784386865; x=1784991665;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=AjCM0F24bYlH8VI7lmxFaWC95xVZry4IO4ZS+S6ayPM=;
+        b=JetRsxQbqDJqADCXkgXG7fPhvsDPJbt/aw8dL+CXnd6sFlVgtI/45jB3/+WuRfnV5G
+         DdQK8E6d4AgyKcHpvUXI9aBPEcXawRal9tvlc5/X1NzPMgHIashyu29QhFWxBBfjV0Ey
+         Ngd3t7EglExCaekvpPzx7+Zaops7pzkn6sxwhe84tHvhbVar/80JGXeTIrYE0ifUq2pL
+         LPLCBPmxA19vcLgIz2Hdew4aDmHCQc2jdwlt5OU0KId+h2DfEdyxPcMHiajTRmgHNvDN
+         g7aO8KvkPU2iACP/xcMLuB8rQs3UIhPryyDGmjDnz6rM5cRzy1Uw6sqBHuT8qPyUwKl0
+         ERrw==
+X-Gm-Message-State: AOJu0YyHMN4L1GPtjIB2l77wGlY3nzkaH4OEvr5T93C1KBliMPblQi0U
+	mkfcsXNQVQR4LDb0KsuZBA+hCkhRlcmq+62CGgHkQn7zXzvbaZrZjVJ5
+X-Gm-Gg: AfdE7clA3P1BQsyrOTuQLbGPIizYxvSN8A5c3nMKCE8xluM+hoWtk9lkMm2dxXl2rU7
+	OpUiMhccULac4H2GgTnJ/nymYdVrpJF4qtgiQRmoHcjLuBJ7aOLC+KeBSuEPZTDFy52OACsR+QY
+	XYnULb9VYIfl8WPFoE9y/12zQMTUaerB7QRaJUReRKttqPn+UKhOYzw5Aow6MXaI8MrwaphuQPo
+	49xdvS28itBKaBGfvm8Q5y4U2OjE/47KeR/atGSMr7ync6yFSi66YjxFZLbvGqYo7kYJKdOQ3nJ
+	LVb4ulHiBZHG++8X61O1bRWwTMOC2ze19WhlVZ9WcjyxVaYlaveda5Jnui8HQb/cJ8rBpZhejL3
+	j88eShDrKJKsnMIcNaITEcIHpD4ECL9UhHmQ+pe+fs+qBHViWt++vuFeNWeqQvsirR/geDRAmg2
+	jWbqxySsGRDPFMpYc9bAl5MNs1L5OEg4P5L1H6TBiE8M6jojGxUCsVKLrOrFQln3AfKFTPRKubk
+	/KEnHIDlYxpkQJN1hbNX8DdkAWpEjF3
+X-Received: by 2002:a05:690e:488b:20b0:664:d37d:5fef with SMTP id 956f58d0204a3-6683bd67e61mr1470457d50.72.1784386865247;
+        Sat, 18 Jul 2026 08:01:05 -0700 (PDT)
+Received: from [192.168.1.110] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90778562524sm44114466d6.13.2026.07.18.08.01.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Jul 2026 08:01:04 -0700 (PDT)
+Message-ID: <c8d443a5-3cfb-4752-8716-cf0d8fadd9d3@gmail.com>
+Date: Sat, 18 Jul 2026 11:01:02 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com> <20260716132848.95982-2-r.siddharth.shrimali@gmail.com>
-In-Reply-To: <20260716132848.95982-2-r.siddharth.shrimali@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 18 Jul 2026 14:30:52 +0200
-X-Gm-Features: AUfX_mxXIMKaNPbPvLMNcMe0D984olxjVOPB_9Bx-XLlW46RaIZ-lCknhJOez3o
-Message-ID: <CAP8UFD2ZNmWh4fjh+vFvKCihfebg2yif9=xLjqpKZFgF-O0RSg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/7] builtin/repack.c: add --drop-filtered and
- --dry-run options
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, siddharthasthana31@gmail.com, 
-	me@ttaylorr.com, ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] trace2: tolerate failed timestamp formatting
+To: Taylor Blau <ttaylorr@openai.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+ <alpXW5U6sndZtgqV@com-79390>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <alpXW5U6sndZtgqV@com-79390>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 16, 2026 at 3:29=E2=80=AFPM Siddharth Shrimali
-<r.siddharth.shrimali@gmail.com> wrote:
->
-> Add two new command-line options to 'git-repack':
->
->   --drop-filtered: intended to eventually delete objects that match
->                    the filter specification. Requires --filter and -a,
->                    and is incompatible with --filter-to.
->   --dry-run: show which objects would be dropped without making any
->              changes. Only meaningful with --drop-filtered.
+On 7/17/2026 12:24 PM, Taylor Blau wrote:
+> On Wed, Jul 15, 2026 at 04:12:11PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> This change removes all uses of xsnprintf() from the trace2/ directory.
+>> There are two uses of xstrdup() that could be considered for removal,
+>> but they only die() on out-of-memory errors instead of formatting
+>> issues. I chose to leave those in place for now.
+> 
+> I may be missing some Git for Windows context, but I dug into this a
+> little and I'm not sure 'gettimeofday()' is the culprit...
+> 
+> In my understanding Git for Windows's 'gettext.h' appears[1] to redirect
+> the 'vsnprintf()' inside 'xsnprintf()' to 'libintl_vsnprintf()'. In this
+> case, we have seven '%' placeholders. Gettext can store only six plus
+> its end marker inline, so parsing the seventh causes an allocation
+> before any timestamp values are read.
+> 
+> A failure there would produce the observed -1, after which 'xsnprintf()'
+> dies and trace2 can recurse.
 
-An alternative would be `--drop-filtered[=3Ddry-run]`, which might be
-extended with other `--drop-filtered` specific options later.
+With this perspective, the issue is that gettext is doing dynamic
+allocation and getting a failure there, which explains the transient
+nature. This is an interesting idea, and a more likely "application
+side" error. I'm still curious why this is creeping up for the first
+time in this burst, since nothing has changed in the application, to
+my knowledge. 
+> I think that also explains why calling 'snprintf()' directly helps.
+> tr2_tbuf.c doesn't include gettext.h, so I think it bypasses libintl. If
+> I'm reading compat/mingw.c correctly, 'gettimeofday()' fills tv and
+> always returns zero [2], making the zero-initialization unrelated.
+> 
+> Would it make more sense to fix the xsnprintf()/libintl boundary and
+> treat Trace2 reentrancy separately? I still can't explain why the
+> allocation failed, so there may be another GfW-specific piece I’m
+> missing.
 
-I think separating `--dry-run` from `--drop-filtered` like this patch
-does makes sense though if we think that `--dry-run` could be useful
-later without `--drop-filtered`. The fact that a number of other
-commands already have a `--dry-run` option might be a good sign.
+I think that your suggested change has merits and should be pursued.
+I'll explore it a bit to confirm.
 
-Anyway it would be nice if the commit message explained a bit the
-choice to have a separate `--dry-run` option.
+The other justification I'd like to make in my patch is that the
+xsnprintf() calls die() and the trace2 machinery should be die()-free
+whenever possible. Solving both possible causes is likely the right
+long-term approach.
+
+Thanks,
+-Stolee
+
+
