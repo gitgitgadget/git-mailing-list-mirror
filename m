@@ -1,93 +1,121 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CF02E8897
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 07:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784361423; cv=none; b=JieLIqDYeNy7M6H7XBGJ5L7zIW95hS4Ql6vW2quqdNZtI15tzGp2cNA84CzkcnSPuMHIIJPImDMOGSu0Jb7iinOfhmtpeMGLLjS2K2uej+FeLdcH/cHoQm/7Li2d//f9Gqt19etapkn8BVo9tOZEqly90z66oFkjT2qWak7oBAY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784361423; c=relaxed/simple;
-	bh=Rk/Mh1zNJaxQYEO/9AtixD2/93mLf5bGNw7jCoxyklY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D34zCdKulwoIwBmMgz5D6/8s5Kz8oUKz61EfQbI3CfVnmFj3OG8+A0LRDj7wVLqX8+aVI39KVraXWBJSraXIOJiF3s80ikbj1JmkYsb07tel+r0GQ4CXlvA0SXs2qsJogEQPbLxu634x2XzxzazYBxe9H5OJvBrppHW7QvklJas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JbmTLXQr; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843AF324B2C
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784361917; cv=pass; b=mYMCCQoVpw+vKKguYQaaQ+E/hRPgeQaVatSyeUZBPFcFIR2GIZysn3qrkkSg3Nl5sTN2Oc7KGhgM7kK5BsYZzWxnBcGPPoJIqH96sqiDQwrVqBF+6ADyXpjtdfwO/wxR8YeMIpweW73mPwrOwDHHmkW53O7PhGtyG/HcadBjtgI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784361917; c=relaxed/simple;
+	bh=Ud4Z1v56s5qScUXm3BNAcVbLwdnD+EXPSJyy5Fu0/eI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fviik6f/jC5DvkYYLWZ11XaNYfaSFaM4wHVc9nmWNVdHy3dOHH/u3ucci6UcYSmJ64YqxOEhU0d3J4zUFqqWcir5rTBXlfZDL/q9aEzxfoDAf28cjHPwa0x+eeRu/JRjKJ/Ujb9J69ffWLzyTcTLbBZlWWrJ1hskebj4zzkqqF4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IHqSuN2j; arc=pass smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JbmTLXQr"
-Received: (qmail 60139 invoked by uid 106); 18 Jul 2026 07:57:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Rk/Mh1zNJaxQYEO/9AtixD2/93mLf5bGNw7jCoxyklY=; b=JbmTLXQrcXMihUNbGz31WTbeqB6SDOYXfh4SjKwk+MMgNLr2Ui1oGTbDZEoRcN8Sz1F3t4dbWuoq0i3bmqB5xUiMqhb7P0uEwBddbPEeLgacPZVqwuLaGOWGwLCRZql/NrZqQ87hocW45oCq1G5vZP1J4xVbjfmFFXJ4LJCXIvXLaUUrPIImEgHdRf4MSKAKbJzS1c8HFL/u7vbDk9tH5iYhefnweYqSD8f05edVfw4FI8Jed1/bFkZNXncthH1DwQow/MxU/K2XjHGopLo5jNfmkab6DJBjoWRqGCCpN5uWriL3zXWHw17Eh4c9p3v3R9bPP2+xpnotZ3Q6EsRtNw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jul 2026 07:57:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 106677 invoked by uid 111); 18 Jul 2026 07:57:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jul 2026 03:57:05 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 18 Jul 2026 03:57:00 -0400
-From: Jeff King <peff@peff.net>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH 1/4] revision: move bloom keyvec precondition into
- function
-Message-ID: <20260718075700.GB22588@coredump.intra.peff.net>
-References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
- <20260717-toon-speed-up-last-modified-v1-1-410418f18614@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IHqSuN2j"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-39c8dbf4f38so48310161fa.3
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 01:05:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784361913; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nbuW7A8/rVueRIo1WlyAQUFJbS4oFUc4NeKRjg5S8U9kQvPtQUnQwpavBG2U83XgGI
+         qJjFpHVLBv1CMZud/K3iDb403Nrc4c7UliqYZb6J2YC+k0Z//D/UEkwl4GIbat2i79Xt
+         K0TpBNFnhK3IPQOZxrVCngsUsv2Q9Iukbfqcz5NBP7T1/xkA+56mkhnd0brX81cNUtWd
+         rHOPz3DjfsQh9Q9TbgCcuxmNV33gflzFGY3tqLeW1RyuszGGxCYPEbL3dnijzrYgDkbt
+         xBgQDeR8T/SkyElUB65gWd7krTo4UQ31jhsAQznnBC0KZIW4ImH5ahMkhr7UWC9NKW+Q
+         VayQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=lYGN+MFH2Ye/9qeWdZn154Wezb8ao5aYMkXOCCgvu7M=;
+        fh=v8NFtVHnyC+/bq+jTyZ7/j2AzjHcFHpenvAYXyxs31I=;
+        b=BtRArv/jSWd413YAj6XZBr9ITqcLrC7XNG9PGiyCwAYIDWv4J2ICezkHr+u9L+XYUr
+         CdXIH/7jkrCGgru8H11iEgawx8ayrM0TiR+QmyeosFAU/ngLGBewjtsYmap43Fq+KfzQ
+         NFeXuhuhmFydY8eR4qDRyk0cIDDcBevv7ZfczNJpzlV/khDyTuyh2vcAatI/pKdehKvA
+         ysYDU/GWTRyzOyFMSrhkbtGREqd8cyxcXvn2ez26plbrjblcEDlmdg7XK6ErWthimd6J
+         EvJcXwW9fD93Jn6VRchrqP10OOcat/wPPyZ8Pojz7KvBnqnVhQFCaPly761VCpMVkXKR
+         7sAA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784361913; x=1784966713; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=lYGN+MFH2Ye/9qeWdZn154Wezb8ao5aYMkXOCCgvu7M=;
+        b=IHqSuN2jkKmqosEzxQgZamI/39H7v+wT2vwtGhM58XgqHzoyeaxPoGLIv/sb6geaiX
+         qXI0zbyvx6mtBO9bk7ZHc5eu9vOK54fsgE1pf+GzyxNBHje4TrFZ34aetSmaWrdJ+Mmo
+         S1WG+u3Cb0CXajz+oUUCqUnk+J7Jlrm8tiggQvaGpT5OFPK1wAy3IGYu6WGdEK6LEND2
+         MdYmKq7r2GnrNUfTSll1jkTnzx8aFX/YGClMnJFWv1zuOeweX2RCTewNGI0U0K2n6jfJ
+         g8XScGSec7g0cEuzCRYXfWiNiBFQRbasNtC0dbCtdZZ2NAZpa/UdZR15c0CSeZUH+oZa
+         UKHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784361913; x=1784966713;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lYGN+MFH2Ye/9qeWdZn154Wezb8ao5aYMkXOCCgvu7M=;
+        b=rVXnJDFfD0gTeMvShjDH6u+xTDAAsFUaWcQK5cWCjWdGF8oARwLXBVxWW5R2vMnxX3
+         mAHNeezpbiuIuk/kmfmx5dtCwCn22K9mcK4P/K7CS+2Z5V0ayni+k46pU8MIi2EwWCHG
+         vQ4VrVBYDPo0egGheLCqGhLCbqP+Yynsnilu8lqApH0veVPoA7+gpDLP/CtT2RZSuzPn
+         PD9a2zPj7bd3S8MEQpYkdX2Oi9+fMFmqIRXnSzEz6Wv74E/tedh5tfq54SDlfikpv3/b
+         1SR2fIYz2KkVzSNQyj5IIpaSWSxyDBFAmHBkNsUyTooe5sxgKdbHkfLQFcIfBiIr0QI7
+         VAhQ==
+X-Gm-Message-State: AOJu0Yy1+3bkToHZGF9i/sUab1zxQU9hPF9YEqECLVkuXvzKnv1sn2tn
+	GFoaBlNLTKn/wALjpGJEg/tjbLrmPG6qICuV7/ALsLI9YjnhZGYLm9Bnh9y8BUZnLqGYvVLQ3Qz
+	FOiTJQUAq2/VmEiLug6YBxEswV9hk8Gw=
+X-Gm-Gg: AfdE7cmc3DsS57Di2zabHTjKARKCZD5SDIOcNYa5n+HYLQ5NdQcWWigyeTGI/ojxu3Q
+	9oG3RMJ8iJWH/vqptsf5b+OZnMcsRO14hFScRF3irHc67Kdv9b6Ps1LZf+wOBVZCXL4BneGY5uI
+	g3HaY8TQaKRE+76oYjxL9ji2u1yjPnupXWa9+YxNUCHs+djL86VZTpCNK6H+SxLlfTfHaxWme50
+	OK7s2A8/hZ9/63HzSVlDeGDHJ7dtPEcb8ieYCx5RsaZy76RI1ck0xT02Nj95rhv+x+t0z00OVmF
+	OsT4UTejl8I57SEB85RL
+X-Received: by 2002:a05:651c:c90:b0:39a:d7f7:9818 with SMTP id
+ 38308e7fff4ca-39eb286e341mr13688281fa.28.1784361912879; Sat, 18 Jul 2026
+ 01:05:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260717-toon-speed-up-last-modified-v1-1-410418f18614@iotcl.com>
+References: <20260716185045.229320-1-sahityajb@gmail.com> <20260717144620.259031-1-sahityajb@gmail.com>
+ <20260718073135.GA22588@coredump.intra.peff.net>
+In-Reply-To: <20260718073135.GA22588@coredump.intra.peff.net>
+From: Sahitya Chandra <sahityajb@gmail.com>
+Date: Sat, 18 Jul 2026 13:35:01 +0530
+X-Gm-Features: AUfX_mzR5n0m6fiYx8KL2zCTAbAoVBWY7Ol5m9pHaX61fzqVOr01L25w6xSi4xo
+Message-ID: <CAP=WS+tZuQyodN1_0Z4D7-uD9dpi9CKp8_sWvVTXqM6hWcwx6A@mail.gmail.com>
+Subject: Re: [PATCH v2] wt-status: avoid repeated insertion for untracked paths
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com, stolee@gmail.com, 
+	ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 17, 2026 at 05:46:59PM +0200, Toon Claes wrote:
+On Sat, Jul 18, 2026 at 1:01=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> The patch looks good, and I think this explanation is OK-ish. But IMHO
+> it is still worth talking about the quadratic issue, because that's
+> really the motivation here (and what the "harder to reason about" is
+> getting at).
+>
+> So maybe something like:
+>
+>   wt_status_collect_untracked() copies entries from dir.entries and
+>   dir.ignored into string_lists using string_list_insert(). At first
+>   glance this seems to be quadratic, because we may shift the backing
+>   array, incurring O(n) work for each insert.
+>
+>   In practice, though, the entries in the dir struct are already sorted,
+>   so each we never have to shift the array (and only pay the log-n
+>   lookup cost for each insertion). But this is subtle and depends on the
+>   behavior of fill_directory().
+>
+>   Collect the entries[...etc...]
+>
+> ?
 
-> There are currently two callsites calling
-> check_maybe_different_in_bloom_filter(). They both check if
-> revs->bloom_keyvecs_nr is not zero before they call that function.
-> 
-> Move bloom_keyvecs_nr precondition into
-> check_maybe_different_in_bloom_filter() to simplify the code.
-
-Makes sense, but...
-
-> Note that this changes `bloom_ret` to become -1 when there are no Bloom
-> key vectors, which results in `count_bloom_filter_false_positive` not
-> being incremented. This is unobservable, as the Bloom statistics are
-> only reported when key vectors were set up.
-
-This "-1" return is kind of subtle. The function is really a tristate
-returning one of:
-
-  0: no, it's definitely not in the filter
-  1: yes, it's (probably) in the filter
-  -1: we could not even check the filter
-
-But nobody ever cares about the difference between "1" and "-1", because
-the probabilistic data structure means "we could not check" must err on
-the side of "it might be in the filter". But that leads to code like:
-
-  if (!bloom_ret)
-
-that _looks_ wrong at first glance (as in "oops, we are not catching -1
-and accidentally treating it the same as 1"). But it's is actually
-correct for the reason above.
-
-The "return -1" you are adding here is not the first (we'd do a similar
-thing if the commit was not found in the graph file). So it is not
-really adding to the confusion.
-
-But as we prepare to make this function public, should we consider
-changing that tristate to a boolean, like:
-
-  false: no, the path is definitely not touched by this commit
-  true: the path could be touched by this commit
-
-It's a minor point, but I think this makes the interface much more
-obvious.
-
--Peff
+Thanks, that wording makes sense. I will use that structure in v3, and
+submit it right away :)
