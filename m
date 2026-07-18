@@ -1,65 +1,65 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1746B339708
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8313783C3
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 21:50:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784411410; cv=none; b=NpRjYL0h/4qSemZAedYYM/qLCZshqNGncgGbTaQhClsaAq5OkhTAMaBOKY+BD0mIY8fq0G3iHzJYQ9/k/fm/Gdmkw5s/w3TTnGjtjCM74HryGI3ByF4nwTlGTkyJHZ9wzQ67Z9lLp8ycyKWLeha/FpUQJL9bNhUw6pvBDnmoDnA=
+	t=1784411412; cv=none; b=MUZcPbR8JDTd+X//UxmJ76lzA0qOCez9r1Ekm1V1a6NQdtvi/bPnoTPP+fOYxBq3ay7a5odgVy5TtOul5fY7nTY5kIVAFzr/HiH+uxZcP01rigOt559jl/xq+/HP9Od4o6imctyaaBgep0CRsLEnBXKLZ51Xl3/ysIDzb2INXYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784411410; c=relaxed/simple;
-	bh=ybf0XRPB6fGoYcQWEAjIRJsRXBy407C2wSdjBILB0Ro=;
+	s=arc-20240116; t=1784411412; c=relaxed/simple;
+	bh=f5N5tWnhRdlIyrj5zcbsJ7/LWTSbXx3OQbDPj89FBTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q9XzOCHUwHM6c3i4n9IDGodBgcmH1C+5ep/nqGIXA23f1hZCvoTF9gR77Mn/ARCZW4JLTIclZX6EKRZKmw+DmlJMC2hD1cuPkuhpO+Qo2Phv8q7Z3xJVdMXiA1mxARApUwt6mFb4TpcAOsISIYHOcXbqsqhoqel8NPsvVel5xxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TdEi+8af; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version:Content-Type; b=b141nMPhB5/hOCqjqHxp5hClZb+gPxbW7Zz+Exi1tZj9LEyW2usWzijjoDZsxCCyrUwOdEcFjExdinTuYLQeOitjLQvcjTvEA7jEbhUZGFR/Ci6K9lO1A0CJYbeymPapFdrwGqYpGkIZmg0XYutNq4x38av72yrOEcijP1osO0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pyeu77JO; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TdEi+8af"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-49548e01d02so8350225e9.0
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pyeu77JO"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4955158f26aso4394955e9.3
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 14:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784411407; x=1785016207; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784411409; x=1785016209; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=kL6y/at/qZ1hM3e3LquL/YeKXpvxJqFCpAqasseW+Dw=;
-        b=TdEi+8afdNDtPdhr6lOE7++uEtYy9Vm8gauE7qHjZa/IpvJo0gomXDQ5Rdl1PflI6e
-         99X8S5OlJVGgiX8ItRvENGxvF57WBhC6CF8m/IZVHE5S2wwp2PYtp4qV4WLTG3Ng06Ll
-         TBiDbvRZekwavTerZ6ONsoi+3z1pFDuabnQTtlI/tzZZZViIaah9Kh22rPRiWnLOwoi0
-         Tgv9ETXBfjprtigSh8fXkWGDRfLmXl5WGhrwBREpE3K2cuxWwTEvNr5sW8v3bhEAx6B5
-         Wlv/DTIxGPB3A4K/Kcr6EYMv5wsXQCjcXrEyBQJuwPRuUHnb48mh0/KrmrY1FGGIvD9R
-         4bHw==
+        bh=KW8AyFp369QxJe9yYHf5IRM+uNNxxl/pg6bEDv3Cano=;
+        b=pyeu77JOJXI5IHYEqpT/ZczCeIqVfZLkug1VatHkpKI3TJZnUnGUnpMXHO6bnn6I7y
+         X4Ybv30p/BD+Axzi5m+8RyF0zvND2K8ib4vq6LOn+9kLPr+ay0/UxEYpnBprhGkmEwq8
+         1W+doZm+t6SiLfxgsmQtSTUmTXh0rkRn1q/AYQFWvYwJudRBbqk7HwTKhLCvATkV60iy
+         CrTzysAPYlS35R01aM6gPUH3BZujvvIOVp3LkfqWow1Omd7p0cedY7/Z4RRHkWE7iXxj
+         Lz62gxtsBU50TQmweU1ZDKsK7WnPcYEqh0mxKf5B+hbs9k4JpGSWJ8HGvebHpyhvZeGV
+         OjyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784411407; x=1785016207;
+        d=1e100.net; s=20251104; t=1784411409; x=1785016209;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kL6y/at/qZ1hM3e3LquL/YeKXpvxJqFCpAqasseW+Dw=;
-        b=nv56ajoxtfziYTPy4h7NFhEeSelCwYWzDw79pW5Jm9lnPVJ/Cw3CxDo5XCKJXrAm8O
-         5j0rW8aoHZN9eJb380mB5oCbHgWaLOTksGUB65/ObRBST/gWcZ7Up6YlzpCo2+DgrO2E
-         FHEUf3bs0cp2PQaSCe0N0DRSfq9hcnxXwPH+c870VJmpGOI2xx0OKgdxo07RuzR5TMo4
-         Afijey99GR7CfjPW6RXq/JLic0VB/WVkq4X7C1f7SDZ5OTJ5+J01/3lXaGsigKu33TD7
-         GIqmSQYzxlcaRPP/X1IQOpld8yHjuPQwoChhGXWYBwcO4neSgjfkkwEdGUJ8NmSrUVyh
-         Dv3Q==
-X-Gm-Message-State: AOJu0Yz4o2Wrs2JCz5G136U9yo+VTzO43w3Ko0gpAHntAZMJABRBqK/M
-	RLxUxLaEA28cuP9qeGLV5o31h7aMpAtlPs5qZYTyaCxksDG0fthz/nhxRO2ehRuA
-X-Gm-Gg: AfdE7ckiaEGZxep6mYogeey+chf1XNc0FQk5oiz5J6xRdx0mNkElrXVXhuxqUJ2kSdh
-	MsbU5j0k7i6YgEW8QeCBkMg++GYjtO85YzFV9w8/qrfu7pNNcANnAlETo//qveeatk3yBZ2ls03
-	cdEsljMXKBZTKNZay4KtM61RXrWqfawiW4t93tZSqfGNegWNck9HQkqpjscgIh/E4/KwgOSR9Gl
-	/5Whn9CIekVbdWzo83vOpdJFcEr6p8is2SjZ+5mxBOrMu43WW58cSHnLvlgyPlhwsa5UJ/3jpx2
-	gUWE/HyHCK1rIs6lc0cPBkIBX6/4CC8rzdNw9AUeYvKHnIgFpHIINkBXIxkR8ULSnd/1cdiaiBO
-	pWn/RzSdO4PjE3ZsFC34/hllW4UWROReUS2LlrIWE5Ry6cSNziGBGLe2pI8Es7PWLfh0MBG2Yhg
-	f8GjI72V3lETfp2AwqfCRqSQKAYnHrEYyw61loEvVgBv1Sfwe4CtLuWBddkwoiJ1NrfIZ3u1D3F
-	cIOdvnluZTiJhw0D7WL1y+8GX563Vy4Kpf0oI9f9YSKhf4zoXZleS84wjuRKJ0pI5LsPx+lGE69
-	XPbdyIUCqqkv1wvMdCovyPFstiJz3DAdWybdSIQOoCs=
-X-Received: by 2002:a05:600c:45d5:b0:495:4056:9473 with SMTP id 5b1f17b1804b1-4954a40d0c3mr88069095e9.28.1784411407081;
-        Sat, 18 Jul 2026 14:50:07 -0700 (PDT)
+        bh=KW8AyFp369QxJe9yYHf5IRM+uNNxxl/pg6bEDv3Cano=;
+        b=p7jYizZ6AeHjDUImV6JZUFRLkTgf6BrUIFrrgokZPI2JPk7XSsWKHd1Rniw25itKax
+         2GIhIAG9ZQBRHxCC0ufLy7Xin3BGhB3jNo4OBE7hObeWEfhTEPKwg+Aw0rYE13RuVNOy
+         v7n+0DRiiHY9WruP/2nYkrLt1LTE+x1VTBqcAbe01fhlnloW8dqv9mXmqu69YUNru2j8
+         y33So9DyAIdn8w123qm8io7I8Gi1BMfTw5L337g6vQdIl75kJtUnUi7qhuS+SVGyGxp2
+         i+is4o7dm36eZaSkQVY+vOiiEXoWv+8LOziml95BphNw5/8kmOZkfh7cKj4SxGf2jVWw
+         iaxg==
+X-Gm-Message-State: AOJu0YxSwPpqhfcmXDyxUxilgYvVLh91HDkQ7lawVn1tnhuPTrHwAhdy
+	uHoXayOb9QEyOGvwSEOOALi46SNdo9ifSzu4ONQ64blK90Viu5YhYxFtUiTmBTQr
+X-Gm-Gg: AfdE7ck55+SnQabF6Ks+Yj5fr5bXWMfaZGLUt+vxtosjL22+wwMDg9jZnRMeLk+28Al
+	oX0Op+5eSTs0MFmhqiKFT9wUQ/pfvuUbFVTJVuh20gaJgXFtNdoTc5Dt6QQVzLccxGybpeBw1NQ
+	L/IxNLkCS0QQAbJn3GBJyCh0zvnVeJnMv7b4WUajtlXVbM5H5gQB5rDoR++bsEoHvnEQLyiHNrZ
+	KzAAHV5vMlDomyYHMzGBxAlQlkvyDOO+MUdhqV5fgLnLmxKPQVTCxq0yERNhgiPVMM3Cwkk66X9
+	fCeTZnK8oCSpNm1umSqXvRLzQktVfF/gq34UCxYN+PFpX46D2XOqerKBe4PuiD1/mfl0CFCC6KR
+	k4QMM+rMSgA5y5DAdE9+ArBhvDA9SN6XvR51jjdqTBn806/rqsjWOHEPA4+ziXJ2ExfAGVjVwGz
+	8NJ9cNunqt0IqXOBH0gU5GtVMIvvfF/NV2m9HEgeMdkg3Cc+d7cfiOSLtFfW0VQTSMMKRWSVxhb
+	9YsW/qxUCvSb/c9RdktVW+zBqjUO16KwNZaUAA1bG4OamPmTglG4dC05nLovdV2bIh5Nxk47fuL
+	Sf2ZKsfe2xg1JcoV3BW/ZMWxKOG1E6jO
+X-Received: by 2002:a05:600c:81b:b0:493:df1d:7488 with SMTP id 5b1f17b1804b1-4954a3f1611mr58679275e9.16.1784411408965;
+        Sat, 18 Jul 2026 14:50:08 -0700 (PDT)
 Received: from localhost.localdomain ([47.58.6.31])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.06
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4954a2edda2sm146225145e9.13.2026.07.18.14.50.07
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 18 Jul 2026 14:50:06 -0700 (PDT)
+        Sat, 18 Jul 2026 14:50:08 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: pabloosabaterr@gmail.com,
@@ -72,9 +72,9 @@ Cc: pabloosabaterr@gmail.com,
 	peff@peff.net,
 	toon@iotcl.com,
 	szeder.dev@gmail.com
-Subject: [PATCH GSoC v20 01/13] transport-helper: fix memory leak of helper on disconnect
-Date: Sat, 18 Jul 2026 23:49:50 +0200
-Message-ID: <20260718-ps-eric-work-rebase-v20-1-0c13962ac532@gmail.com>
+Subject: [PATCH GSoC v20 02/13] cat-file: declare loop counter inside for()
+Date: Sat, 18 Jul 2026 23:49:51 +0200
+Message-ID: <20260718-ps-eric-work-rebase-v20-2-0c13962ac532@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
 References: <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com>
@@ -88,38 +88,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-disconnect_helper() only frees data inside of the if(data->helper) block
-[1]. When the transport is disconnected without the helper being fully
-started, data->name allocated in transport_helper_init()
-is never freed.
+From: Eric Ju <eric.peijian@gmail.com>
 
-Move FREE_AND_NULL(data->name) outside the conditional block so it's
-always freed on disconnect.
+Declare loop counters in the for statement when they are only used
+within the loop body, limiting their scope and improving readability.
 
-[1]: https://lore.kernel.org/git/05fbadbae2184479c87c37675dde7bd79b3e32ab.1716465556.git.ps@pks.im/
+While updating the loop counters, use size_t instead of int for counters
+that iterate over object counts.
 
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+Update the 'nr' parameter of dispatch_calls() to size_t as all callers
+already pass a value of that type.
+
+Helped-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- transport-helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/cat-file.c | 13 ++++---------
+ fetch-pack.c       |  3 +--
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 80f90eb7ba..f195070788 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -266,9 +266,9 @@ static int disconnect_helper(struct transport *transport)
- 		close(data->helper->out);
- 		fclose(data->out);
- 		res = finish_command(data->helper);
--		FREE_AND_NULL(data->name);
- 		FREE_AND_NULL(data->helper);
- 	}
-+	FREE_AND_NULL(data->name);
- 	return res;
- }
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index b4b99a73da..03afc44c5e 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -721,14 +721,12 @@ static void dispatch_calls(struct batch_options *opt,
+ 		struct strbuf *output,
+ 		struct expand_data *data,
+ 		struct queued_cmd *cmd,
+-		int nr)
++		size_t nr)
+ {
+-	int i;
+-
+ 	if (!opt->buffer_output)
+ 		die(_("flush is only for --buffer mode"));
  
+-	for (i = 0; i < nr; i++)
++	for (size_t i = 0; i < nr; i++)
+ 		cmd[i].fn(opt, cmd[i].line, output, data);
+ 
+ 	fflush(stdout);
+@@ -736,9 +734,7 @@ static void dispatch_calls(struct batch_options *opt,
+ 
+ static void free_cmds(struct queued_cmd *cmd, size_t *nr)
+ {
+-	size_t i;
+-
+-	for (i = 0; i < *nr; i++)
++	for (size_t i = 0; i < *nr; i++)
+ 		FREE_AND_NULL(cmd[i].line);
+ 
+ 	*nr = 0;
+@@ -765,7 +761,6 @@ static void batch_objects_command(struct batch_options *opt,
+ 	size_t alloc = 0, nr = 0;
+ 
+ 	while (strbuf_getdelim_strip_crlf(&input, stdin, opt->input_delim) != EOF) {
+-		int i;
+ 		const struct parse_cmd *cmd = NULL;
+ 		const char *p = NULL, *cmd_end;
+ 		struct queued_cmd call = {0};
+@@ -775,7 +770,7 @@ static void batch_objects_command(struct batch_options *opt,
+ 		if (isspace(*input.buf))
+ 			die(_("whitespace before command: '%s'"), input.buf);
+ 
+-		for (i = 0; i < ARRAY_SIZE(commands); i++) {
++		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
+ 			if (!skip_prefix(input.buf, commands[i].name, &cmd_end))
+ 				continue;
+ 
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 29c41132ee..9eb8fc5399 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1388,9 +1388,8 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+ 	if (advertise_sid && server_supports_v2("session-id"))
+ 		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
+ 	if (server_options && server_options->nr) {
+-		int i;
+ 		ensure_server_supports_v2("server-option");
+-		for (i = 0; i < server_options->nr; i++)
++		for (size_t i = 0; i < server_options->nr; i++)
+ 			packet_buf_write(req_buf, "server-option=%s",
+ 					 server_options->items[i].string);
+ 	}
 
 -- 
 2.54.0
