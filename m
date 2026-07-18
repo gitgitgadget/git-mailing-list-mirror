@@ -1,55 +1,172 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21778385D8D
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:38:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D1A28BAB9
+	for <git@vger.kernel.org>; Sat, 18 Jul 2026 08:52:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784363911; cv=none; b=RfRiH3YwVX6/G2gMUtiGsl4yijFTSQx31/FvQWroOzax0zNHO3M+laXxwxsoh+Y2PKsLS9z6htFeJwS5PrXRvgre73b/iFedjQkes53I7kbPBolHPe9srZpvCUXxpYVfKr+zh0DKGKv/mjbIyVAA1KucAhcVhLzLNvh1zviIjL4=
+	t=1784364753; cv=none; b=EkAhO2ODZ1hhDpr7uAN84FiDrEhsxQrLd/5fPgzmVhnT0QsarqkE71fzqWHC2FkdrYQDQ3T6y3O22CZubrA7U7TpouKZ8DujhiO1MNuA0waRcqZJMGZXejTDdnJbmHnskbqYNrcUYCKFesvU5CAsXY3ieTbCuIWg4+FLl3dnhDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784363911; c=relaxed/simple;
-	bh=vgL5k/5q3X63EeDOzCPWuAmbefei7o4qWVPy+QVsdNc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bTQmq2nCWl6REmQptd3UdF1k5OxV439ygLS1BNzMweScofACIDfhGqVUMQ9A2fQ7oliQkkyVNlIT1YFsCeKFtS9XfqL+DJl9/OjVsZJnct74+9RSikR23CqOaub4ut2IhplgYLOxRCilli9kNZYJQyOw+UeyxYRxB/c9E4QgqxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=E1pUd+EB; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1784364753; c=relaxed/simple;
+	bh=y0AYwGoHanQT0WXyzrBRtloP13C7oE6DwGrbfxHYSHU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=nuxJMJsxxuS2hrqoc6UDlEzqS3l3jQbtN4w4ENAcSClONIOuTHCU/qGowf5d7L1ZeH6pC5riHxBlMAk0xAkTl+xAcHij0Z8rpZN+VnWOC5S5ZSGu8uFK4dG9tS5e1gY1DdUU05FcN7usho337NOLe7oxU4x+1cDVqmYjQAbV+KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=iyj5ilsJ; arc=none smtp.client-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="E1pUd+EB"
-Received: (qmail 60640 invoked by uid 106); 18 Jul 2026 08:38:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vgL5k/5q3X63EeDOzCPWuAmbefei7o4qWVPy+QVsdNc=; b=E1pUd+EBfBSCdhl1gA5v4irRTzQ8noaxYB0ETFgC/nyfFJqYe/IBPEVCFmviWfRlzdFVfc1iELsz4gvno3fS6XymD0A1mNckgXudy6HX92KmdfWDenaZYFsphGhMUO/YBUl11Ll4j9+TuZHLZjet5h8aquUPVVErefXC4ge8KhUNkF8JoYFySeIJC/SbBFUkDcMDSTFkb+uR7bVioj0/VpYR9wHOC0O4JNEy4YxrmQAwdJ44oi9S0tJc4jgcEP7UMzm4gy/ecLrSBt1XYdehPHK1IrgoU6pqP6Llsj/TC+LY1cbBswgdUK1XujybR/iXNIdhVr7hEUe3WGxl29v1PQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jul 2026 08:38:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 107135 invoked by uid 111); 18 Jul 2026 08:38:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jul 2026 04:38:33 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 18 Jul 2026 04:38:28 -0400
-From: Jeff King <peff@peff.net>
-To: Sahitya Chandra <sahityajb@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-	stolee@gmail.com, ps@pks.im
-Subject: Re: [PATCH v3] wt-status: avoid repeated insertion for untracked
- paths
-Message-ID: <20260718083828.GE22588@coredump.intra.peff.net>
-References: <20260717144620.259031-1-sahityajb@gmail.com>
- <20260718081449.26747-1-sahityajb@gmail.com>
+	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="iyj5ilsJ"
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id D33B960E06;
+	Sat, 18 Jul 2026 08:52:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1784364745; bh=y0AYwGoHanQT0WXyzrBRtloP13C7oE6DwGrbfxHYSHU=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
+	b=iyj5ilsJ14RVO7jRLmSrwpquQCVfYRvr6uZzHWO5htI2RepVdlulGiyhHDAwiTjsL
+	 698OTdR683Y2ds+Rk4RgNkk7Of0B0BNAWqC8k6B1LvrRUDpyGLIaWJfor7Q2529EId
+	 1I9FQzWVRxqCHyUlEv9ZcvsTiV8pGsVSvCy4BjMY=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260718081449.26747-1-sahityajb@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 18 Jul 2026 04:52:24 -0400
+Message-Id: <DK1KIF2OI8IF.11188A3YEQV1C@lfurio.us>
+Subject: Re: [PATCH v9 3/5] history: add squash subcommand to fold a range
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>, "D. Ben Knoble"
+ <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>, "Harald Nordgren"
+ <haraldnordgren@gmail.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>,
+ <git@vger.kernel.org>
+From: "Matt Hunter" <m@lfurio.us>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <pull.2337.v8.git.git.1783674396.gitgitgadget@gmail.com>
+ <pull.2337.v9.git.git.1784128573.gitgitgadget@gmail.com>
+ <ead974c3173770f9230d2ba8442ff06dd9e91e00.1784128573.git.gitgitgadget@gmail.com>
+In-Reply-To: <ead974c3173770f9230d2ba8442ff06dd9e91e00.1784128573.git.gitgitgadget@gmail.com>
 
-On Sat, Jul 18, 2026 at 01:44:49PM +0530, Sahitya Chandra wrote:
+Hi Harald,
 
-> - Reword the commit message to explain the quadratic concern while noting
->   that the current sorted input avoids array shifts in practice.
+The new functionality for amend! messages seems to be working well, so I
+dug a little deeper and found the following...
 
-Looks good to me. ;)
+On Wed Jul 15, 2026 at 11:16 AM EDT, Harald Nordgren via GitGitGadget wrote=
+:
+> ++
+> +The range is given in the usual `<base>..<tip>` form, where _<base>_ is
+> +the commit just below the oldest commit to squash. For example, `git
+> +history squash HEAD~3..HEAD` folds the three most recent commits into
+> +one, and `git history squash HEAD~5..HEAD~2` squashes an interior range
+> +while leaving the two newest commits in place. Several revisions may be
+> +given, for example `HEAD~3..HEAD ^topic` to additionally exclude what is
+> +already on `topic`. Rev-list options may also be given, but any that wou=
+ld
+> +change how the range is walked are overridden with a warning.
+> ++
+> +The oldest commit's message is preserved by default, except that an `ame=
+nd!`
+> +commit targeting it replaces its message.
 
--Peff
+The new behavior from v9 is documented here, but...
+
+>                                            Specify `--reedit-message` to =
+edit
+> +the resulting message. A merge commit inside the range is folded like an=
+y
+> +other, but the range must have a single base, so a range that reaches mo=
+re
+> +than one entry point (for example a side branch that forked before the r=
+ange
+> +and was later merged into it) is rejected.
+> ++
+> +A `fixup!`, `squash!`, or `amend!` commit is refused unless the commit i=
+t
+> +targets is also in the range, so the fold does not silently absorb a
+> +marker meant for a commit outside it. The body after an `amend!` subject
+> +replaces the oldest commit's message when the marker targets that commit=
+.
+
+...a redundant explanation appears here too.  Personally, I think this
+paragraph flows better if the 'The body after an `amend!`...targets that
+commit.' sentence were removed.
+
+> +As an exception, a range made up entirely of markers for one target is c=
+ombined
+> +into a single commit, keeping the last `amend!` message if there is one.
+> ++
+> +A branch or tag that points at a commit inside the range would be left
+> +dangling once those commits are folded away, so with the default
+> +`--update-refs=3Dbranches` the command refuses. Rerun with
+> +`--update-refs=3Dhead` to rewrite only the current branch and leave such
+> +refs pointing at the old commits.
+> +
+>  OPTIONS
+>  -------
+> =20
+> @@ -107,7 +147,8 @@ OPTIONS
+>  	ref updates is generally safe.
+> =20
+>  `--reedit-message`::
+> -	Open an editor to modify the target commit's message.
+> +	Open an editor to modify the rewritten commit's message. For `squash`
+> +	the editor is pre-filled with the messages of all the folded commits.
+
+At the moment of this patch, this is a false statement, though it is
+made true by patch 5/5 pre-filling all messages.
+
+> diff --git a/builtin/history.c b/builtin/history.c
+> index cbba25096f..edf98a21d3 100644
+> --- a/builtin/history.c
+> +++ b/builtin/history.c
+> +
+> +	repo_init_revisions(repo, &revs, NULL);
+> +	revs.reverse =3D 1;
+> +	revs.topo_order =3D 1;
+> +	revs.sort_order =3D REV_SORT_IN_GRAPH_ORDER;
+> +	revs.simplify_history =3D 0;
+> +	revs.boundary =3D 1;
+> +
+> +	strvec_push(&args, "ignored");
+> +	strvec_push(&args, "--ancestry-path");
+> +	strvec_pushv(&args, argv);
+> +	setup_revisions_from_strvec(&args, &revs, NULL);
+> +	if (args.nr !=3D 1) {
+> +		ret =3D error(_("unrecognized argument: %s"), args.v[1]);
+> +		goto out;
+> +	}
+> +
+> +	if (revs.reverse !=3D 1 || revs.topo_order !=3D 1 ||
+> +	    revs.sort_order !=3D REV_SORT_IN_GRAPH_ORDER ||
+> +	    revs.simplify_history !=3D 0) {
+> +		warning(_("ignoring rev-list options that would change how the "
+> +			  "range is walked"));
+> +		revs.reverse =3D 1;
+> +		revs.topo_order =3D 1;
+> +		revs.sort_order =3D REV_SORT_IN_GRAPH_ORDER;
+> +		revs.simplify_history =3D 0;
+> +	}
+
+Should revs.boundary still =3D=3D 1 be asserted here too?
+
+> +
+> +	base_tree_oid =3D &repo_get_commit_tree(repo, base)->object.oid;
+> +	tip_tree_oid =3D &repo_get_commit_tree(repo, tip)->object.oid;
+> +	commit_list_append(base, &parents);
+> +
+> +	ret =3D commit_tree_ext(repo, "squash", msg_source, message_template,
+> +			      parents,
+> +			      base_tree_oid, tip_tree_oid, &rewritten, flags);
+> +	if (ret < 0) {
+> +		ret =3D error(_("failed writing squashed commit"));
+> +		goto out;
+> +	}
+> +
+> +	strbuf_addf(&reflog_msg, "squash: updating %s", argv[0]);
+
+With this format string, the reflog will miss cases like:
+
+    git history squash HEAD~5..HEAD ^origin/master
+
+Only "squash: updating HEAD~5..HEAD" will be recorded in the log.
