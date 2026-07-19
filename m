@@ -1,195 +1,109 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519E92AD00
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 13:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784468692; cv=none; b=Q0LjW1YJyNMIL7X5/akm8AulopwlP0fOrGiXJawRfsD5mAFCkOEAkHsTdggSDvxQcvBaVd7VJRNRnlL/EumuiqLQxmfnUEGCXv1XOti5SeaczY+71QqRccatWD2LGfZgydk5YY1vZ9XWhGS09Rqgz/cetag3B+MQuvhnSu+qhM0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784468692; c=relaxed/simple;
-	bh=Bvozxn4yAlfpEtGu9B+L5sxI7xUb9kQ5FjFgPqWgDCo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BU2UXW1vB7JsCJoekts4v4T7ytB7c65qZQzeQK6Yzn1sTDvaSk4kpIJfTddDeOTY2V/Rzm7EByshxxr0/YhDm9+nalosvhLUel3fS9C8LkjrrETQG0emviuzmOUkpblgkoTveO73EiUU0JFKeRVzVr1i0tdoaZbpg/NxZfbRy2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YXc0mTdy; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5AC43F08E
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 15:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784475054; cv=pass; b=MpB7KA98CDw6HHtKIUgRH0SS0Yb/FhVb8y6XkcFTr+aAT1x+4u0OMu+XEVUuQFDeQe8gHtvL/pgJ0nMqVQ0KIRw5jHM4KvnN/bDlG60hzP6IUQsuAxLABdxEUOHEqlhCiyIht4K3fFo+qw8tX9VRsbM/T7sDSoU2ZgUAIBmdD1M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784475054; c=relaxed/simple;
+	bh=YyVgPRcNGMhMSZ3CCJ4ndWHkFtSePZ4Th7KJN/3GrIQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rNlCoGZMTBVXe3gVazHqIR9ev3KAjIPetJeuevzL/6PgL/Y2ptVnLxXfkcrJmZGzkftwljmnYICftIR7aMSpkB5bygJZj9wo3r4XRRz3dppf0j/50i7etdM2SsKYSEIM1JmmZrGxtAVwjwkrLWGZmcaM69sCIQp1Fh8xmOMLs6s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C9KSdId5; arc=pass smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YXc0mTdy"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c9e7391839cso5376793a12.0
-        for <git@vger.kernel.org>; Sun, 19 Jul 2026 06:44:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C9KSdId5"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c1614804757so995084766b.1
+        for <git@vger.kernel.org>; Sun, 19 Jul 2026 08:30:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784475051; cv=none;
+        d=google.com; s=arc-20260327;
+        b=q0eHSOko4rljqOuNoQu+SvVPke2JqTS1/6gZgPSoNWlSZa7l+IE8KPbt+65rvKGqJG
+         4wtb8NThgmAwIzZ4ejIQOW87H54JgBe9ZWYCij2oUoZqYxbH7+PSLFLEwlc0fRQixrxK
+         lUEnFLkV92bcAz9MZBgugc5vcm3XPho1rdwdqBFMxf2q3GSE/PnaZXljys+o4HLcIqdR
+         ZITHEyn6oSwQ4M7tXdKhAaPMd92qRwAwqPR4Gah+bTAF2+fvlbRUKxKRVlcxDYrB4JO4
+         2jRFo7iscX94H1RC8Vp1KCrqUqXBV99m3+pmK5pUWl22d8YUJgX9Qs7raqR8B4DL1q4o
+         ZQjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=keXgxct1LNBCqlK+I1TPgOMF7a5GeiSCcJ6Q7wucXnY=;
+        fh=3mJtmlslTCXE/7snQTkBiGOEvg5aO2AzKJdAHSHX4go=;
+        b=GQMidjr77LT1pAYqcaipTDc5CvZNiy+iWIALcauTZVSpSqP/nzYVFSVwHA9CpUEIRb
+         OueeuhnMefT7wI5DiaoP7HmjZpwtL4rUQTepNlH0b+J2z3KVzFEKuZVpPv550RqkhWij
+         htk5LdF3LxwAkJikSb9PPNocsDmU+zH+JZe6k/vmXeOykkQjS0QcKhf2c0afcyPbwq0g
+         8YnfgDKpYhmY4Wo02BcwprUuM1MYqC9cPQOiZodKCmoWxz1mM5lAPtrzA66DYSEB+bmX
+         54IBjcyJi952Dm1XDW9AwuqrIxghfVTB0jvP3bmqGeLnASiqfkc974X3Ls4ctZt4xvEy
+         Sj6Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784468691; x=1785073491; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=pWreBvMjRkTsRRKqqixqjOUqIXxHi0c49HmuFuQS6v4=;
-        b=YXc0mTdyavk0lonQ/dyZENq20nL2DUBnj05GkI5kDpst4PwBwB1qny+s1+c1ZWdq/4
-         8szHtIBSq6cDKiXTWm+17S0awMVf6utaC3iw0nMXRBWmsLBkJV6i6nHovk4AQ0Xg+j1F
-         vUKjvXcDnB7R/5MvoEMdJvNYD27MQ0eLoeR+3lZvgcPerkPpkVUn5UBIPhNssm2ZOpLI
-         9NelOCuMONcWL/3EazU2cn2Zz4UPS7cnG2d/30qbOqir/K4KoCfKXdrNT3ESDQrsFyiu
-         JiAhRYe9LajdP0OrTWCkqKVIJQnXeEfgr2gcxjyae3G4wGYYe2G8etLLo7Rvx6417H2r
-         4RyA==
+        d=gmail.com; s=20251104; t=1784475051; x=1785079851; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=keXgxct1LNBCqlK+I1TPgOMF7a5GeiSCcJ6Q7wucXnY=;
+        b=C9KSdId555GzE+edgXGKoFCNH3TPatz264z0J3PNow6MmgkoZ24tp8LyEHpqRJbgHN
+         eR+yleawQf+VXxcZML1znnkhFaP9ZHirYGsdjPS8Y2WVE1mIN7ft02AqkWwV9UqeIaJS
+         ekkTqo3vv2QUvtpLJ8jjUwQIHjNLunom++qhxPurOuVnbM0LmvUhqmsBUSD8T8I21g07
+         violRpbQ0DkYPRvuIZDJzIzfZXKoGFBEVF2FxSvI/GyObt9++piebn7+FMBnwwpee973
+         Xlyc8ZcS5oHmlh7PauF6Y4jUO3CJd8FBSI/6L/UdwpV/Rd+dEFPxGJf9vgxBBkB6oaBo
+         56Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784468691; x=1785073491;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=pWreBvMjRkTsRRKqqixqjOUqIXxHi0c49HmuFuQS6v4=;
-        b=nJSjf27TbaIkcT9yD3n7JnmSDdhMCvvFUvcz0OzT3sAi/QkjXnylqJDe5YdJTvS04t
-         iojsZp/+6lp01y3pv5/esH/zhxtkPHrTd9NOHI4VDl+7KQRp4tHJKIjZtP8bQFcSq9zB
-         nB1Mt9xixsdXiCe+sNnKfz5T8UcZAVjGTwbRMc7fSBEWrWAkUWL/bqkqkyCe9tKpSNy9
-         1V6n2i6bhv5K9GjnFWB3slTmOnOum8FzWU7moxvFx2pCYLa8voJ8nN4HovSeSchCJOje
-         ldNhNZQ+Us9bx13d0qD2RYOduOVJNXutN4TceetnGk5wyRiIzmlUyAkWLKUCkkje0Xjs
-         PEDQ==
-X-Gm-Message-State: AOJu0YyUqIFxi7kcxvw8jhx3Vflxm3/5QQ2RPCbGONkbbuqR9MIaUDQT
-	6WjbfLHQ3nl9vluV+Z6r8D3NnGufvG4T1SWF0qTqzJAX9jWDDLWovFEB5X/WjQ==
-X-Gm-Gg: AfdE7cmXqRMjgV0ItdLr7E25OtVwfUD5IiMIMpL8eJSjBK9AFkvgX1BqTv1OvqKsTkn
-	zbdU0l9SbB8tG4PeacT2xON3C0vfux9LyV8PvrOp1oBut8zL3vE5CmC7TxpLDV9zw4WHbVSZKFp
-	eKsTxhu4S2AVTjBsSQx0VmzOwf1VUa249WZha9qmrb4wHfrWULFjZ6Cgwb41cpqvOAPFXYr+W5b
-	jbcoY5995HPER6M7BWvyodjDrMaw/Ok/IFus607fYDKNUH1yLyh/OT0iOidG3ejTj5KKHPILPNO
-	DcWh08pxmZcWPhpSwzCOuuGDiZsGSMQS7xgSCj3bI8su0Eewpt3zqKXu6cyYh9MbKJ1A6svexgG
-	56zCLiE8nL33yAkKNub943RrnOg5EDvXlv85znmimWf5/31mK35YRzvPmQXOSbxYnqmRxCJsldK
-	yeYQ==
-X-Received: by 2002:a05:6300:83c6:10b0:3c3:becb:b705 with SMTP id adf61e73a8af0-3c3becbd092mr6158700637.27.1784468690554;
-        Sun, 19 Jul 2026 06:44:50 -0700 (PDT)
-Received: from localhost ([216.228.127.128])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a20b037sm28619582eec.27.2026.07.19.06.44.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 06:44:49 -0700 (PDT)
-From: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>
-To: git@vger.kernel.org,
-	Thiago Perrotta <tbperrotta@gmail.com>,
-	Philippe Blain <levraiphilippeblain@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>
-Cc: Yury Norov <ynorov@nvidia.com>,
-	linux-kernel@vger.kernel.org,
-	Yury Norov <yury.norov@gmail.com>,
-	Codex <codex@openai.com>
-Subject: [PATCH] completion: complete paths for git send-email
-Date: Sun, 19 Jul 2026 09:44:47 -0400
-Message-ID: <20260719134447.381835-1-yury.norov@gmail.com>
-X-Mailer: git-send-email 2.53.0
+        d=1e100.net; s=20251104; t=1784475051; x=1785079851;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=keXgxct1LNBCqlK+I1TPgOMF7a5GeiSCcJ6Q7wucXnY=;
+        b=kyMIraHxHv0PjNX3/gxcawaZPj/umhS/+TIMeSlexBtaNo+YGbFPEfMW8j7DurMUgq
+         kDdX4ayjNcfJQG0LE7nzzUhl1p/AR1aJw9ec1RFDdRYMzcWudyTSLnm2PqA4CBY24Yzw
+         Sb7liRUgu4Hxlb6ldB+JR9ZroCjafTc9k8XPYDFqiAWNer6Z/PhzU+0T5pVepE4kmagb
+         nZJ+jENLdOyGdXKXXSi117GigtWLGaQWExrhZobo/FgABDNV2tAJZ/JYnWTXAgSTrIcG
+         /ARYqlz3eaIxyy9P9qQ0JA+IizD/dPuWc3kDYyHP4LG07hDNfWcoVxnHWPPH8+0Tn3iQ
+         cWsQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpA92nqrjMQr+27pT+fmcloFHSsxH5RkOD9A/8hDiFbZ5xGDLwg0fw26C55s16a8fI5hl0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPMWMKCANoNcof21IVj4ax/YgBQobexBGw+kOalxX6lUHxDCWQ
+	LdfChff/cZJVLHv1gWSSelcKpG3iaS0F33jsBN1XsQwI1cy51qlBcjttNeztZCrggerPeMud+Jy
+	VhYW5BCZ1JsrNh7fnOXmHoMQC4PpBRwo=
+X-Gm-Gg: AfdE7ckjM/EKp4H14tpcpX5eszs0OuaeDsmbD9/QGm4Te0vnDamFnZNPybUru1VCtOW
+	PBm8LBEUerLOfpgw3bHeBKxqlMwgB09i79kYabzABid1/qnK5q1AdurmMD/sYjx/GdkiHITbXxS
+	Uo202T/AQbM6E1Xk6YssTX9sAwNPfOTFOM0SIdJuv+DCCV8fLHiaW9DLd+lhqhoIJPjzJBlFmdq
+	C16RqVp/h7l0q9G3wRw7B/JdeU/4CP1c5qcQuUE8cByq6PN0xKQzAOac7DNsQ==
+X-Received: by 2002:a17:907:1b1f:b0:c16:afdd:9dad with SMTP id
+ a640c23a62f3a-c16b46f16e1mr475180966b.22.1784475050903; Sun, 19 Jul 2026
+ 08:30:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+ <pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com> <a6caa5b397da8ea24eb97e6aa6dc92b437e456ef.1784053493.git.gitgitgadget@gmail.com>
+ <xmqqtspvptqc.fsf@gitster.g>
+In-Reply-To: <xmqqtspvptqc.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Sun, 19 Jul 2026 17:30:11 +0200
+X-Gm-Features: AUfX_myFqZkZdx-tFwA5x3Fy1sY2SE5PrBkSi2bsWMAlewWuk1POmG_SYbC5-UU
+Message-ID: <CAHwyqnXdaPeO12+p=_+_ttrknV0-VqTMnH-suS66yZ4stsBKnQ@mail.gmail.com>
+Subject: Re: [PATCH v19 5/7] branch: add --delete-merged <branch>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Yury Norov <ynorov@nvidia.com>
+I think I can fix this with
 
-git send-email accepts either revisions or paths to patch files, but its
-Bash completion only offers revisions. This prevents patch files from
-being completed. It can also make a prefix such as "0" expand to an
-unrelated hexadecimal ref even when matching 0001-*.patch files exist.
+```
+    -+  if (strset_contains(data->deletable, ref->name))
+    ++  if (strset_contains(data->deletable, ref->name) ||
+    ++      strset_contains(data->spared, ref->name))
+```
 
-In my Linux tree, an attempt to autocomplete the standard-named patch
-brings a random hashtag:
+I used your example to write a test about it as well.
 
- $ ls 0*
- 0001-bitmap-drop-bitmap_next_set_region.patch
- $ git send-email 0<Tab>
- $ git send-email 05c69d298c96703741cac9a5cbbf6c53bd55a6e2
 
-Introduce an append variant of __gitcomp_file() and use it to add
-filesystem candidates after the existing revision candidates.  Keep the
-latter because revisions remain valid send-email arguments.
-
-Add a regression test covering patch files alongside a 40-hex ref.
-
-Assisted-by: Codex <codex@openai.com>
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
----
- contrib/completion/git-completion.bash | 29 +++++++++++++++++++-------
- t/t9902-completion.sh                  | 12 ++++++++++-
- 2 files changed, 33 insertions(+), 8 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e87578771..b7017488d 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -579,21 +579,18 @@ __gitcomp_file_direct ()
- }
- 
- # Generates completion reply with compgen from newline-separated possible
--# completion filenames.
-+# completion filenames by appending them to the existing list of completion
-+# candidates, COMPREPLY.
- # It accepts 1 to 3 arguments:
- # 1: List of possible completion filenames, separated by a single newline.
- # 2: A directory prefix to be added to each possible completion filename
- #    (optional).
- # 3: Generate possible completion matches for this word (optional).
--__gitcomp_file ()
-+__gitcomp_file_append ()
- {
- 	local IFS=$'\n'
- 
--	# XXX does not work when the directory prefix contains a tilde,
--	# since tilde expansion is not applied.
--	# This means that COMPREPLY will be empty and Bash default
--	# completion will be used.
--	__gitcompadd "$1" "${2-}" "${3-$cur}" ""
-+	__gitcompappend "$1" "${2-}" "${3-$cur}" ""
- 
- 	# use a hack to enable file mode in bash < 4
- 	compopt -o filenames +o nospace 2>/dev/null ||
-@@ -601,6 +598,23 @@ __gitcomp_file ()
- 	true
- }
- 
-+# Generates completion reply with compgen from newline-separated possible
-+# completion filenames.
-+# It accepts 1 to 3 arguments:
-+# 1: List of possible completion filenames, separated by a single newline.
-+# 2: A directory prefix to be added to each possible completion filename
-+#    (optional).
-+# 3: Generate possible completion matches for this word (optional).
-+__gitcomp_file ()
-+{
-+	# XXX does not work when the directory prefix contains a tilde,
-+	# since tilde expansion is not applied.
-+	# This means that COMPREPLY will be empty and Bash default
-+	# completion will be used.
-+	COMPREPLY=()
-+	__gitcomp_file_append "$@"
-+}
-+
- # Find the current subcommand for commands that follow the syntax:
- #
- #    git <command> <subcommand>
-@@ -2634,6 +2648,7 @@ _git_send_email ()
- 		;;
- 	esac
- 	__git_complete_revlist
-+	__gitcomp_file_append "$(compgen -f -- "$cur")"
- }
- 
- _git_stage ()
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 55dc9eabf..e87827f21 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2777,7 +2777,17 @@ test_expect_success PERL 'send-email' '
- 	test_completion "git send-email --val" <<-\EOF &&
- 	--validate Z
- 	EOF
--	test_completion "git send-email ma" "main "
-+	test_completion "git send-email ma" "main " &&
-+
-+	git tag 05c69d298c96703741cac9a5cbbf6c53bd55a6e2 &&
-+	test_when_finished "git tag -d 05c69d298c96703741cac9a5cbbf6c53bd55a6e2 &&
-+		rm -f 0001-example.patch 0002-example.patch" &&
-+	touch 0001-example.patch 0002-example.patch &&
-+	test_completion "git send-email 0" <<-\EOF
-+	0001-example.patch
-+	0002-example.patch
-+	05c69d298c96703741cac9a5cbbf6c53bd55a6e2 Z
-+	EOF
- '
- 
- test_expect_success 'complete files' '
--- 
-2.53.0
-
+Harald
