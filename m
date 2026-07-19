@@ -1,127 +1,66 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06437175A8A
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 01:04:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78D31A6838
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 01:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784423096; cv=none; b=BDELQzr2Kyhxl2ViM/+FOPQH79m9IhGdVJ2LZsqhZOHu4sW6KR9ZUkEW9uMmzWGEuLsoBfcXSc5V4c/ooY7/YrxZmjqq9vWhTiK0LWnL1jbd7qlVxqDPrd1FTEwhsQ6HlE9dwkJa67DCmQ6rOcQpNW6LHVg9toMJ4u/nk1R4le4=
+	t=1784423336; cv=none; b=GBx+meQq899M6ks8VsMiNdd86sZRv246au3w6vmTRrXge6EMPIrXbIqcG+4ivcShUk9JT662Y/JV62gdr9SIhB4s4EOaDuPbo8+tIPm+Qow//hBx5D1yaSyRtpk8OSwt+9mq7trYyj2etSheK5qI9suF+TQcgC8q/MUdGcpiYCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784423096; c=relaxed/simple;
-	bh=oG0ZxXZ2eu1E6GaUrJ0ZhqTd85YNwgc8QqhsR8EqOX8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N1jSEKmBkD2MSViPda8eU+sqIIb9I/sgOOYCOV/ARo1Z/8teyj1HyxX9ut7VM159kI48E6qcXPXUWBJ3C0zrhOeKUDSsEyN9yhjzL2smMAgUKzT+TCEkxjQ9N0gVruaXgHCIO676Rt662hOuzkPzVZBfdbqlgkbSbqMYyduFkEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iy75SuUF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U3ITugiz; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784423336; c=relaxed/simple;
+	bh=Kh7cMEhorNaCLDG1+j5cyPIz0Z/a/15UMpgrz5uIKr0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MZdn/StO7IRhzY+BHsXNH1RZZ5Lp7HyRSwe5Y++z5fNSGgMf/qBQGGostVSzmjqZMju6KtqTTG6VFN95bhKlp1v705wDGLQKMB1HCyvmI5XlRBARvPGaPRcUKMFZTeibPJ8+cbxWI5jwHhL7VMVVMRhdjC0U0ejMTNyMKA4MW88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=NxGnSO9i; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iy75SuUF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U3ITugiz"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 26D61EC010B;
-	Sat, 18 Jul 2026 21:04:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 18 Jul 2026 21:04:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784423094;
-	 x=1784509494; bh=HPqGmulWBQoU4JRiuVi0tobFrRNF+w80wAhJa8LwdWI=; b=
-	iy75SuUF8lagNvnd1Z4lVeBFuI7pmI3JGhBwuDC/omV14zJZonb8I6bMytGbLam0
-	APu+sI7/jpi9OQwyf3sBD5fthgoIIklL4s8IHbYhYZDZD2krN4xvtadNMinuXOO2
-	sLwqGVqLad4RgfuuktbXizf06kVvmurmFBdWGUArYcxE8C7TX7JoaeAOWLKByIy4
-	U1nyQvZ5Wd2yTR2W8EuLBIUBA+w40WqJfYlVhfjAEkJbNJdfC/y+dbUTtvDbVxIN
-	deij96DZMkkPsR4BdDoOAQeHjD/6YNOjMIr3/vjf+TVRNVHc0VdRcflY2xp3+WUK
-	sqcaD9hiIJ5PYjXxMt+AXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784423094; x=
-	1784509494; bh=HPqGmulWBQoU4JRiuVi0tobFrRNF+w80wAhJa8LwdWI=; b=U
-	3ITugizoZWCR83Zq+Cl3MKaxnpd48dk4zsOYdP5MleZbz2Q6+f5VAK8FTTxOJbGM
-	X9ey1zhwKR91t/9b9Gd8TwRtDiBHGttykwKmKpv9+a2x8gKqgsyhbPsHMDu2+sHR
-	IaWxjNCp4/aUql5m0Oolbvm+1Jzsff5ejzFaCaFGm0FuwkDdeayBKG/zR9b4cOXs
-	Y84IaeySR8jbrveNENl0q+s4DQNlk3rzrdvQAHq4iKXqnBfP9rtO1W37JMFV+mZU
-	9gMV6B1OM8AlysiLnY05P1SECdzBfiScTLmcRxlgBbQq/RvOeIDRa+oXJXfY42/J
-	WOnzmvA68zKtnl6W8EF0w==
-X-ME-Sender: <xms:tiJcanXgmAOOG7zKmbNlPdKjJDi2o9nEas69sRF3Um9DCfqyo117zQ>
-    <xme:tiJcameWyV7_PAQakgIaimk-2CuiSMUr-kV-6l_O5gtzVgfhizh7y64s29wMbZK66
-    i03G_MzzZoY1_C7aIQBsy4t2z2B8lo3vjCoo3s_7wKgtqYvlBCJe0M>
-X-ME-Received: <xmr:tiJcarsm_BQG-UF9Ilu-ukwYXASJPNhYHByTUYJs3wZ4c99v-cTamxtCyNDQl1qFbvqTpuAb5kci2sFBn4x8_9gEPTDcy0wVtg>
-X-ME-Proxy-Cause: dmFkZTGz/o0oKgKOYBjnPDN+6SEaDJZS7yxAWcFS7LjugyFA/Ud/s/4QI0ZVkTNF5j4WRs
-    FUvJnpohh15+3uVrxKvAzbw+5s1T0lPHxjhXuNL4anRhcCS/M3feXTJaxGoQfWkRWZUY27
-    ahAA+FDcVM8Ozxx+Xfjs4SW3tZWI7cWLwyjKL/Q5i9heDgEs2KZDnsShF8CGqLNkTBdTFe
-    GC+dJ+meF5nJXGnuuqz/51fYMsDPIznu2DVF001aUqG9GIacP2d4YlO4tjDVOvMhDduBvD
-    /6O/37Bkpuiqo7MRFK8YJIG5vjzckQZ4fJGMNyK4J/XeTMYKeobR6BZu6yNdbkgfJ/q5Va
-    dACHiHcmIRkMCm4raNY31lscbeqrJmUuVEoL0MyPXapnb9at5PN46UPVBn98ZQigklzlLk
-    FzCa3Y5rJ6pUqBV8FyQrjO03DDta4LybMcovF+v6VEnmNnwcK8Lg7nLrmjz0Cu5SrliAjD
-    /mDbGGu8pzmA7laXkfr8g80tkavXo6RxYiLVxVBmmw5dau0IuGP8KaK5YiA1TeTpAVn3gp
-    uxB/op1CSyYUuktLZ0aUw9zdptQDwlXNZKpLu7WgSHx8KvTOnnTTZwtJ+22+wEQduELh4D
-    0hjEUACGaPe2Lp2c7LOIBih42KAiLYExF8rFldQSFHr3qpzdAyeV9H434sLA
-X-ME-Proxy: <xmx:tiJcat-pLd5SRM_rUOsbfVMIGlb1_S1oidRAe_nvI76NmrDdfFUsuQ>
-    <xmx:tiJcau1qudAwfao5-O7KWJIMsG8fTlJwVlphfVaN_XDN-A3y07J1Yg>
-    <xmx:tiJcaqDOe5FgtsPOGmWdXFGuhubmVsuMmDzHo1tsF7wtUUh0wB-n9Q>
-    <xmx:tiJcaicCFL_ub1KF_r1ZiZLTBXK4Dw7wVHJnR4exE4_y3DiAU-jQ0w>
-    <xmx:tiJcatN4EMh4n43PEs6Cp1xtxsXF10JV3Xcy6xrX-f2xzEp8DA5KUG-R>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 18 Jul 2026 21:04:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Justin Tobler
- <jltobler@gmail.com>
-Subject: Re: [PATCH 0/9] object-file: move writing of loose objects into
- "loose" source
-In-Reply-To: <alvWfOJb6vAsusai@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Sat,
-	18 Jul 2026 21:39:40 +0200")
-References: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
-	<alvWfOJb6vAsusai@szeder.dev>
-Date: Sat, 18 Jul 2026 18:04:52 -0700
-Message-ID: <xmqq5x2brdqj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NxGnSO9i"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1784423328;
+	bh=Kh7cMEhorNaCLDG1+j5cyPIz0Z/a/15UMpgrz5uIKr0=;
+	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=NxGnSO9iIF7I4rBJ/4nagKFK26H3tDsUFgRlp1DHG3zYxtk0VxlHBhew8Hcjhtdav
+	 9ERUOD4iHUuIkuUqQr9DQw80yoKBNjzBy/4LndgptKoHALOmOOviERCAGRux1Kzpqf
+	 SMxDfpLFQFb8oYpFJIobbEi5pMIPQp+WJOMZ/aezT5ZQfJLFPzwhJwMLanBUJ9ypRW
+	 oI8xnM1bElZMf8B6/d6dfvUeTZyDm0liD/nW1X/UY4M6O8En39BxP+dms1lya/FAFG
+	 LWFCD52V1FiDYKNznajn72e19HT02b6mTb05ar8CIRf43TVIr5LfYOru6VFjZKH8eC
+	 pfeCZqM9ICDAqT0POMyslhOfP1OQz11ARhcWQRQSI+2Tonu2eUJ9rsX2FS/L1Mk/0i
+	 3AqlId5fBvKQtzLF2VVI6l9l74eCQfMQyqgB/fpV/6i7uHvWdwG4o1puyWgsANLhIS
+	 pa+3/G2IbYUty7bINRWP8ejTw4JuS0JRRTFDODnQLNjc39gk7Cq
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e344:7908:59b:a90a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 00FD9200B0;
+	Sun, 19 Jul 2026 01:08:47 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/2] Rust hash cleanups
+Date: Sun, 19 Jul 2026 01:08:40 +0000
+Message-ID: <20260719010842.17991-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Peff recently sent out a series to fix several memory leaks with our
+hashing code when not using the default block algorithm.  This series
+follows up with a few fixes to our Rust hash code, which calls the C
+code, to fix various memory problems.
 
-> Hi Junio,
-> ...
->> Note that jt/receive-pack-use-odb-transaction requires an evil merge:
->> 
->> diff --git a/odb/source-packed.c b/odb/source-packed.c
->> index 06b31dd743..cbb06da038 100644
->> --- a/odb/source-packed.c
->> +++ b/odb/source-packed.c
->> @@ -545,7 +545,8 @@ static int odb_source_packed_write_object_stream(struct odb_source *source UNUSE
->>  }
->> 
->>  static int odb_source_packed_begin_transaction(struct odb_source *source UNUSED,
->> -                                              struct odb_transaction **out UNUSED)
->> +                                              struct odb_transaction **out UNUSED,
->> +                                              enum odb_transaction_flags flags UNUSED)
->>  {
->>         return error("packed backend cannot begin transactions");
->>  }
->
-> It seems that you performed this evil merge when merging the topic
-> jt/receive-pack-use-odb-transaction into jch as 9727bd8447 (Merge
-> branch 'jt/receive-pack-use-odb-transactions' into jch, 2026-07-17),
-> but forgot to do so when creating the base for this patch series as
-> 1d64e64326 (Merge branch 'jt/receive-pack-use-odb-transactions' into
-> ps/odb-move-loose-object-writing, 2026-07-17).  Consequently, neither
-> 1d64e64326 nor any of the the commits of this patch series can be
-> built because of the mismatching function signature:
+brian m. carlson (2):
+  hash: initialize context before cloning
+  rust: discard hash context when finished
 
-Thanks for noticing.
-Very much appreciated.
+ src/hash.rs | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-Will fix-up.
