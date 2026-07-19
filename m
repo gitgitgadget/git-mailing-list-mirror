@@ -1,82 +1,115 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9DE175A6C
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 03:04:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C24518B0A
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 05:48:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784430242; cv=none; b=Yrn16DchCnFW4Sc5bx+i4KCSz0U57Ax3mUsu8y/hRKHbHBYLSP0rgQtML40EazyTJu7yf3epBdDFUNR28FEH104RORECLHJgj7wLo5XuYvxEHVLf9+48MjInNXgJQ4vsvbzb1oEUI6V248ukqnMtSeti4+WZgxAJkFbZSjj3oaI=
+	t=1784440130; cv=none; b=fHaWewdUONeW4e2JIc0HfdLFMzunoQCAlIQ6K+a771Gtz6qJjHqMy0f9laaZ0BXZLPR0cWe64+P0CX5Fdh8TLNlwFtOK0hlNXrIcmDs6sP+xwip9pH+u1O1KONRMK5BADKtkrxd2wfAAo7GrdLoxr5DVU681oFndOG9kj4WH1pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784430242; c=relaxed/simple;
-	bh=efeaCEiEj3tEeBREDH0lyYbMHm+60W/KTmvPd/KaCg4=;
-	h=Message-ID:Content-Type:MIME-Version:To:Subject:Date:From; b=R4vKiuCGdQHb2VtehrMZEFfKer0bRdqLvyTtkKSKWnf5R6AXPULhfFQi3pPXwmf4i6g1+2i4Kt8gE2TewYTEqnYTrAj4O8IaC8prZy03j0WWl//J5Doj5RlxAEz5doSCtY+0i/8y2Ge+kGctJKTJqYhofQ+letD3/KcSwuU/ZEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gkKv61/h; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784440130; c=relaxed/simple;
+	bh=I6bD2JGpm5sN+LXjGz42Zr+JqfyFX3SatNr1om9OEpY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oc/TPWe2VqQPSk+r5Ec1npzHESTrT72Ev7rUXxEs+aBBS0cyhZ+QHpPmduRnhASanl2AhWADba23xr6u3QRMShKaTN+AxJ8FiEJM5B3xWX6dP8D8Lbod61kNFnzgsnleQ7bWcvYqqw9e0sPioR8XbOf3DqOlx2r4aIEv3x8gq6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TVuCwi0/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FjF/hYgs; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gkKv61/h"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-81ec29f1d07so68040797b3.1
-        for <git@vger.kernel.org>; Sat, 18 Jul 2026 20:04:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784430240; x=1785035040; darn=vger.kernel.org;
-        h=from:date:subject:to:mime-version:content-type:message-id:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=efeaCEiEj3tEeBREDH0lyYbMHm+60W/KTmvPd/KaCg4=;
-        b=gkKv61/h7NG0j1Ievx8V0A8OawCTvBMnF3e8vj2+K013dXXtji/pag5VXQDbPVpY0j
-         6ypWL/xvKZsZDXickhwqzS4X1M/QYIBUtMUdc0zQLhxgwX9pZZGn3yJwUwqZukw+HQ0o
-         ZXFNCuGnSOry9LKoGr6FgdPaTUXBemOvmf2MqVFPAw06T8SgZnPR8+YSLhjFZVcvu93A
-         mZCIwf1jyPmXrZ6KE2ufVuiEoHkR67ao85xF45+HnIRHiJSkMHfPldwpha/V+L2Kiecf
-         8ROw448hLMdCYAGlJnFNvOyJiXIMjD76UP/jccvaM42jUOsZ9rfAWw1Bo5ZIcHN5VWOQ
-         2zVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784430240; x=1785035040;
-        h=from:date:subject:to:mime-version:content-type:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=efeaCEiEj3tEeBREDH0lyYbMHm+60W/KTmvPd/KaCg4=;
-        b=EYJ9irm15vYRy6ZfeW9D3oDTR8F7RwIsrYLANfjc/4c2g2br5+8AJFbEh9GEDWHL0C
-         yh42wgBuu3vaynNeu9v+t/7MNVN8+6fF5jf/NH1CJZ/MA4gzAawVmiSDvxAvsxJNUSZO
-         GJKLcjLvo3gxoqYElW6EL5bjj7Kj2c6+HvCEAr8lZI6NKXdR0ea8gct0GNYmNFITyw0p
-         Y4I1w1LjeQH26mYDl9ymp4S/Cx2wiH3SsXwOC2XB6is9NcGyqjpngkLF0ZmB7D/LD17+
-         w5o3ltl9EKjH+01MNRF1yViW9+1pv5int3dsQs0eDUDu+zu3Me4ObuLm5488TZGB3OiE
-         iwDg==
-X-Gm-Message-State: AOJu0YwMFu4xnGcI08MZ/0BgZVepzVGrtaUxrpGdzgVNlCMkPvNWNprF
-	dSWjKo6i9w5+EU5aYCXEEzJrVoq2kpR5sRkL11NwYXSyCpBvOqNmsAsK748s1A==
-X-Gm-Gg: AfdE7ckP1EQsdPPp2SZqwaZ9wBjZipdZSN3nZRPzcDy8zoT64bv5TmIeKyTX74NoRpf
-	JRRlCPJ8JzHlKSzK++RTnB6fyyeg+932HUmcReus9yzoZ7Skm17z+88GQTl49Zwi58gO3fhMyPs
-	m6Vx8uO/plylftj7lwOsWESPgL7ikPAKqeKx+GHlVguGH4dXjf/emj79aoephXYAZLORe9W2ecl
-	GZMb8LcydpA+5uTzUUSKD9Cs5RpqPIQ2ezSMPnCfPxWYFgnPwz91Ysrw/0WzYUPYrIu1mcZhwrC
-	8JSkvJ50MUkDJz2XvPoy1WjnsQugulV4e+6Bfk3l7840R0V3+LP+3jSoUZc+/JFmf2XHiAjO+P0
-	odOfu0qVHl/HzbPaB6V2lE+X+zisdTuDN/l+rev/Pkpsq8m6BCERUhYOiAw0OTniNhIaCFk4N1a
-	aJ+X+HoC6QHb40tvO5iY61CLfU3JtmqdmLiuT9QGyph+Vbm4LoC14Hkj/LT9ik/2zHSzyBuokBW
-	uly9MZBbruIJH8bO3YDNfeylPgdl+QiIsO99ePh
-X-Received: by 2002:a05:690c:c1c:b0:80b:bfee:c427 with SMTP id 00721157ae682-81ef25a3bc3mr28750357b3.13.1784430239809;
-        Sat, 18 Jul 2026 20:03:59 -0700 (PDT)
-Received: from [10.5.0.2] ([74.221.178.247])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-81ef4012c89sm37468187b3.1.2026.07.18.20.03.57
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Jul 2026 20:03:58 -0700 (PDT)
-Message-ID: <6a5c3e9e.ddde9de2.aefa6.3878@mx.google.com>
-Content-Type: multipart/mixed; boundary="===============4825411221471200695=="
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TVuCwi0/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FjF/hYgs"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 04B1AEC01B0;
+	Sun, 19 Jul 2026 01:48:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sun, 19 Jul 2026 01:48:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784440127;
+	 x=1784526527; bh=h5kEsHmjv2iNpv/cP8Ro9KhLN9I/DjY4knC1lOpCp24=; b=
+	TVuCwi0/U+LVABven1Cz5ad2JTvefZkCxTML3erf43nfURkRLZkUtRr5WZt4Xqha
+	uOM7zE417YPJyXhjiDFZM9i8bcSEXhxGOFgsk4dpsi4pNZQ8F2xn4abGD070RJSK
+	LD7t2KRloXHZ2Tbr6cSqo2RjL8v77cNZzxq9zlWRmubuocs6tVdImeHfpq4JYquU
+	rH7tPXdvgXfzC6G/hzGNM2H2AwRWuS1aFwisavbH3prtMCB2TRie+0R97WAeTbQL
+	dnymmzYoTwTdFxYGm0ZcAis0htnsL2gUxneJRA2t0Wi8IOS1sCc/7/x4uBlx4o+4
+	/34MmWcawREQ3MdAfUb2Kw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784440127; x=
+	1784526527; bh=h5kEsHmjv2iNpv/cP8Ro9KhLN9I/DjY4knC1lOpCp24=; b=F
+	jF/hYgsOVTUXR5wEGR8textkxya0PcXXqDWXbImadcz5oUNzY2L2qlMrC6YQDTFT
+	EbiEX97Jpg3Rp+efiKSO9KYIncC64L4eujuh50+j6AmpTm7i5jj0PLgPAJeUXT+v
+	75nCbn7JQuGPp2SWI4q7CghaX1YrRCeI2DnFqfSTl5zrXu2M+5D5tKXPSoJtHxYz
+	lqPRG3rF+tjd8Zejs4f2UyzxvUx/q7sRBCrONlTQ7tnA3tM0jnibQ3LvGTDjg5kw
+	U/61rOsSqZXBvWLN9kFUmOFbDPNOgqBd3ipqWRPW5owiCWuu6ERpoU2ZJBYe4yt2
+	H+dz3dnuZNIl8MKFahKAw==
+X-ME-Sender: <xms:PmVcarOlB2u3YfKW4UKau9wZ72nQUVsMHM5qHVWIOkgQE4vjN7g2Og>
+    <xme:PmVcas1FUYfWguYy5aBgv81XgeYi3dMoiTfdPqEqzLanl7XqiyJSXW0gDeRYqJrM8
+    pzag4SdaHjKzYfcOobPX8-oqcD2fOScOp69u_w1mESUJpOqx7_lag>
+X-ME-Received: <xmr:PmVcail5X2QCe0nh01ZN6VyVa67j-LY-vHJ3NWW9TQ65K4NfP_FKDq3GvdPUqVeN8gAo3T43STHeDS6IbLCf_KqVCvHndAHmOQ>
+X-ME-Proxy-Cause: dmFkZTGYAAqDiFOFH72SGs7ikJ4JRHltyMRu8Q8vJW8MBP51UqOKeh43/OkvGDp+gWEbnC
+    99dxj9KUowk/HSB0jEZA2XMyjikuGtQZ3e0at1PuHpVsRDys8RwU6oGiAfONeuRz5baDlQ
+    EofODDpNZgGlqpbnxqWKZRIdirQuMt9zINYA/7cZtH0L3+wCn3GP9wasivgqhLJ6MH6WWG
+    HMhe9Ojb+ppCQBrp1mYTu9MPJq1VC9Tfz4pm4F2+8SS+eQmHnpkm4SO7mK+dM8AUf8TT16
+    YOTjn06FXs1hgnbZ2NuUf8Zd3b0liAkY+ZvVHKEse8p1B+1VxYs1qjp4R4fEFQTAa5iCcs
+    oieIkmXZ9D8Qbptrd+UpRrVPYztp7U30t993fZMJrNTLpG2Tp+93fGhYpJuyUHB5VKvkDc
+    F7x6HpNorMm9cqj4VtGZOnZLoXO/h3xcmUMF/GCSmKPS5vFNEeg0xLNp65fpc0hadbWgpw
+    CJFe6Y0CB3djkVeKT/0wQOxElXeJcvwcXCHJ5fha7AeuKX3q6YhCp4VgenJOOQFvg9X0bT
+    G8E8ziO9dbzxV+wanNxejP79AEkPwEBpbtheYuTtuWBI0MMaeeO7tYSuWdfxpxiQuH4Bo3
+    sFXV0PY75G/UW0+nfhKOJnyTisoD4WpuzPye4trN72PGgJKc9FFxE24BxPBQ
+X-ME-Proxy: <xmx:PmVcarWW7kisdsrGQdvS00wmnUkrWi5a5kku_6nkfOVuR5BdaGQoBw>
+    <xmx:PmVcaguG7oJSWXiJ2w03uTjF-UIDVQQ9gE9ng5ZrA9Z8s1d5jrMCHA>
+    <xmx:PmVcamZOHSxNnBG95KZaLeQPT2_4WRrQ34c_c9v9DlVrqfz0lEULYA>
+    <xmx:PmVcanVNKy0hy-5LYgdgRMFytyLXKCkLyFA9Hk2pFhCQnvBefzzz8A>
+    <xmx:P2VcaimN0_VD9bAfC9f4VVYzCv-_Fw8M5ykZzmKYfMAkppBHN1wyGId0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 19 Jul 2026 01:48:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH 0/9] object-file: move writing of loose objects into
+ "loose" source
+In-Reply-To: <xmqq5x2brdqj.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	18 Jul 2026 18:04:52 -0700")
+References: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
+	<alvWfOJb6vAsusai@szeder.dev> <xmqq5x2brdqj.fsf@gitster.g>
+Date: Sat, 18 Jul 2026 22:48:45 -0700
+Message-ID: <xmqqecgzpm0y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Subject: Thought your community might enjoy this - CodeRaider
-Date: Sun, 19 Jul 2026 03:03:55 +0000
-X-CodeRaider-Segment: rust_discord_communities
-X-CodeRaider-Source-URL: https://git-scm.com/community
-X-CodeRaider-LLM: yes
-From: CodeRaider Team <bobjim8889@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
---===============4825411221471200695==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hey! I'm Eli, founder of CodeRaider (https://coderaider.net), a code-raid calculator and strategy tool for Rust. Enter what you know about a base's locks and it gives you the optimal sequences to try. I came across Website and think your members would enjoy it. Would you be open to us sharing CodeRaider in your server? Happy to set up a channel or bot integration if you're into that. Cheers, Eli Young Founder, CodeRaider https://coderaider.net --- To opt out of future outreach, please reply 'unsubscribe' or 'stop'.
---===============4825411221471200695==--
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+>
+>> It seems that you performed this evil merge when merging the topic
+>> jt/receive-pack-use-odb-transaction into jch as 9727bd8447 (Merge
+>> branch 'jt/receive-pack-use-odb-transactions' into jch, 2026-07-17),
+>> but forgot to do so when creating the base for this patch series as
+>> 1d64e64326 (Merge branch 'jt/receive-pack-use-odb-transactions' into
+>> ps/odb-move-loose-object-writing, 2026-07-17).  Consequently, neither
+>> 1d64e64326 nor any of the the commits of this patch series can be
+>> built because of the mismatching function signature:
+>
+> Thanks for noticing.
+> Very much appreciated.
+>
+> Will fix-up.
+
+I've rebuilt the topic in question and pushed the results out.  I
+also added some more automation to catch this kind of mistakes early
+to make it less likely to happen again.
+
+Thanks.
