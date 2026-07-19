@@ -1,69 +1,69 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305FD30100E
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 19:54:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8768D2FD69D
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 19:54:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784490886; cv=none; b=Cw+AJye6hTlpmxEEILQOCvBYZa7M3sighbx7Ek5fGjkVmp1zkHefJYm9JJ0STMfKBC4VgfFARXo4OU05HUO05nxgq4j07dx87AwLHXG3BLrgENd2EwIH1fRp+g9wYbI1T3GOtIrbVZa09sEK67ZYIJ0TcCrvj3KBjDEGQ4NNCh4=
+	t=1784490888; cv=none; b=oHT0hBAA6c+5xPVtiGUPe9VK+TL5CG10fK4ayqO6cB9cQuPUrpanAYAkO0XHjbM2mYlc6rW4Qb1TCWTnLWQ0ffo9RGaTBdb7uNkkCNtw737CE3rxxTgVq1ffXyj3AszT8qS8tPwQ2GpZXHqmrmzV6eNiWQvAw0VRL0YNk7V4c/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784490886; c=relaxed/simple;
-	bh=aWmCTvtf2P6ZNbPV6SlEk9RKXWyoqBnYIVAcXpjwDJk=;
+	s=arc-20240116; t=1784490888; c=relaxed/simple;
+	bh=hma9J5htwZiXcV+YYYRrmqRe+u/jbUmnDrcADlvTIfE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=Z8YnIhXnGtLULIZqQu1XPnPIw9OUlAMDYjYE5gcr88YmHPxoIeWZAbRyD8ylx8/aswa/ZCbHFDXF8YzK0Xvrphj2dVfmvjfXgu3B/Pe/tAg4JJSMWqgQ9yTfRnMhgQ0jGalv9it+GKuXD1JtqNWfNa31CDC6MNw97+2USFeJIvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NvdBFAPA; arc=none smtp.client-ip=209.85.219.48
+	 Content-Type:To:Cc; b=YBKrtneFsrlzx+uTyrs4X4TwzantAHMXS8qDC8rwz0eaSPomF8ewj8aTh98u9ClP0d/qZzXBAMNrE950uG/j5ghnD0Rm2IG0Oa0iI1wc7OBfdiKqM0Wh7JUmcRexsa+ucxAB5zEHK1zpRAX7eBASQB3aqWsu0W0qhQ5DROs3Tdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G7gzCCVv; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NvdBFAPA"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-8ff88549786so116488156d6.3
-        for <git@vger.kernel.org>; Sun, 19 Jul 2026 12:54:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G7gzCCVv"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-92e5c92c389so593549885a.3
+        for <git@vger.kernel.org>; Sun, 19 Jul 2026 12:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784490883; x=1785095683; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784490884; x=1785095684; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=pAIKcah3S4ZMn1AMuAZcc9TKcnumnIUZNiD0lXwl/HQ=;
-        b=NvdBFAPANxHh6zvMsQ9yxmB/F3V2h14uERa+HaptwVU+8D/Oeci32Sb3wpgPcyVLwN
-         MBM7DPzgSbJwG3/i2zWuR1BLs7sRjQthUWviNJs+j7Ziftl5a+Z1LXOjjZoBqlSkv/mP
-         KWSmmnocTEfFJ39nYwMb1KMk3UCIjXrUdZbZxA9fN3nB1OS/jRp/1aXI7R96kfwqEpen
-         +H9Kl/pIOzEzFhR6XZscjiSQ9hxUyIJL2K4qwzJEQkUu+p9DDbGxkH2Waapt+9oxV4fE
-         4xBSrhpslLRry7ie3LCccucvhCWXcGwl20AoTkuqhVLjew/rYm+d8bTYh6jXuNBi2j5e
-         tR0w==
+        bh=y85LpxFfXoY/RxYqUpHfy+0kwRMyAPpjv9JYQn783VQ=;
+        b=G7gzCCVvEAEHFrOII6ZohIZAsKtMtVnM9UovPmU4xsh6AyTloTB7CIkGqs4vnne2QC
+         yB6WaUK+R5oa5va3H0Agz83IDxXhCWlk/xbkIgIi85nywWtRk0kwZj52BMz49rwBSUXm
+         kvbQmUTF/NlbIDCA78bV/KO9o522XBalCbFbrZ231PHpc/h4KKsYX007IuqYlQRaRcCC
+         /aStU3rS9F3IEqqhu3rI7WmhEoZYy7iHJri31kpaDCRN2NVRshmu2L6j93ZrxZ1vlux6
+         dqx3gZ3BQkLxF5tuIQthIZ4ByOxYPd3z2sEUVm8dM0pQhxnP+ZOtSC3I0bifK2f66pqn
+         nIJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784490883; x=1785095683;
+        d=1e100.net; s=20251104; t=1784490884; x=1785095684;
         h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=pAIKcah3S4ZMn1AMuAZcc9TKcnumnIUZNiD0lXwl/HQ=;
-        b=ENf62vonro1vgfn7NLk1+DfFJaZBcWn5Nzr9AT4AyWY2FuxnDdBXh9YR06DypVlXMu
-         coqrwVtyTiMDgpjALSUNxXoLQte4ZkK4rqNY7pAWYFZce0lFNTSmoIb0sLKb1dLZny4N
-         PqzBLmsR4fCQY80xGfob2Kof3O2YqrBSGMwLcK9GQ+oC6NQCfMSyx78M03GgsQb9rDV4
-         P/jTIoF0J+5Chux6UtKVGBo5/wSGOBDRvrUSaP1Xtq+NTKmcaasE1/KYzM/UYzwFpIB6
-         RU5ofwWCoDiros6A9IZ6G7zURXiHLX3DIc97CdaLFwvyccfqtmL+sRs42ismOZ0J+1mS
-         Gk8Q==
-X-Gm-Message-State: AOJu0Yxmo/ov6Jc3a5c2dOJtS3AJJMiwOYuv3cTr0TYj7JfRqAbPOOHM
-	Wek8HzixmCsAVBbFIxR3TKGgjOcd4uS8JzNC3O2kJkAgh+wexWglBMtEb1KtmQ==
-X-Gm-Gg: AfdE7cme5ZPwTE2QfX4fKcM6MM90lUpt/u2EQ1YydCvbF6B4zC7uLZcdy5PwyBLFx+o
-	NyHbZGvcmgk2XgvBZ2t1vA8E6/CfGRTcTXL4vBMUSBR5ZpAaxq/aRmuGFYXVSMSndqj5rXzKEsX
-	PYnOcEnOOf5AKu14eFQURzlUAtEbvap42ffD1qRg56U4mgF3hPo1bXtDlmn2Aonit5Nk3nQ8mZl
-	tzAwCR9pMoRijORpIXByG6+c7OuIRzOdP48xDRr+PNnBlrzPpVD847h1CdqazC8PmluAVrAK4p/
-	+3d+mLC0w8wKyV4FDO1NHGZP6klIasYccF5VB6OFll0p9qp9YMD3mfXEL88vsbkSGMwchkF887Z
-	K12Trl/Cgn6esPLZifvutCY4PY4RLtyjQxx3LX35VyF7nzxeBVDowhLFjhygryXr54b12+BCc3p
-	hb/bQ=
-X-Received: by 2002:a05:6214:418b:b0:8ec:cf61:ce4d with SMTP id 6a1803df08f44-907783d2a47mr119179696d6.52.1784490882980;
-        Sun, 19 Jul 2026 12:54:42 -0700 (PDT)
+        bh=y85LpxFfXoY/RxYqUpHfy+0kwRMyAPpjv9JYQn783VQ=;
+        b=G51ITDJ1/4Sbsy6R7/DK7J8QZrfn7IZ7tIK9bQ64f6x60ELGer7ytmNV3C/fQEALYb
+         bcTL0aPGxDn8V1uQM2hQl07q4nb209dQNc37tXCtJLK3oap6crVKLNdK8cAi+uTpOO9C
+         tKH65BsGmnOpz+Jxa7sI6pjG2vpQ5+wHgqrJl1WFzAXawhTrYCFlzjFVhBXN1LwCXzMe
+         KuNPRPN4d54qCo/Wift123SxqCclAurdZ9bn2PtbLxS20JcBN9yRh2Pt3O+vtPANFa8v
+         U6ZZrdctV3KtUdagkXZOrRnR7ciC7zqTKFQXBzpAQQAPYvddYn1QvrjGMrNaM0RfRgNK
+         A3AA==
+X-Gm-Message-State: AOJu0Yzuxt4fWA4fVB6yQtiFhNEnDoAHq9Zb6NsMGObXd+TFGIS2C50N
+	U16jR6gwz4lMJjJNmq/dot3bwpjCv7XI3octuVi2PZzXmUwJbFjJP9eX0YAWMQ==
+X-Gm-Gg: AfdE7cnyJ7J7aDwZy5DTv0VlDIanmK1gAVmlkBnvg7r8vM5xzJgk1rCrsB630LmbyvP
+	no2UVz88xW7HJQb77j1JwfEbV2jmGPyJijNcnsevBcjB8KGenyK5LfGyNAwKjF/M0NdSJzMldZ9
+	DKKudg1LxcnKjoEnKjDKV38lxqM4qFxU7BM+Tay0k8fNkamOJg7XKGJhrW+pt+aK9X6hFiX47kJ
+	XeIrmh4So5BVRNN1EddmtAMfiGzQqdfOBWzSwIa70DRyiF5TMw2CkaxeuuSpyVRO1rYyjyWA9tD
+	uHf3Lq1g3Iood/9XoTUCfKrkVLXpAlBnlVe42Njyw1MbtlthhdHU3iOwGh5YVuvEiThFysiRzlC
+	9IohuC1llw2foK4oRbbNHEV61lLHLvWUPTWD35OoMQJLfrFX7c6nc3es4blKIwsYijtgbWUwu+l
+	aKTBE=
+X-Received: by 2002:a05:620a:bc7:b0:92e:c117:5ed7 with SMTP id af79cd13be357-930b43512e2mr1114956485a.87.1784490883882;
+        Sun, 19 Jul 2026 12:54:43 -0700 (PDT)
 Received: from [127.0.0.1] ([52.188.87.20])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9077853fa67sm74909956d6.6.2026.07.19.12.54.42
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b54773fbsm707112485a.39.2026.07.19.12.54.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 12:54:42 -0700 (PDT)
-Message-Id: <e1ed85e3f2733f0f1cc46416903d1e0c8b4c1856.1784490878.git.gitgitgadget@gmail.com>
+        Sun, 19 Jul 2026 12:54:43 -0700 (PDT)
+Message-Id: <723450c5a0dbbb46ad8ec7cacc59262f6ad760fa.1784490878.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2185.git.1784490878.gitgitgadget@gmail.com>
 References: <pull.2185.git.1784490878.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 19 Jul 2026 19:54:35 +0000
-Subject: [PATCH 2/4] doc: convert git-format-patch synopsis and options to new
+Date: Sun, 19 Jul 2026 19:54:36 +0000
+Subject: [PATCH 3/4] doc: convert git-send-email synopsis and options to new
  style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,674 +84,712 @@ Replace [verse] with [synopsis] in the SYNOPSIS block and remove
 single-quote formatting from the command name.
 
 Backtick-quote all option terms in the OPTIONS section, convert
-standalone placeholders to _<placeholder>_ form, and convert
-single-quoted commands and tools in prose to backtick form.
+the standalone placeholder _<encoding>_ in prose, fix single-quoted
+server names to backtick form, and convert mbox(5) to `mbox`(5).
 
-Also update the included files:
-- diff-options.adoc: backtick-quote the git-format-patch-specific
-  option terms (-p, --no-stat, --max-depth=<depth>)
-- format-patch-caveats.adoc: convert patch(1) to `patch`(1)
+Also update config/sendemail.adoc: backtick-quote all configuration
+key terms and fix a bare sendemail.aliasesFile reference in prose.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/diff-options.adoc     |   8 +-
- Documentation/git-format-patch.adoc | 264 ++++++++++++++--------------
- 2 files changed, 136 insertions(+), 136 deletions(-)
+ Documentation/config/sendemail.adoc |  92 ++++++++--------
+ Documentation/git-send-email.adoc   | 162 ++++++++++++++--------------
+ 2 files changed, 127 insertions(+), 127 deletions(-)
 
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index c8242e2462..e605d28678 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -13,8 +13,8 @@ endif::git-diff[]
- endif::git-format-patch[]
+diff --git a/Documentation/config/sendemail.adoc b/Documentation/config/sendemail.adoc
+index 1d700559b4..5499f91036 100644
+--- a/Documentation/config/sendemail.adoc
++++ b/Documentation/config/sendemail.adoc
+@@ -1,25 +1,25 @@
+-sendemail.identity::
++`sendemail.identity`::
+ 	A configuration identity. When given, causes values in the
+ 	`sendemail.<identity>` subsection to take precedence over
+ 	values in the `sendemail` section. The default identity is
+ 	the value of `sendemail.identity`.
  
- ifdef::git-format-patch[]
---p::
----no-stat::
-+`-p`::
-+`--no-stat`::
- 	Generate plain patches without any diffstats.
- endif::git-format-patch[]
+-sendemail.smtpEncryption::
++`sendemail.smtpEncryption`::
+ 	See linkgit:git-send-email[1] for description.  Note that this
+ 	setting is not subject to the `identity` mechanism.
  
-@@ -893,8 +893,8 @@ endif::git-format-patch[]
- 	reverted with `--ita-visible-in-index`. Both options are
- 	experimental and could be removed in future.
+-sendemail.smtpSSLCertPath::
++`sendemail.smtpSSLCertPath`::
+ 	Path to ca-certificates (either a directory or a single file).
+ 	Set it to an empty string to disable certificate verification.
  
----max-depth=<depth>::
--	For each pathspec given on command line, descend at most `<depth>`
-+`--max-depth=<depth>`::
-+	For each pathspec given on command line, descend at most _<depth>_
- 	levels of directories. A value of `-1` means no limit.
- 	Cannot be combined with wildcards in the pathspec.
- 	Given a tree containing `foo/bar/baz`, the following list shows the
-diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-index f7905c0f7c..5eccb2cf60 100644
---- a/Documentation/git-format-patch.adoc
-+++ b/Documentation/git-format-patch.adoc
-@@ -8,8 +8,8 @@ git-format-patch - Prepare patches for e-mail submission
+-sendemail.smtpSSLClientCert::
++`sendemail.smtpSSLClientCert`::
+ 	Path to the client certificate file to present if requested by the
+ 	server. This is required when the server is set up to verify client
+ 	certificates. If the corresponding private key is not included in the
+ 	file, it must be supplied using `sendemail.smtpSSLClientKey` or the
+ 	`--smtp-ssl-client-key` option.
+ 
+-sendemail.smtpSSLClientKey::
++`sendemail.smtpSSLClientKey`::
+ 	Path to the client private key file that corresponds to the client
+ 	certificate. To avoid misconfiguration, this configuration must be used
+ 	in conjunction with `sendemail.smtpSSLClientCert` or the
+@@ -28,45 +28,45 @@ sendemail.smtpSSLClientKey::
+ 	the certificate. Visit https://metacpan.org/pod/IO::Socket::SSL for more
+ 	details.
+ 
+-sendemail.<identity>.*::
+-	Identity-specific versions of the `sendemail.*` parameters
++`sendemail.<identity>.<config>`::
++	Identity-specific versions of the `sendemail.<config>` parameters
+ 	found below, taking precedence over those when this
+ 	identity is selected, through either the command-line or
+ 	`sendemail.identity`.
+ 
+-sendemail.multiEdit::
++`sendemail.multiEdit`::
+ 	If `true` (default), a single editor instance will be spawned to edit
+ 	files you have to edit (patches when `--annotate` is used, and the
+ 	summary when `--compose` is used). If `false`, files will be edited one
+ 	after the other, spawning a new editor each time.
+ 
+-sendemail.confirm::
++`sendemail.confirm`::
+ 	Sets the default for whether to confirm before sending. Must be
+ 	one of `always`, `never`, `cc`, `compose`, or `auto`. See `--confirm`
+ 	in the linkgit:git-send-email[1] documentation for the meaning of these
+ 	values.
+ 
+-sendemail.mailmap::
++`sendemail.mailmap`::
+ 	If `true`, makes linkgit:git-send-email[1] assume `--mailmap`,
+ 	otherwise assume `--no-mailmap`. `False` by default.
+ 
+-sendemail.mailmap.file::
++`sendemail.mailmap.file`::
+ 	The location of a linkgit:git-send-email[1] specific augmenting
+ 	mailmap file. The default mailmap and `mailmap.file` are loaded
+ 	first. Thus, entries in this file take precedence over entries in
+ 	the default mailmap locations. See linkgit:gitmailmap[5].
+ 
+-sendemail.mailmap.blob::
++`sendemail.mailmap.blob`::
+ 	Like `sendemail.mailmap.file`, but consider the value as a reference
+ 	to a blob in the repository. Entries in `sendemail.mailmap.file`
+ 	take precedence over entries here. See linkgit:gitmailmap[5].
+ 
+-sendemail.aliasesFile::
++`sendemail.aliasesFile`::
+ 	To avoid typing long email addresses, point this to one or more
+ 	email aliases files.  You must also supply `sendemail.aliasFileType`.
+ 
+-sendemail.aliasFileType::
+-	Format of the file(s) specified in sendemail.aliasesFile. Must be
++`sendemail.aliasFileType`::
++	Format of the file(s) specified in `sendemail.aliasesFile`. Must be
+ 	one of `mutt`, `mailrc`, `pine`, `elm`, `gnus`, or `sendmail`.
+ +
+ What an alias file in each format looks like can be found in
+@@ -75,7 +75,7 @@ differences and limitations from the standard formats are
+ described below:
+ +
+ --
+-sendmail;;
++`sendmail`;;
+ *	Quoted aliases and quoted addresses are not supported: lines that
+ 	contain a `"` symbol are ignored.
+ *	Redirection to a file (`/path/name`) or pipe (`|command`) is not
+@@ -85,54 +85,54 @@ sendmail;;
+ 	explicitly unsupported constructs, and any other lines that are not
+ 	recognized by the parser.
+ --
+-sendemail.annotate::
+-sendemail.bcc::
+-sendemail.cc::
+-sendemail.ccCmd::
+-sendemail.chainReplyTo::
+-sendemail.envelopeSender::
+-sendemail.from::
+-sendemail.headerCmd::
+-sendemail.signedOffByCc::
+-sendemail.smtpPass::
+-sendemail.suppressCc::
+-sendemail.suppressFrom::
+-sendemail.to::
+-sendemail.toCmd::
+-sendemail.smtpDomain::
+-sendemail.smtpServer::
+-sendemail.smtpServerPort::
+-sendemail.smtpServerOption::
+-sendemail.smtpUser::
+-sendemail.imapSentFolder::
+-sendemail.useImapOnly::
+-sendemail.thread::
+-sendemail.transferEncoding::
+-sendemail.validate::
+-sendemail.xmailer::
++`sendemail.annotate`::
++`sendemail.bcc`::
++`sendemail.cc`::
++`sendemail.ccCmd`::
++`sendemail.chainReplyTo`::
++`sendemail.envelopeSender`::
++`sendemail.from`::
++`sendemail.headerCmd`::
++`sendemail.signedOffByCc`::
++`sendemail.smtpPass`::
++`sendemail.suppressCc`::
++`sendemail.suppressFrom`::
++`sendemail.to`::
++`sendemail.toCmd`::
++`sendemail.smtpDomain`::
++`sendemail.smtpServer`::
++`sendemail.smtpServerPort`::
++`sendemail.smtpServerOption`::
++`sendemail.smtpUser`::
++`sendemail.imapSentFolder`::
++`sendemail.useImapOnly`::
++`sendemail.thread`::
++`sendemail.transferEncoding`::
++`sendemail.validate`::
++`sendemail.xmailer`::
+ 	These configuration variables all provide a default for
+ 	linkgit:git-send-email[1] command-line options. See its
+ 	documentation for details.
+ 
+-sendemail.outlookidfix::
++`sendemail.outlookidfix`::
+ 	If `true`, makes linkgit:git-send-email[1] assume `--outlook-id-fix`,
+ 	and if `false` assume `--no-outlook-id-fix`. If not specified, it will
+ 	behave the same way as if `--outlook-id-fix` is not specified.
+ 
+-sendemail.signedOffCc (deprecated)::
++`sendemail.signedOffCc` (deprecated)::
+ 	Deprecated alias for `sendemail.signedOffByCc`.
+ 
+-sendemail.smtpBatchSize::
++`sendemail.smtpBatchSize`::
+ 	Number of messages to be sent per connection, after that a relogin
+ 	will happen.  If the value is `0` or undefined, send all messages in
+ 	one connection.
+ 	See also the `--batch-size` option of linkgit:git-send-email[1].
+ 
+-sendemail.smtpReloginDelay::
++`sendemail.smtpReloginDelay`::
+ 	Seconds to wait before reconnecting to the smtp server.
+ 	See also the `--relogin-delay` option of linkgit:git-send-email[1].
+ 
+-sendemail.forbidSendmailVariables::
++`sendemail.forbidSendmailVariables`::
+ 	To avoid common misconfiguration mistakes, linkgit:git-send-email[1]
+ 	will abort with a warning if any configuration options for `sendmail`
+ 	exist. Set this variable to bypass the check.
+diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+index dea3b86460..5c9ab39944 100644
+--- a/Documentation/git-send-email.adoc
++++ b/Documentation/git-send-email.adoc
+@@ -8,11 +8,11 @@ git-send-email - Send a collection of patches as emails
  
  SYNOPSIS
  --------
 -[verse]
--'git format-patch' [-k] [(-o|--output-directory) <dir> | --stdout]
+-'git send-email' [<options>] (<file>|<directory>)...
+-'git send-email' [<options>] <format-patch-options>
+-'git send-email' --dump-aliases
+-'git send-email' --translate-aliases
 +[synopsis]
-+git format-patch [-k] [(-o|--output-directory) <dir> | --stdout]
- 		   [--no-thread | --thread[=<style>]]
- 		   [(--attach|--inline)[=<boundary>] | --no-attach]
- 		   [-s | --signoff]
-@@ -40,20 +40,20 @@ DESCRIPTION
- Prepare each non-merge commit with its "patch" in
- one "message" per commit, formatted to resemble a UNIX mailbox.
- The output of this command is convenient for e-mail submission or
--for use with 'git am'.
-+for use with `git am`.
++git send-email [<options>] (<file>|<directory>)...
++git send-email [<options>] <format-patch-options>
++git send-email --dump-aliases
++git send-email --translate-aliases
  
- A "message" generated by the command consists of three parts:
  
- * A brief metadata header that begins with `From <commit>`
-   with a fixed `Mon Sep 17 00:00:00 2001` datestamp to help programs
--  like "file(1)" to recognize that the file is an output from this
-+  like `file`(1) to recognize that the file is an output from this
-   command, fields that record the author identity, the author date,
-   and the title of the change (taken from the first paragraph of the
-   commit log message).
+ DESCRIPTION
+@@ -48,24 +48,24 @@ OPTIONS
+ Composing
+ ~~~~~~~~~
  
- * The second and subsequent paragraphs of the commit log message.
+---annotate::
++`--annotate`::
+ 	Review and edit each patch you're about to send. Default is the value
+ 	of `sendemail.annotate`. See the CONFIGURATION section for
+ 	`sendemail.multiEdit`.
  
--* The "patch", which is the "diff -p --stat" output (see
-+* The "patch", which is the `diff -p --stat` output (see
-   linkgit:git-diff[1]) between the commit and its parent.
- 
- The log message and the patch are separated by a line with a
-@@ -61,18 +61,18 @@ three-dash line.
- 
- There are two ways to specify which commits to operate on.
- 
--1. A single commit, <since>, specifies that the commits leading
-+1. A single commit, _<since>_, specifies that the commits leading
-    to the tip of the current branch that are not in the history
--   that leads to the <since> to be output.
-+   that leads to the _<since>_ to be output.
- 
--2. Generic <revision-range> expression (see "SPECIFYING
--   REVISIONS" section in linkgit:gitrevisions[7]) means the
-+2. Generic _<revision-range>_ expression (see 'SPECIFYING
-+   REVISIONS' section in linkgit:gitrevisions[7]) means the
-    commits in the specified range.
- 
--The first rule takes precedence in the case of a single <commit>.  To
-+The first rule takes precedence in the case of a single _<commit>_.  To
- apply the second rule, i.e., format everything since the beginning of
--history up until <commit>, use the `--root` option: `git format-patch
----root <commit>`.  If you want to format only <commit> itself, you
-+history up until _<commit>_, use the `--root` option: `git format-patch
-+--root <commit>`.  If you want to format only _<commit>_ itself, you
- can do this with `git format-patch -1 <commit>`.
- 
- By default, each output file is numbered sequentially from 1, and uses the
-@@ -82,7 +82,7 @@ will only be numbers, without the first line of the commit appended.
- The names of the output files are printed to standard
- output, unless the `--stdout` option is specified.
- 
--If `-o` is specified, output files are created in <dir>.  Otherwise
-+If `-o` is specified, output files are created in _<dir>_.  Otherwise
- they are created in the current working directory. The default path
- can be set with the `format.outputDirectory` configuration option.
- The `-o` option takes precedence over `format.outputDirectory`.
-@@ -108,119 +108,119 @@ OPTIONS
- :git-format-patch: 1
- include::diff-options.adoc[]
- 
---<n>::
--	Prepare patches from the topmost <n> commits.
-+`-<n>`::
-+	Prepare patches from the topmost _<n>_ commits.
- 
---o <dir>::
----output-directory <dir>::
--	Use <dir> to store the resulting files, instead of the
-+`-o <dir>`::
-+`--output-directory=<dir>`::
-+	Use _<dir>_ to store the resulting files, instead of the
- 	current working directory.
- 
---n::
----numbered::
-+`-n`::
-+`--numbered`::
- 	Name output in '[PATCH n/m]' format, even with a single patch.
- 
---N::
----no-numbered::
-+`-N`::
-+`--no-numbered`::
- 	Name output in '[PATCH]' format.
- 
----start-number <n>::
--	Start numbering the patches at <n> instead of 1.
-+`--start-number <n>`::
-+	Start numbering the patches at _<n>_ instead of 1.
- 
----numbered-files::
-+`--numbered-files`::
- 	Output file names will be a simple number sequence
- 	without the default first line of the commit appended.
- 
---k::
----keep-subject::
-+`-k`::
-+`--keep-subject`::
- 	Do not strip/add '[PATCH]' from the first line of the
- 	commit log message.
- 
---s::
----signoff::
-+`-s`::
-+`--signoff`::
- 	Add a `Signed-off-by` trailer to the commit message, using
- 	the committer identity of yourself.
- 	See the signoff option in linkgit:git-commit[1] for more information.
- 
----stdout::
-+`--stdout`::
- 	Print all commits to the standard output in mbox format,
- 	instead of creating a file for each one.
- 
----attach[=<boundary>]::
-+`--attach[=<boundary>]`::
- 	Create multipart/mixed attachment, the first part of
- 	which is the commit message and the patch itself in the
- 	second part, with `Content-Disposition: attachment`.
- 
----no-attach::
-+`--no-attach`::
- 	Disable the creation of an attachment, overriding the
- 	configuration setting.
- 
----inline[=<boundary>]::
-+`--inline[=<boundary>]`::
- 	Create multipart/mixed attachment, the first part of
- 	which is the commit message and the patch itself in the
- 	second part, with `Content-Disposition: inline`.
- 
----thread[=<style>]::
----no-thread::
--	Controls addition of `In-Reply-To` and `References` headers to
-+`--thread[=<style>]`::
-+`--no-thread`::
-+	Control addition of `In-Reply-To` and `References` headers to
- 	make the second and subsequent mails appear as replies to the
- 	first.  Also controls generation of the `Message-ID` header to
- 	reference.
+---bcc=<address>,...::
++`--bcc=<address>,...`::
+ 	Specify a `Bcc:` value for each email. Default is the value of
+ 	`sendemail.bcc`.
  +
--The optional <style> argument can be either `shallow` or `deep`.
--'shallow' threading makes every mail a reply to the head of the
-+The optional _<style>_ argument can be either `shallow` or `deep`.
-+`shallow` threading makes every mail a reply to the head of the
- series, where the head is chosen from the cover letter, the
--`--in-reply-to`, and the first patch mail, in this order.  'deep'
-+`--in-reply-to`, and the first patch mail, in this order.  `deep`
- threading makes every mail a reply to the previous one.
- +
- The default is `--no-thread`, unless the `format.thread` configuration
- is set.  `--thread` without an argument is equivalent to `--thread=shallow`.
- +
--Beware that the default for 'git send-email' is to thread emails
-+Beware that the default for `git send-email` is to thread emails
- itself.  If you want `git format-patch` to take care of threading, you
- will want to ensure that threading is disabled for `git send-email`.
+ This option may be specified multiple times.
  
----in-reply-to=<message-id>::
-+`--in-reply-to=<message-id>`::
+---cc=<address>,...::
++`--cc=<address>,...`::
+ 	Specify a starting `Cc:` value for each email.
+ 	Default is the value of `sendemail.cc`.
+ +
+ This option may be specified multiple times.
+ 
+---compose::
++`--compose`::
+ 	Invoke a text editor (see GIT_EDITOR in linkgit:git-var[1])
+ 	to edit an introductory message for the patch series.
+ +
+@@ -80,7 +80,7 @@ Missing `From` or `In-Reply-To` headers will be prompted for.
+ +
+ See the CONFIGURATION section for `sendemail.multiEdit`.
+ 
+---from=<address>::
++`--from=<address>`::
+ 	Specify the sender of the emails.  If not specified on the command line,
+ 	the value of the `sendemail.from` configuration option is used.  If
+ 	neither the command-line option nor `sendemail.from` are set, then the
+@@ -88,12 +88,12 @@ See the CONFIGURATION section for `sendemail.multiEdit`.
+ 	the value of `GIT_AUTHOR_IDENT`, or `GIT_COMMITTER_IDENT` if that is not
+ 	set, as returned by `git var -l`.
+ 
+---reply-to=<address>::
++`--reply-to=<address>`::
+ 	Specify the address where replies from recipients should go to.
+ 	Use this if replies to messages should go to another address than what
+ 	is specified with the `--from` parameter.
+ 
+---in-reply-to=<identifier>::
++`--in-reply-to=<identifier>`::
  	Make the first mail (or all the mails with `--no-thread`) appear as a
--	reply to the given <message-id>, which avoids breaking threads to
-+	reply to the given _<message-id>_, which avoids breaking threads to
+ 	reply to the given Message-ID, which avoids breaking threads to
  	provide a new patch series.
+@@ -115,8 +115,8 @@ illustration below where `[PATCH v2 0/3]` is in reply to `[PATCH 0/2]`:
+ Only necessary if `--compose` is also set.  If `--compose`
+ is not set, this will be prompted for.
  
----ignore-if-in-upstream::
-+`--ignore-if-in-upstream`::
- 	Do not include a patch that matches a commit in
--	<until>..<since>.  This will examine all patches reachable
--	from <since> but not from <until> and compare them with the
-+	_<until>_.._<since>_.  This will examine all patches reachable
-+	from _<since>_ but not from _<until>_ and compare them with the
- 	patches being generated, and any patch that matches is
- 	ignored.
- 
----always::
-+`--always`::
- 	Include patches for commits that do not introduce any change,
- 	which are omitted by default.
- 
----cover-from-description=<mode>::
--	Controls which parts of the cover letter will be automatically
-+`--cover-from-description=<mode>`::
-+	Control which parts of the cover letter will be automatically
- 	populated using the branch's description.
+---outlook-id-fix::
+---no-outlook-id-fix::
++`--outlook-id-fix`::
++`--no-outlook-id-fix`::
+ 	Microsoft Outlook SMTP servers discard the Message-ID sent via email and
+ 	assign a new random Message-ID, thus breaking threads.
  +
--If `<mode>` is `message` or `default`, the cover letter subject will be
-+_<mode>_ can have the following values:
-+
-+`message`;;
-+`default`;; the cover letter subject will be
- populated with placeholder text. The body of the cover letter will be
- populated with the branch's description. This is the default mode when
- no configuration nor command line option is specified.
--+
--If `<mode>` is `subject`, the first paragraph of the branch description will
-+`subject`;; the first paragraph of the branch description will
- populate the cover letter subject. The remainder of the description will
- populate the body of the cover letter.
--+
--If `<mode>` is `auto`, if the first paragraph of the branch description
-+`auto`;; if the first paragraph of the branch description
- is greater than 100 bytes, then the mode will be `message`, otherwise
- `subject` will be used.
--+
--If `<mode>` is `none`, both the cover letter subject and body will be
-+`none`;; both the cover letter subject and body will be
- populated with placeholder text.
- 
----description-file=<file>::
--	Use the contents of <file> instead of the branch's description
-+`--description-file=<file>`::
-+	Use the contents of _<file>_ instead of the branch's description
- 	for generating the cover letter.
- 
----subject-prefix=<subject-prefix>::
-+`--subject-prefix=<subject-prefix>`::
- 	Use '[<subject-prefix>]' instead of the standard '[PATCH]'
- 	prefix in the subject line. This can be used to name a patch
- 	series, and can be combined with the `--numbered` option.
-@@ -231,14 +231,14 @@ all patches. This is often useful on mailing lists which receive
- patches for several repositories and can be used to disambiguate
- the patches (with a value of e.g. "PATCH my-project").
- 
----filename-max-length=<n>::
-+`--filename-max-length=<n>`::
- 	Instead of the standard 64 bytes, chomp the generated output
--	filenames at around '<n>' bytes (too short a value will be
-+	filenames at around _<n>_ bytes (too short a value will be
- 	silently raised to a reasonable length).  Defaults to the
- 	value of the `format.filenameMaxLength` configuration
- 	variable, or 64 if unconfigured.
- 
----rfc[=<rfc>]::
-+`--rfc[=<rfc>]`::
- 	Prepends the string _<rfc>_ (defaults to "RFC") to
- 	the subject prefix.  As the subject prefix defaults to
- 	"PATCH", you'll get "RFC PATCH" by default.
-@@ -254,38 +254,38 @@ can be prefixed with a dash ("`-`") to signal that the rest of
- the _<rfc>_ string should be appended to the subject prefix instead,
- e.g., `--rfc='-(WIP)'` results in "PATCH (WIP)".
- 
---v <n>::
----reroll-count=<n>::
--	Mark the series as the <n>-th iteration of the topic. The
-+`-v <n>`::
-+`--reroll-count=<n>`::
-+	Mark the series as the _<n>_-th iteration of the topic. The
- 	output filenames have `v<n>` prepended to them, and the
- 	subject prefix ("PATCH" by default, but configurable via the
--	`--subject-prefix` option) has ` v<n>` appended to it.  E.g.
-+	`--subject-prefix` option) has `v<n>` appended to it.  E.g.
- 	`--reroll-count=4` may produce `v4-0001-add-makefile.patch`
- 	file that has "Subject: [PATCH v4 1/20] Add makefile" in it.
--	`<n>` does not have to be an integer (e.g. "--reroll-count=4.4",
--	or "--reroll-count=4rev2" are allowed), but the downside of
-+	_<n>_ does not have to be an integer (e.g. `--reroll-count=4.4`,
-+	or `--reroll-count=4rev2` are allowed), but the downside of
- 	using such a reroll-count is that the range-diff/interdiff
- 	with the previous version does not state exactly which
- 	version the new iteration is compared against.
- 
----to=<email>::
-+`--to=<email>`::
- 	Add a `To:` header to the email headers. This is in addition
- 	to any configured headers, and may be used multiple times.
- 	The negated form `--no-to` discards all `To:` headers added so
- 	far (from config or command line).
- 
----cc=<email>::
-+`--cc=<email>`::
- 	Add a `Cc:` header to the email headers. This is in addition
- 	to any configured headers, and may be used multiple times.
- 	The negated form `--no-cc` discards all `Cc:` headers added so
- 	far (from config or command line).
- 
----from::
----from=<ident>::
--	Use `ident` in the `From:` header of each email. In case of a
-+`--from`::
-+`--from=<ident>`::
-+	Use _<ident>_ in the `From:` header of each email. In case of a
- 	commit email, if the author ident of the commit is not textually
--	identical to the provided `ident`, place a `From:` header in the
--	body of the message with the original author. If no `ident` is
-+	identical to the provided _<ident>_, place a `From:` header in the
-+	body of the message with the original author. If no _<ident>_ is
- 	given, or if the option is not passed at all, use the ident of
- 	the current committer.
+@@ -126,15 +126,15 @@ threading. Use it only when you know that the server reports the
+ rewritten Message-ID the same way as Outlook servers do.
  +
-@@ -296,8 +296,8 @@ header). Note also that `git send-email` already handles this
- transformation for you, and this option should not be used if you are
- feeding the result to `git send-email`.
+ Without this option specified, the fix is done by default when talking
+-to 'smtp.office365.com' or 'smtp-mail.outlook.com'. Use
++to `smtp.office365.com` or `smtp-mail.outlook.com`. Use
+ `--no-outlook-id-fix` to disable even when talking to these two servers.
  
----force-in-body-from::
----no-force-in-body-from::
-+`--force-in-body-from`::
-+`--no-force-in-body-from`::
- 	With the e-mail sender specified via the `--from` option, by
- 	default, an in-body "From:" to identify the real author of
- 	the commit is added at the top of the commit log message if
-@@ -308,7 +308,7 @@ feeding the result to `git send-email`.
- 	Defaults to the value of the `format.forceInBodyFrom`
+---subject=<string>::
++`--subject=<string>`::
+ 	Specify the initial subject of the email thread.
+ 	Only necessary if `--compose` is also set.  If `--compose`
+ 	is not set, this will be prompted for.
+ 
+---to=<address>,...::
++`--to=<address>,...`::
+ 	Specify the primary recipient of the emails generated. Generally, this
+ 	will be the upstream maintainer of the project involved. Default is the
+ 	value of the `sendemail.to` configuration value; if that is unspecified,
+@@ -142,20 +142,20 @@ to 'smtp.office365.com' or 'smtp-mail.outlook.com'. Use
+ +
+ This option may be specified multiple times.
+ 
+---8bit-encoding=<encoding>::
++`--8bit-encoding=<encoding>`::
+ 	When encountering a non-ASCII message or subject that does not
+ 	declare its encoding, add headers/quoting to indicate it is
+-	encoded in <encoding>.  Default is the value of the
++	encoded in _<encoding>_.  Default is the value of the
+ 	`sendemail.assume8bitEncoding`; if that is unspecified, this
+ 	will be prompted for if any non-ASCII files are encountered.
+ +
+ Note that no attempts whatsoever are made to validate the encoding.
+ 
+---compose-encoding=<encoding>::
++`--compose-encoding=<encoding>`::
+ 	Specify encoding of compose message. Default is the value of the
+ 	`sendemail.composeEncoding`; if that is unspecified, UTF-8 is assumed.
+ 
+---transfer-encoding=(7bit|8bit|quoted-printable|base64|auto)::
++`--transfer-encoding=(7bit|8bit|quoted-printable|base64|auto)`::
+ 	Specify the transfer encoding to be used to send the message over SMTP.
+ 	`7bit` will fail upon encountering a non-ASCII message. `quoted-printable`
+ 	can be useful when the repository contains files that contain carriage
+@@ -167,8 +167,8 @@ Note that no attempts whatsoever are made to validate the encoding.
+ Default is the value of the `sendemail.transferEncoding` configuration
+ value; if that is unspecified, default to `auto`.
+ 
+---xmailer::
+---no-xmailer::
++`--xmailer`::
++`--no-xmailer`::
+ 	Add (or prevent adding) the `X-Mailer:` header.  By default,
+ 	the header is added, but it can be turned off by setting the
+ 	`sendemail.xmailer` configuration variable to `false`.
+@@ -176,7 +176,7 @@ value; if that is unspecified, default to `auto`.
+ Sending
+ ~~~~~~~
+ 
+---envelope-sender=<address>::
++`--envelope-sender=<address>`::
+ 	Specify the envelope sender used to send the emails.
+ 	This is useful if your default address is not the address that is
+ 	subscribed to a list. In order to use the `From` address, set the
+@@ -185,7 +185,7 @@ Sending
+ 	`sendemail.envelopeSender` configuration variable; if that is
+ 	unspecified, choosing the envelope sender is left to your MTA.
+ 
+---sendmail-cmd=<command>::
++`--sendmail-cmd=<command>`::
+ 	Specify a command to run to send the email. The command should
+ 	be sendmail-like; specifically, it must support the `-i` option.
+ 	The command will be executed in the shell if necessary.  Default
+@@ -193,7 +193,7 @@ Sending
+ 	`--smtp-server` is also unspecified, `git send-email` will search
+ 	for `sendmail` in `/usr/sbin`, `/usr/lib` and `$PATH`.
+ 
+---smtp-encryption=<encryption>::
++`--smtp-encryption=<encryption>`::
+ 	Specify in what way encrypting begins for the SMTP connection.
+ 	Valid values are `ssl` and `tls`. Any other value reverts to plain
+ 	(unencrypted) SMTP, which defaults to port 25.
+@@ -207,14 +207,14 @@ Sending
+ 	documentation or your server configuration to make sure
+ 	for your own case. Default is the value of `sendemail.smtpEncryption`.
+ 
+---smtp-domain=<FQDN>::
++`--smtp-domain=<FQDN>`::
+ 	Specify the Fully Qualified Domain Name (FQDN) used in the
+ 	HELO/EHLO command to the SMTP server.  Some servers require the
+ 	FQDN to match your IP address.  If not set, `git send-email` attempts
+ 	to determine your FQDN automatically.  Default is the value of
+ 	`sendemail.smtpDomain`.
+ 
+---smtp-auth=<mechanisms>::
++`--smtp-auth=<mechanisms>`::
+ 	Whitespace-separated list of allowed SMTP-AUTH mechanisms. This setting
+ 	forces using only the listed mechanisms. Example:
+ +
+@@ -229,7 +229,7 @@ is specified, all mechanisms supported by the SASL library can be used. The
+ special value `none` maybe specified to completely disable authentication
+ independently of `--smtp-user`.
+ 
+---smtp-pass[=<password>]::
++`--smtp-pass[=<password>]`::
+ 	Password for SMTP-AUTH. The argument is optional: If no
+ 	argument is specified, then the empty string is used as
+ 	the password. Default is the value of `sendemail.smtpPass`,
+@@ -241,10 +241,10 @@ or on the command line. If a username has been specified (with
+ specified (with `--smtp-pass` or `sendemail.smtpPass`), then
+ a password is obtained using linkgit:git-credential[1].
+ 
+---no-smtp-auth::
++`--no-smtp-auth`::
+ 	Disable SMTP authentication. Short hand for `--smtp-auth=none`.
+ 
+---smtp-server=<host>::
++`--smtp-server=<host>`::
+ 	Specify the outgoing SMTP server to use (e.g.
+ 	`smtp.example.com` or a raw IP address).  If unspecified, and if
+ 	`--sendmail-cmd` is also unspecified, the default is to search
+@@ -257,7 +257,7 @@ option.  This method does not support passing arguments or using plain
+ command names.  For those use cases, consider using `--sendmail-cmd`
+ instead.
+ 
+---smtp-server-port=<port>::
++`--smtp-server-port=<port>`::
+ 	Specify a port different from the default port (SMTP
+ 	servers typically listen to smtp port 25, but may also listen to
+ 	submission port 587, or the common SSL smtp port 465);
+@@ -265,7 +265,7 @@ instead.
+ 	are also accepted. The port can also be set with the
+ 	`sendemail.smtpServerPort` configuration variable.
+ 
+---smtp-server-option=<option>::
++`--smtp-server-option=<option>`::
+ 	Specify the outgoing SMTP server option to use.
+ 	Default value can be specified by the `sendemail.smtpServerOption`
+ 	configuration option.
+@@ -274,15 +274,15 @@ The `--smtp-server-option` option must be repeated for each option you want
+ to pass to the server. Likewise, different lines in the configuration files
+ must be used for each option.
+ 
+---smtp-ssl::
++`--smtp-ssl`::
+ 	Legacy alias for `--smtp-encryption ssl`.
+ 
+---smtp-ssl-cert-path <path>::
++`--smtp-ssl-cert-path <path>`::
+ 	Path to a store of trusted CA certificates for SMTP SSL/TLS
+ 	certificate validation (either a directory that has been processed
+ 	by `c_rehash`, or a single file containing one or more PEM format
+ 	certificates concatenated together: see the description of the
+-	`-CAfile` _<file>_ and the `-CApath` _<dir>_ options of
++	`-CAfile <file>` and the `-CApath <dir>` options of
+ 	https://docs.openssl.org/master/man1/openssl-verify/
+ 	[OpenSSL's verify(1) manual page] for more information on these).
+ 	Set it to an empty string to disable certificate verification.
+@@ -290,7 +290,7 @@ must be used for each option.
+ 	variable, if set, or the backing SSL library's compiled-in default
+ 	otherwise (which should be the best choice on most platforms).
+ 
+---smtp-ssl-client-cert <path>::
++`--smtp-ssl-client-cert <path>`::
+ 	Path to the client certificate file to present if requested by the
+ 	server. This option is required when the server is set up to verify
+ 	client certificates. If the corresponding private key is not included in
+@@ -299,7 +299,7 @@ must be used for each option.
+ 	to the value of the `sendemail.smtpSSLClientCert` configuration
+ 	variable, if set.
+ 
+---smtp-ssl-client-key <path>::
++`--smtp-ssl-client-key <path>`::
+ 	Path to the client private key file that corresponds to the client
+ 	certificate. To avoid misconfiguration, this option must be used in
+ 	conjunction with the `sendemail.smtpSSLClientKey` configuration variable
+@@ -309,17 +309,17 @@ must be used for each option.
+ 	more details. Defaults to the value of the `sendemail.smtpSSLClientKey`
+ 	configuration variable, if set.
+ 
+---smtp-user=<user>::
++`--smtp-user=<user>`::
+ 	Username for SMTP-AUTH. Default is the value of `sendemail.smtpUser`;
+ 	if a username is not specified (with `--smtp-user` or `sendemail.smtpUser`),
+ 	then authentication is not attempted.
+ 
+---smtp-debug=(0|1)::
++`--smtp-debug=(0|1)`::
+ 	Enable (1) or disable (0) debug output. If enabled, SMTP
+ 	commands and replies will be printed. Useful to debug TLS
+ 	connection and authentication problems.
+ 
+---imap-sent-folder=<folder>::
++`--imap-sent-folder=<folder>`::
+ 	Some email providers (e.g. iCloud) do not send a copy of the emails sent
+ 	using SMTP to the `Sent` folder or similar in your mailbox. Use this option
+ 	to use `git imap-send` to send a copy of the emails to the folder specified
+@@ -331,8 +331,8 @@ must be used for each option.
+ This feature requires setting up `git imap-send`. See linkgit:git-imap-send[1]
+ for instructions.
+ 
+---use-imap-only::
+---no-use-imap-only::
++`--use-imap-only`::
++`--no-use-imap-only`::
+ 	If this is set, all emails will only be copied to the IMAP folder specified
+ 	with `--imap-sent-folder` or `sendemail.imapSentFolder` and will not be sent
+ 	to the recipients. Useful if you just want to create a draft of the emails
+@@ -344,8 +344,8 @@ for instructions.
+ This feature requires setting up `git imap-send`. See linkgit:git-imap-send[1]
+ for instructions.
+ 
+---batch-size=<num>::
+-	Some email servers (e.g. 'smtp.163.com') limit the number of emails to be
++`--batch-size=<num>`::
++	Some email servers (e.g. `smtp.163.com`) limit the number of emails to be
+ 	sent per session (connection) and this will lead to a failure when
+ 	sending many messages.  With this option, send-email will disconnect after
+ 	sending _<num>_ messages and wait for a few seconds
+@@ -354,7 +354,7 @@ for instructions.
+ 	retype your password every time this happens.  Defaults to the
+ 	`sendemail.smtpBatchSize` configuration variable.
+ 
+---relogin-delay=<int>::
++`--relogin-delay=<int>`::
+ 	Waiting _<int>_ seconds before reconnecting to SMTP server. Used together
+ 	with `--batch-size` option.  Defaults to the `sendemail.smtpReloginDelay`
  	configuration variable.
+@@ -362,29 +362,29 @@ for instructions.
+ Automating
+ ~~~~~~~~~~
  
----add-header=<header>::
-+`--add-header=<header>`::
- 	Add an arbitrary header to the email headers.  This is in addition
- 	to any configured headers, and may be used multiple times.
- 	For example, `--add-header="Organization: git-foo"`.
-@@ -316,13 +316,13 @@ feeding the result to `git send-email`.
- 	`Cc:`, and custom) headers added so far from config or command
- 	line.
+---no-to::
+---no-cc::
+---no-bcc::
++`--no-to`::
++`--no-cc`::
++`--no-bcc`::
+ 	Clear any list of `To:`, `Cc:`, `Bcc:` addresses previously
+ 	set via config.
  
----cover-letter::
----no-cover-letter::
-+`--cover-letter`::
-+`--no-cover-letter`::
- 	In addition to the patches, generate a cover letter file containing the
- 	branch description, commit list and the overall diffstat.  You can fill
- 	in a description in the file before sending it out.
+---no-identity::
++`--no-identity`::
+ 	Clear the previously read value of `sendemail.identity` set
+ 	via config, if any.
  
----commit-list-format=<format-spec>::
-+`--commit-list-format=<format-spec>`::
- 	Specify the format in which to generate the commit list of the patch
- 	series. The accepted values for format-spec are `shortlog`, `modern` or
- 	a format-string prefixed with `log:`. E.g. `log: %s (%an)`.
-@@ -334,28 +334,28 @@ feeding the result to `git send-email`.
- 	This option given from the command-line implies the use of
- 	`--cover-letter` unless `--no-cover-letter` is given.
+---to-cmd=<command>::
++`--to-cmd=<command>`::
+ 	Specify a command to execute once per patch file which
+ 	should generate patch file specific `To:` entries.
+ 	Output of this command must be single email address per line.
+ 	Default is the value of `sendemail.toCmd` configuration value.
  
----encode-email-headers::
----no-encode-email-headers::
-+`--encode-email-headers`::
-+`--no-encode-email-headers`::
- 	Encode email headers that have non-ASCII characters with
- 	"Q-encoding" (described in RFC 2047), instead of outputting the
- 	headers verbatim. Defaults to the value of the
- 	`format.encodeEmailHeaders` configuration variable.
+---cc-cmd=<command>::
++`--cc-cmd=<command>`::
+ 	Specify a command to execute once per patch file which
+ 	should generate patch file specific `Cc:` entries.
+ 	Output of this command must be single email address per line.
+ 	Default is the value of `sendemail.ccCmd` configuration value.
  
----interdiff=<previous>::
-+`--interdiff=<previous>`::
- 	As a reviewer aid, insert an interdiff into the cover letter,
- 	or as commentary of the lone patch of a 1-patch series, showing
- 	the differences between the previous version of the patch series and
--	the series currently being formatted. `previous` is a single revision
-+	the series currently being formatted. _<previous>_ is a single revision
- 	naming the tip of the previous series which shares a common base with
- 	the series being formatted (for example `git format-patch
- 	--cover-letter --interdiff=feature/v1 -3 feature/v2`).
+---header-cmd=<command>::
++`--header-cmd=<command>`::
+ 	Specify a command that is executed once per outgoing message
+ 	and output RFC 2822 style header lines to be inserted into
+ 	them. When the `sendemail.headerCmd` configuration variable is
+@@ -392,11 +392,11 @@ Automating
+ 	at the command line, its value takes precedence over the
+ 	`sendemail.headerCmd` configuration variable.
  
----range-diff=<previous>::
-+`--range-diff=<previous>`::
- 	As a reviewer aid, insert a range-diff (see linkgit:git-range-diff[1])
- 	into the cover letter, or as commentary of the lone patch of a
- 	1-patch series, showing the differences between the previous
- 	version of the patch series and the series currently being formatted.
--	`previous` can be a single revision naming the tip of the previous
-+	_<previous>_ can be a single revision naming the tip of the previous
- 	series if it shares a common base with the series being formatted (for
- 	example `git format-patch --cover-letter --range-diff=feature/v1 -3
- 	feature/v2`), or a revision range if the two versions of the series are
-@@ -367,7 +367,7 @@ product of `format-patch` is generated, and they are not passed to
- the underlying `range-diff` machinery used to generate the cover-letter
- material (this may change in the future).
+---no-header-cmd::
++`--no-header-cmd`::
+ 	Disable any header command in use.
  
----creation-factor=<percent>::
-+`--creation-factor=<percent>`::
- 	Used with `--range-diff`, tweak the heuristic which matches up commits
- 	between the previous and current series of patches by adjusting the
- 	creation/deletion cost fudge factor. See linkgit:git-range-diff[1])
-@@ -378,8 +378,8 @@ case is to show comparison with an older iteration of the same
- topic and the tool should find more correspondence between the two
- sets of patches.
+---chain-reply-to::
+---no-chain-reply-to::
++`--chain-reply-to`::
++`--no-chain-reply-to`::
+ 	If this is set, each email will be sent as a reply to the previous
+ 	email sent.  If disabled with `--no-chain-reply-to`, all emails after
+ 	the first will be sent as replies to the first email sent.  When using
+@@ -404,34 +404,34 @@ Automating
+ 	entire patch series. Disabled by default, but the `sendemail.chainReplyTo`
+ 	configuration variable can be used to enable it.
  
----notes[=<ref>]::
----no-notes::
-+`--notes[=<ref>]`::
-+`--no-notes`::
- 	Append the notes (see linkgit:git-notes[1]) for the commit
- 	after the three-dash line.
+---identity=<identity>::
++`--identity=<identity>`::
+ 	A configuration identity. When given, causes values in the
+ 	`sendemail.<identity>` subsection to take precedence over
+ 	values in the `sendemail` section. The default identity is
+ 	the value of `sendemail.identity`.
+ 
+---signed-off-by-cc::
+---no-signed-off-by-cc::
++`--signed-off-by-cc`::
++`--no-signed-off-by-cc`::
+ 	If this is set, add emails found in the `Signed-off-by` trailer or `Cc:`
+ 	lines to the cc list. Default is the value of `sendemail.signedOffByCc`
+ 	configuration value; if that is unspecified, default to
+ 	`--signed-off-by-cc`.
+ 
+---cc-cover::
+---no-cc-cover::
++`--cc-cover`::
++`--no-cc-cover`::
+ 	If this is set, emails found in `Cc:` headers in the first patch of
+ 	the series (typically the cover letter) are added to the cc list
+ 	for each email set. Default is the value of `sendemail.ccCover`
+ 	configuration value; if that is unspecified, default to `--no-cc-cover`.
+ 
+---to-cover::
+---no-to-cover::
++`--to-cover`::
++`--no-to-cover`::
+ 	If this is set, emails found in `To:` headers in the first patch of
+ 	the series (typically the cover letter) are added to the to list
+ 	for each email set. Default is the value of `sendemail.toCover`
+ 	configuration value; if that is unspecified, default to `--no-to-cover`.
+ 
+---suppress-cc=<category>::
++`--suppress-cc=<category>`::
+ 	Specify an additional category of recipients to suppress the
+ 	auto-cc of:
  +
-@@ -394,17 +394,17 @@ configuration options in linkgit:git-notes[1] to use this workflow).
- The default is `--no-notes`, unless the `format.notes` configuration is
- set.
+@@ -456,14 +456,14 @@ Default is the value of `sendemail.suppressCc` configuration value; if
+ that is unspecified, default to `self` if `--suppress-from` is
+ specified, as well as `body` if `--no-signed-off-by-cc` is specified.
  
----signature=<signature>::
----no-signature::
-+`--signature=<signature>`::
-+`--no-signature`::
- 	Add a signature to each message produced. Per RFC 3676 the signature
--	is separated from the body by a line with '-- ' on it. If the
-+	is separated from the body by a line with "-- " on it. If the
- 	signature option is omitted the signature defaults to the Git version
- 	number.
+---suppress-from::
+---no-suppress-from::
++`--suppress-from`::
++`--no-suppress-from`::
+ 	If this is set, do not add the `From:` address to the `Cc:` list.
+ 	Default is the value of `sendemail.suppressFrom` configuration
+ 	value; if that is unspecified, default to `--no-suppress-from`.
  
----signature-file=<file>::
--	Works just like --signature except the signature is read from a file.
-+`--signature-file=<file>`::
-+	Works just like `--signature` except the signature is read from a file.
+---thread::
+---no-thread::
++`--thread`::
++`--no-thread`::
+ 	If this is set, the `In-Reply-To` and `References` headers will be
+ 	added to each email sent.  Whether each mail refers to the
+ 	previous email (`deep` threading per `git format-patch`
+@@ -481,8 +481,8 @@ exists when `git send-email` is asked to add it (especially note that
+ Failure to do so may not produce the expected result in the
+ recipient's MUA.
  
----suffix=.<sfx>::
-+`--suffix=.<sfx>`::
- 	Instead of using `.patch` as the suffix for generated
- 	filenames, use specified suffix.  A common alternative is
- 	`--suffix=.txt`.  Leaving this empty will remove the `.patch`
-@@ -413,36 +413,36 @@ set.
- Note that the leading character does not have to be a dot; for example,
- you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+---mailmap::
+---no-mailmap::
++`--mailmap`::
++`--no-mailmap`::
+ 	Use the mailmap file (see linkgit:gitmailmap[5]) to map all
+ 	addresses to their canonical real name and email address. Additional
+ 	mailmap data specific to `git send-email` may be provided using the
+@@ -492,7 +492,7 @@ recipient's MUA.
+ Administering
+ ~~~~~~~~~~~~~
  
---q::
+---confirm=<mode>::
++`--confirm=<mode>`::
+ 	Confirm just before sending:
+ +
+ --
+@@ -508,22 +508,22 @@ Default is the value of `sendemail.confirm` configuration value; if that
+ is unspecified, default to `auto` unless any of the suppress options
+ have been specified, in which case default to `compose`.
+ 
+---dry-run::
++`--dry-run`::
+ 	Do everything except actually send the emails.
+ 
+---format-patch::
+---no-format-patch::
++`--format-patch`::
++`--no-format-patch`::
+ 	When an argument may be understood either as a reference or as a file name,
+ 	choose to understand it as a format-patch argument (`--format-patch`)
+ 	or as a file name (`--no-format-patch`). By default, when such a conflict
+ 	occurs, `git send-email` will fail.
+ 
 ---quiet::
-+`-q`::
 +`--quiet`::
- 	Do not print the names of the generated files to standard output.
+ 	Make `git send-email` less verbose.  One line per email should be
+ 	all that is output.
  
----no-binary::
-+`--no-binary`::
- 	Do not output contents of changes in binary files, instead
- 	display a notice that those files changed.  Patches generated
- 	using this option cannot be applied properly, but they are
- 	still useful for code review.
+---validate::
+---no-validate::
++`--validate`::
++`--no-validate`::
+ 	Perform sanity checks on patches.
+ 	Currently, validation means the following:
+ +
+@@ -539,20 +539,20 @@ have been specified, in which case default to `compose`.
+ Default is the value of `sendemail.validate`; if this is not set,
+ default to `--validate`.
  
----zero-commit::
-+`--zero-commit`::
-   Output an all-zero hash in each patch's From header instead
-   of the hash of the commit.
+---force::
++`--force`::
+ 	Send emails even if safety checks would prevent it.
  
----no-base::
----base[=<commit>]::
-+`--no-base`::
-+`--base[=<commit>]`::
- 	Record the base tree information to identify the state the
- 	patch series applies to.  See the BASE TREE INFORMATION section
--	below for details. If <commit> is "auto", a base commit is
-+	below for details. If _<commit>_ is `auto`, a base commit is
- 	automatically chosen. The `--no-base` option overrides a
- 	`format.useAutoBase` configuration.
  
----root::
--	Treat the revision argument as a <revision-range>, even if it
-+`--root`::
-+	Treat the revision argument as a _<revision-range>_, even if it
- 	is just a single commit (that would normally be treated as a
--	<since>).  Note that root commits included in the specified
-+	_<since>_).  Note that root commits included in the specified
- 	range are always formatted as creation patches, independently
- 	of this flag.
- 
----progress::
-+`--progress`::
- 	Show progress reports on stderr as patches are generated.
- 
- CONFIGURATION
-@@ -473,7 +473,7 @@ with configuration variables.
- DISCUSSION
- ----------
- 
--The patch produced by 'git format-patch' is in UNIX mailbox format,
-+The patch produced by `git format-patch` is in UNIX mailbox format,
- with a fixed "magic" time stamp to indicate that the file is output
- from format-patch rather than a real mailbox, like so:
- 
-@@ -502,8 +502,8 @@ can save interesting patches in a UNIX mailbox and apply them with
- linkgit:git-am[1].
- 
- When a patch is part of an ongoing discussion, the patch generated by
--'git format-patch' can be tweaked to take advantage of the 'git am
----scissors' feature.  After your response to the discussion comes a
-+`git format-patch` can be tweaked to take advantage of the `git am
-+--scissors` feature.  After your response to the discussion comes a
- line that consists solely of "`-- >8 --`" (scissors and perforation),
- followed by the patch with unnecessary header fields removed:
- 
-@@ -540,7 +540,7 @@ two common types of corruption:
- One way to test if your MUA is set up correctly is:
- 
- * Send the patch to yourself, exactly the way you would, except
--  with To: and Cc: lines that do not contain the list and
-+  with `To:` and `Cc:` lines that do not contain the list and
-   maintainer address.
- 
- * Save that patch to a file in UNIX mailbox format.  Call it a.patch,
-@@ -561,12 +561,12 @@ If it does not apply correctly, there can be various reasons.
-   this case.
- 
- * The MUA corrupted your patch; "am" would complain that
--  the patch does not apply.  Look in the .git/rebase-apply/ subdirectory and
--  see what 'patch' file contains and check for the common
--  corruption patterns mentioned above.
-+  the patch does not apply.  Look in the `.git/rebase-apply/` subdirectory and
-+   see what `patch` file contains and check for the common
-+   corruption patterns mentioned above.
- 
--* While at it, check the 'info' and 'final-commit' files as well.
--  If what is in 'final-commit' is not exactly what you would want to
-+* While at it, check the `info` and `final-commit` files as well.
-+  If what is in `final-commit` is not exactly what you would want to
-   see in the commit log message, it is very likely that the
-   receiver would end up hand editing the log message when applying
-   your patch.  Things like "Hi, this is my first patch.\n" in the
-@@ -582,11 +582,11 @@ GMail
- ~~~~~
- GMail does not have any way to turn off line wrapping in the web
- interface, so it will mangle any emails that you send.  You can however
--use "git send-email" and send your patches through the GMail SMTP server, or
-+use `git send-email` and send your patches through the GMail SMTP server, or
- use any IMAP email client to connect to the google IMAP server and forward
- the emails through that.
- 
--For hints on using 'git send-email' to send your patches through the
-+For hints on using `git send-email` to send your patches through the
- GMail SMTP server, see the EXAMPLE section of linkgit:git-send-email[1].
- 
- For hints on submission using the IMAP interface, see the EXAMPLE
-@@ -595,7 +595,7 @@ section of linkgit:git-imap-send[1].
- Thunderbird
+ Information
  ~~~~~~~~~~~
- By default, Thunderbird will both wrap emails as well as flag
--them as being 'format=flowed', both of which will make the
-+them as being `format=flowed`, both of which will make the
- resulting email unusable by Git.
  
- There are three different approaches: use an add-on to turn off line wraps,
-@@ -609,14 +609,14 @@ Install the Toggle Line Wrap add-on that is available from
- https://addons.thunderbird.net/thunderbird/addon/toggle-line-wrap
- It adds a button "Line Wrap" to the composer's toolbar
- that you can tick off. Now you can compose the message as you otherwise do
--(cut + paste, 'git format-patch' | 'git imap-send', etc), but you have to
-+(cut + paste, `git format-patch` | `git imap-send`, etc), but you have to
- insert line breaks manually in any text that you type.
+---dump-aliases::
++`--dump-aliases`::
+ 	Instead of the normal operation, dump the shorthand alias names from
+ 	the configured alias file(s), one per line in alphabetical order. Note
+ 	that this only includes the alias name and not its expanded email addresses.
+ 	See `sendemail.aliasesFile` for more information about aliases.
  
- As a bonus feature, the add-on can detect patch text in the composer
- and warns when line wrapping has not yet been turned off.
+---translate-aliases::
++`--translate-aliases`::
+ 	Instead of the normal operation, read from standard input and
+ 	interpret each line as an email alias. Translate it according to the
+ 	configured alias file(s). Output each translated name and email
+@@ -718,7 +718,7 @@ include::format-patch-caveats.adoc[]
  
- The add-on requires a few tweaks of the advanced configuration
--(about:config). These are listed on the download page.
-+(`about:config`). These are listed on the download page.
- 
- Approach #2 (configuration)
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-@@ -643,7 +643,7 @@ Toggle it to make sure it is set to `false`. Also, search for
-    Toggle it to make sure it is set to `false`.
- 
- After that is done, you should be able to compose email as you
--otherwise would (cut + paste, 'git format-patch' | 'git imap-send', etc),
-+otherwise would (cut + paste, `git format-patch` | `git imap-send`, etc),
- and the patches will not be mangled.
- 
- Approach #3 (external editor)
-@@ -660,7 +660,7 @@ External Editor from https://globs.org/articles.php?lng=en&pg=8
-    "Composition & Addressing" panel of the account to be used to
-    send the patch.
- 
--3. In the main Thunderbird window, 'before' you open the compose
-+3. In the main Thunderbird window, _before_ you open the compose
-    window for the patch, use Tools->about:config to set the
-    following to the indicated values:
- +
-@@ -708,15 +708,15 @@ BASE TREE INFORMATION
- 
- The base tree information block is used for maintainers or third party
- testers to know the exact state the patch series applies to. It consists
--of the 'base commit', which is a well-known commit that is part of the
-+of the "base commit", which is a well-known commit that is part of the
- stable part of the project history everybody else works off of, and zero
--or more 'prerequisite patches', which are well-known patches in flight
--that is not yet part of the 'base commit' that need to be applied on top
--of 'base commit' in topological order before the patches can be applied.
-+or more "prerequisite patches", which are well-known patches in flight
-+that is not yet part of the "base commit" that need to be applied on top
-+of "base commit" in topological order before the patches can be applied.
- 
--The 'base commit' is shown as "base-commit: " followed by the 40-hex of
--the commit object name.  A 'prerequisite patch' is shown as
--"prerequisite-patch-id: " followed by the 40-hex 'patch id', which can
-+The "base commit" is shown as "base-commit: " followed by the 40-hex of
-+the commit object name.  A `prerequisite patch` is shown as
-+"prerequisite-patch-id: " followed by the 40-hex `patch id`, which can
- be obtained by passing the patch through the `git patch-id --stable`
- command.
- 
-@@ -763,7 +763,7 @@ EXAMPLES
+ SEE ALSO
  --------
+-linkgit:git-format-patch[1], linkgit:git-imap-send[1], mbox(5)
++linkgit:git-format-patch[1], linkgit:git-imap-send[1], `mbox`(5)
  
- * Extract commits between revisions R1 and R2, and apply them on top of
--  the current branch using 'git am' to cherry-pick them:
-+  the current branch using `git am` to cherry-pick them:
- +
- ------------
- $ git format-patch -k --stdout R1..R2 | git am -3 -k
-@@ -778,7 +778,7 @@ $ git format-patch origin
- +
- For each commit a separate file is created in the current directory.
- 
--* Extract all commits that lead to 'origin' since the inception of the
-+* Extract all commits that lead to `origin` since the inception of the
-   project:
- +
- ------------
-@@ -794,7 +794,7 @@ $ git format-patch -M -B origin
- Additionally, it detects and handles renames and complete rewrites
- intelligently to produce a renaming patch.  A renaming patch reduces
- the amount of text output, and generally makes it easier to review.
--Note that non-Git "patch" programs won't understand renaming patches, so
-+Note that non-Git `patch` programs won't understand renaming patches, so
- use it only when you know the recipient uses Git to apply your patch.
- 
- * Extract three topmost commits from the current branch and format them
+ GIT
+ ---
 -- 
 gitgitgadget
 
