@@ -1,163 +1,82 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0873175A72
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 03:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9DE175A6C
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 03:04:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784430144; cv=none; b=gnqGTRjbwAUNMKG/ZlMt9jqGet3etZLJSqAi1BQZzw8GO26h99RKkb4xQW3ZQOzKWImqTFD8n29/rdJ0eiL+2AfOPr/jMz6XfDjh4lGY6hgGvwgTcwEkC1YYT5UhD/DAT5oSYPOvVZzuh+2Q/NOftJtIRwB0ihBCFAt4tUoqadQ=
+	t=1784430242; cv=none; b=Yrn16DchCnFW4Sc5bx+i4KCSz0U57Ax3mUsu8y/hRKHbHBYLSP0rgQtML40EazyTJu7yf3epBdDFUNR28FEH104RORECLHJgj7wLo5XuYvxEHVLf9+48MjInNXgJQ4vsvbzb1oEUI6V248ukqnMtSeti4+WZgxAJkFbZSjj3oaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784430144; c=relaxed/simple;
-	bh=6tazwGHUCrQcWgqR9JI6bz9QiBGJB+YiNOWCAgjb2Vk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u/5bbPSBA4+/uIpqgfq7DJhh9KBn9AkWp/wya2GOAl7v2XffJEd8vty6TRBcI08crrslwTb/XgF+tKtsXVXIQc7extc/h+Da95bh6+jC8NmsEt1ovUfQs00p3hD3qGRqUV+WAIra/+Deov1OWOVYEYtXOit8D/N943kOU+A3yfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AkPQ5nRJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hGCxc7ZN; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784430242; c=relaxed/simple;
+	bh=efeaCEiEj3tEeBREDH0lyYbMHm+60W/KTmvPd/KaCg4=;
+	h=Message-ID:Content-Type:MIME-Version:To:Subject:Date:From; b=R4vKiuCGdQHb2VtehrMZEFfKer0bRdqLvyTtkKSKWnf5R6AXPULhfFQi3pPXwmf4i6g1+2i4Kt8gE2TewYTEqnYTrAj4O8IaC8prZy03j0WWl//J5Doj5RlxAEz5doSCtY+0i/8y2Ge+kGctJKTJqYhofQ+letD3/KcSwuU/ZEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gkKv61/h; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AkPQ5nRJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hGCxc7ZN"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DF8DB14000FF;
-	Sat, 18 Jul 2026 23:02:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 18 Jul 2026 23:02:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784430141; x=1784516541; bh=xHd87i/xrB
-	2u5Cy6GBjVpFBIYX3HemlHLHL5HM17Q9M=; b=AkPQ5nRJZ1rNqWEXA2kxfkTAfm
-	82QSgQ23ZnAEGRQvBpq782ElkgZUGTjQBvZHVOLqif7tFvKyJkqJUl9FTUvXLYNS
-	06wbmUeBbGVzaVQDB3XtjHEY7EctpKNxA4hCB+TqXEXTVDu45+qvej0nv2/nZM3h
-	VYR9dQT7S2aDvZCNbe5OkwrJy0E/BTyKm1DA5/j7UToNGKzKa1pJv5w7T2IAoBea
-	vni/+4YqzOtqHRz38tSG/Ekqn+UYXFzj07CyyyP85kspaI1zyMTD7v6AzrQjpAa3
-	kJpvv4cf+T7+YhgL+jHoJ58SjinibrIO2WH6DR8wbsH3dXD+LOr/zUiaf5Vg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784430141; x=1784516541; bh=xHd87i/xrB2u5Cy6GBjVpFBIYX3HemlHLHL
-	5HM17Q9M=; b=hGCxc7ZNQXtBYPBXVW+2Lgz4238S/h+U/t7KiP2gGRM6pyd8P8e
-	zKQ5kjJ6EhR/PfHuWNhcUBmJ81YHOSgJFffh+DN5G7pB0+fyiyv6xRjgtTwlTd47
-	NAFXEhyJ+OLQZPudPDOggYYSVyjzPwiDCXBQ7JY9WpeHbTwxylt47o8kvZtHCffu
-	PYtI6Btn7vdtFdXINnDcMFozNm5vQXuNLrrq5D0pE7GFyfO4h+7ej6wUnDA63qmR
-	ev7i/0Qdfzk6+j8Rd7C0f0b5x3FGkRl+V3YTO1plXxIxoEH66YZCXXmV+ODslsIh
-	/MgjZdEVz3+8VyUuglSHT1Pax5C0CwOGD5g==
-X-ME-Sender: <xms:PT5capbatvPK0xfp-SCbjxp6cTtuYv6jnCLADpu_KqIhNxGXAYpyWw>
-    <xme:PT5cairaU6KfWqcdninOXWXjpgG_m9WGukCLh5aZwMo1aUjW8twmGAC0Ntsa744h_
-    c1iTQgM0ZDeW8u88JSkbuOOFZtpVXRZRcrS-omYwzUgoTMDI1clPQ>
-X-ME-Received: <xmr:PT5cauN7semWUOSFStyhyukcwlowwOgEAINGTmCXfamxEjA2nLyjdtaMag6InswrJsbobqEZA0QQH6UvP2kqAfSFn26LWOdgOg>
-X-ME-Proxy-Cause: dmFkZTFzsozSdL5pC9eY+aENKDepe7rQzfIlQSDR74kRFXrOlh4Nf/xhZ1K5VcMJsiNtVz
-    CS4KTvpnLgxhKv8wphdHcIc1jXP/IohBCwdypFRMfIFguQolr+HW81mmMgAzI4PjGbVClt
-    RVBUjx+9nzKTQxUPrM9Zj8Pd9wzav5f3Z04S6guA2XY5dtriYV+kuCBNzU5dnPFDl0vCAk
-    swmOzus8z0SyPZ+oPWNBpySw8KYcUx0uME1F0qyo3lTAUZbiPubhJFKMBNqmbGbZHZ61X1
-    Dry4q3AHLTxNyTqjRu39iUC7YFkAGw0I24xwjwqIRshUouaGaGccwtyKy4gwmivucDP1j5
-    eRlU9lTvD1HVQPqs/yUTqd34q+QmQDVeCN9b7qMTxYMqGP/cV2ff+UjdGo/uQ3Ilu23zYw
-    uaijkru6VVaBHZXo710DcIS/5XmtHb2s49vrtl8qzwcOGeizXfbHDEfFajbLjfFyawEBKW
-    WLn5FI/5YzISUOsqCX0aSNGQo03vlMPJ5zAxqhN9ABdzskDLYnTgLPZdrgwfgVBsb9i+Q4
-    baFeYsTRZVKETLN4YQHUr1bRJ2JbJjqRO1rCUdg9GBjXlKeh7PsV0+RYKiag+QI94nPLCd
-    UgFuqR/W3UVi/LWby+E+1QjS7OxCIk7eD7lGnbYtvuap3BIPDvHDxAKd+20A
-X-ME-Proxy: <xmx:PT5catof05OyG2lOnqKqfV2OZ3SmMf93b1nFTotlrflmLgmZsV1RgQ>
-    <xmx:PT5cajdAL1DDGFNUYX95qNAYECTksv-6NwgVn1l2kfXa8k7eQIwu8Q>
-    <xmx:PT5cajQh0c71bvjPNvs0-pilbade4Qn-QX96-2-2dI2vInYhKZUZnw>
-    <xmx:PT5casY2qhoAIKdVbqmDvE_fqjYuJf4s1sDQOtGUjZuTfvSWNdv4Ig>
-    <xmx:PT5calVd8pH5uqJbzQevJOAwzY9mAPR3YKh5c6a4fcY8Apdq2sUa9_z9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 18 Jul 2026 23:02:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v19 5/7] branch: add --delete-merged <branch>
-In-Reply-To: <a6caa5b397da8ea24eb97e6aa6dc92b437e456ef.1784053493.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Tue, 14 Jul 2026
-	18:24:51 +0000")
-References: <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
-	<pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
-	<a6caa5b397da8ea24eb97e6aa6dc92b437e456ef.1784053493.git.gitgitgadget@gmail.com>
-Date: Sat, 18 Jul 2026 20:02:19 -0700
-Message-ID: <xmqqtspvptqc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gkKv61/h"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-81ec29f1d07so68040797b3.1
+        for <git@vger.kernel.org>; Sat, 18 Jul 2026 20:04:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784430240; x=1785035040; darn=vger.kernel.org;
+        h=from:date:subject:to:mime-version:content-type:message-id:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=efeaCEiEj3tEeBREDH0lyYbMHm+60W/KTmvPd/KaCg4=;
+        b=gkKv61/h7NG0j1Ievx8V0A8OawCTvBMnF3e8vj2+K013dXXtji/pag5VXQDbPVpY0j
+         6ypWL/xvKZsZDXickhwqzS4X1M/QYIBUtMUdc0zQLhxgwX9pZZGn3yJwUwqZukw+HQ0o
+         ZXFNCuGnSOry9LKoGr6FgdPaTUXBemOvmf2MqVFPAw06T8SgZnPR8+YSLhjFZVcvu93A
+         mZCIwf1jyPmXrZ6KE2ufVuiEoHkR67ao85xF45+HnIRHiJSkMHfPldwpha/V+L2Kiecf
+         8ROw448hLMdCYAGlJnFNvOyJiXIMjD76UP/jccvaM42jUOsZ9rfAWw1Bo5ZIcHN5VWOQ
+         2zVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784430240; x=1785035040;
+        h=from:date:subject:to:mime-version:content-type:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=efeaCEiEj3tEeBREDH0lyYbMHm+60W/KTmvPd/KaCg4=;
+        b=EYJ9irm15vYRy6ZfeW9D3oDTR8F7RwIsrYLANfjc/4c2g2br5+8AJFbEh9GEDWHL0C
+         yh42wgBuu3vaynNeu9v+t/7MNVN8+6fF5jf/NH1CJZ/MA4gzAawVmiSDvxAvsxJNUSZO
+         GJKLcjLvo3gxoqYElW6EL5bjj7Kj2c6+HvCEAr8lZI6NKXdR0ea8gct0GNYmNFITyw0p
+         Y4I1w1LjeQH26mYDl9ymp4S/Cx2wiH3SsXwOC2XB6is9NcGyqjpngkLF0ZmB7D/LD17+
+         w5o3ltl9EKjH+01MNRF1yViW9+1pv5int3dsQs0eDUDu+zu3Me4ObuLm5488TZGB3OiE
+         iwDg==
+X-Gm-Message-State: AOJu0YwMFu4xnGcI08MZ/0BgZVepzVGrtaUxrpGdzgVNlCMkPvNWNprF
+	dSWjKo6i9w5+EU5aYCXEEzJrVoq2kpR5sRkL11NwYXSyCpBvOqNmsAsK748s1A==
+X-Gm-Gg: AfdE7ckP1EQsdPPp2SZqwaZ9wBjZipdZSN3nZRPzcDy8zoT64bv5TmIeKyTX74NoRpf
+	JRRlCPJ8JzHlKSzK++RTnB6fyyeg+932HUmcReus9yzoZ7Skm17z+88GQTl49Zwi58gO3fhMyPs
+	m6Vx8uO/plylftj7lwOsWESPgL7ikPAKqeKx+GHlVguGH4dXjf/emj79aoephXYAZLORe9W2ecl
+	GZMb8LcydpA+5uTzUUSKD9Cs5RpqPIQ2ezSMPnCfPxWYFgnPwz91Ysrw/0WzYUPYrIu1mcZhwrC
+	8JSkvJ50MUkDJz2XvPoy1WjnsQugulV4e+6Bfk3l7840R0V3+LP+3jSoUZc+/JFmf2XHiAjO+P0
+	odOfu0qVHl/HzbPaB6V2lE+X+zisdTuDN/l+rev/Pkpsq8m6BCERUhYOiAw0OTniNhIaCFk4N1a
+	aJ+X+HoC6QHb40tvO5iY61CLfU3JtmqdmLiuT9QGyph+Vbm4LoC14Hkj/LT9ik/2zHSzyBuokBW
+	uly9MZBbruIJH8bO3YDNfeylPgdl+QiIsO99ePh
+X-Received: by 2002:a05:690c:c1c:b0:80b:bfee:c427 with SMTP id 00721157ae682-81ef25a3bc3mr28750357b3.13.1784430239809;
+        Sat, 18 Jul 2026 20:03:59 -0700 (PDT)
+Received: from [10.5.0.2] ([74.221.178.247])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81ef4012c89sm37468187b3.1.2026.07.18.20.03.57
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jul 2026 20:03:58 -0700 (PDT)
+Message-ID: <6a5c3e9e.ddde9de2.aefa6.3878@mx.google.com>
+Content-Type: multipart/mixed; boundary="===============4825411221471200695=="
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Subject: Thought your community might enjoy this - CodeRaider
+Date: Sun, 19 Jul 2026 03:03:55 +0000
+X-CodeRaider-Segment: rust_discord_communities
+X-CodeRaider-Source-URL: https://git-scm.com/community
+X-CodeRaider-LLM: yes
+From: CodeRaider Team <bobjim8889@gmail.com>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+--===============4825411221471200695==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-> +struct spare_data {
-> +	struct strset *deletable;
-> +	struct strset *spared;
-> +};
-> +
-> +/*
-> + * A surviving branch stacked on a deletion candidate would lose its
-> + * upstream, so drop that candidate from the delete set and remember it
-> + * in "spared" so its own upstream can be tidied up afterwards.
-> + */
-> +static int spare_stacked_base(const struct reference *ref, void *cb_data)
-> +{
-> +	struct spare_data *data = cb_data;
-> +	struct branch *branch;
-> +	const char *upstream, *up_short;
-> +
-> +	if (strset_contains(data->deletable, ref->name))
-> +		return 0;
-> +	branch = branch_get(ref->name);
-> +	upstream = branch_get_upstream(branch, NULL);
-> +	if (!upstream || !skip_prefix(upstream, "refs/heads/", &up_short) ||
-> +	    !strset_contains(data->deletable, up_short))
-> +		return 0;
-> +
-> +	strset_remove(data->deletable, up_short);
-> +	strset_add(data->spared, up_short);
-> +	return 0;
-> +}
-> +
-> +/*
-> + * Keep any branch that a surviving branch tracks as its upstream, so we
-> + * never delete a branch out from under one stacked on top of it.  Such a
-> + * base is itself merged, so when its own upstream is also going away
-> + * (no surviving branch tracks it), clear the base's now-stale upstream.
-> + */
-> +static void spare_stacked_bases(struct ref_store *refs, struct strset *deletable)
-> +{
-> +	struct strset spared = STRSET_INIT;
-> +	struct spare_data data = { .deletable = deletable, .spared = &spared };
-> +	struct strbuf key = STRBUF_INIT;
-> +	struct hashmap_iter iter;
-> +	struct strmap_entry *entry;
-> +
-> +	refs_for_each_branch_ref(refs, spare_stacked_base, &data);
-
-Hmph.  Wouldn't this implicitly make whether a stacked branch is
-spared or has its upstream configuration cleared depends on the
-order in which the branches are visited by the callback function of
-refs_for_each_branch_ref(), which presumably is alphabetical?
-
-For example, if 'a_tip' (unmerged) tracks 'b_mid' (merged), which in
-turn tracks 'c_lower' (merged), visiting them in alphabetical order
-('a_tip', 'b_mid', 'c_lower') would spare both 'b_mid' and
-'c_lower'.  If they, however, were named 'tip' (unmerged), which
-tracks 'mid' (merged), which in turn tracks 'lower' (merged), they
-would be visited in the order 'lower', 'mid', 'tip'.  This would
-result in 'lower' being deleted and 'mid' being spared with its
-upstream configuration cleared, even though the relationship among
-these three branches is exactly the same.
-
-Since the branches are visited in a fixed alphabetical order, it
-might not be an unpredictable order that yields unrepeatable
-results.  Nonetheless, the behavior should be consistent and
-independent of branch names, as long as the inter-relationship
-among the branches involved is identical, no?
-
-Or am I grossly misreading the code?
-
-Thanks.
+Hey! I'm Eli, founder of CodeRaider (https://coderaider.net), a code-raid calculator and strategy tool for Rust. Enter what you know about a base's locks and it gives you the optimal sequences to try. I came across Website and think your members would enjoy it. Would you be open to us sharing CodeRaider in your server? Happy to set up a channel or bot integration if you're into that. Cheers, Eli Young Founder, CodeRaider https://coderaider.net --- To opt out of future outreach, please reply 'unsubscribe' or 'stop'.
+--===============4825411221471200695==--
