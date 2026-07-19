@@ -1,86 +1,88 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC012EF653
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 21:43:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAA7199949
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 23:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784497382; cv=none; b=o4q8Dl2ulLSFotmUt6lvUQCCZIGDDUuWG59/4kg8lZ+WFxVhbTIn5IdvQGC/3Sr4bwMG0Q0aHmqOiWh2Ca5bP0ucwlM2Gda0JU5Da8ziV3Lkck7LX0EfVt6xhV4a/qYoxA3rmfc/W9m72F/hvSotiT9iaDcNtIz3HYVUQHvQnew=
+	t=1784504422; cv=none; b=ELT6oZpkSkEgmvuphMsdzBwuB52THgDww/nZPspZdBEEDIthxTTD3iFWTNl6faaKT0U9rSmjYXBMUs0yaMrXS2wWBabT0IDmcbETgF076n/vfaZ1rKm4Ch+qiAIPY51ZtLurBaN9nzXOoOFpLgG5AwZgvzaobOZikkPJv9gU/9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784497382; c=relaxed/simple;
-	bh=Sg17H+l+k37j4Wkv7cPxkmz4BVxAhXm0HbdX9xxqnCY=;
+	s=arc-20240116; t=1784504422; c=relaxed/simple;
+	bh=2OdXme8mKztuEpuQIpcQSJxv5CabYIdkHChAMIK1Q+0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RKatnVQhDPQpRgPRO+zqtP2V+F0caBXZCaT/AgSB8a7aTuPv8jqm0bHd9P7yXu7W3lA9Qsr3YdpsGmRUJ6pbCYvSFwkl0aQHVirCe6r3KkbvUpTl7YCCHTofOpuELuSgOV55H/914WJdQTk9rY3JpdvuV++lCuX3Z0BFM4eGTU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AWrLv5rx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T4XSvBvN; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=TZBmeVMbRLTXaSJt5wdwEYS10HHy5ofTiS72e7yG/U4y78EVwGDH+ISrFu+MyH7i2OGFH8xEZLYFmc6193daG50K1iXWOsLtYobMN3WiJosSpqG4DHQwLU8wUgdfIJruWJMxli7OErIArHtd/YfriWZqEKPzC7sS6xERZTHBTV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G+qSvotS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lAzSrYk1; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AWrLv5rx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T4XSvBvN"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8B7E2EC00A3;
-	Sun, 19 Jul 2026 17:42:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G+qSvotS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lAzSrYk1"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 58C5D14000F3;
+	Sun, 19 Jul 2026 19:40:19 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sun, 19 Jul 2026 17:42:59 -0400
+  by phl-compute-02.internal (MEProxy); Sun, 19 Jul 2026 19:40:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784497379; x=1784583779; bh=fbSd/wEjoU
-	og7vFWuFZ0XB+WbUYA6OdqVxCHgNiLGfQ=; b=AWrLv5rxdh5losihL9icDM24d4
-	Dd1JgP8qnx2cy4TNkN09misyRvgCmU0GS2EHXuTuxsaMuFVK9TWF8ChZXZJPh/8I
-	WgKKWdjWkoG0Ii55/kMcyd3c0FaEmSMT5qLhaS4NsFTzeUhAe4rQTQsEZyR1BV2o
-	qoXocRmA4uH1YFMkorvkHgO3ytW+SWz3Dqoh1x9tCoSrSDH63MlE8tmrSLIzjWoB
-	SiKsvSF2V718RdopstQLe1r4rxog3rH3Rl2jZ7tpvzchz6aYPiPpSLYFB6c8HnC8
-	RX1jUI+ita4wNMB1G69jbpNn6WyQnH+gS3nEk+XF6lBqPqROpZrLodrYzDBA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784504419;
+	 x=1784590819; bh=YZg2PJ5QNUmuVl5R4wQeh9DToJzNN7g4Ezuba8ksj2M=; b=
+	G+qSvotSwrIG4OBJQGIHDzC6djV1IDMdIQGk+ruqSHtuinffZmXWszOdhfoSjK/P
+	UmeoBrZIfdHQ6KzMUgnKKMN4en2N8g5OxFo109FF/CQdxYbNtUsytpW30H8azH3/
+	f5NMpbgumWFYHGJwI3lAmBgmQpU8fW0HCo6QJto6ixQGYGrdWPdLeP6bjtm4u4ZE
+	bIjTSbi9/QI+cZX9fZC1h77cDcL6NmS0bjwGOGY13YThzW7IyFHI2CdoOAChpNG9
+	Lxi/tqHimt+2Xg4d/hl4Aby5MsXGlL792LNgKuz1TwccZ5w6aA+mfkf57cnsBHOe
+	1qh3AWd8L++XrJnUyi+1nA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784497379; x=1784583779; bh=fbSd/wEjoUog7vFWuFZ0XB+WbUYA6OdqVxC
-	HgNiLGfQ=; b=T4XSvBvNusFsXnIQwB9IT81bLJMISqZZJJglfuVv9wwatTPtRBB
-	xg4MB231np+cbfnTmMslxMc0lIJOR8J1WCz/BMH3kPNQhisO3DZvWS8zRLAyNIn0
-	Mj3KRgPyUzLvvmP7WmTeqEDvdhBG6Q6JF0KUCSMYQL84M8/2cK5LASurVc/WoI71
-	d9BfzRKNqtrAR1WJpeo1RQIgdWXzpRiLRL6uMgV+HcQb0ukzOflzIMrRg352awyC
-	LlfUMjUYMn4LOikFR2Qmid3fZdvphRFj7fv9fU8tXugYwKY8/z1YUI6vimNWWL+1
-	wMGmOf1UWWTgGQOTgMcI44KBM+d1ilHQeDg==
-X-ME-Sender: <xms:40RdanriJBVlyQmZdQg33hjzGRbk-0i6aOtGPa_BC76EC0CHG1sFLg>
-    <xme:40Rdaj4OdLcdUsBHMtifH588h_-Ug0rn31_xLgVhzJSdspgQsXipbk0IJvey7UDPA
-    cpSaETq-v39KsemKj_qdySOAtiBsUDzvyOmM3lcrGOTEJ8Qtnxqxg>
-X-ME-Received: <xmr:40RdamegoTGJiM3yMG32uirSq7OARadMLsl2d36kmpKXYxhxfmmqgxt_cXkCS5uKhPe-SQQIQv9NhmiXU_dhL7lfJu0Qhsk5pw>
-X-ME-Proxy-Cause: dmFkZTEQYv2q7+7qQDRaNKQMzCM9aqEQ5A6SqF2YwAGFYVT5HPDchjHyF3Z3DgOHKufp1/
-    W2qdgCT49h/roifjKq37yisD4/HhqswkkmPE4TQyr/u+LG1XUeKjUKE9HwIv867wrKRTSr
-    y6RvQfMECYjM8fvGtPmB7eo1j6AhtnfqZ1fKiWETzNs+T0ZUtxdyOLGIg84ynes6sXmmUS
-    ARP6euf6AEoscdFLRcOKmB9dS1zYB4dFDYtEHnCREpaQKt+OKAvuYnUXLChpOgQPE3b4e6
-    vSxQ4L+v4hd5SBq/Ytd2YROkryml9kXB9HOPTuXZgCfQ7oMbmh7Wf2nSh7Z8yTNjvED3rG
-    pCyChjJGor6IM0EbriVcWa+4jVT5bBTT7gI8fHSggfSGwZiLUjFDt+rPxa6XxZloUEF1we
-    1QyjaIKsk9C9me5sUILTui+GYB5GHC7rSbBtMC5PsKEzoO5N3ybWRYVBLvKcCwXYIEcGto
-    g+HHLH7Zu8ybIHe7bsvDAoUoYrKiP1PziPZdhr6Z2S7Av6dCpo0Bg1M8eWmtHzb1xWxf0Q
-    c9siHLlws4LGiDcgJh1ES0a3l8nFg37BYedf4eRatZjyojh+nJYuwmXx4gGXH8PxSHkTQ+
-    MP963RUMGe76avR/7iKmgm+k1jBOfkEJDTNHmvJsjwObx1T1wT2FnC+aUrLA
-X-ME-Proxy: <xmx:40Rdag5EkRd6Jw_JbbpX8F8KhhHwfB-dmu4NPGFV43z_c4zvGgjynA>
-    <xmx:40Rdaltim7Shwewnb5h2SmVLPj9EDcF0g0Ml0c_W6JbiiMmhIAja8Q>
-    <xmx:40RdaogCuGhFMBWLFy7o-b1vEJNSt25IirzWyMy8_Bz4LcVkfO-rQA>
-    <xmx:40Rdaoqf2aEa-RRh_TRx2xM531zmVv2JTROlQt6LMUE2cCVOJs2lbQ>
-    <xmx:40Rdagk9FYN79K1aT78HsOvf_Qok5j8cUwfhuW3fok6ptP1yMMGTYi14>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784504419; x=
+	1784590819; bh=YZg2PJ5QNUmuVl5R4wQeh9DToJzNN7g4Ezuba8ksj2M=; b=l
+	AzSrYk1jqmzvuIkyFf0/vK4MTZh/3MxH26122ke1QkttogCnBSiLBF63MWkrWV/4
+	FL4tN3pAmUvHQSibLxIP7bK0RamuPO3BDPC0d45WdG29ncmUNCHqedJi8JtvpRtR
+	iSzG8/xEY4uSToJNNwPGXQ8oMsc7V0Beiec44F2Lsd+4n52084UNXXrVQyAMlgJf
+	FUk9qafHaiZ9lBeKMvC49JhNKt45DGpkhnf+QJ+ncp2UrgxwJA0qDtcAB5n3jFjD
+	2lZa1lQBxG1yU3XaSMbjxS+GPc7juYDDp8q0XdD3PDBEzDtKXF94Qon2L4bYeREx
+	nId3n6qnDA2wYRhvKBaZw==
+X-ME-Sender: <xms:Y2BdagvN5fMZl-xrEbMHGghZNvAmF5nBkcHO1A5Q0wzg8lUULNIDpw>
+    <xme:Y2BdakfwYkJgdYH4OAL62OOd-TCJNJmvxNMGbvOBUphWjJ0NreUZgOlAXTVGMNz_D
+    OOYfwWZZ2X1GTULzN-xYoln7Gz9KyLZYfhDAgWEYkE12raIW2RVLA>
+X-ME-Received: <xmr:Y2BdagwmXqkDM2dsgjF-Gg7tDJoso3WqQruV7s_-UBF2q8EypCEMCT68x6qQg42yV-R1l2IBL1uhmPsAldi-MZ3o9fp0dS9NjA>
+X-ME-Proxy-Cause: dmFkZTFOwM7F0R+C/DWThHILsWwF4HSPFjIg7NPPP/80zSp9g2dtVGpvBWzHLtsaG175IO
+    7UwqsfcRVKkFdDNwoKPNEBS2GGrqLXu7wj6/FRbnTy/hSh30X7lFs1s5EaTSStTTx66kby
+    R/kejR0loe6aWmKoKgruE3OpZ4nkeZxt6jY3rQCzdR6o2DxRsKoeGs57WzPGKAsXOxivAL
+    B7/6FC5J5TMitiaGkckKhd+wV0q5xuQLGsdh8/U4g8VAoCkvKxdur5odSD41ApeJDC9nIW
+    PsFr6gl52POv+RLwd4P3mWjtICH5ODleZrA669jcIKjfKiIOihcy4DMQ8Qy+KqVHPrvVMY
+    hA1DOMq/cYjgrPR+1A4hmD7hyRwE86/URh+X5l/omVUofOBFhs24e1eFW4wobwHsj/8fhc
+    btS88a6QlH72svdPt6NMcgxCHDDF5mPGFte3+an16qOqn1mwSJCRuR0oQUIbYoowfsNJx+
+    5x5QLFUiefUsqNMsnoxwkHCr/imn4FyYrWWOVEXS9mAaRHmAjbQci0zfmEvn2fkluEjHXX
+    P384+LXee3RdIj2g0hq94bx1ZX1i+0P6SFqa2UBJz6ptkLGICYsaWpqJb3oxA/GafUOPhp
+    H9avXx/ahDUP7ZZDcyfUdLGwDoou9rkRV6UvFV1csoKb2dWqjL8+TAR6If9Q
+X-ME-Proxy: <xmx:Y2BdaiEJdQeS5t3wcC6OjWO_qbKWoJLSwNWv13zjvfaZiYRUKu-9JA>
+    <xmx:Y2Bdasy-tQhEmuBc0pigYsIKs7joFdNjufuwHVXh02b-CeblbbsvZg>
+    <xmx:Y2BdarvScxmsUWdms3bEyGRH6nA_bQMGIIIfNzTULPEsDvw1zvvttw>
+    <xmx:Y2Bdah3P89sakWzUp5S1pEZkiz579UNXDLsOeTWHlKrbQ_flkeHVEQ>
+    <xmx:Y2BdagyGm_94DJWv1B1vfdhm7gkcPGSBigxEkmAseUUbD_MIcUmF2wCh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 19 Jul 2026 17:42:58 -0400 (EDT)
+ 19 Jul 2026 19:40:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v19 5/7] branch: add --delete-merged <branch>
-In-Reply-To: <a6caa5b397da8ea24eb97e6aa6dc92b437e456ef.1784053493.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Tue, 14 Jul 2026
-	18:24:51 +0000")
-References: <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
-	<pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
-	<a6caa5b397da8ea24eb97e6aa6dc92b437e456ef.1784053493.git.gitgitgadget@gmail.com>
-Date: Sun, 19 Jul 2026 14:42:57 -0700
-Message-ID: <xmqqpl0ilkpq.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH 2/4] doc: convert git-format-patch synopsis and options
+ to new style
+In-Reply-To: <e1ed85e3f2733f0f1cc46416903d1e0c8b4c1856.1784490878.git.gitgitgadget@gmail.com>
+	(=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Sun,
+ 19 Jul 2026
+	19:54:35 +0000")
+References: <pull.2185.git.1784490878.gitgitgadget@gmail.com>
+	<e1ed85e3f2733f0f1cc46416903d1e0c8b4c1856.1784490878.git.gitgitgadget@gmail.com>
+Date: Sun, 19 Jul 2026 16:40:17 -0700
+Message-ID: <xmqqldb6lfa6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,72 +90,35 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> ...
-> +struct spare_data {
-> +	struct strset *deletable;
-> +	struct strset *spared;
-> +};
+> Backtick-quote all option terms in the OPTIONS section, convert
+> standalone placeholders to _<placeholder>_ form, and convert
+> single-quoted commands and tools in prose to backtick form.
 
-Let me offer a brief comment on the data representation chosen for
-this design, which initially left me confused enough to suspect a
-bug or two.  It turns out the confusion was entirely mine, and I
-have since convinced myself that the approach is sound.
+OK.
 
-> +/*
-> + * A surviving branch stacked on a deletion candidate would lose its
-> + * upstream, so drop that candidate from the delete set and remember it
-> + * in "spared" so its own upstream can be tidied up afterwards.
-> + */
-> +static int spare_stacked_base(const struct reference *ref, void *cb_data)
-> +{
-> +	struct spare_data *data = cb_data;
-> +	struct branch *branch;
-> +	const char *upstream, *up_short;
-> +
-> +	if (strset_contains(data->deletable, ref->name))
-> +		return 0;
-> +	branch = branch_get(ref->name);
+> @@ -708,15 +708,15 @@ BASE TREE INFORMATION
+>  
+>  The base tree information block is used for maintainers or third party
+>  testers to know the exact state the patch series applies to. It consists
+> +of the "base commit", which is a well-known commit that is part of the
+>  stable part of the project history everybody else works off of, and zero
+> +or more "prerequisite patches", which are well-known patches in flight
+> +that is not yet part of the "base commit" that need to be applied on top
+> +of "base commit" in topological order before the patches can be applied.
 
-Here, spare_stacked_base() is a callback triggered by the
-refs_for_each_branch_ref() iterator.  I initially misremembered what
-the for-each-ref family of iterators passes to its callbacks.  I
-thought 'ref->name' here would be a full refname, such as
-'refs/heads/main', which does not match what 'branch_get' expects
-(which is a branch name).  The same confusion led me to think the
-'deletable' strset was indexed by full refnames, which would then
-...
+GIven that the last part of this hunk below uses backtick-quoting
+for `prerequisite patch` and `patch id`, shouldn't the references to
+`base commit`, and `prerequisite patch(es)` in the above also be
+backtick quoted for consistency?
 
-> +	upstream = branch_get_upstream(branch, NULL);
-> +	if (!upstream || !skip_prefix(upstream, "refs/heads/", &up_short) ||
-> +	    !strset_contains(data->deletable, up_short))
-> +		return 0;
-
-... mean that this lookup using 'up_short' (the branch name obtained
-after stripping the 'refs/heads/' prefix) is buggy.  But that is not
-the case.  The 'deletable' strset stores branch names, so indexing
-with 'up_short' is correct, and ...
-
-> +	strset_remove(data->deletable, up_short);
-> +	strset_add(data->spared, up_short);
-
-... adding 'up_short' to the 'deletable' strset is correct too.  The
-same applies to the 'spared' strset.  It is consistently indexed by
-branch names rather than full refnames.
-
-This design choice makes perfect sense for this application.  We
-have no business touching the upstream of a branch unless it is a
-local branch.  A remote-tracking branch, such as
-'refs/remotes/origin/main', lives outside the 'refs/heads/'
-hierarchy.  Such a branch has no need to interact with either the
-'deletable' or 'spared' tables.
-
-I hope others will not be as easily confused as I was, but just in
-case it helps future readers ...
-
-Thanks.
+> +The "base commit" is shown as "base-commit: " followed by the 40-hex of
+> +the commit object name.  A `prerequisite patch` is shown as
+> +"prerequisite-patch-id: " followed by the 40-hex `patch id`, which can
+>  be obtained by passing the patch through the `git patch-id --stable`
+>  command.
 
