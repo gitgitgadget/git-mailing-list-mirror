@@ -1,87 +1,86 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F7743F0BE
-	for <git@vger.kernel.org>; Sat, 18 Jul 2026 22:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06437175A8A
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 01:04:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784412581; cv=none; b=mpzniF9l11HFKDWVb0lJ4MOckATxTOmYnHyLbPYBFM/3R1zTrOjzY/6mk+7GcqIZeP/lF+9vjNrUfnOhIoswbXHacAgw8McJSI7lFtHg9cRediutLHSTNUAgHsonuleItaCKqd4ntdoxkhf/wgi5dTBwvsBYqzZMmupq3K3yGzg=
+	t=1784423096; cv=none; b=BDELQzr2Kyhxl2ViM/+FOPQH79m9IhGdVJ2LZsqhZOHu4sW6KR9ZUkEW9uMmzWGEuLsoBfcXSc5V4c/ooY7/YrxZmjqq9vWhTiK0LWnL1jbd7qlVxqDPrd1FTEwhsQ6HlE9dwkJa67DCmQ6rOcQpNW6LHVg9toMJ4u/nk1R4le4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784412581; c=relaxed/simple;
-	bh=KPp+TCEYIPO4RG1zyuHGBGmUQWTzuzuR9fVN4INvUH8=;
+	s=arc-20240116; t=1784423096; c=relaxed/simple;
+	bh=oG0ZxXZ2eu1E6GaUrJ0ZhqTd85YNwgc8QqhsR8EqOX8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UHX8ulcrJwtsCl6LZop22yJjaGjVrPzUNAp/+jD4Olf/GsATbT1HM9afrik5W2qugQ03LytQKCpTfkbPQSMrAXVuAZFap/3LQEtMSbEYnUFUrPf+UystXj8NTBi6KDD3g9fqEe+nnuylt1sCYvxTJUeWShO6VuTUYY+BaQDVesg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DyXoMCyw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bF5PfkuI; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=N1jSEKmBkD2MSViPda8eU+sqIIb9I/sgOOYCOV/ARo1Z/8teyj1HyxX9ut7VM159kI48E6qcXPXUWBJ3C0zrhOeKUDSsEyN9yhjzL2smMAgUKzT+TCEkxjQ9N0gVruaXgHCIO676Rt662hOuzkPzVZBfdbqlgkbSbqMYyduFkEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iy75SuUF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U3ITugiz; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DyXoMCyw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bF5PfkuI"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iy75SuUF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U3ITugiz"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 378ADEC01A7;
-	Sat, 18 Jul 2026 18:09:38 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 26D61EC010B;
+	Sat, 18 Jul 2026 21:04:54 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 18 Jul 2026 18:09:38 -0400
+  by phl-compute-03.internal (MEProxy); Sat, 18 Jul 2026 21:04:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784412578;
-	 x=1784498978; bh=OUOwqKmG8T/cGbVcYY5VG+HUBROXI78xSwdpVh3AxoI=; b=
-	DyXoMCyw7Fw4Qdd0BQ+SJyzeIeOeyzHRHaXOTRQl05Rc8V2ptOB92n00o7ms57hp
-	I0OqMWWWxJSJgPnCK5/cOmxRXapzJWrIG8mA5z884+nBxoaoKVV/RwT4QG57GtXZ
-	xyQji4RMUZDVrgLOYcInV45x/GymtBZsziPxFgSlhreLTvaLuyL8xuXWbzeVo5As
-	U+TYfa3aKn3ThkzSAAg+at9loUtPFRXOUSSQG8BETxSowEYFyvCPO7lpzkpQ2iZt
-	+y/1Uqw15o2TxeFcQNOPhWxQuVsf7tl8S1BIdedr/3X6euKlG/bmghzQisDn85NS
-	rNekQl7bf9dLhXz+Ylbrtw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784423094;
+	 x=1784509494; bh=HPqGmulWBQoU4JRiuVi0tobFrRNF+w80wAhJa8LwdWI=; b=
+	iy75SuUF8lagNvnd1Z4lVeBFuI7pmI3JGhBwuDC/omV14zJZonb8I6bMytGbLam0
+	APu+sI7/jpi9OQwyf3sBD5fthgoIIklL4s8IHbYhYZDZD2krN4xvtadNMinuXOO2
+	sLwqGVqLad4RgfuuktbXizf06kVvmurmFBdWGUArYcxE8C7TX7JoaeAOWLKByIy4
+	U1nyQvZ5Wd2yTR2W8EuLBIUBA+w40WqJfYlVhfjAEkJbNJdfC/y+dbUTtvDbVxIN
+	deij96DZMkkPsR4BdDoOAQeHjD/6YNOjMIr3/vjf+TVRNVHc0VdRcflY2xp3+WUK
+	sqcaD9hiIJ5PYjXxMt+AXg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784412578; x=
-	1784498978; bh=OUOwqKmG8T/cGbVcYY5VG+HUBROXI78xSwdpVh3AxoI=; b=b
-	F5PfkuId7lFh/FDWXISP8BDali2LBi0Fq3M1LEESQxvHUk6FfQd/WLV4CKvMJp5Q
-	0fq4x1o76aeToYGPb0Txf9nBdXtk/9bOUU1S1jrobLV1j3kskd7JQ4BZDbbRg4PJ
-	LaYcNYKk7fEKSUwFLclIgejKfASiSjSrSavC7KHSAGhH10a6YO6fPxjmxk7szGVm
-	rmoJhjbXFZN5Yzh2kfAyjgJHIXNP64JYdK+p+Stq+unD/GCGBgL643SaapCeQqOS
-	srRgIGXbf7WT1Kd0CTOFn0R4Ix/AtE8E/1Vodj/AGgj35CasWKk9xrmOPXtzYglv
-	UxGouk6Rrh3OApt+D6Dxw==
-X-ME-Sender: <xms:oflbatvu3VKe3IqUyhfFbV9ClROeheWavEJM5eekC4ZYw1yjmFzttw>
-    <xme:oflbaot5yceYgO7nt54bhLT2_nly9PmtDGS3qeRuDJ7oXbBe9PeGjWY8X213tWIA1
-    2Xd4_y7r-yOx6982qCgZ5V9FFBcXBO1UMnvefhxNTqzXqPpDoIkvA>
-X-ME-Received: <xmr:oflbajB-Y5VENMctMczI7_Qd64qkAUlILoDqVXmYqhkEa8krDd5P46FvZQErunDhxR9WTm0txVa3jtAD_VWHyd0XMr2H2vDfIA>
-X-ME-Proxy-Cause: dmFkZTF2yild5ymfMvyyfbO0558L9ZQhDeKw1qEVyd5I1DSVqf87dkEuKm3sEQ1JJz1hRB
-    fJCAc+Xk9+RsVMGNs4ep3l91qzMuA6fFokIzjcUMhIJUq4LuBtQP1yC4nLkqeow5xYthcx
-    JNxZOxuhNE5pD/7wdeb60XMAAO0mncyYXlDjOcmC40D+tN3r6aY5o5wW0Je9a4RcjC59Sa
-    CjJvwFssqne9WUlWRr9B8QKZg5Cl4JL4Co4q0WvIFMWVkzYCIeqMJk9OlR2SsRqfupf4Wp
-    VXSd63jM7bXN0pqsYpWxCHGW5fbVTbDiPDp1B8iW70ORMMtTSkZnkUd5vgnKmFbBQN/nnp
-    HjjP39eMilTGF7vkwMjId8PcLfzr4P50euTvJTiQ1OYRC9wFAT84vq+i7pndYQbH5v2IJb
-    R9iEgry/wzBF/wPqHhbG77gv5ZE1f+WyWqOy5TSnqNANi5gjTitC9FMKRtEuKH5iOoCXzq
-    P0Wb+GrmDUJbYKgx4j7ua2LwAyI2bykU4EJLIVZSPxQfZ5uI57LZeMy+IuptawE2TkBrFH
-    SUidgZ5JHLOPqhJ14yaTRiOLUSmWm11iNXR0SENWQaqxd0JKLZgQd8dBYEWOeDo0MZKdzG
-    wkro2nAbqed4YCl1pN42c7YQM+LRyy2LVrcFUY4Lk2MymfkpnoERM6ZLVSKw
-X-ME-Proxy: <xmx:oflbaqNIq4HDWKtyrsUjDqUQNYyeMCbv2_heIuvqCHf0YcCkDE2rhQ>
-    <xmx:oflbaswzKbEb3S5GWRIwWx1wVjml5tD7tGqccZXr9vCsGAhoHYWHwg>
-    <xmx:oflbaqW1cW3v8FovgYEyDUVRjY5r2VvYCT4rAI3ThYVdzdADw0KfJg>
-    <xmx:oflbauPwksCrznqXYHfi8rTuuyezLKlCMM4qOBYmxzeTSTTKIPjT-w>
-    <xmx:ovlbarI5M69t26JSrEDl6KpJpVFUPkXmTiHt7nz1ZJLTRoSi8u1gGLFS>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784423094; x=
+	1784509494; bh=HPqGmulWBQoU4JRiuVi0tobFrRNF+w80wAhJa8LwdWI=; b=U
+	3ITugizoZWCR83Zq+Cl3MKaxnpd48dk4zsOYdP5MleZbz2Q6+f5VAK8FTTxOJbGM
+	X9ey1zhwKR91t/9b9Gd8TwRtDiBHGttykwKmKpv9+a2x8gKqgsyhbPsHMDu2+sHR
+	IaWxjNCp4/aUql5m0Oolbvm+1Jzsff5ejzFaCaFGm0FuwkDdeayBKG/zR9b4cOXs
+	Y84IaeySR8jbrveNENl0q+s4DQNlk3rzrdvQAHq4iKXqnBfP9rtO1W37JMFV+mZU
+	9gMV6B1OM8AlysiLnY05P1SECdzBfiScTLmcRxlgBbQq/RvOeIDRa+oXJXfY42/J
+	WOnzmvA68zKtnl6W8EF0w==
+X-ME-Sender: <xms:tiJcanXgmAOOG7zKmbNlPdKjJDi2o9nEas69sRF3Um9DCfqyo117zQ>
+    <xme:tiJcameWyV7_PAQakgIaimk-2CuiSMUr-kV-6l_O5gtzVgfhizh7y64s29wMbZK66
+    i03G_MzzZoY1_C7aIQBsy4t2z2B8lo3vjCoo3s_7wKgtqYvlBCJe0M>
+X-ME-Received: <xmr:tiJcarsm_BQG-UF9Ilu-ukwYXASJPNhYHByTUYJs3wZ4c99v-cTamxtCyNDQl1qFbvqTpuAb5kci2sFBn4x8_9gEPTDcy0wVtg>
+X-ME-Proxy-Cause: dmFkZTGz/o0oKgKOYBjnPDN+6SEaDJZS7yxAWcFS7LjugyFA/Ud/s/4QI0ZVkTNF5j4WRs
+    FUvJnpohh15+3uVrxKvAzbw+5s1T0lPHxjhXuNL4anRhcCS/M3feXTJaxGoQfWkRWZUY27
+    ahAA+FDcVM8Ozxx+Xfjs4SW3tZWI7cWLwyjKL/Q5i9heDgEs2KZDnsShF8CGqLNkTBdTFe
+    GC+dJ+meF5nJXGnuuqz/51fYMsDPIznu2DVF001aUqG9GIacP2d4YlO4tjDVOvMhDduBvD
+    /6O/37Bkpuiqo7MRFK8YJIG5vjzckQZ4fJGMNyK4J/XeTMYKeobR6BZu6yNdbkgfJ/q5Va
+    dACHiHcmIRkMCm4raNY31lscbeqrJmUuVEoL0MyPXapnb9at5PN46UPVBn98ZQigklzlLk
+    FzCa3Y5rJ6pUqBV8FyQrjO03DDta4LybMcovF+v6VEnmNnwcK8Lg7nLrmjz0Cu5SrliAjD
+    /mDbGGu8pzmA7laXkfr8g80tkavXo6RxYiLVxVBmmw5dau0IuGP8KaK5YiA1TeTpAVn3gp
+    uxB/op1CSyYUuktLZ0aUw9zdptQDwlXNZKpLu7WgSHx8KvTOnnTTZwtJ+22+wEQduELh4D
+    0hjEUACGaPe2Lp2c7LOIBih42KAiLYExF8rFldQSFHr3qpzdAyeV9H434sLA
+X-ME-Proxy: <xmx:tiJcat-pLd5SRM_rUOsbfVMIGlb1_S1oidRAe_nvI76NmrDdfFUsuQ>
+    <xmx:tiJcau1qudAwfao5-O7KWJIMsG8fTlJwVlphfVaN_XDN-A3y07J1Yg>
+    <xmx:tiJcaqDOe5FgtsPOGmWdXFGuhubmVsuMmDzHo1tsF7wtUUh0wB-n9Q>
+    <xmx:tiJcaicCFL_ub1KF_r1ZiZLTBXK4Dw7wVHJnR4exE4_y3DiAU-jQ0w>
+    <xmx:tiJcatN4EMh4n43PEs6Cp1xtxsXF10JV3Xcy6xrX-f2xzEp8DA5KUG-R>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 18 Jul 2026 18:09:37 -0400 (EDT)
+ 18 Jul 2026 21:04:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Toon Claes <toon@iotcl.com>,
-  Patrick Steinhardt <ps@pks.im>,  Git List <git@vger.kernel.org>,  stsp
- <stsp2@yandex.ru>
-Subject: Re: [PATCH] branch: report kind of checkout when rejecting delete
-In-Reply-To: <c7357faf-3d2b-46c6-99e7-88d3e2c72a77@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sat, 18 Jul 2026 21:07:41 +0200")
-References: <9865fc6b-e3fe-4614-9ffe-71af776e1796@web.de>
-	<xmqqjyqsqk1a.fsf@gitster.g>
-	<c7357faf-3d2b-46c6-99e7-88d3e2c72a77@web.de>
-Date: Sat, 18 Jul 2026 15:09:35 -0700
-Message-ID: <xmqqa4roq7a8.fsf@gitster.g>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH 0/9] object-file: move writing of loose objects into
+ "loose" source
+In-Reply-To: <alvWfOJb6vAsusai@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
+ =?utf-8?Q?=22's?= message of "Sat,
+	18 Jul 2026 21:39:40 +0200")
+References: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
+	<alvWfOJb6vAsusai@szeder.dev>
+Date: Sat, 18 Jul 2026 18:04:52 -0700
+Message-ID: <xmqq5x2brdqj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,65 +91,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-René Scharfe <l.s.r@web.de> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
->>> +				int kind = branch_checkout_kind(name);
+> Hi Junio,
+> ...
+>> Note that jt/receive-pack-use-odb-transaction requires an evil merge:
 >> 
->> Not "enum branch_checkout_kind" but "int"?
+>> diff --git a/odb/source-packed.c b/odb/source-packed.c
+>> index 06b31dd743..cbb06da038 100644
+>> --- a/odb/source-packed.c
+>> +++ b/odb/source-packed.c
+>> @@ -545,7 +545,8 @@ static int odb_source_packed_write_object_stream(struct odb_source *source UNUSE
+>>  }
+>> 
+>>  static int odb_source_packed_begin_transaction(struct odb_source *source UNUSED,
+>> -                                              struct odb_transaction **out UNUSED)
+>> +                                              struct odb_transaction **out UNUSED,
+>> +                                              enum odb_transaction_flags flags UNUSED)
+>>  {
+>>         return error("packed backend cannot begin transactions");
+>>  }
 >
-> Yes, it doesn't matter for the switch and is easier to print.
+> It seems that you performed this evil merge when merging the topic
+> jt/receive-pack-use-odb-transaction into jch as 9727bd8447 (Merge
+> branch 'jt/receive-pack-use-odb-transactions' into jch, 2026-07-17),
+> but forgot to do so when creating the base for this patch series as
+> 1d64e64326 (Merge branch 'jt/receive-pack-use-odb-transactions' into
+> ps/odb-move-loose-object-writing, 2026-07-17).  Consequently, neither
+> 1d64e64326 nor any of the the commits of this patch series can be
+> built because of the mismatching function signature:
 
-I do not understand the "print" part.  I was probably in the last
-group of people who was forced to switch from CPP macros to enum
-and their argument was always "'print kind' in GDB gives symbolic
-output".  As "enum" is an glorified "int", wouldn't 
+Thanks for noticing.
+Very much appreciated.
 
-	int i_kind;
-	enum branch_checkout_kind e_kind;
-	BUG(_("we did not expect %d %d"), e_kind, i_kind);
-
-do just what we expect?
-
->>> +				switch (kind) {
->>> +				case BRANCH_CHECKOUT_KIND_CHECKOUT:
->>> +					error(_("cannot delete branch '%s' "
->>> +						"used by worktree at '%s'"),
->>> +					      bname.buf, path);
->>> +					break;
->> 
->> We may want to be more explicit and say "cannot delete
->> branch 'frotz' checked out in worktree at '/tmp/nitfol'"
->> instead.  Unless this is a catch-all entry for states that
->> are neither 'rebase', 'bisect', nor 'rebase-merges' but are
->> somehow otherwise in use, that is.
->> 
->>> +				case BRANCH_CHECKOUT_KIND_UPDATE_REF:
->>> +					error(_("cannot delete branch '%s' "
->>> +						"used by worktree at '%s' "
->>> +						"for update-ref"),
->>> +					      bname.buf, path);
->>> +					break;
->> 
->> I was quite lost when searching for cases where this 'update-ref'
->> state might be encountered, and I still lack confidence.  Can
->> we make the diagnostic message a bit friendlier to our users?
->> 
->> For instance, something like: 'You are rebasing a history with
->> merges in that other worktree, and the tip of this branch will
->> be updated when that process completes, so you cannot delete
->> it from here.'  (Naturally, I may have misidentified the exact
->> nature of the error, but this illustrates the level of detail and
->> user-facing clarity I hope to see.)
->
-> That's quite long.  Would it make sense to throw that update-ref
-> case into the rebase bin, i.e. only distinguish between checkout,
-> bisect and rebase?
-
-Shortening a quite long expression down to digestable pieces is left
-as an exercise for those with this particular itch to scratch ;-).
-I do not personally mind if it ends up indistinguishable from other
-"rebase" case (or unified the "kind" enum into one), but others may
-have ideas to shorten the message to fit in the pattern we see
-above.
-
-Thanks.
+Will fix-up.
