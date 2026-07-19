@@ -1,65 +1,70 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F70262D0B
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 19:54:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303C5298CC4
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 19:54:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784490882; cv=none; b=SNg48c01rnTemColgI38JkgbWkJ7mn0o7hgMzKca5e7PbYVIDRAbqLeVZAw/E4hvtwrZhAma0fr7rmbCZj5s4JHhCNZUg5Du8xKLLDsWvQb2XTSORZxy465QRzTkvceRHNJAAIWqgujk6PpK2KLr7+4I8UpWdbnILbKHo95BZZA=
+	t=1784490884; cv=none; b=GfJ1ewfISzUwEv7gBsut5f/Ngv8I0RJy4mIrcy8N4colAsf0aGz4XS1JZOfRql8NYcqSv912T1pND/+O6vQ9e92P99y7Wk4KPGIbaxEHLskeikc7FQVi+MDTqREeSUgUmhxQW04AriFAKS3cn4WRbmp+QJGrIVFzqbrED7eoguw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784490882; c=relaxed/simple;
-	bh=SuDh/SOuxglZtSU1YdsMALlz1r6XZK2xqJXwt9J1ykw=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=NgmMXd/WABUjldzW11a40MF64WSLRxOX1dkZQ8ajjPCWL5owwoG4yUPHEZdlVCNt3pRVZ4LCFdt0AC3GgZ5p7AdYsWcsBN75XfpOLSHUtdjZEzYovZ+k5/EIl/0+hoyhZf8ool0Hq7uF7r0GfNwm3zj71OIYCXQYrRTFKm+51eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=StYrBQVP; arc=none smtp.client-ip=209.85.222.172
+	s=arc-20240116; t=1784490884; c=relaxed/simple;
+	bh=Jwt2v05QWYYT1cLPV/BDNH16Xb3QXhWudmgH7aAakK0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=JIO7e4KsQQFHGmBxR9t8XuXpSv2UfPyytm9e/nF2TWiHYf4eY6kSYW8Eh/k/oYhN5iRfa+2pH/ArNeKtona2hpT529Gd8/217JsnHOFb59otBwOO/Op9kkXmCjoohSYk5g7xKWtdS3UayNwQE4Ho49ZrmqOA6NGAzisk1VmSdJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PkvK19/r; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="StYrBQVP"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-92e53581361so733692785a.1
-        for <git@vger.kernel.org>; Sun, 19 Jul 2026 12:54:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PkvK19/r"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-51c21495722so67173151cf.3
+        for <git@vger.kernel.org>; Sun, 19 Jul 2026 12:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784490880; x=1785095680; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784490882; x=1785095682; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=G8L8qQh8ITFXGHJZkfwCWOo4iwnXB7o1QuvBsarn518=;
-        b=StYrBQVPcq0NzSpnleQd1nI3HlcHb5jeKyQilVYd7gZ6AdtdRw+K7xMQxbG0Ofh9qZ
-         lxZLNhH1cHygz3pvWntovf9uIWt9VwiJjn/BkmL61uutePDGzIywzJu5eH2tT2TL9gHi
-         QKDxsyVk874zldvG9vebDg1bleYZ2d6VoWSKRJOQ463PvQEwyIymKLV8XZigsm4hCORn
-         3FrFOlgKbu3oY8YzLxT2AG/wzvoIlOgvJUv0TsPdPt2ABbY27OjI9jqYZ3c+1QXinT3k
-         4IRcrSBppSJURQgeo8Alct7AKvVY6IERxj9PJa+n5dpSCgaHsuC09260tgg59YW7UE1O
-         Tzjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784490880; x=1785095680;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=G8L8qQh8ITFXGHJZkfwCWOo4iwnXB7o1QuvBsarn518=;
-        b=luyG0Y6QZJyiWQnyN6v0rHCXLsUwuOE20JvsESxDgZou01FnAn4p3r/DXkZMmwIYIU
-         OCt7OFKePaXOy9KGPn45I5sNZDfrQqxCJD62DmcKZDcJKdjXjcKTyJxPozxG+kn5xeWM
-         tne5JSJn6ZZm93VLnERgU3ckkIGqgaHiVjnrf9h8RHB4Ye+aB2J4asNGF6FCk7SaM1ze
-         UKIUfiFL5AXCrGCNDjlCMTHVskLLMvwCiWJnewgMSSbu4ma8360L2JL1J5R5Fa/8oPC7
-         3/FIbm1rAXlE9F5UKuDWqExP7DS/HHOYWzCyWswpnBJpNHBMacCq1tMaylbQRaNiZSbS
-         frnA==
-X-Gm-Message-State: AOJu0YyPf2+UlJ7CoqoUsTT1YCV4CjP44sky5NpAPe5nZVO4awDsyxdu
-	LP9cwNzeHAVb5MMY1TBIhSvcM5SKwsCoNRuROIIj99oLEg2BA4bMVnVgG5cu0A==
-X-Gm-Gg: AfdE7cmD2T0vBHCj8HnqnqOJzNKMjeXVyJ+QvWE1wQMm7JnvlNbep8CYEcNynR/sTKb
-	lbN/8Tb7/bW+gYJab2dnnIc2J8Dq74rOzxnbLGXcKTzweUeDzxUZmcPqO2kSveM+y1qSr0fDFfh
-	tuZ4tNeDxJSEV/vHUFzMr8aMEa9T4TmDrSzC8fIekgYQp7trYysTN1Y/tm5+9HkgfG4GcS84jT9
-	02xYX7JzNyvHT3ICc4zzFqvTCtCo23NPflOa25ZFQnIt+igu634uRNFM+YgWO/irUtXVinBhyhG
-	IVdGqoaM8acVmI/hlbjB6gJm+gSA9edR1IWlcw5uuVyVRjXsMTyD/2RSrmIRNe0J3eWEjfTdACW
-	gqe8ZsFwmaVY/ECtDt3beDAIzpcKeLh+4ZwBSclVe5rsVi4krsOsNOyyLrUarif7x7kPnoFlrHP
-	u+8gw=
-X-Received: by 2002:a05:620a:454d:b0:92e:9cc7:fa46 with SMTP id af79cd13be357-930b3ece2b8mr1076480485a.21.1784490880216;
-        Sun, 19 Jul 2026 12:54:40 -0700 (PDT)
+        bh=bFFXtLqJ6swV889PXoDOLZ5EMfLMonrdzwIHaORE4YA=;
+        b=PkvK19/rd4oMZqYgFptv39UAbmY+RIk+eIGDR5v2uGttlnaIhtqYhFxpl58p+YQy1a
+         lpjKnRuKR0WBI9RMW+1xSa9HkDu2seDGMQErvCfiJD96PkKB6PsHgE0Le2yBXeXMZWyH
+         BvnqIixJsDyQkY7E72+26L2VFInrm4AkVQeBXX/9B4hEH8mGQ3k5GyXz2bE1mwR6WQZs
+         yO0kCUhwFl9cPoQ8VIUqGDw0IhDeZNys11yife1ujaXvWR5jB5eba/jV5/GEZ0JzmNLF
+         No8ediOMCYffY1jxlKp0PS3U6yS0MzqDvkkAoiRyAQ9XBD166K5Fa0NaCr1H0Ek/0yvr
+         b8gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784490882; x=1785095682;
+        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bFFXtLqJ6swV889PXoDOLZ5EMfLMonrdzwIHaORE4YA=;
+        b=MxXXjzgkBEKfW0zPZRrmT6lc+lPD/y+87vWZ3XTxqyt0RUGmXECAo6yvZumFEBGc4m
+         yGSWL8AQBX/ipx88uYAX1RcwKdg/ytFWG19Mf44ErjkPBdi8BVye3wjnLlaIe0disOLI
+         76vKN40yjjgrkC0HTrD31jmz734C0hgP5elyyfUDoIMVXkfm5zD1MPN2FXv9XErVWkw4
+         tk2lFRe/hKNjg0qRjhyhW43qWA+l33EHAzsezz7AzzfyTRyf7bbMaEhX2qX36mL2wACL
+         EG0Cws35GFX8dvAVAlK6RoBwwDvTI58a7gqZvsZ501cAXa0srpiYg/LpGcfJHebcBdvI
+         r2jg==
+X-Gm-Message-State: AOJu0YxTCECcyNJ8a5vCUH6o9/+ahZsW7eNZ+DS880k7htTsJt3bIrSu
+	FuirJAAkCczz9qaxA0y3Gw5IMH5gY8j1CKCts/DexWRnT3mia35qL7NSYqYWyg==
+X-Gm-Gg: AfdE7ckD5egzNYerfnwxGJTCyxSsglr12Vl/i9hsgiFW8AZ3hT/SY6oOyT2+r87epdo
+	a1/lP0Yi2bIs78U6AzZRlscCCFfhbFpeD+ozVPp0cV+xvtGa3TTeKM2wy1FV3+Ao1WO/mdjmXDw
+	q+74vlgbuRQ4xHVFE5A3riUb+hBkb1Ptnhugy/g5Iwfh8/TfcVwgjsKN4u1kYtbJ5kIeqPXHwh0
+	faTCb+vRePG9VrCbcJVjSmPAlCGaD2e7amv94TvgSsuUOmzy9ZiN+znlaDLzR7q5JNXqZnl2pSK
+	QIhTmZpQz90e52Rrps9wSS2CHu+yyW3UYhTMLey1p1cTRmGXYoaiZ8vcUeVg0eZCtK6ppQY+q0y
+	J0IVwiMLzRK2ceVqUsxcOMDBAfQJ3TpW42OrxMrU7RBhA59CHmj9aSuWyrKEHWug0NaG3dqLRj1
+	TXYzo=
+X-Received: by 2002:ac8:7d52:0:b0:519:dfd7:70cd with SMTP id d75a77b69052e-5213e082527mr109781001cf.49.1784490881918;
+        Sun, 19 Jul 2026 12:54:41 -0700 (PDT)
 Received: from [127.0.0.1] ([52.188.87.20])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b52dff03sm710722885a.9.2026.07.19.12.54.38
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5214f504892sm58363951cf.20.2026.07.19.12.54.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 12:54:39 -0700 (PDT)
-Message-Id: <pull.2185.git.1784490878.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 19 Jul 2026 19:54:33 +0000
-Subject: [PATCH 0/4] A new batch of synopsis conversion
+        Sun, 19 Jul 2026 12:54:40 -0700 (PDT)
+Message-Id: <798c06439015b3f5056574be4eaf09ef71f66494.1784490878.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2185.git.1784490878.gitgitgadget@gmail.com>
+References: <pull.2185.git.1784490878.gitgitgadget@gmail.com>
+From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 19 Jul 2026 19:54:34 +0000
+Subject: [PATCH 1/4] doc: convert git-imap-send synopsis and options to new
+ style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,30 +75,63 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Fcc: Sent
 To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-The conversion to synopsis continues. Now the commands are less common, so I
-may propose larger PRs if it's ok.
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Jean-Noël Avila (4):
-  doc: convert git-imap-send synopsis and options to new style
-  doc: convert git-format-patch synopsis and options to new style
-  doc: convert git-send-email synopsis and options to new style
-  doc: convert git-request-pull synopsis and options to new style
+Convert git-imap-send from [verse]/single-quote style to the modern
+synopsis-block style:
 
- Documentation/config/imap.adoc      |   2 +-
- Documentation/config/sendemail.adoc |  92 +++++-----
- Documentation/diff-options.adoc     |   8 +-
- Documentation/git-format-patch.adoc | 264 ++++++++++++++--------------
- Documentation/git-imap-send.adoc    |   7 +-
- Documentation/git-request-pull.adoc |  38 ++--
- Documentation/git-send-email.adoc   | 162 ++++++++---------
- 7 files changed, 292 insertions(+), 281 deletions(-)
+- Replace [verse] with [synopsis] in SYNOPSIS block
+- Backtick-quote all OPTIONS terms
+- Backtick-quote all config keys in config/imap.adoc
+- Backtick-quote bare config key references in prose
 
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/config/imap.adoc   | 2 +-
+ Documentation/git-imap-send.adoc | 7 +++++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-base-commit: 08621c32d5536babd139ab1a9086349b3672edd6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2185%2Fjnavila%2Fconvert_synopsis_202606-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2185/jnavila/convert_synopsis_202606-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2185
+diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
+index cb8f5e2700..6b97776bc3 100644
+--- a/Documentation/config/imap.adoc
++++ b/Documentation/config/imap.adoc
+@@ -41,7 +41,7 @@
+ `imap.authMethod`::
+ 	Specify the authentication method for authenticating with the IMAP server.
+ 	If Git was built with the NO_CURL option, or if your curl version is older
+-	than 7.34.0, or if you're running git-imap-send with the `--no-curl`
++	than 7.34.0, or if you're running `git-imap-send` with the `--no-curl`
+ 	option, the only supported methods are `PLAIN`, `CRAM-MD5`, `OAUTHBEARER`
+ 	and `XOAUTH2`. If this is not set then `git imap-send` uses the basic IMAP
+ 	plaintext `LOGIN` command.
+diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send.adoc
+index 538b91afc0..dd1e0a3718 100644
+--- a/Documentation/git-imap-send.adoc
++++ b/Documentation/git-imap-send.adoc
+@@ -192,7 +192,10 @@ supports only `XOAUTH2` as the mechanism.
+ 
+ Once the commits are ready to be sent, run the following command:
+ 
+-  $ git format-patch --cover-letter -M --stdout origin/master | git imap-send
++
++---------
++$ git format-patch --cover-letter -M --stdout origin/master | git imap-send
++---------
+ 
+ Just make sure to disable line wrapping in the email client (Gmail's web
+ interface will wrap lines no matter what, so you need to use a real
+@@ -217,7 +220,7 @@ users may wish to visit this web page for more information:
+ 
+ SEE ALSO
+ --------
+-linkgit:git-format-patch[1], linkgit:git-send-email[1], mbox(5)
++linkgit:git-format-patch[1], linkgit:git-send-email[1], `mbox`(5)
+ 
+ GIT
+ ---
 -- 
 gitgitgadget
+
