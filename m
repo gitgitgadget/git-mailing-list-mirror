@@ -1,84 +1,88 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6EF2DB794;
-	Sun, 19 Jul 2026 17:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7633B0AED
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 18:14:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784480686; cv=none; b=L1tBCa4z7M2uJJ09CleUrDLYltfHpojz9PRWhNVxu4E7VmbpBGo6GhZ8KFf1/vfwCvLb58B7pD9+W7YyyelsTr5Itx83DVQlhXrx624pE7PUCsODVY7pXia8dwbGa8isl12lzG1OZIy8dxwAvSXkTfpBprdgoXQLM0VamNpF5Ro=
+	t=1784484900; cv=none; b=K0mOUEjekCJpLnCsqwyfzeuN8FU+4XV9iRD/nqzOY3qDQSRFoMUvq4TBLSJz6sOv7sxnOtqocbMoEcu4jM9POkJQaebuLoA5K0E4PQ7DY7qN9jAQgzy8GjwDTSHWbxBvhDkNnIna4aPenMvgfPtv4Z325qtKCvBwGaI/G7NcHRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784480686; c=relaxed/simple;
-	bh=LDMvXpITk8fyzYZUSvXoH0pkZOiI7+cBGBOo7M50eFI=;
+	s=arc-20240116; t=1784484900; c=relaxed/simple;
+	bh=XjwQVk5isZmtA8ZBTY30BGgAGz0B6sOYtHYRypopeIc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SUHbiEGV9Yw8nFnwIz4VrDykwCNoU8rQdIf0zcPC4FeWOgpDTvZ//isOhwz1Y6XeTxJIbVWQs/U546MMoBCZgZb+FeXgcdVBkDc4IUl1iZyNT4kutuzhiGj7Y8JcGrEixrINSI3GGfUQLgqpyuvQsiDb7Xc7mgCUma4P1Dv0k1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YmVCHISS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=brPN5hWd; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=sP6oNC4kGowlYpfIjc11pY0eTZ42jWRQ5Q2xv3UNwS8kNd/6LROt6UKKpK6CFrSmxrMDkYVTM6frqh7JKoNWZ09aiMorQDmsZJvkSK5h6mQE/GGxtlDXkctV9W/Fs+w8NpAKcr3JIVTjM9VXIDXRYHe32wwvLE/DRobCMNwYiQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VH5/VOr4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y4CM4Gpn; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YmVCHISS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="brPN5hWd"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 85F17140003F;
-	Sun, 19 Jul 2026 13:04:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 19 Jul 2026 13:04:43 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VH5/VOr4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y4CM4Gpn"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 611CDEC006C;
+	Sun, 19 Jul 2026 14:14:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sun, 19 Jul 2026 14:14:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784480683; x=1784567083; bh=cTvw/tRsE6
-	VT+cLfVt5gjDER0cyPiOf9zuq+J7IEXIw=; b=YmVCHISS1w8o/fnCqLW94XQe3F
-	g096RD2oV4OqfT1YcuepQr7ydxJdTXS9M2E/76P0JT6engs4NMiXFzPp0Rdnoiyd
-	sIba5+Zf3qwUe0+7RtWBP826KXbHXVfyznwujpcnDb/cZy0MI/HH0zCZOX8a3+Qc
-	Pl+ZiaEreFgDIBnRsktdsbcBnWr+Xj3wOxbFLXAJkVbs7GRUoSXjvPR6sQmDmCV4
-	6+l41mGftwlUCUuif5h842Hj5EfB6ZtsMFoF2DJRG4N2ULTGBBgMJ/LFgSjLgqX5
-	XDtO/F1+ix0JkBs9myoNzWnH2oQwDSwTCdMAQiyo6nJ1JB2f5VQcJ3q40XHg==
+	:subject:to:to; s=fm1; t=1784484894; x=1784571294; bh=Yimx0KOJ9B
+	XOANf+qHfTC267rT4TXVJeeqfgD4DhT2Q=; b=VH5/VOr4UrfJj3zoPRkhI6Q6ch
+	HQENw3GGpe8/NVZDJ5hEXjkOzw58o6TKI+eWF76H7I/hnid1Wg2ZHCc+1l22i3Zo
+	DlpPi+5rAlGcBBtgBIdkcaIwqHGKjQ9/JuJQOau5spjbj8W4ip0k6ym6EV6HfAvi
+	9s0b5789yN+uxdXPq4LHStSqM8oKtvPrp2wXzI6wTJioG/7N+Koj9aI09izdY439
+	xtsA58aPSdw1wbQ5Dqn0BdY6/H+nQawyJ39DM0xxC7vCG4ZAQ7ynsHu/E14pwqU0
+	iHxdOY2MsGdHnq8Llx57MoWPk7jwCq2I1C1ux6FaEkmZVwoct02F1Hl8IBNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784480683; x=1784567083; bh=cTvw/tRsE6VT+cLfVt5gjDER0cyPiOf9zuq
-	+J7IEXIw=; b=brPN5hWd+P0y8JREifIlDgryaY0BrW2REa9+lQJ3vCRFUA+hPBN
-	LnZXV9o9JDdUIXTLpNDLdunzvgd0Vy1h2X2dARK7rvaig0QifbvO+TAA+DNNSje2
-	SBxxLpH5YJuL2xpRhCs80je4cRduuIjDpvl/HWBLT51AWw+r1jXHNHbkdg9lsp2H
-	xfo0op74zhExDsg/NNjaA9OZChKrwltTJV6Ejxwav52bw0Jzgid9SQWhMFOeZWSa
-	B03mLMH3mm2JEd9BOuvACazJWGeDnZR3Bfeqm5KfzOwRWRsplgEn688ULK6yLh3L
-	edMIq43YhnKlFU8ex7u22sUlLmnYCMLbnLA==
-X-ME-Sender: <xms:qwNdagAJGltOqNKktbY8LwUpU3KKIsMRbaop0qBhrq7nXEyxatijhQ>
-    <xme:qwNdaneKuIf6nnjnGlM49CzLtMBDNGzrsIOS8lURBd9ylH8EhMJqLWKnNblyYjsuQ
-    IFxTDMj6C3vkB89wPvHTMa2s7SnUw5XEnOeHv9SETrhmGthq8gcUHY>
-X-ME-Received: <xmr:qwNdan0OLu8kUkxvLUa08-YlfKzO_g24KexPcCweCTvjoO5rWEjvfX7LTF8sofY7S3_N4O4nQGhOdRcIBIoSzli3bhh-fW2_lg>
-X-ME-Proxy-Cause: dmFkZTFQdwv5mOcHkhQlvUaZ4PmcyFObBeWlz4wHi7zxkUN/hFgfmKYfC0jQaH7nHp2r9s
-    tXDcxNNXsZyLLKpyuXQ4GGbOt4yQPo2DhUTr6qByAJ/aWx99klkUrOgEq41Pyc5Pyv9Qpx
-    sTj2GrOUGl7ylo4y0pwM9TUVQU5mKoHu31Si1TkXrbJkCRscK9tUo+bM4KBZLKs5EfInPX
-    7ZgXeUqeCXEXoKCjeWZOnGIZhZ8XFU0PoEfYPqKA9NKEm4mI3+gm9lR1hCRXKwSBMi+QK5
-    xCL7sZHpXAQHgs0ZVXMdWEMvHf6iU/jazJcLGBNYUFVCZ8vgc54GLpnaEIgUXLRf1oUXsL
-    QsiJgtsnBekuBkI96Hzbt1P07K0cYAQ/RjC5WfbnkDkdUvZQAIZkZ7hpI21mwURyWq4lzX
-    vQQsYVTmCzs90r6aWq5Xc12ZnTZFcfIrYixXVHOvUBRRbAw5oEICTqHAQ+XB8gpOt3tF4F
-    +CEi31feQHom3wWo5wsg2Xwt05Al+JofnNxQrvUO0+Y9KwIkWd4yze/60+ExqtRlc9ylJy
-    OZGvtASXsS6WUmXoc5liqq2GXON8xhqUlOySeO/bDvfKDKakAfoC1+TZN8JJ7uv3N4zEXi
-    +RYw2YbEwvsPh7O9/Q4CvV1Bs/g7ZfMXx+betSQO5GoOsUnWJRu7uGFcHq9g
-X-ME-Proxy: <xmx:qwNdamgvfgpxxEcte-DdVr7O77aB2WZIWMYNWZMT47BA_2U-VmjVRQ>
-    <xmx:qwNdaombOIN383Z6PQ30K0xbRKSfGFUwNPct-RSp6olmHs5cBDl3AQ>
-    <xmx:qwNdakY272JVOcgvyPQTVFEYLT4gYfgEbwg3qcxYo2Jyb-9y90nHJg>
-    <xmx:qwNdarE4yzrXkQ4pkO6izjXIBhFst26g83dVXQ-kvWWmdfJUE1VhRw>
-    <xmx:qwNdaj4K3wEx24STQ8ByrZogMV8oWFI5BcdYhl6dj1rZaipPw66BEyAD>
+	1784484894; x=1784571294; bh=Yimx0KOJ9BXOANf+qHfTC267rT4TXVJeeqf
+	gD4DhT2Q=; b=Y4CM4Gpn+4iTyR6U4DNMHmMzktPtCZatWauWxcrMO9DnO8RwLFo
+	apZe6haITJ9rr2roS4k3qHWiWLY2U2l3Rj58tk6EcPl4Lqo47xVNx/v7Pq/CpE9B
+	IyXzQ/jDDg8qZh43XDX6Y+VbBNIFJCQqnEU7D0QLVYx3JcNU/e0TsKalzfF0WsW/
+	ojtTMDxsBHAPqfRrttCAsD3TGVXRPSbPlDvTLllR5DIADOH+O/DBgi65m32qbUQy
+	XNGt91FiIpltd8yV9uk9psWHEI22TMzz2LTb89F75WHmKoTkrjMGmCv0k+GwyVLt
+	f+dzqHAiIEn5FWum8dzJSw6KlSJ2s9/vKpA==
+X-ME-Sender: <xms:HhRdasESRDP1yGeUojoXwupmZGIMd8OQZ3hxmrKY0O_LVf3R7HqZ3g>
+    <xme:HhRdakZdKjPsXzSCav_Je2-K-BwogTAJkZ8VuoQkBAvkQ3UMmDfDppEf3Uq9M-caz
+    tZsnaMxjYKXz539y8IIlggDRcDFX9KMG-Pp2Wx6ceYVVKVmehj_>
+X-ME-Received: <xmr:HhRdasVY6xx8cZ6cP6_vqgg6Bxmbk7nQiRpUvTlTqf-grzCe-wL-W80TOx3vH-GzA4F31RFl-5bEmKz9JRT3Bmy30fJUcFaotw>
+X-ME-Proxy-Cause: dmFkZTGITYsXgC1GEn97xyVfuSprFLNCuUCSwOwX8FPUfGJUez7432otpZ03aAQAB3XD3l
+    bec6fJNKhX/BCgZTs9YrrPaJXOrAoLctrw98X+X6aWWj5vinyXjGcCTUa1P/U/NRLi0KT9
+    O+TePKwHkghPDw8hutQI1GlFlt6z3vqynqGKD2Fq8UaHG35ZnqWrM2nzlo/+E/RqQTI7oh
+    O93SL8iHrDtrZPtrsLsU8K9eD/5Rpsn/BQ+rNGBKPi2KR7PP8UuuTqHddK/UkehquzLQH5
+    o+cxmAeVx1sWtyhwaRihfnUYQiXCl9lS4IoZiUaouaBOqc62ypmh9PZtgdqjQvDJiq6CRx
+    fLzor59oLpLHZ4JJybOY7Ary3R6gQqoMEmoggN682UaIbJ9vSv5YrazkNTSpjPKOttwMA0
+    BGFUeKxcp2zhV7wOe8UixmLHL7sZHC7IfhhdK9y8wc9poq4bHWG81WIQGmk1PIzN4JKdcV
+    oUyvzg0mwczbr9oNE4OqYQnajo9QfqiIQBTB+NleHh5Tc9jue6cmd1uHifWatgZisN9SM5
+    e1o0tuqysuszFGc4kc1udmawwuE8qCxj/M8baONrXpGTSXDd4evqp8RZDoQeswvv/WkpZb
+    BtmpDMz2uZmii/GwaIJPQEAZ66CqKNAh6Acc6QZArGFNyWGdf2iXx8s4+tcQ
+X-ME-Proxy: <xmx:HhRdaqnneuJ7KKKEyMtlsl2K7RcgDa4QPVCOPVoQzUHi5Ja4V9JvzQ>
+    <xmx:HhRdanAHgSDYcx4Qy7ycpy-25YZxb9uvb-805Q0YpkarG4sfUAQZ-A>
+    <xmx:HhRdapjIlp9WXuZHLo4idwOTpc-5i8s6w-0LBc-7xfM4lI_PZJkagg>
+    <xmx:HhRdakxJT6pqZP5p7hgJtB_nzaDGZoZjN6ax67OMq3cbwllNJBpfSw>
+    <xmx:HhRdauuq90qWY-0InlF7VpSxmvQpcu5CEXcPyVBmdmS03SF9bSLFRvYI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 19 Jul 2026 13:04:42 -0400 (EDT)
+ 19 Jul 2026 14:14:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>
-Cc: git@vger.kernel.org,  Thiago Perrotta <tbperrotta@gmail.com>,  Philippe
- Blain <levraiphilippeblain@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>,
-  Yury Norov <ynorov@nvidia.com>,  linux-kernel@vger.kernel.org,  Codex
- <codex@openai.com>
-Subject: Re: [PATCH] completion: complete paths for git send-email
-In-Reply-To: <20260719134447.381835-1-yury.norov@gmail.com> (Yury Norov's
-	message of "Sun, 19 Jul 2026 09:44:47 -0400")
-References: <20260719134447.381835-1-yury.norov@gmail.com>
-Date: Sun, 19 Jul 2026 10:04:41 -0700
-Message-ID: <xmqqwluqnc5y.fsf@gitster.g>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  SZEDER
+ =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>
+Subject: Re: [PATCH v6 00/10] commit-reach: terminate merge-base walk when
+ one side is exhausted
+In-Reply-To: <CAL71e4O5=ZJoPD4dnPmh8mjsTKtugx05-8d83VeQdBNOjp=bFw@mail.gmail.com>
+	(Kristofer Karlsson's message of "Sat, 11 Jul 2026 23:41:00 +0200")
+References: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
+	<pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
+	<xmqqv7al9rbj.fsf@gitster.g>
+	<CAL71e4O5=ZJoPD4dnPmh8mjsTKtugx05-8d83VeQdBNOjp=bFw@mail.gmail.com>
+Date: Sun, 19 Jul 2026 11:14:52 -0700
+Message-ID: <xmqqse5en8wz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,81 +92,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Yury Norov (NVIDIA)" <yury.norov@gmail.com> writes:
+Kristofer Karlsson <krka@spotify.com> writes:
 
-> From: Yury Norov <ynorov@nvidia.com>
+> ...
+> After that, all ten patches apply cleanly with git am -3.
 >
-> git send-email accepts either revisions or paths to patch files, but its
-> Bash completion only offers revisions. This prevents patch files from
-> being completed. It can also make a prefix such as "0" expand to an
-> unrelated hexadecimal ref even when matching 0001-*.patch files exist.
->
-> In my Linux tree, an attempt to autocomplete the standard-named patch
-> brings a random hashtag:
->
->  $ ls 0*
->  0001-bitmap-drop-bitmap_next_set_region.patch
->  $ git send-email 0<Tab>
->  $ git send-email 05c69d298c96703741cac9a5cbbf6c53bd55a6e2
+> I should have stated this more clearly in the cover letter
+> instead of mentioning next at all.
 
-Wow.  Even though I use nothing but 'git send-email' when sending my
-own patches, I have never noticed this behavior.  I guess that is
-primarily because I only use the command via my own wrapper script,
-so the usual bash completion kicks in only for filenames in my
-workflow.  Since I store my patches two levels deep in my working
-tree (for example, '+outgo/topic/0000-cover-letter.txt'), I suspect
-that even if I got rid of my wrapper, I would not suffer from this
-issue.  An attempt to run 'git send-email +outgo/contrib-doc/0<TAB>'
-expanding the trailing '0' into a hexadecimal object name would
-indeed be quite annoying.
+Well that is how I wiggled the series in my tree after all ;-)
 
-Good find.
+In any case, we really need to get somebody take a look at these
+patches to move them forward.  Any takers?
 
-> Introduce an append variant of __gitcomp_file() and use it to add
-> filesystem candidates after the existing revision candidates.  Keep the
-> latter because revisions remain valid send-email arguments.
-
-OK.  I will need help from those who are more familiar with our
-completion code than I am to properly assess this change.  Any
-assistance in reviewing this would be appreciated.
-
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 55dc9eabf..e87827f21 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2777,7 +2777,17 @@ test_expect_success PERL 'send-email' '
->  	test_completion "git send-email --val" <<-\EOF &&
->  	--validate Z
->  	EOF
-> -	test_completion "git send-email ma" "main "
-> +	test_completion "git send-email ma" "main " &&
-> +
-> +	git tag 05c69d298c96703741cac9a5cbbf6c53bd55a6e2 &&
-> +	test_when_finished "git tag -d 05c69d298c96703741cac9a5cbbf6c53bd55a6e2 &&
-> +		rm -f 0001-example.patch 0002-example.patch" &&
-
-If the initial 'git tag' fails, 'test_when_finished' is never
-registered, and we end up failing to remove the '000?-example.patch'
-files.  The usual way to write this is:
-
- - set up 'test_when_finished' with a body that is written to
-   succeed even if the clean-up target is not present (your '-f' in
-   'rm -f' is good, as it prevents 'rm' from failing even if
-   '0001-example.patch' does not get created); then
-
- - write the test code that dirties the state (requiring clean-up)
-   after registering the 'test_when_finished' handler.
-
-That is, "Prepare the clean-up first, and then you do not have to
-worry about making a mess."
-
-By the way, the use of a purely hexadecimal string as a tag or
-branch name is highly misleading.  What happens if an object exists
-whose name is identical to that tag?  Git offers ways to
-disambiguate if you really want to, but I do not see any reason for
-a sensible person or workflow to deliberately place oneself in a
-situation where such disambiguation becomes necessary.
-
-Of course, that is no excuse for the bug.  Our completion script
-should not misbehave, even when confronted with a workflow that uses
-funny-looking tags.
+Thanks.
