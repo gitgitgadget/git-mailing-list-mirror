@@ -1,126 +1,131 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9C4271443
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 19:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D423C24E4A1
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 19:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784489375; cv=none; b=PeY54v1qdoqj5z1he+6ojbEB/iWY2Anf6zzUMonmhXxcdgD0tgWQXkWuyoXd9UHvIrqKZvUs6QJwKECBx2UVPw2ajHuDZe4VlEAuhl2PBtbruMdZ3EX9SDJubLgWfwxuhCvRQk5fq1Vj0jXm7D/gknMQ4xZQfYCJ8TlMomrjIfw=
+	t=1784490160; cv=none; b=i1VezjT2wiK52p6MIimShNWHObnAJHDyX7vyyqMTiYYXZ8qhapHe5bNq4fOAL3ocigteX922Rlkeiwpv9kjn0R0DJxDx3Z8v5dl3iFwoZudyR7CHEjOk8jlDFPTWczzGpYglcIwdf8XoFmJFeQ3D3KgjquYKeoUq+pZdtFC9wgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784489375; c=relaxed/simple;
-	bh=mhVXnsXgPqxwZM6K8vmcRhQ2ocdxlXDvKt8v01NKvYA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dPqpPHJrd+qMuwqC+9JXWvEVrGM1jxkO21wxW52/JVB8+ibBTpGqxNTQy8VxM01NMMsgJmcIYfSIkifTB6QkbDsj/H3JMoLvchFX/1tZnvp58A3YEyHCY2NovbvPn1gvU7mPQoor6V86wbb+XiMkbv+AQo2sSBhS4fXeJ8oWYJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=w9bkn4e7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fh2sb8dD; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784490160; c=relaxed/simple;
+	bh=kAdOnet1HmEh/KczpNvQSwG4Dj8NxTCt2pgxUt7C194=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=JZSlFpQyE+nq0GIrJV2fUnnHtTcpFe9P9tpDYNY7IHM95rtWBCQQHM24DCZAvOIHH0tVT1Isx2u2El4N9kiuCLKUtt92VazzxAdPCFTbJaxmV7ywi36fvX/XxnbsYcR6UsscnbDabFemP1TbqFPU1rB7PlgQHM4YI7pQ7wqnC3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jSZb/lsg; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="w9bkn4e7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fh2sb8dD"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3761114000D0;
-	Sun, 19 Jul 2026 15:29:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sun, 19 Jul 2026 15:29:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784489373; x=1784575773; bh=Sk37sMobtb
-	mb/uy0XBoAK0kGEJkyiMn2Is57nIhIYBk=; b=w9bkn4e7umz7tTkNpeiv2ZxfKF
-	gyUz9yQpimGJfuvBwIcZbrcSHPQg1D0PN21EUWGO8TfJ2ys6Di51XqXs/j68e3Mg
-	h8J1JchJSBqbIBqFzuBOEJdZ+qPF5X49y74C/l7CHKhm4Vd0so3dPjs7w/uNoT/V
-	WYgAamHb9y0t62nScMGp4W8hXacedsLZq6yzmVHYLWemjY6nj35goMmUcp1ObSpp
-	awghOBqLPQCJe4+FxzBcAfcPBcUYvxSSMq2f5FJVlJnvQ0m/5owBnPpvO85QBnzI
-	dJbRt27m1JibwTECQlx54JkVg9hsCI6DLksT0RI95u1dTip5pxKWMS/NoE8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784489373; x=1784575773; bh=Sk37sMobtbmb/uy0XBoAK0kGEJkyiMn2Is5
-	7nIhIYBk=; b=fh2sb8dDEliT1Dj+iedn0FhgOF7KLH/mg8pGDDTsU/GopIHySxq
-	Oz4bi6Hwtl5kOxjUUWhfhkdnGn0gI0woKl2OdHsm0iUvPs3UZIxFbLE4A5QZL7Lo
-	euiEDrM3qsswTtxf5GUDcVmQCvgILsRDtBxkrfxbut+8bPZ2byiE+4YnkBLci/ij
-	qE5gV3IKr0Z4OuuIsvzUdo7ffavecWC/eDu5/RCxDOESeAaW2KGa2oaS2IBSSmtd
-	zsOXCmTRLy9qRIkKUH1jdJ5/gN595k7NF4DTc+Ew6Gg+qQsFH4Lu5CcJ2RvMJAwy
-	2F/y6ICewZZbTTjj8UuaBmfsczrYvLNDGdQ==
-X-ME-Sender: <xms:nSVdasq6aZQugkyg6ZSnTB06zghSHfCD9IKEzAqv7El9KXkYQFjT1g>
-    <xme:nSVdak4I3Itz_sBp-Wd-tS6jnXqHzjkS-jshJKYcNfRU8BRee_zpixu4MYiN4Y6Px
-    rz4j5bZ0NkXs_I7YqtvAtz1Mhv1WCWmW8F1H5yNPxJcdzYF6xG1Xg>
-X-ME-Received: <xmr:nSVdajd5UXP5yPAAEFTBnI4JqzIu-Xb8CB2kl4ZC5O7HFI6XVi7nrj8xxWHqOJeaV3uSQnEhPn6VoMxfYpiQ2xVF4cS8LL_VrQ>
-X-ME-Proxy-Cause: dmFkZTEGc1+mh+GDSx/QXYateozdxwLfwti+8u3Jx1S+EMtpMFvDQPKMGMiKCu3F0+Uw/9
-    SL/mbBpy/M2U6R+2buIjeLyS6umS97VrMMNYqcVutj2KNYIF5+jijfIjHS5W6+B7+uV3lf
-    2swVjsDtheKVLB5zy4HXZv08cJD8BTR0fgRuXOGl3ikYRSHq5Vtshwm9iimncVkz9jB06Y
-    m/XUN3PYpStxchvJGco3FRD2+gNzOaXoEYxZyfAWdO+2/hadqK5oM11mBZ7MSnJNVpC8ty
-    qEb7xai2CKw6Hrhw4kSfav3otncHYoN5OZRAVrguIjFkoCFqnvUbIMQswvHqVIeLy8t2LN
-    9y293hhY3/QQrO4GXAe+9ar2SOsOatLYoDb53v63SdzeViPdZg9b1iwm2EOjVOtUFXvIzK
-    lWDF+4wqmH3QXJ31HnUpyaTZvUVQ4WFdFcXUs899prfzq6HqNc2q0kaAKaes2HiZXsznDg
-    R9giaVRDpXQ7HkX6IJ1CTN4/XrCRayEI/4pxnvh4gaN9A83fttgSKLTvNyCZe4kWal2Y6l
-    Vfd35SNfzj6a4AoaLsblYuiW6wZnQ155sT3/Lt6g85LRGkczT4pL3hjiS0aifBckM1A65w
-    THj5ovYKXPZ4Ikw0bDXjh6ISspSdz2g+n+CQqN3nssJXRP8KIUZnpGHOD8bw
-X-ME-Proxy: <xmx:nSVdap50-0tXif-qVK6Y9TxDghtfoo7UJdzD8CmsjknKWLrNzJacDA>
-    <xmx:nSVdaqtvMxJFdjUUv2fxvboouEWBV6IpdHzoyKvAnblKchjMzDXmnw>
-    <xmx:nSVdapiNK4TjRfBV42OfRGHKXxoe0yPbUY-TgKhs5-k8DtkJtHr6DA>
-    <xmx:nSVdalo1vDOqt1ut2ZJgVSK7WDXoPfAV9i6C2vt30rV7Yf5VETTIkA>
-    <xmx:nSVdauk9vZS9v1JxnnMHRkckAFOPGc2EJTbQccEriJyvejqQKK918XWh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 19 Jul 2026 15:29:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
- <u.kleine-koenig@baylibre.com>,
-  Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,  Farid Zakaria
- <farid.m.zakaria@gmail.com>,  Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v3 0/9] sequencer: do not record dropped commits as
- rewritten
-In-Reply-To: <cover.1784128921.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
-	message of "Wed, 15 Jul 2026 16:21:54 +0100")
-References: <cover.1782833268.git.phillip.wood@dunelm.org.uk>
-	<cover.1784128921.git.phillip.wood@dunelm.org.uk>
-Date: Sun, 19 Jul 2026 12:29:31 -0700
-Message-ID: <xmqqecgyn5gk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jSZb/lsg"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4954afac04bso19960745e9.0
+        for <git@vger.kernel.org>; Sun, 19 Jul 2026 12:42:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784490157; x=1785094957; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=/ZhSShaIKMU80vgAwXBj0QoeWKCEEVE8A02BzrwVJZY=;
+        b=jSZb/lsglPCOztvZYu/X6KKnGfaprbAQxWs7PBBv4IU+ggct384mFTC06wNNdVAV+5
+         uv9epM6LMKzplUHbJLep6BzMK0ENCZhkyEzpSK36uXj1U7u8I8SvQ5P2+jhdme2mRw49
+         k4LcAlslt/3uw3/K3W/tuh8xlOnVK4XKWLAlk3ryoYzZTpAk9pOVugZ0yvIVd4ZALVSa
+         0mvgPM1fP81cPk40KEg4QNY+7ndcAcihCfYrA5An9bctqEaxS7KTFNf7R2F6vYTTTUVA
+         h8PRmFiFsoaTnZYZ5GVHJiq8+hNG+saW4oSwWbBrm32X7uJNZgtFG2BXKGajNmEjzo32
+         /H+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784490157; x=1785094957;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/ZhSShaIKMU80vgAwXBj0QoeWKCEEVE8A02BzrwVJZY=;
+        b=dV7ls9beDmLl4U97Loj77QwmRckLNpfhkvlgY7Z6EKEmHROSFI6latPWFl6PZom6iS
+         2PvGAlZtuTF+kAD0oOMPnUxIq3xgTn79f4dDiDYv22kAUvhcdVBIpVjpUu9m7F3gf2BA
+         qOZ41nLa1f9xZZFhMR/Q5JuBy/4t+VtodXyVVHuwrkQVzzwRxiGVQaNSuvJfrsUrvlf+
+         MlbTcvJw0Sc1nOcKVHQw9wIXj4F41EjKC9WW52ng32D3/kyS/I1qj6GzstsQEoMidjX+
+         Wnszn1WQ9a8PTIpFY1g+RCaMAkipd/L3b8kDkHdw5Yf7OyYYlp5UR31X8BNZA3N6egqg
+         tkRw==
+X-Forwarded-Encrypted: i=1; AHgh+RreZttWOntAWCD4PpugbmQfTMU3uYqW+0MMASsZ/2722xzKYknHmXEoe0sRfBdOUvfsEKs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFfkRngpLDS5sldOGcGwevnq0Is3Y6MzV07FHo0WJk6B49K96F
+	eijPIpCfDl9qRHJg5qBuPENQJTDW/kIgsg0/LbFNO71+8NYzr8PpqXDZb1jzTQ==
+X-Gm-Gg: AfdE7cljm7QeZChoQmdy96lcJggP7kxSZggfgUnqqmJh+3ceG41MCzvaVnaIG2Sqeev
+	d5wtqRti2DuDlp7q31aNtu3sWL4hc6s0USmSxEKRWKGK5eVe5QaJlsxYirTlmdEyjITo4eadAxE
+	PmB42BIMR7rgtQad0avTP3r7SJp15qhxwrw5ssIYyg1wQck71/RK4df3X4PzAhG5/9cl73AmTGx
+	CZ9aB1cL2M2nO1/IaMbKSpaL2scFkeQCT9MMqX3Wq/sdPb1uvqo1Mm9p4sodmZPdG0rb/xaStyG
+	tCsJiQRGb9JGB2DlBwGEebwtP0+OKom9L7nJFnEup2ZYEo7qsmuzBwqEPalcuA8457mN3V+LJnZ
+	ZE5PHPW9VzGvIJzguPc1AEz/g377DGvCJUbVNS42kaLZs64eIYVfHQTcJPTAm3bzvG2GROVsRZv
+	Ts+Pev8S/rJLgMFb4Wm9ZhSJX/pZ7gT5FjYnHr8ewryHmUJ6H1MbvDaakZGfjITj0IMSs=
+X-Received: by 2002:a05:600c:35d5:b0:493:d0f7:69c3 with SMTP id 5b1f17b1804b1-4954a749117mr133957395e9.33.1784490156917;
+        Sun, 19 Jul 2026 12:42:36 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63ee0086sm25224280f8f.30.2026.07.19.12.42.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Jul 2026 12:42:35 -0700 (PDT)
+Message-ID: <9b9b9a2c-dd0f-44f8-b80e-565eed9a55a8@gmail.com>
+Date: Sun, 19 Jul 2026 20:42:29 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v19 5/7] branch: add --delete-merged <branch>
+To: Junio C Hamano <gitster@pobox.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+References: <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
+ <pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
+ <a6caa5b397da8ea24eb97e6aa6dc92b437e456ef.1784053493.git.gitgitgadget@gmail.com>
+ <xmqqtspvptqc.fsf@gitster.g>
+ <CAHwyqnXdaPeO12+p=_+_ttrknV0-VqTMnH-suS66yZ4stsBKnQ@mail.gmail.com>
+ <xmqqik6an5t3.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqik6an5t3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 19/07/2026 20:22, Junio C Hamano wrote:
+> Harald Nordgren <haraldnordgren@gmail.com> writes:
+> 
+>> I think I can fix this with
+>>
+>> ```
+>>      -+  if (strset_contains(data->deletable, ref->name))
+>>      ++  if (strset_contains(data->deletable, ref->name) ||
+>>      ++      strset_contains(data->spared, ref->name))
+>> ```
+>>
+>> I used your example to write a test about it as well.
+>>
+>>
+>> Harald
+> 
+> I do not claim that the single example I gave covers all the issues
+> that arise from failing to analyze the dependency graph, or from
+> attempting to solve the problem sequentially, which makes the
+> solution depend on the order in which branches are visited.
+> 
+> I have a suspicion that it may be unavoidable to employ a multi-pass
+> approach that iteratively identifies all branches transitively
+> needed by any surviving branch, though that is merely a hunch,
+> unsupported by any proof.
 
-> Thanks to everyone who commented on v2. I've dropped patch 2 which
-> Andrei pointed out was pointless and tried to make the remaining
-> commit messages clearer as requested by Oswald.
->
-> If a commit gets dropped because its changes are already upstream
-> then we should not record it as rewritten. As well as confusing any
-> post-rewrite hooks this means we end up copying the notes from the
-> dropped commit to the commit that was picked immediately before the
-> one that was dropped.
->
-> This series is structured as follows:
->
-> Patch 1 restores some test coverage that was lost when the default
-> rebase backend was changed.
->
-> Patches 2 & 3 fix the return value of do_pick_commit() when an external
-> command fails (this is in preparation for patch 8).
->
-> Patches 4-7 try and simplify the control flow in pick_one_commit()
-> in preparation for patch 8.
->
-> Patch 8 changes the return type of do_pick_commit() to an enum.
->
-> Patch 9 adds a new member to the enum from patch 8 for commits that
-> are dropped when they become empty and uses that to stop them from
-> being recorded as rewritten.
+I think it would certainly be easier to reason about if we did not 
+mutate data->deletable in spare_stacked_base() in removed the spared 
+branches with
 
-I see Phillip Cc'ed everybody who participated in the review for the
-previous iterations, which is very much appreciated.
+	strset_for_each_entry(&spared, &iter, entry)
+		strset_remove(&deletable, entry);
 
-It looks like this is now ready to go?  Any further comments?
+after the call to refs_for_each_branch_ref() returns in 
+spare_stacked_branches().
 
-Thanks.
+I'll try and have a proper look at this iteration in the comming week.
+
+Thanks
+
+Phillip
+
