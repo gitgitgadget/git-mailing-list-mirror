@@ -1,109 +1,168 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5AC43F08E
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 15:30:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784475054; cv=pass; b=MpB7KA98CDw6HHtKIUgRH0SS0Yb/FhVb8y6XkcFTr+aAT1x+4u0OMu+XEVUuQFDeQe8gHtvL/pgJ0nMqVQ0KIRw5jHM4KvnN/bDlG60hzP6IUQsuAxLABdxEUOHEqlhCiyIht4K3fFo+qw8tX9VRsbM/T7sDSoU2ZgUAIBmdD1M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784475054; c=relaxed/simple;
-	bh=YyVgPRcNGMhMSZ3CCJ4ndWHkFtSePZ4Th7KJN/3GrIQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rNlCoGZMTBVXe3gVazHqIR9ev3KAjIPetJeuevzL/6PgL/Y2ptVnLxXfkcrJmZGzkftwljmnYICftIR7aMSpkB5bygJZj9wo3r4XRRz3dppf0j/50i7etdM2SsKYSEIM1JmmZrGxtAVwjwkrLWGZmcaM69sCIQp1Fh8xmOMLs6s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C9KSdId5; arc=pass smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6EF2DB794;
+	Sun, 19 Jul 2026 17:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784480686; cv=none; b=L1tBCa4z7M2uJJ09CleUrDLYltfHpojz9PRWhNVxu4E7VmbpBGo6GhZ8KFf1/vfwCvLb58B7pD9+W7YyyelsTr5Itx83DVQlhXrx624pE7PUCsODVY7pXia8dwbGa8isl12lzG1OZIy8dxwAvSXkTfpBprdgoXQLM0VamNpF5Ro=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784480686; c=relaxed/simple;
+	bh=LDMvXpITk8fyzYZUSvXoH0pkZOiI7+cBGBOo7M50eFI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SUHbiEGV9Yw8nFnwIz4VrDykwCNoU8rQdIf0zcPC4FeWOgpDTvZ//isOhwz1Y6XeTxJIbVWQs/U546MMoBCZgZb+FeXgcdVBkDc4IUl1iZyNT4kutuzhiGj7Y8JcGrEixrINSI3GGfUQLgqpyuvQsiDb7Xc7mgCUma4P1Dv0k1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YmVCHISS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=brPN5hWd; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C9KSdId5"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c1614804757so995084766b.1
-        for <git@vger.kernel.org>; Sun, 19 Jul 2026 08:30:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784475051; cv=none;
-        d=google.com; s=arc-20260327;
-        b=q0eHSOko4rljqOuNoQu+SvVPke2JqTS1/6gZgPSoNWlSZa7l+IE8KPbt+65rvKGqJG
-         4wtb8NThgmAwIzZ4ejIQOW87H54JgBe9ZWYCij2oUoZqYxbH7+PSLFLEwlc0fRQixrxK
-         lUEnFLkV92bcAz9MZBgugc5vcm3XPho1rdwdqBFMxf2q3GSE/PnaZXljys+o4HLcIqdR
-         ZITHEyn6oSwQ4M7tXdKhAaPMd92qRwAwqPR4Gah+bTAF2+fvlbRUKxKRVlcxDYrB4JO4
-         2jRFo7iscX94H1RC8Vp1KCrqUqXBV99m3+pmK5pUWl22d8YUJgX9Qs7raqR8B4DL1q4o
-         ZQjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=keXgxct1LNBCqlK+I1TPgOMF7a5GeiSCcJ6Q7wucXnY=;
-        fh=3mJtmlslTCXE/7snQTkBiGOEvg5aO2AzKJdAHSHX4go=;
-        b=GQMidjr77LT1pAYqcaipTDc5CvZNiy+iWIALcauTZVSpSqP/nzYVFSVwHA9CpUEIRb
-         OueeuhnMefT7wI5DiaoP7HmjZpwtL4rUQTepNlH0b+J2z3KVzFEKuZVpPv550RqkhWij
-         htk5LdF3LxwAkJikSb9PPNocsDmU+zH+JZe6k/vmXeOykkQjS0QcKhf2c0afcyPbwq0g
-         8YnfgDKpYhmY4Wo02BcwprUuM1MYqC9cPQOiZodKCmoWxz1mM5lAPtrzA66DYSEB+bmX
-         54IBjcyJi952Dm1XDW9AwuqrIxghfVTB0jvP3bmqGeLnASiqfkc974X3Ls4ctZt4xvEy
-         Sj6Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784475051; x=1785079851; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=keXgxct1LNBCqlK+I1TPgOMF7a5GeiSCcJ6Q7wucXnY=;
-        b=C9KSdId555GzE+edgXGKoFCNH3TPatz264z0J3PNow6MmgkoZ24tp8LyEHpqRJbgHN
-         eR+yleawQf+VXxcZML1znnkhFaP9ZHirYGsdjPS8Y2WVE1mIN7ft02AqkWwV9UqeIaJS
-         ekkTqo3vv2QUvtpLJ8jjUwQIHjNLunom++qhxPurOuVnbM0LmvUhqmsBUSD8T8I21g07
-         violRpbQ0DkYPRvuIZDJzIzfZXKoGFBEVF2FxSvI/GyObt9++piebn7+FMBnwwpee973
-         Xlyc8ZcS5oHmlh7PauF6Y4jUO3CJd8FBSI/6L/UdwpV/Rd+dEFPxGJf9vgxBBkB6oaBo
-         56Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784475051; x=1785079851;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=keXgxct1LNBCqlK+I1TPgOMF7a5GeiSCcJ6Q7wucXnY=;
-        b=kyMIraHxHv0PjNX3/gxcawaZPj/umhS/+TIMeSlexBtaNo+YGbFPEfMW8j7DurMUgq
-         kDdX4ayjNcfJQG0LE7nzzUhl1p/AR1aJw9ec1RFDdRYMzcWudyTSLnm2PqA4CBY24Yzw
-         Sb7liRUgu4Hxlb6ldB+JR9ZroCjafTc9k8XPYDFqiAWNer6Z/PhzU+0T5pVepE4kmagb
-         nZJ+jENLdOyGdXKXXSi117GigtWLGaQWExrhZobo/FgABDNV2tAJZ/JYnWTXAgSTrIcG
-         /ARYqlz3eaIxyy9P9qQ0JA+IizD/dPuWc3kDYyHP4LG07hDNfWcoVxnHWPPH8+0Tn3iQ
-         cWsQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpA92nqrjMQr+27pT+fmcloFHSsxH5RkOD9A/8hDiFbZ5xGDLwg0fw26C55s16a8fI5hl0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPMWMKCANoNcof21IVj4ax/YgBQobexBGw+kOalxX6lUHxDCWQ
-	LdfChff/cZJVLHv1gWSSelcKpG3iaS0F33jsBN1XsQwI1cy51qlBcjttNeztZCrggerPeMud+Jy
-	VhYW5BCZ1JsrNh7fnOXmHoMQC4PpBRwo=
-X-Gm-Gg: AfdE7ckjM/EKp4H14tpcpX5eszs0OuaeDsmbD9/QGm4Te0vnDamFnZNPybUru1VCtOW
-	PBm8LBEUerLOfpgw3bHeBKxqlMwgB09i79kYabzABid1/qnK5q1AdurmMD/sYjx/GdkiHITbXxS
-	Uo202T/AQbM6E1Xk6YssTX9sAwNPfOTFOM0SIdJuv+DCCV8fLHiaW9DLd+lhqhoIJPjzJBlFmdq
-	C16RqVp/h7l0q9G3wRw7B/JdeU/4CP1c5qcQuUE8cByq6PN0xKQzAOac7DNsQ==
-X-Received: by 2002:a17:907:1b1f:b0:c16:afdd:9dad with SMTP id
- a640c23a62f3a-c16b46f16e1mr475180966b.22.1784475050903; Sun, 19 Jul 2026
- 08:30:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YmVCHISS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="brPN5hWd"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 85F17140003F;
+	Sun, 19 Jul 2026 13:04:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Sun, 19 Jul 2026 13:04:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784480683; x=1784567083; bh=cTvw/tRsE6
+	VT+cLfVt5gjDER0cyPiOf9zuq+J7IEXIw=; b=YmVCHISS1w8o/fnCqLW94XQe3F
+	g096RD2oV4OqfT1YcuepQr7ydxJdTXS9M2E/76P0JT6engs4NMiXFzPp0Rdnoiyd
+	sIba5+Zf3qwUe0+7RtWBP826KXbHXVfyznwujpcnDb/cZy0MI/HH0zCZOX8a3+Qc
+	Pl+ZiaEreFgDIBnRsktdsbcBnWr+Xj3wOxbFLXAJkVbs7GRUoSXjvPR6sQmDmCV4
+	6+l41mGftwlUCUuif5h842Hj5EfB6ZtsMFoF2DJRG4N2ULTGBBgMJ/LFgSjLgqX5
+	XDtO/F1+ix0JkBs9myoNzWnH2oQwDSwTCdMAQiyo6nJ1JB2f5VQcJ3q40XHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784480683; x=1784567083; bh=cTvw/tRsE6VT+cLfVt5gjDER0cyPiOf9zuq
+	+J7IEXIw=; b=brPN5hWd+P0y8JREifIlDgryaY0BrW2REa9+lQJ3vCRFUA+hPBN
+	LnZXV9o9JDdUIXTLpNDLdunzvgd0Vy1h2X2dARK7rvaig0QifbvO+TAA+DNNSje2
+	SBxxLpH5YJuL2xpRhCs80je4cRduuIjDpvl/HWBLT51AWw+r1jXHNHbkdg9lsp2H
+	xfo0op74zhExDsg/NNjaA9OZChKrwltTJV6Ejxwav52bw0Jzgid9SQWhMFOeZWSa
+	B03mLMH3mm2JEd9BOuvACazJWGeDnZR3Bfeqm5KfzOwRWRsplgEn688ULK6yLh3L
+	edMIq43YhnKlFU8ex7u22sUlLmnYCMLbnLA==
+X-ME-Sender: <xms:qwNdagAJGltOqNKktbY8LwUpU3KKIsMRbaop0qBhrq7nXEyxatijhQ>
+    <xme:qwNdaneKuIf6nnjnGlM49CzLtMBDNGzrsIOS8lURBd9ylH8EhMJqLWKnNblyYjsuQ
+    IFxTDMj6C3vkB89wPvHTMa2s7SnUw5XEnOeHv9SETrhmGthq8gcUHY>
+X-ME-Received: <xmr:qwNdan0OLu8kUkxvLUa08-YlfKzO_g24KexPcCweCTvjoO5rWEjvfX7LTF8sofY7S3_N4O4nQGhOdRcIBIoSzli3bhh-fW2_lg>
+X-ME-Proxy-Cause: dmFkZTFQdwv5mOcHkhQlvUaZ4PmcyFObBeWlz4wHi7zxkUN/hFgfmKYfC0jQaH7nHp2r9s
+    tXDcxNNXsZyLLKpyuXQ4GGbOt4yQPo2DhUTr6qByAJ/aWx99klkUrOgEq41Pyc5Pyv9Qpx
+    sTj2GrOUGl7ylo4y0pwM9TUVQU5mKoHu31Si1TkXrbJkCRscK9tUo+bM4KBZLKs5EfInPX
+    7ZgXeUqeCXEXoKCjeWZOnGIZhZ8XFU0PoEfYPqKA9NKEm4mI3+gm9lR1hCRXKwSBMi+QK5
+    xCL7sZHpXAQHgs0ZVXMdWEMvHf6iU/jazJcLGBNYUFVCZ8vgc54GLpnaEIgUXLRf1oUXsL
+    QsiJgtsnBekuBkI96Hzbt1P07K0cYAQ/RjC5WfbnkDkdUvZQAIZkZ7hpI21mwURyWq4lzX
+    vQQsYVTmCzs90r6aWq5Xc12ZnTZFcfIrYixXVHOvUBRRbAw5oEICTqHAQ+XB8gpOt3tF4F
+    +CEi31feQHom3wWo5wsg2Xwt05Al+JofnNxQrvUO0+Y9KwIkWd4yze/60+ExqtRlc9ylJy
+    OZGvtASXsS6WUmXoc5liqq2GXON8xhqUlOySeO/bDvfKDKakAfoC1+TZN8JJ7uv3N4zEXi
+    +RYw2YbEwvsPh7O9/Q4CvV1Bs/g7ZfMXx+betSQO5GoOsUnWJRu7uGFcHq9g
+X-ME-Proxy: <xmx:qwNdamgvfgpxxEcte-DdVr7O77aB2WZIWMYNWZMT47BA_2U-VmjVRQ>
+    <xmx:qwNdaombOIN383Z6PQ30K0xbRKSfGFUwNPct-RSp6olmHs5cBDl3AQ>
+    <xmx:qwNdakY272JVOcgvyPQTVFEYLT4gYfgEbwg3qcxYo2Jyb-9y90nHJg>
+    <xmx:qwNdarE4yzrXkQ4pkO6izjXIBhFst26g83dVXQ-kvWWmdfJUE1VhRw>
+    <xmx:qwNdaj4K3wEx24STQ8ByrZogMV8oWFI5BcdYhl6dj1rZaipPw66BEyAD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 19 Jul 2026 13:04:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>
+Cc: git@vger.kernel.org,  Thiago Perrotta <tbperrotta@gmail.com>,  Philippe
+ Blain <levraiphilippeblain@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo
+ <rjusto@gmail.com>,
+  Yury Norov <ynorov@nvidia.com>,  linux-kernel@vger.kernel.org,  Codex
+ <codex@openai.com>
+Subject: Re: [PATCH] completion: complete paths for git send-email
+In-Reply-To: <20260719134447.381835-1-yury.norov@gmail.com> (Yury Norov's
+	message of "Sun, 19 Jul 2026 09:44:47 -0400")
+References: <20260719134447.381835-1-yury.norov@gmail.com>
+Date: Sun, 19 Jul 2026 10:04:41 -0700
+Message-ID: <xmqqwluqnc5y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v18.git.git.1782338106.gitgitgadget@gmail.com>
- <pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com> <a6caa5b397da8ea24eb97e6aa6dc92b437e456ef.1784053493.git.gitgitgadget@gmail.com>
- <xmqqtspvptqc.fsf@gitster.g>
-In-Reply-To: <xmqqtspvptqc.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sun, 19 Jul 2026 17:30:11 +0200
-X-Gm-Features: AUfX_myFqZkZdx-tFwA5x3Fy1sY2SE5PrBkSi2bsWMAlewWuk1POmG_SYbC5-UU
-Message-ID: <CAHwyqnXdaPeO12+p=_+_ttrknV0-VqTMnH-suS66yZ4stsBKnQ@mail.gmail.com>
-Subject: Re: [PATCH v19 5/7] branch: add --delete-merged <branch>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-I think I can fix this with
+"Yury Norov (NVIDIA)" <yury.norov@gmail.com> writes:
 
-```
-    -+  if (strset_contains(data->deletable, ref->name))
-    ++  if (strset_contains(data->deletable, ref->name) ||
-    ++      strset_contains(data->spared, ref->name))
-```
+> From: Yury Norov <ynorov@nvidia.com>
+>
+> git send-email accepts either revisions or paths to patch files, but its
+> Bash completion only offers revisions. This prevents patch files from
+> being completed. It can also make a prefix such as "0" expand to an
+> unrelated hexadecimal ref even when matching 0001-*.patch files exist.
+>
+> In my Linux tree, an attempt to autocomplete the standard-named patch
+> brings a random hashtag:
+>
+>  $ ls 0*
+>  0001-bitmap-drop-bitmap_next_set_region.patch
+>  $ git send-email 0<Tab>
+>  $ git send-email 05c69d298c96703741cac9a5cbbf6c53bd55a6e2
 
-I used your example to write a test about it as well.
+Wow.  Even though I use nothing but 'git send-email' when sending my
+own patches, I have never noticed this behavior.  I guess that is
+primarily because I only use the command via my own wrapper script,
+so the usual bash completion kicks in only for filenames in my
+workflow.  Since I store my patches two levels deep in my working
+tree (for example, '+outgo/topic/0000-cover-letter.txt'), I suspect
+that even if I got rid of my wrapper, I would not suffer from this
+issue.  An attempt to run 'git send-email +outgo/contrib-doc/0<TAB>'
+expanding the trailing '0' into a hexadecimal object name would
+indeed be quite annoying.
 
+Good find.
 
-Harald
+> Introduce an append variant of __gitcomp_file() and use it to add
+> filesystem candidates after the existing revision candidates.  Keep the
+> latter because revisions remain valid send-email arguments.
+
+OK.  I will need help from those who are more familiar with our
+completion code than I am to properly assess this change.  Any
+assistance in reviewing this would be appreciated.
+
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 55dc9eabf..e87827f21 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -2777,7 +2777,17 @@ test_expect_success PERL 'send-email' '
+>  	test_completion "git send-email --val" <<-\EOF &&
+>  	--validate Z
+>  	EOF
+> -	test_completion "git send-email ma" "main "
+> +	test_completion "git send-email ma" "main " &&
+> +
+> +	git tag 05c69d298c96703741cac9a5cbbf6c53bd55a6e2 &&
+> +	test_when_finished "git tag -d 05c69d298c96703741cac9a5cbbf6c53bd55a6e2 &&
+> +		rm -f 0001-example.patch 0002-example.patch" &&
+
+If the initial 'git tag' fails, 'test_when_finished' is never
+registered, and we end up failing to remove the '000?-example.patch'
+files.  The usual way to write this is:
+
+ - set up 'test_when_finished' with a body that is written to
+   succeed even if the clean-up target is not present (your '-f' in
+   'rm -f' is good, as it prevents 'rm' from failing even if
+   '0001-example.patch' does not get created); then
+
+ - write the test code that dirties the state (requiring clean-up)
+   after registering the 'test_when_finished' handler.
+
+That is, "Prepare the clean-up first, and then you do not have to
+worry about making a mess."
+
+By the way, the use of a purely hexadecimal string as a tag or
+branch name is highly misleading.  What happens if an object exists
+whose name is identical to that tag?  Git offers ways to
+disambiguate if you really want to, but I do not see any reason for
+a sensible person or workflow to deliberately place oneself in a
+situation where such disambiguation becomes necessary.
+
+Of course, that is no excuse for the bug.  Our completion script
+should not misbehave, even when confronted with a workflow that uses
+funny-looking tags.
