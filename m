@@ -1,85 +1,120 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B793B1C701F
-	for <git@vger.kernel.org>; Sun, 19 Jul 2026 01:08:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34CA43F0B5
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 02:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784423337; cv=none; b=rwio7kFnX+bPwnZPsYHdEntTDp0duuLJI1lS7vjwG5qt352CeAMBduk037wLYbJhABl4fySyK10rnPExLmGlZ+ilGUprVdJTw3fPXvJvBvacL7gNpxDsKCAJ4YCDQ3BvIqSvAgbUlDt5+daEWKzVXCuzasDMsj89GK2dZfk+RnU=
+	t=1784429184; cv=none; b=V1x+2FJk9KacVIqAEC9XzA9vE1dcTUMwL4v/lATIOwqgOwJI8+ia4FDHSu2n0rabuKwpWfLYY0Yo0tzNQjdzFhfNv1+FogHtJ4hULUy2Cfh8Iu63F0bQ5QUdl/vcNlxShqeKIGHKI13SpNdYNGt375GAJdsARN7/7x19dfDs0RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784423337; c=relaxed/simple;
-	bh=vbUvMPWFnYm2/XL/089YkULDyI7O54Zv+T779Qk0IOo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MOe/t4mdfqfxrhAun6QsC91NJqoZ0RYAm8LRwUQvn+wU92fH/axMPhzwQ7FgWWmOPGNmEzuB791P/V4A7CibQljgZ6SzKH+y4E2H3QdYu6rn71tO4Ostgowd1a41i3pQEBqCFbIjqMOJJyEGsC48+pliWdZkv/Q/YDxxrTkIouk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=OObkCO76; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1784429184; c=relaxed/simple;
+	bh=iY7NSDw8yn6O1+ld22Uvw+9voHaMJ+FntLVinCSewMs=;
+	h=Date:Message-ID:Subject:From:To:Content-Type; b=BJv6uug98NYFiZBbph9TwxWOkGmOV1a24C8D/SwZeZc3tfpM6uPOhE1Mu2hXbzPD2CfGss8bzejT0lOj32PPSX0EY2H9DErymCxf1aZ8+gtZ0l1fshOmr0swNSCfxeaQ0mgrrP5e6SIAdslrzLWzNvfoRqMLuAxSqANx0Uy4Bvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=JFuwByA+; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="OObkCO76"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1784423328;
-	bh=vbUvMPWFnYm2/XL/089YkULDyI7O54Zv+T779Qk0IOo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=OObkCO76IoMiy08dbk+IQXJ8Sm6iHoXQgWYQ7V4ERPKcT1rBpBxmB8xBtfXJlNXmx
-	 TZeEJGuavPHCKwKup0riaaZGHIrOuKyWAf/7X2SevV1z4jkYH8uLkkRUOpeTE6H4BM
-	 uOWT0o3+UVdinN0ZOh6RU6+dTI5h2juBYlLM01konr4BYZ0AVmZdUniwyYB0WtHt5z
-	 S8QdefcFJsZDrePYf8dxi2FXaZmp9uEOETRNkt6ZJN9FAX4Vk4516As5gFbQx7P5WS
-	 WKT8eY1hbg7Yd0dapLmZl4gMfYH7fSBiFHgkov6XBtgL2aF7IbUKEsN9YKgSCvhENU
-	 DHl7nH2CXeyeL0ReSKZf3Ho9QrGfqBSSVwFIAHaYgAKJCrtF13UdCI3NLm0mnFzCQH
-	 7SuOq0NwOuH8tftROjzojbJFX4xcoYnqWn2EU0229Dh/+wuU49hZteeK0DFR07/twn
-	 QtmkxpLlVTQwS2iOplZVJqsonMONFzj+PNznJUQ7deZrf1AYXau
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e344:7908:59b:a90a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1425B2010D;
-	Sun, 19 Jul 2026 01:08:48 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 1/2] hash: initialize context before cloning
-Date: Sun, 19 Jul 2026 01:08:41 +0000
-Message-ID: <20260719010842.17991-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
-In-Reply-To: <20260719010842.17991-1-sandals@crustytoothpaste.net>
-References: <20260719010842.17991-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="JFuwByA+"
+Received: from mail01.layka.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 0D62487287
+	for <git@vger.kernel.org>; Sun, 19 Jul 2026 04:46:12 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id M8MBytK8P-lt for <git@vger.kernel.org>;
+ Sun, 19 Jul 2026 04:46:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1784429171; bh=iY7NSDw8yn6O1+ld22Uvw+9voHaMJ+FntLVinCSewMs=;
+	h=Date:Subject:From:To;
+	b=JFuwByA+9oWLnT36thlMbpoJnza3i5akXxdg6O9jOnnXBIg3fkSU1BkQ2XwebuZtG
+	 0t9mlkLMlceoUKbIGiRpgg6ceNNDiLfkLJmQY1vemx9yfms9a4DWsOm/hoZFymHiPh
+	 UbpXRdelSedf68JjTbKCa+YXmKBbvDyZi3HHC1iDwb90sEfJ09ZNjDJr1qIj1CHHIK
+	 ETMZhi8H/AVbCao97O8kGUQiYy4vzk9IP484/cpZxKuJABkSpy89e3CJXAsGhD14RR
+	 xA/RSVj3PQCrC9kOY/MVK0OsC8seNmIXi4uOeEM6uhz/qGrE7s5prZJh8NbKRDJlIr
+	 VSrvpQWkEt3yQ==
+Date: Sun, 19 Jul 2026 05:46:09 +0300
+Message-ID: <6b78724639d248e0fa9089035b1ff2fb.sporteka2@disroot.org>
+Subject: [Feature] linked files — one source, multiple paths, always identical
+From: sporteka2@disroot.org
+To: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Our C-based clone helper requires that the context be initialized, but
-we neglect to do that in our Clone implementation for CryptoHasher.
-This does not matter when using our default block SHA-256
-implementation, but it does cause a crash when using OpenSSL as the
-backend.  Fix this by properly initializing the context before cloning
-into it.
+Hi all,
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- src/hash.rs | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+I would like to propose a 'linked files' mechanism for Git: a file can be
+declared to mirror another file in the same repository, so the two are
+always byte-identical. The tooling would enforce identity and keep the
+copies in sync automatically — no manual copy, no symlink, no commit hook.
 
-diff --git a/src/hash.rs b/src/hash.rs
-index dea2998de4..4d14e4b4fa 100644
---- a/src/hash.rs
-+++ b/src/hash.rs
-@@ -181,7 +181,10 @@ impl CryptoDigest for CryptoHasher {
- impl Clone for CryptoHasher {
-     fn clone(&self) -> Self {
-         let ctx = unsafe { c::git_hash_alloc() };
--        unsafe { c::git_hash_clone(ctx, self.ctx) };
-+        unsafe {
-+            c::git_hash_init(ctx, self.algo.hash_algo_ptr());
-+            c::git_hash_clone(ctx, self.ctx)
-+        };
-         Self {
-             algo: self.algo,
-             ctx,
+== Motivation ==
+
+Many projects need the same source file available from multiple paths:
+
+- a library core reused by an example folder
+  (examples/demo/core.js must equal the root core.js);
+- a shared header copied into submodules;
+- documentation snippets embedded in several places.
+
+Today the only ways to keep them identical are:
+
+- Copy — drifts whenever one side is edited;
+- Symlink — breaks on some archive downloads and cross-filesystem;
+- Hardlink — lost by every git checkout / git reset;
+- Commit hook — a workaround, not a platform guarantee, and runs only
+  at commit time.
+
+None of these guarantees that the files are identical at any moment,
+which is what a maintainer actually wants.
+
+== Proposed mechanism ==
+
+Add a declarative file (e.g. .gitlinks, similar to .gitignore) mapping
+a linked path to its source:
+
+  .gitlinks
+  # linked path            source path
+  examples/demo/core.js   core.js
+
+The tooling would then:
+
+- On commit — reject the commit if a linked file differs from its source
+  (or auto-overwrite it from the source);
+- On checkout / clone — materialise the linked file from the source
+  (hardlink when the filesystem allows, otherwise an identical copy);
+- On archive / ZIP download — keep the link so the downloaded tree
+  stays correct;
+- On edit — editing either path updates both, so divergence is
+  impossible.
+
+== Why this belongs at the tooling level ==
+
+Git already stores content-addressed blobs, so two identical files share
+one blob internally. The missing piece is a working-tree guarantee that
+the paths stay identical.
+
+== Concrete first step (smaller scope) ==
+
+Even without full 'linked files', a valuable first deliverable would be:
+git archive should preserve hardlinks between identical files, the way it
+already preserves symlinks. That alone would let a maintainer hardlink a
+file locally and have the archive keep the two entries pointing at one
+object.
+
+== Alternatives considered ==
+
+- Submodules / subtrees — heavier, separate history or full copy, not
+  'same file'.
+- Symlinks — already preserved by git archive, but break on some download
+  tools and cross-filesystem.
+- Commit hooks — work only at commit time, easy to forget, not enforced.
+
+I would appreciate feedback on this proposal.
+
+Thanks,
+sporteka
+
