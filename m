@@ -1,85 +1,82 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93B91C695
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 04:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581702BE7BE
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 05:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784523307; cv=none; b=UHVMOl56lztceMnhCcZK+vSDeiif3AhQ0m1TjW9f0Y1pmS620DZQuYo+/seCEnZNtoNVJve7PLi+6QOHIw6l1U8Z6DsjCPMWlOs9GWyppAnXTyn3APZrUmLJVVWwJIedyGI5iICiizOXsyF5i/YnvIEL9mfhgTbG1VvAmvLIlPM=
+	t=1784524181; cv=none; b=MCDTVjb5YWdysT7eKvFgZoRaY86Ft319RA4s8uX5Wtz+Te8pY3TY4GkQtpnVki0sE33ZR/4I3NbESQqFd/2iL3FuKkagtIkTH+xtrTou0OjubZZ9SyaE5aC4KzlgTIGeVIU83Jgv0AL1AkGW853CiH7VzuuIvYlCiqxVtFGwRzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784523307; c=relaxed/simple;
-	bh=7e0HOpwO4XTG76O5M5uLA+EQtrJoKwWHkj3jVFjm2/E=;
+	s=arc-20240116; t=1784524181; c=relaxed/simple;
+	bh=laTcJ0NvtIkvBGQGNdC/IAFQZ7J8nEax/Mwlq4DdXMY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MEWAb/iN9kb6eojCjxJFMxBb9Cjdv2YTC1eXR9kuoARjrLxpHNr85KQf1cZ7DAq50hKthJk7KhIM19zOxAAM0dA95Wollhh3mAri9ylOqqaV3rnHEnoPnIB80gsbrBduMzmnHNcjjtnmSo2k0xty0uT+M+hcB9jLGa1rtAxC+1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mS9s3dTQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B96dalH2; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=Kolb6XtH+4JEu169svzddg1HaG3P9/KWKvmj1+jAXGViqtNGidJtwwQF4sj2bJgCcSGrnm2pa2+EaRrHRXpCpalVsYNOdBctXrrEaAAF7BAZexOdtBnnROb+YLgXQ7I1BdkHPAhiIx1+O0AxKWcwNq1N76rhPAIbV45EBpMRPQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CPbasPL9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AJO9cidU; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mS9s3dTQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B96dalH2"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CPbasPL9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AJO9cidU"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id BC7C71D0005F;
-	Mon, 20 Jul 2026 00:55:04 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 59E761D0004C;
+	Mon, 20 Jul 2026 01:09:38 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 20 Jul 2026 00:55:04 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 20 Jul 2026 01:09:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784523304; x=1784609704; bh=QnPqgrbUr9
-	DNbmfbH6sSVv5zDlOl7tOfu3Hll3ycJQo=; b=mS9s3dTQgWrtrnswEGlVzoC26J
-	Bbq6QOgo/Iuz/DYM7nHegrdcBCtcBhe5JKPYBhEiBJMx7aPPZtwUZlAggpn9lcTk
-	A7ytURYiVd6r//uI2luMhMAiEqm7SrckcuTXH3QzdyxAHUztACNM4tm1YFgb6gcg
-	vVVY/0XH+ExxVpKmM36+Krfy7j/xVQJo2ZkweYLZmPje6FZOpMqMlplA4WudmNSR
-	jvZtNGeQwUu42Zo/jl0I3Nj4xzBQMPyqqrtNcgbPoCDKEmsX2zjgf6s8ML9W8ILi
-	xyfD7U7QFqfBcEli6/EqxSNW1X5MsMg9PvpfHVAcRNZmxuB6CPunCCZnYpNg==
+	:subject:to:to; s=fm1; t=1784524178; x=1784610578; bh=OWjg2vDNFR
+	lvxPj16o2MCoal1KoOq2OCh//5mZYx64A=; b=CPbasPL9qUwz2MjLp1MxYtUpmF
+	uThRC6U7mM8KIG7VpuncPJ3tTv9+fe2+pO4J2T/u18nIXFgJTbn+pHWayG6GnjAr
+	3EtG9IvDbHy/f7EDUb1xoXMC4epSbIsDPQ/5TZEhqVHq6Vd8F19p4wzaDlurrIWI
+	yKilAj+p5W+CPaXVX6YN0pz0xfDKCosuWT/nACNX9gg1YYFLuwGVDdBfQqv9nQ2b
+	hglHzhhEUBE/cD/zBbgcqn6TZ6PQ20V1H9IQKuNwPcURP/fFQ8p6QKu9b8XGMRFW
+	KQXl8hisz55NfCbBnfL3ikaWi2WO4zRbYennCpmz9i9AlHTECi8f2tF9bYyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784523304; x=1784609704; bh=QnPqgrbUr9DNbmfbH6sSVv5zDlOl7tOfu3H
-	ll3ycJQo=; b=B96dalH2RY+Zl4cZ2LCoyk8FaKsM59d50z2xXgqPItalG0SEfyX
-	+IOuRATtYwapnT+aPyi2gbSek9lF/YjL066vSfZVfCt7zWmHDTdcpyZZqkl4/eRZ
-	T6qXRRhcASFMMIU0FogG6yJjT/z8l6E596q6xfSxBdUjC6dPbatafgPZwoU1S8ko
-	i+QpqQEgsepuzINlPD1hV5wGbIpVfd4CTXePAV23ZHGuGtZBlKnL/MctLUwKmwSl
-	2/HF+QEzFbhytmkTQsBv1CrPeRFmacY7DJKzHE6F6SPehHCo/1A97BV2mXGK0SHp
-	X1pZnjEJ7TZ71b1pxzziZIiK23IW3tKNNnQ==
-X-ME-Sender: <xms:KKpdah1pldyk95el3ePdx7s3bu3v8kstAZAO97I-mFJmlH90TIyrVA>
-    <xme:KKpdanLKMsNEZW_o0R0qdC2uh5ZqmMAl4Epx3SYYRZMLKVi88YCwkq0GSL4-KsYkK
-    kBhBapOPPQBF6WDgL4wQbecCvJ6L2qWTpKAn-82DlhjrFT8MjWS>
-X-ME-Received: <xmr:KKpdaoFcJ893kzy0lDMR6t2wPrOBes0TTbWSij6TKwQ05eWTx-cMrzehUl4K897aWuJu6dzeLdbMxU5NlGex0w3gTzhAHO-TJA>
-X-ME-Proxy-Cause: dmFkZTEyR4gMwLy8q0PoUcAoMkMOFNUy0zF/yeMYqlzZM0RlEA4CeUGV7thgxiF16Cqa0T
-    HV8Y/ILAKKY3kLSfchNZRGxZbjyObsl5gb9VphIrgHnpHP9sPntNuKy9T/3CMJ8NO0UU3k
-    1G/T8IbDI1AhSTDcldO8MPSlx8oLGXM0xT5FDwnW5Bzw+l26JMi4mNKc+tt59HzP9fYKf6
-    BfaUBi2PRQp9EZyNr4P6wP1y6SvedB2EQPi09oExKPFbs/lxHAvU/XOo4Nj9nVdcn/BKhl
-    BfS3L33qhfeC1FWapo8lNqeL884g7q/bnOlbpHvnrwfS8uzBtvGovsuf0xhe1Fwe9rjWFk
-    nju4umw+LyO7k7+ScDpNT212/Mgq8M6EzP0uejXFNvvHPkrW6T/0ImRKhx7u8mhEH0sSoR
-    3LK10pkRry7GClmKTBcuW7KVj9z2JGRj8YLqw6c36VnIrGdPfEAgljUTEtkW+q0eH+FH58
-    5yXBTimFNwayJ6gJxsRU69g6tJgbhSF7kqo/fCenCl7wOzh9uLGqkgZ9RHxYPuVI9yt9QI
-    Saysx4ra7tCPLm0jO83LT+Vcy/CyBsXk3G7+W1NFA3cMFIWlx5kddKCppmeWJYPmwMuQMf
-    Cj9hD+V0CY7EANAzggQwWkHspCcaKZBRaVqEsz8++tPwXpS3CMlw3C5mKY0g
-X-ME-Proxy: <xmx:KKpdarVmsyoyxYlnhJ5CVTn6QFG_miWbWJxIYuzIZynyIakAaev4Ww>
-    <xmx:KKpdaoznwylvt2mYo4rFhnhCJx-mWuAulhMnXwjSw2IO9bjEzF3GJA>
-    <xmx:KKpdaoRcOYh1vi2FIGfVUMO5R6nrZr1NzY-OaHOKY3kVZ81niJjdKA>
-    <xmx:KKpdashM_s0EKRw1P7kdZ2pi_mJo0x8ez-QWO1o2lxvD86Og8SGZgQ>
-    <xmx:KKpdahsIv8AyYXL7IMJOxOSA9brq7psL7iIdj9EO9Jt1-hgmiGKAAIIr>
+	1784524178; x=1784610578; bh=OWjg2vDNFRlvxPj16o2MCoal1KoOq2OCh//
+	5mZYx64A=; b=AJO9cidUOww+P/kCvMNefppaLQQVaNlGlPydPRSHtwsnIo5wNQK
+	5ZPk9iSu2gQl9J2pgHp2qbVUI5gVAZApcvB52mHJ0JywgU/YUcshILX30HwAMEc5
+	OPvkvEYFeNetZWIXDpm6ao0/vVue6/EA6Ul4D9vlfoefXV8DE+FdrVXPKtBGEBuD
+	+XY2wA6NfcQ172NdfZUgEiq9X5ZMHKyai/V7q+yJP1erCCa9WeyT7FMEFuLqFS6c
+	VpojO4qlknpdaTI4zJ33wxydXtgt9KJOmDE+EzAdG+QBjd/ypNpp1W0ivTI67sDo
+	fpg1PSVL5YroONoaXkx53E7yIp4L35y6R6w==
+X-ME-Sender: <xms:kq1darP1lPlQHNsp3P3d_gS50QMijM3tXNCvWS2oaf4YcrFeDw1ivA>
+    <xme:kq1das8vXjdeZezfT_RZ3F0gNqfsuU_OsU366XARq9mv8QZEywes63lyXFDpmgwMY
+    sqCYJMP_71Kr8Vs09xZ6f41D3--3uo8KuFZE6cD2zS2iVzRrfocPQ>
+X-ME-Received: <xmr:kq1davRizDRnpw5tTv85R0jSve1UKjS2R5aU4-vzlygsM5Hx4xvH8PO_laOdXApc0OeZHxNRTbuOmafy_3uVG4eF4SRpsiKUeA>
+X-ME-Proxy-Cause: dmFkZTGO/bmvr19MHL6cvyBb6h9I46i1bnRnuLDlhOyuL8EUmGoPMLYYyu7WDKl7ktBnst
+    qaAjRw7H52Faq/FjxFS5IRANJgfTmedz5yq6lksztNQiwuxZYBkZTXn/TK+/uQ1qWdak6o
+    yKR5qIRBtj8fpeb6LY0YZSncBzXXfd0zdySdSA2JZuoZpaSn22hDv9MY3Np991RmPq+jfs
+    vcVOzhm3AnGxszalE2ODfwzerwy5M6OefLikOvDeTvMj8Skk6tILQU+ViMwiHcnUCvN7/R
+    4cB7/ZzmPu2r2YvVzeNq/lbhPB0Uq0BRo6Sn9ozJce3laDHzEzYbkfQzsiDhs0Ke6DOmli
+    hzxtfx2JnpldOlA8MgCp80bXPhOQH+35EjXIAV50jgtK/n7JD4bMfCtiXjqoojbsd174Ly
+    1bhKavlWavpN8sM9+EV2GRyNou6MLHjsSJMv9H/R9SsmjtcyTw2oVybR4S+EACz1HhPpN4
+    q0aFGxP3NlPUwgGaWQNC5xbvOGMCaObJXMb6c+hHQkzfuoNl6H3vhpnr/uG6zGP5CyFjB3
+    1N5TPbDG36YxzxzXyNVpR5heSK1SoZkbyRUcNjRqheMYN/ZW3Q4tM2e668+kQc/OP9hTuh
+    7ZKFY8UekpgOM5ibB6tjw5WJ9Bhv/5UCw8WuPnchIK+RnM5gvYiEZMuojPzQ
+X-ME-Proxy: <xmx:kq1dauln_cWSVSGEY4TlNuNiNz8DcmgCBWe01dcaMEknwCyR3SWJUQ>
+    <xmx:kq1davTJTX6OsHMT6yEYHO9Zbx361UHG7nIENdryRm-vymd9CtjTlw>
+    <xmx:kq1dasOCFr77rn4wLu8rYy3Egb3ZonBuzqB5xjOmYJhfPnRugH9BIA>
+    <xmx:kq1daoXyv1aUnff264CtoyjqpIPBGefHlxO4l03g6OhvT75OOOB2bg>
+    <xmx:kq1dasq_xspj9AQHh4w5sx0aucL3OlrZ-iGOrOnM6oWHJq89RFuVZXzY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 00:55:03 -0400 (EDT)
+ 20 Jul 2026 01:09:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Shlok Kulshreshtha <diy2903@gmail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Eric Sunshine
- <sunshine@sunshineco.com>,  "Scott L. Burson" <Scott@sympoiesis.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] userdiff: add support for Swift
-In-Reply-To: <2a3a73c5-5e90-44a3-bf6a-6e98ce5e5a59@kdbg.org> (Johannes Sixt's
-	message of "Sat, 18 Jul 2026 20:11:30 +0200")
-References: <20260717140232.6722-1-diy2903@gmail.com>
-	<2a3a73c5-5e90-44a3-bf6a-6e98ce5e5a59@kdbg.org>
-Date: Sun, 19 Jul 2026 21:55:02 -0700
-Message-ID: <xmqqldb6i7kp.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 05/11] last-modified: handle repo_parse_commit() failures
+In-Reply-To: <xmqqldbdqciy.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	14 Jul 2026 18:15:01 -0700")
+References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
+	<f728be4dacb0b9781ef6589a0d2c48009aa31e9e.1784069325.git.gitgitgadget@gmail.com>
+	<xmqqldbdqciy.fsf@gitster.g>
+Date: Sun, 19 Jul 2026 22:09:35 -0700
+Message-ID: <xmqqh5lui6wg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,31 +86,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Am 17.07.26 um 16:02 schrieb Shlok Kulshreshtha:
->> Add a built-in userdiff driver for the Swift programming language so that
->> diff hunk headers and word diffs work out of the box for ".swift" files.
->> 
->> The funcname pattern is built for Swift's own declaration grammar: an
->> optional run of attributes ("@objc", "@available(iOS 13, *)", ...),
->> followed by an optional run of lowercase modifiers ("public", "static",
->> "final", ...), followed by a declaration keyword (func, class, struct,
->> enum, protocol, extension, actor, init, deinit, subscript). The keyword
->> is followed by a boundary that allows whitespace, "(" (init/subscript),
->> "?" or "!" (failable init), or "<" (generics), while still acting as a
->> word boundary so e.g. "initialize(" does not match.
->> 
->> The word regex recognizes Swift identifiers, hexadecimal, octal, binary,
->> integer and floating-point literals, and the language's operators.
->> 
->> Signed-off-by: Shlok Kulshreshtha <diy2903@gmail.com>
->> ---
->> This addresses the "add a userdiff driver for a language" microproject.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> ...
+>> -		repo_parse_commit(lm->rev.repo, c);
+>> +		if (repo_parse_commit(lm->rev.repo, c))
+>> +			continue;
 >
-> I am mildly surprised that userdiff drivers can count as microproject.
-> At a minimum, they are on the challenging side of the spectrum.
+> Shouldn't this be
+>
+> 			goto cleanup;
+>
+> instead?  'n' pulled out of not_queue may be unparseable and when we
+> ignore it, don't we still want to clean up the active_paths slab for
+> commit 'c'?
 
-I am, too ;-)  It is hard to get them right, even though thanks to
-your earlier work long time ago, writing a test that demonstrates
-what is expected of the patterns is fairly easy to write.
+--- >8 ---
+Subject: [PATCH] fixup! last-modified: handle repo_parse_commit() failures
+
+https://lore.kernel.org/git/xmqqldbdqciy.fsf@gitster.g/
+
+'n' pulled out of not_queue may be unparseable and when we ignore
+it, we still want to clean up the active_paths slab for commit 'c'.
+
+diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+index fe012b0c2e..3846244dfc 100644
+--- a/builtin/last-modified.c
++++ b/builtin/last-modified.c
+@@ -416,7 +416,7 @@ static int last_modified_run(struct last_modified *lm)
+ 		 * in the '--not' queue.
+ 		 */
+ 		if (repo_parse_commit(lm->rev.repo, c))
+-			continue;
++			goto cleanup;
+ 
+ 		while ((n = prio_queue_get(&not_queue))) {
+ 			struct commit_list *np;
