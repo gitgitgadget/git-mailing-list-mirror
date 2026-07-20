@@ -1,92 +1,101 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C301FD4
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 00:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDA121A92F
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 01:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784507757; cv=none; b=N7/vCyUrKxP1tL+J8Uj/AFkCfzWpgRLR0WY1KLhHl5ZZlrvyUUTCnCo818leOyXvoM9xxBNRsBQufArZe9Qed+P4zO2ygOMPpWJclyxuN00SOmHs15AkKmh4QtzSxd/wPdhiDrX5H0GgZBwgSYjqKdLfP4RYS6DLddR+5kqfj2M=
+	t=1784510085; cv=none; b=MZPqFuSWPzF6IELbqxSmzWQ9ty5swqA65HEzozG1LzTTJZKUSxM1vVkVWHQXQ7Atx59Q7y3+y9r1xJGAeCFLrRMb2wKqOt8i3DFFnAUkhjmNTqmZ9Jd7m5qwRXaJ8+9stmhoD7CwF1gUnWbtgjMIN4xNIbrz/+c9lCTTvZEQQnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784507757; c=relaxed/simple;
-	bh=R0m1lrY9hke2mrprT49s9vDupBme4gfD7GFuxoXc0zw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=o4mF7Bc3JrJPlN2sAJa1WFGv4UupqCG7PZt1HxL0rhJKhXTl7Lx3K1a5yL2XRKv8tOIF/6V1sVX0/zIEZRqTMM8AxW2c/p79hrLicjB5NhFrmcxyJPzs4tatT9r+xIKd8u5OSSfNFIeAWepJzDARs9bJQJlkJHrUG1GeyrGv7QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ti4Aw5OK; arc=none smtp.client-ip=209.85.221.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784510085; c=relaxed/simple;
+	bh=fxuLI29YBLdPPvPJNPEo6nH8xTWhPKBftJfoRefwvz0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nLqJBmMkZJz16TuVUr+1SKp6n8O9At8/edF57bz6EXCR6wD+EsbbmXWeD3wowY1ztRV3qQ/jDEQyIDCRIxLYd7B5gKyW3FhLfkQi0bbK+sJpS2afnHwG//i9w8szvC6NK7ftMBCJTWYviuUDy97hBjqGDfMFE9yVjJRKFkk7h4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yFOefevw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JVXAieXL; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ti4Aw5OK"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5bfa99f8ef8so1622533e0c.0
-        for <git@vger.kernel.org>; Sun, 19 Jul 2026 17:35:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784507755; x=1785112555; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:content-type:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=R0m1lrY9hke2mrprT49s9vDupBme4gfD7GFuxoXc0zw=;
-        b=Ti4Aw5OKiyQrOE6gtHSkLGrYLSAydqxGIUOlatMLoJBFlIn1tUb75hJvEOlypiB+Dl
-         Lw0mEaKnsnH4x3L4YDGXX5hoPMdWdqbBAjJRP1LMazpPky5RqePAs0mQv/akdGqlRV5V
-         WNAD8iSPO22vyTk/lErgEcudX05pUmkd0sv9zo96UNGIhB3qbcqP++MQ1wd93mk/4r6O
-         p7/9VS/Pzr9aFCTwOAQq0VZymyhjH3Ds2JpFWjbjPILE/e0ILBMBJUsczhdVT+sxDFKH
-         9j1fGTcOY1Utm5EBxiAV/LmnzVp6MQ9krCPC92PojHaUih4zMU+hYHBLI/3fa7dZuak1
-         ZOaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784507755; x=1785112555;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=R0m1lrY9hke2mrprT49s9vDupBme4gfD7GFuxoXc0zw=;
-        b=ohS8b7j8dbPgNTnR8oCJRslRyVq91mzmD7J1zb9ZwsvlxmcOuboSLldWVtuKehn9wb
-         4sbd4n8GQPcGTI4wOJm8ormeocj8e4pgJf5oZVRnHUQL7HpJFhJh5ZdUG6Oe0smxMb7m
-         YabTFqoz5/zIZJEvKj/Rqy9jIuNgFKeneEoGrWhvLtA00sLqvutX3Pq5FuvSlex3m3fV
-         PYyRzJ5FskHfXPRh5k0dhLd04jpDc3yPZj9/BKSfLDhsUjNiIMfVjJWYW+78ZfcomVuw
-         oHwZ4YCAjHCZcLrvEhmQ/+T00dZZw18I+sosK2oUp6J11iWlcxRJK/dW5o6oa/du2zmH
-         TEiw==
-X-Gm-Message-State: AOJu0YwQ3GeBwxY0OgRzqWjMoc7v8EVpnMLIb6KPcKAFgfdjKcNl4VgD
-	mU9ONtMLiqmq3Ezc2F2SXVnGD/5e32Z0QynfSU3fdG6NUky911kyqW02
-X-Gm-Gg: AfdE7cmgSApJEblt04PU0SrrgOY23+uzyHwiiHK624ITM584g9/zn22UE67VfVOfFMi
-	YBdSrZg6YC5f6mPxZwA70XslFbWXM9Mxei9PRgjwh/Px4PVRIfYITAhX1jShcq6rpBlknIcZWLQ
-	P7ot1nJKlSPzQ5KtJ+7XmTktFgtWwO7Fvun95HoBetoCS5ZrC2ryfXYHggtpPB21x/bDnM+bdRa
-	QiLpl2M6EawlkQ9JV5TlKAHFZMJqI4KeismOKwscXG/K+oznFIiPb2VfDsgIuRxt1OKEN0QkXpv
-	J1pr8yZp8nhf0cHZVurnRU2eI0Dp+gnaZDGTL3wSbgbqGH21tkgLV0sPvRDV79+XbAOCWRmXY2r
-	9F/Bc+YOxSzXS63XSdRWEn/RPJu6BgF7d8W0NhYYvQsnoXW052tX56aoz9n5U+h0Rsen6ZVNnPR
-	jUs4XYd5vbRMzm58rGKIlBE8JmvQEY7/4=
-X-Received: by 2002:ac5:c772:0:b0:5bb:e5dd:d93d with SMTP id 71dfb90a1353d-5c13bed465bmr3115283e0c.0.1784507754943;
-        Sun, 19 Jul 2026 17:35:54 -0700 (PDT)
-Received: from smtpclient.apple ([191.181.57.76])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-976fc60ca1asm5912959241.10.2026.07.19.17.35.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 19 Jul 2026 17:35:54 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yFOefevw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JVXAieXL"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 122417A0068;
+	Sun, 19 Jul 2026 21:14:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Sun, 19 Jul 2026 21:14:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784510082; x=1784596482; bh=fxuLI29YBL
+	dPPvPJNPEo6nH8xTWhPKBftJfoRefwvz0=; b=yFOefevwb8hXvR1HPBXutrlvEz
+	Euvh6hJQbl4NRYcGm/1eH/Wd6CGP7Aurtt/QE57qF6f+UyosXRpsPSaaiQmH+PNA
+	7QhF8325AoagOncmsw9CO42ntwd38yjC/uQGK2MYXMRHAAG8rUuOFxdZUzBvktwb
+	c2kZBn4bhoeNQDMFkaRELorwKVIIJ5hne3QT2gLTsJsYJIKICyeRajk/8O+eUoRY
+	hweuHVvU27Qs52UaphbMba9TL8Xow7eRc4uroHVr4ej+AABJd/x0GlA1CcoRWRmN
+	37Bi0H4JLR71ej/NKvXyJNHLWt5tIJf9KgS+Sn81foy/2BkCWoSKCxeZJaOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784510082; x=1784596482; bh=fxuLI29YBLdPPvPJNPEo6nH8xTWhPKBftJf
+	oRefwvz0=; b=JVXAieXLx2eNPbWbtB5R3trmUHlIXU22mk6amJzkQYzuNu3w92M
+	Cgw8UaU8zidd6EJUy73cYNpjr8wt6LC6txJBTENDtDJb4gZotHkHLV83IWrZZF4i
+	ArERKos5aLywEisFxxDz05TI5FxVN6cd4GAKZkR/yGGnRP4FFYvhKc/vJTsn/JSX
+	nTQMqGf5vtRYmKgw5WSJTLIFH2IAjNM3plzoFSkAhr86NYu0ygbv+tP3bnddGBOA
+	EYYT5Gr0mIgu1QKkVlm7F+BcgOF9MMbCnvMatMaNbobNUJlvZwi8dTfTPQuFVHZh
+	xgeRNtnZGRXiMPqtvyvjWupG9o529yrZ2xA==
+X-ME-Sender: <xms:gnZdasfojGkGSzX9jePgpp6xUSKSjO8pXZXC48g_CeFUYs0Dxj5xXA>
+    <xme:gnZdalHNws5fPtobMa8dLmGqj0LX5yV92-EtaLj5l4Ubc6f7WqetJGspTSM1kceyH
+    NW-0tLEZUpnoSSDx615RGM5ATtJW6CE596PvFJOqoyC11lHdk9Ijw>
+X-ME-Received: <xmr:gnZdal3EJjWHPjny1XBodlWEkEZVz7d1fFjlC27Jm4b1s_jb4PaXBGWpXC76aoM0JHZo5AiMaPvXBkxWyVgltuHghquh_rHnRA>
+X-ME-Proxy-Cause: dmFkZTGglkVmqu2UWR6/bkzgR0oaBDR2EQgYaCS9hk5gWwFLtCrPwZReEc2JjJo+Z7iPO7
+    JXBi42yql0oIYuYv+t7436nc/ddgJZmVzfDUllU8xDuTqAoTWWqztyUA9e4pGcRaqEdplF
+    cXAN1pC5eM0Kkx4jgPN9CxtFqbRHWXzjjFjymA2Htgnz/dMIluHAy+BSsft60thYrLXG5y
+    lS//88unaYkEvzxgT7cAMZ1X8uhCUY9ziwfJI+Ae/tdYqLxtHeKyqD/YaA7UnB5B8dFVbX
+    OWrG1atV2jB/6ik/Zg0hqKJliVDgiD7GcoAI2WSKCAm+3cP9Pi3h7eDcfUyBVBxwcOm/XC
+    /+R4F7Rg3Rh5kWIenqZv19fvloBJ61GtAAxSWSQhLbPvAy0PYZrQStFFkONCpKeRJ1dDGj
+    h1eENpmi1TMchFw0MomWsa1FakcuiSK8C8zsHNDmRMzKyZRxqHgyJy9MoBblPRRskLW8h9
+    PkQd02jrQkgtfTislz2Ag0zOXe6A4MPJxM0lHVt6lsqZnlgqSf0ExiK/9dzvIi8wKAyl/J
+    MI75eM2460WZO5iUY0faKJl744F4sA4fBMdViRllJP4xLXV5ceplxL0eCmZ0dVd9XsVpcW
+    R/OrHlJs9e7TdnJMc/qW0dL50hN8GBpf7RKA8VRDGnwrbsdMCzRyYwt+QOIA
+X-ME-Proxy: <xmx:gnZdatlTSqffHfnxSq7Vjv7TYPumCWjzCalqaKsT3O2SVEme45sGzQ>
+    <xmx:gnZdal9mHLHGvXAHFzZBzNghlxvKachpARuR1m9MHIuRJchbbD9HFg>
+    <xmx:gnZdaipKobLJ78_3QD70sX6PGyKPG8qAKtWSUIAQ6GAif-4yaeJWwg>
+    <xmx:gnZdaumXPxhfMS_PP-Ik9JwwbRNPRTyiLYa2f-KnLt0nD1cx-iuQ5Q>
+    <xmx:gnZdauVjvXoeimfPcHuGg6hos-azUjLeVKRE2duotAB9US4TJ7CuBiKX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 19 Jul 2026 21:14:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,  Harald Nordgren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] bisect: add --auto-reset to leave when done
+In-Reply-To: <b79a479b-d279-4ac9-a368-6eb8edfed937@kdbg.org> (Johannes Sixt's
+	message of "Sat, 18 Jul 2026 18:18:54 +0200")
+References: <pull.2335.git.git.1784180159.gitgitgadget@gmail.com>
+	<pull.2335.v2.git.git.1784312854.gitgitgadget@gmail.com>
+	<5b3704fbd4129e6bf742fe9b38998d5c952c6f21.1784312854.git.gitgitgadget@gmail.com>
+	<b79a479b-d279-4ac9-a368-6eb8edfed937@kdbg.org>
+Date: Sun, 19 Jul 2026 18:14:40 -0700
+Message-ID: <xmqqik6ajwcf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [GSoC Patch v2 5/7] repo: add path.index with absolute and
- relative suffix formatting
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <20260717133015.32040-6-jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 19 Jul 2026 21:35:40 -0300
-Cc: git@vger.kernel.org,
- jltobler@gmail.com,
- Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <845D6852-98F5-4168-82CD-90B3B476BCF5@gmail.com>
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260717133015.32040-1-jayatheerthkulkarni2005@gmail.com>
- <20260717133015.32040-6-jayatheerthkulkarni2005@gmail.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Introduce `path.index.absolute` and `path.index.relative` keys to
-> `git repo info`. This allows tooling utilities to discover the active
-> index context cleanly while scaling transparently with localized
-> `GIT_INDEX_FILE` environment overrides.
+> IMHO, --auto-reset is too generic and doesn't give a clue what is
+> automatic about it. How about --reset-when-found?
 
-Note that bare repositories doesn't need to have an index file. Maybe
-it would be better if you return an empty value in those cases.
+I like it already.
+
+Or you can generalize to have --exec-at-end="git bisect reset"
+perhaps (ducks and runs)?
+
+;-).
