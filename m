@@ -1,168 +1,119 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7C33D1CB2
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 09:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D783D668C
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 09:42:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784538812; cv=none; b=jdYKtRwds+nDfNKGbaOzTa/h+yTt0+gSBuOacib8lQ+6JCFUDO3NwLyBXPNcwbVUl9jtwiyJLt1g0o2qqNDijmmXK4VwAldV37WvCH4im96aye/mbUKvekxbzju8tcCME9VL04GdW7pnNdHtjrpUEDTQE6ofBRVMrC14zk3soHY=
+	t=1784540549; cv=none; b=FtM+ar3Lxj54f6JQ3/DbZd7PJ3MVyMiJhX2ZSYtTBtwetBc6YSjLm1EwWLzysBST2ez3zW6vd4vS04w4UD1FOCof3gOZecR+BINSBjjRNyuo+DiOXG1mcPdRruUrkS7J6nXhG2SvvDmcELQCZ7E/cR/NyJopt1q4NQw8yNeKWtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784538812; c=relaxed/simple;
-	bh=ViNFt6n9WzS23EAgrK2uOTJCQzV3L6Ef1VDVH5EOyGg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Iu+yGrW8XRU2OPRSgNlcjjjAQBxYPOmdl5Ayku9DEoWH5/W0lK8kixc1lSLX2bZxeBIn/txY+MzMnIKoPNhNCKrbVQXCTWwS7es91XzLvLQnUIhJym+irJ26kO6mBxsmLTNaDY3n6EMGzfkkaCiVQk980N0/wolRx88nwap5NG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=jpwZpbgF; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=W6VK3mj4; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1784540549; c=relaxed/simple;
+	bh=/SGdhPDFu4kGHXIQEANWsjFGVd8imD14vLp5Lnm26L0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SWvDqTDvRrnmnHpQSMgbsD/+2fwlNSdskNCyXd2B+NvNnzbebftwvcTUjnfn4AMiOn340ZWm8YfS5ro2XwvNEDW7FJT23K6bBT+GNNj+i7CiifH2KutkbVG65txXSVvrTAVwASj0sqjjur5B3Ee3z6cMbKtUBU8wrEsf+uBZCLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dbpBoQ1X; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="jpwZpbgF";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="W6VK3mj4"
-DKIM-Signature: a=rsa-sha256; b=jpwZpbgFdrF78qPqrGpeiZz5d7boYOsgLW2am4fr4BNSKhEeKl1yM+lJP5CtqgIgmV1t4WqASI9mbARnES6OVjY72ExADPngt8e1jxgn76LV2VDYo1Nl7x1x9cBuWdpy/T2st8cUg1MXOhyKc6u7aUAGszoMG2Hdve5PaqFe/vyzz+dcEEraD1ngA/DbsuiNj4V9fVfe/jkoJEn7auvDGQYzKmznID8ST4Wez6F9pNz4zCibgXt0+fzaQv/anWCyaOZDHhLx62qe5bXsgTHLLlsleXi98+pho0ij3DE6Xu+1FK7emv6bp9pXXHoPDixf1cxozb1EtJq6AECR15QU6g==; s=purelymail2; d=malon.dev; v=1; bh=ViNFt6n9WzS23EAgrK2uOTJCQzV3L6Ef1VDVH5EOyGg=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=W6VK3mj4TpgLL6VXMQCeuYWc9ta7DsS6z5wptPY3BkTD7Prtqti1gfghUknTnouaCCKcMe+LzqsGfATdy54tlIfUc4tC3dQWEhLPxLzFK864KtaIe2oNpSBXbHVxvcjLIkInvbur3F+0chlkIrZ5Ly9Wlm9r6YBMP+xG0lJ+1KEPO7sX9wAm2SEfI8+W4b1gTZaynZOzmaCHpKeWjpj/TlsUVyZDbgfva+nWHdwwJk8Ms2vMoEdzh3/u9wHVvJFlM/JzA3S5a3xO/x4Ly9OO9KrUTsW+ruMZeXDxCC041FD0y/YGMBgGdLtLPL/Nvc0ta1FgQsehigGDz7qiTMfaBA==; s=purelymail2; d=purelymail.com; v=1; bh=ViNFt6n9WzS23EAgrK2uOTJCQzV3L6Ef1VDVH5EOyGg=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1905825058;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 20 Jul 2026 09:13:23 +0000 (UTC)
-Message-ID: <8b9528b8-198b-489f-8f0e-fbd0c7d07b64@malon.dev>
-Date: Mon, 20 Jul 2026 17:13:17 +0800
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dbpBoQ1X"
+Received: (qmail 82312 invoked by uid 106); 20 Jul 2026 09:42:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/SGdhPDFu4kGHXIQEANWsjFGVd8imD14vLp5Lnm26L0=; b=dbpBoQ1XD3m1RdOB6/ZEg3AWezLTy7XnUywxdq6JmQerggJXHiSp2M+MiO6eg70FWkDMsDKKLAtGHqri/VWlAjO+57tP1rGigN+EZgLko49M7S9GyT8Jsqe+I7R9N4N6oCpuMFb1lvO+Puxf+f4yapRhnf1X2di84DPkTZrOVjA61AAFdRGSJYPv5CS3E8LXZ8zQjAMs7WN6+d7EjbZKXhI+cz5yakJ9OgElVzUcI+HhPE8K6k+YKvnc4dsm8ohhip7w36K2n5s1YYpRvn8fpHoECzb9uERilwEG/8eBfrCOihSPJzx4BSqE+HSOPXIF40Fe7YeUgDy7/J9SkEar+g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 20 Jul 2026 09:42:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19853 invoked by uid 111); 20 Jul 2026 09:42:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Jul 2026 05:42:19 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 20 Jul 2026 05:42:18 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Gusted <gusted@codeberg.org>
+Subject: Re: [PATCH 3/4] last-modified: check pathspec against Bloom filter
+ first
+Message-ID: <20260720094218.GA681989@coredump.intra.peff.net>
+References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
+ <20260717-toon-speed-up-last-modified-v1-3-410418f18614@iotcl.com>
+ <alq1Q55ezuN9ZI9j@com-79390>
+ <20260718083757.GD22588@coredump.intra.peff.net>
+ <alvulw2fk67duo8n@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/4] read-cache: pass 'repo' to 'ce_mode_from_stat()'
-Content-Language: en-US
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im,
- Christian Couder <christian.couder@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Olamide Caleb Bello <belkid98@gmail.com>
-References: <20260716084941.1101918-1-cat@malon.dev>
- <20260717063559.1633567-1-cat@malon.dev>
- <20260717063559.1633567-3-cat@malon.dev> <alvNq8rXF/jofqUc@szeder.dev>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <alvNq8rXF/jofqUc@szeder.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alvulw2fk67duo8n@com-79390>
 
-On 7/19/26 03:02, SZEDER G=C3=A1bor wrote:
-> On Fri, Jul 17, 2026 at 02:35:57PM +0800, Tian Yuchen wrote:
->> The ce_mode_from_stat() function is a performance-critical static
->> inline helper in 'read-cache.h'. As we migrate configuration
->> variables into the repository struct, this helper needs access
->> to the repository context.
->>
->> Update the signature of ce_mode_from_stat() to take a 'struct
->> repository *' parameter, and update all callers to pass the
->> appropriate repository instance.
->>
->> To prepare for the overhead of replacing cheap global variable
->> accesses with getter functions, the boolean expressions are
->> reordered to evaluate 'S_ISREG(mode)' first.
->>
->> While at it, add a comment for ce_mode_from_stat().
->>
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
->> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
->> Signed-off-by: Tian Yuchen <cat@malon.dev>
->> ---
->=20
->> diff --git a/read-cache.h b/read-cache.h
->> index 043da1f1aa..94b8d3e547 100644
->> --- a/read-cache.h
->> +++ b/read-cache.h
->> @@ -4,15 +4,24 @@
->>   #include "read-cache-ll.h"
->>   #include "object.h"
->>   #include "pathspec.h"
->> +#include "environment.h"
->>  =20
->> -static inline unsigned int ce_mode_from_stat(const struct cache_entry *=
-ce,
->> +/*
->> + * Determine the appropriate index mode for a file based on its stat()
->> + * information and the existing cache entry (if any).
->> + *
->> + * This function handles degradation for filesystems that lack
->> + * symlink support or reliable executable bits.
->> + */
->> +static inline unsigned int ce_mode_from_stat(struct repository *repo,
->=20
-> This new parameter is not yet used in this function, which causes
-> compilation errors in all source files which include "read-cache.h"
-> when trying to build this commit using DEVELOPER=3D1, e.g.:
->=20
->        CC pathspec.o
->    In file included from pathspec.c:11:
->    read-cache.h: In function =E2=80=98ce_mode_from_stat=E2=80=99:
->    read-cache.h:16:65: error: unused parameter =E2=80=98repo=E2=80=99 [-W=
-error=3Dunused-parameter]
->       16 | static inline unsigned int ce_mode_from_stat(struct repository=
- *repo,
->          |                                              ~~~~~~~~~~~~~~~~~=
-~~^~~~
->    cc1: all warnings being treated as errors
->    make: *** [Makefile:2921: pathspec.o] Error 1
->        CC preload-index.o
->    In file included from preload-index.c:16:
->    read-cache.h: In function =E2=80=98ce_mode_from_stat=E2=80=99:
->    read-cache.h:16:65: error: unused parameter =E2=80=98repo=E2=80=99 [-W=
-error=3Dunused-parameter]
->       16 | static inline unsigned int ce_mode_from_stat(struct repository=
- *repo,
->          |                                              ~~~~~~~~~~~~~~~~~=
-~~^~~~
->    cc1: all warnings being treated as errors
->    make: *** [Makefile:2921: preload-index.o] Error 1
->        CC read-cache.o
->    In file included from read-cache.c:34:
->    read-cache.h: In function =E2=80=98ce_mode_from_stat=E2=80=99:
->    read-cache.h:16:65: error: unused parameter =E2=80=98repo=E2=80=99 [-W=
-error=3Dunused-parameter]
->       16 | static inline unsigned int ce_mode_from_stat(struct repository=
- *repo,
->          |                                              ~~~~~~~~~~~~~~~~~=
-~~^~~~
->    cc1: all warnings being treated as errors
->    make: *** [Makefile:2921: read-cache.o] Error 1
->=20
+On Sat, Jul 18, 2026 at 04:22:31PM -0500, Taylor Blau wrote:
 
-Nice catch.
+> I think that we could feasibly get rid of "d" in the output in this
+> particular case within last-modified. As you note, the command is marked
+> EXPERIMENTAL for a reason, after all ;-).
+> 
+> If we wanted to do that, it should be straightforward to do. I think the
+> following (untested) patch would be sufficient:
+> 
+> --- 8< ---
+> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+> index adc7cd8c74..0f0c1d1d17 100644
+> --- a/builtin/last-modified.c
+> +++ b/builtin/last-modified.c
+> @@ -103,7 +103,7 @@ struct last_modified_callback_data {
+>  };
+> 
+>  static void add_path_from_diff(struct diff_queue_struct *q,
+> -			       struct diff_options *opt UNUSED, void *data)
+> +			       struct diff_options *opt, void *data)
+>  {
+>  	struct last_modified *lm = data;
+> 
+> @@ -112,6 +112,11 @@ static void add_path_from_diff(struct diff_queue_struct *q,
+>  		struct last_modified_entry *ent;
+>  		const char *path = p->two->path;
+> 
+> +		if (!match_pathspec(opt->repo->index, &opt->pathspec, path,
+> +				    strlen(path), 0, NULL,
+> +				    S_ISDIR(p->two->mode)))
+> +			continue;
+> +
 
-> I think the new parameter should be marked as UNUSED in this patch,
-> and then the UNUSED should be dropped in the next, where you start
-> using the parameter.
->=20
->> +=09=09=09=09=09     const struct cache_entry *ce,
->>   =09=09=09=09=09     unsigned int mode)
->>   {
->>   =09extern int trust_executable_bit, has_symlinks;
->> -=09if (!has_symlinks && S_ISREG(mode) &&
->> +=09if (S_ISREG(mode) && !has_symlinks &&
->>   =09    ce && S_ISLNK(ce->ce_mode))
->>   =09=09return ce->ce_mode;
->> -=09if (!trust_executable_bit && S_ISREG(mode)) {
->> +=09if (S_ISREG(mode) && !trust_executable_bit) {
->>   =09=09if (ce && S_ISREG(ce->ce_mode))
->>   =09=09=09return ce->ce_mode;
->>   =09=09return create_ce_mode(0666);
->> --=20
->> 2.43.0
->>
+Yeah, that was exactly what I was thinking, but I wasn't sure if
+match_pathspec() was the right tool. I mean, obviously it sounds like it
+should be from the name, but I don't think it is actually what is used
+in tree-diffs! There we have tree-walk.c:do_match() which does some
+magic. And match_pathspec() is used more for dir.c callers.
 
-But 'USUSED' cannot be used here since the corresponding header=20
-(git-compat-util.h, or more specifically compat/posix.h) is not included.
+I guess the two are supposed to be equivalent, or else we'd have weird
+discrepancies between commands. So maybe just a weird existing oddity
+that we don't need to worry about here.
 
-Can we write..
+There is one other interesting corner case here. If I do this in
+git.git, for example:
 
-=09(void)repo; /* TODO: use this parameter in the next patch */
+  git last-modified -t Documentation/technical/
 
-..to keep it simple?
+it shows an entry for Documentation/, which we both find weird. And the
+patch above would remove that. But it also shows an entry for
+Documentation/technical/, which _is_ within the pathspec and would still
+be shown after the patch above. That's OK for the optimization we're
+talking about (it would be part of the filter key), but I do find it
+still a little funny. The invocation above, at least as we used to use
+it as blame-tree at GitHub, is really about asking for the entries
+inside that directory, not the directory itself.
 
+Perhaps not worth worrying too much about, though. The caller can easily
+ignore the extra entry.
 
-Regards, yuchen
+> If, on the other hand, we wanted to retain "d" in the output (which I am
+> inclined to suggest is a bad idea), we could keep a list of paths which
+> are not covered by the given pathspec.
+
+Yeah, your analysis here makes sense, but I agree that it is not worth
+retaining "d". Besides reducing our ability to optimize, it is IMHO just
+plain confusing to have in the output.
+
+-Peff
