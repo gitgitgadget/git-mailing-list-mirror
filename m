@@ -1,86 +1,73 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A5C42BEAC
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 14:29:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5DD42BEA6
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 14:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784557796; cv=none; b=u3eVYipYa68S7ql1kbUQZObUnGmB7Fd5nenMurUzXGmxC9dkhUVZGqLB/QPYOVH+B30Ej/O1VlED+QZN71iQ5qgzKROBLI+W4TtLO9HV/8LjNbbpv2GEMuoJPFdrRwHkDFxaz12nNIlxYiKTFlMFPIFBhinPMVQywQyuyay7noA=
+	t=1784558259; cv=none; b=TCbyAUg4rdotLuQWKoihsudJPYeJlwsXEGCM4T+xDgopopC2UpMeRJCL3vqM+KGFBbCXbMCTS8jHS5d9QDHLQxpOvE+H/RLNNzpLussuuySjzhDHv8hjnD7IMMStIFrMJLLgVg/2+P+kqIjPyEudeb36rKPzIFJGdHDtUn7/RPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784557796; c=relaxed/simple;
-	bh=csgf/G/YRsQW9wasBTtEWysosHFnyovLIYH/M7OKn7M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uAAZEvWmT6YNBur61SSsghss/ZA6nf8SgycGOX6isw9cXRzvlpxueecO2nVhYW0rTrCkjHtIIfOAmwVy1YJOOWuK/WFiXhEEW+/CALsSy3erq9ypMl60lf7DJcRl7iGvg/3zD9VZrA198gocHYEM/lbsu8ptb8icWpO/akVMW28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nKQecUHf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=htxt3tT5; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784558259; c=relaxed/simple;
+	bh=rqvKVAAOmIomfJe4Iq5SBJDTq1tWksu82QJRB82NP7I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A7P1wilaHC7H4ejHGgeCpG7iWgpXGRpBm7TScWZsStgLm6XeXZeYKUaKessxkYNyUxMAtVfE/FE3ixF0VhUXtx8EAaZaQ8sMbt/vOmxgwqXYq5yt2aiFaRJvlQfH4qfXnGl1BtABhpoS5RF3XSEqDciF3RiduerEIgvlkmhj2eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=A8AMBaLs; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nKQecUHf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="htxt3tT5"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A1D9140009B;
-	Mon, 20 Jul 2026 10:29:53 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 20 Jul 2026 10:29:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784557793;
-	 x=1784644193; bh=Y1mLIBKX9kcwBLfa0zGOpQ0MR/WsbOO4UVHe7GVp94k=; b=
-	nKQecUHfkSwBAhIn/w6mUnvTZK4H1+bYcLy5b0Lm1n8QhqxYbnns10U2NHTQq7m1
-	6FgfBny46J56Hd6uRnO6DH9pWsSfMyahy9DDvXUp7vusHioBtu1HTIG5VKnnaxqa
-	J8bq293p+hmHdTNO1rXASQTpAgWItYYebukpzCyBaayA1WAqde3KYg5GCSFAL4TB
-	CtBM2vCcomp1AVfR1gubjk5IlBi3q3r4TwB/G6BRTbgkRR3ujVKHW1Uddn6ht8dx
-	Xk8ZK6BBHsJPfqDNWZ/+1bR7OmKJBOhigiZ4Z4vXkffZiBxcz4FGWQ8pMuDZNdtx
-	6+JEiEuSHAmPBN+jDByZUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784557793; x=
-	1784644193; bh=Y1mLIBKX9kcwBLfa0zGOpQ0MR/WsbOO4UVHe7GVp94k=; b=h
-	txt3tT584xpJH9plcDjlkEbBzFnm3L78ur3DPavau8cvn1KJnkAE9D62Op/zJu0Y
-	L8AZchxUkXg7E9Qz7W/ioZD2/xsSiY8RZ0s2eTNhKSDFxaYEVM+ER9U9KMTq45Ap
-	S6/MftnAtb1h3Fg8urIAKsIvtQAaZoBSYwZchN7JBTSnzFBh7ScoS0NaaIpx/5pv
-	kuMn716AtwIfSaHxywpm6otlqWUQ9Mkvv0G40Ql/5eEjHfXDVuNbwqBLi7qvbaH6
-	TVthg+5/M7d0L/81BQHQ4JlFZm9ZR98jagXzzUmLSuC45tDr0UcAjiPqaSX3CpYk
-	MkNBJ3RGSM/LtLK5dabpA==
-X-ME-Sender: <xms:4TBeao3na2NHIBqMGQJZGQ8hutHnLvId_Hx0vEz3EZ6RWmHTqdksvQ>
-    <xme:4TBeap8rIx6B_cB8Mu0X-dKcLsKREmg_QRWEBaViG0WpwNE334Jh2hEvfO7Vg8E8N
-    HOBfbVtvlATqVQIQ1_8x5n0oIuTIkM4yYbQ6uPjryCCFPQAsCn9VoI>
-X-ME-Received: <xmr:4TBeapP_0CkS4EEugHmJO8msw5rgXUB_qHCrzpjEL4h1nPVNEyEPqrOEHn9IhEkCcYzue1wsxnLuRUF1Q8I-kZx9MunFHdWd6Q>
-X-ME-Proxy-Cause: dmFkZTF1vcqLERxl9eDygruwAuhBgGU/VImAM9rtwuswBLbhe6wlxgG5PMkQEaoFrv8R0O
-    jvk7fCKf86e+E1PRR64RZoR97wWvE1Avx+N88c7pyFKMCSbfLme4nQwR8J/ronno1z6RpH
-    DpS3ItyA3vhRskMB9jlHu8ECGBPcqkK2inxJzOYJu4eudXH+I3CGv5dY+QKbHKsWFdH/G0
-    Oyq2F/lqE4JL+gvqtVpJaoJ/u9xe8SEkodwV/lHC6KEloR57reZ+2bqsKNo/dBlpSKXutj
-    whK5CBP7u7dNq5Er4xvcilYp0lbslFMkmcRmlIjKTI4bsoDZ/bl52UFWuoGNDm9Tj8YLLG
-    Cje86SglfxcP37Axj2oor/7PUOzZ5rjK3qvUB7Re6/0L5vb6VFxtbkmVuRYuslqcRwXVZS
-    NrVYZprzLxArYL+1w8M0hDXNy2CO3Hob5DQ6VZHoj6oDN4BvrF+JtLcj+qkMm7qjSzLKzr
-    kE899S09pQrwaBDyAWXAiR5T5S+aHp+vfQLpGn7mHuZtnrRjUpRZ+H/a6AMbjfxF8cO/sk
-    fWAMayJu1aI9eMzfE5ZujgeHr+dNKcJXSzXS+cJ1e+nw6s1eJ9ihOauMoNDugZOC77FUdx
-    D988qfv5M4YYt9Qy+Sv3JuwLBbWMzDR4a9U0rBeXGoLAdOTce4vYv5GIEJTA
-X-ME-Proxy: <xmx:4TBeatcNwC7oJEcvw_Ntt9B9YPldV3mj1wmjZCBXCUOMYYr3bdDjnA>
-    <xmx:4TBeaoXLft32-6WtubGwNFV5bibXUGUXN6sK_qzoinxCzNFE0S7jCw>
-    <xmx:4TBealh_bjIJRzHEj08zc-LLBD8g2azkkaQVf2wqahmLkuvC6s9_Sg>
-    <xmx:4TBean-Qzsob3YBVgYQTnWzKvHCB7PZ8ZGOZnAABGv1r4zMx2H1Mfw>
-    <xmx:4TBeap_BHeT_4eURu1j2FVYFcFgMdHJwAzMbm0aab2lNBFQ0BAdmGtXF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 10:29:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Taylor Blau <ttaylorr@openai.com>,  Derrick Stolee via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="A8AMBaLs"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-81e86df8987so43312337b3.3
+        for <git@vger.kernel.org>; Mon, 20 Jul 2026 07:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1784558257; x=1785163057; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=U+02Z3+HZw83bev5chNg3D6o7MMv7nAcpCkJT1jkBaY=;
+        b=A8AMBaLsOdTquzjjd6ldrfWiKTRWslmAkoO3Qio+NDTBirvZiYdRpjgxEVGerTMmdl
+         ucTENQqHryNpyCXg6nf4GiujLf02EaFBS1+exOVGwrnhnveYnQSJRwE5UeQB/47CIu/V
+         calPX6gOENpOqJ5TOWgTlZ7xmf5esYlCrrw2Y=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784558257; x=1785163057;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=U+02Z3+HZw83bev5chNg3D6o7MMv7nAcpCkJT1jkBaY=;
+        b=pqVaTFxD2pttibJbouNjCvMxpuc52oHNz64j5LAUCq+DPPiQaORJtwvRe7fWc4oFZZ
+         eVrxs8JfMYotWSu034M85yEiVKYdPYaDYu0RG4zzgrUxiqfoGu46QLwjwJ8vt6WS5RGy
+         7h8D00YShV/ZSOX6iOgp5d7U5Ypa/5pX82JY6JntmgdXuH/xqha00wgnxaYFAZ30zwHB
+         7v21e/7UvJqoEfvG59E58KNp8sBaxKlTtfIsi+Jun3Ank1KlaHGlWUazH8kzeeVLZ2Al
+         B3oxbOK6qU0GiAXolAltK12kezTU1GIEkjuh6EBLvXmKTADY8344Hy7CQpCdISplqEhr
+         x2hQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rob91grYVz+W4Rsts/BRBwBcPUvGTLS1apCPTyI9lSfPbDzJG9kgN4j1vEBHPuH+HnUuWA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2KUnB56jW1YeIlZiWOvefJ0UnRipA/8OAFKmspEJN+K6FqRKP
+	O6lo1fq98bcRmIfwaMX3oIOyRkRlxAFy/TITZmTRd1R9CCbrv2lqH7nVAlz6nJoAHbM=
+X-Gm-Gg: AR+sD13zZe80LEezrWByjfSzuhwzerOb3tOwgQvIAh3J6KVU0OD2UGOghZ44L6mKgJ+
+	OuBHHEh+SHw0NRsCMPTCk2pOXUZ5OD1FSz2e+SyCip3biuAUv5kIkzrQNgpFCAKzA+KiNscbCnh
+	Tvnp225rbmHbctfR64EPaDGD4yoBJeu5jRMIv05AaKkwJnK0Fa5+b3258R2qvYomZSIQbgDQzUW
+	BKUHkEglh1W/8gON3gVpoubPxnNp9Fn7AUvyvdCgXeIKnyQd0JIRyJVE2yTdLJeMHBFAQlwiYCe
+	PvIEe8B6nlaYaA2vkxIxiNTPKY+7EqHqSZEuYKgiu612a3eiSCfEDuhsp1mK0KMku7NaGXUU6RD
+	SvpTff9BsVdxsC52+gq1XzIJg9zPl4YAHMMZzw1vTh0yNMBu5HJwFcVo5vcpPpKGAXhNyDFNZ1M
+	RBlFrrA0/ERRQwLSY+u+mVVmjarI1MGvUPS+Tzibt+nBnI/flVtaeB8u5d1E/2xDKov9TlIQ==
+X-Received: by 2002:a05:690c:6a0c:b0:81c:b0ff:d664 with SMTP id 00721157ae682-81ef2760c0bmr48714397b3.18.1784558257287;
+        Mon, 20 Jul 2026 07:37:37 -0700 (PDT)
+Received: from com-79390 (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81ef4275090sm51078237b3.29.2026.07.20.07.37.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jul 2026 07:37:36 -0700 (PDT)
+Date: Mon, 20 Jul 2026 09:37:33 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
 Subject: Re: [PATCH] trace2: tolerate failed timestamp formatting
-In-Reply-To: <c8d443a5-3cfb-4752-8716-cf0d8fadd9d3@gmail.com> (Derrick
-	Stolee's message of "Sat, 18 Jul 2026 11:01:02 -0400")
+Message-ID: <al4yrXXoZiHLwSvE@com-79390>
 References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
-	<alpXW5U6sndZtgqV@com-79390>
-	<c8d443a5-3cfb-4752-8716-cf0d8fadd9d3@gmail.com>
-Date: Mon, 20 Jul 2026 07:29:51 -0700
-Message-ID: <xmqqzezlhgyo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <alpXW5U6sndZtgqV@com-79390>
+ <c8d443a5-3cfb-4752-8716-cf0d8fadd9d3@gmail.com>
+ <xmqqzezlhgyo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,33 +75,28 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzezlhgyo.fsf@gitster.g>
 
-Derrick Stolee <stolee@gmail.com> writes:
-
->> Would it make more sense to fix the xsnprintf()/libintl boundary and
->> treat Trace2 reentrancy separately? I still can't explain why the
->> allocation failed, so there may be another GfW-specific piece I’m
->> missing.
+On Mon, Jul 20, 2026 at 07:29:51AM -0700, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 >
-> I think that your suggested change has merits and should be pursued.
-> I'll explore it a bit to confirm.
+> >> Would it make more sense to fix the xsnprintf()/libintl boundary and
+> >> treat Trace2 reentrancy separately? I still can't explain why the
+> >> allocation failed, so there may be another GfW-specific piece I’m
+> >> missing.
+> >
+> > I think that your suggested change has merits and should be pursued.
+> > I'll explore it a bit to confirm.
+>
+> That band-aid may be a good idea, but I would prefer not to see the
+> conditional in a common source file like 'wrapper.c'.  Somewhere
+> MinGW-specific would be more appropriate, would it not?
 
-That band-aid may be a good idea, but I would prefer not to see the
-conditional in a common source file like 'wrapper.c'.  Somewhere
-MinGW-specific would be more appropriate, would it not?
+Yeah, to be clear, I do not think that putting the '#define' here in
+'wrapper.c' is appropriate, and included it in my original email only to
+demonstrate the shape of the proposed solution.
 
-> The other justification I'd like to make in my patch is that the
-> xsnprintf() calls die() and the trace2 machinery should be die()-free
-> whenever possible. Solving both possible causes is likely the right
-> long-term approach.
-
-That is indeed worth considering.
-
-You mention a few calls to xstrdup() that can potentially abort, and
-I agree that anything that triggers malloc() and notices that we are
-out of memory can probably do little better than to die.  But are
-there other operations that may cause us to exit, even though we are
-not in an unrecoverable state (such as an out-of-memory condition)?
-
-Thanks.
+Thanks,
+Taylor
