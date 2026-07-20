@@ -1,43 +1,77 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D783D668C
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 09:42:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6B130566F
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 09:52:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784540549; cv=none; b=FtM+ar3Lxj54f6JQ3/DbZd7PJ3MVyMiJhX2ZSYtTBtwetBc6YSjLm1EwWLzysBST2ez3zW6vd4vS04w4UD1FOCof3gOZecR+BINSBjjRNyuo+DiOXG1mcPdRruUrkS7J6nXhG2SvvDmcELQCZ7E/cR/NyJopt1q4NQw8yNeKWtI=
+	t=1784541142; cv=none; b=nPNIlexq459jP/kgunY1ZnFUhzDuHrmXEg7mho8v5NcSN88ilIgBtM8JyPtnXBKHU0ScCw5hh5kA1D1+Id1CyG+xsSxJ2Wq1tsyUWcbLuMw9xBzqIbiHDqmzWo5BHvnlVtqp3YveFJL2EoOXpqQpdLNWk48jYeoqVxUxnpSUd5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784540549; c=relaxed/simple;
-	bh=/SGdhPDFu4kGHXIQEANWsjFGVd8imD14vLp5Lnm26L0=;
+	s=arc-20240116; t=1784541142; c=relaxed/simple;
+	bh=w8kpbkUQ9bAz1pVqTJiuu+6c0Ql0O8ApH+ksUBELKjg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SWvDqTDvRrnmnHpQSMgbsD/+2fwlNSdskNCyXd2B+NvNnzbebftwvcTUjnfn4AMiOn340ZWm8YfS5ro2XwvNEDW7FJT23K6bBT+GNNj+i7CiifH2KutkbVG65txXSVvrTAVwASj0sqjjur5B3Ee3z6cMbKtUBU8wrEsf+uBZCLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dbpBoQ1X; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=BSc5ly+Giu3WatU10K/9IWbc3Gn+J3zyY6E7EubHzJETVnCjsBEU5zbzgyJBFM3I3nvO//s54eRBKH52WcDUS/rcFwdoZjiWHeCyKOCmnonBf86G4ekQU2EbRRXJ61Q++hGznIe1HK1Zwb6d7hr5LMkxT2VdUPGPpqcW4YusHoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cAkMA8PC; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dbpBoQ1X"
-Received: (qmail 82312 invoked by uid 106); 20 Jul 2026 09:42:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/SGdhPDFu4kGHXIQEANWsjFGVd8imD14vLp5Lnm26L0=; b=dbpBoQ1XD3m1RdOB6/ZEg3AWezLTy7XnUywxdq6JmQerggJXHiSp2M+MiO6eg70FWkDMsDKKLAtGHqri/VWlAjO+57tP1rGigN+EZgLko49M7S9GyT8Jsqe+I7R9N4N6oCpuMFb1lvO+Puxf+f4yapRhnf1X2di84DPkTZrOVjA61AAFdRGSJYPv5CS3E8LXZ8zQjAMs7WN6+d7EjbZKXhI+cz5yakJ9OgElVzUcI+HhPE8K6k+YKvnc4dsm8ohhip7w36K2n5s1YYpRvn8fpHoECzb9uERilwEG/8eBfrCOihSPJzx4BSqE+HSOPXIF40Fe7YeUgDy7/J9SkEar+g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 20 Jul 2026 09:42:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19853 invoked by uid 111); 20 Jul 2026 09:42:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Jul 2026 05:42:19 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 20 Jul 2026 05:42:18 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
-	Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH 3/4] last-modified: check pathspec against Bloom filter
- first
-Message-ID: <20260720094218.GA681989@coredump.intra.peff.net>
-References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
- <20260717-toon-speed-up-last-modified-v1-3-410418f18614@iotcl.com>
- <alq1Q55ezuN9ZI9j@com-79390>
- <20260718083757.GD22588@coredump.intra.peff.net>
- <alvulw2fk67duo8n@com-79390>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cAkMA8PC"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-698e5859a3cso7327090a12.0
+        for <git@vger.kernel.org>; Mon, 20 Jul 2026 02:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784541139; x=1785145939; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=M2rjuvrTLBGBmrRwQfRUKTn1kAvO203h8TAZ7W9gLVM=;
+        b=cAkMA8PC84QcXEgp3psvhUC+Y51l6d6ilPok1krr/zOKF4XDgV1YCxUWMKKCO4pqtf
+         bdrel3yJexTnNN2vUL2hn4XuTJA8fIIh46J+wwJL9G4lDROhraRNslF6VNfP2/F6Bs/l
+         GsV7fa1JYL3tWZBMbIRHq1aU0jtqMkiEXmj8aPsNyIGRW45QOQB+zZgu9G/V7MPRY4Bl
+         5zeUH6RzbSvadt21SeFn1XjOXLf+6/JEdaCzLGQrRJxkzNWUqHFFd6b9nkoAOgb/RNP1
+         sqOUPutyYL9pbsl5cgYBEZlANY+8440WZm4C9K2AuVPwlpqTp/TRxtVxyo1vQ4zcAnp0
+         lzPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784541139; x=1785145939;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=M2rjuvrTLBGBmrRwQfRUKTn1kAvO203h8TAZ7W9gLVM=;
+        b=VQdsLRBS5tesWYmZtRt2frzKTAaweAKwp7YQABEBscBzzVgabr6N6c7cveoJZG9ON3
+         EYWaGAKxQO/I8YmDUwlZ3AXREKAFacCzkHE0OIKrKUfW2QoPTCcAljxd3Uiwd5fb61Lg
+         7/y2RW+N4S9nR93C8OVrLCmKtfJe5MAvw8AiD/so0MeVRsKdhYMgKRyf1U954PiSgbtg
+         asbtqVTOcp8ektkN2mE+Q5zR5ThxSnTrXu86BlGLBpqhRd3nVXB3EePfe1yYarAiqzWw
+         virYKHLEzndvjq0Y414EN9laR6p+HDGZwY+NFjTNAWm9D2flSWhjqAx7swUQK8sODUJ/
+         hWaQ==
+X-Gm-Message-State: AOJu0YwaBiyO12gXT3ggITkPG0M+1s1B9jVQAQWFZM4Z977/Cyb07DiT
+	kGJPXFBxXOoQGd6Lx9p7lMhdX1x9NtCSHur8X0kv83xKuLQPU9q0UtQhlxCL+g==
+X-Gm-Gg: AfdE7cka4VdYWdK/g/y8UrvAFf061+X9eiwzQ7ToK5soIOoA5FgwksaJq6AyQYAemts
+	LyUobtMhH3G7muhsa6yN2uWGxCERYKV/2S3nhx53Ge/zbfb192DoJkG9u1YM2PGf+OkQOOrX62/
+	7J+eMmEc+VMQjsEMDu9e0RtopTBOepX2p0Ny9TgYkXLys3MNI2U5LX1ubMAkb8i6z314qcHP2/+
+	lUB+hJEg09jo2gLaIaJpt1iRf9lS7Hvrik0onS7EhM0Y/+aca6KrNFXDXpeapEB56k881XOmclR
+	oaszZoslFYo9ftShAmCEFzeoB7v3g9jMERta0dVVtg1THxP7tUt358QGXQpUH/lIacfLad/J8ZF
+	I1pauJWG4eYfka+NVOtsm85Iwrx1ExtjgrByVyZVplmXbibG40AYcNxETnJBEAji1O1KZUH8cYx
+	/sO3k6uQXoo92JU6SXHiTZ6i6q6OEU
+X-Received: by 2002:a05:6402:3788:b0:69e:2ca5:53bb with SMTP id 4fb4d7f45d1cf-69e64aa1432mr4831005a12.0.1784541138733;
+        Mon, 20 Jul 2026 02:52:18 -0700 (PDT)
+Received: from localhost (94-21-29-149.pool.digikabel.hu. [94.21.29.149])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69e6fef2640sm4437815a12.8.2026.07.20.02.52.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jul 2026 02:52:17 -0700 (PDT)
+Date: Mon, 20 Jul 2026 11:52:16 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org, ps@pks.im,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: Re: [PATCH v7 2/4] read-cache: pass 'repo' to 'ce_mode_from_stat()'
+Message-ID: <al3v0NVZJYS9SVZF@szeder.dev>
+References: <20260716084941.1101918-1-cat@malon.dev>
+ <20260717063559.1633567-1-cat@malon.dev>
+ <20260717063559.1633567-3-cat@malon.dev>
+ <alvNq8rXF/jofqUc@szeder.dev>
+ <8b9528b8-198b-489f-8f0e-fbd0c7d07b64@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,74 +80,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alvulw2fk67duo8n@com-79390>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8b9528b8-198b-489f-8f0e-fbd0c7d07b64@malon.dev>
 
-On Sat, Jul 18, 2026 at 04:22:31PM -0500, Taylor Blau wrote:
+On Mon, Jul 20, 2026 at 05:13:17PM +0800, Tian Yuchen wrote:
+> On 7/19/26 03:02, SZEDER Gábor wrote:
+> > On Fri, Jul 17, 2026 at 02:35:57PM +0800, Tian Yuchen wrote:
+> > > diff --git a/read-cache.h b/read-cache.h
+> > > index 043da1f1aa..94b8d3e547 100644
+> > > --- a/read-cache.h
+> > > +++ b/read-cache.h
+> > > @@ -4,15 +4,24 @@
+> > >   #include "read-cache-ll.h"
+> > >   #include "object.h"
+> > >   #include "pathspec.h"
+> > > +#include "environment.h"
+> > > -static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
+> > > +/*
+> > > + * Determine the appropriate index mode for a file based on its stat()
+> > > + * information and the existing cache entry (if any).
+> > > + *
+> > > + * This function handles degradation for filesystems that lack
+> > > + * symlink support or reliable executable bits.
+> > > + */
+> > > +static inline unsigned int ce_mode_from_stat(struct repository *repo,
+> > 
+> > This new parameter is not yet used in this function, which causes
+> > compilation errors in all source files which include "read-cache.h"
+> > when trying to build this commit using DEVELOPER=1, e.g.:
 
-> I think that we could feasibly get rid of "d" in the output in this
-> particular case within last-modified. As you note, the command is marked
-> EXPERIMENTAL for a reason, after all ;-).
+> > I think the new parameter should be marked as UNUSED in this patch,
+> > and then the UNUSED should be dropped in the next, where you start
+> > using the parameter.
+> > 
+> > > +					     const struct cache_entry *ce,
+> > >   					     unsigned int mode)
+> > >   {
+> > >   	extern int trust_executable_bit, has_symlinks;
+> > > -	if (!has_symlinks && S_ISREG(mode) &&
+> > > +	if (S_ISREG(mode) && !has_symlinks &&
+> > >   	    ce && S_ISLNK(ce->ce_mode))
+> > >   		return ce->ce_mode;
+> > > -	if (!trust_executable_bit && S_ISREG(mode)) {
+> > > +	if (S_ISREG(mode) && !trust_executable_bit) {
+> > >   		if (ce && S_ISREG(ce->ce_mode))
+> > >   			return ce->ce_mode;
+> > >   		return create_ce_mode(0666);
+> > > -- 
+> > > 2.43.0
+> > > 
 > 
-> If we wanted to do that, it should be straightforward to do. I think the
-> following (untested) patch would be sufficient:
-> 
-> --- 8< ---
-> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-> index adc7cd8c74..0f0c1d1d17 100644
-> --- a/builtin/last-modified.c
-> +++ b/builtin/last-modified.c
-> @@ -103,7 +103,7 @@ struct last_modified_callback_data {
->  };
-> 
->  static void add_path_from_diff(struct diff_queue_struct *q,
-> -			       struct diff_options *opt UNUSED, void *data)
-> +			       struct diff_options *opt, void *data)
->  {
->  	struct last_modified *lm = data;
-> 
-> @@ -112,6 +112,11 @@ static void add_path_from_diff(struct diff_queue_struct *q,
->  		struct last_modified_entry *ent;
->  		const char *path = p->two->path;
-> 
-> +		if (!match_pathspec(opt->repo->index, &opt->pathspec, path,
-> +				    strlen(path), 0, NULL,
-> +				    S_ISDIR(p->two->mode)))
-> +			continue;
-> +
+> But 'USUSED' cannot be used here since the corresponding header
+> (git-compat-util.h, or more specifically compat/posix.h) is not included.
 
-Yeah, that was exactly what I was thinking, but I wasn't sure if
-match_pathspec() was the right tool. I mean, obviously it sounds like it
-should be from the name, but I don't think it is actually what is used
-in tree-diffs! There we have tree-walk.c:do_match() which does some
-magic. And match_pathspec() is used more for dir.c callers.
+UNUSED _can_ be used here, because:
 
-I guess the two are supposed to be equivalent, or else we'd have weird
-discrepancies between commands. So maybe just a weird existing oddity
-that we don't need to worry about here.
+  - This is a header file, so it's not supposed to be compiled on its
+    own.
+  - All C source files including this header file must start with
+    including "git-compat-util.h", so by the time they include
+    "read-cache.h", the UNUSED macro is already defined.
 
-There is one other interesting corner case here. If I do this in
-git.git, for example:
-
-  git last-modified -t Documentation/technical/
-
-it shows an entry for Documentation/, which we both find weird. And the
-patch above would remove that. But it also shows an entry for
-Documentation/technical/, which _is_ within the pathspec and would still
-be shown after the patch above. That's OK for the optimization we're
-talking about (it would be part of the filter key), but I do find it
-still a little funny. The invocation above, at least as we used to use
-it as blame-tree at GitHub, is really about asking for the entries
-inside that directory, not the directory itself.
-
-Perhaps not worth worrying too much about, though. The caller can easily
-ignore the extra entry.
-
-> If, on the other hand, we wanted to retain "d" in the output (which I am
-> inclined to suggest is a bad idea), we could keep a list of paths which
-> are not covered by the given pathspec.
-
-Yeah, your analysis here makes sense, but I agree that it is not worth
-retaining "d". Besides reducing our ability to optimize, it is IMHO just
-plain confusing to have in the output.
-
--Peff
