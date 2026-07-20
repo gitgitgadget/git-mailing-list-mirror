@@ -1,142 +1,119 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2E84302E7
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 22:14:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DCE2AD00
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 22:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784585669; cv=none; b=JqEObeKV3iEZVeiyHajXcM3ZOHrMuLAqHHJibK6eVFf0yCdl14bV5uooYsSErU3nUy/AaLGxBAVYHOYAj/wSs75nTKmPRGuuXNS13HdTcywPtZbM8enbDDvCb2xQs8jDNqwVz9bUu7VXy10br4ORy2abEtXcJsQCtFnHGmrvhtU=
+	t=1784586685; cv=none; b=PYVXf9jbensR7EBp2TTT9Lp+eVPTSk30g6D9LsbdmLoY7R1v5jNWykLs0Upf1aF20oxC5VNdcGTJVx9txaX3D8sP5lyHPjCoiqYXWxoJfGcX98+Xwf1+oIwYSPmuggHP5/r2l3hrUjxdgu2e8gDh/rR6i8dPJ02mej8ndQ+yfYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784585669; c=relaxed/simple;
-	bh=vymIz1TvfSuLc74nmoCGEsSsTpuCQODVL/fQxdf52wI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EqRjZrkSl3EsXEUAb/6jvOIt0ZoxmP2qB0qrHi+lKHms5uqV24UQeHL0zPZicVN14Qmds7HHJdQJtTxC1KAd8bz2TrGyJbuSO69jH59nRCJ5h3H6v6rbMlDZr9Ujerrs9BBanFcDKTOUhsgU2xC4GjeWy8S8fToyduJ1+3Ppl4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qS7kfHL9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qkd4SDph; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784586685; c=relaxed/simple;
+	bh=bdjFTPK5g/O0cXkjjJN+tSLsrbO+nmaDwAMmTJeNBK4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HQq79KOl2ZraxZXRPbx30gZvpDg0lMZGNNy8xFVCHS2a2xGIVQXEE7a2ZOnDidHaSAgHJSHGJhcxjDyzvboWl41fuiNor3Ph13k0Lt4+1ENlF8U73wDQ/dtfa/I+csRpgPAf5hXjZsU3RGt8HYzIdksZ7RDVDAo3BKYOLSkye7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=E2VvsrfQ; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qS7kfHL9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qkd4SDph"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 083AC7A00FF;
-	Mon, 20 Jul 2026 18:14:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 20 Jul 2026 18:14:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784585666;
-	 x=1784672066; bh=YSGIZLRxwBqAE6LVqMW41hH6LzLzqxU71ebCHku0N+c=; b=
-	qS7kfHL9tdskoD4+zUhL+LwK2j1RsO3bUQHIzfMGIpl8wHNVx3V6SIvZXUbVRmcn
-	CKY1uI5fz+e8+yOtTgsZf+ObnoGASRtHMe0Zh7s0OuvX6OYuyJxjPbZm34IT18fW
-	zg7w5miqXC9imRobDO3K3N7sJzxTrvrJSxrkD/NsvJNi4pdY7JOu1qR5A8GOKK66
-	5+P12lA/TyFOyP5J55MBmW5jatULiDgYr81/z++VajewzhCDeY8uatLhdBOxAlM2
-	anRsOyW+WZTT4ZgHR8ZG3/+TFGsYy8hwrIeRauIQJqTTtwXdPydrk+xFlv7putYf
-	wjVByV7Pk/EvzTOmYqshQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784585666; x=
-	1784672066; bh=YSGIZLRxwBqAE6LVqMW41hH6LzLzqxU71ebCHku0N+c=; b=q
-	kd4SDphEN4wnhWlY21Udwo9OSIjIjTOXnovpOxfD7fC6Nxd/6dkqndOZ+gFYCZpS
-	t7/WaOM0YGJObaHYYzHMA6YetgzxUjXlMdzDIQMxeQ+/PYKoVh0RA/Vd3bxC6HN4
-	vLCdzBUV/yTvWglBQb0ht2B6sAfkng9eJY0guMEJpZRPK4BAcNcfbRmMipfUFxbg
-	wl1KdgSA0QUWXCDiVo2ikElO4jdjoQXzMaw716Zfd+eC4fVo6YNLpluor4kasKwe
-	jGx+aLLnL2BKqLfIjJvKYPegqFNm+GCoqiqoOHDsvdaXkoMiyz3M/fKGVjDwjvh7
-	cGtFtwvZ1y3DQF5e/B0bw==
-X-ME-Sender: <xms:wp1eajcSelZXku6CQj3cVGvzzMWl-dtwVvda1zHAhM5p754g8CW8qg>
-    <xme:wp1eauLglwgx-QoxFz4xr1mQ-mGc0qJ12MLvFHQQU8AKeIxTpF2dG-MJu39a-x3qd
-    wOwWtkcU1PoUu9nEBAapugasq4v-50P3l2Rq-AQjjaDq-pQ-X8y>
-X-ME-Received: <xmr:wp1eagz8jep4PK6UbFFJ4QNkd7U6VMeFfqIKKauFqCciT8SmoRZsY5pRyZ-qBBZKsmSaiAlH8vk6ysYpB5j_jayDnrHTn0ooyg>
-X-ME-Proxy-Cause: dmFkZTGNJRN1MAJIOh4VC547Thn+TNVrohJWo//tDUGTKIOsnAfZQKRpIh1SiOqgMdLj+t
-    gKEwCIsECmxKXaPh3CXdGJyQfeXQE+t0RT+or5s1MnLQpe5vmF/C86fKiyhwmXdGuXPSVZ
-    3Ne320GNDZS7M1HSnVkktnOVEI1WUZU/klGQqP0kitqYMrM6JwVL4TkQLUfEU4RpKMNodT
-    D5qoBGKirtxLiUBHTVqXG7H3jeEIAr2K3Uc9Y72K63NBZu3gKiuG2/xldmSUnqx/r4eWAx
-    hhD1qWaEONiwN79ml0t3Pp+zjVvOR2atznVKNvNIYjScbZcSqkX1B2EBdEhp3ALJQY4rac
-    BjpZ9rXbPOkAsdJV6/u1yF/JiaiojcAu6p+u8huIDhWVjL5Lrwzw4LGjiakzXLcDYrJnDO
-    nAJHGh8KZsfzOg9rKyR2zypxoVMp55dIOLCIozGxZ+tKuuKw//WEKRSP/UKxPCbUg1Dr/Z
-    BdPUgjjmJyYZnV13g6oc9yrG3koPl4Nd/a25UKjvn837LQ9nl+uuHcnGlkRIxTuRDxrcny
-    bAhjPhEIP0z0Gjfxpzra8nD1I6iDkQ7sOCdkyeicvwPKDUkCN9FJHhx3qbQf6peGumDLP2
-    dO4STerQo2uMWtjGUUWGeXXUuMsDu6KIKBEPnqJrjG7wUW5SWGJ/lN5xHEGQ
-X-ME-Proxy: <xmx:wp1eakvPmEPzblcAcafr0KDBPGd489ovfxhn9wb2z_sClhW9rFJQiw>
-    <xmx:wp1eajCheP73o4Zlz-eozxomV4pQmckeGkfbm8dUbWSzkejCul19_g>
-    <xmx:wp1eamGoOWp83v6jKSyJUlSbY56408112anyt253PJYFejkVGr1x5w>
-    <xmx:wp1eajAQ5tJOkvZzFxjSCwDM1JTsV5W55v4xHV4zK5M40PGmyTiR5A>
-    <xmx:wp1eavrjORjIMEa3KKgykS1U1Hjoh7koVWmxJgCvesPzFxvzmqxQ68UF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 18:14:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,
-  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Elijah Newren <newren@gmail.com>,  Derrick Stolee <stolee@gmail.com>,
-  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
- directory
-In-Reply-To: <2d455ecf-972e-e3ce-54bc-683050c04282@gmx.de> (Johannes
-	Schindelin's message of "Mon, 20 Jul 2026 16:24:00 +0200 (CEST)")
-References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
-	<20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
-	<alR9GDNTbdjWB4dq@szeder.dev>
-	<2d455ecf-972e-e3ce-54bc-683050c04282@gmx.de>
-Date: Mon, 20 Jul 2026 15:14:24 -0700
-Message-ID: <xmqqjyqpb96n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="E2VvsrfQ"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-907ae87ebfcso347316d6.0
+        for <git@vger.kernel.org>; Mon, 20 Jul 2026 15:31:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1784586683; x=1785191483; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=nEU4sFVB55zstEoTdn1EDIgs82vBe3a/ZY1lxPovKD4=;
+        b=E2VvsrfQf5AxklNBC6cUwCqL/4q2ce0amma8mtmdSpnmPhalZO00SKf6M0avSUGxxG
+         UMYz9SmJftlcVyU4y4SX3fAgydcHtNMRVyGqcmJZjmAut7bzLtlgAEcFY5dBp6PAZvy0
+         d0l2ORilNGF70Xn49Qg3L75vGn5RGA2Zh/xiY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784586683; x=1785191483;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=nEU4sFVB55zstEoTdn1EDIgs82vBe3a/ZY1lxPovKD4=;
+        b=RH0PaKmW0kJflL71ZInPxnWsXzo18lqGn9rEHkbcAhbTnRL+qlE+g8BH+QqKoPk7Uj
+         kN9BDAe90r8TFbLjgf1p1iifBv8YNdqQbqBei+9pYB0gAYqVUndm34lSoHEKebrWRDGy
+         4D/7aMyb11D6laUGOL1Bilm2CX+wLEgirCC4Tf79HcTRR5SOzttpTuvIb4+Wg9fXqhoV
+         tiE9fcoQvIEg0z+DFlIx1QY+2kfET6ONhG95RVaukdEaHE+cGbT98DMq0yoX/vOLX6xz
+         80KbKkLEIYKsMb6P3u5LhhqDlOxAJAR2Vnnwxo85AclM4oMua6YyjXKoBNUYGI8IZ0N1
+         X6eQ==
+X-Gm-Message-State: AOJu0YwRQvhDE2/Pz/U+n6eg6XOJ1++ki/o1/k+gmSF6miRxqaWIO+P0
+	C9Mc1bCoVI2JK+XFsG5cVp4iD30aUS8/uprw9zl56eCxDUJDNQnQeVLv4PKTQmfpP/Hm2iH7nQS
+	6Zljl
+X-Gm-Gg: AfdE7cnR0UhqG4NH284xoO5ToDmp/d9QGXCURFMQUc/QFyOnl7I6m8FIvnSh9Eon+Mf
+	vjpoxGa1VDNhA4DYVTn3i5e9QsDDidN3LEBEgFPRlY3CdOhzoezSqsa1yh6foaOrH5yL2Pz01jm
+	/G3AnmqVd6VmquZcHfWTcpDCuVywtXhDUKa7LA/3psBCXe6+Jd1+l/R6oZuEdDTytLfM82iffFD
+	IksYTunhp+ePdo/DBHRsrAB9H0eMlmLKoPlejvRG38w/Uoep3/R0sTgiOwwdazB9EfZTnGLoDhH
+	4yJMdLeOg7noxk1/cdfoSYwQ1XYRfKVYpD6V2jqNptF3jQaUWCn+pFDNz4189hsslrYqasN+NDv
+	T3OYNUSd1HMgSCXOSkHZY+4w4d77Qks4YghJtGXsD8WpKP9Nv0LHIkRmw9SOe7kdGjwYVZJDnCr
+	zBaRoGXQzw5riDYq4IMrQSdqHqevhL1mqg34FjL+yWlZY9/WA3t8Uq1Wt4rdbfmgfZebVw8mD77
+	t34e/Y=
+X-Received: by 2002:ac8:5852:0:b0:51a:8d32:f796 with SMTP id d75a77b69052e-5266f81609fmr7452411cf.0.1784586682958;
+        Mon, 20 Jul 2026 15:31:22 -0700 (PDT)
+Received: from com-76773.corp.openai.org ([209.249.37.132])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5214d095ed4sm81232211cf.10.2026.07.20.15.31.19
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 20 Jul 2026 15:31:21 -0700 (PDT)
+From: tnyman@openai.com
+To: git@vger.kernel.org
+Cc: Ted Nyman <tnyman@openai.com>,
+	Derrick Stolee <stolee@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	Jeff King <peff@peff.net>,
+	Victoria Dye <vdye@github.com>
+Subject: [PATCH 0/2] stash: avoid sparse-index expansion for in-cone paths
+Date: Mon, 20 Jul 2026 15:31:19 -0700
+Message-ID: <20260720223118.62821-4-tnyman@openai.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Ted Nyman <tnyman@openai.com>
 
->> > My own (obviously subjective and biased) take is that the tradeoff is
->> > worth it, as these issues are a one-time cost while the benefits to
->> > discoverability will be permanent.
->> 
->> It is not a one-time cost, but will be an ongoing burden.
->
-> It is maybe drawn-out, but it is a one-time cost. It's not like we're
-> going to mass-rename source files to move them to `lib/` every two weeks
-> from now on.
+`git stash push -- <pathspec>` expands a sparse index before checking
+whether the pathspec matches a tracked path. A pathspec wholly inside
+the sparse-checkout cone cannot match part of a sparse-directory entry,
+so that expansion needlessly makes the command proportional to the full
+index size.
 
-Since the topic was posted, I have dealt with the fallout from it at
-least twice a day (which, when we are lucky, is not a huge time
-sink, as I have mostly automated it by now), and again every time a
-new topic is posted that touches the moved files in substantial ways
-or adds new files that ought to be moved.  The latter is the most
-time-consuming to handle.  This will continue until all contemporary
-topics, as well as the topic in question, graduate.
+The first patch fixes the pathspec helper to use the parsed, prefixed
+path consistently. The existing code can read past the end of the
+unprefixed path for a wildcard passed to `git rm` or `git reset` from a
+subdirectory; AddressSanitizer reports a heap-buffer-overflow in that
+case.
 
-If that is not an ongoing burden, I do not know what is.
+The second patch uses the helper in `git stash push`, following the same
+approach as bcf96cfca6 ("rm: expand the index only when necessary",
+2022-08-07). It adds compatibility coverage for the supported pathspec
+forms and a path-limited stash case to p2000.
 
-> And this statement neglects to acknowledge that the lack of clean
-> organization of source code files is an ongoing burden _right now_, and
-> would be at least partially addressed by the move.
+On a cone-mode repository with 349,525 tracked paths and 49 sparse-index
+entries, the best of three runs was:
 
-At least, Gábor does not seem to think that the lack of clean
-organization is so severe as to warrant a massive code churn like
-this.
+  before: 18.87s (2.93s user + 15.62s system), 4 expansions
+  after:   0.06s (0.01s user +  0.02s system), 0 expansions
 
-I value stability much more than prettiness.  If we had started out
-with almost nothing at the root level and almost everything in
-either 'lib' or 'builtin', I would have strongly preferred to keep
-that structure.  But since we have been using a layout that has all
-built-in commands in 'builtin', with subsystems like 'refs' and
-'odb' in their own directories, and everything else at the root
-level, I would prefer to keep that organization until a substantial
-subsystem update wants to carve out a new location for itself, just
-as past updates to create 'builtin', 'refs', and 'odb' did.
+A full-index control was unchanged (1.62s before, 1.65s after).
 
-Compared to those past moves, the proposed change looks more like
-churn for the sake of moving things around, without achieving any
-real organizational improvement.
+The series is based on 48bbf81c29 ("The 5th batch", 2026-07-19), the
+current master. Focused sparse-index, stash, pathspec, rm, reset,
+SHA-256, and unit-test coverage passes. Clang, GCC, and sanitizer
+builds also pass.
 
-I must say that I, too, remain skeptical.
+Ted Nyman (2):
+  pathspec: use match for sparse-index expansion checks
+  stash: avoid sparse-index expansion for in-cone paths
+
+ builtin/stash.c                          |  4 +-
+ pathspec.c                               | 12 ++---
+ t/perf/p2000-sparse-operations.sh        |  1 +
+ t/t1092-sparse-checkout-compatibility.sh | 62 ++++++++++++++++++++++++
+ 4 files changed, 71 insertions(+), 8 deletions(-)
+
+
+base-commit: 48bbf81c29ca9a4479ec7850fe206518682cdb2f
