@@ -1,206 +1,125 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713583E9F93
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 22:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8731B43B3D0
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 22:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784586850; cv=none; b=gX5GJjS8BAOMrECYJ8qM91WhSNzSm05jzFMr2w3qWPbFMgjEiZjSCOvvEbfc2kB79XCMIXjtF/dqmj9D5PexIRTuWzPyu1aPrfJAKH1kd4B4iUggwNbjZAIpo+sG9N8/nPgho6cBjkVyQkVT6AeEih8RictPficyh4g8OmUiH70=
+	t=1784587435; cv=none; b=CYG7nrO8Q7CH2qgYocudYOJRUA10W5C0aUYpobCGrPEKl0LKiRirR0gf5W2sXlOKhYLbj2bnRy6danhhF54Hng/f2gOI15RzFu6uiUxa5axMo7J9IaOXWNGwOyBI1l3mwtqo8ooRoanyOdngEI8mocSGULROEV37mJygoObAUqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784586850; c=relaxed/simple;
-	bh=dDh6YYMsuFEPhSx7JmcXrxh7UYtUQEKywA5MGeajkBI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liMb+x1Vkqoti3GjIe0B5dwRXJ5sUYZKW5n3JkvZKVxRrwFxJnyyTUQSA6JCIGBnfrVFyWUKldOyngZQvZ1j9JgfRcsiXbwb6pRKEtQf7icQzKJtsP4zndU4lqC+2Funb/erVyrQYY4/2pAsakscVAbcqSQ86OsHtRavtUSebww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=bOMaXRIl; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1784587435; c=relaxed/simple;
+	bh=s5/LiXoD5/la0XcAoM+dvtt47/jycSgT7H4atyhq0RQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IYfh3yKurfEVm+dZ+gspgZces++wa98JyvtAxftmu99+768Dr2Q9YPASRfQTFAX/XonfmKj6Bp75AT3T02UiYYOfsp1OiIybU3HadfvHjeDR6n5Bvvj9XSXExWQ9ZjiQmHiN+197GOS3aoSYgeG8Y/sqXBbzPtE5S+MEvWb1fFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mGTJbe19; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W6KnLxue; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="bOMaXRIl"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-92ef5f7fadbso106244085a.2
-        for <git@vger.kernel.org>; Mon, 20 Jul 2026 15:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1784586845; x=1785191645; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=970JYqXaOH3h19Qa0O6W85iodT7umhIahN9uWWq2Jro=;
-        b=bOMaXRIljOtLr0M8E8BnjBU6+Rd8pejNX60Y5xzry083zD8yWEAZN5i03D40m3IKBA
-         UbM8hHgrnd/pxxSgyGmuq6zDjgXZSIpGkhg5TVCvSiqkRhrd3m8ydD0xEfb+sPxoJ+jt
-         I8sWS+bqu01lr0M0C2KYTAuM+35rysrPrw4N4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784586845; x=1785191645;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=970JYqXaOH3h19Qa0O6W85iodT7umhIahN9uWWq2Jro=;
-        b=gzqjivt1N7T5m2XUV3EVtUihKk4+ZATqQCSJ8RgMyFAImscTPXQ8XpRYfLSi4nXkmm
-         pVn7Zadg9GocwvgN/rJLPWfWqbR7hKSUAbGK/NVonPblgNTYgLNVcwY5HupXMohc6Bx0
-         5og2mAPL8YNgsfss01RI4HzDvSqO5A7xovmSRHKhVsMZVClUlz513lrWPo5Yz7y4lZkZ
-         3C4++v1aFMjPfykG1aiLQ/fwoMlmXTzUsKQYV01NEH90FB6CLfEOWmrUQ82dzWtJ3aqO
-         7F4s29xtfJYesDg8LrDQpGEOUhWTW1XlYeEmMzO9ASTcvT+BqYt4cOi7qg9ph9tfPjXQ
-         gYCQ==
-X-Gm-Message-State: AOJu0Yw7MwpbZOPAituWQxVYwjlmzjJmNDheG/7unN0KWX048ZIPnTIU
-	T4rVS5PG0dOcArgIBYo47uYEjL54aeEqmKJe+Cx05w8Kdby4WjASGRlhBZv5+fyksOxOs4huPzL
-	BD4jcjPY=
-X-Gm-Gg: AfdE7cncfC3xNChSjT2HJ8HIWUgio6cfhirZsfY6GFJoR9x2VOQWUoTWOukGZT9p86+
-	eaorpuE4AC5se7AoiVEeXgBntUrboeKQdls/0QgMfp6O54KS7paerHQRym7d0a8hZDLLh4cHvUk
-	aPOstwE0ledZIVesSWJLHJDLdjx3Qe50Hm4Nj22X/wC9DnQZ8MFrnrMvI1Nx70e7clsGaNuSDbU
-	+vDHHCsDC8+R0XEFyVQjcjnwG/WUCM6jw0X0cY5or9FI9X0Z6h8+6/UwPI+ky3pXb9FqYVzakuX
-	8AbrQ+gTjbOEThf2wiOs7efOBWzGcbp57S36RMUdQFO0jTXkFc4IHO1/kmbrM7CC14WL3/pJoKZ
-	TSIChmZnxMtLNQQIO7u4205srsOKWEHKG7BpBCKQZUqIz0ENlCxGxuXWd21YyV1DAU/WAJarM4x
-	wOR2KUefrnTr047V8bjSuCstF4tGsXfm0b/d6BGfKyZ1nWCxX+ijZYrgp5SWgJrb8QqNBnOd85O
-	Oiksig=
-X-Received: by 2002:a05:620a:2806:b0:915:7c1a:1388 with SMTP id af79cd13be357-930e7086dccmr79146785a.5.1784586845418;
-        Mon, 20 Jul 2026 15:34:05 -0700 (PDT)
-Received: from com-76773.corp.openai.org ([209.249.37.132])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b542dd27sm972590185a.29.2026.07.20.15.34.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 20 Jul 2026 15:34:05 -0700 (PDT)
-From: Ted Nyman <tnyman@openai.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	me@ttaylorr.com,
-	peff@peff.net,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	sandals@crustytoothpaste.net,
-	avarab@gmail.com
-Subject: [PATCH v2 2/2] fetch-pack: accept "pack" output for packfile URIs
-Date: Mon, 20 Jul 2026 15:34:00 -0700
-Message-ID: <9b41d4ddb38a5d7d4cc84f5626d6a031155f8f05.1784582665.git.tnyman@openai.com>
-X-Mailer: git-send-email 2.55.0.125.g9b41d4ddb3
-In-Reply-To: <cover.1784582665.git.tnyman@openai.com>
-References: <cover.1783982021.git.tnyman@openai.com> <cover.1784582665.git.tnyman@openai.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mGTJbe19";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W6KnLxue"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 654677A0064;
+	Mon, 20 Jul 2026 18:43:52 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 20 Jul 2026 18:43:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784587432; x=1784673832; bh=7mqd/9yk0K
+	NZJUWKnSC3imqVWnW5co9KANqgLa/Eyjs=; b=mGTJbe19yikTvcnF57e0nkI3z4
+	pOoPC6u/iDj+o0Oh/Odgt4H7nH5uCd48quGQqpStjNl2W/LEBulQHItX4G2cFsho
+	Ne2tzP8JGwAqjxTbfNs/r/0LLmA11e8f8Zc1QWbGC22/V4IMLZNxj1SkIX3ehdwV
+	xk1MDOfnd/5YKDQ/lS2YCytLBaZXh+M5dyLFafr3bx3d29TlN3kEa00ugxAQ3aBy
+	FXU6sI0LccQylqOQl6gYqMPtMPDC38Bh8NFc4QY3TousTYEHr8UMmHFtiGVF7hea
+	SposHVWH2ineJA4iEMWCPf+BGRlbjzuf8DTJz2nfxF+CnIGqmaaD9/ltLlqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784587432; x=1784673832; bh=7mqd/9yk0KNZJUWKnSC3imqVWnW5co9KANq
+	gLa/Eyjs=; b=W6KnLxuexqjiYhuJRZCn//1bnpr1rL60kuLApxWgW/trjevUgI6
+	2mbTiPIhJ1DhedzZlFUBzKCkjm0QJW8m8QHsk5JkA9u4VMqnBV34XfuXhbCH42rw
+	48o4V+MfHU5zmvZE+j1g2JQWvbIWRMOeGzsWdJG3nrNW5Z6Aed7jsdXI63Uug4Ef
+	bAxGJpJdyZ1Vfzu5ff+1oZrkdYp5HuJHzIyW3HRA/u7QfcwHpJR+iwuAD6qurftr
+	RywKHsWScZRlsIdG9utLwz7jcmsatnWp08qljTZ8987YuwStA2+O4VhGvT98jIS5
+	J0AAeFIEYpNBaQI4ac/RAk8ylV4oMyrxo0A==
+X-ME-Sender: <xms:p6ReavUFJvWunb9IUniYuwzOOnTiiZGMk6Crm7dep6QDOOtU76P1Ag>
+    <xme:p6Reashc84tGEwlWbFi8IY83kKaHMTIuaMmStPc_t9V8tPo97DoXEBDja5CW4S___
+    9srQ_Uy22HDzlSTT6m9Vp-RlH6VYKH4LM-T61_6jpovzIstU_dY>
+X-ME-Received: <xmr:p6Reavpg2rXuS9TcEA8z-8wsWrCSoRPnoOCBjzzMrMbU5SDq4OZAI7Zg_Nzy3TgRCz7B-xBd5HEC9fH_OYjWFM8jSP1YcXSv2Q>
+X-ME-Proxy-Cause: dmFkZTE5ggHXx0dj5dcvo5riDXswTLt5lfg+JURjdnS/Fp1UCVgRHX5vLB/5uOuEYT1DIv
+    cP+QMgRxjRqYHSlKYEEqx+q5nJxAlTSXNOSxXrENQ4aKvO54uw3WB7QHNpj9Pt3LRok78Q
+    T4qQ/wz7Lj8eB85JNrQ0CqHnpiwKiJ2fgoSCfF2OBJZnkbDCFH88dfec5np4SPubW7Rokm
+    26R2h9aKDySi7HXPznGagIU5PgLoj0EXjotjUY1bDX4nFaUhAikKJSEhYS4NZiVuUXWIf7
+    4D3ZUZblYPNPH0Q+oQCWoRC+r3MRQY2K459RmD9ttRUjd2woHgYd9vpIXAWq0qwnVE4shE
+    A+FCoK7mtk8wCxrcqBNOskh522+F09bL+PzGU8bCXlnWOWG+pL+Dx74oVZ4KjRt0MrHUn6
+    HTtTnhE8TWD/1/NcIQZ/DFdg26yPhUSAJJ5bTDXtqT0Su2FSgnPUCteYSPveZQYMExnofE
+    Q0DxXA9Ho7snFzCjeAenNHMjcFgra5WFbThKvU3m7fEhgFTX7PxaFJy/d1BjkFWGpJ6oGT
+    QLRnlJbQ+TDtjN3dhD1lf7kk3rqL16u2s9SuOtWWSJykuzGrP9hTiw7hFkTgn8IQw5x9yM
+    Bl/R1ArZJRionOnVbazGRtDnNkqYBf/0yRGi1tBs3yupyeD6vGu+YyTzPpoA
+X-ME-Proxy: <xmx:p6ReaqGcNeWxoVgANAwfffN0G4b-ROjvY3I5ECBbXUSyJM1fYwj_Gg>
+    <xmx:p6Reas5S_43PVw-v6paDtnm2ZpShVYoPv78Mx-v2EnaVPo49oAV_MA>
+    <xmx:p6Reaqc8z0vdWc_oU1N38383TRMok1IdZ97d-kr8FI1ltotAbZJ14Q>
+    <xmx:p6Reav4VVae_XMRy4i5iMiBUf-2XuTHKvfg03u-Ystu0SSoSKa8IkQ>
+    <xmx:qKReauAL5rE3wI7FTUFYyzQdVRyLyk53BGOrU4qGpp9YB3eIKt7-Y_5Y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Jul 2026 18:43:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Elijah Newren
+ <newren@gmail.com>,  Derrick Stolee <stolee@gmail.com>,  SZEDER
+ =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
+ directory
+In-Reply-To: <al6Yz_QMlyU1GETv@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Mon, 20 Jul 2026 21:53:20 +0000")
+References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
+	<20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
+	<al6Yz_QMlyU1GETv@fruit.crustytoothpaste.net>
+Date: Mon, 20 Jul 2026 15:43:50 -0700
+Message-ID: <xmqqqzkx9t95.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When index-pack finds an existing keep file it reports pack rather than
-keep. Accept either result from http-fetch, and only register a keep
-lockfile when this fetch created it.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Read the pack/keep prefix and hash without consuming any following fsck
-output, validate the reported pack hash against the advertised hash, and
-exercise a packfile URI fetch with a pre-existing keep file.
+> I would very much welcome better rename support and I'm sure the
+> community would as well.  If we can incentivize ourselves to step up and
+> implement that, I'm all for it.
 
-Signed-off-by: Ted Nyman <tnyman@openai.com>
----
- fetch-pack.c           | 33 ++++++++++++++++++---------------
- t/t5702-protocol-v2.sh | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 15 deletions(-)
+I would welcome such an effort.  It is, however, a different story
+to move things simply because we want to move them, without a
+concrete need or strategy to do so.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 120e01f3cf..509b91527b 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1887,9 +1887,10 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 	}
- 
- 	for (i = 0; i < packfile_uris.nr; i++) {
-+		bool created_keep;
- 		int j;
- 		struct child_process cmd = CHILD_PROCESS_INIT;
--		char packname[GIT_MAX_HEXSZ + 1];
-+		char packhash[GIT_MAX_HEXSZ + 1];
- 		const char *uri = packfile_uris.items[i].string +
- 			the_hash_algo->hexsz + 1;
- 
-@@ -1907,16 +1908,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		if (start_command(&cmd))
- 			die("fetch-pack: unable to spawn http-fetch");
- 
--		if (read_in_full(cmd.out, packname, 5) < 0 ||
--		    memcmp(packname, "keep\t", 5))
--			die("fetch-pack: expected keep then TAB at start of http-fetch output");
-+		if (read_in_full(cmd.out, packhash, 5) != 5 ||
-+		    (memcmp(packhash, "keep\t", 5) &&
-+		     memcmp(packhash, "pack\t", 5)))
-+			die("fetch-pack: expected pack or keep then TAB at start of http-fetch output");
-+		created_keep = !memcmp(packhash, "keep\t", 5);
- 
--		if (read_in_full(cmd.out, packname,
--				 the_hash_algo->hexsz + 1) < 0 ||
--		    packname[the_hash_algo->hexsz] != '\n')
--			die("fetch-pack: expected hash then LF at end of http-fetch output");
--
--		packname[the_hash_algo->hexsz] = '\0';
-+		if (read_in_full(cmd.out, packhash,
-+				 the_hash_algo->hexsz + 1) != the_hash_algo->hexsz + 1 ||
-+		    packhash[the_hash_algo->hexsz] != '\n')
-+			die("fetch-pack: expected hash then LF in http-fetch output");
-+		packhash[the_hash_algo->hexsz] = '\0';
- 
- 		parse_gitmodules_oids(cmd.out, &fsck_options.gitmodules_found);
- 
-@@ -1925,16 +1927,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		if (finish_command(&cmd))
- 			die("fetch-pack: unable to finish http-fetch");
- 
--		if (memcmp(packfile_uris.items[i].string, packname,
-+		if (memcmp(packfile_uris.items[i].string, packhash,
- 			   the_hash_algo->hexsz))
- 			die("fetch-pack: pack downloaded from %s does not match expected hash %.*s",
- 			    uri, (int) the_hash_algo->hexsz,
- 			    packfile_uris.items[i].string);
- 
--		string_list_append_nodup(pack_lockfiles,
--					 xstrfmt("%s/pack/pack-%s.keep",
--						 repo_get_object_directory(the_repository),
--						 packname));
-+		if (created_keep)
-+			string_list_append_nodup(pack_lockfiles,
-+						 xstrfmt("%s/pack/pack-%s.keep",
-+							 repo_get_object_directory(the_repository),
-+							 packhash));
- 	}
- 	string_list_clear(&packfile_uris, 0);
- 	strvec_clear(&index_pack_args);
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 9f6cf4142d..1861eb7d7c 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1291,6 +1291,37 @@ test_expect_success 'packfile URIs with fetch instead of clone' '
- 		fetch "$HTTPD_URL/smart/http_parent"
- '
- 
-+test_expect_success 'packfile URI preserves an existing keep file' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	rm -rf "$P" http_child keep.expect &&
-+
-+	git init "$P" &&
-+	git -C "$P" config uploadpack.allowsidebandall true &&
-+
-+	echo my-blob >"$P/my-blob" &&
-+	git -C "$P" add my-blob &&
-+	git -C "$P" commit -m x &&
-+	configure_exclusion "$P" my-blob >h &&
-+
-+	git init http_child &&
-+	packhash=$(cat packh) &&
-+	keep="http_child/.git/objects/pack/pack-$packhash.keep" &&
-+	echo pre-existing >"$keep" &&
-+	cp "$keep" keep.expect &&
-+
-+	GIT_TEST_SIDEBAND_ALL=1 \
-+	git -C http_child -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		fetch "$HTTPD_URL/smart/http_parent" &&
-+
-+	test_path_is_file \
-+		"http_child/.git/objects/pack/pack-$packhash.pack" &&
-+	test_path_is_file \
-+		"http_child/.git/objects/pack/pack-$packhash.idx" &&
-+	test_cmp keep.expect "$keep" &&
-+	git -C http_child cat-file -e "$(cat h)"
-+'
-+
- test_expect_success 'fetching with valid packfile URI but invalid hash fails' '
- 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
- 	rm -rf "$P" http_child log &&
--- 
-2.55.0.125.g9b41d4ddb3
+In any case, the root level of the 'lib/' directory introduced by
+the 'ps/libgit-in-subdir' topic is full of source files, with only a
+small number of focused subdirectories like 'odb/', 'refs/', and
+'ewah/' mixed in to house specific subsystems.  This merely shifts
+the clutter one level down without resolving it.
 
+I would rather see a structure where each subsystem-like group
+carves out its own directory.
+
+I do not particularly care whether such a directory lives at the
+root level or inside 'lib/'.  But if we were to establish a sensible
+grouping, I suspect we would not need a 'lib/' directory solely to
+house the 'refs/' and 'odb/' subdirectories.  Instead, it would be
+sufficiently clean to have 'refs/', 'odb/', and other subsystem
+directories directly under the root level.
+
+I do not think we want to do this in a single large change.  If we
+were to move everything to 'lib/' only to then need to further group
+them into subdirectories of 'lib/', it would subject us to multiple
+rounds of disruption.  I suspect it would be far less disruptive if
+we migrated one subsystem at a time, directly to a new directory
+immediately below the root level.
