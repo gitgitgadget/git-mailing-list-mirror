@@ -1,185 +1,104 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF93612F4
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 18:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784573380; cv=none; b=COeNVUOSJOBqEj0xAp5caWnUMRzlrURf8WJTfwG9eDH9OOHj4oMzZpxAWOF78sv3thPhiYhTQ47NCt5tz3EvvbkFq9tyvV9dZvQcitl/jxaPRjj680z4vcJYEpe7muNN/3rO+wC08vhTGuyfwPJLuESREB74UmEdLNSrdT0t8qQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784573380; c=relaxed/simple;
-	bh=8Kl+qtDRuASM5PLK+cRPEd34r/FfE5APf79vHWTmM3w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NAHgELfOgq88BPcuwrYJBkx9XGtt6gXms2UMuanOHyrJdx3+bopuNAuxIPcICE/VcMMFs2az2dCPWlNwOONI3gkt8N7+UEDnIDLAHqi46Z9lb63ZBXeIZJZRo5aE4Rxq2MyrTEY2qmrcpgwNWPF4sQToxyWNps95d3iEX9uKEVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pnnnmqhr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PQ8PIJOP; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88731352C34
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 19:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784577428; cv=pass; b=gNOzzivHq1GlY0ECiXvK8LQsRhW+D7eGzdIlxwXbJ9cmgQUrWK226DpkAoRdoEdZOAaIWsw3a0YZiQKAkgf9bp9bcb4GF1kIh9wlMRrqVVjhIv32KNR8mIc6xslqOlQS9rzCFIfchU5q+9WkIobzGPyi5hNga5tox2rbWbe5D9I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784577428; c=relaxed/simple;
+	bh=a7T/MGfzanhZMFReI8YSvFFHS4AeP/x85gZXIc/m19w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JZpxnFNwL3fBYcGn9jhXQB32StGzJnGE8EX0mS+YgZ0i3RIUkUuoSElRiPmpFFwHqlBVq1kiGjIW6DNZE4/8bjwKw0kbTbiAWBhRXF9DpagQYDVvD01xuwrsCpn+Vx2mzm4lt2cTTnLfQvldAZubc4hFFxQZmtk+5NCRqIk8yd4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SpVfJC6u; arc=pass smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pnnnmqhr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PQ8PIJOP"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 760517A00EB;
-	Mon, 20 Jul 2026 14:49:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 20 Jul 2026 14:49:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784573377; x=1784659777; bh=CKsZARqybF
-	Qt/AnNfeKqY3gynEjJUfMAGxKNe7+To1I=; b=pnnnmqhryZff/KEPwY9CHGrKJh
-	P0j0WBJ9PtZrJ6RsRnxzdRKNu2lEu8sDed2j2JDSLt0Wd9BIRZogoZRduKUvc+lB
-	+8Su7mRzn7WtZ6/XFjYFGhnFz+jhasGxNOEZlu+lwMaeigPd3wuIgp9Vet8RmmTc
-	fAmUjaBDzADlo1QDq7sou9u1KjFQLITJAjj2/DEVmOKw/R05lAPtftTbfJKdMcF+
-	rTJizefQTJ6Nlq+Z6J6tWnw7X8tndAZOq8fWdd8nrS8bhXEkzcikU4i6QncNjAej
-	+KaY7D/qLjXVpH29WBdNUakwvFzALAh2GfGMOGWie6ewQunqiVv+a03+iJVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784573377; x=1784659777; bh=CKsZARqybFQt/AnNfeKqY3gynEjJUfMAGxK
-	Ne7+To1I=; b=PQ8PIJOPjx5SUwAoCDEGMs7nl7+PQw3eaQMJMGuN2d9y5og7MTf
-	ONCkooA+f0vm+ewybZQtxdsoFufb+LNsvlyfXGRyJ6d0dQCUZIxNb9qDnbe3VJar
-	zjBsbJcCVkGtT10dtSe+r5LCBNU+X+nksX9e4JrmjfN9ngUcAdXGvC0KaNHuxyFF
-	cMXNE/TbZAK4Op+hhuvWP4M0rupRMhHLOEypxjKVf75akzB0h+f7Vi3Rlfs1hKvH
-	PJWJPSCvsA8jcIgifOPaPUBgDtN3fUPPU8lmzmP1ReWFZtiVInabEFL+69PoS2ZJ
-	41d8zFI0FMFPkji9EHCXTAxQyaeapIjtiSQ==
-X-ME-Sender: <xms:wW1eauiebKQRBmkXUwte2ENHgXYq0VsUPJHwt_qWEGBGHq9o99r2SA>
-    <xme:wW1eamDZEqpvJfVpPDKHQ6s-vlvISHUOIV4BA0jcwq169FINFaSPeYn5KFe7suTTp
-    DIwhVTIrSJc62V5jIQzyxXXLLP2KZ5KO4JzkPTpSyaHn0QGfC7-5A>
-X-ME-Received: <xmr:wW1earHbvGvHPIeRx6QuHtKK3MJcTDwVBMVolQpq_9-eyqwZGNKladhccVd20RUG3tIGNMEeujJiaLBWJT0s8XAKutRZrH21MA>
-X-ME-Proxy-Cause: dmFkZTE0DQEAKCcP3bYHdaNYhdEgs9RTkcerKgXWzFdk8rHZNRnAKkg8ZepGe00Hg+31AB
-    /c9wVR4m17i4iWEYX3LDy/Ri8YDOUvmBVUkNnkm5XM2VTc/nxDS+1bWVRc5ZZjgLYdVWLw
-    o3FubAJBCmNKMGCOk7k3KPPsfuKU0MHcqhgafLyZdwWIluF35whwH8ML7DOeASWyxXpPOk
-    ioxvn7YjvrCB/8Tq29clFuaa9Gf0bWlvc8F87XChInYK9wstrQBx1QUCoa60IRSYhm5Yqg
-    MTgeUnBWtUqQ6rZSFZppx7kWolFfGlifupOoQ1RuuhP4wFIe1XinUhRVx7HPFBf212yXEc
-    X8ZBshDCL3pcY6lYTDlyKgUErYKh2YPzPxTqxGUPgeje7lmeaPjoYUooCrcDyuoveoAuiW
-    LpYJ68z7Jtqr0PFdKcFJoWTvP8Pgtmv+sj/hiR5NUDCtxwn6Bldm2kuQ7LwsClurub7xAR
-    GnYiSIXv6jnwTtzglS6tLZF+DA9mRZrH/E23p+erVhF80UjbHjZghkGITdR5WaY+Z0Sal9
-    ms1AuLPo9RkopuxM3IiimMDvU1PS7w/fyinMQrpZoLqDE92hldR7EWzMXydRniP6stBkkA
-    wxYVkIGul1yUQPYOsLXHpbjzLrL9HQl20efk3wUQwJX2rWHCJ5xijKwapO1A
-X-ME-Proxy: <xmx:wW1eamKeFmtzJXCiWsste13732C6UHDOmEz7DgGU-MGQlOOMMSQtWg>
-    <xmx:wW1eanmxhpao_glsNqLWVa-mwbp-ynhAlryBdR9AwURVwZsKrkQ-Lg>
-    <xmx:wW1eamSU7vJSI5BcP-CYc_2HkqAncjncpkSQxK18RvjBqxY_AJPk_w>
-    <xmx:wW1eahIaAtXC0WNRimO7qkHCdzh2k1V4KG1TXYZrjKWy-pEOuEkKHA>
-    <xmx:wW1eaikpVBRsAA70UV60WzzFmk3hbWjBrclsOHaDYoFPTN5UUUVLPfwZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 14:49:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH 2/2] remote: resolve URL-valued push tracking remotes
-In-Reply-To: <ff645b21591a4b365b30acaf67a295510889141c.1784538618.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Mon, 20 Jul 2026
-	09:10:18 +0000")
-References: <pull.2358.git.git.1784538618.gitgitgadget@gmail.com>
-	<ff645b21591a4b365b30acaf67a295510889141c.1784538618.git.gitgitgadget@gmail.com>
-Date: Mon, 20 Jul 2026 11:49:35 -0700
-Message-ID: <xmqq4ihtcx8g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SpVfJC6u"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-69c1220bd51so11962981a12.3
+        for <git@vger.kernel.org>; Mon, 20 Jul 2026 12:57:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784577425; cv=none;
+        d=google.com; s=arc-20260327;
+        b=cV8Hyozv8tDRlaXaOm0GUNiKHYYH12KmSkk+g0GvZMfiZzyZxSXy0bv1tlIlkwjPJz
+         2xxQTmxViO+hMod6GEDAIxrOQbyWMZaQ9FJkkpJfLPuQWfgilzLRXPPKfYyfx5XpaMoP
+         u1tw0udsBRRXxZdG4FRSsBcmasdZ3UfHfyoFYDBvKfQ7T6swZ8KsScrTG6t4zNYo5EPj
+         BOZmKkR8YNWT5JFTiS+srVSOSoIz4dt3Li33NcIQQVvZA0JWIZdMdSDE70Txo3vQos16
+         FVSwxuRWcDkiv5/YurW73VcAB75INPFT0oISau0YzpfPzvSa8KPdQzJEYc742ozlIwRh
+         7qLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=a7T/MGfzanhZMFReI8YSvFFHS4AeP/x85gZXIc/m19w=;
+        fh=D+R3Mw3ESfrCLP5krFgFKFmZiutm6kbIEyabfwhs57g=;
+        b=lQBqjTFU/0L/KTVYOoYLhTghL5DJrs+u2Ed8IN+dFPQ+F6YV8WEpT1lvLEI7uf2V5v
+         X9fruYKeGWKMvbyd8kGSf+cWLRikOzg8BP3ZfyuO6GRRUwTRhVn9l7YJy4O9EGgE4e8V
+         nCONgKIy7TS0YhJHyMJD+7GUUVsJ3uZbpkTmNxy8rBtdNjN1+ofYnJeo/HrMRzP0yFW+
+         JnOjyWKEANJ6qqdhGBmRzFhXsAlG0zdWRb4a3iRw+ptTc/WyzadgrtZzyFUQnxgfSqbi
+         9BK0ZqG9KfBbRp4uW6f9bSPaiPmPq19SvgJBF19Qzgzhon+2JoL+gtoRAPRHD0117bAG
+         vWDA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784577425; x=1785182225; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=a7T/MGfzanhZMFReI8YSvFFHS4AeP/x85gZXIc/m19w=;
+        b=SpVfJC6uwfMkWBCQpv6M7W5zzPEDzFutfvMlXnoGOCFb+wuxIAmKnhNaUdRc6f+JD6
+         5cy0yXOnsxjDNFJa75LR7gFMcMk3bFAAIboho9hVcclcSIkfZJkB399dzddlGTHrWmjd
+         XNvtrPqaRJVqEwcVrHqqgBaF40Xz5A+ok7L3cTju4SIVKv3fKOg0VCK93BdaxG3M71od
+         wJHQKD6mypP02H7SpEV8GEnpWrV0nrU2SykbcNbP42QPlSLm7iCpFRoCqzTgIlj8O6a8
+         5hLl/cHnlQ0Mw+1XBa7ESru3lGLccwhkhZAqQxSZpr7sTaGysNCX1XoOUXhp7rSmviKB
+         WxzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784577425; x=1785182225;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=a7T/MGfzanhZMFReI8YSvFFHS4AeP/x85gZXIc/m19w=;
+        b=a1CNWuWq1oYudDMktd1J9Bg/vDgEVX+sEQl6cGxoFBWQPnROAZtvQ3ZQIUFSSasc6i
+         dvpW+xPMQRqSfEWj8hLlXRbI/hrvvV0zoyF8Rw3Dk8j7nRMenySOXVqbSNV/snuZnbTs
+         wxCpRy9m2GE1YqVSMmFa0243DR01bRfRgXueyiq0Nz1B+RvRFYlAWuE0VkecJIJLWabV
+         WF1Sn64rkq47a8IqdZyI2DP0kVl4kPxSEXFo6ZOqu+8eQ0h3up0FkbgcG8of4MtJeL7a
+         YwvhxGj76y5JKWnhg4DpmHSVJAdWYEUqTnl4/hdaRkPqAp579+N4glx312+1K39MJZRZ
+         aQDg==
+X-Forwarded-Encrypted: i=1; AHgh+RofbbMcmj8InwWm5qQApdM1SGkV1Vx4/yM/rWj5zLj22GF1sHfEvYMb48rYhMTiljbE92E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4ZOTBPN32QRxn2KaOuj9aX8zp2onE+EA5+H5n+fWSfjXDVmfT
+	vfF4za512yYVu7SNCvYDpI9wFE+24p2S4ynlXbtNe6mkPg8r+kT3sKPwRj0SuWnd2dycw0+MraP
+	1GV6lYoxBeoLmiMV0jD+WzE1Fa1Hptkud4X3i64I=
+X-Gm-Gg: AfdE7cnD0eG3zxIyoS+1Gl3bLlzYI7nWH9PH6W/Sf/Tbux/YLs6DX5bZPp6A0ECghXo
+	r708HvsTpmdQbAy0wot6lGtnS/txpHhkuz92YSySSbMcLESOSDxOSOBJEgJeFyMPsQvIOR89+KM
+	t5KwLKoiEle8fhbMY6f2qlSfH1JKinvP4mr7zRtPd2rIbAPeD/knKFsyJ62TcgWVwVUJIImICiF
+	S8MiTq17EuEzDf4MnOKJEfSylxrK/Vw6NSy1JG3c/nwxN6CvugzJm+6W8zw3Q==
+X-Received: by 2002:a17:907:ea6:b0:c12:da4a:97d5 with SMTP id
+ a640c23a62f3a-c16b47fe546mr732707966b.50.1784577424290; Mon, 20 Jul 2026
+ 12:57:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2358.git.git.1784538618.gitgitgadget@gmail.com>
+ <ff645b21591a4b365b30acaf67a295510889141c.1784538618.git.gitgitgadget@gmail.com>
+ <xmqq4ihtcx8g.fsf@gitster.g>
+In-Reply-To: <xmqq4ihtcx8g.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Mon, 20 Jul 2026 21:56:25 +0200
+X-Gm-Features: AUfX_mytFjhs3lVRyuElk2LcaudWv7JGs0DH-KLpjlIPANbz03YrL0e2RJ6M_cM
+Message-ID: <CAHwyqnV=ZbthekwTcmrK5twCOgNETW+0Z5uj=w3oKjUK6Hv47g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] remote: resolve URL-valued push tracking remotes
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Thanks for your continued support on all my topics!
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> A branch may name its push destination with a URL instead of a
-> configured remote. This is useful in fork workflows, where the original
-> remote is renamed to "upstream", the fork is added as "origin", and an
-> existing branch.<name>.pushRemote continues to contain the fork URL.
->
-> Git can still push through the anonymous remote created for that URL.
-> However, the anonymous remote has no fetch refspec. Git therefore cannot
-> resolve @{push} to origin/<branch> or update that remote-tracking branch
-> after a push. The push can succeed, or report that everything is up to
-> date, while status continues to compare against a stale tracking ref or
-> cannot show the push branch at all.
+Yes, I should clarify in the commit message what the actual motivation
+is, which is for me to handle remote renames in a smoother way, since
+'gh' renmames remotes when forking a repo which is messing with
+@{push} and compareBranches for 'git status'.
 
-Let me try to think aloud, rephrasing the explanation with a
-slightly more concrete illustration, to see whether I understand
-what you are trying to achieve.
 
-The current system allows you to set:
-
-     [branch "mytopic"]
-        pushRemote = https://hosting.site/users/me/mine.git/
-     [remote "notlinked"]
-        url = https://hosting.site/users/me/mine.git/
-        push = refs/heads/mytopic
-        fetch = refs/heads/*:refs/remotes/notlinked/*
-
-but when on the 'mytopic' branch, @{push} cannot determine which
-branch at the remote repository to update, so it cannot map it back
-to our remote-tracking branch ('refs/remotes/notlinked/mytopic' in
-the above illustration).
-
-A question.  Do we currently accept a string that is not a remote
-name as the value for 'branch.<name>.pushRemote' by design?
-
-The 'git config --help' output explains that:
-
- - 'branch.<name>.pushRemote' overrides 'branch.<name>.remote' and
-   'remote.pushDefault'; and
-
- - 'branch.<name>.remote' and 'remote.pushDefault' tell 'git fetch'
-   and 'git push' which remote to work with.
-
-It therefore seems clear that setting a string that is not a remote
-name (such as a URL) as the value for these three variables is a
-misconfiguration in the current system.
-
-I am not saying that it should stay that way forever.  But please
-re-read your first sentence and tell me whether it is clear that the
-patch extends the current system with a new feature.  It was far
-from clear to me and caused significant confusion.  Writing it like
-this:
-
-    Under the current system, a branch cannot name its push
-    destination using a URL.  If we were to extend the system
-    to allow this, such and such benefits would become
-    possible.
-
-would have been far less confusing.
-
-If that is what you are doing, that is.
-
-> A uniquely matching configured remote already provides the missing
-> mapping.
-
-A very good consideration.  It was the first thing that came to my
-mind while I was thinking aloud, constructing an illustration with
-'notlinked', wondering "what if there is another remote, with the
-same URL, but different 'push' configuration?".
-
-> Use its fetch refspec when resolving the push tracking branch
-> and when updating tracking refs after a push.
-
-Is this not needless, and is mentioning it not confusing?  If I
-understand correctly, what the change entails is:
-
- * If the value of 'branch.<name>.pushRemote' (call it X) is 'not' a
-   remote name, try to see whether there is a unique remote that
-   has either (1) a 'pushurl' whose value matches X, or (2) no
-   'pushurl' but a 'url' whose value matches X.  If no such remote
-   exists, simply abort and refuse to proceed.
-
- * If there is such a remote, pretend that the value of
-   'branch.<name>.pushRemote' were the name of that remote, and do
-   everything else as usual.
-
-And mapping the current branch name to its push destination via
-'remote.<name>.push' to find the name of the destination branch at
-the remote, and then mapping it back to our remote-tracking branch
-using 'remote.<name>.fetch', is not something new that this topic
-needs to update, no?
-
-Thanks.  Once I understand what you are trying to achieve, I will
-offer further comments on the implementation, as I find this topic
-potentially quite interesting.
+Harald
