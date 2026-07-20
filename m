@@ -1,143 +1,174 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6B130566F
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 09:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59943D0BFB
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 09:53:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784541142; cv=none; b=nPNIlexq459jP/kgunY1ZnFUhzDuHrmXEg7mho8v5NcSN88ilIgBtM8JyPtnXBKHU0ScCw5hh5kA1D1+Id1CyG+xsSxJ2Wq1tsyUWcbLuMw9xBzqIbiHDqmzWo5BHvnlVtqp3YveFJL2EoOXpqQpdLNWk48jYeoqVxUxnpSUd5c=
+	t=1784541239; cv=none; b=dxcm5Ru0Fq1ZpGZGkmv5FpqB7rZ7LsF+AsbbNOhT1YxotRqMP4ZfM7XMejsbL5oLMqhz5J6tCq195ttAuRc5TvIgJN58Hj6jQWPJWZ8C3jESWVGvT4jKrbW0yXga0PcFlUMbWDlVeuDvdSr2kChHvQu/9b8hs/VQRNAbXRQRM08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784541142; c=relaxed/simple;
-	bh=w8kpbkUQ9bAz1pVqTJiuu+6c0Ql0O8ApH+ksUBELKjg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BSc5ly+Giu3WatU10K/9IWbc3Gn+J3zyY6E7EubHzJETVnCjsBEU5zbzgyJBFM3I3nvO//s54eRBKH52WcDUS/rcFwdoZjiWHeCyKOCmnonBf86G4ekQU2EbRRXJ61Q++hGznIe1HK1Zwb6d7hr5LMkxT2VdUPGPpqcW4YusHoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cAkMA8PC; arc=none smtp.client-ip=209.85.208.49
+	s=arc-20240116; t=1784541239; c=relaxed/simple;
+	bh=nFcvRUFk8ZCJGwzuSPxodCEFdasw4iYo8bI4SgOLzZg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FWnplmUYbYphtW6/OTsgngOPTett4uzmseE+lQAnaAuG07obvwrZItykFkf8OPRLIAyMYHhjOQyXJjcwGDx1TnYNm79dvO9RFRl6xUtHxJVyAe1+dgmIcEDP0Q8sxxzqfwRsCckUpTLDCQh4/CsRQYb/9N7RStS8j1+PkpHDLpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kNZxeSSc; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cAkMA8PC"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-698e5859a3cso7327090a12.0
-        for <git@vger.kernel.org>; Mon, 20 Jul 2026 02:52:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kNZxeSSc"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cf52d15d88so13206015ad.2
+        for <git@vger.kernel.org>; Mon, 20 Jul 2026 02:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784541139; x=1785145939; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=M2rjuvrTLBGBmrRwQfRUKTn1kAvO203h8TAZ7W9gLVM=;
-        b=cAkMA8PC84QcXEgp3psvhUC+Y51l6d6ilPok1krr/zOKF4XDgV1YCxUWMKKCO4pqtf
-         bdrel3yJexTnNN2vUL2hn4XuTJA8fIIh46J+wwJL9G4lDROhraRNslF6VNfP2/F6Bs/l
-         GsV7fa1JYL3tWZBMbIRHq1aU0jtqMkiEXmj8aPsNyIGRW45QOQB+zZgu9G/V7MPRY4Bl
-         5zeUH6RzbSvadt21SeFn1XjOXLf+6/JEdaCzLGQrRJxkzNWUqHFFd6b9nkoAOgb/RNP1
-         sqOUPutyYL9pbsl5cgYBEZlANY+8440WZm4C9K2AuVPwlpqTp/TRxtVxyo1vQ4zcAnp0
-         lzPw==
+        d=gmail.com; s=20251104; t=1784541237; x=1785146037; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=PmcIS1CBmizGcot1skLlKVBff3JGI0HFX0dtFMhEhHk=;
+        b=kNZxeSScWH4759p5+ap7b9TEx2p1l0H4L2Ygfna53E0EURF2uVLs7lgGPV2PLBEF9i
+         5U15Zwt6/ZYgX3F8pjQzQmm7+cYJodkVlpMPDgAthPADseXZaYWPBNo4ElVFfs0CsiMo
+         2kQ+NjYl1/yeeivKy5JfswshmVl2xqxJUO0rvBz2pnOjB1qSMqsl4gJWwypsyBA+RKcA
+         0DOsRwjWEDd4y4coNmU1EzVJhkaeMyaY/X0z6GFDk7JJzffZyLsCs4C+BxR9B/JGwKB+
+         FD5qwDeXYe9kz98Ps4MJh5vU05551fbI+QmB05OUJ6mm/MNpDDlIJmsmLMDRPyCnrrFu
+         +GSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784541139; x=1785145939;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=M2rjuvrTLBGBmrRwQfRUKTn1kAvO203h8TAZ7W9gLVM=;
-        b=VQdsLRBS5tesWYmZtRt2frzKTAaweAKwp7YQABEBscBzzVgabr6N6c7cveoJZG9ON3
-         EYWaGAKxQO/I8YmDUwlZ3AXREKAFacCzkHE0OIKrKUfW2QoPTCcAljxd3Uiwd5fb61Lg
-         7/y2RW+N4S9nR93C8OVrLCmKtfJe5MAvw8AiD/so0MeVRsKdhYMgKRyf1U954PiSgbtg
-         asbtqVTOcp8ektkN2mE+Q5zR5ThxSnTrXu86BlGLBpqhRd3nVXB3EePfe1yYarAiqzWw
-         virYKHLEzndvjq0Y414EN9laR6p+HDGZwY+NFjTNAWm9D2flSWhjqAx7swUQK8sODUJ/
-         hWaQ==
-X-Gm-Message-State: AOJu0YwaBiyO12gXT3ggITkPG0M+1s1B9jVQAQWFZM4Z977/Cyb07DiT
-	kGJPXFBxXOoQGd6Lx9p7lMhdX1x9NtCSHur8X0kv83xKuLQPU9q0UtQhlxCL+g==
-X-Gm-Gg: AfdE7cka4VdYWdK/g/y8UrvAFf061+X9eiwzQ7ToK5soIOoA5FgwksaJq6AyQYAemts
-	LyUobtMhH3G7muhsa6yN2uWGxCERYKV/2S3nhx53Ge/zbfb192DoJkG9u1YM2PGf+OkQOOrX62/
-	7J+eMmEc+VMQjsEMDu9e0RtopTBOepX2p0Ny9TgYkXLys3MNI2U5LX1ubMAkb8i6z314qcHP2/+
-	lUB+hJEg09jo2gLaIaJpt1iRf9lS7Hvrik0onS7EhM0Y/+aca6KrNFXDXpeapEB56k881XOmclR
-	oaszZoslFYo9ftShAmCEFzeoB7v3g9jMERta0dVVtg1THxP7tUt358QGXQpUH/lIacfLad/J8ZF
-	I1pauJWG4eYfka+NVOtsm85Iwrx1ExtjgrByVyZVplmXbibG40AYcNxETnJBEAji1O1KZUH8cYx
-	/sO3k6uQXoo92JU6SXHiTZ6i6q6OEU
-X-Received: by 2002:a05:6402:3788:b0:69e:2ca5:53bb with SMTP id 4fb4d7f45d1cf-69e64aa1432mr4831005a12.0.1784541138733;
-        Mon, 20 Jul 2026 02:52:18 -0700 (PDT)
-Received: from localhost (94-21-29-149.pool.digikabel.hu. [94.21.29.149])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69e6fef2640sm4437815a12.8.2026.07.20.02.52.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 02:52:17 -0700 (PDT)
-Date: Mon, 20 Jul 2026 11:52:16 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org, ps@pks.im,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v7 2/4] read-cache: pass 'repo' to 'ce_mode_from_stat()'
-Message-ID: <al3v0NVZJYS9SVZF@szeder.dev>
-References: <20260716084941.1101918-1-cat@malon.dev>
- <20260717063559.1633567-1-cat@malon.dev>
- <20260717063559.1633567-3-cat@malon.dev>
- <alvNq8rXF/jofqUc@szeder.dev>
- <8b9528b8-198b-489f-8f0e-fbd0c7d07b64@malon.dev>
+        d=1e100.net; s=20251104; t=1784541237; x=1785146037;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=PmcIS1CBmizGcot1skLlKVBff3JGI0HFX0dtFMhEhHk=;
+        b=d4eTalqZXXj3J9A51lOgifF28HE+WQM5aNJLAo8xbcq4w4Nmu0dGXWON1DmSH1TNzc
+         hHlCojQvIceGVkPSgLLP51ZzXIiX4I7MlumMkuf2pZinpkVGI99b0GZYm4XdsBQbvmID
+         3HalkFiOfgJjC6d2teYH/GjdgrtOel5o7W/x0unKr1WWlmgyFW66IbToGa4/n0gFdebZ
+         4hbQZldSeGi/AWMTQzkGjSqb55YAhoS3db4HTqs0tv1qqikmdCAzjRhGEV7fzPLg1DpH
+         hTg/L4RVffkWGRFZw5RrHv17BuVv86M5fPXM3Tf3Z06v9fSD72tOAaejn3NJU/Lcd3Rt
+         ffXA==
+X-Forwarded-Encrypted: i=1; AHgh+RoFaamrtqhvVTuc2VPhVxwDQRuDKA1vDT/4KhRqP54ehbhc8kpdiFIDS2SQW5feDJV2bJA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyslX8ragvdic4slLFJe4KX3bQ6KfFO3BHTrybg1LTq+dlC6BTU
+	jmsm5PiTCYE/ENWfnxfo9B+3oPMNKfDwR6hYfbX5fti8no8QZS8EsUaS
+X-Gm-Gg: AfdE7cl6TQzHztNJlycLjNokWXR2hkGOqTGO6QG61iW2JHNkGUQB/gB2nrNJwwMNNU5
+	mu4pXlWC9dzmEH6/ZMSbDLObpT9j+9dcUd9HIjSAAy4jsdS/g/S4GnQ4RMXyPhkJObSVjr3RENm
+	Y8r+ruaXDaH9QZncZuCdKDdValhN4lfrnHuOVeSyLYWqD2jFE9n2ooIBrLGTfWgBLnPeW5qzK05
+	x42dN74DL2P/XShelPQwuXdsZmK3krcjCABo0o4Pd5xjbe7cc9S/3dnpbEl98UdUJBO+NlKRKtt
+	bobX9UdFbPD+DfxLLARhr3+J/FacllO6PHleI8RpHG9KErQTTHnYyKojn3rZgLuySiOjIR7MWaU
+	GAQQ/XI2SoSuhk/S0hGVpIuXh0Th0Gku9TTAkIIQIYG1Znp1+5lQPvr60HeBEU22GigyO/BTGNl
+	UncpG4ivuldYM/R+gHclmfBoJ2KC4=
+X-Received: by 2002:a17:903:440c:b0:2ca:1594:451e with SMTP id d9443c01a7336-2cf3496b583mr155314695ad.31.1784541236828;
+        Mon, 20 Jul 2026 02:53:56 -0700 (PDT)
+Received: from localhost.localdomain ([14.141.116.242])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a1ddeb6sm39294021eec.20.2026.07.20.02.53.53
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 20 Jul 2026 02:53:56 -0700 (PDT)
+From: Shlok Kulshreshtha <diy2903@gmail.com>
+To: j6t@kdbg.org
+Cc: Shlok Kulshreshtha <diy2903@gmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	"Eric Sunshine" <sunshine@sunshineco.com>,
+	"Scott L. Burson" <Scott@sympoiesis.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] userdiff: add support for Swift
+Date: Mon, 20 Jul 2026 15:22:28 +0530
+Message-ID: <20260720095335.66241-1-diy2903@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <2a3a73c5-5e90-44a3-bf6a-6e98ce5e5a59@kdbg.org>
+References: <2a3a73c5-5e90-44a3-bf6a-6e98ce5e5a59@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8b9528b8-198b-489f-8f0e-fbd0c7d07b64@malon.dev>
 
-On Mon, Jul 20, 2026 at 05:13:17PM +0800, Tian Yuchen wrote:
-> On 7/19/26 03:02, SZEDER Gábor wrote:
-> > On Fri, Jul 17, 2026 at 02:35:57PM +0800, Tian Yuchen wrote:
-> > > diff --git a/read-cache.h b/read-cache.h
-> > > index 043da1f1aa..94b8d3e547 100644
-> > > --- a/read-cache.h
-> > > +++ b/read-cache.h
-> > > @@ -4,15 +4,24 @@
-> > >   #include "read-cache-ll.h"
-> > >   #include "object.h"
-> > >   #include "pathspec.h"
-> > > +#include "environment.h"
-> > > -static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
-> > > +/*
-> > > + * Determine the appropriate index mode for a file based on its stat()
-> > > + * information and the existing cache entry (if any).
-> > > + *
-> > > + * This function handles degradation for filesystems that lack
-> > > + * symlink support or reliable executable bits.
-> > > + */
-> > > +static inline unsigned int ce_mode_from_stat(struct repository *repo,
-> > 
-> > This new parameter is not yet used in this function, which causes
-> > compilation errors in all source files which include "read-cache.h"
-> > when trying to build this commit using DEVELOPER=1, e.g.:
+Johannes Sixt <j6t@kdbg.org> writes:
+>>  - attributes, with or without arguments, whether on their own line
+>>    ("@objc" above a "func") or inline with the declaration
+> AFAIC, the regular expression does not match attributes on their own
+> line. What relevance does this statement have?
 
-> > I think the new parameter should be marked as UNUSED in this patch,
-> > and then the UNUSED should be dropped in the next, where you start
-> > using the parameter.
-> > 
-> > > +					     const struct cache_entry *ce,
-> > >   					     unsigned int mode)
-> > >   {
-> > >   	extern int trust_executable_bit, has_symlinks;
-> > > -	if (!has_symlinks && S_ISREG(mode) &&
-> > > +	if (S_ISREG(mode) && !has_symlinks &&
-> > >   	    ce && S_ISLNK(ce->ce_mode))
-> > >   		return ce->ce_mode;
-> > > -	if (!trust_executable_bit && S_ISREG(mode)) {
-> > > +	if (S_ISREG(mode) && !trust_executable_bit) {
-> > >   		if (ce && S_ISREG(ce->ce_mode))
-> > >   			return ce->ce_mode;
-> > >   		return create_ce_mode(0666);
-> > > -- 
-> > > 2.43.0
-> > > 
-> 
-> But 'USUSED' cannot be used here since the corresponding header
-> (git-compat-util.h, or more specifically compat/posix.h) is not included.
+You are right.  The pattern only matches attributes that are inline with
+the declaration.  An attribute on its own line is not matched, and does
+not need to be, because the declaration line below it matches on its own.
+I have reworded this.
 
-UNUSED _can_ be used here, because:
+> This test contains "RIGHT" twice. This is not good, because we do not
+> know which one is picked.
+[...]
+> Again "RIGHT" twice in a harmful way.
 
-  - This is a header file, so it's not supposed to be compiled on its
-    own.
-  - All C source files including this header file must start with
-    including "git-compat-util.h", so by the time they include
-    "read-cache.h", the UNUSED macro is already defined.
+Fixed in a coming v2: swift-init, swift-failable-init and
+swift-generic-subscript now contain "RIGHT" only once, on the
+declaration line.
 
+> It may be worth considering to enumerate all keywords and permit any
+> run of them:
+> 	(public|final|etc.|func|init|...|actor)[ \t(?!<]+)+
+
+Noted, and thanks for the follow-up on this one.  I did check it anyway
+out of curiosity: with that shape, a line that is only modifiers and
+never reaches a real declaration keyword, such as
+
+	public var counter = 0
+
+would still match, because it merges modifiers and declaration keywords
+into one interchangeable run.  The current pattern requires a real
+keyword at the end, so that line correctly gets no header.  I will keep
+the current form for now, and can revisit if the backtracking turns out
+to matter in practice.
+
+> You could just throw all of them into a single pattern like this:
+> 	0[xXoObB][0-9a-fA-F_]+
+> except when, for example, 0b1_abc
+
+Right -- that is why I kept them as three separate patterns, so the
+digit ranges stay correct (binary [01], octal [0-7]); merging would
+mis-tokenize "0b1_abc".
+
+> Is ".5" a correct floating-point number?
+
+No -- Swift requires a leading digit, so ".5" is a syntax error (one must
+write "0.5").  Tokenizing it as "." and "5" is therefore fine, and it
+does not occur in valid Swift.
+
+> You do not have to account for single-character operators; they are
+> automatic. Drop the "?" from the first "=?".
+
+Done in a coming v2, thanks; I had not realized PATTERNS appends
+"|[^[:space:]]".  It is a nice simplification, and it only touches the
+word regex, not the funcname pattern.
+
+Since neither of us speaks Swift, for your ease of judgement I have also
+put together some coverage numbers, which the coming v2 cover note will
+include:
+
+ - Grammar: I went through every declaration form listed in the "Summary
+   of the Grammar" in Swift's own language reference (func, init incl.
+   failable/generic, deinit, subscript incl. generic, class, struct,
+   enum, protocol, extension, actor, operator methods, stacked
+   modifiers, attributes with and without arguments, "where" clauses,
+   multi-line signatures -- 26 forms total) and wrote a case for each.
+   All 26 get the correct header.
+
+ - Real-world code: I ran the driver over the last 200 commits touching
+   *.swift in seven different Swift projects -- Alamofire,
+   apple/swift-argument-parser, vapor, Kingfisher, RxSwift, SnapKit, and
+   pointfreeco/swift-composable-architecture -- and checked every hunk
+   header by hand. Out of 20454 hunks, 15310 got a header, and 15296 of
+   those (99.9%) named a real declaration. None of the empty-header
+   hunks turned out to be a real miss (they were things like file
+   comment blocks, imports, or Package.swift, which have nothing to
+   attach a header to).
+
+These numbers are unaffected by the changes in this reply: the funcname
+pattern is identical in v1 and v2 (only the word regex and the test
+files changed), and both measurements are of hunk headers, which come
+from the funcname pattern alone. So the coverage above still holds for
+v2.
+
+Besides the fixes above, v2 will also carry the reworded attribute
+description and the changelog explaining what changed since v1, so the
+full picture is in one place when you look at it.
+
+Thanks for the careful review.
+Shlok
