@@ -1,81 +1,83 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8877443E53
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 17:09:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EA53DA5AE
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 17:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784567352; cv=none; b=IZ0jiT5EULmYXMQdPtX2/c6ZykBSdLKXbwMcIUVDgwwsg7YFBLvNzq3Nu8pu8xT4YmU+GIUXOf5GqAue5FN8TN771Rwlaau8AAvVkTSNcN2qoSbhqjGvdDeKhT4RVksl1nEELr8Tak7GnLg+D71BH5rbuQ64tsQ9ViY64bz+K1Y=
+	t=1784568027; cv=none; b=lWQsuLlNI/xLf5QPkdK474EXovJDnkNUmL0aPI/C51OrRodzxN8iDlND3qCFKAbJ+GXCPpM4GgZUsVrOYCS2DuOTCqRgWARkyH5Ct7ZMr41frXLv7GlvLQH+bZFGUqU42jZNp7ztMGZalT/w384By1KScSZiz55spkifjapEOYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784567352; c=relaxed/simple;
-	bh=HVIxgdXF5gx9IFCwn5zuV6fPVzQaLHvEydO9Jk1YU44=;
+	s=arc-20240116; t=1784568027; c=relaxed/simple;
+	bh=6QGdKA4LDKC3LvBTY2sOiS/T8L4W4AQE+dzRnE/GUeA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=axp8+kU2YlMEgVMnftlzwRa7LYOTb5eDmbh8YWxwGhCIE/QR+OuWJQpSvcR90OFRtfYWX2NFIeimGJRWb7IJV3JNx/DI1J1t6TnSE+1jfgxgW01HiwauptcojZuWkjThDqENCq1h9HvCJFSfBDMlnuG7Kx6krxRGGGRcTtCIZuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U2FwP7jl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PdtR2eSr; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=HbsIDgsL5TFq49CtMllYk35kFUxuikYYuu3UNdOydE42OmGxWAn2GikdnVaG/kop6ZQOZqvDSaEXC75hHbRbZzv/hHBSb568/FzxV0Hte27rc/68JcF/lyLiJMpUe2y4St+cSV6//Afn6wVIhPcRrPUD+eISORqxfZ76SvG0jzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f8hn1w/X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AVicJZov; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U2FwP7jl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PdtR2eSr"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C6ED1400134;
-	Mon, 20 Jul 2026 13:09:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 20 Jul 2026 13:09:06 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f8hn1w/X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AVicJZov"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6002314000E1;
+	Mon, 20 Jul 2026 13:20:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 20 Jul 2026 13:20:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784567346; x=1784653746; bh=HVIxgdXF5g
-	x9IFCwn5zuV6fPVzQaLHvEydO9Jk1YU44=; b=U2FwP7jl384XBeXy6ASRlmAAuN
-	VAAT84UK2Mt1eou5tjJxU7B+grZxPQnNpDumOLfDZ5lJKcQL2/UL83BmgajuxFZT
-	wUE1cKxBNOBv4Icpb3aN86ByO5pVeX3wjAEsyP3W0bGQUsaG5PIZB/qQa+mUaYwm
-	gAybr1iMIauEQhFpr8JGFINsfhHic6K/tpAIW9D0mSfEPUZiq3dMwnRVNpl81Vz1
-	bQXtAP5TIOdN4OIpeHcfoD47y8AYnjhKV0PKnDVS05uBUpv2bPnUrGNoFnUccNUz
-	OaK6I4x41r+Ul3Xnv8s4uenCeR/CqpLWUv5VDg+OFD9N8L7vdF2oKT/C0G1w==
+	:subject:to:to; s=fm1; t=1784568020; x=1784654420; bh=nbIMocH83n
+	5/QxhqyTOjkjgaayBkwLSOe+C/Ybpqsxw=; b=f8hn1w/X3EOvgT8qwtKWgeBSNv
+	5ozL49OwvNV9zaXzJiREl7QYM81wT5IN8KFCxZPBpgorFXwH3603eTmpJwn31Yac
+	KFGxKJNdAWC3TYwwgeiU2eRlPQhReley8QbBSMp6jujEaAcIfgIZqXZXl/XKlr2T
+	kqxF9zM7Zi68WVi0oan5Duzkg0HZEeKJZ4cafZvpufjDCxiFx77ST7LY0CwinKnf
+	sJqerC8AIxT0cSqGjSO2cL2CXPGK+aQ9gW3N/yphSzdLrCyvbFIU0hqyFMtn9lSZ
+	FBQHtKV2g85M55PgD1LoWt5JBeogi10x5KXeBzYClE0hC3v28d86XWUDBj/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784567346; x=1784653746; bh=HVIxgdXF5gx9IFCwn5zuV6fPVzQaLHvEydO
-	9Jk1YU44=; b=PdtR2eSr3+sw9U1ZQ84mjMskPVotpIVYdeVH32fP4d0qpy3ZetI
-	4EL2IouxNMQD771VNM/vA8gDdzzvX/Qbj9Af8FzbZ9h1DugT0fxkU0jhtA+MUU+E
-	EtW/YgPAXgjGCY8I0g0bhfIVy1PVSh8IR1Alb4GNjN3vozuHQeCTx0xEpgsjhKcc
-	gazqhpYbo1CmYG3UrVgg/7/JaNDOIxVdB4IXwyq5m4u3a9OKSXsnccvnVIAoiK5P
-	R42TZxlyrNPSqSQu1fvjvGNrvqt0rRFJKwP9yOnDsiCGKa/SEVEs+JcbUPAxAhP3
-	Kh3/p9tg1hVky2TN8GvrSlUM/MLor3alL5A==
-X-ME-Sender: <xms:MVZeail0lq5ru8FICKXZL2AsNR9-pNnPNbqJGXK0XWf5boB53ndOvw>
-    <xme:MVZeanpZWP_cys4xwqe8q8FkG2lbLN_DOlH5JeFucGsWg6WgliProqWD-kFgp-85V
-    tBPXIMhbmLqt8Jrp-OiDPFSUlyPnK7qfUPmI6oqiITCZZhGj6xnyOw>
-X-ME-Received: <xmr:MVZearHqug70eio7WwTyeRAlgYaeyk1SDyccK_aFntrRQcfzQEXn6ci5xubQMVaO369yygKSgyy6vEh9QXXI5dQ1la1_ZhOWeQ>
-X-ME-Proxy-Cause: dmFkZTFSrHxgwZENihRNDfmrAKR2aCIAAv0tfZmGPSCzwWbAkjyILphwOwd4B5DTfiIYHR
-    F29BYRSeePyD64u8K3a8j0N/PS0snBilh+MTeskaY4O5V8FEFm24oicnVpF+jPRL5rFy1j
-    rPvXm9yY2CIRCdY1e1CPcZJSQ8A0DXEW9yLnQtBOJXWXwThOI2qi9sZh/NSBx99bAxovtW
-    JWhG8MIYOJJYdfql+A11ZyFrcxd9bR+2JFPb3rP1PhepJwH+qWOk7SfPzaqRjJPZ1M30cI
-    QGe0LfXIaAXFkQ0Dx6ZDRmfVHOJaeh2bKGUnHQdskAtEZP0A7hV+KN5S7S88Z1EDY3MCq5
-    cEs34sA9Sc0Hye+ZlWpIzp8kO7HUmzJR8p80JHZioS+YQGi+ZEBBshqwgCZM4FT413j4+b
-    fa/XkpXRhwGc5RskKjKC9sq8J+O5VYR4S0SAXUgvB10w+CQxDFK0DxAHDfCs5tSn93P6a3
-    ceO+CHOnkVpz/bTdrtkRRL4b0L6SpkPX7NSS7kppX78F7YA7RzIWu6VdfSI2em+aZ7BZRQ
-    xgw7A5Cm4mrd+MfRe840McEclcrtcvx/Gky+hgdpbhQbeP2UPtCdBE5OS22wGVW7aZJvzK
-    jbpCdZPaA0lMBegOxlQrr1j9sLFmvSsFm3Cax61OOO9WtOmzK1wNgGfakTPw
-X-ME-Proxy: <xmx:MVZeajxBM1wIvHHrTPISRdBbb3tkQqgzPRGPN1aGfxRe9mnlfS2JPw>
-    <xmx:MVZeagrCqQG8myKV_oFBxxFejm73M4bco8_nR1NStLzRbwTFjQMPsA>
-    <xmx:MVZeatiAAeKGkERcNM8rowXkLdPQGAYf4fDMYOAxGW75wadso0TPOA>
-    <xmx:MVZeath-mE6spDbpbZIYxgSUGTpmrKZeU54_BIKsfrCTtYF6tzWYOg>
-    <xmx:MlZeasoZ11dy-IM9yd6VvJemb-n9nyDP-IEB85v86XJ-xXDJZKwEzP48>
+	1784568020; x=1784654420; bh=nbIMocH83n5/QxhqyTOjkjgaayBkwLSOe+C
+	/Ybpqsxw=; b=AVicJZovU3z2Dn+KH9VdgouRQ3TmEypC7j87hVl25WJKDIwz0fO
+	v4dpo5HFnJ7+3B8UeEl+xWJy5Bs3RuM8lNAxh3x4DaoPwM1wfnJtF9mlfYBAHPlA
+	74tt4Occyw3kf8c9VyyTpk2M3lqJQx7zYuFlN9hWqN9DYlXiwFuiCKAhI+p5DKa+
+	E1h5KyT+L6t1UyEyKtAvbPSrSgt3H4BiHXYGpyzXcNUN4nrWFAKoUpchCcBWbrR+
+	CKFqWBFHKEK3ELaiH9vX7Vecq56aaTKAm2x60KWKrvRpoYci4g4usKoVErVIBi0Q
+	sJbhRsg5ibuYX67c5ZDdPU5dhegPFPOwITQ==
+X-ME-Sender: <xms:1Fheao004RFYA6ggiWyuvyNDRVya8yvFJKVbiIh7fMZGmO7qUydp4w>
+    <xme:1Fheap_0QsUByNX9jNZ3_3vkuXf4m8P87NZouj0BsgMLiAzl0ApfvOJkSrXd6s5xW
+    xmDR4gmLyKQszJffNECpRSlmg4dKHmwN5Vgw0-UJcZJG5HphsE_4Tc>
+X-ME-Received: <xmr:1FheapOU7yzbohUjoeRsa03kg-a1m6UMSF7mUXIfNx7rzSgGV39zwFmBJDUHJh5IWXizbpinVN18SKupfTjD54C-waNJbKjMzw>
+X-ME-Proxy-Cause: dmFkZTFLiIMiCabbhT5kiHE087SfEyOqb7Qi09nb2eC9WaZBdfNhNC0Rb+Ot7aZGaqZ2Q6
+    mzgLKaVs/LaqD4LXwuPfBAV3SR86ytg9DyElClveSN0FJ4vhbqKejYYwNfXdUz5ExGqqgu
+    2P/GWsc3SOsz1M1jCv42JdJCUme3GV/UGoEv/B21p9LARjZ2Cm/h3nFKVaIgf0jkRmC2ml
+    XzSIV99wR/4YJ8RMbSHEroUKfbK1g9bEmfdmzlabATbHao9PCP6YkdGN5ePPIHKrMnx30z
+    HRsxEjQ6+0Xw8ZirohTdZTT3DbEZrgKB9FCcvRrWqI0DoL2f+wgUf6knfSKSNNp0yNp4a9
+    Ni32Gnufl0ndo+TIZYePyY0zOEiUkT3hiLBbMckaylLX9hPxuBtu1O5Srj+Z7qQ4SdUlox
+    q8Y773zC+a4jbCniXXT9JCA7J3V7Y1HgRrd5hBHaT8ClLBfeAZNP6oqnyF4f7p6vwG3Rto
+    zmLLsuENjDXs5xFEL4+0FZFpW+X881w0FtprE1YHSpPAkctBxfEI+JbPUBBQnHqvjJ/dsC
+    CLgTNNP42jpIocM43zklQlpEorP2WmYDCFGKXtZsGaQ7CIpelBONwUSCa4C4F1RSu5Wupf
+    ROASFdKVVC6PHm33f5bQTMntyc5C/j2IQRTZfresDILNpj+kWy3nvdygfdag
+X-ME-Proxy: <xmx:1Fheatd-o1iQU-EkYSMTxxQ5dPj8F87dtoTxoOv6J4p5CRxZX1HGUQ>
+    <xmx:1FheaoXo2zYH2O0SYDgahIx9Yjc5Sm1WD3m4fiw-nmxnZsCefFBmeg>
+    <xmx:1FhealjYIaPACm9di85Pl8OtyXAFn9EgHkJg8JXIaRxpECeCQ7K-Cw>
+    <xmx:1Fhean91IfVHnRr7H9W6OhIWc49pkM0uMzA5bies3i1N0fZO76LObw>
+    <xmx:1FheanMEwY-F8Vzt6m7FfVKO4Kl5mYeWHf9s3YbdaeYiXewNOg7o1RRq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 13:09:05 -0400 (EDT)
+ 20 Jul 2026 13:20:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Hendrik Jaeger <ml_git@henk.geekmail.org>,  git@vger.kernel.org
-Subject: Re: git config: unintuitive behaviour with --global and --no-includes
-In-Reply-To: <20260720125145.GA5100@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 20 Jul 2026 08:51:45 -0400")
-References: <20260720113402.0dc16abe@frustcomp.hnjs.home.arpa>
-	<20260720125145.GA5100@coredump.intra.peff.net>
-Date: Mon, 20 Jul 2026 10:09:04 -0700
-Message-ID: <xmqqse5dd1vz.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Sixt <j6t@kdbg.org>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3 0/2] bisect: add --auto-reset to leave when done
+In-Reply-To: <pull.2335.v3.git.git.1784538619.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Mon, 20 Jul 2026 09:10:17
+	+0000")
+References: <pull.2335.v2.git.git.1784312854.gitgitgadget@gmail.com>
+	<pull.2335.v3.git.git.1784538619.gitgitgadget@gmail.com>
+Date: Mon, 20 Jul 2026 10:20:18 -0700
+Message-ID: <xmqqldb5d1d9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,29 +87,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> IMHO lbmk is wrong to be using "--global" in the first place. Looking at
-> the source, it is trying to check whether the user has set up their
-> identity. But it is not lbmk's business whether you did it in the
-> --global config file, or elsewhere!
-
-Exactly.
-
-> Though note there is one other hitch, which is that the user can set
-> author.* and committer.* as specific variables, since 39ab4d0951
-> (config: allow giving separate author and committer idents, 2019-02-04).
-> I suspect not many people do that, but that would also be something that
-> a config-specific check would have to handle (but "git var" would do
-> automatically).
+> Add a --reset-when-found option to git bisect that resets the bisect session
+> when culprit is found.
 >
-> So I think you might consider sending a bug report to lbmk. Feel free to
-> point at this thread, and I'm happy to discuss further with them.
+> Changes in v3:
+>
+>  * Rename --auto-reset to --reset-when-found, including internal names.
+>  * Defer git bisect run cleanup until captured output is printed and
+>    BISECT_RUN is closed. Drop the open-descriptor preparatory change,
+>    retaining the existing filename-based output handling.
 
-Thanks for your thoughtful and thorough explanation.
+The range-diff looks very busy, but it mostly looks like a fallout
+caused by the renaming of the option and internal functions and enum
+to match the updated name.
 
-The environment variables 'GIT_{AUTHOR,COMMITTER}_{NAME,EMAIL}' also
-play a part in determining the author andcommitter identities, so
-'git var AUTHOR_IDENT' would be the correct choice here.
+Looking good.  Is everybody happy with this version?  If so I'll
+mark the topic for 'next' soonish.
 
-
+Thanks.
