@@ -1,82 +1,82 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0424499BA
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 18:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF93612F4
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 18:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784571798; cv=none; b=AQuK9WKS92gwn7wA7Q0bcncsZ0tXHlJEpKf1jWA2tDXDWuhPnJnD/slAPt2yBQqjkWuNBjjWDZK5qMFvW4DMR+CHwk+0M7ljaeV1VLW/Yf3crIALBWICE6lzw6jja5/0993uz+XRp+emMQtejykGNSqJHTSrgm9cPBNrgrhvksY=
+	t=1784573380; cv=none; b=COeNVUOSJOBqEj0xAp5caWnUMRzlrURf8WJTfwG9eDH9OOHj4oMzZpxAWOF78sv3thPhiYhTQ47NCt5tz3EvvbkFq9tyvV9dZvQcitl/jxaPRjj680z4vcJYEpe7muNN/3rO+wC08vhTGuyfwPJLuESREB74UmEdLNSrdT0t8qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784571798; c=relaxed/simple;
-	bh=5PIDNwKRfX/6uqS0dxnBWNw627XuKQxshjxIFKMMD4s=;
+	s=arc-20240116; t=1784573380; c=relaxed/simple;
+	bh=8Kl+qtDRuASM5PLK+cRPEd34r/FfE5APf79vHWTmM3w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b4TeBydztugSVtxR31ov+l2u4Go0mYTV/TE9tipv6/NSDwl5dGpy/rkUMbo6svfDLKdHFcYKAWv4eC4ZZk2bHXvzjd6zKxd7AVd5r2bX7Tu7dtQgLiZbkc9dsnAgZijKroi5qJLMidFFLkz5bhCbylcKKt0PNf9Sdn9/LAhv2GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y5moHFBa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qr1fGIki; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=NAHgELfOgq88BPcuwrYJBkx9XGtt6gXms2UMuanOHyrJdx3+bopuNAuxIPcICE/VcMMFs2az2dCPWlNwOONI3gkt8N7+UEDnIDLAHqi46Z9lb63ZBXeIZJZRo5aE4Rxq2MyrTEY2qmrcpgwNWPF4sQToxyWNps95d3iEX9uKEVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pnnnmqhr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PQ8PIJOP; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y5moHFBa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qr1fGIki"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CFD237A0119;
-	Mon, 20 Jul 2026 14:23:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pnnnmqhr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PQ8PIJOP"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 760517A00EB;
+	Mon, 20 Jul 2026 14:49:37 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 20 Jul 2026 14:23:13 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 20 Jul 2026 14:49:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784571792; x=1784658192; bh=DVswgq8/aP
-	gRDTfoG0shX68XHYSc96Da+3hAn74//BQ=; b=Y5moHFBazRb6xUkROl4B41GnGX
-	MxCeLBTHeO+5gew277slWUah4SNPd2PK+uWVjObuQcvJBwih+PuEVVomjPz4fUjw
-	kYah4dCOHX7VriplfDamtBHutWf16Wdmoh+ZIpaKXcdqPMg6i0bhejM0aIA8xsMe
-	r8qHw7mCSGhYU4QExBc4M8SH1UFitvotxyKzWijW0pEYu3SWPpwjsH4VHPbYaB2D
-	n7WsdcyJGkLptQXNueHOevnKvaPN3XP8po/pp0t1Rh9aIY36p7T/fuP4Qf2cwn97
-	s4/N4vQwaQQQdeH1T1GFkdc4mjmR1EECSIz3Tp2vhsax/S+61xCQGOdUZJgA==
+	:subject:to:to; s=fm1; t=1784573377; x=1784659777; bh=CKsZARqybF
+	Qt/AnNfeKqY3gynEjJUfMAGxKNe7+To1I=; b=pnnnmqhryZff/KEPwY9CHGrKJh
+	P0j0WBJ9PtZrJ6RsRnxzdRKNu2lEu8sDed2j2JDSLt0Wd9BIRZogoZRduKUvc+lB
+	+8Su7mRzn7WtZ6/XFjYFGhnFz+jhasGxNOEZlu+lwMaeigPd3wuIgp9Vet8RmmTc
+	fAmUjaBDzADlo1QDq7sou9u1KjFQLITJAjj2/DEVmOKw/R05lAPtftTbfJKdMcF+
+	rTJizefQTJ6Nlq+Z6J6tWnw7X8tndAZOq8fWdd8nrS8bhXEkzcikU4i6QncNjAej
+	+KaY7D/qLjXVpH29WBdNUakwvFzALAh2GfGMOGWie6ewQunqiVv+a03+iJVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784571792; x=1784658192; bh=DVswgq8/aPgRDTfoG0shX68XHYSc96Da+3h
-	An74//BQ=; b=Qr1fGIkiSLbU0NNykKm+HOXETyGssKymJUb0rJUxTcMHfrzxAxe
-	kx9utqTrb1oNLOktpznO+UyUGJdU2nkzXYqwnM4DcICMiRbQCgnn0IyRm1MhYOQ/
-	HnssCCN+7BzUvm6tDE8Y0FnNiRcNI2WkN10/XRqtvvBvuWZ3sFQSYTJSkdM7zdZd
-	3LGvNKowjWXrrb1i832ilA23B4686r67C5PJrlrcrLyk48ClaBoxaBDLHG4Y7ry6
-	c044bGx749zz6Q7dheNLAEM3Ut/AEFCvcem2Hbmi/fQZwjl8XGoU267WtB6t72SJ
-	hAfgRZBp1u58a+gTRyQB8VZDLmMg1djtAZQ==
-X-ME-Sender: <xms:kGdeasTSBJq02eGu5YoVHxxwD4rtqSM4ziM9j0pV2mtHhH2B1JxjFQ>
-    <xme:kGdeagyWSJEhmph7k0sZYZwdpnls8UP-6UNsKg-gDv9LSel7mw5-WVurE4Gb4xvQS
-    mdz8WEfBFZCRzVkHSRVBL4b5uYdgLRpAO5j0HZEphQQe57cQaRG3g>
-X-ME-Received: <xmr:kGdeau24sDssvOrx1j-G2RZIONPUnwtXGKTDvwbe3VMS6zH2VBGEmHdgHj-vqjYZzDV4EZUKI1txykkaMtRAdqxMp_tUOhctHw>
-X-ME-Proxy-Cause: dmFkZTEbQzH3IuFwS40VvK6jGS4bYft4upnpvqFTEunTc33P+4nLmOM46emc9I72tuMKGD
-    iw/tOR5goI1OtKIUU37+Cm+bRRb/Pg9QAJUeQwn6HmOQwvpFQSRhkyqVIkut09ibUSLO6/
-    /DL1lqrZxX2S0e3NKPWTRttTk22vqTbsJtra0TMGk0+cU05QHS3lkHrIbWjmy3ETlwvMQt
-    eD+EuHVeA4SSQo3na3bD5ouxUESdHYEIjmcvVf26do14UmfQblf0wnnVzMh9oe7VOLcLOG
-    6IdGlzmU4l9jMHZB8YKAmCVEuBPN9KhxqjSsg7j3GeuSpLbpeRT77ptK60kEQdXOJaBQKp
-    eu0yF3kSnyygQEeaD9orGH5cpjxfGy7c6KWmFyH3Zmj4mj2XJTIWkz5kTepiqMz3andpmX
-    Vt6SQVBqw6jOGdKQK6b5NiP4+8t3/qilWLdB90w7qVIpa2ncX4g1HiDGSc0WzUnUwlKm3z
-    7upyMSSZdPxzBMi88HUSddei4njCiLw0F6y6P2wieVzk+ud3n2MQN3yfEdeHF4TltcjI6T
-    tJuN204e+FxslhQ+RQKEu4SXW80GztMXo11i8GH4rIzzm4fzTRpDs8KV8r+9h/aRg1xP5K
-    7wX0YWbAu6jPsjfX8/g/Wp9ujUjaVCDptRh/5kH5YAfB1GxYHEo2dlxXg2sw
-X-ME-Proxy: <xmx:kGdeau64_wnwIK27wneGMTe2B3LbhbHY5OT1HPcWCeeu-nggBKUrLA>
-    <xmx:kGdeahXHsI78K7RlCXKazeSHMGB9j1kd1LZ0aDfK2sH2VDfw8PDLLA>
-    <xmx:kGdeatDvE6CEdMjMFzcBKZJG355mCqt8hKhcyoWXcw7uxr17LMXF9w>
-    <xmx:kGdeag4PnQ0qVnxsBKHNw9drMBeVzmK4lX1VR1zjiXkmzXBiVGB-hA>
-    <xmx:kGdeajgcKKpKCrTjeWSNCjbX0tbKULsYWf8547-YKUuJYss7oIhyRIEK>
+	1784573377; x=1784659777; bh=CKsZARqybFQt/AnNfeKqY3gynEjJUfMAGxK
+	Ne7+To1I=; b=PQ8PIJOPjx5SUwAoCDEGMs7nl7+PQw3eaQMJMGuN2d9y5og7MTf
+	ONCkooA+f0vm+ewybZQtxdsoFufb+LNsvlyfXGRyJ6d0dQCUZIxNb9qDnbe3VJar
+	zjBsbJcCVkGtT10dtSe+r5LCBNU+X+nksX9e4JrmjfN9ngUcAdXGvC0KaNHuxyFF
+	cMXNE/TbZAK4Op+hhuvWP4M0rupRMhHLOEypxjKVf75akzB0h+f7Vi3Rlfs1hKvH
+	PJWJPSCvsA8jcIgifOPaPUBgDtN3fUPPU8lmzmP1ReWFZtiVInabEFL+69PoS2ZJ
+	41d8zFI0FMFPkji9EHCXTAxQyaeapIjtiSQ==
+X-ME-Sender: <xms:wW1eauiebKQRBmkXUwte2ENHgXYq0VsUPJHwt_qWEGBGHq9o99r2SA>
+    <xme:wW1eamDZEqpvJfVpPDKHQ6s-vlvISHUOIV4BA0jcwq169FINFaSPeYn5KFe7suTTp
+    DIwhVTIrSJc62V5jIQzyxXXLLP2KZ5KO4JzkPTpSyaHn0QGfC7-5A>
+X-ME-Received: <xmr:wW1earHbvGvHPIeRx6QuHtKK3MJcTDwVBMVolQpq_9-eyqwZGNKladhccVd20RUG3tIGNMEeujJiaLBWJT0s8XAKutRZrH21MA>
+X-ME-Proxy-Cause: dmFkZTE0DQEAKCcP3bYHdaNYhdEgs9RTkcerKgXWzFdk8rHZNRnAKkg8ZepGe00Hg+31AB
+    /c9wVR4m17i4iWEYX3LDy/Ri8YDOUvmBVUkNnkm5XM2VTc/nxDS+1bWVRc5ZZjgLYdVWLw
+    o3FubAJBCmNKMGCOk7k3KPPsfuKU0MHcqhgafLyZdwWIluF35whwH8ML7DOeASWyxXpPOk
+    ioxvn7YjvrCB/8Tq29clFuaa9Gf0bWlvc8F87XChInYK9wstrQBx1QUCoa60IRSYhm5Yqg
+    MTgeUnBWtUqQ6rZSFZppx7kWolFfGlifupOoQ1RuuhP4wFIe1XinUhRVx7HPFBf212yXEc
+    X8ZBshDCL3pcY6lYTDlyKgUErYKh2YPzPxTqxGUPgeje7lmeaPjoYUooCrcDyuoveoAuiW
+    LpYJ68z7Jtqr0PFdKcFJoWTvP8Pgtmv+sj/hiR5NUDCtxwn6Bldm2kuQ7LwsClurub7xAR
+    GnYiSIXv6jnwTtzglS6tLZF+DA9mRZrH/E23p+erVhF80UjbHjZghkGITdR5WaY+Z0Sal9
+    ms1AuLPo9RkopuxM3IiimMDvU1PS7w/fyinMQrpZoLqDE92hldR7EWzMXydRniP6stBkkA
+    wxYVkIGul1yUQPYOsLXHpbjzLrL9HQl20efk3wUQwJX2rWHCJ5xijKwapO1A
+X-ME-Proxy: <xmx:wW1eamKeFmtzJXCiWsste13732C6UHDOmEz7DgGU-MGQlOOMMSQtWg>
+    <xmx:wW1eanmxhpao_glsNqLWVa-mwbp-ynhAlryBdR9AwURVwZsKrkQ-Lg>
+    <xmx:wW1eamSU7vJSI5BcP-CYc_2HkqAncjncpkSQxK18RvjBqxY_AJPk_w>
+    <xmx:wW1eahIaAtXC0WNRimO7qkHCdzh2k1V4KG1TXYZrjKWy-pEOuEkKHA>
+    <xmx:wW1eaikpVBRsAA70UV60WzzFmk3hbWjBrclsOHaDYoFPTN5UUUVLPfwZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 14:23:12 -0400 (EDT)
+ 20 Jul 2026 14:49:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH 1/2] remote: pass repository to push tracking helper
-In-Reply-To: <fc70895732f406ecdbaea7a5b9a3fda4fb03df67.1784538618.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 2/2] remote: resolve URL-valued push tracking remotes
+In-Reply-To: <ff645b21591a4b365b30acaf67a295510889141c.1784538618.git.gitgitgadget@gmail.com>
 	(Harald Nordgren via GitGitGadget's message of "Mon, 20 Jul 2026
-	09:10:17 +0000")
+	09:10:18 +0000")
 References: <pull.2358.git.git.1784538618.gitgitgadget@gmail.com>
-	<fc70895732f406ecdbaea7a5b9a3fda4fb03df67.1784538618.git.gitgitgadget@gmail.com>
-Date: Mon, 20 Jul 2026 11:23:10 -0700
-Message-ID: <xmqqfr1dcygh.fsf@gitster.g>
+	<ff645b21591a4b365b30acaf67a295510889141c.1784538618.git.gitgitgadget@gmail.com>
+Date: Mon, 20 Jul 2026 11:49:35 -0700
+Message-ID: <xmqq4ihtcx8g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,71 +90,96 @@ Content-Type: text/plain
 
 > From: Harald Nordgren <haraldnordgren@gmail.com>
 >
-> The push tracking helper currently only needs the push remote. However,
-> resolving a URL-valued remote requires access to the repository's list
-> of configured remotes.
-
-It is unclear to me what 'resolving a URL-valued remote' means.
-Could you describe what you are trying to achieve, without relying
-on unexplained terms like 'to resolve' and 'URL-valued remote',
-which seem to carry specialized meanings in this context?
-
-Thanks.
-
-> Pass the repository through the existing callers and mark the parameter
-> as unused for now. This prepares the helper for that lookup without
-> changing its behavior.
+> A branch may name its push destination with a URL instead of a
+> configured remote. This is useful in fork workflows, where the original
+> remote is renamed to "upstream", the fork is added as "origin", and an
+> existing branch.<name>.pushRemote continues to contain the fork URL.
 >
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->  remote.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/remote.c b/remote.c
-> index e6c52c850c..89d0f9e2d8 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1887,7 +1887,8 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
->  	return branch->merge[0]->dst;
->  }
->  
-> -static char *tracking_for_push_dest(struct remote *remote,
-> +static char *tracking_for_push_dest(struct repository *repo UNUSED,
-> +				    struct remote *remote,
->  				    const char *refname,
->  				    struct strbuf *err)
->  {
-> @@ -1925,13 +1926,13 @@ static char *branch_get_push_1(struct repository *repo,
->  					 _("push refspecs for '%s' do not include '%s'"),
->  					 remote->name, branch->name);
->  
-> -		ret = tracking_for_push_dest(remote, dst, err);
-> +		ret = tracking_for_push_dest(repo, remote, dst, err);
->  		free(dst);
->  		return ret;
->  	}
->  
->  	if (remote->mirror)
-> -		return tracking_for_push_dest(remote, branch->refname, err);
-> +		return tracking_for_push_dest(repo, remote, branch->refname, err);
->  
->  	switch (push_default) {
->  	case PUSH_DEFAULT_NOTHING:
-> @@ -1939,7 +1940,7 @@ static char *branch_get_push_1(struct repository *repo,
->  
->  	case PUSH_DEFAULT_MATCHING:
->  	case PUSH_DEFAULT_CURRENT:
-> -		return tracking_for_push_dest(remote, branch->refname, err);
-> +		return tracking_for_push_dest(repo, remote, branch->refname, err);
->  
->  	case PUSH_DEFAULT_UPSTREAM:
->  		return xstrdup_or_null(branch_get_upstream(branch, err));
-> @@ -1953,7 +1954,7 @@ static char *branch_get_push_1(struct repository *repo,
->  			up = branch_get_upstream(branch, err);
->  			if (!up)
->  				return NULL;
-> -			cur = tracking_for_push_dest(remote, branch->refname, err);
-> +			cur = tracking_for_push_dest(repo, remote, branch->refname, err);
->  			if (!cur)
->  				return NULL;
->  			if (strcmp(cur, up)) {
+> Git can still push through the anonymous remote created for that URL.
+> However, the anonymous remote has no fetch refspec. Git therefore cannot
+> resolve @{push} to origin/<branch> or update that remote-tracking branch
+> after a push. The push can succeed, or report that everything is up to
+> date, while status continues to compare against a stale tracking ref or
+> cannot show the push branch at all.
+
+Let me try to think aloud, rephrasing the explanation with a
+slightly more concrete illustration, to see whether I understand
+what you are trying to achieve.
+
+The current system allows you to set:
+
+     [branch "mytopic"]
+        pushRemote = https://hosting.site/users/me/mine.git/
+     [remote "notlinked"]
+        url = https://hosting.site/users/me/mine.git/
+        push = refs/heads/mytopic
+        fetch = refs/heads/*:refs/remotes/notlinked/*
+
+but when on the 'mytopic' branch, @{push} cannot determine which
+branch at the remote repository to update, so it cannot map it back
+to our remote-tracking branch ('refs/remotes/notlinked/mytopic' in
+the above illustration).
+
+A question.  Do we currently accept a string that is not a remote
+name as the value for 'branch.<name>.pushRemote' by design?
+
+The 'git config --help' output explains that:
+
+ - 'branch.<name>.pushRemote' overrides 'branch.<name>.remote' and
+   'remote.pushDefault'; and
+
+ - 'branch.<name>.remote' and 'remote.pushDefault' tell 'git fetch'
+   and 'git push' which remote to work with.
+
+It therefore seems clear that setting a string that is not a remote
+name (such as a URL) as the value for these three variables is a
+misconfiguration in the current system.
+
+I am not saying that it should stay that way forever.  But please
+re-read your first sentence and tell me whether it is clear that the
+patch extends the current system with a new feature.  It was far
+from clear to me and caused significant confusion.  Writing it like
+this:
+
+    Under the current system, a branch cannot name its push
+    destination using a URL.  If we were to extend the system
+    to allow this, such and such benefits would become
+    possible.
+
+would have been far less confusing.
+
+If that is what you are doing, that is.
+
+> A uniquely matching configured remote already provides the missing
+> mapping.
+
+A very good consideration.  It was the first thing that came to my
+mind while I was thinking aloud, constructing an illustration with
+'notlinked', wondering "what if there is another remote, with the
+same URL, but different 'push' configuration?".
+
+> Use its fetch refspec when resolving the push tracking branch
+> and when updating tracking refs after a push.
+
+Is this not needless, and is mentioning it not confusing?  If I
+understand correctly, what the change entails is:
+
+ * If the value of 'branch.<name>.pushRemote' (call it X) is 'not' a
+   remote name, try to see whether there is a unique remote that
+   has either (1) a 'pushurl' whose value matches X, or (2) no
+   'pushurl' but a 'url' whose value matches X.  If no such remote
+   exists, simply abort and refuse to proceed.
+
+ * If there is such a remote, pretend that the value of
+   'branch.<name>.pushRemote' were the name of that remote, and do
+   everything else as usual.
+
+And mapping the current branch name to its push destination via
+'remote.<name>.push' to find the name of the destination branch at
+the remote, and then mapping it back to our remote-tracking branch
+using 'remote.<name>.fetch', is not something new that this topic
+needs to update, no?
+
+Thanks.  Once I understand what you are trying to achieve, I will
+offer further comments on the implementation, as I find this topic
+potentially quite interesting.
