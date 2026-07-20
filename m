@@ -1,114 +1,110 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BB22AD35
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 04:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784520077; cv=none; b=a9GRzQGPJcUwzoeHK8vUJoClq24AU0LWhQxLluRPI12ZchDLC99rN5eRtGLBbYjBAireyJZv81sxPGbLZB22ghWNT4BZLbioxMmeD7P/xD9Mr/OtCrJ3BGIqUjjpLeNZjUz3KgA76Z9TBXqJePldLzhoxnCn+W1Babikg/G44Uo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784520077; c=relaxed/simple;
-	bh=YKQnTGub8B59E82vl3Z7kBdlsyYL9Iim4lkw6+VS8oM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d7/IMwQ6llKpAWp+blQfh2oPj4wu71cAQ3APVtr3loJEVKR18A4GUqQwoXFOOM6DgSxa2DvNp/4rfYbrCUzIYd96zQ+6UTxKxl5kPb+G1vNhXhwSXf50MAEPDWKbQtRQXdjH7TxNqBZ2yHNMzS9QPgLJhndIWBealqwbw5sdlGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dyH8iSZk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ogHAP6nq; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAD11CD2C
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 04:31:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784521893; cv=pass; b=ezDUCprtFBs0UMNEBGYXl0oh+JwaGyZ81bT9ChBBNJHa5z2/V0y6gFTKmrsZ2f/d+W3zZ8sRk/8LMSd8/mW5hw6IDq11IDBN6DvtfaCzZMTAYyFNjdcgg/1mOWzGDQAF/UDxCA9HDQ4Hi18rH0cKZeZwvhDTy77DWKSCZ135soU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784521893; c=relaxed/simple;
+	bh=USstkdWF4ZRKCIhki+OIIyltGW91HetrW56moeu4QBU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jLD8fkgaSHP1eNpXVtwf8nhDLo9WKbNGpB/XN4LSMjc2PfXBkP94qWgX6lMbzH/X9cqoM1klW8yPRzVrZvOBTZ36lgTU60ZtH1fsyOJ21LcERa2zCjdVOFJDBRmdgSJ3H5x0wAEQf8cIlSjA0WbeZXTqCnOvtQYWD45reIns+0g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EIr0hohy; arc=pass smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dyH8iSZk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ogHAP6nq"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 00ADF1D0004A;
-	Mon, 20 Jul 2026 00:01:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 20 Jul 2026 00:01:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784520074; x=1784606474; bh=EGF+rgcM7b
-	eYoSXNpU+1CoHUw5LsQr4iVJ6D6+G9EfY=; b=dyH8iSZkJaCkr+9DxaCIEpKJl5
-	IqMqJT9OtCjbU6DUdHIyWgJuyQOe7rmNa8jFo7RYJFGX9GhwgsEieRvNc2sOT2kH
-	+/p4bvZBMS9Xkc215vfNjfrcbdg0aXIoJpXBZA3lMcX7ZN3mTzzq+8dbvpCQeNPx
-	6OGE5+uR5UA2m2TbOxy1pfJpiOVGkeELRCsiLFTt8lyLosU0yg2OTUlUUUFT+Pk4
-	okrEs16iZvH2FbT018k89VYMIyPHCWL00DKd5a5mO/Hf/8zgdniRqSBsLqAIx5Zs
-	zFyQiAMwiz6zGNqMf7k5PL/sA0r9e5ROt/6E/wuOSrVTGkIOtrYNEPsYAPlA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784520074; x=1784606474; bh=EGF+rgcM7beYoSXNpU+1CoHUw5LsQr4iVJ6
-	D6+G9EfY=; b=ogHAP6nqMpRMDgEwDvJvGu7DFTsuyJ4VLVodbifynoxtisa8sXH
-	YEux/m1gMBMg4eoCrB/4f7GvuWErHrDA4o0i75gYKjjgU34RFK2xu3pI+6dep/2u
-	gwCVXUdGjPARhCmOxll4J79Ist43H4lE7fWJi8wOhn1jRqlr4Ctb72jpnp5fJIrb
-	AEq+r6pJXeq99CqESvHRjlTz1mbkHWKD89+FJaL1ZCUV3J2x3bnfpftXrcQhsYk/
-	lqn2m0sfWo438rp2n/NclgVykrkGJsagEtWYNZr55f/KcfViXouXgIfNVKCjKHu8
-	owWFzR7UtJ+1+q5m/Xto9DASPNl/aMcTHSA==
-X-ME-Sender: <xms:ip1datzX-8n7EFGH3m2GvRoRf0hCYzgc9JEOEJ03WOIy0zVZqlpfSg>
-    <xme:ip1dakJ3JybMrgfvvoiJY7yPu8F4PDT9cP5PCM2CrwLWANv_yFxEauIYwixGQtAjW
-    N1P_qDI_rBMA5nAAX_8dLob7oyRjWiElJ4pxHUeLcB4PDQKQflqxw>
-X-ME-Received: <xmr:ip1davql3YMQ09Z0_Pg5klfIeVa9XucIDR27QCG88A4o7oZtb1480izfKyOqHcQoGJEQKYr-oGpJSqg2QDoaGYUE7YYDBCMfYQ>
-X-ME-Proxy-Cause: dmFkZTGxoQwbe1ZtuWefCwpc27vZBHSwoj4z35HfG4kxADqxBWmjt/Zg5kJUadQV931cs7
-    xwlxayDCaw9FZeb1SHBKf32M/BqrL16Ucj3Xwq+rmrSem6PTG0HmOiYRB8knz2/k7MeVrZ
-    simRt4HP8eiEc9no5+2oA9+Kv4pFSeUhwMjfVwlcwZgaxzJWeAcNBZmk1a8/uWtu0q4c96
-    N7ikjC/WZ/185Oq1XWNUSm24f5eTDPzrML6qr2It2mFfcZ26ePxvD/kUO5u1UQQho9lGtE
-    nENp3Tjczq+kdxQFPTTWsyPHlVNj6Qrx57mJEmbu5L/xPAQyZ+O99zdXfO3xLDguse3UhD
-    F7OHEeGo3LY5CEDv+0h4zMhr87JLpIc9uhbv+XyoVhzvCx4dXjHlShYgHDFhPTlTpsP3NL
-    L9qYs4IswRHFn3ZjpA6+FfLDdAb2HeY/QD/3kHwKZMyRLj6jH8HHjqmtEeeQVhkRJeogOf
-    zwvfTS5pTm0ix71AlR+HZqKxJmWP+cVlg8CB2NK+Vy6RI0Og/93gTg8cMRvCAufJ5H+yJE
-    dlFwexDnZ5bqNaAFirrglldU2c8kHwhezlUW0KtYkI8fg8RkUaSVdNFFMkz+JoC7AYSp4Y
-    KDMpRleEjSEK24QeL23zhHvCN2/aoLwURkotc7f6wc36NFplD1tqynYe9SyQ
-X-ME-Proxy: <xmx:ip1darJxl5yzWNHRmf3etyVYurRNGQu-eAYAhA2bcc_UB2iywe4x_A>
-    <xmx:ip1dasQRzx0YOAN1vgkHV4J6ONy7YGOjOqtbcfPksWN716z8RFwZ7Q>
-    <xmx:ip1daisCzRe4a2nijdwi9Sjik1BI-aiiD60vTSLxJYnDGTgT9-7IMg>
-    <xmx:ip1dalbWGfL7LjDA-1TDa-o27HcodyMzPTLSaJ20OfkwJFtwyt4ExA>
-    <xmx:ip1damYm4I_WhnvY1_eUokpVVo5bgc3wWJ7vIGRFwp18TYpdF3ESEcNe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jul 2026 00:01:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,  git@vger.kernel.org,
-  jltobler@gmail.com
-Subject: Re: [GSoC Patch v2 6/7] repo: add path.grafts with absolute and
- relative suffix formatting
-In-Reply-To: <DB49CF15-4980-4213-8463-4C0FE2EC8438@gmail.com> (Lucas Seiki
-	Oshiro's message of "Sun, 19 Jul 2026 21:20:22 -0300")
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
-	<20260717133015.32040-1-jayatheerthkulkarni2005@gmail.com>
-	<20260717133015.32040-7-jayatheerthkulkarni2005@gmail.com>
-	<DB49CF15-4980-4213-8463-4C0FE2EC8438@gmail.com>
-Date: Sun, 19 Jul 2026 21:01:12 -0700
-Message-ID: <xmqq33xejomv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EIr0hohy"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-668432fe416so1039736d50.0
+        for <git@vger.kernel.org>; Sun, 19 Jul 2026 21:31:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784521891; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ckraoW4xwKYU5/Z9rW34oTjNgWKjmri9SmhPof2TqApzhsx5DlTXbzxllBSubX3DkG
+         ECeGLhDBnUUHEgpcSyf3jsWQwvluf3Pg/bewaxS8Fu+Hg7Ypnn/vbsxrOfr+O1rgkbct
+         czIO/witPlRnrTDPzvoOJr8Z+OlPFFHDNR0p/bPcIhzdpMS0RnnwhurFrJn2CV0Ln+6R
+         CzoO9+MOBrXtOQlju/Y5oyHxgEdLhuQreJolY85bo0jLS3JQMCOgBWGWWcFoLYWmUC5k
+         HU83Jrsv7QNNv7BsL3vzRTSitPrlSihKTwq7xjSHeBX0cw7q0p0EcNSKpfFFR8GqaeWU
+         IRfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=USstkdWF4ZRKCIhki+OIIyltGW91HetrW56moeu4QBU=;
+        fh=QnVQ3wfWHPhiZMoMSXPWuRxIZpGYqet0mF2rlxd0t4Q=;
+        b=jqNs10Ia6u5Ywc+5K/5MFMgkFAhXG0TcRqUn1+cqNxV3KtbgtgWRAVH/kJmT1QCpqW
+         DQcBa1Vvy/8ByPSYHVR0aNr5n+PI0p34rBuh3/gax1LL4QQflbBMSsOdEwKCz7ArtciH
+         JK7c3BXaDwkA99yCmVzIwfccYUC6dHyCwVep1dvJ66uot7YkMrI/RC+nPzRsC8trT9Vh
+         85uMP9nCVKgvlbA62cC6Johfx9v3w2cYunUuTSFNl8CscyLL3D1diuEtIr4pw4uopy8G
+         ULjlFUf+luoMkZAqRo2t9FUZ6ISSNSRjHx9AqMKdX0BpXbN1NLyadPBjC2rnNJLMzj1j
+         LB+Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784521891; x=1785126691; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=USstkdWF4ZRKCIhki+OIIyltGW91HetrW56moeu4QBU=;
+        b=EIr0hohy+tDMqXrocxitwfwKkDPbdK39/evmcwHlXO3HvS37QDskzLGhfX6pWr1p03
+         skDX9QuIKY8DqoImEyoFIZ9y54Da4Fo2fcR25s7JZ6V/kmlvq2VLTsD7TBREFc9KgPMI
+         YAwvk1XLVRy430FMnMdHW8P1UuobH4k0L7YiobK/HcKSUVTebBlKJlJ5zEElOiu5jGdY
+         TzTjzPhUcaCq8vDHLOGEqXTJNZJEL9mXnPhGEbzspN+z8+FWCwbhAsE8WIXNDWxAj5DF
+         8BEJGi06tZogWXiHL0KmLur2lm5u4Gh0USchGpxYb9WeC/3iQmSp6aEqrUBOWkh27PJ3
+         1tvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784521891; x=1785126691;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=USstkdWF4ZRKCIhki+OIIyltGW91HetrW56moeu4QBU=;
+        b=OhdxgmkjyIAYs5I3PdriGNkwara7cTwbmjc87v/Zd4xd44+EBcXjuXcm9cuFKCOgrJ
+         Lw1YAwH4IU672s16G6mOO4+bLkeIH3RSadagUJXplQjXK7Pp3DGydc17M1ITZ3eB1amP
+         71FlbnnJGV7ClWIYIY3+BD4JOIXxD2Il7gbelyUkveQuwDEp0BmRBzVrv1OANwi91p8l
+         3DRJXKTFWvigcZrmsS5nXremTH34lQSYddLDYxuh9fTX7x/qqEokStWmDdXcdaI53Eus
+         2CbeYyjwpWz7EY4/olOR3u9TQvphhbZrWtcUg3OfMwkQdjUIgvYu5pSgw4sv3z3ky8YZ
+         PLDg==
+X-Gm-Message-State: AOJu0Yxude5ZBmgiQ++eglDQevNLAsc2xKSXJqFf2NC9D8/YGRxeoJrq
+	3/1A71NLhSkLkm78xh6Bq3IKifIZzwZYTzjaeZsppeyo6nrggLsTOWHw1f/IPgHd+EdWHvDZDaE
+	66Jx98GGFCgB+Wx36pZM44kmbVGw3IlJGsAFm
+X-Gm-Gg: AR+sD13OGS+iSTg1oQaTXHPCYbIyMYEqSiZtpCehov3K6kSBUfmK6aqjWUoJylyfzxR
+	sF/MWvR0mLIyB09iLeLugmnz+tUJbKIrZbWc60wlWMf8VyngfkP0EEmnvf4Pm5RXmg9cUMofLoe
+	pF23qYSbEE4xO/vOAi7SdGwKTcy5iiMRXd1TzsG/0ilTzJPA6sm5TpjHnR+S26vFcsUAvIfYitL
+	/Rq8g0iRnvH7A+I+hP5324hJCRnCTHoaFb8jd6LuZjlbcZhnCw4ul0D0BbXnTolJXUB0E63mozN
+	9URnUtmHVVMqx3xxWtcyftQO9Lc=
+X-Received: by 2002:a05:690e:429c:20b0:664:ae67:b672 with SMTP id
+ 956f58d0204a3-6683bd7a996mr2786888d50.78.1784521891424; Sun, 19 Jul 2026
+ 21:31:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Chris Packham <judge.packham@gmail.com>
+Date: Mon, 20 Jul 2026 16:31:19 +1200
+X-Gm-Features: AUfX_mzMEw6FVev6Pd9LDJjt7HCoSRDwPqv4W6mx4M8xykVBI_LYN6d9BeCslOI
+Message-ID: <CAFOYHZBTAGiugQVOJrc4kJQkuhcSDiT1ruim7A1+6EW1iKAUNQ@mail.gmail.com>
+Subject: import-zips
+To: GIT <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+Hi,
 
->> Introduce `path.grafts.absolute` and `path.grafts.relative` keys to
->> `git repo info`. This allows scripting layers to query the active grafts
->> context cleanly while scaling transparently with active `GIT_GRAFT_FILE`
->> environment variable overrides.
->
-> I ran `git repo info path.grafts.relative` in a repository with no
-> `grafts` file, and it returned `.git/info/grafts`, which obviously
-> doesn't exist.
->
-> Wouldn't it be better if we check if that file exists before
-> returning this value?
+I found myself in need of a git repository that was built up from zip
+files supplied by a 3rd party. I knew about
+contrib/fast-import/import-zips.py but saw that it hadn't had a lot of
+attention in 13 or so years.
 
-That is an interesting question, but I think it depends on who is
-querying and for what purpose.
+I spend a bit of (AI assisted) time on updating things to python3. The
+result is https://github.com/cpackham/import-zips.
 
-If a script is asking where to write the file, then the author wants
-to know where the file is supposed to be, even if no such file
-exists yet.  Since the file format is public, they are free to write
-their own tools to manipulate it.
+I started the repository with a filter-repo of the existing
+contrib/fast-import/import-zips.py which does lead me to one question
+- what license applies? In the absence of anything else I've taken the
+COPYING file from git.git i.e. GPL-2.0
 
-Thanks.
+I wasn't sure if there would be any interest in taking the changes
+back to git.git/contrib (or if the use of AI would rule that out).
+Anyway it's there on my github page if anyone else needs it. If
+someone wants me to turn the changes into a series for git.git I'm
+happy to do that too.
+
+Regards,
+Chris
