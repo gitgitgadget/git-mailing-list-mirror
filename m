@@ -1,119 +1,131 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F11E39AD51
-	for <git@vger.kernel.org>; Mon, 20 Jul 2026 10:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784542369; cv=none; b=t2L+Fa7RkOCaPbg2dLuHp1ypXFijpsRQIYQ9RzWxq6pAWtB0Spg/0byaADzNbOSoJyMkSi1jN/ulRR+9hKI8Df6gHurRTgovs294HiG3y2YMpfrLk2OZngeYvLw7wNokA/JLLqFOvC07u6r/cJrPgUC4vymZZR4bpysRYGxjVKk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784542369; c=relaxed/simple;
-	bh=ajl+bJKOnRQno4Y9hWZrKoAOjs3A5ut4Pi0m2zI4B9A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bkt1flglVhymKYG2YwlbVGUK1akz4rpOu//3AEH3E237xnk9Fs13s4Yd+3QihYOyEe9HFxa51SKwcTW4yb/N6BN6GxJHrr2YyeOh1hXdN0S+/DwkIBXyvMAEzz45GDS0Dz30DJ6tnI1OJ7RSqO8fyziedZZqeTBGE0ONIBV46Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=qAh8vsUH; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=VYpAaZAk; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652D139280D
+	for <git@vger.kernel.org>; Mon, 20 Jul 2026 10:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784542806; cv=pass; b=h2kS+tYWMF0svAj46wduYSkupLmdivDZJaGrrRmQIsu92Syp2gFCOWWInZ6iU6IG89tDAEcyOckXXp7joi30A0WE0vlyJsGxvx8zdxfiUgUC08UKHKyrCM3BxHkD2Yb6Hepc6oMGY7GW+UTDPsoH41ORhAQDo+KAuESvMxFTk8M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784542806; c=relaxed/simple;
+	bh=VIUx71oM7HPRruYcUBgOHS9MTks+2LVgw0JoQvtSlrM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WrFu/lne8gTRbVGElTgFzQJYQEaK3aj4as4lnE3Ptkc+sNXsTcW09K17QPW3x9Jx9f25kSRG2R4IEZQepmTBrJMFF35Sf/WA/6VQ1gL9qpMuwjNaL7B19QQmuF3HbhdMYg5/29CDZmnPLW4YQbWWW+LSONWxGtbftZGe8H//LcM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C/RuablA; arc=pass smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="qAh8vsUH";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="VYpAaZAk"
-DKIM-Signature: a=rsa-sha256; b=qAh8vsUH6wT0uPXUWv04O+SfsQDnucFuZJ2LHgmBpB/XloEEJ65bS7WnXX3Mi5YmoQRcIlFaF+vITVL12+iY/CAFhA+liQic+IYHh6gLc/fZ7mBcWdLBtTIP3GNhobft2d7Gb/nvkyBGwPzT/ig/og4+cT1vXiQqwjA6nygDcMJLnnBuMlQAiZrNAcrCvYUmjGADGe4SEJIuz48QXfmp6R/EGX6AZkcVx7/N56+YwttxxhiTfdHY8fuCZVr7fU9FjdQ01YjLqWAHsZM+9uB/sxIPBSlWn5QEXGx6huNZwVM1TpqtnHCN6+sQ1xthaZe04bQjm9PErWb8RFiMs7/D/w==; s=purelymail2; d=malon.dev; v=1; bh=ajl+bJKOnRQno4Y9hWZrKoAOjs3A5ut4Pi0m2zI4B9A=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=VYpAaZAko4wdIJTo1qOjkWusfv4KtDwaxQ9pe73O++4D0uTiDCDgxGJZr2r7GiPaqXYUq9CYEnPMLLCslyHdnlMk52O5dTx4Ss4nMNkSmNJ65z2698SB3FGFgYkTAnkIUqEH+VMwPlhhjGZuCEIjxxv9p+WcXVVq2v6hJGByBPPbAURM2wfybubwCWPxrY4neR0Qr6OvVE+Fv/LTYlDuESt5gSGQxMkNsUEqvmrh8b6F1i8ff/KeMoP2naxAkQHM4b6eg7ESpFeW/QWr8W23OgtSCW3+ReCF/bW1ifPPcW5cK19ifLvTX519dRs68ej2r4NY8jmVLj+4lyGl24MwAQ==; s=purelymail2; d=purelymail.com; v=1; bh=ajl+bJKOnRQno4Y9hWZrKoAOjs3A5ut4Pi0m2zI4B9A=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -2113826742;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 20 Jul 2026 10:12:35 +0000 (UTC)
-Message-ID: <6407614a-156b-40e1-bf70-e54ce84427ad@malon.dev>
-Date: Mon, 20 Jul 2026 18:12:30 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/RuablA"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-84a2c90e383so2322741b3a.0
+        for <git@vger.kernel.org>; Mon, 20 Jul 2026 03:20:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784542805; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MAstc95MjC/D4jziT2tatAvNkNe83ES1uqeGOPOeF+M2BToEshcwZN0HhyG5xQoF1W
+         fTW5BoBH04l7RUoabeqQBBSVYXiEQ2SnLIERMnxNNTSgGXXJ2uYjw8V/2NrLOXb8QoqM
+         M0vR+WjlN9ZJVK+lYCgYBnv++w9VMdx4H+lHrgDzrWywHp15LIRR/djJtDW+92CmleYB
+         lWMbAoDOPuFpbV6ZlGbR28MHfAYvktU+B0Y2BDBslnYT+9vbv7z3m1QfwQ/1QTliqRB3
+         1oA738cor+q4Xv8aE7vTUK6jjYBfo76vfFzmXbI4brolXCXhhfsDPltzOgT+R/o5RwMc
+         MoJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=VIUx71oM7HPRruYcUBgOHS9MTks+2LVgw0JoQvtSlrM=;
+        fh=h83en6Dr5+E4BFEbSBk9ciqFMJ3sYwHOEz/wUHqjghE=;
+        b=hHo1vzitB0KCGjtKbTnwCwmmc2od1Mu7ohO1hWlYbYrK4L6nFvhuvEDzsAfG0sj6x9
+         3N5dT3H3i1PaVdzIkDWfOybZHiajxN7m/Iwx9pdn0aUMXfQ/85hOnm0M7VkbPfHcOBEx
+         HxjjWzamVHk6EZ0hbXP4GT53qHo6H7T5Rz0vMrtM2Yc9Ug0U+g4f8BjcKzszHcjqdgsD
+         yeQwpSVAqupZ4h6hhec70fpNZI8PqbmZ+xouW258hEsoTIqxsWdqrQwaG2DygEuiNvBK
+         i0fwkVR/HvSdCyNYtsbT2ScjuRYeL71YLf8e0fo8lwGBx/yitqo3Qrd7evEzvGYUvDyB
+         n8nA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784542805; x=1785147605; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=VIUx71oM7HPRruYcUBgOHS9MTks+2LVgw0JoQvtSlrM=;
+        b=C/RuablACAHWOIMT64X5DJ+nswHdaZdGiSM8rXdyNNtt1o+4Q8CoKUToikvjNfNBep
+         EMBQw0CWiNZ2wL7LReUzYazRPFVphCZNup/+WaAcaEf7KBzFiktZTfYc3aOmNK6KVaN1
+         smfo6WS6r1tfU7EgZ1AlNPfk1VQXlTlmjPbPoB8GfAcxqwXlmNxdNTlBlDBUoSm0QsIY
+         7M4iiUQ7qqQTBGJ8s6df/991FG/5dTzhTlisRuZBObTqK+Eto3oXh9bi8LYRRS55vq8Y
+         ToUHaTSuPJxhJ7rGLAtScgKMOXHFEPJ3mbdTdX9Kj0BR1juSLjnAzZN4wJNtwuYWQuIx
+         kaUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784542805; x=1785147605;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=VIUx71oM7HPRruYcUBgOHS9MTks+2LVgw0JoQvtSlrM=;
+        b=TIQz0q5NMBpg5yQFAYDGq01sn/u5HY1u7S4ZEgHnG6jBrfRyyUb/P1eDYLwtxtsGtq
+         vU+STF2THpfZLAwMmlY2XzFG0Oz51wSzOMp+8V5tankRbjso0eGzUl5yzxj4f7nnIPKG
+         bkh9eO8LNmv+dodKMxB4uXCA1cUyqW8nkojYiWy46/x6iqy3v7/idb9KAgKpKc0l79Ob
+         UH5O9hqgPo0qFGoj3ykwRc1rHh1JrxVmis9W2kfbNnPto2hzuEZPrsqIE5ZK1bwscZdA
+         Rkot+LgaUg4gUTPS6l0aYxlcA4Lv2Yl9QcT5NjR3j+WbfsTqTFu+MAXEk2xLIgyYwNFE
+         BPpA==
+X-Gm-Message-State: AOJu0Yy+vZLgO5swwizcU6tfTuHPfzE8k7YfqDvYm2chNqHgnvCpLLDR
+	WDsXkpUIC+yWS1SbA37VgE/x7SYj3V4/g8R1gQZjfIaTwACunM7Rrnav8XL0sQEAXlltQlp+Rqz
+	gxabYIezOgn+OA+XJ1A6HPFozOQuvIUk=
+X-Gm-Gg: AfdE7cm+qiQgujxCVBBKUrMcL7fNlAKwhtMq0RdyjlKT8eoZT629piuCYcND2KhJ3x/
+	BFoVywWFljp6Lxr5XozaTEHXa5c9hXg6SoGW1wef/a1JSsMJQAGsDi6jxMRoxuST/nXFIzllHiN
+	VPaNygDH19hhCInzUWiMQ9RmMO5cwqe6s82Z5L/nMiv639xFFgkWb5WIIjDXptkaEWPaI/euWlW
+	zBiL+Q3clH70c4RdDDGVbdi/P6ZdJk/yNoKhr1tqaqgDsbTuvlQLCgM8UEcm3dfJ9QqiVGEpiVT
+	sEWu4/JlbHg8V1FvQxPk62CaTHOKBlVyimZ29uIOlEZO6rmGCIlwYJqws2wGow9LytHzI9kKT12
+	KHkDQZQ==
+X-Received: by 2002:a05:6a00:6c9f:b0:837:f111:b70 with SMTP id
+ d2e1a72fcca58-84beb054ce3mr17593511b3a.4.1784542804401; Mon, 20 Jul 2026
+ 03:20:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/4] read-cache: pass 'repo' to 'ce_mode_from_stat()'
-Content-Language: en-US
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im,
- Christian Couder <christian.couder@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Olamide Caleb Bello <belkid98@gmail.com>
-References: <20260716084941.1101918-1-cat@malon.dev>
- <20260717063559.1633567-1-cat@malon.dev>
- <20260717063559.1633567-3-cat@malon.dev> <alvNq8rXF/jofqUc@szeder.dev>
- <8b9528b8-198b-489f-8f0e-fbd0c7d07b64@malon.dev>
- <al3v0NVZJYS9SVZF@szeder.dev>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <al3v0NVZJYS9SVZF@szeder.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
+ <20260716132848.95982-2-r.siddharth.shrimali@gmail.com> <CAP8UFD2ZNmWh4fjh+vFvKCihfebg2yif9=xLjqpKZFgF-O0RSg@mail.gmail.com>
+In-Reply-To: <CAP8UFD2ZNmWh4fjh+vFvKCihfebg2yif9=xLjqpKZFgF-O0RSg@mail.gmail.com>
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Date: Mon, 20 Jul 2026 15:49:28 +0530
+X-Gm-Features: AUfX_mzXUuzZ7lZ-B_5RxPxUBl4S7bZBHZvyYlrLnXceD5runhdolEVZ6fsZLLY
+Message-ID: <CAGWgyh8rCg0eP6Og31RPRn6oXZ5K09VHtH2UsvMSQs9-CJ=pgg@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/7] builtin/repack.c: add --drop-filtered and
+ --dry-run options
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, siddharthasthana31@gmail.com, 
+	me@ttaylorr.com, ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de, 
+	karthik nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/20/26 17:52, SZEDER G=C3=A1bor wrote:
-> On Mon, Jul 20, 2026 at 05:13:17PM +0800, Tian Yuchen wrote:
->> On 7/19/26 03:02, SZEDER G=C3=A1bor wrote:
->>> On Fri, Jul 17, 2026 at 02:35:57PM +0800, Tian Yuchen wrote:
->>>> diff --git a/read-cache.h b/read-cache.h
->>>> index 043da1f1aa..94b8d3e547 100644
->>>> --- a/read-cache.h
->>>> +++ b/read-cache.h
->>>> @@ -4,15 +4,24 @@
->>>>    #include "read-cache-ll.h"
->>>>    #include "object.h"
->>>>    #include "pathspec.h"
->>>> +#include "environment.h"
->>>> -static inline unsigned int ce_mode_from_stat(const struct cache_entry=
- *ce,
->>>> +/*
->>>> + * Determine the appropriate index mode for a file based on its stat(=
-)
->>>> + * information and the existing cache entry (if any).
->>>> + *
->>>> + * This function handles degradation for filesystems that lack
->>>> + * symlink support or reliable executable bits.
->>>> + */
->>>> +static inline unsigned int ce_mode_from_stat(struct repository *repo,
->>>
->>> This new parameter is not yet used in this function, which causes
->>> compilation errors in all source files which include "read-cache.h"
->>> when trying to build this commit using DEVELOPER=3D1, e.g.:
->=20
->>> I think the new parameter should be marked as UNUSED in this patch,
->>> and then the UNUSED should be dropped in the next, where you start
->>> using the parameter.
->>>
->>>> +=09=09=09=09=09     const struct cache_entry *ce,
->>>>    =09=09=09=09=09     unsigned int mode)
->>>>    {
->>>>    =09extern int trust_executable_bit, has_symlinks;
->>>> -=09if (!has_symlinks && S_ISREG(mode) &&
->>>> +=09if (S_ISREG(mode) && !has_symlinks &&
->>>>    =09    ce && S_ISLNK(ce->ce_mode))
->>>>    =09=09return ce->ce_mode;
->>>> -=09if (!trust_executable_bit && S_ISREG(mode)) {
->>>> +=09if (S_ISREG(mode) && !trust_executable_bit) {
->>>>    =09=09if (ce && S_ISREG(ce->ce_mode))
->>>>    =09=09=09return ce->ce_mode;
->>>>    =09=09return create_ce_mode(0666);
->>>> --=20
->>>> 2.43.0
->>>>
->>
->> But 'USUSED' cannot be used here since the corresponding header
->> (git-compat-util.h, or more specifically compat/posix.h) is not included=
-.
->=20
-> UNUSED _can_ be used here, because:
->=20
->    - This is a header file, so it's not supposed to be compiled on its
->      own.
->    - All C source files including this header file must start with
->      including "git-compat-util.h", so by the time they include
->      "read-cache.h", the UNUSED macro is already defined.
->=20
+Hey Christian,
 
-I see.
+On Sat, 18 Jul 2026 at 18:01, Christian Couder
+<christian.couder@gmail.com> wrote:
+> An alternative would be `--drop-filtered[=dry-run]`, which might be
+> extended with other `--drop-filtered` specific options later.
+>
+> I think separating `--dry-run` from `--drop-filtered` like this patch
+> does makes sense though if we think that `--dry-run` could be useful
+> later without `--drop-filtered`. The fact that a number of other
+> commands already have a `--dry-run` option might be a good sign.
 
-Thanks, yuchen
+Agreed. I chose a separate --dry-run mainly for consistency with the many other
+Git commands that already use it that way, and because it leaves room
+for --dry-run
+to apply to other repack behavior later rather than being tied to
+--drop-filtered.
+
+That said, I do like the --drop-filtered[=dry-run] form for keeping future
+--drop-filtered-specific options together, and it might end up being the tidier
+choice.
+
+Since this is an RFC, I'd genuinely welcome others' thoughts on which one
+holds up better in the long run, before settling on any one command-line.
+
+>
+> Anyway it would be nice if the commit message explained a bit the
+> choice to have a separate `--dry-run` option.
+
+Either way, for v2 I'll add a note to the commit message explaining
+the final choice.
+
+Thanks!
