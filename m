@@ -1,337 +1,227 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275C937E5CC
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 14:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784642706; cv=none; b=EflMyUhrqJaY2WtxNgP+gW377AnrBTZdi1Wz7nB4Bk5lCMhw/tTs2/Oo8xdSCAOdasyhsA0drSnh6TUuINOfcqkkdOQsiwTR1qbRNBDpuMQzQOroyEfVJSmj7EIfCPF+BoBH122AiXSV/YZDXovMAxjBwNzhRBPcPXvm1jQuWtE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784642706; c=relaxed/simple;
-	bh=znMKJU1iXsZx19OmoO2n/H+9prnHtgGzRcPwsISseh0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BU/H6VyGkcXf3v/UVgwUVwBDF84atYcsrf5KbPcnthbuwHTcaJzGbhA5ThVkwASZVdBf5VY2gZtc+9tLta3+F+1IuQ+urKRFqgoCCHMMGN0fEt/46hY0tviFVaGjWcU6kovdB1wsfKVf9G+0qUshpLs/5EGv1O87jFizuuWLmsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es; spf=pass smtp.mailfrom=hsal.es; dkim=pass (2048-bit key) header.d=hsal.es header.i=@hsal.es header.b=JJfzJFYd; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hsal.es
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9801739EF0F
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 14:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784644131; cv=pass; b=nhZJYFj76Gvm6FGKPm7FxmH+fE2sykVsIIeb60/qP+WmLo1hf6ZUCnxR6+57qxHOnAWXDCJdh6mEMM3oJvKHl1ui2k8xx2llT/MmokRJ2sfmIZBQqi3KGjj11oDt8AdhpNvLQsMIyGrSEdD9dRH/TE/4V8bY12y1z+vLXUaXyeA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784644131; c=relaxed/simple;
+	bh=CY/sa/r5tB2+rhiXZriFA0cTY2vqQHcTHyDQhHi3u8o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eokyjgIEuFUdpQ/YrmCvzMK90MRdY38S5AWKmoKNMRt2SQg7TduXystR11M6yZXK5n8bmMEEbTjLV4XUsVD9/Q4TXN7UBPN/T7Uq+4OYw6iNxfE/KjsxFdmCydbO/aLplUjkCSTlwj6MJ3bi67s+6qxr95S1yNIWtZGourg+Ego=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTBWufqx; arc=pass smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hsal.es header.i=@hsal.es header.b="JJfzJFYd"
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4h4Jzw6NlKzMlH9;
-	Tue, 21 Jul 2026 16:05:00 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
-	t=1784642700;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BfEU+pxdhzGIaHwEwAXK8MVrBPX9iCM6epQyMvNUszM=;
-	b=JJfzJFYdSOD9YABV+lwOVgWfeZ6vyvydz1nRj2MwoxA5R8jidhCPFpZDdt1/W+IlHT4t2J
-	gBFU0TzQnjTukxPAMFEMBX3oS4+13Q6h8+O57WB8NB2Zs1HR1c+8W5r81wqARe+6Bjf0iP
-	aT1K4UAlmtOtamKvwfcJppDIQzGXW9FXRgUB0YquwAR7Qb5w2Ax2vUUA3vaAUQG1ftClhQ
-	ORF6laR7JqaloC5Ledbr0A9awXypvHVtNStYZ2LuUeOL6Nu3FFtLSM8wlY8EwFamSStVhv
-	ezraM7glYf7sk1uJ4xFGqAWM9T62LQjhWdqGWMQokZWVkwbCG/Akq2cG921nbw==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of hugo@hsal.es designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=hugo@hsal.es
-From: Hugo Sales <hugo@hsal.es>
-To: git@vger.kernel.org
-Cc: Hugo Sales <hugo@hsal.es>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/1] rebase: add --[no-]edit to --continue
-Date: Tue, 21 Jul 2026 15:04:42 +0100
-Message-ID: <20260721140443.1809379-2-hugo@hsal.es>
-In-Reply-To: <20260721140443.1809379-1-hugo@hsal.es>
-References: <20260721140443.1809379-1-hugo@hsal.es>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTBWufqx"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38e58034d05so3451734a91.2
+        for <git@vger.kernel.org>; Tue, 21 Jul 2026 07:28:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784644130; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Wty1NiqpQcSuMwQFbyw4TVh1ARkocP7rGl3If2rBEKEGRFRqwRChSykoK85ld1pvpa
+         qEJj5ylHxEzGObeb23av1E8wlXPp5BkflqU+19r5/1MWBA+Qok/C1v3OUSswxOyUjRY3
+         GHEXMXdT2BzpL/r6/asGH5uH8UCzkhnFkmvwTwhjhdyHfPrxflVsW/yIjrcM2p81SJhU
+         MUc7SkSmOd2bHRV4WtFIs0tE35PgTDoyQamJiKF4VVqLMbivXIcYZfrdyc0P882VoyDU
+         5rnXguHnVqGmWYmeOZJm93Axr4MP0kLjL7rguINuQcnaZ2+DWDY9WkhfcFjLI/sfy1/c
+         8SBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=/e+hdiRb0i/dbSh4cpURzc/r1mn6pdjsf67zGuUfJW8=;
+        fh=Ox4D5aCb0Wm3NuWmIZhbrD5IUgm6JPtaEE6xbKungY4=;
+        b=Z1SS30BjJv5XdEfqyCcmmyFn8avXNLLWaZFAHLKCJjogVlTe4uZ4BJbmjqqbzDeeEA
+         vyAg7r4525Ci7V+QGXvu+166PWKOI71iTxFRLgfAf09cIzjdjUwc8E7XVkyZFUOE8i/y
+         wS34NMdThP2b38rE5WRUUsvTdTHoeHYrRmyg6cl3dTKmG1lVyIRH4JecgE/dPQaof8wA
+         UBJAmqIk57I+tuXrZUeGF4BOk28l2pAvk1Q7AG73UpriF1xsg8PvnEkvIgAgpKhn9bax
+         VMQVhEKbiLA8lLgtPHKXZ95ORm8MiXORCgI0cnL1v/NLlf4QJBVFMBR67n/2bxwEZ/8V
+         ajEg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784644130; x=1785248930; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=/e+hdiRb0i/dbSh4cpURzc/r1mn6pdjsf67zGuUfJW8=;
+        b=dTBWufqxbpYLps2f2FhzZB8fz2l6kvrJ0xUX0jM6fCTovBI59RhR/2iTtDDygrtmIm
+         VxOMOt6jmiNiVTDEyXPg1z+gMWGsn9BfSXRyrcK8YUwczKZh2dRNEfsUOgncTleU8eN0
+         RyNpVU3HzldLtJnzwzkjeoTXZFTTJuZYiYlfarpnRqaguoVDYtMzx+ubjPikyutQQPg0
+         nBhPSN0IwCEGIA/ugv+JcfEIzp5dFbTtp3Ggu2uKxtJTSNcyAq8THUoethxqY/uOgvek
+         7NQLAcb8wA1U0Z8ahwYWfLxPvq/XSJwiWVj4xX2FmHNTH9bZtE+BjG4TBemruDGGMRf6
+         5tIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784644130; x=1785248930;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/e+hdiRb0i/dbSh4cpURzc/r1mn6pdjsf67zGuUfJW8=;
+        b=LpVtF+cSQoge1DSGYbcQ/gulEUgmIvpqEiKPMHhXVONxIHe8Pcqy3nSzFOg2Byof9p
+         vSHHgkYzSqsI0ui7i+uReYhJ8l/5gS+YpO6l0/QFPy1zhyZ0BIV6BgSLQAxMsct49HDx
+         IhQW5+rCiap1eSLf6nV2vplflMsdOyUOBee9AFd1b+T9gvj6avK2wUZCj6jroNRtRf2Y
+         gHddsUHloKahDY2D3GDgNQSzpGzsvem12VhXMtmIWFQEXUZRb5qKCTyVhCcne4Qt/e6e
+         JPFkUhLIIR6WTJoAG2LDj7NFkw/INAkL+cxwex19xHiYsxJqlZz/ahWXrqlAeSlEyVLt
+         Zf8Q==
+X-Gm-Message-State: AOJu0YxJNedMCoQ8jvFAEE7Hr198Nvh+WmSDycbjKK0Qx+o0IrgrugLn
+	G8XnHVKTCCG09MMYsMtz2eHDyBRc8WX3WW07so8fRb4B87MzXOYSKxf0ALby4taf3aJhCVKDBL+
+	ajzUmZe5Anu75Jcrua8ekw0Zi31Rg1eE=
+X-Gm-Gg: AR+sD12NA6EFGxwnY2tz6vMVZkreSbpN4HeZKvTXOr76oAgBCnLYIDDPjWZJ7ErCUs1
+	sb3WCbR3Q1KGo3P5EvpSQelgYXTKWHnkzVpZaZNv3km40zbmvWwhVH6p1410gphanXHnSTGeL3W
+	WHwWIZEyrok8xVZKisrKDq5ZwHK5u7L4fPGInr1CJzFJLvOi5JZB+8Dnwsyo40ajoRbb/9UPmO3
+	CQEgTzfgrDMyLeO3pONUZa/XeMVCsA0USTyCdYeaBTtf0zavAuRcnA2dXTdiP0ixAXej3tMKrmK
+	gYWJR2HCNMKh0/hi+Ur9yDWejNsa0wjdv+IgtiFgEXlqOs9qRTo5JWXxgkLFogMh2S4zcEcYAlg
+	q/Bu9mRuolzK5cPErPkiWtICx4NKvcU1KlM9U
+X-Received: by 2002:a17:90b:1d0a:b0:38e:895f:25fc with SMTP id
+ 98e67ed59e1d1-38e895f2bf9mr6130671a91.38.1784644129875; Tue, 21 Jul 2026
+ 07:28:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4h4Jzw6NlKzMlH9
+References: <pull.2358.git.git.1784538618.gitgitgadget@gmail.com> <pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 21 Jul 2026 10:28:37 -0400
+X-Gm-Features: AUfX_mxx7Ejl_DAQuQK_5FIQNm90I5APNhIiVQNpkccZSpdHmn7sj8YZ2fyPCXA
+Message-ID: <CALnO6CAY2x-adAxSXW1f_+OHjV_tVhLmkN7D+wE39rj3wc8LEQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] remote: renamed remote push tracking
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Allow skipping the editor when continuing after resolving conflicts,
-via --no-edit or the rebase.noEdit configuration variable. The --edit
-option overrides rebase.noEdit when both are set.
+Hi Harald,
 
-Signed-off-by: Hugo Sales <hugo@hsal.es>
----
- Documentation/config/rebase.adoc |  6 ++++
- Documentation/git-rebase.adoc    | 17 +++++++++--
- builtin/rebase.c                 | 29 ++++++++++++++++--
- sequencer.c                      | 29 +++++++++++++++++-
- t/t3436-rebase-more-options.sh   | 52 ++++++++++++++++++++++++++++++++
- 5 files changed, 126 insertions(+), 7 deletions(-)
+On Tue, Jul 21, 2026 at 5:08=E2=80=AFAM Harald Nordgren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> Keep git status showing the push branch after remotes are renamed by find=
+ing
+> the configured remote with the same URL.
+>
+> Changes in v3:
+>
+>  * Revamp commit messages to clarify motivation.
+>
+> Changes in v2:
+>
+>  * Clarify that URL push destinations already work and that this change o=
+nly
+>    restores their tracking information.
+>  * Document URL values for branch.<name>.pushRemote and their @{push}
+>    behavior.
+>
+> Harald Nordgren (2):
+>   remote: pass repository to push tracking helper
+>   remote: find tracking branches for URL push destinations
+>
+>  Documentation/config/branch.adoc |   2 +
+>  Documentation/revisions.adoc     |   3 +
+>  remote.c                         |  36 +++++++++--
+>  remote.h                         |   2 +
+>  t/t5505-remote.sh                | 104 +++++++++++++++++++++++++++++++
+>  transport.c                      |   5 +-
+>  6 files changed, 146 insertions(+), 6 deletions(-)
+>
+>
+> base-commit: 48bbf81c29ca9a4479ec7850fe206518682cdb2f
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-235=
+8%2FHaraldNordgren%2Fremote-resolve-url-push-tracking-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2358/H=
+araldNordgren/remote-resolve-url-push-tracking-v2
+> Pull-Request: https://github.com/git/git/pull/2358
+>
+> Range-diff vs v1:
+>
+>  1:  fc70895732 ! 1:  b1ac49de87 remote: pass repository to push tracking=
+ helper
+>      @@ Metadata
+>        ## Commit message ##
+>           remote: pass repository to push tracking helper
+>
+>      -    The push tracking helper currently only needs the push remote. =
+However,
+>      -    resolving a URL-valued remote requires access to the repository=
+'s list
+>      -    of configured remotes.
+>      +    The next commit needs tracking_for_push_dest() to inspect the
+>      +    repository's configured remotes. Pass the repository through th=
+e
+>      +    existing callers and mark the new parameter as unused.
+>
+>      -    Pass the repository through the existing callers and mark the p=
+arameter
+>      -    as unused for now. This prepares the helper for that lookup wit=
+hout
+>      -    changing its behavior.
+>      +    No change in behavior.
+>
+>           Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+>
+>  2:  ff645b2159 ! 2:  6e924a7fec remote: resolve URL-valued push tracking=
+ remotes
+>      @@ Metadata
+>       Author: Harald Nordgren <haraldnordgren@gmail.com>
+>
+>        ## Commit message ##
+>      -    remote: resolve URL-valued push tracking remotes
+>      +    remote: find tracking branches for URL push destinations
+>
+>      -    A branch may name its push destination with a URL instead of a
+>      -    configured remote. This is useful in fork workflows, where the =
+original
+>      -    remote is renamed to "upstream", the fork is added as "origin",=
+ and an
+>      -    existing branch.<name>.pushRemote continues to contain the fork=
+ URL.
+>      +    Git already accepts a repository URL as branch.<name>.pushRemot=
+e and
+>      +    can push to it. When a configured remote has the same URL, howe=
+ver,
+>      +    "git status" cannot show that remote's push branch.
+>
+>      -    Git can still push through the anonymous remote created for tha=
+t URL.
+>      -    However, the anonymous remote has no fetch refspec. Git therefo=
+re cannot
+>      -    resolve @{push} to origin/<branch> or update that remote-tracki=
+ng branch
+>      -    after a push. The push can succeed, or report that everything i=
+s up to
+>      -    date, while status continues to compare against a stale trackin=
+g ref or
+>      -    cannot show the push branch at all.
+>      +    This can happen in fork workflows when the original remote is r=
+enamed
+>      +    to "upstream", the fork is added as "origin", and an existing
+>      +    pushRemote value still contains the fork URL. The URL still poi=
+nts to
+>      +    the right repository, so pushing works. However, @{push} is una=
+vailable
+>      +    because Git does not connect the URL to "origin". As a result,
+>      +    "git status" cannot show the push branch, and an up-to-date pus=
+h can
+>      +    leave its local tracking information stale.
 
-diff --git a/Documentation/config/rebase.adoc b/Documentation/config/rebase.adoc
-index c6187ab28b..321ab8b529 100644
---- a/Documentation/config/rebase.adoc
-+++ b/Documentation/config/rebase.adoc
-@@ -62,6 +62,12 @@ instead of:
- +
- Defaults to false.
- 
-+rebase.noEdit::
-+	When set to true, `git rebase --continue` uses the commit message
-+	without launching $EDITOR, as if `--no-edit` were given.  The
-+	`--edit` option to `git rebase --continue` overrides this setting.
-+	Defaults to false.
-+
- rebase.rescheduleFailedExec::
- 	Automatically reschedule `exec` commands that failed. This only makes
- 	sense in interactive mode (or when an `--exec` option was provided).
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index f6c22d1598..cc0a69b5a5 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -181,6 +181,16 @@ including not with each other:
- 
- --continue::
- 	Restart the rebasing process after having resolved a merge conflict.
-++
-+-e::
-+--edit::
-+--no-edit::
-+	With `--continue`, edit or do not edit the commit message,
-+	respectively. By default, the configured $EDITOR is opened so you
-+	can update the commit message after resolving conflicts.
-+	`--no-edit` reuses the existing message without launching an
-+	editor. The `rebase.noEdit` configuration variable can be used to
-+	enable `--no-edit` by default; `--edit` overrides that setting.
- 
- --skip::
- 	Restart the rebasing process by skipping the current patch.
-@@ -783,9 +793,10 @@ Commit Rewording
- When a conflict occurs while rebasing, rebase stops and asks the user
- to resolve.  Since the user may need to make notable changes while
- resolving conflicts, after conflicts are resolved and the user has run
--`git rebase --continue`, the rebase should open an editor and ask the
--user to update the commit message.  The 'merge' backend does this, while
--the 'apply' backend blindly applies the original commit message.
-+`git rebase --continue`, the rebase opens an editor and asks the
-+user to update the commit message, unless `rebase.noEdit` is set or
-+`--no-edit` is passed to `--continue`.  The 'merge' backend does this,
-+while the 'apply' backend blindly applies the original commit message.
- 
- Miscellaneous differences
- ~~~~~~~~~~~~~~~~~~~~~~~~~
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 10a306310c..5827b20baf 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -43,7 +43,7 @@ static char const * const builtin_rebase_usage[] = {
- 		"[--onto <newbase> | --keep-base] [<upstream> [<branch>]]"),
- 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
- 		"--root [<branch>]"),
--	"git rebase --continue | --abort | --skip | --edit-todo",
-+	"git rebase --continue [--[no-]edit] | --abort | --skip | --edit-todo",
- 	NULL
- };
- 
-@@ -135,6 +135,8 @@ struct rebase_options {
- 	int config_autosquash;
- 	int config_rebase_merges;
- 	int config_update_refs;
-+	int config_no_edit;
-+	int edit;
- };
- 
- #define REBASE_OPTIONS_INIT {			  	\
-@@ -156,6 +158,8 @@ struct rebase_options {
- 		.update_refs = -1,                      \
- 		.config_update_refs = -1,               \
- 		.strategy_opts = STRING_LIST_INIT_NODUP,\
-+		.config_no_edit = -1,                   \
-+		.edit = -1,                             \
- 	}
- 
- static void rebase_options_release(struct rebase_options *opts)
-@@ -215,6 +219,13 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
- 		replay.have_squash_onto = 1;
- 	}
- 
-+	if (opts->action == ACTION_CONTINUE) {
-+		if (opts->edit >= 0)
-+			replay.edit = opts->edit;
-+		else if (opts->config_no_edit > 0)
-+			replay.edit = 0;
-+	}
-+
- 	return replay;
- }
- 
-@@ -841,6 +852,11 @@ static int rebase_config(const char *var, const char *value,
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "rebase.noedit")) {
-+		opts->config_no_edit = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "rebase.forkpoint")) {
- 		opts->fork_point = git_config_bool(var, value) ? -1 : 0;
- 		return 0;
-@@ -1171,6 +1187,8 @@ int cmd_rebase(int argc,
- 			    ACTION_CONTINUE),
- 		OPT_CMDMODE(0, "skip", &options.action,
- 			    N_("skip current patch and continue"), ACTION_SKIP),
-+		OPT_BOOL('e', "edit", &options.edit,
-+			 N_("edit the commit message")),
- 		OPT_CMDMODE(0, "abort", &options.action,
- 			    N_("abort and check out the original branch"),
- 			    ACTION_ABORT),
-@@ -1311,10 +1329,15 @@ int cmd_rebase(int argc,
- 			"which is no longer supported; use 'merges' instead"));
- 
- 	if (options.action != ACTION_NONE && total_argc != 2) {
--		usage_with_options(builtin_rebase_usage,
--				   builtin_rebase_options);
-+		if (options.action != ACTION_CONTINUE ||
-+		    options.edit < 0 || total_argc != 3)
-+			usage_with_options(builtin_rebase_usage,
-+					   builtin_rebase_options);
- 	}
- 
-+	if (options.edit >= 0 && options.action != ACTION_CONTINUE)
-+		die(_("--edit and --no-edit can only be used with --continue"));
-+
- 	if (argc > 2)
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
-diff --git a/sequencer.c b/sequencer.c
-index 1355a99a09..be2945b12d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2211,6 +2211,25 @@ static int should_edit(struct replay_opts *opts) {
- 	return opts->edit;
- }
- 
-+static int should_edit_rebase_continue(struct replay_opts *opts)
-+{
-+	if (opts->edit < 0)
-+		return 1;
-+	return opts->edit;
-+}
-+
-+static void finalize_continue_edit_flags(struct replay_opts *opts,
-+					 unsigned int *flags)
-+{
-+	if (*flags & CLEANUP_MSG)
-+		return;
-+
-+	if (should_edit_rebase_continue(opts))
-+		*flags |= EDIT_MSG;
-+	else
-+		*flags &= ~EDIT_MSG;
-+}
-+
- static void refer_to_commit(struct repository *r, struct strbuf *msgbuf,
- 			    const struct commit *commit,
- 			    bool use_commit_reference)
-@@ -5281,7 +5300,7 @@ static int commit_staged_changes(struct repository *r,
- 				 struct todo_list *todo_list)
- {
- 	struct replay_ctx *ctx = opts->ctx;
--	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
-+	unsigned int flags = ALLOW_EMPTY;
- 	unsigned int final_fixup = 0, is_clean;
- 	struct strbuf rev = STRBUF_INIT;
- 	const char *reflog_action = reflog_message(opts, "continue", NULL);
-@@ -5446,6 +5465,8 @@ static int commit_staged_changes(struct repository *r,
- 		}
- 	}
- 
-+	finalize_continue_edit_flags(opts, &flags);
-+
- 	if (run_git_commit(final_fixup ? NULL : rebase_path_message(),
- 			   reflog_action, opts, flags)) {
- 		ret = error(_("could not commit staged changes."));
-@@ -5503,6 +5524,12 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
- 			res = -1;
- 			goto release_todo_list;
- 		}
-+
-+		/*
-+		 * Command-line --[no-]edit applies only to this
-+		 * --continue invocation, not to subsequent picks.
-+		 */
-+		opts->edit = -1;
- 	} else if (!file_exists(get_todo_path(opts)))
- 		return continue_single_pick(r, opts);
- 	else if ((res = read_populate_todo(r, &todo_list, opts)))
-diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-index 94671d3c46..c84c6717ab 100755
---- a/t/t3436-rebase-more-options.sh
-+++ b/t/t3436-rebase-more-options.sh
-@@ -201,6 +201,58 @@ test_expect_success '--ignore-date is an alias for --reset-author-date' '
- 	test_atime_is_ignored -2
- '
- 
-+test_expect_success '--no-edit on continue uses existing commit message' '
-+	git checkout commit2 &&
-+	test_must_fail git rebase -m --onto commit2^^ commit2^ &&
-+	echo resolved >foo &&
-+	git add foo &&
-+	write_script fail-if-editor-invoked <<-\EOF &&
-+	echo editor invoked >&2
-+	exit 1
-+	EOF
-+	GIT_EDITOR=./fail-if-editor-invoked git rebase --continue --no-edit &&
-+	git log --format=%s -1 >actual &&
-+	echo commit2 >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-edit cannot be used when starting a rebase' '
-+	test_must_fail git rebase --no-edit -m main side 2>err &&
-+	test_grep "only be used with --continue" err
-+'
-+
-+test_expect_success 'rebase.noEdit skips editor on continue' '
-+	git config rebase.noEdit true &&
-+	git checkout commit2 &&
-+	test_must_fail git rebase -m --onto commit2^^ commit2^ &&
-+	echo resolved >foo &&
-+	git add foo &&
-+	write_script fail-if-editor-invoked <<-\EOF &&
-+	echo editor invoked >&2
-+	exit 1
-+	EOF
-+	GIT_EDITOR=./fail-if-editor-invoked git rebase --continue &&
-+	git log --format=%s -1 >actual &&
-+	echo commit2 >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--edit on continue overrides rebase.noEdit' '
-+	git config rebase.noEdit true &&
-+	git checkout commit2 &&
-+	test_must_fail git rebase -m --onto commit2^^ commit2^ &&
-+	echo resolved >foo &&
-+	git add foo &&
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_MESSAGE="edited on continue" \
-+			git rebase --continue --edit
-+	) &&
-+	test_write_lines "edited on continue" "" >expect &&
-+	git log --format=%B -1 >actual &&
-+	test_cmp expect actual
-+'
-+
- # This must be the last test in this file
- test_expect_success '$EDITOR and friends are unchanged' '
- 	test_editor_unchanged
--- 
-2.54.0
+I'm a bit confused about the problem scenario here: if the pushRemote
+value contains a URL, then renaming a remote has nothing to do with
+it, right?
 
+And if the pushRemote value contains a remote name, then renaming the
+remote should propagate there as well, right? (At least, that's my
+recollection of renaming; when I have used the GitHub CLI in the past
+it has worked pretty well in that case, but maybe they've changed
+things recently?)
+
+I do think the URL<->remote matching for user display is a nice touch,
+so I'm not against the series! Just want to understand the problem
+statement well. Maybe I should read over the test cases, or you could
+suggest a "how I hit this in the real world" recipe? (Explicit
+commands are easier for me than natural language in that case.)
+
+--=20
+D. Ben Knoble
