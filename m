@@ -1,61 +1,61 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204014446F4
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 23:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBE0433BAC
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 23:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784676620; cv=none; b=O9lTIJH9Ff+zBlQARoM77h/hGicFZgf7RlU29sg+drCuT02QZ+97EBck/qMIeZUW52pr6626Mwb8CokaKyJumfZzTXbLSPUgz8lkMmezrZ5bbflNp5ZN+vTAAUAoQzv4rad7N+fAKgNi7UAxmSHwJXaGjvUBl3/v3a+venBqxV0=
+	t=1784676620; cv=none; b=fYEL6YwCopeX3CTKFff5WqP444jugB/11L5zcEfqhC0eJUo2fTpFGBTTCSC08Nv+CMsp6NyH/i02zLpCV5Svs+49pmiKhrYXEYAlkDg3/C1hOZZABpSoqmJGyXmIpvpTv4TSKNpqJjXu38R+eTAU56C5Oerc8uXtPDfn+BPIZB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784676620; c=relaxed/simple;
-	bh=WAhSIeOpD0X6k11rc8bYw/nOgjzY3yKRb7Bq/czSlvE=;
+	bh=uGWD67MW6wYScfwvTn5vnH3dAuOQ6DRsntabHBdk/NA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVncJorhFfJQc2ICpPI5TiUaZvZup6CPIh5WbdoHax6AE1ZZHDzbIj9TAIGnC2FNenfC/nfoAPNQ7cbx0GXQXKgMTG0JAfQMpvp7bquXWnVWDHpsZhgsbIN0GytF47AUzJdc+32rl37W2ovG/fEfTLSYtW9oA9cqP1qZb2uHNDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=ghBPIopt; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version; b=gkj4TgsvTSfiHmRuo236W/3orF49uxWuoHO6om38pThRJr28YzVvaHr6ZsAk5qSh6yZhuowUe/dBB2g1SiNbdpULGj/3aJOCwdIAGj4N+ewSyXx+O+le1DgvhBjWe7/kMzYHw/8gJIPEABp7NO0abMYoXVoFIMMVdScrTQ5Taqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=fxiPnBgm; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="ghBPIopt"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8f03db59e9eso14645326d6.0
-        for <git@vger.kernel.org>; Tue, 21 Jul 2026 16:30:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="fxiPnBgm"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-92e68de4f9aso184089085a.1
+        for <git@vger.kernel.org>; Tue, 21 Jul 2026 16:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1784676614; x=1785281414; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1784676618; x=1785281418; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=1qu/610kEEP7lBSncZKuIsdgx+/Dc5NURAWjC5clJ7g=;
-        b=ghBPIoptWHqZcWK/lT4EVEeYn+Y7OKWHT6Bimgy3eEVONaYJM+2pRUK4dlDwjN+mL4
-         IAo3oiy9TehGLf8tDIMJbzynY/Ui3EG0yUBq9kBUI18FFz4ZlmnJGRmnbcG+QaOvfrla
-         n+JpA68dS/iylg6a7EcqtRcgbKmrTqKnEs4GA=
+        bh=4qwRMl6vimJZ8+A5tlbsP6yLxFvWRgz0RRj/KprB4qA=;
+        b=fxiPnBgm8ip6ZqNTFWNRiSj5suFgyqIIWGK7vY/d/KwzWYTtJJV0cmaehm+fCEg9Xo
+         4Nj9i0nAcot+tx5Eq+ULJwq/0xea9BNXmNypJiheMgm/BoH+xK50aH23jLwp+8yinPfA
+         8qzYKkzzGYUTOGTgdfNMXxFC3ZENOgBylRkzg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784676614; x=1785281414;
+        d=1e100.net; s=20251104; t=1784676618; x=1785281418;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1qu/610kEEP7lBSncZKuIsdgx+/Dc5NURAWjC5clJ7g=;
-        b=Yn3rPkxYKi4wHHFWGqv0OvH2bkfVRlyPAoa6ahoRgctg96wNPMbFBK/0ya/2TSzmnU
-         bIDiRNzurJvbrjW/nmZ0nVgvq3tX1y+crFBz7O1KVmYl/PF1zn4+cvQm5oCpwc6OoSV4
-         pG7uryp+lNHSUZEhUGTi6OhMWN/WCrp9SAQD/+Z2RmHq2CfPjgncPbFe3BP5wcJ2aFsT
-         Qp3ntf2VvgF2YlkD4gA/px+2xtMPQ1UC2ilJJqZSDahlEnJqh7NY1uWY60FeIx8eTwoD
-         YnTSujoHs9O/ly5EZZ+r6mNYoDBbTw+kwsGgXGbifAdNldv6eUQOkNb58u4JkGvxFCx3
-         E5nQ==
-X-Gm-Message-State: AOJu0Yz/r6xnsM2W+pG1nTgblMgJI9dDSzl7txfRUIeFlmAqEVkxGi+0
-	T2WNOLfsQ2JEyl350asRa3Me5j/IHZJwKbJ5X8r4wlR+V87TkFiP3qZxtpiMnE+5QhhHxSXFxKv
-	cgyKu4Kk=
-X-Gm-Gg: AfdE7cme9fEW5Tdr+8dz8WSSzvJtB6WUctHdECmSMf94KXL7cfKLcDRBD7IkC6YN5kp
-	Dh05M9j9U8TZ23uOSRV5CjRjLeXK9ZHL0AU0gk+n/0EkSwoIeMfF/HoL1GeY9++DaR8cVAz9t80
-	1mM3/6CUroz6TlrHvhGdSxr/pTtBUafbGLrAXj0TjsXKiKFef6fNUzK/bQ36R+UTwKJ6KLFRZVH
-	fPMb3BdRYVp4fcIdwv2z2OQl5rNL6g8OtEevMZlie4y9SsD1X5uR4V3skSUIo/uT6WXduYfrbVB
-	0qlnDZ4/zwiRMkUlxTjbm426bToqBLIn7VVer6v0fw+Pz9giDVAXM9ROxkm4czICgsmdxzZ4bBT
-	+ie+V2cdj3AyHr6GGZzApq75eRPPR/BjnwPjiPY6UkD0kl2INR5ZHu6t+R+7Ax3nUg+0swOINSd
-	p4JQT5eoNafBas18su+hkO2so6iG72sCtJuxS6EjGSREdCfaZawFH3WonqN7Q74sZjCm3taXYnd
-	pEA/z9r7Edltx9W0g==
-X-Received: by 2002:a05:620a:a102:b0:930:afae:129f with SMTP id af79cd13be357-930e70eddf6mr387707485a.8.1784676613639;
-        Tue, 21 Jul 2026 16:30:13 -0700 (PDT)
+        bh=4qwRMl6vimJZ8+A5tlbsP6yLxFvWRgz0RRj/KprB4qA=;
+        b=GWOgtTBp0XOolI5Ch0N6NwQnpqfIPqLhksBm71e2HnYk3BibzZIgFcxW+yzX3/xRQr
+         ZTGuNpS3CfHgVFy+VWJue9pRz7PwnkbBoMAiCOg7KY1+DtoGenEU90XkcnEirzP+cIHC
+         2cqoCbEjCBNJ2tgChHgpYh66Hoq/Pknaba7/ZBs1hodGSohLVYc5S3J72Y6Uy+fppAiR
+         ijpqh+ECn/woYdLR55ptknostae9mBd4wMEDgRzPBYPIm9TfDVSM9UM1gzWsamzyFXTt
+         QqvRwHwCQXgt3E1ZjduCU8kvvAIeSnjFUE2UaU57XQyBPFzfHbj4kaFQSsiaKA7bHFNx
+         gE0A==
+X-Gm-Message-State: AOJu0YzGeOtlYkTN/dBTiUcMOZa41nelt9j+6lx4Zw40Xo0HFDKAbalb
+	oNuY2GfirBT6mD3exAt+MhhIJWBOqqk5lQ9LU5ixp+EPEnM/7GCySRegex/pB5mIw2INjGJmM8I
+	Bl2In4fU=
+X-Gm-Gg: AR+sD10Lj2rTRogBDJZ4HmItk+r6Sx/aI4Y/mBWYUTz0csniK1664vGsgx9a+DZQS0s
+	7/sF/JNhnNyQX5NBwdLczojz3Cubxe04AcBlQvOHTcw2ZDxngnwy3yCBpqn1/MHwpkNlJ6wRkDB
+	MyckQG5a9bQLkL2EuKaFr7UVBSg/y1++62QOS+AGSYHMhMyJ6yIKY8tfDPuFxnrla0AzEYf9Itq
+	YI/rnJrIxg29j3YsV3ZLTkKlomHpVlPqnAV6ZwN9gUlVom7QYftvKPQ2gJB84X69bkagN+WQzZ2
+	8uH+f1m/SqFypoA1pjUNfogc99TabzSCw1M8hmyJKuHp+StCL0N643kR6cPKgPX2oofDo2nxliP
+	BEoIP9D1xlQqXNRQiHzca4d6G1+R3ot6WFoq59M5BTLBTrtV5qWftXxQ40Fbl0uLW6Oa81CBkX9
+	LYFdn737+vxVxf+wS5vAKZ5pYI5qpG4CsALBcOSftKgfOc5nLvyDGYQQvqqE3QsqR3Eg/dneVlD
+	y5pn3u1CGZThyJLwA==
+X-Received: by 2002:a05:620a:1709:b0:92e:705f:1626 with SMTP id af79cd13be357-930f458fd0emr105472785a.6.1784676617604;
+        Tue, 21 Jul 2026 16:30:17 -0700 (PDT)
 Received: from com-76773.corp.openai.org ([209.249.37.147])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930f6a0b2c7sm16008585a.24.2026.07.21.16.30.11
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930f6a0b2c7sm16008585a.24.2026.07.21.16.30.15
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 21 Jul 2026 16:30:13 -0700 (PDT)
+        Tue, 21 Jul 2026 16:30:17 -0700 (PDT)
 From: Ted Nyman <tnyman@openai.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -65,9 +65,9 @@ Cc: gitster@pobox.com,
 	karthik.188@gmail.com,
 	sandals@crustytoothpaste.net,
 	avarab@gmail.com
-Subject: [PATCH v3 1/3] http-fetch: correct --index-pack-arg documentation
-Date: Tue, 21 Jul 2026 16:29:40 -0700
-Message-ID: <a6a40b80461377452a0b2c9204c3a659ab60a7d5.1784676106.git.tnyman@openai.com>
+Subject: [PATCH v3 3/3] fetch-pack: accept "pack" output for packfile URIs
+Date: Tue, 21 Jul 2026 16:29:42 -0700
+Message-ID: <1ee5d7e02747e76dd044571379ce07bdc9c96c94.1784676106.git.tnyman@openai.com>
 X-Mailer: git-send-email 2.55.0.337.g1ee5d7e027
 In-Reply-To: <cover.1784676106.git.tnyman@openai.com>
 References: <cover.1783982021.git.tnyman@openai.com> <cover.1784676106.git.tnyman@openai.com>
@@ -79,60 +79,128 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The --packfile mode accepts one --index-pack-arg=<arg> option per
-argument passed to index-pack, but its documentation and option
-dependency errors still refer to the plural --index-pack-args form.
+When index-pack finds an existing keep file it reports pack rather than
+keep. Accept either result from http-fetch, and only register a keep
+lockfile when this fetch created it.
 
-Correct the spelling and describe the repeatable per-argument form.
+Read the pack/keep prefix and hash without consuming any following fsck
+output, validate the reported pack hash against the advertised hash, and
+exercise a packfile URI fetch with a pre-existing keep file.
 
 Signed-off-by: Ted Nyman <tnyman@openai.com>
 ---
- Documentation/git-http-fetch.adoc | 8 ++++----
- http-fetch.c                      | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ fetch-pack.c           | 33 ++++++++++++++++++---------------
+ t/t5702-protocol-v2.sh | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git-http-fetch.adoc b/Documentation/git-http-fetch.adoc
-index 2200f073c4..09b5d675ee 100644
---- a/Documentation/git-http-fetch.adoc
-+++ b/Documentation/git-http-fetch.adoc
-@@ -50,11 +50,11 @@ commit-id::
- 	URL and uses index-pack to generate corresponding .idx and .keep files.
- 	The hash is used to determine the name of the temporary file and is
- 	arbitrary. The output of index-pack is printed to stdout. Requires
--	--index-pack-args.
-+	one or more --index-pack-arg options.
- 
----index-pack-args=<args>::
--	For internal use only. The command to run on the contents of the
--	downloaded pack. Arguments are URL-encoded separated by spaces.
-+--index-pack-arg=<arg>::
-+	For internal use only. An argument to the command run on the contents
-+	of the downloaded pack. This option can be specified multiple times.
- 
- --recover::
- 	Verify that everything reachable from target is fetched.  Used after
-diff --git a/http-fetch.c b/http-fetch.c
-index f9b6ecb061..601a77c3c1 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -155,7 +155,7 @@ int cmd_main(int argc, const char **argv)
- 
- 	if (packfile) {
- 		if (!index_pack_args.nr)
--			die(_("the option '%s' requires '%s'"), "--packfile", "--index-pack-args");
-+			die(_("the option '%s' requires '%s'"), "--packfile", "--index-pack-arg");
- 
- 		fetch_single_packfile(&packfile_hash, argv[arg],
- 				      index_pack_args.v);
-@@ -164,7 +164,7 @@ int cmd_main(int argc, const char **argv)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 29c41132ee..e9f24fbd63 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1887,9 +1887,10 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
  	}
  
- 	if (index_pack_args.nr)
--		die(_("the option '%s' requires '%s'"), "--index-pack-args", "--packfile");
-+		die(_("the option '%s' requires '%s'"), "--index-pack-arg", "--packfile");
+ 	for (i = 0; i < packfile_uris.nr; i++) {
++		bool created_keep;
+ 		int j;
+ 		struct child_process cmd = CHILD_PROCESS_INIT;
+-		char packname[GIT_MAX_HEXSZ + 1];
++		char packhash[GIT_MAX_HEXSZ + 1];
+ 		const char *uri = packfile_uris.items[i].string +
+ 			the_hash_algo->hexsz + 1;
  
- 	if (commits_on_stdin) {
- 		commits = walker_targets_stdin(&commit_id, &write_ref);
+@@ -1907,16 +1908,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		if (start_command(&cmd))
+ 			die("fetch-pack: unable to spawn http-fetch");
+ 
+-		if (read_in_full(cmd.out, packname, 5) < 0 ||
+-		    memcmp(packname, "keep\t", 5))
+-			die("fetch-pack: expected keep then TAB at start of http-fetch output");
++		if (read_in_full(cmd.out, packhash, 5) != 5 ||
++		    (memcmp(packhash, "keep\t", 5) &&
++		     memcmp(packhash, "pack\t", 5)))
++			die("fetch-pack: expected pack or keep then TAB at start of http-fetch output");
++		created_keep = !memcmp(packhash, "keep\t", 5);
+ 
+-		if (read_in_full(cmd.out, packname,
+-				 the_hash_algo->hexsz + 1) < 0 ||
+-		    packname[the_hash_algo->hexsz] != '\n')
+-			die("fetch-pack: expected hash then LF at end of http-fetch output");
+-
+-		packname[the_hash_algo->hexsz] = '\0';
++		if (read_in_full(cmd.out, packhash,
++				 the_hash_algo->hexsz + 1) != the_hash_algo->hexsz + 1 ||
++		    packhash[the_hash_algo->hexsz] != '\n')
++			die("fetch-pack: expected hash then LF in http-fetch output");
++		packhash[the_hash_algo->hexsz] = '\0';
+ 
+ 		parse_gitmodules_oids(cmd.out, &fsck_options.gitmodules_found);
+ 
+@@ -1925,16 +1927,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		if (finish_command(&cmd))
+ 			die("fetch-pack: unable to finish http-fetch");
+ 
+-		if (memcmp(packfile_uris.items[i].string, packname,
++		if (memcmp(packfile_uris.items[i].string, packhash,
+ 			   the_hash_algo->hexsz))
+ 			die("fetch-pack: pack downloaded from %s does not match expected hash %.*s",
+ 			    uri, (int) the_hash_algo->hexsz,
+ 			    packfile_uris.items[i].string);
+ 
+-		string_list_append_nodup(pack_lockfiles,
+-					 xstrfmt("%s/pack/pack-%s.keep",
+-						 repo_get_object_directory(the_repository),
+-						 packname));
++		if (created_keep)
++			string_list_append_nodup(pack_lockfiles,
++						 xstrfmt("%s/pack/pack-%s.keep",
++							 repo_get_object_directory(the_repository),
++							 packhash));
+ 	}
+ 	string_list_clear(&packfile_uris, 0);
+ 	strvec_clear(&index_pack_args);
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 74a2b7730b..0f05286de8 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -1291,6 +1291,37 @@ test_expect_success 'packfile URIs with fetch instead of clone' '
+ 		fetch "$HTTPD_URL/smart/http_parent"
+ '
+ 
++test_expect_success 'packfile URI preserves an existing keep file' '
++	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++	rm -rf "$P" http_child keep.expect &&
++
++	git init "$P" &&
++	git -C "$P" config uploadpack.allowsidebandall true &&
++
++	echo my-blob >"$P/my-blob" &&
++	git -C "$P" add my-blob &&
++	git -C "$P" commit -m x &&
++	configure_exclusion "$P" my-blob >h &&
++
++	git init http_child &&
++	packhash=$(cat packh) &&
++	keep="http_child/.git/objects/pack/pack-$packhash.keep" &&
++	echo pre-existing >"$keep" &&
++	cp "$keep" keep.expect &&
++
++	GIT_TEST_SIDEBAND_ALL=1 \
++	git -C http_child -c protocol.version=2 \
++		-c fetch.uriprotocols=http,https \
++		fetch "$HTTPD_URL/smart/http_parent" &&
++
++	test_path_is_file \
++		"http_child/.git/objects/pack/pack-$packhash.pack" &&
++	test_path_is_file \
++		"http_child/.git/objects/pack/pack-$packhash.idx" &&
++	test_cmp keep.expect "$keep" &&
++	git -C http_child cat-file -e "$(cat h)"
++'
++
+ test_expect_success 'fetching with valid packfile URI but invalid hash fails' '
+ 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 	rm -rf "$P" http_child log &&
 -- 
 2.55.0.openai.131.g83a728de1eb6
 
