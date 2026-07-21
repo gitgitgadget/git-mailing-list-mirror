@@ -1,166 +1,119 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C860F3B6BF4
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 21:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EB1367B92
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 21:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669470; cv=none; b=lvfA6I+Jr7fCMWRtEqY6d5klKm/VQgPqqsDfMWmVpx1+VTp5/1oW507e05/zLrr0uYRGFhWmrVlWqub7a4pNRc+mVBRZB/qlM2HO3jbtsVScTM2h2LIAmT3NU/lkHV6WEOAbHGuiagyPP3MgxeWKOEpzKV30L5LKUHkIqnX8+/o=
+	t=1784670949; cv=none; b=uxoVRBme/00E/FTTkyxOB0/8YqZpiIkCpyOP0gpsxkVcTV4dwimR0dJQI//GJ/JFeLzFMNq9xu1/oD9Mbi+OztohwyOwDS+ljKJdAlND8YPbWBIbVnCylGZgOMlxqrE3z2gvNiSIFIQ9JYP8jD2DcaAlmTOfcp3cylwVf1Rt6vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669470; c=relaxed/simple;
-	bh=y5svdNJV0wytNZ/5TbOWGZrTqVF3FgmzKsp9ZDwQ4N0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TC7EBYWdQzbBaeWPxJIYagvQg93ICJW58g4lkyp/XlQbtIlzLdxtp1zaNW09RjfvglQZixv5EzNMVLlYVi2LgedNoJ2Vam2cLSSZnMmTjmXFUTTWFBpBfhySJ77hahOH6bvQupKUxtS3SpzFCoLrFPysYBW8qx5VMC0M3OM2ew8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fIFnO5gB; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784670949; c=relaxed/simple;
+	bh=rB7oIBhRewUU38c1jhoDWkt80VSdQURYAWGHMqxe+7s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jRiz6+VNvVwoAJlTdXaa7LE2fSA2Bcc8ivFpENEKFmj2r0P9cBFwVpag64/XADCZv/DmueZPOw+8/g8TpF3tzWOn0NdcTiUYR8OHvDF49sDxPwnhEEFL3NgJd6pr/hvNbGlhcvuKnyOixle3FM6yLRaMGA3BsHAlhyK2mmWEtkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i49PKoqS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AmZPTRP/; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fIFnO5gB"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4955aa106b1so25535265e9.0
-        for <git@vger.kernel.org>; Tue, 21 Jul 2026 14:31:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784669467; x=1785274267; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0Hrlip+UNMp3GkJoAP8yFau77KlCuVFqzjJEI30uIrE=;
-        b=fIFnO5gBCT7AgPfF97VugZvsWo17mcoS4sNZSyJ+eZtBGIyQZlG4xAY8b4U9MfoVo8
-         37eMS4xdojy4DwMa9wpt4lqRAV8Cxg3lGpdZ/xfh5sHu3KHP8Vk27Byk358tjSZUd8xh
-         c1eERtNdp+xU55WpCm7G1Jj8pSPaGYKHHN8txn0WrsiQoicC2nY1uMH6pcZ2xFnxe4Xi
-         ySAiCC5Qf42p6E3Z2ZaaVGq1uQV91ge8VXBPB/2qCwlMj80e/T3bUVFobbisGlLeV6M2
-         VBGBfcgEV2qqpgiB//2wisruizFwa7F5Uz/YU4LqkJpmrq2AYxHsvmDeU+fxepI8UrUq
-         cvFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784669467; x=1785274267;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=0Hrlip+UNMp3GkJoAP8yFau77KlCuVFqzjJEI30uIrE=;
-        b=bHb9NWG59Y8X/mwQqojlSCnr66LX/uLkmUiHGzzMFPDmDdorZEDSnMFu2+gGMgBxBa
-         2OjNEyDyQNj6oYQKGEZtl4IVkScBsqNbo4eIr7DuA1dzICYeTK9SviNMj4V/sbxZ+y/z
-         gY+x3XekSV4eT1AbdRcrMJTfNPJM8wTWdGPsSw7jg8zfXZDSvCrHFb42VWk2uNWZt/av
-         kRleTJ5XQdtwycDdSTHlWh3zdOAgsj49O0uhiN3CknMot3kHXsaAyWH43XySexOGLO2g
-         gTm4S1+xAuCSh9gRU6AL95vo8nKu3HoMnqdwI99MKNNdzmkamvL1PGL2nL4e6q3VRHVF
-         gIog==
-X-Gm-Message-State: AOJu0YyMnomg4Rgn2/TtdC/hT71xuWZpQl5qhtbTkRSCrGHRi7COUxIK
-	rXytCMup/HSYs3k4B/qJmagaJjeTkWJ68GuL4n0EHHAhXth1sytT+C9pNUsJng==
-X-Gm-Gg: AfdE7cm6aDDMSSDI8AAaIO5xYslA4b1tuMDH3xXbw2eVptEM/7i511MwjQeHm1qIvAv
-	rt1F7duJGbUlA9IJuM+k8o7KI7StKKfmZH3/O+adYesMWLgfhusH1B5wmP9Tk68/DCJ+kuc77fv
-	HdHrnPwlathb8QJDDP/ZQvDbDDhE4yjA8X7TCPXwOnSxXbm/MF18GcZ2hHIUzyDqhKyIMRO9PvC
-	0MTq1ixZvBB80nu9WrAxZ2HKegOfXEfjnxMgdSiaqqUyGTp/Y16YDjs3B89r1PlLlHGU7KqtqYR
-	zZp/0FDpgY8AV+4LLWrNKHAJnhixNfJZuY4zPabGhBgrw6U8+qrNlZohISiOLpOBqXmPb5TcUjY
-	+YnGUYu5XfeQmp2/HdVeLCZ1oPfo9NAleDAPDseSiDqXIgNxqazQtXZyn1KSDN6W1HuRmtZPMgU
-	5tW1WORd8qYOAuKSAPX5kslNIs
-X-Received: by 2002:a05:600c:c84:b0:495:4689:1e98 with SMTP id 5b1f17b1804b1-4954a3ed426mr220185445e9.10.1784669466744;
-        Tue, 21 Jul 2026 14:31:06 -0700 (PDT)
-Received: from ccjmne-arch (82-65-84-247.subs.proxad.net. [82.65.84.247])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f63e52aa4sm43037446f8f.10.2026.07.21.14.31.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 14:31:06 -0700 (PDT)
-From: =?UTF-8?q?=C3=89ric=20NICOLAS?= <ccjmne@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	=?UTF-8?q?=C3=89ric=20NICOLAS?= <ccjmne@gmail.com>
-Subject: [PATCH] submodule: resolve insteadof-aliases when matching remote
-Date: Tue, 21 Jul 2026 23:30:42 +0200
-Message-ID: <20260721213042.3357346-1-ccjmne@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i49PKoqS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AmZPTRP/"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 867171D000DD;
+	Tue, 21 Jul 2026 17:55:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 21 Jul 2026 17:55:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784670946; x=1784757346; bh=jFCxEcKNMB
+	FXDycGy+JIMBMvH4236PMQ0KQtnnYN5KI=; b=i49PKoqSqsdIiVlQAIsuRM/i6M
+	cFR8sq+fXWUlSIUzqy4pkj5nECRKkAj6lnhr1ZMKfmR28zs5TwreFbFREdNsLCF1
+	w+wtrTeHrrqB24XRzJvrhqj5o15zyEcD1/PJv+x/Gc9nGlEOKNJEsfTfnaDM28IU
+	Ry5h4RRubHeMqaMnbUrxvPtIH9lY+9Efi53hLc5IctAZZ/rIMqu5n5onnMsjrc61
+	hseDEHcS8J+rIutHclsBMFHrjX9JJrt1mpbTJ4GOBPdz1CosVc3NlobBGpU8sxbO
+	SOFC2U5vFFdiAuDTwN0naV3r2omkMz3K3IGnPyWyu9ERkXsj/ET5qeMBIFNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784670946; x=1784757346; bh=jFCxEcKNMBFXDycGy+JIMBMvH4236PMQ0KQ
+	tnnYN5KI=; b=AmZPTRP/HY8Nsq6SOTuEaIvtCGuZ9G/2klVVZWbyq5fYVvwC3Cf
+	UDe/WN5w/Yc29afIfbidoYJn8FRn2KS3Cjvds4gStijcq2+s+6WsvG9VMrfeFEgT
+	LWr3mPtEAZkuJbMcKZ7rEiIJa4H6q9wiDUZkdfhW41uRgCGSd5dDvJY4m6aFTDQI
+	GRUlcA51y6KGI6I/Rj3f37p5rsLn8YoxWHQ6pwUCQ+tPRWe930RX/rlfnxot9ZrY
+	YKO6ckl/N13W0dsoMOxwo8cYWpHO6qBZAB2ig2jssiUs4ShJVAs40+rzMY9ijNS/
+	Gc5JdU+zLnWN2wBrvC3WJhjYEDSPu1db6tA==
+X-ME-Sender: <xms:4upfalz6AOJb42lMHikat6jOfg2j2_-apM1PpiBeU6kOZU-3iotDtA>
+    <xme:4upfasInVstM2N-uCDG9VHoQoRt22eHBq6U_owAozX6_SK09OfFZb5t7JpTW2nR_1
+    D3tD9XDe4IbI4Zk9TNpufvj9gtukgkzuPBqUkusZ9_JRQ0GqrqVwQ>
+X-ME-Received: <xmr:4upfanrMUYHlzC1TlqgVYz_zuNzbncNxh7BA1iH5nCSd_7-deA0ypoY4MNzEEhbDEX03its_Fyj0ylm-MfVqkbrIz2WdeZFovQ>
+X-ME-Proxy-Cause: dmFkZTFFyQ5qdyMaXWCfvse9bAlfkc0W8BG+sWtEWKifaOPnC5bG2sz3IsXtyoKkdVuUjj
+    Ru+U2pEwNJZyAI03IkkFGq+Qq+YGojHBT1zequcWTU2F64Hdgy9hN5WXXbulFkDqJD0+t6
+    GAPc4MXhXhLgdpT8fEpLTp+gffavwAfBWmm7l9qDoS/GkXVpP06onTCgLrJgWUVVw8Y8Lv
+    B7Szkxn8kV9w1q/bt4gAdbDWJNUTdfJHsTaTOAtwbxiuO3CVhD3YBPeJX2hMf91eqFQBGZ
+    m7YoL/1x6fDWOUhpw+aMflPTZYZwa+N7OURAhswxdcrLrQA9Tn4Yh8ydEXBEHCkbpIlPr+
+    4LrD1+LafKhCTVJZEDT8UgxaTcqxKWDPSDDVUdJjHqJvyFAyUudg6JN8VGf+Uv1qmvDk3Z
+    30yChke3UMIMhQGxQGfSE6Cq6YNjsva0OK2ubmgGWgtk+K1tz1qopSnbKlfU/doH7zCtde
+    GY9mAvTURDQvpHDRfDF1USBwE9A5vJHjtdm70WK6M2Dn1AAtmpSFP6qB3J4qFR0t9Gk/k4
+    L7vo1mfk5CioqeLmvnWv9A1gsrX8HAO7weNRBrIbR980tqD6t4TFncQpaMLbcMor1BypXb
+    JAwqK1SOO5vpqjIUZplVbWrbrmKU1ElzdpV7K1xkYR1nDuIREvrBoS2L132w
+X-ME-Proxy: <xmx:4upfajLWol_fOfsKNIomWQyc06z6l4XkYY826lQO-UJWHH6OPBUGyw>
+    <xmx:4upfakTc8wtFyNURk6hAXy8lB1uUNIEMTT0naDKV5hCUt08w58ZoOw>
+    <xmx:4upfaqs6ZjkKmPIT8XHxk81c_zc_zLCZ3lND9cbH1Wba3kWYFNGnPA>
+    <xmx:4upfatbkGf_y8R3rJ6OYkSEA08A6NtW3B_yVlF7ekEg9_Zx4bYNpLA>
+    <xmx:4upfagnmYWtH13huK1ayimoV1s46B-lc1mG_IBM-OUaJRPVk0U3HXFWi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 Jul 2026 17:55:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Weijie Yuan <wy@wyuan.org>
+Cc: Jamie Magee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,
+  Jamie Magee <jamie.magee@gmail.com>
+Subject: Re: [PATCH] t0213: skip ancestry tests under user-mode emulation
+In-Reply-To: <al-1JkcH91aW6VWM@wyuan.org> (Weijie Yuan's message of "Wed, 22
+	Jul 2026 02:06:30 +0800")
+References: <pull.2168.git.1783359242130.gitgitgadget@gmail.com>
+	<al-1JkcH91aW6VWM@wyuan.org>
+Date: Tue, 21 Jul 2026 14:55:44 -0700
+Message-ID: <xmqqwluot3bz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When ca62f524c1 introduced a mechanism to identify which remote is to be
-used by a submodule, we had it compare the URL stored in the .gitmodules
-inventory to those of each available remote.
+Weijie Yuan <wy@wyuan.org> writes:
 
-However, when using URL aliasing via url.<base>.insteadOf, we store
-in .gitmodules the URL pre-resolution of the alias, whereas the
-corresponding remote set up in the submodule reports using the
-*resolved* URL.  This mechanism therefore fails to find a match then,
-and resorts to the fallback logic, which does use either the only
-configured remote if there is only one, or attempts using "origin"
-otherwise.
+>> ...
+>> Cc: Matthew John Cheetham <mjcheetham@outlook.com>
+>> Signed-off-by: Jamie Magee <jamie.magee@gmail.com>
+>> ---
+>
+> Very sorry to say something completely outside the patch.
+>
+> But may I ask what's the point of writting the line started with "Cc:"?
+> ...
+> I know that Linux kernel has something about writting Cc in the commit
+> message, while I don't see much from Git's documentation about trailers,
+> including MyFirstContribution and SubmittingPatches.
 
-Resolve the alias in the URL inventoried in .gitmodules before comparing
-it against those of the corresponding submodule's configured remotes.
+If you ask me, 'Cc:' belongs in e-mail headers, not in commit
+messages, though the Linux kernel community has a different
+convention.
 
-Signed-off-by: Éric NICOLAS <ccjmne@gmail.com>
----
- remote.c                    | 15 ++++++++++++---
- t/t7406-submodule-update.sh | 21 +++++++++++++++++++++
- 2 files changed, 33 insertions(+), 3 deletions(-)
+GitGitGadget collects 'Cc:' lines from the commit message and, when
+sending e-mails on behalf of the author, copies the recipients
+listed there, if I am not mistaken.  Thus, it is not surprising that
+contributors use the trailer for that purpose.
 
-diff --git a/remote.c b/remote.c
-index b17648d6ef..ae187fb3d6 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1821,17 +1821,26 @@ const char *repo_default_remote(struct repository *repo)
- 
- const char *repo_remote_from_url(struct repository *repo, const char *url)
- {
-+	char *rewritten_url;
-+	const char *url_to_match;
-+	const char *remote_name = NULL;
-+
- 	read_config(repo, 0);
-+	rewritten_url = alias_url(url, &repo->remote_state->rewrites);
-+	url_to_match = rewritten_url ? rewritten_url : url;
- 
- 	for (int i = 0; i < repo->remote_state->remotes_nr; i++) {
- 		struct remote *remote = repo->remote_state->remotes[i];
- 		if (!remote)
- 			continue;
- 
--		if (remote_has_url(remote, url))
--			return remote->name;
-+		if (remote_has_url(remote, url_to_match)) {
-+			remote_name = remote->name;
-+			break;
-+		}
- 	}
--	return NULL;
-+	free(rewritten_url);
-+	return remote_name;
- }
- 
- int branch_has_merge_config(struct branch *branch)
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 9554720152..84e2cbbef9 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -256,6 +256,27 @@ test_expect_success 'submodule update --remote should fetch upstream changes' '
- 	)
- '
- 
-+test_expect_success 'submodule update --remote resolves URL rewrites' '
-+	test_config_global "url.$(pwd)/.insteadOf" local: &&
-+	mkdir aliased-super aliased-submodule &&
-+	(
-+		cd aliased-submodule &&
-+		git init &&
-+		echo line >file &&
-+		git add file &&
-+		git commit -m "Initial commit"
-+	) &&
-+	(
-+		cd aliased-super &&
-+		git init &&
-+		git submodule add local:aliased-submodule submodule &&
-+		git submodule update --force submodule &&
-+		git -C submodule remote rename origin upstream &&
-+		git -C submodule remote add fork user@host &&
-+		git submodule update --remote submodule
-+	)
-+'
-+
- test_expect_success 'submodule update --remote should fetch upstream changes with .' '
- 	(
- 		cd super &&
--- 
-2.55.0
+We do not use the 'Cc:' trailer to allow a commit author to say, "As
+the commit object indicates, I CC'd this change to that expert.  I
+am no longer solely responsible for any bugs in this commit.  That
+expert should have caught my mistake!"  ;-)
 
+Thanks.
