@@ -1,267 +1,258 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045B34307AD
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 20:12:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664738; cv=pass; b=h2ZP9sXeOuc0pZ8mun+/6pOfvafCjJzYiAO50naiEVZl+qEJH0WDrzXG9LOBuyASec2w/opryb6xl+qlawrxgp4TmZ/vQbBC89FISIOv+Bi+YHtCDosjpuyd4PyBHJD1dm8lX3TAK9M8jIRnv+WFfDKc65mDJb39XwsCQJpVeGw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664738; c=relaxed/simple;
-	bh=9YauZlTB8+vzW/zEEPlzbOhP4qGR6ofjnexdRBX8doc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rd0qBEDcskrZQG18+T7aMRSBtvFQoi2z5kVynP0c7EP41GVCtU/L8bLWjPmG3XgSwsOYmL2zbiQmssdnCYg9ceSnry5kSOEdpX09lzrxfbjDpaozavG3KwMEC+xNZud5C6K/4IUHqe9By/V00F6ra0XeGcKfH/LHDBOcdrtliY0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Atpz99UN; arc=pass smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BC847044A
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 20:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784664864; cv=none; b=k6GwlCy/nXexhPe02iCZNsSeYycHP3uCfb8XseFL76YTILQ7jSfQnQ/ShmpJUjT5SOdpX17No4I0g7BTQGcor9F+eh7Lfwl65GwE8mAoydI6jMK29rFpYaFF1RBLn1Sh4f1TNiFP6BtnynB0b4GTUK5x6pxLwQkq0gN3n075WmA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784664864; c=relaxed/simple;
+	bh=6BT1gsZiWZRNLH1WsGQKUr0AWCuihY3DiklIsKzw15k=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=YB28gBRP47Bv9Xj0vS6ya3ALnqsGNW/yIWBITjW8ZWYqGf5VxRr93daSgu9VFdOzT1Re0Ul0w/91Tk/UBAvAPfJ0hCUe6mHXqNWvaH33THnvB+wJiQP7dmRYo2l10Y4iECj40ZpXFCWJlB528D3PUS1MkLL3gRrHHc44XGTQJ0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YxBvhVLw; arc=none smtp.client-ip=209.85.210.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Atpz99UN"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-737f6e70678so7591919137.0
-        for <git@vger.kernel.org>; Tue, 21 Jul 2026 13:12:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784664734; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Xw7luS/9LY1mQ6rr3lYuEMUK/Y60QFG+a4Lrf+OKXEvFNWI8XpAsN9Kz41rrYgjac7
-         r1l26UzLKQ4ry1J9xb8hi33B9GfVfFZZs4M5YCusYcXUXEP5sDlevgRhIjpMndVUr4x9
-         cY3pqitfzdP152MKOSm+XfOiXfhY+Bno+VeT+4tOuobSneFY8T7+gpYMOHtHJVsYl/oR
-         +GhojP0LQPeqTgj336zVKEyPd9/27p6UePUy+jMJlUnU+yF218PsbWc5ADW2dpIAECPP
-         B7Ugd91ckR6qVFwN+V0H90nUuW2xQNEnyrs6mz8mkv+qGUDR/HYRWm55gapcbjWLsV8q
-         Ukmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=jHcvUyG663eiSyLSeQvvRa3j/9+qbOq/ZNIRyGefstA=;
-        fh=6NFYcSDm26httaK1pPWseyIbiYoT7uMwBh3u3/xppW8=;
-        b=KE5BBSvaeEqZotP6P2ZOQ2dKob3kfJW+jiBFWFvWR2R4/aPgkR4OYQS+yS7pNKXrd9
-         4FfFbHLoNFfUuBMUDSd+EQl+wnmu/9SjDHwqLFEu8j//5xAPsOTMGiKf3gcrwL0clq8G
-         La/xr+3P3dt4juys9psZwd9HFNFf4bD/3rSQstLXCFRq52LBvkq+D0Lb21q6KFo5JrwE
-         oilScn3Up0mb/wXzzuc72zNNz9WAMtvvwPctZXTY/E/vMbD2/esN8EakJeNhKpHMtvI0
-         K39s/G1aNyJCGwQ/QO1H62znvM8vS2yRf15gn7/3OzWPL2OfbROjWhuMq/69IY5I+rZc
-         qC4A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxBvhVLw"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7eb64371a2aso5123494a34.0
+        for <git@vger.kernel.org>; Tue, 21 Jul 2026 13:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784664734; x=1785269534; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jHcvUyG663eiSyLSeQvvRa3j/9+qbOq/ZNIRyGefstA=;
-        b=Atpz99UNwzFq1L6TN+kOspgLVPhYdPQ/LsmGP+JAzrLbnMNWiS4Tzhg+B2Jjg34a2v
-         HwDlf4lrgd05VGCwOQoplErtLaGZU47WuhZHM9QcLswxoSODKVqzXLA+dFcSjNhoNRxV
-         IrQO/ARsQLlW8yxkLJfIcvqQjMuHuaEjTm8Oxxf1RckvfijUr4RmCMeM6+xmoAJKUKxn
-         Euwu8mH6JsEKgkSeDidoPYzbsEmwozxm9x6huSYkn+YhEjT4aYO97oL0qB4e2+Mw5HQS
-         HTdksbRkyair02tXnWxwHC6BtNJxiV5dZNvVEXbYFi49aPT50xoy79BvrvixsFKELO86
-         GW/g==
+        d=gmail.com; s=20251104; t=1784664861; x=1785269661; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mJhtQN4QiFKoxc8KvTf2lsMdwoRGA9TNDhdykWz8Y0c=;
+        b=YxBvhVLw4EMlCiZruto7dAFWpRo+WrSWkws4W7bOYkgOeVlJ+WDMgnxp8qn/FdjDzT
+         Je+SE8X1qnt6E4XjgWZRm3PZYN0SLwkfxT779lemMA7aGuMEOpXbeH9PvIvsr3ozem0T
+         9YErktdZ5YoaWIFmKg8mzJDUwxpOkBi1HiEWM6rKJLL3r2+rxNYmBk02L2PEAam827eA
+         3RVBN0PS5/qmbcDe2FMH75INwpoh/mvmEj6DGJda6TyQnFJUs5ryf4z2G5UgBipUakjL
+         jBi1CpYIDQm/3Fk9h4WRUTs3ue0DrZLvTiRNyDbtpFfRqLy5WuyPMDkwr6kGNfc7UQpW
+         uJpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784664734; x=1785269534;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jHcvUyG663eiSyLSeQvvRa3j/9+qbOq/ZNIRyGefstA=;
-        b=QeZCaXq2FlykZIVTLh+VmvXcXIxPPaEuVSElhqXZyDwInF1EUicWSeGuZVBKBoatto
-         a1QNwnumVBPbxBzUsmyTop/yLsq8blXhMuuvVBgCFhydad3rySPEAjfr67a5pB5YI0xQ
-         zh5OoMw7bIp/adad1Y2FQ4VVzwsUFU6SHXghi1r/hAmgB/ELtgPH1E5puat/lKLzjp/H
-         HbVpEF97Gi+GK7fBd/+BP1GdV9aqcC9TmpZzNo8diX31x8iE+bhZVVg3XOV84poYkZu5
-         5HjHsuBWYQD++4bWoyFwyPYcbQA2qPPD5FrM9DnRUqyip1iKSgY9Ta5QvrV51oNYQSv7
-         lEUQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rr9+4CPWVZ7p+tPrwDj4x0bSD9ghqDHOSaClkb/l/7p0J4F6UHEG2gQ6QYoQAhnZnxNMQM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8ReiYZphgEzw8vS6KPBfDo/8Cp2rgDuZE5pO8ORN7CK96ltr4
-	nBcAKT7FyJvlHJdTwSRsRrY5bdjWnBkVICBVH7htivpDQ+wJwAFC+Uw1CY0P2xG4oSzUpNNcYIJ
-	4IPJZglwFx34EOSwVNz6mju1WOPmU8tw=
-X-Gm-Gg: AR+sD11Uq9m3tw7GB/3WhTrCPGi7GO1UVosQDlR5Ts510npuW+KlxD1aoiquSQXBV3a
-	jiwKxwe4R38G/oTU2X8nF3oLtlPBxgSmG6ClFLAl5EHPdsY3FUis/6Vzbm2PFSQ12Ll1rf40Zi/
-	a/ZbFxHT3u4gSPNVFhhsYNiJe/nSnbtNIDkOy1j5pTLg6LmDHSGqnNqwl93hBlL/hj4/DIcF1Jl
-	DbDjjA8mA09qaqqeAxcUt7PxLFAV52bwxHbP8TEOFDw7tf6nqoExh9FoPvqV9wG8YchzLwiaEGY
-	09FQzYuW+m+K4kIr9JqRCUfijEgRc0eZJZs6AhKVOFWAG1DZ8Yby
-X-Received: by 2002:a05:6102:3f06:b0:650:9174:32b with SMTP id
- ada2fe7eead31-74753439e95mr7855941137.1.1784664734196; Tue, 21 Jul 2026
- 13:12:14 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 21 Jul 2026 16:12:12 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 21 Jul 2026 16:12:12 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
-References: <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com> <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
+        d=1e100.net; s=20251104; t=1784664861; x=1785269661;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mJhtQN4QiFKoxc8KvTf2lsMdwoRGA9TNDhdykWz8Y0c=;
+        b=DiagszfLhtOaQHuK6GuDyaR5Eh0LkM20YD5Nw5U40IEXZh4QgJeHfj0MbG00EWQpvJ
+         vnNAT+cquszU7ui3izleieL0eGMW7kTWEjMkogcGKXVhlu9rL4GILcqEFxg7/JyW3KaQ
+         7kv0MAHPf2w4KihFPqr/kHnvBqxsRby6la/8Dp59f0gQLwJ931FABhy8u83HWTzT/U0j
+         ZO2QvZAKtOeIJM03BiUNOyBCWZjOC/IVaNMHv35B954WWi5jBIQI2NQhYMct/4sJZ0Lw
+         sY+WZBjTPTFbAErVaKlYWwHpoANPbTBhlkYx48BTouh9zu7vZMCK3Jgj4GE2uF6sxd7d
+         +eiw==
+X-Gm-Message-State: AOJu0YxuK3/CRpMK64udtEpaw6cvHAJbBSl4NQql6JxuuwTD5f/n8C3d
+	8xiAy9oH5D/zb06npxXOqIZhunH+kLAJxFppetrw5k0sFLCR4pI6iv+0d4Ihnw==
+X-Gm-Gg: AfdE7cmAOCI8z3VmRiAFLN5sG2QP77GqrqWLF9MKKJHXQ7ceQvZFiuQITopnCKQNXkg
+	Je+abbYz4U/Hdnkp0DCN6koYk8VArxBVTOoXJZuDvlI0xTezDsIlBvN+zLdZHdY0sdbN6J3k/M/
+	I0kmLXXmsNYIMyl1fNX7Z9rc2Io9ms6LWthrsf+qbpsZGBdcJKmFnfoSfCc39LsCt4BQ7iPcouz
+	giNZj35LLC/ywxYkLH52lj/tVT/NTLBnxPkiae46s8hdTmZ00F4dkko5+B97Ree7ZbQFR+e/EQA
+	5frWfe+KYcxfpJ4ENyRkeYS8W5PUtZoWMARILJF79A+CUvInM3N7fqwFhhbVTNfax447o2ka8Bw
+	5GaptOFxEa8BtJ6sYPJCiBgirgCGFw444MX7E48nAUpIWKluUyApcyOk8jrNtZ+u182dhvEnj+N
+	GxORMkcA==
+X-Received: by 2002:a05:6830:8d0:b0:7e9:ff97:5e3b with SMTP id 46e09a7af769-7eda08f4022mr10143874a34.15.1784664861106;
+        Tue, 21 Jul 2026 13:14:21 -0700 (PDT)
+Received: from [127.0.0.1] ([52.173.123.151])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7edaf99b337sm11093779a34.21.2026.07.21.13.14.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2026 13:14:20 -0700 (PDT)
+Message-Id: <pull.2358.v3.git.git.1784664859.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
+References: <pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 21 Jul 2026 20:14:17 +0000
+Subject: [PATCH v3 0/2] remote: url-based pushRemote with renamed remotes
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 21 Jul 2026 16:12:12 -0400
-X-Gm-Features: AUfX_my8Gly7cVkN6YUmUOfvJ1AltiLuUzaBH62P369NbSPSBUoSEH5ReYRhoKk
-Message-ID: <CAOLa=ZT77L39-jSZxgrvVFwdY6_rapBmKv8gCxr7QpdkCsEzXg@mail.gmail.com>
-Subject: Re: [PATCH GSoC v20 00/13] cat-file: add remote-object-info to batch-command
-To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
-Cc: chandrapratap3519@gmail.com, chriscool@tuxfamily.org, 
-	eric.peijian@gmail.com, gitster@pobox.com, jltobler@gmail.com, peff@peff.net, 
-	toon@iotcl.com, szeder.dev@gmail.com
-Content-Type: multipart/mixed; boundary="00000000000086bd81065724a359"
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
---00000000000086bd81065724a359
-Content-Type: text/plain; charset="UTF-8"
+Fix git status not showing the push branch after remotes are renamed, when
+branch.<name>.pushRemote is a URL matching exactly one configured remote.
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Changes in v4:
 
-[snip]
+ * Match against the actual push URL, including pushurl and pushInsteadOf.
+ * Clarify how rearranging remotes exposes the git status tracking problem.
+ * Simplify and correct the documentation for URL-valued pushRemote.
 
-> Changes in v20:
-> - Moved the prep patch that fixes hash_algo's type to be before
->   write_fetch_command_and_capabilities() being moved to 'connect.c'
-> - Reverted git-cat-file.adoc documentation comments about CAVEATS
-> - Fixed style for EXPAND_DATA_INIT
-> - Added more context for comman line die()
->
+Changes in v3:
 
-[snip]
+ * Revamp commit messages to clarify motivation.
 
-> Range-diff versus v19:
->
->  1:  6df5bcb3bc =  1:  31b02f10b5 transport-helper: fix memory leak of helper on disconnect
->  2:  141d85a76f =  2:  7d62e0586f cat-file: declare loop counter inside for()
->  3:  87457a1fe3 =  3:  082d593fb7 t1006: extract helper functions into new 'lib-cat-file.sh'
->  4:  c26d378931 =  4:  8646b9d7cf fetch-pack: drop the static advertise_sid variable
->  -:  ---------- >  5:  5531a3c399 fetch-pack: use unsigned int for hash_algo variable
->  5:  ee16e17228 !  6:  92b4122642 fetch-pack: move write_fetch_command_and_capabilities() to connect.c
->     @@ connect.c: int server_supports(const char *feature)
->      +	}
->      +
->      +	if (server_feature_v2("object-format", &hash_name)) {
->     -+		int hash_algo = hash_algo_by_name(hash_name);
->     ++		const unsigned int hash_algo = hash_algo_by_name(hash_name);
->      +		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
->      +			die(_("mismatched algorithms: client %s; server %s"),
->      +			    the_hash_algo->name, hash_name);
->     @@ fetch-pack.c: static int add_haves(struct fetch_negotiator *negotiator,
->      -	}
->      -
->      -	if (server_feature_v2("object-format", &hash_name)) {
->     --		int hash_algo = hash_algo_by_name(hash_name);
->     +-		const unsigned int hash_algo = hash_algo_by_name(hash_name);
->      -		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
->      -			die(_("mismatched algorithms: client %s; server %s"),
->      -			    the_hash_algo->name, hash_name);
->  6:  bb915f57ad <  -:  ---------- connect: use unsigned int for hash_algo_by_name() calls
->  7:  b3b06b0cae =  7:  b954a5994a connect: make write_fetch_command_and_capabilities() more generic
->  8:  79a87c7011 =  8:  627242a7a1 fetch-pack: move fetch initialization
->  9:  37c3f93975 =  9:  0578594733 protocol-caps: check object existence regardless of the attributes requested
-> 10:  c5062ecaf2 = 10:  816bfa9162 serve: advertise object-info feature
-> 11:  22d72168bc = 11:  2323f45cb2 transport: add client support for object-info
-> 12:  2cf3b24a35 ! 12:  a39975766b cat-file: add remote-object-info to batch-command
->     @@ Documentation/git-cat-file.adoc: one per line, and print information based on th
->       You can specify the information shown for each object by using a custom
->       `<format>`. The `<format>` is copied literally to stdout for each
->      @@ Documentation/git-cat-file.adoc: newline. The available atoms are:
->     - 	reports).
->     -
->     - `objectsize:disk`::
->     --	The size, in bytes, that the object takes up on disk. See the
->     --	note about on-disk sizes in the `CAVEATS` section below.
->     -+	The size, in bytes, that the object takes up on disk.
->     -
->       `deltabase`::
->       	If the object is stored as a delta on-disk, this expands to the
->       	full hex representation of the delta base object name.
->      -	Otherwise, expands to the null OID (all zeroes). See `CAVEATS`
->     --	below.
->     -+	Otherwise, expands to the null OID (all zeroes).
->     ++	Otherwise, expands to the null OID (all zeroes). See `CAVEATS` section
->     + 	below.
->
+Changes in v2:
 
-This chagne is still unnecessary, no?
+ * Clarify that URL push destinations already work and that this change only
+   restores their tracking information.
+ * Document URL values for branch.<name>.pushRemote and their @{push}
+   behavior.
 
->       `rest`::
->     - 	If this atom is used in the output string, input lines are split
->      @@ Documentation/git-cat-file.adoc: newline. The available atoms are:
->       	after that first run of whitespace (i.e., the "rest" of the
->       	line) are output in place of the `%(rest)` atom.
->     @@ builtin/cat-file.c: struct expand_data {
->      +	 */
->      +	unsigned is_remote:1;
->      +};
->     ++
->      +#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD }
->      +
->      +static const char *remote_object_info_atoms[] = {
->     @@ builtin/cat-file.c: static void parse_cmd_mailmap(struct batch_options *opt UNUS
->      +	line_to_split = xstrdup(line);
->      +	count = split_cmdline(line_to_split, &argv);
->      +	if (count < 0)
->     -+		die(_("remote-object-info: %s"), split_cmdline_strerror(count));
->     ++		die(_("remote-object-info: failed to parse command line: %s"),
->     ++		    split_cmdline_strerror(count));
->      +	if (count - 1 > MAX_ALLOWED_OBJ_LIMIT)
->      +		die(_("remote-object-info supports at most %d objects"),
->      +		    MAX_ALLOWED_OBJ_LIMIT);
-> 13:  ebdfc22fb7 ! 13:  70a11d2aea cat-file: make remote-object-info allow-list adapt to the server
->     @@ builtin/cat-file.c: struct expand_data {
->       	 */
->       	unsigned is_remote:1;
->      -};
->     +-
->      -#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD }
->
->      -static const char *remote_object_info_atoms[] = {
->      -	"objectname",
->      -	"objectsize",
->     ++	/*
->     ++	 * List of atoms (i.e. "objectsize") that the server supports. Built
->     ++	 * from the server's object-info advertised capabilities.
->     ++	 */
->      +	struct string_list remote_allowed_atoms;
->       };
->     -+#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD, \
->     -+			    .remote_allowed_atoms = STRING_LIST_INIT_NODUP }
->
->     ++#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, \
->     ++			    .type = OBJ_BAD, \
->     ++			    .remote_allowed_atoms = STRING_LIST_INIT_NODUP }
->     ++
+Harald Nordgren (2):
+  remote: pass repository to push tracking helper
+  remote: find tracking branches for URL push destinations
 
-I guess this is output of running the style check script (which I did
-recommend, but I should've mentioned that you should take it with a
-pinch of salt, it doesn't always provide the best solutions.)
+ Documentation/config/branch.adoc |   1 +
+ Documentation/revisions.adoc     |   3 +
+ remote.c                         |  43 +++++++++--
+ remote.h                         |   2 +
+ t/t5505-remote.sh                | 124 +++++++++++++++++++++++++++++++
+ transport.c                      |   5 +-
+ 6 files changed, 172 insertions(+), 6 deletions(-)
 
->       static int is_atom(const char *atom, const char *s, int slen)
->       {
->     + 	int alen = strlen(atom);
->      @@ builtin/cat-file.c: static int expand_atom(struct strbuf *sb, const char *atom, int len,
->       		       struct expand_data *data)
->       {
->     @@ builtin/cat-file.c: static int expand_atom(struct strbuf *sb, const char *atom,
->      -			if (is_atom(remote_object_info_atoms[i], atom, len))
->      +		size_t i;
->      +		for (i = 0; i < data->remote_allowed_atoms.nr; i++)
->     -+			if (is_atom(data->remote_allowed_atoms.items[i].string, atom, len))
->     ++			if (is_atom(data->remote_allowed_atoms.items[i].string,
->     ++				    atom, len))
->       				break;
->      -
->      -		/*
->
-> ---
-> base-commit: 44de1520f08d1dfebc3ab2d9f644208eaa5ac925
 
-I reviewed v18 last, but the diff here looks good to me. Thanks!
+base-commit: 48bbf81c29ca9a4479ec7850fe206518682cdb2f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2358%2FHaraldNordgren%2Fremote-resolve-url-push-tracking-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2358/HaraldNordgren/remote-resolve-url-push-tracking-v3
+Pull-Request: https://github.com/git/git/pull/2358
 
---00000000000086bd81065724a359
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9329ec02cdacf1c0_0.1
+Range-diff vs v2:
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wZjBwb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNUJ4Qy80NHNaRWM5MS9zUDN3Z1BQeG5Od0VnUmc3cApJSmRVTWJSbnRr
-U2FZTEVnanRJeGFzR2RKQ1F3dCtGd2g2b2lJSXBGYzg4cDNiTmoveVVxR0lhMFlYcW9aUVFMCkNN
-SEVuOERIZXdkRjVGMHdZejMyd2xWTjByeTh3UVhPcG01TkZLNGw2aC9WUEExY3VKUnRnS3d4bnhP
-N3J6NGUKOVh6UVpXTCs0NnFheks4TXFSZGVaSTRzajRRdWNweVp5aFBieVJHdDZFMW5WUnZYZDR2
-ZG1paU1xOStlbnlBYQpYaHkvbDBpWU5oaFlkTVlQTklhakdwMWh1dDdFSTk4MmRXcHdDL0g0WUhV
-dUJIdyttekxoQnI2ZGJFdFg1SFg0CkwzbWpUSE1kVG9VU0lKVjE2WEc1M0dOMXJGQlNmbjc1a2Nv
-cjdabTgzTUdvMEtLSEFIVEpFYU5WYmpGSHlUTUQKSTZJS0pTdHFPd0h6dW1wZ0M0UVI2blh0TGpu
-K2lZOU5YRWpaam5xc3c2bVNxSExwNDNpNFQ5S1o5NXRrb0xMNAoydG1YR3JoaW5McW1SZmsxczZE
-SExUQkUvZ0dQRVhZa3RXZ1NSK0JrblF3L3E0Q0ZTRVNpaU9ocDU4ekRzU2pnClZMMGJBTDk4TU1Y
-bzFWeFhvSnFDS1NCcjdqKzNnZXdSekxaQTdTZz0KPW94VXUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000086bd81065724a359--
+ 1:  b1ac49de87 = 1:  b1ac49de87 remote: pass repository to push tracking helper
+ 2:  6e924a7fec ! 2:  a343af9d50 remote: find tracking branches for URL push destinations
+     @@ Metadata
+       ## Commit message ##
+          remote: find tracking branches for URL push destinations
+      
+     -    Git already accepts a repository URL as branch.<name>.pushRemote and
+     -    can push to it. When a configured remote has the same URL, however,
+     -    "git status" cannot show that remote's push branch.
+     +    Git accepts a repository URL as branch.<name>.pushRemote and can push
+     +    to it. This branch setting takes precedence over remote.pushDefault.
+      
+     -    This can happen in fork workflows when the original remote is renamed
+     -    to "upstream", the fork is added as "origin", and an existing
+     -    pushRemote value still contains the fork URL. The URL still points to
+     -    the right repository, so pushing works. However, @{push} is unavailable
+     -    because Git does not connect the URL to "origin". As a result,
+     +    A branch can be configured with a URL-valued pushRemote before any push
+     +    occurs. If the remotes are later rearranged with "git remote rename" and
+     +    "git remote add", the newly added remote may use that URL. The URL value
+     +    is unaffected by the rename and continues to take precedence over
+     +    remote.pushDefault. The URL and the remote then point to the same
+     +    repository, but Git does not connect them for tracking. Pushing works,
+     +    but @{push} cannot identify the remote's tracking branch. As a result,
+          "git status" cannot show the push branch, and an up-to-date push can
+     -    leave its local tracking information stale.
+     +    leave its tracking information stale.
+      
+     -    When exactly one configured remote has the URL as one of its
+     -    remote.<name>.url values, use its fetch refspec to find and refresh the
+     -    push branch. Keep the URL as the push destination so the configured
+     -    remote's push settings do not change existing behavior. Keep the
+     -    current behavior when no remote matches or multiple remotes match.
+     +    When exactly one configured remote uses the push destination URL, use
+     +    that remote for push tracking. Continue to push to the URL so the
+     +    configured remote's push settings do not change existing behavior. Keep
+     +    the current behavior when no remote matches or multiple remotes match.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+     @@ Documentation/config/branch.adoc: This option defaults to `never`.
+       	repository), you would want to set `remote.pushDefault` to
+       	specify the remote to push to for all branches, and use this
+       	option to override it for a specific branch.
+     -+	The value may be the name of a configured remote or a repository
+     -+	URL. A URL is used directly as the push destination.
+     ++	The value may be the name of a configured remote or a repository URL.
+       
+       `branch.<name>.merge`::
+       	Defines, together with `branch.<name>.remote`, the upstream branch
+     @@ Documentation/revisions.adoc: some output processing may assume ref names in UTF
+         `git push` were run while `branchname` was checked out (or the current
+         `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
+         the remote-tracking branch that corresponds to that branch at the remote.
+     -+  If the push destination is a URL and exactly one configured remote has the
+     -+  same `remote.<name>.url`, '@\{push}' reports the remote-tracking branch for
+     -+  that remote.
+     ++  If the push destination is a URL and exactly one configured remote has
+     ++  that URL among its `remote.<name>.url` values, '@\{push}' reports that
+     ++  remote's remote-tracking branch.
+       +
+       Here's an example to make it more clear:
+       +
+     @@ remote.c: const char *branch_get_upstream(struct branch *branch, struct strbuf *
+      +struct remote *repo_remote_for_push_tracking(struct repository *repo,
+      +					     struct remote *remote)
+      +{
+     ++	const struct strvec *push_urls;
+      +	struct remote *first_match = NULL;
+      +	struct remote_state *remote_state = repo->remote_state;
+     ++	const char *check_url;
+      +
+     -+	if (remote->origin != REMOTE_UNCONFIGURED || remote->url.nr != 1)
+     ++	if (remote->origin != REMOTE_UNCONFIGURED)
+      +		return remote;
+      +
+     ++	push_urls = push_url_of_remote(remote);
+     ++	if (push_urls->nr != 1)
+     ++		return remote;
+     ++	check_url = push_urls->v[0];
+     ++
+      +	for (int i = 0; i < remote_state->remotes_nr; i++) {
+      +		struct remote *candidate = remote_state->remotes[i];
+      +
+      +		if (!candidate || candidate == remote ||
+      +		    !remote_is_configured(candidate, 0) ||
+     -+		    !remote_has_url(candidate, remote->url.v[0]))
+     ++		    !remote_has_url(candidate, check_url))
+      +			continue;
+      +		if (first_match)
+      +			return remote;
+     @@ t/t5505-remote.sh: setup_repository () {
+      +	rm -rf fork.git client &&
+      +	git clone --bare one fork.git &&
+      +	git clone one client &&
+     -+	fork_url="$TRASH_DIRECTORY/fork.git" &&
+     ++	fork_url="file://$TRASH_DIRECTORY/fork.git" &&
+      +	(
+      +		cd client &&
+      +		git checkout -b topic --track origin/main &&
+     @@ t/t5505-remote.sh: test_expect_success 'rename a remote renames repo remote.push
+      +	EOF
+      +'
+      +
+     -+test_expect_success 'adding fork remote makes URL-valued pushRemote trackable' '
+     ++test_expect_success 'adding matching remote makes URL-valued pushRemote trackable' '
+      +	setup_url_pushremote &&
+      +
+      +	(
+     @@ t/t5505-remote.sh: test_expect_success 'rename a remote renames repo remote.push
+      +	EOF
+      +'
+      +
+     ++test_expect_success 'pushInsteadOf URL pushRemote is trackable' '
+     ++	setup_url_pushremote &&
+     ++	(
+     ++		cd client &&
+     ++		git remote rename origin upstream &&
+     ++		git remote add -f origin "$fork_url" &&
+     ++		git config "url.$fork_url.pushInsteadOf" fork: &&
+     ++		git config branch.topic.pushRemote fork:
+     ++	) &&
+     ++
+     ++	check_status <<-EOF
+     ++	On branch topic
+     ++	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+     ++
+     ++	Your branch is up to date with ${SQ}origin/topic${SQ}.
+     ++
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++'
+     ++
+      +test_expect_success 'up-to-date URL push refreshes stale tracking branch' '
+      +	setup_url_pushremote &&
+      +	(
+
+-- 
+gitgitgadget
