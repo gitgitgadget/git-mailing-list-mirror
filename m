@@ -1,187 +1,309 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B424446F4
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 22:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB593AF643
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 23:30:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672485; cv=none; b=kKErPrTEiU+4eScwIzg1GjVqBSDD93P5Cihx99MBa4YjaNwqXxfVdhRnV6NlNPuS114pusU4HL/OHAkgiHUo34leolWOa8TyJvteqwQOxa/SgJGcMDjkwta5RfTUlWcAkJrqUC11Usy18rgk6o6xFiUt7uXUeUsZB6L/ZqoEtJE=
+	t=1784676614; cv=none; b=HOICmS3xJEieu7phtsoq6JsJOQHp8mpssaLt1pGBuJBIpc0PhmSAgXXdy3v2gSbARYJ4GezcG52RruiYyLVfeHfrfR43oaO0OskNR/B1cW/Y4xTyxPShLxv7G/6I2KuyQpM8x3mPlKR71DsVx8U5GqCsmYnZWLOBrU06k3x8Zvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672485; c=relaxed/simple;
-	bh=ZpZ44T0rSR19hOImJZswH81giyKAC8UcNnZhfQcC/ag=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gOp8YNjlQq7SKei4ET4feycJHqNKxzJjufPKcoc4jqp1WCLgagGFfS2ENHTKwgQ/oC+KI7trSdOCbMwljDf+Cv1x2T1l3r9mT7AVQsFKXCJ9sywS2Y32ncIgN3/Ave/TFRqrAuC7yNtO24yfmpLc6mj5CvfWikDxNcBNru9RKTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PG7hTzv3; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784676614; c=relaxed/simple;
+	bh=9uRwEhhD4i3J9iNeDtDFtNoY3GC0hZUv3b0HZCD0kl8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dyNL10ynqxQmvuRvXp4RNzY+VDfrF2qbEX4TXwq201IiiBjd9g0Lr3pGeQI77tDzQTvJdb3ghfFQpPibK5gFPYnfZ3KHe15nhk0eTi6WzJO5fkE/4qSFJHcpN3cWeiBwLmkpFgJw4Ml+OvZ9VrsOX9usIOpwrU2f2HiVa2eBuDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=JUlD2ebM; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PG7hTzv3"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c15b33f7b23so1729182666b.3
-        for <git@vger.kernel.org>; Tue, 21 Jul 2026 15:21:20 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="JUlD2ebM"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8ea2b8f128aso15601136d6.2
+        for <git@vger.kernel.org>; Tue, 21 Jul 2026 16:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784672479; x=1785277279; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qyQeKm+Hbb4jmey+PB9WFih5Y0fv1no1I/iU3jR9Q0Q=;
-        b=PG7hTzv3JE+KyLWhSRlBKuZR9j/2Hawrhegwl/iY8n5mjapS5dnFtAUUut8akp09zA
-         irI+x7GUi2QH99JbrOey8lDQraUoIz/US6Kl9qvFJCUVLKYypwc4aCPOBcCoTklPuCUC
-         jmVAYNu0XK3TikM4B3wuvAjcBB2jiSJq8PPdVm3GTF649BsEjqEPknVmYbLY2QKyM49g
-         LmA+PnXLEP0tlabHCkkC+Xuo0HjIrRdv2JOQ3xkscZacs5m5hubWO9Mozk/EOfCrSecL
-         ASRx2bi3xWxWNhLg/OTCFW7AOHhin2CNue9bRmwEOSM/kQNiqQHDu3X7vUgFSiS8cM/F
-         1IAA==
+        d=openai.com; s=google; t=1784676612; x=1785281412; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GArZXdDASpnW1B9QVBJPtIO14MSnGQoUV2WKSEwLeSs=;
+        b=JUlD2ebMwQ0yAKhKZujaFzIMgsAawBihhp/FqrEZ3jn/AeTQfc3LLLeWRyS1SI3JhX
+         4+djGwSSdKuJErxPHE385A8mQUu0ykL+fnC+ngwQ4vjvCh3WL8rY75+TbzKocqFDwdZY
+         Y+23N7JCwNxqKa+E+WazGYFG47XFXmr+KNKBM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784672479; x=1785277279;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=qyQeKm+Hbb4jmey+PB9WFih5Y0fv1no1I/iU3jR9Q0Q=;
-        b=l1/w6F8ecPATIBW0FzaiYnkaw91yRDs8ovJTJQSbprDS7RJfPXHVIIA5k0QJk9F/Ck
-         IrHV+Mr7uVV3FtLNLxAd/XLADzmh/TMVe5CkJiuNBaCfraPrEWrw4i1mTTJtl2odO3vs
-         sO84lVpdfQOfeLOHCmm1c2HcBFX9SB1QqTuHJzHFl9CPj86RlmKss5evgq3ZgOlWcn76
-         h2YA7vHBNh3GOQAX+UD6YdMjBPnjoXqhw6An7Qza+wIbIHoi6Ov+W2VvpBf3+52Udbge
-         yj3hJSJ61PldO392RmUWuOwmPQ78n14jKyGRYQUfmPCtxcAeEfDmVmXZocgROtPHwn5H
-         SulA==
-X-Forwarded-Encrypted: i=1; AHgh+Ro9E+G22KHKlGDWQp3KdK88/1yk9vK9RRgl+CmndjBQpMdiT6MRbbFePetah11GA3Y2e44=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwodGzczq+cVLnwWB55/FRxoXtNCL2uNJrgcsjAj88MdEKtPYcH
-	iXsy50bEiqtW7Ntj88UICi0litPcLN6MHhWMvS79tJDlsbkK6+Ubcd1J
-X-Gm-Gg: AR+sD12IKVRACJaHKSoWgsoL/HOsu4Gs/StbQvaF0arXvOWgPjwAwUGymz0j7otW3xa
-	ygzV02R0jNFzX3VnDx00w877mX5Q2s7nvWEfM5tTu/20Fc2ZDIMsV9OYqOCaUXcPuNg48X1LoWu
-	of13f5K0E9f6haoj2bHKXBqYCbWyk8M7zcV0mAkcygwDWQ/wdASeQs3Qzr36gARFZatWqNaZTVI
-	ZUnKLyjLcas4HXISuMMVxF597t9IkqF551hlKAIKouPGAB3aYFrQxUJLka2H1E9B5c/QzFpM2Rn
-	xRFoPLs6QYWr/KLZPWyAT88WOrL80xXdoiLyXUssp/Nlk/Lp7zx/HM/NjP8c69PVEraKJyhwaav
-	EGDitF/xeim7yYBsNf4W8pzp76C/tiTEPDeEVk+46ql3W2Yucngkx6Y22uxza6tZfSn1LY58NXN
-	ushbYapupazRrSK1fOuPjoNcftJCub
-X-Received: by 2002:a17:907:9625:b0:c16:101d:7afe with SMTP id a640c23a62f3a-c16b46d34f2mr830437866b.23.1784672478307;
-        Tue, 21 Jul 2026 15:21:18 -0700 (PDT)
-Received: from localhost (94-21-29-149.pool.digikabel.hu. [94.21.29.149])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1c32af45ecsm21879266b.28.2026.07.21.15.21.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 15:21:16 -0700 (PDT)
-Date: Wed, 22 Jul 2026 00:21:14 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>, git@vger.kernel.org,
-	Thiago Perrotta <tbperrotta@gmail.com>,
-	Philippe Blain <levraiphilippeblain@gmail.com>,
-	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
-	Yury Norov <ynorov@nvidia.com>, linux-kernel@vger.kernel.org,
-	Codex <codex@openai.com>
-Subject: Re: [PATCH] completion: complete paths for git send-email
-Message-ID: <al/w2qgBfhe9qMg6@szeder.dev>
-References: <20260719134447.381835-1-yury.norov@gmail.com>
- <CALnO6CAuitGp_xLYkXpkQYV9oiXsNNfsXZ_OqzkW7_6ND49=LA@mail.gmail.com>
- <xmqqcxwgz2u3.fsf@gitster.g>
+        d=1e100.net; s=20251104; t=1784676612; x=1785281412;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GArZXdDASpnW1B9QVBJPtIO14MSnGQoUV2WKSEwLeSs=;
+        b=pNLTPXIg7WoSoYk/OouKJomnhpmElafK9ciLoU9ywdGQkFrLUqClNmvDnNMq5TUvXK
+         5jZvKe1hKcj24n5xKFDFxhCPCv3spQIqIAqORGR2akHK2mJoblun2AORPRsoMBPYjL0h
+         mR5VyjvLaPgEWDTJS+v6g+aGVoviLw7wz5ail2kaqaJaI9Kjbw7Yng/dDA2kk3CmYTPV
+         35piTgM1SBkia+21O+r1kEUgsv5hyFGiLO5VM8T2bLlPP8sHykzY4ZeTje100wnb0h/m
+         OUittPFjLUG1xdv1+voBmqbNhwt+tU+Hd+IuMzzJWTebfA6JRxUBGKa2irxSpp8FLSFr
+         PRuA==
+X-Gm-Message-State: AOJu0Yxnon20CR5SSO7617C1vW06gMPPcOQ5652S7k6nSHQq1B98ggbP
+	gqY92XxkBvbyrS3zWVw/K/eMgHTgjJT1ZJJZtHDcvLg5XtxNWwv7Lw9Sak1paeo4ww1VfelsC3+
+	wZndgRZQ=
+X-Gm-Gg: AR+sD12A0ZxF8v/0DcoKKxdY5Qg2uSV1c7sF/06+IhcsgWPju9mD8a7EuNbl7z8Wjdj
+	9JLhDXTLqbyOG9AVI99qJ8VLbo0sjxXHicCaqNW3/8gJy1srow/6ZpJtbbVZLkYMRUxpDFLggOB
+	ODsd4uuYBBaM3h9Cykp6cIwIvCNOKr6Apml9XKVRQqjGZQD6ZdP/BUXmVJsHq9+TqI/F/D+q6t4
+	zK5p/WLq7crXTaZbL6eKRzgIRh8fHjihulYrn2CYFV7tz55Hc7jsBqXVp6xJ543ive3TKMCzcSj
+	rH+DwoHHR0KWyySkshoRgWh/+H147p6cjAlLK7X4LPIvYaSD0NxbMgBBKe7hSSGas4u4sf0l0p5
+	J09nBQnrs7T9sOrDATGcNACfNHj/VKhGtY5k73uYKMv+VYiVr/JS5sD7LhdABl1Ah4n6Z7t9qDt
+	xpKeeRbSwo31SlbLOkP2FMkgdJSTmz7ADrKl58oSMcSYhqlZPpaAWs1nHNqrQVYIo9sSuJTSb64
+	VmG5+o=
+X-Received: by 2002:a05:620a:271b:b0:92e:5272:4e3e with SMTP id af79cd13be357-930e6dd6fe8mr453806685a.0.1784676611465;
+        Tue, 21 Jul 2026 16:30:11 -0700 (PDT)
+Received: from com-76773.corp.openai.org ([209.249.37.147])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930f6a0b2c7sm16008585a.24.2026.07.21.16.30.10
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 21 Jul 2026 16:30:10 -0700 (PDT)
+From: Ted Nyman <tnyman@openai.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	me@ttaylorr.com,
+	peff@peff.net,
+	ps@pks.im,
+	karthik.188@gmail.com,
+	sandals@crustytoothpaste.net,
+	avarab@gmail.com
+Subject: [PATCH v3 0/3] packfile URIs: support concurrent downloads
+Date: Tue, 21 Jul 2026 16:29:39 -0700
+Message-ID: <cover.1784676106.git.tnyman@openai.com>
+X-Mailer: git-send-email 2.55.0.337.g1ee5d7e027
+In-Reply-To: <cover.1783982021.git.tnyman@openai.com>
+References: <cover.1783982021.git.tnyman@openai.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqcxwgz2u3.fsf@gitster.g>
 
-On Tue, Jul 21, 2026 at 10:09:56AM -0700, Junio C Hamano wrote:
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
-> 
-> > On Sun, Jul 19, 2026 at 9:45 AM Yury Norov (NVIDIA)
-> > <yury.norov@gmail.com> wrote:
-> >>
-> >> From: Yury Norov <ynorov@nvidia.com>
-> >>
-> >> git send-email accepts either revisions or paths to patch files, but its
-> >> Bash completion only offers revisions. This prevents patch files from
-> >> being completed. It can also make a prefix such as "0" expand to an
-> >> unrelated hexadecimal ref even when matching 0001-*.patch files exist.
-> >>
-> >> In my Linux tree, an attempt to autocomplete the standard-named patch
-> >> brings a random hashtag:
-> >
-> > It is unusual to call this a "hashtag." Perhaps "hash" or "object
-> > name" (or id) based on the glossary and datamodel docs?
-> 
-> Very good point, but I am not sure if the author truly meant object
-> names here.  The reproduction test uses a long hexadecimal string,
-> but that is not an object name; it is an unusual-looking tag name.
-> It is like naming a topic branch '012345' and complaining that:
-> 
->     $ git send-email 0<TAB>
-> 
-> completes the input to the branch name while ignoring the
-> 0001-changes.patch file.
-> 
-> When you have a branch named '0-tolerance-policy' and:
-> 
->     $ git send-email 0<TAB>
-> 
-> completes to that branch name, you would not dream of complaining
-> about the completion.  IOW, I think the complaint is somewhat unfair
-> to begin with.
-> 
-> Actually, I do not know if the completion script really expands an
-> abbreviated object name to a full one.  I tried:
-> 
->     $ git rev-parse seen^2
->     179eccf0d01729c19a3238905b951b1880aa4ba1
->     $ git checkout master
->     $ . contrib/completion/git-completion.bash
->     $ git send-email 17<TAB>
-> 
-> and waited for some time, but it did not complete to anything.
+Packfile URI and dumb HTTP downloads stage packs at
+objects/pack/pack-<hash>.pack.temp so an interrupted transfer can
+resume. Opening that file in append mode forces every write to its
+current end. Two Git processes fetching the same pack into one object
+database can therefore append duplicate data and corrupt the pack.
 
-We definietely don't do that.  I'm not sure what the use-case would be
-for completing full object names, but considering how many objects a
-repo might contain, I doubt it can be usable for anything.
+The first patch separates the unrelated --index-pack-arg documentation
+and error-message correction requested during review.
 
-> In any case, when both a '0001-my-changes.patch' file and a
-> '0-tolerance-policy' branch exist in your repository and current
-> working directory, running:
-> 
->     $ git send-email 0<TAB>
-> 
-> should offer both as candidates, I thihk.  Since I only ever pass
-> filenames to the command, I personally do not think it is a huge
-> loss if the completion script stops looking at refs and sticks to
-> filenames only, but others may have a use for that feature.
+The second patch keeps the predictable staging name but removes append
+mode. Each downloader seeks once to the current end, requests the
+corresponding Range, and writes using its own descriptor offset. Since
+the staging key must identify immutable pack contents, overlapping
+responses write identical bytes at identical offsets. There is no need
+for pwrite(2) or cross-process coordination, and resumption continues to
+work for both packfile URI and ordinary dumb HTTP downloads.
 
-There are a couple of similar Git commands that accept both refs and
-paths, "diff" and "log" being the obvious examples, and our completion
-script doesn't list refs and paths for any of them, only refs [1].
+A downloader can also find that the partial pack has completed and
+request a range starting at EOF. Servers may respond with HTTP 416 in
+that case. Treat the response as a completed download and let
+index-pack validate the pack.
 
-I think that's intentional, because:
+On MinGW, the non-append O_RDWR open grants FILE_SHARE_DELETE only for an
+existing file. Create a missing staging file exclusively, close it, and
+reopen it without O_CREAT so every retained descriptor permits another
+downloader to unlink the path. Keep the open descriptor for index-pack;
+it installs its own pack, so the shared staging file is only unlinked,
+never renamed.
 
-  - It's easier to pick the ref you want from a list containing only
-    refs than from a list of refs and paths mixed together, because
-    the list to choose from is shorter, and the unique prefix is
-    likely shorter as well.
-    The same goes for picking the path you want from a list containing
-    only paths.
+The third patch handles the related .keep race. When another process has
+already created the keep file, index-pack reports "pack<TAB><hash>"
+instead of "keep<TAB><hash>". Accept both successful forms and remove
+only keep files created by the current process. Read only the prefix and
+hash so any following fsck output remains available to fetch-pack.
 
-  - Even when our completion script only lists refs for a particular
-    command, it's easy to trigger Bash's filename completion via one
-    of the following methods:
+The tests cover resumption, a completed partial returning 416,
+overlapping 200 and 206 responses, unlinking the staging path while
+index-pack holds its descriptor, and a pre-existing .keep file. The
+unlink test does not require FIFOs, so it can exercise MinGW's sharing
+behavior even though the concurrent-download tests are skipped there.
 
-      - git diff ./foo<TAB>  # No ref can start with "./".
-      - git log foo<ALT-/>   # Bash/readline's keybinding to trigger
-                             # filename completion.
-      - git log -- foo<TAB>  # No --options or refs after the
-                             # disambiguating doubledash.
+Changes since v2:
 
-    Although I'm not sure "git send-email" supports the disambiguating
-    doubledash; its completion function surely doesn't.
+  * Split the --index-pack-arg documentation and error-message cleanup
+    into a preliminary patch, as requested by Junio.
+  * Clarify why per-descriptor offsets keep overlapping writes safe and
+    why MinGW permits the shared staging path to be unlinked.
+  * Add a non-FIFO unlink-while-indexing regression test that can run on
+    MinGW.
+  * Rebase onto the current master.
 
-  - There is no similarly easy way to trigger refs completion.
+The v2 discussion is at:
 
-[1] There are a couple of (sub)commands, like "git worktree add" or
-    "git bungle create", where our completion script lists either
-    paths or refs (but never both) depending on what's already on the
-    command line.  But both of these expect a single path followed by
-    a single ref or any revision arguments, so we can unambigously
-    figure out when to list paths and when to list refs.  With "diff",
-    "log" and "send-email" this is not possible, because they accept
-    any revision arguments followed by paths.
+  https://lore.kernel.org/git/cover.1784582665.git.tnyman@openai.com/
 
+Ted Nyman (3):
+  http-fetch: correct --index-pack-arg documentation
+  http: avoid concurrent appends to partial packs
+  fetch-pack: accept "pack" output for packfile URIs
+
+ Documentation/git-http-fetch.adoc |  13 +-
+ fetch-pack.c                      |  33 ++--
+ http-fetch.c                      |   7 +-
+ http-push.c                       |   3 +-
+ http-walker.c                     |   3 +-
+ http.c                            |  56 ++++---
+ t/t5550-http-fetch-dumb.sh        | 244 ++++++++++++++++++++++++++++++
+ t/t5702-protocol-v2.sh            |  31 ++++
+ 8 files changed, 344 insertions(+), 46 deletions(-)
+
+Range-diff against v2:
+-:  ---------- > 1:  a6a40b8046 http-fetch: correct --index-pack-arg documentation
+1:  160a9b9fd0 ! 2:  6c91054afc http: avoid concurrent appends to partial packs
+    @@ Commit message
+     
+         Pack requests stage downloads in a predictable partial-pack file so an
+         interrupted transfer can be resumed. Both packfile URI and ordinary dumb
+    -    HTTP requests use this staging path. Opening it in append mode lets
+    -    concurrent fetches interleave their writes, corrupting the pack or
+    -    causing a later fetch to request a range at EOF.
+    +    HTTP requests use this staging path. Opening it in append mode forces
+    +    each write to the current end of the file, so concurrent responses can
+    +    append duplicate data and corrupt the pack.
+     
+    -    Open the partial pack read-write, seek to its current end, and retain a
+    -    per-descriptor offset for incoming data. Reopen newly created partial
+    -    packs without O_CREAT so Windows permits concurrent unlink, and keep the
+    -    descriptor for index-pack when another downloader removes the staging
+    -    path. Accept HTTP 416 when a partial pack is already complete.
+    +    Open the partial pack read-write without O_APPEND and seek once to its
+    +    current end. Each downloader then retains the offset matching the Range
+    +    it requested. Because the staging key must uniquely identify immutable
+    +    pack contents, overlapping responses write the same bytes at the same
+    +    offsets instead of extending the file with duplicate data.
+     
+    -    Exercise resumed transfers, EOF ranges, and overlapping 200 and 206
+    -    responses. Clarify the staging-key documentation and correct the stale
+    -    --index-pack-args spelling in the documentation and error messages; the
+    -    repeatable --index-pack-arg option is already accepted.
+    +    MinGW's non-append O_RDWR open grants FILE_SHARE_DELETE only for an
+    +    existing file. Create a missing partial pack exclusively, close it, and
+    +    reopen it without O_CREAT so every retained descriptor permits another
+    +    downloader to unlink the staging path. Duplicate that descriptor for
+    +    index-pack instead of reopening the path after closing the stream;
+    +    index-pack installs its own pack and the shared staging file is only
+    +    unlinked, never renamed. Accept HTTP 416 when a partial pack is already
+    +    complete and let index-pack validate its contents.
+    +
+    +    Exercise resumed transfers, EOF ranges, overlapping 200 and 206
+    +    responses, and unlinking the staging path while index-pack still holds
+    +    its descriptor. Clarify the staging-key documentation.
+     
+         Signed-off-by: Ted Nyman <tnyman@openai.com>
+     
+    @@ Documentation/git-http-fetch.adoc: commit-id::
+      	URL and uses index-pack to generate corresponding .idx and .keep files.
+     -	The hash is used to determine the name of the temporary file and is
+     -	arbitrary. The output of index-pack is printed to stdout. Requires
+    --	--index-pack-args.
+     +	The hash is used to determine the name of the temporary file. It need
+     +	not be the pack hash, but it must uniquely identify the pack contents
+     +	for resumption. The output of index-pack is printed to stdout. Requires
+    -+	one or more --index-pack-arg options.
+    - 
+    ----index-pack-args=<args>::
+    --	For internal use only. The command to run on the contents of the
+    --	downloaded pack. Arguments are URL-encoded separated by spaces.
+    -+--index-pack-arg=<arg>::
+    -+	For internal use only. An argument to the command run on the contents
+    -+	of the downloaded pack. This option can be specified multiple times.
+    + 	one or more --index-pack-arg options.
+      
+    - --recover::
+    - 	Verify that everything reachable from target is fetched.  Used after
+    + --index-pack-arg=<arg>::
+     
+      ## http-fetch.c ##
+     @@ http-fetch.c: static void fetch_single_packfile(struct object_id *packfile_hash,
+    @@ http-fetch.c: static void fetch_single_packfile(struct object_id *packfile_hash,
+      			struct url_info url;
+      			char *nurl = url_normalize(preq->url, &url);
+      			if (!nurl || !git_env_bool("GIT_TRACE_REDACT", 1)) {
+    -@@ http-fetch.c: int cmd_main(int argc, const char **argv)
+    - 
+    - 	if (packfile) {
+    - 		if (!index_pack_args.nr)
+    --			die(_("the option '%s' requires '%s'"), "--packfile", "--index-pack-args");
+    -+			die(_("the option '%s' requires '%s'"), "--packfile", "--index-pack-arg");
+    - 
+    - 		fetch_single_packfile(&packfile_hash, argv[arg],
+    - 				      index_pack_args.v);
+    -@@ http-fetch.c: int cmd_main(int argc, const char **argv)
+    - 	}
+    - 
+    - 	if (index_pack_args.nr)
+    --		die(_("the option '%s' requires '%s'"), "--index-pack-args", "--packfile");
+    -+		die(_("the option '%s' requires '%s'"), "--index-pack-arg", "--packfile");
+    - 
+    - 	if (commits_on_stdin) {
+    - 		commits = walker_targets_stdin(&commit_id, &write_ref);
+     
+      ## http-push.c ##
+     @@ http-push.c: static void finish_request(struct transfer_request *request)
+    @@ http.c: struct http_pack_request *new_http_pack_request(
+     -	if (!preq->packfile) {
+     -		error("Unable to open local file %s for pack",
+     -		      preq->tmpfile.buf);
+    -+	/* Reopen without O_CREAT so MinGW permits another writer to unlink it. */
+    ++	/*
+    ++	 * MinGW's non-append O_RDWR open grants FILE_SHARE_DELETE only for an
+    ++	 * existing file; reopen a newly created file so others may unlink it.
+    ++	 */
+     +	for (;;) {
+     +		fd = open(preq->tmpfile.buf, O_RDWR);
+     +		if (fd >= 0 || errno != ENOENT)
+    @@ http.c: struct http_pack_request *new_http_pack_request(
+     +	if (fd < 0) {
+     +		error_errno("unable to open local file %s for pack",
+     +			    preq->tmpfile.buf);
+    -+		goto abort;
+    -+	}
+    + 		goto abort;
+    + 	}
+     +	prev_posn = lseek(fd, 0, SEEK_END);
+     +	if (prev_posn < 0) {
+     +		error_errno("unable to seek local file %s for pack",
+     +			    preq->tmpfile.buf);
+     +		close(fd);
+    - 		goto abort;
+    - 	}
+    ++		goto abort;
+    ++	}
+     +	preq->packfile = xfdopen(fd, "w");
+      
+      	preq->slot = get_active_slot();
+    @@ t/t5550-http-fetch-dumb.sh: test_expect_success 'http-fetch --packfile' '
+     +	git -C packfileclient-resume cat-file -e "$HASH"
+     +'
+     +
+    ++test_expect_success 'http-fetch --packfile permits unlink while indexing' '
+    ++	git init packfileclient-unlink &&
+    ++	p=$(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
+    ++		ls objects/pack/pack-*.pack) &&
+    ++	tmpfile="packfileclient-unlink/.git/objects/pack/pack-$ARBITRARY.pack.temp" &&
+    ++	write_script git-unlink-index-pack <<-\EOF &&
+    ++	test -f "$GIT_TEST_PACK_TEMP" || exit 1
+    ++	rm "$GIT_TEST_PACK_TEMP" || exit 1
+    ++	exec git index-pack "$@"
+    ++	EOF
+    ++	test_when_finished "rm -f git-unlink-index-pack" &&
+    ++	PATH="$TRASH_DIRECTORY:$PATH" \
+    ++	GIT_TEST_PACK_TEMP="$TRASH_DIRECTORY/$tmpfile" \
+    ++	git -C packfileclient-unlink http-fetch --packfile="$ARBITRARY" \
+    ++		--index-pack-arg=unlink-index-pack \
+    ++		--index-pack-arg=--stdin --index-pack-arg=--keep \
+    ++		"$HTTPD_URL/dumb/repo_pack.git/$p" >out &&
+    ++	test_path_is_missing "$tmpfile" &&
+    ++	git -C packfileclient-unlink cat-file -e "$HASH"
+    ++'
+    ++
+     +test_expect_success PIPE 'concurrent http-fetch --packfile accepts a complete partial' '
+     +	git init packfileclient-concurrent &&
+     +	p=$(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
+2:  9b41d4ddb3 = 3:  1ee5d7e027 fetch-pack: accept "pack" output for packfile URIs
+
+base-commit: 5d2e7709234afea1b6ddb25cd4f60d3d5fb3c200
+-- 
+2.55.0.openai.131.g83a728de1eb6
