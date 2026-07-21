@@ -1,82 +1,88 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A803E49C6
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 16:11:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCEF3998AF;
+	Tue, 21 Jul 2026 17:09:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784650304; cv=none; b=k7JjpBZdxq/2W7iOzLj8cNT7rrCQQZDMzohsp+j7K/4r7es1C7P1Oy1m16WbqFdEVHjuS5fzB7WJqL1D7jIWHJoRGHmMwx2tOfUrUX1PKjwh7JPNWVyuReIHcLXVc+GE9WMC/5/L71yxMfx5x477heHnJCxMm6qVJckjezFRNTM=
+	t=1784653800; cv=none; b=icJvXmvr3FS+EVMB6QVeziZCx5TKLPJoUWHGFEcjVEQJRfJUp+ZpZU9vOwOjXH2r6oNpKziHe5nSFweK9KGC1LU18j38oN9VZ7MPUuMPINHjvgvh6KZo7puaMQVBGVbgBTjhfGSUR4VVitZqgm+L82Qivvb+EjVyypxHEWodyaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784650304; c=relaxed/simple;
-	bh=5KeqnBwynWKcGEOH8rDPIHKVZm48tF7VcO8w1zfIRTo=;
+	s=arc-20240116; t=1784653800; c=relaxed/simple;
+	bh=6++Lg9kYoO9WSZYnyb+rgz4xtqnBDiOUcsIr42a/6zQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mn05ZftXas9dxh+1KZW6qDLZcrbevmAnuo/ZjpU3pdix8MC/2ik/WWFWX4veYaQ5TZ8lHr4IYqGGLc6Z6wfQ38dlFSx2/xmt9tfgYEY+Vrzf1pOqSG10D0cVKS6PdQaHoC8SIVA6R9p2gARjTxe0nX1TIQ9q5M4O6svNGJuEhM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tO8s74xF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lRyLRKV7; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=PKjY+uUoqcbEsmwokEs3UHfkTg1qgefKqmR5ZUWZr0uGRCK9sDqHWbZRpaCvQCFaTqbqW8ETBSirqffbFC64j64RG6lj11//vxgwd453r/9MIL+o3GhmCSAoCHXHeK5+WClnArb9Eh4Ph9xtDvJ4QrxNK6PtPMcC/GEuL12pqic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jPSG47ko; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UOe7pxY0; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tO8s74xF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lRyLRKV7"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0A8CD14000CF;
-	Tue, 21 Jul 2026 12:11:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jPSG47ko";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UOe7pxY0"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 55302140003C;
+	Tue, 21 Jul 2026 13:09:58 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 21 Jul 2026 12:11:42 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 21 Jul 2026 13:09:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784650302; x=1784736702; bh=vCVWkBotWf
-	gwM7UDAY0KwT7kqUKV8jSURW10egweOwU=; b=tO8s74xF0KlQ6RdOYRk9dhRiH0
-	ba20+sPmXvg6QuwE1CrkrNc/Gk2trOj+wzRPi+WpzqC9m8Le/HCC9Pe/VKJfSAUv
-	n8LvbWPwLHvZPqdchSBTQ7v2cec6SsE/Tn0FddAGIXpe2sWpWD9QLq65Lp5/yZQQ
-	bX9pGbv+iLFlq8eUrPdKxKCSlsLvWLCorAKS9Ptc93oijM3cqJEJnGlo9qJqn6YB
-	5Ga4T4DjbuyEjpI9TtlkHFqAJ+hstpYTY3ESgOBestSoMcmaoZOqiWHpDNYK4jIp
-	WJBVUN/0it64h8A6KDrmChDnxE5qoxMeLA0yEPsYWIsemhiBpq/BkEMROrMg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784653798;
+	 x=1784740198; bh=aVkQZcMR0JKJc7XvtB0/mypaTdoFZ0wIdBtDRlzY34w=; b=
+	jPSG47koT3+B+TAwjVrvzzir+OuZ6ilxEw0EW8tOKf3FMoySqNG9RXI0xYYcY8Yp
+	fjKxmqFALvxpcvTF9r0ZO0Cg6XFvbxQPTLUqYNit9hWpc3Xsko5RNIyHBplor8p0
+	+kJ2xE+DTNq6l8BUBkao6W3i5dMMrFJ0GjspHOvPIAoGPbfp3r2jgC7GaSMivSkX
+	W+DJYe+ZeNBHo9RYT4FC216TTpxuA2kkYg1fCosaT46OBFth07tsGqysVfXq1uoe
+	W4ajSmiyYfaPeE2ilg66EFFc0/icruqNTd6e8XT4RXJNDkfaEFmfiuWiCUlI3Uf5
+	fEFWBG2oh9DwSyFvXsN4gg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784650302; x=1784736702; bh=vCVWkBotWfgwM7UDAY0KwT7kqUKV8jSURW1
-	0egweOwU=; b=lRyLRKV799ZU7LtiQpY8kzC0h7o9rl/3IdfRUk0NZHq9o1DrUmj
-	/Uy0dT8IOAnlQp1jV4EMgZB6f/FlaZUx7rtcBJlBOwPW5qJUvxidBobLtAC2PJn2
-	bJzI74WAQjA4otwDkQLI3oPhIZfs25GQgHclFvO9agn8HJ7YVD3wMf4kb7ILHs/y
-	V8wjj2XQBJf32IqvK0G11FL8B/mTZiIEwxOKZdv850nRMaQc8qRw2T6GkMEtq95y
-	Ql1WtVveCrLFyPdZFvG77sMYyQHYRFfsvD/2703DPjFnDELwYDImm7Ic7YOgLAjK
-	pZPrmROnP4Bqd5Bodf7ppzEQB8CAVJC1ImA==
-X-ME-Sender: <xms:PZpfau7GhQC5JiEqU9fzJWAyzdMVHgSuUl5_2knpjl0N-_GVCjDrGw>
-    <xme:PZpfau5HRpRon8FC_b4rPEti9HCJNLg0El4Gn6WQ0iyIPNgD_gIgiahLd6pvRtLKU
-    Wll8txFEs77u4METe0DrieliVL69cnUK5dpahW13rhSMQdxalKp9fI>
-X-ME-Received: <xmr:PZpfaieC3mflSKztuw9ZYfZx33w1BhmcucCwv8i1CgbtJ_YoAQr6_TFJsnRScofBNI9aqrq7VKSO69Gp-RpJey1pIatiGUvKWQ>
-X-ME-Proxy-Cause: dmFkZTFWj20JCsOgrWZSfREWgbpGK+VEPN3fcy17iaJ7GZvMO9GXgIT6TjZMt0qXN1MeI8
-    9VD1ts2QFyoUFeRSivBx1YurCo29pPxsWCHG6XPsqIeUy4TYsQC9xljU+JPf/r7Vckfdkg
-    u/3Xo/FkUTw9gEuNxnGDfyYw7M02bLix2VicDRi3L8lw21wQ5kWDjDqGWsdTSt8qDJ5VJx
-    yiDVXejOSfluMYvfbc166IdyDq8svQmJTZCeu1U4ysJcCCY69M9SY1KdAZUuW3aE8NK8q1
-    MmTlt+4ulZYNtR4U4bt53WLv3piDc1F9eJuggEjHs7h5k+mljelx1Ilh7H3zi0i6rE+yAD
-    Ee7KR4RsBP/gwLA5E9fNWvR2P0kx/7t1rSQdasWFUOyV/8I52ScQaZVl+jv0FLA5/0v7ga
-    PskxwYs+rLNSfER59cyL/EHRAMYudYhRjIoBzhfCj/EU8Q4qFIR1Lcren+dLYZiYg5OA4T
-    LMHQMgFWH5IvQFT/p1zJmKbR68Jxg0fDYVnGneHXbauNSsaYVUXh6moLx5MauOiXo32DP6
-    CxRp0iD6pzXp6/kkjPlZT78BbqMszz52ZFa1586IFY/fOLfbKZaTo7c8NDSw/o/NPidiTd
-    Gg9eWqs8WwhbZ1/n0uTPVSUnEbHqYgSP9jBAY95s+N8RAD3XtYY5HH6KnxNA
-X-ME-Proxy: <xmx:PZpfaqCCwMlBENYJ69FBgkWl7oBicFKtFDW41jTc3GqwnCs_DHqc-A>
-    <xmx:PZpfat-TFLWafOZ4xcPlck1otG1rUSRreuxXQQKos92qMh9y-5nZzQ>
-    <xmx:PZpfatKdx5iQBZ6l8qyxoB7Vs04zdOrGe8rdxc1p5K-8U3V7a5vxLQ>
-    <xmx:PZpfaujxS4ZFXVfEM4kYH-OLsNYdSAGyieTNznMj9zAiCkrOtTCwWg>
-    <xmx:Pppfah8_ZBDDfeQ_HvnFS8t-K6_TI5Ao46bZa623WA_-IwDU1Ugkx_fr>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784653798; x=
+	1784740198; bh=aVkQZcMR0JKJc7XvtB0/mypaTdoFZ0wIdBtDRlzY34w=; b=U
+	Oe7pxY0fb5b2Vy6h6HrcVo0ioJz73iNxKFdhLDslCfk96FYEB3Fd3xgLuWjS3Dao
+	5tc/84+clP0FNS8plwNYJYfAWTjwLSJG+lJ4FeSNjqY6ouZ6IGOdpq4ce7lRjsl5
+	gXToY1YB4RDSphqeNjRnBtR/leK4mvkFFjZE9A0QoNYU0PUjcUJQsrE/zAkyl96q
+	2uJRLXp3ZfwM4QFAtplvB9POhOb5KtguO7vtgKVqrRD0BcKV6rwiYVU/3OAIMjg/
+	gmpmvGJ80IO765OBFhO4+XouthX6ddLBE4UXDWR9Bp/rg9gIfxrpm1eUkgZBycKx
+	vnRlWuJHp3SxIy0Oz1V8w==
+X-ME-Sender: <xms:5qdfasgGYD16Fm5KS9iSc01FXdKowZsGaYffFY_OY0VlFHXnU1Jtpw>
+    <xme:5qdfaoGUz0j0674P0hWF_jAH4nj29X7qwj2cJXP-8ffgjNzVdaYcMqykbFwwYMfIQ
+    WUTkpqrCBJA2GbeDJQDpJgGN43cFI2JG330g7WxBK5IF7OYLt5tkQ>
+X-ME-Received: <xmr:5qdfauv416B1a8Z6YfFQCWnfOqb7ktKsDyDwqfgbd_gRriPMjLfsGXP26zEIsb10UTb3muV2AseQ3xrxVTlSk_0nH5AcYRr_xA>
+X-ME-Proxy-Cause: dmFkZTFzvnjlaA7qNbdi1ClJM+reVk7Mmj5ft1UFI4oIdZvRYndnjV/7XahNW24X+KaNXH
+    lAcSHGgSzP9jSS8PzHjEM6fIdbRO6E0tCFpJzzEy+LQJg7tEDM6LXPLSx/mNtDjTxzH2IT
+    GLz4CPKiE3ogAFZkb+TZqEWzHkCNY0QZOf5n1yiJCLmTzxACUNpyf2hYuhHdPDZwN6fmJc
+    GS7mBcRM12JYc3OEgKvJntlvy1SjgKyxQg/p4eNnu6bte1nkvqHlTPaTv8pZA76IVaKpN6
+    B1nPi9bPnIvA9icDM1qpiMqi2WXpe7hs8O0FbOWrtLihMDYtMvW08wOwhqcuf5fyq4+FjY
+    +irzf/1DiVZQCrwLr5QsEzXk2MzjJxunRxUdA1n7FQFG0T+xGwiql7dAt/SIme8xo06dDo
+    O7sS/LHuRu4KowMuKHulLWXipy9Mjt8LSbBxiSJD5BmK7NT1eLn3K2jBhrnTzwsJXXX5EA
+    N/0+LpgZZAZIHSzJAch5SyLR2hx1u5cKYR21Absrg1e18xUJnfDTj6S0QyavFYI0Oxg0Th
+    zROax8sbzyoy+6XMYraoRFO1phTVH4BKLOt52RGDv2iDxEXYUcfoX45JcoocpPf6gBa0xB
+    NpdAGydqzvzEd1OinHjUZH3ZZJoN+lsb8wx0934RKjDM4ctrUOhoPtzf4O0w
+X-ME-Proxy: <xmx:5qdfapeVPqHNnA8SnODtdQruvMLvT1qPlz3FNH0meQfWp289tN_o-Q>
+    <xmx:5qdfaknE_06Tt84yNYWbciHbe1_lMW6zQi12VO7Ejxmte4DETHr5Hw>
+    <xmx:5qdfasA5_nBDiHDM6Mg5SHOGXmWUZuIcBZYjEYrWdn3MDb-Gw_qokg>
+    <xmx:5qdfauPYm8oVStEcnVXnhQ8R_7ttFuGuq_iWxflnbpUHpO3GvL5jSA>
+    <xmx:5qdfalVb73j8eUHkviDsGd5oGAG3burantSiabh3ip6EMoWdtQOAs8YJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Jul 2026 12:11:41 -0400 (EDT)
+ 21 Jul 2026 13:09:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH 2/2] remote: resolve URL-valued push tracking remotes
-In-Reply-To: <ff645b21591a4b365b30acaf67a295510889141c.1784538618.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Mon, 20 Jul 2026
-	09:10:18 +0000")
-References: <pull.2358.git.git.1784538618.gitgitgadget@gmail.com>
-	<ff645b21591a4b365b30acaf67a295510889141c.1784538618.git.gitgitgadget@gmail.com>
-Date: Tue, 21 Jul 2026 09:11:40 -0700
-Message-ID: <xmqqecgw726b.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>,  git@vger.kernel.org,
+  Thiago Perrotta <tbperrotta@gmail.com>,  Philippe Blain
+ <levraiphilippeblain@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo
+ <rjusto@gmail.com>,  Yury
+ Norov <ynorov@nvidia.com>,  linux-kernel@vger.kernel.org,  Codex
+ <codex@openai.com>
+Subject: Re: [PATCH] completion: complete paths for git send-email
+In-Reply-To: <CALnO6CAuitGp_xLYkXpkQYV9oiXsNNfsXZ_OqzkW7_6ND49=LA@mail.gmail.com>
+	(D. Ben Knoble's message of "Tue, 21 Jul 2026 08:49:54 -0400")
+References: <20260719134447.381835-1-yury.norov@gmail.com>
+	<CALnO6CAuitGp_xLYkXpkQYV9oiXsNNfsXZ_OqzkW7_6ND49=LA@mail.gmail.com>
+Date: Tue, 21 Jul 2026 10:09:56 -0700
+Message-ID: <xmqqcxwgz2u3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,92 +90,64 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+> On Sun, Jul 19, 2026 at 9:45 AM Yury Norov (NVIDIA)
+> <yury.norov@gmail.com> wrote:
+>>
+>> From: Yury Norov <ynorov@nvidia.com>
+>>
+>> git send-email accepts either revisions or paths to patch files, but its
+>> Bash completion only offers revisions. This prevents patch files from
+>> being completed. It can also make a prefix such as "0" expand to an
+>> unrelated hexadecimal ref even when matching 0001-*.patch files exist.
+>>
+>> In my Linux tree, an attempt to autocomplete the standard-named patch
+>> brings a random hashtag:
 >
-> A branch may name its push destination with a URL instead of a
-> configured remote. This is useful in fork workflows, where the original
-> remote is renamed to "upstream", the fork is added as "origin", and an
-> existing branch.<name>.pushRemote continues to contain the fork URL.
->
-> Git can still push through the anonymous remote created for that URL.
-> However, the anonymous remote has no fetch refspec. Git therefore cannot
-> resolve @{push} to origin/<branch> or update that remote-tracking branch
-> after a push. The push can succeed, or report that everything is up to
-> date, while status continues to compare against a stale tracking ref or
-> cannot show the push branch at all.
->
-> A uniquely matching configured remote already provides the missing
-> mapping. Use its fetch refspec when resolving the push tracking branch
-> and when updating tracking refs after a push. This changes neither the
-> push destination nor configuration. Keep the existing behavior when no
-> remote matches or multiple remotes share the URL, since either case is
-> ambiguous.
-> ...
-> +struct remote *repo_remote_for_push_tracking(struct repository *repo,
-> +					     struct remote *remote)
-> +{
-> +	struct remote *first_match = NULL;
-> +	struct remote_state *remote_state = repo->remote_state;
-> +
-> +	if (remote->origin != REMOTE_UNCONFIGURED || remote->url.nr != 1)
-> +		return remote;
+> It is unusual to call this a "hashtag." Perhaps "hash" or "object
+> name" (or id) based on the glossary and datamodel docs?
 
-I briefly wondered what should happen when a caller passes NULL as
-the remote parameter to this function, but it turns out that no
-caller passes NULL.  One caller is tracking_for_push_dest(),
-which is called from branch_get_push_1().  The latter refuses to
-proceed when !remote is true and does not call
-tracking_for_push_dest(), meaning it cannot pass NULL to this
-function.  The other caller is transport_push(), which passes
-transport->remote.  This value comes from transport_get(), which
-ensures transport->remote is not NULL before returning, so it
-cannot pass NULL to this function either.
+Very good point, but I am not sure if the author truly meant object
+names here.  The reproduction test uses a long hexadecimal string,
+but that is not an object name; it is an unusual-looking tag name.
+It is like naming a topic branch '012345' and complaining that:
 
-Therefore, it is OK to assume remote is not NULL, and let the
-program crash loudly if that assumption is violated.  Adding an
-explicit BUG() check would be overkill here:
+    $ git send-email 0<TAB>
 
-    if (!repo || !remote)
-            BUG("...");
+completes the input to the branch name while ignoring the
+0001-changes.patch file.
 
-> +	for (int i = 0; i < remote_state->remotes_nr; i++) {
-> +		struct remote *candidate = remote_state->remotes[i];
-> +
-> +		if (!candidate || candidate == remote ||
-> +		    !remote_is_configured(candidate, 0) ||
-> +		    !remote_has_url(candidate, remote->url.v[0]))
-> +			continue;
+When you have a branch named '0-tolerance-policy' and:
 
-This check, as well as the safety uniqueness check at the beginning
-of the function, only pays attention to the url member.  However, it
-should also consider the pushurl member and, when it exists, ignore
-the url member.  The upfront check would then look something like
-this (please sanity check the details):
+    $ git send-email 0<TAB>
 
-	const char *check_url = NULL;
+completes to that branch name, you would not dream of complaining
+about the completion.  IOW, I think the complaint is somewhat unfair
+to begin with.
 
-	if (remote->origin != REMOTE_UNCONFIGURED)
-		return remote;
+Actually, I do not know if the completion script really expands an
+abbreviated object name to a full one.  I tried:
 
-	if (remote->pushurl.nr) {
-		if (remote->pushurl.nr != 1)
-			return remote;
-		check_url = remote->pushurl.v[0];
-	} else if (remote->url.nr != 1) {
-		return remote;
-	} else {
-		check_url = remote->url.v[0];
-	}
+    $ git rev-parse seen^2
+    179eccf0d01729c19a3238905b951b1880aa4ba1
+    $ git checkout master
+    $ . contrib/completion/git-completion.bash
+    $ git send-email 17<TAB>
 
-The test inside the loop would then use check_url:
+and waited for some time, but it did not complete to anything.
 
-		!remote_has_url(candidate, check_url)
+In any case, when both a '0001-my-changes.patch' file and a
+'0-tolerance-policy' branch exist in your repository and current
+working directory, running:
 
-instead of testing remote->url.v[0] directly.
+    $ git send-email 0<TAB>
 
-Thanks.
+should offer both as candidates, I thihk.  Since I only ever pass
+filenames to the command, I personally do not think it is a huge
+loss if the completion script stops looking at refs and sticks to
+filenames only, but others may have a use for that feature.
 
