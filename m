@@ -1,70 +1,71 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869EF390CBF
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 08:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294A93C10B8
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 08:58:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784624311; cv=none; b=WcCkZ03sC09AqnEeg1itJ+fPWqUKJiE+iVowKdl+zZwPm6Wep8wTx0IwNlRiTAWmtC2Gven+3v6D7+R5GbNGwdxZXT1sgIuJMi7eZ8t4P4Fjz2rO8amy7Pajf/JJuGV7ftiu9TvXPOPgTIh5188AlwZoE1aJuo76JRQ3C3liAT0=
+	t=1784624313; cv=none; b=pqxFh3OjN+wFTEP3z508GJkZg9qKx/9CjakksAOYu1AwCIloGQeVlukMrkz055oLeLbHPmpIKD0B+3EtsGLwzRTMpILsz4fDpxZv0AmE9VRmNl2ZU4k+UCJ96aBwtZVR00PFEWWgdTXc0gTRlaoN6x4GKIfvwkX6AZ5+GAyyGek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784624311; c=relaxed/simple;
-	bh=lmrVIQc1JN1X6YqEmBY+VyKP/TT4ddkuTmN90OPOHpA=;
+	s=arc-20240116; t=1784624313; c=relaxed/simple;
+	bh=HOT+OixhFxTSPFQSrrT1UsexgulZHmCzxsCNFfCABG0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=p2sFKi/uiW2VSpt4tde4uNGulFFWAKUuWPusj1RkTcaleHUEXw4TDpGWR+YPjr9EMWFrl/eDQAjpczuGQzWfXYydJ0Z3otp4Hh7FOWXkruqjalNjhKb9rAV9KuEjAYWWk/W4Q1t1wFwej1dX/A56+QGZsktXUN3i+Q7jU8z/mVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pt4Ua/lp; arc=none smtp.client-ip=209.85.210.171
+	 MIME-Version:To:Cc; b=HxhcrSfx94B3pwYFlFHyn+LTYo/r+3I/MsjZyRZEexYB1iDuozMJV1xXg/TvbMRXfod/QUWcxKVLzs/9PI0L5ikRW8MpZZ8fzbiMb+ybwrwLPamW4XRrRNz7vvQW0DrXsus0eKcd0rMzb0Q5nHuZxPdfH0vI9trOpIcjdIxwbGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=awSNWV1S; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pt4Ua/lp"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-84862b0d5f8so6139694b3a.3
-        for <git@vger.kernel.org>; Tue, 21 Jul 2026 01:58:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="awSNWV1S"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-38a0c7e841fso8859775a91.2
+        for <git@vger.kernel.org>; Tue, 21 Jul 2026 01:58:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784624310; x=1785229110; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784624311; x=1785229111; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=X17ZpV3aGC64jgZBZQtfRHlV/TEsBgO93FVkD73UJ64=;
-        b=pt4Ua/lpKrk3cNafhEdOzwDUq9EvjVTpn1JLWJKAR0Hxvl1LeVoEv2Z7OjLQudR9u5
-         lPPtvaoS1l5v6piaKQ+2YKxO/ENVDrruWMYnlGurMHmeUymSO6YVMqK28chrkXiWEgQa
-         JVxjl+ip0Md4Ipxp7rgNx5MYb6ls3cdu5ZMv7HJWrTGu3VIJzcN3i79zs0G1wPuyJ9bY
-         1nzohBXhATc3m4sy7bdqpnVqOr2t/TLtTxRw8F8ALrBL4CCq6ejoUGyW0vF4YV5r/64B
-         rIoVqsiC2hv0v0/DVL0KpQeA5UajTm6XlJhQ23vEdyMQdjWLuUhfUHGQkS/m9cyc6wh2
-         2+DA==
+        bh=BC2ZreAC1VZnRHGS/ZQWOnF1XRZptrjm7ddyc0gxeW4=;
+        b=awSNWV1Swi/LoXZwJzprFvdQlxraEe7EaOnq9Gjm4ZbkhOqDcGfgSWaMHtKL/C10yg
+         qLcshgxv2SHiF+OI2JyKFYVLgYv+wBj7YKoQF5eBsJdV+ST4Lr8I5eUQ21q72XoSfoLq
+         4/Y6bWwwD8+t+tC83qKdXrH4pSLtIHSW/3ecpy87U9MypqGItH52de+33nYERA1TwmF3
+         LOMSTU6fB0SnY8Ew0zXMs7ZLLb25LkfNwhYmQWki3pHX5ojtDjf0kRXgUBDAfazz8wF6
+         h4CtFWyKtjTBzM+Z/nsyyYxsWewPXOqLTvLoRsd5FzBHTjG7ZrFqLJhd5LYj71nXufbR
+         tWlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784624310; x=1785229110;
+        d=1e100.net; s=20251104; t=1784624311; x=1785229111;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=X17ZpV3aGC64jgZBZQtfRHlV/TEsBgO93FVkD73UJ64=;
-        b=TsXgr0j4gDp3UYYYOHJKsky209jd2RDYSFqrqmrvp0Y6mQcbhqQ3JAEF7BqRR4R8gG
-         UrBfiIiWZ+g19zRPZ28/7Z2E1FjxGJlqP3effDdZJSWsWAAXpfc/J24+WiDux5oHlzDI
-         IQC5v6HLaAAqK/4syTr7oVtTcJcQ6+Hk566eYE6igvafwhde80G8/JmypiM146c4u/nj
-         q8sBSSGiuSuhPAu4CmX0Rafa+HBfSGYiqGHsy45vlHmxDmltHnBe1Dlr1WPgnn1pi5+d
-         fw+6ZspLEe3tbwMLRkXkun+txc6of5xbFq/sqAW+UKBjgx11VKel9E6U033EknNo6GxS
-         RxxA==
-X-Gm-Message-State: AOJu0Ywwg0yuJsZTPdJvFCK4j2bfUHt6y96uOV/QlF35hhWDKdxNYxTt
-	Qfx6vSKDKQ9H+8xBao9M2i9pT/hDKO2yshGBCuuLSRHqsbXIMfUC1Leyp+cm0w==
-X-Gm-Gg: AR+sD113hyUS5/kcr26PI/KRI3FQtL/cU32W+jfQ8RuD/9IG32ixvFH4dWaT5Gr/V8I
-	sc4Q3vKvCY5YoWvsPa3rAKJn4eaAaz53Mge3cNt+zoI3Cg8wPMnAi8Pz6MKiJGAidbssLxGNyRF
-	YZ33yxDAZ+7qF2buQjTLyTNMrQDwqRYBMgZ9juUu5VwCVch+jIA3VbRDvJyFS2+h2zFZwslYDCX
-	WWXy6ChkKH77Cqj62itOV/3pWlNKdeqWO3AS18CtSYK3y53T3s/uF/+8+O3fEfjgoG08ffYlOpc
-	Hh1N9GDrrClNLyJJeAV2rAO1uQpfhjlWtt9Si6KzClSP3lnp0riSFoaJLhc0vNR/bdiPbtgq3Ge
-	HqvsdKOPsHl7DNuAWW+/dfSCf6/C8UfywI90UdEDheEvOvUHA7rBVmGxZlaKMn7IKYCffs9EqDc
-	d5UYXG7qc=
-X-Received: by 2002:a05:6a00:4211:b0:847:7fd5:aaaa with SMTP id d2e1a72fcca58-84c292a0eeamr17424127b3a.17.1784624309795;
-        Tue, 21 Jul 2026 01:58:29 -0700 (PDT)
+        bh=BC2ZreAC1VZnRHGS/ZQWOnF1XRZptrjm7ddyc0gxeW4=;
+        b=EZcJR9O3vCclpMIJte4L6nUEgYT95CJxo7RdbPzcg7Z4hE5VXJ6JEillxncph7QFev
+         5pvxdZLB88++QyOveZwWtKb6iUBWoVlAls/J7nBK1+J+EdFhK5gN7BIp8W/3zYZhlH35
+         FyYLqyc+g40qjskAD0lJNSPdbi45SEkvIxpvIr3kWpEBTEdJDB2kYl9mNXdiBNyXDJ/3
+         P119XpwG2FoHlu8R31MM+brNdPMOmtkhRhZZLjk5iF4FR7Y8s+RYUZ1oYX3rFg4HqByT
+         sO3LGbNXAKCoobnA4wB11qMzFCHT3sLwEZPLwF6CN+nWXh5/7JZrG2Vi9EJMPIFsk4F/
+         dkEw==
+X-Gm-Message-State: AOJu0YymrjZJ/8sfye/gaEi6Y/otbppi8D7n9E4lkwOaZ3RJPqRYbk4J
+	NWJnl1QPWNH9vxCjrghOp9cS1cEM18ypV3rWfc2ttmGHPr94RJDBuFhpBS6wPw==
+X-Gm-Gg: AR+sD13UzBJ59LgA3qv+qE/Mg2iADZ9jf8W6vqxSUR3UeC+h4Los0v45UBRVh4guGnv
+	8IaDU5KPhWThOCUNXKzYPOvM2XsuiXKFb2cZsKH0slUw+PqM7xmWM8jC/XOV8Zhpry4N3vIGEuG
+	0a2ov/zTqv1ZCsKLHPijaPfbu9KqGocZ6snQ3k0AiJZPrC1KkKNGCiX83QTClbqksBIOCycU7Ol
+	TmJiw43t6Otuxe3rxR+3ENrheRqibNXNRZ1o4oRt5H59Mw4tibHLSa4Rw3r68NZUf04/WoV1TAW
+	06uSGVVcBGjfwwlyQYoqid9aYTInAetI15bHcBdu8vJYoAJnUzuM/LPVZh4QVnN1wekAPk0BGUX
+	8BWqgMhCl0T8P5+nj5YlNSp5gsyprJC8GpxGqbxvZ2CalKcjEA5qw41fXBGD019QhveCSrAcgao
+	0Xfqz8cPI=
+X-Received: by 2002:a17:90b:3ccd:b0:38d:a8be:a597 with SMTP id 98e67ed59e1d1-38e4b5c98afmr19520976a91.37.1784624311268;
+        Tue, 21 Jul 2026 01:58:31 -0700 (PDT)
 Received: from [127.0.0.1] ([172.208.152.210])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84c2ad87f83sm7037639b3a.3.2026.07.21.01.58.28
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38e9234e206sm1123719a91.10.2026.07.21.01.58.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 01:58:29 -0700 (PDT)
-Message-Id: <b1ac49de87c2a8b88aa2aed60b18847734fa906e.1784624306.git.gitgitgadget@gmail.com>
+        Tue, 21 Jul 2026 01:58:30 -0700 (PDT)
+Message-Id: <6e924a7fecb364780a5e11d27c20a08599e0d21e.1784624306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
 References: <pull.2358.git.git.1784538618.gitgitgadget@gmail.com>
 	<pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 21 Jul 2026 08:58:25 +0000
-Subject: [PATCH v2 1/2] remote: pass repository to push tracking helper
+Date: Tue, 21 Jul 2026 08:58:26 +0000
+Subject: [PATCH v2 2/2] remote: find tracking branches for URL push
+ destinations
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,65 +81,256 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-The next commit needs tracking_for_push_dest() to inspect the
-repository's configured remotes. Pass the repository through the
-existing callers and mark the new parameter as unused.
+Git already accepts a repository URL as branch.<name>.pushRemote and
+can push to it. When a configured remote has the same URL, however,
+"git status" cannot show that remote's push branch.
 
-No change in behavior.
+This can happen in fork workflows when the original remote is renamed
+to "upstream", the fork is added as "origin", and an existing
+pushRemote value still contains the fork URL. The URL still points to
+the right repository, so pushing works. However, @{push} is unavailable
+because Git does not connect the URL to "origin". As a result,
+"git status" cannot show the push branch, and an up-to-date push can
+leave its local tracking information stale.
+
+When exactly one configured remote has the URL as one of its
+remote.<name>.url values, use its fetch refspec to find and refresh the
+push branch. Keep the URL as the push destination so the configured
+remote's push settings do not change existing behavior. Keep the
+current behavior when no remote matches or multiple remotes match.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- remote.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ Documentation/config/branch.adoc |   2 +
+ Documentation/revisions.adoc     |   3 +
+ remote.c                         |  27 +++++++-
+ remote.h                         |   2 +
+ t/t5505-remote.sh                | 104 +++++++++++++++++++++++++++++++
+ transport.c                      |   5 +-
+ 6 files changed, 141 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
+index a4db9fa5c8..e22b6c846d 100644
+--- a/Documentation/config/branch.adoc
++++ b/Documentation/config/branch.adoc
+@@ -55,6 +55,8 @@ This option defaults to `never`.
+ 	repository), you would want to set `remote.pushDefault` to
+ 	specify the remote to push to for all branches, and use this
+ 	option to override it for a specific branch.
++	The value may be the name of a configured remote or a repository
++	URL. A URL is used directly as the push destination.
+ 
+ `branch.<name>.merge`::
+ 	Defines, together with `branch.<name>.remote`, the upstream branch
+diff --git a/Documentation/revisions.adoc b/Documentation/revisions.adoc
+index 6ea6c7cead..670fc66053 100644
+--- a/Documentation/revisions.adoc
++++ b/Documentation/revisions.adoc
+@@ -127,6 +127,9 @@ some output processing may assume ref names in UTF-8.
+   `git push` were run while `branchname` was checked out (or the current
+   `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
+   the remote-tracking branch that corresponds to that branch at the remote.
++  If the push destination is a URL and exactly one configured remote has the
++  same `remote.<name>.url`, '@\{push}' reports the remote-tracking branch for
++  that remote.
+ +
+ Here's an example to make it more clear:
+ +
 diff --git a/remote.c b/remote.c
-index b17648d6ef..0dc36956c3 100644
+index 0dc36956c3..2e07bd998f 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1887,7 +1887,8 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+@@ -1887,13 +1887,38 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
  	return branch->merge[0]->dst;
  }
  
--static char *tracking_for_push_dest(struct remote *remote,
-+static char *tracking_for_push_dest(struct repository *repo UNUSED,
-+				    struct remote *remote,
+-static char *tracking_for_push_dest(struct repository *repo UNUSED,
++struct remote *repo_remote_for_push_tracking(struct repository *repo,
++					     struct remote *remote)
++{
++	struct remote *first_match = NULL;
++	struct remote_state *remote_state = repo->remote_state;
++
++	if (remote->origin != REMOTE_UNCONFIGURED || remote->url.nr != 1)
++		return remote;
++
++	for (int i = 0; i < remote_state->remotes_nr; i++) {
++		struct remote *candidate = remote_state->remotes[i];
++
++		if (!candidate || candidate == remote ||
++		    !remote_is_configured(candidate, 0) ||
++		    !remote_has_url(candidate, remote->url.v[0]))
++			continue;
++		if (first_match)
++			return remote;
++		first_match = candidate;
++	}
++
++	return first_match ? first_match : remote;
++}
++
++static char *tracking_for_push_dest(struct repository *repo,
+ 				    struct remote *remote,
  				    const char *refname,
  				    struct strbuf *err)
  {
-@@ -1925,13 +1926,13 @@ static char *branch_get_push_1(struct repository *repo,
- 					 _("push refspecs for '%s' do not include '%s'"),
- 					 remote->name, branch->name);
+ 	char *ret;
  
--		ret = tracking_for_push_dest(remote, dst, err);
-+		ret = tracking_for_push_dest(repo, remote, dst, err);
- 		free(dst);
- 		return ret;
++	remote = repo_remote_for_push_tracking(repo, remote);
+ 	ret = apply_refspecs(&remote->fetch, refname);
+ 	if (!ret)
+ 		return error_buf(err,
+diff --git a/remote.h b/remote.h
+index 72a54d84ad..cca02033b9 100644
+--- a/remote.h
++++ b/remote.h
+@@ -345,6 +345,8 @@ char *remote_ref_for_branch(struct branch *branch, int for_push);
+ 
+ const char *repo_default_remote(struct repository *repo);
+ const char *repo_remote_from_url(struct repository *repo, const char *url);
++struct remote *repo_remote_for_push_tracking(struct repository *repo,
++					     struct remote *remote);
+ 
+ /* returns true if the given branch has merge configuration given. */
+ int branch_has_merge_config(struct branch *branch);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 6f5e86dede..2c86661294 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -24,6 +24,28 @@ setup_repository () {
+ 	)
+ }
+ 
++setup_url_pushremote () {
++	rm -rf fork.git client &&
++	git clone --bare one fork.git &&
++	git clone one client &&
++	fork_url="$TRASH_DIRECTORY/fork.git" &&
++	(
++		cd client &&
++		git checkout -b topic --track origin/main &&
++		git commit --allow-empty -m topic-change &&
++		git config push.default current &&
++		git config status.compareBranches "@{upstream} @{push}" &&
++		git config branch.topic.pushRemote "$fork_url" &&
++		git push
++	)
++}
++
++check_status () {
++	git -C client status >actual &&
++	cat >expected &&
++	test_cmp expected actual
++}
++
+ tokens_match () {
+ 	echo "$1" | tr ' ' '\012' | sort | sed -e '/^$/d' >expect &&
+ 	echo "$2" | tr ' ' '\012' | sort | sed -e '/^$/d' >actual &&
+@@ -1018,6 +1040,88 @@ test_expect_success 'rename a remote renames repo remote.pushDefault but keeps g
+ 	)
+ '
+ 
++test_expect_success 'URL-valued pushRemote without matching remote is not trackable' '
++	setup_url_pushremote &&
++
++	check_status <<-EOF
++	On branch topic
++	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
++	  (use "git push" to publish your local commits)
++
++	nothing to commit, working tree clean
++	EOF
++'
++
++test_expect_success 'adding fork remote makes URL-valued pushRemote trackable' '
++	setup_url_pushremote &&
++
++	(
++		cd client &&
++		git remote rename origin upstream &&
++		git remote add -f origin "$fork_url"
++	) &&
++
++	check_status <<-EOF
++	On branch topic
++	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
++
++	Your branch is up to date with ${SQ}origin/topic${SQ}.
++
++	nothing to commit, working tree clean
++	EOF
++'
++
++test_expect_success 'up-to-date URL push refreshes stale tracking branch' '
++	setup_url_pushremote &&
++	(
++		cd client &&
++		git remote rename origin upstream &&
++		git remote add -f origin "$fork_url" &&
++		git commit --allow-empty -m another-topic-change &&
++		git -C ../fork.git fetch ../client topic:topic
++	) &&
++
++	check_status <<-EOF &&
++	On branch topic
++	Your branch is ahead of ${SQ}upstream/main${SQ} by 2 commits.
++
++	Your branch is ahead of ${SQ}origin/topic${SQ} by 1 commit.
++	  (use "git push" to publish your local commits)
++
++	nothing to commit, working tree clean
++	EOF
++
++	git -C client push >actual 2>&1 &&
++	test_grep "Everything up-to-date" actual &&
++
++	check_status <<-EOF
++	On branch topic
++	Your branch is ahead of ${SQ}upstream/main${SQ} by 2 commits.
++
++	Your branch is up to date with ${SQ}origin/topic${SQ}.
++
++	nothing to commit, working tree clean
++	EOF
++'
++
++test_expect_success 'duplicate remote URL leaves URL-valued pushRemote ambiguous' '
++	setup_url_pushremote &&
++	(
++		cd client &&
++		git remote rename origin upstream &&
++		git remote add -f origin "$fork_url" &&
++		git remote add duplicate "$fork_url"
++	) &&
++
++	check_status <<-EOF
++	On branch topic
++	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
++	  (use "git push" to publish your local commits)
++
++	nothing to commit, working tree clean
++	EOF
++'
++
+ test_expect_success 'rename handles remote without fetch refspec' '
+ 	git clone --bare one no-refspec.git &&
+ 	# confirm assumption that bare clone does not create refspec
+diff --git a/transport.c b/transport.c
+index fc144f0aed..30a4ab2cd5 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1553,8 +1553,11 @@ int transport_push(struct repository *r,
+ 	if (!(flags & (TRANSPORT_PUSH_DRY_RUN |
+ 		       TRANSPORT_RECURSE_SUBMODULES_ONLY))) {
+ 		struct ref *ref;
++		struct remote *tracking_remote = repo_remote_for_push_tracking(
++			r, transport->remote);
++
+ 		for (ref = remote_refs; ref; ref = ref->next)
+-			transport_update_tracking_ref(transport->remote, ref, verbose);
++			transport_update_tracking_ref(tracking_remote, ref, verbose);
  	}
  
- 	if (remote->mirror)
--		return tracking_for_push_dest(remote, branch->refname, err);
-+		return tracking_for_push_dest(repo, remote, branch->refname, err);
- 
- 	switch (push_default) {
- 	case PUSH_DEFAULT_NOTHING:
-@@ -1939,7 +1940,7 @@ static char *branch_get_push_1(struct repository *repo,
- 
- 	case PUSH_DEFAULT_MATCHING:
- 	case PUSH_DEFAULT_CURRENT:
--		return tracking_for_push_dest(remote, branch->refname, err);
-+		return tracking_for_push_dest(repo, remote, branch->refname, err);
- 
- 	case PUSH_DEFAULT_UPSTREAM:
- 		return xstrdup_or_null(branch_get_upstream(branch, err));
-@@ -1953,7 +1954,7 @@ static char *branch_get_push_1(struct repository *repo,
- 			up = branch_get_upstream(branch, err);
- 			if (!up)
- 				return NULL;
--			cur = tracking_for_push_dest(remote, branch->refname, err);
-+			cur = tracking_for_push_dest(repo, remote, branch->refname, err);
- 			if (!cur)
- 				return NULL;
- 			if (strcmp(cur, up)) {
+ 	if (porcelain && !push_ret)
 -- 
 gitgitgadget
-
