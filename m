@@ -1,336 +1,212 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from leonardo.netwichtig.de (leonardo.netwichtig.de [213.133.111.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294A93C10B8
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 08:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB3B331A77
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 11:53:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.111.59
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784624313; cv=none; b=pqxFh3OjN+wFTEP3z508GJkZg9qKx/9CjakksAOYu1AwCIloGQeVlukMrkz055oLeLbHPmpIKD0B+3EtsGLwzRTMpILsz4fDpxZv0AmE9VRmNl2ZU4k+UCJ96aBwtZVR00PFEWWgdTXc0gTRlaoN6x4GKIfvwkX6AZ5+GAyyGek=
+	t=1784634828; cv=none; b=BtgBogSaiFfLZ79NO77+gT4pnVyKWadMIk0jgNVPjU7e4H69H0PxHDScnzeJgCpcagTdLjuAG2OhnZgA2ejUu8r9pphzQxFv5kcdG+X4AEH/kXs8q9a3a1Bf2oC1tS8Fs6BrpEGE4WSWNoBniWNl63OZaMuapEpPkJmz/URFLYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784624313; c=relaxed/simple;
-	bh=HOT+OixhFxTSPFQSrrT1UsexgulZHmCzxsCNFfCABG0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HxhcrSfx94B3pwYFlFHyn+LTYo/r+3I/MsjZyRZEexYB1iDuozMJV1xXg/TvbMRXfod/QUWcxKVLzs/9PI0L5ikRW8MpZZ8fzbiMb+ybwrwLPamW4XRrRNz7vvQW0DrXsus0eKcd0rMzb0Q5nHuZxPdfH0vI9trOpIcjdIxwbGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=awSNWV1S; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784634828; c=relaxed/simple;
+	bh=nknnEfGPn23PcYYUd8yJ0EC5eddfE/bqe+B/gZTwHZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NqVBD6DTZEvpEaHpAynDDuDbPHJNEjBe9/+cAOyusFJGU0V6lf7/ndjBEmREGqcJQZOnOhR8saxj0QRM9HYaWg1OuZZ8RIXZH2qpawieG4QYbX562OT0L9E1b6vIjOFgOBMYDzJCP+7x6PNbwz7RlkGJB13bYr2lE5SwS6peAIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=henk.geekmail.org; spf=pass smtp.mailfrom=henk.geekmail.org; dkim=pass (2048-bit key) header.d=geekmail.org header.i=@geekmail.org header.b=rNrLtuAE; arc=none smtp.client-ip=213.133.111.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=henk.geekmail.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=henk.geekmail.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="awSNWV1S"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-38a0c7e841fso8859775a91.2
-        for <git@vger.kernel.org>; Tue, 21 Jul 2026 01:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784624311; x=1785229111; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=BC2ZreAC1VZnRHGS/ZQWOnF1XRZptrjm7ddyc0gxeW4=;
-        b=awSNWV1Swi/LoXZwJzprFvdQlxraEe7EaOnq9Gjm4ZbkhOqDcGfgSWaMHtKL/C10yg
-         qLcshgxv2SHiF+OI2JyKFYVLgYv+wBj7YKoQF5eBsJdV+ST4Lr8I5eUQ21q72XoSfoLq
-         4/Y6bWwwD8+t+tC83qKdXrH4pSLtIHSW/3ecpy87U9MypqGItH52de+33nYERA1TwmF3
-         LOMSTU6fB0SnY8Ew0zXMs7ZLLb25LkfNwhYmQWki3pHX5ojtDjf0kRXgUBDAfazz8wF6
-         h4CtFWyKtjTBzM+Z/nsyyYxsWewPXOqLTvLoRsd5FzBHTjG7ZrFqLJhd5LYj71nXufbR
-         tWlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784624311; x=1785229111;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BC2ZreAC1VZnRHGS/ZQWOnF1XRZptrjm7ddyc0gxeW4=;
-        b=EZcJR9O3vCclpMIJte4L6nUEgYT95CJxo7RdbPzcg7Z4hE5VXJ6JEillxncph7QFev
-         5pvxdZLB88++QyOveZwWtKb6iUBWoVlAls/J7nBK1+J+EdFhK5gN7BIp8W/3zYZhlH35
-         FyYLqyc+g40qjskAD0lJNSPdbi45SEkvIxpvIr3kWpEBTEdJDB2kYl9mNXdiBNyXDJ/3
-         P119XpwG2FoHlu8R31MM+brNdPMOmtkhRhZZLjk5iF4FR7Y8s+RYUZ1oYX3rFg4HqByT
-         sO3LGbNXAKCoobnA4wB11qMzFCHT3sLwEZPLwF6CN+nWXh5/7JZrG2Vi9EJMPIFsk4F/
-         dkEw==
-X-Gm-Message-State: AOJu0YymrjZJ/8sfye/gaEi6Y/otbppi8D7n9E4lkwOaZ3RJPqRYbk4J
-	NWJnl1QPWNH9vxCjrghOp9cS1cEM18ypV3rWfc2ttmGHPr94RJDBuFhpBS6wPw==
-X-Gm-Gg: AR+sD13UzBJ59LgA3qv+qE/Mg2iADZ9jf8W6vqxSUR3UeC+h4Los0v45UBRVh4guGnv
-	8IaDU5KPhWThOCUNXKzYPOvM2XsuiXKFb2cZsKH0slUw+PqM7xmWM8jC/XOV8Zhpry4N3vIGEuG
-	0a2ov/zTqv1ZCsKLHPijaPfbu9KqGocZ6snQ3k0AiJZPrC1KkKNGCiX83QTClbqksBIOCycU7Ol
-	TmJiw43t6Otuxe3rxR+3ENrheRqibNXNRZ1o4oRt5H59Mw4tibHLSa4Rw3r68NZUf04/WoV1TAW
-	06uSGVVcBGjfwwlyQYoqid9aYTInAetI15bHcBdu8vJYoAJnUzuM/LPVZh4QVnN1wekAPk0BGUX
-	8BWqgMhCl0T8P5+nj5YlNSp5gsyprJC8GpxGqbxvZ2CalKcjEA5qw41fXBGD019QhveCSrAcgao
-	0Xfqz8cPI=
-X-Received: by 2002:a17:90b:3ccd:b0:38d:a8be:a597 with SMTP id 98e67ed59e1d1-38e4b5c98afmr19520976a91.37.1784624311268;
-        Tue, 21 Jul 2026 01:58:31 -0700 (PDT)
-Received: from [127.0.0.1] ([172.208.152.210])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38e9234e206sm1123719a91.10.2026.07.21.01.58.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2026 01:58:30 -0700 (PDT)
-Message-Id: <6e924a7fecb364780a5e11d27c20a08599e0d21e.1784624306.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
-References: <pull.2358.git.git.1784538618.gitgitgadget@gmail.com>
-	<pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 21 Jul 2026 08:58:26 +0000
-Subject: [PATCH v2 2/2] remote: find tracking branches for URL push
- destinations
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=geekmail.org header.i=@geekmail.org header.b="rNrLtuAE"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=geekmail.org; s=leonardo2023; h=Content-Type:MIME-Version:References:
+	In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=CN47JIyVBYkESqhTMYmiVR9wREvfzRWVhYIVCdHeKng=; t=1784634822; x=1785844422; 
+	b=rNrLtuAESkiTzFvrwJBN3dPnsdX00Y3vuVvSJivdjWUrrdRtL2jVbpFqgci4si81OtHx4zDWLKL
+	Y/nCNYXy+5PatZaZVBZN7WFvONyCqbSYplzevZGwwwb6CZL8jwyw1Sr7+WxXRrhZbbS2ZXpOWffdu
+	VxRYA3p+rZ1X1FtNdwQz2ZlThjiHpgP4JJ2E0VBMo0yPzrSXaoPxJs1D0LLDz0Jrij7u8obf83aXa
+	gDPnVhUZ2xerVvNgiZXzYFGD+tu2jpjDoLCVMBH/hYJMPT+HUX2alrRwPznJ7BxkjIg1++W2vr32/
+	yM3CzZ8ealcOnrA1t4r9GLdhm0+4XJe4C0Zw==;
+Received: from [2a02:168:7a8c:21::a2a] (port=47474 helo=frustcomp.hnjs.home.arpa)
+	by leonardo.netwichtig.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <ml_git@henk.geekmail.org>)
+	id 1wm92Q-00000009odM-2V5Z;
+	Tue, 21 Jul 2026 11:53:33 +0000
+Date: Tue, 21 Jul 2026 13:53:17 +0200
+From: Hendrik Jaeger <ml_git@henk.geekmail.org>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: git config: unintuitive behaviour with --global and
+ --no-includes
+Message-ID: <20260721135317.4802ef2d@frustcomp.hnjs.home.arpa>
+In-Reply-To: <20260720125145.GA5100@coredump.intra.peff.net>
+References: <20260720113402.0dc16abe@frustcomp.hnjs.home.arpa>
+	<20260720125145.GA5100@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: multipart/signed; boundary="Sig_/9iw.akXH4FtSXP1J8b+XHpy";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-hnjs-rSpam_score: -2.2
+X-hnjs-rSpam_score_int: -21
+X-hnjs-rSpam_bar: --
+X-hnjs-rSpam_report: Action: no action
+ Symbol: RCVD_TLS_ALL(0.00)
+ Symbol: FROM_HAS_DN(0.00)
+ Symbol: FROM_EQ_ENVFROM(0.00)
+ Symbol: TO_MATCH_ENVRCPT_ALL(0.00)
+ Symbol: SIGNED_PGP(-2.00)
+ Symbol: MIME_GOOD(-0.20)
+ Symbol: RCPT_COUNT_TWO(0.00)
+ Symbol: RCVD_VIA_SMTP_AUTH(0.00)
+ Symbol: ARC_NA(0.00)
+ Symbol: ASN(0.00)
+ Symbol: RCVD_COUNT_ONE(0.00)
+ Symbol: TO_DN_SOME(0.00)
+ Symbol: MISSING_XM_UA(0.00)
+ Symbol: MIME_TRACE(0.00)
+ Message-ID: 20260721135317.4802ef2d@frustcomp.hnjs.home.arpa
+X-hnjs-Spam_score: -2.9
+X-hnjs-Spam_score_int: -28
+X-hnjs-Spam_bar: --
+X-hnjs-Spam_report: Spam detection software, running on the system "leonardo.netwichtig.de",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ postmaster@netwichtig.de for details.
+ Content analysis details:   (-2.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+ -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+                             [score: 0.0000]
+X-hnjs-domain-score: 0
+X-hnjs-ip-score: 0
+X-hnjs-inconsistency-score: 0
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+--Sig_/9iw.akXH4FtSXP1J8b+XHpy
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Git already accepts a repository URL as branch.<name>.pushRemote and
-can push to it. When a configured remote has the same URL, however,
-"git status" cannot show that remote's push branch.
+Hi Jeff
 
-This can happen in fork workflows when the original remote is renamed
-to "upstream", the fork is added as "origin", and an existing
-pushRemote value still contains the fork URL. The URL still points to
-the right repository, so pushing works. However, @{push} is unavailable
-because Git does not connect the URL to "origin". As a result,
-"git status" cannot show the push branch, and an up-to-date push can
-leave its local tracking information stale.
+Thanks for your email!
 
-When exactly one configured remote has the URL as one of its
-remote.<name>.url values, use its fetch refspec to find and refresh the
-push branch. Keep the URL as the push destination so the configured
-remote's push settings do not change existing behavior. Keep the
-current behavior when no remote matches or multiple remotes match.
+> As for the rationale, it is a mix of backwards compatibility and least-su=
+rprise.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/config/branch.adoc |   2 +
- Documentation/revisions.adoc     |   3 +
- remote.c                         |  27 +++++++-
- remote.h                         |   2 +
- t/t5505-remote.sh                | 104 +++++++++++++++++++++++++++++++
- transport.c                      |   5 +-
- 6 files changed, 141 insertions(+), 2 deletions(-)
+To be honest, this reminds me of the XKCD comic with the title "workflow": =
+https://xkcd.com/1172/
+The behaviour may be =E2=80=9Cleast-surprise=E2=80=9D for the initiated. Fo=
+r everyone new to this, I=E2=80=99d expect it to be as =E2=80=9Cmost-surpri=
+sing=E2=80=9D as it was for me.
 
-diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
-index a4db9fa5c8..e22b6c846d 100644
---- a/Documentation/config/branch.adoc
-+++ b/Documentation/config/branch.adoc
-@@ -55,6 +55,8 @@ This option defaults to `never`.
- 	repository), you would want to set `remote.pushDefault` to
- 	specify the remote to push to for all branches, and use this
- 	option to override it for a specific branch.
-+	The value may be the name of a configured remote or a repository
-+	URL. A URL is used directly as the push destination.
- 
- `branch.<name>.merge`::
- 	Defines, together with `branch.<name>.remote`, the upstream branch
-diff --git a/Documentation/revisions.adoc b/Documentation/revisions.adoc
-index 6ea6c7cead..670fc66053 100644
---- a/Documentation/revisions.adoc
-+++ b/Documentation/revisions.adoc
-@@ -127,6 +127,9 @@ some output processing may assume ref names in UTF-8.
-   `git push` were run while `branchname` was checked out (or the current
-   `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
-   the remote-tracking branch that corresponds to that branch at the remote.
-+  If the push destination is a URL and exactly one configured remote has the
-+  same `remote.<name>.url`, '@\{push}' reports the remote-tracking branch for
-+  that remote.
- +
- Here's an example to make it more clear:
- +
-diff --git a/remote.c b/remote.c
-index 0dc36956c3..2e07bd998f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1887,13 +1887,38 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
- 	return branch->merge[0]->dst;
- }
- 
--static char *tracking_for_push_dest(struct repository *repo UNUSED,
-+struct remote *repo_remote_for_push_tracking(struct repository *repo,
-+					     struct remote *remote)
-+{
-+	struct remote *first_match = NULL;
-+	struct remote_state *remote_state = repo->remote_state;
-+
-+	if (remote->origin != REMOTE_UNCONFIGURED || remote->url.nr != 1)
-+		return remote;
-+
-+	for (int i = 0; i < remote_state->remotes_nr; i++) {
-+		struct remote *candidate = remote_state->remotes[i];
-+
-+		if (!candidate || candidate == remote ||
-+		    !remote_is_configured(candidate, 0) ||
-+		    !remote_has_url(candidate, remote->url.v[0]))
-+			continue;
-+		if (first_match)
-+			return remote;
-+		first_match = candidate;
-+	}
-+
-+	return first_match ? first_match : remote;
-+}
-+
-+static char *tracking_for_push_dest(struct repository *repo,
- 				    struct remote *remote,
- 				    const char *refname,
- 				    struct strbuf *err)
- {
- 	char *ret;
- 
-+	remote = repo_remote_for_push_tracking(repo, remote);
- 	ret = apply_refspecs(&remote->fetch, refname);
- 	if (!ret)
- 		return error_buf(err,
-diff --git a/remote.h b/remote.h
-index 72a54d84ad..cca02033b9 100644
---- a/remote.h
-+++ b/remote.h
-@@ -345,6 +345,8 @@ char *remote_ref_for_branch(struct branch *branch, int for_push);
- 
- const char *repo_default_remote(struct repository *repo);
- const char *repo_remote_from_url(struct repository *repo, const char *url);
-+struct remote *repo_remote_for_push_tracking(struct repository *repo,
-+					     struct remote *remote);
- 
- /* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 6f5e86dede..2c86661294 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -24,6 +24,28 @@ setup_repository () {
- 	)
- }
- 
-+setup_url_pushremote () {
-+	rm -rf fork.git client &&
-+	git clone --bare one fork.git &&
-+	git clone one client &&
-+	fork_url="$TRASH_DIRECTORY/fork.git" &&
-+	(
-+		cd client &&
-+		git checkout -b topic --track origin/main &&
-+		git commit --allow-empty -m topic-change &&
-+		git config push.default current &&
-+		git config status.compareBranches "@{upstream} @{push}" &&
-+		git config branch.topic.pushRemote "$fork_url" &&
-+		git push
-+	)
-+}
-+
-+check_status () {
-+	git -C client status >actual &&
-+	cat >expected &&
-+	test_cmp expected actual
-+}
-+
- tokens_match () {
- 	echo "$1" | tr ' ' '\012' | sort | sed -e '/^$/d' >expect &&
- 	echo "$2" | tr ' ' '\012' | sort | sed -e '/^$/d' >actual &&
-@@ -1018,6 +1040,88 @@ test_expect_success 'rename a remote renames repo remote.pushDefault but keeps g
- 	)
- '
- 
-+test_expect_success 'URL-valued pushRemote without matching remote is not trackable' '
-+	setup_url_pushremote &&
-+
-+	check_status <<-EOF
-+	On branch topic
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+'
-+
-+test_expect_success 'adding fork remote makes URL-valued pushRemote trackable' '
-+	setup_url_pushremote &&
-+
-+	(
-+		cd client &&
-+		git remote rename origin upstream &&
-+		git remote add -f origin "$fork_url"
-+	) &&
-+
-+	check_status <<-EOF
-+	On branch topic
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	Your branch is up to date with ${SQ}origin/topic${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+'
-+
-+test_expect_success 'up-to-date URL push refreshes stale tracking branch' '
-+	setup_url_pushremote &&
-+	(
-+		cd client &&
-+		git remote rename origin upstream &&
-+		git remote add -f origin "$fork_url" &&
-+		git commit --allow-empty -m another-topic-change &&
-+		git -C ../fork.git fetch ../client topic:topic
-+	) &&
-+
-+	check_status <<-EOF &&
-+	On branch topic
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 2 commits.
-+
-+	Your branch is ahead of ${SQ}origin/topic${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+
-+	git -C client push >actual 2>&1 &&
-+	test_grep "Everything up-to-date" actual &&
-+
-+	check_status <<-EOF
-+	On branch topic
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 2 commits.
-+
-+	Your branch is up to date with ${SQ}origin/topic${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+'
-+
-+test_expect_success 'duplicate remote URL leaves URL-valued pushRemote ambiguous' '
-+	setup_url_pushremote &&
-+	(
-+		cd client &&
-+		git remote rename origin upstream &&
-+		git remote add -f origin "$fork_url" &&
-+		git remote add duplicate "$fork_url"
-+	) &&
-+
-+	check_status <<-EOF
-+	On branch topic
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+'
-+
- test_expect_success 'rename handles remote without fetch refspec' '
- 	git clone --bare one no-refspec.git &&
- 	# confirm assumption that bare clone does not create refspec
-diff --git a/transport.c b/transport.c
-index fc144f0aed..30a4ab2cd5 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1553,8 +1553,11 @@ int transport_push(struct repository *r,
- 	if (!(flags & (TRANSPORT_PUSH_DRY_RUN |
- 		       TRANSPORT_RECURSE_SUBMODULES_ONLY))) {
- 		struct ref *ref;
-+		struct remote *tracking_remote = repo_remote_for_push_tracking(
-+			r, transport->remote);
-+
- 		for (ref = remote_refs; ref; ref = ref->next)
--			transport_update_tracking_ref(transport->remote, ref, verbose);
-+			transport_update_tracking_ref(tracking_remote, ref, verbose);
- 	}
- 
- 	if (porcelain && !push_ret)
--- 
-gitgitgadget
+Best regards
+
+henk
+
+
+On Mon, 20 Jul 2026 08:51:45 -0400
+Jeff King <peff@peff.net> wrote:
+
+> On Mon, Jul 20, 2026 at 11:34:02AM +0200, Hendrik Jaeger wrote:
+>=20
+> > The manpage says: =20
+> > > Respect include.*  directives in config files when looking up
+> > > values. Defaults to off when a specific file is given (e.g., using
+> > > --file, --global, etc) and on when searching all config files. =20
+> >=20
+> > IMHO it makes sense the way it is phrased =E2=80=9Cwhen a specific file=
+ is
+> > given=E2=80=9D but then seems to turn into non-sense when --global is g=
+iven as
+> > an example. Giving --global is not =E2=80=9Cgiving a specific file=E2=
+=80=9D but
+> > =E2=80=9Crestricting to a specific scope=E2=80=9D, which may `include` =
+other files.
+> > The results seem inconsistent and counterintuitive to me.
+> >=20
+> > Am I misunderstanding anything here?
+> > Is this behaviour intended?
+> > If it is intended, can someone please explain the rationale behind it? =
+I don=E2=80=99t get it, it seems wrong to me. =20
+>=20
+> The behavior you're seeing is intended. Regarding "a specific scope", I
+> don't think that's an unreasonable way to think about it. But it's not
+> how Git thinks about it, and in particular back when --include was added
+> and this behavior was set, "--global" was literally a synonym for
+> "--file=3D$HOME/.gitconfig".
+>=20
+> As for the rationale, it is a mix of backwards compatibility and
+> least-surprise. The include functionality was tacked on to the existing
+> config parser, and we did not want to surprise anybody who asked for a
+> specific file by showing them results for another file. This is
+> especially important for reading untrusted input like .gitmodules, but
+> also for writing.
+>=20
+> > Regarding the initial issue: I just added --includes to the call in
+> > lbmk and it works just fine, so there is no need to address this. I
+> > only mentioned it for context to how I got to looking into this
+> > behaviour. =20
+>=20
+> IMHO lbmk is wrong to be using "--global" in the first place. Looking at
+> the source, it is trying to check whether the user has set up their
+> identity. But it is not lbmk's business whether you did it in the
+> --global config file, or elsewhere! So it should probably just use a
+> straight "git config user.name", which will do the same resolution that
+> Git will do internally.
+>=20
+> The "--global" was added in their 4a280c62 (.gitcheck: re-write
+> entirely. force global config., 2023-08-27), but I don't see any
+> rationale given.
+>=20
+> Depending on what they are trying to check, it might be even better
+> still for it to use "git var GIT_AUTHOR_IDENT". That will give the
+> actual ident Git will derive, including things like checking $EMAIL in
+> the environment and so on.
+>=20
+> So if the intent is "will Git come up with some ident", then that is the
+> most accurate way to check it. But if the intent is "did the user
+> specifically configure Git (because we are worried that values derived
+> from GECOS and $EMAIL might not be accurate)", then checking user.*
+> specifically is closer to that.
+>=20
+> Though note there is one other hitch, which is that the user can set
+> author.* and committer.* as specific variables, since 39ab4d0951
+> (config: allow giving separate author and committer idents, 2019-02-04).
+> I suspect not many people do that, but that would also be something that
+> a config-specific check would have to handle (but "git var" would do
+> automatically).
+>=20
+> So I think you might consider sending a bug report to lbmk. Feel free to
+> point at this thread, and I'm happy to discuss further with them.
+>=20
+> -Peff
+
+--Sig_/9iw.akXH4FtSXP1J8b+XHpy
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEv/2bXrNWp9EAWgjaFCJRCMHSVp8FAmpfXbcACgkQFCJRCMHS
+Vp/3ww//V1q24kS47wfcPwpzkdrj2BCrTjX43CvcDHn7dGXYOb4AqDeyuIQ460bS
+BiHsabpF4UMHO0I3yT+25F9z7U964o177JcbH7531VZnNEMIdx+TyvpHr23Efpj1
+G5xdkfKXkRnnallEMI1gmevp/WxfpwFyGk+doucVGNE/tm+q7w9/Ns9YGScChN2J
+pkAsRsiLrVj30i3kdPDcxPosnadAG3riFGn9Mmam0uJphnhMHbpV0usnlfUL6Cnq
+DtDy9uxXrw6/BBWTUvYZmEV7cA3n0XvgF2K/TtC6ujml8ARetkMf+2SpTGTzxA+T
+wweoNhwc5DHDC32dtXX23F/7secl+iw2DfyIKGyacxSNEtJd3r2w+lz064WISyps
+1EoR3rbmRxv6a8MB9J7xKmM3/bbWLDj2v0qRZRhk64pPEBPe/KbpRdJqd3ykLaYx
+dt6RoYuBs3jlTo2FqyrrXdEDZEMGinPf6UitRr6Kz/hy3prdkN7P91GBL/UYe4Y9
+GF4TrhwRl4FEo12ki88ug50O7gmODVIibOsPVhAYUuB7IIuzTiL9ZHwPeLA4K/bL
+Y2/Htaq3wr8hnj3TslKE1REGDg73+W8Jz68Xy7H1oYVtY5MJ4gkqrd1mWoiszR9C
+uO8LAWVlyw6Bb2b0uEwn9zDGk7ivNe7s/uqxEKB3he4RReXgzYo=
+=C+1A
+-----END PGP SIGNATURE-----
+
+--Sig_/9iw.akXH4FtSXP1J8b+XHpy--
