@@ -1,81 +1,87 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CC238910F
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 18:51:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5755343031D;
+	Tue, 21 Jul 2026 19:22:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659905; cv=none; b=LDEaLmvwz43r7HaG4j5aXnA+tpxnSyVXgP9GoPwmJxGD5hJ2cocgAjQYQftsSekYSqrDQhAgqaEgpAA723hhIWjmjPHFOZU+Ksb6L6OEDGDoBvpUm8MfhTLyN4Fhc0eXIlj1c/dK4PWkrI82xGf6qTq3prcih6It9GHlhwL6/Lw=
+	t=1784661729; cv=none; b=OTmTW2NaT8qkxAMDI5Yv4rOOOEkcFgb6ntMBdyObjEoGv7KUksnHLGUOfp1C8bxO8Qbqe6Zog4ajIZj+YezzyQz1cer5orumK/rcPNFsqYRJQJYB254I/gK8K8Prc40vvuLaMZ7gZ2czJiZ6XZYTZuGX32JJJBbRf1A6FCrzvyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659905; c=relaxed/simple;
-	bh=p177GuLV7yj62MU8OdUuRlW6J5dxNjlSZQZj+hQCnJ4=;
+	s=arc-20240116; t=1784661729; c=relaxed/simple;
+	bh=J0sYA8dV4q4rM1hnamb7aK9oi4RqQ5FYt1mpQ7DmckA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R3nB3Y9y5Tyme4QZfUZqDfIw9xWqjDw4w+5vJJctYcp1p96nrcVWiG3fZILHXMuq3wctw0VybBwmcMFzuW5wKmBZfnGBgFTl9SK7Kzmn06OqTDk5yHyvw/0TLyGPnVRNdpl2jIot2geoPRPSElLuvW3ZEENNBtMAPHrk7q6CmIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NuXDWbmL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g0WV8m4m; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=mwtaNOg6hAGG5shHSnqrA1kXIxnVMtcQ6ooiIegZtOjo3S3VaXkYC1ab9CvLwjWI0IY+oPYWiLprWydxxKu8lcONHnIqPyrEypWkQrufSerxbYN9Q4rHjhTQWYCCxvSfdxMqaB+okCjUPHCMO7v67r4WJbfdw0oMHu1mCAcRSCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XnCcXGVI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YoYmn0fR; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NuXDWbmL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g0WV8m4m"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 356B57A00FF;
-	Tue, 21 Jul 2026 14:51:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 21 Jul 2026 14:51:39 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XnCcXGVI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YoYmn0fR"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 78DC81D000DD;
+	Tue, 21 Jul 2026 15:22:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 21 Jul 2026 15:22:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784659899; x=1784746299; bh=nLZxpm06pj
-	D7A0twe5myBN2dQEGRbE8fMm/lqKslle8=; b=NuXDWbmLyuY/HFZDsIqDsXvv7t
-	BEm3wNtnLYv6qHVx/dfsrwQgvAcEQzx4ZMRkK7vdUXKHBgvkTVGe7pazCwzxjawI
-	Q78mg3rSGuCjHkKf6+qll9YNArc70iReJLAxADt5oGp8JLRzPAuNdvalGXEi31Qb
-	73fLT2OQwKt8ZHB+AzmC3B+emuH5JMYQ7dgC/UD/Hw/Vgo2eSYQkoQfwkDwvcnYH
-	QlVQSdMp6wsgw5F/Nu38vGj6TwQRDYPME1oO3Imt5f269nI4503eO9aQZB3QIhRy
-	Ybt6VEWzxi9t4zAC86rbwkgaZnufCIIhpR0JDABKHIcbLVqx2fSR2ymsEa0A==
+	:subject:to:to; s=fm1; t=1784661727; x=1784748127; bh=yYjhRW/D0a
+	Ak6hnOcMEV8thduNzZR3FNXSDddYKr6x0=; b=XnCcXGVIC5Fa+Ao5bxpZCIDEwt
+	J80wfdLvaKO+6tq+nSrwwlDkRTxCih3w34L9L/j33wzGB+GSGdxjfgWU3UFxY3xG
+	NGIQ0+J1kd4LGU7C1RHSH5PwrkQPKx7wyduEwjXfXgBSaw0QEM5zTI8digZ/LXEq
+	fygVtm9wIq/VymU6yEW8NyBiEbftMN7+UJwe9fQwgrkeUX4vJppZNoxhetZXPfy5
+	Laeg/RA5EGAEZti4+Bpo8OOEtTbotw9Q4j2DI7eykiayK5FxoUWcNniXPVtqrPiN
+	4QJ8MUPK6DWKVc9DmewlOpFNRAP9ll9FJ8m3ATn41pL3q2nvOpig4LhshBIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784659899; x=1784746299; bh=nLZxpm06pjD7A0twe5myBN2dQEGRbE8fMm/
-	lqKslle8=; b=g0WV8m4mwMF/H2pfeE2Ss00pjVG5WCEKHOPIdqk3Ct5uWcdwVy5
-	9KJWXLWCUSxp6/vRDRHHCUPjkGQsYmWTAGF78uvo7iWT7R4CzB5nZUZdhekmodjI
-	MtaUC1HuIIEksP+K5CWNNj0brENqfLov05RCfxOh/u7AH029U3cS3oms1iVFFfde
-	/HKTIEG8F9FntkWauF2pQfuBX6Sf9LxxuFeLLow8BHSEAAEN/Vacmv27P1oOlt14
-	X1/AQiUFQk6+0wb6U9IYy0e8Jm9+o5Z0Yyf0nd0woBVp1vLBTa65Z+NZYsoe8oYF
-	msUvbS2SYQRpRjmVjXk4q+0dApUB1wYBYwg==
-X-ME-Sender: <xms:ur9faqaPSBPokbdGCKTZdVFwPA0mxxP5ZF0sG__skltaFFyIVEA2zA>
-    <xme:ur9fak1FznkLDfwK19qPBww1BHlYm2TvvODBUfareHG1EIJpak3MvpZ5sFt-od_HP
-    ArEU9lHr5oQUhEJUX6OkdzZRv7rlVFMlLMW-M5Li_7yJwmJLp0F1uY>
-X-ME-Received: <xmr:ur9faiW4kAzkzlEsilG9H9EmI8dAL50DaZ2wfTkyK_syjHKskbutKEl4VA52kQXdSHKG4oSoVC8GkOxUeydXc_mvm6E6v7MAhg>
-X-ME-Proxy-Cause: dmFkZTFX/rpDMPLc+E4o+dpTS0fcJnrnUPfNfOhOQf+ztbI1coFads+/eLssAFdbrJtfKZ
-    nmC1Bz3GuK/vfGTjPN/Bz0ErgPU0NpUAaWZas5EtCN7ZXwR4PLviX/4LU7WvuEXiV/ZvRj
-    LwmeOrXPwvGts3DvYY6tqyIL5fhixA6E6mk/fOSmm+tf1RvZ6EO3EKE7M8rs5mdKPjkEJV
-    bp7DjmqITeL2VyEusuYcZkH0n2nmZEq6ehlTAlyEHAMx183qNnB6oNlGcXB9A6/KZhtlxF
-    tStn/wcaOfidZRqs2PHAo1XXfoS1Ws3tp7P+oKUdaxxC7BRAtzsYh1skbZBlhf03RVFVEm
-    I20LD2NycXpovINh015CUHuwPRFEtXL7RSXrePGol0UI1swx40cUzf2Li1Jra53BPAP2m0
-    86ajds4TvA0VCqryHmdh9l6CC9nF0yAYs8IGqroh7OBSdVl4ExXUXVXZJInihKTXo/Fb8q
-    m+6wwobvBLnWh3caHpODvjWK2HyDSqDTKm4qdCK6AauSkT8DVCy1MDORh/B+buvRVwlDQY
-    NEVCHkUNZwOYUWMFUugGtXHQnRoLQXokzxW1cnD+vpvZtTFNC9UklLaZmOGMLzeRZpOdf1
-    eY8wrdvuCDMNEHlqI/sPxMXkCBpkiT0eBV07tXIrrZQiGaCgnsNIIcOfxwXw
-X-ME-Proxy: <xmx:ur9famUp9h9Vvn4VsNrajeU27L0mCVj3G0L37HUHijl9T7bCdJsL-g>
-    <xmx:ur9fapfZfe5s1nRl6cG9wxURfoVNV4LPK5VCp5kjKO_RsI0MFwzoAQ>
-    <xmx:ur9fanXQ2DCKphey8as0EUXN_P10P8kyxlUbE5URqnSi6DQtEURnSg>
-    <xmx:ur9faqfpSKcZeiOIL4-higbdgOZx07PcpGUQiK8VJeLZuUX9pSI4IA>
-    <xmx:u79fas2xHTMdx1JkD1Z0vM1xBoDiI2haslTPHAodZUz3XJSMwVE5mvRD>
+	1784661727; x=1784748127; bh=yYjhRW/D0aAk6hnOcMEV8thduNzZR3FNXSD
+	ddYKr6x0=; b=YoYmn0fRYhlwkR1B7+1clBgjFhLTkUo/NR9F25abSJ0iALe1THA
+	IBMxfChcGWKkr83p460xkkrxt84tYer6E4J7uFQmx3rk1cv6GEE+j3manz/PS+fE
+	7BfdTbK5L/kOv3zidx1UlxY4bxbQu7I4eW7WFaGCBsotyGZpZsHpKCBT+g1PdU90
+	Ma1f/UYjZnFqGPnLcWPrltl53Ar0/ZKQy2AmUCDLbEDVPfqx+PzjxVKD1kNaiOVQ
+	EUwGU13YWLUA0SywuFufj+gSX0INPhwWtPlfb/oZy1Jhrj+cDsYyIN519ucLJUDa
+	NNaX6/u74JpiixVacbrlfigpYD7WsYdJGKg==
+X-ME-Sender: <xms:38ZfalYF-HX8V1j3HLzCPOnC_1zUEbPluwdIc6oLS3fKeeDnn1OFgQ>
+    <xme:38ZfaveKIr_B7ePcKdg9s2aRT2ZEZh22VOKN46xdKH7Z1pIdh0dtVRWejdMv3zzeq
+    2W3cAbPs7oMAU6_SI9nQTIJNhXtlhwrgd-g6hdRcFHWfGOpDFNx>
+X-ME-Received: <xmr:38ZfaintYBTJuf304VN56WL7zBwk9vOlokGCqtThmG5pARBNpL8KgEGdrI3bJtoOz7G0SSfwZ_cnLyoawJn3Vmd3CAHyCTgCFg>
+X-ME-Proxy-Cause: dmFkZTFxdR1gy0nDWXKiaI4Ef9fpOxs8+NSl6kCOpbEkkfU9VVynRAkugNGQaRpmNLUKl+
+    zBtSBOMb2yEO0vabuLHK29I5Z8wKzqYcKQOf820zZiHFouhBNw82xPTWFiZCdN+vmqb20Z
+    gRbRgU5XgCn5LndlDkF6U5l6a8cqauig5rvCYudpynehH8Se9D3cEBmTLmdO+6Jy+KVgBb
+    QVy6aGfyHRV5ISeJssBT/ZGrCwcahw9UyryKxaRFHU0vIlCEA3bSl759kZXfTDCKvD5V9g
+    DpkhCKfsEBoG4Ybd74BfBJRozrLk97vCPDSmkM4OYUtsKWPUQt7ZIR+DtPMED5/5AtXKGm
+    AVYAu9N38o8KR2kBqv2Yf6Cj5hPCvIxqnhRiA98WsYAzL8D3RCQQwGyV0WfjORyaFIAoRL
+    bsDnYUhpXRN3/CzlYyejxVVQ5tr0oa2KcER+GXXhm02jUSPkwq8TkSYCp78tNr6sq5UpxM
+    V2hmO4Xd8B3JMcB3GJhh95Nyn6wGbelZPNOHhlkzpQcSppxen/GVgViK/R6xdsSj7q9EDH
+    d3JX7qmucN2slo6RolNDoATqaTd3ATJmcExnkBvWsk6EoANoJJ8Sk/7qZr7HqYBHtSC+Fw
+    K3ISeqCWfKJ2k4x63+VDdC5HBs0T6W0waNpMw32wU1x/jRU48Om7Ra4dZksA
+X-ME-Proxy: <xmx:38Zfav1HJstLwbY4b_dbAfCR-9Jn_Q8CXDZHEzFoR2b5BX9eNLJi5A>
+    <xmx:38Zfardd9jp83S1U_vZeIiaIfwg1LBolDz1DPC8Dnc22r7iMlvBOHg>
+    <xmx:38ZfapZhPkzy2uh6p0MbCg10fWkLdeaBfkSP6tz26RoK1dwJ0MxbJg>
+    <xmx:38ZfagET_xWqm0-fEg3nUQ5hfy4E4N-0AX3sKsDgle6bT058bxZMwg>
+    <xmx:38ZfahO3Jd4YqrST9eMUkv-pU06PfN0PSSjsSc4idZFFKO1fO88mn_2a>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Jul 2026 14:51:38 -0400 (EDT)
+ 21 Jul 2026 15:22:06 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v9] show-branch: convert per-branch flags to commit-slab
-In-Reply-To: <20260717224435.74504-1-gatlavishweshwarreddy26@gmail.com> (Gatla
-	Vishweshwar Reddy's message of "Sat, 18 Jul 2026 04:14:35 +0530")
-References: <xmqqcxwl33kr.fsf@gitster.g>
-	<20260717224435.74504-1-gatlavishweshwarreddy26@gmail.com>
-Date: Tue, 21 Jul 2026 11:51:37 -0700
-Message-ID: <xmqqzezkw4zq.fsf@gitster.g>
+To: Yury Norov <ynorov@nvidia.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Yury Norov (NVIDIA)"
+ <yury.norov@gmail.com>,  git@vger.kernel.org,  Thiago Perrotta
+ <tbperrotta@gmail.com>,  Philippe Blain <levraiphilippeblain@gmail.com>,
+  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
+  linux-kernel@vger.kernel.org,  Codex
+ <codex@openai.com>
+Subject: Re: [PATCH] completion: complete paths for git send-email
+In-Reply-To: <al-0ckPhoa-ZPhSi@yury> (Yury Norov's message of "Tue, 21 Jul
+	2026 14:03:30 -0400")
+References: <20260719134447.381835-1-yury.norov@gmail.com>
+	<CALnO6CAuitGp_xLYkXpkQYV9oiXsNNfsXZ_OqzkW7_6ND49=LA@mail.gmail.com>
+	<xmqqcxwgz2u3.fsf@gitster.g> <al-0ckPhoa-ZPhSi@yury>
+Date: Tue, 21 Jul 2026 12:22:05 -0700
+Message-ID: <xmqqqzkww3ky.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,68 +91,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com> writes:
+Yury Norov <ynorov@nvidia.com> writes:
 
-> I took time to read through the code carefully before sending this.
+>> In any case, when both a '0001-my-changes.patch' file and a
+>> '0-tolerance-policy' branch exist in your repository and current
+>> working directory, running:
+>> 
+>>     $ git send-email 0<TAB>
+>> 
+>> should offer both as candidates, I thihk.  Since I only ever pass
+>> filenames to the command, I personally do not think it is a huge
+>> loss if the completion script stops looking at refs and sticks to
+>> filenames only, but others may have a use for that feature.
+>
+> Agree. The test should create a file 0001.patch, then a tag
+> 0-tag, then a branch 0-branch, maybe something else that is
+> relevant; and then make sure every option is correctly offered
+> by autocompletion.
+>
+> Guys please let me know if everything else is needed before I send v2.
 
-Hmph.  I hate to say this, but I am finding it difficult to trust
-your "carefully" at this point.
+So in short, we want the problem description updated to something
+like:
 
-    $ make
-    $ ./git show-branch master next
-    Floating point exception (core dumped).
+   When branches and tags whose names share the same prefix as a
+   file (or a directory???) that stores a patch exist, the attempt
+   to complete that shared prefix
 
-While I have not spent the time to exhaustively find all bugs in
-this code [*], it is disturbing that the simplest use of the command
-immediately crashes.  The reason for this crash is trivial.
+       $ git send-email that-shared-prefix<TAB>
 
->  static struct commit_name_slab name_slab;
->  
-> +define_commit_slab(commit_rev_flags, uint64_t);
-> +static struct commit_rev_flags rev_flags_slab;
-> +static int flags_stride; /* number of uint64_t words per commit */
-> +
->  static struct commit_name *commit_to_name(struct commit *commit)
->  {
->  	return *commit_name_slab_at(&name_slab, commit);
->  }
+   should offer both branches, tags, and files (and directories???).
+   But the completion only offers branches and tags and fails to
+   offer files.
 
-The code still uses name_slab to associate names with commits, and
-commit_to_name() is called by functions like name_commits(), which
-is used in cmd_show_branch().  Yet, the patch does this:
+And the description of the solution would follow after that in the
+proposed log message.
 
-> @@ -713,8 +773,6 @@ int cmd_show_branch(int ac,
->  	const char **args_copy = NULL;
->  	int ret;
->  
-> -	init_commit_name_slab(&name_slab);
-> -
+As to the tests, using 40-hex is misleading, and 0-branch as you
+said would be sufficient to reproduce and demonstrate the issue, and
+that your code change fixes it.
 
-The code simply discards the initialization for that slab, leaving
-name_slab BSS-initialized.  Consequently, all members in the struct
-are initialized to 0, including the '.slab_size' member.
+Ben, anything I missed?
 
-This init_commit_name_slab() call is not moved elsewhere; it simply
-disappeared without an explanation.
+Thanks.
 
-When commit_to_name() tries to look up a commit in the slab, it
-first attempts to determine which slab should contain the data for
-the commit, using this code from <commit-slab-impl.h>:
-
-scope elemtype *slabname## _at_peek(struct slabname *s,			\
-						  const struct commit *c, \
-						  int add_if_missing)   \
-{									\
-	unsigned int nth_slab, nth_slot;				\
-									\
-	nth_slab = c->index / s->slab_size;				\
-	nth_slot = c->index % s->slab_size;				\
-									\
-And we all know what would happen when you divide by zero.
-
-
-
-[Footnote]
-
- * ... and I will not.
- 
