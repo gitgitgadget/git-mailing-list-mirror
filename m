@@ -1,131 +1,82 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B11415F02
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 18:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB3247125E
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 18:06:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657090; cv=none; b=C96hfXE9bD9oZHBX2z/TaW7LNpGV+JJ/vQxtIu86W2VQb4Kj9+paLAFvtKeJ2L2vUIcznnlYwFioKHJBjQkW/lwrs4tLIsssqrxBeg4AaSMw9/QUjNePSEw2aWQtRtmc5c8WK+zAAfR8vzP3mfyyq6axO2+1tT19dAaChGlhT/Q=
+	t=1784657211; cv=none; b=kXpDVAgGGb90NTELbZ/sF5/aGR1tXJqvdQ2ptwmYQL3z0rk0sdGl9TH1G1E2UbCLOVy6HK6e+/eCXfJm82+WC9TmJY5GJUFI1PaBSk+C9rtubUxeUhZCvKJEyUFG08KjbRzNd0nHISctF25ZolSp74CvfaXekSuRVO643PR4cds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657090; c=relaxed/simple;
-	bh=2iV9zUCUss90br2apmKgcefh4RHQA/8t/PPo4Lvd8GI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=vGiq3WMdjWlXIcwOsTBwVd+4rBIGs4wnNE/fO+Bpsj3itOgT/0NgaaMHvZ/KKeMn7xGqBqUOpjFnK2wOC33FqmkM4k59A8vnBqbcysbXNIPEOYlJg3fZdsY2xZA5eqthMaNX+1AK/6hXEOlQSYfMlwiNtiuSIY/1tYFj0ctSNF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pB2qjT50; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KDYDscrj; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784657211; c=relaxed/simple;
+	bh=brzec4A88YUXxzDFh79z0xq/j9sqCfidcWIKHuBxpao=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OLPNxCuDoJH4NwWWjXNTkgZp28hdn4fbSVhb/0cRNoZvr6zi/h87f5+K3yrmQK56JdWZc/8v27Ps+uHAvxxEi0rmduulZCimiZQwBfNteMj/3rxXqyk2N4Rn6WeI5BOBWznvNOyTZfH6OZHjEQILdS7mFCSGFybLd7xv016vrgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=uIXkuXQa; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pB2qjT50";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KDYDscrj"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 981AB1D000B3;
-	Tue, 21 Jul 2026 14:04:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 21 Jul 2026 14:04:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784657087; x=1784743487; bh=YfCNK/jwNQ
-	qWwiT5zgD8yq9KEdoU6MO6pOm4WY8tnmE=; b=pB2qjT50CblH0NvxjEfs6MGq/c
-	f7zBxXGWG7YGwNakn0Kv+XCrzGNCYAKm3AWONCmoNF+aDFGuNW3RzSq2ZScVngdP
-	W91pKqczuHx4dmV86+dGXC7tDObk7vbr2jGM8VM0u/PRWqlcDsbFuqsddxzCMlbs
-	gNwGliEQ5Q17jPZxuaH2Fr7JOl2Ct8hRjT8PdkUu4++KASglpT3kBhDTppSrQ20U
-	IDcRl3RfUnk4uBndozVkLS/L5Ti0tV1AK2lyWARt+z4NQSvS4Wdyj3J7wUsm4ScP
-	fWyYh7a36O1JJXvMUngRMMH8H0lKgKvVGOOYIb8HtOmTIY7dZEC/snEtiI+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784657087; x=1784743487; bh=YfCNK/jwNQqWwiT5zgD8yq9KEdoU6MO6pOm
-	4WY8tnmE=; b=KDYDscrjPnvhKzNyBzU14OZCKJaFP+a32u7j6TWNEhgzBbYD09t
-	6oukXKcXqVkkmawojOGeB9cPPJJkZV1fD8Wf4geySrMbHErbi/jJh74sHs3LdQmS
-	Uw4+EUtRQaC//JQ/ugzZuxWiNdWJ2dEX8VqCBcQp8GhAlB7YWg5UgYBFm2GgVlBv
-	WS+oDqS3dFu8l5ksK+aertcRVJoTJrLkKgg+buNa32Ku+FasMCLnfEUKYEVrRvxT
-	p0BtR9x2+bdit9XmkJaUzREtYrHClMou8x5FUaMdQEDldf1o8wM6dYvDHsR7DoxD
-	WPTr9h17PYGnVlsoKFYKyVX/uZPF2FniIbg==
-X-ME-Sender: <xms:v7Rfak5fdIA8YObSEUABn10DP3bAEbmaqwjFxMz0tYHhXWHzdvq64w>
-    <xme:v7RfatWf5nBNK7QNrqN8e4tds2JP8Qh510saEfLlOpHOPMrmZDeiFAW73rIFlAhSG
-    uqKYkh6KCcrSDsH73YmL66BnJElKe4GL0DFasTuAAMRQR0izyqAMQ>
-X-ME-Received: <xmr:v7Rfag10pYi5BLUJDAZqCbGtuES-rFFywD_AuoQxTYnX65i7TPcMf5lYPEPv-C-G0kBPuEl_jTWCDLU_Q_FDSmmEdxol-7xxMw>
-X-ME-Proxy-Cause: dmFkZTFDLxmB8O3Hok1J+zvfODaTUdYcZJeZOYaFSuHIKfJoDpcnLITO4OQhR7BOLNCfkb
-    3qLGfafzvyhgHC+rqykrDeRO476I5D7dsyMZaqzdrKjlo/1Q+vOVndAxRVViVwHqU6pPvL
-    CywAAZG+peUiorb/xL/XJ+GEH7dmbWF1/PB5jwgaQQvPDcF9mxFoUCa2vA95sLpz6M0+b2
-    LFmT3eYI9pje8qsNQHO1OQ1n3iPqDckhdEifwIscJK2C1/ztgzbnZ3fWsv+jVimqQYCPt0
-    qrrr5c7oq96SAoGw8o6Q6ivjOi6yeXzjywwH8p/2XE3a1Mv3eDTSX6uo3GDj0qVW1kwFTr
-    W3f34wSkKjv2NQau4fAYWY56KzZNwmnufaICk23bJ6sOzsINarukz/VeFNBAtSMqNv0Epk
-    N9StOmtWr+FPiZ5oMh6IXg3aBFYDQH0l2XBrZDWfwmyrvtN9QWVbRMeQM3enqgaB7XUhVj
-    Wdqs+0fvcQb2P7IYSw0zpAlyAbocWn2C8Fv3U7uMEotsEyEHsZOj/cW96Ud/h4b8RnOu8y
-    PNBP6vn33NJa1GG/mlmQG3GXFTBaweUdNmsL2WKa3acxEhFHID/16mcpiQzpUsVFtx+jCY
-    PmHUy+CzsobNKAyKci4w+Zqevq2L+VGcnciBF51XoKjy+pey2tgX+QZ5fcqw
-X-ME-Proxy: <xmx:v7Rfai2bfP-aCG0jQ4wwmswHHncVVIzJDyyP4XJagXoot_XeIly76Q>
-    <xmx:v7Rfar_7VTmAB8FfLBrPi036jSpK7Sa-EWN4Pg1GDIPui7vrVX0lsg>
-    <xmx:v7Rfan1Lb2rTiFIhx6Go5ggbs3Ks7MjMAoVdCagIgoiq6I3yb6qTaA>
-    <xmx:v7Rfag98RLoPWJyeblFyAqFZ7bP_nhi5U76XIreX-usGLRG-sDLuag>
-    <xmx:v7RfamFDq8NuAcHAI-er0pv8FydUquozPUv0TCmnP08eSNOGgjDrpaYV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Jul 2026 14:04:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Hugo Sales <hugo@hsal.es>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/1] rebase: add --[no-]edit to --continue
-In-Reply-To: <20260721140443.1809379-1-hugo@hsal.es> (Hugo Sales's message of
-	"Tue, 21 Jul 2026 15:04:41 +0100")
-References: <20260721140443.1809379-1-hugo@hsal.es>
-Date: Tue, 21 Jul 2026 11:04:45 -0700
-Message-ID: <xmqqldb4xlqa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="uIXkuXQa"
+Date: Wed, 22 Jul 2026 02:06:30 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
+	t=1784657205;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VeH7JiCogo+tny25dRtK2hLnThJSIvArl7B7ni8ARr8=;
+	b=uIXkuXQaxxjdgE/7oUojDL0u/fT9BjDWUTpB1MgMNKIObgtF3VLk9Aer9ZnfReCUbR0zhx
+	bPgqHRA5Il97lIeMrvNZEzAhmzBfllMFebAH4PF4JlWgS1Iizwps8OQiipBSa2JETcbMTb
+	+2DAcC1YPa8ckJYeCxSDJZkTyS2mAM/tkR7ZCQOfKpZF7wCWOBG2UfybB5VzO/jhxnYrSf
+	WN68vUZeYbLO6ECYmN3Teg6uG/vSfdo1vfJ+s+n0dd/Wi1w2Mx++qoLeCUYPZVI96BP/y/
+	JxFZBK8lT5yLDmaU5nrmYIbdA+WaL5bJNfxV4y+ZHHBb2jrTCOX91w29HNtaYQ==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Weijie Yuan <wy@wyuan.org>
+To: Jamie Magee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jamie Magee <jamie.magee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t0213: skip ancestry tests under user-mode emulation
+Message-ID: <al-1JkcH91aW6VWM@wyuan.org>
+References: <pull.2168.git.1783359242130.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2168.git.1783359242130.gitgitgadget@gmail.com>
+X-Migadu-Flow: FLOW_OUT
 
-Hugo Sales <hugo@hsal.es> writes:
+On Mon, Jul 06, 2026 at 05:34:01PM +0000, Jamie Magee via GitGitGadget wrote:
+> From: Jamie Magee <jamie.magee@gmail.com>
+> 
+> The tests added in 3c8c638df6 (t0213: add trace2 cmd_ancestry tests,
+> 2026-02-13) expect the cmd_ancestry event to name "test-tool" and
+> "git". On Linux those names come from the "comm" field of
+> /proc/<pid>/stat. Under user-mode emulation (e.g. qemu-user) /proc
+> reports the emulator ("qemu-riscv64") instead, so the event is still
+> emitted, the TRACE2_ANCESTRY probe enables the tests, and tests 2-5
+> fail even though they pass on native riscv64.
+> 
+> Require the probe to see "test-tool" in the ancestry of a test-tool
+> spawned from test-tool, so the tests skip when the names are unreliable.
+> 
+> Cc: Matthew John Cheetham <mjcheetham@outlook.com>
+> Signed-off-by: Jamie Magee <jamie.magee@gmail.com>
+> ---
 
-> When a rebase stops for conflicts and the user runs `git rebase --continue`, the
-> merge backend opens $EDITOR so the commit message can be revised. That is often
-> useful, but not always: sometimes the user only wants to keep the message that
-> is already there.
->
-> This series adds:
->
-> - `git rebase --continue --no-edit` to commit without opening an editor
+Very sorry to say something completely outside the patch.
 
-Meh. "GIT_SEQUENCE_EDITOR=: git rebase --continue" is your friend ;-)
+But may I ask what's the point of writting the line started with "Cc:"?
+I know that Linux kernel has something about writting Cc in the commit
+message, while I don't see much from Git's documentation about trailers,
+including MyFirstContribution and SubmittingPatches. Although I know
+that "git send-email" and "git interpret-trailers" could use "Cc:", I
+still wonder whether using this trailer is encouraged or not. If so,
+adding some decriptions about it would be nice, I guess, since I was
+confused when reading kernel docs about using Cc trailers in the commit
+message sometime ago.
 
-> - `rebase.noEdit` to make that the default on continue
-> - `git rebase --continue --edit` to override `rebase.noEdit`
+Sorry in advance if I missed any context.
 
-The new 'rebase.noEdit' configuration is especially concerning.  It
-encourages users to assume by default that their rebase sessions
-will not produce notable changes worth recording in the commit logs.
-
-A few immediate edge cases come to mind:
-
- - What if 'rebase -i' stops to give control back to the user for
-   reasons other than a merge conflict?  If the user chose 'edit',
-   their original intent was to modify both the commit message and
-   the content.  With 'rebase.noEdit' enabled, would they now have
-   to remember to pass '--edit' when continuing?  Does the answer
-   depend on whether the 'edit' step resulted in a merge conflict?
-
- - What if the user chose 'reword', which is an explicit signal to
-   update the commit message, but 'rebase.noEdit' is enabled?  If
-   the rebase does not stop with a conflict, it might open the
-   editor regardless of the configuration.  But if a conflict does
-   occur and requires manual resolution, will the user still need to
-   remember to pass '--edit' when continuing?
-
-The proposed tests only cover the code path where control returns to
-the user due to a conflict.  This is understandable since that
-scenario was your primary motivation.  However, they do not verify
-what happens when there are no conflicts but the user explicitly
-intended to edit the message from the start.  You may want to expand
-the test coverage to address these scenarios (and potentially
-others, as this is not an exhaustive list).
-
-Thanks.
+Thanks very much.
