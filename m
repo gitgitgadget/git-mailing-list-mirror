@@ -1,135 +1,301 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF74A4189DA
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 22:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FC743E066
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 22:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671408; cv=none; b=MpMApdJKgC0Gl9rNEb/asosDq3gMQytkzqtFf/VUWimAb7h/2PmzFNs9MF2t68vq7mpWCRbVaCb+jUbvCV33ApM1PGvTMtje/ky/dFCjrLhqiCS5Qt8pZ7X+RPxr1HN2xTQ1i6b12lonbjSjXNIVKJ5cypNSCEnk4JsdoQsVEYs=
+	t=1784672120; cv=none; b=mf0iVzQxDNSa14N2S3s1YWkhr/R56kIXsPj5CLMxOdu8OPlOfphihl7V2CymMENhaiEypXCnD5ogUfHUcxv5ArlIvwg4qOyjDsRsRVUAAoLsbiy3ZwFpabBsY7DipJzs1NZ3Ze0ZWHz0/8U4ypDQfQ15UkqV4jlDuIgLZk6yGIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671408; c=relaxed/simple;
-	bh=PXIpw5Jn/X8QrOzwAxqkJl4YziAw7hHM9nLRHBNf07Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C27TRh1mmuRf7ibCRVidmnvNiT4MH3M74rBkyxUezHlDnOgxvxDtuD9dPaq09ZznT2aQSDqCpmPHkkljKLFqybEnk7PXY5P9F99GT4yozykpZkhIySsdBjhjIanZ96YuWEumvIZQpXmc1dhBI1jhl4SjYNjaMHjWkMHMDexrQxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gQhkJ0Vs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jonDWz8c; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1784672120; c=relaxed/simple;
+	bh=RIROY0Qdb696x2F3Pa8zVvwUSJD0UD71XQ2f7vcjYNo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bZVWr/ejprwrC7zX9tlCUBWXfnkbxE8nTTppmz4gIaKOD/wUYAvRp9zz0SvaSlarIGMaPFeI0ZYoCeZNfxGlliVd85KPvFmJTzXYWONcG4suaiZI5VZHY09/fX2ToU10jldZcn5cFTZt7jlqoCwiefZy2s4d+tc2G+sMBVa83Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yx/O+TCi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kCCeLC+b; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gQhkJ0Vs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jonDWz8c"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id ADF941D00112;
-	Tue, 21 Jul 2026 18:03:25 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 21 Jul 2026 18:03:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1784671405;
-	 x=1784757805; bh=jWXvyKIlnvWPjceJRVdLBao5M16Nh2P1Tq2DCTrHgeY=; b=
-	gQhkJ0Vsj1R7WoiA2OsGWHRzNisOjH8RpwHmMV8vG3RSnIEsDLIJnRDOwLYYTF6+
-	VMr0n9TtJyzi6mY0pP0MXEnps+JiCP2CVAwUsrzzln4UWfGhoOiwSzj4R4wpjvH0
-	GsEQL2GhBgAQ47ZtWG2dyj3w4krvVnU68YM5njJE77/nmZDOa+1s0UBz/uvG8dMU
-	0JPfbeO8GCOWcJLvKL5HBIBOg01FvqvsxIwe6Hg+VT/qwr+XeHCWjApZ0OyZLEJo
-	N/h0m/NvpYv5ZrxKSrZsmYR/gNZ4SkL9ctyGuNnlEhuj8wXJesciN//C3VLVmu+A
-	dCchz3QfiQb3Q6WlJAqd6Q==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yx/O+TCi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kCCeLC+b"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 78C081D000E6;
+	Tue, 21 Jul 2026 18:15:17 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 21 Jul 2026 18:15:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784672117; x=1784758517; bh=DTE+dWHaKb
+	dyTMxWKcXAu5Go1VNW5AY++9n5tIrbYLk=; b=Yx/O+TCiuCGa1LgglaA4vFZlGE
+	+9KXoWK6v2L7sSJphvrVJNsEnD5o6VMhd9YFAyVA08PxxAYLw5kJ0bW9my2VPyNM
+	p0DiHkYiH/8p09ZK3gNyoVzAvAR/IXxRJeH+VrsbnidslbEfkddSk3djctWkZByd
+	Yarl5QHRxqxvz3WbgizRf3eWK3E/hRueh7T4QEXlXF6dDrvxS2kUzVZ0c1Ldj5Iv
+	GkWymaNzBLA4vHZ6ImBO9BU10cbog4krBt6z9vYE+BJ+tCt3a2nTb7A04ua1pZze
+	DLV+z69HHHbEOAVRTZfCT5169w5Gp2rmJ6GkqPBA+LbAcEs9hlTfNBey7uoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784671405; x=
-	1784757805; bh=jWXvyKIlnvWPjceJRVdLBao5M16Nh2P1Tq2DCTrHgeY=; b=j
-	onDWz8c8isubV9/bVpgxEMCe+PWa41TZnjTRaOb5bPDBx3Sdlee8SoVyw13uqTqg
-	LRBi23TbFGBF+yT/nWVmOwpgnEga8mR59tOzRpd1aq9LunRApwKmxBotRK9QRqn3
-	fZ2T2Y6C8Qx6GNsV9FuBZOc0dAV/aqtXH3epQ7P6qq0hkKKgGYxV8pvNMqRav6fT
-	4owfoY02HM/8KF7n4khVqik88SJ17t+efcT9sbvDbMlUQkU2xkC3yAlewpy1xxEd
-	1WnOZ2YLRWfEI2oSoDbRIR7Ob6caWkcbumABPjDsCWYaOPx44SSxTXw2cmFssYqu
-	WTd+Ppvx7j713ah3jmv9g==
-X-ME-Sender: <xms:rexfakydlOdc__S960nG_q_en5xhrKNYOm3yQXdE6DqqIp525AjrYg>
-    <xme:rexfavs4e7uiNS4lXU93dGMBiPK0GyYQdjh0HVoE-9-ouZeeLXGPLnGVdUy0xhH1v
-    MfBqCPPIVFjL6MxNpFRhndlkfE6tI2en191-7ay3YTo3n5vAxUhmQ>
-X-ME-Received: <xmr:rexfajvNiu4qwvVbjcbVA3sRj7QHlEs7IcTZ4-v1aDZ08rt-e9vszdoSnvy820dZ0dR1MDQeetW7QshTb66GpRa8lGjSEQZGy66JWvL8PIWc6w>
-X-ME-Proxy-Cause: dmFkZTEaeTm5HMySyCAzgdrqdDaJdmzkrqM06bSO3DDyflWrnyJbNkX2egLA59vMwfP7Xn
-    3kXlxvpUgRE0JLfJR9TJHxcKVA/Jy6V+8L+z6G07QSpRz/Z3pCnE6+be55Ud0syCHQwglq
-    gycaL/ZmsbZ7d4ksR+kSFWbWPSmLvgIDmDRy6UxeUt1cUyiQT7LOHWl7dtOemxLu9Jknko
-    ++7ZMppXq2mF/kWbnhqSgc4fknDDJXrJp48t/0WLjmedxb2l0Ex2P5GdDSzKH76nksdLff
-    gxzWS2GSrgmJp6kWCIGawcu5fpzq+6BI62Quq4mzBK36ZAa/uVw1eoJsMekV7hj14nM1sG
-    5WHBzVC9dl/J8OuIk2MelyN8hBQlNSqW4tW7RlNS46wh+NfN8JfHc8XY2naUEalDDgNdsj
-    m+zRRvlOrgIHsJqiys4JvTNcm7ATTNp2wE6tA5BrqyE5/vC2kyxzqN+ySqEUuGUnr/Nq1r
-    /LHUB39VVq76CK/Eek5dPSuHRvUOOuH1El516EEeGlaG3b8aQxfpc1Ye41JkYrEKScHA4H
-    3IndwphasNt6156TB0+5wbZ4kxfMsROPkmDJT4PWCVailAt1pnoONx5C0x9iCx3QBvfRql
-    d/sg4pKVaQKOQCEwY1DenHDwxzpSb1Ml91ZjUQNm8JtqhxImT2st6/bClWSg
-X-ME-Proxy: <xmx:rexfasPnqorNsm5l_dT_4XE4dNt9WOaCIJapsr7aKZHDBsDsS3081Q>
-    <xmx:rexfap1bI8NYQuwIBjIupyhDXxrH_dXU1v_Udbexj7LBgWKy8weZGA>
-    <xmx:rexfagORqn9VvmNpn7JNSrnyu9ttp3qsUMQKKpIk3mIyqmDzIo5IDg>
-    <xmx:rexfah16f1CkiXlPQIN8mjSC5wCYJXNWhagF0e_8ROizidOd_7p2Ew>
-    <xmx:rexfamUf05a6YnSgWAGWNX5swzSsncpZyG47QYgr-Hx-OmIncIm4nyB_>
-Feedback-ID: i197146af:Fastmail
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784672117; x=1784758517; bh=DTE+dWHaKbdyTMxWKcXAu5Go1VNW5AY++9n
+	5tIrbYLk=; b=kCCeLC+bMFQKAoujJEFWJDiMon80Fg6HN3GowNl+ewsNewBkDxQ
+	0j6FlEkWBSYvqPin5ZoPMkc4TGDobNt4pWZZ9XsxHHZZmxN6T24l3B8qvIscn/gq
+	CRWTeGSPMiDRBoZHkjT5k0+SsqI+UgC93ZJgxqNiqSYPcZAPd1E8Jzj1OuHmbfKI
+	ula0D+K7AomEx9qeGbZeEystMMerMaR7RJACf0gpD3HkxSNmiGaEsm7sFu7P4xgA
+	uhgFtJtCksAJCyogngkVq0HX/zceT0+uoqj2f1IiyTN9DIRDQ9hMfo7bo8zkRcj2
+	6XRBt6OepMsGoAJuNcNRdfvruGXNPqwvQXQ==
+X-ME-Sender: <xms:de9fakBNfn2i4bABXeCBarsX6DiRHQuqCph_8cNBVNKBWKrCEqaSOQ>
+    <xme:de9fatZKW7ojld8jVcgaEJlV7CbECQn8zgAbKvkbXRcW-AIS5vt3Jty1QCPIfn-xo
+    I59A0vV7Uyznad4FUauMCrFO2Lbtniy2Mqpmt_YUMR66FXRJczVag>
+X-ME-Received: <xmr:de9fav6zdZL1Sxe5c5AeTel0Zr7U8yN48rbWZj0yi0cj2tCvX-ctrMr2mb3wyPPQYypP-0pYfTQA4hlhyiVAlM_kmv5IJNXMWQ>
+X-ME-Proxy-Cause: dmFkZTGDb9manAdN+8hiYZEnI6QJCu1XbyulabQOY2J/3+8XA4S90EF6ofv/hlpU/WX+0q
+    gUaX3CbBNbaJrxuqkwElkvBawkICKLT2imgNJAyjywCBg+dbrbohhT/BdbFEXZUeyi8YZs
+    WNvamzfro4LwTOGAcOwXidV185gXqfKmvwiod6/Y9Unv+L7JgZy83qRuVjDohK1DmE6vNf
+    XdbFLaZaA5oQakZXZWYAWATn9oNpB2PAgY4Z/03RIRVuXWzV9F6vkOESXRuz27C6P2RKRu
+    HqNgqUtMK4vs8/ooghEhdeUc9vIeK011QB3Y0nNCX1yI2rXDioCK48sUibN0VGLGNAhMIE
+    mj2/qb1xGgvmIYuakFNMi28hX55Tfs8LrPnSyV61ijnYYU++CNwZtiukct30ywFPeRn7Vj
+    pjsZwYQfnWYFARPfIuWZ2UZVdIXTJx0PfOkJUDhqE0i1rku7FyVHbHw5f12hmP7e/4Dblx
+    WrkaL753cPYcV6hiteAqF7/O6HGAsvePiTIEhy44p9gent3v9TmhNrjod2wj9IomTpHsd8
+    6v5i+1VMaIhCobe/zw/c76LJFwuxvhqlSkgq1FXxUL7tN9FG+tLykW7Z0BBbCy7TyUSZz4
+    MaGwAira4WONbApdIlBxSutUXg4nvetvSMa5qh1GyeUkFNedCe2DVJDEvuSg
+X-ME-Proxy: <xmx:de9famYBndMSfBw8X9I_hSGoKd48K5XID_khszYubP0ot7Xuev2plQ>
+    <xmx:de9famj5OBzI9by9YUsH7BkdM3F7vTcDezRGfH2K_kLcGgKETWtveQ>
+    <xmx:de9fav_6MVRddgOj59qfJMQnEA2Rquz4HmvLncAazptLQIDIZ3n8gw>
+    <xmx:de9fappAFpxIRNI0dZlqoGg-ll0vajqw9Oi9s4LdF5OaIPxtH3zLcw>
+    <xmx:de9fahrfXmf4xZ_ijN3IkhhIAM_RTqiaYP-D7BwAiD8l7p7RH-rz0o60>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Jul 2026 18:03:24 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a4586696 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 21 Jul 2026 22:03:21 +0000 (UTC)
-Date: Wed, 22 Jul 2026 00:03:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
-Subject: Re: [PATCH 5/5] use
- repo_hold_lock_file_for_update{,_mode,_timeout}() with custom repos
-Message-ID: <al_spOloKmeCp0oe@pks.im>
-References: <20260714175956.54601-1-l.s.r@web.de>
- <20260714175956.54601-6-l.s.r@web.de>
- <aldYW4TPUqgDMRcf@pks.im>
- <3c0a8031-7082-422a-b474-938418682b60@web.de>
- <xmqqmrvmn6a5.fsf@gitster.g>
+ 21 Jul 2026 18:15:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Harald
+ Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3 2/2] remote: find tracking branches for URL push
+ destinations
+In-Reply-To: <a343af9d500a598826c5fe9a3abbe9df2f5916e8.1784664859.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Tue, 21 Jul 2026
+	20:14:19 +0000")
+References: <pull.2358.v2.git.git.1784624306.gitgitgadget@gmail.com>
+	<pull.2358.v3.git.git.1784664859.gitgitgadget@gmail.com>
+	<a343af9d500a598826c5fe9a3abbe9df2f5916e8.1784664859.git.gitgitgadget@gmail.com>
+Date: Tue, 21 Jul 2026 15:15:15 -0700
+Message-ID: <xmqqqzkwt2fg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqmrvmn6a5.fsf@gitster.g>
+Content-Type: text/plain
 
-On Sun, Jul 19, 2026 at 12:11:46PM -0700, Junio C Hamano wrote:
-> René Scharfe <l.s.r@web.de> writes:
-> 
-> > On 7/15/26 11:52 AM, Patrick Steinhardt wrote:
-> >> On Tue, Jul 14, 2026 at 07:59:56PM +0200, René Scharfe wrote:
-> >>> Apply the config setting core.sharedRepository from the repository at
-> >>> hand instead of from the_repository.
-> >> 
-> >> We only do this for a subset of callsites, apparently. How did you
-> >> select which subsystems to convert and which not to? To make this
-> >> explicit: I don't mind a partial migration, but I think the commit
-> >> message should briefly explain the reasoning behind it.
-> >
-> > All those that have a repository reference other than the_repository.
-> >
-> >> Also, as you don't get rid of the old functions that still implicitly
-> >> depend on `the_repository`, I think we should have an additional commit
-> >> on top that guards all functions that have this implicit dependency with
-> >> `USE_THE_REPOSITORY_VARIABLE`. This ensures that we cannot accidentally
-> >> call such functions from other subsystems that already got rid of the
-> >> global dependency.
-> >
-> > Probably, but the lockfile conversions deserve their own patch series.
-> > Patch 5 is only included here because it was easy to write.  We can drop
-> > it and leave the low-hanging fruit on the tree if that's preferable.
-> 
-> I am personally indifferent as to what we do immediately in this
-> series, as long as we all agree on the longer-term direction.  It
-> seems we are in agreement on providing additional safety in the
-> medium term?
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-It would be an easy thing to guard existing interfaces that depend on
-`the_repository` behind `USE_THE_REPOSITORY_VARIABLE`. But the patch
-series is already a strict improvement over the status quo, so I don't
-mind if we merge it as-is and defer that to a later point.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> Git accepts a repository URL as branch.<name>.pushRemote and can push
+> to it. This branch setting takes precedence over remote.pushDefault.
+>
+> A branch can be configured with a URL-valued pushRemote before any push
+> occurs. If the remotes are later rearranged with "git remote rename" and
+> "git remote add", the newly added remote may use that URL. The URL value
+> is unaffected by the rename and continues to take precedence over
+> remote.pushDefault. The URL and the remote then point to the same
+> repository, but Git does not connect them for tracking. Pushing works,
+> but @{push} cannot identify the remote's tracking branch. As a result,
+> "git status" cannot show the push branch, and an up-to-date push can
+> leave its tracking information stale.
+>
+> When exactly one configured remote uses the push destination URL, use
+> that remote for push tracking. Continue to push to the URL so the
+> configured remote's push settings do not change existing behavior. Keep
+> the current behavior when no remote matches or multiple remotes match.
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>  Documentation/config/branch.adoc |   1 +
+>  Documentation/revisions.adoc     |   3 +
+>  remote.c                         |  34 ++++++++-
+>  remote.h                         |   2 +
+>  t/t5505-remote.sh                | 124 +++++++++++++++++++++++++++++++
+>  transport.c                      |   5 +-
+>  6 files changed, 167 insertions(+), 2 deletions(-)
 
-Thanks!
+Hmph, the changes since the previous round look a bit incoherent.
 
-Patrick
+> diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
+> index a4db9fa5c8..5a85fde8de 100644
+> --- a/Documentation/config/branch.adoc
+> +++ b/Documentation/config/branch.adoc
+> @@ -55,6 +55,7 @@ This option defaults to `never`.
+>  	repository), you would want to set `remote.pushDefault` to
+>  	specify the remote to push to for all branches, and use this
+>  	option to override it for a specific branch.
+> +	The value may be the name of a configured remote or a repository URL.
+>  
+>  `branch.<name>.merge`::
+>  	Defines, together with `branch.<name>.remote`, the upstream branch
+> diff --git a/Documentation/revisions.adoc b/Documentation/revisions.adoc
+> index 6ea6c7cead..78f96fe8b0 100644
+> --- a/Documentation/revisions.adoc
+> +++ b/Documentation/revisions.adoc
+> @@ -127,6 +127,9 @@ some output processing may assume ref names in UTF-8.
+>    `git push` were run while `branchname` was checked out (or the current
+>    `HEAD` if no branchname is specified). Like for '@\{upstream\}', we report
+>    the remote-tracking branch that corresponds to that branch at the remote.
+> +  If the push destination is a URL and exactly one configured remote has
+> +  that URL among its `remote.<name>.url` values, '@\{push}' reports that
+> +  remote's remote-tracking branch.
+
+We claim we use remote.<name>.url here.
+
+>  Here's an example to make it more clear:
+>  +
+> diff --git a/remote.c b/remote.c
+> index 0dc36956c3..4a29669443 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1887,13 +1887,45 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+>  	return branch->merge[0]->dst;
+>  }
+>  
+> -static char *tracking_for_push_dest(struct repository *repo UNUSED,
+> +struct remote *repo_remote_for_push_tracking(struct repository *repo,
+> +					     struct remote *remote)
+> +{
+> +	const struct strvec *push_urls;
+> +	struct remote *first_match = NULL;
+> +	struct remote_state *remote_state = repo->remote_state;
+> +	const char *check_url;
+> +
+> +	if (remote->origin != REMOTE_UNCONFIGURED)
+> +		return remote;
+> +
+> +	push_urls = push_url_of_remote(remote);
+> +	if (push_urls->nr != 1)
+> +		return remote;
+> +	check_url = push_urls->v[0];
+
+But we correctly pay attention to both .url and .pushurl, giving
+precedence to the latter.
+
+> +	for (int i = 0; i < remote_state->remotes_nr; i++) {
+> +		struct remote *candidate = remote_state->remotes[i];
+> +
+> +		if (!candidate || candidate == remote ||
+> +		    !remote_is_configured(candidate, 0) ||
+> +		    !remote_has_url(candidate, check_url))
+> +			continue;
+> +		if (first_match)
+> +			return remote;
+> +		first_match = candidate;
+> +	}
+> +
+> +	return first_match ? first_match : remote;
+> +}
+
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index 6f5e86dede..983aff6552 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -24,6 +24,28 @@ setup_repository () {
+>  	)
+>  }
+>  
+> +setup_url_pushremote () {
+> +	rm -rf fork.git client &&
+> +	git clone --bare one fork.git &&
+> +	git clone one client &&
+> +	fork_url="file://$TRASH_DIRECTORY/fork.git" &&
+> +	(
+> +		cd client &&
+> +		git checkout -b topic --track origin/main &&
+> +		git commit --allow-empty -m topic-change &&
+> +		git config push.default current &&
+> +		git config status.compareBranches "@{upstream} @{push}" &&
+> +		git config branch.topic.pushRemote "$fork_url" &&
+> +		git push
+> +	)
+> +}
+> +
+> +check_status () {
+> +	git -C client status >actual &&
+> +	cat >expected &&
+> +	test_cmp expected actual
+> +}
+> +
+>  tokens_match () {
+>  	echo "$1" | tr ' ' '\012' | sort | sed -e '/^$/d' >expect &&
+>  	echo "$2" | tr ' ' '\012' | sort | sed -e '/^$/d' >actual &&
+> @@ -1018,6 +1040,108 @@ test_expect_success 'rename a remote renames repo remote.pushDefault but keeps g
+>  	)
+>  '
+>  
+> +test_expect_success 'URL-valued pushRemote without matching remote is not trackable' '
+> +	setup_url_pushremote &&
+> +
+> +	check_status <<-EOF
+> +	On branch topic
+> +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
+> +	  (use "git push" to publish your local commits)
+> +
+> +	nothing to commit, working tree clean
+> +	EOF
+> +'
+> +
+> +test_expect_success 'adding matching remote makes URL-valued pushRemote trackable' '
+> +	setup_url_pushremote &&
+> +
+> +	(
+> +		cd client &&
+> +		git remote rename origin upstream &&
+> +		git remote add -f origin "$fork_url"
+> +	) &&
+> +
+> +	check_status <<-EOF
+> +	On branch topic
+> +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+> +
+> +	Your branch is up to date with ${SQ}origin/topic${SQ}.
+> +
+> +	nothing to commit, working tree clean
+> +	EOF
+> +'
+
+But the test does not seem to exercise remote.<name>.pushURL
+anywhere.
+
+> +test_expect_success 'pushInsteadOf URL pushRemote is trackable' '
+> +	setup_url_pushremote &&
+> +	(
+> +		cd client &&
+> +		git remote rename origin upstream &&
+> +		git remote add -f origin "$fork_url" &&
+> +		git config "url.$fork_url.pushInsteadOf" fork: &&
+> +		git config branch.topic.pushRemote fork:
+> +	) &&
+
+Testing insteadof is a nice touch, though.
+
+> +test_expect_success 'duplicate remote URL leaves URL-valued pushRemote ambiguous' '
+> +	setup_url_pushremote &&
+> +	(
+> +		cd client &&
+> +		git remote rename origin upstream &&
+> +		git remote add -f origin "$fork_url" &&
+> +		git remote add duplicate "$fork_url"
+> +	) &&
+> +
+> +	check_status <<-EOF
+> +	On branch topic
+> +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+> +	  (use "git push" to publish your local commits)
+> +
+> +	nothing to commit, working tree clean
+> +	EOF
+> +'
+
+So is a test that checks non-unique case where the machinery should
+not kick in.
+
+Thanks.
