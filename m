@@ -1,329 +1,393 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E7D264A86
-	for <git@vger.kernel.org>; Tue, 21 Jul 2026 05:05:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8F4419314
+	for <git@vger.kernel.org>; Tue, 21 Jul 2026 06:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784610327; cv=none; b=cqur68llYVHNdPewtTNl/yZ5nf7yrK7DJtsLmP9fBWZTBS2SDpRA2KMZIfCayRIMl1HrvhF2OpsTF4MCDxaT/jsNBegtDGKfPJ37Z2rr638if63cTcVptDmmtIc7Et6bwaAdX8fHKcw2fWh7Fg0CG1APftgOW9kwTY0dYBhPhCs=
+	t=1784617068; cv=none; b=j4KOFIaicPTAEZUoVXceHg/gJHbHOSdIhoWR0J1o+DpSxasOuaFtt1Udx7h4pg4487hujSyGTSVW1GxV5tTC8Qn/VQ+U+E4xGQbYN3i9e0LJ24ROn+X7umki6erLPHEijp+19BTlylcropvEXnDMOm6EgV5/6pUtAiiw68pUSUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784610327; c=relaxed/simple;
-	bh=vDyeQYdZ1aATyr0lk4e59rv6tKUmA4/eCxjVtSwD1ew=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CYY9KzQXMFWoXGFwNV1qUBIHdK0u+v2SJDMKzrqGk1xFruY1UYTyN42ouT7WhXsR1tLnKLTdZer/ViL8KKpRJimmJLtjsK9zkhRwglFUGnAhkDPqcQL9ok8CNXY3PQSnlBzggBduXKhojGfJTLHcIOvE5JzJncXHwS3SSqE/ynU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=Fo/WS78w; arc=none smtp.client-ip=74.125.224.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1784617068; c=relaxed/simple;
+	bh=Odx/zPTiUpoGX3sxGDTrChyHhtN8OPlWfEmni2cdN8s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ETSq8HQxAyGM7eNnVil0odcSRDVyU6vjdjcXNJbvlR2i+lRWilKNIS7mjheg6BCrP1fZUPh6HtvjhgNZw8QYarllt6kmnco8y/MlyTgDsNnr1nYCFe61YClTFm7Mcrl56giVxAMGh6ZK5ouqHpZLHy+SN1w33ti2SA81HeayGjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P64h3FLZ; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="Fo/WS78w"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6685483aad2so1992137d50.0
-        for <git@vger.kernel.org>; Mon, 20 Jul 2026 22:05:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P64h3FLZ"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c9e0b89e228so4944675a12.1
+        for <git@vger.kernel.org>; Mon, 20 Jul 2026 23:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1784610325; x=1785215125; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=rGEShrbSsR/2CDzeczor/gvivWxwUVVy4UICHfhMLKo=;
-        b=Fo/WS78wzZ5WJIiopbN4hkGGsZOAanOBkoamTgQvw/6JHKECBKg7Rj4szxiNmlgG5e
-         sa3EWomoF/9sNNJo0Ovpos4vZ4dWz5uGSy20QSrua/AU6Qp1lU4AXujPac5k+Zjh1zsL
-         Jqi8rC8dt9H5K/V09cVF8FNs9onywvRLriPzA=
+        d=gmail.com; s=20251104; t=1784617066; x=1785221866; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZISyztD4rKg8EfBDpcd2pJ2nPHVvKz65gVj7I81hcTM=;
+        b=P64h3FLZZzyE0DX4TNfDHreNLmzJ+ZTAHtdjcE7GzoMvKJP5HqbzDotvFOQH/RQ2a9
+         A0W3FJif44CYGKcEZjT8UI95mVEJWJ/3SH5TMsLcivMOhcC3LaWGY348nxi2L65ynjDN
+         FQXLvYBel6PDxyMutuYjjw3cvO+4IY+cC6HxbDn+z7zdOvHTIn/5pAEnHmweE5wq9PwV
+         bT1pSRGuUSD6UPpqwdG86zBvA/0hj8DRdfug5bQrLxwCjVIlSXdZ7XT73OkS66lSG0le
+         P+lGsB42opn6aY2Nrni4JXchGn9YlBCcosf314P7lKB3k+A2NI15oveXG1sXcZMj915h
+         IW4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784610325; x=1785215125;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rGEShrbSsR/2CDzeczor/gvivWxwUVVy4UICHfhMLKo=;
-        b=p++SJvpB1zKfGbfo9bgMIOE+qMyCUsBNz0lUTcxYYJhq0PLVQ5rGO/kKanxDstpwLq
-         5gECLXu2otG6Ln32DggOKM4e0omUSoC8QgmkK/FK1NDpghxWBPCdQfUdS8GbnqbqHNlB
-         EYqjBKqxPF7UnBs4lQNuPx+1pjJH78Woo/P7K6WATD2A2eqv7Gn0ikcrk6X1ANR47SM5
-         FU4LqdTm4tiwzoUnv4BExNJy46fQ1ZoEvOVuN6bgqU52cG3f1fGbf2beUPUemHwwZgsP
-         5CgKU26EqAa0xxN8Gxyor9yuTtJP+Hon/ub5OHD/q3gl5k1AVuVWR1JYu1Rg4EhwxMrQ
-         vfZg==
-X-Forwarded-Encrypted: i=1; AHgh+Rp97JUAmkwIGZcupUpu1v7wHuh84Ecu5OUXx7udSS5CcJGzG7dL9H1s83gqGiLJUJJdsdk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrU4ibphTLdg7f/DrqEli1pTbRlhkZ+E+fHXX/pkYeHRuqipXi
-	/v84kkWH1myolqEFG5z8poqvNiivlkMkiV8qPUgRjBV8ZsVWM/YP0d5HkwxWLuVOwazl+yb/WM0
-	hoT+18mj2hQ==
-X-Gm-Gg: AR+sD136RMU/n2aRRRxTLYxNkI/2LIF3NaXcyVSKYRyi5zjN4wamAule0QnbxOstlY9
-	8SdqODQ1cY5bHWMKxsCnouGTpA7fVif7yhtWZayUC694wLwzMotIyEbJy2jWbE1/Q30DOk9t0+9
-	m3vOnLnJ3pNQqrbFFRWdig+KskjDVfbfyCL4uCJKoC7DbwA2TyEUyh1gxJYCdwXhTwBQIVJt93m
-	fW9QQ6qfWbpgG0X58DtKPTu2FI6P3FvQuluO1thS04BWTA++Hka4TkjzJLMZO7iUvI7LWtPjopa
-	psyUUrXy0S6ke25u+DzNoEjoYl6mXRTa4KSrwl7/Oo4Q0gXYWwk/z960Q83s1Ul3SuOBl1kScl4
-	PMtw/wWJFNzcZPnEj7TGaHe7nelUaFwVnAeONBBlHg5D+DtnilYD4Jj7pYcbzXrh7pfZwNmReoR
-	PRCSz0StHloIxsjmZunhGaSQlDEERm2vfFJZW+JFqwUXJEN2Q8G5fBj8+zbmon89JXRPnbCQ==
-X-Received: by 2002:a05:690c:eca:b0:81e:ae6f:ac0a with SMTP id 00721157ae682-81ef277db23mr52093657b3.24.1784610324731;
-        Mon, 20 Jul 2026 22:05:24 -0700 (PDT)
-Received: from com-79390 (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-81ef42763absm58486567b3.32.2026.07.20.22.05.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 22:05:23 -0700 (PDT)
-Date: Tue, 21 Jul 2026 00:05:21 -0500
-From: Taylor Blau <ttaylorr@openai.com>
-To: Jeff King <peff@peff.net>
-Cc: Wolfgang Kritzinger <wkritzinger@atlassian.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: Performance regression in connectivity check during receive-pack
- (git 2.54)
-Message-ID: <al7-EaWaW3BYq4Nj@com-79390>
-References: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
- <20260721035733.GA581473@coredump.intra.peff.net>
+        d=1e100.net; s=20251104; t=1784617066; x=1785221866;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZISyztD4rKg8EfBDpcd2pJ2nPHVvKz65gVj7I81hcTM=;
+        b=hN7/H++90D8YdS2fzNlTL1CAybJv0dGEtLu19N+OYOzS3Y6op/qf7rI62fLfBj9tMF
+         nH6hFxTG+7cTEb6Dn1a/wda3Bv10gJ31dRFTe5OLbNS0FxfSl5kklCZ4tsg4rPGSnXs7
+         pLI19m8XGxJ0eyA/nfGrVB5VPwqbtr9XjiyR2SpZryB4pwaoBOVvM7Ec2jVnonCyHeLD
+         PnaBsGA5RdWfyv/cCJRbQRg3UA9WRbwMKaONw60ayaFvnJIj0UoNCcu6WixJ0VmiPIOs
+         1iUZhIl61q+DkYsnEbCgilsUjhjotU3+lUwgYHT9MsfH7JwmD/Kg8wJfwK8BlGavu+Zr
+         kbBA==
+X-Gm-Message-State: AOJu0YxHr4Wt3JsIYuOKUzKU8tqbaO90tBRdEL2oKniAlF3EK0/qd53q
+	vrQmzm8fOE/t50bTgM21H58UfdqCeEmHXEmCZiTelhOwUPMvJHquSiwvj31f/GP6
+X-Gm-Gg: AfdE7cnfKW4lxlZcnw/FTZ2RUGvh5009/DPumwkwxHevUlGuyoIGUN94Io3JVPWnRpt
+	EE8uuJANM7mIHT0RxlWe+ie7NF04DpMzJ12L637x7ts397YVE5L0RYIUUtVXDzUHUe6kocsthMj
+	fdNTgEgymMi9Gln1nXCytw6AGOolm9UsPF64pKmExgymgknOIe16kXYs1RNccQRmt/G5f6Celsh
+	evtb6w6mI1S/rqRiHZ2yvwRwUqqd1S5uyTTbJq2ACi1YK6nyMGSUq/shF3HZED9xEqKZVzkomFQ
+	3L5gvm7nrMuLh1hTaYy8yRaSEUZXVi31wvsKCkHtMcQYA0Qy7g8Uc3Jn9yZDLJFPl7kkYVPNB7t
+	jjleLNkvmsLUb0rW2TEPGgqvWRMKt74PLSw7pzQhr1llNCtVn2bHE4E1m/7Y0BHxF9U3loZw9I9
+	8/7A/0aPhE8ypEJeX3hZDjQ/iIRe0k9flwjsdffw==
+X-Received: by 2002:a05:6a21:9147:b0:3bf:6c07:b2f7 with SMTP id adf61e73a8af0-3c3ad9e3ddemr18793381637.58.1784617065924;
+        Mon, 20 Jul 2026 23:57:45 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:81e8:b680:e55f:5528:5bee:bb02])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31429fe1014sm43323339eec.7.2026.07.20.23.57.42
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 20 Jul 2026 23:57:45 -0700 (PDT)
+From: Shlok Kulshreshtha <diy2903@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"D . Ben Knoble" <ben.knoble@gmail.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	"Scott L . Burson" <Scott@sympoiesis.com>,
+	Shlok Kulshreshtha <diy2903@gmail.com>
+Subject: [PATCH v2] userdiff: add support for Swift
+Date: Tue, 21 Jul 2026 12:27:36 +0530
+Message-ID: <20260721065736.8747-1-diy2903@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260717140232.6722-1-diy2903@gmail.com>
+References: <20260717140232.6722-1-diy2903@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260721035733.GA581473@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 20, 2026 at 11:57:33PM -0400, Jeff King wrote:
-> On Tue, Jul 21, 2026 at 03:17:23PM +1200, Wolfgang Kritzinger wrote:
->
-> > `strace` shows that after a push, 2.54 does a failing open() of
-> > of numerous loose objects -- once in the quarantine (incoming)
-> > directory and once in the main object store -- before finding it
-> > in a pack:
-> >
-> > openat(".../objects/tmp_objdir-incoming-XXXX/ed/58..", O_RDONLY) = ENOENT
-> > openat(".../objects/ed/58..", O_RDONLY) = ENOENT
->
-> Interesting. Here's a smaller reproduction recipe that shows the issue:
->
->   # clone of git.git, or any other non-trivial repo; it should be mostly
->   # packed
->   src=/path/to/git
->
->   git init empty
->   export GIT_ALTERNATE_OBJECT_DIRECTORIES=$src/.git/objects
->   strace -fe openat \
->     git -C empty rev-list --objects $(git -C $src rev-parse HEAD) >/dev/null
->
-> In v2.50, we see almost no loose object open calls, because we check the
-> pack first. But in v2.54, we see tons of them.
->
-> > 2.50 does not do this. In most customer deployments of Bitbucket,
-> > the Git data lives on an NFS share. The extra latency on NFS makes
-> > this process of checking for non-existent loose objects take too
-> > long, the push essentially hangs at the "Checking connectivity" step.
->
-> Yeah, I can imagine. But even on a fast filesystem, we definitely want
-> to avoid all of those syscalls. Replacing "strace" above with a timing
-> harness, even on a system with fast syscalls and a warm cache, the v2.54
-> version is ~12% slower.
->
-> > I believe this new behavior was introduced in the recent object
-> > database rework. After using bisect, I belive the problem can be
-> > traced back to commit 8384cbcb4c.
+Add a built-in userdiff driver for the Swift programming language so that
+diff hunk headers and word diffs work out of the box for ".swift" files.
 
+The funcname pattern is built for Swift's own declaration grammar: an
+optional run of attributes ("@objc", "@available(iOS 13, *)", ...),
+followed by an optional run of lowercase modifiers ("public", "static",
+"final", ...), followed by a declaration keyword (func, class, struct,
+enum, protocol, extension, actor, init, deinit, subscript). The keyword
+is followed by a boundary that allows whitespace, "(" (init/subscript),
+"?" or "!" (failable init), or "<" (generics), while still acting as a
+word boundary so e.g. "initialize(" does not match.
 
-> Hmm, my bisect ended up at a593373b09 (packfile: refactor
-> `find_pack_entry()` to work on the packfile store, 2026-01-09), which is
-> nearby. I'm not sure if it might depend on other factors (e.g., presence
-> of commit graphs, midx, etc) or my reproduction is not exactly like
-> yours, or if one of us messed up bisection.
->
-> +cc Patrick as the author of both commits.
+The word regex recognizes Swift identifiers, hexadecimal, octal, binary,
+integer and floating-point literals, and the language's operators.
 
-I think that both bisection results are equally valid for different
-reasons.
+Signed-off-by: Shlok Kulshreshtha <diy2903@gmail.com>
+---
+v2, addressing Johannes Sixt's review of v1
+(<2a3a73c5-5e90-44a3-bf6a-6e98ce5e5a59@kdbg.org>).  Changes since v1:
 
-Before 8384cbcb4c, 'find_pack_entry()' did
+ - t4018/swift-{init,failable-init,generic-subscript}: "RIGHT" now
+   appears only once, on the declaration line, so the expected header is
+   unambiguous.
+ - word regex: dropped the redundant "?" after the single-character
+   operator class.  Single characters are already covered by the
+   "|[^[:space:]]" fallback that the PATTERNS macro appends, so only the
+   two-character forms need to be spelled out.
 
-    packfile_store_prepare(r->objects->sources->packfiles);
+(A couple of Hannes's other suggestions I kept as-is; I have explained
+the reasoning in a reply to his review.)
 
-, then tried each of the stores in order to first see if (1) a MIDX was
-available to locate the object in some pack, or (2) failing that, if
-there exists some non-MIDX'd pack which could do the same.
+Some coverage evidence beyond the t4018 fixtures:
 
-Worth noting is that 'packfile_store_prepare()' effectively did:
+ - Grammar: a test over every declaration form in Swift's grammar
+   summary (26 forms -- func/class/struct/enum/protocol/extension/actor,
+   init incl. "init?"/"init!"/generic, deinit, subscript incl. generic,
+   operator methods, stacked modifiers, inline attributes with and
+   without arguments, "where" clauses, multi-line signatures) -- all 26
+   resolve to the correct declaration.
 
-    for (s = store->source->odb->sources; s; s = s->next) {
-        prepare_multi_pack_index_one(s);
-        prepare_packed_git_one(s);
-    }
+ - Corpus: run over the last 200 commits touching *.swift in seven
+   stylistically different projects (Alamofire, apple/
+   swift-argument-parser, vapor, Kingfisher, RxSwift, SnapKit,
+   pointfreeco/swift-composable-architecture): of 20454 hunks, 15310
+   produced a header and 15296 (99.9%) named a real declaration.  The
+   empty-header hunks are changes with no enclosing declaration (file
+   comment blocks, imports, Package.swift, top-level code); sampling
+   found no change inside a declaration that failed to get a header.
+   The handful of non-declaration headers are the selective-import form
+   ("import class Foundation.Bundle"), which reads "import" as a
+   modifier; rare and low-harm, and I can exclude it in a follow-up if
+   preferred.
 
-Thus preparing the first store also prepared every alternate store,
-enabling 'find_pack_entry()' to search through all store's MIDX and
-pack lists/sources.
+ Documentation/gitattributes.adoc  |  2 ++
+ t/t4018/swift-actor               |  5 +++++
+ t/t4018/swift-attribute-with-args |  7 +++++++
+ t/t4018/swift-class               |  5 +++++
+ t/t4018/swift-enum                |  5 +++++
+ t/t4018/swift-extension           |  5 +++++
+ t/t4018/swift-failable-init       |  7 +++++++
+ t/t4018/swift-func                |  5 +++++
+ t/t4018/swift-generic-subscript   |  7 +++++++
+ t/t4018/swift-init                |  7 +++++++
+ t/t4018/swift-inline-attribute    |  7 +++++++
+ t/t4018/swift-modifiers           |  4 ++++
+ t/t4018/swift-protocol            |  5 +++++
+ t/t4018/swift-struct              |  5 +++++
+ userdiff.c                        | 10 ++++++++++
+ 15 files changed, 86 insertions(+)
+ create mode 100644 t/t4018/swift-actor
+ create mode 100644 t/t4018/swift-attribute-with-args
+ create mode 100644 t/t4018/swift-class
+ create mode 100644 t/t4018/swift-enum
+ create mode 100644 t/t4018/swift-extension
+ create mode 100644 t/t4018/swift-failable-init
+ create mode 100644 t/t4018/swift-func
+ create mode 100644 t/t4018/swift-generic-subscript
+ create mode 100644 t/t4018/swift-init
+ create mode 100644 t/t4018/swift-inline-attribute
+ create mode 100644 t/t4018/swift-modifiers
+ create mode 100644 t/t4018/swift-protocol
+ create mode 100644 t/t4018/swift-struct
 
-8384cbcb4c changes this such that 'packfile_store_prepare()' now only
-prepares its owning source:
-
-    prepare_multi_pack_index_one(store->source);
-    prepare_packed_git_one(store->source);
-
-, which is reasonable, but 'find_pack_entry()' still loops over all
-sources starting from 'r->objects->sources' and calls the function
-'packfile_store_prepare()'. But! It calls that function over the same
-argument each time, like so:
-
-    for (source = r->objects->sources; source; source = source->next) {
-        packfile_store_prepare(r->objects->sources->packfiles);
-        if (source->midx && fill_midx_entry(source->midx, oid, e))
-            return 1;
-    }
-
-So we never prepare the packfile store from other sources!
-
-In Wolfgang's case, if we have an quarantine store followed by the main
-object store, our lookup order will be:
-
- 1. prepare the quarantine object store
- 2. search packs in the quarantine object store
- 3. search packs in the main object store (which will fail, since this
-    list is guaranteed to be empty since we never called
-    'packfile_store_prepare()')
- 4. search loose objects in the quarantine object store
- 5. search loose objects in the main object store
- 6. haven't found anything, so we must reprepare
- 7. search packs in the main object store, which will now succeed, as
-    the previous reprepare called 'packfile_store_prepare()' on the main
-    object store's packfile source.
-
-Commit a593373b09 changes things, since it makes 'find_pack_entry()' no
-longer operate over the entire repository, but over a single store.
-Before searching that store, it prepares it, like so:
-
-    static int find_pack_entry(struct packfile_store *store,
-                               const struct object_id *oid,
-                               sturct pack_entry *e)
-    {
-        struct packfile_list_entry *l;
-
-        packfile_store_prepare(store);
-        if (store->source->midx && fill_midx_entry(...))
-            return 1;
-
-        for (l = store->packs.head; l; l = l->next) {
-            struct packed_git *p = l->pack;
-            if (!p->multi_pack_index && fill_pack_entry(oid, e, p)) {
-                /* ... */
-                return 1;
-            }
-        }
-
-        return 0;
-    }
-
-So commit a593373b09 indeed squashes the bug introduced by 8384cbcb4c,
-and when lookup reaches the main store, it prepares the main store
-correctly.
-
-But a593373b09 also changes the lookup order, because the caller in
-'do_oid_object_info_extended()` already loops over sources!
-
-    static int do_oid_object_info_extended(struct object_database *odb,
-                                           const struct object_id *oid,
-                                           struct object_info *oi, unsigned flags)
-    {
-        /* replace objects, cached lookups, etc., ... */
-
-        odb_prepare_alterantes(odb);
-
-        while (1) {
-            struct odb_source *source;
-
-            for (source = odb->sources; source; source = source->next) {
-                if (!packfile_store_read_object_info(source->packfiles,
-                                                     real, oi, flags) ||
-                    !odb_source_loose_read_object_info(source, real, oi,
-                                                       flags))
-                    return 0;
-            }
-        }
-    }
-
-Before a593373b09, that call to 'packfile_store_read_object_info()'
-looped over all sources, since it still called 'find_pack_entry()'.
-
-In other words, prior to a593373b09, the lookup proceeded like so:
-
- 1. search packfiles in quarantine
- 2. search packfiles in the main object store
- 3. search loose objects in quarantine
- 4. search loose objects in the main object store
-
-But a593373b09 changes that to instead proceed store-by-store, as
-follows:
-
- 1. search packfiles in quarantine
- 2. search loose objects in quarantine
- 3. search packfiles in the main object store
- 4. search loose objects in the main object store
-
-So even with all object sources prepared, every object found in a later
-source pays a failed loose object lookup in an earlier one, which I
-believe matches what Peff strace'd above.
-
-So both bisections make sense. If the later store has not been prepared
-yet, commit 8384cbcb4c is where Git first fails to see its packs and
-falls through to loose object checks. If the stores are already
-prepared, that problem does not show up, and a593373b09 is where Git
-first starts checking loose objects in an earlier source before looking
-in a later source's packs.
-
-I think that something like the following (untested) would fix the
-immediate issue:
-
---- 8< ---
-diff --git a/odb.c b/odb.c
-index cf6e7938c0..aeb2915f0f 100644
---- a/odb.c
-+++ b/odb.c
-@@ -568,9 +568,28 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 	while (1) {
- 		struct odb_source *source;
-
--		for (source = odb->sources; source; source = source->next)
--			if (!odb_source_read_object_info(source, real, oi, flags))
-+		/*
-+		 * Check all packed sources before trying loose ones. A loose
-+		 * miss requires a filesystem lookup, and receive-pack's
-+		 * quarantine source makes the main object directory an
-+		 * alternate.
-+		 */
-+		for (source = odb->sources; source; source = source->next) {
-+			struct odb_source_files *files =
-+				odb_source_files_downcast(source);
+diff --git a/Documentation/gitattributes.adoc b/Documentation/gitattributes.adoc
+index bd76167a45..9fea75f96f 100644
+--- a/Documentation/gitattributes.adoc
++++ b/Documentation/gitattributes.adoc
+@@ -914,6 +914,8 @@ patterns are available:
+ - `scheme` suitable for source code in most Lisp dialects,
+   including Scheme, Emacs Lisp, Common Lisp, and Clojure.
+ 
++- `swift` suitable for source code in the Swift language.
 +
-+			if (!odb_source_read_object_info(&files->packed->base,
-+							 real, oi, flags))
- 				return 0;
-+		}
-+		for (source = odb->sources; source; source = source->next) {
-+			struct odb_source_files *files =
-+				odb_source_files_downcast(source);
-+
-+			if (!odb_source_read_object_info(&files->loose->base,
-+							 real, oi, flags))
-+				return 0;
-+		}
+ - `tex` suitable for source code for LaTeX documents.
+ 
+ 
+diff --git a/t/t4018/swift-actor b/t/t4018/swift-actor
+new file mode 100644
+index 0000000000..e4852f40a7
+--- /dev/null
++++ b/t/t4018/swift-actor
+@@ -0,0 +1,5 @@
++actor RIGHT {
++    let a = 1
++    // a comment
++    let b = ChangeMe
++}
+diff --git a/t/t4018/swift-attribute-with-args b/t/t4018/swift-attribute-with-args
+new file mode 100644
+index 0000000000..22b1ee32f1
+--- /dev/null
++++ b/t/t4018/swift-attribute-with-args
+@@ -0,0 +1,7 @@
++struct View {
++    @available(iOS 13, *) public func RIGHT() {
++        let a = 1
++        // a comment
++        print(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-class b/t/t4018/swift-class
+new file mode 100644
+index 0000000000..c3a9336027
+--- /dev/null
++++ b/t/t4018/swift-class
+@@ -0,0 +1,5 @@
++class RIGHT {
++    let a = 1
++    // a comment
++    let b = ChangeMe
++}
+diff --git a/t/t4018/swift-enum b/t/t4018/swift-enum
+new file mode 100644
+index 0000000000..0a84302993
+--- /dev/null
++++ b/t/t4018/swift-enum
+@@ -0,0 +1,5 @@
++enum RIGHT {
++    case first
++    // a comment
++    case ChangeMe
++}
+diff --git a/t/t4018/swift-extension b/t/t4018/swift-extension
+new file mode 100644
+index 0000000000..cbc18ab6ef
+--- /dev/null
++++ b/t/t4018/swift-extension
+@@ -0,0 +1,5 @@
++extension RIGHT {
++    static let a = 1
++    // a comment
++    static let b = ChangeMe
++}
+diff --git a/t/t4018/swift-failable-init b/t/t4018/swift-failable-init
+new file mode 100644
+index 0000000000..4bbd6217c9
+--- /dev/null
++++ b/t/t4018/swift-failable-init
+@@ -0,0 +1,7 @@
++class Bar {
++    init?(RIGHT: Int) {
++        let x = 0
++        // a comment
++        print(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-func b/t/t4018/swift-func
+new file mode 100644
+index 0000000000..1fecae0911
+--- /dev/null
++++ b/t/t4018/swift-func
+@@ -0,0 +1,5 @@
++func RIGHT(x: Int) -> Int {
++    let y = x
++    // a comment
++    return ChangeMe
++}
+diff --git a/t/t4018/swift-generic-subscript b/t/t4018/swift-generic-subscript
+new file mode 100644
+index 0000000000..423cb58941
+--- /dev/null
++++ b/t/t4018/swift-generic-subscript
+@@ -0,0 +1,7 @@
++struct Container {
++    subscript<RIGHT>(index: Int) -> Int {
++        let a = 0
++        // a comment
++        return ChangeMe
++    }
++}
+diff --git a/t/t4018/swift-init b/t/t4018/swift-init
+new file mode 100644
+index 0000000000..dc7a298f38
+--- /dev/null
++++ b/t/t4018/swift-init
+@@ -0,0 +1,7 @@
++class Foo {
++    init(RIGHT: Int) {
++        let x = 0
++        // a comment
++        print(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-inline-attribute b/t/t4018/swift-inline-attribute
+new file mode 100644
+index 0000000000..2374c4b603
+--- /dev/null
++++ b/t/t4018/swift-inline-attribute
+@@ -0,0 +1,7 @@
++class Service {
++    @objc func RIGHT() {
++        let path = "/api"
++        // a comment
++        log(ChangeMe)
++    }
++}
+diff --git a/t/t4018/swift-modifiers b/t/t4018/swift-modifiers
+new file mode 100644
+index 0000000000..9d80685a78
+--- /dev/null
++++ b/t/t4018/swift-modifiers
+@@ -0,0 +1,4 @@
++public static func RIGHT() -> Int {
++    // a comment
++    return ChangeMe
++}
+diff --git a/t/t4018/swift-protocol b/t/t4018/swift-protocol
+new file mode 100644
+index 0000000000..07c39ec2a3
+--- /dev/null
++++ b/t/t4018/swift-protocol
+@@ -0,0 +1,5 @@
++protocol RIGHT {
++    var first: Int { get }
++    // a comment
++    var second: ChangeMe { get }
++}
+diff --git a/t/t4018/swift-struct b/t/t4018/swift-struct
+new file mode 100644
+index 0000000000..e399ed7759
+--- /dev/null
++++ b/t/t4018/swift-struct
+@@ -0,0 +1,5 @@
++struct RIGHT {
++    let a = 1
++    // a comment
++    let b = ChangeMe
++}
+diff --git a/userdiff.c b/userdiff.c
+index b5412e6bc3..7129bf1482 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -362,6 +362,16 @@ PATTERNS("scheme",
+ 	 "\\|([^|\\\\]|\\\\.)*\\|"
+ 	 /* All other words should be delimited by spaces or parentheses. */
+ 	 "|([^][)(}{ \t])+"),
++PATTERNS("swift",
++	 "^[ \t]*((@[A-Za-z_][A-Za-z0-9_]*(\\([^()]*\\))?[ \t]+)*([a-z]+[ \t]+)*(func|init|deinit|subscript|class|struct|enum|protocol|extension|actor)[ \t(?!<].*)$",
++	 /* -- */
++	 "[a-zA-Z_][a-zA-Z0-9_]*"
++	 /* hexadecimal, octal, and binary literals */
++	 "|0[xX][0-9a-fA-F_]+|0[oO][0-7_]+|0[bB][01_]+"
++	 /* integers and floating-point numbers */
++	 "|[0-9][0-9_]*([.][0-9_]+)?([eE][-+]?[0-9]+)?"
++	 /* unary and binary operators */
++	 "|[-+*/%<>=!&|^~?]=|&&|\\|\\||<<=?|>>=?|\\?\\?|\\.\\.[.<]|->"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|([a-zA-Z0-9]|[^\x01-\x7f])+"),
+ { .name = "default", .binary = -1 },
 
- 		/*
- 		 * When the object hasn't been found we try a second read and
---- >8 ---
+Range-diff against v1:
+1:  1e7e199355 ! 1:  af48611565 userdiff: add support for Swift
+    @@ t/t4018/swift-failable-init (new)
+     @@
+     +class Bar {
+     +    init?(RIGHT: Int) {
+    -+        let value = RIGHT
+    ++        let x = 0
+     +        // a comment
+     +        print(ChangeMe)
+     +    }
+    @@ t/t4018/swift-func (new)
+      ## t/t4018/swift-generic-subscript (new) ##
+     @@
+     +struct Container {
+    -+    subscript<RIGHT>(index: RIGHT) -> Int {
+    ++    subscript<RIGHT>(index: Int) -> Int {
+     +        let a = 0
+     +        // a comment
+     +        return ChangeMe
+    @@ t/t4018/swift-init (new)
+     @@
+     +class Foo {
+     +    init(RIGHT: Int) {
+    -+        let value = RIGHT
+    ++        let x = 0
+     +        // a comment
+     +        print(ChangeMe)
+     +    }
+    @@ userdiff.c: PATTERNS("scheme",
+     +	 /* integers and floating-point numbers */
+     +	 "|[0-9][0-9_]*([.][0-9_]+)?([eE][-+]?[0-9]+)?"
+     +	 /* unary and binary operators */
+    -+	 "|[-+*/%<>=!&|^~?]=?|&&|\\|\\||<<=?|>>=?|\\?\\?|\\.\\.[.<]|->"),
+    ++	 "|[-+*/%<>=!&|^~?]=|&&|\\|\\||<<=?|>>=?|\\?\\?|\\.\\.[.<]|->"),
+      PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+      	 "\\\\[a-zA-Z@]+|\\\\.|([a-zA-Z0-9]|[^\x01-\x7f])+"),
+      { .name = "default", .binary = -1 },
+-- 
+2.52.0
 
-But...
-
-> I'm not sure of the correct fix. This is working against the whole "odb
-> sources are independent and abstract" refactoring that a593373b09 was
-> going for. But I think it's an important optimization. I guess the
-> abstract version would be that each source has "fast" and "slow" lookups
-> or something like that, and we check all fast ones before slow ones. But
-> that is pretty gross.
-
-...that fix is breaking the very abstraction that the pluggable-ODB
-effort is trying to create in the first place, at least in my
-understanding of the project's goals.
-
-> I'll leave it to Patrick to ponder further. I haven't really been paying
-> a lot of attention to the odb refactoring.
-
-I am genuinely not sure what the right path forward here is, given that
-I do not have a super firm understanding of all of the refactoring that
-has taken place here. I would be likewise eager to hear from Patrick or
-others with thoughts on how to resolve this.
-
-Thanks,
-Taylor
