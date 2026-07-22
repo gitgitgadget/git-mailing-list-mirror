@@ -1,218 +1,145 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E49735C6B4
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 20:47:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8922A384CE8
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 20:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784753239; cv=none; b=b2XE7isCKZQHs7qzKvROWP29SAX3VyAXbWx8UrM01cr3M7Dd6kid7gwBoUQ+EBOrVPOUfkvD+fWL81KFqkdgdcvKpeyaZQOnQ5Tmumhf/yfgAnDIEmq4IbxpkcDgiqx6A/Bgrk9ZSVRBRX7N+O4WNv3W4DrFRxIhXed55QyROwY=
+	t=1784753591; cv=none; b=fjJNDP8eo19BeFa0s9josvKuiX3pso4+xEjwFcEtCD7ZEozrTgVe+UmIlDdIHEPZeDF7IUzeLNEPefxRD5Vs54bzYT3Au1UfXfSj9TvMdfqehxlQa1OicU8vrKZaTVA7087DFH9qxfN4mRphvrNFuYyPcx8IkUbuM4+DHyN8lqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784753239; c=relaxed/simple;
-	bh=e361Qv6hTPtwW7TYO9ALsqQ7E+SntY1vHpe+xYZ2wao=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=BYxkzoOOZ4xwsnhW1QgZFJ5TxLvMQcPN7obtel7JyitJm8/8BLfRVbxuPJFrnroQCSmoR52kPa2GyGsnJ5b+oCt05w03VwB3AF+7SoBWxzGtulCkqXCEGHmNrrudOH2MKTN/+lwxALS0jbq9EvIcht8eKHSqxgFDJ2eGnQD0lgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WR9QgYWd; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784753591; c=relaxed/simple;
+	bh=zTBD9L+hj2uTZGgZnjOkjod/+xLdYK2/vS356uQc7Ts=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lePa+tI0rr4WL3hNsRU2JqOW1AmNDPcDa3r8oWnu8meyf3cfiV+LCq+ptbcbNkB6PNrrjn21gn3S27Sd++oNwT02uBjQlLj/OTtITZLqF5BZqdvzKEAx155ldjkB7pparwzRmyHELKtNwW/O7VF72Eae4b1ew8FLQx6/YEf0hcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rb/j9Kqo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pnlV8LzJ; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WR9QgYWd"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47f3b39f2a1so7102879f8f.2
-        for <git@vger.kernel.org>; Wed, 22 Jul 2026 13:47:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784753235; x=1785358035; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pnIIjNbnwUbPpk4UlmkUIuyIgPSeqZ7RnQt9cf0XHds=;
-        b=WR9QgYWdJR3WM7P1gR8jkmwHeQzfWXJeehMbmV95zHn5J4tvexUhnfS0kLynQ3Wisk
-         DNWcQ4bTyg/sAbwjDn/RqMY59DijRjbj63pnam4uXFvJqvZLGJrI652CHi0IxLn1YVAC
-         QYczKUOAWKSACzJBaD/jlioMAGs4Dgk9OzpfQocbnJav/FidQTBCrRqRuok3Qh/myC5t
-         tpgMUeWJ897KTo65EZb8dxwfUQibfdDIE8KudCCsp6sRG+jFyN74ID+v080hvU25zRZT
-         HiLtvqXAc0CDTAvUmwGrMXaSvLB6uVx2cYWjM9BYik1Yaod7I08F7msbmx14RQb5wb5q
-         9HNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784753235; x=1785358035;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pnIIjNbnwUbPpk4UlmkUIuyIgPSeqZ7RnQt9cf0XHds=;
-        b=iAw6/OVPr9FhIa4rHpGODvIP69l6y+qW3Af9uiBSUjUhbIMK2TKL/iuiwoPxI7mooc
-         z6VKc7Y6H8tSIEwvgIVELtgrg4439I4tkGF6y9Gu0W/QXPbSNOZf6YF8jSt3ZSUrI6q0
-         LI844w0hmbK6RSGHuXqP23T6I6XuC6a/gwss/8Qr1nmtosYW/BTCmVUQdZMamtRVVBAM
-         29rhv3M/tGYXHbtu9+C/iK1CgCwumSL1XdB5wCR0iubexxRJjuzEU6fcOlXlaRmakABG
-         bxlcLTOwMnLDKkFlB8wYVn6a3jkTmO7+Q3TJP4RFqIDlB6l4uyy3SYwEavRLcxzeGT53
-         qHeg==
-X-Forwarded-Encrypted: i=1; AHgh+Rru9PqrbV69l4MOwlJ0TYMS6QCaOe7jVDa8s7TAkrweMuceHdO1NpvQ9zUKlMJDR4bsMZk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUJdVdki4lrctobnHDJWv8/bvLUhG8zds2EXB5rsHVGPpo8h72
-	7IREpVZOsX+rgWVmh3MEoNQnBEz9yzQo1+jHX7LdMafi1mN0sN0/fc59
-X-Gm-Gg: AR+sD13619BoKDOR8aFifinhRkzYBFiY6kgSesrTSYWuZV6g3yiy0uD2GOxRr6ynkuB
-	h1FVgInhJHBEaOZNMWS7dVY6H96/SC9MvazdXG8TRz5SREtpMeJ1AnAVurLCF5F6KcqMIe0kXLq
-	muX/EJWlBg8WZOFsE6Rjz1pBDtHhc9G2IP18uzG+hAKFSWRY5tZnjWYHSsg239TEYsyagctBNJW
-	iQVziHQuytRDFeS2BnR391TuNFn15RfXvyBPjHoevQ3o8+DZIhUGKVjT3Xq5G/wGQeI0LpMEytg
-	ygV6RiKmOOJTKhiQtgOrOmJc/qiIFtiYYrR10nUyARosUY3hXKXWBqQOXLfyyKoH/ixwiVSscL1
-	icp+QrmFZIs1sF/YVtaLAXCmd39oSsN+ELA5MHpaO1GacLGhXL4juSltdkkqQNaj02kaKY5Vo9C
-	6geARxKxD5IIax6WUU5oWzR7+f5gIlSlr8dvgR67x7Dce0+D7Bo0mAJryE2gDS2aGMb3UtW/RLW
-	HoJTbiaAufe1W9kPvDLoI05V6MXmHB3wg4lAe/A+MlTUkwCxDW4lT5pDieuhaumOTBxN0H/R4eJ
-	ah4JAn3f6LLqj6scUhCgdMOTw90kmQIIUHllzdBZcyXZWvz1fr9t+Yrm
-X-Received: by 2002:a05:6000:402a:b0:47f:4c9b:99b1 with SMTP id ffacd0b85a97d-47f8d754483mr448079f8f.32.1784753235301;
-        Wed, 22 Jul 2026 13:47:15 -0700 (PDT)
-Received: from localhost (82.159.183.80.static.user.ono.com. [82.159.183.80])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb81dcsm9073571f8f.12.2026.07.22.13.47.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jul 2026 13:47:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rb/j9Kqo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pnlV8LzJ"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7EB13EC00EA;
+	Wed, 22 Jul 2026 16:53:08 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 22 Jul 2026 16:53:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784753588; x=1784839988; bh=1iVZOz4/nn
+	88umtxu7JttKMYkqx63JaRiFbCmDaFv+I=; b=rb/j9Kqomgkx/ZE29/y/EzUu2i
+	3nF3F6Dx95UUFnt5lIeh7hMHaQ6FIgkmAqmXyvpX+nTZ8Na/MN7AVMI463P+kDnh
+	x4EyfnA+baejwOvDSG71qJycUKLoVxLdJp8mKXJqcy2AUq6PVbcEkpmeJxaBl/2n
+	zpjdLFS2BNtKeG/fqwi3x31WZeYMj3x+DmV31avXuyVxuRnbcaZZvpc30+I68kFH
+	ef8+7vNKHga+eSiiixbqQVicy0wkttRKcNs+L0aq5Q7yt+8tofYIv0K3bi8cCmSu
+	TBDh0J/BJ/0nskmq0q/Rg14TUtmcjQIKgQsYtM/2q4msXvNSS/lklQ17ltgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784753588; x=1784839988; bh=1iVZOz4/nn88umtxu7JttKMYkqx63JaRiFb
+	CmDaFv+I=; b=pnlV8LzJAoDp9DHt01pOjK+EuxRa10Q9Y5HQbrrP/F7QYygXFrr
+	fmhnGoxUonsqHcFeLA6YScsmpNRVP5PHOH8ycGqqNKmpPRSFTQeY3m1U4gSfIj2Y
+	7AK73cvKFFCPaEkUL36NnLtKgTGKQnDf2Itu/OlD5wXjpNo3vY2k1W1/c+33gZ5n
+	vZk6ox9dd1H7zePmxe3XfBTiKJPzYO68KQLq53uS8Yioat9BWl0U7Z6PKVQa+aZK
+	YmRmL1FNFnYRp2YBnz0tbymPRF3AIpNRl9ZK5ryxDqqAVdPuaz4qb3U3V9gfM4ZV
+	iVBG/eyK6ihDXfecZqsoZw3GgC0ACdm6zAQ==
+X-ME-Sender: <xms:tC1hatwhTLr4X0EoROfo0doWvwy32pk3nsC1nEVQkisFhAKZBxQx3g>
+    <xme:tC1haksKeGlRQcF4lwfer6dC8xp9__BluNv1RrmidIaCgBSNGdz7OsIFSeodGPxU9
+    K5vCUe5eBDbL4PG5wvh1C4oHoQEQxazaLFMGtuA99GGNcE2Bap-2Q>
+X-ME-Received: <xmr:tC1hakvM_XzXosc3dWDDB2hAEh2VqbRTajKA4W2cMCBKkDASf8pQCSSnQsatsBRDvetIIcuw_kUnaCguaWT2bWba3zzJZ1wrYQ>
+X-ME-Proxy-Cause: dmFkZTF9hzVJ0peq5JToljH/9q7hxwPlJA8ICJhGFD+H+uiT/6CXqBZEXG1cKcWNHgDJ/7
+    deJ6UfulK93bhQrjujK9ZjKeiOSp95pnFTadoixHj4Lvcrn7GSJ/mVFSqF5EWWb7WO6Jgx
+    VFWs+eua2NdLCwT/3ifu+ZV5X+avLtCfRpljr6ISUNb7Wme/SgY5QBWbrxVyjDrSbjGV8n
+    pQoP8aQOcjm2NVYXlMCv4/auke56jNOqBoWMLLOnzfOCJlmLv9Sc4FBf7WmFwI7zktY+zY
+    6L+LYJs3K4kTgzb2HsDYgZsHO9NbbDnGnBNIULjaIqDnCRQJN3zr6sJfLctiBuwKh/TQuG
+    f90HjJxNlHYZx1gxMRWYU3+n/VHPASaeAu3lpK+yBgMnIq/VXZmEfPuJ3ifOnY4wuUtpe/
+    YDGpJzNLyr0aQJilaurbx9RTZZRW3Wx0lUqWw486QwHuAlEZvEny6aAAP+QUF2wk7IiJzU
+    xqTTxV8Q9VWK+GmDCt7cmNnSFhEZ2hqV1QL34Sac4i0qydjGl/egLqvHtsVVI8hz7Qzx9j
+    9SQvR9Btui6pFllHKSw26YfhYjSjoQvhXCe6nX95TJTt8ldSUnAx+5pbDq/aNjwsIhGG1l
+    1HPeT1u4TQUqT2sTsSkKOsCeM4/2OYEm+yblXZ8tJcCfJBM3Wi5vac/IvaOw
+X-ME-Proxy: <xmx:tC1hapPhiYXDxAWMk2knLteR0D52ozefdvRGX7waryJe_Sx_lh9bCA>
+    <xmx:tC1hai2ZRJTyaGWRxkclGbN7oTuH31Yu7Mj4JMK-_JyOyztT5Rvkrg>
+    <xmx:tC1halMn4Qh08NeRN3DEWtRfaBiwJ4OYCh1BOtpJpdzRz_ywexOzzg>
+    <xmx:tC1hai1aiblTLmTv7JF2gFWRXLZJOo_mB2vi_dFoWpPMvP1WLURdvw>
+    <xmx:tC1haktgEo_nGpDTPpyaOSiXKH1SF87i0wG5bye7bK-tZzAZQbkekCzJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Jul 2026 16:53:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: hardikxk <hardikxk@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Extract only the message body from git commit.
+In-Reply-To: <20260722083836.744338-2-hardikxk@gmail.com>
+	(hardikxk@gmail.com's message of "Wed, 22 Jul 2026 14:08:36 +0530")
+References: <20260722083836.744338-1-hardikxk@gmail.com>
+	<20260722083836.744338-2-hardikxk@gmail.com>
+Date: Wed, 22 Jul 2026 13:53:06 -0700
+Message-ID: <xmqqtspqn3v1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 22 Jul 2026 22:47:12 +0200
-Message-Id: <DK5E7W7M0G8G.306LUAYVXFJ2N@gmail.com>
-Cc: <chandrapratap3519@gmail.com>, <chriscool@tuxfamily.org>,
- <eric.peijian@gmail.com>, <gitster@pobox.com>, <jltobler@gmail.com>,
- <peff@peff.net>, <toon@iotcl.com>, <szeder.dev@gmail.com>
-Subject: Re: [PATCH GSoC v20 00/13] cat-file: add remote-object-info to
- batch-command
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Karthik Nayak" <karthik.188@gmail.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>, <git@vger.kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com>
- <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
- <CAOLa=ZT77L39-jSZxgrvVFwdY6_rapBmKv8gCxr7QpdkCsEzXg@mail.gmail.com>
- <DK549LIZS8BS.3PL9CQQIR2LAA@gmail.com>
- <CAOLa=ZS8J4t12ab1=3-LRYNuZOwqSHG861iYm97JjF3mGprvJA@mail.gmail.com>
-In-Reply-To: <CAOLa=ZS8J4t12ab1=3-LRYNuZOwqSHG861iYm97JjF3mGprvJA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Wed Jul 22, 2026 at 6:13 PM CEST, Karthik Nayak wrote:
-> "Pablo Sabater" <pabloosabaterr@gmail.com> writes:
->
->> On Tue Jul 21, 2026 at 10:12 PM CEST, Karthik Nayak wrote:
->>> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->>>
->>> [snip]
->>>
->>>> Changes in v20:
->>>> - Moved the prep patch that fixes hash_algo's type to be before
->>>>   write_fetch_command_and_capabilities() being moved to 'connect.c'
->>>> - Reverted git-cat-file.adoc documentation comments about CAVEATS
->>>> - Fixed style for EXPAND_DATA_INIT
->>>> - Added more context for comman line die()
->>>>
->>>
->>> [snip]
->>>
->>>> Range-diff versus v19:
 
-[snip]
+hardikxk <hardikxk@gmail.com> writes:
 
->>>>
->>>>     @@ Documentation/git-cat-file.adoc: one per line, and print inform=
-ation based on th
->>>>       You can specify the information shown for each object by using a=
- custom
->>>>       `<format>`. The `<format>` is copied literally to stdout for eac=
-h
->>>>      @@ Documentation/git-cat-file.adoc: newline. The available atoms =
-are:
->>>>     - 	reports).
->>>>     -
->>>>     - `objectsize:disk`::
->>>>     --	The size, in bytes, that the object takes up on disk. See the
->>>>     --	note about on-disk sizes in the `CAVEATS` section below.
->>>>     -+	The size, in bytes, that the object takes up on disk.
->>>>     -
->>>>       `deltabase`::
->>>>       	If the object is stored as a delta on-disk, this expands to the
->>>>       	full hex representation of the delta base object name.
->>>>      -	Otherwise, expands to the null OID (all zeroes). See `CAVEATS`
->>>>     --	below.
->>>>     -+	Otherwise, expands to the null OID (all zeroes).
->>>>     ++	Otherwise, expands to the null OID (all zeroes). See `CAVEATS` =
-section
->>>>     + 	below.
->>>>
->>>
->>> This chagne is still unnecessary, no?
->>
->> I guess it is unnecessary. I added it because on top, at objectsize:disk
->> it says "`CAVEATS` section". So I tried to have it consistently.
->>
->> Is it worth a reroll?
->>
->
-> No I don't think a re-roll is necessary. But something to avoid next
-> time :)
->
+> Subject: Re: [PATCH 1/1] Extract only the message body from git commit.
 
-[snip]
+Please see Documentation/SubmittingPatches[[describe-changes]].
 
->>>
->>>> 13:  ebdfc22fb7 ! 13:  70a11d2aea cat-file: make remote-object-info al=
-low-list adapt to the server
->>>>     @@ builtin/cat-file.c: struct expand_data {
->>>>       	 */
->>>>       	unsigned is_remote:1;
->>>>      -};
->>>>     +-
->>>>      -#define EXPAND_DATA_INIT  { .mode =3D S_IFINVALID, .type =3D OBJ=
-_BAD }
->>>>
->>>>      -static const char *remote_object_info_atoms[] =3D {
->>>>      -	"objectname",
->>>>      -	"objectsize",
->>>>     ++	/*
->>>>     ++	 * List of atoms (i.e. "objectsize") that the server supports. =
-Built
->>>>     ++	 * from the server's object-info advertised capabilities.
->>>>     ++	 */
->>>>      +	struct string_list remote_allowed_atoms;
->>>>       };
->>>>     -+#define EXPAND_DATA_INIT  { .mode =3D S_IFINVALID, .type =3D OBJ=
-_BAD, \
->>>>     -+			    .remote_allowed_atoms =3D STRING_LIST_INIT_NODUP }
->>>>
->>>>     ++#define EXPAND_DATA_INIT  { .mode =3D S_IFINVALID, \
->>>>     ++			    .type =3D OBJ_BAD, \
->>>>     ++			    .remote_allowed_atoms =3D STRING_LIST_INIT_NODUP }
->>>>     ++
->>>
->>> I guess this is output of running the style check script (which I did
->>> recommend, but I should've mentioned that you should take it with a
->>> pinch of salt, it doesn't always provide the best solutions.)
->>
->> It comes in part from Junio's suggestion [1]. Although I don't think tha=
-t
->> it will receive a lot of new fields, I thought that it would leave the
->> macro clean for that.
->>
->
-> Then wouldn't something like this be better?
->
->      #define EXPAND_DATA_INIT  {  \
->              .mode =3D S_IFINVALID, \
->              .type =3D OBJ_BAD,     \
->              .remote_allowed_atoms =3D STRING_LIST_INIT_NODUP, \
->     }
->
-> Note the difference:
-> 1. The first line no longer has the '.mode' field, this would ensure
-> that removal of the field is a diff which only contains the field and
-> not movement of other fields to the top line.
-> 2. Similar for the last time.
-> 3. We also add a comma for the last field, this allows addition of new
-> fields without modifying previous lines by adding a missing comma.
->
-> I don't think this too warrants a re-roll, but this is something to
-> definitely fix incase you do re-roll for other reasons :)
+> The patch fixes the `extractLogMessageFromGitCommit` function to skip all the metada of the commit object and only return back the message body.
 
-Yeah, this one is better formatted than what I did. Thanks for
-the explanation. I'll definetely fix this two hunks if I have to reroll.
+Line-wrap overly long lines like this one.
 
-[snip]
+> Previously the function would return the entire data of the objects
+> including authors tree and SHAs. This patch fixes that to skip over all
+> that and just return the body of the log message.
 
-Thanks,
-Pablo
+Please see Documentation/SubmittingPatches[[meaningful-message]].
+The observation on how the current code behaves should not be
+described as "Previously X did Y".  Just say "X does Y" instead.
+There are other rules on how to write proposed commit log messages
+explained there.
+
+> Signed-off-by: hardikxk <hardikxk@gmail.com>
+
+Please see Documentation/SubmittingPatches[[real-name]].
+
+> ---
+>  git-p4.py | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+
+Thanks.
+
+> diff --git a/git-p4.py b/git-p4.py
+> index c0ca7be..589efcd 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1003,12 +1003,18 @@ def branchExists(ref):
+>  def extractLogMessageFromGitCommit(commit):
+>      logMessage = ""
+>  
+> -    # fixme: title is first line of commit, not 1st paragraph.
+> +    foundNewLine = False
+>      foundTitle = False
+>      for log in read_pipe_lines(["git", "cat-file", "commit", commit]):
+> -        if not foundTitle:
+> +        if not foundNewLine:
+> +            # skip anything that is not the commit message
+>              if len(log) == 1:
+> -                foundTitle = True
+> +                foundNewLine = True
+> +            continue
+> +
+> +        # everything from here is the commit message
+> +        if not foundTitle:
+> +            foundTitle = True
+>              continue
+>  
+>          logMessage += log
+
