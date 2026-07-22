@@ -1,105 +1,143 @@
-Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AD233B96B
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 13:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D0B33FE33
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 13:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784726728; cv=none; b=eXKTSuswqUw3st+uCH/nucDz7q5WxZKSkj5oXRFzWB+Cd8xg43pOivP16X/YLy6kC+ZNVMhNfSaHKcwkm/zWqh8WhmIJHnfpUktu9vQFUmaikalsEObLmULrFOxkPBTiwaGfTiFc/28dXdJzRwEXxlv0WNt4rHz9A+dDxdJvvTQ=
+	t=1784727582; cv=none; b=kW/aji2RDlr8nKfJ2h3GcaRuvOHOtMjRtfd6I9QauSdKMD/wMuUn/LMQQbb0xATjTWMo5Ubo2tyf18GUY0InXBGxkQXgPl8O8EUfUGnumnoZv/Vcy3da6JxhOprmsjU9vKl8vUHEMmBS+3EZFainmfvRfz9KO8dLkJSqaZ1GWpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784726728; c=relaxed/simple;
-	bh=lOApklQn1xEOSpa2436oq6mtb3cwlhAgu3tqkM44Kt8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WSTv1z1QrDAR0waeljbggWdamravcs0SSjRKHSIY5ndTkmnle4syXTXttvxvpVUSJeEOYMOI83G5shf5YoYMcAWFHIZGYxMJjE0LHVsN9i57+A1FklQ/AZPFcyO9xD0bxSNQ9m9iVXSxNUcUlTdVXR5C0VXl1da2R3hAhJD9Tow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=fr3G09US; arc=none smtp.client-ip=95.215.58.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1784727582; c=relaxed/simple;
+	bh=rPD1cefl4eyZenGhWBs9Nu8EtX9SWfUwKaMr7mkOLAw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YLO+nBCw+xJ+9bNk2n5BknJ7MCkN+zVSJGM/YOKK4np7IGy70I4ZqA//i+epWfEZq8maz73vMYwf1jw7mPtgIMe/v9Wt2ArtPxmmIupvlxijJ1LY3SrBUh6k6xxCw2884Bx07YcKXn4ddzGEhZx/wFpxX3dEVZht1lqLqXShKQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oj8U5Tvb; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="fr3G09US"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1784726720;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M1ABzH5NSzhldvEgji21up61iJ7oHVNsECwXiNGm0+k=;
-	b=fr3G09USXGZhOj0d9nyP+sog/S9XoDkrV8IsFBU3mlPtepP8KH/7pyM6kiSleG5nGFdtll
-	/c4sz7ll2g9EhId96XBys0MBRkPU+qBum0kQ/vJeIJAO/xHvcxnCkgtFMFA4OgFkBbLzsy
-	sYmTnnrISC+S5Pa2rPVZCuq0Oy05vak=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 4/9] odb: lift object existence check out of the "loose"
- backend
-In-Reply-To: <20260717-pks-odb-move-loose-object-writing-v1-4-46446a3cb5b7@pks.im>
-References: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
- <20260717-pks-odb-move-loose-object-writing-v1-4-46446a3cb5b7@pks.im>
-Date: Wed, 22 Jul 2026 15:25:06 +0200
-Message-ID: <87jyqnp365.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oj8U5Tvb"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c167bda216fso1198837466b.2
+        for <git@vger.kernel.org>; Wed, 22 Jul 2026 06:39:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784727576; x=1785332376; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=JG63ityV2y7NsmGQE2TxVncYq8fjssAwtuXMrNIg0/Q=;
+        b=Oj8U5TvbW/OSPFZJufqZwkbraL5vyNH/A0ZSQGZ8JWShfLq+/PhXCp+pB+bAIAOAAA
+         8NOrdpJhuzm+esKpbG9ZjDM6SMHhQp8zJy1/E5zbN9a7rdjZA9nS1dlvGNXe6MPEcn/R
+         DtyBv2EeRWLOwyKPgOncZXp7UUIwj6OyeP10Z8wCPzj2JjkbnXnSM4vNYaYse2lBI5Wo
+         e5/uiSXlKdJUeCoLZnNN7PSkMrjK64QIJ0xaBUECDBmds1sIOzieESr2lyqrRdUmZmD1
+         gjDR79+K+W9Fqt2dm0JgFuBycVWe4hLOGtaLoGEyBGXH48T+Yl1IpGLGMRgGQhSwZpCT
+         nJyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784727576; x=1785332376;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=JG63ityV2y7NsmGQE2TxVncYq8fjssAwtuXMrNIg0/Q=;
+        b=LFQ+/sfzxNQY75w4NI2tj5qb57YC77Ykhbd090B18lEk1xKMTRBdSLr91FvCeG2sve
+         stas1kBpXqgGbphL70TOd3jwUujieJ3qr9F9Xoy4rnbBfJ6uUCBOIHQxBJzAOqiNA3fn
+         e46ovQiZWPQXCxVGlbuQF3Hu9DkUg4+mlRQUVfICQH+yFn2uva/+fyCXS5OjiMaXGuIF
+         cnafUbSb+8xZEXW8UbEtQciwXnbYoU1FT4HDYdkpf/sI9PM2awViOCHvTcRj2B5yCyI7
+         2CiVezs7c6O1CR2GwcQZEoYRKFN91XPTrggQ8NfPjsf6a7AHBQJ64AD5rLatODLvZqqh
+         tbDQ==
+X-Gm-Message-State: AOJu0Yxt574N4mSwr8f2PyRXozY20OV/G5pwxokV1Mi/FkluyRAyJAmW
+	tNgrru6sclg4AOyN6Hmtl3CNgeC4238ZDM3vat1qPt9PFxTsLxCOnubfK1OoHg==
+X-Gm-Gg: AR+sD13d1UdkSwBGZnYYNMc3zyljQaxTLewC62Si3USnF4AeZdAy71qWW8kf5UR4XV3
+	xop3jQ1Owt3tECxxAEpWEVEsz4Umju62IFbOuy1UxTfXLHZ+ioEEYYwhPMeyzUXup8jsdDjmfly
+	APtAGimhWDH+7f8GspDEuKeSs/t63GNHZq9N2VZtag4GWqnq6QIQiX3mUTD4PcHb1YJwUHj1a/7
+	UuPDyi5R0ltcbLNU/nRuxeGtNdJtJZgkvgLWLvfsvqf/RcyimeX6tOxSpGzJZQsa4rpiNkAWSk/
+	WI05zoQ6t+BqCAmIbZXRmDaLLIf971UsLkGooAZL4aLjD50x1lhk1Kue2+lvmAQRLOz7HYF0J1R
+	Ff515Q7/6anPNQtDMGdMZN63p6jw+aH7dJVflNsAhbTI5kC//N4iKW6toeATUMEvis6a02SmAwC
+	OAh/Z/oTBv53C3Uj4n5pb1965C7Qe+zLqJvVY++K41E82+qXnbDAp64now
+X-Received: by 2002:a17:907:970e:b0:c15:de33:a018 with SMTP id a640c23a62f3a-c16b48c5ae0mr1026732966b.45.1784727576289;
+        Wed, 22 Jul 2026 06:39:36 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1c32c8ea94sm107467566b.41.2026.07.22.06.39.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jul 2026 06:39:35 -0700 (PDT)
+Message-ID: <db7edc66-9b2a-47bc-98db-87d01885cef0@gmail.com>
+Date: Wed, 22 Jul 2026 14:39:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/1] rebase: add --[no-]edit to --continue
+To: Junio C Hamano <gitster@pobox.com>, Hugo Sales <hugo@hsal.es>
+Cc: git@vger.kernel.org
+References: <20260721140443.1809379-1-hugo@hsal.es>
+ <xmqqldb4xlqa.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqldb4xlqa.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 21/07/2026 19:04, Junio C Hamano wrote:
+> Hugo Sales <hugo@hsal.es> writes:
+> 
+>> When a rebase stops for conflicts and the user runs `git rebase --continue`, the
+>> merge backend opens $EDITOR so the commit message can be revised. That is often
+>> useful, but not always: sometimes the user only wants to keep the message that
+>> is already there.
+>>
+>> This series adds:
+>>
+>> - `git rebase --continue --no-edit` to commit without opening an editor
+> 
+> Meh. "GIT_SEQUENCE_EDITOR=: git rebase --continue" is your friend ;-)
 
-> Before writing a new loose object we first check whether the object
-> already exists in any of the sources attached to the object database.
-> This results in a couple of issues:
->
->   - We have a layering violation, where the source needs to be aware of
->     objects stored in any of the other sources.
->
->   - Every backend would have to reimplement this check, which feels
->     somewhat pointless.
->
->   - It is not possible to easily write an object into a source in case
->     the same object already exists in another source.
->
-> Refactor the code and lift up the object existence check from the
-> "loose" backend into the generic ODB layer. No callers need adjustment
-> as none of them write via a specific source, but via the ODB layer.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.c              | 7 +++++++
->  odb/source-loose.c | 8 ++------
->  2 files changed, 9 insertions(+), 6 deletions(-)
->
-> diff --git a/odb.c b/odb.c
-> index 4adbdf8a64..bfeca76f4e 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -997,6 +997,13 @@ int odb_write_object_ext(struct object_database *odb,
->  
->  	hash_object_file(odb->repo->hash_algo, buf, len, type, oid);
->  
-> +	/*
-> +	 * We can skip the write in case we already have the object available.
-> +	 * In that case, we only freshen its mtime.
-> +	 */
-> +	if (odb_freshen_object(odb, oid))
-> +		return 0;
-> +
+Do you mean "GIT_EDITOR=:"? The sequence editor is only relevant for 
+editing the todo list. The last time this came up [1] I shared an alias 
+that only suppresses the editor if HEAD has not changed since the user 
+continued the rebase, but that does not stop the user suppressing the 
+editor when continuing a "reword" command. I share the concerns you 
+listed below about this patch in its current form.
 
-For the loose backend, this calls check_and_freshen_file(), which code
-comment says:
+Thanks
 
-    /*
-     * All of the check_and_freshen functions return 1 if the file exists and was
-     * freshened (if freshening was requested), 0 otherwise. If they return
-     * 0, you should not assume that it is safe to skip a write of the object (it
-     * either does not exist on disk, or has a stale mtime and may be subject to
-     * pruning).
-     */
+Phillip
 
-And I see similar logic in the packed backend. So a non-zero value skips
-the write and the file was freshened. Makes sense.
+[1] 
+https://lore.kernel.org/git/fbf859ca-43f4-433e-b111-377aa60f1947@gmail.com
 
--- 
-Cheers,
-Toon
+>> - `rebase.noEdit` to make that the default on continue
+>> - `git rebase --continue --edit` to override `rebase.noEdit`
+> 
+> The new 'rebase.noEdit' configuration is especially concerning.  It
+> encourages users to assume by default that their rebase sessions
+> will not produce notable changes worth recording in the commit logs.
+> 
+> A few immediate edge cases come to mind:
+> 
+>   - What if 'rebase -i' stops to give control back to the user for
+>     reasons other than a merge conflict?  If the user chose 'edit',
+>     their original intent was to modify both the commit message and
+>     the content.  With 'rebase.noEdit' enabled, would they now have
+>     to remember to pass '--edit' when continuing?  Does the answer
+>     depend on whether the 'edit' step resulted in a merge conflict?
+> 
+>   - What if the user chose 'reword', which is an explicit signal to
+>     update the commit message, but 'rebase.noEdit' is enabled?  If
+>     the rebase does not stop with a conflict, it might open the
+>     editor regardless of the configuration.  But if a conflict does
+>     occur and requires manual resolution, will the user still need to
+>     remember to pass '--edit' when continuing?
+> 
+> The proposed tests only cover the code path where control returns to
+> the user due to a conflict.  This is understandable since that
+> scenario was your primary motivation.  However, they do not verify
+> what happens when there are no conflicts but the user explicitly
+> intended to edit the message from the start.  You may want to expand
+> the test coverage to address these scenarios (and potentially
+> others, as this is not an exhaustive list).
+> 
+> Thanks.
+> 
+
