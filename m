@@ -1,140 +1,122 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDB23A6EF0
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 15:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784734910; cv=pass; b=QzaeMC5aPN9yiWdEfpLdciTCIwYNI/63IrvM2hdltg9B29f2rd5Kswd6SPM+AKbqlAPCtYXaq2iUHedkm/0K2EdkWIhwqYRQWCQ3unXR5vRn55zfkuDNmmeni35Wou6jSPx2/9I72TmWdEdJOvKhpxoBE0j6WW5RBO+pSgIi4h4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784734910; c=relaxed/simple;
-	bh=Ic8MACaZ5bMMlYbmy34P9hy1QmlQ5BpgsqyZxn37EQA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F9JD5ucHh09CWvwjcS8TCWCfpzsY45fCZHnqe858Limp7+jJx5ocOUjnyTRgupmoZrCkqzPheroFOofFSJ2d0WR6Cmrpe8FsIi8Tqjf5fm5p1zRT7xuQuVJVL8WAJBBhii1ECwSODTMt7Vhdvx/SRINpeeG6qpFsoOslrkjG8EQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bKm2XKHA; arc=pass smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C863515F8
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 15:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784735395; cv=none; b=Iwyk7jbypze4+i1NYx/Cm/NMYOS/z5Y3FgIWj3SUqr2sC5/7kFCRgdW8DGm7vj8AelrzyYwbQ4o082YcqUM3e/q96uhr7LA4oO30y2OezLmn92txcD4yQ4O1tjsfvEDqK7gz6EiD18JogWeDTtHucB6ojqhi8cHFn3WUSNbHchg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784735395; c=relaxed/simple;
+	bh=eqYDfrGn0u8c22PIzLLWFdsFbeJLVwQ3VVtFDD9b+x4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ouHNQg62cSuM2Y3X2m6ePkwiZopMdYRZQ2zCHXHqscnIgGEfQo6JsNXF4pY2BLQ9ffgo3iL+fXZqrNrR4AAWgLPEteGD3orXXOH6ERvW2M23Qx/eLN3f32eF6OnjPpmrN5rzPesUyxGiJ2mAOuj82CX5rEVOxZp/pOw143bLEpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U4WUt4IT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QuOV/Y5a; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bKm2XKHA"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-69c5f6f7a40so13828679a12.0
-        for <git@vger.kernel.org>; Wed, 22 Jul 2026 08:41:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784734906; cv=none;
-        d=google.com; s=arc-20260327;
-        b=XQz0o+YVh6Veo4FIIeuanN8YEotDLUYqZTj9wvIkz2SEwcwUMbY5zgTDEiRaPCPHpW
-         ZYztlq5f0U0rn3Q5e6rVU9us4I0hcyNo8mXLrr/EMFQyTutSbRBUnFVfC03FBWyce+T+
-         wlGhkfXCVt7d4lCR0ADuiyRBW77UaD4YHtm8qXkH6hBGIfLWDdxR21Ejiby2UxdErwKw
-         90xUtfbQbwk+9yG2IELg6wXVOWsyG5LYd/577OEKYZn1xqPJrQCL7ZpnieRJ73j+yoPz
-         p6TStB1teqcG+3h6r9EM5FvXM1Gp+vKeJvanTJrarYqcki9OO+PAkWPI63Ow7NqTfWqB
-         cwKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=agiHuthhtWqLFgW9aE1oMtsjwqATWEQ0KHKmHJxjYKU=;
-        fh=pMy4AuGry5d90enpk5h0SzjWMIOTJf4lVnauHgGuKsM=;
-        b=eamupA02QmdqPbu5d0SFDXdth4Z+FrGlCVfW/feC6+n9F2xVIL3dtjn5Ju9SIQV+/g
-         SU0VofKGqO7jkGsfbgPyeepWA2A4x5KdHZcHjrnaWDPonM8QXHIIxFhxWGMjyy4ndcTn
-         wk0jrpkTiReM9SRGeEdE/KYQE9kYcS9D1lsEbILVWSeoQT3Dw5nZK0s9UOfRzeSuuWQb
-         Aq+9LSuKIm47kQ7D5qU/Ej+o8XrchgBAy8OYzuSgkBaweRKCQvHDADJjmz211wAA1Jjj
-         BMOeQ3bnzKrxsCFK1/T7v2vqetPLb1ByrUz63aHswAE4eHL3OxUveetOxHxPCalBsRVz
-         DAWA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784734906; x=1785339706; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=agiHuthhtWqLFgW9aE1oMtsjwqATWEQ0KHKmHJxjYKU=;
-        b=bKm2XKHAynBONWNED4ehE9t8Xt+mgYUcEf6YWF+I03YzDGRMOGZVwTdGBZrm716ii0
-         TuflCLaHwEp8YBAUQ9jckKEvhWxM5QGuJdctF+VmyUDdx9BInnXiARHgsdY/mT/gaw/G
-         VbkaSEkygSo/ft7thbY43sx+eZWX1yOud3GiBR8EntZG394QoPotpD2unrTvE6A6q7eI
-         bzKuyscMh5S01CZfaWO8ZUcc7XftqwGAC38yI3gYpIAmMnA06yzOzgem+o+vWmSgx5+S
-         rCPNXNnfk00lMjhpNWL9nuPICwhLXr5qOqTJGt1nOXAmJWXPcM8uKojNYZmsdPF0V7/g
-         kIsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784734906; x=1785339706;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=agiHuthhtWqLFgW9aE1oMtsjwqATWEQ0KHKmHJxjYKU=;
-        b=GrdxSLhuvB4qUdnN9q+jJ/xEdRAYvERCnlvOwQdjDxAA7dv/C2YqH8ZF3Gads73Ky1
-         +jKnxuQ+/1AUDz+Wh7sq/rfpaNHKdpWy7dTi7sL/IWuN+mSFAbMehk0LypifF2n+wcfj
-         pY4onH/S2/FHxQ6jcnYMzKH/2x8ElbU/yyAdqCWMZA92JklNVbG2ZxYs9aMl1KiTtumB
-         bGMs1BfOTVnnmjEQf8md9uBE1D5e9NBocyX9UWHE0oX08V6rsiSmoVUQ9pvepKMf1XCs
-         sGkYmfNLdYfsHqMP2IwXIbZ2IrSsftLwDuuTenpR+in4tbt9cU7r/Ejq+dNsYY7XgccV
-         MRuA==
-X-Forwarded-Encrypted: i=1; AHgh+RpMspHxBBtGRQ/rofImIDtnJ1OVJ1kor75FFnWYeMn4aJ+P53pZR2CvJlrFL08OwQukUbQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOEBJHfLG9gZuKA0lZn9mlay8jdJ+fRb/LEeQrYubcNWlLz5/2
-	gTYVit8AVeRS8ciakYWI6n1N+E9MDvrmGdCtdRzixvzNbHqiUbH8pvoFJ7EQM0y6Dy7dKlxDvWa
-	Xhgn6+53NIgHUKN/7iG8aT8489vD8Oig=
-X-Gm-Gg: AR+sD107YI3LWYhLMaM+ZXJrQen6SJF8+X7elgr02XWtxyAv6OQEPP+i+TSU5tuRAYY
-	alFcwu80w7sTAuoosBRsQWCCLqwVnQiiE/f3yOQvTbZZ/hBbmOn6+P2OZ2sLB7uSBajdlUN7ENt
-	uwE3iWPFMVYff5GFCJ8Yre6wDVfNUWu564ON9mOalfMO946TZ9Q8hmPOor54JO5R4itUh7TN7za
-	5SVQKqxJagbV1MMiTCiElR+nAL80Kz7e5B5l0qb0tNxkRy5a2b+zpfg4Sdowg==
-X-Received: by 2002:a05:6402:11cb:b0:697:ee9b:e9bc with SMTP id
- 4fb4d7f45d1cf-69e652e2374mr10044922a12.26.1784734906396; Wed, 22 Jul 2026
- 08:41:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U4WUt4IT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QuOV/Y5a"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 465301400141;
+	Wed, 22 Jul 2026 11:49:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 22 Jul 2026 11:49:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784735393; x=1784821793; bh=NsC2QNlfAf
+	nK7QKSXiGxHm2bs0DGJ41DRqSJ1lbfwqk=; b=U4WUt4ITjjC65FMLSCyTPBSwb4
+	y3ZdEHF3xVh0654flIUk11dLqqeZNoms6CsFmm1JQcM0ai273ugmBmgNw8tBGKvI
+	LDlZUiFG4TmpwED1M6P4sXRnoreic1O4XvWTE3zds+Gnfky9aIrehO4gBZN+q7QI
+	5g6SzUptAtt2CLIszv2TRMmeQqK8WVuCKd9tGw1IkKc066x4BR7lkXyUKQ3+G6e5
+	cIZLVevDpkQt6B6qmcLa9Hj3KkZ5ez8PmrHNtP/48+zEoAKP5LmV9z9e+yG4mDZW
+	Ydhy8yHw4+hP7EVJNSgTcSjGb6G1ibGBHls+DjhHqfLgtFZq3D8mG6pdua4g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784735393; x=1784821793; bh=NsC2QNlfAfnK7QKSXiGxHm2bs0DGJ41DRqS
+	J1lbfwqk=; b=QuOV/Y5a32zZVRZeEw9ErJTqTuuI7JxXTUVZx2MiduDMAEtTlPM
+	UoPlXeIXM6oEPxjJLe4UbS1CQBWeBR1NJnXPPKv2LYHHDfpYc1h5kX6is+Wnlfof
+	7j0V3/2s9rfQk+Cn+SQDB/merIP/ZLchKQz07RKY8W5yP0jOzuH0ymCIj3BN/vnx
+	dSUvMS76NydLLO3hioc3v3G/SxbTB9aCysh4IjFwEBTLrj1YqEDGT7pwfyCbZ3n/
+	6+E8XVULmsCLJjxnnmfnIULxFbi+u+hvfF54T/3/6GRC/b0HJxXpOmdYD9DFhlaM
+	c0kkugTs2un2hobXYSy/WjyedDj/VwQKxmg==
+X-ME-Sender: <xms:oOZgaicI1bFMvAXjhjtLW9ylsMov8XUidlRYfB9Y-CIZMQih66JFUw>
+    <xme:oOZgav7DbGonhFBWR-qwHjmiHjUsqmALfJ9sLtF52kXjd5ETsDXS-4bpyJYO6uZBs
+    A54F315X6FP8p4rXKPzTfgSUHHfpdc-2nC8oEEajfwh5WS1dX_RXkE>
+X-ME-Received: <xmr:oOZgatUBUUNAvboe_FCUdDYRFijhw8AKErYXhPmGvrIs5ChGyTpKHMy7pmG1kAYXCr-h2LszuyM6Xib4I36UR2-VgWoGoi6b4g>
+X-ME-Proxy-Cause: dmFkZTGdH08ZXhQO0PY1zZfNhx4Ft5T1JoXGwkaBOSVQJ9bu+KmOjZM0jgaFFyU2vItmii
+    /1gyAVzuEZ2yHArwS3U7TfbJQMomV/6Gkj5jm877y+2GbtcAmDelQi63SXbsv73RwSwEXm
+    tIjkGChcqVDzuJT6vOyqa/OpLK2xfCgRLNO6gRHEYKzGGGSD4/q1fvAigLjdl1qXpDB4e8
+    +RJGYeCEC3+JO1BLAsuNPb879nVdf7euDZdSyoD0m0JyeMOUTSrvsxEnM2KX1sDmUdaIDD
+    VH4cNFTSUUyoiXIBjyVM/0w6Bxh4+mAbnmd9Dj/hV7wKiARjMrtb6YoncC+bdk+UgBRPlB
+    knnnnyYcmzvsc5WWCWnoCtPJaCYqo811Qe9hgXEy4ax/7h2aAYdzSbY0Cqbm3AkXrcMKNi
+    xpppyEAQ38kfahqqlRx8Qx67SHbSxSMITfLyN+ivRq3fNpC65oIk2P+yzT9ZzFqfof/mQp
+    3CuBa1qjCzbn9GfEFgqxdZbZgI/WNMspzKFEPSjh7RrwASIP/KpP9Ua25rESwLlUHwkaa/
+    gQEfKVVpO1c9Adth2r96Nwew4Q85cP11p33tm7ciwqjXRlGfmUMBWb53Oe1J+8KQpbGhVy
+    FyxJU7VfLz1NvcORyW0ZaZYmX+QWqTtE+TIxxmM2hiMBwTKSErXH3CCHVMiw
+X-ME-Proxy: <xmx:oOZgam6VbLsrb0S8lsHMa7Uuf1_UIasZ8fsT9p0mu_AxXhpe-xseZw>
+    <xmx:oOZgagpDWuefmXcdB_bMk79EqpJVbv21S_aC1ycrH7prz54DHBnDrQ>
+    <xmx:oOZgahmmEaJnHCuBS4l-PgdA9S0kffg0LL7LhmB55YPtJZpcMuO3Jg>
+    <xmx:oOZgakOl0rdSLGo9ZJDIoDBtUGC62yafWVsepsNzjBoVE2oZvUpsrg>
+    <xmx:oeZgankP47WgMNSvYf5m0pMlxxKAld2OTNowUe_gPewYZu7pMW9WEgnu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Jul 2026 11:49:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  Wolfgang Kritzinger
+ <wkritzinger@atlassian.com>,  git@vger.kernel.org,  jltobler@gmail.com
+Subject: Re: Performance regression in connectivity check during
+ receive-pack (git 2.54)
+In-Reply-To: <amCuLpT6vYzo1GF8@pks.im> (Patrick Steinhardt's message of "Wed,
+	22 Jul 2026 13:49:02 +0200")
+References: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
+	<20260721035733.GA581473@coredump.intra.peff.net>
+	<xmqqtsps76f1.fsf@gitster.g> <amCuLpT6vYzo1GF8@pks.im>
+Importance: high
+Date: Wed, 22 Jul 2026 08:49:50 -0700
+Message-ID: <xmqqh5lrrplt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
- <pull.2285.v20.git.git.1784704238.gitgitgadget@gmail.com> <20976edc-fc9d-4d4d-8919-b599d336f9cc@gmail.com>
-In-Reply-To: <20976edc-fc9d-4d4d-8919-b599d336f9cc@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Wed, 22 Jul 2026 17:41:06 +0200
-X-Gm-Features: AUfX_mwYRADTh0u3mh02479y-Rec31WZDmESuc2jrnimyqk7DJS92MzKOsGG8ig
-Message-ID: <CAHwyqnUmq1fMC9qEbX+7P7W=TL1d7HaXMDsj2QoLZ+nQqRKOAw@mail.gmail.com>
-Subject: Re: [PATCH v20 0/7] branch: delete-merged
-To: phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Jul 22, 2026 at 3:39=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> The alternative to this would be to instead have logic in functions like
+> `odb_write()` that checks whether we have an active transaction or not.
+> If so, the write would go into the transaction directly instead of going
+> into the primary source, and consequently we wouldn't even have to
+> modify the list of sources at all.
 >
-> Hi Harald
->
-> On 22/07/2026 08:10, Harald Nordgren via GitGitGadget wrote:
-> > Delete branches that have already been merged on upstream.
-> >
-> > Changes in v20:
-> >
-> >   * Protect branches transitively required by a surviving local upstrea=
-m
-> >     stack. Traverse upstream chains once and defer delete-set mutation =
-until
-> >     traversal completes.
-> >   * Make stacked-branch handling independent of ref iteration order and
-> >     update the documentation accordingly.
-> >   * Clarify variable names with regards to branch names (short) to redu=
-ce
-> >     confusion.
->
-> I'm having a hard time reading the range diff due to the renaming of the
-> members of "struct stacked_branch_data". Can you explain what has
-> changed in the logic to protect branches that are upstreams of unmerged
-> branches and why please? In particular why wasn't sufficient to stop
-> removing the members of "spared" from "deletable" in
-> spare_stacked_base() and remove them after refs_for_each_branch_ref()
-> has returned instead.
+> This shouldn't create too much of a problem, as we typically don't
+> intend to even read objects that we've written into the transaction
+> immediately. It would avoid that we try to read objects from the
+> temporary object directory. And it would also allow us to eventually
+> move all the logic to write objects into the transactions exclusively.
 
-Hmm. The main idea is to bite the bullet and actually traverse the
-graph since it didn't seem possible to finish the job correctly in a
-single pass anotherwise which I'm trying to demonstrate with
+I suspect several of those 'transactions' are actually misspelt
+'temporary directories', but I catch your drift.  That said, a
+redesign like that feels more or less independent of the fix for our
+immediate performance regression.
 
-    test_expect_success '--delete-merged keeps the upstream chain of a
-surviving branch' '
+After all, didn't Peff show us a case where no odb sources were
+being flipped in the middle?  Simply setting up one object store to
+borrow from another via the alternates mechanism demonstrated that
+checking packs across all object stores before hunting for loose
+objects in any of them makes a world of difference.
 
-It becomes a bit like whack-a-mole when Junio asks me to clarify the
-code and now you cannot review it because of that. I'm still not
-friends with range-diff even after using it for some time, I agree
-that the diff v19...v20 doesn't look very inviting.
+> I'm currently out of office though, and will be on vacation next week.
+> I'll explore this area a bit more though once I'm back in office in two
+> weeks.
 
+Understood.  Bon voyage and have fun!
 
-Harald
