@@ -1,120 +1,166 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837B335F8C9
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 13:42:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8034934BA5A
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 14:26:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784727764; cv=none; b=Acp6G2BXvvfz6hiiJAFW5q3xHMLfGq3i9wDZIs19OSMAu585XfiugWce6WPixFKh1xtSjVBy6EhpClZ8WJ0wwwuEZn14Y/rf6KrndQE+RRPbkiLUBsGAXXkPmenmENOLALmnCi+p7rtJJ9gBY5Z5McB05p0QO3Xwn2QTmB9gnII=
+	t=1784730421; cv=none; b=skUpVaDYbBzJDZcNl1MLXtz551BDhE/29MXWEfCh6tR8iFnv2eFkq0TNVDxQ3/FVJry0p1+tVMAuvRT1r2Yw6baDzoElLN36CcKeUVGK8d4kfVNSFi05Jqm80NhmVq0bVC8qY7bQHEsch0CBxcDMD5F20kd5ocrLx2V+BfWo19c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784727764; c=relaxed/simple;
-	bh=Uojxhw3TK0cL4XisDvXAL5moJjXmvFlrFPV5xUbeYJg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=Z/6o8JUVogGcPNb8OStsyhLLmitkfnE1cpWmAs2qrr544LdBZo1rlKn5BxB7ADNf7mOX67G838S8qziFXWueq+T/oMKvEi73Dr4mLLeQW36dh+E/ysAj0mv388fhuf6Fr3ehO13Oi+fUIYQt2nxlqexY8DyPQycypsA7CNTpWA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sw8FjnyE; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784730421; c=relaxed/simple;
+	bh=pyfib9kLTy7THYvvy776+vVffF15qYMMuuPRQoRPork=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r23DoF/VYxIuTv6hBii+r1cHqlOzH+NPa9GPAR2waDPj8F32S+jZNcJ5u6rdkmbeqnT0B6BG6px6M5QuVeYkCEYMaFdbTN8uGck9u79r+K+0tSmlk0TTaGfg32Hmr6H0n4RLbu7I3zmMM+N30XYtQSdclflFN/l9YulNqwz5ZKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=YaZiVHLx; arc=none smtp.client-ip=95.215.58.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sw8FjnyE"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8487214ad2bso11990689b3a.1
-        for <git@vger.kernel.org>; Wed, 22 Jul 2026 06:42:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784727762; x=1785332562; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Uojxhw3TK0cL4XisDvXAL5moJjXmvFlrFPV5xUbeYJg=;
-        b=sw8FjnyESpc5NIc24daPclQ1uJJ9Ioz1HxN+eE5EAf7DM/t9JDtGTS9lEDLtDCNzLL
-         Xe1mrH+UOWIHXbT4HBPeuW2LJluaT1ge6/r6XeAnw4XZ/55qlPHMu0Qj0KQbAXpGV5W7
-         gPMnAVCo3Q6atQ13IZbYzXQoxc3+ojnq0zVwPYFLA+NSnunPUvJu7TASVi7929ESngxh
-         2icae037B95bftWCZrn+aGXyi8TgBJOoyz+olSBC3KyTJA4memG7rwUkHV+fYSOY4O4u
-         ZkoiyNarDa8cd85Q5M0KjscqOL+FLCcoMIF/Zt0mtAI8HE4LarqnUvbBYwtm4ILLDTdS
-         lmzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784727762; x=1785332562;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Uojxhw3TK0cL4XisDvXAL5moJjXmvFlrFPV5xUbeYJg=;
-        b=s8XOHK6nfD8N9RnUMjv81Dc0mO3FDb5vkkWYj3a9uemzodh79MCtqpIXq9kS5hPozD
-         hQJxPFhQvs5eOWxJejS7HvJqYPcx3VweZa53nUX/8YCP0xFRJb9gdXMZAL3UWb/WDapK
-         PwitNUUSiKflpbSMODGdji3G0+p00tjiqzEc5MAocYQJazdQO/wIclocwF4uxBzSD4lb
-         afB2ZUw50MSJtK0+A50kC5UcTRaIvPHAEoqvXnxoOsDTsHK9NYtHsRe6X49zIwoPsIb7
-         8hrtTqAdSFgt9MMJeyiZxDUOMSSg7k1KZ/lJ75oGSJNAjo9TPDHkPtVki+4l7/isJauX
-         GFhA==
-X-Forwarded-Encrypted: i=1; AHgh+Rp3npAVG2wXiEyp0usfqxb+lnypzpgMaFc4zzaYGW8s7CKTe5EgnEME2s++sKiSt2A3x1o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjGgwx/YT2BPvPfJArQGTE61vf9Bm0NcJuJwyu5f+BOzc/2n+Y
-	h8WGX7szLaKk/oYuoqOZ+np6ZaH2GFENixsP/9YxDcL4i30iJcjZMCAK
-X-Gm-Gg: AR+sD11yZcWPsMoD5NHQXh+GWFTysD6h5ACyrPoRZPgsA4O/5TuJ+pCSzks689YHIZY
-	+PT4hSQg1mOJJLyry/bmsIKvSWAfLzH1+Famg6xnAVKQSTwleH8mjA51G3kDIFoeJLjhH+Kc1Ac
-	KGt8DSC+eDajPUOQvEzMcUDwPh8WTD1tokMUxT2ujGOYxl1biU/dRII8T2HyXIKgF4D2YTXWO6i
-	90f2Ax9P114yPzu6yzdMFG6FN44f5pKL1ZSKf0Ea8IH9fYURzy1Ll3+iSnjqxh5Gm9tjkzx7T8L
-	4cUjLEJpeyI8kP5CNAofHY8ueeujuzdpzU/2xnahmIfZrErVGj+0j6EwB9w4l4J0I6CkoVy/35a
-	sQ0XCSIHOOY3FeRW/5vjZCZr3uGH+frntIqhyFjJTJIRKZKF/NR+MyeFve8xlwUfux0ih/f7Dko
-	hXOGApXN07
-X-Received: by 2002:a05:6a00:3cd3:b0:848:788a:e7f9 with SMTP id d2e1a72fcca58-84c292b4922mr23553141b3a.18.1784727761545;
-        Wed, 22 Jul 2026 06:42:41 -0700 (PDT)
-Received: from localhost ([220.158.183.16])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e175a4b98sm1370888b3a.45.2026.07.22.06.42.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jul 2026 06:42:40 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="YaZiVHLx"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1784730411;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=o77px+rIYbQLmtTUWvK8NFOx+hnnXh2Fng780dZFaB4=;
+	b=YaZiVHLx65Lhwpb8H2JuhRIX0RnsQ+tT+COdcEYGj5DZPP3eO63rcnR0DoBsnHhrHEMaKn
+	/xnQf8mUqFE8pNR0fMm4+rgZF3y8G1JR2CD7xk41Dh7ULSGXiOf/8Fe4VBkTjlIo47MHXE
+	GkFVL0lEltz3UknvIkYPWyiTv7gOerY=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 9/9] object-file: move logic to write loose objects
+In-Reply-To: <20260717-pks-odb-move-loose-object-writing-v1-9-46446a3cb5b7@pks.im>
+References: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
+ <20260717-pks-odb-move-loose-object-writing-v1-9-46446a3cb5b7@pks.im>
+Date: Wed, 22 Jul 2026 16:26:41 +0200
+Message-ID: <87fr1bp0bi.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 22 Jul 2026 19:12:35 +0530
-Message-Id: <DK556S085CN5.25WTVX3W1DSUZ@gmail.com>
-Subject: Re: [PATCH 1/1] Extract only the message body from git commit.
-From: "Hardik Kumar" <hardikxk@gmail.com>
-To: "Pablo Sabater" <pabloosabaterr@gmail.com>, "hardikxk"
- <hardikxk@gmail.com>, <git@vger.kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260722083836.744338-1-hardikxk@gmail.com>
- <20260722083836.744338-2-hardikxk@gmail.com>
- <DK53I00U9FJS.2MUNWC5000IZ5@gmail.com>
-In-Reply-To: <DK53I00U9FJS.2MUNWC5000IZ5@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-> nit: I think this can be written more clearly. Let's use present tense
-> and state things affirmatively:
+Patrick Steinhardt <ps@pks.im> writes:
 
-Sure, I will update this in a later commit.
-
-> Reading the code, this doesn't seem to do what the log says it does.
-> Testing it against what it did before this patch:
-> We can see that the previous output only shows the commit log, title
-> + body. There were no SHAs, tree, etc., the opposite of what this
-> patch's log claimed.
-
-I see, I was comparing this to the how git stores your commits in
-.git/objects. My assumption was the function would take an object
-from there and (wanting to extract just the body) was taking the
-entire object as is and not stripping out the subject.
-
-> What this patch actually does is drop the commit subject.
-
-Yes, since I suppose all the other places in the file where
-this method is being used don't require the subject line.
-
-> Either way, this patch does not address the '# fixme' correctly.
+> The logic to write loose objects is split up across "object-file.c" and
+> "odb/source-loose.c". This split is somewhat weird, but it is the result
+> of two things:
 >
-> Before continuing, I think we should try to understand what the '# fixme'
-> meant in the first place.
+>   - `force_object_loose()` used to reach into internals of how exactly
+>     we write objects.
+>
+>   - The logic of writing objects is intertwined with potentially
+>     starting a transaction.
+>
+> We have refactored `force_object_loose()` over preceding commits to work
+> via generic interfaces now, so this reason doesn't exist anymore. But
+> the second reason still does, as our management of "files" transactions
+> and their ad-hoc creation is still very messy. This area definitely
+> requires further work, and that work is indeed ongoing.
+>
+> That being said, we can already move the writing logic into the "loose"
+> backend rather easily. All we have to do is to expose two functions that
+> relate to the transactions.
 
-My assumption was that the function that I made changes to was solely
-responsible for sending back only the message stripping out subject and
-metadata related to the commit object.
+I'm a bit on the fence that should have gone in a separte commit, but
+it's fine.
 
-Moving forward I suppose the one suggestion would be changing the name
-of the variable `foundTitle` to `foundSubject` instead since that might
-result in less ambuiguity in what the function is doing (and the fixme).
-Although I dont't think if that really makes any difference.
+> Expose these two functions and move the writing logic into the "loose"
+> backend accordingly so that it becomes more self-contained. Note that
+> this requires us to drop a reference to `the_repository` in favor of
+> using the source's repository in `start_loose_object_common()`.
 
-But yes the #fixme does seem very vague now. Not sure if this is worth
-it.
+Yay! Thanks for calling that out, it standed out in the zebra diff.
 
-Regards,
-Hardik.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  object-file.c      | 360 +----------------------------------------------------
+>  object-file.h      |  22 +---
+>  odb/source-loose.c | 354 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+
+That's a pretty large diff, but luckily the zebra diff helps a lot.
+
+> -int write_loose_object(struct odb_source_loose *loose,
+> -		       const struct object_id *oid, char *hdr,
+> -		       int hdrlen, const void *buf, unsigned long len,
+> -		       const time_t *mtime, unsigned flags)
+
+This line is not colored being moved because it was made static, which
+makes sense.
+
+> diff --git a/object-file.h b/object-file.h
+> index 31781a9c53..805f2cfa28 100644
+> --- a/object-file.h
+> +++ b/object-file.h
+> @@ -24,20 +24,6 @@ int index_path(struct index_state *istate, struct object_id *oid, const char *pa
+>  struct object_info;
+>  struct odb_source;
+>  
+> -/*
+> - * Write the given stream into the loose object source. The only difference
+> - * from the generic implementation of this function is that we don't perform an
+> - * object existence check here.
+> - *
+> - * TODO: We should stop exposing this function altogether and move it into
+> - * "odb/source-loose.c". This requires a couple of refactorings though to make
+> - * `force_object_loose()` generic and is thus postponed to a later point in
+> - * time.
+> - */
+
+This was added by you on 2026-06-01, so thanks for addressing this.
+
+> @@ -611,12 +849,120 @@ static int odb_source_loose_write_object_stream(struct odb_source *source,
+>  						size_t len,
+>  						struct object_id *oid)
+>  {
+> +	struct odb_source_loose *loose = odb_source_loose_downcast(source);
+> +	const struct git_hash_algo *compat = loose->base.odb->repo->compat_hash_algo;
+> +	struct object_id compat_oid;
+> +	int fd, ret, err = 0, flush = 0;
+> +	unsigned char compressed[4096];
+> +	git_zstream stream;
+> +	struct git_hash_ctx c, compat_c;
+> +	struct strbuf tmp_file = STRBUF_INIT;
+> +	struct strbuf filename = STRBUF_INIT;
+> +	unsigned char buf[8192];
+> +	int dirlen;
+> +	char hdr[MAX_HEADER_LEN];
+> +	int hdrlen;
+> +
+> +	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
+> +		odb_transaction_files_prepare(loose->base.odb->transaction);
+> +
+> +	/* Since oid is not determined, save tmp file to odb path. */
+> +	strbuf_addf(&filename, "%s/", loose->base.path);
+> +	hdrlen = format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
+> +
+>  	/*
+> -	 * TODO: the implementation should be moved here, see the comment on
+> -	 * the called function in "object-file.h".
+
+So this is what you did, as suggested, by yourself.
+
+> +	 * Common steps for write_loose_object and stream_loose_object to
+> +	 * start writing loose objects:
+> +	 *
+> +	 *  - Create tmpfile for the loose object.
+> +	 *  - Setup zlib stream for compression.
+> +	 *  - Start to feed header to zlib stream.
+>  	 */
+> -	struct odb_source_loose *loose = odb_source_loose_downcast(source);
+> -	return odb_source_loose_write_stream(loose, in_stream, len, oid);
+
+This line is marked as removed in the zebra diff, but that's because the
+code is being inlined into this odb_source_loose_write_object_stream()
+function.
+
+All good.
+
+
+-- 
+Cheers,
+Toon
