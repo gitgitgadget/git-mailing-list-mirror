@@ -1,114 +1,140 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA4D4317D
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 15:36:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784734568; cv=none; b=u/WZUZGz83QlDETwMAB7qeSPAzKuEuLfWKm7g/SUuh0c4E8wUKMCNkPtd7irL3No7uCMnIRMNdX9TCsuUmGv6yzE8YnB6M1qW+e31AsDGyC9hxTluD0jya0mOKZYAqzE6oWiPrEG/nnii7affS65dt2IPN8VlYtlKiGhBL+OFYo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784734568; c=relaxed/simple;
-	bh=wukaIQCPjlPG0T85xRSLKQhlk3HJKsYF3LCkd/5Cla0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R59RyPYrqu9AGCfb8YOS8LVkdGbY35xbPHx0aXnoQZPlgi2JpE9TP/7x6kqSMQRra+vfeRN0RpDohgWvvpKLeMhZjNL1RzD9ZvgErHxhLVL7+v/vehLlHi10F2wkEXBklM0USm58/Kqqa4VuX/H5vQEj89fkXqTLf8JcnGaLdqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=azs73qCM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XVXjabYv; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDB23A6EF0
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 15:41:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784734910; cv=pass; b=QzaeMC5aPN9yiWdEfpLdciTCIwYNI/63IrvM2hdltg9B29f2rd5Kswd6SPM+AKbqlAPCtYXaq2iUHedkm/0K2EdkWIhwqYRQWCQ3unXR5vRn55zfkuDNmmeni35Wou6jSPx2/9I72TmWdEdJOvKhpxoBE0j6WW5RBO+pSgIi4h4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784734910; c=relaxed/simple;
+	bh=Ic8MACaZ5bMMlYbmy34P9hy1QmlQ5BpgsqyZxn37EQA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F9JD5ucHh09CWvwjcS8TCWCfpzsY45fCZHnqe858Limp7+jJx5ocOUjnyTRgupmoZrCkqzPheroFOofFSJ2d0WR6Cmrpe8FsIi8Tqjf5fm5p1zRT7xuQuVJVL8WAJBBhii1ECwSODTMt7Vhdvx/SRINpeeG6qpFsoOslrkjG8EQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bKm2XKHA; arc=pass smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="azs73qCM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XVXjabYv"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BA7881400120;
-	Wed, 22 Jul 2026 11:36:05 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 22 Jul 2026 11:36:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784734565; x=1784820965; bh=UcmnndA0qV
-	ZuTDOTwhhalQ0LIlLKrHtNZoHNtIQqgaA=; b=azs73qCM4r1Z/rAm8410GSOfyy
-	SJGQ+oTNfFJzXUmwDhLPTfZpJ+hi5fVdmGMXFoE/Z9L4rkH+emYWVRGwBjfYFSye
-	hfLE6sUtEGuKK6b3bZe+Hvlftle48M62NDcyq7sZKbEyjJxHAIa8X5CyGGMP9eo5
-	oWO6vkEHZwCayV6+RXuRLSdw41RidY1JyrSRrJEr3B37eT/2MinOEL+PXx7nz23g
-	se+uIc4oOi8FV6Znm96TjSJKd31mkhayBUE4mu4ehuqwXbq6zDpAD3WHk8zE5QYo
-	2CaWfksYStDnHA6p4YHo1Ix5KHC/Hq7t5mQwp+kTBC04QPBETiKuLg/+62Eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784734565; x=1784820965; bh=UcmnndA0qVZuTDOTwhhalQ0LIlLKrHtNZoH
-	NtIQqgaA=; b=XVXjabYvzx6NwTdcw6hWKTp9k1VHaE2Ef32B17eys7ZJdAlwncb
-	xZwTUyC5aVwS5Y4t14CGgrvxVGY3kw4Tb3j4qngmPdWH34ITQVt6019rnKOpvxX5
-	Z2eeusYWb/MOspVL3tHwI6omnL7zP/8pmWFakVv3NepMMEBtKTJIVCRtjMwkSTrQ
-	tVouy0Bza3r1c4/OqfpkGjy5jBnIaSig3682y3Ti4XAgI1mIRM3CZZwhYYqs2zDp
-	6D510U7wIkp4rKossuQPCF42S6kDKE1PRTYFZQI15C1weFnzcxwU9hheIr0WnC4A
-	SzJhwpH+C7Mdh8fbbg7NbuPPahYtu0y9+Rw==
-X-ME-Sender: <xms:ZeNgaoW5ui5kZ9qalvOErKsel-WJOwjnBzy7mG0t8QcDcJX50UrCDg>
-    <xme:ZeNgajk8-WdJsICioj7dK3d4x5BdSzJFLyiorz9XYPai7gDcm9Tqg2H30suRg7SCn
-    ZJNqWcEljRecSjRsVC6M1MIqmrCVWk3uW0Qfofudz07nO-qj2VmC40>
-X-ME-Received: <xmr:ZeNgahbor5EiXyC96PSm_3pVd07uVNeh7pawLXCbFMpBmoPScyFXKIrmLKQfLUX6r0tF1sq3Tq1HhoCTrnPCy2YhyxourUxwiw>
-X-ME-Proxy-Cause: dmFkZTFC8VWbvr5k1w4o+OtBQMxUT10pT9k9RnAeXiHZ7GrNtsSwRNdh99jnwsA1vZAGKE
-    YTrmj1xi3KRH0cdWMGaGMEAdBf9kaiD+kIm025qitXXfBp3QyKO9YvBm4JH9C46+MYKgwM
-    asF8zntrTZEx4fPHwkNVt/DhuEltLyDWjxwjESeTrfczeRrBwyxufFAKGmXRC3h1Eg4O1w
-    4dmTorbVHc+dizB3au16LIu8X/r2fVeHOyFnGgaMaHbyHjLhCGtlr10XcoPPyrRgl89mh0
-    y7j5hsE2xEdmC1RSLeB0q3cntiTTWqsOaYUQLfkpo/FcE3NWlOQCTeyhdQj4u1cIti+rLy
-    VK3xbZihJNGzx9RzGgXIiA3rSHDGyrcoVbQXiBhMKE46SsQcTWg/nFscvAzdsPLYyxFNzs
-    wptlK/u31kD68O7VkY6P9BP77h/QsQgt148D1Uh/ffnnRhvhP2+VOqnDzvbQcCNns8cnh3
-    BjGiJkiw2GS6R0uqtw9QZTnarsoufwXY6tK+hF8UuRzeKHrmCcJYeOvXWsFtBSdA7sBqyL
-    SJ/pLjvYLDz8eOjgdauvfhDTigybuXYuPomMVicrDdpaF+masmjsVYiq64EmqOhisOzcXT
-    O5HukuLeAAIBaELgYzBqYZRyozzh89faLizs9ln9UZ2DPI8YJ2x8B9Qnz4Qg
-X-ME-Proxy: <xmx:ZeNgamOj0fMOt78LR5OVFJuWHSvLSwPs5-VPyrtvgPi1Ym6u6ztPSg>
-    <xmx:ZeNgaua4kk83g-fD-kNVPb2AW4atait_ZegNrCpJbq0Eqi3ROnlCkg>
-    <xmx:ZeNgas2rNerxJHqjF4qHHMWRxFrnG7yn34OKh2lCZ0dkM3MB67RBtg>
-    <xmx:ZeNgasdnG6AqYmQZy2KSfxoo7rJhhRjdf0OzVumuMDnxAInhsZ1eEw>
-    <xmx:ZeNgajIgSIKk8z9YksEzRHADIZMfzi36NhUvsJY3NAvyJsPO-lHbKwni>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jul 2026 11:36:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Hugo Sales <hugo@hsal.es>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/1] rebase: add --[no-]edit to --continue
-In-Reply-To: <db7edc66-9b2a-47bc-98db-87d01885cef0@gmail.com> (Phillip Wood's
-	message of "Wed, 22 Jul 2026 14:39:32 +0100")
-References: <20260721140443.1809379-1-hugo@hsal.es>
-	<xmqqldb4xlqa.fsf@gitster.g>
-	<db7edc66-9b2a-47bc-98db-87d01885cef0@gmail.com>
-Date: Wed, 22 Jul 2026 08:36:03 -0700
-Message-ID: <xmqqse5brq8s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bKm2XKHA"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-69c5f6f7a40so13828679a12.0
+        for <git@vger.kernel.org>; Wed, 22 Jul 2026 08:41:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784734906; cv=none;
+        d=google.com; s=arc-20260327;
+        b=XQz0o+YVh6Veo4FIIeuanN8YEotDLUYqZTj9wvIkz2SEwcwUMbY5zgTDEiRaPCPHpW
+         ZYztlq5f0U0rn3Q5e6rVU9us4I0hcyNo8mXLrr/EMFQyTutSbRBUnFVfC03FBWyce+T+
+         wlGhkfXCVt7d4lCR0ADuiyRBW77UaD4YHtm8qXkH6hBGIfLWDdxR21Ejiby2UxdErwKw
+         90xUtfbQbwk+9yG2IELg6wXVOWsyG5LYd/577OEKYZn1xqPJrQCL7ZpnieRJ73j+yoPz
+         p6TStB1teqcG+3h6r9EM5FvXM1Gp+vKeJvanTJrarYqcki9OO+PAkWPI63Ow7NqTfWqB
+         cwKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=agiHuthhtWqLFgW9aE1oMtsjwqATWEQ0KHKmHJxjYKU=;
+        fh=pMy4AuGry5d90enpk5h0SzjWMIOTJf4lVnauHgGuKsM=;
+        b=eamupA02QmdqPbu5d0SFDXdth4Z+FrGlCVfW/feC6+n9F2xVIL3dtjn5Ju9SIQV+/g
+         SU0VofKGqO7jkGsfbgPyeepWA2A4x5KdHZcHjrnaWDPonM8QXHIIxFhxWGMjyy4ndcTn
+         wk0jrpkTiReM9SRGeEdE/KYQE9kYcS9D1lsEbILVWSeoQT3Dw5nZK0s9UOfRzeSuuWQb
+         Aq+9LSuKIm47kQ7D5qU/Ej+o8XrchgBAy8OYzuSgkBaweRKCQvHDADJjmz211wAA1Jjj
+         BMOeQ3bnzKrxsCFK1/T7v2vqetPLb1ByrUz63aHswAE4eHL3OxUveetOxHxPCalBsRVz
+         DAWA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784734906; x=1785339706; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=agiHuthhtWqLFgW9aE1oMtsjwqATWEQ0KHKmHJxjYKU=;
+        b=bKm2XKHAynBONWNED4ehE9t8Xt+mgYUcEf6YWF+I03YzDGRMOGZVwTdGBZrm716ii0
+         TuflCLaHwEp8YBAUQ9jckKEvhWxM5QGuJdctF+VmyUDdx9BInnXiARHgsdY/mT/gaw/G
+         VbkaSEkygSo/ft7thbY43sx+eZWX1yOud3GiBR8EntZG394QoPotpD2unrTvE6A6q7eI
+         bzKuyscMh5S01CZfaWO8ZUcc7XftqwGAC38yI3gYpIAmMnA06yzOzgem+o+vWmSgx5+S
+         rCPNXNnfk00lMjhpNWL9nuPICwhLXr5qOqTJGt1nOXAmJWXPcM8uKojNYZmsdPF0V7/g
+         kIsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784734906; x=1785339706;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=agiHuthhtWqLFgW9aE1oMtsjwqATWEQ0KHKmHJxjYKU=;
+        b=GrdxSLhuvB4qUdnN9q+jJ/xEdRAYvERCnlvOwQdjDxAA7dv/C2YqH8ZF3Gads73Ky1
+         +jKnxuQ+/1AUDz+Wh7sq/rfpaNHKdpWy7dTi7sL/IWuN+mSFAbMehk0LypifF2n+wcfj
+         pY4onH/S2/FHxQ6jcnYMzKH/2x8ElbU/yyAdqCWMZA92JklNVbG2ZxYs9aMl1KiTtumB
+         bGMs1BfOTVnnmjEQf8md9uBE1D5e9NBocyX9UWHE0oX08V6rsiSmoVUQ9pvepKMf1XCs
+         sGkYmfNLdYfsHqMP2IwXIbZ2IrSsftLwDuuTenpR+in4tbt9cU7r/Ejq+dNsYY7XgccV
+         MRuA==
+X-Forwarded-Encrypted: i=1; AHgh+RpMspHxBBtGRQ/rofImIDtnJ1OVJ1kor75FFnWYeMn4aJ+P53pZR2CvJlrFL08OwQukUbQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOEBJHfLG9gZuKA0lZn9mlay8jdJ+fRb/LEeQrYubcNWlLz5/2
+	gTYVit8AVeRS8ciakYWI6n1N+E9MDvrmGdCtdRzixvzNbHqiUbH8pvoFJ7EQM0y6Dy7dKlxDvWa
+	Xhgn6+53NIgHUKN/7iG8aT8489vD8Oig=
+X-Gm-Gg: AR+sD107YI3LWYhLMaM+ZXJrQen6SJF8+X7elgr02XWtxyAv6OQEPP+i+TSU5tuRAYY
+	alFcwu80w7sTAuoosBRsQWCCLqwVnQiiE/f3yOQvTbZZ/hBbmOn6+P2OZ2sLB7uSBajdlUN7ENt
+	uwE3iWPFMVYff5GFCJ8Yre6wDVfNUWu564ON9mOalfMO946TZ9Q8hmPOor54JO5R4itUh7TN7za
+	5SVQKqxJagbV1MMiTCiElR+nAL80Kz7e5B5l0qb0tNxkRy5a2b+zpfg4Sdowg==
+X-Received: by 2002:a05:6402:11cb:b0:697:ee9b:e9bc with SMTP id
+ 4fb4d7f45d1cf-69e652e2374mr10044922a12.26.1784734906396; Wed, 22 Jul 2026
+ 08:41:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
+ <pull.2285.v20.git.git.1784704238.gitgitgadget@gmail.com> <20976edc-fc9d-4d4d-8919-b599d336f9cc@gmail.com>
+In-Reply-To: <20976edc-fc9d-4d4d-8919-b599d336f9cc@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Wed, 22 Jul 2026 17:41:06 +0200
+X-Gm-Features: AUfX_mwYRADTh0u3mh02479y-Rec31WZDmESuc2jrnimyqk7DJS92MzKOsGG8ig
+Message-ID: <CAHwyqnUmq1fMC9qEbX+7P7W=TL1d7HaXMDsj2QoLZ+nQqRKOAw@mail.gmail.com>
+Subject: Re: [PATCH v20 0/7] branch: delete-merged
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> On 21/07/2026 19:04, Junio C Hamano wrote:
->> Hugo Sales <hugo@hsal.es> writes:
->> 
->>> When a rebase stops for conflicts and the user runs `git rebase --continue`, the
->>> merge backend opens $EDITOR so the commit message can be revised. That is often
->>> useful, but not always: sometimes the user only wants to keep the message that
->>> is already there.
->>>
->>> This series adds:
->>>
->>> - `git rebase --continue --no-edit` to commit without opening an editor
->> 
->> Meh. "GIT_SEQUENCE_EDITOR=: git rebase --continue" is your friend ;-)
+On Wed, Jul 22, 2026 at 3:39=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> Do you mean "GIT_EDITOR=:"? The sequence editor is only relevant for 
+> Hi Harald
+>
+> On 22/07/2026 08:10, Harald Nordgren via GitGitGadget wrote:
+> > Delete branches that have already been merged on upstream.
+> >
+> > Changes in v20:
+> >
+> >   * Protect branches transitively required by a surviving local upstrea=
+m
+> >     stack. Traverse upstream chains once and defer delete-set mutation =
+until
+> >     traversal completes.
+> >   * Make stacked-branch handling independent of ref iteration order and
+> >     update the documentation accordingly.
+> >   * Clarify variable names with regards to branch names (short) to redu=
+ce
+> >     confusion.
+>
+> I'm having a hard time reading the range diff due to the renaming of the
+> members of "struct stacked_branch_data". Can you explain what has
+> changed in the logic to protect branches that are upstreams of unmerged
+> branches and why please? In particular why wasn't sufficient to stop
+> removing the members of "spared" from "deletable" in
+> spare_stacked_base() and remove them after refs_for_each_branch_ref()
+> has returned instead.
 
-Oh, absolutely.  I made a last minute change s/_EDITOR/SEQUENCE_&/
-before sending it out, without realizing that I made a totally
-unnecessary change X-<.
+Hmm. The main idea is to bite the bullet and actually traverse the
+graph since it didn't seem possible to finish the job correctly in a
+single pass anotherwise which I'm trying to demonstrate with
 
-Thanks for spotting.
+    test_expect_success '--delete-merged keeps the upstream chain of a
+surviving branch' '
 
-> editing the todo list.
+It becomes a bit like whack-a-mole when Junio asks me to clarify the
+code and now you cannot review it because of that. I'm still not
+friends with range-diff even after using it for some time, I agree
+that the diff v19...v20 doesn't look very inviting.
 
+
+Harald
