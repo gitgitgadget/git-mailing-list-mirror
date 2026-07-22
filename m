@@ -1,140 +1,189 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C493440F72F
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 11:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D05C30ACF1
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 12:23:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784720957; cv=none; b=I0wz/hEtwwI0LM3F4vPOktAHcTsjL9tocqnmYbhBOX959IZVTpusvTEeG6bcRdukKzlOlAM68XUDoYMkcX+1gH3jbM0mzWd8MoUSiOayx7e9AyQJBSz5dznwFpaYcVuRYkLAaUWf7pjJnG9t26yQYFIE9GTx5LY7udnH/dP3blo=
+	t=1784723006; cv=none; b=WGZaAagFyUzgLWycWtuClgPARtc3se0Hg271RLW6go8d4rxKHpyKOmZ39+7lsaUHBJbyXBtEMIZ2I2jm9Bor6KlffKA+4jZsC+2MP8UOpmsZw4H9uMFqHv4zcl/fS+ALxdriylzMyfeVPKfX24JJ1KN3eViKczaLwOWiEMJhx6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784720957; c=relaxed/simple;
-	bh=aDLbFYEhuzzoQWNvJw/1/cHQHti1CQYJYuVfJMlp7eA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iUyS7NOK5FumnQFMHW2AkslOpPrw00bKgZJANP1RZPiBiAZ1OcWrVt2PLWPcEb1++nd9ooCl9tl5qvMleskXXGHzs0qUS3J8GE+MgikVNOGHq+166FUNaLgK6sJdUIbp6ggU8VOTfgl097HBkXi/IrS/JKak87HwDQfiBGnBX5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ly+CzTQ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qVxI58D/; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1784723006; c=relaxed/simple;
+	bh=kOTc0rcw/JrtN3CzMsMhhLQ8jpydwBEtFHMxFJVHhWY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=N745rcVVoj3aV7K2JgIF8jDMyFgL2/RWBemgpaPxaHSBXI5Xwq0hzqCx5Sv9haDPSlN3lFi5H10q5eLWyOWZeUMBAh48jvLEiU88s72ViRkxW7S9BWjVHDFrqdpk4eg8m6xm5KA0oc0T2WKadVUHD75jsl9iA8bCJgMyyOJZUoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b4C08Zce; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ly+CzTQ1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qVxI58D/"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 036D91D00128;
-	Wed, 22 Jul 2026 07:49:14 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 22 Jul 2026 07:49:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1784720954; x=1784807354; bh=w7owvquzmU
-	Ng4cvI4ncly5RxtwUiONev8Zs9Gx4rtDY=; b=Ly+CzTQ1OjJOX4ZQd7STwthmPv
-	EaRIwmrtU5jynbZX6kDCsKaL+/u7TrC9O+v2U7EUNuUkHAFMVFMl4y29UIkAf7B7
-	yKAzhDnwyFkrpU6giqtQjqslB81gN7jz3imUvWo+kCLpbif2qvTDUqttjvGSM7Kj
-	HOijxiSCSdDV0DgTVW0A1mQnYBb5dP+wtXKDHUVUHuGCBtqMdBpbZyE6f1MsajkF
-	TDRtYvNVQ/H+f5LNjqdTK5NpOM0XhkgHzF8Q883p4zE20+nN0BK08TKIRQwWiv0U
-	d8mGiqA5e0YwTX3lG7JIB8ki8pZJCqeDopUuOXvgg7BDxWwDbooHhpsP+8RQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784720954; x=1784807354; bh=w7owvquzmUNg4cvI4ncly5RxtwUiONev8Zs
-	9Gx4rtDY=; b=qVxI58D/PbiRVtqdYA3hWOrrXb71xBAHDOAO3cwsejGsfyVPB2h
-	2QTAYSRFuL+8txF+3GG5Q6sL9I3TztHaN2aZn8w+IjsrilupdWBNrRyftT1egduj
-	zPpXAVGTAyjLjjhzaAoohe6tSO6ifGlIvcu7f3RGTY416c+zPeAxDeL099rIal9s
-	qJir+ipUkF/xxEc1p/ZHPgBICnkrO4N92SYZaPS7tntY9pL9FX9lJeBadS8GdBUJ
-	gvcn/UhVY0tles0CjFGPv6A1MgE/mEnrcTpMP08k+nwNx57qPB/0u5o+hQ7pRuRl
-	BZxax5MI7I25MXdwUGhsHyWZnXDMohEZsog==
-X-ME-Sender: <xms:Oq5gaufSDtpMnKRKoTgJoiFSfgqYGevxETjx1AVnvMi8qeWWqT4bWQ>
-    <xme:Oq5gavE87AOooQT4jMipD0WAPx2RwhGMueTW2tOTtLrMKqEZALIrWPiuITo3Pz6f8
-    UeyClA4xebXbQDrso9ZUOz-ys9FK4FrUOrZSpDp1bcPs-V0S1XUHw>
-X-ME-Received: <xmr:Oq5gan0LlbnDmPW9gmACjR8YwaRDAEjxB4CX4JbbAMS8mWb5JVQFxIEjvQ4AnbewLsp5NYoQK6mMlHzJ6mMcpgsaUPEdiWzdbYUslMhxvw>
-X-ME-Proxy-Cause: dmFkZTFSkiyGg6hAL81hu2tjpSz/0YPyrnNH0FtLPTtuX2fIVXLqcvDUTUjts/eboO1xd9
-    N4y9IiG0sUsh3ElDmuDAu37jc0jWniKUameooGsQrw0anGesjyqBovI+1p6iVJkM5GUPLr
-    aqRekQHbqq8lCX8ufWq0/NvpOngNboKhznv+IfoRu0MBqmcZhiQvG40fSyIIcsgFDhrXEW
-    oEWyHkUS6VvhJ8FTK2/4g7FbOngHhetTR/2IczidGbaauxq5/E/yjRR5MT4MIeK9747o3b
-    9EsmjU/tBLhyJQL45EnaQiM28w3tpzpH+dxQHND90Ty1D+ZXCWBc24kXg1hv9yqVf0LOIx
-    QxkY8eooS8Z/S+vhuW2EIRcdsyh7vdHA06CZqcZgnviPfPMF50VuMTqBCHHYm9MWB07oIh
-    BPsmEHl7wTdkZ2MVB29yFmLXnIEahUDwqZ+JNFbilt2udS/2d75IqURHaSkwNci1a/f/G6
-    aSGXmes3G4SW7/vRbWVIREMHLcJ2JmOJzm2jegKYIsQ7qc21FYJsAj+D2dMPMQBAcIKuiI
-    nEw/wQK4wDG+ps8XDP5MG8FDoGIVzf7z/AuhBaaxQ27TN1ll3A0WEwpKsTl3qKeKKZ6loW
-    4IJ+Vu7Ho5Sg9iZh5g0XC+lrEBQxG4l1YWKEpD0jwBOs9/AxRQdOpc+AxIGw
-X-ME-Proxy: <xmx:Oq5ganlcpW9Fbz-WJ0_9SBSJ4nvOSEU2cHZDzeDQo7NaOJJUlZ165Q>
-    <xmx:Oq5gan_SHn2zAA7FaijhpfLyU4cIwEJEy9xgzHZ358FqCcJwBRxN5w>
-    <xmx:Oq5gasoTTirc5JUSgwa855L3BkfCvPyzi9fshDLCSgOFjWvN8N-7kA>
-    <xmx:Oq5gagkxd-lclMr4mHJ3q-SPr56qTA5_xQcKZZ7LAEXKiuz-MzUTWA>
-    <xmx:Oq5gatDw3TeE4VwiX2igbM6Sho4lrZHJCkiidtawmKYxhFlkvEzjCGCj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jul 2026 07:49:13 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 009c51a0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Jul 2026 11:49:11 +0000 (UTC)
-Date: Wed, 22 Jul 2026 13:49:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>,
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>,
-	git@vger.kernel.org, jltobler@gmail.com
-Subject: Re: Performance regression in connectivity check during receive-pack
- (git 2.54)
-Message-ID: <amCuLpT6vYzo1GF8@pks.im>
-References: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
- <20260721035733.GA581473@coredump.intra.peff.net>
- <xmqqtsps76f1.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b4C08Zce"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-49556f97a9dso25617815e9.1
+        for <git@vger.kernel.org>; Wed, 22 Jul 2026 05:23:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784722995; x=1785327795; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=URRrYBda8SKOHAyhiaX85I4U4RzuFKyAWqJDPfppdQM=;
+        b=b4C08Zce5IB/VLkKJ/gYUYT/RpsuClblLr+gEU6fplvPzqxuW0E10ZH0BznBia9VFG
+         +dJwceet1WpUlDuk+ij+y5S7Q8AR/dB7p6jd+Qv5kPNRqTA4en9LaTUw+aZUpcHlE44W
+         DtqGgJbMF4t+8SDu0fcCleN9amtLCoA+O8jYzMdIxv1yMbT+KzU83WgILvoQ0Bgp5+b4
+         LODfIbV09EZeJqL3ZS5Vjaf8DY+o0G4qVqxQN1MEFEycDw3eWs5AgKN+Gg45EI40eIb0
+         4WRbd1mydZ9fZG8OP9C6zPp0JsnJ4D5wS0//ndLJ9aaKuDgiSVLUydbmNIflaDCK9ZgV
+         +/JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784722995; x=1785327795;
+        h=in-reply-to:references:to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=URRrYBda8SKOHAyhiaX85I4U4RzuFKyAWqJDPfppdQM=;
+        b=X7V8Vn0Lu2KDSBgFlJSTYrEAk+/VT+/B/7RRSR7wqwrc0CmdyBEFhA5Aq1FbQk6quL
+         VlB8HFPg47d/4yei5zlN92OFxxoCiBxjeMiyCramKRzI91uFeF3k+sySXqOPJoAn2gkh
+         eYtEaNEpuXGOQEZTBkldkRKQNYykGpBYpKYi9wvzLNvEk6D0NhDhE6UDHJWCeJTesIcR
+         GThYmqKBlWIcBqbsNEsMJuvkx5vUiRCdwwD90li3QIKLIRYXsAr4zpd65kv6A5lAYWef
+         +azGtTYdSQKYTOl9l4iiLGxLse6ibj8z/pj8o3X2xwv6oBwdhgH9K+UVt79jh8AZTJPU
+         mVmw==
+X-Forwarded-Encrypted: i=1; AHgh+Rp6Vl6BR2e5hp+d+42tYHp+gspNZ+MFGLR8fBOO8n6XeH0X+biUwVC8Pgo/RDVSxtjxQPg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyeEZlGHOWdlcnIfXLu7MgxwJyxotl0bZnWkc9BQ2pj2tSSzCLN
+	8xcmSThwB+kJGGlObnHnd7V23uAX937CCi1JlLIgT04es5LAm+NQ36gXSVMTgZ/m
+X-Gm-Gg: AR+sD12kaJ8j2BGtZlHLLIENPS/JS23gSwMxkPr3gqpMYypeliPDBsr4sndghQ135HR
+	MB4G3PJUOTxOc0SrnBU6kKbTRhL0/JvjPfAfCnEpRPZeICyq18fSVZbRoGPDiMJb/8b0RWaBFHt
+	akKEn86ohfOCY9YeMzNRCVYoYZKY8Xee6sLb/61aGqlPykFlbnJ+O/lor6dnBOdJRDBORleDB1t
+	FaWHSyXKgzyOd00W6gXLhkpyDt+Ckz+WXeKeDIUKI3YTjYfLySgexVzRS0nqiP2jX67OL+DcIM7
+	nU75GPjSb1KCvvDe4Jrj6PTUewQHAI12ByGsPtX0RqylmuIQISPnPbijNxj1rImQEsk/eU0zqb8
+	azQ4pG+iFdl2QSHim7S96KPxbP97+jd4DV+hboekLcNJOe0rE86j+mRRjAa/s1VdSp/sZ25Y0pv
+	uznaJKWwxCcsdLFskFdBe1E8BL5Gaa7wpEL1aeFe27OshHdyajLPRajRw2MESDgmRFNy+ieHQFD
+	S8C5DQfnfWCmRwsCl2gf91NtJ7Zq7zB/G3+dtwQmCEOve7y1NSqtfRxdG3HfuaTGc13uDxbrao7
+	R5TnB7nHes3+X3FD6rWITObwProdyFFlzkhWSWWsfBaptC8teQ8bmAhU
+X-Received: by 2002:a05:600c:1550:b0:495:6e68:5df2 with SMTP id 5b1f17b1804b1-4956e685e95mr14541755e9.12.1784722994739;
+        Wed, 22 Jul 2026 05:23:14 -0700 (PDT)
+Received: from localhost (82.159.183.80.static.user.ono.com. [82.159.183.80])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4956b030a64sm46036755e9.3.2026.07.22.05.23.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jul 2026 05:23:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtsps76f1.fsf@gitster.g>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 22 Jul 2026 14:23:12 +0200
+Message-Id: <DK53I00U9FJS.2MUNWC5000IZ5@gmail.com>
+Subject: Re: [PATCH 1/1] Extract only the message body from git commit.
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "hardikxk" <hardikxk@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20260722083836.744338-1-hardikxk@gmail.com>
+ <20260722083836.744338-2-hardikxk@gmail.com>
+In-Reply-To: <20260722083836.744338-2-hardikxk@gmail.com>
 
-On Tue, Jul 21, 2026 at 07:40:02AM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > Yeah, and that type of regression makes sense for what a593373b09 was
-> > trying to do. But I think the v2.54 behavior is wrong. We should check
-> > all packs before any loose objects.
-> >
-> > I'm not sure of the correct fix. This is working against the whole "odb
-> > sources are independent and abstract" refactoring that a593373b09 was
-> > going for. But I think it's an important optimization. I guess the
-> > abstract version would be that each source has "fast" and "slow" lookups
-> > or something like that, and we check all fast ones before slow ones. But
-> > that is pretty gross.
-> >
-> > I'll leave it to Patrick to ponder further. I haven't really been paying
-> > a lot of attention to the odb refactoring.
-> 
-> I think checking the fast sources before the slow ones is probably
-> the best we can do if we want to retain the 'each odb source is an
-> opaque object' abstraction.
+On Wed Jul 22, 2026 at 10:38 AM CEST, hardikxk wrote:
+> The patch fixes the `extractLogMessageFromGitCommit` function to skip all=
+ the metada of the commit object and only return back the message body.
 
-Seeing that this is about the `tmp_objdir` case: one of the things that
-Justin and I wanted to work on anyway is that we want to stop modifying
-the list of sources during transactions in the first place. It always
-felt kind of gross that we're modifying the sources when creating a
-transaction, as the only reason that we do this for is so that the
-writes actually go to the temporary object directory instead of to the
-primary object source. And that doesn't make a lot of sense to begin
-with.
+nit: wrap this long line to a max of ~72 columns.
+nit: s/metada/metadata/
 
-The alternative to this would be to instead have logic in functions like
-`odb_write()` that checks whether we have an active transaction or not.
-If so, the write would go into the transaction directly instead of going
-into the primary source, and consequently we wouldn't even have to
-modify the list of sources at all.
+>
+> Previously the function would return the entire data of the objects
+> including authors tree and SHAs. This patch fixes that to skip over all
+> that and just return the body of the log message.
 
-This shouldn't create too much of a problem, as we typically don't
-intend to even read objects that we've written into the transaction
-immediately. It would avoid that we try to read objects from the
-temporary object directory. And it would also allow us to eventually
-move all the logic to write objects into the transactions exclusively.
+nit: I think this can be written more clearly. Let's use present tense
+and state things affirmatively:
 
-I'm currently out of office though, and will be on vacation next week.
-I'll explore this area a bit more though once I'm back in office in two
-weeks.
+  extractLogMessageFromGitCommit() returns the entire object data,
+  including authors, tree and SHAs.
+  Make it return only the log message body.
 
-Patrick
+Don't take this suggestion literally, as we find below that this log
+does not match reality.
+
+You may find Documentation/CodingGuidelines and
+Documentation/SubmittingPatches interesting.
+
+>
+> Signed-off-by: hardikxk <hardikxk@gmail.com>
+> ---
+>  git-p4.py | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index c0ca7be..589efcd 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1003,12 +1003,18 @@ def branchExists(ref):
+>  def extractLogMessageFromGitCommit(commit):
+>      logMessage =3D ""
+>
+> -    # fixme: title is first line of commit, not 1st paragraph.
+> +    foundNewLine =3D False
+>      foundTitle =3D False
+>      for log in read_pipe_lines(["git", "cat-file", "commit", commit]):
+> -        if not foundTitle:
+> +        if not foundNewLine:
+> +            # skip anything that is not the commit message
+>              if len(log) =3D=3D 1:
+> -                foundTitle =3D True
+> +                foundNewLine =3D True
+> +            continue
+> +
+> +        # everything from here is the commit message
+> +        if not foundTitle:
+> +            foundTitle =3D True
+>              continue
+>
+>          logMessage +=3D log
+
+Reading the code, this doesn't seem to do what the log says it does.
+Testing it against what it did before this patch:
+
+First we need to do a bit of investigation, but we end up finding
+that the commit that introduced this '# fixme' was:
+
+  b016d39756 (Robustness fixes for pipes, 2007-05-23)
+
+I couldn't find a thread about this commit.
+
+*Note that the output does not have line breaks; I'm adding them for
+readability*.
+
+previously:
+
+'Extract only the message body from git commit.\n\nThe patch fixes the
+`extractLogMessageFromGitCommit` function to skip all the metada of the
+commit object and only return back the message body.\n\nPreviously the
+function would return the entire data of the objects\nincluding authors
+tree and SHAs. This patch fixes that to skip over all\nthat and just
+return the body of the log message.\n\nSigned-off-by: hardikxk <hardikxk@gm=
+ail.com>\n'
+
+after the patch:
+
+'\nThe patch fixes the `extractLogMessageFromGitCommit` function to skip
+all the metada of the commit object and only return back the message
+body.\n\nPreviously the function would return the entire data of the
+objects\nincluding authors tree and SHAs. This patch fixes that to skip
+over all\nthat and just return the body of the log message.
+\n\nSigned-off-by: hardikxk <hardikxk@gmail.com>\n'
+
+We can see that the previous output only shows the commit log, title
++ body. There were no SHAs, tree, etc., the opposite of what this
+patch's log claimed.
+
+What this patch actually does is drop the commit subject.
+
+Is this what the '# fixme' meant? I'm making assumptions here, since I
+couldn't find a thread to be sure why it was added, but I think it is
+either about the loop stopping at the blank line rather than at the title
+itself, or a warning that a title is just one line and not a paragraph.
+
+Either way, this patch does not address the '# fixme' correctly.
+
+Before continuing, I think we should try to understand what the '# fixme'
+meant in the first place.
+
+Regards,
+Pablo.
+
