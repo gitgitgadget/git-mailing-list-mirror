@@ -1,84 +1,86 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A3C33D6F0
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 11:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C493440F72F
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 11:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784719052; cv=none; b=ALno6YBg81FUZXEIQdYbWLF7LEtYSFy+vOBA3aVoBXiMsD4XeYz+E+BM6CkKXafFyLqUoU1CtlatfWouMIEyehOM8BQtLs0oDDuCp+j2VTI0Zx6DSnSqlglQSXG+K8hh6vwdpMC244dwTkIb3g3vKEpw61pyDkfwhx8lv6Dr/Hs=
+	t=1784720957; cv=none; b=I0wz/hEtwwI0LM3F4vPOktAHcTsjL9tocqnmYbhBOX959IZVTpusvTEeG6bcRdukKzlOlAM68XUDoYMkcX+1gH3jbM0mzWd8MoUSiOayx7e9AyQJBSz5dznwFpaYcVuRYkLAaUWf7pjJnG9t26yQYFIE9GTx5LY7udnH/dP3blo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784719052; c=relaxed/simple;
-	bh=Q1PpCWPpruAzfOkJSgkBFwdDslRdyR8xlztflKgzZos=;
+	s=arc-20240116; t=1784720957; c=relaxed/simple;
+	bh=aDLbFYEhuzzoQWNvJw/1/cHQHti1CQYJYuVfJMlp7eA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UAUwViwSy5g4pAwx0uIFHrXEzzE9m2Jeo6YkdfmdJSMINU8N840vXsb7ocP0yjPfriyWvx0V8rSlOD/h+il0ihISvhED43lBalWxbt3+UvKpqseZETukkbVH4cBRPGH02hao/K7nQyjN0RY0mA6KDQPAo5HuYRWI56SFRpdRpf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DjNUkFjV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eZbL/BvX; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=iUyS7NOK5FumnQFMHW2AkslOpPrw00bKgZJANP1RZPiBiAZ1OcWrVt2PLWPcEb1++nd9ooCl9tl5qvMleskXXGHzs0qUS3J8GE+MgikVNOGHq+166FUNaLgK6sJdUIbp6ggU8VOTfgl097HBkXi/IrS/JKak87HwDQfiBGnBX5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ly+CzTQ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qVxI58D/; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DjNUkFjV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eZbL/BvX"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 39B561D000C4;
-	Wed, 22 Jul 2026 07:17:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ly+CzTQ1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qVxI58D/"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 036D91D00128;
+	Wed, 22 Jul 2026 07:49:14 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 22 Jul 2026 07:17:29 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 22 Jul 2026 07:49:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1784719049; x=1784805449; bh=KHwAx3e0LK
-	Xc6rgO/c/wp3wT2ZXM3eOV0Vj3JSn51Kk=; b=DjNUkFjV5JMmcQCNIkh8rzhnoo
-	8LtvE6jq/2vDmmkELC4DrFhjdhQr4i2CU1Hq51igWkQA/fiq6+mnwC0Qq61gM/Ba
-	n8kFRHXh0kYlNNRP72VBDXQowjwi06bL3glJrIKwKhtxv0fQ3sG1HZ2fsqU1QmMD
-	4b6mEkxMNQ6pkLQBqik9IO03UWL0JdlB5mrRNlujv/DiXmM0bmx7MY3jlzA5Hj1f
-	/Rbz/Hmnnz8SEjfSrEePWjT1n6QoK/Q6ej6wInrLgTXgpGOysMrwVv+w68y5Rihz
-	VXC//kJU80dXJW9TtGKDAnE08kaV0eTcB5d8XzwWFrbtZ6RF7wZcDN3y6ClA==
+	:subject:to:to; s=fm2; t=1784720954; x=1784807354; bh=w7owvquzmU
+	Ng4cvI4ncly5RxtwUiONev8Zs9Gx4rtDY=; b=Ly+CzTQ1OjJOX4ZQd7STwthmPv
+	EaRIwmrtU5jynbZX6kDCsKaL+/u7TrC9O+v2U7EUNuUkHAFMVFMl4y29UIkAf7B7
+	yKAzhDnwyFkrpU6giqtQjqslB81gN7jz3imUvWo+kCLpbif2qvTDUqttjvGSM7Kj
+	HOijxiSCSdDV0DgTVW0A1mQnYBb5dP+wtXKDHUVUHuGCBtqMdBpbZyE6f1MsajkF
+	TDRtYvNVQ/H+f5LNjqdTK5NpOM0XhkgHzF8Q883p4zE20+nN0BK08TKIRQwWiv0U
+	d8mGiqA5e0YwTX3lG7JIB8ki8pZJCqeDopUuOXvgg7BDxWwDbooHhpsP+8RQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784719049; x=1784805449; bh=KHwAx3e0LKXc6rgO/c/wp3wT2ZXM3eOV0Vj
-	3JSn51Kk=; b=eZbL/BvXTYpMa9vdrcmGDkLV5jzzboY+DeMjaE+0/5+4tybM5oJ
-	whsKSrCF9OtUnyqMB9Da/EXmF5U3ra+pS6OxOjl5alU3ZOiRz3P1slOwE4AQ7t9T
-	d+5IMZDWu0IxcG1qUoBJ3TmnYzX+tVrMf/TSdJ7pBLqmIJPxaHmLshaAGgfKStUg
-	mgRwkaIqrpT5iQ1q5hFgM4TygLHYnpM6UDqssKzGip+V/PU5KE9j6OqhzSOpOu4S
-	vjBIQruTdL7HXgG0VkQM6LZJmQwc1Limls8xJjvRBBBNIcmyRYDrF/IBD9XLNmv2
-	T0Qu5vgWB+zGn8OJvajm3vW2DqiLAeCTqtg==
-X-ME-Sender: <xms:yKZgasPfp5JvQ9X7kG8FVmxJMUWt601EUcPwSsHmNkNU-NLoTi8nUA>
-    <xme:yKZgao8X237opEnhyBk3NV9wJ-q06eXgGjn5YeBG5OnJ6MwgH5Mgl3FlHK91VcIFp
-    2lJuladDZf2pdplj7Lb02Cv-sywq2YzOlybEujkhA798zZIh7MPRA>
-X-ME-Received: <xmr:yKZgag54kMhFWAoltm1u4zT4pE1aco9fNW0nUpb8blYlc5j3cYR5HCAJR_KOGxYwUuWXlGXeoO7_0PwEiBNzr-hERlo1Lh8D0K8ZhiPenw>
-X-ME-Proxy-Cause: dmFkZTEJcnz2o/sUha5cEGDHVwbowT1S/X5LbPsuDoW3U6Ewr3LQ0cWVncnVN+U1jgzbMk
-    sj5ilPx+Vrej6ifM3IBtFOLSKaH76J+uPNYVgp7fvXEF7zzoWx26MbWrXNspSfr1edHoJ5
-    VFPC1Ol29cTqPxopr1+cUyBjjqnuhtt8gXFIgKRGqlW5nVpgVRdnoc2T8PMxz5p6d17qoB
-    ovV1Hz25UqX8XtE8werDcEqWh3XovHtvWSqdOLhYIFsCvKsCYGLqrMZHDTC9Gh+IGSb4qZ
-    J94XiFtTaJEMmJCu1We4HIuTOChF9dmM/g47vZDt6MmRfb8voZj51tqUFVNN6+b/E99jdp
-    Z3+cxmNHek2b7LjR8QaLdeYgLjDH0uAMyYqwiMYp0qh2W9HOAl+z302x9X6FNLqAJim8mh
-    eLR45IYoIy0YVtwQDeJOQiS1NQ1n8uUM0w0GTVGeLKDdk9TC4Tz9AysUokQloqwu6VZFxG
-    1qTpP1kPdOHSYY4pRr5EyAw+B7NAfSWaW0+VBJIqY9zWmyuce6FJXKd1qQ4UPq74aZh9Nc
-    PLlNCBsZZyyYjTDRRi600wyHaFZdLX7h8YNFmughkPmvCrnq4kzaB0ZtRBdUZ6SWxLOz82
-    eqO4FcK9q0P0dIf70XJkJj/6lpevVkHUPArPi7/di+clzwUsCfSPDsDF3WiQ
-X-ME-Proxy: <xmx:yKZgav36ISpx9x_QlXKjOgjEq_j7yAwyf1r6haF0w9wNLRJ73D8hoQ>
-    <xmx:yKZganCp-Shl54uOjbsTqqiK3bHbVG4BzCPJL19LsHXile03Vledrg>
-    <xmx:yKZgah2wX7GmcwU8D0O_N_mTVpvlQ03-rL4sGaFZFV5p6UXlWVg7PA>
-    <xmx:yKZgahu9SNrHWoa3PcphhMl4BDHL_EE14AuYCLY1-ayPgGHfcm0Bpw>
-    <xmx:yaZgankL76_7QrtCyLjLMxSmUKVFZMFBW5OUiX1yrOYIGcpzWXqiZPXU>
+	1784720954; x=1784807354; bh=w7owvquzmUNg4cvI4ncly5RxtwUiONev8Zs
+	9Gx4rtDY=; b=qVxI58D/PbiRVtqdYA3hWOrrXb71xBAHDOAO3cwsejGsfyVPB2h
+	2QTAYSRFuL+8txF+3GG5Q6sL9I3TztHaN2aZn8w+IjsrilupdWBNrRyftT1egduj
+	zPpXAVGTAyjLjjhzaAoohe6tSO6ifGlIvcu7f3RGTY416c+zPeAxDeL099rIal9s
+	qJir+ipUkF/xxEc1p/ZHPgBICnkrO4N92SYZaPS7tntY9pL9FX9lJeBadS8GdBUJ
+	gvcn/UhVY0tles0CjFGPv6A1MgE/mEnrcTpMP08k+nwNx57qPB/0u5o+hQ7pRuRl
+	BZxax5MI7I25MXdwUGhsHyWZnXDMohEZsog==
+X-ME-Sender: <xms:Oq5gaufSDtpMnKRKoTgJoiFSfgqYGevxETjx1AVnvMi8qeWWqT4bWQ>
+    <xme:Oq5gavE87AOooQT4jMipD0WAPx2RwhGMueTW2tOTtLrMKqEZALIrWPiuITo3Pz6f8
+    UeyClA4xebXbQDrso9ZUOz-ys9FK4FrUOrZSpDp1bcPs-V0S1XUHw>
+X-ME-Received: <xmr:Oq5gan0LlbnDmPW9gmACjR8YwaRDAEjxB4CX4JbbAMS8mWb5JVQFxIEjvQ4AnbewLsp5NYoQK6mMlHzJ6mMcpgsaUPEdiWzdbYUslMhxvw>
+X-ME-Proxy-Cause: dmFkZTFSkiyGg6hAL81hu2tjpSz/0YPyrnNH0FtLPTtuX2fIVXLqcvDUTUjts/eboO1xd9
+    N4y9IiG0sUsh3ElDmuDAu37jc0jWniKUameooGsQrw0anGesjyqBovI+1p6iVJkM5GUPLr
+    aqRekQHbqq8lCX8ufWq0/NvpOngNboKhznv+IfoRu0MBqmcZhiQvG40fSyIIcsgFDhrXEW
+    oEWyHkUS6VvhJ8FTK2/4g7FbOngHhetTR/2IczidGbaauxq5/E/yjRR5MT4MIeK9747o3b
+    9EsmjU/tBLhyJQL45EnaQiM28w3tpzpH+dxQHND90Ty1D+ZXCWBc24kXg1hv9yqVf0LOIx
+    QxkY8eooS8Z/S+vhuW2EIRcdsyh7vdHA06CZqcZgnviPfPMF50VuMTqBCHHYm9MWB07oIh
+    BPsmEHl7wTdkZ2MVB29yFmLXnIEahUDwqZ+JNFbilt2udS/2d75IqURHaSkwNci1a/f/G6
+    aSGXmes3G4SW7/vRbWVIREMHLcJ2JmOJzm2jegKYIsQ7qc21FYJsAj+D2dMPMQBAcIKuiI
+    nEw/wQK4wDG+ps8XDP5MG8FDoGIVzf7z/AuhBaaxQ27TN1ll3A0WEwpKsTl3qKeKKZ6loW
+    4IJ+Vu7Ho5Sg9iZh5g0XC+lrEBQxG4l1YWKEpD0jwBOs9/AxRQdOpc+AxIGw
+X-ME-Proxy: <xmx:Oq5ganlcpW9Fbz-WJ0_9SBSJ4nvOSEU2cHZDzeDQo7NaOJJUlZ165Q>
+    <xmx:Oq5gan_SHn2zAA7FaijhpfLyU4cIwEJEy9xgzHZ358FqCcJwBRxN5w>
+    <xmx:Oq5gasoTTirc5JUSgwa855L3BkfCvPyzi9fshDLCSgOFjWvN8N-7kA>
+    <xmx:Oq5gagkxd-lclMr4mHJ3q-SPr56qTA5_xQcKZZ7LAEXKiuz-MzUTWA>
+    <xmx:Oq5gatDw3TeE4VwiX2igbM6Sho4lrZHJCkiidtawmKYxhFlkvEzjCGCj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jul 2026 07:17:28 -0400 (EDT)
+ 22 Jul 2026 07:49:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dee29c33 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Jul 2026 11:17:25 +0000 (UTC)
-Date: Wed, 22 Jul 2026 13:17:20 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 009c51a0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Jul 2026 11:49:11 +0000 (UTC)
+Date: Wed, 22 Jul 2026 13:49:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 11/12] builtin/gc: fix signedness issues in
- ODB-related functionality
-Message-ID: <amCmwKjbq2aNt8mZ@pks.im>
-References: <20260713-b4-pks-odb-optimize-v2-0-9c2c3ee94b38@pks.im>
- <20260713-b4-pks-odb-optimize-v2-11-9c2c3ee94b38@pks.im>
- <xmqqwluyyhv1.fsf@gitster.g>
+Cc: Jeff King <peff@peff.net>,
+	Wolfgang Kritzinger <wkritzinger@atlassian.com>,
+	git@vger.kernel.org, jltobler@gmail.com
+Subject: Re: Performance regression in connectivity check during receive-pack
+ (git 2.54)
+Message-ID: <amCuLpT6vYzo1GF8@pks.im>
+References: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
+ <20260721035733.GA581473@coredump.intra.peff.net>
+ <xmqqtsps76f1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,33 +89,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqwluyyhv1.fsf@gitster.g>
+In-Reply-To: <xmqqtsps76f1.fsf@gitster.g>
 
-On Mon, Jul 13, 2026 at 09:28:02AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/builtin/gc.c b/builtin/gc.c
-> > index 3207182488..8cf3781313 100644
-> > --- a/builtin/gc.c
-> > @@ -456,7 +458,7 @@ static struct packed_git *find_base_packs(struct odb_source_files *files,
-> >  		if (e->pack->is_cruft)
-> >  			continue;
-> >  		if (limit) {
-> > -			if (e->pack->pack_size >= limit)
-> > +			if ((uintmax_t) e->pack->pack_size >= limit)
+On Tue, Jul 21, 2026 at 07:40:02AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> Here, just like in too_many_loose_objects(), 'limit' is of type
-> 'unsigned long'.  While it makes sense to convert both sides of
-> the comparison to an unsigned type, casting only the left side
-> to a type that differs from the right side puzzles me.
+> > Yeah, and that type of regression makes sense for what a593373b09 was
+> > trying to do. But I think the v2.54 behavior is wrong. We should check
+> > all packs before any loose objects.
+> >
+> > I'm not sure of the correct fix. This is working against the whole "odb
+> > sources are independent and abstract" refactoring that a593373b09 was
+> > going for. But I think it's an important optimization. I guess the
+> > abstract version would be that each source has "fast" and "slow" lookups
+> > or something like that, and we check all fast ones before slow ones. But
+> > that is pretty gross.
+> >
+> > I'll leave it to Patrick to ponder further. I haven't really been paying
+> > a lot of attention to the odb refactoring.
 > 
-> Presumably, the other side is of type 'off_t', which is signed,
-> explaining the desire to cast it to an unsigned type.  But I am
-> not sure what happens if 'off_t' is wider than 'unsigned long'.
+> I think checking the fast sources before the slow ones is probably
+> the best we can do if we want to retain the 'each odb source is an
+> opaque object' abstraction.
 
-Yeah, `pack_size` is an `off_t`, which is signed. But we never populate
-it with a negative value, so casting it to `uintmax_t` in unnecessary.
-The right-hand side is already unsigned, so due to the usual arithmetic
-conversion rules it would be automatically promoted to `uintmax_t`, as
-well.
+Seeing that this is about the `tmp_objdir` case: one of the things that
+Justin and I wanted to work on anyway is that we want to stop modifying
+the list of sources during transactions in the first place. It always
+felt kind of gross that we're modifying the sources when creating a
+transaction, as the only reason that we do this for is so that the
+writes actually go to the temporary object directory instead of to the
+primary object source. And that doesn't make a lot of sense to begin
+with.
+
+The alternative to this would be to instead have logic in functions like
+`odb_write()` that checks whether we have an active transaction or not.
+If so, the write would go into the transaction directly instead of going
+into the primary source, and consequently we wouldn't even have to
+modify the list of sources at all.
+
+This shouldn't create too much of a problem, as we typically don't
+intend to even read objects that we've written into the transaction
+immediately. It would avoid that we try to read objects from the
+temporary object directory. And it would also allow us to eventually
+move all the logic to write objects into the transactions exclusively.
+
+I'm currently out of office though, and will be on vacation next week.
+I'll explore this area a bit more though once I'm back in office in two
+weeks.
 
 Patrick
