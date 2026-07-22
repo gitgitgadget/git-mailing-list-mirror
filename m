@@ -1,85 +1,84 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D758F470EAD
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 19:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C57470E8F
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 19:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784746990; cv=none; b=TG0RcIAhxXvCIrJc/uuQRfTeMPelqfF10BUqwvHEaet49y/Bf+MbdAfsd4k6Drm5sxr4KXy0gPHLQjBIUs4axYIxo2fJgqVq/Gxl5LEs5aZ+IzgCH9TwTDLnUxslHWmq7r5sU3ehj30FugUvevQ5MKHHCYGkPTx2itYZIlwywBk=
+	t=1784749755; cv=none; b=KN5voiHaVjA718hnP/ceaofazDsnRYJF1MCOFJOD43E+5XT2pDTQbLcJPYrCKcDhhHIOPObBDeF5a7d6Qd4KGN7A/BGJ+X8cSoHlkNvGOK/BrNEvnE9Z+byVquysBYarhhTjUq8nFzWIse5hAj0I+VPMcQaEv/UJvvzCDe5aYvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784746990; c=relaxed/simple;
-	bh=o+Px/3cYGp2PTzkKPKhqI9BFpEgNAcel8WOgpL89GXQ=;
+	s=arc-20240116; t=1784749755; c=relaxed/simple;
+	bh=XgnjZwXfD1vUv2yxUqeSvN0B82T6rG2DGC14c9GvkMU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PlGA/tI2t7pYo9Ks4iEy00vn68Emw0HP81hVF/zxvrJPJt3efpHjZbMEmGzxl49JwtB2igH0P053yvsPWIhPmyMugNlDkdyUxnSDy0fx+3mnie+9DfGJUPT2GbZHMbGxjpj+Yxj9WOdLPgo0UAoboM8Yop2G7843euostwZhd5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=odmHhQaa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=agP5zO/c; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=ESbeX47YI1B1XPuY8CY6JiRRQcgnlPAdxm7eC4nJEIR8mkvBa6pvW7UX82ONS8WWD96nlPAeR7LQB9ORFBAvOShScuOKSuOAgYmEvmyBI9Pvf/cwxGUpa+RQTf+cSKlUf9UHnMNcJxtvUTS1FPfKA2BIXmsYAJH4THyopa1x5VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h/NWQYqq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mIhWMAE0; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="odmHhQaa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="agP5zO/c"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0BAB1EC01A2;
-	Wed, 22 Jul 2026 15:03:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 22 Jul 2026 15:03:03 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h/NWQYqq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mIhWMAE0"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id D0636EC011B;
+	Wed, 22 Jul 2026 15:49:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Wed, 22 Jul 2026 15:49:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784746983; x=1784833383; bh=8ABcZTV5jm
-	Ue6GiJVkeu0ySt5VGFnLDl7N2pyQ7Ouy0=; b=odmHhQaahza8Adtc6hTEhwaaop
-	H4cPM1TbHJIJufTkhfM5E/ZxKQgLggvbOav2orATxxmZUshu8leKdH7RnewXfINW
-	ZvlG1XOeer3ju4+Xn6CEpKwetCLPv/v4fFcoqtDAUxvEuS951ubmIM6Z5LvGZ+OZ
-	n3HYOPwnr1bhZK6OTrsHNCjshA/7i4hIIDIaTHq3AqiXbIqKMXNHg1uJtHSNSb63
-	8KlYsFoSTnBJdWYMCIr5ZJxGv+rzSNWRSnY4ZjJv8jY8Rfh7Pi4v8Wvb5BzYlgW3
-	x6bFV3NeeEDKU0y0crCVZHZjy/MIw0dv+nXJ01xn+Vd5l0yjM/UkOcxb1v2g==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784749752;
+	 x=1784836152; bh=4WcZbofvBkR+OTrLCou8yioExPuUUuj6Khn0b/cwrTc=; b=
+	h/NWQYqqEtaceuulaFLIJqQ5L63G3pCAPk990yBnt4HzrJdRjoDXQR6d7P96UriV
+	RmwOWcsYbzt6iVeuS7ZZuUiemTYLKjiL/nYKk8FFqTc2QfDJ1+l8HKiPGOVchj33
+	FZo7xpW7i8quc7wuLydqRlBTMKmDX3RgSmNcvzxJ2bfbzzS2n/tsjioLzXuLtUlH
+	UL/BBif9pG07cETEPodUj/5aEW7A6EI4qBVOqnwhgSNOb4wngyyMslfCX4M7RR3t
+	yJPlYuWP5KFDq1iddenzZ3s54BzmoCnrO5DCva4/NSYCfowsyRMIphJliUNtdQ9b
+	KdSDHYacS+yKIwHOvqebQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784746983; x=1784833383; bh=8ABcZTV5jmUe6GiJVkeu0ySt5VGFnLDl7N2
-	pyQ7Ouy0=; b=agP5zO/cNlC+kDkttmruHtZlbIuhQLLIHiXkI46BrGh0JiIuTZ9
-	GGUq8w7PlD7U7PV2PLWdmPWoQtFGPXSVhlHalqitD4ltOvcKi1dvAKPijWPtFb5a
-	FRJBoeNBoPwwyiD758dog78xJ5k1Eb0Bi4mdmVXKf4wqZML6jI2NxsvymzR3LyJD
-	bfdv/8gsQknWt1g70apk7I4OdhNsfVCi31U68znRYuzXmMX7WL1fEt9VUerkz/Vp
-	6u6rnWom9jExmmWlzaFBFjMX+SfT3OPZW//1eWQv2rDJpkZJ7vgH3+alhKCTo7gk
-	IA16yPOZvq3U6h9K962vhanDibHbnAFS+FA==
-X-ME-Sender: <xms:5hNharylTMgPrEqgBo8HpMZCKD4WM0g3poOmbXUNh7jVUaOI4roH5Q>
-    <xme:5hNhaqJfBhJuvtAmNNw0alOX4Jc4eUO7Cf9ZNitFoeXIOxpk6kTAykdnLQu5OiCjb
-    jbkQZTr9z_8qSmQAM78x0uW27vyzwi1wzac2F958dKJfepMeU5DGsg>
-X-ME-Received: <xmr:5hNhatrWDK_Ux02EZkdjdg24Ulph0SDBsJx8mySIA_Oh9rkJ4IThwwmZDlFIDPBjvL_aT2giuiKYHQ5TD4avuPsQqkYL2Q1_tA>
-X-ME-Proxy-Cause: dmFkZTEZrbDzui7DrYnm3rAuTv653z/Vmzz7REuC0AWxF9663EJC0Qa4gqSMKAUz7yXAYb
-    nNB+6KcuAhbAcam2RSf/FdahGdLz9zaFp/J3wVD+dfwUKH7+iaPVZrANlfQOTT/pZwnT2+
-    /39COVzVWeHPKUEOxyfTrOn96cyfz485k6v3CrD8wrMBa/1oajrYyGXOZ8hogJ5QC+p/0c
-    JW+R0kzaOlW4thPzVNLpiSIQystKcIeHemBQ0xJkPbde4X5i3ePe+cfZWaSoF0uBVpBsqm
-    Rn+JisNvk5PW9sIe3pKRMI7nOF7+TU9c1ctyxSebP+M/opIhKA30hagoIHglA6Jc7kJ9hg
-    kmwgY2tDAiP16vWmiYQijWESYsW+Wvt8Bf+tB9M3L0DK7jdeepVqd/o3cbhZ1hij4XWQph
-    kSdr8DTQ/JAIlp+UOW0fOy+WX/HfecCELrsXE0mHyHZ6+LRvFYQU8cD+zBmF56VTZ4tQM6
-    no8CFjA+IRISW+UxK1CtDdv3ai5wbn+DMhKlPViYYRkTvmQtjwjslpQ0zti0rkp8ds7d9/
-    WjmyJ/8PdFDaRWMfaZmbHTIRi9doLb9lpESGDNo9fyjG26WjX8ywbc5vW+RczFpKDi/ihF
-    uny33/9fYF2plRyCErkbCZRHJ2RaDFHRceUxBWcZ8VwdAjgexDJQNJhC0nqA
-X-ME-Proxy: <xmx:5hNhahKBGLRB6lzkRyaRfvnFMlydqU7L5oQBaNDluMkSVCsamouW8Q>
-    <xmx:5hNhaqTdEoBvkRSUGE718AhESF5fJBOPKuEi1siTrulC94Q-wDPTKg>
-    <xmx:5hNhaosQVgpBfmbsLYYxMX-sMm5PxZpKYEQxnJo_YyG-x_sCHw-vnw>
-    <xmx:5hNhajY139nir176OqPBb4tagDBErFroB4ZAwHjPq5VABBN9o8Eh1w>
-    <xmx:5xNhasYtKkJoBrnF8UOf0Z0Z5aRIBqcpxeMkBzJXO6jZcJOGazP9YifW>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784749752; x=
+	1784836152; bh=4WcZbofvBkR+OTrLCou8yioExPuUUuj6Khn0b/cwrTc=; b=m
+	IhWMAE0+T7CvDfczSzV+l6dj3lJhgP9o44ZUS8eYeKXalUM7mcN/9Z1PLl0vAB0p
+	0Vn7WdsjmqSFQbCiiFEurvp8AZTnyPvq5FMTG0e4DgJpKF53Z2cmfTmMUt6vtXBX
+	Ay/cGYAsVEh3+/z9gGJ1UafPeIcuplMRa0Go33D/xkhcasXkqSRQ/Odd8M+WNEIa
+	RSVN51YlRoAwUuJGvFKDpaOsyMROoLsMp0FvcJIyvWFX7cs2Vi3uf+WNI6wMpj96
+	1SaEq+lM4OXyj0mgwfwMlzSl+fv3MS12r1FLbT0bffJgHr9AmnUKLEAAVDKybJ2h
+	qn3XALu3cEz549QYySolA==
+X-ME-Sender: <xms:uB5hasVyX-8h58LxQsp1LRCUl705BW2qQeVdROSo0HBseIC_DI3lMg>
+    <xme:uB5hanmci7McY45w0-LlKZtcr8BthrpgvleTHQSsSHqSTYqnGOv7MAKKF1tnDg2_M
+    lwml2zNY-OZcxXmKawSmvcU5CZkf7I0-6FRbzzVZWXgzG3aMenVhg>
+X-ME-Received: <xmr:uB5halZjfHyMJxgbIlML-UNAzYS5Cvu2KirpxyMxrxmXW8bEYOMtPebSNvKmcCXAtLnRDuWu44JFsakm1xbU4EDhgLM-0wvBaQ>
+X-ME-Proxy-Cause: dmFkZTGtYD+tZUQb7h7SQ1hRT58luX8jI0bTlGMM4a4HcxcfsXAa598eU6i8mO3Q0sgsZw
+    v+ek0Ymrbr9/ykB56Z1sfQPMq1JGWEhBKWNx6U/OmfVghHSuz79FB51raYPPu3Fat99PoE
+    +W4IoMZpm28Pap4M9qi/8vKEnzbBr5qTvCHL/K9hIyUCVlzG2rTYBj01seuwccTkqD6mVu
+    ObIKuhcc6SfT/EcCKkQf6ruhhDRsV35HxR0W67TrShlc6s1kOZjJqPE36umo/OGHnFERFM
+    Wpk4zDKnsvUfEI1+BU0Th2zYgazXW/rC9ZazpkKmsvVSFE+3maJn9YK+xDyZOGdU6MH9Jb
+    lOKae45ZyEkLpn2DYpevmBPfBT9RYjBPo+CUZqSAxWtuORRIdaSKABVpt288XVv6KB9p/Z
+    xCI0U8MEtIJ8/iSdDP03xUWPjzLblFr3zYLqYr3YtoU3xTo6f6tUunVfB/f+QeS01zr9TI
+    X1yEvojvcg9eWQOK+mUB6mBnsHrNEwmWVY+IAAEqbixtJr0yiYaEYc1Oc+Mye7eDGi76tC
+    syReaQuibdJdwbJnIIk4dbb/FAmYP6FgE2KA2ervl7XIg6iuBzJPDHI4jDuX/xVZBqpjZM
+    eQIzqH1Kx7DpBQtolw02psVyHz5Ai1M1FZQgJg+FUFKm0uy9MguEvtFXm0mw
+X-ME-Proxy: <xmx:uB5haqOdncIOlTu0IEP0i040l1DQ2pLCuQNTf-rzBZSgZME6jd3vrA>
+    <xmx:uB5haibGQdKEBJMoOg-3nWSE83EBxMlPquUUGe2No7DdSc0wPNcWDw>
+    <xmx:uB5hag3QpYuOizBt3Uk_pNtEXgjO6Ax6Fm0JqzmxGvNdl1-y3tziCA>
+    <xmx:uB5hagdXbAjrA-kNQhvxUmjZ-oZ693jT3QOfhrLf6Jr-UNl08ptkKA>
+    <xmx:uB5hag7RJkQRjtV8kx2bqPSnIma0sHyYNAB741rS0Cfx-3uvB4T4ES_A>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jul 2026 15:03:02 -0400 (EDT)
+ 22 Jul 2026 15:49:12 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4 2/2] remote: find tracking branches for URL push
- destinations
-In-Reply-To: <08c432a2d4f52c202a2bebaa72330a17e94aedd1.1784743738.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Wed, 22 Jul 2026
-	18:08:58 +0000")
-References: <pull.2358.v3.git.git.1784664859.gitgitgadget@gmail.com>
-	<pull.2358.v4.git.git.1784743738.gitgitgadget@gmail.com>
-	<08c432a2d4f52c202a2bebaa72330a17e94aedd1.1784743738.git.gitgitgadget@gmail.com>
-Date: Wed, 22 Jul 2026 12:03:00 -0700
-Message-ID: <xmqqpl0eoniz.fsf@gitster.g>
+To: =?utf-8?Q?=C3=89ric?= NICOLAS <ccjmne@gmail.com>
+Cc: git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] submodule: resolve insteadof-aliases when matching remote
+In-Reply-To: <20260721213042.3357346-1-ccjmne@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=89ric?= NICOLAS"'s
+	message of "Tue, 21 Jul 2026 23:30:42 +0200")
+References: <20260721213042.3357346-1-ccjmne@gmail.com>
+Importance: high
+Date: Wed, 22 Jul 2026 12:49:10 -0700
+Message-ID: <xmqqbjbyole1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,78 +86,98 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Éric NICOLAS <ccjmne@gmail.com> writes:
 
-> +static bool remote_has_push_url(struct remote *remote, const char *url)
-> +{
-> +	const struct strvec *push_urls = push_url_of_remote(remote);
-> +
-> +	for (size_t i = 0; i < push_urls->nr; i++) {
-> +		if (!strcmp(push_urls->v[i], url))
-> +			return true;
-> +	}
-> +	return false;
-> +}
+> When ca62f524c1 introduced a mechanism to identify which remote is to be
+> used by a submodule, we had it compare the URL stored in the .gitmodules
+> inventory to those of each available remote.
 
-A new helper is very much welcome.
+Please refer to an existing commit using this format:
 
->  void ref_push_report_free(struct ref_push_report *report)
->  {
->  	while (report) {
-> @@ -1887,13 +1898,45 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
->  	return branch->merge[0]->dst;
->  }
+    When ca62f524c1 (submodule: look up remotes by URL first,
+    2025-06-23) introduced ...
+
+> However, when using URL aliasing via url.<base>.insteadOf, we store
+> in .gitmodules the URL pre-resolution of the alias, whereas the
+> corresponding remote set up in the submodule reports using the
+> *resolved* URL.  This mechanism therefore fails to find a match then,
+
+Since anything involving the .gitmodules file is often security-
+sensitive, it is always a good idea to go beyond just saying 'X fails
+to do Y.'  We should also explain why that failure is a bad thing (or
+perhaps a good thing) and for what reason.
+
+If this aliasing were controlled by a remote entity (for example, if
+an upstream project modified the .gitmodules file to redirect us
+somewhere unexpected), failing to find a match could actually be a
+safety feature, shielding us from bad actors trying to hijack the
+local repository.  Since that is not the case here, adding 'fails to
+find a match, which is unfortunate because...' would make the commit
+message much stronger.
+
+> and resorts to the fallback logic, which does use either the only
+> configured remote if there is only one, or attempts using "origin"
+> otherwise.
+>
+> Resolve the alias in the URL inventoried in .gitmodules before comparing
+> it against those of the corresponding submodule's configured remotes.
+>
+> Signed-off-by: Éric NICOLAS <ccjmne@gmail.com>
+> ---
+>  remote.c                    | 15 ++++++++++++---
+>  t/t7406-submodule-update.sh | 21 +++++++++++++++++++++
+>  2 files changed, 33 insertions(+), 3 deletions(-)
+>
+> diff --git a/remote.c b/remote.c
+> index b17648d6ef..ae187fb3d6 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1821,17 +1821,26 @@ const char *repo_default_remote(struct repository *repo)
 >  
-> -static char *tracking_for_push_dest(struct repository *repo UNUSED,
-> +struct remote *repo_remote_for_push_tracking(struct repository *repo,
-> +					     struct remote *remote)
-> +{
-> +	const struct strvec *push_urls;
-> +	struct remote *first_match = NULL;
-> +	struct remote_state *remote_state = repo->remote_state;
-> +	const char *check_url;
+>  const char *repo_remote_from_url(struct repository *repo, const char *url)
+>  {
+> +	char *rewritten_url;
+> +	const char *url_to_match;
+> +	const char *remote_name = NULL;
 > +
-> +	if (remote->origin != REMOTE_UNCONFIGURED)
-> +		return remote;
-> +
-> +	push_urls = push_url_of_remote(remote);
-> +	if (push_urls->nr != 1)
-> +		return remote;
-> +	check_url = push_urls->v[0];
-> +
-> +	for (int i = 0; i < remote_state->remotes_nr; i++) {
-> +		struct remote *candidate = remote_state->remotes[i];
-> +
-> +		if (!candidate || candidate == remote ||
-> +		    !remote_is_configured(candidate, 0) ||
-> +		    !remote_has_push_url(candidate, check_url))
+>  	read_config(repo, 0);
+> +	rewritten_url = alias_url(url, &repo->remote_state->rewrites);
+> +	url_to_match = rewritten_url ? rewritten_url : url;
 
-This part used to use remote_has_url(candidate, remote->url.v[0]),
-which only looked at the .url and ignored .pushurl.  Now it uses
-remote_has_push_url() so we grab the effective push URL for the
-remote we are dealing with and match it against the effective push
-URL of the candidates.  Looks correct.
+Being a bit lazy, I probably would have just reused 'url' directly:
 
-> diff --git a/transport.c b/transport.c
-> index fc144f0aed..30a4ab2cd5 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -1553,8 +1553,11 @@ int transport_push(struct repository *r,
->  	if (!(flags & (TRANSPORT_PUSH_DRY_RUN |
->  		       TRANSPORT_RECURSE_SUBMODULES_ONLY))) {
->  		struct ref *ref;
-> +		struct remote *tracking_remote = repo_remote_for_push_tracking(
-> +			r, transport->remote);
+	if ((rewritten_url = alias_url(url, &repo->remote_state->rewrites)))
+		url = rewritten_url;
 
-Personally, I would have line-wrapped the above more like this:
+This lets us avoid introducing a brand-new 'url_to_match' variable,
+whose lifetime is essentially just taking over for 'url' anyway.
 
-		struct remote *tracking_remote =
-			repo_remote_for_push_tracking(r, transport->remote);
+>  	for (int i = 0; i < repo->remote_state->remotes_nr; i++) {
+>  		struct remote *remote = repo->remote_state->remotes[i];
+>  		if (!remote)
+>  			continue;
+>  
+> -		if (remote_has_url(remote, url))
+> -			return remote->name;
+> +		if (remote_has_url(remote, url_to_match)) {
+> +			remote_name = remote->name;
+> +			break;
+> +		}
 
-This is just for a future reference; it is certainly not critical
-enough to warrant a new iteration just for this.
+While the new code preserves the original 'first one wins' behavior,
+it does make me wonder why we do not issue a warning or raise an
+error when multiple URLs match.  Leaving such an ambiguous
+configuration unflagged feels like a silent bug waiting to happen.
+
+But it is of course outside the scope of this topic.
+
+>  	}
+> -	return NULL;
+> +	free(rewritten_url);
+> +	return remote_name;
+>  }
 
 Thanks.
-
