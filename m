@@ -1,87 +1,82 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D1547DD4A;
-	Wed, 22 Jul 2026 15:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA4D4317D
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 15:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784734366; cv=none; b=H4xMwglSnClk3tWe/zM4OraCWI/hg7XGwvZH7LL+6KgodiB4yy1Jo/U7WgemAIJzhrOHzlKcbwo59Vsm8okSPY0AqC/EIvGxAnLhQMg03OF1INl8uzKR68D97Ba1Aynl/q4xlmyg44PVHkP47ngsjc08wzT2nog8VPFDnm3IlEU=
+	t=1784734568; cv=none; b=u/WZUZGz83QlDETwMAB7qeSPAzKuEuLfWKm7g/SUuh0c4E8wUKMCNkPtd7irL3No7uCMnIRMNdX9TCsuUmGv6yzE8YnB6M1qW+e31AsDGyC9hxTluD0jya0mOKZYAqzE6oWiPrEG/nnii7affS65dt2IPN8VlYtlKiGhBL+OFYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784734366; c=relaxed/simple;
-	bh=/wdTS+f4uLBsPjr0iqwi53XHY0aWR7oEauCT9edc+X4=;
+	s=arc-20240116; t=1784734568; c=relaxed/simple;
+	bh=wukaIQCPjlPG0T85xRSLKQhlk3HJKsYF3LCkd/5Cla0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E9hiGqe+3sMraW7W0c3vvnU6WAyTsL6mxd/+eB+3Q4gkSrM0cbjuVnM2jDIzu663g0pBUNhQPbnkK0rfYgxN7kbYbt0EQoNHdTiIbfAXI1kxUtn9qB5NNzgg4XWII5q4/NRUgsO0voJe+490KjEh0dHDbdx1aawcnm41vqWBpFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V6T3oiay; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nE7KvB7q; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=R59RyPYrqu9AGCfb8YOS8LVkdGbY35xbPHx0aXnoQZPlgi2JpE9TP/7x6kqSMQRra+vfeRN0RpDohgWvvpKLeMhZjNL1RzD9ZvgErHxhLVL7+v/vehLlHi10F2wkEXBklM0USm58/Kqqa4VuX/H5vQEj89fkXqTLf8JcnGaLdqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=azs73qCM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XVXjabYv; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V6T3oiay";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nE7KvB7q"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 50A741400122;
-	Wed, 22 Jul 2026 11:32:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="azs73qCM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XVXjabYv"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BA7881400120;
+	Wed, 22 Jul 2026 11:36:05 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 22 Jul 2026 11:32:44 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 22 Jul 2026 11:36:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784734364;
-	 x=1784820764; bh=4Zg2nnTQLXlCugUeoSxcBmfEus8rVi7k0AOTDmUH1HA=; b=
-	V6T3oiayE9Bju4sXd4giE4V/FxAi0wy7gtVs2CJ6BD8w/os5RbtqO+Yi+9dST6RF
-	cvLQ9yjIiMsYimurYXfzZWWwDItLUNRihbgQydncao/1VuWosHRUQ4NP4Vb26Hj+
-	/OxRH4oGU3AEGmZfKZGAhay6lAt4e56qrF5oLnkBF9zzythwHwVKc/iGry9w762U
-	TfYdt36MJC3iPWdfJ8/OZ625f/YtP/vTNQq0J1ZJuIdR2KIkkzuSZaJ87SaYy1Em
-	zFIchgu+QvyVPwsFc0SoqwbKGS/QktTFxgBppNKOuXLvWWgu3+t3+p0QC5jhzTs3
-	HPAF2qRRJhv7iJyNTS4B/g==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784734565; x=1784820965; bh=UcmnndA0qV
+	ZuTDOTwhhalQ0LIlLKrHtNZoHNtIQqgaA=; b=azs73qCM4r1Z/rAm8410GSOfyy
+	SJGQ+oTNfFJzXUmwDhLPTfZpJ+hi5fVdmGMXFoE/Z9L4rkH+emYWVRGwBjfYFSye
+	hfLE6sUtEGuKK6b3bZe+Hvlftle48M62NDcyq7sZKbEyjJxHAIa8X5CyGGMP9eo5
+	oWO6vkEHZwCayV6+RXuRLSdw41RidY1JyrSRrJEr3B37eT/2MinOEL+PXx7nz23g
+	se+uIc4oOi8FV6Znm96TjSJKd31mkhayBUE4mu4ehuqwXbq6zDpAD3WHk8zE5QYo
+	2CaWfksYStDnHA6p4YHo1Ix5KHC/Hq7t5mQwp+kTBC04QPBETiKuLg/+62Eg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784734364; x=
-	1784820764; bh=4Zg2nnTQLXlCugUeoSxcBmfEus8rVi7k0AOTDmUH1HA=; b=n
-	E7KvB7qrAApuvZwQv29TFfcaPAUKMUUFhTIX4RqjRcn7Lx4S/a7XCe6EJXxCxiyX
-	97LFJGHy9p+3YpPIi7J2xSuqpMf05fg6ZNtjbHwBhBO/5TyTnx+Uh+DxiA/FHPF4
-	pUbdF9UHn5yylb0wHMatvanzMq96e9MwYFm8y7jXnc3j6tNylpDUQKOmwR5XLaaa
-	J5xnYwfgFKtyK8rNbOOSbtrnq8UGAECzoZG32av/0VsUbR5MGjqI/ZsIyTvfQgo/
-	PwprLDCD5i4ca4NGNtdNaSMevKYYDaOmRQ9k1yJwV3zHgfe91IBrVyw1Apg3ILZV
-	4RBkEhbOvxkg2FCUxOMMQ==
-X-ME-Sender: <xms:nOJgaqEXzaxL_J9Fu0UHhfcHffkOvu4Bh2TSnBkdAyZgWK9rDPr3mw>
-    <xme:nOJgaua2bm3ArZ-ASrzL9_cSW7iR2LNhl1jiIIvF6yVQPQsK-LzuaGm1X1KelwGMN
-    udHcgeIIgxU2i0j-H-XpStOyC0UnCkY0VJF04Jhm41k56mDuQqlKiY>
-X-ME-Received: <xmr:nOJgauxbnHwTO7vecJQKsLL3-zZcEPgmYWU6P6CIwnJByEfz5ZrSc-wT-MSBG5sP8Wl_51jsL9vS12xMFsrL9pTWuPI-fYNfog>
-X-ME-Proxy-Cause: dmFkZTFxsALUb4sR2NdP/9HHy32xz/sAse+DLl5J5C8Twg/JbGFg2UToZN21RDcj3PZLij
-    05Yu5IuWFGAbA9M784MUid0jCG32grspNrp3JXk5Wk50nDYUW/SAn74cEqn/5d3As5Bbp3
-    a+4OUpH7qAfhITC8z79Ibl/DCqPqAfOoFdL78mkZ1xdIngvYn3iWii/wUzAfpMhzPbhGP1
-    aqrbl4YsVqyyIs46pnAZrgbavnCKjtMfk1mZskyJSGum21QHazuiRv4ITAOqS2vo4M7gkk
-    dNIvhEG8NwKepI53f//2sYxt+LHDdOzdfTYdUAQuuc9RZ0QvQ6IS/bZM1h8DLH6Ud/UeH+
-    W7gKektdFssAZd3z+Lnr1knmAiYl7RapMs7UCHQN4a7SpCZ57y680aLev1Mw6IS2yZ9jY8
-    M0OrWvZ6MwQs6nawsuE4mVyZyyHMW/ty8RXR9fHxEeDGQcbVjjGz9/FtWvZ0bGBQOZUrbv
-    1DIsu+o0a2IGwmU6ZLNquK1F8k9weI1VHokswcCR5ZcA1YLNr6l2aGYPernKgHFrcf44UO
-    P6eLMFlfFvNMEjdcgjV5zqRdNBguXGv+ftfK4Tzr+TVjoR4MVzjrCR5Lr0l/412tso9hNJ
-    vWOmbO4rhBSkgjkWL+nV9e8LCrBkp6Q1MtOeUVUKEGckSaCu528aBZWeaBEQ
-X-ME-Proxy: <xmx:nOJgagSju8cYys3-8tBMekn7dthBvnXFOhAHUa1uncEGQA4F23b1Ag>
-    <xmx:nOJgarJpyvI0te3hdK1nAbuMSAy8kCVzmiq4yn67ZAuMRpBPxONIMg>
-    <xmx:nOJganX9rsmX4K1OYNK18QhZWv1pF31JAu_YO5kcwpZLioA9OaAjWQ>
-    <xmx:nOJgavTKj775gYo1vwcziWk-eJsmCQoQpfIMOgeRJb1ojNkxcCe4RA>
-    <xmx:nOJgapbS4ospFkgUjbLOPzWkyJu04CuFSZhFYIG0HRFBnzG-jRCsIRa6>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784734565; x=1784820965; bh=UcmnndA0qVZuTDOTwhhalQ0LIlLKrHtNZoH
+	NtIQqgaA=; b=XVXjabYvzx6NwTdcw6hWKTp9k1VHaE2Ef32B17eys7ZJdAlwncb
+	xZwTUyC5aVwS5Y4t14CGgrvxVGY3kw4Tb3j4qngmPdWH34ITQVt6019rnKOpvxX5
+	Z2eeusYWb/MOspVL3tHwI6omnL7zP/8pmWFakVv3NepMMEBtKTJIVCRtjMwkSTrQ
+	tVouy0Bza3r1c4/OqfpkGjy5jBnIaSig3682y3Ti4XAgI1mIRM3CZZwhYYqs2zDp
+	6D510U7wIkp4rKossuQPCF42S6kDKE1PRTYFZQI15C1weFnzcxwU9hheIr0WnC4A
+	SzJhwpH+C7Mdh8fbbg7NbuPPahYtu0y9+Rw==
+X-ME-Sender: <xms:ZeNgaoW5ui5kZ9qalvOErKsel-WJOwjnBzy7mG0t8QcDcJX50UrCDg>
+    <xme:ZeNgajk8-WdJsICioj7dK3d4x5BdSzJFLyiorz9XYPai7gDcm9Tqg2H30suRg7SCn
+    ZJNqWcEljRecSjRsVC6M1MIqmrCVWk3uW0Qfofudz07nO-qj2VmC40>
+X-ME-Received: <xmr:ZeNgahbor5EiXyC96PSm_3pVd07uVNeh7pawLXCbFMpBmoPScyFXKIrmLKQfLUX6r0tF1sq3Tq1HhoCTrnPCy2YhyxourUxwiw>
+X-ME-Proxy-Cause: dmFkZTFC8VWbvr5k1w4o+OtBQMxUT10pT9k9RnAeXiHZ7GrNtsSwRNdh99jnwsA1vZAGKE
+    YTrmj1xi3KRH0cdWMGaGMEAdBf9kaiD+kIm025qitXXfBp3QyKO9YvBm4JH9C46+MYKgwM
+    asF8zntrTZEx4fPHwkNVt/DhuEltLyDWjxwjESeTrfczeRrBwyxufFAKGmXRC3h1Eg4O1w
+    4dmTorbVHc+dizB3au16LIu8X/r2fVeHOyFnGgaMaHbyHjLhCGtlr10XcoPPyrRgl89mh0
+    y7j5hsE2xEdmC1RSLeB0q3cntiTTWqsOaYUQLfkpo/FcE3NWlOQCTeyhdQj4u1cIti+rLy
+    VK3xbZihJNGzx9RzGgXIiA3rSHDGyrcoVbQXiBhMKE46SsQcTWg/nFscvAzdsPLYyxFNzs
+    wptlK/u31kD68O7VkY6P9BP77h/QsQgt148D1Uh/ffnnRhvhP2+VOqnDzvbQcCNns8cnh3
+    BjGiJkiw2GS6R0uqtw9QZTnarsoufwXY6tK+hF8UuRzeKHrmCcJYeOvXWsFtBSdA7sBqyL
+    SJ/pLjvYLDz8eOjgdauvfhDTigybuXYuPomMVicrDdpaF+masmjsVYiq64EmqOhisOzcXT
+    O5HukuLeAAIBaELgYzBqYZRyozzh89faLizs9ln9UZ2DPI8YJ2x8B9Qnz4Qg
+X-ME-Proxy: <xmx:ZeNgamOj0fMOt78LR5OVFJuWHSvLSwPs5-VPyrtvgPi1Ym6u6ztPSg>
+    <xmx:ZeNgaua4kk83g-fD-kNVPb2AW4atait_ZegNrCpJbq0Eqi3ROnlCkg>
+    <xmx:ZeNgas2rNerxJHqjF4qHHMWRxFrnG7yn34OKh2lCZ0dkM3MB67RBtg>
+    <xmx:ZeNgasdnG6AqYmQZy2KSfxoo7rJhhRjdf0OzVumuMDnxAInhsZ1eEw>
+    <xmx:ZeNgajIgSIKk8z9YksEzRHADIZMfzi36NhUvsJY3NAvyJsPO-lHbKwni>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jul 2026 11:32:43 -0400 (EDT)
+ 22 Jul 2026 11:36:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Yury Norov <ynorov@nvidia.com>,  Yury Norov <yury.norov@gmail.com>,
-  git@vger.kernel.org,  Thiago Perrotta <tbperrotta@gmail.com>,  Philippe
- Blain <levraiphilippeblain@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>,
-  linux-kernel@vger.kernel.org,  Codex <codex@openai.com>
-Subject: Re: [PATCH] completion: complete paths for git send-email
-In-Reply-To: <C9564DC6-6B68-46CA-A339-1A1774AFA7C0@gmail.com> (Ben Knoble's
-	message of "Wed, 22 Jul 2026 06:29:43 -0400")
-References: <xmqqqzkww3ky.fsf@gitster.g>
-	<C9564DC6-6B68-46CA-A339-1A1774AFA7C0@gmail.com>
-Date: Wed, 22 Jul 2026 08:32:42 -0700
-Message-ID: <xmqq4ihrt4yt.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Hugo Sales <hugo@hsal.es>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/1] rebase: add --[no-]edit to --continue
+In-Reply-To: <db7edc66-9b2a-47bc-98db-87d01885cef0@gmail.com> (Phillip Wood's
+	message of "Wed, 22 Jul 2026 14:39:32 +0100")
+References: <20260721140443.1809379-1-hugo@hsal.es>
+	<xmqqldb4xlqa.fsf@gitster.g>
+	<db7edc66-9b2a-47bc-98db-87d01885cef0@gmail.com>
+Date: Wed, 22 Jul 2026 08:36:03 -0700
+Message-ID: <xmqqse5brq8s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,36 +84,31 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Ben Knoble <ben.knoble@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> As to the tests, using 40-hex is misleading, and 0-branch as you
->> said would be sufficient to reproduce and demonstrate the issue, and
->> that your code change fixes it.
+> On 21/07/2026 19:04, Junio C Hamano wrote:
+>> Hugo Sales <hugo@hsal.es> writes:
 >> 
->> Ben, anything I missed?
+>>> When a rebase stops for conflicts and the user runs `git rebase --continue`, the
+>>> merge backend opens $EDITOR so the commit message can be revised. That is often
+>>> useful, but not always: sometimes the user only wants to keep the message that
+>>> is already there.
+>>>
+>>> This series adds:
+>>>
+>>> - `git rebase --continue --no-edit` to commit without opening an editor
 >> 
->> Thanks.
+>> Meh. "GIT_SEQUENCE_EDITOR=: git rebase --continue" is your friend ;-)
 >
-> Not from my end, though SZEDER’s review merits some thinking.
+> Do you mean "GIT_EDITOR=:"? The sequence editor is only relevant for 
 
-I agree that presenting both refs and paths cleanly will require a
-much better structure than a flat list.  I also agree that hiding
-paths when we have ref matches may give us a cleaner layout than
-mixing them alphabetically into a single, flat list.  While I am
-still not convinced it is the best way, at least that is the
-principle current completion implementations use for other commands,
-and it makes sense to model the updated completion for send-email
-after it.
+Oh, absolutely.  I made a last minute change s/_EDITOR/SEQUENCE_&/
+before sending it out, without realizing that I made a totally
+unnecessary change X-<.
 
-That said, since I never feed refs to send-email myself, 'if we have
-matches with refs, do not show paths at all' rule makes send-email
-completion completely useless, at least to me.
+Thanks for spotting.
 
-> Traveling the next week+; replies may be slower (than usual, hah).
+> editing the todo list.
 
-Have a great trip, and have fun!
-
-Thanks.
