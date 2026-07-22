@@ -1,183 +1,218 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C57470E8F
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 19:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E49735C6B4
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 20:47:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784749755; cv=none; b=KN5voiHaVjA718hnP/ceaofazDsnRYJF1MCOFJOD43E+5XT2pDTQbLcJPYrCKcDhhHIOPObBDeF5a7d6Qd4KGN7A/BGJ+X8cSoHlkNvGOK/BrNEvnE9Z+byVquysBYarhhTjUq8nFzWIse5hAj0I+VPMcQaEv/UJvvzCDe5aYvs=
+	t=1784753239; cv=none; b=b2XE7isCKZQHs7qzKvROWP29SAX3VyAXbWx8UrM01cr3M7Dd6kid7gwBoUQ+EBOrVPOUfkvD+fWL81KFqkdgdcvKpeyaZQOnQ5Tmumhf/yfgAnDIEmq4IbxpkcDgiqx6A/Bgrk9ZSVRBRX7N+O4WNv3W4DrFRxIhXed55QyROwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784749755; c=relaxed/simple;
-	bh=XgnjZwXfD1vUv2yxUqeSvN0B82T6rG2DGC14c9GvkMU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ESbeX47YI1B1XPuY8CY6JiRRQcgnlPAdxm7eC4nJEIR8mkvBa6pvW7UX82ONS8WWD96nlPAeR7LQB9ORFBAvOShScuOKSuOAgYmEvmyBI9Pvf/cwxGUpa+RQTf+cSKlUf9UHnMNcJxtvUTS1FPfKA2BIXmsYAJH4THyopa1x5VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h/NWQYqq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mIhWMAE0; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784753239; c=relaxed/simple;
+	bh=e361Qv6hTPtwW7TYO9ALsqQ7E+SntY1vHpe+xYZ2wao=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=BYxkzoOOZ4xwsnhW1QgZFJ5TxLvMQcPN7obtel7JyitJm8/8BLfRVbxuPJFrnroQCSmoR52kPa2GyGsnJ5b+oCt05w03VwB3AF+7SoBWxzGtulCkqXCEGHmNrrudOH2MKTN/+lwxALS0jbq9EvIcht8eKHSqxgFDJ2eGnQD0lgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WR9QgYWd; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h/NWQYqq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mIhWMAE0"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id D0636EC011B;
-	Wed, 22 Jul 2026 15:49:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Wed, 22 Jul 2026 15:49:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784749752;
-	 x=1784836152; bh=4WcZbofvBkR+OTrLCou8yioExPuUUuj6Khn0b/cwrTc=; b=
-	h/NWQYqqEtaceuulaFLIJqQ5L63G3pCAPk990yBnt4HzrJdRjoDXQR6d7P96UriV
-	RmwOWcsYbzt6iVeuS7ZZuUiemTYLKjiL/nYKk8FFqTc2QfDJ1+l8HKiPGOVchj33
-	FZo7xpW7i8quc7wuLydqRlBTMKmDX3RgSmNcvzxJ2bfbzzS2n/tsjioLzXuLtUlH
-	UL/BBif9pG07cETEPodUj/5aEW7A6EI4qBVOqnwhgSNOb4wngyyMslfCX4M7RR3t
-	yJPlYuWP5KFDq1iddenzZ3s54BzmoCnrO5DCva4/NSYCfowsyRMIphJliUNtdQ9b
-	KdSDHYacS+yKIwHOvqebQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784749752; x=
-	1784836152; bh=4WcZbofvBkR+OTrLCou8yioExPuUUuj6Khn0b/cwrTc=; b=m
-	IhWMAE0+T7CvDfczSzV+l6dj3lJhgP9o44ZUS8eYeKXalUM7mcN/9Z1PLl0vAB0p
-	0Vn7WdsjmqSFQbCiiFEurvp8AZTnyPvq5FMTG0e4DgJpKF53Z2cmfTmMUt6vtXBX
-	Ay/cGYAsVEh3+/z9gGJ1UafPeIcuplMRa0Go33D/xkhcasXkqSRQ/Odd8M+WNEIa
-	RSVN51YlRoAwUuJGvFKDpaOsyMROoLsMp0FvcJIyvWFX7cs2Vi3uf+WNI6wMpj96
-	1SaEq+lM4OXyj0mgwfwMlzSl+fv3MS12r1FLbT0bffJgHr9AmnUKLEAAVDKybJ2h
-	qn3XALu3cEz549QYySolA==
-X-ME-Sender: <xms:uB5hasVyX-8h58LxQsp1LRCUl705BW2qQeVdROSo0HBseIC_DI3lMg>
-    <xme:uB5hanmci7McY45w0-LlKZtcr8BthrpgvleTHQSsSHqSTYqnGOv7MAKKF1tnDg2_M
-    lwml2zNY-OZcxXmKawSmvcU5CZkf7I0-6FRbzzVZWXgzG3aMenVhg>
-X-ME-Received: <xmr:uB5halZjfHyMJxgbIlML-UNAzYS5Cvu2KirpxyMxrxmXW8bEYOMtPebSNvKmcCXAtLnRDuWu44JFsakm1xbU4EDhgLM-0wvBaQ>
-X-ME-Proxy-Cause: dmFkZTGtYD+tZUQb7h7SQ1hRT58luX8jI0bTlGMM4a4HcxcfsXAa598eU6i8mO3Q0sgsZw
-    v+ek0Ymrbr9/ykB56Z1sfQPMq1JGWEhBKWNx6U/OmfVghHSuz79FB51raYPPu3Fat99PoE
-    +W4IoMZpm28Pap4M9qi/8vKEnzbBr5qTvCHL/K9hIyUCVlzG2rTYBj01seuwccTkqD6mVu
-    ObIKuhcc6SfT/EcCKkQf6ruhhDRsV35HxR0W67TrShlc6s1kOZjJqPE36umo/OGHnFERFM
-    Wpk4zDKnsvUfEI1+BU0Th2zYgazXW/rC9ZazpkKmsvVSFE+3maJn9YK+xDyZOGdU6MH9Jb
-    lOKae45ZyEkLpn2DYpevmBPfBT9RYjBPo+CUZqSAxWtuORRIdaSKABVpt288XVv6KB9p/Z
-    xCI0U8MEtIJ8/iSdDP03xUWPjzLblFr3zYLqYr3YtoU3xTo6f6tUunVfB/f+QeS01zr9TI
-    X1yEvojvcg9eWQOK+mUB6mBnsHrNEwmWVY+IAAEqbixtJr0yiYaEYc1Oc+Mye7eDGi76tC
-    syReaQuibdJdwbJnIIk4dbb/FAmYP6FgE2KA2ervl7XIg6iuBzJPDHI4jDuX/xVZBqpjZM
-    eQIzqH1Kx7DpBQtolw02psVyHz5Ai1M1FZQgJg+FUFKm0uy9MguEvtFXm0mw
-X-ME-Proxy: <xmx:uB5haqOdncIOlTu0IEP0i040l1DQ2pLCuQNTf-rzBZSgZME6jd3vrA>
-    <xmx:uB5haibGQdKEBJMoOg-3nWSE83EBxMlPquUUGe2No7DdSc0wPNcWDw>
-    <xmx:uB5hag3QpYuOizBt3Uk_pNtEXgjO6Ax6Fm0JqzmxGvNdl1-y3tziCA>
-    <xmx:uB5hagdXbAjrA-kNQhvxUmjZ-oZ693jT3QOfhrLf6Jr-UNl08ptkKA>
-    <xmx:uB5hag7RJkQRjtV8kx2bqPSnIma0sHyYNAB741rS0Cfx-3uvB4T4ES_A>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jul 2026 15:49:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?=C3=89ric?= NICOLAS <ccjmne@gmail.com>
-Cc: git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] submodule: resolve insteadof-aliases when matching remote
-In-Reply-To: <20260721213042.3357346-1-ccjmne@gmail.com> (=?utf-8?Q?=22?=
- =?utf-8?Q?=C3=89ric?= NICOLAS"'s
-	message of "Tue, 21 Jul 2026 23:30:42 +0200")
-References: <20260721213042.3357346-1-ccjmne@gmail.com>
-Importance: high
-Date: Wed, 22 Jul 2026 12:49:10 -0700
-Message-ID: <xmqqbjbyole1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WR9QgYWd"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47f3b39f2a1so7102879f8f.2
+        for <git@vger.kernel.org>; Wed, 22 Jul 2026 13:47:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784753235; x=1785358035; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=pnIIjNbnwUbPpk4UlmkUIuyIgPSeqZ7RnQt9cf0XHds=;
+        b=WR9QgYWdJR3WM7P1gR8jkmwHeQzfWXJeehMbmV95zHn5J4tvexUhnfS0kLynQ3Wisk
+         DNWcQ4bTyg/sAbwjDn/RqMY59DijRjbj63pnam4uXFvJqvZLGJrI652CHi0IxLn1YVAC
+         QYczKUOAWKSACzJBaD/jlioMAGs4Dgk9OzpfQocbnJav/FidQTBCrRqRuok3Qh/myC5t
+         tpgMUeWJ897KTo65EZb8dxwfUQibfdDIE8KudCCsp6sRG+jFyN74ID+v080hvU25zRZT
+         HiLtvqXAc0CDTAvUmwGrMXaSvLB6uVx2cYWjM9BYik1Yaod7I08F7msbmx14RQb5wb5q
+         9HNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784753235; x=1785358035;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pnIIjNbnwUbPpk4UlmkUIuyIgPSeqZ7RnQt9cf0XHds=;
+        b=iAw6/OVPr9FhIa4rHpGODvIP69l6y+qW3Af9uiBSUjUhbIMK2TKL/iuiwoPxI7mooc
+         z6VKc7Y6H8tSIEwvgIVELtgrg4439I4tkGF6y9Gu0W/QXPbSNOZf6YF8jSt3ZSUrI6q0
+         LI844w0hmbK6RSGHuXqP23T6I6XuC6a/gwss/8Qr1nmtosYW/BTCmVUQdZMamtRVVBAM
+         29rhv3M/tGYXHbtu9+C/iK1CgCwumSL1XdB5wCR0iubexxRJjuzEU6fcOlXlaRmakABG
+         bxlcLTOwMnLDKkFlB8wYVn6a3jkTmO7+Q3TJP4RFqIDlB6l4uyy3SYwEavRLcxzeGT53
+         qHeg==
+X-Forwarded-Encrypted: i=1; AHgh+Rru9PqrbV69l4MOwlJ0TYMS6QCaOe7jVDa8s7TAkrweMuceHdO1NpvQ9zUKlMJDR4bsMZk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUJdVdki4lrctobnHDJWv8/bvLUhG8zds2EXB5rsHVGPpo8h72
+	7IREpVZOsX+rgWVmh3MEoNQnBEz9yzQo1+jHX7LdMafi1mN0sN0/fc59
+X-Gm-Gg: AR+sD13619BoKDOR8aFifinhRkzYBFiY6kgSesrTSYWuZV6g3yiy0uD2GOxRr6ynkuB
+	h1FVgInhJHBEaOZNMWS7dVY6H96/SC9MvazdXG8TRz5SREtpMeJ1AnAVurLCF5F6KcqMIe0kXLq
+	muX/EJWlBg8WZOFsE6Rjz1pBDtHhc9G2IP18uzG+hAKFSWRY5tZnjWYHSsg239TEYsyagctBNJW
+	iQVziHQuytRDFeS2BnR391TuNFn15RfXvyBPjHoevQ3o8+DZIhUGKVjT3Xq5G/wGQeI0LpMEytg
+	ygV6RiKmOOJTKhiQtgOrOmJc/qiIFtiYYrR10nUyARosUY3hXKXWBqQOXLfyyKoH/ixwiVSscL1
+	icp+QrmFZIs1sF/YVtaLAXCmd39oSsN+ELA5MHpaO1GacLGhXL4juSltdkkqQNaj02kaKY5Vo9C
+	6geARxKxD5IIax6WUU5oWzR7+f5gIlSlr8dvgR67x7Dce0+D7Bo0mAJryE2gDS2aGMb3UtW/RLW
+	HoJTbiaAufe1W9kPvDLoI05V6MXmHB3wg4lAe/A+MlTUkwCxDW4lT5pDieuhaumOTBxN0H/R4eJ
+	ah4JAn3f6LLqj6scUhCgdMOTw90kmQIIUHllzdBZcyXZWvz1fr9t+Yrm
+X-Received: by 2002:a05:6000:402a:b0:47f:4c9b:99b1 with SMTP id ffacd0b85a97d-47f8d754483mr448079f8f.32.1784753235301;
+        Wed, 22 Jul 2026 13:47:15 -0700 (PDT)
+Received: from localhost (82.159.183.80.static.user.ono.com. [82.159.183.80])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb81dcsm9073571f8f.12.2026.07.22.13.47.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jul 2026 13:47:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 22 Jul 2026 22:47:12 +0200
+Message-Id: <DK5E7W7M0G8G.306LUAYVXFJ2N@gmail.com>
+Cc: <chandrapratap3519@gmail.com>, <chriscool@tuxfamily.org>,
+ <eric.peijian@gmail.com>, <gitster@pobox.com>, <jltobler@gmail.com>,
+ <peff@peff.net>, <toon@iotcl.com>, <szeder.dev@gmail.com>
+Subject: Re: [PATCH GSoC v20 00/13] cat-file: add remote-object-info to
+ batch-command
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Karthik Nayak" <karthik.188@gmail.com>, "Pablo Sabater"
+ <pabloosabaterr@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20260717-ps-eric-work-rebase-v19-0-d4faee35764b@gmail.com>
+ <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
+ <CAOLa=ZT77L39-jSZxgrvVFwdY6_rapBmKv8gCxr7QpdkCsEzXg@mail.gmail.com>
+ <DK549LIZS8BS.3PL9CQQIR2LAA@gmail.com>
+ <CAOLa=ZS8J4t12ab1=3-LRYNuZOwqSHG861iYm97JjF3mGprvJA@mail.gmail.com>
+In-Reply-To: <CAOLa=ZS8J4t12ab1=3-LRYNuZOwqSHG861iYm97JjF3mGprvJA@mail.gmail.com>
 
-Éric NICOLAS <ccjmne@gmail.com> writes:
-
-> When ca62f524c1 introduced a mechanism to identify which remote is to be
-> used by a submodule, we had it compare the URL stored in the .gitmodules
-> inventory to those of each available remote.
-
-Please refer to an existing commit using this format:
-
-    When ca62f524c1 (submodule: look up remotes by URL first,
-    2025-06-23) introduced ...
-
-> However, when using URL aliasing via url.<base>.insteadOf, we store
-> in .gitmodules the URL pre-resolution of the alias, whereas the
-> corresponding remote set up in the submodule reports using the
-> *resolved* URL.  This mechanism therefore fails to find a match then,
-
-Since anything involving the .gitmodules file is often security-
-sensitive, it is always a good idea to go beyond just saying 'X fails
-to do Y.'  We should also explain why that failure is a bad thing (or
-perhaps a good thing) and for what reason.
-
-If this aliasing were controlled by a remote entity (for example, if
-an upstream project modified the .gitmodules file to redirect us
-somewhere unexpected), failing to find a match could actually be a
-safety feature, shielding us from bad actors trying to hijack the
-local repository.  Since that is not the case here, adding 'fails to
-find a match, which is unfortunate because...' would make the commit
-message much stronger.
-
-> and resorts to the fallback logic, which does use either the only
-> configured remote if there is only one, or attempts using "origin"
-> otherwise.
+On Wed Jul 22, 2026 at 6:13 PM CEST, Karthik Nayak wrote:
+> "Pablo Sabater" <pabloosabaterr@gmail.com> writes:
 >
-> Resolve the alias in the URL inventoried in .gitmodules before comparing
-> it against those of the corresponding submodule's configured remotes.
+>> On Tue Jul 21, 2026 at 10:12 PM CEST, Karthik Nayak wrote:
+>>> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>>>
+>>> [snip]
+>>>
+>>>> Changes in v20:
+>>>> - Moved the prep patch that fixes hash_algo's type to be before
+>>>>   write_fetch_command_and_capabilities() being moved to 'connect.c'
+>>>> - Reverted git-cat-file.adoc documentation comments about CAVEATS
+>>>> - Fixed style for EXPAND_DATA_INIT
+>>>> - Added more context for comman line die()
+>>>>
+>>>
+>>> [snip]
+>>>
+>>>> Range-diff versus v19:
+
+[snip]
+
+>>>>
+>>>>     @@ Documentation/git-cat-file.adoc: one per line, and print inform=
+ation based on th
+>>>>       You can specify the information shown for each object by using a=
+ custom
+>>>>       `<format>`. The `<format>` is copied literally to stdout for eac=
+h
+>>>>      @@ Documentation/git-cat-file.adoc: newline. The available atoms =
+are:
+>>>>     - 	reports).
+>>>>     -
+>>>>     - `objectsize:disk`::
+>>>>     --	The size, in bytes, that the object takes up on disk. See the
+>>>>     --	note about on-disk sizes in the `CAVEATS` section below.
+>>>>     -+	The size, in bytes, that the object takes up on disk.
+>>>>     -
+>>>>       `deltabase`::
+>>>>       	If the object is stored as a delta on-disk, this expands to the
+>>>>       	full hex representation of the delta base object name.
+>>>>      -	Otherwise, expands to the null OID (all zeroes). See `CAVEATS`
+>>>>     --	below.
+>>>>     -+	Otherwise, expands to the null OID (all zeroes).
+>>>>     ++	Otherwise, expands to the null OID (all zeroes). See `CAVEATS` =
+section
+>>>>     + 	below.
+>>>>
+>>>
+>>> This chagne is still unnecessary, no?
+>>
+>> I guess it is unnecessary. I added it because on top, at objectsize:disk
+>> it says "`CAVEATS` section". So I tried to have it consistently.
+>>
+>> Is it worth a reroll?
+>>
 >
-> Signed-off-by: Éric NICOLAS <ccjmne@gmail.com>
-> ---
->  remote.c                    | 15 ++++++++++++---
->  t/t7406-submodule-update.sh | 21 +++++++++++++++++++++
->  2 files changed, 33 insertions(+), 3 deletions(-)
+> No I don't think a re-roll is necessary. But something to avoid next
+> time :)
 >
-> diff --git a/remote.c b/remote.c
-> index b17648d6ef..ae187fb3d6 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1821,17 +1821,26 @@ const char *repo_default_remote(struct repository *repo)
->  
->  const char *repo_remote_from_url(struct repository *repo, const char *url)
->  {
-> +	char *rewritten_url;
-> +	const char *url_to_match;
-> +	const char *remote_name = NULL;
-> +
->  	read_config(repo, 0);
-> +	rewritten_url = alias_url(url, &repo->remote_state->rewrites);
-> +	url_to_match = rewritten_url ? rewritten_url : url;
 
-Being a bit lazy, I probably would have just reused 'url' directly:
+[snip]
 
-	if ((rewritten_url = alias_url(url, &repo->remote_state->rewrites)))
-		url = rewritten_url;
+>>>
+>>>> 13:  ebdfc22fb7 ! 13:  70a11d2aea cat-file: make remote-object-info al=
+low-list adapt to the server
+>>>>     @@ builtin/cat-file.c: struct expand_data {
+>>>>       	 */
+>>>>       	unsigned is_remote:1;
+>>>>      -};
+>>>>     +-
+>>>>      -#define EXPAND_DATA_INIT  { .mode =3D S_IFINVALID, .type =3D OBJ=
+_BAD }
+>>>>
+>>>>      -static const char *remote_object_info_atoms[] =3D {
+>>>>      -	"objectname",
+>>>>      -	"objectsize",
+>>>>     ++	/*
+>>>>     ++	 * List of atoms (i.e. "objectsize") that the server supports. =
+Built
+>>>>     ++	 * from the server's object-info advertised capabilities.
+>>>>     ++	 */
+>>>>      +	struct string_list remote_allowed_atoms;
+>>>>       };
+>>>>     -+#define EXPAND_DATA_INIT  { .mode =3D S_IFINVALID, .type =3D OBJ=
+_BAD, \
+>>>>     -+			    .remote_allowed_atoms =3D STRING_LIST_INIT_NODUP }
+>>>>
+>>>>     ++#define EXPAND_DATA_INIT  { .mode =3D S_IFINVALID, \
+>>>>     ++			    .type =3D OBJ_BAD, \
+>>>>     ++			    .remote_allowed_atoms =3D STRING_LIST_INIT_NODUP }
+>>>>     ++
+>>>
+>>> I guess this is output of running the style check script (which I did
+>>> recommend, but I should've mentioned that you should take it with a
+>>> pinch of salt, it doesn't always provide the best solutions.)
+>>
+>> It comes in part from Junio's suggestion [1]. Although I don't think tha=
+t
+>> it will receive a lot of new fields, I thought that it would leave the
+>> macro clean for that.
+>>
+>
+> Then wouldn't something like this be better?
+>
+>      #define EXPAND_DATA_INIT  {  \
+>              .mode =3D S_IFINVALID, \
+>              .type =3D OBJ_BAD,     \
+>              .remote_allowed_atoms =3D STRING_LIST_INIT_NODUP, \
+>     }
+>
+> Note the difference:
+> 1. The first line no longer has the '.mode' field, this would ensure
+> that removal of the field is a diff which only contains the field and
+> not movement of other fields to the top line.
+> 2. Similar for the last time.
+> 3. We also add a comma for the last field, this allows addition of new
+> fields without modifying previous lines by adding a missing comma.
+>
+> I don't think this too warrants a re-roll, but this is something to
+> definitely fix incase you do re-roll for other reasons :)
 
-This lets us avoid introducing a brand-new 'url_to_match' variable,
-whose lifetime is essentially just taking over for 'url' anyway.
+Yeah, this one is better formatted than what I did. Thanks for
+the explanation. I'll definetely fix this two hunks if I have to reroll.
 
->  	for (int i = 0; i < repo->remote_state->remotes_nr; i++) {
->  		struct remote *remote = repo->remote_state->remotes[i];
->  		if (!remote)
->  			continue;
->  
-> -		if (remote_has_url(remote, url))
-> -			return remote->name;
-> +		if (remote_has_url(remote, url_to_match)) {
-> +			remote_name = remote->name;
-> +			break;
-> +		}
+[snip]
 
-While the new code preserves the original 'first one wins' behavior,
-it does make me wonder why we do not issue a warning or raise an
-error when multiple URLs match.  Leaving such an ambiguous
-configuration unflagged feels like a silent bug waiting to happen.
-
-But it is of course outside the scope of this topic.
-
->  	}
-> -	return NULL;
-> +	free(rewritten_url);
-> +	return remote_name;
->  }
-
-Thanks.
+Thanks,
+Pablo
