@@ -1,131 +1,195 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E7240F725
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 10:29:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE9D385D7D
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 10:35:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784716198; cv=none; b=rE0DWogPyhg7zZRdnRSo/hAfH30VTS3D08SHxXtkCi9rukHJDrK8eQxBfLfIpMjmjhDSDot6fPPPlW/Qf4EBfpuP95zDeMULDclgj00wPrFcVVvXzUW/7wrLI3p18e5OXSnjOve0QdTishQsWj73SBu3ZGyUnZMz3vRrDY/UtpY=
+	t=1784716530; cv=none; b=l/gQNi/vHqwOJ8oaP9tyTxt+0kjAZJwlXa8SQYtRHMjOohNFogBXmKx2awoZH6q5/SNYa96Tel9Te6HMYv5i2H0q3X6ddiJ2Mpe1uDO5mEMNmUIHTjtbNN69H+wcdqcR2jhp/exOiIi9dhKFQBJZfrhODFZa6k6Edhk4CcsIkZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784716198; c=relaxed/simple;
-	bh=epV4m39BZguOzNSUstZvTbACncACL1yVYMsjGRmgOsY=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
-	 Message-Id:References:To; b=ISp6rW+uFqnZ3IKKDxJ+hunwy00Ws22ev3eZ33nOK2l/jpB1Y1WVqaYCoSKnZuJs9DuPApmyUpsxJITPaRLLvxZMAalMQOCTZykwGAC79EGyt8ZJQZDe7xGssUDRYz4sNITRkCkifqoRw2Sm0ZCHgS1crzUNfA7P7WclVhkkFNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e2KkhYYI; arc=none smtp.client-ip=209.85.160.172
+	s=arc-20240116; t=1784716530; c=relaxed/simple;
+	bh=hInvd4/DPYr+7tCI/yaAA+uLfmRJFjtWwVbHKOhbc/c=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=lkW5c5UjvJYUEENat/mIhUqWMEYyvZ7OPV+ecOWovC5zhwyCp+X6WsT6JNrM3VAG0whMfYEO9WdZ52X2KvC7sCOq3iKnJhzG1VjhBRgHxGjKOb9xSxOjQyt1QodtliUq4GoNIHBn9vccVwdREjzscTmXAT1jqopX7MgFaWgOBOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hGOaFJ8V; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e2KkhYYI"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51bfe810293so69029991cf.1
-        for <git@vger.kernel.org>; Wed, 22 Jul 2026 03:29:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hGOaFJ8V"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8efcef23d21so121030276d6.2
+        for <git@vger.kernel.org>; Wed, 22 Jul 2026 03:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784716196; x=1785320996; darn=vger.kernel.org;
-        h=to:references:message-id:date:cc:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:content-type:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=2cVXAnz0JdlskThqIixsSCj4Clo7UNnHRq5jMfLzp7E=;
-        b=e2KkhYYI9U56J1OVEGPx2CR+CpBQ7hMj32MVkrZRHpxy8Kl8tSCwWXzlV9itv4U9P9
-         8bWAwzLtqUstAJ54zYDdKfdMqCVWwtk8CoEHGk8puUNvD307U6U4xZc8fXryit5Kpaoa
-         trPw16ZF3BKzFyf5JeiHEzkL17zppdkZ2TEFNcuaNJH6ICm4rL6Wvc92+kaXOc9J4hap
-         U3XffvW78MXzqXW2hMEX3ABz/pjQvGqJIF21Z975VHNhzorCwPfTMJDppzozE1D8stDM
-         UQbrsG90h/LATOEjxr0yn7WzDCWyvoJEmuMoOQepPQVfv/1p2mgyRaLhC+Ll1zxc6qrQ
-         fmyA==
+        d=gmail.com; s=20251104; t=1784716528; x=1785321328; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=sHFqeAagPKmVmZQ7PMFmWsTP2DKt/1HbojxLqZPb35g=;
+        b=hGOaFJ8V8LTRlz8PMoM4l7kCeCsxbNOD2tggKvSmidCdXxN6w85RrbJTQBmlkSiwk2
+         f+weCD3oFr+XUo9S8aY4d4hG6RMCPc9hGd8RgevzASm7PdftDPrgbbcLgDFc6y9luT4g
+         Yh2ZPCsUxmi3qcKWbVHcVGLPXGw/xBYY31+GMC1J9f+C/eu1mx3wqcGihS8TEFW6bVZD
+         yxThLDulg29OW9dRTTh4hntolRYmjijiWBn/hGtg3AJap1QWwwM+1SmwJigZoMHELG7w
+         XqTYXqSAOTvodXlssn8N4PKeNvVMaSrJkN642kwbz3T15oyoKDDd1bG0fC1x5HfQ9POF
+         REhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784716196; x=1785320996;
-        h=to:references:message-id:date:cc:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:content-type:x-gm-gg
+        d=1e100.net; s=20251104; t=1784716528; x=1785321328;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2cVXAnz0JdlskThqIixsSCj4Clo7UNnHRq5jMfLzp7E=;
-        b=R7T23VtyFLaw+8zn6hPtTjaug+Mbt9QAsS7tuWYUoeFt2yGWqKVkYgj5sRE4uePrAL
-         4jHrnGVL7Fd/ZX9pqtc5o7bFK38T1aUNqms6FPNO153uO2QT9VABhwZQAf3d2RmOAYAS
-         yED7olM7LEC3DvaS39sELSJzgU4ej1mYYcYrt7KPw126JqXoj34hh2JjyrDJAA4aIQer
-         bPDV/dk+0GsTiL6h+oF+Ze1UppmZ+tiWbCy6m3gU7AFWeH1fPLwPymf32jsfZDBY0uXF
-         rrRCq5YjtE3zZzb8amrkH6DMrzGpbPL6mIouWa8PN/sbUCdmzWjo1rXEVnl9jffy7RH3
-         BDjw==
-X-Forwarded-Encrypted: i=1; AHgh+RpGWpTUJbmr5W0RSLslJuCSS/J9GVlVnGSdLtuemlo2rOyYLabovfhQ+GKL34BdBowM53E=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0s9jxgxR/j2BfvsAg3h6ZexImZmAKekAZYekhu72Jo/LX/qkj
-	68oK/OEAunWh0proPwihgTJPlpoEUDjCcdsU4q1SDEqCM6xBcI/wJh/j
-X-Gm-Gg: AR+sD11GVbOtppStZjUiHPBbLNBWpyM8rbT28NaU5hzltX9o94TaLSNktwIjTvyRHQJ
-	NA6NDhQnYYtnadOzV1BB0bvayumwT5rM5zGXlklFRmjK/8HYLvmXvVK7y3dU81TdP8uxR6wkKJ/
-	g60fFg6QuZ1jSvVJqSlSgB/ceNCksWu799llBSeqj/U4eRfqZW3GUnXoiQKl4Q8Razowm1eaquJ
-	yMmKdoGYYygjw7s6CiecnaNqDjomHzUvY1rf5BZow0dLLzc0Ga5ThW+E1CVWvD3b/IKLjOOF/mF
-	NcunnlJkcp/c8YF3nf6HgUuDDsQabPCSxRLjevj5obxvj1Q2dDnA6j0p5V18sZmMuKKQJTuMGlr
-	IV92Mr2WWLykMxJ4vAkTW5KBte7irceaXIUQwJBv4CsakB/nh8Rz1qJAoE4Klp8IW96fqXCBLwv
-	gay3xWjT1Dbl0pl+mYE1IoOKDhcN8gU2oa8/5VVoBcjWI69Pj+iEFGNvFbtCXx5LFOtKiHAxh1j
-	GMSwIJl+DW7/SVvMSE5ZtfGq/Uv4gOM2cwDYCim5uz0/qm6WBvj1/w=
-X-Received: by 2002:a05:622a:1453:b0:51c:2022:cef5 with SMTP id d75a77b69052e-5213b147021mr219035321cf.26.1784716195897;
-        Wed, 22 Jul 2026 03:29:55 -0700 (PDT)
+        bh=sHFqeAagPKmVmZQ7PMFmWsTP2DKt/1HbojxLqZPb35g=;
+        b=SefiTX5OJePbRT/OOy8+TKQ1KKKC2ZyOIjEu3xwjrnPDZpwySEeVx1tyiUUwQhHl+i
+         pe0D71ybma8R/sCS0RIarjw3qtrb9CeMAjpTHxhowcW2BwPVTpHPIy6tXYhfFvB4OqVk
+         vy8pGEvDAUhW+b1o+MIe+aEh9rPd3f2PBX/jPtmc0FP8QvTqLHSot+kBOeSJpNXdKybh
+         GGNG5xsE5aZ7/eMI0Pf1+FpCpAUFSp/dsDe1mEA3YFif0TCvoKGVKYJZPe2bGc9VKjXe
+         Mbn3iQYhphZ/2WiHQtqeh+C46PC4xbgQzM4kG88RGg6X2ei7Z6vcAw1DycVgytevEvhn
+         3xGw==
+X-Gm-Message-State: AOJu0YzoF7rhcTg2pgENiBfnh4YMqK+s9rRBOMM5ZRFrvyIYQ+tv7ox2
+	At7pEsKASvOL2chmH840WBOc7yt4zqEA3+LGB7wAvq1LJlYD9ZxgIsbA
+X-Gm-Gg: AR+sD13vJNvhz9gRnk5H5orCQNsu6PGCpu8WOahoZBwAh2ETmXXUM2M9v9QmqQXftft
+	0awrEPHOGGYIQ4zMhs1pLDLKbBxlKlhAZPX88LNtGOFrqD213MV6vYXKEayjAUhE5LlTEcrQv/u
+	LTS1fPH6XfTj9tItepEi0P/P1+hkR786CadEbNxdhTtiyRZQoeVBl0BtY2CJvq4hblbGQ9FJwCL
+	lNBtW9AyafJDjxq4Llrw0GhCbuhAN1uWZ+RinQmOrYZ7JPrRJR6BSvwsm+qn+HwJqDrfs+8SAob
+	sGCDyF0LgqGyUY0aAUfd00CB37o4VXbxM2m9BbccspjFmpUkwvW/9zzhZATwVTq9kV1vw0NuVzg
+	ifMiZjb0fZ6htSxrbgBD4oSuyKAe/k7hgev16wn/sFEX06uRzXTL0cQZEYvAwQb+Ttp7SdEUIU+
+	XBCwhBke0UCYhwhSbxYnxquiLiTuk2ioMEQLiD6u2NCbwFRdIFZKQ0ZEkUzKgpyP+R36Tu9biiK
+	QZM94YdzFRY0ZxDrSZq20mdhqeHKNySygadJcoBlYodtTbEXsaaeVqsf15qvI8tnw==
+X-Received: by 2002:a05:6214:5912:b0:8e9:f62b:bee9 with SMTP id 6a1803df08f44-9077856c696mr249587366d6.57.1784716527482;
+        Wed, 22 Jul 2026 03:35:27 -0700 (PDT)
 Received: from smtpclient.apple ([2600:1004:b089:8e47:e4dd:73f0:fa4:cadd])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-527d3555e7bsm12410841cf.23.2026.07.22.03.29.54
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-907ba9e1ad3sm17986466d6.29.2026.07.22.03.35.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jul 2026 03:29:55 -0700 (PDT)
+        Wed, 22 Jul 2026 03:35:26 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] completion: complete paths for git send-email
-From: Ben Knoble <ben.knoble@gmail.com>
-In-Reply-To: <xmqqqzkww3ky.fsf@gitster.g>
-Cc: Yury Norov <ynorov@nvidia.com>, Yury Norov <yury.norov@gmail.com>,
- git@vger.kernel.org, Thiago Perrotta <tbperrotta@gmail.com>,
- Philippe Blain <levraiphilippeblain@gmail.com>,
- =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- linux-kernel@vger.kernel.org, Codex <codex@openai.com>
-Date: Wed, 22 Jul 2026 06:29:43 -0400
-Message-Id: <C9564DC6-6B68-46CA-A339-1A1774AFA7C0@gmail.com>
-References: <xmqqqzkww3ky.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/2] remote: url-based pushRemote with renamed remotes
+Date: Wed, 22 Jul 2026 06:35:16 -0400
+Message-Id: <3FE12592-B663-438C-B33E-A251AE08E146@gmail.com>
+References: <pull.2358.v3.git.git.1784664859.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+In-Reply-To: <pull.2358.v3.git.git.1784664859.gitgitgadget@gmail.com>
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
 X-Mailer: iPhone Mail (23D8133)
 
 
-> Le 21 juil. 2026 =C3=A0 15:22, Junio C Hamano <gitster@pobox.com> a =C3=A9=
-crit :
+> Le 21 juil. 2026 =C3=A0 16:14, Harald Nordgren via GitGitGadget <gitgitgad=
+get@gmail.com> a =C3=A9crit :
 >=20
-> =EF=BB=BFYury Norov <ynorov@nvidia.com> writes:
+> =EF=BB=BFFix git status not showing the push branch after remotes are rena=
+med, when
+> branch.<name>.pushRemote is a URL matching exactly one configured remote.
 >=20
->>> In any case, when both a '0001-my-changes.patch' file and a
->>> '0-tolerance-policy' branch exist in your repository and current
->>> working directory, running:
->>>   $ git send-email 0<TAB>
->>> should offer both as candidates, I thihk.  Since I only ever pass
->>> filenames to the command, I personally do not think it is a huge
->>> loss if the completion script stops looking at refs and sticks to
->>> filenames only, but others may have a use for that feature.
->> Agree. The test should create a file 0001.patch, then a tag
->> 0-tag, then a branch 0-branch, maybe something else that is
->> relevant; and then make sure every option is correctly offered
->> by autocompletion.
->> Guys please let me know if everything else is needed before I send v2.
+> Changes in v4:
 >=20
-> So in short, we want the problem description updated to something
-> like:
->=20
->  When branches and tags whose names share the same prefix as a
->  file (or a directory???) that stores a patch exist, the attempt
->  to complete that shared prefix
->=20
->      $ git send-email that-shared-prefix<TAB>
->=20
->  should offer both branches, tags, and files (and directories???).
->  But the completion only offers branches and tags and fails to
->  offer files.
->=20
-> And the description of the solution would follow after that in the
-> proposed log message.
->=20
-> As to the tests, using 40-hex is misleading, and 0-branch as you
-> said would be sufficient to reproduce and demonstrate the issue, and
-> that your code change fixes it.
->=20
-> Ben, anything I missed?
->=20
-> Thanks.
+> * Match against the actual push URL, including pushurl and pushInsteadOf.
+> * Clarify how rearranging remotes exposes the git status tracking problem.=
 
-Not from my end, though SZEDER=E2=80=99s review merits some thinking.
+> * Simplify and correct the documentation for URL-valued pushRemote.
+>=20
+> Changes in v3:
+>=20
+> * Revamp commit messages to clarify motivation.
+>=20
+> Changes in v2:
+>=20
+> * Clarify that URL push destinations already work and that this change onl=
+y
+>   restores their tracking information.
+> * Document URL values for branch.<name>.pushRemote and their @{push}
+>   behavior.
+>=20
+> Harald Nordgren (2):
+>  remote: pass repository to push tracking helper
+>  remote: find tracking branches for URL push destinations
+>=20
+> Documentation/config/branch.adoc |   1 +
+> Documentation/revisions.adoc     |   3 +
+> remote.c                         |  43 +++++++++--
+> remote.h                         |   2 +
+> t/t5505-remote.sh                | 124 +++++++++++++++++++++++++++++++
+> transport.c                      |   5 +-
+> 6 files changed, 172 insertions(+), 6 deletions(-)
+>=20
+>=20
+> base-commit: 48bbf81c29ca9a4479ec7850fe206518682cdb2f
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2358=
+%2FHaraldNordgren%2Fremote-resolve-url-push-tracking-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2358/Ha=
+raldNordgren/remote-resolve-url-push-tracking-v3
+> Pull-Request: https://github.com/git/git/pull/2358
+>=20
+> Range-diff vs v2:
+>=20
+> 1:  b1ac49de87 =3D 1:  b1ac49de87 remote: pass repository to push tracking=
+ helper
+> 2:  6e924a7fec ! 2:  a343af9d50 remote: find tracking branches for URL pus=
+h destinations
+>     @@ Metadata
+>       ## Commit message ##
+>          remote: find tracking branches for URL push destinations
+>=20
+>     -    Git already accepts a repository URL as branch.<name>.pushRemote a=
+nd
+>     -    can push to it. When a configured remote has the same URL, howeve=
+r,
+>     -    "git status" cannot show that remote's push branch.
+>     +    Git accepts a repository URL as branch.<name>.pushRemote and can p=
+ush
+>     +    to it. This branch setting takes precedence over remote.pushDefau=
+lt.
+>=20
+>     -    This can happen in fork workflows when the original remote is ren=
+amed
+>     -    to "upstream", the fork is added as "origin", and an existing
+>     -    pushRemote value still contains the fork URL. The URL still point=
+s to
+>     -    the right repository, so pushing works. However, @{push} is unava=
+ilable
+>     -    because Git does not connect the URL to "origin". As a result,
+>     +    A branch can be configured with a URL-valued pushRemote before an=
+y push
+>     +    occurs. If the remotes are later rearranged with "git remote rena=
+me" and
+>     +    "git remote add", the newly added remote may use that URL. The UR=
+L value
+>     +    is unaffected by the rename and continues to take precedence over=
 
-Traveling the next week+; replies may be slower (than usual, hah).=
+>     +    remote.pushDefault. The URL and the remote then point to the same=
+
+>     +    repository, but Git does not connect them for tracking. Pushing w=
+orks,
+>     +    but @{push} cannot identify the remote's tracking branch. As a re=
+sult,
+>          "git status" cannot show the push branch, and an up-to-date push c=
+an
+>     -    leave its local tracking information stale.
+>     +    leave its tracking information stale.
+>=20
+>     -    When exactly one configured remote has the URL as one of its
+>     -    remote.<name>.url values, use its fetch refspec to find and refre=
+sh the
+>     -    push branch. Keep the URL as the push destination so the configur=
+ed
+>     -    remote's push settings do not change existing behavior. Keep the
+>     -    current behavior when no remote matches or multiple remotes match=
+.
+>     +    When exactly one configured remote uses the push destination URL,=
+ use
+>     +    that remote for push tracking. Continue to push to the URL so the=
+
+>     +    configured remote's push settings do not change existing behavior=
+. Keep
+>     +    the current behavior when no remote matches or multiple remotes m=
+atch.
+>=20
+>          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+
+I find this explanation makes more sense ; it=E2=80=99s not how I use remote=
+ renames, since I don=E2=80=99t usually use URL-valued remotes, but I can se=
+e how things arise now. Thanks!=
