@@ -1,70 +1,69 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C373AEF49
-	for <git@vger.kernel.org>; Wed, 22 Jul 2026 07:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB321DDC35
+	for <git@vger.kernel.org>; Wed, 22 Jul 2026 08:15:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784704253; cv=none; b=aU8po6fw3oBUcftaQPaXYEt8DPrj5vCxt/V0Wx9DXHBHNeANXOha3oSvr8YxnvFMjBJpqDqmoDUcCgPaqDQ76OEPoKmQtvzmZLxXYhvxNbuVXuZECYVODpz9WxjTd5cXxA0pcUh3eSr67wfzbmRbm68zI/vWOo17xnLtHAgC5Q8=
+	t=1784708112; cv=none; b=YEEOyQCug1QfO6oGsVTTGbayFEZCEPjUDkkI1R2E8V30L1XOYmrr24OEuJKyXlpOFlT4PNNGlLhke9/7jPn6eU+5d5Qj5lQ6ddA+T8Yc6WfDm0rVz6IsbORqy6SDR7hRZt+Cde/dVXF7VEUEmjGJHI3+SA2l+9Ki7vNCNpQw4Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784704253; c=relaxed/simple;
-	bh=AV6NmdCHSFoZhlIxYamqztxt/JO5XHcDCEHXSdhRkIQ=;
+	s=arc-20240116; t=1784708112; c=relaxed/simple;
+	bh=fcb5RyM7um/cxRxir2DWCrONVVgQzLxqQKU31PtSuy0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Iib95Twdb682ORQxwWOkgCDFhFJTMypn2D4zxZdF8XePoG1Unf23ETM4JhqdzZWAplO99SaAdlKCEd7XhmMC8t2p0cNk3dFQfWnKOCMkJJRJsg5w0m7NpFYyg43t8manTfBplC+Wk1/JsHHJG7MPVsoZG4IYWWsUHhLwLi+L5uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TYMx9LOd; arc=none smtp.client-ip=209.85.160.172
+	 MIME-Version:To:Cc; b=jrq3yUyh2Mktp5U2O3ZGCajulKfcTvWMIcQ9D7v8Pm7KCoTDnyxVc+wVj9tRGRCNjUITHLT61ksn1JcmuOVRulqczRFavaMDT5y1Y5rSjroYfx9CEoJ4w8ewBbGDNmcn3Lr/lpcB/Iu9NjgaLCtalbQiVuIgEu0tk767g/SOv1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gGYVpaWM; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TYMx9LOd"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51c0a81d286so52241911cf.1
-        for <git@vger.kernel.org>; Wed, 22 Jul 2026 00:10:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gGYVpaWM"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c9e607d81fcso5560348a12.2
+        for <git@vger.kernel.org>; Wed, 22 Jul 2026 01:15:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784704245; x=1785309045; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784708109; x=1785312909; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ij5hI0Rh2EPmo0rsl3yX4FIx5bM0hwVG231IP0BuDrc=;
-        b=TYMx9LOd9qvlxDiCUstyDG5EiM8vQET3QPWr6f5Z/TQW3bL8WRjlOFy13OORL11TNA
-         mKHCj96DNwpSloYeB0mFMHkR9GJ3vdxahSsMAispy2r2z4YBtzZMkv4c+weEPTc1n1xF
-         DVmIgQuyVqcPdRMfg1L2uDtlIrVtUoaD7kedU/Pz9D2T7aUAKD1wgWiDgZHl1LL4QMqZ
-         XUvtqdywTnxGK9pGyEIwcIqz3sRqDbIk/hKL7yRxlXIxqKmQgGCnrW1So0Uimr6wEb+l
-         sB0+QFQlBKOn3oAsXhNQZPNPe33mRuXDzDmOsy6iBSUdBuww9yw+x9A+2Ydg0C6/zcAk
-         Cm4g==
+        bh=vKuncHk6R6XZPL52ErmAi+EIkX1H+5qrXTt06yMA450=;
+        b=gGYVpaWMLqxZeDfO7lB4avKk7Cva3zlib5OouXyBk15DlPHMhR9vrE2ClEG+BRGkLe
+         drc5sGjPzuQc+WScqTIRh8jVBq50YsuePga7p7aCilZvzrXmjVRG56Unrx4zE7k8A7gV
+         lsce8ntJDSD8L7IRNVz1EMueP5BKkHiq8kFGPIcqTv/bjJpOz0EL4t4GqP1pclxruhtu
+         seLZp/cvylZ/Lo2ic0PAPUX6VFK0CEd+HfOIXG7Ue4Awi5bDuYetTH5n0mxPZOWeXNxB
+         prCHAmw0LPsKA338EJjzIN2sH5mDHpsk9kBQDlw1jWne65x5eqdSeaz/hhKV/qynZup9
+         rj6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784704245; x=1785309045;
+        d=1e100.net; s=20251104; t=1784708109; x=1785312909;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ij5hI0Rh2EPmo0rsl3yX4FIx5bM0hwVG231IP0BuDrc=;
-        b=nJ3nPEIMbeFHxzJqtroAblkDHkh0QbmA+yMh0MEVLymSkYzZrhg7qHqN+OjicPc9oU
-         x2ttogzv9eB1g6W2nccTuehi0ZXOPk0GUMZ8E/iIKZq+nSSNF5il/KvTQBlF5H3APPQU
-         tknQ1zj+E8PWSXIxRGiFYBnVYK7ddIo4juYLsRDHqqaZpE+pwmiBlXf66S9SLoETU7eU
-         LVlbFJli0pSmTq4yhIcNaTrYDdAquk2wt7xJdQuJj6GbJw/Z9NHhJ8MhoZqU8lmvbLvN
-         C5N1KdvgtbdXHqL1Qx7MjPX+9afcFe0LZdRtu2P6RcIuGc9Z9bDh8iu/JRkHClcJER3G
-         N4/A==
-X-Gm-Message-State: AOJu0Yy3wAAARlbpzZH+zjMFof3lI+5nPsTRy9pLuPkY/nk/slPoOzog
-	5obcfORG/NUwY6UGAi/lrws4DZaBwupO7VhhcKRiDqJPA9t1+fbuFwjh86EE9Q==
-X-Gm-Gg: AR+sD12In4XaT+1KosegTNtrqC7m0DPcr7kVOxx0XHH+xGO5kyahYDtkvG0MFs137/E
-	qKR17TAXF+19img30f2lLeRu9+mFjCOK89CrqC7nOxa8WEdyYZP6YiHvO3omrnxIdDga9WP0Hzs
-	E7+8v/6hZ90+55Tnz7TSoEWQ1lBidVRRUVPH1msyCEfvK+ZBotqaTHuTUr2MZ2h8RRs3eRwJTyy
-	dyKKyR8ThKLpxnkyylO9q/7NgRKUhAJd5n8ZRrEgttwQle7qjIwfTUYXbxT3Kznz0sj3JnGp317
-	EvR/Ee5PLOPixCrupiYMvrrgzelMrqvm8B63qQRIvmvQMvrXXi5wrYLTCZAShBNbQHbeyXyCydK
-	9zbi4JL35N/D/HGvvej3z9sLCTBnfXMACAYbQMzmPCNjLowZLltcjSzWyNvPSNxAIlnuwAm73z/
-	igpGA=
-X-Received: by 2002:a05:622a:653:b0:51e:aa39:4fc0 with SMTP id d75a77b69052e-527a9cfdd3emr29781741cf.42.1784704245482;
-        Wed, 22 Jul 2026 00:10:45 -0700 (PDT)
-Received: from [127.0.0.1] ([48.214.53.82])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-907baa296a9sm14713596d6.49.2026.07.22.00.10.44
+        bh=vKuncHk6R6XZPL52ErmAi+EIkX1H+5qrXTt06yMA450=;
+        b=pTuo/DIAsfUeO4vfuMlc0T3xDSbdzrY+/wwTKsaysi8G2WlZjr1sNcND4kMpVO7DTz
+         TFSELdS/Ux4mTlwJRAXdKdm6PyYDRZAgY5PytHizutvvq2TCIXh6lKfllj5wy/+cBb0a
+         6wBjFdioj7v/gyxEKGYr0ia9WdfZ00uh8vwW7bxjCHdHWx5gHXC6EWpvvpb/4L+b6kQS
+         iBgMDeYgvWQmq/Fv+UaOBqXBpr75/DZj7qaIWqMSmY7zjpPTFhEltxId5VtLiQqbylnw
+         89eqwC+oJt1nRG89ZygbQYOdIngekH8PqAbykj9feX/VcvhAh0HwfZ6ctbSJyKhnAIlv
+         kcQQ==
+X-Gm-Message-State: AOJu0YwEK1g3F+z0gvqhBAnqZWzOQzoAB0nE+mM7Iiti/dkbBs8QS6Ps
+	6Rd304a4IgWaia/rZan+YQQFAxcYD014CD6T4hWE2AfMz7wi1SmpnQqfOk9FoA==
+X-Gm-Gg: AR+sD118nLkE4xyCGU4fO5QBAlxecagb503PPznWoMphsRP7LlJSw11FFmc9d4Z4+q8
+	Nyz338iStQKnKugedvQvdFhuRzohh+/H8lxpC+DqpqkDdSMkLxAquFM6I4BlgBHTbiykMCadfXy
+	HAlnrOmlntd7mErUiWpOGgW8DROAYKftbYeBjWtoR8dGkkah1ZAG3dAzdscDttx28C0L5g6bWj4
+	JxNtK/R9v9cVx9guZXMxdNvoOlEAPavMZwRaaNiZC7CUXqWsutxiBc45AcJdgwaed4ZIpgE+Fo0
+	hEBcF+PvBoIrFGYj2NYMYTEdBnSzELMX9i9X9TJ7sa/vp7s4PMacrvgRk1GN333+j3/zuuuLpJn
+	tIbx7JVCl+yv9L+Ibrf0limaJpCFYscXG3KTqdyWn5zgN8EpOWgAbN8G62s3NK+2+6p/5Ry1m25
+	eEQ3c9eg==
+X-Received: by 2002:a05:6300:2285:b0:3c3:6c90:65b3 with SMTP id adf61e73a8af0-3c3adb086f8mr23411742637.65.1784708109045;
+        Wed, 22 Jul 2026 01:15:09 -0700 (PDT)
+Received: from [127.0.0.1] ([172.182.253.38])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147dc7d8fbsm7338913eec.10.2026.07.22.01.15.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jul 2026 00:10:44 -0700 (PDT)
-Message-Id: <ef9f57e73577b2278c2a0aa20c3d30a5db4cdbb3.1784704238.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2285.v20.git.git.1784704238.gitgitgadget@gmail.com>
-References: <pull.2285.v19.git.git.1784053493.gitgitgadget@gmail.com>
-	<pull.2285.v20.git.git.1784704238.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 22 Jul 2026 07:10:36 +0000
-Subject: [PATCH v20 5/7] branch: add --delete-merged <branch>
+        Wed, 22 Jul 2026 01:15:08 -0700 (PDT)
+Message-Id: <pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
+References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
+From: "Son Luong Ngoc via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 22 Jul 2026 08:15:04 +0000
+Subject: [PATCH v3 0/2] rebase: handle --update-refs branch symrefs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,542 +75,197 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Johannes Sixt <j6t@kdbg.org>,
     Phillip Wood <phillip.wood123@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+    Son Luong Ngoc <sluongng@gmail.com>
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+git rebase --update-refs can finish rewriting the current branch and then
+fail while updating a local branch that is a symbolic ref. This can happen
+during a default-branch rename where refs/heads/main points at
+refs/heads/master while users migrate. The failure leaves refs partially
+updated even though the main rebase has succeeded.
 
-    git branch (--delete-merged <branch>)... [<pattern>...]
+Resolve local branch decorations before adding update-ref commands. The
+first patch skips aliases whose targets are other branches and preserves the
+existing handling of the current branch. The second patch keeps aliases to
+non-branch refs supported while preventing duplicate and cross-worktree
+updates to their resolved targets.
 
-deletes local branches matching the optional patterns when their
-configured upstream matches one of the --delete-merged arguments and
-their tip is reachable from that upstream. The work has already landed
-on the upstream they track, so the local copy is no longer needed.
+Changes since v2:
 
-The option can be repeated to widen the upstream match. Keeping the
-candidate patterns as positional arguments lets users bound the set of
-local branches that may be deleted independently of the upstream
-selection.
+ * Skip branch-to-branch symrefs before checked-out handling.
+ * Restore the unconditional current-branch skip and keep an owned copy of
+   the resolved HEAD name.
+ * Check both a non-branch symref alias and its resolved target against
+   checked-out reservations.
+ * Deduplicate aliases that share a non-branch target.
+ * Reserve resolved targets from other worktrees' in-progress update-refs
+   state.
+ * Split the branch-alias fix and non-branch safeguards into separate
+   patches.
+ * Rebase onto 48bbf81c29 (The 5th batch).
 
-A branch is not deleted when:
+The focused t3400 and t3404 test suites pass with both the files and
+reftable backends.
 
-  * it is checked out in any worktree
-  * its configured upstream ref no longer exists, since a missing
-    upstream is not by itself a sign of integration
-  * pushing it by name to the remote configured by
-    branch.<name>.remote would update its upstream, as determined by
-    mapping the branch ref through that remote's fetch refspec. For
-    example, a local "main" that tracks "origin/main" is kept even when
-    remote.pushDefault names a fork. Right after a pull it merely looks
-    fully merged.
+Son Luong Ngoc (2):
+  rebase: skip branch symref aliases
+  rebase: guard non-branch symref targets
 
-A branch whose work is not yet merged into its upstream is silently
-skipped, so one unmerged topic does not abort the whole sweep.
+ branch.c                      | 15 ++++++
+ sequencer.c                   | 63 ++++++++++++++++++++-----
+ t/t3400-rebase.sh             |  2 +-
+ t/t3404-rebase-interactive.sh | 88 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 155 insertions(+), 13 deletions(-)
 
-A branch that a surviving branch depends on through a chain of local
-upstreams is also kept, so no branch is deleted out from under stacked
-work. Collect this transitive set without changing the candidate set
-during ref iteration: walk upstream chains from surviving branches,
-visit each branch at most once, and remove the collected bases only
-after the iteration completes. This makes the result independent of
-ref iteration order without repeated full scans.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-branch.adoc |  30 +++++
- builtin/branch.c              | 159 +++++++++++++++++++++++++-
- t/t3200-branch.sh             | 204 ++++++++++++++++++++++++++++++++++
- 3 files changed, 391 insertions(+), 2 deletions(-)
+base-commit: 48bbf81c29ca9a4479ec7850fe206518682cdb2f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2126%2Fsluongng%2Fsl%2Frebase-update-refs-symrefs-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2126/sluongng/sl/rebase-update-refs-symrefs-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2126
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index b0d66a6deb..2a96cd7253 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -25,6 +25,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
- git branch (-c|-C) [<old-branch>] <new-branch>
- git branch (-d|-D) [-r] <branch-name>...
- git branch --edit-description [<branch-name>]
-+git branch (--delete-merged <branch>)... [<pattern>...]
- 
- DESCRIPTION
- -----------
-@@ -201,6 +202,35 @@ This option is only applicable in non-verbose mode.
- 	Print the name of the current branch. In detached `HEAD` state,
- 	nothing is printed.
- 
-+`--delete-merged <branch>`::
-+	Delete local branches whose configured upstream matches
-+	_<branch>_, but only when their tip is reachable from that
-+	upstream. In other words, the work on the branch has already
-+	landed on the upstream it tracks, so the local copy is no longer
-+	needed. The option can be repeated to widen the upstream match.
-+	Optional _<pattern>_ arguments limit which local branches are
-+	considered, e.g. `git branch --delete-merged 'origin/*'
-+	'topic-*'`.
-++
-+A branch is not deleted when:
-++
-+--
-+* its configured upstream ref no longer exists,
-+* it is checked out in any worktree, or
-+* pushing it by name to the remote configured by
-+  `branch.<name>.remote` would update its upstream, so it cannot be
-+  distinguished from a branch that just looks "fully merged" right
-+  after a pull.
-+--
-++
-+A branch whose work has not yet been merged into its upstream is
-+silently skipped. Delete it with `git branch -D` if you want to
-+remove it anyway.
-++
-+A branch that a surviving branch depends on through a chain of local
-+upstreams is kept, so a branch is never deleted out from under stacked
-+work.
-+
- `-v`::
- `-vv`::
- `--verbose`::
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 1ef8362c12..b97315df35 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -21,6 +21,7 @@
- #include "branch.h"
- #include "path.h"
- #include "string-list.h"
-+#include "strmap.h"
- #include "column.h"
- #include "utf8.h"
- #include "ref-filter.h"
-@@ -38,6 +39,7 @@ static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
- 	N_("git branch [<options>] [-r | -a] [--points-at]"),
- 	N_("git branch [<options>] [-r | -a] [--format]"),
-+	N_("git branch [<options>] (--delete-merged <branch>)... [<pattern>...]"),
- 	NULL
- };
- 
-@@ -699,6 +701,149 @@ static int parse_opt_forked(const struct option *opt, const char *arg, int unset
- 	return 0;
- }
- 
-+struct stacked_branch_data {
-+	struct strset *deletable_branch_names;
-+	struct strset *protected_branch_names;
-+	struct strset *visited_branch_names;
-+};
-+
-+static int collect_stacked_branch_bases(const struct reference *ref,
-+					void *cb_data)
-+{
-+	struct stacked_branch_data *data = cb_data;
-+	const char *branch_name;
-+
-+	if (!skip_prefix(ref->name, "refs/heads/", &branch_name))
-+		BUG("expected local branch ref, got '%s'", ref->name);
-+	if (strset_contains(data->deletable_branch_names, branch_name))
-+		return 0;
-+
-+	while (strset_add(data->visited_branch_names, branch_name)) {
-+		struct branch *branch = branch_get(branch_name);
-+		const char *upstream_refname = branch_get_upstream(branch, NULL);
-+		const char *upstream_branch_name;
-+
-+		if (!upstream_refname ||
-+		    !skip_prefix(upstream_refname, "refs/heads/",
-+				 &upstream_branch_name) ||
-+		    !strset_contains(data->deletable_branch_names,
-+				    upstream_branch_name))
-+			break;
-+
-+		strset_add(data->protected_branch_names, upstream_branch_name);
-+		branch_name = upstream_branch_name;
-+	}
-+
-+	return 0;
-+}
-+
-+static void protect_stacked_branch_bases(struct ref_store *refs,
-+					 struct strset *deletable_branch_names)
-+{
-+	struct strset protected_branch_names = STRSET_INIT;
-+	struct strset visited_branch_names = STRSET_INIT;
-+	struct stacked_branch_data data = {
-+		.deletable_branch_names = deletable_branch_names,
-+		.protected_branch_names = &protected_branch_names,
-+		.visited_branch_names = &visited_branch_names,
-+	};
-+	struct refs_for_each_ref_options opts = {
-+		.prefix = "refs/heads/",
-+	};
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+
-+	refs_for_each_ref_ext(refs, collect_stacked_branch_bases, &data, &opts);
-+
-+	strset_for_each_entry(&protected_branch_names, &iter, entry)
-+		strset_remove(deletable_branch_names, entry->key);
-+
-+	strset_clear(&visited_branch_names);
-+	strset_clear(&protected_branch_names);
-+}
-+
-+static int branch_pushes_to_upstream(struct branch *branch,
-+				     const char *upstream)
-+{
-+	struct remote *remote = remote_get(remote_for_branch(branch, NULL));
-+	char *tracking = NULL;
-+	int ret = 0;
-+
-+	if (remote)
-+		tracking = apply_refspecs(&remote->fetch, branch->refname);
-+	if (tracking && !strcmp(tracking, upstream))
-+		ret = 1;
-+
-+	free(tracking);
-+	return ret;
-+}
-+
-+static int delete_merged_branches(const struct strvec *upstreams,
-+				 const char **argv, unsigned int flags)
-+{
-+	struct ref_store *refs = get_main_ref_store(the_repository);
-+	struct ref_filter filter = REF_FILTER_INIT;
-+	struct ref_array candidates = { 0 };
-+	struct strset deletable_branch_names = STRSET_INIT;
-+	struct strvec branches_to_delete = STRVEC_INIT;
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+	size_t i;
-+	int ret = 0;
-+
-+	for (i = 0; i < upstreams->nr; i++)
-+		if (ref_filter_forked_add(&filter, upstreams->v[i]) < 0)
-+			die(_("'%s' is not a valid branch or pattern"),
-+			    upstreams->v[i]);
-+
-+	filter.kind = FILTER_REFS_BRANCHES;
-+	filter.name_patterns = argv;
-+	filter_refs(&candidates, &filter, filter.kind);
-+
-+	for (i = 0; i < (size_t)candidates.nr; i++) {
-+		const char *branch_refname = candidates.items[i]->refname;
-+		const char *branch_name;
-+		struct branch *branch;
-+		const char *upstream_refname;
-+
-+		if (!skip_prefix(branch_refname, "refs/heads/", &branch_name))
-+			BUG("filter returned non-branch ref '%s'", branch_refname);
-+		if (branch_checked_out(branch_refname))
-+			continue;
-+
-+		branch = branch_get(branch_name);
-+		upstream_refname = branch_get_upstream(branch, NULL);
-+		if (!upstream_refname || !refs_ref_exists(refs, upstream_refname))
-+			continue;
-+		if (branch_pushes_to_upstream(branch, upstream_refname))
-+			continue;
-+		if (check_branch_commit(branch_name, branch_name,
-+					&candidates.items[i]->objectname, NULL,
-+					FILTER_REFS_BRANCHES, DELETE_BRANCH_SKIP_UNMERGED))
-+			continue;
-+
-+		strset_add(&deletable_branch_names, branch_name);
-+	}
-+
-+	protect_stacked_branch_bases(refs, &deletable_branch_names);
-+
-+	strset_for_each_entry(&deletable_branch_names, &iter, entry)
-+		strvec_push(&branches_to_delete, entry->key);
-+
-+	if (branches_to_delete.nr)
-+		ret = delete_branches(branches_to_delete.nr, branches_to_delete.v,
-+				      FILTER_REFS_BRANCHES,
-+				      DELETE_BRANCH_SKIP_UNMERGED |
-+				      DELETE_BRANCH_NO_HEAD_FALLBACK |
-+				      flags);
-+
-+	strvec_clear(&branches_to_delete);
-+	strset_clear(&deletable_branch_names);
-+	ref_array_clear(&candidates);
-+	ref_filter_clear(&filter);
-+	return ret;
-+}
-+
- static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
- 
- static int edit_branch_description(const char *branch_name)
-@@ -763,6 +908,7 @@ int cmd_branch(int argc,
- 	/* possible actions */
- 	int delete = 0, rename = 0, copy = 0, list = 0,
- 	    unset_upstream = 0, show_current = 0, edit_description = 0;
-+	struct strvec delete_merged = STRVEC_INIT;
- 	const char *new_upstream = NULL;
- 	int noncreate_actions = 0;
- 	/* possible options */
-@@ -816,6 +962,9 @@ int cmd_branch(int argc,
- 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
-+		OPT_CALLBACK_F(0, "delete-merged", &delete_merged, N_("branch"),
-+			N_("delete merged branches whose upstream matches <branch> (repeatable)"),
-+			PARSE_OPT_NONEG, parse_opt_strvec),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
- 		OPT_MERGED(&filter, N_("print only branches that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
-@@ -863,7 +1012,8 @@ int cmd_branch(int argc,
- 			     0);
- 
- 	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
--	    !show_current && !unset_upstream && argc == 0)
-+	    !show_current && !unset_upstream && !delete_merged.nr &&
-+	    argc == 0)
- 		list = 1;
- 
- 	if (filter.with_commit || filter.no_commit ||
-@@ -873,7 +1023,7 @@ int cmd_branch(int argc,
- 
- 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
- 			    !!show_current + !!list + !!edit_description +
--			    !!unset_upstream;
-+			    !!unset_upstream + !!delete_merged.nr;
- 	if (noncreate_actions > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
-@@ -915,6 +1065,10 @@ int cmd_branch(int argc,
- 				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
- 				      (quiet ? DELETE_BRANCH_QUIET : 0));
- 		goto out;
-+	} else if (delete_merged.nr) {
-+		ret = delete_merged_branches(&delete_merged, argv,
-+					     quiet ? DELETE_BRANCH_QUIET : 0);
-+		goto out;
- 	} else if (show_current) {
- 		print_current_branch_name();
- 		ret = 0;
-@@ -1083,6 +1237,7 @@ int cmd_branch(int argc,
- 	ret = 0;
- 
- out:
-+	strvec_clear(&delete_merged);
- 	string_list_clear(&sorting_options, 0);
- 	return ret;
- }
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 4ffd224a71..268203089b 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1872,4 +1872,208 @@ test_expect_success '--forked requires a value' '
- 	test_grep "requires a value" err
- '
- 
-+test_expect_success '--delete-merged: setup' '
-+	git init -b main upstream &&
-+	(
-+		cd upstream &&
-+		test_commit base &&
-+		git checkout -b next &&
-+		test_commit next-work &&
-+		git checkout main
-+	) &&
-+	git init -b main other &&
-+	test_commit -C other other-base &&
-+	git init -b main fork
-+'
-+
-+setup_repo_for_delete_merged () {
-+	rm -rf repo &&
-+	git clone upstream repo &&
-+	(
-+		cd repo &&
-+		git remote add fork ../fork &&
-+		git remote add other ../other &&
-+		git config push.default current &&
-+		git fetch other
-+	)
-+}
-+
-+create_merged_branch () {
-+	(
-+		cd repo &&
-+		git checkout -b "$1" origin/next --track &&
-+		git commit --allow-empty -m "$1 work" &&
-+		git push origin "$1:next"
-+	)
-+}
-+
-+check_branches () {
-+	git for-each-ref --format="%(refname:short)" refs/heads/ >actual &&
-+	cat >expect &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success '--delete-merged keeps cloned main without a default push remote' '
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git checkout --detach &&
-+
-+		git branch --delete-merged */* &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-merged deletes only selected merged branches' '
-+	setup_repo_for_delete_merged &&
-+	create_merged_branch also-merged &&
-+	create_merged_branch merged &&
-+	(
-+		cd repo &&
-+		git checkout -b unmerged origin/next --track &&
-+		git commit --allow-empty -m "unmerged work" &&
-+		git checkout -b tracks-other other/main --track &&
-+		sha=$(git rev-parse --short merged) &&
-+
-+		git branch --delete-merged origin/next merged >actual 2>&1 &&
-+		echo "Deleted branch merged (was $sha)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		also-merged
-+		main
-+		tracks-other
-+		unmerged
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-merged keeps main despite a different default push remote' '
-+	setup_repo_for_delete_merged &&
-+	create_merged_branch on-next &&
-+	create_merged_branch checked-out &&
-+	create_merged_branch upstream-gone &&
-+	(
-+		cd repo &&
-+		git config remote.pushDefault fork &&
-+		git checkout -b local-to-delete main --track &&
-+		git update-ref refs/remotes/origin/topic refs/remotes/origin/next &&
-+		git branch --set-upstream-to=origin/topic upstream-gone &&
-+		git update-ref -d refs/remotes/origin/topic &&
-+		git checkout -b tracks-other other/main --track &&
-+		git checkout checked-out &&
-+
-+		git branch --delete-merged origin/* \
-+			--delete-merged main &&
-+
-+		check_branches <<-\EOF
-+		checked-out
-+		main
-+		tracks-other
-+		upstream-gone
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-merged keeps the upstream of a surviving branch' '
-+	setup_repo_for_delete_merged &&
-+	create_merged_branch feature &&
-+	(
-+		cd repo &&
-+		git checkout -b topic feature --track &&
-+		git commit --allow-empty -m "topic work" &&
-+
-+		git branch --delete-merged origin/next 2>err &&
-+
-+		test_must_be_empty err &&
-+		check_branches <<-\EOF &&
-+		feature
-+		main
-+		topic
-+		EOF
-+
-+		git config --local --get-regexp "branch\\.(feature|topic)\\.(merge|remote)" >actual &&
-+		cat >expect <<-\EOF &&
-+		branch.feature.remote origin
-+		branch.feature.merge refs/heads/next
-+		branch.topic.remote .
-+		branch.topic.merge refs/heads/feature
-+		EOF
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success '--delete-merged keeps the upstream chain of a surviving branch' '
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git config remote.pushDefault fork &&
-+		git branch lower origin/next --track &&
-+		git branch mid lower --track &&
-+		git checkout -b tip mid --track &&
-+		git commit --allow-empty -m "tip work" &&
-+
-+		git branch --delete-merged origin/next \
-+			--delete-merged lower >actual 2>&1 &&
-+		test_must_be_empty actual &&
-+
-+		check_branches <<-\EOF &&
-+		lower
-+		main
-+		mid
-+		tip
-+		EOF
-+
-+		git config --local --get-regexp "branch\\.(lower|mid|tip)\\.(merge|remote)" >actual &&
-+		cat >expect <<-\EOF &&
-+		branch.lower.remote origin
-+		branch.lower.merge refs/heads/next
-+		branch.mid.remote .
-+		branch.mid.merge refs/heads/lower
-+		branch.tip.remote .
-+		branch.tip.merge refs/heads/mid
-+		EOF
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success '--delete-merged result is independent of stacked branch names' '
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git branch c-lower origin/next --track &&
-+		git branch b-mid c-lower --track &&
-+		git checkout -b a-tip b-mid --track &&
-+		git commit --allow-empty -m "tip work" &&
-+
-+		git branch --delete-merged origin/next \
-+			--delete-merged "c-*" &&
-+
-+		check_branches <<-\EOF &&
-+		a-tip
-+		b-mid
-+		c-lower
-+		main
-+		EOF
-+
-+		git branch --delete-merged origin/next \
-+			--delete-merged "c-*" >actual 2>&1 &&
-+		test_must_be_empty actual &&
-+
-+		check_branches <<-\EOF
-+		a-tip
-+		b-mid
-+		c-lower
-+		main
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-merged requires a value' '
-+	test_must_fail git -C forked branch --delete-merged 2>err &&
-+	test_grep "requires a value" err
-+'
- test_done
+Range-diff vs v2:
+
+ 1:  68f698225c ! 1:  b9a01e9141 rebase: skip branch symref aliases
+     @@ Metadata
+       ## Commit message ##
+          rebase: skip branch symref aliases
+      
+     -    git rebase --update-refs can fail after the normal rebase path has
+     -    updated the current branch when another local branch is a symref to it.
+     -    This can happen during a default-branch rename where refs/heads/main
+     -    points at refs/heads/master while users migrate.
+     +    git rebase --update-refs can finish rewriting the current branch and
+     +    then fail while updating a local branch that is a symbolic ref. This can
+     +    happen during a default-branch rename where refs/heads/main points at
+     +    refs/heads/master while users migrate.
+      
+     -    The sequencer queues update-ref commands from local branch decorations.
+     -    Commit 106b6885c7 (rebase: ignore non-branch update-refs) filters out
+     -    decorations that are not local branches, such as HEAD and tags. A branch
+     -    symref is different: it is still a local branch decoration, but if it
+     -    resolves to another branch then that target branch is itself present in
+     -    the decoration list and will be updated as a concrete branch.
+     +    The problem is a partially applied ref update: the main rebase has
+     +    already succeeded when the later ref update fails.
+      
+     -    Skip branch decorations whose symrefs resolve to refs/heads/*, because
+     -    those targets are already represented by concrete branch decorations.
+     -    This prevents aliases from scheduling a second update for the same
+     -    branch. Keep symrefs to non-branch targets on the existing path.
+     +    The sequencer queues updates from local branch decorations. Commit
+     +    106b6885c7 (rebase: ignore non-branch update-refs) filters out
+     +    decorations such as HEAD and tags. A branch symref is still a local
+     +    branch decoration, but refs_update_ref() dereferences it, so an alias to
+     +    another branch duplicates the concrete branch update.
+      
+     -    Preserve the existing checked-out branch handling before applying these
+     -    skips. Such refs still need a todo-list comment instead of an update-ref
+     -    command, even when the checked-out ref is the branch being rebased or a
+     -    branch symref alias. Use a copy of the resolved HEAD ref so later ref
+     -    resolution does not overwrite it.
+     +    Resolve local branch decorations before queuing them. Skip symrefs whose
+     +    targets are under refs/heads/ so that only the concrete branch update is
+     +    queued. Keep an owned copy of the resolved HEAD and skip the current
+     +    branch before checked-out handling so later ref resolution cannot change
+     +    the comparison.
+     +
+     +    This prevents a successful rebase from being followed by a failed,
+     +    partially applied ref update while preserving each alias as a symref.
+      
+          Signed-off-by: Son Luong Ngoc <sluongng@gmail.com>
+      
+     @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+       	while (decoration) {
+       		struct todo_item *item;
+       		const char *path;
+     -+		const char *resolved_ref;
+     ++		char *resolved_ref;
+      +		int flags = 0;
+       		size_t base_offset = ctx->buf->len;
+       
+     @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+      +			continue;
+      +		}
+      +
+     -+		path = branch_checked_out(decoration->name);
+     -+
+     -+		/*
+     -+		 * If the branch is the current HEAD, then it will be
+     -+		 * updated by the default rebase behavior. Exclude it from
+     -+		 * the list of refs to update, unless it is checked out and
+     -+		 * needs a comment in the todo list.
+     -+		 */
+     -+		if (!path && head_ref && !strcmp(head_ref, decoration->name)) {
+     ++		resolved_ref = refs_resolve_refdup(refs, decoration->name,
+     ++						      RESOLVE_REF_READING,
+     ++						      NULL, &flags);
+     ++		if (resolved_ref && (flags & REF_ISSYMREF) &&
+     ++		    starts_with(resolved_ref, "refs/heads/")) {
+     ++			free(resolved_ref);
+      +			decoration = decoration->next;
+      +			continue;
+      +		}
+      +
+     -+		resolved_ref = refs_resolve_ref_unsafe(refs, decoration->name,
+     -+						       RESOLVE_REF_READING,
+     -+						       NULL, &flags);
+     -+		if (!path && resolved_ref && (flags & REF_ISSYMREF) &&
+     -+		    starts_with(resolved_ref, "refs/heads/")) {
+     ++		/*
+     ++		 * If the branch is the current HEAD, then it will be
+     ++		 * updated by the default rebase behavior.
+     ++		 */
+     ++		if (head_ref && !strcmp(head_ref, decoration->name)) {
+     ++			free(resolved_ref);
+       			decoration = decoration->next;
+       			continue;
+       		}
+     + 
+     ++		path = branch_checked_out(decoration->name);
+     ++
+     + 		ALLOC_GROW(ctx->items,
+     + 			ctx->items_nr + 1,
+     + 			ctx->items_alloc);
+      @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+       		memset(item, 0, sizeof(*item));
+       
+     @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+       			strbuf_commented_addf(ctx->buf, comment_line_str,
+       					      "Ref %s checked out at '%s'\n",
+      @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+     + 		item->arg_len = ctx->buf->len - base_offset;
+     + 		ctx->items_nr++;
+     + 
+     ++		free(resolved_ref);
+       		decoration = decoration->next;
+       	}
+       
+     @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+       }
+       
+      
+     + ## t/t3400-rebase.sh ##
+     +@@ t/t3400-rebase.sh: test_expect_success 'git rebase --update-ref with core.commentChar and branch on
+     + 	GIT_SEQUENCE_EDITOR="cat >actual" git -c core.commentChar=% \
+     + 		 rebase -i --update-refs base &&
+     + 	test_grep "% Ref refs/heads/wt-topic checked out at" actual &&
+     +-	test_grep "% Ref refs/heads/topic2 checked out at" actual
+     ++	test_grep ! "% Ref refs/heads/topic2 checked out at" actual
+     + '
+     + 
+     + test_done
+     +
+       ## t/t3404-rebase-interactive.sh ##
+      @@ t/t3404-rebase-interactive.sh: test_expect_success '--update-refs ignores non-branch decorations' '
+     + 	) &&
+     + 	grep ^update-ref todo >actual &&
+     + 	test_write_lines "update-ref refs/heads/no-conflict-branch" >expect &&
+     ++	test_grep ! "^# Ref refs/heads/update-refs checked out" todo &&
+     + 	test_cmp expect actual
+       '
+       
+       test_expect_success '--update-refs updates refs correctly' '
+ -:  ---------- > 2:  a653f56ea2 rebase: guard non-branch symref targets
+
 -- 
 gitgitgadget
-
