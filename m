@@ -1,66 +1,69 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1372047FB09
-	for <git@vger.kernel.org>; Thu, 23 Jul 2026 18:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B858132B114
+	for <git@vger.kernel.org>; Thu, 23 Jul 2026 19:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784833125; cv=none; b=jVj24pn8lA04Uhrg1FceV2IESoTGHNDPaaUO7eIi8wb6ybM6yU8+zlZ+VsF1PqNCX4NBz6twXdhHD4AhMXAyoiqT+Y1g8ieYYGbnGpbUzH5xdey5lR4prHV0k/0XMygTPW9FyPpRFZQSfUkOWRCAQzlrPhgheObL0UZ1YCInjRM=
+	t=1784834771; cv=none; b=L06td4kbfpLsj/WwoUNpz3OD8bFEpT1c7fnXKqu9RiMSQU7hKXh9mIOYoNbaed40dbSFTcUVnlc4oTuO9pZyqy7SjSqBTEyCdItcztoaYn+R7lBQFFZksVAviRowcglqMwmpknRnOGNrTmL+iyNCSgXuBH6/h/HqUpKSPOoAcNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784833125; c=relaxed/simple;
-	bh=0UOtdCyGh+CkkYY9XNRLyEz11dLSXBOoyYW2fc/snIs=;
+	s=arc-20240116; t=1784834771; c=relaxed/simple;
+	bh=YaxO0pmcGHg9yxZl4K/VGAdPFKfaQzbCDZZbDaWsUb4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Os0A9mDvbki6j7R/I4ybcVI2gfOG8Z8eI2uR9mLbirNUjADiBzrR5YeoxJf9ByeJxI+0FOKhk7mppMm6HdrNrIx6VP5cBo3VDKE37zy29tUjIBgDGBTwY3VvGY/7JYOZxVMBSzqrvcsSADQmAy8ptS+Tq41sCGgKqnxeKcOGcmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c5D5Vrhn; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:Content-Type; b=ttruNvOMXQipvy/tg56dLEfaF0WC/Z5OqTP6PU5btWjGuCTTkYrVYIMBuFXhq8yJ8GclupxsHecMB/lSoV0NugC0+pgHXj/1nWzVbwQuJ4xDx1HOGhQA0+aR7q3w1N+M37pD39eCf5HC+3eZ3MgnXSDgDQfhVGKL0GyowPjuXTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S3s9QeHN; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5D5Vrhn"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4954aff6088so8774155e9.3
-        for <git@vger.kernel.org>; Thu, 23 Jul 2026 11:58:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S3s9QeHN"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c966b9ee9cbso714091a12.1
+        for <git@vger.kernel.org>; Thu, 23 Jul 2026 12:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784833120; x=1785437920; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EEjRvDU+Zeiy4n4kU4Z2CVk4COxFPP9XGcnnczyvlxM=;
-        b=c5D5VrhnzC5a/k5L2yrKYm6Tjf+jekCNbaS71wH6vpT/yltEnrdLm9cD82O/SBTT5b
-         FNu1UZX/FLTJYfb5ms/+/7aprHaEHzpbYg5kgU6JtlDSKao0wOi6aKvlbSvNCPs/r3lU
-         yWwtdt9wRFgPODwYNX2RuxUBhGBkgnb+Gdziae3diNATWlATJwVybpSd0nzGw0ffBW5+
-         IzA5NGn+EaAS9s0QqUJtCrFKswRfw6QxWaeBFSkJarMkK6stKuvXVYs4e8pqUSCbYDMe
-         aCKj2D6AAJT1ed8FPlyx9EqO/utCG/if+l46qaWSG84uPOSJc+MeZ8dsOM/m4d9lb4ar
-         1nCA==
+        d=gmail.com; s=20251104; t=1784834769; x=1785439569; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZTyK2y+hDNIxHkxXvvMtvezddtx5eayRhJpYkVPXwZA=;
+        b=S3s9QeHNOffwWdodHW1TjvH76ef7zBbxpZQapm0tSMl4WSLzdpL1zfF7PVxrjACqm8
+         wMcusDoRJcLAefnljS+1JspOjZOV4mFvG4SpjbDSP87IxdRCaXdhbSR1pa/SlZJ2sAo7
+         1P6b/f0ii30siYAf1YRhDGbo8QfRU3NVLN2boT2ImheT8uaSKz0gwBlTCFSpz0hp1xlp
+         aADqjSjJaDbaFFnj+DLrsiPHAXsZJ7LkPcc8BMR6Y+eDSNEnLpIkiHLJQpshzu+aQHtx
+         7RxvatGbARjaICFXSAguhYaCnxgzVJiMeOcLoUJvZ3jj72DYM/FvMf7cTGlHto5xIkAs
+         XdXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784833120; x=1785437920;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1784834769; x=1785439569;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=EEjRvDU+Zeiy4n4kU4Z2CVk4COxFPP9XGcnnczyvlxM=;
-        b=tBZpBmihQKY1Dxfi9SfRcIYBv2l/9pOl34waKGv/jyNHd4Iyk6PdU9VG08ppl7U4Fy
-         QqeEtDjW1botZUNhw6ymALE9zeH1/1ql/TEFWB1Bc2yUHBnufDS48sckTKaLBYiRKG0h
-         0gRWBHxebcCxHWZ97k5Mj6BR01OyjNRNDHalu4NSvRKd+9ZdeElI9rZCD4diNlZo5JCH
-         Gw5ZByh/4nd0OXeJqLTPB9OZmloRL7ojy7Sxji91dCQVKZ7n/m6SaCNldQndSi5KJLDX
-         uk3YHIDoWrkDEo3fEDk43pJAWU8Ja+BmCKW7IOtCSlSAnfvlGRXDBAlCA4jyFrrqNmXx
-         DbwA==
-X-Forwarded-Encrypted: i=1; AHgh+RobUEruwMKoQ+YtGHFcthwixEuIqE3KTcDSKMZBJy8SET2E5qxxXxmrvLQzaE0YqOu2CmA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwJ6gZquXLiEti93jo9S/2fNx4kQrQ8PeZAdr+M9Ewp1WeqcGcB
-	5EVUovqeK5pRPMhrosqhbK2jwY65yXPVYlrISDuHQPzZcdseTsQHmpcs
-X-Gm-Gg: AR+sD11MVmYHGeuTsTKk7ISgYrpM84Rmaa4vMyqsTVgbQpNIHKAUNW2IRwe2DH8006Z
-	GPfsxGUa7CMCBYNNjdlg/Wnj0es65c1BWewN7PjRjv8u1zdq6mPu1GpRheYHgP7QX/2+R4P5Vs9
-	eWkkWURjeTwEOkFst4++Ayt9pvPjcQmDyj2yeGDvPi2vtZ86VXC+3e31Z8C9k/XAxpX6pGRiSmv
-	ksERSHNTGofvzGjkage8BNJnlu+zHiPtn5tpjoB8JJTiNvzQm+91XmrpGfkwSd0d3QV48HTS0Kj
-	UKyFYS5EgVEzdd1HyW5yRLkcYjfV7NGt0Izl28BgVKK++OzdHmbcB8IFikXUqg4yknX0Jj1+7Im
-	oge7XAAbXh5s7r1ShCuKvuKR4nDL5EgZZ7YgOocZUr2kARwD+aOzNDCPk+ZGTj2pVGgY39kS9NY
-	rPdkeb7X6rZZQit1Kup2ah8vbOiBHmw4wo1pMBLEzvk2ViNhzx/Q2NVi0QIQBJ+CKlu+E=
-X-Received: by 2002:a05:600c:190b:b0:495:5e07:649b with SMTP id 5b1f17b1804b1-49573cd895amr48635925e9.24.1784833119458;
-        Thu, 23 Jul 2026 11:58:39 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4957b5f2918sm9912095e9.2.2026.07.23.11.58.38
+        bh=ZTyK2y+hDNIxHkxXvvMtvezddtx5eayRhJpYkVPXwZA=;
+        b=B3OeHfs/jrksosNj8E5TkUEteV/2M9Hmb7Od377ZDw3xy6Su1FNcbzIq/82yds0NGn
+         dmFsReOGUMHMKE6CXI5xqJMtInJA36RXaHJBwZ/39MwgiEW4dtX5h6raCfWQbog8WJmc
+         f4GrxyNbt5XOZt8VDLPs95Q0Y0636AGeTk5JqEugMdSIfYBdMDjsCnme/ZXEahLhbF9d
+         UpEWSzyKaVZIN9o6jgnPEHdGT2SNga/CMcmgp/x2o3my2oez/GiaaHJPSX8aEb3pdPgl
+         GYHos8b1inuGM+lj5QLktWVhICC0mQ0UG8AgZpa4+Do9XcfO1pGt+4GQQ/4prAH3Z7F8
+         XHHQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrrnJ6e0b4kn2Cua7+wvnmhiRXpvBXbSHlDfMrx0xIxee/ydc+/ELB28vBc9cg0P9GZEuo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxp3KFueXzKZ37HxhorOZY0Gms1k+Udu9TwkQCWG9xEt5OhnEfq
+	Go5vQQcHyL2ZAIHxFF1JDYh4qMWxQqEzM9v/ql9+ZiZDTTAsI+zRPT4M
+X-Gm-Gg: AR+sD10NA/+kSpTuF+R3WoqW+KeDRGzAPUcFoc+BMnaF8YijnyzglZ96SYtJ8e5Tcjy
+	5MB2jvGlTHR8AA6Ftn9D5ZSLaYsL880F8E6picWAjXz5VaRuEG2rGD3sJg4bKjJT68Hxptuims5
+	WxnZqeKq4Q42Vl5uijqTProLHgsxsJPfxtYE08frAL+F7iLZTsXzdmOuDr5q34OzSdzjUFpVy1g
+	Je+4joC2SgfPxKijq8ABASo7lHHkhVnaZHAKJUEKkxCSbBqnKvNO0aBv8lK57kGRk6P8MNvDqaI
+	YhsENd4xn+ujP2t/Ge3HMrHRoYYAngY2MoWmSq0ZKO4bunSfoZ+JYUIi2GK9cvBncL6VtHmfDNl
+	HACWIE3xKug1MTzVfjVpJ8FugHR+kDGlr4qQQwXYG0dd0jO19E9b6Z+lVPkaXcunl7DmWoZFrZc
+	eJZwIdHs2B1AGdM/UARj72KQwPgcrUug9mh2lBX99+x2GuaD4CkIZVmoXDh5Zs2nzx9y4xAfCmH
+	xsUktX9r/ZuiTTyKxxlqMcV1H43xuN/edh4jFJ9k5RTvokpBgI/rCwiAj2pXaSmCoitDqdLbwNq
+	gNEkVEeFxC/StETD4WT/9WB3sCP5mFrBa3QG
+X-Received: by 2002:a05:6a20:7483:b0:3c0:9c19:659d with SMTP id adf61e73a8af0-3c44b26c1afmr4541682637.69.1784834768843;
+        Thu, 23 Jul 2026 12:26:08 -0700 (PDT)
+Received: from ?IPV6:2409:40e3:40f2:e504:b8c9:6fa8:29d4:f006? ([2409:40e3:40f2:e504:b8c9:6fa8:29d4:f006])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147e1bc886sm22567754eec.26.2026.07.23.12.26.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jul 2026 11:58:38 -0700 (PDT)
-Message-ID: <5bece313-6ffb-450b-add1-29652b64de10@gmail.com>
-Date: Thu, 23 Jul 2026 19:58:36 +0100
+        Thu, 23 Jul 2026 12:26:07 -0700 (PDT)
+Message-ID: <f9c26c07-1dde-4bb6-a919-37d5229642f5@gmail.com>
+Date: Fri, 24 Jul 2026 00:56:02 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,206 +71,116 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/2] rebase: skip branch symref aliases
-To: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Son Luong Ngoc <sluongng@gmail.com>
-References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
- <pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
- <b9a01e9141d580606527cb1a658c7c72710fb013.1784708107.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <b9a01e9141d580606527cb1a658c7c72710fb013.1784708107.git.gitgitgadget@gmail.com>
+Subject: Re: [RFC PATCH 0/7] repack: add --drop-filtered to reclaim space in
+ partial clones
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, christian.couder@gmail.com, me@ttaylorr.com,
+ ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
+References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
+Content-Language: en-GB
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 22/07/2026 09:15, Son Luong Ngoc via GitGitGadget wrote:
-> From: Son Luong Ngoc <sluongng@gmail.com>
+
+
+On 16/07/26 18:58, Siddharth Shrimali wrote:
+> This is an RFC series seeking feedback on the design and approach.
+> Several pieces are still missing (noted below) and the commit
+> organization needs cleanup.
 > 
-> git rebase --update-refs can finish rewriting the current branch and
-> then fail while updating a local branch that is a symbolic ref. This can
-> happen during a default-branch rename where refs/heads/main points at
-> refs/heads/master while users migrate.
+> Partial clones let you work with large repositories without downloading
+> every blob up front and the missing blobs are lazily fetched from the promisor
+> remote on demand. Over time, though, these lazily-fetched blobs
+> accumulate locally and there is currently no safe, built-in way to
+> reclaim that disk space instead of re-cloning.
 > 
-> The problem is a partially applied ref update: the main rebase has
-> already succeeded when the later ref update fails.
+> This series adds a "git repack --drop-filtered --filter=<spec>" command
+> that removes large, locally-held promisor blobs that are recoverable
+> from the promisor remote. The dropped blobs become absent locally but
+> remain lazily re-fetchable, making the partial-clone still reversible.
 > 
-> The sequencer queues updates from local branch decorations. Commit
-> 106b6885c7 (rebase: ignore non-branch update-refs) filters out
-> decorations such as HEAD and tags. A branch symref is still a local
-> branch decoration, but refs_update_ref() dereferences it, so an alias to
-> another branch duplicates the concrete branch update.
+> How it works:
+>    * Enumerate promisor objects directly (ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)
+>      and select the blobs exceeding the filter threshold. Because every
+>      enumerated object is a promisor object, it is guaranteed recoverable and
+>      locally-created objects are never candidates.
+
+
+This looks like the right approach to me. Going through the promisor 
+repack path instead of write_filtered_pack() matches how repack already 
+splits promisor objects out.
+
+
 > 
-> Resolve local branch decorations before queuing them. Skip symrefs whose
-> targets are under refs/heads/ so that only the concrete branch update is
-> queued. Keep an owned copy of the resolved HEAD and skip the current
-> branch before checked-out handling so later ref resolution cannot change
-> the comparison.
+>    * Rebuild the promisor pack without the selected blobs, reusing the
+>      existing repack machinery, so the drop is crash-safe.
 > 
-> This prevents a successful rebase from being followed by a failed,
-> partially applied ref update while preserving each alias as a symref.
-
-Thanks for re-rolling I'm pretty sure the logic is sound now but I'm a 
-bit confused by a couple of things - see my comments below.
-
-> Signed-off-by: Son Luong Ngoc <sluongng@gmail.com>
-> ---
->   sequencer.c                   | 44 +++++++++++++++++++++++++----------
->   t/t3400-rebase.sh             |  2 +-
->   t/t3404-rebase-interactive.sh | 16 +++++++++++++
->   3 files changed, 49 insertions(+), 13 deletions(-)
+>    * Record each dropped object in a drop log
+>      ($GIT_DIR/objects/info/promisor-dropped) so a later change can
+>      explain a failed lazy fetch (when it was dropped, which filter
+>      matched, which remotes) instead of a bare "could not fetch" error.
 > 
-> diff --git a/sequencer.c b/sequencer.c
-> index 1355a99a09..63aba60a08 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6465,32 +6465,50 @@ static int add_decorations_to_list(const struct commit *commit,
->   				   struct todo_add_branch_context *ctx)
->   {
->   	const struct name_decoration *decoration = get_name_decoration(&commit->object);
-> -	const char *head_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-> -						       "HEAD",
-> -						       RESOLVE_REF_READING,
-> -						       NULL,
-> -						       NULL);
-> +	struct ref_store *refs = get_main_ref_store(the_repository);
-> +	char *head_ref = refs_resolve_refdup(refs, "HEAD",
-> +					     RESOLVE_REF_READING,
-> +					     NULL, NULL);
->   
->   	while (decoration) {
->   		struct todo_item *item;
->   		const char *path;
-> +		char *resolved_ref;
-> +		int flags = 0;
->   		size_t base_offset = ctx->buf->len;
->   
->   		/*
-> -		 * If the branch is the current HEAD, then it will be
-> -		 * updated by the default rebase behavior.
-> -		 * Exclude it from the list of refs to update,
-> -		 * as well as any non-branch decorations.
->   		 * Non-branch decorations may be present if the pretty format
->   		 * includes "%d", which would have loaded all refs
->   		 * into the global decoration table.
->   		 */
-> -		if ((head_ref && !strcmp(head_ref, decoration->name)) ||
-> -		    (decoration->type != DECORATION_REF_LOCAL)) {
-> +		if (decoration->type != DECORATION_REF_LOCAL) {
-> +			decoration = decoration->next;
-> +			continue;
-> +		}
+>    * --dry-run lists the candidates and changes nothing.
+> 
+> Planned follow-ups:
+>    * Safety guards: refuse to run while a merge/rebase/cherry-pick is in
+>      progress, and refuse to drop blobs referenced by the current index.
 
-It would be nice to have a comment here explaining what we're doing. 
-Also I don't think we need to copy the refname so it would be more 
-efficient to use refs_resolve_ref_unsafe().
 
-> +		resolved_ref = refs_resolve_refdup(refs, decoration->name,
-> +						      RESOLVE_REF_READING,
-> +						      NULL, &flags);
-> +		if (resolved_ref && (flags & REF_ISSYMREF) &&
-> +		    starts_with(resolved_ref, "refs/heads/")) {
-> +			free(resolved_ref);
-> +			decoration = decoration->next;
-> +			continue;
-> +		}
+I think these matter before we present this as a real space-reclaim
+tool. Without the index guard especially, users may drop blobs and then
+immediately fetch them back on the next command that needs the worktree.
 
-We skip any symbolic refs that point to another branch which is good.
+The drop log and remote-object-info can wait. I would not block the
+next RFC round on them.
 
-> +		/*
-> +		 * If the branch is the current HEAD, then it will be
-> +		 * updated by the default rebase behavior.
-> +		 */
-> +		if (head_ref && !strcmp(head_ref, decoration->name)) {
-> +			free(resolved_ref);
->   			decoration = decoration->next;
->   			continue;
->   		}
+On the UI, I am fine with a separate --dry-run for now (same as
+Christian). We can revisit a --drop-filtered=<mode> form later if we
+grow more drop-specific options.
 
-Then we check to see if the decoration matches HEAD which we used to do 
-above - I'm not clear why we have moved this check.
+Thanks.
+Siddharth
 
-> +		path = branch_checked_out(decoration->name);
-> +
 
-This belongs in the next patch I think.
-
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index e62e07b894..1a02f6546b 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -471,7 +471,7 @@ test_expect_success 'git rebase --update-ref with core.commentChar and branch on
-
-Adding an extra context line shows
-
-	git checkout topic2>   	GIT_SEQUENCE_EDITOR="cat >actual" git -c 
-core.commentChar=% \
->   		 rebase -i --update-refs base &&
->   	test_grep "% Ref refs/heads/wt-topic checked out at" actual &&
-> -	test_grep "% Ref refs/heads/topic2 checked out at" actual
-> +	test_grep ! "% Ref refs/heads/topic2 checked out at" actual
-
-As topic2 is checked out in the worktree where the rebase is running why 
-did this line appear before?
-
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index e64816770a..11afa8be56 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1975,15 +1975,23 @@ test_expect_success '--update-refs ignores non-branch decorations' '
->   	) &&
->   	grep ^update-ref todo >actual &&
->   	test_write_lines "update-ref refs/heads/no-conflict-branch" >expect &&
-> +	test_grep ! "^# Ref refs/heads/update-refs checked out" todo &&
-
-Lets move this line below test_cmp so we keep that line next to the ones 
-that create the files that are being compared. Is this another case 
-where we used to add this comment and no longer do so?
-
->   	test_cmp expect actual
->   '
->   
->   test_expect_success '--update-refs updates refs correctly' '
-> +	test_when_finished "
-> +		test_might_fail git symbolic-ref -d refs/heads/no-conflict-branch-alias &&
-> +		test_might_fail git symbolic-ref -d refs/heads/second-alias
-> +	" &&
->   	git checkout -B update-refs no-conflict-branch &&
->   	git branch -f base HEAD~4 &&
->   	git branch -f first HEAD~3 &&
->   	git branch -f second HEAD~3 &&
->   	git branch -f third HEAD~1 &&
-> +	git symbolic-ref refs/heads/no-conflict-branch-alias \
-> +		refs/heads/no-conflict-branch &&
-> +	git symbolic-ref refs/heads/second-alias refs/heads/second &&
->   	test_commit extra2 fileX &&
->   	git commit --amend --fixup=L &&
->   
-> @@ -1991,8 +1999,16 @@ test_expect_success '--update-refs updates refs correctly' '
->   
->   	test_cmp_rev HEAD~3 refs/heads/first &&
->   	test_cmp_rev HEAD~3 refs/heads/second &&
-> +	test_cmp_rev HEAD~3 refs/heads/second-alias &&
->   	test_cmp_rev HEAD~1 refs/heads/third &&
->   	test_cmp_rev HEAD refs/heads/no-conflict-branch &&
-> +	test_cmp_rev HEAD refs/heads/no-conflict-branch-alias &&
-> +	test_write_lines refs/heads/no-conflict-branch >expect &&
-> +	git symbolic-ref refs/heads/no-conflict-branch-alias >actual &&
-> +	test_cmp expect actual &&
-> +	test_write_lines refs/heads/second >expect &&
-> +	git symbolic-ref refs/heads/second-alias >actual &&
-> +	test_cmp expect actual &&
-
-This looks good - we check that "rebase --update-refs" succeeds withh 
-branches that are symrefs and also that those refs are untouched by the 
-rebase.
-
-Thanks
-
-Phillip
-
->   	q_to_tab >expect <<-\EOF &&
->   	Successfully rebased and updated refs/heads/update-refs.
+> 
+>    * Authoritative remote verification: the drop log currently lists all
+>      configured promisor remotes rather than the exact remote each object
+>      is recoverable from, because there is no client-side way to query a
+>      remote for object availability yet. A "remote-object-info" command
+>      is being added to the "git cat-file --batch" protocol for this. Once
+>      available, the exact remote can be recorded.
+> 
+> Known issues to address in v2:
+>    * There is churn between "enumerate promisor blobs" and "actually drop
+>      filtered promisor blobs". The former introduces
+>      enumerate_promisor_blobs() with an interim signature that the latter
+>      rewrites. These will be reorganized so the function is introduced
+>      in its final form.
+> 
+>    * The tests are in a standalone commit. They will instead be
+>      distributed into the commits that introduce the behavior they test.
+> 
+> Siddharth Shrimali (7):
+>    builtin/repack.c: add --drop-filtered and --dry-run options
+>    list-objects-filter: add list_objects_filter__filter_oidset()
+>    repack-promisor: allow excluding objects from the rebuilt promisor
+>      pack
+>    builtin/repack: enumerate promisor blobs for --drop-filtered
+>    t7706: test --drop-filtered enumeration and validation
+>    builtin/repack: actually drop filtered promisor blobs
+>    repack-promisor: record dropped objects in a drop log
+> 
+>   builtin/repack.c                |  76 ++++++++++++++++-
+>   list-objects-filter.c           |  45 ++++++++++
+>   list-objects-filter.h           |  16 ++++
+>   repack-filtered.c               |  81 ++++++++++++++++++
+>   repack-promisor.c               | 106 ++++++++++++++++++++++-
+>   repack.h                        |  12 ++-
+>   t/meson.build                   |   1 +
+>   t/t7706-repack-drop-filtered.sh | 145 ++++++++++++++++++++++++++++++++
+>   8 files changed, 478 insertions(+), 4 deletions(-)
+>   create mode 100755 t/t7706-repack-drop-filtered.sh
+> 
 
