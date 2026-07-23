@@ -1,69 +1,69 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0393D1ABD
-	for <git@vger.kernel.org>; Thu, 23 Jul 2026 19:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F373BD63D
+	for <git@vger.kernel.org>; Thu, 23 Jul 2026 19:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784835700; cv=none; b=ItL3rYAiqVltWpNiYodiRabp4Go+pkEGkA7AYLBgWAyAqQH1kytmckZMW5uogdGpM4Rj3SpuL8Vo/rLYiqqD7UQe7EePVWANVS6R/FB1bs1Et1kXMGhc5cIW8RzAJiCk0oeuNgsTCNGFnRQa9V2CKfx4wDpKW39Df0M3lbZWLZs=
+	t=1784835779; cv=none; b=KIyRdiYeeG7jOzLlqsWmALdH8VJAWudlr6qrXISMGJobSdDjJEyHvT/1ziXYZitdrrl36N/OUWuGUzJsFJhJbo7vhedHmADTGTrtWsuXzjjR6Xd1Gd5SRG3jCEQYciB+9WwhBVJTbaPb+MBHD3huhuhYNIUBRRIdjRxwOzXsGl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784835700; c=relaxed/simple;
-	bh=+LmJgrVi7nIsU5Yeb6SfAUZ3bdIsJDtGOYIL4Owj8a4=;
+	s=arc-20240116; t=1784835779; c=relaxed/simple;
+	bh=H+RhntVnF8z3NiEY21NhLXfUnzrbRBJAJwJU2pQ4YAk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RYaMtSbqM0tYttov67z2gW/Z883zc0vOKaeuHTAQSId4/4/dg8XK0rIFs+HL47VQPIvr678nyZOzBUTt7QD7rFmQVkux62zfbyMBcbWhNbLNQGMw+/SY5OiF6IaGTQkcFyEvWaXmuK/rrCB82OMlYlNKdVwh0pENwR+QIGeRKGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SjwufVLO; arc=none smtp.client-ip=209.85.214.175
+	 In-Reply-To:Content-Type; b=dsjuG8zNmpE6oH6rd7RW9KX9KRQowmPEZ84zni2tbHL09bUjEnPoKlpUAeixSOk0cB40XrzgxTVxChGZnvAJF23AM4xvNih+uVNMMCvqZ0hBSayBADJjYE65U/vlLRAj1zU0V30U2jV5nztrYtKK8l4XH6jBBuTyce6c0XP+un0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J0ZPcgpz; arc=none smtp.client-ip=209.85.216.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SjwufVLO"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ca64c3ce5fso11757915ad.3
-        for <git@vger.kernel.org>; Thu, 23 Jul 2026 12:41:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0ZPcgpz"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-38dfe7eb825so858635a91.0
+        for <git@vger.kernel.org>; Thu, 23 Jul 2026 12:42:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784835690; x=1785440490; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784835772; x=1785440572; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Qu/OWXMKe3aWOjos5v3eM6rnKwRJfaD0goxb6hxuyIY=;
-        b=SjwufVLOJY9hBmLiWHyEyKwb2LFY5ncZ8l8bv+6I1DgGmbqpRA7qJL4XwTCe2Tu/o+
-         IGy573gUNoY73lIzqRyXOEB34H2+uYLG5tUPehdj+3yj6SojhP4ptdzHgn42iXVhMLMz
-         wbO9nZCBORiSJFfyD5giJZ6k2arHYHdUjfZZvEoa4ktlwV8a3x7rXFJU+6MhEuSVbcYm
-         QQS8nUExFN+hIpqerL7nhV9ZZ5R3cYtcpsPtmvWVkhSFy6GaToyTys1l960BPB8Lb01i
-         FiH1F6JEPLXnP7S+UbBqSMrqIVsy4lVDlcQA0Cr2+V0LD5f/ZHfmanlEj/A61gne94Xs
-         tFfA==
+        bh=/7MiO+8iAADlRuSMZ1FP9lDHcA0FfrPUrBuw4UcM5qA=;
+        b=J0ZPcgpzrtGmY2hbrMl+1gANb8IemAZvfi3QCEa6oZ9UZGRbshzrIYNAFBrk14AXbW
+         o8u8lKqaoEe8TWNFgeA1h+xZ577Ifx9dmNfEcYm0ge5bfyy9lM4tjwFLFL+czKtv8LTn
+         dDpxGlFdMZthsijuF/Dnp8eZ2BGrwKJ3Z6Gk2vCDYBNUbz8yD+l9E4EfTX53X9b7VCYg
+         MM3/MDQJMqqy1FPOWjoNFGqYS4L1haPjYmrAlVHInzYxsFpUMPOQmnT7Jv12wpt5RLUA
+         WQcpqHAIGkUkz6f+u7Tdpz0fPAVKytEHhGrY5k8YOoYP0WQKgCMwm7lBhL7OyNCflUir
+         rJpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784835690; x=1785440490;
+        d=1e100.net; s=20251104; t=1784835772; x=1785440572;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Qu/OWXMKe3aWOjos5v3eM6rnKwRJfaD0goxb6hxuyIY=;
-        b=siPjuE5lgP0bB0D/ZutmJBs+lVhun56bjVMPTw2cInplzX0AMWKVcOlpemGwAs0y4z
-         CMDSnQ2fNzf1SuPAtXVHBv7jfCOSWBZMUlEkHCdjrr7/3M9w5R//2TZWQd6Nvrud6oMj
-         9Ofw6kVtnn0CMU1cNx1xYyj6NeYb9VS63fzHdMtEpSF6z7eC1R1t80Uwi76HpIp6g2nS
-         ukwWT2qVlb8U7v2oKG+Z4M8reYM7JHZousJML4H5iXY86GFfbyq25bVJh12htN4oj55n
-         YIXN34yiwbxhhIUOE6be29Li8QcZabW1vGjlphkpP8+PJJVDEd/KTsGsMg2Or85z0Lf7
-         KElg==
-X-Forwarded-Encrypted: i=1; AHgh+Rr/g7Gbi7BHmRLms80iR+QXjL6K0aPQzuPL5ijOGm+P6sHdDHgo1mFLFmrukaNvBc9EyWY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3YV1ulTAvt3WjIfJKnyzYd4iXSggaSHovFGwYFC7wedOlRLLx
-	+wXL8UINFXJS5wMZcyvnMNm1eo7ij7u8jBVJdiHlDaTyK0T9+STQytyH
-X-Gm-Gg: AR+sD12kI9mcjozGY9kNlsEgjF2ciIsZxY4IWUk7Le3HbgPymOZI5cVBmiY4K8vfpJh
-	zfofQ9pOJ+jK5QzqHIo9E/KSMyyKreP7nDRSCf1w3vn+RnQLtA3qjXDihhTp6T/AW100ldWtLca
-	2eN0ZYen3IjDxuERR5IWghTd1MNiR8usb3H65Q53ayMoVySkBkfMD53Bqg26J65d/flcKY7Y+bX
-	QZJfyeYnuZiCX5kfhIxQ2pqkhfpivfBF0MivXuUvk6dYFyW6bQyLTXmD5sdLEwDD77SpLony074
-	SFF+LjpxZXJfAB30P5qgDCRjm0ZcYjXxoSqRX/rZM+Z9r5ne0sMO7B4PNthoBcP3UcZXIQ7GnJr
-	UR4z9Fgf/IqaXJ5YJUo/4vEJ2qbejMPTd18UNd1vS6l8pFFbVQXqDYq0adqITxVrG4y8nfYjoT2
-	FwNOr0qupRagmf6dMPO4MjoimQCfkX/T1PfbbnY6XJ+J5paziaFgUbis0nlh3ufBCi5oIKXCN0w
-	VxSqaa41kB2GRw97c0BkNSTh8IffI4dtToTSB++VgN5GV0suoUmcY5v3FW5XTsKUJZxvP3zOsbz
-	Of1Wj2R5n4kvM+F1CnIVY7uBuQ==
-X-Received: by 2002:a17:90b:3e85:b0:38e:a74:dfe4 with SMTP id 98e67ed59e1d1-38ec65ed89fmr4842561a91.25.1784835690434;
-        Thu, 23 Jul 2026 12:41:30 -0700 (PDT)
+        bh=/7MiO+8iAADlRuSMZ1FP9lDHcA0FfrPUrBuw4UcM5qA=;
+        b=aQ2njqvnBQ63O453pCVgB8qvrxPItcPyhLV5dD6ivh+f/BmHsikc2Bnqzz45oMUPdW
+         mvnoHH3372+JsvzykdZyemDU7YoxhDUk8F5R8WUhKXQDAdw64YQhCw6NArhP8lPy4LkM
+         YcwQtkb7j9yI/6PVLIiz7Oh9Gf1nXmfglb+xsu9/LWJhssyGicWUt64aUFZVqvLsoeI2
+         p9wAvjEYENSRpVkjMGDGDiLPCSdoiOd1rNV1GRO8tsTXAYCNZx6Ot6lGW7lNMUbGsAag
+         5QhGGpsO4ci8uh57iyvLvxWce4q6wVxmuyJ2z5foLCZLAwVu0aRo9IM2R4nlNK8SdiCB
+         KT+w==
+X-Forwarded-Encrypted: i=1; AHgh+RpMNewNrmgo6wNM6+aCKAhdwp0p5R9sGo1vcqT/QBfrD2dQQR4g1/ZajSlptsGbtvcBTtA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZ5/Cah6Y/98audHA/iyq4LESoBROtM8KtRe/Sj1jy5kc3EGJK
+	y4ll2hqAItXh6nrnGP1vt/LmEDIwfNFLJ8YgqIQQGRRs6ESg9CPNh6Lo
+X-Gm-Gg: AR+sD11cy37KcotY3KKpjX+/S91WMWccDSvxutZkb00+OvP6gsrQZsiQb7N/HJtobTs
+	9pt1iWe+LO2i3QasMHMQzMsEx8TYLiF2Djhrs/nGGgZpId+iKV45h3gfo7oQgSIyXO/zAUQbbZA
+	EOJFYmbOsyiwcB1cmNGxeIhm9YX+TYSdMiDfru+CyNYCrielVRowQWv7qKdUuh/ttETz7CbH7eC
+	TLsvsrzhcu2pldl1vD8Bgx5DevkNtwFLJHSsQ/ekC21ssuTk3XfqFk+FOlBHmLPzyS00o86F1yI
+	VciSxMbh/nxxoCeqZ5g4YrwKM3uh0/ZFK4Li9/VUxVVEhGyXl2CGw0LFRWVnmGWnL0v874xLXRP
+	XqM9u5UCe+fUD6ioreemsNTUh7e7HAE2r9zr3ZYG1Obt/ClaLk/nxkwd8dukCYjwobiAVOzRQ/N
+	Zjx2UE5lO025dSlhAMypRdMsL4N/LKDd8Pcwac88fZ9Kg0MNVamLCeN7I6LXsQj6T5MvLbxSEIq
+	JOE0DhBHy6iqSkQCYjEHWMarRSyG4vYuabAw/xyyIhv9Q4w26jNCXAmfncGBSNIO6FbJvP3VQYg
+	k1JJ3VcMiIkiqsfX8udeebai9Q==
+X-Received: by 2002:a17:90b:5650:b0:38e:cb1:8ec9 with SMTP id 98e67ed59e1d1-38ec661b520mr4498293a91.42.1784835772416;
+        Thu, 23 Jul 2026 12:42:52 -0700 (PDT)
 Received: from ?IPV6:2409:40e3:40f2:e504:b8c9:6fa8:29d4:f006? ([2409:40e3:40f2:e504:b8c9:6fa8:29d4:f006])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d13014d27sm19113812c88.4.2026.07.23.12.41.26
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d13003f12sm30724784c88.2.2026.07.23.12.42.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jul 2026 12:41:29 -0700 (PDT)
-Message-ID: <e8d63121-fedc-49da-ad1a-0cbcf1a35a0b@gmail.com>
-Date: Fri, 24 Jul 2026 01:11:24 +0530
+        Thu, 23 Jul 2026 12:42:51 -0700 (PDT)
+Message-ID: <ec546f71-3412-47ef-a4cf-98558889a90f@gmail.com>
+Date: Fri, 24 Jul 2026 01:12:47 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,213 +71,280 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 7/7] repack-promisor: record dropped objects in a drop
- log
+Subject: Re: [RFC PATCH 6/7] builtin/repack: actually drop filtered promisor
+ blobs
 To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>, git@vger.kernel.org
 Cc: gitster@pobox.com, christian.couder@gmail.com, me@ttaylorr.com,
  ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
 References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
- <20260716132848.95982-8-r.siddharth.shrimali@gmail.com>
+ <20260716132848.95982-7-r.siddharth.shrimali@gmail.com>
 Content-Language: en-GB
 From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <20260716132848.95982-8-r.siddharth.shrimali@gmail.com>
+In-Reply-To: <20260716132848.95982-7-r.siddharth.shrimali@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
 On 16/07/26 18:58, Siddharth Shrimali wrote:
-> After --drop-filtered removes promisor blobs, append a record of each
-> dropped object to $GIT_DIR/objects/info/promisor-dropped. Each line
-> records the object ID, a reflog-style timestamp (Unix seconds and
-> timezone), the filter spec, and the promisor remote it was attested
-> recoverable from like the following:
+> Make --drop-filtered remove the enumerated promisor blobs instead of
+> only listing them.
 > 
->    <oid> <time> <tz> filter=<spec> remote=<name>
+> The drop set is computed before repack_promisor_objects() runs, and on
+> a real run it is passed in so the rebuilt promisor pack omits those
+> blobs. --drop-filtered implies -d so the old promisor packs, which
+> still contain the dropped blobs, are removed. Without this the blobs
+> would survive in the redundant packs. The existing repack machinery
+> performs the write-before-delete and fsync, so the drop is crash-safe.
 > 
-> If a dropped object later becomes unrecoverable (for example, the
-> branch holding it is deleted on the promisor remote), a lazy fetch
-> fails with a generic error. This persistent record lets a later change
-> explain that the object was dropped deliberately, when, under which
-> filter, and from which remote it was expected to be recoverable.
-
-
-I like the idea of better errors when a later lazy fetch fails.
-
-An alternative would be to wait until we actually have that error-path
-change in the same series, so we do not grow an on-disk format that
-nothing reads yet. I think keeping the log in the RFC is fine though
-if you find it useful while developing; I would not treat it as
-required for the first mergeable version.
-
-
-
-> 
-> The remote field lists all configured promisor remotes rather than the
-> specific one each dropped object is recoverable from. Determining the
-> exact remote would require asking the remote whether it has the object.
-> A "remote-object-info" command is being added to the "git cat-file
-> --batch" protocol for this kind of query, but it is not available yet.
-> A NEEDSWORK marks this for a follow-up.
-> 
-> The log is written only on a real run, i.e. --dry-run changes nothing.
+> The dropped blobs become absent locally but remain recoverable from the
+> promisor remote, so a later access lazy-fetches them back
+> transparently. --dry-run keeps its previous behavior, i.e. it lists the
+> candidates and changes nothing.
 > 
 > Mentored-by: Christian Couder <christian.couder@gmail.com>
 > Mentored-by: Siddharth Asthana <siddharthasthana31@gmail.com>
 > Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 > ---
->   builtin/repack.c  |  4 +++
->   repack-promisor.c | 91 +++++++++++++++++++++++++++++++++++++++++++++++
->   repack.h          |  4 +++
->   3 files changed, 99 insertions(+)
+>   builtin/repack.c                | 75 ++++++++++++++++++---------------
+>   repack-filtered.c               | 17 ++------
+>   repack.h                        |  4 +-
+>   t/t7706-repack-drop-filtered.sh | 18 +++++---
+>   4 files changed, 59 insertions(+), 55 deletions(-)
 > 
 > diff --git a/builtin/repack.c b/builtin/repack.c
-> index aa3257a98a..49dcbbc567 100644
+> index c2b07477d2..aa3257a98a 100644
 > --- a/builtin/repack.c
 > +++ b/builtin/repack.c
-> @@ -702,6 +702,10 @@ int cmd_repack(int argc,
->   		write_midx_file(files->packed, NULL, NULL, flags);
->   	}
+> @@ -15,6 +15,8 @@
+>   #include "repack.h"
+>   #include "shallow.h"
+>   #include "list-objects-filter-options.h"
+> +#include "oidset.h"
+> +#include "hex.h"
 >   
-> +	if (drop_filtered && !dry_run)
-> +		append_drop_log(repo, &drop_oids,
-> +			expand_list_objects_filter_spec(&po_args.filter_options));
+>   #define ALL_INTO_ONE 1
+>   #define LOOSEN_UNREACHABLE 2
+> @@ -143,6 +145,7 @@ int cmd_repack(int argc,
+>   	struct string_list_item *item;
+>   	struct string_list names = STRING_LIST_INIT_DUP;
+>   	struct existing_packs existing = EXISTING_PACKS_INIT;
+> +	struct oidset drop_oids = OIDSET_INIT;
+>   	struct pack_geometry geometry = { 0 };
+>   	struct tempfile *refs_snapshot = NULL;
+>   	int i, ret;
+> @@ -269,9 +272,6 @@ int cmd_repack(int argc,
+>   		die(_("--dry-run only takes effect with --drop-filtered"));
+>   
+>   	if (drop_filtered) {
+> -		if (!dry_run)
+> -			die(_("--drop-filtered doesn't work without --dry-run yet"));
+> -
+>   		if (!po_args.filter_options.choice)
+>   			die(_("--drop-filtered requires --filter"));
+>   
+> @@ -294,6 +294,28 @@ int cmd_repack(int argc,
+>   			die(_("--drop-filtered requires a promisor remote"));
+>   
+>   		write_bitmaps = 0;
 > +
->   cleanup:
->   	string_list_clear(&keep_pack_list, 0);
->   	string_list_clear(&names, 1);
-> diff --git a/repack-promisor.c b/repack-promisor.c
-> index fabfdc168a..60913a5150 100644
-> --- a/repack-promisor.c
-> +++ b/repack-promisor.c
-> @@ -7,6 +7,97 @@
->   #include "repository.h"
->   #include "run-command.h"
->   #include "oidset.h"
-> +#include "date.h"
-> +#include "promisor-remote.h"
-> +#include "strbuf.h"
-> +
-> +/*
-> + * Append the drop-log entries to the already-computed path.
-> + * Returns -1 on any I/O failure so the caller can warn once.
-> + * Keeping this in a separate helper avoids goto-based cleanup
-> + * in append_drop_log();
-> + */
-> +static int write_to_drop_log(struct repository *repo,
-> +			     const char *path,
-> +			     const struct oidset *dropped,
-> +			     const char *stamp,
-> +			     const char *filter_spec,
-> +			     const char *remotes)
-> +{
-> +	struct oidset_iter iter;
-> +	const struct object_id *oid;
-> +	FILE *fp;
-> +
-> +	if (safe_create_leading_directories(repo, (char *)path)) {
-> +		warning(_("could not create leading directories for '%s'"), path);
-> +		return -1;
-> +	}
-> +
-> +	fp = fopen(path, "a");
-> +	if (!fp) {
-> +		warning_errno(_("could not open '%s'"), path);
-> +		return -1;
-> +	}
-> +
-> +	oidset_iter_init(dropped, &iter);
-> +	while ((oid = oidset_iter_next(&iter))) {
-> +		if (fprintf(fp, "%s %s filter=%s remote=%s\n",
-> +				oid_to_hex(oid), stamp,
-> +				filter_spec ? filter_spec : "",
-> +				remotes) < 0) {
-> +			warning(_("could not write to '%s'"), path);
-> +			fclose(fp);
-> +			return -1;
-> +		}
-> +	}
-> +
-> +	if (fclose(fp)) {
-> +		warning_errno(_("could not close '%s'"), path);
-> +		return -1;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +void append_drop_log(struct repository *repo,
-> +		     const struct oidset *dropped,
-> +		     const char *filter_spec)
-> +{
-> +	char *path;
-> +	struct strbuf stamp = STRBUF_INIT;
-> +	struct strbuf remotes = STRBUF_INIT;
-> +	struct promisor_remote *pr;
-> +
-> +	if (!oidset_size(dropped))
-> +		return;
-> +
-> +	datestamp(&stamp);
-> +
-> +	/*
-> +	 * NEEDSWORK: we temporarily record all configured promisor remotes rather
-> +	 * than the specific one a given object is recoverable from because there
+> +		/*
+> +		 * Dropping objects means rebuilding the promisor packs
+> +		 * without them and then removing the old packs, so the
+> +		 * redundant packs must be deleted. Imply -d on a real run.
+> +		 */
+> +		if (!dry_run)
+> +			delete_redundant = 1;
 
 
-Recording all promisor remotes for now looks OK to me with that
-NEEDSWORK. I would not block this on remote-object-info.
+Yes, without that the drop would not actually reclaim space.
 
-
-> +	 * is currently no way to determine that locally. it would require
-> +	 * asking the remote whether it has the object. A "remote-object-info"
-> +	 * command is being added to the "git cat-file --batch" protocol for
-> +	 * this kind of query. Once it is merged in the codebase, this should
-> +	 * record the exact promisor remote that has each dropped object.
-> +	 */
-> +	for (pr = repo_promisor_remote_find(repo, NULL); pr; pr = pr->next) {
-> +		if (remotes.len)
-> +			strbuf_addch(&remotes, ',');
-> +		strbuf_addstr(&remotes, pr->name);
-> +	}
-> +
-> +	path = repo_git_path(repo, "objects/info/promisor-dropped");
-
-
-If we keep it, it would be nice to document this path (for example in
-gitrepository-layout) and to have a small test that a real drop appends
-a line.
+It would be nice if the documentation mentioned that a real
+--drop-filtered run implies -d.
 
 
 Thanks
-Siddharth
 
 
 > +
-> +	if (write_to_drop_log(repo, path, dropped, stamp.buf,
-> +			filter_spec, remotes.buf))
-> +		warning(_("could not record all dropped objects in the drop log"));
+> +		ret = enumerate_promisor_blobs(repo, &po_args.filter_options, &drop_oids);
 > +
-> +	strbuf_release(&stamp);
-> +	strbuf_release(&remotes);
-> +	free(path);
-> +}
+> +		if (ret)
+> +			goto cleanup;
+> +
+> +		if (dry_run) {
+> +			struct oidset_iter iter;
+> +			const struct object_id *oid;
+> +
+> +			oidset_iter_init(&drop_oids, &iter);
+> +			while ((oid = oidset_iter_next(&iter)))
+> +				printf("%s\n", oid_to_hex(oid));
+> +		}
+>   	}
 >   
->   struct write_oid_context {
->   	struct child_process *cmd;
+>   	if (delete_redundant && repo->repository_format_precious_objects)
+> @@ -406,7 +428,8 @@ int cmd_repack(int argc,
+>   		strvec_push(&cmd.args, "--delta-islands");
+>   
+>   	if (pack_everything & ALL_INTO_ONE) {
+> -		repack_promisor_objects(repo, &po_args, &names, packtmp, NULL);
+> +		repack_promisor_objects(repo, &po_args, &names, packtmp,
+> +			(drop_filtered && !dry_run) ? &drop_oids : NULL);
+>   
+>   		if (existing_packs_has_non_kept(&existing) &&
+>   		    delete_redundant &&
+> @@ -589,35 +612,20 @@ int cmd_repack(int argc,
+>   		}
+>   	}
+>   
+> -	if (po_args.filter_options.choice) {
+> -		if (drop_filtered) {
+> -			/*
+> -			 * Enumerate promisor objects directly rather than
+> -			 * going through write_filtered_pack(). The filter
+> -			 * machinery cannot see promisor objects because
+> -			 * repack_promisor_objects() handles them separately
+> -			 * before the filter runs.
+> -			 */
+> -			ret = enumerate_promisor_blobs(repo,
+> -					&po_args.filter_options,
+> -					dry_run);
+> -			if (ret)
+> -				goto cleanup;
+> -		} else {
+> -			struct write_pack_opts opts = {
+> -				.po_args = &po_args,
+> -				.destination = filter_to,
+> -				.packdir = packdir,
+> -				.packtmp = packtmp,
+> -			};
+> -
+> -			if (!opts.destination)
+> -				opts.destination = packtmp;
+> -
+> -			ret = write_filtered_pack(&opts, &existing, &names);
+> -			if (ret)
+> -				goto cleanup;
+> -		}
+> +	if (po_args.filter_options.choice && !drop_filtered) {
+> +		struct write_pack_opts opts = {
+> +			.po_args = &po_args,
+> +			.destination = filter_to,
+> +			.packdir = packdir,
+> +			.packtmp = packtmp,
+> +		};
+> +
+> +		if (!opts.destination)
+> +			opts.destination = packtmp;
+> +
+> +		ret = write_filtered_pack(&opts, &existing, &names);
+> +		if (ret)
+> +			goto cleanup;
+>   	}
+>   
+>   	string_list_sort(&names);
+> @@ -697,6 +705,7 @@ int cmd_repack(int argc,
+>   cleanup:
+>   	string_list_clear(&keep_pack_list, 0);
+>   	string_list_clear(&names, 1);
+> +	oidset_clear(&drop_oids);
+>   	existing_packs_release(&existing);
+>   	pack_geometry_release(&geometry);
+>   	pack_objects_args_release(&po_args);
+> diff --git a/repack-filtered.c b/repack-filtered.c
+> index f5a1dae5b1..6f0cecca9b 100644
+> --- a/repack-filtered.c
+> +++ b/repack-filtered.c
+> @@ -87,16 +87,13 @@ static int collect_promisor_blob(const struct object_id *oid,
+>   
+>   int enumerate_promisor_blobs(struct repository *repo,
+>   			const struct list_objects_filter_options *filter,
+> -			int dry_run)
+> +			struct oidset *to_drop)
+>   {
+>   	struct oidset all_promisor_blobs = OIDSET_INIT;
+> -	struct oidset to_drop = OIDSET_INIT;
+>   	struct collect_cb_data cb = {
+>   		.repo = repo,
+>   		.set = &all_promisor_blobs
+>   	};
+> -	struct oidset_iter iter;
+> -	const struct object_id *oid;
+>   	int ret = 0;
+>   
+>   	/*
+> @@ -122,22 +119,14 @@ int enumerate_promisor_blobs(struct repository *repo,
+>   
+>   	/*
+>   	 * Apply the filter to find which blobs exceed the threshold.
+> +	 * The caller has to_drop and is responsible for clearing it.
+>   	 */
+>   	ret = list_objects_filter__filter_oidset(repo,
+>   		(struct list_objects_filter_options *)filter,
+>   		&all_promisor_blobs,
+> -		&to_drop);
+> -	if (ret)
+> -		goto cleanup;
+> -
+> -	if (dry_run) {
+> -		oidset_iter_init(&to_drop, &iter);
+> -		while ((oid = oidset_iter_next(&iter)))
+> -			printf("%s\n", oid_to_hex(oid));
+> -	}
+> +		to_drop);
+>   
+>   cleanup:
+>   	oidset_clear(&all_promisor_blobs);
+> -	oidset_clear(&to_drop);
+>   	return ret;
+>   }
 > diff --git a/repack.h b/repack.h
-> index 61e554e4ed..33309548ce 100644
+> index d08e25b852..61e554e4ed 100644
 > --- a/repack.h
 > +++ b/repack.h
-> @@ -171,6 +171,10 @@ int enumerate_promisor_blobs(struct repository *repo,
->   			     const struct list_objects_filter_options *filter,
->   			     struct oidset *to_drop);
+> @@ -168,8 +168,8 @@ int write_filtered_pack(const struct write_pack_opts *opts,
+>   			struct string_list *names);
 >   
-> +void append_drop_log(struct repository *repo,
-> +		     const struct oidset *dropped,
-> +		     const char *filter_spec);
-> +
+>   int enumerate_promisor_blobs(struct repository *repo,
+> -			       const struct list_objects_filter_options *filter,
+> -			       int dry_run);
+> +			     const struct list_objects_filter_options *filter,
+> +			     struct oidset *to_drop);
+>   
 >   int write_cruft_pack(const struct write_pack_opts *opts,
 >   		     const char *cruft_expiration,
->   		     unsigned long combine_cruft_below_size,
+> diff --git a/t/t7706-repack-drop-filtered.sh b/t/t7706-repack-drop-filtered.sh
+> index b558807847..41e7941799 100755
+> --- a/t/t7706-repack-drop-filtered.sh
+> +++ b/t/t7706-repack-drop-filtered.sh
+> @@ -56,12 +56,6 @@ test_expect_success '--dry-run only takes effect with --drop-filtered' '
+>   	test_grep "dry-run only takes effect with --drop-filtered" err
+>   '
+>   
+> -test_expect_success '--drop-filtered without --dry-run is rejected' '
+> -	test_must_fail git -C plain.git repack --drop-filtered \
+> -		--filter=blob:limit=1k -a 2>err &&
+> -	test_grep "drop-filtered doesn.t work without --dry-run yet" err
+> -'
+> -
+>   test_expect_success '--drop-filtered requires -a' '
+>   	test_must_fail git -C plain.git repack --drop-filtered \
+>   		--filter=blob:limit=1k --dry-run 2>err &&
+> @@ -136,4 +130,16 @@ test_expect_success '--dry-run does not remove the filtered objects' '
+>   	git -C repo cat-file -e "$BIG"
+>   '
+>   
+> +test_expect_success '--drop-filtered removes the promisor blob locally' '
+> +	BIG=$(cat big_oid) &&
+> +	SMALL=$(cat small_oid) &&
+> +
+> +	git -C repo -c repack.writeBitmaps=false \
+> +		repack --drop-filtered --filter=blob:limit=1k -a &&
+> +
+> +	git -C repo cat-file --batch-all-objects --batch-check="%(objectname)" >present &&
+> +	! grep -q "$BIG" present &&
+> +	grep -q "$SMALL" present
+> +'
+> +
+>   test_done
 
