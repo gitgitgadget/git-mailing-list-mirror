@@ -1,173 +1,115 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C60F4A13A4
-	for <git@vger.kernel.org>; Thu, 23 Jul 2026 13:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF952472B6
+	for <git@vger.kernel.org>; Thu, 23 Jul 2026 14:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784812405; cv=none; b=scCZhwQkMyA0ac7Mmx6K4oWIAS8ycVDKeoUbosiHNdN5AOK9P02QtFC27nzOcUQRoY4MaTDr8qc4ozpoi4CoVgtoN+mRJW2xrHDdquuERTKd1Oo9VdTCfZUdF7qOhCg6yyTAyXBNueA3/ezSBbvw1d/gN8jgUNHZHnFgKt0FlEQ=
+	t=1784816831; cv=none; b=eEhCgAa6hpxC7a3waseZt2WuJ/ApAR05/j1AfvBN3sWenWvFnsVvWBF0hOpAr0BKvjgClgXKyiXqmhKUvj/KyfZmy5JNktqDz5F8FJvLeDV08FCgyLNLhZezjiC/zuMYAHZX689YmC5d76HEOfD8nd13rcSJ647z3s4SGJ6n8aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784812405; c=relaxed/simple;
-	bh=AjGUOMnlqVQtCOYtasdoci1vWn7utIdKijq9KJ+tHQw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=euV+WLV4o/+44yq23Yyr6iBeXSR3/2wylCVh9jUj9i9P4d2BgYUZsXY3U0cRa1D8388XuODlH2fSgeBUMZ6aOvKxh0O5MM/zV3KKf8JxvggDVqNAPL+74H0UYb+YHKq4XxpJqirz1hNBuhuRkiMLVv7Hoq7HQG2zZ4k5140NFCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o8yhnCVM; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784816831; c=relaxed/simple;
+	bh=MgRu3Nn24sxskrfn6OvwzdZHMk2QR73jE1qEAcHoxzY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HERikEKOh3XHlrnBEznYmrN+c1W7OmjWL677DojjdbTGFziYbDcsNHmeUT+eiGg+KKDmrm2F+TidwDAZab1a3X9saTgwUoZQxtlHmEJWoY9WRPjeeRZfwFL45LhmJQeA/s5egYMjh4aKfuBGW+991fEOr67sSEX13PkvebC5jMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p4hLdTRP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wi/X2A+I; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o8yhnCVM"
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-39c953950dfso4793901fa.1
-        for <git@vger.kernel.org>; Thu, 23 Jul 2026 06:13:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784812395; x=1785417195; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=azs5drk3KRLAmmrIlinakIpOk4mRX/FxMjB1SPbmOY4=;
-        b=o8yhnCVMI7zc+I0VXTsOQ6l5DLpxLflfQvQyvxH3ihw6oUs8oo5IYTcooo/G9UO0on
-         2+au3Y5RWh7wrH1hJCjcrDzL/wIc6YGZWDfp602QtWnzSNlXAdLyv+9YgEsu4KPVWvWx
-         Byg3RDqGVZtcY/FvzeR7zmA1jSH5/et9mMgyUGOmu0l4j3XFxYrWAQtgbbx5y0dld8W9
-         iG/R3BEA1kJQ4bSlYDN/SnRRPp9UWYRR8a/6mD6V8cJ2W96IUG4houvpzg8hvaGvlWbF
-         kuN9zEZoyk/FhgavPEtKzZpAD9GPLAZXlLCw+hWTvlNkRHCIynGds3Hk1ZwFYUjOxq3r
-         YitA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784812395; x=1785417195;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=azs5drk3KRLAmmrIlinakIpOk4mRX/FxMjB1SPbmOY4=;
-        b=WpGoEEDjzEnHQms+vP7oOKiaBJa0hGwCwIz3BQEdXE40DMV+hZlRR7I5eX588W9i81
-         g2yqZm8n2FSrlAtrphiHsANaOjsbsrnLfQAWfyiOWPjrE9dyPtJRxVdvCNA7AyotUT5v
-         N6m6emYwrqrSGwHNP91M66jBgUNmBKCF+o2mwe0U7iSxR0KImwEoeZlrhzRCY9MaQxx4
-         qSz7y38kRSo01OX1yrwe5NldZZ9iYCOMVybqjIPnnk8NXVIGfMff1WK0e8Xf8dt2S5TA
-         kNjJvJZ+UFkTRrJvVFcYzvufMyiNfLUn06zD4tCPxcWKMahCAqNqkYYnNP5lkcEBrqbA
-         5Svg==
-X-Gm-Message-State: AOJu0YwQ1nF1Y64CEbiv1njzLlwDD2BCZKnEUYlGg1hq7GVLs4pAJqxY
-	/mFajodgruA6hc6EDNS6gx2Q/HwjFSY0q2ALumS/nvU0SsN0Yfqx1rsPBgRQes4t
-X-Gm-Gg: AR+sD12oRDHGaWmlnFvJdlvlTqn+LSbyWWbbAtF1UFjuOF5mkY/C/6ZD5hNyDnT+TMK
-	NDLP45svUxCjaa7mH74zCH75iSIbKajCjIilykyd1d1PwNKBiXz8JE0kmkl3KUCgcrwlr4FGrow
-	2gPmkYaiMpavAYyaIHTBViYUwJgZMpZerxb8unx0E35WOypFhWst7x5mLeU/UEo9mFn9KdtDdh8
-	nCdctWcbiSdiGpOvCpvYyYh3u8IEmtxLmRTVujrRTmCO4/NynifsAIZS4i8jNccgUO+jiAYvBIh
-	ajDidSu81ajaCfh7rZ0eVwf7jX+xTqHtnB4j+Awt8a46ZotfKJfo/UKHcr3ItE2AEGKeYP6gWRP
-	tqiPu0yBqCEBpm3yK/VIhduUaPmuP1Q5mz70FXwH0hHAkoiTmb87R4ANDSCF6j5n56cO9YM1VRu
-	y6P27X
-X-Received: by 2002:a2e:b8ca:0:b0:39a:ee64:36f4 with SMTP id 38308e7fff4ca-39f07c24ecfmr6097761fa.1.1784812395093;
-        Thu, 23 Jul 2026 06:13:15 -0700 (PDT)
-Received: from [127.0.0.1] ([20.115.103.82])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39ef6c41c9bsm8906001fa.19.2026.07.23.06.13.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jul 2026 06:13:14 -0700 (PDT)
-Message-Id: <1a790e001610d3324ec45d86ac67ca5720678cb8.1784812390.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2356.v2.git.git.1784812390.gitgitgadget@gmail.com>
-References: <pull.2356.git.git.1784125963694.gitgitgadget@gmail.com>
-	<pull.2356.v2.git.git.1784812390.gitgitgadget@gmail.com>
-From: "Lucas Zamboni Orioli via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 23 Jul 2026 13:13:10 +0000
-Subject: [PATCH v2 2/2] mv: check for missing destination directory before
- renaming
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p4hLdTRP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wi/X2A+I"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5EB531D00067;
+	Thu, 23 Jul 2026 10:27:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 23 Jul 2026 10:27:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784816829; x=1784903229; bh=82hDNqE3bQ
+	wVoGncTCqADo2tUIQpIp+LVavlymeaRw4=; b=p4hLdTRPrlRqxp+8EBN94FEYnX
+	0uiXJuTLqhHhRbNp72EK/BgB1q7WzHBnZPONM5Lie40r9owl6VS6uFLq7dai+7H2
+	twaAJ5U+1Kbp4YRsPje/IPPNvxzYtzkxeU0CrCND+wOPKul9ClCQLxq7tga4o1SP
+	g01nETcJ4VRdW9L1kKHULYjssxfFa65Ok9TjVgdBuC7sWmEUnFE7EAdpWfhQw4NT
+	lxnbkRAp4QWaISYcAWACcLG7leFOUEvYOHNy+NdMzO6bm+cDIB0mN65WlBFH7PK3
+	xj37KFFbXwObmJRUgny2KWQiEDBijPbH+/6koUh9OLJS8xD8uO0/U0NduG2w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784816829; x=1784903229; bh=82hDNqE3bQwVoGncTCqADo2tUIQpIp+LVav
+	lymeaRw4=; b=Wi/X2A+IUSRevx6UFDHeEuZedPt2o38BLFbW7pZCqhVptJyhYoN
+	9oI6fnj5+paCY4IOjxuMZHDPAQ/sIZ5pTwdhl98nH7MLdvBE4foFBTy6v9juzTf1
+	Hl7J0SszMYKKhtULZhUp3kTAtyupw1hQMaddk2Mjh/TJ6Qj5XrCi68gC2FLhrWHL
+	YkX8DKHsIwF83gQWu6OvxUQdaj7yITyS5eI1l1hWNy09+WMNefABd7rUS0NXXZCm
+	qodotJz5qcsXVAmX7isGgwQJD0DnL5DQx41DCyK6BoW6Wcm1XscbgLUal4QZNnZ3
+	ELzcWEu0ONhwZVpijMEcRedW6wZbIyjWTJw==
+X-ME-Sender: <xms:vSRiapS-Ug0RKMrqPfFWwb3SuwGmtC18Dl3oeDyf5-yt-PJt1yHrYQ>
+    <xme:vSRiapoDESfBywbqTtpIYMybcNANt1oBLbQAfmW4IC9lwWcHTUDGW0KxdXP-IexUN
+    pp-h1ApMK_iZe_FvhGjitw4sTM_GQDnWxRgaqy5d0q8uBjWqRhetwE>
+X-ME-Received: <xmr:vSRianJ3hWwn7NXBuYe2My79aaEBr5O9YvCniqOyblpYzsNCDoRbdoKu2tUqiH-rFNC2Z5y2-ZsYt6J_Z5xTCQMxu0sWAtnqSA>
+X-ME-Proxy-Cause: dmFkZTG4KTEaj6Ckx88uknbyCJ/bzFsmFHcr2LvmGAgdClyrfIHTBjJMXnh2mLJClK2COC
+    AAROY11AGR9aAgbmPWCzRW7ayXCnCB4uJCwkg4YbaYTCcGj84C3mZW9vOJ2TG4lofBHnrW
+    udoWmBMcdOQaGZmuLsKJboiL6vVssvk5E3okTZDVXOdThwjijKaNLePpB4sug1ONXZmfFm
+    /sZNgoH4CmJN80mAfw9ANi+lqldBEDKWlhrbm+ro2bW3d5bgfXdDhAvthc27IuW/U939sB
+    KUvI5hBRMLuHRdTPhX95e+qfK9T0eHHNoEjRaV4hCA7/VMGYkJeuSEQozjCHgQsGAjHgVR
+    OAM7ZD7NIUddjO0lrxZC5IhqqH4yy+4VF5MBrfwGAH5zAHcHoH7HHugq6YwZusO4+Hi+Ue
+    +RFHMHExY0wbuPEJ3D0RxncJAeHlY+U4ofKU1pzNEapeTm8L9W4B+IwE2Ekq9WzoKh4bRo
+    Bl1EG+A7QS6EVCnBPb7gx2/aQs2TcZh93yI1MZeaDxiIQXt/YjgjGhMJNK5IxKE5T3dxUK
+    /klXu0mi2CmvgtapsrsS4E90+ziMGSc3ovNnQbTWo+mavbp6pNzv2MtrUPSp1h4FukjDxC
+    0IhYyrG59fOekdhfQKjlrH7qjEKHc2ZaDVE/M3HKiDQl+QyIjAGVGnc3ke1Q
+X-ME-Proxy: <xmx:vSRiaspx3ZzK_G2cfcZw7BZYJtHRB7e-9siqBwS7aVwg2iMQx-JdRg>
+    <xmx:vSRiavyr0gU3sI0NRZZmpzdSA9_EjQwIGDZ-41KXUhZ2EGAV3Npd9A>
+    <xmx:vSRiagP8g9k6px8YK7dBD17QypmgqOuCMRPbMOwKXs_Zd62B1rn1KA>
+    <xmx:vSRiak5HmnTtzsyEMwwUbOU3tOP-3tMcHkNcNjyHjep91-a-9pyoGQ>
+    <xmx:vSRiao53ssLZKNa0sIQAJmr8kqoyOJQZ-NClpgteUaVA-tf3RZHffKYe>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Jul 2026 10:27:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,  Harald Nordgren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] bisect: add --reset-when-found to leave when done
+In-Reply-To: <faa22968-54ac-4e4f-8324-3326ffb00c5b@kdbg.org> (Johannes Sixt's
+	message of "Thu, 23 Jul 2026 11:17:28 +0200")
+References: <pull.2335.v2.git.git.1784312854.gitgitgadget@gmail.com>
+	<pull.2335.v3.git.git.1784538619.gitgitgadget@gmail.com>
+	<542f4b2c8065818b887437add90130d2090fa0f2.1784538619.git.gitgitgadget@gmail.com>
+	<faa22968-54ac-4e4f-8324-3326ffb00c5b@kdbg.org>
+Date: Thu, 23 Jul 2026 07:27:07 -0700
+Message-ID: <xmqq33x9n5ms.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
-    Lucas Zamboni Orioli <lucaszam0@gmail.com>,
-    Lucas Zamboni Orioli <lucaszam0@gmail.com>
+Content-Type: text/plain
 
-From: Lucas Zamboni Orioli <lucaszam0@gmail.com>
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Moving a file into a directory that does not exist fails at rename(2)
-with ENOENT. The checking phase already rejects a missing destination
-directory when the destination ends in a slash, but a destination that
-names a file inside a non-existent directory is not caught and only
-fails later at the syscall. As a consequence "git mv -n" does not
-detect the problem either: the dry run never reaches rename(2) and
-reports a move that would not actually succeed.
+> Am 20.07.26 um 11:10 schrieb Harald Nordgren via GitGitGadget:
+>> @@ -784,6 +859,10 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+>>  			break;
+>>  		}
+>>  	}
+>> +	if (reset_when_found != RESET_WHEN_FOUND_NONE && no_checkout) {
+>> +		res = error(_("'--reset-when-found' cannot be used with '--no-checkout'"));
+>
+> We have a boilerplate text for this kind of error that saves a translation:
+>
+> 		res = error(_("options '%s' and '%s' cannot be used together"),
+> "--reset-when-found", "--no-checkout");
 
-Detect this during the checking phase. For entries that will be renamed
-on disk, stat the destination's leading directory and, if it is
-missing, fail with the existing "destination directory does not exist"
-message. Guard the check with the same condition under which rename(2)
-is invoked, so that directory moves, whose child entries are expanded
-to paths under a not-yet-created directory, and sparse or out-of-cone
-destinations, which are not written to the worktree, are not flagged
-incorrectly.
+I wonder if we should add a set of helper functions
+that return an error instead of dying, to complement
+the die_for_incompatible_optX() family of functions.
 
-This is a best-effort diagnostic rather than a guarantee: the
-destination directory can still disappear between the check and the
-rename(2). It fixes the common case and, unlike the syscall path,
-lets "git mv -n" report the failure.
+Are there many other places that would benefit from this?
 
-Add tests covering both the error path and the dry-run detection.
+Thanks.
 
-Signed-off-by: Lucas Zamboni Orioli <lucaszam0@gmail.com>
----
- builtin/mv.c  | 21 +++++++++++++++++++++
- t/t7001-mv.sh | 14 ++++++++++++++
- 2 files changed, 35 insertions(+)
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 35e504484a..eb59fe0f31 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -444,6 +444,27 @@ dir_check:
- 			goto act_on_entry;
- 		}
- 
-+		/*
-+		* If we are going to move SRC to DST on disk, DST's leading
-+		* directories must already exist.
-+		*/
-+		if (!(modes[i] & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
-+				!(dst_mode & (SKIP_WORKTREE_DIR | SPARSE))) {
-+				char *dst_dir = xstrdup(dst);
-+				char *slash = strrchr(dst_dir, '/');
-+
-+				if (slash) {
-+						struct stat dir_st;
-+						*slash = '\0';
-+						if (lstat(dst_dir, &dir_st) < 0 && errno == ENOENT) {
-+								free(dst_dir);
-+								bad = _("destination directory does not exist");
-+								goto act_on_entry;
-+						}
-+				}
-+				free(dst_dir);
-+		}
-+
- 		if (ignore_sparse &&
- 		    (dst_mode & (SKIP_WORKTREE_DIR | SPARSE)) &&
- 		    index_entry_exists(the_repository->index, dst, strlen(dst))) {
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 7cf4aa5ba1..2d8a98d8b0 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -114,6 +114,20 @@ test_expect_success 'clean up' '
- 	git reset --hard
- '
- 
-+test_expect_success 'moving to non-existent destination parent directory' '
-+	git reset --hard &&
-+	mkdir -p from &&
-+	echo content >from/file &&
-+	git add from/file &&
-+	test_must_fail git mv from/file no-such-dir/file 2>actual &&
-+	test_grep "destination directory does not exist" actual
-+'
-+
-+test_expect_success 'mv --dry-run detects non-existent destination parent directory' '
-+	test_must_fail git mv -n from/file no-such-dir/file 2>actual &&
-+	test_grep "destination directory does not exist" actual
-+'
-+
- test_expect_success 'moving to existing untracked target with trailing slash' '
- 	mkdir path1 &&
- 	git mv path0/ path1/ &&
--- 
-gitgitgadget
+
