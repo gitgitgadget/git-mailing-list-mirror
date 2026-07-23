@@ -1,71 +1,73 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-pj2-f4.google.com (mail-pj2-f4.google.com [74.125.227.132])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA413F54A7
-	for <git@vger.kernel.org>; Thu, 23 Jul 2026 21:19:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6090E3E63A4
+	for <git@vger.kernel.org>; Thu, 23 Jul 2026 21:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784841583; cv=none; b=IeXGgFoaFTJ7dB2/Cg15BrpXvkbcd/PZrapTZXUrUdJrQbM+dESDXKtNd64wuOemVzCqY2P7/AyuF95WsOFjLdtOK/SyEIr3TZawCdMSQ/74qEIXtuIGk7zT+G/ALgZZUBIg5gl6W5EbvcDPueJbhooBu3GLcG1XWUg/OZgscRY=
+	t=1784842405; cv=none; b=ei/zdfRAsL/nyXrRrJ5iuqtGjVpOiAZaTe5dqFVK0hieti6gP9f3X7SzX214ZRXHzcn6/jcGxl63WA7vVHCsbdDlWmtNWjy7RufEkUmeaGysGmMmzURUOFBce3BlBHpZReZn+yoDW8laN0H3Ci/cqmR4kTHkOHVDE+WxRiW5SZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784841583; c=relaxed/simple;
-	bh=H28LdFAH69ddSKwY/zgWlunoL5XzbKtyPdzljixSCSA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=cubVhmO93AoZixq4yC9Lg51UN8EK3ZMW/M5l5nTjWXnZ6Zn+fBG1mRlXV1MULLHlFAuB/RktenXLfHlEelOKIrWrY0P1LfXKvJPSp5C3E6E/rHNz21d3v0L82G0YdBRs2Pimduhu7aOqnIhZcASzIcXJHM8j5wY79+8/7prS75E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FhqGWyLd; arc=none smtp.client-ip=209.85.210.46
+	s=arc-20240116; t=1784842405; c=relaxed/simple;
+	bh=3dJDR29t7fHHlX/3npTJjtovWULXZgPq9EmiQDwhfKE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Q8YBiVHGLCSDiv1reNtIw5Wd/V7XdhhvJYTY6qUd0TUQit6whzUFVUDVfNM6rRL5DYK6FO9R/DjMtDa4sOI3r0OzTHY8oZjNk+BFiNY5d8pBXOZKCNDR6KuNT4w24jboNWsiUBhemCaQQFGaP9uFyyqg0KFLya5tddFa847yRpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dEfd60vL; arc=none smtp.client-ip=74.125.227.132
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FhqGWyLd"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7eb68bdf53aso512409a34.3
-        for <git@vger.kernel.org>; Thu, 23 Jul 2026 14:19:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dEfd60vL"
+Received: by mail-pj2-f4.google.com with SMTP id 98e67ed59e1d1-38111ea8a88so761069a91.1
+        for <git@vger.kernel.org>; Thu, 23 Jul 2026 14:33:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784841581; x=1785446381; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=nazj7aqef6uGgy9P/pXKPJiBkriKrNtUCgslSlgtUg4=;
-        b=FhqGWyLdoz/CXFxzqEGCUvR073KiaqMUn1F0WcYcg73IyNCshNtQHB7e6oJ7FHy+Nj
-         kT1x8pCJlWmRZfxrlL4YmFVrxjRCM9Vg156cI5KHJeynblGYn3scg8mUKEwP6pkSy5Uf
-         zsKF4yJWk7mf4QzQrhfm/SSgdlsT2yLBceFqgFMpJ6nvhcFhCiYglsEV8N69UW7169oz
-         xnDcFNKyaWX6oKt0sggABTOtrIyQ3e1yiwRyuBLsV08OnYn0A9q6rsiRFDIsBpWhEvmo
-         oLafcXV23qJ9Ae1eXRuyBleDNcef64Al1O8V9+rncBJOwQhK7usnEFaiZPK0O0IEIckZ
-         EBbQ==
+        d=gmail.com; s=20251104; t=1784842404; x=1785447204; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Q5RC8e5zgMOjebY78675rshMWRmhwZw0EQB4cMxDEkg=;
+        b=dEfd60vL8M8GKoahDct7tQUoSY0lgfx0P/WLzy7b+yb5BTsquuVPJTUjcD3cklAYqu
+         N2tb6LQOjgCRf3VzJq7r2pP7nf23Ip/e/YjZknvZcdDTzBUKsH6Uq3TsHtqyFVKLvkcO
+         Kh2RdelwJ5YpAf/vIwAFp0NmH6zDHWW4NlhFG00EJELKx3VOSEzmw5ASWH+PIIsOgok6
+         SOtY84Y/7JVIuMzH2flpVOb3vHbWFJBEP7P9caZk2ynk6cbr6PZ/DCJttNRRLSQl+mBP
+         Vcarme9FNu06oR7QTJ8rhxvkCdldkKUUMmkhSo8YmisDL6A8erFvLMTBEzyHtu+yOnRw
+         I3gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784841581; x=1785446381;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1784842404; x=1785447204;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nazj7aqef6uGgy9P/pXKPJiBkriKrNtUCgslSlgtUg4=;
-        b=jjOViaXefxuUm7SCneo8YgNVhrVbJ2jVmD1f3P+LEGg2XxuBqgTy1yfr1i01TWHnDK
-         AlMG6XZSyOtnJeqPpyQUYSpA66hN3aW0zjn6AfsaHu5xWmzTMdiuylAdKfVBn5XjYRrk
-         UiUh8KscMauq/Qkio+poIG/qAaQpJwr65TiK+JiRvFUUSx/WwN4DRNi/9dkce6CEke6m
-         JpOdxDZzylOc0zRvLSlf8R8KMpju69RY24bX04m7rGw5JGIeNrPfXS8wuRQRZrHpBfRx
-         71MR1bSJ/CSntGGaQx0rsLpruU6FVBPAirkG+yzUK6dRmaaMPrYQjrK1V6PdBUSZZ7RE
-         dNnw==
-X-Gm-Message-State: AOJu0YwjjyPqzcHsxku3rKegvReq3E2VNPP36cPFDdW/yym8jmgtb8Wa
-	dgVKaPbk1Exr2Eel/pC/RgBO9XxyHoFAnFW5kHsbwle8v6I+gcXWAizjHkPgcQ==
-X-Gm-Gg: AR+sD11XkirpCYP5VMKUZB2DKOmvotMgqETm0Kfeq+lLDQAax/3MNokPQdv6suNfO8c
-	V12W60aCb+IA8DAbRvPA88nWiFnoGKVZxihp8Jaam+XViQzmAWLTJoZ3gGDJlEBgmXQSXCTDrMa
-	ydWQdia2a3Cu7LmcEAvb45yUZJMvvItIOemykKH15I+6n5K6/kSqU8R4BnSlJmpsKl46d5w3tsK
-	sULKonssN4nzQpkyTVC4tLPkzPA0B7jt1IkZ2qSRpbT/oT+RseeiBTg4hGk423fUJjCgRVK5bNa
-	fpAIylOZxp0tJCOLz35Y6KXDES8X2PVCaS6tLNEXTTVSDL69f3YKvWATa5Kv8rmeT+8ZLkpht6y
-	0ef7U77MBD5ZDfooQwklsTN7xPR2fPLRXtqOeR3GOHa0pDP9QDjgfhxovBCmZPlYh75iRbt0zFO
-	XqvtrlwA==
-X-Received: by 2002:a05:6830:3488:b0:7e6:e8cd:bb7e with SMTP id 46e09a7af769-7ee43a4c105mr2618276a34.4.1784841580772;
-        Thu, 23 Jul 2026 14:19:40 -0700 (PDT)
-Received: from [127.0.0.1] ([52.165.251.167])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-45766f0cfd8sm5164332fac.5.2026.07.23.14.19.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jul 2026 14:19:40 -0700 (PDT)
-Message-Id: <740b24631de2c2aff01dcb461f60121fbd11bfe1.1784841567.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2185.v2.git.1784841567.gitgitgadget@gmail.com>
-References: <pull.2185.git.1784490878.gitgitgadget@gmail.com>
-	<pull.2185.v2.git.1784841567.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 23 Jul 2026 21:19:26 +0000
-Subject: [PATCH v2 4/4] doc: convert git-request-pull synopsis and options to
- new style
+        bh=Q5RC8e5zgMOjebY78675rshMWRmhwZw0EQB4cMxDEkg=;
+        b=QUe3X2JDZINOzfiPAyMmC4yththzHIqgAwkYoILnT6W9hII9MOERWv/SMKPb2PZfxz
+         UNnXJxNHrPYJUualN0k6H8eyTSAYEIl9vRlgemYh/ruyQjOkms+pK33zk1Con/K6GNCL
+         YbWYgNrs1v5GsvhSF5TlqFUKkTz1WB5kY7/Zxj5wmdcX/kK79MQS7Z4zLBDyqSz1L+qv
+         wkKsNBjirzR2uLq33V9A+QfDgn2B2Lycp1yRa0yA9OVM83ACdAg8V6maexB9/oSGI2Jw
+         ZetyCfgLaBgbamSu6s2oY5pptmeIUBSOTKf8Q24bo6e9wvPnVaEg3pb+ffhlGEpJB8Jk
+         vCJA==
+X-Gm-Message-State: AOJu0Yw1YKh2JNel+nNTpA5oApW8H9r7VLO3YKWhwOptmpdlXt+GCpKf
+	WwCqBf5XtUcb5zkO+GjS+HfgYio+r3v3FR4VLErYQJBTJiX0eIBHML0s
+X-Gm-Gg: AR+sD10gtlZOnxhssyF0zIJ4NJSzbRzAfS3L9o71pZSyZXtWuz8SODmVOku1Rz4rYFF
+	+G1AZBaeK4/p6J41TY6qEk8A7Of3PBvK4RCwsSLl8OvgXw6qTUhstm43SaCFCXNSuodGDP3zLh+
+	KHlSJ9hOhYzKdRwxT2aMG903RGgdXHbs58WPOSDjJY7WKWnses6nRkC+KIysQ1WPTcZXJTzrCYJ
+	KdkO3ujKuOml76KPlI+n/QvRg0lt3b9ljD1LtMa/+2hKnmdHlHxvZyHmQEoTwiOldt9k2qTNysz
+	j2b/hO4Mb2Cuno953E24mW6O3tjK91xTPB9Oz5XsSZKE3vjkM0TZ97mLXPdOf+Csgz1p4oKAElc
+	VPOOAWJcMYg9NF1yoTP5bdLW0afpuQQ757BYOx8f6Ua7QQA/2LBd0rTpn2ZL01acq/RlPqsnlqK
+	EzNpxac3ESK0/XquK4rMNveJHHyg8IKn93Ok2kvJ2u4dIndzk=
+X-Received: by 2002:a17:90b:1b01:b0:38e:57a3:f218 with SMTP id 98e67ed59e1d1-38ec64f272dmr5269033a91.13.1784842403654;
+        Thu, 23 Jul 2026 14:33:23 -0700 (PDT)
+Received: from localhost.localdomain ([45.117.66.215])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d130cc5ebsm24734361c88.12.2026.07.23.14.33.21
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 23 Jul 2026 14:33:23 -0700 (PDT)
+From: Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	Gatla Vishweshwar Reddy <gatlavishweshwarreddy26@gmail.com>
+Subject: Re: [PATCH v10] show-branch: convert per-branch flags to commit-slab
+Date: Fri, 24 Jul 2026 03:03:15 +0530
+Message-ID: <20260723213316.89081-1-gatlavishweshwarreddy26@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <xmqqo6fxe8rf.fsf@gitster.g>
+References: <xmqqo6fxe8rf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,111 +76,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+> We are removing this initialization. Why? Have we changed the
+> API to make BSS initialization sufficient? Does the updated
+> code no longer use this structure? Do we initialize it
+> somewhere else now?
 
- * Replace [verse] with [synopsis] in the SYNOPSIS block
- * remove single-quote formatting from the command name
- * backtick-quote the flag
- * use _<placeholder>_ form for positional parameter terms
+The init_commit_name_slab() call was removed by mistake in v7
+when I restructured the initialization order. I moved the slab
+initialization for rev_flags_slab to after ref collection, and
+accidentally dropped the name_slab initialization entirely in
+the process. The API has not changed — BSS initialization is
+not sufficient because slab_size remains 0, causing division
+by zero when commit_to_name() tries to compute which slab page
+contains a commit's data using c->index / s->slab_size. The
+structure is still used throughout — name_commits(), name_commit(),
+name_parent() all call commit_to_name(). It is not initialized
+anywhere else. It was a plain mistake that I should have caught
+by running ./git show-branch master before sending.
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- Documentation/git-request-pull.adoc | 38 +++++++++++++++++------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+> Firing off a new iteration before there is a rough consensus
+> on what it should look like is a total waste of everyone's time.
 
-diff --git a/Documentation/git-request-pull.adoc b/Documentation/git-request-pull.adoc
-index 15dcbb6d91..8523c4e6bb 100644
---- a/Documentation/git-request-pull.adoc
-+++ b/Documentation/git-request-pull.adoc
-@@ -7,8 +7,8 @@ git-request-pull - Generates a summary of pending changes
- 
- SYNOPSIS
- --------
--[verse]
--'git request-pull' [-p] <start> <URL> [<end>]
-+[synopsis]
-+git request-pull [-p] <start> <URL> [<end>]
- 
- DESCRIPTION
- -----------
-@@ -19,28 +19,28 @@ begins with the branch description, summarizes
- the changes, and indicates from where they can be pulled.
- 
- The upstream project is expected to have the commit named by
--`<start>` and the output asks it to integrate the changes you made
--since that commit, up to the commit named by `<end>`, by visiting
--the repository named by `<URL>`.
-+_<start>_ and the output asks it to integrate the changes you made
-+since that commit, up to the commit named by _<end>_, by visiting
-+the repository named by _<URL>_.
- 
- 
- OPTIONS
- -------
---p::
-+`-p`::
- 	Include patch text in the output.
- 
--<start>::
-+_<start>_::
- 	Commit to start at.  This names a commit that is already in
- 	the upstream history.
- 
--<URL>::
-+_<URL>_::
- 	The repository URL to be pulled from.
- 
--<end>::
--	Commit to end at (defaults to HEAD).  This names the commit
-+_<end>_::
-+	Commit to end at (defaults to `HEAD`).  This names the commit
- 	at the tip of the history you are asking to be pulled.
- +
--When the repository named by `<URL>` has the commit at a tip of a
-+When the repository named by _<URL>_ has the commit at a tip of a
- ref that is different from the ref you have locally, you can use the
- `<local>:<remote>` syntax, to have its local name, a colon `:`, and
- its remote name.
-@@ -54,11 +54,15 @@ the `v1.0` release, and want it to be integrated into the project.
- First you push that change to your public repository for others to
- see:
- 
--	git push https://git.ko.xz/project master
-+----
-+git push https://git.ko.xz/project master
-+----
- 
- Then, you run this command:
- 
--	git request-pull v1.0 https://git.ko.xz/project master
-+----
-+git request-pull v1.0 https://git.ko.xz/project master
-+----
- 
- which will produce a request to the upstream, summarizing the
- changes between the `v1.0` release and your `master`, to pull it
-@@ -67,11 +71,15 @@ from your public repository.
- If you pushed your change to a branch whose name is different from
- the one you have locally, e.g.
- 
--	git push https://git.ko.xz/project master:for-linus
-+----
-+git push https://git.ko.xz/project master:for-linus
-+----
- 
- then you can ask that to be pulled with
- 
--	git request-pull v1.0 https://git.ko.xz/project master:for-linus
-+----
-+git request-pull v1.0 https://git.ko.xz/project master:for-linus
-+----
- 
- 
- GIT
--- 
-gitgitgadget
+Understood. I will not send another version until I answer every
+question through discussion first.
+
+> If you can resurrect and continue the chat session with the
+> AI agent that spawned the v9 patch, ask it why it decided
+> to delete that init_commit_name_slab() call.
+
+The deletion happened when I restructured the initialization
+block in v7 — moving flags_stride and init_commit_rev_flags_with_stride
+to after ref collection. The name_slab init was in the same
+block and got dropped in the process. The AI did not flag it
+as significant because it was focused on the rev_flags_slab
+changes. I did not catch it because I did not run the binary.
+Both failures — the AI not flagging it and me not running it —
+are my failures to own.
+
+Please ask me any questions you need answered to be satisfied
+this is a human-understood patch. I will answer each  and move this patch forward.
+
+Vishweshwar
