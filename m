@@ -1,69 +1,70 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB3B4DA526
-	for <git@vger.kernel.org>; Thu, 23 Jul 2026 13:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14844DA53C
+	for <git@vger.kernel.org>; Thu, 23 Jul 2026 13:13:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784812400; cv=none; b=ntwYPLcF3qdSumhtg9ETTG3DJ7cskeCNeeZ/Xfgq7Z/zWMxb4xZtoS+fZK+o35H0Aj2xQZiOcJggqssTwb603ORfBINbDgm1455FP73mGV4aRh5a8lWv1LL8uZw2LSY3V5F0YKTEwe0v/aUpqPg7FGz7/zxNNc1UxRb5g6NA/QM=
+	t=1784812402; cv=none; b=HTlBkfE1++bFlvHCPtmYRRlOGLFGaZZSYA+ccChV43us0SbX31yU113d7qht90hxx6CotDF5ACCDin+sOl03zVEub1Ms3S0ezUxst2I+NI/RO2CmgQ2uIH5FoPj6AkpfTCWBnH0UjDnPwnf8VY77CxZ+eTdtUawMeNv9Y3YcPmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784812400; c=relaxed/simple;
-	bh=BOXBMGfQonIy0rhOycrEK9qf0EJ0/R9LJMCNFop5NlQ=;
+	s=arc-20240116; t=1784812402; c=relaxed/simple;
+	bh=WrLubwdvmUVv8AiNN0UuntNVd06qaZmsvUY8Obecf4E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=RoznUAEFG9hQM2lHKvPPMcAOzOW2O+6OnYkxUdK9eAKk17vYhxx7cm5J2YAhPUCpBS37WVrqPvAxrClRd+D7PeB4A3TsklngUDJpHQpwphQJnW+YvCWEF25B17+LD0N1SnF3CGIhLmQbaWb/aWK/AQAFX+28VSZqEdJB+kIB9Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n3ubqSOt; arc=none smtp.client-ip=209.85.208.175
+	 MIME-Version:To:Cc; b=UFeKG59iP5V6zMZLVNaYtRyjDOrWuBjjOh8MfPG7Q1054xqpGj7njyW9bxALHR+/KJ17zWUsi4suUFKmSsJwcGKWdH3tgLRmbHfoU6+gYrYDJjEt6sis+TKkWB3Qb9YiZ8OgYrrQw5bmHLwewjPst5uwGbpboZ4of/dLLQQW4lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NthFBOdT; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n3ubqSOt"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-39d4c864bfbso5898261fa.1
-        for <git@vger.kernel.org>; Thu, 23 Jul 2026 06:13:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NthFBOdT"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5b14d1f9315so532321e87.2
+        for <git@vger.kernel.org>; Thu, 23 Jul 2026 06:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784812392; x=1785417192; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784812394; x=1785417194; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=deBvTHsOFWdZPf0BW0g4cHNniqASxhQMQ2kmT+cqNfI=;
-        b=n3ubqSOt+BUFOwL3sEKhLyC7M3uFoD0/DkXbJPCI9X+MkzfwHT3dJUdgmdzF6LcBAX
-         0q5hBdMSqKgNlM9UrISdLH/scknlGm1vvZCBr7uyuBZrx7VQV3mmkA2Mkql/18WrEqtJ
-         l31YX+Vsnz6ImHaTMutesF1zAIWdVJMOz+kRZU2MXwWBHcW2+LZqtP0gv0QhoUN5OngB
-         QBWjVWyE+CCO0Hmt2tR5N1SxZg/uAMDmnaqwuMfg0H8KLEUFwb/0f+MBEdXjA8NK6+TX
-         aQODhnhWZ74pEadeJkRLdFFVbJiKNH3WuOshlDajbrPkl90O9fUsQ+jFcuXItvIARm/P
-         UK/w==
+        bh=3atA0DeGODCtG50yPZ9ieMEi0ZD5KhNSu53hbxdm2xg=;
+        b=NthFBOdT3mOI1Q4tk4mLkPCpk32Wz2NESrXYcVf4iIyW5Z+LJiZ375DyWcg5pyVZj6
+         LULbsk4rkBkLYfXs68xU+5IqdVT+j8hJwKFVHi2Xn2t3O0xawq9Ci+vyS/5l70xNzXYE
+         911/cWp5zoK9QXm033NHxTVUmokC1wTxjt9rKLi3Hv2nesX7Eo6G78lNksTmvsfxD9xZ
+         tES/jrCDZuSI0cFZd5NqnxA8ikaVKMsu3x8qFj92IBU0j6ZhK2vJQ9p09i9OYpYsw1ej
+         uQTFs5jCA9Mu6OQtttTmrUMAgm/vfI6lSsLThpml5m2FdqAW6fFg04ZJrh56/+aVGjCJ
+         DanA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784812392; x=1785417192;
+        d=1e100.net; s=20251104; t=1784812394; x=1785417194;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=deBvTHsOFWdZPf0BW0g4cHNniqASxhQMQ2kmT+cqNfI=;
-        b=PObe34Haa0WltvqsWZNvT/3aIZV2PpFX/DO0Np8amZF2t40obNoTgXSNkJ6xHBziuo
-         OxHuax4jzFHxk8UQJOWrigKd0vC86mKQvQ9TBlzZXaHYQ58qbCN3pK96Tea1bbb/nCz5
-         UTRGSm39OPdk6Bho51YUY8ql6RRFrf+O6fIrY0duaRawOLS+wwR0NJysNGRVXsCAGV3r
-         9ujkwidE//xAq/Fkg+QD12m3bTP0Ah6N1XOn/BSwOU4btFgQNdg6f9ymFVqFxRCrx9Dh
-         Z94yiFnTWE/LnVFYTiA7oClv1tQktCEgijC3K54S2zIURClVzfsj+Fp04zUCGtPwl9F2
-         g5aQ==
-X-Gm-Message-State: AOJu0YzOTZW8oSC7gvVyBn7ncfxhDFVaM62WMg0z+P8weT0LczWK3shh
-	vAhRVytcFha4Bfj3IljEOG8s2+W5pzydOpSnFIolSVJzqi3lLDIiJ4hWH6DLIVab
-X-Gm-Gg: AR+sD10e/rt1ejz+h/UwAPmAyzVSuNgeJJZVReS7j2lSXF7Cs1+dTJnMH2tm/Qo0B6n
-	HWXg2Cl8eFiBdLU3jYeHZHPcBeMTh+TBcR6cCy3ViZXnwUD4yJHah/kPSNvV/OZ7dW3QBBPFJ67
-	X47wTWp+L5COJ/rc/NvrHuU1CuE0t0we91XJOIZjQBVqxsfJTd9qY7QidpAvqW/D2GolT1N4WfB
-	n+9DHHN1oBgrPwryGTgGtp+2Djo10lBzlfZs2UaRtAlQY3ayf3jfuv/FsHSGTr3XRtF572qnf7z
-	xZCH4W3TaoMWinnBJF2HV6pyvt17FvgyB55s9aNUhZCTFOmxAWgn6tVUJJ5276GOfC/j0YCXs4C
-	fG4v4KngiWgCj50N39zvP9+ncG4nAH119SGaCI1Dl0XlHzjzYBoUOz1vuaUIGEYszu2pdogu/3C
-	wAamSlpPnJw68CEBw=
-X-Received: by 2002:a05:6512:3e01:b0:5ae:ba28:a56e with SMTP id 2adb3069b0e04-5b2b2f699d3mr644194e87.35.1784812392089;
-        Thu, 23 Jul 2026 06:13:12 -0700 (PDT)
+        bh=3atA0DeGODCtG50yPZ9ieMEi0ZD5KhNSu53hbxdm2xg=;
+        b=Mn2a6tbkxkPk8a26fXcsNwJrgT/KBJiiCsdbgGS4ZENFkG/LpGluYF78Jg+t/JgYAi
+         qGKJ2sF3KZTszPjQgS41pzzSKS2Nb1Fus5o1gGsHToCh2PKeHwqtI6+XtSPCNbssIzOQ
+         5nioxhsh6Yzq4EUyWThWoYyFhA/i6VFgrRJZvW6W+HX1gukOrK71nYlpaF6xun4jYCGV
+         Bgu4Fv22S9a0LRF05pzJREXtYzT8+entJAGFFaREc9hx4YxJ/1HUoH2vUT19eqWBBLta
+         bzmsazD28rz5nB9iHReQMZcNhaRiDrlo2y3IAsLcfQSjWM/lZkj8iDZYICU9v5Rz/zE0
+         Dgdw==
+X-Gm-Message-State: AOJu0YyHXIo9nZ+Z3bhkMbEm2sBvUZqLsegQ5xwJKg4pNqKd6xNIjecY
+	mrlU0U4jMzMNaJ7B7i1oY2FkpPoJe5NHWeaYbTbRBhmBZNuTqPL6juQWlVaE4Wwh
+X-Gm-Gg: AR+sD10DxQcHNTtEssQi9Y62QkZtYy1uXVvr8tXApZP3Rt6fZhQ98LDCO066MVBWeMo
+	2WzlxzCXSwRUeMlhJ1JldNTIUBJqBjvvCu7kbyqcDs5NOXRkUmezHlgpyJtYsDt0bJZds4FyC5C
+	ZiDp+y4h6xTdoryG0fmmQhxjejKIfRcl/sndM/2gY/If/Ugmo87O2cpzATdMpZWkAij0qU92pHA
+	iB0Je8UOtblZgMm/HHjg4GRllm9NMhFl5vkU+S0HlZFIUszezFQVouQvOx9+myg2H3W9hubhwCD
+	qcwVpJxCpdIb1WqN5qVwRrDXiJs/vNWB0sJsZ0quH6UQy8y405lACm3qymThTTft+L8UD5PJmaV
+	4JpJEfPoBJYZ4r0buWvr/XJmxgC0+3/golyvttPltLsUU77+nmR6beOLVdR1XpZx8ebWFID77Yf
+	0N6HKCya+z3d/pq+8=
+X-Received: by 2002:ac2:4157:0:b0:5b0:eda:de2b with SMTP id 2adb3069b0e04-5b2b2f72e46mr426545e87.50.1784812393601;
+        Thu, 23 Jul 2026 06:13:13 -0700 (PDT)
 Received: from [127.0.0.1] ([20.115.103.82])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b2a9f52fa7sm1009765e87.80.2026.07.23.06.13.10
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b2a9f5361bsm999075e87.84.2026.07.23.06.13.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jul 2026 06:13:11 -0700 (PDT)
-Message-Id: <pull.2356.v2.git.git.1784812390.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2356.git.git.1784125963694.gitgitgadget@gmail.com>
+        Thu, 23 Jul 2026 06:13:13 -0700 (PDT)
+Message-Id: <0d67da588bc86c5257ce366903ae58e171159b8b.1784812390.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2356.v2.git.git.1784812390.gitgitgadget@gmail.com>
 References: <pull.2356.git.git.1784125963694.gitgitgadget@gmail.com>
+	<pull.2356.v2.git.git.1784812390.gitgitgadget@gmail.com>
 From: "Lucas Zamboni Orioli via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 23 Jul 2026 13:13:08 +0000
-Subject: [PATCH v2 0/2] mv: report missing destination leading directory
+Date: Thu, 23 Jul 2026 13:13:09 +0000
+Subject: [PATCH v2 1/2] mv: name both source and destination when rename fails
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,92 +76,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Ben Knoble <ben.knoble@gmail.com>,
+    Lucas Zamboni Orioli <lucaszam0@gmail.com>,
     Lucas Zamboni Orioli <lucaszam0@gmail.com>
 
-Changes since v1:
+From: Lucas Zamboni Orioli <lucaszam0@gmail.com>
 
- * altered the error message to include both source and destination as
-   suggested by Ben Knoble
+When "git mv" fails at the rename(2) syscall, the error is reported
+with die_errno() using only the source path:
 
-Lucas Zamboni Orioli (2):
-  mv: name both source and destination when rename fails
-  mv: check for missing destination directory before renaming
+    fatal: renaming 'src' failed: No such file or directory
 
- builtin/mv.c  | 23 ++++++++++++++++++++++-
- t/t7001-mv.sh | 14 ++++++++++++++
- 2 files changed, 36 insertions(+), 1 deletion(-)
+rename(2) returns ENOENT both when the source does not exist and when
+a directory component of the destination does not exist, and errno
+does not distinguish the two. Reporting only the source therefore
+misleads the user in the latter case: for
 
+    git mv a/file b/no-such-dir/file
 
-base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2356%2FZamboniL%2Fmv-detect-non-existing-target-folder-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2356/ZamboniL/mv-detect-non-existing-target-folder-v2
-Pull-Request: https://github.com/git/git/pull/2356
+the message blames 'a/file', which exists, and gives no hint that
+'b/no-such-dir/' is the missing part.
 
-Range-diff vs v1:
+Inspecting the paths again after the failure to determine which one is
+at fault would be racy, since either could appear or disappear between
+the rename(2) and the follow-up check. Instead, simply name both the
+source and the destination in the message and let the reader see which
+one is wrong:
 
- -:  ---------- > 1:  0d67da588b mv: name both source and destination when rename fails
- 1:  692f44456f ! 2:  1a790e0016 mv: report missing destination leading directory
-     @@ Metadata
-      Author: Lucas Zamboni Orioli <lucaszam0@gmail.com>
-      
-       ## Commit message ##
-     -    mv: report missing destination leading directory
-     +    mv: check for missing destination directory before renaming
-      
-     -    When moving a file to a destination whose leading directory does not
-     -    exist, "git mv" fails at the rename(2) syscall with ENOENT. Because
-     -    the error is reported via die_errno() using only the source path:
-     +    Moving a file into a directory that does not exist fails at rename(2)
-     +    with ENOENT. The checking phase already rejects a missing destination
-     +    directory when the destination ends in a slash, but a destination that
-     +    names a file inside a non-existent directory is not caught and only
-     +    fails later at the syscall. As a consequence "git mv -n" does not
-     +    detect the problem either: the dry run never reaches rename(2) and
-     +    reports a move that would not actually succeed.
-      
-     -        fatal: renaming 'src' failed: No such file or directory
-     +    Detect this during the checking phase. For entries that will be renamed
-     +    on disk, stat the destination's leading directory and, if it is
-     +    missing, fail with the existing "destination directory does not exist"
-     +    message. Guard the check with the same condition under which rename(2)
-     +    is invoked, so that directory moves, whose child entries are expanded
-     +    to paths under a not-yet-created directory, and sparse or out-of-cone
-     +    destinations, which are not written to the worktree, are not flagged
-     +    incorrectly.
-      
-     -    the message misleadingly blames the source, even though it is the
-     -    destination's parent directory that is missing. A user who runs
-     +    This is a best-effort diagnostic rather than a guarantee: the
-     +    destination directory can still disappear between the check and the
-     +    rename(2). It fixes the common case and, unlike the syscall path,
-     +    lets "git mv -n" report the failure.
-      
-     -        git mv a/file b/does-not-exist/file
-     -
-     -    is told the problem is with 'a/file', which exists, giving no hint
-     -    that 'b/does-not-exist/' needs to be created first.
-     -
-     -    The checking phase already rejects a missing destination directory
-     -    when the destination ends in a slash, but a destination that names a
-     -    file inside a non-existent directory is not caught and only fails
-     -    later at rename(2). As a result "git mv -n" also fails to detect the
-     -    problem, since the dry run never reaches the syscall and reports a
-     -    move that would not actually succeed.
-     -
-     -    Detect this during the checking phase instead: for entries that will
-     -    be renamed on disk, stat the destination's leading directory and, if
-     -    it is missing, fail with the existing "destination directory does not
-     -    exist" message. Guard the check with the same condition under which
-     -    rename(2) is invoked so that directory moves, whose child entries are
-     -    expanded to paths under a not-yet-created directory, and sparse or
-     -    out-of-cone destinations, which are not written to the worktree, are
-     -    not flagged incorrectly.
-     -
-     -    This gives a clear message and lets "git mv -n" report the failure.
-     +    Add tests covering both the error path and the dry-run detection.
-      
-          Signed-off-by: Lucas Zamboni Orioli <lucaszam0@gmail.com>
-      
+    fatal: renaming 'a/file' to 'b/no-such-dir/file' failed:
+    No such file or directory
 
+Signed-off-by: Lucas Zamboni Orioli <lucaszam0@gmail.com>
+---
+ builtin/mv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index a82fc97a19..35e504484a 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -549,7 +549,7 @@ remove_entry:
+ 		    rename(src, dst) < 0) {
+ 			if (ignore_errors)
+ 				continue;
+-			die_errno(_("renaming '%s' failed"), src);
++			die_errno(_("renaming '%s' to '%s' failed"), src, dst);
+ 		}
+ 		if (submodule_gitfiles[i]) {
+ 			if (!update_path_in_gitmodules(src, dst))
 -- 
 gitgitgadget
+
