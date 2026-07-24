@@ -1,85 +1,81 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B33D41A54B
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 15:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E223438013
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 15:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784908352; cv=none; b=HJACw3nS3l7ZO63KIFP0Z4SnuIp/cnpW3qmdfDgHTwkZ57UPsxCU+AKO+eIzS7jLxJkzg1bplcIAn/tU5q3a9rZJs5qFrhnDDwhcZ7sTw5RK3p+kW2hOMTiwybJFNHCKz3ALur7UTEBKNFQbZr6i338Po4gEXku1KHoX2DjCvuw=
+	t=1784908710; cv=none; b=bvx1GYHSZC4TthuOz49XtmlooGOY//dZgiRm3mIv5wsIrMqLgo9bRy2hjM9QQv1Fd2xNDe+5myXPi7SG/UOCqsJm4RNOzqEd8JQV+FPFu/PmXEF2KG4OASWywlyEtWjNd3G3QgIXY4rFM410d09c9Y6JJdYmLEaCyOrF+tdvxDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784908352; c=relaxed/simple;
-	bh=80gFVR5UzHrEj9efAem3+ga1wEOHvuvSNTDcB8+d4+8=;
+	s=arc-20240116; t=1784908710; c=relaxed/simple;
+	bh=1j1kz0KVMwKyKWP/0xDVTgt5st8d6pS/cD89OAiS1Tg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PW7oQBCEnD4zCTv7VCPUJiiizSUTH9iosFmv4/PMb/wh/2GbsKR9+emVY9SH1C0ZYNGqJncqPMzTfPWXcZDI+aHIQDQYfnGu0RY+mFZJlw/uFsXr8BaGyMRYaGNooQwtUp9vPO6LolPcnpGeu17WT+ryLA0Q/VWUyYRIt2xJ5AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XDMgcuG1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gFKHFNHI; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=oJOdyzkEeSqkx3rTfi6VMDMyPzUYNDp5iVlpQ1BRCFQh2diAjzbyIkWmVptq5YwSLZ5XrCaQj5BbB3aJX0/Cs1EIyo0fDbkZIuum7G3PAlvQIW//ITaX8G+zZXLo8AbOGuiLhw+Jy2FD6cPQHVaW+UmFDrep33An+pHDvAoVWHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PNDVZap9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bGGJ2dji; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XDMgcuG1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gFKHFNHI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 11D7D1D0043E;
-	Fri, 24 Jul 2026 11:52:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PNDVZap9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bGGJ2dji"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8BA3B7A018B;
+	Fri, 24 Jul 2026 11:58:28 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 24 Jul 2026 11:52:29 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 24 Jul 2026 11:58:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784908348; x=1784994748; bh=op+ByFRpMt
-	jc1tZsaL5Lt7PHLWC0FldQU0KYH4uPQQI=; b=XDMgcuG18c2Mp0kiRB3V81u/KR
-	+PtLkU5e8xH0KGb/ADkdsv2RWq3VRu2o7oM/PGHYSsFj3eh6w4p8FZQRyyc2jEaC
-	Osn/AMRPY6jZVxz+CxU7Rh+CQKucFgOL6y0JKjgZx/RNnSQFFK+mhfZkQ07weeEY
-	dTtl24N4QHiQk4fsdAGzsHfkPiYxcXGuPJQD9zunnqUvHmwWISbFA/qxOicmlNFy
-	L+hlRRZpjuYIvD+2tUXfD0kuO1f/EdPGy1QIOoWu+EE7KrbUiAgiHVOk9+bbZBVa
-	xavifwtAvWyF8F4vGXwEEg6PDvQiYv/7l7+iHdZt5eimVyn1sA1sqeTXkgLQ==
+	:subject:to:to; s=fm1; t=1784908708; x=1784995108; bh=0qU2IPtzMj
+	hdgm+xTj4kl5We4/xesOaKSTRrICSC570=; b=PNDVZap9M3CjbFKprU3N09M9A4
+	wgCozwwUztsAL/5c8vxKq3JIgd6NpuAZ9mynNNZwe/tELPpYtXyht/XjJpSFJbfL
+	NyA/lXwlOr//13l5LQttsh8/Og75hAVcqDbjn+TWNmMIU2BSc/njvrFIbfVZLeXS
+	cpML/Rs/5xi3FyZ/RI+Ft0PPR6tYEY1WpRvijFerLABvlT7h84mM38di6IhvbQtU
+	S+AsQtSnq5extgh5YpbpQP/i75r/k103wAlD+h+tOyYzzqNT0B707DzcRbXRQzmm
+	v5yulgWjZ5/G8o1x5zXjm9ufCzaVYRjmWoXjzgJswnl+5zOBFc0roD9BV9KQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784908348; x=1784994748; bh=op+ByFRpMtjc1tZsaL5Lt7PHLWC0FldQU0K
-	YH4uPQQI=; b=gFKHFNHIlWd+6C3HhJWiDBFM/Q726nwsszq/RRBSb+uEi65udHX
-	qIDwDLpmFoYA1aCsZ2Aclq23/jDvDyM5qJ2GtZJe46s1wcJR/zJRTF8BzqDFyYvV
-	+4am/dLfBxRc9hldx6hNfVH0RCnm/QkC0hzm5sFxkH3xCQIf4jeGzoymEzYfhArF
-	0TJFloGv4PIh5/zNq2R7Y3e2VK32Xgav4wvG19KYMl8FeRgW/dVFEAgvgG4V+tmO
-	Tk0U5fo89KFVHiCG3e56ue5fx50lQUwuHJqnXiApRuOgCE8NIYQNXyb9f0a98eOR
-	Mv9OjVUlcvdvj14yR6ZUEF5ayEYAMoXG3+g==
-X-ME-Sender: <xms:PIpjaqMSVgSbp6KyLJ8Ak32F7WrBLnSCJ2s1__CFR312WOVcKJL7Cw>
-    <xme:PIpjahJyGngou0cthZHnjqtEJceNIIMWCKjv8lvdGzopgqbtIOtSzQc7Jth-nTb-4
-    3Nju6iyxIderVvRAezeBT0Srb3348uBkMyw-kEVxbzN8OILKd9qtQ>
-X-ME-Received: <xmr:PIpjas1_0TNLWkkOg8HVRFA2uQzlEwD8G8Bw_R-WSDfuIlbaWZIgfcZTe0syNY-dnPcdMkIA6RcF5pjlht7NuvNLzcgkKZQzMg>
-X-ME-Proxy-Cause: dmFkZTGfj4QEIUhnQUGq6YrOlKQZZwhsynM6WPmu9jdSRFYjHUVo8SHGZxaCRnkxsqC+n4
-    TTpTUu+1H+ZrAMr1t2bWH3aCdmWuFdv0Sw2hXlAzdFdsa6mKIrb5JnzJpDcVMzm48aKL2y
-    p3jFRgN/+4NdAOx8x8t9h2J1CBVOYIMbB63VHfBMsk9PaKcpsvwlPbFAIQdsUnoXvVAAft
-    /2JOme4V0HzPMQjfBiORe9ZP1zF7hUv3Rg4u8nRvN0I9Lg9JrX+NSmuoLiQd8Pl0jshAxO
-    7UsMAfrxrotYfTBKuGxDUXvE1UqB3ytZSQ2AshVTm2Knm62cDLl246KzAnklFS9LmPa+rl
-    o7cEsdTgen4zo2SIGe9iSkYVFev53rfH3PY7oc7ailRBUWo89iwiWcZg/vQwufUYftFpQu
-    dgEILstCiw80rteUbN/o+a6x1lfhUY+VXXklK9FjxqrdYsX5qYCr32dYRoMukp/f5mEmno
-    gaPgJZ6wJU3GI5Xlq2tAEKpA3J3laRoGZ4+6jhuoiTZEkOHgqqkhWLQ1KlzHR0nLC+bjbL
-    deYKpOMmb4rowbFKVtXKnrV/2OqPjyZNI0aoJYL2vVYmOe/2c9El/TYiA46caU/MciD0MY
-    b8TuGAR15MVHhzgVWZFy3fxHQNrIJPU48bi4pxefAVR3KFw5Vz+1Ec29UUsw
-X-ME-Proxy: <xmx:PIpjalUeekJRRvc4lzBmO-CWFX8msbwtsWhe7GrirMaGr6kYm1DNXg>
-    <xmx:PIpjauOL6ajG7qZ8CwhJBT2uuHLipm6Ir8ykEjqQr0UxZGFNXt3Ksw>
-    <xmx:PIpjao1UR4V1x6I2u2xsPj9sRhgv9BCH0sZkhPlIaQnEavwaQiwLEw>
-    <xmx:PIpjaiTJHN2pRXlRNi0PeJaVO3_x96druhfLXqEy_SQQLAgv0syA1Q>
-    <xmx:PIpjarOGJYlccranvpD9Il8HjdqrESBOfA-iGhGKlLs-8lblP0OaEd0S>
+	1784908708; x=1784995108; bh=0qU2IPtzMjhdgm+xTj4kl5We4/xesOaKSTR
+	rICSC570=; b=bGGJ2djibB1TtXwgBkCcq0g2YlB/HtYGvZ0b+/DIxBIUh3BUtk3
+	RMZjLrzI5T3x1+X8u6+v1ojYzNpIK1CkibL07j7NKW1Hib9OfmivJWxAKzwyHm0n
+	qSO8xKKVcB/m0kHbpZkHvCWtRVHpFf9ZS7OXjGRnNspWPWATfcZebMDL1V3KX4ii
+	gksbdZDCSKGPKwURXfs32Z7vIDafZS4xYOHjrPnvFoH4UlrfoMSDh+ixb5/hVuIe
+	/zH1FlKr/5qA1Hv7roErIXtxMo1g5cN/9Tkm305elRJUYFbuxB28BHOrPTekD20y
+	h4ZbxtN5gX/0BbscIRcie8PvBmwsweK4vIw==
+X-ME-Sender: <xms:pItjauxKUNUNXBlgkWUMIAhW2tql3XP5p4H2pbZy97IsjVbsac0deA>
+    <xme:pItjahLVPMuNDURqODl7Mj--YqJMUW-UC8qkjQRd_d1AWpQ6zwTPpqwpsLLpNg0_2
+    dqXniwzHu-jDpBH2JGgX6ZnQN0juo8kwsfM9c8yARthp6aAYPkExw>
+X-ME-Received: <xmr:pItjaop3_9vpMt8gny8k2jvJE5H8YVsI7SjZnK2eoFwdQn9a65WuQqXbHVF5zeuIggxxsCtA7xEiV37uxGC6iib5VNJW7FsM2Q>
+X-ME-Proxy-Cause: dmFkZTFj8nskDNkswBtwjqZW4h8beSyyuJ/VKJ6ANouO33DjiUot7n1szPVSvJCEgpGMVb
+    LE9eVi3tvUd3AkCjWLpyCDRFU7XBLrtm02zCJ1xCDe2bT6I8Rg5aoDrluZjDv45p1zLxm8
+    S56nNe1TLJ7V/MktO3Zkdg3aI6JTp0lsb5MesVQHeAqi12fGoraM6c6W1ueEpAT2bOsb12
+    JU4m40c8JkGofZ5cNizLtp2pPAEoPLnu0j/ql/isMYcnYCqavaejHLMezjWYThcB0EQDYF
+    TP8koen3ZILSWB1C5m5w60Gl9BrhWquVC7PHsm+IB0viZmNhnuiJpJwmiRp6rmjwyLJSZ1
+    +Ck37WWA67dXNU46seaqPeqp/bHKAG6tHK6rbU3UlZrcJ5bc3PZ+SgnNnkyDV6c9NWN5Sr
+    QnmtB+IyQd9LJn489DvIK46nD4pK6cjCZ7sQRX3Njrw341nU3wjS0A3R+Pr/X0Lk6qGjsQ
+    MbjVncQe9uvGqhjKFPsLHtkyDB8SZkW95FKXiyNMQd1gPL8TKSw4GBpWff29fqMjrsag36
+    j9/jKBEcfWu+pWioSak1jo5cyilagpmhTpYxbu+LqZul09sCHTy/E6217atLtOMWaXlmWL
+    CqGw9krClJdDP9TqdKckYFwBDYjzf8cKYC8uCc3J/oaYrc06A47GPOgAgRBw
+X-ME-Proxy: <xmx:pItjagIMBZb1FmjPJ_Edbw_RyPkUETwE35zzEnzM8IlmGO--FOlkvA>
+    <xmx:pItjatSl3WuZfltz01fJouFqsd9NvIAkcGbI_7sg7CvgvJGeZgCBOw>
+    <xmx:pItjavtsyMvWDQdWGGAlrNv1NkmV3RTcM5hgQxSDZfJo-rYBUcZG8w>
+    <xmx:pItjauYw3U26FkmzVEQ3i59yAov-ioeRGVJOVK9aZDNyv1wuyK9yMg>
+    <xmx:pItjaod9kZanaDKnIvRqmn-iOoJWqyDvX1NWPR-Ao5Mnt1YIrFR0eCpW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 11:52:27 -0400 (EDT)
+ 24 Jul 2026 11:58:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,
-  chriscool@tuxfamily.org,  eric.peijian@gmail.com,  jltobler@gmail.com,
-  karthik.188@gmail.com,  peff@peff.net,  szeder.dev@gmail.com,
-  toon@iotcl.com
-Subject: Re: [PATCH GSoC v21 00/13] cat-file: add remote-object-info to
- batch-command
-In-Reply-To: <20260724-ps-eric-work-rebase-v21-0-ba67f024fdff@gmail.com>
-	(Pablo Sabater's message of "Fri, 24 Jul 2026 12:54:11 +0200")
-References: <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
-	<20260724-ps-eric-work-rebase-v21-0-ba67f024fdff@gmail.com>
-Date: Fri, 24 Jul 2026 08:52:26 -0700
-Message-ID: <xmqqtspo8jwl.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: tnyman@openai.com,  git@vger.kernel.org,  haraldnordgren@gmail.com
+Subject: Re: [PATCH] branch: avoid slow strvec Coccinelle matching
+In-Reply-To: <20260724114948.GA825505@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 24 Jul 2026 07:49:48 -0400")
+References: <20260724091152.27794-2-tnyman@openai.com>
+	<20260724114948.GA825505@coredump.intra.peff.net>
+Date: Fri, 24 Jul 2026 08:58:26 -0700
+Message-ID: <xmqqpl0c8jml.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,13 +85,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Changes in v21:
-> - Dropped unnecessary change in git-cat-file.adoc
-> - Fixed EXPAND_DATA_INIT macro formating
-> - typo and blank line before WARNING:
-> ...
-> Range-diff versus v20:
+> The static-analysis CI job uses the ubuntu-22.04 image, for no reason
+> that I can really discern. It looks like coccinelle 1.3.0 is in ubuntu
+> 25.10, according to:
+>
+>   https://packages.ubuntu.com/km/questing/coccinelle
+>
+> Why don't we just use the more recent version instead of trying to work
+> around it? That would fix this problem and prevent future ones. Looking
+> at the code in question:
+>
+>> diff --git a/builtin/branch.c b/builtin/branch.c
+>> index 42f2221547..2415a275ea 100644
+>> --- a/builtin/branch.c
+>> +++ b/builtin/branch.c
+>> @@ -797,10 +797,9 @@ static int delete_merged_branches(const struct strvec *upstreams,
+>>  	struct strbuf key = STRBUF_INIT;
+>>  	struct hashmap_iter iter;
+>>  	struct strmap_entry *entry;
+>> -	size_t i;
+>>  	int ret = 0;
+>>  
+>> -	for (i = 0; i < upstreams->nr; i++)
+>> +	for (size_t i = 0; i < upstreams->nr; i++)
+>>  		if (ref_filter_forked_add(&filter, upstreams->v[i]) < 0)
+>>  			die(_("'%s' is not a valid branch or pattern"),
+>>  			    upstreams->v[i]);
+>
+> ...there is nothing suspicious or wrong about it. It seems likely that
+> somebody else may end up writing something similar and triggering the
+> same problem.
 
-All looks good.  Let's mark it for 'next' now.
+Exactly.
+
+> That said, moving the iterator into the loop declaration is perhaps
+> nicer anyway, because it avoids two unrelated uses of the same variable.
+
+Exactly again.
+
+> Notably:
+>
+>> @@ -809,7 +808,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
+>>  	filter.name_patterns = argv;
+>>  	filter_refs(&candidates, &filter, filter.kind);
+>>  
+>> -	for (i = 0; i < (size_t)candidates.nr; i++) {
+>> +	for (size_t i = 0; i < (size_t)candidates.nr; i++) {
+>>  		const char *branch_refname = candidates.items[i]->refname;
+>>  		const char *branch_name;
+>>  		struct branch *branch;
+>
+> This hunk is not using a strvec at all. Because it uses the same
+> variable, if we did not change this loop, then we'd still have to
+> declare "i" at the top of the function and the other loop would
+> introduce a shadowed variable. That's not wrong, but it is confusing.
+>
+> However, if we are going to have our own variable here, perhaps it
+> should use the correct type? candidate.nr is an int, so probably this
+> should also be an int, and then the gross cast can go away.
+
+Ah, very good eyes.  It is a disease to try appeasing -Wsign-compare
+without thinking, instead of questioning the value of the warning
+first, and in this case there is no reason to try forcing the use of
+size_t, even with the unnecessary casting.
+
