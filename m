@@ -1,255 +1,293 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1D02EA732
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 03:49:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD801A6820
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 04:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784864961; cv=none; b=DU6yJWrgaIVqKEmu7afMzuO9lQS/fSjazzzaLqWdMNWrSNZD0V/rweyOJiygCJzvwbzjnKgfO8ndBWOaa/Vo35g7NLbrvuYaXgmcLDTehLW/Qbw/KCnvToBL7imxPK2noFbnjFeUJBALahckJqCvrseWG+PwCTtyX3JDZLYA/hg=
+	t=1784866802; cv=none; b=IQVIe13KEbUPavczHvQsPJIqB/aPujOEOosewctYxVRlD+CroQNL0fVB0dcOb0R+vz7NiGYaDT+k9BEBhBlo0lYGq+iJ4DcI/tnh58Sb2nURelSjZAb5RMyZBP/mgY2InPaF8hWZOz/5wG+VbaMoBDMHUvlbtOglluS57FDBBgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784864961; c=relaxed/simple;
-	bh=WlMhlKdfmx4dtPwVWPIM6ErEJduOAiavRW7vhSZ3jMc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YRcu9JWMOyXEk7EFkUcBx4KfbHoJ8CasQw7h7GwjeOlPHTSpBQxC06cK6LADEc6300zH+D6KRzlz1PUp0XpQmGlGG5MDldewUBqcDutEG2Q1S3wC8aLxs1bEN8zSLp4uvwml2j8YU6c8T9y14aQhMb56C3soeRJIP6QnblJbPHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bAGYrIYF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kL85GCE6; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1784866802; c=relaxed/simple;
+	bh=LOn9qYRyes0TR6pVzwRYRySYnp0V/UPP6AcpLIsS1pQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lORb6x6X4Jdhx5eN+b/682/+sD6LjALr0gWip7xF85/KDCXZNVptj/na13Hm0TSvTuOIPeL0VFnHkgMmZPbcGAfA/u/rAC++pNMjPZQUSwmiabceTs/7itzpSGWVLfb8AiDR2sKh5iC5y6PEtFpnDTjYCf6XK0mIFQ0L5SXNIKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XB2vV+p7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TdlnCzs7; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bAGYrIYF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kL85GCE6"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 581297A0313
-	for <git@vger.kernel.org>; Thu, 23 Jul 2026 23:49:19 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 23 Jul 2026 23:49:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1784864959;
-	 x=1784951359; bh=sFc7QEqyBKmEODZS8hAUpNH4CoTbIcStzNaUy3Gq5WI=; b=
-	bAGYrIYF69y0TVCfDNW+XiqjWOCfCU3KhrcVNaiCWwY4jEtr9oLf6i0Fz9UpmznT
-	+MZBkoVFZRTwXiM4pfUo9OzoHFj3lKSxqCPpzoxGVpvbjWY3wSzDpDp/XuNaEKZL
-	EkebVDqoIvogWeT/GITea8pbiEBqxXv9OuAkhd3ZCa8qwA0usCSGlIRTS7wCIFRr
-	y1H0HGv0INvPN2CblQanMbAAa5szn03JJ9PK1mqehFhJVam5mXTiTWtImyOIATW+
-	8SGFuRv5QgkGHxlm5vxlxyp+lLUmLG1+s7HPjBZrHs5mLaaMTH6C5aEiAqq27/F5
-	1yekdIkOa6duMG+ZVf44jQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XB2vV+p7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TdlnCzs7"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EFC827A0345;
+	Fri, 24 Jul 2026 00:19:59 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Fri, 24 Jul 2026 00:20:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784866799; x=1784953199; bh=x9AX9iru51
+	X5BX8CypylFUiEzqtZ3O9kPeh5I5ek3YU=; b=XB2vV+p7lj53ygw9EM7lZmxls8
+	z+cSbT/WgCFa453RPT/NgFszMytrLINn/nj/WlNaNEEfYaFtq6ygvSc4jU4T8U8V
+	F8Tw4H8elXMdZGpq6t4ZNnYnnkm5ArXh+vOUcVR5cYQx3bDWuzGx4O5kBJ4RXKzU
+	druiSYAiZpiDncv+eEHyHjhUfw3sBNL1ZCnSRmnmajRKysBAbHPFvRMiygCJKD6/
+	3gagtLaBu9h8Ez82pMT2yL2mAeWs6yOGzRZWz16+kI4KZCar322Mj82ziohJs3pn
+	pOdnWKi+5G+d1+kRMfymiNOlFba30wjBZnRKXXBXuGjyqeeBSx2aa0KxZXbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784864959; x=
-	1784951359; bh=sFc7QEqyBKmEODZS8hAUpNH4CoTbIcStzNaUy3Gq5WI=; b=k
-	L85GCE6VWfc8+UxdzOoPGq8E+v93n3F61PXHFcAlfdIdK4eUmIuMBZry0E+4phby
-	wPVwQI1BvZUbhzh6ajbx1hMIljBWmDGP7DB7mzwDMG656kxTwxVSqO8A5AFLOzhD
-	uhUxqPSlhjKaPllKggUZvFAIPBJU/TciECRmhp7f4RMJT3dOFuE7AOBdxGsI9FRH
-	Y6aUO8Qsgkk/Zc+bj0FsAeOD79OEBlFKzDXXgJ3aq1p1yZlIKcrqtVWiLu/BuY/b
-	bKHB5rmZqrHbFp5vPf13HksDDgS004EB8bnegQNeztGbnEmqrMeqJqhJqhrFLHJn
-	olwSl0KFhkmyiRus+QmMg==
-X-ME-Sender: <xms:v-BianWclNfiMXBr15I8jJJaiZDZSKqrA2YQ3Xy-PpqKyEvCAttFeQ>
-    <xme:v-BiamjQU6d6lMQqKqvde7v61dBdw8avLuoaQ04FpsAi3LPuSVemK2VdRY-XghB3E
-    cTkSM1HJKswZKSInq1xykElZTtYsyCnmEJvUnYS45JKdOxG575eyg>
-X-ME-Received: <xmr:v-BiapCX71famrUKJx_k8qX8n3MgLLM8PVAs22QV6uQyEy0gwEMQAFs6-xRNdsnFwnaPrj8YKFUvdOrj5QRGSR4ljBr6ketCnyeogvfeoEg>
-X-ME-Proxy-Cause: dmFkZTGu+wQeRerJm1Z/lERLfY9RoIY8Tr0gWi+/WhheCw/mmrklXpb6g5xHMxR7XzajeM
-    Ty3H6dG6pUMhNxy/EqyFfesFO40zU97Fwp66zd0TFPRcjaZ3O2ySyPHy02XBEMHjol9/fi
-    VunmqG8FGYlE5HwQMnRP7WYY57X9HhIkSQLYq4aXqxoxE/ua/8S+s+1kp+/Rqm/zm/IJzy
-    A3KtcwTO3yNKagOuX3FsDQKBZUx25wd5VwMDTxNdOtObXe3VmIhn7vP8tKdmm/6MkCofwG
-    clbls8qgJOFjg95yH/UpHjjQBgrQ6HALNlIoSGbFjMVHgvEP11cHrzxPNkHh2U/PI6rJgX
-    D2ktPhE45uueXWctsc38djEZuy+LfRVREBSIITqXggSAeaF5cBl7cm60G3JkoTFwR3N/pF
-    2yiePwlJ2JRiBj7iQqW6+gpA6+ktc1gRWVb1AjXKSp96pJuqkNkSt/IvsmZaOkYQsxolnJ
-    fceYkaFxlJKhmEcSRKgxwWIZqt9xZuqDEAhJ3aYhdXkL4iEsEhYQsG4GwQ5yiJhC/eVINO
-    UNt1ytwpzbbeVE4ctfcn33Xq38ZWmTQ56qZcfGdeF3Atk8THz5hzT2U2ir3UL8e6HC96ue
-    JlKOYlpLRRC8ukvfMJXrckay2akXrdAeYp3VJHf8BcNg7tn8HYFi86xlKAmg
-X-ME-Proxy: <xmx:v-BiandpZLQPLF_yzd3SPgAf3fRjs-E6dpMnLsJLixa8EgdbOcI73Q>
-    <xmx:v-BiahfHWhLPY7WgFg54VgU-Upq1Aez-bxVXQtEPYla18EGM2WMTzQ>
-    <xmx:v-BiarhbZJwmNoRARvPHOMMgLVvqo-G9irWfRmgET7F1ji9JQr8CLw>
-    <xmx:v-BiatRmwe3GJeqzX_XBz40JvL6Qzwaduvlg6Hh6NLI2Py2SP1F-EQ>
-    <xmx:v-BiaqkEMmLwrTV6u02hG__fN0S53s7ugOCRenBgHpjEjEA3a1e0hZrq>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 23 Jul 2026 23:49:18 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5bc82ef2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Fri, 24 Jul 2026 03:49:18 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 24 Jul 2026 05:48:44 +0200
-Subject: [PATCH 5/5] odb: make creation of on-disk structures pluggable
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784866799; x=1784953199; bh=x9AX9iru51X5BX8CypylFUiEzqtZ3O9kPeh
+	5I5ek3YU=; b=TdlnCzs7hPH5sssvO3wfsI7etOvIjydqZYvthed5doJGOk4SetU
+	cvgXJ89GSw1oL2C7cR+G8tA0tJFgpQKLgi2er2QHVi6CgmvND0Y+tgb97DB8Vrci
+	CjF3A1XbuC+ZBiYWmXIOLffFbBJ4NC4ffcVsPIMQbEcc97aLgJGRaUBMDF+VllUZ
+	Bkq8OUEb+R/9X/yjbsFqg9mBC5LozgCAmnxDCNvMFa+lu5qFzCZMKKz3Cwo5yD36
+	dgJ+OWRh6SddrDpKO9zXWuG65aW8jjcSCN0Q10s3LWqimjmm2/8KbAhsWlUE2ziY
+	OSFRdEW0+i8BDAMY4KEZfImOXSXNyWnrxjw==
+X-ME-Sender: <xms:7-diatsc5ViwreTBKa6VBPFFAuTps0WQMhEL_h_6AQZo4dKsMuIubA>
+    <xme:7-diat4CMOcMbWG7N9cj4Wr-Wdj5050VgmXkGtClD4Bjf3kQl9S35YBvNLlQTV9SL
+    PPt_a1i_t0dE166L0mXXEK5peDnaxeDmHC3qN_nkZU8kEMhkLT2qw>
+X-ME-Received: <xmr:7-diauK0Ku9tDmTF4JJnubC3-Mq2v8RpWVKKhSxe_7_Lc8TQiPCl-0oI91eS7R71HzRWe5G6lzIbfFJ7qUT4gdclIEoiOPZ3Vw>
+X-ME-Proxy-Cause: dmFkZTFlFWkm9p4bvLOFndm4Z8VX+915asVc1QAIRsQEApVeGc6vjPFG+xO2RasuFFNC9P
+    CQYoLE4/5H6OguksFsrYyEJ/g2swmZYwXKqAXhMOMz8FviexCagOllDKOUg7BPYjBYz993
+    jyEo4DLoMhsd10SjEvtX55N3L4hM3rPLvP7hk6rGIs52YKy9W66YsGpJQ6urXjj/MGKauj
+    /H3uEZk/u1rzSde0cfRimug72kgQ+2nFwHIstKA6xlYaQcVSZsjKKtG6SMTVeKhgQbzn6Y
+    uNwy5Q+o0YV1uTRvsDlwfK6TvDsboGT+kK1fMGDuuvU0qgMOrlEOw/61/5M4J8MoERBARF
+    OmtkWcMDk7o2w3rUHJT8WAB01vyl42tRAiZeNO27ltPUzlvRqIDGVRezbBOVtR33ckAsQX
+    GBBNph4hhPTG5S8/nluYYticZyEydK8gV2VO1U/ZSeVZvh1UdXSf2R1FZJVFcdyRu49jo5
+    x5PpWbmbu59NMH7D7PC0g1ke4upAwIh7PGxr3nskxYEowWTyv8yR9I+n8dPGnYDjhHidsO
+    kviNg8mH1Tjz9f0FJUPje4ZYdfR7sZURvJGvwQoMAkb8oWP98wrXQWzInfQ2vdbHUEIOWc
+    EeHKYnrNQuFf8/6N0f03zv4vLqDf2Ln5/qfOLM+u6u0P9VKvGMGO2+pj79gQ
+X-ME-Proxy: <xmx:7-diat6T1NhHaaYQ2tOn24lBN9f_ZyOK6xp8ZXGieiW-9GosZLvmWg>
+    <xmx:7-diahzlZY7y_15MYpVMeTzgrhY3fZPjmRURpJrkxBvFL4VvVY_wCg>
+    <xmx:7-diahY2m7W1VjF810RyfuXpRP4KPIL4VIiqNC8em6yxawD2aoOkGA>
+    <xmx:7-diajTVyCOQMkqayq3Frfyzw8_r5niJUKbWyTfCCfRXOyr-pw3u7g>
+    <xmx:7-diag1SZznY3CElYzvl5wAe7Sf6GMtsANgoytRzZuXaQnNPksE0yKlY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Jul 2026 00:19:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chungmin Lee <chungmin@chungminlee.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] regexec: work around macOS TRE memory leak on invalid
+ UTF-8
+In-Reply-To: <20260722053127.37244-1-chungmin@chungminlee.com> (Chungmin Lee's
+	message of "Tue, 21 Jul 2026 22:31:27 -0700")
+References: <20260722053127.37244-1-chungmin@chungminlee.com>
+Date: Thu, 23 Jul 2026 21:19:57 -0700
+Message-ID: <xmqqpl0d9fyq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260724-pks-odb-create-on-disk-v1-5-3b3d265d979b@pks.im>
-References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
-In-Reply-To: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
+Content-Type: text/plain
 
-When creating a new "files" object database source we have to create a
-couple of directories. These directories are of course specific to this
-particular backend, and a different backend may require a setup that is
-completely different.
+Chungmin Lee <chungmin@chungminlee.com> writes:
 
-Make the creation of on-disk structures pluggable to accommodate for
-this.
+> This came out of a real incident: "git grep -i" over a repository that
+> contains PDFs exhausted memory on an otherwise idle Mac mini and took the
+> machine down with a kernel watchdog panic ("no checkins from watchdogd").
+> The leak is in the system regex engine, not in git, but git is what
+> drives it into the leaking path, once per line.
+>
+> Why this belongs in regexec_buf():
 
-Note that there is one exception though: the "objects" directory must
-exist in a repository regardless of which backend is in use. If it
-doesn't exist then the repository is not treated as a Git repository at
-all. Consequently, we create this directory regardless of the backend.
+Why does this belong to Git, not macOS, in the first place?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- odb/source-files.c | 19 +++++++++++++++++++
- odb/source.h       | 23 +++++++++++++++++++++++
- setup.c            | 35 ++++++++++++++++++++---------------
- 3 files changed, 62 insertions(+), 15 deletions(-)
+> diff --git a/compat/regexec.c b/compat/regexec.c
+> new file mode 100644
+> index 000000000..0677162a8
+> --- /dev/null
+> +++ b/compat/regexec.c
+> @@ -0,0 +1,108 @@
+> +#include "git-compat-util.h"
+> +
+> +#ifdef REGEXEC_MAY_LEAK_ON_ILLSEQ
+> +
+> +#include <wchar.h>
+> +
+> +/*
+> + * macOS's libc regex engine (TRE) leaks the buffer it allocates for a
+> + * match whenever regexec() encounters an invalid multibyte sequence in
+> + * a multibyte locale: it returns REG_ILLSEQ without freeing that buffer.
+> + * A single "git grep" over a file with binary data can call regexec()
+> + * once per line and leak gigabytes, which has been observed to exhaust
+> + * memory and trigger a kernel watchdog panic.
+> + *
+> + * The leak happens inside regexec() before it returns, so reacting to
+> + * REG_ILLSEQ cannot avoid it: the invalid bytes must never reach the
+> + * matcher.  Split the buffer at each invalid sequence and search the
+> + * surrounding runs of valid text separately.  A match on either side of
+> + * the invalid bytes is still found (the same result the matcher gives on
+> + * valid input), but the leaking REG_ILLSEQ path is never reached.
+> + *
+> + * Use mbrtowc() to decide where to split, so that we split at exactly the
+> + * bytes the platform's own decoder -- and thus the regex engine, which
+> + * decodes the same way -- rejects.  A hand-rolled validator would
+> + * have to guess that boundary; being too lenient reintroduces the leak.
+> + */
 
-diff --git a/odb/source-files.c b/odb/source-files.c
-index 4138758511..0db6e681fe 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -9,6 +9,7 @@
- #include "odb/source-files.h"
- #include "odb/source-loose.h"
- #include "packfile.h"
-+#include "path.h"
- #include "strbuf.h"
- #include "write-or-die.h"
- 
-@@ -41,6 +42,23 @@ static void odb_source_files_close(struct odb_source *source)
- 	odb_source_close(&files->packed->base);
- }
- 
-+static int odb_source_files_create_on_disk(struct odb_source *source)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	safe_create_dir(source->odb->repo, source->path, 1);
-+
-+	strbuf_addf(&path, "%s/pack", source->path);
-+	safe_create_dir(source->odb->repo, path.buf, 1);
-+
-+	strbuf_reset(&path);
-+	strbuf_addf(&path, "%s/info", source->path);
-+	safe_create_dir(source->odb->repo, path.buf, 1);
-+
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
- static void odb_source_files_prepare(struct odb_source *source,
- 				     enum odb_prepare_flags flags)
- {
-@@ -271,6 +289,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
- 
- 	files->base.free = odb_source_files_free;
- 	files->base.close = odb_source_files_close;
-+	files->base.create_on_disk = odb_source_files_create_on_disk;
- 	files->base.prepare = odb_source_files_prepare;
- 	files->base.read_object_info = odb_source_files_read_object_info;
- 	files->base.read_object_stream = odb_source_files_read_object_stream;
-diff --git a/odb/source.h b/odb/source.h
-index ab16d152f4..4abc418bdd 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -89,6 +89,18 @@ struct odb_source {
- 	 */
- 	void (*close)(struct odb_source *source);
- 
-+	/*
-+	 * This callback is expected to create on-disk data structures that are
-+	 * required for this source to operate.
-+	 *
-+	 * The callback is expected to return 0 on success, a negative error
-+	 * code otherwise.
-+	 *
-+	 * This callback may be NULL in case the source does not need any
-+	 * on-disk setup.
-+	 */
-+	int (*create_on_disk)(struct odb_source *source);
-+
- 	/*
- 	 * This callback is expected to prepare the source so that it becomes
- 	 * ready for use. It optionally clears underlying caches of the object
-@@ -316,6 +328,17 @@ static inline void odb_source_close(struct odb_source *source)
- 	source->close(source);
- }
- 
-+/*
-+ * Create on-disk data structures that are required for this source to operate
-+ * correctly. Returns 0 on success, a negative error code otherwise.
-+ */
-+static inline int odb_source_create_on_disk(struct odb_source *source)
-+{
-+	if (!source->create_on_disk)
-+		return 0;
-+	return source->create_on_disk(source);
-+}
-+
- /*
-  * Prepare the object database source and clear any caches. Depending on the
-  * backend used this may have the effect that concurrently-written objects
-diff --git a/setup.c b/setup.c
-index a7b1b9eaef..14ef119cb7 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2666,29 +2666,34 @@ static int create_default_files(struct repository *repo,
- static void create_object_database(struct repository *repo)
- {
- 	char *object_directory, *alternate_object_directories;
--	struct strbuf path = STRBUF_INIT;
--	size_t baselen;
- 
- 	get_object_directories(&object_directory, &alternate_object_directories);
--	repo->objects = odb_new(repo, object_directory,
--				alternate_object_directories);
- 
--	strbuf_addstr(&path, repo_get_object_directory(repo));
--	baselen = path.len;
--
--	safe_create_dir(repo, path.buf, 1);
-+	/*
-+	 * Create the "objects" directory in the common directory. This is done
-+	 * so that the repository can be discovered regardless of the backend
-+	 * used.
-+	 *
-+	 * Note that we only do this in case the object directory wasn't
-+	 * overwritten via an environment variable. If it _is_ being overridden
-+	 * then we skip this step, as the repository won't be discoverable
-+	 * anyway without the environment variable.
-+	 */
-+	if (!object_directory) {
-+		struct strbuf objects_dir = STRBUF_INIT;
-+		repo_common_path_append(repo, &objects_dir, "objects");
-+		safe_create_dir(repo, objects_dir.buf, 1);
-+		strbuf_release(&objects_dir);
-+	}
- 
--	strbuf_setlen(&path, baselen);
--	strbuf_addstr(&path, "/pack");
--	safe_create_dir(repo, path.buf, 1);
-+	repo->objects = odb_new(repo, object_directory,
-+				alternate_object_directories);
- 
--	strbuf_setlen(&path, baselen);
--	strbuf_addstr(&path, "/info");
--	safe_create_dir(repo, path.buf, 1);
-+	if (odb_source_create_on_disk(repo->objects->sources) < 0)
-+		die("failed creating object database");
- 
- 	free(alternate_object_directories);
- 	free(object_directory);
--	strbuf_release(&path);
- }
- 
- static void separate_git_dir(const char *git_dir, const char *git_link)
+This clearly seems to be a workaround for a platform bug.  Do we
+know how long we will need to keep it?
 
--- 
-2.55.0.407.g700c83d4f3.dirty
+> +/*
+> + * Search buf[start, end) for a match.  REG_STARTEND reports offsets
+> + * relative to buf, so a hit needs no translation.  ^ may only match at
+> + * the real start of the buffer and $ only at its real end, so suppress
+> + * them when this segment does not reach those boundaries.
+> + */
+> +static int regexec_segment(const regex_t *preg, const char *buf,
+> +			   size_t start, size_t end, size_t size,
+> +			   size_t nmatch, regmatch_t pmatch[], int eflags)
+> +{
+> +	eflags |= REG_STARTEND;
+> +	if (start > 0)
+> +		eflags |= REG_NOTBOL;
+> +	if (end < size)
+> +		eflags |= REG_NOTEOL;
+> +	pmatch[0].rm_so = start;
+> +	pmatch[0].rm_eo = end;
+> +	return regexec(preg, buf, nmatch, pmatch, eflags);
+> +}
+> +
+> +int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+> +		size_t nmatch, regmatch_t pmatch[], int eflags)
+> +{
+> +	size_t seg_start = 0, i = 0;
+> +	mbstate_t mbs;
+> +
+> +	assert(nmatch > 0 && pmatch);
+> +
+> +	/*
+> +	 * Only a multibyte locale drives TRE through the leaking multibyte
+> +	 * path.  In a single-byte locale (MB_CUR_MAX == 1) no byte is
+> +	 * invalid, so search the whole buffer as before.  MB_CUR_MAX
+> +	 * reflects the current LC_CTYPE, the same locale mbrtowc() below
+> +	 * decodes against.
+> +	 */
+> +	if (MB_CUR_MAX == 1) {
+> +		pmatch[0].rm_so = 0;
+> +		pmatch[0].rm_eo = size;
+> +		return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
+> +	}
+> +
+> +	memset(&mbs, 0, sizeof(mbs));
+> +	while (i < size) {
+> +		unsigned char c = (unsigned char)buf[i];
+> +		size_t n;
+> +
+> +		if (c < 0x80) {		/* ASCII fast path */
+> +			i++;
+> +			continue;
+> +		}
+> +
+> +		n = mbrtowc(NULL, buf + i, size - i, &mbs);
+> +		if (!n)			/* embedded NUL decodes to one byte */
+> +			n = 1;
+> +		if (n != (size_t)-1 && n != (size_t)-2) {
+> +			i += n;
+> +			continue;
+> +		}
 
+OK.  I wonder if we want to document what -1 and -2 signify (in
+other words, why we stop only when the call returns one of these
+two values), or is it too obvious for users of mbrtowc()?
+
+In any case, if control reaches here, we saw either an invalid
+sequence (-1) or not enough bytes to complete a whole multi-byte
+character (-2), i.e., the case where regexec() would have trouble
+matching starting at offset 'i'.  The bytes before that position
+make an OK substring.
+
+> +		/* buf[i] begins an invalid sequence; search the run before it */
+> +		if (i > seg_start) {
+> +			int ret = regexec_segment(preg, buf, seg_start, i, size,
+> +						  nmatch, pmatch, eflags);
+> +			if (ret != REG_NOMATCH)
+> +				return ret;
+> +		}
+
+Naturally, this "check the OK prefix string" approach makes readers
+wonder what happens when the pattern is "right anchored$" and the OK
+prefix would match if the string truly ended at 'i' (or, if this is a
+second or subsequent segment, the pattern is "^left anchored", and
+the segment would match if the string started at 'seg_start').  The
+use of 'REG_STARTEND' in regexec_segment() above, combined with
+'REG_NOTBOL'/'REG_NOTEOL', is a clever way to work around it cleanly.
+
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 880977640..3861c9353 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -992,6 +992,10 @@ static inline int strtol_i(char const *s, int base, int *result)
+>  #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
+>  #endif
+>  
+> +#ifdef REGEXEC_MAY_LEAK_ON_ILLSEQ
+
+Hmph, how many different symbols do we need to deal with this?  The
+Makefile has DARWIN_TRE_REGEXEC_LEAK_WORKAROUND and CPP macro is
+REGEXEC_MAY_LEAK_ON_ILLSEQ?
+
+> +int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+> +		size_t nmatch, regmatch_t pmatch[], int eflags);
+> +#else
+>  static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+>  			      size_t nmatch, regmatch_t pmatch[], int eflags)
+>  {
+> @@ -1000,6 +1004,7 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+>  	pmatch[0].rm_eo = size;
+>  	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
+>  }
+> +#endif
+
+It is a bit awkward that the next platform needing its own
+implementation of regexec_buf() to work around a different platform
+bug would have to do:
+
+	#if defined(REGEXEC_MAY_LEAK_ON_ILLSEQ) || defined(SOME_OTHER_PLATFORM_BUG)
+	int regexec_buf(.....);
+	#else
+	static inline int regexec_buf(.....)
+	... the current definition comes here ...
+	#endif
+
+I thought it was more common to:
+
+ * Have each platform with such a need define an override in its own
+   platform header file:
+
+    int darwin_regexec_buf(.....);
+    #define regexec_buf darwin_regexec_buf
+
+ * Have a header file like 'git-compat-util.h' include such a header
+   file (conditionally on relevant platforms, of course); and
+
+ * Have the common header file do this:
+
+        #ifndef regexec_buf
+        static inline int regexec_buf(.....)
+        ... the current definition comes here ...
+        #endif
+
+Right now, macOS is the only platform that needs an override, so the
+result would be about the same amount of code.  However, in the long
+run, this structure may give us a better organization, no?
+
+> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> ...
+> +test_expect_success MACOS,MB_REGEX 'grep anchors ^ and $ at true line ends past invalid UTF-8' '
+
+Do we need to allow this test to fail on non macOS hosts?  Why?
+
+> +	LC_ALL=en_US.UTF-8 git grep -h "^before" invalid-utf8-embedded >actual &&
+> +	test_cmp invalid-utf8-embedded actual &&
+> +	LC_ALL=en_US.UTF-8 git grep -h "world\$" invalid-utf8-embedded >actual &&
+> +	test_cmp invalid-utf8-embedded actual
+> +'
+> +
+
+Thanks.
