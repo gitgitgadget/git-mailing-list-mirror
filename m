@@ -1,146 +1,225 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7812D23A6
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 04:43:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E793ADB98
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 08:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784868199; cv=none; b=ih0AfZTvQtkQXQLxL7j7f0dPSfyNeqTxazzckwdYKW3eucUDSmAFUu8+lhFXtJrS1mv3IbRsCi5wypdGDDyWzJkQDXemF5DYA8zruV+vTbfzPlNqTOBtABHrsK+tkcDmbtpXGEXwUK56zvGSHOKk4F0hMOl8CPooJxbbdSRRCG4=
+	t=1784880866; cv=none; b=ov/ofyljm0OzEJDTaA1WcKFmzsNPjanPN/i2s6buATp1yRQmCnZ1RCiq9HABiWgi2CPiKKB4R3sGzi0BJSBUOn77eV97cM7/zmV4qzpUbx4XHg+KQv0zi1fH5WtV88PwAy6JACtR9LGw46ew2wQ0ubeCxWJuuv4V0xczBROkXa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784868199; c=relaxed/simple;
-	bh=j/alzO6yLfGVWvvuq8H/ImuPOoA2jZ7SiGxiqwZU3iQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OCR9yEsirJC590XUDMQVTM4JUy7XEmdrZ1y4Mekn4EWPiUxSp2Ju+stGgEcNgv+4MqmPdaXWh7SgPgz9rVrJ9apKfALvCf1FarOtAS26v7RshFnhIBmbuUqerUDAX+rk/5jzRD4f9+RL4OqJPwD9X+VNbxpojX0otZVgdXeHaKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mL/1oUkf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z/IPcN+1; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784880866; c=relaxed/simple;
+	bh=+bifR97wQmZWPISNSrnl6ofKJl/RslF+4fS4zZQ75ag=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HxJ3o9mehAwK/kHG+jklDniqgF9Vf57JLdxYn49Y6nzJhY0vIFYdLpUawRCft0IeOoPwQAI2kwM7NH1r8Wf2Rx8bst7f/CPuyARwmGz4WYSnk8bgEmV/G310XlZ+65YRYGLzuwvTPCEZMPcwjt+2PvZN4lz0annzqI6M7VMJyNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=Yq8q5uuf; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mL/1oUkf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z/IPcN+1"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DA0DD7A0349;
-	Fri, 24 Jul 2026 00:43:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 24 Jul 2026 00:43:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784868196; x=1784954596; bh=Ju7VAYedQ6
-	JbcjkzctkRoocw3N+ktDrggDzPsPAzLPA=; b=mL/1oUkfT+6CgZFFju8RnoU8a4
-	g5B6SLA2YeT3Eo+9mY6pGUyGgyQzLihcAGI75sPSi7fhfbfbNzeHzx6uWz42p1Tq
-	VTKpbBFj+gzKk2u1zxtME/AvQFKUp8OhQF9cVRA981pyFK2zj899H5xroKFSi+FL
-	QvTeN5DbDQNjB8xJy6Bf3kmFFnW+XVIOtxsNz0ePzxwlWtFvO5KjxtAlJlt5hZrr
-	3O5gaprt5BFGolJlo5udCimfkwHGQA3PtpFyxCnBgTqn71q6LxN9JlrtuEEMQMV5
-	Tgdi5rvBmSfSTyxMPmPk9v/TjfNvBptCEHkK9BbYBxm3umNHksEFZyVy0MWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784868196; x=1784954596; bh=Ju7VAYedQ6JbcjkzctkRoocw3N+ktDrggDz
-	PsPAzLPA=; b=Z/IPcN+1/SsjH+caD2GNVPJtjMUM4zTXv79M2cHKYlR7LTr8WC1
-	X3HYiEKdgRflvo9zWLCSoxDRJpZCOPJriLxGlLZQxmmQYJYg5vJKorA9kxTkcQWZ
-	TKERlcRiK8d8LrwF0t81uJxCOG/JwA0cAPQhU4aG0P7cF88kZEXpPzNvVRYiyxed
-	yPopZ6Uqzg35I7PuFfGmbFtNwgpoIy22I0XXQeVvKOdML1Ymoz2Jngjd1lCHqb/h
-	LIOtHoVnJ03JCTdclchJSzmzFC29YobOrM/DlaJZxK0oLX0INFbwMqLnTCVQcFwy
-	ot0hk+E94GbGYa10+JDt8O69RxUKDVJ1T6w==
-X-ME-Sender: <xms:ZO1iatcBWVjUgUpbwugZNypAM7o_zk1J0wW_WlUv27o_oh7-tmuczA>
-    <xme:ZO1iatzSdOzZCHWyj2oZpaHSklZKWF2Fv9pdlJIhalZp8CCIK92-YAOwmhsO3L5PD
-    P79jP7teFaySQ5YOKda8-zk2aF6z-BYfmQA6iyTMr0rQQ1en7ht>
-X-ME-Received: <xmr:ZO1iaqJEHVWCo5QMtT-2v-hWZhi4WHU9iJVp-KAx63igRzT9gonZuMoIgorfBXR29rx8T1KYhufHHXUGm3HDZ7orQI_gswS_Iw>
-X-ME-Proxy-Cause: dmFkZTGWjFQywaqokuZIvOq93bxmj4MYuAa0cPUtgPBoEXxxqxq+7tYefymcqt/xlFO5Nn
-    umNdvIxvNK2b8r7Kct3njWrH6KCeHp1wSdJNIkmhADW4O9PSuQMBQnw/lneqP9LfG7HQnD
-    jc7S5KvpGEzzt6TnO1YsZkFE/U9M+xbxm453rcLouHw0QsU3LoSJwwWqSIfQG6C3eoNMer
-    6XvNlODBBcjAJzvnAivQlQpFZnvB7BCOxK6bTuSatYer/rQedRCaead4Y7tOQkn37Ren6z
-    eCQ8brWNifZaDMxgPQEkjWOyUXNIk/IBuosv5bVeBdN4gvU175otZaakefDYUxd/w+RgXB
-    w/SRnmu5KUPkppz+yW6wexmp0fWFFCL1CwnymWLyNXdmk04z6xUZpqhGgUDnX+VadZLLxi
-    8iyI+yTuEhihHY3IM6TnkAE8hOwES+IcdwjhZ4MCbWqfxMg8tfngbz89IDOgFPfYuhyIUl
-    EEv8JHGkfYZERGwj6Xb9kNgXKhoVYpl2I/CUiJUD8bIqpv/SO7yZc7JkGXOMSAHhU5Bbdn
-    Z7bFe4BqCxGnpWZ7Yci/EjXojdieVxF3guD7kebglPkQnXWpOsK4mPn1JMZEUwJmn18j9/
-    7qmxZDnf03TuuwfBBIW9rjRZX60lZ8doq2+NJd9D8QlUGM00WUyuORzJMaQg
-X-ME-Proxy: <xmx:ZO1ianF6BFifpUsyN7DMDVXiJD3MVkcSo0CQ5yk1-rTdxGsDKoyitQ>
-    <xmx:ZO1iau_Xld-wR0FtHS0I3Jbr_wPCD4q-NYpzClPXZK5T1Cj7i30dKA>
-    <xmx:ZO1iavJgwzYXIIMH5dSVfkcyy4kwdmRJTm1I7BXKajh87kUUZAp67w>
-    <xmx:ZO1iakuvaN5OZ_NP7z26NK5Bd7Ed7SDee1euIGVisFeia5qHsLjqRQ>
-    <xmx:ZO1iamRyp2dzDWLWnLUyHiS1HpJLfUUSTTpI5NxzDlouVKzo6dcVF3FL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 00:43:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ted Nyman <tnyman@openai.com>
-Cc: git@vger.kernel.org,  me@ttaylorr.com,  peff@peff.net,  ps@pks.im,
-  karthik.188@gmail.com,  sandals@crustytoothpaste.net,  avarab@gmail.com
-Subject: Re: [PATCH v3 0/3] packfile URIs: support concurrent downloads
-In-Reply-To: <cover.1784676106.git.tnyman@openai.com> (Ted Nyman's message of
-	"Tue, 21 Jul 2026 16:29:39 -0700")
-References: <cover.1783982021.git.tnyman@openai.com>
-	<cover.1784676106.git.tnyman@openai.com>
-Date: Thu, 23 Jul 2026 21:43:14 -0700
-Message-ID: <xmqqldb19evx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="Yq8q5uuf"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2cf30af983aso306575ad.3
+        for <git@vger.kernel.org>; Fri, 24 Jul 2026 01:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1784880864; x=1785485664; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3N87Xne9nsk1n7XvZh+DfkUeVJYFYKBMXA7OWZa1+fA=;
+        b=Yq8q5uuf7cUL/umsqKTmMabYVs4r2WQMcSXK1pgCcCVbwDlX+znnYeZcN3g85S4bza
+         HF7odBKYyWP+HAt2fdWqbpr2x3tZG6Si6A8X61LEpaAHtf98ErlG0/97O/kMUvGYFYyA
+         tA/4Ty7eJ2Sbe7O7r1hM8+JlAybetz7lvMuVo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784880864; x=1785485664;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3N87Xne9nsk1n7XvZh+DfkUeVJYFYKBMXA7OWZa1+fA=;
+        b=MyxCoJ5hCWv8ebgSy4Qkzt2zdPSkevml6UwSbv9eJzaFsNzj3Kr8ZXB/7wMwbtRTN0
+         v3gpcY4Jx6k1dLBVl5QSjM09jv9bvxQPE+803FrvRE/Y/wAZzPYvIro6DwHOcbFCHD7W
+         eSulr78Dmflgdg9gaZcfUUBbO/Yf3Lf4ubWdsLs3Fv53iUe0WsHy3qggl3ddEawyvyWg
+         BfIt92smyYxPOjDhnecuXgQUYxAQyzgWZf7kbKi7k8a9fXc7YZ+eLhvPkoiooPU4Iiq4
+         CKgRnWw53iYQGz3xeAiCOHnQVNNcL8WXIwQ6G1yo+pUUDMh/4ldcqfKPI7PLz2kdkahT
+         nFUA==
+X-Gm-Message-State: AOJu0YyYudLBC8d3S2emsXBOaxuY2chVXgB4zgoaJ+CL32gcsq6Eovb5
+	dC/s7IYc+VoQSqUhxYikJHZmveS5yufJFdSVQdL7kVQi8XELS4ZpDTxWz8RBoy1IRFB2OJ7zuxC
+	2J4zTgP0=
+X-Gm-Gg: AR+sD125ZSl2qgjJPdBYYc7aIXyOjq/x4GvUyWdVL0qHkL1yiMFdmFWPEHfz8sRln3L
+	Vvjosv1xbIaQc2TDKTysHtEpXugCiwmE1Gd95fuf1OlKeirWv7fx5hlNEsu/v1v17fVJRdBlI8w
+	G6qSTbxjH1GBz3+CR36T3JEitkU+kA+5HoT65YEOWbzmi+ZqbFsaReWx/RNSBQDVnDv897ATM86
+	jKQLbSwsBxemJvf0ozTYCb0HjUhC17mj5h82hDJheTjKJtrRuT6/DWDyALBKEWzSUaZSTLLiwlj
+	NZR8B6/SAOtNERcTPsozwa2b8FJbELRVH0JWhuex65ICPf5k6rZboBDTRUQMsY082l6w98pvem+
+	hQgMymNhj6a2+P42x8Lrx7eRyw8wbohj1dFlUphGOZyFGwbJz6eIU7rgAR0wg3kyicdUYxysLbS
+	P62OyZCjlZjCUL0gpl9BkD9Ob/Q7Uxuhyi25oiZX8LN4WxCcV3td+xt+YASqbu7GZPIeAaAPZpe
+	HLq/9sLP1x3omc=
+X-Received: by 2002:a17:903:b88:b0:2c9:fbde:ab68 with SMTP id d9443c01a7336-2cfa6c59dd0mr56203455ad.3.1784880863766;
+        Fri, 24 Jul 2026 01:14:23 -0700 (PDT)
+Received: from com-76773.corp.openai.org ([2601:646:300:69b0:f912:1358:fd39:7404])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147d47960dsm26218810eec.0.2026.07.24.01.14.22
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 24 Jul 2026 01:14:23 -0700 (PDT)
+From: Ted Nyman <tnyman@openai.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	me@ttaylorr.com,
+	peff@peff.net,
+	ps@pks.im,
+	karthik.188@gmail.com,
+	sandals@crustytoothpaste.net,
+	avarab@gmail.com
+Subject: [PATCH v4 0/3] packfile URIs: support concurrent downloads
+Date: Fri, 24 Jul 2026 01:14:22 -0700
+Message-ID: <cover.1784874850.git.tnyman@openai.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <cover.1784676106.git.tnyman@openai.com>
+References: <cover.1784676106.git.tnyman@openai.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Ted Nyman <tnyman@openai.com> writes:
+Packfile URI and dumb HTTP downloads stage packs at
+objects/pack/pack-<hash>.pack.temp so an interrupted transfer can
+resume. Opening that file in append mode forces every write to its
+current end. Two Git processes fetching the same pack into one object
+database can therefore append duplicate data and corrupt the pack.
 
-> Packfile URI and dumb HTTP downloads stage packs at
-> objects/pack/pack-<hash>.pack.temp so an interrupted transfer can
-> resume. Opening that file in append mode forces every write to its
-> current end. Two Git processes fetching the same pack into one object
-> database can therefore append duplicate data and corrupt the pack.
-> ...
-> The tests cover resumption, a completed partial returning 416,
-> overlapping 200 and 206 responses, unlinking the staging path while
-> index-pack holds its descriptor, and a pre-existing .keep file. The
-> unlink test does not require FIFOs, so it can exercise MinGW's sharing
-> behavior even though the concurrent-download tests are skipped there.
->
-> Changes since v2:
->
->   * Split the --index-pack-arg documentation and error-message cleanup
->     into a preliminary patch, as requested by Junio.
->   * Clarify why per-descriptor offsets keep overlapping writes safe and
->     why MinGW permits the shared staging path to be unlinked.
->   * Add a non-FIFO unlink-while-indexing regression test that can run on
->     MinGW.
->   * Rebase onto the current master.
+The first patch separates the unrelated --index-pack-arg documentation
+and error-message correction requested during review.
 
-When merged into 'seen', this topic seems to cause t5550 to hang
-fairly consistently.  It is not surprising, considering that the
-topic adds roughly 240 lines to the test script in question.  It is
-entirely possible that we are seeing an existing breakage from
-another topic in 'seen' that is exposed by the additional tests.
+The second patch keeps the predictable staging name but removes append
+mode. Each downloader seeks once to the current end, requests the
+corresponding Range, and writes using its own descriptor offset. Since
+the staging key must identify immutable pack contents, overlapping
+responses write identical bytes at identical offsets. There is no need
+for pwrite(2) or cross-process coordination, and resumption continues to
+work for both packfile URI and ordinary dumb HTTP downloads.
 
-The CI run
+A downloader can also find that the partial pack has completed and
+request a range starting at EOF. Servers may respond with HTTP 416 in
+that case. Treat the response as a completed download and let
+index-pack validate the pack.
 
-  https://github.com/git/git/actions/runs/30045343889
+On MinGW, the non-append O_RDWR open grants FILE_SHARE_DELETE only for an
+existing file. Create a missing staging file exclusively, close it, and
+reopen it without O_CREAT so every retained descriptor permits another
+downloader to unlink the path. Keep the open descriptor for index-pack;
+it installs its own pack, so the shared staging file is only unlinked,
+never renamed.
 
-is today's seen (excluding this topic) at 728e180b7b; it has
-breakages in leak checking jobs from other topics, but does not see
-t5550 hanging.
+The third patch handles the related .keep race. When another process has
+already created the keep file, index-pack reports "pack<TAB><hash>"
+instead of "keep<TAB><hash>". Accept both successful forms and remove
+only keep files created by the current process. Read only the prefix and
+hash so any following fsck output remains available to fetch-pack.
 
-The CI run
+The tests cover resumption, a completed partial returning 416,
+overlapping 200 and 206 responses, unlinking the staging path while
+index-pack holds its descriptor, and a pre-existing .keep file. The
+unlink test does not require FIFOs, so it can exercise MinGW's sharing
+behavior even though the concurrent-download tests are skipped there.
 
-  https://github.com/git/git/actions/runs/30048327878
+Changes since v3:
 
-is seen at 05d0dd408c that merges this topic on top of 728e180b7b
-above.  It breaks the same leak checks, but in addition makes t5550
-hang.
+  * Match HTTP 416 in trace output from both older and current libcurl.
+  * Add a timeout to the overlapping-download test server, notify FIFO
+    waiters on server failures, and track the actual server process for
+    cleanup.
+  * Wait for the second downloader first so an early failure cannot
+    leave the test server waiting for a request that will never arrive.
+  * No production code changes.
 
-Can you help figure out what is going on?
+These changes avoid false failures with older libcurl and prevent a
+failed downloader from leaving the test server running indefinitely.
 
-Thanks.
+The v3 discussion is at:
 
+  https://lore.kernel.org/git/cover.1784676106.git.tnyman@openai.com/
 
-PS. Recent CI runs on 'seen' started to spend so much time on static
-    analysis (aka coccinelle) jobs, even though I do not think we
-    acquired any new rules recently.  We probably need to figure out
-    what is going on there, too.  There is something wrong for these
-    CI runs that usually take ~40 minutes to spin for more than 4
-    hours.
+Ted Nyman (3):
+  http-fetch: correct --index-pack-arg documentation
+  http: avoid concurrent appends to partial packs
+  fetch-pack: accept "pack" output for packfile URIs
 
+ Documentation/git-http-fetch.adoc |  13 +-
+ fetch-pack.c                      |  33 ++--
+ http-fetch.c                      |   7 +-
+ http-push.c                       |   3 +-
+ http-walker.c                     |   3 +-
+ http.c                            |  56 ++++---
+ t/t5550-http-fetch-dumb.sh        | 250 ++++++++++++++++++++++++++++++
+ t/t5702-protocol-v2.sh            |  31 ++++
+ 8 files changed, 350 insertions(+), 46 deletions(-)
+
+Range-diff against v3:
+1:  a6a40b8046 = 1:  a6a40b8046 http-fetch: correct --index-pack-arg documentation
+2:  6c91054afc ! 2:  144c98cdfa http: avoid concurrent appends to partial packs
+    @@ t/t5550-http-fetch-dumb.sh: test_expect_success 'http-fetch --packfile' '
+     +	test_cmp expect second.out &&
+     +	test_grep "Range: bytes=64-" first.trace &&
+     +	test_grep "Range: bytes=[0-9]*-" second.trace &&
+    -+	test_grep "HTTP/[0-9.]* 416" second.trace &&
+    ++	test_grep "416 Requested Range Not Satisfiable" second.trace &&
+     +	test_path_is_missing "$tmpfile" &&
+     +	git -C packfileclient-concurrent cat-file -e "$HASH"
+     +'
+    @@ t/t5550-http-fetch-dumb.sh: test_expect_success 'http-fetch --packfile' '
+     +	use IO::Socket::INET;
+     +
+     +	my ($packfile, $server_ready, $first_ready) = @ARGV;
+    ++	my $completed = 0;
+    ++	END {
+    ++		if (!$completed) {
+    ++			signal_ready($server_ready, "failed");
+    ++			signal_ready($first_ready, "failed");
+    ++		}
+    ++	}
+    ++
+    ++	$SIG{ALRM} = sub { die "timed out serving concurrent pack requests\n" };
+    ++	alarm 60;
+    ++
+     +	open(my $in, "<:raw", $packfile) or die "open $packfile: $!";
+     +	my $pack = do { local $/; <$in> };
+     +	close($in) or die "close $packfile: $!";
+    @@ t/t5550-http-fetch-dumb.sh: test_expect_success 'http-fetch --packfile' '
+     +	write_all($second, substr($pack, $second_pos));
+     +	close($first) or die "close first response: $!";
+     +	close($second) or die "close second response: $!";
+    ++	$completed = 1;
+    ++	alarm 0;
+     +	EOF
+     +	{
+    -+		(
+    -+			if ! "$TRASH_DIRECTORY/slow-pack-server" "$pack" \
+    -+				"$TRASH_DIRECTORY/server-ready" \
+    -+				"$TRASH_DIRECTORY/first-ready"
+    -+			then
+    -+				echo failed >"$TRASH_DIRECTORY/server-ready" &&
+    -+				echo failed >"$TRASH_DIRECTORY/first-ready" &&
+    -+				exit 1
+    -+			fi
+    -+		) >server.log 2>&1 &
+    ++		"$TRASH_DIRECTORY/slow-pack-server" "$pack" \
+    ++			"$TRASH_DIRECTORY/server-ready" \
+    ++			"$TRASH_DIRECTORY/first-ready" >server.log 2>&1 &
+     +		server_pid=$!
+     +	} &&
+     +	test_when_finished "
+    @@ t/t5550-http-fetch-dumb.sh: test_expect_success 'http-fetch --packfile' '
+     +		kill $second_pid 2>/dev/null || :
+     +		wait $second_pid 2>/dev/null || :
+     +	" &&
+    -+	wait "$server_pid" &&
+    -+	wait "$first_pid" &&
+     +	wait "$second_pid" &&
+    ++	wait "$first_pid" &&
+    ++	wait "$server_pid" &&
+     +	test_grep "HTTP/[0-9.]* 200" overlap-first.trace &&
+     +	test_grep "Range: bytes=[1-9][0-9]*-" overlap-second.trace &&
+     +	test_grep "HTTP/[0-9.]* 206" overlap-second.trace &&
+3:  1ee5d7e027 = 3:  d9063deb60 fetch-pack: accept "pack" output for packfile URIs
+
+base-commit: 5d2e7709234afea1b6ddb25cd4f60d3d5fb3c200
+-- 
+2.55.0.openai.131.g83a728de1eb6
