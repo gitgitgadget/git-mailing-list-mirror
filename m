@@ -1,76 +1,68 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62781F4180
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 08:14:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24FB3B14B1
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 09:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784880874; cv=none; b=Yq6Xj7srk62zxvisx9UD/57aaGrTfwcXyZRD2+4fpUZHNI23HOxjYT2ieS3gjG0D6B2SrQCKYasKA/rxxPKk2beCIfB6UVDPvkE0zi9yHCDbGcPMyDz+4DkC9/UxAls3bBOkCcj7iKeH+5rkyNiBKueQcB4pjTnIVU7bzccNrNE=
+	t=1784884316; cv=none; b=XJ94Qnvi9beHEDJbrXBOSZayXgqLx57niMNZXi8TKXimW0h4bUT2iYT0ZVXkvVmWZ6NwQwOpKnbxl61fvVRdoZxl2zew96nH4l/XawM9xl8wpNlcp0iTLuElwRfjADda41W2MpG+jKKJvw5malofQ6Nfid7TUHiYAPXGkVQG5Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784880874; c=relaxed/simple;
-	bh=3ThbS7Qbi2MIF73doXS8WLlmThIVGa042VjrxLdYvcw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4PeTuXIhqyZTYyMWkkzpEA3/jH6nRAN4VAEPC3dU9DcvnRV/t3vjVQaFqC8cLG8se5XD6SCw32iGUcR70w9xH0NFTehILzrSsvLymzO49D1sNKyTTejXv7vdV9HN4EGP+1lnE6Ud9/R+wKmZHL3Yrb72tpmRW4lJ/dflqsHA84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=bVeVAT2a; arc=none smtp.client-ip=209.85.214.171
+	s=arc-20240116; t=1784884316; c=relaxed/simple;
+	bh=kl1L9WEB4hlGYau2b5LSYAN7EMlN7a05zvT0P9uT5fs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gj3BukYcjNvJ4prHYKV8d+Ws9QPYG1QREnj09F6VtzgB68tlPInsZPI3Upd18IrDTGnhoFr56MLMHS45Yrue5AFXzAakw2CivuK4ezCu1U1RqmPi7zg++3oZu/CsVIZnO4wJB2nIeCRP9HCqY5YoLRS6sKgPQ6OKYkNl74pxvXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=THuK2imX; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="bVeVAT2a"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cad85b7b5aso272165ad.1
-        for <git@vger.kernel.org>; Fri, 24 Jul 2026 01:14:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="THuK2imX"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c8612812170so32264a12.2
+        for <git@vger.kernel.org>; Fri, 24 Jul 2026 02:11:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1784880867; x=1785485667; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/oLS3E8KZaOvx+VpPTNrPLjnO4yE8NPyPvZ76MbGe4Y=;
-        b=bVeVAT2ayBhMLmQ7j1GNA6zv/YU+UBRSA59eGygV35ES38OWLd4uGGZW0YhXpDs5y9
-         U2hLT85Ul1mHPpWhcOFFRJNRBuy3AH6AVV+CtELem8xQXrVSZNFMekHjID83cKELjlJk
-         zrbtFKCf9v6K71PWy22YktlziBpSknseFBeO0=
+        d=openai.com; s=google; t=1784884314; x=1785489114; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=gIP+9G35JMOafhFl1avKqq4UsN7L5NauJKz9wdGhLQs=;
+        b=THuK2imXClr5/myOEE4FuFuOEx/u5Vj3CHGgqJ93a5qjsCzjEmVGIxaVb/SXFuzizU
+         l+gy9g181fmtYXKbTL8js4w0S7dNBLggY/3F3mU0XtgfnGjlL75lrew7HPkDPqSpjpui
+         xe/j9CJOlwed0E3p04D1wkv9tMW4QENqWnCrM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784880867; x=1785485667;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/oLS3E8KZaOvx+VpPTNrPLjnO4yE8NPyPvZ76MbGe4Y=;
-        b=norjC3P7gT5ipCyETlcy3VazFfrkXr9v4EfFb9Mhg1Y+Nobt6FWTpLWBsV5tfm/qPV
-         VhDNOtCNsay0CWMjw6KMfaO7FE+IJGVnlAWcWKcxhWyZWPcThB6VIhTDpZ6ndExX7PMq
-         RsPAk+P7i2TJDWmEu0lAi2iNlT158yVZ4/drrdfUZ9aQtDTzW6/sNdQqxMrPGK1GuJdg
-         3/BROK5aOF8npgCyjYwbZraKPJ7gKIUdUyu8vXGqgTv/58u8f4//w/TBSMkgUN22WMY5
-         3Qy8AgMjVXOjSWWahUTnpL0cP5aETIK9oX3v4Vqqxhbo3O3u/r7In5eEpZDfdBaeN10t
-         rq/Q==
-X-Gm-Message-State: AOJu0YwAN4E6xYXlO7UbeXDf3peikIp3rrvnqBUOHL9T5KYrWa8hw8Ye
-	Ytttv2MLemWun1iHHn7x8/E3iAgIG3tPyC3MZtn6QxzsAtRIBAV+bsL8O/1qlHI89r6v7VHG8WK
-	hxGa2i48=
-X-Gm-Gg: AR+sD10tH7sZW89lGwtoqtm4jUTDVXjBCdq4NQi0ryWZpxFCqofxUhWHqvvFYMQ9lmF
-	HWNtmfMBJkUnv5hi2TF6opjLdSFzgPeUc3pPayQFdIJ4rIczncZw6Xw0rfU94MilY+q3oRxRirk
-	5lW+m6kf2RcKoFtqxvO/kMKoRGl0/j7rcAexPXrHrMHknc2q9u5uvpGTqHYIINm737V5shffGnp
-	inNaGShim20kmy+PoJ7g4uo5nHfDLW7+2s8B0UphFwLPdX+SUgvgJxIA43olZtU6BRP8Xjcx60N
-	ElDjAHhNyKZzBTBy/IZXUQemN3k7f/ZCEVMbcmeqzg7HEBO7OxxQ0cdTTW/r4kz8I3BVMkjP8xN
-	GNvepwc0rue4ZeJmfXbpmrTeMeWpRfZ8xDBu8IvJj1SsPbAZshFsdawiEkacqhFkNo4nuPAggQ4
-	u5Q+RMSo8a2nPTPx1o5SRO0lp5Kc0X8UlO7lZ8bWN6pC4bnuuRVT66kygI2A23X9dvPXcAVCem9
-	GRi8a1bg9pD7vQ=
-X-Received: by 2002:a17:902:7408:b0:2cf:ca85:57e2 with SMTP id d9443c01a7336-2cfca85593fmr10608265ad.1.1784880866702;
-        Fri, 24 Jul 2026 01:14:26 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1784884314; x=1785489114;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gIP+9G35JMOafhFl1avKqq4UsN7L5NauJKz9wdGhLQs=;
+        b=GDvJCSo4Nwiy+iYtT9rVXus9d39gp5nBCQy243VeHJPCf/07MICEFXxkK3ZYFATYW5
+         hdPT7H5lmvqWYuMfVg7TWmHAwpDjqOI0itg1hu9uK3aXGithgm37XyV1qLNd4zr3slmB
+         Ldkn9HaaeaGoZ703viYp1cXZEAC+csKIh3tLbDerGnBqOEb+PrC8L3Up9czmXfG8c+Kl
+         AKgGaA6Hwp0aKqYbp9V9Ch9+Y/AclF+AnUETxVpl0FJU0PgRudgEWwdF9FqtZavyRtrH
+         d8h3hFEt6mneDr7tETGs94tAzZZcUjqr5UWiv3SFAQdloz0sdli3kO7nVnc0EfpVjniK
+         ibGA==
+X-Gm-Message-State: AOJu0Yw5JboyomwFDBR8g/sSsdm8zRnvWBa8un+mubxAr4WWdC9AvDqY
+	KG46l2ZVpNPLO0Xs1BgqEeD7UYEhmBL2q8PRiMewPGFsHenow/GYidN890b4O/vuCLhAY0XOiLe
+	cydRTpzg=
+X-Gm-Gg: AR+sD10f6m6Z4UHCK8O+QxmjHl+bMPwm6f9KdpAWYhtzpkgBmcDulSwzGDnoghK5Iig
+	AkgZrrKhX9bOYFO9lIPQsdnDzzrsV321AYVJ1JYEwUu0v6jSIqe+HpIPei6RqsyL21OWEhMUSbZ
+	F2gUR0EVq5mZS6pUALXI4NJbLEMac4ZoDutRVoRqucX9rK0dMZw6ZbNxKfjqY1kFmZOBafwamdH
+	0o+QnSu7qVIUMTPR0R0b0TRozoxUMYRVGUiAMpQNYACub1uSITjoEe8XVyx8qjVZIWO6tUk3KZd
+	5uqnwUcTHR09rS0/ppIqO+rY10dyHiB/RCVsdLV7ewTn9Trs1DVVETZjhKRoSvuH01DbKjVq51I
+	cuQLwQwgmD5LPXsbKH9WQFfM/Z3LhNs8Ly/kLhfp8a5J/SnUv9KjzPOxw7gW4fAewb1ML2IqftM
+	2g7JxIbmG11DfviNK0lSqiYtbwcl93uWLViLCniJ9oQvYkS2BgShLUotdWXcHAXmsCpu9qqKb2+
+	D3xwjdilH0K348KMdnOpylxZw==
+X-Received: by 2002:a17:903:1b4c:b0:2c9:ed4a:c3a4 with SMTP id d9443c01a7336-2cfbc786e8emr26530095ad.0.1784884314078;
+        Fri, 24 Jul 2026 02:11:54 -0700 (PDT)
 Received: from com-76773.corp.openai.org ([2601:646:300:69b0:f912:1358:fd39:7404])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147d47960dsm26218810eec.0.2026.07.24.01.14.25
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147dc8b0cdsm28143961eec.11.2026.07.24.02.11.53
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 24 Jul 2026 01:14:25 -0700 (PDT)
-From: Ted Nyman <tnyman@openai.com>
+        Fri, 24 Jul 2026 02:11:53 -0700 (PDT)
+From: tnyman@openai.com
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
-	me@ttaylorr.com,
-	peff@peff.net,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	sandals@crustytoothpaste.net,
-	avarab@gmail.com
-Subject: [PATCH v4 2/3] http: avoid concurrent appends to partial packs
-Date: Fri, 24 Jul 2026 01:14:24 -0700
-Message-ID: <144c98cdfa4492206db0f1dd40cc43c47f376673.1784874850.git.tnyman@openai.com>
+	haraldnordgren@gmail.com,
+	Ted Nyman <tnyman@openai.com>
+Subject: [PATCH] branch: avoid slow strvec Coccinelle matching
+Date: Fri, 24 Jul 2026 02:11:53 -0700
+Message-ID: <20260724091152.27794-2-tnyman@openai.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <cover.1784874850.git.tnyman@openai.com>
-References: <cover.1784676106.git.tnyman@openai.com> <cover.1784874850.git.tnyman@openai.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,461 +71,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Pack requests stage downloads in a predictable partial-pack file so an
-interrupted transfer can be resumed. Both packfile URI and ordinary dumb
-HTTP requests use this staging path. Opening it in append mode forces
-each write to the current end of the file, so concurrent responses can
-append duplicate data and corrupt the pack.
+From: Ted Nyman <tnyman@openai.com>
 
-Open the partial pack read-write without O_APPEND and seek once to its
-current end. Each downloader then retains the offset matching the Range
-it requested. Because the staging key must uniquely identify immutable
-pack contents, overlapping responses write the same bytes at the same
-offsets instead of extending the file with duplicate data.
+The --delete-merged implementation declares a loop index at function
+scope and reuses it to walk its strvec of upstreams and its list of
+candidate branches. Coccinelle 1.1.1 spends hours matching this against
+the separate_loop_index rule in tools/coccinelle/strvec.cocci, causing
+the static-analysis job on 'seen' to reach its six-hour timeout.
 
-MinGW's non-append O_RDWR open grants FILE_SHARE_DELETE only for an
-existing file. Create a missing partial pack exclusively, close it, and
-reopen it without O_CREAT so every retained descriptor permits another
-downloader to unlink the staging path. Duplicate that descriptor for
-index-pack instead of reopening the path after closing the stream;
-index-pack installs its own pack and the shared staging file is only
-unlinked, never renamed. Accept HTTP 416 when a partial pack is already
-complete and let index-pack validate its contents.
-
-Exercise resumed transfers, EOF ranges, overlapping 200 and 206
-responses, and unlinking the staging path while index-pack still holds
-its descriptor. Clarify the staging-key documentation.
+Declare each index in its for loop instead. This avoids the expensive
+separate-index rule, limits each index to the loop that uses it, and
+leaves the branch deletion behavior unchanged.
 
 Signed-off-by: Ted Nyman <tnyman@openai.com>
 ---
- Documentation/git-http-fetch.adoc |   5 +-
- http-fetch.c                      |   3 +-
- http-push.c                       |   3 +-
- http-walker.c                     |   3 +-
- http.c                            |  56 ++++---
- t/t5550-http-fetch-dumb.sh        | 250 ++++++++++++++++++++++++++++++
- 6 files changed, 295 insertions(+), 25 deletions(-)
+This applies on top of hn/branch-delete-merged and addresses the long
+static-analysis runs on 'seen'. Coccinelle 1.1.1 spends hours matching
+the existing separate_loop_index rule against delete_merged_branches().
 
-diff --git a/Documentation/git-http-fetch.adoc b/Documentation/git-http-fetch.adoc
-index 09b5d675ee..60ca91cf3a 100644
---- a/Documentation/git-http-fetch.adoc
-+++ b/Documentation/git-http-fetch.adoc
-@@ -48,8 +48,9 @@ commit-id::
- 	line (which is not expected in
- 	this case), 'git http-fetch' fetches the packfile directly at the given
- 	URL and uses index-pack to generate corresponding .idx and .keep files.
--	The hash is used to determine the name of the temporary file and is
--	arbitrary. The output of index-pack is printed to stdout. Requires
-+	The hash is used to determine the name of the temporary file. It need
-+	not be the pack hash, but it must uniquely identify the pack contents
-+	for resumption. The output of index-pack is printed to stdout. Requires
- 	one or more --index-pack-arg options.
- 
- --index-pack-arg=<arg>::
-diff --git a/http-fetch.c b/http-fetch.c
-index 601a77c3c1..05f68f306a 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -70,7 +70,8 @@ static void fetch_single_packfile(struct object_id *packfile_hash,
- 
- 	if (start_active_slot(preq->slot)) {
- 		run_active_slot(preq->slot);
--		if (results.curl_result != CURLE_OK) {
-+		if (results.curl_result != CURLE_OK &&
-+		    results.http_code != 416) {
- 			struct url_info url;
- 			char *nurl = url_normalize(preq->url, &url);
- 			if (!nurl || !git_env_bool("GIT_TRACE_REDACT", 1)) {
-diff --git a/http-push.c b/http-push.c
-index 60f6f8f054..ef8abe3908 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -595,7 +595,8 @@ static void finish_request(struct transfer_request *request)
- 
- 	} else if (request->state == RUN_FETCH_PACKED) {
- 		int fail = 1;
--		if (request->curl_result != CURLE_OK) {
-+		if (request->curl_result != CURLE_OK &&
-+		    request->http_code != 416) {
- 			fprintf(stderr, "Unable to get pack file %s\n%s",
- 				request->url, curl_errorstr);
- 		} else {
-diff --git a/http-walker.c b/http-walker.c
-index b58a3b2a92..abafca84d6 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -451,7 +451,8 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo,
- 
- 	if (start_active_slot(preq->slot)) {
- 		run_active_slot(preq->slot);
--		if (results.curl_result != CURLE_OK) {
-+		if (results.curl_result != CURLE_OK &&
-+		    results.http_code != 416) {
- 			error("Unable to get pack file %s\n%s", preq->url,
- 			      curl_errorstr);
- 			goto abort;
-diff --git a/http.c b/http.c
-index caccf2108e..a0d399b274 100644
---- a/http.c
-+++ b/http.c
-@@ -2688,10 +2688,13 @@ int finish_http_pack_request(struct http_pack_request *preq)
- 	int tmpfile_fd;
+Declare each loop index in its for statement instead of sharing an
+index declared at function scope. This avoids the pathological matching
+without changing branch behavior.
+
+The CI failure reproduces locally with Coccinelle 1.1.1: applying
+strvec.cocci to the original builtin/branch.c still times out with
+"spatch --timeout 120". With this change, the same check completes in
+0.06 seconds.
+
+The full coccicheck run completes in 47 seconds, and all 190 tests in
+t3200-branch.sh pass with a fresh DEVELOPER=1 build.
+
+ builtin/branch.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 42f2221547..2415a275ea 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -797,10 +797,9 @@ static int delete_merged_branches(const struct strvec *upstreams,
+ 	struct strbuf key = STRBUF_INIT;
+ 	struct hashmap_iter iter;
+ 	struct strmap_entry *entry;
+-	size_t i;
  	int ret = 0;
  
-+	/* Another downloader may unlink the staging path while we index it. */
-+	tmpfile_fd = xdup(fileno(preq->packfile));
- 	fclose(preq->packfile);
- 	preq->packfile = NULL;
--
--	tmpfile_fd = xopen(preq->tmpfile.buf, O_RDONLY);
-+	if (lseek(tmpfile_fd, 0, SEEK_SET) < 0)
-+		die_errno("unable to seek local file %s for pack",
-+			  preq->tmpfile.buf);
+-	for (i = 0; i < upstreams->nr; i++)
++	for (size_t i = 0; i < upstreams->nr; i++)
+ 		if (ref_filter_forked_add(&filter, upstreams->v[i]) < 0)
+ 			die(_("'%s' is not a valid branch or pattern"),
+ 			    upstreams->v[i]);
+@@ -809,7 +808,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
+ 	filter.name_patterns = argv;
+ 	filter_refs(&candidates, &filter, filter.kind);
  
- 	ip.git_cmd = 1;
- 	ip.in = tmpfile_fd;
-@@ -2704,13 +2707,8 @@ int finish_http_pack_request(struct http_pack_request *preq)
- 	else
- 		ip.no_stdout = 1;
- 
--	if (run_command(&ip)) {
-+	if (run_command(&ip))
- 		ret = -1;
--		goto cleanup;
--	}
--
--cleanup:
--	close(tmpfile_fd);
- 	unlink(preq->tmpfile.buf);
- 	return ret;
- }
-@@ -2738,22 +2736,45 @@ struct http_pack_request *new_http_pack_request(
- struct http_pack_request *new_direct_http_pack_request(
- 	const unsigned char *packed_git_hash, char *url)
- {
--	off_t prev_posn = 0;
-+	off_t prev_posn;
- 	struct http_pack_request *preq;
-+	int fd;
- 
- 	CALLOC_ARRAY(preq, 1);
- 	strbuf_init(&preq->tmpfile, 0);
--
- 	preq->url = url;
- 
- 	odb_pack_name(the_repository, &preq->tmpfile, packed_git_hash, "pack");
- 	strbuf_addstr(&preq->tmpfile, ".temp");
--	preq->packfile = fopen(preq->tmpfile.buf, "a");
--	if (!preq->packfile) {
--		error("Unable to open local file %s for pack",
--		      preq->tmpfile.buf);
-+	/*
-+	 * MinGW's non-append O_RDWR open grants FILE_SHARE_DELETE only for an
-+	 * existing file; reopen a newly created file so others may unlink it.
-+	 */
-+	for (;;) {
-+		fd = open(preq->tmpfile.buf, O_RDWR);
-+		if (fd >= 0 || errno != ENOENT)
-+			break;
-+		fd = open(preq->tmpfile.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
-+		if (fd >= 0) {
-+			close(fd);
-+			continue;
-+		}
-+		if (errno != EEXIST)
-+			break;
-+	}
-+	if (fd < 0) {
-+		error_errno("unable to open local file %s for pack",
-+			    preq->tmpfile.buf);
- 		goto abort;
- 	}
-+	prev_posn = lseek(fd, 0, SEEK_END);
-+	if (prev_posn < 0) {
-+		error_errno("unable to seek local file %s for pack",
-+			    preq->tmpfile.buf);
-+		close(fd);
-+		goto abort;
-+	}
-+	preq->packfile = xfdopen(fd, "w");
- 
- 	preq->slot = get_active_slot();
- 	preq->headers = object_request_headers();
-@@ -2762,12 +2783,7 @@ struct http_pack_request *new_direct_http_pack_request(
- 	curl_easy_setopt(preq->slot->curl, CURLOPT_URL, preq->url);
- 	curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER, preq->headers);
- 
--	/*
--	 * If there is data present from a previous transfer attempt,
--	 * resume where it left off
--	 */
--	prev_posn = ftello(preq->packfile);
--	if (prev_posn>0) {
-+	if (prev_posn > 0) {
- 		if (http_is_verbose)
- 			fprintf(stderr,
- 				"Resuming fetch of pack %s at byte %"PRIuMAX"\n",
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index f00eeae48f..dcb9667eeb 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -293,6 +293,256 @@ test_expect_success 'http-fetch --packfile' '
- 	git -C packfileclient cat-file -e "$HASH"
- '
- 
-+test_expect_success 'http-fetch --packfile resumes a partial download' '
-+	git init packfileclient-resume &&
-+	p=$(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
-+		ls objects/pack/pack-*.pack) &&
-+	tmpfile="packfileclient-resume/.git/objects/pack/pack-$ARBITRARY.pack.temp" &&
-+	test_copy_bytes 64 <"$HTTPD_DOCUMENT_ROOT_PATH/repo_pack.git/$p" >"$tmpfile" &&
-+	GIT_TRACE_CURL="$TRASH_DIRECTORY/resume.trace" \
-+	git -C packfileclient-resume http-fetch --packfile="$ARBITRARY" \
-+		--index-pack-arg=index-pack --index-pack-arg=--stdin \
-+		--index-pack-arg=--keep \
-+		"$HTTPD_URL/dumb/repo_pack.git/$p" >out &&
-+	test_grep "Range: bytes=64-" resume.trace &&
-+	test_path_is_missing "$tmpfile" &&
-+	git -C packfileclient-resume cat-file -e "$HASH"
-+'
-+
-+test_expect_success 'http-fetch --packfile permits unlink while indexing' '
-+	git init packfileclient-unlink &&
-+	p=$(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
-+		ls objects/pack/pack-*.pack) &&
-+	tmpfile="packfileclient-unlink/.git/objects/pack/pack-$ARBITRARY.pack.temp" &&
-+	write_script git-unlink-index-pack <<-\EOF &&
-+	test -f "$GIT_TEST_PACK_TEMP" || exit 1
-+	rm "$GIT_TEST_PACK_TEMP" || exit 1
-+	exec git index-pack "$@"
-+	EOF
-+	test_when_finished "rm -f git-unlink-index-pack" &&
-+	PATH="$TRASH_DIRECTORY:$PATH" \
-+	GIT_TEST_PACK_TEMP="$TRASH_DIRECTORY/$tmpfile" \
-+	git -C packfileclient-unlink http-fetch --packfile="$ARBITRARY" \
-+		--index-pack-arg=unlink-index-pack \
-+		--index-pack-arg=--stdin --index-pack-arg=--keep \
-+		"$HTTPD_URL/dumb/repo_pack.git/$p" >out &&
-+	test_path_is_missing "$tmpfile" &&
-+	git -C packfileclient-unlink cat-file -e "$HASH"
-+'
-+
-+test_expect_success PIPE 'concurrent http-fetch --packfile accepts a complete partial' '
-+	git init packfileclient-concurrent &&
-+	p=$(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
-+		ls objects/pack/pack-*.pack) &&
-+	packhash=$(basename "$p" .pack) &&
-+	packhash=${packhash#pack-} &&
-+	tmpfile="packfileclient-concurrent/.git/objects/pack/pack-$packhash.pack.temp" &&
-+	test_copy_bytes 64 <"$HTTPD_DOCUMENT_ROOT_PATH/repo_pack.git/$p" >"$tmpfile" &&
-+	mkfifo first-ready first-continue &&
-+	exec 8<>first-ready &&
-+	exec 9<>first-continue &&
-+	write_script git-wait-index-pack <<-\EOF &&
-+	echo ready >"$GIT_TEST_WAIT_READY" &&
-+	read continue <"$GIT_TEST_WAIT_CONTINUE" &&
-+	exec git index-pack "$@"
-+	EOF
-+	{
-+		(
-+			if ! PATH="$TRASH_DIRECTORY:$PATH" \
-+			GIT_TEST_WAIT_READY="$TRASH_DIRECTORY/first-ready" \
-+			GIT_TEST_WAIT_CONTINUE="$TRASH_DIRECTORY/first-continue" \
-+			GIT_TRACE_CURL="$TRASH_DIRECTORY/first.trace" \
-+			git -C packfileclient-concurrent http-fetch --packfile="$packhash" \
-+				--index-pack-arg=wait-index-pack \
-+				--index-pack-arg=--stdin --index-pack-arg=--keep \
-+				"$HTTPD_URL/dumb/repo_pack.git/$p" >first.out
-+			then
-+				echo failed >"$TRASH_DIRECTORY/first-ready" &&
-+				exit 1
-+			fi
-+		) &
-+		first_pid=$!
-+	} &&
-+	test_when_finished "
-+		echo continue >&9
-+		kill $first_pid 2>/dev/null || :
-+		wait $first_pid 2>/dev/null || :
-+		exec 8>&-
-+		exec 9>&-
-+		rm -f first-ready first-continue git-wait-index-pack
-+	" &&
-+	read ready <&8 &&
-+	test "$ready" = ready &&
-+	GIT_TRACE_CURL="$TRASH_DIRECTORY/second.trace" \
-+	git -C packfileclient-concurrent http-fetch --packfile="$packhash" \
-+		--index-pack-arg=index-pack \
-+		--index-pack-arg=--stdin --index-pack-arg=--keep \
-+		"$HTTPD_URL/dumb/repo_pack.git/$p" >second.out &&
-+	echo continue >&9 &&
-+	wait "$first_pid" &&
-+	printf "pack\t%s\n" "$packhash" >expect &&
-+	test_cmp expect first.out &&
-+	printf "keep\t%s\n" "$packhash" >expect &&
-+	test_cmp expect second.out &&
-+	test_grep "Range: bytes=64-" first.trace &&
-+	test_grep "Range: bytes=[0-9]*-" second.trace &&
-+	test_grep "416 Requested Range Not Satisfiable" second.trace &&
-+	test_path_is_missing "$tmpfile" &&
-+	git -C packfileclient-concurrent cat-file -e "$HASH"
-+'
-+
-+test_expect_success PERL,PIPE 'concurrent http-fetch --packfile cannot corrupt an overlapping download' '
-+	git init packfileclient-overlap &&
-+	blob=$(test-tool genrandom pack-overlap 2m |
-+		git -C "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git \
-+			hash-object -w --stdin) &&
-+	packhash=$(printf "%s\n" "$blob" |
-+		git -C "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git \
-+			pack-objects "$TRASH_DIRECTORY/overlap-pack") &&
-+	pack="$TRASH_DIRECTORY/overlap-pack-$packhash.pack" &&
-+	tmpfile="packfileclient-overlap/.git/objects/pack/pack-$packhash.pack.temp" &&
-+	mkfifo server-ready first-ready &&
-+	exec 7<>server-ready &&
-+	exec 8<>first-ready &&
-+	write_script slow-pack-server "$PERL_PATH" <<-\EOF &&
-+	use strict;
-+	use warnings;
-+	use IO::Socket::INET;
-+
-+	my ($packfile, $server_ready, $first_ready) = @ARGV;
-+	my $completed = 0;
-+	END {
-+		if (!$completed) {
-+			signal_ready($server_ready, "failed");
-+			signal_ready($first_ready, "failed");
-+		}
-+	}
-+
-+	$SIG{ALRM} = sub { die "timed out serving concurrent pack requests\n" };
-+	alarm 60;
-+
-+	open(my $in, "<:raw", $packfile) or die "open $packfile: $!";
-+	my $pack = do { local $/; <$in> };
-+	close($in) or die "close $packfile: $!";
-+	my $server = IO::Socket::INET->new(LocalAddr => "127.0.0.1",
-+		LocalPort => 0, Proto => "tcp", Listen => 2, ReuseAddr => 1)
-+		or die "listen: $!";
-+
-+	sub signal_ready {
-+		my ($file, $value) = @_;
-+		open(my $out, ">", $file) or die "open $file: $!";
-+		print $out "$value\n" or die "write $file: $!";
-+		close($out) or die "close $file: $!";
-+	}
-+
-+	sub write_all {
-+		my ($out, $data) = @_;
-+		my $offset = 0;
-+		while ($offset < length($data)) {
-+			my $written = syswrite($out, $data,
-+				length($data) - $offset, $offset);
-+			defined($written) && $written or die "write response: $!";
-+			$offset += $written;
-+		}
-+	}
-+
-+	sub start_response {
-+		my $out = $server->accept() or die "accept: $!";
-+		<$out> or die "read request: $!";
-+		my $start = 0;
-+		while (<$out>) {
-+			last if /^\r?\n$/;
-+			$start = $1 if /^Range: bytes=(\d+)-/i;
-+		}
-+		$start < length($pack) or die "invalid range $start";
-+		my $length = length($pack) - $start;
-+		my $middle = int($length / 2);
-+		my $status = $start ? "206 Partial Content" : "200 OK";
-+		my $headers = "HTTP/1.1 $status\r\n" .
-+			"Content-Length: $length\r\n" .
-+			($start ? "Content-Range: bytes $start-" .
-+				(length($pack) - 1) . "/" . length($pack) . "\r\n" : "") .
-+			"Connection: close\r\n\r\n";
-+		write_all($out, $headers);
-+		write_all($out, substr($pack, $start, $middle));
-+		return ($out, $start + $middle);
-+	}
-+
-+	signal_ready($server_ready, $server->sockport());
-+	my ($first, $first_pos) = start_response();
-+	signal_ready($first_ready, "ready");
-+	my ($second, $second_pos) = start_response();
-+	write_all($first, substr($pack, $first_pos));
-+	write_all($second, substr($pack, $second_pos));
-+	close($first) or die "close first response: $!";
-+	close($second) or die "close second response: $!";
-+	$completed = 1;
-+	alarm 0;
-+	EOF
-+	{
-+		"$TRASH_DIRECTORY/slow-pack-server" "$pack" \
-+			"$TRASH_DIRECTORY/server-ready" \
-+			"$TRASH_DIRECTORY/first-ready" >server.log 2>&1 &
-+		server_pid=$!
-+	} &&
-+	test_when_finished "
-+		kill $server_pid 2>/dev/null || :
-+		wait $server_pid 2>/dev/null || :
-+		exec 7>&-
-+		exec 8>&-
-+		rm -f server-ready first-ready slow-pack-server
-+	" &&
-+	read port <&7 &&
-+	url="http://127.0.0.1:$port/pack" &&
-+	{
-+		(
-+			if ! GIT_TRACE_CURL="$TRASH_DIRECTORY/overlap-first.trace" \
-+			GIT_TRACE_CURL_NO_DATA=1 \
-+			git -C packfileclient-overlap http-fetch --packfile="$packhash" \
-+				--index-pack-arg=index-pack \
-+				--index-pack-arg=--stdin --index-pack-arg=--keep \
-+				"$url" >first.out
-+			then
-+				echo failed >"$TRASH_DIRECTORY/first-ready" &&
-+				exit 1
-+			fi
-+		) &
-+		first_pid=$!
-+	} &&
-+	test_when_finished "
-+		kill $first_pid 2>/dev/null || :
-+		wait $first_pid 2>/dev/null || :
-+	" &&
-+	read ready <&8 &&
-+	test "$ready" = ready &&
-+	test_path_is_file "$tmpfile" &&
-+	test -s "$tmpfile" &&
-+	{
-+		GIT_TRACE_CURL="$TRASH_DIRECTORY/overlap-second.trace" \
-+		GIT_TRACE_CURL_NO_DATA=1 \
-+		git -C packfileclient-overlap http-fetch --packfile="$packhash" \
-+			--index-pack-arg=index-pack \
-+			--index-pack-arg=--stdin --index-pack-arg=--keep \
-+			"$url" >second.out &
-+		second_pid=$!
-+	} &&
-+	test_when_finished "
-+		kill $second_pid 2>/dev/null || :
-+		wait $second_pid 2>/dev/null || :
-+	" &&
-+	wait "$second_pid" &&
-+	wait "$first_pid" &&
-+	wait "$server_pid" &&
-+	test_grep "HTTP/[0-9.]* 200" overlap-first.trace &&
-+	test_grep "Range: bytes=[1-9][0-9]*-" overlap-second.trace &&
-+	test_grep "HTTP/[0-9.]* 206" overlap-second.trace &&
-+	printf "keep\t%s\npack\t%s\n" "$packhash" "$packhash" | sort >expect &&
-+	sort first.out second.out >actual &&
-+	test_cmp expect actual &&
-+	test_path_is_missing "$tmpfile" &&
-+	git -C packfileclient-overlap cat-file -e "$blob"
-+'
-+
- test_expect_success 'fetch notices corrupt pack' '
- 	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
+-	for (i = 0; i < (size_t)candidates.nr; i++) {
++	for (size_t i = 0; i < (size_t)candidates.nr; i++) {
+ 		const char *branch_refname = candidates.items[i]->refname;
+ 		const char *branch_name;
+ 		struct branch *branch;
 -- 
-2.55.0.openai.131.g83a728de1eb6
-
+2.54.0.8.g047e0526de
