@@ -1,131 +1,111 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D32625
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 00:33:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E6872617
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 00:40:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784853234; cv=none; b=o5iDQ5UUQY1Hqa5II1mkOOuQGJgE+ZAL3+bu83v5mQNjjjQa38RPp9cAUwVH0ie1DGVByFHCH7vcq6O41cb08/m0TlcuCXvdFlg2GazUKQmmmk4Rb0O4T7XOpnJXjqDp8eO0eC88DxFPolN0LZKjP9RT8ImQR02QBpPpxpytPyg=
+	t=1784853659; cv=none; b=eF5XemI5KLdjc4KDpMznhZ5Z3CsCyjrqDfliJKxD18kjnlNThabhzKxdGMmsemJ16jmRgYf8htt6KmqmdXlu20diXqEa3KSCW5/mBVoyN4kLVQ87fVPNR7dI69cxhcp9xCKzYk3WnoqsFUizwJXK0fvyy5MiEC/KDShWBpEvp0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784853234; c=relaxed/simple;
-	bh=rPfvTWmzLJshdlmPL9m6zEfiJ9g/HKVu5pyWIYlmSoo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jdxdnZRiQS51bguznhZWrUR2kt5nB1JGqLuGDS66X+plRuDqyaA9ZPUYEdOOEXquXowHyKU183LHJzuI8eKO/mZf2O6nphOqeWWBOBN4zP3PhcaRuf7Oap51vfaqttqUS3WaMKgo9AepJVvgVnbRVaqnAcYbU66wpAEBhGZRXv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n4nKNipu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hj++s0kK; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784853659; c=relaxed/simple;
+	bh=PeF8HhM/XFBSzwvR9DOUk7gFO2r+yN+b1Gq7FIW9tJg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GxyiHhcClhOtG6EHFOm14Gus43a3hRUXqmu+Mscv9xvKyahXRwfIuRXHZoPbZYtmU1RObuo8jTU+4DQqt7vG9MNP7DRhFHJuxKxPsJXoqFMa60Zs0XNX+NbUEPGfv43yna7Lly68y2hES3wdF6qNxPJ7Jx2RTC6JlqyNgKoXQwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=qOjCa4xG; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=g1IuWW6w; arc=none smtp.client-ip=80.241.56.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n4nKNipu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hj++s0kK"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4C6291D0032B;
-	Thu, 23 Jul 2026 20:33:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 23 Jul 2026 20:33:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784853232; x=1784939632; bh=0qYW6klYzk
-	F1vQdS0gHjcnek11tJumTAXDmHfceGBIQ=; b=n4nKNipuQldldKceajgfj+8Nm4
-	0bhENflAYQQa3T8C4+7ieyZqCAPk1xMyXtWpOkshJDr8ntU/D+RjqJ38/1F633i7
-	rvcfsK1dvIrV1wRYQeUB7mKrb0uaum0+nUBilNHkdgK4esbxWwze6M/lCWXn3kIw
-	L3oKxWZEfXFuPM1eTFTxZg/TIbaf2itJOXrIx3qNh7oGdLl/emFwfT33vX9oF1Ft
-	yX8OwL83wC62Q9+Ns/OSEtmRGYgumxx0mUlKP8lZEERchj7FzCQkPlalgz9mVvo2
-	50hRjjMZhEbxnYaQ4oHI+9zdEpwy2nAaSkTLqb34xSUEU4jDlVPIerhGrtww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784853232; x=1784939632; bh=0qYW6klYzkF1vQdS0gHjcnek11tJumTAXDm
-	HfceGBIQ=; b=Hj++s0kKD4Ob+KOcCLvptmP9VVgyLwnlEaESHLRZp5XitkiXRVk
-	JupIsRXH4PXUmOfxk7cj6WSD8HHM46oZfYftm/O2aMiYFfnGciQ2MYN2L7Sk9Dwj
-	CRmsY+vNFWb/GcM70BRoKowP7xFbseE1nPPlhWVZ7nQVcq997umU0TxtRBMrOUb9
-	bWWlsXPOWzzMsOeO477mA+5Nzy5IlYWGnYv06vO9/Q7NA1hv2pgE6liNmEzzjg0c
-	KtXL7MWsnTbYs+OzZO5K/BAkyCXZZ6CI8IoGpV1wjj6qEJ2bKs0ZLXazYv7irVWw
-	pn8jbBDnVB2SHNPcPid0MwhifA/9Ybh32bA==
-X-ME-Sender: <xms:8LJiatx2Yrvyci1r1TB0w0G2mSImaIBvDQuBezwS4_TGvahDl3fQVw>
-    <xme:8LJiaks7WEz70cvM3NhNonVrCEmoLxajckMY-n7DNbOD-3K2GXH2_OEeChuhyHcI2
-    U0WOqIRL-ARSDMdm5Qvn4-7xRLmfPv7fclaIXRFdtlSxykl-Z4lQw>
-X-ME-Received: <xmr:8LJiakupeK5hLrf-btBV50rbW642cqAeCe2v2IO3nxaPoTWshUIlot-6N3Dg0KUS7TktH_Tr2Hos_3A1qYufKQocVr3shsiK-g>
-X-ME-Proxy-Cause: dmFkZTFEqDzFazAfy20VxE3cqLDOAzDz/yBu1VkbyyzkM1D6mQwI5jggLEGERTNMioyFep
-    mIiPNkaGkjH99eeEYYgmTzRt2pNWXeMvIFFjrQ1WTvcRZY6T/y4TmLAKMRl7/OKjagzMBu
-    ACw7sf1HONXDJey3KMISEZjr5cUl5GZCeuWcKFfKtneI0LD9WNJ0LymfYt2qStLR4oiHBh
-    s7U5PnQzfNhZgzkhOl8yqBvqv5yxofsbzbhSGOKTVN51qRUqQKaT9243iqDmEVOKFQHK+6
-    OmZt+MHRwjUbvhAYsBUNjYP97salwSLMxSY7qXG+TQRgCxoBm54ibgjkAYNq4jRFKGcpY+
-    ZXr0KwOPkgfnHQ97gkZpsqWW+J4Z6De/qxUoj8Rp/z3dzZfAkOHfYeERVyEU9FMVQYq6lL
-    YyQYuLe88OelXoHVMMGXjyHvUF53P8vxKSF0tnWZKk6qs8LRf7z4oaULMrcVRuVOuprFlb
-    0/XANKtDCRpoOmCIxy09pBjYAA9VoLT/R/fK5mCqzarYwmAp2t+xFPmVoDvqhgOlVZpQ9j
-    Oq5w1KW4B7py/x1v7kHmtzaaKtc6PAZCiUVwQ2OXLPgVR5o8fc9Rfo7MDWeEiYRcCYZviA
-    W+ZYR+rxbWzGeafKEvLayUm/DQtxr/VWtM2pd1pVeL/aOsNZu1akG3VsiMNg
-X-ME-Proxy: <xmx:8LJiapP6Z7XM2mDsXfXFvNETvd-VkmevOn0iPKhV9CszEym3AO6zvg>
-    <xmx:8LJiai0-S4zBGH7vl7Vvp0OzJrIiCTrDTccUuVuzMk40KYqcf3V9Sw>
-    <xmx:8LJialNo87eME4iIOURDGGalNTCp1FeubD8hB2-T2EjkTiCv7siwKw>
-    <xmx:8LJiai0HtZb_M7ibnKb2gw1wgiyHtkPhShhgIIc_IpOvEqs0k0fPig>
-    <xmx:8LJiakvRuegd_Xq7fgu9LED5vvETbx18zQblpPBKoEa51Nrv4o4eJQYv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Jul 2026 20:33:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Pablo Sabater" <pabloosabaterr@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jul 2026, #10)
-In-Reply-To: <DK6AAT0NM6G0.3SP94VJYJWPKU@gmail.com> (Pablo Sabater's message
-	of "Thu, 23 Jul 2026 23:55:36 +0200")
-References: <xmqqfr1amnvn.fsf@gitster.g>
-	<DK6AAT0NM6G0.3SP94VJYJWPKU@gmail.com>
-Date: Thu, 23 Jul 2026 17:33:50 -0700
-Message-ID: <xmqqqzktb501.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="qOjCa4xG";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="g1IuWW6w"
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4h5q0k3x2xzMlK7;
+	Fri, 24 Jul 2026 02:40:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1784853654;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=mUPtl5hMfTzDtC46XWh7idpV4rGXRqgvIufU++Py1x8=;
+	b=qOjCa4xGRLwA15dHe9WfYeq+1hFd/9rGK7SQkeBkpckHhEqBqSkRkv22fqtbgFvebFh7+z
+	91kWVNmB21dJueek9n1RPTeEtNJjmlli2CAauiuZhyuPjf6xFk49M2kzvfe4tI5HYU/qrC
+	tjjQoiYv2COKIa4Njqjqc734EC+DzHiXtD7V4F+SkFt4+f6v9dItv7w3TNgTd3A45gZ48J
+	+CvALofoO4XAPsMmc9BKQ47myPnMpQVR92RgY5wBwCJSdI6fnquITuNvVO/hyiMm9lEPrd
+	B+x4gT4LRXiGdRd2Ck/ByYEszkVj+JXxWLDSDM+cUddyd3wRYvzbC1wFAwpDJQ==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=g1IuWW6w;
+	spf=pass (outgoing_mbo_mout: domain of fpottbaecker+git@mailbox.org designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=fpottbaecker+git@mailbox.org
+From: =?UTF-8?q?Fabian=20Pottb=C3=A4cker?= <fpottbaecker+git@mailbox.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1784853652;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=mUPtl5hMfTzDtC46XWh7idpV4rGXRqgvIufU++Py1x8=;
+	b=g1IuWW6w5hWAQj+4mugROLLJppLriZRGT/Cos1SX7oZgD4NNjX+iYmfCIbOG/eaAcILstr
+	Czq9Ugy3Xxfa9lbwZ3DauG52t0MM2lspgRjUQuh3Zmo0RExDqNV49PZV3zDVFjysX3RlOy
+	p9O2SIw4l6kq+F5NaJYMpgdxwFrllre3GjKwSnmfbqAWCr4dPp38N6iN6xb/V4CK43xm3j
+	2ilvcVo9x8pu4/LQmpL7CumNtmQxjnXvEpKd1aQmeApGYH25N/SpIPMZXMgEm4jFPZddrg
+	05WHw1CRxHujsV7tPOnRqQkrQPOTmWwWGZ121MykSnEaLZKhSCdXjmweryUDVQ==
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?UTF-8?q?Fabian=20Pottb=C3=A4cker?= <fpottbaecker+git@mailbox.org>
+Subject: [PATCH 0/3] config: support scp-style --url
+Date: Fri, 24 Jul 2026 02:40:08 +0200
+Message-ID: <20260724004011.41795-1-fpottbaecker+git@mailbox.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-MBO-RS-META: 1runza5t886h6jmdiqegwyy4ebf3e5sj
+X-MBO-RS-ID: dbee44b25edaa44e4e8
+X-Rspamd-Queue-Id: 4h5q0k3x2xzMlK7
 
-"Pablo Sabater" <pabloosabaterr@gmail.com> writes:
+Almost all git commands support the same set of URL formats, which includes the
+scp-style shortcut for ssh. This format is the default format of multiple large
+git services, presented to users when pressing a clone button. The config --url
+option was a notable exception. This is only relevant for scripting, it only
+affects the config get command.
 
-> On Thu Jul 23, 2026 at 4:38 AM CEST, Junio C Hamano wrote:
->>
->> * ps/cat-file-remote-object-info (2026-07-18) 13 commits
->>  - cat-file: make remote-object-info allow-list adapt to the server
->>  - cat-file: add remote-object-info to batch-command
->>  - transport: add client support for object-info
->>  - serve: advertise object-info feature
->>  - protocol-caps: check object existence regardless of the attributes requested
->>  - fetch-pack: move fetch initialization
->>  - connect: make write_fetch_command_and_capabilities() more generic
->>  - fetch-pack: move write_fetch_command_and_capabilities() to connect.c
->>  - fetch-pack: use unsigned int for hash_algo variable
->>  - fetch-pack: drop the static advertise_sid variable
->>  - t1006: extract helper functions into new 'lib-cat-file.sh'
->>  - cat-file: declare loop counter inside for()
->>  - transport-helper: fix memory leak of helper on disconnect
->>
->>  The 'remote-object-info' command has been added to 'git cat-file
->>  --batch-command', allowing clients to request object metadata
->>  (currently size) from a remote server via protocol v2 without
->>  downloading the entire object.  Format placeholders are dynamically
->>  filtered on the client based on server-advertised capabilities,
->>  returning empty strings for inapplicable or unsupported fields.
->>
->>  Needs review.
->>  source: <20260718-ps-eric-work-rebase-v20-0-0c13962ac532@gmail.com>
->>
->
-> Hi,
->
-> Karthik reviewed it a few days ago [1] and it looked good to him. Two tiny
-> nits came up, which don't seem worth a reroll on their own.
->
-> I think the series is good unless further issues come up.
->
-> [1]: https://lore.kernel.org/git/CAOLa=ZS8J4t12ab1=3-LRYNuZOwqSHG861iYm97JjF3mGprvJA@mail.gmail.com/
+This series consists of three commits: the first adds URL default port
+normalization to FTP and SSH, the second adds some git-config tests for --url
+which seemed missing (present for --get-urlmatch), and the third uses the
+recently added `url_parse` to support scp-style URLs in --url.
 
-I was silently hoping that you would fix these two nits, saying that
-one of the alone might not warrant reroll but if we have multiple,
-we would better get them right for the final version, or something
-;-)
+Uses in scripting of this change include smaller tools to automatically
+configure some settings based on some remote, like setting up author info based
+on a user git config value scoped to ssh://service.com, which is useful
+because git hosters often offer an email obfuscation/forwarding feature and this
+would enable easier management of identities with multiple accounts (like work
+and private).
+
+This could of course be more useful with adjustments to `fmt_ident` to support
+this, with appropriate config options (what remote, copy values to repo config
+or use globals automatically, ...). Which would have been somewhat out of scope
+for this and requiring some more intricate changes I did not feel comfortable
+with yet.
+
+
+Fabian Pottbäcker (3):
+  urlmatch: normalize ssh and ftp default ports
+  t1300: cover --url for some --get-urlmatch tests
+  config: use url_parse for --url
+
+ Documentation/git-config.adoc           |  5 +++
+ builtin/config.c                        |  2 +-
+ t/t1300-config.sh                       | 58 +++++++++++++++++++++++++
+ t/unit-tests/u-urlmatch-normalization.c |  9 ++++
+ urlmatch.c                              | 16 +++++--
+ 5 files changed, 85 insertions(+), 5 deletions(-)
+
+
+base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+-- 
+2.50.1 (Apple Git-155)
 
