@@ -1,127 +1,147 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BD33B4417
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7313CE4A3
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:05:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784926882; cv=none; b=ZadkkFK80JH7lKaw9ebAwYSFx+ymUJLjhlhBAEDGjrEVB7Ko1ENBzGuWbtj8WoeUJRB+mv6uJ+y0Qmg40W0i3R3KEmYMZom4HZOLVnWGGWvUJgo7duO0vdp/dS8Lv4v6nOFPo1xQx5Kk2GDyRluuRjXVEK8BNqxJtX7l9XkrHTk=
+	t=1784927155; cv=none; b=UZhqMKJm62/G00UPLjP45/8+bJk1wDVsOw8npXTsKyJV1giOL9Ujc9fTxjRt2jhgOYZ2ihMVoUdi/bi/+TgMxiYDj87ymiPNCD7Es7xJzWHKUeEkw1rEBO0IOcO3xi7+3NWZxgarxuOOsL7xlAWIjHoL0ZJF5CdUYyNoUOWWwqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784926882; c=relaxed/simple;
-	bh=UwITQAgF3xRaw0a/RMu1o3hSq1N+e+Fj8tNHw40CuAs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M7OG/ZxRFsLzwj/zcUUOygMxUNDfMLzRA18qkTbAkvkAbEzhwMK23FoXfYAPtIexmG/Mr9SoYBRtFd4ARduCGJvuU94LkT2Ht6HbpqtJjMO5nSNBHHbbp8rWqUblueuICHDKlIsHco1gSy3LNrYqFYXpGdRBebdXXEGF0LeWkL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rvORHa7W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DJUohX/z; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784927155; c=relaxed/simple;
+	bh=H+EiYhHJPEfx18JWfOjkW4hLlkhnNcM0jHocPokDpsg=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=IWfSUvY1L5ZHr3FXXEfqvFHZDglf2Nm/L7tnJ+U7vKys68jn4K7cP5Tw+BfcTz+vtJ5hMbOXVzTkOXWc4Ct4uJA5kw9yCibyxTaHXIJO8LLQh4Sx1tJE81gOkhty+gui7t/8JYKGz5ooIYVDpH0+SPQFPhvahDSaJHdLlkamR4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=HesxmqRj; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rvORHa7W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DJUohX/z"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 20CBE7A0227;
-	Fri, 24 Jul 2026 17:01:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 24 Jul 2026 17:01:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784926879; x=1785013279; bh=m33GQnxt6v
-	TxeNo+gSdem5xVU7eiVckMHB8OIi7h1a4=; b=rvORHa7WHt75lVHYTjRsoYATtd
-	I+h83Ekbw+klJ5GvV4n0F92oP8bK/axdrH1KEedqLgSrcM0WuL8xg3iHndKdvZmV
-	qRQSVEkqAlaX2N6lEGaHk3H9IQRlHdIU5jaZ/M0lVryFr/cNU6EOnGq0kWPSACax
-	pxsiBmXOfswhhC0XU0uf50NJ4MLNc+CruT1g9gujT+xDknO8JdmMp4Zoea4qrkGk
-	S7IbpT/rlllJt651j/Ip4pmiQvs9tbeS8rYSRV//i/9h6mIVdJqS/dVuHPX6q+Yp
-	yJwJVwUlUSQTb7woabja5+Iux3a3l1Uz7Sl0GN5j48a7DbDY/ZEa0WrmBl8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784926879; x=1785013279; bh=m33GQnxt6vTxeNo+gSdem5xVU7eiVckMHB8
-	OIi7h1a4=; b=DJUohX/z/71IuTO68rccpertL23obAAoPFQ2aK3vpOpL7gTUr/7
-	1fPUfDiuzUOqYh39hyLF8XnKPFiWrVUbtqgmhbvcJszZUYBqvjJkeWFEqkYzP7MK
-	hjiVh3RAIa4tZB7jSoqi/vaMMGqF9u/b1mRlQ1S7mckW3d/MZXCHENDg4VyOIXct
-	ZteTX2qM+HWnHq2aG6cNIpeQpHNLX+vlEaw9u78THdprtusTquAAupNMSntPsflT
-	EYCGObuOGhcJ93gKZyTL83gUGNaIkenpJSP7YhSj62sZ0sYWNAdfTtdEayhJmmPf
-	eOuM+EOeMQZ4dw1ciMwGRsLwYll6jZkO6+A==
-X-ME-Sender: <xms:n9Jjat5PUw4SedN10i1bSllEMF9kxJgjqsTbFwWeyNQmCUtNXlgqQg>
-    <xme:n9JjaiVttMmxunusa7__8N0XMI6pdHOcSRVfWkhi9thCidIt_cQ1TvX6t3QeP6dNa
-    4TpJd_fT0kXqavVb2_fggnC9lHGnkw3QsqHWQyqi3V-qy-ZONxQEw>
-X-ME-Received: <xmr:n9Jjah2_e-RfxlFPiwl-OATysDWYVqKYvHOzMcjacXc6sv5zv0mVCoED67ynhDEbh-0igAch_iyYgj8sBTNq9lIDspSiyyp4mA>
-X-ME-Proxy-Cause: dmFkZTFU8ckoGooC60R6xRqit73l4caCfWgXUtJNzLPW9LqVoRIf9DcErwKoLLQ31aExn3
-    JIa+wK1q0JnHoWBt5+LV9AT1NOAVBPpSB+SRtmqi22Mth8TzwJdfGM//oLGeFFL5ZN6G0W
-    7k7fpky7h3RH6LN+SX8GqRKl8Ayq3yhkEDsTUNcyT9Y9E+3h9JUOjw/nV5jUMgV0ByMJvf
-    Z1xwoSJmV+xJvLet5X1OszWJsESIgbT4itsCBjjZgpc3yeEvmCWTfLEf0TRPt/X7X9Nw21
-    9SR6Yhwy2i31LurM24ininzeHZJ3ZU/7gtTa3iEJwgT2dBFvBDhHmZHZvVeF+JgA4t5gpJ
-    SSpSrG2/GWfjJ9I7eu7y6yM2RvqsvwbR1XUSnjNG/U+VMif3xeyj2e1i3bYJX7qkx4gEf6
-    m2rewsY1lD4N6yGewo/zBvfxVW+HRyfCUAKtd+UKIW1EwWBoiuSRYvZMpCjtesfP2BqRSz
-    PfK2pjOnaNjuC2Hk8uuIDvJAiy8JolwJT6NInvjbMfa34ZZOwxuRALgdtORZIH9u6pgyIY
-    KT0WyYQKmT1gzua7DF95EcqykSNwKH+vFUNydzU96EdkTHc9WvOUlE4pome10NOFUt501x
-    Es+dh4zOcT5Q9WH9X3ZzlsHkJBYrFolhHdVWrD6lY//vxMQNV690l2mgel6A
-X-ME-Proxy: <xmx:n9Jjav3w6rM5-jcxu8LAz86vXh6n3_NM5Eo-LfafWjn0ULatjLgxqQ>
-    <xmx:n9Jjak9lKamJPSuwHcwBwEe7gF6FV7sn3i8bNI1HynbAkrFACKDbaw>
-    <xmx:n9Jjas2dCikUYgGf-xTCcFf0FvlLloQOUiaSl0MCRtt3soikXRu0Dw>
-    <xmx:n9Jjah9oGrBwybkR9GNzhjjFAVZrfsAS04Fwm43Owz-CU4rwQLP_hA>
-    <xmx:n9JjaqUXe1JfFE0yz3PvY3T-ALJLyRan0V3m0vs8uf13FIBTJgALJ1Pr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 17:01:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] rebase -i: fix counting of fixups after rebase --skip
-In-Reply-To: <c37a518486a8fa9832a6dbbe6048cda70af87d73.1784304378.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Fri, 17 Jul 2026 17:06:36 +0100")
-References: <cover.1784304378.git.phillip.wood@dunelm.org.uk>
-	<c37a518486a8fa9832a6dbbe6048cda70af87d73.1784304378.git.phillip.wood@dunelm.org.uk>
-Date: Fri, 24 Jul 2026 14:01:18 -0700
-Message-ID: <xmqqbjbw5cgx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="HesxmqRj"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7ff05e5d009so7110417b3.1
+        for <git@vger.kernel.org>; Fri, 24 Jul 2026 14:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1784927148; x=1785531948; darn=vger.kernel.org;
+        h=content-disposition:content-type:mime-version:message-id:subject:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=4X79eGpC7JyrbPOX8b0oQqku7VADV4iZGcLtSWkqLMg=;
+        b=HesxmqRj6Gav3Yc/ba6eeg5IkUqe+UeENzN0vA+NMMmpvBRClKinR2iG1vOS2xibk1
+         AdZOw+19010Upn7+oEUbfCbL7y79JKGAx5lGf7q1rTtu/1/W5Ce19ZKDCI/cdaQFbHim
+         Ckzogwm9c9NH+CEVCr1Lp+AU2g3qa8uEVyj+E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784927148; x=1785531948;
+        h=content-disposition:content-type:mime-version:message-id:subject:to
+         :from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=4X79eGpC7JyrbPOX8b0oQqku7VADV4iZGcLtSWkqLMg=;
+        b=cKY5DBibgqPbtK4nGbd9jFtE+2aATtHoEHDqLqbTuHTIAnKrFBe6+BCklTbIc+i/rq
+         tOIcFVOuWOhrHp+7qZX8vhw8u2dB1AAepgFjwwGUCUQ5OQ75npayO02aoJsXYOgkwsH0
+         abqB/soGM/SIAVNQRDVdYQ605sNf42/BsRpNISWfodlrHY4QlaJxtJzgHSZ831Dca0MK
+         Kav1bF4R6lwAPFEYCZcWJbCdXPNE4GPjDCmKcwRVlI3cP06OZ/4K60iv34WzQ3ldWXa/
+         V+0ASZtXPAPmaq7UJCWAe0CM9+FT+8RI6V73XOQ/SULGkToZy1TMbWi8mgHbomA/uYLN
+         3PHQ==
+X-Gm-Message-State: AOJu0YyStOoY1d3nh8zH50UF5gc5iIpoJv+jVKT1ciqwxbqezxTUOJ74
+	TfbnbcFoOvL+sJzz6s2WPE5/Cgvh5Rosl2hZxMdOr1q1UT32Jvk07PciGR+UGjT5rAGVUL9tNXp
+	Tp/7oTbw=
+X-Gm-Gg: AR+sD13i7E3iwygkZILXg858LhWp9PozNMwc1IpWMUO0BSu4y3lXOPboGIUDIvTTPJW
+	dyuX5bHKfO1DgNOzm5afpTqs/qawd0g3u8p78HCDwBT8fZh0YK0R7VCYA0ZAPSMwkV6Z6heGUC5
+	KYO6xG9MUtO1kKuLvH7aBeDQgauMxniE/yuBKXbkQKq4mpELuPz8ki/t7YMHSKiPApTFSST65A3
+	OzojXDQ9spaHeiHW0oCoJ+guvsK2fCFxJkZB1Lt0FcnNS6cVtMHWB8oZlq83/oI8t6nYr4Ax/dx
+	ecSJRAOHO9iqiBBXGXJLpE5RGK0s96fjv7sfG/SX05fXvwWZVzD39BmyZce1sF4zDOOW1Xofp+n
+	bYUIB6ocT/vyH3DOsrItMxM5t+hRwow2A5PjCICtqtsIxMjdvbt946bNcp4n6rZghYE7z21mXUZ
+	2zqhDCcHaBU4/fXoMV41a3bNLZJ+8zOSuu5nWmcOuaSmoKsxoKalgbEllahJ52yO+xTmWZHsC8q
+	gd6j0YdVUwgSlE6CpagKacxzmA9O1HzDk5OAA7VGZaqIZbuJLICGYc=
+X-Received: by 2002:a05:690c:620d:b0:809:fd83:a88b with SMTP id 00721157ae682-81f69ccf38amr369117b3.3.1784927147791;
+        Fri, 24 Jul 2026 14:05:47 -0700 (PDT)
+Received: from com-79390 (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81f657cf02dsm5801517b3.22.2026.07.24.14.05.46
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2026 14:05:47 -0700 (PDT)
+Date: Fri, 24 Jul 2026 16:05:44 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/5] packfile: harden handling of packs with duplicate entries
+Message-ID: <cover.1784927134.git.ttaylorr@openai.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Packfiles containing duplicate object entries are unusual, but Git
+already accepts them outside of strict indexing. Both pack indexes and
+reverse indexes maintain a 1-to-1 mapping between themselves and the
+physical layout of objects in the pack (including duplicate).
 
-> @@ -3281,7 +3281,13 @@ static int read_populate_opts(struct replay_opts *opts)
->  			const char *p = ctx->current_fixups.buf;
->  			ctx->current_fixup_count = 1;
->  			while ((p = strchr(p, '\n'))) {
-> -				ctx->current_fixup_count++;
-> +				/*
-> +				 * Older versions of git accidentally
-> +				 * inserted blank lines when a fixup
-> +				 * was skipped.
-> +				 */
-> +				if (p[1] != '\n')
-> +					ctx->current_fixup_count++;
->  				p++;
->  			}
->  		}
+While testing packs containing duplicate objects with MIDXs and MIDX
+bitmaps, I found various bugs which are addressed by this series. It is
+organized as follows:
 
-If we hit the LF at the very end (e.g. "fixup A\n" at the end of the
-file), strchr() would have moved p to the newline, and p[1] will be
-'\0', no?  And because p[1] != '\n' and wouldn't current_fixup_count
-be incremented again?  It might be safer to check p[1] != '\n' &&
-p[1] != '\0' to avoid counting a trailing newline as an extra
-command when reading legacy files.
+- The first patch establishes that reverse indexes already do the right
+  thing: they retain duplicate .idx rows. So asking cat-file to produce
+  the on-disk size of some object with '%(objectsize:disk)' produces the
+  right answer (even in cases like asking for the on-disk size of object
+  'B' in a pack layout like [A, B, A, C]).
 
-> @@ -5353,6 +5359,9 @@ static int commit_staged_changes(struct repository *r,
->  			if (!len)
->  				BUG("Incorrect current_fixups:\n%s", p);
->  			while (len && p[len - 1] != '\n')
-> +				len--;
-> +			/* Remove trailing newline */
-> +			if (len)
->  				len--;
+- The second fixes a bug exposed when ordinary 'REF_DELTA' lookup
+  chooses a duplicate representation of some object that creates a
+  cycle, even when a different copy of that same object could resolve
+  the delta chain without cycles.
 
-So we removed all the non newline from the end, and the loop would
-break if !len or p[len - 1] == '\n'.  And in the latter case, we
-also drop that '\n'.  Which sounds right.
+  Importantly, we only take the more expensive path after the usual
+  lookup encounters a cycle, which should hopefully be rare.
 
-Thanks.
+The remaining patches deal with miscellaneous MIDX and bitmap consumers
+which are sensitive to packs containing duplicate objects:
 
+ - MIDX verification can now accept any copy of a duplicate object
+   (keyed by its OID *only*, as opposed to an (OID, offset) pair).
+
+ - The 'bitmap' test helper now cleanly die()s when trying to write a
+   bitmap for packs containing duplicate objects, since the bitmap
+   writer cannot tolerate single pack bitmaps with duplicate objects.
+
+ - Finally, multi-pack reuse stops treating pseudo-pack[^1] positions as
+   physical pack positions when a pack contains duplicate entries. It
+   disables optional fast paths when their mapping cannot be proven and
+   uses the existing per-object path otherwise.
+
+This does not change index-pack's duplicate policy or make duplicate
+entries a preferred pack format. It makes existing non-strict packs
+readable, verifiable, and safe for bitmap-assisted packing while keeping
+ordinary packs on their current paths.
+
+Thanks,
+Taylor
+
+[^1]: This is a good example of the types of problems this series
+  addresses. We currently assume that all objects in a MIDX's preferred
+  pack have a unique bit position, which is the same as their
+  pack-relative position. That assumption is safe as a consequence of
+  how the pseudo-pack ordering is defined, but *only* when the pack in
+  question contains no duplicate object entries.
+
+Taylor Blau (5):
+  t5308: test reverse indexes with duplicate objects
+  packfile: recover delta cycles through duplicate entries
+  midx: verify duplicate pack entries by OID and offset
+  test-tool bitmap: reject packs with duplicate objects
+  pack-bitmap: handle duplicate pack entries during MIDX reuse
+
+ builtin/pack-objects.c            |  24 ++--
+ midx.c                            |  59 +++++++--
+ pack-bitmap.c                     |  27 +++-
+ packfile.c                        | 199 ++++++++++++++++++++++++++++++
+ t/helper/test-bitmap.c            |   3 +
+ t/helper/test-find-pack.c         |  18 ++-
+ t/t5308-pack-detect-duplicates.sh |  60 +++++++++
+ t/t5309-pack-delta-cycles.sh      | 148 +++++++++++++++++++++-
+ t/t5332-multi-pack-reuse.sh       |  89 +++++++++++++
+ 9 files changed, 595 insertions(+), 32 deletions(-)
+
+
+base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+-- 
+2.55.0.383.gde07827a19
