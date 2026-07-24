@@ -1,161 +1,112 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F93B47DC
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:19:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E963F1ABB
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784927942; cv=none; b=AjkXEkBcKiSiwCFhg/bxe0B4Y7R+TuS2TjOD3tYgQSW0Uyp8z8EiF4ZmI3w4gD3xFObiq7oFPgvNAkG8zeJzci3z+aB1RLnTflEu7fZZ2h0Nj8t7dJChY5MmvlLZ2W5iN6DO+ZIB+sTFNmJ617HoGz8qcVz2Dif6CoaX9QLC/cU=
+	t=1784928049; cv=none; b=h/7z+xdT8imOuZakDoG9lAAg7lCHV9+Qibj3JSuf/e6HAOJo2rmUewlQMbboTd8Gxu6HD0U5eZzMWxX0Mkc6laKP6Qnso8pPaw9kpTCSlctQ1e134G8/jTB8gXXGK3qUd6kdrVHrSlW/nVDL+Wf2HEK3SyR5PWIJ2bWXFIJVdP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784927942; c=relaxed/simple;
-	bh=9eI7D829HJ/impolzU4ODbHwSbcz99xcgKh8AUFFdLM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jwD/QyzhRCF5YLv7dg+C99e0eHTPRG1d6ltyPAsy4nAjG9Vx2AVHvHOf9lGCgnfsoi2K4PxKJ1ZjE6W8cWPsX3LZvUnaf/e9OCXA77t/SIIOAresv/jcc7DVtP9Sp6dMJzodGN8eCwPRY7EZ9yqe5PBGPzGOc5eV/Rfu/jivQt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BH88P2Ai; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L4XwWdaD; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784928049; c=relaxed/simple;
+	bh=32eFPTxUN1Sa3w3POer3JO8cPj6wAfvXQCAEmdUeVKg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cdIsVYfiH3mmy/mqL4z8585aQo97EtEs1z856EZsdB5o1c5STHC58g1n9nSXmw6VbY+dekGmkJHZxUQyEUgKDoLdXKq7YmixM9F5qhFJEGxUahZmln5XQewIbPlNro8fxABH0kZyq2isd/b6y9aa7irX3H1iJBOrh4BQoM67PDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=D9ycfvTf; arc=none smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BH88P2Ai";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L4XwWdaD"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 12AD31D004E5;
-	Fri, 24 Jul 2026 17:19:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 24 Jul 2026 17:19:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784927939; x=1785014339; bh=IvjKviuQEd
-	aoD8YzEbegqZvCKdLHK0w3703ywQ85P/s=; b=BH88P2AiPDhziix3OEMgnlIUvb
-	k4UxV4+LhGQP7BMLdWqfv5cgbutaPtAYGIdLYOLWl/ALCaxa23BrM8Y4k4ZmjsA5
-	OHKhFRErelSF08n7yTEoEpVTak9rzFIc10Cbaaxh3t+x9uL6FwGxpLFKd/U412n8
-	00j+PqHMByyjXN+Ez0LsHhusT5lCN+AREFzaB2fpUaobkogT5zfZzM7yROC5gOfk
-	gjXmQIFFZjGXei/SUZkBgLiZ3dqeoVUC7+XaxY3ppM7bq/Ed/G5NTQyUcdkojm/5
-	KpLzqVEIwlmLi1rK/gKsWrWqrpm2MNr++nZ9Tb2alJoGY7klzeLnAW/Bokdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784927939; x=1785014339; bh=IvjKviuQEdaoD8YzEbegqZvCKdLHK0w3703
-	ywQ85P/s=; b=L4XwWdaDa5YPeVxwq9xrO3jAvxOKiKNkTZiDuqamdcpYfsXOSmR
-	jPTUKLmIn4fANUKVZoBGHcXRzlz/WnounjTov8ZZn3LGylfUQLY1DuIDHsqrVTxJ
-	6yXKYQxQjB+o5twg2gaJisk+udWX36bRGqGKLdUY4vbrdLvoahrpWEuteSrMRUYy
-	Pq/Kgpm+/vp0mDsbusiVUsLIoEZm7JIHyvkBYUfbSAvp7KRFYlkgRKImQlVXU3MA
-	6y5l6LRQZHSn1c9h8pUsDo1iJS+He8aLDjxRH2gzogPJ9FnxrYLFZjkzpk43oU58
-	MuS1c5wYLiRPAzQbhvo1HNBcadyl5mXR53A==
-X-ME-Sender: <xms:w9Zjalf48TQpVrM0hYkbtxDDUe2AhnD6B42fvyCyI3AN40FygEJAuQ>
-    <xme:w9ZjaqreKgSxc_uN62e_86nDZIKnY8Qmn6xnais_ezHuOFV2FnnJj8AVI7SXmAuc0
-    vX8UJzoceacca9KeaakhHQbov_KVcV_pAJjGXYHRmvljUcqoAf91A>
-X-ME-Received: <xmr:w9Zjar6Sgy-XSL3pg5d5VGOjZ8FWOFaHyhBaHilNu7JHALIc1CEm87m1S3R2sDhZNLZOJvPWir_FyBsWc7wTMZvbaZ7Po7NV2g>
-X-ME-Proxy-Cause: dmFkZTEORePahuiV8R6nR4gbI1Hzjm9+shvx15XvR6CBzHwO0j3CFADekr8JnvLA6FW4ya
-    /FQqBw7UMOaQQgrvSovNIH28xXddzrnd2lf9oePDiCx/nI60+hJJ8iK0M+h0Muf8ZoRZ9z
-    u+he0eyfbnu6V82Ufk6vRUxlJtNVSJsZRBw3v2DWZ1C/oA4UURfP+1H3WZDdro3FfgNIi5
-    cKi/qHMhit4gE8CIH6HSk+ln3KYLPErsg5OeiPt2yjemEhpu1A9hEaozseUnvHuiLPTmIe
-    TixTOAlxGDudlu7X3XIT3DGePICsRKDEwTWmP+dci+AkCdy4+NMYga56YaF/3RGAnoquUn
-    wWsSZgUTH02A43tbGFIjAWB+gEULes/1L463dwWiuh6djvwI96EY+E/6g6nNM9DyK/AG/d
-    xd4LEh6Z8xXU3kYmnXu6lWTtI0Q+JpLdK39X3FtWQwX+/4N7q3tlG+zKI6KxS32m8IXdhb
-    bsph0duw/EbiWj8WYEpco5h/0nOjzMw9JSDqLgIWhzXRUC3xTaukKWsiBAtUxh/+hsurWb
-    61xuMhDIqJ7XzBTrfmd0G4OXoJ4MeyXV01AiJmWWpCiH6UNttiuYxxTt9jNbq2WJU+U+Sx
-    NlfuB1219/p9b1MvQ5ml43AZlGVHhrqrKbKr0uFrOO6EzcCkEDcRGdNIe9Gg
-X-ME-Proxy: <xmx:w9ZjaoqyzmRDs1bOJ2AM4u6LsUJ_ZD0IgUQuKGHuvAuPc3SnieB83A>
-    <xmx:w9Zjalh8A04ON3R4bFCBIyC6xX5dqvLWXvxYdBkw4E2KY8ViBRBTjw>
-    <xmx:w9ZjaqKC5FQ9Bf4VUNX8CWRtn0HmKvmXwV--CMPlqcMkTeNOyJk5gQ>
-    <xmx:w9ZjatA01Mnnn1n0BKDhCe_RQwMx4Hjoanq_KGxt5SAR2YWVcQhP9Q>
-    <xmx:w9ZjamrBN4jCYrd3LSDzSwoiTlOPIeCb8sFDpOTzCY2ezYHP7A9neWej>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 17:18:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] rebase: remember fixup -c after skipping fixup/squash
-In-Reply-To: <7c8075ff2675976821a1ee979f86c7c46a35bd15.1784304378.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Fri, 17 Jul 2026 17:06:37 +0100")
-References: <cover.1784304378.git.phillip.wood@dunelm.org.uk>
-	<7c8075ff2675976821a1ee979f86c7c46a35bd15.1784304378.git.phillip.wood@dunelm.org.uk>
-Date: Fri, 24 Jul 2026 14:18:58 -0700
-Message-ID: <xmqqtspo3x31.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="D9ycfvTf"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-66807ba2f0fso814913d50.3
+        for <git@vger.kernel.org>; Fri, 24 Jul 2026 14:20:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1784928044; x=1785532844; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=GOugYSvTR2jtYUB1wyD1mPDEwCfG/+iUkjjc/fMDTXw=;
+        b=D9ycfvTfkQ6PSbKH7nFrDuZWOv8XP24SY8PG+zQ+DfQjaI7GGftMBdBbWJ5IyQT/Rk
+         aB4l6SKlC+gqU4qq/TfOi5QFGitFA6mlb10wCAoYk6Klpeesnhx6p0yZwwfWiCuxaLt6
+         UtLkvrV3dNBaj5BbyrJ5Yt7Z4yNq18yvy3piw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784928044; x=1785532844;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GOugYSvTR2jtYUB1wyD1mPDEwCfG/+iUkjjc/fMDTXw=;
+        b=jK9uQgHgs+vDMbpUj4FQkNkf/afRmmI+/+lR0tphph5dKllcVdjR7VFPDmCDH1CTXv
+         PBiJCR7r+AvlKG2fqC4q5n0h1e7qFbSXzY7D6Eh0hHznxeFKL5hHgJh7eQPy4Sbov29a
+         ybiCwc1tKfmrrroLCXryWfc+Ls1lAusekKiur33XUO/UgqOX6DF1toPt4sLXieJ/aJXY
+         oYot0ivR3Av0SIrF76Eqc4lbW7Bb7PLlBgWDjFg8MEwvhDOk5a5lJ3gfEnSn6i8bUUVk
+         joIE2jSYyg4k2mXsj2l6KinthkcveyS7AGULbkiQTgxSOScyqrExSIR/77wT8Xq4M4pc
+         btIA==
+X-Forwarded-Encrypted: i=1; AHgh+Rp3MDCU4XXP+8B4o56+8A946m7kLfoQQIhi0Yt0Sf56m38rltmKH3xLqJXDK+IXBi/SNNg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvtBB/AwZXKU4I4Ao6N8g54VBzGgerus004abn5RWZO6gJWhXc
+	g4ZIw6YcwKi+gMrL12ueOv8oQlh0TDtKG6lQHp7aEowlz3ItRPjjk6w3SzO35GK/3OE=
+X-Gm-Gg: AR+sD10LrcPEP5CFyq50Y4og6OhzATT6go+vXKxjYGnbrC5MnpfdhbgfgpK12lXOu0Z
+	kvVgd35hVk9QWqAmvIQzovyqEPBUUf4GaK5Ks0YWpeVdQGGVVopuF2tje9VbwfUjEZhemhEA5lB
+	U4kjEvnueTogWp1jfHM0D3cGTJ6xGgvsMwrOqYF+ok4GwQv+Xn+NYPrVFOFjuPSqe1WYWy4IKvy
+	ZJtDrZsy/Il57/TRkNhdFLg5aMGw2hvueQP0T/8u2tE2RX+ntO730VM7D3LIGZKh3RVO4ZZr+rw
+	IvE0dbHnDMq0Gz1x0VmxYkwZ7f1FFY1Lp+Wba/+WnO5i5DizGjiBfGtdV45hVUO1jSp3aZy2eCj
+	Ko9bjAw66D681aROfPrBDPe1fGmVOTesQRZsYukCdmy0BJsfkQuClhZZWGwD6L0doGXwGiFqrv0
+	yRj88cO8VeO6X9RSZSYqoQ3U+zXWbZwpbEPaI3AXprcrZLSb3nGlVVH03QIZOeFXT9n0VhM5Gr6
+	i0KxRcQP4Fyu6UDu5iFy/DRTrMU58Ira/tvJImzZnJm
+X-Received: by 2002:a53:a701:0:b0:668:296d:3dc with SMTP id 956f58d0204a3-668a50201a5mr1925068d50.109.1784928044203;
+        Fri, 24 Jul 2026 14:20:44 -0700 (PDT)
+Received: from com-79390 (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-668c6d30e62sm39269d50.3.2026.07.24.14.20.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2026 14:20:43 -0700 (PDT)
+Date: Fri, 24 Jul 2026 16:20:41 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: tnyman@openai.com, git@vger.kernel.org, haraldnordgren@gmail.com
+Subject: Re: [PATCH] branch: avoid slow strvec Coccinelle matching
+Message-ID: <amPXKfnoTzUuuyMN@com-79390>
+References: <20260724091152.27794-2-tnyman@openai.com>
+ <xmqq33x89zn9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq33x89zn9.fsf@gitster.g>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Fri, Jul 24, 2026 at 08:27:06AM -0700, Junio C Hamano wrote:
+> tnyman@openai.com writes:
+>
+> > From: Ted Nyman <tnyman@openai.com>
+> >
+> > The --delete-merged implementation declares a loop index at function
+> > scope and reuses it to walk its strvec of upstreams and its list of
+> > candidate branches. Coccinelle 1.1.1 spends hours matching this against
+> > the separate_loop_index rule in tools/coccinelle/strvec.cocci, causing
+> > the static-analysis job on 'seen' to reach its six-hour timeout.
+> > ...
+> > The CI failure reproduces locally with Coccinelle 1.1.1: applying
+> > strvec.cocci to the original builtin/branch.c still times out with
+> > "spatch --timeout 120". With this change, the same check completes in
+> > 0.06 seconds.
+>
+> Impressive.  Nicely analyzed.
+>
+> Even though this is very much like bending the code only to appease
+> the checker, the resulting code is arguably better in this
+> particular case, so I do not feel as bad as I have on other
+> occasions when we had to work around deficiencies in our tools [*].
 
->  	return starts_with(ctx->current_fixups.buf, "squash") ||
->  		strstr(ctx->current_fixups.buf, "\nsquash");
-> +}
-> +
-> +/* Does the current fixup chain contain a "fixup -c" command? */
-> +static int seen_fixup_edit_msg(struct replay_ctx *ctx)
-> +{
-> +	return starts_with(ctx->current_fixups.buf, "fixup -c") ||
-> +		strstr(ctx->current_fixups.buf, "\nfixup -c");
->  }
+Agreed. I don't think we should ever bend over backwards to appease a
+static analysis tool, *especially* when it results in worse looking
+code. But this case is a strict improvement, and just so happens to
+address the Coccinelle issue. ;-)
 
-It is a bit annoying that "git diff" decided to consider the "}" at
-the end of the otherwise unmodified function to be the one that was
-added X-<.  But thanks to it, we can see this mirrors the previous
-function to check if we have "squash" anywhere.  I wonder what
-diff-algorithm was used to produce this result, but it is an
-unrelated tangent.
+> I see Harald already took this in the latest update.  Thanks for
+> working well together.
 
-It is a bit surprising that we do not carefully parse each line to
-identify a 'squash' or a 'fixup -c', which would make it unnecessary
-to guess whether the current line is what we are looking for or if
-the desired string immediately follows a newline later on.  Still,
-this patch inherits that pattern from the original code, so it is
-not a fault of this change.
+Yup. Thanks, both.
 
->  static void update_comment_bufs(struct strbuf *buf1, struct strbuf *buf2, int n)
-> @@ -2148,9 +2155,14 @@ static int update_squash_messages(struct repository *r,
->  	strbuf_release(&buf);
->  
->  	if (!res) {
-> -		strbuf_addf(&ctx->current_fixups, "%s%s %s",
-> +		const char *fixup_flag = "";
-> +
-> +		if (is_fixup_flag(command, flag) && (flag & TODO_EDIT_FIXUP_MSG))
-> +			fixup_flag = " -c";
-> +
-> +		strbuf_addf(&ctx->current_fixups, "%s%s%s %s",
->  			    ctx->current_fixups.len ? "\n" : "",
-> -			    command_to_string(command),
-> +			    command_to_string(command), fixup_flag,
->  			    oid_to_hex(&commit->object.oid));
->  		res = write_message(ctx->current_fixups.buf,
->  				    ctx->current_fixups.len,
-> @@ -5391,8 +5403,8 @@ static int commit_staged_changes(struct repository *r,
->  				 * message, no need to bother the user with
->  				 * opening the commit message in the editor.
->  				 */
-> -				if (!starts_with(p, "squash ") &&
-> -				    !strstr(p, "\nsquash "))
-> +				if (!seen_squash(ctx) &&
-> +				    !seen_fixup_edit_msg(ctx))
->  					flags = (flags & ~EDIT_MSG) | CLEANUP_MSG;
-
-If 'fixup -c' is anywhere in the chain, we would need to offer the
-user a chance to edit (similar to having 'squash').
-
-It is a bit surprising that the 'squash' detection, for which we
-already had a helper function, was open-coded here.  I also notice
-that the helpers (including the new 'fixup -c' one) do not insist on
-having a space immediately after the verb 'squash'.  Should we add
-one above?
-
-Other than these minor nits, this looks good.
-
-It is a bit disappointing that, with so many users who crucially
-depend on the proper operation of 'rebase -i', we have received no
-review comments on these two patches so far.  Perhaps summer is a
-truly quiet and slow season ;-)
-
-I will wait for a few more days and then mark the topic for 'next'.
-
-Thanks.
+Thanks,
+Taylor
