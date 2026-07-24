@@ -1,81 +1,86 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084412E7BD6
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 18:50:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE2E37F334
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 19:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784919042; cv=none; b=Mowp/1+DHcEA6uX/SV7uLla7eYZejUsEYuv+nyOHlVvKnOHrI9P9xTLAOcN2NpJz0hPYdky3TRESaaKABdEtqyvy+aYVRoYpcwgItFDUPSFEYtLKj7Z7hVAhyUkI3LmQyhIW4q11jcw7zc+VlYDBGbGOId9lT2bJZcg21KN0sJY=
+	t=1784920874; cv=none; b=fhai8Hf1G5AypkgfFTkgc1gKgpQpY89CMSZe+cm6wXU7Rr33wHcZiMtN3bdjXhgWLTAgekfkYh4Nl8ki8+7IKw2RDyk1ZAQDwps9bWquaBbtXs1Tj4a+mG1totIAqM0ZGudSexLg0UI/lcVYQkrCR1QWg9xfPZq2ztjGfTl3z/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784919042; c=relaxed/simple;
-	bh=IkYZScmNDdz3+5SV7jWyKEDqVlhxA6+XvE+RzUx5Lik=;
+	s=arc-20240116; t=1784920874; c=relaxed/simple;
+	bh=lE5PcRZYp8KrIMuuvrvTHImWGtHFZ7CZIJf8rw5MG1Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GJ09DbjQ9arVsqGhZHB1aaVGl24gSrflv76wy0zEXklHExBfFQ9BxuX8bn1B8kyWtnLfBYBqTDLy365xK3Jg1P7Q+wpooCcMbjMemYkuJC5XWg5UZY8B2Rz4omuBQeZGbMmPh425FGI3/CLzWRFgz8Om7WIAXa5qveewhJ9WG5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KPG+tWQH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eSMrstep; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=CnuTsFUMcjAfqGMBh1vEc8rQ+qHld4RyJBV2R49A2QeZP58LSr0lmqOOR6Odp1knfL2YL78goDCj31qzHHAfF/7RIPni9wC2jbTF9cuMxrERMfQqfLM/C4+vildDKr0K8P87VyYzslaX7Shy96JFR+eMRRfcVQCRIUIHAKYZWWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k+bVlnam; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TbKjTLR7; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KPG+tWQH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eSMrstep"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 465091D004A9;
-	Fri, 24 Jul 2026 14:50:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k+bVlnam";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TbKjTLR7"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EA14D7A005C;
+	Fri, 24 Jul 2026 15:21:10 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 24 Jul 2026 14:50:40 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 24 Jul 2026 15:21:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784919040; x=1785005440; bh=WNoFUaXRHs
-	hnTe4QO+CGiImiarO/m18i4CpOLlfke28=; b=KPG+tWQH5TgBjG2y36AwMP7sl/
-	V9moiRvGsG3776pahgGObqzuC1okHJei1hlv9HZFPCLgZvsoEfZPYUpMYreX1TUB
-	5nKupdBmayq+7pQDohV154bBeAbak+JPmNonzyTKxJy9DixKafkg+Zmi3AAxF7c5
-	rYZSuj1uMKDyHPnPPIERyw7yVdCaGIFM7c18Yln5sb8lOAN4Ho9Qh1hPDTlH8wzc
-	nowEsM8PF+tB+UZ+qvTf/If+lCN8zx7KaSvKhowujlkLQOHhVWg9yH5KB/K95hrH
-	pwPb73r8UUrBasYd3DVy78BUnQ9NYNuduQjYFOPFHTKcLPEcKroW6VBhfBmQ==
+	:subject:to:to; s=fm1; t=1784920870; x=1785007270; bh=2vuj+876fY
+	P/AyIYcYzoNgVszmyyrZ/Wbc6zxA+XHfQ=; b=k+bVlnampgqwNV2gMF6G+JehY5
+	fmUr5R2Xwxp8ETjt7REMMPEq88tOfEFDJR2rmHXBVcXIqlHh6ZUmiYMdTEwpFX2o
+	WSD6pOrGjTZsCSK/K90sErLsezE7a7mc5VMJ/NV5LjbiXIcLFrHUoQYbIwn7LmVe
+	IIG9NcBlIdqvGcikcYYcJl0pIXHWbXGvYA7TKnYV7FTAE1W+jdqxThGi/pX4iZtB
+	2R/0Xn0arINVLovP0hgldNAbW53sVhOdQsSpg3dzBprgbK50PITZjOIr8os1YEY5
+	+8oriEn80ekndXdodFpcIGk2FhWxEsPHzWRgam1ETMgLClrsbFDNjuoRwZbA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784919040; x=1785005440; bh=WNoFUaXRHshnTe4QO+CGiImiarO/m18i4Cp
-	OLlfke28=; b=eSMrstepOz0K0qaQbloy2oS5i/S+jBOhqLoahSlfqe6pFZaiu0e
-	yKl20sCECXLG8BShCkqheGDFMqmvT6DIx4rnAPFnsKc22PTOF4BOQ/i0iCY9la1w
-	9OE3KMdCFqcB9qo9UF6hhYX6rRQXpIsd8x6gJLMscNESkS3S7saq+IDxH2cJhnZw
-	zClX76ubmACj4xUpjImPgwAAg5Ykw6dk8r/I2xIslHpwUxJ+mF4w+ukZ5D3idi7n
-	VZfQCGCyIu1ctEtXsOhWmP0eYMuSYIU9pLKi2Wtcekp8aNQk80bg5R+ldsKBTYMF
-	/N8EfjLWXol/r7BOuh/oRYpOkMr+NAdfPmA==
-X-ME-Sender: <xms:_7NjatfOevqT-SF-jsdqVS3ALEa_PuperoqRKokt_Jq7ZMmqrQ8nhg>
-    <xme:_7NjaiozJc7M0K2CFN8gWucqwwJ4rDSrDJHRvlKwrCAwnEBuQqSwjQMW6glVt9z2z
-    9wBdeYieDyxGDc0XomiuojdjDaLmEycbfKt84bNDuhr3tZJ1I7iKQ>
-X-ME-Received: <xmr:_7Njaj6NBP3VuohtBG2MlgIgGdwJHaHO5DSKiWlpKSgsVYMKo0xaA1uzr_YsHmY72G2SkjC3Ik4sg8pENBZdEXUq_G7y0cPa3g>
-X-ME-Proxy-Cause: dmFkZTE0Mcn2WUTRZ375L6KHKjMZFUxCbrHhQzIqkQeaoUtSzhQodXB/bCycF6J8qh5lTY
-    vjo7o74V9Ee0jBZzZoWOqLkHf1ONkOmn2V8ZAlVDIIun4vVm4x+eOpAA+gZHUk7eJkNYZJ
-    +PAkkqMBuGELYTJvFw2zDzvYEzWYo4rk8N+TofQseTf76IOJUtxnKvnKKqs4+oRf/YHRra
-    t02UNHuRyYAAM2uR9baNSwlZ+pKqzTJ+FPoRFVisEduwlqV/LoPzhaeIeLgU3TL9Bn6CXK
-    gOC8dff3O3ZzB8m/NH0pcI7YdgP1Bj91Vawz4jPF9+5kKvZ4zQOJyMwxak8CgdzyG/EEF/
-    FYpp3WguFfx3iz5FWpKyCsdcArjLiPunMVSthzlba+grpNqmyeoenZf+NfT4G+DHAwhAsj
-    EbfW195ZIpay+2hE54D9LHkB8zCVE5Qm7HGBvgWzO/GIRIuEVwBo+hVzc0098+sJXE7i8H
-    pprASzTMZ/Ksa/ktp5H1EondOpICwQ0teQWsMJ7e0KepfBFCKtMSHVUHcVyirlJTJTfCEf
-    wUAbJYC6GBu9ST26vQV0XXB5vKqD2UrU36jT8+HVWTgBz/mAlUSbiCFdCPLgswyqvkvALc
-    SYRktk+4SejWXUwnUMwYn1YReke55sAX7POeJaeOxbHOZHRtxKpn/qCAVRPA
-X-ME-Proxy: <xmx:_7NjagpbyLPpXq6oVG3559j2u66ACh7zG5xRDEh1UBzfQEX3HrFB7A>
-    <xmx:_7Njatg6s5GrE_xDfvwEApmQ0u6Uh72SirqD0P57JJwTEKkNWgwjYw>
-    <xmx:_7NjaiKf36lLKFpceuhdPmxabNP_Qwgv46gSMdYDATkQzNQliRcPkA>
-    <xmx:_7NjalBXWtomyW-s7HnM9XMKsIAMgSNesHHh-sDQaHE_mCMVdr1J2w>
-    <xmx:ALRjaix-2-5XbVa_Omj8LQz6tuPRmRG1SaIKEhSJiDnF48Rk0kI_NWeV>
+	1784920870; x=1785007270; bh=2vuj+876fYP/AyIYcYzoNgVszmyyrZ/Wbc6
+	zxA+XHfQ=; b=TbKjTLR70qDgTDjEPPvTIlGoLmDq8ZBxG10W/OX5kY6cyhj5gVr
+	FWiOZTKP9iP8eUr/qULGpQ90jg0otJgl24qK2J8FjjFnFHDVL9fySmwNqvivGJW6
+	tnwGQrqJyn8a1sjCIrWKBeau/DbK94biuGOck6QCgzjVY2IMJQo7/L5ie+Of+DsO
+	iiyKzOp8OkUYUqjuSPVG6IGiTD6VwYsEvVL8MSlS9BV2CPFNjfWcOx6y3Oyx+Djb
+	dBDi4xhNVMI4AKFChVLjrGWg1xUmGiLKEKc+LGTfRRvF/DAx41TUCXdTa0+G4wx+
+	aWlbCEBSOIpSR30vZQ0+HuGZScarZf2RgSA==
+X-ME-Sender: <xms:JrtjajHaBteM506QALTvTsYeoodF8Si1tl9pg4nzq7HM2Hl_fDclhQ>
+    <xme:JrtjanPTS3TyqyO3DVdz8K3-Iw9qMRjfJFRMx07jBbGwx9up8DSwoM7XUm6-3wtLI
+    E9zvtHemUaf9Y3bWNYXRxoYumgKOh0WnDb8mW8oELcbyA7Jcg>
+X-ME-Received: <xmr:JrtjatfsWO_h0ON6Ko7Jicg7dUsCmBkOp7m-g__k8vqp7tFOCAHeb2IGGrhJvF3_nrwhskKM-bX-Djk2QWEHub8b06zBZXa4KQ>
+X-ME-Proxy-Cause: dmFkZTFdA8KvEJUlRT0VZKUO4rvj/ZmJH/ekv3iW4OJKkVOCg0aGlKC1FnEcalgRXgh5zB
+    3scfEMYMxOFsd64kkDgvUsWBJVaqndOZvN+3/FmYKxPSNDTT7EXoUJ7te20n+5KGKbrskR
+    TZhLXugEpMPv6xfG3/x7rg3ZZVqCplo3f6HZ6r+G/QhM0vtt7x803CzE3hc2hRpNi2rk0I
+    IRMYTZ3yXAkEodqk/Y8ArP0UKXf2GJ9NyKL6W8E7GIaoLVv5xEa01EPdO33GTKhx7GsQ1T
+    mLyzOPhDByDx6FVOVa7eBU0zvZomB9z3Wd2mkBH797psVmOHNe7I7qh8d7YObrh87bgUj3
+    uwEUYVRkQIRYTGS3ujn5qXtqyIFvzG+unyMpKV9BTWFhMgeXheatu6MQWIRP2vl4iSC8s1
+    hjHTJSflcJ3CpRtNi7hvq/oOSt6vLT7M2QuQnHgeqJjImc49jrOKCWeJ644oRB5R65CyAR
+    DHwnrT4MTz1r12JTq+98jvWy7rZRLrg7EThkFtYteX8y7HL0krVt6BXMSBlzCvh02BXd4r
+    ar+5jBilvy+5LxsE1JdViviYTsxsBSMWplEFH1PDg2yeYE4kq/IX42u3fIFiYPA01/0h52
+    +KTab0moOu9+6XTae+cwbJcZUQxHIbPMeENWCnlJ0q726UuMxPhw1vOwvi1g
+X-ME-Proxy: <xmx:JrtjassrexvCNuC6kIDLYTlRAIZQjLF2nHk54QPIJVguef4C4NY7zQ>
+    <xmx:JrtjamnEA_tXWpduI4OmC99Xkl2MUM7oztgLSk4k8CqDXR5ysx7jOw>
+    <xmx:JrtjamxQ2WWB0heXvpyYKVXhHirGsDYj-ka_qW3j4gY80VQaSyxDDQ>
+    <xmx:JrtjagOOkb2prX22CcnfnCEsKBTppJPNTbvgD5IvEGZuCL07s6KIoQ>
+    <xmx:Jrtjar8ZL4-bDmHdWA4xP8EQMI-ryOSXKmAxwjGisSQejHpFFxrQ22x4>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 14:50:39 -0400 (EDT)
+ 24 Jul 2026 15:21:10 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/5] setup: defer object database creation
-In-Reply-To: <20260724-pks-odb-create-on-disk-v1-3-3b3d265d979b@pks.im>
-	(Patrick Steinhardt's message of "Fri, 24 Jul 2026 05:48:42 +0200")
-References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
-	<20260724-pks-odb-create-on-disk-v1-3-3b3d265d979b@pks.im>
-Date: Fri, 24 Jul 2026 11:50:38 -0700
-Message-ID: <xmqq5x246x35.fsf@gitster.g>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
+  jltobler@gmail.com
+Subject: Re: [GSoC Patch v2 5/7] repo: add path.index with absolute and
+ relative suffix formatting
+In-Reply-To: <CA+rGoLcgHYk1BgWyNmJT6SGmo6xb_Q4O=LT46FXaC=+tQ_U-qg@mail.gmail.com>
+	(K. Jayatheerth's message of "Fri, 24 Jul 2026 23:19:16 +0530")
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+	<20260717133015.32040-1-jayatheerthkulkarni2005@gmail.com>
+	<20260717133015.32040-6-jayatheerthkulkarni2005@gmail.com>
+	<845D6852-98F5-4168-82CD-90B3B476BCF5@gmail.com>
+	<CA+rGoLcgHYk1BgWyNmJT6SGmo6xb_Q4O=LT46FXaC=+tQ_U-qg@mail.gmail.com>
+Date: Fri, 24 Jul 2026 12:21:08 -0700
+Message-ID: <xmqqv7a45h3v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,143 +90,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-> In a subsequent commit we'll make the creation of the on-disk data
-> structures of an object database pluggable. This will lead to an
-> in-between state where we have already configured the repository's
-> object database, but it's not usable yet until we eventually call
-> `create_object_directory()`.
+> While bare repos don't have a working tree (and therefore usually no index),
+> scripts do sometimes set GIT_INDEX_FILE to build temporary indexes for
+> tree manipulation.
 >
-> Defer the object database creation so that we handle both steps in the
-> same function.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  setup.c | 35 +++++++++++++++++++++++++++--------
->  setup.h |  9 +++++++++
->  2 files changed, 36 insertions(+), 8 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index 825572f5f1..a7b1b9eaef 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1760,6 +1760,13 @@ enum discovery_result discover_git_directory_reason(struct strbuf *commondir,
->  	return result;
->  }
->  
-> +static void get_object_directories(char **object_directory,
-> +				   char **alternate_object_directories)
-> +{
-> +	*object_directory = xstrdup_or_null(getenv(DB_ENVIRONMENT));
-> +	*alternate_object_directories = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
-> +}
-> +
->  int apply_repository_format(struct repository *repo,
->  			    const struct repository_format *format,
->  			    enum apply_repository_format_flags flags,
-> @@ -1779,8 +1786,9 @@ int apply_repository_format(struct repository *repo,
->  	if (flags & APPLY_REPOSITORY_FORMAT_HONOR_ENV) {
->  		const char *shallow_file;
->  
-> -		object_directory = xstrdup_or_null(getenv(DB_ENVIRONMENT));
-> -		alternate_object_directories = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
-> +		get_object_directories(&object_directory,
-> +				       &alternate_object_directories);
-> +
->  		shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
->  		if (shallow_file)
->  			set_alternate_shallow_file(repo, shallow_file);
+> Should we strictly return an empty string for bare repos (similar to
+> how we handle path.toplevel),
+> or should we return the default <gitdir>/index path in case a script
+> wants to know where it would be?
 
-HONOR_ENV still means we read the environment variable to learn where
-the object directory (which is admittedly a files backend specific
-concept) and alternate object directories (ditto) are.
+The path to the top level can be an empty string if you are already
+at the top level, which is neither an error nor an unusual
+condition.  I do not understand the contrast you are drawing here.
 
-> @@ -1803,8 +1811,9 @@ int apply_repository_format(struct repository *repo,
->  	repo->repository_format_precious_objects =
->  		format->precious_objects;
->  
-> -	repo->objects = odb_new(repo, object_directory,
-> -				alternate_object_directories);
-> +	if (!(flags & APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION))
-> +		repo->objects = odb_new(repo, object_directory,
-> +					alternate_object_directories);
+I expect "tell me where the index is" to return <gitdir>/index,
+$GIT_INDEX_FILE, or whatever Git sets during setup.  In other words,
+whatever repo's '.index_file' member holds when control reaches
+repo_read_index().
 
-And SKIP_ODB_CREATION can tell apply_repository_format() not to
-create an odb there.
-
-> -static void create_object_directory(struct repository *repo)
-> +static void create_object_database(struct repository *repo)
->  {
-> +	char *object_directory, *alternate_object_directories;
->  	struct strbuf path = STRBUF_INIT;
->  	size_t baselen;
->  
-> +	get_object_directories(&object_directory, &alternate_object_directories);
-> +	repo->objects = odb_new(repo, object_directory,
-> +				alternate_object_directories);
-> +
->  	strbuf_addstr(&path, repo_get_object_directory(repo));
->  	baselen = path.len;
->  
-> @@ -2672,6 +2686,8 @@ static void create_object_directory(struct repository *repo)
->  	strbuf_addstr(&path, "/info");
->  	safe_create_dir(repo, path.buf, 1);
->  
-> +	free(alternate_object_directories);
-> +	free(object_directory);
->  	strbuf_release(&path);
->  }
->  
-
-
-> @@ -2867,9 +2883,10 @@ int init_db(struct repository *repo,
->  	 */
->  	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
->  	repository_format_configure(&repo_fmt, hash, ref_storage_format);
-> -	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
-> +	if (apply_repository_format(repo, &repo_fmt,
-> +				    APPLY_REPOSITORY_FORMAT_HONOR_ENV |
-> +				    APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION, &err) < 0)
->  		die("%s", err.buf);
-> -	startup_info->have_repository = 1;
-
-Early in initialization, we no longer recreate the ODB when calling
-apply_repository_format(), and we defer declaring that we have a
-repository until we call create_object_database().
-
-> @@ -2885,7 +2902,9 @@ int init_db(struct repository *repo,
->  
->  	if (!(flags & INIT_DB_SKIP_REFDB))
->  		create_reference_database(repo, initial_branch, flags & INIT_DB_QUIET);
-> -	create_object_directory(repo);
-> +	create_object_database(repo);
-> +
-> +	startup_info->have_repository = 1;
-
-Instead we call create_object_database() rather late, after we
-finish creating leading directories and default files and processing
-the configuration.  I guess this is a prelude to specifying "no, we
-are not doing the files backend but are using this new thing" in the
-global configuration?
-
-> diff --git a/setup.h b/setup.h
-> index 654f10e059..e55d647b70 100644
-> --- a/setup.h
-> +++ b/setup.h
-> @@ -241,6 +241,15 @@ enum apply_repository_format_flags {
->  	 * relate to the object database.
->  	 */
->  	APPLY_REPOSITORY_FORMAT_HONOR_ENV = (1 << 0),
-> +
-> +	/*
-> +	 * Usually, the object database is created after the repository format
-> +	 * was applied. This step is skipped if this flag is set, which leaves
-> +	 * us with a partially-working repository.
-> +	 *
-> +	 * This is useful when initializing a new repository.
-> +	 */
-> +	APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION = (1 << 1),
->  };
-
-OK.
+If a script checks that location and finds no file, that is the
+natural way to learn there is no index.
