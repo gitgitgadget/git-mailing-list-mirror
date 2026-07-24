@@ -1,112 +1,130 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E963F1ABB
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:20:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D813C9880
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:30:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784928049; cv=none; b=h/7z+xdT8imOuZakDoG9lAAg7lCHV9+Qibj3JSuf/e6HAOJo2rmUewlQMbboTd8Gxu6HD0U5eZzMWxX0Mkc6laKP6Qnso8pPaw9kpTCSlctQ1e134G8/jTB8gXXGK3qUd6kdrVHrSlW/nVDL+Wf2HEK3SyR5PWIJ2bWXFIJVdP8=
+	t=1784928614; cv=none; b=hOW14b888uhXqsiVBmiy81f3P6AtVXm76gqTT7vM2X+R9815x7+dfNHkaPozV/Q5M0WIGWgkKtO//e1OR6KgI1uOtFON1bbfPECFN139FjKl6XrcngUa+iBElhWOX/TJ5Sa9OSdfFF1jex6620uLYDts8VrXseZKBgkLxUWmphU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784928049; c=relaxed/simple;
-	bh=32eFPTxUN1Sa3w3POer3JO8cPj6wAfvXQCAEmdUeVKg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cdIsVYfiH3mmy/mqL4z8585aQo97EtEs1z856EZsdB5o1c5STHC58g1n9nSXmw6VbY+dekGmkJHZxUQyEUgKDoLdXKq7YmixM9F5qhFJEGxUahZmln5XQewIbPlNro8fxABH0kZyq2isd/b6y9aa7irX3H1iJBOrh4BQoM67PDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=D9ycfvTf; arc=none smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1784928614; c=relaxed/simple;
+	bh=yFR7PXp65RTldcmoF8n095yeE6xc51Hr8KxNvGFUu94=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=thLNIDzjN5wHULfNe+f3nMDkqpbvD2QHAebD8XBGXFyWGN8h2BKuZNB6Qyor7MWvlJo7LpYPLG+kHEVfUtt1lgyhCfr/IYCN+j1ynus6sDgPqD99F5C2rQ/v0LlyTr7BUTnCJkNB//cDNatDG7L/Z8i8WH8xVd6T1ciIBDLNtms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gq0ncpv0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H9i1Vqzl; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="D9ycfvTf"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-66807ba2f0fso814913d50.3
-        for <git@vger.kernel.org>; Fri, 24 Jul 2026 14:20:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1784928044; x=1785532844; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GOugYSvTR2jtYUB1wyD1mPDEwCfG/+iUkjjc/fMDTXw=;
-        b=D9ycfvTfkQ6PSbKH7nFrDuZWOv8XP24SY8PG+zQ+DfQjaI7GGftMBdBbWJ5IyQT/Rk
-         aB4l6SKlC+gqU4qq/TfOi5QFGitFA6mlb10wCAoYk6Klpeesnhx6p0yZwwfWiCuxaLt6
-         UtLkvrV3dNBaj5BbyrJ5Yt7Z4yNq18yvy3piw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784928044; x=1785532844;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GOugYSvTR2jtYUB1wyD1mPDEwCfG/+iUkjjc/fMDTXw=;
-        b=jK9uQgHgs+vDMbpUj4FQkNkf/afRmmI+/+lR0tphph5dKllcVdjR7VFPDmCDH1CTXv
-         PBiJCR7r+AvlKG2fqC4q5n0h1e7qFbSXzY7D6Eh0hHznxeFKL5hHgJh7eQPy4Sbov29a
-         ybiCwc1tKfmrrroLCXryWfc+Ls1lAusekKiur33XUO/UgqOX6DF1toPt4sLXieJ/aJXY
-         oYot0ivR3Av0SIrF76Eqc4lbW7Bb7PLlBgWDjFg8MEwvhDOk5a5lJ3gfEnSn6i8bUUVk
-         joIE2jSYyg4k2mXsj2l6KinthkcveyS7AGULbkiQTgxSOScyqrExSIR/77wT8Xq4M4pc
-         btIA==
-X-Forwarded-Encrypted: i=1; AHgh+Rp3MDCU4XXP+8B4o56+8A946m7kLfoQQIhi0Yt0Sf56m38rltmKH3xLqJXDK+IXBi/SNNg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvtBB/AwZXKU4I4Ao6N8g54VBzGgerus004abn5RWZO6gJWhXc
-	g4ZIw6YcwKi+gMrL12ueOv8oQlh0TDtKG6lQHp7aEowlz3ItRPjjk6w3SzO35GK/3OE=
-X-Gm-Gg: AR+sD10LrcPEP5CFyq50Y4og6OhzATT6go+vXKxjYGnbrC5MnpfdhbgfgpK12lXOu0Z
-	kvVgd35hVk9QWqAmvIQzovyqEPBUUf4GaK5Ks0YWpeVdQGGVVopuF2tje9VbwfUjEZhemhEA5lB
-	U4kjEvnueTogWp1jfHM0D3cGTJ6xGgvsMwrOqYF+ok4GwQv+Xn+NYPrVFOFjuPSqe1WYWy4IKvy
-	ZJtDrZsy/Il57/TRkNhdFLg5aMGw2hvueQP0T/8u2tE2RX+ntO730VM7D3LIGZKh3RVO4ZZr+rw
-	IvE0dbHnDMq0Gz1x0VmxYkwZ7f1FFY1Lp+Wba/+WnO5i5DizGjiBfGtdV45hVUO1jSp3aZy2eCj
-	Ko9bjAw66D681aROfPrBDPe1fGmVOTesQRZsYukCdmy0BJsfkQuClhZZWGwD6L0doGXwGiFqrv0
-	yRj88cO8VeO6X9RSZSYqoQ3U+zXWbZwpbEPaI3AXprcrZLSb3nGlVVH03QIZOeFXT9n0VhM5Gr6
-	i0KxRcQP4Fyu6UDu5iFy/DRTrMU58Ira/tvJImzZnJm
-X-Received: by 2002:a53:a701:0:b0:668:296d:3dc with SMTP id 956f58d0204a3-668a50201a5mr1925068d50.109.1784928044203;
-        Fri, 24 Jul 2026 14:20:44 -0700 (PDT)
-Received: from com-79390 (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-668c6d30e62sm39269d50.3.2026.07.24.14.20.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 14:20:43 -0700 (PDT)
-Date: Fri, 24 Jul 2026 16:20:41 -0500
-From: Taylor Blau <ttaylorr@openai.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: tnyman@openai.com, git@vger.kernel.org, haraldnordgren@gmail.com
-Subject: Re: [PATCH] branch: avoid slow strvec Coccinelle matching
-Message-ID: <amPXKfnoTzUuuyMN@com-79390>
-References: <20260724091152.27794-2-tnyman@openai.com>
- <xmqq33x89zn9.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gq0ncpv0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H9i1Vqzl"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 032E17A01FA;
+	Fri, 24 Jul 2026 17:30:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 24 Jul 2026 17:30:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784928607; x=1785015007; bh=t/KOO9hI8z
+	hJE9eS9OwonaQTHmVmbFw4fclM5bnbU68=; b=Gq0ncpv05Do7mhu9TGYxpiYm/A
+	CLQ6lFcddsTSBdRPD3nb64pN9HguRihhvqTNVfpLKrejWIpfX5CNkYrrJpUl1/wU
+	7NPNpcT/n0HZf2yRcwHIZn8b2wymn3oc454CVY9wLtciDaNGIgWX70DOraaPgYqE
+	tV3g7qQss7yhp0arg5ol5a58y/uuGrKLCtOiEsXxzNSou9ZpNEEjMhLxag89xVOD
+	FOPpu4yO5aR5nfxKC18tzBrZrj0CiPcyhNNoLrHadFPU9gacrKVanNQBBPcrK6/g
+	7BQERGJ1YL4SQXr2gNHTAQjjpU85ZshxclHDI2NBUZW0t1kwVcEgLkHIU6gg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784928607; x=1785015007; bh=t/KOO9hI8zhJE9eS9OwonaQTHmVmbFw4fcl
+	M5bnbU68=; b=H9i1VqzlR5fLT8tPlZjcLjSEjjXMRhOc8YRYnMOSpc8+buIaPEZ
+	0cpve0Iq7l+8LOGUFrRckfvTTuyt8v+pKWQWLozOonux/Bq3vh7Y3rKqF1YzpYMc
+	BkrQmWVnlsDlglKVAoCXbrEU7LcHCGA9lpKGX7EoNXPJ1g8f26Y0XiYGA92O9UM3
+	oJFHGrbG4V2vNA8iuQ2Tjwgt9y+Hs79owPDdnO62g+IrmghJoRlVSvjr2uoGAChP
+	NNVqX1fM+uVNjVafx7967xo9DxKyV4LU315YjxcmdxYOj969tNAz+2WEm+Mb/wF4
+	9lXJXY0T8T6q/EWh+9BQk5kjDoBNsyenxEg==
+X-ME-Sender: <xms:X9ljasq8gJUkuc9u6qRaEaW4OfZa7RI8lylWnw7I35nMRbPJz6gXKA>
+    <xme:X9ljaqHVdzmNSjmQzw65H2H34MQ3DfVOxdDw9nhdWS7kTsV4B6W_DWjCZHEIAohtp
+    XjRl0Z180aIA6yzfzODeUTfZ41Ere9EOghqi_udkg1ZN5ZunaA3>
+X-ME-Received: <xmr:X9ljaumj3uSJ4fduelHnLq6MlwYLYMGrJ89Ysmg4Df8ra2rAsST4rGStGDfGAXID3Ghl-IIOBgt-fHdIo29kNEBwUyhODhhoHA>
+X-ME-Proxy-Cause: dmFkZTEISh6kqyo8gFLiNx5uO3gVibgUsW4FAfK81AXIckIpzKgS4Kiry9z0A3vzJDExK3
+    Gbq5c6pKv4j1u7UIhjdYu/YP7KvgsV4mdOVUtJdWffjfrfwvD6qAyp4TVWMqrO6cEd8ryz
+    6+CKReymindRH0TCcDONHODYPkWmGP/BttnotmCLoxVZ1JIg5ZvhjDKf1B5EosKVBxXW/+
+    WvDvE4EhfFg3Ns/GUNMtaxV5aG9FT43dk1R08USmY1EegakuoIoycK/ed3fOehWZeJe7oz
+    3KWt25IY/7EVEJKucREH2KDt/38T0Sot3tI+3HxZEdxXR22wclNugkTXDlL7x+mm7MpBaN
+    hPnJ/HawASKsESlF0i+L6rCkMMwTVjdrDNJrKxk9pZUCRcLQoMFcVhPETLT+Xav38SGZvB
+    M6fbCS/dfakRVyKVPn3hLb2YM2gjxEgz1HM26egklh4AE0jtntC+eNnI320USx4nG1T+Ua
+    Psf5Kmta7uAx/iYkjjloZ3o3b+PH4E2SKK3xoEhRHllvh4aXrCzvRTvJe8bliQl6v5SY6v
+    5EJUHMrDZBCDgoVu5VrHcDMcizi7oCmefB8uisd/9WfPMfNn0/J1RIihd9vsVI53Xhx476
+    RnqOF16Rt+thGTKa/37Ri+J58RWfTfaWFkBHGXbZyBm4AnlvRMJTVfOpPNUw
+X-ME-Proxy: <xmx:X9ljatmjpYvOwfJv4ymBopkiY4KpGnSt5TNJlpXTaNQ83PP6mPCKFQ>
+    <xmx:X9ljavs0Kev_DqTUvLgyRh7-8Xal9BnZ2CsIa5Tz-sJb8-tudjUgHQ>
+    <xmx:X9ljagmSGrKYNrrirwyOgz0f4QWk7rXbFTFZhYPtGx2ZF80rRGiu9g>
+    <xmx:X9ljaqtNo5CIn8H20nLxvELj9AlAzQtfRvGJHvGxxSZHUuY_D2Ycpg>
+    <xmx:X9ljao29_a8GRrIVlOwoI4OhPsaIJ8WrcbXLr6VZIUrz1QPiw52jmJut>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Jul 2026 17:30:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] diff: ignore unmerged paths outside prefix with
+ --relative --cached
+In-Reply-To: <20260715060523.GA517940@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 15 Jul 2026 02:05:23 -0400")
+References: <20260715060523.GA517940@coredump.intra.peff.net>
+Date: Fri, 24 Jul 2026 14:30:05 -0700
+Message-ID: <xmqqo6fw3wki.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq33x89zn9.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Jul 24, 2026 at 08:27:06AM -0700, Junio C Hamano wrote:
-> tnyman@openai.com writes:
->
-> > From: Ted Nyman <tnyman@openai.com>
-> >
-> > The --delete-merged implementation declares a loop index at function
-> > scope and reuses it to walk its strvec of upstreams and its list of
-> > candidate branches. Coccinelle 1.1.1 spends hours matching this against
-> > the separate_loop_index rule in tools/coccinelle/strvec.cocci, causing
-> > the static-analysis job on 'seen' to reach its six-hour timeout.
-> > ...
-> > The CI failure reproduces locally with Coccinelle 1.1.1: applying
-> > strvec.cocci to the original builtin/branch.c still times out with
-> > "spatch --timeout 120". With this change, the same check completes in
-> > 0.06 seconds.
->
-> Impressive.  Nicely analyzed.
->
-> Even though this is very much like bending the code only to appease
-> the checker, the resulting code is arguably better in this
-> particular case, so I do not feel as bad as I have on other
-> occasions when we had to work around deficiencies in our tools [*].
+Jeff King <peff@peff.net> writes:
 
-Agreed. I don't think we should ever bend over backwards to appease a
-static analysis tool, *especially* when it results in worse looking
-code. But this case is a strict improvement, and just so happens to
-address the Coccinelle issue. ;-)
+> diff --git a/diff-lib.c b/diff-lib.c
+> index ae91027a02..a23119b852 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -467,7 +467,7 @@ static void do_oneway_diff(struct unpack_trees_options *o,
+>  	if (cached && idx && ce_stage(idx)) {
+>  		struct diff_filepair *pair;
+>  		pair = diff_unmerge(&revs->diffopt, idx->name);
+> -		if (tree)
+> +		if (pair && tree)
+>  			fill_filespec(pair->one, &tree->oid, 1,
+>  				      tree->ce_mode);
+>  		return;
 
-> I see Harald already took this in the latest update.  Thanks for
-> working well together.
+OK, so if diff_unmerge() gives a NULL for a path outside out area of
+interest, we of course do not fill the filepair and return.  We
+won't do any further processing, like showing the entry or recursing
+into it, and diff_queued_diff hasn't been told about this path (as
+diff_unmerge() returns NULL before queuing the pair), so it is the
+end of story for this path here.
 
-Yup. Thanks, both.
+Looks good to me.
 
-Thanks,
-Taylor
+> diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+> index 2c8493fe66..167be0bdcc 100755
+> --- a/t/t4045-diff-relative.sh
+> +++ b/t/t4045-diff-relative.sh
+> @@ -245,4 +245,13 @@ test_expect_failure 'diff --relative with change in subdir' '
+>  	test_cmp expected out
+>  '
+>  
+> +test_expect_success 'diff --relative --cached with change in subdir' '
+> +	git switch br3 &&
+> +	test_when_finished "git merge --abort" &&
+> +	test_must_fail git merge sub1 &&
+> +	echo file0 >expected &&
+> +	git -C subdir diff --relative --name-only --cached >out &&
+> +	test_cmp expected out
+> +'
+> +
+>  test_done
