@@ -1,73 +1,72 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBDD3C3BF1
-	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F5B377AB3
+	for <git@vger.kernel.org>; Fri, 24 Jul 2026 21:46:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784929098; cv=none; b=taIyzPdo5HjdeaDs5Q0YERoBna4hA2tlFXdbWEroUARPC5AqTIvKCQ3xUhz7uQR9X3g5bhE/S2qXJ96I5+BQH9BtCaBZ3gagjLP40rVT+ylzkNg/R3tQShs7TLPizQNn/lxlpVfGTIgQsQ5eR0veaw2mpuvel7yRIZnnmRj/VKY=
+	t=1784929592; cv=none; b=SMw49NnCbpQocHpqw9ii7HVAV3C+KntsN35/cmvybqjvd/snZJGLeT2TT/EwkgAovmxtRlGcUM9sm5rHJvpIAqfpF3PSFGwEOcr8MP6su/Eqacl8F3oce68t1LCY4vWNgX8uXMWvwRGgS6gYYOvc5f4eDzTVH1nKjjswVpmdpjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784929098; c=relaxed/simple;
-	bh=0ysojLbDyJJx5mu8cRM2MfOrkOqtLlxRWyPiC9Sd5UI=;
+	s=arc-20240116; t=1784929592; c=relaxed/simple;
+	bh=7/Fn4p0m8UdlmN/DZxBvUCkVSEfFp0YhzTMSEBEfriM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CpWKStGEe0qmOlLsOhwBNN6CITH1v+Uv5POlhMQVc25CosKByBKVOdg5QDKoAyX0aRVE2DjFiNjdFcWa54m9LcMsu1IhkYeXwY2tZcec3RHiBKBF/nDGV8um4t8abDZmnWzHwipV8bo7a1HRUCtIx3fKQXlToLx2fBSIW8N3qaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=FWn8J1MI; arc=none smtp.client-ip=74.125.224.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=BIVkxYeBbXBSCwCw2GAjPiRXwM4vVwW75TiwGXGt5FSJXc5+OzlTDTLPBlEsVg86DTH5fw62QMldPIUEdtWZFR5lPpOo7wYTEFRoOOmTdHbzY+k7M5AXE2xZo6dZaL60yXQddIr1LSeG2/w5DpXjhzfB6MF8CBZZmmCD49Uxx8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=BDKz0yq8; arc=none smtp.client-ip=74.125.224.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="FWn8J1MI"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-6626b5ace23so1880743d50.0
-        for <git@vger.kernel.org>; Fri, 24 Jul 2026 14:38:16 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="BDKz0yq8"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-66843304cbaso906716d50.2
+        for <git@vger.kernel.org>; Fri, 24 Jul 2026 14:46:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1784929095; x=1785533895; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1784929588; x=1785534388; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=wUH1f19bZb1A2nr4PnRwohrfpfrpzoKGwSpbAr9cN4g=;
-        b=FWn8J1MIQIb5K5SisuQFJo3x1IGtNVk3KY8tEedzaYMRa4o6oe3Nc4vNlpnZdZBdeC
-         mtYTVRAHRGhM9vfA5yMuJ3eIY2UiUqugGCNX1jXGz1nd7xE7XNRP5ecIjVwP6Flwrjz+
-         2T2BnwBd4x5yPjkCXnVqBUGmq/CRzW1v06A/U=
+        bh=lUkyAz7x+E2RaIcoPAPbP3SPDisO44TFthD7H56Gzl8=;
+        b=BDKz0yq8kQlXjtLAtlFQf8Syq08qiek2YBTMXJi2AotYGajrzUZodIYba68j5WJGiI
+         IjSlGJ/R0rjZk+NqDPk3kb84b2c9QtleWRGmHHrDfBHyYmsjYV7pYRUkcBAsaAvScTOD
+         ocrp0Ds259D8t/BZdyEmWSHkK6U49Q2rCRWlA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784929095; x=1785533895;
+        d=1e100.net; s=20251104; t=1784929588; x=1785534388;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=wUH1f19bZb1A2nr4PnRwohrfpfrpzoKGwSpbAr9cN4g=;
-        b=Ya8uLb4lC31+MarfO5LELeIOdE+hcvkKAKDraIMe08qomAvfGMSTDu2h5jvHs1Gh8Z
-         CALEzxeWXGkN0LoaIRLWBAVlH+MO9QX3NY7BvfMx0g8ElZAnqr65zgzkTEzN8ckQNbDv
-         0WtJhOJdisDZcvP9T5byQYkEJyY6czeZEu0fE1V8CYGM9pQyUhlAUL78klIbj/8d0Rf/
-         cQeScMOHe2jA8EMdgDL90YXWK6xlZKIpKm/8dC7aCxBPQQ1PoSEti7zDZnFLwzNay5rA
-         5uTKk5oPCB09SUYRBB2vDrcw3OnmY36x9wsf4iF5kp+x+M5ye2TZM7047h90gk70qjA0
-         ZiAg==
-X-Gm-Message-State: AOJu0YxSLDpBCvp1e+1z/CxNCk+3WbGykx9zm/bCB1o6BfaXO2X4ZZuI
-	0VCxHJp50jd8EVSr7/HU8A12brfOGs2YsJwpJinaA2UBVBerXyas5a/W25Ga1NYftjBb0KN9jXh
-	iOb4eVV4=
-X-Gm-Gg: AR+sD118mPLlt25opUnrDfigHquILts3V3qtxuZsTFZ5pDBrI+KszpbNxYYluHiZRbY
-	b6g//A//Cpjm+4jNhJ/G8MOs9ScVSUT22St5pBLn6z/ekQw7YQgN714sDyp7dLnve+mbsMUC2nW
-	cTM/0JJgu1htfTW7wC7mHBn3immZwUETEgofxSE+ugbZxI81S89LOJquDJwd6GJhl7VM/lUZxfL
-	0rv5xFOFuEMRSjeSQk3ymNPn4ix341bVIiEVF7pMC8zohhQ2MHjkdKYLyW3vQBaQzuUFQIIm4AY
-	fqv7gHcZu+HwUKWSt1mw4m2uehv7FHa/KKNUeMKoQmj0fWGCAZx/Cd/f0Bc5NcZuZ1fCelq2PY+
-	sF5doy8n/jxlYZVcbR8nSG62tAuwoJnnfLKlyxIJ+f4FHpHNpJZzQ+PYBGIgxA3HfIwLK4QTgF/
-	czvfykkEhWq+9kH0FZeR6qOXQKNLZxOKMbYMX89EBtS6Gco9ZH6BXlbd4EKezC8wmf3UBCWmCUb
-	W76691bvnOLyQVkj9eGgMdIs5wx628NRrcA611otp0t
-X-Received: by 2002:a05:690e:b82:b0:664:ae87:c771 with SMTP id 956f58d0204a3-668c041ba50mr576969d50.37.1784929095525;
-        Fri, 24 Jul 2026 14:38:15 -0700 (PDT)
+        bh=lUkyAz7x+E2RaIcoPAPbP3SPDisO44TFthD7H56Gzl8=;
+        b=na+yZC790Kx/Yys8m8RjoeNfrtctfZ1RllxZADQp4rHF2ZCpiMwXSfsu+r8Fg+Y8NQ
+         Tl4EhLH2ICKHZFMLuLlspgzFuys21dJCJxecz+Mtki6xeWFxe2Cnyca2pIs3TwBx/+3X
+         EvqWGYyOuTh2ptxxPAjiyfZL9bR/TLjhce2kwB7ydCl5p5VpoR0Vn2JzKy0WkomQ8tbN
+         b8dHjsjiaQZyJNj4oTKtV8/jg/lA8jEYNlC3uA4IucwR404TC0BDihXLykpUR43YkJhP
+         Dw/5vqSBy7SXyLgNsOpVWDsRgocS0KEQVhKXCs5wroR4st8rYYuFuOIMJjmZB2dwCyDo
+         5PAw==
+X-Gm-Message-State: AOJu0YwHvWu2GcMZM/xj5M9oZ1nIh9DRbFSz/8qJxzdsLGg0bAcTDyG7
+	4vt0b33UCaaPehaXywpt1UsJuUkOvVnucnoNJ1MSqOm88i/y7463Uu/bmSXer9iPLdo=
+X-Gm-Gg: AR+sD11PuTdqgwcAMOiDI26Z7CukoB+ZZQKT4GK5fNmVj7JAhwnCxswdiI2Q+s5prPE
+	W3ofljAnKHQFVC+fYyM8rrpsiszjBhmNra9efph8tspmHFhVk/pZG1twjLXm0jc3iTS0Rz61MDo
+	Z2bPhSZCUnpnO6f0tKJicRi9zBnEDtWXqgH9+FVI1rFiBHzBDyHI8JlD7bjzuax1OWl8NTRv24n
+	ACcA5chPWMYgWFOiGqFCRjvOukYTCIjRfAr6Jb1ipR1I0TtIDtvV0wjoxApjHBFRHi0Nk2dCbpW
+	HdZi7CTPVkmnZtYrkIg78NHxgEJT3sOzII7IIMo++BDgq3yidtV8WWqsidA5RMRsKBueqfzkYqB
+	kZQP3g8oX8YW5y0Qt8aJT0IvPemmOx+D250w7IyCdvg5gXwVOqAg3/aC7rNfWw+iNesQEPo3I41
+	si5WR4BbNrzqH455fKh50o9NgqI3czJf8GaqasSdpFNlhBgUIFnu+4RD0NLRbECQpU6DJ5DjV6Z
+	ics6O2NCWZp+hCtE01tBACSBhgVdLH7pJQSoOSg8jSmerls/9kEsBuHmXWt1kuytg==
+X-Received: by 2002:a05:690e:4382:b0:668:8b09:bd13 with SMTP id 956f58d0204a3-668a4baa723mr1703101d50.18.1784929587826;
+        Fri, 24 Jul 2026 14:46:27 -0700 (PDT)
 Received: from com-79390 (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-668c6d61cc4sm59545d50.5.2026.07.24.14.38.14
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-668c6ad2d93sm78773d50.0.2026.07.24.14.46.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 14:38:15 -0700 (PDT)
-Date: Fri, 24 Jul 2026 16:38:12 -0500
+        Fri, 24 Jul 2026 14:46:27 -0700 (PDT)
+Date: Fri, 24 Jul 2026 16:46:25 -0500
 From: Taylor Blau <ttaylorr@openai.com>
 To: Ted Nyman <tnyman@openai.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com, peff@peff.net,
 	ps@pks.im, karthik.188@gmail.com, sandals@crustytoothpaste.net,
 	avarab@gmail.com
-Subject: Re: [PATCH v4 1/3] http-fetch: correct --index-pack-arg documentation
-Message-ID: <amPbRCAOLr-pSWfj@com-79390>
+Subject: Re: [PATCH v4 3/3] fetch-pack: accept "pack" output for packfile URIs
+Message-ID: <amPdMQH3QRLnDpl0@com-79390>
 References: <cover.1784676106.git.tnyman@openai.com>
  <cover.1784874850.git.tnyman@openai.com>
- <a6a40b80461377452a0b2c9204c3a659ab60a7d5.1784874850.git.tnyman@openai.com>
+ <d9063deb60354eb731e34c453cd6730e1098f905.1784874850.git.tnyman@openai.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,57 +75,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a6a40b80461377452a0b2c9204c3a659ab60a7d5.1784874850.git.tnyman@openai.com>
+In-Reply-To: <d9063deb60354eb731e34c453cd6730e1098f905.1784874850.git.tnyman@openai.com>
 
-On Fri, Jul 24, 2026 at 01:14:23AM -0700, Ted Nyman wrote:
-> The --packfile mode accepts one --index-pack-arg=<arg> option per
-> argument passed to index-pack, but its documentation and option
-> dependency errors still refer to the plural --index-pack-args form.
-
-Good find, it looks like this dates all the way back to 27e35ba6c6
-(http-fetch: allow custom index-pack args, 2021-02-22). Thanks for
-taking the time to correct it.
-
-> diff --git a/Documentation/git-http-fetch.adoc b/Documentation/git-http-fetch.adoc
-> index 2200f073c4..09b5d675ee 100644
-> --- a/Documentation/git-http-fetch.adoc
-> +++ b/Documentation/git-http-fetch.adoc
-> @@ -50,11 +50,11 @@ commit-id::
->  	URL and uses index-pack to generate corresponding .idx and .keep files.
->  	The hash is used to determine the name of the temporary file and is
->  	arbitrary. The output of index-pack is printed to stdout. Requires
-> -	--index-pack-args.
-> +	one or more --index-pack-arg options.
+On Fri, Jul 24, 2026 at 01:14:25AM -0700, Ted Nyman wrote:
+> When index-pack finds an existing keep file it reports pack rather than
+> keep. Accept either result from http-fetch, and only register a keep
+> lockfile when this fetch created it.
 >
-> ---index-pack-args=<args>::
-> -	For internal use only. The command to run on the contents of the
-> -	downloaded pack. Arguments are URL-encoded separated by spaces.
-> +--index-pack-arg=<arg>::
-> +	For internal use only. An argument to the command run on the contents
-> +	of the downloaded pack. This option can be specified multiple times.
+> Read the pack/keep prefix and hash without consuming any following fsck
+> output, validate the reported pack hash against the advertised hash, and
+> exercise a packfile URI fetch with a pre-existing keep file.
+>
+> Signed-off-by: Ted Nyman <tnyman@openai.com>
+> ---
+>  fetch-pack.c           | 33 ++++++++++++++++++---------------
+>  t/t5702-protocol-v2.sh | 31 +++++++++++++++++++++++++++++++
+>  2 files changed, 49 insertions(+), 15 deletions(-)
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 29c41132ee..e9f24fbd63 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1887,9 +1887,10 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  	}
+>
+>  	for (i = 0; i < packfile_uris.nr; i++) {
+> +		bool created_keep;
+>  		int j;
+>  		struct child_process cmd = CHILD_PROCESS_INIT;
+> -		char packname[GIT_MAX_HEXSZ + 1];
+> +		char packhash[GIT_MAX_HEXSZ + 1];
 
-Interesting. The plural "--index-pack-args" form says that it specifies
-the command to run on the downloaded pack, as well as arguments which
-are separated by spaces. Two thoughts:
+OK, so we keep track of whether or not we got "keep" as part of the
+output.
 
- - I think the "arguments are URL-encoded separated by spaces" claim was
-   not true even in 27e35ba6c6, so dropping that seems like a strict
-   improvement to me.
+While here, "packname" is renamed to "packhash", which I think is
+reasonable, especially to indicate that the buffer is sized accordingly.
+We happen to read the preceding "pack" or "keep" into that same buffer,
+which I think is fine. If we wanted to be pedantic we could read that
+into a separate buffer, but I don't think such separation is necessary.
 
- - The new form says "An argument to the command run on [...]", but I
-   believe that this option is also used to specify the name of the
-   command to run itself. I wonder if it may be worth saying something
-   like "The first instance specifies the command to run. Subsequent
-   occurrences specify its arguments."
+>  		const char *uri = packfile_uris.items[i].string +
+>  			the_hash_algo->hexsz + 1;
+>
+> @@ -1907,16 +1908,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  		if (start_command(&cmd))
+>  			die("fetch-pack: unable to spawn http-fetch");
+>
+> -		if (read_in_full(cmd.out, packname, 5) < 0 ||
+> -		    memcmp(packname, "keep\t", 5))
+> -			die("fetch-pack: expected keep then TAB at start of http-fetch output");
+> +		if (read_in_full(cmd.out, packhash, 5) != 5 ||
+> +		    (memcmp(packhash, "keep\t", 5) &&
+> +		     memcmp(packhash, "pack\t", 5)))
+> +			die("fetch-pack: expected pack or keep then TAB at start of http-fetch output");
+> +		created_keep = !memcmp(packhash, "keep\t", 5);
 
-> diff --git a/http-fetch.c b/http-fetch.c
-> index f9b6ecb061..601a77c3c1 100644
-> --- a/http-fetch.c
-> +++ b/http-fetch.c
+Makes sense.
 
-Changes in this file look reasonable. Likewise, it makes sense that we
-do not have any changes in the test suite, since this option did not
-exist in a plural in the first place ;-).
+>
+> -		if (read_in_full(cmd.out, packname,
+> -				 the_hash_algo->hexsz + 1) < 0 ||
+> -		    packname[the_hash_algo->hexsz] != '\n')
+> -			die("fetch-pack: expected hash then LF at end of http-fetch output");
+> -
+> -		packname[the_hash_algo->hexsz] = '\0';
+> +		if (read_in_full(cmd.out, packhash,
+> +				 the_hash_algo->hexsz + 1) != the_hash_algo->hexsz + 1 ||
+> +		    packhash[the_hash_algo->hexsz] != '\n')
+> +			die("fetch-pack: expected hash then LF in http-fetch output");
+> +		packhash[the_hash_algo->hexsz] = '\0';
+
+Likewise. The rest of this file and the test also look good.
 
 Thanks,
 Taylor
