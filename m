@@ -1,69 +1,70 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9666327C09
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3A33AA195
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:32:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784979143; cv=none; b=DVXnUPg5MvdlF0n7vDTv/27YqKg4FHdZulG2/K/nOuh2mF0wVnTA8o69h6lg1U+KKGJZIBvislxdSxKouyYJrVTHDq0mrAF6Tblovq+//YA5m/TZ6ZnvZNFzyPRCdm5n/A3G6jEjvZIC7nZKsJ9Mmu63ILn52cJcQSe7nx3VoSI=
+	t=1784979145; cv=none; b=pjmCg5+ccKWWzAG6wxTzvdMZCQGD/wBgbDESAgFIGA1M0U6HTW3cLe0Ba7zVhuN3BNlAqbEtKKla9ivlA9UHSVDphW2GRiKKPac6TrrJBrkBKdjmUup3YNbRvBYzWKmYCgO9EonLOvEHgs5m3QUJJx7r8QlddXFn1t9hXRkM4+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784979143; c=relaxed/simple;
-	bh=CEs0Hd09f0tGWI4L9AdnKtNTQYkDKhGpxxb0qfrlNYA=;
+	s=arc-20240116; t=1784979145; c=relaxed/simple;
+	bh=Wuc7cq+LI6wzhu7rFrWJbqTxCcBTwUCn95b3vuwe1nQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=W1yBPJpKznpKwsPyxDXl3bRKQgpMU+cnhzyN99wMS1OnHFXGrnZTCfyyPEigk3X01Xjk4MeVbUkKa/Xu6C3rwZWloG/44/KPBTnUAtNYI9+sLt84NrDBPl5eeP3Jmrc1+7Vb0+JoUV5lUh0qk2s9Vby/5zSrelkW5e4cIRzrwcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hKvLJFZZ; arc=none smtp.client-ip=209.85.161.42
+	 MIME-Version:To:Cc; b=XHCNL6qkHEzzRrltPotl1vQ0DkFEfu5A0VyR8HALq0uEE3O+m4TqwywtPGvXfqXuj+jqU6AweBLrQoUXOmGPwJF5RyxXY+ppSDRkTgaD+e9QpQyhJQukOLWHlCgw+Eo66cl7eFmj+44KfNguhUQPBZH8KV7BN241tZD/6DesDsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GbgdBCqA; arc=none smtp.client-ip=209.85.210.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hKvLJFZZ"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6aae36ea5c4so700718eaf.1
-        for <git@vger.kernel.org>; Sat, 25 Jul 2026 04:32:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GbgdBCqA"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7eb42a2f5feso518440a34.1
+        for <git@vger.kernel.org>; Sat, 25 Jul 2026 04:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784979140; x=1785583940; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784979143; x=1785583943; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=iTKfp+oLzvssGuYxciuJlIma9AGuKXh1fR1UGNyXNXQ=;
-        b=hKvLJFZZ562eHYIDAmkvzRocyzAtU8O4pxzHbO/hXSwbBf7rGZAfCSJUuNsxJ6xRu0
-         suOkOOx4rbcMTcfdaCQAIjbpmIWZzUYApz6gOVy6MouAo27KjiZEe/KKtXtaVe6W/LwE
-         xPRVfYYxoJlcpU3VwMjX1SeOnU2Ofi74TMHqTftsQKt3Qq4YdDHFbIXPEvAoDHQLNnH4
-         bckG/HUDHqjfNz7/QDwLQpt4zWX2Od7vU+FftxjfjZE4s8RHuqhOnyzKm2o+sfzJtf+H
-         x+TijmjxLSJo1erhHeHAKo2CafXZpEHYcIEBm25iBTln3HnzKMa0yQL2P/YeS3lrO6zV
-         QSsA==
+        bh=afzC8R8OGz0QxpxnicSSr0MCsGnOV/2oIz6okRgg0Sk=;
+        b=GbgdBCqA5xJHtN5jRkYOEtwmC33hLVvjHHtpmK1arb9BKJn+5hj/O9fwkzyuNv8m6d
+         HMg2wno6iHsZI1yVvoWDT0uCIfglSuo+xkYNFS5s5cih/4JzQPftFNxPICK4DS2oSRMJ
+         dPfIZy84+VdSgejrYDlTK42Oxa5s/jy9NdcxjwLkRomBjy2sUZo0d7vX9g71bjj+yQzi
+         JzdyW8KeDQJUFa56HYmk6duIKXBI/2o1/qdpfONffEe7+OAzWT9CqRVvtNFi0UKlyiD4
+         08RqGk5Du3iLbEMWecSUbOgi/al1epdulgfdvqaEpZpdO1qe2QXh2YOD1EtQtwLf6k9L
+         V1MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784979140; x=1785583940;
+        d=1e100.net; s=20251104; t=1784979143; x=1785583943;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=iTKfp+oLzvssGuYxciuJlIma9AGuKXh1fR1UGNyXNXQ=;
-        b=jLHbwX/xRPF82xDUnEvwO0xSXmBbIi2DtewCHN9pzkYiNOECFD0FzzyAxD2vl85JY+
-         NLhyr6EYV+CUyWs+Md1jtFnC11a/3Pmc0Xye+aP19XGhbkkcvKU9OXIQZ12hsUa15YsN
-         4ewja4DhujEn0NNR1iWosbFyZNTSZxNkLszhfYhzmkS6jekKfVLX3t5zvQnjEfoKwOKm
-         WX54b75GNao84Gzjf+bivzoWiS3VOPprK3DoZjSkDcODudPs0m4zyHTWmwA4b37jnY9Z
-         +h0ILxmq7YAt8z/MBCVK0mcANFmlHulj2FCVrcnx9KH5QX2F/N06fSkF2c5oF+wqdjnZ
-         N/Ow==
-X-Gm-Message-State: AOJu0YxmlPOUL0bBoc4/eWsoYJMwS99L9oOVK6WkyPQHWSWqYtAMEgwW
-	v5fExTZECr8W9U6x7HAPUA+xkajt5wXHfX8Oa7U1pq6P6cESFAAR4oP5f/O0bw==
-X-Gm-Gg: AR+sD11mSxBNLERjrSS4B05xHXryurSSzmbYJzSqdVcRuE3hXIfAY9IVt0+nBekx89O
-	fk3XIILBSbBOsMQL9Yrgw7os582eWIQ7ytYFUDRDi452513anR0kmlVauYv3UHHeaINRqLSXq+3
-	XCVS9c5m2+JO/1C+KtJq7kplOrx9wq8UROsKvWR7oiN9in8ct4X4Sf38Q0wEc+i0xySRn1G0n8I
-	6cRH4LnmpqpTxnPSKvvAA+dYPnCD47vO5f8x65AsSLRt5YqhYP9xI4TvjQD1ThAMH5hnUbQUjAJ
-	XrbKCeYkeDX4OCBOFKkmjmtV1vU8db21NCEs5jKx/7DRlQxNIVcRMMA0fXZFDsxtbhQFwXUDE3i
-	PP4SioVteBuMTwhL6iSSiek6tQgwjFAaWrTHb/MS9wU9uFN2LQOowuakdxJAMEjg3tb6BePVuXK
-	t/jWw9
-X-Received: by 2002:a05:6820:169f:b0:6aa:edca:e171 with SMTP id 006d021491bc7-6aaff86142fmr1543648eaf.19.1784979139948;
-        Sat, 25 Jul 2026 04:32:19 -0700 (PDT)
+        bh=afzC8R8OGz0QxpxnicSSr0MCsGnOV/2oIz6okRgg0Sk=;
+        b=e6y5SOzltpMGUKCZb2OnzKZ2ELQxadEkmblonE8ds1pZrjV99i1eyhX2RyF6N+1bRL
+         bcqrcR72xYQvcDaIDmJLIIIXX1cTjAJ00riqNGgeKfTxKxmyBfEyXdqSAffu+WJRWeN6
+         mAffd+ueFDbPVegB7rcnitXBnclx9I/RMm1mdxasx2vBUeR/aen3bHAsh+mS8WukyPHC
+         FLQhGZMZ/ERc19xX4baS+LTV7w0st4vVG2jB/H6zYz6aDo6ZnpvA+ws8/WtHJwhZnwfH
+         9CRbBmoE1AalIGUw/yT35GhWa7wlWHZ8VbPW1oiTBGR7Uyr2hs6ANBe5fgx4BylwLmvd
+         05lg==
+X-Gm-Message-State: AOJu0YyXZpuGWahSoBddT0pDarXoU/UmI3D0am0HfACzK6xmpgHGaqAW
+	lVAVWInKOUKyEDAv/HtD0+hqf3shwNxo9AMHrzJnAAG9nCUR7MLYEFphec+2AAGy
+X-Gm-Gg: AR+sD10Tr1DLc2YfWDUwSKezCvShpdgI8I7tQC4bQ6mrZdMRrjw711fCMrmBXRY0dMX
+	fMZcYbhXHtBI9zztOxr5b+TpUBfUKzFBlaqd0Y++PRxIrwePmzWP0SwjZwbSw1qHKHRN1y8c0Oz
+	yZ5PhJlx+4SBWqpynuJT2QiO1VJf9VZzcvdbJ1i7CBOo9OrAYtwlIObUI5qSzQSW/hC0670n3A4
+	Rj/vMZhC8G0sUq3DisGn8hdxPEruUTsongJsitY3MWU3DI2VlGqcYx8qjJ9PS25TjcjO2jVcbWn
+	tMJU2TTMj+SPfPRvYZ+/aUlcewPfDZSfaFV+Dj0oZm/tEsYgA9KKHNdWu6H+X/WB+g2mauXf6KS
+	LaLic5Nt+RMYaNXCHLKGyXbvyzSjCKBm+Ov9xSpXgXU/q2McFu0XMjq/VI9bR0KWX59D8BN9rCC
+	ItPTXH
+X-Received: by 2002:a05:6830:2a0e:b0:7e9:e094:db6d with SMTP id 46e09a7af769-7ee78a532a6mr1481455a34.4.1784979142845;
+        Sat, 25 Jul 2026 04:32:22 -0700 (PDT)
 Received: from [127.0.0.1] ([132.196.94.33])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6aaf973036dsm1650518eaf.14.2026.07.25.04.32.17
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ee2a108679sm8320716a34.27.2026.07.25.04.32.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jul 2026 04:32:18 -0700 (PDT)
-Message-Id: <pull.2285.v23.git.git.1784979136.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2285.v22.git.git.1784921375.gitgitgadget@gmail.com>
+        Sat, 25 Jul 2026 04:32:21 -0700 (PDT)
+Message-Id: <0c4fe549cbab2d2fb69ca66b24292ab2f3d5d762.1784979136.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v23.git.git.1784979136.gitgitgadget@gmail.com>
 References: <pull.2285.v22.git.git.1784921375.gitgitgadget@gmail.com>
+	<pull.2285.v23.git.git.1784979136.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 25 Jul 2026 11:32:09 +0000
-Subject: [PATCH v23 0/7] branch: delete-merged
+Date: Sat, 25 Jul 2026 11:32:10 +0000
+Subject: [PATCH v23 1/7] branch: add --forked filter for --list mode
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,294 +78,379 @@ To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
     Johannes Sixt <j6t@kdbg.org>,
     Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
-Delete branches that have already been merged on upstream.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Changes in v23:
+Add a --forked option to "git branch" list mode that lists only
+branches whose configured upstream matches <branch>. The argument
+can be a ref (e.g. "origin/main", "master"), a remote name like
+"origin" for the branch its origin/HEAD points at, or a shell glob
+(e.g. "origin/*"), and may be repeated to widen the filter.
 
- * Use a loop-local size_t iterator for --forked patterns.
- * Simplify upstream-prefix stripping into an explicit fallback.
+It is an ordinary list filter, so it combines with the others:
 
-Changes in v22:
+    git branch --merged origin/main --forked 'origin/*'
 
- * Loop variable int when appropriate to avoid typecast.
+lists branches forked from origin that are already merged into
+origin/main, and --no-merged inverts the question.
 
-Changes in v21:
+This is the building block for --delete-merged, which deletes the
+listed branches once they have landed on their upstream.
 
- * Change loop variables to prevent CI timeout.
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ Documentation/git-branch.adoc |  12 +++-
+ builtin/branch.c              |  18 +++++-
+ ref-filter.c                  |  70 ++++++++++++++++++++
+ ref-filter.h                  |  10 +++
+ t/t3200-branch.sh             | 117 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 224 insertions(+), 3 deletions(-)
 
-Changes in v20:
-
- * Protect branches transitively required by a surviving local upstream
-   stack. Traverse upstream chains once and defer delete-set mutation until
-   traversal completes.
- * Make stacked-branch handling independent of ref iteration order and
-   update the documentation accordingly.
- * Clarify variable names with regards to branch names (short) to reduce
-   confusion.
-
-Changes in v19:
-
- * Fix bug where dry-run would still remove config, added test coverage.
- * Redesigned --delete-merged as a repeatable upstream selector with
-   optional positional patterns limiting deletion scope.
- * Protect same-name upstream branches independently of push-default
-   configuration.
- * Simplified flags handling where local caching became complicated when
-   mutating values.
- * Clarified assertions in tests.
-
-Changes in v18:
-
- * Instead of keeping the whole chain of upstream branches, keep only the
-   ones an unmerged branch still needs. When a kept (merged) branch in turn
-   tracks a branch that is being deleted, clear its now-stale upstream
-   config.
- * Rework spare_stacked_bases() to record the kept bases and, in a second
-   pass, clear the upstream of any whose own base is going away. Build the
-   to-delete list with strset_for_each_entry() instead of re-walking the
-   candidate array.
-
-Changes in v17:
-
- * Keep a merged branch when another surviving branch still tracks it as its
-   upstream, so --delete-merged no longer deletes a branch out from under
-   one stacked on top of it.
- * Move the --dry-run and branch.<name>.deleteMerged opt-out fully into
-   their own commits.
-
-Changes in v16:
-
- * Convert delete_merged_branches() to take an unsigned int flags argument
-   instead of separate quiet/dry_run booleans, matching delete_branches()
- * Reuse the strbuf across the skip-config loop (strbuf_reset per iteration,
-   single strbuf_release after) instead of allocating and freeing it each
-   time
- * Rewrite the --delete-merged tests as integration tests: branches that
-   land commits upstream, with deletion and the checked-out, upstream-gone,
-   and push-equals-upstream safety cases exercised together in one run and
-   output asserted via test_cmp
- * Collapse the many per-aspect test repos into a single reused repo set up
-   by a setup_repo_for_delete_merged helper, and rename helpers off the old
-   pm_/prune naming
- * Nest single-repo setup sequences in ( cd ... ) subshells instead of
-   prefixing every command with -C
-
-Changes in v15:
-
- * Renamed --prune-merged to --delete-merged throughout. Not necessarily
-   final, but something to advance the discussion.
- * --delete-merged now silently skips not-yet-merged branches instead of
-   warning.
- * Initialized the delete_branches() flag locals where declared. Only force
-   stays deferred.
- * delete_branches()/check_branch_commit() doc and code cleanups: redundant
-   branch NULL checks dropped, ref_array candidates = { 0 }, a BUG() for the
-   unreachable non-branch ref, and reworked --delete-merged doc wording.
- * Broadened the --forked tests (local commits for realism, remote add -f,
-   --forked coverage), renamed the misleading trunk fixture, and replaced
-   the misnamed detached branch with git checkout --detach.
-
-Changes in v14:
-
- * Fixed a git branch -d -r regression (broke t5404/t5505/t5514): the
-   remotes path set a local force but not the DELETE_BRANCH_FORCE bit that
-   check_branch_commit() reads, so it wrongly ran the merge check.
- * Made flags the single source of truth in delete_branches() so the bit and
-   the derived locals can't disagree.
- * Works locally, but GitHub CI has problems that are there for other
-   branches too, hopefully not related
-   (https://github.com/git/git/pull/2285).
-
-Changes in v13:
-
- * Reworked --forked into a real ref-filter applied in apply_ref_filter()
-   instead of a post-pass, so non-matching branches are never allocated.
- * Match exact --forked patterns on full refnames (only globs use the
-   abbreviated upstream), and dropped the old helper machinery, forward
-   declaration, and string_list in favor of a strvec.
- * Replaced the boolean parameters of
-   delete_branches()/check_branch_commit() with a single unsigned int flags.
- * --prune-merged now collects candidates via filter_refs() rather than its
-   own branch walk.
- * --prune-merged now takes its patterns as positional arguments (e.g. git
-   branch --prune-merged origin/main 'feature*') instead of repeating the
-   option.
-
-Changes in v12:
-
- * Reworked --forked from a standalone action into a --list-mode filter.
- * Switched --forked and --prune-merged to repeatable OPT_STRING_LIST
-   options.
- * Dropped the bare-remote-name resolution for --forked, the argument is now
-   a ref or a glob.
-
-Changes in v11:
-
- * The flags now take a branch, not a remote. --forked and --prune-merged
-   accept a literal upstream short name like origin/main or a wildmatch
-   pattern like origin/. The old --all-remotes flag is gone, since origin/
-   covers that case.
- * The prune guard now compares @{push} against @{upstream}. A branch is
-   spared when these are equal. That is the trunk like case, such as local
-   main tracking and pushing to origin/main, where "fully merged to
-   upstream" cannot be told apart from "just pulled". Only branches that
-   push somewhere other than their upstream, typically fork based topics,
-   are candidates. The earlier /HEAD by name guard that the reviewer
-   rejected is gone.
- * New --dry-run for --prune-merged.
-
-Changes in v10:
-
- * --forked / --prune-merged now take a branch glob instead of a remote name
-   — origin, origin/*, origin/release-- all work. This replaces the
-   remote-only form and subsumes the old --all-remotes flag, which has been
-   dropped.
- * New --dry-run for --prune-merged.
-
-Changes in v9:
-
- * --force no longer has special meaning with --prune-merged; reachability
-   is always enforced. Use git branch -D to delete an unmerged branch.
-   Matches how git branch's other read/safe actions treat --force.
- * Synopsis drops [-f]; "not fully merged" hint points at git branch -D.
- * Dropped the --prune-merged --force tests.
-
-Changes in v8:
-
- * Delete only when the branch's work is actually reachable from its
-   upstream
- * Skip branches whose upstream is gone (even with --force)
- * Simplified the internal safety flag to live in one place
-
-Changes in v7:
-
- * --prune-merged now checks if a branch is merged into its own upstream
-   first. If the upstream is gone, it checks against the remote's default
-   branch instead. If neither exists, the branch is refused (use --force to
-   delete anyway).
-
-Changes in v6:
-
- * --prune-merged now measures merged-ness against the remote's default
-   branch instead of the candidate's upstream — so the decision no longer
-   depends on which branch happens to be checked out locally.
- * delete_branches() / check_branch_commit() gained a per-candidate override
-   that lets a caller substitute a different "what counts as merged"
-   reference (or skip the check). branch -d callers pass NULL and keep their
-   existing semantics.
- * prune_merged_branches() resolves each candidate's push-remote HEAD and
-   threads it through, so --prune-merged --all-remotes measures each
-   candidate against its own remote rather than a single global reference.
-
-Changes in v5:
-
- * Drop commit 'fetch: add --prune-merged'
-
-Changes in v4:
-
- * Resolve each remote's HEAD and collect the targets into a
-   protected_default_refs set in collect_forked_set.
- * In prune_merged_branches, skip a candidate when its upstream is a
-   protected default ref and the local branch name matches the default
-   branch's leaf name (so a local main tracking origin/main is spared, but a
-   renamed trunk tracking origin/main is not).
- * Also skip when the candidate's push ref points at a protected default
-   ref, so a topic branch configured to push to origin/main is never pruned.
- * Tests: spare the local default branch; only protect by matching leaf name
-   (not by upstream alone); spare a branch whose push ref is the remote
-   default.
-
-Changes in v3:
-
- * s/remote-tracking refs/remote-tracking branches/g
-
-Changes in v2:
-
- * The whole feature moved out of git fetch and into git branch. git fetch
-   --prune-merged now just calls git branch --prune-merged after fetching.
- * The fetch.pruneLocalBranches and remote..pruneLocalBranches config
-   options are gone, replaced by per-branch opt-out via branch..pruneMerged.
- * New git branch --forked lists local branches whose upstream lives on the
-   given remote (read-only building block).
- * New git branch --prune-merged deletes those branches, but only if their
-   tip is reachable from the upstream tracking ref; --force skips that
-   safety check.
- * New git branch --all-remotes lets --forked/--prune-merged operate across
-   every configured remote at once.
- * The currently checked-out branch in any worktree is always preserved.
- * branch..pruneMerged=false lets you exempt a branch (e.g. a long-running
-   topic branch) even with --force; doesn't affect explicit git branch -d.
- * delete_branches() got a warn_only mode so bulk deletion prints a one-line
-   warning per skipped branch instead of the noisy four-line hint that git
-   branch -d shows.
- * New section in git-branch docs; git-fetch docs trimmed to just mention
-   --prune-merged.
- * New tests in t3200-branch.sh for the new branch flags; t5510-fetch.sh
-   shrunk since most logic moved.
-
-Harald Nordgren (7):
-  branch: add --forked filter for --list mode
-  branch: convert delete_branches() to a flags argument
-  branch: let delete_branches skip unmerged branches on bulk refusal
-  branch: prepare delete_branches for a bulk caller
-  branch: add --delete-merged <branch>
-  branch: add branch.<name>.deleteMerged opt-out
-  branch: add --dry-run for --delete-merged
-
- Documentation/config/branch.adoc |   7 +
- Documentation/git-branch.adoc    |  49 +++-
- builtin/branch.c                 | 275 ++++++++++++++++++---
- ref-filter.c                     |  70 ++++++
- ref-filter.h                     |  10 +
- t/t3200-branch.sh                | 393 +++++++++++++++++++++++++++++++
- 6 files changed, 773 insertions(+), 31 deletions(-)
-
-
-base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2285%2FHaraldNordgren%2Ffetch-prune-local-branches-v23
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2285/HaraldNordgren/fetch-prune-local-branches-v23
-Pull-Request: https://github.com/git/git/pull/2285
-
-Range-diff vs v22:
-
- 1:  90aa528bef ! 1:  0c4fe549cb branch: add --forked filter for --list mode
-     @@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const c
-      +static const char *short_upstream_name(const char *full_ref)
-      +{
-      +	const char *short_name = full_ref;
-     -+	(void)(skip_prefix(short_name, "refs/heads/", &short_name) ||
-     -+	       skip_prefix(short_name, "refs/remotes/", &short_name));
-     ++
-     ++	if (!skip_prefix(short_name, "refs/heads/", &short_name))
-     ++		skip_prefix(short_name, "refs/remotes/", &short_name);
-      +	return short_name;
-      +}
-      +
-     @@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const c
-      +	const char *short_name;
-      +	struct branch *branch;
-      +	const char *upstream;
-     -+	int i;
-      +
-      +	if (!skip_prefix(refname, "refs/heads/", &short_name))
-      +		return 0;
-     @@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const c
-      +	if (!upstream)
-      +		return 0;
-      +
-     -+	for (i = 0; i < filter->forked.nr; i++) {
-     ++	for (size_t i = 0; i < filter->forked.nr; i++) {
-      +		const char *pattern = filter->forked.v[i];
-      +		if (has_glob_specials(pattern)) {
-      +			if (!wildmatch(pattern, short_upstream_name(upstream),
- 2:  048c002cb4 = 2:  2d20015ba9 branch: convert delete_branches() to a flags argument
- 3:  bb93303df3 = 3:  34b37aeb43 branch: let delete_branches skip unmerged branches on bulk refusal
- 4:  e70e64c866 = 4:  606ce4082c branch: prepare delete_branches for a bulk caller
- 5:  7dbfc6e243 = 5:  5fd74f0050 branch: add --delete-merged <branch>
- 6:  6f27770b9f = 6:  6494be7c75 branch: add branch.<name>.deleteMerged opt-out
- 7:  4a42b6f5f9 = 7:  7102c931e2 branch: add --dry-run for --delete-merged
-
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index c0afddc424..b0d66a6deb 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -13,6 +13,7 @@ git branch [--color[=<when>] | --no-color] [--show-current]
+ 	   [--column[=<options>] | --no-column] [--sort=<key>]
+ 	   [--merged [<commit>]] [--no-merged [<commit>]]
+ 	   [--contains [<commit>]] [--no-contains [<commit>]]
++	   [(--forked <branch>)...]
+ 	   [--points-at <object>] [--format=<format>]
+ 	   [(-r|--remotes) | (-a|--all)]
+ 	   [--list] [<pattern>...]
+@@ -51,7 +52,8 @@ merged into the named commit (i.e. the branches whose tip commits are
+ reachable from the named commit) will be listed.  With `--no-merged` only
+ branches not merged into the named commit will be listed.  If the _<commit>_
+ argument is missing it defaults to `HEAD` (i.e. the tip of the current
+-branch).
++branch).  With `--forked`, only branches whose configured upstream matches
++the given branch or pattern will be listed.
+ 
+ The command's second form creates a new branch head named _<branch-name>_
+ which points to the current `HEAD`, or _<start-point>_ if given. As a
+@@ -311,6 +313,14 @@ superproject's "origin/main", but tracks the submodule's "origin/main".
+ 	Only list branches whose tips are not reachable from
+ 	_<commit>_ (`HEAD` if not specified). Implies `--list`.
+ 
++`--forked <branch>`::
++	Only list branches whose configured upstream matches
++	_<branch>_. The argument can be a ref (e.g. `origin/main`,
++	`master`), a remote name like `origin` for the branch its
++	`origin/HEAD` points at, or a shell-style glob (e.g.
++	`'origin/*'`). The option can be repeated to widen the
++	filter. Implies `--list`.
++
+ `--points-at <object>`::
+ 	Only list branches of _<object>_.
+ 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index dede60d27b..3ac1272d7e 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -30,7 +30,7 @@
+ #include "commit-reach.h"
+ 
+ static const char * const builtin_branch_usage[] = {
+-	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
++	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
+ 	N_("git branch [<options>] [-f] [--recurse-submodules] <branch-name> [<start-point>]"),
+ 	N_("git branch [<options>] [-l] [<pattern>...]"),
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+@@ -673,6 +673,16 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	free_worktrees(worktrees);
+ }
+ 
++static int parse_opt_forked(const struct option *opt, const char *arg, int unset)
++{
++	struct ref_filter *filter = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	if (ref_filter_forked_add(filter, arg) < 0)
++		die(_("'%s' is not a valid branch or pattern"), arg);
++	return 0;
++}
++
+ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+ 
+ static int edit_branch_description(const char *branch_name)
+@@ -793,6 +803,9 @@ int cmd_branch(int argc,
+ 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_MERGED(&filter, N_("print only branches that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
++		OPT_CALLBACK_F(0, "forked", &filter, N_("branch"),
++			N_("print only branches whose upstream matches <branch> (repeatable)"),
++			PARSE_OPT_NONEG, parse_opt_forked),
+ 		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
+ 		OPT_REF_SORT(&sorting_options),
+ 		OPT_CALLBACK(0, "points-at", &filter.points_at, N_("object"),
+@@ -838,7 +851,8 @@ int cmd_branch(int argc,
+ 		list = 1;
+ 
+ 	if (filter.with_commit || filter.no_commit ||
+-	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
++	    filter.reachable_from || filter.unreachable_from ||
++	    filter.points_at.nr || filter.forked.nr)
+ 		list = 1;
+ 
+ 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
+diff --git a/ref-filter.c b/ref-filter.c
+index 284796c49b..df6fb143d7 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2744,6 +2744,72 @@ static int filter_exclude_match(struct ref_filter *filter, const char *refname)
+ 	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
+ }
+ 
++static const char *short_upstream_name(const char *full_ref)
++{
++	const char *short_name = full_ref;
++
++	if (!skip_prefix(short_name, "refs/heads/", &short_name))
++		skip_prefix(short_name, "refs/remotes/", &short_name);
++	return short_name;
++}
++
++/*
++ * Match the configured upstream of a branch against the registered
++ * --forked patterns. Exact patterns are compared against the full
++ * upstream refname so they are unambiguous; glob patterns are matched
++ * against the abbreviated upstream so that a glob such as origin/...
++ * works as typed.
++ */
++static int filter_forked_match(struct ref_filter *filter, const char *refname)
++{
++	const char *short_name;
++	struct branch *branch;
++	const char *upstream;
++
++	if (!skip_prefix(refname, "refs/heads/", &short_name))
++		return 0;
++	branch = branch_get(short_name);
++	if (!branch)
++		return 0;
++	upstream = branch_get_upstream(branch, NULL);
++	if (!upstream)
++		return 0;
++
++	for (size_t i = 0; i < filter->forked.nr; i++) {
++		const char *pattern = filter->forked.v[i];
++		if (has_glob_specials(pattern)) {
++			if (!wildmatch(pattern, short_upstream_name(upstream),
++				       WM_PATHNAME))
++				return 1;
++		} else if (!strcmp(pattern, upstream)) {
++			return 1;
++		}
++	}
++	return 0;
++}
++
++int ref_filter_forked_add(struct ref_filter *filter, const char *arg)
++{
++	struct object_id oid;
++	char *full_ref = NULL;
++
++	if (has_glob_specials(arg)) {
++		strvec_push(&filter->forked, arg);
++		return 0;
++	}
++
++	if (repo_dwim_ref(the_repository, arg, strlen(arg), &oid,
++			  &full_ref, 0) == 1 &&
++	    (starts_with(full_ref, "refs/heads/") ||
++	     starts_with(full_ref, "refs/remotes/"))) {
++		strvec_push(&filter->forked, full_ref);
++		free(full_ref);
++		return 0;
++	}
++	free(full_ref);
++	return -1;
++}
++
+ /*
+  * We need to seek to the reference right after a given marker but excluding any
+  * matching references. So we seek to the lexicographically next reference.
+@@ -2979,6 +3045,9 @@ static struct ref_array_item *apply_ref_filter(const struct reference *ref,
+ 	if (filter->points_at.nr && !match_points_at(&filter->points_at, ref->oid, ref->name))
+ 		return NULL;
+ 
++	if (filter->forked.nr && !filter_forked_match(filter, ref->name))
++		return NULL;
++
+ 	/*
+ 	 * A merge filter is applied on refs pointing to commits. Hence
+ 	 * obtain the commit using the 'oid' available and discard all
+@@ -3764,6 +3833,7 @@ void ref_filter_init(struct ref_filter *filter)
+ void ref_filter_clear(struct ref_filter *filter)
+ {
+ 	strvec_clear(&filter->exclude);
++	strvec_clear(&filter->forked);
+ 	oid_array_clear(&filter->points_at);
+ 	commit_list_free(filter->with_commit);
+ 	commit_list_free(filter->no_commit);
+diff --git a/ref-filter.h b/ref-filter.h
+index 120221b47f..9361296e2a 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -67,6 +67,7 @@ struct ref_filter {
+ 	const char **name_patterns;
+ 	const char *start_after;
+ 	struct strvec exclude;
++	struct strvec forked;
+ 	struct oid_array points_at;
+ 	struct commit_list *with_commit;
+ 	struct commit_list *no_commit;
+@@ -110,6 +111,7 @@ struct ref_format {
+ #define REF_FILTER_INIT { \
+ 	.points_at = OID_ARRAY_INIT, \
+ 	.exclude = STRVEC_INIT, \
++	.forked = STRVEC_INIT, \
+ }
+ #define REF_FORMAT_INIT {             \
+ 	.use_color = GIT_COLOR_UNKNOWN, \
+@@ -172,6 +174,14 @@ void ref_sorting_release(struct ref_sorting *);
+ struct ref_sorting *ref_sorting_options(struct string_list *);
+ /*  Function to parse --merged and --no-merged options */
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
++/*
++ * Register a --forked <branch> pattern on the filter. The argument is
++ * either a ref, which is resolved to its full refname, or a shell-style
++ * glob. Branches are kept only when their configured upstream matches
++ * one of the registered patterns. Returns -1 if the argument is not a
++ * valid ref or pattern.
++ */
++int ref_filter_forked_add(struct ref_filter *filter, const char *arg);
+ /*  Get the current HEAD's description */
+ char *get_head_description(void);
+ /*  Set up translated strings in the output. */
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 1ecbafbee1..4ffd224a71 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1755,4 +1755,121 @@ test_expect_success 'errors if given a bad branch name' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--forked: setup' '
++	test_create_repo forked-upstream &&
++	(
++		cd forked-upstream &&
++		test_commit base &&
++		git branch one base &&
++		git branch two base
++	) &&
++
++	test_create_repo forked-other &&
++	(
++		cd forked-other &&
++		test_commit other-base &&
++		git branch foreign other-base
++	) &&
++
++	git clone forked-upstream forked &&
++	(
++		cd forked &&
++		git remote add -f other ../forked-other &&
++		git branch local-base &&
++		git branch --track local-one origin/one &&
++		git branch --track local-two origin/two &&
++		git branch --track local-foreign other/foreign &&
++		git branch --track local-onbase local-base &&
++
++		git checkout local-one &&
++		test_commit --no-tag local-one-work local-one.t &&
++		git checkout local-foreign &&
++		test_commit --no-tag local-foreign-work local-foreign.t
++	)
++'
++
++test_expect_success '--forked <upstream-tracking-branch> filters by upstream' '
++	git -C forked branch --forked origin/one --format="%(refname:short)" >actual &&
++	echo local-one >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <glob> filters by wildmatch' '
++	git -C forked branch --forked "origin/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-one
++	local-two
++	main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <local-branch> matches branches with local upstream' '
++	git -C forked branch --forked local-base --format="%(refname:short)" >actual &&
++	echo local-onbase >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked can be repeated to widen the filter' '
++	git -C forked branch --forked origin/one --forked other/foreign --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-one
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked combines literal and glob arguments' '
++	git -C forked branch --forked local-base --forked "other/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-onbase
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked "*/*" covers every remote-tracking upstream' '
++	git -C forked branch --forked "*/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-one
++	local-two
++	main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked composes with --no-merged' '
++	git -C forked branch --forked "origin/*" --no-merged origin/one \
++		--format="%(refname:short)" >actual &&
++	echo local-one >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <remote> uses the branch <remote>/HEAD points at' '
++	git -C forked branch --forked origin --format="%(refname:short)" >actual &&
++	echo main >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked narrows a <pattern> argument' '
++	git -C forked branch --forked "origin/*" "local-*" \
++		--format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-one
++	local-two
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked rejects unknown branch/pattern' '
++	test_must_fail git -C forked branch --forked nope 2>err &&
++	test_grep "not a valid branch or pattern" err
++'
++
++test_expect_success '--forked requires a value' '
++	test_must_fail git -C forked branch --forked 2>err &&
++	test_grep "requires a value" err
++'
++
+ test_done
 -- 
 gitgitgadget
+
