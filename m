@@ -1,164 +1,95 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AF731E852
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 04:16:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129B54908CD
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 09:09:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784953021; cv=none; b=cVwrOqpqwZ+FeUigwV9hYu/V3YRlAoU0XK2wlAOvj66FhZ3E6PWjdtoVDg3uqrNyab+W/gMDXInXA256F5pBwOBRFJrMMohWVIGKt3K7YfdLIgeXQz/cKYlTkvJaFwCsZQzyPgARViNY9y6Dc7CyGzIMHdP8hFWOmb/fhy06kMs=
+	t=1784970555; cv=none; b=dSw3FIyB6gveAwwaYjFyVhN6Rc1jbJhzsDllaZ2Vp+6yVaUxmMZZxzpVm8ScXKy81Q2QsWzK/8/54zaKYzwTHdkeAX+rM7/JYjErp7EhUcfjoxfZVd9cgcClaWTE6E2vM4om1Pi9VUa6FR4UsJ33f48SLIOVwkmBRfYMhlcclbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784953021; c=relaxed/simple;
-	bh=avjW29tbnCyDZ2DGf/QDnrW4NahUwQ9/MOddXD2lLEc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qDGS9StahjMmavfkfmLdGcEd5Pr/u2t9oOqXtw2alKgVpcVP6+zTfZ8FPIRGL83H1H5jhL77C7wB0OVVsRwJPqBDOolCurWPeDH9ok37veJE4sBHL5iiMS4uiZR199Z+fc1GKKKJ1AgIk4lQJAePpZK/MH+P3MODNtiJoTUweOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M+HnmQBh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jQ3zxuBu; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1784970555; c=relaxed/simple;
+	bh=0FnQhceJ9GCGetNzbA07fYZAXV4XpA/dVg14RasB62c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Neww7OvuYyBTS1zvkQvwmJV616uNa/1pWR1QKbtCXmWXIUmdNdo2SWXvZPkMecGLBjcK4x8jk13K77udbfyhfwvAWhRywlXdSkqfPFtkjBOsBNtgT2E27YpnLc4cMURQdflr0kKpGAWL40ug6FWer+JDoCyK4ViYnYof2VpApQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aWbGCBMI; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M+HnmQBh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jQ3zxuBu"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id DACD4EC02E5;
-	Sat, 25 Jul 2026 00:16:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Sat, 25 Jul 2026 00:16:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784953009; x=1785039409; bh=XoFF+knuLn
-	ZlgUpz/6HkqaEgq6juN6sIx42q1Sp8whw=; b=M+HnmQBhDHXDHo3kG9tjr0XHb/
-	4Re+AHyUJaOXzZ7BnVkNmF4rzPjcewq8T/5TlD20S/2iXLTJI36JZ+24EadC2LIw
-	rwQV6soJPplNzPVgl3FUMdu94KLXNdLf3nggtdyZrqbboVStaVXX5vb8InjiL5BE
-	cutQXzXzTwf/3XgBPyikpfxkNSZI7v8ZarFyErDxM9NsAdX+83KFUHcFIEJYs4uC
-	kcOwcTIIXqeC6UrDPV8ksDG4EB2avW0SRpmxOdWQXpcZ6q+Wx7bLGWk/0UfrA6Q6
-	3pAbQYW9ZqzdHy6NZQjBDNyLTD7iP3QUlvScleHODy9JNM6MFJxoHp1mO9hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784953009; x=1785039409; bh=XoFF+knuLnZlgUpz/6HkqaEgq6juN6sIx42
-	q1Sp8whw=; b=jQ3zxuBud8JoBuegG+jskrY9keDiMRsQXV3XHlZTWyFXEbHnuW2
-	Sd9AxeFD/SSIsb36Fm/l81Yumflkypi2jlwVj0tzg3va1m+NvlXrMDE6j1R/kuy1
-	6LAJkDD2GAkkW7myybuWoKBZQpKduMNGOxEwF4byy34W6Ne4uwza1RC9bD8rySXc
-	XsSZobG4rjIE8yUMlHGePXuS/MNYmWakegt/jZOFg2Y/P9tnzERWtDpF0LgInJ2Q
-	A3Pi5V/gCkzxLePPl4PW73Tm2Tv76pzTsN7nrt59kmu40dtt00XOdzwFMvz+suuB
-	0AejdFg64FUybWywUiuAoHa71Z65ig11P+w==
-X-ME-Sender: <xms:sThkavmjtFuuyIRo5RRnxQfvnLlgqKxnV8XWGV_JILyFneJ4kiaSmw>
-    <xme:sThkalGLlW2-BJI1pzzHFzawwJI6FuwLgZxmcaqaMBJavnEDbFgsDbgV8GuSrPapp
-    pAzUiEASHuIYvi5SK18mjz9Q6LEHS4qy1oyVOhVISCy2BuW25mGzg>
-X-ME-Received: <xmr:sThkan7zxpsjJST3T2SkQfHYUASiAnXTf_CUgmfY2Rky2L76e_ullBaP_l1UXKDl6RU--2xOJmqLz12kuXnJXInv-OxGXsFMAg>
-X-ME-Proxy-Cause: dmFkZTFJb11Mf5MdnVcaDv9iJp4F9gYvu/ksSaT9u3FUodBHP2Xeamk0rTS8sTy+ylBLfa
-    f1IDCHPy8Xt3GzRt2k1InibI4RxjC+JNRHtJ1XYimv95lMKCzs6BbFcjcPpzht+K7CLlfg
-    q0bOQFjhA5dSd+EC4ZBWbjI92+Axad1SmWWbbhLSoTCi38JwmLvnYepr1yMGsxmw9ZBAvK
-    26eKlKvNpdf1Ym8JsIAiqAPhKTo9Lgpzkcqd2EJejcrUzRMsgGrqWnHL5mTqJdH8TMkQ99
-    uDDO0MXC6x51MH4XbHKO0fDSuOS+B2r7zqA8UWzZNMg6Swh5/ve+ZMBhCRbZT8XlgDBPqh
-    rsrf5XbB6ikbS++Okw4iOay/gLBHafheh3s2FDYgzDMeaZcjnhMo/KK2bLyIZvA82Eei+D
-    XcpVdzYNM44pUQelzHJPYFwYymf0Sr+GyXskTHLiA8xhozLnc48wGEOEie28VeZiRvzZ22
-    /Ym4w5C9y9xosgmm7koDEfg4sQaOejiP73IyE5Jhinfs6PUZsqCbqnxlDgiLx9jNJSl9fv
-    t2xdKYgaXvyouj/BRq7/OvR1MUSStbXPAUznPIHTux9xIrwej+9cllDv7PcXvf9ydO0vUg
-    GMMIaVqtTUk7Nx1BKlzPj4oj/RRwAdqAcKrpOclQ+igZBcY0r2NmHMI6zJzw
-X-ME-Proxy: <xmx:sThkatlOUF2_w-TlLdc3EuTC1RnLLhAUeWl3xBEL4CpsWSna65egjQ>
-    <xmx:sThkaspcyQe1al2DmZPPvDlCHutbD_GIi-bPi8u0J8FQFxC2kkoZhQ>
-    <xmx:sThkastdn0KZWJclDbhPfuQsVgBwmRYrKETY2aliA7dcJKZNUyvRjg>
-    <xmx:sThkahGtHYHaNk3OrsDGhLQETHYp90Hs8ek6g2-k-106Jeq2aICUBg>
-    <xmx:sThkavS5WJ4SA7VAIqvpGaXNtlkT7MBUWmlhQn5oAVJmpOekl4tPyw2E>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 25 Jul 2026 00:16:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v22 1/7] branch: add --forked filter for --list mode
-In-Reply-To: <90aa528bef242851ca95794f06a9e9311b83a05d.1784921375.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Fri, 24 Jul 2026
-	19:29:29 +0000")
-References: <pull.2285.v21.git.git.1784889377.gitgitgadget@gmail.com>
-	<pull.2285.v22.git.git.1784921375.gitgitgadget@gmail.com>
-	<90aa528bef242851ca95794f06a9e9311b83a05d.1784921375.git.gitgitgadget@gmail.com>
-Date: Fri, 24 Jul 2026 21:16:47 -0700
-Message-ID: <xmqq33x73dqo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aWbGCBMI"
+Received: (qmail 45531 invoked by uid 106); 25 Jul 2026 09:09:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0FnQhceJ9GCGetNzbA07fYZAXV4XpA/dVg14RasB62c=; b=aWbGCBMIR5OZMDtOdzpk84WU8bGFuhpCGwmu7JXtVPbAVtmagoCCvsUsBxNljrbTMYehRbIGF48XcYfAJa3nLa+WrI2v99ejMLME0H+MsGSetBFYSmli5nAiVJjD3yTlfGFx4pKqa+wGhmfWRyu2CpbFYnxFeSBpYV9AsEmn5DUXMfvhIZO5IrpEmKUJWDNd/YXBXc6e2OexHs5hdOJjvgSmgvN1oXlOPdvEz/bNZmTZyMc4yI95Thxmhe/u26PEjogpHySZ5v+IAa9NwLMo39lrlReD0YodGVhSUcPQBwJ/kpuvMhsOFHf/cakLqZbTc6yX3VFxSaFK+GLNG8XZSA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 Jul 2026 09:09:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 45011 invoked by uid 111); 25 Jul 2026 09:09:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Jul 2026 05:09:16 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 25 Jul 2026 05:09:10 -0400
+From: Jeff King <peff@peff.net>
+To: Ted Nyman <tnyman@openai.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	me@ttaylorr.com, ps@pks.im, karthik.188@gmail.com,
+	sandals@crustytoothpaste.net, avarab@gmail.com
+Subject: Re: [PATCH v3 0/3] packfile URIs: support concurrent downloads
+Message-ID: <20260725090910.GA1438796@coredump.intra.peff.net>
+References: <cover.1783982021.git.tnyman@openai.com>
+ <cover.1784676106.git.tnyman@openai.com>
+ <xmqqldb19evx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqldb19evx.fsf@gitster.g>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jul 23, 2026 at 09:43:14PM -0700, Junio C Hamano wrote:
 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 284796c49b..cbdac1a19a 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -2744,6 +2744,72 @@ static int filter_exclude_match(struct ref_filter *filter, const char *refname)
->  	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
->  }
->  
-> +static const char *short_upstream_name(const char *full_ref)
-> +{
-> +	const char *short_name = full_ref;
-> +	(void)(skip_prefix(short_name, "refs/heads/", &short_name) ||
-> +	       skip_prefix(short_name, "refs/remotes/", &short_name));
-> +	return short_name;
-> +}
+> When merged into 'seen', this topic seems to cause t5550 to hang
+> fairly consistently.  It is not surprising, considering that the
+> topic adds roughly 240 lines to the test script in question.  It is
+> entirely possible that we are seeing an existing breakage from
+> another topic in 'seen' that is exposed by the additional tests.
 
-It is a bit tricky to read the above, which is equivalent to this
+I didn't get any hang locally, but running t5550 with --stress causes
+around half of the runs to fail immediately. That continues to be true
+with v4. So there is presumably some race condition still present.
 
-	if (!skip_prefix(short_name, "refs/heads/", &short_name))
-		skip_prefix(short_name, "refs/remotes/", &short_name);
-	return short_name;
+The failing test is the big one (34) and the failing command is the
+"test -s $tmpfile" call. It looks like the pack has already been indexed
+(at least by the time I look at the on-disk state of a failed example).
 
-which is written in a more dumb way.
+I don't immediately see the issue, though. I could believe that extra
+load fakes out any sleep-based timing tricks, but it looks like the test
+tries to use FIFOs to do everything deterministically.
 
-Unless we are going to add more "if the string does not begin with
-this prefix, try this other one" to the cascade, the dumb "try
-stripping local branch prefix, if not, try the remote-tracking
-branch prefix" way might be easier to understand.
+Diffing the overlap-first.trace file between a working case and a
+failing one, I see (skipping past uninteresting port differences) this
+hunk at the end:
 
-> +/*
-> + * Match the configured upstream of a branch against the registered
-> + * --forked patterns. Exact patterns are compared against the full
-> + * upstream refname so they are unambiguous; glob patterns are matched
-> + * against the abbreviated upstream so that a glob such as origin/...
-> + * works as typed.
-> + */
-> +static int filter_forked_match(struct ref_filter *filter, const char *refname)
-> +{
-> +	const char *short_name;
-> +	struct branch *branch;
-> +	const char *upstream;
-> +	int i;
-> +
-> +	if (!skip_prefix(refname, "refs/heads/", &short_name))
-> +		return 0;
-> +	branch = branch_get(short_name);
-> +	if (!branch)
-> +		return 0;
-> +	upstream = branch_get_upstream(branch, NULL);
-> +	if (!upstream)
-> +		return 0;
-> +
-> +	for (i = 0; i < filter->forked.nr; i++) {
+  @@ -17,4 +17,5 @@
+   <= Recv header: Connection: close
+   <= Recv header, 0000000002 bytes (0x00000002)
+   <= Recv header:
+  -== Info: shutting down connection #0
+  +== Info: end of response with 1048917 bytes missing
+  +== Info: closing connection #0
 
-The 'filter->forked' member is added by this patch and of type
-'struct strvec', filter->forked.nr is of type 'size_t'.  And 'i',
-which is of type 'int', is compared with it.
+So curl sees a hangup on the first connection (even though the second
+one hasn't even started yet!). I'm not sure why, though. There's nothing
+useful in the server.log file. I tried stracing the server process but
+it didn't show much of interest. Both cases write "ready" to
+first-ready, and then the success case immediately sees an accept() for
+the second connection. The failing case waits in accept() and then
+eventually calls SIGALRM (which is way after the failure happens; the
+test has already bailed and so the second connection never comes in).
 
-> diff --git a/ref-filter.h b/ref-filter.h
-> index 120221b47f..9361296e2a 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -67,6 +67,7 @@ struct ref_filter {
->  	const char **name_patterns;
->  	const char *start_after;
->  	struct strvec exclude;
-> +	struct strvec forked;
->  	struct oid_array points_at;
->  	struct commit_list *with_commit;
->  	struct commit_list *no_commit;
+So from the perspective of the server process, everything is fine, but
+curl complains that it didn't get all of the bytes. Weird. The strace
+shows both writing the first 1MB as expected. It's like the connection
+gets hung up for some reason, but I can't tell why or by whom.
+
+-Peff
