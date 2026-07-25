@@ -1,80 +1,86 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCBE19D07A
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 01:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AF731E852
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 04:16:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784944630; cv=none; b=h7iCPRxrHb9EaPrM160kW/McfoJSfi++Iyn4sNlVUMDymsFFIYMr+8Zhx+AbJdu5rf0ysyl+calSFe4BGMYD0NKZkBrhXQRCvYV/4RTEpOmQbzw4wiEXhPPXtVwEBdZO06naeuhdmVwFrPKqf0V/n3RnNBRz8sh1zX38SSiOyB0=
+	t=1784953021; cv=none; b=cVwrOqpqwZ+FeUigwV9hYu/V3YRlAoU0XK2wlAOvj66FhZ3E6PWjdtoVDg3uqrNyab+W/gMDXInXA256F5pBwOBRFJrMMohWVIGKt3K7YfdLIgeXQz/cKYlTkvJaFwCsZQzyPgARViNY9y6Dc7CyGzIMHdP8hFWOmb/fhy06kMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784944630; c=relaxed/simple;
-	bh=U21qGSnjqHc7r9cqLqcTANQyQ9CCFZeXnKshFQUSdsY=;
+	s=arc-20240116; t=1784953021; c=relaxed/simple;
+	bh=avjW29tbnCyDZ2DGf/QDnrW4NahUwQ9/MOddXD2lLEc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LkCEUSKh5UN7Aix1LCN46EIF1qC41jxP9tdfha2SggKEWUKYkBkS3WhiyHU+CCee6nrK09lvANt7Fa1KsBx1wyD36r88KIEpV8zmUwtbet0y33P7+iQpMrFW12caJC5y3B7e56tpdnINmw2AuKubXZG241Va1ExomrF3nGkLTEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Atsa1cHk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rNqkjgze; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=qDGS9StahjMmavfkfmLdGcEd5Pr/u2t9oOqXtw2alKgVpcVP6+zTfZ8FPIRGL83H1H5jhL77C7wB0OVVsRwJPqBDOolCurWPeDH9ok37veJE4sBHL5iiMS4uiZR199Z+fc1GKKKJ1AgIk4lQJAePpZK/MH+P3MODNtiJoTUweOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M+HnmQBh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jQ3zxuBu; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Atsa1cHk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rNqkjgze"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9C8F0EC027B;
-	Fri, 24 Jul 2026 21:57:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M+HnmQBh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jQ3zxuBu"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id DACD4EC02E5;
+	Sat, 25 Jul 2026 00:16:49 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 24 Jul 2026 21:57:07 -0400
+  by phl-compute-10.internal (MEProxy); Sat, 25 Jul 2026 00:16:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784944627; x=1785031027; bh=C70tJI91+C
-	9mJCIn95zHNxrpUZrfzJNRjPXMXnldqac=; b=Atsa1cHkMqWliftucwndbXVLcr
-	mhKSYK71V20jvm8eE2TmIMqF09i8nMd+lzFihbB6OP7PDeDCSnACVcBIh3ZtKJsN
-	8hxKaNxoKensPB3KO6ymzmYZQmZnYmJBVM6aT/7FMd3nVEbxvKkdys5ZdS/ttrxQ
-	oJpQdKkv4TNeO6vpKogYMaQu6D6M5mPl191XIMwc/jW6F17kLQi/7PHa1paGEs6J
-	J9dOYskE38cXon8qWRiwnw9X2hy1MCDsxgPYFUFG0sLiwZIEtV5ADE8snXf+n8w1
-	jDmhzG87K4PpvUVWgPcfG+BQuDqWaMQmW1O6rvJ/GUUDiVUHun4tgUPDjNaA==
+	:subject:to:to; s=fm1; t=1784953009; x=1785039409; bh=XoFF+knuLn
+	ZlgUpz/6HkqaEgq6juN6sIx42q1Sp8whw=; b=M+HnmQBhDHXDHo3kG9tjr0XHb/
+	4Re+AHyUJaOXzZ7BnVkNmF4rzPjcewq8T/5TlD20S/2iXLTJI36JZ+24EadC2LIw
+	rwQV6soJPplNzPVgl3FUMdu94KLXNdLf3nggtdyZrqbboVStaVXX5vb8InjiL5BE
+	cutQXzXzTwf/3XgBPyikpfxkNSZI7v8ZarFyErDxM9NsAdX+83KFUHcFIEJYs4uC
+	kcOwcTIIXqeC6UrDPV8ksDG4EB2avW0SRpmxOdWQXpcZ6q+Wx7bLGWk/0UfrA6Q6
+	3pAbQYW9ZqzdHy6NZQjBDNyLTD7iP3QUlvScleHODy9JNM6MFJxoHp1mO9hw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784944627; x=1785031027; bh=C70tJI91+C9mJCIn95zHNxrpUZrfzJNRjPX
-	MXnldqac=; b=rNqkjgzecfJ18vu3bZk3yuHvUUqrFijrf9sgcUHfQwmiTq/gFVR
-	stis3MPFV0iI+CyohAkOQhkPeJmuntco9vpM0MLgDLSz7Bobqx8y0UHGX1y3+X5Q
-	g7PtPdp2dz2U+BsC28lBZqRAU2J+z33fPFfQdtjPkoX9vICWeiVW0+2uXgyvTaTs
-	RAhpG4u6jBlbA9IKn2OZ3xMSGIIs0XkXt1kKIDyJ6wfvdg0gkqSzkqNj4Z50DEPX
-	vOBGUO33vNSCuY83P0i3RkZRMVNE+/2uVsokAeR+3evyUCxI9iwcbhHyp1m2u0mI
-	/yQCEeOLFSpMrVA/DpKYrpN2eOZgtHjMRWg==
-X-ME-Sender: <xms:8xdkav7t1Xk60m7FB4FSo48hUJhygRfNrKGJ3KZF-Sf95OUUoKK9yQ>
-    <xme:8xdkar5JPyG6EoLqW_qCeTHOHP2LOdOTK9mPQfqHYj9Ztaq9-TLA8kKyIQ_L-DMpm
-    UrDYUJTMZUYmrM0is2YSN0F-MiG9yECPtaaE1u0yR1o6ooHlUgqSno>
-X-ME-Received: <xmr:8xdkarcnRTFDX6Ogh3YoJqzFNsXETkbLqVT0tUg3bRYeVEO15q56hdXq4Asm-5pO4YCC3mQQLEMpdP5BvQ94l-uPAq7ggLI_ig>
-X-ME-Proxy-Cause: dmFkZTGhTaOS060CM7+lP4Sp8EHiTDAzrxIzCaeBhTTjkp3IwKt+LXIvngMBzBJEuvVmOk
-    KleMpc8BOAImAoL+Oo6YKgN7yHExL2+eQgrLuRly66uVaKLguaujhJ0dDWnP3mL6U/Snjd
-    yFqwQZP3J2SPZi4J10mOvTNcB1F/VeX5hAO4G8tzCSsESIytnJSmwbyNiEAsQEH/qLyWA7
-    zhrXSD/esRJXS8K6Du+06cJm1kijXPGBB0RxAeWaxvmw4rQ9ZOCbvw6bZ90x63Ks+BO8+g
-    8IEnViQIalG0jtk2Adm28Pkw6Whh00tJmF6wHY5LGy0EL/CVilDHAgc27sQWay/QYXnLP4
-    p/YZno9f15lgFXlpUtvhbJjhmQsMITEpqzrx35EW2JwW7TvTuPqVahYr29ZgPS++vXduTt
-    cHUca1fpMaeCljfMhuxGw88gQHgqKPG0wpn3t7zT1Fb/qj48mc9+tuZiFrN+/0dGoNjDzD
-    mrbE1ygWVfg8uPD0/x9zZWGMtFmAKfGmuUAupmH9uqdCoKD3hUcTsGrX7Ni1+KguM+xfTn
-    RywwV6wWp/eis3APFHALIu3wXugtDDKY/nBWcyC28NQODz+fF1tbgX/khSlVTEqQO47Ddb
-    7BRbuIwg/ndTLF99UoRTSuRrKyc2vbJMq37HBnwHVZYYiJl/taUYjbDVLAWA
-X-ME-Proxy: <xmx:8xdkavBg9EPxabM8LJDHWMwh4nUAXuhL-KRZ9Gm1dRt5GpeKa0skEQ>
-    <xmx:8xdkau8bpqh2l5LGVJxs21Zptp5ROScBnXrekPRnMJttFBniBel_zw>
-    <xmx:8xdkaqLsvFydaMMv0IYbjRZn8wXRQY7CDzaedm9pr8uiiY7WVSLWcg>
-    <xmx:8xdkanhgTWJuxRQ7I5Yj1WjVjTciySpjk_QmbCG1NGZ3gEewUalS9g>
-    <xmx:8xdkal9IPvBw2Jo9CjtKWx2dEBiDsnmj1xGrFj5rQ8q5HufcY_p8YncB>
+	1784953009; x=1785039409; bh=XoFF+knuLnZlgUpz/6HkqaEgq6juN6sIx42
+	q1Sp8whw=; b=jQ3zxuBud8JoBuegG+jskrY9keDiMRsQXV3XHlZTWyFXEbHnuW2
+	Sd9AxeFD/SSIsb36Fm/l81Yumflkypi2jlwVj0tzg3va1m+NvlXrMDE6j1R/kuy1
+	6LAJkDD2GAkkW7myybuWoKBZQpKduMNGOxEwF4byy34W6Ne4uwza1RC9bD8rySXc
+	XsSZobG4rjIE8yUMlHGePXuS/MNYmWakegt/jZOFg2Y/P9tnzERWtDpF0LgInJ2Q
+	A3Pi5V/gCkzxLePPl4PW73Tm2Tv76pzTsN7nrt59kmu40dtt00XOdzwFMvz+suuB
+	0AejdFg64FUybWywUiuAoHa71Z65ig11P+w==
+X-ME-Sender: <xms:sThkavmjtFuuyIRo5RRnxQfvnLlgqKxnV8XWGV_JILyFneJ4kiaSmw>
+    <xme:sThkalGLlW2-BJI1pzzHFzawwJI6FuwLgZxmcaqaMBJavnEDbFgsDbgV8GuSrPapp
+    pAzUiEASHuIYvi5SK18mjz9Q6LEHS4qy1oyVOhVISCy2BuW25mGzg>
+X-ME-Received: <xmr:sThkan7zxpsjJST3T2SkQfHYUASiAnXTf_CUgmfY2Rky2L76e_ullBaP_l1UXKDl6RU--2xOJmqLz12kuXnJXInv-OxGXsFMAg>
+X-ME-Proxy-Cause: dmFkZTFJb11Mf5MdnVcaDv9iJp4F9gYvu/ksSaT9u3FUodBHP2Xeamk0rTS8sTy+ylBLfa
+    f1IDCHPy8Xt3GzRt2k1InibI4RxjC+JNRHtJ1XYimv95lMKCzs6BbFcjcPpzht+K7CLlfg
+    q0bOQFjhA5dSd+EC4ZBWbjI92+Axad1SmWWbbhLSoTCi38JwmLvnYepr1yMGsxmw9ZBAvK
+    26eKlKvNpdf1Ym8JsIAiqAPhKTo9Lgpzkcqd2EJejcrUzRMsgGrqWnHL5mTqJdH8TMkQ99
+    uDDO0MXC6x51MH4XbHKO0fDSuOS+B2r7zqA8UWzZNMg6Swh5/ve+ZMBhCRbZT8XlgDBPqh
+    rsrf5XbB6ikbS++Okw4iOay/gLBHafheh3s2FDYgzDMeaZcjnhMo/KK2bLyIZvA82Eei+D
+    XcpVdzYNM44pUQelzHJPYFwYymf0Sr+GyXskTHLiA8xhozLnc48wGEOEie28VeZiRvzZ22
+    /Ym4w5C9y9xosgmm7koDEfg4sQaOejiP73IyE5Jhinfs6PUZsqCbqnxlDgiLx9jNJSl9fv
+    t2xdKYgaXvyouj/BRq7/OvR1MUSStbXPAUznPIHTux9xIrwej+9cllDv7PcXvf9ydO0vUg
+    GMMIaVqtTUk7Nx1BKlzPj4oj/RRwAdqAcKrpOclQ+igZBcY0r2NmHMI6zJzw
+X-ME-Proxy: <xmx:sThkatlOUF2_w-TlLdc3EuTC1RnLLhAUeWl3xBEL4CpsWSna65egjQ>
+    <xmx:sThkaspcyQe1al2DmZPPvDlCHutbD_GIi-bPi8u0J8FQFxC2kkoZhQ>
+    <xmx:sThkastdn0KZWJclDbhPfuQsVgBwmRYrKETY2aliA7dcJKZNUyvRjg>
+    <xmx:sThkahGtHYHaNk3OrsDGhLQETHYp90Hs8ek6g2-k-106Jeq2aICUBg>
+    <xmx:sThkavS5WJ4SA7VAIqvpGaXNtlkT7MBUWmlhQn5oAVJmpOekl4tPyw2E>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 21:57:07 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 25 Jul 2026 00:16:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org, Ted Nyman <tnyman@openai.com>
-Cc: =?utf-8?Q?=C3=89ric?= NICOLAS <ccjmne@gmail.com>
-Subject: Re: [PATCH] remote: plug memory leaks
-In-Reply-To: <xmqqv7a33nm9.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	24 Jul 2026 17:43:26 -0700")
-References: <xmqqv7a33nm9.fsf@gitster.g>
-Date: Fri, 24 Jul 2026 18:57:05 -0700
-Message-ID: <xmqqbjbv3k7i.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v22 1/7] branch: add --forked filter for --list mode
+In-Reply-To: <90aa528bef242851ca95794f06a9e9311b83a05d.1784921375.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Fri, 24 Jul 2026
+	19:29:29 +0000")
+References: <pull.2285.v21.git.git.1784889377.gitgitgadget@gmail.com>
+	<pull.2285.v22.git.git.1784921375.gitgitgadget@gmail.com>
+	<90aa528bef242851ca95794f06a9e9311b83a05d.1784921375.git.gitgitgadget@gmail.com>
+Date: Fri, 24 Jul 2026 21:16:47 -0700
+Message-ID: <xmqq33x73dqo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,47 +90,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> The in-core data structure used to keep track of
-> 'url.<real>.{insteadOf,pushInsteadOf} = <alias>' settings is not
-> properly cleaned up when the process is done with it.
->
-> Fix the rewrites_release() function to free not just the 'struct
-> rewrites' instance itself, but also allocated structures that are
-> pointed at by the 'struct rewrites' instance.  One of the embedded
-> structures holds a 'const char *' to point at a borrowed constant
-> string from a configuration callback.  Since the code does not
-> modify this string, stop copying the value (alias URL) before
-> registering it in 'struct rewrite', as nobody is freeing this
-> member, to avoid leaking the extra copy.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * These are not recently introduced leaks as far as I can tell, but
->    the new tests in en/submodule-insteadof-remote-match expose them.
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 284796c49b..cbdac1a19a 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2744,6 +2744,72 @@ static int filter_exclude_match(struct ref_filter *filter, const char *refname)
+>  	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
+>  }
+>  
+> +static const char *short_upstream_name(const char *full_ref)
+> +{
+> +	const char *short_name = full_ref;
+> +	(void)(skip_prefix(short_name, "refs/heads/", &short_name) ||
+> +	       skip_prefix(short_name, "refs/remotes/", &short_name));
+> +	return short_name;
+> +}
 
-It is unfortunately rare to see all CI jobs pass, but today is one
-of those days ;-)
+It is a bit tricky to read the above, which is equivalent to this
 
-With this, and everything in 'seen' reported in the last edition of
-the "What's cooking" report, excluding the
-'tn/packfile-uri-concurrency' topic, CI passes all jobs.
+	if (!skip_prefix(short_name, "refs/heads/", &short_name))
+		skip_prefix(short_name, "refs/remotes/", &short_name);
+	return short_name;
 
-  https://github.com/git/git/actions/runs/30137079882/
+which is written in a more dumb way.
 
-'tn/packfile-uri-concurrency' was tentatively excluded from the
-above as I made a random guess at who the culprit for the t5550
-failure in
+Unless we are going to add more "if the string does not begin with
+this prefix, try this other one" to the cascade, the dumb "try
+stripping local branch prefix, if not, try the remote-tracking
+branch prefix" way might be easier to understand.
 
-  https://github.com/git/git/actions/runs/30130205851/job/89602846186
+> +/*
+> + * Match the configured upstream of a branch against the registered
+> + * --forked patterns. Exact patterns are compared against the full
+> + * upstream refname so they are unambiguous; glob patterns are matched
+> + * against the abbreviated upstream so that a glob such as origin/...
+> + * works as typed.
+> + */
+> +static int filter_forked_match(struct ref_filter *filter, const char *refname)
+> +{
+> +	const char *short_name;
+> +	struct branch *branch;
+> +	const char *upstream;
+> +	int i;
+> +
+> +	if (!skip_prefix(refname, "refs/heads/", &short_name))
+> +		return 0;
+> +	branch = branch_get(short_name);
+> +	if (!branch)
+> +		return 0;
+> +	upstream = branch_get_upstream(branch, NULL);
+> +	if (!upstream)
+> +		return 0;
+> +
+> +	for (i = 0; i < filter->forked.nr; i++) {
 
-for the SHA-256 CI job was.  I have merged the topic back into
-'seen', and the resulting CI run for 'seen' is here:
+The 'filter->forked' member is added by this patch and of type
+'struct strvec', filter->forked.nr is of type 'size_t'.  And 'i',
+which is of type 'int', is compared with it.
 
-  https://github.com/git/git/actions/runs/30138777784/
-
-It has not finished running, so we'll see how it goes.
-
-Thanks.
+> diff --git a/ref-filter.h b/ref-filter.h
+> index 120221b47f..9361296e2a 100644
+> --- a/ref-filter.h
+> +++ b/ref-filter.h
+> @@ -67,6 +67,7 @@ struct ref_filter {
+>  	const char **name_patterns;
+>  	const char *start_after;
+>  	struct strvec exclude;
+> +	struct strvec forked;
+>  	struct oid_array points_at;
+>  	struct commit_list *with_commit;
+>  	struct commit_list *no_commit;
