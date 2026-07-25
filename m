@@ -1,76 +1,80 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD642571A0
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 00:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCBE19D07A
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 01:57:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784940210; cv=none; b=X9bS8rOsJuVHumT+nN4iGmV46iT4TIhs2BU2I6jOb7F4zgUozEm6PSvvXZFaWs6be8gd/ud3LXC+yKEv2PuPHtPcIaTXYN4QbMHAJb1PkLPQ41dt6B6Dbg5YbDIcpS83gYxZopZYD5t6icWCilTKg9V8PdfdYHTkSZHbceyqk5Q=
+	t=1784944630; cv=none; b=h7iCPRxrHb9EaPrM160kW/McfoJSfi++Iyn4sNlVUMDymsFFIYMr+8Zhx+AbJdu5rf0ysyl+calSFe4BGMYD0NKZkBrhXQRCvYV/4RTEpOmQbzw4wiEXhPPXtVwEBdZO06naeuhdmVwFrPKqf0V/n3RnNBRz8sh1zX38SSiOyB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784940210; c=relaxed/simple;
-	bh=i/VHSfV/DzWZs3tCSBxLsO92EO0Ti3E/VcWIwUX8cbA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LFIB5wyUKPA8ezVY2BeNKCd7y6dzDgZGpBTZPRwNdb5PdxJ1FOEsd6ecB0UVuJWvjM8Wo+fbZKTGGS/Il5FT7eMjSc2TJFhh00k7l1ge87Nl2viJLKNo1KX/iAUkTCkr86yVi2DPeWHEHEHKZWTwzHWHlExhYWhebz0/JjNGuHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nYOwcbix; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wgm0rCRO; arc=none smtp.client-ip=103.168.172.146
+	s=arc-20240116; t=1784944630; c=relaxed/simple;
+	bh=U21qGSnjqHc7r9cqLqcTANQyQ9CCFZeXnKshFQUSdsY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LkCEUSKh5UN7Aix1LCN46EIF1qC41jxP9tdfha2SggKEWUKYkBkS3WhiyHU+CCee6nrK09lvANt7Fa1KsBx1wyD36r88KIEpV8zmUwtbet0y33P7+iQpMrFW12caJC5y3B7e56tpdnINmw2AuKubXZG241Va1ExomrF3nGkLTEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Atsa1cHk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rNqkjgze; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nYOwcbix";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wgm0rCRO"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8A5C4EC01DB;
-	Fri, 24 Jul 2026 20:43:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Atsa1cHk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rNqkjgze"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9C8F0EC027B;
+	Fri, 24 Jul 2026 21:57:07 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 24 Jul 2026 20:43:28 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 24 Jul 2026 21:57:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1784940208; x=1785026608; bh=YLifFARasdlRrrYlOk+0qO0ofVGf4hTJ
-	ri1hZzpugBM=; b=nYOwcbixsS2b6Z+TEApFDilAbksiBROKE88VI9gfyVKTKGrD
-	GQyOV/rJvv67CPsDbWoMF0c7RoarCtQ7L7TBY4p7YntP1Ol6D+nowXQwLR/7cY83
-	i0EwIhUbsgAPEQRJGclYWjTxZRrkJKppn87xtXCasZjKVzOQqtSMCQx9RakQNeEt
-	xXJZOt1WnXYMvbbnUOJpSbyinHQ5RP3upH5T3IwWo13E1e0AYOSAq2L3tN5kjscH
-	yP69cbwbsOQ+SY3cf/UkBbMP0/c9V9Klb/Exc9NQZUt8JltSrlrFm2DhdaZFDD4F
-	TgJOYoB+MB+Qy1oGoa/vjnLjsyMUEF8ar1AWTg==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784944627; x=1785031027; bh=C70tJI91+C
+	9mJCIn95zHNxrpUZrfzJNRjPXMXnldqac=; b=Atsa1cHkMqWliftucwndbXVLcr
+	mhKSYK71V20jvm8eE2TmIMqF09i8nMd+lzFihbB6OP7PDeDCSnACVcBIh3ZtKJsN
+	8hxKaNxoKensPB3KO6ymzmYZQmZnYmJBVM6aT/7FMd3nVEbxvKkdys5ZdS/ttrxQ
+	oJpQdKkv4TNeO6vpKogYMaQu6D6M5mPl191XIMwc/jW6F17kLQi/7PHa1paGEs6J
+	J9dOYskE38cXon8qWRiwnw9X2hy1MCDsxgPYFUFG0sLiwZIEtV5ADE8snXf+n8w1
+	jDmhzG87K4PpvUVWgPcfG+BQuDqWaMQmW1O6rvJ/GUUDiVUHun4tgUPDjNaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784940208; x=
-	1785026608; bh=YLifFARasdlRrrYlOk+0qO0ofVGf4hTJri1hZzpugBM=; b=W
-	gm0rCROL6hg6XhETxKORkXu5WNdn+IaOGVUQk3spyYFMpcjVO8U1GYntXnvmtJy6
-	V0rHcNRlyV49iqTSrQWDhRVfPxs3/v7+wVQDulsjTNOylqyl6pWTOKTNVZpsx0a4
-	8v0Ym0hswkeuAKKqx8InFvXr6f1VhIYrP2dGRaz++yh8MCdFREx4Mkhv7SPTmRKx
-	eWkfZi5URx2tYjwFYGLaka5B+o/qsx8rZXQR4xz1AGT95zC1L+1iEQxGVJ9zvpXO
-	/GwDDIVspLXXbl5zJ6FjJ/7udSjJH+MHTfzc6knXioG92Hd9KT1ZhxkjdgqbyAeW
-	aowglPZP6BuJUE5AhYZ5g==
-X-ME-Sender: <xms:sAZkatVRvXVwkQNBasfyUnG5_YJTjFHu8HJPQBF4VSTYR2qiJ_t5bw>
-    <xme:sAZkalAtTxEP-d5BY_zlPEB_tc82VkGD9-tusrT17ubTGYmi6J9kplPTkHKtfnAya
-    BGpdYop0kI41C9ifYOpiYVT0eWkddxX2ue_pu_9s0mn35eeSaYd>
-X-ME-Received: <xmr:sAZkamwzqtu-Jsh9IGi1wWCeRcmzxN-5uwCQ8qaQXjn-jq76Yw0elB9QNJpfqPTWx0i1SIklmhgGDQJztaCIbP2f-ehOFXZfKg>
-X-ME-Proxy-Cause: dmFkZTGotRkIHdYDbalOd9yEukz/MK8XvjSRxTRwNpG2phy1oqZ8gbUN2Eq/LBCiPKXd4N
-    Q4FR/cEgHGSG7CC/ptbLhQ2sn+K32Qzh/h6kheA7FkOAvMr0xVZxRMaHIeCb7n8FBCiyw6
-    17F8Oxx+gNnITkrAu4dtpXplmQYjiuiPFVbb8EG6SN36JLBwjxKIkc7+gWK9Sy7uPPGoNw
-    iW9FFdIQcI3rxe2Evwh4y2TaMwu1oMRMJH4bXbCxAqP3QJw8hglKXToGq0Lj7By7JQg1mm
-    RMzdfS1639+g3YulWTv/+LT+zqdOVRzm4SyjEhh5SrnASKCLBG8II62cUV1ld+DRjklpAl
-    PI40iYFgJxPe7ABAnvlUWbwFpRNmNB+BpjcdAm5UpfpIBbQ9VM8ZRB6IfBik8hw+2y/gCC
-    HGMh05X65ZxqumOIjwcMxpfaPeHswxCIC3G3FBgC3EAxHL2zPizb5HHCjG37cZS41MYEj4
-    cFah5GPe/PF0m0MssqMtCGxK7R4H3Vbmu3vrHDG9qpz2ArmmBSadJxHk8rDmIgJ6BhitUl
-    8sB58rRX0kKgIzoqbW58EV6zJWCFUyPuTuWdG4+l6NJQ4u+W0Db/7sRYsTXZKBu3q3l+7S
-    0aEF77PnkRsiVI4OfBE6ZeLdkbG4Pft8Ul5K7YyxHCyqjrWxOYYbXvNF7S7A
-X-ME-Proxy: <xmx:sAZkaqBwBWpsJicQSdXS5eCgpIK0gljYE6uYYRqkonvq7WPO-iBlvg>
-    <xmx:sAZkarYvYgXaJncIRc5DjmjUXJMvGn9y4IlaXrL8IvaRhaTe6xcVBQ>
-    <xmx:sAZkaqhVBVyz3Tl0T83qy8GfGR5OudKTgI5RIZI8nlI_iRB3BX-iZg>
-    <xmx:sAZkal5y7Q11WhJZlW6jaHXSyPA8S3UbgsH20TuVCCf1z5ibSXEs1A>
-    <xmx:sAZkapCb7M01bHrkr5EFsf3z2N4aRW_REcpnX6ComlWjFpOpGd-GCKcZ>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784944627; x=1785031027; bh=C70tJI91+C9mJCIn95zHNxrpUZrfzJNRjPX
+	MXnldqac=; b=rNqkjgzecfJ18vu3bZk3yuHvUUqrFijrf9sgcUHfQwmiTq/gFVR
+	stis3MPFV0iI+CyohAkOQhkPeJmuntco9vpM0MLgDLSz7Bobqx8y0UHGX1y3+X5Q
+	g7PtPdp2dz2U+BsC28lBZqRAU2J+z33fPFfQdtjPkoX9vICWeiVW0+2uXgyvTaTs
+	RAhpG4u6jBlbA9IKn2OZ3xMSGIIs0XkXt1kKIDyJ6wfvdg0gkqSzkqNj4Z50DEPX
+	vOBGUO33vNSCuY83P0i3RkZRMVNE+/2uVsokAeR+3evyUCxI9iwcbhHyp1m2u0mI
+	/yQCEeOLFSpMrVA/DpKYrpN2eOZgtHjMRWg==
+X-ME-Sender: <xms:8xdkav7t1Xk60m7FB4FSo48hUJhygRfNrKGJ3KZF-Sf95OUUoKK9yQ>
+    <xme:8xdkar5JPyG6EoLqW_qCeTHOHP2LOdOTK9mPQfqHYj9Ztaq9-TLA8kKyIQ_L-DMpm
+    UrDYUJTMZUYmrM0is2YSN0F-MiG9yECPtaaE1u0yR1o6ooHlUgqSno>
+X-ME-Received: <xmr:8xdkarcnRTFDX6Ogh3YoJqzFNsXETkbLqVT0tUg3bRYeVEO15q56hdXq4Asm-5pO4YCC3mQQLEMpdP5BvQ94l-uPAq7ggLI_ig>
+X-ME-Proxy-Cause: dmFkZTGhTaOS060CM7+lP4Sp8EHiTDAzrxIzCaeBhTTjkp3IwKt+LXIvngMBzBJEuvVmOk
+    KleMpc8BOAImAoL+Oo6YKgN7yHExL2+eQgrLuRly66uVaKLguaujhJ0dDWnP3mL6U/Snjd
+    yFqwQZP3J2SPZi4J10mOvTNcB1F/VeX5hAO4G8tzCSsESIytnJSmwbyNiEAsQEH/qLyWA7
+    zhrXSD/esRJXS8K6Du+06cJm1kijXPGBB0RxAeWaxvmw4rQ9ZOCbvw6bZ90x63Ks+BO8+g
+    8IEnViQIalG0jtk2Adm28Pkw6Whh00tJmF6wHY5LGy0EL/CVilDHAgc27sQWay/QYXnLP4
+    p/YZno9f15lgFXlpUtvhbJjhmQsMITEpqzrx35EW2JwW7TvTuPqVahYr29ZgPS++vXduTt
+    cHUca1fpMaeCljfMhuxGw88gQHgqKPG0wpn3t7zT1Fb/qj48mc9+tuZiFrN+/0dGoNjDzD
+    mrbE1ygWVfg8uPD0/x9zZWGMtFmAKfGmuUAupmH9uqdCoKD3hUcTsGrX7Ni1+KguM+xfTn
+    RywwV6wWp/eis3APFHALIu3wXugtDDKY/nBWcyC28NQODz+fF1tbgX/khSlVTEqQO47Ddb
+    7BRbuIwg/ndTLF99UoRTSuRrKyc2vbJMq37HBnwHVZYYiJl/taUYjbDVLAWA
+X-ME-Proxy: <xmx:8xdkavBg9EPxabM8LJDHWMwh4nUAXuhL-KRZ9Gm1dRt5GpeKa0skEQ>
+    <xmx:8xdkau8bpqh2l5LGVJxs21Zptp5ROScBnXrekPRnMJttFBniBel_zw>
+    <xmx:8xdkaqLsvFydaMMv0IYbjRZn8wXRQY7CDzaedm9pr8uiiY7WVSLWcg>
+    <xmx:8xdkanhgTWJuxRQ7I5Yj1WjVjTciySpjk_QmbCG1NGZ3gEewUalS9g>
+    <xmx:8xdkal9IPvBw2Jo9CjtKWx2dEBiDsnmj1xGrFj5rQ8q5HufcY_p8YncB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 20:43:28 -0400 (EDT)
+ 24 Jul 2026 21:57:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
+To: git@vger.kernel.org, Ted Nyman <tnyman@openai.com>
 Cc: =?utf-8?Q?=C3=89ric?= NICOLAS <ccjmne@gmail.com>
-Subject: [PATCH] remote: plug memory leaks
-Date: Fri, 24 Jul 2026 17:43:26 -0700
-Message-ID: <xmqqv7a33nm9.fsf@gitster.g>
+Subject: Re: [PATCH] remote: plug memory leaks
+In-Reply-To: <xmqqv7a33nm9.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	24 Jul 2026 17:43:26 -0700")
+References: <xmqqv7a33nm9.fsf@gitster.g>
+Date: Fri, 24 Jul 2026 18:57:05 -0700
+Message-ID: <xmqqbjbv3k7i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,61 +84,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-The in-core data structure used to keep track of
-'url.<real>.{insteadOf,pushInsteadOf} = <alias>' settings is not
-properly cleaned up when the process is done with it.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Fix the rewrites_release() function to free not just the 'struct
-rewrites' instance itself, but also allocated structures that are
-pointed at by the 'struct rewrites' instance.  One of the embedded
-structures holds a 'const char *' to point at a borrowed constant
-string from a configuration callback.  Since the code does not
-modify this string, stop copying the value (alias URL) before
-registering it in 'struct rewrite', as nobody is freeing this
-member, to avoid leaking the extra copy.
+> The in-core data structure used to keep track of
+> 'url.<real>.{insteadOf,pushInsteadOf} = <alias>' settings is not
+> properly cleaned up when the process is done with it.
+>
+> Fix the rewrites_release() function to free not just the 'struct
+> rewrites' instance itself, but also allocated structures that are
+> pointed at by the 'struct rewrites' instance.  One of the embedded
+> structures holds a 'const char *' to point at a borrowed constant
+> string from a configuration callback.  Since the code does not
+> modify this string, stop copying the value (alias URL) before
+> registering it in 'struct rewrite', as nobody is freeing this
+> member, to avoid leaking the extra copy.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * These are not recently introduced leaks as far as I can tell, but
+>    the new tests in en/submodule-insteadof-remote-match expose them.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+It is unfortunately rare to see all CI jobs pass, but today is one
+of those days ;-)
 
- * These are not recently introduced leaks as far as I can tell, but
-   the new tests in en/submodule-insteadof-remote-match expose them.
+With this, and everything in 'seen' reported in the last edition of
+the "What's cooking" report, excluding the
+'tn/packfile-uri-concurrency' topic, CI passes all jobs.
 
- remote.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+  https://github.com/git/git/actions/runs/30137079882/
 
-diff --git a/remote.c b/remote.c
-index 368a43c1b2..e3d4b25040 100644
---- a/remote.c
-+++ b/remote.c
-@@ -309,8 +309,11 @@ static struct rewrite *make_rewrite(struct rewrites *r,
- 
- static void rewrites_release(struct rewrites *r)
- {
--	for (int i = 0; i < r->rewrite_nr; i++)
-+	for (int i = 0; i < r->rewrite_nr; i++) {
- 		free((char *)r->rewrite[i]->base);
-+		free(r->rewrite[i]->instead_of);
-+		free(r->rewrite[i]);
-+	}
- 	free(r->rewrite);
- 	memset(r, 0, sizeof(*r));
- }
-@@ -469,13 +472,13 @@ static int handle_config(const char *key, const char *value,
- 				return config_error_nonbool(key);
- 			rewrite = make_rewrite(&remote_state->rewrites, name,
- 					       namelen);
--			add_instead_of(rewrite, xstrdup(value));
-+			add_instead_of(rewrite, value);
- 		} else if (!strcmp(subkey, "pushinsteadof")) {
- 			if (!value)
- 				return config_error_nonbool(key);
- 			rewrite = make_rewrite(&remote_state->rewrites_push,
- 					       name, namelen);
--			add_instead_of(rewrite, xstrdup(value));
-+			add_instead_of(rewrite, value);
- 		}
- 	}
- 
--- 
-2.55.0-576-g1c3ad6b142
+'tn/packfile-uri-concurrency' was tentatively excluded from the
+above as I made a random guess at who the culprit for the t5550
+failure in
 
+  https://github.com/git/git/actions/runs/30130205851/job/89602846186
+
+for the SHA-256 CI job was.  I have merged the topic back into
+'seen', and the resulting CI run for 'seen' is here:
+
+  https://github.com/git/git/actions/runs/30138777784/
+
+It has not finished running, so we'll see how it goes.
+
+Thanks.
