@@ -1,80 +1,81 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571BD4908A9
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 17:02:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212973C2E
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 17:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784998964; cv=none; b=S2WwvJTz7QJkg8QKfRc/3ocgWqlssD19LFJ/mtHYm09RN6Bh6y7hKoUURXMCVwoLyU1MClhK5iJ208ENC8zdAreHh5kUcFFjkhW/ifVcoVe/RrtNrZiAEvyGcT1/46qZczIC5V4iWI8QCNR8JB99HIp/uRN1UUhGH7HeNeGUFSo=
+	t=1784999176; cv=none; b=A/1eehnnf2zSreF0FCxFm0vH9vpqvDm7a0hVPUP7CkM9M6OpMmBDphGCB6j7ZGWyziCoVMkDWGJOaMoCMIwbL/EGrNdvLrXF6Hus4SYvGL75/u5CKG8ZJYdtly58YLkIYJQ8LWc3AqzYjMyE5W1ow6U71DhDwR3VClo/NWhAVDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784998964; c=relaxed/simple;
-	bh=Svh5bBgdc9r1Ub2awZubHYk5JUGxvzRVqjEHo1X7NBA=;
+	s=arc-20240116; t=1784999176; c=relaxed/simple;
+	bh=44RMZpWE/2HBiTTCP2FJNJ4evoLZSfT6tkAK2Ybu5iM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rEzQxbRu0I8lWbXAu9ydZ9rBLjd2UY/IJmRHmqpcxuny4hhQ2Hf83lDnl1OPv/EZygHXmid8ixwSLPfXZB7tvSCG6Pd8aKC23Tq9uU800uwViulpMVceZanf7p06wHURtiarBYoTIHx04OMGwz1AVzOicFnquFlUo53t/WFSwCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E5UahYvz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JdbFBfN1; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=vDHzabhDXRkW9Cr8zJxFgL9qno5EIlWdXV7e+tNGeqiZH+Af3t96jh4fnVwA0v6G4SstvxY3VGS0MEmK0I0pLBapyb1Y9vKelr5uebnGuAoFQyzO2ZQkxEDUJ1NIWCSGrWLPpsfhE/lXVpcJ5qyZRhoOxsFJmqspsnvYP0Oi66A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=viMEtYUZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JcVncrM0; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E5UahYvz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JdbFBfN1"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87E60140006D;
-	Sat, 25 Jul 2026 13:02:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 25 Jul 2026 13:02:42 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="viMEtYUZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JcVncrM0"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 05330EC00BE;
+	Sat, 25 Jul 2026 13:06:14 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sat, 25 Jul 2026 13:06:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1784998962; x=1785085362; bh=zxs6I09mzw
-	AAa2jvzuWpc5/YHo4B4Tzolzn0Xgp1AyM=; b=E5UahYvzKHZYLMDRoq8fzB72t3
-	hyj9xYAVheeumBgfBHxdaqBdCj13of/xGJy1AZA79dXd6e7zmKmIHA5J3KtYWhmg
-	3hC1/PBBfb8VT5VJRnf9CFOwOTi2kYaqyjVICKPwgOtgh9TeFI6VzcVeJU8htjiR
-	WLAbn3YUEga+xxKbUWrWPxZ/BHL2MCyVzDKFIQDXXMc5rKVZ2dl3rWWysl+h1Ygz
-	xragXWiwHpE2xVsunkOw87qI4/yjUXbF/6YHsN+IzRLzlEz8ctBC+PCn8FtbzS/m
-	7skQYKHD779zu++lBIuoBLY1rpzH1Q+HoHXrNoWoRtOMlHMWzoLK6bva2W1w==
+	:subject:to:to; s=fm1; t=1784999174; x=1785085574; bh=uQcoT9M2Yp
+	AYN9F2WS8/RfWIN+O5VxdiiWi0gGWcEGA=; b=viMEtYUZT7ScUpFlJSL3falXh7
+	UhFuWvivnaNPXW2rl8t+kkDnBbFIozcUvoPb70CGaXpdwGeLRKJqLqCewEew5GHz
+	53ZubuzE4z8lyNIEOukfPp2mksfUIkaiMHn71TBwHWgQtJdEgdZLfbw/EFeyLlVD
+	zwgqObtn4RQL4pyg7ieq/Wj2g8KEJXDOcXfZkQOgYYitVD25Ubn22IO74bsTfy0t
+	bNlEgVJffZI2Hc5gvzCiMeqgVKfGtkHwdndr8aBGoIAIOExSHDSItwMmbyrEGNuP
+	xKqwQsRfodl9sBYs6SR8dSfVd9RB6+LkYW1EUXOHhZsg3NhxeDdPUIpe4mpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1784998962; x=1785085362; bh=zxs6I09mzwAAa2jvzuWpc5/YHo4B4Tzolzn
-	0Xgp1AyM=; b=JdbFBfN1CSpk+ZQc7bLHS2zW2k5W0Snv6lapF1dmINKYjCWmA99
-	Dz4ONJfROPEpvyVmvz2feqy0StXF9+O0nKwkOASWn+k9J5GSdnf5SXaCqqDCQE1q
-	oNTHJBGJdLXmUtNXh8VC03QlPpdG1X/lcYi8kfbBxTlvfB3VG9UnsrHUM/3+dtFQ
-	AYxgp86nUEkiIhoY6aR25p0fSUceq7Gl9YLu5hcqCT7OhNgfKGrxgux3F5C5cWoF
-	acShNMopDG2s0vQkah2m6C+6Ynjsf+DM8nsik+nrz60D6c8mH+aWqaACHCIkCp35
-	PLmyut/usJUeca57WLnRQ8ozirbCXV9ob4w==
-X-ME-Sender: <xms:MuxkapG7eXkvpnraOMiWKS1vH9KIjMelAF26GhngMrKt1fcMi6opsw>
-    <xme:MuxkalMJMto21h7t5Mf2SeaShCoGUTXHevW1E-ScYOmn8zQkN-vZzl4pMD-XbuX9N
-    XUSMpVUo-EhEUR2i2GVVh4Bh9d0g6TqAfs6BHYhjvVGpnFDI1YUUMw>
-X-ME-Received: <xmr:MuxkajcdRRGHF7PaKnD_XtfDOzt7ums8EcP6Em5ooeiI3NUs0W4SfFK2rZMMe4xLfSd-HXpJxN4b_qQk3num8Mn3WN8v10coxQ>
+	1784999174; x=1785085574; bh=uQcoT9M2YpAYN9F2WS8/RfWIN+O5VxdiiWi
+	0gGWcEGA=; b=JcVncrM0rlvKOqvOzpeOugNtQ4gFxHB97Zamv/4M6xYr1KlU+Z9
+	bWpDET1sAUJF64Ns7XPvGSDDPe0dnC7DTRLPlf4vQ9OQPFONC8OAvpmIQXRtlqn0
+	dWeRSI9/BPmUAVY+US0+GZ/naZ03iz/mpRSypuGyKTWp1XxvsCGW4MJXUF1FVQwv
+	8T4aWplzpIOvVOnXfOKMyWW1oO4pq1zclkc7sw54LshA2X7JnB7Vq3tp1AGfAVxF
+	qyPB3FkJqyjXuT8KjZMXbLwSai6CY8JnB9MxkIjX1V9paPgw2Wa7qp1JvCWCj0pJ
+	X8GVPY8uRsxQakve5bgw7reOfPAFaVe51mw==
+X-ME-Sender: <xms:Be1kanGl-dz4M2R53d4tmlcE_RHvon-u3YGYpa37mxUXH_bU-s-GCg>
+    <xme:Be1karzu7JTwd7wYs-b9L3O1A4wFmRW3hFPKU0-yqgEiULEWAn1RW6WlO8eVSdMtZ
+    mas0CzGysvCPLr7fUctuTNUVQ5lSbQeEFhwpODV7tZHz9ORwz6chBw>
+X-ME-Received: <xmr:Be1kamiWLJnOy41TnV4zpOHAHfOLJxUe_wnp6rxfHkNCmrqLgIlfIRBX-lYjuNuXQru7j9zm2_Ad0wWUXUpZgZivzHLsaeazVg>
 X-ME-Proxy-Cause: dmFkZTEmB3USK51KmKh0n+5cp9CKHKVkQUNxrKK8CYZJpsdSwb8/PMItyPc2IEtSGjwcfO
     DjF+kiDxLaQH5tBcK7snlcVSZ74uIGQDKpQLV8IUamnLsOhIAB7Vjnko365t471ZOpRrCW
     Y9pJCwRJNuTCpyoQWoS7dlKze+NOegqp5hXQD7LeD69HBgz0596sz9C8GuB2RutEvmmDvc
     CtC5N1KJVh2wB4gpMuQshGB+EWZXI7HQVowuFuEPZQEWFDMFRu97584yJdhWb5EiNZ+Abd
-    kC+190a3W3VR+m7ybSCZeTlCjoMSxOPNAfwjmM/Famow1dEUODPqk1Nl2T9/4zYP5agzGM
-    nBNsNP5FFRLOJIVPfbWDVBwrroEhc7ExWaWPCkZRKEfCxPuuJIDCw2rNTwi4X9Spu0Khpw
-    7KnYHBjV3k+iD4J5hjCbDqc/ElKcp5bQgsncBLLn4JsQKEOTKa0coD3hDaByoHrzppWWgh
-    tJWK0irwoeOrlVdHpfbd3VhIN8CXIiiJkviGYBcMSC9vr9r6a7i8HVxII7DguCUDOfvVS1
-    V6v3piCkUXP1cDrq/kRMUPuKBtqHu+omzkYhCLv7Qbip5Qw27CP+dzrCT5TmGv2HpdTHQi
-    51EYSplO4Ao2LD1FbWo0/BrLN6y4AwFjrZq5OShVoIZHxdM8MaLpzooNtS6Q
-X-ME-Proxy: <xmx:MuxkaqsEApk4SNu8YD_03GI1u-xj3RFNPOuFJW-iA1NkNHoAb_MAoQ>
-    <xmx:Muxkaslbx8KgdtIQVXcKurOAs1hKweThRq3n5FkofWf_b4AnCX4dOA>
-    <xmx:MuxkakwEofrTMxArpNEJlQwD1yHwFuYfS_bG35ENJtYVdFgO--itDQ>
-    <xmx:MuxkamNktJTtZrVl0hB355J89xh9F_hoc3yNeEy_d2dpECOk3WzuTQ>
-    <xmx:MuxkaqcEiGrS1dmCOZmgegZY13n7CjtFKpw2SWOAjiG5oLR6EKN0RTCD>
+    kC+190a3W3VR+m7ybSCZeTlCjoMSxOPNAfwjmM/Famow1dEUODPqk1Nl2T9/4zYP5agzBc
+    bFEHiuwuE66AHWnY51djW81X2bMydX5CbJMvnr4yuSBk/AqAiZ3NZ3m/RrJb2FUPRv+NtI
+    SM46tNVMTe7Egq9Ny+JLi78M0zXOH65IQ3LP2K8ZY0lxpYP5xM6JklWosBXX2RRRuuklpd
+    NuxaMcHJyLRrA0BunZLwYmBRNI+zkF3myeUW9TnG0vUzVOYT8S4eIGtUgSJ4iV7yqyqb4W
+    iqnoIAypn0vObV+Dn14LeMlen7OlvYYJTM94qUn91IfpY8+D90yvvkeRF2MBaim6Wh1rln
+    +Jkrlu/kq6dfVZZHBHrLCKDAAw1XAyAv70l7GNCX5skPzKEvkcb1ZOMhgG9g
+X-ME-Proxy: <xmx:Be1kauz9xwfLrSM9dV9vaGfxY8bN1aBqfAbT45_epre_YWR4wDz_9A>
+    <xmx:Be1kahKhOiZMRV_nTXyaNkug_u5nlBDGcmA3L1dmOQufhe9P7VvxhQ>
+    <xmx:Be1katRB1hZvQYv_QDRdcI9x4rdGPEL7q1uPQ2j8BcbOYd7aj9yaYg>
+    <xmx:Be1kahqJoS2wg9HtqbFgwjEHbL-smLnIkGk-H8S6M-AHLMVARxyJvw>
+    <xmx:Bu1kaogYEh_zwXbHdIvw62JVZSCXHttPQL3hHx8cl1Zgj5nJCSMlS_Zm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 25 Jul 2026 13:02:41 -0400 (EDT)
+ 25 Jul 2026 13:06:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  ps@pks.im,  newren@gmail.com
-Subject: Re: [PATCH v1 0/3] environment: migrate more global variables, pt.2
-In-Reply-To: <20260725115428.2214202-1-cat@malon.dev> (Tian Yuchen's message
-	of "Sat, 25 Jul 2026 19:54:25 +0800")
-References: <20260725115428.2214202-1-cat@malon.dev>
-Date: Sat, 25 Jul 2026 10:02:40 -0700
-Message-ID: <xmqq5x23ypcf.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] remote: plug memory leaks
+In-Reply-To: <20260725161819.GA2343104@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 25 Jul 2026 12:18:19 -0400")
+References: <xmqqv7a33nm9.fsf@gitster.g> <xmqqpl0b12gj.fsf@gitster.g>
+	<20260725161819.GA2343104@coredump.intra.peff.net>
+Date: Sat, 25 Jul 2026 10:06:12 -0700
+Message-ID: <xmqq1pcryp6j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,47 +85,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tian Yuchen <cat@malon.dev> writes:
+Jeff King <peff@peff.net> writes:
 
-> Hi all,
+> We should not rely on that assumption, because we sometimes discard the
+> configset (e.g., when discovering the repo, or when writing a new config
+> option). I couldn't come up with a case that fails, but I think it is
+> mostly luck (or lack of imagination) that there is no code path that
+> invalidates the configset between when we read the remote config and
+> when we actually use it.
 >
-> This series moves:
+> So even though in something like:
 >
->  - (1/3) minimum_abbrev and default_abbrev 
->  - (2/3) pack_size_limit_cfg
->  - (3/3) assume_unchanged
+>     git -c url.$PWD.insteadOf=$PWD clone $PWD dst
 >
-> into repo_config_values to continue the libification effort. 
+> we end up with a state were the instead-of structs are broken, nobody is
+> reading them at that point.
 >
-> Note: in commit 1/3, we need (repo != the_repository) checks in the
-> getters, because some subsystems where the readers of _abbrev
-> configurations live forbid the use of 'the_repository' and only accept
-> 'repo' [1]. We have to explicitly intercept those intances that are
-> not 'the_repository'.
+> So I think this v2 is doing the right thing.
 
-Sorry but I am not sure I follow.  If a repository that is not
-the_repository is not yet allowed, shouldn't the caller be flagged
-for passing a random repository that is not the_repository as not
-conforming to the API (yet) with:
+Thanks.
 
-        if (repo != the_repository)
-                BUG(...);
+I had somebody else dig into the entire codebase and they claim that
+there is only one existing (ab)user of the configuration API that
+assumes that the configset-held strings will stay forever, which is
+the comment_line_string stuff that is stored from the configuration
+callback without getting copied.  I do not necessarily believe it is
+the only one, but this particular code indeed seems to rely on the
+assumption.  #leftoverbits perhaps.
 
-rather than papering over the issue with an unconditional
-
-        repo = the_repository;
-
-override?
-
-If the API that deals with this 'abbrev' setting needs to call
-another API that only superficially takes any 'repo' parameter
-without supporting anything other than the_repository, isn't that a
-sign that the other API needs to be extended to work with any 'repo'
-before the 'abbrev' part of the system can use it, simply because the
-former is not ready?  Futzing with the 'abbrev' part of the system in
-such a state piles on more unfinished work that will need to be fixed
-later without achieving anything, except for the superficial "now
-this part too can take a 'repo' parameter, even though it does not
-support anything but the_repository", no?
-
-Puzzled...
