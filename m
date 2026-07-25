@@ -1,30 +1,30 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B135133260B
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31743C8717
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784980482; cv=none; b=tLHzNADVcnyrWMZXgs77l1rpHoqZhU8k2tb+MZwbmy8KfBqmdy/Lrp7cvonwzH63NzJA1WE9uqancIhtQUG1s4Z+T7QkZti2GVJr5RQhfFw1BvI3XlPnbntFJCo7iMjdq7qp/PLYqlzzcCKfWXNWzGD1CtKJ9bB76zubjRPvw6I=
+	t=1784980485; cv=none; b=SAk7BNhfj4sHDHA9ymZNXB1nHchU5C5TFqpkyqVOGcnbBsiwRLwYrKVxjYohvCWCMG4XnU6R2XnyEvwVbLnHrtLn6xnVzALKOfIka2b0Erp5WMxxdld8EU4JzYLZUDv771nXmvb27BbW9W1UtL3dZrauz7RZKiTF/jbIDU12OMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784980482; c=relaxed/simple;
-	bh=2fXh31vxpBpIWNgYrix/Kd+2N8be0tHbXXuvjzJZzmo=;
+	s=arc-20240116; t=1784980485; c=relaxed/simple;
+	bh=A6d6lLSbUTe+z1CwRaT4g2BUg7IO6fOzttWkIlVHblY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Unun1SeW+7XR3SbyjRhfPP/btxSRshJg6oJNFpHZrbAVCI2VdwzlrOJYLwfT3qbghupwgeU5KmMImhLs2HSysJJvEE6PABkOe+CUmUCY/HHNUAAqVWzBxSsuUGjQ3uQ6wnqEDfICwjs9lwKllTKSQzyvsL4zBxdjisx2CPrFfok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=JnbDGy8p; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=a07odQZe; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=ANA4XZxn7v1qMWmgvucl4xlXeMkpIiwmO5a8M3697aTb6qvfEos7pb1saeQfuo3JhVQtu0oNf/Oo7jXv0Y6InZTsgapqJnQbPoI2TjSjrLPEB8qckdfbx07DEFZikBklfg+InmYgYPIfFJ2O39cFdTfpKR2r/5FpPf4eBRvwsCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=KZoSe324; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=KY+LlucC; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="JnbDGy8p";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="a07odQZe"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="KZoSe324";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="KY+LlucC"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=JnbDGy8pUF/eYGMVQUKCrvMcwu+b2tO9hFfrjHAESypXj+8Ddli2HwyWX9UMUT9mcYgv8qETYt2LqyX91V+ToLQRagmG/nKhdgVs5mKNPShCseB7HZTcFS1ZqVl8WKTUd6lRGWP4rjilKttVhDFwFECbGHZwMybCIFYo20spjby6cF64pC22TWmhydFs57XpIj4zpdpaZ9mhZmVfzLxSEcL3MvYobwSjTGOXDnrK6dN5zeVVo5IMFLFpbL1WJ+CFJLys0T6OFsDBLaNzrr7FHMYhE4647ZPAfEmfr2MBwnSb1oLJ5pCMQexujeSLBaM/XXVcuJTl79r+lBVjxFwR+Q==; s=purelymail3; d=malon.dev; v=1; bh=2fXh31vxpBpIWNgYrix/Kd+2N8be0tHbXXuvjzJZzmo=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=a07odQZeqtqgvPmBrGYeCdwlVTcDhNXi5VBLpChslfwCdUemP7rSf1/suWF8GRZ4/mdOBGTuvPVXi2j666aJQH4BS/cbrb82uaMgAAUUKK3sHd8xQkjD9g8uCHkoFIc2dHUNwIgbcHydZvsx8ik7YGoeaeP0I02aiFlyfGeAXPSXeLgW80axX702emKybMcISVPhKq3gEHL0y4aXf/zjHzkBGYsq9B5HSC6PmpCd59SjCGFujrKzF3pwhl/5ymwfDHDVrOk9NKsDLLh28VYgD2esRan+HNWfwgM80o5Q4LaOxakXaZtvYndY4U1P3fyauRGrPD7mE8+jAfnB/tJZTA==; s=purelymail3; d=purelymail.com; v=1; bh=2fXh31vxpBpIWNgYrix/Kd+2N8be0tHbXXuvjzJZzmo=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=KZoSe324p14Mva2jml8q8dP4GabDMH3MAYoBAb00TF99sNcDSqzA5NFFL2xZ6wE7Of4PlboqDAHhrneBMRkaVfMrc+0aFeOfrWaHTbsiFiNRF1EnqO2CS9XzMSbThvtcmTNOc7Yp58AlItX/J90I4XFq3ovUGuK4+6/7IwrIqRpqJfJ5y9NtV/+1t6yordNoNg1yL983+A/Ww0RdVwaBRy952yqMg/ML7inBrd/IzmqzDkMqRqq50AKvb8yWMw0KYgdXnOFAJjtyOR6NiJeV1G976mGF4hMYLbAuJ/70C1eq+N6POLJHrDDOWoIhIScmA4fS87nxEL82N9kldWg/bQ==; s=purelymail3; d=malon.dev; v=1; bh=A6d6lLSbUTe+z1CwRaT4g2BUg7IO6fOzttWkIlVHblY=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=KY+LlucCwBslCdqc1ojWKd0IUupQsgEWLMJ188B61VQPDJJIq9OzlOBP4+3IL/Uj+G18Tl+FhdOXd44MBtr0iOB0t5feRi9A1FWXa23QbPl2666vG8ez4cmcWr3AxsEML3AS5CciWNah8Ty8hs//9DwmZA9gGStHF8l0GbTXWfHgqTgPfybmnELmZihvYZSSm8VE1rAa4srvJO8uVNmGwaedTXeNJuHEkz4ccmyLq4k7n6ZkyW2veHv8F+kDfbv+Sln29L5p7T5PyhIiPGR6ikJrDmXxqLG8ajYlV6hGnT7wpbNPsyP506oI7EvC1nxZ0/M9D68H+8zhqYI5xzkbBQ==; s=purelymail3; d=purelymail.com; v=1; bh=A6d6lLSbUTe+z1CwRaT4g2BUg7IO6fOzttWkIlVHblY=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 891366051;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sat, 25 Jul 2026 11:54:39 +0000 (UTC)
+          Sat, 25 Jul 2026 11:54:42 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -33,9 +33,9 @@ Cc: ps@pks.im,
 	Christian Couder <christian.couder@gmail.com>,
 	Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v1 1/3] environment: migrate minimum_abbrev and default_abbrev
-Date: Sat, 25 Jul 2026 19:54:26 +0800
-Message-ID: <20260725115428.2214202-2-cat@malon.dev>
+Subject: [PATCH v1 2/3] environment: migrate pack_size_limit_cfg into repo_config_values
+Date: Sat, 25 Jul 2026 19:54:27 +0800
+Message-ID: <20260725115428.2214202-3-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260725115428.2214202-1-cat@malon.dev>
 References: <20260725115428.2214202-1-cat@malon.dev>
@@ -49,220 +49,113 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-Move the global 'minimum_abbrev' and 'default_abbrev' configurations
-into the repository-specific 'repo_config_values'
-struct.
+Move the global 'pack_size_limit_cfg' configuration into the
+repository-specific 'repo_config_values' struct.
 
-To ensure code readability, the getter functions
-'repo_minimum_abbrev()' and 'repo_default_abbrev()' have been introduced.
-The existing MINIMUM_ABBREV and DEFAULT_ABBREV macros are redefined to
-the corresponding getters.
-
-Additionally, some subsystems forbid the direct use of 'the_repository'
-and must pass their own local 'repo'. Let the getters explicitly intercept
-these instances.
+We do not introduce a getter for it because the readers are
+limited and no hardcoded fallback values are needed.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 Signed-off-by: Tian Yuchen <cat@malon.dev>
 ---
- environment.c | 31 ++++++++++++++++++++++++++-----
- environment.h |  6 +++++-
- merge-ort.c   |  7 ++++---
- object-name.h |  4 ++--
- replay.c      |  2 +-
- sequencer.c   |  5 +++--
- 6 files changed, 41 insertions(+), 14 deletions(-)
+ builtin/pack-objects.c | 2 +-
+ environment.c          | 4 ++--
+ environment.h          | 3 ++-
+ object-file.c          | 5 +++--
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3673b14b89..4ebcaccb09 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -5328,7 +5328,7 @@ int cmd_pack_objects(int argc,
+ =09if (!HAVE_THREADS && delta_search_threads !=3D 1)
+ =09=09warning(_("no threads support, ignoring --threads"));
+ =09if (!pack_to_stdout && !pack_size_limit)
+-=09=09pack_size_limit =3D pack_size_limit_cfg;
++=09=09pack_size_limit =3D cfg->pack_size_limit_cfg;
+ =09if (pack_to_stdout && pack_size_limit)
+ =09=09die(_("--max-pack-size cannot be used to build a pack for transfer")=
+);
+ =09if (pack_size_limit && pack_size_limit < 1024*1024) {
 diff --git a/environment.c b/environment.c
-index c663113e8a..2b44778b50 100644
+index 2b44778b50..ff731a9611 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -43,7 +43,6 @@ static int zlib_compression_seen;
+@@ -66,7 +66,6 @@ enum push_default_type push_default =3D PUSH_DEFAULT_UNSP=
+ECIFIED;
+ #endif
+ enum object_creation_mode object_creation_mode =3D OBJECT_CREATION_MODE;
+ int grafts_keep_true_parents;
+-unsigned long pack_size_limit_cfg;
 =20
- int trust_executable_bit =3D 1;
- int has_symlinks =3D 1;
--int minimum_abbrev =3D 4, default_abbrev =3D -1;
- int assume_unchanged;
- char *git_commit_encoding;
- char *git_log_output_encoding;
-@@ -148,6 +147,26 @@ int repo_ignore_case(struct repository *repo)
- =09=090;
- }
+ #ifndef PROTECT_HFS_DEFAULT
+ #define PROTECT_HFS_DEFAULT 0
+@@ -723,7 +722,7 @@ int git_default_config(const char *var, const char *val=
+ue,
+ =09}
 =20
-+int repo_minimum_abbrev(struct repository *repo)
-+{
-+=09if (repo !=3D the_repository)
-+=09=09repo =3D the_repository;
-+
-+=09return repo->initialized
-+=09=09? repo_config_values(repo)->minimum_abbrev
-+=09=09: 4;
-+}
-+
-+int repo_default_abbrev(struct repository *repo)
-+{
-+=09if (repo !=3D the_repository)
-+=09=09repo =3D the_repository;
-+
-+=09return repo->initialized
-+=09=09? repo_config_values(repo)->default_abbrev
-+=09=09: -1;
-+}
-+
- int have_git_dir(void)
- {
- =09return startup_info->have_repository
-@@ -364,14 +383,14 @@ int git_default_core_config(const char *var, const ch=
-ar *value,
- =09=09if (!value)
- =09=09=09return config_error_nonbool(var);
- =09=09if (!strcasecmp(value, "auto"))
--=09=09=09default_abbrev =3D -1;
-+=09=09=09cfg->default_abbrev =3D -1;
- =09=09else if (!git_parse_maybe_bool_text(value))
--=09=09=09default_abbrev =3D GIT_MAX_HEXSZ;
-+=09=09=09cfg->default_abbrev =3D GIT_MAX_HEXSZ;
- =09=09else {
- =09=09=09int abbrev =3D git_config_int(var, value, ctx->kvi);
--=09=09=09if (abbrev < minimum_abbrev)
-+=09=09=09if (abbrev < cfg->minimum_abbrev)
- =09=09=09=09return error(_("abbrev length out of range: %d"), abbrev);
--=09=09=09default_abbrev =3D abbrev;
-+=09=09=09cfg->default_abbrev =3D abbrev;
- =09=09}
+ =09if (!strcmp(var, "pack.packsizelimit")) {
+-=09=09pack_size_limit_cfg =3D git_config_ulong(var, value, ctx->kvi);
++=09=09cfg->pack_size_limit_cfg =3D git_config_ulong(var, value, ctx->kvi);
  =09=09return 0;
  =09}
-@@ -738,6 +757,8 @@ void repo_config_values_init(struct repo_config_values =
+=20
+@@ -763,4 +762,5 @@ void repo_config_values_init(struct repo_config_values =
 *cfg)
- =09cfg->check_stat =3D 1;
- =09cfg->zlib_compression_level =3D Z_BEST_SPEED;
- =09cfg->pack_compression_level =3D Z_DEFAULT_COMPRESSION;
-+=09cfg->minimum_abbrev =3D 4;
-+=09cfg->default_abbrev =3D -1;
- =09cfg->precomposed_unicode =3D -1; /* see probe_utf8_pathname_composition=
-() */
  =09cfg->core_sparse_checkout_cone =3D 0;
  =09cfg->sparse_expect_files_outside_of_patterns =3D 0;
+ =09cfg->warn_on_object_refname_ambiguity =3D 1;
++=09cfg->pack_size_limit_cfg =3D 0;
+ }
 diff --git a/environment.h b/environment.h
-index acfb670be1..c5905d8b01 100644
+index c5905d8b01..c1d5bba2f0 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -95,6 +95,8 @@ struct repo_config_values {
- =09int check_stat;
- =09int zlib_compression_level;
- =09int pack_compression_level;
-+=09int minimum_abbrev;
-+=09int default_abbrev;
- =09int precomposed_unicode;
- =09int core_sparse_checkout_cone;
- =09int warn_on_object_refname_ambiguity;
-@@ -151,6 +153,9 @@ int repo_protect_ntfs(struct repository *repo);
-  */
- int repo_ignore_case(struct repository *repo);
-=20
-+int repo_minimum_abbrev(struct repository *repo);
-+int repo_default_abbrev(struct repository *repo);
+@@ -103,6 +103,8 @@ struct repo_config_values {
+ =09int protect_hfs;
+ =09int protect_ntfs;
+ =09int ignore_case;
++=09unsigned long pack_size_limit_cfg;
 +
- void repo_config_values_init(struct repo_config_values *cfg);
 =20
- int is_bare_repository(struct repository *repo);
-@@ -180,7 +185,6 @@ int have_git_dir(void);
- /* Environment bits from configuration mechanism */
- extern int trust_executable_bit;
- extern int has_symlinks;
--extern int minimum_abbrev, default_abbrev;
+ =09/* section "sparse" config values */
+ =09int sparse_expect_files_outside_of_patterns;
+@@ -188,7 +190,6 @@ extern int has_symlinks;
  extern int assume_unchanged;
  extern char *apply_default_whitespace;
  extern char *apply_default_ignorewhitespace;
-diff --git a/merge-ort.c b/merge-ort.c
-index c410a5d353..b94ebcc2de 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -777,7 +777,7 @@ static void format_commit(struct strbuf *sb,
+-extern unsigned long pack_size_limit_cfg;
+=20
+ enum rebase_setup_type {
+ =09AUTOREBASE_NEVER =3D 0,
+diff --git a/object-file.c b/object-file.c
+index 7ff2b730ac..be68eead63 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1273,6 +1273,7 @@ static int odb_transaction_files_write_object_stream(=
+struct odb_transaction *bas
+ =09=09=09=09=09=09     size_t size,
+ =09=09=09=09=09=09     struct object_id *result_oid)
  {
- =09struct merge_remote_desc *desc;
- =09struct pretty_print_context ctx =3D {0};
--=09ctx.abbrev =3D DEFAULT_ABBREV;
-+=09ctx.abbrev =3D repo_default_abbrev(repo);
++=09struct repo_config_values *cfg =3D repo_config_values(the_repository);
+ =09struct odb_transaction_files *transaction =3D container_of(base,
+ =09=09=09=09=09=09=09=09 struct odb_transaction_files,
+ =09=09=09=09=09=09=09=09 base);
+@@ -1298,8 +1299,8 @@ static int odb_transaction_files_write_object_stream(=
+struct odb_transaction *bas
+ =09 * the difference between the inflated and on-disk size is limited
+ =09 * to zlib compression and is sufficient for this check.
+ =09 */
+-=09if (state->nr_written && pack_size_limit_cfg &&
+-=09    pack_size_limit_cfg < state->offset + size)
++=09if (state->nr_written && cfg->pack_size_limit_cfg &&
++=09    cfg->pack_size_limit_cfg < state->offset + size)
+ =09=09flush_packfile_transaction(transaction);
 =20
- =09strbuf_addchars(sb, ' ', indent);
- =09desc =3D merge_remote_util(commit);
-@@ -2035,7 +2035,8 @@ static int merge_submodule(struct merge_options *opt,
- =09=09util->flag =3D sub_flag;
- =09=09util->abbrev =3D NULL;
- =09=09if (!sub_not_initialized) {
--=09=09=09abbrev =3D repo_find_unique_abbrev(&subrepo, b, DEFAULT_ABBREV);
-+=09=09=09abbrev =3D repo_find_unique_abbrev(&subrepo, b,
-+=09=09=09=09=09=09=09repo_default_abbrev(opt->repo));
- =09=09=09util->abbrev =3D xstrdup(abbrev);
- =09=09}
- =09=09string_list_append(csub, path)->util =3D util;
-@@ -5348,7 +5349,7 @@ static void merge_ort_internal(struct merge_options *=
-opt,
- =09} else {
- =09=09strbuf_add_unique_abbrev(&merge_base_abbrev,
- =09=09=09=09=09 &merged_merge_bases->object.oid,
--=09=09=09=09=09 DEFAULT_ABBREV);
-+=09=09=09=09=09 repo_default_abbrev(opt->repo));
- =09=09ancestor_name =3D merge_base_abbrev.buf;
- =09}
-=20
-diff --git a/object-name.h b/object-name.h
-index 167a9154ea..a6d7206ed8 100644
---- a/object-name.h
-+++ b/object-name.h
-@@ -133,8 +133,8 @@ struct object *repo_peel_to_type(struct repository *r,
- =09=09=09=09 struct object *o, enum object_type);
-=20
- /* Convert to/from hex/sha1 representation */
--#define MINIMUM_ABBREV minimum_abbrev
--#define DEFAULT_ABBREV default_abbrev
-+#define MINIMUM_ABBREV repo_minimum_abbrev(the_repository)
-+#define DEFAULT_ABBREV repo_default_abbrev(the_repository)
-=20
- /* used when the code does not know or care what the default abbrev is */
- #define FALLBACK_DEFAULT_ABBREV 7
-diff --git a/replay.c b/replay.c
-index 463c900d6c..cd41c7f507 100644
---- a/replay.c
-+++ b/replay.c
-@@ -27,7 +27,7 @@ static const char *short_commit_name(struct repository *r=
-epo,
- =09=09=09=09     struct commit *commit)
- {
- =09return repo_find_unique_abbrev(repo, &commit->object.oid,
--=09=09=09=09       DEFAULT_ABBREV);
-+=09=09=09=09       repo_default_abbrev(repo));
- }
-=20
- static struct commit *peel_committish(struct repository *repo,
-diff --git a/sequencer.c b/sequencer.c
-index 1355a99a09..2426c5e422 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5813,7 +5813,7 @@ static const char *label_oid(struct object_id *oid, c=
-onst char *label,
- =09=09label =3D p =3D state->buf.buf;
-=20
- =09=09repo_find_unique_abbrev_r(the_repository, p, oid,
--=09=09=09=09=09  default_abbrev);
-+=09=09=09=09=09  repo_default_abbrev(the_repository));
-=20
- =09=09/*
- =09=09 * We may need to extend the abbreviated hash so that there is
-@@ -5875,7 +5875,8 @@ static const char *label_oid(struct object_id *oid, c=
-onst char *label,
- =09=09=09=09strbuf_addch(buf, '-');
- =09=09if (!buf->len) {
- =09=09=09strbuf_addstr(buf, "rev-");
--=09=09=09strbuf_add_unique_abbrev(buf, oid, default_abbrev);
-+=09=09=09strbuf_add_unique_abbrev(buf, oid,
-+=09=09=09=09=09=09 repo_default_abbrev(the_repository));
- =09=09}
- =09=09label =3D buf->buf;
-=20
+ =09CALLOC_ARRAY(idx, 1);
 --=20
 2.43.0
 
