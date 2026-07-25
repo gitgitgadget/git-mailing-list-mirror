@@ -1,186 +1,370 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAF02EA47C
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:29:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9666327C09
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:32:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784978954; cv=none; b=dOI8Lz+4iOV+wE2Ns9E4AN5aZLIOidxoYPaPpinSQa+Jxe6/MX9JbmJwxRLZD1zQaDc4RiIlj/v/7Bkeby1i/wiG0dLieSRs93/imw8dYumQLo8jEqu+NmMBQGux9YIGavkVlcLOjAuk4MXzdSeSDTWDGdLwJhV0goR/D4jM1wQ=
+	t=1784979143; cv=none; b=DVXnUPg5MvdlF0n7vDTv/27YqKg4FHdZulG2/K/nOuh2mF0wVnTA8o69h6lg1U+KKGJZIBvislxdSxKouyYJrVTHDq0mrAF6Tblovq+//YA5m/TZ6ZnvZNFzyPRCdm5n/A3G6jEjvZIC7nZKsJ9Mmu63ILn52cJcQSe7nx3VoSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784978954; c=relaxed/simple;
-	bh=dSfLQOQb6Dv98yRNUnOMBy8qM7O6ZLcOwcDSqoMhxj4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gmgE3YgkbqP43axrOMCcXgsb/ITH9DCxl/RLzCgLOn0/5aP+/uV8vT6+sOu95BjW/Q4Gsk1WbNTJSxONbawExzaNmpMAVKfs6yvPgkRg88GpNDe1xCwellem0YVQDw4o2yNwV2dD+EPn8apLrGX5HNKl0UhSovPpaRtMAF25zb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=oEu9MnLT; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1784979143; c=relaxed/simple;
+	bh=CEs0Hd09f0tGWI4L9AdnKtNTQYkDKhGpxxb0qfrlNYA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=W1yBPJpKznpKwsPyxDXl3bRKQgpMU+cnhzyN99wMS1OnHFXGrnZTCfyyPEigk3X01Xjk4MeVbUkKa/Xu6C3rwZWloG/44/KPBTnUAtNYI9+sLt84NrDBPl5eeP3Jmrc1+7Vb0+JoUV5lUh0qk2s9Vby/5zSrelkW5e4cIRzrwcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hKvLJFZZ; arc=none smtp.client-ip=209.85.161.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="oEu9MnLT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1784978948; x=1785583748; i=l.s.r@web.de;
-	bh=mGKrQOKE+mKDv8yWB2RLYxoErGq4lVVamlpddW9JXAM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=oEu9MnLThGne3EcouHhPdLeSjEABAcjepzCsmr/9egd5FO1OxCg6iqjOpjSRjOOi
-	 DuFtv1AtnwtBU7jzunqXQr2Dtt4duG3MS0fmSYkm6pwyrMB4nK24yRy8pNfAEbx+n
-	 qbGHSAheMg1sstVLfrHpSarIPDOnOx8WQGcvKI4AFpaY6J13vSXq2vdupMolDWot/
-	 p7p0GwXJFs3J39FMllefJkrVsuDFNPLd6WUctTliU8GfMwsomKy78c42XjYIEIeQF
-	 VPpRbzeJxeBZTyy3fUNlnaYHygtRYtpzZAhImaOSBjdZ29jMNb5pvHecZ09Gc+aLf
-	 SKVs/3M+F7ETQ6cdvQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mmymz-1xDbWd3FId-00cu9y; Sat, 25
- Jul 2026 13:29:08 +0200
-Message-ID: <81b0d8a0-5c65-4b42-ad75-2b818f0bb66a@web.de>
-Date: Sat, 25 Jul 2026 13:29:08 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hKvLJFZZ"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6aae36ea5c4so700718eaf.1
+        for <git@vger.kernel.org>; Sat, 25 Jul 2026 04:32:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784979140; x=1785583940; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=iTKfp+oLzvssGuYxciuJlIma9AGuKXh1fR1UGNyXNXQ=;
+        b=hKvLJFZZ562eHYIDAmkvzRocyzAtU8O4pxzHbO/hXSwbBf7rGZAfCSJUuNsxJ6xRu0
+         suOkOOx4rbcMTcfdaCQAIjbpmIWZzUYApz6gOVy6MouAo27KjiZEe/KKtXtaVe6W/LwE
+         xPRVfYYxoJlcpU3VwMjX1SeOnU2Ofi74TMHqTftsQKt3Qq4YdDHFbIXPEvAoDHQLNnH4
+         bckG/HUDHqjfNz7/QDwLQpt4zWX2Od7vU+FftxjfjZE4s8RHuqhOnyzKm2o+sfzJtf+H
+         x+TijmjxLSJo1erhHeHAKo2CafXZpEHYcIEBm25iBTln3HnzKMa0yQL2P/YeS3lrO6zV
+         QSsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784979140; x=1785583940;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iTKfp+oLzvssGuYxciuJlIma9AGuKXh1fR1UGNyXNXQ=;
+        b=jLHbwX/xRPF82xDUnEvwO0xSXmBbIi2DtewCHN9pzkYiNOECFD0FzzyAxD2vl85JY+
+         NLhyr6EYV+CUyWs+Md1jtFnC11a/3Pmc0Xye+aP19XGhbkkcvKU9OXIQZ12hsUa15YsN
+         4ewja4DhujEn0NNR1iWosbFyZNTSZxNkLszhfYhzmkS6jekKfVLX3t5zvQnjEfoKwOKm
+         WX54b75GNao84Gzjf+bivzoWiS3VOPprK3DoZjSkDcODudPs0m4zyHTWmwA4b37jnY9Z
+         +h0ILxmq7YAt8z/MBCVK0mcANFmlHulj2FCVrcnx9KH5QX2F/N06fSkF2c5oF+wqdjnZ
+         N/Ow==
+X-Gm-Message-State: AOJu0YxmlPOUL0bBoc4/eWsoYJMwS99L9oOVK6WkyPQHWSWqYtAMEgwW
+	v5fExTZECr8W9U6x7HAPUA+xkajt5wXHfX8Oa7U1pq6P6cESFAAR4oP5f/O0bw==
+X-Gm-Gg: AR+sD11mSxBNLERjrSS4B05xHXryurSSzmbYJzSqdVcRuE3hXIfAY9IVt0+nBekx89O
+	fk3XIILBSbBOsMQL9Yrgw7os582eWIQ7ytYFUDRDi452513anR0kmlVauYv3UHHeaINRqLSXq+3
+	XCVS9c5m2+JO/1C+KtJq7kplOrx9wq8UROsKvWR7oiN9in8ct4X4Sf38Q0wEc+i0xySRn1G0n8I
+	6cRH4LnmpqpTxnPSKvvAA+dYPnCD47vO5f8x65AsSLRt5YqhYP9xI4TvjQD1ThAMH5hnUbQUjAJ
+	XrbKCeYkeDX4OCBOFKkmjmtV1vU8db21NCEs5jKx/7DRlQxNIVcRMMA0fXZFDsxtbhQFwXUDE3i
+	PP4SioVteBuMTwhL6iSSiek6tQgwjFAaWrTHb/MS9wU9uFN2LQOowuakdxJAMEjg3tb6BePVuXK
+	t/jWw9
+X-Received: by 2002:a05:6820:169f:b0:6aa:edca:e171 with SMTP id 006d021491bc7-6aaff86142fmr1543648eaf.19.1784979139948;
+        Sat, 25 Jul 2026 04:32:19 -0700 (PDT)
+Received: from [127.0.0.1] ([132.196.94.33])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6aaf973036dsm1650518eaf.14.2026.07.25.04.32.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Jul 2026 04:32:18 -0700 (PDT)
+Message-Id: <pull.2285.v23.git.git.1784979136.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v22.git.git.1784921375.gitgitgadget@gmail.com>
+References: <pull.2285.v22.git.git.1784921375.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 25 Jul 2026 11:32:09 +0000
+Subject: [PATCH v23 0/7] branch: delete-merged
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/10] test-lib-functions: improve diagnostic output
- for trace2 data assertions
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>,
- Kristofer Karlsson <krka@spotify.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?=
- <szeder.dev@gmail.com>
-References: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
- <pull.2149.v6.git.1783776466.gitgitgadget@gmail.com>
- <d0ee6d062ef60e2d9e4572ed2dd4d0968e1e29c3.1783776466.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <d0ee6d062ef60e2d9e4572ed2dd4d0968e1e29c3.1783776466.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XyBTITxi8YxUZ2K2M9LgIcGH44patUthceFiY8lRN5AqO7ABvxl
- zGL9zdVWbYexINgw01j6I4h0g1uAI9qmzBoZ2UJY4qiQfFKLXXLhVvwwfKvOnBxWF1YvG3y
- vkdEgGpze4WaYP5cd7dQBnetZ78QtjDyA2838gcGvTNi5SFZRmGjb+sjf5tsD469qKMxXGS
- YuZ4a00EHIuzEV/RPJ86g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:9RgpSiC42JI=;NIbD+6U2lgkd3hMIWyMQ67V+Tpz
- 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
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-On 7/11/26 3:27 PM, Kristofer Karlsson via GitGitGadget wrote:
->=20
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 809c662124..3521efe5d7 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1996,6 +1996,42 @@ test_trace2_data () {
->  	grep -e '"category":"'"$1"'","key":"'"$2"'","value":"'"$3"'"'
->  }
-> =20
-> +# Check that the given trace2 data event has the expected value and
-> +# appears exactly once.  Produces a diagnostic on failure.
-> +#
-> +#	test_trace2_data_singular <category> <key> <value> [<label>]
-> +test_trace2_data_singular () {
-> +	local category=3D"$1" key=3D"$2" expect_val=3D"$3"
-> +	local label_suffix=3D"${4:+ [$4]}"
-> +	local kv_pattern=3D'"category":"'"$category"'","key":"'"$key"'","value=
-":"\([^"]*\)"'
-> +	local actual
-> +
-> +	actual=3D$(sed -n "s|.*${kv_pattern}.*|\1|p") &&
-> +
-> +	if test -z "$actual"
-> +	then
-> +		echo >&4 "error: trace2 data '$category/$key'$label_suffix not found"
-> +		return 1
-> +	fi &&
-> +
-> +	case "$actual" in
-> +	*"
-> +"*)
+Delete branches that have already been merged on upstream.
 
-Nit: You could use $LF here instead of this two-line string.
+Changes in v23:
 
-Ren=C3=A9
+ * Use a loop-local size_t iterator for --forked patterns.
+ * Simplify upstream-prefix stripping into an explicit fallback.
 
+Changes in v22:
+
+ * Loop variable int when appropriate to avoid typecast.
+
+Changes in v21:
+
+ * Change loop variables to prevent CI timeout.
+
+Changes in v20:
+
+ * Protect branches transitively required by a surviving local upstream
+   stack. Traverse upstream chains once and defer delete-set mutation until
+   traversal completes.
+ * Make stacked-branch handling independent of ref iteration order and
+   update the documentation accordingly.
+ * Clarify variable names with regards to branch names (short) to reduce
+   confusion.
+
+Changes in v19:
+
+ * Fix bug where dry-run would still remove config, added test coverage.
+ * Redesigned --delete-merged as a repeatable upstream selector with
+   optional positional patterns limiting deletion scope.
+ * Protect same-name upstream branches independently of push-default
+   configuration.
+ * Simplified flags handling where local caching became complicated when
+   mutating values.
+ * Clarified assertions in tests.
+
+Changes in v18:
+
+ * Instead of keeping the whole chain of upstream branches, keep only the
+   ones an unmerged branch still needs. When a kept (merged) branch in turn
+   tracks a branch that is being deleted, clear its now-stale upstream
+   config.
+ * Rework spare_stacked_bases() to record the kept bases and, in a second
+   pass, clear the upstream of any whose own base is going away. Build the
+   to-delete list with strset_for_each_entry() instead of re-walking the
+   candidate array.
+
+Changes in v17:
+
+ * Keep a merged branch when another surviving branch still tracks it as its
+   upstream, so --delete-merged no longer deletes a branch out from under
+   one stacked on top of it.
+ * Move the --dry-run and branch.<name>.deleteMerged opt-out fully into
+   their own commits.
+
+Changes in v16:
+
+ * Convert delete_merged_branches() to take an unsigned int flags argument
+   instead of separate quiet/dry_run booleans, matching delete_branches()
+ * Reuse the strbuf across the skip-config loop (strbuf_reset per iteration,
+   single strbuf_release after) instead of allocating and freeing it each
+   time
+ * Rewrite the --delete-merged tests as integration tests: branches that
+   land commits upstream, with deletion and the checked-out, upstream-gone,
+   and push-equals-upstream safety cases exercised together in one run and
+   output asserted via test_cmp
+ * Collapse the many per-aspect test repos into a single reused repo set up
+   by a setup_repo_for_delete_merged helper, and rename helpers off the old
+   pm_/prune naming
+ * Nest single-repo setup sequences in ( cd ... ) subshells instead of
+   prefixing every command with -C
+
+Changes in v15:
+
+ * Renamed --prune-merged to --delete-merged throughout. Not necessarily
+   final, but something to advance the discussion.
+ * --delete-merged now silently skips not-yet-merged branches instead of
+   warning.
+ * Initialized the delete_branches() flag locals where declared. Only force
+   stays deferred.
+ * delete_branches()/check_branch_commit() doc and code cleanups: redundant
+   branch NULL checks dropped, ref_array candidates = { 0 }, a BUG() for the
+   unreachable non-branch ref, and reworked --delete-merged doc wording.
+ * Broadened the --forked tests (local commits for realism, remote add -f,
+   --forked coverage), renamed the misleading trunk fixture, and replaced
+   the misnamed detached branch with git checkout --detach.
+
+Changes in v14:
+
+ * Fixed a git branch -d -r regression (broke t5404/t5505/t5514): the
+   remotes path set a local force but not the DELETE_BRANCH_FORCE bit that
+   check_branch_commit() reads, so it wrongly ran the merge check.
+ * Made flags the single source of truth in delete_branches() so the bit and
+   the derived locals can't disagree.
+ * Works locally, but GitHub CI has problems that are there for other
+   branches too, hopefully not related
+   (https://github.com/git/git/pull/2285).
+
+Changes in v13:
+
+ * Reworked --forked into a real ref-filter applied in apply_ref_filter()
+   instead of a post-pass, so non-matching branches are never allocated.
+ * Match exact --forked patterns on full refnames (only globs use the
+   abbreviated upstream), and dropped the old helper machinery, forward
+   declaration, and string_list in favor of a strvec.
+ * Replaced the boolean parameters of
+   delete_branches()/check_branch_commit() with a single unsigned int flags.
+ * --prune-merged now collects candidates via filter_refs() rather than its
+   own branch walk.
+ * --prune-merged now takes its patterns as positional arguments (e.g. git
+   branch --prune-merged origin/main 'feature*') instead of repeating the
+   option.
+
+Changes in v12:
+
+ * Reworked --forked from a standalone action into a --list-mode filter.
+ * Switched --forked and --prune-merged to repeatable OPT_STRING_LIST
+   options.
+ * Dropped the bare-remote-name resolution for --forked, the argument is now
+   a ref or a glob.
+
+Changes in v11:
+
+ * The flags now take a branch, not a remote. --forked and --prune-merged
+   accept a literal upstream short name like origin/main or a wildmatch
+   pattern like origin/. The old --all-remotes flag is gone, since origin/
+   covers that case.
+ * The prune guard now compares @{push} against @{upstream}. A branch is
+   spared when these are equal. That is the trunk like case, such as local
+   main tracking and pushing to origin/main, where "fully merged to
+   upstream" cannot be told apart from "just pulled". Only branches that
+   push somewhere other than their upstream, typically fork based topics,
+   are candidates. The earlier /HEAD by name guard that the reviewer
+   rejected is gone.
+ * New --dry-run for --prune-merged.
+
+Changes in v10:
+
+ * --forked / --prune-merged now take a branch glob instead of a remote name
+   — origin, origin/*, origin/release-- all work. This replaces the
+   remote-only form and subsumes the old --all-remotes flag, which has been
+   dropped.
+ * New --dry-run for --prune-merged.
+
+Changes in v9:
+
+ * --force no longer has special meaning with --prune-merged; reachability
+   is always enforced. Use git branch -D to delete an unmerged branch.
+   Matches how git branch's other read/safe actions treat --force.
+ * Synopsis drops [-f]; "not fully merged" hint points at git branch -D.
+ * Dropped the --prune-merged --force tests.
+
+Changes in v8:
+
+ * Delete only when the branch's work is actually reachable from its
+   upstream
+ * Skip branches whose upstream is gone (even with --force)
+ * Simplified the internal safety flag to live in one place
+
+Changes in v7:
+
+ * --prune-merged now checks if a branch is merged into its own upstream
+   first. If the upstream is gone, it checks against the remote's default
+   branch instead. If neither exists, the branch is refused (use --force to
+   delete anyway).
+
+Changes in v6:
+
+ * --prune-merged now measures merged-ness against the remote's default
+   branch instead of the candidate's upstream — so the decision no longer
+   depends on which branch happens to be checked out locally.
+ * delete_branches() / check_branch_commit() gained a per-candidate override
+   that lets a caller substitute a different "what counts as merged"
+   reference (or skip the check). branch -d callers pass NULL and keep their
+   existing semantics.
+ * prune_merged_branches() resolves each candidate's push-remote HEAD and
+   threads it through, so --prune-merged --all-remotes measures each
+   candidate against its own remote rather than a single global reference.
+
+Changes in v5:
+
+ * Drop commit 'fetch: add --prune-merged'
+
+Changes in v4:
+
+ * Resolve each remote's HEAD and collect the targets into a
+   protected_default_refs set in collect_forked_set.
+ * In prune_merged_branches, skip a candidate when its upstream is a
+   protected default ref and the local branch name matches the default
+   branch's leaf name (so a local main tracking origin/main is spared, but a
+   renamed trunk tracking origin/main is not).
+ * Also skip when the candidate's push ref points at a protected default
+   ref, so a topic branch configured to push to origin/main is never pruned.
+ * Tests: spare the local default branch; only protect by matching leaf name
+   (not by upstream alone); spare a branch whose push ref is the remote
+   default.
+
+Changes in v3:
+
+ * s/remote-tracking refs/remote-tracking branches/g
+
+Changes in v2:
+
+ * The whole feature moved out of git fetch and into git branch. git fetch
+   --prune-merged now just calls git branch --prune-merged after fetching.
+ * The fetch.pruneLocalBranches and remote..pruneLocalBranches config
+   options are gone, replaced by per-branch opt-out via branch..pruneMerged.
+ * New git branch --forked lists local branches whose upstream lives on the
+   given remote (read-only building block).
+ * New git branch --prune-merged deletes those branches, but only if their
+   tip is reachable from the upstream tracking ref; --force skips that
+   safety check.
+ * New git branch --all-remotes lets --forked/--prune-merged operate across
+   every configured remote at once.
+ * The currently checked-out branch in any worktree is always preserved.
+ * branch..pruneMerged=false lets you exempt a branch (e.g. a long-running
+   topic branch) even with --force; doesn't affect explicit git branch -d.
+ * delete_branches() got a warn_only mode so bulk deletion prints a one-line
+   warning per skipped branch instead of the noisy four-line hint that git
+   branch -d shows.
+ * New section in git-branch docs; git-fetch docs trimmed to just mention
+   --prune-merged.
+ * New tests in t3200-branch.sh for the new branch flags; t5510-fetch.sh
+   shrunk since most logic moved.
+
+Harald Nordgren (7):
+  branch: add --forked filter for --list mode
+  branch: convert delete_branches() to a flags argument
+  branch: let delete_branches skip unmerged branches on bulk refusal
+  branch: prepare delete_branches for a bulk caller
+  branch: add --delete-merged <branch>
+  branch: add branch.<name>.deleteMerged opt-out
+  branch: add --dry-run for --delete-merged
+
+ Documentation/config/branch.adoc |   7 +
+ Documentation/git-branch.adoc    |  49 +++-
+ builtin/branch.c                 | 275 ++++++++++++++++++---
+ ref-filter.c                     |  70 ++++++
+ ref-filter.h                     |  10 +
+ t/t3200-branch.sh                | 393 +++++++++++++++++++++++++++++++
+ 6 files changed, 773 insertions(+), 31 deletions(-)
+
+
+base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2285%2FHaraldNordgren%2Ffetch-prune-local-branches-v23
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2285/HaraldNordgren/fetch-prune-local-branches-v23
+Pull-Request: https://github.com/git/git/pull/2285
+
+Range-diff vs v22:
+
+ 1:  90aa528bef ! 1:  0c4fe549cb branch: add --forked filter for --list mode
+     @@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const c
+      +static const char *short_upstream_name(const char *full_ref)
+      +{
+      +	const char *short_name = full_ref;
+     -+	(void)(skip_prefix(short_name, "refs/heads/", &short_name) ||
+     -+	       skip_prefix(short_name, "refs/remotes/", &short_name));
+     ++
+     ++	if (!skip_prefix(short_name, "refs/heads/", &short_name))
+     ++		skip_prefix(short_name, "refs/remotes/", &short_name);
+      +	return short_name;
+      +}
+      +
+     @@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const c
+      +	const char *short_name;
+      +	struct branch *branch;
+      +	const char *upstream;
+     -+	int i;
+      +
+      +	if (!skip_prefix(refname, "refs/heads/", &short_name))
+      +		return 0;
+     @@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const c
+      +	if (!upstream)
+      +		return 0;
+      +
+     -+	for (i = 0; i < filter->forked.nr; i++) {
+     ++	for (size_t i = 0; i < filter->forked.nr; i++) {
+      +		const char *pattern = filter->forked.v[i];
+      +		if (has_glob_specials(pattern)) {
+      +			if (!wildmatch(pattern, short_upstream_name(upstream),
+ 2:  048c002cb4 = 2:  2d20015ba9 branch: convert delete_branches() to a flags argument
+ 3:  bb93303df3 = 3:  34b37aeb43 branch: let delete_branches skip unmerged branches on bulk refusal
+ 4:  e70e64c866 = 4:  606ce4082c branch: prepare delete_branches for a bulk caller
+ 5:  7dbfc6e243 = 5:  5fd74f0050 branch: add --delete-merged <branch>
+ 6:  6f27770b9f = 6:  6494be7c75 branch: add branch.<name>.deleteMerged opt-out
+ 7:  4a42b6f5f9 = 7:  7102c931e2 branch: add --dry-run for --delete-merged
+
+-- 
+gitgitgadget
