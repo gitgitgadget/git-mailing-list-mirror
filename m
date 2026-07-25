@@ -1,69 +1,69 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4917331EB9
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A8632B125
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 11:19:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784978353; cv=none; b=hJKFG5L31364nFfYdwn9cV4urb4AB/uoMXBGmzAENqI+EpMRATZN7Dca/XlMCAXp80vP7/H+9d22jpIA19b3pSXHWhytLfM9Bxax8RC9hjvsKhykxXPSdrzX8mE0GnJ8S7EMsz70zgXbyr0Qu33OGoIuKer9qyLJ/CZY58GlQZ0=
+	t=1784978354; cv=none; b=DGYCofLvRQP0X2Boa9CCrggCBxzN4lF8uF86ZOyicTGYxTtmEIKKxCd3l4T/ArV1O1GXA1ErNGkoNbomFPETfHCKN25Ii01ek5tgMEuSN0RGybuDGM+S+olTwEbXjJ9Adx9oljbLDxZ/ihODFKjtNKX3YBx9pvh4FAJM/mmyHIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784978353; c=relaxed/simple;
-	bh=niXFwI4dLw2pRfRqoOyed/v470GNXpDI1Y3weYObnWs=;
+	s=arc-20240116; t=1784978354; c=relaxed/simple;
+	bh=1pz+tSMhC7ooFgT2dsJa0k8JOo0o1Rx/nOoD05P3JjU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=hZB/hZTkPTRMkaoT7dGPrJOlMEEku36h6OYC7sp3UX2t4kfcDnGHf7EqYn2U8oVL0KYRQpKN2CyilFUwH6oznKJQBO4NDbk//2wWL6uWSqxdl7jSX8KF03kFgZZtfzm4/+DXEr/KgHn+btF15DRRGE2pfxbQH5Q1XpYc4lIlf10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nvih+jkE; arc=none smtp.client-ip=209.85.214.179
+	 Content-Type:To:Cc; b=bjUmyvAwIu239kfs4ByRZv711txVbtjFHfar+UPjmH3r31PSC6DVRJIjSJ3/+ClMNrH0dE3yFV4636ac5e1ffAO54FEeV29lL8q019Ey8aHHdcUqmzEzbme2Rxgz98Y7jIalDiK5INZMV2aJXrfSlYiMUiR1C3wkd2YWQ1+Wp+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ljBlLaQ9; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nvih+jkE"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2cc61541f8cso25908265ad.0
-        for <git@vger.kernel.org>; Sat, 25 Jul 2026 04:19:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ljBlLaQ9"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-38e071ed6aeso1025471a91.0
+        for <git@vger.kernel.org>; Sat, 25 Jul 2026 04:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784978351; x=1785583151; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784978353; x=1785583153; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=vMNVxedH1Clmq9CMJQwwXpiPg5azqP9Nttp67ldLShw=;
-        b=nvih+jkE4cuxaC7WAWKrltJrbntWhDKic7ywsusyXD/w0atPgSDR+hJrmKg3pCTpzG
-         zKqZUVLCPBpf8XdxvKW/gjU3QquC/yfBf9KfJnBaRtcvDYI6CAMQbi7dtZlXOi1wMZ0F
-         y9qmGEKZFeFue0ZL0/FQlz7URuxQYBUPbnGpRALOw2CgmKvIKBssn2J5bMfPSqUDY6nq
-         97uIpp1nwN/PzZvkLYsfhRltNzS9/MyoP8Ua1DQAVpSfsgDcvbyqUCEehOMlTDJYYALz
-         DGJQV5Mnis3LEMGMw4Lw8oZa7EqGNgHuW5WuNtn+0GFsqmtVS23NMtGEvcmdiSH1mnbM
-         qmTg==
+        bh=Y7VOjM3ZnZcKNsAleTh4XKVnDaGFBnGckmmVi6cvmn0=;
+        b=ljBlLaQ9ScBVH/kJOz7Da5Ir9nnrRQMtjdFy6tTY8SExuC0DfqOsyrjH5oD1T8QEI8
+         SkqOV98IXuAzXGHSGF8QBgjIlRzAJ3SyUsrA4b5FDm04ma5TjcFlVKvevyp4cvQvoQcv
+         LDvUMXgWlmehtiRpadRb4cMo7zUiHGrTxcWa542XcfOw164KcOXkh2e1CxyOc5cZdaP9
+         C/pxSwgwnigmAKzy176xa+f+SJcqkglm9aBPj/MJ5X5Ccn06B9HDVEGiJoMVUiJcUtGb
+         GmOrnzhpPYP9CcgzI8yA6/8ELgiddNBd9GHVesoYtWRHCZL0ykDRioph8p68tevhBcPK
+         npPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784978351; x=1785583151;
+        d=1e100.net; s=20251104; t=1784978353; x=1785583153;
         h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vMNVxedH1Clmq9CMJQwwXpiPg5azqP9Nttp67ldLShw=;
-        b=XrdkdB2+tQzT0PWFY34M5TKPtDW1BF2KivkyIviaxympLIEr5ZsRG3JnJV8cgNCUSs
-         lF3Pb/aY6y2byxNHut+5IjtJn7JkFsz+uaIp7HgzwKDuDTqBwPLIlPoor5UduArpEtDH
-         reLtZC0WZfE+KoAPQhME8MyLetXIGYv3rQq6zxVzNJvLc9WhZPjO9UAE7qRhbk0v7te4
-         IlMI5u6YAmaJW4pvAdlojCcSBIw44B4sC5Jp+KkkPJ+5jLYiGS6UkrO81lOm0WP2Wsnl
-         /1tEFcjBI//OXlx3ajUPsaEfiSvp/HL8A++PUXRTa6SH6/c2Ixj5LTH5pS/3GlxpGAGn
-         a3aw==
-X-Gm-Message-State: AOJu0YyPMAJ/kM3fSWTuSqC74QR66RaiIbS4Uetly2lSVm9DaAc5I7gt
-	hdXk4UJScPvEEh0dkiAX2A2cYvDXlGCC64QkPw5mZtZYL4+EzARC6BcY3gXXuw==
-X-Gm-Gg: AR+sD139z+fETAxhF0DvNmb1unSpjhH6nIuFTzSY8bJ+Wp2KvtxaOWkcSE/vCX1opbq
-	s7PrYA1ejRzegd6BvfeeXX+qd859DrKL7Sq95eka1+go75jfMR+XUxvY461uHgIxsa49v18EL8l
-	tFJ6wQVpZv0p7dj5FJvrvbjc7aF4QAw+HwlmJuocP5gjcJ57RY95cxq9IdYU8njPnhwRXZBwDdz
-	0Yey7piS/8skuzpD4GJyTJ0oYUC7xDmLIygxvr1ciY5wlqQuo70kCkmAdVUyrW3eQOt1KUz1Z02
-	A5POvBS34cIlwlkCNtGI78GyHF2zi8d+Ya16oi3MmebboTHUTSiHkBW13H2ROfaqZpC5YsXZuin
-	ZX/Pytmc9GV5YlHdZnECcps+cIRoB8lVOLuoLV7XNvaczyc1ha99aj7JIzKcg91OIqsZnYvXTwZ
-	HjaOwAq6s=
-X-Received: by 2002:a17:903:41cf:b0:2cf:461a:3863 with SMTP id d9443c01a7336-2cfd7194df2mr36769115ad.22.1784978351200;
-        Sat, 25 Jul 2026 04:19:11 -0700 (PDT)
+        bh=Y7VOjM3ZnZcKNsAleTh4XKVnDaGFBnGckmmVi6cvmn0=;
+        b=gC20i9a1UXg0iCCTx/wZND5LRi+UvzLMoAsAh0t0xvSEThfsf8EAiosLsAMv707hxz
+         kIogft3UtXp8II6DNKkPY+ARMNIOCar/3fgSYZA07Ov8L/XcAapFQ7tVYOMyF84fmCMp
+         Xs+8IfHuz83DnDTGktTsNcBWWeE7lLCS/KV3VNw5o2G7VyHpSPU8xVrsiJgv1fqoquzE
+         VkXsesvrEkpu0M1uX2YcYn6hwfTmSPcUZNYXC9AmDAcXe6BSAA6mNxsHTHpyLn+dd83z
+         hUpZMWH6sGqu4jxW+HZDGlXZ1Bp/1T2s9JMuune2pdeudFyoQp0J0WFq1dtum6U1G6oN
+         MseA==
+X-Gm-Message-State: AOJu0YwoYMHYeKIP9TO7hSVkNLDnOo/0sQGV5RFOJLfMni8LAvP/jUb1
+	52w8nR5rJUf7qT7ebz43FDBPSMDUCwGPxWQiOKNGi6p70BGzY+CirUBIXSpbBg==
+X-Gm-Gg: AR+sD11MX8utqhakEnYtok73nFjzqVBamA5X7LhCbbT20po9SHlMoTtZI9RtA3cZO6A
+	aHVsqXXCD8HKzuEiZkCK13ZPeBpbbzy70oZhdq/kIHMYn1qsXelIheWt9/I9J2Qb5UXA9KUm1rL
+	Z0JMJ4KQlis3rn4BCNVULrwwAj6Og045uYyGYIRtaoM84rs0NdLrC8wlNR0h541cgSmRdolosAv
+	BFzrGtVQWE8pfGLM0V/6GxZ7+T30bbvwvFCuuB/9nEWdyqvjyCbVIbbhNfKudBxgO00+S5OA7ym
+	8Qp23M91b3Bxzg9X97fREC7C/Iu7dm7lXJ/Lq4a3IFRSi9XdDD1REqb/R8mTj5+qt3tzoGQohKI
+	5Q3vuhX/trzqlX1hqvQ5vdCoMaNwfTUfIt4OSoG9VtxM3zZ/tQxMkni0OUoD8j8AH3p6ismmUvE
+	FjM9g7qVY=
+X-Received: by 2002:a17:90b:53ce:b0:38d:a150:ee04 with SMTP id 98e67ed59e1d1-38f2965eb5emr1931452a91.30.1784978352639;
+        Sat, 25 Jul 2026 04:19:12 -0700 (PDT)
 Received: from [127.0.0.1] ([172.215.216.193])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc447f6bsm10738832eec.12.2026.07.25.04.19.10
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d13015052sm32843482c88.5.2026.07.25.04.19.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jul 2026 04:19:10 -0700 (PDT)
-Message-Id: <8bc69c6b80ed42888327331b1567cecf7225ea7e.1784978348.git.gitgitgadget@gmail.com>
+        Sat, 25 Jul 2026 04:19:12 -0700 (PDT)
+Message-Id: <ec682d75f3a7848dc36f82cf36bbdff6fd283e2d.1784978348.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2187.git.1784978348.gitgitgadget@gmail.com>
 References: <pull.2187.git.1784978348.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Matthias=20A=C3=9Fhauer?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 25 Jul 2026 11:19:06 +0000
-Subject: [PATCH 1/2] worktree: don't read out of bounds
+Date: Sat, 25 Jul 2026 11:19:07 +0000
+Subject: [PATCH 2/2] worktree: reject empty string
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,58 +82,29 @@ Cc: Marc Branchaud <marcnarc@xiplink.com>,
 
 From: =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 
-`worktree_basename` tries to read from memory before the passed `path`
-string, if `path` is empty (or only consists of directory separators).
-That results in unexpected nonsense data being returned to the caller,
-which can lead to issues, such as `git worktree add ""` recursively
-deleting the current working directory, including `.git`.
-
-Stop reading out of bounds in these cases to avoid that behaviour.
-
-This leads to `git worktree add ""` consistently exiting with the
-message `BUG: How come '' becomes empty after sanitization?`, which is
-still undesirable, but at least it doesn't result in data loss anymore.
-
-This fixes https://github.com/git-for-windows/git/issues/6346
+`git worktree add ""` errors out with the message `BUG: How come ''
+becomes empty after sanitization?`, but not due to a bug in the
+sanitization code. An empty string should remain empty during
+sanitization. Instead reject the argument as invalid user input,
+if it's already empty before sanitization.
 
 Signed-off-by: Matthias Aßhauer <mha1993@live.de>
 ---
- builtin/worktree.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ builtin/worktree.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 4bc7b4f6e7..d8188035db 100644
+index d8188035db..113dbf98d3 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -297,17 +297,21 @@ static void remove_junk_on_signal(int signo)
- static const char *worktree_basename(const char *path, int *olen)
- {
- 	const char *name;
--	int len;
-+	int len, len2;
+@@ -496,6 +496,8 @@ static int add_worktree(const char *path, const char *refname,
+ 		die(_("invalid reference: %s"), refname);
  
--	len = strlen(path);
-+	len2 = len = strlen(path);
- 	while (len && is_dir_sep(path[len - 1]))
- 		len--;
- 
--	for (name = path + len - 1; name > path; name--)
--		if (is_dir_sep(*name)) {
--			name++;
--			break;
--		}
-+	if(len) {
-+		for (name = path + len - 1; name > path; name--)
-+			if (is_dir_sep(*name)) {
-+				name++;
-+				break;
-+			}
-+	}
-+	else
-+		name = path + len2;
- 
- 	*olen = len;
- 	return name;
+ 	name = worktree_basename(path, &len);
++	if (!len)
++		die(_("the empty string is not a valid worktree"));
+ 	strbuf_add(&sb, name, path + len - name);
+ 	sanitize_refname_component(sb.buf, &sb_name);
+ 	if (!sb_name.len)
 -- 
 gitgitgadget
-
