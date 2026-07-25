@@ -1,69 +1,69 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE13F32AABD
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 15:34:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACD532A3FF
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 15:34:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784993677; cv=none; b=QM0+Y34bGZWGW5dYgYO3/5n7N9A543O9GqG0nphCbqObWUOfneCI2Aqg/im6Pv+OFBbxJZAqvJTU5ObuJ+8kBt2rCgAZa+sYcahkKEHYzXEi11Etl0yWsWaHm7f7jBtAOnUaBHs2cSPTQHR/iXfPqKiGLDB8ExjxyLtqrxlvtJA=
+	t=1784993679; cv=none; b=pADzLkWZ+8+eebiN4g+UGb7etaVU2lDeMyo4HXXXD822ygIYnLP1IlnWf8i5oajvUC94tnM60o1g9sGmOoRUXshQTl6or4rPVwVA3oeITpwNgVR3jeFFlDpTZ9Y3jJjAW34MN4hrvIY7QGCxzo9yiXbSaxGvnSOED3B+T4FGHEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784993677; c=relaxed/simple;
-	bh=8GgrbZT53bgNOXlhsc7kw1J4SCLOOYKEhL/3551g3Ao=;
+	s=arc-20240116; t=1784993679; c=relaxed/simple;
+	bh=NRNY3EnPCzp1LqzP2Nx+r70TVQFnmKrQNOqGtrW1K3E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ODoc4ZNsGZsKG2WSeUlnxdUbRnYlZC37ZcnOGINoBuc5386Ow+aT53N56+m536S3k537eDiUbPRLkNi0PpqfIRXffF3MrfI9LLVdi4RkHcQtoYzl96yeJ1pWN+YkzEwTkU6f7EgzmcuThijMFh6g7nSXkCaU3FYCryEVsoRMpns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G4Ed8z2c; arc=none smtp.client-ip=209.85.216.52
+	 MIME-Version:To:Cc; b=k2iELDEjyctHvrlNwPJ6j5+n+8aOGpm/r0FOKJImf7WF38Dplo+KJb1suDAp3n2tJgRIKY2Nws2H6R66btfQqXKSaE4g+vOzxGOJGsH9Bm8ILyEonWrrCe2yUYjU87Rkv1niul0JgDCOPD01OxMR8lky/JXpPemSmAm/VYTtK+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N6/t6kNa; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4Ed8z2c"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3811f512167so1278319a91.3
-        for <git@vger.kernel.org>; Sat, 25 Jul 2026 08:34:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N6/t6kNa"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38e3efab7e0so1096032a91.0
+        for <git@vger.kernel.org>; Sat, 25 Jul 2026 08:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784993674; x=1785598474; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784993676; x=1785598476; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=zZm2zgdU+Gog6IfqVC4pB6f2DFpdN3LLiIUdON5shZQ=;
-        b=G4Ed8z2cMvXsxcddgdrSWwEZ9W9pjIdH0u5bROwYy2WlKeHzsN7rUxlJaz9razSxnQ
-         zsqfvr4jQrmwLpIueKh/Yv0nMvWyv2QzSeyUAk6NxQLC49ODHb/VOJ4YkgnCtS4Ryr0/
-         57MwTWKjpLzJYh3fB+5drD9MG3wT5bb62Oa4P8R9/zrSZnFbnMg67ZNwi1srz8VIBu0E
-         W0+p12qx16UsAxv4OMozCTadslMUB39aqCGN2Dzd+PBWHv45oOAihVJELpL7zLueJtRC
-         t2zrljlB3VBM3xl0b/St6qtFCpyt8vd456KQMN57FsMGmov9jShCi6MbC1Zkq/3YNwbB
-         bYvg==
+        bh=cLp0SXWTIBwVIkhR3Po5WPBI0iaNbikcghTAB7aUBoc=;
+        b=N6/t6kNauF+mqNMLpyV//PM1dMXR97MrekUkEyYCeWlplV8ho8JETfxUrUV9Y1HcMG
+         mBVbbaNiGp03TfIqvb/ZjVUrnrRnwDK6sXFV2QFjdDslEvV0Szse77vZAWdGMDdLQxgU
+         5sARPZixtpgiOVbbORi6zLzZJCUqMejeiRTra3w3NxZPPCcMjAzBBE5te/82k0s3Ajh1
+         nvqqQW1rFu6WTGKQtoZNROCsko8/1AYv4o/bz7JTCoI9FoqXuK1UMUgUwQPbwi+gIN6w
+         SaeS6Ig9SqWAg6oFeI3uxTraRDoMIsWvuHAzVduGljMAraFVQj3chfw7dnEDDx2sjH3h
+         1xaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784993674; x=1785598474;
+        d=1e100.net; s=20251104; t=1784993676; x=1785598476;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zZm2zgdU+Gog6IfqVC4pB6f2DFpdN3LLiIUdON5shZQ=;
-        b=Uw6U+8yZ2zX/KQqjjhEKMSDyh6OgOJRbkAyvuTM3YUhfI4m07Bs4vxgG2/rV5CbTXO
-         N7KQH1Iig7tHb9Yq60b4MifuBx3zkRGzzO/Q88chMjqsLe+bX64nvOTkG7toUk+qFpBB
-         vkZbT3az82iDCh9E5MwSyf1EcvPui5gDGF8znufD3U/9vRv6RblTigoYHp30nyFCUVMI
-         CnrvEVswoX9zGB+MTKRQ8NvNH9CbSBgY3zIzavbH3y/ZPf7Jp3bOirzDGEu05aL+6Lnf
-         q9cxnmqBYO68JHofbIVf6n/UHwYDUVNWikc5XRpjPjo0m8pDmhMLyJfSXFiOORhaStp8
-         esHg==
-X-Gm-Message-State: AOJu0YzBkZMMKZChDBgLie+vORMyK72/O54QgKao+fRD/5Cvg0bVDQyU
-	beir/8JLBCLULP67tTZu05F8tT7b8bHfO9Loiozq3VJwp+ozEmN/NjunmzVG1alP
-X-Gm-Gg: AR+sD10cZ7WsXg3Djqps1pv2Q/Zgf5zSlyqhjCnhoJMCnZLrU6SHmfzMOxdJuuIoJJK
-	6HBPMyQwla1LjY7hWLUbxcfOBXUIL6xhDwyOTewUnWjoRwjOTPj8XcvIfpfPSFXHsRRbXmIgTX7
-	/jC3O5KWhg3JFZyxKVdWPveyjOsNrxgcypZeZr1a7FWGk0DNgtb/QqS9eSZrTlZ8/jR40EeuXbI
-	T9pFnEWUtkDh///EKLDlHQdfl2l09WAM2RLWiPyrm2ihj4aHRJlEeM7PX1GxD0davGkdNUMkE4L
-	eX97/M3SxOv8Rxak6qwfJzxoaUYtJ9iWIJcGHI402eduyk2XZ5i3Zqnz80Fw7ZuwzbyJeE/N4ap
-	owLeAlCD74qs1mPKtXt9ZtKGULxQ/MVaTsW1AHTzqS6w9ZDAE4EOeRDkeCSn6peKIRncYXIN/3m
-	FS
-X-Received: by 2002:a17:90b:3dc4:b0:38d:e658:595a with SMTP id 98e67ed59e1d1-38f293cd055mr2642223a91.2.1784993673937;
-        Sat, 25 Jul 2026 08:34:33 -0700 (PDT)
+        bh=cLp0SXWTIBwVIkhR3Po5WPBI0iaNbikcghTAB7aUBoc=;
+        b=a+o5E4mtm+FHxRLA4czpx6S/GddOGjXi3cMOD+J8RgMr30grx22HnUXPPUCia0vzAV
+         3ymRKT5M7ixQsjC9wWLyxGtBAxmBysCQsBuxkCZg3gLo2ALVh5N4nLWArqmOuPdLPzjy
+         EGEJKTMj0OpZVyOYc0UaMKu2VNBDCdBXhtyzdO7qvFyUNO2LmyH6mPjd2fH9C4i4LnEB
+         DdCLnVagbouNA3Lk82nNske7vRPyNNFWT9CA0vU/EBdXX5Y7reDhcpxpn8ZHLMjvRDfH
+         I5opVuiXCeN/ns1EuypL9ckwPao9tNzZvdpTkWn/8BYbbgGBPd0+7S5H8myuvAhBDeA7
+         QxPw==
+X-Gm-Message-State: AOJu0YxrW8NOJNtDQraiyTlw8KDHH9sFmgD1pvxsnKvcJJWOUbPDcARy
+	5uMX3VvzuGY2KW6028qnUikc2+n3jEqwHxf0jx3XrYnrunlU59lEtFuZsAMAUFj9
+X-Gm-Gg: AR+sD11ITL3UMQyAJDnkVHzBndp53laFQaqUdczHIRunltlplWKFJrAQ2mF/e0gRcW7
+	UZoBjb6VG53fZjMuxsyIeHrLfOt0grVj395XqTQsvEMQRtsDFJcVv5mPFSb8JshrizD0LvQPbG7
+	lqWZnaYyYNtiBMD8Q5RMKWPp9E2OOnogIQs5l6545ydazfQdHocXkMP5R+S/TEJu7HzHD6QBqEc
+	iedHAY9Jdt1itXTxNVvjg7YbY/6GoXEbre5vH89oNEYANVxZXtjBBdeqdDOHPxU+vjYCsaNOb/P
+	0ZGinYZycM1RvZnUug64s/GYCM7DfGorEA+IRc7qy2Rhif1a6ecnrofLFfwzCT65dl0Np2bfykR
+	PjLBOCWXItOZNTC/1NmX5RG2uN3F8SKn6f1PwK6/XMl8hRqkJYO6fx6p0yz4v+y1BZ4RSpTSkwO
+	N/
+X-Received: by 2002:a17:90b:4d11:b0:387:d5bd:622e with SMTP id 98e67ed59e1d1-38f2aa99eb8mr1882931a91.17.1784993676104;
+        Sat, 25 Jul 2026 08:34:36 -0700 (PDT)
 Received: from [127.0.0.1] ([4.154.7.17])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f292d2eafsm888281a91.8.2026.07.25.08.34.32
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f090b0c9dsm1499472a91.4.2026.07.25.08.34.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jul 2026 08:34:33 -0700 (PDT)
-Message-Id: <b501b5fcd0b9dde65c1ce358e2f4014dfa340c37.1784993669.git.gitgitgadget@gmail.com>
+        Sat, 25 Jul 2026 08:34:34 -0700 (PDT)
+Message-Id: <37becf38c2ef175a3dadcf750e2cca836942d83e.1784993669.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
 References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 25 Jul 2026 15:34:28 +0000
-Subject: [PATCH 1/2] sequencer: teach autostash apply to report conflicts
+Date: Sat, 25 Jul 2026 15:34:29 +0000
+Subject: [PATCH 2/2] checkout -m: refine autostash fallback
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,191 +79,126 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Add a conflicted parameter to apply_save_autostash_oid() and
-apply_save_autostash_ref() so callers can learn whether applying the
-stash resulted in conflicts.  Thread the parameter through
-apply_autostash_ref() and update existing callers to pass NULL.
+When unpack_trees() fails under "git checkout -m", only create an
+autostash and retry if there are tracked local changes.  Without such
+changes, the fallback cannot help and merely repeats the same failure.
+
+Use the conflict result from apply_autostash_ref() to print a blank line
+before the branch-switch message, visually separating it from the
+conflict advice.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/checkout.c |  3 ++-
- builtin/commit.c   |  2 +-
- builtin/merge.c    |  6 +++---
- sequencer.c        | 29 +++++++++++++++++++----------
- sequencer.h        |  3 ++-
- 5 files changed, 27 insertions(+), 16 deletions(-)
+ builtin/checkout.c | 17 +++++++++++++----
+ t/t7201-co.sh      | 17 ++++++++++++++++-
+ 2 files changed, 29 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index aee84ca897..72aafa4049 100644
+index 72aafa4049..2e8b2a2348 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1242,7 +1242,8 @@ static int switch_branches(const struct checkout_opts *opts,
- 					    new_branch_info->name,
+@@ -838,10 +838,11 @@ static void init_topts(struct unpack_trees_options *topts,
+ static int merge_working_tree(const struct checkout_opts *opts,
+ 			      struct branch_info *old_branch_info,
+ 			      struct branch_info *new_branch_info,
+-			      bool quiet,
++			      bool allow_autostash,
+ 			      int *writeout_error)
+ {
+ 	int ret;
++	bool can_autostash = false;
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	struct tree *new_tree;
+ 
+@@ -888,9 +889,13 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			return 1;
+ 		}
+ 
++		if (allow_autostash)
++			can_autostash = has_unstaged_changes(the_repository, 1) ||
++				has_uncommitted_changes(the_repository, 1);
++
+ 		/* 2-way merge to the new branch */
+ 		init_topts(&topts, opts->show_progress,
+-			   opts->overwrite_ignore, quiet);
++			   opts->overwrite_ignore, can_autostash);
+ 		init_checkout_metadata(&topts.meta, new_branch_info->refname,
+ 				       new_branch_info->commit ?
+ 				       &new_branch_info->commit->object.oid :
+@@ -917,7 +922,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		clear_unpack_trees_porcelain(&topts);
+ 		if (ret == -1) {
+ 			rollback_lock_file(&lock_file);
+-			return MERGE_WORKING_TREE_UNPACK_FAILED;
++			return can_autostash ?
++				MERGE_WORKING_TREE_UNPACK_FAILED : 1;
+ 		}
+ 	}
+ 
+@@ -1166,6 +1172,7 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	int flag, writeout_error = 0;
+ 	int do_merge = 1;
+ 	int created_autostash = 0;
++	bool autostash_conflicted = false;
+ 	struct strbuf old_commit_shortname = STRBUF_INIT;
+ 	struct strbuf autostash_msg = STRBUF_INIT;
+ 	const char *stash_label_base = NULL;
+@@ -1243,7 +1250,7 @@ static int switch_branches(const struct checkout_opts *opts,
  					    "local",
  					    stash_label_base,
--					    autostash_msg.buf);
-+					    autostash_msg.buf,
-+					    NULL);
+ 					    autostash_msg.buf,
+-					    NULL);
++					    &autostash_conflicted);
  		}
  		if (ret) {
  			branch_info_release(&old_branch_info);
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 28f6174503..d678a81865 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1980,7 +1980,7 @@ int cmd_commit(int argc,
- 	}
+@@ -1256,6 +1263,8 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit && new_branch_info->commit != old_branch_info.commit)
+ 		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
  
- 	apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
--			    NULL, NULL, NULL, NULL);
-+			    NULL, NULL, NULL, NULL, NULL);
++	if (autostash_conflicted && !opts->quiet)
++		fputc('\n', stderr);
+ 	update_refs_for_switch(opts, &old_branch_info, new_branch_info);
  
- cleanup:
- 	free_commit_extra_headers(extra);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5b46a596f0..cecb8fb716 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -538,7 +538,7 @@ static void finish(struct commit *head_commit,
- 
- 	if (new_head)
- 		apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
--				    NULL, NULL, NULL, NULL);
-+				    NULL, NULL, NULL, NULL, NULL);
- 	strbuf_release(&reflog_message);
- }
- 
-@@ -1680,7 +1680,7 @@ int cmd_merge(int argc,
- 					  &commit->object.oid,
- 					  overwrite_ignore)) {
- 			apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
--					    NULL, NULL, NULL, NULL);
-+					    NULL, NULL, NULL, NULL, NULL);
- 			ret = 1;
- 			goto done;
- 		}
-@@ -1844,7 +1844,7 @@ int cmd_merge(int argc,
- 			fprintf(stderr, _("Merge with strategy %s failed.\n"),
- 				use_strategies[0]->name);
- 		apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
--				    NULL, NULL, NULL, NULL);
-+				    NULL, NULL, NULL, NULL, NULL);
- 		ret = 2;
- 		goto done;
- 	} else if (best_strategy == wt_strategy)
-diff --git a/sequencer.c b/sequencer.c
-index 1355a99a09..91a70e39a1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4748,7 +4748,8 @@ void create_autostash_ref(struct repository *r, const char *refname,
- static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
- 				    const char *label_ours, const char *label_theirs,
- 				    const char *label_base,
--				    const char *stash_msg)
-+				    const char *stash_msg,
-+				    bool *conflicted)
- {
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	int ret = 0;
-@@ -4783,14 +4784,16 @@ static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
- 		strvec_push(&store.args, stash_oid);
- 		if (run_command(&store))
- 			ret = error(_("cannot store %s"), stash_oid);
--		else if (attempt_apply)
-+		else if (attempt_apply) {
-+			if (conflicted)
-+				*conflicted = true;
- 			fprintf(stderr,
- 				_("Your local changes are stashed, however applying them\n"
- 				  "resulted in conflicts.  You can either resolve the conflicts\n"
- 				  "and then discard the stash with \"git stash drop\", or, if you\n"
- 				  "do not want to resolve them now, run \"git reset --hard\" and\n"
- 				  "apply the local changes later by running \"git stash pop\".\n"));
--		else
-+		} else
- 			fprintf(stderr,
- 				_("Autostash exists; creating a new stash entry.\n"
- 				  "Your changes are safe in the stash.\n"
-@@ -4814,7 +4817,7 @@ static int apply_save_autostash(const char *path, int attempt_apply)
- 	strbuf_trim(&stash_oid);
- 
- 	ret = apply_save_autostash_oid(stash_oid.buf, attempt_apply,
--				      NULL, NULL, NULL, NULL);
-+				      NULL, NULL, NULL, NULL, NULL);
- 
- 	unlink(path);
- 	strbuf_release(&stash_oid);
-@@ -4833,19 +4836,24 @@ int apply_autostash(const char *path)
- 
- int apply_autostash_oid(const char *stash_oid)
- {
--	return apply_save_autostash_oid(stash_oid, 1, NULL, NULL, NULL, NULL);
-+	return apply_save_autostash_oid(stash_oid, 1, NULL, NULL, NULL, NULL,
-+				       NULL);
- }
- 
- static int apply_save_autostash_ref(struct repository *r, const char *refname,
- 				    int attempt_apply,
- 				    const char *label_ours, const char *label_theirs,
- 				    const char *label_base,
--				    const char *stash_msg)
-+				    const char *stash_msg,
-+				    bool *conflicted)
- {
- 	struct object_id stash_oid;
- 	char stash_oid_hex[GIT_MAX_HEXSZ + 1];
- 	int flag, ret;
- 
-+	if (conflicted)
-+		*conflicted = false;
+ 	if (created_autostash) {
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 0ddd1ad7aa..f9696dab36 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -240,6 +240,14 @@ test_expect_success 'checkout -m creates a recoverable stash on conflict' '
+ 	test_grep "git stash drop" actual &&
+ 	test_grep "git stash pop" actual &&
+ 	test_grep "The following paths have local changes" actual &&
++	sed -n "/apply the local changes later/,/Switched to branch/p" \
++		actual >separator.actual &&
++	cat >separator.expect <<-EOF &&
++	apply the local changes later by running "git stash pop".
 +
- 	if (!refs_ref_exists(get_main_ref_store(r), refname))
- 		return 0;
++	Switched to branch ${SQ}side${SQ}
++	EOF
++	test_cmp separator.expect separator.actual &&
+ 	git log -p -1 --format="%gs%n%B" -g --diff-merges=1 refs/stash >actual &&
+ 	sed /^index/d actual >actual.trimmed &&
+ 	cat >expect <<-EOF &&
+@@ -262,11 +270,18 @@ test_expect_success 'checkout -m creates a recoverable stash on conflict' '
+ 	git reset --hard
+ '
  
-@@ -4858,7 +4866,7 @@ static int apply_save_autostash_ref(struct repository *r, const char *refname,
- 	oid_to_hex_r(stash_oid_hex, &stash_oid);
- 	ret = apply_save_autostash_oid(stash_oid_hex, attempt_apply,
- 				       label_ours, label_theirs, label_base,
--				       stash_msg);
-+				       stash_msg, conflicted);
- 
- 	refs_delete_ref(get_main_ref_store(r), "", refname,
- 			&stash_oid, REF_NO_DEREF);
-@@ -4869,16 +4877,17 @@ static int apply_save_autostash_ref(struct repository *r, const char *refname,
- int save_autostash_ref(struct repository *r, const char *refname)
- {
- 	return apply_save_autostash_ref(r, refname, 0,
--					NULL, NULL, NULL, NULL);
-+					NULL, NULL, NULL, NULL, NULL);
- }
- 
- int apply_autostash_ref(struct repository *r, const char *refname,
- 			const char *label_ours, const char *label_theirs,
--			const char *label_base, const char *stash_msg)
-+			const char *label_base, const char *stash_msg,
-+			bool *conflicted)
- {
- 	return apply_save_autostash_ref(r, refname, 1,
- 					label_ours, label_theirs, label_base,
--					stash_msg);
-+					stash_msg, conflicted);
- }
- 
- static int checkout_onto(struct repository *r, struct replay_opts *opts,
-diff --git a/sequencer.h b/sequencer.h
-index 64a9c7fb1b..b39528b6d0 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -237,7 +237,8 @@ int apply_autostash(const char *path);
- int apply_autostash_oid(const char *stash_oid);
- int apply_autostash_ref(struct repository *r, const char *refname,
- 			const char *label_ours, const char *label_theirs,
--			const char *label_base, const char *stash_msg);
-+			const char *label_base, const char *stash_msg,
-+			bool *conflicted);
- 
- #define SUMMARY_INITIAL_COMMIT   (1 << 0)
- #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
+-test_expect_success 'checkout -m which would overwrite untracked file' '
++test_expect_success 'checkout -m only retries untracked-file failure with local changes' '
+ 	git checkout -f --detach main &&
+ 	test_commit another-file &&
+ 	git checkout HEAD^ &&
+ 	>another-file.t &&
++	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/trace" \
++		git checkout -m @{-1} 2>err &&
++	test_grep "untracked working tree files" err &&
++	grep "\"region_enter\".*\"category\":\"index\",\"label\":\"refresh\"" \
++		trace >refresh.events &&
++	test_line_count = 1 refresh.events &&
++
+ 	fill 1 2 3 4 5 >one &&
+ 	test_must_fail git checkout -m @{-1} 2>err &&
+ 	q_to_tab >expect <<-\EOF &&
 -- 
 gitgitgadget
-
