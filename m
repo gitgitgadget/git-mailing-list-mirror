@@ -1,141 +1,130 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EA828D8D0
-	for <git@vger.kernel.org>; Sat, 25 Jul 2026 17:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571BD4908A9
+	for <git@vger.kernel.org>; Sat, 25 Jul 2026 17:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784998832; cv=none; b=V3GhJFGlOKYvb8mvx9sYFlYiIiCk/B78VrlXXtoNQYzyo5xx6WGvb9Gdeb7xnizTPjamn3Gm4P4TMYWATXumkaa691e4PxZMPNyd3YUBTbVoZcwnYs54MvrbiZ9yb22MY3Mauov08nxABrxJI4FmegzJt6HqGGLlLNTen2loN38=
+	t=1784998964; cv=none; b=S2WwvJTz7QJkg8QKfRc/3ocgWqlssD19LFJ/mtHYm09RN6Bh6y7hKoUURXMCVwoLyU1MClhK5iJ208ENC8zdAreHh5kUcFFjkhW/ifVcoVe/RrtNrZiAEvyGcT1/46qZczIC5V4iWI8QCNR8JB99HIp/uRN1UUhGH7HeNeGUFSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784998832; c=relaxed/simple;
-	bh=4Ar3a+M5w1ky5ZJSRPMzH+3j+h4CrExuLh9k2S31dhQ=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=cCQFKb1xoBBXmvIOyoCNhV7sAj/whxwtciewuJPI1fVq1AKu2z3Zmsi6kLIsFc6VvXdbyES2CiXhTvOopS2Blo35GaTlOU73kJp4ug9b97H7Tj1aXTGlf5Q3f9xkcWVWtCjUPBd/+pYajIIsreYg6zcLKHD+P3z36Jn+Lb5p5qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eT5QyhCN; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784998964; c=relaxed/simple;
+	bh=Svh5bBgdc9r1Ub2awZubHYk5JUGxvzRVqjEHo1X7NBA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rEzQxbRu0I8lWbXAu9ydZ9rBLjd2UY/IJmRHmqpcxuny4hhQ2Hf83lDnl1OPv/EZygHXmid8ixwSLPfXZB7tvSCG6Pd8aKC23Tq9uU800uwViulpMVceZanf7p06wHURtiarBYoTIHx04OMGwz1AVzOicFnquFlUo53t/WFSwCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E5UahYvz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JdbFBfN1; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eT5QyhCN"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-383b4a3755fso1330033a91.3
-        for <git@vger.kernel.org>; Sat, 25 Jul 2026 10:00:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784998830; x=1785603630; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=QoQC/WwV3wWQOfcpDse1V0OTXKjOfDN40MD+J/oOMWE=;
-        b=eT5QyhCNEljv903HUesL+2wwG48l00GGvDlcEoY8qd83ksJqRYlDD59oSad6yjpZHX
-         F4PTlPVYq/8nAK4OOYBLSUp/rOY1hzok6cDLVZdpj0FaxAPjy3oF8hi6K6NgM6fkTRun
-         /3sir85neYSBQjgrOyP7jTY58GBA7DyA9YLSNUe5JEu2PxEkB8K5UWIXZwZirJLRHGJ1
-         dbniTTfC0T9tQZLtTtd7aECcvNS+G1292tPMvwHTX12yn1d9j0F01dMx4864RNnyZQZC
-         Jfn6ifqIG/4P8eqDc6dTV2IuQ0zq42FS/ZONPiC4hhCh7vOmrfonedmgS+Jhm1Z3ZYzH
-         +/OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784998830; x=1785603630;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=QoQC/WwV3wWQOfcpDse1V0OTXKjOfDN40MD+J/oOMWE=;
-        b=OLcXkCygN68xwb3VTa9wu7QaYtX63dJdwP0qm4U/E90BDKHnJq/Ov05FGepYX0ab1M
-         tsNqkfTXIsSBLiU1paOuKUSIHFzfL0mYOE/4PVdh4KsNCvAijlLI/rIKnpJnRkJT4e23
-         hWmJjrkueAX9F7fNXNVoZU/jUSDvOGmsNzBrGZ/vYvTVs8L694ez3r4gSEkQeGme5cbi
-         pclWkmkKtVVyzknjQDKeTpHr8T6m3ZYkNGhpnXe6m4ej0sFszgZE/Ybh7v+cSG8k9PsV
-         jq8lmWfsc0ySTZVfQPFPPlqqYC8lurdeyb2y3+ZwzgDqIlTW/O15VNXQgyHXMnivw+uh
-         iyXQ==
-X-Gm-Message-State: AOJu0Yy57n5BDmkjrhULZ9rUqOZWdxfl59GlWl5qaFxP+GTYMbbrRAv9
-	MFrzh3RTOmz7mXP1YMpBhQIzJVyDl55AnsQLWjVd1wZl4t0io5WVaa+epEXS9A==
-X-Gm-Gg: AR+sD12Z0d5V9cO1cJ1XV/DskmwqAdZxf/IJCpNmHqY/fZW9TulUAkgn3OkGaFWTSsb
-	pDtm1u0Xm/VVNJHgwr/jEalkgM0qZd49qJxk6XJNWcRxv4sU/6SA+nLlakB7+vF3/CIS72JS+rx
-	qZJ4iG/5QLbgAhIBkSt+P0hw3xNqa418lptT0sCuI5VDRTa3klLDsyrfZ3EFPEXZDD5FwwDZEaG
-	AhFpHACotyfz4sIDJ7gVlCwzu0PjeTbe5gFYJ4QyO/HHx+wzI6eP+BefvMhINv9J+O2xycnZham
-	iPxzWndksbo1o+E4VLwTLIClKusymzBWvsA+2tIBc7mmItahdyO1fNtSxgkK9wk5syhnUcNkJqE
-	bMfa3F6WQ7PFcH3hLHRAfeBTTdsaAUpnfYwUS7OfgbZ09DONNfaPD38m/YBcQY0unEcYtQwnVKA
-	GcO4E=
-X-Received: by 2002:a17:90b:258e:b0:37f:9ce1:cda4 with SMTP id 98e67ed59e1d1-38f29641b23mr2721887a91.26.1784998830105;
-        Sat, 25 Jul 2026 10:00:30 -0700 (PDT)
-Received: from [127.0.0.1] ([20.171.20.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d13003f12sm63986830c88.2.2026.07.25.10.00.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jul 2026 10:00:29 -0700 (PDT)
-Message-Id: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
-From: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 25 Jul 2026 17:00:28 +0000
-Subject: [PATCH] merge-base: add tests for --is-ancestor
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E5UahYvz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JdbFBfN1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 87E60140006D;
+	Sat, 25 Jul 2026 13:02:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 25 Jul 2026 13:02:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1784998962; x=1785085362; bh=zxs6I09mzw
+	AAa2jvzuWpc5/YHo4B4Tzolzn0Xgp1AyM=; b=E5UahYvzKHZYLMDRoq8fzB72t3
+	hyj9xYAVheeumBgfBHxdaqBdCj13of/xGJy1AZA79dXd6e7zmKmIHA5J3KtYWhmg
+	3hC1/PBBfb8VT5VJRnf9CFOwOTi2kYaqyjVICKPwgOtgh9TeFI6VzcVeJU8htjiR
+	WLAbn3YUEga+xxKbUWrWPxZ/BHL2MCyVzDKFIQDXXMc5rKVZ2dl3rWWysl+h1Ygz
+	xragXWiwHpE2xVsunkOw87qI4/yjUXbF/6YHsN+IzRLzlEz8ctBC+PCn8FtbzS/m
+	7skQYKHD779zu++lBIuoBLY1rpzH1Q+HoHXrNoWoRtOMlHMWzoLK6bva2W1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1784998962; x=1785085362; bh=zxs6I09mzwAAa2jvzuWpc5/YHo4B4Tzolzn
+	0Xgp1AyM=; b=JdbFBfN1CSpk+ZQc7bLHS2zW2k5W0Snv6lapF1dmINKYjCWmA99
+	Dz4ONJfROPEpvyVmvz2feqy0StXF9+O0nKwkOASWn+k9J5GSdnf5SXaCqqDCQE1q
+	oNTHJBGJdLXmUtNXh8VC03QlPpdG1X/lcYi8kfbBxTlvfB3VG9UnsrHUM/3+dtFQ
+	AYxgp86nUEkiIhoY6aR25p0fSUceq7Gl9YLu5hcqCT7OhNgfKGrxgux3F5C5cWoF
+	acShNMopDG2s0vQkah2m6C+6Ynjsf+DM8nsik+nrz60D6c8mH+aWqaACHCIkCp35
+	PLmyut/usJUeca57WLnRQ8ozirbCXV9ob4w==
+X-ME-Sender: <xms:MuxkapG7eXkvpnraOMiWKS1vH9KIjMelAF26GhngMrKt1fcMi6opsw>
+    <xme:MuxkalMJMto21h7t5Mf2SeaShCoGUTXHevW1E-ScYOmn8zQkN-vZzl4pMD-XbuX9N
+    XUSMpVUo-EhEUR2i2GVVh4Bh9d0g6TqAfs6BHYhjvVGpnFDI1YUUMw>
+X-ME-Received: <xmr:MuxkajcdRRGHF7PaKnD_XtfDOzt7ums8EcP6Em5ooeiI3NUs0W4SfFK2rZMMe4xLfSd-HXpJxN4b_qQk3num8Mn3WN8v10coxQ>
+X-ME-Proxy-Cause: dmFkZTEmB3USK51KmKh0n+5cp9CKHKVkQUNxrKK8CYZJpsdSwb8/PMItyPc2IEtSGjwcfO
+    DjF+kiDxLaQH5tBcK7snlcVSZ74uIGQDKpQLV8IUamnLsOhIAB7Vjnko365t471ZOpRrCW
+    Y9pJCwRJNuTCpyoQWoS7dlKze+NOegqp5hXQD7LeD69HBgz0596sz9C8GuB2RutEvmmDvc
+    CtC5N1KJVh2wB4gpMuQshGB+EWZXI7HQVowuFuEPZQEWFDMFRu97584yJdhWb5EiNZ+Abd
+    kC+190a3W3VR+m7ybSCZeTlCjoMSxOPNAfwjmM/Famow1dEUODPqk1Nl2T9/4zYP5agzGM
+    nBNsNP5FFRLOJIVPfbWDVBwrroEhc7ExWaWPCkZRKEfCxPuuJIDCw2rNTwi4X9Spu0Khpw
+    7KnYHBjV3k+iD4J5hjCbDqc/ElKcp5bQgsncBLLn4JsQKEOTKa0coD3hDaByoHrzppWWgh
+    tJWK0irwoeOrlVdHpfbd3VhIN8CXIiiJkviGYBcMSC9vr9r6a7i8HVxII7DguCUDOfvVS1
+    V6v3piCkUXP1cDrq/kRMUPuKBtqHu+omzkYhCLv7Qbip5Qw27CP+dzrCT5TmGv2HpdTHQi
+    51EYSplO4Ao2LD1FbWo0/BrLN6y4AwFjrZq5OShVoIZHxdM8MaLpzooNtS6Q
+X-ME-Proxy: <xmx:MuxkaqsEApk4SNu8YD_03GI1u-xj3RFNPOuFJW-iA1NkNHoAb_MAoQ>
+    <xmx:Muxkaslbx8KgdtIQVXcKurOAs1hKweThRq3n5FkofWf_b4AnCX4dOA>
+    <xmx:MuxkakwEofrTMxArpNEJlQwD1yHwFuYfS_bG35ENJtYVdFgO--itDQ>
+    <xmx:MuxkamNktJTtZrVl0hB355J89xh9F_hoc3yNeEy_d2dpECOk3WzuTQ>
+    <xmx:MuxkaqcEiGrS1dmCOZmgegZY13n7CjtFKpw2SWOAjiG5oLR6EKN0RTCD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 25 Jul 2026 13:02:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  ps@pks.im,  newren@gmail.com
+Subject: Re: [PATCH v1 0/3] environment: migrate more global variables, pt.2
+In-Reply-To: <20260725115428.2214202-1-cat@malon.dev> (Tian Yuchen's message
+	of "Sat, 25 Jul 2026 19:54:25 +0800")
+References: <20260725115428.2214202-1-cat@malon.dev>
+Date: Sat, 25 Jul 2026 10:02:40 -0700
+Message-ID: <xmqq5x23ypcf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Nikolaus Schuetz <nikolauspschuetz@gmail.com>,
-    Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Content-Type: text/plain
 
-From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Tian Yuchen <cat@malon.dev> writes:
 
-`git merge-base --is-ancestor A B` is used a lot in scripts but has no
-tests. Add some to t6010 covering its exit codes: 0 when A is an
-ancestor of B, 1 when it is not, and 128 (not 1) when given a bad
-argument. Also check that --is-ancestor and --all can't be combined,
-and that the resulting error names both options.
+> Hi all,
+>
+> This series moves:
+>
+>  - (1/3) minimum_abbrev and default_abbrev 
+>  - (2/3) pack_size_limit_cfg
+>  - (3/3) assume_unchanged
+>
+> into repo_config_values to continue the libification effort. 
+>
+> Note: in commit 1/3, we need (repo != the_repository) checks in the
+> getters, because some subsystems where the readers of _abbrev
+> configurations live forbid the use of 'the_repository' and only accept
+> 'repo' [1]. We have to explicitly intercept those intances that are
+> not 'the_repository'.
 
-Signed-off-by: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
----
-    merge-base: add tests for --is-ancestor
+Sorry but I am not sure I follow.  If a repository that is not
+the_repository is not yet allowed, shouldn't the caller be flagged
+for passing a random repository that is not the_repository as not
+conforming to the API (yet) with:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2186%2Fnikolauspschuetz%2Ft6010-test-is-ancestor-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2186/nikolauspschuetz/t6010-test-is-ancestor-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2186
+        if (repo != the_repository)
+                BUG(...);
 
- t/t6010-merge-base.sh | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+rather than papering over the issue with an unconditional
 
-diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
-index 44c726ea39..d28d9dab2c 100755
---- a/t/t6010-merge-base.sh
-+++ b/t/t6010-merge-base.sh
-@@ -305,4 +305,38 @@ test_expect_success 'merge-base --octopus --all for complex tree' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'setup --is-ancestor' '
-+	git init is-ancestor &&
-+	(
-+		cd is-ancestor &&
-+		test_commit one &&
-+		test_commit two &&
-+		git checkout -b side one &&
-+		test_commit three
-+	)
-+'
-+
-+test_expect_success '--is-ancestor parent and child' '
-+	git -C is-ancestor merge-base --is-ancestor one two &&
-+	test_expect_code 1 git -C is-ancestor merge-base --is-ancestor two one
-+'
-+
-+test_expect_success '--is-ancestor self' '
-+	git -C is-ancestor merge-base --is-ancestor two two
-+'
-+
-+test_expect_success '--is-ancestor diverged commits' '
-+	test_expect_code 1 git -C is-ancestor merge-base --is-ancestor three two
-+'
-+
-+test_expect_success '--is-ancestor exit 128 non-existent commit' '
-+	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor one no-such-commit &&
-+	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor no-such-commit one
-+'
-+
-+test_expect_success '--is-ancestor and --all cannot be used together' '
-+	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor --all one two 2>err &&
-+	test_grep "options .--is-ancestor. and .--all. cannot be used together" err
-+'
-+
- test_done
+        repo = the_repository;
 
-base-commit: f60db8d575adb79761d363e026fb49bddf330c73
--- 
-gitgitgadget
+override?
+
+If the API that deals with this 'abbrev' setting needs to call
+another API that only superficially takes any 'repo' parameter
+without supporting anything other than the_repository, isn't that a
+sign that the other API needs to be extended to work with any 'repo'
+before the 'abbrev' part of the system can use it, simply because the
+former is not ready?  Futzing with the 'abbrev' part of the system in
+such a state piles on more unfinished work that will need to be fixed
+later without achieving anything, except for the superficial "now
+this part too can take a 'repo' parameter, even though it does not
+support anything but the_repository", no?
+
+Puzzled...
