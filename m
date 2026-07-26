@@ -1,137 +1,167 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4F63C1400
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 15:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792183BC69C
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 15:50:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785080586; cv=none; b=N5GYL7r7VAsGp/SM7/DQlY/jcVcDNpxraeoffUzOJhOuyAdXwF5Ia554IFZE3UVf8cB3Z6R+cVuzZRz1Zbo6CfTogB2eg4/DwnnQTq3wwguIJbP9uv3dxC88gCUz9b7UgykLCcYxthOhMKvX/PRIAYNz6HtvlOIIQW5qznV7GDc=
+	t=1785081045; cv=none; b=YDrQqOee4qgOgby1x8KRPN4L3X1MTd35YHNOJtExn2DyXUSxmx3vGQWYiuF4CrvcS0aU2WF3Cwd8CkWkwtNlDxPkX5QYOVYBOkvxXWNhB3/96lntrQ/boywSqrphmbkKhxn+eNoCc7/h6g3ngtsq3yqlW0N7pkiLyNcdMGioXyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785080586; c=relaxed/simple;
-	bh=UAQq9wm4FuRaOjMUlFB0A6AipFPK1Mm5llvAuiYJR2o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z8DTm1l9z6XRIOUixnS7EpaWvgyqM+UM0PmM/WILYSpHrrSY5wNHD5XYolfIRCblDi4832dupitXjO8qwAfZOLquGuCpo3ZvVJBRvfoNGbKEcrYdLA8xmpFrkyekvb/0++IXtqc05uqITBaCiEviiSpTK2wXppmPxrxkmm6VG+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=x5yByLKP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U20A3QVm; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785081045; c=relaxed/simple;
+	bh=9tauSpgX4bR2fLlH4H1Cz8Z0D/vPSVJXQF/GHTMj8ME=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=oqgJJQXkOxf+Nnh3mhTjkBZFb/wUZXcb+H4zE9TTXf4uWqTGkB388Uq2VkfK9HK4iMUWmhaQls774ZwNOMd30LKOhCckoo5nBhcttpHY+HBY096azlutynZ2FOpXqWvuZoNmdEbYwFQTeQ3cJglCTt/3fhkcVv0RiSiqvLhbcv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nE4gQiIa; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="x5yByLKP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U20A3QVm"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 05109EC03A7;
-	Sun, 26 Jul 2026 11:43:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sun, 26 Jul 2026 11:43:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1785080580;
-	 x=1785166980; bh=6hxzciFxCpU1YmONJrjZtsWECI0AnWulS8sU0dSVVB4=; b=
-	x5yByLKPDfBNC5SPwUlTRNRMgCdxwkcVYvmftnH9wK3I6hcryhp2lNX39VesnDsx
-	RBzNK/wa3jLIRywODtNRbnGSj3nRkDNO9Vx19Ql3BPjoYgcjjGDCbtrMm1bjzU+J
-	x8Y4H9I8DtUljbh6eV9E3qpS9Pd1j5RMbuQeYxYEGbpbxA/YyPOlzBEtVCYF/tsT
-	TLSkxbrmUGv/wNaT2GEsBVuLTriJUcb50am+YlWsnI7XGsMre3qfoufvaCVfrln1
-	7ZKt73hXo0xXOBD4ktC6KiaSpsVlJHg4btzF80iUJiFqNtHVsZnS+p7CsAqzIxQj
-	VNaMZ98FO0TBmjLbCrdZHw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785080580; x=
-	1785166980; bh=6hxzciFxCpU1YmONJrjZtsWECI0AnWulS8sU0dSVVB4=; b=U
-	20A3QVmXSOs7jvDXyT09NfyqWQpjkG1wfcKMf+PLtlJbSAowI1t5tjGUslEad51y
-	rajSBtavLXmLJinJSN7M8w7Esob7Z5DIPMse66YTRYJs+d3a3qZBJiY4K9UtTP/t
-	Twbl/7uv70eN5fTl1PajcIjosc7cCu3DQfov5L82otIJ0U/HH0A2K74Awpci3pFD
-	pjSwT5yAW9e0yxsAnm9YXRFPKpRCfd9hK9JbB+MHf64hmOvqF4ZokNpEHaxvu4En
-	R5GfT4k1+Dgl42YZLDf+4rQc5FvPC6R2rzK38fYp+9Yj1qZyxhdLF+p2urNjmY6I
-	Xr7POWYdsTykqi6QBjCKw==
-X-ME-Sender: <xms:AytmaiNbw3AQWwOM3dmxByG3vCN0H_0dY6X9FULgkbn2Vau9-DCypQ>
-    <xme:AytmakqBxNxsylIZkc0rtBhUgrd02exouqnE35mRvv3BIc4Bo-QrIIn4bBFyI5haO
-    CiTGTjEdWqkJUGQwZanN92YumQSqzaWE7h5NQ2VMj5RzdOM-2d5nQ>
-X-ME-Received: <xmr:AytmajHjzjDO5H5UlbXtMXYHt8PtRqQ6dh-zUqk2zZ9xeu_P5Y_4hyFfQ6X-IfRkw4rQDKhcc0PXv1pJr4lU5YH23db_4GBSOQ>
-X-ME-Proxy-Cause: dmFkZTFOK/a14ydveZuh9CcRR6SGELp4xWYPPraWMq0P6cx6ZkNbP25kd/b+oZZF5AQ4Ar
-    2a2bdTxDnerq3BLdy0m3ta/fWHbZ24z1PAhQj9OeGjJlUAqh9QQK+/sOcwnE/6PLX/gv2h
-    groelk9PDR+bCSSNFcNEUgP6tC0FHQ3SgBtO1twP4i5t6nbcf1bVWifP4ASUeDHsIhrTGh
-    mnKAkgbHvWBsAoeYrYt8qzQvW55/TLiToHvQvI0owRoX2HPVzRg/ozI2yq9RVT/cqLpmbf
-    nGInhujooFWB8nLgLWgHNRRudVGMzDt7jIc1zS4XMb8iIduDPafD85RzGALNZ9ZgQwmKcR
-    JSSGob1mlA6Tab7sI/Kh2kBjgpI61cO010SDituO4Y+qZV2/dVX+IMyS04pAsYbsl2YeyM
-    uilMwTDEaUe67egpxsvG9kC2oojJhDIor6NEmh26AREwnaeRvFWbZ6JYKatAwQ8k4o+nBv
-    Nx55Wax6h2bzwDTLhb7yB7fk9VmQhDzq248bZj5s1+aTH8pwV5SvLBNwuqG2Kb9bvbXPHJ
-    Ds5BXRPW9KaXsdnkDatCygfvTn7W1sbAWZgcaRO6O/1oab85i6JOE5lAD5dRA710UM2Ed+
-    dvUGXf82O3ZfNPBG1jNIg9R+siz7pqYy67cprFJfHu4dgL+0arOqpPXZq5RA
-X-ME-Proxy: <xmx:AytmapoxTnumKh1vhPtEdUA18bQDsCswQ0P7rb6l2uXztk8lhK1OoQ>
-    <xmx:AytmasZJSW0OjlOTUdgdIx-oZ_2ilsWH9dVKpYoxMQFruvf-NzeITg>
-    <xmx:AytmaiVsNKbhRYRuYy7FpkvIqjsU6j4QTdkWWH9Inr01OKcwnhYwag>
-    <xmx:Aytmal_An7MDVXrUCgCF_aZ8AMd0L5JI9FQCWF9KafrhlGuzdpFtEA>
-    <xmx:BCtmamyhYO0-xSYNRzVux9OLsOs4Cm5x7jd9Ik0OAlmc3nc9bar_z4cq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 26 Jul 2026 11:42:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Son Luong Ngoc <sluongng@gmail.com>
-Subject: Re: [PATCH v3 1/2] rebase: skip branch symref aliases
-In-Reply-To: <00e529b6-7ae7-463f-a4b3-0991e9411aba@gmail.com> (Phillip Wood's
-	message of "Fri, 24 Jul 2026 10:55:18 +0100")
-References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
-	<pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
-	<b9a01e9141d580606527cb1a658c7c72710fb013.1784708107.git.gitgitgadget@gmail.com>
-	<5bece313-6ffb-450b-add1-29652b64de10@gmail.com>
-	<00e529b6-7ae7-463f-a4b3-0991e9411aba@gmail.com>
-Date: Sun, 26 Jul 2026 08:42:57 -0700
-Message-ID: <xmqq7bmhycxq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nE4gQiIa"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c999f162c9aso1374078a12.3
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 08:50:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785081043; x=1785685843; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=iviXX4nQyn2/qJZav8frE9N5O2n/Ap6LzStN1D9yim4=;
+        b=nE4gQiIaJib8OxWaVvtQ3qpEJlfoPC1f/IzBm49UXrMHGCYwrUPo9EL/4EI18BemeY
+         qzjnqEKz2PpcB4bC9+KKxDhKoUhn7iAFCdAto2eSFuMpBcX5sa0FB0PneXpKtMfTtMZv
+         7MWsImxQUQZrwvT6TYNf9JHBLS4ZlkwREEwWX03/RnvWOZ4u4z79iVQLatsnfaP3lC7U
+         34SR9E2f+EnH/7Ku4kS1RHSDlX3bhElSr0rT9p4i/LToLOHE5JVNeEva16Gj+KWBhNzX
+         ZYN0OCNxmRY5z95ET59tfGm7DyvwkEfmy7jGFhl0zdlQ5mRqZEX8cyvmCMo+wsZD7GTo
+         /NMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785081043; x=1785685843;
+        h=in-reply-to:references:to:from:subject:message-id:date:content-type
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=iviXX4nQyn2/qJZav8frE9N5O2n/Ap6LzStN1D9yim4=;
+        b=YtgjcX7JM4IbZuEsPUvn+BtYB9e4LN5njJyHFaDxPVWfcSomw7DcPaQEHgDkUkEg7+
+         YYaA8MEsaOaPVnw1r6YhncKu/CMeWM9pNyHOxfaVx3xj1ku/0rpsMPc2G0Vvqueon576
+         dmveoTI4kCgr56FGueaq99zVJYnLQHxep9DrCR7fGpQzlJay9/990TFgXLCgWSDYqBlE
+         39DQfAtOqRV/vcrWfLhRfBhEr9U86B80mY+QTdYnbvOYoV8pGylYl7G5lh4Vsri94Yj6
+         g84TDaQ5zmicthi1eV89yFOjm1JHmNoRFb3FzaPjKVn9MmSqFILPahCvoM9YL8ibjoOZ
+         nn0w==
+X-Forwarded-Encrypted: i=1; AHgh+RosaokCoJpN6AJ2HR2K1mU6t2rsQWnyYcwXhg9+XYaf+gN+Txt3EC+VdPWb5tx39z1n1jU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMdioxW47IT5naiytGWSf/VVnpmmoDXRd+xeZQEmVkAiZLgpU7
+	93NcExqnDPC/7ByVIKkRp6CWx3ASfogMMcmD384XQ/A4bNqS8wvXTyH/
+X-Gm-Gg: AR+sD12dbi8bL4OKiuufzOa0+aJsdRtNicLpCT1I+BdHqmExt3xbOMjkipxcvyp9Nci
+	Ki9JXeYINPRrR6yukdIXXlSPbSXrbhOuzgZ53jMXAOsQfLhc2fdyzWjnpJzxkT2L+QFlREQw0EH
+	Y78KIN2w1Q43K5CJeN1qGlRRE5eGs/QErPToCLuLMiQPHmGM9pJ7jAh6rxmGXFyYfH+KsAPg03v
+	0jcc3DBDHWi8yd1K5k183ITbtqt/MUJU9uBJQpTPoAbwQZgbUTPnA2iBXm17wQ57ml4gcbF17+N
+	LrDvjabh8oqCfHE+0vnzOQ8kT+XCy4oniPfrodirr3y5XPN+Qwj55dW3sHDe1RdEIj4ADNX2C4f
+	Bdj2rSwIceNvF77TS/dLDhApBlR+jD5R3jtFUBAgINRVhKzO71J8IHZ2NJodvT6K2D3dRO9Cs4W
+	8=
+X-Received: by 2002:a05:6a21:700d:b0:3c3:8d86:9856 with SMTP id adf61e73a8af0-3c67dab1a1bmr5204443637.14.1785081042768;
+        Sun, 26 Jul 2026 08:50:42 -0700 (PDT)
+Received: from localhost ([112.133.220.140])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d13015052sm42666591c88.5.2026.07.26.08.50.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 26 Jul 2026 08:50:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 26 Jul 2026 21:20:37 +0530
+Message-Id: <DK8MEZUFXK0Q.RTW35IRY7R4@gmail.com>
+Subject: Re: [PATCH] change utf8_strwidth() return type to size_t
+From: "Hardik Kumar" <hardikxk@gmail.com>
+To: =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, "Hardik Kumar"
+ <hardikxk@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20260726123427.173877-1-hardikxk@gmail.com>
+ <a85b5428-df17-447f-9d84-03fb433711a1@web.de>
+In-Reply-To: <a85b5428-df17-447f-9d84-03fb433711a1@web.de>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
->> Thanks for re-rolling I'm pretty sure the logic is sound now but I'm a 
->> bit confused by a couple of things - see my comments below.
->> ...
->> It would be nice to have a comment here explaining what we're doing. 
->> Also I don't think we need to copy the refname so it would be more 
->> efficient to use refs_resolve_ref_unsafe().
+On Sun Jul 26, 2026 at 7:11 PM IST, Ren=C3=A9 Scharfe wrote:
+> On 7/26/26 2:34 PM, Hardik Kumar wrote:
+>> The patch changes the return types of `utf8_strwidth()` and
+>> `utf8_strnwidth()` to `size_t` (implementing a //TODO). Both functions
+>> have been updated in the header file also.
+>>=20
+>> Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
+>> ---
+>>  utf8.c | 13 ++++---------
+>>  utf8.h |  4 ++--
+>>  2 files changed, 6 insertions(+), 11 deletions(-)
 >
-> Looking at this again we cannot use refs_resolve_ref_unsafe() because 
-> the result would be overwritten by the call to refs_resolve_refdup() in 
-> branch_checked_out().
-
-Makes sense.  Thanks for raising a possible alternative and then
-clarifying that it is not quite workable.
-
->>> +        /*
->>> +         * If the branch is the current HEAD, then it will be
->>> +         * updated by the default rebase behavior.
->>> +         */
->>> +        if (head_ref && !strcmp(head_ref, decoration->name)) {
->>> +            free(resolved_ref);
->>>               decoration = decoration->next;
->>>               continue;
->>>           }
->> 
->> Then we check to see if the decoration matches HEAD which we used to do 
->> above - I'm not clear why we have moved this check.
+> What about callers that still expect int?  Are they all safe without
+> cast_size_t_to_int()?
 >
-> Should we be using "resolved_ref" instead of "decoration->name"? That 
-> would explain why this was moved and would makes sense as we resolve 
-> symrefs when reading HEAD. When HEAD points outside "refs/heads/" we'd 
-> then skip updating any symrefs under "refs/heads/" that pointed to the 
-> same ref as HEAD.
+The return type should be implicitly converted back to int for all the
+locations its being called at. If implicit conversions are not
+encouraged I could change the types of the variables at the call sites?
 
-Yeah, decoration is very much end-user facing and if we can make
-behavioural decision based on a more stable resolved_ref that would
-make it easier to reason about.
+>>=20
+>> diff --git a/utf8.c b/utf8.c
+>> index 96460cc..1081573 100644
+>> --- a/utf8.c
+>> +++ b/utf8.c
+>> @@ -208,7 +208,7 @@ int utf8_width(const char **start, size_t *remainder=
+_p)
+>>   * string, assuming that the string is utf8.  Returns strlen() instead
+>>   * if the string does not look like a valid utf8 string.
+>>   */
+>> -int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>> +size_t utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>>  {
+>>  	const char *orig =3D string;
+>>  	size_t width =3D 0;
+>> @@ -225,15 +225,10 @@ int utf8_strnwidth(const char *string, size_t len,=
+ int skip_ansi)
+>>  		if (glyph_width > 0)
+>>  			width +=3D glyph_width;
+>>  	}
+>> -
+>> -	/*
+>> -	 * TODO: fix the interface of this function and `utf8_strwidth()` to
+>> -	 * return `size_t` instead of `int`.
+>> -	 */
+>> -	return cast_size_t_to_int(string ? width : len);
+>> +	return (string) ? width : len;
+>
+> Nit: Why the parentheses around "string"?
+>
+Bad habit I'll drop them in v2. Makes it obvious we are expecting a bool
+value here.
 
-But stepping back a bit, is having a HEAD that is a symref and
-points outside "refs/heads/" an invalid state?  Why are we catering
-to such a configuration to begin with?
+>>  }
+>> =20
+>> -int utf8_strwidth(const char *string)
+>> +size_t utf8_strwidth(const char *string)
+>>  {
+>>  	return utf8_strnwidth(string, strlen(string), 0);
+>>  }
+>> @@ -821,7 +816,7 @@ void strbuf_utf8_align(struct strbuf *buf, align_typ=
+e position, unsigned int wid
+>>  		       const char *s)
+>>  {
+>>  	size_t slen =3D strlen(s);
+>> -	int display_len =3D utf8_strnwidth(s, slen, 0);
+>> +	size_t display_len =3D utf8_strnwidth(s, slen, 0);
+>>  	int utf8_compensation =3D slen - display_len;
+>> =20
+>>  	if (display_len >=3D width) {
+>> diff --git a/utf8.h b/utf8.h
+>> index cf8ecb0..531e968 100644
+>> --- a/utf8.h
+>> +++ b/utf8.h
+>> @@ -7,8 +7,8 @@ typedef unsigned int ucs_char_t;  /* assuming 32bit int =
+*/
+>> =20
+>>  size_t display_mode_esc_sequence_len(const char *s);
+>>  int utf8_width(const char **start, size_t *remainder_p);
+>> -int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
+>> -int utf8_strwidth(const char *string);
+>> +size_t utf8_strnwidth(const char *string, size_t len, int skip_ansi);
+>> +size_t utf8_strwidth(const char *string);
+>>  int is_utf8(const char *text);
+>>  int is_encoding_utf8(const char *name);
+>>  int same_encoding(const char *, const char *);
+>>=20
+>> base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+
