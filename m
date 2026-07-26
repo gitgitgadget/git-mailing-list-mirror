@@ -1,124 +1,120 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494C42E3FE
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 15:36:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C8F23393B
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 15:39:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785080212; cv=none; b=Ack92XU8RpTSGn7kREUANRHykgKnQ83VQNjMrDkC6r4uUSUxOnEHB99iXfjezi6OyTXvucYHKnDR5v2qtuy1vAXsfs5fBlqyPV2BcZOywl44sdW7Rbmw7uSUqU9c7+jgmPhIKy151QlYq9Ax/WrvIipCAGG9cV5cHHsu9D5DThs=
+	t=1785080363; cv=none; b=hNIsCOk/c61tORFDfqk5YO4C0M/HAjoX8Yhmv3AY6gi2/mVlyYozT0EBhTh0JlLMtwYozAiDlgJfNZKIW4qqY7znnhZ8sGPn7eg2fG2/jg5B4CZ51JfoYxXgkcmovcFStrK6f8UjjtAOlh65pz27rdBxtV5Er9L+NMix2bhhduM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785080212; c=relaxed/simple;
-	bh=dgthkSYx9WN+rpIgoW/wVIh1n2q4iw4xLm127O+7J/o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bj5HLxlG+DksAT9PNr1pT7hZ+rqnOypgmG4kBmjFhqAo/qOCnMAw1l2qznVn09XVLCWrSTGW2NoTAVW7K7Cuy4Jhiw5Aj6DbvtlyAJenDAEWkCchKu3iwmh+KhqvI1nj7b/E0CiDUBcxAYSz9RBNTb6pn/6AUmDJxxg+VZPagV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zgv+geZW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Slkh45fw; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785080363; c=relaxed/simple;
+	bh=eNvdXsfSmmFbnv77WxLYfrPZh2SPfoC5SdC+kb59sjQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DoZQCxk34xt855gk8O6gs4Og5VvehPmxFhe92hVO0VM7guHW79yK6c3nzkrjINCzghiEu0Psqy2aCKXwjbYw6t6WzcMTsaSKMRGmwWy32uR9q+AzUSSQcan7CyXSrTrFpAYDUyHDKfujVTGXAqnCJJaBy87nh18RboQ+9qduSGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WXgqBai0; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zgv+geZW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Slkh45fw"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 718521400387;
-	Sun, 26 Jul 2026 11:36:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Sun, 26 Jul 2026 11:36:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1785080210;
-	 x=1785166610; bh=bmm9d7d7jVJwrO4xQdrWO94x91z4d4oBUZqv5pijNhg=; b=
-	Zgv+geZWBr7KkD5FJW6GQu7CtxbrJaOlqZKRbWLw8NI8o/VYC5XJOWvcNsJli/oM
-	REXPXI1XKGGkCkDuiMtZBZjv8KY3J5xk3/cHSpCADZ22iAgfTKPGPXW2Q+WWLkYn
-	RiOPvW7hQ94Lrpmoq/h7Kctt+xEtPB1qdNM+m8UWlPdkBmFYAhMEW5LuH7AYMX28
-	CVeSn6osG3Fe5ekkSuSs/9uNZVpSXDsS7WAq7L/TAGrKMkEZC+Mk4tA4GBI5kjeZ
-	dq+CFfSWvO+x7XhovBTab/rlvXram0GRn/Wuixex9Xk2lQ1xrCl6rGukJKJitxUE
-	UobvqIjElajeTZJdELLpCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785080210; x=
-	1785166610; bh=bmm9d7d7jVJwrO4xQdrWO94x91z4d4oBUZqv5pijNhg=; b=S
-	lkh45fwPXEOslx5NmTVoFlEEETcvOExV+BGWdj/1J2/F4Esw5KgC6D/X8Ybwn+a4
-	sa10kCW/zKIKLg3T9+zdQtvnRZHmq1NHWggzh7gqKKcmObKa3mhMumkgRTGe70pd
-	uHofC7aCtXmiFjdkDUQwo3B3c3EBDUcOwlIavA/GwuXEueFTiNVVLUYBtDo429v0
-	2xpjQaiKv1WinfKuGllbVNsS1TvK8/dqkKXqELb7WJahWnHUDg1ym4UwsvTrT5NJ
-	nBGVfj9Y3+mhJRIMzbQM0fL5C9N0Xcuwot5ETX3o3dULMd3BnDZA/LfW4Tp567ct
-	lqWUf24BbnsD1L6yqzsrQ==
-X-ME-Sender: <xms:kSlmagX7Ej3U1xMVv1yfavPmnimwel2NCWQw-P7fRE59y1CJX6x9Zg>
-    <xme:kSlmamGJ2FJnZAXbLc7NwshgwqqElDxtSAhlMUY70xGa89uIWLjKlxJRQamZhp8Km
-    Wi5M6EVPmz9TL9cIsTDQgSzi7yQ3-SitOPqDZ3orb9zkMp4Nm6O6A>
-X-ME-Received: <xmr:kSlmakdhIcoQtZOJBh6xZ5xn13mRp7_TxH0fFALMi6ebQmuaZ88cqTFbaBKQ40OHL0BIijDo4iGQ7-uBWOsYZbg50w01ok4FzA>
-X-ME-Proxy-Cause: dmFkZTELleC1xLxulWsW22GeuAdZ2qayeBSS2QWq3q6qRMiIPGChWZnutj2U1QFYkWXuZ9
-    OcYaF24ky9/wfDV672CszFPSg/D0tk9gKtBGiX7tsYwBSdujWuyMGvKTU5GtxRTti+6PT9
-    QVmVP5JYdTJ50K5sc/Uztv/1OoptF2AYQJhzVpcrX+MK9IbGBK+rs8cfA2FNPN3IeaGHUI
-    diOupcKkL1pjZoYQ+vKCFH0SPfO9VtVSKkrsXjIGza0U/FORVPEWgui/BHao62LshPROsE
-    HmEF58EWoePCY6F5rDoXlShtyAnL8+37p4fIuhECCd5K4tRcCGAgVjQKxk1uHVk6gZEWti
-    Ypi3Baps8gUXZpEPRQYE0b+H/N8by+lXahHcXY+92QJU6Oe5jajIuBG8LIrLSIG4Kkpx5o
-    ATT+XTSsqOeTS+MiB4a1oi4e7cva5jPjLAmRyUcEEignXyQAasZFJJjQejQxy6V2hpQck0
-    BIE8dwbQTxeqfarHmm9NqHC07WJvzu3YoWC1JxkQqtMmJdI+Ix8YBqyONLKCnEopgrhwbT
-    ydJOUdRqmJW6Wyd8ftIPPuWh3YfQaprk25HFudCanpWj4cINxiY025kEatvPg2jB+7m7Vc
-    mwWDgsrePV+GDQNj+RCMKDhbW+umg1QXrK1059i1uCsem94a+pmg4MLFqhrw
-X-ME-Proxy: <xmx:kSlmavKODFH9Zqb08i1__jdnMoScTVjFVTmfk0zqVUC2qbbjcJhD0A>
-    <xmx:kSlmahGRF8ReANLfyq50TeDmvUzpOXUr59FWMTqpaMn8nCTlGNScqA>
-    <xmx:kSlmaqBLexs3OTXb-Mz20alVW7UeDbeXb8WH10KCuj4ZknXfSvP0QQ>
-    <xmx:kSlmas9NtDlC3t98yK6N8vBei9iSBZ99T44JbdfSwAeL-Mf3SOFTXQ>
-    <xmx:kilmamenyu3TY3ffxNoFJ2o40bLAasL2KtmA3nrlEawogM6hkVSK2EQw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 26 Jul 2026 11:36:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,  stsp <stsp2@yandex.ru>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] branch: report active bisect run when rejecting delete
-In-Reply-To: <590382fb-731b-4e14-911e-ff68356d1082@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sat, 25 Jul 2026 12:41:07 +0200")
-References: <9865fc6b-e3fe-4614-9ffe-71af776e1796@web.de>
-	<590382fb-731b-4e14-911e-ff68356d1082@web.de>
-Date: Sun, 26 Jul 2026 08:36:47 -0700
-Message-ID: <xmqqbjbtyd80.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WXgqBai0"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-493f75f7172so17057515e9.1
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 08:39:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785080360; x=1785685160; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Q1kYEjL1xWNQj+92lfJSByNRrNBexiMxcC+n5zn//Ok=;
+        b=WXgqBai0Jk6g2mV8sifvhFfmiKW7U8seO+h5cE1T8hN77BcdlLK4phVu+M1009Mfh8
+         S+ohfdiB43AIsnL1vfotOBL39mEc7gKbihAIcAKtSDbmMptKn3pU1CZUpxZJGqoc9Kv/
+         f02lALdVREebj5N8xTky3FVE3FcpNer6pDJUk0okzq5Fdab/xKmt7F0eNGae8lWF/I19
+         JiHPA8Yoy6sS0VcNli9dYuOgNN0VIC28PFdP9iESAmeNmCJYQnKri+UVeuxqEk/1ttTC
+         TPSnKaA+9XbkwvXKTGdw/dS3ciVt33UAX+n/i9Mvx94GrDh4XMly8BeP9fbL0/B9w7JJ
+         rc7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785080360; x=1785685160;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Q1kYEjL1xWNQj+92lfJSByNRrNBexiMxcC+n5zn//Ok=;
+        b=Ht5gGA8ZXyn4LFhLVPYKHSYCCtpT6ycQ9z13U0InlFeycVfwZLLOqaXCttiSuKdVEJ
+         bklNo2WfAkEXn/dnbepmvULz3Z/ffsMM2MVniufy+q3he3DAmtifnJF2hUdT1bAqwSr6
+         hsSWH6V5so202BBMqJ1APHFCM7v14aCjUQXp6a5pNCaPx+ODdfS2MKzZLKroISVqUIKO
+         7vhkwV8fSYmQq6us7gPk6yvUpREv0DkJQel2izUKMm2KV1BdqDDyc81uLdkhVmQGRBkL
+         MKk4rfBUe8GFmtOIk1bHPSMZqrZC3H7zd6ZY1/e5HbFSyvoXyp2jEZeqiC3tf+8qHqD+
+         jRrg==
+X-Gm-Message-State: AOJu0YzfcCBG8V80KjdpLiw8b7QO1yWjEIWfQU+iMRKgWfmSPJbNclkt
+	/jjM0l9XKHvFuL6qUrHD40zTKp9bWElwDjwJzjkCu3zxSdOdB+/+Xtw+RMb01Q==
+X-Gm-Gg: AR+sD10N6nSHj5ZGTStNK0Exuu0h3OHFktpQcPm3IOsuAsu7F5/kbWFOdqzmS9s/kEv
+	ECHRfYrDTsjeFU/BdPl9M4l0RqbKg+GP+iuUilp+LGIbEo2ye2q1UhLjOlC9zVQlmpnX1A3+mLQ
+	LAZU9ShY3Ti9NygmbiRkAVT2zDEUF5GcSgybRd+Kx4zwBasJI2WGwdWrAF1sUNbAnxZw0Xuansi
+	9ELYQ5LKZa+PMCKoHoOHdaI9fhqZJp2aKgKiWAMd1eJJJxQce+aQhiifcFJMYNW1/Bv/v+0g9YB
+	KjvC7NN0EarGfVPL+lTjQXX1KiMRmOzn/LGNyHHxf9jdHP5j8ndgctk4+OGUeeVU/tkhDOJOFt2
+	uVgNOJlS5twIhHB7usvvcxi56WykDIKrtfrH2BDeRP6ejdfRbI2gaPdImVaul/O4Jc01XAs8ar9
+	Ix53wmzw==
+X-Received: by 2002:a05:600c:35d0:b0:493:e79e:da63 with SMTP id 5b1f17b1804b1-496b5708bacmr67999985e9.34.1785080360352;
+        Sun, 26 Jul 2026 08:39:20 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-496b4f2639csm144035805e9.10.2026.07.26.08.39.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jul 2026 08:39:19 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v2 0/2] rebase: a couple of fixup fixes
+Date: Sun, 26 Jul 2026 16:38:58 +0100
+Message-ID: <cover.1785080337.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
+In-Reply-To: <cover.1784304378.git.phillip.wood@dunelm.org.uk>
+References: <cover.1784304378.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-René Scharfe <l.s.r@web.de> writes:
+These patches fix a couple of small bugs in the way skipped "fixup"
+and "squash" commands are handled. A skipped command can lead to
+an incorrect commit count in the template message which is fixed in
+patch 1. It can also mean we fail to open the editor after a "fixup
+-c" command which is fixed in patch 2
 
-> git branch refuses to delete branches that are currently checked out
-> with a message like this: "error: cannot delete branch 'foo' used by
-> worktree at '/path/of/worktree'".  This can be confusing if it's an
-> internal checkout for git bisect.  Report a more specific error in
-> that case to help users that might have forgotten their bisect run.
->
-> Suggested-by: stsp <stsp2@yandex.ru>
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
-> Changes since v2:
-> - Only report bisect runs as specific rejection reason for now.
-> - Leave rebasing unaddressed because I don't see how to formulate
->   clear and readable messages for those scenarios, yet.
-> - Collect all checkout reasons of all branches in a simple array for
->   easy use, e.g. to eventually address rebases or for git status.
-> - Rebased onto the landed test_grep conversion.
+Thanks for the comments on V1. The only change here is to make sure
+a character non-NUL when we're checking if it isn't a LF in patch 1
+as suggested by Junio.
 
-The scope of this patch has shrunk a bit.  While the 'in use by a
-rebase' state is still recognized internally, unlike in the previous
-round, we guard users only against the 'in use by a bisect' state and
-the 'in use by being checked out' state.
+base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Frebase-fixup-fixes-part-1%2Fv2
+View-Changes-At: https://github.com/phillipwood/git/compare/9a0c4701d...3089979e2
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/rebase-fixup-fixes-part-1/v2
 
-This is probably a good single step, so unless there are objections,
-let's mark the topic for 'next'.
 
-My understanding of what is stopping us from taking the next step is
-that we do not know the exact phrasing to express the 'in use by a
-rebase' state concisely.
+Phillip Wood (2):
+  rebase -i: fix counting of fixups after rebase --skip
+  rebase: remember fixup -c after skipping fixup/squash
 
-Thanks.
+ sequencer.c                     | 31 ++++++++++++++++++----
+ t/t3418-rebase-continue.sh      | 36 ++++++++++++++++++++++---
+ t/t3437-rebase-fixup-options.sh | 47 +++++++++++++++++++++++++++++++++
+ 3 files changed, 105 insertions(+), 9 deletions(-)
+
+Range-diff against v1:
+1:  c37a518486a ! 1:  f95668512a8 rebase -i: fix counting of fixups after rebase --skip
+    @@ sequencer.c: static int read_populate_opts(struct replay_opts *opts)
+     +				 * inserted blank lines when a fixup
+     +				 * was skipped.
+     +				 */
+    -+				if (p[1] != '\n')
+    ++				if (p[1] && p[1] != '\n')
+     +					ctx->current_fixup_count++;
+      				p++;
+      			}
+2:  7c8075ff267 = 2:  3089979e2da rebase: remember fixup -c after skipping fixup/squash
+-- 
+2.54.0.200.gfd8d68259e3
+
