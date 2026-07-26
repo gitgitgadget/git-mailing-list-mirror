@@ -1,206 +1,153 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A97B3C109A
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 15:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510613C0A1A
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 15:41:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785080365; cv=none; b=AQEe1WlAJxu0JzRauznGTC9BalVW5V/Y6VOnbfJudBWJsd0Mxn06YD/Um66Wq2I0mGxf6Mdwl+WAnRkpwIH4u1oaYQaw710qWWsdLibAsx+tS6EVMwgEI796Jt/g1yZs5uhMCfucuVWTZt7UNDHTkxjxUeVC/GjXhiNpuVDxELo=
+	t=1785080502; cv=none; b=m3dzfIZ+T/hhJEcR4pq6ZuVFQLvQxyxTeKO/sdGNRj8WaCrut5OruEtTw7sR/P2wG4cG57+aYTu0dbPaTXvLIWQ8WEVsVViWc9wy8VhPAWxa0/ToOiE+PSDQrgDZmhP7szY/3otFD9AEAuFQaxbQbl5vCOTYcUIQOBfTWBe/As0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785080365; c=relaxed/simple;
-	bh=HDbR5v3gKzKiPfracBHAQdSo0PNG250Qn4ikyebU0Hc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+iAbdotNHyZ/xte7bjp5Nc19J6PtFOukscANJlmWCWVKevK6e5mqH25kZ77Dv67+eq7qtTTPi/D8TynMma2dINOnJTx3tS0jIGBBIeRwpSdhPg+6Sj+ysisYZUbv/aAV8nj+6yahQw76rhJpPo8seX2CYNGdn51TooESCLuOeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SNyYHybR; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1785080502; c=relaxed/simple;
+	bh=RIdhbBV3AnayutNRVZHpWK0LrBxP/r2wIZuBZ74u6R4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=T2Td9BWScjRcpGX39El2p4Nds4+STOvq0+E++KI5ePw498gT2Tkr8S/E+rk6hEoi8ubbb9oPuxvcOLKurNvX0Oo7aFnCpMW4h4q4fFsxzKiuR4Je8SAGadWRjKmXBFUc8cTlcy6+eIVt2M7Xcw8h0lcZcK8OxIvepPtDjnAzSMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLYJUwcg; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNyYHybR"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4955de8797cso11530455e9.3
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 08:39:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLYJUwcg"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-47de0093c42so1482251f8f.3
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 08:41:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785080362; x=1785685162; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=5F6VaPGsduzNmRry2iv5GzFu2NnYJegylxoGR4sPoyk=;
-        b=SNyYHybRZM3tMB3NwA+yEHjvEvOrhFGGk6jdYIDPTlovZAK+I99RcI48oZHZbxUgCH
-         P11CEz88NSmDeWBhRXnQ4RxAv53JOPljZ789IKLulXM8AKfH8rD/9LItCNyzkvWJTLZ2
-         eFLN6v/4MS4h4RiPBM1YCk/y6+RaYAqwl5b+x9YA3XKVoWjO1tIW9d8wew/CelnNl3rb
-         x/ecBTcru4d7v9fQJXbDjjAucSUUGm6CMXNvfJ+W++m2BF/7w38G8VUhoHp2SEC33Kw9
-         ECmWvA7wnlXDMf2dFrodMJy3INxtrS80CMOXfFd9OYLtMRtnCpk55boBGYMXCwq006Gz
-         TSuw==
+        d=gmail.com; s=20251104; t=1785080499; x=1785685299; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=HENYrE2erM7qk/OmBwrS3jcL4wjuf4CNkfxm4yH4H1o=;
+        b=DLYJUwcgbPegYOb6V3tc1NSz5GozOFEhPkgN2WnfHXuXXL1+rJqdJwkVBFMgrwVhvh
+         hfUiclAafP+vXUWIdBn4viMVM3wvFRAr1VyaWpxXjije3YOfWPXjod9/Fw4u8JaFeQBG
+         6s9RDZ1d/DhXsPc5UoYUgdpvhgfr5vCHdYpd7LL8NLts3YpwmZRRPwjetXQMXo8esB/i
+         y57Y7LO3dGhYDPMfeyWo/nOn5S1eqE92qVpU/AWa7IEOo1V0y7vkA7Y1te1cVwO51xtD
+         9O8bRSnY+MaAF0JFWuZEBhK1HjcbfhO2C9cTVPBp0CW9Xc8UHQvtNmWfosp/ILoejVay
+         aWbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785080362; x=1785685162;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5F6VaPGsduzNmRry2iv5GzFu2NnYJegylxoGR4sPoyk=;
-        b=JoZcMAgjYeouxvYLQY+f9/KLVjrU4ZPcZNqjLJYqzCWrgc41uI6sW+8qAE/IG1ezKv
-         6uFNboxiNkYXZJUnG5PCJNDkSI+CqGeoAaZx04XvSzxYlXF/r9BmcsaIGwoZJqG9omJU
-         q1+VLwniGn/ysiON7rHLtsY+MfzN/PrhZuzAcDS8DmjjJ0KMr2UsBhHr3jBYfNeQ2OJR
-         YO3ifuAlfo7QxlkR04FWQa9CWhvheXmJ0ivtZ6e250mn682mCAs5TJsIjoo0hcTBgmlQ
-         +UiGSabJ7XgDfFrUTin6CE1po1GmPWc5XJwKZmnCIPL3FSyjrNPoBCuTTploB6aKSKHg
-         8RzQ==
-X-Gm-Message-State: AOJu0YwGcE25scO/p+cy2U/xbTE0X3cCSx1inElD3rm92hfVi3gxEcfO
-	/l7Z8f5wluioDpPdu4f0SQc0Lx6SCYO12ErsCW1P7AMtoAma2AEBNme82fAh0A==
-X-Gm-Gg: AR+sD106hwgiATnyToPxLysvashfg4+jkM3ZKiqBfat78Kk9+dK6VU5QYsRni3IWQEp
-	W46o/t/dlIKVDwcbBOOP/yt3AYgXNH94wiZ1XA6TqlUt73fCuoveOr15JyizyLFFebfm9l/RY4u
-	3O5i3DVEvi6S5U2YAA/BrA2c+hUe+gbLWe7D4IWKgtZp+ZVHEvBFM6sCqO3qjeSllV5k3iH/HC4
-	QBh8I7nLwTOgDoHx+k43cE0vwNcKxcEef6ZQVgyqtyfivB6WZnHlVBRppNOw7U1kdJzeDVoCBFw
-	fMnhn/vTjfpx8gfiMCnm2e+tFTWY0jHl1Ffv6hA3TNFCei/YbFitP78h2Al0AsptzT7msr+0VTS
-	z8stQqH3aD/dbbw1fHGCNnpr6ylISV26JSqfP3W5I37lv+N7ucIENAVtYMVhbaUZIUQ+hXwLwm2
-	zDmRe6/g==
-X-Received: by 2002:a05:600c:a016:b0:495:63e6:5fb8 with SMTP id 5b1f17b1804b1-496b56fa3c4mr69775155e9.12.1785080362356;
-        Sun, 26 Jul 2026 08:39:22 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-496b4f2639csm144035805e9.10.2026.07.26.08.39.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 08:39:21 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 2/2] rebase: remember fixup -c after skipping fixup/squash
-Date: Sun, 26 Jul 2026 16:39:00 +0100
-Message-ID: <3089979e2daf5bc8532008539e37695091dd10b2.1785080337.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.54.0.200.gfd8d68259e3
-In-Reply-To: <cover.1785080337.git.phillip.wood@dunelm.org.uk>
-References: <cover.1784304378.git.phillip.wood@dunelm.org.uk> <cover.1785080337.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        d=1e100.net; s=20251104; t=1785080499; x=1785685299;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=HENYrE2erM7qk/OmBwrS3jcL4wjuf4CNkfxm4yH4H1o=;
+        b=CG1Yjw9GQFBZJeaRTx4LwESg63WzJ4VFDyyX/bevITFD+6tLgZt3MF/XzjNofJ5QK5
+         k+/gs7BkyC7lGR5LqRU1NoERfzD7BGtJrDjpShZ48NE1kMsFs3D3LnLwf9HsIPMcL2G6
+         IfIwbWOp2qRJ4R4Rog7spcV2ftzSFtkeBZS3NttlHGjhQOZmA2Z8OZEvoQmUMB9TQAY1
+         Ot9MVPmbQCkF9pEyRyZZvRM0RsMXeJa8QCDd6xx3pTVsYn9c6E9K+Lb+3uL88NudesEK
+         wtLUGKd3Kk/7XGh+SekDaTXWLJvUNwutKTJNcrTqjNNf7q9ZjuK9PKe7unHfyNATLkPv
+         6E2A==
+X-Gm-Message-State: AOJu0YwzaW0ZcF8v2yVg9DEZSx7Xn4GHDx1P8ElOuLP8zvLPl1rpMWtD
+	EbQL2M+2U4+Qns2WXqTKJYYmlCe20StMv7Hd40AwKFJo23joN36q9JJk
+X-Gm-Gg: AR+sD13b/V46o0mNBuG5RQZijQhZ5zz1lf3OeW79c3rWyl6vv1Wlrr/rncWbkhlhjmZ
+	QHTLj25gbATXd1xvOfQgFnKhSgljOYRVUkOGMCNrxUt1DQZS9ESJWOx2NSjhAnGRyRPVg40LU8i
+	vaAT/To9Bgzye++4vbSnOCTn38kZtldzPHlA5GOXUB8Sj5TXPzzgtscuaKloNptxDh5hBf/bKSe
+	m1bj328x6OdwF+EZE/ttXNtsVbW9tpA/l1Yi7+58pku/uulyyySagtPwTjSAQmMHfnUllrxuIL0
+	pwKV1f10QpCBwpEeCrKcJg5hAqfISx8ezGa2I5lNWTwLb6ddfOk+2kxB7v1iUvsj2rwhYrCDPGu
+	7+JGMAIEkV3c2P0ZaP1V22V3eh7danskBA4KgKQpJSwtJLhT9OxYo/e4Ay4OIbMzXabcGISjIBp
+	Ib5CLAY4urKiA2gRW9wQShE66aEtlVEiiUvbFLv1B9ROCBh2v11wR6AmDRfv2pbMD7ZoQ=
+X-Received: by 2002:a05:6000:1aca:b0:47f:9096:3c57 with SMTP id ffacd0b85a97d-47f9feaa738mr7162980f8f.40.1785080499340;
+        Sun, 26 Jul 2026 08:41:39 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bc62basm43310811f8f.13.2026.07.26.08.41.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 26 Jul 2026 08:41:38 -0700 (PDT)
+Message-ID: <c9631a42-ea7b-45bb-a153-0372784b8f24@gmail.com>
+Date: Sun, 26 Jul 2026 16:41:37 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] rebase: remember fixup -c after skipping fixup/squash
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <cover.1784304378.git.phillip.wood@dunelm.org.uk>
+ <7c8075ff2675976821a1ee979f86c7c46a35bd15.1784304378.git.phillip.wood@dunelm.org.uk>
+ <xmqqtspo3x31.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqtspo3x31.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Hi Junio
 
-When the final command in a chain of "fixup" and "squash" commands
-is skipped, we should prompt the user to edit the commit message
-if the chain contains a "fixup -c" command that was not skipped.
-Unfortunately, commit_staged_changes() only looks for completed "squash"
-commands and so does not prompt the user to edit the message. Fix
-this by recording whether a fixup command has the "-c" flag set and
-then checking whether we have seen either a "fixup -c" or a "squash"
-command. Add regression tests for skipping a command in the middle
-of the chain (which currently works but has no test coverage), and
-for skipping the final command (which is fixed by this patch).
+On 24/07/2026 22:18, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>   	return starts_with(ctx->current_fixups.buf, "squash") ||
+>>   		strstr(ctx->current_fixups.buf, "\nsquash");
+>> +}
+>> +
+>> +/* Does the current fixup chain contain a "fixup -c" command? */
+>> +static int seen_fixup_edit_msg(struct replay_ctx *ctx)
+>> +{
+>> +	return starts_with(ctx->current_fixups.buf, "fixup -c") ||
+>> +		strstr(ctx->current_fixups.buf, "\nfixup -c");
+>>   }
+> 
+> It is a bit annoying that "git diff" decided to consider the "}" at
+> the end of the otherwise unmodified function to be the one that was
+> added X-<.  But thanks to it, we can see this mirrors the previous
+> function to check if we have "squash" anywhere.  I wonder what
+> diff-algorithm was used to produce this result, but it is an
+> unrelated tangent.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c                     | 20 +++++++++++---
- t/t3437-rebase-fixup-options.sh | 47 +++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 4 deletions(-)
+Patience diff without the diff slider. When I was reviewing some of 
+Ezekiel's patches I noticed that the diff slider was munging some diffs 
+generated by patience in a way I didn't like so I tried turning it off 
+to see what happened. It seems I haven't rebuilt my local git in a while ...
 
-diff --git a/sequencer.c b/sequencer.c
-index 4640ee9b7f5..1a0a283b42c 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1924,6 +1924,13 @@ static int seen_squash(struct replay_ctx *ctx)
- {
- 	return starts_with(ctx->current_fixups.buf, "squash") ||
- 		strstr(ctx->current_fixups.buf, "\nsquash");
-+}
-+
-+/* Does the current fixup chain contain a "fixup -c" command? */
-+static int seen_fixup_edit_msg(struct replay_ctx *ctx)
-+{
-+	return starts_with(ctx->current_fixups.buf, "fixup -c") ||
-+		strstr(ctx->current_fixups.buf, "\nfixup -c");
- }
- 
- static void update_comment_bufs(struct strbuf *buf1, struct strbuf *buf2, int n)
-@@ -2148,9 +2155,14 @@ static int update_squash_messages(struct repository *r,
- 	strbuf_release(&buf);
- 
- 	if (!res) {
--		strbuf_addf(&ctx->current_fixups, "%s%s %s",
-+		const char *fixup_flag = "";
-+
-+		if (is_fixup_flag(command, flag) && (flag & TODO_EDIT_FIXUP_MSG))
-+			fixup_flag = " -c";
-+
-+		strbuf_addf(&ctx->current_fixups, "%s%s%s %s",
- 			    ctx->current_fixups.len ? "\n" : "",
--			    command_to_string(command),
-+			    command_to_string(command), fixup_flag,
- 			    oid_to_hex(&commit->object.oid));
- 		res = write_message(ctx->current_fixups.buf,
- 				    ctx->current_fixups.len,
-@@ -5391,8 +5403,8 @@ static int commit_staged_changes(struct repository *r,
- 				 * message, no need to bother the user with
- 				 * opening the commit message in the editor.
- 				 */
--				if (!starts_with(p, "squash ") &&
--				    !strstr(p, "\nsquash "))
-+				if (!seen_squash(ctx) &&
-+				    !seen_fixup_edit_msg(ctx))
- 					flags = (flags & ~EDIT_MSG) | CLEANUP_MSG;
- 			} else if (is_fixup(peek_command(todo_list, 0))) {
- 				/*
-diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
-index 5d306a47692..a4b2a631654 100755
---- a/t/t3437-rebase-fixup-options.sh
-+++ b/t/t3437-rebase-fixup-options.sh
-@@ -184,6 +184,53 @@ test_expect_success 'multiple fixup -c opens editor once' '
- 	get_author HEAD >actual-author &&
- 	test_cmp expected-author actual-author &&
- 	test_commit_message HEAD expected-message
-+'
-+
-+test_expect_success 'fixup -c is remembered after skipping final fixup' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	cat >todo <<-\EOF &&
-+	pick B
-+	fixup -c A1
-+	fixup A3
-+	EOF
-+	(
-+		set_fake_editor &&
-+		set_replace_editor todo &&
-+		test_must_fail git rebase -i A A &&
-+		git show && cat .git/rebase-merge/message-squash &&
-+		FAKE_COMMIT_AMEND=edited git rebase --skip
-+	) &&
-+	test_commit_message HEAD <<-\EOF
-+	new subject
-+
-+	new
-+	body
-+
-+	edited
-+	EOF
-+'
-+test_expect_success 'fixup -c is remembered after skipping later fixup' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	cat >todo <<-\EOF &&
-+	pick B
-+	fixup -c A1
-+	fixup A3
-+	fixup A2
-+	EOF
-+	(
-+		set_fake_editor &&
-+		set_replace_editor todo &&
-+		test_must_fail git rebase -i A A &&
-+		FAKE_COMMIT_AMEND=edited git rebase --skip
-+	) &&
-+	test_commit_message HEAD <<-\EOF
-+	new subject
-+
-+	new
-+	body
-+
-+	edited
-+	EOF
- '
- 
- test_expect_success 'sequence squash, fixup & fixup -c gives combined message' '
--- 
-2.54.0.200.gfd8d68259e3
+>> @@ -5391,8 +5403,8 @@ static int commit_staged_changes(struct repository *r,
+>>   				 * message, no need to bother the user with
+>>   				 * opening the commit message in the editor.
+>>   				 */
+>> -				if (!starts_with(p, "squash ") &&
+>> -				    !strstr(p, "\nsquash "))
+>> +				if (!seen_squash(ctx) &&
+>> +				    !seen_fixup_edit_msg(ctx))
+>>   					flags = (flags & ~EDIT_MSG) | CLEANUP_MSG;
+> 
+> If 'fixup -c' is anywhere in the chain, we would need to offer the
+> user a chance to edit (similar to having 'squash').
+> 
+> It is a bit surprising that the 'squash' detection, for which we
+> already had a helper function, was open-coded here.  I also notice
+> that the helpers (including the new 'fixup -c' one) do not insist on
+> having a space immediately after the verb 'squash'.  Should we add
+> one above?
 
+I'm not sure the space thing makes much difference as this isn't the 
+todo file that the user edits. We're reading a file that we've written 
+and the lines can only start with "fixup" or "squash"
+
+> Other than these minor nits, this looks good.
+> 
+> It is a bit disappointing that, with so many users who crucially
+> depend on the proper operation of 'rebase -i', we have received no
+> review comments on these two patches so far.  Perhaps summer is a
+> truly quiet and slow season ;-)
+
+Oswald mentioned in another thread that he'd read these and they seemed 
+to make sense. In general I find it hard to attract reviewers for 
+rebase/sequencer patches - it is one of those features that everyone 
+uses but not many people on the list seem to be familiar with the code.
+
+> I will wait for a few more days and then mark the topic for 'next'.
+
+Thanks for your review, I've sent a re-roll fixing the newline detection 
+in the previous patch.
+
+Thanks
+
+Phillip
