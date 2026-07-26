@@ -1,71 +1,71 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075653D5674
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537153D5674
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785091899; cv=none; b=O3vtyN5khiqIIxXOa6LDAWWA0QfhqTSiFd+1pJQoT+qhwbykVoUcNh6c3O4JdjfjsmE0110d6q2tUOgWHqKNW+BKUAXEw5Q4mEOQKNFpHhyFMPQ+Rc0zJy1CkMIDT0TcJS2vekeog7rVhzcagU4Z8gEqn0prAj6sAjEhde5dz4Y=
+	t=1785091902; cv=none; b=dVLJax2zh6wijy1MNlPuhtCwaXoVVChgfbjyGB9TqnwvwgXAHBIb++WbUmnqsW2Nd9pDjaFUf5WX2lbRahB44jL068FqeZud231f4CuU6JTt5fA0ZLn1a1lEVPN03OgIxOHw628zdkRjHlUeeEjVxh8R+uhseHDF4Ef9rKvV/3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785091899; c=relaxed/simple;
-	bh=HIN+6Z8bGegsgEGtqK86pKqpKPW/nhlPkP4AXm3zQJc=;
+	s=arc-20240116; t=1785091902; c=relaxed/simple;
+	bh=iH8V+ORmVm2DGs60rY6wg/Vw16ZNpfIO8Ku55CRTkW8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=mMoa7kPx1joWNnlhkRaqcwwkiu8MT39JMkkNip7eMkKmSmimgnQwC0Jfdcg7XgP0xucavgJSx7o/EUqPqsLUz5itSpksAD4nraZ//6261oZhtCRD6z9KtzDzSh9h00U5mVemf5JpQj7IRxNZnnd6iNnilrg+7dztINO9WEQsodw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LmcjW+KP; arc=none smtp.client-ip=209.85.215.171
+	 MIME-Version:To:Cc; b=f/27e5gHsnDYbs74+QGLTT73eM7+lN5uRJPMoVL4XITGc9y62LsdcVqKTwoWje0Pn+UdcMA5Agm+hnw6/7ibXnahv2dHOwmRHI3+PmWeAwve6HTJHgD3uZTSgDjWvoJQrzAKwdf2h6m0z9LwVqc8n7CGeMtZ6KPXY/fkUaiZqXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BI8Aguty; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LmcjW+KP"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cb5b8572b70so1504876a12.2
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BI8Aguty"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-385ea3ce80dso2033895a91.2
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785091897; x=1785696697; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785091901; x=1785696701; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=ORZuL5otqGlZPUh9/HR4xS9hIF340E/CEsRCss3eEdY=;
-        b=LmcjW+KPAmdig1V62ypElvvSAPuXJdXsBbmLR6mt03xfqhpI7OV+hqNDsWFPY5O9/5
-         x51YVQ3JkCUkrdqixDyWbOzIDnQurWYbw9y1JKBUK20ZOELary2Pc+DXJGrnwWb8BmZz
-         yQ9ugYsnBf2bVkYGY4CVTS3g9Vo24fHpjEadUfckaA0MABpfkfVT9ptmkTBLw91/HAFP
-         I+IEydQ12XXKlqdvUGMvlONi527ie+K6D1z7uNIQk8UzIf7oI2rlpLaeIschB5SmDssw
-         +yJISgjeuzjFUGvxB+bm2W+h0r1BdDCLUf8rBoifOZwKT3rSmY0QCc0PJuCrXBz7o2bP
-         nRJg==
+        bh=aeAVsRd1f76dy3d/+Jahyd1tMJ2T1eJU8ftf2DMNF20=;
+        b=BI8Agutyj1ues9u1hG924nRN7JPPbFSS6Od4NXCeMEzmB+D6xvcs4c3FbBKxdeENK5
+         weL4lQGVVEAjZmfu9CE/pnT43lspn6mtQJ7Uwolbj8g75lYdzVlLFzbJnm2RwXC9G7RO
+         eKm5iYFnSZgU67aplGIKS5leLtvjPuU13+nrXk0BeGOKMXGZZpBibgHK6TEiJedelcbA
+         8K4cGzxVj1B3HcFA11neiBDSahBKYqV9PI9ojso4DqvDzQxjPM+ALy7K0gt4G6mWINaZ
+         HZDMKU67jBh4EVyDCamU/fiya2vcoBE88/EagMmmuEG3qIuSFRWagHXGBemIjlRvFJlO
+         CUgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785091897; x=1785696697;
+        d=1e100.net; s=20251104; t=1785091901; x=1785696701;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ORZuL5otqGlZPUh9/HR4xS9hIF340E/CEsRCss3eEdY=;
-        b=VPXMCbaB2mxekzeaPp7bE8ZUvHo44GXNMbCxCFsMckeOcAZJVtjPcEPDeOGP/BX0/8
-         y13cdKG6Ez1TAsLPteMtaIFuS0Nr6yVEtJ2AsNUnOhtQ4hyVZoxgRPfqvzTshgDN/exh
-         8lW8xn3UO7nSMJ2BO5+oAmh6LJjkpV+OtP+ZedV3J+Gt7z6zo28lyluHTS8BYIr0+GKM
-         qFxOcjUh5Ae7Yt4RJf4KriYKE1TH5i5S5NEguzm1x9x7EbpbimzKI+oC/q5dPpyuXU/W
-         V2R5StUBq5eMjWyHf5pgCOYct9kNeDBZ3Y9IqJ7/+HU4JH3PLQfVBQR8K5CeSABcXYjZ
-         3+vw==
-X-Gm-Message-State: AOJu0YyXkzN6jDqZdplfNQIMw2yD4u63BxqrM+sVr6STJhsTlzwi3+7u
-	lIFE0PS+2jhaBZc1jVpz95RxFDZon/BHpam2mPWnEyJUMAJFrZd3EvqfDxdj6g==
-X-Gm-Gg: AR+sD10hFQYdrQPMyKOoelbpQympX5bntmllHv97aZ6geHM5H9jQzCTKNBH5o7VaQU8
-	8YjHJqDjlczmuGPxJ5Rt699EHqEGZSmvqpHZDw/ftTF9s/bIa66HETjxj6xpNt9/t1DjvqSygOu
-	gkZbIBM0jx2e0A9emY6A719nukkiDGBv0cRbEgd68J1Jis/r3pFnOz5bidjrCZ5EkoheQJ3IBty
-	JADzl48IqVy10QdtIJ4BIjaww5atK9qgKvWoksfrUb3wPZ16+lg8y6NZ/vvQaV4477jtpYUUf66
-	8gbBij+cnOuUVcOEaIceEGuAbCX4J1EkiGHT2tpTbfkkUOxW9MroF4JCzmNocEvF8TsJl0U5SIj
-	0DpgHzByFMJROzJywwwcMEuLZoYSNP1V2gErYYZWjWXnwrbvQCw978QlRN64mqU8xBAFyDr1EoH
-	eXUfjU
-X-Received: by 2002:a05:6a21:7a45:b0:3c3:8980:e844 with SMTP id adf61e73a8af0-3c67e13e32amr5691680637.57.1785091897300;
-        Sun, 26 Jul 2026 11:51:37 -0700 (PDT)
+        bh=aeAVsRd1f76dy3d/+Jahyd1tMJ2T1eJU8ftf2DMNF20=;
+        b=FDLClFuk91lecsjt+1BO/yUx/FMWRBUqeGv0C7QQH1DjXHdJatkBydPDvYR9gyTx3T
+         vas+m3qchJO9RbZVA2r7Q5IcH89oWHU0+WZltnOecFT37j1/Cj8kzGKeeCfxNX2kIOMv
+         tp2mI6i+bhSNYD0U3De2crXASMErpUJqeghI1FugIXwQOLTkD+xRs2e8owdr41dU1+nU
+         vHlYchNjfTqKOozyAC9YIZ1bxViDZuHmiJ7gGb3zjYuu4t6FZS+YknnsHYALqCfTgLNR
+         je73z7G45xFrT9bgx6oHQq1EbzhK3NrUAzsIjnVIapjxhe6U7zZq0F5xCPGPm+KXMcwR
+         FQOA==
+X-Gm-Message-State: AOJu0YzNsyqEG5oJmfUF6LGqd0ySCE7XCKxbPRTO+PD3lgVdlQFh141t
+	Je9jjLigH+TyQpDz9r4hJhYyFPVT+vr0+2JUQ9wla1wxniJbzKxPzOjfiLcJXw==
+X-Gm-Gg: AR+sD12FB3nYAaLg2pGxTdwSVPLcHh/EwJhkGsvmj2CTHbZkiGiZFgC8q/hWElwuMLQ
+	vjxdmkYXdSreNxwR879h058TZMSybvaP+FC6sgjADBme7fWSZXQu00gZwH0VMDL5ojAH+yEGII+
+	NvlnltMKjhDAN7PWtsKyuw9yhP9fVLJXUx6e4RoVBvHLE2SEbFmFYQQHBelD5Rq7R4+WOyZJdXC
+	chyz9jZz1UOHx9M8jOHPUaiEAT7Jp99EAxp9XaFzklGH3YQTNPuxVjAF2DXR/LG0UTqgl5SIZho
+	z8joq4IxeZ4nvJK/88N+FLzeWyoiLa99J4pq2F1pNJvrdBcR5kFsWP5RwON4Bv5EDSTlyOH+mZR
+	3mnd3w4jji0xpuWfVR/IMusX7ZZ6Pkavkxn/EejNrThBWWZuVkg3AoYXceHq8lWe2NzORoSyGfj
+	eTmFIE2WShWmO8htrtIRLJFDw6BQ==
+X-Received: by 2002:a17:90b:180c:b0:38e:c7b0:84ad with SMTP id 98e67ed59e1d1-38f2926696bmr5469517a91.0.1785091900529;
+        Sun, 26 Jul 2026 11:51:40 -0700 (PDT)
 Received: from [127.0.0.1] ([52.159.229.50])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc5cb670sm32553688eec.31.2026.07.26.11.51.36
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d2eb01aa0sm32953268c88.3.2026.07.26.11.51.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 11:51:36 -0700 (PDT)
-Message-Id: <850c7cbcf5d6c029e184c056d45e1a6769541494.1785091889.git.gitgitgadget@gmail.com>
+        Sun, 26 Jul 2026 11:51:40 -0700 (PDT)
+Message-Id: <4795743ab97a690b0a3544071acf7b417f571e75.1785091889.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
 References: <pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
 	<pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Jul 2026 18:51:23 +0000
-Subject: [PATCH v6 4/9] sub-process: separate process lifecycle from hashmap
- management
+Date: Sun, 26 Jul 2026 18:51:25 +0000
+Subject: [PATCH v6 6/9] diff: bypass diff process with --no-ext-diff and in
+ format-patch
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,116 +82,175 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-subprocess_start() and subprocess_stop() couple two concerns:
-managing a child process (setup, handshake, teardown) and
-managing a hashmap that indexes running processes by command
-string.  The hashmap suits callers like convert.c where many
-files may share one filter process looked up by name, but
-callers that manage process lifetime through their own data
-structures do not need it.
+Make --no-ext-diff disable diff.<driver>.process in addition to
+diff.<driver>.command.  Although the two mechanisms work differently
+(command replaces Git's output, process feeds hunks back into the
+pipeline), both invoke external tools and --no-ext-diff means
+"no external tools."
 
-Extract subprocess_start_command() and subprocess_stop_command()
-so callers can reuse the child process setup and handshake
-machinery without maintaining a hashmap.  subprocess_start()
-and subprocess_stop() become thin wrappers that add hashmap
-operations on top.
+Replace the OPT_BOOL for --ext-diff with an OPT_CALLBACK that
+sets both allow_external and no_diff_process, so a single option
+controls both.  Passing --ext-diff explicitly clears
+no_diff_process, so a later --ext-diff overrides an earlier
+--no-ext-diff.
+
+Disable the diff process unconditionally in format-patch so that
+generated patches are always based on the builtin diff algorithm
+and can be applied reliably by recipients who do not have the
+external tool.
+
+Document that --diff-algorithm also bypasses the diff process,
+since it forces the builtin algorithm.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- sub-process.c | 28 +++++++++++++++++++++++-----
- sub-process.h |  9 ++++++++-
- 2 files changed, 31 insertions(+), 6 deletions(-)
+ Documentation/diff-algorithm-option.adoc |  3 +++
+ Documentation/diff-options.adoc          |  4 +++-
+ Documentation/gitattributes.adoc         |  6 +++---
+ builtin/log.c                            |  7 +++++++
+ diff.c                                   | 16 ++++++++++++++--
+ diff.h                                   |  5 ++++-
+ t/t4080-diff-process.sh                  | 16 ++++++++++++++++
+ 7 files changed, 50 insertions(+), 7 deletions(-)
 
-diff --git a/sub-process.c b/sub-process.c
-index 83bf0a0e82..5468939338 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -49,7 +49,7 @@ int subprocess_read_status(int fd, struct strbuf *status)
- 	return (len < 0) ? len : 0;
- }
+diff --git a/Documentation/diff-algorithm-option.adoc b/Documentation/diff-algorithm-option.adoc
+index 8e3a0b63d7..4d7e2ec35f 100644
+--- a/Documentation/diff-algorithm-option.adoc
++++ b/Documentation/diff-algorithm-option.adoc
+@@ -18,3 +18,6 @@
+ For instance, if you configured the `diff.algorithm` variable to a
+ non-default value and want to use the default one, then you
+ have to use `--diff-algorithm=default` option.
+++
++If you explicitly choose a diff algorithm, it also bypasses
++`diff.<driver>.process` (see linkgit:gitattributes[5]).
+diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
+index 8a63b5e164..18b8b0ed24 100644
+--- a/Documentation/diff-options.adoc
++++ b/Documentation/diff-options.adoc
+@@ -825,7 +825,9 @@ endif::git-format-patch[]
+ 	to use this option with linkgit:git-log[1] and friends.
  
--void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry)
-+void subprocess_stop_command(struct subprocess_entry *entry)
- {
- 	if (!entry)
- 		return;
-@@ -57,7 +57,14 @@ void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry)
- 	entry->process.clean_on_exit = 0;
- 	kill(entry->process.pid, SIGTERM);
- 	finish_command(&entry->process);
-+}
+ `--no-ext-diff`::
+-	Disallow external diff drivers.
++	Disallow external diff helpers, including
++	`diff.<driver>.command` and `diff.<driver>.process`
++	(see linkgit:gitattributes[5]).
  
-+void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry)
-+{
-+	if (!entry)
-+		return;
+ `--textconv`::
+ `--no-textconv`::
+diff --git a/Documentation/gitattributes.adoc b/Documentation/gitattributes.adoc
+index f4ca4a8c7e..a03fb9deb1 100644
+--- a/Documentation/gitattributes.adoc
++++ b/Documentation/gitattributes.adoc
+@@ -1073,9 +1073,9 @@ display, which is covered above); and combined diffs (`--cc` and merge
+ diffs), whose protocol would have to be extended from a single old/new
+ pair to one comparison per merge parent.
+ 
+-`--diff-algorithm` bypasses the process entirely, for every feature
+-listed above.  The whitespace-ignoring options (`-w`,
+-`--ignore-space-change`, `--ignore-blank-lines`, and the like),
++`--no-ext-diff` and `--diff-algorithm` bypass the process entirely,
++for every feature listed above.  The whitespace-ignoring options
++(`-w`, `--ignore-space-change`, `--ignore-blank-lines`, and the like),
+ `-I<regex>`, and `--anchored` also bypass it for the affected files:
+ the tool is never told about these options, so it could not honor
+ them, and Git falls back to the builtin diff, which does.
+diff --git a/builtin/log.c b/builtin/log.c
+index e464b30af4..363052f468 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -2217,6 +2217,13 @@ int cmd_format_patch(int argc,
+ 	if (argc > 1)
+ 		die(_("unrecognized argument: %s"), argv[1]);
+ 
++	/*
++	 * Disable diff.<driver>.process so that patches generated by
++	 * format-patch are always based on the builtin diff algorithm
++	 * and can be applied reliably.
++	 */
++	rev.diffopt.flags.no_diff_process = 1;
 +
-+	subprocess_stop_command(entry);
- 	hashmap_remove(hashmap, &entry->ent, NULL);
+ 	if (rev.diffopt.output_format & DIFF_FORMAT_NAME)
+ 		die(_("--name-only does not make sense"));
+ 	if (rev.diffopt.output_format & DIFF_FORMAT_NAME_STATUS)
+diff --git a/diff.c b/diff.c
+index aab012f922..1a487bb353 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6071,6 +6071,17 @@ static int diff_opt_submodule(const struct option *opt,
+ 	return 0;
  }
  
-@@ -72,7 +79,7 @@ static void subprocess_exit_handler(struct child_process *process)
- 	finish_command(process);
- }
- 
--int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
-+int subprocess_start_command(struct subprocess_entry *entry, const char *cmd,
- 	subprocess_start_fn startfn)
- {
- 	int err;
-@@ -96,15 +103,26 @@ int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, co
- 		return err;
- 	}
- 
--	hashmap_entry_init(&entry->ent, strhash(cmd));
--
- 	err = startfn(entry);
- 	if (err) {
- 		error("initialization for subprocess '%s' failed", cmd);
--		subprocess_stop(hashmap, entry);
-+		subprocess_stop_command(entry);
- 		return err;
- 	}
- 
++static int diff_opt_ext_diff(const struct option *opt,
++			     const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
++
++	BUG_ON_OPT_ARG(arg);
++	options->flags.allow_external = !unset;
++	options->flags.no_diff_process = unset;
 +	return 0;
 +}
 +
-+int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
-+	subprocess_start_fn startfn)
-+{
-+	int err;
-+
-+	err = subprocess_start_command(entry, cmd, startfn);
-+	if (err)
-+		return err;
-+
-+	hashmap_entry_init(&entry->ent, strhash(cmd));
- 	hashmap_add(hashmap, &entry->ent);
- 	return 0;
- }
-diff --git a/sub-process.h b/sub-process.h
-index bfc3959a1b..45f1b8e5e3 100644
---- a/sub-process.h
-+++ b/sub-process.h
-@@ -52,10 +52,17 @@ int cmd2process_cmp(const void *unused_cmp_data,
-  */
- typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
+ static int diff_opt_textconv(const struct option *opt,
+ 			     const char *arg, int unset)
+ {
+@@ -6401,8 +6412,9 @@ struct option *add_diff_options(const struct option *opts,
+ 			 N_("exit with 1 if there were differences, 0 otherwise")),
+ 		OPT_BOOL(0, "quiet", &options->flags.quick,
+ 			 N_("disable all output of the program")),
+-		OPT_BOOL(0, "ext-diff", &options->flags.allow_external,
+-			 N_("allow an external diff helper to be executed")),
++		OPT_CALLBACK_F(0, "ext-diff", options, NULL,
++			       N_("allow an external diff helper to be executed"),
++			       PARSE_OPT_NOARG, diff_opt_ext_diff),
+ 		OPT_CALLBACK_F(0, "textconv", options, NULL,
+ 			       N_("run external text conversion filters when comparing binary files"),
+ 			       PARSE_OPT_NOARG, diff_opt_textconv),
+diff --git a/diff.h b/diff.h
+index 7dc157968d..ee034d240d 100644
+--- a/diff.h
++++ b/diff.h
+@@ -173,7 +173,10 @@ struct diff_flags {
+ 	 */
+ 	unsigned allow_external;
  
--/* Start a subprocess and add it to the subprocess hashmap. */
-+/* Start a subprocess and run the startfn (typically handshake). */
-+int subprocess_start_command(struct subprocess_entry *entry, const char *cmd,
-+		subprocess_start_fn startfn);
-+
-+/* Start a subprocess, run startfn, and add it to the subprocess hashmap. */
- int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
- 		subprocess_start_fn startfn);
+-	/** Disables diff.<driver>.process. */
++	/**
++	 * Disables diff.<driver>.process.  Set by --no-ext-diff and by
++	 * format-patch.
++	 */
+ 	unsigned no_diff_process;
  
-+/* Kill a subprocess. */
-+void subprocess_stop_command(struct subprocess_entry *entry);
-+
- /* Kill a subprocess and remove it from the subprocess hashmap. */
- void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry);
+ 	/**
+diff --git a/t/t4080-diff-process.sh b/t/t4080-diff-process.sh
+index 3b75df082e..7e71b70ab9 100755
+--- a/t/t4080-diff-process.sh
++++ b/t/t4080-diff-process.sh
+@@ -398,6 +398,22 @@ test_expect_success 'diff process bypassed by --diff-algorithm' '
+ 	test_path_is_missing backend.log
+ '
  
++test_expect_success 'diff process bypassed by --no-ext-diff' '
++	test_when_finished "rm -f backend.log" &&
++	git -c diff.cdiff.process="$BACKEND --log=backend.log" \
++		diff --no-ext-diff worddiff.c >actual &&
++	test_grep "return 999" actual &&
++	test_path_is_missing backend.log
++'
++
++test_expect_success 'diff process not used by format-patch' '
++	test_when_finished "rm -f backend.log" &&
++	git -c diff.cdiff.process="$BACKEND --log=backend.log" \
++		format-patch -1 --stdout -- logtest.c >actual &&
++	test_grep "return 2" actual &&
++	test_path_is_missing backend.log
++'
++
+ test_expect_success 'diff process bypassed under whitespace-ignoring flags' '
+ 	test_when_finished "rm -f backend.log" &&
+ 	printf "a\nb\nc\n" >wsbypass.c &&
 -- 
 gitgitgadget
 
