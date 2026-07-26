@@ -1,70 +1,70 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F5E3E3C4D
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C8D3BE62A
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785091896; cv=none; b=ljB9eafPOPGNqj0qfKK6s5cVUOy0Qn1whV+1hkRWUVCw3cZRbOSZ1mFs1dOybH6hv4unk7shm02raGWZv+vbxrv3fQvsywUX2gmyxjryrazt6CIQZM5baFJ65mAJEZchdGY696dpU+n/lZpFjYY7WHfp1xUq8wjTInoWJdMVaBE=
+	t=1785091897; cv=none; b=JatTsIivUil8VEAQWqfiUY4+/Op2DpM8gfrZzJCYJiUzmB8fdA/eMjRhwgzYTDHlHpFtJTwTNfwQukFbfTsfUHyRPkGnWqWooHuLZxLyU97KszYDrLvrnwsaT/gNwULESoFRQzRgP7lshHWik6sUb9rEOlTqVyfw5EuMOz04WC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785091896; c=relaxed/simple;
-	bh=l1zTOjT1tgoLgnMlUkwrD8RcG062CeqQ1WXR07nPNW4=;
+	s=arc-20240116; t=1785091897; c=relaxed/simple;
+	bh=b63FwAXWj671Jz5W7et9R08DCR2Q6v32Cdt4VG5jdc4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hjliJfeZW+3Ml2NWsOGqubfBVfY35bsN3X34bBs3RirsKS65JTF7p5K55VZubeymWRweV6YlNI1OaO0qrCcdsW9vJuVhn7Kd02lDyoAM4ANmaWvzd80h6u9TX/qVBX0zvu9rGHT3hc92lLn2PyPZkWNOuugnfgYApHo/BgGUSlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UePlQJOR; arc=none smtp.client-ip=209.85.216.53
+	 MIME-Version:To:Cc; b=KJt8BPahk6WynCBAZCRdn855IavWcQ7A2P54DVyglUCB4ACtP6WdWDrQ8L5ik3hcDRsbWJEx8QphaaGL31AOsnMVjqjBBM2XJCsZysVe7sQY3QeHFjQAnuqME5jcXlhuRI2X1NZmnk80fqJmM+2MWs1OVTNPBFwLzJxYR7eNU8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qyskuX8s; arc=none smtp.client-ip=209.85.216.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UePlQJOR"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e07ebd263so1332981a91.1
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qyskuX8s"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-383cb94f742so1638586a91.3
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785091894; x=1785696694; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785091896; x=1785696696; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=YMzQAl7RqJO53duf4d5eU3AFZc7L4y65AKZTB8aQjvs=;
-        b=UePlQJOR7cAMjBIjssUTTjuBU9JfFsd1fm0OwN9npTbpOS7kgZS+11R6T4fP7naLRi
-         oc+ete+CCk9OI/9OR7P52MMov/aPHLNjX4gtbHinj/yHiwLPf8+4lJE1N8b5Mcg7Grks
-         jH28iUwuQhbCzExAZCsCCUEXjR+wW8HCqeln6+fYRH3wacJ8r5fNzTE+HqmBtkMGPkSy
-         RDgmgrk9qa7PjIafN8lt4x6b9gStcHmDPK/1Veuk3oK5hJhE6/vGQPxwxxviyVeOVo2B
-         l4O4z9/ffl0dT/gEp7xTW9u8jGFegTRP5GZn/qOj4KlB5wgxQRwHg2rOMZ4D7sUKUiQz
-         cLVQ==
+        bh=QGhPD4wlK16cfPJHf0ZO8q+VJwE3VbJ4mUgT7ZSXaqY=;
+        b=qyskuX8sw4WfEu7sDpcOzFIwk8QjbS8+ZUI69v8iPvaXukKwYWho57gmIYw09UQrtN
+         945jCVNY4ZA19+9dM9Qv7/CKW5t6kI0eeSU9Fd+cIp1zHOQgxrn89kXmIQkvo08lLOYd
+         joufsViq6mVSSsbKyP6g/T+oVhy26apfgvVW1vNVtJ1QpBSLhzRNcpW/z41V90d2SaAv
+         dxEKdFyogN+hpMuuzRTCFaTpsmyI+JbxmXhqvTqX5j198nqjExQ1qUCHQOpKoPaEuJse
+         fQB1FGuLj+5z71Y27i1wYx8yiLqqXQda7Qn9NVP4uqUaJqiFwg0vyJLq6R4f9uOBF4ZN
+         yUYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785091894; x=1785696694;
+        d=1e100.net; s=20251104; t=1785091896; x=1785696696;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YMzQAl7RqJO53duf4d5eU3AFZc7L4y65AKZTB8aQjvs=;
-        b=kSUfGHOeuP0k/RsNyKCqc4F8iSvVDBxiObmLh1DXvFJEwosLTgDi33XBEorEOC67L2
-         Zs3dsOabT8KnaqA6lybFeyr67H39bhqc5wQXqPZxufGPxNqWOWyZ6bvbOQNQchHgmk3Y
-         M11jIQ4ve91nAz5W2XEToyl3TiRLrsB+TSIZJHUjDILyrrwL2SplpxdQYXySwFZZa02f
-         e3cfoESZl3ZB8Yt/wMZgS7xgBfHJzRdeVem1CnseSuQebUQ39PkacSeVvxSDwglbziBi
-         FVKpJuPAJJgQSoVaeF9xS+xkWEoIx5kCJVgRtx1Ywl0l0lfK8Oeq3SYWQ08E5NmUVNA2
-         ijiQ==
-X-Gm-Message-State: AOJu0YxgDz96/V6n3cvJteLf/ogqBoBqSoEAYeffLV4up0rWd8VLhlnG
-	sRO3wks6u59jxjZ/rJqAEsJhA1a3keopDpzAbCsDSUJgj0umqYPiP1oE/H6HIg==
-X-Gm-Gg: AR+sD12x1gheYaYlBb91V3QGenKQ8zB0nWLeD7kDD/KG+SgcYXxpMmsJBxB0TDOQiqs
-	V3iN7P2wOmp2jJcED5kQx8RBEGHZj3ZgaRWBsnhfNkswtPGzAPxnEguKKCTzlk5/9Pv+Cnx2MRO
-	DRdkjgs0JVg7Uyarhy/PCtHx9Dl+s2/zSgZ8s4XmlWUPfD3wG02yco4X4LopAqOH5TK9mP992Ez
-	uG6jgPRNjzyEjOZIekn+PZ3k2UenyTJaBJ11oBlRMYmf+vO5TRYbUK/sZszImSrQl6y4PI0nw1w
-	tmrXAcX38Bav97VICYdSLhrbJJse5ZkuPpTYAyiB0YmEwmixeAKY4+JneSeKZVHoIG/aQpuUHEX
-	C8uxofO7/XvsWF/fPI44KC5mEz4/WUdkMBq/UxyZpDIEjgS3RPyJF+mqDxoDP0kKvVQyX9pW57i
-	4XkDKhmqGiHXpR7Cs=
-X-Received: by 2002:a17:90b:384b:b0:38f:1f8:1fa with SMTP id 98e67ed59e1d1-38f294ea429mr6040663a91.15.1785091894191;
-        Sun, 26 Jul 2026 11:51:34 -0700 (PDT)
+        bh=QGhPD4wlK16cfPJHf0ZO8q+VJwE3VbJ4mUgT7ZSXaqY=;
+        b=I7AX8lbW5Dl3KHeumO9jvkTvlbmIQhGICjB/jUbUhi8uWE7aJN/0J1s5jc9eVkbBX4
+         wi/YAn+vu1Q1aDWsaUynzWJ0Jg6G+gIbRa0t+Z6JHLeozdqT/0aSZkUsozXkCceYGTRS
+         ty7UMRZsCHJ/Ih63cASL5rRkK9zd7akWoG4hIilgqnuZDXY2ydHrRhy1B6LuE4jybnKX
+         NAgda9LTfywU5QkvYeTEPIZ3c0G2rolqhVuij4HMkdm0GtfJbyCC7A1B16ABHN4NtBJm
+         zFVulBCRgvoZ7I+MutF/UC6PP0Kt9NrJB7tnwi7JMy3FG4IcsYmeTcd9E6unLdfJ2QeN
+         HEXQ==
+X-Gm-Message-State: AOJu0Yw9N1YMkkVa5r92k5hnMSZtchn0kboWXNyJnrX6YORzvuaw+G1g
+	zdTLve5fv9Xdnia2AX2NHc4ydyExXMasIDFloyppn+VOPHCOYONBkv4cdm/C/g==
+X-Gm-Gg: AR+sD114WG+KyBrg3kncfj55OwbZ+wxDmtIqqPL2j3uvvkM0saA+Qd5bp0OyeP4NEgf
+	dEMjE60afOMo3Z0TUmC4zNFTHTZ0abBhGupjOic9gLFxnfJ7NF87G38NA6EsuSbYfKZUjNjHm05
+	CzSq0WwQQni0iUyaqSOcTFHyVR3G0XVHIjnIf1WTU6H2CYWZpqpMy89zRuJlgz/EdaMCGIRwxok
+	wo+tbqyMblgXTtmLjmcAgqQdpyHZR2r3VJvvHrwOfF3c+sUng8vxVUGLtI+LnAGs64QGgCpMa5F
+	H8Jf6SRuxniUoPMUqB0VmrKvFsbFHqrvkMmwxw01B1F1yu40Egx4jMSgAgG+RSVdf4a2sfkd/YF
+	I4uT+OaddzGjPpruv60ekvNFjjwVGDZAOJiUHf7RKzfqvDDMstlVYVSWyhKOlxzj69fVRtLEvss
+	PyUcsO
+X-Received: by 2002:a17:90b:4c09:b0:381:6466:7160 with SMTP id 98e67ed59e1d1-38f295bd1fbmr6080673a91.26.1785091895647;
+        Sun, 26 Jul 2026 11:51:35 -0700 (PDT)
 Received: from [127.0.0.1] ([52.159.229.50])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13e5c921686sm7413652c88.4.2026.07.26.11.51.33
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc288a79sm23469813eec.0.2026.07.26.11.51.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 11:51:33 -0700 (PDT)
-Message-Id: <ed2db0ac59cd0e1722a0a69ca21171e3f0afa0df.1785091889.git.gitgitgadget@gmail.com>
+        Sun, 26 Jul 2026 11:51:35 -0700 (PDT)
+Message-Id: <115e31d80662706214ccfbae10824cd1d2af4345.1785091889.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
 References: <pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
 	<pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Jul 2026 18:51:21 +0000
-Subject: [PATCH v6 2/9] xdiff: support external hunks via xpparam_t
+Date: Sun, 26 Jul 2026 18:51:22 +0000
+Subject: [PATCH v6 3/9] userdiff: add diff.<driver>.process config
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,225 +81,46 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-Add two new xpparam_t fields (external_hunks, external_hunks_nr)
-that let callers supply pre-computed hunks.  When set, xdl_diff()
-populates the changed[] arrays from these hunks instead of running
-the diff algorithm, then continues through compaction and emission
-as usual.
-
-Validate supplied hunks before use.  Out-of-bounds line numbers,
-overlapping or out-of-order hunks, and misaligned unchanged runs are
-treated as a malformed tool response: xdl_populate_hunks_from_external()
-warns, returns -1, and xdl_diff() falls back to the builtin diff
-algorithm for that file.  The run of unchanged lines between two hunks
-(and before the first and after the last) must be the same length on
-both sides; xdl_build_script() walks the two files in lockstep over
-unchanged lines, so a balanced total is not enough.  Non-negative
-counts and 1-based starts are instead caller preconditions, checked
-with BUG(), since the caller normalizes hunks before this point.
-
-On rejection xdl_diff() frees the environment it prepared and falls
-through to xdl_do_diff(), which prepares a fresh one for the builtin
-pass.
-
-Skip trim_common_tail() in xdi_diff() when external hunks are
-present, since external hunks reference line numbers in the
-original content.
+Add the process field to struct userdiff_driver and teach the
+config parser to populate it from diff.<driver>.process.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- xdiff-interface.c |  7 +++-
- xdiff/xdiff.h     | 16 +++++++++
- xdiff/xdiffi.c    | 84 +++++++++++++++++++++++++++++++++++++++++++++--
- xdiff/xprepare.c  | 10 ++++++
- xdiff/xprepare.h  |  1 +
- 5 files changed, 115 insertions(+), 3 deletions(-)
+ userdiff.c | 7 +++++++
+ userdiff.h | 2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 32e04630ee..afe4c12e9e 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -143,7 +143,12 @@ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t co
- 	if (mf1->size > MAX_XDIFF_SIZE || mf2->size > MAX_XDIFF_SIZE)
- 		return -1;
- 
--	if (!xecfg->ctxlen && !(xecfg->flags & XDL_EMIT_FUNCCONTEXT))
-+	/*
-+	 * External hunks reference line numbers in the original content;
-+	 * trimming the tail would change line counts and invalidate them.
-+	 */
-+	if (!xpp->external_hunks &&
-+	    !xecfg->ctxlen && !(xecfg->flags & XDL_EMIT_FUNCCONTEXT))
- 		trim_common_tail(&a, &b);
- 
- 	return xdl_diff(&a, &b, xpp, xecfg, xecb);
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index dc370712e9..4736bcdb07 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -78,6 +78,18 @@ typedef struct s_mmbuffer {
- 	long size;
- } mmbuffer_t;
- 
-+/*
-+ * Hunk descriptor for externally computed diffs, in xdiff's own
-+ * coordinates: line numbers are 1-based and a hunk's start is the
-+ * first line it covers.  A caller translates any external "empty side"
-+ * idiom (such as git diff's start-0/count-0) to a 1-based start before
-+ * handing hunks over.
-+ */
-+struct xdl_hunk {
-+	long old_start, old_count;
-+	long new_start, new_count;
-+};
-+
- typedef struct s_xpparam {
- 	unsigned long flags;
- 
-@@ -88,6 +100,10 @@ typedef struct s_xpparam {
- 	/* See Documentation/diff-options.adoc. */
- 	char **anchors;
- 	size_t anchors_nr;
-+
-+	/* Externally computed hunks: bypass the diff algorithm.  Owned by caller. */
-+	struct xdl_hunk *external_hunks;
-+	size_t external_hunks_nr;
- } xpparam_t;
- 
- typedef struct s_xdemitcb {
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index c5a892f91e..73a456f5dd 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -1085,16 +1085,96 @@ static void xdl_mark_ignorable_regex(xdchange_t *xscr, const xdfenv_t *xe,
+diff --git a/userdiff.c b/userdiff.c
+index b5412e6bc3..7547874aa2 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -509,6 +509,13 @@ int userdiff_config(const char *k, const char *v)
+ 		drv->algorithm = drv->algorithm_owned;
+ 		return ret;
  	}
- }
- 
-+/*
-+ * Populate the changed[] arrays from externally supplied hunks,
-+ * bypassing the diff algorithm.  The caller normalizes and validates
-+ * the hunks first (order, overlap, and lockstep alignment), so this
-+ * only marks lines changed after asserting the memory-safety
-+ * preconditions it depends on: non-negative counts and 1-based starts
-+ * (checked with BUG()), and an in-bounds range (a silent -1 so the
-+ * caller can fall back to the builtin diff rather than index changed[]
-+ * out of range).  Keeping this diagnostic-free leaves user-facing
-+ * messages to the git layer.
-+ *
-+ * Returns 0 on success, -1 if a hunk is out of range.
-+ */
-+static int xdl_populate_hunks_from_external(xdfenv_t *xe,
-+					    struct xdl_hunk *hunks,
-+					    size_t nr_hunks)
-+{
-+	size_t i;
-+	long j;
-+
-+	/*
-+	 * xdl_prepare_env() may dirty changed[] via xdl_cleanup_records().
-+	 * Clear them so only the external hunks are marked.
-+	 */
-+	xdl_clear_changed(&xe->xdf1);
-+	xdl_clear_changed(&xe->xdf2);
-+
-+	for (i = 0; i < nr_hunks; i++) {
-+		struct xdl_hunk *h = &hunks[i];
-+
-+		/*
-+		 * Non-negative counts and 1-based starts are caller
-+		 * preconditions (it normalizes hunks into xdiff coordinates
-+		 * before this point), so a violation is a bug, not a bad
-+		 * tool response.
-+		 */
-+		if (h->old_count < 0 || h->new_count < 0)
-+			BUG("external hunk %"PRIuMAX": "
-+				"negative count (old=%ld, new=%ld)",
-+				(uintmax_t)(i + 1),
-+				h->old_count, h->new_count);
-+		if (h->old_start < 1 || h->new_start < 1)
-+			BUG("external hunk %"PRIuMAX": "
-+				"start not 1-based (old=%ld, new=%ld)",
-+				(uintmax_t)(i + 1),
-+				h->old_start, h->new_start);
-+
-+		/*
-+		 * The caller validates ordering, overlap and lockstep
-+		 * alignment (and diagnoses a bad response).  This is only a
-+		 * silent in-bounds guard so the marking loop cannot index
-+		 * changed[] out of range: start + count - 1 <= nrec,
-+		 * rewritten to avoid overflow.  A count of 0 (pure
-+		 * insert/delete) allows start == nrec + 1, the position
-+		 * after the last line.  On a miss, return -1 and let the
-+		 * caller fall back to the builtin diff.
-+		 */
-+		if (h->old_count > (long)xe->xdf1.nrec - h->old_start + 1 ||
-+		    h->new_count > (long)xe->xdf2.nrec - h->new_start + 1)
-+			return -1;
-+
-+		for (j = 0; j < h->old_count; j++)
-+			xe->xdf1.changed[h->old_start - 1 + j] = true;
-+		for (j = 0; j < h->new_count; j++)
-+			xe->xdf2.changed[h->new_start - 1 + j] = true;
++	if (!strcmp(type, "process")) {
++		int ret;
++		FREE_AND_NULL(drv->process_owned);
++		ret = git_config_string(&drv->process_owned, k, v);
++		drv->process = drv->process_owned;
++		return ret;
 +	}
-+
-+	return 0;
-+}
-+
- int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
- 	xdchange_t *xscr;
- 	xdfenv_t xe;
- 	emit_func_t ef = xecfg->hunk_func ? xdl_call_hunk_func : xdl_emit_diff;
- 
--	if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0) {
-+	if (xpp->external_hunks) {
-+		if (xdl_prepare_env(mf1, mf2, xpp, &xe) < 0)
-+			return -1;
-+		if (xdl_populate_hunks_from_external(&xe,
-+						     xpp->external_hunks,
-+						     xpp->external_hunks_nr) == 0)
-+			goto diff_done;
-+		xdl_free_env(&xe);
-+	}
- 
-+	if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0)
- 		return -1;
--	}
-+
-+diff_done:
- 	if (xdl_change_compact(&xe.xdf1, &xe.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe.xdf2, &xe.xdf1, xpp->flags) < 0 ||
- 	    xdl_build_script(&xe, &xscr) < 0) {
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 11bada2608..f4ab935332 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -471,3 +471,13 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
  
  	return 0;
  }
-+
-+/*
-+ * Reset the changed[] array so that no lines are marked as changed.
-+ * Also clears the sentinel slots at changed[-1] and changed[nrec]
-+ * that xdl_change_compact() relies on during backward scans.
-+ */
-+void xdl_clear_changed(xdfile_t *xdf)
-+{
-+	memset(xdf->changed - 1, 0, (xdf->nrec + 2) * sizeof(bool));
-+}
-diff --git a/xdiff/xprepare.h b/xdiff/xprepare.h
-index 947d9fc1bb..0413baf07b 100644
---- a/xdiff/xprepare.h
-+++ b/xdiff/xprepare.h
-@@ -28,6 +28,7 @@
- int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 		    xdfenv_t *xe);
- void xdl_free_env(xdfenv_t *xe);
-+void xdl_clear_changed(xdfile_t *xdf);
- 
- 
- 
+diff --git a/userdiff.h b/userdiff.h
+index 827361b0bc..51c26e0d41 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -31,6 +31,8 @@ struct userdiff_driver {
+ 	char *textconv_owned;
+ 	struct notes_cache *textconv_cache;
+ 	int textconv_want_cache;
++	const char *process;
++	char *process_owned;
+ };
+ enum userdiff_driver_type {
+ 	USERDIFF_DRIVER_TYPE_BUILTIN = 1<<0,
 -- 
 gitgitgadget
 
