@@ -1,60 +1,123 @@
-Received: from outbound.qs.icloud.com (qs-2007f-snip4-11.eps.apple.com [57.103.84.191])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91692BB13
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 20:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.84.191
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A670371867
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 20:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785096093; cv=none; b=RgR4Y+Nt1lJQPLCdI2HUD5n6XXUnMhI/b/CWkSu91lkv8ObOU1Bl1NY0ApaJOEV8L9u4TrVhF5u4w5DLdGWe8r/eDVY2X1a+vgxOLrTCENUIR0i185rk/juosmjpHu6zYsWk3AdvwACjPnbfskqpGujadzinF64+NVqmNCK35+I=
+	t=1785096158; cv=none; b=WZl1UveTumgd55IMolKTmq0/86IBJiSxf35T5Q1zg7eK88O3Enp9eY+9T+7Q2+kL6Y9Or6eE0O+8JIcnwCShVixabyW7z0Er3V1mkQQKKTa0k50nKQMFEGip84flUDMfMf9Z8hikiYcjziMvUjfC4zDVdhxy05ZveopcZ2VuDPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785096093; c=relaxed/simple;
-	bh=UJuYdm0ffiPUJnob5ocgoPUz2FbgSNQQFgt++32SBoI=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=gqHNv147rlL6cR6bg8W3ek+xNH38sxUVB3+u3LHGb3gMbFd+WcWzuh26bgPEpuR5gPAFCnyHNhxkkToAxvLqkuIDnAgOm5x4OVEOvh4BC9xuJEcnlsw39oXYKTlxfMfp0oujw1dypSVoKJE5xs5fZPgkXqzXDZszRmalvqZcpXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=l5RDnmEL; arc=none smtp.client-ip=57.103.84.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1785096158; c=relaxed/simple;
+	bh=UmNSSrmFtoiDZpdVH6bkWLgL3f3p7F22sQwqg1gIPXk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bexzX8EZuO6jszHRXlycUvg5L4IGK0niKODyddryPpXO+bUheQdzSe2t+cud4JrphlxH15iuuhfOI7bEXVTT4MvioQo9518JZd6wrbwHSvfUDl722Sx1mUR79j/Tt/UYn5IHWf9dx+A3kPtw0NEvGgeQlPeFQ851yXlumkVSW3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gatskyOM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XDDTH5e6; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="l5RDnmEL"
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPS id 787B81800687
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 20:01:29 +0000 (UTC)
-X-ICL-RepId: 019fa004-af42-719e-8a6c-8cf239140f6a
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQBBHV4PRQBCAFYBWARLVxQEEUEIUx1fMFAbXwJCDxwTVhUTC1NWWxNVF0YJGQhdHRkKUFAGS1oVVRcOAkIfUB9MFldDRhgcGVoUXBhTRVEfVFhDGUVWaUELTx1dGVscQmRYVwkKAlEcVg1XQ1QEX1BUEVdQC14ASAE5BSwBRnMyCkEeWQZecV14SQovGi5xNnpMCyx0WQQ2DDhaDlsERxQXG1wACUtGCUkdDgRUB10FXQ==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1785096091; x=1787688091; bh=UJuYdm0ffiPUJnob5ocgoPUz2FbgSNQQFgt++32SBoI=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=l5RDnmEL30hQtAvWhqDliydmDe3Unmqhc7C18Xq4PlgZQGg2hNQvN926R3ry1GJvSKTOvHyslzElPE1hp/MFpPl5icEn47yyLkAVy/ynIDdcOzoAO8x1NpX53+4qBNmTub2DcLP7SaWo9H+lRdQjcEta0p/Y4tkNsFDREzYOYnOCELVsJuq/whZG6aA/qQho87/m+9WyKV5pKNrBHud0/SYGt99QfN6XT0p7hQe8qNY4mlAqWMv2Fbg6sdPvll8dZ86OH+cBtZp37M5/qWoJUZ0AmeG+K2GtsbWewKDAmtliCvRp4WyLOn+UqwUPU5g09ggYp01E7RybhEHWxvMzxg==
-Received: from smtpclient.apple (unknown [17.57.155.37])
-	by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPSA id 8D78418006AD
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 20:01:19 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: DANIEL CATONI <iredvm@icloud.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gatskyOM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XDDTH5e6"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ACD3914004A3;
+	Sun, 26 Jul 2026 16:02:34 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sun, 26 Jul 2026 16:02:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785096154; x=1785182554; bh=JyB25d4l5j
+	UqrGvGJxGHT2Aff81rcD4UdJotZyIgOnQ=; b=gatskyOMlynYFizAbNrJGF7Q1S
+	6xSRMhu9j76klWIe/cc0AY3hQ8FRnRALU3HxAZX/ZfWkw0rdQor+10WdzoHZtuow
+	Os0YtV7L0W6PGd+11mS83683dTUDsvfSDWourUfm5uR4QG6o9Wz4pa5JmdrwZ+mq
+	C6Fnuy8c82qrWxw5EWPkGSsbT2BO/3klMktpIG4LBt+ZYeleQSC5qYsbRKhD+HfU
+	+u93NU1sZWEEEOpHrK1YUpnR5HF3Iv/oMc5ryazYQ3lZIMD1wQgbduD0EuCF2uiL
+	UZ56CuWWubDDEnmEpDs1FmifigMWG1xSkUtIuh+HGFp6nsLsthD1unkGSmxw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785096154; x=1785182554; bh=JyB25d4l5jUqrGvGJxGHT2Aff81rcD4UdJo
+	tZyIgOnQ=; b=XDDTH5e6kRC1xDdM8SI8HMcDPeiTJ9eWCQkQacU/ZCuQc+sCMcR
+	Bhy5DXr4oI/uan8Fe+73vhShu6o3ES7lU+Z9PnSTVmda2g3Mbvuvy9Nfb1ocs5yq
+	E5e25lPhWDsGP+YA5jttZojyDqf2Ez1NBHObUwDyrE4ZBZKE4qEt59jloezQpaMh
+	lJXEPG86oF/0fm06HZEOZtJWOQSy7btxvjv/uHNorsACeAI8Vm5Xh8LInJFyHn8d
+	8VuS4TjUgtyy2lhxvoH8wDnSTWB0Dedwsx0tzH+nmK3BBXgFJfY/oOE4LvJq7AVO
+	59Czx8DCaoGewXNSg2dGOKDBWn82Pa6Gf+A==
+X-ME-Sender: <xms:2mdmaiBLXXXdkpR-bP4mt7ZM1Z3s1JxNa3K8WhkIi9LyM1GHLKj0eg>
+    <xme:2mdmaj-0iX2ZOwk0R96V-ih66jzm7wB3tNdz2bfzub2aUnEfdqWmEcB6643KSdvUJ
+    hOBJmSsebTEGZJT-CZLAr4Z0BdLrtOKUJGhw6DOUwYbxcc2kSg>
+X-ME-Received: <xmr:2mdmai9hJCxLV7wqMIv4d8zaXVA0fIJknbCUWu3Fyv2sGgBWYtO_wFO7k0lbLhfcF6VprOWh0VCIWs-Y2zhHG0PiUytimYLthg>
+X-ME-Proxy-Cause: dmFkZTELJtrYKMc0M9YCo64EdViszthDo2xpW2keVRllPsZHmktbC/Ty9YUBdPLifUXnKp
+    CLmPAmb25vY8g6NmaYovEp+58A3PDm9CbySOEa00W/FFYFcMSW2HR0VsNXzVIUtV5T0JiX
+    /vUTZI1j1qGIPe6Je1FETtkuir255YJZ4nGtQRDSYTLONdQ3/PKCKlHUuBZ3JY6/LXJjCQ
+    JslHt4BghzD/ILwYD7cgDAmEowKp0f867OZIrPtrjUWEe7fcvBivMQd08/qwYSmn11Sqwk
+    +H94G3a+Mi56hatHfpZCpiWmUaW0Y14HZ3JvgKGW6CWfavk9rd52rbsyL0xScpZh36xMSz
+    Se453sXkEdozhbVFrbMaGg47F7yoHPYKjK6SocnJ4Hc4FeoutO99SDNLIawBWdt54xwuZX
+    e/WwemZSyTB3YwdTkYkc75NuOkE4nozjQH3XApc9WY4kr3lqwBdnNLbilJySzOP+VVT3aJ
+    MJAJPYdHn24JUm8947YJ7QxPm2xdwvlRpEx3h/Qdj0oyOH21Vip1txnQNa1CEX772L1zov
+    aLCWz2yjcB4Kw8bTtlBF5lqRVBQD13LpCwVBH1zWG0wNJ+gZpAxZHO/tNY/DDvU0jPcuNU
+    J6cFcQi32COAvcmWA7aI4fK3RbcZZ4Rt2vWOYIvKGrormDa3IPxFak8Z48Yw
+X-ME-Proxy: <xmx:2mdmaqce7LzV68uy4p-35Z_oUHbVPolBn6j1x7WFD7WbDN7VCwkEGA>
+    <xmx:2mdmarGSaBL-hWG9PjKb489mICh_y_1QulaFN6lGyLe0bNNz2stxWw>
+    <xmx:2mdmaof8Do55yON4IOgtsTNoZl7mv-z3C2VDUiXq4vk04zMuMePKYw>
+    <xmx:2mdmalHZiT-XvoZgBA5sMEVsu0-x6nE9kelQ4Ym_wj1Llajp99nOeg>
+    <xmx:2mdmausY7fXI_OJo2dIInfnRnALqBeAVouj51hVQ_ZIFVkYys0Nw9XRx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 26 Jul 2026 16:02:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/2] diff-lib relative-path cleanups
+In-Reply-To: <20260726084550.GC2366012@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 26 Jul 2026 04:45:50 -0400")
+References: <20260715060523.GA517940@coredump.intra.peff.net>
+	<xmqqjyqwp9jh.fsf@gitster.g>
+	<20260726084550.GC2366012@coredump.intra.peff.net>
+Date: Sun, 26 Jul 2026 13:02:32 -0700
+Message-ID: <xmqqjyqhv7s7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Sun, 26 Jul 2026 16:01:07 -0400
-Subject: Hello my friend 
-Message-Id: <5288A6A6-AB39-415C-A19B-ECFC48AC26F5@icloud.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (23F84)
-X-Authority-Info-Out: v=2.4 cv=ZfEQ98VA c=1 sm=1 tr=0 ts=6a666799
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
- a=x7bEGLp0ZPQA:10 a=5owJUTMDJoYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=r8itkdL81-e9g45S_QUA:9 a=QEXdDO2ut3YA:10 a=P4FZZRP6rPu2-ETPHK1R:22
- a=ejlqsxI8fuF1w8N6ZzsM:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI2MDIwMyBTYWx0ZWRfX+ZKhem4cGpcv
- Uji1Hq9ag9f94xjnxP0ztarA6XzSYy54X5zDmOb5q5puhgB45T0zLHbR5gtgoIm9klpJ4Vyl3k7
- uzSazcPPuwgs8wfDWtXmW/qZrrNP3pWnWB2tITxFe1mg/Q5Wo0HUmWj1+mi4WN2AXMCLn+lVUkl
- 0Kz1EyJbc0mU5FUkyHIhIrnNn7wPIW91aVmDgzf/Ek6OtIBY9wnJGuiCJ3rzEAJna5cqw5YzAnC
- 5TADUHuij7PHerN15xalF2XQomrJpuZruj5JSw61f/lE+3NbBEgII5CP0BjkFNVig35wc7gFlOi
- TVpAq9BSfQkmk+h0qYO4xdB1NC2e2ndW0F6r3/GKzRPliawBuhE6Fli7QFegks=
-X-Proofpoint-GUID: 2l_bIF0cT4m_ED1TgB6nLiG8etI1V_rZ
-X-Proofpoint-ORIG-GUID: 2l_bIF0cT4m_ED1TgB6nLiG8etI1V_rZ
+MIME-Version: 1.0
+Content-Type: text/plain
 
-I=E2=80=99m a fellow code user and I=E2=80=99m getting started on this side o=
-f git just wondering what=E2=80=99s the best advice you can give me starting=
- off with this kind of code repository and what=E2=80=99s issue that git mig=
-ht having or lacking in or around the the code git itself
-Sent from my iPhone=
+Jeff King <peff@peff.net> writes:
+
+> On Wed, Jul 15, 2026 at 08:17:06AM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > A diff using --relative ignores entries outside the current directory.
+>> > This results in a segfault when we try to process an unmerged entry
+>> > that's outside of our prefix, since we end up with a NULL diff_filepair
+>> > and use it without checking that it's valid.
+>> > ...
+>> > +cc Junio, as you may have some wisdom on that further exploration.
+>> 
+>> Will take a look at the history myself, but I would probably not
+>> have much wisdom on a change from 2011.  I often do not even
+>> remember what I ate for breakfast yesterday ;-).
+>
+> I have the same problem. ;)
+>
+> Looks like you reviewed the patch in question already. Here's what I
+> uncovered by digging into the history. I don't think it should have any
+> functional difference (and even the "avoid unnecessary work" in patch 2
+> is probably not very much work in practice), but it might be worth
+> doing.
+>
+> This would go on top (even though patch 2 makes the original fix here
+> unnecessary, I'd rather have both in place).
+>
+>   [1/2]: diff-lib: drop stale comment about advancing o->pos
+>   [2/2]: diff-lib: skip paths outside prefix in oneway_diff()
+
+Both patches look good to me.  Let's combine them with the original
+fix into a three-patch series and merge them into 'next'.
+
+Thanks.
