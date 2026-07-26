@@ -1,148 +1,105 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5841353A8A
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 08:33:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B1D37E2E7
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 08:37:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785054794; cv=none; b=k/7nravEuclNxxCppkjTEJgIt+uH/c8nujFJGGKoI/KZ+89p1/jL+UE5Q2op+Z6ZhzQP9geZyCCtoZGq4qI8jo7YbkKfdZdpRHxFdNI3VXwRZfMLHSTHueuOKMI3/9s1zqGpx7ZaXk0ia8u9mNViZw+yUNxSC0z86c19a7iICbs=
+	t=1785055052; cv=none; b=kDHMNTTqOfNhPDA2Pb2hApxHhQWfz3DhGHuRj4K/bbDdGNor87fXW/UIQxv3o4tmiwLn40dmNq/9uQaI69hn/vxBolzlK/toLrF5GOQhAX+mm/YqAUwQOnd06+4Nwqo4yhSkXfvprEvV5oCtoaGLEPJ0XAMgfEhNzCJUeEWf6zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785054794; c=relaxed/simple;
-	bh=qT70r6hsf7WuPc3xZ1T635jDGrOtbUvRT4zycRB9pQs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CQByrr4+739RpyVzVQK80GTQTfPYwrsrBZbbgIfeJnykSWQleihSSGLJCReCVpW+PyjEJktuSNt2WJavZZWbsFZr8MlNskVVTWK9jYWaS2ExIYjYAlqe8b3BiG1R0ygw2/msMxmqEYq3WUMkjPxiooIuf8J7f1fsUMb+hetio7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=KFvs1ZiQ; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1785055052; c=relaxed/simple;
+	bh=7eh6hhdS7R+K6YisxgkvorxzCClmcj/oU5m+sdxUzXw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RZ2Vq0g9XCbZ6nVfzCJw6KVmqmkccM5iV3HXAfunljQl7Mk4RVtDbqay/MUf63766s8XeVh2MGc9Fi5S79zPvqGHkX1c6Gt7QIdK7tp+PoOU3HIL7rLzJ8bn1cXqs31eJIgvJI4jf1HbfDV+gZheyBPsfRnYoyk50Blrd8/H0vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MQcmlB0D; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="KFvs1ZiQ"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2cf49dc28ccso3319595ad.0
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 01:33:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1785054792; x=1785659592; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qhXGBzAMioG3PkeJ3hZnc/fVeepcNS4CYSG4hY+PVxc=;
-        b=KFvs1ZiQx/zEaqAn5YgbALXSVMB/MM+cw9S5tHlN0PwvQyTp8MbJ+SPj8Ws/5dFNn9
-         eMWp1Ipv4UPmhjUTvbRTw/HlPExpOvK9jawXYtnzYhMz0fsJBIQKSKfWkIp8zexo0oT9
-         3yGChvB+DfgrbwudmrE9sb0JGlmVF/UEfSlEI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785054792; x=1785659592;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=qhXGBzAMioG3PkeJ3hZnc/fVeepcNS4CYSG4hY+PVxc=;
-        b=K6Q6PA68NMBg00+lS72FhFPTZY/iy5+miUTdkDyRUfAOofUbHFyxjL5D1seuoaGmKX
-         2vvwupua9t55/QcqwBtGN9Fxr2WKYFlx5JfHHVv1XMZDUW1QcPVUIDhBJg7UdVo/xJzZ
-         3KoyU0tcxmlJLlLUmn3g0Flr6buqiG0BjumzabuFTQOZV9YhYKthkOndV6OknjLeeYYY
-         X6z7FOX5JVYKzoD029Ndco5+Z+WAwJMuTwi4hn1bJlgsBcRlYFNJXyV1o9VDvtWmUFhv
-         AIHpV6nI4ZhLAmaQtcC2OvAsjxhp+SlFtw10y7HYlfqV/fYI9RBd4RKEnvZBOgfGOXKI
-         laVw==
-X-Gm-Message-State: AOJu0YzlMUo66QYCW/KL4UKpRA3qZmwlXpA3OikT3JGAr4QvMgjMNPu+
-	UAxfqGAL9/c40qrDgsZXZn1j4zmObsPuX6H82vcsj678L2U0EhryoCB2m00ZkuxgC8+5Pgxu+sp
-	S3iwTtoQ=
-X-Gm-Gg: AR+sD12VHfKGb0ejnHQMCKC9/Z4/QFkvN9VPkPRtRwbGBF1wHCo1vkBvjx72yHLa/7b
-	CLa7/yDkiSuA/0iXV0TKUQDVBmVqKBW5VfpC1sQJfkaTBGCo5I5yPDzIfoYnnm8ck4YMZtGnguV
-	rD7qXuTwZmT8aZDAEsENeWbAhxpE6E57VcUJhDBadMwBSBHOI7lYKsRcVrw43v6iY2uyFWq2noH
-	l6Y7UqjYJ5APcw5QbuGPnTya9I3OP7alROqGNOREYpNr+hhnQnS9HBRa5UT2JvT2lk404EZtzz3
-	7I4a88Eq99GLrrEPzknTPK5ku4s08yeir0eUAyDWZgyZQVv1bUEUTOBgxgCXTO97MJK6d86X0ID
-	2GJ+vLy02r27FMDvjlarsQikavnI9aWCGqrl/rSM5Um3ny8Pu1MLYbhE2aVejBaLIoJ6MxEYXz3
-	18vrQaYC/YI6W6OL2xPFvJ8xdPGQt+244Rfdnxoes87r0VUjk7ROhlRqhh44pDdBetx5SN6Bjum
-	SD4dnPdUMjJ8g==
-X-Received: by 2002:a17:90b:5870:b0:38e:7069:7117 with SMTP id 98e67ed59e1d1-38f2925ec3fmr3199399a91.0.1785054791926;
-        Sun, 26 Jul 2026 01:33:11 -0700 (PDT)
-Received: from com-76773.corp.openai.org ([2601:646:300:69b0:50d4:8855:c7f5:b68])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc413766sm19240063eec.8.2026.07.26.01.33.11
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 26 Jul 2026 01:33:11 -0700 (PDT)
-From: Ted Nyman <tnyman@openai.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MQcmlB0D"
+Received: (qmail 56914 invoked by uid 106); 26 Jul 2026 08:37:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=7eh6hhdS7R+K6YisxgkvorxzCClmcj/oU5m+sdxUzXw=; b=MQcmlB0DPhPjUNK32LL3cfglixDP+DvC0u2zlMITCP12l3mhBB9xMetDuaGuEyWMCN+AcjrfYBs0bMgq6WO/BnywjIcuebgMWfkPuYsZywEq/JNrL56ibL4xtSSdv+r5Oxq48ypp/V8Ajvg+N9F496pxtV0yvgiE52Zm4tl9U2hoW24vdZeOFc8rnYdykCIUTHaTJZkOSUuU8PuvNy+pKBLTuq9KTHU3IuMyFk8mwVpwgJ+ZF0GG8De8lS+/yryPSWPXoln3aP/RZ4L/DfrDuRJPaGRUU4UCSavNVTOBnYNrV57oKP99pTS3d5o3TkDQamFdgp2CtS7Lh6bkZJ9IwQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 26 Jul 2026 08:37:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 57842 invoked by uid 111); 26 Jul 2026 08:37:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 26 Jul 2026 04:37:33 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 26 Jul 2026 04:37:27 -0400
+From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	me@ttaylorr.com
-Subject: [PATCH] fetch-pack: trace packfile URI downloads
-Date: Sun, 26 Jul 2026 01:33:11 -0700
-Message-ID: <20260726083310.16180-2-tnyman@openai.com>
-X-Mailer: git-send-email 2.55.0.378.g9a0c4701dc.dirty
+Cc: tnyman@openai.com, Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: [PATCH 1/2] bloom: silence CHECK_ASSERTION_SIDE_EFFECTS false
+ positive
+Message-ID: <20260726083727.GA3529069@coredump.intra.peff.net>
+References: <20260726083254.GA3528497@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260726083254.GA3528497@coredump.intra.peff.net>
 
-When a protocol v2 fetch includes packfile URIs, the client downloads
-each advertised pack in a separate http-fetch process. Existing Trace2
-regions cover negotiation, but not the time spent downloading these
-packs or the number of advertised URIs.
+Using gcc 15, compiling with CHECK_ASSERTION_SIDE_EFFECTS=1 causes a
+complaint about this line in bloom.c having a side effect:
 
-Add a Trace2 region around the packfile URI download loop and record the
-number of URIs. This makes the cost of downloading external packs
-visible without emitting an event for each pack.
+	assert(version == 1 || version == 2);
 
-Extend the existing packfile URI test to verify the region and count.
+I think this is pretty clearly a false positive, as those comparisons
+should not have side effects. The side-effect checker uses a magic
+definition of assert() that relies on the compiler's optimizer to drop a
+reference to an otherwise unused variable. And for whatever reason, gcc
+chooses not to do so here under -O2 (side note: if you have -O0 in your
+CFLAGS, that naturally creates many more false positives!).
 
-Signed-off-by: Ted Nyman <tnyman@openai.com>
+This code has been around for a while, but nobody seems to have noticed
+because we use an older version of the compiler in our static-analysis
+ci job, and it does not complain. Presumably very few people run this
+check locally on their more modern compilers.
+
+Let's silence the false positive to avoid confusion for anyone running
+locally, and to make it possible to upgrade the image we use for our
+static-analysis job.
+
+We could just switch to our custom ASSERT() here, but I think we can
+improve the code by integrating the assertion into the if/else cascade.
+That avoids repeating the logic about which versions are acceptable.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- fetch-pack.c           | 12 ++++++++++++
- t/t5702-protocol-v2.sh |  7 ++++++-
- 2 files changed, 18 insertions(+), 1 deletion(-)
+Building with clang or with "gcc -flto" seems to also silence the false
+positive. We might consider using those for the static-analysis job.
+But since in this instance we can both silence it and (IMHO) make the
+code nicer to read, I think it's reasonable to do so. We can leave
+tinkering with the assert() magic as a separate topic for anyone
+interested.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 29c41132ee..701a23f808 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1886,6 +1886,13 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		}
- 	}
- 
-+	if (packfile_uris.nr) {
-+		trace2_region_enter("fetch-pack", "packfile-uris",
-+				    the_repository);
-+		trace2_data_intmax("fetch-pack", the_repository,
-+				   "packfile-uris/count", packfile_uris.nr);
-+	}
-+
- 	for (i = 0; i < packfile_uris.nr; i++) {
- 		int j;
- 		struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -1936,6 +1943,11 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 						 repo_get_object_directory(the_repository),
- 						 packname));
- 	}
-+
-+	if (packfile_uris.nr)
-+		trace2_region_leave("fetch-pack", "packfile-uris",
-+				    the_repository);
-+
- 	string_list_clear(&packfile_uris, 0);
- 	strvec_clear(&index_pack_args);
- 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 74a2b7730b..537deff7b3 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1223,7 +1223,7 @@ configure_exclusion () {
- 
- test_expect_success 'part of packfile response provided as URI' '
- 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
--	rm -rf "$P" http_child log &&
-+	rm -rf "$P" http_child log trace2 &&
- 
- 	git init "$P" &&
- 	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-@@ -1238,10 +1238,15 @@ test_expect_success 'part of packfile response provided as URI' '
- 	configure_exclusion "$P" other-blob >h2 &&
- 
- 	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	GIT_TRACE2_EVENT="$(pwd)/trace2" \
- 	git -c protocol.version=2 \
- 		-c fetch.uriprotocols=http,https \
- 		clone "$HTTPD_URL/smart/http_parent" http_child &&
- 
-+	test_grep \"event\":\"region_enter\".*\"label\":\"packfile-uris\" trace2 &&
-+	test_grep \"key\":\"packfile-uris/count\",\"value\":\"2\" trace2 &&
-+	test_grep \"event\":\"region_leave\".*\"label\":\"packfile-uris\" trace2 &&
-+
- 	# Ensure that my-blob and other-blob are in separate packfiles.
- 	for idx in http_child/.git/objects/pack/*.idx
- 	do
+ bloom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/bloom.c b/bloom.c
+index c98d1672ad..caf22f9831 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -610,10 +610,10 @@ int bloom_filter_contains_vec(const struct bloom_filter *filter,
+ uint32_t test_bloom_murmur3_seeded(uint32_t seed, const char *data, size_t len,
+ 				   int version)
+ {
+-	assert(version == 1 || version == 2);
+-
+ 	if (version == 2)
+ 		return murmur3_seeded_v2(seed, data, len);
+-	else
++	else if (version == 1)
+ 		return murmur3_seeded_v1(seed, data, len);
++	else
++		BUG("unexpected bloom version: %d", version);
+ }
+-- 
+2.55.0.742.gf2bff09aa6
+
