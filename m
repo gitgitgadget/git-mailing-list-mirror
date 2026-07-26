@@ -1,206 +1,161 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83595370D6D
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 06:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785048296; cv=none; b=o9arnX3U1w6JovL3b77gGPUnRk4sChKXAIg5NBSz5v+h6oygypsXFMJ5N5ymyRnwd95GvHcvU91efOerFPyzo7rrzAvFAATUfUes+KF+tC6JPsb8H4cxSFMWq/wMJqLIR/KpYTJi9eme0jqJqTA+QkTwM9jpqM8f6ccGf2kMowU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785048296; c=relaxed/simple;
-	bh=uGWD67MW6wYScfwvTn5vnH3dAuOQ6DRsntabHBdk/NA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLcvVZp24kkRcNYSDNuW1rM/6DJhVnhhz+PmAhmtHF2oi7eGlpQRw97D0eIft0KR07cCimarWOLCBTOCqK9OymYItm0R2qwsnMo43UiYOuFQL/PXMuR2dc5KyqB026wu9CFv5hTnMZaZqnvtbjiMB9iEoYfPZ3RdXUhdj3qzylc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=BHfJsCXM; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8B5374E62
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 06:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785049145; cv=pass; b=twwM7hOVs0hq0AlUTQKKTLEzTKaFHCh0lssyqJR2lahbAIWIrmlSFnqNy4zvW7SASO0kMbhYQOmEcgYhFrJ3K0OOoAHe1HBl6ZR5dKIcVwkR7+LENdYM13YqsGwMV71Po4OSZFweZ6LvSOcXJJliHdiFsDF/DINWJ3dKroxb6cs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785049145; c=relaxed/simple;
+	bh=stabF8e2OCKt2PuyrjRj+ioN6JoU2cGlaWZ83pTQZZY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BCGIrOWGqX+O2k8jkysjNrVCtJyrfpI3aP1BmxkYjud3shxnysG6Hrf27Iy8bNTJO7UA6LdxNcDMvy+SxKFS5zuhqrnMe5+60Cab6gv2cwGZYBiZnj5rcFgdH5aJPJwPTxVfqlsZK6Pd5MsIT0xSfgNNoY7xFhs6sRnAhcdSmOk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rrza+HBC; arc=pass smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="BHfJsCXM"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ccdce28edeso2392275ad.0
-        for <git@vger.kernel.org>; Sat, 25 Jul 2026 23:44:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rrza+HBC"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-495b250b01cso959664b6e.0
+        for <git@vger.kernel.org>; Sat, 25 Jul 2026 23:59:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785049143; cv=none;
+        d=google.com; s=arc-20260327;
+        b=puU+Km0vqTNRMfzYeB+MhrqhTQBYP8igg+TkS/IQaM/70dSIElcJcQNRYrxoRhwvNN
+         eBEzIgYr8I8ofHcuTW+TK0g+mfy1/z+XzPQWRP1lbl7NeJ13YYBuDqCLSVRLOnq1EDhw
+         a6tiE1Bh6i8SH/yMQl7szoN9cBSlW/OedSjN+FD/mCbQiCFFQrLejAEBEAdoPmRy3ILY
+         eeKnfhzwp8T5L2+ObtRkZhnXY8kf2usF8iI6alhjKlaWBqEJ2yRt6+7iayJ9swlHXNY3
+         9CCyYSlMFfqH+TXIVNT7NI0gPXq5IrTpye4NAaeb89b4s6NfeITDA+mgmbOnrzsJRPnH
+         MHtQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=/nU6zyeNAoA1riwbHzcNNtp0u4b2bpyw12dBf9CQVzw=;
+        fh=PJA4JaP/j8vSnwMGgKQUC4fHLIhv2c/ic/GPgVk54GI=;
+        b=A6gaZUoAzQ6GvxfxafAglmc3YBZrMY9A5tH/SABRpn1+w/cmNr1gvZMy84xGpeyPn4
+         SQCuNr/VN9QRZ/sVGGX6FTt54pfC+ZoRvVQMa7MxJf6Jl242a0y8v7+VBlB58m5Wv/GR
+         MW3IU/7uEs5Z93duwor6zTa8ojSlgmsEyVxgQ0vPmLZUpWuk8iZ4bwwr7JPxK6j1tAiQ
+         ZQDEPDh2m/p37vG06RSKZA3Yf01omMS790Jw4g183OL6RMpF+FHCAIjiRVvmwOwDOT0t
+         FsQf5KhzNaVbATyMsTjdtWciLXKDdPFLUNifGdAK4Peq65YycLPoxV+TLOLSnZwX3ak2
+         vMwg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1785048294; x=1785653094; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=4qwRMl6vimJZ8+A5tlbsP6yLxFvWRgz0RRj/KprB4qA=;
-        b=BHfJsCXMhlygnDeKapSQ5m8/iubhrYbzwRJ6Cr9+yqjja07TRxNAxOV/vJt+O2uwRc
-         YUabHKLgqquLg2yMLVSyay8RgvQiR6jKVOc/IrxsbxhwSdmXUZ5rXlwrBtDPSWxfeO4d
-         xnvuA6E9YLIXye3FX0dYwzWtZv3UEZ01NQ+aw=
+        d=gmail.com; s=20251104; t=1785049143; x=1785653943; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=/nU6zyeNAoA1riwbHzcNNtp0u4b2bpyw12dBf9CQVzw=;
+        b=Rrza+HBC3W6MiRN+TsgGCk5YSSvCXOvouNeYON2VYk+yAy5ovXT1QH7uHtzUKJCbmC
+         MJ0A9ujjEn7CyYvk3saO8wvTEhfZXjkYW8wfY2IaUWTRh68sf8U2QDuEzRjyTbLXNw4P
+         YFbA0I3zdikESw571f1GmrH49DUXAmnOu88aibidQK6YE4XMBQhub2q6CN5Pcz71fv6d
+         rQbMG4IScD8KmNbnr0QLYChC8O2SDeojVd97F5Pul6cnKbR6KTNXFNsNtq0b6sv/LNge
+         CLdcRLauyIGwcyj5cEO/ufSBG0lo7lyb3/GYANK7//5wZizVKWmQqOh1RTI1zPAiEm0P
+         sO3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785048294; x=1785653094;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4qwRMl6vimJZ8+A5tlbsP6yLxFvWRgz0RRj/KprB4qA=;
-        b=f3311iOy2//WnHvJ7B627WVjQR68stE0+ed4Flq7OFXAGFxPMG5wEa9ub2Wn2Ek/xC
-         9foylPx+3TAKySdJPTv2EHjGDIq95B+fIk1w/YY9jdwFhfspq7ShyQchgVz4gVn2uqH1
-         nM7dXpa3nnZiEqvPWucOGNu7ZFHNFi9FnKI+M8PR4Zp9BLei/o2q0zfnZ3RAFeA+5eEk
-         1xe28neuglHDn0F+X5Uxcel4cbrg2DUqfsMzVAVDVL0QkKACLSN4aOZN7v10b188hG6f
-         /C/YG4ynKMl/o+8ust4qSr9WdUwpyaAA5tKH1MXWC000MyMs7+LxogRODJAsztZYIk65
-         EhYA==
-X-Gm-Message-State: AOJu0YyKjZFwhmR9geGscTL8/nXnVy4UC8MDRgZBUnBqHDjiwH6ZnTGP
-	BFZ26mERCHzlne8kOZ4RF1R1tMCcTgT+A3OOhlIXJRqB7cmozVOhbsntzoPqh1EuPfkiv9w48jM
-	pPP5SkF4=
-X-Gm-Gg: AR+sD12dRpsMw2hhqqVwv0QLOolpm3ibUt4qyBx4W2/zDLRQnzK+xnMeV8L1MX1XfYb
-	4KasNyYoV5nPqBgsfovu5H47cU63bN/yfljb1aq4wFX/xyJJAvhglQrFpk8iAKP8Jdq1FLAMsEX
-	duDSrZDsDZkBXYK1ZtY1gw7e1CTO7XydVejqV2CMhnTKiOdoYdbhs10CVlv0eiwl18ug1/jgIyH
-	hREtwexqy1OgSkewrmUIZNQZpCi+HMbm8HUxUF8HAHVQGV2NisfQ73Y4r/lWmhfSx1EyYm+y/dx
-	4KHk/v+7nNbZ8+z7nyDhsfhNJxUrg0IoEAX5fmoCbpW0vJrDioLjBvkEjPBIlsCm1hSqmyIfxOp
-	pOR9IGwQgoKAZp3D6zdmhUNH7uub03Ec03XE2G3VIpU1oQKGigOYX/HVCx5A1zaxDlCwHm/+JKr
-	1RBrbUyZyrCzIapV7nYyJBkf9fpsG4WbKhoNX4Ak+MJndXzOr4YQ8qDoMsubgGuvaxJBoyr0PK5
-	Wjkr6AO6YNKdDk=
-X-Received: by 2002:a17:903:26c4:b0:2c9:b96a:2855 with SMTP id d9443c01a7336-2cfde55d876mr59224285ad.0.1785048293773;
-        Sat, 25 Jul 2026 23:44:53 -0700 (PDT)
-Received: from com-76773.corp.openai.org ([2601:646:300:69b0:f912:1358:fd39:7404])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc549b11sm18622982eec.18.2026.07.25.23.44.52
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 25 Jul 2026 23:44:53 -0700 (PDT)
-From: Ted Nyman <tnyman@openai.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	me@ttaylorr.com,
-	peff@peff.net,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	sandals@crustytoothpaste.net,
-	avarab@gmail.com
-Subject: [PATCH v5 3/3] fetch-pack: accept "pack" output for packfile URIs
-Date: Sat, 25 Jul 2026 23:44:48 -0700
-Message-ID: <fee6f292cba09a8190cc78595d0aa80e31243a8d.1785047139.git.tnyman@openai.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <cover.1785047139.git.tnyman@openai.com>
-References: <cover.1784874850.git.tnyman@openai.com> <cover.1785047139.git.tnyman@openai.com>
+        d=1e100.net; s=20251104; t=1785049143; x=1785653943;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/nU6zyeNAoA1riwbHzcNNtp0u4b2bpyw12dBf9CQVzw=;
+        b=c6L1hvbwYf+/DhmGeFRc3UaYUnpMhPShWxpVhiUSaPPniPKyHjuTRSQt/U5xph2hKC
+         VNDuar7zPItRlaTu14+4AirsRdfEYOk031UIOuGZx4/zkbTbOEgUx9iNV6+LY5h7LVNs
+         dhUpkZc5p/qgU9P5AD4aqjKcqAvEKL15ThSy8IcnBLLYIScRcAtlrs+L0JF01IRQNZxt
+         R8gsjMqIxvwmMxFKG6xyYs+tOYoZsQnguwb2OgTuOmOGB6DwZOdtTwWMrljHFlEhbR09
+         OuqXHA9BUUzNPa23PiGRS4Sa9JGydGFwfaNNrrOAQ5G2gFGJgfZ9L84+DQ0K3s8aV4Mo
+         s2bQ==
+X-Gm-Message-State: AOJu0Yz2ZX3bCGBRSfau2VPTgOYZVewcfan/yDCsJfoWuGJ4/KZJ/dvi
+	0L3p5qti/gz9Q3P8A/uZPVERfQqg5O+mVSoEbmYXJS9CgLqb6OO+Fc46TrVDnkp+RD/6gc5gViA
+	tsvwUneaflJQ50XE0WTWPPwOlavBi5fo=
+X-Gm-Gg: AR+sD12wBbI6IFMvVemK0s270Yo+kgR8dDJGZnKdDZnG2hkdMcmnlO0MLiMCdU+2DCF
+	8/z1dIA038BGidp2gypzGgx3+9eyYwaO1WnUkVIFuqYaOrF79sSdbRuBpaQmrrGMnd8EyKRPlsg
+	QThFAp+riZfNHC2fqImDpETrJ9MT5LLcBLqgde5V3keUUMAmHiFAKndhSBT+EcJBXAfpmTteok/
+	zus0RNmMF4fk91xeru8OsvPbq6oppJbAUzegUPIXK5SY3g2d4ft1WA4AF4ufwM/GpRjNSan44FX
+	/ctIyG8odfCuNp28pgCWEbJYVkDDakzJ1y31GK/C0ZSlKyclgASxx9xqDu9fODeEgl+fmEDuA/d
+	1N6+o
+X-Received: by 2002:a05:6808:1481:b0:497:dedc:605c with SMTP id
+ 5614622812f47-4ab69f57143mr4797938b6e.7.1785049143249; Sat, 25 Jul 2026
+ 23:59:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
+ <pull.2149.v6.git.1783776466.gitgitgadget@gmail.com> <5ef4f08105bc5485444e824cec39e684692a9348.1783776466.git.gitgitgadget@gmail.com>
+In-Reply-To: <5ef4f08105bc5485444e824cec39e684692a9348.1783776466.git.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Sat, 25 Jul 2026 23:58:52 -0700
+X-Gm-Features: AUfX_myFpGzd1mRlI2-BiTKDnKpyD45IS6d8p0DpzQDDD_Dxw6JsMPJC31J2hjA
+Message-ID: <CABPp-BGvoZArZ65ge_2qabb9GQDbtWG=pP=g4bZDmAvX=yF=xA@mail.gmail.com>
+Subject: Re: [PATCH v6 01/10] Documentation/technical: add paint-down-to-common
+ doc
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
+	Kristofer Karlsson <krka@spotify.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When index-pack finds an existing keep file it reports pack rather than
-keep. Accept either result from http-fetch, and only register a keep
-lockfile when this fetch created it.
+On Sat, Jul 11, 2026 at 6:27=E2=80=AFAM Kristofer Karlsson via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Kristofer Karlsson <krka@spotify.com>
+>
+> Add a technical document describing the paint_down_to_common()
+> algorithm used for merge-base computation, covering the paint
+> walk, generation number regions, and termination conditions.
 
-Read the pack/keep prefix and hash without consuming any following fsck
-output, validate the reported pack hash against the advertised hash, and
-exercise a packfile URI fetch with a pre-existing keep file.
+Thanks, this is really nice.
 
-Signed-off-by: Ted Nyman <tnyman@openai.com>
----
- fetch-pack.c           | 33 ++++++++++++++++++---------------
- t/t5702-protocol-v2.sh | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 15 deletions(-)
+> +In the finite region, generation ordering guarantees topological
+> +traversal: children are always visited before their parents. This
+> +means that paint on already-visited commits is final -- no future
+> +traversal step can add paint to them.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 29c41132ee..e9f24fbd63 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1887,9 +1887,10 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 	}
- 
- 	for (i = 0; i < packfile_uris.nr; i++) {
-+		bool created_keep;
- 		int j;
- 		struct child_process cmd = CHILD_PROCESS_INIT;
--		char packname[GIT_MAX_HEXSZ + 1];
-+		char packhash[GIT_MAX_HEXSZ + 1];
- 		const char *uri = packfile_uris.items[i].string +
- 			the_hash_algo->hexsz + 1;
- 
-@@ -1907,16 +1908,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		if (start_command(&cmd))
- 			die("fetch-pack: unable to spawn http-fetch");
- 
--		if (read_in_full(cmd.out, packname, 5) < 0 ||
--		    memcmp(packname, "keep\t", 5))
--			die("fetch-pack: expected keep then TAB at start of http-fetch output");
-+		if (read_in_full(cmd.out, packhash, 5) != 5 ||
-+		    (memcmp(packhash, "keep\t", 5) &&
-+		     memcmp(packhash, "pack\t", 5)))
-+			die("fetch-pack: expected pack or keep then TAB at start of http-fetch output");
-+		created_keep = !memcmp(packhash, "keep\t", 5);
- 
--		if (read_in_full(cmd.out, packname,
--				 the_hash_algo->hexsz + 1) < 0 ||
--		    packname[the_hash_algo->hexsz] != '\n')
--			die("fetch-pack: expected hash then LF at end of http-fetch output");
--
--		packname[the_hash_algo->hexsz] = '\0';
-+		if (read_in_full(cmd.out, packhash,
-+				 the_hash_algo->hexsz + 1) != the_hash_algo->hexsz + 1 ||
-+		    packhash[the_hash_algo->hexsz] != '\n')
-+			die("fetch-pack: expected hash then LF in http-fetch output");
-+		packhash[the_hash_algo->hexsz] = '\0';
- 
- 		parse_gitmodules_oids(cmd.out, &fsck_options.gitmodules_found);
- 
-@@ -1925,16 +1927,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		if (finish_command(&cmd))
- 			die("fetch-pack: unable to finish http-fetch");
- 
--		if (memcmp(packfile_uris.items[i].string, packname,
-+		if (memcmp(packfile_uris.items[i].string, packhash,
- 			   the_hash_algo->hexsz))
- 			die("fetch-pack: pack downloaded from %s does not match expected hash %.*s",
- 			    uri, (int) the_hash_algo->hexsz,
- 			    packfile_uris.items[i].string);
- 
--		string_list_append_nodup(pack_lockfiles,
--					 xstrfmt("%s/pack/pack-%s.keep",
--						 repo_get_object_directory(the_repository),
--						 packname));
-+		if (created_keep)
-+			string_list_append_nodup(pack_lockfiles,
-+						 xstrfmt("%s/pack/pack-%s.keep",
-+							 repo_get_object_directory(the_repository),
-+							 packhash));
- 	}
- 	string_list_clear(&packfile_uris, 0);
- 	strvec_clear(&index_pack_args);
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 74a2b7730b..0f05286de8 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1291,6 +1291,37 @@ test_expect_success 'packfile URIs with fetch instead of clone' '
- 		fetch "$HTTPD_URL/smart/http_parent"
- '
- 
-+test_expect_success 'packfile URI preserves an existing keep file' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	rm -rf "$P" http_child keep.expect &&
-+
-+	git init "$P" &&
-+	git -C "$P" config uploadpack.allowsidebandall true &&
-+
-+	echo my-blob >"$P/my-blob" &&
-+	git -C "$P" add my-blob &&
-+	git -C "$P" commit -m x &&
-+	configure_exclusion "$P" my-blob >h &&
-+
-+	git init http_child &&
-+	packhash=$(cat packh) &&
-+	keep="http_child/.git/objects/pack/pack-$packhash.keep" &&
-+	echo pre-existing >"$keep" &&
-+	cp "$keep" keep.expect &&
-+
-+	GIT_TEST_SIDEBAND_ALL=1 \
-+	git -C http_child -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		fetch "$HTTPD_URL/smart/http_parent" &&
-+
-+	test_path_is_file \
-+		"http_child/.git/objects/pack/pack-$packhash.pack" &&
-+	test_path_is_file \
-+		"http_child/.git/objects/pack/pack-$packhash.idx" &&
-+	test_cmp keep.expect "$keep" &&
-+	git -C http_child cat-file -e "$(cat h)"
-+'
-+
- test_expect_success 'fetching with valid packfile URI but invalid hash fails' '
- 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
- 	rm -rf "$P" http_child log &&
--- 
-2.55.0.openai.131.g83a728de1eb6
+This is the critical invariant.
 
+I think there's a small hole here, however.  For a v1 commit-graph,
+generation numbers saturate at GENERATION_NUMBER_V1_MAX; from
+Documentation/technical/commit-graph.adoc:
+
+"""
+We use the macro GENERATION_NUMBER_V1_MAX =3D 0x3FFFFFFF for commits whose
+topological levels (generation number v1) are computed to be at least
+this value. We limit at this value since it is the largest value that
+can be stored in the commit-graph file using the 30 bits available
+to topological levels. This presents another case where a commit can
+have generation number equal to that of a parent.
+"""
+
+> +In the INFINITY region, commit-date ordering can violate this: a
+> +parent with a later date can be visited before a child with an earlier
+> +date. Paint flags are therefore NOT final at visit time, and a
+> +commit visited with only one side's paint may later gain the other.
+
+Perhaps we could lump GENERATION_NUMBER_V1_MAX the same as INFINITY
+for this algorithm, since GENERATION_NUMBER_V1_MAX can also violate
+the ordering we want?
+
+> +Generation cutoff
+> +~~~~~~~~~~~~~~~~~
+> +Some callers (notably `remove_redundant()`) supply a `min_generation`
+> +threshold -- the minimum generation of the input commits. No merge
+> +base can have a generation below this threshold, so the walk
+> +terminates as soon as it dequeues such a commit.
+
+?  I'm not sure I'm following the wording here.  Typically a
+merge-base is a common ancestor of the inputs, and ancestors have a
+strictly lower generation than their descendants, and there's no limit
+to how far back we might need to read to find a merge base.
+
+I think what makes the min_generation cutoff safe is that callers
+passing a nonzero min_generation (remove_redundant() and
+repo_in_merge_bases_many()) don't need those deeper merge bases at
+all: they only need to determine reachability among the input commits,
+all of which sit at or above min_generation.
+
+Is there a risk that with the current wording of this paragraph that
+future callers might be tempted to pass a nonzero min_generation and
+still expect a complete MERGE_BASE_FIND_ALL result?
