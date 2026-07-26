@@ -1,262 +1,369 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CEE3BFE5D
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2451F03DE
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 19:57:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785091907; cv=none; b=eKKFYkMoSYNDiqNU5yfn5WzYxK0uQWYEgQyeSrbNYavWatMcohhDsYidENaK+7fDglX5iJmAaboI2Tbu2Q7p5RYqQZQSeJ90SYwKIz7XK8jkkU+CEW50z+XM7XaPiYeLIvVVnXgzTnu8Izumg9toI4JKO2MlCulU0unABQ9eWro=
+	t=1785095854; cv=none; b=CU2Of43vIiUPF/e0pGETU4tYJmxxHc4RYfrFHKzrylwUJpes6uOHTD4H6lwpmP8cWmLvGs45MA0XrL14Tt890ovKZCEt7oHDszB54991sQQvtScSNDWpvSjUxmyPCHL8eii9YBCYnv7L6CSxazExyBYa0EoguH0MdSgVe3qySQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785091907; c=relaxed/simple;
-	bh=aUvduz7JpVbsR0JZbbwNiFs3GFH6B9z6gyaT0jK85fg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JfIlI88JWIGrEAZgRbBu5ZG/YqqWQS1qWFbjJtSMRqIGeH7/WivtQeGhvqSIA2hgD+ySylvar8P+J+lxwpCnzfy2uXU9IHx+Zc1wp8eARxR5QVRS/C5Q+B9ZW8hV+zzYihSElF+01a//deD0EdTnyBADhloQZgINIlfWlnt4Z/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V6RjGggM; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1785095854; c=relaxed/simple;
+	bh=nNKvhEBTENGrcWy8hX0lk5lU/yx8fnkgiJ2CwUsZRus=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gp4n2fnIRCA0PJaldAgBR37GIi5bMwyGP4U7rcCYxjARBDozTLYFMu1BzyPuytbgPkwpXqYh4o/+6SRxNHxl9gQekPtaeWhL3L0ZdT+Ail5A7La3Od1UqgcbyxIW+bg60K8zkk8g+tw7A0WcoflL8klfvmmKUpU7jZ+jHdLfJGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eVlYhQF6; arc=none smtp.client-ip=209.85.215.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V6RjGggM"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2cf452def93so24116685ad.1
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eVlYhQF6"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c9b373d5af0so1474415a12.2
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 12:57:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785091905; x=1785696705; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=F6juJvzmVgEQKMS259q/zT0jflQDbDOk0p0jv9qxhmU=;
-        b=V6RjGggMe7dcE/Tj0hE3LG+xm3ek0/2ghMVX0uVGWYH0yK0BL8xmixBIQxoPmNxq36
-         cAXiDylZ1+HWDZNA1XOU4qcuUquizZRIsL1i+0V0RkkCqRL2+tRtXgdeGVMbAZFEyyRo
-         NnAbZcoMLCeWKSl2DGwXBCiVRxA/5EYOYq3gNOPnsRlEF4pg/wY5zY/PsAIse1mM8vB6
-         nZXPpdzMg5T9x84+FRDWMxOYF9ErospBp1VOu6KJ0prSV127pK7eroA2OKoeRT1lIAsO
-         RckN9n+/lt04UWy7lbdJjgDJw3hJbk/RO6xB6fhtC9rbLiWg+XI2h7zz6WyuVmnqHjLh
-         9YNw==
+        d=gmail.com; s=20251104; t=1785095852; x=1785700652; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gTsklbUC0EVoqPA+bs3wFDPeDKGLz11BxEGbL/Jd6L4=;
+        b=eVlYhQF6DEkZKlAqjmxtsZLiecxo08kemqgTgCugBLP3HEZEBZIt8UvEJDPB0n0bpO
+         95kd0uEAmgMjWAZWHgPZbruk+kczEkWLSCVxwIsyaBLZ51mMmbZKWNHDecFZyK60B1bm
+         EjWHNL9nYJsqOsX3upNacUn/t9/fVR+z4hW2/T1xWvdf/hxD5immmsT4AiQ23/jeS2CU
+         8YSj0bBGGUpdjf5n/ncHtjgt2U1sc1hr0WBnCb7nKs6PA0Tqnp0KhQ6KNNIMT6UVTBYK
+         RRuXMU6Xi0DF+X3D+KQATnTP062L6adhxpOsdrssaf0Datwd9fkfav9op7ERARu+oxc0
+         N1rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785091905; x=1785696705;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=F6juJvzmVgEQKMS259q/zT0jflQDbDOk0p0jv9qxhmU=;
-        b=DudhNFu3L0eA4ea+05MiZSD3YSUmROwbN3DoMEPHlVL/8B/+5uQuePP7bu5VobMf6H
-         AtL6c0P7QG6V6/p7XGFQpEsVqz+7Tt+njSrZeW5r8X8l8Zd2pg0T0CuBvZAGVz2dYE+k
-         2ZOQEfJuFmNceBNw30KPsXpbrxHlAusKTJopkduAeDueTBub/7jH8ifnSbvShpaiLLcN
-         73RwvVpwAQN3Z2ZONeEx9pbk2oo/HwzhjfRR67toxWWB81SclK4OIiyjZ4n85mEgdPSW
-         HLiyiQJuCAZbMGklFzsR1oUMOYXtublrBcM5G8BNPgE+O8stYJiHVcZuHqEl0W0jfYNQ
-         qAPg==
-X-Gm-Message-State: AOJu0YzcMqhns0tNRK0R8QunqKQJdb4h55MMgkj5oqOjj6TwnFyqEU/I
-	2K1CFp8rw2Rq0nhETU7BMgp/a/vxRCNfnXN9F0BO1avfznk1GioS8dhp8oK7iQ==
-X-Gm-Gg: AR+sD127+tzTEDSnfk4CTpu9aOFT2PxBSYmlEHB/hSpPKc8A1M4/TuKoIt6LxFk3DdM
-	Y7AMilqct6EBRgXdSlyB7CYURhVAAm/AQMdw8tYYdEKHyvMVp+uTbCi24LmsT/joqk3ZS1xgYX4
-	J5G7spHZGZxE2FQNEwGRIRRmzpjHsaFZeEi/zExv7itgqkgBQ6+k9r2ivQn4w+WbaL6HDFsScJG
-	poAvykTcyKj2x0Nm0/vh/UNuovFzHj4WF3kFc1j6+Mhq+HseYdr/+4n6OSLM4Z5yuwCSCnVn3UN
-	5gDdJ9/7/1RfjulLjan3Sz2tFVgyQ53YB8l3fY4r4kECOFKdqv2xq8sv0zWd/eV6A4QGdM/IRjQ
-	Iocf20Y8R3zEOQFa4Cj2xwW2tDZhn3sq/vaDENusR2mFJ62jQTBil6J7QCT199aprah2O/YegCb
-	1INSph
-X-Received: by 2002:a05:6a20:c90a:b0:3a8:800:bdf4 with SMTP id adf61e73a8af0-3c6726b42cfmr7476105637.33.1785091905238;
-        Sun, 26 Jul 2026 11:51:45 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.229.50])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d2d1d0d1esm23753586c88.0.2026.07.26.11.51.44
+        d=1e100.net; s=20251104; t=1785095852; x=1785700652;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=gTsklbUC0EVoqPA+bs3wFDPeDKGLz11BxEGbL/Jd6L4=;
+        b=ewGmk15FqQ5rn6i5Jn+OYHEsFGkfMw3ABofuy9DwDbQcCa8zTdX4aNRVunzB5DftS9
+         AuAut+Sy6eBlNTTYyi+xrkNiH45Ws3d308EcnbU7SJyM1j7gsTxCA/fZb7sYrmv0h+/x
+         /iz1Z/71YOEaPBwxa6+OvF1rekWRG6ycErNDeb9TlDlcR3RIZnRCVmZClkAdv6SOtmHa
+         ZBfHkvHGiHYYI0EsfagK5G5XTJDpJqKsTTdH8HRnRqMiiLF2HvnUC5o0z18JFG18S9DK
+         eHBbZLLGI1qDqangJAO2C5PtwXAFbN9f2kwfsxdT8q3yFe3swbO3FBInd+yZV0T9SXB7
+         CcCA==
+X-Gm-Message-State: AOJu0YzaKTFzRhu1iIEq4d6iKZ6G/AnV+DPblZLe+/2Ek6AHHMeZmqHn
+	UjqABsmneyau/YLsL4PRXekN0umJPsSIItP7+38vk2Jwpk0pcw2l5GkgsXciKgsV
+X-Gm-Gg: AR+sD12cL0GPzYXlkggdBiHgeaCClZ2eO8MB06QfI72eKm+FbhOU8rfmilpwSQW5K4o
+	PZZeZC786e2G+r9oMKHmHlYS5mQyjTXSB3Oi6CFYdp5g9pByf7dk5EKqZ/rPvVqd3UHbI0De1eD
+	+dQFTdg/6+/MXN1ewLqkeJvqu9QsfN3L6l/D/Z9XpSBWtJV97HzBur84AHh8nTs4OHJlUj1o0Q5
+	vjc2xDFq77ihaik73Y7CYElDJAPirrWjpRch6ouCfUL2tOm7LY19UuFv+TfZTfs7YgnQ5hoajA3
+	emlAE4kNp8+Xf/ZGgAKIlPEUIDSH87kQVtAMWXZJ2Noyqdgz8BSiA9RRCxYR2WY4niLOUEM67wk
+	wJI3UTFPfxyhD0oHaOzp0csQWNirtzwVuO4/bhVAr8Ks6AYqI5Hjo7+YllsBZnZI8gG7dZAVlY9
+	Fw6OeuGp9beD8iKCu8
+X-Received: by 2002:a05:6a21:6005:b0:3c0:9c19:65c0 with SMTP id adf61e73a8af0-3c67e05d5fdmr5626037637.72.1785095851710;
+        Sun, 26 Jul 2026 12:57:31 -0700 (PDT)
+Received: from fedora.tail0f6912.ts.net ([117.213.200.4])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d130f42bbsm52391516c88.14.2026.07.26.12.57.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 11:51:44 -0700 (PDT)
-Message-Id: <ffa6954d67a0c29dd1e9218042c15570cbe19212.1785091889.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
-References: <pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
-	<pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
-From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Jul 2026 18:51:28 +0000
-Subject: [PATCH v6 9/9] line-log: consult diff process for range tracking
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 26 Jul 2026 12:57:31 -0700 (PDT)
+From: Hardik Kumar <hardikxk@gmail.com>
+To: git@vger.kernel.org
+Cc: l.s.r@web.de,
+	pabloosabaterr@gmail.com,
+	Hardik Kumar <hardikxk@gmail.com>
+Subject: [PATCH v2] utf8: use size_t for string width methods and callee sites.
+Date: Mon, 27 Jul 2026 01:27:18 +0530
+Message-ID: <20260726195718.1914131-1-hardikxk@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <DK8L6JM14UNS.16B15DIOFW1K5@gmail.com>
+References: <DK8L6JM14UNS.16B15DIOFW1K5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Michael Montalbo <mmontalbo@gmail.com>,
-    Michael Montalbo <mmontalbo@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Michael Montalbo <mmontalbo@gmail.com>
+utf8_strwidth() and utf8_strnwidth() return int, even though the
+return value is always non-negative:
 
-git log -L tracks line ranges by diffing each commit against its
-parent in collect_diff().  This pass used the builtin diff while the
-displayed diff (builtin_diff()) consults a configured
-diff.<driver>.process, so the two could disagree: a reformat-only
-commit selected by builtin tracking was then rendered with an empty
-diff because the tool reported the files equivalent.
+- utf8_strnwidth() accumulates the width into a size_t and otherwise
+  returns its size_t len parameter,
+- utf8_strwidth() just forwards its result.
 
-Consult the process in collect_diff() too, mirroring the blame
-integration.  When the tool reports the files equivalent, collect no
-ranges; the tracked range then maps across unchanged and the commit
-drops out of the log, matching what is displayed.  Like the summary
-formats, the tracking pass diffs raw content, so the tool is consulted
-on the raw blobs here.
+Change their signatures to return size_t instead.
 
-Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+Update the types of the variables the said method is used to avoid
+potential UB caused by implicit conversion from size_t to int.
+
+The returned values from `utf8_strwidth()` are casted to int at places
+where it was falling tests or required other changes.
+
+Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
 ---
- Documentation/gitattributes.adoc | 20 ++++++++++---------
- line-log.c                       | 33 ++++++++++++++++++++++++++++----
- t/t4080-diff-process.sh          | 33 ++++++++++++++++++++++++++++++++
- 3 files changed, 73 insertions(+), 13 deletions(-)
+Changes in v2:
+- reworked types for utf8_strwidth and its sites of usage.
+- removed redundant parens around `string`.
+- updated commit message for better explaining the patch.
 
-diff --git a/Documentation/gitattributes.adoc b/Documentation/gitattributes.adoc
-index 7cdede6b21..8021dc8e39 100644
---- a/Documentation/gitattributes.adoc
-+++ b/Documentation/gitattributes.adoc
-@@ -1037,12 +1037,16 @@ Features that ask "which lines changed" use the tool's hunks in place
- of the builtin algorithm:
+ builtin/blame.c  |  4 ++--
+ builtin/branch.c |  2 +-
+ builtin/repo.c   | 10 +++++-----
+ column.c         |  2 +-
+ diff.c           |  7 ++++---
+ gettext.c        |  2 +-
+ gettext.h        |  2 +-
+ pretty.c         |  5 +++--
+ utf8.c           | 13 ++++---------
+ utf8.h           |  4 ++--
+ wt-status.c      |  8 ++++----
+ 11 files changed, 28 insertions(+), 31 deletions(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 48d5251..2d24b63 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -564,7 +564,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent,
+ 					name = ci.author_mail.buf;
+ 				else
+ 					name = ci.author.buf;
+-				pad = longest_author - utf8_strwidth(name);
++				pad = longest_author - cast_size_t_to_int(utf8_strwidth(name));
+ 				printf(" (%s%*s %10s",
+ 				       name, pad, "",
+ 				       format_time(ci.author_time,
+@@ -668,7 +668,7 @@ static void find_alignment(struct blame_scoreboard *sb, int *option)
  
- - `git diff` patch output, together with everything layered on it:
--  word diff, function context (`-W`), `--color-moved`, the `@@` hunk
--  headers, and the `-L` line-range display.  These operate on the
--  lines the patch step already emitted, so they reflect the tool's
--  hunks without any further negotiation.
-+  word diff, function context (`-W`), `--color-moved`, and the `@@`
-+  hunk headers.  These operate on the lines the patch step already
-+  emitted, so they reflect the tool's hunks without any further
-+  negotiation.
- - `git blame`: a commit whose change the tool reports as equivalent is
-   skipped, and its lines are attributed to an earlier commit.
-+- `git log -L`: both the line-range display and the underlying range
-+  tracking consult the tool, so a commit it reports as equivalent is
-+  dropped from the log (its tracked range maps across unchanged)
-+  rather than selected and then shown with an empty diff.
- - `--stat`, `--numstat`, and `--shortstat`: the inserted and deleted
-   counts come from the tool's hunks, so a file the tool calls
-   equivalent contributes no stat line, matching the empty patch that
-@@ -1079,11 +1083,9 @@ design:
- - `--raw`, `--name-only`, and `--name-status` compare object ids at
-   the tree level and never run a line-level diff at all.
+ 	for (e = sb->ent; e; e = e->next) {
+ 		struct blame_origin *suspect = e->suspect;
+-		int num;
++		size_t num;
+ 		size_t marks_count = count_marks(e, *option);
  
--Two cases ask "which lines changed" but still use the builtin
--algorithm, and may consult the process in a later change: `git log
---L`'s commit selection and parent range propagation (as distinct from
--its display, which is covered above), and combined diffs (`--cc` and
--merge diffs), whose protocol would have to be extended from a single
-+Combined diffs (`--cc` and merge diffs) ask "which lines changed" but
-+still use the builtin algorithm, and may consult the process in a
-+later change; their protocol would have to be extended from a single
- old/new pair to one comparison per merge parent.
+ 		if (max_marks_count < marks_count)
+diff --git a/builtin/branch.c b/builtin/branch.c
+index dede60d..514ba64 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -354,7 +354,7 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
+ 	for (i = 0; i < refs->nr; i++) {
+ 		struct ref_array_item *it = refs->items[i];
+ 		const char *desc = it->refname;
+-		int w;
++		size_t w;
  
- `--no-ext-diff` and `--diff-algorithm` bypass the process entirely,
-diff --git a/line-log.c b/line-log.c
-index 5fc75ae275..97b3e0a31d 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -7,11 +7,11 @@
- #include "tag.h"
- #include "tree.h"
- #include "diff.h"
-+#include "diff-process.h"
- #include "commit.h"
- #include "decorate.h"
- #include "repository.h"
- #include "revision.h"
--#include "xdiff-interface.h"
- #include "strbuf.h"
- #include "line-log.h"
- #include "setup.h"
-@@ -330,12 +330,15 @@ static int collect_diff_cb(long start_a, long count_a,
- 	return 0;
- }
+ 		skip_prefix(it->refname, "refs/heads/", &desc);
+ 		skip_prefix(it->refname, "refs/remotes/", &desc);
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 84e012f..47b9191 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -367,7 +367,7 @@ static void stats_table_vaddf(struct stats_table *table,
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct string_list_item *item;
+ 	char *formatted_name;
+-	int name_width;
++	size_t name_width;
  
--static int collect_diff(mmfile_t *parent, mmfile_t *target, struct diff_ranges *out)
-+static int collect_diff(struct diff_options *diffopt, const char *path,
-+			mmfile_t *parent, mmfile_t *target,
-+			struct diff_ranges *out)
- {
- 	struct collect_diff_cbdata cbdata = {NULL};
- 	xpparam_t xpp;
- 	xdemitconf_t xecfg;
- 	xdemitcb_t ecb;
-+	int ret = 0;
- 
- 	memset(&xpp, 0, sizeof(xpp));
- 	memset(&xecfg, 0, sizeof(xecfg));
-@@ -345,7 +348,23 @@ static int collect_diff(mmfile_t *parent, mmfile_t *target, struct diff_ranges *
- 	xecfg.hunk_func = collect_diff_cb;
- 	memset(&ecb, 0, sizeof(ecb));
- 	ecb.priv = &cbdata;
--	return xdi_diff(parent, target, &xpp, &xecfg, &ecb);
-+
-+	/*
-+	 * Consult the diff process so range tracking agrees with the
-+	 * diff that will be shown.  When the tool reports the files as
-+	 * equivalent we collect no ranges, so the tracked range maps
-+	 * across unchanged and the commit drops out of the log, rather
-+	 * than being selected here but rendered with an empty diff by
-+	 * the process-aware builtin_diff().  Blob oids are not threaded to
-+	 * this path yet, so pass NULL and send no old-oid/new-oid (a later
-+	 * change can supply the pair, where they would let the tool cache
-+	 * across the range-tracking and display passes over the same
-+	 * commit).
-+	 */
-+	if (xdi_diff_process(diffopt, path, parent, target,
-+			     NULL, NULL, &xpp, &xecfg, &ecb) == DIFF_PROCESS_ERROR)
-+		ret = -1;
-+	return ret;
- }
- 
- /*
-@@ -927,7 +946,13 @@ static int process_diff_filepair(struct rev_info *rev,
+ 	strbuf_vaddf(&buf, format, ap);
+ 	formatted_name = strbuf_detach(&buf, NULL);
+@@ -387,12 +387,12 @@ static void stats_table_vaddf(struct stats_table *table,
+ 		string_list_append_nodup(&table->annotations, strbuf_detach(&buf, NULL));
  	}
+ 	if (entry->value) {
+-		int value_width = utf8_strwidth(entry->value);
++		size_t value_width = utf8_strwidth(entry->value);
+ 		if (value_width > table->value_col_width)
+ 			table->value_col_width = value_width;
+ 	}
+ 	if (entry->unit) {
+-		int unit_width = utf8_strwidth(entry->unit);
++		size_t unit_width = utf8_strwidth(entry->unit);
+ 		if (unit_width > table->unit_col_width)
+ 			table->unit_col_width = unit_width;
+ 	}
+@@ -582,8 +582,8 @@ static void stats_table_print_structure(const struct stats_table *table)
+ {
+ 	const char *name_col_title = _("Repository structure");
+ 	const char *value_col_title = _("Value");
+-	int title_name_width = utf8_strwidth(name_col_title);
+-	int title_value_width = utf8_strwidth(value_col_title);
++	size_t title_name_width = utf8_strwidth(name_col_title);
++	size_t title_value_width = utf8_strwidth(value_col_title);
+ 	int name_col_width = table->name_col_width;
+ 	int value_col_width = table->value_col_width;
+ 	int unit_col_width = table->unit_col_width;
+diff --git a/column.c b/column.c
+index 93fae31..6b7f921 100644
+--- a/column.c
++++ b/column.c
+@@ -24,7 +24,7 @@ struct column_data {
+ };
  
- 	diff_ranges_init(&diff);
--	if (collect_diff(&file_parent, &file_target, &diff))
-+	/*
-+	 * Select the driver by the old (parent) path, as builtin_diff() does
-+	 * with name_a, so a renamed file resolves to the same driver for
-+	 * range tracking as for the diff that is shown.
-+	 */
-+	if (collect_diff(&rev->diffopt, pair->one->path,
-+			 &file_parent, &file_target, &diff))
- 		die("unable to generate diff for %s", pair->one->path);
+ /* return length of 's' in letters, ANSI escapes stripped */
+-static int item_length(const char *s)
++static size_t item_length(const char *s)
+ {
+ 	return utf8_strnwidth(s, strlen(s), 1);
+ }
+diff --git a/diff.c b/diff.c
+index 589c196..4887958 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2952,7 +2952,8 @@ static int utf8_ish_width(const char **start)
  
- 	/* NEEDSWORK should apply some heuristics to prevent mismatches */
-diff --git a/t/t4080-diff-process.sh b/t/t4080-diff-process.sh
-index 118d0f9464..9584a458b1 100755
---- a/t/t4080-diff-process.sh
-+++ b/t/t4080-diff-process.sh
-@@ -960,4 +960,37 @@ test_expect_success 'blame -w bypasses diff process' '
- 	test_path_is_missing backend.log
- '
+ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ {
+-	int i, len, add, del, adds = 0, dels = 0;
++	int i, add, del, adds = 0, dels = 0;
++	size_t len;
+ 	uintmax_t max_change = 0, max_len = 0;
+ 	int total_files = data->nr, count;
+ 	int width, name_width, graph_width, number_width = 0, bin_width = 0;
+@@ -3037,7 +3038,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 	 * making the line longer than the maximum width.
+ 	 */
+ 	if (options->stat_width == -1)
+-		width = term_columns() - utf8_strnwidth(line_prefix, strlen(line_prefix), 1);
++		width = term_columns() - cast_size_t_to_int(utf8_strnwidth(line_prefix, strlen(line_prefix), 1));
+ 	else
+ 		width = options->stat_width ? options->stat_width : 80;
+ 	number_width = decimal_width(max_change) > number_width ?
+@@ -3123,7 +3124,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 			if (slash)
+ 				name = slash;
+ 		}
+-		padding = len - utf8_strwidth(name);
++		padding = len - cast_size_t_to_int(utf8_strwidth(name));
+ 		if (padding < 0)
+ 			padding = 0;
  
-+#
-+# Line-log (git log -L) range tracking.
-+#
-+
-+test_expect_success 'diff process drops equivalent commit from log -L' '
-+	test_when_finished "rm -f backend.log" &&
-+	cat >linelog.c <<-\EOF &&
-+	int tracked(void) { return 1; }
-+	EOF
-+	git add linelog.c &&
-+	git commit -m "add linelog.c" &&
-+
-+	cat >linelog.c <<-\EOF &&
-+	int tracked(void) { return 2; }
-+	EOF
-+	git commit -am "change tracked line" &&
-+
-+	# Builtin line tracking selects the change commit.
-+	git log --no-ext-diff -L1,1:linelog.c --format="%s" >builtin &&
-+	test_grep "change tracked line" builtin &&
-+
-+	# With the tool reporting the change as equivalent, tracking
-+	# drops the commit (the range maps across unchanged) instead of
-+	# selecting it and rendering an empty diff.
-+	git -c diff.cdiff.process="$BACKEND --mode=no-hunks --log=backend.log" \
-+		log -L1,1:linelog.c --format="%s" >actual &&
-+	test_grep ! "change tracked line" actual &&
-+	# The creating commit still appears, so the change commit was
-+	# selectively dropped rather than the whole log going empty.
-+	test_grep "add linelog.c" actual &&
-+	test_grep "command=hunks pathname=linelog.c" backend.log
-+'
-+
- test_done
+diff --git a/gettext.c b/gettext.c
+index 8d08a61..4d5d05e 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -129,7 +129,7 @@ void git_setup_gettext(void)
+ }
+ 
+ /* return the number of columns of string 's' in current locale */
+-int gettext_width(const char *s)
++size_t gettext_width(const char *s)
+ {
+ 	static int is_utf8 = -1;
+ 	if (is_utf8 == -1)
+diff --git a/gettext.h b/gettext.h
+index 484cafa..f161a21 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -31,7 +31,7 @@
+ #ifndef NO_GETTEXT
+ extern int git_gettext_enabled;
+ void git_setup_gettext(void);
+-int gettext_width(const char *s);
++size_t gettext_width(const char *s);
+ #else
+ #define git_gettext_enabled (0)
+ static inline void git_setup_gettext(void)
+diff --git a/pretty.c b/pretty.c
+index d8a9f37..f7d392d 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1805,11 +1805,12 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ {
+ 	struct strbuf local_sb = STRBUF_INIT;
+ 	size_t total_consumed = 0;
+-	int len, padding = c->padding;
++	int padding = c->padding;
++	size_t len;
+ 
+ 	if (padding < 0) {
+ 		const char *start = strrchr(sb->buf, '\n');
+-		int occupied;
++		size_t occupied;
+ 		if (!start)
+ 			start = sb->buf;
+ 		occupied = utf8_strnwidth(start, strlen(start), 1);
+diff --git a/utf8.c b/utf8.c
+index 96460cc..cefaefe 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -208,7 +208,7 @@ int utf8_width(const char **start, size_t *remainder_p)
+  * string, assuming that the string is utf8.  Returns strlen() instead
+  * if the string does not look like a valid utf8 string.
+  */
+-int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
++size_t utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+ {
+ 	const char *orig = string;
+ 	size_t width = 0;
+@@ -225,15 +225,10 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+ 		if (glyph_width > 0)
+ 			width += glyph_width;
+ 	}
+-
+-	/*
+-	 * TODO: fix the interface of this function and `utf8_strwidth()` to
+-	 * return `size_t` instead of `int`.
+-	 */
+-	return cast_size_t_to_int(string ? width : len);
++	return string ? width : len;
+ }
+ 
+-int utf8_strwidth(const char *string)
++size_t utf8_strwidth(const char *string)
+ {
+ 	return utf8_strnwidth(string, strlen(string), 0);
+ }
+@@ -821,7 +816,7 @@ void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int wid
+ 		       const char *s)
+ {
+ 	size_t slen = strlen(s);
+-	int display_len = utf8_strnwidth(s, slen, 0);
++	size_t display_len = utf8_strnwidth(s, slen, 0);
+ 	int utf8_compensation = slen - display_len;
+ 
+ 	if (display_len >= width) {
+diff --git a/utf8.h b/utf8.h
+index cf8ecb0..531e968 100644
+--- a/utf8.h
++++ b/utf8.h
+@@ -7,8 +7,8 @@ typedef unsigned int ucs_char_t;  /* assuming 32bit int */
+ 
+ size_t display_mode_esc_sequence_len(const char *s);
+ int utf8_width(const char **start, size_t *remainder_p);
+-int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
+-int utf8_strwidth(const char *string);
++size_t utf8_strnwidth(const char *string, size_t len, int skip_ansi);
++size_t utf8_strwidth(const char *string);
+ int is_utf8(const char *text);
+ int is_encoding_utf8(const char *name);
+ int same_encoding(const char *, const char *);
+diff --git a/wt-status.c b/wt-status.c
+index 58461e0..0e1e32d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -331,9 +331,9 @@ static int maxwidth(const char *(*label)(int), int minval, int maxval)
+ 
+ 	for (i = minval; i <= maxval; i++) {
+ 		const char *s = label(i);
+-		int len = s ? utf8_strwidth(s) : 0;
++		size_t len = s ? utf8_strwidth(s) : 0;
+ 		if (len > result)
+-			result = len;
++			result = cast_size_t_to_int(len);
+ 	}
+ 	return result;
+ }
+@@ -360,7 +360,7 @@ static void wt_longstatus_print_unmerged_data(struct wt_status *s,
+ 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
+ 
+ 	how = wt_status_unmerged_status_string(d->stagemask);
+-	len = label_width - utf8_strwidth(how);
++	len = label_width - cast_size_t_to_int(utf8_strwidth(how));
+ 	status_printf_more(s, c, "%s%.*s%s\n", how, len, padding, one);
+ 	strbuf_release(&onebuf);
+ }
+@@ -429,7 +429,7 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
+ 	what = wt_status_diff_status_string(status);
+ 	if (!what)
+ 		BUG("unhandled diff status %c", status);
+-	len = label_width - utf8_strwidth(what);
++	len = label_width - cast_size_t_to_int(utf8_strwidth(what));
+ 	assert(len >= 0);
+ 	if (one_name != two_name)
+ 		status_printf_more(s, c, "%s%.*s%s -> %s",
 -- 
-gitgitgadget
+2.55.0
+
