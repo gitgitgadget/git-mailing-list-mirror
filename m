@@ -1,127 +1,146 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01398635D
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 17:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038513C13FB
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 17:59:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785085260; cv=pass; b=CdEzexZKnLuRogIlyCN+tRBaa6FTWREANWzv8jpQrr6W5fSp+PCPjtW29OU/ElYOhy/7SUBxriko7N4rgLSKo9QC0jUwultDhoHY9CJlKKGWoCiGovCX37SVdmqoHhK8CkE2L7FwLKm/JZ3/HIC/WkIFbCnOlNxubQBH256dXzY=
+	t=1785088798; cv=pass; b=k5J5EMOIzoHJ5hg7veqX2Y+huQF+0i7ONeHFuAVRACI1d9zuCC/NsvnnrKTsQR/xC7eZKu4PxJcmxWSFjPrYICcj1DxOJiEpYO/MEAhXreXHEt1ld0V1RuIOwL1Zyt/0htw2DqEUaQihqR3+GSl+V3ZvTJxuC+HrDpLgJjCTWSk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785085260; c=relaxed/simple;
-	bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
+	s=arc-20240116; t=1785088798; c=relaxed/simple;
+	bh=oScZxzD5wbk5GKpZ+RHcH83mMUBAuhlJz2zeJGLnYCc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SPOA+Z6r7aDkuOMmxeeaxTckFCcYbsxtm6q9lNMtKPVKOFkW73MF8GGx24oRS1g5Sv2/AO70ZzxjVtKDGeJ7t28/lYAmU626l1adRK+5wTayapffHqSYy+Qtfc85D86jB2jljvWrG/n5DMl/gMAN1FwykwBQXV3BlUJKfE4V4Ew=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PQKSXtmG; arc=pass smtp.client-ip=209.85.208.181
+	 To:Cc:Content-Type; b=HssBQWoBK9mhb/KXG44oHK1m9G0VasFUW1CYrN67bEI/1cErtQw+i4oelEdrTTNW4IF/cWWysFsLv8tnmIPDFkZAWRDhLuotDSeQtjuPKaTIPqDKuH9G/+rMJO49JcO+ZIFxxjmuyykFBmzVy9rTe5qb/k10nKaS1usLwtam5Xc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5uRRXPr; arc=pass smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PQKSXtmG"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-39d4c864bfbso16510221fa.1
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 10:00:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785085257; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5uRRXPr"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6983f20a8bfso3123328a12.1
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 10:59:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785088795; cv=none;
         d=google.com; s=arc-20260327;
-        b=D3wgm/GmedGPI71fjF8IbizuvaGEu7sDnO5RSGvb+tSBB4xl3dHVDNjlM9PsbR7kIY
-         ygrVmz13yb4fAkrTREPM/MMXQUzzb/nA7FFsMcjGQd2AVa2KN/+CSM5aD0k6u22FNKMc
-         LXSAd76aS86PGF6mC1QiNFv94R8e422rztj0tnqI3eQ15HHZQyYQ+VlC/FLrGD6O234j
-         /QMwHNxfX7M/EyBnKp8QHzC07vQNNQ/pQV2Bui5Qzuhp983bREsVjmgLsz1/w8ITZcps
-         gBdfY6t9031OeCTDdc8ZqJJBa3mK34HZgGvlmtXEYNeg0SyXWobth/R0FZHEdgMVikKA
-         /8GQ==
+        b=ojL3JI6zXg8d3bO9k96PdvM1bkKDjdsFH6IOxG9NtdJd2axmuhj6g1dA/Wk3OrJmtC
+         luYonhf2/ALHP6GDcwPEhuofTEHIK6GYVBvhEO9DPUyWXRpeQJHSDWMN7sQ8IC3timiu
+         dejriyFMLmPzLQ5wtcOjZx2X6CD3Y3rPXNV5TLuEeuqXAxweAwrocA/8XzADNVfNc5ua
+         DJQwy89eWF0smS9GRicCTcjWmGgXfCdMN1XSFXK0/HR6SktYDxyqd00n3Xc3IILhBOGd
+         n4NEGV9Y2kWL77gdGcfX2oXRLgi3eZuB9KEYa0TzFlg/4yk8pfen30XFk7nxyypac9L7
+         Z3ZQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
-        fh=rfLjIwn2a57wX7vvUPf5sv7xoXYLkb1by0ZOpcDOxJM=;
-        b=p0vrDebet7/kIRQ3Y9zx9gWCrB2H2FKj/wWe4wiGQoawxjKHdXbgUL97xRD4ezEPjo
-         AzaIiYAKe9djSBu/YVkCuWdNkkmfj/UxeDk8vOB2iexYGb42zJm1HWYNUgbtSHz/NL/m
-         YVBC/qF0tc2vJE859jDUwXxi9qrWC/vHnPvB0S3AJS4Q3xZRl5zhFh4fF1BP0gNbTeVj
-         i96MyqZHx5oJFlhHeyuqVQXyQdqEgHRtYQKnk+tXnTTVqCDoI/eDt8gdvx4+WkfUDix3
-         Z0NSmz+1RA6uRlAc1mWBBE2UjOgDcdilwqmxCmEzP21wI1YX21rd4NIrZj7Vh18IQaao
-         3x2w==;
+        bh=A7GvnEEppQ/s1FGLgIdW19vmGzL2ANouEtnB+sf4s0M=;
+        fh=yalKYYanIEb5jv9++9i5BrL5Bp5foLKdI8QhdBQ/xhM=;
+        b=EbMvLigYi5L4qIdBFtLH9qKIp1oH3R6l3Yw5HPJ4wMIOiSaflaY/0xfYPyl9sgNUsL
+         aecn9siVoKrCXBRL/YIMOBT6JE3fLXPk2oqkn/QjVERQNEdO/VO9pzyxjq1u1neTGqrv
+         nWs9bpzEhp+sn77JIkXUYazDP//jIDVI5VAMEMVidsnT4mfP6oLeDD4JFjXA01ml6SXH
+         KjmyNRs7SrEhxzsRLBcX+PcMFXKf9c7lIp3YqwH3BrLHbVXIzLErjIldEXLcdEl+Q8Ge
+         IcvNcbq2+Vg73XiMRW6bBjFBwtluCAMksNVx1KdOJtOt2In4QtKs8RYFr2yi9EC1KzC8
+         FTlw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785085257; x=1785690057; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785088795; x=1785693595; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
-        b=PQKSXtmG5s4nB/copEup2r1k4viWKYihWso7eO1pTUaSzNt49VO9AQgG6cbtraarhF
-         hTKbhbYQKksv8dLFGwULLJWhnbXiGY68/StprTjGDua4f0yuazz8o8hpDQfRzbSN1hp7
-         stIqFnMnqzlCbm/gqREG5RICfO5kFkZb33HX57ZjYOZU+RhLhU/JJ8D/gSL0wfevRyC+
-         13Z0pcG0vqh9VYkQdBNhpihn4U8AgVn3XVut9EebZF+iXauHt0jZq7TnO8wuPSiNoVTQ
-         bDayR0NkD2gKX0KEpp8pN8EPMSlLqjIYoatfwGKJu3edh62qJiRnTex0riDl5vq3Tadf
-         IwSA==
+        bh=A7GvnEEppQ/s1FGLgIdW19vmGzL2ANouEtnB+sf4s0M=;
+        b=C5uRRXPrmGmc2ZeZxD6VH77/DYux/jVo99z46E2bgmdDTtXl5WyLkXKGoSTHZ9TEfP
+         IZKCq+ZWCcnhLqPafVi2N6o066/L/M5Uy4AkRpHykSah9lEsO3xMGxtnKojEMgiIc5f4
+         P6ZBiIrgC3A/YIiU/ksMLj2/OaHsMtzGgbnh705eoOWvgtUAK7MquZtuL1k+q75u2Idg
+         rwz1KULz1PdGcGOhwesudskES9b7X489XHFAWWphQP/6StS7p+uXaR76kwjIIn0J15v4
+         R7KTPtP0ORMBvPzdlJlVRjczhEcHbqGXyGAWmv+60NQcp3n6ijNYt9JKi5AusrNYMhh3
+         1fVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785085257; x=1785690057;
+        d=1e100.net; s=20251104; t=1785088795; x=1785693595;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
-        b=QxHDJDYDRYptgVP1kIIvIrwYlWG65/LDi6flX2OKjpAsy+YkngB5d2G+fRzDN0osrz
-         47n3mdfd2HAQQGm9ayClYwlbY/UEHfqvuECid9mWqSwVelvDUWKTPSTwkcJdp5KnXaIE
-         KVIO7K+X4t7tx1PhAqzwZY/1kU03ml8WODj4pmxKSw+AY7c0KTG6GUsRB+fWCKFUoGik
-         9qxjjV2REeLc5Nn/1uzAj75E5dUaVaJpvyiEjdKP2LoCEVi693GtLBMLZgEW+6sXPC2h
-         poS1sEx7b48Q4uoDYom0Ms1nBjqkOiD7KwdaSkRxLG+3SH8C2KLHcLJyldO0/FLcUEPr
-         /eJA==
-X-Gm-Message-State: AOJu0YyRKx1G6iux59S196tmkXAwHXOo4Llocu+fRWLCPHaISKRHdjDI
-	sJUtfIzCRYeUUrPso6uPKv45wB6nJUZwZMBPYDuevhd9DqkgB25ua4m6A6ntUjZruaS9rM8+Zl2
-	VZ0+yo/433+2J1mZekrPHgJVz2mDaqjY=
-X-Gm-Gg: AR+sD12NuzQQyFqhRyu2nbiI3I3bkXzMlj0cPCPvr7r3svKEz1Y5X2HwUqkPncpRXac
-	ywxmI9jJ2WYtveiVeOFb6WJ8XZLgp/g5XJ+6xZIHxXFpT9ZznrK18uko0M8T8Gu/ZrWG4Ie/pAV
-	JSOFn56NjcrYLSXUfndonkiih7OMAo/rfxqssX27/srq6+xQLhA436u8WEp4htVNLiI5Lh7HUKP
-	5/3guKh6u4dWBaY8myAWJ9F+rVd15rsQ6R6ffykGOjFk8K/uubv67WjFiKqYHD9VAEUQiW4+lFJ
-	D/9HHJGrUVtiGmZguILRS2uKruqK/E5c2A615f1T3AyTRiGrfQkAZaFUCYItCEW7r/ntxxhtim2
-	YEvM7tr7sBStqDP8=
-X-Received: by 2002:a05:6512:239a:b0:5b1:5eea:a576 with SMTP id
- 2adb3069b0e04-5b2c1b1821emr1082382e87.21.1785085256556; Sun, 26 Jul 2026
- 10:00:56 -0700 (PDT)
+        bh=A7GvnEEppQ/s1FGLgIdW19vmGzL2ANouEtnB+sf4s0M=;
+        b=h2YrF9TfjoC/Qs2X06Ot4hOHbkEOKuFcAY/HhxT9a4+Yi4gcjSk9gxKUjcRycD8GAm
+         E9WBCaWL0k3vMqvR7AlsoNH3BAIGwB7JIBHCVdmHyx32IRifRD6yhDn456BIH6oKCF5n
+         BI/WUmSzxE/iSS2k4HlTLfzhnLO1TS7rhc4grKG8q/+YfpcdnF7xkowHJbkmBoPA4JzO
+         HJUxo//RDRleYqn4/ezOOltv0F4uD5JTSj5KQ00VIL/dDSXr7oqFOxsIJl+g67CG8kcs
+         2K/0v8hGCl8Xg6qRa41OP54+CctiFXa2Y4Dw1CVP6NLxDIMmEbZ8xtOhizEhNb86cPB/
+         mFvg==
+X-Forwarded-Encrypted: i=1; AHgh+RpK8Q2b3boWDPK2di4Xelaa46Ay2MpgfzJAS/myTzv/mZzX0gLbmdwqgFeHKgIkcFm8FFc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwrjBX6zMaZLmNJU3mn7RSeqsRDWCAv+yLwsqYfrLR9l+2W7841
+	8UMggx7nb77wQ81Fr1EuTSiA9MV6nCObu1cF5M5Up4NplL0WGKgQn68bnxSBuDkNPZXQpUMeto8
+	dmndVfVEKU5PBnvSIb6UZ+smYYXSlAYo=
+X-Gm-Gg: AR+sD11hLv/EMsfaILnEIgDTvQ3NHD4IaOGVPn9Uc2KDG2fffgOyVMPBVgTNpb7/7Aq
+	KrWVpZxhA5dpvEnPIDSxSLgAqYgKPok3hilqUr3Vrgdvc3LfRKoPNm9SGg60Js3Wq/UC44VxrPi
+	44QPOiC895P9Wa9Lr61lVxZkpyQJUSMndMnO+du8ejUi4ztJ0IiiPx5qFqilynfyT3aYwNtxnxh
+	7bvtP2r4IylHuarrs5XvFv3n7sFe3Gf4uJNorgtniR4Kn9euMFeqxmPJ3ij5oofZAHzOWX/sNZ7
+	xsZvRLa2tuiLX8D4+abu
+X-Received: by 2002:a05:6402:354a:b0:698:d6e:bea7 with SMTP id
+ 4fb4d7f45d1cf-69fc100538dmr2190719a12.14.1785088795005; Sun, 26 Jul 2026
+ 10:59:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260726104343.16933-1-jayatheerthkulkarni2005@gmail.com> <xmqqse55vhnz.fsf@gitster.g>
-In-Reply-To: <xmqqse55vhnz.fsf@gitster.g>
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 26 Jul 2026 22:30:43 +0530
-X-Gm-Features: AUfX_mxRzNDQ6oONbYsh_I8eA4JtG-qlDEDvMsCrOsfHTy-N4I1lXR-Y4NxXbeg
-Message-ID: <CA+rGoLce-64v7EsQuDbtTd3gx4hsspMo58siHfONWbUBehhNng@mail.gmail.com>
-Subject: Re: [GSoC Patch v3 0/7] repo: add more path keys to git repo info
+References: <pull.2356.git.git.1784125963694.gitgitgadget@gmail.com>
+ <pull.2356.v2.git.git.1784812390.gitgitgadget@gmail.com> <1a790e001610d3324ec45d86ac67ca5720678cb8.1784812390.git.gitgitgadget@gmail.com>
+ <xmqqo6fximn2.fsf@gitster.g> <CAH01Q-_2APONq2fXmjF=Wo08rTzScMEjyXL-G=_GH6TbjJmTBw@mail.gmail.com>
+ <xmqqcxwdcmln.fsf@gitster.g> <xmqqik61yeyn.fsf@gitster.g>
+In-Reply-To: <xmqqik61yeyn.fsf@gitster.g>
+From: Lucas Zamboni Orioli <lucaszam0@gmail.com>
+Date: Sun, 26 Jul 2026 14:59:42 -0300
+X-Gm-Features: AUfX_mwbLDQe8h-RRn3na0hXH0Q6XJluHP8z5zTe7Lzi95Po9FV9Jnx1abRsKDw
+Message-ID: <CAH01Q-_k1QEcTLTMygBceUWjGNFLNewixf80bYOD2_s20jajrQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] mv: check for missing destination directory before renaming
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, lucasseikioshiro@gmail.com
+Cc: Lucas Zamboni Orioli via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Ben Knoble <ben.knoble@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 26, 2026 at 9:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
->
-> > Series adds keys to git repo info.
-> > Keys output paths of repository components:
-> > * path.toplevel: repository tree.
-> > * path.superproject-working-tree: superproject tree from submodules.
-> > * path.objects: repository objects.
-> > * path.hooks: repository hooks.
-> > * path.index: repository index.
-> > * path.grafts: repository grafts.
-> > * path.git-prefix: prefix offset.
->
-> I guess the issues I had at the design level in the previous
-> iteration is gone ;-)
->
-> I'd love to hear real reviews from others on these patches, but
-> at least I didn't spot anything glaringly wrong anymore.
->
-> Thanks.
+Em dom., 26 de jul. de 2026 =C3=A0s 11:59, Junio C Hamano
+<gitster@pobox.com> escreveu:
+> Think carefully about cases where 'a' is a directory and 'a/b' is a
+> symlink, or where 'a' and 'a/b' are directories and 'a/b/c' is a
+> symlink, and so on.  We do not want to craft an arbitrary rule that
+> says we allow or refuse to operate depending on the link target.
 
-Sure,
-until then I will work on the histogram patches in git repo structure.
+Thanks for pushing on this, chasing the symlink case down turned up
+more than a bad message. With a tracked symlink in the leading path,
+"git mv" leaves the index inconsistent with the worktree:
 
-Thanks for validating!
+    mkdir repo && cd repo
+    git init
+    echo content >a
+    mkdir real-dir
+    echo content >real-dir/b
+    ln -s . c
+    git add .
+    git commit -m "initial"
+    git mv a c/real-dir/a
+    git status
 
-Regards,
-- K Jayatheerth
+'c' is a tracked symlink to '.'. The move follows it, so on disk the
+file lands at the resolved path 'real-dir/a', but the index records
+the literal 'c/real-dir/a'. "git status" then reports a staged rename
+to 'c/real-dir/a', an unstaged deletion of that same path (nothing is
+there on disk), and the real file untracked at 'real-dir/a', with the
+symlink 'c' also shown untracked. A later "git add" did reconcile it
+by finding the file at its real location, but "git mv" on its own has
+already produced an index that describes a worktree that doesn't
+exist, it got there precisely by traversing a tracked symlink.
+
+So this is the "not careful enough" case you suspected, and the fix is
+the behavior you described: refuse to operate when any component of the
+destination's leading path is a symlink, independent of where it
+points. I'm thinking of using has_symlink_leading_path() (symlinks.c) for
+that check, which is what "git apply" already uses to avoid following in-tr=
+ee
+symlinks, so the behavior stays consistent with the rest of the tree.
+
+For v3 I'll fold this into the series: the leading-directory check will
+reject a missing directory or a non-directory/symlink component up
+front, which covers both the original misleading-error case and this
+symlink traversal. Tests will cover a symlink as the final component
+and as an intermediate one ('a/b/c' with 'a' a symlink), plus the
+existing missing-directory and dry-run cases.
