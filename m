@@ -1,146 +1,338 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038513C13FB
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 17:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785088798; cv=pass; b=k5J5EMOIzoHJ5hg7veqX2Y+huQF+0i7ONeHFuAVRACI1d9zuCC/NsvnnrKTsQR/xC7eZKu4PxJcmxWSFjPrYICcj1DxOJiEpYO/MEAhXreXHEt1ld0V1RuIOwL1Zyt/0htw2DqEUaQihqR3+GSl+V3ZvTJxuC+HrDpLgJjCTWSk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785088798; c=relaxed/simple;
-	bh=oScZxzD5wbk5GKpZ+RHcH83mMUBAuhlJz2zeJGLnYCc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HssBQWoBK9mhb/KXG44oHK1m9G0VasFUW1CYrN67bEI/1cErtQw+i4oelEdrTTNW4IF/cWWysFsLv8tnmIPDFkZAWRDhLuotDSeQtjuPKaTIPqDKuH9G/+rMJO49JcO+ZIFxxjmuyykFBmzVy9rTe5qb/k10nKaS1usLwtam5Xc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5uRRXPr; arc=pass smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C866F3033D6
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785091893; cv=none; b=iP1yySsSVUN97Hh1m4byej/gENhLGvP/JJ+cYwKNvcQtGxU3MdSwWAVCTBSRISudieUCqPebFOzTAkITxJFv+/wt479MsQHWODodfpp1JI16DNkBqYF1+958Q+qojFcXrJptUxn69QP1XdDFI0MZLSu64B2nQ+CX+QXLOUQH4j8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785091893; c=relaxed/simple;
+	bh=XlB2RSu/qDTJo+Rztf/8AByv1E1xFf4uLi95qECy/yI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=HZjVz3uyXwhmQ0Y2DVP8rtHsqUWUqEmW2OR54TDVpiSsrExwwKg2i/HZPCp8mh9nUF665qQfQ/9yh4AihJNGwUgpBnUrg+x8fFfgaNUPJm0ME563gSV+x186TU1DXjp5AWVwUPpUEKDg4Wa47D2a0htQJifeRGF21QDgoIgVc9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U2m2nmrj; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5uRRXPr"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6983f20a8bfso3123328a12.1
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 10:59:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785088795; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ojL3JI6zXg8d3bO9k96PdvM1bkKDjdsFH6IOxG9NtdJd2axmuhj6g1dA/Wk3OrJmtC
-         luYonhf2/ALHP6GDcwPEhuofTEHIK6GYVBvhEO9DPUyWXRpeQJHSDWMN7sQ8IC3timiu
-         dejriyFMLmPzLQ5wtcOjZx2X6CD3Y3rPXNV5TLuEeuqXAxweAwrocA/8XzADNVfNc5ua
-         DJQwy89eWF0smS9GRicCTcjWmGgXfCdMN1XSFXK0/HR6SktYDxyqd00n3Xc3IILhBOGd
-         n4NEGV9Y2kWL77gdGcfX2oXRLgi3eZuB9KEYa0TzFlg/4yk8pfen30XFk7nxyypac9L7
-         Z3ZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=A7GvnEEppQ/s1FGLgIdW19vmGzL2ANouEtnB+sf4s0M=;
-        fh=yalKYYanIEb5jv9++9i5BrL5Bp5foLKdI8QhdBQ/xhM=;
-        b=EbMvLigYi5L4qIdBFtLH9qKIp1oH3R6l3Yw5HPJ4wMIOiSaflaY/0xfYPyl9sgNUsL
-         aecn9siVoKrCXBRL/YIMOBT6JE3fLXPk2oqkn/QjVERQNEdO/VO9pzyxjq1u1neTGqrv
-         nWs9bpzEhp+sn77JIkXUYazDP//jIDVI5VAMEMVidsnT4mfP6oLeDD4JFjXA01ml6SXH
-         KjmyNRs7SrEhxzsRLBcX+PcMFXKf9c7lIp3YqwH3BrLHbVXIzLErjIldEXLcdEl+Q8Ge
-         IcvNcbq2+Vg73XiMRW6bBjFBwtluCAMksNVx1KdOJtOt2In4QtKs8RYFr2yi9EC1KzC8
-         FTlw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U2m2nmrj"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38e347638adso1825434a91.0
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785088795; x=1785693595; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=A7GvnEEppQ/s1FGLgIdW19vmGzL2ANouEtnB+sf4s0M=;
-        b=C5uRRXPrmGmc2ZeZxD6VH77/DYux/jVo99z46E2bgmdDTtXl5WyLkXKGoSTHZ9TEfP
-         IZKCq+ZWCcnhLqPafVi2N6o066/L/M5Uy4AkRpHykSah9lEsO3xMGxtnKojEMgiIc5f4
-         P6ZBiIrgC3A/YIiU/ksMLj2/OaHsMtzGgbnh705eoOWvgtUAK7MquZtuL1k+q75u2Idg
-         rwz1KULz1PdGcGOhwesudskES9b7X489XHFAWWphQP/6StS7p+uXaR76kwjIIn0J15v4
-         R7KTPtP0ORMBvPzdlJlVRjczhEcHbqGXyGAWmv+60NQcp3n6ijNYt9JKi5AusrNYMhh3
-         1fVw==
+        d=gmail.com; s=20251104; t=1785091891; x=1785696691; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=j9CY769A2saZdWi21qltvoqXn4+KMZ7OcRFcA9IuhPU=;
+        b=U2m2nmrjAuhia84uIssSjB516enQVC0VA225Q9Ov4Oafb5Zpv2nbppaWzE0usvtszd
+         QIT5x1Apv1CZFTC74XJkK8cqpBglhNcYJaNvj9zbXFe2L3+MbV7LITvdjMWJJDso9XPJ
+         /zoHPrEeRP5qnloJIUSBPVUk9YKLbt4+xMhHgFu4+rDx2Ad/hp+GTYSO4hEFd1JeOXsO
+         s26hsO1lunVHDYSF6X/wGCp8keJ24PU1hS3tPs/JrU3QBZykOAvkTuiBI7PvbyQovtMZ
+         NjtPlXMGTXujPR23i7mQeqnWPsycQI3Q9+h4uAxma48LPme6owrPZP9K2tj+mZxLGmOc
+         feZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785088795; x=1785693595;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1785091891; x=1785696691;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=A7GvnEEppQ/s1FGLgIdW19vmGzL2ANouEtnB+sf4s0M=;
-        b=h2YrF9TfjoC/Qs2X06Ot4hOHbkEOKuFcAY/HhxT9a4+Yi4gcjSk9gxKUjcRycD8GAm
-         E9WBCaWL0k3vMqvR7AlsoNH3BAIGwB7JIBHCVdmHyx32IRifRD6yhDn456BIH6oKCF5n
-         BI/WUmSzxE/iSS2k4HlTLfzhnLO1TS7rhc4grKG8q/+YfpcdnF7xkowHJbkmBoPA4JzO
-         HJUxo//RDRleYqn4/ezOOltv0F4uD5JTSj5KQ00VIL/dDSXr7oqFOxsIJl+g67CG8kcs
-         2K/0v8hGCl8Xg6qRa41OP54+CctiFXa2Y4Dw1CVP6NLxDIMmEbZ8xtOhizEhNb86cPB/
-         mFvg==
-X-Forwarded-Encrypted: i=1; AHgh+RpK8Q2b3boWDPK2di4Xelaa46Ay2MpgfzJAS/myTzv/mZzX0gLbmdwqgFeHKgIkcFm8FFc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrjBX6zMaZLmNJU3mn7RSeqsRDWCAv+yLwsqYfrLR9l+2W7841
-	8UMggx7nb77wQ81Fr1EuTSiA9MV6nCObu1cF5M5Up4NplL0WGKgQn68bnxSBuDkNPZXQpUMeto8
-	dmndVfVEKU5PBnvSIb6UZ+smYYXSlAYo=
-X-Gm-Gg: AR+sD11hLv/EMsfaILnEIgDTvQ3NHD4IaOGVPn9Uc2KDG2fffgOyVMPBVgTNpb7/7Aq
-	KrWVpZxhA5dpvEnPIDSxSLgAqYgKPok3hilqUr3Vrgdvc3LfRKoPNm9SGg60Js3Wq/UC44VxrPi
-	44QPOiC895P9Wa9Lr61lVxZkpyQJUSMndMnO+du8ejUi4ztJ0IiiPx5qFqilynfyT3aYwNtxnxh
-	7bvtP2r4IylHuarrs5XvFv3n7sFe3Gf4uJNorgtniR4Kn9euMFeqxmPJ3ij5oofZAHzOWX/sNZ7
-	xsZvRLa2tuiLX8D4+abu
-X-Received: by 2002:a05:6402:354a:b0:698:d6e:bea7 with SMTP id
- 4fb4d7f45d1cf-69fc100538dmr2190719a12.14.1785088795005; Sun, 26 Jul 2026
- 10:59:55 -0700 (PDT)
+        bh=j9CY769A2saZdWi21qltvoqXn4+KMZ7OcRFcA9IuhPU=;
+        b=dz9DeVBQU7LaDAGvt7B1Nejs7bZ/7UkWScwVOu0vD4CzuAv/QDK6ZfV1sCvohNM/dB
+         qoIk8DP7KAgPCx/ivubYc5hTXUKUN3acnmZPfDx+rIB12k1UVXoxhKDOpzEwSOZ+HA1Y
+         J/NpUBaLgk5Jux/wGjvOKVTAl2oaEpooriCiGOlpry2Vq57Q5vPi7ApVJuLv5htFWlWu
+         k8TrODFIBiVaV3rxpxc7gWiTwfS1Gcgf2hC+fiShkP+gbVYQsOXK7V8oQpQpKarIlvEp
+         hn9AaPiQVggBwjvt7kzspCtF0HA9DZohWOQbueccnLWwqFSSlV4oSZD9D4UoUIXf6TVN
+         oeBg==
+X-Gm-Message-State: AOJu0Yz6HAmdfG0yI4EVXzzu1Q2WM1B/EjJVG7hrZlZaiJLdMevq4imi
+	hl/4y+8UwZhlzEfGLZJ3LsecFX1cCT8EsuFF+kAwuWnkSqZfkniCHBWjiHUnzw==
+X-Gm-Gg: AR+sD10M3oa8wHD+/A3qJUtvW3zNDJDqrC2KE0ghcQfIT0g9bQB8oCQ25PxS6XJws13
+	f11lFkogl1nZUCfioaH8Hhmeiq4XxzkYSd8/xMrzrUlGRMnTYa8P9tMCwyfxXjznf8ISAx2XJ8M
+	ykmO4nXkvPXOMRGNvx1Vi+vlRfbtJ13XFaHCBIijpqa0C3kSSA96JljkkuYqGt33kVbbSTPdOZh
+	tPtB0qdWx0fu+bGyqFD+7v5rw5Ile1QxYllYgeumvV3tE16mVVx49lE7ClwaxCVOJKiMqf02wke
+	l/AetG+82q41TA+gUWyzx0z13rgQehYtC6yMRi0M+zNFsZQf76ft1MV1Sk6Bmdj2x+k/eprjq4v
+	NiO9s3faJsxsHljf26tmtSbHWT/cFYb7EV4sYEMihzxGEwzjRX4SDmZjNW5A4EzwBkOYSLDHLiz
+	6Uacod
+X-Received: by 2002:a17:90b:5826:b0:387:df8f:1406 with SMTP id 98e67ed59e1d1-38f2978b8cfmr5224483a91.39.1785091891065;
+        Sun, 26 Jul 2026 11:51:31 -0700 (PDT)
+Received: from [127.0.0.1] ([52.159.229.50])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc548f5dsm27068613eec.17.2026.07.26.11.51.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jul 2026 11:51:30 -0700 (PDT)
+Message-Id: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
+References: <pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
+From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 26 Jul 2026 18:51:19 +0000
+Subject: [PATCH v6 0/9] [RFC] diff: add diff.<driver>.process for external hunk providers
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2356.git.git.1784125963694.gitgitgadget@gmail.com>
- <pull.2356.v2.git.git.1784812390.gitgitgadget@gmail.com> <1a790e001610d3324ec45d86ac67ca5720678cb8.1784812390.git.gitgitgadget@gmail.com>
- <xmqqo6fximn2.fsf@gitster.g> <CAH01Q-_2APONq2fXmjF=Wo08rTzScMEjyXL-G=_GH6TbjJmTBw@mail.gmail.com>
- <xmqqcxwdcmln.fsf@gitster.g> <xmqqik61yeyn.fsf@gitster.g>
-In-Reply-To: <xmqqik61yeyn.fsf@gitster.g>
-From: Lucas Zamboni Orioli <lucaszam0@gmail.com>
-Date: Sun, 26 Jul 2026 14:59:42 -0300
-X-Gm-Features: AUfX_mwbLDQe8h-RRn3na0hXH0Q6XJluHP8z5zTe7Lzi95Po9FV9Jnx1abRsKDw
-Message-ID: <CAH01Q-_k1QEcTLTMygBceUWjGNFLNewixf80bYOD2_s20jajrQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] mv: check for missing destination directory before renaming
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Lucas Zamboni Orioli via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Ben Knoble <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Michael Montalbo <mmontalbo@gmail.com>
 
-Em dom., 26 de jul. de 2026 =C3=A0s 11:59, Junio C Hamano
-<gitster@pobox.com> escreveu:
-> Think carefully about cases where 'a' is a directory and 'a/b' is a
-> symlink, or where 'a' and 'a/b' are directories and 'a/b/c' is a
-> symlink, and so on.  We do not want to craft an arbitrary rule that
-> says we allow or refuse to operate depending on the link target.
+Language-aware diff tools (e.g., Difftastic) and format-specific analyzers
+can produce better line matching than Git's builtin diff algorithm, but
+diff.<driver>.command replaces Git's diff output with the program's own
+output, so display features like word diff, function context, and color
+cannot operate on it; and because the program is consulted only for that
+patch output, blame, --stat, and git log -L fall back to Git's builtin line
+matching and cannot benefit from the tool at all.
 
-Thanks for pushing on this, chasing the symlink case down turned up
-more than a bad message. With a tracked symlink in the leading path,
-"git mv" leaves the index inconsistent with the worktree:
+This series adds diff.<driver>.process, a long-running subprocess protocol
+that lets an external tool control which lines Git considers changed while
+Git handles all output formatting. The protocol follows
+filter.<driver>.process: pkt-line over stdin/stdout, capability negotiation,
+one process per Git invocation.
 
-    mkdir repo && cd repo
-    git init
-    echo content >a
-    mkdir real-dir
-    echo content >real-dir/b
-    ln -s . c
-    git add .
-    git commit -m "initial"
-    git mv a c/real-dir/a
-    git status
+The tool receives both file versions and returns changed regions (line
+ranges in the old and new file). Git validates and feeds them into the xdiff
+pipeline in place of the builtin diff algorithm. When the tool returns no
+hunks, Git treats the files as having no changes, which propagates through
+patch output, the --stat summary, blame, and git log -L. The request also
+carries the two blobs' object names (old-oid/new-oid) so a tool can cache
+its analysis keyed on the pair.
 
-'c' is a tracked symlink to '.'. The move follows it, so on disk the
-file lands at the resolved path 'real-dir/a', but the index records
-the literal 'c/real-dir/a'. "git status" then reports a staged rename
-to 'c/real-dir/a', an unstaged deletion of that same path (nothing is
-there on disk), and the real file untracked at 'real-dir/a', with the
-symlink 'c' also shown untracked. A later "git add" did reconcile it
-by finding the file at its real location, but "git mv" on its own has
-already produced an index that describes a worktree that doesn't
-exist, it got there precisely by traversing a tracked symlink.
+ * Patch 1: document how an external diff driver (diff.<driver>.command)
+   relates to the rest of Git's diff features, so the contrast with the new
+   process driver is clear.
+ * Patch 2: xdiff plumbing for externally supplied hunks.
+ * Patch 3: diff.<driver>.process config key.
+ * Patch 4: refactor subprocess API to separate process lifecycle from
+   hashmap management, since the diff process stores its subprocess on the
+   userdiff driver rather than in a hashmap.
+ * Patch 5: the main feature, including the old-oid/new-oid request metadata
+   for blob-pair caching.
+ * Patch 6: bypass knobs (--no-ext-diff, format-patch).
+ * Patch 7: blame integration so the tool can declare commits as having no
+   changes; introduces the shared xdi_diff_process() consult-then-diff
+   helper that blame and git log -L both use.
+ * Patch 8: --stat/--numstat/--shortstat consult the tool, so the summary
+   agrees with the patch output.
+ * Patch 9: git log -L range tracking consults the tool, so a reformat-only
+   commit is dropped from the log rather than shown with an empty diff.
 
-So this is the "not careful enough" case you suspected, and the fix is
-the behavior you described: refuse to operate when any component of the
-destination's leading path is a symlink, independent of where it
-points. I'm thinking of using has_symlink_leading_path() (symlinks.c) for
-that check, which is what "git apply" already uses to avoid following in-tr=
-ee
-symlinks, so the behavior stays consistent with the rest of the tree.
+A "Which features consult the diff process" section in gitattributes(5) lays
+out, per feature, why each does or does not consult the process (patch
+output, blame, summary formats, and the -L line-range view do; pickaxe -G,
+patch-id, merge, range-diff, --check, and --raw do not, with reasons).
+Combined diffs (--cc) remain on the builtin algorithm and are noted as
+future work.
 
-For v3 I'll fold this into the series: the leading-directory check will
-reject a missing directory or a non-directory/symlink component up
-front, which covers both the original misleading-error case and this
-symlink traversal. Tests will cover a symlink as the final component
-and as an intermediate one ('a/b/c' with 'a' a symlink), plus the
-existing missing-directory and dry-run cases.
+Changes since v5:
+
+ * Changed series to be based on top of the in-flight
+   mm/line-log-limited-ops:
+   
+   https://lore.kernel.org/git/pull.2152.v2.git.1782581342.gitgitgadget@gmail.com/
+
+ * builtin_diffstat() now routes the process's hunks through that topic's -L
+   line-range filter, so "git log -L --stat" scopes the tool's changed-line
+   counts to the tracked range (patch 8, with a new t4080 test).
+
+Michael Montalbo (9):
+  gitattributes: document how external diff drivers relate to diff
+    features
+  xdiff: support external hunks via xpparam_t
+  userdiff: add diff.<driver>.process config
+  sub-process: separate process lifecycle from hashmap management
+  diff: add long-running diff process via diff.<driver>.process
+  diff: bypass diff process with --no-ext-diff and in format-patch
+  blame: consult diff process for no-hunk detection
+  diff: consult diff process for --stat counts
+  line-log: consult diff process for range tracking
+
+ Documentation/config/diff.adoc           |   5 +
+ Documentation/diff-algorithm-option.adoc |   3 +
+ Documentation/diff-options.adoc          |   4 +-
+ Documentation/gitattributes.adoc         | 274 +++++++
+ Makefile                                 |   2 +
+ blame.c                                  |  24 +-
+ builtin/log.c                            |   7 +
+ diff-process.c                           | 529 ++++++++++++
+ diff-process.h                           |  75 ++
+ diff.c                                   |  84 +-
+ diff.h                                   |   6 +
+ line-log.c                               |  33 +-
+ meson.build                              |   1 +
+ sub-process.c                            |  28 +-
+ sub-process.h                            |   9 +-
+ t/helper/meson.build                     |   1 +
+ t/helper/test-diff-process-backend.c     | 381 +++++++++
+ t/helper/test-tool.c                     |   1 +
+ t/helper/test-tool.h                     |   1 +
+ t/meson.build                            |   1 +
+ t/t4080-diff-process.sh                  | 996 +++++++++++++++++++++++
+ userdiff.c                               |   7 +
+ userdiff.h                               |   5 +
+ xdiff-interface.c                        |   7 +-
+ xdiff/xdiff.h                            |  16 +
+ xdiff/xdiffi.c                           |  84 +-
+ xdiff/xprepare.c                         |  10 +
+ xdiff/xprepare.h                         |   1 +
+ 28 files changed, 2566 insertions(+), 29 deletions(-)
+ create mode 100644 diff-process.c
+ create mode 100644 diff-process.h
+ create mode 100644 t/helper/test-diff-process-backend.c
+ create mode 100755 t/t4080-diff-process.sh
+
+
+base-commit: f67c51df064d2b64b257bd8c17d757cc0ce1b7fc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2120%2Fmmontalbo%2Fmm%2Fstructural-diff-backend-clean-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2120/mmontalbo/mm/structural-diff-backend-clean-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/2120
+
+Range-diff vs v5:
+
+  1:  0fd994a3d3 =  1:  b4a1ff4dea gitattributes: document how external diff drivers relate to diff features
+  2:  2004502549 =  2:  ed2db0ac59 xdiff: support external hunks via xpparam_t
+  3:  926cf01af6 =  3:  115e31d806 userdiff: add diff.<driver>.process config
+  4:  363d459ff6 =  4:  850c7cbcf5 sub-process: separate process lifecycle from hashmap management
+  5:  d003bc1f15 =  5:  4526809b7f diff: add long-running diff process via diff.<driver>.process
+  6:  b2e80f014e =  6:  4795743ab9 diff: bypass diff process with --no-ext-diff and in format-patch
+  7:  cf5bb8984a =  7:  00573a88a9 blame: consult diff process for no-hunk detection
+  8:  c1d02d0e15 !  8:  7e3ba56967 diff: consult diff process for --stat counts
+     @@ Commit message
+          Otherwise the tool's hunks, or the builtin fallback, feed the counts
+          through the shared xpparam_t.
+      
+     +    Under -L, route the surviving hunks through the same line-range filter
+     +    builtin_diffstat() already uses for a tracked range, so a
+     +    process-provided diff is scoped to that range: "git log -L<range>
+     +    --stat" counts the tool's changed lines within the range rather than
+     +    the builtin line diff's.
+     +
+          Like the builtin summary path, builtin_diffstat() does not apply
+          textconv, so the process is consulted on the raw blob content here,
+          unlike builtin_diff() which sends textconv'd content.  This keeps
+     @@ Commit message
+          Add tests covering counts from the tool's hunks (--numstat,
+          --shortstat), an equivalent file producing no stat line, --stat
+          --exit-code, the raw non-textconv content the tool receives, a
+     -    multi-file mix of equivalent and changed files, and a mode-only
+     -    change.
+     +    multi-file mix of equivalent and changed files, a mode-only change,
+     +    and a range-scoped --stat under "git log -L" that reflects the tool's
+     +    hunks.
+      
+          Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+      
+     @@ diff.c: static void builtin_diffstat(const char *name_a, const char *name_b,
+       		xecfg.ctxlen = o->context;
+       		xecfg.interhunkctxlen = o->interhunkcontext;
+       		xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
+     --		if (xdi_diff_outf(&mf1, &mf2, NULL,
+     +-
+     +-		if (p->line_ranges) {
+     +-			struct line_range_filter lr_filter;
+     +-
+     +-			line_range_filter_init(&lr_filter, p->line_ranges,
+     +-					       diffstat_consume, diffstat);
+     +-
+     +-			if (line_range_filter_diff(&lr_filter, &mf1, &mf2,
+     +-						   &xpp, &xecfg))
+      +		/*
+      +		 * Consult the diff process so --stat reflects the
+      +		 * tool's view of which lines changed rather than the
+     @@ diff.c: static void builtin_diffstat(const char *name_a, const char *name_b,
+      +		 * xdiff entirely, leaving added and deleted at zero so
+      +		 * the file is pruned below, just as builtin_diff() emits
+      +		 * no patch for an equivalent file.
+     ++		 *
+     ++		 * Under -L, feed the tool's hunks through the same
+     ++		 * line-range filter the builtin stat uses, so a
+     ++		 * process-provided diff is scoped to the tracked range.
+      +		 */
+      +		if (diff_process_fill_hunks(o, name_a, &mf1, &mf2,
+      +					    one->oid_valid ? &one->oid : NULL,
+      +					    two->oid_valid ? &two->oid : NULL,
+      +					    &xpp)
+     -+		    != DIFF_PROCESS_EQUIVALENT &&
+     -+		    xdi_diff_outf(&mf1, &mf2, NULL,
+     - 				  diffstat_consume, diffstat, &xpp, &xecfg))
+     - 			die("unable to generate diffstat for %s", one->path);
+     ++		    != DIFF_PROCESS_EQUIVALENT) {
+     ++			if (p->line_ranges) {
+     ++				struct line_range_filter lr_filter;
+     ++
+     ++				line_range_filter_init(&lr_filter, p->line_ranges,
+     ++						       diffstat_consume, diffstat);
+     ++
+     ++				if (line_range_filter_diff(&lr_filter, &mf1, &mf2,
+     ++							   &xpp, &xecfg))
+     ++					die("unable to generate diffstat for %s",
+     ++					    one->path);
+     ++			} else if (xdi_diff_outf(&mf1, &mf2, NULL, diffstat_consume,
+     ++						 diffstat, &xpp, &xecfg))
+     + 				die("unable to generate diffstat for %s",
+     + 				    one->path);
+     +-		} else if (xdi_diff_outf(&mf1, &mf2, NULL,
+     +-				  diffstat_consume, diffstat, &xpp, &xecfg))
+     +-			die("unable to generate diffstat for %s", one->path);
+     ++		}
+      +		free(xpp.external_hunks);
+       
+       		if (DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two)) {
+     @@ t/t4080-diff-process.sh: test_expect_success 'diff process with --exit-code and
+      +	test_grep "2 deletions" actual
+      +'
+      +
+     ++test_expect_success 'diff process scopes --stat to the tracked range under log -L' '
+     ++	test_when_finished "rm -f backend.log" &&
+     ++	cat >rangestat.c <<-\EOF &&
+     ++	line1
+     ++	line2
+     ++	line3
+     ++	line4
+     ++	OLD5
+     ++	OLD6
+     ++	line7
+     ++	line8
+     ++	OLD9
+     ++	OLD10
+     ++	EOF
+     ++	git add rangestat.c &&
+     ++	git commit -m "add rangestat.c" &&
+     ++
+     ++	cat >rangestat.c <<-\EOF &&
+     ++	line1
+     ++	line2
+     ++	line3
+     ++	line4
+     ++	NEW5
+     ++	NEW6
+     ++	line7
+     ++	line8
+     ++	NEW9
+     ++	NEW10
+     ++	EOF
+     ++	git add rangestat.c &&
+     ++	git commit -m "change rangestat.c" &&
+     ++
+     ++	# The file changes at lines 5-6 and 9-10, but fixed-hunk reports
+     ++	# only 5-6.  The builtin line diff counts both regions (4/4); the
+     ++	# tool hunks flow through the same line-range filter the stat uses,
+     ++	# so the range-scoped stat reflects the tool view instead (2/2).
+     ++	git log --no-ext-diff -L1,10:rangestat.c --oneline --stat >builtin &&
+     ++	test_grep "4 insertions(+), 4 deletions(-)" builtin &&
+     ++
+     ++	git -c diff.cdiff.process="$BACKEND --mode=fixed-hunk --log=backend.log" \
+     ++		log -L1,10:rangestat.c --oneline --stat >actual &&
+     ++	test_grep "2 insertions(+), 2 deletions(-)" actual &&
+     ++	test_grep ! "4 insertions" actual &&
+     ++	test_grep "command=hunks pathname=rangestat.c" backend.log
+     ++'
+     ++
+      +test_expect_success 'diff process equivalent file makes --stat --exit-code succeed' '
+      +	# The tool reports worddiff.c equivalent, so --exit-code reports
+      +	# no change (0); the builtin diff would report a change (1).
+  9:  c3c17ba8fc =  9:  ffa6954d67 line-log: consult diff process for range tracking
+
+-- 
+gitgitgadget
