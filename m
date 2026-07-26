@@ -1,71 +1,70 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537153D5674
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B3F3BFE5D
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 18:51:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785091902; cv=none; b=dVLJax2zh6wijy1MNlPuhtCwaXoVVChgfbjyGB9TqnwvwgXAHBIb++WbUmnqsW2Nd9pDjaFUf5WX2lbRahB44jL068FqeZud231f4CuU6JTt5fA0ZLn1a1lEVPN03OgIxOHw628zdkRjHlUeeEjVxh8R+uhseHDF4Ef9rKvV/3s=
+	t=1785091904; cv=none; b=W6NchKnarNR9+bUVTdCuNvlEUFKuQUyrm/IGE/edBZ4MO6LprbEy7fpCXRuQ1CDZWfdk7rIjOCDMXuMjyEMQpGabnZYU3XwArknRQlbfaGJYD/WS+oelMBOJXYYdA30voQubJxYY2783rY2AqQU+n272TE8g7GG5dkV0LLNK9To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785091902; c=relaxed/simple;
-	bh=iH8V+ORmVm2DGs60rY6wg/Vw16ZNpfIO8Ku55CRTkW8=;
+	s=arc-20240116; t=1785091904; c=relaxed/simple;
+	bh=eQBIMtrQ4KP6RjHfhhKdtJFNdmFinOCqwPMWx4hlKdQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=f/27e5gHsnDYbs74+QGLTT73eM7+lN5uRJPMoVL4XITGc9y62LsdcVqKTwoWje0Pn+UdcMA5Agm+hnw6/7ibXnahv2dHOwmRHI3+PmWeAwve6HTJHgD3uZTSgDjWvoJQrzAKwdf2h6m0z9LwVqc8n7CGeMtZ6KPXY/fkUaiZqXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BI8Aguty; arc=none smtp.client-ip=209.85.216.50
+	 MIME-Version:To:Cc; b=WB+6LNzZ8oX9QjwHMdphr3m+0RIxKEUGjLZFe1Cdoq34YWmj+0smuHqTXJgwIizaLUw5Qq7ETydQNyaCdlqPm2b+qrWW6N0Qs/0VImkvP63mXFTDL0zVgoCqozBxMSlNPG+D6UHbwj/vfclvXciuv987d/u6EYyVJmmLw1nDTRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bl39LlBH; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BI8Aguty"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-385ea3ce80dso2033895a91.2
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bl39LlBH"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-cbb8b54fcf8so2011875a12.0
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 11:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785091901; x=1785696701; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785091902; x=1785696702; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=aeAVsRd1f76dy3d/+Jahyd1tMJ2T1eJU8ftf2DMNF20=;
-        b=BI8Agutyj1ues9u1hG924nRN7JPPbFSS6Od4NXCeMEzmB+D6xvcs4c3FbBKxdeENK5
-         weL4lQGVVEAjZmfu9CE/pnT43lspn6mtQJ7Uwolbj8g75lYdzVlLFzbJnm2RwXC9G7RO
-         eKm5iYFnSZgU67aplGIKS5leLtvjPuU13+nrXk0BeGOKMXGZZpBibgHK6TEiJedelcbA
-         8K4cGzxVj1B3HcFA11neiBDSahBKYqV9PI9ojso4DqvDzQxjPM+ALy7K0gt4G6mWINaZ
-         HZDMKU67jBh4EVyDCamU/fiya2vcoBE88/EagMmmuEG3qIuSFRWagHXGBemIjlRvFJlO
-         CUgA==
+        bh=fEelhvMbuwjXiV00oGCRmNqUsavwD0hHJWOv5/InFxw=;
+        b=bl39LlBHyzxK/MoXrE7oUnFSzXh1tdi9TAeQ/NWQbTHgklckFIeiDZpTckSoscT0CQ
+         TAvkImcKqOF+DRmaCbbbls8ViM6Z2SGyrD5NPP5+NvRRFR6YtpOvgMJIddkRAudX1CwX
+         BAvTyOLnizWijXaNKPVEAypIp7lqmhfmrgbvspFfqJqBYmzNmIgUx6kSG2TyE8/BC47m
+         nIcmPkLZKj3hJeHW88wBP1cAuMI2Dc8fw1F6OtkRS6Fp/foH9hImJwWidoPHsrJQzB6g
+         3lSsbw/Bc4SvG0v36jie5YhMmdZnjvc9/5+AdNuXrOahuQAG2r+Og4ObA4x2RvkI/K+7
+         kHYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785091901; x=1785696701;
+        d=1e100.net; s=20251104; t=1785091902; x=1785696702;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=aeAVsRd1f76dy3d/+Jahyd1tMJ2T1eJU8ftf2DMNF20=;
-        b=FDLClFuk91lecsjt+1BO/yUx/FMWRBUqeGv0C7QQH1DjXHdJatkBydPDvYR9gyTx3T
-         vas+m3qchJO9RbZVA2r7Q5IcH89oWHU0+WZltnOecFT37j1/Cj8kzGKeeCfxNX2kIOMv
-         tp2mI6i+bhSNYD0U3De2crXASMErpUJqeghI1FugIXwQOLTkD+xRs2e8owdr41dU1+nU
-         vHlYchNjfTqKOozyAC9YIZ1bxViDZuHmiJ7gGb3zjYuu4t6FZS+YknnsHYALqCfTgLNR
-         je73z7G45xFrT9bgx6oHQq1EbzhK3NrUAzsIjnVIapjxhe6U7zZq0F5xCPGPm+KXMcwR
-         FQOA==
-X-Gm-Message-State: AOJu0YzNsyqEG5oJmfUF6LGqd0ySCE7XCKxbPRTO+PD3lgVdlQFh141t
-	Je9jjLigH+TyQpDz9r4hJhYyFPVT+vr0+2JUQ9wla1wxniJbzKxPzOjfiLcJXw==
-X-Gm-Gg: AR+sD12FB3nYAaLg2pGxTdwSVPLcHh/EwJhkGsvmj2CTHbZkiGiZFgC8q/hWElwuMLQ
-	vjxdmkYXdSreNxwR879h058TZMSybvaP+FC6sgjADBme7fWSZXQu00gZwH0VMDL5ojAH+yEGII+
-	NvlnltMKjhDAN7PWtsKyuw9yhP9fVLJXUx6e4RoVBvHLE2SEbFmFYQQHBelD5Rq7R4+WOyZJdXC
-	chyz9jZz1UOHx9M8jOHPUaiEAT7Jp99EAxp9XaFzklGH3YQTNPuxVjAF2DXR/LG0UTqgl5SIZho
-	z8joq4IxeZ4nvJK/88N+FLzeWyoiLa99J4pq2F1pNJvrdBcR5kFsWP5RwON4Bv5EDSTlyOH+mZR
-	3mnd3w4jji0xpuWfVR/IMusX7ZZ6Pkavkxn/EejNrThBWWZuVkg3AoYXceHq8lWe2NzORoSyGfj
-	eTmFIE2WShWmO8htrtIRLJFDw6BQ==
-X-Received: by 2002:a17:90b:180c:b0:38e:c7b0:84ad with SMTP id 98e67ed59e1d1-38f2926696bmr5469517a91.0.1785091900529;
-        Sun, 26 Jul 2026 11:51:40 -0700 (PDT)
+        bh=fEelhvMbuwjXiV00oGCRmNqUsavwD0hHJWOv5/InFxw=;
+        b=O9IS+eN07WyoIiNyoCVWqk5JtW1xsvtKa9pol5aGf3odWjbjvRDx7PFeiLSEoBAzaT
+         wcz3wYEcINPrrguelvLhZ6KJkjA6wTxoJIeFp7bdzA2JspZDvPST6Ct1qqnezQfdB0dz
+         bd20lyGgCWLUwaeYvNMAWRpRF4uCkh9xFc+ltaDfnF6IrBOUkK+LydoJ//Va/fxRkIrZ
+         UVCEx2iTBJCrg/7xNjrIxogBui6bt5HOA6NdERcswdFhJuo2p7ng2++BOeFE0owvQNYz
+         xIZrJDhPNxZFDq1bb3vUXDEvvv+X0IRsBiwI/hco8JuhXJ7cXtrbSZfoCfMZLTx1yGQ8
+         EazA==
+X-Gm-Message-State: AOJu0Yzx/y2+WcFxecygif8+lixCj782SR1AoLmO/HeC7oIbQH6L5OQo
+	E2TXxrllp+cDAS0RsAbyNseFG6y1FC1qJS8ep9lF/p1TeUQdthBucLPIEP9q6g==
+X-Gm-Gg: AR+sD13hz4qDlQw8lpIKpYdIxHihdPr6CNXokcWjCSnYn2gGkQ4K/6wvj4RDeQdYFQm
+	r+J3PtpSRDeUg2SXIgAGFDYMmU0dLBNjXkWN6h9lbrroMNS4mpZaebY4/oSyjOEj1SaFOK5p2NH
+	AJGS1l6xirTKHRks4QFCuUfTHW2W6X6aP3hWwJlCbh8e5ot2adOskLuTfncknq5/6ajARgrJ3QL
+	qRnb/+ElwFrefIo/4bAgzqiJG771f/EM82Y3BFqcadxMFjSc5bD/39nqxRFwVAuB9XuOjEj14jP
+	x6gUUvIQ4KTksNFPSvp6wwizcQnNsUEw1u9WuEc+H9PFYXsXwlXhajl+Z3JhZgpRzCM67yleXxV
+	vT2uO/dVBH6NoLRNzMYe2IVCXnzMI7PSCXo3Ke6cc21IapVEJ+NiXnpJvQ5j40fOMFRlDN0yRqr
+	aeCVf8hodMN/a3pis=
+X-Received: by 2002:a05:6a20:2d22:b0:3bf:b182:94e with SMTP id adf61e73a8af0-3c67dab4684mr5679678637.5.1785091902148;
+        Sun, 26 Jul 2026 11:51:42 -0700 (PDT)
 Received: from [127.0.0.1] ([52.159.229.50])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d2eb01aa0sm32953268c88.3.2026.07.26.11.51.39
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d2eb01aa0sm32953383c88.3.2026.07.26.11.51.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 11:51:40 -0700 (PDT)
-Message-Id: <4795743ab97a690b0a3544071acf7b417f571e75.1785091889.git.gitgitgadget@gmail.com>
+        Sun, 26 Jul 2026 11:51:41 -0700 (PDT)
+Message-Id: <00573a88a9d1f83a115e90ceacf39034b37eafee.1785091889.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
 References: <pull.2120.v5.git.1784149323.gitgitgadget@gmail.com>
 	<pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Jul 2026 18:51:25 +0000
-Subject: [PATCH v6 6/9] diff: bypass diff process with --no-ext-diff and in
- format-patch
+Date: Sun, 26 Jul 2026 18:51:26 +0000
+Subject: [PATCH v6 7/9] blame: consult diff process for no-hunk detection
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,175 +81,313 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-Make --no-ext-diff disable diff.<driver>.process in addition to
-diff.<driver>.command.  Although the two mechanisms work differently
-(command replaces Git's output, process feeds hunks back into the
-pipeline), both invoke external tools and --no-ext-diff means
-"no external tools."
+When a diff process is configured via diff.<driver>.process,
+consult it during blame's per-commit diffing.  If the process
+returns no hunks for a commit's changes to a file, treat the
+commit as having no changes, causing blame to attribute lines
+to earlier commits.
 
-Replace the OPT_BOOL for --ext-diff with an OPT_CALLBACK that
-sets both allow_external and no_diff_process, so a single option
-controls both.  Passing --ext-diff explicitly clears
-no_diff_process, so a later --ext-diff overrides an earlier
---no-ext-diff.
+Introduce xdi_diff_process(), a process-aware xdi_diff() that
+consults the process, runs xdiff on the tool's hunks or on the
+builtin algorithm when it does not apply, frees the hunks, and
+reports DIFF_PROCESS_EQUIVALENT (without running xdiff) so the caller
+can drop or skip the change.  It is the shared consult-then-diff path
+for consumers that work on raw hunks: blame's pass_blame_to_parent()
+uses it here, and git log -L reuses it later.  builtin_diff() keeps
+consulting the process directly, because it tests for equivalence
+early, before its funcname-pattern and word-diff setup, so a
+reformat-only file short-circuits without that work.
 
-Disable the diff process unconditionally in format-patch so that
-generated patches are always based on the builtin diff algorithm
-and can be applied reliably by recipients who do not have the
-external tool.
+Blame's -w option is not communicated to the process and it could not
+honor it, so blame must fall back to the builtin diff there.  Because
+blame keeps its whitespace flags in sb->xdl_opts rather than diffopt,
+the process bypass keys off xpp (the flags the diff actually runs
+with), which covers blame without a guard of its own.
 
-Document that --diff-algorithm also bypasses the diff process,
-since it forces the builtin algorithm.
+The subprocess is long-running (one startup cost amortized across the
+blame traversal), but each commit in the file's history incurs a
+round-trip to the tool.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- Documentation/diff-algorithm-option.adoc |  3 +++
- Documentation/diff-options.adoc          |  4 +++-
- Documentation/gitattributes.adoc         |  6 +++---
- builtin/log.c                            |  7 +++++++
- diff.c                                   | 16 ++++++++++++++--
- diff.h                                   |  5 ++++-
- t/t4080-diff-process.sh                  | 16 ++++++++++++++++
- 7 files changed, 50 insertions(+), 7 deletions(-)
+ blame.c                 |  24 +++++++-
+ diff-process.c          |  38 ++++++++++++
+ diff-process.h          |  26 +++++++++
+ t/t4080-diff-process.sh | 126 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 213 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/diff-algorithm-option.adoc b/Documentation/diff-algorithm-option.adoc
-index 8e3a0b63d7..4d7e2ec35f 100644
---- a/Documentation/diff-algorithm-option.adoc
-+++ b/Documentation/diff-algorithm-option.adoc
-@@ -18,3 +18,6 @@
- For instance, if you configured the `diff.algorithm` variable to a
- non-default value and want to use the default one, then you
- have to use `--diff-algorithm=default` option.
-++
-+If you explicitly choose a diff algorithm, it also bypasses
-+`diff.<driver>.process` (see linkgit:gitattributes[5]).
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index 8a63b5e164..18b8b0ed24 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -825,7 +825,9 @@ endif::git-format-patch[]
- 	to use this option with linkgit:git-log[1] and friends.
- 
- `--no-ext-diff`::
--	Disallow external diff drivers.
-+	Disallow external diff helpers, including
-+	`diff.<driver>.command` and `diff.<driver>.process`
-+	(see linkgit:gitattributes[5]).
- 
- `--textconv`::
- `--no-textconv`::
-diff --git a/Documentation/gitattributes.adoc b/Documentation/gitattributes.adoc
-index f4ca4a8c7e..a03fb9deb1 100644
---- a/Documentation/gitattributes.adoc
-+++ b/Documentation/gitattributes.adoc
-@@ -1073,9 +1073,9 @@ display, which is covered above); and combined diffs (`--cc` and merge
- diffs), whose protocol would have to be extended from a single old/new
- pair to one comparison per merge parent.
- 
--`--diff-algorithm` bypasses the process entirely, for every feature
--listed above.  The whitespace-ignoring options (`-w`,
--`--ignore-space-change`, `--ignore-blank-lines`, and the like),
-+`--no-ext-diff` and `--diff-algorithm` bypass the process entirely,
-+for every feature listed above.  The whitespace-ignoring options
-+(`-w`, `--ignore-space-change`, `--ignore-blank-lines`, and the like),
- `-I<regex>`, and `--anchored` also bypass it for the affected files:
- the tool is never told about these options, so it could not honor
- them, and Git falls back to the builtin diff, which does.
-diff --git a/builtin/log.c b/builtin/log.c
-index e464b30af4..363052f468 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -2217,6 +2217,13 @@ int cmd_format_patch(int argc,
- 	if (argc > 1)
- 		die(_("unrecognized argument: %s"), argv[1]);
- 
-+	/*
-+	 * Disable diff.<driver>.process so that patches generated by
-+	 * format-patch are always based on the builtin diff algorithm
-+	 * and can be applied reliably.
-+	 */
-+	rev.diffopt.flags.no_diff_process = 1;
-+
- 	if (rev.diffopt.output_format & DIFF_FORMAT_NAME)
- 		die(_("--name-only does not make sense"));
- 	if (rev.diffopt.output_format & DIFF_FORMAT_NAME_STATUS)
-diff --git a/diff.c b/diff.c
-index aab012f922..1a487bb353 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6071,6 +6071,17 @@ static int diff_opt_submodule(const struct option *opt,
- 	return 0;
- }
- 
-+static int diff_opt_ext_diff(const struct option *opt,
-+			     const char *arg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+
-+	BUG_ON_OPT_ARG(arg);
-+	options->flags.allow_external = !unset;
-+	options->flags.no_diff_process = unset;
-+	return 0;
-+}
-+
- static int diff_opt_textconv(const struct option *opt,
- 			     const char *arg, int unset)
+diff --git a/blame.c b/blame.c
+index 977cbb7097..d159de0367 100644
+--- a/blame.c
++++ b/blame.c
+@@ -19,6 +19,8 @@
+ #include "tag.h"
+ #include "trace2.h"
+ #include "blame.h"
++#include "diff-process.h"
++#include "xdiff-interface.h"
+ #include "alloc.h"
+ #include "commit-slab.h"
+ #include "bloom.h"
+@@ -1943,6 +1945,9 @@ static void pass_blame_to_parent(struct blame_scoreboard *sb,
+ 				 struct blame_origin *parent, int ignore_diffs)
  {
-@@ -6401,8 +6412,9 @@ struct option *add_diff_options(const struct option *opts,
- 			 N_("exit with 1 if there were differences, 0 otherwise")),
- 		OPT_BOOL(0, "quiet", &options->flags.quick,
- 			 N_("disable all output of the program")),
--		OPT_BOOL(0, "ext-diff", &options->flags.allow_external,
--			 N_("allow an external diff helper to be executed")),
-+		OPT_CALLBACK_F(0, "ext-diff", options, NULL,
-+			       N_("allow an external diff helper to be executed"),
-+			       PARSE_OPT_NOARG, diff_opt_ext_diff),
- 		OPT_CALLBACK_F(0, "textconv", options, NULL,
- 			       N_("run external text conversion filters when comparing binary files"),
- 			       PARSE_OPT_NOARG, diff_opt_textconv),
-diff --git a/diff.h b/diff.h
-index 7dc157968d..ee034d240d 100644
---- a/diff.h
-+++ b/diff.h
-@@ -173,7 +173,10 @@ struct diff_flags {
- 	 */
- 	unsigned allow_external;
+ 	mmfile_t file_p, file_o;
++	xpparam_t xpp = {0};
++	xdemitconf_t xecfg = {0};
++	xdemitcb_t ecb = {NULL};
+ 	struct blame_chunk_cb_data d;
+ 	struct blame_entry *newdest = NULL;
  
--	/** Disables diff.<driver>.process. */
-+	/**
-+	 * Disables diff.<driver>.process.  Set by --no-ext-diff and by
-+	 * format-patch.
+@@ -1961,7 +1966,24 @@ static void pass_blame_to_parent(struct blame_scoreboard *sb,
+ 			 &sb->num_read_blob, ignore_diffs);
+ 	sb->num_get_patch++;
+ 
+-	if (diff_hunks(&file_p, &file_o, blame_chunk_cb, &d, sb->xdl_opts))
++	xpp.flags = sb->xdl_opts;
++	xecfg.hunk_func = blame_chunk_cb;
++	ecb.priv = &d;
++	/*
++	 * Consult the diff process, then attribute the resulting chunks
++	 * via blame_chunk_cb.  It bypasses the process for the whitespace-
++	 * ignoring options it cannot honor (they live in xpp.flags, which
++	 * the consultation checks), and when the process reports the blobs
++	 * equivalent it runs no diff, so blame passes this commit and looks
++	 * past it.  Look up the driver by the parent (old) path, as
++	 * builtin_diff() does with name_a, so a renamed file resolves to the
++	 * same driver across diff, blame, and line-log.  Pass no
++	 * old-oid/new-oid: blame diffs each blob pair once, so the tool gains
++	 * nothing from a per-invocation cache key.
 +	 */
- 	unsigned no_diff_process;
++	if (xdi_diff_process(&sb->revs->diffopt, parent->path,
++			     &file_p, &file_o, NULL, NULL, &xpp, &xecfg, &ecb)
++	    == DIFF_PROCESS_ERROR)
+ 		die("unable to generate diff (%s -> %s)",
+ 		    oid_to_hex(&parent->commit->object.oid),
+ 		    oid_to_hex(&target->commit->object.oid));
+diff --git a/diff-process.c b/diff-process.c
+index 4c748fdd2a..191b2b67b2 100644
+--- a/diff-process.c
++++ b/diff-process.c
+@@ -37,6 +37,7 @@
+ #include "sub-process.h"
+ #include "pkt-line.h"
+ #include "strbuf.h"
++#include "xdiff-interface.h"
+ #include "xdiff/xdiff.h"
  
- 	/**
+ #define CAP_HUNKS (1u << 0)
+@@ -489,3 +490,40 @@ enum diff_process_result diff_process_fill_hunks(
+ 	}
+ 	return DIFF_PROCESS_SKIP;
+ }
++
++enum diff_process_result xdi_diff_process(
++		struct diff_options *diffopt,
++		const char *path,
++		mmfile_t *file_a,
++		mmfile_t *file_b,
++		const struct object_id *oid_a,
++		const struct object_id *oid_b,
++		xpparam_t *xpp,
++		xdemitconf_t *xecfg,
++		xdemitcb_t *ecb)
++{
++	enum diff_process_result res;
++
++	/*
++	 * Consult the diff process, then run xdiff either constrained to
++	 * the tool's hunks or, when the process does not apply, computing
++	 * the diff itself as a fallback.  EQUIVALENT short-circuits: the
++	 * caller decides what "no change" means for it (drop the commit,
++	 * skip the file, ...), so xdiff is not run.
++	 *
++	 * A SKIP/ERROR from the process just selects the builtin path
++	 * (its warning, if any, was already emitted), so the result then
++	 * reflects whether xdiff itself succeeded, not the process.
++	 */
++	res = diff_process_fill_hunks(diffopt, path, file_a, file_b,
++				      oid_a, oid_b, xpp);
++	if (res == DIFF_PROCESS_EQUIVALENT)
++		return res;
++
++	res = xdi_diff(file_a, file_b, xpp, xecfg, ecb) < 0
++		? DIFF_PROCESS_ERROR : DIFF_PROCESS_OK;
++
++	FREE_AND_NULL(xpp->external_hunks);
++	xpp->external_hunks_nr = 0;
++	return res;
++}
+diff --git a/diff-process.h b/diff-process.h
+index 8d00dafe1d..5e5b514b77 100644
+--- a/diff-process.h
++++ b/diff-process.h
+@@ -46,4 +46,30 @@ enum diff_process_result diff_process_fill_hunks(
+ 		const struct object_id *oid_b,
+ 		xpparam_t *xpp);
+ 
++/*
++ * Process-aware xdi_diff(): consult the diff process for 'path', then
++ * run xdiff either constrained to the tool's hunks or computing the
++ * diff itself when the process does not apply or fails.  Frees any
++ * hunks it obtained before returning.
++ *
++ * Returns DIFF_PROCESS_EQUIVALENT (without running xdiff) when the tool
++ * reports the blobs equal, so the caller can drop or skip the change;
++ * DIFF_PROCESS_OK when xdiff ran (on tool hunks or builtin); and
++ * DIFF_PROCESS_ERROR if xdiff itself errored.
++ *
++ * The caller fills xpp (flags, ignore_regex, anchors) and xecfg/ecb as
++ * for a direct xdi_diff() call.  oid_a/oid_b are forwarded to
++ * diff_process_fill_hunks() (see there).
++ */
++enum diff_process_result xdi_diff_process(
++		struct diff_options *diffopt,
++		const char *path,
++		mmfile_t *file_a,
++		mmfile_t *file_b,
++		const struct object_id *oid_a,
++		const struct object_id *oid_b,
++		xpparam_t *xpp,
++		xdemitconf_t *xecfg,
++		xdemitcb_t *ecb);
++
+ #endif /* DIFF_PROCESS_H */
 diff --git a/t/t4080-diff-process.sh b/t/t4080-diff-process.sh
-index 3b75df082e..7e71b70ab9 100755
+index 7e71b70ab9..694c94edb2 100755
 --- a/t/t4080-diff-process.sh
 +++ b/t/t4080-diff-process.sh
-@@ -398,6 +398,22 @@ test_expect_success 'diff process bypassed by --diff-algorithm' '
- 	test_path_is_missing backend.log
+@@ -658,4 +658,130 @@ test_expect_success 'diff process omits old-oid and new-oid for textconv content
+ 	test_must_be_empty stderr
  '
  
-+test_expect_success 'diff process bypassed by --no-ext-diff' '
++#
++# Blame integration.
++#
++
++test_expect_success 'blame uses tool-provided hunks' '
++	cat >blame-hunk.c <<-\EOF &&
++	line1
++	line2
++	line3
++	line4
++	original5
++	original6
++	line7
++	line8
++	line9
++	line10
++	EOF
++	git add blame-hunk.c &&
++	git commit -m "add blame-hunk.c" &&
++	ORIG=$(git rev-parse --short HEAD) &&
++
++	cat >blame-hunk.c <<-\EOF &&
++	line1
++	line2
++	line3
++	line4
++	changed5
++	changed6
++	line7
++	line8
++	changed9
++	changed10
++	EOF
++	git add blame-hunk.c &&
++	git commit -m "change blame-hunk.c" &&
++	CHANGE=$(git rev-parse --short HEAD) &&
++
++	# With fixed-hunk mode the tool reports only lines 5-6 as changed,
++	# so blame should attribute lines 9-10 to the original commit
++	# even though the builtin diff would show them as changed.
++	git -c diff.cdiff.process="$BACKEND --mode=fixed-hunk" \
++		blame blame-hunk.c >actual &&
++	sed -n "9p" actual >line9 &&
++	sed -n "10p" actual >line10 &&
++	test_grep "$ORIG" line9 &&
++	test_grep "$ORIG" line10 &&
++	sed -n "5p" actual >line5 &&
++	sed -n "6p" actual >line6 &&
++	test_grep "$CHANGE" line5 &&
++	test_grep "$CHANGE" line6
++'
++
++test_expect_success 'blame skips commits with no hunks from diff process' '
++	cat >blame.c <<-\EOF &&
++	int main(void) {
++	return 0;
++	}
++	EOF
++	git add blame.c &&
++	git commit -m "add blame.c" &&
++	ORIG_COMMIT=$(git rev-parse --short HEAD) &&
++
++	cat >blame.c <<-\EOF &&
++	int main(void)
++	{
++	return 0;
++	}
++	EOF
++	git add blame.c &&
++	git commit -m "reformat blame.c" &&
++	BLAME_COMMIT=$(git rev-parse --short HEAD) &&
++
++	# Without no-hunks mode, blame attributes the change.
++	git blame blame.c >without &&
++	test_grep "$BLAME_COMMIT" without &&
++
++	# With no-hunks mode, the process considers the files equivalent
++	# and blame skips the reformat commit, attributing to the original.
++	git -c diff.cdiff.process="$BACKEND --mode=no-hunks" \
++		blame blame.c >with &&
++	test_grep ! "$BLAME_COMMIT" with &&
++	test_grep "$ORIG_COMMIT" with
++'
++
++test_expect_success 'blame --no-ext-diff bypasses diff process' '
 +	test_when_finished "rm -f backend.log" &&
-+	git -c diff.cdiff.process="$BACKEND --log=backend.log" \
-+		diff --no-ext-diff worddiff.c >actual &&
-+	test_grep "return 999" actual &&
++	git -c diff.cdiff.process="$BACKEND --mode=no-hunks --log=backend.log" \
++		blame --no-ext-diff blame.c >actual &&
++	# Without the process, blame attributes the reformat commit normally.
++	test_grep "$BLAME_COMMIT" actual &&
 +	test_path_is_missing backend.log
 +'
 +
-+test_expect_success 'diff process not used by format-patch' '
++test_expect_success 'blame --no-ext-diff uses builtin hunks' '
++	# fixed-hunk mode would narrow blame to lines 5-6, but
++	# --no-ext-diff should bypass it and use the builtin diff.
 +	test_when_finished "rm -f backend.log" &&
-+	git -c diff.cdiff.process="$BACKEND --log=backend.log" \
-+		format-patch -1 --stdout -- logtest.c >actual &&
-+	test_grep "return 2" actual &&
++	git -c diff.cdiff.process="$BACKEND --mode=fixed-hunk --log=backend.log" \
++		blame --no-ext-diff blame-hunk.c >actual &&
++	# Builtin diff attributes lines 9-10 to the change commit.
++	sed -n "9p" actual >line9 &&
++	test_grep "$CHANGE" line9 &&
 +	test_path_is_missing backend.log
 +'
 +
- test_expect_success 'diff process bypassed under whitespace-ignoring flags' '
- 	test_when_finished "rm -f backend.log" &&
- 	printf "a\nb\nc\n" >wsbypass.c &&
++test_expect_success 'blame -w bypasses diff process' '
++	test_when_finished "rm -f backend.log" &&
++	printf "alpha\nbeta\ngamma\n" >blamew.c &&
++	git add blamew.c &&
++	git commit -m "add blamew.c" &&
++	orig=$(git rev-parse --short HEAD) &&
++	printf "alpha\n   beta   \ngamma\n" >blamew.c &&
++	git commit -am "reindent beta" &&
++	reindent=$(git rev-parse --short HEAD) &&
++	# blame -w must ignore the whitespace-only change and attribute
++	# beta to the original commit, not the reindent commit.  The tool
++	# is never told about -w, so blame must bypass it (not let tool
++	# hunks override -w).
++	git -c diff.cdiff.process="$BACKEND --mode=whole-file --log=backend.log" \
++		blame -w blamew.c >actual &&
++	sed -n "2p" actual >line2 &&
++	test_grep "$orig" line2 &&
++	test_grep ! "$reindent" line2 &&
++	test_path_is_missing backend.log
++'
++
+ test_done
 -- 
 gitgitgadget
 
