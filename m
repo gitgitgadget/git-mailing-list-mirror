@@ -1,105 +1,127 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C5136DA03
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 16:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785083694; cv=none; b=a1KEehhjEsivpsQUm9eNRA776RRtX1BdRAUiZ8dLxDS0+LVBRjTrZha+QdtXF4JuYbpMVCVdiCX3POr+TvOsH1/38s19obBC0vziNVuLRO6Pksca/63ZFGr2ThQXhF34wccah8HPP0EdcyVndnaxGstKmbWA34liBIZaK94vv2s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785083694; c=relaxed/simple;
-	bh=3LMPqVfRJAwAUgs6+eEEkfshZPCTLsU4ktJQJC+oaBw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Dcw/cOhnxcl4bUrv0Scu88heCREExGb+owiLpbXKSAQ/jHlDvpHp/2ITTNyxMQMX0gYI5zuxJtsTOXa8I/NMSNogb9rd1b8gpfYO51Ftdp3VJo72TECdrESucjk9rRl4Dr9nLEzDm4q6DNQObP8KPOXtQ4qZIYF9PI936LKNShg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O3VMl0cY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pfG1h6LN; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01398635D
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 17:00:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785085260; cv=pass; b=CdEzexZKnLuRogIlyCN+tRBaa6FTWREANWzv8jpQrr6W5fSp+PCPjtW29OU/ElYOhy/7SUBxriko7N4rgLSKo9QC0jUwultDhoHY9CJlKKGWoCiGovCX37SVdmqoHhK8CkE2L7FwLKm/JZ3/HIC/WkIFbCnOlNxubQBH256dXzY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785085260; c=relaxed/simple;
+	bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SPOA+Z6r7aDkuOMmxeeaxTckFCcYbsxtm6q9lNMtKPVKOFkW73MF8GGx24oRS1g5Sv2/AO70ZzxjVtKDGeJ7t28/lYAmU626l1adRK+5wTayapffHqSYy+Qtfc85D86jB2jljvWrG/n5DMl/gMAN1FwykwBQXV3BlUJKfE4V4Ew=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PQKSXtmG; arc=pass smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O3VMl0cY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pfG1h6LN"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id AB8B5EC0072;
-	Sun, 26 Jul 2026 12:34:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sun, 26 Jul 2026 12:34:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785083692; x=1785170092; bh=e0fFdTXPuG
-	/vdmLEYLwe2k/E5+xpSfHjP1E7nbrjAV4=; b=O3VMl0cYuOO/E6gB4Tx9QZELoF
-	YhZeBFkFzDGb+2rx66ISo1SIhCb/KrK08PLH/Fe1d+AyeFWzibLZ9L+JOdILHt6T
-	95LEicf+paymtIBf6VZpIj5mXk+kW9INWDHfTGrcCF9ggjT0wS1JrGQsSCqIwOT5
-	VZ0CDA2wZWEWGaKEiQ5wYxEzHgJ0S9rrFmcsV80+E1WTgxynk867XE3fMUskwEeV
-	CseTtDl/sDaKBGEr0YiTrw15bu0LmBVnSJ/p3wDOtyW9YJ9Km93xPtUf6Bf2roM2
-	va8hF3sxiA3vrfBU1twMj0v1wm0FsLXXR5XaDGIqn3afPJ5YxBhC3AWVk4tA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785083692; x=1785170092; bh=e0fFdTXPuG/vdmLEYLwe2k/E5+xpSfHjP1E
-	7nbrjAV4=; b=pfG1h6LNaAquCi8JIfd4zC2KlOdFbpCKgZYx09vpfsxWAk8hUw4
-	vSPmNTiJMjlGDqfTw1WzaCyyKgCdnfkgWb6c3QkixnqgG8xYkDqLG/KuMo4sBzCI
-	P9DekQJ5JKWfpB/Qfi4NWZ63PUCVTebA+88thzlrcyQXWS6HZQ6R1jgUvQenKlqO
-	x4yHDtUovueVYXAIbeCPfvqHDxoGLCS+nuzPMI/+FbjnmZ6q8oiNJVLI09Y5fS4F
-	psmys9qREvR25VIV2EdwrKzC9H/RmPwBzertF6LdmQ1fYFZ+tG4ASDoPnWoYtbZK
-	ZJURoqr23MimfdGQqHqXBk4lviIZmmKKSVQ==
-X-ME-Sender: <xms:LDdmatRSqAt5xfONakbMR7pUe1rrJV_m_V7HkJfzMUwmp9MpdQvHQw>
-    <xme:LDdmaqf99ltOARwQzkzhGw1wdUDPxEXuigIYbMTAz2hwvcu7iaEtgngi9sSzMXna8
-    u9kCmoKuuFbxFsJSXrte7hqRNRcb5tF-iUb5jhakEKcFBAtmGjQ>
-X-ME-Received: <xmr:LDdmaspkxQByOxklk__Nj0J8yX8UpOhp3mSljn2OOb1tz674FPzrvzyz32_LiP0oyLJy7CAxthoO5cgy-paENsQv87GHxm8nug>
-X-ME-Proxy-Cause: dmFkZTFQaOAdhCYDFVKWKLUO19H++sgZYyzmhE8vOeT36FuBXxiQcp27EDsQwSroJnl4XP
-    RtBOgqG7tciSWcu+2caF4C4Hkfnqt1qPkK3vpsg5e+GNsMCsTCFvtvng5eQzjN6eDLnYNP
-    HV2DfcUqfalU2PS9xUqk9kGGeIyEPgRaChr0UgXIJaKDiCbgsGOLVUQtDhYFMyZLD38iJL
-    ztx8xCuUXBGOftLDink91YA/c3YUx1N6+gCOP+sCnDVbCKBVhqqRyq1b4qOqW7rVw0K0Li
-    R6L9GxhtLew+YKtGRmJiu1zjqmC7P+SFhOBz/2WXL57zNp9nGxc1C+eTMojKE2pIfedmsm
-    yhoIk6alnzZGssX+KeTkBEXB0u6DnCHkI0CYgW/1CmjWyUHE1b4tHWIx7P2GMZgerpR6FT
-    Jd+2uStxBq0w3wq8Lj5ZznANQpS04DH7nq04FO3MhSI0iqC2udko/Z2k0a0XxKfYO31UFF
-    z8Qp5Q/UEwJu7Fgx6bD9KviCc9HcPK3cHp13nJhp8cqdHN2YNvxjbcE16cd+oveZVph9Eq
-    WnotYLl8na4C0om8dCGZAeZQ8ogGmKYcB9M24RXylTipIWuseawjn6NNRYjFwOmp13XFMb
-    GdwqBCaolXcJbKVjyEg+kQdBM3pei6Pd43RFZazGrPGfL7wUq5uWckBunAuw
-X-ME-Proxy: <xmx:LDdmar_VvqYPycgrwhw5cHI6liSBhwgHbbLdG2pVm1mwqhBayKwscw>
-    <xmx:LDdmaodr1IcMev-pqGukt0cGDOnx02J89qHxia4piX2qwfMO1xHsmQ>
-    <xmx:LDdmalIxsW_M0u9gYJ0PPtZWaLX34cUHeZxdjqJXXt_SC0DB_dDpYQ>
-    <xmx:LDdmaogiYmIBBkuKL5clHI8S1wKDVJ-X1PyYcF_hU3lkBaEPD9H9PQ>
-    <xmx:LDdmaqJj7al8duodkwmGdAkv2QeY423BqBKcnZrQTVmyDrPV7cf_T01t>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 26 Jul 2026 12:34:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  tnyman@openai.com,  Taylor Blau <me@ttaylorr.com>,
-  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/2] bump static-analysis ci image version
-In-Reply-To: <20260726083254.GA3528497@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 26 Jul 2026 04:32:54 -0400")
-References: <20260726083254.GA3528497@coredump.intra.peff.net>
-Date: Sun, 26 Jul 2026 09:34:50 -0700
-Message-ID: <xmqqo6ftvhed.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PQKSXtmG"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-39d4c864bfbso16510221fa.1
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 10:00:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785085257; cv=none;
+        d=google.com; s=arc-20260327;
+        b=D3wgm/GmedGPI71fjF8IbizuvaGEu7sDnO5RSGvb+tSBB4xl3dHVDNjlM9PsbR7kIY
+         ygrVmz13yb4fAkrTREPM/MMXQUzzb/nA7FFsMcjGQd2AVa2KN/+CSM5aD0k6u22FNKMc
+         LXSAd76aS86PGF6mC1QiNFv94R8e422rztj0tnqI3eQ15HHZQyYQ+VlC/FLrGD6O234j
+         /QMwHNxfX7M/EyBnKp8QHzC07vQNNQ/pQV2Bui5Qzuhp983bREsVjmgLsz1/w8ITZcps
+         gBdfY6t9031OeCTDdc8ZqJJBa3mK34HZgGvlmtXEYNeg0SyXWobth/R0FZHEdgMVikKA
+         /8GQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
+        fh=rfLjIwn2a57wX7vvUPf5sv7xoXYLkb1by0ZOpcDOxJM=;
+        b=p0vrDebet7/kIRQ3Y9zx9gWCrB2H2FKj/wWe4wiGQoawxjKHdXbgUL97xRD4ezEPjo
+         AzaIiYAKe9djSBu/YVkCuWdNkkmfj/UxeDk8vOB2iexYGb42zJm1HWYNUgbtSHz/NL/m
+         YVBC/qF0tc2vJE859jDUwXxi9qrWC/vHnPvB0S3AJS4Q3xZRl5zhFh4fF1BP0gNbTeVj
+         i96MyqZHx5oJFlhHeyuqVQXyQdqEgHRtYQKnk+tXnTTVqCDoI/eDt8gdvx4+WkfUDix3
+         Z0NSmz+1RA6uRlAc1mWBBE2UjOgDcdilwqmxCmEzP21wI1YX21rd4NIrZj7Vh18IQaao
+         3x2w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785085257; x=1785690057; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
+        b=PQKSXtmG5s4nB/copEup2r1k4viWKYihWso7eO1pTUaSzNt49VO9AQgG6cbtraarhF
+         hTKbhbYQKksv8dLFGwULLJWhnbXiGY68/StprTjGDua4f0yuazz8o8hpDQfRzbSN1hp7
+         stIqFnMnqzlCbm/gqREG5RICfO5kFkZb33HX57ZjYOZU+RhLhU/JJ8D/gSL0wfevRyC+
+         13Z0pcG0vqh9VYkQdBNhpihn4U8AgVn3XVut9EebZF+iXauHt0jZq7TnO8wuPSiNoVTQ
+         bDayR0NkD2gKX0KEpp8pN8EPMSlLqjIYoatfwGKJu3edh62qJiRnTex0riDl5vq3Tadf
+         IwSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785085257; x=1785690057;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ki8jvdKZ+PX/2aEYtmEu5HxesgDSSHYfpDMlYs8rKeQ=;
+        b=QxHDJDYDRYptgVP1kIIvIrwYlWG65/LDi6flX2OKjpAsy+YkngB5d2G+fRzDN0osrz
+         47n3mdfd2HAQQGm9ayClYwlbY/UEHfqvuECid9mWqSwVelvDUWKTPSTwkcJdp5KnXaIE
+         KVIO7K+X4t7tx1PhAqzwZY/1kU03ml8WODj4pmxKSw+AY7c0KTG6GUsRB+fWCKFUoGik
+         9qxjjV2REeLc5Nn/1uzAj75E5dUaVaJpvyiEjdKP2LoCEVi693GtLBMLZgEW+6sXPC2h
+         poS1sEx7b48Q4uoDYom0Ms1nBjqkOiD7KwdaSkRxLG+3SH8C2KLHcLJyldO0/FLcUEPr
+         /eJA==
+X-Gm-Message-State: AOJu0YyRKx1G6iux59S196tmkXAwHXOo4Llocu+fRWLCPHaISKRHdjDI
+	sJUtfIzCRYeUUrPso6uPKv45wB6nJUZwZMBPYDuevhd9DqkgB25ua4m6A6ntUjZruaS9rM8+Zl2
+	VZ0+yo/433+2J1mZekrPHgJVz2mDaqjY=
+X-Gm-Gg: AR+sD12NuzQQyFqhRyu2nbiI3I3bkXzMlj0cPCPvr7r3svKEz1Y5X2HwUqkPncpRXac
+	ywxmI9jJ2WYtveiVeOFb6WJ8XZLgp/g5XJ+6xZIHxXFpT9ZznrK18uko0M8T8Gu/ZrWG4Ie/pAV
+	JSOFn56NjcrYLSXUfndonkiih7OMAo/rfxqssX27/srq6+xQLhA436u8WEp4htVNLiI5Lh7HUKP
+	5/3guKh6u4dWBaY8myAWJ9F+rVd15rsQ6R6ffykGOjFk8K/uubv67WjFiKqYHD9VAEUQiW4+lFJ
+	D/9HHJGrUVtiGmZguILRS2uKruqK/E5c2A615f1T3AyTRiGrfQkAZaFUCYItCEW7r/ntxxhtim2
+	YEvM7tr7sBStqDP8=
+X-Received: by 2002:a05:6512:239a:b0:5b1:5eea:a576 with SMTP id
+ 2adb3069b0e04-5b2c1b1821emr1082382e87.21.1785085256556; Sun, 26 Jul 2026
+ 10:00:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+ <20260726104343.16933-1-jayatheerthkulkarni2005@gmail.com> <xmqqse55vhnz.fsf@gitster.g>
+In-Reply-To: <xmqqse55vhnz.fsf@gitster.g>
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Date: Sun, 26 Jul 2026 22:30:43 +0530
+X-Gm-Features: AUfX_mxRzNDQ6oONbYsh_I8eA4JtG-qlDEDvMsCrOsfHTy-N4I1lXR-Y4NxXbeg
+Message-ID: <CA+rGoLce-64v7EsQuDbtTd3gx4hsspMo58siHfONWbUBehhNng@mail.gmail.com>
+Subject: Re: [GSoC Patch v3 0/7] repo: add more path keys to git repo info
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, lucasseikioshiro@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+On Sun, Jul 26, 2026 at 9:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+>
+> > Series adds keys to git repo info.
+> > Keys output paths of repository components:
+> > * path.toplevel: repository tree.
+> > * path.superproject-working-tree: superproject tree from submodules.
+> > * path.objects: repository objects.
+> > * path.hooks: repository hooks.
+> > * path.index: repository index.
+> > * path.grafts: repository grafts.
+> > * path.git-prefix: prefix offset.
+>
+> I guess the issues I had at the design level in the previous
+> iteration is gone ;-)
+>
+> I'd love to hear real reviews from others on these patches, but
+> at least I didn't spot anything glaringly wrong anymore.
+>
+> Thanks.
 
-> This is another way to fix the slow coccinelle run discussed in:
->
->   https://lore.kernel.org/git/20260724091152.27794-2-tnyman@openai.com/
->
-> by using a newer version of coccinelle.
->
-> We tweaked the code there to avoid the problem, so this isn't urgent.
-> But it is worth doing to avoid running into the same problem again (and
-> because in general I think it makes sense to run newer versions of our
-> dev tools than older ones).
->
-> The second patch is the interesting one. The first is a necessary
-> clean-up (+cc Elijah as the relevant author there).
+Sure,
+until then I will work on the histogram patches in git repo structure.
 
-Both are interesting.  Thanks for doing this (with relevant
-archaeology as usual).
+Thanks for validating!
+
+Regards,
+- K Jayatheerth
