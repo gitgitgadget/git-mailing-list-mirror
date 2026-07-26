@@ -1,121 +1,93 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA53374A1D
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 06:59:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785049184; cv=pass; b=EiGG8JSon3K6BnOSBuPto/5Zj3wIrXjsg5U19aAACNlisXuK107jL/KjHc2xj1e5rqa+jfmOdyGf+toxeENSaEGyYcDateD/QjxCBD9D27Kz/AajbO6nO+2imr4Ww+csJV10JsEwXjaYwUIm5TmSvpcLyzbLDHrvbdc7R71xo54=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785049184; c=relaxed/simple;
-	bh=d2Ww6GH0/tEw7lWZmhV0x2nHjx0QyRJ5fmyPmnY84Dg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LJjL1+b/KBnQmrsEs25ctba1T0wLOmd8plm7zYVVm8bSn4jUnsXl/cSa23ZqixiIBvhbdpRmdt83gQOROYBHFEWNa2tLwGGpeWGN0Yzx7LZdQfmP95/xMP4gZdfcrK1Vrp/3ug05x0szPIV1lPph9jb0LUIxSSvStoEzyIrF5Tg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SEdVeGqc; arc=pass smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA811DE4EF
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 07:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785051664; cv=none; b=lhdX+5MnQ7Ml6vMc2WXLFl7tq6QRaCCnyP+kvpa3cdMEo//qDarUrOtur00zD78M0kb8MhFHuQ2sZX9vSqBAHBj8etyzefipu1eJgQ1RV+Rp3+1rKvFVuH08gb9bDR7vpr77baurFzOE/QoOe1jBgKmdUqi+zNIwHuNjEG3EJM0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785051664; c=relaxed/simple;
+	bh=JX8DJTC0N/qXS96i3PAQZ3rC+GlXWQ/nvQhctfNhvzw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WLtMCHnCC5UhlKFTdbT8aspcYiEuh2+b3o1UjykypaOUqTNp5vQKDOG5uC7JAR6nRlJaBFmz26TdRaVkrt1zE9kan7ckNfcf8koUDn7gswVk3lOEQCwpcKZBUhbop9zXtAlCt8Kkk1J5qqRExA9vngj0w54CB7jJfJYVVJEpkes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WX8c+Oy3; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SEdVeGqc"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7ebd88be784so1257948a34.2
-        for <git@vger.kernel.org>; Sat, 25 Jul 2026 23:59:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785049182; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UZUE/RpPZ+D0MJcn/H7QlXA5Kk/km3YBAB/jriv6WuQuB6YgON+5IYvVFn/vQEq9cR
-         DB5riwILJqkFpsiMdvTKRJ5s1MSuCKdnT4LXhB+6WbNz2WEbKAe3Qb+FiJ/8dJpkNN+5
-         u/Oq4ii6GyPtMVn6oyfgbbcZtPEkV7LxzZ6YP/gZPYdVgNcngTRSbUQkJuAmYmWsqCJc
-         RnSTwmZ/RJiwyiGGDESfizqr3LGJV0jUs4UAA4c4vAib9p0BOqX4uElvgr/J6OavQqGM
-         MWSx0a98DPGX4wDnOlX0AVKlW/MKXuT8rjrYSsoe9p3nUQ+DN4N++84x/xzfSEgwIjkp
-         78nA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=botCUwsBYsEBwV0fNYFNTWSzfNhUh8gERiBlU3v5ZNc=;
-        fh=NLE3wSUrauHg9vAbx1PwZCGM+OQEDSIdoBfAht2rzTA=;
-        b=feSTUJtwQtcBz+/YyLP/+M0rPgWFamaMPsVx2q/pnpOZyWtYIPPpXIVreFwVLHP1AM
-         U3RfE5rIjh4G9HzzF5c+AIc/LwtRoqXYr03TXZ4600RjoPb226a0RGZotslE7MqbdSul
-         sApKx84nR7JXRLfOHixP/8c+EQkAvlFHIpq9kPQwROhYZDdKuWLgDjyHxhPIZEV6KoDj
-         lWLO3kvfs61+rmJu11UCwuG7Qwx4Z5RzMuggw/+l4EJeWpRoWanTyEUKDf9iTAyKj4LL
-         859BFZntltzv5ugsDPPHVG1whh1RMO+1dak3Vfih+BYvuJ3dzllnGEcQJKW/l1XGiR+Y
-         aW2w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785049182; x=1785653982; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=botCUwsBYsEBwV0fNYFNTWSzfNhUh8gERiBlU3v5ZNc=;
-        b=SEdVeGqclfVZ9u86t158gtePfNdMD8AsT/Mp51b6a9K+x8ywDjaxyKsBF95I0KtyHF
-         8bcv/ehK/kFcVyNNqifCAfqYSK83+ehOzkbBv9qScb+qBxbF1Abiwnzd/j331ifoFfb/
-         TftE53iEyL6707jPIYIDoW+p+RpXcQvvCvC/W6zI7aHQWVGDKYXKYyQ5AuvMKKF7L1Of
-         3Z2fTd5k3dJ9BnR5a7JN7EPvv/gZKIzlyr/Sy51u6jyhte/1C38dnXbkUOcOBBW43XLU
-         w9Z3d4GJVh9gOhJNaLcjQryJBH0iP8VrSR3nZRBX2WCYJeHtbI75rIfCoY+VhQoT3HV+
-         +seQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785049182; x=1785653982;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=botCUwsBYsEBwV0fNYFNTWSzfNhUh8gERiBlU3v5ZNc=;
-        b=FCEydcaeWjdxABCSS8UIW+3p5R9dPHFFUiVKzCD0RISb9GOT8B1YQA2uNP6UJJ1d87
-         jLyjUMuOStE3VZW8oN8Dn55q7NSslH7R0HO/NLG+zmFXlRdvbzsgyQSuArBuLtV5p4Io
-         hj2/AsjmyeWjc8yba4SRShXgAZqlK/k6JyBQPUuoJCw62ZPAdIy+ThgiTYw06NBgmbbb
-         COqCoMqbNpbvkJHsoPW+90cOzKxCyT7Vn4dBH20YWREGrVfXjhrFi71p76dbnUFxEups
-         XbWkMF+NLT5wq9XB2XHNfeSR1EvhZ89ug/vbWpCOn6zYa5UPZbW/oslnY3QS901yary2
-         ixvg==
-X-Forwarded-Encrypted: i=1; AHgh+Rpbz31gxFsVY9VMcexEVq8DPofm9p6Ox1ZNP3HYjqzkTk5xGbDZF8QXzHZdOFehRHKwpI4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvYXvhTXGKjJCFINYRdTVo03yx1hul7uxcM6itPdre2BnMpWj9
-	jWuDlN7K+3zLen5ePTZvRW3og67AweoQ3RzfndKD5i13Y3V9LZKe3TJNuZTRyqX38+KY+SKkjOD
-	OWKCNxBz6AwkLY4cfvL6e/wBqIKA8S1k=
-X-Gm-Gg: AR+sD10G+45/sbRCEeoNRwSkQWjQ/F9Kv8ZfHH806eI+gRltRswVOGazeq6dmU8fTpk
-	8yJR5fIloi4Ny1lJqdlx8IRGP+MHRuQ1nJh2jsoEqt3AgsLYf6UCI/h8iZj3mSxOxNOqbmMVrye
-	s9lq3CWZMILLieWJec0ENOF6/Hyd5Xrn6DIP8dHh/5otPFsYxeT9FXruzjC4HkNVczQoxxEU8bK
-	+8xHkZalo5Lho0tQ1lEMVBzGDO9/A47KquvtFQ8TcjAOpIG4JUrZ2NVDXWGnmG1HbTnLA1xwJOY
-	o1xGyaEfrtcyG/qJIuJobdWVQ5PcPn0RoKxfjLEdnv1D+TxSNQYRjNftiU7CYyNLvWh8qm0P/GK
-	yiyj0yqfbKDSVwYE=
-X-Received: by 2002:a05:6808:c3ea:b0:495:faa4:a742 with SMTP id
- 5614622812f47-4ab6a28c20emr4080392b6e.41.1785049182063; Sat, 25 Jul 2026
- 23:59:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WX8c+Oy3"
+Received: (qmail 56553 invoked by uid 106); 26 Jul 2026 07:41:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=JX8DJTC0N/qXS96i3PAQZ3rC+GlXWQ/nvQhctfNhvzw=; b=WX8c+Oy38bCmqhMyV5owc1g2QKURbG9j+Gaf8d1RG/fahUBL/NpQC2QfYdT3OuEkkeUZ69xj0qSTnxxitcuZP83O1z0a5scrssabR+Z+73pKv9yjFyHk/kEiRHSjTlckdpBzLI7ZeMYIQPyM5q+vedKUXUUnExTvZxVDgB/fmg3kLU43Skg8wuUNBOVR+7LOYqxt7puYxWMJsaIaBOwNX2xtJ7TTl7mIb4yeVBd6BiLkRyqpUeIGSaopliyyC+fKaQIuRz8+USPQuX9toMTWwHUspyaDl1gNEpgCTtw5g22Ln1qNk2KrWItYtD/wRjcEIRZ3+EgKrZjQDy7UM+ipCQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 26 Jul 2026 07:41:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 57341 invoked by uid 111); 26 Jul 2026 07:41:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 26 Jul 2026 03:41:05 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 26 Jul 2026 03:41:00 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: tnyman@openai.com, git@vger.kernel.org, haraldnordgren@gmail.com
+Subject: Re: [PATCH] branch: avoid slow strvec Coccinelle matching
+Message-ID: <20260726074100.GA2366012@coredump.intra.peff.net>
+References: <20260724091152.27794-2-tnyman@openai.com>
+ <20260724114948.GA825505@coredump.intra.peff.net>
+ <xmqqpl0c8jml.fsf@gitster.g>
+ <xmqqbjbw8icj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.v5.git.1782923832.gitgitgadget@gmail.com>
- <pull.2149.v6.git.1783776466.gitgitgadget@gmail.com> <xmqqv7al9rbj.fsf@gitster.g>
- <CAL71e4O5=ZJoPD4dnPmh8mjsTKtugx05-8d83VeQdBNOjp=bFw@mail.gmail.com> <xmqqse5en8wz.fsf@gitster.g>
-In-Reply-To: <xmqqse5en8wz.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 25 Jul 2026 23:59:30 -0700
-X-Gm-Features: AUfX_mwa1T2Yov2vARLdSU9hUNBsOv-bUFzLTcLQ65u6klIpBmUy1LppCJ1v4aU
-Message-ID: <CABPp-BGATrNJyT7trzUzAMB_v-1ssVe_SRqp+281X5GzU=2eow@mail.gmail.com>
-Subject: Re: [PATCH v6 00/10] commit-reach: terminate merge-base walk when one
- side is exhausted
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson <krka@spotify.com>, 
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbjbw8icj.fsf@gitster.g>
 
-On Sun, Jul 19, 2026 at 11:14=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Kristofer Karlsson <krka@spotify.com> writes:
->
-> > ...
-> > After that, all ten patches apply cleanly with git am -3.
-> >
-> > I should have stated this more clearly in the cover letter
-> > instead of mentioning next at all.
->
-> Well that is how I wiggled the series in my tree after all ;-)
->
-> In any case, we really need to get somebody take a look at these
-> patches to move them forward.  Any takers?
+On Fri, Jul 24, 2026 at 09:26:04AM -0700, Junio C Hamano wrote:
 
-I started looking at the series and left a couple comments.  I'll
-continue looking at it on Monday.
+> > Ah, very good eyes.  It is a disease to try appeasing -Wsign-compare
+> > without thinking, instead of questioning the value of the warning
+> > first, and in this case there is no reason to try forcing the use of
+> > size_t, even with the unnecessary casting.
+> 
+> Having said that, another fix might be to standardize the way we
+> count the number of things in an array and update 'ref-filter.h' to
+> use size_t in 'struct ref_array' as well.
+
+Yes, I had the same thought.
+
+I am generally in favor of using size_t for anything that counts
+allocations. I'd also be fine with (and maybe even prefer) a type that
+is a signed integer of the same magnitude as size_t, because loops, etc,
+are often easier to reason about when "0 - 1" is actually less than 0,
+and doesn't wrap. But we would need to define our own custom type for
+that, since ssize_t isn't portable enough.
+
+> It is not as though 2 billion refs are too few to satisfy our
+> needs, and in general, the platform-natural int should be used to
+> count things unless there is a compelling reason to deviate from
+> that norm.  However, "somehow we ended up counting many things in
+> size_t, so it is better to count everything using the same type"
+> could serve as "the compelling reason" to make such a change.
+
+Yeah, I think that consistency is nice.
+
+My personal reason (and this is mostly re-hashing previous discussions)
+is avoiding integer overflow attacks by making it impractical to
+allocate sufficient memory.
+
+If you had a repository with 3 billion refs, then I think right now "git
+for-each-ref" would wrap and start using negative values. I _suspect_ it
+would be caught when ALLOC_GROW() converts that negative into to a
+size_t (yielding an impractical allocation), but I don't think it's
+practical to try. I started feeding 2^31 refs into "update-ref --stdin"
+and it was around 64GB of heap after only 160 million or so.
+
+But in general, if the counters are all size_t or similar magnitude,
+then any geometric growth pattern is going to require allocating some
+significant portion of the whole address space before we hit the integer
+overflow condition (and presumably such an allocation would fail).
+
+-Peff
