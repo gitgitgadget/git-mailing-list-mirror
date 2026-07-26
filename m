@@ -1,276 +1,152 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148FC3515CC
-	for <git@vger.kernel.org>; Sun, 26 Jul 2026 20:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA35323416
+	for <git@vger.kernel.org>; Sun, 26 Jul 2026 20:34:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785097079; cv=none; b=Suom6A/d2X8rnPWwGRAy9WG3XwxF5PiKiDcU3iXgqyzJTDYYMww2Np//oaTkNFChykbExrpxfVnqJL1/lk+HbcDITd8LwgUrMgK0BB1JUoI/GgyJGYf+HaE60PAhxMaF5edgrOKL0zxuiBxAls2Kq8zdoPhmpgSs/04dNuqkvjo=
+	t=1785098062; cv=none; b=mrSgb3Gqndm24Es5UMeg1IJw3oovqdCa+SJuTlJYTufALJdd9Th3EfNVjbwPZalxfRQCgre27r0PJZRb6kpoNkYdpyEcS3yYdZsM1oKDUBIi5DhmQznEa23a1nLS2z30tpWoRBDxSY5rQ36ymvlToPWEG+Yz6fIolCsfQ2qgqzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785097079; c=relaxed/simple;
-	bh=p0BxTycnHL1y/9vWE9kvXY1iNn34OHbr8t6L2XySqok=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Nd0VbOqH2+4r/JfVgAknd5sTvh1PQH3dQZqRVFESNQLqbPw1oF4YbbNOMQggsp2RK27WN5suYBT6ZU0OVLgBfOIgsBqSZ3I/m+alZrwaTLNh7y/oFspjNrfuPhX9Ignh0VhPCYR26OUllSh//jBWTaQ8nOBEVmCTNylzj/zal2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JAE57psI; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785098062; c=relaxed/simple;
+	bh=veCqmctO5RZxiJ5ZyeeeAmIMkw6yvzNO+wZeGVLu1CU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tKkpjU+VEmGyXWrTEYhpDUDSaDfkQ+fKKYbPpuyysG1nf5R4EAuHpnJApuDZ+jji7+Koe3/gis1eCJJf0ukYwxwr31qiL2sY3ROXqBC2znO60BQuNEJxl6ToZCNl/V1D7hN1YV1go99BGlhz5KU/F8W9B9VrABs0p96Eg1m2Lbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LATC0TQ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NAnZwBhu; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JAE57psI"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-51c05dcdf49so22423171cf.0
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 13:17:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785097077; x=1785701877; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=YmcMM6AlP/RQde1RfCFOqEMNg1tug0gqufr9R8Wo0m8=;
-        b=JAE57psI8P9jx07Vxmd6hL1NQO1HClAgT6CSWARCmnO4auTmwEwK8hg0Wr2mJLwmQe
-         k4baHHnsfkkaVJLMtW7vyRyaP7NlzHSw612th1RyNt/wG6z+F6+9V0CNyFU9ODNeZibL
-         T8aPTYjPfGIWSinKsvPJv0ZlV1nEJuATnEX83wCyihAWTNl8eXksxMg0hHulBY1QF2oY
-         6A6KEdV2u6bJqw80Omr5ZS5CqM+iVeByOGnn24PCkXNH/MtewMQnPx428zkD7UAgs8bd
-         LDrWoP2LINlcyYjSvI+s0YzCTleXxkIDAso0DK+Rt4bmmUFuCByV+Hq7UzeYtPppekgF
-         C5bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785097077; x=1785701877;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=YmcMM6AlP/RQde1RfCFOqEMNg1tug0gqufr9R8Wo0m8=;
-        b=sDg672b5fB3ed3LpxzXDum3nCzSg36vTCZKSro2tk6g+DQiou8TsvgznEoMIkIYVna
-         VY+fI1tJdq7nVWRmMAGAV/iT1/ShkmJ9uY13KhIHLfzDlYzp9mlHLgKsT8JDY1FsPFSt
-         u3/40ynRP12Qs2/bK/xybNNYmGEs4EDF7UOnuStYdSoWKu/1y4TRC8cDdFhrEg3lppyr
-         CAk1ej5OxFYE9DtcENKLzKLVJExhOx9CfKBD6znXf6gNhelnJQUadzKPp578AR/yolbU
-         10UGORMqiiexKrsKialG45DNp6gcb4LyxN5FuOhhSdv9K4FxEyH4f4E9N6aglQOaJTrb
-         1zrA==
-X-Gm-Message-State: AOJu0Yyu2AuPSwGOgfAilzOUdCpNpCKiDu/JCDFltzSZKV0Itg3OPNCH
-	dzp/AjHGsefR7LuVJ6hIlEre6C3ww2+5/J3ckA9gF2oIs7e0/NVhsT1bwrq7ww==
-X-Gm-Gg: AR+sD124P5SdjGFvz8xkz5qcAJvCZH26GLTwG7/PFst0C616Df6MPIx+LDYdURl4BRW
-	R7/HFkMAZd41T+t+KTZho/FPs9LJFVwCdS246k0+Z7e1AXSF8cAQ6oZECiOO+7+bWE8RZeLdmAJ
-	TudpZt9P5LZ0OsRKFJIAcfgBv4Z8p+gOSwSDmVClTFWHGdzgzehZiQty7HkHxSNXXY0iwn1l35f
-	5dRVyjbR3P0hOwFTTGHmRFjkRkHaVcE6GFUBAViiilif/HCgkNrL0AbTSws+m01eSZrabIGKeVt
-	LlAVRpoO5vxlzdXZ3Wyht6gl3a4bHfYdb9LYVHvYm9Y9TVIRuXsrJ00fAA/I3N07m1sFJQ8Mfvl
-	zzprJpb/XHnnYwA60Ik66a4Ig4kclMnK3zQCCCWryNjbN+8cNaqRtgw2UUHlFrE2Nkp+RRqvhck
-	lYhif7
-X-Received: by 2002:ac8:5f84:0:b0:527:2b06:2bc9 with SMTP id d75a77b69052e-529a888cb73mr61287661cf.83.1785097076807;
-        Sun, 26 Jul 2026 13:17:56 -0700 (PDT)
-Received: from [127.0.0.1] ([135.232.200.2])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-529a2989b24sm40205331cf.15.2026.07.26.13.17.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 13:17:55 -0700 (PDT)
-Message-Id: <6b72efb4130d96947c7f90026042fa09a440d091.1785097071.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2356.v4.git.git.1785097071.gitgitgadget@gmail.com>
-References: <pull.2356.v3.git.git.1784842831.gitgitgadget@gmail.com>
-	<pull.2356.v4.git.git.1785097071.gitgitgadget@gmail.com>
-From: "Lucas Zamboni Orioli via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Jul 2026 20:17:51 +0000
-Subject: [PATCH v4 2/2] mv: reject a destination whose leading path is missing
- or a symlink
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LATC0TQ9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NAnZwBhu"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3CC75EC0067;
+	Sun, 26 Jul 2026 16:34:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 26 Jul 2026 16:34:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785098059; x=1785184459; bh=2P6JblfFyF
+	Rb4p3MB32ZrXrnIzD6B7gj8eEGPxmtJ7A=; b=LATC0TQ9WnK2JBtTmfJvEyPXji
+	HZl/BDOq/ykNMEhJzxSwU6CORPlTZXQNzXtIczxMSIjm3BiMay//LfWMOsfVKiag
+	4ePZfVCM2/uDpQq8onYdAtD4lkUhCIbNH3eokshuu4IhoACHJjQ1U/CKwai+o5tu
+	dipKzRiOD5EVIBpYTcn6Od5bG6FLKlI48+HI4rpldK586u9Mu8u66lby5oHrIUan
+	gVqAlTV5dmV286ht6WdSqhNQonUVBCYRv69ZEIIAV4tD8Tx5bDR8/FNxb/ITKhim
+	CkFtXgKNBQHvbU4aPlFT1XMc85KJUDei8BWaAdWYrqFlPZedsN88d6+pT2RQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785098059; x=1785184459; bh=2P6JblfFyFRb4p3MB32ZrXrnIzD6B7gj8eE
+	GPxmtJ7A=; b=NAnZwBhu+wwDDyhcLYVY+NeVkhEpO+Omua4Y2TiClxswAu+hqD0
+	ForTKXeUlyw8497y4EYTBdF/h4wf6kQvWmB2n06sx/yWsTKLHIITGsgTRcFtgNNG
+	GTzfYG8hLGLX/CxCaHPqRQmkS5yYSf432yf+K8DD1o49ih1/0EwcbbUe+5a0QgLS
+	CS8pHHyra8ULF8FFHiwlP6wSoFcXDTvGRfsXoGIeIvGqD7s8FkdgdGDKe496lTKU
+	srELum7jOcL9aVJAyFMAE4gMgpxujBAmvOTINLoYVmVxuxnoFNEuc3Zldz9n4VWN
+	xS1/3MCSmrn4CMkevnWtK6Bk03UkWeKfuUQ==
+X-ME-Sender: <xms:S29matwRv-0ei9E_lwvgHAiDa2q0hRktzJLlxd2mUjsbexTH_ekFVw>
+    <xme:S29maks6CNVt9C1-eYxWkW7sDz9szXmDIe5dF3oKaT3Y48Cvp5qPHZSQ7ElnDSrhQ
+    iKn2vOIjWl9xgY7HesH94Ix4OuVYHIFZAQ_J9_zQFqih12v_gcI6w>
+X-ME-Received: <xmr:S29maks8ghQHQ-ws2uNzu98fp5sY6Zte-mkAkocLwH8Wb-gTrQ11DAYNTAR82oAXlSXZsn62sGG7e7AMiaEhraSmDsCKcZgL_Q>
+X-ME-Proxy-Cause: dmFkZTEMdsLEokxA2QiKjd+AQ+GvpLe6moWwzZ3m1WWP2sGMRt18JPNPRl386m8wV9lQAN
+    NhB8aMPEDLmvfNr84VQm1pVVqYat8XuZJ9pwYsOaTGWpC0NtgjJyW9bpuDXjXmxWYfjJ9E
+    CO0dFY0cXH3FZ0uSc2oH/5kYaBRr56HSh0DsGLn8/y5HPt5GuNK19le/0kPbo6GscqvDri
+    hSWDdJcVQpOk0sOBkGoDoOQmh2tAhTyRGBaxfJx+Y9qaXaYxdkNebD1OwiBbgyvdr+hDfs
+    4XV0iREzj/lmelIhyO61a2LT3WooC8N6DnxOs4x2I5e5g86Afw0Bln88pqw07yUrSJqVaf
+    OJxRJqw5PiSVQUMywDgaXeYhPBXCkO9Ir5zMQD0eu6V5O3blqr1UQjEncsgsGAy4jRqgys
+    8VcXGnbE9gtZuE63+fiUeIhlbfIqoOBYagaPFWb6aCGLa5c7Wn9Sgxgb2AkqMRpXEr7pry
+    9nWwPfUpz3a4jmIjx9oQVBVRyt2lxHhatCiYMlQrE8T3g+qXmDvkNb3rjO9AInEZC+k28A
+    GkVe2ZerEJBdb4mvrD6oKT3bhERqsHYmp+4nX9KsyUFK9vsh5wtUJNsHpjafgwJlYk7ESY
+    JumUeZKp2ECOscefw7B+d/KjRbgXRcGcCaotq8YIBcUp4bfqAJ2Hl1EUNIsw
+X-ME-Proxy: <xmx:S29mapORjUW6rkd5Ungb06kd82mHcJ0My0s9WpbUyduKAHBiCZ_YRg>
+    <xmx:S29mai2J9uX8vS3Wjg9q0hZpgt44vinvZ0s4RjaCkkENVzxBzGriYw>
+    <xmx:S29malNXRO_hMhhjxrLavYL8qSn-Bifp4edAMfpeq23cep22AW3mIQ>
+    <xmx:S29mai3K5C7LBiGAV7yiqmNiWmTE_sQCxU6X2Dm4juYH8fqL5P46ww>
+    <xmx:S29mas2pXcf86yAX6P4NJE4wGsbcdS3p6gFMPzbh0SFh4KraeOhzcpRl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 26 Jul 2026 16:34:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/5] odb/source: introduce function to map source type
+ to name
+In-Reply-To: <20260724-pks-odb-create-on-disk-v1-4-3b3d265d979b@pks.im>
+	(Patrick Steinhardt's message of "Fri, 24 Jul 2026 05:48:43 +0200")
+References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
+	<20260724-pks-odb-create-on-disk-v1-4-3b3d265d979b@pks.im>
+Date: Sun, 26 Jul 2026 13:34:17 -0700
+Message-ID: <xmqqfr15v6ba.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
-    Pablo Sabater <pabloosabaterr@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Lucas Zamboni Orioli <lucaszam0@gmail.com>,
-    Lucas Zamboni Orioli <lucaszam0@gmail.com>
+Content-Type: text/plain
 
-From: Lucas Zamboni Orioli <lucaszam0@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-Moving a file into a destination whose leading directories are not all
-present, real directories is only diagnosed later at rename(2), and for
-a symlinked component is not diagnosed at all.
+> Introduce a new function that maps an object source's type to a
+> human-readable name. Use the function to provide better human-readable
+> error messages for the downcasting functions.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb/source-files.h    |  4 +++-
+>  odb/source-inmemory.h |  4 +++-
+>  odb/source-loose.h    |  4 +++-
+>  odb/source-packed.h   |  4 +++-
+>  odb/source.c          | 19 +++++++++++++++++++
+>  odb/source.h          |  6 ++++++
+>  6 files changed, 37 insertions(+), 4 deletions(-)
 
-Three cases reach rename(2) unchecked today:
+OK.
 
-  - A leading directory is missing: rename(2) fails with ENOENT,
-    reported against the source (misleading), and "git mv -n" does not
-    detect it since the dry run never reaches the syscall.
+> +static const char * const odb_source_names_by_type[] = {
+> +	[ODB_SOURCE_UNKNOWN] = "unknown",
+> +	[ODB_SOURCE_FILES] = "files",
+> +	[ODB_SOURCE_LOOSE] = "loose",
+> +	[ODB_SOURCE_PACKED] = "packed",
+> +	[ODB_SOURCE_INMEMORY] = "inmemory",
+> +};
 
-  - A leading component is a non-directory ("git mv x a/b" with 'a' a
-    file): rename(2) fails with ENOTDIR, again only at the syscall.
+This is a trivially obvious implementation for mapping in either
+direction.
 
-  - A leading component is a symbolic link: "git mv" follows it. Since
-    Git tracks symlinks, the destination is really occupied by a
-    tracked object, and following it is wrong regardless of the link
-    target. The move is done on disk at the resolved location while the
-    index records the literal path, leaving the index describing a
-    worktree that does not exist. A later "git add" can reconcile it,
-    but "git mv" alone has already corrupted the state.
+'inmemory' should probably be spelled 'in-memory', though.
 
-Detect all three in the checking phase. Reject a destination that goes
-through a symlink with has_symlink_leading_path(), which uses lstat()
-and never follows the link, so the refusal is independent of the
-target. Then lstat() the leading directory: report "destination
-directory does not exist" for ENOENT/ENOTDIR and "destination is not a
-directory" for a non-directory. Other errors fall through to rename().
-Guard the directory check with the same condition under which rename(2)
-runs, so directory moves and sparse/out-of-cone destinations are not
-flagged incorrectly.
+Thanks.
 
-This changes behavior: a move through a tracked symlink that previously
-"succeeded" while corrupting the index is now refused. The other two
-cases only change when the failure is diagnosed.
-
-Signed-off-by: Lucas Zamboni Orioli <lucaszam0@gmail.com>
----
- builtin/mv.c  | 35 ++++++++++++++++++++++
- t/t7001-mv.sh | 83 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 118 insertions(+)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 35e504484a..535599e6be 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -22,6 +22,7 @@
- #include "string-list.h"
- #include "parse-options.h"
- #include "read-cache-ll.h"
-+#include "symlinks.h"
- 
- #include "setup.h"
- #include "strvec.h"
-@@ -443,6 +444,40 @@ dir_check:
- 			bad = _("destination directory does not exist");
- 			goto act_on_entry;
- 		}
-+		if (has_symlink_leading_path(dst, strlen(dst))) {
-+			bad = _("destination is beyond a symbolic link");
-+			goto act_on_entry;
-+		}
-+
-+		/*
-+		 * If we are going to move SRC to DST on disk, DST's leading
-+		 * directories must already exist.
-+		 */
-+		if (!(modes[i] & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
-+		    !(dst_mode & (SKIP_WORKTREE_DIR | SPARSE))) {
-+			char *dst_dir = xstrdup(dst);
-+			char *slash = strrchr(dst_dir, '/');
-+
-+			if (slash) {
-+				struct stat dir_st;
-+
-+				*slash = '\0';
-+				if (lstat(dst_dir, &dir_st) < 0) {
-+					/*
-+					 * other errors fall through to rename(),
-+					 * which reports them
-+					 */
-+					if (errno == ENOENT || errno == ENOTDIR)
-+						bad = _("destination directory does not exist");
-+				} else if (!S_ISDIR(dir_st.st_mode)) {
-+					bad = _("destination is not a directory");
-+				}
-+			}
-+			free(dst_dir);
-+
-+			if (bad)
-+				goto act_on_entry;
-+		}
- 
- 		if (ignore_sparse &&
- 		    (dst_mode & (SKIP_WORKTREE_DIR | SPARSE)) &&
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 7cf4aa5ba1..7905d629d8 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -114,6 +114,89 @@ test_expect_success 'clean up' '
- 	git reset --hard
- '
- 
-+test_expect_success 'moving to a non-existent directory' '
-+	git reset --hard &&
-+	rm -rf from && mkdir from &&
-+	echo content >from/file &&
-+	git add from/file &&
-+	test_must_fail git mv from/file no-such-dir/file 2>actual &&
-+	test_grep "destination directory does not exist" actual
-+'
-+
-+test_expect_success 'moving to a destination with a file as a leading path component' '
-+	git reset --hard &&
-+	rm -rf from && mkdir from &&
-+	echo contents >from/file &&
-+	echo blocker >not-dir &&
-+	git add from/file &&
-+	test_must_fail git mv from/file not-dir/file 2>actual &&
-+	test_grep "destination is not a directory" actual
-+'
-+
-+test_expect_success SYMLINKS 'moving to a destination beyond a symlink' '
-+	git reset --hard &&
-+	rm -rf from regular-dir link-to-dir &&
-+	mkdir from regular-dir &&
-+	echo contents >from/file &&
-+	ln -s regular-dir link-to-dir &&
-+	git add from/file &&
-+	test_must_fail git mv from/file link-to-dir/file 2>actual &&
-+	test_grep "destination is beyond a symbolic link" actual
-+'
-+
-+test_expect_success SYMLINKS 'moving to a destination with a symlink as an intermediate component' '
-+	git reset --hard &&
-+	rm -rf from && mkdir -p from/real/inner &&
-+	echo contents >from/file &&
-+	ln -s real from/link &&
-+	git add from/file from/link &&
-+	test_must_fail git mv from/file from/link/inner/dst 2>actual &&
-+	test_grep "destination is beyond a symbolic link" actual
-+'
-+
-+test_expect_success SYMLINKS 'refuses to overwrite a symlink at the destination' '
-+	git reset --hard &&
-+	rm -rf from && mkdir from &&
-+	echo contents >from/file &&
-+	ln -s target from/link &&
-+	git add from/file from/link &&
-+	test_must_fail git mv from/file from/link 2>actual &&
-+	test_grep "destination exists" actual
-+'
-+
-+test_expect_success SYMLINKS 'mv through a symlinked leading path does not touch the index' '
-+	git reset --hard &&
-+	rm -rf from && mkdir from &&
-+	echo contents >from/src &&
-+	ln -s . from/link &&
-+	git add from/src from/link &&
-+	git commit -m "setup symlink case" &&
-+	git ls-files --stage >expect.index &&
-+	test_must_fail git mv from/src from/link/real/dst 2>actual &&
-+	test_grep "destination is beyond a symbolic link" actual &&
-+	git ls-files --stage >actual.index &&
-+	test_cmp expect.index actual.index
-+'
-+
-+test_expect_success SYMLINKS 'mv -f does not follow a symlinked leading path' '
-+	git reset --hard &&
-+	rm -rf from && mkdir from &&
-+	echo contents >from/src &&
-+	ln -s file from/link &&
-+	git add from/src from/link &&
-+	test_must_fail git mv -f from/src from/link/dst 2>actual &&
-+	test_grep "destination is beyond a symbolic link" actual
-+'
-+
-+test_expect_success 'mv --dry-run detects non-existent destination parent directory' '
-+	git reset --hard &&
-+	rm -rf from && mkdir from &&
-+	echo contents >from/file &&
-+	git add from/file &&
-+	test_must_fail git mv -n from/file no-such-dir/file 2>actual &&
-+	test_grep "destination directory does not exist" actual
-+'
-+
- test_expect_success 'moving to existing untracked target with trailing slash' '
- 	mkdir path1 &&
- 	git mv path0/ path1/ &&
--- 
-gitgitgadget
+> +const char *odb_source_type_to_name(enum odb_source_type type)
+> +{
+> +	const char *name;
+> +	if (type < 0 || type >= ARRAY_SIZE(odb_source_names_by_type))
+> +		type = ODB_SOURCE_UNKNOWN;
+> +	name = odb_source_names_by_type[type];
+> +	if (!name)
+> +		BUG("name missing in `odb_source_names_by_type` for '%d'", type);
+> +	return name;
+> +}
+> +
+>  struct odb_source *odb_source_new(struct object_database *odb,
+>  				  const char *path,
+>  				  bool local)
+> diff --git a/odb/source.h b/odb/source.h
+> index cd63dba91f..ab16d152f4 100644
+> --- a/odb/source.h
+> +++ b/odb/source.h
+> @@ -25,6 +25,12 @@ enum odb_source_type {
+>  	ODB_SOURCE_INMEMORY,
+>  };
+>  
+> +/*
+> + * Convert between the enum and its name. Returns the equivalent of "unknown"
+> + * for unknown types.
+> + */
+> +const char *odb_source_type_to_name(enum odb_source_type type);
+> +
+>  struct object_id;
+>  struct odb_read_stream;
+>  struct strvec;
