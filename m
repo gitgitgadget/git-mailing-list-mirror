@@ -1,61 +1,61 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12221F8723
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 00:29:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA672771B
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 00:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785112152; cv=none; b=SW+9rMedDVazVQqcLcjJrl9FUwfnG5yc6nTv5hlfyw+plov7FGs+R9xmZ/uA3796AxyVHm7085fWs//y8j7xwXCwaLn+UOPnFj0kX5q2iqP9vUr6dn/RDeu8xvo5xqmPCr405toX6wrKRLJkiWP96oT4GMVys41z67Tmgs0Ml4A=
+	t=1785112155; cv=none; b=RO8dn9kEgITeGPwz2pOupS40+Qvb6eQkYYClp52QLCkzRJmXqvi/w7lLWNWh+T4fPakmTNFTLYnkyM2BgvA8Z/ApRhx/YaH76aTHz1syQBZJhk65KhGJ5Od7Tj2XgoQgymBQFFLRKjdAq9OcztTiHyj+I/FV0GjgTxO75Vd6az4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785112152; c=relaxed/simple;
-	bh=TTmEIP35KQ1NT74AGy39gkgsegsazslkK4tlgVjbqlo=;
+	s=arc-20240116; t=1785112155; c=relaxed/simple;
+	bh=uGWD67MW6wYScfwvTn5vnH3dAuOQ6DRsntabHBdk/NA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPQBRFq1xxSIHAB+fmyEiLuA/QPyLY+uoywiC3Ebr4Lr5DNs0a4OP6PMD7whFHq5p8//yOET/Jbeik+o4X5mnnOcWNwwFH9N8ijpE4eafwjF+ycU15FmiFZieR4fRi23C2WHY63fD4fmfQEYxu0+RGW93xuGlPyOoOVEBIEfJDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=bVWPwz8U; arc=none smtp.client-ip=209.85.216.54
+	 MIME-Version; b=c0OZprNi2YEDzZeyj8L7Bl32ogpkfU+QnC1k4WcrqIkgZzClGyyDrjTLRm0njqsZIEwrSFuSFQk0ZU+NLXW4BznyoprgF7ChP6UcQn2x0D6j5bUOQDrwflEns3H57yGdsGqncV1sgpgmD0Da0oZ9Cn88kcnAxobWi+ItRI1iSBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=Sffb+xTg; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="bVWPwz8U"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-38f57e312ecso2583a91.1
-        for <git@vger.kernel.org>; Sun, 26 Jul 2026 17:29:10 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="Sffb+xTg"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ccae46de39so3178625ad.3
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 17:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1785112150; x=1785716950; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1785112153; x=1785716953; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Qvi24Q9TlzM5rUr+dIPhAECbMKR2fENYyz5SnFTz+GI=;
-        b=bVWPwz8UR3M0VNyrsKXeM6uvsUQ7TSHoi1qmlestJ+lzfXiq/MefjE5O4C8diMEW5g
-         JMug0KsNVTnXEA6xOvBnOgVGFW2AB0xOb1e+AAIDRXsOg/cB2Et0diHe2WcuLRQRvpob
-         CRz6EOugaZQAsAZEW7rwTGpVv8tM5911TmgCk=
+        bh=4qwRMl6vimJZ8+A5tlbsP6yLxFvWRgz0RRj/KprB4qA=;
+        b=Sffb+xTguxXnJ6OC8DKafzT0/99WKPV91HVBdEnaGS6FaC/uAeEr5OtKIPHdKgY4wN
+         D3O3cTClA82l/1wpM26EmO73N/yxbrlLN5uqOQWw/O93fgFk3PddRk7cwX0/Un+6/tKu
+         heQrVkJW7YrcDzK7TQYnOYPuAJi3WurrdZajQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785112150; x=1785716950;
+        d=1e100.net; s=20251104; t=1785112153; x=1785716953;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Qvi24Q9TlzM5rUr+dIPhAECbMKR2fENYyz5SnFTz+GI=;
-        b=QF/6Fsr4YfHYrtRiQGsTpXOK+INM1A94b75l7LRsUdQmJ3+46O5W/AEC0VO/XtOfmK
-         7VQ7Y7w4hTGbWqK4/WcRZAXP3KX+nyqMKtKWmMNdRkaWqD8Kw088uv8OqA6JkEIff30A
-         fAwckpnzioGIHl3cYC/tytx7nLVD6bpU4eETg8ujXDhw9WiB8ICsOCbatsEbRrlLDg/u
-         R6T4Y58Fgh6aKJNcRThQF4bAFQMLBtGc76R7ae6tOPbTwZAqWrStHTGFPlx81VnQK18x
-         BqcmaMSkvnlec2pmK/o6m6t6vw1q52LTc3YIT2zMBMCL5HcDD9w2uESbx7oUe9JqTkXZ
-         9QbA==
-X-Gm-Message-State: AOJu0YztSzhgJXTJtyUSFjOfblLzS8pFyoVcToeVjcIMmW0q8s8UkFlm
-	T8XhgPar62j5MbAB8+npcR89ITIVrZDtD6aozSByUnruKvNRWb/UHlWC+VyA1t7NUGkYblJFWeK
-	jYfLEcPE=
-X-Gm-Gg: AR+sD12C4P1q1cucUyfeytRVoXJ22xvBWPH1xzjwyDzBUbQ/q0IXwYMx/xtn+hBJ6qp
-	Kq48POXZS/Pko+n6ZdEV07qbdikubh72VR0qP2jbKiWZdHeslVJxU8QDvi2rfdwTKxKo4fX6bea
-	8F4pcr+Tg85G8M6phFNHBSLWygog0qUNY8cV8CFDOnx9SH+TDoNTh9T9hRFBINL46BUQoT3jI+y
-	wIYvVn0VbbbHD4yGXungHCv+VtovuHX/3c/2bM7TbKytpNZ1c71SH4pVLZWtTLrcudVlyJ5sreu
-	P3vM3a1QCROJTc7BCmheCNpqJ0IrTzPpjnWgJO7SX3K25VCiPwsra+khN2IE9dT0c77mlR9bItX
-	Xd9Fy2IEqtJ2CrTFjbXlsQiiz7CHrm1ih2z1E5poOBysmtQ6rGJnoJKGvcPe20FnYI1ALMVXQOS
-	y5NCm37ZjuyY7e4vcETevAT+61O9R72xDFk/Oz0RPavA/++jML/jnlraSn/VpKr/ETqnHDU8n0Y
-	9jl9hI=
-X-Received: by 2002:a17:90b:1b08:b0:381:fa5:5217 with SMTP id 98e67ed59e1d1-38f2977c441mr4437321a91.7.1785112150122;
-        Sun, 26 Jul 2026 17:29:10 -0700 (PDT)
+        bh=4qwRMl6vimJZ8+A5tlbsP6yLxFvWRgz0RRj/KprB4qA=;
+        b=aLYRglAS2ak/yCpDLmXsY3R3uGgvnBBdARM9uslcBsha3/F77e+rlCaQQ6RxsWzTYk
+         jTMPn2olYg7s6dDKcar9127S230n/Nkiay+7W98EVIC4oh+5V5uxMmH3DMqDQJ5vqiet
+         3v2qvusKbDkJsCW9GkDEoQ8yDGZWCe8TsdyMkSoHSUD6jI1orDZnJ3RU5LGSbIelbAPV
+         2Y9mVC0oFKqi1rM/FxcMWYCP/f5LRIyJZW0yw1q9+ZK/JTW8V2Cau/d8sukrlWlbDx3C
+         zdiI3vRf5zKKUlEee6TnfbHdbNn4pdP5WU3U308Lh225C+p339wwIz7CnLMGoJxffmoE
+         zmQQ==
+X-Gm-Message-State: AOJu0Yy788N6xH8w0y5BW87n4A6xtBGZcpdzottTy7rDgp9AgE/Nw9zu
+	A4rvfuGxTH71ZxSotmFfVaBwpX5rS8fZJwcNjIVLJyOnaIpVp6ND9KRb9xQcadZ5My+7T5dowBx
+	rwfuAci0=
+X-Gm-Gg: AR+sD12WbTPdx+5dobPDzUhC7Mu/Ra+yTpfuea0pnAB9gsQQiddaFGxADnidux8OjSE
+	4dG9v2p+whU8Q++os4v2E7kk6XCUTRTRIMBVSoN4Hxq7jRw2qVcK8/0pWUuSuShTjWIq6pBDwce
+	sQ5wCpeZFQ7QrsoHRFCCUbz0nUpcLSEvdh6YUdsvOtINBANN6zYzwJVnURUKsndK850juI90G3j
+	cH+0gaYvURkl9krrMWFi5ijLL/gBx/exXlZUTAzU807e+duQ2Va4fI+uriVhwxf6L+5Gl+B9pFS
+	CvvzNTP1R2oDqQoTzjhQjLg+8EEZFJfB1UMkN4zqvpsrD3tkvzWygBN0EhvtyGnYIv4osJDgWj1
+	PK0qNewepn6LdDXhk6BgyQwrW4YjticbnHuv1rIOuIGZrRUd3z8Hp6AvPFzfj3LZPwhah02RwPO
+	dF2EaPpOZm/Aoiqz9RT5T/fFfk20t/YMc3Tq4TE6FjES/K2h5cvvlc4uuqRTPtIso/p9yZ6508w
+	PLuX4bP+kdWlI+FQQ==
+X-Received: by 2002:a17:90b:53c8:b0:381:2788:a437 with SMTP id 98e67ed59e1d1-38f293cfc02mr4573867a91.1.1785112153230;
+        Sun, 26 Jul 2026 17:29:13 -0700 (PDT)
 Received: from com-76773.corp.openai.org ([20.102.114.220])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d6ba579c3sm19920328c88.8.2026.07.26.17.29.07
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d6ba579c3sm19920328c88.8.2026.07.26.17.29.10
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 26 Jul 2026 17:29:09 -0700 (PDT)
+        Sun, 26 Jul 2026 17:29:12 -0700 (PDT)
 From: Ted Nyman <tnyman@openai.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -65,9 +65,9 @@ Cc: gitster@pobox.com,
 	karthik.188@gmail.com,
 	sandals@crustytoothpaste.net,
 	avarab@gmail.com
-Subject: [PATCH v6 5/6] http: permit unlinking partial packs on Windows
-Date: Sun, 26 Jul 2026 17:28:42 -0700
-Message-ID: <87a20ac80fcaaaa3f69a24a650f5c135b24956ff.1785111375.git.tnyman@openai.com>
+Subject: [PATCH v6 6/6] fetch-pack: accept "pack" output for packfile URIs
+Date: Sun, 26 Jul 2026 17:28:43 -0700
+Message-ID: <be9e2fe2735124ee16e2c87fc3aaf3d37dde416b.1785111375.git.tnyman@openai.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1785111375.git.tnyman@openai.com>
 References: <cover.1785047139.git.tnyman@openai.com> <cover.1785111375.git.tnyman@openai.com>
@@ -79,85 +79,128 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Windows, an open file must permit FILE_SHARE_DELETE before another
-process can unlink it. MinGW's non-append O_RDWR open enables that
-sharing mode only for an existing file; adding O_CREAT falls back to
-_wopen(), which cannot set it.
+When index-pack finds an existing keep file it reports pack rather than
+keep. Accept either result from http-fetch, and only register a keep
+lockfile when this fetch created it.
 
-First try opening the partial pack without O_CREAT. If it does not
-exist, create it exclusively, close that descriptor, and retry through
-the existing-file path. A racing creator retries after EEXIST.
-
-This ensures that every retained descriptor permits another downloader
-to unlink the staging path. Add an unlink-while-indexing test that does
-not require FIFOs and can therefore run on MinGW.
+Read the pack/keep prefix and hash without consuming any following fsck
+output, validate the reported pack hash against the advertised hash, and
+exercise a packfile URI fetch with a pre-existing keep file.
 
 Signed-off-by: Ted Nyman <tnyman@openai.com>
 ---
- http.c                     | 17 ++++++++++++++++-
- t/t5550-http-fetch-dumb.sh | 21 +++++++++++++++++++++
- 2 files changed, 37 insertions(+), 1 deletion(-)
+ fetch-pack.c           | 33 ++++++++++++++++++---------------
+ t/t5702-protocol-v2.sh | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 15 deletions(-)
 
-diff --git a/http.c b/http.c
-index ad07ef3549..a0d399b274 100644
---- a/http.c
-+++ b/http.c
-@@ -2746,7 +2746,22 @@ struct http_pack_request *new_direct_http_pack_request(
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 29c41132ee..e9f24fbd63 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1887,9 +1887,10 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	}
  
- 	odb_pack_name(the_repository, &preq->tmpfile, packed_git_hash, "pack");
- 	strbuf_addstr(&preq->tmpfile, ".temp");
--	fd = open(preq->tmpfile.buf, O_RDWR | O_CREAT, 0666);
-+	/*
-+	 * MinGW's non-append O_RDWR open grants FILE_SHARE_DELETE only for an
-+	 * existing file; reopen a newly created file so others may unlink it.
-+	 */
-+	for (;;) {
-+		fd = open(preq->tmpfile.buf, O_RDWR);
-+		if (fd >= 0 || errno != ENOENT)
-+			break;
-+		fd = open(preq->tmpfile.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
-+		if (fd >= 0) {
-+			close(fd);
-+			continue;
-+		}
-+		if (errno != EEXIST)
-+			break;
-+	}
- 	if (fd < 0) {
- 		error_errno("unable to open local file %s for pack",
- 			    preq->tmpfile.buf);
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 86b9d87ef5..b5758f1c9c 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -328,6 +328,27 @@ test_expect_success 'http-fetch --packfile resumes a partial download' '
- 	git -C packfileclient-resume cat-file -e "$HASH"
+ 	for (i = 0; i < packfile_uris.nr; i++) {
++		bool created_keep;
+ 		int j;
+ 		struct child_process cmd = CHILD_PROCESS_INIT;
+-		char packname[GIT_MAX_HEXSZ + 1];
++		char packhash[GIT_MAX_HEXSZ + 1];
+ 		const char *uri = packfile_uris.items[i].string +
+ 			the_hash_algo->hexsz + 1;
+ 
+@@ -1907,16 +1908,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		if (start_command(&cmd))
+ 			die("fetch-pack: unable to spawn http-fetch");
+ 
+-		if (read_in_full(cmd.out, packname, 5) < 0 ||
+-		    memcmp(packname, "keep\t", 5))
+-			die("fetch-pack: expected keep then TAB at start of http-fetch output");
++		if (read_in_full(cmd.out, packhash, 5) != 5 ||
++		    (memcmp(packhash, "keep\t", 5) &&
++		     memcmp(packhash, "pack\t", 5)))
++			die("fetch-pack: expected pack or keep then TAB at start of http-fetch output");
++		created_keep = !memcmp(packhash, "keep\t", 5);
+ 
+-		if (read_in_full(cmd.out, packname,
+-				 the_hash_algo->hexsz + 1) < 0 ||
+-		    packname[the_hash_algo->hexsz] != '\n')
+-			die("fetch-pack: expected hash then LF at end of http-fetch output");
+-
+-		packname[the_hash_algo->hexsz] = '\0';
++		if (read_in_full(cmd.out, packhash,
++				 the_hash_algo->hexsz + 1) != the_hash_algo->hexsz + 1 ||
++		    packhash[the_hash_algo->hexsz] != '\n')
++			die("fetch-pack: expected hash then LF in http-fetch output");
++		packhash[the_hash_algo->hexsz] = '\0';
+ 
+ 		parse_gitmodules_oids(cmd.out, &fsck_options.gitmodules_found);
+ 
+@@ -1925,16 +1927,17 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		if (finish_command(&cmd))
+ 			die("fetch-pack: unable to finish http-fetch");
+ 
+-		if (memcmp(packfile_uris.items[i].string, packname,
++		if (memcmp(packfile_uris.items[i].string, packhash,
+ 			   the_hash_algo->hexsz))
+ 			die("fetch-pack: pack downloaded from %s does not match expected hash %.*s",
+ 			    uri, (int) the_hash_algo->hexsz,
+ 			    packfile_uris.items[i].string);
+ 
+-		string_list_append_nodup(pack_lockfiles,
+-					 xstrfmt("%s/pack/pack-%s.keep",
+-						 repo_get_object_directory(the_repository),
+-						 packname));
++		if (created_keep)
++			string_list_append_nodup(pack_lockfiles,
++						 xstrfmt("%s/pack/pack-%s.keep",
++							 repo_get_object_directory(the_repository),
++							 packhash));
+ 	}
+ 	string_list_clear(&packfile_uris, 0);
+ 	strvec_clear(&index_pack_args);
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 74a2b7730b..0f05286de8 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -1291,6 +1291,37 @@ test_expect_success 'packfile URIs with fetch instead of clone' '
+ 		fetch "$HTTPD_URL/smart/http_parent"
  '
  
-+test_expect_success 'http-fetch --packfile permits unlink while indexing' '
-+	git init packfileclient-unlink &&
-+	p=$(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
-+		ls objects/pack/pack-*.pack) &&
-+	tmpfile="packfileclient-unlink/.git/objects/pack/pack-$ARBITRARY.pack.temp" &&
-+	write_script git-unlink-index-pack <<-\EOF &&
-+	test -f "$GIT_TEST_PACK_TEMP" || exit 1
-+	rm "$GIT_TEST_PACK_TEMP" || exit 1
-+	exec git index-pack "$@"
-+	EOF
-+	test_when_finished "rm -f git-unlink-index-pack" &&
-+	PATH="$TRASH_DIRECTORY:$PATH" \
-+	GIT_TEST_PACK_TEMP="$TRASH_DIRECTORY/$tmpfile" \
-+	git -C packfileclient-unlink http-fetch --packfile="$ARBITRARY" \
-+		--index-pack-arg=unlink-index-pack \
-+		--index-pack-arg=--stdin --index-pack-arg=--keep \
-+		"$HTTPD_URL/dumb/repo_pack.git/$p" >out &&
-+	test_path_is_missing "$tmpfile" &&
-+	git -C packfileclient-unlink cat-file -e "$HASH"
++test_expect_success 'packfile URI preserves an existing keep file' '
++	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++	rm -rf "$P" http_child keep.expect &&
++
++	git init "$P" &&
++	git -C "$P" config uploadpack.allowsidebandall true &&
++
++	echo my-blob >"$P/my-blob" &&
++	git -C "$P" add my-blob &&
++	git -C "$P" commit -m x &&
++	configure_exclusion "$P" my-blob >h &&
++
++	git init http_child &&
++	packhash=$(cat packh) &&
++	keep="http_child/.git/objects/pack/pack-$packhash.keep" &&
++	echo pre-existing >"$keep" &&
++	cp "$keep" keep.expect &&
++
++	GIT_TEST_SIDEBAND_ALL=1 \
++	git -C http_child -c protocol.version=2 \
++		-c fetch.uriprotocols=http,https \
++		fetch "$HTTPD_URL/smart/http_parent" &&
++
++	test_path_is_file \
++		"http_child/.git/objects/pack/pack-$packhash.pack" &&
++	test_path_is_file \
++		"http_child/.git/objects/pack/pack-$packhash.idx" &&
++	test_cmp keep.expect "$keep" &&
++	git -C http_child cat-file -e "$(cat h)"
 +'
 +
- test_expect_success PERL,PIPE 'concurrent http-fetch --packfile cannot corrupt an overlapping download' '
- 	git init packfileclient-overlap &&
- 	blob=$(test-tool genrandom pack-overlap 2m |
+ test_expect_success 'fetching with valid packfile URI but invalid hash fails' '
+ 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 	rm -rf "$P" http_child log &&
 -- 
 2.55.0.openai.131.g83a728de1eb6
 
