@@ -1,83 +1,86 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0640A40EB91
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 13:45:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E523F7AB7
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 14:55:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785159947; cv=none; b=ORQfyWiqAy7Iljvc6p7a0kerm1Bj8arMh2gpfUr6ti9wez9IjHbgLrh+0ZFA/ORTuYKZci1KyQ0hhxMswOQpTcTmxwwOKBuNCc4qc7+lPYg0nyXnkT8r+4LviaNmsyMOacpVinklAoVyVsb2eQwMuaGHRMXxEU/jmKxXCGMl0Tc=
+	t=1785164117; cv=none; b=El/bVcR/J1pUVwLiOyXELNEaqiaJwXANWK6nwvMmeBImwu5WLxAVGDGotR6TefMxlolh2mNW6DsN2M4Rz7YjWi2n/WvvY2qNUtU4zqFTxnx/rqHOEFzma/nrDlyOA89mkxx6vMamlUIA11X+8x0OtqROGJpAvvY3lyG2HKxnnbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785159947; c=relaxed/simple;
-	bh=xAxcjq0DO3utuDRAyh86EQWWfP8p3ZQZG8hxyzl6AbY=;
+	s=arc-20240116; t=1785164117; c=relaxed/simple;
+	bh=V0VBTTZig/DnkieFxLpaGw5kR+ZKsABrYpp+wz95ijI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t/b5aw/e+Wx3w/UqqLOAb2BHMkdD4+GvaAEc1ATqNtRm0ycgOHb1KFqxKGUC/tBaTBrHHR1FdsH4kQOIbKC63Em6cp/3q9iIDy392Jnvc9xj0BfGWNONkCpjwUftDirnkgKLBJkV30maJE8OxvxOutGMoeRimJQBR9UHExhnLOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gz7gkI0q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IhJnuj2J; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=EcieRVo2uTy/JFqUWC7MAY00g8gXQrdR2NpHBFNCUao0MTZxto/iXNX1Frd1Fm02yp/sLtGwtLdzkRPubpa9/TzIKfiU08epPKktyKYV5j93R0Lvc91GNRqBC4p7iEPNOSgzNp1/Wn0TS8t+gN1B7t+YIbk6mJCldV8TOayeeG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mTXWPu5A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iujdTjzT; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gz7gkI0q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IhJnuj2J"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 36EB0EC0180;
-	Mon, 27 Jul 2026 09:45:44 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 27 Jul 2026 09:45:44 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mTXWPu5A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iujdTjzT"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E27351400146;
+	Mon, 27 Jul 2026 10:55:14 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 27 Jul 2026 10:55:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785159944; x=1785246344; bh=WfjxqaXlOf
-	f0b6klYQ/Iaglqpgpn0Ha3Ny8oP7kjnjE=; b=Gz7gkI0q8hvnQuOMGcGQogZORJ
-	Zo2VnEv7JVRWZnjaS5c0UmiLlIi1grNQDlS6ztGxpMG5ZkYikl4c38SbEv0WDF8X
-	UA17MrV8O0XGal3k77bUw+5BowsilKotVsxdX7DsjiF4T24wWGYubmPWJokb1kh0
-	XPDJnatyuD6XJDoW4bUfU+MyY9lhPsmw0KcmL+224Xl90gO9kUX2R3ezFtI8QJtt
-	ASk/zmj+tEin9lzQyu5Bfu1ZeHztb8dJnyjzTibuu9g4JRvmyiC1rynBwPwmb1+M
-	trXsGV2yqlsf9i9lXr/guNuRfl+IP8ZNtpqSpaFXsbetqtp2YKDxfQdUV6fg==
+	:subject:to:to; s=fm1; t=1785164114; x=1785250514; bh=leq5adVC80
+	mp8/pdyqAnvknTDOUBMpXVem5xzz26PiU=; b=mTXWPu5A+J3LeVMjyjavUpXkzh
+	aoNkaiPxPFk24msddSwCIij+pqbBVQPrKCCGWbKg7tBWdvqv1hYTBjjBMCQEt1rJ
+	S4w0GOTN3arFJn9gAL0d4ifyf3Rlpy3xjQO67hsX5S44193qwi4yhJ6uZbVKppUw
+	f1KqlGqqlTbvFwqpMY26dMeDn8/Do16Tf4miTREO7YSegXxJOuHs0q7uG4RtVLIx
+	MjqnHNjTCPIGLS8Lci/BGQLV4T5wrxfLPKcKqGpPM1w8wcoW5vdVsg5Uv2U3s5Ce
+	d/m2hyuH4N0RKUOxD+0JnRAfWvZhYuQBUI7PTu9/DFWRqubi0N/btg6ADP4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785159944; x=1785246344; bh=WfjxqaXlOff0b6klYQ/Iaglqpgpn0Ha3Ny8
-	oP7kjnjE=; b=IhJnuj2JWLGtIwSQ8ASCuggioJDAi11xddTXWK+SnjtyowIyuDy
-	AiVM+9fCRP/3Sb2J3NXPbLMmUqtAudepgvZtF8tu4TWO85uUOgNIbrV94eoAf/BX
-	sXPOPZDJ4cdNg6AXfEYFtmuoQbAS5ufndi4mdM69wZvxlHjFTxv7MpNFGwvT5ygB
-	KAKFhE4W3Xe5sh5G8uk7L+RmDqZPlg4b4BpMktM+ZQHwg5HFx4zzKi4MklH6XEZX
-	uc5sn6PhaMrmtnV/G2wW36UJZE8cBDLmu0aabCrprYJZE2PU+36k0m+ZEJq1As8P
-	Nm/PDWiiyJb2BtzCcYua5bXDCx8y4UaP2Yw==
-X-ME-Sender: <xms:CGFnaoq0NxRQsx-koRSN1CWyATRSfbzckqacEmgdcHdJwkxhqaAQ0w>
-    <xme:CGFnaljBUN5dVfHZDcmGSdt_kanbclyz_ibuB2DTG6kVAm1EjpQW1MZjpjnkTRY5f
-    FwccqHduOJV7qcmLvmGL8TS1gxVF32m1BPyXgpwqBtOluVAhjal0Q>
-X-ME-Received: <xmr:CGFnalj1SWbjWuyFb9wNzaa2ljPsUhQJvVlQxCyuYikOhgRibVgA1Gx-pcqSu1wtBDP0hwKsYpXdQsx_0GTizWMM8cfL4-Tc2w>
-X-ME-Proxy-Cause: dmFkZTE5QGFX9SCuQIgf/6jijCGGiCmD7IjCSfXGpp+fm33SYU4ppIAy6dZ3ZsKHV99zMA
-    MotiNmJyuUAZPwOtrz8B5Enc6l/8drty/XeBpmO4zojibI/n7TdkUEBBb+PtI5771ZRFAW
-    rZHdNfUrDY27zT1AQtd4p/6GGq43swddR8wp0FN/tidGUGm7hvsmJaMq082bcq1bGM0nmJ
-    44vowRItG09/wPUG4rkr09XSam1DvhpdOJmvNrkb1hwMy8IlgODHaisYdcSXEiA/5O7gun
-    GhnOOsljDqcfZo2Hu8QF+rm7P2bWUVRu0b7XZo2dA4hITN8wt/jv+wk6Po6K1FjJfMxPGb
-    YoNNRZuwWZT3Ybn+QS5zrpPg5cyo60CUdvlb024cFmybzlGty0VVTLYBW9Db06eZMFUwq1
-    +DoV9idEJhjvCpGIr2y5rsyPsRD0bZs3/9z7o3esMbqOLIJ7W+7AlxVqmwvxGl4dKfedUc
-    CKBW+3LC/8Vt4juFmkAFcobolq94W29SIBUWSZIqOhUA7f0Qspy6C41o8qMe3S0VjTTDsT
-    zVHJ86HvXSV23ANdA22Jjx1LykVPXRqVyvemyh6wpn4/XRE7zknT2djO5+prUKo9bQ5Ni0
-    ku0EDLhsNTgzFkrObGMDAl6pB7mzMfWn4kK3r3rBz+KWUthtCwTDBzaZNTPQ
-X-ME-Proxy: <xmx:CGFnariwqwKiWFnmwKBAj2jf33d9DCu27QbWR5N6xJV8jBBIvi1KYw>
-    <xmx:CGFnalJLlRISpvkX_zmoqWWWBGqxTZHHFem-pOQpU3x7-_89pFfVhw>
-    <xmx:CGFnaqEX0ZqEaIVg4fXB05E7tS-cWwLItFy9tsmMDflYJqmX9Wxwmw>
-    <xmx:CGFnapT95oIbHuq5eVl663EMnkMbr2ptT3UlhqjDeJw3R4xz3JTOvg>
-    <xmx:CGFnauwoUdNdtGGGXeqKR-vKm9gq8hunRKLU_VPggHRAO4gmdguWryof>
+	1785164114; x=1785250514; bh=leq5adVC80mp8/pdyqAnvknTDOUBMpXVem5
+	xzz26PiU=; b=iujdTjzTwQ7LZ5ilmE34Fl9SqSL3S936/v2inV7bA9oICNngwY1
+	BVLmwWZpiuV+KvwqfMptjwUrAwB4xTsZUl1Erzj1cRfu1M2b2GjQfca4ZJgxHtdD
+	10g2Pkbu0nM39DAL1Z5v9n6YS+kQHpGsU9fgDZpUE1IjWt9f0WD7fKM/WoZv7Qu7
+	SuHe6OxU+dtkehYa4Oedo/P4hjO2ehjy06BUvRliGkuTNvYJOxdNORDxyRUOFCrZ
+	lG0b31axXHUzYEQGaTUAI7G1BWz613BnKJcmEjXb/90k/Xw52/glbnhFrCDr6v3i
+	O1UDi8wGpjJYAcZCmqmLP1JTfqoBJ1wxPiA==
+X-ME-Sender: <xms:UnFnaiqBSZT7_rgE0iluaqwMoD_3ih-ZyZ4WocMWCWFYjwjkwl_MXw>
+    <xme:UnFnai6_3aoAgxfx26UJhqe0f5qdfz0J6jZb3BscCHmNXZY54B2x40xU6ULU-RVfU
+    2mMhFjp9M0A4HbpimOunFY3u8zH1Ii2nGKVUFq31pin2td5_0iuDJE>
+X-ME-Received: <xmr:UnFnapeW2QfWYSLrI0Oo157m5KIJyHOJAZVO0PjVVaUFvcanC-h-V3ilDbHJdvgksVMZSLlwE9KK6lAgQZlrCvOGWdUzi-UD6Q>
+X-ME-Proxy-Cause: dmFkZTFnp1cTKRNA28lIo7tsjiQfBQh003NNZ9GUcTKpJZUjs9OsVGW4s1zH2iFK796Lwe
+    7vWpvQzFop+6IBYsl57yVp2LyZoawwIMXFT/aPH2I1mnwrNBa/n+s4YplcIuzJqeKAEZyt
+    b6ecsOR8SvCk0BVkLOPIn24YSQ97Qsf4JuPMkkLv3nGk9C/pajuAITdbG1cDx/dcPAdAaE
+    UnzYy8pzJ15EOZY8bk4lrORsjIvJRkiuwO1uzcoqx4T+wzSqhM/QgDvdNgazWRIkO55Z/d
+    hwawfRcVwofGrkY/sKK0OcS8SCdsmFyl/KeFhpq9YWEhvtsC039Dx42MVrhLNeQYkHb5Kj
+    GiunzckTfMljzP2BcSMx/TngVpBY4mJv1eedLDvCeDmZFrCrpKmBozOBOwj6PM2JHZ5DUW
+    RCYCBtPhvJdvE2UlifGGegBP+op510l0SxU40tuGBdkKfiI/Jxn2g5FoaayXZXb5bw6dZz
+    f6Rwm6A3GMy9cpI9LM/AUYts8sjIDKDJc2ExUP1aC1NoJ6euRgPif8CbKvICdwDk/1ym9q
+    h22RNpRbF8r/gVieyr1VHpod254rmVp6WAVdHhzx9INfCtg0C5tiV3mLEkOkukkNmi8oHc
+    pRAp/5fM0G3aZZNeBNvkJtVLzd83iaBVBnJXhV87eAYNCeFbw2HTjcsN0ACg
+X-ME-Proxy: <xmx:UnFnan421CjhScQ7PRY0om2_RffoVtNfw_w-cmHdaPq83_ielseWxw>
+    <xmx:UnFnags8LdOwlPa2NOFwoWm6U2ZQd4TYJebX7uMz68OPTeZSVhDNjA>
+    <xmx:UnFnanjSpcT-ZsGnTBuo0Rdz-hWulCCFlTlkA3ahs0Ar0dWlyopVRQ>
+    <xmx:UnFnarrILECw3LStk3siHBa9JPqSIf6u9yRYpMk-jHKcyP_j4d3vCQ>
+    <xmx:UnFnagh3_p3bUWe71FjuMuLSEBfx-uAhCk4rFtY3fRxrtA8kVHhDTJfH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jul 2026 09:45:43 -0400 (EDT)
+ 27 Jul 2026 10:55:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,  Michael
- Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH] revision: make get_commit_action() a pure predicate
-In-Reply-To: <pull.2169.git.1784143793613.gitgitgadget@gmail.com> (Michael
-	Montalbo via GitGitGadget's message of "Wed, 15 Jul 2026 19:29:52
-	+0000")
-References: <pull.2169.git.1784143793613.gitgitgadget@gmail.com>
-Date: Mon, 27 Jul 2026 06:45:41 -0700
-Message-ID: <xmqq8q6wpmuy.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Hardik Kumar <hardikxk@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+  Pablo Sabater
+ <pabloosabaterr@gmail.com>
+Subject: Re: [PATCH v3] utf8: make utf8_strwidth() and utf8_strnwidth()
+ return size_t
+In-Reply-To: <e971400e-6d23-463f-ae9c-a21d3c5a3563@gmail.com> (Phillip Wood's
+	message of "Mon, 27 Jul 2026 13:51:27 +0100")
+References: <20260726123427.173877-1-hardikxk@gmail.com>
+	<20260727065917.469738-1-hardikxk@gmail.com>
+	<e971400e-6d23-463f-ae9c-a21d3c5a3563@gmail.com>
+Date: Mon, 27 Jul 2026 07:55:12 -0700
+Message-ID: <xmqq4ihkpjn3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,126 +90,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> commit_early_ignore() runs twice on the -L path, once for that gate and
-> once inside get_commit_action(), but it reads only object flags and pack
-> membership, disjoint from the TREESAME flag the fold sets, so the repeat
-> is harmless.
+> I think it would be much better to remove the TODO comment as Junio 
+> previously suggested and instead add some documentation to the function 
+> explaining (a) why it is appropriate for it to return an int; (b) why we 
+> must use the cast_size_t_to_int() helper to prevent overflows (see the 
+> commit that added that comment).
 
-This one confused me a bit, so I'll think aloud below to see if you
-can spot where I am misunderstanding your code.
-
-> +/*
-> + * Whether the commit is ignored by the cheap checks that read only its
-> + * traversal flags and pack membership (e.g. already shown, or marked
-> + * uninteresting), before any check that examines the commit's date,
-> + * parents, message, or diff.
-> + */
-> +static int commit_early_ignore(struct rev_info *revs, struct commit *commit)
->  {
->  	if (commit->object.flags & SHOWN)
-> -		return commit_ignore;
-> +		return 1;
->  	if (revs->maximal_only && (commit->object.flags & CHILD_VISITED))
-> -		return commit_ignore;
-> +		return 1;
->  	if (revs->unpacked && has_object_pack(revs->repo, &commit->object.oid))
-> -		return commit_ignore;
-> -	if (revs->no_kept_objects) {
-> -		if (has_object_kept_pack(revs->repo, &commit->object.oid,
-> -					 revs->keep_pack_cache_flags))
-> -			return commit_ignore;
-> -	}
-> +		return 1;
-> +	if (revs->no_kept_objects &&
-> +	    has_object_kept_pack(revs->repo, &commit->object.oid,
-> +				 revs->keep_pack_cache_flags))
-> +		return 1;
->  	if (commit->object.flags & UNINTERESTING)
-> +		return 1;
-> +	return 0;
-> +}
-
-This mirrors what the original get_commit_action() did to return
-early with 'commit_ignore'.  Collapsing the nested 'if' for the
-kept-objects case is a nice touch that makes the result easier to
-follow.
-
-> +/*
-> + * Decide whether this commit is shown or ignored.  Keep it a pure
-> + * predicate: callers such as the commit graph depend on it having no
-> + * side effects, so per-commit mutations (such as -L range tracking)
-> + * belong in the caller, simplify_commit(), not here.
-> + */
-> +enum commit_action get_commit_action(struct rev_info *revs, struct commit *commit)
-> +{
-> +	if (commit_early_ignore(revs, commit))
->  		return commit_ignore;
-> -	if (revs->line_level_traverse && !want_ancestry(revs)) {
-> -		/*
-> -		 * In case of line-level log with parent rewriting
-> -		 * prepare_revision_walk() already took care of all line-level
-> -		 * log filtering, and there is nothing left to do here.
-> -		 *
-> -		 * If parent rewriting was not requested, then this is the
-> -		 * place to perform the line-level log filtering.  Notably,
-> -		 * this check, though expensive, must come before the other,
-> -		 * cheaper filtering conditions, because the tracked line
-> -		 * ranges must be adjusted even when the commit will end up
-> -		 * being ignored based on other conditions.
-> -		 */
-> -		if (!line_log_process_ranges_arbitrary_commit(revs, commit))
-> -			return commit_ignore;
-> -	}
->  	if (revs->min_age != -1 &&
->  	    comparison_date(revs, commit) > revs->min_age)
->  			return commit_ignore;
-> @@ -4314,7 +4316,23 @@ struct commit_list *get_saved_parents(struct rev_info *revs, const struct commit
->  
->  enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
->  {
-> -	enum commit_action action = get_commit_action(revs, commit);
-> +	enum commit_action action;
-> +
-> +	/*
-> +	 * For a line-level log without parent rewriting, fold each commit's
-> +	 * ranges as the walk reaches it (parent rewriting does this eagerly in
-> +	 * prepare_revision_walk()).  Fold before get_commit_action() so the
-> +	 * ranges carry across a commit that a later, cheaper check ignores;
-> +	 * the commit_early_ignore() guard skips a commit get_commit_action()
-> +	 * would ignore outright.
-> +	 */
-> +	if (revs->line_level_traverse && !want_ancestry(revs) &&
-> +	    !commit_early_ignore(revs, commit)) {
-> +		if (!line_log_process_ranges_arbitrary_commit(revs, commit))
-> +			return commit_ignore;
-> +	}
-> +
-> +	action = get_commit_action(revs, commit);
-
-The primary change in the patch is to lift the "line-level" code out
-of get_commit_action() and move it to one of its callers (namely
-simplify_commit()).  The other caller is known not to trigger the
-affected parts of the function, which was discussed previously at
-https://lore.kernel.org/git/xmqqtsqxfdl4.fsf@gitster.g/ and started
-this leftover bit.
-
-We used to call get_commit_action() to decide the fate of the
-commit.  If get_commit_action() returned anything other than
-'commit_show', simplify_commit() simply returned that action without
-doing anything further.
-
-The original get_commit_action(), when on the code path that calls
-line_log_process_ranges_arbitrary_commit() to check if we want to
-ignore this commit, did what the commit_early_ignore() helper does
-in this version before reaching that point.  So this updated caller
-in simplify_commit() recreates the exact same logic.
-
-We do end up executing the commit_early_ignore() logic twice if
-line_log_process_ranges_arbitrary_commit() does not tell us to ignore
-this commit.  With only two callers of get_commit_action(), we could
-easily reuse the result of commit_early_ignore() if we wanted to, but
-it is probably not worth it.
-
-So the patch looks good.  Will queue.  Thanks.
+Thanks, especially for (b) above.  That needs to be stressed if we
+are to go in that direction.
