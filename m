@@ -1,141 +1,148 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F343BB9F1
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 15:45:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78633FB067
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 15:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785167155; cv=none; b=D5JKrjThKEsgnFwfhQqvqDkQEiRfPN8FUzsp7SFZsH12cyrfp3VjK1ELJSduM3g7u6muQnBme+FcGP/dTLG8GKdt+X9hiGU3uS1S5TRF3nRkwg4FD8qMlikzm5ebwphWNv6tpvuW3lJmUlUQkwYQdWkDKDJGpd7F3tOtXNfU1Sw=
+	t=1785167995; cv=none; b=D79ygaY0hq7/Cnqa8l1xgGUPjaNX05DdBKaAdYrRRR9RugVnZArBm9tgyaiPb7U23kKtYhkTta9L+HO8CsmvlCodY7oWzq4VsTcwFWhDJCh4ylIaAMJI17QSF0InWI1jzNhNF2fVvPw3wQPuxU8x9gt5WRyczeI1k/oVOmW31ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785167155; c=relaxed/simple;
-	bh=Sowlz2ZFm0cp1p2lo3j7ZOioBz2xb8r1Hva3Bu+/dCY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iSdFAsED03bmX0uME7KxEzSC7sGk2gVFbt9UTw41Hb3Y8+dXw9r5qPRfpWJdWU3a2Iv91a7HSyZWkwHDpqGTY/OP0gQMvdt6+nlzNjjzGliENcsecjG+9yqXax1vB0OnPcSXp6hF0aUmzn7KS39EfNnG0EhtvjQa8y189+Xyjh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CxACHE+V; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785167995; c=relaxed/simple;
+	bh=L0EfeTvqSB5B8zWD0/A0HLcGcO16dkHKyIq1ry9SQXo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=phOdVHGe98yS8dn0EeqoElDpmurqeZ4HxrJ8IHkWbdRBJKw7Vx9gsMDpDDhmGR9+aooN4L+60m8n5ibGefIR+XTWabbtWbgfKU2z3EMx3S+F3uIIbJEGDWpMecRdR9rKmh1aMMk2aTqMJCeUxKPvxr4LINEUAFVXMJ+Cl4ZB05g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NEgRTSpW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jn8JZ1W9; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CxACHE+V"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e6b554044fso2434033a34.0
-        for <git@vger.kernel.org>; Mon, 27 Jul 2026 08:45:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785167149; x=1785771949; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8nfZUbnTr5I/UN0RfYFusyLsYdPzpNsJD35p/I++BX8=;
-        b=CxACHE+V2TJTLAmDezhY3e5LyWLaNhXOABroA2e+X4k9V+K9P/Ftc6pzfAdJfzOp7Z
-         n1+C3P3McGZR5/kkb6jZrWRirpebF4suw3qIVVayj97mmbBqdgsjFe4RVv6YXzhzDt5E
-         dU6m9kYMBz9Gshs16PIXBasklGRQIEdS1aKxWW19Lnh7P2gLST4PGXksizH6KUOPVcWL
-         cs1RAwl+30zuG+/KjX3ILGA+Kn029HLT07Ve/d6vgRERnagkLvW6aVJQpPyobL4TL1Iz
-         WoZ4y1AaKnxADsYTGHccojc8rRo+HFkc/p1E5d5VKv0Qu1HK8VifUiJdozO3iZlSXsmN
-         5AAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785167149; x=1785771949;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8nfZUbnTr5I/UN0RfYFusyLsYdPzpNsJD35p/I++BX8=;
-        b=swGAtM3Eoz4LhtZlcpPFVsQDHt6F0brkM+8DEpL20YOigfxVnm7w7UmxBmVZo4pPpZ
-         VlZ9h8w626Xm2LjowsbRK8x0uhCQzvlmnG3m4SM02UMaoPaiUSzZeW+doJv93Xd1l2Uk
-         iKYIOsoH9ogkhpwMftn7oxZNg+NKYDGsvv6unQGUwN8YeGuUy7r2a3evZ0jmQent3t42
-         BX9vu5n+jRmQ8W9TQxNU6O8pKg8vrZAIMLioQgLm0sgJfv6+oV23b15YzC9BGrCQ42+5
-         HohqT6th8izujYaAlBtbh4w7MDaFyelkTpSuKoBg6SAAB4n31hd/CTLB3Cisu2AKQa98
-         oNrA==
-X-Forwarded-Encrypted: i=1; AHgh+Ro4DTML7v5iid/KP33NdSNTj54zSg0oejMJXhL6Gv0m/3GkW2piVMUDesSpT8IFLi8umR8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqW1xJgCr/YvwrC6MQF9v3ajh5GI9bGUWThUx3Inv7SdDXJAnP
-	tSFqrL+tthI5YS5jGUplZ6/UhyhrN+Ju8Atz/SmLS7wV6fGiVxPPZL3KmbDUJA==
-X-Gm-Gg: AR+sD10GbH1Op0UtoRo0I+ArAqctYe8HX77394CQBgdZ2kuyBJWp1vuviqvGhyAtMpZ
-	RlichqsD7A8FBp8+ccIHaNempa7IW6XHDDIJL9829yO5Ml3qPdRA5p+4KGNyQVmrNRJB2AAHpNQ
-	re2JKMnpg/VOga8Z0x8pzV0+13fNbR7SUljRVHR9OoDYKRzmNZYLx/XXmZ+fedsznnUoMKdDnar
-	UxbGA3/fjHpvr1TREB3pifP7bhDYRVONnOl09sN6XsxLUPBBqhiF22hIf67k7v+2dJe0tOcXOSE
-	hipCUuYu+tfXN6QX85+1qdWOgs/cEomx02Gqe8uxfDRP9j52ODpk8uW7+amdr9RpzPCvyZARvXv
-	crLuiyCxP4KIUm4rF2+st63nJCBIomoaS9+K1/EqvzbDFwPzMSVJ1RCCLRRJ+xbzEyJj6HFQ=
-X-Received: by 2002:a05:6830:6d13:b0:7e9:b4d0:df75 with SMTP id 46e09a7af769-7ee78dd9884mr8500172a34.29.1785167149558;
-        Mon, 27 Jul 2026 08:45:49 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ee29e13a4csm12722806a34.12.2026.07.27.08.45.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2026 08:45:49 -0700 (PDT)
-Date: Mon, 27 Jul 2026 10:45:46 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>, git@vger.kernel.org
-Subject: Re: Performance regression in connectivity check during receive-pack
- (git 2.54)
-Message-ID: <amd4yR3EEn_fVZcm@denethor>
-References: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
- <20260721035733.GA581473@coredump.intra.peff.net>
- <xmqqtsps76f1.fsf@gitster.g>
- <amCuLpT6vYzo1GF8@pks.im>
- <xmqqh5lrrplt.fsf@gitster.g>
- <20260723104943.GC604358@coredump.intra.peff.net>
- <amLgMqkqxR8mKIbT@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NEgRTSpW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jn8JZ1W9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id C48BCEC01A9;
+	Mon, 27 Jul 2026 11:59:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 27 Jul 2026 11:59:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785167991; x=1785254391; bh=gf5++nsuzm
+	rJDhKn5fsd418oToCDgdPogCFE5LDF1pM=; b=NEgRTSpWxu6JROIsQ7IGNODh6N
+	sq95DmdL+7yilc8Arats6TFvefRkD6ZZau/LW5hWD4KS67SVXivqpAYJSS09lS0c
+	RbFvECpiT3AJ9sFmntfj+NG9YSKVei8TU5GUjbMi3pXz5Asm/h/fbBPRzk2r//5H
+	hU50CS1I+0cLuIQo6VD0Er6tLCn98BfMYn2RnqsQIbBrFPGRG154JOUqoO+/T0fP
+	xNGvvUgK3NQQzIe209f0uX5zExmmztHnvh9Vv41MuBIXjqk5Wzt2OllcXLgAIjph
+	glCcj0yFhraOAW1mCg68b+65+Xnddcoe2Bwe5NDsbsgqNSY0PDzBcgrevAkA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785167991; x=1785254391; bh=gf5++nsuzmrJDhKn5fsd418oToCDgdPogCF
+	E5LDF1pM=; b=jn8JZ1W9SjyRNcn4ISoKYwj0yr10ITM7Mk52C9A4J+Zg0azBoj6
+	EnOD9/US7MXRv7899GQVXa0BGE3I8FpRJJi/87qrftZxhZeYpvrYs5vAi39Ka64B
+	8mnEfD0wr/PWnga+TcweLaBY4Tq0o4Cn3nKdVm8SfmG5tPPcM1Zt2cEP+53Z7AJG
+	WWiNtuCT30GfbzLtEJEoM9OQkChEOp89Bf+ASsDTbHpJ5pTh3fw1CpPg4bGZNi0J
+	dSRQDD9971svAASQjupYnDJ7NE6Gafyd8ttPXu3l/61Z4DHucWRtJE02d+pedDaH
+	NCAuZxbbohdN9cuNMLrm4tH3y0cA6nNay/A==
+X-ME-Sender: <xms:d4BnatbaulKVAT-aR_AD9z1hTmwjQPW4NrtoeB2qo_uvkoCjmZWE2w>
+    <xme:d4BnaoGy5GJgyjyG-M8RYZAOaOww8wzN41xwnSAP2ZBPcuvryOQocKN7vLF2S7JMx
+    eMjobCLswLKSpdI43a3qyIWkRnBfp7IRz17q-b2U__XFi0kRd4dLg>
+X-ME-Received: <xmr:d4BnapxBb0mlAmXtJs0z1lU9POjuKFGGh_2tAzAjzNUKHXUeSxgoQh1Mo-5zPWah3Or3muD2MIRaEhMiNFjaU7-uU6PJE-VEtQ>
+X-ME-Proxy-Cause: dmFkZTGLkIywjg4MxvKeKIQW2ejWEl1NOeMVq65a3ArKHPcFcb8wCuy7He8KVldrQKmETP
+    cSXHP7UzfMk6lbl8xO77bCfnwqf5XTSp52qZ0hXKX0UKxLcdo8tkx8SCW3Hl1chb2x+ZqY
+    b34mJkz5msRCHOl4dvNPiip+46VY2LnyKBPdmx0YrMMZnhgfdI3de4A+J2RpEzQSELuibh
+    VuxbyGvMFtl+yhSdeq84QfnJNfzwjMSJhHC4flsypqZQ5NNuxYNaWB3ObSIQpG8wXZcsc6
+    Hitiaf6X7uwC44GkVUBcTCRgJsD30tZ0/gn7I/iuE4gWvi2yFf3yDufOhqdCbX8dTOdpRh
+    zAAP5EpMGYoR4WuY/GvGSXE/kWjt/06UgkbXtM1E2DSdKpLVUTUmPoCEYWlmPuOca/UOdW
+    J8Q/Ao6eYQyJw6VCC8Fhr7JXpqgc+tY87CCg4HRbOv0oLjYeyZDqbGWOTnFqlF5agczmgQ
+    yISe2oxoWJ6K2oaCt1+tQbjtpYGt7GrKJYdBv6571BeLvejfJqxlQq/cuagJgPsNjpWCCh
+    JnEjA3QNLuWU0l8tShNRKSZ0N48yG63FYL4xrDEfySoz0Y+qBre/cyRj15THC9b0FWcWZ5
+    d57ssrkbP8LX17pLatyIb9rSl2bSrZ/Z6Mu7m/2SwJz8lh4HXUwfzL7yigWQ
+X-ME-Proxy: <xmx:d4BnaimHDuE4_KJHvYTwkbYuLhqu63LNolfC1ncfsuKOt8llYJhH5w>
+    <xmx:d4Bnaqkx4G6hqJL0qbgGZJepd_Ike084yydNU1FLRHWRU1AohRXk7Q>
+    <xmx:d4BnaswZD4cCivYVUd0fyWYF3KhYQdI9ON1cFJedwknFi8KlJD1VHg>
+    <xmx:d4Bnanq6s9AWYGjsHtD9v6a1U4eRheF8ycCqgkG8r95xIvAnkbYq7w>
+    <xmx:d4Bnao2dkoEJfGI2_nTNt8Z2W0WmJHT46wHKG5R47JacsYhmW7E7_j16>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Jul 2026 11:59:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Bryan B. Lima" <bblima@usp.br>, Patrick Steinhardt <ps@pks.im>
+Cc:   git@vger.kernel.org,
+  gustavoscorrea@usp.br,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH] submodule absorbgitdirs tests: use test_* helper functions
+In-Reply-To: <akTKHfKPsP3-Rn31@pks.im> (Patrick Steinhardt's message of "Wed,
+	1 Jul 2026 10:04:45 +0200")
+References: <20260630020220.1559190-1-bblima@usp.br>
+	<xmqqmrwbsybn.fsf@gitster.g> <akTKHfKPsP3-Rn31@pks.im>
+Date: Mon, 27 Jul 2026 08:59:49 -0700
+Message-ID: <xmqqik60o22y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <amLgMqkqxR8mKIbT@pks.im>
+Content-Type: text/plain
 
-On 26/07/24 05:46AM, Patrick Steinhardt wrote:
-> This would solve a bunch of smaller issues that we're currently
-> grappling with where some of the concepts in Git really want to operate
-> across all of the alternates:
-> 
->   - The OBJECT_INFO_SECOND_READ flag can be dropped as it becomes an
->     implementation detail.
-> 
->   - We can fix the performance regression because we can now easily
->     reorder access to read via packfiles first across all sub-sources.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Letting the backend control the ordering would be a nice property.
+> On Tue, Jun 30, 2026 at 11:00:28AM -0700, Junio C Hamano wrote:
+>> "Bryan B. Lima" <bblima@usp.br> writes:
+>> 
+>> > Use modern helper functions from test-lib-functions.sh to provide nice error messages.
+>> >
+>> > Signed-off-by: Bryan B. Lima <bblima@usp.br>
+>> > Co-authored-by: Gustavo S. Correa <gustavoscorrea@usp.br>
+>> > Signed-off-by: Gustavo S. Correa <gustavoscorrea@usp.br>
+>> > ---
+>> >  t/t7412-submodule-absorbgitdirs.sh | 22 +++++++++++-----------
+>> >  1 file changed, 11 insertions(+), 11 deletions(-)
+>> 
+>> Welcome to the Git development community.
+>
+> Welcome indeed!
+>
+>> It is rare, but it happens from time to time, that we see a patch by
+>> somebody we haven't seen on this list, and the patch looks perfect.
+>> Very delighted.
+>
+> Sorry to spoil it: the order of SOBs is incorrect. The patch is authored
+> by Bryan, so that signoff needs to come last.
+>
+> The patch itself looks good though, thanks!
 
->   - Commit graphs and bitmap really are a singleton, so loading them via
->     multiple sources is awkward.
 
-I completely agree. Having the ODB source be more self-contained with
-the alternates better fits the shape of commits graphs and alternates
-IMO.
+This discussion thread has been hanging for a while after we saw
+this message.  To help a new participant, here are a few tips.
 
->   - The object storage extension that I've written got quite a bit ugly
->     as it wasn't quite clear where exactly to draw the line. Especially
->     hadnling the environment variables mentioned above into the "files"
->     backend removes one point of friction I encountered.
-> 
->   - Object database maintenance needs to be aware of the other non-local
->     sources.
-> 
-> Also, doing that change isn't as bad as it may sound at first. We'd
-> still retain the whole `struct odb_source` list because we want to have
-> them for submodule sources. Furthermore, alternates aren't required for
-> isolation either as we currently use them via the temporary object
-> directory. An alternative implementation may use a completely separate
-> mechanism to achieve write isolation, which is also why we have made the
-> environment variables pluggable that the `struct odb_transaction` ends
-> up passing to the child process.
+ * These discussions can be seen on mail archives.  On the primary
+   archive, the message I am responding to appears here:
 
-Once all temporary object directory users are updated to use ODB
-transactions, we could stop reording source list when starting/ending a
-transaction. Instead the transaction could be tracked separately
-internally and during ODB read/writes the transaction could be directly
-used as needed. This is something I plan to tackle in a future series
-soon.
+   https://lore.kernel.org/git/akTKHfKPsP3-Rn31@pks.im/
 
-> I think overall this could simplify some of the design, and it makes a
-> bunch of issues that I have been struggling with go away. The devil may
-> be in the details of course, but I think transitioning towards this
-> should be doable.
+   For any discussion you are interested in, replace the URL path
+   with the Message-Id of the message that is part of the
+   discussion.  For example, after sending a patch, you use the
+   message ID of the patch message you sent out and by visiting the
+   page there, you see everything people said on your patch.
 
-I am certainly a fan of this direction. We do lose some flexibility in
-terms of supporting alternates more generically, but I'm not sure
-supporting alternates of different source types in the same repo would
-be something we want anyways in practice due to the additional
-complexity.
+   https://lore.kernel.org/git/20260630020220.1559190-1-bblima@usp.br/
 
--Justin
+   Scroll down to see the "Thread overview".
+
+ * When you receive a review response to help you polish your patch
+   submission, you are expected to respond to it.  If the reviewer
+   suggested an improvement, either you respond explaining why your
+   original is better without the change suggested, or you respond
+   thanking the reviewer for the suggestion and promise to submit an
+   updated version that incorporates the suggested improvements, and
+   then take your time to improve the patch and send a "reroll".
+   For this patch, it would be numbered "v2".
+
+   As we can see, neither option has occurred, and this discussion
+   thread is keeping everybody waiting.
+
+Thanks.
