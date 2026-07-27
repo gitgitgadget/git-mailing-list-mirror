@@ -1,86 +1,116 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B953EEAD2
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 09:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006EF3E1201
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 09:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785145162; cv=none; b=YvJ9Mg+8X40n2cK9g1mNGbwnK5oqIQf3U1nuFnIZ5Z3T0bsskfLRktLjiynvkpDxjc4lGTK/j1KUjs5k342NWhowoCkjBJIIwNKq47+I7k7ltuzRSHYrN+50gaPCtXqoiDE1BNPvl46GeBUnFGKl4LEJNXtq+47aS0mfQlKWjm8=
+	t=1785146224; cv=none; b=a+eu3kXzyLXQK9TPjMMQDpCDHyjNAMfHW5cGPGJTZp5mE7mah0IRUXWMhCMOiwwlbA6dLVZsOM7K6IgbQdJ2Flv87Lj/c4Av73YSTZQrrEiNkZMItOwoVmdgNC0HO0EC23t79D/mfhtcc2o6HfkiUk9W0OoMAiCOhuWUizlGqlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785145162; c=relaxed/simple;
-	bh=6PKF9G58Zl0lNkO6sGkGKRmi/3HnqptHtXFShi91UXU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OZOnpXMqsCBrz+7ZuLFELGP2TxEkFK9q/YVqupQ4/dhr3h2Fm1lQcZJiD4XK80IP3hOT5KKssFleXOGHJTtTc+avCxx19GbWZCfdYk6QzaT6tIY9qvNf01ij89HR6c8bi6d3lClS8serz7E/a1sZk0A8vKAWErJ3R9txV/areS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Wnr3tCMZ; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1785146224; c=relaxed/simple;
+	bh=9D0ql/B8iae7AEhUjhJEtfF/A4dEgO4GjFnmfZ72Czc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=D0xDpfrkB8qaP8mzJ5X6eNicruAv0diL0XQi1+aRWNz9XpjfdViQHVYPGtQe0iRaTEdRtSTeQJQuUlVCuzie4OzqlBsSv+YDhqmBOf6Ey0RglCrkl2IlWBoRcbju4q1K/AHA3tiJRk7jlPzLdUddeUHyZL2NG6Ff5DKjeWFl/qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+lEYCUm; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Wnr3tCMZ"
-Received: (qmail 68943 invoked by uid 106); 27 Jul 2026 09:39:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6PKF9G58Zl0lNkO6sGkGKRmi/3HnqptHtXFShi91UXU=; b=Wnr3tCMZM8hzlgpdkxwChWv995v67VK1ScDsLGd5G7IV6mIcIoLIcL1LCuXOEtHmhPUQay07bgmKrUV+Y6K5NFTJqoUzfmyQMThLlkyskALNqlFU2joU2mBzCM2kbBACsxoVD6+fhJvmwIBDDfWbb4oBz1yIR2fRg2V/78/Bz+yBtkSLO57wyONidQF/Nw5SVwecugz+Gb08n0dsT8f6WFUZgocCRNYE8FCET/DjHJri3BK4F8rViiZloecY0dv4cVLH6OIrMCS7t0N7E9ln9cnL5WvZkGGkcXj3bIMa05VV3PNgKz2CNxEFLEJEDoABBCm3Ylwq/AQI7uT/E1DCCA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Jul 2026 09:39:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 77528 invoked by uid 111); 27 Jul 2026 09:39:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Jul 2026 05:39:17 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 27 Jul 2026 05:39:12 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] diff-lib: skip paths outside prefix in oneway_diff()
-Message-ID: <20260727093912.GA591426@coredump.intra.peff.net>
-References: <20260726084550.GC2366012@coredump.intra.peff.net>
- <20260726084705.GB3529698@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+lEYCUm"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-cbb973e6749so2848834a12.1
+        for <git@vger.kernel.org>; Mon, 27 Jul 2026 02:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785146222; x=1785751022; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2W0zygcCtlszEg5crsQkDu7cfbF51GVSJfKXWDD9OnU=;
+        b=b+lEYCUmEdpdF57mdbcX8xN7i2GIuJxlvYpsjjf6xjoKZhhkWLWxhxlruueCoHYBZK
+         FVBWNUidun4/rN8EGyIra6Jy+qKp4BpxAnGfPkSvtL445nwV3l9SIoG7De5XY7ofd1h2
+         28gAxftSBvhxqQZcbAFOTZsq/pThWw4qF3Px63D7/3dEgSKwFcsQDX66lcaRjWToWMRK
+         js9gM19BXnvQXMgA+x3Wff1VNZYir3FyguX34oSkKEgrmj/kX9Tus2Dspewnjdg9aa7V
+         jzxtg2V2TEDHOzdTc9Z4GMGO1RahGYOCENUBI7FFFgk0tK8W6AiCOHduCE5xpyg3chH3
+         57/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785146222; x=1785751022;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2W0zygcCtlszEg5crsQkDu7cfbF51GVSJfKXWDD9OnU=;
+        b=Y47+lkAJg4Rg0K9HdYtwWKtr5FAV8RExcg9+VFg4OJgKwOmN03OAr5GCx3loZc7crO
+         mDK1TO3ipEB1GiGJBlbbAkK5+dYk04+Rwt0AiJ4f55T99n9MfcIVDkU1eFmJ6qf4DPK5
+         0VUjKKRH7MKND/PsGWxvVskG6j2D4TQnfcSxoNruuuQsB73dWra2AMMg0OvpuRI6HSMF
+         VlfjW53+Szi6i6HHtyqJC3wNNwM2FWTQW3TlhCTbcxrle4j9YoxGlZXIQM38pUPbg7yg
+         wG2BT+YaoqeZg3p286FICadeDTCp7eZMdAF+pWuP7a+p8GtXrS5SvmWfSlBS3ipd5YX4
+         xh9g==
+X-Gm-Message-State: AOJu0Yz8ZohzsWJv28hyjhOknf9p608lwfeKZ9LxrisqJeaKLb++ym4D
+	Tj7CdM5O8EJp4/wr8lv9lQ1aMKd+XPq54d+gFjLzs1sirVA4HHnKtADcfQsawA==
+X-Gm-Gg: AR+sD12nmVyj45yMJzFI+Ze7l4gqWp2FRFRdW4kUxxD04eIpDb7WpJnCCT09uJU8RlW
+	25hFfC8YJEZSfIZ1XgSx0RtjWWUEi3+1axnc8LPYxKlWq05oaBGFW76ErYnuvkP8DYHccgGwe73
+	95Vigng+9KMtNU1Yo+CXXlmIixYPntE6/hOWXvERwnjQR/fGrlMEI/8tBYb3bhehAEULULxHzxh
+	BtxlAMmNFYEHf51X3rOX/hxZwK3sYk6oFZt3SXB3sq1wljc4utj3tW3pcDVD1z6xEWkT1fzwInV
+	gysVOlYmZJm48YnPQvrrTpw2dxdyZvo9c8yH080gcQh5psnwHkR1BMXMyiK9TPT1VFqw7qbBaoq
+	cQM2x6AVL4SPQ9vor9a7y6Z87m0vc2DV2DLeP+SB2kU485nYKNvUe5CMMBbaMNeu0pAB1f+SrMJ
+	r0zYv0+efB0IWwAHnY0gXy1o6PqFQ=
+X-Received: by 2002:a05:6a20:939a:b0:3c3:724d:ae7a with SMTP id adf61e73a8af0-3c67d9b4663mr7436714637.9.1785146222208;
+        Mon, 27 Jul 2026 02:57:02 -0700 (PDT)
+Received: from localhost.localdomain ([14.141.116.242])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc3e127asm49203193eec.2.2026.07.27.02.57.00
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 27 Jul 2026 02:57:01 -0700 (PDT)
+From: Shlok Kulshreshtha <diy2903@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Shlok Kulshreshtha <diy2903@gmail.com>
+Subject: [PATCH v2 0/2] t: add and use a commit_body test helper
+Date: Mon, 27 Jul 2026 15:26:54 +0530
+Message-ID: <20260727095656.75496-1-diy2903@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqqldawq24y.fsf@gitster.g>
+References: <20260726224803.45131-1-diy2903@gmail.com> <xmqqldawq24y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260726084705.GB3529698@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Sun, Jul 26, 2026 at 04:47:05AM -0400, Jeff King wrote:
+Junio pointed out that t7509-commit-authorship.sh defines its own local
+message_body() helper that wraps the same "git cat-file commit | sed"
+idiom commit_body was introduced to replace, which the first version of
+this series missed. Rechecking the whole idiom by its sed
+address, rather than by grepping for "cat-file", turned up one more
+inline occurrence with a spacing/escaping variant in
+t3404-rebase-interactive.sh that also didn't match the four spellings
+enumerated in v1.
 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index 95f920a9a0..9986f5b141 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -528,6 +528,11 @@ static int oneway_diff(const struct cache_entry * const *src,
->  	if (tree == o->df_conflict_entry)
->  		tree = NULL;
->  
-> +	if (revs->diffopt.prefix &&
-> +	    strncmp((idx ? idx : tree)->name, revs->diffopt.prefix,
-> +		    revs->diffopt.prefix_length))
-> +		return 0;
-> +
+Changes since v1:
 
-BTW, Coverity complains here that "tree" could be NULL (because we set
-it that way in the lines above due to a D/F conflict).
+  2/2: fold in t7509's message_body helper (drop it, convert its six
+       call sites to commit_body) and the missed inline site in t3404.
+       Site count is now 61 in 12 files, plus the removed helper.
 
-I _think_ it is fine. We only look at "tree" if idx is NULL, and I think
-idx is only NULL when we have a deletion. So that implies either:
+Shlok Kulshreshtha (2):
+  test-lib-functions: add commit_body helper
+  t: use commit_body to extract commit message bodies
 
-  1. unpack_trees() passed us both entries as NULL, which doesn't make
-     sense. There was no entry to delete!
+ t/README                                  | 11 ++++
+ t/t3404-rebase-interactive.sh             |  2 +-
+ t/t3405-rebase-malformed.sh               |  8 +--
+ t/t3408-rebase-multi-line.sh              |  4 +-
+ t/t3434-rebase-i18n.sh                    |  3 +-
+ t/t3900-i18n-commit.sh                    |  4 +-
+ t/t4150-am.sh                             |  8 +--
+ t/t7500-commit-template-squash-signoff.sh |  4 +-
+ t/t7501-commit-basic-functionality.sh     | 21 +++----
+ t/t7502-commit-porcelain.sh               | 77 ++++++++---------------
+ t/t7509-commit-authorship.sh              | 23 +++----
+ t/t7600-merge.sh                          | 14 ++---
+ t/t7604-merge-custom-message.sh           | 18 ++----
+ t/t7614-merge-signoff.sh                  |  9 +--
+ t/test-lib-functions.sh                   |  8 +++
+ 15 files changed, 91 insertions(+), 123 deletions(-)
 
-  2. We set tree to NULL due to a D/F conflict. But a conflict with
-     what? There is nothing at the path in the index to conflict.
+-- 
+2.52.0
 
-So AFAICT this is OK and it's just a false positive from Coverity
-(though an understandable one; the semantics of the relationship between
-"idx" and "tree" are not represented in the code).
-
-Possibly adding:
-
-  if (!idx && !tree)
-	BUG("oneway diff with no endpoints");
-
-would help static analysis, but I don't know if that makes things more
-or less clear to a human.
-
--Peff
