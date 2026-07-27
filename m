@@ -1,130 +1,113 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2DD423EB2
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 17:37:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785173842; cv=pass; b=LVnNinSTBh3xVSecsyQOeHEPJS2nIyQn1UGsbXOZm3m6Jti4nYK6N6HwtCrNQa7fJfNYy5IwA22+sVNQ/BiBScLdVVdBThtMxFiEO6FkicmrwuLAupUAiAizICdgTxiKphZDbmc4ZXi4chK67p1NZ4WQkMRiBW/3RG4KZ5iIz9U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785173842; c=relaxed/simple;
-	bh=GTz2054GWUDBI7CKgsCM50hN20ruC3eNY9HAJJdO9PE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YLjk8Bw3rMAmWVtOSchPhcAk0slSTCUpgooq4czrYzrmmIcUrFD6DlUZCemYCZWMGJA+GzVHY++J5BSOrR5O43MC/c0q41CQ90w521ttGms7NJdsyN0D4vIOQrEeF5eolB8nsGU2DImCqPy9Q8lTYoPyOpP3MEZmVBAz0FSiD00=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hQ3giCEL; arc=pass smtp.client-ip=209.85.210.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE0C3CB918
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 19:52:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785181963; cv=none; b=fygxX+dG8CRZMyhWur7ShnxwROB2HCYBjqyh+CxUTggMLAWDfvRlrJV1VqpWGT2g1eTvjSezT16iwvmAVxCEXyHdy0hhuikSFXpc2BvTmyNhSoEoAGXCC6xJK921vlIIT3yUsyeKMGh5wIeKk0LMK2GOuHWSIvx06vGzSzy6Iu4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785181963; c=relaxed/simple;
+	bh=Rb8u6ndKh1UpX8X/bs8IP+/G1f7RzXPx7wdh9Q7darE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=W1E5EkZc8KwdY/PeU0ksMFV4tIC0SYgTfWrUNQTYi3xS+PX0Xml4bgZB3UZBnTD+b5U4En6HvNI6sqWGr8lwe2oVR+zRZ41SJbN+JK7tXSThwXZycMkCfKJ2BonNTakplXXbSp/vZYWg0740Tx6I/+J5etRAIfwmQF53g0xWJt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JvL+yoBS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XrtuT7dH; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hQ3giCEL"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-7ee4399c3abso2264084a34.2
-        for <git@vger.kernel.org>; Mon, 27 Jul 2026 10:37:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785173840; cv=none;
-        d=google.com; s=arc-20260327;
-        b=iUeHRaRBlk728s7hu5ImB07T/5/M2ChQ5YZNrSbw/YMouCZWYupkYUC35opT8q0Qwk
-         nWh8viqAdC1BVD4/TnFBiqpT4L/hY/wMFBdpnVgETwq1ICqsD/QLm1W0EpCQJGTxG3ZB
-         VIg0Iz1iacNYahFart0ZqT68BHIPIQHG2hV3Wm2tHZg+K/ISb1vlNsUqtgrSKprt85DP
-         AYg6L6+vlBHCK78NmkH6lv1oEEHDuPvMHEl2nI2Hg+/oFqWI5Bj3ONFw9tpgeIi2dDR1
-         hqWGZinlX35UueU9xaAIcqBKXEKqqLBSButqUgl9fOwRycDSu3pko6ya9CEEzQdpH52/
-         ID3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=GTz2054GWUDBI7CKgsCM50hN20ruC3eNY9HAJJdO9PE=;
-        fh=0MEXze/YyaZIS5ggcNlAV81rzJsgCeE/hRC2GicnnxY=;
-        b=G7ssvVnfna3tffmPKDdV6vLv6iq80+iibGMxSuX5eYomqgHj2nQbsR7qrsv7Q8aoUY
-         udr+dy9GBJ1V3Nyrkp0w9bdhX/V1YbBaBptzb0Nrig40FDaAVw4L5ryWkkdumq9i4NgA
-         F+WDGiluTXYmC6h/6+wQso67XWcl4yzdSqLQ1+4im4M7x0xHxtW6hT2W8yLCCNtJ7XVd
-         n51qgNQaCAFfNtzsEaQiG27AbvHQNi0YODkd73xc+NtZH7E8OYIthaiF05IVe+ZCJwxN
-         RymBFg6VE4F5gsUZ7FSm1vI0u/fYnri+w4b7wdeJTPtpUXqDIIlVAtMCKyqjeEqbZFvD
-         kLUQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785173840; x=1785778640; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GTz2054GWUDBI7CKgsCM50hN20ruC3eNY9HAJJdO9PE=;
-        b=hQ3giCELbE6MDnMX6bzl9vozf1/0pH2nTWimtT51V4ubu0koaFlDhAxYWKTMI+32Fs
-         km/oFn0C62s+Kzv65NJb3xMaew09UaIw9t5jBYamslJXotShkOBT3wbrZCbQ6vuauhv3
-         QHUaq7zEHx4moTkBP5+xIpkFCvROMhXJ4736r6C5rFKE7Ulsb3lsm1kKx8sPGp1ycsWQ
-         6zp2bHmhqpUIaVIzH0sfHc83Lu8jROL4A0Q8b2RJjqW6EM9zDOn81tviOIYUj+Xf0IZZ
-         z6A5co63zU5z1RwxCG7xWVkBvgmMlR/ebqHIgBNWg3LY0ccvfQAe88ArBnSi+cgzJBLx
-         HRWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785173840; x=1785778640;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GTz2054GWUDBI7CKgsCM50hN20ruC3eNY9HAJJdO9PE=;
-        b=NW/PzQL4i27GpFMADkpuPsywBgp+4okiykLVFd/NIuVUSeeHwFTjSL7jeoepeLhOoG
-         AcmPPnbWK5OMXuWIGv8LKkTQ6EPjsGslVhyyGkBGiBgLWvHvQivRSPuMm0E0rEd46ElV
-         U6q9plOuwWDMKt4ON7VDKCrIR9hrap5MyqGWv6mcCuySAezpFwOK6kdQJRDyqXRIt+m3
-         Nwek7XsWFNGrPZF9sdKEGDDaiFQiGxZChFGawlIi2TFU3fM6cLzA0rqWEcuxEH5H2x32
-         pw7GR2wdmymNvGzRif3NyeUebdkAVMO7aY6oEHdO25120OGvA2Pylucw0QVSqOHe8Aef
-         r+sw==
-X-Forwarded-Encrypted: i=1; AHgh+Rp3ctj7buTlPjtgsXfUDpz2s2ffoxjVSostvsrVtPL0H4VAiUgUKtjdtEgQMnnM+A8ULls=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCsrLMP3yo1D13Occ5Xb6D7HXnjq2Xft5e1hUbGNdONLgXI6z+
-	2hz+xbEf9olSlFkPkvyCx5vaQppHaPFsXMToGg7IYroK9dzxNqv9/uaK1tDLGEpzA0vXtJrmrVz
-	umlvV3zaLDjDpljmS9FsCXsnkYyshwvs=
-X-Gm-Gg: AR+sD10/9as6QlqASWq7+evzGAzuAaIl4yXzhe3uvj37GK9c1dz4meoTk4JE8nl08IX
-	HzhQ3cX7ear2y605xaKVKwf9R4kU+J3/N0FP6hfdNR7CQbNQ5/yk3Ch3B0mH5RhkwJBGT0ZQHmy
-	h56y9zWKvVwNVz4QFlSxfTv3MsQW4/ySyRNIPnkdG6gg/Lztzf/e3P+8atKWRhw/39MB9gFv+F5
-	deTiPN5TKla2SYGeEHzo7bB6FApmJOmFxhfAuQpCRFFgIeAVC9YH958W84DlK4b5z7w6Zybbmhb
-	INHxZfbxLNYqDb23FnLCMQGNIDsrW9OAfN72csBqsXCWUDvnNDFCn/P7r2QES/xAQiFakE9Sf8X
-	58Gv6JcEOIMY03g==
-X-Received: by 2002:a05:6830:34a8:b0:7e9:b4d1:78b1 with SMTP id
- 46e09a7af769-7ee78e13a97mr7490031a34.31.1785173839779; Mon, 27 Jul 2026
- 10:37:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JvL+yoBS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XrtuT7dH"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6449F1D00159;
+	Mon, 27 Jul 2026 15:52:40 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 27 Jul 2026 15:52:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785181960; x=1785268360; bh=QqJBKw4Soj
+	8Ss+jpOYyc7Ek1mcFUGpvUE7auUlgqKdY=; b=JvL+yoBSun7yOSQJgt+EXxJF8W
+	lX6i64hacaUka+5fiD8ZY84GdQimTBrJnXMF3Ch0Wji8a7HGUQ2E+zYy/eOCvAuJ
+	aCAnEa6hWbTpuiO/NJNaqh1c25yAGwArtQp4/bwJADA9ycTEGSzozHykLcSmYzdo
+	fHSvpX5XjRlaiHbdj08zrRv13Cgu6UVHJQZIfsGdYANZRVXKamaEGjGG0oCswWGB
+	kiiMGRb4xnH93fzNRjRSMeyhM1047I27TsMxo/zKBvSK5TLDS6HapfOxDnDZgJ8f
+	70bp7SPs74LfgK449IKxTU7Tq+0rtD4XQY6+W7lBHbofSBgCgGo67TN+yLDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785181960; x=1785268360; bh=QqJBKw4Soj8Ss+jpOYyc7Ek1mcFUGpvUE7a
+	uUlgqKdY=; b=XrtuT7dHU88WSYrdSmwgyh67J5uZNk7myYjFCa0t1UgzWhWrK97
+	u3B2+rvfjzn9M/iMBr0d16kyEWZIcK3TByFLBIEt/+kznfbAQ5OnxEgNba3UcFxh
+	8yWWie3Lt51wd39kq999zOyTuCn/gFOXfE8Rx3300B0P+/PXeUYf1WEKE6A91RDW
+	S7o+ohzg7xrbgzr/7ZtuXgLA+M0XGUczsKP+00k5g9FxOgwNoCW0s1I0c9ODUtMG
+	M8de4guFD9fctkt1fm0J54fiIJM0YLO5nbDL3MK6SDvBP5X3+YcXCjTYTh5OTfwI
+	gG89XS2y7ZBXNASCnE2zcuK256z+fR9Yobg==
+X-ME-Sender: <xms:CLdnauJNu6siTtaOhSjROECrDo2O4VcOrtEnwE_nS0HINCjyh6QZLA>
+    <xme:CLdnaoY53y3IRVFlhMakZyL_40rzgorPH9Z5sc9QISRXvTlmMCzoUt-vRDkfqRkAQ
+    Q8CSRqy2fhfn9mAk2cTDC53A1sciyQVrFLbk1tva1ELm0eTjUZweg>
+X-ME-Received: <xmr:CLdnag--hTxvmv88DkZUmkdelrSnaaps5le-95oYqSFwbcPJiChvFx_qn27i9A6ACfq6rTQ1J6_Wzz-1ej7pwjfEOTDOXfNcjw>
+X-ME-Proxy-Cause: dmFkZTEHkS4Z/a03lr1afrgkM0zxaIRmmsVo25QyoihpuChlIs/V3krWo9Wr+wD2z3WTRA
+    M+qhkiUy3KvfkuJpfZ0JL7qPOBH5KDnOSVCmrLjKSYE48RHnqmbuFiDCx9qf7fc3FvmZBy
+    4wjdV0ODoDpcwAZFf5LHpklLqoCCkf+271CU7bGUrqWA7SIwhVC1mjm2ojfjJLjsy5+2O/
+    /3aveBTQ0d+DSsmZGCFZDbbovRpLyCEwI5EIe6W4qJnYPScA5emhlUeOMrWnRgONrMkb51
+    eG2xqaDSKSOOKH7UxNDCEF/gy3ZI2xzJnLNfG2hb66+zHhpdUi7R1twdT64PscoDQ45jKe
+    lR67PfPWaRiwWgS7CJaXn9hRuP1MhcqQLODFw7hHPCZjwUN9tlL67tkfeTgFiVoSWHAp3D
+    WJz4DTSZJ62TDhg17fjamAw3U6XI7rdCPAdmREZkq0k8yRwzMtb0tTmdSHvbizAfNxjdS4
+    qC1oLjpCDOAd3SCiXqGtLZOGUtJk75DORxtCmPKo5gI3ROYyscyKmls3StOS9FcGgjmU7R
+    3gPaEcocgDUC5fV/91+XtFyR9KPas+cqXk6gtijUkvWiZb9XssQi2Kq+kauJnh6SQQiR+R
+    nAubV3q50MAsV5caPt8Yq0wezgzpFedXYPU8spPBLs7btMUO3dxfC1wxIHfA
+X-ME-Proxy: <xmx:CLdnapbUNrS_7Gs0WqAsl-WiUbf1_OQiiAWrOjHd1ei3ahVeX1U06A>
+    <xmx:CLdnakMcVFSln5mOshQQiSx8Pb-J0jzmnLNFeCbe8aMyR5AjbaK1bg>
+    <xmx:CLdnalCaRfNSWf5-HlVlM1X1auXrie_Ya3TwRtuoxG4Ev7tceU0w3w>
+    <xmx:CLdnarLv4DIF0VPjEVUjgNA45m72eFsM0NmlQo_IuVU4CUDcnvH9Kw>
+    <xmx:CLdnamAVLransvi6M-uHZ8ju21vIeDn5rvIeGnQQULyLSwoUK9wXOKKW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Jul 2026 15:52:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Hardik Kumar" <hardikxk@gmail.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>,  <git@vger.kernel.org>,
+  "Patrick Steinhardt" <ps@pks.im>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
+ <l.s.r@web.de>,  "Pablo
+ Sabater" <pabloosabaterr@gmail.com>
+Subject: Re: [PATCH v3] utf8: make utf8_strwidth() and utf8_strnwidth()
+ return size_t
+In-Reply-To: <DK9HO7JD6QT3.1ATJX1OLR8YBJ@gmail.com> (Hardik Kumar's message of
+	"Mon, 27 Jul 2026 21:50:14 +0530")
+References: <20260726123427.173877-1-hardikxk@gmail.com>
+	<20260727065917.469738-1-hardikxk@gmail.com>
+	<e971400e-6d23-463f-ae9c-a21d3c5a3563@gmail.com>
+	<xmqq4ihkpjn3.fsf@gitster.g> <DK9HO7JD6QT3.1ATJX1OLR8YBJ@gmail.com>
+Date: Mon, 27 Jul 2026 12:52:38 -0700
+Message-ID: <xmqqtspkgqgp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260717140232.6722-1-diy2903@gmail.com> <20260721065736.8747-1-diy2903@gmail.com>
- <CAC2QwmK7HVma7HMxmXvC7qa4XQVomteC0x7PpX61MjpDLbvDzA@mail.gmail.com> <734cf745-ff32-4681-be2f-ad3225c80bec@kdbg.org>
-In-Reply-To: <734cf745-ff32-4681-be2f-ad3225c80bec@kdbg.org>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Mon, 27 Jul 2026 10:37:06 -0700
-X-Gm-Features: AUfX_my-_CDzDD_g5BXav562qnKgRF45y1TdqCBeQTTVsf031EPiFsd89llmXGM
-Message-ID: <CAC2QwmKuNEnFHraKTUkaskW4aeEWJvS68SyMfxMnhwMEoJuhrQ@mail.gmail.com>
-Subject: Re: [PATCH v2] userdiff: add support for Swift
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Shlok Kulshreshtha <diy2903@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, "D . Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Eric Sunshine <sunshine@sunshineco.com>, "Scott L . Burson" <Scott@sympoiesis.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, Jul 26, 2026 at 11:44=E2=80=AFPM Johannes Sixt <j6t@kdbg.org> wrote=
-:
+"Hardik Kumar" <hardikxk@gmail.com> writes:
+
+> On Mon Jul 27, 2026 at 8:25 PM IST, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> I think it would be much better to remove the TODO comment as Junio 
+>>> previously suggested and instead add some documentation to the function 
+>>> explaining (a) why it is appropriate for it to return an int; (b) why we 
+>>> must use the cast_size_t_to_int() helper to prevent overflows (see the 
+>>> commit that added that comment).
+>>
+>> Thanks, especially for (b) above.  That needs to be stressed if we
+>> are to go in that direction.
 >
-> Am 27.07.26 um 07:03 schrieb Michael Montalbo:
-> > On Tue, Jul 21, 2026 at 12:06=E2=80=AFAM Shlok Kulshreshtha <diy2903@gm=
-ail.com> wrote:
-> >>
-> >> Add a built-in userdiff driver for the Swift programming language so t=
-hat
-> >> diff hunk headers and word diffs work out of the box for ".swift" file=
-s.
-> >>
-> >
-> > I noticed other languages add a test_language_driver entry to
-> > t/t4034-diff-words.sh with corresponding pre/post/expect
-> > fixtures. Should we add something similar for Swift?
-[snip]
-> In the past, these test scripts turned out to
-> be non-trivial to get correct and it was a burden for both the author
-> and the reviewers. It would certainly exceed the scope of a microproject.
->
+> Should this be documented in a new adoc file in the technical
+> documentation directory?
 
-Got it, thanks for the context.
+The best thing for the new comment to do is to replace the misguided
+TODO comment that led us to this exercise.
 
-FWIW, I tested the changes against a recent WWDC 2026 sample
-project[1] I was playing around with, and the new user driver appears
-to work well.
-
-[1] https://developer.apple.com/documentation/FoundationModels/origami-craf=
-ting-a-dynamic-tutorial-for-apple-intelligence
