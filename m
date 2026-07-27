@@ -1,195 +1,86 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229993EAC71
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 09:30:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785144657; cv=pass; b=abYbQCcqgW7G/OEQyECxTxJ4ICC/S2n9nu+iHVQ25U3ElR6HFXT62PP5b/Jn1DRj801kSTELflsrbLiGGbOItE/V7lyF508iWFmYrcsBH1aZUXh/EdARzkoi79592cpJbIfivqUPL+DwjWkN6NLIReueIe9YE8DLdyZk7G15iLQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785144657; c=relaxed/simple;
-	bh=rgvFg/1ofFbWPeWzE+4a8fyMXHZyHHCxm3nNie5W0p8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=QqgJ6PWFcB+aLiNQ/+QHcTyTwCwwk3T8Ea0fI1FtZS3Chsq5faQR6+gkRBfPH/CzyRMB/lBwm3//0NBbQx6wVJLzUGIFNrYTSFS6KEl6YCc7mi7QDzgtvz4ZqT854N9mQd9k4ftctSMqi0LhtjNdhNFl3MF26Ztu3utjWD8+xuU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=source.dev; spf=pass smtp.mailfrom=source.dev; dkim=pass (2048-bit key) header.d=source-dev.20251104.gappssmtp.com header.i=@source-dev.20251104.gappssmtp.com header.b=WL782XMk; arc=pass smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=source.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=source.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B953EEAD2
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 09:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785145162; cv=none; b=YvJ9Mg+8X40n2cK9g1mNGbwnK5oqIQf3U1nuFnIZ5Z3T0bsskfLRktLjiynvkpDxjc4lGTK/j1KUjs5k342NWhowoCkjBJIIwNKq47+I7k7ltuzRSHYrN+50gaPCtXqoiDE1BNPvl46GeBUnFGKl4LEJNXtq+47aS0mfQlKWjm8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785145162; c=relaxed/simple;
+	bh=6PKF9G58Zl0lNkO6sGkGKRmi/3HnqptHtXFShi91UXU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OZOnpXMqsCBrz+7ZuLFELGP2TxEkFK9q/YVqupQ4/dhr3h2Fm1lQcZJiD4XK80IP3hOT5KKssFleXOGHJTtTc+avCxx19GbWZCfdYk6QzaT6tIY9qvNf01ij89HR6c8bi6d3lClS8serz7E/a1sZk0A8vKAWErJ3R9txV/areS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Wnr3tCMZ; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=source-dev.20251104.gappssmtp.com header.i=@source-dev.20251104.gappssmtp.com header.b="WL782XMk"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-660a40aac63so322085d50.0
-        for <git@vger.kernel.org>; Mon, 27 Jul 2026 02:30:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785144655; cv=none;
-        d=google.com; s=arc-20260327;
-        b=F4wyH1K3fF0dj5kpTamyzkyU0wJRQeLm9nbjF4/apelmxWK3rDCmlPkMTZJqSHaDpJ
-         7IRodzUR0DrQfj985143HlFJ9yMVNzWtqE1t0yVVgSXBJ/sNInMjwi29eQ42JOtxORxe
-         TG+mi6NnHDIWrMXqUJGyxMW08R/JcUzsWNL/yoUK3kl9OqP21SLXgJdnfTeK6oL6rNUU
-         Y7T2op0L2YIlV5gt9a3V36WP7UEtKJhsBoR/4FS5qvFeHBEkHqfuLjf9gWwZcQ42dRSs
-         mpFaLj+t//WqlutWuKeexhIO4eCaalWrMzBa0wvIi5HXNdTUwMFEmekgF8Xwkx2VUAfA
-         Tf0Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=pcRaHrHDNTf9JnulSWwblXIE2tuA8cVu2VTX0tWD+o8=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=STf9q6/GAo2tJKwHwzPrEApFTlBfpavxzYYVB/BOxmjpiirXfz1Fz6WMG8kr5TGAQ0
-         iSUCVVUi3H1bTZltHiQpObiMlb/s4hy4BV3wYoc3L98LGx2JlxuDNFt5UB/FJhj4DIcB
-         XRRS0WFmsrnVawdge8CHB4LiHmG+vMQrncb895iMfnCSIbWFbRCaoqc+SkMdTHcuJild
-         wYL//rZx4VTobWAxFCsL7K7bDDQrXTunnPJqBoch7AlezBtMFUUMGXaPkZclFmdDwTwV
-         4qSfthXaXZ71nHLln5dppkOoF/k+zysiA2UlTTMTyPZgjVPqG14dQD0/IiO3TcQMpS20
-         Vi4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=source-dev.20251104.gappssmtp.com; s=20251104; t=1785144655; x=1785749455; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=pcRaHrHDNTf9JnulSWwblXIE2tuA8cVu2VTX0tWD+o8=;
-        b=WL782XMkHS4t+oaSoDODeYLotJ62/Pj/qdjhKmJgU+7EuhM9K4eZ7p1KkP8SaTzrwG
-         1i1OEBIAJIUK4Qnu/DLpGz6I7IOZXsmgXL91wApHmUk2tN4tX7czgoTsX+hIi7Bd11LD
-         Zx5zPXuH0GQ60f9ii3UXWFOyHNuaITj2ynJVmjzwiHM1vQmYPgIejxqmzkKLJjdY4NOU
-         scNVH5Zgm8j2MbxWInvXpQhwlIn3yfDPV8hgKzdhHGHqf/etaI868cQLBiskSnda67G1
-         2rg+JLyagOxQOa+Ow4J3148kdulQWdQhIthCoLg8TqpSTgZ8FosxgSEWNk6b8kGX5F4z
-         KwXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785144655; x=1785749455;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pcRaHrHDNTf9JnulSWwblXIE2tuA8cVu2VTX0tWD+o8=;
-        b=QYZvNQYplJCQYDlWvE1SExOhgCexTlXh2iWoh58E46ODp2Kt39P+pfDEJufmLLrb3d
-         bOBIkQHG4/b2XOlgyc/duX88wfDc09BmAGLgKiCrXfvxMNrURGyu1WoOBajoIQGZJYh3
-         QW0MkbBll13bUgDsMXj7HQJDN21iIr6KQmOeL3JxKgjUf9g3CbSwIlAwARsYz7Ho/bY3
-         TmJAdQ/DgHL+OdJRExpScYPZMhy/lY1JhZw4t8gi/kPHo2eUQNVQA4cTguLIom/4l42B
-         e+iZsRCGrhXCYgLkSRgrGU6ZAlrvRsZM0ZPJWrHALEcwDpKwmuioJyTqJTbVOuu/I5qE
-         A8dA==
-X-Gm-Message-State: AOJu0YyngcMziaSXqaBg5TjIB/SBaML4jxRoaMjW4fpIgwZk1oweDw4x
-	cl21FT20JweQtejoG/ucRJVzGUhXK6uUQobKRPqAx9u6bGp9MTmMvmgmhhoNEynAsW3uywSLPAW
-	uH4zP7jucK56fB9i1SzDVLytu7I9D15s9d+GE5As2DNWrQzWKf0dFZQOJ6g==
-X-Gm-Gg: AR+sD11MNvnaZIO8USJKsoHbZtKDChQ6Zi+0mkHZ7SyMb5UfYAUGQQXSsnWAmKKvv/Q
-	jTMulnFabDLPHzijTr2dhB9rgdUY3YFeoha9dYalSzinrTo/e7Qvx/sXAKAFISgdB6A6RVCJwAV
-	FQ0pW4QF/PRnh0ZYKtci61K43O45lg+Jac2TVRqgO9R45NEdPm4lS6B45da2Tn01Jze77HIiA3f
-	Y38O4GRmCMnHZ/+MRe45arhfvL40PU4ynyX9xfEEbDbGEDHhCR5CDWrzALeVAIyY0DHtccmYF0+
-	W+L48TFTwBqihTGTqLc=
-X-Received: by 2002:a05:690c:9d:b0:81e:ba5b:97d2 with SMTP id
- 00721157ae682-81f69cc634amr23602197b3.2.1785144654634; Mon, 27 Jul 2026
- 02:30:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Wnr3tCMZ"
+Received: (qmail 68943 invoked by uid 106); 27 Jul 2026 09:39:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6PKF9G58Zl0lNkO6sGkGKRmi/3HnqptHtXFShi91UXU=; b=Wnr3tCMZM8hzlgpdkxwChWv995v67VK1ScDsLGd5G7IV6mIcIoLIcL1LCuXOEtHmhPUQay07bgmKrUV+Y6K5NFTJqoUzfmyQMThLlkyskALNqlFU2joU2mBzCM2kbBACsxoVD6+fhJvmwIBDDfWbb4oBz1yIR2fRg2V/78/Bz+yBtkSLO57wyONidQF/Nw5SVwecugz+Gb08n0dsT8f6WFUZgocCRNYE8FCET/DjHJri3BK4F8rViiZloecY0dv4cVLH6OIrMCS7t0N7E9ln9cnL5WvZkGGkcXj3bIMa05VV3PNgKz2CNxEFLEJEDoABBCm3Ylwq/AQI7uT/E1DCCA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Jul 2026 09:39:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 77528 invoked by uid 111); 27 Jul 2026 09:39:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Jul 2026 05:39:17 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 27 Jul 2026 05:39:12 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] diff-lib: skip paths outside prefix in oneway_diff()
+Message-ID: <20260727093912.GA591426@coredump.intra.peff.net>
+References: <20260726084550.GC2366012@coredump.intra.peff.net>
+ <20260726084705.GB3529698@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Alan Stokes <alan@source.dev>
-Date: Mon, 27 Jul 2026 10:30:43 +0100
-X-Gm-Features: AUfX_myigaAFw6yMIgHsvTpJwX9nIRAZVC6Z6uJW60nxzlmvDoPlTiVPUJlo0_8
-Message-ID: <CAFZW3h0K6vi15HhMEX30Ab+pjRc3mQr2Myv9KJUH=MWzsvt0FQ@mail.gmail.com>
-Subject: Assertion failure with git cat-file --batch-command
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260726084705.GB3529698@coredump.intra.peff.net>
 
-I unexpectedly managed to hit this:
-git: builtin/cat-file.c:387: print_object_or_die: Assertion
-`data->info.typep' failed.
-Aborted (core dumped)
+On Sun, Jul 26, 2026 at 04:47:05AM -0400, Jeff King wrote:
 
-(That's in print_object_or_die().)
+> diff --git a/diff-lib.c b/diff-lib.c
+> index 95f920a9a0..9986f5b141 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -528,6 +528,11 @@ static int oneway_diff(const struct cache_entry * const *src,
+>  	if (tree == o->df_conflict_entry)
+>  		tree = NULL;
+>  
+> +	if (revs->diffopt.prefix &&
+> +	    strncmp((idx ? idx : tree)->name, revs->diffopt.prefix,
+> +		    revs->diffopt.prefix_length))
+> +		return 0;
+> +
 
-Here's the bugreport.
+BTW, Coverity complains here that "tree" could be NULL (because we set
+it that way in the lines above due to a D/F conflict).
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+I _think_ it is fine. We only look at "tree" if idx is NULL, and I think
+idx is only NULL when we have a deletion. So that implies either:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+  1. unpack_trees() passed us both entries as NULL, which doesn't make
+     sense. There was no entry to delete!
 
-~$ mkdir foo
-~$ cd foo
-~/foo$ git init
-Initialized empty Git repository in /home/alan/foo/.git/
-~/foo (main)$ echo hello > hello
-~/foo (main)$ git add hello
-~/foo (main)$ git commit -m"first"
-[main (root-commit) d62fc70] first
- 1 file changed, 1 insertion(+)
- create mode 100644 hello
-~/foo (main)$ git ls-tree HEAD
-100644 blob ce013625030ba8dba906f756967f9e9ca394464a hello
-~/foo (main)$ echo ce013625030ba8dba906f756967f9e9ca394464a | git
-cat-file --batch="%(objectsize)"
-6
-hello
+  2. We set tree to NULL due to a D/F conflict. But a conflict with
+     what? There is nothing at the path in the index to conflict.
 
-~/foo (main)$ echo info ce013625030ba8dba906f756967f9e9ca394464a | git
-cat-file --batch-command="%(objectsize)"
-6
-~/foo (main)$ echo contents ce013625030ba8dba906f756967f9e9ca394464a |
-git cat-file --batch-command="%(objecttype) %(objectsize)"
-blob 6
-hello
+So AFAICT this is OK and it's just a false positive from Coverity
+(though an understandable one; the semantics of the relationship between
+"idx" and "tree" are not represented in the code).
 
-~/foo (main)$ echo contents ce013625030ba8dba906f756967f9e9ca394464a |
-git cat-file --batch-command="%(objectsize)"
-6
-git: builtin/cat-file.c:387: print_object_or_die: Assertion
-`data->info.typep' failed.
-Aborted (core dumped)
+Possibly adding:
 
-What did you expect to happen? (Expected behavior)
+  if (!idx && !tree)
+	BUG("oneway diff with no endpoints");
 
-cat-file prints the size of the blob and then the blob contents
+would help static analysis, but I don't know if that makes things more
+or less clear to a human.
 
-What happened instead? (Actual behavior)
-
-Assertion failure, core dump
-
-What's different between what you expected and what actually happened?
-
-The abort
-
-Anything else you want to add:
-
-I first observed this in 2.43.0, but it still seems to be present in
-2.54.0.
-
-Note that if I ask git cat-file --batch-command to include the
-objecttype in the output it is fine (which gives me a workaround). Or
-if I use git cat-file --batch.
-
-IIUC git only fetches the metadata that it needs for each object, and
-that is determined from the format. For --batch I guess the type is
-always requested, since it is needed to print the object contents. But
-for --batch-command that doesn't seem to happen.
-
-I'm not sure what the correct fix is - always request the type in
---batch-command, or perhaps only if a "contents" command is issued?
-
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.54.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: disabled
-gettext: enabled
-libcurl: 8.5.0
-zlib: 1.3
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.0.0-28-generic #28~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC
-Wed Jul  1 15:50:57 UTC 2 x86_64
-compiler info: gnuc: 13.3
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-
-Best wishes,
-
-Alan
+-Peff
