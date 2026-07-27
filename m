@@ -1,1173 +1,396 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704703DD862
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 10:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7117F1E8342
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 12:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785149693; cv=none; b=cnf9DUc9bceWK4GLwUexu6h+qobLLOErOgIWYyj+wjpCl8zN+fjNGeS3EnQRXsQH6HDPj3VGSVf+oQpGkxcpG2KuurKSLKqTEuL2dY4n7/pyo6tCNGfMcp8H3OAwlbzn9BOZIKgR49MaeJahbhR+ifETWaHg0LpM5RVWWQpbZ/E=
+	t=1785156683; cv=none; b=iz23SQekvTD1xzob3gQt5W9st8VAjfNBRjc2x6fCc1b/hP+hLNFNGG8c9+W5In47Q+kmBYicWsLI9ttBILCD8y6y7lIT8a3jZ5KQtGxiMWRW4xPGv8S5T2YM63YenJzYDFis1kt8bWg4bWJlNiFPG+WVuAyJT9tOHIZjSjaUnVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785149693; c=relaxed/simple;
-	bh=mlqwuSmfblodlfu7SFYH218vqSsqfN2ejAF/oFlOTLE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=pbVYkLrTdeMKl7cXHVLmasH491bhBMZ688UKLapSLBke7n3+dN17azS6uuCFJ26y5rG2YmqCWUxDN/2jxepmQc+ryGNzbdvN81WkxB/ldlBQhf6kBkF2Tjio/iT00fvKzylniB/6mS6cuCt0xidTkwin8YIO9Yz+BHdTI/Hi7bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AueZVyWy; arc=none smtp.client-ip=209.85.210.174
+	s=arc-20240116; t=1785156683; c=relaxed/simple;
+	bh=nsdO8w8gNyM5VmESN0rqNnV9FP5zWD7ml+7Hg74aX2c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=DjCsBQSAq2PjfbUKFFsGyBUTNo7kFmrN0vPRlVe1CooGsRqU8hGs30+NSOXmCqVufOf1wQyFHFNe8L1x3EAFujY2zF1nLnm88Xs5EeyNzMaKhmGWHVHjI2zI9YOOeHCm8lfV3kmbV1owKPcQXUtrNIBttECY0o0yu0K4HW2Hsbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ixixwkiq; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AueZVyWy"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8486672f03cso2437228b3a.0
-        for <git@vger.kernel.org>; Mon, 27 Jul 2026 03:54:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ixixwkiq"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6983d3dae7aso5208761a12.0
+        for <git@vger.kernel.org>; Mon, 27 Jul 2026 05:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785149690; x=1785754490; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=5HgtFiyG/Z0GDIIsjgdR2Gir8EuXoP1wzpbd8QbEZck=;
-        b=AueZVyWyH07xfDNEpLZSdxRqkCyc07yESCLvPJn6tRNPiMmwkOYXslh9AmHyPj/t6y
-         nd/LlvGlSRFTvNTxRc7ZXot2J+jFMptMCoGvcFZUF8Q+PnRxKVHsVrmtYyyHNOLFea2/
-         +lV8FCu8m3K28zOWWFI8fBj6xxavVpj6r/WZ6gwFLoc6vZTMEM1YXLMGZjrqNOhx+Wt3
-         6SmhokNmRj7KvMpyS0JqVqtJdiRxphDAqmn6Lin/8xH53Og2F2+94i1KZHkJmyx80/JJ
-         EkPp+S+aWjkjaMDlJpWAIxBfPZ4mJ5UC3yn2Zw4XI/gVf5Ibwh0wFc+iOWMEubE86bv2
-         dF4Q==
+        d=gmail.com; s=20251104; t=1785156680; x=1785761480; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=jgZAE39BbjAAFGdpK/MuLJ+UlzXgkzMoCe4a5g/+1A8=;
+        b=ixixwkiqXv/y5NLjAZVIR/cH5uAf31uUgJWwEHsz/9sWveg1fmypWi2WO3HEykSYkh
+         iqfRaP8pgAjoJHzYaUG+rg1LgGyRn+jBe0DFkQT6d0bQy2JADx9Em5ZvkEXcFrA+C/CV
+         XOMZpFxS886t/ULkbFMSesRChz3x0CTf28ZUx+60NxVWNhYUJyumXd0wGQB3Le8Kwyk9
+         0n57xyrCLbkxqs4WTO54IxWPfwsKET9mFCmYAauoUnXpxc4E6qqvoIxUvsb7P5HkhNJy
+         ZR0PzcXWIaVSE46ujaItZP6b55LRXNNsyl4Zi41ih8LGFeN6j13YAmNmGz7FCv/TLi+f
+         a+qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785149690; x=1785754490;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5HgtFiyG/Z0GDIIsjgdR2Gir8EuXoP1wzpbd8QbEZck=;
-        b=Q6Jbaje/2AJqBfSpx0u3RL01/Mo+3QwLsWmEq/uHpzk8NxlSRXK0fXu9g/43KIPChI
-         yt7/XW0OtK8M6PiOorv45lXWgtHmL25VFwzH0uuXPI7cXUG4rPmr4iJCAaUtkLGZD7vu
-         X3+FCSAYMtLA8XrTQVlxjTO5U0aNRec8wD2ikcR54owWI/JO3JFbJ2iCWtuyxx5MIlym
-         IzV7eVSh/OAdiGeh0FqJknEAycQLB00/RpTFpbnB0JpIxKNZ9vBw/oiuf4R9jaqepuRb
-         NszCqtJcie4+sZpgSmlFex84wfimFPE8/1TNZtAyl3CHh1VDBYSsK+4/+URCYNiiwyX6
-         1X7Q==
-X-Gm-Message-State: AOJu0YzSq4IOt0jqrwtw/cvuYQBz68Lm5eG7EjRhaJ3kE5dq52Om97wx
-	QDtzY4+ugooWc1LnPqqHWaqOKWmE59sibShnDAQFhFtwH+z3hN4AlJTpr0IxkA==
-X-Gm-Gg: AR+sD11e1PZGJ/tUVPwiE24yIbO+t9KY2dk2nnAXCGKiRE3LF5HrSzDqipFhHMncdvk
-	urz4DmG+Dp/d5vNXoMB+owk8p/yFL6ZX/EIP+1jueLu1yEQ1YqCchqQZtqirGzhjeqmJrupWOX8
-	etqBzGhZE152Y72KmKLVtNHr16ucy8m5B6hfNT16CpgtRsMjhjykopWALNO1haV9HPvm2ht+hQ4
-	fVEqwlJx65EiR46a3DFvlMkevzeRGHAvvuIpFAzpzkJxeuvbINjX8D1H/cAOm858qNCeMn/UIQk
-	RA7uOyYuxdy6fsnz4HQgukMNS1Vt9221MMYBK+Fd0ldDjVVkqDEyFyrugmPZ5HqPzx2WL1Q7Gkw
-	aNOq0MPk1wyn8ect8UqUrGbAMGydlGkbXJpcwBEgA7zpUCa/wYXkieVIPHkD6yRCs7mOb5x+5LW
-	8lREH5
-X-Received: by 2002:a05:6a00:812:b0:848:2f7a:2e5f with SMTP id d2e1a72fcca58-84e595a9eabmr6160103b3a.78.1785149689250;
-        Mon, 27 Jul 2026 03:54:49 -0700 (PDT)
-Received: from [127.0.0.1] ([68.220.59.210])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533d15c2sm2844090b3a.29.2026.07.27.03.54.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2026 03:54:48 -0700 (PDT)
-Message-Id: <pull.2180.v2.git.1785149687514.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2180.git.1784190706028.gitgitgadget@gmail.com>
-References: <pull.2180.git.1784190706028.gitgitgadget@gmail.com>
-From: "Emin =?UTF-8?Q?=C3=96zata?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 27 Jul 2026 10:54:46 +0000
-Subject: [PATCH v2] stash: add 'reword' subcommand
+        d=1e100.net; s=20251104; t=1785156680; x=1785761480;
+        h=content-transfer-encoding:content-type:in-reply-to:cc:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=jgZAE39BbjAAFGdpK/MuLJ+UlzXgkzMoCe4a5g/+1A8=;
+        b=EBrFS+mKLn8PP/jXJh9tg3YB8Iu0x7wJ1nPpBGdzod85DOGB24N83MDPT5B2TM9sxy
+         16y2XnHn3iS/VB3vL7SKrMGZbICSsMpZvetTH6zeBppQVpMrAt7vdeJ8a30r5Q62O7z1
+         6qvGBhjRUk4Jr0bxE92IixFZjXLnaHxlWbScB0bNWOmxLiPhGvcp85sGJSgN+sbrnLal
+         g5Cwm93VVRmRq0Gzw6p4/ml6fUv8YrhRMIWgwSzLpzpc/VQtQE9cMRq8IDx81byDG5dO
+         Ui8LzHsiV8f7akelGbXNE3vr5VuiQR55TfZTmWgP8KU6ZdnzOPVDVES4CpvHhNiFOHJD
+         +FiQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrK7FN7AHJPogxyrZmlf96u+4+h1eBI3XLTAUYAGDzBesRS9Nw0V1W04C/wHL8+O6itFw8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/AjEsNkrRfIkmJog1iwi0TinLvboN4hTgywRWLEcRwt5iqcXE
+	+kquR1hf5pjlyVltsFFMF5zLUmGRJTu+mH1aGPeAQPQ7p7/4CsmYmut6
+X-Gm-Gg: AR+sD11CEQVIgmABpMSOZzCr2DyVOicrs7xRZ+1DOLularKaix6wYaCMf0CB2K+GzAC
+	s7IbYSr17HYPSReCnymYPZ+TfOZ7yEE7QJ2rMMSRrpFaDaDnhk+31Ir01rNSkmAgOByu9xOsUHi
+	cLyzso0DZdeNSTCDSB9SuflR2BBTJaQnseRtIsimukIrkiCZRi/DbAmb85iMGFqbgZsAWH6q8gF
+	tUA060rTpW6glxvNbTQyxtREoVoeUmZO9fWLqan5rmnPWVUM0u4MVQWCabwCL2eh1urWiHEccR6
+	0Hi9AbGagEqLsedmTWMcBdVS9yh38sE9YI00eywCXIG3TKcbPvJ99rBJfujyUsi/eTGhHGteVTQ
+	nhV6ResKH+hJzIJLFvAFOSx+f8BSJK439rLWa28LD73CDj1icnjRt/o3T5rj0eg32K/aCKqsyId
+	oI5S8AcCTc/t9mPNMFmpQG3LBqb+HHtEah+v8CmpKSh2VGAE4+d/Knq8n8zkFlRSj/zxml4qKTc
+	sE=
+X-Received: by 2002:a17:906:7955:b0:c12:8ede:77 with SMTP id a640c23a62f3a-c1f1fdd44ebmr356030866b.22.1785156679300;
+        Mon, 27 Jul 2026 05:51:19 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:3d4c:17a4:abdd:f101? ([2a0a:ef40:17bb:9901:3d4c:17a4:abdd:f101])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1f5e717da4sm49040566b.4.2026.07.27.05.51.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jul 2026 05:51:18 -0700 (PDT)
+Message-ID: <e971400e-6d23-463f-ae9c-a21d3c5a3563@gmail.com>
+Date: Mon, 27 Jul 2026 13:51:27 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Emin =?UTF-8?Q?=C3=96zata?= <eminozata@proton.me>,
-    =?UTF-8?q?Emin=20=C3=96zata?= <eminozata@proton.me>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] utf8: make utf8_strwidth() and utf8_strnwidth() return
+ size_t
+To: Hardik Kumar <hardikxk@gmail.com>, git@vger.kernel.org
+References: <20260726123427.173877-1-hardikxk@gmail.com>
+ <20260727065917.469738-1-hardikxk@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Pablo Sabater <pabloosabaterr@gmail.com>
+In-Reply-To: <20260727065917.469738-1-hardikxk@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: =?UTF-8?q?Emin=20=C3=96zata?= <eminozata@proton.me>
+Hi Hardik
 
-Stash entries accumulate with the default "WIP on <branch>" message
-when they are created in a hurry, and there is no way to relabel the
-ones worth keeping afterwards.  The only option is dropping an entry
-and re-storing it by hand, which moves it to the top of the stash
-list and gets fiddly for deeper entries.
+On 27/07/2026 07:59, Hardik Kumar wrote:
+> 
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 48d5251..83e4dd6 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -564,7 +564,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent,
+>   					name = ci.author_mail.buf;
+>   				else
+>   					name = ci.author.buf;
+> -				pad = longest_author - utf8_strwidth(name);
+> +				pad = longest_author - cast_size_t_to_int(utf8_strwidth(name));
+>   				printf(" (%s%*s %10s",
+>   				       name, pad, "",
+>   				       format_time(ci.author_time,
 
-Add 'git stash reword <message> [<stash>]', which defaults to the
-latest entry like the other subcommands do.  The name follows the
-verb git already uses for changing only a message, as in the reword
-command of 'git rebase -i' and in 'git history reword'.  It reads
-the whole reflog and writes it back in a single transaction, with
-the new message on the target and every other entry left as it was.
-Position, contents, timestamps and the reflog chain all stay put.
+To me this example perfectly illustrates why changing the return value 
+of utf8_strwidth() is a bad idea. The return value is pretty much always 
+used to calculate a padding to pass to printf() which expects an int. By 
+changing the return value you're forcing all the callers to do the 
+conversion themselves which is a bug waiting to happen. I'm also far 
+from convinced that the conversions in this patch are complete: grepping 
+for 'utf8_strn\{0,1\}width' turns up several calls which do not appear 
+to be correctly converted here. For example:
 
-Before touching anything, the command inspects the target entry and
-the ones above it, and refuses to start if any of them does not look
-like a stash commit; that can only happen when refs/stash was
-written to by hand.  The rewrite clears the reflog before writing
-the new one, so if the transaction fails afterwards, the command
-reports the object id of each collected entry and re-stores it
-best-effort.  Whatever it fails to re-store can be recovered with
-'git stash store'.
+builtin/worktree.c: display[i].width = utf8_strwidth(buf.buf);
 
-This was proposed before: in 2010, as a "git reflog update" command
-that edited reflog entries in place [1].  When it came up again in
-2013 [2], Junio rejected it on the grounds that reflogs are
-append-only recovery logs, and that whoever really cares about a
-stash message can pop and re-stash [3].  Michael Haggerty pointed
-out in that thread that refs/stash does not fit the description:
-its reflog is the primary data store for stash entries, and 'git
-stash drop' rewrites it all the time [4].  So this patch rewrites
-refs/stash directly, the way 'git stash drop' already does, through
-ref_transaction_update_reflog(), which 'git remote rename' and 'git
-refs migrate' already use to rewrite existing reflogs.
+where "width" is an int.
 
-Name the target by index (stash@{1}); the command rejects
-time-based selectors, because it needs the entry's position in the
-reflog.  Writing the reflog back at once keeps the cost linear in
-its length whatever that position is, and spares the reftable
-backend from emitting and compacting a table per entry, which is
-what dropping and re-storing the entries one by one would cost.
+I think it would be much better to remove the TODO comment as Junio 
+previously suggested and instead add some documentation to the function 
+explaining (a) why it is appropriate for it to return an int; (b) why we 
+must use the cast_size_t_to_int() helper to prevent overflows (see the 
+commit that added that comment).
 
-[1] https://lore.kernel.org/git/20100620093142.GF24805@occam.hewgill.net/
-[2] https://lore.kernel.org/git/loom.20130104T192132-16@post.gmane.org/
-[3] https://lore.kernel.org/git/7vbod4tynt.fsf@alter.siamese.dyndns.org/
-[4] https://lore.kernel.org/git/50ED2C78.1030300@alum.mit.edu/
+Thanks
 
-Signed-off-by: Emin Özata <eminozata@proton.me>
----
-    stash: add 'reword' subcommand
-    
-    eo/stash-reword
-    
-    "git stash reword" learned to change the message of an existing stash
-    entry without changing its position, its contents or its reflog
-    timestamp.
-    
-    This came up in 2010 and again in 2013, and was rejected back then on
-    the grounds that reflogs are append-only recovery logs. refs/stash is
-    the exception Michael Haggerty pointed out in that thread: its reflog is
-    the primary data store for stash entries, and "git stash drop" rewrites
-    it already. So this rewrites the refs/stash reflog through
-    ref_transaction_update_reflog(), which "git remote rename" and "git refs
-    migrate" already use to rewrite existing reflogs, and touches nothing
-    else. Details and links to the old threads are in the commit message.
-    
-    Costs, so nobody has to dig for them: the whole reflog is read and
-    written back once whatever the target's depth, so the cost is linear in
-    its length. The rewrite is not crash-safe. The reflog is cleared before
-    the transaction writes it back, so a process killed in that window
-    leaves refs/stash without the reflog that "git stash list" reads. If the
-    transaction itself fails, the collected entries are re-stored
-    best-effort, and whatever cannot be written back is reported with its
-    object id so "git stash store" can recover it. The stash commits are
-    never deleted either way, so "git fsck" still finds them. Closing that
-    window for real needs a refs API operation that replaces a reflog in one
-    step, which I would rather do as a follow-up.
-    
-    I picked a positional message argument over an -m option ("stash store"
-    style); no strong opinion, happy to switch.
-    
-    Changes since v1, all from Patrick's review: the subcommand is 'reword'
-    rather than 'rename', the reflog is rewritten in a single transaction
-    instead of one drop-and-store per entry, and the commit message opens
-    with the use case rather than with the observation that stash messages
-    cannot be changed.
-    
-    t3903 passes with GIT_TEST_DEFAULT_REF_FORMAT=files and reftable.
+Phillip
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2180%2Fozemin%2Fstash-rename-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2180/ozemin/stash-rename-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2180
+> @@ -685,9 +685,9 @@ static void find_alignment(struct blame_scoreboard *sb, int *option)
+>   			suspect->commit->object.flags |= METAINFO_SHOWN;
+>   			get_commit_info(suspect->commit, &ci);
+>   			if (*option & OUTPUT_SHOW_EMAIL)
+> -				num = utf8_strwidth(ci.author_mail.buf);
+> +				num = cast_size_t_to_int(utf8_strwidth(ci.author_mail.buf));
+>   			else
+> -				num = utf8_strwidth(ci.author.buf);
+> +				num = cast_size_t_to_int(utf8_strwidth(ci.author.buf));
+>   			if (longest_author < num)
+>   				longest_author = num;
+>   			commit_info_destroy(&ci);
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 775a797..c4ae95f 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -850,7 +850,7 @@ static void display_ref_update(struct display_state *display_state, char code,
+>   			display_state->shown_url = 1;
+>   		}
+>   
+> -		width = (summary_width + strlen(summary) - gettext_width(summary));
+> +		width = (summary_width + strlen(summary) - cast_size_t_to_int(gettext_width(summary)));
+>   		remote = prettify_refname(remote);
+>   		local = prettify_refname(local);
+>   
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index 84e012f..9c7ad8c 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -371,7 +371,7 @@ static void stats_table_vaddf(struct stats_table *table,
+>   
+>   	strbuf_vaddf(&buf, format, ap);
+>   	formatted_name = strbuf_detach(&buf, NULL);
+> -	name_width = utf8_strwidth(formatted_name);
+> +	name_width = cast_size_t_to_int(utf8_strwidth(formatted_name));
+>   
+>   	item = string_list_append_nodup(&table->rows, formatted_name);
+>   	item->util = entry;
+> @@ -387,12 +387,12 @@ static void stats_table_vaddf(struct stats_table *table,
+>   		string_list_append_nodup(&table->annotations, strbuf_detach(&buf, NULL));
+>   	}
+>   	if (entry->value) {
+> -		int value_width = utf8_strwidth(entry->value);
+> +		int value_width = cast_size_t_to_int(utf8_strwidth(entry->value));
+>   		if (value_width > table->value_col_width)
+>   			table->value_col_width = value_width;
+>   	}
+>   	if (entry->unit) {
+> -		int unit_width = utf8_strwidth(entry->unit);
+> +		int unit_width = cast_size_t_to_int(utf8_strwidth(entry->unit));
+>   		if (unit_width > table->unit_col_width)
+>   			table->unit_col_width = unit_width;
+>   	}
+> @@ -582,8 +582,8 @@ static void stats_table_print_structure(const struct stats_table *table)
+>   {
+>   	const char *name_col_title = _("Repository structure");
+>   	const char *value_col_title = _("Value");
+> -	int title_name_width = utf8_strwidth(name_col_title);
+> -	int title_value_width = utf8_strwidth(value_col_title);
+> +	int title_name_width = cast_size_t_to_int(utf8_strwidth(name_col_title));
+> +	int title_value_width = cast_size_t_to_int(utf8_strwidth(value_col_title));
+>   	int name_col_width = table->name_col_width;
+>   	int value_col_width = table->value_col_width;
+>   	int unit_col_width = table->unit_col_width;
+> diff --git a/column.c b/column.c
+> index 93fae31..a63d040 100644
+> --- a/column.c
+> +++ b/column.c
+> @@ -26,7 +26,7 @@ struct column_data {
+>   /* return length of 's' in letters, ANSI escapes stripped */
+>   static int item_length(const char *s)
+>   {
+> -	return utf8_strnwidth(s, strlen(s), 1);
+> +	return cast_size_t_to_int(utf8_strnwidth(s, strlen(s), 1));
+>   }
+>   
+>   /*
+> diff --git a/diff.c b/diff.c
+> index 589c196..205fedf 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2982,7 +2982,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+>   			continue;
+>   		}
+>   		fill_print_name(file);
+> -		len = utf8_strwidth(file->print_name);
+> +		len = cast_size_t_to_int(utf8_strwidth(file->print_name));
+>   		if (max_len < len)
+>   			max_len = len;
+>   
+> @@ -3037,7 +3037,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+>   	 * making the line longer than the maximum width.
+>   	 */
+>   	if (options->stat_width == -1)
+> -		width = term_columns() - utf8_strnwidth(line_prefix, strlen(line_prefix), 1);
+> +		width = term_columns() - cast_size_t_to_int(utf8_strnwidth(line_prefix, strlen(line_prefix), 1));
+>   	else
+>   		width = options->stat_width ? options->stat_width : 80;
+>   	number_width = decimal_width(max_change) > number_width ?
+> @@ -3108,7 +3108,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+>   		 * "scale" the filename
+>   		 */
+>   		len = name_width;
+> -		name_len = utf8_strwidth(name);
+> +		name_len = cast_size_t_to_int(utf8_strwidth(name));
+>   		if (name_width < name_len) {
+>   			char *slash;
+>   			prefix = "...";
+> @@ -3123,7 +3123,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+>   			if (slash)
+>   				name = slash;
+>   		}
+> -		padding = len - utf8_strwidth(name);
+> +		padding = len - cast_size_t_to_int(utf8_strwidth(name));
+>   		if (padding < 0)
+>   			padding = 0;
+>   
+> diff --git a/gettext.c b/gettext.c
+> index 8d08a61..4d5d05e 100644
+> --- a/gettext.c
+> +++ b/gettext.c
+> @@ -129,7 +129,7 @@ void git_setup_gettext(void)
+>   }
+>   
+>   /* return the number of columns of string 's' in current locale */
+> -int gettext_width(const char *s)
+> +size_t gettext_width(const char *s)
+>   {
+>   	static int is_utf8 = -1;
+>   	if (is_utf8 == -1)
+> diff --git a/gettext.h b/gettext.h
+> index 484cafa..f161a21 100644
+> --- a/gettext.h
+> +++ b/gettext.h
+> @@ -31,7 +31,7 @@
+>   #ifndef NO_GETTEXT
+>   extern int git_gettext_enabled;
+>   void git_setup_gettext(void);
+> -int gettext_width(const char *s);
+> +size_t gettext_width(const char *s);
+>   #else
+>   #define git_gettext_enabled (0)
+>   static inline void git_setup_gettext(void)
+> diff --git a/pretty.c b/pretty.c
+> index d8a9f37..83d4e86 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -1809,7 +1809,7 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+>   
+>   	if (padding < 0) {
+>   		const char *start = strrchr(sb->buf, '\n');
+> -		int occupied;
+> +		size_t occupied;
+>   		if (!start)
+>   			start = sb->buf;
+>   		occupied = utf8_strnwidth(start, strlen(start), 1);
+> @@ -1830,7 +1830,7 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+>   		placeholder++;
+>   		total_consumed++;
+>   	}
+> -	len = utf8_strnwidth(local_sb.buf, local_sb.len, 1);
+> +	len = cast_size_t_to_int(utf8_strnwidth(local_sb.buf, local_sb.len, 1));
+>   
+>   	if (c->flush_type == flush_left_and_steal) {
+>   		const char *ch = sb->buf + sb->len - 1;
+> diff --git a/utf8.c b/utf8.c
+> index 96460cc..cefaefe 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -208,7 +208,7 @@ int utf8_width(const char **start, size_t *remainder_p)
+>    * string, assuming that the string is utf8.  Returns strlen() instead
+>    * if the string does not look like a valid utf8 string.
+>    */
+> -int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+> +size_t utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>   {
+>   	const char *orig = string;
+>   	size_t width = 0;
+> @@ -225,15 +225,10 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>   		if (glyph_width > 0)
+>   			width += glyph_width;
+>   	}
+> -
+> -	/*
+> -	 * TODO: fix the interface of this function and `utf8_strwidth()` to
+> -	 * return `size_t` instead of `int`.
+> -	 */
+> -	return cast_size_t_to_int(string ? width : len);
+> +	return string ? width : len;
+>   }
+>   
+> -int utf8_strwidth(const char *string)
+> +size_t utf8_strwidth(const char *string)
+>   {
+>   	return utf8_strnwidth(string, strlen(string), 0);
+>   }
+> @@ -821,7 +816,7 @@ void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int wid
+>   		       const char *s)
+>   {
+>   	size_t slen = strlen(s);
+> -	int display_len = utf8_strnwidth(s, slen, 0);
+> +	size_t display_len = utf8_strnwidth(s, slen, 0);
+>   	int utf8_compensation = slen - display_len;
+>   
+>   	if (display_len >= width) {
+> diff --git a/utf8.h b/utf8.h
+> index cf8ecb0..531e968 100644
+> --- a/utf8.h
+> +++ b/utf8.h
+> @@ -7,8 +7,8 @@ typedef unsigned int ucs_char_t;  /* assuming 32bit int */
+>   
+>   size_t display_mode_esc_sequence_len(const char *s);
+>   int utf8_width(const char **start, size_t *remainder_p);
+> -int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
+> -int utf8_strwidth(const char *string);
+> +size_t utf8_strnwidth(const char *string, size_t len, int skip_ansi);
+> +size_t utf8_strwidth(const char *string);
+>   int is_utf8(const char *text);
+>   int is_encoding_utf8(const char *name);
+>   int same_encoding(const char *, const char *);
+> diff --git a/wt-status.c b/wt-status.c
+> index 58461e0..672f83b 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -325,13 +325,13 @@ static const char *wt_status_diff_status_string(int status)
+>   	}
+>   }
+>   
+> -static int maxwidth(const char *(*label)(int), int minval, int maxval)
+> +static size_t maxwidth(const char *(*label)(int), int minval, int maxval)
+>   {
+>   	int result = 0, i;
+>   
+>   	for (i = minval; i <= maxval; i++) {
+>   		const char *s = label(i);
+> -		int len = s ? utf8_strwidth(s) : 0;
+> +		size_t len = s ? utf8_strwidth(s) : 0;
+>   		if (len > result)
+>   			result = len;
+>   	}
+> @@ -345,7 +345,7 @@ static void wt_longstatus_print_unmerged_data(struct wt_status *s,
+>   	struct wt_status_change_data *d = it->util;
+>   	struct strbuf onebuf = STRBUF_INIT;
+>   	static char *padding;
+> -	static int label_width;
+> +	static size_t label_width;
+>   	const char *one, *how;
+>   	int len;
+>   
+> @@ -360,7 +360,7 @@ static void wt_longstatus_print_unmerged_data(struct wt_status *s,
+>   	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
+>   
+>   	how = wt_status_unmerged_status_string(d->stagemask);
+> -	len = label_width - utf8_strwidth(how);
+> +	len = label_width - cast_size_t_to_int(utf8_strwidth(how));
+>   	status_printf_more(s, c, "%s%.*s%s\n", how, len, padding, one);
+>   	strbuf_release(&onebuf);
+>   }
+> @@ -429,7 +429,7 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
+>   	what = wt_status_diff_status_string(status);
+>   	if (!what)
+>   		BUG("unhandled diff status %c", status);
+> -	len = label_width - utf8_strwidth(what);
+> +	len = label_width - cast_size_t_to_int(utf8_strwidth(what));
+>   	assert(len >= 0);
+>   	if (one_name != two_name)
+>   		status_printf_more(s, c, "%s%.*s%s -> %s",
+> 
+> base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
 
-Range-diff vs v1:
-
- 1:  86af7ff53c ! 1:  d9def7b461 stash: add 'rename' subcommand
-     @@ Metadata
-      Author: Emin Özata <eminozata@proton.me>
-      
-       ## Commit message ##
-     -    stash: add 'rename' subcommand
-     +    stash: add 'reword' subcommand
-      
-     -    There is no way to change the message of a stash entry after the
-     -    fact.  The only option is dropping the entry and re-storing it by
-     -    hand, which moves it to the top of the stash list and gets fiddly
-     -    for deeper entries.
-     +    Stash entries accumulate with the default "WIP on <branch>" message
-     +    when they are created in a hurry, and there is no way to relabel the
-     +    ones worth keeping afterwards.  The only option is dropping an entry
-     +    and re-storing it by hand, which moves it to the top of the stash
-     +    list and gets fiddly for deeper entries.
-      
-     -    Add 'git stash rename <message> [<stash>]', defaulting to the
-     -    latest entry like the other subcommands do.  It reads the object id
-     -    and reflog message of the target entry and of the entries above it,
-     -    drops them all like 'git stash drop' would, and stores them back in
-     -    the same order, with the new message going to the target.  Position,
-     -    contents and the reflog chain stay as they were.
-     +    Add 'git stash reword <message> [<stash>]', which defaults to the
-     +    latest entry like the other subcommands do.  The name follows the
-     +    verb git already uses for changing only a message, as in the reword
-     +    command of 'git rebase -i' and in 'git history reword'.  It reads
-     +    the whole reflog and writes it back in a single transaction, with
-     +    the new message on the target and every other entry left as it was.
-     +    Position, contents, timestamps and the reflog chain all stay put.
-      
-     -    The command checks every entry it is about to rewrite and refuses
-     -    to start if one of them does not look like a stash commit, which
-     -    can only happen when refs/stash was written to by hand.  Finding
-     -    that out halfway through the sequence would lose entries.  Should a
-     -    write-back fail anyway, the entry's object id is reported so it can
-     -    be recovered with 'git stash store', and the command only reports
-     -    success when the reflog ended up in the requested state.
-     +    Before touching anything, the command inspects the target entry and
-     +    the ones above it, and refuses to start if any of them does not look
-     +    like a stash commit; that can only happen when refs/stash was
-     +    written to by hand.  The rewrite clears the reflog before writing
-     +    the new one, so if the transaction fails afterwards, the command
-     +    reports the object id of each collected entry and re-stores it
-     +    best-effort.  Whatever it fails to re-store can be recovered with
-     +    'git stash store'.
-      
-          This was proposed before: in 2010, as a "git reflog update" command
-          that edited reflog entries in place [1].  When it came up again in
-     @@ Commit message
-          stash message can pop and re-stash [3].  Michael Haggerty pointed
-          out in that thread that refs/stash does not fit the description:
-          its reflog is the primary data store for stash entries, and 'git
-     -    stash drop' rewrites it all the time [4].  So this patch stays away
-     -    from the reflog machinery entirely and does the suggested
-     -    pop-and-re-stash workaround mechanically, without the detour
-     -    through the working tree.
-     +    stash drop' rewrites it all the time [4].  So this patch rewrites
-     +    refs/stash directly, the way 'git stash drop' already does, through
-     +    ref_transaction_update_reflog(), which 'git remote rename' and 'git
-     +    refs migrate' already use to rewrite existing reflogs.
-      
-     -    The sequence only works if entry positions hold still while it
-     -    runs, so the command takes index-based selectors (stash@{1}) and
-     -    rejects time-based ones.  It also refreshes the reflog timestamps
-     -    of the rewritten entries, and renaming stash@{n} costs n+1 reflog
-     -    deletions and ref updates.
-     +    Name the target by index (stash@{1}); the command rejects
-     +    time-based selectors, because it needs the entry's position in the
-     +    reflog.  Writing the reflog back at once keeps the cost linear in
-     +    its length whatever that position is, and spares the reftable
-     +    backend from emitting and compacting a table per entry, which is
-     +    what dropping and re-storing the entries one by one would cost.
-      
-          [1] https://lore.kernel.org/git/20100620093142.GF24805@occam.hewgill.net/
-          [2] https://lore.kernel.org/git/loom.20130104T192132-16@post.gmane.org/
-     @@ Documentation/git-stash.adoc: git stash create [<message>]
-       git stash store [(-m | --message) <message>] [-q | --quiet] <commit>
-       git stash export (--print | --to-ref <ref>) [<stash>...]
-       git stash import <commit>
-     -+git stash rename [-q | --quiet] <message> [<stash>]
-     ++git stash reword [-q | --quiet] <message> [<stash>]
-       
-       DESCRIPTION
-       -----------
-     @@ Documentation/git-stash.adoc: with no conflicts.
-       	created by `export`, and add them to the list of stashes.  To replace the
-       	existing stashes, use `clear` first.
-       
-     -+`rename [-q | --quiet] <message> [<stash>]`::
-     ++`reword [-q | --quiet] <message> [<stash>]`::
-      +	Change the message of a single stash entry.  The entry keeps its
-     -+	position and its contents.  _<stash>_ must name an entry by
-     -+	index (e.g. `stash@{1}`); renaming refreshes the reflog
-     -+	timestamps of the entry and of the entries above it.
-     ++	position, its contents and its reflog timestamp.  _<stash>_ must
-     ++	name an entry by index (e.g. `stash@{1}`).
-      +
-       OPTIONS
-       -------
-     @@ Documentation/git-stash.adoc: literally (including newlines and quotes).
-       `--quiet`::
-       	This option is only valid for `apply`, `drop`, `pop`, `push`,
-      -	`save`, `store` commands.
-     -+	`rename`, `save`, `store` commands.
-     ++	`reword`, `save`, `store` commands.
-       +
-       Quiet, suppress feedback messages.
-       
-     @@ Documentation/git-stash.adoc: For more details, see the 'pathspec' entry in link
-       _<stash>_::
-       	This option is only valid for `apply`, `branch`, `drop`, `pop`,
-      -	`show`, and `export` commands.
-     -+	`show`, `export`, and `rename` commands.
-     ++	`show`, `export`, and `reword` commands.
-       +
-       A reference of the form `stash@{<revision>}`. When no _<stash>_ is
-       given, the latest stash is assumed (that is, `stash@{0}`).
-      
-       ## builtin/stash.c ##
-     +@@
-     + #include "abspath.h"
-     + #include "config.h"
-     + #include "environment.h"
-     ++#include "date.h"
-     + #include "gettext.h"
-     + #include "hash.h"
-     + #include "hex.h"
-     ++#include "ident.h"
-     + #include "object-name.h"
-     + #include "parse-options.h"
-     + #include "refs.h"
-      @@
-       	N_("git stash export (--print | --to-ref <ref>) [<stash>...]")
-       #define BUILTIN_STASH_IMPORT_USAGE \
-       	N_("git stash import <commit>")
-     -+#define BUILTIN_STASH_RENAME_USAGE \
-     -+	N_("git stash rename [-q | --quiet] <message> [<stash>]")
-     ++#define BUILTIN_STASH_REWORD_USAGE \
-     ++	N_("git stash reword [-q | --quiet] <message> [<stash>]")
-       #define BUILTIN_STASH_CLEAR_USAGE \
-       	"git stash clear"
-       
-     @@ builtin/stash.c: static const char * const git_stash_usage[] = {
-       	BUILTIN_STASH_STORE_USAGE,
-       	BUILTIN_STASH_EXPORT_USAGE,
-       	BUILTIN_STASH_IMPORT_USAGE,
-     -+	BUILTIN_STASH_RENAME_USAGE,
-     ++	BUILTIN_STASH_REWORD_USAGE,
-       	NULL
-       };
-       
-     @@ builtin/stash.c: static const char * const git_stash_import_usage[] = {
-       	NULL
-       };
-       
-     -+static const char * const git_stash_rename_usage[] = {
-     -+	BUILTIN_STASH_RENAME_USAGE,
-     ++static const char * const git_stash_reword_usage[] = {
-     ++	BUILTIN_STASH_REWORD_USAGE,
-      +	NULL
-      +};
-      +
-       static const char ref_stash[] = "refs/stash";
-       static struct strbuf stash_index_path = STRBUF_INIT;
-       
-     -@@ builtin/stash.c: static int reflog_is_empty(const char *refname)
-     - 					 refname, reject_reflog_ent, NULL);
-     - }
-     - 
-     --static int do_drop_stash(struct stash_info *info, int quiet)
-     -+static int drop_reflog_entry(const char *revision)
-     - {
-     --	if (!reflog_delete(info->revision.buf,
-     --			   EXPIRE_REFLOGS_REWRITE | EXPIRE_REFLOGS_UPDATE_REF,
-     --			   0)) {
-     --		if (!quiet)
-     --			printf_ln(_("Dropped %s (%s)"), info->revision.buf,
-     --				  oid_to_hex(&info->w_commit));
-     --	} else {
-     --		return error(_("%s: Could not drop stash entry"),
-     --			     info->revision.buf);
-     --	}
-     -+	if (reflog_delete(revision,
-     -+			  EXPIRE_REFLOGS_REWRITE | EXPIRE_REFLOGS_UPDATE_REF,
-     -+			  0))
-     -+		return error(_("%s: Could not drop stash entry"), revision);
-     - 
-     - 	if (reflog_is_empty(ref_stash))
-     - 		do_clear_stash();
-     -@@ builtin/stash.c: static int do_drop_stash(struct stash_info *info, int quiet)
-     - 	return 0;
-     - }
-     - 
-     -+static int do_drop_stash(struct stash_info *info, int quiet)
-     -+{
-     -+	if (drop_reflog_entry(info->revision.buf))
-     -+		return -1;
-     -+
-     -+	if (!quiet)
-     -+		printf_ln(_("Dropped %s (%s)"), info->revision.buf,
-     -+			  oid_to_hex(&info->w_commit));
-     -+
-     -+	return 0;
-     -+}
-     -+
-     - static int get_stash_info_assert(struct stash_info *info, int argc,
-     - 				 const char **argv)
-     - {
-      @@ builtin/stash.c: out:
-       	return ret;
-       }
-       
-     -+struct rename_entry {
-     -+	struct object_id oid;
-     ++struct reword_entry {
-     ++	struct object_id old_oid;
-     ++	struct object_id new_oid;
-     ++	char *committer;
-      +	char *msg;
-      +};
-      +
-     -+struct rename_data {
-     -+	struct rename_entry *entries;
-     ++struct reword_data {
-     ++	struct reword_entry *entries;
-      +	size_t nr, alloc;
-     -+	size_t want;
-      +};
-      +
-     -+static int collect_rename_entries(const char *refname UNUSED,
-     -+				  struct object_id *old_oid UNUSED,
-     ++static int collect_reword_entries(const char *refname UNUSED,
-     ++				  struct object_id *old_oid,
-      +				  struct object_id *new_oid,
-     -+				  const char *committer UNUSED,
-     -+				  timestamp_t timestamp UNUSED,
-     -+				  int tz UNUSED, const char *msg,
-     ++				  const char *committer,
-     ++				  timestamp_t timestamp,
-     ++				  int tz, const char *msg,
-      +				  void *cb_data)
-      +{
-     -+	struct rename_data *data = cb_data;
-     ++	struct reword_data *data = cb_data;
-      +	const char *eol = strchrnul(msg, '\n');
-     ++	struct reword_entry *entry;
-     ++	struct ident_split ident;
-      +
-      +	ALLOC_GROW(data->entries, data->nr + 1, data->alloc);
-     -+	oidcpy(&data->entries[data->nr].oid, new_oid);
-     -+	data->entries[data->nr].msg = xstrndup(msg, eol - msg);
-     -+	data->nr++;
-     ++	entry = &data->entries[data->nr];
-     ++	oidcpy(&entry->old_oid, old_oid);
-     ++	oidcpy(&entry->new_oid, new_oid);
-     ++	entry->msg = xstrndup(msg, eol - msg);
-     ++
-     ++	if (split_ident_line(&ident, committer, strlen(committer)) < 0) {
-     ++		entry->committer = xstrdup(committer);
-     ++	} else {
-     ++		struct strbuf name = STRBUF_INIT, mail = STRBUF_INIT;
-     ++		const char *date = show_date(timestamp, tz, DATE_MODE(NORMAL));
-     ++
-     ++		strbuf_add(&name, ident.name_begin,
-     ++			   ident.name_end - ident.name_begin);
-     ++		strbuf_add(&mail, ident.mail_begin,
-     ++			   ident.mail_end - ident.mail_begin);
-     ++		entry->committer = xstrdup(fmt_ident(name.buf, mail.buf,
-     ++						     WANT_BLANK_IDENT, date, 0));
-     ++		strbuf_release(&name);
-     ++		strbuf_release(&mail);
-     ++	}
-      +
-     -+	return data->nr >= data->want;
-     ++	data->nr++;
-     ++	return 0;
-      +}
-      +
-      +static int parse_stash_index(const char *revision, size_t *idx)
-     @@ builtin/stash.c: out:
-      +	return 0;
-      +}
-      +
-     -+static int store_rename_entry(struct rename_entry *entry, const char *msg)
-     ++static int do_reword_stash(struct stash_info *info, size_t idx,
-     ++			   const char *reworded_msg, int quiet)
-      +{
-     -+	if (!do_store_stash(&entry->oid, msg, 1))
-     -+		return 0;
-     -+	warning(_("could not restore stash entry %s; "
-     -+		  "recover it with 'git stash store %s'"),
-     -+		oid_to_hex(&entry->oid), oid_to_hex(&entry->oid));
-     -+	return -1;
-     -+}
-     -+
-     -+static int do_rename_stash(struct stash_info *info, size_t idx,
-     -+			   const char *msg, int quiet)
-     -+{
-     -+	struct rename_data data = { .want = idx + 1 };
-     -+	size_t i, missing = 0;
-     ++	struct ref_store *refs = get_main_ref_store(the_repository);
-     ++	struct ref_transaction *transaction = NULL;
-     ++	struct reword_data data = { 0 };
-     ++	struct strbuf err = STRBUF_INIT;
-     ++	uint64_t index = 0;
-     ++	size_t i;
-      +	int ret = -1;
-      +
-     -+	refs_for_each_reflog_ent_reverse(get_main_ref_store(the_repository),
-     -+					 ref_stash, collect_rename_entries,
-     -+					 &data);
-     ++	refs_for_each_reflog_ent_reverse(refs, ref_stash,
-     ++					 collect_reword_entries, &data);
-      +	if (data.nr <= idx) {
-      +		error(_("%s does not exist"), info->revision.buf);
-      +		goto cleanup;
-      +	}
-      +
-     -+	if (!oideq(&info->w_commit, &data.entries[idx].oid)) {
-     ++	if (!oideq(&info->w_commit, &data.entries[idx].new_oid)) {
-      +		error(_("%s changed concurrently; try again"),
-      +		      info->revision.buf);
-      +		goto cleanup;
-      +	}
-      +
-     -+	/* refuse up front; do_store_stash() would die halfway through */
-     -+	for (i = 0; i < data.nr; i++) {
-     ++	for (i = 0; i <= idx; i++) {
-      +		struct commit *stash = lookup_commit_reference(the_repository,
-     -+							       &data.entries[i].oid);
-     ++							       &data.entries[i].new_oid);
-      +
-      +		if (!stash || check_stash_topology(the_repository, stash)) {
-      +			error(_("%s does not look like a stash commit"),
-     -+			      oid_to_hex(&data.entries[i].oid));
-     ++			      oid_to_hex(&data.entries[i].new_oid));
-      +			goto cleanup;
-      +		}
-      +	}
-      +
-     -+	while (missing <= idx) {
-     -+		if (drop_reflog_entry("stash@{0}"))
-     -+			goto restore;
-     -+		missing++;
-     ++	if (refs_delete_reflog(refs, ref_stash)) {
-     ++		error(_("could not rewrite %s"), ref_stash);
-     ++		goto cleanup;
-      +	}
-      +
-     -+	ret = 0;
-     -+	while (missing) {
-     -+		i = missing - 1;
-     -+		if (store_rename_entry(&data.entries[i],
-     -+				       i == idx ? msg : data.entries[i].msg))
-     -+			ret = -1;
-     -+		missing--;
-     ++	transaction = ref_store_transaction_begin(refs, 0, &err);
-     ++	if (!transaction)
-     ++		goto restore;
-     ++
-     ++	for (i = data.nr; i-- > 0; ) {
-     ++		if (ref_transaction_update_reflog(transaction, ref_stash,
-     ++						  &data.entries[i].new_oid,
-     ++						  &data.entries[i].old_oid,
-     ++						  data.entries[i].committer,
-     ++						  i == idx ? reworded_msg :
-     ++							     data.entries[i].msg,
-     ++						  index++, &err))
-     ++			goto restore;
-      +	}
-      +
-     -+	if (!ret && !quiet)
-     -+		printf_ln(_("Renamed %s (%s)"), info->revision.buf,
-     -+			  oid_to_hex(&data.entries[idx].oid));
-     ++	if (ref_transaction_commit(transaction, &err))
-     ++		goto restore;
-     ++
-     ++	ret = 0;
-     ++	if (!quiet)
-     ++		printf_ln(_("Reworded %s (%s)"), info->revision.buf,
-     ++			  oid_to_hex(&data.entries[idx].new_oid));
-      +	goto cleanup;
-      +
-      +restore:
-     -+	/* dropping failed midway; put the dropped entries back */
-     -+	while (missing) {
-     -+		store_rename_entry(&data.entries[missing - 1],
-     -+				   data.entries[missing - 1].msg);
-     -+		missing--;
-     -+	}
-     ++	if (err.len)
-     ++		error("%s", err.buf);
-     ++	ref_transaction_free(transaction);
-     ++	transaction = NULL;
-     ++	for (i = data.nr; i-- > 0; )
-     ++		if (do_store_stash(&data.entries[i].new_oid,
-     ++				   data.entries[i].msg, 1))
-     ++			warning(_("could not restore stash entry %s; "
-     ++				  "recover it with 'git stash store %s'"),
-     ++				oid_to_hex(&data.entries[i].new_oid),
-     ++				oid_to_hex(&data.entries[i].new_oid));
-      +cleanup:
-     -+	for (i = 0; i < data.nr; i++)
-     ++	ref_transaction_free(transaction);
-     ++	strbuf_release(&err);
-     ++	for (i = 0; i < data.nr; i++) {
-     ++		free(data.entries[i].committer);
-      +		free(data.entries[i].msg);
-     ++	}
-      +	free(data.entries);
-      +	return ret;
-      +}
-      +
-     -+static int rename_stash(int argc, const char **argv, const char *prefix,
-     ++static int reword_stash(int argc, const char **argv, const char *prefix,
-      +			struct repository *repo UNUSED)
-      +{
-      +	int ret = -1;
-     @@ builtin/stash.c: out:
-      +	};
-      +
-      +	argc = parse_options(argc, argv, prefix, options,
-     -+			     git_stash_rename_usage, 0);
-     ++			     git_stash_reword_usage, 0);
-      +
-      +	if (!argc)
-     -+		usage_with_options(git_stash_rename_usage, options);
-     ++		usage_with_options(git_stash_reword_usage, options);
-      +
-      +	if (!argv[0][strspn(argv[0], " \t\r\n")]) {
-      +		ret = error(_("stash message cannot be empty"));
-     @@ builtin/stash.c: out:
-      +	if (get_stash_info_assert(&info, argc - 1, argv + 1))
-      +		goto cleanup;
-      +
-     -+	/* positions must stay stable across the drop-and-store sequence */
-      +	if (parse_stash_index(info.revision.buf, &idx)) {
-     -+		error(_("cannot rename '%s': name the entry by index, "
-     ++		error(_("cannot reword '%s': name the entry by index, "
-      +			"like 'stash@{1}'"), info.revision.buf);
-      +		goto cleanup;
-      +	}
-      +
-     -+	ret = do_rename_stash(&info, idx, argv[0], quiet);
-     ++	ret = do_reword_stash(&info, idx, argv[0], quiet);
-      +cleanup:
-      +	free_stash_info(&info);
-      +	return ret;
-     @@ builtin/stash.c: int cmd_stash(int argc,
-       		OPT_SUBCOMMAND("push", &fn, push_stash_unassumed),
-       		OPT_SUBCOMMAND("export", &fn, export_stash),
-       		OPT_SUBCOMMAND("import", &fn, import_stash),
-     -+		OPT_SUBCOMMAND("rename", &fn, rename_stash),
-     ++		OPT_SUBCOMMAND("reword", &fn, reword_stash),
-       		OPT_SUBCOMMAND_F("save", &fn, save_stash, PARSE_OPT_NOCOMPLETE),
-       		OPT_END()
-       	};
-     @@ contrib/completion/git-completion.bash: _git_sparse_checkout ()
-       _git_stash ()
-       {
-      -	local subcommands='push list show apply clear drop pop create branch import export'
-     -+	local subcommands='push list show apply clear drop pop create branch import export rename'
-     ++	local subcommands='push list show apply clear drop pop create branch import export reword'
-       	local subcommand="$(__git_find_on_cmdline "$subcommands save")"
-       
-       	if [ -z "$subcommand" ]; then
-     @@ contrib/completion/git-completion.bash: _git_stash ()
-       		__git_complete_refs
-       		;;
-      -	show,*|apply,*|drop,*|pop,*|export,*)
-     -+	show,*|apply,*|drop,*|pop,*|export,*|rename,*)
-     ++	show,*|apply,*|drop,*|pop,*|export,*|reword,*)
-       		__gitcomp_nl "$(__git stash list \
-       				| sed -n -e 's/:.*//p')"
-       		;;
-     @@ t/t3903-stash.sh: test_expect_success 'stash show --include-untracked includes u
-       	test_grep "untracked" actual
-       '
-       
-     -+test_expect_success 'rename a stash entry' '
-     ++test_expect_success 'reword a stash entry' '
-      +	git stash clear &&
-     -+	>file-to-rename &&
-     -+	git add file-to-rename &&
-     ++	>file-to-reword &&
-     ++	git add file-to-reword &&
-      +	git stash push -m "original message" &&
-     -+	git stash rename "new message" stash@{0} >out &&
-     -+	test_grep "Renamed stash@{0}" out &&
-     ++	git stash reword "new message" stash@{0} >out &&
-     ++	test_grep "Reworded stash@{0}" out &&
-      +	git stash list >list &&
-      +	test_grep "stash@{0}: new message" list &&
-      +	test_grep ! "original message" list
-      +'
-      +
-     -+test_expect_success 'rename defaults to the latest stash entry' '
-     -+	git stash rename "default target" >out &&
-     -+	test_grep "Renamed refs/stash@{0}" out &&
-     ++test_expect_success 'reword defaults to the latest stash entry' '
-     ++	git stash reword "default target" >out &&
-     ++	test_grep "Reworded refs/stash@{0}" out &&
-      +	git stash list >list &&
-      +	test_grep "stash@{0}: default target" list
-      +'
-      +
-     -+test_expect_success 'rename a deeper stash entry keeps positions and states' '
-     ++test_expect_success 'reword a deeper stash entry keeps positions and states' '
-      +	git stash clear &&
-      +	for i in 1 2 3
-      +	do
-     @@ t/t3903-stash.sh: test_expect_success 'stash show --include-untracked includes u
-      +		git stash push -m "message $i" || return 1
-      +	done &&
-      +	git rev-parse stash@{0} stash@{1} stash@{2} >expect &&
-     -+	git stash rename "renamed middle" stash@{1} &&
-     ++	git stash reword "reworded middle" stash@{1} &&
-      +	git rev-parse stash@{0} stash@{1} stash@{2} >actual &&
-      +	test_cmp expect actual &&
-      +	git stash list >list &&
-      +	test_grep "stash@{0}: On.*message 3" list &&
-     -+	test_grep "stash@{1}: renamed middle" list &&
-     ++	test_grep "stash@{1}: reworded middle" list &&
-      +	test_grep "stash@{2}: On.*message 1" list
-      +'
-      +
-     -+test_expect_success 'rename the deepest stash entry' '
-     ++test_expect_success 'reword the deepest stash entry' '
-      +	git rev-parse stash@{0} stash@{1} stash@{2} >expect &&
-     -+	git stash rename "renamed deepest" stash@{2} &&
-     ++	git stash reword "reworded deepest" stash@{2} &&
-      +	git rev-parse stash@{0} stash@{1} stash@{2} >actual &&
-      +	test_cmp expect actual &&
-      +	git stash list >list &&
-     -+	test_grep "stash@{2}: renamed deepest" list
-     ++	test_grep "stash@{2}: reworded deepest" list
-      +'
-      +
-     -+test_expect_success 'rename accepts a bare index and honors --quiet' '
-     -+	git stash rename -q "quietly renamed" 1 >out &&
-     ++test_expect_success 'reword accepts a bare index and honors --quiet' '
-     ++	git stash reword -q "quietly reworded" 1 >out &&
-      +	test_must_be_empty out &&
-      +	git stash list >list &&
-     -+	test_grep "stash@{1}: quietly renamed" list
-     ++	test_grep "stash@{1}: quietly reworded" list
-      +'
-      +
-     -+test_expect_success 'rename rejects bad arguments' '
-     -+	test_must_fail git stash rename "no such entry" stash@{99} &&
-     -+	test_must_fail git stash rename "" &&
-     -+	test_must_fail git stash rename "   " &&
-     -+	test_must_fail git stash rename "not a stash" HEAD &&
-     -+	test_must_fail git stash rename "not an index" "stash@{now}" &&
-     -+	test_expect_code 129 git stash rename &&
-     ++test_expect_success 'reword rejects bad arguments' '
-     ++	test_must_fail git stash reword "no such entry" stash@{99} &&
-     ++	test_must_fail git stash reword "" &&
-     ++	test_must_fail git stash reword "   " &&
-     ++	test_must_fail git stash reword "not a stash" HEAD &&
-     ++	test_must_fail git stash reword "not an index" "stash@{now}" &&
-     ++	test_expect_code 129 git stash reword &&
-      +	git stash list >list &&
-     -+	test_grep "stash@{1}: quietly renamed" list
-     ++	test_grep "stash@{1}: quietly reworded" list
-      +'
-      +
-     -+test_expect_success 'rename refuses to rewrite a non-stash reflog entry' '
-     ++test_expect_success 'reword refuses to rewrite a non-stash reflog entry' '
-      +	git stash clear &&
-      +	>real-a &&
-      +	git add real-a &&
-     @@ t/t3903-stash.sh: test_expect_success 'stash show --include-untracked includes u
-      +	git add real-b &&
-      +	git stash push -m "real B" &&
-      +	git stash list >expect &&
-     -+	test_must_fail git stash rename "renamed A" stash@{2} &&
-     ++	test_must_fail git stash reword "reworded A" stash@{2} &&
-      +	git stash list >actual &&
-      +	test_cmp expect actual
-      +'
-
-
- Documentation/git-stash.adoc           |  10 +-
- builtin/stash.c                        | 201 +++++++++++++++++++++++++
- contrib/completion/git-completion.bash |   4 +-
- t/t3903-stash.sh                       |  79 ++++++++++
- 4 files changed, 290 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
-index 50bb89f483..16a2a015f3 100644
---- a/Documentation/git-stash.adoc
-+++ b/Documentation/git-stash.adoc
-@@ -25,6 +25,7 @@ git stash create [<message>]
- git stash store [(-m | --message) <message>] [-q | --quiet] <commit>
- git stash export (--print | --to-ref <ref>) [<stash>...]
- git stash import <commit>
-+git stash reword [-q | --quiet] <message> [<stash>]
- 
- DESCRIPTION
- -----------
-@@ -163,6 +164,11 @@ with no conflicts.
- 	created by `export`, and add them to the list of stashes.  To replace the
- 	existing stashes, use `clear` first.
- 
-+`reword [-q | --quiet] <message> [<stash>]`::
-+	Change the message of a single stash entry.  The entry keeps its
-+	position, its contents and its reflog timestamp.  _<stash>_ must
-+	name an entry by index (e.g. `stash@{1}`).
-+
- OPTIONS
- -------
- `-a`::
-@@ -258,7 +264,7 @@ literally (including newlines and quotes).
- `-q`::
- `--quiet`::
- 	This option is only valid for `apply`, `drop`, `pop`, `push`,
--	`save`, `store` commands.
-+	`reword`, `save`, `store` commands.
- +
- Quiet, suppress feedback messages.
- 
-@@ -292,7 +298,7 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
- 
- _<stash>_::
- 	This option is only valid for `apply`, `branch`, `drop`, `pop`,
--	`show`, and `export` commands.
-+	`show`, `export`, and `reword` commands.
- +
- A reference of the form `stash@{<revision>}`. When no _<stash>_ is
- given, the latest stash is assumed (that is, `stash@{0}`).
-diff --git a/builtin/stash.c b/builtin/stash.c
-index c4809f299a..61471cf510 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -4,9 +4,11 @@
- #include "abspath.h"
- #include "config.h"
- #include "environment.h"
-+#include "date.h"
- #include "gettext.h"
- #include "hash.h"
- #include "hex.h"
-+#include "ident.h"
- #include "object-name.h"
- #include "parse-options.h"
- #include "refs.h"
-@@ -63,6 +65,8 @@
- 	N_("git stash export (--print | --to-ref <ref>) [<stash>...]")
- #define BUILTIN_STASH_IMPORT_USAGE \
- 	N_("git stash import <commit>")
-+#define BUILTIN_STASH_REWORD_USAGE \
-+	N_("git stash reword [-q | --quiet] <message> [<stash>]")
- #define BUILTIN_STASH_CLEAR_USAGE \
- 	"git stash clear"
- 
-@@ -80,6 +84,7 @@ static const char * const git_stash_usage[] = {
- 	BUILTIN_STASH_STORE_USAGE,
- 	BUILTIN_STASH_EXPORT_USAGE,
- 	BUILTIN_STASH_IMPORT_USAGE,
-+	BUILTIN_STASH_REWORD_USAGE,
- 	NULL
- };
- 
-@@ -143,6 +148,11 @@ static const char * const git_stash_import_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_reword_usage[] = {
-+	BUILTIN_STASH_REWORD_USAGE,
-+	NULL
-+};
-+
- static const char ref_stash[] = "refs/stash";
- static struct strbuf stash_index_path = STRBUF_INIT;
- 
-@@ -1190,6 +1200,196 @@ out:
- 	return ret;
- }
- 
-+struct reword_entry {
-+	struct object_id old_oid;
-+	struct object_id new_oid;
-+	char *committer;
-+	char *msg;
-+};
-+
-+struct reword_data {
-+	struct reword_entry *entries;
-+	size_t nr, alloc;
-+};
-+
-+static int collect_reword_entries(const char *refname UNUSED,
-+				  struct object_id *old_oid,
-+				  struct object_id *new_oid,
-+				  const char *committer,
-+				  timestamp_t timestamp,
-+				  int tz, const char *msg,
-+				  void *cb_data)
-+{
-+	struct reword_data *data = cb_data;
-+	const char *eol = strchrnul(msg, '\n');
-+	struct reword_entry *entry;
-+	struct ident_split ident;
-+
-+	ALLOC_GROW(data->entries, data->nr + 1, data->alloc);
-+	entry = &data->entries[data->nr];
-+	oidcpy(&entry->old_oid, old_oid);
-+	oidcpy(&entry->new_oid, new_oid);
-+	entry->msg = xstrndup(msg, eol - msg);
-+
-+	if (split_ident_line(&ident, committer, strlen(committer)) < 0) {
-+		entry->committer = xstrdup(committer);
-+	} else {
-+		struct strbuf name = STRBUF_INIT, mail = STRBUF_INIT;
-+		const char *date = show_date(timestamp, tz, DATE_MODE(NORMAL));
-+
-+		strbuf_add(&name, ident.name_begin,
-+			   ident.name_end - ident.name_begin);
-+		strbuf_add(&mail, ident.mail_begin,
-+			   ident.mail_end - ident.mail_begin);
-+		entry->committer = xstrdup(fmt_ident(name.buf, mail.buf,
-+						     WANT_BLANK_IDENT, date, 0));
-+		strbuf_release(&name);
-+		strbuf_release(&mail);
-+	}
-+
-+	data->nr++;
-+	return 0;
-+}
-+
-+static int parse_stash_index(const char *revision, size_t *idx)
-+{
-+	const char *num = strstr(revision, "@{");
-+	char *end;
-+
-+	if (!num || !isdigit(num[2]))
-+		return -1;
-+	*idx = strtoumax(num + 2, &end, 10);
-+	if (*end != '}' || end[1])
-+		return -1;
-+
-+	return 0;
-+}
-+
-+static int do_reword_stash(struct stash_info *info, size_t idx,
-+			   const char *reworded_msg, int quiet)
-+{
-+	struct ref_store *refs = get_main_ref_store(the_repository);
-+	struct ref_transaction *transaction = NULL;
-+	struct reword_data data = { 0 };
-+	struct strbuf err = STRBUF_INIT;
-+	uint64_t index = 0;
-+	size_t i;
-+	int ret = -1;
-+
-+	refs_for_each_reflog_ent_reverse(refs, ref_stash,
-+					 collect_reword_entries, &data);
-+	if (data.nr <= idx) {
-+		error(_("%s does not exist"), info->revision.buf);
-+		goto cleanup;
-+	}
-+
-+	if (!oideq(&info->w_commit, &data.entries[idx].new_oid)) {
-+		error(_("%s changed concurrently; try again"),
-+		      info->revision.buf);
-+		goto cleanup;
-+	}
-+
-+	for (i = 0; i <= idx; i++) {
-+		struct commit *stash = lookup_commit_reference(the_repository,
-+							       &data.entries[i].new_oid);
-+
-+		if (!stash || check_stash_topology(the_repository, stash)) {
-+			error(_("%s does not look like a stash commit"),
-+			      oid_to_hex(&data.entries[i].new_oid));
-+			goto cleanup;
-+		}
-+	}
-+
-+	if (refs_delete_reflog(refs, ref_stash)) {
-+		error(_("could not rewrite %s"), ref_stash);
-+		goto cleanup;
-+	}
-+
-+	transaction = ref_store_transaction_begin(refs, 0, &err);
-+	if (!transaction)
-+		goto restore;
-+
-+	for (i = data.nr; i-- > 0; ) {
-+		if (ref_transaction_update_reflog(transaction, ref_stash,
-+						  &data.entries[i].new_oid,
-+						  &data.entries[i].old_oid,
-+						  data.entries[i].committer,
-+						  i == idx ? reworded_msg :
-+							     data.entries[i].msg,
-+						  index++, &err))
-+			goto restore;
-+	}
-+
-+	if (ref_transaction_commit(transaction, &err))
-+		goto restore;
-+
-+	ret = 0;
-+	if (!quiet)
-+		printf_ln(_("Reworded %s (%s)"), info->revision.buf,
-+			  oid_to_hex(&data.entries[idx].new_oid));
-+	goto cleanup;
-+
-+restore:
-+	if (err.len)
-+		error("%s", err.buf);
-+	ref_transaction_free(transaction);
-+	transaction = NULL;
-+	for (i = data.nr; i-- > 0; )
-+		if (do_store_stash(&data.entries[i].new_oid,
-+				   data.entries[i].msg, 1))
-+			warning(_("could not restore stash entry %s; "
-+				  "recover it with 'git stash store %s'"),
-+				oid_to_hex(&data.entries[i].new_oid),
-+				oid_to_hex(&data.entries[i].new_oid));
-+cleanup:
-+	ref_transaction_free(transaction);
-+	strbuf_release(&err);
-+	for (i = 0; i < data.nr; i++) {
-+		free(data.entries[i].committer);
-+		free(data.entries[i].msg);
-+	}
-+	free(data.entries);
-+	return ret;
-+}
-+
-+static int reword_stash(int argc, const char **argv, const char *prefix,
-+			struct repository *repo UNUSED)
-+{
-+	int ret = -1;
-+	int quiet = 0;
-+	size_t idx;
-+	struct stash_info info = STASH_INFO_INIT;
-+	struct option options[] = {
-+		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_reword_usage, 0);
-+
-+	if (!argc)
-+		usage_with_options(git_stash_reword_usage, options);
-+
-+	if (!argv[0][strspn(argv[0], " \t\r\n")]) {
-+		ret = error(_("stash message cannot be empty"));
-+		goto cleanup;
-+	}
-+
-+	if (get_stash_info_assert(&info, argc - 1, argv + 1))
-+		goto cleanup;
-+
-+	if (parse_stash_index(info.revision.buf, &idx)) {
-+		error(_("cannot reword '%s': name the entry by index, "
-+			"like 'stash@{1}'"), info.revision.buf);
-+		goto cleanup;
-+	}
-+
-+	ret = do_reword_stash(&info, idx, argv[0], quiet);
-+cleanup:
-+	free_stash_info(&info);
-+	return ret;
-+}
-+
- static void add_pathspecs(struct strvec *args,
- 			  const struct pathspec *ps) {
- 	int i;
-@@ -2472,6 +2672,7 @@ int cmd_stash(int argc,
- 		OPT_SUBCOMMAND("push", &fn, push_stash_unassumed),
- 		OPT_SUBCOMMAND("export", &fn, export_stash),
- 		OPT_SUBCOMMAND("import", &fn, import_stash),
-+		OPT_SUBCOMMAND("reword", &fn, reword_stash),
- 		OPT_SUBCOMMAND_F("save", &fn, save_stash, PARSE_OPT_NOCOMPLETE),
- 		OPT_END()
- 	};
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e875787710..261c6bf101 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3465,7 +3465,7 @@ _git_sparse_checkout ()
- 
- _git_stash ()
- {
--	local subcommands='push list show apply clear drop pop create branch import export'
-+	local subcommands='push list show apply clear drop pop create branch import export reword'
- 	local subcommand="$(__git_find_on_cmdline "$subcommands save")"
- 
- 	if [ -z "$subcommand" ]; then
-@@ -3508,7 +3508,7 @@ _git_stash ()
- 	import,*)
- 		__git_complete_refs
- 		;;
--	show,*|apply,*|drop,*|pop,*|export,*)
-+	show,*|apply,*|drop,*|pop,*|export,*|reword,*)
- 		__gitcomp_nl "$(__git stash list \
- 				| sed -n -e 's/:.*//p')"
- 		;;
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index ecc35aae82..07fbbddac8 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1831,4 +1831,83 @@ test_expect_success 'stash show --include-untracked includes untracked files' '
- 	test_grep "untracked" actual
- '
- 
-+test_expect_success 'reword a stash entry' '
-+	git stash clear &&
-+	>file-to-reword &&
-+	git add file-to-reword &&
-+	git stash push -m "original message" &&
-+	git stash reword "new message" stash@{0} >out &&
-+	test_grep "Reworded stash@{0}" out &&
-+	git stash list >list &&
-+	test_grep "stash@{0}: new message" list &&
-+	test_grep ! "original message" list
-+'
-+
-+test_expect_success 'reword defaults to the latest stash entry' '
-+	git stash reword "default target" >out &&
-+	test_grep "Reworded refs/stash@{0}" out &&
-+	git stash list >list &&
-+	test_grep "stash@{0}: default target" list
-+'
-+
-+test_expect_success 'reword a deeper stash entry keeps positions and states' '
-+	git stash clear &&
-+	for i in 1 2 3
-+	do
-+		>file$i &&
-+		git add file$i &&
-+		git stash push -m "message $i" || return 1
-+	done &&
-+	git rev-parse stash@{0} stash@{1} stash@{2} >expect &&
-+	git stash reword "reworded middle" stash@{1} &&
-+	git rev-parse stash@{0} stash@{1} stash@{2} >actual &&
-+	test_cmp expect actual &&
-+	git stash list >list &&
-+	test_grep "stash@{0}: On.*message 3" list &&
-+	test_grep "stash@{1}: reworded middle" list &&
-+	test_grep "stash@{2}: On.*message 1" list
-+'
-+
-+test_expect_success 'reword the deepest stash entry' '
-+	git rev-parse stash@{0} stash@{1} stash@{2} >expect &&
-+	git stash reword "reworded deepest" stash@{2} &&
-+	git rev-parse stash@{0} stash@{1} stash@{2} >actual &&
-+	test_cmp expect actual &&
-+	git stash list >list &&
-+	test_grep "stash@{2}: reworded deepest" list
-+'
-+
-+test_expect_success 'reword accepts a bare index and honors --quiet' '
-+	git stash reword -q "quietly reworded" 1 >out &&
-+	test_must_be_empty out &&
-+	git stash list >list &&
-+	test_grep "stash@{1}: quietly reworded" list
-+'
-+
-+test_expect_success 'reword rejects bad arguments' '
-+	test_must_fail git stash reword "no such entry" stash@{99} &&
-+	test_must_fail git stash reword "" &&
-+	test_must_fail git stash reword "   " &&
-+	test_must_fail git stash reword "not a stash" HEAD &&
-+	test_must_fail git stash reword "not an index" "stash@{now}" &&
-+	test_expect_code 129 git stash reword &&
-+	git stash list >list &&
-+	test_grep "stash@{1}: quietly reworded" list
-+'
-+
-+test_expect_success 'reword refuses to rewrite a non-stash reflog entry' '
-+	git stash clear &&
-+	>real-a &&
-+	git add real-a &&
-+	git stash push -m "real A" &&
-+	git update-ref -m junk --create-reflog refs/stash HEAD &&
-+	>real-b &&
-+	git add real-b &&
-+	git stash push -m "real B" &&
-+	git stash list >expect &&
-+	test_must_fail git stash reword "reworded A" stash@{2} &&
-+	git stash list >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-
-base-commit: 55526a18268bbc1ddaf8a6b7850c33d984eac9e9
--- 
-gitgitgadget
