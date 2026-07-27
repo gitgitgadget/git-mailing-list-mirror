@@ -1,115 +1,108 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EE918A6CF
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 04:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785124947; cv=none; b=sZ4S+zE5jcJCVCc/987M+IQdUQi9ebGKXBivmO0KSHio1poV5GR8JcCmiZ4knhw/kyUG0YG6/o4k3PXuKYAfMp6TA9hqLis6+uwlpiGSmppoyRKlUo45Gl2NV6KFT/H6VYNAY+Mh08/PZpw2SZnuY+gVNI8h1rkhYxGXU2r9tRo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785124947; c=relaxed/simple;
-	bh=QSaEBqlfcgM3LOckcYqfU45Fvv4rqJdOzf+A5KGlKhU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TfzccelC+vSufLCi16U9su3QbYhBcoJ6eybp6Fyxolm8t76GVI5oghvaqmxNdaIXJiZBc+FYeBikPj8MbvGvLhE+nwez7dH4p8YgvLDXfVZeUqc1XOUKgOfD4vZg6k7lchPrT9zNfI1imgwZI0O6v0WI4O+muLyQ2dS95OLVge4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L20+xJ89; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IjkGb6IG; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF9263B9
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 05:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785128648; cv=pass; b=Vf9FXe5UN/jI8hb0vJMByWLIfuUgN3pPuAt+xN8qQjClMm8eyN68nPEQ63YayIqpRAEOac1MHwIwWs0AD/X+38/QOdZaGCmAS801aiCVU2teC+qWn+OCPrnzfUYMpNv/526Hts/07KcMHwHheqUAO8ByGK7lHA2tVERVa+QpC8Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785128648; c=relaxed/simple;
+	bh=N5rLXWrkt8rMixy7usRXhAg/zRlRR4eMjZiT9tnG1as=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hud/9NXgulkMiUT7Yff1JHQx/vaiyy9LogexqYDdki9uy85rV8eHMUtRuTXeBwHpx8xEn0kJz5fKLkDv7rzDjgsQmk3weG4Zsh9tpTr5Tvb0rNvHNwUpYgpGQiFHZRY4Al1ESnpdjggtFKuRXNTCOeEvrNN3/vMgQV+8EOY2mJI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AGi0wMOF; arc=pass smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L20+xJ89";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IjkGb6IG"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 951D07A0256;
-	Mon, 27 Jul 2026 00:02:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 27 Jul 2026 00:02:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785124945; x=1785211345; bh=wSADh9LAxS
-	Rg3mS5lsWkV3f/v/QlFQYnRaOdXWiRDfI=; b=L20+xJ894TJgiT1M5nZRsV9eGs
-	Ub0syp5V+AApzxns+t4+ThOJYiw0jbBJbO/d05FDcwM45XmXALej5Iw0aiKhckBP
-	z3YhQDtv2y9PUs1t2pwRShWA412MYC/O7xze6lViuBqE+ECbfy0QBMEzPxMw+8rA
-	u0PeJwUd3PN4jzkMsal4zGsq2/ufPeLAcZrLHQ+XnmnJRhpXNS16YXuWZ1NqCFw1
-	NcK7hkenaG2RKuHBhC6UxzLkddoVk+nerKRKLUqWTgiDa73RK2YHiOZoO9cZG/qg
-	MZBcVDhH+kpQB2Defe3MqgeWrCCXZQ6vJkZdQQAFIa1sEg4VAWchexKEPQ9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785124945; x=1785211345; bh=wSADh9LAxSRg3mS5lsWkV3f/v/QlFQYnRaO
-	dXWiRDfI=; b=IjkGb6IGFyN1NBIG6czbSs7HqkzNbyZij8J16RU1HO6jXT3JZg2
-	FlLKO7HbicQbIhuFi0gkM8w1XYdoumfjNBjruWMOw9y76izXIxDlcXoDrpPiAO7p
-	7Rn5H4Le58XUZAOmKm2hHo41Lxn+qKS8ZJqVHwE+kl27XeDLjcbTvgRKngL4AJqe
-	0va+a1fetwjuY6HY+h3r2mT9lZJ0HimOmV8AqQSsF06CmSo5Dl/2tFJPkIugSrGz
-	TtsdH6mOEtDJMG1DxiCGZuL9mpwhrKFI9NLqzMqY4BsHfbXJdd7WPGnESJ+CMc0x
-	k9GDT6R9ygB7HlxgTV+nx6zVIWHoH4crF6A==
-X-ME-Sender: <xms:UdhmauSr20KzlAq0nqzDLmNnj-YCCcL2qfYj61O5NebEEFqS1QLFlg>
-    <xme:UdhmaqruUx1B_fOqvdvHS_P57fQsbZ-sF7Fpchn98fTNZF2Ns2ZvQn_BrKONINJes
-    Sek__rpJzJM9BXoKTttezeZh-UipFiIihihpEP32N6h89fnE5EnIg>
-X-ME-Received: <xmr:UdhmakLt8_gH_CgYLe-s3vBfFF5am3YD5S-7bB6V8-TZnHP_U83mYKUMXpO3ZpDbTwksiY6QVuA3gvzQH5BxN8CMvPK86Qlqtg>
-X-ME-Proxy-Cause: dmFkZTELC9PZFQwf3Ft0sc6GSHlLmRfzAIlouNmD6RFnfXygqfL0ilWdd6Vq9myN48tw/0
-    +0TWbJlJZ6/xdkNlrtIQFM1m89r98j4JOFteQOuQn7auUOyC6iRXChknVPr1M6Sd2ei4s2
-    xq+WNxZyTLsPD5NmnHnAskB6VNOqX942Bua0LuBf+/ep65MR0OmWyU0DZEMaElOr3YOsoI
-    BupTrOj5JxMOce+03tDTJa+erj+kbTuaWaEWOaSngWIi80E5vg22JF0Fd0/2TaGx6/KrB8
-    Gs9lyyEZjVlEcqrabsAyiot4ytmDgoxNerPOWeLfxI1fZLbxXd2FuKNBIRy2hr6B6ufhZD
-    z848y7UxPaA0/SYhpA/UVSFy7qQahWSwVnjHQAoA4njWyt0vpur8u541FieHE0f0Ps/4ZZ
-    8r1HijlPOugJiBRr6t3FMtHCdoCOYec9LRJTQD45d+0BuKvVyrhq5mAbAkkZxA5OI5Mumq
-    MvnnfUiMkb+AR7svlRkgHCMAUbxrcwF+peceyXxKCoke1KrTJHoxUAK5CcOLHLoFqv5kMh
-    VI/o30SfyGnL3aqZ0keve00Ef8yLOglvfdNofRmRJaLJQq9yOfQ3jHyLQK2CVe3WVUG4iI
-    etejCYRmxeGhqH1JISB5kaU/40L0jJ0QfUbWUDgpQ199SZgHrx0axvTpL20w
-X-ME-Proxy: <xmx:Udhmalp7fqEmHH-Lp56IeujZeOl8K5u_MohHTFo8NZUQV16p9r4N5w>
-    <xmx:Udhmakweu10EZZg7GmqE0AQ38GwAnD3GdF3nsfXuiuhD92ssWTxrsA>
-    <xmx:UdhmahOI8N9C261Mi_PgYRVG9CtfMI33CawOCDlZEJ-PYFKS13jwuw>
-    <xmx:Udhmah5KaLViXiYKQiLYolW5mFWUcm6dKQ1PjIWMOSRdixD2GS3hYA>
-    <xmx:UdhmarFk-CXpPrs6nAq2oTNBnsrxbjld4dwId9MfBhsvi6Uu0UP_Q2Gu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jul 2026 00:02:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Hardik Kumar <hardikxk@gmail.com>
-Cc: git@vger.kernel.org,  l.s.r@web.de,  pabloosabaterr@gmail.com
-Subject: Re: [PATCH v2] utf8: use size_t for string width methods and callee
- sites.
-In-Reply-To: <xmqqpl09s3cc.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-	26 Jul 2026 17:06:43 -0700")
-References: <DK8L6JM14UNS.16B15DIOFW1K5@gmail.com>
-	<20260726195718.1914131-1-hardikxk@gmail.com>
-	<xmqqpl09s3cc.fsf@gitster.g>
-Date: Sun, 26 Jul 2026 21:02:23 -0700
-Message-ID: <xmqqbjbtqdv4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AGi0wMOF"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4a4c6081f9fso392925b6e.3
+        for <git@vger.kernel.org>; Sun, 26 Jul 2026 22:04:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785128646; cv=none;
+        d=google.com; s=arc-20260327;
+        b=aVAg6kd6IImpCGQNYK9KjHQ3vZcpggLPqk5NjFCA+TAUW+88WyDSlRJKdJqsEmUdSu
+         wyhb7sfdu7JvpXmKZhSGujfejN+pEQdpgEhSyh71MQSsLnUpJgg6kjRcISq79WkOH07U
+         9+49FVbNi2N5GJFTRvVqBcBno5ZVkvcm/wCy4xgU+psdbYwlFuKwv2FtK2q5y0k7PYGa
+         qq6gsLHpBCNbVTd4xAFpCzMNGdK/7gCZwVsqpomDQC0CBHf6O2oaIDbNEstD4Ee1LOmH
+         Lnd0K++IhVp4TY65GE7Rs4TRZrgB6j5iz+1HCET4WpbdQedKSmJFlbA8YaU8YZgXj1dh
+         BoAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=N5rLXWrkt8rMixy7usRXhAg/zRlRR4eMjZiT9tnG1as=;
+        fh=14WwI+1R8fC5Gl/uZJcJLXlQcxWqfccFpWyCmnzn9HY=;
+        b=hO24mBT8az+kP87s9RPLxDIVLlVN53hnRDdUfxtm9NoYGhCrRjTpc3a7Xr705Cwoz3
+         DXEHPZch+LuPKCP6LcCK7/rXURik7y+QBY/aHIjflx1nXKtkb5+dU5XCSTuz3X5Wltdf
+         SwASCYTJMeMQ2XpFn2CnqBiFxHxAY284pTVD9/6rLGoezmwKsfsHKrLdTVktX2V17LVP
+         G+9DCtxDVPIh0WtbtieHmMq6Lg2b+Xw2HctGL5QYBwjaeO8/uXDqW8drkAEpLEBPPwL6
+         r0xAcSJbmnrzi6rPMd/M4WBVwKgtG0XrZlCc6KT2rzL8bo6B1Cd3XE/VmyhWm0ZHacIc
+         FDLw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785128646; x=1785733446; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=N5rLXWrkt8rMixy7usRXhAg/zRlRR4eMjZiT9tnG1as=;
+        b=AGi0wMOFUdkaMd5OL+ujWQCvSFwxg0u5mF/tMFq3HxM1qULn6SMA7gBNpoI5wQM7bf
+         hETLBQDwi9g+S2QwDq5KgRSpO+LnNaJmTRD14SF0g8DN57ZaWFWA7eXfeSvanyTefuxe
+         tdCKC8oixrvvrhVV5uem+tK8vqLmUJem9yvDs4Q0CXkg+3qgqVRugIDWlwChmtb3Gq+d
+         wdQh28XaYPEIgnGIQ4I6ul31Se4Ea6MVM9kAvR+mZ0Ma+32894eGHay5jf0DUWHgKUOJ
+         WqPsSCLobRY0VgdtYsBfDnqeXxya45gNLrZog5fcOk97bCPD0l1qSZZcUG122sK2onq1
+         tWeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785128646; x=1785733446;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=N5rLXWrkt8rMixy7usRXhAg/zRlRR4eMjZiT9tnG1as=;
+        b=A30+9B2EPVLUkdBKSN7uLf8+ShA2FWre8ZaiWi81mjjFl8QHZC+kKiY51ZrA6BTGCe
+         AkP/mmKmLrt30kQZ5hSv1y1/whs/nM+5lcUzw79YdccKAd6ihNFYSc/b0+CHc5huo2X3
+         XPusgEPRBMnhy9EOPC1W0g2q7yRzbJKRulexex8MnRIvTvdrsYhtbXct3oKUGkwMsE5U
+         AbrIci6BKUw3mfKAVsmQMYooLL4j2xZVYWXan7JNBzoG6qBlLj002H6jPp2depx0Kps7
+         Sme5Mb+E1/g8WMyjruVzTMWmCIHVZ6JkaxJ6TCjXrtnKnCk/Gbb7tvAslJjuIobrJrnN
+         vK2w==
+X-Gm-Message-State: AOJu0YzuJFAbJZO4l2j/ePjjPJOUGUh33csc9vzyhGLWw28FgNOBuMU6
+	swqsEuK5OWp8n20n2xD5X7OBdTTXaoxBZV+AeQq7OJoBfYJe2ywhEO/CyJvraBGJuBOgIY7zcoA
+	zbOkDbMUSlabvqOvecvrvEAK12xuXlbs=
+X-Gm-Gg: AR+sD10YoC5+ZeeUb45TKMCVylJ/00VJmnQ4yU4K55WfPRDEp2OJFODrG0G7tbwYIEY
+	ZC3ZbE8b2lwjUR9D+UNiCQnjrHc9irG4DB2FogUtj3H9zo0qgu3v1j2pq+m18RK05ugBUGkrJ/M
+	dH1VUJTcL5R2kWu8K9btz67x1l0QypjpKjzbIaV6zSUVpeGmSidaJSYvJlt20z0bdxER76RFNrT
+	hOaHtTsJdzoc45RrBYuJONEjwD8uVl+Q/kB9gF5vIy8x+vtv/Bshne4LoEzG2h9TQh51U0lrDDZ
+	WrXKz+wxfZA7iIpsBIQx+KOlUrx6gr3E14qpb4H0M4/yUDG+BVZMfTuCde7F7HgIm1hY63XwTdC
+	WPs/k6q4GLPVlNQ==
+X-Received: by 2002:a05:6808:23c3:b0:49a:1ada:53da with SMTP id
+ 5614622812f47-4ab6a34c23bmr7371366b6e.34.1785128646284; Sun, 26 Jul 2026
+ 22:04:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260717140232.6722-1-diy2903@gmail.com> <20260721065736.8747-1-diy2903@gmail.com>
+In-Reply-To: <20260721065736.8747-1-diy2903@gmail.com>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sun, 26 Jul 2026 22:03:54 -0700
+X-Gm-Features: AUfX_mzNsUR-iRWDeeL86YwurKFe1t14SZ7h0EB1jZVjonpfkbxL7IgIBtQKtRw
+Message-ID: <CAC2QwmK7HVma7HMxmXvC7qa4XQVomteC0x7PpX61MjpDLbvDzA@mail.gmail.com>
+Subject: Re: [PATCH v2] userdiff: add support for Swift
+To: Shlok Kulshreshtha <diy2903@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>, 
+	"D . Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Eric Sunshine <sunshine@sunshineco.com>, "Scott L . Burson" <Scott@sympoiesis.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jul 21, 2026 at 12:06=E2=80=AFAM Shlok Kulshreshtha <diy2903@gmail.=
+com> wrote:
+>
+> Add a built-in userdiff driver for the Swift programming language so that
+> diff hunk headers and word diffs work out of the box for ".swift" files.
+>
 
-> The goal looks attractive on the surface, and the change to make
-> utf8_strwidth() and utf8_strnwidth() return 'size_t' clears an
-> existing TODO.  However, the updates to the call sites to support
-> this change introduce several bugs due to unsigned integer underflow
-> and incorrect mixed-sign comparisons.
-
-Having said that, we need to remember that these two functions are
-not designed for anything more than what fits on a single line.  The
-only reason they exist in our codebase is because their callers want
-to measure the display width of a string, so that they can align
-elements on a line vertically with the corresponding elements on the
-previous and next lines.
-
-This does not mean we do not need to support more than 80 columns
-;-), but they surely do not have to support a 2-billion-column-wide
-display.
-
-Quite honestly, I have to say that this topic has a very low
-expected benefit in practice, while it costs us quite a lot by
-having to carefully code and even more carefully review.  If we have
-to endure so many new bugs in the callers just to clear an existing
-TODO, we might be better off not doing so and relying on the "safe
-cast from size_t down to int that barfs if the quantity does not fit
-in an int" protection.
+I noticed other languages add a test_language_driver entry to
+t/t4034-diff-words.sh with corresponding pre/post/expect
+fixtures. Should we add something similar for Swift?
