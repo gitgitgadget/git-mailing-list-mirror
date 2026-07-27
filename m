@@ -1,84 +1,109 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D095837E2E9
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 07:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68F02FFFBE
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 08:15:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785135883; cv=none; b=pBHT6bYe1RDYXE6mQlFvnklIPyhqyDusDLZfDwXEauQFpxpPqVczlrcsPwdR8ReIXsvj5PjoSMOcMfRnNjgPUp8l8QiSEYawmArqEDMT7ymp3tF1IdR7ZYu7x4u8jypSdCTbPbX+jFLqLUpQsnJ3jsZgTwqGxa5GxHX2DxgVTt0=
+	t=1785140147; cv=none; b=Ce9HS9tYZ5HVveSJjHtNykV13UHiE3jqOlMeYOFTEO+DHimmXTKz7FQf4jnEik8hMRltt57q8y7NOpWB0qo0RDGTY7DrSn75O/1wgoDo0+Rd3fML4XiDU4UEwz4R49woGzgohGnuBas/qxRBMmChGkacQaMVNQW0VC2uzmV9BPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785135883; c=relaxed/simple;
-	bh=PjRq7M7a0zm0XqX27aIAd1f3XZBtvP2TOM/JKUq/lms=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=S9wjOsRr1hpwrHKl0AD3rqytK9T0UTnW+zT7r7L+t1xm0xL7JWloHQiVlAptp6141aSvkDvQm7LiRnd80YCO5d8o7RuROhA7I/iWb6MAZebaHZsXRZJhUGbKBERUwJ4PcCTWSGSggkvkc6ALg453yb/9+OwfOc9ICGcATsagt2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Casjvgg6; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785140147; c=relaxed/simple;
+	bh=ldiEMndXDbw2nJk6ERUFpTHNq7w2iT4i2FPomEL9JJ8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=opfxJveChFoGbuI5GPGkEWPzoB1bwzjKQxJkK3BpMojE7ifvHKhKRyxKsXoophuW44qyvRGhqbxI6jht95QtEMRuBvwsMq1QtIZgz70Qa9DMTCC4dRZh8S4uKtKhgT1GA3hTclS55xHBegDXiMmSt4iX28zswMD0GsA8rl2pGtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m+19PkdS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DWfHSwbG; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Casjvgg6"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38e08baf860so2413470a91.2
-        for <git@vger.kernel.org>; Mon, 27 Jul 2026 00:04:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785135880; x=1785740680; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=PjRq7M7a0zm0XqX27aIAd1f3XZBtvP2TOM/JKUq/lms=;
-        b=Casjvgg6pGeYQX+pQs0urVl7LTfTl4qQeZvzWUAGOf+iOWqwQW9Cl/gKRjb+QJJGxc
-         DI6Yy7s19xBAG/9oETzzdv+LSxiNhmQx8MZtEOH/13QtmB+5c0KobtX0Fgc8Y5U6YJtS
-         VMoumgfjsCWa3Gyl+qhCmL1Kz2GrdWjugXqEAhs2kJ5pKIGWww9JPeI4erykGejkRrKb
-         vIOiqrHZWgOEZ5lB2R75cuPn2PqWEPRUPJXxq0MBf6MJLmfKOBvdp0DvZgu7uMrBYWlD
-         idF6hLZ6Tw/C3OXt+/QTEhJy6ZIWTMaApVxj66G+roM9iwq+a0MrdGK9Fu3QtRQFHEvV
-         g6qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785135880; x=1785740680;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=PjRq7M7a0zm0XqX27aIAd1f3XZBtvP2TOM/JKUq/lms=;
-        b=fHfOHTcCzYYP8+PLBMaKOaBRkokIMnq3A0zNipaCWskpKUyOXG7KIhrGmJPvGJ58zQ
-         pQq7kWNm+gWbcBXg1drptylrsGJd6U0p4aOFRbdQpF2BZvkk2sYv2T/L0WD4N1unZMNk
-         iYnP6+4MWt6mVcSV4fhuxkW2YGmzK+nkrlUIl0l6F7ULf7DixrjNrXje7alFWT8Jl6YJ
-         oYOBuSIMdvdZ2Hso2hsanMQneZqKhAkI/7Hi0dv092Psjivh2qDeo4ytBHt5mSbao9/5
-         qQ4el5nWcAfHCxujBu+qhLmmNcgovlKlz+0if8fdKk5x+si4P06QZ3fY70KPovTuewTM
-         W1/A==
-X-Forwarded-Encrypted: i=1; AHgh+RqXilQYgPxSCyM49LeVaSbBLb3D6Bv81n59rgiLNJCNLPx7ubDxk31zC8/+sWV+ifeMRbA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNhHJxEOMty/xjJ6gIsHIq9JfYJ2z2Pvur7vxoYwl0HX8yVRKL
-	awMDMQh/sLt2bGZGN1sQDfDG6Qr3uDHya624lGMAT9hvreiRbzrVd4cS
-X-Gm-Gg: AR+sD12Lfa0CGEFxWeAvxuzu9sYLKAmLMDzkkZNt2k9ZVJKqfO3uVrvH1lg5F147S2R
-	fZoekoyII8joQgFP5IYF8hvo/mWf7pd94mPbpI5MKO3pN+4RGotsa3rbp9bwJc8nF5AKMAxODo0
-	91UuGsu1598m2GUYFerHP9s42NUuYJLsW8vlU75Nmp7WmmmLNPc72kdF4Bb3nBXihAFdn4+eRK8
-	KaFpuKxEOSjuMyFzxol7m89XlH6ud+Kkd9cA1W//EOGStqstcRZI5Ch4vtsIOd0uUW870nQ62h5
-	zGPgLaAJhNm34pzGlL4a/5sBXc3+vKHjQC/C0G74lMkQzD7zMdxXeBREuEMLiv1/rYnuJ/5mMt7
-	T9D4zeioEgbb2NxJIc3a8Q8TBGSdq/HJeft7RObvifWRGS6w8dHmx5OGniM68O++I9EHj3orcDg
-	==
-X-Received: by 2002:a17:90b:1e0d:b0:38e:dc4:3f64 with SMTP id 98e67ed59e1d1-38f29784460mr6374168a91.38.1785135880199;
-        Mon, 27 Jul 2026 00:04:40 -0700 (PDT)
-Received: from localhost ([220.158.183.16])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc57ae17sm25026413eec.22.2026.07.27.00.04.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jul 2026 00:04:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m+19PkdS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DWfHSwbG"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BB2D2140016A;
+	Mon, 27 Jul 2026 04:15:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 27 Jul 2026 04:15:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785140143; x=1785226543; bh=KXfoe2U09+
+	ExehSE5gKyXuAOzwEllx58Qvg3m0wSgoc=; b=m+19PkdSSwH3z+bBHa/QZ9KEeE
+	ImWxgTd6B3q34xEWBYgCmGiy05eaPcN3kOtabOOnsCmX7pfHAIKkkWqd8pGcT11X
+	+Q9BgnRErWR1zIRtWOfVbWjRRsRZqJ4VBQthwymGlI+KjzXcvd6XbrdmVCLWVTZf
+	l0TXMIFm+pAIY0X+vC2ZzNYuJ6zjkAvsNNWz3dEXKy3mtEOQ/s5RwS3u7a2JAz0x
+	uqZUzaa4/TUKpgliAy6acJr0LyYd7M1UR+oZaMi0rijZVdSQpXFkHYo+Ujmfsgyw
+	l9PS5VBREB2Wq0TaKlL8Elc3P41o1F6Ki0thuptEQmhTqBDxXIO37h+MrT9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785140143; x=1785226543; bh=KXfoe2U09+ExehSE5gKyXuAOzwEllx58Qvg
+	3m0wSgoc=; b=DWfHSwbGcqgQSSCtM+VVCsoSjNdPriy2ESflAZt1/VMXhTub3sJ
+	ksVmHT7MtIEheHNFP2YLk8NoeSFvPotXvLtRF9p0LyUrad+2ay2j42l6KLlpyh3p
+	kqhAoqRPArbKSL+PwDkBAcahkoqxH2F//lI2oK4C2JYhpgPNhWY2PV88uAoB96pd
+	VzGBukUS1S1NJGabvNchC18VVPVWUAOnp1QrHKh0TWv6F4f1LK5dqo6yq5mNV4wX
+	sz0vozVfryOOdQYP0ucmGlTT9W/4jy0FDJhEKoBBEuX4CU2fOUezt6mNtr9VPN5R
+	1BEdl6/QPK1vciYn8hzhR3Io9kEX/KDG4mQ==
+X-ME-Sender: <xms:rxNnauh0BJmQnqPJwXXBWrmxNsdZDf1e0zrSkQlqVDk2xNkI5it98w>
+    <xme:rxNnamcuoM9u2lF9yVNzo5PBeQPKT0VhOZM37KOjhlu_iO0VO-czu1aBrVe6HUMq9
+    vAHGssKswa-tGQ-FmGpGJOlVRozVnMnUOeVA020M4bmftWMnloi5g>
+X-ME-Received: <xmr:rxNnajdUVp6glM2b9x6alhzY4a31yFLk_qVit8DDYd4R-FkU_btriL46GwbFYMuJ2HyX80wSl6e6jB1Kl0f63Fve8o4W6Hn5bg>
+X-ME-Proxy-Cause: dmFkZTEsLmvTZHjLxK1Jwg7dnIjgLVzIPSNK4bVaRD2KNDLrqTIMmE/bDb1pezIMjzfi7j
+    9WIshifQG70ejwGP4JskSYFwtXhT2WFmugUiUldr+KlccAKXjF2tWdyXodkHSjHlL+i8Wx
+    /62bPx2k7KcVtvIhY3702Ujq6orCxeHrhM//OhN29SKuDhxW5PTGQHh4ydxqMDzS7IarQn
+    /HqiWXJ5gYAZu3sFy4qsHu52WcAkhz20qwE3xnygn7EMOvrpfiaeuCXjCJKmfb3dOdc9+C
+    q9RXY/dRJrfBFrIb59pJFGK+kECuMGau20PgsAEwi5HhH99FW0eARNWRk3UgKyf7/Wa/VE
+    1Tv2M1LyDEL5NmjN2+aou0vQ5X9PlVGmhc1y/keRka7E9vuOljiW/Z/enji/GlNBkyehPX
+    JJb0GWn6iNNacJbpYyViGKjDMJY3Bfp6XjTAneL/Jmdlel+3GwfDP4HvqjMk3d1DzlZ+Mc
+    t/WNv5Op87Rha3cq/cnGSKEBqfjlCi5O6vxNdZKvaHORWpFx6Pzt0fh/PbAMP2Zj7s4gEV
+    vRBT95wyHlv8FF/VsjaOHGQ/A02uH+5v1pdV8V34AWLgXCI1RYSuVSo/QvhTM268wNrzmb
+    KYgmN9rkS/MXNaawgQ2iyYzjkWvrIk5LnZfKahIW62AdkwBugFAhcNJPhY0w
+X-ME-Proxy: <xmx:rxNnag_J6TffkMTKPMHvS0H91NlruXOAmoTo15EvIoowDmmIz-UC_g>
+    <xmx:rxNnavmQY5933tLCYJdTdSaut3b6FXvYaf6s-igxPzeweCC2rZzmUQ>
+    <xmx:rxNnai_xwe_pywVmudKKLzLSWtZP_7WTaS1BMA94NDTZInbQnt8pvA>
+    <xmx:rxNnatn0atuSqJWbR_aqTBfoIex8uQtPvFIs36XQzq9NIqXyVhGN_g>
+    <xmx:rxNnamc_qr1je9hxOcqwUVyFOjqbImAz4RyxQbuwdyb-RzMSiD9QZVQM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Jul 2026 04:15:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Shlok Kulshreshtha <diy2903@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/2] t: add and use a commit_body test helper
+In-Reply-To: <20260726224803.45131-1-diy2903@gmail.com> (Shlok Kulshreshtha's
+	message of "Mon, 27 Jul 2026 04:18:01 +0530")
+References: <20260726224803.45131-1-diy2903@gmail.com>
+Date: Mon, 27 Jul 2026 01:15:41 -0700
+Message-ID: <xmqqldawq24y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 27 Jul 2026 12:34:34 +0530
-Message-Id: <DK95URJHRRGR.88DI7EGK5OMO@gmail.com>
-Subject: Re: [PATCH v3] utf8: make utf8_strwidth() and utf8_strnwidth()
- return size_t
-From: "Hardik Kumar" <hardikxk@gmail.com>
-To: "Hardik Kumar" <hardikxk@gmail.com>, <git@vger.kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260726123427.173877-1-hardikxk@gmail.com>
- <20260727065917.469738-1-hardikxk@gmail.com>
-In-Reply-To: <20260727065917.469738-1-hardikxk@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Changes in v3:
-- resolve all signed unsigned warnings.
-- cast returns of `utf8_strwidth` where necessary.
-- update maxwidth() return type to size_t in wt-status.c
-- improve commit message.
+Shlok Kulshreshtha <diy2903@gmail.com> writes:
+
+>  t/README                                  | 11 ++++
+>  t/t3405-rebase-malformed.sh               |  8 +--
+>  t/t3408-rebase-multi-line.sh              |  4 +-
+>  t/t3434-rebase-i18n.sh                    |  3 +-
+>  t/t3900-i18n-commit.sh                    |  4 +-
+>  t/t4150-am.sh                             |  8 +--
+>  t/t7500-commit-template-squash-signoff.sh |  4 +-
+>  t/t7501-commit-basic-functionality.sh     | 21 +++----
+>  t/t7502-commit-porcelain.sh               | 77 ++++++++---------------
+>  t/t7600-merge.sh                          | 14 ++---
+>  t/t7604-merge-custom-message.sh           | 18 ++----
+>  t/t7614-merge-signoff.sh                  |  9 +--
+>  t/test-lib-functions.sh                   |  8 +++
+>  13 files changed, 81 insertions(+), 108 deletions(-)
+
+Doesn't 'message_body' t7509 has follow the same pattern to hide
+exit code from 'git cat-file commit'?
+
+Thanks.
+
+
