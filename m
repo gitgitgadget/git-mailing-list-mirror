@@ -1,220 +1,120 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502793FCB0C
-	for <git@vger.kernel.org>; Mon, 27 Jul 2026 13:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBC4233927
+	for <git@vger.kernel.org>; Mon, 27 Jul 2026 13:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785157668; cv=none; b=M0KmMQXvVmBrXny7bMPD48hpfFVqs6TQb19xMRuUAFn9M4tQ1HoX0JAHtHfpGkpN1ZfEB4iqUq2v40L6C4iq6p9tTmfKz2ctmZxiifDi0hNosByYBLMYxqHpc+P0rDgjK4EMjDiNrZ4qwkjybJQO9hkekGyKMo7Kol4TxdfxyWo=
+	t=1785158746; cv=none; b=r19862m7GT06aLgX4dr7VDzGnS3qbaaeAoO9JMz4gsbc9opUxguYL4E4TJy+rRg2zbKyoHmBcfFvjkG/poVXppNrKPp3yrwtAujKkI+j9pyxrjt17CTyGIncHj3kKNFxU7RY/OXvPtfLw67k+R8TXJK9j3PidsFE4AZOkmxBYEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785157668; c=relaxed/simple;
-	bh=2lb6XMJeBKqz4XQREsqm3Ky2eA2eVpe0urW/nU1wblI=;
+	s=arc-20240116; t=1785158746; c=relaxed/simple;
+	bh=wrEeLeiMHizaI8da6RG1a6vaeCXxc5cEaXd4sTuR5Lk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E7S2i4KNbo7w5J3fopPj2n5X+Vx94RWqOR0BbXu5Nwp/RnfWfnMVYOjziaNPxRwWaMVm0VL/sXSyN6ygRk007IIIH4STA00g+DbKHpSo9c26jTai6TrZ1X6QPJj5WLFCoMlgSBitA8x3a0ZBXytcGE7R/1bgQYivf3aCCxvbZi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=feSqeqAn; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=cO9mHPmJsWhcuGXTD8fsdUnntmWLE+urmaGMzZA0nlRN/W1+lR8zxbOKO9LUJWR9w2VIOiUt0I3Q8v9Hvzh2fXFHHmJQCWdcbaGlyDjcX7XETxGsyOQ8A91LXLSKEJBhIr2DJ8vJembqK17CoDaNBmxPhkRQ2l/8YBimD4Ikl4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hXkXLPW6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D0r58zxc; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="feSqeqAn"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1785157662;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=E7CZcLlSw57n8O8kHKW5xKzpOk72myzzaELG0YHSjVs=;
-	b=feSqeqAnTeBLBbiMBJTS2eDmwwUx97wWTvL9pKk5ogy+PlOeZxD5T7SdAhXKrVqbjw8gdR
-	hPDrXVOi9RXCjIl9QHU+NR/dUs1954cmxD+tYT6ubxVfnMZ36JqSMMl/Zo4B1p6l01IB4c
-	m2Zb7PZMBZkKZQyQKI5yCIN4B/M4BJo=
-From: Toon Claes <toon@iotcl.com>
-To: Elijah Newren <newren@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v7 3/3] replay: offer an option to linearize the commit
- topology
-In-Reply-To: <CABPp-BGdK8v8Qk5XB=QL_yJDPTNjSb2rN08GiPpK50V2gAj1QQ@mail.gmail.com>
-References: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
- <20260707-toon-git-replay-drop-merges-v7-3-808ab9b4afa6@iotcl.com>
- <CABPp-BGzU9KHGF1nipi2HZaa1AiikMKGGaapQzHVH06wO4V1ww@mail.gmail.com>
- <xmqqbjcawnhp.fsf@gitster.g>
- <CABPp-BGxO0bd3UzDYNnhNUgDSKYwcFVCFsJ9rCzmNX7Q0xBrow@mail.gmail.com>
- <xmqqse5km6lc.fsf@gitster.g>
- <CABPp-BGdK8v8Qk5XB=QL_yJDPTNjSb2rN08GiPpK50V2gAj1QQ@mail.gmail.com>
-Date: Mon, 27 Jul 2026 15:07:24 +0200
-Message-ID: <87bjbs4m43.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hXkXLPW6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D0r58zxc"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 166201400101;
+	Mon, 27 Jul 2026 09:25:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 27 Jul 2026 09:25:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1785158744;
+	 x=1785245144; bh=y6jd6jmUCP1F0jZFfBZ9SOVGh4aP34icu/Gl7bEX4d8=; b=
+	hXkXLPW6J2A8zAp5tJ4EJqFfrwl4nUwthzEluaHV3IpFEfhgG4Zoj2ieZRxlPIO/
+	GpkAd2qQkUpNA/SR35EOXhkIH4wtVpSEQq2JIAfX66YwFQWpVSt4SENaO7i+ikiW
+	hEMynRimBDXDbzYcjY2jpYL4YLk0XQK55zkcFWOU49fRE78CI3jRF+nIk62PQUdY
+	1ZQrb5uVjcUajSzn3a02ejV67/l7xbHNR/ckVNSzWcVp+hz4YN8ha+5ouVjUiRgW
+	ft9sFvq9KjRl8SeS9mqcnD748p85Yo1jCbIOHXa36aTq3cYgJFieAx2YKDoKoenr
+	mH3hH8VsBtvgSVi5BXFXQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785158744; x=
+	1785245144; bh=y6jd6jmUCP1F0jZFfBZ9SOVGh4aP34icu/Gl7bEX4d8=; b=D
+	0r58zxcAzJtKPuBtgiAa57310lFncOr9Lnd43TyJ2/Riae7iiIT8ilhiV+uaIXaC
+	6dlU5yVTuyMHBPE/emBMH5eAYZwtGDwcC4EPVXQ1+hZiAaZEdilba395q5j/Xmtk
+	aR6+Pp1s5CnSF7+rcAUnE2LP/gFLh1jPbaIPe3T0titsv42EcDA2XYlig1UUes3K
+	lR7IMhkoJc1tusqI+guic0cvabHa/NhceV0o25z56Rxv5iCqyA/cShfYtDZpf6ap
+	EiZ4hnbiL1LD77W+u2bjLSdMY/jCISkI6AAvw5ZeHDfdtEf8jTiSM1Rfx1JDJNc7
+	jvyr6XfAHEVaLV8jEda5A==
+X-ME-Sender: <xms:V1xnapoyY17FPWnBgUyNGzpOcS5QX6NAGv0owuSAWMiL2k_F78GVSw>
+    <xme:V1xnaijO15zTmR9jYMcU41Kk8CxVax6ycSydmGiFP_7b5w0K6zudqKCL6fDVNSWJf
+    8nOqlPMauGk9oXjFS1qgzlXrJUumSFdroCtWeYn-PbUmM76QY2Srw>
+X-ME-Received: <xmr:V1xnauhJDQscLjMvM8QdocfKDwLly8raR4g4Ld767mlUSb9DH0ZJx4DfYv1z51c_NwRDgdx7yAFg09YnP-dgL51jC5d2GhwtDA>
+X-ME-Proxy-Cause: dmFkZTF/VjNSmjPqdVzSfeqXnzHRmwMCsSKEfAcOqo7QmvjWte0fvHfYj5qWF0ITeE1rZ2
+    V8+XJdIe/I6q1FCD7eMraj8/GjKG8wTQObiB47fgAmEE5CqqpmAx0UVzV3AFJR3Y0KlHjK
+    xaRMrv22c/Sz47DZ4xuvJ9Maa6ETtCBHOt0hoCtfwdanw9nvhcs996amp2ibkX7Rtm1per
+    qPKvVM6GMkBqXsW0VNxCO1JhKUHIomT1NyZu10RumQNLTOtJcY1GN93Lkg/Wwa6Ov+OXQj
+    kmH1jNmlgGFFTZDnUBE7hk9+RzvaSYS0Rhr++ZED6BRK5Ih1YBKD0aANNeqmHN/qF5FYRv
+    bLE+L0zaGVFjs49hrii5rQSgFJh8dOx1/IcIrp5AQMZzaBI655FNuo7YuLNEJEFAQyU05S
+    edBHWKWCqKCVncH4/AoxfDjtkJOzK8pmmnWFEu+F4qfLCZ2//5kWJT4qiBzp9BrszRrp4y
+    qXnWA3B1YuRXxEb2aOp3kWqZUq63rRiPYNlQ4EgWW4bPMGHMk4aAHTbqWb0LJz2+r6esM6
+    uvGYs8EVEKP7rCRGldfswlDbi4SG9EWgg5lTTqz+fyztaklQKx7/kgY6/alUBuemMa6je9
+    VZtDi6rY0Qe0anrPOAgLZWSvU6wBS/vMP9aQjAy1+njVHJat8cfWpswvwIqg
+X-ME-Proxy: <xmx:V1xnaggSkHyHHy9wQ8i4LwsU4om7Y2hstE2EqVRbu4A_uacGF-GYpA>
+    <xmx:WFxnamKaAD65bc5wOi1ADga9jUVXxiJw0fEUpcW-J0Yn9bdtdiwaLQ>
+    <xmx:WFxnanEhSkOTAUttXORSQBNrDOtAmL47uO-1_Po3nusSB4bSMtubPg>
+    <xmx:WFxnaiQLAWmcCyrozmVT6vBIV7jJR676_KjA31c3hS5oNl-mzMT2wg>
+    <xmx:WFxnajxOrh7Sj7z-PJFfixOmae4HNw1SSA2tWe4eYNGBLcHvGETaeXZU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Jul 2026 09:25:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] revision: make get_commit_action() a pure predicate
+In-Reply-To: <CAC2QwmKP16cyw0get3hEWP8GjcFkUHB3uXxcQi9hBCCM-B+ECw@mail.gmail.com>
+	(Michael Montalbo's message of "Sat, 25 Jul 2026 12:25:05 -0700")
+References: <pull.2169.git.1784143793613.gitgitgadget@gmail.com>
+	<xmqqjyqk3w7d.fsf@gitster.g>
+	<CAC2QwmKP16cyw0get3hEWP8GjcFkUHB3uXxcQi9hBCCM-B+ECw@mail.gmail.com>
+Date: Mon, 27 Jul 2026 06:25:41 -0700
+Message-ID: <xmqqcxw8pnsa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Elijah Newren <newren@gmail.com> writes:
+Michael Montalbo <mmontalbo@gmail.com> writes:
 
-> As I proposed last time, I'd be fine with erroring on multiple
-> positive refs as an interim step (plus associated documentation and
-> commit message updates) so this series lands, with per-branch
-> linearization as the real fix later.
+> On Fri, Jul 24, 2026 at 2:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Sorry, but I completely lost track and I do not recall suggesting a
+>> change that amounts to 100+ lines of new lines.  Are we doing any
+>> code clean-up?  Bugfix?  A new feature?
+>
+> A latent bug fix, but I understand why this was confusing.
+>
+> This was the discussion I should have linked to:
+>
+> https://lore.kernel.org/git/xmqqtsqxfdl4.fsf@gitster.g/.
+>
+> I had the link in my GGG PR description but accidentally deleted it
+> without re-adding when I remembered GGG PRs shouldn't use a
+> description for one commit series.
 
-I appreciate you're open to this interim step, but I would like to
-understand the end goal better before we continue.
+Ah, I recall that discussion.
 
-> TL;DR version; my problems with the current implementation of
-> `--linearize` are that it:
->   * Makes the rare usecase easy, and ignores the common usecase
+> Unfortunately, I couldn't figure out a way to make a test that
+> validates if the change is effective without creating a bespoke
+> test-tool that calls the function with the "right" options set.
 
-Cannot deny that, although I'm not sure git-replay(1) is a popular
-end-user command.
+Understandable, as it does not fix an active bug so much as clean up
+the API to make it harder to introduce bugs in code that calls it.
 
->   * Makes it asymmetrically difficult to recover for those that wanted
-> the common usecase instead of the easy
-
-I don't think many users would use --linearize anyway. I'm guessing
-properly replaying merges would be far more useful to most people.
-I'm adding it mostly to scratch my own itch: do a server-side
-non-interactive rebase that's identical git-rebase(1)'s
---no-rebase-merges.
-
->   * Makes `--linearize` mean something other than "remove non-linearity"
-
-It's debatable what it means, because you can think of it linearizing
-all reachable commits (see also below what you said context of
-gitrevisions(7)).
-
->   * Turns multiple branches into one, but updates several branches anyway
->   * Ignores order specified by the user on the command line
->   * Introduces an inconsistency within git-replay between `--advance`
-> and `--linearize --onto`
-> (The last three items being minor compared to the first three.)
-
-I'm surprised you consider these three more minor, because I have more
-issues with them personally (the ordering in particular).
-
-I don't have a feasible example, but as I understand from your
-argumentation, v7 might make commits reachable from a branch where they
-weren't before:
-
-> M1  M2  M3  M4  M5
-> *---*---*---*---* <- master
->                 |
->                 |  A1  A2  A3  A4
->                 |--*---*---*---* <- branchA
->                 |      \
->                 |       -*---* <- branchC
->                 |        C1  C2
->                 |
->                 \-*---*---* <- branchB
->                   B1  B2  B3
-> 
-> With the current implementation of --linearize, adding that flag, i.e.
->     git replay --linearize --onto master branchA branchB branchC
-> would instead give something like:
-> 
-> M1  M2  M3  M4  M5  B1  B2  B3  A1  A2  C1  C2  A3  A4
-> *---*---*---*---*---*---*---*---*---*---*---*---*---*
->                 ^           ^               ^       ^
->                 |           |               |       |
->               master     branchB         branchC  branchA
-
-Before the replay, branchC didn't reach any commits in branchB, while it
-does now. It kind of makes sense though, because branchC is specified
-after branchB. But then again, why does now branchA contain branchB and
-branchC? That's the problem I have with the ordering.
-
-> I think I know what you mean, but this isn't quite right:
-> git-replay(1) only ever accepts a single revision range.  From
-> gitrevisions(7) (also in git-rev-parse(1)):
-> 
->        Commands that are specifically designed to take two distinct ranges
->        (e.g. "git range-diff R1 R2" to compare two ranges) do exist, but they
->        are exceptions. Unless otherwise noted, all "git" commands that operate
->        on a set of commits work on a single revision range. In other words,
->        writing two "two-dot range notation" next to each other, e.g.
-> 
->            $ git log A..B C..D
-> 
->        does not specify two revision ranges for most commands. Instead it will
->        name a single connected set of commits, i.e. those that are reachable
->        from either B or D but are reachable from neither A or C.
-
-You could think v7's implementation of --linearize converts the
-"distinct ranges" into a "single connected set of commits", but then the
-option name isn't very good.
-
-> The reason I am comfortable with erroring out as a stopgap: turning an
-> error into working behavior later never breaks anyone, whereas letting the
-> current concatenation semantics reach 'master' risks users coming to
-> depend on them, which would make switching to the better behavior a
-> compatibility break.
-
-I absolutely agree with that approach.
-
-> Erroring now keeps our options open; merging as-is
-> quietly closes them.  (git-replay is still EXPERIMENTAL, so this is not
-> fatal either way, but it seems better not to paint ourselves into a
-> corner.)
-
-Being EXPERIMENTAL allows us to break things if we discover we didn't
-think about before, that's not the case here.
-
-But then again, what do we do about --contained?
-
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-     \
-      \  A1  A2  A3  A4  A5  A6
-       \-*---*---*---*---*---* <- branchA
-          \   \     /   /
-           \   *---*   /  <- branchB
-            \  B1  B2 /
-             \---*---/  <- branchC
-                 C1
-
-This would end up into something like:
-
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-                |
-                |   A1  A2  A3  B1  B2  C1 A6
-                \---*---*---*---*---*---*---* <- branchA
-                           branchB -^   ^- branchC
-
-Same issue, branchC suddenly contains the commits of branchB.
-
-The only way we can linearize (as in flatten merges) these branches is
-by replaying some commits twice:
-
-M1  M2  M3  M4  M5
-*---*---*---*---* <- master
-                |
-                |   A1  A2  A3  B1  B2  C1 A6
-                \---*---*---*---*---*---*---* <- branchA
-                     \   \
-                      \   \---*---*           <- branchB
-                       \     B1'  B2'
-                        \---*                 <- branchC
-                            C1'
-
-But is that what the user wants? They could achieve that with running
-git-replay(1) once for every single branch separately (let's assume they
-set COMMITTER_DATE).
-Is this the end goal we want for --linearize with multiple revision
-ranges? I don't think that's doable with the last_commit per branch.
-
-But for now, I would say --contained is not allowed with --linearize as
-well.
-
-And maybe, maybe we should make --ref required when --linearize is
-given. Then the user would do something like:
-
-    $ git replay --onto master branchA branchB branchC --ref branchA
-
-This makes the end result unambiguous: take all commits reachable from
-these 3 branches, replay them linearly onto 'master' and *only* update
-ref 'branchA'.
-
-
--- 
-Cheers,
-Toon
+Thanks.
