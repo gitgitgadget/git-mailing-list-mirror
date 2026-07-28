@@ -1,38 +1,66 @@
-Received: from send219.i.mail.ru (send219.i.mail.ru [95.163.59.58])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AB22DB78B
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:34:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.59.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3093D9DCA
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:41:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785252861; cv=none; b=LTaO0uSLISumrKhvUxkru0yO6Kz2x+NUXByEpiVDksXsooxgQuo/tQVPdMmVMTBb6E74JqkT0mmJFZsskvml+5oDWbh5kOv6+gW/mc6NHSdftzp3mVzDNdg2XS68UKx0bX6pv9EUIkYVHV0U/lF5vOkFqjpJUWUKTKWAgobh3Zg=
+	t=1785253277; cv=none; b=FW/I06yXNDOk15OsiQ0z0yjpSlwis+2U+7BxAvf0IUKTsZ4wWhtAn69RDMts6pmCm09ki1FcaZA/QIFSIwhLFWtqndVYGoMtA+SG+JWu+2nJVfyL8feFJw2lLblzK0wtZ+kj8YXic9yeA4wIaiJlvhJz/h4qxYWDMKJkX4pv4n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785252861; c=relaxed/simple;
-	bh=1DTQEmoAmP3dgEKy5kbHWTafQC6FokQK7/inohmo5Gw=;
+	s=arc-20240116; t=1785253277; c=relaxed/simple;
+	bh=UQjOVZcIQI4/ZZao2NVNff7OYhJP5J4pKLPvHbnTGO4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Gs+QA/NK0v0IhccXespfWNw9LEJ3BdWoVuIxq/dULFrR7B2i/xnCbXoXQ97LILK2qZMy6IASLVK5W7p5CmQQP+0SLcfw9HjL518ggO/olc6/R+WY5xy7/ufGWn+s2mZq9yVVlHvspq/7L5wi2T8qUEsSbpihXim/dUqQAMoOyV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=NUTzwiHa; arc=none smtp.client-ip=95.163.59.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+	 In-Reply-To:Content-Type; b=tAY9jB/otT2XJ5bf+o5uNK7D9IQ/auDPk9CQs7uAgLbJnNSRkw8MT7o9nLaZyFyfGBhHiJBOfW4FnWSmxbtxIY837H4tXknNKMK7ebQcl+97Krjk8zKwDZs+0fqWBsCxbGIwvhy3w1p/NheD9vbu9wm/j6Rq238KDeFak5swbJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXqqUnh5; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="NUTzwiHa"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References
-	:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To:Cc:
-	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
-	bh=Ach7HfeCJdkys9U4EaBxTVWdcDKMPTFWAr9StPbDI68=; t=1785252857; x=1785342857; 
-	b=NUTzwiHadY5rITk4ej/PQCNL/E6mz30vSEvTokVfTrT9TIM/WLjs4W0dbmNUki6xuD2hO2jRnks
-	BxwXq0ihmcdvLAkz5eJwOBwU2j+fHnoB6LLmsWgC3SHiZh6Ufh9W5xOpH6KQ3WIa/Zc3RZoYrNmBR
-	tveZAiZLYGdRhZClgYS3MZ3hkR5e4xtIOfNJkxkcY4MEOuu1eF08gPwBG12Cs9cY5BWRJ7DnD6lab
-	ufxOKUmWssIXPgxMsBlHdxMcFglgwfN/6UHh6J+eO2hiXTdkETIKgjLYbH7zeIoHcfwUG1nhtB7MI
-	DruPdN8fzl6+G/OUU3i++hCobi5OndDpFEqw==;
-Received: by exim-smtp-6bc4cc657b-v7qcd with esmtpa (envelope-from <long76.git@mail.ru>)
-	id 1wojol-00000000SL9-3oNU; Tue, 28 Jul 2026 18:34:08 +0300
-Message-ID: <b19319a0-a248-4213-ab03-b1abb4a42744@mail.ru>
-Date: Tue, 28 Jul 2026 18:34:07 +0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXqqUnh5"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47f6609c657so4100f8f.2
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 08:41:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785253274; x=1785858074; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=eCpVvKmVfrP3TCLO1oDEyg2ZUjOChfr2nidphn6fDm8=;
+        b=nXqqUnh55ibeEF+9/uw9IWcVud/dqFIy647xzFa25upsuE4UDvcfrKekv35I2wY++d
+         b60nLMwOpSZSoX/NPmsGmxfS8xFdgpeYoT9/jfMuSiiFSD/8hG/IpewY+Us3TYrKwy0y
+         kkVybowqTyAgq7iN78TNDrIl213LZ5Aw+v4YJyLU3mWSTNP4RxGaPZUE63bxx/6gDW2J
+         X9SOBVB4kk44G0MzZWfNkjtrDWebyirt/rgaGu5venlg2lkfrYxDrTc3ezdT+CXsdMyf
+         pNsxf+Tgmj6yNxNY7w7grhNkZUvQ+9SdyfknOGf1xoBRSA4L9FcqCscFj1MQMrRHj4P9
+         ZVJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785253274; x=1785858074;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=eCpVvKmVfrP3TCLO1oDEyg2ZUjOChfr2nidphn6fDm8=;
+        b=C4/56NJdq1QRIcFnQ8C8Bz1Uv8ZpZgxe2IjvNQPNPEoJc4cObM5fCL1EUPG9BtKlJS
+         +uesCuwfY4Ics6jsqC7qB+HRTGlw6JtXdLB/raRf+w5E5+OVJWJKixEuUd+WLbRQLpzP
+         CAvdc41oTr5WkkbFcTffCmF4OVGh20JQeadEv9+huwFTZacme91X94+bmMUvzz5Z0eEJ
+         Nm7sZMiDNdqDKC9qAPJRqBbPihA3VX87aOZdJ5wNnPg2abuAXxRZApweq8pLK3QKN8wy
+         ecxJ9I9ZZgvai5SEpJ9H/vAAa5caDjEBJp7DgWkjkfe3e0BiwRZqbohsxz689JGLWl4q
+         3oLQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqhlEw2Dxm21wo5VrFXDDl5iWU46ey5NrKSGQiMAgl5vQnbz2CLWiq8qRX4Sj2S3Wsa4DQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQ8u4g1eAjvRfXPaxJd5+CT0Db6qGdD1Ipu0Hg9XPfwJ8TlXlW
+	WQlaaZTiAwi7V0VoMdeCczmTM4htEzS0zNeaYrKavlC9418pU+Dvce4s
+X-Gm-Gg: AR+sD11gcRtGbTT5SUp8HA3J6koBWkTg400WsGVS2QTJ5H5prX9yNXJhgscGVschYIn
+	yjAhiyoM1eoTOgkRID+wHH7d5ZnYqMRq+jojB5bNWUgVNTzUR5xFN2h1mAeYUWg/hAW2dOFBD1J
+	gyVHZAr3oF7C9ZFGYlcR32CNzNfKvfVobOb5cGyxSdMxafRVE1ZUKt/NRc9BrsE6et8J9et2Ck5
+	auL35fIAaaDIAKaNqTL3LQWdkjT/I7mw4ZuMR8noyfF66w2K8/VzmZrhQTgsiHYgri+Ss7Or9Lc
+	TswhnDVB8m28cB4lXqg2s3bRvwk9A+A1ZkgVLYjeE2gvenE1ox5uxPyTtD3rMhzn0TtpZaVioHJ
+	iz7qraZHreEpemRwsmQA/cnNz9EDtnzYe0jG88zZq9hplCVMlkJfR2RYZomD51w8Ln7Wf+OwWtE
+	rZK1qgu04BUATzCd9XLkfjOxqeTbSnrNBJN6MmTNd8yZ77fBzpOAZSzz25
+X-Received: by 2002:a05:6000:4b06:b0:47f:9662:85fe with SMTP id ffacd0b85a97d-47fb1e696d2mr4068270f8f.16.1785253274066;
+        Tue, 28 Jul 2026 08:41:14 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85c66cebsm60576355f8f.30.2026.07.28.08.41.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jul 2026 08:41:13 -0700 (PDT)
+Message-ID: <c8fb2eba-c1c8-4f59-b467-e6d4766623d8@gmail.com>
+Date: Tue, 28 Jul 2026 16:41:11 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,35 +68,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: REBASE_HEAD still exists after success end rebase
-To: phillip.wood@dunelm.org.uk, Matt Hunter <m@lfurio.us>, git@vger.kernel.org
-References: <edfc868b-6be6-4871-a539-e70791db216d@mail.ru>
- <DKA3RP12A8LU.2VD89MQ7G2KLL@lfurio.us>
- <92a69a99-c56f-4ec5-968f-436bef64ee48@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4] utf8: replace utf8_strwidth todo with descriptive
+ comment
+To: Hardik Kumar <hardikxk@gmail.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
+ <l.s.r@web.de>, Patrick Steinhardt <ps@pks.im>,
+ Pablo Sabater <pabloosabaterr@gmail.com>
+References: <20260726123427.173877-1-hardikxk@gmail.com>
+ <20260727211520.84289-1-hardikxk@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-From: Long 76 <long76.git@mail.ru>
-In-Reply-To: <92a69a99-c56f-4ec5-968f-436bef64ee48@gmail.com>
+In-Reply-To: <20260727211520.84289-1-hardikxk@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Authentication-Results: exim-smtp-6bc4cc657b-v7qcd; auth=pass smtp.auth=long76.git@mail.ru smtp.mailfrom=long76.git@mail.ru
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD999EC7E29E32078B0D3237E42CA06847C04BCC942C35173F7182A05F538085040C6770728F940DC213DE06ABAFEAF670592DBBDFA39111859C9AE6BEE73B3A4F5BB3D1907BEA9FCEE
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE73B44982FA5E78411EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB553375666E0AFCC7CBCEC7C7A6E05C256B2EAFCC20F65A6F359C252BBA0413F8F7CF56D78EEF46B7454FC60B9742502CCDD46D0D6089696B24BB1D19F6B57BC7E64490618DEB871D839B73339E8FC8737B5C224908988D4D34163C9DCC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C0031F16FAD15614698941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C07D08B698D69CD5617B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050F9647ADFADE5905B11133410A2FE6C23AB3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE9ECD01F8117BC8BEE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8B79D6AC9746D9C56775ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-C1DE0DAB: 0D63561A33F958A5DA009CEEBBCDAB305002B1117B3ED696CA25AB057DB830C892212597CCBD6D77823CB91A9FED034534781492E4B8EEADD0953842B444AAC3BDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE1918E10F71CB4DF9F9677DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D6593F525BA4340D9CFA60654693B694E1758EE1CC4897E01B278180AD3E4196013C0D6BF86EEF6C0AB9B8341EE9D5BE9A0AC580F43ADCD61A4B160821B20954A7D0BF6DB5A14D38762A6536EB022892E5344C41F94D744909CE06349EBF80BA53DC7F80F8B16B0B4F5BC3981EEBE9DB10F943082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVczkDsfooUjf+CWYgcj/nwg=
-X-Mailru-Sender: FA56D3AF5E7ABC7464DC1CE9D819784E4E68FF6DEAC117923DE06ABAFEAF670592DBBDFA39111859B7CBEF92542CD7C86E6763FEFA0584FA91296853BA92DB573F2CD06A13C360CFE5A15ED4F09F547DA6B405093FCEE899451FCD79C64DC368C77752E0C033A69E3453F38A29522196
-X-Mras: Ok
 
-> The need for "--force" when pushing is due to you having rebased the 
-> branch, it is unrelated to the existence of REBASE_HEAD (other than the 
-> fact that it exists indicates you have rebased). Rebasing rewrites the 
-> history which means that the remote cannot fast-forward when you push. 
-> Rather than using "--force" I'd recommend "--force-with-lease --force- 
-> if-includes" instead (see the "git push" man page for more details).
+Hi Hardik
 
-I know it, commit don't the same that was before rebase - because of the 
-conflict, it had to be changed.
+On 27/07/2026 22:15, Hardik Kumar wrote:
+> The `utf8_strwidth()` function is used in multiple places that all
+> expect the function to return an int. The result is directly used for
+> padding and width calculations and passed to `printf()` calls. All
+> these operations expect the function to return an int value. Changing
+> the return type here requires changing the types of all the callers and
 
+s/requires/would require/
+
+> other additional variables, that depend on the results from this
+> function directly or indirectly, to avoid overflow by implicit
+> conversions.
+> 
+> The comment precisely explains the reason why the explicit conversion is
+> done.
+
+I don't think this comment, or the lines below add anything useful to 
+the message. It would be better to say something like
+
+As we do not want to change the return type, update the comment to 
+explain that and the need for the explicit cast.
+
+> - Remove an old TODO that is no longer feasible.
+> - Add a comment explaining the behaviour and reason of the allowed
+> expression.
+> 
+> Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
+> ---
+> changes in v4:
+> - drop the todo implementation and remove from codebase.
+> - replace the todo with a reasonable explanation for the current
+> approach and why its not worth the change.
+> 
+>   utf8.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/utf8.c b/utf8.c
+> index 96460cc..1b55bd4 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -227,8 +227,9 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>   	}
+>   
+>   	/*
+> -	 * TODO: fix the interface of this function and `utf8_strwidth()` to
+> -	 * return `size_t` instead of `int`.
+> +	 * The function is used in multiple locations where the callers
+> +	 * expect the result to be a signed int value. We cast the
+> +	 * result to an int to avoid changing signatures of all callers.
+
+The last sentence does not really capture the reasons given in the 
+message of the commit that added this comment. If you haven't done so 
+already you should read it - see 937b71cc8b (utf8: fix overflow when 
+returning string width, 2022-12-01). The fundamental reason to call 
+cast_size_t_to_int(), rather than relying on an implicit conversion to 
+the return type, is not about changing signatures, it is about avoiding 
+an overflow that caused git to crash.
+
+When you send a new version of the patch please CC everyone who 
+commented on previous versions so they don't have to trawl the list to 
+find it.
+
+Thanks
+
+Phillip
+
+
+
+>   	 */
+>   	return cast_size_t_to_int(string ? width : len);
+>   }
 
