@@ -1,249 +1,135 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F09409635
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 21:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52CE474262
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 21:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785273825; cv=none; b=BxjBp607xFOjL1KWMhvQgzwFzbjZff6eZ87ZpMYOWt2AkDJrhWsKyMHH63ei02hGqxzBbOqLOSCO7wyeRNkR0tjLUMLyUnlPV1BVVO/UhQSQTZbfS8uJaLIyRo4rM9e0/xD8YfPLpRRSAqHJPfF14/CczeMaETqR5nEO7Hqdr2Y=
+	t=1785275543; cv=none; b=W6Isa7NgLK0y6hOSPnq7WWPblh8AeDEAMELhOMji+TdMkWShWmoD0dGKCg468xBSA+LMdRVrb6VcA7dogTridT8RURhSC71ks4szhqMuKSqsNh50o3va6uH+yFnFxVHYFAcaKZRGrIRy8DKqThegPraWF8KIxPzwNUwpyrsDEQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785273825; c=relaxed/simple;
-	bh=UveUaBYBFO6GSvx9p9622Bmn9yDFMTc4+2/Rnq3kI48=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q4g3xbkj7BsrLxpYSJd7JmFVfu3DaDCd3mNPSjHisXPQ3kzmgwid3msybKPRRfZacdU41TsdISMuDvDHSPolAf9d3WBua7q1xvdo76KA3WBNpHlUDJ+JLIlQJlr04Y0AEwswR1uFCtZYau53qzrgV8gr32Rb3yDsdGIrU0kqnbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h5Nw7knV; arc=none smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785275543; c=relaxed/simple;
+	bh=7C4Ov0x7+MN5XOVVVmqzrP2t1yRxO55ucCCA6jgfltY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=lDBiBVwa7HaNlg7N7A7Iw2dc8+edsg89BDTUN0mYakw0tg3QbgZYpowK49GGF43GGrx8j6kTS3ZwFvb/nRWlC7nZvKiG1Z/LZvpIXcgh9KggAskuO/pwZs9Pg0OWZt514T+sA6Mw4Y4KAcoxJb0zXpcfoGPFBbyGOKI2r7A2mJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=enw2D18M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qwVOxssF; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h5Nw7knV"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-4a475409044so127322b6e.1
-        for <git@vger.kernel.org>; Tue, 28 Jul 2026 14:23:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785273823; x=1785878623; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=oNF1zeFH6Y8xhuv0NmKTdtQa8c5AgjuT37FxHUndgKU=;
-        b=h5Nw7knVmokm7+rElia09cJx3e4GxJKbfuaQRVc+6cXxIG6koA2gpSrnC5XeNBMr6J
-         McPZ03LgPhN/UY9WIOX8Cz4B189EuVcWWwh96OzAEpctBfv6MebBiQkdh3rWOtcIeuDa
-         tAsV0fsrKLO0Xqknr/tTQAydHmu3O/J9g42PbnH2G7yjXeZnN3LWGYQFnumVdNmpffN6
-         h1RbpdYNEkbopvyWKgx3QZGz+698NO2F95eOP41QutgzOvZgbXVUWTJ3/IPDjjOtvpCH
-         8syY9iJ0osLs6eKNGyQobgHo42eAZzv9aGNU+LvR//8lfUyf4sSJ5gwybRW/nLbH4XSi
-         GZKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785273823; x=1785878623;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=oNF1zeFH6Y8xhuv0NmKTdtQa8c5AgjuT37FxHUndgKU=;
-        b=OwHAvxP2KD2DOWJkLBMLBYr2xMXEUPPN+mQ7W+M3G74itwxnZ3gBGXJUZoY3CQgG4p
-         +12ZQjtmNmvJ61z/m5VmEhSI2hkWOin1YL345SVDLGIVrnlcvk9rQEuYCw/BDUCS0lRd
-         JV+ouDrdP9UTGhI336V+1/naw0PI9tbWz9UlQGiQjsgjU56rHvUnr1zgK7WCybDNW8lz
-         TMTQrXm93icVqadqP2xS4G4HLl+dhSQpCxPXcEgPAeWfJfggPnMFmOWsEGPeRwz26OxT
-         kfcR7Rhu/XfJz6Z/+Rho7yJTmkdjKdPZpmagF9v0b9GaqA1GBNzca70gfu5NM6CLjCMc
-         Hi3A==
-X-Gm-Message-State: AOJu0YwBGYtl2DcR656jo1MUvgyMmc2B3WcRZQK09lUGiM/SSN6dC2+t
-	vuqJG/TLK4zB2mcg4eeb5yZa4J6zTb30NdcAna4FQQFN1HT0sYfL9eHoKSd/9Q==
-X-Gm-Gg: AR+sD10sb35U1D3DkomM4lyYnYJvo7K1c1LXDxlycyb2N5aqGVffxl/dzKOeTPWkoz3
-	yrOycmAmvuaFw6cVJf+uH2wh/3bDz2Zo/ZkVkgoTDjEt+Fh2j3ScodAT/jj7LSIcNI9R5G/eGxD
-	YPfKYI9fu1u6JzA1FQh5Sl75lucPsIbZC9cBKCDmd9Xx1XHCPEoDzIXpHnQ/vbqpLG/MrRtN4NF
-	/BvpzHE7OwahW0JUOjW1BZxrfJ93+PueAM640AJ6xK8/mzmwgAgRj45siDo5s2qT8g4ua9CWOJr
-	uqg6fmjblcezfLC/OhjS4XKAFujyw+mOjxLDfaAz41hN9nFRrQEPgxRx3QDis712Z9o2L2A09vU
-	cvKPGmaAowtisNum5VijMrrE4d08PAwfs/OB7EiIuX9d8zXd0xijXzt8SA93Pdo4W5FCW1dkWjf
-	PSYAexPUXNiBhA3qenfwll3/37c3B3JL66iBUu5xgLsp6Ekn8fp/z12D9/4g+S4AGRAA==
-X-Received: by 2002:a05:6808:1908:b0:49a:8f0d:cdbb with SMTP id 5614622812f47-4ad5bd29b67mr2997502b6e.31.1785273822624;
-        Tue, 28 Jul 2026 14:23:42 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4ad6efc9c91sm227668b6e.16.2026.07.28.14.23.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 14:23:42 -0700 (PDT)
-Date: Tue, 28 Jul 2026 16:23:41 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/5] odb: make creation of on-disk structures pluggable
-Message-ID: <amkcNhMTKqWdLXwX@denethor>
-References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
- <20260724-pks-odb-create-on-disk-v1-5-3b3d265d979b@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="enw2D18M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qwVOxssF"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2168E7A02A6;
+	Tue, 28 Jul 2026 17:52:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 28 Jul 2026 17:52:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1785275540; x=1785361940; bh=+8OoQ3bd7bofivZL3Cn7r
+	FDkYaX969QN1k87uRyzbi8=; b=enw2D18M2ffwXb1Z4f89NdipOpOrwF7Fysiak
+	GEpWBNPPryFTD6fkYRF/nO/qHyTKhRn7xSzoBg5hbsc0j+ff5jrV4rSgCJRnYqOX
+	INkokojg4Exjh2g56P8QGMwTK9vlHUk5BzIQEPmaNzk/iCQa4n5IrlXDWlhR6LB9
+	NEOqArvi7bg//krWj3bzycyW8KNrzUyRC0Uk+nWvfWeGECvEoGPohWXf3OTZaxHY
+	IgfTK2BrU+Pjxy3WM8R/i+Ogs4LbheIyc7Z+is+1HX0b/ekTTfmJKzrEVcBlQoxu
+	dw0ECM8kzlrGC+zHhuUuI4iMLdgq8jr4iNXzRLb0mR9QAxIdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785275540; x=1785361940; bh=+8OoQ3bd7bofivZL3Cn7rFDkYaX969QN1k8
+	7uRyzbi8=; b=qwVOxssFVBhlzXnMi6mgvsJBvNsE/SuM59gjH1lDtvu6NLznaxs
+	s8TRbw8rE6OdF0L9mtYDuMbFODP1J/jA6NSvvcg3ms+dhRRdZA8+uVQI6y77JZ/m
+	gBEPLrEuIOMwVIGheblRbibq8kHOPuiRCsFncM91UjuoyiRRORjUezYZ8IvEh8jd
+	lwRT9BY/p9+dVbY0HPMgWr4yr5h5yKnvS9ah8iWhh1QH7MgUp/H6uF3ZvSWL6y9c
+	o1J3Kq+LkhgD5oUy2vtlmkPbHlNq7XGOGDiRZGXpczRpf/rFP4e/YX0jgF/cTnch
+	33TwMFKUZVKRrk6vMacJoTdBs29hcDR+34w==
+X-ME-Sender: <xms:lCRpapFjwOR5Pw2P8BUTd4VEhIozCGOefh8Ujf9T8ieW82BFAXxNoA>
+    <xme:lCRpakVKnp9mTi2BCH1b5pfrDJGtd9tAM3tiBwzdKcmwMcg5opn79na871HZiaedx
+    hZGbl2YmLS6Nwn1DSMfwYep5gA1wG77VtnmFtfZZcxiFxGWCCHH6w>
+X-ME-Received: <xmr:lCRpaoyTBK-H41jjuBzyUX3KaIPKuUHqAi0r58qKelXGpwuGiCgXYPDUwk9cio3Z-AYEtrGNKtFZjJwW-mBrQmEdCMwxX894kg>
+X-ME-Proxy-Cause: dmFkZTEKkmEwveJWbpy9js/1g0fuePXP09ocmNMUyfK33KVZZ35JRVl4xssrzPipc00/n2
+    53qgCR+bR98IfLzxR4WTHv42PhKao0NFHzOdhXETWO4HtuyFT6wK0jT90/HpKDVpobC4nX
+    5PZsKGONCUH02UMyNTVn7MFkS4V3kAGHEnr/Ts+r0xYX1MmDNJkEbEWGWtFGy9QBuOJoQ9
+    K4MxK1Bl8nXK2qH5nYY9rXSJKlomDyIDsCh7oTRe35Kks4dXU6X98zi8X97PJPc5mNaGRF
+    RGi0JnfYDB1nXT0IdXkGMq+Uj41jOqOOGoEfAQ6wyO7CIX+7i3eGrVk5OKMFKvAYnBr7HD
+    O43G+eRZOgY4u9rj+zL9tmTur6ay9NlmEv+iZTICHc1wwl0Dw67sSQ197NXQRM4UGzVhgZ
+    awS4C3Bokrehb13krbTFomFxPKF9FSAXzzWsN1IHtBiykufwowiYKbQotBSz516XqZfXil
+    UfRhlEDy/35A6Dv0MGr3V0IGF+9SU90PHJ+ntX78yyhqu30dK3h68i4eYlHhZKM5LeVksq
+    8luA/txWSuIrZ6HWbyjOblrFlP38dtZjQi0YstoMC6L8yN2PJ7VLtaCVoweJApHkMvMRz3
+    rqD7z1uichO+47KiblDgoZjPLfh6i2C3YH6F3WcN0M2iVqX4pV8PUhPV3mfw
+X-ME-Proxy: <xmx:lCRpaqPjbDbZL2JDAdVB5GhnPo9EvTHyXITdQg-9rBPCZU2qFGPn2g>
+    <xmx:lCRpah7c6x5XZ-p14zEjHpu6U4-ksuQsGdD4dOVRRLj4CcJkhBqHfw>
+    <xmx:lCRpajOYb5_8bEN97XtlO2OqjKyNrugdyBbS1m1oZ64DUiUTf1JTEQ>
+    <xmx:lCRpanlS2okyHW6_LqIEkz5SZofQEen0OP5xw6j40HWtGQhjynBYPA>
+    <xmx:lCRpakeOS4oq0-pIhdRJIKjGCAvyOduqsXD9_Kz6pB5WyHw77U1aTI37>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jul 2026 17:52:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/4] git add --resolved
+Date: Tue, 28 Jul 2026 14:52:15 -0700
+Message-ID: <20260728215219.753678-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.55.0-594-g42d2bf033e
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260724-pks-odb-create-on-disk-v1-5-3b3d265d979b@pks.im>
+Content-Transfer-Encoding: 8bit
 
-On 26/07/24 05:48AM, Patrick Steinhardt wrote:
-> When creating a new "files" object database source we have to create a
-> couple of directories. These directories are of course specific to this
-> particular backend, and a different backend may require a setup that is
-> completely different.
-> 
-> Make the creation of on-disk structures pluggable to accommodate for
-> this.
+When you are the maintainer of a project and make many merges day
+in, day out, a lot of your time is spent resolving conflicts and
+adding the results to the index.  It is not unusual to have local
+changes in your working tree that are unrelated to any particular
+merge [*].  In such cases, 'git add -u', which adds all changes in
+the working tree to the index, does not help much.
 
-Ok.
+Here is a new option for 'git add' that lets you add paths with
+resolved conflicts to the index, while keeping unrelated local
+changes out.
 
-> Note that there is one exception though: the "objects" directory must
-> exist in a repository regardless of which backend is in use. If it
-> doesn't exist then the repository is not treated as a Git repository at
-> all. Consequently, we create this directory regardless of the backend.
+The first two patches perform preliminary refactorings.
 
-Makes sense.
+ - [1/4] consolidates a helper function to determine whether a line
+   is a conflict marker (replacing two slightly different
+   definitions).
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-files.c | 19 +++++++++++++++++++
->  odb/source.h       | 23 +++++++++++++++++++++++
->  setup.c            | 35 ++++++++++++++++++++---------------
->  3 files changed, 62 insertions(+), 15 deletions(-)
-> 
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index 4138758511..0db6e681fe 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -9,6 +9,7 @@
->  #include "odb/source-files.h"
->  #include "odb/source-loose.h"
->  #include "packfile.h"
-> +#include "path.h"
->  #include "strbuf.h"
->  #include "write-or-die.h"
->  
-> @@ -41,6 +42,23 @@ static void odb_source_files_close(struct odb_source *source)
->  	odb_source_close(&files->packed->base);
->  }
->  
-> +static int odb_source_files_create_on_disk(struct odb_source *source)
-> +{
-> +	struct strbuf path = STRBUF_INIT;
-> +
-> +	safe_create_dir(source->odb->repo, source->path, 1);
-> +
-> +	strbuf_addf(&path, "%s/pack", source->path);
-> +	safe_create_dir(source->odb->repo, path.buf, 1);
-> +
-> +	strbuf_reset(&path);
-> +	strbuf_addf(&path, "%s/info", source->path);
-> +	safe_create_dir(source->odb->repo, path.buf, 1);
-> +
-> +	strbuf_release(&path);
-> +	return 0;
-> +}
+ - [2/4] introduces a helper that makes registering path removals
+   from the index as easy as adding them, complete with automatic
+   '--dry-run' and '--verbose' support.
 
-This is the callback to create on-disk state specific to the "files"
-source and matches the current set of created files.
+The third patch implements the new feature.
 
-> +
->  static void odb_source_files_prepare(struct odb_source *source,
->  				     enum odb_prepare_flags flags)
->  {
-> @@ -271,6 +289,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
->  
->  	files->base.free = odb_source_files_free;
->  	files->base.close = odb_source_files_close;
-> +	files->base.create_on_disk = odb_source_files_create_on_disk;
->  	files->base.prepare = odb_source_files_prepare;
->  	files->base.read_object_info = odb_source_files_read_object_info;
->  	files->base.read_object_stream = odb_source_files_read_object_stream;
-> diff --git a/odb/source.h b/odb/source.h
-> index ab16d152f4..4abc418bdd 100644
-> --- a/odb/source.h
-> +++ b/odb/source.h
-> @@ -89,6 +89,18 @@ struct odb_source {
->  	 */
->  	void (*close)(struct odb_source *source);
->  
-> +	/*
-> +	 * This callback is expected to create on-disk data structures that are
-> +	 * required for this source to operate.
-> +	 *
-> +	 * The callback is expected to return 0 on success, a negative error
-> +	 * code otherwise.
-> +	 *
-> +	 * This callback may be NULL in case the source does not need any
-> +	 * on-disk setup.
-> +	 */
-> +	int (*create_on_disk)(struct odb_source *source);
-> +
->  	/*
->  	 * This callback is expected to prepare the source so that it becomes
->  	 * ready for use. It optionally clears underlying caches of the object
-> @@ -316,6 +328,17 @@ static inline void odb_source_close(struct odb_source *source)
->  	source->close(source);
->  }
->  
-> +/*
-> + * Create on-disk data structures that are required for this source to operate
-> + * correctly. Returns 0 on success, a negative error code otherwise.
-> + */
-> +static inline int odb_source_create_on_disk(struct odb_source *source)
-> +{
-> +	if (!source->create_on_disk)
-> +		return 0;
-> +	return source->create_on_disk(source);
-> +}
-> +
->  /*
->   * Prepare the object database source and clear any caches. Depending on the
->   * backend used this may have the effect that concurrently-written objects
-> diff --git a/setup.c b/setup.c
-> index a7b1b9eaef..14ef119cb7 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -2666,29 +2666,34 @@ static int create_default_files(struct repository *repo,
->  static void create_object_database(struct repository *repo)
->  {
->  	char *object_directory, *alternate_object_directories;
-> -	struct strbuf path = STRBUF_INIT;
-> -	size_t baselen;
->  
->  	get_object_directories(&object_directory, &alternate_object_directories);
-> -	repo->objects = odb_new(repo, object_directory,
-> -				alternate_object_directories);
->  
-> -	strbuf_addstr(&path, repo_get_object_directory(repo));
-> -	baselen = path.len;
-> -
-> -	safe_create_dir(repo, path.buf, 1);
-> +	/*
-> +	 * Create the "objects" directory in the common directory. This is done
-> +	 * so that the repository can be discovered regardless of the backend
-> +	 * used.
-> +	 *
-> +	 * Note that we only do this in case the object directory wasn't
-> +	 * overwritten via an environment variable. If it _is_ being overridden
-> +	 * then we skip this step, as the repository won't be discoverable
-> +	 * anyway without the environment variable.
-> +	 */
-> +	if (!object_directory) {
-> +		struct strbuf objects_dir = STRBUF_INIT;
-> +		repo_common_path_append(repo, &objects_dir, "objects");
-> +		safe_create_dir(repo, objects_dir.buf, 1);
-> +		strbuf_release(&objects_dir);
-> +	}
+The fourth patch is a totally unrelated code cleanup that almost
+disappears when viewed with 'git show -w'.
 
-Here we always create the objects directory regardless of the backend.
-Looks good.
+ 1/4: merge-ll: consolidate conflict marker scanning logic
+ 2/4: read-cache: add remove_file_from_index_with_flags()
+ 3/4: add: introduce '--resolved' option
+ 4/4: read-cache: reindent
 
-> -	strbuf_setlen(&path, baselen);
-> -	strbuf_addstr(&path, "/pack");
-> -	safe_create_dir(repo, path.buf, 1);
-> +	repo->objects = odb_new(repo, object_directory,
-> +				alternate_object_directories);
->  
-> -	strbuf_setlen(&path, baselen);
-> -	strbuf_addstr(&path, "/info");
-> -	safe_create_dir(repo, path.buf, 1);
-> +	if (odb_source_create_on_disk(repo->objects->sources) < 0)
-> +		die("failed creating object database");
+[Footnote]
 
-Here we invoke the pluggable callback to create source specific on-disk
-state. Part of me does wonder if this would be better to include this
-inside of `odb_new()` and enable it with a specific flag, but having it
-as a explicit separate step is probably fine too.
+ * This is not limited to my own workflow. An earlier message on
+   this topic worth mentioning is:
 
--Justin
+   https://lore.kernel.org/git/CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com/
+
+
+ Documentation/git-add.adoc |  10 +++-
+ builtin/add.c              |  92 ++++++++++++++++++++++++++++---
+ diff.c                     |  25 +--------
+ merge-ll.c                 |  53 ++++++++++++++++++
+ merge-ll.h                 |   2 +
+ read-cache-ll.h            |   3 ++
+ read-cache.c               |  89 +++++++++++++++++-------------
+ rerere.c                   |  38 +++----------
+ t/t2207-add-resolved.sh    | 108 +++++++++++++++++++++++++++++++++++++
+ 9 files changed, 319 insertions(+), 101 deletions(-)
+ create mode 100755 t/t2207-add-resolved.sh
+
+-- 
+2.55.0-594-g42d2bf033e
+
