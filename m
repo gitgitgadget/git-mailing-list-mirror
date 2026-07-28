@@ -1,164 +1,212 @@
-Received: from send54.i.mail.ru (send54.i.mail.ru [89.221.237.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01429230BDB
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 08:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785228113; cv=none; b=SWjkCTBcVQjuJzRZP1ufxNoIttDAsJptEi73ChIZq1vWbYkEGdhPZRIKXozxdCiZREh9Zp0P4VVkxdQ8dfLichkp0YbFdS86D3u036TIHOMYY6b288ks8HsW/Gn4eownN+kf9xzN0w0KpcvsM/Ldx+G8SjofVlMtGJhgdSwpS6o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785228113; c=relaxed/simple;
-	bh=XErFIk0ZDETyUS/OjN1IyEEVXeVsz2o13d9JLGZJPCM=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=ph7pdRvjZ+slMVNjfVBc3YjtVC0fssvz/wkPAfhsowDgLr61rUyEYP0v4ZZpbIgK3zQ9/Vbvs8d3pUlGFk0YrRU20xFhR3iyTECqSPoX1NK7fkCm4eHWT55AfWyzYeliTUFdL2kbHT9hQcv0I7X7gU94L1Qk6U+hKEBvhcA7HyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=z+1mOIrr; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=gfrov2Nz; arc=none smtp.client-ip=89.221.237.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48B640F8D0
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 09:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785229742; cv=pass; b=GX0nJoO1vP/oMRGRG2lV7jTN5UzO1SpJrSjUikGuHPuAW1NQ06AF7o6mqQlnCwsjdyTIDAoNX7Vn5dBgTh+nqUstKdfoDH65kgkfEfZ8gUMj6cH1GkhxuD5GSl/2ehVvZ6wmtUTLKJRAdME09hci4sa7uODMlHuGrf426ED2/QI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785229742; c=relaxed/simple;
+	bh=ja2O81zwsVsPwkbsmwk9fuY1nDnR6tXJaEPmjqeksZM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d39Rdr95haj1zHs6z7nE3Sx5Vn3DPI/ed7y5tFtwFtK9AfYxBuTGV5BLQOvaowzaKdZj3g0cfnEMJFJqDkd7SVXJdlyu5xETFANYyvUZHFnTQKyGRFMMCcOVTxxCgSCE5uoy3N8Z99gZ0XKBsGII3AJHOGltWb6E3GkP+T5oB3c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=source.dev; spf=pass smtp.mailfrom=source.dev; dkim=pass (2048-bit key) header.d=source-dev.20251104.gappssmtp.com header.i=@source-dev.20251104.gappssmtp.com header.b=OtoSNFKv; arc=pass smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=source.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=source.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="z+1mOIrr";
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="gfrov2Nz"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=pA8o2OeWtAUnuG7d5sBrR4mE5SD+wQwLwxBNTh3ES1I=; t=1785228109; x=1785318109; 
-	b=z+1mOIrraLMDcGeEnmNMxLlH6cDHz5BlZktBQwFyhZYI/ycfdLE8ztyWxSmjypxzyDAyhUP7uuT
-	gXYb4YaxIh1kq6WFrDThmWbsGjCTNd9vWfDaa/cE4Gr11MY0TrPuAxLiDvEuGRy5HYLErpm4u9AOO
-	ql2Rvm9laDf0FbnmPzduiheUsvHhucQtZjG8AW/0AFmzVf/fhlGmNlCB2NEXGmn2NVNEw6amzXLb4
-	CD4HMnOnjz1UzVh7CCHlKNGM0oG3jBh9jqCDLzyqQNQTP+Y99d2GFwemokifVNpUwvzPKVD1Lc1oW
-	aNMbZOAXVLYbxVtSwbqjLgknHrQL7CaR6bqA==;
-Received: from [10.113.154.169] (port=46810 helo=send278.i.mail.ru)
-	by exim-fallback-5cf4fc9bf6-zj7fh with esmtp (envelope-from <long76.git@mail.ru>)
-	id 1wod95-000000007By-1NKH
-	for git@vger.kernel.org; Tue, 28 Jul 2026 11:26:39 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:
-	MIME-Version:Date:Message-ID:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
-	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
-	List-Owner:List-Archive:X-Cloud-Ids:Disposition-Notification-To;
-	bh=pA8o2OeWtAUnuG7d5sBrR4mE5SD+wQwLwxBNTh3ES1I=; t=1785227199; x=1785317199; 
-	b=gfrov2Nz5TBDqbqA+d6lVnxvSLPspdIwIVzMsCSsSFuaImWFmnSz0dRJTtGEa9lgSLTKqZkAGB5
-	eZuF6fFx9w1WcY+J8++TosFqlO/fkwT8K20GLT3JZ+f43A4oV4T545Qt4Sqs4Fr5+KEPp7fA1N2Qw
-	zzojxhjA9DW9vPuLl66AH3FrlY5NA5UK7Z5hrrQlAAQzL7Gpw9jtZJfQX7jwMMV89eG1IkiJ+FP9y
-	y1gM7Ih2mgasamutNEHFwlCb9+2YSPmGLAL4BWvweo1T7lG385/7/wTWNaHRw8I/zU3mRLt9QZL/+
-	ugDAF0A7mu6C5bVnzTuB6R8RiApe7F62ZtDQ==;
-Received: by exim-smtp-6c76488b9f-8glpg with esmtpa (envelope-from <long76.git@mail.ru>)
-	id 1wod8w-000000003oy-2hWn
-	for git@vger.kernel.org; Tue, 28 Jul 2026 11:26:31 +0300
-Message-ID: <edfc868b-6be6-4871-a539-e70791db216d@mail.ru>
-Date: Tue, 28 Jul 2026 11:26:29 +0300
+	dkim=pass (2048-bit key) header.d=source-dev.20251104.gappssmtp.com header.i=@source-dev.20251104.gappssmtp.com header.b="OtoSNFKv"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-664b3dfbf70so97799d50.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 02:09:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785229739; cv=none;
+        d=google.com; s=arc-20260327;
+        b=rVFB8L35UKPltMQAh+WqmrGzjYFlqylODdyHdffzMPLkanZVzFt0Ytrbqh8loBbANM
+         aztczGS+39EBVG5RytnmUcrXCcY3HZmPSOCjbjE2/3JNyJEtZPRPP1T+CPSgGOZrTnPE
+         L3GtTtVw0uavZwRp9tY+2dSvBIkm/wnXnvdlVQfEjA9LTHd/d5r3+5IzA4XByVRtLr8S
+         pqoZj+/22E1Erp5qMnZkJ/hm/72ilK7COD9N5YLXusMU4TokTKMKKkY0q5jZQaMX8R9i
+         Jl2Bd3F4pOO7p183n9d6B3RBzGDyuKPq7LvR4VMzcz4tbIFb85HhzXEdHHVNbZWbiukt
+         g1xw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=AQiVz14gsgzuX4jPiYscpTHtSu6DtwpktvDqCx+1vpw=;
+        fh=oXOqwYaROWggbcdiccaKYGW5dEKLcOxkHO/0sMyBcgA=;
+        b=HXWJor8d2rp5Ag0Y9W7T0H0+6HDVJKesleVSht8QHt2ifXcV02RRAYEglHYP1F8wEH
+         iWlNLIiKMlKKVyDtuOsMSqy1yDK10ST6+uVmX5DqGeasFqgkoDQRGtG2HBinPxa6SfIg
+         iq49GZD0UYZJLcT1NJS2DvZWaRw82q0Ew4BI2sTwIzShFqsxk+cyYgB3BZrEN8TxsEob
+         TW/J3dErlj6ofJJZ68AR95jBzw4C/Uy8urQkCUDyIEK4AJ3ito1lNlHIAmCXFp1wOgoc
+         ILnFjFTmhWZOAd1JusjMSZzTIxAR5OcTbWr8etzFRsGfRVdKkMgziP1KS+T1SQCxyEC0
+         NbZQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=source-dev.20251104.gappssmtp.com; s=20251104; t=1785229739; x=1785834539; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AQiVz14gsgzuX4jPiYscpTHtSu6DtwpktvDqCx+1vpw=;
+        b=OtoSNFKvEtdmu1Z+8oK37Uhaimg7jOjLwjT1OjfMXMw6GrHVVnPOXhQwO20ES7nLe+
+         DTQP/aqH9uFxn4yXQGd6Ezhjgp/icCCNWNKCRmf/AW0SpfYPRK8UCdCBGvX0frxj0KbP
+         8tjWrxvVxVjfg7DisCYfgfOJsWm6g5vJpDhY01nY1DnvctTAAEcPcby9PsrGu4gpwLPv
+         OfcofdxqGzAYEqjHsZSiXS0XprNIzl9GgPo+TD42Pd1p+K0dqKDS3lTPHkN5eXFle0VS
+         O0nk2WDwIKvSQcYCYBPx6A7W8Q4opF7hoDhFx2q8TNrCF5n9wGsGn8ViL7UIb2zmVMyY
+         u9zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785229739; x=1785834539;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=AQiVz14gsgzuX4jPiYscpTHtSu6DtwpktvDqCx+1vpw=;
+        b=PIsAlM4bEKTvFZIH3nSNX72RsL8opjkZv5IrXMhd++SE9jdkhJT0ugeqZ0Ed9SGnZL
+         twnBVW0Fji43cjr/hFqoxiAFD8u0GvIL+ZerZdBTdIDfZNzrzA4OFgx6t3gstUHcpPss
+         Oq+NAsfuv9SpQXvRZPLHxKVGLwlAOp6nKnRqC6M8lOZNiXlyonc2merBdIk/JtHQobG6
+         c8o4tlnQhmwuETqXDDVZ8tifqtoUpCXUON98J4aP/DapbPnObPW0VC/aT8q3qwbvJ0oD
+         dZW7KDfPtVzdPqSGqPIJTMWSTPq+flSNPGX0SVM/qWnGkkiYUWSr3WsVRsafkYJcDcCj
+         xsKA==
+X-Forwarded-Encrypted: i=1; AHgh+RoU+0wU42qjNbRCHURBdOQQz4B8r8g61RbWhHG6d48+hT9S8SzQVxnKWpMFG4SP+zTbEpc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKESlOftXv0XiCd5NV/vVqURcsXZjUc/qiT5me4IzbMA1/xX5w
+	MEEVCM6dEBjVhplpoltVIBuNFqWBx4TT/cWHD5BSRgNI7lO/oI3Sf/MQRDHV554ycVAsRDwmyrs
+	h2xKTPjLZjJgcNA01gF/GFdI8GnnqFmNCuVJFc4/PYg==
+X-Gm-Gg: AR+sD10eHbgmwVm3Dcsv90HQcEQcvlyoYtZReACK/pbVDCey/R2jhd2TIts6A7hiPv2
+	BYK0BXD1JYr697IGG3RQEm1NW9/6LXFyowbjIjb3+jW/USLUDVx3K0adjveMlNthQofVANjJgP3
+	dP8F+89IJwQAUWvoN4wg6Po8GS0uJ8AsqKCOTBvSzpqy3kJllThTMuf/TT+j7qevBM2KMyVhPSU
+	0RTtDY7WFpu62ComeZbjxSiRakrBCKFGWF5b0i+frKBchruY/OVUGDtov5M5cVvYEoWxj0JRPob
+	4i5P8UAyIy9WEvY7xsZN
+X-Received: by 2002:a05:690e:e8d:b0:668:43a3:9de3 with SMTP id
+ 956f58d0204a3-669058356fcmr874600d50.3.1785229739280; Tue, 28 Jul 2026
+ 02:08:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: git@vger.kernel.org
-From: Long 76 <long76.git@mail.ru>
-Subject: REBASE_HEAD still exists after success end rebase
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: B8F34718100C35BD
-X-77F55803: 4F1203BC0FB41BD93AE80F4FE6181E4F1628ED37B610B6442EA28E42FE12C9A6182A05F53808504042CCE5522733214D3DE06ABAFEAF67050D2D2478E385988DF8363BD8C781F7C3FB1AA341019AC2B8
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7C2204D4F9A221771EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB553375666E0AFCC7CBCEC7C70597FE6F0E2750EBC16C0F217943397900DEE43A098DC29D8EEF46B7454FC60B9742502CCDD46D0D9E541A154B51D14BF6B57BC7E64490618DEB871D839B73339E8FC8737B5C2249B0E9FD5D4288160ECC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C045A75973B56231AD8941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C0F206494F22AA87D6D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE362B3BD3CC35DA588BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C37F2E9035E9FA3B8235872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-C1DE0DAB: 0D63561A33F958A5F0A4FE07AE7E3BE65002B1117B3ED6963835BB1B293EF33D54BB1175C6E7DD94823CB91A9FED034534781492E4B8EEAD491B7F2495B7DCE6C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659A611480346927E0AA3F92EB898ED643955956DBD112D65CB32C1DAD23C334769507DD5121BE02A77B8341EE9D5BE9A0A1C1F1CDC506315819679A7E8562E785C2C97CFABFF52DDFD52EE4E5D9E54FDA44C41F94D744909CE06349EBF80BA53DC7F80F8B16B0B4F5BC3981EEBE9DB10F943082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVczkDsfooUjfYzTZ3xrlqIk=
-X-Mailru-Sender: BF619F039C5E48B05804D9064179567ACFC4FEA5F9F4E57AB951B70A5BD4BD8EFC91B8E0DF0E3FF45F9045B74F665CC8425AE62B7EC354419CA68C07A4EE0065362722A76DE2BCCC34372B9448EDC0929956202DFC8A2C27324D571D86A1F4E42D063C67CFD4E84967EA787935ED9F1B
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B41153A78F4023D798AB6565AD5806B5EA4D6119D097D08A05B647ED114AB003AC6D60E98ACA21A2CBAC4385294E02B5FB5AA90AE450F532CFDE06E3894AC1A351F3A2C4E99DBE10D3
-X-7FA49CB5: 0D63561A33F958A54C90D348551511615002B1117B3ED6967FB09263A6E5EE3EAD864E5BE48A9E5E02ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZRUBLxC85WEBi8N0Vl0Zq4g==
-X-Mailru-MI: 20000000020000000000000800
-X-Mras: Ok
+References: <CAFZW3h0K6vi15HhMEX30Ab+pjRc3mQr2Myv9KJUH=MWzsvt0FQ@mail.gmail.com>
+ <20260727095735.GA1153453@coredump.intra.peff.net> <DK9MX0YJ07S0.1TOBLIA6ZNSEN@gmail.com>
+In-Reply-To: <DK9MX0YJ07S0.1TOBLIA6ZNSEN@gmail.com>
+From: Alan Stokes <alan@source.dev>
+Date: Tue, 28 Jul 2026 10:08:46 +0100
+X-Gm-Features: AUfX_mzVTBe1QDfG1909YaCrgZzE3UQyTYIBv_AgnrotrYeJGKdxWg4x_i-nyqM
+Message-ID: <CAFZW3h3xyeJJwHfVK2mB2k1=e-0he9_gbTetJ1RdB2uUM1rp4A@mail.gmail.com>
+Subject: Re: Assertion failure with git cat-file --batch-command
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
-My configuration:
-OS Kubuntu 24.04
-Git version: 2.54.0 from ppa:git-core/ppa
+On Mon, 27 Jul 2026 at 21:26, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
+>
+> On Mon Jul 27, 2026 at 11:57 AM CEST, Jeff King wrote:
+> > On Mon, Jul 27, 2026 at 10:30:43AM +0100, Alan Stokes wrote:
+> >
+> >> I first observed this in 2.43.0, but it still seems to be present in
+> >> 2.54.0.
+> >
+> > Yeah, I think this has been there since --batch-command was added.
+> >
+> >> Note that if I ask git cat-file --batch-command to include the
+> >> objecttype in the output it is fine (which gives me a workaround). Or
+> >> if I use git cat-file --batch.
+> >>
+> >> IIUC git only fetches the metadata that it needs for each object, and
+> >> that is determined from the format. For --batch I guess the type is
+> >> always requested, since it is needed to print the object contents. But
+> >> for --batch-command that doesn't seem to happen.
+> >
+> > Yes, exactly. In the normal --batch code path we have this code:
+> >
+> >         /*
+> >          * If we are printing out the object, then always fill in the type,
+> >          * since we will want to decide whether or not to stream.
+> >          */
+> >         if (opt->batch_mode == BATCH_MODE_CONTENTS)
+> >                 data.info.typep = &data.type;
+> >
+> > But for command mode, we don't do the same. This makes your case work:
+> >
+> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> > index 1458dd76d6..78eab9723d 100644
+> > --- a/builtin/cat-file.c
+> > +++ b/builtin/cat-file.c
+> > @@ -690,6 +690,7 @@ static void parse_cmd_contents(struct batch_options *opt,
+> >                            struct expand_data *data)
+> >  {
+> >       opt->batch_mode = BATCH_MODE_CONTENTS;
+> > +     data->info.typep = &data->type;
+> >       batch_one_object(line, output, opt, data);
+> >  }
+> >
+> >
+> > but there's a slight catch. That expand_data is used for every request,
+> > not just the current one. In normal --batch mode, every request wants
+> > the same data (the user-specified format plus the object contents). But
+> > in command mode, some may be "contents" requests and some may just be
+> > "info". The code above turns on type-checking for every request, making
+> > the "info" ones pay to look up the type.
+>
+> Yes, for example, both 'info' and the 'remote-object-info' series
+> (marked to 'master' in the last "What's cooking") [1] act on
+> data->info.typep.
+>
+> This would make 'info' do a type lookup, and 'remote-object-info'
+> request "type" even if it wasn't present on the format.
+>
+> >
+> > A type lookup isn't all that expensive, but it might matter for some
+> > formats (e.g., just "%(objectname)" does an existence check and nothing
+> > else, so we never even access the object data).
+>
+> Yes, and only the atoms in the format get expanded, a populated type
+> without its atom in the format won't be shown.
+> the wasted lookup or a bigger request are the only effect.
+>
+> >
+> > I guess saving and restore data->info.typep would work.
+>
+> Yes I think that too, I tried this and it worked fine:
+>
+> static void parse_cmd_contents(struct batch_options *opt,
+>                              const char *line,
+>                              struct strbuf *output,
+>                              struct expand_data *data)
+> {
+>         enum object_type *saved = data->info.typep;
+>
+>         opt->batch_mode = BATCH_MODE_CONTENTS;
+>         data->info.typep = &data->type;
+>         batch_one_object(line, output, opt, data);
+>         data->info.typep = saved;
+> }
 
-.gitconfig
-[merge]
-     guitool = meld
-     tool = meld
-[core]
-     editor = code -w
-     autocrlf = input
-     quotePath = false
-     eol = lf
+That does look pretty simple and correct.
 
-[global]
-[diff]
-     tool = meld
-[gui]
-     editor = code
-[fetch]
-     prune = true
-[mergetool]
-     keepBackup = false
+>
+> nit: On the current code the parameters aren't indented correctly.
+>
+> >
+> >> I'm not sure what the correct fix is - always request the type in
+> >> --batch-command, or perhaps only if a "contents" command is issued?
+> >
+> > Yeah, in general if you are asking about "contents" I'd expect you to
+> > get the full name/type/size triple. But it's not wrong to ask for less,
+> > and certainly we should never hit a BUG(). So I think we'd want a fix
+> > along the lines above.
+> >
+> > Do you want to try your hand at a patch? It would need to do the
+> > save/restore, and most importantly add a new test to t1006.
 
-How to reproduce:
-1) Made repo
-# Init repo with README.md
-git init
-echo -e '# Git rebase bug\n\n```\ngit rebase master\ngit mergetool\ngit 
-rebase --continue\ngit rev-parse REBASE_HEAD\n```' > README.md
-git add README.md
-git commit -m "docs: add README.md"
+I would be willing to have a go at it. But realistically I probably won't have
+time for a month or two. I'm also a complete noob at the whole posting
+patches via email process, so it may be slightly chaotic. If anybody else
+wanted to deal with it I obviously wouldn't object.
 
-# Add feature branch
-git branch feature_branch
+Best wishes,
 
-# Add files in separate commits
-echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
-line" > Text1.txt
-git add Text1.txt
-git commit -m "feat: add Text1.txt"
+Alan
 
-echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
-line" > Text2.txt
-git add Text2.txt
-git commit -m "feat: add Text2.txt"
-
-echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
-line" > Text3.txt
-git add Text3.txt
-git commit -m "feat: add Text3.txt"
-
-# Do the same in feature branch and one more in one commit
-git checkout feature_branch
-echo -e "Texts 1 line\nTexts 2 line\nTexts 3 line\nText 4 line\nTexts 5 
-line" > Text1.txt
-git add Text1.txt
-
-echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
-line" > Text2.txt
-git add Text2.txt
-
-echo -e "Texts 1 line\nTexts 2 line\nTexts 3 line\nText 4 line\nTexts 5 
-line" > Text3.txt
-git add Text3.txt
-
-echo -e "Texts 1 line\nTexts 2 line\nText 3 line\nTexts 4 line\nText 5 
-line" > Text4.txt
-git add Text4.txt
-git commit -m "feat: add all files"
-2) Call — git rebase master
-3) Call — git mergetool
-4) Call — git rebase --continue
-5) Call — git rev-parse REBASE_HEAD
-Last command return value and .git/REBASE_HEAD exists.
-In other words REBASE_HEAD exists if ogirinal commit in new branch 
-modified and need call git push --force to send it to server. Please fix 
-it, thanks!
-
---
-Long76
+> >
+> > -Peff
+>
+> [1]: https://lore.kernel.org/git/20260724-ps-eric-work-rebase-v21-0-ba67f024fdff@gmail.com/
+>
+> Hope this helps,
+> Pablo
