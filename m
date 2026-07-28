@@ -1,113 +1,296 @@
-Received: from send170.i.mail.ru (send170.i.mail.ru [95.163.59.9])
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A1C456DFC
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.59.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D9733F582
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:46:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785253458; cv=none; b=CnFah6I0Ug4GV2e3xVYAkxX0ddN4hDznEMz7UZXg8v9SFXUhMzEdvOYvn5rhySmLf64ZBkRSrQL13C6qqtGm1ehV9EKi5OXC5SIrgx6o2F62d6ZT4EHwKylCgf+h9xczzqiPx81y+unZCqxB+YBzlHLp8pjPwwEeiUYiIN0pgIc=
+	t=1785253582; cv=none; b=VJUNvhgd4kEHIyDl9ZStXh9vFdFhJQMWjIgS5zexvOHG1ggv5YAvIJwaXK5jCRTiE8qVT/9rI8T46kQu32sGwT4FI9SGf8Vog4gKh4/giIGe6BZWIX0TyGFtJ5wk70+73gRcZ5avvhVxwl+Qqt6GOd8LZmutMe7AYgCTjwA/BEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785253458; c=relaxed/simple;
-	bh=keZP27gzJvFDg1wi7SGVdynTpu7UzSXzhBgq5JYlzGY=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=R7pvU5KD44zDNWwOTbhrXSW1JRmDqCiux+agyuljwCUIeDaW+XQm3xuNco5Ow3k1Qvu9uPqcOvmVXXr2FUoBnTxr4erDAM2a5YOr/xngOKmBP4G3uuPvILuYiTJ0cLY/1hn8cQUf1QI9UaPspR33fbNt581r8J3kwBnq59O9e88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=WOJpt8hX; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=MC4DW5YE; arc=none smtp.client-ip=95.163.59.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="WOJpt8hX";
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="MC4DW5YE"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:To:
-	From:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=luu2zDF1zIR0CdyldQXAoKiEqobddgn/qusEzxfTiC0=; t=1785253455; x=1785343455; 
-	b=WOJpt8hXI4YDrMUFIDzoOfqPL6n+FrP670NFNyWqbVzv4VuiO4eNB19oCwqhwxLQvtYowtDYNQi
-	Nwp1a1FEk1ly/ZonqhG1xxCmehkqBJ4ZEnb6u47gqrw4uIy4lLfPKpIEqU1uen9zopsWXfCCNXeeI
-	x2LEjZd6rd16mWafVNes4daclBnCijKbqyhUk0MySylcH+tRoMx4CugN1gMK97ZAdOsW25S5P1kGT
-	BTHk5zOMczT9LWFUK/AhpOwLg/YkGhOysOLBQcZA5zyqL9tfhvhtEVvdrg0IqP2zDxx6IKlVZrmVI
-	c5KQtRbS+kYgWrawgSd0rJDb2n1pqUQWlY+g==;
-Received: from [10.113.18.215] (port=50744 helo=send37.i.mail.ru)
-	by exim-fallback-67c48d97fc-c4lwr with esmtp (envelope-from <long76.git@mail.ru>)
-	id 1wojjs-000000009Ko-3MCj
-	for git@vger.kernel.org; Tue, 28 Jul 2026 18:29:05 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:To:
-	From:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To:Cc:
-	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
-	bh=luu2zDF1zIR0CdyldQXAoKiEqobddgn/qusEzxfTiC0=; t=1785252544; x=1785342544; 
-	b=MC4DW5YEtDhVsczktX5/gNLR6SnOXACiiLFkfn2qn48vyaJgi8+f/6odifG/kX3neh8/NtHNaUA
-	UpD9CyKdYnSwb7rdheCrFNn0ipUvvRtD4pCrbFIm5LKW6yAz3QaAKkQf7ln8C2sOEfuJ3pIqZwrCZ
-	FzgTyzLpUrI4UOwGTMcSICOOFxDE+O3BLmT9KhjOyNu5fxCwTb0KW4miD4trnc8zgJdB+y5GfFtOk
-	vbPG7C+2H+RuuplMudvDEdkW4Iq79wSOjfQ3Z3twGQCKvRxKrNt2ySqW8ZD1N71CAXcDNagHNypSH
-	/bbTyu0zBxmaGwN2VnE/e0OGkfAqfzPHRVqA==;
-Received: by exim-smtp-6bc4cc657b-ddd7c with esmtpa (envelope-from <long76.git@mail.ru>)
-	id 1wojjj-000000003B0-3zRl; Tue, 28 Jul 2026 18:28:56 +0300
-Message-ID: <b3ec5eac-a177-4991-8edc-36ce5992dad2@mail.ru>
-Date: Tue, 28 Jul 2026 18:28:55 +0300
+	s=arc-20240116; t=1785253582; c=relaxed/simple;
+	bh=02scJ5OsSan1Ek9DyOdwpe3SusAd9ojPzh4OtPVXIJw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=lIFR3zHwNmuom88q6L4Rs6ZrYk4/W9h9vUm5mMc9FYOH0p4Uj46FpWsDvwG2JZj8vvhIjyCv08E2XhvaanvxC+LavAbBK36v3Ll5kKjxcQpCkQO0l4LXAmxy6IrfIMWob0UqF0vRXY0s/8OyFMxjXHvKt2rCc+1SetfGXjg6wY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH v8 0/3] Teach git-replay(1) to linearize merge commits
+Date: Tue, 28 Jul 2026 17:45:50 +0200
+Message-Id: <20260728-toon-git-replay-drop-merges-v8-0-ced11dffe749@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: REBASE_HEAD still exists after success end rebase
-From: Long 76 <long76.git@mail.ru>
-To: Matt Hunter <m@lfurio.us>, git@vger.kernel.org, phillip.wood@dunelm.org.uk
-References: <edfc868b-6be6-4871-a539-e70791db216d@mail.ru>
- <DKA3RP12A8LU.2VD89MQ7G2KLL@lfurio.us>
- <9ee7b916-a9ce-4300-baf4-b24d0a52fe46@mail.ru>
-Content-Language: en-US
-In-Reply-To: <9ee7b916-a9ce-4300-baf4-b24d0a52fe46@mail.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: B8F34718100C35BD
-X-77F55803: 4F1203BC0FB41BD999EC7E29E32078B0E87D26D5D4D3469A37D306C28DB22336182A05F5380850402E0B3425611EFC093DE06ABAFEAF670598C32A035B9C88D6C9AE6BEE73B3A4F55872F0C4753F95D2
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE716FAD50E497B9C14EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB553375666E0AFCC7CBCEC7C7D7B6C56B8D84D0D1E53E209DA1FD640CCA7FAC370D7F1B7B8EEF46B7454FC60B9742502CCDD46D0D2FFDA4F57982C5F4F6B57BC7E64490618DEB871D839B73339E8FC8737B5C224908988D4D34163C9DCC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C02A2C2731A565D81B8941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C040FEA8D7F28272697B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050F26055571C92BF10F452896749CDDA0A6B3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE9ECD01F8117BC8BEE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8BFBCBFC5051A70ADB75ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-C1DE0DAB: 0D63561A33F958A521273140BA653CD05002B1117B3ED696522D43315B5CFF5BD57BAD45EC4C5DE1823CB91A9FED034534781492E4B8EEAD85CCBA673D36D1A4BDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE1918E10F71CB4DF9F96AB70F9BE574AE9C625B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659C155AD360680812C310FFFB4258B05E968A3FB6024825D508CD43FCF42D91F3A7BF7BC7F2C35F04EB8341EE9D5BE9A0AE7D8EAFA6E132C4031616FB9C592A5040F8B83E85039FACF6536EB022892E5344C41F94D744909CE06349EBF80BA53DC7F80F8B16B0B4F5BC3981EEBE9DB10F943082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVczkDsfooUjfO261hvgSRik=
-X-Mailru-Sender: FA56D3AF5E7ABC7464DC1CE9D819784EA85CE5491858B1333DE06ABAFEAF670598C32A035B9C88D6B7CBEF92542CD7C86E6763FEFA0584FA91296853BA92DB573F2CD06A13C360CFE5A15ED4F09F547DA6B405093FCEE899451FCD79C64DC368C77752E0C033A69E3453F38A29522196
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B42CD459FEF794EC2C492BBD0D7572DF2445AEDE09B62EC3B1049FFFDB7839CE9EC750E04395D273842FF6C062570EF0D5BBD0893F6E162E036E42E004001AE341601E1CEE31C3EEEB
-X-7FA49CB5: 0D63561A33F958A5BCCE5704092F41195002B1117B3ED6960849FC0DA8CBA0934565145407275D2102ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
-X-B7AD71C0: 6FEFE4C63DFE2D851629A3278334FCEC2AD323669803AD9FE6E38E9349F0B96630D0092E3DE3DA7F6E0C20BFA971ED82
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZcy7CYgo9o5vXVDAHWlwDOw==
-X-Mailru-MI: 20000080020001000000000800
-X-Mras: Ok
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4XPTWrDMBAF4KsErasy+pey6j1KF7I0SlQSK8iua
+ Qi5e+WUUuOFs3wwfO/NjQxYMw5kv7uRilMeculbsC87Eo6+PyDNsWXCgWvQIOlYSk8PeaQVLyd
+ /pbGWCz1jPeBALZjkAWwUTpEmXCqm/P3Q3z9+8/DVfWIYZ3K+OOZhLPX6qJ/YfPfXZDebJkaBo
+ kA0LAU0nXzLZQyn11DOZG6a+MJisG3xZinDpDcs6GjF2hJLS29bollMCXTYOReQrS25sDjftmS
+ zUuLKJCWkYG5tqaX1ZJeaf0TGwQjbuQhrS/9bBp7s0s0y1oMJMYKwfG2ZpWW2LdMsC9Z3rpM+e
+ b207vf7D1gzVzmgAgAA
+X-Change-ID: 20260604-toon-git-replay-drop-merges-807fa008d395
+In-Reply-To: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
+References: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Toon Claes <toon@iotcl.com>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Migadu-Flow: FLOW_OUT
 
-+ phillip.wood@dunelm.org.uk
+As an alternative to dscho's patch series to replay merges[1], add
+an option to git-replay(1) to linearize merges. This mimics what
+git-rebase(1) does with --no-rebase-merges (the default).
 
-28.07.2026 18:27, Long 76 пишет:
->> I made a very short-lived effort to look into why this "bug" was
->> happening.  I say "bug" in quotes, because I'm not even sure if it is
->> even problematic behavior.
-> 
-> I think this is a bug because git create similar HEADs if you made merge 
-> or cherry-pick. I don't have problems with them.
-> 
-> Plus by git rebase docs on official site flag '--show-current-patch':
-> ---
-> Show the current patch in an interactive rebase or when rebase is 
-> stopped because of conflicts. This is the equivalent of git show 
-> REBASE_HEAD.
-> ---
-> For me it means that return patch only if rebase in progress - not 
-> aborted/not complete/have conflicts
-> 
->> I solved my need at the time (detecting a rebase in progress) by
->> checking for the existence of either of the 'rebase-merge' or
->> 'rebase-apply' directories in $GIT_DIR.
-> 
-> Thanks for advice! I don't knew it.
+The first two patches do some refactoring. The third patch implements
+the actual change. The original patch was kindly provided by Dscho,
+which I've tweaked to be upstreamed.
+
+The --linearize option is only added to git-replay(1) and not to
+git-history(1) because in my opinion it doesn't make much sense to do
+so, but I'm happy to hear if anyone disagrees.
+
+Dscho's series to replay merges[1] needs a bit of rework to fit on top
+of this, but I'm happy to help figuring that out. We've been discussing
+to either name the option --flatten or --linearize, but I've decided on
+"linearize" because the documentation of git-rebase(1) also mentions
+"linearize".
+
+[1]: <pull.2106.git.1778107405.gitgitgadget@gmail.com>
+
+---
+Changes in v8:
+- Disallow multiple revision ranges with --linearize.
+- Disallow --contained with --linearize.
+- Link to v7: https://patch.msgid.link/20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com
+
+Changes in v7:
+- Allow --revert and --linearize to be used together.
+- Because quite a lot of changes have been made since the original
+  patch, change author from Johannes to Toon for the last commit.
+  Johannes already told me he doesn't really care about authorship when
+  he initially shared the patch with me.
+- Link to v6: https://patch.msgid.link/20260702-toon-git-replay-drop-merges-v6-0-78a07cdd0382@iotcl.com
+
+Changes in v6:
+- Reworked the second commit that moves picking the base completely
+  outside pick_regular_commit(), instead of adding more explanation.
+- Drastically extended the commit message on commit #3.
+- Extended docs on flattening multiple revision ranges and how it's
+  different from git-rebase(1)'s --no-rebase-merges.
+- Added a bunch of tests to cover various scenarios.
+- Remove newline from BUG() message.
+- Link to v5: https://patch.msgid.link/20260626-toon-git-replay-drop-merges-v5-0-5e120738b9d0@iotcl.com
+
+Changes in v5:
+- Dropped the enum->bool patch and instead added a patch that better
+  explains how pick_regular_commit() picks a base.
+- Order of commits is shuffled.
+- (BIGGEST CHANGE) When working on a refactor to undo the enum->bool
+  patch, I extended the code comments to explain how things work. This
+  made me realize the use of the "replayed_base" was incorrect when
+  multiple branches are rebased with --onto. This is fixed now and a
+  test is added for this scenario.
+- Link to v4: https://patch.msgid.link/20260622-toon-git-replay-drop-merges-v4-0-ff257f534319@iotcl.com
+
+Changes in v4:
+- Use test_grep instead of a bare grep in the range-diff test, to
+  prepare for mm/test-grep-lint.
+- Link to v3: https://patch.msgid.link/20260616-toon-git-replay-drop-merges-v3-0-153e9eb99ce1@iotcl.com
+
+Changes in v3:
+- Add --linearize to Documentation SYNOPSIS, and mention it's
+  incompatible with --revert.
+- Small language change in help message for --linearize.
+- Rephrase comment to include last_commit isn't modified when
+  linearizing merges.
+- Remove test that was added in earlier versions, but actually is
+  a duplicate of 'replaying merge commits is not supported yet'.
+- Add test to verify --revert and --linearize are incompatible.
+- Properly test that replaying down to root with --linearize works.
+- Add test for --linearize with --advance.
+- Add test that uses git-range-diff(1) to verify the patches created by
+  --linearize are correct.
+- Link to v2: https://patch.msgid.link/20260610-toon-git-replay-drop-merges-v2-0-5714a71c6d83@iotcl.com
+
+Changes in v2:
+- Restructured the conditions to detect merge commits and added a line
+  of comment why the loop continues.
+- Rewrote tests to use the history from the setup step and added a few
+  test cases.
+- Re-added Johannes's Signed-off-by trailer. Johannes gave me the
+  patches with this trailer, and if I understand correctly, I can keep
+  it. Please let me know if that wrong.
+- Link to v1: https://patch.msgid.link/20260608-toon-git-replay-drop-merges-v1-0-e3ee71fce7b4@iotcl.com
+
+---
+Toon Claes (3):
+      replay: add helper to put entry into replayed_commits
+      replay: resolve the replay base outside pick_regular_commit()
+      replay: offer an option to linearize the commit topology
+
+ Documentation/git-replay.adoc |  19 +++++++-
+ builtin/replay.c              |   6 ++-
+ replay.c                      |  87 +++++++++++++++++++++++----------
+ replay.h                      |   5 ++
+ t/t3650-replay-basics.sh      | 109 +++++++++++++++++++++++++++++++++++++++++-
+ 5 files changed, 198 insertions(+), 28 deletions(-)
+
+Range-diff versus v7:
+
+1:  4faca15008 = 1:  0dc78a2a4b replay: add helper to put entry into replayed_commits
+2:  a32f28e1ec = 2:  7522f5940f replay: resolve the replay base outside pick_regular_commit()
+3:  2a689c90eb ! 3:  6f27442866 replay: offer an option to linearize the commit topology
+    @@ Commit message
+         Without `--linearize` this replays 'topic1' and 'topic2' onto 'main'
+         independently and updates both refs.
+     
+    -    With `--linearize` the whole set is flattened into one line: the ranges
+    -    are stacked on top of each other rather than replayed side by side, so
+    -    both refs end up pointing at different points along that single history.
+    +    For now this is disallowed with option `--linearize`. Linearizing more
+    +    than one branch at once would concatenate unrelated histories into a
+    +    single line, and update each branch to some point in that line. That
+    +    won't be the result most users want, especially because the order
+    +    depends on the order of the revision walk, not the order of the branch
+    +    names on the command line.
+     
+    -    Replaying all revision ranges into one single linear history is
+    -    intentional and it's the only way to ensure predictable results. A user
+    -    who wants to linearize ranges independently is advised to use separate
+    -    git-replay(1) invocations.
+    +    For the same reason disallow the use of `--contained` with
+    +    `--linearize`.
+     
+    -    Linearizing is a distinct operation, and flattening merge commits is
+    -    just one aspect of that. Recreating merges would be a separate mode, so
+    -    rather than mirror git-rebase(1)'s `--rebase-merges[=<mode>]` interface,
+    -    git-replay(1) uses its own `--linearize` option.
+    +    Users who want to linearize multiple branches are advised to do this in
+    +    separate git-replay(1) invocations. Linearizing multiple branches at
+    +    once might be added later.
+    +
+    +    Note that `--linearize` is not modeled after git-rebase(1)'s
+    +    `--rebase-merges[=<mode>]` interface. Recreating merges, by preserving
+    +    their topology, is a distinct operation that would be a separate mode.
+    +    `--linearize` only drops merges and replays commits linearly. So
+    +    git-replay(1) uses its own option rather than reusing that interface.
+     
+         Based-on-patches-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+         Signed-off-by: Toon Claes <toon@iotcl.com>
+    @@ Documentation/git-replay.adoc: incompatible with `--contained` (which is a modif
+     +the merge commit itself is dropped. A ref that pointed to a merge commit
+     +is updated to the merge's last replayed ancestor.
+     ++
+    -+This flattens the `<revision-range>` as a whole. When multiple revision
+    -+ranges are given they are stacked on top of each other into one linear
+    -+history. Each of their refs is updated to point to its position in that
+    -+history. To linearize ranges separately, replay them in separate `git
+    ++Only a single branch can be linearized at a time: `--linearize` cannot
+    ++be combined with multiple positive revisions or with `--contained`,
+    ++because that would concatenate otherwise unrelated histories into one
+    ++line. To linearize several branches, replay them in separate `git
+     +replay` invocations.
+     +
+      <revision-range>::
+    @@ builtin/replay.c: int cmd_replay(int argc,
+      		OPT_END()
+      	};
+      
+    +@@ builtin/replay.c: int cmd_replay(int argc,
+    + 				  opts.contained, "--contained");
+    + 	die_for_incompatible_opt2(!!opts.ref, "--ref",
+    + 				  !!opts.contained, "--contained");
+    ++	die_for_incompatible_opt2(opts.linearize, "--linearize",
+    ++				  !!opts.contained, "--contained");
+    + 
+    + 	/* Parse ref action mode from command line or config */
+    + 	ref_mode = get_ref_action_mode(repo, ref_action);
+     
+      ## replay.c ##
+    +@@ replay.c: int replay_revisions(struct rev_info *revs,
+    + 	set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto,
+    + 			   &detached_head, &advance, &revert, &onto, &update_refs);
+    + 
+    ++	if (opts->linearize &&
+    ++	    update_refs && strset_get_size(update_refs) > 1) {
+    ++		ret = error(_("'--linearize' cannot be used with multiple revision ranges"));
+    ++		goto out;
+    ++	}
+    ++
+    + 	if (opts->ref) {
+    + 		struct object_id oid;
+    + 
+     @@ replay.c: int replay_revisions(struct rev_info *revs,
+      	while ((commit = get_revision(revs))) {
+      		const struct name_decoration *decoration;
+    @@ t/t3650-replay-basics.sh: test_expect_success '--onto with --ref rejects multipl
+     +	test_line_count = 3 out
+     +'
+     +
+    -+test_expect_success 'replay with --linearize rebase multiple divergent branches into a single line' '
+    -+	git replay --ref-action=print --linearize \
+    -+		--onto main ^B topic2 topic3 topic4 >result &&
+    -+
+    -+	test_line_count = 3 result &&
+    -+	cut -f 3 -d " " result >new-branch-tips &&
+    -+
+    -+	>expect &&
+    -+	for i in 2 3 4
+    -+	do
+    -+		printf "update refs/heads/topic$i " >>expect &&
+    -+		printf "%s " $(grep topic$i result | cut -f 3 -d " ") >>expect &&
+    -+		git rev-parse topic$i >>expect || return 1
+    -+	done &&
+    -+
+    -+	test_cmp expect result &&
+    -+
+    -+	test_write_lines           E D C M L B A >expect2 &&
+    -+	test_write_lines     H G F E D C M L B A >expect3 &&
+    -+	test_write_lines J I H G F E D C M L B A >expect4 &&
+    -+
+    -+	for i in 2 3 4
+    -+	do
+    -+		git log --format=%s $(grep topic$i result | cut -f 3 -d " ") >actual &&
+    -+		test_cmp expect$i actual || return 1
+    -+	done
+    ++test_expect_success '--linearize rejects multiple revision ranges' '
+    ++	test_must_fail git replay --ref-action=print --linearize \
+    ++		--onto main ^B topic2 topic3 topic4 2>err &&
+    ++	test_grep "cannot be used with multiple revision ranges" err
+     +'
+     +
+     +test_expect_success 'replay with --linearize of a divergent merge keeps both sides' '
+    @@ t/t3650-replay-basics.sh: test_expect_success '--onto with --ref rejects multipl
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success '--linearize with --contained updates contained refs' '
+    -+	git replay --ref-action=print --linearize --contained \
+    -+		--onto main ^B topic-with-merge >result &&
+    -+
+    -+	test_line_count = 2 result &&
+    -+
+    -+	git log --format=%s $(head -n 1 result | cut -f 3 -d " ") >actual &&
+    -+	test_write_lines J I M L B A >expect &&
+    -+	test_cmp expect actual &&
+    -+
+    -+	git log --format=%s $(tail -n 1 result | cut -f 3 -d " ") >actual &&
+    -+	test_write_lines O N J I M L B A >expect &&
+    -+	test_cmp expect actual
+    ++test_expect_success '--linearize and --contained cannot be used together' '
+    ++	test_must_fail git replay --ref-action=print --linearize --contained \
+    ++		--onto main ^B topic-with-merge 2>err &&
+    ++	test_grep "cannot be used together" err
+     +'
+     +
+     +test_expect_success 'replay --revert with --linearize reverts a range containing a merge' '
+
+
+---
+base-commit: 13c7afec212fc97ce257d15601659314c6673d6c
+change-id: 20260604-toon-git-replay-drop-merges-807fa008d395
 
