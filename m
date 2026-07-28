@@ -1,90 +1,109 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA4547ACD4
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 22:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AB74749E7
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 22:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785276647; cv=none; b=OPOUvKnF1JRo9/S/4UzysJXEzHqrpKlTEk7hc/wKKeqardVuzCe48j2L/0aELXt6rDuOCYrTN3RzONMsJl6XPgoRyx995n1ywPVPJRZXkqbhwq/do8dgnkgBkUwkwNoGpwi1CbgHnxoXwCJLLu2Uz+dQYFTc7xQZBLx973LFsUM=
+	t=1785278707; cv=none; b=f3wH0j/NNwPmI0dSnrLxaJiZrcyialPdFIkfIE/0OeYJ6srT9S0HGGJ1tl+SDk8VrBVeD2/RqxG3T1PjuMks8LrSdHHFaDd23Zg6bSKKYYcTAK3bcDkrlR5zSIGFg7WBVJDgoiR1S07LsKcNULwRfYBakI9aEsTd9BxVQF+bTJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785276647; c=relaxed/simple;
-	bh=+Wzrf4Gtt+eNrBivUk/sJvV2igrn1rqhNC9vLPhwiAk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KxDx7rOSmiqPUqqgK/85egWHP/aldfkBtR9Cd1j5UgRB/9Oau5uZGsE7M71R6FabIDv0slwqu1LcHT+KJYnDMP5XTykUom8ZP13X2M9oY0wJ8AzA2WMRDAxmzSKP5voQ/PPT06URxt6XmvgyDdcc6T6XAByJ0/dwINj9YUvgfl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s8GwQ4y8; arc=none smtp.client-ip=209.85.210.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785278707; c=relaxed/simple;
+	bh=T/wddv4dHiT40/2l06Qb9FeU6qOpjFgijbBpOPPNLEw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K2MhYn7IgYUHe0SS7/cPkRJArcu1B3GyGHvWRtfaNXGyxjL+Hc8Hn64hhCjWAPY9FF69uf1fMNPBQujjTxqyNPmbSwWX07WduEVkUxGdKz+0AJ8/u+yEwLPQ2V9vUzRFWqyotYsIP2H1mVKIw36RRL4oYFEiK1jrXFHM+dts1t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X/GNYPRy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O/jfoa0o; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s8GwQ4y8"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7ec1e9d3359so321439a34.0
-        for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:10:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785276642; x=1785881442; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+Wzrf4Gtt+eNrBivUk/sJvV2igrn1rqhNC9vLPhwiAk=;
-        b=s8GwQ4y80Op4cdy2pYssw93QPDXcFVBhpYYStS0EnqG6Ux/PNY31xmX+7jPVkRij1U
-         7jhEl/vuP6OOb4bZPfLGhqCJBXLJsaIINfLViftm8tPs0ojXNxtikPdCsDDgY3ss/3JP
-         F1FVULfUhLgPj/NqDvB+GEGmcFc4ETHGwsY+2fNUhPVhKaUy8LGrDrnfmv+jh0+wHqju
-         nRDmvCccQLCUsmVwiv/W9H7SvxLU60LrRMzBCOb2FxglrN8NobeQeasR7BGwtJphKXfE
-         alrEdphRkhZMAwbvmDrL0KUXP/u+2tYGsramu77Qa4N49FyMUv5Hbos2va3vs6fktb81
-         +ZxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785276642; x=1785881442;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+Wzrf4Gtt+eNrBivUk/sJvV2igrn1rqhNC9vLPhwiAk=;
-        b=TFOOk7vO6v1b46SqFaCklbRfv9yxywmsx8t/a1Xq6PElz0gQXrqu+MOUpZZWInsGu2
-         xhvmuBi6p/6BkJi4DBaXAv/fRqqRyJHpdeQrfaGw4MSdg2ZBGJ1YRTCN4jAXUfFBvkty
-         9VCcXCCZSNR5AyR8T7nEKZvMN1vDmGi6VyqO1/AsWUQRN/6CcvySqBPAygK7/h6sgy1k
-         0zrptRv5P+lE7yPz0AOCjVFjl0mAUduSQnq5u8afs0XR5o0u9hiwY8IMTeBLlSeC0FUp
-         C1CzHFc3WiUUBSVUasxKhuA8Z9SJdOOwe7BRkMCf+/Y9Ynm7AjrEMVGwA+l2iyU5tijm
-         hmXg==
-X-Gm-Message-State: AOJu0Yy0qt7OeAAtUrL1fTfZDhaHdH1O0x64apqXalD/1NInbZ30PRU7
-	RY+nsbxcsfX/3HOD0NeZe/ZHV5FfrE3P06NtL8LJGCHNK9DgLgbiJ6y8hwhNhw==
-X-Gm-Gg: AR+sD13cym8rkP0EzTSVOFvktVU73XWb1lcxWhhM/vCR8BAo//vyUR7xsCeJ7h+rNQU
-	uiMGmR+Gv5IlMNYfFJ7Z8ouXZiqWgQi99N8J9A4yaTrMTnfM9xDTH7el/pw4EKmpqgwTPLxnxkc
-	CqcybGpNhaugBb7ybmLovQaI5ntn1tVCR6KS/gG7ZMB83ZknTpRzgCiJsm4CgN0peiZojGXWd7J
-	ZO2ugk0ngmLH4J+f+IteEsAGW5wQZakEi2iYsO9br71m6MeWtJfkFefNBhLH4yqvdkQchTEcMD7
-	TUsNknVsN2OgmRt/zrOHKLA9iifFYFK3wSv51kW5pft9EyZA/Nshafuh2A3uugeHqqksQNr6IeF
-	MpNf1El9rK/sLk75ToZ+zm0JjXAuyWMBsdN82Y9J8zGSkjhK6fEXdjpEwpAmzFKAucuN1wjKnAo
-	0pkglFs+vUBqOs7yDGQGgf1IrFyIOfhKZRGUDurBUmNH5E0w/wGynhpQ==
-X-Received: by 2002:a05:6830:2116:b0:7e9:b537:102d with SMTP id 46e09a7af769-7efff296d3fmr2248107a34.26.1785276641911;
-        Tue, 28 Jul 2026 15:10:41 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f00d9a9396sm761730a34.26.2026.07.28.15.10.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 15:10:41 -0700 (PDT)
-Date: Tue, 28 Jul 2026 17:10:40 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/9] t/u-odb-inmemory: implement wrapper for writing
- objects
-Message-ID: <amkoeX3HeUWqwqeu@denethor>
-References: <20260717-pks-odb-move-loose-object-writing-v1-0-46446a3cb5b7@pks.im>
- <20260717-pks-odb-move-loose-object-writing-v1-2-46446a3cb5b7@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X/GNYPRy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O/jfoa0o"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 04AE77A0465;
+	Tue, 28 Jul 2026 18:45:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 28 Jul 2026 18:45:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785278704; x=1785365104; bh=kfzRRk1bRb
+	fMFwzFc1g9tCQJPb7uSSUuxNWvYOYXV0U=; b=X/GNYPRyszNkRheorbmYl+iLqM
+	3I5bnaZSon6ZbjEacIcMKVpJbROgTLojSQWGdg1qseMfwp7nKd1lKnaITd26SCU4
+	66KiZtNdh4lajHTCxJJFU0hCqgzNlIkfcYr0iG6G8pSHy5eWOyGjYcm8gBk+yhsI
+	DnZQCgRJnPLsjJ6uudUDap3z52wcBlNsaKNsPbhm7p/6wfjjZtWWRbpms1xlP4b6
+	FuNRKdEy/JA4+HRmdyhr8DmX+rbKM8PMe0qMAlAWDsgf3TDx2pJgdLRLnRW6nTtT
+	5Bj7ulie6uVBJG1ET5ZeZ88y4bm1UzLFI9LH1VD9/A7GX+auetqRQe09CQew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785278704; x=1785365104; bh=kfzRRk1bRbfMFwzFc1g9tCQJPb7uSSUuxNW
+	vYOYXV0U=; b=O/jfoa0opxxEGbqHYRPaFMfvjZmDHYOTWJjxmltIP7nrLYrjF6Z
+	mR4hGIKuCQeOqpW44jUwFc/Khi3KJnlyPEHt0vDsHeMLtz+GnY8da5jC/MLUkFcG
+	WLrgr+7yZO6Xfoaeq40AwIJ4hpRCtReHTJnS57GCRtnQFMAf9xLiUgTVEQ/qoTIJ
+	CXsfd4ez9hZ4AK5E98dVD0Mm+ChhQ/v1/Cci3iZg798MlYETSfV67UvoSAX7FiPe
+	9PX0Sqav4iY97NOdR0reSa8taIJ5HcRXSPuhXKMho3PmnXyryTXsbnLPXr1tX5nE
+	7YNBP9t1U51enmjefR9Lu8aDYFd/EwcglBg==
+X-ME-Sender: <xms:8DBpaggjs8ec8Ng7S6qJy7dKdcy_mwVX2wsVJioacYN5M-27AgoynQ>
+    <xme:8DBpagDbTZfKI_N8qhC7FWN4DizheWie1Gx6PSVfmUjyOzf9nEk1TJ0WMUUV5AYM2
+    ZWuBM87H3gTx6VO64908tUGovflN3YRoxMoVEE5BsRt_ANmVjkwKZI>
+X-ME-Received: <xmr:8DBpatFM0rDQli6lPY3lj-aQvpajSCk6yWQcvi2gV9Q6QcisJWwA1g0GBFzudYgWfyBVyBYjHkHJixqKnvjUMcwcDRo86a561w>
+X-ME-Proxy-Cause: dmFkZTEnHx4o2bOH7IWco/Ey0SeIm14ntGS5rmcN1b5MNW/Av8cbpVQqkxascLllWDEpDP
+    ksVbOXbnPuOi8/7FDrlQ7EieFh4GMEhQBtBOPTWnn7/TDc8MPdoBTFvhKbjSKVVNJZOpNJ
+    VU4I/1KH82fUl49TmWYA27AV3r55H4Xq/VVToWEuoC8KWQeH8D75H8PpbhlhM18dfwJ4jC
+    n9a6A73QcdqtoGfp5L5n1/X8/AOVEqKI3ExgPVBYdfogQW3cVNgbHFjBkd54+vlKZQkDez
+    8vROptRLpQBunJSH8kDXU6Lefpid/PtYwIc2nOzboDxIV0qhQ2ZYzufkIAtr+2TsF3EmNc
+    /aarsPB2fmLxXqV4GtmpucsWhu6T/S7/DV8vzp8EWsO9B2oxjfYD7H60PlhsUtceN6LuNu
+    NlhUVcqt2rDQHFjw45EXXsGzxkMMaEAeb17BY8h3RZd1fLcy4sZ7f5C0pfgv1ss4bv5qcf
+    Hv4HSd9N1331+hHRvnAjVyyaDGpcSJYgkJ7VMKVjzwOt0FM/CX4HbAB5TJo0qz+zbFxacm
+    Qs5oNyM/S02poM+KZw8Mw88ImwfHxB/EN8DMQfIehpxKrXx41T3KFCbVY4EBwalnp+Divv
+    lLENteH+/4+EUwaGxBFzpPCNQ3bxOplGUTpCBs2tcRq2xrmwS67mB4egBtAQ
+X-ME-Proxy: <xmx:8DBpagKJWiKgaNetG0RHuZxd1MEKgL4kzrqdRY54JsRQpqNBEf31uQ>
+    <xmx:8DBpaplXva7jmfA-ynx6mpEhAQyeWHtzG5q-FOPpSlxlqJyzsLWRyw>
+    <xmx:8DBpagQQ9ECy6FmZSpsNX6u7w796yhTLEzfffvJ5T5MUbD0jIqT8NA>
+    <xmx:8DBpajJ96bEDQX6atihfYbwO4gaZXD4a2kyUWnYdzDYrrxMDLAnLeA>
+    <xmx:8DBpaicBCIJR_LOHf6U8hV6LhCT10ElMNEtOzEzGPqEJlMjMriqXQpmP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jul 2026 18:45:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] mingw: skip symlink type auto-detection for network
+ share targets
+In-Reply-To: <pull.2189.git.1785239196007.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Tue, 28 Jul 2026 11:46:35
+	+0000")
+References: <pull.2189.git.1785239196007.gitgitgadget@gmail.com>
+Date: Tue, 28 Jul 2026 15:45:02 -0700
+Message-ID: <xmqqcxw6d98x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260717-pks-odb-move-loose-object-writing-v1-2-46446a3cb5b7@pks.im>
+Content-Type: text/plain
 
-On 26/07/17 11:32AM, Patrick Steinhardt wrote:
-> In the next commit we're about to change how objects are being written
-> into the object database source. Prepare for this refactoring by
-> introducing a wrapper function into our unit tests so that we don't have
-> to adjust all callsites.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Ok, I assume future patches will extend the `cl_assert_write_object()`
-wrapper function logic which would make sense. The patch itself looks
-trivially correct.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> On Windows, symbolic links come in two flavors: file symlinks and
+> directory symlinks.  Since Git was born on Linux where this distinction
+> does not exist, Git for Windows has to auto-detect the type by looking
+> at the target.  When the target does not yet exist at symlink creation
+> time, Git for Windows creates a "phantom" file symlink and later, once
+> checkout is complete, calls `CreateFileW()` on the target to check
+> whether it is actually a directory.
+> ...
+> Note that there are legitimate paths starting with a single backslash
+> that are _not_ network paths: drive-less absolute paths are interpreted
+> as relative to the current working directory's drive. In practice, these
+> are highly uncommon (and brittle, just one working directory change away
+> from breaking). In any case, the only consequence is now that the
+> symlink type of those has to be specified via Git attributes, is all.
 
--Justin
+Thanks, will queue.
