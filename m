@@ -1,86 +1,82 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8974334DB
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 18:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9D043A7F1
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 18:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785263047; cv=none; b=E3sSckLWtzwhmy5ILXC8xaW0uvk+biSzVSX0BRBIfyKipgRJ1fWA8ZD6SMMq6OzJAcKN9lsLOq436UAoOfrK4OZv39QIkMPVgSvGwqI0qA2tQiHV8lS3IJI3tQbjY5m3AerAzWqBP9+TSjoqc62MPg2fTDuDxQHKEnQa41M1PGw=
+	t=1785263199; cv=none; b=urbqqVBIPXLgwFPEDc16KVE3AUqcXF6IDzwgxqo0eVhv8LTYHkA3g+gxlvx715VWDsRyeMctisHifAeLoVOu5Cub8er/N4Kb0tA4UlKZaO2bqkY2z+CAhsRH5Lu5+2bn9J8NehGm/g02kG0Hv1Lk4VRPIGHKXuTowybx1Cmy36U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785263047; c=relaxed/simple;
-	bh=lIrtGDFpgiLHl1ZwpAI12LVseznxnl+hDKfOWvlvnyc=;
+	s=arc-20240116; t=1785263199; c=relaxed/simple;
+	bh=WEw7bzuDS6NIpL/exn1P2KGi5tu5AoRey399fnfv4Dk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c0YAIxVoqOYHISD57SdkbKeaj8JTxWyHPuyDnnimJf0SjJQ0t6GnjyPhZfXCcGPl+v60adeoTjYLhz+9MOhsA4O/wLwZwa2btvqMvtluREajJjkZkV3hcyvA5PI4XL++Yy3cKP2BPkFzNuv27biELoFlUXhOKMHmGtWn3llE0uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YEhlbOeN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mV4UoC0G; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=FvkrpwoOOUKhjMjXWFF0nLztelQw+tw+v4rwxg8n9KJf0aNi5UlGhZf9pyMiIVYIazUkzS1FeyZEuhJgnXIeRERjP/ELm+W/f0VC3U5yDa5lGuWpp9Rr/xooYLi9gDB1zN+jvmiXFQlajSbO4/fYOG8VGx8m/Hh37lkAa7filSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fLah1RKV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nia5tqde; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YEhlbOeN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mV4UoC0G"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EDECD7A0486;
-	Tue, 28 Jul 2026 14:24:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 28 Jul 2026 14:24:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fLah1RKV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nia5tqde"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C14B87A0468;
+	Tue, 28 Jul 2026 14:26:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 28 Jul 2026 14:26:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785263044; x=1785349444; bh=b/Dlf3q9KB
-	ScDdgUj03FrKJzcKBUWyMrLzr41Bg36cs=; b=YEhlbOeNONTWLd2IR9EOeApsac
-	S7nWbtAsYZHp5gHh6uX8DxfBsuonTf2Pb9PbFvN5HdPdxKEVMJFZ/EHxkrr/RdiN
-	KEdMz9L9O2z+cF1jzFuUkQiZnfWv76QfbTtgKmHRP4y7ywNqf/hGwGOfqxkO8qOP
-	gEDKDYgzkHqDbBgSDkXrl0c1L87hjmPy+Ftni/kVBtSPSXBfiV7DdE8ez6howba+
-	jKfGQ0PidCJJOgNJPVy6mMHCDaY2sKtlRRrM/ZXqXUpKQj7lq3rsuY1Vj1jqUVp0
-	ibq33KadmSl+sSYr9ZyiIhHFityFmJW/fGrZv/d8UplI06BgNmoZnIgYKQyA==
+	:subject:to:to; s=fm1; t=1785263196; x=1785349596; bh=WEw7bzuDS6
+	NIpL/exn1P2KGi5tu5AoRey399fnfv4Dk=; b=fLah1RKVn1UGP8CDRjpKDBHpxf
+	CbqtHh9AcU0okHsygxJK4in7wJPvQ7woU7ef7HJw714PgDezNY7V5T0rO1tyRiTM
+	3apiW7xJZxJsaY5xYulsxymOD5av/GovUwtk9JNjHc3Q5L5zxZnSTJt8J+LoOHEy
+	Md3NsICGrOHTiI7fEYARC6Rqelachs0XhHn0xcsh/f7E3kZNyl5ltl1KSt2c76Mf
+	/XnrIY038WloX/AV9+Qczld+fGLt6BNlMp55tMQMCBS3Jmfv3gkgH1kCxx0y30N5
+	AcRQjBujBguir0Vqc6d10meH5eBBhdDSAQn2sKJvfcTUs7due9qoXZdMSAMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785263044; x=1785349444; bh=b/Dlf3q9KBScDdgUj03FrKJzcKBUWyMrLzr
-	41Bg36cs=; b=mV4UoC0GAvtCdMGVN2+xllNJxc4RF1GKCKXE5gFn2HLvq2Pun1g
-	TfPLhqsmpwHC2Ev36n44Qq800UY0QQnnt8JJKYOhU7rAMXBC8O0eKMMPeB+yTsRh
-	pk5LrXZ4zJcK4LQuEY8glWhCys0sSNRRBOzj31bPbHG0kEqv3zR9B8YZwds6ALAr
-	72Ko/DNeoNxLbRreuAnp4WVkYK/an71IMeC52Fz0ezCd7tbR+7M9A1D12Ir/8Met
-	9KQiT3iGnUzUekEJkvpnqzRp3iDaUw7if2fhPNqXZbZF0ajBaoL0ViDZSY5PzV+W
-	OZltFvgoUbkhSTUUWcR6YrLrmg4iv47RSvA==
-X-ME-Sender: <xms:xPNoary0imuk-DxM7BoXjX0PWeVNV3ekXWf2Q5M0PAtstQ2hLykRUQ>
-    <xme:xPNoaljgjQyAPXFneG2rddpZETVwgynFxwq1OF3SdWgKPtVEerpbn-CaE2lFZTNbe
-    RHzFuoEEhzHLAXeDswg1RWBrdfsYiyDvy3gvQd2z26O5FYGNQvK0w>
-X-ME-Received: <xmr:xPNoanlxW9x1pMrUKPF66HOTKwLyf4AVQ8XR02JGFInBShgo87jWqzJmrmzcYJdvN8yyBpsEWpMgZCe2tzFj70v5taaR2DYHZw>
-X-ME-Proxy-Cause: dmFkZTGg4AZtzp0jHJYZX74XjeK7ulBuhswMLqipQ17mvUuhxgC7F0TE4nPXrhssUp53Kd
-    zClSgoHLbi/7mKfoIEYDB8kuCmo0rXt1CK3QRt/6m49QB9AxkvBE7AHZ9ygipIYqBzkWEf
-    9bKHr1H2m0VOCY8f6xA2EPR9poVnxZkTz94voYwaXlHQJptiuQ0FbL+VnmK5IFPbb0n5SU
-    wBGDls4FAitB7l7UtOO0VXP+WFBjQxpm81aCMnVxLwVqmpUib8RkUcOSrxkBSbVmRqBYPP
-    NZP1wjeRr3RRIF6aUJ4/4Y+HP4A2M4jn7XJMcEp7vtrmRi6vC+R7hhWRkGtVV4uAwKRvpe
-    vQwScaLn/NRT79o1Eq/XGGU5b4MkB3/VB91lQ948HGvXe0nSYiLzC6v5iodfwIXV7OXb3E
-    /UCGPesOoT1VcnA1ua96r3lXETYsYRVE4uOZgSV3b87O4Yk/FECnjcaIX4mN2Mlc6G7zEO
-    zl08sWWMXd9E3cPpurYtVbFotmOnruUOyKhzRoanT8/iwAuiL4XRiAJ2uOki9aj7p7m00Y
-    blY0Ky8SQAYAUOTd0fnPKIaOwTQ++gOOiAt7N/ntpbwbjz/sKznmzuglEJYjAexL+Ai5HX
-    8zphgmBo8bUwhebyylOGmxbK9lMykwE03JCC4Odnk6t3+u94w2QNQiHP1h2w
-X-ME-Proxy: <xmx:xPNoarh0HRNKRn8OaSqu7TqjBz9nwGdYpFKA9fJIezJgBEaJdeHBMw>
-    <xmx:xPNoar3WvAsABvjT5dyr46vx1X10Z7JfqAj4tEO08Q6MuAhdu7Unow>
-    <xmx:xPNoakKc3tZDC1rzFsCazUXuNW2FtJMZIBXsV1CRHFK159fEg6qTmQ>
-    <xmx:xPNoarwv3jlolD-Dzeg_ySyOcNtod1QbQ5DlL97jVW4yXZAUyQenxw>
-    <xmx:xPNoatfHbi2C0Xs8ZB2_r8zjP1ZsNxc8r8no1BhUHRyW44pOMXZnmDP0>
+	1785263196; x=1785349596; bh=WEw7bzuDS6NIpL/exn1P2KGi5tu5AoRey39
+	9fnfv4Dk=; b=nia5tqdeXZAC2mCT+fOTqw6pKuGn/1BOiRmJDF+0CilgrQf8DeK
+	ohw6eS1JgKwr5xpLky8d7dN82xeZyE03UP7lbnROS8+4mdSYjS7IR7hn2YOquv/r
+	O75VMXAcxJg5VdPhfA+UwkGqZnNulQYAFaDAAnQTstpLRCnbYyWCZN2HHS0L7zHF
+	EJ3uUZelmtfvOtQuutSavRwi5+iNclVEZgWNhJS/ui72G9WP8hB0f0L63IvYtaSz
+	cm5Lv1QYyhSymhy/Js/BgShl6u2ELKtJ7PMrZaY9bKKnsPvPmbrqBLw1iiFkUTjQ
+	eIcKIEN1AOHdh3TiJZFsLvCOvsTG4tBhlYg==
+X-ME-Sender: <xms:XPRoakN4wpT2E8Dg0x3rI8zSXUs-hS23D27TQZScy0RIBSQtavJriQ>
+    <xme:XPRoah1NyiFkKPmBPR2wM1wMwdIHgVgCoXoyPerKjrD33yrmpBrL1WqsxyJSs4Ypm
+    1yfwbl-7ylriIrPRyLb4l0sBh5QDUNh-CEDbrU30hefKypGib6_>
+X-ME-Received: <xmr:XPRoajl2OQSYBXmJWGJobWGMnKvdEsJeOy77O3MAi-aMqKsWUvsLn7_YeDE7eVS7ky2VHNzw2BYNIakW0EQ9qs14mlbUeyeTNQ>
+X-ME-Proxy-Cause: dmFkZTFJqgEPnnW50lbhuqKFbWvJ5vx85z+wpBAHS/fplGhEuPjg1KaFU4P9qIwBRRWcNh
+    s4iic8trMgj98G3cf/T2TvpdQr+IP5+bEjlVbR3dJClcMZoWIlalJa/QHqAGwl1Qt7MA0W
+    RQwteHYLbX6cNa95HDl+h7jH/3fatpk0W5e9q1rwzaSK+nPvUUP6M7JtX0cqJJRx7Y7q+Y
+    YMC5ae8i774MlST2eJXBFXT56rtPoSAUIVffgK7ipQdq16hzaZsUqnSLRYVIdk5CnI/4RN
+    7NcT/X/1R2OFeXxzKYgu/9DD57kQez6uuadL0lftxO3RquHBqqvltig/7720KOK1BczsT+
+    8zrgLzR3s4NHIzCxruppBvNZ2naZY6RWqPvFMntg/7U7sp5eTZnet2EXL8tNfCrIxTYw/W
+    AQRBX6tnfBVmdc8d/+c/EYYNj/iuZfonHQ2LEon8CaqyBeL/wr0751AdylrKBTTCt+6QGs
+    InN501opSylRY/d75Xx7WCOFBOCgPLP6uTxlb1o1ExH5lA41O3HPt8GonNpNcP3KAS1UTO
+    lhD0fx7e892v1uMFvIwJrGVrXTiWX7tYIbPbsh+Qs1gjgFOrcIRSJRSPG+QiaHOcK0lU62
+    McfgwGzHUYl2e4OnfOg6rRi5iB/6WHPqTFLC0myQKIDCMk6Z/4AZ40RnhDfw
+X-ME-Proxy: <xmx:XPRoaoW221ytzvRljkPtzH0q-zEViMr3vIGOBHZwiy_fOFy4qrGWdA>
+    <xmx:XPRoapvxOb0V8seS-vFFrYT1-R2qTxjyQaRArTfoxp79ptIuCcqX4Q>
+    <xmx:XPRoarZ6ncmm_468pH7WKtp7E_x9yQPFANmw8unvWnEwEyg9PAebVQ>
+    <xmx:XPRoaoULTp4f1_g6r5UoZkBXBRTyon7uexo_JYuKYcRtAZJAO2j-oQ>
+    <xmx:XPRoaj_ySUqm2yFRhdQm1RL1Gc3uGMuudK5rSZzUCs-BU39Li5aJ_uQb>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 14:24:04 -0400 (EDT)
+ 28 Jul 2026 14:26:35 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Hardik Kumar <hardikxk@gmail.com>,  git@vger.kernel.org,  =?utf-8?Q?Re?=
- =?utf-8?Q?n=C3=A9?= Scharfe
- <l.s.r@web.de>,  Patrick Steinhardt <ps@pks.im>,  Pablo Sabater
- <pabloosabaterr@gmail.com>
-Subject: Re: [PATCH v4] utf8: replace utf8_strwidth todo with descriptive
- comment
-In-Reply-To: <c8fb2eba-c1c8-4f59-b467-e6d4766623d8@gmail.com> (Phillip Wood's
-	message of "Tue, 28 Jul 2026 16:41:11 +0100")
-References: <20260726123427.173877-1-hardikxk@gmail.com>
-	<20260727211520.84289-1-hardikxk@gmail.com>
-	<c8fb2eba-c1c8-4f59-b467-e6d4766623d8@gmail.com>
-Date: Tue, 28 Jul 2026 11:24:03 -0700
-Message-ID: <xmqq33x3dlbw.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v8 0/3] Teach git-replay(1) to linearize merge commits
+In-Reply-To: <20260728-toon-git-replay-drop-merges-v8-0-ced11dffe749@iotcl.com>
+	(Toon Claes's message of "Tue, 28 Jul 2026 17:45:50 +0200")
+References: <20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com>
+	<20260728-toon-git-replay-drop-merges-v8-0-ced11dffe749@iotcl.com>
+Date: Tue, 28 Jul 2026 11:26:34 -0700
+Message-ID: <xmqqy0evc6n9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,60 +86,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> I don't think this comment, or the lines below add anything useful to 
-> the message. It would be better to say something like
+> As an alternative to dscho's patch series to replay merges[1], add
+> an option to git-replay(1) to linearize merges. This mimics what
+> git-rebase(1) does with --no-rebase-merges (the default).
 >
-> As we do not want to change the return type, update the comment to 
-> explain that and the need for the explicit cast.
-
-Perfect ;-)
-
->> diff --git a/utf8.c b/utf8.c
->> index 96460cc..1b55bd4 100644
->> --- a/utf8.c
->> +++ b/utf8.c
->> @@ -227,8 +227,9 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
->>   	}
->>   
->>   	/*
->> -	 * TODO: fix the interface of this function and `utf8_strwidth()` to
->> -	 * return `size_t` instead of `int`.
->> +	 * The function is used in multiple locations where the callers
->> +	 * expect the result to be a signed int value. We cast the
->> +	 * result to an int to avoid changing signatures of all callers.
+> The first two patches do some refactoring. The third patch implements
+> the actual change. The original patch was kindly provided by Dscho,
+> which I've tweaked to be upstreamed.
 >
-> The last sentence does not really capture the reasons given in the 
-> message of the commit that added this comment. If you haven't done so 
-> already you should read it - see 937b71cc8b (utf8: fix overflow when 
-> returning string width, 2022-12-01). The fundamental reason to call 
-> cast_size_t_to_int(), rather than relying on an implicit conversion to 
-> the return type, is not about changing signatures, it is about avoiding 
-> an overflow that caused git to crash.
+> The --linearize option is only added to git-replay(1) and not to
+> git-history(1) because in my opinion it doesn't make much sense to do
+> so, but I'm happy to hear if anyone disagrees.
+>
+> Dscho's series to replay merges[1] needs a bit of rework to fit on top
+> of this, but I'm happy to help figuring that out. We've been discussing
+> to either name the option --flatten or --linearize, but I've decided on
+> "linearize" because the documentation of git-rebase(1) also mentions
+> "linearize".
+>
+> [1]: <pull.2106.git.1778107405.gitgitgadget@gmail.com>
+>
+> ---
+> Changes in v8:
+> - Disallow multiple revision ranges with --linearize.
+> - Disallow --contained with --linearize.
+> - Link to v7: https://patch.msgid.link/20260707-toon-git-replay-drop-merges-v7-0-808ab9b4afa6@iotcl.com
 
-The comment should also answer why the callers want an int, and
-whether that is a legitimate need.  Topics the comment may want to
-cover include:
-
-   - Callers want display width; we will never deal with output
-     wider than 2 billion columns, so int is adequate, provided we
-     do not cause bugs due to integer wraparound.
-
-   - The return value is used to compute width in constructs like:
-
-        printf("%*s", width, string)
-
-     which requires int, not size_t.  Instead of forcing these
-     callers to call cast_size_t_to_int() individually, this
-     function should return int after ensuring the value is correct
-     without wraparound.
-
-This is in addition to explaining why we want cast_size_t_to_int(),
-as you described above.
-
-> When you send a new version of the patch please CC everyone who 
-> commented on previous versions so they don't have to trawl the list to 
-> find it.
+The topic has been cooking in 'next' since Jul 9th, so I'll revert
+the merge and queue this iteration instead, making sure I do not
+accidentally merge it down to 'next' prematurely.
 
 Thanks.
