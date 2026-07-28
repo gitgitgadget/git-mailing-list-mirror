@@ -1,72 +1,70 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18CB3D9534
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 19:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3564E4734C6
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 20:14:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785265252; cv=none; b=G4i2jGXGo0NnceJs3FEw+zNfx4VyfjNZOzJuH4lD2NO3c0ggjOHDp6FeJvs+YFzjP4S2NZbA+pzMiuYTqAWQG8+DTPG4tMxH2l3YrikrghvBUKvh9HM3dsgQ1hcjJUXM6TkGkIeVQEWnbgHu/ERwJ9HQU9pppoIIQXdp7nk+rOg=
+	t=1785269650; cv=none; b=FNbszvNULSjvuNkn7vgkNqpv1F1E36opEt9Z8xiPcXv7pc5h0Kqm9mRrmt8RjSpphnRzp5/hSFzhyrVa9Xqq4tVLqPwFdQX7qds0B8uzh6zVtdYy+jANvZ1/nSTeJdo34J0r82EB+HklxjoRnZoynu/gDRuoeK7pc9qIOE3jy2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785265252; c=relaxed/simple;
-	bh=EIyg2pVLSWB49WYyKB1fKxE2UJW9U4jXZtgrJ7muzEQ=;
+	s=arc-20240116; t=1785269650; c=relaxed/simple;
+	bh=jqUooDpwGfwelryQDW7CnVRPxx3kdni3qWPiiAR9b74=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rc3XjeU3dShUfFJBwHylkdohEpIdH3ARD3KEptkVDCG+WlePkf3sI5owBxbCRO5fhtz2XGeGgWQVEgOPFWC/lrZdavLzpYDkDPR0+J75fp9oIPdoWB/qG+ARrM6rstTwa/v4ih/B0LWegzkFcsdpdA0epDrTO8COBCsL5fTgjUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L1ki/R1o; arc=none smtp.client-ip=209.85.161.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=g0dQRilf2LP0raPdeo4saeKq8ShBDFIefq1uIcg8DduZk9AIremT7ilFQ3SY/9bwBfQBrnAyajSXkSnIvL1KfUTJrI/8tfA+TlUVVDdF30x1d3G4eG6Sp7vNKAuzpVKd/2QN9udSvG8chYaxJyVm5t1DNtd+rKQSyBFM1WSu66E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gHkMpQUX; arc=none smtp.client-ip=209.85.210.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L1ki/R1o"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6aae244ef49so150268eaf.2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2026 12:00:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gHkMpQUX"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7e9f1f24cbcso270480a34.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 13:14:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785265232; x=1785870032; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785269648; x=1785874448; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=ftHt5FVyaUlSk1nwq4WkVfcaev3wH6uAn5XqZq0iDiU=;
-        b=L1ki/R1o9ZXqadUvr9eTpQ+RK1EN8NeGQZ/a/4g8DyOhCeFsxqUow8yup2Q8SGzvLR
-         iHewZoSrAOsxfdcWZgQClBKm+kbhehmNTF2CYWS2nlV7FhsWxWWw1ZHScl4AQFS0XIAM
-         6vkNZre6xwGs867zQmWciXTCNAum9GVRxRE7tKQNJamdu5ShNtp43vDniU13x9c0AEgr
-         tKKLDsZew14axIz1WcTCwMrago9/axY+D9F1e9wRhe1UeCbW0LC74iBED8snpWqfJH7T
-         1nOZ7ZnMh933hHirPq2aVzcNVg5Swjlh+UM/5AUoxsPAxmw1WCQN3uHSRYuObTRv2Gb7
-         +IWw==
+        bh=x0oITKhX3swAivYE2Rtr4T+hjRrfwRG59qZoxgd4OE4=;
+        b=gHkMpQUXU+gt4BoedNYmr1d2N2F34IhBvy8O9Qgzu8fCb6qBZo2FDYs+4sNH+/MBX9
+         HTAt9G4g51o3+8z+RD1zayh2g/fO40FeI0scqc8eIvLQRrbeMMFkDdrhhUEMe4WcAnRm
+         YQkbjVbGKj21ZcH5K4JM1zVeV4yiUDCn02eSOWMY96uLiDeGwYxBaka2Po/534ShpNcS
+         lh3r0TSZxVHTCocBDQYPz/qgDNSsk6vKcVazNn+yOCFYo+quMILwuqtdUuPW1Gf8Nzhc
+         b/sRuW6SPLkMLPC3G3FCB/LAPHEkyr36l4jry3Xo44kmCQOUE7MHwAZ3cXSLjHKAkyvB
+         QX0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785265232; x=1785870032;
+        d=1e100.net; s=20251104; t=1785269648; x=1785874448;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ftHt5FVyaUlSk1nwq4WkVfcaev3wH6uAn5XqZq0iDiU=;
-        b=qOM+6pIeo3yEuazsCokHIAXctmxmX4By/IF/7ijr5r6WysV15g14DKvL5/U+Xgsr/W
-         pRhJdvRfvlfMVP0XYVXV+o94uW0Hqgm8TXFTqRoUGvjuLwP4u5VK+p/4MgeTnRHZ4hob
-         KxkRrEbGFVvN4BrvUM2jVVnFCJhgWXOXA6zfqlb0qOphcy6gosJBa6oOH+CO1OFo4HmM
-         a9TqvliDj+diqTTTSO6WFdd+7qLeE8gPidpbIFmyjzavL9+qg4g5wtg4IV9VaEUq99H0
-         ET9Onb8JeTMwmTa0wJjJt6z+xezUBzzPG6uZvuzcNbDEgHn/AxXutqmOT1l+Xp8Kla1T
-         l28g==
-X-Gm-Message-State: AOJu0YyprpMtsgk2b3bhuXP81CMVnMo+D8/Rnm3LWgZPnc4cA6lBCwQJ
-	ieJaMVRnssRfDPhN8OXSsehH5qLwK4S04jSX8GKG8UC5hRb4cO5nXV/d
-X-Gm-Gg: AR+sD11c6efohwZN/ZWuegz3kzTb4hjBLIi61/VBKQh+nPuOyHKaZC/kI0C22DIsPYx
-	1ABqX0yiMfab0BwH/s0eiImX8eP/vdMfrJ1GJnkquIHhtgnNw/hsT1BjMFgqXnZDxsr4XgMdpIm
-	aLRNMqyvo8PmMrU77RmYBR61QglcS8oK0S7+yyz4qxdl5VjBxwjqQHKiJBavXqzL60NxCk/ydmH
-	hVC3VNw2kj3iTdmvjM4w/sPV9EmZvsqxiT180MTZBPuYB34d0Cgm5HhxIprjfFYgqMGQbP/1X0M
-	iaD/RPN0qzMhUND0SIz+blVrPnIXojZm7AP0NpNH8v9Yc6kiHSwLoJ+q2Jnp8Ikti0uHdQqV7Oj
-	ujgU88IUw831hiToZI7p36E4Uf3YUcF/N533NkYB5tqj5hdvcSqZTjEiZlS1wO3gloTPfiUw=
-X-Received: by 2002:a05:6820:f007:b0:6a3:7a25:c084 with SMTP id 006d021491bc7-6ac96de16ecmr1866737eaf.69.1785265232270;
-        Tue, 28 Jul 2026 12:00:32 -0700 (PDT)
+        bh=x0oITKhX3swAivYE2Rtr4T+hjRrfwRG59qZoxgd4OE4=;
+        b=N7gOpWze/Mmm/4TX7Cu4uOQ298PiGOrIF4TbycP5crc09EMluDsllhnz0Y9A8jX5hJ
+         etLBm921akHCh01y+dIM06mj9ipFPUrRIF2v4icch0XQxRcIhdFHUu/0xc0Jp6Tt6axA
+         mdBWnaDpfLfT2Si2dEEqUEBX1Xk/oKRbpuVj21i5AvU8PVSaOj4/LjBuRvBRx5SB37eG
+         F4WGhiHNIyA0YoM10gQFLCYxhsgqMecJOAz7Yxv5w8joFQsI9QbkkMMNcznM+dAMEeim
+         unrJV4H3x1DftDXRMq8FZhZBBZX8sUJbPVCyxJ6NL0oFxexJXpzesILIvrHvx3ITD3rt
+         thMw==
+X-Gm-Message-State: AOJu0YyNeP5vifSrfZm5cz2vjOjoytoO0UviWux/GelQ7+HBeMu4hqnS
+	bOt0KZXIUdobsZAAfJADiIrjalzNPe0vwdaT85l1mHwVU6NPTmZPPGE4JWIasA==
+X-Gm-Gg: AR+sD13NVWX/H6UVvffnV5131jQz4YXhMUCgd2/XWnYJ0OGjeD9aWFsoFy5tIzGvRfq
+	y8WMu+mBvJ3V8TWZmigc4Rxm0PSj6vbNzJPp2ROifDTKls6a98isTsOQu7f/jnpVkZKNNOoh67f
+	dYL8K1i65Z79LpnY4FZcLDa+v3yTuCD4JiUw1XyxxUzQhfi83l9mxYk9gujQ/QS/WY3LYwxqxwW
+	1FH8dUuwoDGoeDIzd9NKL+PGmjhWtBPI+PBKPcsvi5V+NhUy0x3DWj/pNB1HuveJRuttuO2OBKv
+	8KusNWehURoVFGJ6EWF/VOcb44bCdaMYyKHBZ4uh+CFp1lEzN+dQWW97Y1tPC+cGVHbXK3mu7bS
+	bMbNpFRatYvQOf8l5kkjgfFf8K88X4STJKfXAsaeHwc7rhWk7ZPV4xtaribBOqFvz/wMtn5s=
+X-Received: by 2002:a05:6820:208a:b0:6a1:7c3e:f62a with SMTP id 006d021491bc7-6ac96a4ec81mr1735483eaf.12.1785269648013;
+        Tue, 28 Jul 2026 13:14:08 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6aca5254057sm211606eaf.4.2026.07.28.12.00.31
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f00d5f3aebsm582065a34.9.2026.07.28.13.14.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 12:00:31 -0700 (PDT)
-Date: Tue, 28 Jul 2026 14:00:29 -0500
+        Tue, 28 Jul 2026 13:14:07 -0700 (PDT)
+Date: Tue, 28 Jul 2026 15:14:05 -0500
 From: Justin Tobler <jltobler@gmail.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, lucasseikioshiro@gmail.com
-Subject: Re: [PATCH v3 4/7] repo: add path.hooks with absolute and relative
- suffix formatting
-Message-ID: <amjjMwAHSbkQgtPb@denethor>
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260726104343.16933-1-jayatheerthkulkarni2005@gmail.com>
- <20260726104343.16933-5-jayatheerthkulkarni2005@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/5] loose: load loose object map for the correct source
+Message-ID: <amkMipjGA_7cwpOR@denethor>
+References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
+ <20260724-pks-odb-create-on-disk-v1-1-3b3d265d979b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,44 +73,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260726104343.16933-5-jayatheerthkulkarni2005@gmail.com>
+In-Reply-To: <20260724-pks-odb-create-on-disk-v1-1-3b3d265d979b@pks.im>
 
-On 26/07/26 04:13PM, K Jayatheerth wrote:
-> External tool integrations and validation systems need a stable way to
-> identify where the repository hooks are stored. Currently, this involves
-> relying on `git rev-parse --git-path hooks` or querying `core.hooksPath`
-> manually.
+On 26/07/24 05:48AM, Patrick Steinhardt wrote:
+> When loading the loose object map via `load_one_loose_object_map()` we
+> pass in both a repository and the corresponding source. We ultimately
+> don't really respect the passed-in source though as we instead always
+> load the map via the common directory. This doesn't make any sense
+> though, as the function is called in a loop through all sources, and as
+> such the expectation is that we'll load the map that belongs to the
+> given source.
+> 
+> Fix this bug by instead loading the map via the loose source's path.
 
-Similar to the comment in the previous patch, "External tool
-intergations and validation systems" seems overly specific IMO. Also,
-"need" is a bit strongly worded as I'm sure its not a requirement for
-every external script/tool.
+IIUC the primary source is always being used, does this mean that
+repositories using a compat hash and alternates are currently broken?
 
-> Introduce `path.hooks.absolute` and `path.hooks.relative` keys to
-> `git repo info`. This allows tools to discover the active hooks location
-> natively, ensuring proper resolution regardless of whether Git is using
-> the standard `.git/hooks` structure or a custom `core.hooksPath` setup.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  loose.c | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
+> 
+> diff --git a/loose.c b/loose.c
+> index bf01d3e42d..9dad75373b 100644
+> --- a/loose.c
+> +++ b/loose.c
+> @@ -61,9 +61,11 @@ static int insert_loose_map(struct odb_source_loose *loose,
+>  	return inserted;
+>  }
+>  
+> -static int load_one_loose_object_map(struct repository *repo, struct odb_source_loose *loose)
+> +static int load_one_loose_object_map(struct odb_source_loose *loose)
+>  {
+> -	struct strbuf buf = STRBUF_INIT, path = STRBUF_INIT;
+> +	struct repository *repo = loose->base.odb->repo;
 
-Per hooks path documentation:
+Ok, we really only need the repository to know the hash algo, but we can
+get this from the loose source.
 
-  The path can be either absolute or relative. A relative path is taken
-  as relative to the directory where the hooks are run.
-  
-  ...
+> +	struct strbuf buf = STRBUF_INIT;
+> +	char *path;
+>  	FILE *fp;
+>  	int ret = -1;
+>  
+> @@ -78,10 +80,10 @@ static int load_one_loose_object_map(struct repository *repo, struct odb_source_
+>  	insert_loose_map(loose, repo->hash_algo->empty_blob, repo->compat_hash_algo->empty_blob);
+>  	insert_loose_map(loose, repo->hash_algo->null_oid, repo->compat_hash_algo->null_oid);
+>  
+> -	repo_common_path_replace(repo, &path, "objects/loose-object-idx");
+> -	fp = fopen(path.buf, "rb");
+> +	path = xstrfmt("%s/loose-object-idx", loose->base.path);
 
-  You  can also disable all hooks entirely by setting core.hooksPath to
-  /dev/null.
-
-Should we handle this /dev/null case specially? It looks like:
-
-  $ git -c core.hooksPath=/dev/null rev-parse --git-path hooks
-
-just prints '/dev/null'. I do wonder if this makes much sense though in
-context of the relative path version of this key. From some quick
-testing, it appears the git-rev-parse(1) version of this option always
-prints the absolute path if that is what is configured (it appears to
-ignore --path-format). Maybe we should just special case /dev/null and
-return an empty string? I'm not entirely sure what the best route is
-here though.
+Now we use the correct path per source. Looks good.
 
 -Justin
