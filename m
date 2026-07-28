@@ -1,126 +1,220 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4567338593
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 16:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5442637DE8B
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 16:36:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785255766; cv=none; b=Y2FKY8yDmaBN71AmcWOqM5V51JlpwP+MtK6u0VCqm55MlxiebKxBv1WkAS1HDNHHeyyJRKeG5oDxP7CWgaR+hHZJwnfYANeWuAMAuL+zZ+Tc70D3mNUVtW+ONIC3mP7fInjQ88BNHfgVPhC6x9Dxzds+cu8G5EaOZwPIMkHR/ZY=
+	t=1785256573; cv=none; b=paHr8xX9onhRNiXZ1zdWxOrWV5ViUzeXV+cNDCoE4glrrBhcfXfLJGwf/DlGC+ErShlgjpolPAVlZ5PaBjKoPdgPnxHRs1jnPq24bpq4QPEpULS8nu+tfqdqWudSNklqArGq4/R1ump1e1CnpmuEtoPVkICIB1QM1jEFJlEz+yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785255766; c=relaxed/simple;
-	bh=GxDtKsqQ7lAPVD4nGuVwVp+21mExUfNe4TcivZRXvuk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JIQRLzC9bFlclZgaEMdCTmVjinWKbvnjHW9k/bbikA1IyOpR7x4ibYH18tFD0FcXBdk44Z7TY8sgKjzmgkdJngBVio72zQmK3FPUaG0DlYczB8ktTqpkpY16VBMRo3p1e7JMvjNUwBmmUuhBcgoeOxUoM8LtTcmBIONz50vpql8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WTSmAbJU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n1DEAPjG; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785256573; c=relaxed/simple;
+	bh=fKM8VUdJtomCCX/WW0GoM2PGTOgOFRd3Af0zdoaEAgE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fOBVi2+Cz2oYlVUv3M1xIc3SsZFxi9oh32jGPkren9t1FPDNljUStkEVzgr3umGU8bih7dZJGckGqJB7RBcQj5XhYG9c9XKy8jhM4Ua8tCJSqnrIMkqS+Tjwjcv2EfLL5dHUuSlESNlMTelw/e+FzHSSPA4JL3YR5YvAqfIqqY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PwMyFz3T; arc=none smtp.client-ip=209.85.160.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WTSmAbJU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n1DEAPjG"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id C9E8EEC0384;
-	Tue, 28 Jul 2026 12:22:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 28 Jul 2026 12:22:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785255763; x=1785342163; bh=OGvQDzSa8M
-	bMOAhE3iwYWimYjihYHY/f9E8O2kNY1Zc=; b=WTSmAbJU4UxV9+2KrLSmQxESDU
-	uKKThqkfCg8hqP7W0prpHnvOsGmj8an6Rm04n0ZmXbHL7tj1OiokyiVGDCZAN/Ic
-	MY1wFWfSArWwn9Kv5QcliwfGw4+eP8gx8A29cwJUuZDeaUctgAcEv2Fn2ZO5MXYB
-	39QhZD9pKhVhv2FUSvI8emWmhvmRR6Dpya5RxrNmRB+7N0dPvfMvJbROhR1m/Gy3
-	cULFs+rp7SR+X+hEKjHlA6c3rRLtoYlw50Q2NdlwzMmiCsc+vT2pMDWIVCxyXv/P
-	AmU4tVRjYJhDd6Spoa/ZTOTp9TmcuUWSDEJAG68qH4bEHascJ3uWW1pqeNjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785255763; x=1785342163; bh=OGvQDzSa8MbMOAhE3iwYWimYjihYHY/f9E8
-	O2kNY1Zc=; b=n1DEAPjGPgW0u0lB6VoN3d7J1TiwE9YFDQuf1xXLxUD0imnrFi1
-	vn9OitbNRX90pQ1fhWJyJC4moWBladpsmogt2yeHDgeQqPfChlM85rXGmv2691Tk
-	dJAi8+pQZozqK7fnFWjvJb9CiR8Wrj+C6PN7H1jN3YFwshXwl4cqhZrzDNTcDLsj
-	E2bTwVaj84EJtrJe3rweCd01iCspA/RaYveQcMbMLSCn8hSzrJrkGq3yMFpCRtJX
-	rTjoipGLMape9aWEw57CcEUhqCllK44jtBvH1NR1VYbVCv55sZ6A8u2T9fCHZbIs
-	aisEPyiFisc/Uc7aqXjwmTSi953px6g3CGA==
-X-ME-Sender: <xms:U9doaqrCovp6A26PjwHBzdNT6ff5tLLq3OzuvWtQ7hISBYdteL1GOQ>
-    <xme:U9doagGWu4R8mEfFtimUhL5cT1A6D6rRzQ5cvTo0SeHDQEsR_TvTyG2zwqWv1RYJi
-    ftca3W_dch_joA_V4szbLwK1qNf-NZwKSWh-gx6dWBuZRqRBryOIg>
-X-ME-Received: <xmr:U9doasnMDWg8U7VkEhH3n9xTWI-bTNcx_tOSb_oPPaDUwsQ2AXkKHIxlg1gBNiCmMQVMximK3tO88GtoFIEvQwv76b1lYxC9mw>
-X-ME-Proxy-Cause: dmFkZTGRQbVQF1HeCMhiCcwS6PbEIveeBs20FYaps7bYK1cktszEHxL5je1P4kA+crdGJB
-    ZQrh6d4aRXWIfnJxAMGoDUwJ0iQJPpbMlefZxBaGDVtdRQ5S0ce+gTQqITfERRawNX5Zh+
-    Lueohyg78W8AQ1LrQRuVEljVv2YSy2U/v6E6r5qUNAeI0vKwgl1BcsAo1XzXvdwti0/aNc
-    +WoFPo55vH260Rh4BxQHSvbMrAqNyPNGHcqCLIKrULj/ziy+BiHRFOf/WFdzqguxl6LWBF
-    mDzzvR39fTvtPRkGK7WMbjCa0wI6hOttDEw5KtYU9qyEhCY/t3FaHCLDYcRdhyt9aJ+8hZ
-    KLgGiZOZDsKjm4PTwDjv/kJsPtFbmA6W49i2lfdWeg3RwKpWGGUaTYJ4V44aPW9eOCB0eM
-    RvcOKISHPXHJOxRk3kEdBBsQUAosKLOg2ILDeVoRogQxeOnkQo1BgWNPOXIt2AXadBikSZ
-    NwHkXnUaCZQs/fIQ/gWX1CkEZYwWU76BnD0gKyBMEQgVfSgDpem5T4BsLv4o3hJt9dHNv/
-    roZRNHXAZApVlF99J5JNQJUS55ZSJ+9LzmF8x7ya20bFW3MChOBf/v1l+RLWWhaA5ubq2O
-    bJggZ96PcLLJDy+myunFuW6yV+FRjXEnFZZ2OV3ldIZdpRVjHNGN1FwSHZSw
-X-ME-Proxy: <xmx:U9doajlL87O0bT6ySU1PbdOvp97f21LH41XfVtvVX9SkWO4kVQfBvA>
-    <xmx:U9doatu4GWWmM8NNT2KStH9IJSyVIYAFZbMVYi7f4oaWrrVWD4Tzhg>
-    <xmx:U9doamn4fYad_PQHQWG0rdjdil7srEb2YZRcv9lXqwMumMADrabFFQ>
-    <xmx:U9doaoskcO0uKT5nv_q1GftxKtllb2WjKhvclTp16Q0DRns3r7c2sQ>
-    <xmx:U9doau3ZItvINymASGAtzd3hurw32RNr51u7AgMbkEaeEijDEoj-0SqR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 12:22:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] diff-lib: add idx/tree sanity check to oneway_diff
-In-Reply-To: <20260728151458.GB41931@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 28 Jul 2026 11:14:58 -0400")
-References: <20260726084550.GC2366012@coredump.intra.peff.net>
-	<20260726084705.GB3529698@coredump.intra.peff.net>
-	<20260727093912.GA591426@coredump.intra.peff.net>
-	<xmqq4ihkgd06.fsf@gitster.g>
-	<20260728151458.GB41931@coredump.intra.peff.net>
-Date: Tue, 28 Jul 2026 09:22:42 -0700
-Message-ID: <xmqqo6frdqy5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PwMyFz3T"
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-448b69cfc6dso3512383fac.3
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 09:36:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785256571; x=1785861371; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=eEsgFOp3n8tm7R1y9L/DUxDn8RW548wUHBZUCeaigGY=;
+        b=PwMyFz3TL3BosL+Rtk2tHwA6YAzXeQyDq7+Y5lu019kbK7xu1zHPN5zTqmIg4nf1qC
+         Cmw9/3/CC2NDCEKoIM98tRwG5XKEwcZgGpFFdZjCMTulOnE6EzboN6ocduSWZgK4KR8t
+         3IGumFe9maUGCc/BmCx86PRNccG8Yndg6zu4Irnv2BQpSbOYqhU3JqlKpoG+aD5ND9km
+         oC0FskLqMGFA6CEJwAja7ym4Wviq6plKfTkiqDIiDKP5L0W3SrjpsFiv4i3wAAtY0K6R
+         gSlS7XGFmtSjgXgmMmU6CCBiI7gTOJa+ast7pLwqsnzevt72o/zbQ046DFNoOETukaPy
+         Foxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785256571; x=1785861371;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=eEsgFOp3n8tm7R1y9L/DUxDn8RW548wUHBZUCeaigGY=;
+        b=Yh2kq0ZvM9p0qmKZgEsCr7z/9ZXV8nSV1PV46aiPF0NiMV8mx+EyP6dl7K1HbDPWkK
+         hokVbqao75M9tyOazMEySya2WzOuslYDXvryuaXygHR/WHBsqED87XQLAKQ5UmXly0Hn
+         NTLIW7bhYSg9C1+TQsM/I9/FpUGxmZAU3Hefsv2k65+3SC4klqar/e0LDCAsthAnU2FF
+         hOWfmKJT7arDnsLdFVXCuOqqZEjYLTOqQO0E/eHO0C41yHe3AgXTvMbyUuX57H/e7dx+
+         JwsmVounhX16WfT9bUmoUMkuXMuXFXKqaqtHQ4D2AxXY6MnqPWv951PDcpF1oL9SC4mM
+         ORLw==
+X-Gm-Message-State: AOJu0YyNzReBYIoIlNbuws7rM/zZU87xmzUfNiaCebI+N48V6goJzAl/
+	4SmuDvUxkvF8dg0GwmElJGltGl2cMoQO0ZcKL3bBP39WWN17GE3faMRw
+X-Gm-Gg: AR+sD10JAaeKrP7lsro1T+PcJRq+OAu9cjJdkXPjh8ewRzvDzB3BiZ5Af6Rr8DzeFwo
+	R6mBqx9myygLIckEKQx8Bvxv3T1M+vGZTM6Lcx3sQC/ae3hZHtr4dE6ybWB8p60VX47zuVvlBQv
+	Ae4IU775xIM+OgCMfzLV2HhbZvOw5XfFhQoTwvEXtuceC6JwK8Qn/B5868lWNLXdpmPI8nTHP2F
+	BobVzbXt8Y+QIini44jAmpDhxZmJKfw2nCajEX7iNa8385BOxVxHzqbUVRP+ut7qRLvHHn6r3st
+	/QICbqm/kN+0Mf56xhfIxn9EE5gvCUjJ+hE77RMUEAWDSrymjhSJ/n87+kPXOr5nGEjNedUYBwt
+	WdKiMQNLAaAxtXX2IUKmzQ91h92PJWCKPIgcISoD1gDWZBU9yqEfjZl73TdGMs5tUPil3g3Y=
+X-Received: by 2002:a05:6871:68e:b0:448:75b1:9c8a with SMTP id 586e51a60fabf-4586c98447cmr1739733fac.16.1785256571120;
+        Tue, 28 Jul 2026 09:36:11 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-458864c8a5bsm338928fac.8.2026.07.28.09.36.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jul 2026 09:36:10 -0700 (PDT)
+Date: Tue, 28 Jul 2026 11:36:04 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, lucasseikioshiro@gmail.com
+Subject: Re: [PATCH v3 1/7] repo: add path.toplevel with absolute and
+ relative suffix formatting
+Message-ID: <amjUPEgenletgbp5@denethor>
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+ <20260726104343.16933-1-jayatheerthkulkarni2005@gmail.com>
+ <20260726104343.16933-2-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260726104343.16933-2-jayatheerthkulkarni2005@gmail.com>
 
-Jeff King <peff@peff.net> writes:
+On 26/07/26 04:13PM, K Jayatheerth wrote:
+> Scripts frequently need to find the root directory of a repository's
+> working tree. Currently, this requires using `git rev-parse --show-toplevel`
+> or inferring it from other path components.
+> 
+> Introduce `path.toplevel.absolute` and `path.toplevel.relative` keys
+> to `git repo info`. This allows scripts to retrieve the top-level
+> working tree path in a predictable, strictly formatted manner without
+> relying on `rev-parse`.
 
->> We could help humans that the BUG is not expected to fire and only
->> to help static analysis by a crafted message, perhaps?
->> 
->>    if (!idx && !tree)
->>  	BUG("Hey, Coverity, this does not happen");
->
-> If we are helping humans we can probably afford to be a little more
-> eloquent. ;)
+Ok, this seems like suitable information to also look up under
+git-repo-info.
 
-I do not mind eloquence but does the comment clearly say this is
-primarily for unconfusing static analyzers?  My first reaction to
-the message was "OK, you explained very well why this condition
-would never happen, but then why do you need to check and BUG() on
-it???"
+> If requested in a bare repository where no working tree exists, the
+> command returns an empty string.
 
-But I guess the point is a future modification may invalidate this,
-in which case I agree with the comment.  If it is hard for static
-analysers to get it right, it probably is equally difficult to grok
-for AI agents many people seem to be using to draft their changes
-these days ;-).
+This matches the existing behavior in git-rev-parse(1). Makes sense.
 
-> +	/*
-> +	 * We should only see a NULL idx when the entry was present in the tree
-> +	 * but deleted in the idx. In which case it should be impossible
-> +	 * that a NULL tree was passed in (there would have been no entry at
-> +	 * all) or that we got a df conflict above (you need a directory and a
-> +	 * file to get such a conflict, which implies both sides are present).
-> +	 */
-> +	if (!idx && !tree)
-> +		BUG("oneway_diff with neither idx nor tree");
+> Mentored-by: Justin Tobler <jltobler@gmail.com>
+> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+>  Documentation/git-repo.adoc | 10 ++++++++++
+>  builtin/repo.c              | 28 ++++++++++++++++++++++++++++
+>  t/t1900-repo-info.sh        | 30 ++++++++++++++++++++++++++++++
+>  3 files changed, 68 insertions(+)
+> 
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> index ed7d80c690..e34abe5fea 100644
+> --- a/Documentation/git-repo.adoc
+> +++ b/Documentation/git-repo.adoc
+> @@ -119,6 +119,16 @@ values that they return:
+>  `path.gitdir.relative`::
+>  	The path to the Git repository directory relative to the current working directory.
+>  
+> +`path.toplevel.absolute`::
+> +	The canonical absolute path to the top-level directory of the
+> +	repository's working tree. Outputs an empty string if the repository
+> +	is bare.
 > +
->  	if (revs->diffopt.prefix &&
->  	    strncmp((idx ? idx : tree)->name, revs->diffopt.prefix,
->  		    revs->diffopt.prefix_length))
+> +`path.toplevel.relative`::
+> +	The path to the top-level directory of the repository's working
+> +	tree relative to the current working directory. Outputs an empty
+> +	string if the repository is bare.
+> +
+>  `references.format`::
+>  	The reference storage format. The valid values are:
+>  +
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index 042d6de558..194757eb18 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -121,6 +121,32 @@ static int get_path_gitdir_relative(struct repository *repo, struct strbuf *buf)
+>  	return 0;
+>  }
+>  
+> +static int get_path_toplevel_absolute(struct repository *repo, struct strbuf *buf)
+> +{
+> +	const char *work_tree = repo_get_work_tree(repo);
+> +
+> +	if (!work_tree) {
+> +		strbuf_addstr(buf, "");
+
+The strbuf here is already NULL-terminated when its initialized. I don't
+think this should be necessary.
+
+> +		return 0;
+> +	}
+> +
+> +	format_path(buf, work_tree, startup_info->prefix, PATH_FORMAT_CANONICAL);
+> +	return 0;
+> +}
+> +
+> +static int get_path_toplevel_relative(struct repository *repo, struct strbuf *buf)
+> +{
+> +	const char *work_tree = repo_get_work_tree(repo);
+> +
+> +	if (!work_tree) {
+> +		strbuf_addstr(buf, "");
+
+Same here.
+
+> +		return 0;
+> +	}
+> +
+> +	format_path(buf, work_tree, startup_info->prefix, PATH_FORMAT_RELATIVE);
+> +	return 0;
+> +}
+> +
+>  static int get_references_format(struct repository *repo, struct strbuf *buf)
+>  {
+>  	strbuf_addstr(buf,
+> @@ -137,6 +163,8 @@ static const struct repo_info_field repo_info_field[] = {
+>  	{ "path.commondir.relative", get_path_commondir_relative },
+>  	{ "path.gitdir.absolute", get_path_gitdir_absolute },
+>  	{ "path.gitdir.relative", get_path_gitdir_relative },
+> +	{ "path.toplevel.absolute", get_path_toplevel_absolute },
+> +	{ "path.toplevel.relative", get_path_toplevel_relative },
+>  	{ "references.format", get_references_format },
+>  };
+>  
+> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+> index ae8c22c817..fbb9063ee5 100755
+> --- a/t/t1900-repo-info.sh
+> +++ b/t/t1900-repo-info.sh
+> @@ -213,4 +213,34 @@ test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
+>  	'.git' \
+>  	'GIT_DIR="../.git" && export GIT_DIR'
+>  
+> +test_expect_success 'path.toplevel absolute and relative' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		mkdir -p repo/sub &&
+> +		cd repo/sub &&
+> +
+> +		ROOT="$(test-tool path-utils real_path ..)" &&
+> +
+> +		echo "path.toplevel.absolute=$ROOT" >expect.abs &&
+> +		git repo info path.toplevel.absolute >actual.abs &&
+> +		test_cmp expect.abs actual.abs &&
+> +
+> +		echo "path.toplevel.relative=../" >expect.rel &&
+> +		git repo info path.toplevel.relative >actual.rel &&
+> +		test_cmp expect.rel actual.rel
+> +	)
+> +'
+> +
+> +test_expect_success 'path.toplevel returns empty in a bare repository' '
+> +	test_when_finished "rm -rf bare.git" &&
+> +	git init --bare bare.git &&
+> +	(
+> +		cd bare.git &&
+> +		echo "path.toplevel.absolute=" >expect &&
+> +		git repo info path.toplevel.absolute >actual &&
+> +		test_cmp expect actual
+
+In this test we are only checking the absolute path. It probably
+wouldn't hurt to also check the relative path too.
+
+-Justin
