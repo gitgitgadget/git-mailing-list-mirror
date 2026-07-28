@@ -1,80 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1FA371D1E
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 16:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4567338593
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 16:22:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785255593; cv=none; b=txfrSGj3kuYYV/C/DUefetLd3fsR3iRb9as23G8j+YhcV+rY0TDyJnLcZJ+5qsp9WKjfLmemP8JJBXdNwiWB3ze+keLrYvRdNMKNPaheJlyDFfKf8d6cvMCEiEXdoklrldBwEaFSCuO45AQW0la0I1ilwiYAr6vkWfgAH0QeO3M=
+	t=1785255766; cv=none; b=Y2FKY8yDmaBN71AmcWOqM5V51JlpwP+MtK6u0VCqm55MlxiebKxBv1WkAS1HDNHHeyyJRKeG5oDxP7CWgaR+hHZJwnfYANeWuAMAuL+zZ+Tc70D3mNUVtW+ONIC3mP7fInjQ88BNHfgVPhC6x9Dxzds+cu8G5EaOZwPIMkHR/ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785255593; c=relaxed/simple;
-	bh=+EoeBa0gOW+2Oi5IRRLZt78yxyhj8I34nXCUNnj0xRI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JE/NufKQab8ny8C4C00VhggCk2VnY4cQrsuwZY4dWGDgPmo8nhrVHiofZGDaD0+D/bH7t/8jikjSa6XBsyE72l55L95E4tTpIMtK16uoiIBO8Pntzl1FloVjqGH6cRc+MFRYzubXpkFGrB2tjS+/X4pRNK9P7O9NnO/CseD75yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LeS9Nbp0; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1785255766; c=relaxed/simple;
+	bh=GxDtKsqQ7lAPVD4nGuVwVp+21mExUfNe4TcivZRXvuk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JIQRLzC9bFlclZgaEMdCTmVjinWKbvnjHW9k/bbikA1IyOpR7x4ibYH18tFD0FcXBdk44Z7TY8sgKjzmgkdJngBVio72zQmK3FPUaG0DlYczB8ktTqpkpY16VBMRo3p1e7JMvjNUwBmmUuhBcgoeOxUoM8LtTcmBIONz50vpql8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WTSmAbJU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n1DEAPjG; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LeS9Nbp0"
-Received: (qmail 81897 invoked by uid 106); 28 Jul 2026 16:19:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+EoeBa0gOW+2Oi5IRRLZt78yxyhj8I34nXCUNnj0xRI=; b=LeS9Nbp00uzdo7XJ/pidYbprLIqM40YuRrI4c6aOjYQGFT1EgTReF7/cQdN/+QuJT5yBVZbficGDi5F8MLN1oSY35FOacMZSRKGbfLTrKOyWfQNH8uHp7dgW9lw/DIA/lH4dih++mLr6aX5NvHvv/uOp56bqlKY89WdD+uURXQtUFugMF18iSzLKV0giOa2siSadtZIS+p9H68ZIvcEpidgWzQF2hkjS1OWXhMR9xE6+h9rmCexbOr8aDtN7QqhFErJPRQesO2QwZH6lxqHNlYJ7kjhzb55pg3sOCawvPgnGPQ1v1nC+/FNf8SHKiX6AxAgEGlaOQfiow3NLUMeE8w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Jul 2026 16:19:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 101163 invoked by uid 111); 28 Jul 2026 16:19:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2026 12:19:51 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 28 Jul 2026 12:19:49 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] t0014: generate deprecated command names dynamically
-Message-ID: <20260728161949.GD639637@coredump.intra.peff.net>
-References: <20260728143653.GB11894@coredump.intra.peff.net>
- <20260728143845.GB41686@coredump.intra.peff.net>
- <xmqqse53drwu.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WTSmAbJU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n1DEAPjG"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id C9E8EEC0384;
+	Tue, 28 Jul 2026 12:22:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 28 Jul 2026 12:22:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785255763; x=1785342163; bh=OGvQDzSa8M
+	bMOAhE3iwYWimYjihYHY/f9E8O2kNY1Zc=; b=WTSmAbJU4UxV9+2KrLSmQxESDU
+	uKKThqkfCg8hqP7W0prpHnvOsGmj8an6Rm04n0ZmXbHL7tj1OiokyiVGDCZAN/Ic
+	MY1wFWfSArWwn9Kv5QcliwfGw4+eP8gx8A29cwJUuZDeaUctgAcEv2Fn2ZO5MXYB
+	39QhZD9pKhVhv2FUSvI8emWmhvmRR6Dpya5RxrNmRB+7N0dPvfMvJbROhR1m/Gy3
+	cULFs+rp7SR+X+hEKjHlA6c3rRLtoYlw50Q2NdlwzMmiCsc+vT2pMDWIVCxyXv/P
+	AmU4tVRjYJhDd6Spoa/ZTOTp9TmcuUWSDEJAG68qH4bEHascJ3uWW1pqeNjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785255763; x=1785342163; bh=OGvQDzSa8MbMOAhE3iwYWimYjihYHY/f9E8
+	O2kNY1Zc=; b=n1DEAPjGPgW0u0lB6VoN3d7J1TiwE9YFDQuf1xXLxUD0imnrFi1
+	vn9OitbNRX90pQ1fhWJyJC4moWBladpsmogt2yeHDgeQqPfChlM85rXGmv2691Tk
+	dJAi8+pQZozqK7fnFWjvJb9CiR8Wrj+C6PN7H1jN3YFwshXwl4cqhZrzDNTcDLsj
+	E2bTwVaj84EJtrJe3rweCd01iCspA/RaYveQcMbMLSCn8hSzrJrkGq3yMFpCRtJX
+	rTjoipGLMape9aWEw57CcEUhqCllK44jtBvH1NR1VYbVCv55sZ6A8u2T9fCHZbIs
+	aisEPyiFisc/Uc7aqXjwmTSi953px6g3CGA==
+X-ME-Sender: <xms:U9doaqrCovp6A26PjwHBzdNT6ff5tLLq3OzuvWtQ7hISBYdteL1GOQ>
+    <xme:U9doagGWu4R8mEfFtimUhL5cT1A6D6rRzQ5cvTo0SeHDQEsR_TvTyG2zwqWv1RYJi
+    ftca3W_dch_joA_V4szbLwK1qNf-NZwKSWh-gx6dWBuZRqRBryOIg>
+X-ME-Received: <xmr:U9doasnMDWg8U7VkEhH3n9xTWI-bTNcx_tOSb_oPPaDUwsQ2AXkKHIxlg1gBNiCmMQVMximK3tO88GtoFIEvQwv76b1lYxC9mw>
+X-ME-Proxy-Cause: dmFkZTGRQbVQF1HeCMhiCcwS6PbEIveeBs20FYaps7bYK1cktszEHxL5je1P4kA+crdGJB
+    ZQrh6d4aRXWIfnJxAMGoDUwJ0iQJPpbMlefZxBaGDVtdRQ5S0ce+gTQqITfERRawNX5Zh+
+    Lueohyg78W8AQ1LrQRuVEljVv2YSy2U/v6E6r5qUNAeI0vKwgl1BcsAo1XzXvdwti0/aNc
+    +WoFPo55vH260Rh4BxQHSvbMrAqNyPNGHcqCLIKrULj/ziy+BiHRFOf/WFdzqguxl6LWBF
+    mDzzvR39fTvtPRkGK7WMbjCa0wI6hOttDEw5KtYU9qyEhCY/t3FaHCLDYcRdhyt9aJ+8hZ
+    KLgGiZOZDsKjm4PTwDjv/kJsPtFbmA6W49i2lfdWeg3RwKpWGGUaTYJ4V44aPW9eOCB0eM
+    RvcOKISHPXHJOxRk3kEdBBsQUAosKLOg2ILDeVoRogQxeOnkQo1BgWNPOXIt2AXadBikSZ
+    NwHkXnUaCZQs/fIQ/gWX1CkEZYwWU76BnD0gKyBMEQgVfSgDpem5T4BsLv4o3hJt9dHNv/
+    roZRNHXAZApVlF99J5JNQJUS55ZSJ+9LzmF8x7ya20bFW3MChOBf/v1l+RLWWhaA5ubq2O
+    bJggZ96PcLLJDy+myunFuW6yV+FRjXEnFZZ2OV3ldIZdpRVjHNGN1FwSHZSw
+X-ME-Proxy: <xmx:U9doajlL87O0bT6ySU1PbdOvp97f21LH41XfVtvVX9SkWO4kVQfBvA>
+    <xmx:U9doatu4GWWmM8NNT2KStH9IJSyVIYAFZbMVYi7f4oaWrrVWD4Tzhg>
+    <xmx:U9doamn4fYad_PQHQWG0rdjdil7srEb2YZRcv9lXqwMumMADrabFFQ>
+    <xmx:U9doaoskcO0uKT5nv_q1GftxKtllb2WjKhvclTp16Q0DRns3r7c2sQ>
+    <xmx:U9doau3ZItvINymASGAtzd3hurw32RNr51u7AgMbkEaeEijDEoj-0SqR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jul 2026 12:22:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] diff-lib: add idx/tree sanity check to oneway_diff
+In-Reply-To: <20260728151458.GB41931@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 28 Jul 2026 11:14:58 -0400")
+References: <20260726084550.GC2366012@coredump.intra.peff.net>
+	<20260726084705.GB3529698@coredump.intra.peff.net>
+	<20260727093912.GA591426@coredump.intra.peff.net>
+	<xmqq4ihkgd06.fsf@gitster.g>
+	<20260728151458.GB41931@coredump.intra.peff.net>
+Date: Tue, 28 Jul 2026 09:22:42 -0700
+Message-ID: <xmqqo6frdqy5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqse53drwu.fsf@gitster.g>
+Content-Type: text/plain
 
-On Tue, Jul 28, 2026 at 09:01:53AM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > We have a few tests related to aliasing of deprecated commands. They use
-> > whatchanged and pack-redundant because those are the only two deprecated
-> > commands we have. Eventually those commands will be removed, at which
-> > point these tests will be checking nothing useful (they'll just be
-> > regular aliases, which we already cover in other tests).
-> >
-> > We could remove them at that point, but the code to handle deprecated
-> > commands will still remain. We probably do want to keep the tests around
-> > for the eventual day that we deprecate more commands. So let's ask Git
-> > for its list of deprecated commands, and if we don't have any, skip
-> > those tests.
-> 
-> Ah, now I understand.  So HAVE_DEPRECATED prerequisite guards tests
-> that require at least two deprecated commands, so that we can test
-> cases with aliases that involve two commands among deprecated ones
-> referring to each other.  Obviously, with 0 or 1 deprecated commands,
-> there is no point to perform such tests.
+>> We could help humans that the BUG is not expected to fire and only
+>> to help static analysis by a crafted message, perhaps?
+>> 
+>>    if (!idx && !tree)
+>>  	BUG("Hey, Coverity, this does not happen");
+>
+> If we are helping humans we can probably afford to be a little more
+> eloquent. ;)
 
-Yeah. Sorry, maybe splitting the two just made it more confusing (it was
-really to make the diff a bit less heinous). I'm OK if you want to just
-squash them together (using the commit message from the second).
+I do not mind eloquence but does the comment clearly say this is
+primarily for unconfusing static analyzers?  My first reaction to
+the message was "OK, you explained very well why this condition
+would never happen, but then why do you need to check and BUG() on
+it???"
 
-I suspect we could _probably_ rewrite the "looping aliases" test to also
-run when there's only 1 deprecated command (just looping on itself). But
-since we have two now, and plan to have zero later, I don't know that
-it's worth the effort of doing so.
+But I guess the point is a future modification may invalidate this,
+in which case I agree with the comment.  If it is hard for static
+analysers to get it right, it probably is equally difficult to grok
+for AI agents many people seem to be using to draft their changes
+these days ;-).
 
--Peff
+> +	/*
+> +	 * We should only see a NULL idx when the entry was present in the tree
+> +	 * but deleted in the idx. In which case it should be impossible
+> +	 * that a NULL tree was passed in (there would have been no entry at
+> +	 * all) or that we got a df conflict above (you need a directory and a
+> +	 * file to get such a conflict, which implies both sides are present).
+> +	 */
+> +	if (!idx && !tree)
+> +		BUG("oneway_diff with neither idx nor tree");
+> +
+>  	if (revs->diffopt.prefix &&
+>  	    strncmp((idx ? idx : tree)->name, revs->diffopt.prefix,
+>  		    revs->diffopt.prefix_length))
