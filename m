@@ -1,69 +1,72 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DFE3191D3
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 23:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9021D9663
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 23:31:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785281366; cv=none; b=a97PAJXBwPb0YbiWwy4Qx5FmjGXX8ImDJoldfhwXnDJXncUWDKVdhSt7i42LbDtdQwvNyqVmp/dNxLAKGKxLQ061e8iDZw14QPiajr+TUQUcOmmSLITNaoSg5fwlEWJFMnEtiYpj/d18xhPenSwp8MHy0qfRPuaTVmVwwm95qvE=
+	t=1785281514; cv=none; b=f4ICGOyWx+yAkNNZH0Ycq+MoX8iLbOAGP2P0+vZtxr9IGafoZ99AGXNB4s4v49oIZ49jVf8HwNEhGsokoTfoVmMH2bhR682eiAj+zzzESDZVBYxST3Yj7ZFQIl8S+TI2omscEGGfXbS9o5yjD5Q5Q9pKGkXYdIXVbCo1FmVbH1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785281366; c=relaxed/simple;
-	bh=2mi+Opj9w9FvFj3SinNt/f1zhoXj4XlRy2qnf+9eTtE=;
+	s=arc-20240116; t=1785281514; c=relaxed/simple;
+	bh=67vRz1OS15tlykKeGgbCky0gQ3IV19jzcTQ41XdAcIY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vEnIvhTBbfye+JG3A9/IRiuZKJ2sP16Syi35khoezXGAw6F/QFXRMprUWTEKPH0pfMeM4yqtDOqOaKxyXrZqo3/rGE1o1GQqYPJUg2/a1kP6HZXlRH9E8vFUlwAtyrEOaxoKP1pzK7O9ZIQaau5YJIn9E76wH1Bcly39aKY4jL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=SKrI97zO; arc=none smtp.client-ip=74.125.224.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=ecJuEXErpt8mH/ij/uA3hmStxxjiGnhg6yT2iBzC1GYCdoialepOc62tkUcriC1aR4OCx3eetb14k7mB7F0zwlZsJfjvuV3s6ljY5VAVeAIs6NcyRtFz+4qwPz5+9zWsqL7MT6K0Wh7oBCB/3/IbPzFGTXHpIAR0ejfYp/gyWEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=WyZ/m65R; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="SKrI97zO"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6682259cb3dso711303d50.1
-        for <git@vger.kernel.org>; Tue, 28 Jul 2026 16:29:24 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="WyZ/m65R"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-81e69a2db34so6698167b3.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 16:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1785281363; x=1785886163; darn=vger.kernel.org;
+        d=openai.com; s=google; t=1785281512; x=1785886312; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=SCMiJaXvOIS3+01VguKIVvGmMeFcX4LsjM64wZqgLa0=;
-        b=SKrI97zO7Q13sR6NlxsT+1SmN6S3MJw/cAHyEtOrGaz5Zkw/mElapoEMlo8nFtM0ga
-         Pzs2c1uZGseCIlhSgm0B7j8UxBrk9Fh8xqcviimKYnw1aNwNiJfRKJh/41W7xdTGmJbD
-         XK7jb3mbhcxyCO1wXRyNeY+JoqXF6mLC4cqJg=
+        bh=YDin6SAdrN+0ArTFaDtEYgk63/ji8brYvF8wKs/MFcY=;
+        b=WyZ/m65RPVu8gFddyvaCoN5Iq04Pb9YyS4pB0bf36sOk0ZV7UCb1ilYP8A/Ogyv7hC
+         iK5iqykhUN29OhX4Br4hIoFa2IpjbeNUto1PQtZ1HQJ+KOOHBSkZAxLepmyiWYKlyuCh
+         DYZSpU80PPe5S19G/PA+NI1t1dkys6i2gMYD0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785281363; x=1785886163;
+        d=1e100.net; s=20251104; t=1785281512; x=1785886312;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SCMiJaXvOIS3+01VguKIVvGmMeFcX4LsjM64wZqgLa0=;
-        b=ib7dLAEbv+cKMsLHhIC61ZsUhKm946J5HhbL0UJCkJqJPy/IdrikKf3jgCXQPWto7b
-         FvEOhvQyeRogZj7jJly8fef6zMSyFnpMoXzdHhWAenDYxpuElWAU/va4fOXQomH7Yzj/
-         N4zwr5CqqYlGOmsGmMVhtujm+mUHsqs55HMgAbpM98Euw59hUGPL37nrhcDq41GBzjzA
-         tW1CaRNeiI8/8rGtnKXvwOdqKG4BQDRGz4+g2R8RosdN4TcYt6tpVqthmK8oUyZTnkZd
-         Zv6WKhiN505vHRETlwOUUAPE1vsapvlsLIObkm3JeIGtzae/T7Botz5crdYRfgH6n6Rv
-         iPbw==
-X-Gm-Message-State: AOJu0YwfWuIb+E2Mjx0VDUFdbKxvOQJ+G9WQr2anBH7+leRJELAO6Op7
-	WpVX3sbnQCP0atwxUMIBobpPL3CoAmNgnX0GOdNlI2e8fz8/gimwB/EO6zhNf5qnhzA=
-X-Gm-Gg: AR+sD12PpvOSyrzyWPgkJsxSvK1UMfqVm92MHeE0Uq96egUOT66g2xx6q6cF3nldS/F
-	8GHNRtpx1p6NBFpmD0pVAvgGfJTWNS9KNwAe/RsHzpZmLhbgmYT8JAbt9S65QAIP3mO8vJ3dSnQ
-	+D/sU5NhGYodMOz/M1J3q08gkFxPAFoWk6FpXZv5SZVjx+XF2JRAf0A9tyqOsZytlMt4mV60meh
-	SRlKPUPN/RShDzi7mHq0J96Djyj/yX/1HVPfKXZjwZ10aYlolQyUprggPJEaCYTyDUEsmdk7vLi
-	/+klVuo0URhEdtL7AnR52EJCNhpyS3d65sqpq0Y+6njH5MDr1bO1PLuHUrqKE6w/8/02UEq0gDZ
-	XAuTkaLHzxQ9g68fbI4kVzXvr2akK7VFtuu2lgDD9v3JfdmBXKb0ore7mq6gFH6D1t2zUi/wMaO
-	Kyd1nJpYZIncZn+Xdq+KFZrW2GbBxfYP+Xdlg5sIobi6YuWS6s4NxwUWebjrC2tI7QxNzchgL7d
-	CzHX5MbJ2ZXv0yIAFvwHovQv32EzQcMUGwFA7+07H8Xlo53bwmB1aWVf+s=
-X-Received: by 2002:a53:c056:0:10b0:667:8b93:4fdf with SMTP id 956f58d0204a3-66905860663mr1630700d50.49.1785281363465;
-        Tue, 28 Jul 2026 16:29:23 -0700 (PDT)
+        bh=YDin6SAdrN+0ArTFaDtEYgk63/ji8brYvF8wKs/MFcY=;
+        b=MxiFOy2pzd3kSJYd50jbn+cTjbiGhOUOKW/4outRfWow27QNrXuChRkrk/KQ52eemZ
+         2FBFf49UDZeibsukvNO5Z1gzd4SaZTh8jK4Ggu81Zq/+o2vvtdnfa+oGliJ7azlM/3L/
+         hotXoUr4bU1vCO2y0PlbAFuRPBfavsWBX76IqiqAL3So6cLS44LnSTvr9T+E0jJTTFbO
+         RCoUOPWSOOeNQEfWx2COk3gHxHBPaCPSxt0x4ODyM5N4BnArjgmzksT78+Az6xQTuVQV
+         4EXPtVXeGLpYTxdUI764THIn8Atu1lXCyG9VlcsWRbG9w0G7HjAarP3hh7EQAw60KqL9
+         w6Cw==
+X-Forwarded-Encrypted: i=1; AHgh+Rq0YtqSxwQOMDZA7E+m4W8LNfGx3i2BlPSejpwEWmgAkj2vYnVZCttXzicWmuTkEvFtfEY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1FJ5Gp76mmNE0Ql2VhHWDJy+WWzeL9gdj/YrYIhcTggaTG+hZ
+	5yjWhpz0D7OKL+fUUoW930jebl4PykBWcyBBXur/iZi5IPV81OB8tkeHbKlgHO1PRHM=
+X-Gm-Gg: AR+sD13JBgxHE70cdJ2HDe9kGgxf0wxESUYZlYTalkztPBMdwyGZsEIUL0FVcEA7NnI
+	w2RJJtQDUMp9Xi1Isx3lG5OgHWbES315LkaxMZce0zq+a42X8IrhaYxD/0I6avHS3+sg9rHaK9q
+	Csm/slSIuQdug6UkM04l30fzREN0Zhf0M7ysVopw4PYdRG2wC0kMM+lnBItTblTEMb0lgifxM83
+	buS2opu1B8CjhGueB2xI57jfEWObwP1Z3q21ZIt09ZoZoRU4S6Eq/9l6xh+DIRnCOCxV/fjWpQa
+	PiS9bO9JqXLxlbKkPgh/3kLj4oumU9E6PpqGzLURg7wfRnnnoLLVL8igH4FVcnF7X+WPmyDVqw7
+	JIrYCCwSWpGW4vQucotJlK+Zx/ew7ZivSPwWkNTdywhetpx96hDn0S5emRo6KDHXZdhM7wRp9PC
+	2nC1m/JpqFYkd0YtDvSp9awAXxlQuhgsCCt5w7lcMpOQ0V9lDoV42oX2ppxy0s0jI4vxEViAeTa
+	nbtRy+w4XX7Cktcd+CuSGZxIMpkmOY5l6l00SozmB0wA1Y=
+X-Received: by 2002:a05:690c:62c8:b0:7d1:dd7b:b71f with SMTP id 00721157ae682-81f99242bf1mr20835567b3.29.1785281512136;
+        Tue, 28 Jul 2026 16:31:52 -0700 (PDT)
 Received: from com-79390 ([20.102.114.220])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-669125fbd76sm711511d50.11.2026.07.28.16.29.22
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81fa27568c2sm8276217b3.5.2026.07.28.16.31.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 16:29:23 -0700 (PDT)
-Date: Tue, 28 Jul 2026 18:29:19 -0500
+        Tue, 28 Jul 2026 16:31:51 -0700 (PDT)
+Date: Tue, 28 Jul 2026 18:31:49 -0500
 From: Taylor Blau <ttaylorr@openai.com>
-To: friel@openai.com
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net, stolee@gmail.com,
-	me@ttaylorr.com, ps@pks.im, jonathantanmy@fastmail.com
-Subject: Re: [RFC PATCH] index-pack: optionally allow duplicate objects
-Message-ID: <amk7T6N5XhArUQwo@com-79390>
-References: <20260728042550.91133-2-friel@openai.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: David Lin <davidzylin@gmail.com>, git@vger.kernel.org,
+	David Lin <davidlin@stripe.com>
+Subject: Re: [PATCH v2] pack-bitmap: handle objects at bitmap position zero
+Message-ID: <amk75SuhyHBbx-E8@com-79390>
+References: <20260727171331.21088-1-davidlin@stripe.com>
+ <20260728135248.61304-1-davidlin@stripe.com>
+ <xmqq5x1yd968.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,218 +75,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260728042550.91133-2-friel@openai.com>
+In-Reply-To: <xmqq5x1yd968.fsf@gitster.g>
 
-On Mon, Jul 27, 2026 at 09:25:32PM -0700, friel@openai.com wrote:
-> Git's upload-pack normally uses pack-objects to select each reachable
-> object once before writing a response. A server can instead construct
-> that response by streaming entries from existing packs. When those
-> packs overlap, the same object can appear more than once.
+On Tue, Jul 28, 2026 at 03:46:39PM -0700, Junio C Hamano wrote:
+> David Lin <davidzylin@gmail.com> writes:
 >
-> Avoiding duplicates requires the producers to coordinate their object
-> selection or track object IDs across all input packs. A duplicate can
-> also be used as a delta base, so removing it can require buffering and
-> rewriting the response. Doing that work at request time gives up the
-> memory and latency benefits of streaming existing packs.
-
-Right. An out-of-tree implementation of upload-pack may choose to stitch
-multiple individual packs together by concatenating them, trading some
-pack generation time for a pack which may contain duplicate objects.
-
-While this series is primarily motivated by that use-case, I suspect
-that there are optimizations we could make within Git's implementation
-of upload-pack that would take advantage of environments where clients
-are prepared to accept packs that contain duplicate objects.
-
-That's not a goal of this patch, of course, but something to keep in
-mind as others review this.
-
-> Applies on top of tb/pack-with-duplicates.
+> > `bitmap_position()` only returns a negative value when an object is not
+> > present in the bitmap index.
+> > ...
+> > Also cover the non-pseudo-merge case by passing `HEAD` twice. The first
+> > occurrence initializes the base from its stored bitmap, and the second
+> > must recognize that position zero is already present.
+> >
+> > Helped-by: Taylor Blau <ttaylorr@openai.com>
+> > Signed-off-by: David Lin <davidlin@stripe.com>
+> > ---
+> > Changes since v1:
+> > - Clarify the bitmap disk load wordings.
+> > - Add coverage for the non-pseudo-merge case.
 >
->  Documentation/config/pack.adoc    |  11 ++
->  Documentation/git-index-pack.adoc |  12 ++-
->  builtin/index-pack.c              |  41 ++++++-
->  t/t5308-pack-detect-duplicates.sh | 171 ++++++++++++++++++++++++++++++
->  t/t5309-pack-delta-cycles.sh      |  10 ++
->  5 files changed, 241 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/config/pack.adoc b/Documentation/config/pack.adoc
-> index 22384c2d2f..2229878abe 100644
-> --- a/Documentation/config/pack.adoc
-> +++ b/Documentation/config/pack.adoc
-> @@ -39,6 +39,17 @@ is set to "multi", reuse parts of just the bitmapped packfile. This
->  can reduce memory and CPU usage to serve fetches, but might result in
->  sending a slightly larger pack. Defaults to true.
->
-> +pack.allowDuplicateObjects::
-> +	Allow linkgit:git-index-pack[1] to accept a pack containing
-> +	multiple copies of the same object while checking that the pack
-> +	is self-contained and connected. For example,
-> +	`git clone -c pack.allowDuplicateObjects <repository>` can accept
-> +	a pack generated from overlapping existing packs. Object and
-> +	connectivity checks are preserved. Explicit `--strict` and
-> +	`--verify` continue to reject duplicate objects.
-> +	`--no-allow-duplicate-objects` overrides this setting.
-> +	Defaults to `false`.
-> +
+> Thanks, both of you.  Will queue.
 
-A couple of brief thoughts here:
-
- - Is "while checking that the pack is self-contained and connected"
-   true in all cases? Certainly if we give the option
-   '--check-self-contained-any-connected' to 'index-pack'. But if
-   a user invokes "git -c pack.allowDuplicateObjects index-pack ...",
-   we will not bother to perform the same checks.
-
- - The "For example [...]" may be unnecessary here. I don't have a
-   strong feeling here either way, but it feels somewhat specific to
-   'git-clone(1)' so perhaps belongs there instead?
-
- - "Explicit `--strict` and `--verify` [...]" and the following
-   sentence. I think that this means to suggest that `--strict` and
-   `--verify` both continue to behave as-is, but setting this
-   configuration option allows them to conditionally accept
-   otherwise-good packs that happen to contain duplicate objects.
-
-   I wonder if these couple of sentences may be combined like: "When
-   `true`, linkgit:git-index-pack[1] will accept otherwise-valid packs
-   containing duplicate objects under `--strict` or `--verify`." But
-   reading further, I don't think that that's actually what this option
-   does. More below.
-
->  pack.island::
->  	An extended regular expression configuring a set of delta
->  	islands. See "DELTA ISLANDS" in linkgit:git-pack-objects[1]
-> diff --git a/Documentation/git-index-pack.adoc b/Documentation/git-index-pack.adoc
-> index 18036953c0..1cb11ff898 100644
-> --- a/Documentation/git-index-pack.adoc
-> +++ b/Documentation/git-index-pack.adoc
-> @@ -11,7 +11,9 @@ SYNOPSIS
->  [verse]
->  'git index-pack' [-v] [-o <index-file>] [--[no-]rev-index] <pack-file>
->  'git index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>]
-> -		  [--[no-]rev-index] [<pack-file>]
-> +		  [--[no-]rev-index]
-> +		  [--[no-]allow-duplicate-objects]
-> +		  [<pack-file>]
-
-Not the fault of this patch, but the synopsis and usage string
-(`index_pack_usage`) do not agree, hence the 'index-pack' entry in
-t/t0450/adoc-help-mismatches. So putting this on a new line is OK, but I
-think it's fine to keep this and "[<pack-file>]" on the same line as
-"[--[no-]rev-index]" in the pre-image of this patch.
-
->  DESCRIPTION
-> @@ -97,6 +99,14 @@ default and "Indexing objects" when `--stdin` is specified.
->  --check-self-contained-and-connected::
->  	Die if the pack contains broken links. For internal use only.
->
-> +--allow-duplicate-objects::
-> +--no-allow-duplicate-objects::
-> +	Allow or reject multiple copies of the same object while checking
-> +	that the pack is self-contained and connected. The default is
-> +	controlled by `pack.allowDuplicateObjects`. The command-line
-> +	option overrides the configuration. `--allow-duplicate-objects`
-> +	cannot be combined with `--strict` or `--verify`.
-
-Hmm. This suggests something other than what I gathered when reading the
-corresponding git-config(1) entry.
-
-Are there cases where we would want want to allow duplicate object,s but
-retain the other "--strict" behavior of dying when the pack contains
-broken objects, or links off to objects that we don't have? I would
-imagine that 'git clone' would want to do just this. I imagine that such
-a use-case would expect that even if we are cloning from a source that
-is known to produce packs with duplicate objects we would still want to
-verify that none of the objects it references are missing, etc.
-
-I think that suggests something more along the lines of having this
-option opt you out of this specific portion of "--strict"'s behavior, as
-in "git index-pack --strict --allow-duplicate-objects". I may be missing
-something here.
-
-> @@ -135,6 +135,11 @@ static int nr_threads;
->
->  static int from_stdin;
->  static int strict;
-> +static enum {
-> +	DUPLICATE_OBJECTS_REJECT = 0,
-> +	DUPLICATE_OBJECTS_ALLOW_CONFIG,
-> +	DUPLICATE_OBJECTS_ALLOW_OPTION,
-> +} allow_duplicate_objects;
-
-I was initially a little surprised to see a new enum value here for what
-I imagined would be a true/false value. But looking at the diff below, I
-think that this is to silently ignore a "true" value for the config
-option 'pack.allowDuplicateObjects' in the presence of "--strict".
-
-So I think that this tri-state is fine in that sense. But I imagine that
-much of this goes away if we take this option to instead carve out one
-specific behavior of --strict instead of being incompatible with it
-entirely.
-
-> +	if (write_idx_strict &&
-> +	    allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION)
-> +		die(_("options '%s' and '%s' cannot be used together"),
-> +		    "--allow-duplicate-objects", "--strict");
-> +	if (verify &&
-> +	    allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION)
-> +		die(_("options '%s' and '%s' cannot be used together"),
-> +		    "--allow-duplicate-objects", "--verify");
-
-If you end up keeping the existing meaning and need to declare this
-incompatible with write_idx_strict and verify, there is a helper for
-this case:
-
-    die_for_incompatible_opt2(allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION,
-                              "--allow-duplicate-objects",
-                              write_idx_strict, "--strict");
-
-    die_for_incompatible_opt2(allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION,
-                              "--allow-duplicate-objects",
-                              verify, "--verify");
-
-Alternatively, since writing "allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION"
-is kind of a mouthful, you could instead write this abomination:
-
-    if (allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION) {
-        die_for_incompatible_opt2(1, "--allow-duplicate-objects",
-                                  write_idx_strict, "--strict");
-        die_for_incompatible_opt2(1, "--allow-duplicate-objects",
-                                  verify, "--verify");
-    }
-
-;-)
-
-> @@ -2055,7 +2090,7 @@ int cmd_index_pack(int argc,
->  		read_idx_option(&opts, index_name);
->  		opts.flags |= WRITE_IDX_VERIFY | WRITE_IDX_STRICT;
->  	}
-> -	if (strict)
-> +	if (write_idx_strict)
->  		opts.flags |= WRITE_IDX_STRICT;
->
->  	if (HAVE_THREADS && !nr_threads) {
-
-OK. Since we aren't treating this as a carve-out, we don't have any
-further changes in pack-write.c. Makes sense, though I am curious about
-your thoughts on whether the alternate interface makes more or less
-sense.
-
-> diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
-> index c6273a1aeb..95c81fa7b4 100755
-> --- a/t/t5308-pack-detect-duplicates.sh
-> +++ b/t/t5308-pack-detect-duplicates.sh
-
-I haven't read the tests carefully (under the assumption that they may
-change substantively if the meaning of "--allow-duplicate-objects" is
-altered). But from skimming, I wonder if there is some room to shrink
-the number of tests.
-
-When working with an agent, I typically ask it to implement the minimal
-number of tests, along with a prompt that it must demonstrate that those
-tests still exercise all interesting behavior. Often I will repeat this
-a number of times until I am similarly convinced.
+This version looks good to me.
 
 Thanks,
 Taylor
