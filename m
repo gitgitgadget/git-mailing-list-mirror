@@ -1,414 +1,164 @@
-Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+Received: from send54.i.mail.ru (send54.i.mail.ru [89.221.237.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8C73A783F
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 05:26:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01429230BDB
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 08:41:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785216369; cv=none; b=Q1XJZNe1CtZl/UoArkZLQ3fVJUFvPMkgmP0xWiOGcoip/T7sTtGzl7Zce2Ivxmj+Ev4OlxNO8ix58+6rWNp1W53rNU3ck+O99MFyKUxOAjiopAKagQ+MBk3b6emLlaPf1AY+f+XEdF4r6YTZXosm+PDY3YdTsdRp6UYq8eXkAnI=
+	t=1785228113; cv=none; b=SWjkCTBcVQjuJzRZP1ufxNoIttDAsJptEi73ChIZq1vWbYkEGdhPZRIKXozxdCiZREh9Zp0P4VVkxdQ8dfLichkp0YbFdS86D3u036TIHOMYY6b288ks8HsW/Gn4eownN+kf9xzN0w0KpcvsM/Ldx+G8SjofVlMtGJhgdSwpS6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785216369; c=relaxed/simple;
-	bh=Ni4JTnegglPOes5tpCLYWu4xQJ37/hAHDhZZCYIHDkA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTpeDs8bjHv+XYx/PKCh2XvKYDRlIa2wNad+uxIQqPZS+IGnOuy5hOzl6wY5K8X8vvMTpzLQ/eeZtkXeCKd7zW6HRf+9G5rGONTj51IijiVD8qE6JfCqEZxPMYjXXFR8l2EJnQ4zfGY4lKfFpQJaMOSiZPTwQa9bMlsq4uzXSug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chungminlee.com; spf=pass smtp.mailfrom=chungminlee.com; dkim=pass (2048-bit key) header.d=chungminlee.com header.i=@chungminlee.com header.b=MQOOdEpv; arc=none smtp.client-ip=91.198.250.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chungminlee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chungminlee.com
+	s=arc-20240116; t=1785228113; c=relaxed/simple;
+	bh=XErFIk0ZDETyUS/OjN1IyEEVXeVsz2o13d9JLGZJPCM=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=ph7pdRvjZ+slMVNjfVBc3YjtVC0fssvz/wkPAfhsowDgLr61rUyEYP0v4ZZpbIgK3zQ9/Vbvs8d3pUlGFk0YrRU20xFhR3iyTECqSPoX1NK7fkCm4eHWT55AfWyzYeliTUFdL2kbHT9hQcv0I7X7gU94L1Qk6U+hKEBvhcA7HyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=z+1mOIrr; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=gfrov2Nz; arc=none smtp.client-ip=89.221.237.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chungminlee.com header.i=@chungminlee.com header.b="MQOOdEpv"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4h8P7l4DMFzMlwt;
-	Tue, 28 Jul 2026 07:25:55 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chungminlee.com;
-	s=MBO0001; t=1785216355;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Uc+iQSjrEaIRY5gv60qroUs6daOrp929+PVzyF5UpA8=;
-	b=MQOOdEpvcT2oFEMtZtrexPu4JXgHZl2ZS2RONIixDXnQmzTzQgeaE3irZ9A0XE2JsbRjKd
-	hEBFJNWzL3K8bJ5OoNS0SADEz2IE5tEwYxPB3AoBigD8GxqkYXZ6mllqYueP0lLdozDAx6
-	Q8strxypy/JsdZyQSuHnyALYdl/MTUjcQr06KRhyFbmzwTXdAxiEZoxZStas2wdGFzdSHS
-	aR3Jz+vhSYZvZfccvI3DShHEQ4Q/qMRciClqjcLUJGF7lKVNfeEXBxxrgYEoVJAyIMbrb+
-	URaUym1JlDP0Ehisc9LtZD1wYMA4TN+QwYz6zRtRQhms3oJDbcjyRn4X4p4tQA==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of chungmin@chungminlee.com designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=chungmin@chungminlee.com
-From: Chungmin Lee <chungmin@chungminlee.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Chungmin Lee <chungmin@chungminlee.com>
-Subject: [PATCH v2] regexec: work around macOS TRE leak on invalid UTF-8
-Date: Mon, 27 Jul 2026 22:25:38 -0700
-Message-ID: <20260728052538.12429-1-chungmin@chungminlee.com>
-In-Reply-To: <20260722053127.37244-1-chungmin@chungminlee.com>
-References: <20260722053127.37244-1-chungmin@chungminlee.com>
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="z+1mOIrr";
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="gfrov2Nz"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=pA8o2OeWtAUnuG7d5sBrR4mE5SD+wQwLwxBNTh3ES1I=; t=1785228109; x=1785318109; 
+	b=z+1mOIrraLMDcGeEnmNMxLlH6cDHz5BlZktBQwFyhZYI/ycfdLE8ztyWxSmjypxzyDAyhUP7uuT
+	gXYb4YaxIh1kq6WFrDThmWbsGjCTNd9vWfDaa/cE4Gr11MY0TrPuAxLiDvEuGRy5HYLErpm4u9AOO
+	ql2Rvm9laDf0FbnmPzduiheUsvHhucQtZjG8AW/0AFmzVf/fhlGmNlCB2NEXGmn2NVNEw6amzXLb4
+	CD4HMnOnjz1UzVh7CCHlKNGM0oG3jBh9jqCDLzyqQNQTP+Y99d2GFwemokifVNpUwvzPKVD1Lc1oW
+	aNMbZOAXVLYbxVtSwbqjLgknHrQL7CaR6bqA==;
+Received: from [10.113.154.169] (port=46810 helo=send278.i.mail.ru)
+	by exim-fallback-5cf4fc9bf6-zj7fh with esmtp (envelope-from <long76.git@mail.ru>)
+	id 1wod95-000000007By-1NKH
+	for git@vger.kernel.org; Tue, 28 Jul 2026 11:26:39 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:
+	MIME-Version:Date:Message-ID:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
+	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
+	List-Owner:List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=pA8o2OeWtAUnuG7d5sBrR4mE5SD+wQwLwxBNTh3ES1I=; t=1785227199; x=1785317199; 
+	b=gfrov2Nz5TBDqbqA+d6lVnxvSLPspdIwIVzMsCSsSFuaImWFmnSz0dRJTtGEa9lgSLTKqZkAGB5
+	eZuF6fFx9w1WcY+J8++TosFqlO/fkwT8K20GLT3JZ+f43A4oV4T545Qt4Sqs4Fr5+KEPp7fA1N2Qw
+	zzojxhjA9DW9vPuLl66AH3FrlY5NA5UK7Z5hrrQlAAQzL7Gpw9jtZJfQX7jwMMV89eG1IkiJ+FP9y
+	y1gM7Ih2mgasamutNEHFwlCb9+2YSPmGLAL4BWvweo1T7lG385/7/wTWNaHRw8I/zU3mRLt9QZL/+
+	ugDAF0A7mu6C5bVnzTuB6R8RiApe7F62ZtDQ==;
+Received: by exim-smtp-6c76488b9f-8glpg with esmtpa (envelope-from <long76.git@mail.ru>)
+	id 1wod8w-000000003oy-2hWn
+	for git@vger.kernel.org; Tue, 28 Jul 2026 11:26:31 +0300
+Message-ID: <edfc868b-6be6-4871-a539-e70791db216d@mail.ru>
+Date: Tue, 28 Jul 2026 11:26:29 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: git@vger.kernel.org
+From: Long 76 <long76.git@mail.ru>
+Subject: REBASE_HEAD still exists after success end rebase
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4h8P7l4DMFzMlwt
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD93AE80F4FE6181E4F1628ED37B610B6442EA28E42FE12C9A6182A05F53808504042CCE5522733214D3DE06ABAFEAF67050D2D2478E385988DF8363BD8C781F7C3FB1AA341019AC2B8
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7C2204D4F9A221771EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB553375666E0AFCC7CBCEC7C70597FE6F0E2750EBC16C0F217943397900DEE43A098DC29D8EEF46B7454FC60B9742502CCDD46D0D9E541A154B51D14BF6B57BC7E64490618DEB871D839B73339E8FC8737B5C2249B0E9FD5D4288160ECC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C045A75973B56231AD8941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C0F206494F22AA87D6D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE362B3BD3CC35DA588BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C37F2E9035E9FA3B8235872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-C1DE0DAB: 0D63561A33F958A5F0A4FE07AE7E3BE65002B1117B3ED6963835BB1B293EF33D54BB1175C6E7DD94823CB91A9FED034534781492E4B8EEAD491B7F2495B7DCE6C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659A611480346927E0AA3F92EB898ED643955956DBD112D65CB32C1DAD23C334769507DD5121BE02A77B8341EE9D5BE9A0A1C1F1CDC506315819679A7E8562E785C2C97CFABFF52DDFD52EE4E5D9E54FDA44C41F94D744909CE06349EBF80BA53DC7F80F8B16B0B4F5BC3981EEBE9DB10F943082AE146A756F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVczkDsfooUjfYzTZ3xrlqIk=
+X-Mailru-Sender: BF619F039C5E48B05804D9064179567ACFC4FEA5F9F4E57AB951B70A5BD4BD8EFC91B8E0DF0E3FF45F9045B74F665CC8425AE62B7EC354419CA68C07A4EE0065362722A76DE2BCCC34372B9448EDC0929956202DFC8A2C27324D571D86A1F4E42D063C67CFD4E84967EA787935ED9F1B
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B41153A78F4023D798AB6565AD5806B5EA4D6119D097D08A05B647ED114AB003AC6D60E98ACA21A2CBAC4385294E02B5FB5AA90AE450F532CFDE06E3894AC1A351F3A2C4E99DBE10D3
+X-7FA49CB5: 0D63561A33F958A54C90D348551511615002B1117B3ED6967FB09263A6E5EE3EAD864E5BE48A9E5E02ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZRUBLxC85WEBi8N0Vl0Zq4g==
+X-Mailru-MI: 20000000020000000000000800
+X-Mras: Ok
 
-On macOS, the system regex engine leaks an internal buffer when
-regexec() encounters an invalid multibyte sequence in a UTF-8 locale.
-The line-by-line path can call regexec_buf() for each pattern on every
-line, so "git grep" can leak repeatedly on a file containing invalid
-UTF-8.  The total leak grows with the number of calls, and the per-call
-allocation grows with the pattern's automaton.  In one case, grepping a
-repository containing PDFs exhausted memory and caused the machine to
-restart.
+Hi,
+My configuration:
+OS Kubuntu 24.04
+Git version: 2.54.0 from ppa:git-core/ppa
 
-ce025ae4f61e (grep: disable lookahead on error, 2024-10-20) made "git
-grep" fall back to line-by-line matching when regexec() reports an error
-on invalid UTF-8.  That fallback cannot prevent this leak: the allocation
-has already leaked when regexec() returns REG_ILLSEQ.
+.gitconfig
+[merge]
+     guitool = meld
+     tool = meld
+[core]
+     editor = code -w
+     autocrlf = input
+     quotePath = false
+     eol = lf
 
-Avoid the leaking path by providing a Darwin-specific regexec_buf().
-Walk the input with mbrtowc(), split it at bytes that cannot form a
-complete multibyte character, and search each valid segment separately.
-This preserves matches in valid text on either side of an invalid byte.
+[global]
+[diff]
+     tool = meld
+[gui]
+     editor = code
+[fetch]
+     prune = true
+[mergetool]
+     keepBackup = false
 
-Search each segment with REG_STARTEND so match offsets remain relative to
-the original buffer.  Set REG_NOTBOL and REG_NOTEOL for internal segment
-boundaries so "^" and "$" do not match there.  Keep the flags clear at
-the true beginning and end of the buffer.
+How to reproduce:
+1) Made repo
+# Init repo with README.md
+git init
+echo -e '# Git rebase bug\n\n```\ngit rebase master\ngit mergetool\ngit 
+rebase --continue\ngit rev-parse REBASE_HEAD\n```' > README.md
+git add README.md
+git commit -m "docs: add README.md"
 
-Use the normal regexec_buf() path in single-byte locales, where no byte
-can form an invalid multibyte sequence.  Use the bundled regex
-implementation unchanged when NO_REGEX is enabled.
+# Add feature branch
+git branch feature_branch
 
-Declare the Darwin override in compat/darwin.h and map regexec_buf() to
-darwin_regexec_buf().  This follows the platform override pattern used
-by the other compatibility headers and leaves the common inline
-implementation as the default.
+# Add files in separate commits
+echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
+line" > Text1.txt
+git add Text1.txt
+git commit -m "feat: add Text1.txt"
 
-There is no reliable way to detect a future macOS version in which the
-system regex implementation has been fixed.  Even after a fix, Git will
-need the workaround while it supports affected macOS releases, so treat
-it as an indefinite compatibility workaround.
+echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
+line" > Text2.txt
+git add Text2.txt
+git commit -m "feat: add Text2.txt"
 
-Add tests for matches before, after, and between invalid bytes, including
-an offset check after an invalid byte.  Also check incomplete trailing
-input and anchors at true and internal line boundaries.
+echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
+line" > Text3.txt
+git add Text3.txt
+git commit -m "feat: add Text3.txt"
 
-Signed-off-by: Chungmin Lee <chungmin@chungminlee.com>
----
-Changes since v1:
+# Do the same in feature branch and one more in one commit
+git checkout feature_branch
+echo -e "Texts 1 line\nTexts 2 line\nTexts 3 line\nText 4 line\nTexts 5 
+line" > Text1.txt
+git add Text1.txt
 
-  - Cite ce025ae4f61e, which handles the same macOS regexec() error.
-  - Treat the workaround as indefinite instead of assuming a known
-    removal point.
-  - Document the -1 and -2 returns from mbrtowc().
-  - Use one DARWIN_REGEXEC name in all build systems.
-  - Move the implementation under compat/darwin/ and use a platform
-    header to override regexec_buf().
-  - Add coverage for offsets, incomplete sequences, and internal
-    boundaries.
-  - Use POSIX regex patterns in the tests so they exercise regexec_buf()
-    rather than the fixed-string optimization.
-  - Keep positive invalid-UTF-8 matching tests macOS-only because system
-    regex implementations differ in how they handle invalid multibyte
-    input.  Run the no-false-anchor test on every MB_REGEX platform.
+echo -e "Text 1 line\nText 2 line\nText 3 line\nText 4 line\nText 5 
+line" > Text2.txt
+git add Text2.txt
 
-Reproduction on macOS in a UTF-8 locale:
+echo -e "Texts 1 line\nTexts 2 line\nTexts 3 line\nText 4 line\nTexts 5 
+line" > Text3.txt
+git add Text3.txt
 
-    perl -e 'print "\377" x 16, "\n" for 1..300000' >binfile
-    git init -q r &&
-    mv binfile r &&
-    git -C r add binfile &&
-    git -C r commit -qm x
-    P='aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt'
-    /usr/bin/time -l git -C r grep -i -E "$P" >/dev/null
+echo -e "Texts 1 line\nTexts 2 line\nText 3 line\nTexts 4 line\nText 5 
+line" > Text4.txt
+git add Text4.txt
+git commit -m "feat: add all files"
+2) Call — git rebase master
+3) Call — git mergetool
+4) Call — git rebase --continue
+5) Call — git rev-parse REBASE_HEAD
+Last command return value and .git/REBASE_HEAD exists.
+In other words REBASE_HEAD exists if ogirinal commit in new branch 
+modified and need call git push --force to send it to server. Please fix 
+it, thanks!
 
-On the machine used to reproduce the problem, stock Apple Git 2.50.1
-reached roughly 1--2 GiB maximum RSS.  The patched build used roughly
-13 MiB.  The difference grows with the number of invalid-byte lines and
-the size of the pattern.
-
-The leak was also reproduced in a standalone test using
-malloc_zone_statistics().  It reported about 3072 bytes leaked per
-REG_ILLSEQ call from tre_tnfa_run_parallel().
-
-Tested with the native macOS regex engine and with NO_REGEX:
-
-    make
-    make test T=t7810-grep.sh
-    make clean
-    make NO_REGEX=YesPlease
-    make test T=t7810-grep.sh NO_REGEX=YesPlease
-
- Makefile                            |  4 ++
- compat/darwin.h                     |  8 +++
- compat/darwin/regexec.c             | 91 +++++++++++++++++++++++++++++
- config.mak.uname                    |  1 +
- contrib/buildsystems/CMakeLists.txt |  3 +
- git-compat-util.h                   |  5 ++
- meson.build                         |  5 ++
- t/t7810-grep.sh                     | 37 ++++++++++++
- 8 files changed, 154 insertions(+)
- create mode 100644 compat/darwin.h
- create mode 100644 compat/darwin/regexec.c
-
-diff --git a/Makefile b/Makefile
-index 1cec251..81075c3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2264,6 +2264,10 @@ ifdef USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
- 	COMPAT_CFLAGS += -DUSE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
- 	COMPAT_OBJS += compat/regcomp_enhanced.o
- endif
-+ifdef DARWIN_REGEXEC
-+	COMPAT_OBJS += compat/darwin/regexec.o
-+	BASIC_CFLAGS += -DDARWIN_REGEXEC
-+endif
- endif
- ifdef NATIVE_CRLF
- 	BASIC_CFLAGS += -DNATIVE_CRLF
-diff --git a/compat/darwin.h b/compat/darwin.h
-new file mode 100644
-index 0000000..6fbdc34
---- /dev/null
-+++ b/compat/darwin.h
-@@ -0,0 +1,8 @@
-+#ifndef COMPAT_DARWIN_H
-+#define COMPAT_DARWIN_H
-+
-+int darwin_regexec_buf(const regex_t *preg, const char *buf, size_t size,
-+		       size_t nmatch, regmatch_t pmatch[], int eflags);
-+#define regexec_buf darwin_regexec_buf
-+
-+#endif
-diff --git a/compat/darwin/regexec.c b/compat/darwin/regexec.c
-new file mode 100644
-index 0000000..13fb7d5
---- /dev/null
-+++ b/compat/darwin/regexec.c
-@@ -0,0 +1,91 @@
-+#include "git-compat-util.h"
-+
-+#include <wchar.h>
-+
-+/*
-+ * Darwin's TRE regex engine leaks an internal buffer when it encounters an
-+ * invalid multibyte sequence.  Since the leak has already happened when
-+ * regexec() reports REG_ILLSEQ, keep invalid bytes out of regexec() by
-+ * searching each valid segment separately.
-+ */
-+
-+/*
-+ * Search buf[start, end), where size is the full size of buf.  REG_STARTEND
-+ * keeps match offsets relative to buf.  Do not let an internal segment create
-+ * a false beginning or end of line.
-+ */
-+static int regexec_segment(const regex_t *preg, const char *buf,
-+			   size_t size, size_t start, size_t end,
-+			   size_t nmatch, regmatch_t pmatch[], int eflags)
-+{
-+	eflags |= REG_STARTEND;
-+	if (start > 0)
-+		eflags |= REG_NOTBOL;
-+	if (end < size)
-+		eflags |= REG_NOTEOL;
-+	pmatch[0].rm_so = start;
-+	pmatch[0].rm_eo = end;
-+	return regexec(preg, buf, nmatch, pmatch, eflags);
-+}
-+
-+int darwin_regexec_buf(const regex_t *preg, const char *buf, size_t size,
-+		       size_t nmatch, regmatch_t pmatch[], int eflags)
-+{
-+	size_t seg_start = 0, i = 0;
-+	mbstate_t mbs;
-+
-+	assert(nmatch > 0 && pmatch);
-+
-+	/*
-+	 * A single-byte locale cannot contain an invalid multibyte sequence,
-+	 * so use regexec() directly.
-+	 */
-+	if (MB_CUR_MAX == 1) {
-+		pmatch[0].rm_so = 0;
-+		pmatch[0].rm_eo = size;
-+		return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
-+	}
-+
-+	memset(&mbs, 0, sizeof(mbs));
-+	while (i < size) {
-+		unsigned char c = (unsigned char)buf[i];
-+		size_t n;
-+
-+		if (c < 0x80) {
-+			i++;
-+			continue;
-+		}
-+
-+		n = mbrtowc(NULL, buf + i, size - i, &mbs);
-+		if (!n)
-+			n = 1;
-+		if (n != (size_t)-1 && n != (size_t)-2) {
-+			i += n;
-+			continue;
-+		}
-+
-+		/*
-+		 * -1 denotes an encoding error; -2 denotes an incomplete
-+		 * trailing sequence.  In either case, buf[i] cannot begin a
-+		 * complete valid character within this buffer.  Search an
-+		 * empty initial segment to preserve zero-width matches at the
-+		 * true beginning.
-+		 */
-+		if (i > seg_start || i == 0) {
-+			int ret = regexec_segment(preg, buf, size, seg_start, i,
-+						  nmatch, pmatch, eflags);
-+			if (ret != REG_NOMATCH)
-+				return ret;
-+		}
-+		i++;
-+		seg_start = i;
-+		memset(&mbs, 0, sizeof(mbs));
-+	}
-+
-+	/*
-+	 * Search the final segment even when it is empty, so an empty buffer
-+	 * or a buffer ending in invalid bytes still has its true end.
-+	 */
-+	return regexec_segment(preg, buf, size, seg_start, size,
-+			       nmatch, pmatch, eflags);
-+}
-diff --git a/config.mak.uname b/config.mak.uname
-index 9ebd240..4660ff3 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -154,6 +154,7 @@ ifeq ($(uname_S),Darwin)
- 	HAVE_DEV_TTY = YesPlease
- 	COMPAT_OBJS += compat/precompose_utf8.o
- 	BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
-+	DARWIN_REGEXEC = YesPlease
- 	BASIC_CFLAGS += -DPROTECT_HFS_DEFAULT=1
- 	HAVE_BSD_SYSCTL = YesPlease
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index a57c4b4..83e8b71 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -519,6 +519,9 @@ if(NOT HAVE_REGEX)
- 	include_directories(${CMAKE_SOURCE_DIR}/compat/regex)
- 	list(APPEND compat_SOURCES compat/regex/regex.c )
- 	add_compile_definitions(NO_REGEX NO_MBSUPPORT GAWK)
-+elseif(APPLE)
-+	list(APPEND compat_SOURCES compat/darwin/regexec.c)
-+	add_compile_definitions(DARWIN_REGEXEC)
- endif()
- 
- 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8809776..96995c6 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -162,6 +162,9 @@ static inline int is_xplatform_dir_sep(int c)
- #include "compat/win32/path-utils.h"
- #include "compat/msvc.h"
- #endif
-+#ifdef DARWIN_REGEXEC
-+#include "compat/darwin.h"
-+#endif
- 
- /* used on Mac OS X */
- #ifdef PRECOMPOSE_UNICODE
-@@ -992,6 +995,7 @@ static inline int strtol_i(char const *s, int base, int *result)
- #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
- #endif
- 
-+#ifndef regexec_buf
- static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
- 			      size_t nmatch, regmatch_t pmatch[], int eflags)
- {
-@@ -1000,6 +1004,7 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
- 	pmatch[0].rm_eo = size;
- 	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
- }
-+#endif
- 
- #ifdef USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
- int git_regcomp(regex_t *preg, const char *pattern, int cflags);
-diff --git a/meson.build b/meson.build
-index 3247697..53c4816 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1387,6 +1387,11 @@ if not get_option('b_sanitize').contains('address') and get_option('regex').allo
-     libgit_c_args += '-DUSE_ENHANCED_BASIC_REGULAR_EXPRESSIONS'
-     compat_sources += 'compat/regcomp_enhanced.c'
-   endif
-+
-+  if host_machine.system() == 'darwin'
-+    libgit_c_args += '-DDARWIN_REGEXEC'
-+    compat_sources += 'compat/darwin/regexec.c'
-+  endif
- elif not get_option('regex').enabled()
-   libgit_c_args += [
-     '-DNO_REGEX',
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index d61c4a4..149654e 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -89,6 +89,10 @@ test_expect_success setup '
- 	function dummy() {}
- 	EOF
- 	printf "\200\nASCII\n" >invalid-utf8 &&
-+	printf "before\346world\n" >invalid-utf8-embedded &&
-+	printf "a\346b\347c\n" >invalid-utf8-multi &&
-+	printf "\346world\n" >invalid-utf8-leading &&
-+	printf "before\346\n" >invalid-utf8-trailing &&
- 	if test_have_prereq FUNNYNAMES
- 	then
- 		echo unusual >"\"unusual\" pathname" &&
-@@ -595,6 +599,39 @@ test_expect_success MB_REGEX 'grep two chars in single-char multibyte file' '
- 	LC_ALL=en_US.UTF-8 test_expect_code 1 git grep ".." reverse-question-mark
- '
- 
-+test_expect_success MACOS,MB_REGEX 'grep matches valid text on both sides of invalid UTF-8' '
-+	LC_ALL=en_US.UTF-8 git grep -h "befo[r]e" invalid-utf8-embedded >actual &&
-+	test_cmp invalid-utf8-embedded actual &&
-+	LC_ALL=en_US.UTF-8 git grep -h "worl[d]" invalid-utf8-embedded >actual &&
-+	test_cmp invalid-utf8-embedded actual &&
-+	LC_ALL=en_US.UTF-8 git grep -h -o "worl[d]" invalid-utf8-embedded >actual &&
-+	echo world >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success MACOS,MB_REGEX 'grep matches a run between two invalid sequences' '
-+	LC_ALL=en_US.UTF-8 git grep -h "[b]" invalid-utf8-multi >actual &&
-+	test_cmp invalid-utf8-multi actual
-+'
-+
-+test_expect_success MB_REGEX 'grep does not anchor ^ or $ inside an invalid-byte line' '
-+	test_expect_code 1 env LC_ALL=en_US.UTF-8 \
-+		git grep -h "^world" invalid-utf8-embedded &&
-+	test_expect_code 1 env LC_ALL=en_US.UTF-8 \
-+		git grep -h "before\$" invalid-utf8-embedded
-+'
-+
-+test_expect_success MACOS,MB_REGEX 'grep anchors ^ and $ at true line ends past invalid UTF-8' '
-+	LC_ALL=en_US.UTF-8 git grep -h "^before" invalid-utf8-embedded >actual &&
-+	test_cmp invalid-utf8-embedded actual &&
-+	LC_ALL=en_US.UTF-8 git grep -h "world\$" invalid-utf8-embedded >actual &&
-+	test_cmp invalid-utf8-embedded actual &&
-+	LC_ALL=en_US.UTF-8 git grep -h "^" invalid-utf8-leading >actual &&
-+	test_cmp invalid-utf8-leading actual &&
-+	LC_ALL=en_US.UTF-8 git grep -h "\$" invalid-utf8-trailing >actual &&
-+	test_cmp invalid-utf8-trailing actual
-+'
-+
- cat >expected <<EOF
- file
- EOF
-
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
--- 
-2.55.0
+--
+Long76
