@@ -1,82 +1,167 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479A7230264
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 13:44:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4FE446829
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 13:54:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785246267; cv=none; b=mI5c3i06jc02Bb4/IMGQJp5UWl4AX+79kSJRv0ivLvZv58yMDHazmrL/Ioahx8gaVc1vHA/UWr3RVT8oihrFE6yWyejmEMRc8XX36fgsBpwhweKBcgKlm4Vc37qLGz/QTXCF6Ab+bcOSj//idmVt24+rLwXgzJrzrXYuKg9jPHw=
+	t=1785246875; cv=none; b=sdbYOHxYMExghpb40xBxwrJ+1oKL+WQ6MS9jpw9h4gVSbIxLvz6eSCmXrvQWhOze0Mwzm/uLgMhMYCIJaGpQpl0lpMHz+JfeLHiXJ/ABX/lq89U3OKg/9QSzeiTTrdFgKnd8E02ajzXgN0SihIFKoSSHuqEX3/84zq3CWi4hVog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785246267; c=relaxed/simple;
-	bh=CG0Ecfir7ePpEVz5ueRvTwSLA0ONvRBtwM/cQqIZJGM=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cEJyPBszHb5UThjJbyBNoJydEWOwPgbBqBCOEcVx+lMxP0JvTj32+17hWWQ0k7C4OgiOD4K+DQTIkSlOqbDmUNRw+G+UAeb5GL5/e36Vppzmc3/G8YlAe3oNSzYINkUtS0V523cJlBt8YnadjKKpU1EvSqQxyGXDtYAVmkHJBjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=MJ8uJ3lL; arc=none smtp.client-ip=91.218.175.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1785246875; c=relaxed/simple;
+	bh=kZ7Sa7FGNwpBO3Xu8NP93B7PrhikSwQeIv1CKuVtw2A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RPKK8zfUYbDOJKt2e5YriLZPD7lIw0zbaCks7WN1xv2rJV1I3pJ2izpO4cUQs3KWjFYNkjcq2mKUkcyHcSZ2Indmk6GqkkhTC92J9Jb2/v2Xrcl8him17wStS37vQdMmyOpeIM5St8+esyz9nOSIyF/oBZ+dJ60jtetcNRnnOsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQ6Nce94; arc=none smtp.client-ip=209.85.217.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="MJ8uJ3lL"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1785246263;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0CufA+x/GN/7YgdWR/pAU1yH9bzzmknc5z9YI7LK348=;
-	b=MJ8uJ3lLjk0sg/jUGHDKPquCc46xGxzz6zowgLUyp6pe72S/T2aXPkNdpr4qPkHLE18DWE
-	VCk+pzP+oCmoUHIKd+G+FcJmwxUAdJI9g6EF0385WwI03aT1qS2+vINSAEdM2aTKYnqX6o
-	Q4CLL2s5xS0Az4jSFYfOV5QXeEGskBE=
-From: Toon Claes <toon@iotcl.com>
-To: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>,
- git@vger.kernel.org
-Subject: Re: git-history(1) fixup broken with worktrees?
-In-Reply-To: <e7dbcede-4486-459c-aa64-e44690e01fe0@gmail.com>
-References: <87jyqt1m6g.fsf@emacs.iotcl.com>
- <e7dbcede-4486-459c-aa64-e44690e01fe0@gmail.com>
-Date: Tue, 28 Jul 2026 15:44:18 +0200
-Message-ID: <87y0evcjpp.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQ6Nce94"
+Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-7380954d1c6so1288940137.3
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 06:54:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785246872; x=1785851672; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TlSXaW/qcuKqY2SAJrjP3MpeZ2p3AeclVBZPXYp4y1c=;
+        b=gQ6Nce949EeYca8HKoCTCWOzt1bhkh2ifRjJNBrL4L4rLiO+n4Dk7wLIgdqHL0gdaq
+         kc0kt7iFN3zuQ0IvIhymvyotpHKoNuMgobi9xmP/uXIR/XVLHfpf3q2l307hBA3pmyYb
+         lPbN1KIg4B7U7HVtInSe0m43d+QdpDRmt/O7qGCRQE6saqjz87L53Tr4JvYrQQtuhsxY
+         GUlA9sh6xD/vx0sCTPUcTGqaNDDXfzKTz/5ywqo13IR4kUZTQib1lzxpEztRPZWD+16Q
+         MIth/1NUcDDhQ6kku+yQslQsn3JDdgA/4GjZA84r+2grYLQDoFdWOxl1Umw9qfaB2s8G
+         dAjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785246872; x=1785851672;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=TlSXaW/qcuKqY2SAJrjP3MpeZ2p3AeclVBZPXYp4y1c=;
+        b=YeltP30gmefwOO8HCDea9/Wn0nVlOwyapmLixFNKLHATWwj9I6T1cJBdJVHkyiYhgj
+         t2i4q1DNe1URhOGnaBze3kpGqn0hfDfFXUOPuZK7MQikWlL8dXP4VnjMAkrFhlXzhTMG
+         rYltMIiUwihSCFqs8DtHmsVDwBjzbZfbTe8eU3wHCTPYqH8SmKkHuDwBTrbD3TU+WsKJ
+         gwLwqVSXwAZ5HrmxA0ofvwfRdwdu9wFOtjgR9j6T0k0u2PcXvwK1VhhzsYgH4IZZSu0R
+         AC5iax2qSk3SJGMdN4gnOWjmHNkiltu/A4fe42xvtmyRHO52yNEGs7HQ8vEqZEKnRnHj
+         F9Rw==
+X-Gm-Message-State: AOJu0Ywy8Wsu6NI+cJxHsn3mDWP53elYMbGs6e38nmoOtnB85YYHLrJw
+	uSnB0WehDYSY5Rzqk8BkIqC4fPtUbRsY8qbo43RWOap6F0CMKk4LnX+Wj2TKDQJ70uo=
+X-Gm-Gg: AR+sD12kj7EBWvOCDY1fADAga0No8HEapzrm+8JMEZXg8vFTknQOLArZzJzHf4nNZTc
+	uJZ3OugS6hg1ZLAGJA6JYY5Luivzc/0pHcK1xt4JEeLWcLSmwBgQQ/weqOXRx4TBS6PTBYtYqtV
+	VAIK02PK8DPeITZ0ecifg/alEM2lhXbU19N3lTmbasyvad3zrzC2aPO67wGPSCyu7L9h5BL/rTE
+	fx8QQuZMmu7wrap4ROHeDfLfHVefuFhMbUDV1YLia94nmZkXm6eKrvoF3rYa1U0e55Fxqi+aCab
+	nlacscDpEYUGf02GMMpsMbP6BnXV4TVQ9OXebV0RaA/Dj5qUGEIjikyaXfY5mAjoc+JD2K/nOVf
+	KO/rkj1htGnAy4goqP5nHOamOVKaTjTWkN+sp/0vq23RnxDLGT8Wkr7KGW1oetwPrjCk1gaHzPf
+	qW+AzLuXWB09nsFkig6m+oOsS5En7IllZHFomDK22ZLehtFD+r
+X-Received: by 2002:a05:6102:4b12:b0:73e:605c:405c with SMTP id ada2fe7eead31-7549fd662b7mr986186137.12.1785246872381;
+        Tue, 28 Jul 2026 06:54:32 -0700 (PDT)
+Received: from st-davidlin1 ([142.188.83.43])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5c3056cde82sm9061412e0c.12.2026.07.28.06.54.31
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 28 Jul 2026 06:54:31 -0700 (PDT)
+From: David Lin <davidzylin@gmail.com>
+X-Google-Original-From: David Lin <davidlin@stripe.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ttaylorr@openai.com,
+	David Lin <davidlin@stripe.com>
+Subject: [PATCH v2] pack-bitmap: handle objects at bitmap position zero
+Date: Tue, 28 Jul 2026 09:52:48 -0400
+Message-ID: <20260728135248.61304-1-davidlin@stripe.com>
+X-Mailer: git-send-email 2.54.0.1783223981.geb76c99f7f.stripe
+In-Reply-To: <20260727171331.21088-1-davidlin@stripe.com>
+References: <20260727171331.21088-1-davidlin@stripe.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+`bitmap_position()` only returns a negative value when an object is not
+present in the bitmap index.
 
-> I think what's happening is that the branch "feature" is updated because 
-> the commit it points to is rewritten, but the index and working copy in 
-> the work tree "feature" are not.
+In `find_objects()`, we have added a check (11d45a6e6a) to avoid
+processing a root whose reachability is already represented by the base
+bitmap, but accidentally uses `pos > 0`. Consequently, it never performs
+the membership test for an object at position zero.
 
-Yeah, it's relatively easy to understand what goes wrong, the fix would
-be a bit more involved.
+If that object has an individual reachability bitmap, we unnecessarily
+OR that bitmap into the base again. Otherwise, we add the object to the
+not-mapped list, only for the subsequent pass to recognize that it is
+already present. The latter pass correctly treats all non-negative
+positions as valid, so this does not change the resulting object set,
+but an off-by-one edge case.
 
-> Rebase's --update-refs option refuses to update branches that are
-> checked out in other workers by default to avoid exactly this
-> problem[1].
+Treat position zero as valid by changing the condition to `pos >= 0`.
 
-Ah, thanks for finding this existing discussion, interesting.
+The existing pseudo-merge traversal test exercises this case. Its
+position-zero commit is presented through multiple roots. Before this
+change, each occurrence is counted as a bitmap hit; afterwards, only
+the first occurrence is counted. Assert the resulting hit count to
+cover the boundary condition.
 
-> As you can see in that thread there was some discussion about updating
-> the index and working copy when the work tree is clean instead. I
-> think that is a friendlier approach as it preserves the relationships
-> between branches and avoids materializing changes in other worktrees.
+Also cover the non-pseudo-merge case by passing `HEAD` twice. The first
+occurrence initializes the base from its stored bitmap, and the second
+must recognize that position zero is already present.
 
-Yeah, I agree it would be nice if git-history(1) would give it their
-"best-effort".
+Helped-by: Taylor Blau <ttaylorr@openai.com>
+Signed-off-by: David Lin <davidlin@stripe.com>
+---
+Changes since v1:
+- Clarify the bitmap disk load wordings.
+- Add coverage for the non-pseudo-merge case.
 
-> On a related note, rebase refuses to rewrite a branch that is being 
-> rewritten by another rebase running in a different work tree. That's an 
-> important safety measure that I think the history command is missing.
+ pack-bitmap.c                   |  2 +-
+ t/t5333-pseudo-merge-bitmaps.sh | 14 +++++++++++++-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-From [2] I've learned there are multiple ways a branch can be checked
-out. We have to take them all into account. It can be build on top of
-the changes in that patch.
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d8dc4ae8d1..e85bd69ba4 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1569,7 +1569,7 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+ 
+ 		if (base) {
+ 			int pos = bitmap_position(bitmap_git, &object->oid);
+-			if (pos > 0 && bitmap_get(base, pos)) {
++			if (pos >= 0 && bitmap_get(base, pos)) {
+ 				object->flags |= SEEN;
+ 				continue;
+ 			}
+diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
+index 305d677108..5b2a17f90a 100755
+--- a/t/t5333-pseudo-merge-bitmaps.sh
++++ b/t/t5333-pseudo-merge-bitmaps.sh
+@@ -50,7 +50,15 @@ test_expect_success 'bitmap traversal without pseudo-merges' '
+ 	test_pseudo_merges_cascades 0 <trace2.txt &&
+ 	test_pseudo_merges >merges &&
+ 	test_must_be_empty merges &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
++
++	: >trace2.txt &&
++	GIT_TRACE2_EVENT=$PWD/trace2.txt \
++		git rev-list --objects --use-bitmap-index HEAD HEAD >/dev/null &&
++
++	# The first HEAD initializes base from its position-zero bitmap. The
++	# duplicate root should not count as another bitmap hit.
++	test_trace2_data bitmap bitmap/hits 1 <trace2.txt
+ '
+ 
+ test_expect_success 'pseudo-merges accurately represent their objects' '
+@@ -85,6 +93,10 @@ test_expect_success 'bitmap traversal with pseudo-merges' '
+ 
+ 	test_pseudo_merges_satisfied 8 <trace2.txt &&
+ 	test_pseudo_merges_cascades 1 <trace2.txt &&
++
++	# Position zero is named by HEAD, its branch, and its tag, but it
++	# should count as only one bitmap hit.
++	test_trace2_data bitmap bitmap/hits 1 <trace2.txt &&
+ 	test_cmp expect actual
+ '
+ 
 
-[2]: https://lore.kernel.org/git/590382fb-731b-4e14-911e-ff68356d1082@web.de
-
+base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
 -- 
-Cheers,
-Toon
+2.54.0
+
