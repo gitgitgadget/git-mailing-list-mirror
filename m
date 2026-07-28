@@ -1,159 +1,143 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3093D9DCA
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:41:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57673432313
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:42:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785253277; cv=none; b=FW/I06yXNDOk15OsiQ0z0yjpSlwis+2U+7BxAvf0IUKTsZ4wWhtAn69RDMts6pmCm09ki1FcaZA/QIFSIwhLFWtqndVYGoMtA+SG+JWu+2nJVfyL8feFJw2lLblzK0wtZ+kj8YXic9yeA4wIaiJlvhJz/h4qxYWDMKJkX4pv4n0=
+	t=1785253348; cv=none; b=OL2lFXbfni7FFfXSszvV0EkR/lSYJQzqk/OSK7LHXItFnrCWmpOEHmleGevQaDO7jZLGIPrxDMLNwseJp1Q+IZHWCEQPPRWze2P70qkJRDBwFhgMJdbdhavQeRfz05EJRPyiiNZkv+3MUw/9qAjizbGgpvlN067MQF7D3U5TVv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785253277; c=relaxed/simple;
-	bh=UQjOVZcIQI4/ZZao2NVNff7OYhJP5J4pKLPvHbnTGO4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=tAY9jB/otT2XJ5bf+o5uNK7D9IQ/auDPk9CQs7uAgLbJnNSRkw8MT7o9nLaZyFyfGBhHiJBOfW4FnWSmxbtxIY837H4tXknNKMK7ebQcl+97Krjk8zKwDZs+0fqWBsCxbGIwvhy3w1p/NheD9vbu9wm/j6Rq238KDeFak5swbJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXqqUnh5; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785253348; c=relaxed/simple;
+	bh=WYB2UQAeIa8rPvFWsOxq2WBKIRX8v0MoUisIqETopds=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sS9hd+1Ge97AbDrlCAh8CujmK9k6wnjE7kcwQ4/mczBbIBgTF/qbOx4D45M/HjMjBA11+0eA+czikw6uDuD1C9klj0qbyOmGTiPU/Y7PwwdM8rXkjVoUai+NyAr2OCv0kWmXJo1152GuqV681vGQ68ldWkMMBuXrFWLsEnQeVdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gO5fKvIA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aH3/fU14; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXqqUnh5"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47f6609c657so4100f8f.2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2026 08:41:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785253274; x=1785858074; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=eCpVvKmVfrP3TCLO1oDEyg2ZUjOChfr2nidphn6fDm8=;
-        b=nXqqUnh55ibeEF+9/uw9IWcVud/dqFIy647xzFa25upsuE4UDvcfrKekv35I2wY++d
-         b60nLMwOpSZSoX/NPmsGmxfS8xFdgpeYoT9/jfMuSiiFSD/8hG/IpewY+Us3TYrKwy0y
-         kkVybowqTyAgq7iN78TNDrIl213LZ5Aw+v4YJyLU3mWSTNP4RxGaPZUE63bxx/6gDW2J
-         X9SOBVB4kk44G0MzZWfNkjtrDWebyirt/rgaGu5venlg2lkfrYxDrTc3ezdT+CXsdMyf
-         pNsxf+Tgmj6yNxNY7w7grhNkZUvQ+9SdyfknOGf1xoBRSA4L9FcqCscFj1MQMrRHj4P9
-         ZVJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785253274; x=1785858074;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=eCpVvKmVfrP3TCLO1oDEyg2ZUjOChfr2nidphn6fDm8=;
-        b=C4/56NJdq1QRIcFnQ8C8Bz1Uv8ZpZgxe2IjvNQPNPEoJc4cObM5fCL1EUPG9BtKlJS
-         +uesCuwfY4Ics6jsqC7qB+HRTGlw6JtXdLB/raRf+w5E5+OVJWJKixEuUd+WLbRQLpzP
-         CAvdc41oTr5WkkbFcTffCmF4OVGh20JQeadEv9+huwFTZacme91X94+bmMUvzz5Z0eEJ
-         Nm7sZMiDNdqDKC9qAPJRqBbPihA3VX87aOZdJ5wNnPg2abuAXxRZApweq8pLK3QKN8wy
-         ecxJ9I9ZZgvai5SEpJ9H/vAAa5caDjEBJp7DgWkjkfe3e0BiwRZqbohsxz689JGLWl4q
-         3oLQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqhlEw2Dxm21wo5VrFXDDl5iWU46ey5NrKSGQiMAgl5vQnbz2CLWiq8qRX4Sj2S3Wsa4DQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQ8u4g1eAjvRfXPaxJd5+CT0Db6qGdD1Ipu0Hg9XPfwJ8TlXlW
-	WQlaaZTiAwi7V0VoMdeCczmTM4htEzS0zNeaYrKavlC9418pU+Dvce4s
-X-Gm-Gg: AR+sD11gcRtGbTT5SUp8HA3J6koBWkTg400WsGVS2QTJ5H5prX9yNXJhgscGVschYIn
-	yjAhiyoM1eoTOgkRID+wHH7d5ZnYqMRq+jojB5bNWUgVNTzUR5xFN2h1mAeYUWg/hAW2dOFBD1J
-	gyVHZAr3oF7C9ZFGYlcR32CNzNfKvfVobOb5cGyxSdMxafRVE1ZUKt/NRc9BrsE6et8J9et2Ck5
-	auL35fIAaaDIAKaNqTL3LQWdkjT/I7mw4ZuMR8noyfF66w2K8/VzmZrhQTgsiHYgri+Ss7Or9Lc
-	TswhnDVB8m28cB4lXqg2s3bRvwk9A+A1ZkgVLYjeE2gvenE1ox5uxPyTtD3rMhzn0TtpZaVioHJ
-	iz7qraZHreEpemRwsmQA/cnNz9EDtnzYe0jG88zZq9hplCVMlkJfR2RYZomD51w8Ln7Wf+OwWtE
-	rZK1qgu04BUATzCd9XLkfjOxqeTbSnrNBJN6MmTNd8yZ77fBzpOAZSzz25
-X-Received: by 2002:a05:6000:4b06:b0:47f:9662:85fe with SMTP id ffacd0b85a97d-47fb1e696d2mr4068270f8f.16.1785253274066;
-        Tue, 28 Jul 2026 08:41:14 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85c66cebsm60576355f8f.30.2026.07.28.08.41.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jul 2026 08:41:13 -0700 (PDT)
-Message-ID: <c8fb2eba-c1c8-4f59-b467-e6d4766623d8@gmail.com>
-Date: Tue, 28 Jul 2026 16:41:11 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gO5fKvIA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aH3/fU14"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6D2F8EC0347;
+	Tue, 28 Jul 2026 11:42:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 28 Jul 2026 11:42:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785253345; x=1785339745; bh=7VParmwDM1
+	N4xvHCcRX3rY7yWQNmRbHeMTfgdbTSbvs=; b=gO5fKvIAoggH3Uck6HlDjjs/XP
+	q7vRjWHiL4ODnFYfClix5Dwg/DSciCPzgsrLMyTFBZAWjc8KK/dZJ0xQ9tmDsk7B
+	3u1PcWhLechjQyDhqMIiXkmKfzF5lUvKNnu1hdjdwRJzFDgIS4wKkToQsqvCLbP0
+	fXBarsVVj2fprIU4LKh84tClZvZ77o+eYQZEPVJ1k2ztTQm0ndoRPFggNszi4PGs
+	dfNIuxsj3Qci+QRpwM+LcN0v7edzm1/QUUVIAIIWMN6lFopeQDnfGcClk3brSo3X
+	Yp1VKyLa63jj3wAsjNcbX1g4ZLBiuHukSfmT/yAWx9lIGKp1seV3zjcbMItA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785253345; x=1785339745; bh=7VParmwDM1N4xvHCcRX3rY7yWQNmRbHeMTf
+	gdbTSbvs=; b=aH3/fU14igNkKgjZmzMs3JlI+V6fY8KIWwZ5Ud16tELRfFWtSr1
+	R9Z7UrN19dHCy/gZGlmQTmOldCqiWAsOJtSz45A3ekg509JaosRsj+W1JymoGEo5
+	sZhHdQc21FNlZP/ct+gjzG/iGs1ZJQ0GDQD3BlSIPV3yP9jxWovNwWYEaoFSMOXj
+	EQaAN4P2ph2qUpX3fGsyI+tgJSyyl0wNZtNAQEfltjN6l9AmxyoGlTFY5iKoMyub
+	872bv2WF3X/SrB9bXr8eZgoekbfIXRqRA6FQC79hp48VXO1gktfwF8jvUgZZwLmD
+	j7A6vVZKs2xCgux3JScJlNAkcZqvTxRzdXA==
+X-ME-Sender: <xms:4c1oakbDA7Ht_StM-DoDPCVUFPk77bnFy2H6m1xaOOIRAhzDetOn6Q>
+    <xme:4c1oambJwduGBgF6o1dbLhAyohrfO57-Qti3O_tybi5xaGRwuxPqEvfqPeFPOc0Dc
+    QmDnzZ9BTkv-FQvvxpjEUbfelwcsmIv_mQCbCejivWoAUctleNE>
+X-ME-Received: <xmr:4c1oaj9yZjg9K6HFvTasvhUrKxUc18rq6PHVqAz2F0fTznFIqJ9EGOZcm8us0s2f9APJql9kEDME_vm1EyWEiNDiDDAXmNko5g>
+X-ME-Proxy-Cause: dmFkZTGHW987C6XBhtn04gJBqA2iM5nhuYunZ7W1H2pURQqcL6xzhOYCYXcGMJm4r1l9jL
+    QCeQgG32WxR7g/G7U/JOgEwQLsBje4CRxIeVs1lh0kPalotEq8y0Uv4oSoUe9i7sNlX8Tg
+    p6Ky3N+qRcV/pGCbVOBq3ySXF525ELolPXgBWZYnmC9q2pfSglbLfGDKDs2OSd5Ryl1oC0
+    iirWFVTGDoDnCnz/TDx2wIi75Y0RWHc25qrue1OTzTueAAFqueaJ8u9TxXupMLgWc0xfMb
+    t+PuiyhaHvR+i95sg/y7bmtolc4hqH81NgRAuNi9/t/irbSxr3Zj6rPssiDUbRgUf0iMjp
+    BG3nwmJe4TnZNIeja8PGpiDv+zHglevcechEc5aMOYjIZ8jEC7v6vPBraft3Rs8G1WA8gm
+    g2tweAAoFVy0wdAIbSbCSqZQEDbpeWqGGJJ/Dtsn1+lYUrw2F1qRVTzGh/p4E+ly3sGW4h
+    sY3uR3F8O5b50ZyjkOyfBCq5TTd6teDyGHvrlkS4HUuMKQO+6avyT+AY0qau/5gWxcbBtu
+    PiynstdslrGnTH2dlCg+kM+lPVYUtppjxcQBkFEL0t3zBQ6IOmKmN2WHI4f26/XbBMYoky
+    DMeFwGiLYFl1aaTU+Vhj70W/axG76dqXXIo+/sxTgPSmXEMMamLofGfpHaXQ
+X-ME-Proxy: <xmx:4c1oathMd9v19k6WBpGnUQX6wWSFGJeJpnf5T04JoNqfdsnoZoMGgA>
+    <xmx:4c1oarf9NnU4Jh4BQYngLGFOpXkAgOA1GEJGVpXoQigXumxPJawV0A>
+    <xmx:4c1oasq-pjUuNwwfTmUhWSE1WX3gKyF5j6FoAguieRJiJzXdV24Akw>
+    <xmx:4c1oaoDLiz36RL0b234_hdF3q9w0iXJxDF2Rjgwc2iNF4RS5MGWBEg>
+    <xmx:4c1oao89uEu1wBEq91uKN_T03h0D4QZDm-6VUsdmXKxxYgP7amtYQXfX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jul 2026 11:42:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Emin =?utf-8?Q?=C3=96zata?= via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Emin =?utf-8?Q?=C3=96zata?= <eminozata@proton.me>
+Subject: Re: [PATCH v2] stash: add 'reword' subcommand
+In-Reply-To: <xmqqbjbsmkom.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	27 Jul 2026 10:00:57 -0700")
+References: <pull.2180.git.1784190706028.gitgitgadget@gmail.com>
+	<pull.2180.v2.git.1785149687514.gitgitgadget@gmail.com>
+	<xmqqbjbsmkom.fsf@gitster.g>
+Date: Tue, 28 Jul 2026 08:42:23 -0700
+Message-ID: <xmqq4ihjf7ds.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4] utf8: replace utf8_strwidth todo with descriptive
- comment
-To: Hardik Kumar <hardikxk@gmail.com>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
- <l.s.r@web.de>, Patrick Steinhardt <ps@pks.im>,
- Pablo Sabater <pabloosabaterr@gmail.com>
-References: <20260726123427.173877-1-hardikxk@gmail.com>
- <20260727211520.84289-1-hardikxk@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260727211520.84289-1-hardikxk@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Hardik
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 27/07/2026 22:15, Hardik Kumar wrote:
-> The `utf8_strwidth()` function is used in multiple places that all
-> expect the function to return an int. The result is directly used for
-> padding and width calculations and passed to `printf()` calls. All
-> these operations expect the function to return an int value. Changing
-> the return type here requires changing the types of all the callers and
+> I wonder if the reflog API needs to be extended before we can
+> implement this properly.  I imagine a set of functions like (there
+> may be others)
+>
+>  * refs_reflog_replace(ref_stash, idx, &reflog_data);
+>  * refs_reflog_edit_in_bulk(ref_stash, num_edit, reflog_edit[]);
+>
+> will become the foundations of such a feature.
 
-s/requires/would require/
+On further thought, I think this fits pretty well into the general
+architecture of the refs subsystem.  Both backends would need
+refs_reflog_edit_in_bulk() in their vtable, while the single-entry
+edit can just be a thin wrapper passing a single-element
+reflog_edit[] array with a 'replace' operation.
 
-> other additional variables, that depend on the results from this
-> function directly or indirectly, to avoid overflow by implicit
-> conversions.
-> 
-> The comment precisely explains the reason why the explicit conversion is
-> done.
+If someone is interested in implementing this, there are a few
+tricky details to be careful about:
 
-I don't think this comment, or the lines below add anything useful to 
-the message. It would be better to say something like
+ * With delete/insert, indices drift.  In "insert at stash@{5},
+   replace stash@{10}", the second instruction targets what was
+   originally position #10, which becomes #11 after the insertion
+   at #5.  Pre-scanning the reflog_edit[] array in user order to
+   annotate each element with an effective '.idx' value should
+   resolve this, or something along those lines.
 
-As we do not want to change the return type, update the comment to 
-explain that and the need for the explicit cast.
+ * Multiple reflog_edit[] elements may target the same '.idx'.  In
+   "replace stash@{4} with 'hello', replace stash@{4} with 'bye'",
+   stash@{4} should end up as 'bye'.  If a backend sorts
+   reflog_edit[] by '.idx' (or in reverse, as the files backend
+   might do when copying from largest index to smallest),
+   processing must produce the same result as unsorted execution.
+   The sort needs to be stable, probably keyed on effective '.idx'
+   and tiebroken by original array position.
 
-> - Remove an old TODO that is no longer feasible.
-> - Add a comment explaining the behaviour and reason of the allowed
-> expression.
-> 
-> Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
-> ---
-> changes in v4:
-> - drop the todo implementation and remove from codebase.
-> - replace the todo with a reasonable explanation for the current
-> approach and why its not worth the change.
-> 
->   utf8.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/utf8.c b/utf8.c
-> index 96460cc..1b55bd4 100644
-> --- a/utf8.c
-> +++ b/utf8.c
-> @@ -227,8 +227,9 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
->   	}
->   
->   	/*
-> -	 * TODO: fix the interface of this function and `utf8_strwidth()` to
-> -	 * return `size_t` instead of `int`.
-> +	 * The function is used in multiple locations where the callers
-> +	 * expect the result to be a signed int value. We cast the
-> +	 * result to an int to avoid changing signatures of all callers.
+ * A reflog_edit[] array with "delete stash@{4}" followed by
+   "replace stash@{4}" asks for an impossible operation and must
+   error out.  Swapping the order (edit then delete) is technically
+   valid, though it feels like a user mistake.  I am undecided on
+   that one.
 
-The last sentence does not really capture the reasons given in the 
-message of the commit that added this comment. If you haven't done so 
-already you should read it - see 937b71cc8b (utf8: fix overflow when 
-returning string width, 2022-12-01). The fundamental reason to call 
-cast_size_t_to_int(), rather than relying on an implicit conversion to 
-the return type, is not about changing signatures, it is about avoiding 
-an overflow that caused git to crash.
+Although "git stash reword" needs only 'replace', edit_in_bulk()
+could consolidate existing operations like "reflog delete", "stash
+drop", and "stash pop", and help clean up refs_reflog_expire().
+Even if initial support is limited to 'replace', designing for
+'delete' and 'insert' upfront saves us from a future rewrite.
 
-When you send a new version of the patch please CC everyone who 
-commented on previous versions so they don't have to trawl the list to 
-find it.
+As for "git stash reword" handling multi-line messages, the
+flat-file reflog format pretty much expects single-line entries.
+Since "git stash push -m" already squishes contiguous whitespace
+(including newlines) into a single space, "stash reword" should
+probably follow suit.
 
-Thanks
-
-Phillip
-
-
-
->   	 */
->   	return cast_size_t_to_int(string ? width : len);
->   }
-
+That is about all for now.
