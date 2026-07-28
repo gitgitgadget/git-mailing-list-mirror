@@ -1,73 +1,51 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212163A380E
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 04:25:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8C73A783F
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 05:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785212755; cv=none; b=YGUseAPNVq5qapdyc4/zJ1TFRs9XO89H+vD8ZQcyZiDRVfEcP8XStRvb8q++UZqlXzQtt8qJEsg5ZsE7AKeARJuAc4rdANf9Vjug3l04z85mucXYv7HHrQ41bUu7QmWVLmrLgvbXHMnwJVatW3Yb0TcY7DSMr47sv6a+oJ/NmEQ=
+	t=1785216369; cv=none; b=Q1XJZNe1CtZl/UoArkZLQ3fVJUFvPMkgmP0xWiOGcoip/T7sTtGzl7Zce2Ivxmj+Ev4OlxNO8ix58+6rWNp1W53rNU3ck+O99MFyKUxOAjiopAKagQ+MBk3b6emLlaPf1AY+f+XEdF4r6YTZXosm+PDY3YdTsdRp6UYq8eXkAnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785212755; c=relaxed/simple;
-	bh=dXybVUm5J6BeyHpTku3ubH0BSxGF2otskICmy1oV41U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UPcuoGOXd03wgB+5Tr2C6cqas92Im+ioR1Lp7bni/BwmjC4zwlllv4iSIbVLA2v8EtFolMaiszZNZKHi3FHDW6wi78IV9zXbX9SVb/MwPGAETRzU+GI+GFBxBlDv8VgS7JvLUG70wtBmBescvLnJYx3Sd8BNMthTTApca3S1Uu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=aqCbPAHY; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1785216369; c=relaxed/simple;
+	bh=Ni4JTnegglPOes5tpCLYWu4xQJ37/hAHDhZZCYIHDkA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dTpeDs8bjHv+XYx/PKCh2XvKYDRlIa2wNad+uxIQqPZS+IGnOuy5hOzl6wY5K8X8vvMTpzLQ/eeZtkXeCKd7zW6HRf+9G5rGONTj51IijiVD8qE6JfCqEZxPMYjXXFR8l2EJnQ4zfGY4lKfFpQJaMOSiZPTwQa9bMlsq4uzXSug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chungminlee.com; spf=pass smtp.mailfrom=chungminlee.com; dkim=pass (2048-bit key) header.d=chungminlee.com header.i=@chungminlee.com header.b=MQOOdEpv; arc=none smtp.client-ip=91.198.250.236
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chungminlee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chungminlee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="aqCbPAHY"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38dfe910e9dso3075372a91.3
-        for <git@vger.kernel.org>; Mon, 27 Jul 2026 21:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1785212752; x=1785817552; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ROtPYpTLmzoFyWfkYpyR8vLYbGZAZ3UWrn+PpTrNTyY=;
-        b=aqCbPAHYqVyzc7w++wc9v/pDrVPO2uLpEjlpGPCs4W+75mUCNhgmJJ3vYXo+JUoG4m
-         9peSEgk6KNthFa5s2IMmX/gRrEbPfBCkrawjULDOr2RzIxshg34TMdnvZWPOicrxOr/L
-         OiR7amfXcItFZBlxE94QPwnu1sivAh8C1yWqQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785212752; x=1785817552;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ROtPYpTLmzoFyWfkYpyR8vLYbGZAZ3UWrn+PpTrNTyY=;
-        b=SB9DT7nPyp5SsDRBRzbnJvgRqKK7lPxwsUKPbIf261yKNPlxylop8C778gQbCZJdoN
-         yTNUI4bLgcYyhLFkh2mI0RqYd4+Y8iR7mc/DHjXJngpjlwM98HKv/SxXTFejOdWevqyZ
-         zH9lPdvQey81I8b37h0tAwTqTfYE/gEeaNR3wbWfSrj1iUw4ReXzxfMGhQX2TW7TSbEw
-         8Ok+X1b2Yt5fBHlURXN5Ixv+GIijuDV5bAWmw25rQdk3xUk8iLNY6g6rkJrjqj1Wzw2I
-         t3M9OMkfHcY9LGHZDRagrP4fsiYSmqOtCJOjI2YsTHn6Z1/yCrL3xkeTtmcYcjODW5mf
-         FS9A==
-X-Gm-Message-State: AOJu0YyBIJEBOrgzD81e9Im0eHRbGbRKvxDg1So5GrE18dhK9Je8/C0y
-	2XORRSezCLkTthpfOeTmi3g7OlWbk/CbS/R7R5/IYQ+USX2LSgL+VOLimzGnnyL2GCwKsymi1d+
-	kPFZP4es+KQ==
-X-Gm-Gg: AR+sD1217kZgsQtQ6vBbYV3JQUhYpol4WpKX9PMcCGCwfUcPFG7hNBUe6NQx/x2dbtz
-	ZwRJfFpeukRw3OIHrq28ZEQ0DOCBLThN4Tqaqal6b2cZ1pL9cBndKyAEd9HcpL3GuQBdIDxeQs8
-	Hs3mW4NdxtyOouTNK5iSdMJ1a5y5NrFoI/VELb6Z9sth+OUByIK61G/Cn9N+8tPkhoY2nXo3zjk
-	RPBPfbgw6Xu2nPsiZhdxKVZd2stEc2NSR0BiQ1Kv13jRImc5jDDMj7Ep0NgkGaWrWXWYbMkSpTF
-	mGaXcembDAO7FavqlmwlBsdPnm9ctbhY/V26z+JdiTrR6RZu7C3Rvjzrf06/TFuBz7+Ki2zeISG
-	94HSbkjwrj6Ul8996j7KXVPNItqpC8uhFN/s2EzEF3TNP1p2zyUVUGGkdMShmvugpfG9u2Ug+hz
-	Av5Z1w0hsdGrDYNuX3ZJrBaJIj6smnO6jSIno8rIgLk+hUP9LwcPbx/OeioSuYYoO0VMfym0Ydq
-	cykpZw7VKN7de4P2m33r8kY7iiLwqZz5EOfXCwoXkMdos0iegaBwvI4uGsbejPksjJaNPxyqQMR
-	TA==
-X-Received: by 2002:a05:6a20:2583:b0:3c3:704d:57c4 with SMTP id adf61e73a8af0-3c8aaf7ce69mr1064608637.12.1785212752269;
-        Mon, 27 Jul 2026 21:25:52 -0700 (PDT)
-Received: from com-58127.corp.openai.org ([199.47.143.15])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc5a67f3sm39715677eec.29.2026.07.27.21.25.51
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 27 Jul 2026 21:25:51 -0700 (PDT)
-From: friel@openai.com
+	dkim=pass (2048-bit key) header.d=chungminlee.com header.i=@chungminlee.com header.b="MQOOdEpv"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4h8P7l4DMFzMlwt;
+	Tue, 28 Jul 2026 07:25:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chungminlee.com;
+	s=MBO0001; t=1785216355;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Uc+iQSjrEaIRY5gv60qroUs6daOrp929+PVzyF5UpA8=;
+	b=MQOOdEpvcT2oFEMtZtrexPu4JXgHZl2ZS2RONIixDXnQmzTzQgeaE3irZ9A0XE2JsbRjKd
+	hEBFJNWzL3K8bJ5OoNS0SADEz2IE5tEwYxPB3AoBigD8GxqkYXZ6mllqYueP0lLdozDAx6
+	Q8strxypy/JsdZyQSuHnyALYdl/MTUjcQr06KRhyFbmzwTXdAxiEZoxZStas2wdGFzdSHS
+	aR3Jz+vhSYZvZfccvI3DShHEQ4Q/qMRciClqjcLUJGF7lKVNfeEXBxxrgYEoVJAyIMbrb+
+	URaUym1JlDP0Ehisc9LtZD1wYMA4TN+QwYz6zRtRQhms3oJDbcjyRn4X4p4tQA==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of chungmin@chungminlee.com designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=chungmin@chungminlee.com
+From: Chungmin Lee <chungmin@chungminlee.com>
 To: git@vger.kernel.org
-Cc: Friel <friel@openai.com>,
-	gitster@pobox.com,
-	peff@peff.net,
-	stolee@gmail.com,
-	me@ttaylorr.com,
-	ps@pks.im,
-	jonathantanmy@fastmail.com
-Subject: [RFC PATCH] index-pack: optionally allow duplicate objects
-Date: Mon, 27 Jul 2026 21:25:32 -0700
-Message-ID: <20260728042550.91133-2-friel@openai.com>
-X-Mailer: git-send-email 2.54.0
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Chungmin Lee <chungmin@chungminlee.com>
+Subject: [PATCH v2] regexec: work around macOS TRE leak on invalid UTF-8
+Date: Mon, 27 Jul 2026 22:25:38 -0700
+Message-ID: <20260728052538.12429-1-chungmin@chungminlee.com>
+In-Reply-To: <20260722053127.37244-1-chungmin@chungminlee.com>
+References: <20260722053127.37244-1-chungmin@chungminlee.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,400 +53,362 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4h8P7l4DMFzMlwt
 
-From: Friel <friel@openai.com>
+On macOS, the system regex engine leaks an internal buffer when
+regexec() encounters an invalid multibyte sequence in a UTF-8 locale.
+The line-by-line path can call regexec_buf() for each pattern on every
+line, so "git grep" can leak repeatedly on a file containing invalid
+UTF-8.  The total leak grows with the number of calls, and the per-call
+allocation grows with the pattern's automaton.  In one case, grepping a
+repository containing PDFs exhausted memory and caused the machine to
+restart.
 
-index-pack accepts repeated object IDs by default. However,
---check-self-contained-and-connected also enables strict index
-validation, which rejects them. A clone therefore rejects a pack
-containing duplicate objects even when all of its objects are connected.
+ce025ae4f61e (grep: disable lookahead on error, 2024-10-20) made "git
+grep" fall back to line-by-line matching when regexec() reports an error
+on invalid UTF-8.  That fallback cannot prevent this leak: the allocation
+has already leaked when regexec() returns REG_ILLSEQ.
 
-By default, shallow and filtered clones do not request this pack-local
-check and already accept duplicate objects. Ordinary full clones reject
-the same pack because they enable strict index validation.
+Avoid the leaking path by providing a Darwin-specific regexec_buf().
+Walk the input with mbrtowc(), split it at bytes that cannot form a
+complete multibyte character, and search each valid segment separately.
+This preserves matches in valid text on either side of an invalid byte.
 
-Git's upload-pack normally uses pack-objects to select each reachable
-object once before writing a response. A server can instead construct
-that response by streaming entries from existing packs. When those
-packs overlap, the same object can appear more than once.
+Search each segment with REG_STARTEND so match offsets remain relative to
+the original buffer.  Set REG_NOTBOL and REG_NOTEOL for internal segment
+boundaries so "^" and "$" do not match there.  Keep the flags clear at
+the true beginning and end of the buffer.
 
-Avoiding duplicates requires the producers to coordinate their object
-selection or track object IDs across all input packs. A duplicate can
-also be used as a delta base, so removing it can require buffering and
-rewriting the response. Doing that work at request time gives up the
-memory and latency benefits of streaming existing packs.
+Use the normal regexec_buf() path in single-byte locales, where no byte
+can form an invalid multibyte sequence.  Use the bundled regex
+implementation unchanged when NO_REGEX is enabled.
 
-Add pack.allowDuplicateObjects so a client can accept these packs during
-its initial fetch:
+Declare the Darwin override in compat/darwin.h and map regexec_buf() to
+darwin_regexec_buf().  This follows the platform override pattern used
+by the other compatibility headers and leaves the common inline
+implementation as the default.
 
-    git clone -c pack.allowDuplicateObjects <repository>
+There is no reliable way to detect a future macOS version in which the
+system regex implementation has been fixed.  Even after a fix, Git will
+need the workaround while it supports affected macOS releases, so treat
+it as an indefinite compatibility workaround.
 
-Add --[no-]allow-duplicate-objects to override the configuration for
-index-pack. Preserve the default rejection introduced by 68be2fea50
-(receive-pack, fetch-pack: reject bogus pack that records objects twice,
-2011-11-16). An explicit --strict or --verify remains strict regardless
-of the configuration and cannot be combined with
---allow-duplicate-objects. Object validation, connectivity checks, and
-delta resolution remain unchanged.
+Add tests for matches before, after, and between invalid bytes, including
+an offset check after an invalid byte.  Also check incomplete trailing
+input and anchors at true and internal line boundaries.
 
-Signed-off-by: Friel <friel@openai.com>
+Signed-off-by: Chungmin Lee <chungmin@chungminlee.com>
 ---
-Applies on top of tb/pack-with-duplicates.
+Changes since v1:
 
- Documentation/config/pack.adoc    |  11 ++
- Documentation/git-index-pack.adoc |  12 ++-
- builtin/index-pack.c              |  41 ++++++-
- t/t5308-pack-detect-duplicates.sh | 171 ++++++++++++++++++++++++++++++
- t/t5309-pack-delta-cycles.sh      |  10 ++
- 5 files changed, 241 insertions(+), 4 deletions(-)
+  - Cite ce025ae4f61e, which handles the same macOS regexec() error.
+  - Treat the workaround as indefinite instead of assuming a known
+    removal point.
+  - Document the -1 and -2 returns from mbrtowc().
+  - Use one DARWIN_REGEXEC name in all build systems.
+  - Move the implementation under compat/darwin/ and use a platform
+    header to override regexec_buf().
+  - Add coverage for offsets, incomplete sequences, and internal
+    boundaries.
+  - Use POSIX regex patterns in the tests so they exercise regexec_buf()
+    rather than the fixed-string optimization.
+  - Keep positive invalid-UTF-8 matching tests macOS-only because system
+    regex implementations differ in how they handle invalid multibyte
+    input.  Run the no-false-anchor test on every MB_REGEX platform.
 
-diff --git a/Documentation/config/pack.adoc b/Documentation/config/pack.adoc
-index 22384c2d2f..2229878abe 100644
---- a/Documentation/config/pack.adoc
-+++ b/Documentation/config/pack.adoc
-@@ -39,6 +39,17 @@ is set to "multi", reuse parts of just the bitmapped packfile. This
- can reduce memory and CPU usage to serve fetches, but might result in
- sending a slightly larger pack. Defaults to true.
- 
-+pack.allowDuplicateObjects::
-+	Allow linkgit:git-index-pack[1] to accept a pack containing
-+	multiple copies of the same object while checking that the pack
-+	is self-contained and connected. For example,
-+	`git clone -c pack.allowDuplicateObjects <repository>` can accept
-+	a pack generated from overlapping existing packs. Object and
-+	connectivity checks are preserved. Explicit `--strict` and
-+	`--verify` continue to reject duplicate objects.
-+	`--no-allow-duplicate-objects` overrides this setting.
-+	Defaults to `false`.
+Reproduction on macOS in a UTF-8 locale:
+
+    perl -e 'print "\377" x 16, "\n" for 1..300000' >binfile
+    git init -q r &&
+    mv binfile r &&
+    git -C r add binfile &&
+    git -C r commit -qm x
+    P='aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt'
+    /usr/bin/time -l git -C r grep -i -E "$P" >/dev/null
+
+On the machine used to reproduce the problem, stock Apple Git 2.50.1
+reached roughly 1--2 GiB maximum RSS.  The patched build used roughly
+13 MiB.  The difference grows with the number of invalid-byte lines and
+the size of the pattern.
+
+The leak was also reproduced in a standalone test using
+malloc_zone_statistics().  It reported about 3072 bytes leaked per
+REG_ILLSEQ call from tre_tnfa_run_parallel().
+
+Tested with the native macOS regex engine and with NO_REGEX:
+
+    make
+    make test T=t7810-grep.sh
+    make clean
+    make NO_REGEX=YesPlease
+    make test T=t7810-grep.sh NO_REGEX=YesPlease
+
+ Makefile                            |  4 ++
+ compat/darwin.h                     |  8 +++
+ compat/darwin/regexec.c             | 91 +++++++++++++++++++++++++++++
+ config.mak.uname                    |  1 +
+ contrib/buildsystems/CMakeLists.txt |  3 +
+ git-compat-util.h                   |  5 ++
+ meson.build                         |  5 ++
+ t/t7810-grep.sh                     | 37 ++++++++++++
+ 8 files changed, 154 insertions(+)
+ create mode 100644 compat/darwin.h
+ create mode 100644 compat/darwin/regexec.c
+
+diff --git a/Makefile b/Makefile
+index 1cec251..81075c3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2264,6 +2264,10 @@ ifdef USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
+ 	COMPAT_CFLAGS += -DUSE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
+ 	COMPAT_OBJS += compat/regcomp_enhanced.o
+ endif
++ifdef DARWIN_REGEXEC
++	COMPAT_OBJS += compat/darwin/regexec.o
++	BASIC_CFLAGS += -DDARWIN_REGEXEC
++endif
+ endif
+ ifdef NATIVE_CRLF
+ 	BASIC_CFLAGS += -DNATIVE_CRLF
+diff --git a/compat/darwin.h b/compat/darwin.h
+new file mode 100644
+index 0000000..6fbdc34
+--- /dev/null
++++ b/compat/darwin.h
+@@ -0,0 +1,8 @@
++#ifndef COMPAT_DARWIN_H
++#define COMPAT_DARWIN_H
 +
- pack.island::
- 	An extended regular expression configuring a set of delta
- 	islands. See "DELTA ISLANDS" in linkgit:git-pack-objects[1]
-diff --git a/Documentation/git-index-pack.adoc b/Documentation/git-index-pack.adoc
-index 18036953c0..1cb11ff898 100644
---- a/Documentation/git-index-pack.adoc
-+++ b/Documentation/git-index-pack.adoc
-@@ -11,7 +11,9 @@ SYNOPSIS
- [verse]
- 'git index-pack' [-v] [-o <index-file>] [--[no-]rev-index] <pack-file>
- 'git index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>]
--		  [--[no-]rev-index] [<pack-file>]
-+		  [--[no-]rev-index]
-+		  [--[no-]allow-duplicate-objects]
-+		  [<pack-file>]
- 
- 
- DESCRIPTION
-@@ -97,6 +99,14 @@ default and "Indexing objects" when `--stdin` is specified.
- --check-self-contained-and-connected::
- 	Die if the pack contains broken links. For internal use only.
- 
-+--allow-duplicate-objects::
-+--no-allow-duplicate-objects::
-+	Allow or reject multiple copies of the same object while checking
-+	that the pack is self-contained and connected. The default is
-+	controlled by `pack.allowDuplicateObjects`. The command-line
-+	option overrides the configuration. `--allow-duplicate-objects`
-+	cannot be combined with `--strict` or `--verify`.
++int darwin_regexec_buf(const regex_t *preg, const char *buf, size_t size,
++		       size_t nmatch, regmatch_t pmatch[], int eflags);
++#define regexec_buf darwin_regexec_buf
 +
- --fsck-objects[=<msg-id>=<severity>...]::
- 	Die if the pack contains broken objects, but unlike `--strict`, don't
- 	choke on broken links. If the pack contains a tree pointing to a
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index bc86925ad0..4ffcbb6c28 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -33,7 +33,7 @@
- #include "strvec.h"
- 
- static const char index_pack_usage[] =
--"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-id>=<severity>...]] [--fsck-objects[=<msg-id>=<severity>...]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
-+"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-id>=<severity>...]] [--[no-]allow-duplicate-objects] [--fsck-objects[=<msg-id>=<severity>...]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
- 
- struct object_entry {
- 	struct pack_idx_entry idx;
-@@ -135,6 +135,11 @@ static int nr_threads;
- 
- static int from_stdin;
- static int strict;
-+static enum {
-+	DUPLICATE_OBJECTS_REJECT = 0,
-+	DUPLICATE_OBJECTS_ALLOW_CONFIG,
-+	DUPLICATE_OBJECTS_ALLOW_OPTION,
-+} allow_duplicate_objects;
- static int do_fsck_object;
- static struct fsck_options fsck_options;
- static int verbose;
-@@ -1673,6 +1678,12 @@ static int git_index_pack_config(const char *k, const char *v,
- 			die(_("bad pack.indexVersion=%"PRIu32), opts->version);
- 		return 0;
- 	}
-+	if (!strcmp(k, "pack.allowduplicateobjects")) {
-+		allow_duplicate_objects = git_config_bool(k, v) ?
-+			DUPLICATE_OBJECTS_ALLOW_CONFIG :
-+			DUPLICATE_OBJECTS_REJECT;
-+		return 0;
-+	}
- 	if (!strcmp(k, "pack.threads")) {
- 		nr_threads = git_config_int(k, v, ctx->kvi);
- 		if (nr_threads < 0)
-@@ -1889,6 +1900,7 @@ int cmd_index_pack(int argc,
- 		   struct repository *repo UNUSED)
- {
- 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0, rev_index;
-+	int write_idx_strict;
- 	const char *curr_index;
- 	char *curr_rev_index = NULL;
- 	const char *index_name = NULL, *pack_name = NULL, *rev_index_name = NULL;
-@@ -1941,8 +1953,11 @@ int cmd_index_pack(int argc,
- 				strict = 1;
- 				do_fsck_object = 1;
- 				fsck_set_msg_types(&fsck_options, arg);
-+			} else if (!strcmp(arg, "--allow-duplicate-objects")) {
-+				allow_duplicate_objects = DUPLICATE_OBJECTS_ALLOW_OPTION;
-+			} else if (!strcmp(arg, "--no-allow-duplicate-objects")) {
-+				allow_duplicate_objects = DUPLICATE_OBJECTS_REJECT;
- 			} else if (!strcmp(arg, "--check-self-contained-and-connected")) {
--				strict = 1;
- 				check_self_contained_and_connected = 1;
- 			} else if (skip_to_optional_arg(arg, "--fsck-objects", &arg)) {
- 				do_fsck_object = 1;
-@@ -2022,6 +2037,26 @@ int cmd_index_pack(int argc,
- 		usage(index_pack_usage);
- 	if (fix_thin_pack && !from_stdin)
- 		die(_("the option '%s' requires '%s'"), "--fix-thin", "--stdin");
++#endif
+diff --git a/compat/darwin/regexec.c b/compat/darwin/regexec.c
+new file mode 100644
+index 0000000..13fb7d5
+--- /dev/null
++++ b/compat/darwin/regexec.c
+@@ -0,0 +1,91 @@
++#include "git-compat-util.h"
++
++#include <wchar.h>
++
++/*
++ * Darwin's TRE regex engine leaks an internal buffer when it encounters an
++ * invalid multibyte sequence.  Since the leak has already happened when
++ * regexec() reports REG_ILLSEQ, keep invalid bytes out of regexec() by
++ * searching each valid segment separately.
++ */
++
++/*
++ * Search buf[start, end), where size is the full size of buf.  REG_STARTEND
++ * keeps match offsets relative to buf.  Do not let an internal segment create
++ * a false beginning or end of line.
++ */
++static int regexec_segment(const regex_t *preg, const char *buf,
++			   size_t size, size_t start, size_t end,
++			   size_t nmatch, regmatch_t pmatch[], int eflags)
++{
++	eflags |= REG_STARTEND;
++	if (start > 0)
++		eflags |= REG_NOTBOL;
++	if (end < size)
++		eflags |= REG_NOTEOL;
++	pmatch[0].rm_so = start;
++	pmatch[0].rm_eo = end;
++	return regexec(preg, buf, nmatch, pmatch, eflags);
++}
++
++int darwin_regexec_buf(const regex_t *preg, const char *buf, size_t size,
++		       size_t nmatch, regmatch_t pmatch[], int eflags)
++{
++	size_t seg_start = 0, i = 0;
++	mbstate_t mbs;
++
++	assert(nmatch > 0 && pmatch);
 +
 +	/*
-+	 * Connectivity checks require strict object traversal, but may allow
-+	 * duplicate entries in the pack index.
++	 * A single-byte locale cannot contain an invalid multibyte sequence,
++	 * so use regexec() directly.
 +	 */
-+	write_idx_strict = strict;
-+	if (check_self_contained_and_connected) {
-+		strict = 1;
-+		if (allow_duplicate_objects == DUPLICATE_OBJECTS_REJECT)
-+			write_idx_strict = 1;
++	if (MB_CUR_MAX == 1) {
++		pmatch[0].rm_so = 0;
++		pmatch[0].rm_eo = size;
++		return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
 +	}
 +
-+	if (write_idx_strict &&
-+	    allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION)
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--allow-duplicate-objects", "--strict");
-+	if (verify &&
-+	    allow_duplicate_objects == DUPLICATE_OBJECTS_ALLOW_OPTION)
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--allow-duplicate-objects", "--verify");
- 	if (promisor_msg && pack_name)
- 		die(_("--promisor cannot be used with a pack name"));
- 	if (from_stdin && !startup_info->have_repository)
-@@ -2055,7 +2090,7 @@ int cmd_index_pack(int argc,
- 		read_idx_option(&opts, index_name);
- 		opts.flags |= WRITE_IDX_VERIFY | WRITE_IDX_STRICT;
- 	}
--	if (strict)
-+	if (write_idx_strict)
- 		opts.flags |= WRITE_IDX_STRICT;
++	memset(&mbs, 0, sizeof(mbs));
++	while (i < size) {
++		unsigned char c = (unsigned char)buf[i];
++		size_t n;
++
++		if (c < 0x80) {
++			i++;
++			continue;
++		}
++
++		n = mbrtowc(NULL, buf + i, size - i, &mbs);
++		if (!n)
++			n = 1;
++		if (n != (size_t)-1 && n != (size_t)-2) {
++			i += n;
++			continue;
++		}
++
++		/*
++		 * -1 denotes an encoding error; -2 denotes an incomplete
++		 * trailing sequence.  In either case, buf[i] cannot begin a
++		 * complete valid character within this buffer.  Search an
++		 * empty initial segment to preserve zero-width matches at the
++		 * true beginning.
++		 */
++		if (i > seg_start || i == 0) {
++			int ret = regexec_segment(preg, buf, size, seg_start, i,
++						  nmatch, pmatch, eflags);
++			if (ret != REG_NOMATCH)
++				return ret;
++		}
++		i++;
++		seg_start = i;
++		memset(&mbs, 0, sizeof(mbs));
++	}
++
++	/*
++	 * Search the final segment even when it is empty, so an empty buffer
++	 * or a buffer ending in invalid bytes still has its true end.
++	 */
++	return regexec_segment(preg, buf, size, seg_start, size,
++			       nmatch, pmatch, eflags);
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index 9ebd240..4660ff3 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -154,6 +154,7 @@ ifeq ($(uname_S),Darwin)
+ 	HAVE_DEV_TTY = YesPlease
+ 	COMPAT_OBJS += compat/precompose_utf8.o
+ 	BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
++	DARWIN_REGEXEC = YesPlease
+ 	BASIC_CFLAGS += -DPROTECT_HFS_DEFAULT=1
+ 	HAVE_BSD_SYSCTL = YesPlease
+ 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index a57c4b4..83e8b71 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -519,6 +519,9 @@ if(NOT HAVE_REGEX)
+ 	include_directories(${CMAKE_SOURCE_DIR}/compat/regex)
+ 	list(APPEND compat_SOURCES compat/regex/regex.c )
+ 	add_compile_definitions(NO_REGEX NO_MBSUPPORT GAWK)
++elseif(APPLE)
++	list(APPEND compat_SOURCES compat/darwin/regexec.c)
++	add_compile_definitions(DARWIN_REGEXEC)
+ endif()
  
- 	if (HAVE_THREADS && !nr_threads) {
-diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
-index c6273a1aeb..95c81fa7b4 100755
---- a/t/t5308-pack-detect-duplicates.sh
-+++ b/t/t5308-pack-detect-duplicates.sh
-@@ -139,4 +139,175 @@ test_expect_success 'index-pack can reject packs with duplicates' '
- 	test_expect_code 1 git cat-file -e $LO_SHA1
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8809776..96995c6 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -162,6 +162,9 @@ static inline int is_xplatform_dir_sep(int c)
+ #include "compat/win32/path-utils.h"
+ #include "compat/msvc.h"
+ #endif
++#ifdef DARWIN_REGEXEC
++#include "compat/darwin.h"
++#endif
+ 
+ /* used on Mac OS X */
+ #ifdef PRECOMPOSE_UNICODE
+@@ -992,6 +995,7 @@ static inline int strtol_i(char const *s, int base, int *result)
+ #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
+ #endif
+ 
++#ifndef regexec_buf
+ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+ 			      size_t nmatch, regmatch_t pmatch[], int eflags)
+ {
+@@ -1000,6 +1004,7 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+ 	pmatch[0].rm_eo = size;
+ 	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
+ }
++#endif
+ 
+ #ifdef USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
+ int git_regcomp(regex_t *preg, const char *pattern, int cflags);
+diff --git a/meson.build b/meson.build
+index 3247697..53c4816 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1387,6 +1387,11 @@ if not get_option('b_sanitize').contains('address') and get_option('regex').allo
+     libgit_c_args += '-DUSE_ENHANCED_BASIC_REGULAR_EXPRESSIONS'
+     compat_sources += 'compat/regcomp_enhanced.c'
+   endif
++
++  if host_machine.system() == 'darwin'
++    libgit_c_args += '-DDARWIN_REGEXEC'
++    compat_sources += 'compat/darwin/regexec.c'
++  endif
+ elif not get_option('regex').enabled()
+   libgit_c_args += [
+     '-DNO_REGEX',
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index d61c4a4..149654e 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -89,6 +89,10 @@ test_expect_success setup '
+ 	function dummy() {}
+ 	EOF
+ 	printf "\200\nASCII\n" >invalid-utf8 &&
++	printf "before\346world\n" >invalid-utf8-embedded &&
++	printf "a\346b\347c\n" >invalid-utf8-multi &&
++	printf "\346world\n" >invalid-utf8-leading &&
++	printf "before\346\n" >invalid-utf8-trailing &&
+ 	if test_have_prereq FUNNYNAMES
+ 	then
+ 		echo unusual >"\"unusual\" pathname" &&
+@@ -595,6 +599,39 @@ test_expect_success MB_REGEX 'grep two chars in single-char multibyte file' '
+ 	LC_ALL=en_US.UTF-8 test_expect_code 1 git grep ".." reverse-question-mark
  '
  
-+test_expect_success 'connectivity check rejects duplicate objects by default' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	test_must_fail git index-pack \
-+		--check-self-contained-and-connected --stdin <dups.pack &&
-+	test_expect_code 1 git cat-file -e $LO_SHA1
++test_expect_success MACOS,MB_REGEX 'grep matches valid text on both sides of invalid UTF-8' '
++	LC_ALL=en_US.UTF-8 git grep -h "befo[r]e" invalid-utf8-embedded >actual &&
++	test_cmp invalid-utf8-embedded actual &&
++	LC_ALL=en_US.UTF-8 git grep -h "worl[d]" invalid-utf8-embedded >actual &&
++	test_cmp invalid-utf8-embedded actual &&
++	LC_ALL=en_US.UTF-8 git grep -h -o "worl[d]" invalid-utf8-embedded >actual &&
++	echo world >expected &&
++	test_cmp expected actual
 +'
 +
-+test_expect_success 'connectivity check can allow duplicate objects' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	git index-pack --check-self-contained-and-connected \
-+		--allow-duplicate-objects --stdin <dups.pack &&
-+	git cat-file -e "$LO_SHA1" &&
-+	git cat-file -e "$HI_SHA1"
++test_expect_success MACOS,MB_REGEX 'grep matches a run between two invalid sequences' '
++	LC_ALL=en_US.UTF-8 git grep -h "[b]" invalid-utf8-multi >actual &&
++	test_cmp invalid-utf8-multi actual
 +'
 +
-+test_expect_success 'configuration allows duplicates with connectivity checks' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	git -c pack.allowDuplicateObjects index-pack \
-+		--check-self-contained-and-connected --stdin <dups.pack &&
-+	git cat-file -e "$LO_SHA1" &&
-+	git cat-file -e "$HI_SHA1"
++test_expect_success MB_REGEX 'grep does not anchor ^ or $ inside an invalid-byte line' '
++	test_expect_code 1 env LC_ALL=en_US.UTF-8 \
++		git grep -h "^world" invalid-utf8-embedded &&
++	test_expect_code 1 env LC_ALL=en_US.UTF-8 \
++		git grep -h "before\$" invalid-utf8-embedded
 +'
 +
-+test_expect_success 'command-line allowance overrides false configuration' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	git -c pack.allowDuplicateObjects=false index-pack \
-+		--check-self-contained-and-connected \
-+		--allow-duplicate-objects --stdin <dups.pack &&
-+	git cat-file -e "$LO_SHA1" &&
-+	git cat-file -e "$HI_SHA1"
++test_expect_success MACOS,MB_REGEX 'grep anchors ^ and $ at true line ends past invalid UTF-8' '
++	LC_ALL=en_US.UTF-8 git grep -h "^before" invalid-utf8-embedded >actual &&
++	test_cmp invalid-utf8-embedded actual &&
++	LC_ALL=en_US.UTF-8 git grep -h "world\$" invalid-utf8-embedded >actual &&
++	test_cmp invalid-utf8-embedded actual &&
++	LC_ALL=en_US.UTF-8 git grep -h "^" invalid-utf8-leading >actual &&
++	test_cmp invalid-utf8-leading actual &&
++	LC_ALL=en_US.UTF-8 git grep -h "\$" invalid-utf8-trailing >actual &&
++	test_cmp invalid-utf8-trailing actual
 +'
 +
-+test_expect_success 'command-line rejection overrides true configuration' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	test_must_fail git -c pack.allowDuplicateObjects=true index-pack \
-+		--check-self-contained-and-connected \
-+		--no-allow-duplicate-objects --stdin <dups.pack 2>err &&
-+	test_grep "appears twice in the pack" err
-+'
-+
-+test_expect_success 'configured allowance does not relax explicit strict mode' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	test_must_fail git -c pack.allowDuplicateObjects=true index-pack \
-+		--strict --stdin <dups.pack 2>err &&
-+	test_grep "appears twice in the pack" err
-+'
-+
-+test_expect_success 'explicit strict mode cannot allow duplicate objects' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	test_must_fail git index-pack --strict --allow-duplicate-objects \
-+		--stdin <dups.pack 2>err &&
-+	test_grep "cannot be used together" err
-+'
-+
-+test_expect_success 'configured allowance does not relax verification' '
-+	clear_packs &&
-+	create_pack dups.pack 2 &&
-+	git index-pack --check-self-contained-and-connected \
-+		--allow-duplicate-objects --stdin <dups.pack &&
-+	test_must_fail git -c pack.allowDuplicateObjects=true index-pack \
-+		--verify .git/objects/pack/pack-*.pack 2>err &&
-+	test_grep "appears twice in the pack" err
-+'
-+
-+test_expect_success 'verify cannot allow duplicate objects' '
-+	test_must_fail git index-pack --verify --allow-duplicate-objects \
-+		.git/objects/pack/pack-*.pack 2>err &&
-+	test_grep "cannot be used together" err
-+'
-+
-+test_expect_success 'configured allowance preserves connectivity checks' '
-+	clear_packs &&
-+	tree=$(git mktree </dev/null) &&
-+	commit=$(echo message | git commit-tree "$tree") &&
-+	{
-+		pack_header 2 &&
-+		pack_obj $commit &&
-+		pack_obj $commit
-+	} >not-self-contained.pack &&
-+	pack_trailer not-self-contained.pack &&
-+	rm .git/objects/$(test_oid_to_path $commit) &&
-+	test_expect_code 1 git -c pack.allowDuplicateObjects index-pack \
-+		--check-self-contained-and-connected \
-+		--stdin <not-self-contained.pack &&
-+	test "$(git cat-file -t $commit)" = commit
-+'
-+
-+test_expect_success 'allowing duplicates preserves object checks' '
-+	clear_packs &&
-+	tree=$(git mktree </dev/null) &&
-+	cat >bad-commit <<-EOF &&
-+	tree $tree
-+	author A U Thor 1234567890 +0000
-+	committer C O Mitter <committer@example.com> 1234567890 +0000
-+
-+	message
-+	EOF
-+	commit=$(git hash-object --literally -t commit -w --stdin \
-+		<bad-commit) &&
-+	{
-+		pack_header 2 &&
-+		pack_obj $commit &&
-+		pack_obj $commit
-+	} >bad-objects.pack &&
-+	pack_trailer bad-objects.pack &&
-+	rm .git/objects/$(test_oid_to_path $commit) &&
-+	test_must_fail git index-pack \
-+		--check-self-contained-and-connected --fsck-objects \
-+		--allow-duplicate-objects --stdin <bad-objects.pack 2>err &&
-+	test_grep "missingEmail" err
-+'
-+
-+test_expect_success 'set up upload-pack that serves duplicate objects' '
-+	test_commit clone-duplicates &&
-+	commit=$(git rev-parse HEAD) &&
-+	tree=$(git rev-parse HEAD^{tree}) &&
-+	blob=$(git rev-parse HEAD:clone-duplicates.t) &&
-+	{
-+		pack_header 4 &&
-+		pack_obj "$commit" &&
-+		pack_obj "$tree" &&
-+		pack_obj "$blob" &&
-+		pack_obj "$blob"
-+	} >clone-duplicates.pack &&
-+	pack_trailer clone-duplicates.pack &&
-+	write_script .git/duplicate-pack-hook <<-EOF
-+	cat >/dev/null &&
-+	cat "$TRASH_DIRECTORY/clone-duplicates.pack"
-+	EOF
-+'
-+
-+test_expect_success 'clone rejects duplicate objects by default' '
-+	test_must_fail git clone --no-local \
-+		-u "git -c uploadpack.packObjectsHook=./duplicate-pack-hook upload-pack" \
-+		. clone-reject 2>err &&
-+	test_grep "appears twice in the pack" err
-+'
-+
-+test_expect_success 'shallow clone already accepts duplicate objects' '
-+	git clone --no-local --depth=1 \
-+		-u "git -c uploadpack.packObjectsHook=./duplicate-pack-hook upload-pack" \
-+		. clone-shallow &&
-+	test "$(git -C clone-shallow rev-parse HEAD)" = "$commit" &&
-+	git -C clone-shallow fsck --full
-+'
-+
-+test_expect_success 'filtered clone already accepts duplicate objects' '
-+	git clone --no-local --filter=blob:none \
-+		-u "git -c uploadpack.allowFilter=true -c uploadpack.packObjectsHook=./duplicate-pack-hook upload-pack" \
-+		. clone-filter &&
-+	test "$(git -C clone-filter config remote.origin.partialclonefilter)" = blob:none &&
-+	test "$(git -C clone-filter rev-parse HEAD)" = "$commit" &&
-+	git -C clone-filter fsck --full
-+'
-+
-+test_expect_success 'clone -c pack.allowDuplicateObjects accepts duplicate objects' '
-+	git clone --no-local -c pack.allowDuplicateObjects \
-+		-u "git -c uploadpack.packObjectsHook=./duplicate-pack-hook upload-pack" \
-+		. clone-allow &&
-+	test "$(git -C clone-allow config --bool pack.allowDuplicateObjects)" = true &&
-+	test "$(git -C clone-allow rev-parse HEAD)" = "$commit" &&
-+	git -C clone-allow fsck --full
-+'
-+
- test_done
-diff --git a/t/t5309-pack-delta-cycles.sh b/t/t5309-pack-delta-cycles.sh
-index f613950e38..fb5ed81ca3 100755
---- a/t/t5309-pack-delta-cycles.sh
-+++ b/t/t5309-pack-delta-cycles.sh
-@@ -217,6 +217,16 @@ test_expect_success 'failover after a tail into a three-object delta cycle' '
- 	check_blob "$T" tail
- '
- 
-+test_expect_success 'configured connectivity check recovers duplicate delta bases' '
-+	clear_packs &&
-+	git -c pack.allowDuplicateObjects index-pack --fix-thin \
-+		--check-self-contained-and-connected \
-+		--stdin <recoverable-1.pack &&
-+	printf "\7\0" >expect.duplicate-base &&
-+	check_blob "$A" expect.duplicate-base &&
-+	git cat-file -e "$B"
-+'
-+
- test_expect_success 'index-pack works with thin pack A->B->C with B on disk' '
- 	git init server &&
- 	(
+ cat >expected <<EOF
+ file
+ EOF
 
-base-commit: fd2739b159d075cd4c6fa69b2cd876ba1caa5c88
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+2.55.0
