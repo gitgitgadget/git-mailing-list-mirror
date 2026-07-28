@@ -1,143 +1,106 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from send239.i.mail.ru (send239.i.mail.ru [95.163.59.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57673432313
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:42:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6DB383C7D
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 15:43:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.59.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785253348; cv=none; b=OL2lFXbfni7FFfXSszvV0EkR/lSYJQzqk/OSK7LHXItFnrCWmpOEHmleGevQaDO7jZLGIPrxDMLNwseJp1Q+IZHWCEQPPRWze2P70qkJRDBwFhgMJdbdhavQeRfz05EJRPyiiNZkv+3MUw/9qAjizbGgpvlN067MQF7D3U5TVv0=
+	t=1785253394; cv=none; b=trGHaKelM7jXpjGLXyDrtqDz9cimarT0TuBWubPsRI3b0YfffRqRDefez5a0KdDDkXCKYyt6DSIUfFL5MNH3Q3kbEKaPiwKCPychm7EuoozsjceE952//wJzn95Mu40YgocqnXD3E9xjmirf96B+2ZWEdbUQH1k5KSXbVVnirTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785253348; c=relaxed/simple;
-	bh=WYB2UQAeIa8rPvFWsOxq2WBKIRX8v0MoUisIqETopds=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sS9hd+1Ge97AbDrlCAh8CujmK9k6wnjE7kcwQ4/mczBbIBgTF/qbOx4D45M/HjMjBA11+0eA+czikw6uDuD1C9klj0qbyOmGTiPU/Y7PwwdM8rXkjVoUai+NyAr2OCv0kWmXJo1152GuqV681vGQ68ldWkMMBuXrFWLsEnQeVdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gO5fKvIA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aH3/fU14; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785253394; c=relaxed/simple;
+	bh=NqtyVj9vOTQ6G2iopW54D1u9dTSaLtl/tnFKIN/v0+8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sXIgqJaRlqhEVqXQWsIJeJgE+jNVMU7mqKL5bUjvJ9B7btr/NLsGmVBwlaY7Ft++Oylv5++dMFrGRhOLYxPlf2edscwYAg/zWjQ3AAe0fSBJq484h02N09DVnjX2q6IiQdvh0yJ9DWd9ClYWWvOa529AOnyquvOrd0qFprZyLLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=sO+d8i3u; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=FhgIffsM; arc=none smtp.client-ip=95.163.59.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gO5fKvIA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aH3/fU14"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6D2F8EC0347;
-	Tue, 28 Jul 2026 11:42:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 28 Jul 2026 11:42:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785253345; x=1785339745; bh=7VParmwDM1
-	N4xvHCcRX3rY7yWQNmRbHeMTfgdbTSbvs=; b=gO5fKvIAoggH3Uck6HlDjjs/XP
-	q7vRjWHiL4ODnFYfClix5Dwg/DSciCPzgsrLMyTFBZAWjc8KK/dZJ0xQ9tmDsk7B
-	3u1PcWhLechjQyDhqMIiXkmKfzF5lUvKNnu1hdjdwRJzFDgIS4wKkToQsqvCLbP0
-	fXBarsVVj2fprIU4LKh84tClZvZ77o+eYQZEPVJ1k2ztTQm0ndoRPFggNszi4PGs
-	dfNIuxsj3Qci+QRpwM+LcN0v7edzm1/QUUVIAIIWMN6lFopeQDnfGcClk3brSo3X
-	Yp1VKyLa63jj3wAsjNcbX1g4ZLBiuHukSfmT/yAWx9lIGKp1seV3zjcbMItA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785253345; x=1785339745; bh=7VParmwDM1N4xvHCcRX3rY7yWQNmRbHeMTf
-	gdbTSbvs=; b=aH3/fU14igNkKgjZmzMs3JlI+V6fY8KIWwZ5Ud16tELRfFWtSr1
-	R9Z7UrN19dHCy/gZGlmQTmOldCqiWAsOJtSz45A3ekg509JaosRsj+W1JymoGEo5
-	sZhHdQc21FNlZP/ct+gjzG/iGs1ZJQ0GDQD3BlSIPV3yP9jxWovNwWYEaoFSMOXj
-	EQaAN4P2ph2qUpX3fGsyI+tgJSyyl0wNZtNAQEfltjN6l9AmxyoGlTFY5iKoMyub
-	872bv2WF3X/SrB9bXr8eZgoekbfIXRqRA6FQC79hp48VXO1gktfwF8jvUgZZwLmD
-	j7A6vVZKs2xCgux3JScJlNAkcZqvTxRzdXA==
-X-ME-Sender: <xms:4c1oakbDA7Ht_StM-DoDPCVUFPk77bnFy2H6m1xaOOIRAhzDetOn6Q>
-    <xme:4c1oambJwduGBgF6o1dbLhAyohrfO57-Qti3O_tybi5xaGRwuxPqEvfqPeFPOc0Dc
-    QmDnzZ9BTkv-FQvvxpjEUbfelwcsmIv_mQCbCejivWoAUctleNE>
-X-ME-Received: <xmr:4c1oaj9yZjg9K6HFvTasvhUrKxUc18rq6PHVqAz2F0fTznFIqJ9EGOZcm8us0s2f9APJql9kEDME_vm1EyWEiNDiDDAXmNko5g>
-X-ME-Proxy-Cause: dmFkZTGHW987C6XBhtn04gJBqA2iM5nhuYunZ7W1H2pURQqcL6xzhOYCYXcGMJm4r1l9jL
-    QCeQgG32WxR7g/G7U/JOgEwQLsBje4CRxIeVs1lh0kPalotEq8y0Uv4oSoUe9i7sNlX8Tg
-    p6Ky3N+qRcV/pGCbVOBq3ySXF525ELolPXgBWZYnmC9q2pfSglbLfGDKDs2OSd5Ryl1oC0
-    iirWFVTGDoDnCnz/TDx2wIi75Y0RWHc25qrue1OTzTueAAFqueaJ8u9TxXupMLgWc0xfMb
-    t+PuiyhaHvR+i95sg/y7bmtolc4hqH81NgRAuNi9/t/irbSxr3Zj6rPssiDUbRgUf0iMjp
-    BG3nwmJe4TnZNIeja8PGpiDv+zHglevcechEc5aMOYjIZ8jEC7v6vPBraft3Rs8G1WA8gm
-    g2tweAAoFVy0wdAIbSbCSqZQEDbpeWqGGJJ/Dtsn1+lYUrw2F1qRVTzGh/p4E+ly3sGW4h
-    sY3uR3F8O5b50ZyjkOyfBCq5TTd6teDyGHvrlkS4HUuMKQO+6avyT+AY0qau/5gWxcbBtu
-    PiynstdslrGnTH2dlCg+kM+lPVYUtppjxcQBkFEL0t3zBQ6IOmKmN2WHI4f26/XbBMYoky
-    DMeFwGiLYFl1aaTU+Vhj70W/axG76dqXXIo+/sxTgPSmXEMMamLofGfpHaXQ
-X-ME-Proxy: <xmx:4c1oathMd9v19k6WBpGnUQX6wWSFGJeJpnf5T04JoNqfdsnoZoMGgA>
-    <xmx:4c1oarf9NnU4Jh4BQYngLGFOpXkAgOA1GEJGVpXoQigXumxPJawV0A>
-    <xmx:4c1oasq-pjUuNwwfTmUhWSE1WX3gKyF5j6FoAguieRJiJzXdV24Akw>
-    <xmx:4c1oaoDLiz36RL0b234_hdF3q9w0iXJxDF2Rjgwc2iNF4RS5MGWBEg>
-    <xmx:4c1oao89uEu1wBEq91uKN_T03h0D4QZDm-6VUsdmXKxxYgP7amtYQXfX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 11:42:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Emin =?utf-8?Q?=C3=96zata?= via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Emin =?utf-8?Q?=C3=96zata?= <eminozata@proton.me>
-Subject: Re: [PATCH v2] stash: add 'reword' subcommand
-In-Reply-To: <xmqqbjbsmkom.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	27 Jul 2026 10:00:57 -0700")
-References: <pull.2180.git.1784190706028.gitgitgadget@gmail.com>
-	<pull.2180.v2.git.1785149687514.gitgitgadget@gmail.com>
-	<xmqqbjbsmkom.fsf@gitster.g>
-Date: Tue, 28 Jul 2026 08:42:23 -0700
-Message-ID: <xmqq4ihjf7ds.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="sO+d8i3u";
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="FhgIffsM"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References
+	:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=BXbYwuLbaitr5a9MDJQXB5S20faXybRpRnJtqxxqqOk=; t=1785253390; x=1785343390; 
+	b=sO+d8i3uLWamA81fW/d3kr+KwZln1H6co2uBxgyPu/IqonVrh6W8dY0pDj5rQzF0JVjvtLG5T3o
+	WqRLgAZWkBUVim0VopDMKwJGaBfPaegt33QZ+UVjYFfX9X+JkPgj1OqaF6lKQNmv1JJJZYHDtEm/N
+	nFGJWh1m9DYeFLtNe7EJQjXCDgYkcL8LPfysTDE4kbyZfqOE9kx99jSZaDwpQocYUD4xaN9sKyZkz
+	tHTY10Ke/VlVZV9gpeai0zrMEefBfp27sUR1udvkYhQCmedNS5nIYs1D1sZVrbZastKfyHVpVdldY
+	/5/njUiuPD2dTBHeBoVQXvPhBv7qcG/upLEA==;
+Received: from [10.113.148.58] (port=57116 helo=send277.i.mail.ru)
+	by exim-fallback-67c48d97fc-46b7n with esmtp (envelope-from <long76.git@mail.ru>)
+	id 1wojir-00000000Ibe-0oaz
+	for git@vger.kernel.org; Tue, 28 Jul 2026 18:28:01 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References
+	:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To:Cc:
+	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=BXbYwuLbaitr5a9MDJQXB5S20faXybRpRnJtqxxqqOk=; t=1785252481; x=1785342481; 
+	b=FhgIffsMEqkRGAUhqVoDeo33j270842FVvFr9WbZMlQijIg5JcJAVm4wYs35mSduSTTKLN9zNG/
+	bU9RNhdevGjEHTNOXuXMH3JUNuWX/cU/wZv8K6qFdVCqXwX75rcpA7daxmAyCV6bB5oOm78IvCcb0
+	/r+qinDfgWwRmch4TBA0JwKJ4S8paGKLAawqeVNUlRa1fZBB+9a4aKqKRBcZsIyBvvyOCA6Jn516t
+	duGwNIcLSFpjeBkrIAkAKS0UQHwv90+kaBGcXFckxkKvX7Uc+ZAMRTHPaQHcTKDSVpS+SUZvmLV9s
+	Mbt6SxODqGr5THEmya/hVT6mdwYDj0TgskcQ==;
+Received: by exim-smtp-6bc4cc657b-5bznt with esmtpa (envelope-from <long76.git@mail.ru>)
+	id 1wojih-000000003tZ-2Wen; Tue, 28 Jul 2026 18:27:52 +0300
+Message-ID: <9ee7b916-a9ce-4300-baf4-b24d0a52fe46@mail.ru>
+Date: Tue, 28 Jul 2026 18:27:51 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: REBASE_HEAD still exists after success end rebase
+To: Matt Hunter <m@lfurio.us>, git@vger.kernel.org
+References: <edfc868b-6be6-4871-a539-e70791db216d@mail.ru>
+ <DKA3RP12A8LU.2VD89MQ7G2KLL@lfurio.us>
+Content-Language: en-US
+From: Long 76 <long76.git@mail.ru>
+In-Reply-To: <DKA3RP12A8LU.2VD89MQ7G2KLL@lfurio.us>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD9C208BCBABA4BDCEA74E992CA62641EC6E69F963F4B1EC6F5182A05F5380850404C228DA9ACA6FE27376364C2308783533DE06ABAFEAF670569608B39E62FE0F4C9AE6BEE73B3A4F587940C845C9D7C7C
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7F9D3BE5B596754B8C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6759CC434672EE6371C2A783ECEC0211ADC4224003CC836476D5A39DEEDB180909611E41BBFE2FEB2BE267DD1575EE63CDECFF40451C75720F9F193CA2E806E3CF41ABE5FAE8A937650C819B32DFABC24A725E5C173C3A84C390D92131081DE748117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC081CF0AE924DC023A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F4460429728776938767073520B1593CA6EC85F86DC26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE26055571C92BF10F452896749CDDA0A6D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE32D01283D1ACF37BA03F1AB874ED89028C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F790063719C769067E8F2942EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
+X-C1DE0DAB: 0D63561A33F958A5490D7E7B3AF3D5295002B1117B3ED69633025B1410DF83DD54BB1175C6E7DD943610D81D389A125CDE35189EBF2DEA28FEA14CD2CD220BB99C5DF10A05D560A9880EC71AF561E0AAD9143641EC25BB39CC2F3E6DF6689A16
+X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE1918E10F71CB4DF9F9677DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659A35F7744BE51F939D879FEBA09F9BD4269FF4B44652333D6A6985E5BF7A12C3387E606A5CC54422CB8341EE9D5BE9A0A04BF348ADA31A601D131F03A8772E519ADA5280EB9C268748CD93680B12512CF4C41F94D744909CE06349EBF80BA53DC7F80F8B16B0B4F5BC3981EEBE9DB10F943082AE146A756F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVczkDsfooUjfZ8/5aioXLDU=
+X-Mailru-Sender: FA56D3AF5E7ABC7464DC1CE9D819784E7F26A6C00E8045F83DE06ABAFEAF670569608B39E62FE0F4B7CBEF92542CD7C86E6763FEFA0584FA91296853BA92DB573F2CD06A13C360CFE5A15ED4F09F547DA6B405093FCEE899451FCD79C64DC368C77752E0C033A69E3453F38A29522196
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B42CD459FEF794EC2C492BBD0D7572DF240EBBA641EA382894049FFFDB7839CE9EC750E04395D27384788FFF19CE74BE960BC5A9DA48A2F6B49A13ED0C9CFA31418498557B6A1CBFE0
+X-7FA49CB5: 0D63561A33F958A5840C21FCCAB5506B5002B1117B3ED69663B790108C7F9B6C4E82D2634811542802ED4CEA229C1FA827C277FBC8AE2E8B93B120FAD52BA009
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZgueHt3aoMlO/T1l3J3a7Mg==
+X-Mailru-MI: 20000080020000000000000800
+X-Mras: Ok
 
-Junio C Hamano <gitster@pobox.com> writes:
+> I made a very short-lived effort to look into why this "bug" was
+> happening.  I say "bug" in quotes, because I'm not even sure if it is
+> even problematic behavior.
 
-> I wonder if the reflog API needs to be extended before we can
-> implement this properly.  I imagine a set of functions like (there
-> may be others)
->
->  * refs_reflog_replace(ref_stash, idx, &reflog_data);
->  * refs_reflog_edit_in_bulk(ref_stash, num_edit, reflog_edit[]);
->
-> will become the foundations of such a feature.
+I think this is a bug because git create similar HEADs if you made merge 
+or cherry-pick. I don't have problems with them.
 
-On further thought, I think this fits pretty well into the general
-architecture of the refs subsystem.  Both backends would need
-refs_reflog_edit_in_bulk() in their vtable, while the single-entry
-edit can just be a thin wrapper passing a single-element
-reflog_edit[] array with a 'replace' operation.
+Plus by git rebase docs on official site flag '--show-current-patch':
+---
+Show the current patch in an interactive rebase or when rebase is 
+stopped because of conflicts. This is the equivalent of git show 
+REBASE_HEAD.
+---
+For me it means that return patch only if rebase in progress - not 
+aborted/not complete/have conflicts
 
-If someone is interested in implementing this, there are a few
-tricky details to be careful about:
+> I solved my need at the time (detecting a rebase in progress) by
+> checking for the existence of either of the 'rebase-merge' or
+> 'rebase-apply' directories in $GIT_DIR.
 
- * With delete/insert, indices drift.  In "insert at stash@{5},
-   replace stash@{10}", the second instruction targets what was
-   originally position #10, which becomes #11 after the insertion
-   at #5.  Pre-scanning the reflog_edit[] array in user order to
-   annotate each element with an effective '.idx' value should
-   resolve this, or something along those lines.
-
- * Multiple reflog_edit[] elements may target the same '.idx'.  In
-   "replace stash@{4} with 'hello', replace stash@{4} with 'bye'",
-   stash@{4} should end up as 'bye'.  If a backend sorts
-   reflog_edit[] by '.idx' (or in reverse, as the files backend
-   might do when copying from largest index to smallest),
-   processing must produce the same result as unsorted execution.
-   The sort needs to be stable, probably keyed on effective '.idx'
-   and tiebroken by original array position.
-
- * A reflog_edit[] array with "delete stash@{4}" followed by
-   "replace stash@{4}" asks for an impossible operation and must
-   error out.  Swapping the order (edit then delete) is technically
-   valid, though it feels like a user mistake.  I am undecided on
-   that one.
-
-Although "git stash reword" needs only 'replace', edit_in_bulk()
-could consolidate existing operations like "reflog delete", "stash
-drop", and "stash pop", and help clean up refs_reflog_expire().
-Even if initial support is limited to 'replace', designing for
-'delete' and 'insert' upfront saves us from a future rewrite.
-
-As for "git stash reword" handling multi-line messages, the
-flat-file reflog format pretty much expects single-line entries.
-Since "git stash push -m" already squishes contiguous whitespace
-(including newlines) into a single space, "stash reword" should
-probably follow suit.
-
-That is about all for now.
+Thanks for advice! I don't knew it.
