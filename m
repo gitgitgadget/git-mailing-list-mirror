@@ -1,146 +1,126 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A5942CAE1
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 13:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D842D43BDB6
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 13:21:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785243636; cv=none; b=jy93YT7L8bXtnT/VF7jGH8UCHjCbPLkut7cUZ4E4igV0kGZoyQ3LE6n7/cAQY4rBs5/2H3WNeGhgvL3+HItvENUH9+v1WWVS5zh3Vve83c9XNkg9TvjLNbjpZRRcRYZmq66nve2Tfcxmep4WHhETaYUsmvBoJJQIrI3ByvkEYGE=
+	t=1785244870; cv=none; b=qCNZGNCkbaKmQXWRAFr7oTTjq4deYemmdXI6rh89XSJBKRPGaP/rxv8ybfFXHtmynUtqrYnKYHt2GEaUWtzIW2nluF5J+i23cnPD6FjXfInq3Ydg/DJcCJ9mHiKfoyQ86oLCwG2N7XI+gBMghvTnAGN74RaZ2gaunH+GnKePhLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785243636; c=relaxed/simple;
-	bh=gKwt4G5CCsWTq1m+9bp+FT5vRDIJHX/gRpdauq80/10=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WbMH33JwuUHSH1QFOKT3eFk5TKL42LJFP1444Wtzy7j5/r/ddMhQjvO0JXVZ9jV9ekjyyi8lxIavs/hbztg0sfabHVwZzH2wU1NCvmC+muPr5npl84ZITNx8Vl7CMZ+sEjUvlMHHDu9GkRwiazT/DmtoARVdZbqyMX56GeFjHiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=pwYVgLDS; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1785244870; c=relaxed/simple;
+	bh=SiIwx/RGTQEOWhod1PXXe7b/j0lo7VZlG/tz7eQW6dU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=cBfbrqVtp0QY3ZRtVrj3ZPfGWQ2oL5KV83a65UgkJ2sYKwtoG5mXO64RxkqtD2HH4EHHBA3LLP2KK3FYDzB0+t4076Gudc+I23EJFRNAkTM2prp+O2Z6D85E4SdToHWC4KKusf812WWTDA19Mt9cBVOwdiXYmUu4ic6VI7+tbXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Piwckoyh; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="pwYVgLDS"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1785243625;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=AybxSZkkgDOm6+SOyJ1pLHoGmbLphkyz1TvcKmQ0VyA=;
-	b=pwYVgLDSbA9VTTmm/pkwOM6kWD0UVL3TC+kTJciHy+gxip5py/2D7PpHIzcLZ0ENZkHtUV
-	6wJOEhaGMWwzlfR91wu6CwJeATjuPcdt6uLGldAR0jUOpHv8q6G5QwdCA/w5WwHjL9AQkl
-	EtcJDOSvJa918BusJsVX7ClKJiFfIGQ=
-From: Toon Claes <toon@iotcl.com>
-Date: Tue, 28 Jul 2026 15:00:04 +0200
-Subject: [PATCH] merge: fix leak with merge.defaultToUpstream
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Piwckoyh"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-69c7ab350e9so5802282a12.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 06:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785244867; x=1785849667; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=lZ41pduoFLBN2CLBK/cRB5Y9n4onXJ6BPErMIcF+g4M=;
+        b=Piwckoyh5D76dP0ThzpzWI4TtHyL+q1MWVbw2llKTIgf/TKsz3DGV5YItkYQvL04Pz
+         mKWtK7hOXwL4q6SNjbjyGhJR+4HDddA+pdkDGFrLZ5oIzTs77LLaaM9QWs3m83MuSH2M
+         UmL73l1RkYqNICInPPP9h3eZv6r6/t5QXlpf2x1KpvJQP6ijnpQOMcqf13N1WTbzdqfH
+         tBhbOXq1nOfoue+dvx45vVpJjFyPiEmdRtv/Ct78Sd+YG0oTf2lXSBO8zsjVc+Ojpu3Z
+         utZl5/kQZr3xiXGv4S8TFh6+StyUEBeL0tvJ5RkIgOay9F4lqkHkl1su52Li4mqaLqCV
+         4DVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785244867; x=1785849667;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lZ41pduoFLBN2CLBK/cRB5Y9n4onXJ6BPErMIcF+g4M=;
+        b=ZOaD6iRFUFFz+B9GRbRPZ3PMRZbe3WokflWsFZvHhS1ejqAVA4KEK+Cjsyr4ZMxwPL
+         8XIbOdMom6MLrvj9XEoIL4bQgYbCQG5jW8sGr5II4hCQyTzO1KeAOz/Bda/EtOcefl1T
+         6+vPL0DWCcLHFi6NtrYOVoH8dbioi5B/8ANsiJL/pk5t8FtUwi6F+c9Z/CTDsVkTJKNH
+         lCFtI5Y0eq1djoEYq+DWOrY/2V0O5HLETL9niGpE+A3+nEKqseFXizQYKA9+weLcaEQW
+         ru3/jTlEYTep4tiNLyjQm706S+iuZvg7Ke/SFqfIyzHzgUUeIeBOauOj3DqsKOFym6Kp
+         Pjcw==
+X-Forwarded-Encrypted: i=1; AHgh+RqS1EBXy3awlTqc2rcYA3wKZBpLeCPZl4stMoxV5RRTogExiHg7Xp4dmDicqVLV3zVTjOs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxbiWafjR9MKJexMKLKufFREXHScKdQgTE6I0LFa7aruqU25Uzv
+	ofsyADPuStw894VslQ9Ij66cQpozN1C8uFLyETpI9x9mZjm00E4F+I3Nf/K0Zg==
+X-Gm-Gg: AR+sD13mb5TOlWYFN6Lvj3xhzp0dkKyL5ahZ8lsZuWTjQGTqZTVQ5gU1yIBM1tHc4NZ
+	3P2PLcWGH7MO3sT3toWO43W45PKQsakbgVMl2oEOM+whLGVZr6dGPIJvNirVuSRi4pPfz8O/t8h
+	qmHN02AqC6etvNV6tNdmq0NzVHxsSK4Jgy3T2d2AZwlH3rDAVohHb1LLdBzP1kR8B6uO1CVPGkX
+	q2khr6AMgZ1ciq72ujcOOI2w44p6RitYmnImJg83NXLqXKq3xe0DOgbNwXJr1d2pxkNLEbRq/P5
+	cJDmtimIvKoc8KbMl1VnD0azLHFaKrOZ4AAXrI4/YMO8eYOyn6yZve0v5rR3XUk6vwlmp9sb9Kn
+	/y2NWMYYFTotJJ4JC3vjT8Z7Nk2EOeeEcCPmh7IFvGEZknL5S64dyPRbhMVBSE7kP3zgAKUjMCJ
+	S2DdGV7EG+UhhLzlZjD7jMoRcLqreU7cHtZyl6ZC8v90kCHdJXm7M8M7EJ
+X-Received: by 2002:a05:6402:240d:b0:698:ae9c:2ae with SMTP id 4fb4d7f45d1cf-6a0349de2c3mr1176504a12.17.1785244866824;
+        Tue, 28 Jul 2026 06:21:06 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69fb5843580sm4051950a12.25.2026.07.28.06.21.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jul 2026 06:21:06 -0700 (PDT)
+Message-ID: <92a69a99-c56f-4ec5-968f-436bef64ee48@gmail.com>
+Date: Tue, 28 Jul 2026 14:21:05 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: REBASE_HEAD still exists after success end rebase
+To: Matt Hunter <m@lfurio.us>, Long 76 <long76.git@mail.ru>,
+ git@vger.kernel.org
+References: <edfc868b-6be6-4871-a539-e70791db216d@mail.ru>
+ <DKA3RP12A8LU.2VD89MQ7G2KLL@lfurio.us>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <DKA3RP12A8LU.2VD89MQ7G2KLL@lfurio.us>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260728-toon-fix-merge-leak-v1-1-d6bd161a3acf@iotcl.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcyML3ZL8/DzdtMwK3dzUIqBsTmpitq5ZinFSsmlimpGBhZESUGdBUSp
- QBdjU6FgIv7g0KSs1uQRklFJtLQCYsNwvdwAAAA==
-X-Change-ID: 20260728-toon-fix-merge-leak-6d3bc5af2082
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
 
-By default the setting 'merge.defaultToUpstream' for git-merge(1) is set
-to 'true', which means when `git merge` is invoked with no arguments it
-merges the upstream branch configured for the current branch.
+On 28/07/2026 10:39, Matt Hunter wrote:
+> On Tue Jul 28, 2026 at 4:26 AM EDT, Long 76 wrote:
+>>
+>> In other words REBASE_HEAD exists if ogirinal commit in new branch
+>> modified and need call git push --force to send it to server. Please fix
+>> it, thanks!
 
-With this configuration set to 'true', setup_with_upstream() is called.
-That function allocates an array of arguments and hands it back to
-cmd_merge() via its `argv` parameter. This array is never freed, so
-cmd_merge() leaks it on every invocation.
+The need for "--force" when pushing is due to you having rebased the 
+branch, it is unrelated to the existence of REBASE_HEAD (other than the 
+fact that it exists indicates you have rebased). Rebasing rewrites the 
+history which means that the remote cannot fast-forward when you push. 
+Rather than using "--force" I'd recommend "--force-with-lease 
+--force-if-includes" instead (see the "git push" man page for more details).
 
-Track the allocated array in a separate variable and free it at the end.
+> I ran into this not that long ago too, while working on a script.  It
+> looked like this behavior depended on how the _last_ item in the rebase
+> todo list was handled.  I found if the last action was a squash or edit
+> (I don't think reword did this), then REBASE_HEAD was left behind.
+> 
+> Also, if rebase stops on a break command, then REBASE_HEAD will be
+> missing, even though a rebase is still in-progress.
+> 
+> I made a very short-lived effort to look into why this "bug" was
+> happening.  I say "bug" in quotes, because I'm not even sure if it is
+> even problematic behavior.
 
-The leak has been present since 93e535a5b7 (merge: merge with the
-default upstream branch without argument, 2011-03-24). Although the leak
-sanitizer was enabled for tests in fc1ddf42af (t: remove
-TEST_PASSES_SANITIZE_LEAK annotations, 2024-11-21), it went unnoticed
-because no test calls `git merge` without arguments, exercising the
-default-to-upstream path. Add such a test in t7600, which fails under
-the leak sanitizer without this fix.
+I think leaving REBASE_HEAD behind after a rebase is a bug, albeit not a 
+very serious one. Looking at the code we delete it before processing 
+each command, but do not clean it up after the last command.
 
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
-I ran into this leak while running `yay`[1] (I use Arch btw). `yay` uses
-Git to fetch packages from source, and it happens to call `git merge`
-without any revision to merge (it only passes the options `--no-edit`
-and `--ff`). Because I have Git with the leak sanitizer enabled in my
-$PATH, my `yay` tripped on a leak.
+> I solved my need at the time (detecting a rebase in progress) by
+> checking for the existence of either of the 'rebase-merge' or
+> 'rebase-apply' directories in $GIT_DIR.
 
-This series fixes the leak and adds a test to reproduce it.
+That's the best way to detect if a rebase is in progress - REBASE_HEAD 
+only exists when there are conflicts, or the editor is opened for the 
+user to reword a commit. It does not exist when the user is editing the 
+todo list at the start of a rebase; when stopping for conflicts after a 
+"merge parent" command without "-C"; when stopping for a break or failed 
+exec command.
 
-[1]: https://github.com/Jguer/yay
----
- builtin/merge.c  |  7 +++++--
- t/t7600-merge.sh | 17 +++++++++++++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+Thanks
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 58d1b7bb07..5b4eb23a83 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1373,7 +1373,7 @@ int cmd_merge(int argc,
- 	struct commit_list *common = NULL;
- 	const char *best_strategy = NULL, *wt_strategy = NULL;
- 	struct commit_list *remoteheads = NULL, *p;
--	void *branch_to_free;
-+	void *branch_to_free, *argv_to_free = NULL;
- 	int orig_argc = argc;
- 	int merge_log_config = -1;
- 
-@@ -1517,8 +1517,10 @@ int cmd_merge(int argc,
- 		option_commit = 1;
- 
- 	if (!argc) {
--		if (default_to_upstream)
-+		if (default_to_upstream) {
- 			argc = setup_with_upstream(&argv);
-+			argv_to_free = argv;
-+		}
- 		else
- 			die(_("No commit specified and merge.defaultToUpstream not set."));
- 	} else if (argc == 1 && !strcmp(argv[0], "-")) {
-@@ -1880,6 +1882,7 @@ int cmd_merge(int argc,
- 	}
- 	strbuf_release(&buf);
- 	free(branch_to_free);
-+	free(argv_to_free);
- 	free(pull_twohead);
- 	free(pull_octopus);
- 	discard_index(the_repository->index);
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 7f2a1db16d..e31d261f9d 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -1166,4 +1166,21 @@ test_expect_success 'suggested names are not ambiguous' '
- 	test_grep remotes/origin/not-local stderr
- '
- 
-+test_expect_success 'merge with no argument defaults to upstream' '
-+	test_when_finished "rm -rf upstream downstream" &&
-+	git init upstream &&
-+	(
-+		cd upstream &&
-+		test_commit one &&
-+		test_commit two
-+	) &&
-+	git clone upstream downstream &&
-+	(
-+		cd downstream &&
-+		git reset --hard HEAD^ &&
-+		git merge &&
-+		test_cmp_rev origin/main HEAD
-+	)
-+'
-+
- test_done
-
----
-base-commit: 13c7afec212fc97ce257d15601659314c6673d6c
-change-id: 20260728-toon-fix-merge-leak-6d3bc5af2082
-
+Phillip
