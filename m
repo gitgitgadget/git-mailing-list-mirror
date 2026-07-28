@@ -1,170 +1,94 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF3A42CAF0
-	for <git@vger.kernel.org>; Tue, 28 Jul 2026 11:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785239200; cv=none; b=ql1BQDCANV9W49isc2qIoSKmess2VmTcYQOOlSWNnPkS7i1ezjjli3mDfwpNdxqnL0keJUbMy9ynRr42bC1Ycj2de8rO0o6vaef/oQNrxhqW1qxpvwoZPsH/UhXBuB1VhcGxByVNitoac1Na44utogxL9tJumicsPCgQcuZ+yiM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785239200; c=relaxed/simple;
-	bh=Y6b7Rl6FiOuBP15lPakbs85+YfzdDbbyzYHas3eSSEU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=b0kujtcyoiqQboNIoTfTb4u+gp8GLJepJs6+TmRZi7jySSTx034Wt3IIVP6q72Y6tx4AK7Z1KCsQ5ylFqTRzTGltv2pye5OypI0t5vex9et0jYBvAek3uHV7GxrVJ7MmU4kWR5H4y8+60qJ9J0B1DnzwDQD1/nKJYqzn1y88j2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xps+vUtr; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2546B1A5B9E
+	for <git@vger.kernel.org>; Tue, 28 Jul 2026 11:46:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785239215; cv=pass; b=uDIZDy8orEom75Gj79ja4QY1cxU/zcgUTTPCWnJBArZNt37X+nlnkCR6THCxHgQdGSw/UegavQtF75ZnDFTcCsG7LLMwQdKNfPyKxGeu5WR6oeyi+wJsgdPGwEScL372vU7oorJEbDqiRgQzxecfW56PDmH4198urQ/dMm13Z04=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785239215; c=relaxed/simple;
+	bh=YH7f+haRh00pbHq8DeYdFywxv1dMpHjIWWkxstAHOHk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=HVBK4epYHEBYChyou8VDwXgVMrMY5wK58SLXKeXIuQs/Gx5w0Tl2bbl+7YA3ak/XG0dJkLpCK3ACwvenwBlfPeYmc4kgI+8FzOKvlsWkHq83b34lY3eXSzrMi90TkCqsZcMy9Df4fx1bmBNGrQG/28KEuJvwozmXGx97mf71nCk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V6anFOVK; arc=pass smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xps+vUtr"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7ebd88be784so2747176a34.2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2026 04:46:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V6anFOVK"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4954f5e8020so18336785e9.2
+        for <git@vger.kernel.org>; Tue, 28 Jul 2026 04:46:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785239212; cv=none;
+        d=google.com; s=arc-20260327;
+        b=H3gdmh4YwqscWNjJrk4s64zrxD+FK9YZUf+DhJC8OWA/9XYFpKiapWWa5CJWb2IhPr
+         DQXB1mF7gMM9Adsx0ItZkp3lEPg4GP4N0RX1AFiLJN8eLEY6BYHRR4cfp4Uupsg+dTNM
+         +AAg1zWEY94iiKSwXTbokM3xvVlzZco7RPzj1XgcFL49uY9wuUvou5gxHdxUgOzBfLWA
+         gfXf8iw8AcNUAX4GoQhSCKEAbUtqfJMPysKAfl9d7uunKelyFtPTaGdflSBI+1D4zBmK
+         Yb31whHWaI9NbgFohnctqLtMJb7ylgRbzh2Elz0YXq5dVR8tbxTu/ceyZwYHKFCnBOXh
+         0YaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=YH7f+haRh00pbHq8DeYdFywxv1dMpHjIWWkxstAHOHk=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=WU+bFtlDqep4Lzr9W6RTKQAJChclWZG3Y43+y43R81pZ55KvT3DX2X2NZdtWkcTBEM
+         ISjd2DZcGgKcMSrVwC5sUkR3GzqHkiEhTq9KlG9rtO86v5ehdrYN6G47xT90IBVXvdRr
+         ElI+fGS7K778wm/VXlUg5+PVD/4ojPO7nzd3johwchl18l8WqTGHrnYGNWemn3eNLU5g
+         c1o8+gLKo3V+RXg2pbVJ6XZrXosDtZPXwhLQqeIA8YdvGpLiIax7eNaH1UBemsCedLYB
+         f2fpBBGWrtxzvoFumzjZGtGzg0/qtwnpSm2vweXdZQ7fevAbuQaG6KrgEWy51Yg/KaCX
+         NOJg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785239198; x=1785843998; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=NA3yZR9XobX/VrH/9S/njipuw2CHd/2/uHnjWqwrgu8=;
-        b=Xps+vUtr1BBcyXVMrcO5y0LcFqCR7raxirLyQX5yQr6uknWRIrDGjesus6SR4iSG+t
-         F7J6jtdcxIrlVnqBJW0AtwraEj/86mM5f+2dVc2B8iYQdPwXF9nLwrHE1Mmv9Hp7F5BT
-         eSaCQsNkd8bmLLHTcmbIg1yQF+pNjUucs3ZE7dKy9qrmM9S7olpuZNRJBzxPHdMXU86T
-         gJixrCNXw5UZ0oVCN/ezpWc0Naq8ZGcGmwrC/FVNOVXmPLCbxDaS6vd2+3goZPOrfnvS
-         mZOVdxMdWEFq+bRHZ57b2RvAwd+gPiUvMRjL5VaD+DlmncvfDbMD1CR4/D6yGRu7l7Ix
-         z2AQ==
+        d=gmail.com; s=20251104; t=1785239212; x=1785844012; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=YH7f+haRh00pbHq8DeYdFywxv1dMpHjIWWkxstAHOHk=;
+        b=V6anFOVKz7myOm2ScC33i9w9elHm7IaK8HEQy7+G/OzY2LOsA/02rYQoXCVypL3F/o
+         lveDdDAjKv0iUbI/p5AmBko84HWS8x1hL/qup9mxfHfOcOGv6Lum79IAAWXuS03iRfl7
+         6bS1Kwap5hxDvOB1EfmJWUtHxcodWBfkjwLc/b+VFzEWuu7NXzkPXeWjFAtlpcCSYzg8
+         RN6qqaUFNR1WZ/phPwxqoIu9Kq0ogP0D1Wsz98FUjhHpmao9OZkmZhYHN/IWpLo9rgpW
+         uFSDk+P4LB67daETMjBRh0ynqKrLS7COKKDq603NwyEVrScqo23tjQZ+n1lK8TbYetiQ
+         KYJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785239198; x=1785843998;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=NA3yZR9XobX/VrH/9S/njipuw2CHd/2/uHnjWqwrgu8=;
-        b=iOPhjQS1l8jFJ4xKY1RxTyARPVbPe+LHAGb6D5dbxzCosXg4yTuZA12dx58CFTELTr
-         LR9V0wfu5n8JjEByPp6BofbB/jqyFfSEIujt55pvUosIpMv6C50wAVJ3NjwVQmZ+8Oko
-         nDyQpj4ZMx+qodfNOPyFw1aNMB43beuAlASfulKlGbOgNe1+M0Gw5/OQH49TT2ih89qZ
-         HRyxBfu2sQgh8RfNCn3g6v3URFm922eqIR+oFRlrV79zqxHmLNZ01mSEee2XNyHlUugQ
-         N0V5wN42+e7oBjuHBGAImR2+QcY673jj3NNClLWRXVbpm07Kzg2W9OTWs+SXwHdaJAbt
-         PPRg==
-X-Gm-Message-State: AOJu0YyeW+XgVlYnUVH+UlP10pbWT9xP1v022b14sWMKZnqGITcWmdzF
-	dIj1WfRg2bv1oobMPa+pQ6CuHM39M4LMQHq1uY2NN8R041keiVuDu0dcuZF7+A==
-X-Gm-Gg: AR+sD11/si+tRnwgG3uyEvT6Fypa+JC89MocOxjwyi3bhNpKTBlptSrMAho6GklJBIQ
-	qcChPUk3gHhg0wM5G5LZ5jeWTMwOWN0Z5vGGLYdjXOjXK9kcNw2pNtHRlQ0/4JXVrttSfHindfP
-	06ZZf6OuvApgqh9TtkqeZpYE0jtThw4Y+gE+0Ep73xQtX9oqLyK+CsV72HHXA0tL4zm9cmsr3FT
-	+vEyvhunafWOd3+A0eVtpDPJ40Kvac4Cmv19Q0NtYyEknFk9O8eOlVDDGJDp9EGALm3S4B9izqZ
-	Bq8OBqcnL2nw2ehAToyWOLOtY2BGbbatdSnzwJwAFDoCOaxmnqqkFzgMY+xubjokSQjwXoxCtwV
-	vIfKl/4CPVvYHjGNbLcWiGAghNPF2j7lJD7QDrj/I+CTcomWHTtaUslaEFcnutGsunjCc9wSnyg
-	L5eE74wQ==
-X-Received: by 2002:a05:6830:6ad6:b0:7e7:7de:ca8a with SMTP id 46e09a7af769-7efff2bc79cmr1167756a34.22.1785239197670;
-        Tue, 28 Jul 2026 04:46:37 -0700 (PDT)
-Received: from [127.0.0.1] ([52.242.242.176])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7ee2a1087b3sm14595142a34.25.2026.07.28.04.46.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 04:46:37 -0700 (PDT)
-Message-Id: <pull.2189.git.1785239196007.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 28 Jul 2026 11:46:35 +0000
-Subject: [PATCH] mingw: skip symlink type auto-detection for network share
- targets
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1785239212; x=1785844012;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YH7f+haRh00pbHq8DeYdFywxv1dMpHjIWWkxstAHOHk=;
+        b=Ssi+PdtD9hfxdUtjz0isslOu+BUVaOcklRVqqrOlVtF/UwEApdBfKC+/YDaMzZH2Ga
+         X8HCDpo+tasJwCkULa3FOsK+kDSUE4ghrQZ75j93HKK9sPk1hnG0LA1F0anDteUy6c0T
+         oaSp1TCPZX5sbaXyzTFiYORQ6dqLJjybO65iciFvpgc7QcRDBQKGewTkedv8hZVUhiy2
+         RiZvOpB5f72p9rD2/vyf72hkSJsX9wxZYNDggw+9VWhk8lg53/F0763ffTkeCaQxzcOx
+         mGhaGf7mb5HT5Af95HN6fzmSWppnG2HQKhS037QqlKFgurxT/dhcn6IWcn2GJVnI0Y6h
+         4E6A==
+X-Gm-Message-State: AOJu0Yyr5E++ciYNUZsYcw40rNGYGZmx2lEJlcsCCFOq4+DLDTINioZ6
+	6a2vi+r18i1Gl0ax9hd7Qq/EtoOx5CcyEOhfYGJXn/uc5AnpQF8+67aXJVviTWx2eKgH1344H21
+	q5QcjPR0/1kyM4A8u/pGWe/2UwSxwOEm4Wmu+
+X-Gm-Gg: AR+sD10jXzoOySwC7JEP9fq81fmPlxb2Q2gV8P/oxixr9GnLIM15cnXcabpUKXELbIR
+	TpJxC8337N0D8AdEPXbVFKn+CsAXqhlWOtzSIzMSubLu6Gqloml1M6+bUSc0eEYQCdixJGc+HTP
+	Fg4if62STFLME7j3vgdLpQYMftlIsbXdw0zdmkZemMnJ4oIKGptre2drAzKV1kjuEpThd1WIyJe
+	GSTWX3D04efJMqxT/Xtm8wrlLOP5kVENSJvpW34N9xWuzxXyIzXAFbOo5J0S5cjpZ8cXB+vpnfo
+	UnrJGDhLGx90ZUCfxJfTXeoQpcRVsll6TYTPHBtVlFhnP6lmTXI1VHAQCn2VTQ==
+X-Received: by 2002:a05:600c:c4b8:b0:495:665d:75df with SMTP id
+ 5b1f17b1804b1-496c658ee80mr24311055e9.23.1785239212129; Tue, 28 Jul 2026
+ 04:46:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: William Pursell <william.r.pursell@gmail.com>
+Date: Tue, 28 Jul 2026 05:46:40 -0600
+X-Gm-Features: AUfX_mx3k5ogvp8f2qBAdEQQ4fX-x4CEhYh4Ul0lz4_fqzfaUl4HPabUbnLBfBY
+Message-ID: <CAJPQ5NbTLnbe_VU1awCVggw5m9kGdBZssrZBp8G0YxcMjb_rwA@mail.gmail.com>
+Subject: Bug: Makefile ignores CARGO_TARGET_DIR
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+The Makefile hardcodes the path to the Rust static library at line
+962, but the cargo invocation at line 3036 does not override
+CARGO_TARGET_DIR. (line numbers are relative to 9a0c4701)
 
-On Windows, symbolic links come in two flavors: file symlinks and
-directory symlinks.  Since Git was born on Linux where this distinction
-does not exist, Git for Windows has to auto-detect the type by looking
-at the target.  When the target does not yet exist at symlink creation
-time, Git for Windows creates a "phantom" file symlink and later, once
-checkout is complete, calls `CreateFileW()` on the target to check
-whether it is actually a directory.
+When CARGO_TARGET_DIR is set in the environment, the link step fails:
 
-If the symlink target is a UNC path (e.g. `\\attacker\share`), this
-auto-detection triggers an SMB connection to the remote host.  Windows
-performs NTLM authentication by default for such connections, which
-means a crafted repository can exfiltrate the cloning user's NTLMv2 hash
-to an attacker-controlled server without any user interaction beyond
-`git clone -c core.symlinks=true <url>`.
-
-There are ways to specify UNC paths that start with only a single
-backslash (e.g. `\??\UNC\host\share`); All of them do start like that,
-though, so let's use that as a tell-tale that we should skip the
-auto-detection in `process_phantom_symlink()`. The symlink is then left
-as a file symlink (the `mklink` default), and a warning is emitted
-suggesting the user set the `symlink` gitattribute to `dir` if a
-directory symlink is needed.  When the attribute is already set,
-auto-detection is never invoked in the first place, so that code path is
-unaffected.
-
-This is the same class of vulnerability as CVE-2025-66413
-(https://github.com/git-for-windows/git/security/advisories/GHSA-hv9c-4jm9-jh3x)
-and follows the same general mitigation pattern that MinTTY adopted for
-ANSI escape sequences referencing network share paths
-(https://github.com/mintty/mintty/security/advisories/GHSA-jf4m-m6rv-p6c5).
-
-Note that there are legitimate paths starting with a single backslash
-that are _not_ network paths: drive-less absolute paths are interpreted
-as relative to the current working directory's drive. In practice, these
-are highly uncommon (and brittle, just one working directory change away
-from breaking). In any case, the only consequence is now that the
-symlink type of those has to be specified via Git attributes, is all.
-
-Reported-by: Justin Lee <jessdhoctor@gmail.com>
-Addresses: CVE-2026-32631
-Assisted-by: Claude Opus 4.6
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    mingw: skip symlink type auto-detection for network share targets
-    
-    This was released as part of Git for Windows v2.53.0(3) already.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2189%2Fdscho%2Fskip-symlink-detection-for-network-shares-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2189/dscho/skip-symlink-detection-for-network-shares-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2189
-
- compat/mingw.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 3eca3a7f2e..2b0d162d49 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -352,6 +352,29 @@ process_phantom_symlink(const wchar_t *wtarget, const wchar_t *wlink)
- 	wchar_t relative[MAX_PATH];
- 	const wchar_t *rel;
- 
-+	/*
-+	 * Do not follow symlinks to network shares, to avoid NTLM credential
-+	 * leak from crafted repositories (e.g. \\attacker-server\share).
-+	 * Since paths come in all kind of enterprising shapes and forms (in
-+	 * addition to the canonical `\\host\share` form, there's also
-+	 * `\??\UNC\host\share`, `\GLOBAL??\UNC\host\share` and also
-+	 * `\Device\Mup\host\share`, just to name a few), we simply avoid
-+	 * following every symlink target that starts with a slash.
-+	 *
-+	 * This also catches drive-less absolute paths, of course. These are
-+	 * uncommon in practice (and also fragile because they are relative to
-+	 * the current working directory's drive). The only "harm" this does
-+	 * is that it now requires users to specify via the Git attributes if
-+	 * they have such an uncommon symbolic link and need it to be a
-+	 * directory type link.
-+	 */
-+	if (is_wdir_sep(wtarget[0])) {
-+		warning("created file symlink '%ls' pointing to '%ls';\n"
-+			"set the `symlink` gitattribute to `dir` if a "
-+			"directory symlink is required", wlink, wtarget);
-+		return PHANTOM_SYMLINK_DONE;
-+	}
-+
- 	/* check that wlink is still a file symlink */
- 	if ((GetFileAttributesW(wlink)
- 			& (FILE_ATTRIBUTE_REPARSE_POINT | FILE_ATTRIBUTE_DIRECTORY))
-
-base-commit: 13c7afec212fc97ce257d15601659314c6673d6c
--- 
-gitgitgadget
+clang: error: no such file or directory: 'target/release/libgitcore.a'
