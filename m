@@ -1,214 +1,154 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF373B71A7
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 09:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05DB445AEA
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 09:57:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785318833; cv=pass; b=LI+S4Lk81wJdrFTNjW+un7km15tS9tkbftrKgp4/UJngcCThwT5E6dS4km+M+LVSAKmPfKdi+1xtjXeohwU0gf8otkmdlBMH/jtDhLFwAuUvdt+evcAek7tLfv1/jN8chAHmZm/LDhWuNFVCsV+KwPJekTpFVMFztpw66VMnfiQ=
+	t=1785319051; cv=pass; b=E7fu2bpNaOuNH28r7BD2Q7O8RtDxA+r8+cqHSnavjpX1c7qP1o1utEq7MlDiPgsl08u5zykj4EzFHxSLoV4ke6zeWbyJ1kPZS21mD1+tEHXFcv+3dMbJlsOr34qLb062nDdKfVz/11KmVi/TqF5vM+DSHhGqvYe0CdYOVqiuU7g=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785318833; c=relaxed/simple;
-	bh=c9Sal97l0sVgvbUyQv2zDupbXIdEyaWz34fyTKJHTGY=;
+	s=arc-20240116; t=1785319051; c=relaxed/simple;
+	bh=ikJzI6EGxgPU4hK1DF11r2wP9b/UxzeMTAnQ4pJaGFo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y6A5cin3ucvohI7pvVepWxd7RmuyqvuBiAgdYT2XYWvbMqbOeh7FMxRF4bk6oQ9GqjoOdPdtK9MtbO2yOzzuC5fRoTUOgyIahThQA0w9UoSINrK4/K1NJWy+I6k9fV4IUvXKhHkCtKt/jIyDhALJWIQlviS++YPANpgJQz2VtVc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j4vkqiZG; arc=pass smtp.client-ip=209.85.208.48
+	 To:Cc:Content-Type; b=KHNMkf4VqykOc0e3aWLY40WHbTunwuI99uWqpR17ewCPCNMqQ7jYbDmPNNqIXdjse4e12Po06FwiidALdXOffTN+HYEimubLil1mdoVjyg0oxscCPl0nYxy9UuPr653BDY/swMP1ybe9NWFRS8PlBj0XysLQRLaIJfztodmIcQI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HULgPz2v; arc=pass smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j4vkqiZG"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6a02aedabadso996493a12.1
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 02:53:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785318830; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HULgPz2v"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-69c7ab350e9so1218236a12.0
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 02:57:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785319048; cv=none;
         d=google.com; s=arc-20260327;
-        b=MmHKpB9l3P3rc5ptDIe9pnPc3OQR2l9K0fNfBjqYCVNaHmIQAZ0J+wnNJmY7gqNGeI
-         /iFJPvsao2+HkvBXrZK0+0Bijgfad9o8QMIPfiwCm8CNIiG9zbd46R/F+ZL2b8NzVDtE
-         Om7lUH2t5cgTInDPy11EF3iClmUP/5ro+IJfyTaBo1Z6MOM++ZFVudwXVv900A7v8hW3
-         w7YITeSvbqxqLcmv3uV+9Oh6qLqDyYoJb/D6HISIF624EAPnHdTsfaId7uidk8H0D4+B
-         iPP4eeOysrixr3OG7WxMC4H58ObIvz+xAe+Q2nENlYCZrVkR2QiFDSuJxiR+R8YXpTnr
-         AWDQ==
+        b=nmmuzWeTaAdJifB9+No9gJ3syv9iHV29+UOtPzDjH6/TgWbhdjrRn1Rc2lfTDNwAaM
+         PPqp2A7soJFbxGyGaBlrYnjEMyH9xSlgQFs5agcjCkKne9v19mg+rxw+LdURRUaja/Wn
+         T1Dj2c+fote9VYiXTt31C9Qi8Lm9Nd5MZdca6//9Wn2CuQ2+HgBC7wzYcFIkZK1JCPdE
+         QAOrCOt/FOa55Xm9JGsTLlZIc5PLE5m+WtTDWl1mtDH7OaBFXug7Y14dQLL6DVMhQw/B
+         WrZRyfBNgcdZPWEdTuzfcpbjYBQUIYNogJmBhUVHK0rn6CgLyndj2Uks5d2/apdl5uN2
+         dd+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=VmFA6jmantW+2hbPGR0Eny/V2eYJwjCXDsK63OVvnyU=;
+        bh=jEGAOjPgnwS1bP/d9cnTrRaleKRDlmywAwctv4pNyrc=;
         fh=2aAxuZ3FwNf3QcFlH2RvBEmGPgSA32B5xuUzbfpQbOg=;
-        b=dk4CdnyglQsMgE1CpCjYDFD4v7ShBxOa39hrtMfvs4Go9hOaiA3f8HHXAqj5OcGzjm
-         1o86hg2T/4rnSONcnjsj+7GYYpE3PJ5wQ8snhr4g45xfCiG8RxT+UG/ccik+LeBf9h5+
-         OQ6p0UpIf7hQTJCOIWfJLlARyI86sh/YJX6E4AThRiW4moKKe6kG2AUw/zE8WXgNhnox
-         okUFukNlBP/HN7urcr8N1aGJhosZK+ivSE85tBCGHHLmJT+SS2L8Cdfv59CVQJMufPUa
-         0cjmzDGPSjJRSHYVGRkC16AWvRuN3wHHbOB2jeYiDJhtEClxs9cjGSNZ2yLSEp3yTrt8
-         7BTg==;
+        b=MPbl+Haj+nEEGDbCxS/jxe9M7Y9JJFgx7MFAiGhfdxOFYP88HZAOVkm68l5Ug++Tfd
+         OnYqM95/yfdHT9TY3ax8wyO4BNsCciYbAoFIzEMfjYodepIgy6x4zyIdoweF3TJ3BdLG
+         hXdlckdHvI/UMYO210SahbNcYgEwuQQ8HC+gmM5MnQ1yZXcHBR0Nw3kaz3eSC8iMna0h
+         C24GXhIxkva5MiaK1kSOCWMnRr8fPoPmIXPVR1x3sGu/DdOw8NEXayLkf24bbCOdRewt
+         AMH81qnmQ8+7N8xCIFXG6/VdN33iil74xwGZIxiS1dc0drgqVTw2fYMLQL+9wuSmKAFu
+         xkBw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785318830; x=1785923630; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785319048; x=1785923848; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VmFA6jmantW+2hbPGR0Eny/V2eYJwjCXDsK63OVvnyU=;
-        b=j4vkqiZGx1libq3GCJwzP2N3p/H4NVUv1qrfwK+rqwaqRnIB83SeyRW+WgIbcF6sjJ
-         +O33cVn7B7TXVN2jNguhxTxBLa3BijnT0UKfxbRsD/qfavONKJQQ10LZCSo/ZFUpUjI9
-         2Lzy5K4RptuDiaCOt1GTbDs6wP1o/knE4oBl5+U4Vo5J5bKa4J+Jh8P2d/kwQ18vytCW
-         o2wuZi8Kt1gJXD/6mkM4X+T1ZxEtBQsClu8HJdY0/LsLd0ziqLMqW7RuFZh4YHeC7c7A
-         bgnBJ+OHMJHQmtB/+9ASp58cYxj56O+Jp4V1d+5N1BGdcaF6/KGzRES6j+rHXwyZm3e4
-         w1Og==
+        bh=jEGAOjPgnwS1bP/d9cnTrRaleKRDlmywAwctv4pNyrc=;
+        b=HULgPz2vR73GVVeGcG9f3Mmi+XI/knc8gnSlb1cniBa2BpWMgY+jUNIxhybW00x4UG
+         3L4nij6aomsyausHTEl1QQbgaofZP5oObcnuER3aRlsLv2dbcdfXVk3g7e7ydF1d8gBA
+         DX6DQCeKBk3EdNgXMkceo0thq//Fsugd1Wdxl0/aNocsoKqitJtnTPhztNE6Rx2tVMaj
+         9xHRaSUALLdkN+CEY2+Hcude2wEVVirqqLAXmb/idc9Af5i9tlA5GuWOjauqwQY+mPMn
+         c6V8dm1wTbJEO1WoaQBkl4utnSdf2ephxCYz3f5zPJnlt2cXbFJj7pIWv0pU9X7LsLtZ
+         4rjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785318830; x=1785923630;
+        d=1e100.net; s=20251104; t=1785319048; x=1785923848;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=VmFA6jmantW+2hbPGR0Eny/V2eYJwjCXDsK63OVvnyU=;
-        b=eJXioiN8z8Mh9oRaIkT3uxnLYv80EW+j+odlDUXNEUzdOPpdpV9acvB92sTJtRpH7r
-         7vpKICZu4AiyrwITjRdx9QdVHm8+bfSbr1XtbgJlbsoeCN2DQoFJRkzYEBwQkS3GVfaA
-         sKN0ud272ivE3D8crr4+DSdJz6cDRcKltoKjSODZuoP2eqOQupGRin62WxjKm40lP6/r
-         gE227klerPD1j+Z9mXIMAwnuiMWgONRrYd9XOCcbGUt5IVitgLP4gJcWc2ZCYx5I7Clh
-         facU3MeSdSSP841GJYJPiPVFWHdykL2yMf6fIiSOx1df45/3tzH4nH5gRMzN2L8d5MRZ
-         7dUg==
-X-Gm-Message-State: AOJu0YwaEYeP2tvd4ddy5lu9xZQ1QQGT74wclivg7icPDtpJ10WDh0Ju
-	SmjFT6cl8riU5T6e8bdRwCGn65SNgGSQQE0Sj6+B1NY6NuSXs2II7AdGHX5ysyYgu1ePUd6voTP
-	N6W/ngoO1eRdVdloWamLDf40hMI/nMP8=
-X-Gm-Gg: AR+sD13f1L27vm0JWmEhU0j/xwZyQvu6XeaHzVkjpEwevo0pGn+zEHA7hm9ZKK6G7LN
-	HB5JqgQTaWis9uomTKBhGwmh94FDgodkRqRzo5CpouIyjmGtt4kHPcnuMrHKikmtNYSS13jeNtZ
-	zVEVD5sEOyZuzARhoCa6YfFcsl02p/cSQnKf9PqxaTXQAzRj3/KfweVGQQYY473HGffYmxO1xj3
-	txFT9hQT1lwrVnByICpRZ83r61lHx3Of1hIQcs2u6SOmrpTBc2aHSqi7NR4sTyq0hzZNqnCTQ7P
-	4L7/SuHo+sKqUc8hhSwNZ8EgjcQcaY+2wYWz3J7+u+Qs+8QSfeRPHLihz+5kbLTw7TRBQbO3Jct
-	1iw9ikl78W9/nL8tm4LklUYRd6+MNcEAoCWxU8Kw6H0NdArID/5HybfHdId0v7KOrJ8wU
-X-Received: by 2002:a05:6402:1ec9:b0:69e:2585:7e6 with SMTP id
- 4fb4d7f45d1cf-6a034ab356fmr3126198a12.30.1785318830049; Wed, 29 Jul 2026
- 02:53:50 -0700 (PDT)
+        bh=jEGAOjPgnwS1bP/d9cnTrRaleKRDlmywAwctv4pNyrc=;
+        b=R5ZZLFTd0j7DxywSqRPUUfL9GrSnyJvH/Aw5PotX4/TF28FGwijDM7YLNKEe/i7bfK
+         /2sqGdc50xV7B9LIfu3mlYpEdKtxYRSWN1k/i8M3WVuLKlgjQLEu5AnhkncWan1IEZS9
+         +FMFlWR1Zhrh3suYwPICXs8+SM4Lx60uvfbab0rp3GCyo6O9ObTfZPNaw7CcnZGHtDvj
+         eUA6hNeJ+ZoGBvl9kuiZwwFcFabeoYseVjDwEI9b8uk2ktcAA28BuUxkeV7PCmU8EFyV
+         +bXLEAoj8nAbUiRRam6XS07oFvd+Vk2eT3j9aBopvevekQom/6If4TzjYQrcdsy47v8+
+         3yWg==
+X-Gm-Message-State: AOJu0YzvCyXtgMr1WznnAOAqyVfrNSkvSRcJrtvegRUXGNhM9i9RISxo
+	KHwRLrky+asd5A2YuE+KwCU5afYRUEdN0CV7PiyBT8Tjd7gQ88uGosBP1v7v1RBPAu0iWJmCGPJ
+	g+fag6tcpYRqKigXQv76S9F+/U8s2AKAWO/jwjqrneA==
+X-Gm-Gg: AR+sD121bT44+Uuhy+RLcQKjFUe6haurOF/JFDze4BvvMlptp1PpdI7S5RCCZsc3YOa
+	alaY5baFv0JSwmw/DeMl8BoaK7T4KUuM2KxrNBSWai053hNg4Nb6QvI/o/sD+iVvkskxouAEBHZ
+	eiORiFTPQ8m51Yc1BvgV1Gw4ThDwhWRVgsTasTrzxFP4IvJYFmNZljyqHdsYT/wh8JEk9XZpOP/
+	txYZMKncDmAMMPA/ApcWwgRkvzCcxPz7BQO1+jXrDFhcsTzq+fOeIPO0+hBYuFSVTLlEh9njCVf
+	epGFKMbtB5CHHuPKD7K1xZnhI4DFaAzPLUUAujtIxqmXM9aixCLtGNbCKzzb9B4Q3vcSdT3ZHXm
+	zMc0GnHADSK+oD/XlNgnYnlkEu4Qct3AMMlvzCQnjqnuR2YIo2q3QWNmt5Q==
+X-Received: by 2002:a05:6402:52c9:b0:696:8f45:4ae7 with SMTP id
+ 4fb4d7f45d1cf-6a0349da6bemr2533340a12.13.1785319048159; Wed, 29 Jul 2026
+ 02:57:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com> <20260725-objecttype-support-v1-1-2d4ca3bbabf1@gmail.com>
-In-Reply-To: <20260725-objecttype-support-v1-1-2d4ca3bbabf1@gmail.com>
+References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com> <20260725-objecttype-support-v1-2-2d4ca3bbabf1@gmail.com>
+In-Reply-To: <20260725-objecttype-support-v1-2-2d4ca3bbabf1@gmail.com>
 From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Wed, 29 Jul 2026 15:23:23 +0530
-X-Gm-Features: AUfX_mydJKxx6fHsYyxOkRoej-rvA7A20pWIDv4lj4M5x_uya7Uu0YzZmOVsp44
-Message-ID: <CA+J6zkQFAqZvi-6UaQi6v_OBiT4ihZtCN45vyGCGTbo9TJLJbg@mail.gmail.com>
-Subject: Re: [PATCH GSoC 1/5] protocol-caps: add type support to object-info
+Date: Wed, 29 Jul 2026 15:27:02 +0530
+X-Gm-Features: AUfX_mxYP0R3gdqwTP_jy1iUEnOrsqqs8ngEM8CgRx7-iF3w_t2cZKVcJ1l0gLE
+Message-ID: <CA+J6zkSQYuK-ZJoiQkEJDS9fBypOrBEmgYZRj1yYU00ws2u_HA@mail.gmail.com>
+Subject: Re: [PATCH GSoC 2/5] fetch-object-info: parse type from server response
 To: Pablo Sabater <pabloosabaterr@gmail.com>
 Cc: git@vger.kernel.org, karthik.188@gmail.com, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 
 On Sat, 25 Jul 2026 at 17:25, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
 >
-> Teach the server-side object-info handler to accept type as a requested
-> field. When the client includes type in its object-info request, the
-> server returns the requested object type.
->
-> While at it, fix requested_info->size bit field style.
+> The server can handle type requests but does not advertise the
+> capability yet. Prepare the client to know how to parse the server
+> response once the server advertises the capability.
 >
 > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 > Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
 > Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 > ---
->  protocol-caps.c      | 21 ++++++++++++++++++---
->  t/t5701-git-serve.sh | 27 +++++++++++++++++++++++++++
->  2 files changed, 45 insertions(+), 3 deletions(-)
+>  fetch-object-info.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 >
-> diff --git a/protocol-caps.c b/protocol-caps.c
-> index 02261be14d..5531d388f0 100644
-> --- a/protocol-caps.c
-> +++ b/protocol-caps.c
-> @@ -11,7 +11,8 @@
->  #include "strbuf.h"
+> diff --git a/fetch-object-info.c b/fetch-object-info.c
+> index ba7e179c44..cf6b94afb8 100644
+> --- a/fetch-object-info.c
+> +++ b/fetch-object-info.c
+> @@ -50,6 +50,7 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
+>                       const int stateless_rpc, const int fd_out)
+>  {
+>         int size_index = -1;
+> +       int type_index = -1;
 >
->  struct requested_info {
-> -       unsigned size : 1;
-> +       unsigned size:1;
-> +       unsigned type:1;
->  };
->
->  /*
-> @@ -73,15 +74,20 @@ static void send_info(struct repository *r, struct packet_writer *writer,
->         if (info->size)
->                 packet_writer_write(writer, "size");
->
-> +       if (info->type)
-> +               packet_writer_write(writer, "type");
-> +
->         for_each_string_list_item (item, oid_str_list) {
->                 const char *oid_str = item->string;
->                 struct object_id oid;
->                 size_t object_size;
-> +               enum object_type object_type;
->
->                 if (get_oid_hex_algop(oid_str, &oid, r->hash_algo) < 0) {
->                         packet_writer_error(
->                                 writer,
-> -                               "object-info: protocol error, expected to get oid, not '%s'",
-> +                               "object-info: protocol error, expected to get "
-> +                               "oid, not '%s'",
-
-I assume this is a style change? The original line doesn't seem
-long enough to wrap though.
-
-Also, this would break the grep-ability of this error string.
-
->                                 oid_str);
->                         continue;
+>         switch (version) {
+>         case protocol_v2:
+> @@ -101,8 +102,13 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
+>                         for (size_t j = 0; j < args->oids->nr; j++)
+>                                 object_info_data[j].sizep =
+>                                         xcalloc(1, sizeof(*object_info_data[j].sizep));
+> +               } else if (!strcmp(reader->line, "type")) {
+> +                       type_index = (int)i;
+> +                       for (size_t j = 0; j < args->oids->nr; j++)
+> +                               object_info_data[j].typep =
+> +                                       xcalloc(1, sizeof(*object_info_data[j].typep));
+>                 } else {
+> -                       BUG("only size is supported");
+> +                       BUG("unexpected object-info option: %s", reader->line);
 >                 }
-> @@ -93,7 +99,8 @@ static void send_info(struct repository *r, struct packet_writer *writer,
->                  * If an object is not recognized by the server append SP to
->                  * the response.
->                  */
-> -               if (get_object_info(r->objects, &oid, &object_size) <= OBJ_NONE) {
-> +               object_type = get_object_info(r->objects, &oid, &object_size);
-> +               if (object_type <= OBJ_NONE) {
->                         strbuf_addstr(&send_buffer, " ");
->                         goto write;
->                 }
-> @@ -103,6 +110,9 @@ static void send_info(struct repository *r, struct packet_writer *writer,
->                                     (uintmax_t)object_size);
->                 }
+>         }
 >
-> +               if (info->type)
-> +                       strbuf_addf(&send_buffer, " %s", type_name(object_type));
-> +
->  write:
->                 packet_writer_write(writer, "%s", send_buffer.buf);
->                 strbuf_reset(&send_buffer);
-> @@ -124,6 +134,11 @@ int cap_object_info(struct repository *r, struct packet_reader *request)
->                         continue;
->                 }
+> @@ -148,6 +154,10 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
+>                             object_info_values.items[0].string,
+>                             object_info_values.items[size_index + 1].string);
 >
-> +               if (!strcmp("type", request->line)) {
-> +                       info.type = 1;
-> +                       continue;
-> +               }
+> +               if (type_index >= 0)
+> +                       *object_info_data[i].typep =
+> +                               type_from_string(object_info_values.items[type_index + 1].string);
 > +
->                 if (parse_oid(request->line, &oid_str_list))
->                         continue;
->
-> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> index 9a575aa098..d7c93b5b55 100755
-> --- a/t/t5701-git-serve.sh
-> +++ b/t/t5701-git-serve.sh
-> @@ -366,6 +366,33 @@ test_expect_success 'basics of object-info' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'type' '
-> +       test_config transfer.advertiseObjectInfo true &&
-> +
-> +       test-tool pkt-line pack >in <<-EOF &&
-> +       command=object-info
-> +       object-format=$(test_oid algo)
-> +       0001
-> +       size
-> +       type
-> +       oid $(git rev-parse two:two.t)
-> +       oid $(git rev-parse two:two.t)
-> +       0000
-> +       EOF
-> +
-> +       cat >expect <<-EOF &&
-> +       size
-> +       type
-> +       $(git rev-parse two:two.t) $(wc -c <two.t | xargs) blob
-> +       $(git rev-parse two:two.t) $(wc -c <two.t | xargs) blob
+>                 string_list_clear(&object_info_values, 0);
 
-Can we not use the `test_file_size` tool to do this instead?
-That should also be much more portable.
+Is there a risk of an out-of-bounds array access here if the server
+responds with a truncated or malformed packet?
+
+If object_info_values.nr <= type_index + 1, this will segfault.
+
+If there isn't a bounds check slightly higher up in this loop, we should
+add one. Either way, we should definitely add a test using a mocked
+server response (e.g., via test-tool pkt-line) to ensure the client
+gracefully dies with a protocol error rather than segfaulting when it
+receives a malformed packet.
