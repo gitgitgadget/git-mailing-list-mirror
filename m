@@ -1,66 +1,66 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADCB47CC9E
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 12:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E122236FD
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 12:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785326881; cv=none; b=heGVwheiq39TcqzvxuXvr+VNvNFVRZzW6Xhe3xHiCVuOTKE/1ADUIWr36lC8TCxyoJfJCnfh6bGG7k9Qd/5BJ39h1kvcv2c5zwlSzG4fJmLzgl1oZjZZc/ruBvQWxyBeyI6T3pBvOORX+4vFCjz9oORAMJtf961saKOqXOydrDI=
+	t=1785327329; cv=none; b=fzcXyuKGzBSa6+CSYyNzboJjEKT331c+IIS11ivvmUsXMSx+I7LmipZQJyA6/nd74hK4UiUFnJr2IeQV6q9A2VdxfyqjLBJwEHf+SStgwTuAeCGHdJx/2qCnoUMG20BXQfuHOrblZ+FxDrpHl2box7cyfx6OF9VzYpSdrI+EKUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785326881; c=relaxed/simple;
-	bh=fSz64Gguqh/NICJQo2FVhNDNM/rrC/IMESjCVE1sV/U=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=tIp55IYgrixCYEJZ2Emibq3t9p3IYa6VcubjlKIdIxpYthA4NmOQUX7GWan9SwV7S5ir2DlpWw5B8RYMNZU6av/4apysLbiXNyN+vZ0yEdD07HVeNaQMSow9+vBlOlovDT7vaf/jYwYulDYonpdZZMrvUZ/FcUhvmkrlNCvs+8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVJ/MuXw; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1785327329; c=relaxed/simple;
+	bh=pypnZZiuxMezARfTX8fndfnCQqeyaoDU5pleTlcMbJk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=p859akiTdi+Bqff8S6dR7mxYUu+2FE0yALtSCIWxPBDYOXATSo0BHVbDTWNcxgDzAMUSkB7BLZ0BIbs65DMCWlZIPFhNjNLCao2DuRXsW2NgirJsIuUJMauJef2hYYE7TvRY4R3P44+6ZRq1kM6GNN6CwQC5ytoHmtt3YT6FbqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UT3jItFH; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVJ/MuXw"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47f71156e1aso491908f8f.3
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 05:07:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UT3jItFH"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-47f97d310caso841559f8f.2
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 05:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785326877; x=1785931677; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
+        d=gmail.com; s=20251104; t=1785327327; x=1785932127; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=H3xRV1n5123gvf6MosLy4rxkuhLHhqU5DN9+kcntMGY=;
-        b=VVJ/MuXwf6jZvI3fJBf0Jk4AeMOZ6uLB5ybgccYYDEw9IbE0BnfRQAJUggQkgEm8B8
-         NJa54WGLj4J/Rzx+S/TxV3E5em71QuEA5jnO//mG70BFswb+EytdcDomr1j7HpZCnj91
-         HRnq0bsu1D35tX7fGAInp0cxlw/YnSV3kyJm12rff1KfmF5V9jOjZDcu68J4GnIZ5ZvH
-         qO1N1tl2TiowplfGvSV57JhU1do0POXcNwmbQoyWkMYCbEwqyYvoA0yqTBRJg4Wa+FpG
-         Lw2MEuaNKrl0H5cyXcqKoSmyGJF4VDDwiZ80A356le5j/Y34UaGQF0ShehnNw5yxWgUX
-         CZEQ==
+        bh=tcNhrA6YxyDd8hpDqltEZZHKhIfmdaxMirxgoqmOvMQ=;
+        b=UT3jItFHhSBOW0WqQJ99qH/ClzbBLF2/nNksJbvPBSOS25O4Xp1Dk7e+CBqXR032Sj
+         8cvjSONg4lRgZT/j0alJigvXl0XTjH+zZsUSf0rBPxOnJIvmMdSippTyeuqmIQlK1fdQ
+         JWvChUnhKbRbdaAGw9KRF+cU99ImGeFzGC/8Slnz22LX7zhgHfGRNi5l4vbe/WNKcDWv
+         9xbvLAwEcRgWS+fqS52G4ITeZkVAqqb0I+1XB0TjlMP3JrL3T4H7/diEPr0nijbuNrLS
+         9V31iLu1EmKARGMhCUaws0slWcfsMQN3iIFBpLNkYrfGloEsM7nk2wbHJUdIualQ+xjT
+         b59Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785326877; x=1785931677;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
+        d=1e100.net; s=20251104; t=1785327327; x=1785932127;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=H3xRV1n5123gvf6MosLy4rxkuhLHhqU5DN9+kcntMGY=;
-        b=RG0tO4ZfhMaA1b5aYH8u7LryzUq+5SkMop3PtPvMHPVGDki3HTTnXQkfWkmkyibiIC
-         1eBvUyAE+TZrsMKvJ3/yN9geoA2VnFMEk6nxFsWsAB9WOhhy3pSHGIj9GmDrId61b7Ka
-         M3qDs3OkqlS8t6dbxhosYdJ2WQS1Y5WnYZsHRnSmBU18cnDwODX1+TE+TjBfQbnqhLmu
-         b1QSGDdK6f6fKTC8JoVp/AWBimf/Hbd1wZPft+dKTmGkdxf6zZIgdDDSSXrj7eBwUAm7
-         tXAfQ3SlbIasurfs1uzKzwNokxRMGMtPupq1RMBWagMo/+KNxwdMWdyOtXhfwYWLUF5u
-         R4Cg==
-X-Gm-Message-State: AOJu0YyJM6FCgAfP3dB+KFYlm3x1ry49oGfK1mGNOsdvtsJDvYjP9psN
-	+Yf6mMbfgC8z1tB09imjsxURt2NAAxWpjHzHuqWKQwD6WKBx8xOP5xDT
-X-Gm-Gg: AR+sD134tEkAS99+uuY3rnFCO149P4W1YNYv66mj1UvMFg+v1aeFLW49C3Me9W0pc0z
-	CoVpFvOCQsAbP9W+tTwoyXb+4bPjccptzhmxyMjbsfv2HIFfn94EXpsak3xfYkjG98LjjcDLj5G
-	FtqUDK9xf3qVVX/qFy48KOFfjrva5ZJURFbeLERORV9G1MCAyTYnMxO1y6KVa4ohTvSUPOrCCQG
-	d3QtkvhAUN0Oy90m3Y+S9cyh7jfX0+xxp/aIfobJGV641L4ASD7d1X3+T7q0qfPh+ZoG0H9aqb5
-	zcJ+/8kz0XnJ7k088xqFqpweybUv+bro6XJQ2WIaJRtNeIIkZ4BOpOkU/bl6MS+g7FRtZ5LPz/K
-	SKVMflgWvIjoBvbp7Yxkqc4f1LcnS24fqYzFhdaJpad6H8slBoNHWD4sNbFE/oXEFbyjcMf+WSD
-	lWoGRCz/UkHI+OniNsns15wHFdUHNEiclns+4AYZGeK4y/Wc/wiTz5H8JVZX6wceixue/kUzxPR
-	uLEAkmzUVVSEzWTHp5pZPM1tiPODaUK0RuyagqYFhMQuK+5EYhzZieX9dAv2LdGL/nrh4uHy8r+
-	FJh95WNhIbsNo8UIjRCbi1fxIkv1/zZyntorHT6133gCFP5ZD4eGRZmvUhyetaP+DQ+F2nZJKkU
+        bh=tcNhrA6YxyDd8hpDqltEZZHKhIfmdaxMirxgoqmOvMQ=;
+        b=VV0g7lpuCTADaL5weNdTu+LO3k6ycuUImowagkxt5Xm23/PvRao7viWM1boZDqmjmk
+         WYloet/rXwhJwpLQbHLlW9Nz09aiAgxx2pRgsvBnzLDSsATU6ONYwe8lBM7yR9U3ltEo
+         S8d3JCiQbs2jB/HeBHKqJwXmxiRwERRlyRtB0cYWjwc2ewXyBgUyKHkulzV+2IldlC9L
+         h39PYg1+ESxwT9R9h/t2TydijjJ3yUYrC+I5zt7qA7BXVFVwN1UWqCTLHK/lN147jg3d
+         83celgOa/ouYcB5gfPVEItaOjvLjGsJstgLmSIbkdX7n3mT+0AY/miiscBEgv72I1dcP
+         xtWw==
+X-Gm-Message-State: AOJu0Yx8Yc1vSQckFh1b0kfC+N9XqLgA3UEB68TQsuKA4DVrTDpAnbDv
+	ZmuomsEci9iEtmxYGe7vuaUB6WVoAIao7aR8bTk3ryMVp9SU0dMoR8rv
+X-Gm-Gg: AR+sD11bn20IA1HyeSr7XuC0IG76DQIJTa2sL9+WNim3JorWUPjM7013hhubR3r396R
+	FB/fRxDWYsrMFSIebNZUpy7+K5qSqVo+NNTeWrNuKmeUBgAgqvZiKOZ0KyFSwOWSgi3bilmk/xe
+	bKBBz0i9DIlZ6zR1V7gSJkiPaSZy3X1ht/rDA9YEJbF5fzsV1DZ+QHQtgNyV3H4+Yie2F1Cw/D2
+	P6oXzWK108Bw8UEY/UIlmQYUKydFr0miLS0sjvaSOu+RucaPIadSgSzYEWtbul1HuXXpXpWePUe
+	wl13KdvfGpnvM4NgRWrJZWH4TTEnzpohonz/BhPV8CAvOtZFjf8YI/dCkHAWPbWY+js0w6uY6zn
+	bBccda7ClCgyJwCm2qFQ88h9HL2+ywLjiF5a9r0CuYQcrBIkhGyRQi7lfB8TLfGOY2Mjd3UfWS5
+	UXu7X+zzLeq9x8k5w5iOboQ1BsIrT4ChWzysM+2Yq1bQO1K9JQTgE+gcLAeEZcsSUlxGCXQucz0
+	ITL4t9UVgbYpQPkHgx8+uvG9zNZPT9iu6wg3o17ZSOOExiHqi9eS/tHJM4CTWF8qLrXF/qhoXBd
+	nnT4SyqvG8IjG38mY1ea7Yf6DVi880LhjUZB6BwjuELMXgRrO1VrqJiOSALvd/efJJ4WcLTslRs
 	=
-X-Received: by 2002:a05:6000:29ce:b0:47f:b452:49f1 with SMTP id ffacd0b85a97d-47fb4524a45mr3999064f8f.2.1785326877416;
-        Wed, 29 Jul 2026 05:07:57 -0700 (PDT)
+X-Received: by 2002:a05:6000:1884:b0:47f:8ed4:133c with SMTP id ffacd0b85a97d-47fb1ecdf49mr7670956f8f.31.1785327326548;
+        Wed, 29 Jul 2026 05:15:26 -0700 (PDT)
 Received: from localhost ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fb6acb6c9sm8347367f8f.13.2026.07.29.05.07.56
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fb6b0ee81sm8062467f8f.17.2026.07.29.05.15.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2026 05:07:56 -0700 (PDT)
+        Wed, 29 Jul 2026 05:15:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,82 +69,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 29 Jul 2026 14:07:56 +0200
-Message-Id: <DKB1K4BKHK2G.2HZ0HM22UTWXD@gmail.com>
-Subject: Re: [PATCH GSoC 3/5] fetch-object-info: request all supported
- options dynamically
+Date: Wed, 29 Jul 2026 14:15:25 +0200
+Message-Id: <DKB1PUMUWM9K.31JZRJNIO79CU@gmail.com>
+Cc: <git@vger.kernel.org>, <karthik.188@gmail.com>, <gitster@pobox.com>
+Subject: Re: [PATCH GSoC 4/5] serve: advertise type capability
 From: "Pablo Sabater" <pabloosabaterr@gmail.com>
 To: "Chandra Pratap" <chandrapratap3519@gmail.com>, "Pablo Sabater"
  <pabloosabaterr@gmail.com>
-Cc: <git@vger.kernel.org>, <karthik.188@gmail.com>, <gitster@pobox.com>
 X-Mailer: aerc 0.21.0
 References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com>
- <20260725-objecttype-support-v1-3-2d4ca3bbabf1@gmail.com>
- <CA+J6zkQCa-rCJYQgfsjLyyJqrW+0-Z8pUJ4EJxY9HSTkJH=u4A@mail.gmail.com>
-In-Reply-To: <CA+J6zkQCa-rCJYQgfsjLyyJqrW+0-Z8pUJ4EJxY9HSTkJH=u4A@mail.gmail.com>
+ <20260725-objecttype-support-v1-4-2d4ca3bbabf1@gmail.com>
+ <CA+J6zkQKHVhDLSXYz=hFtfnACHviSVZEDignagbCVLhEWBZiJg@mail.gmail.com>
+In-Reply-To: <CA+J6zkQKHVhDLSXYz=hFtfnACHviSVZEDignagbCVLhEWBZiJg@mail.gmail.com>
 
-On Wed Jul 29, 2026 at 11:57 AM CEST, Chandra Pratap wrote:
-> On Sat, 25 Jul 2026 at 17:25, Pablo Sabater <pabloosabaterr@gmail.com> wr=
-ote:
+On Wed Jul 29, 2026 at 11:58 AM CEST, Chandra Pratap wrote:
+> [snip]
+>> -# This tests depends on %(objecttype) not being supported yet, once sup=
+ported
+>> -# it needs to be updated.
+>> -test_expect_success 'unsupported placeholder on remote returns empty st=
+ring' '
+>> +test_expect_success 'objecttype is supported by remote-object-info' '
+>>         (
+>>                 set_transport_variables "$daemon_parent" &&
+>>                 cd "$daemon_parent/daemon_client_empty" &&
 >>
->> In send_object_info_request(), size is hardcoded to be the only option
->> sent. In order to support type and future capabilities, replace the
->> hardcoded size with a loop that requests everything on
->> object_info_options list.
->>
->> This is safe because the list has already been trimmed previously in
->> fetch_object_info() to only contain options that the server supports.
->>
->> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
->> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
->> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
->> ---
->>  fetch-object-info.c | 11 +++++++----
->>  1 file changed, 7 insertions(+), 4 deletions(-)
->>
->> diff --git a/fetch-object-info.c b/fetch-object-info.c
->> index cf6b94afb8..e5cfdafe68 100644
->> --- a/fetch-object-info.c
->> +++ b/fetch-object-info.c
->> @@ -15,10 +15,13 @@ static void send_object_info_request(const int fd_ou=
-t, struct object_info_args *
->>
->>         write_command_and_capabilities(&req_buf, "object-info", args->se=
-rver_options);
->>
->> -       if (unsorted_string_list_has_string(args->object_info_options, "=
-size"))
->> -               packet_buf_write(&req_buf, "size");
->> -       else if (args->object_info_options->nr)
->> -               BUG("only size should be in object_info_options");
->> +       /*
->> +        * The list is already checked to only request valid and support=
-ed fields
->> +        * no need to check, just request everything left on the list
+>> -               echo "" >expect &&
+>> +               echo $hello_type >expect &&
+>>                 git cat-file --batch-command=3D"%(objecttype)" >actual <=
+<-EOF &&
+>>                 remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid
+>>                 EOF
 >
-> Nit: ...valid and supported fields no need to check.. -> valid and
-> supported fields.
-> Just request everything remaining on the list.
-
-Ok, will fix it, thanks.
-
+> Instead of this, what about creating a single test that verifies
+> 'type' is supported,
+> and modifying this test to verify that the other options are not?
 >
->> +        */
->> +       for (size_t i =3D 0; i < args->object_info_options->nr; i++)
->> +               packet_buf_write(&req_buf, "%s",
->> +                                args->object_info_options->items[i].str=
-ing);
+> That would actually preserve this test's behaviour and make it easier
+> to extend in the future. Something like:
 >
-> Perfect place to use `for_each_string_list_item()`.
+> + test_expect_success 'type is supported by remote-object-info'
+> + test_expect_success 'unsupported placeholder on remote returns empty st=
+ring'
 
-Didn't think of that, I will change it, thanks.
+Hmmm, it is true that after this test there are no test with the git://
+that test for known but unsupported placeholders returning empty
+strings, but there are tests from the previous series that does test for
+others that are still unsupported like objectmode, deltabase,
+objectsize:disk.
 
->
->
->>         if (args->oids)
->>                 for (size_t i =3D 0; i < args->oids->nr; i++)
->>
->> --
->> 2.54.0
->>
+I think on more test grouping all the one that remain unsupported will
+be good and document.
 
+I'll do exactly what you proposed, thanks,
+Pablo
