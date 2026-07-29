@@ -1,77 +1,77 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC641C5F1B
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 17:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43199366061
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 17:25:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785345930; cv=none; b=Vp6FhS6CvOfg0rsrDfvBUYKKmmQgdnsdAMl8CNPmdeWKpTNDkHI1E+4zxiyymPXV8Vqw91FtKrj0mEHWQM9lGv8BWuBhjY2/U7cKHeVA4EueeMP5pFQTQuQC+CXNzR8fsUajVt0VaUx1Ahhrl8qEEo+iF5TKxxZgtVR49CkwjRA=
+	t=1785345931; cv=none; b=oDXsYNvFbLASSFPMM6tjzTMQx7n5ynmys4oXKrN6+NxGh9xLStB8u7PN0u2U/OEpWXWijerHdtxt4J8ftaLTuKkAkQPK1MdTGwra9QvxP7r0NncZ3qfyVUCWeEa3/aZxrXEnYz9GG6cvv0EgHdqKU/4aWG+1bs3mrZ7XwmpmBF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785345930; c=relaxed/simple;
-	bh=nARRT/Du9jK3z+sHp5INAuFsk7C55bbXPTje+04dwvE=;
+	s=arc-20240116; t=1785345931; c=relaxed/simple;
+	bh=fXAXNr4UM6tQpLaz4XTYa7idgGFFwZAgvqximlRSX9o=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7HbXksWurVTAOqdqYo1++RKvzZlk1xMVDsyNW1HLxde6nEMfSzl6Mb0l7cTvv5W+HWOB69MnH7WVCBw7BuHcMkmXaQjLhVMFp8KtldSJAKvVZmZGbL9rFYw8uZxtiINOvdSHIFrGO71q34K7eOt9z0YfnG8X8Vqq1JAWCghnVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nuRIIron; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RFMIhXrq; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version; b=ssEbYObehc4v4Sd7ZJZHc/UtoEJDp1eo2PmF2+JVKp02PMz0QDAehwuONWxnEBzQkIYtmFGZ6rO2rqJHSa1cJUaE+5NqccO+LVnrhUEadRs9JTb1Em9Ln4jLjwZcZkwqawvUf5ccSvDyMqOuc5V5L2EEHTpcyjU1PEatdjUUMOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=juf4UIKa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PDeRuGKV; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nuRIIron";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RFMIhXrq"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id A71771D00056;
-	Wed, 29 Jul 2026 13:25:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 29 Jul 2026 13:25:27 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="juf4UIKa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PDeRuGKV"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 917D17A01A0;
+	Wed, 29 Jul 2026 13:25:29 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 29 Jul 2026 13:25:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1785345927; x=
-	1785432327; bh=nN4mVv1INZdsaS3jNVFOlRBlx90P4hBrgQqzA614coc=; b=n
-	uRIIronJuhLDppyaRB3Vb533F1I9onseEqnUV7vkRvFli679IR/QXYxKSmQdozJZ
-	qm8trDwlzGsAs7WvFy9vZVMGfCWXhx2qHRkB1wuaTTdHhgaNOdDXKlz0LV8mxeeO
-	IL2scL3UMOKyxR4ZocuvHexQ239sKiRc7ZuCk9Hal6wGmCmMEEow5MGqwJXGKum3
-	g5fFZCSwBf2AnJpqiRn6JzgVrbWoShy7U/QyhiGzM5td2Um0pWckPlItsy5g0oCZ
-	j44aoGv4yJGnUgdiy6iVJLK5HAf6FchghWk7ASbo6FVECzUxt6Qn+oj0aq+OaoIS
-	p+aqavnpSIvZqcqMvC2ug==
+	:reply-to:subject:subject:to:to; s=fm1; t=1785345929; x=
+	1785432329; bh=X9h1sXuUsTPKyPvC1yH0rNY0gUAYrcD0szsTITAsQak=; b=j
+	uf4UIKaRaBGpZds4SRrE+BjshsIMisUc7KkFtBfQeZ2o4H4Jx7agyF7rlsdFanCj
+	50LkVgz6WiHBSsc5FFKTwbLQ0VKiLrOIRJIKd5w4NnWYvPGn3S+tiq1aAvS6v9Va
+	bR1Gz2LEVsqAAuzMbZ3b5zGKI4m2lJ6jB+VL1Xp3ZENmRT4bjGxH9zmJ8LfbukVp
+	cmeCY1bdajNJUZVlkw7bQPeZtO9zAY7KXFEzsFDs4eZjXDXwALJp3XE1vUfqntkW
+	zkPzamwzub9LpifKtFLOPMHry19kMZzMmqwvprZoCzr5yq4WQvqSdFbTzxPSaWvY
+	MNQKIKiMkpuRiIXw9F/aQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1785345927; x=1785432327; bh=nN4mVv1INZdsaS3jNVFOlRBlx90P
-	4hBrgQqzA614coc=; b=RFMIhXrqG0asp9KULjPpHem1uAvb4v8P5U4aYY/I17/3
-	NsLYfmSzlXKWbopiTUbyK7OX3sn8abl2x3yppAIFwWjasl81GEMlYwXNRClrUZTb
-	nvefG8/uEnqAtL4Kd5gjottGSSNK+AvzDvZQl4ne7N/QNDigjz8XVBetn6wbgWyL
-	eiAKX7G+ZlI15cBuO0/hQRvwkTadu2iOsrW5HZj9Ok2zhYBhxRrFzv+KZI845jQB
-	9TNhzCeWmw9ClJt35+fRT2mZGYYi54mG68Pw1tONTlJjtPFQqvRJrAwscyRQmZrP
-	p7uMwBlcSi0Z+2OGOgKT2SbDUPKdCaxUcYFPIrDXqg==
-X-ME-Sender: <xms:hzdqaiMwzXTjOX3rqTQH6HAs3CarjRZwWtt2QV8lbvg0AdP1bqWarQ>
-    <xme:hzdqam-QdKcHnhvYxRkLVY5NqrmMylAAJL1pBrqCdFPUPauz_zz-EZP09SM0OqCIa
-    tHsV_RfyOnetebsgjXbJbwCJ8rAnpZ9xqONFUaso8YljBOzrBGI4Q>
-X-ME-Received: <xmr:hzdqam4vAqOp4ACpCC00otVmhX-AjoFhUjuvG3BzdEq4uLiErqZUAQrBzudBHbLhVHZEiaQXtH5VjoMBSG94sawcmfuxwogh5A>
-X-ME-Proxy-Cause: dmFkZTGGjC09EifXiIGPzrhr12+xwP6qu/lo6FbJgfr+7e0F7A1od6yx+pyTl3GBSGeaUB
-    kwsASOtzOqZcbLqHtvNLniBQ0s0du0m2BAtXxMZV8nqg5DKZkEzNisHHMXDmM3pfBxANKb
-    IimaNrT3pUSHHr+oQdd2w1E2wofmj+erswEhZEXIf0h0cLf6bpXjLzAI02hOZE5NmoU/5w
-    0TN83FvqLiJZWeo/z/wEWLVoz2J50c7GiOEQYqY9xbz4GrKNb9oHNnyK8MSGq3IuAtexZO
-    nWsuRbwjXe5Kh/99zkcS8HhCkxtSi+O9wwgpErdE+EKBJA6YHG8jPRTac3p0YlJB+OCNUi
-    VQDaQdeZ8ktwq4UtjHva8bKz1PMnMQaNkHPblzuufx2J17ZdOO8pagn1rtUb0/LPS4l/8u
-    s0eyfLpAQQ+3MCXS6gLWBonTaJfnBa01vim15wdSXHCu0i2Pp/V6aQa7ZZyo/b2i0rCeuf
-    BkLoRkst5fsBX4/P7elHqdi7FdNlHEmZyff9FPANTGadazS4UD6Dr4TckLbUcnP3VZ21rT
-    fCLp+uU6ZdIZbqpU/JPNwSynEBX9TmpW6Qeg/WXA6lTBLeIo8lj3WiEKeqFLrgRXRsBQ2e
-    QaX/d87ZEH5/02sWhNT/38wlb5u6F+ej8sd2EP8z4I/i5bw2tOB2WcToeN0g
-X-ME-Proxy: <xmx:hzdqat1OzaOKRS5fuTwttT5dL6e4JFi5Bbs8eByerevKbtXdyEazbA>
-    <xmx:hzdqatCfx3bEiyWqm_zWgr_6CO0MK4Em5_a0_mwK5vMx7jqiqycSMg>
-    <xmx:hzdqav3W6z1RvulV-Fi9SFchYFniAUNYCOvz-OiMghDxVObR4bUvbw>
-    <xmx:hzdqanuKYrOc30Bawg0JL8DOBPLvE6D3tmkt_NOIi5qHoYl2O-ylhw>
-    <xmx:hzdqatkL5LeJLFZ3bsmLjUVxnAcC_1CvGxd05nxuFZHG8DeMNnfuMSaB>
+	fm2; t=1785345929; x=1785432329; bh=X9h1sXuUsTPKyPvC1yH0rNY0gUAY
+	rcD0szsTITAsQak=; b=PDeRuGKV/f5+VgeAHD1jGta3b6o2jizTpFbeiPYcYpCG
+	xzia4Fl8fOOj4DbNyUqCQlWX/exyQ0bVy10x9PgCigDww+A2BNw7vu5PnH/LneBB
+	n2A+TM6lmbXoWJH+Orw1R9Et1cFeb16qk8LZ3nMKiqnI+6qlIp58eQKZu41p0opa
+	/bpow1r+1+r/gPYMJlB0JUXqEmfaW0/L39CF3eVdvwmHSzedvAdH54wbdI0YbiDU
+	Av84GY9EIQXEE1zfqS0kO1wASOfsQhjeSMQb8kJdfH7PAMtotmivbEMwrQCCQdlQ
+	tNlVATFRR2+YsblBhfaPBUfQtIKI0LQRbia/hWFbzg==
+X-ME-Sender: <xms:iTdqasLzt5S2dd2JZYQMYK54slPhBxHJBZPp3pT40dhxtpKrBvNUfA>
+    <xme:iTdqaiK1vmKxF_uc35KFmcKpr-jpwFzPnFWDFfu9J4yNoPdBLHbqcZ6y95w4wQ1gi
+    i-3NwMbXAZUKZCRNgPRLyjtXnhT2s4CA4TQvMUgeto9AbfoOZDigE4>
+X-ME-Received: <xmr:iTdqaqWhkA2F8utDtNWQZw5uZ4HqutUFgzF-SL8S-U74Pt91MDmyxP5MpfdFBtuIbCv8jR9RneFaGTSKykHPcS1bjXF7vjMIoQ>
+X-ME-Proxy-Cause: dmFkZTEOfrxFAlxrNocGwlX9Xe58YtJfVauubty3vKotQlHg8Vw2q2OJt9XOFRZZYTr565
+    5WtY/QemwnB0ZyDulj27iwXkMZOrM1UffTnbCAUxXs2Tm8u85QfYb9kxP3/JVrVS1RGTmH
+    cdIr5Cic8dMxnMn56/iAGNeLbUQwWBwmMYMlQOXheawcTKkp2+RVke1UCGPa1Vo98WBLc6
+    rrcCnmGhzYDGPE1n4v6RHXS9oxU2Tt7to0zgsvUDRmhx4b85fdmJ0DkWtgRijbdMoUG2w0
+    3gAhXzHrcRuzC/Vqh1RHRyBBUtSxi/UbQaQobNR1ucf2gObAjalSVz2Nd6RSNrS5dT/FkK
+    KwpSJTkgAL2x5Re9+TYMMYlsJJpTLqqazhnB+klH4wl5Cv+ueWxQl3GPpbjdXK4+KrPi3L
+    6IBLv45Kg0ZUsJe8jbG+ZuA4cjxoqkfj+rM0JWpU6zzSBnvKF5DAwR/qYOc5URAIvdWTEt
+    Yjl983Yk/jApYWAulMUrI6GY2Q4juolH+S7q7D+pUhLlpxs9/ZCQuRg3e4AfVge4CKoVXD
+    Wt7bFTU/pyw57EHWviYQCp0BdtdJqCZLRFUEU/nFjrjVmiayhbTv+ibQrGKWSJh5P+39+7
+    P/J4atzVYR3jmDkVAoaUYUe2HT9vE00F3S3v+Xee5o17fS/Ec+pfOpjtXS9Q
+X-ME-Proxy: <xmx:iTdqakhaxfkWxwnOAX_lGOywBxVZf-DsRzyfEjiL9SwEMQZm5PFi2g>
+    <xmx:iTdqal-eSjwm64xGuwftXc_sHhwg7oUmACfjlz8HLQ5yscb4zrZUrQ>
+    <xmx:iTdqauCzOrW7Wtv85UCwqAWChDTJFfR25-6CQ3xKCVZGMTgBvSyxeQ>
+    <xmx:iTdqaiKJrtWqLuU0gTzrjm48Go7q5fe2lM-allOtVqshQzgbQF0n8Q>
+    <xmx:iTdqavgKrLSvHHrZkSwpUmzcSXW8Tvuwz5Xjag-3yuXCgDJk_HsNb2Jq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jul 2026 13:25:27 -0400 (EDT)
+ 29 Jul 2026 13:25:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 1/4] read-cache: reindent
-Date: Wed, 29 Jul 2026 10:25:21 -0700
-Message-ID: <20260729172524.4022621-2-gitster@pobox.com>
+Subject: [PATCH v2 2/4] merge-ll: consolidate conflict marker scanning logic
+Date: Wed, 29 Jul 2026 10:25:22 -0700
+Message-ID: <20260729172524.4022621-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.55.0-609-g9a17695db7
 In-Reply-To: <20260729172524.4022621-1-gitster@pobox.com>
 References: <20260728215219.753678-1-gitster@pobox.com>
@@ -84,138 +84,201 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-I do not know how this happened without anybody noticing, but a few
-months ago we added a16c4a245a (read-cache: submodule add need
---force given ignore=all configuration, 2026-02-06), and almost all
-lines the patch added were incorrectly indented.
+The diff.c:is_conflict_marker() and rerere.c:is_cmarker() functions
+implement duplicate logic for identifying conflict marker lines
+(lines that begin with a run of '<', '=', '>', and '|' characters).
 
-Reindent these lines so that they play better with surrounding lines
-in the same file.
+diff.c's original version from 049540435f (diff --check: detect
+leftover conflict markers, 2008-06-26) accepts any whitespace (such
+as a newline) immediately following '<<<<<<<' and '>>>>>>>', whereas
+rerere.c's version from 191f241717 (rerere: prepare for customizable
+conflict marker length, 2010-01-16) strictly requires a space
+character (' ') after them.
+
+Implement is_conflict_marker_line() in merge-ll.c to serve as a
+replacement for both, and update diff.c and rerere.c to use the new
+helper.  The unified helper intentionally adopts rerere's stricter
+rule, as the conflicts generated by Git always show the "ours" and
+"theirs" labels after these markers separated by a space.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- read-cache.c | 70 +++++++++++++++++++++++++++-------------------------
- 1 file changed, 36 insertions(+), 34 deletions(-)
+ diff.c     | 25 +------------------------
+ merge-ll.c | 31 +++++++++++++++++++++++++++++++
+ merge-ll.h |  1 +
+ rerere.c   | 38 ++++++--------------------------------
+ 4 files changed, 39 insertions(+), 56 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 38b55323dd..58c378414a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3910,32 +3910,33 @@ static int fix_unmerged_status(struct diff_filepair *p,
- }
+diff --git a/diff.c b/diff.c
+index 589c1969e4..cfe515af4e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3519,29 +3519,6 @@ struct checkdiff_t {
+ 	int last_line_kind;
+ };
  
- static int skip_submodule(const char *path,
--						struct repository *repo,
--						struct pathspec *pathspec,
--						int ignored_too)
+-static int is_conflict_marker(const char *line, int marker_size, unsigned long len)
 -{
--    struct stat st;
--    const struct submodule *sub;
--    int pathspec_matches = 0;
--    int ps_i;
--    char *norm_pathspec = NULL;
+-	char firstchar;
+-	int cnt;
 -
--    /* Only consider if path is a directory */
--    if (lstat(path, &st) || !S_ISDIR(st.st_mode))
-+			  struct repository *repo,
-+			  struct pathspec *pathspec,
-+			  int ignored_too)
-+{
-+	struct stat st;
-+	const struct submodule *sub;
-+	int pathspec_matches = 0;
-+	int ps_i;
-+	char *norm_pathspec = NULL;
+-	if (len < marker_size + 1)
+-		return 0;
+-	firstchar = line[0];
+-	switch (firstchar) {
+-	case '=': case '>': case '<': case '|':
+-		break;
+-	default:
+-		return 0;
+-	}
+-	for (cnt = 1; cnt < marker_size; cnt++)
+-		if (line[cnt] != firstchar)
+-			return 0;
+-	/* line[1] through line[marker_size-1] are same as firstchar */
+-	if (len < marker_size + 1 || !isspace(line[marker_size]))
+-		return 0;
+-	return 1;
+-}
+-
+ static void checkdiff_consume_hunk(void *priv,
+ 				   long ob UNUSED, long on UNUSED,
+ 				   long nb, long nn UNUSED,
+@@ -3571,7 +3548,7 @@ static int checkdiff_consume(void *priv, char *line, unsigned long len)
+ 	if (line[0] == '+') {
+ 		unsigned bad;
+ 		data->lineno++;
+-		if (is_conflict_marker(line + 1, marker_size, len - 1)) {
++		if (is_conflict_marker_line(line + 1, len - 1, marker_size)) {
+ 			data->status |= 1;
+ 			fprintf(data->o->file,
+ 				"%s%s:%d: leftover conflict marker\n",
+diff --git a/merge-ll.c b/merge-ll.c
+index fafe2c9197..41c97fb90a 100644
+--- a/merge-ll.c
++++ b/merge-ll.c
+@@ -468,3 +468,34 @@ int ll_merge_marker_size(struct index_state *istate, const char *path)
+ 	}
+ 	return marker_size;
+ }
 +
-+	/* Only consider if path is a directory */
-+	if (lstat(path, &st) || !S_ISDIR(st.st_mode))
- 		return 0;
- 
--    /* Check if it's a submodule with ignore=all */
--    sub = submodule_from_path(repo, null_oid(the_hash_algo), path);
--    if (!sub || !sub->name || !sub->ignore || strcmp(sub->ignore, "all"))
-+	/* Check if it's a submodule with ignore=all */
-+	sub = submodule_from_path(repo, null_oid(the_hash_algo), path);
-+	if (!sub || !sub->name || !sub->ignore || strcmp(sub->ignore, "all"))
- 		return 0;
- 
--    trace_printf("ignore=all: %s\n", path);
--    trace_printf("pathspec %s\n", (pathspec && pathspec->nr)
--									? "has pathspec"
--									: "no pathspec");
-+	trace_printf("ignore=all: %s\n", path);
-+	trace_printf("pathspec %s\n",
-+		     ((pathspec && pathspec->nr)
-+		      ? "has pathspec"
-+		      : "no pathspec"));
- 
--    /* Check if submodule path is explicitly mentioned in pathspec */
--    if (pathspec) {
-+	/* Check if submodule path is explicitly mentioned in pathspec */
-+	if (pathspec) {
- 		for (ps_i = 0; ps_i < pathspec->nr; ps_i++) {
- 			const char *m = pathspec->items[ps_i].match;
- 			if (!m)
-@@ -3949,28 +3950,29 @@ static int skip_submodule(const char *path,
- 			}
- 			FREE_AND_NULL(norm_pathspec);
- 		}
--    }
++int is_conflict_marker_line(const char *line, unsigned long len, int marker_size)
++{
++	char firstchar;
++	int cnt;
++
++	if (len < marker_size + 1)
++		return 0;
++
++	firstchar = line[0];
++	switch (firstchar) {
++	case '=': case '>': case '<': case '|':
++		break;
++	default:
++		return 0;
 +	}
- 
--    /* If explicitly matched and forced, allow adding */
--    if (pathspec_matches) {
-+	/* If explicitly matched and forced, allow adding */
-+	if (pathspec_matches) {
- 		if (ignored_too && ignored_too > 0) {
- 			trace_printf("Add submodule due to --force: %s\n", path);
- 			return 0;
- 		} else {
- 			advise_if_enabled(ADVICE_ADD_IGNORED_FILE,
--				_("Skipping submodule due to ignore=all: %s\n"
--					"Use --force if you really want to add the submodule."), path);
-+				  _("Skipping submodule due to ignore=all: %s\n"
-+				    "Use --force if you really want to "
-+				    "add the submodule."), path);
- 			return 1;
- 		}
--    }
++
++	for (cnt = 1; cnt < marker_size; cnt++) {
++		if (line[cnt] != firstchar)
++			return 0;
 +	}
++
++	if (((firstchar == '<') || (firstchar == '>')) &&
++	    line[marker_size] != ' ')
++		return 0;
++
++	if (!isspace((unsigned char)line[marker_size]))
++		return 0;
++
++	return firstchar;
++}
+diff --git a/merge-ll.h b/merge-ll.h
+index d038ee0c1e..b348aee15d 100644
+--- a/merge-ll.h
++++ b/merge-ll.h
+@@ -109,6 +109,7 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+ 	     const struct ll_merge_options *opts);
  
--    /* No explicit pathspec match -> skip silently */
--    trace_printf("Pathspec to submodule does not match explicitly: %s\n", path);
--    return 1;
-+	/* No explicit pathspec match -> skip silently */
-+	trace_printf("Pathspec to submodule does not match explicitly: %s\n", path);
-+	return 1;
+ int ll_merge_marker_size(struct index_state *istate, const char *path);
++int is_conflict_marker_line(const char *line, unsigned long len, int marker_size);
+ void reset_merge_attributes(void);
+ 
+ #endif
+diff --git a/rerere.c b/rerere.c
+index 216100925a..924a1f2e30 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -331,33 +331,6 @@ static int rerere_file_getline(struct strbuf *sb, struct rerere_io *io_)
+ 	return strbuf_getwholeline(sb, io->input, '\n');
  }
  
- static void update_callback(struct diff_queue_struct *q,
--							struct diff_options *opt UNUSED, void *cbdata)
-+			    struct diff_options *opt UNUSED, void *cbdata)
+-/*
+- * Require the exact number of conflict marker letters, no more, no
+- * less, followed by SP or any whitespace
+- * (including LF).
+- */
+-static int is_cmarker(char *buf, int marker_char, int marker_size)
+-{
+-	int want_sp;
+-
+-	/*
+-	 * The beginning of our version and the end of their version
+-	 * always are labeled like "<<<<< ours" or ">>>>> theirs",
+-	 * hence we set want_sp for them.  Note that the version from
+-	 * the common ancestor in diff3-style output is not always
+-	 * labelled (e.g. "||||| common" is often seen but "|||||"
+-	 * alone is also valid), so we do not set want_sp.
+-	 */
+-	want_sp = (marker_char == '<') || (marker_char == '>');
+-
+-	while (marker_size--)
+-		if (*buf++ != marker_char)
+-			return 0;
+-	if (want_sp && *buf != ' ')
+-		return 0;
+-	return isspace(*buf);
+-}
+-
+ static void rerere_strbuf_putconflict(struct strbuf *buf, int ch, size_t size)
  {
- 	int i;
- 	struct update_callback_data *data = cbdata;
-@@ -3980,7 +3982,7 @@ static void update_callback(struct diff_queue_struct *q,
- 		const char *path = p->one->path;
+ 	strbuf_addchars(buf, ch, size);
+@@ -375,7 +348,8 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
+ 	int has_conflicts = -1;
  
- 		if (!data->include_sparse &&
--			!path_in_sparse_checkout(path, data->index))
-+		    !path_in_sparse_checkout(path, data->index))
- 			continue;
+ 	while (!io->getline(&buf, io)) {
+-		if (is_cmarker(buf.buf, '<', marker_size)) {
++		int marker = is_conflict_marker_line(buf.buf, buf.len, marker_size);
++		if (marker == '<') {
+ 			if (handle_conflict(&conflict, io, marker_size, NULL) < 0)
+ 				break;
+ 			if (hunk == RR_SIDE_1)
+@@ -383,15 +357,15 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
+ 			else
+ 				strbuf_addbuf(&two, &conflict);
+ 			strbuf_release(&conflict);
+-		} else if (is_cmarker(buf.buf, '|', marker_size)) {
++		} else if (marker == '|') {
+ 			if (hunk != RR_SIDE_1)
+ 				break;
+ 			hunk = RR_ORIGINAL;
+-		} else if (is_cmarker(buf.buf, '=', marker_size)) {
++		} else if (marker == '=') {
+ 			if (hunk != RR_SIDE_1 && hunk != RR_ORIGINAL)
+ 				break;
+ 			hunk = RR_SIDE_2;
+-		} else if (is_cmarker(buf.buf, '>', marker_size)) {
++		} else if (marker == '>') {
+ 			if (hunk != RR_SIDE_2)
+ 				break;
+ 			if (strbuf_cmp(&one, &two) > 0)
+@@ -442,7 +416,7 @@ static int handle_path(unsigned char *hash, struct rerere_io *io, int marker_siz
+ 		git_hash_init(&ctx, the_hash_algo);
  
- 		switch (fix_unmerged_status(p, data)) {
-@@ -3989,8 +3991,8 @@ static void update_callback(struct diff_queue_struct *q,
- 		case DIFF_STATUS_MODIFIED:
- 		case DIFF_STATUS_TYPE_CHANGED:
- 			if (skip_submodule(path, data->repo,
--								data->pathspec,
--								data->ignored_too))
-+					   data->pathspec,
-+					   data->ignored_too))
- 				continue;
- 
- 			if (add_file_to_index(data->index, path, data->flags)) {
+ 	while (!io->getline(&buf, io)) {
+-		if (is_cmarker(buf.buf, '<', marker_size)) {
++		if (is_conflict_marker_line(buf.buf, buf.len, marker_size) == '<') {
+ 			has_conflicts = handle_conflict(&out, io, marker_size,
+ 							hash ? &ctx : NULL);
+ 			if (has_conflicts < 0)
 -- 
 2.55.0-609-g9a17695db7
 
