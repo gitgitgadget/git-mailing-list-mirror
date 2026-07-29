@@ -1,130 +1,230 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53B0443AA9
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 10:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785319429; cv=pass; b=lEzWLFLcCoitu5/+jXsar2MSivlxF4LKYpfILeG+bprs1XzDHmT/i9KmigNKKqjyZIgbwhxv7U1V++tDWNbSIB3lPP/WmRpk65/Gk/Huerl0ObfukLWfc8BAz9ccRf5hHOeNn5TCFcZtFO3ZuJ0Qnmo0theaLoYjAY64oGqN29A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785319429; c=relaxed/simple;
-	bh=ow9dRM1MREAlI9rrvVlP+1aYmoytl/DD40dnleJL8Ak=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nzjSB4GXGZdmvgAEWefTHeHjB+W+dve68bejkyOmJMUkKGWPbku8vhsjGYhDtqS49vSDaTEBfvjJRCKgz79HHtD4Wo5KmkIjePVlvblVRur+qyL4bBnVrQd58xVvGObPMs4zjwIHML6zqwkMRPfY0TRwyDBBU/Y46yX/PFm+tlc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=source.dev; spf=pass smtp.mailfrom=source.dev; dkim=pass (2048-bit key) header.d=source-dev.20251104.gappssmtp.com header.i=@source-dev.20251104.gappssmtp.com header.b=rZLXvToA; arc=pass smtp.client-ip=74.125.224.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=source.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=source.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA8644D020
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 11:18:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785323898; cv=none; b=hNQ3ZCYu17AptBg+HNxoVfeHT4noT2rTI0uxMfMx5EDV5Wjfmw+KlWdtNv83tZv/TeJnBAljQ4qSb2i6qL/YNkQyDb/qWThjqeHQFHkpxGGCbL9V3VwuNHaQoiJIY5sKrkqcrzu8vBPZAsQIvZvDE5QtU1UA9Fi4tsLA6d4xBkU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785323898; c=relaxed/simple;
+	bh=G/32R9AWC3e2aXx9VILHtjn/LgV7HN1MsWAH+6FqEIk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=PuL9eo7RGanH0M2DD1NyyGaYVCrL+6HEX+7ghDJitd59At5H/fblB9LjWkYszE2uA2+VqxTpkB0DBOCf+9WwL78dWG1tuJ3Pbr/y6vW3ZodsCaS9mTixskuTr7EbdBUI0J+xL9FNOwVEp+PcyxTYffbyDUKwsRWdci6yUNvnSrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E/udM5sb; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=source-dev.20251104.gappssmtp.com header.i=@source-dev.20251104.gappssmtp.com header.b="rZLXvToA"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-66854eebf60so36638d50.1
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 03:03:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785319427; cv=none;
-        d=google.com; s=arc-20260327;
-        b=H3f1eL6HjeEIB//6RxN1ZpXKloNbRCuue+FLbC9m5F/UFoQptBZzIWvLgDpuyvV0Zf
-         1SyzRv/KajT9w+beez3u/jBXdozeN6hFhXT7ysqNj/XIKLdp893SUFCIn/d143bo/5/v
-         DvJZtx/ZqJeaBP80Czp8lGZ/2O4vriEDT6SlJcgj2UCBoZRHO1mcFPNWAT8Q/EHPbs+z
-         WyqKobfbQOk7km09QMOLTcFJOs7j4MNWZ6YvSKmNzdZ4aO82nH6L4O6vxjyEFSjqpiQW
-         drmpSfhpY/er7rbk/CuuMrRoAS+5vRRUZPT2i080jn3axR5YNTO8lNy9D1muGcgz2t9Z
-         hW6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=8ksRIFKNms4qM0BTh9KUYq/fYx7FjuyVS8y9/B2hv3Q=;
-        fh=1T7A0knhF3NoyC/gy/gtHBVIPmh8UUtkm3PMSb2CMpA=;
-        b=k5TMqw9e+KgSVIi/hCSW+tCclbZOd73g/OykJj/RrzT9IGOzHfQb4C6Ho/koND053f
-         IuRHAFlzsUc7cv6JK+5F90Fg3s0yDjuSuP7e5/aLZ0U2q8OEt11sIsSnI9yJYsSR3Phe
-         AKj7CAIwsAR25hbcLlBFCNrMqQev1MNG6a2YqYNBjbRWaiXLjWx1x+rLovkxd/mzC3dO
-         sdaH7HVS093gin3SsiGeh+aJqL+cH6byTI5q2auG6h/Sx54hpIgxVMuym8fhd0LrXieh
-         1wiugQtjbOdDygzR/1Qy5L1m5SrmtMcfgboAoTOHilpMudFO3Tm5of60Li111euu4604
-         Y2Sw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/udM5sb"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47f59f25ec4so332614f8f.2
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 04:18:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=source-dev.20251104.gappssmtp.com; s=20251104; t=1785319427; x=1785924227; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8ksRIFKNms4qM0BTh9KUYq/fYx7FjuyVS8y9/B2hv3Q=;
-        b=rZLXvToAQ01AVqCu3uQC2Xuy5OClZpq7aIufoSUnHH+cPRCoFbbf/INAAzd+/XlOCA
-         aB/CFgb6KZz6IzUfuGJ1KxPhWWk5D8JGb+yo0DsgD2Q1jsljszpggDUELet2GMuTc70H
-         BBBWZtCnjFOlUnJOFfczWyYMEj4wevSqNjoYz1TyIAVKbctciiW+kdfFUUmMg032PjtU
-         WgPrW0h+ZuaRvLJgdvPMzvZTBhS+KdmUNCLxjp0vyi5Oyc9BU5c8DMJSM/x3UaZyC55r
-         vtjlXVnQP3o9/TOne6MGlfg3xSDwN1/cZ1gVnvH3+NOmt4gxxJmv+Fzh164cxuaoPu9F
-         ZY7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785319427; x=1785924227;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1785323895; x=1785928695; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=8ksRIFKNms4qM0BTh9KUYq/fYx7FjuyVS8y9/B2hv3Q=;
-        b=QScFyyUNS6JjzAzG0+YGRGs3H13KIanpiLtH/bv5nd7I4fYiuxv0jUg7nPuQhP3JTm
-         BAsduuGCXl+fTKGih6XHLDi5DWTL/ttPP1nF2n07FfwGXzJPLsE+es6zvL2vZk/ysl6F
-         VPaSfqA1zuEYR9cE5kyjwTegLLex+IgBZJL2k8rEgW7NHmBNXeqIiAPfQzgZgk04njCy
-         qKDIOXZxZ4nlgLQjzVgHo6VOOEeu1zVoGbqvTMgqzZc20q5AqbaNtBUkVe5xBCMmtchP
-         8UxkiEVKJKGAORPf0aFP8KEUrPjGCPfl79pSXIpxRnKQ9GwJQCT3b7CLjASzcUYJNoJ+
-         B75A==
-X-Forwarded-Encrypted: i=1; AHgh+RqMQ+QK8vTiC5RlTFBxARBHf9re3uN2cX7sPQKcQI+7QMUenSDar2ZwVwo5/uPAHbWxOyU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKz9ZrRTKdOpHfRz7p5x1GtdoYnbQHXZYcS/t1VH13XnJSJhvj
-	nobXaAEsYNT/5NSgMPE+9A8AtdmMbNGKIIjS9ldu/RrNIjMzXyLZiRy5eEm1wFaDJB6B1AvRpW+
-	lIteiq1WAO3ognSKwsssfbbOgx5Xcp1WVNamIQlt0IA==
-X-Gm-Gg: AR+sD12HMx0FWzy+KUqx5kXmPyzVsTk5Uue16K3pQQQrP4/n0N3bqWaFDiyZ6wC3Wk3
-	JqUFyRuW8mBkOyO6C2hsqCx/MTDOXYCFCjZWCL2Pq33LjNt5U3U4sxsB6IHwmOXIEC1DbGkRr6B
-	w8CHdr1JdwJfhBjWuFHfmaYKo6Def2cpg/VwFkwVSThxHQB0gmarf3Eh6KXuSpJ1L5h1WXx0swW
-	rVLHUwV8821TnP/HqGA1paIVCFspaJeXK3naOcOD7UgmETBSwZEDNM+wE5emXV16aadQ1rBlZlk
-	f0tthCVX5tGfVZfpWuDEVgRi+6ChhKsO2Y8fEkH35QeJSw==
-X-Received: by 2002:a05:690e:b8b:b0:668:e1:629c with SMTP id
- 956f58d0204a3-669057c84e6mr2715501d50.4.1785319426620; Wed, 29 Jul 2026
- 03:03:46 -0700 (PDT)
+        bh=j8nz4dIrDb7xkXQ3nNnj2bflQClivBMXjMEgyEVgbH4=;
+        b=E/udM5sbsL1RXBuV59cnaapyobhcRqMx2VJ+NBxT3xpSLCYwfbAaEprStjYE6Zhr5+
+         2oZhE+lDhDGU9TAytD58Z5tnCVhJBNCbRhjNUltJGC2JZg5//bm9icvmZifso72Qmm9Y
+         jM+qeYP0mZs8jMG25uOstEYIe3D+IFkrcg3mL/0Lco7Bo9TrxKLNL3eJ9HqRyk9B1vzX
+         A2/k6QLFjRO1tMe5MJqAtGVQo8Bvp2R22mLR7UL3IJWLe4clyu1up3NDo8GxSwcNw7Ga
+         +BMy2Bg4jXuthtUuX3i7VT1WTKy44pmyUVZw3iaFZ/mfAi3FDZONYdJMmYKVx3N6z/Lt
+         Jlug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785323895; x=1785928695;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=j8nz4dIrDb7xkXQ3nNnj2bflQClivBMXjMEgyEVgbH4=;
+        b=HiYysfB0klDyrJOJTl5l2VgNJ/VMZVodGfLYuZKpjd747f028/0VeztcDVm9NbY5bx
+         4SwaPQTTM/unfNqWFMgwtqyRi7/sw5VouChHNpIplwneWm266RSO8X/1Fmye+HMunSge
+         GaZFZX660p1rCVRYQ9kyzoDTK/mlLA5jW6x8W09vPc38COOe/Df83nY8JlNMXkMVkrau
+         qal0+axBlfTN8AfDulPrdpC31yoUJn7q2sYSIJiirHY0iHiYHcObjFnXA8Dto5dqkwY5
+         WU0SEk3w7M8ItDHy7mfjvwbPgfaSHlQBEhGYh+5C0OAbwnBd2QQ4X8kIMs9mdkbBAGAM
+         OKZA==
+X-Gm-Message-State: AOJu0YygbzdQKx3UzOdDeGoFMOtL1wsnwj0owXA7sqZvArpIhTHb0tFy
+	PwAYtxM0B9d22zvJscd6uF4QEb9+FXA5rJVY+G6RlouiQBo2cRNtwohX
+X-Gm-Gg: AR+sD10V1DrnRGfrb/j55Dtx2A+jDefo5MYamcU1s5YdoTWySQtFkJx5mxFCdT0BGzA
+	m/q6RmyXSbXAmAQrM1yTROrdMTNz2SfDLpRveAZd0b0miQo1yoFZoe0eBDnoDHTAfZJXd+PQrvq
+	fCk5DDb2mmgNydw4WlffHqJ6GTWqncpUYLUSmawu0MnVOBUw3JmNgBDgniaobd7vRheoIRRj1mh
+	ofvoVZsa1AjqI2N6Ns+sTcsJGCPeCa4QGd77+iYZUtqlqGoGj1N9HHeB7zovLG6aTrfL2WZFBdu
+	Ni/GM39nlUdNPTBg7Uw92fcK9/hcLWWL9Jfg8zVRfmBG8yzhUnBdU82vIsqvoCdTArVbpwrP6lK
+	59m9pg/qX+DSSlbt4/uvmNc7WU0ev3Iue3/jOdruoTJePqsf1NaPfu4voznMLhsCVKTDl27UgsD
+	shI5COeJA4SFwKnRsmt0Ei2n/WKSBPl9EQx3u9J4WwJLiIKf3ZHjpUqJGQABVdVnEGcSFT0icXi
+	Mcjq8Lf8femwwxtfoZXLigLGgJrq9cATTbBe5+xPStDD5oS9uN5VbW0S+tSrDxm0X9i56E30CXZ
+	Wiez/OlZ2KvOe8xt887wzoj6YnW0uSyNy/S+t6Wv8zVxWja8y78kWmDinCwxlfmVtbtlSbFo3dE
+	=
+X-Received: by 2002:a05:6000:4802:b0:47f:81a9:3f36 with SMTP id ffacd0b85a97d-47fb1e8e26cmr7499602f8f.18.1785323894973;
+        Wed, 29 Jul 2026 04:18:14 -0700 (PDT)
+Received: from localhost ([47.58.8.78])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fb6ac44bcsm6800760f8f.11.2026.07.29.04.18.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jul 2026 04:18:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <CAFZW3h0K6vi15HhMEX30Ab+pjRc3mQr2Myv9KJUH=MWzsvt0FQ@mail.gmail.com>
- <20260727095735.GA1153453@coredump.intra.peff.net> <DK9MX0YJ07S0.1TOBLIA6ZNSEN@gmail.com>
- <CAFZW3h3xyeJJwHfVK2mB2k1=e-0he9_gbTetJ1RdB2uUM1rp4A@mail.gmail.com>
- <20260728150031.GA41931@coredump.intra.peff.net> <xmqqjyqfdnie.fsf@gitster.g>
-In-Reply-To: <xmqqjyqfdnie.fsf@gitster.g>
-From: Alan Stokes <alan@source.dev>
-Date: Wed, 29 Jul 2026 11:03:34 +0100
-X-Gm-Features: AUfX_mw2lqSb0CVwJ1sOlWe5538jLS5sX8S2CQ9LdIdCBphzrI-GzQ1RA793qxQ
-Message-ID: <CAFZW3h2hVMaVy12uO_5k5cwN=N9LDhrxuVSQPNmPWxB4j+kRwQ@mail.gmail.com>
-Subject: Re: [PATCH] cat-file: handle content request for --batch-command
- without type
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 29 Jul 2026 13:18:13 +0200
+Message-Id: <DKB0I229LCE8.CU4ME582YISN@gmail.com>
+Subject: Re: [PATCH GSoC 1/5] protocol-caps: add type support to object-info
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Chandra Pratap" <chandrapratap3519@gmail.com>, "Pablo Sabater"
+ <pabloosabaterr@gmail.com>
+Cc: <git@vger.kernel.org>, <karthik.188@gmail.com>, <gitster@pobox.com>
+X-Mailer: aerc 0.21.0
+References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com>
+ <20260725-objecttype-support-v1-1-2d4ca3bbabf1@gmail.com>
+ <CA+J6zkQFAqZvi-6UaQi6v_OBiT4ihZtCN45vyGCGTbo9TJLJbg@mail.gmail.com>
+In-Reply-To: <CA+J6zkQFAqZvi-6UaQi6v_OBiT4ihZtCN45vyGCGTbo9TJLJbg@mail.gmail.com>
 
-On Tue, 28 Jul 2026 at 18:36, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed Jul 29, 2026 at 11:53 AM CEST, Chandra Pratap wrote:
+> On Sat, 25 Jul 2026 at 17:25, Pablo Sabater <pabloosabaterr@gmail.com> wr=
+ote:
+>>
+>> Teach the server-side object-info handler to accept type as a requested
+>> field. When the client includes type in its object-info request, the
+>> server returns the requested object type.
+>>
+>> While at it, fix requested_info->size bit field style.
+>>
+>> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+>> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+>> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+>> ---
+>>  protocol-caps.c      | 21 ++++++++++++++++++---
+>>  t/t5701-git-serve.sh | 27 +++++++++++++++++++++++++++
+>>  2 files changed, 45 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/protocol-caps.c b/protocol-caps.c
+>> index 02261be14d..5531d388f0 100644
+>> --- a/protocol-caps.c
+>> +++ b/protocol-caps.c
+>> @@ -11,7 +11,8 @@
+>>  #include "strbuf.h"
+>>
+>>  struct requested_info {
+>> -       unsigned size : 1;
+>> +       unsigned size:1;
+>> +       unsigned type:1;
+>>  };
+>>
+>>  /*
+>> @@ -73,15 +74,20 @@ static void send_info(struct repository *r, struct p=
+acket_writer *writer,
+>>         if (info->size)
+>>                 packet_writer_write(writer, "size");
+>>
+>> +       if (info->type)
+>> +               packet_writer_write(writer, "type");
+>> +
+>>         for_each_string_list_item (item, oid_str_list) {
+>>                 const char *oid_str =3D item->string;
+>>                 struct object_id oid;
+>>                 size_t object_size;
+>> +               enum object_type object_type;
+>>
+>>                 if (get_oid_hex_algop(oid_str, &oid, r->hash_algo) < 0) =
+{
+>>                         packet_writer_error(
+>>                                 writer,
+>> -                               "object-info: protocol error, expected t=
+o get oid, not '%s'",
+>> +                               "object-info: protocol error, expected t=
+o get "
+>> +                               "oid, not '%s'",
 >
-> Jeff King <peff@peff.net> writes:
+> I assume this is a style change? The original line doesn't seem
+> long enough to wrap though.
 >
-> > We can fix it by tweaking the object_info on the fly as we receive each
-> > command. But we should be careful to restore it afterwards; otherwise a
-> > sequence of commands like:
-> >
-> >   contents $one
-> >   info $two
-> >   info $three
-> >
-> > will pay the type-lookup price for $two and $three when it does not need
-> > to. This wouldn't be incorrect, but just slightly inefficient (and hence
-> > there are no tests for that part, because the externally-visible
-> > behavior is the same).
->
-> Woooo, tricky.  I love this kind of attention to details.
->
-> The patch text obviously is correct.
->
-> Will queue and mark the topic for 'next'.  Thanks.
+> Also, this would break the grep-ability of this error string.
 
-Thanks, Peff and Pablo. Sorry I wasn't able to contribute this time.
+Yes It is a style change and it's ~60columns long, I'll drop the change.
+Turns out my nvim settings is showing the vertical guide at ~60 columns ins=
+tead
+of 80, but that's on me.
 
-(Peff: for some reason I'm not receiving emails from you, although
-I've got the other ones on this thread. I'm assuming that's due to
-some over-zealous filter at my end.)
+>
+>>                                 oid_str);
+>>                         continue;
+>>                 }
+>> @@ -93,7 +99,8 @@ static void send_info(struct repository *r, struct pac=
+ket_writer *writer,
+>>                  * If an object is not recognized by the server append S=
+P to
+>>                  * the response.
+>>                  */
+>> -               if (get_object_info(r->objects, &oid, &object_size) <=3D=
+ OBJ_NONE) {
+>> +               object_type =3D get_object_info(r->objects, &oid, &objec=
+t_size);
+>> +               if (object_type <=3D OBJ_NONE) {
+>>                         strbuf_addstr(&send_buffer, " ");
+>>                         goto write;
+>>                 }
+>> @@ -103,6 +110,9 @@ static void send_info(struct repository *r, struct p=
+acket_writer *writer,
+>>                                     (uintmax_t)object_size);
+>>                 }
+>>
+>> +               if (info->type)
+>> +                       strbuf_addf(&send_buffer, " %s", type_name(objec=
+t_type));
+>> +
+>>  write:
+>>                 packet_writer_write(writer, "%s", send_buffer.buf);
+>>                 strbuf_reset(&send_buffer);
+>> @@ -124,6 +134,11 @@ int cap_object_info(struct repository *r, struct pa=
+cket_reader *request)
+>>                         continue;
+>>                 }
+>>
+>> +               if (!strcmp("type", request->line)) {
+>> +                       info.type =3D 1;
+>> +                       continue;
+>> +               }
+>> +
+>>                 if (parse_oid(request->line, &oid_str_list))
+>>                         continue;
+>>
+>> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+>> index 9a575aa098..d7c93b5b55 100755
+>> --- a/t/t5701-git-serve.sh
+>> +++ b/t/t5701-git-serve.sh
+>> @@ -366,6 +366,33 @@ test_expect_success 'basics of object-info' '
+>>         test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success 'type' '
+>> +       test_config transfer.advertiseObjectInfo true &&
+>> +
+>> +       test-tool pkt-line pack >in <<-EOF &&
+>> +       command=3Dobject-info
+>> +       object-format=3D$(test_oid algo)
+>> +       0001
+>> +       size
+>> +       type
+>> +       oid $(git rev-parse two:two.t)
+>> +       oid $(git rev-parse two:two.t)
+>> +       0000
+>> +       EOF
+>> +
+>> +       cat >expect <<-EOF &&
+>> +       size
+>> +       type
+>> +       $(git rev-parse two:two.t) $(wc -c <two.t | xargs) blob
+>> +       $(git rev-parse two:two.t) $(wc -c <two.t | xargs) blob
+>
+> Can we not use the `test_file_size` tool to do this instead?
+> That should also be much more portable.
 
-Best wishes,
+Yes, I will use it, I didn't know about it.
+A test on top of this one does the same pattern, I will fix it too.
 
-Alan
+Thanks for the feedback,
+Pablo
+
