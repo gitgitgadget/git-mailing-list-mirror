@@ -1,186 +1,137 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FC348382E
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 12:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FBC48C3F3
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 13:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785328469; cv=none; b=McNw3Y6AboCf/6fqILsXCKJ2Fghq9iM2bAVwUBv28xlydotlti97jF9uEeQ6kOrX606ZciGNpzDEMHj5aB9SXbZf0PvUipaScFuOwjqJZNA9GWmkqvEAHHFqMjLcz5zNUjfvwLvBzVFHbWRZ5xOwazh2fqtlUkr1JBJFr9BH2Hw=
+	t=1785331449; cv=none; b=da+edtd1BA7iROFKan1SwP1Jk0dJp1HxXYNBbnukxcz2GPSvmx96cvgtDuNzuDEkyvwA23Pb4UX8KVboWEDvMR3pwZk3qUb4oDEAf50R8Fn3HtsaEQrVilFXN+AIUEcwSNRwzM1+LjZZ91VAqe2jp+iLTAm/1rXQkSpCMiVXl0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785328469; c=relaxed/simple;
-	bh=gBIqRfyzZsC08kN12mRJu+uA+RtkJieGlesPQ+FQ7HY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=qEJBph/BLVVOjbTcXj0zl9XQCbQ+5ygV6V4yZV6NxgQSwrOM80S/Cw8QG5U5gDkbDKVNde5/8v9HfQS4nohBwr+D5rzI2j/suJRSjg81i1y2xK/pUy1/WqoXKd/hvqBEqTuO2Yd6rDHa+hr4Nqpn/DmplqyOKxr9Kp29QjlNtkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P7/q85/5; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1785331449; c=relaxed/simple;
+	bh=5gf4dmjnWqpGlctTDRUiVR2ADduUY4RTtRjna3xYBxg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=bKOa5txQAOlzkUu/zYtab+sTnD0x92xVCA7zc2t+Tewtc44fhEMIv3MXESNgMzJpwe0s+/hFuSySfBRs1kHf5ikP44zsIVa5TAsHoa49oBaK6+PDwGGhGEJ/IET5/da0Jo+Ao16tf3Q1D7DZSKH5oPc6JqcUbOE76gk7jq35xYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QjoTGm0r; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P7/q85/5"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4720f3bf164so1344464f8f.1
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 05:34:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QjoTGm0r"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-69e8ea2783aso1334302a12.3
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 06:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785328459; x=1785933259; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=EWaYs7fqKNp7qyM5suhBODB2GblFEIM3DCOGubSAwYo=;
-        b=P7/q85/57KzVHxTsNOjqlZpn3FaxBsPaq4LK0ZkQpn+BzI+AwCbCHbltogmxHgpEdy
-         0rXNax4v/xRFBHaKDxCxXSEwd7SnGPynVASbP+schRF5EWNIWjiv6J81vi+mbjwSwd+1
-         psLrKohKWg4dJKRAy8/Vge/fZJbY6dUIeipp9FpoEZu+/4teKbN3yw575q4WfT+7ARr/
-         pk0rKHLXy2FlE20Y3lDMI/M2hs5z9w07SBC3ErnzuIC/rsHxW9y4qtNqylVgbs8eOcS+
-         2u7zQhpyQcOV0lvvnUCwU7r4e1f6oGSbN7++agDjVXW1u3D+nPjXxImYIcHDTvHYJLWX
-         7I8w==
+        d=gmail.com; s=20251104; t=1785331445; x=1785936245; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:cc
+         :content-language:from:references:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=C+ioyortPE21xJqEf/W8feOTcKMZNJ36pIWW86+66rI=;
+        b=QjoTGm0rYRCT6oFo/Cxkkr3fbMRFUdA84Q3OqQGbu0FTU/hgBP4iirmQ5aB9hHn9pE
+         tgQYtj4g7OemgQ39KFrpKZsop0k2uMXcuqPZ0xIG+/k0HZlh2/kIDI2JbQ2bW25ar4BZ
+         Va8NtkWHmHSlUkKwTb6HgyMDrzD5DgHbUcYFAW9hu28RQfBjuU63gEyz0uh5B8S9l1uq
+         UumzETs4apPhPdHKyyO/UsEXJ5TYyYl/0yobKMfhID9hGpOH9lV7xKnxtaPtw4eQqxNB
+         cBg7ucnKPI0Q+24tN7aEcoMCphms+6jwZ771bRgVpPj+Z24fm/HxBPfXzkXi/pFBsMsK
+         /GcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785328459; x=1785933259;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EWaYs7fqKNp7qyM5suhBODB2GblFEIM3DCOGubSAwYo=;
-        b=BLe/4Ktc/hvPvkY0UgRgKLG/yBXRwjyqgNOO57CiDCUeHXOv45u1P3wzaE9gPFwzdH
-         VWfRXBRXhEePFtEGL16KTVJ/prYr3qsWdao2DFJU9sEOV0zWnnFaCYe1U67H54PxIXbS
-         Qg9Rws2tqkBFkD8eXEfxnwGRBOyQM/zlljCctUDSWSHjOVXomQ2ikrrQRCzioIVlRGAV
-         qXH5losQKMKs+JXUcvls4cWcvdt+m2C0q8VCikwqCJIW29HdOnXmINvsHUy9lBkJllhB
-         jRrR6B0yhVOMGeA00uS19tViiI0VW6mcM0HtRx3IiskLygyiV+tX4FS+Y9wtURRzx4pW
-         3RnQ==
-X-Gm-Message-State: AOJu0Yy85F1xe6QFg/ymLOF3MMiqdor2UMXyBkEAHG40bdHpgJwEkDam
-	b05aWCDoFn26XzHBRDSwFRYOJ/TD8RqcnmP3fDrSAmVW93R+D+kIwji2
-X-Gm-Gg: AR+sD12rpgazOidlsNaG7y+531iNqfN8tQMNdLHekwxKcA1UVbMg6ou8ZySMZ9PP/Ar
-	Zc4aodWsIRtbJsOCxPufzHaj4Xu7mnK2FE8q6uEfJOhDmGkMzfRZl9ChQsmGndeRMYYN4DZ9kaT
-	fT9/zMYuQ+Vb38qJqekr3qhB9Mo9I/6QWF/R3PYRZaeHyj95vaUDUHrLMz36UhwyMmF0lX2yFyt
-	tzAek83E6CdKXOzwD+iYcNacScnKD/vKfvQVQt5due0SlMjgI8fe39ug4GvjfkDMC2j9qJD83Dd
-	zLvBV3E83C1Ut9XdJ+yFGfjqvSM8DIJVLPhiZNUsbCJjMDUYCHpCKhiVKy3KKvacyivGxHbL9a/
-	KwiGSzJtWPVUEvR9eBuX+Fd7uKMc784iLzPRMtUaUcfUfLQo/sVSkKMmA60TC0N5O8pu3/jiZNS
-	lKQ189XSYTyWEX1sDvgBuPMdpsKHWtM+su1TxUkbnBaoFf2PZcF/e20r1BrBgBrV8FynDen4xLK
-	yJ8hPtZKopGehXvg+xOO15K5pCQYn7ES6f3y19KeHVYofnTBza8N185p2gTrhbCPI6qH3QQ7KJP
-	zvakaQLtmmw/ibDkHZoQU036JCIHaI9LI3bYgml/x5d/6MOMs0gskcWwCm35OPEPh+bXG5jwme7
-	9EYjlniJ0O20=
-X-Received: by 2002:a05:6000:2c05:b0:47f:9763:9864 with SMTP id ffacd0b85a97d-47fbabee850mr2690513f8f.19.1785328459221;
-        Wed, 29 Jul 2026 05:34:19 -0700 (PDT)
-Received: from localhost ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fb6aa3a88sm6984066f8f.6.2026.07.29.05.34.18
+        d=1e100.net; s=20251104; t=1785331445; x=1785936245;
+        h=content-transfer-encoding:content-type:in-reply-to:cc
+         :content-language:from:references:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=C+ioyortPE21xJqEf/W8feOTcKMZNJ36pIWW86+66rI=;
+        b=B1G7o26CGotFcdxU8W7dKNcK23ePcDiMy0rk34UIWRzjArRLGM7lYT3lzfh+iG1scK
+         tdjg9Geooc1Yq9B2W6DOCLWHIH+6cKVEMx9qF1v+h33lNN8g09+44zjH418Cv3IBkCvZ
+         5e0FYlNAymrrxe2I96Owl8tLFNOC2Slrkz1pDw6dHE2WCvbrpokFM355JIR8MG04alr8
+         ZuQgcbAoznK1GkqNIYbriq6LmxdKwwl6PE+lf9Qs6ZJ7hjgG8jM8OVec+9eCQgn4QVk7
+         2HlY9coc0c2tAy2fhH2XHSMFnzpSJp0UODiVIrFbIseIriZ/LWbeJLSoWAUtL214BnOt
+         G/bQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rrw+LsCscfSKP6nHt6feBp34qTL3/LkuZbsquA8hsEQNn9KcPrDRLhII1W1fiXxZfRT5C0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiXYkNFXSN6mkO4CNhUjfe8UpS7/AC3X4/sdYl7NdTnu/7xEux
+	KGx04UeGnRba17nEI95ctZyjoRaR5uBSFq0zRy/cr99CeSasLdfYBL9r
+X-Gm-Gg: AR+sD11r/Yk29e+OgmLi1Y15PFcVjjcNpFfkom81miGciiDN7woHeRPgAXZGODgveiM
+	CRYdJyr4fpOaMGJlv5UTTW9CnZRl/QYisMOTIYfE54I9AVv/gQPRO+eRZCJdiz95pg1I2d9rgT5
+	Ejo1NBMc/4I0+hjVFTNrILZzX/C+0H5ZNLgZyvCAdI3DUk/YVe2UxpDVhJoRChQYBCnqDa8nLvh
+	PFlqX4j7YQ78baBmvh+w20YRAIDPJ7lhX3enODvufCa2rK+CtKtpHSgo7rYnlxnbvWM0BZWvWLd
+	S1BhLvhgqS9a5TSGBhQzF632P7BxsaD1vF3cRzPzvzcRkwwXhgpW07Im9EmXxvt4KQ5aDW1SSH5
+	eb9zRV2V98b8Gf0P3I5qaZ4pNTfF1/ksvPXrk7FCKeE6Zp0zCuvwQfGkpAY31OQOccEBCdNSv2a
+	EIkrWbEi980BiFogSVMmgBySE9WVHFlV13WpGQitNd7bM8sDyGXCX/gm/jTWjDiNNeRCo0J4mdh
+	Ziq3mzZxVPBXwzrBK7cx+NXC6aWSZ8zCCeobyDd2mHlobzAOhIo1xY=
+X-Received: by 2002:a05:6402:194e:b0:6a0:c62:75c7 with SMTP id 4fb4d7f45d1cf-6a034a9e9b2mr3441042a12.26.1785331444958;
+        Wed, 29 Jul 2026 06:24:04 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a050c4ac3fsm816455a12.15.2026.07.29.06.24.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2026 05:34:18 -0700 (PDT)
+        Wed, 29 Jul 2026 06:24:04 -0700 (PDT)
+Message-ID: <f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
+Date: Wed, 29 Jul 2026 14:24:00 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 29 Jul 2026 14:34:17 +0200
-Message-Id: <DKB24AZJXEMW.1X3CA3AGA1GAE@gmail.com>
-Subject: Re: [PATCH GSoC 0/5] cat-file: extend remote-object-info to support
- %(objecttype)
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Chandra Pratap" <chandrapratap3519@gmail.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-Cc: <git@vger.kernel.org>, <karthik.188@gmail.com>, <gitster@pobox.com>
-X-Mailer: aerc 0.21.0
-References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com>
- <CA+J6zkSvwqy4QdL16oQ_W=Noi81i-dLtAdAQqU3u9A1mQV3izQ@mail.gmail.com>
-In-Reply-To: <CA+J6zkSvwqy4QdL16oQ_W=Noi81i-dLtAdAQqU3u9A1mQV3izQ@mail.gmail.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: What's cooking in git.git (Jul 2026, #12)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqfr15ruw7.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
+In-Reply-To: <xmqqfr15ruw7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed Jul 29, 2026 at 11:52 AM CEST, Chandra Pratap wrote:
-> On Sat, 25 Jul 2026 at 17:25, Pablo Sabater <pabloosabaterr@gmail.com> wr=
-ote:
->>
->> "%(objecttype)" is already known by the client's allow-list, but neither
->> the client nor the server knows how to handle type. This series continue=
-s
->> the work for git cat-file --batch-command extending remote-object-info
->> to support "%(objecttype)" end to end. It is based on its predecessor
->> series "cat-file: add remote-object-info to batch-command" [1].
->>
->> Type is the last property that is identical on the server and on the
->> client once fetched.
->>
->> Whether to support more metadata such as:
->>
->> - objectsize:disk
->> - deltabase
->> - objectmode (needs context)
->>
->> should be discussed, unlike size and type, the rest depend on how things
->> are packed on the server and on what the client already has, so they
->> cannot reliably match local once fetched. IMO they are not worth
->> supporting, I can't find a use case for them.
->
-> Makes sense to me. The metadata you listed depends on the local packfile
-> storage where the repository lives.
->
-> `objectmode` depends on the tree pointing to the blob, so it wouldn't be
-> accessible using the current infrastructure anyway.
+On 27/07/2026 04:09, Junio C Hamano wrote:
+> 
+> * hn/history-squash (2026-07-20) 5 commits
+>    (merged to 'next' on 2026-07-23 at 2790c83e45)
+>   + history: re-edit a squash with every message
+>   + sequencer: share the squash message marker helpers and flags
+>   + history: add squash subcommand to fold a range
+>   + history: give commit_tree_ext a message template
+>   + history: extract helper for a commit's parent tree
+> 
+>   The experimental 'git history' command has been taught a new 'squash'
+>   subcommand to fold a range of commits into a single commit, with any
+>   descendants replayed on top.
+> 
+>   Will merge to 'master'.
+>   cf. <DK1KIF2OI8IF.11188A3YEQV1C@lfurio.us>
+>   cf. <DK1KIH6CXW0X.1U2V3GU8L6HB7@lfurio.us>
+>   source: <pull.2337.v10.git.git.1784536024.gitgitgadget@gmail.com>
 
-Yup, sounds like this will be it (for now) for remote-object-info placehold=
-ers.
+Oh, I'd missed this going into master. Has the implementation received 
+any serious review? I've seen messages from a couple of people trying it 
+out but I can't see anybody reading the code. Having a quick look 
+through it assumes the presence of an UNINTERESTING commit means we have 
+a BOTTOM commit. It then assumes that UNINTERESTING commit means we 
+cannot reach any root commits. Both of those assumptions are false I 
+think. As far as I can see it allows multiple tips so that with
 
->
->> Adding new placeholders has become trivial.
->> To add a new placeholder, follow the steps in this series and add it to
->> the client's allow-list at 'builtin/cat-file.c'.
->>
->> Based-on: <20260724-ps-eric-work-rebase-v21-0-ba67f024fdff@gmail.com>
->>
->> Github CI: https://github.com/pabloosabaterr/git/actions/runs/3015558627=
-9
->>
->> [1]: https://lore.kernel.org/git/20260724-ps-eric-work-rebase-v21-0-ba67=
-f024fdff@gmail.com/
->>
->> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
->> ---
->> Pablo Sabater (5):
->>       protocol-caps: add type support to object-info
->>       fetch-object-info: parse type from server response
->>       fetch-object-info: request all supported options dynamically
->>       serve: advertise type capability
->>       cat-file: unify default format
->
-> The current incremental approach is safe and ensures every commit
-> compiles and passes tests. However, from a storytelling perspective for
-> the reviewers, I believe it's better to do any 'preparatory refactoring' =
-before
-> starting the new feature.
->
-> Patch 3 (dynamically requesting supported options) doesn't actually depen=
-d
-> on type existing yet. I suggest bumping Patch 3 to be Patch 1 in V2.
-> That way, the client is already dynamic and ready, and the feature patche=
-s
-> can strictly focus on adding type:
+   - A - B - C
+          \
+           D
 
-True, I'll move patch 3 to be the first, thanks for noticing.
+it accepts "^A C D" but does not squash them correctly. It will refuse 
+to squash "^A C" if there is a branch pointing to "B", but not if there 
+only a branch pointing to "D" (in which case the branch is not 
+rewritten). It also refuses to squash if there is a tag or remote 
+tracking ref pointing to "B" which seems rather strange. None of the 
+other history commands complain about rewriting commits that are pointed 
+to by tags or remote tracking refs.
 
->
-> - fetch-object-info: request all supported options dynamically (Current P=
-atch 3)
-> - protocol-caps: add type support to object-info (Current Patch 1)
-> - fetch-object-info: parse type from server response (Current Patch 2)
-> - serve: advertise type capability (Current Patch 4)
-> - cat-file: unify default format (Current Patch 5)
->
->>  Documentation/git-cat-file.adoc        | 17 +++-----
->>  Documentation/gitprotocol-v2.adoc      | 15 +++++--
->>  builtin/cat-file.c                     |  7 ---
->>  fetch-object-info.c                    | 23 +++++++---
->>  protocol-caps.c                        | 21 +++++++--
->>  serve.c                                |  4 +-
->>  t/t1017-cat-file-remote-object-info.sh | 80 +++++++++++++--------------=
--------
->>  t/t5701-git-serve.sh                   | 27 ++++++++++++
->>  8 files changed, 113 insertions(+), 81 deletions(-)
->
-> This series is definitely a lot smaller than I thought it would be. Looks=
- like
-> most of the heavy lifting was already done with the previous series.
+Without "--reedit-message", it will happily discard "amend!" and 
+"squash!" commit messages even though the user creating them is a strong 
+signal that they intended to use them to reword the commit. 
+"--reedit-message" is a rather verbose option name which does not make 
+sense to me as we're creating a new commit with a new message so we're 
+not re-editing anything. I've commented elsewhere that I strongly 
+dislike reusing the rebase squash message template for this command 
+where we can squash fixups into multiple different commits at the same 
+time. I'll try and go through the patches and produce some fixups, 
+though that may not be until next week.
 
-Yes I also got surprised by how little I had to do in order to make this
-series happen (I expected a lot more) but it turned out to be very brief.
+Thanks
 
->
-> Good for us!
-
-Yay! :)
+Phillip
 
