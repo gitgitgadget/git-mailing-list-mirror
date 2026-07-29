@@ -1,166 +1,185 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7365945C713
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 17:06:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785344798; cv=pass; b=cCkXcL+5kMf5ja/ZUa4nXCJ7aZjZSWAvynMrQ4iO3Wy+LLcxUCMwh61Bvemvzc2E8maGD9t8Hrdcm8h59Joy+mzF8459V/41QyzUNfw1hGPC+J5AbDCWFY+hSJQggHAI5/IkHXoGMnl9SPQeEFDkoV6fwmnxATEX2DS3SHleaD8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785344798; c=relaxed/simple;
-	bh=ncgNwBO7O5Z7VpQRx888zB2XhOgMDy/LodlcTl3ZEhk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mxv+Ho4/92v1E7jBu20FVplywfLdPPNxPbpsZ8031duMYY0dDCihZJ/gj51uFMJnwbkXjt9PgpluepQ0DNgUXzCpoFg6pUz9RNHU2c7Hau4EBf3PyrnFbmsmBVlbd+Qm1KlC/xqn3Iso46mhF2sm9ypIW1/Jc47Qv+GrtT1Zvr4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hjgu4ODW; arc=pass smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219F33438A7
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 17:25:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785345929; cv=none; b=R2TzXdv5s9Cjej+t7okq10WXbiF7pEDaXAdDmgxvBYwHzriCIFm12eg/n2rncBOZU7egP2rgMOlOOaa65RDjAW4xK7BfISSgNkDfADBjHuwhrNZZ52/edXzZ7R6o2NHs7neg0IJ2e6+VrnO7CiTx48wY2KPYTmO0DdYgFrj2T3k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785345929; c=relaxed/simple;
+	bh=WUf5W1270UZWme2KXVMENnLsHJXpEpcCCkaACVbKv+4=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=X+XKEUUG0Zr1UQY474+C9L2W/H/f/66lEv+p4a7jU6SakgrshQMJzf2vQvfTnbJF8sRY9ZbRRWkrpXRv1M1gXwLOK+RC7BekSi6aPERe9RrG9d2WZSAUFg8+HwYSRa/cOdMqhLj/fNrEsgYXW2zmEFXmrGr7W7JqHWtAiMPyLTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mIsHjuxv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l2GxRDTL; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hjgu4ODW"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-69e2266b07fso1665963a12.2
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 10:06:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785344795; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NzhuyGpkg5HJiPq2RKbSwIblqAN3+s7YVBjgdFnNDZ2X+1j+/wd7T8NcmLG4q5ZQRQ
-         5ukhBzqfIQFS6Cypqfir1+POfYasr53sTY3lXGwX8RmfOv9jjnm902SzX3uxbsi2wiG3
-         n2MC3bAUqS2wfAR0qtVAP6treev/PPDO8pxoaMprhilaQOaJxMjZaBBUXRjf4X+8IvK/
-         FFbT7z9UKSC4RAtMUH9nJDN/Y5iOq8AfBv9KDlosmxvxnh/8PnUBoIBdfO8mWE5LVEgj
-         aPI3pcDcWZ3j3UlxxbZxBFOe9i/PT4lM0iUvS9bsaUH7ylc2+9zKKop2+XYKI+GXdfU3
-         NR1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=NAYuBtvgkNPtu+77U+cuNL6hX3DsjLg4kaBT8NYw16c=;
-        fh=2aAxuZ3FwNf3QcFlH2RvBEmGPgSA32B5xuUzbfpQbOg=;
-        b=K5p+qxSwcRyx+l2jcUv9amdo1eZTdVUvt4ZTF82EujnFGq42BRrbeaHQF6KOwVG9Sz
-         8/EwGmhQXwFKwNqnj/tj9S6UZ8vc8Ibg/p6/4fO4TwTdqaAy/85ISrePwFp6EJceCbk9
-         kFZoUoCIATDoi/3dZXx+G0znJiaYTk+3TZV9lAARhx/ZB/+BtpLxVrJAGTWBFC/THTAk
-         zB0VcnC5pw/ZTfHmVrqJZ56tqQyY2JVpR4VkMCJxh3dyairnVRH4hUvYoVqGr6f94VwC
-         N3uFuI5tl6ypriIRjj4iN8cVj+Or5PVz0lqwWRsCmdGoe/P1kFFfj1/0fMeVlue3Ao/H
-         h71Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785344795; x=1785949595; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NAYuBtvgkNPtu+77U+cuNL6hX3DsjLg4kaBT8NYw16c=;
-        b=Hjgu4ODWcDYimA3P1xlWd+Jpaqr2FOtIzG14mNXz48F+sW07Ejtiwi7etHEgQx3ZYV
-         Ol2nOid7GXmbL7i+KSe+GlWJqot+9taRiMRpinQ0wjNKkf4/4QnS9f2HYJ5xGq7IZBmg
-         zeDVQJi9Nfqj1Vm5KL5SXxyK3AfOLquobsJ5iRevXzte9GvtIxgHNYQBS3/kdj5mpvjm
-         ZeqRWdSjVpDwfTvx8YwEbEX/wEfrmkQzEU6/B0MzzAz6Z26p9n/5v/lVCvhrnm78uMQk
-         ArarAQ1fQMc3SCi+Oxv4n7XovyX4eNCscYI9Q4y4xebxQCnw+xaMVJvbqHREkAuPFay2
-         1Lww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785344795; x=1785949595;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=NAYuBtvgkNPtu+77U+cuNL6hX3DsjLg4kaBT8NYw16c=;
-        b=V5iF4chUVX0yiKnscEarghuxkSVA6Hf5v40AMHHEXzg3PcTZCaGv94NKyKuer7HeIB
-         KxTQ6G4+rUldWdbbQAapHQGZO8jSGRPsTquz5ZG6fuRBaihhaNz4A5cRU2IZ0bhExBjn
-         o8j83On9qX1w3dgyOQqWKjKW85s8GH+4fHTTw7iJVcDV9CvqmDnBSsRDBI7n44+6yQu2
-         ZqDmapnOAghHvWZrvZnVHR2fDxZPZ2Zhng59QCxSogCNzyBq5DZZVBgeEn6LiTSB59uJ
-         Y6+ymdCMtBljJiFnwXVvIY8Nx9GDGvVqPqhphDG9uP5RtO4DoDFsxDHN/7YoNVi/umRj
-         ndcQ==
-X-Gm-Message-State: AOJu0YweBNxMX19fUUm0+EKs9yfs/nWU1sbM8k+iSK0K8smCSZ3eIBhe
-	n7MnMtQ97rt+q3us+MXrRIEokMFoHAvMLvt+7m28FM2xf/q66fKxWBlI1Q130Hqk3vw2UMhqz1t
-	l87b/5ebblY/y1TJu8F6zj54xdpq1pr8=
-X-Gm-Gg: AR+sD12ISZa8guYo2og0j0CNIO4u4GBinrAnNYU8RN6bxTxT6MtRrHmtlnURlcqATnm
-	Mjjer8qOs91olGYNoz1ltz/O0SomyREyjw+1Br+sGM1eGIRv9IDahJ+PMfXa9NYybHdyJg0YoqT
-	ljfvt+xw5QwlEKezRgS1RuItLk53hS7NgB5ve82chSBUkrBLxkZzFplJdU4FmIwwOGjt0A4orAb
-	/qx0i/+DzGOo58PPd7Uj5vL5NClNL/bpZV6U5poUech+xcg0d7nwin6pPjg0QVmiV9OOOUKVR1Y
-	LRzJSFAh8/n0/Tfz0dnuxky/CfV2gVeg9YeD5s9FRCc7VsCPjPKQ5+hdfdJokm1Kt7NCxJKC8zh
-	BgSvnCtQIflLY/KlLElhlP/oz4w4=
-X-Received: by 2002:a05:6402:a0cf:b0:697:e8e1:d3c0 with SMTP id
- 4fb4d7f45d1cf-6a034a3d016mr3814914a12.2.1785344794573; Wed, 29 Jul 2026
- 10:06:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mIsHjuxv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l2GxRDTL"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0FF917A015D;
+	Wed, 29 Jul 2026 13:25:26 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 29 Jul 2026 13:25:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1785345925; x=
+	1785432325; bh=MUMK+aK8Q207Us9j4G6kmXwzcu29Pjf6CI6k3JRPXxs=; b=m
+	IsHjuxvJPEl7lRukTNjtusQtxRrBKMiRnp1jPvb7BY3usmAGUODhK41X67b1b+Kd
+	GcsklO0QZvj6/0ix+QFy9bAyIWq2T7Bit1IY7n/EcPpaddQAi3sqUb0QybJAKXf7
+	CecGVZNeIM52scsvPZsa4yN7W7zsbNgzTIFevKWyeim1pmCM4AYMnL32NrZ7pqqb
+	IeAe3jHZxtjkx0vgS7mFza6EeKL8gZ+npcM2+3kWHV7sgeOv07TEd+wANuzJwjjb
+	zfAZ2qunT2sBzpfLLV4Fwb5djvylswV5MywZP/hzEj0SDe6KqaOghP2JzoMwU4x5
+	1Jq0BfhDk754nY7XMhGXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1785345925; x=1785432325; bh=MUMK+aK8Q207Us9j4G6kmXwzcu29
+	Pjf6CI6k3JRPXxs=; b=l2GxRDTLwfc1F55VTf73uifKZlwCAUnV4mAPOUux5PWl
+	xoNxRwWv0gr6ViQOb8w4vkRej/L2bg9n9bp9c3Vhgt83KoU0WSSrWd6lxNqVqobG
+	1sUwYGexBYDLVBLAYjsAcUIb3FOtN4Q200+5SNUYJP1Ag5A9kLfUETQ4h9CJsgcm
+	GjYpZvXv38IJVZpAnDMXjaNfiR9xl+PtI1qrEbgnzXIb0hRlVyg4dtEwxlkPY4Wn
+	4wICMzJEAnjptqJXFDvRUVU+beWGrCUcdIrtqum6JvpROzDvxiLkeKefX+mDi+6x
+	N46+Oqmbj2mTH87uMAKmUnUzR5t2S4+BOb/vepWpUw==
+X-ME-Sender: <xms:hTdqahnUTe0UkP-HpUCjwb_luciPJRKuxrBr4PPf6LYWAByOXLNYmA>
+    <xme:hTdqai1kUQTUn81EaizFos7NC_OfPgEGNKqfVk8kK5wW7rYdx5F4cR5qhYfIM3ykL
+    TNp1atcu0vT-0sd__zcldKqy4nFFjfnSVVmYSYQ0BwTMCR90SYa1ZM>
+X-ME-Received: <xmr:hTdqalQLbYrpOm2Im3ylDNpEia7hzG_ZUzRGtG16qJHEleWIWkb-uLvQhB_4tvsAPhZy9HIzxgeXQhquOl8Tv6sjWlGLgl-b_w>
+X-ME-Proxy-Cause: dmFkZTFT8eh+q27HvXD+Wx8OA1uTo60JFz9BF05YiM7iMz2oCc2RRskRsTqpLdtGOSox/z
+    lqJ2nFcftm39MSsHTROB/6kSWbPHByu/HsgTk6STeF8LRxffBvW6D8yTkXnpy5eQzOdCaD
+    AtBzelXbM5dLaxqF6bp8h8dTB7nFFJ9jpv/5gyoYh0pfSp2iY1s0zSK6jEe6E5CfuiRi6S
+    TJ0V8QPtZ1aqSpdAy67ps0A9vEp+1DsVkrAN6tPXbQi/yX7GHAJRUVUKIjLgsK+GA74z+Q
+    qWx6bEIVpr7KlqcMAlXoT86O8mlRjkl0aIGQ1uxjxSIgni+EBMzRoDSZO7/RORu6wy/Inn
+    zrS/VyRLiZ5msHzcfJlYXOf6ICwRbQhp1TZZ+I/I4/argLfmfsOy4MHQrpOtRXSvN7jPdU
+    zRkrEiGdpyMlYcKdDIU5tAiGSTlCfoY95cC2114Hk7DBxf+Wqr5GG657FUB4+o3ji07FHG
+    ek+BS+s38dmoIayT39ZOTmosDJZ8Z7H5pq91rbl++9jmTuyDtbknMZBO8qmht4icgYSZ6x
+    rydpHlM0kYqX39Z8XEg3fbJp0IzGwmdosrlyPvC1iGMwUpN5NEZhVyD6j//alWMIlOGqyQ
+    Kj8BqLYyR48lYMb47d2srJZXAqlomqMYg1vYKYeAGXX13eUpHPEWfHn9Jh8A
+X-ME-Proxy: <xmx:hTdqasuT5VkUAs8h7sc_Yb0Wh7gfZJbtakJu6atnarKeE7l5YXOzlQ>
+    <xmx:hTdqaibNcrzMpUQ5-v4uoMpsrn63DnZKtQyPnRvxFuZmFoPcI21Nsw>
+    <xmx:hTdqapto0RGSCnbIpImLADga4gBCiM1Tw0arsHJOd4kM7YsL9yA1qg>
+    <xmx:hTdqasF-nW5D1r0ECNzVnBdxsbgtrAtcqQT3I-9nQ-wznZnaoDDbsA>
+    <xmx:hTdqas_iQ2SEj4I6B4j60Rtzj3mAQlsH_iVoWIpda4usquH8HBdDYL1i>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 Jul 2026 13:25:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH v2 0/4] git add --resolved
+Date: Wed, 29 Jul 2026 10:25:20 -0700
+Message-ID: <20260729172524.4022621-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.55.0-609-g9a17695db7
+In-Reply-To: <20260728215219.753678-1-gitster@pobox.com>
+References: <20260728215219.753678-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com>
- <20260725-objecttype-support-v1-2-2d4ca3bbabf1@gmail.com> <CA+J6zkSQYuK-ZJoiQkEJDS9fBypOrBEmgYZRj1yYU00ws2u_HA@mail.gmail.com>
- <DKB1II4Z88SG.38KG7RAF9Q7VW@gmail.com>
-In-Reply-To: <DKB1II4Z88SG.38KG7RAF9Q7VW@gmail.com>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Wed, 29 Jul 2026 22:36:07 +0530
-X-Gm-Features: AUfX_mzlOtflGSwLYMCboABulkHLnsowH6UXWGGHtEMGdHBIyhIpa1gqGXMnBhM
-Message-ID: <CA+J6zkQQ2F4P1dr+ix8HrKth5W=Kw+AA5EXKwm4QHY5DKjt-Hg@mail.gmail.com>
-Subject: Re: [PATCH GSoC 2/5] fetch-object-info: parse type from server response
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-[snip]
-> >> @@ -148,6 +154,10 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
-> >>                             object_info_values.items[0].string,
-> >>                             object_info_values.items[size_index + 1].string);
-> >>
-> >> +               if (type_index >= 0)
-> >> +                       *object_info_data[i].typep =
-> >> +                               type_from_string(object_info_values.items[type_index + 1].string);
-> >> +
-> >>                 string_list_clear(&object_info_values, 0);
-> >
-> > Is there a risk of an out-of-bounds array access here if the server
-> > responds with a truncated or malformed packet?
-> >
-> > If object_info_values.nr <= type_index + 1, this will segfault.
->
-> This shouldn't be a possible case because of:
->
-> fetch_object_info()
->
->         for (size_t i = 0; i < args->object_info_options->nr; i++) {
->
->                 [snip]
->
->                 } else if (!strcmp(reader->line, "type")) {
->                         type_index = (int)i;
->
->                 [snip]
->
-> type_index is set based of the range of object_info_options->nr so:
->   type_index < object_info_options->nr
->
-> and a few lines below:
->
->         if (args->object_info_options->nr + 1 != object_info_values.nr)
->                 die("object-info: unexpected number of attributes: %s",
->                     reader->line);
->
-> so we also know that type_index + 1 < object_info_values.nr.
-> After that we get to those lines that this patch introduced:
->
->
->  +               if (type_index >= 0)
->  +                       *object_info_data[i].typep =
->  +                               type_from_string(object_info_values.items[type_index + 1].string);
->
->  And because type_index + 1 < object_info_values.nr we can be sure that
->  this cannot segfault once we reach this code.
+When you are the maintainer of a project and make many merges day
+in, day out, a lot of your time is spent resolving conflicts and
+adding the results to the index.  It is not unusual to have local
+changes in your working tree that are unrelated to any particular
+merge [*].  In such cases, 'git add -u', which adds all changes in
+the working tree to the index, does not help much.
 
-Makes sense to me.
+Here is a new option for 'git add' that lets you add paths with
+resolved conflicts to the index, while keeping unrelated local
+changes out.
 
-> >
-> > If there isn't a bounds check slightly higher up in this loop, we should
-> > add one. Either way, we should definitely add a test using a mocked
-> > server response (e.g., via test-tool pkt-line) to ensure the client
-> > gracefully dies with a protocol error rather than segfaulting when it
-> > receives a malformed packet.
->
-> Ok, that's sounds a good test, I think there's none where a malicious
-> server is simulated, in part because I don't know how and I think I
-> haven't seen a test that does that yet.
-> test-tool and pkt-line are used for the opposite: simulating the
-> client to test the real server.
->
-> I'll see what I can do about it.
+The first three patches perform preliminary refactorings.
 
-Yeah, I wouldn't recommend breaking your back for it though. We
-already have tests exploring the happy paths, so something that
-simply verifies our expectations for error paths (printing an empty
-string in this case) should be good enough.
+ - [1/4] is a totally unrelated code cleanup that almost disappears
+   when viewed with 'git show -w', but it was an eyesore to have so
+   many lines with broken indentation while working in the vicinity.
+
+ - [2/4] consolidates a helper function to determine whether a line
+   is a conflict marker (replacing two slightly different
+   definitions).
+
+ - [3/4] introduces a helper that makes registering path removals
+   from the index as easy as adding them, complete with automatic
+   '--dry-run' and '--verbose' support.
+
+The fourth patch implements the new feature.  Relative to v1, the
+detection of the use of the '-A' option was fixed and the Meson build
+file was updated to include the new test script, both thanks to
+Michael Montalbo.  In addition, the has_conflict_markers() helper
+has been tightened to bail early on a binary file.
+
+ 1/4: read-cache: reindent
+ 2/4: merge-ll: consolidate conflict marker scanning logic
+ 3/4: read-cache: add remove_file_from_index_with_flags()
+ 4/4: add: introduce '--resolved' option
+
+[Footnote]
+
+ * This is not limited to my own workflow. An earlier message on
+   this topic worth mentioning is:
+
+   https://lore.kernel.org/git/CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com/
+
+ Documentation/git-add.adoc |  10 +++-
+ builtin/add.c              |  92 ++++++++++++++++++++++++++++---
+ diff.c                     |  25 +--------
+ merge-ll.c                 |  56 +++++++++++++++++++
+ merge-ll.h                 |   2 +
+ read-cache-ll.h            |   3 ++
+ read-cache.c               |  89 +++++++++++++++++-------------
+ rerere.c                   |  38 +++----------
+ t/meson.build              |   1 +
+ t/t2207-add-resolved.sh    | 108 +++++++++++++++++++++++++++++++++++++
+ 10 files changed, 323 insertions(+), 101 deletions(-)
+ create mode 100755 t/t2207-add-resolved.sh
+
+Range-diff against v1:
+4:  c503fbb785 = 1:  e46fe3e887 read-cache: reindent
+1:  03ea86d803 = 2:  b5490819bd merge-ll: consolidate conflict marker scanning logic
+2:  e94e3c1390 = 3:  e1f4aba480 read-cache: add remove_file_from_index_with_flags()
+3:  73679d6b69 ! 4:  b1308a0ca1 add: introduce '--resolved' option
+    @@ builtin/add.c: int cmd_add(int argc,
+     -	if (addremove && take_worktree_changes)
+     -		die(_("options '%s' and '%s' cannot be used together"), "-A", "-u");
+     +	die_for_incompatible_opt3(take_worktree_changes, "-u/--update",
+    -+				  0 <= addremove_explicit, "-A/--all",
+    ++				  0 < addremove_explicit, "-A/--all",
+     +				  add_resolved, "--resolved");
+      
+      	if (!show_only && ignore_missing)
+    @@ merge-ll.c: int is_conflict_marker_line(const char *line, unsigned long len, int
+     +			has_markers = 1;
+     +			break;
+     +		}
+    ++		if (buffer_is_binary(sb.buf,
+    ++				     ULONG_MAX <= sb.len ? ULONG_MAX : sb.len))
+    ++			break;
+     +	}
+     +	fclose(f);
+     +	strbuf_release(&sb);
+    @@ merge-ll.h: enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+      
+      #endif
+     
+    + ## t/meson.build ##
+    +@@ t/meson.build: integration_tests = [
+    +   't2204-add-ignored.sh',
+    +   't2205-add-worktree-config.sh',
+    +   't2206-add-submodule-ignored.sh',
+    ++  't2207-add-resolved.sh',
+    +   't2300-cd-to-toplevel.sh',
+    +   't2400-worktree-add.sh',
+    +   't2401-worktree-prune.sh',
+    +
+      ## t/t2207-add-resolved.sh (new) ##
+     @@
+     +#!/bin/sh
+-- 
+2.55.0-609-g9a17695db7
+
