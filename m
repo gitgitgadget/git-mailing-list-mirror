@@ -1,186 +1,195 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99813BBFD6
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 22:39:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D0A24E4B5
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 22:47:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.45
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785364751; cv=pass; b=hsosHxLVRuWLJwNMuvwF3GNOE9AmuHHyOZl52bCiBqbQNO8dYa47PLR84+BaxqVU0kTH3H7yssAAlkPLJRskkJsb7ffJCHoPnhGIQiBsO4OPzbg+U3XCSv/ODsYJea5ORCcQtPW8rMc7bYHpdycTVZE9qE5j9E1pjWmO6nULN+k=
+	t=1785365240; cv=pass; b=mAwJe01DgZidjwMqXZLJR/EnGk6pTYvXWjXoQOEJZbubsXRPtY4YrpFRk/0HHrTWtLO3LI4z/xI3+Cc8XgEZtLY5CWjon+HhN4WfiovJPFAsMBrbgUMzvvsaaV9wQVwsNbSQDkwsVdt4Y28PBMRyU4nx7e+HpDQq1WiyQczM+d8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785364751; c=relaxed/simple;
-	bh=r3dlhEJfELVO1K9bsPAN/GS5+b9H20tmGwsxin4nfbQ=;
+	s=arc-20240116; t=1785365240; c=relaxed/simple;
+	bh=DO7XNOWGszjUShBnPweSUqYi3bMbI6UEr1bd9wfZYIc=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ttrele+6QLRH3vQm41I7rAYgF3n3SaGMdwmUAvl1bVW/2Zr+/iIb3xkMhO9JTgokYnzNoUx5j7nN59p0EW78LggFsCBOkUWbYLp7bUjhviQuBBMc236yFknXpC0x5S++xnfh4dd1a6T+0n3zIsFz//jorLStCtmLceDtTVcJNHQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UG6IDQlT; arc=pass smtp.client-ip=209.85.222.54
+	 To:Cc:Content-Type; b=ciMiovGI71NB8/MeXERv2jQZFRnbSknMqmQ54AnTlANxaR9G2MRkXIOlUM2h/2eD+Ch0iVv4234dDs96qLOWinVorxws6lQz0h2SLKb/6had3WbVP+j5wvoaj9gV1bxH9Fkal+yhYyIyADfRlG4+NqO5CxRhT+scQUJdpI57Uvc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A0Yy8bJX; arc=pass smtp.client-ip=209.85.222.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UG6IDQlT"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-96723c7151eso392414241.2
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 15:39:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785364748; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A0Yy8bJX"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-9773507d36aso901591241.2
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 15:47:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785365238; cv=none;
         d=google.com; s=arc-20260327;
-        b=c5JtRfZnwCw+qQsi4P/EAfEPBcgS829RQbM2U93fw+lgMpX71fZcLOM8yJgw3Ayfm4
-         iiK8sV/ylQeXxUDk01HueBfd2BfaPxX1UfEHJtDOh+pMHjidqZApHOjH9OWx873SX4lO
-         ptvK7H/AHFG5MYlXWA84rZgDf3Bv3IyImk6maYcdfQRPWnlxcFGhXdX5HxqUIp/WF3OZ
-         k3KdJUd2OHPWlGy9zMRNTCxOA635dV18wWCC+NNXCEPRJCq79DjGhFtkhgz/0IpL9Wi4
-         h3GCSJF7Nks+7R0KBNK/1mlQMzawQSqMCwHjAcOEolREabkscZ30raM2IANOJufXPkMO
-         UgPw==
+        b=kFkR8yognkJJn2W+P07uvrjfCH6Gdlo9pO67Hr5BlVLmmp1emjUXJnUHCy+yONtEgW
+         o+ejgOd8Ivx5LXwClqD5JhEYXar1aEb4Nkl4qQG9bI7Ms1px7UsYqmKEYXxYnuA4l64M
+         5fOzxrik+5XCZmpS3d292YVb3zwnKs1LAfvnM98Si+ImIqAJUt/UFDUfvO4LtzkGE9iz
+         6i8/ZaH6E2u4A1SsjnxGuCVDWKXryi97e+U5JnR5/KBrOSSzE1vsI/1KMlVVHUenn+ZX
+         3wP5k3Rfn+7olCFc06O2cCOAYORzljbo+sPZsEu1XLbYEebcJFa/i01tw2zQU8R48G5C
+         3LEg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=T/WvE47Vbe8PEtllY/rkz3MjqqXP1eRscyVOOfUxoFo=;
-        fh=a4cP6noKAj2VsfEJdL/krMVcYCP1focHmXBUogQelio=;
-        b=bfNLtuJNiHMWiuhyQCZXkgQG0PLbHnRdmMjJuu898akcEorVT67Q1rekE0cMqkqQ+X
-         ZnC4vueDHL3Is5NGyLOgvxHm2OOO+6AYfDjcWMPe670o55tyWz0aiJYk3wjdiqcEvp2c
-         IBJc1qFL5lx2pfHW52MQ8PS4IBNvIk36IEHraKlc05tdzKRnEg7YiYaLWVZZWwKFxrqP
-         A7rSFH/PlSsYYfFN8IkqiytjDN2X2Bs0hDMMgB4Am5nXOwjhe46wz4eBdMxN07+yNH1v
-         2l0C2KYnTSPJBR1R5DYrvcqzNhXVDu/+xBi8803HiyzRDcrjPB0edMeltjCqLUf4Mapw
-         MSFA==;
+        bh=6ZEWr2tCfzauRkucxzvWNd7WkV7ZoYtEEqs5xTVikoo=;
+        fh=E6drYL5KVidDJZ6We2jJ1IDrMF5BmMKSNqoo4yWzMVc=;
+        b=ZnNn1kT4xEwsXkWH/xnVJ/7AoN8zneExpVfECUaljSOYn+GyR9BXBP91DYeQDTT+pe
+         IGSIRr6O34KS/e1o0UPWgZOdSVDAhfkpYH87mSSpGRCPtj35srylMXOwvsh9ToFiyumf
+         ZEdzgZWh7VAkfvGFASX4AQsxBiVFWU+xedPAdDBzFoHnMNBdGmVm7xu6YYD86+mkqEYm
+         a0WrNVwgbqqKJBuo56+8FaAQJhQEhDXLJmL6nPmVZnkI4xue9pSvtbXFiNurpOwucLEX
+         EgYksVNfbDiy81KfoEC8MpAPPFio0RsfaaE92cuoXJCJjOUAtUuamMXhlhWbXfVGJcip
+         tG9Q==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785364748; x=1785969548; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785365238; x=1785970038; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=T/WvE47Vbe8PEtllY/rkz3MjqqXP1eRscyVOOfUxoFo=;
-        b=UG6IDQlTQyh6r3zaNj8aggPHoOwJnKXpI5cvxch/hvCpMakxsjOMbFraaMAYDxHLvp
-         pRg7e8S2oPQjkmFYGjIz7Bgn4Dzk6W4EdzwlR5MNN4vUGF32Ylxy4tb3PL39DPOgmX+Y
-         F/R99Jcr17oq3+E7ZH/eoBF0qaWA7xVUMDCgzHeFpMCSi2kQcD+8802ivxkRFysXA7ka
-         +BZNqovUtrsWkIZl2K67Ec+RS1cWx3Eh/p8+/RMHVOzhIqpmyHvlkpBSuei6cdILLmMC
-         a9n8vg+FNqKaM/Lbnf08W8lUIBiuoNnkUaqmo2Gp5Wo90j5zT4bEn7t37gqhYYAbfwkS
-         v65w==
+        bh=6ZEWr2tCfzauRkucxzvWNd7WkV7ZoYtEEqs5xTVikoo=;
+        b=A0Yy8bJXDsfSsyl0Fw5mXmJkiw020fV9RpK+4RGPmkLazr+7Zq/dsfrN3g3WAywqvw
+         7hsmYjTI3jYXsmWZc+vcJrK3f9ywG9Z+R9xNbM7ReiDPPtGNmIm5E8o5/N+PnhK5FPyJ
+         +oG0ZXYK6ncvcXG1Xz0OXgXdfAxx6ZSSQo8N7Hy7BDvMCKbBDlrzAaVOsUBQFXeLWPoU
+         MqgIa/dRgv4uUxDrO/zgsjyr8xdY9MquUgPNpoCNo5J+4QiVlIIzyiy2f8FLcPWhWvaq
+         la9Z90xyi795MWgdjSR45MTaS+yuaLFaiuH5Gc4/hJ09BFZGq9wZ1N5kDy0sHGtGKrJk
+         MIfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785364748; x=1785969548;
+        d=1e100.net; s=20251104; t=1785365238; x=1785970038;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=T/WvE47Vbe8PEtllY/rkz3MjqqXP1eRscyVOOfUxoFo=;
-        b=UHJFof4CkCotC7W/Zgw5I5jX9rAPhQcIM5knCINoXzeBCf3PmC0OAL9C1o4vQ1Lg+I
-         NrnNxkD/dqlcwvk4lclDw4Fh1fXqpUuNR38fsOGbbvdBEcLmTgH6LbfwUUobL4A3ovF/
-         /FlycrNRkO6TZzNn2C5hxgDc8A7AxqRrQMf5YYDTd4NsImS2DXfE160/dHPg2OlqXV/v
-         guimxOfcndfpFyEIOfoi4qDu/yFEniyApjHGrvoNPh1h8KL+23vu+W4UTbfdcEeEbHPb
-         KFalcxsHRzkwS6MuOVqfSfsmDydkx7+OnQp38wDYH+5XpsopxwbrcJKNiS7vubaVIGCs
-         volQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpJefp4W/UtpqIydhmyJfxJLehl6PknIcnXh+c9fetm9ULwyoTCCHSk2nOy4Cxve1qY6T0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/0YDG+fM+wV1uXYdUi6QfBEYXoemURZNMBHfrlxdMOGLyz8TD
-	TixO2lejMnYKd18Zpi00dfKWRwLxZsFtNlmpZRNdsuG4O9XyAziWbdIM9pvZXtWGtGd007D1LDB
-	vopJbn1KL1CQtYttvfD42t/8/OilDXUVm34Aw
-X-Gm-Gg: AR+sD12TVbvwevXyZQhfzuHdC4pGdQznoeT4wW5evIx1FTjeu2rDV0SMJy5zPw8DmRt
-	JUZtZRz2BrkxLKg7qyVJGyJo0nCG+KftEwxnZIHMwBobqCGaezB4wAJ5JfX6EFCUwdmKdICv8DZ
-	bvGyi+uGkiQ1mZRkbHI4f1HWWG6TRycqa6xm3Owtkp8l1Fmfat4p2SK8x9buMQIQzkD5iaz6WED
-	M/k1kSawPZ77bFSAX1luxNb4GAHFcXLgzxGQnK3tJG5KJNPyWe6o1nIBZv8f0pNHD/g0VUQTvLU
-	qm71B1zBoFwZEcfGenT8qcET5/XHCBzMPsYT4mmmTIJxTXwNH+AJpz0MB4FztQzTF8sPC7OiNP8
-	7Jz+TqujGIHPiFPDpv2PNF4QLWUbdvXzwZw==
-X-Received: by 2002:a05:6102:3047:b0:738:20f:10de with SMTP id
- ada2fe7eead31-7574fb497e2mr68182137.17.1785364748529; Wed, 29 Jul 2026
- 15:39:08 -0700 (PDT)
+        bh=6ZEWr2tCfzauRkucxzvWNd7WkV7ZoYtEEqs5xTVikoo=;
+        b=N9OgrVQ8JDbMXrh/t55p/thG7Tu0GSvDIGxE3QLSmXIABdZ81PT/LCxvMbH+F1wkZy
+         BCNMPx83T5rB3yFUqAajCUC2xNvBiutR/ZLYK6scOknwEvOzYiRr15oAcchynXCQHUX3
+         X+agYcWDVuYHMxBipLrlGbFE+kSz27f6JceRnyddolSWnLBYauMW/PYFtQ6AFhFoNYYM
+         Furk9AdIBmk4XgeN/5QpSgi4P4SUrERpLhLOexo6PGupIQ9gfPyi6Av9MDSks4IjbwPo
+         inAN89iVNEymKCemZ7l0xzOXZ1MDx7cr7uLKm7srUxLJm7Y6YCu/jmvOOXvBmQ4jcgSn
+         Qd5g==
+X-Forwarded-Encrypted: i=1; AHgh+RoV+Gnj2KI5zCWv42jlj9J5OfluvtIwFgkiDn+25ds655VU52mKEQP6TZaYpmSdstzyCrU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgEYrQmeM5aQ9pJDmfpp0mH4m8SjUcWki0D6lgvQmEK+toGToJ
+	iM74Wm2pW15bCFX8OtrF2Aw4EB7uJEsEcJZmXbCAZeIbn8elG3zl3ORA0qx8NJxzhZIB0npGGC+
+	ThOTwSDMvLIinPp9cwGOgguOra1//C/k=
+X-Gm-Gg: AR+sD12PKwL9OTj8i6NAQJ84wnRHsMVm6MGxdlwDzvIQ4xlPbRXmFe+JQBVB38S7S6P
+	ourziXedMNgK9iBQocmiUyccVqAbCYR1prtvwTEZL6jf2bh9mtwNAdO9xdPvCBecjwL7qVNGqod
+	a2GbmDz+e3JgyxLzt4DmhJA5jE3L/fcMCqtOkTFl1murL+X5DTNwaQWbffE5VjLkoMkT/Y/HbBg
+	nGEgnpIVGvjZfNLc2RSSZgO4QmzT5K2EiCSy5UKdc97S3Mr0Q0kFMd8Fop7vUxjT+eQFOEfVsud
+	Dh//LRwqDZ7cmtylbAhf/HJOG3UcdwD79Zg0BMAQTRWiEuxz5IqHp0S5zdaEXqs0JacT5EuRjtc
+	iUiJZlLk+qqBm0Y7Av81BbpA+4pzI4BK51Q==
+X-Received: by 2002:a05:6102:3f52:b0:737:e816:b26f with SMTP id
+ ada2fe7eead31-7574e3cf31dmr106011137.10.1785365237990; Wed, 29 Jul 2026
+ 15:47:17 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 29 Jul 2026 22:39:06 +0000
+ HTTPREST; Wed, 29 Jul 2026 17:47:17 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 29 Jul 2026 22:39:06 +0000
+ HTTPREST; Wed, 29 Jul 2026 17:47:17 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260725-objecttype-support-v1-1-2d4ca3bbabf1@gmail.com>
-References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com> <20260725-objecttype-support-v1-1-2d4ca3bbabf1@gmail.com>
+In-Reply-To: <20260725-objecttype-support-v1-2-2d4ca3bbabf1@gmail.com>
+References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com> <20260725-objecttype-support-v1-2-2d4ca3bbabf1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 29 Jul 2026 22:39:06 +0000
-X-Gm-Features: AUfX_myRvrxRniSSg26GR55jtb4xb70Hb-MQxqCzSiUphrqM2G7qJlkVACNe0tI
-Message-ID: <CAOLa=ZSJvOrTXypnh1Bk_Z3kkXtJVwueSH1U-vHALwS=XQTouQ@mail.gmail.com>
-Subject: Re: [PATCH GSoC 1/5] protocol-caps: add type support to object-info
+Date: Wed, 29 Jul 2026 17:47:17 -0500
+X-Gm-Features: AUfX_mzkrwHC0p2MbCJKJ55E536owh5Ub_rTJ91tp_-lhIpWKC43VSWI6ssNLLY
+Message-ID: <CAOLa=ZQbf2vdYOkFBHQ2Kkk=Yc0uSZXEPy+FQPyzp9C8=sUFEQ@mail.gmail.com>
+Subject: Re: [PATCH GSoC 2/5] fetch-object-info: parse type from server response
 To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
 Cc: chandrapratap3519@gmail.com, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000a199cf0657c79fad"
+Content-Type: multipart/mixed; boundary="000000000000ce24630657c7bccf"
 
---000000000000a199cf0657c79fad
+--000000000000ce24630657c7bccf
 Content-Type: text/plain; charset="UTF-8"
 
 Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> Teach the server-side object-info handler to accept type as a requested
-> field. When the client includes type in its object-info request, the
-> server returns the requested object type.
+> The server can handle type requests but does not advertise the
+> capability yet. Prepare the client to know how to parse the server
+> response once the server advertises the capability.
 >
-> While at it, fix requested_info->size bit field style.
->
+
+Nit, I was a bit confused by the flow from the first to the second
+sentence. Maybe:
+
+    The server can handle type requests but does not advertise the
+    capability yet. As a percursor, prepare the client to know how to
+    parse the server response.
+
 > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 > Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
 > Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 > ---
->  protocol-caps.c      | 21 ++++++++++++++++++---
->  t/t5701-git-serve.sh | 27 +++++++++++++++++++++++++++
->  2 files changed, 45 insertions(+), 3 deletions(-)
+>  fetch-object-info.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 >
-> diff --git a/protocol-caps.c b/protocol-caps.c
-> index 02261be14d..5531d388f0 100644
-> --- a/protocol-caps.c
-> +++ b/protocol-caps.c
-> @@ -11,7 +11,8 @@
->  #include "strbuf.h"
+> diff --git a/fetch-object-info.c b/fetch-object-info.c
+> index ba7e179c44..cf6b94afb8 100644
+> --- a/fetch-object-info.c
+> +++ b/fetch-object-info.c
+> @@ -50,6 +50,7 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
+>  		      const int stateless_rpc, const int fd_out)
+>  {
+>  	int size_index = -1;
+> +	int type_index = -1;
 >
->  struct requested_info {
-> -	unsigned size : 1;
-> +	unsigned size:1;
-> +	unsigned type:1;
->  };
+>  	switch (version) {
+>  	case protocol_v2:
+> @@ -101,8 +102,13 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
+>  			for (size_t j = 0; j < args->oids->nr; j++)
+>  				object_info_data[j].sizep =
+>  					xcalloc(1, sizeof(*object_info_data[j].sizep));
+> +		} else if (!strcmp(reader->line, "type")) {
+> +			type_index = (int)i;
+> +			for (size_t j = 0; j < args->oids->nr; j++)
+> +				object_info_data[j].typep =
+> +					xcalloc(1, sizeof(*object_info_data[j].typep));
+>  		} else {
+> -			BUG("only size is supported");
+> +			BUG("unexpected object-info option: %s", reader->line);
+>  		}
+>  	}
 >
->  /*
-> @@ -73,15 +74,20 @@ static void send_info(struct repository *r, struct packet_writer *writer,
->  	if (info->size)
->  		packet_writer_write(writer, "size");
+> @@ -148,6 +154,10 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
+>  			    object_info_values.items[0].string,
+>  			    object_info_values.items[size_index + 1].string);
 >
-> +	if (info->type)
-> +		packet_writer_write(writer, "type");
+> +		if (type_index >= 0)
+> +			*object_info_data[i].typep =
+> +				type_from_string(object_info_values.items[type_index + 1].string);
 > +
->  	for_each_string_list_item (item, oid_str_list) {
->  		const char *oid_str = item->string;
->  		struct object_id oid;
->  		size_t object_size;
-> +		enum object_type object_type;
+
+For size, passing the value as a number makes sense, since the value
+represents the field directly.
+
+For type however, we're passing in a value, while the actual field is a
+string. We rely on `type_from_string()` to make that translation for us,
+which internatlly depends on `object_type_strings[]`. What if there is a
+mismatch between the server and the client? Shouldn't we be sending in
+the string itself?
+
+>  		string_list_clear(&object_info_values, 0);
+>  	}
+>  	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
 >
+> --
+> 2.54.0
 
-This is fine, but If you do reiterate, maybe we can follow the reverse
-christmas tree [1] format and move this field up? Or maybe its just
-me...
-
->  		if (get_oid_hex_algop(oid_str, &oid, r->hash_algo) < 0) {
->  			packet_writer_error(
->  				writer,
-> -				"object-info: protocol error, expected to get oid, not '%s'",
-> +				"object-info: protocol error, expected to get "
-> +				"oid, not '%s'",
-
-I know this is to fix styling, but we generally don't do such changes
-unless we're touching the code or around it. It just tends to be a
-distraction :)
-
-
-[snip]
-
-[1]: https://lwn.net/Articles/758613/
-
---000000000000a199cf0657c79fad
+--000000000000ce24630657c7bccf
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: cd62a1c2e252375f_0.1
+X-Attachment-Id: a8947aad497d2883_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wcWdRY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMmVtQy80M0RJOEh2Q3BPaUdtOHphMkx6ZHYwM1lJYQpGeTRZZUhaRFRS
-Skx1TXo5eTRBRXQwTWN5czVRNi9SZnEyOWV1M3lpK0x4SXJuV09mbnlTU1gyc0p4eC9wMVB1ClBW
-MFd6aUkzMGg5SjV1YlhlNXRyWlFzTDN2QW5Xd1NqWkdvZ2dWVkhKUGtabGhVaEpzSXVmQmh6aGlP
-TUJzdlcKU0VsUXcwMUIvOGZqMlhoT09qVUd5cmpta0ZPcnZ5amFJVmg1NjRKQjZWNE9Id2NBUXlY
-WklwdCt5YUhGUGFSdgpjTjdYdlVWUWJsMnU1Wlp5SVJaRFQrcldkTVFCNUZJUzRkZXM1T1ExMzRr
-MkxYNVNmU3l4cHVIeU1wOWcrTWhKCjk1QnRFV3YrOHdBS0hnK0hZMlgxZFc5MzVGUkN5Nnd5aXFM
-bnFGZkVtKzhZam9LT1VrZEhJd1dYN1A0c0wxOUQKRnRYY1d4MXYyaXJPZjM4bGhXTm51azJDMmcz
-Q0RWYW4zZHFsZi9TQmNtR2h1amxacXA5d0FvUzRlQW1XQU9FbwppSmdISVNyRDl1dHRHdTVqYlhl
-RFF6MXR1NzhQcDlmaGNOVndNdnBWMmVUSFR1c2k0WngvN1dsVjl3NTFnSm5UCklNT1ZZUGJxTXE0
-OEVqeVZlcTJzWXVqeTNOd0VJZ1JuSVBoK3VSST0KPStROFEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1wcWd2SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meE9OQy85enlmdHdIcU5pRGYrOTZVU2ZEemhZdDd3SQpQMlVsOHIxRTd5
+V3JTaHlTVkNqdnBQRG9ybXU5U1VZMnZCZmtxQkFGKzNwNUpUZEpVMXBPMXk1d1BZR0FkbGdvClM0
+NHBmY1hscEpTK3ZzdUpsZVAwODN2L0Vmc2dNOTBDektiNVdQbEM5c24rczFBVFp5eEJKZXlZdnh5
+b01aa2EKZ0hsb05zait5RGZKYzFEa3kwSit3ZzFNRUFwRzFweWl1bUNPcXdsVit2MVhwOFM0V0lW
+a09QNGlEdVZLYmtDUApZM3ZCZmJ5a2dvUWZMU0RmakFXUlB4bWxVY1ZMbVMyOGpJN253Z0pydUZj
+UUt6L3F6dXR3Y1lLUkJOWkUxNzh5CnFKS0NEUHB1d0x3WE5QWU1QQkhscUh0UmdPL0YvQjVqbjly
+REROVHBKdDcvQnVzNFNtOXRReksyU2E3UHNuUTAKbzlrMWtTVWhPQWJPT0VONUU1Rlh3aDh4NjVj
+d0FneDlOR1M2bVVObi9qRU9VUHo0SkFlM0ovTEhsaGczeEZaWgpTcUxUZTNzeURXbnJQelJYZ29k
+U2hyRzBWYU5xK3lxdGI2VGV4aHp2aW93OUp0VTcwOWk0NXZvQ21YZlY1K2tPCmdwMHZWcmRKVmd4
+TFFsUGNKMFVidE1NYTZVZGlZa2V5YTBabk90ND0KPUVrTk0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000a199cf0657c79fad--
+--000000000000ce24630657c7bccf--
