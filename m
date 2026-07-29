@@ -1,117 +1,128 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F150F3AAF52
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 15:25:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F5A455180
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 15:31:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785338747; cv=none; b=aQAwV5pBtz9onInExO8G9597dKBqTErCz3Wy1R6JVYULjvwgHOQgFnncKyyUyqn/v4jktorp1Q43X9xWbX7fwDcCr6DkL6/NgfAqARIqq6DXsc+lctzPgVetm+hu/krGzKNpWyixAFzaR4fvgqa9gpHf46Q/KNzO2fj3DIItoiQ=
+	t=1785339114; cv=none; b=LFyY65eKlK4oZChErA9fVJWIOWOhO3IKdj7MXILT3EmcVOHUPMacdvmkdBXdv5ieW1l8tAo08umf0nWoET1XqCVgg1am8YZY55x/M55H0xr8BsopuqYpIy0AOvqII3kgK/XzmURIcKdjDji2SurXj0/SSbB8kOUBn4M/A0HM6ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785338747; c=relaxed/simple;
-	bh=mrem6RSpKG+3gmu5Bj1mR29aOwI1U7XmFngo6xX2/uY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qTmKuc90lCN6LT+ghWWdzGnbQZ86YUXlK+VzrpYnXr94P06oiRW3K8PVGi59csZ18sXLjRvPcQid5mBnjH48vjhUzOWg92Igx3kZQz0NvsSLXt5dsuPa8P8+jtmo0eBd5k8c1PEmycOSYOC44nLqQhsuy7oKhleDHzApWCAR3LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q/aZK8nG; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785339114; c=relaxed/simple;
+	bh=vjMu37L2H70ZSfNbo32mk0tCJexTSh+x6ZZXRBRuWzE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dg4OtHIc6mFsfYs8nEgguAABcvzfqNND4bQTK0nR4KwGy31EaHa2ObsdhTvUGz/aVnHE0O1Kxr5LmSLgFPgY5ym0epu23i8myR02v1U7UeH6JztGSRjGbr8G9zJt+9LtJje+8L5/sLHTJFb95dzsitTvWiMJAi9qPwDfMH0HcN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hn3nkNtv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lRJZ2do/; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q/aZK8nG"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-69f7fa1c548so1602895a12.2
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 08:25:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785338744; x=1785943544; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=iGVV7Re5IL6V09DHsi57TGzuLhseG7HhpAmuWJv/ceU=;
-        b=Q/aZK8nGYJTHy72uA0Mst7E5dqQUqwqszUvfVXtJbmPQLfYtD5eFuAGyBNxI5Yj76l
-         odqnO/82DRyV6/o1UwdQA+Xj9mf6Gzw/swvze+ZN8geamU6W4OztDDd/TjG5GezIQ/O1
-         Lhfrd4UPLyR//tpVb100VqUHBHecbFo9f3HUobucRQoCKy5WvicjXBVGkOGPPpbi/6AI
-         p5rktFimmwK5Bi4HZZBqXKktjzARwOvd6B6CVJGjzaRo6BRy4qjkYmu8ML/7T19w7MI8
-         9ymxEWtap1f5QwlxaHNS59YOwmbAtCp21wX7tP+E3EMywXawiKrA4qwXe6qJCW/EraFG
-         zCAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785338744; x=1785943544;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=iGVV7Re5IL6V09DHsi57TGzuLhseG7HhpAmuWJv/ceU=;
-        b=kqvCeBDgHXyPiYM8BGzt2ftVhm/i6s1rT5s0z+ZHZKACHhGoN3nPc5k3b1XKdyiIce
-         GNz4JMmHCxARoS5UfWI4rPP7PQVae3NtFajGLUfxuz0iAo3z/ReUkGElFtfTfTdw2b7I
-         wNvRJyE960EUFnhtmdclMww4L3YpnAgc7MhIwk6CbqkPzLUR69wQM96fis70HqcKccs0
-         edmge+tbhZC3viwOlsF9Eo1tBYcU/k/STN9Tz+2NeGqH1UxyprDzlJgxo3fPjaJhmNib
-         k8VYlWrzYhiyJSwM6X5x5W4QhRUW4BigyLZ84tf0xHA/cLRyR7QvoqS1lLuXl04u78VH
-         It3w==
-X-Forwarded-Encrypted: i=1; AHgh+Rr0lJM9yP8Wn68rN3OK+0aYzv5GqvqatkU8QNH8vgpkwZoieQXBKWHl2AV0NreIcMeXNek=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6+OCPwe+Cc1bALs51tCG6u8gfz3ebs+hOtBMWSBPsR6McdbUD
-	93U9xWyXwvYuvvJVYd+QjNscpvmCu7u7uL6CxONm3LmkSA1kgWKy5ie3
-X-Gm-Gg: AR+sD10mAp/O8TRoJQsn1Bysl0eq5jcThENt7A/sjyMVtjLXnDLlc71qguwOP5Tuwca
-	flohBCd81gwKzlPafQTc+01iRYb0ql/SnMGTse4zAvFcCZoH3ZkyarU8gTyRJCq9/jIRcz90VUv
-	2hlQp3VZl9lpc6MdnH20es9LrnTUkYvWb+pfhppkudTrvDqhwzDknruEih/EFTE9dve9U5tSYEO
-	880IrJxP7twgcLBaNoU5Iu3Cy9cU+JoLC2M3SKb249+bOVLuyH+I0HbZ+lQyVyeWjaK1trggyd+
-	Iwpg8MwsXeiCKIlzgOtUJK0mJQt5LTXUN4e4IkpRMKvWoSm6vo4oF2oy8RaeClpqkQlfHgrxZ7C
-	LE+Dcap6O/vdAe3yw4mTdWuxPHVS50gnZwMDQJd6DJJrkkTFEAacf5wNVwCcnMqOEBDYwJ9Id1s
-	sy6rgVbpkD5f/3EuMEzjiUMo9jx1ytNEqNiaYHngFXhduZa8QX63Fqc69IyxDFfX9FRzrjl1anT
-	W7j5FK6irWtAyedEl5V62SpheibiVjL7ThL5ci6xuohgixIOWSVklg=
-X-Received: by 2002:a17:906:7312:b0:c1c:5eb7:2ff0 with SMTP id a640c23a62f3a-c1f72154d2bmr399033766b.48.1785338743802;
-        Wed, 29 Jul 2026 08:25:43 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1f83cdf521sm136107666b.17.2026.07.29.08.25.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2026 08:25:43 -0700 (PDT)
-Message-ID: <1ee46199-b895-4f5e-ba2b-030fb2e47852@gmail.com>
-Date: Wed, 29 Jul 2026 16:25:42 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hn3nkNtv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lRJZ2do/"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id EDC031D0010A;
+	Wed, 29 Jul 2026 11:31:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 29 Jul 2026 11:31:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785339109; x=1785425509; bh=njOjK1lXpP
+	QZeoB/sg1KweE+8u1jmD9v3kZvNzpyFsg=; b=hn3nkNtvnke4P97km0jmKcRtPm
+	9WW6Dq5q3TaJGrM/JEO93euLt/z3UdQ33gqeeYUGWGRBQR7PUbi2nmxoq5wC11BY
+	U6ySs+/YKFlHLUtvWdoejw54tepOUhBnZtLaBERoJhNO1K/cVGkrZDqpFMRUHuNo
+	PJ0gAg2BuL4i2o3nkAMtYzxD33qRnwyLghCezKXd6e7wADRas5zLKenazrWLyMUy
+	ZOBO1CWOH/3IdeLqikp/CeemoA5W89V5AQGQVRfYQPfXHUNfmSNu9YHIORGiUWrr
+	PUmGNUfbEUfwmlphf53RppzLJt7xsqb5Xy16T/46JV6AUt1/vTFHr5OQu1gw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785339109; x=1785425509; bh=njOjK1lXpPQZeoB/sg1KweE+8u1jmD9v3kZ
+	vNzpyFsg=; b=lRJZ2do/zfOM2RahtOe0LQSEp7FrLiwuTtZdAM3FLuGjj2vjjew
+	XjygPiiQhiwedr+mVsRJ4JYi9z/3WLGKeYCj/OIr/a0HbV7gUdvCJ/udcRZp6Ldz
+	TCyQUFTQmOpMhk8fcEV1N+lT/Bp046g9qtD/xjRCxw0U1f+RWieB7wdVYNSaen3S
+	LPqmHMbwgulvvLaEeZHGt0gehb28sWiUl9zytxHErOBcru3ykCdSEfm2N8toJLw3
+	pt1ruJ25n3tTHTmm4ktEH5r/tg4XwtR1XClT7R4YCqQvu/mmbHqmLCpJuvqhy6up
+	Ib49eMzhRO0OJpv4sdB6ODVkTCUsVbbyt1g==
+X-ME-Sender: <xms:5Rxqan1JT1bkwChf2nOyvga636Xvvgi7677Xak4pocaM3Y4cUwBRqg>
+    <xme:5Rxqas9-MTzY3h1FGrr0nlaEa8CBuAd9ZfsTCOa7gO8fJl5-wOlJ8H3ORoOVyv1zF
+    laWO9wb6rDntGjleF8nMEQyJYTOeXhzK1dcpaOTzHyxvFw-cPyBDbg>
+X-ME-Received: <xmr:5RxqagOL5yRu7bTOrAjjWeg05PXd0GgtiX6KJaCbF2b62cYHpP8Tqa2CMrvDpCwhT2L7_YUVU7HnCJcLI9IAGQx4VG_lfCw-dQ>
+X-ME-Proxy-Cause: dmFkZTFisSXpipwTUNOQ/S0ZTYoT3ILVryVd8zlZv2oUmGnfeDTZVwXkLC7xJgnKcmC9xh
+    gLqRKG4KkbUarWVyyK/k/mzdUZ4YXuZ+5wmoQ5aRjgytRTqpbnnmlyrsyC9gPiuy93j8Gf
+    1zWOz4GST/p2ytIJjp6qPK4bTmxFW3OW0d7TIS84sIopK1IJexUsvbAzpiDxUMlIAwllpn
+    dyRRh7dG9Xf25jv3T6sXH7Jo/Fhj6TgXecxUuBfOE1sto27ihRWsmkhAY61my5LbLhhTAy
+    4pNfW4ZTsXMj3KwWP78KPQcfTzRA7l1iPpYu+oWZ0qQMafLSMdH7vqqdayIaf5c/7IzwPm
+    poHyvmH09FRbyJIjCQnmOo14RRc0u9JzUsMh8v3zQDhv8dW6QrKfu3Wq4qSQHz9zKyTbpy
+    WNPYDsmwzGvpYesQwDGRCXvMzIbwlcbTf40KXvh6uoKVHY9F/qw4h+gRKlPXFzT4QBkJYy
+    qgksZRnOBejCpxRC7IpaEocfvm05fZyAGzSfkw2RH9f+UF42xpV5psrJitulQ5/YiABvY8
+    mZfXcLftufh9jqUvadh69z+IBFL+kPVq3QutafrbGUnIa0d0NBH93Ntd1pY+b5yqgBmBJ2
+    nw/PcG/dvsWUa3U7uuVxkYYCPwgu37G0XCr4KTqb6w4MwpC/DWiUcJa3oz2Q
+X-ME-Proxy: <xmx:5RxqaocM4AM-xmZxl_HTPz8sJ-P-qKhpWF9dGPJfmIlP012v7jhWXg>
+    <xmx:5RxqanVcMMXlBw5B0oUustDD1OT2Gt1dpaTib-eJLh2DR72jFtqVAA>
+    <xmx:5RxqaojVgB4dkMCN7-3MetQSonNYI-KZv2j1ZMCk5yOj9GPDAW_Gog>
+    <xmx:5Rxqau9iTNzFqe1VMXLcGQtqVcHEqXmp6cVwXg9igQdyjydzlI2V-A>
+    <xmx:5Rxqanu98cOUDc5df7qX5nRJMt7UuZHKrzfyZzo796SSgqrrmU6ku3En>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 Jul 2026 11:31:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Subject: Re: [PATCH] merge-base: add tests for --is-ancestor
+In-Reply-To: <9a47d529-6195-435b-90a6-e511856f128e@gmail.com> (Phillip Wood's
+	message of "Wed, 29 Jul 2026 10:39:11 +0100")
+References: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
+	<9a47d529-6195-435b-90a6-e511856f128e@gmail.com>
+Date: Wed, 29 Jul 2026 08:31:47 -0700
+Message-ID: <xmqqo6fpak2k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Failing tests with WITH_BREAKING_CHANGES
-To: Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-References: <amf76F4wxlboLz_A@fruit.crustytoothpaste.net>
- <758dbec3-7657-4342-8b74-7e59cdf88b5e@gmail.com>
- <20260728135532.GA11894@coredump.intra.peff.net>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260728135532.GA11894@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 28/07/2026 14:55, Jeff King wrote:
-> On Tue, Jul 28, 2026 at 02:31:03PM +0100, Phillip Wood wrote:
-> 
->> I find t1517 fails quite often for me due to cruft from a previous build
->> when a different branch was checked out. I wonder if there is a command that
->> is no-longer built by WITH_BREAKING_CHANGES whose executable still exists in
->> the build directory from a previous build. Its not clear to me why the alias
->> tests might be failing though.
-> 
-> It's the same reason. We test looping through deprecated aliases using
-> whatchanged and pack-redundant. When those are builtin but deprecated
-> (like now) we allow aliases. After the breaking-changes split, those
-> names are not special at all, and they are subject to the usual alias
-> rules. If there is crufty git-whatchanged in your build directory, then
-> that is an "external command" unknown to Git and you are not allowed to
-> alias over it.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Oh, of course - thanks for explaining that. Thanks for fixing the tests 
-as well, I've only skimmed them but they seemed to make sense.
+> Thanks for adding some tests for this option
+>
+>> diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
+>> index 44c726ea39..d28d9dab2c 100755
+>> --- a/t/t6010-merge-base.sh
+>> +++ b/t/t6010-merge-base.sh
+>> @@ -305,4 +305,38 @@ test_expect_success 'merge-base --octopus --all for complex tree' '
+>>   	test_cmp expected actual
+>>   '
+>>   
+>> +test_expect_success 'setup --is-ancestor' '
+>> +	git init is-ancestor &&
+>> +	(
+>> +		cd is-ancestor &&
+>> +		test_commit one &&
+>> +		test_commit two &&
+>> +		git checkout -b side one &&
+>> +		test_commit three
+>> +	)
+>> +'
+>
+> Do we really need to create a new repository? None of the existing tests 
+> do that - can't we just use the commits created by the first test? 
 
-Phillip
+Good point.  It is often a lot more work to do so when writing these
+new tests, and I suspect that is the reason why this new repository
+was created, but I do not know whether, in the long run, it is
+cheaper and more maintainable to reuse the test history that has been
+used by all existing tests above.  The next developer who needs to
+tweak the first test has 5 (the number of tests below) extra
+constraints if we go that route, but a separate setup means the two
+sets of tests are more isolated.
 
-> The test in t0014 that covers this should be removed after the breaking
-> changes actually land (those commands won't handled specially, so it's
-> not different than the normal alias loop detection).
-> 
-> But we are in a funny limbo now for WITH_BREAKING_CHANGES. Possibly we
-> could pull the value out of GIT-BUILD-OPTIONS (which I guess happens
-> already via the environment) and use a prereq to skip the test.
-> 
-> -Peff
-> 
+> Having said that, the tests below look good. We could perhaps have a 
+> test to check that it fails with one commit or three commits but what 
+> you have here is clearly a very useful improvement in our test coverage.
 
+Thanks.
