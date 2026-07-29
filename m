@@ -1,82 +1,83 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F5A455180
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 15:31:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79B23AAF70
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 15:40:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785339114; cv=none; b=LFyY65eKlK4oZChErA9fVJWIOWOhO3IKdj7MXILT3EmcVOHUPMacdvmkdBXdv5ieW1l8tAo08umf0nWoET1XqCVgg1am8YZY55x/M55H0xr8BsopuqYpIy0AOvqII3kgK/XzmURIcKdjDji2SurXj0/SSbB8kOUBn4M/A0HM6ik=
+	t=1785339652; cv=none; b=LnkX9hUFiACyEv3++JGLQaMkQdIqcNOe6TgAof6cyl1uXpUZXH3WTdRFIaFSWpLxMRp4UDUJcNoCpKLW/PQcoUy/a7w4+VvBPcVmsSoqD1Nhl6Alu4gWljRMcTA2vHjIowGM7pPCtfxhursZNYg3NWtKK7wMRnKYDKZGBjlcKWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785339114; c=relaxed/simple;
-	bh=vjMu37L2H70ZSfNbo32mk0tCJexTSh+x6ZZXRBRuWzE=;
+	s=arc-20240116; t=1785339652; c=relaxed/simple;
+	bh=eFWisWXFAiiigCscmptN/2j4q0KSduRcLNPJOwmcLK8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dg4OtHIc6mFsfYs8nEgguAABcvzfqNND4bQTK0nR4KwGy31EaHa2ObsdhTvUGz/aVnHE0O1Kxr5LmSLgFPgY5ym0epu23i8myR02v1U7UeH6JztGSRjGbr8G9zJt+9LtJje+8L5/sLHTJFb95dzsitTvWiMJAi9qPwDfMH0HcN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hn3nkNtv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lRJZ2do/; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=RsMnHJCxiGMJ0tF0G4dIxYzqeHc04Bfz5kNvNVLSYOrCx+dzkBVYMwNAtyIiaNxJeo5mK2X1yuqYZj5+3sDws2wprHMKnRC2Gg1rheZ71UWbi5f8yI27vv6KGyZTd2uBdcV1GmvUMt1ti6Cw4y6l4I8Qork74orrtt1oJ81beok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KkexNRSX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cn/RL74H; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hn3nkNtv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lRJZ2do/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id EDC031D0010A;
-	Wed, 29 Jul 2026 11:31:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KkexNRSX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cn/RL74H"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2512B7A019A;
+	Wed, 29 Jul 2026 11:40:50 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 29 Jul 2026 11:31:50 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 29 Jul 2026 11:40:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785339109; x=1785425509; bh=njOjK1lXpP
-	QZeoB/sg1KweE+8u1jmD9v3kZvNzpyFsg=; b=hn3nkNtvnke4P97km0jmKcRtPm
-	9WW6Dq5q3TaJGrM/JEO93euLt/z3UdQ33gqeeYUGWGRBQR7PUbi2nmxoq5wC11BY
-	U6ySs+/YKFlHLUtvWdoejw54tepOUhBnZtLaBERoJhNO1K/cVGkrZDqpFMRUHuNo
-	PJ0gAg2BuL4i2o3nkAMtYzxD33qRnwyLghCezKXd6e7wADRas5zLKenazrWLyMUy
-	ZOBO1CWOH/3IdeLqikp/CeemoA5W89V5AQGQVRfYQPfXHUNfmSNu9YHIORGiUWrr
-	PUmGNUfbEUfwmlphf53RppzLJt7xsqb5Xy16T/46JV6AUt1/vTFHr5OQu1gw==
+	:subject:to:to; s=fm1; t=1785339650; x=1785426050; bh=vx6RzTFUCC
+	4dgOIqYYCun3q1ASHfsv2wKr36aDG2GO0=; b=KkexNRSXJIqK358PhZrI2s8X0k
+	TAS3o+d9rPFl59LcRcWCOAXtKd37Ib70l/x/ZHzEK/+cGaOmOX3oEbXHnH4ogwVq
+	8lmpAWnCrG/90LC4QjFdhtuPHGNzCCwt0wvdYsAkKAcZ6f/6LM/1XPGClcenodai
+	4yVEIoNI4bzIfYt35I3C6GiHNlYpByt85HHAc8swGiWq4k2idJ/AxGpQKOkrwFkE
+	4ncCRWWV1bmN41BCKz82+5HDG2x2QEgUz3ksys7tTBHKxWWF0L5gPHH53yHVI6+M
+	EMEOTO2jnFTPonJNLREOHP2srUMszEc2EP69J3C3Blbv3BSzhDED8nvLVA9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785339109; x=1785425509; bh=njOjK1lXpPQZeoB/sg1KweE+8u1jmD9v3kZ
-	vNzpyFsg=; b=lRJZ2do/zfOM2RahtOe0LQSEp7FrLiwuTtZdAM3FLuGjj2vjjew
-	XjygPiiQhiwedr+mVsRJ4JYi9z/3WLGKeYCj/OIr/a0HbV7gUdvCJ/udcRZp6Ldz
-	TCyQUFTQmOpMhk8fcEV1N+lT/Bp046g9qtD/xjRCxw0U1f+RWieB7wdVYNSaen3S
-	LPqmHMbwgulvvLaEeZHGt0gehb28sWiUl9zytxHErOBcru3ykCdSEfm2N8toJLw3
-	pt1ruJ25n3tTHTmm4ktEH5r/tg4XwtR1XClT7R4YCqQvu/mmbHqmLCpJuvqhy6up
-	Ib49eMzhRO0OJpv4sdB6ODVkTCUsVbbyt1g==
-X-ME-Sender: <xms:5Rxqan1JT1bkwChf2nOyvga636Xvvgi7677Xak4pocaM3Y4cUwBRqg>
-    <xme:5Rxqas9-MTzY3h1FGrr0nlaEa8CBuAd9ZfsTCOa7gO8fJl5-wOlJ8H3ORoOVyv1zF
-    laWO9wb6rDntGjleF8nMEQyJYTOeXhzK1dcpaOTzHyxvFw-cPyBDbg>
-X-ME-Received: <xmr:5RxqagOL5yRu7bTOrAjjWeg05PXd0GgtiX6KJaCbF2b62cYHpP8Tqa2CMrvDpCwhT2L7_YUVU7HnCJcLI9IAGQx4VG_lfCw-dQ>
-X-ME-Proxy-Cause: dmFkZTFisSXpipwTUNOQ/S0ZTYoT3ILVryVd8zlZv2oUmGnfeDTZVwXkLC7xJgnKcmC9xh
-    gLqRKG4KkbUarWVyyK/k/mzdUZ4YXuZ+5wmoQ5aRjgytRTqpbnnmlyrsyC9gPiuy93j8Gf
-    1zWOz4GST/p2ytIJjp6qPK4bTmxFW3OW0d7TIS84sIopK1IJexUsvbAzpiDxUMlIAwllpn
-    dyRRh7dG9Xf25jv3T6sXH7Jo/Fhj6TgXecxUuBfOE1sto27ihRWsmkhAY61my5LbLhhTAy
-    4pNfW4ZTsXMj3KwWP78KPQcfTzRA7l1iPpYu+oWZ0qQMafLSMdH7vqqdayIaf5c/7IzwPm
-    poHyvmH09FRbyJIjCQnmOo14RRc0u9JzUsMh8v3zQDhv8dW6QrKfu3Wq4qSQHz9zKyTbpy
-    WNPYDsmwzGvpYesQwDGRCXvMzIbwlcbTf40KXvh6uoKVHY9F/qw4h+gRKlPXFzT4QBkJYy
-    qgksZRnOBejCpxRC7IpaEocfvm05fZyAGzSfkw2RH9f+UF42xpV5psrJitulQ5/YiABvY8
-    mZfXcLftufh9jqUvadh69z+IBFL+kPVq3QutafrbGUnIa0d0NBH93Ntd1pY+b5yqgBmBJ2
-    nw/PcG/dvsWUa3U7uuVxkYYCPwgu37G0XCr4KTqb6w4MwpC/DWiUcJa3oz2Q
-X-ME-Proxy: <xmx:5RxqaocM4AM-xmZxl_HTPz8sJ-P-qKhpWF9dGPJfmIlP012v7jhWXg>
-    <xmx:5RxqanVcMMXlBw5B0oUustDD1OT2Gt1dpaTib-eJLh2DR72jFtqVAA>
-    <xmx:5RxqaojVgB4dkMCN7-3MetQSonNYI-KZv2j1ZMCk5yOj9GPDAW_Gog>
-    <xmx:5Rxqau9iTNzFqe1VMXLcGQtqVcHEqXmp6cVwXg9igQdyjydzlI2V-A>
-    <xmx:5Rxqanu98cOUDc5df7qX5nRJMt7UuZHKrzfyZzo796SSgqrrmU6ku3En>
+	1785339650; x=1785426050; bh=vx6RzTFUCC4dgOIqYYCun3q1ASHfsv2wKr3
+	6aDG2GO0=; b=Cn/RL74HMTGuVT0fz0kPjTVk3vwflMuNqQNx6F/OPaPq21HQ+Al
+	uoATVzvVB0x7GMWu8Ar2RIc0PuhQybSBN9XCsD2TC/8uG+H2coL6rXyN631E9Y6c
+	7I/x5/+C6yvY1d5YZC4f7qUUyodWLKdT7XV/xO4ewof1+rptUGu1HtZh26ap52p7
+	pv/2dyh1qfJk/KyHQWNDqvCG8Fz02DBvRNGRDP6WDM62s3gAAJ5QNze9baduweVj
+	y/ZSn6XO4sDfcLbdDuCPWvZ4GKrJyUiIDcQoxhjq2hlkKi2pY4BRf66JdrUG100c
+	xiHgBm8AZVV+PyDqJKSumHc19QxL3oVWVMw==
+X-ME-Sender: <xms:AR9qarfX--MtRf1-0ZIiv0ch9FwSazCHqaUMC8GNg8SSsHXNxzzILg>
+    <xme:AR9qaoEp6v8GNbXvnHViUafME_jvEwolYtHxBsNyh_ms3qoeLcd3v2Mv51Tz0q0NJ
+    2HC6p0t82kabNQBw9-8D2Qs56D7PkfkEdjVwShMO6Kg54t54FDAMQ>
+X-ME-Received: <xmr:AR9qas0k_Bv23ZOs0JL5XxnmWaWdskujuaELTqaxQeWObAby3CzAe9HdgIig4mkePDNTJnqExqK5D6paAf5JFVYCXILFTwAoIw>
+X-ME-Proxy-Cause: dmFkZTEWkEpXLPWo8BPACH1+hO+YZ4OMkeLA9r5t+N2LXBbAOh+JvjNLSwmth+LET9zu6n
+    ylP/RS1eejZiM2p39usd1Wthy6Hzkq6UTCm8UJny9uX4y44YqYqORuGZarDMJrafpR1hPW
+    3hZ66+qB/Ys1vMOQb/9clECApNjNQ5Bz/m6ACXb7pW42y5GWAVxvE8axycSs9r5mWcvG0C
+    HkAdr6q3YDoBdw6nStZDEzGuWNwi/zjZOIXNWBcSTOCkoSw66/4O64LbiO1sA21cfi26+5
+    vFXZwp3Zak4MlfW7DJRfE1SMKfVBtBKwWWMvQ3SXZTqCYQgt+IJbnemY11L3UgbOcm5/Y+
+    cCLVMBTiBiBBC38eA4rKgL6vuaZVLcZANMg5rSkJOTYHaGtonBElTjyIsOuJgCk4kGhzwV
+    j473Zto42siKaHdQh/Hge+JNFaLpqBVONcZRDRuKF/mGL0PSyR3h/XUB+K1ec/ZTxtR7kw
+    2Dp0k4n1Xy9TrC5DXq2iY/Ssml3Tkj4UJ56hPwVSX+3JcJOmiq5ON+BonCdog4OPuNmN+O
+    BgimHaLLDwnbKqKrM86Y6DK2nPgttfCKLfWNr4jenGy2mFv5WSbKb2YmnDer/Dt7xM0DvA
+    Vcg0W3hzLp64g+97EdeBv9apvD3zVrlRjtWe+BDnPtkrHA4viXiKJ6kZ3uLQ
+X-ME-Proxy: <xmx:AR9qaokDCazkaVVbuukNVMaspO6d9XX3Tp0k28gn41pTzCCJZLM_wQ>
+    <xmx:AR9qak9UZZ77h_vjfWTNNy5WKxe328oagGgv-hHhKB3cA84GWj5LgA>
+    <xmx:AR9qalo5tLkH2Ix9fOcd2dHeHct4iXq0aaXkknRdH8nM25Gs0R1I0A>
+    <xmx:AR9qalmPdD4FKjn6ncSMUQFqVl-qs-Sbtz_Y5vHXjUBHf0HtVnkh8A>
+    <xmx:Ah9qav3KEsDqf4gnejVM37EqspSrYVGttN6-ujQXKO_vWO4e2i_3gqtH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jul 2026 11:31:49 -0400 (EDT)
+ 29 Jul 2026 11:40:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-Subject: Re: [PATCH] merge-base: add tests for --is-ancestor
-In-Reply-To: <9a47d529-6195-435b-90a6-e511856f128e@gmail.com> (Phillip Wood's
-	message of "Wed, 29 Jul 2026 10:39:11 +0100")
-References: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
-	<9a47d529-6195-435b-90a6-e511856f128e@gmail.com>
-Date: Wed, 29 Jul 2026 08:31:47 -0700
-Message-ID: <xmqqo6fpak2k.fsf@gitster.g>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  git@vger.kernel.org,
+  karthik.188@gmail.com
+Subject: Re: [PATCH GSoC 1/5] protocol-caps: add type support to object-info
+In-Reply-To: <CA+J6zkQFAqZvi-6UaQi6v_OBiT4ihZtCN45vyGCGTbo9TJLJbg@mail.gmail.com>
+	(Chandra Pratap's message of "Wed, 29 Jul 2026 15:23:23 +0530")
+References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com>
+	<20260725-objecttype-support-v1-1-2d4ca3bbabf1@gmail.com>
+	<CA+J6zkQFAqZvi-6UaQi6v_OBiT4ihZtCN45vyGCGTbo9TJLJbg@mail.gmail.com>
+Date: Wed, 29 Jul 2026 08:40:48 -0700
+Message-ID: <xmqqecglajnj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,43 +87,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-> Thanks for adding some tests for this option
+>>                 if (get_oid_hex_algop(oid_str, &oid, r->hash_algo) < 0) {
+>>                         packet_writer_error(
+>>                                 writer,
+>> -                               "object-info: protocol error, expected to get oid, not '%s'",
+>> +                               "object-info: protocol error, expected to get "
+>> +                               "oid, not '%s'",
 >
->> diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
->> index 44c726ea39..d28d9dab2c 100755
->> --- a/t/t6010-merge-base.sh
->> +++ b/t/t6010-merge-base.sh
->> @@ -305,4 +305,38 @@ test_expect_success 'merge-base --octopus --all for complex tree' '
->>   	test_cmp expected actual
->>   '
->>   
->> +test_expect_success 'setup --is-ancestor' '
->> +	git init is-ancestor &&
->> +	(
->> +		cd is-ancestor &&
->> +		test_commit one &&
->> +		test_commit two &&
->> +		git checkout -b side one &&
->> +		test_commit three
->> +	)
->> +'
+> I assume this is a style change? The original line doesn't seem
+> long enough to wrap though.
+
+A 92-column line is much wider than our usual ~70 column limit.
+
+> Also, this would break the grep-ability of this error string.
+
+I've heard this a few times, but so what?  You can still grep for
+"object-info: protocol error," and will find it just fine.
+
+>> +       cat >expect <<-EOF &&
+>> +       size
+>> +       type
+>> +       $(git rev-parse two:two.t) $(wc -c <two.t | xargs) blob
+>> +       $(git rev-parse two:two.t) $(wc -c <two.t | xargs) blob
 >
-> Do we really need to create a new repository? None of the existing tests 
-> do that - can't we just use the commits created by the first test? 
+> Can we not use the `test_file_size` tool to do this instead?
+> That should also be much more portable.
 
-Good point.  It is often a lot more work to do so when writing these
-new tests, and I suspect that is the reason why this new repository
-was created, but I do not know whether, in the long run, it is
-cheaper and more maintainable to reuse the test history that has been
-used by all existing tests above.  The next developer who needs to
-tweak the first test has 5 (the number of tests below) extra
-constraints if we go that route, but a separate setup means the two
-sets of tests are more isolated.
-
-> Having said that, the tests below look good. We could perhaps have a 
-> test to check that it fails with one commit or three commits but what 
-> you have here is clearly a very useful improvement in our test coverage.
-
-Thanks.
+Well spotted.
