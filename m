@@ -1,112 +1,115 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA68C331A78
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 21:19:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F35369D57
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 21:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785359984; cv=none; b=ZDIyExFaQmwJ/EPWRCQdkaz2YnqK6Hq4Bf4e/Fo7F8+JPFaQMxMtd1Tha8rul6CHpa1WU6ggC9SzmFo05D/SydFcXQu8KQTyMkprfWsz3ZsfOJA/LZdjR6nHMZQihms8/zZkpccLtFVJETvV1RQ96+mpxwMTO97luAWEwCXjd44=
+	t=1785360224; cv=none; b=SuMC5i63jXyEEQnzzRMVeMQNi/epG70JvwSDtWrULLjdbqvlXYgoQByENS004YhYtDzK25BqlJ9ToN8VVEMNRi3IEyYRltME680xFQtKiFOZbPDyY2z5TqRyP0PqXkBBmzw5+9gaJvxdu2FuypSKtDI6Fu8htJl6uTNq2hUb2U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785359984; c=relaxed/simple;
-	bh=GCiy92yigKfHfsrZi9LaF5BlRw83SUlZAZKLY2Uh6JQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X+Flg2N7tINlKe1fHH9wxs0YM3fMTRqfhD3rY0zrYSPKPmI8UMMwR8aUBzdZyPzYor6H/TW+NTvkKx5Kv/jcPM8B6HJYcPuIRokW9a2JNj28ol8G7pqqI8aD6SypikFsHkn4+BT9bUc3UPojMFbsIvbGUtdOFKSQuzBFmZEBrsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W/bgnwbv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g3NV0u4h; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785360224; c=relaxed/simple;
+	bh=dRhL96I2HwzjmjUGD4CX6hEF8+dSsxjC9hia//tZRxA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KjKB253LUBagnB5LCeN/4hjb/zd+Vj5zjKaLOfW+8sV3aFf0uSECmGTSiM8IVm6V/sijTPernXq5cRrJppY9y0KTSMiZ5yMvGwr8GeKFTmiyD8VBqJ5fqTNIY+x8nNmlBRa2FmsIfoo85GeCWRqIERiWU74wwyVH9MCMEBEPDEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=SCB4B/2q; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W/bgnwbv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g3NV0u4h"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0020CEC05DC;
-	Wed, 29 Jul 2026 17:19:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 29 Jul 2026 17:19:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785359981; x=1785446381; bh=IKmXltW/ap
-	BMSBaAsi2UvfWxwBf7vohETDhUQ+U227M=; b=W/bgnwbvlSmItMIor1yxzZ31mg
-	qbzKPIOCdnSDq0H1C03XobTwVKYoTdTeDCYcy2ShWuh1ARIa3VmgJ/VlUKGrXp/q
-	JBoaucBP8M4XXWMzrKpE7RbYVG4GkCGoqvuxQUvRPDFUrHoiQ3jWRxjYG39i4nGu
-	yptMVuNgyBBC5hoHjqlMfEYn+kaxQZXhEEjHTx537jdsEwkep7v0SvXgLYvBjTXk
-	a/SIvuw4Ja8exIY+YE56e5T74/5lWjI9VI8QGfM3ZrpiKMIrC7G3nzhwoUcSTiRK
-	D7wI6pnChaBUBjklAO35lvdiDWkqz67Zv6Uuy5A6jyD7oedO/tMhu6J0zLgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785359981; x=1785446381; bh=IKmXltW/apBMSBaAsi2UvfWxwBf7vohETDh
-	UQ+U227M=; b=g3NV0u4h/8ob7Ou4C4YXiS4XRqFQDyQqvGOJiGKLvf8xKkVsDZd
-	1BVu6DCF9pbmVpFSYW/nEjSL3L5Uu3S1DgUil8sODE+KNMJaSMMivF1LRyzL6lLT
-	DkdfzYE6+naPg+AKUXXVASwgtAr2F5Kg9vRHUCeo4Cgyn1TDSm13AKWlptKbeDkQ
-	hNIh1aIuOY/NpDJytKj1otuAgfH06Rg67RD3uU/VsI2fI9visH4ZPzpTH/796V5Y
-	NSAt8PPxkTfUnckwHIUVoGVnVUkveZKQL8rLVVKI5p7Dp1EK76lcVjlVEXngC4Ar
-	3GBnYi7cWgXn7+4z7ZnylKdsG5GnI7cJwBw==
-X-ME-Sender: <xms:bW5qatlGUjShZFOB7Pp_Nr18nRIqr_lYg7knv4dqQctnUkalD1aILA>
-    <xme:bW5qagQYjWIMfxN-nJuuN1NPPuqYkpJwRBWasBhBIkWm7V6ZPuDBjy8URoDcdtFRk
-    olbVrXKj7JsGIoVgDYGgf8v9zB5AztweHjp12GIC-anpzQ7GxjpMg>
-X-ME-Received: <xmr:bW5qahDa1IlqTolymovfk3Z_ge8DazrRALl0LfyTJdSerT5LMhMzXGkr6zPZDzKMjWGnxZ9ya3dOzeHmFgHOg1UP_Jdd5QCHIA>
-X-ME-Proxy-Cause: dmFkZTEltRc1LI/+DVZRXnS+mRPoAzJ0l1C1F/0WjBPXC0xQGJak0JDAfU2J2Z3aQqydK1
-    ++wJHzBeY0hG0wHPI9LN1OhNWmqsRUEf0FVwA6py04N9+m3rEaZqO1m/r3k08StLvil8hZ
-    ZECToj6nKXxjUCubOK+/oqBwSi9dOy70HdzOiDpApR+L4wGc7yTSzNGa+4e4xIulqiTfFg
-    2WBVbOK0QMfGtJXG5muzgNvYjB0XqwU+W1akXJkE7AmwToTNk/sPCkj6EOBL6lPrHtk83p
-    QyIBKMzMT8N+si4+nJvrZL3PRbqQSSIt1YB0Q5y8xsg+3L+sjFzGaQ0YvN0RT71DAr7Ngl
-    aZpgS5PEwasN8TsOJW4hbOSRfuqehSipekJU5FNv99Tx/ahyuLdB9AbT4chSfyClSUBhSW
-    Evlsx/hKbvYNdVVccrORlEeUS0R83P1v/YiFQnWo6En9pmDPViO5d5SU5HV9M1jAZYoVMw
-    8KTX9Psm5KTreTQ4IEM35NDM6GFGglYN2LJmz65poHWW4PiPAmGIIe1Vj07CPAN2Ve3sDL
-    MDYF7vcJmUX6q6JbJh07LaV/riHWHwjHCBT6hA1aSUf1qjlpZwhJGIuxFBtUJ7kIrl/hJd
-    eZmgRG2JzRo/SBFIwzE4Uf4qnt72NdkW7LPhcZ6U6S5MKtaaL9C1THKvBHWw
-X-ME-Proxy: <xmx:bW5qanS8FbtrXYixSuaWNMbeI0nfQw59HvuVxJVwBQk1suxeLTtZag>
-    <xmx:bW5qavrw4uwzW5fqIQwoCcYNdw-KSzaKnSPzu4iqETgRh653lu9-8g>
-    <xmx:bW5qapy3Kr6VFzQ_3KS_auJ6ZGSOyB8PAdISOdzoSDg60wQB0ca3wA>
-    <xmx:bW5qakJfyVKTv4Lrb3uE_jCyb8aejbH0Ux2yfLahFWJCEMyCH3C4_Q>
-    <xmx:bW5qakRvg1wN4MmWhHUqynMJbQKw3V0kjjbAUeMAsaoQ3bsrBJyMg89Q>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jul 2026 17:19:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shlok Kulshreshtha <diy2903@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t: use commit_body to extract commit message bodies
-In-Reply-To: <20260727095656.75496-3-diy2903@gmail.com> (Shlok Kulshreshtha's
-	message of "Mon, 27 Jul 2026 15:26:56 +0530")
-References: <20260726224803.45131-1-diy2903@gmail.com>
-	<xmqqldawq24y.fsf@gitster.g>
-	<20260727095656.75496-1-diy2903@gmail.com>
-	<20260727095656.75496-3-diy2903@gmail.com>
-Date: Wed, 29 Jul 2026 14:19:40 -0700
-Message-ID: <xmqqpl05o5n7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="SCB4B/2q"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-81e9d8f3289so22183607b3.1
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 14:23:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1785360222; x=1785965022; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=J80INUEraVID4MEdxE0W9AzTUFSWKRfFc3Z0Rl4RKnc=;
+        b=SCB4B/2q6womf5lMbByM/3LtdjZYt2MXH9dYG/YI1AMyda2kZoYai1fP2xRrHFzDVt
+         +uoInIIBcVPZJzY9DNLEFRnts/0kwbkEdxHBqZd/Bfr7XIS90wZEiYib1O1Oc6eTvoAX
+         uMzGWhfoj2Khj/vtMf+js82+nFGKxqwt+M6wk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785360222; x=1785965022;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=J80INUEraVID4MEdxE0W9AzTUFSWKRfFc3Z0Rl4RKnc=;
+        b=DmL624nQxURsc15/9ZlrId2vgodFWYFHYPZfOOi/y/WuoVmxD9/OUgFI+60dsFsfIa
+         9BjhUZMKvU/j+PmJS+ZDp90a+HrKfN7j1/Qd20D6FyFJYLeIvc9xTvQQbjzgHuwXKdVA
+         FXS/1lLOK2mvbl/Ww/fMj5JAcbNz4qy2xMbEnh+AFJdRGFIi6gK+iIMd2/izOPnGGuTj
+         tYWblhUmdDRSquqOSVBAvuiUviNO11yQmAIgHByoQxuK8vI8AA0sHRGFpXxYIfPKi97A
+         9QtOnfBD0IaJFfimBCwYDoayA+HS1iYWhhF+5SRm/ytgInr7g+4bQ+7oNRAN7sXqMg32
+         I8Xg==
+X-Forwarded-Encrypted: i=1; AHgh+RqP9pufC9fQziKQlEeYBpVcjv8U/ygx1hi+tLA3rmpG21j8QvT/S4zccQ46AnjRTtdNi30=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBBhjW8tVenr1ywbJ2B40in20Txdl91r81WQSYjdc9K52d64yM
+	L6RQ+IgupBSQFv6KuRhp/ot5fv4IOt5Wrj2wJI8LzqO/RIecnSrst6K57a1mo7gvdhWKsknmZrx
+	VlLcguug=
+X-Gm-Gg: AR+sD13Q7STBwYk/kUx9TxiDfkn/8nj0MdSDt/NY8xKxU9e1CbJuKgvOYJbtpSMwrk2
+	u4h9inrP5grovZ3lTyW4t3+gZAVECzHMDgztuRAWJhqiB7MaaSDtdiY1nsewLht2JgypCuuT2iy
+	FTa/aL9d8gpzndGsGT5h6WTorHUa8lTarjyw3PuSdx+E0bO2E8xMjZGLAvZLPbD6uHNkL08s5A/
+	KEh2OOxfFkhnVIu9WuoQJd1Uy0dnaRzDE9MlFI6ctdIflfQACMYn16udVYwYmpv2E7OUZUXXbrf
+	4ZJLbn0+oTH3/iSGsOfOzghcI3vNAzENbyzHMsurV3CbPRFQuoh3pu17/kG4/tk2C5BVoX17/Mi
+	f2KtI4bUNt75aHjLYZgVrChTd5RqJKFn9ZSD7wS3Hhkulek0bzK16SBYHFIxBfmvgIxdHg/f1lX
+	6gfmilOcOC3JfaZJosGKafcIJLs7nUUhhrP2srUJW+tfjLueW0hNcX4CTf3svANtpMhlObYSgOW
+	u/PtUTHm/tz2u1F2Lsm/XmLkhur2bVorYGjPvLnWVwGyg==
+X-Received: by 2002:a05:690c:9981:b0:80b:9114:3b85 with SMTP id 00721157ae682-81fb5b42e97mr4778757b3.0.1785360221688;
+        Wed, 29 Jul 2026 14:23:41 -0700 (PDT)
+Received: from com-79390 ([20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81fb7de8e8asm102427b3.29.2026.07.29.14.23.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2026 14:23:41 -0700 (PDT)
+Date: Wed, 29 Jul 2026 16:23:38 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: friel@openai.com, git@vger.kernel.org, peff@peff.net, stolee@gmail.com,
+	me@ttaylorr.com, ps@pks.im, jonathantanmy@fastmail.com
+Subject: Re: [RFC PATCH] index-pack: optionally allow duplicate objects
+Message-ID: <ampvWrDaNqmNdlUm@com-79390>
+References: <20260728042550.91133-2-friel@openai.com>
+ <xmqqik5ybmi9.fsf@gitster.g>
+ <ampR7FkErK3CQPyC@com-79390>
+ <xmqqtspho7tk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtspho7tk.fsf@gitster.g>
 
-Shlok Kulshreshtha <diy2903@gmail.com> writes:
+On Wed, Jul 29, 2026 at 01:32:39PM -0700, Junio C Hamano wrote:
+> Taylor Blau <ttaylorr@openai.com> writes:
+>
+> > If we can find useful ways to combine the ideas above with Git's in-tree
+> > implementation of upload-pack, one could imagine that Git itself may
+> > eventually send packs containing duplicate copies of some object(s)
+> > behind a capability. In other words, for clients that know how to
+> > process such a pack, the server may wish to ask the client to do just
+> > that in the name of saving some CPU cycles necessary to generate a pack
+> > that doesn't have any duplicate objects.
+>
+> I can live with such an extension as long as we teach the receiving
+> end to deduplicate the extra copy.  Leaving packs with duplicate
+> objects on disk is a completely different story, as it will become a
+> source of spreading such broken packs elsewhere, though.
 
->  t/t3404-rebase-interactive.sh             |  2 +-
->  t/t3405-rebase-malformed.sh               |  8 +--
->  t/t3408-rebase-multi-line.sh              |  4 +-
->  t/t3434-rebase-i18n.sh                    |  3 +-
->  t/t3900-i18n-commit.sh                    |  4 +-
->  t/t4150-am.sh                             |  8 +--
->  t/t7500-commit-template-squash-signoff.sh |  4 +-
->  t/t7501-commit-basic-functionality.sh     | 21 +++----
->  t/t7502-commit-porcelain.sh               | 77 ++++++++---------------
->  t/t7509-commit-authorship.sh              | 23 +++----
->  t/t7600-merge.sh                          | 14 ++---
->  t/t7604-merge-custom-message.sh           | 18 ++----
->  t/t7614-merge-signoff.sh                  |  9 +--
->  13 files changed, 72 insertions(+), 123 deletions(-)
+I am trying to nudge us in the direction of reconsidering whether a
+pack containing duplicate objects *is* broken. After reading some of the
+historical discussions on the list, the only "broken" portion here is
+client-side support, which is what my series is trying to address.
 
-I would not claim to have checked all of these changes, but I did
-spot check a handful and they all looked reasonable.
+> > But I would note that having packs containing duplicate objects is not a
+> > new repository state for Git. Non-strict `index-pack` accepts duplicate
+> > entries today, and shallow and filtered clones can store the same pack.
+>
+> The same as what???
 
-Shall we mark the topic for 'next'?
+The same pack meaning the one which contains duplicate objects. As I
+understand, Friel configured clients to have a shallow depth equal to
+the 32-bit unsigned maximum value (which is gross), but does cause us to
+run "index-pack" without "--strict".
 
-Thanks.
+Thanks,
+Taylor
