@@ -1,126 +1,127 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B243A1F2380
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 03:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785295707; cv=pass; b=XFZvIA7ougijZ08ETprDJhYnfQisPvDThfr7hxZNIGUP6iIn1t1KbyU0fuHi+9EWDJHez2IaJmDEvFcW28ikUXr8Z2sKAxb5VMsIKjqOEmH1tBukS7sSjdk2MOmjhbDwb1bma4jr5HZ9OFIeQ4Hvzh1hYlYVEEJOHtufbl1eyWI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785295707; c=relaxed/simple;
-	bh=m0+tpzwKiu7g2EYu9FDNEerdzrVYkqz8kDwJTLcmd6c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cFbLF3UzeKQpSzui5vp+FfIsa6c/4SKycbT3/9JP+E+9eUZ29hja3M68ibJ9R5gKg0J6ta2v2exkI4Qs2SDO/BXgeGrl55d3XMhZ5OSNMbPQnxq/B8sXQmIfBN9mXiQJwGTnzVnXPKnzbX0YkqmsGDwcTnRfu/gg5ZIS9Wy6ehM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MvH/DAcB; arc=pass smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F1A4432E3
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 09:31:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785317502; cv=none; b=UKK9wpQbaYkJbafs6VOLz7bRLv4HqaN27mmEitSeSJRtGJK2SHp5pUD6BfSjFf/SQnIkr/VnvMsbReJDB0Mm3RXl2tWlbgZ+bESc9kCoDiQqlLSTCqWryVP42HjzIy99IlVI40K9gjnD6Fg4Rqceb2YH6YbarkAizX7V2NI+4XE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785317502; c=relaxed/simple;
+	bh=b/imunS0UMqJDnT+m9eWhBvw3nvuf+qtlVaSeHv2NT4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=l/QQhVIe8jcOkNadFz6xYptWqiJxIrPLVJTrkK0EhAIv+oB2Pv4UjuHSTO+zgaWWuCIxekFHG4/rf0vgI8QHp63wSESQ6VIhisJXFGi+4h86SYzydXwNS/b163W2I/59b6a/D/NXu8+hBI/2zdmdkHwKntDJlvHN+2dQFQZVw40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvbwcVaT; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MvH/DAcB"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7e9ef94c0e2so340628a34.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2026 20:28:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785295704; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rtakR+ZvMVkn3YF2S49RQp1eZcitVCd1NEQCferQuihutiLvP5ZwoFh9aDxCOZkzse
-         NRyc3JXn21e+zdU1sdC2Vq44gkTaGKVgaj64HngdCncbfQoKUQRdNDq9nS7A+qsRyz0W
-         MWTlE76cVGnrMK3jUfauOyE/k0ctlWgrzMcr1JiLFeF+7hOvLS+C4BpVPN6wwiyBo3cE
-         kfs6F/qHKKI0K2iupn21Fp+FijMvEHUPSZLaxrkt9tsvbIIXkb55LvzX/oWIj7IkX9k2
-         AKnK/l3oCpNXBsMNTeMvdXzlnnmadKWPtlqTkyWGvbRHqTBAbLXaBta2AqHrn9DJdeq1
-         DZsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3hhts0+1SrP+oyUQka/3vqVOGQcyxz5K95ZiMIgSJyE=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=IcYdxlVmkj3LZcAFcujC3ShCUEEtv00TtU0XzFRvizqCrzPaJVENLobh0AhvKx3GVm
-         Mtr7G1n1Rc9LKmX86l0vcq5CErYGmMXH5pdsewXxGL0ivq+BoBBzEvtCivUgH4SHz4M0
-         cGlJalb3LTCKnLqKLuSIGJxnRTreuMbN4aDDUcuyQ7Qq0+6i1PUtrroFPDgKsJ3mn/QT
-         wyFgj99a+xMUht2qATz3LZklDSFjxyT+8fLxyOFEY9gSV6vVOYXPwTS/CHPOzYDeu+Kv
-         CAGEkk0CX9aaDXVNw1YOx7OFeeVAvQy0JaexZGTR9q6HRv/m/8nR13w4v5UYNsoKYrJh
-         XEwQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvbwcVaT"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c1671ec8692so93958466b.0
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 02:31:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785295704; x=1785900504; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3hhts0+1SrP+oyUQka/3vqVOGQcyxz5K95ZiMIgSJyE=;
-        b=MvH/DAcB3iaOt1Ngmau/AOO9IICx2ezlnbiVZCUU9m0mVDZ5UFc180OkZeHSrWSoxP
-         cvArEeQcfWal2ABpBWX7eSf0tzNtQGVuFMt8PVlUD4mKXjpQ9GeXQNjIgWOBm23Gyk4C
-         SYeOLyifJa7K8bz2sDY1xwARNS6fqOuSjPBgIiw5cwzE2yn8MOadQm6Z2d25y+Z2GQUb
-         2SX4LbiJPKrXottuKw0FEpppVG780V+aBq/l8zc7bYpsJpwREp6239yiPuJDOl6p2xdK
-         TD35+6NAEJHO1yw6R09NUZ0HO+deQKrHT55LX2zu/GPj9G45+X92wVxE51kYfGemGw4p
-         s8lQ==
+        d=gmail.com; s=20251104; t=1785317500; x=1785922300; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=RDhQnq+3Ww+r1HfHesrC3lqE7LgI1gB71iSlb9FtbXk=;
+        b=JvbwcVaTLjIxaRbB1nOCjQQz7Ho6CPrjaZ8B1Bzjtx0kJ6Bu1arqLpjve8gK/PqcWY
+         lE3xy/xVT/0mOb7Yhj+VBT8MosJdZlIfheBMvw9OS3M6TBLs2Lx2mrpZvV/NR2BEb7Fm
+         7Gs3UK8Cm0by0Mjr31ppFhme1vm190N7DJl4kW58XW/RA1QIJR0jv7YTUyH085sxxE/n
+         EGk9MNGOUT12IVrp1pKN4ppR4QlHC4PHOLgRPMdLdhiimSyh0Sc48GGuDhbCEy4pcUtE
+         uALBS/+6+AsdiCbWXT995cquwQS+WD31F8Him8GR1uW22CBprw9rOrAvHMwqwZEUDT/U
+         7tSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785295704; x=1785900504;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3hhts0+1SrP+oyUQka/3vqVOGQcyxz5K95ZiMIgSJyE=;
-        b=Aohhs68/zbgb9MzLjtEnjWoYfaQECBBdjoZ3OYO65AQZUmQBGPVrS+nP8TkTmFc4Br
-         p5saVwSLO3F44s0LkwgC3KoA85A6zZwcG9hEWsCmSGvTRDa5DtAqtkh/ClTlpNzxuJKf
-         18KRpEMmwUYv1hly4JRxDykyrLFIk9inBUB9z+HXHMbad1o0s1RUJMvDn332BbJbDPke
-         IputantYo2bJ5jf3Zj+blUP0yEzPObZ0qSEK+SUuTRYt8fSfIShii1MglbQmStqGDGo0
-         APZwxQ0+d0SqgCg1Q8sC+gYOObwBJqXslbQUnm6bCmf09aBcVO2vcY204Ow2rfzruyhg
-         hliQ==
-X-Gm-Message-State: AOJu0Yz2+VW3HwZUdq5NxZ1Hc1VgutICfvwd9CjVs06Ee0VodGndZewJ
-	hUH4HyS/S4H+9d+cj+sJUbPET6eFS9zhQ9wAu+4sRxqq2kjBNQv4D7bayvyO/nNMCom9CYR7kIw
-	2jY+DAYEC+U0KuEFo08l0GtwjYj8CIufRfg==
-X-Gm-Gg: AR+sD12+TisW8xplJ38XvUZCDbMR8Uy2yi0k5/V89lV5y+HGD5kI+p5eKestERdOjqw
-	U75Vuy7q0jA/3dMPsbSuULFdCYk00YFAdukylBV2mYIoNuACLBlaaPRdQZdvwpf56onaANiI4AZ
-	9HBBSANul9eZI0SfM9WCI6RzyytYtJ+2NetYAqNP0zn1zPB2STTzZkROmIsRDlaBFfWfXkFASzy
-	CKp2EfIhuF5smJTDG1dHq7UGYsbZN7AHqK34TEd0fHDD1ECgzTvZne9nM+DxaUGxop8uXHqKP+2
-	tM0/5NK2dyub2n/ewFGo6NXEp3JGx/NzvIpzoaFWURhTXuhsh/IoxQY2weUBz4nzp8cy4kM4SXl
-	Y5gtaCIrASUGTYm/jkjDh7mG8J43RFUwi2/yKPVkT5wYGDpqbqE0QqgGpml9aAOI=
-X-Received: by 2002:a05:6808:2392:b0:4a3:58a6:8a57 with SMTP id
- 5614622812f47-4ad5b832e2amr2744498b6e.20.1785295704660; Tue, 28 Jul 2026
- 20:28:24 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785317500; x=1785922300;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=RDhQnq+3Ww+r1HfHesrC3lqE7LgI1gB71iSlb9FtbXk=;
+        b=mNWS/APc9ZBCTBtNeZiArej3+MtTyGYvNgxiSCqmfCz7olJCIBYDhxeooyxMc0aRP5
+         7o+Jh6ZLO0K7GkKVIg+bbTGaVxiXsOs13ttUKVjKm+xGL41YJSIIIq9owdWr9+2zxg+X
+         Muj6qfBDiyWyFIgnlhqRyj6bj8/BD9kTcJtqGZS0HuoSGKzO+q3rZSBVd7pZZWM7OSYc
+         ZVxbvlx2P6V8GjdDLVfHcIWnhm8xxYe8RYiltSQzLw/uyMrQnUKi77s8Ie3tX11Q4umc
+         FUq3GZcs9LfIWfCqSxBxG+j3yt2ie5/xdEwAUMQzREqIW0rnVdYz6HCzrUg3Yo6iXTSI
+         T4AA==
+X-Forwarded-Encrypted: i=1; AHgh+RrUb4QvxXeifLj/eW/PRaWL7z1RGnTKuv/exmQqpTGezy+uOmiWoQepg6MC03TnIwP9jgc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSzVwQq+q1DmLsajkXhy9yLq6AN3E+FWXb60LsesxbX+B+wUDh
+	AlBK0z8n8G3hXl62/xBQOlNgHxGMqBglnp8ouRqTiRZoenafmg9wdNrw
+X-Gm-Gg: AR+sD12FCiE6NQpGc087zS+Lrr4l3eAvveprpup4KapvT4Q41kXUmB3vfVOQjZs2Mvt
+	VP5zLl13TxVSVZGRZxw/2PfsMnKXmBl7KnT8nu3V8bjy5x4vecTiom5EJHugsXa6Wh7IgEzu9U+
+	WIKPGh9NLpDbqrckesVmn7MocfOOadsxL0SifA3KhfldGBPoQdT6fCtpLCsKvWt+CzeFm4Oub6u
+	MVQdhXuAFpHi7GGs5rOQ/KrKTCbB94gKWc39aIE6f3WHpVgH6POlbgIujL9M9+pJRXUAxMKHHv9
+	cEOLOaFgmIflkCDGU/9+u9/oC0ReSz0VnMy2gd/NG5NEkg65KUE3XjCaFv2TDXKu0cNa/PYvimq
+	igaghmbrjKz5fk7S+qtZV31Zo9uNtLxkQyNwpdKgt4AQWMfMn+lQuxHS7d3gt0wpeO4Q6dMU3iR
+	jw54xn8s24WfEIR6BukENiSk0/NQzmkaM2fAO2qtOAckD7UnlE4pXv4emEZJN0jWEO67XjylX8y
+	7QYi3RlT9puWvlt5o+M7pje8pgMeONk/oiRH0qCBY0=
+X-Received: by 2002:a17:907:9617:b0:c1c:62b4:1ebf with SMTP id a640c23a62f3a-c1f721913ddmr348384966b.60.1785317499341;
+        Wed, 29 Jul 2026 02:31:39 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1f8400fad2sm87019366b.55.2026.07.29.02.31.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jul 2026 02:31:38 -0700 (PDT)
+Message-ID: <61291144-60da-4e37-83ef-fe09e91c4f51@gmail.com>
+Date: Wed, 29 Jul 2026 10:31:34 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260728215219.753678-1-gitster@pobox.com> <20260728215219.753678-4-gitster@pobox.com>
-In-Reply-To: <20260728215219.753678-4-gitster@pobox.com>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Tue, 28 Jul 2026 20:28:11 -0700
-X-Gm-Features: AUfX_mxmnhqPuBCE8viLZCK-urSemQw7ue2qMmfjDZHcdpJyCdiDyV0MumaCRd0
-Message-ID: <CAC2Qwm+AmeDubDrkLmu8Rz9rtO3697gokwF2=2c5PgP--hZT2w@mail.gmail.com>
-Subject: Re: [PATCH 3/4] add: introduce '--resolved' option
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/2] rebase: skip branch symref aliases
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Son Luong Ngoc <sluongng@gmail.com>
+References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
+ <pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
+ <b9a01e9141d580606527cb1a658c7c72710fb013.1784708107.git.gitgitgadget@gmail.com>
+ <5bece313-6ffb-450b-add1-29652b64de10@gmail.com>
+ <00e529b6-7ae7-463f-a4b3-0991e9411aba@gmail.com> <xmqq7bmhycxq.fsf@gitster.g>
+ <8631114b-aa6f-446e-9710-92c400320eac@gmail.com> <xmqqpl07fb1u.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqpl07fb1u.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 28, 2026 at 2:58=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> -       if (addremove && take_worktree_changes)
-> -               die(_("options '%s' and '%s' cannot be used together"), "=
--A", "-u");
-> +       die_for_incompatible_opt3(take_worktree_changes, "-u/--update",
-> +                                 0 <=3D addremove_explicit, "-A/--all",
-> +                                 add_resolved, "--resolved");
->
+On 28/07/2026 15:23, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>> But stepping back a bit, is having a HEAD that is a symref and
+>>> points outside "refs/heads/" an invalid state?  Why are we catering
+>>> to such a configuration to begin with?
+>>
+>> We allow HEAD to point to anything below "refs/" - see e9cc02f0e4
+>> (symbolic-ref: allow refs/<whatever> in HEAD, 2009-02-13).
+> 
+> But that was about a low level mechanism that must be more lenient
+> to be usable as repair tools to recover from such a broken state,
+> no?
 
-Should this be "0 < addremove_explicit"? I thought addremove_explicit being
-set to 0 indicates either --no-all or --ignore-removal (via ignore_removal_=
-cb)
-was specified by the user. I think this causes "git add --resolved --no-all=
-" to
-die naming "-A/--all"  as the culprit even though the opposite flag was set=
-.
-Also, it may cause "git add -u --ignore-removal" and "git add -u --no-all" =
-to
-now die, whereas they were accepted before.
+It checks the new value of HEAD, not the old one so I don't think so. 
+The commit message talks about topgit using "git symbolic-ref" to set 
+head outside "refs/heads/" - peff had previously tried to tighten it to 
+reject non-branch refs but that broke topgit. I've just had a quick look 
+at the topgit code and still sets HEAD to point to "refs/top-bases/..." 
+by default[1], although there are plans to start using 
+"refs/heads/{top-bases}/..." instead.
+>  I thought the end-user facing commands like "git checkout" have
+> been tightened long ago to stop users from getting into a situation
+> that needs repairing in the first place.  And that was why I asked.
 
->
-> diff --git a/t/t2207-add-resolved.sh b/t/t2207-add-resolved.sh
-> new file mode 100755
-> index 0000000000..f88e3f413e
-> --- /dev/null
-> +++ b/t/t2207-add-resolved.sh
+Yes "git checkout" detaches HEAD if you give a non-branch ref, but 
+external tools can still use "git symbolic-ref" to bypass that. It 
+appears topgit's rebase command is built around "git rebase"[2] so I 
+think we need to continue to support rebasing a non-branch HEAD.
 
-Does this new test file need a t/meson.build entry?
+Thanks
+
+Phillip
+
+[1] https://github.com/mackyle/topgit/blob/master/tg.sh#L2683
+[2] https://github.com/mackyle/topgit/blob/master/tg-rebase.sh#L56
+
+
