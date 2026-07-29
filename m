@@ -1,46 +1,46 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D5B3E00A1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977423E00BE
 	for <git@vger.kernel.org>; Wed, 29 Jul 2026 23:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785367941; cv=none; b=qE70MGuT414XYBGkzGUCvPhvcJ7HyZljD7WriHI/uO+OoXmLD/DDD2iXsHJks79A9mPaRy/Diy1oai+ijEGk1k30gxzYSu/FaQ3O0Fb+TEoGFH+TmXLKPpiYTuii5yz1DJhOtojn61ClxSvyvRf33rxAH7y/1PdIyGc7vuKfhiU=
+	t=1785367941; cv=none; b=BXNHJ+BF5Nv10t6LQWwpN9XCJfOLzT5AQ6Dz4ymyj1/vSr81vTJqYiektyNC5X3wnu4QmaG4xi/neVY2wv8uv4AGX4tXZz6n5YfgOTVZqdqnDu+eQpS03QvLDaSOXg23K1QKAOQ+SkcvFG4bAEgoT3xk63fyrm/CQVycbElGD7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785367941; c=relaxed/simple;
-	bh=wAJ0FYqP6abP4/BtXbljT55kpZiUsmY7jo7JY3nADM0=;
+	bh=JvPvZ4XucGL9yZGARIV3iowxllQ8XkSj6a0viZ+zlEk=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lz8yxfkWAiJ/zAFgr15c9Bd6s2PG0Fyw9vG8PFt6lM2YFaBTCtXbB+pLMY3xUj/4h1Ml+igS9pMVCAFkgrCKtNcZKA4tFcoa+yxYU8Of988k9sf0mkXOPUKa+2wYuzmeN05aFYNync2Y/Me9LuIJyz32i59u1cmS5HQQjcA0zj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=wP3EnPGN; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=d1ka/9s0Oys8Sxih2HpnseKkZEaKgkAbm+uM7SA+XoytaTXWPEWtonVKHcSXYW4aA72DnADxR/7YXsK0K/ERsTU27JrpEgN81J2KoS79jlQgxdA6v6tJ1MXnfMIawpDwf7XsR7+ImKIDJR4AA/xYEdiE+fYwKkrNxmVmibxjIFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mn5HsA1i; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wP3EnPGN"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mn5HsA1i"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1785367938;
-	bh=wAJ0FYqP6abP4/BtXbljT55kpZiUsmY7jo7JY3nADM0=;
+	bh=JvPvZ4XucGL9yZGARIV3iowxllQ8XkSj6a0viZ+zlEk=;
 	h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
 	 Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
 	 References:Content-Type:Content-Disposition;
-	b=wP3EnPGN3Veh3gsJj23kCYPl1pMw97ITP/8Tl9VNPQutivGuhtEL1gQVOAE5PhTUs
-	 U6X1OteAjAjLKrQet5dIi5V0dhcEUWJOkGEi5Ymdy/mmRIMo4nm9kgA6GszCm4u+yW
-	 IVkNfUvVkpihJ5VExPOyUXadoX3QgRdrcyMLZbXCs6MpxqiJPEmzpybxhAXLls8GG7
-	 i7sbVhzpdTdhGWOS5yYzK3/gYAPTcWJ/Mj3Xp6yA0Yku4u1mINdD3C45S7txMx6HXE
-	 DUwgv8fr3y2irBG0nnF1QWYnT3w3TOgLOpKHZSo6jfnhsC5Rzg58tMBptD7CkOEPIE
-	 9bGiNN+Yj7R95+jTU+a/C4lxpjW+6ANn5gRBETjU+q6Y6wNJO+cCCmMvxTsqTuELC1
-	 r8DLIZ3/os6WOVKwunHBDViAURNdeA+j1zaZUrPuOOx7F6BkeorfFr11nye2T44BZW
-	 +46Ph4CeAGILVPbFDmQY62uTP4Z+SK6SFQChT5hYNwr1W+iGfX8
+	b=mn5HsA1iJ0cOzraeC1SldJQtppOLIBLUC74z5u3upaJEJCJJONF9vYymtqlIeaFbM
+	 JHsMFKzQ5Q5gWe4CZVhzC+xRl7LyHlw8DBSz5hz+QgzXBTsKWOhBEhmYuODgSpXyZT
+	 wCLseeR2tBhY0spAYCIPBlJI4qWZ7nt7tbvgBZb+dfMgmcuURVB9dA6wD6tMxib7mt
+	 EzZj/zo3MggtFEZXNgX6tWSEVXvJMhMb31u2tS06K0BljXuMYi5iLeVXHoBvYFyGn2
+	 s72nVgJc/ujAwn8ASLuokib+bJJ+MADlmVMx04WI8s08z1QnQh17lzhlbakH53MPCG
+	 Suo5xalAKZg3wrGt+ja9h6MSHEjKP5MpwHKIVnEjEBUUXcsIntEh1SFjHQTikN/RZe
+	 it6yXNYpcN3dnqzobZHtY71RuwniF2B5dakZLiWynJvj2Pr1mm8Bkxq1bHiFBDTr+t
+	 EIbBq90dNtkIk7V+os63XlUKSPz0qfbldCQ6j9C134Er7MeigaK
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:c292:4852:9051:fdce])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A9ABB201E3
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9946B2010E
 	for <git@vger.kernel.org>; Wed, 29 Jul 2026 23:32:18 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
-Subject: [RFC PATCH 4/6] hex: label usages of hex parsing for object IDs
-Date: Wed, 29 Jul 2026 23:32:13 +0000
-Message-ID: <20260729233215.398654-5-sandals@crustytoothpaste.net>
+Subject: [RFC PATCH 1/6] hex: add functionality for lowercase-only hex
+Date: Wed, 29 Jul 2026 23:32:10 +0000
+Message-ID: <20260729233215.398654-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
 In-Reply-To: <20260729233215.398654-1-sandals@crustytoothpaste.net>
 References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
@@ -52,103 +52,138 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In preparation for a future change, label the hex parsing we're doing
-for object IDs by defining a constant called HEX_KIND_OID.  This is
-currently the same as HEX_KIND_MIXED, so there is no functional change
-here.
+We currently allow both upper and lower case for all hex values in Git.
+However, in a future commit, we'll want to change that to allow only
+lowercase values in some cases.  To prepare for that case, provide a
+table to convert hex values using lowercase only and an enum to let us
+choose which we want, wiring it up to the hexval function.
+
+For now, keep things completely the same by specifying only the
+variant that accepts both lowercase and uppercase to avoid changing
+behavior.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- diagnose.c    | 2 +-
- hex-ll.h      | 2 ++
- hex.c         | 2 +-
- http-push.c   | 4 ++--
- notes.c       | 2 +-
- object-file.c | 2 +-
- 6 files changed, 8 insertions(+), 6 deletions(-)
+ color.c    |  2 +-
+ hex-ll.c   | 37 ++++++++++++++++++++++++++++++++++++-
+ hex-ll.h   | 14 ++++++++++----
+ pkt-line.c |  8 ++++----
+ 4 files changed, 51 insertions(+), 10 deletions(-)
 
-diff --git a/diagnose.c b/diagnose.c
-index fc11cea229..9c652d36a6 100644
---- a/diagnose.c
-+++ b/diagnose.c
-@@ -112,7 +112,7 @@ static void loose_objs_stats(struct strbuf *buf, const char *path)
- 	while ((e = readdir_skip_dot_and_dotdot(dir)) != NULL)
- 		if (get_dtype(e, &count_path, 0) == DT_DIR &&
- 		    strlen(e->d_name) == 2 &&
--		    !hex_to_bytes(&c, e->d_name, 1, HEX_KIND_MIXED)) {
-+		    !hex_to_bytes(&c, e->d_name, 1, HEX_KIND_OID)) {
- 			strbuf_setlen(&count_path, base_path_len);
- 			strbuf_addf(&count_path, "%s/", e->d_name);
- 			total += (count = count_files(&count_path));
-diff --git a/hex-ll.h b/hex-ll.h
-index fe698f0c76..9da76f17e8 100644
---- a/hex-ll.h
-+++ b/hex-ll.h
-@@ -6,6 +6,8 @@ enum hexkind {
- 	HEX_KIND_LOWER = 1,
+diff --git a/color.c b/color.c
+index 00b53f97ac..9015d0faf1 100644
+--- a/color.c
++++ b/color.c
+@@ -72,7 +72,7 @@ static int get_hex_color(const char **inp, int width, unsigned char *out)
+ 	unsigned int val;
+ 
+ 	assert(width == 1 || width == 2);
+-	val = (hexval(in[0]) << 4) | hexval(in[width - 1]);
++	val = (hexval(in[0], HEX_KIND_MIXED) << 4) | hexval(in[width - 1], HEX_KIND_MIXED);
+ 	if (val & ~0xff)
+ 		return -1;
+ 	*inp += width;
+diff --git a/hex-ll.c b/hex-ll.c
+index 4d7ece1de5..fa85e91827 100644
+--- a/hex-ll.c
++++ b/hex-ll.c
+@@ -36,10 +36,45 @@ const signed char hexval_table[256] = {
+ 	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f8-ff */
  };
  
-+#define HEX_KIND_OID HEX_KIND_MIXED
++const signed char hexval_lc_table[256] = {
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 00-07 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 08-0f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 10-17 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 18-1f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 20-27 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 28-2f */
++	  0,  1,  2,  3,  4,  5,  6,  7,		/* 30-37 */
++	  8,  9, -1, -1, -1, -1, -1, -1,		/* 38-3f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 40-47 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 48-4f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 50-57 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 58-5f */
++	 -1, 10, 11, 12, 13, 14, 15, -1,		/* 60-67 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 68-67 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 70-77 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 78-7f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 80-87 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 88-8f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 90-97 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 98-9f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a0-a7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a8-af */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b0-b7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b8-bf */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c0-c7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c8-cf */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d0-d7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d8-df */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e0-e7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e8-ef */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f0-f7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f8-ff */
++};
++
+ int hex_to_bytes(unsigned char *binary, const char *hex, size_t len)
+ {
+ 	for (; len; len--, hex += 2) {
+-		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
++		unsigned int val = (hexval(hex[0], HEX_KIND_MIXED) << 4) | hexval(hex[1], HEX_KIND_MIXED);
+ 
+ 		if (val & ~0xff)
+ 			return -1;
+diff --git a/hex-ll.h b/hex-ll.h
+index a381fa8556..da1b5239b2 100644
+--- a/hex-ll.h
++++ b/hex-ll.h
+@@ -1,10 +1,16 @@
+ #ifndef HEX_LL_H
+ #define HEX_LL_H
+ 
++enum hexkind {
++	HEX_KIND_MIXED = 0,
++	HEX_KIND_LOWER = 1,
++};
 +
  extern const signed char hexval_table[256];
- extern const signed char hexval_lc_table[256];
- static inline unsigned int hexval(unsigned char c, enum hexkind kind)
-diff --git a/hex.c b/hex.c
-index 6150bdcbf8..4e1e81af3f 100644
---- a/hex.c
-+++ b/hex.c
-@@ -9,7 +9,7 @@ static int get_hash_hex_algop(const char *hex, unsigned char *hash,
- 			      const struct git_hash_algo *algop)
+-static inline unsigned int hexval(unsigned char c)
++extern const signed char hexval_lc_table[256];
++static inline unsigned int hexval(unsigned char c, enum hexkind kind)
  {
- 	for (size_t i = 0; i < algop->rawsz; i++) {
--		int val = hex2chr(hex, HEX_KIND_MIXED);
-+		int val = hex2chr(hex, HEX_KIND_OID);
- 		if (val < 0)
- 			return -1;
- 		*hash++ = val;
-diff --git a/http-push.c b/http-push.c
-index 0cc990d395..132d26d6a1 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1030,13 +1030,13 @@ static int get_oid_hex_from_objpath(const char *path, struct object_id *oid)
- 	if (strlen(path) != the_hash_algo->hexsz + 1)
- 		return -1;
- 
--	if (hex_to_bytes(oid->hash, path, 1, HEX_KIND_MIXED))
-+	if (hex_to_bytes(oid->hash, path, 1, HEX_KIND_OID))
- 		return -1;
- 	path += 2;
- 	path++; /* skip '/' */
- 
- 	return hex_to_bytes(oid->hash + 1, path, the_hash_algo->rawsz - 1,
--			    HEX_KIND_MIXED);
-+			    HEX_KIND_OID);
+-	return hexval_table[c];
++	return kind == HEX_KIND_MIXED ? hexval_table[c] : hexval_lc_table[c];
  }
  
- static void process_ls_object(struct remote_ls_ctx *ls)
-diff --git a/notes.c b/notes.c
-index 99b8b15d81..7e9e3eb2d2 100644
---- a/notes.c
-+++ b/notes.c
-@@ -443,7 +443,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 				goto handle_non_note;
+ /*
+@@ -13,8 +19,8 @@ static inline unsigned int hexval(unsigned char c)
+  */
+ static inline int hex2chr(const char *s)
+ {
+-	unsigned int val = hexval(s[0]);
+-	return (val & ~0xf) ? val : (val << 4) | hexval(s[1]);
++	unsigned int val = hexval(s[0], HEX_KIND_MIXED);
++	return (val & ~0xf) ? val : (val << 4) | hexval(s[1], HEX_KIND_MIXED);
+ }
  
- 			if (hex_to_bytes(object_oid.hash + len++, entry.path, 1,
--					 HEX_KIND_MIXED))
-+					 HEX_KIND_OID))
- 				goto handle_non_note; /* entry.path is not a SHA1 */
+ /*
+diff --git a/pkt-line.c b/pkt-line.c
+index 3fc3e9ea70..338075558c 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -378,10 +378,10 @@ int packet_length(const char lenbuf_hex[4], size_t size)
+ {
+ 	if (size < 4)
+ 		BUG("buffer too small");
+-	return	hexval(lenbuf_hex[0]) << 12 |
+-		hexval(lenbuf_hex[1]) <<  8 |
+-		hexval(lenbuf_hex[2]) <<  4 |
+-		hexval(lenbuf_hex[3]);
++	return	hexval(lenbuf_hex[0], HEX_KIND_MIXED) << 12 |
++		hexval(lenbuf_hex[1], HEX_KIND_MIXED) <<  8 |
++		hexval(lenbuf_hex[2], HEX_KIND_MIXED) <<  4 |
++		hexval(lenbuf_hex[3], HEX_KIND_MIXED);
+ }
  
- 			/*
-diff --git a/object-file.c b/object-file.c
-index 8427b2802a..4bcff66442 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1473,7 +1473,7 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
- 		strbuf_add(path, de->d_name, namelen);
- 		if (namelen == algop->hexsz - 2 &&
- 		    !hex_to_bytes(oid.hash + 1, de->d_name,
--				  algop->rawsz - 1, HEX_KIND_MIXED)) {
-+				  algop->rawsz - 1, HEX_KIND_OID)) {
- 			oid_set_algo(&oid, algop);
- 			memset(oid.hash + algop->rawsz, 0,
- 			       GIT_MAX_RAWSZ - algop->rawsz);
+ static const char *find_packfile_uri_path(const char *buffer)
