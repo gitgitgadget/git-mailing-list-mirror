@@ -1,67 +1,67 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F1A4432E3
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 09:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2847540A924
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 09:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785317502; cv=none; b=UKK9wpQbaYkJbafs6VOLz7bRLv4HqaN27mmEitSeSJRtGJK2SHp5pUD6BfSjFf/SQnIkr/VnvMsbReJDB0Mm3RXl2tWlbgZ+bESc9kCoDiQqlLSTCqWryVP42HjzIy99IlVI40K9gjnD6Fg4Rqceb2YH6YbarkAizX7V2NI+4XE=
+	t=1785317959; cv=none; b=AgB4xK+USVNtr8+UVw/qQu2MAiMTR1jS2/CIoY0qhAZ6dwP8fjtb7rp+eAjwjw7o9lAptmGNUMf2BWPKV5ur4KleBAJpKBV5DHR3taCgL8V/pWIhuqT8QNSKpqd1VUPjJSXn9la3dwvjkYuZjKnvBnY9/azQIsyluBroxzbjxJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785317502; c=relaxed/simple;
-	bh=b/imunS0UMqJDnT+m9eWhBvw3nvuf+qtlVaSeHv2NT4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=l/QQhVIe8jcOkNadFz6xYptWqiJxIrPLVJTrkK0EhAIv+oB2Pv4UjuHSTO+zgaWWuCIxekFHG4/rf0vgI8QHp63wSESQ6VIhisJXFGi+4h86SYzydXwNS/b163W2I/59b6a/D/NXu8+hBI/2zdmdkHwKntDJlvHN+2dQFQZVw40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvbwcVaT; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1785317959; c=relaxed/simple;
+	bh=r2ZEOmlAedUk4a1f8y5z/DF4vNraTWMlW5nS1tZ79IM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NG/u9EF6af60Z0wOSFRChYUL6zAkIAO+pxNIX2A0pvp4aKzyaEJjRhTLgx0AbQbcnAgo+MbS33HyQePb+kY8mCtjA9PwCIlTaTrNEIGS2By34xU9CKe6XZECMMl3f9Wxw7S2fepzLL3/wGm2c+1hrRxpcOZaDl3spAeCm905Jlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nwjV8+Qf; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvbwcVaT"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c1671ec8692so93958466b.0
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 02:31:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nwjV8+Qf"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-69c108fee7fso1054929a12.3
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 02:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785317500; x=1785922300; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785317956; x=1785922756; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=RDhQnq+3Ww+r1HfHesrC3lqE7LgI1gB71iSlb9FtbXk=;
-        b=JvbwcVaTLjIxaRbB1nOCjQQz7Ho6CPrjaZ8B1Bzjtx0kJ6Bu1arqLpjve8gK/PqcWY
-         lE3xy/xVT/0mOb7Yhj+VBT8MosJdZlIfheBMvw9OS3M6TBLs2Lx2mrpZvV/NR2BEb7Fm
-         7Gs3UK8Cm0by0Mjr31ppFhme1vm190N7DJl4kW58XW/RA1QIJR0jv7YTUyH085sxxE/n
-         EGk9MNGOUT12IVrp1pKN4ppR4QlHC4PHOLgRPMdLdhiimSyh0Sc48GGuDhbCEy4pcUtE
-         uALBS/+6+AsdiCbWXT995cquwQS+WD31F8Him8GR1uW22CBprw9rOrAvHMwqwZEUDT/U
-         7tSQ==
+        bh=iJPytyYeXFQo9luIQ+MaHAgszAE5ZbBoPufx12KHvpc=;
+        b=nwjV8+QfQ7b/5Lr+KBBhKmHpYEIEbuTIGWE75ern6fNkWuaG5AQmfLLMUYDIW3d56f
+         y4Vq0X494z27KK3Qw5nSVrN9L/nznxRaMnaO67WiM41wS59NVg+T03VEfSf3vgD12sOr
+         mH5sOElB4diMqvG93LGaWUwGzLrDRttdjPVXdzjohq5o98P3b4NwZKVUQ1IMfsvkA4fg
+         JJnaj55OlKqqy6HAAQYDvBqeyGGelqtR9Wd5L2Ht2JTOtLCpfHHlFBpzbvxfMRT33ECM
+         RxT5w6JSvBnSA1pep73Or3avG33o9bQSEE4YuESR9w3Nnoiy4l1d/guQ7w8XzVaD0cbJ
+         BuyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785317500; x=1785922300;
+        d=1e100.net; s=20251104; t=1785317956; x=1785922756;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=RDhQnq+3Ww+r1HfHesrC3lqE7LgI1gB71iSlb9FtbXk=;
-        b=mNWS/APc9ZBCTBtNeZiArej3+MtTyGYvNgxiSCqmfCz7olJCIBYDhxeooyxMc0aRP5
-         7o+Jh6ZLO0K7GkKVIg+bbTGaVxiXsOs13ttUKVjKm+xGL41YJSIIIq9owdWr9+2zxg+X
-         Muj6qfBDiyWyFIgnlhqRyj6bj8/BD9kTcJtqGZS0HuoSGKzO+q3rZSBVd7pZZWM7OSYc
-         ZVxbvlx2P6V8GjdDLVfHcIWnhm8xxYe8RYiltSQzLw/uyMrQnUKi77s8Ie3tX11Q4umc
-         FUq3GZcs9LfIWfCqSxBxG+j3yt2ie5/xdEwAUMQzREqIW0rnVdYz6HCzrUg3Yo6iXTSI
-         T4AA==
-X-Forwarded-Encrypted: i=1; AHgh+RrUb4QvxXeifLj/eW/PRaWL7z1RGnTKuv/exmQqpTGezy+uOmiWoQepg6MC03TnIwP9jgc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSzVwQq+q1DmLsajkXhy9yLq6AN3E+FWXb60LsesxbX+B+wUDh
-	AlBK0z8n8G3hXl62/xBQOlNgHxGMqBglnp8ouRqTiRZoenafmg9wdNrw
-X-Gm-Gg: AR+sD12FCiE6NQpGc087zS+Lrr4l3eAvveprpup4KapvT4Q41kXUmB3vfVOQjZs2Mvt
-	VP5zLl13TxVSVZGRZxw/2PfsMnKXmBl7KnT8nu3V8bjy5x4vecTiom5EJHugsXa6Wh7IgEzu9U+
-	WIKPGh9NLpDbqrckesVmn7MocfOOadsxL0SifA3KhfldGBPoQdT6fCtpLCsKvWt+CzeFm4Oub6u
-	MVQdhXuAFpHi7GGs5rOQ/KrKTCbB94gKWc39aIE6f3WHpVgH6POlbgIujL9M9+pJRXUAxMKHHv9
-	cEOLOaFgmIflkCDGU/9+u9/oC0ReSz0VnMy2gd/NG5NEkg65KUE3XjCaFv2TDXKu0cNa/PYvimq
-	igaghmbrjKz5fk7S+qtZV31Zo9uNtLxkQyNwpdKgt4AQWMfMn+lQuxHS7d3gt0wpeO4Q6dMU3iR
-	jw54xn8s24WfEIR6BukENiSk0/NQzmkaM2fAO2qtOAckD7UnlE4pXv4emEZJN0jWEO67XjylX8y
-	7QYi3RlT9puWvlt5o+M7pje8pgMeONk/oiRH0qCBY0=
-X-Received: by 2002:a17:907:9617:b0:c1c:62b4:1ebf with SMTP id a640c23a62f3a-c1f721913ddmr348384966b.60.1785317499341;
-        Wed, 29 Jul 2026 02:31:39 -0700 (PDT)
+        bh=iJPytyYeXFQo9luIQ+MaHAgszAE5ZbBoPufx12KHvpc=;
+        b=cDY0qK2DL5g3Vk9KLjKMBAwF1YUGUyIdt6mhfo5TPOIrGj+y1TXAVQxMt0qgyKDDtS
+         aYzIUu6BWNo8y6LH+SNqIMt8UJbZKL1Ta9YzIWGl4+Qgbi0oQLcwuE4DYo9nhrCrdQlH
+         pnHd99L0ENdHDFixBmw82sELw/bnBAomfov5S1TdK/WFfpKPsoRKM1zgvFPxKbfSRC5l
+         yViSWDTnwb2l/8zrfHZlBkuP6ZcPY3bo1Xf5r17uUp4Cgls6MtuNZwOyEuPYcSJDTuub
+         iOfp7H1niIuQqgzy0LZ0rb2tDL5xjgHRxYEKAy+aSwtFhXDEDjPIT3U/gG322ImOLz/y
+         SK7g==
+X-Forwarded-Encrypted: i=1; AHgh+RroHe7AlFmLk0eYG/10VcfqUEuveSL2D9jeMYYeAYDG3fMR0MgSCEFUXqdzhTQ0aM/DTbw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yypl20foTX6Mh5EVL+yYVfqUzlV6sOc4jF+FT6sd+QHMi7sUytp
+	QE5fTeZHx+bpaOyYNL6FbMQKVpJutLgCq09V/YLo0p9jqizLulYiniYq
+X-Gm-Gg: AR+sD11k04LQ7Xdz/g3lMCFDsZJxPlOYwq5LAcSzYMWV8RCBqCDOCUVUUXHcpEqwM8C
+	doY+M5qgXd1CODir+/k2sCNqUnZZT7DN6JKmze2N0G2iy2NObaI/7BvP6znaSLcWJ4oySapSUvR
+	XjUO0b6HvXe9dhdYjbRKnpwDmel1Po+rxWTKjYUin7ZrC6plQt2TQqotXX0Y7q9CdO67b+ghcp3
+	Ms8g99sFsAs+D3XjD47X1SI29fBLaWk5+3sJvtZb+PdLUUD13EvjP/oBrXVphzGhTvhPJ/+Tu3O
+	CcSVpWCg37hHiiGDWbbdf5DpiUNARJbtd3x+m+BQmtrC/arCfOOlVUF/GdpBqR5kfA3sA7m2gcw
+	I4ey7pCNlee3I5g7EVcdbxBcMgldsHTt36fF5xxQhyGbMrhZPBwTjogIcvmcTYp38GHolijsxiC
+	6vKOmXEGoB4iLvOvf2JgjGoBfDXmziOInn7jNuCHcA+JSpjCiPRZkjTDbFLz9lPwk6RPVwMqlHd
+	NWteoGZ/S4wUGjvi2iykBTNbgJEYRUXNOAHxZrx8Mg=
+X-Received: by 2002:a17:907:e1d1:20b0:c19:6d4a:4261 with SMTP id a640c23a62f3a-c1f72510400mr223130166b.63.1785317956068;
+        Wed, 29 Jul 2026 02:39:16 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1f8400fad2sm87019366b.55.2026.07.29.02.31.37
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1f83cdf452sm89770666b.14.2026.07.29.02.39.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2026 02:31:38 -0700 (PDT)
-Message-ID: <61291144-60da-4e37-83ef-fe09e91c4f51@gmail.com>
-Date: Wed, 29 Jul 2026 10:31:34 +0100
+        Wed, 29 Jul 2026 02:39:15 -0700 (PDT)
+Message-ID: <9a47d529-6195-435b-90a6-e511856f128e@gmail.com>
+Date: Wed, 29 Jul 2026 10:39:11 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,59 +69,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/2] rebase: skip branch symref aliases
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Son Luong Ngoc <sluongng@gmail.com>
-References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
- <pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
- <b9a01e9141d580606527cb1a658c7c72710fb013.1784708107.git.gitgitgadget@gmail.com>
- <5bece313-6ffb-450b-add1-29652b64de10@gmail.com>
- <00e529b6-7ae7-463f-a4b3-0991e9411aba@gmail.com> <xmqq7bmhycxq.fsf@gitster.g>
- <8631114b-aa6f-446e-9710-92c400320eac@gmail.com> <xmqqpl07fb1u.fsf@gitster.g>
+Subject: Re: [PATCH] merge-base: add tests for --is-ancestor
+To: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+References: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqqpl07fb1u.fsf@gitster.g>
+In-Reply-To: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 28/07/2026 15:23, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->>> But stepping back a bit, is having a HEAD that is a symref and
->>> points outside "refs/heads/" an invalid state?  Why are we catering
->>> to such a configuration to begin with?
->>
->> We allow HEAD to point to anything below "refs/" - see e9cc02f0e4
->> (symbolic-ref: allow refs/<whatever> in HEAD, 2009-02-13).
-> 
-> But that was about a low level mechanism that must be more lenient
-> to be usable as repair tools to recover from such a broken state,
-> no?
+Hi Nikolaus
 
-It checks the new value of HEAD, not the old one so I don't think so. 
-The commit message talks about topgit using "git symbolic-ref" to set 
-head outside "refs/heads/" - peff had previously tried to tighten it to 
-reject non-branch refs but that broke topgit. I've just had a quick look 
-at the topgit code and still sets HEAD to point to "refs/top-bases/..." 
-by default[1], although there are plans to start using 
-"refs/heads/{top-bases}/..." instead.
->  I thought the end-user facing commands like "git checkout" have
-> been tightened long ago to stop users from getting into a situation
-> that needs repairing in the first place.  And that was why I asked.
+On 25/07/2026 18:00, Nikolaus Schuetz via GitGitGadget wrote:
+> From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+> 
+> `git merge-base --is-ancestor A B` is used a lot in scripts but has no
+> tests. Add some to t6010 covering its exit codes: 0 when A is an
+> ancestor of B, 1 when it is not, and 128 (not 1) when given a bad
+> argument. Also check that --is-ancestor and --all can't be combined,
+> and that the resulting error names both options.
 
-Yes "git checkout" detaches HEAD if you give a non-branch ref, but 
-external tools can still use "git symbolic-ref" to bypass that. It 
-appears topgit's rebase command is built around "git rebase"[2] so I 
-think we need to continue to support rebasing a non-branch HEAD.
+Thanks for adding some tests for this option
+
+> diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
+> index 44c726ea39..d28d9dab2c 100755
+> --- a/t/t6010-merge-base.sh
+> +++ b/t/t6010-merge-base.sh
+> @@ -305,4 +305,38 @@ test_expect_success 'merge-base --octopus --all for complex tree' '
+>   	test_cmp expected actual
+>   '
+>   
+> +test_expect_success 'setup --is-ancestor' '
+> +	git init is-ancestor &&
+> +	(
+> +		cd is-ancestor &&
+> +		test_commit one &&
+> +		test_commit two &&
+> +		git checkout -b side one &&
+> +		test_commit three
+> +	)
+> +'
+
+Do we really need to create a new repository? None of the existing tests 
+do that - can't we just use the commits created by the first test? 
+Having said that, the tests below look good. We could perhaps have a 
+test to check that it fails with one commit or three commits but what 
+you have here is clearly a very useful improvement in our test coverage.
 
 Thanks
 
 Phillip
 
-[1] https://github.com/mackyle/topgit/blob/master/tg.sh#L2683
-[2] https://github.com/mackyle/topgit/blob/master/tg-rebase.sh#L56
-
+> +test_expect_success '--is-ancestor parent and child' '
+> +	git -C is-ancestor merge-base --is-ancestor one two &&
+> +	test_expect_code 1 git -C is-ancestor merge-base --is-ancestor two one
+> +'
+> +
+> +test_expect_success '--is-ancestor self' '
+> +	git -C is-ancestor merge-base --is-ancestor two two
+> +'
+> +
+> +test_expect_success '--is-ancestor diverged commits' '
+> +	test_expect_code 1 git -C is-ancestor merge-base --is-ancestor three two
+> +'
+> +
+> +test_expect_success '--is-ancestor exit 128 non-existent commit' '
+> +	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor one no-such-commit &&
+> +	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor no-such-commit one
+> +'
+> +
+> +test_expect_success '--is-ancestor and --all cannot be used together' '
+> +	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor --all one two 2>err &&
+> +	test_grep "options .--is-ancestor. and .--all. cannot be used together" err
+> +'
+> +
+>   test_done
+> 
+> base-commit: f60db8d575adb79761d363e026fb49bddf330c73
 
