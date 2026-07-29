@@ -1,80 +1,81 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219F33438A7
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 17:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC641C5F1B
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 17:25:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785345929; cv=none; b=R2TzXdv5s9Cjej+t7okq10WXbiF7pEDaXAdDmgxvBYwHzriCIFm12eg/n2rncBOZU7egP2rgMOlOOaa65RDjAW4xK7BfISSgNkDfADBjHuwhrNZZ52/edXzZ7R6o2NHs7neg0IJ2e6+VrnO7CiTx48wY2KPYTmO0DdYgFrj2T3k=
+	t=1785345930; cv=none; b=Vp6FhS6CvOfg0rsrDfvBUYKKmmQgdnsdAMl8CNPmdeWKpTNDkHI1E+4zxiyymPXV8Vqw91FtKrj0mEHWQM9lGv8BWuBhjY2/U7cKHeVA4EueeMP5pFQTQuQC+CXNzR8fsUajVt0VaUx1Ahhrl8qEEo+iF5TKxxZgtVR49CkwjRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785345929; c=relaxed/simple;
-	bh=WUf5W1270UZWme2KXVMENnLsHJXpEpcCCkaACVbKv+4=;
+	s=arc-20240116; t=1785345930; c=relaxed/simple;
+	bh=nARRT/Du9jK3z+sHp5INAuFsk7C55bbXPTje+04dwvE=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+XKEUUG0Zr1UQY474+C9L2W/H/f/66lEv+p4a7jU6SakgrshQMJzf2vQvfTnbJF8sRY9ZbRRWkrpXRv1M1gXwLOK+RC7BekSi6aPERe9RrG9d2WZSAUFg8+HwYSRa/cOdMqhLj/fNrEsgYXW2zmEFXmrGr7W7JqHWtAiMPyLTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mIsHjuxv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l2GxRDTL; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version; b=n7HbXksWurVTAOqdqYo1++RKvzZlk1xMVDsyNW1HLxde6nEMfSzl6Mb0l7cTvv5W+HWOB69MnH7WVCBw7BuHcMkmXaQjLhVMFp8KtldSJAKvVZmZGbL9rFYw8uZxtiINOvdSHIFrGO71q34K7eOt9z0YfnG8X8Vqq1JAWCghnVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nuRIIron; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RFMIhXrq; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mIsHjuxv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l2GxRDTL"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nuRIIron";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RFMIhXrq"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0FF917A015D;
-	Wed, 29 Jul 2026 13:25:26 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id A71771D00056;
+	Wed, 29 Jul 2026 13:25:27 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 29 Jul 2026 13:25:26 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 29 Jul 2026 13:25:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1785345925; x=
-	1785432325; bh=MUMK+aK8Q207Us9j4G6kmXwzcu29Pjf6CI6k3JRPXxs=; b=m
-	IsHjuxvJPEl7lRukTNjtusQtxRrBKMiRnp1jPvb7BY3usmAGUODhK41X67b1b+Kd
-	GcsklO0QZvj6/0ix+QFy9bAyIWq2T7Bit1IY7n/EcPpaddQAi3sqUb0QybJAKXf7
-	CecGVZNeIM52scsvPZsa4yN7W7zsbNgzTIFevKWyeim1pmCM4AYMnL32NrZ7pqqb
-	IeAe3jHZxtjkx0vgS7mFza6EeKL8gZ+npcM2+3kWHV7sgeOv07TEd+wANuzJwjjb
-	zfAZ2qunT2sBzpfLLV4Fwb5djvylswV5MywZP/hzEj0SDe6KqaOghP2JzoMwU4x5
-	1Jq0BfhDk754nY7XMhGXw==
+	:reply-to:subject:subject:to:to; s=fm1; t=1785345927; x=
+	1785432327; bh=nN4mVv1INZdsaS3jNVFOlRBlx90P4hBrgQqzA614coc=; b=n
+	uRIIronJuhLDppyaRB3Vb533F1I9onseEqnUV7vkRvFli679IR/QXYxKSmQdozJZ
+	qm8trDwlzGsAs7WvFy9vZVMGfCWXhx2qHRkB1wuaTTdHhgaNOdDXKlz0LV8mxeeO
+	IL2scL3UMOKyxR4ZocuvHexQ239sKiRc7ZuCk9Hal6wGmCmMEEow5MGqwJXGKum3
+	g5fFZCSwBf2AnJpqiRn6JzgVrbWoShy7U/QyhiGzM5td2Um0pWckPlItsy5g0oCZ
+	j44aoGv4yJGnUgdiy6iVJLK5HAf6FchghWk7ASbo6FVECzUxt6Qn+oj0aq+OaoIS
+	p+aqavnpSIvZqcqMvC2ug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1785345925; x=1785432325; bh=MUMK+aK8Q207Us9j4G6kmXwzcu29
-	Pjf6CI6k3JRPXxs=; b=l2GxRDTLwfc1F55VTf73uifKZlwCAUnV4mAPOUux5PWl
-	xoNxRwWv0gr6ViQOb8w4vkRej/L2bg9n9bp9c3Vhgt83KoU0WSSrWd6lxNqVqobG
-	1sUwYGexBYDLVBLAYjsAcUIb3FOtN4Q200+5SNUYJP1Ag5A9kLfUETQ4h9CJsgcm
-	GjYpZvXv38IJVZpAnDMXjaNfiR9xl+PtI1qrEbgnzXIb0hRlVyg4dtEwxlkPY4Wn
-	4wICMzJEAnjptqJXFDvRUVU+beWGrCUcdIrtqum6JvpROzDvxiLkeKefX+mDi+6x
-	N46+Oqmbj2mTH87uMAKmUnUzR5t2S4+BOb/vepWpUw==
-X-ME-Sender: <xms:hTdqahnUTe0UkP-HpUCjwb_luciPJRKuxrBr4PPf6LYWAByOXLNYmA>
-    <xme:hTdqai1kUQTUn81EaizFos7NC_OfPgEGNKqfVk8kK5wW7rYdx5F4cR5qhYfIM3ykL
-    TNp1atcu0vT-0sd__zcldKqy4nFFjfnSVVmYSYQ0BwTMCR90SYa1ZM>
-X-ME-Received: <xmr:hTdqalQLbYrpOm2Im3ylDNpEia7hzG_ZUzRGtG16qJHEleWIWkb-uLvQhB_4tvsAPhZy9HIzxgeXQhquOl8Tv6sjWlGLgl-b_w>
-X-ME-Proxy-Cause: dmFkZTFT8eh+q27HvXD+Wx8OA1uTo60JFz9BF05YiM7iMz2oCc2RRskRsTqpLdtGOSox/z
-    lqJ2nFcftm39MSsHTROB/6kSWbPHByu/HsgTk6STeF8LRxffBvW6D8yTkXnpy5eQzOdCaD
-    AtBzelXbM5dLaxqF6bp8h8dTB7nFFJ9jpv/5gyoYh0pfSp2iY1s0zSK6jEe6E5CfuiRi6S
-    TJ0V8QPtZ1aqSpdAy67ps0A9vEp+1DsVkrAN6tPXbQi/yX7GHAJRUVUKIjLgsK+GA74z+Q
-    qWx6bEIVpr7KlqcMAlXoT86O8mlRjkl0aIGQ1uxjxSIgni+EBMzRoDSZO7/RORu6wy/Inn
-    zrS/VyRLiZ5msHzcfJlYXOf6ICwRbQhp1TZZ+I/I4/argLfmfsOy4MHQrpOtRXSvN7jPdU
-    zRkrEiGdpyMlYcKdDIU5tAiGSTlCfoY95cC2114Hk7DBxf+Wqr5GG657FUB4+o3ji07FHG
-    ek+BS+s38dmoIayT39ZOTmosDJZ8Z7H5pq91rbl++9jmTuyDtbknMZBO8qmht4icgYSZ6x
-    rydpHlM0kYqX39Z8XEg3fbJp0IzGwmdosrlyPvC1iGMwUpN5NEZhVyD6j//alWMIlOGqyQ
-    Kj8BqLYyR48lYMb47d2srJZXAqlomqMYg1vYKYeAGXX13eUpHPEWfHn9Jh8A
-X-ME-Proxy: <xmx:hTdqasuT5VkUAs8h7sc_Yb0Wh7gfZJbtakJu6atnarKeE7l5YXOzlQ>
-    <xmx:hTdqaibNcrzMpUQ5-v4uoMpsrn63DnZKtQyPnRvxFuZmFoPcI21Nsw>
-    <xmx:hTdqapto0RGSCnbIpImLADga4gBCiM1Tw0arsHJOd4kM7YsL9yA1qg>
-    <xmx:hTdqasF-nW5D1r0ECNzVnBdxsbgtrAtcqQT3I-9nQ-wznZnaoDDbsA>
-    <xmx:hTdqas_iQ2SEj4I6B4j60Rtzj3mAQlsH_iVoWIpda4usquH8HBdDYL1i>
+	fm2; t=1785345927; x=1785432327; bh=nN4mVv1INZdsaS3jNVFOlRBlx90P
+	4hBrgQqzA614coc=; b=RFMIhXrqG0asp9KULjPpHem1uAvb4v8P5U4aYY/I17/3
+	NsLYfmSzlXKWbopiTUbyK7OX3sn8abl2x3yppAIFwWjasl81GEMlYwXNRClrUZTb
+	nvefG8/uEnqAtL4Kd5gjottGSSNK+AvzDvZQl4ne7N/QNDigjz8XVBetn6wbgWyL
+	eiAKX7G+ZlI15cBuO0/hQRvwkTadu2iOsrW5HZj9Ok2zhYBhxRrFzv+KZI845jQB
+	9TNhzCeWmw9ClJt35+fRT2mZGYYi54mG68Pw1tONTlJjtPFQqvRJrAwscyRQmZrP
+	p7uMwBlcSi0Z+2OGOgKT2SbDUPKdCaxUcYFPIrDXqg==
+X-ME-Sender: <xms:hzdqaiMwzXTjOX3rqTQH6HAs3CarjRZwWtt2QV8lbvg0AdP1bqWarQ>
+    <xme:hzdqam-QdKcHnhvYxRkLVY5NqrmMylAAJL1pBrqCdFPUPauz_zz-EZP09SM0OqCIa
+    tHsV_RfyOnetebsgjXbJbwCJ8rAnpZ9xqONFUaso8YljBOzrBGI4Q>
+X-ME-Received: <xmr:hzdqam4vAqOp4ACpCC00otVmhX-AjoFhUjuvG3BzdEq4uLiErqZUAQrBzudBHbLhVHZEiaQXtH5VjoMBSG94sawcmfuxwogh5A>
+X-ME-Proxy-Cause: dmFkZTGGjC09EifXiIGPzrhr12+xwP6qu/lo6FbJgfr+7e0F7A1od6yx+pyTl3GBSGeaUB
+    kwsASOtzOqZcbLqHtvNLniBQ0s0du0m2BAtXxMZV8nqg5DKZkEzNisHHMXDmM3pfBxANKb
+    IimaNrT3pUSHHr+oQdd2w1E2wofmj+erswEhZEXIf0h0cLf6bpXjLzAI02hOZE5NmoU/5w
+    0TN83FvqLiJZWeo/z/wEWLVoz2J50c7GiOEQYqY9xbz4GrKNb9oHNnyK8MSGq3IuAtexZO
+    nWsuRbwjXe5Kh/99zkcS8HhCkxtSi+O9wwgpErdE+EKBJA6YHG8jPRTac3p0YlJB+OCNUi
+    VQDaQdeZ8ktwq4UtjHva8bKz1PMnMQaNkHPblzuufx2J17ZdOO8pagn1rtUb0/LPS4l/8u
+    s0eyfLpAQQ+3MCXS6gLWBonTaJfnBa01vim15wdSXHCu0i2Pp/V6aQa7ZZyo/b2i0rCeuf
+    BkLoRkst5fsBX4/P7elHqdi7FdNlHEmZyff9FPANTGadazS4UD6Dr4TckLbUcnP3VZ21rT
+    fCLp+uU6ZdIZbqpU/JPNwSynEBX9TmpW6Qeg/WXA6lTBLeIo8lj3WiEKeqFLrgRXRsBQ2e
+    QaX/d87ZEH5/02sWhNT/38wlb5u6F+ej8sd2EP8z4I/i5bw2tOB2WcToeN0g
+X-ME-Proxy: <xmx:hzdqat1OzaOKRS5fuTwttT5dL6e4JFi5Bbs8eByerevKbtXdyEazbA>
+    <xmx:hzdqatCfx3bEiyWqm_zWgr_6CO0MK4Em5_a0_mwK5vMx7jqiqycSMg>
+    <xmx:hzdqav3W6z1RvulV-Fi9SFchYFniAUNYCOvz-OiMghDxVObR4bUvbw>
+    <xmx:hzdqanuKYrOc30Bawg0JL8DOBPLvE6D3tmkt_NOIi5qHoYl2O-ylhw>
+    <xmx:hzdqatkL5LeJLFZ3bsmLjUVxnAcC_1CvGxd05nxuFZHG8DeMNnfuMSaB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jul 2026 13:25:25 -0400 (EDT)
+ 29 Jul 2026 13:25:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 0/4] git add --resolved
-Date: Wed, 29 Jul 2026 10:25:20 -0700
-Message-ID: <20260729172524.4022621-1-gitster@pobox.com>
+Subject: [PATCH v2 1/4] read-cache: reindent
+Date: Wed, 29 Jul 2026 10:25:21 -0700
+Message-ID: <20260729172524.4022621-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.55.0-609-g9a17695db7
-In-Reply-To: <20260728215219.753678-1-gitster@pobox.com>
+In-Reply-To: <20260729172524.4022621-1-gitster@pobox.com>
 References: <20260728215219.753678-1-gitster@pobox.com>
+ <20260729172524.4022621-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,103 +84,138 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When you are the maintainer of a project and make many merges day
-in, day out, a lot of your time is spent resolving conflicts and
-adding the results to the index.  It is not unusual to have local
-changes in your working tree that are unrelated to any particular
-merge [*].  In such cases, 'git add -u', which adds all changes in
-the working tree to the index, does not help much.
+I do not know how this happened without anybody noticing, but a few
+months ago we added a16c4a245a (read-cache: submodule add need
+--force given ignore=all configuration, 2026-02-06), and almost all
+lines the patch added were incorrectly indented.
 
-Here is a new option for 'git add' that lets you add paths with
-resolved conflicts to the index, while keeping unrelated local
-changes out.
+Reindent these lines so that they play better with surrounding lines
+in the same file.
 
-The first three patches perform preliminary refactorings.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ read-cache.c | 70 +++++++++++++++++++++++++++-------------------------
+ 1 file changed, 36 insertions(+), 34 deletions(-)
 
- - [1/4] is a totally unrelated code cleanup that almost disappears
-   when viewed with 'git show -w', but it was an eyesore to have so
-   many lines with broken indentation while working in the vicinity.
-
- - [2/4] consolidates a helper function to determine whether a line
-   is a conflict marker (replacing two slightly different
-   definitions).
-
- - [3/4] introduces a helper that makes registering path removals
-   from the index as easy as adding them, complete with automatic
-   '--dry-run' and '--verbose' support.
-
-The fourth patch implements the new feature.  Relative to v1, the
-detection of the use of the '-A' option was fixed and the Meson build
-file was updated to include the new test script, both thanks to
-Michael Montalbo.  In addition, the has_conflict_markers() helper
-has been tightened to bail early on a binary file.
-
- 1/4: read-cache: reindent
- 2/4: merge-ll: consolidate conflict marker scanning logic
- 3/4: read-cache: add remove_file_from_index_with_flags()
- 4/4: add: introduce '--resolved' option
-
-[Footnote]
-
- * This is not limited to my own workflow. An earlier message on
-   this topic worth mentioning is:
-
-   https://lore.kernel.org/git/CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com/
-
- Documentation/git-add.adoc |  10 +++-
- builtin/add.c              |  92 ++++++++++++++++++++++++++++---
- diff.c                     |  25 +--------
- merge-ll.c                 |  56 +++++++++++++++++++
- merge-ll.h                 |   2 +
- read-cache-ll.h            |   3 ++
- read-cache.c               |  89 +++++++++++++++++-------------
- rerere.c                   |  38 +++----------
- t/meson.build              |   1 +
- t/t2207-add-resolved.sh    | 108 +++++++++++++++++++++++++++++++++++++
- 10 files changed, 323 insertions(+), 101 deletions(-)
- create mode 100755 t/t2207-add-resolved.sh
-
-Range-diff against v1:
-4:  c503fbb785 = 1:  e46fe3e887 read-cache: reindent
-1:  03ea86d803 = 2:  b5490819bd merge-ll: consolidate conflict marker scanning logic
-2:  e94e3c1390 = 3:  e1f4aba480 read-cache: add remove_file_from_index_with_flags()
-3:  73679d6b69 ! 4:  b1308a0ca1 add: introduce '--resolved' option
-    @@ builtin/add.c: int cmd_add(int argc,
-     -	if (addremove && take_worktree_changes)
-     -		die(_("options '%s' and '%s' cannot be used together"), "-A", "-u");
-     +	die_for_incompatible_opt3(take_worktree_changes, "-u/--update",
-    -+				  0 <= addremove_explicit, "-A/--all",
-    ++				  0 < addremove_explicit, "-A/--all",
-     +				  add_resolved, "--resolved");
-      
-      	if (!show_only && ignore_missing)
-    @@ merge-ll.c: int is_conflict_marker_line(const char *line, unsigned long len, int
-     +			has_markers = 1;
-     +			break;
-     +		}
-    ++		if (buffer_is_binary(sb.buf,
-    ++				     ULONG_MAX <= sb.len ? ULONG_MAX : sb.len))
-    ++			break;
-     +	}
-     +	fclose(f);
-     +	strbuf_release(&sb);
-    @@ merge-ll.h: enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
-      
-      #endif
-     
-    + ## t/meson.build ##
-    +@@ t/meson.build: integration_tests = [
-    +   't2204-add-ignored.sh',
-    +   't2205-add-worktree-config.sh',
-    +   't2206-add-submodule-ignored.sh',
-    ++  't2207-add-resolved.sh',
-    +   't2300-cd-to-toplevel.sh',
-    +   't2400-worktree-add.sh',
-    +   't2401-worktree-prune.sh',
-    +
-      ## t/t2207-add-resolved.sh (new) ##
-     @@
-     +#!/bin/sh
+diff --git a/read-cache.c b/read-cache.c
+index 38b55323dd..58c378414a 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3910,32 +3910,33 @@ static int fix_unmerged_status(struct diff_filepair *p,
+ }
+ 
+ static int skip_submodule(const char *path,
+-						struct repository *repo,
+-						struct pathspec *pathspec,
+-						int ignored_too)
+-{
+-    struct stat st;
+-    const struct submodule *sub;
+-    int pathspec_matches = 0;
+-    int ps_i;
+-    char *norm_pathspec = NULL;
+-
+-    /* Only consider if path is a directory */
+-    if (lstat(path, &st) || !S_ISDIR(st.st_mode))
++			  struct repository *repo,
++			  struct pathspec *pathspec,
++			  int ignored_too)
++{
++	struct stat st;
++	const struct submodule *sub;
++	int pathspec_matches = 0;
++	int ps_i;
++	char *norm_pathspec = NULL;
++
++	/* Only consider if path is a directory */
++	if (lstat(path, &st) || !S_ISDIR(st.st_mode))
+ 		return 0;
+ 
+-    /* Check if it's a submodule with ignore=all */
+-    sub = submodule_from_path(repo, null_oid(the_hash_algo), path);
+-    if (!sub || !sub->name || !sub->ignore || strcmp(sub->ignore, "all"))
++	/* Check if it's a submodule with ignore=all */
++	sub = submodule_from_path(repo, null_oid(the_hash_algo), path);
++	if (!sub || !sub->name || !sub->ignore || strcmp(sub->ignore, "all"))
+ 		return 0;
+ 
+-    trace_printf("ignore=all: %s\n", path);
+-    trace_printf("pathspec %s\n", (pathspec && pathspec->nr)
+-									? "has pathspec"
+-									: "no pathspec");
++	trace_printf("ignore=all: %s\n", path);
++	trace_printf("pathspec %s\n",
++		     ((pathspec && pathspec->nr)
++		      ? "has pathspec"
++		      : "no pathspec"));
+ 
+-    /* Check if submodule path is explicitly mentioned in pathspec */
+-    if (pathspec) {
++	/* Check if submodule path is explicitly mentioned in pathspec */
++	if (pathspec) {
+ 		for (ps_i = 0; ps_i < pathspec->nr; ps_i++) {
+ 			const char *m = pathspec->items[ps_i].match;
+ 			if (!m)
+@@ -3949,28 +3950,29 @@ static int skip_submodule(const char *path,
+ 			}
+ 			FREE_AND_NULL(norm_pathspec);
+ 		}
+-    }
++	}
+ 
+-    /* If explicitly matched and forced, allow adding */
+-    if (pathspec_matches) {
++	/* If explicitly matched and forced, allow adding */
++	if (pathspec_matches) {
+ 		if (ignored_too && ignored_too > 0) {
+ 			trace_printf("Add submodule due to --force: %s\n", path);
+ 			return 0;
+ 		} else {
+ 			advise_if_enabled(ADVICE_ADD_IGNORED_FILE,
+-				_("Skipping submodule due to ignore=all: %s\n"
+-					"Use --force if you really want to add the submodule."), path);
++				  _("Skipping submodule due to ignore=all: %s\n"
++				    "Use --force if you really want to "
++				    "add the submodule."), path);
+ 			return 1;
+ 		}
+-    }
++	}
+ 
+-    /* No explicit pathspec match -> skip silently */
+-    trace_printf("Pathspec to submodule does not match explicitly: %s\n", path);
+-    return 1;
++	/* No explicit pathspec match -> skip silently */
++	trace_printf("Pathspec to submodule does not match explicitly: %s\n", path);
++	return 1;
+ }
+ 
+ static void update_callback(struct diff_queue_struct *q,
+-							struct diff_options *opt UNUSED, void *cbdata)
++			    struct diff_options *opt UNUSED, void *cbdata)
+ {
+ 	int i;
+ 	struct update_callback_data *data = cbdata;
+@@ -3980,7 +3982,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 		const char *path = p->one->path;
+ 
+ 		if (!data->include_sparse &&
+-			!path_in_sparse_checkout(path, data->index))
++		    !path_in_sparse_checkout(path, data->index))
+ 			continue;
+ 
+ 		switch (fix_unmerged_status(p, data)) {
+@@ -3989,8 +3991,8 @@ static void update_callback(struct diff_queue_struct *q,
+ 		case DIFF_STATUS_MODIFIED:
+ 		case DIFF_STATUS_TYPE_CHANGED:
+ 			if (skip_submodule(path, data->repo,
+-								data->pathspec,
+-								data->ignored_too))
++					   data->pathspec,
++					   data->ignored_too))
+ 				continue;
+ 
+ 			if (add_file_to_index(data->index, path, data->flags)) {
 -- 
 2.55.0-609-g9a17695db7
 
