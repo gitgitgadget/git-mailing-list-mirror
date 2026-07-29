@@ -1,85 +1,81 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9B9282F35
-	for <git@vger.kernel.org>; Wed, 29 Jul 2026 13:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E694C041A
+	for <git@vger.kernel.org>; Wed, 29 Jul 2026 14:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785333000; cv=none; b=bMYzI3Wkph2QE94bsSKxQknHhEVvFMpH7FdT9N/9UZTOt0pVfXJ+RrjZR5y12OTWagSh+f3j2eQ07NsfhKO6QuzJwZp8+W/p9lFlKkOlBpXIftVLHqzPVbx7c0QUYjRcGM+f7oo1cLSHnwJLz3k/L6Txj2A+o4Zg0dTIc7ZFjT4=
+	t=1785334719; cv=none; b=Vv4E7lyYh06lHCT1jmU/SWD/usuDvaPFs5qgH31aHh3RpwfTBHk+EIenpn/tb3R6GSMI71evunCDPY3TvoT9mmJ+H+bI3RrFDx++VpMmGPZG8VNBXroQCSIkndhYR7yBP01q9bIAL1eBTh6UjAFIeWpR6aFNmXUEwPDYWVk7aew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785333000; c=relaxed/simple;
-	bh=l0JI82iapA2N609kNKVrgv+/WRIvnnGiUmHrcBBdExA=;
+	s=arc-20240116; t=1785334719; c=relaxed/simple;
+	bh=PhAAnV4oNYXtFSTmpb9GFfLcmPgDR5AmHFAznILzNA4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X8fafQxuzlYSZWYG2PbTmRfJwhmxzlOvxm4wQtD1xA0szDz+7ts0R/guPS1yWzKl9GGxOtcI6zaBRk6X2ARffQxzF7wrlNNfNLWcWpiafcRHbszhOYctCv0Qv3alvPFVDs5F4zGnm0PbnI0uYICTF/A6Zb+NZgv91j5ifuPoSpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZQ54l71A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CsgCRewN; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=g8r1+S/JVcX/68DzKWMqnHKDnGIYDkUct94uxsWOLLrNncbxAL1KhPG9bSclxeeJ01rcoRTWvRt22x7dciU0fuOuK5TAvEkh44viAF5SnVYt0Q7IkVWluqth8r3/m4bFlNGatxG8cFWOKyalKafwBe//jf/G7G5p1yG+eBz/3gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mbyptnCS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xuh2M4Kl; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZQ54l71A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CsgCRewN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id A9A231D0017B;
-	Wed, 29 Jul 2026 09:49:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mbyptnCS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xuh2M4Kl"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2005F1D0013F;
+	Wed, 29 Jul 2026 10:18:37 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 29 Jul 2026 09:49:50 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 29 Jul 2026 10:18:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1785332990;
-	 x=1785419390; bh=9HIeRJoWRfgBvNZJs/xCzCPDHxOEKBlGj5h9lkAEjq4=; b=
-	ZQ54l71ArEXII1QnccYYIfvXTa5Rltk8pKCaY1u++XU3zetstLidhYNDSBrIhZnv
-	tvaxTjUiSIG0Id1a9KU5M5ZLiLcmycdZsKktqhpDsLxTWEOdqtgvKLjg3WNVxldO
-	avWxQV5hfXNDKco0ZfeqVaTn9vDYl5DyXwmYTYQje07Y/xhH5PbVAOM+mRS9teeS
-	1xgNyEWxVWbKH2PO91n0B3KYuJ8CmWuZynGUKxomWHAuAeR08PpSRTCHbpXkuQg9
-	NWGf8GFFPg0E1Kpmaq6SzWPNBxfA/CaZ9Ra2JFnsgd3IGNkVviiqg3B0YsalCCsM
-	PAJSpmwfBTdrqFz6NUju0w==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785334716; x=1785421116; bh=4NAYt+ywMt
+	ZEI0IqQB9hnQir1oG+trFeY530/UOFA7M=; b=mbyptnCSDwNxZX0HEXb1yL3bt7
+	UJT6dKXs6qweG4Z+2k/dv6UwmwgR3jsqHspyYCCLJ5bb8c7YtaXRL85xD+sfZfzB
+	y+M9sqxwE03/QweTBd3T6wmhy+P3JH/S/a9fgtkBDBck6T/N0nxThDGZCLkURxF+
+	/UIQVF2C1NcEw2JUzf64sIXtdAhtxnDuHkhMY3bIW8MZeX5rSDe2oEEXLbOZiNO1
+	+aNnNMnPpFc9xR0XSD+40bT+3pfv4CIrVPbaYtlzgjqpJH09gSbPx0kQxhdTEhRI
+	CCQyS8NXS4BrAmue0W+oZKLq3+S/6Zt61UwrE1fKaTBFPgBMIAEJrLsm1iNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785332990; x=
-	1785419390; bh=9HIeRJoWRfgBvNZJs/xCzCPDHxOEKBlGj5h9lkAEjq4=; b=C
-	sgCRewNXvDG4MinvXDPmBq5LJUfZNq5C7ps1KoaVUI3moBjkjeIgaGS5r7rRDqNj
-	wzf3UImNYaYdKNRQLcPheoGnUKH75IZH2FgkmGtlyKLVM/OoS6tXs5ktNMiZ7K8a
-	G/+/MYxIV+9RTAzzsPV/OsYffJcCIrobNHAKde9QleRWSsk6ldJsDoKHprpb/NBt
-	VFUEtww/uKq8Zf1sivCMXesiiZognLVeRSoyodVpIjy7Mkb79BuAMhpoRawjyttC
-	qM8dkDIMvYaN1xhopOsDFnJsSasAQ4ptfkpFQcnbdsu/TPChSH/Zs35MJ8Q1938G
-	C9nwmpG9y7jrIg2InE3gA==
-X-ME-Sender: <xms:_gRqas-OhTgGyHJZMmM5RmGNL6FOI3-TPPdo7nxQuSNrmVH7dwu3HA>
-    <xme:_gRqasK_0eloAFZ1TrexC1M0bNQ4NM6xeFtJRo7_TmWpxF07Z-Q_H4bhLKZsJ7_dC
-    LSODSgkqyapS5mc4TwOAIlnt5z02jLHqceV2C1-emfZm2tU_32jNQ>
-X-ME-Received: <xmr:_gRqavb57DcsXRmV0mEINAjI7mIq0G0mIaxIEO3mDtkNl1c1zWuKFBJCZgyfnYr4vwIkcuW8x0ZUmY0Rn_kg626QiTYSYzA9yA>
-X-ME-Proxy-Cause: dmFkZTF2vwA3aAOnqlcwybJwUGRRJkwTj//JtcYWOnZsUDN7jvZ86Agzsm44oz80CkNo7Z
-    8Hk4gssk+AYEoWwiBANx+fyCy5YT46CtXyoaiLSlAN6Qf9pIFtARJd+T0R8GspNIt1MALk
-    TI1cpd1zkPX/fuceQjmx9G3HJLISP+PJfOzV/VCMcQ2e1KAyOICYBqLMtmFYvArEzWBcNT
-    L2du5A8dMP/796O2AM/wtcCTz7I/DJDgGt/Z37WX3oaRjoDqFM96unEVOxPGvV8aTyi31A
-    DyEXnoZR4tq/xzdr6SIMgf9q3uVUh48gsKuxfxjQg76/+OIyPoerxtSQs/sEhYOK2FuLsH
-    L0pS3u60a4MXfWZTAJ21pglW53xkcJLyI1saeIB86X2JNxPJrjSbnyJeGj1AhkvPXSM4fg
-    024kaa4yZPi03skhgaSR+MmOlUKWgTOgu1fsCIuqtYdnWzks80SqsJ1oVmAA2GtKJPtbHZ
-    h1424EQQEp9A5PqFZUfVU9dRvubRTOiidP/BMG1wItdNm1naUzLrpAuaSqhm8TTA/BTeBF
-    yrwkfICHVyev8wMoZ4jDjLMct1zwLp4RVC54ZhpBb/4tp2RbHXxmYhcs+13JlCfuTvKhln
-    NwcryoDQTyItZ24xZNpIxy5GPGpn5LbXnIZ2u6j5M9skLVCO5V5LQYmAtfBA
-X-ME-Proxy: <xmx:_gRqamL1C2T1L9ng0cQ7MKL-JQALJOJu_EfguPQOXF1rudteenEKRw>
-    <xmx:_gRqalACR_Qhj6ItgIcGRKp39wekOxSio9mmOyaQrhqZ9Jpoo8iuKA>
-    <xmx:_gRqajpdoVq6DOH7-BlYj2YyX1nRc-v7VOH6O5CNHsbtak747rmFMg>
-    <xmx:_gRqaojXwTtW8hhfK9qshFPBYd6fUYqIHI14PhYK2W3mWmMIqCBZbQ>
-    <xmx:_gRqaoLwwa6VsCaEoWG3Rb5Hue3X7_JKOSiQxgCHpiZ10AgjZm8Gjzif>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785334716; x=1785421116; bh=4NAYt+ywMtZEI0IqQB9hnQir1oG+trFeY53
+	0/UOFA7M=; b=Xuh2M4Kl8oYENqeWMuteb1jdIa162HcFZz2nohCVIl+KyiYtzEl
+	0eCj6MGZPZwHfk/ZM7E9hG2T0qrlJsvLXf1V4j5naTLyuNpOSfO+wg7sVf72b0wZ
+	hNMjN1+iBtQ3EbxSiuzqFt5CjcHw5JTeqr47q2PWCs8hSg5tQKW/LQrpc6TpDCdf
+	Q79+AtOA2v+VaSKEKhy5uqc/EG2P/hhphabLcDghC6dPwxbst3K5giAoMDDpwF/5
+	rKOldRr/HpPMYRktxKMCgOuFf+Lsm2d8Uvt4tCtsFO+gwqIN7fD2RBkLsIrdqpLV
+	Ygs1S8ewIn76Idzsb0HKDBHOSsmEU0Nn7Bw==
+X-ME-Sender: <xms:vAtqakvlXT8Rc1VBajUQKr6vQm1kWdsbFT9t7uf1YmgZ8-bCaDsUGQ>
+    <xme:vAtqaofDTiXiufD-x3rEkXISORB7vKaenBJjed2N4U9QYJ1VVl4okYAK1wTqn_CU_
+    _Txg4s_ajbqi8bWL2NXeS5Ixxg7gJu-vaLtu96eHXo73CyNman_WHw>
+X-ME-Received: <xmr:vAtqakyYkmZlyGNytF2jjBvW4wIspU9IvfgT1bLXovPrIXW-l4YIh-k-J_u4R8cl5Va1vX7zKlOMh1KybWviXNSsMmU2dSv7Dw>
+X-ME-Proxy-Cause: dmFkZTGcuCoTrAcmCxBo+aU9PYg/rzt090MVZ47pexlclevOQ1cQvNmGJoTfX+D+YEhmHj
+    /VKFNmzOSaU5N/4sOAk2/OwcDnNQd1VHe0MZld+PlXxpMTzJTynOdiiJWNgGWfDzZoNuYm
+    LooRWLDXH7iiLWpHT0P6nsxtecca0dLoldfQttqP+zO7nCVZ+BjZx0QVRcYomIIl94TRnZ
+    aSCjn48dtLOf1UHwT2uPV0kd6ZaHwinGIlozn8yMbJnPadFfTWz9A+pEfKvvkTv1ln8Kik
+    9IlZqf16LG/M9RZ/r4QLOBD14YYP/DTKze+BfD8gaLJlObSE8PJhDD+cl1UKRa3kI3A7JO
+    ig7wgMLABie2aGU3TsFSv/SScml6Pnyu1/uzY/Fh220Iom+42Wjw6lNjuiLWmh6aLlXgt+
+    0j6pE6R6QUSnkOacF6ZVsIYjFHxav2wwN58K+PWTZ8vkFfDV26UffKQP/E98766qZKdyUq
+    07VVEh7tC4JR3xkacAikVwEJNDS21iJm2hRyE9kKYCq+Na0y1gTW5eXU3vadfoZIn66eLJ
+    1xRdfoDJl9IvxKY3G+J8VSF+be4Mm0dsLzv0P+62yCffe8a53/1etqzMP4J8a/Eh/3hAV9
+    ais75bLWQZGXY62m6lKhuRsugnziIWA0VL4rweiJtAUvDncDus7c5NR0S5hA
+X-ME-Proxy: <xmx:vAtqamEub4gyEeRquGKEnc3jmCR50Ng7WNBfvOvDaSBiA33hjBnTCw>
+    <xmx:vAtqagwbr4cYRtC2YlS_sUk686QDguML0FblkeVKCdpHvaxGdVf0UA>
+    <xmx:vAtqavuZgb1dVys9m2UkH8R5b4f657fproPGZeuw77YKW-yWyDxM2w>
+    <xmx:vAtqal0l1UVkgxFnN63VtX1QDn3oPXKgUJpIj_Gc1sxJ1iCgUk3lDg>
+    <xmx:vAtqaoSVftnD6jHSmUUGwET_ty_4ahIgC6D44vFYV8U2_J91fIs5Bf9k>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jul 2026 09:49:50 -0400 (EDT)
+ 29 Jul 2026 10:18:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] add: introduce '--resolved' option
-In-Reply-To: <xmqqcxw5c3na.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	29 Jul 2026 06:43:37 -0700")
-References: <20260728215219.753678-1-gitster@pobox.com>
-	<20260728215219.753678-4-gitster@pobox.com>
-	<CAC2Qwm+AmeDubDrkLmu8Rz9rtO3697gokwF2=2c5PgP--hZT2w@mail.gmail.com>
-	<xmqqcxw5c3na.fsf@gitster.g>
-Date: Wed, 29 Jul 2026 06:49:49 -0700
-Message-ID: <xmqq8q6tc3cy.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2026, #12)
+In-Reply-To: <f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com> (Phillip Wood's
+	message of "Wed, 29 Jul 2026 14:24:00 +0100")
+References: <xmqqfr15ruw7.fsf@gitster.g>
+	<f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
+Date: Wed, 29 Jul 2026 07:18:35 -0700
+Message-ID: <xmqq1pclc210.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,47 +83,49 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Michael Montalbo <mmontalbo@gmail.com> writes:
+>>   The experimental 'git history' command has been taught a new 'squash'
+>>   subcommand to fold a range of commits into a single commit, with any
+>>   descendants replayed on top.
+>> 
+>>   Will merge to 'master'.
+>>   cf. <DK1KIF2OI8IF.11188A3YEQV1C@lfurio.us>
+>>   cf. <DK1KIH6CXW0X.1U2V3GU8L6HB7@lfurio.us>
+>>   source: <pull.2337.v10.git.git.1784536024.gitgitgadget@gmail.com>
 >
->> On Tue, Jul 28, 2026 at 2:58 PM Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> -       if (addremove && take_worktree_changes)
->>> -               die(_("options '%s' and '%s' cannot be used together"), "-A", "-u");
->>> +       die_for_incompatible_opt3(take_worktree_changes, "-u/--update",
->>> +                                 0 <= addremove_explicit, "-A/--all",
->>> +                                 add_resolved, "--resolved");
->>>
->>
->> Should this be "0 < addremove_explicit"?
->
-> Thanks for noticing.  '0 <=' is absolutely bogus.
->
-> I wonder if we should simply write 'addremove', as this part of the
-> change is about rewriting the open-coded die_for_incompatible_opt2()
-> in the original and using die_for_incompatible_opt3() to add a third
-> option.
+> Oh, I'd missed this going into master. Has the implementation received 
+> any serious review? I've seen messages from a couple of people trying it 
+> out but I can't see anybody reading the code.
 
-Not really.  I forgot that addremove is futzed before this part when
-add_resolved is present, so using addremove would mean both
-addremove and add_resolved are on, mistakenly complaining about -A
-that the user never gave us.
+Thanks for stopping me.  I am happy to immediately revert the merge
+of this topic into 'next'.
 
-So "0 < addremove_explicit" that is.
+Perhaps I should re-evaluate the "What's Cooking" report and eject
+other topics from 'next' as well.  There are indeed topics I did not
+personally read, relying instead on impressions from busy exchanges
+(including earlier iterations read by others X-<).
 
->
->>> diff --git a/t/t2207-add-resolved.sh b/t/t2207-add-resolved.sh
->>> new file mode 100755
->>> index 0000000000..f88e3f413e
->>> --- /dev/null
->>> +++ b/t/t2207-add-resolved.sh
->>
->> Does this new test file need a t/meson.build entry?
->
-> Yeah, it shows that I rarely exercise meson build.
->
-> Thanks.
+Are there other topics in 'next' that do not deserve to be there
+yet?
+
+I cannot, of course, afford to be the sole serious reviewer and
+merge only those I have carefully read through, given that there are
+only 24 hours in a day and I have other obligations.  So either our
+quality criteria must suffer, like this episode showed us, or more
+topics must be ignored.
+
+> Having a quick look 
+> through it assumes the presence of an UNINTERESTING commit means we have 
+> a BOTTOM commit. It then assumes that UNINTERESTING commit means we 
+> cannot reach any root commits. Both of those assumptions are false I 
+> think.
+
+Very true.
+
+> ... I'll try and go through the patches and produce some fixups, 
+> though that may not be until next week.
+
+Thanks.
