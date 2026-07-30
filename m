@@ -1,113 +1,164 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBB73B27FA
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 09:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368573B27FA
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 09:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785405530; cv=none; b=N9/4QRqJNBnuxmR+jhA3FuZFrELOgJ+IyMNt/L5PZ8wnv3kByDfeRJDikTdw+idqQTOZIu/3BtogRdLD+bZvy9+UnWj9ipxiVsSJZ/THW6DJjDOqWYWoOjhnJn9IDEn+eV1QyAs/O+/uRoS4hi3VEsL0lt2r1fTw2uVWDDjWuw0=
+	t=1785405533; cv=none; b=Wkx2YBSs1+sLUA1tqJKL4rK0Q7mWdgk4opOqV/RwLwZFmruaguPVAbD6xeO6DYrIkhMpJ7KwDYftdXuKOQXhoaav2UtkjV+dP2a9tca5C9DUWv79YyFh17u9tgpJTyxdmIEiuDfy3TCpqb8gmJJVfIL0tIb3QHyvkCIcSup6FcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785405530; c=relaxed/simple;
-	bh=097IOzSh8Jm1KtjSvOR1A++CDnU+YBzZ7gsqmCk4E4o=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Lz+4h0OQaIdmR5IifDkzpENTs26bYuSOqxmY93SWd6W/nRe/eXZLqhPmKaCk7lku1HzLbVgyJ5QfJA+n2vQXG5kZS6jSrFgibsHfXdfoQoZBoBgSUDbyfobX6NdduF+WxCIK3rD6LzpBr4xSb1rFJ/UK2w+xKJjraVs/zd7xkPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DwOhqvpC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CVulUFHS; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1785405533; c=relaxed/simple;
+	bh=5Kt6vUhlAdd6tVMnfOGMH4wsTDgeAvOt66VboqS5YUY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VJG/d/MCNxqr9NZnCVd4xbNb9Oo5knswiSYdaxJqeGGixRxriZzfUNntpdS0LUTvtDEfTQ1jIvDFQ4F5XG5JbYit2xuPVJt9u1h+BYlJWh+BSaKaV/YM6svxqlmpQ0ntpcqzzEEQngPRvm4HL6RWGX66EVPRUJ1jUGnYkq9FH/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cQbc2R2i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mcUDDXdQ; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DwOhqvpC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CVulUFHS"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cQbc2R2i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mcUDDXdQ"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 420DE1D00136;
-	Thu, 30 Jul 2026 05:58:48 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 30 Jul 2026 05:58:48 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 9C22D1D00100;
+	Thu, 30 Jul 2026 05:58:51 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 30 Jul 2026 05:58:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1785405528;
-	 x=1785491928; bh=/Ai/zdzBDNcAd+c6UQ42XQ8abWX5T4ZKx9k0xZcchbE=; b=
-	DwOhqvpCrvsjj9s8sAuCCSbTHtaDtnFu3sSuc2u+CjDWCmFtTilJpJIxK2GjKNAB
-	px/5T5jHAimw+kJ/vlZq46rELXdDVet6Gj5tX5GoIprl906lssKyZVQ8ztbrzM8D
-	J7k6R26ATpRXKkzXlnuV7kzRioihd12Bm28kxdHI9p++4qz5MXYTexYdxDYAGZ9i
-	fz/fM1Yes7TSJFNLRGyeu71R/eHvWWv6B5iNe/auyTC+bZS7IuHUr9MHoaMiW8N8
-	wZqctMH9ezh2m7nsiTBQhIW0043CyRrGTJWJhHJVBNk20WFa1cZoTJsDllaHwvn4
-	juC5OPFO5MWn7OZXntfGeQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1785405531;
+	 x=1785491931; bh=Y6TFVl1BvOqyMFEJITy+xRES/uxfN/YvxpkLhq7QYU0=; b=
+	cQbc2R2ibDORTbsYxaRIJRcZmIjvIhgmdJUVu5UoEYssyNfiUtbrGsoVl4s7PVeW
+	pcKX1a1TGHBY2XCrjHZLrCOzrGGjALFo/G/yt3bFYEB7gVNJqG+2LKCn3Zg20+vY
+	pQK5NvcmsftvcBkxdDa7T4L5EYtnxXvGkEFUXzLIHiP5YJH5g6tKjTkjPTY1sLck
+	vOx5UNUEAJdoe84uxzb4NZ9r6eodmr7PZu9Plf6hyHyfrcjntnaSL2QpZOwgXiLw
+	ftYY1cKwKpXv+Y3+mCT6NqdDh1YHDMJKw3Ja9DJqOerUoPDhsUCS2XRznBWnQsRu
+	U69Oo3mhRP6sfvMNdiiUMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785405528; x=
-	1785491928; bh=/Ai/zdzBDNcAd+c6UQ42XQ8abWX5T4ZKx9k0xZcchbE=; b=C
-	VulUFHSaJ0pv48FmLnB7rDvd7yljXb2i3UD6u4tERvDz0+5MqtfS0bsfQZxnJeZ5
-	U9OXI0ogd2YXInGLJD21O9LzIfaNR20X/YqOyE3pYb886nO+O0QElPnrTBUZah1D
-	ObQYxBNNtYsXMXV34mYJ1zHoklYAVQexjawWrHvbI589dDVSfOdWa5ILiHwBhY9J
-	AQS0fCpdaH8H2mGaG7xPlEUW/3DtnvhpTVwAvF97kahg8h8uvDq+6gr0mv05W/ai
-	zO0bvJbaSyX7fFXQ4ij6SlmR7GNdPHw+Bj2CEYglZzl+GlrTIm4KCYZ9Nn35bacz
-	QZH5cMndBErqLD86alysw==
-X-ME-Sender: <xms:WCBrarySfK0K2sAfJ9ScUdhSbK_J6TMKCYi7qkb3_ot2sGqhdn8a2aU>
-    <xme:WCBrauE1vvIbZux7DB1zvgyIP8dyIcffhWo3xaOGW8CRYO3rRWVOEK2NAQTaXgEWP
-    AKnQOJauU5AI8MdcppNAQulxhD--KujYOweWXh0d60AB9eBRBe4>
-X-ME-Proxy-Cause: dmFkZTEFsKVvYhEK/usVC4fHhIbsHjYCEx5m7vMTL+ev8kFWKuFrHx4sH2wjqlcjTL4WlD
-    Rjt4igTc7upShh2h1MzvflxAKfowLp0/D80jQsVo5ah92k3v3W4JFvvFNTvwfdpvcSPncL
-    DTbeS8ueQ+MRUwL4unO5yLlr4CtaPLKQ5nRT+VK8OOe4qmvAcNWSOHk0oZrTcHgd5y3L7/
-    rp7KYfKR+uFsEEP8X10mLVRjv8VcLrNwQS94mYSDFGGDGP27hclqUkb27qcIqyjvyd7Wv+
-    71ixH+n/2Uy5Lkb4aWn66+FxBkY+U5yer47ZQCyvvjec2r/UwDqkifqaNylIVitr/hZ7Hm
-    lMeyZvBRsCrSVUnflPKGkZOBA2S8beB/XJEw4smXjhLzB0QsuOXo0Igg9BhVcaa1mp34od
-    apF992MogaX1C43uu4iFx0uQJPacj2MyftKgXdvp8fAnyo2vF7+uhNungnYBMxnTiY6ibC
-    WmWlofRWU+bw0V11J3+PthTmsPsuJ4XC+NGP0cLfkcBw7/VWIaXmnN42nGRjVnVTcu4gVV
-    VY/r3JHu6w9kA/LtnFxmkEP0330QJWTi+zomwPQ3qrhEd3DGol1CD6GY+HwDupLe5EM4XV
-    Nbs6CpVGNBJi/MgghN58XG0YeIDYcvNG0dJVzij/wvXkJTjkY93+W0mFl7uA
-X-ME-Proxy: <xmx:WCBram3B8cdkfDay9uQMlALDMtv7IkSbPUCYG9TCFSKVy5iU_mN1yA>
-    <xmx:WCBraqlz1LFGjrltXO0II-tawM--aZ3am2s-GZnhJ0uxWlakRfmuYg>
-    <xmx:WCBrau_RQPpZMdCGb4EM0CBMwuXIzuB1AwkGyCxPfXgIOp3N2UgJxA>
-    <xmx:WCBranp2hpgavfvHC3S-Gg4GhFAqQydYLlARnXW2FfWGSmdeu8gRCQ>
-    <xmx:WCBrajJN_oJ3SZWi3DbDS1vC660NGx0acs1RUpu423dGqbcq0hDNQjV7>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785405531; x=
+	1785491931; bh=Y6TFVl1BvOqyMFEJITy+xRES/uxfN/YvxpkLhq7QYU0=; b=m
+	cUDDXdQdJaWYf2XjaD+4GpfYFJy2euIZz02wNCpDIRW2ioxm79lFGp42r5UQJovw
+	foBkN9CtJo6nOxOqSJEaBq5ezkGPA9A+igfE+XWSE6m0JuHlUrUKfdDp1WUntPMD
+	93uh6Qy7ty0LFbHymWYU/qaaCwhq4CPaqmCHAhqAoymce+X9Pu+3Qfn6HuRt+xen
+	8CZoHWwOYhbFZRrudXmW/5jme/IxyPBthQVITVQGBb42411HWakz+j49t3qhXcXZ
+	3qhx7UM+D+rpwTCdq04cY4khLV/w9QafvkkswswTUZYAz6fKIaxig08d9k6oY9fC
+	TMO2hKxBjcH2wGXKJ8yLQ==
+X-ME-Sender: <xms:WyBravxibCVCLBRcJx3XR-EShXq3acCrOG1LJJG_hcWrdQwmBsaFr-0>
+    <xme:WyBraq_O1Q-Lturfu2nkwCM6eIAGjEkFbYhwW3ET4FwOWF5sjDFQBBnPs236VfzT3
+    eF1j_-TY7PbJplV3CTw0o1yRCswIBB6ZvN4IYqtYYbT9l0cruxqUA>
+X-ME-Received: <xmr:WyBrajKV0WkMMlRLNhUI5a9mWWe4hmKaO3uaVN8sjQ3oKPrIB6l27HVcvx43mWEKfzY5iOGnVPKmRrEp2JqYgLYQNpXVf2tpCG4_2xI6xR4NfuAL6HVh3XA>
+X-ME-Proxy-Cause: dmFkZTFfu9LVkCyNTP6+w6+0ZCMcaqhCtFuyvf05XAb4FwXSPv/MYEleVb9TzBk6Qvz/s/
+    IvygWfZN6VHUHNxSYD44KjA8ts2v64690aiuIXPk2zZgmLp5nemG8bDjADJEypjZhi+ZEc
+    6NSnUpjHltimymeQKG/qtUMEUu3geU96gM/0U2aarlp4dLDm3/R5N7Vy/H5zBuLV/4h8iq
+    busaVXOq4HOpzpeBHnzN1gkbuSbXE5CbDozSB53iqgdQGTaWYZk6ohFf0mRDBzIk7vuWgv
+    HAjm71J5slVjMnkI/DUneq2oIdA9Vm1iFn5FzYHQwl4VoqzTTFeiYaUx7ll3YyY3WYtKTK
+    TpTlXsiagLn7ePo5UHNdEuBQFy8rvCQjM94sUvu8lNMzO1c0f266laWhJCjhX6G3PtsKOv
+    CSJ2XcoVA2yTpk0GTO10cIbV9goSas0dAC1KhGlcWOZIfQM/GyskzXYumse2THmm4mobxW
+    W9gi28bsmeHq4lnHl4I7ieWxVVn7lGnJqZPY8nkKHHvJEOZe5BFdjzSHp5KRAcuD9WB489
+    OdE8DAL/538lFnmYzfpC3xXPz0QhGikJov+U5D7rJ6S38Pn7YynokxLoGpSTxqryuNNw1r
+    gFOXv+XRg3ZcGy0ouhlWsrD6tJCQEbHnf2UFm6lAEny9H3Hri97vfVoR0h6Q
+X-ME-Proxy: <xmx:WyBragfiTCQVSqARbJk3i-uHzWpoPSvd0YZ3R3hKnBTmJBYtZXJMCA>
+    <xmx:WyBrai9WuF5hV6oYt5yitI3KvKd7QBNhsi6mMuFmwLZzYeBj1F9w6A>
+    <xmx:WyBratoKb7aIypqrQXcSyvIZ9xE7uZBm6mHOeeaR_VzNpRxfPXEudw>
+    <xmx:WyBranDxB4zk9dCCZIEDxTdxfPFzRbReO__CKCzzXgRgLcNUmHv9Xw>
+    <xmx:WyBrao0A6lb_RtY7XcAbpOtf9j6PMGV6nx7wuIAwATkN_Cc0Wkpbhv5f>
 Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id EB7883020073; Thu, 30 Jul 2026 05:58:47 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jul 2026 05:58:50 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Junio C Hamano <gitster@pobox.com>,
+	Siddharth Asthana <siddharthasthana31@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Toon Claes <toon@iotcl.com>
+Subject: [PATCH v4 4/4] =?UTF-8?q?doc:=20replay:=20move=20=E2=80=9Cdefault?= =?UTF-8?q?=E2=80=9D=20to=20the=20right-hand=20side?=
+Date: Thu, 30 Jul 2026 11:57:16 +0200
+Message-ID: <V4_default_RHS.af7@msgid.xyz>
+X-Mailer: git-send-email 2.54.0.22.g9e26862b904
+In-Reply-To: <V4_CV_doc_replay_config.af3@msgid.xyz>
+References: <CV_doc_replay_config.709@msgid.xyz> <V4_CV_doc_replay_config.af3@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A24SwMDxPVBs
-Date: Thu, 30 Jul 2026 11:58:26 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Siddharth Asthana" <siddharthasthana31@gmail.com>, git@vger.kernel.org,
- "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <06dacc74-82d9-415a-a5bd-ce6bd824ec0d@app.fastmail.com>
-In-Reply-To: <xmqqv7a5b6n7.fsf@gitster.g>
-References: <V2_CV_doc_replay_config.767@msgid.xyz>
- <V3_CV_doc_replay_config.780@msgid.xyz> <xmqqv7a5b6n7.fsf@gitster.g>
-Subject: Re: [PATCH v3 0/4] doc: replay: fix config link
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 24, 2026, at 01:58, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> Topic name (applied): kh/doc-replay-config
->>
->> Topic summary: link to the config for git-replay(1) (one variable) in
->> git-replay(1) and git-config(1). Also improve the doc for that config
->> variable and `--ref-action`.
->
-> I was reviewing the draft of the What's Cooking report and noticed  
-> that this topic is among a handful of stalled efforts going nowhere.
->
-> It has been more than a month since this thread got a few good
-> comments by Toon Claes.  Would we see an update anytime soon?  If
-> not, let me mark the topic to be discarded in my draft of the
-> whats-cooking report.
->
-> Thanks.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-I have posted a new version now.
+This is now a description list (see previous commit) and parentheticals
+like this do not go on the left-hand side. Moving it to the other side
+makes it stand out just as much and is also more consistent with the
+rest of the documentation.
+
+Let’s also do the same for the `replay.refAction` description list.
+That makes the two desc. lists identical in the first sentence. Let’s
+add a comment about that for future editors.
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    v2:
+    • It’s “description list”, not “definition list”
+      • (Same mistake I have done for “line continuation” (it’s “list”))
+    • It’s e.g. “right-hand side” (drop “-side” hyphen)
+    • Change `replay.refAction` “default” placement
+    • Now that these two description lists are so similar, add an
+      AsciiDoc comment about it for future editors. Note that I
+      outright deleted this list in the previous version because I
+      didn’t want to keep them in synch. But we can remain aware of
+      these with two comments.
+    
+    ---
+    
+    v1:
+    > do not go on the left-hand-side.
+    
+    At least I haven’t seen it.
+
+ Documentation/config/replay.adoc | 5 ++++-
+ Documentation/git-replay.adoc    | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config/replay.adoc b/Documentation/config/replay.adoc
+index a7dd5288553..84e17e313a1 100644
+--- a/Documentation/config/replay.adoc
++++ b/Documentation/config/replay.adoc
+@@ -3,7 +3,10 @@ replay.refAction::
+ 	The value can be:
+ +
+ --
+-`update`;; Update refs directly using an atomic transaction (default behavior).
++////
++These use the first sentences from the description list in git-replay(1).
++////
++`update`;; (default) Update refs directly using an atomic transaction.
+ `print`;; Output update-ref commands for pipeline use.
+ --
+ +
+diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+index b4fe43ec687..ea4d14baddb 100644
+--- a/Documentation/git-replay.adoc
++++ b/Documentation/git-replay.adoc
+@@ -80,7 +80,10 @@ incompatible with `--contained` (which is a modifier for `--onto` only).
+ 	Control how references are updated. The mode can be:
+ +
+ --
+-`update` (default);; Update refs directly using an atomic transaction.
++////
++Expanded description list compared to 'replay.refAction'.
++////
++`update`;; (default) Update refs directly using an atomic transaction.
+ 	All refs are updated or none are (all-or-nothing behavior).
+ `print`;; Output update-ref commands for pipeline use. This is the
+ 	traditional behavior where output can be piped to `git update-ref --stdin`.
+-- 
+2.54.0.22.g9e26862b904
+
