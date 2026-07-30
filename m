@@ -1,83 +1,86 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B3E443E3E
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 16:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2808E4562B3
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 16:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427374; cv=none; b=BhOvlPhb6gPcPhIx4zLmkIKeH8CmpHUKiy9Trn4Wpu5bPVSWvbMAE1P22xJEem/Hyg4LvROQT2HpcFSYVcX4hPxfQKDwvHZaZiYZOrM3X/k1IKjKkHOIzABhFaq9UzPG0aaPXa43ogHvNJFMfExhF1z2Q62WXiblhkqH72Tnop0=
+	t=1785428370; cv=none; b=FzWILXQW3VWKZ4TTVOIzXQZGkeuaja5RYfQtOEihzrojJ2AT2NYg5R96ldngEtkg8B6az7CXjzmmDNtQelaEPrRvO3LAtTij9Q43Q7cjDNA197aXALujUL652pj1qDRmt3WBG2v258lfSaLAV7qc4jIn4XnDxqj7rnMSaba04KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427374; c=relaxed/simple;
-	bh=F4yqGnAXWOi3OyeE2mExDvaqn6QdM7EFQbXtWy5JMvQ=;
+	s=arc-20240116; t=1785428370; c=relaxed/simple;
+	bh=CzpY1DSZSIdWW7JjngMQhI+hXbbtD30K2CXY4qWZA30=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BH0HsHZaA16CO1hJKl4wcOZijsJ6ucqBJbPgfZtZuXshhUQakhB5vJUiRhNg0iojFFt1mwwXGNN5iU1yKDBxuEkL5vw+EFjiag6qV/K2mA1qa0vOu3yua6L0YfrN18qK0IW0ToCZzGVjtJCCD3IwmCk2udJnZMe82u4SC+kXEx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PvUeAFks; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LaSb5pmD; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=V8oI3UELcg74xPvajv8oqe1jk7EypwR1Tfk7AEz4NaM2bptRb3XwfteALnArTo/VhE7j3tQ3zJJ2MzXDqIDI01KzBHfF7hu91lpXIEyfrfsd3khud+FYzGWfNZHRx+WkSJc+mnyBwldZuwbA2UyuQfyRv0bJYCShJ0yRxqFUlrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CgSjnKrB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZLRkm4+o; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PvUeAFks";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LaSb5pmD"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 90D197A00BF;
-	Thu, 30 Jul 2026 12:02:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CgSjnKrB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZLRkm4+o"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5438D7A00BF;
+	Thu, 30 Jul 2026 12:19:28 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 30 Jul 2026 12:02:52 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 30 Jul 2026 12:19:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785427372; x=1785513772; bh=Q/r2gzZkRh
-	ibBm1ZTMKzFZNrGGnaI/lXV+NQxeXozUs=; b=PvUeAFksKEDmxdmz0NIJzxmFLR
-	6jm6KaIZT2H8gD8O67QCF5ZJuaEB6xYCQd5HLca6Vp1h93mMe6WFDOVTRufhjpop
-	WZ2jDIZfQJOzGOCs9Bn4O6J/uNxAFmd4vGzixc41nGKlH2OC/zZ550kDXJXptrqC
-	pdupnwfqDWtu5aQb2xo2LEuNsZheZzS/yZ5fd4q/yXsUt8fz4YNclaemUDkmhvk+
-	AsH6cPWG4HCgsgIb+HbcIn2Y9hn4IZCUafOkNrXf1mv5gB9FXbt/kBSalpxjBM9G
-	W6McBLzRE5LId6NrdYaTwScYF8r/TcU4MX6D1h/gCH0jcDdNt5c2n9zkzY6w==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1785428368;
+	 x=1785514768; bh=ZDA7YHilLuOpQELlpgpKowWrpAwgQJero+u/h9MHfI0=; b=
+	CgSjnKrBAGKIHgpbD1paapt6y1R+3ZLAfC///GGhkzgN4wVDOAmWkWvA9HLjAnzl
+	fAzilHrSd2Wot1VU5Am4GNKgSIP5ZW39uDGDNLMJATvP29xpr6+avBqulut7mTCx
+	XBi4XIXcUeZQ8x5tWywsLPJIS+rEURc+AC9yx6+Zo210Ii7+8Fkx8z/s2zPSfrgD
+	0w5DWdeKslG00UPL32NFUykZYfm7Hr4fkCJAFKV9ldgkFhvEB9RyFQwTySGyq2wd
+	NbtQeMkZ1oFWxsaCa/f8klLTg1RuzYigrG+PoySi7tQ+wxnMcu5/V+pbygP3LzY/
+	ZZqx6jPDd6fPNzGRzLfg0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785427372; x=1785513772; bh=Q/r2gzZkRhibBm1ZTMKzFZNrGGnaI/lXV+N
-	QxeXozUs=; b=LaSb5pmDVbgHZqD0ZQY2Jengw6GqSUDyMjL2bLuvXdjv7Yc4pdM
-	IZhuHi2QmjAo6xn69sH4GVxVrl1MtoNWH8k1u/dL7/as5r3+y3+v7r/i4H0LAWhq
-	z17SZoF7FKj1ZrNb0jt/RxsK0y6vWMKnG+wFBF8lNoZV2fUOCSQEluwmyaC+xrig
-	coun9rwkEsR84NuSDrwliKMeZG84ZFeYdMFV7ZOkYeO9GbiXywocnuOPa3Is1UKZ
-	rpz5WoJQz0y5vlvUP0e9PiqAm1jjpzdhYnEZmAQI9njey3DR8TFiA1RMS90NkPxr
-	NOQ21oCqIiaSe6rDGMLUc8WN86YpC50gVsQ==
-X-ME-Sender: <xms:rHVrajJ3V26RZIXsSdP-EoDSU7heg4phcXaczo8KjL30B4hALS0tuQ>
-    <xme:rHVrauCSmekwfVosfZOh_ekHTrtDw5fQKM8HE0D-ZqP8QCA7gwJv2zq3UyjEBWR0g
-    7LYHDaAphox5fzMn6TQT9Bp6U5CfZKaF9Qr4UbIMQX-hShFKi46KAI>
-X-ME-Received: <xmr:rHVrakBc67klzN57b2rTju-uyulJJ4JmhtHwzFHm4fJGxVVpLDB-j20pl75K76XoZfOnNpwdlm9J8K2fMfYxVXuNBWuYA2luvw>
-X-ME-Proxy-Cause: dmFkZTFrTeJLx2ROhG/y7I0tjCA08gNUDwgrUfeunJoePzpKw3qCs++5cDrPukm4lYKm90
-    xLEfIaarloGN8t9QtmBACmK83EVHPA/7micS3jXj2yU/3MlQtKqM3lTSc9a4YC8hG5vhjH
-    XQOdh0ojjc7+IeFOlZnM6BAvjVuPszYONVcYgisWtktdUlMWMMXxWuToAIwe1SG9K86Iad
-    XAE5Oh9RzRFt4uhFOedBJSMobZqXtCbN47kBecVypbkH8XlsLlEwT7AdjW8yAqUR6gFzik
-    tDPbWlcO1Vc4xy4f2ox5bDAfONWuKyCoLNk4YbuWToYWrAMFTJPU1MsJCAGKQqpJ+z1kA9
-    Eadpd+MqxPmXIXTieOuFANPT01I2M0CUE92UunYCXRbInRegcu1fEnMzE4HZPsvn1+I/Cf
-    TjIgD4OVzcEpWkeIKMF8ZLRgPdLEXO7fphIeTHCTts38vVxXLoMzIbQYI8qaGurQZHM0ts
-    zRG60edFaexJ2W6l+9pWZCzW+hLLwH4BDna1QaAtGs1dgfF64dRO96WdMtwhDg5+KgU/I6
-    6bkx2rE14NF2bVyYTv93bDolW2TCK/lOuE7aSbPEoSaB7zNt4/A5WEjfv6rTit4I4tbeh0
-    IHpIvX1NQa3oPbceYAqUoeP/fMpD3BJLbh7bfJ8GhFFinsQLNeQof/Tqyn/g
-X-ME-Proxy: <xmx:rHVraoDxuK6lXIZ-z4sEZ-EIV6gpGMGYVVzqWlETBM-TkmSIGL2RQA>
-    <xmx:rHVranqQzWSsjMyN6W_Ve4kCXzBSvYudFIbquaMqlZwXqByj0TIkpA>
-    <xmx:rHVraql5yJtpNGdN4e5lrxIdy-C3yFfcXWxhH5mRkn3VevGclpgpHQ>
-    <xmx:rHVravzqrn0hAKba5iLa9giDpZoPhvY6xyEHte1T3ebB7g122Aazig>
-    <xmx:rHVrarQzZM6eUCz-Ok04K7trs7IhfYPP3eqAU8-maKHcgFXi39Ohy8wM>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785428368; x=
+	1785514768; bh=ZDA7YHilLuOpQELlpgpKowWrpAwgQJero+u/h9MHfI0=; b=Z
+	LRkm4+oJCXfjrmG6ybYeLYPjMwCjnPyO3RhYr3mPCIQF0Lc6CCsYj21O2+lK7/5S
+	A42agvHoGAfaavkMQ0uzs2drXoiyleOe9MP5rwQC9iU0llRAf6ARj2ArOKPEgX+g
+	VgT/RS/3LrzNgrZ2rsyFbr/iRj4nKvE59kDjPW0dtWpU3px/zUuTX+RXSFe1JynR
+	d0yWvQV+ThaH8yq3HSxk5QUIwIabM3H7Qde12P6FBu4EglugT5axX9VqhYbWRp4A
+	wrWxMr8M06H9MfoVsiB9GEhQzcn31h2rTIpw6m3zhhtV4xx/JckFY/zUHy4PNb2Z
+	w3/HoZWlXPqEv9aXe333g==
+X-ME-Sender: <xms:j3lraitVXz-grHcVgL1UKDpjcLiBItEIor2aES_8xWErVtbM8y3eDQ>
+    <xme:j3lrapvpjW6-omDkmVG7_dt_WCeXu_WUTWyuBc163Crle4Cd7e9Z6haiqDtgWxuIq
+    Zu90YznZq7M9WK8GQfFWVFLscvcb020VsqlDXBGYsT8GS6-TiNPLQ>
+X-ME-Received: <xmr:j3lragCVdUKAc5zn7rxZ-HTdTIvFbGfxQB5VLHFIKwfziq_lPDYV3_mN8YfMb-pQHS3ooFrEpRDYfdyBvTFm61mD1Pa6e07PvA>
+X-ME-Proxy-Cause: dmFkZTEKXtD84GWnBMxtreOlUPM/3udahOSakspFVoz0zHOB915oMzMUEpua4qiFdBsSrH
+    LsnkSx3Ju8+w6W91PNEmkVSp0Qs09dIWwxQFiQl/1CLd/IvVKPr4YpeGndxT62FgCsk6Q/
+    ZGeneCQklZLPfYrUXlXWO3p+O1giMLUTo9aei2Vwg9GQsaeetWKkUBML49A/EsbcxnVBLu
+    myzNDJmNJmTtPIvIxqczFml2amZaiVVK43dtRWMgVroP8X6SFV9IQk3QxQn4WZ6F0YB3rw
+    t0aAtHBwDPPs1hEP8KRhn5KkIEwr/lZJLJ/4kxwVEEt4N6QpovNtsI/lroiCosbydKH+QQ
+    W/R1H8dusci72lKxPYcztKPfBZNutgTRuRiy9eHJ7eQTxeKEMxcjzlZ61cN1fj5rPdRsvW
+    8c/rrTdTZXIjqEq/EMV0jXDDY1j7KS7fagyoShF0r4okWAbYrZud/kxwXlhLW51cDqLwQQ
+    ojv2uXRdKz+VI99yiiSu61zkY4BDg/uyfxdKNJQ6uIeyruHissvNeueQhxx6py53QoCv29
+    zY5FuE/PYDN1yOSBD8zrM7va16HNVms77eSZC2kBIbEpelP4XUVdK1anDyOadkG6zPi8iI
+    KiJ+dnThszth70T8js+/QhDncgVD2NI+cIbALYtGSVN5FOoMBgDyelxz72Jw
+X-ME-Proxy: <xmx:j3lrajPfndr5OzgQJkh70EP6Mv6L4s7Tl4Sc16Jy3Wl4DcWZULhh1g>
+    <xmx:j3lrahyveDAJaq1vkZArOJPT95iloBMf63oX--z2Rj-mzQpF4AnIjQ>
+    <xmx:j3lrarUW0xhPb8kipUqI_HFrslUVFK_VYPDT5kD0YEGijwK_b5RA9w>
+    <xmx:j3lrarOk_ZDkNzTLXQkVKs8TNDykk0pfN8ibSYIUve26tTC9zvUaSQ>
+    <xmx:kHlravWQiBrjvpP3GFN3iKAdkuaq4F8xdRoDQ3WoZIZf8a0HBW3U-VqW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jul 2026 12:02:51 -0400 (EDT)
+ 30 Jul 2026 12:19:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
-  Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-Subject: Re: [PATCH v2] merge-base: add tests for --is-ancestor
-In-Reply-To: <pull.2186.v2.git.1785392350660.gitgitgadget@gmail.com> (Nikolaus
-	Schuetz via GitGitGadget's message of "Thu, 30 Jul 2026 06:19:09
-	+0000")
-References: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
-	<pull.2186.v2.git.1785392350660.gitgitgadget@gmail.com>
-Date: Thu, 30 Jul 2026 09:02:50 -0700
-Message-ID: <xmqq8q6slb2t.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  Siddharth Asthana <siddharthasthana31@gmail.com>,  Patrick Steinhardt
+ <ps@pks.im>,  Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v4 0/4] doc: replay: fix config link
+In-Reply-To: <V4_CV_doc_replay_config.af3@msgid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Thu, 30 Jul 2026
+	11:57:12 +0200")
+References: <CV_doc_replay_config.709@msgid.xyz>
+	<V4_CV_doc_replay_config.af3@msgid.xyz>
+Date: Thu, 30 Jul 2026 09:19:26 -0700
+Message-ID: <xmqq4ihglab5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,21 +88,77 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com> writes:
+kristofferhaugsbakk@fastmail.com writes:
 
->     Changes since v1, per review:
->     
->      * Reuse the E---D---C---B---A history and the G/H merges from the "set
->        up G and H" test instead of creating a separate repository.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> Topic name (applied): kh/doc-replay-config
+>
+> Topic summary: link to the config for git-replay(1) (one variable) in
+> git-replay(1) and git-config(1). Also improve the doc for that config
+> variable and `--ref-action`.
+>
+> § Changes in v4
+>
+> Patch “improve config description”: Take Toon’s suggestion about avoiding
+> two “for”.
+>
+> § Link to v3
+>
+> https://lore.kernel.org/git/V3_CV_doc_replay_config.780@msgid.xyz/
 
-Looks good.
+That's truly minimal update.  It is a bit surprising that the topic
+was stuck for a long time, nearing its expiration date.
 
->      * Add a test that --is-ancestor requires exactly two commits: too few
->        is a usage error (exit 129), while more than two is rejected with
->        "--is-ancestor takes exactly two commits" (exit 128).
+A quick look at the thread
+https://lore.kernel.org/git/V3_CV_doc_replay_config.780@msgid.xyz/
+tells me that there weren't any outstanding review comments.
 
-OK.
+That unfortunately does not say if this version is good enough or
+people got tired of reviewing and did not pick all lints in v3, but
+we need to work with what we have, so let's see how smoothly this
+round goes.
 
-Will queue.  Thanks.
+Will replace.  Thanks.
+
+> [1/4] doc: link to config for git-replay(1)
+> [2/4] doc: replay: improve config description
+> [3/4] doc: replay: use a nested description list
+> [4/4] doc: replay: move “default” to the right-hand side
+>
+>  Documentation/config.adoc        |  2 ++
+>  Documentation/config/replay.adoc | 19 +++++++++++++------
+>  Documentation/git-replay.adoc    | 16 ++++++++++++----
+>  3 files changed, 27 insertions(+), 10 deletions(-)
+>
+> Interdiff against v3:
+> diff --git a/Documentation/config/replay.adoc b/Documentation/config/replay.adoc
+> index 40d1695782a..84e17e313a1 100644
+> --- a/Documentation/config/replay.adoc
+> +++ b/Documentation/config/replay.adoc
+> @@ -14,5 +14,5 @@ ifdef::git-replay[]
+>  See `--ref-action`.
+>  endif::git-replay[]
+>  ifndef::git-replay[]
+> -See `--ref-action` for linkgit:git-replay[1] for details.
+> +See `--ref-action` in linkgit:git-replay[1] for details.
+>  endif::git-replay[]
+> Range-diff against v3:
+> 1:  ef8212a076a = 1:  ef8212a076a doc: link to config for git-replay(1)
+> 2:  35b44b922e5 ! 2:  392c4f3ab9e doc: replay: improve config description
+>     @@ Documentation/config/replay.adoc
+>      +See `--ref-action`.
+>      +endif::git-replay[]
+>      +ifndef::git-replay[]
+>     -+See `--ref-action` for linkgit:git-replay[1] for details.
+>     ++See `--ref-action` in linkgit:git-replay[1] for details.
+>      +endif::git-replay[]
+>      
+>       ## Documentation/git-replay.adoc ##
+> 3:  12c73641fb9 = 3:  a693ab0b6d3 doc: replay: use a nested description list
+> 4:  e2191c723fc = 4:  53663bd54ed doc: replay: move “default” to the right-hand side
+>
+> base-commit: a89346e34a937f001e5d397ee62224e3e9852040
