@@ -1,41 +1,84 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD23D413D8F
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 14:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B3E443E3E
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 16:02:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421639; cv=none; b=F5aWsLplzuSryJlJEDBNgs3c3+Ilg71ku6IJkxXS8VH/S0kFQHkHRmJGruCAGODbk2OQQlPwQwiwHGVkz8iL4TWBs4d6WVX4C2iuhvQxOKAZKgV3XbO5mPrwXzlCZ1RuxvDwp/XsCSR0P9siFQBw0NKQcCJFkjfeLFGlVbJRGew=
+	t=1785427374; cv=none; b=BhOvlPhb6gPcPhIx4zLmkIKeH8CmpHUKiy9Trn4Wpu5bPVSWvbMAE1P22xJEem/Hyg4LvROQT2HpcFSYVcX4hPxfQKDwvHZaZiYZOrM3X/k1IKjKkHOIzABhFaq9UzPG0aaPXa43ogHvNJFMfExhF1z2Q62WXiblhkqH72Tnop0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421639; c=relaxed/simple;
-	bh=yjQDAAQNDRw+fzfBMhClGt7joiNAcw8BX+YkLvVjD6Y=;
+	s=arc-20240116; t=1785427374; c=relaxed/simple;
+	bh=F4yqGnAXWOi3OyeE2mExDvaqn6QdM7EFQbXtWy5JMvQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EEsRF055v6cuI/amXO5v7e1DxA9qG6bwX/xxrpL4b5OZSV9wrQr6+7IJr7KDt/iUnk0w2keZd2ez2Xxc03wfJMgLNrs/GB4GBXYAufGgzzx/Uqw9/5eMrNcLM2vba3sqEkCfONxQZIkhr2yVkl5SrLRNtm54pS99qC9885OjJ30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=WdMkl3M6; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=BH0HsHZaA16CO1hJKl4wcOZijsJ6ucqBJbPgfZtZuXshhUQakhB5vJUiRhNg0iojFFt1mwwXGNN5iU1yKDBxuEkL5vw+EFjiag6qV/K2mA1qa0vOu3yua6L0YfrN18qK0IW0ToCZzGVjtJCCD3IwmCk2udJnZMe82u4SC+kXEx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PvUeAFks; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LaSb5pmD; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="WdMkl3M6"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1785421632;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EIhnX9jUXnZhSlJSobjKy0VYn66kj8YakP1Xn8eoSDY=;
-	b=WdMkl3M6weTHOdNWoMzMvc0XN+lm9DvCiAg/yG8Xtw52M26w7S1aPF3Rf6kQUNCY2irAAg
-	IWgUKVauzCRxLNw0nJJRmL4If/JHwQrLwW1idCcDimwItkDuwHdUUAOkKSrdPnpEzzfBsS
-	5W/fiG1HG9F34uPFOGSnGrdSnqf563M=
-From: Toon Claes <toon@iotcl.com>
-To: Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/5] setup: detangle loading of loose object maps
-In-Reply-To: <amkOb3rvWFUpnT28@denethor>
-References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
- <20260724-pks-odb-create-on-disk-v1-2-3b3d265d979b@pks.im>
- <amkOb3rvWFUpnT28@denethor>
-Date: Thu, 30 Jul 2026 16:27:05 +0200
-Message-ID: <87pl04d03q.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PvUeAFks";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LaSb5pmD"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 90D197A00BF;
+	Thu, 30 Jul 2026 12:02:52 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Thu, 30 Jul 2026 12:02:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785427372; x=1785513772; bh=Q/r2gzZkRh
+	ibBm1ZTMKzFZNrGGnaI/lXV+NQxeXozUs=; b=PvUeAFksKEDmxdmz0NIJzxmFLR
+	6jm6KaIZT2H8gD8O67QCF5ZJuaEB6xYCQd5HLca6Vp1h93mMe6WFDOVTRufhjpop
+	WZ2jDIZfQJOzGOCs9Bn4O6J/uNxAFmd4vGzixc41nGKlH2OC/zZ550kDXJXptrqC
+	pdupnwfqDWtu5aQb2xo2LEuNsZheZzS/yZ5fd4q/yXsUt8fz4YNclaemUDkmhvk+
+	AsH6cPWG4HCgsgIb+HbcIn2Y9hn4IZCUafOkNrXf1mv5gB9FXbt/kBSalpxjBM9G
+	W6McBLzRE5LId6NrdYaTwScYF8r/TcU4MX6D1h/gCH0jcDdNt5c2n9zkzY6w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785427372; x=1785513772; bh=Q/r2gzZkRhibBm1ZTMKzFZNrGGnaI/lXV+N
+	QxeXozUs=; b=LaSb5pmDVbgHZqD0ZQY2Jengw6GqSUDyMjL2bLuvXdjv7Yc4pdM
+	IZhuHi2QmjAo6xn69sH4GVxVrl1MtoNWH8k1u/dL7/as5r3+y3+v7r/i4H0LAWhq
+	z17SZoF7FKj1ZrNb0jt/RxsK0y6vWMKnG+wFBF8lNoZV2fUOCSQEluwmyaC+xrig
+	coun9rwkEsR84NuSDrwliKMeZG84ZFeYdMFV7ZOkYeO9GbiXywocnuOPa3Is1UKZ
+	rpz5WoJQz0y5vlvUP0e9PiqAm1jjpzdhYnEZmAQI9njey3DR8TFiA1RMS90NkPxr
+	NOQ21oCqIiaSe6rDGMLUc8WN86YpC50gVsQ==
+X-ME-Sender: <xms:rHVrajJ3V26RZIXsSdP-EoDSU7heg4phcXaczo8KjL30B4hALS0tuQ>
+    <xme:rHVrauCSmekwfVosfZOh_ekHTrtDw5fQKM8HE0D-ZqP8QCA7gwJv2zq3UyjEBWR0g
+    7LYHDaAphox5fzMn6TQT9Bp6U5CfZKaF9Qr4UbIMQX-hShFKi46KAI>
+X-ME-Received: <xmr:rHVrakBc67klzN57b2rTju-uyulJJ4JmhtHwzFHm4fJGxVVpLDB-j20pl75K76XoZfOnNpwdlm9J8K2fMfYxVXuNBWuYA2luvw>
+X-ME-Proxy-Cause: dmFkZTFrTeJLx2ROhG/y7I0tjCA08gNUDwgrUfeunJoePzpKw3qCs++5cDrPukm4lYKm90
+    xLEfIaarloGN8t9QtmBACmK83EVHPA/7micS3jXj2yU/3MlQtKqM3lTSc9a4YC8hG5vhjH
+    XQOdh0ojjc7+IeFOlZnM6BAvjVuPszYONVcYgisWtktdUlMWMMXxWuToAIwe1SG9K86Iad
+    XAE5Oh9RzRFt4uhFOedBJSMobZqXtCbN47kBecVypbkH8XlsLlEwT7AdjW8yAqUR6gFzik
+    tDPbWlcO1Vc4xy4f2ox5bDAfONWuKyCoLNk4YbuWToYWrAMFTJPU1MsJCAGKQqpJ+z1kA9
+    Eadpd+MqxPmXIXTieOuFANPT01I2M0CUE92UunYCXRbInRegcu1fEnMzE4HZPsvn1+I/Cf
+    TjIgD4OVzcEpWkeIKMF8ZLRgPdLEXO7fphIeTHCTts38vVxXLoMzIbQYI8qaGurQZHM0ts
+    zRG60edFaexJ2W6l+9pWZCzW+hLLwH4BDna1QaAtGs1dgfF64dRO96WdMtwhDg5+KgU/I6
+    6bkx2rE14NF2bVyYTv93bDolW2TCK/lOuE7aSbPEoSaB7zNt4/A5WEjfv6rTit4I4tbeh0
+    IHpIvX1NQa3oPbceYAqUoeP/fMpD3BJLbh7bfJ8GhFFinsQLNeQof/Tqyn/g
+X-ME-Proxy: <xmx:rHVraoDxuK6lXIZ-z4sEZ-EIV6gpGMGYVVzqWlETBM-TkmSIGL2RQA>
+    <xmx:rHVranqQzWSsjMyN6W_Ve4kCXzBSvYudFIbquaMqlZwXqByj0TIkpA>
+    <xmx:rHVraql5yJtpNGdN4e5lrxIdy-C3yFfcXWxhH5mRkn3VevGclpgpHQ>
+    <xmx:rHVravzqrn0hAKba5iLa9giDpZoPhvY6xyEHte1T3ebB7g122Aazig>
+    <xmx:rHVrarQzZM6eUCz-Ok04K7trs7IhfYPP3eqAU8-maKHcgFXi39Ohy8wM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jul 2026 12:02:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
+  Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Subject: Re: [PATCH v2] merge-base: add tests for --is-ancestor
+In-Reply-To: <pull.2186.v2.git.1785392350660.gitgitgadget@gmail.com> (Nikolaus
+	Schuetz via GitGitGadget's message of "Thu, 30 Jul 2026 06:19:09
+	+0000")
+References: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
+	<pull.2186.v2.git.1785392350660.gitgitgadget@gmail.com>
+Date: Thu, 30 Jul 2026 09:02:50 -0700
+Message-ID: <xmqq8q6slb2t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,127 +86,20 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Justin Tobler <jltobler@gmail.com> writes:
+"Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 26/07/24 05:48AM, Patrick Steinhardt wrote:
->> When a repository is configured to use a compatibility hash function
->> then we load the loose object map when we initialize the repository.
->> This object map provides the mappings between the canonical object hash
->> and the compatibility object hash.
->> 
->> Loading the object map happens in `repo_set_compat_hash_algo()`, which
->> calls `repo_read_loose_object_map()` in case the compatibility object
->> hash is non-zero. This setup sequence has two major downsides:
->> 
->>   - We assume that the primary object database is the "files" object
->>     database so that we can extract its "loose" backend. This stops
->>     working with pluggable object databases.
->
-> So IIUC, does this mean that `repo_set_compat_hash_algo()` is directly
-> reaching into the loose object source to load the compatibility object
-> map? I suppose it should be the responsibility of the respective ODB
-> backend to handle object compatibility.
->
->>   - We require the object database to already have been initialized when
->>     configuring the object database. This means that we must intermix
->>     configuration of the repository and initialization of its
->>     sub-structures in a weird way.
->
-> If there any reason we need to eagerly load compatibility object
-> mappings?
->
->> Refactor the logic so that we instead load the loose object map via the
->> "loose" backend, which fixes both of the above issues.
->
-> Sounds reasonable.
->
->> Signed-off-by: Patrick Steinhardt <ps@pks.im>
->> ---
->>  loose.c            | 11 +++++------
->>  loose.h            |  1 +
->>  odb/source-loose.c |  2 ++
->>  repository.c       |  2 --
->>  setup.c            |  5 +++--
->>  5 files changed, 11 insertions(+), 10 deletions(-)
->> 
->> diff --git a/loose.c b/loose.c
->> index 9dad75373b..a3b2dcedc2 100644
->> --- a/loose.c
->> +++ b/loose.c
->> @@ -61,7 +61,7 @@ static int insert_loose_map(struct odb_source_loose *loose,
->>  	return inserted;
->>  }
->>  
->> -static int load_one_loose_object_map(struct odb_source_loose *loose)
->> +int loose_object_map_load(struct odb_source_loose *loose)
->>  {
->>  	struct repository *repo = loose->base.odb->repo;
->>  	struct strbuf buf = STRBUF_INIT;
->> @@ -69,6 +69,9 @@ static int load_one_loose_object_map(struct odb_source_loose *loose)
->>  	FILE *fp;
->>  	int ret = -1;
->>  
->> +	if (!should_use_loose_object_map(repo))
->> +		return 0;
->
-> Previously the above condition has asserted in
-> `repo_read_loose_object_map()` which calls `loose_object_map_load()` for
-> each source. Do we expect each source to potentially answer differently
-> though?
+>     Changes since v1, per review:
+>     
+>      * Reuse the E---D---C---B---A history and the G/H merges from the "set
+>        up G and H" test instead of creating a separate repository.
 
-I've been wondering about this as well. The reason for this change is to
-also have this guard when odb_source_loose_new(), in source-loose.c (see
-further down in the patch), calls this function too.
+Looks good.
 
->> +
->>  	if (!loose->map)
->>  		loose_object_map_init(&loose->map);
->>  	if (!loose->cache) {
->> @@ -112,14 +115,10 @@ int repo_read_loose_object_map(struct repository *repo)
->>  {
->>  	struct odb_source *source;
->>  
->> -	if (!should_use_loose_object_map(repo))
->> -		return 0;
->> -
->>  	odb_prepare_alternates(repo->objects);
->> -
->>  	for (source = repo->objects->sources; source; source = source->next) {
->>  		struct odb_source_files *files = odb_source_files_downcast(source);
->> -		if (load_one_loose_object_map(files->loose) < 0)
->> +		if (loose_object_map_load(files->loose) < 0)
->>  			return -1;
->>  	}
->>  
->> diff --git a/loose.h b/loose.h
->> index 6c9b3f4571..ed663ac550 100644
->> --- a/loose.h
->> +++ b/loose.h
->> @@ -13,6 +13,7 @@ struct loose_object_map {
->>  
->>  void loose_object_map_init(struct loose_object_map **map);
->>  void loose_object_map_clear(struct loose_object_map **map);
->> +int loose_object_map_load(struct odb_source_loose *loose);
->>  int repo_loose_object_map_oid(struct repository *repo,
->>  			      const struct object_id *src,
->>  			      const struct git_hash_algo *dest_algo,
->> diff --git a/odb/source-loose.c b/odb/source-loose.c
->> index 3f7d04a56e..812ca1c138 100644
->> --- a/odb/source-loose.c
->> +++ b/odb/source-loose.c
->> @@ -727,5 +727,7 @@ struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
->>  	if (!is_absolute_path(loose->base.path))
->>  		chdir_notify_register(NULL, odb_source_loose_reparent, loose);
->>  
->> +	loose_object_map_load(loose);
->
-> Now we load the loose object map for the specific source when its
-> created.
+>      * Add a test that --is-ancestor requires exactly two commits: too few
+>        is a usage error (exit 129), while more than two is rejected with
+>        "--is-ancestor takes exactly two commits" (exit 128).
 
-Here.
+OK.
 
--- 
-Cheers,
-Toon
+Will queue.  Thanks.
