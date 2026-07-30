@@ -1,123 +1,161 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E0D37A494
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 16:32:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCB4446078
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 17:42:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785429125; cv=none; b=bFERfah/uihg6Xik8cT4eIRxTjptJmhsEhYPXtlrCVmmEbC6okr+6bM8wBwJz191KXErYdnDAdlXgeUBZ+rKDyB45noDLTUXJmJGMh7AzNFylCBGT5ylgoKU2J2gXzFqQqmrxvtX3KS80BNJ/2jxJxNIlCtkDg9YgLhA6mPcO3M=
+	t=1785433345; cv=none; b=stSmQRwKMSLomhwmbK1YR1fqEV+2SnSqupN6OTlUYdqGP7wbUQFgJ5eK3ZLE/k98O+WQjeSo0rib/K9J8ZJ7Kv3xMnT7EevmsPaOBZPJZngEnCLY2xztMTwCTRCN1+MvT2F+VFc4i0sobza3tWdzxaoPr3Mmn2lA/cpZiHcgDKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785429125; c=relaxed/simple;
-	bh=tUUcJizzEYagheQxxCmwVI2jWQAWo83j01nykBP95Rg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=HdbTur/5vxVqzsxpwP6yDnQDdAemFVzGRCd3ZQDYNxnxvq/ZJpaIfiLDNMr+M0EcAvaL1oo0yrm2N5w4aYpBDSdiRMJcXvthdQgKhCpvucdZzLoUvi9gNLTPx47k0xc3A15cMoeHHxzS97owcqG8NQojqERJOnIs7MHk1lSqFeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TiLZnhOk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AzNrIH5F; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1785433345; c=relaxed/simple;
+	bh=fznAuerBE6MrfkuwpJqv5P0xQ3ic37razD4Fgkb5l7c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=r7rZhZqmovoHvK9YLJG/2yxV1swve/tgTuGqDoYwf8mBk7vR2kHP8ru6YLjbPFACGm9ULv5OpwYdUHSks7W4YKgxGJlKbrAQ+MhKhIN2MvgOucgiGZKfRoGPY6Vl27wfuNrKkq3cVF1YWfPyK3+e0FcCHTTS4uLaB/8eNhUz/cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c8PAOXFN; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TiLZnhOk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AzNrIH5F"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id F2E701D000C3;
-	Thu, 30 Jul 2026 12:32:02 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 30 Jul 2026 12:32:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1785429122;
-	 x=1785515522; bh=hdxyCSLGFbzOElrBeq6xDSinBPo00QeTBubdaP5p6yQ=; b=
-	TiLZnhOkm2pOUJYefxsTitWWvN2g8kdMztkv81xJbSb380fL9LqJHFqLngv2eqdf
-	pqemZyxysxoxhDsL+uM8aMjG+d+wETl1W7RzNmBBIDpRnZIhWlgA1PI/Il+S1N1n
-	X/xp35QqNFaimHI8inJr2dGODpX7ffheMhHgp6SHTZF+xtZM2fmQS6Q9RUzjYqVL
-	krEnzyk3GzERnawsk+cwe+1YekpSVDYGEMWHDH2+QKI1zYUytiBHTJRkwhiTkR+t
-	jqKH2c1SJTAHWLJ85QNj3G2pEYi9l12SxzKMZQDkTGBMP4r9GaGhhNtpAjxaVDSQ
-	js0zT1KwpKQllY93IaXo2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785429122; x=
-	1785515522; bh=hdxyCSLGFbzOElrBeq6xDSinBPo00QeTBubdaP5p6yQ=; b=A
-	zNrIH5FHaX+oUmkoyRdPFe3j57lPwzLWFa61aQ8PVTlWDewON9nyvFiPIz3xnDRn
-	djdIA48KbKVr+GNXSNmwvfM0XXt9XnL6gaAsvifhKyos/gHY0Kmo34Z9SbF3eudm
-	rOPUPBUUjJB2KqvJxPLIDFeDJK2LU8dPgXd9gpzIkXiVVFxbi/YTZIb+Bt/f889o
-	FJb0ja5L2Lv08AsQjoPpH8QXhhpxKOIOv8rIzQCyluqDfiHMietJmjBNYcZw1kKO
-	/ChxJa3zasjykSVqnPUGr2mqWjxXBryhXe/S2N4MxxFhS6AL1gmHFuJGHdsNIndE
-	6et7N69oLp5WRKUV5uMbg==
-X-ME-Sender: <xms:gnxralPJiihOjtVd7Gzss5eMd2ifhMHYmYSeJVpNs1IbN7eMr6JZImk>
-    <xme:gnxraiweC2I57405ZXdVMwv4EHlf9nA7Z18lT8BYY285J2ko1PCb4gRyw371DrY91
-    cxBTnUec38uiAo2EC9cPSHIzow-fRWNiIelro5QI0CzsTSPmUqOhqU>
-X-ME-Proxy-Cause: dmFkZTGuVi3wGszhgeRvLwfRj7oYOrbOUX0v+UmAxdE6eVDTSFmX7JuRi2ObovIUJ9XXSv
-    uw4e3/QB1Ch7vOakLU4QIHOCKe0p94/3u0dnM5hZumquXOcvZ/mqNoalJKyk4+6X6WGnpd
-    62Ltw0uRnCEiCHDX3gHnkyl3lik1FeAiz1dbyO7xvC8hPyKVm9pMCbfRXgFw3XniCBxOFE
-    eCS+VBdW+AQqdWhbF/g/ZV+wH4DPyMMb+IyfIwY4F/E++DcDApjHSAGxmirWDMc5BzaAUA
-    Rm36schze/R18hLRZBEhtnwYDxXn6mfQqJsJGeLrOzdYFpRc2bBr6R81NRd8D6o4EFaoan
-    My8t6auDD+5dnGF6qp64PNf5x2zZdoV9Ecdz9n770D4bKNcQnHbuxnFaG5p/thMwuLkttx
-    /+RGNS1YqrfiOBlLVEFgAw8e1+JXWONeTedi+QqAbhEq2S6hCW4paIqzerCNmUXgAT3qox
-    jv+UL62fsKTa1b76sJ4WUCfVQbO9mVlRFqtZqyqS0fxtC5W9xAjc3eQPP33DySmU6Dr1w4
-    Huh7Q47jYE1UPg8yGNXbBuEjY/BOqYLxylrzGO6+S9YGdz/6aGvvsShYaFYNZsBNTadeSu
-    V6T96aNlREW09pLMykhFMmDbFfAsVRBXbYR3V6a2tBMA7i1SpbPk4fCzqViw
-X-ME-Proxy: <xmx:gnxrau56jquZC19TYW7mI1tEXGIaPZVw-3mwS_JCzlGsq6_qxOM4GA>
-    <xmx:gnxrahObcanP7tUrUBUXukv6n7OvenEhY9ywQXCPwpZCvnrY_r-QkQ>
-    <xmx:gnxrakvoqwzn0a9W7PhRgGdNU-VcgT2trPzmLjOoRas0WJeeTv1oxA>
-    <xmx:gnxrasZoOZaasZRAj2fwSoXngFsgaMnLwZU2iCFcadI9sexoNv3IFA>
-    <xmx:gnxraoKWqd_bKmvTinSWoZO7trBp_Vzqoff29259vM7vHGJO88KCNof->
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A37823020073; Thu, 30 Jul 2026 12:32:02 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c8PAOXFN"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c9e0b89e228so36800a12.1
+        for <git@vger.kernel.org>; Thu, 30 Jul 2026 10:42:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785433342; x=1786038142; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=VHT0yvibd8BWmokYs4PZN9QNJbE/CR3At7CPU8vv/LE=;
+        b=c8PAOXFNrmKVl+jxrQExbngzY7GwL/CTtkT3ZX2z0a23/xWMGtNC87vGz5dnnxuv+y
+         tLDIfWZXKx+ZUjCDTzfne/sN4i657YaIjcWMpv0ehIly0nJUmJJlMqecIf2e2YBfa9OQ
+         rVdBNLGziNNIZWd6DCQOu8ikk1OIEjuowv+LVOuKM34N8XLal57BKxV9bMhUOKasiD3B
+         pLiOTP/4N1H0s2otkMSIajBjok7JhJCN8bvVQrzFgwqhhFzpvvb0sx1OEXuqESWJuj1E
+         MndCtKZ6LAT5T6hJeqIk3QQDxL3IX4Fifqw4gG2bZEcQGnK1LsmVGWpwN5G7eC2wp2Mh
+         Imiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785433342; x=1786038142;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=VHT0yvibd8BWmokYs4PZN9QNJbE/CR3At7CPU8vv/LE=;
+        b=AvXCgR47bWjw32qtEj5vVOv+NJN02gGwYoscwmXuNUe12cKXI8EKkAafPC2mK9SEVC
+         VoMIvTC29p5VNJAnf/7EImO+ZaKbznlaJ8Bm6cgw6l3MSt47Fq+Jts+J1ZndaJvMPXqu
+         3y22HQGUK24wvgdEpOoZnN9ipHzSngH8+IBueZ/oHlh3aoQFaRn1JM4xv5gBIHSWwXT7
+         IZyXNChFibJ+dSrXD8+OXAG0xgYtJPg7J0EpTlfCxYJxn0FxvH14Pe2I81aukiYVsv3+
+         hS7UT/mlCI3iQ67BqtJLsc6TulDobqYJzVXWo5Vvxo78h3pYYr4LwwF+QRgKMnG2rvVY
+         a0eQ==
+X-Gm-Message-State: AOJu0Yx7EkVuRQmo1Q66YiwoiSI7kxv81zOMmsZReuMzyuqOkoHEcYSt
+	Jr8aa5iS4uEUlmYYJ86WU9576Qj6IC6UHwrLhUTZEtfuZSmUhSSyQZv/nbXMWA==
+X-Gm-Gg: AR+sD10ZGDJZr0WUp1p+Y9tmLVnuLkFXP3xfNkFgDsZoZAJnMY6AgRqIdAOSc9AqS8n
+	Rx4/gNk6pfCi7Kcruz+Y5aVR0WI85+PAbH0Ghmz9Uf+VfEP/kNJ7cE2vo5qXL79c703mvt0YLV5
+	oY4+Isl4iHsie2Vg10g5ME4jKswC/77STRrIC7orsi6XM7HE2/NVBrbtT1WpLUn/aWuTSj6IY4o
+	crbaJ63eLygOdbmhYdDApBKLvnB81gMFNcoCLuH6r53N+OtOiH7nI29MS/BO1uLnsZYqIcjfld1
+	JpnaVEdSV++iuVC/g/WHCOb7vN2BNbBdQyUHatY9jmfZNnh4STdAR/FeDKJe1dVYpgRd5PoULPa
+	1MaPy9uVFDZOkvHwNN3PyOcdLB9D79LbNg4pIWxzK1vNOHwCKT1Z47TTiTz+kbZ0fyW869wP87W
+	OV5gUGrCLrd3I93hPAp2BZi51DCEvIaOHMl8FYZKax6lRzwA+veIw4LiCrpb0/PA7AR/WRPWTuG
+	QUpSJQT9DWj7c2h1X1aGaFDTVE+Knzlf2sngEn1ITMpSr0NZZ6qJuMMnz6AbKH5+q8j2TWpq00B
+	fJsbG/OszZNxxDZcSSbw5FUMqjEbktNmfhYKlA==
+X-Received: by 2002:a05:6a20:428b:b0:3bf:7498:9cd1 with SMTP id adf61e73a8af0-3c90085d18emr3619279637.45.1785433341675;
+        Thu, 30 Jul 2026 10:42:21 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:5622:d88b:20c4:5444:d41a:b6c2])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31504cc9dffsm25163964eec.14.2026.07.30.10.42.16
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 30 Jul 2026 10:42:21 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	me@ttaylorr.com,
+	ps@pks.im,
+	johannes.schindelin@gmx.de,
+	l.s.r@web.de,
+	r.siddharth.shrimali@gmail.com
+Subject: [GSoC PATCH v2 0/7] repack: add --drop-filtered to reclaim space in partial clones
+Date: Thu, 30 Jul 2026 23:11:46 +0530
+Message-ID: <20260730174153.9949-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
+References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A24SwMDxPVBs
-Date: Thu, 30 Jul 2026 18:31:24 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "Siddharth Asthana" <siddharthasthana31@gmail.com>,
- "Patrick Steinhardt" <ps@pks.im>, "Toon Claes" <toon@iotcl.com>
-Message-Id: <6bcc7490-6dc8-42a7-b3ea-99bf948d7997@app.fastmail.com>
-In-Reply-To: <xmqq4ihglab5.fsf@gitster.g>
-References: <CV_doc_replay_config.709@msgid.xyz>
- <V4_CV_doc_replay_config.af3@msgid.xyz> <xmqq4ihglab5.fsf@gitster.g>
-Subject: Re: [PATCH v4 0/4] doc: replay: fix config link
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 30, 2026, at 18:19, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->>[snip]
->> =C2=A7 Changes in v4
->>
->> Patch =E2=80=9Cimprove config description=E2=80=9D: Take Toon=E2=80=99=
-s suggestion about avoiding
->> two =E2=80=9Cfor=E2=80=9D.
->>
->> =C2=A7 Link to v3
->>
->> https://lore.kernel.org/git/V3_CV_doc_replay_config.780@msgid.xyz/
->
-> That's truly minimal update.  It is a bit surprising that the topic
-> was stuck for a long time, nearing its expiration date.
->
-> A quick look at the thread
-> https://lore.kernel.org/git/V3_CV_doc_replay_config.780@msgid.xyz/
-> tells me that there weren't any outstanding review comments.
->
-> That unfortunately does not say if this version is good enough or
-> people got tired of reviewing and did not pick all lints in v3, but
-> we need to work with what we have, so let's see how smoothly this
-> round goes.
+This is v2 of the series adding "git repack --drop-filtered" to reclaim
+disk space in partial clones by dropping large, locally-held promisor
+blobs that remain recoverable from the promisor remote. v1 was sent as
+an RFC [1].
 
-Yeah, there just hasn=E2=80=99t been much interest in this topic. But th=
-anks
-again to Toon for taking a fresh look.
+Partial clones let you work with large repositories without downloading
+every blob up front. Mising blobs are lazily fetched from the promisor
+remote on demand. Over time these accumulate locally and there is
+currently no safe, built-in way to reclaim that space short of
+re-cloning. This series adds that reverse direction: enumerate promisor
+blobs over a size threshold, drop them locally, and rely on the existing
+lazy-fetch machinery to bring them back transparently when needed.
 
->
-> Will replace.  Thanks.
->[snip]
+How it works:
+  * Enumerate promisor objects directly (ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)
+    and select the blobs exceeding the filter threshold. Every enumerated
+    object is a promisor object by construction, so it is guaranteed
+    recoverable and locally-created objects are never candidates.
+  * Rebuild the promisor pack without the selected blobs, reusing the
+    existing repack machinery, so the drop is crash-safe (write, fsync,
+    install, then delete the old pack).
+  * --dry-run lists the candidates and changes nothing.
+
+Safety guards refuse to run while a merge, rebase, am, cherry-pick,
+revert, or bisect is in progress, and refuse to drop a blob referenced
+by the current index (it would only be lazily re-fetched by the next
+worktree command). Both are skipped for bare repositories.
+
+Changes since v1:
+  * distinguish an explicit -b/--write-bitmap-index on the command line
+    (reported as a conflict) from a repack.writeBitmaps config value
+    (silently disabled for the command). This addresses Junio's review
+    that the previous check could not tell the two apart
+  * documented the choice to keep --dry-run as a separate option rather
+    than --drop-filtered=<mode>
+  * implemented the safety guards
+  * Added git-repack documentation for --drop-filtered and --dry-run
+  * Reorganised so enumerate_promisor_blobs() is introduced in its final
+    signature
+  * Distributed the tests into the commits that introduce each behavior,
+    instead of a single standalone test commit.
+  * Dropped the drop-log commit from this series
+
+To do:
+  * Remote verification: verifying against the remote awaits the "remote-object-info"
+    cat-file protocol command.
+  * Drop log: introduce with the error-path change that reads it.
+  * --verbose: space-reclaimed reporting.
+
+[1] https://lore.kernel.org/git/20260716132848.95982-1-r.siddharth.shrimali@gmail.com/
+
+Siddharth Shrimali (7):
+  builtin/repack.c: add --drop-filtered and --dry-run options
+  list-objects-filter: add list_objects_filter__filter_oidset()
+  repack-promisor: allow excluding objects from the rebuilt promisor
+    pack
+  builtin/repack: enumerate promisor blobs for --drop-filtered
+  builtin/repack: actually drop filtered promisor blobs
+  builtin/repack: add safety guards for --drop-filtered
+  Documentation/git-repack: document --drop-filtered and --dry-run
+
+ Documentation/git-repack.adoc   |  35 +++++++
+ builtin/repack.c                | 135 +++++++++++++++++++++++-
+ list-objects-filter.c           |  45 ++++++++
+ list-objects-filter.h           |  16 +++
+ repack-filtered.c               |  81 +++++++++++++++
+ repack-promisor.c               |  15 ++-
+ repack.h                        |   8 +-
+ t/meson.build                   |   1 +
+ t/t7706-repack-drop-filtered.sh | 179 ++++++++++++++++++++++++++++++++
+ 9 files changed, 511 insertions(+), 4 deletions(-)
+ create mode 100755 t/t7706-repack-drop-filtered.sh
+
+-- 
+2.54.0
+
