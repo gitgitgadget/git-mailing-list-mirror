@@ -1,115 +1,151 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3D640315B
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 09:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C9D3C0A08
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 09:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785403243; cv=none; b=Am4jgklGTCwSBveAHbwodunNXkZwW6QlZFl2tcEmKrYEdQ2qjljUyuUeqTk5QmPFnWilVIJXVAZNP4EDweCGZsOhn+Qgx4kpjxLFYelxzn+Xmw1sE1gGDnGP3WxlJhWbsz8l6/DWIehG6erVwuY9I3qpSuJENKwQgGf+hXGH/20=
+	t=1785403260; cv=none; b=JdfMRvQ7IwFveXrPsrpu7JrZO2tMftHugPJ9CZ0NZcXf/y1BLzgQmpsLBkkt7gi9guhJ5zjQn18OxEtGFRdynjhWlo/F+LHDvifJuGf+yNJgq/FAa7wC0M/lhqZSg/QfTLO2kfyiTXsn81TX0a/0nM29GvGlzGE69lGY/gRqIBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785403243; c=relaxed/simple;
-	bh=YcUc2GXWXfQTzX6E5n0XrAyO66ptiTeo21iJFQtPSXE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=IZ2toXSOjYyReHkhZ0ppdK8YTcZif2DhQwB+zFDxhNkwXpcbljZEvutSPkReXv6tF5iA/D3MlponPSV1ywOmHWpXgMbTIPNp8EVbve6dalpC2h85o85ED3o+L0geG+Ca1t9wkHC0wIqNoqW+NNv+rWv7df04j+muGpm01YIdnZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LyB92EY0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z/LTw5lB; arc=none smtp.client-ip=202.12.124.155
+	s=arc-20240116; t=1785403260; c=relaxed/simple;
+	bh=ZVvRWSFLkCOvbjBFPdl8ErtlpNfEpeDnFYMRFFma+qQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uPh1P7Us9UxVSgapFicoLofCNJ0lHFv9gpekMW2yyIcwqNy7VRGnNtB9qOKlbUti4lPIZW4RQ5Q7xdMr9CsETUH6JoApFJWHUMEvCeMR4sur0CBvKaRnr2KiRZQwCvkCY9YI0HLsQU0XFb43gccHi15XZKGH9qx5gD9OMEaXQ50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=L4eGxJiy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=myqinwHm; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LyB92EY0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z/LTw5lB"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1809D7A01CB;
-	Thu, 30 Jul 2026 05:20:42 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 30 Jul 2026 05:20:42 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="L4eGxJiy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="myqinwHm"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D0807A01C8;
+	Thu, 30 Jul 2026 05:20:58 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Thu, 30 Jul 2026 05:20:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1785403241;
-	 x=1785489641; bh=wJimjBLhxOkHKi1lpfG7wLIQOBADbFiz1r4MrQ8B5C8=; b=
-	LyB92EY0fs4AIvQXG+DNJqDU3hepq8K2xxJeIRmmCQ4sroY7X2jx1OHDkxI9iG2C
-	zgf2CNN8MfrjQxjaBZxXxY7XP5nRJMMjJMPO63ef7CA6LH+5PqXdrPysRtoyGO8P
-	qT/kBZCekSTj+BRNuPuTvl7fDNMW3W1EESGrgNic4bW7xQnCiuq0m/63qknRd4ar
-	h1o3632CK69oga2bj4z2eCjy5ZfNaOxiPzFGFD6AoY2EpVIeVaC583TogW+64dvk
-	FnvVWzqBloZ38IXm/bYXrbYI3UdRdJgMU8kApTPl2oLapy/z38iVMTvov9feIoEx
-	S+Z+Ahb+bqYjA0yVh2O4Rg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1785403258;
+	 x=1785489658; bh=g95CV+b6TgiXhzUmZbFP81/c8WX2kKWmyPL0aZHO9Ug=; b=
+	L4eGxJiy2prM6dQPyWLjQovw/T57n0ADme01nSHSAIhO4aQLXfpaF9o8hSm9AgoW
+	FBb77QBtIAI0UM2fixNKj4AjnoyMi+Rx/c0IHt1gPwHTaBRfc1lxuDN/T33y1thv
+	wzgb3NDbyjGEwLjgBXWL3H+G6potr96pr8FPJFgjpeYhPIYAmeLsAVmmpDZ4a2oL
+	QREQ3PD26th9IwA9sP/G6yhA7UGQ+KpO9k0ii+3aKjcHsDso/4XBscXalqVdzmIN
+	tzeObjcxWlcYv5XHU3RuSw+j/WUsViXEJwvXuKCqnSu00+nEAzFWVAB0hILukhJr
+	e+YrJdchTnOpBWPjfa2u8Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785403241; x=
-	1785489641; bh=wJimjBLhxOkHKi1lpfG7wLIQOBADbFiz1r4MrQ8B5C8=; b=Z
-	/LTw5lBjSLq/SoQ+mMhD84QK4o3sswas4/fsQgeIImhSPu29KcM3p9xhoXG3kOk4
-	LNPvNVwdgiEgQoConfWclml/kKPwc5/zpGP5S3sQlUs2F1sxXJpEJqIu9e9MuXbI
-	cfdryLCUWbrZoRy3IhS1pVMEqpjJu/HnHAbM2/gbmOBxv8omUEj/BkMiXlyXaw9E
-	TyRNJSyXxK0BNkpLwNbodMOxizQ51DKO2apitaOyptpWt0awwDXEvXM6kjqzG9Da
-	bsS3Vj7qDCUE/PKuHvjOg65Ze+S7/hRxgmZG+mgMTidXGPrkuN7srAkg6PpdI1z8
-	+vrcm9jbSik3fycDIJO1w==
-X-ME-Sender: <xms:aRdrap3_rFDyX5twJ6eRl3cWJ6u1mW0wdCcH5n3-fCnZGipFpxKq610>
-    <xme:aRdraq63mm22yG3QntxRbk4wWbL1qswquRaoDQhTISmITtR1cvA-zocS4XnE4BGqW
-    CPLQQ2450rfFdh0cQo4EfdCkHALIEBJCV4AjCpbF0ye76V4Y5Py-g>
-X-ME-Proxy-Cause: dmFkZTGbFwXG//MAuto0P9sA9fhM+7zeh55aJlkkj8905p0etvohiUW7MR5vyATE0AaL/d
-    0vKvhJz9VtOpsBr38xTSsadCAdZgpFonzQfe1TGPGh/1OA+XawChhl4ePKkM5MtWOIRvwW
-    99PZZk5WYpjXpI/NbQhraA2Rjy1TtiTVaUp0q5pFU3mgAFrX7ZIIw4OCEw+/Rqfeczf/3w
-    CmnuBeLorzylCeopnqV/zzgL50W9u8/BD5fmAv0Z5t/AFYEiNEk5Jwea171vfAxDjkJt0g
-    d+1AK+w2sYlQ+SPqpyOrgxI4QDCyjT56ylhzZgmjN+3ZWxa6nldotKK0bsUB4RwqAJowUq
-    VqUH4T2vwHKR4NLmQHwbCLWiQm/q1k/ENM8dLZyDRAVjvD072gqE1i+sHCqhiyrcTKI2iH
-    WB9mCr65YWOff/nos4UBgn8W42CAnnUZsmkaYdHXT5lsmCJI4mv5xrSqKBsE+urds0TfEj
-    i6oIfjrB8wH8LyK7mxNfecqmyCEKzNbjIikD2YZ1Iu12TDbcA4QIfvL3uansTfLzUlHIqu
-    +MNeR+c4dk7rgLU/JBtbbhpyMOyEEo+iTSzJqHlc5gQ1g2FYjKUC4ZgwZFFsi4roZ6EvFo
-    wXNwk/w0kxKPN+5i6M4Y24lhcWFm9AGDrQ25V8CAD2BipDElNDZP+bqD5mhQ
-X-ME-Proxy: <xmx:aRdranj9zP_LM2JuFTaiJx-ttrnI3vRP8CJkUnq6IxhaWdHVd0n9bw>
-    <xmx:aRdratUrj7ScXpYaZy76cwlE1T1ONIckV6IioAs2nugn5QQno09O2A>
-    <xmx:aRdrauXWKAeiyCmhYEZVwYBB1G-3Oz9S26T2k7NgEZTZ86eonDCcKA>
-    <xmx:aRdralhcwf0LoOz-XbcMGr5Xx4hW3kiUSKc7sK5YjtJPm71bdCsqJQ>
-    <xmx:aRdralXakfXi4pPjAwxoBTq8L0mStR-1TZNBR5wWDGkD-yDCVKHuHiCM>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785403258; x=
+	1785489658; bh=g95CV+b6TgiXhzUmZbFP81/c8WX2kKWmyPL0aZHO9Ug=; b=m
+	yqinwHm/nH93l6aUwdRKun3BtDhxAvTNBfpxw9OgR7IqM9oOR36mgSmPDci9rU/R
+	a8oVi2IK7Dsbb2Akc5Lwym+0M1pprNcnokAqk4MGgx6/NOMT0eE3+/A3Y+348eTR
+	ICIXmsKAH+P5KNZlo/aYP52MH1iFF8oA3I85FfkoVVfATI//OZnVROPp3cvyfa7b
+	PaTxcnn1odLF+Y6nQCx2TJCy2gpkoMSxW4GqBvK6sJ2H4PksyP4zFLAlfO1QsoAw
+	4mHec7M23+m/usoDeL2bmPWdg/9qVzPguYy1OKgBFYbooL5qE2j23iPygqtr5VCW
+	hCVZlzKIiZ89KbrBD8hfQ==
+X-ME-Sender: <xms:ehdrauj0lWD155Cz1H3Yct-fYo2I2FN-MPVwNcpbio37M63OzmdAQhU>
+    <xme:ehdrauGxKl5Sw4f0cKgq1fEwk4U39a5NfbR7_Ph0jJ3eMCWjw8a16WkSxsoxko8Jw
+    pKj2bMjCDpmJGT7SnrlTmNDsi7PmSkcabyOoaMDMjQXBfbWecVS>
+X-ME-Received: <xmr:ehdrasSg9iDWOHFok2N1RUxp4QVrrX_dpcr5ipJO9WxLTXZT5y16-lY9JukMf6x8lE7ilxTVe_4Llz9IB47dfp7yEvCizJZ8C27cyBZgugC_WM3DvQiFr28>
+X-ME-Proxy-Cause: dmFkZTEQRaEnp20JHpkZN84W0Q6WHP48FXgPbfDynCccs1aRUH7OTcWv14/9sQKcd3mlNw
+    cNwb/n+9BQBBGue2hk8pje/LcGgLUW27pJUGEKVe4HF1dVfkZGOdX9ynw3XapXdoE/Aazt
+    igSQlf9AzI8Wf7moh0eWcCkc7o1tplhOgXEX9VazN6RbSvEzsHM61maQEBnNB/6olueJb7
+    1465y6Br3pCDzlfMELcHsNzFjCqNxPUCGBiVMsMrGOoRJXHJfVf2kJjGdep5Nc0wMPTIEm
+    bYl2FFqIRqrq2iLm4PJtQhzdHasuyxV8J8l8WydIceVVYxQD485lKvS/iMIosI/5SG1QtV
+    c5nyKbO5G7d/DgiDTWXJJ/+LcPXXj1VpsCUl03Zqfg3gUuB0Woj/EW7fpQfztapc93mIux
+    5y4CuiTACzj6jrdpb8AdCYFqXhwJB0mOkEBNgzHiYitO3DJbjhiuEB3etj7FjcK9p+z8II
+    qJ97PyC5U5AbBtWthlc4PzijxK+t132PGzc+IUERUO3erf7w1IbZ0/wW/x+2cS9nvOYWst
+    3kNSQhXZQpkDwpc4/G64mbxcsFlQfeycafsa3ZkGAWELZ7fMv3qkIq/AlcgubgEFIrRfpH
+    T/F6Ua6zE3iq1sr8U/Fl+4jq+Oqk3uKWx5vqQsppwElx4kI5BkSo7fC2r8Kg
+X-ME-Proxy: <xmx:ehdrajypCz984vsJKj7yTT5ZJsdSIdNGthbTCfvFcT-pOO-y0w6xUg>
+    <xmx:ehdrageFkYVQcv6pjbnEBX8rBRaeI2StydE6LI0uVxYgcjZcx3Qi1Q>
+    <xmx:ehdrauPrpTHJeL6gU9oqFvYFtwxJwXig1ILo9xHlF3wqSV7R1_sEOw>
+    <xmx:ehdrajuymgdfvvlokb0SflA68nrnbGFHa7LBDXxiAu5C-EdUkUcLEw>
+    <xmx:ehdraqnuTjUrkdNX7p5p8a_O4tgxdIJqbc9veteR15J_nJkEC19_nPNB>
 Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id AA4D43020073; Thu, 30 Jul 2026 05:20:41 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jul 2026 05:20:56 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	christian.couder@gmail.com,
+	jackmanb@google.com,
+	Linus Arver <linus@ucla.edu>,
+	"D . Ben Knoble" <ben.knoble@gmail.com>,
+	Matt Hunter <m@lfurio.us>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 07/11] doc: interpret-trailers: add key format example
+Date: Thu, 30 Jul 2026 11:18:20 +0200
+Message-ID: <V4_trailer_key_format_example.ae9@msgid.xyz>
+X-Mailer: git-send-email 2.54.0.22.g9e26862b904
+In-Reply-To: <V4_CV_doc_int-tr_key_format.ae2@msgid.xyz>
+References: <CV_doc_int-tr_key_format.533@msgid.xyz> <V4_CV_doc_int-tr_key_format.ae2@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AdJf8Qpl78Hc
-Date: Thu, 30 Jul 2026 11:20:21 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Christian Couder" <christian.couder@gmail.com>,
- jackmanb@google.com, "Linus Arver" <linus@ucla.edu>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <21339fd9-9fcf-46ea-8896-9fde56cd1f29@app.fastmail.com>
-In-Reply-To: <xmqqzezhb73q.fsf@gitster.g>
-References: <CV_doc_int-tr_key_format.533@msgid.xyz>
- <V3_CV_doc_int-tr_key_format.8a3@msgid.xyz> <xmqqcxxyt4op.fsf@gitster.g>
- <729baf6b-53ea-4e8d-95ab-5935667e66c2@app.fastmail.com>
- <xmqqzezhb73q.fsf@gitster.g>
-Subject: Re: [PATCH v3 00/11] doc: interpret-trailers: explain key format
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 24, 2026, at 01:48, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->
-> I was reviewing the draft of the What's Cooking report and noticed
-> that this topic is among a handful of stalled efforts going nowhere.
->
->>> If you want to stress that a line with only whitespaces on it does
->>> not count as a blank line for the purpose of this paragraph, you can
->>> consistently say "an empty line" withotu saying "a blank line", and
->>> you do not need to have "(specifically an empty lline)" there.
->>
->> Okay, I=E2=80=99ll make it shorter.
->>
->> It felt too long for a simple concept indeed.
->> ...
->
-> And it has been more than a month since we discussed this topic the
-> last time.  Will we see an update anytime soon?  If not, let me
-> mark the topic to be discarded in my draft of the whats-cooking
-> report.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-I=E2=80=99ve posted the next version now.
+All of the examples speak of the Happy Path where everything works
+as intended. But failure examples can also be instructive. Especially
+for explaining again, by example, the key format (see previous commit).
+
+This also allows us to demonstrate trailer block detection with a
+concrete example.
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    v4: Fix doubled word “to to”
+    
+    v2: [new]
+
+ Documentation/git-interpret-trailers.adoc | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
+index fb503cbe952..a0f7ed6fdd9 100644
+--- a/Documentation/git-interpret-trailers.adoc
++++ b/Documentation/git-interpret-trailers.adoc
+@@ -405,6 +405,29 @@ mv "\$1.new" "\$1"
+ $ chmod +x .git/hooks/commit-msg
+ ------------
+ 
++* Here we try to use three different trailer keys. But it fails because
++  two of them are not recognized as trailer keys.
+++
++----
++$ cat msg.txt
++subject
++
++Skapad-på: some-branch
++Hash-in-v6.11: 45c12d3269fe48f22834320c782ffe86c3560f2c
++Reviewed-by: Alice <alice@example.com>
++$ git interpret-trailers --only-trailers <msg.txt
++$
++----
+++
++Recall that a trailer key has to consist of only ASCII alphanumeric
++characters and hyphens, and this does not hold for the two first
++supposed trailer keys. And now none are recognized as trailers because
++the candidate trailer block has at least one non-trailer line, even
++though `Reviewed-by` is a valid trailer key. Recall that a trailer block
++has to either (i) be all trailers, or (ii) consist of at least one
++Git-generated or user-configured trailer (and some other conditions).
++And (ii) is not satisfied since we have not configured any trailer keys.
++
+ SEE ALSO
+ --------
+ linkgit:git-commit[1], linkgit:git-format-patch[1], linkgit:git-config[1]
+-- 
+2.54.0.22.g9e26862b904
+
