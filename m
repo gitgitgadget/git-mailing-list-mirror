@@ -1,71 +1,70 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7364243D4EC
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 13:58:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9477044102E
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 13:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785419927; cv=none; b=DTsgM0kHpKHPnzCZ8fFn4VHzFaWYP85NqbqVYraXM2lODMS+6C+hjd2TC+gUMzxQgusRJX9RKSOT11O66ORpYF5gvxNl7RaHbXpSVyffonDuDCwjh9U6kUWf4IiOo8HC7438hzaK02CDoQsT9tQGLf1W6DOhcg3Dq4wIBBrGXAc=
+	t=1785419929; cv=none; b=oOzqFUvxwo7oZtxyqX9Y0Wmc859emnvQff9gde9bGDpu3e/ta8ui4AnAxmUfd7UgRylUiNvtk9lbE7YnGBLHI4zbPqDZ8wMblPj0flqaQrKn2dc3GxX7Sc9aAPMY/VuXmPHVbYHhcECuowrXn73rmF67+XgHI5GaIDSzdqA5Gck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785419927; c=relaxed/simple;
-	bh=B5e1ASTsAflEu8wWCxpz1D6NeQ21+RYtYSfroUpu7dE=;
+	s=arc-20240116; t=1785419929; c=relaxed/simple;
+	bh=bWFdC/UgpOWVXmrFdne41eImdo+DWrSI/q9ec5+3q1U=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=U30Aco6adOf4p/Ge/VWSe1/EwCXV8ite4rL4kh5JpMJxYuy931bV/yenCZIVwftLNLH+GOHKcUeVbWCSCAfzbkxhOWHyT3UBDZbvULdtibBKvP9kfZLBkCmTopAjSx65qk1Vk92VUie1/iuVno1J28bWS/ftuIoK62Kdv1dZWVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RG+3jCY5; arc=none smtp.client-ip=209.85.210.180
+	 MIME-Version:To:Cc; b=SyzgjuhERUhaVhpPX5XjU6vhSz04a0cP9S7gjEa+yFMi6mQFl8+19CZZ8gEwfQaJpntKZBNRrrTLrXr2Fpp7KYl3w/BF2WMtbmM3BXfaMKBGPgHd854i/zjXnE8fNS/G6c0w3nr8UxGYkuKI/V8JRqxT8KxbzZMqjM0UITuP1rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C/YrooLI; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RG+3jCY5"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8485b358552so2491932b3a.2
-        for <git@vger.kernel.org>; Thu, 30 Jul 2026 06:58:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/YrooLI"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38e7109321dso1288663a91.3
+        for <git@vger.kernel.org>; Thu, 30 Jul 2026 06:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785419926; x=1786024726; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785419927; x=1786024727; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Xl1GUuZQCnUIcZe+crmBjUUgEdlZuwXClPMHkRFgLRg=;
-        b=RG+3jCY57mZso7Ag1/saZ1WO7FbZpakv1Wc+LRS50oB8m7XwEM0ZLRlcTR49iwxBnE
-         X1+zo5gddDo6wA2cE+AvQJ3XDQFH/PvI7XzqVEmwQPVjIEDWRKsVExd5EXYilSUZnSz3
-         UfKQeiFXAugtS9AmtGaTJGkQS7YmqVmrGQFrV7XwVMaQgJ25Q7yP6MBxr4oyzf9ZaXpY
-         nDVJN3ymsj/oBcx++fqSrohHe8rLM6Hl2EyTXbc7QE0iGDaot48FUHxxkh8Er8BU1Kei
-         oNi34mZpQDuRe+snQYCHyT9Om2du2CyHdH24tq+Q+/bP0V7MK1OvEYXWG15dfPSMVW9C
-         q7Ow==
+        bh=ru+oCI4hMc0/hTbJ+Ckxv9nkhfo7Vo8sSvtFd6xRJsg=;
+        b=C/YrooLIF2RJhdXRPtLUuB5KpwSimHXio6NiBalrvPf3RTOO37tw2wKTw5nIkUOymO
+         XwTsLi3vFO539Ct28DWF+QW142/GN7aVfRjSMDy+dSTXwoPpMCV9LmCTQ1fFeba2jsby
+         83+s4rjea/iSZh+1nOiiyWH9yx4B5yNplDv453pwnmPBcQj5gwGr+/ucLJtFKp7p3kI4
+         3BBh6pg5bfoiJ6hiiQ9D1RWWcttMVgBMQkqgwPrQadZ1n7FKK0W3pkWPnjb8SF3gzYUO
+         c2ksbKu2hc4ueJljZsErBA+YzpEznWJ3O1pFISdTfQweVHQ1jJ5F+YxiW1nlEqCPg5s5
+         3kqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785419926; x=1786024726;
+        d=1e100.net; s=20251104; t=1785419927; x=1786024727;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Xl1GUuZQCnUIcZe+crmBjUUgEdlZuwXClPMHkRFgLRg=;
-        b=hLWc44SQ6r8MvbOpR4Qx55EonH3fpM8HDRO/OjnmryX6DGwS7Q1a5nKb+7M3ERVXAp
-         88zal/3sfa4f3I50UF21jjMD0GEDwRTxbvoNGvJAFYWRLPG5Hc/yV57RwbdmrRTsjB47
-         1sTUoMelM6TIioeYFdDdVG2PTGrWJ4HpzddFXdkRi+1lVsYJeHYCqEUgCOkC9f4DOY29
-         6b9Rb41v/d7DcPFzIjwXAy9dQTUjuhLQBHXspqAx+ti3zNK06nW6YtCN2FeMDuYDykQC
-         SbVulz0Axt4i1AaMI7acyXJJbfFJNINzEgRNY25sByp/jnNy6gsCZ4eyA3c938daW0Mi
-         m/Hw==
-X-Gm-Message-State: AOJu0YyL3QWXx2faxuDX0S2KXtcxpfrgVYiGIaLloYnQDE0u3eHMNITa
-	qrsdQhcKkN86Ki1hOMTlQb9LmL8JPx8l6edqkk1rfVvXGETabh7sqIbN2YjyCvo0
-X-Gm-Gg: AR+sD11joNIaaei2jTkixq2UGAnYC+i7bRCm6wACf9FGV04+WzS9lzyWJql16GQOkMj
-	ASaUohZF8zf+mVy9QcG1vpXDzyWJKVdj2CL5VtIF1JLa19h4Fn5kA41UOmzn0bnrcYFOKrneYsv
-	pgvzPS5Ld8E8kdBaRsiUps9fsruB1gjnA0klhHMhC9NRk6RA/EYR0g78NVRyFE2Jp3alCIxv1Dw
-	O6XOWq5ZIVs5UvfcBi7ytG7RHzYFwNA7Bj/uMO+oFzjm7/PHQNGcntVh7U0dJSXXgQrkutMnz1w
-	DeJ15Iodz1KPIJV88G3+3tUNct8E9l998HcbVkI43NQv+461GYZDm2ntgaTo9GLo8Rgb0f9Tkxq
-	eXnS4utl5HH/LQPqdyYTVSt9XYxJl/T4LznKsYDJ7ppgWp5OWux/sqKcoyUQTsIUvLSHPV6iRnR
-	ZCP0t1d5lGHJGdnkL6BX14oB92zqOmofofG1ZJQIGnzI8shxyShSsaYWCqZ05DzDF0/Bf9DwhIb
-	JCb
-X-Received: by 2002:a05:6a00:c82:b0:845:3fea:96c with SMTP id d2e1a72fcca58-84ebc22e874mr2527076b3a.21.1785419925654;
-        Thu, 30 Jul 2026 06:58:45 -0700 (PDT)
+        bh=ru+oCI4hMc0/hTbJ+Ckxv9nkhfo7Vo8sSvtFd6xRJsg=;
+        b=cRcGkovj3URWlsC9QvlSarb6PP2WmNW8lNPc7Zc+hCctvPFnuNgEVxRPDSmBmMxR/z
+         2LKfgVv5GMifFSFyB8OCmvyO+cUP+ZgMEUvDkOP2c4J/oiEAlt37VYmOs/LQqSJ8lEFc
+         mKsMO58XuYEHMf/a0RSNldPB74VdvY5Li+Mzgj99Iob5ttHXU584r1vcmKwTsqvCfj2U
+         E4c+WFjw2LueLNMsntFq6Nyjv4GYZzAvWBKh7g7TgJpq04iifTi9/AwXUrIOK8TCihqV
+         cCZoEQfBN1JE0CSJifqYdILubQJpL2UkvoI9xJBdrZQTwgP4XuTsXBhaukvETYO1ZO0o
+         Iqcw==
+X-Gm-Message-State: AOJu0YzrATsDyoxHt6ojwhNVsMPblHOyXWsfiDm+h7iXLbJrjlwBcy9m
+	4larNd4DcPDEsRbLcJEA4a/TIe8N6NHQRJy1TQF2IfcWzAwij8faw3k8gYSyDd0I
+X-Gm-Gg: AR+sD13JHDc9mZ6yPMqKQuEm5VyHLIDRf83ualX91HN05FC25surQVXqTTiKzzRCvxj
+	PuyCGDgw7no9X02Fabiezef08jQL7WNsQx1ZXfdu6oNdEXsonPM7Cd1mYxo80XJQQpHGqiE5Ak1
+	UueGRkJB9Z7N5mvXA0DY6K4ssLMLi1YVUl7BFyvtUNYQ8dxkTPNqQ1nhzVlMJ6VnJVY/o2MAEV3
+	/Y6o4jP2MStD6WoYbrDKbH6cTKeYIT560CEAeyDYv24APOAylHcdqJWsLq1DRE1aFcQhXkFXCtu
+	cTOE79DnqWW3dpYeLGcBBOdYLE6pwYLPArbeul9lfGbnzxc92oKw1y4PkMJpwtQ3N2pV0Z2RFRW
+	q1lau7xdMdQ/8e+ryKhuImSS93+ZlrsNueb+f7NAQXJ8tDjDTAJEOea6ptqVJq1/fLfQqgAlqC2
+	vaqOe/51sBePK6tNgs0JptAa6NODJGVHRtvBsYbjJnjtVXXPyuz3jk2IG80t8WCFuu
+X-Received: by 2002:a17:90b:1812:b0:38e:69ae:7148 with SMTP id 98e67ed59e1d1-38f9bece079mr2492871a91.24.1785419926824;
+        Thu, 30 Jul 2026 06:58:46 -0700 (PDT)
 Received: from [127.0.0.1] ([20.120.230.195])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84ea00514d8sm3240404b3a.13.2026.07.30.06.58.44
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f9b72c596sm1155089a91.9.2026.07.30.06.58.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2026 06:58:44 -0700 (PDT)
-Message-Id: <aa845096d853b5613059433429dbcf4a44804047.1785419916.git.gitgitgadget@gmail.com>
+        Thu, 30 Jul 2026 06:58:46 -0700 (PDT)
+Message-Id: <96ebfd6ec65253d9c86edcb2d8cee07f0dfd6af0.1785419916.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2285.v24.git.git.1785419916.gitgitgadget@gmail.com>
 References: <pull.2285.v23.git.git.1784979136.gitgitgadget@gmail.com>
 	<pull.2285.v24.git.git.1785419916.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 30 Jul 2026 13:58:35 +0000
-Subject: [PATCH v24 6/7] branch: add branch.<name>.deleteMerged opt-out
+Date: Thu, 30 Jul 2026 13:58:36 +0000
+Subject: [PATCH v24 7/7] branch: add --dry-run for --delete-merged
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,143 +83,195 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Setting branch.<name>.deleteMerged=false exempts that branch from
-"git branch --delete-merged", which is useful for a topic you want
-to keep developing after an early round of it has been merged
-upstream. Unless --quiet is given, each skip is reported so the
-user knows why their topic was kept.
+"git branch --dry-run --delete-merged ..." prints one line per ref that
+would be deleted without modifying refs or branch configuration.
 
-Explicit deletion with "git branch -d" still uses the normal merge
-check and ignores this setting.
+--dry-run is only meaningful together with --delete-merged and is
+rejected otherwise.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/config/branch.adoc |  7 +++++++
- Documentation/git-branch.adoc    |  3 ++-
- builtin/branch.c                 | 14 +++++++++++++
- t/t3200-branch.sh                | 36 ++++++++++++++++++++++++++++++++
- 4 files changed, 59 insertions(+), 1 deletion(-)
+ Documentation/git-branch.adoc |  8 +++++++-
+ builtin/branch.c              | 23 +++++++++++++++++----
+ t/t3200-branch.sh             | 38 ++++++++++++++++++++++++++++++++++-
+ 3 files changed, 63 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
-index a4db9fa5c8..d8483acb4f 100644
---- a/Documentation/config/branch.adoc
-+++ b/Documentation/config/branch.adoc
-@@ -102,3 +102,10 @@ for details).
- 	`git branch --edit-description`. Branch description is
- 	automatically added to the `format-patch` cover letter or
- 	`request-pull` summary.
-+
-+`branch.<name>.deleteMerged`::
-+	If set to `false`, branch _<name>_ is exempt from
-+	`git branch --delete-merged`.  Useful for a topic branch you
-+	intend to develop further after an initial round has been
-+	merged upstream.  Defaults to true.  Explicit deletion via
-+	`git branch -d` is unaffected.
 diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index 4766178204..cfaac4b90f 100644
+index cfaac4b90f..bfdf459329 100644
 --- a/Documentation/git-branch.adoc
 +++ b/Documentation/git-branch.adoc
-@@ -224,7 +224,8 @@ A branch is not deleted when:
-   distinguished from a branch that just looks fully merged right
-   after a pull; this is determined by the remote's configured push and
-   fetch refspecs,
--* it is the local upstream of a branch that is not being deleted.
-+* it is the local upstream of a branch that is not being deleted, or
-+* `branch.<name>.deleteMerged` is set to `false`.
- --
- +
- When such a local upstream branch has its own upstream deleted by the
+@@ -25,7 +25,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
+ git branch (-c|-C) [<old-branch>] <new-branch>
+ git branch (-d|-D) [-r] <branch-name>...
+ git branch --edit-description [<branch-name>]
+-git branch (--delete-merged <pattern>)... [<branch-pattern>...]
++git branch [--dry-run] (--delete-merged <pattern>)... [<branch-pattern>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -235,6 +235,12 @@ A branch whose work has not yet been merged into its upstream is
+ silently skipped. Delete it with `git branch -D` if you want to
+ remove it anyway.
+ 
++`--dry-run`::
++	With `--delete-merged`, print which branches would be
++	deleted and exit without touching any ref.  Useful for
++	sanity-checking a wide pattern like `'origin/*'` before
++	committing to the deletion.
++
+ `-v`::
+ `-vv`::
+ `--verbose`::
 diff --git a/builtin/branch.c b/builtin/branch.c
-index f1a73bcea1..2d0c4f51ea 100644
+index 2d0c4f51ea..57ee384d23 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -818,6 +818,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 	struct strset deletable_branch_names = STRSET_INIT;
- 	struct strset protected_branch_names = STRSET_INIT;
- 	struct strvec branches_to_delete = STRVEC_INIT;
-+	struct strbuf key = STRBUF_INIT;
- 	struct hashmap_iter iter;
- 	struct strmap_entry *entry;
- 	int ret = 0;
-@@ -836,6 +837,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 		const char *branch_name;
- 		struct branch *branch;
- 		const char *upstream_refname;
-+		int opt_out;
+@@ -200,6 +200,7 @@ enum delete_branch_flags {
+ 	DELETE_BRANCH_QUIET = (1 << 1),
+ 	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
+ 	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
++	DELETE_BRANCH_DRY_RUN = (1 << 4),
+ };
  
- 		if (!skip_prefix(branch_refname, "refs/heads/", &branch_name))
- 			BUG("filter returned non-branch ref '%s'", branch_refname);
-@@ -853,6 +855,17 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 					FILTER_REFS_BRANCHES, DELETE_BRANCH_SKIP_UNMERGED))
- 			continue;
- 
-+		strbuf_reset(&key);
-+		strbuf_addf(&key, "branch.%s.deletemerged", branch_name);
-+		if (!repo_config_get_bool(the_repository, key.buf, &opt_out) &&
-+		    !opt_out) {
-+			if (!(flags & DELETE_BRANCH_QUIET))
-+				fprintf(stderr,
-+					_("Skipping '%s' (branch.%s.deleteMerged is false)\n"),
-+					branch_name, branch_name);
-+			continue;
-+		}
-+
- 		strset_add(&deletable_branch_names, branch_name);
+ static int check_branch_commit(const char *branchname, const char *refname,
+@@ -342,13 +343,20 @@ static int delete_branches(int argc, const char **argv, int kinds,
+ 		free(target);
  	}
  
-@@ -873,6 +886,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
+-	if (refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
++	if (!(flags & DELETE_BRANCH_DRY_RUN) &&
++	    refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+ 		ret = 1;
+ 
+ 	for_each_string_list_item(item, &refs_to_delete) {
+ 		char *describe_ref = item->util;
+ 		char *name = item->string;
+-		if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
++		if (flags & DELETE_BRANCH_DRY_RUN) {
++			if (!(flags & DELETE_BRANCH_QUIET))
++				printf(remote_branch
++					? _("Would delete remote-tracking branch %s (was %s).\n")
++					: _("Would delete branch %s (was %s).\n"),
++					name + branch_name_pos, describe_ref);
++		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+ 			char *refname = name + branch_name_pos;
+ 			if (!(flags & DELETE_BRANCH_QUIET))
+ 				printf(remote_branch
+@@ -882,7 +890,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
+ 				      DELETE_BRANCH_NO_HEAD_FALLBACK |
+ 				      flags);
+ 
+-	if (!ret)
++	if (!ret && !(flags & DELETE_BRANCH_DRY_RUN))
  		clear_deleted_upstreams(&protected_branch_names,
  					&deletable_branch_names);
  
-+	strbuf_release(&key);
- 	strvec_clear(&branches_to_delete);
- 	strset_clear(&protected_branch_names);
- 	strset_clear(&deletable_branch_names);
+@@ -960,6 +968,7 @@ int cmd_branch(int argc,
+ 	int delete = 0, rename = 0, copy = 0, list = 0,
+ 	    unset_upstream = 0, show_current = 0, edit_description = 0;
+ 	struct strvec delete_merged = STRVEC_INIT;
++	int dry_run = 0;
+ 	const char *new_upstream = NULL;
+ 	int noncreate_actions = 0;
+ 	/* possible options */
+@@ -1016,6 +1025,8 @@ int cmd_branch(int argc,
+ 		OPT_CALLBACK_F(0, "delete-merged", &delete_merged, N_("pattern"),
+ 			N_("delete merged branches whose upstream matches <pattern> (repeatable)"),
+ 			PARSE_OPT_NONEG, parse_opt_strvec),
++		OPT_BOOL(0, "dry-run", &dry_run,
++			N_("with --delete-merged, only print which branches would be deleted")),
+ 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_MERGED(&filter, N_("print only branches that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
+@@ -1078,6 +1089,9 @@ int cmd_branch(int argc,
+ 	if (noncreate_actions > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
++	if (dry_run && !delete_merged.nr)
++		die(_("--dry-run requires --delete-merged"));
++
+ 	if (recurse_submodules_explicit) {
+ 		if (!submodule_propagate_branches)
+ 			die(_("branch with --recurse-submodules can only be used if submodule.propagateBranches is enabled"));
+@@ -1118,7 +1132,8 @@ int cmd_branch(int argc,
+ 		goto out;
+ 	} else if (delete_merged.nr) {
+ 		ret = delete_merged_branches(&delete_merged, argv,
+-					     quiet ? DELETE_BRANCH_QUIET : 0);
++					     (quiet ? DELETE_BRANCH_QUIET : 0) |
++					     (dry_run ? DELETE_BRANCH_DRY_RUN : 0));
+ 		goto out;
+ 	} else if (show_current) {
+ 		print_current_branch_name();
 diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 322c5a20cc..50fd1d348c 100755
+index 50fd1d348c..942c7b63f8 100755
 --- a/t/t3200-branch.sh
 +++ b/t/t3200-branch.sh
-@@ -2084,4 +2084,40 @@ test_expect_success '--delete-merged requires a value' '
- 	test_must_fail git -C forked branch --delete-merged 2>err &&
- 	test_grep "requires a value" err
- '
+@@ -1938,6 +1938,19 @@ test_expect_success '--delete-merged deletes only selected merged branches' '
+ 		git checkout -b tracks-other --track other/main &&
+ 		sha=$(git rev-parse --short merged) &&
+ 
++		git branch --dry-run --delete-merged origin/next merged >actual 2>&1 &&
++		echo "Would delete branch merged (was $sha)." >expect &&
++		test_cmp expect actual &&
++		git rev-parse --verify refs/heads/merged &&
 +
-+test_expect_success '--delete-merged honours branch.<name>.deleteMerged=false' '
-+	setup_repo_for_delete_merged &&
-+	create_merged_branch deleted &&
-+	create_merged_branch kept &&
-+	(
-+		cd repo &&
-+		git config branch.kept.deleteMerged false &&
-+		git checkout --detach &&
++		check_branches <<-\EOF &&
++		also-merged
++		main
++		merged
++		tracks-other
++		unmerged
++		EOF
 +
+ 		git branch --delete-merged origin/next merged >actual 2>&1 &&
+ 		echo "Deleted branch merged (was $sha)." >expect &&
+ 		test_cmp expect actual &&
+@@ -2003,9 +2016,12 @@ test_expect_success '--delete-merged keeps the upstream of a surviving branch' '
+ 		git checkout -b topic --track feature &&
+ 		git commit --allow-empty -m "topic work" &&
+ 
+-		git branch --delete-merged origin/next 2>err &&
++		git branch --dry-run --delete-merged origin/next >out &&
++		test_grep ! "feature" out &&
+ 
 +		git branch --delete-merged origin/next 2>err &&
+ 		test_must_be_empty err &&
 +
-+		test_grep "Skipping .kept." err &&
-+		check_branches <<-\EOF
-+		kept
-+		main
+ 		check_branches <<-\EOF &&
+ 		feature
+ 		main
+@@ -2033,6 +2049,21 @@ test_expect_success '--delete-merged clears the deleted upstream of a protected
+ 		git commit --allow-empty -m "tip work" &&
+ 		sha=$(git rev-parse --short lower) &&
+ 
++		git branch --dry-run --delete-merged origin/next --delete-merged lower >actual 2>&1 &&
++		echo "Would delete branch lower (was $sha)." >expect &&
++		test_cmp expect actual &&
++
++		git config --local --get-regexp "branch\\.(lower|mid|tip)\\.(merge|remote)" >actual &&
++		cat >expect <<-\EOF &&
++		branch.lower.remote origin
++		branch.lower.merge refs/heads/next
++		branch.mid.remote .
++		branch.mid.merge refs/heads/lower
++		branch.tip.remote .
++		branch.tip.merge refs/heads/mid
 +		EOF
-+	)
-+'
++		test_cmp expect actual &&
 +
-+test_expect_success "branch -d still deletes a deleteMerged=false branch" '
-+	setup_repo_for_delete_merged &&
-+	create_merged_branch kept &&
-+	(
-+		cd repo &&
-+		git config branch.kept.deleteMerged false &&
-+		git checkout --detach &&
-+
-+		git branch -d kept &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
-+	)
+ 		git branch --delete-merged origin/next --delete-merged lower >actual 2>&1 &&
+ 		echo "Deleted branch lower (was $sha)." >expect &&
+ 		test_cmp expect actual &&
+@@ -2120,4 +2151,9 @@ test_expect_success "branch -d still deletes a deleteMerged=false branch" '
+ 	)
+ '
+ 
++test_expect_success '--dry-run without --delete-merged is rejected' '
++	test_must_fail git -C forked branch --dry-run 2>err &&
++	test_grep "requires --delete-merged" err
 +'
 +
  test_done
 -- 
 gitgitgadget
-
