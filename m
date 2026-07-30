@@ -1,117 +1,87 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11BE379C2A
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 12:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5345333ADB0
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 12:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785413013; cv=none; b=hftze3CiRZCV4wLLMJTNy5VWNjByz+ca15uGWKIIIlBdAaXKDzaj71qC2qeg+C3d65O0qy+KehwG6FEJAopS7lg/P0uRh++yJGcw5nR5RrSiIkZXA+o7+ynpRVRyH51pqtsrJOtIGHsNm6Y0MWF0/3wAvPz2pNhiy2nFHwnXWXQ=
+	t=1785415682; cv=none; b=YbcIIeH4uxqxCgcBGg2NsHdicUM6GHEip9ektLyNrxPMHlrq0UsKFHM/t3GXiGlSEepu6H8iUnplggq5EUXssTPfSW1CXpHkfi89hdwGZayBXcyzWfJF2OJWl3hJRtl0L+BFUCpZC+9CdhM5Oo9hvb7pRFJSB4mCo5zuM5JLuvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785413013; c=relaxed/simple;
-	bh=0jTmqsUkMCAFT2jFNDV9xpR8EyGfKX7NnhCKcvUF7dM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IUbRxHylTozsyLzE6/Z4uhUn2PJU+3JpE3/tcpyFOxeZptUz5UATozNt9ABRajAa7YegxdZlDDyB/Bn6pGIMQ8jBpmzqB/ApDYCEc0xJnxDLRLxZo2XCaZz5sI/M5nFxlD6ODG2N3PheBWVkbAkPSnZCRbnR5lqlg7MCNnODnic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=jnh0GDZ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CG/eoxIF; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1785415682; c=relaxed/simple;
+	bh=t17HcDg2aqPoUoqZPI7zI/1YWAU3fMz3LLKhIdmN1vk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lHlcSs+1xzyKYR6lYKIWNTpXPt0DfEXzGz6kKSEyAsHcdmna6EZ1B87HLDTcyVay0dP3pyBdWoM8KY0/PNxrklF8IoGzP8sWrOcYVq6doNJLPzRU36pUMOAG5lxDU5in0ROyeJUHlZpB2b+WMB8NhT2mp96rfbnQESdwCgdRdtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=p3xtR37a; arc=none smtp.client-ip=91.218.175.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="jnh0GDZ9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CG/eoxIF"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0078F7A009B;
-	Thu, 30 Jul 2026 08:03:30 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 30 Jul 2026 08:03:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm2; t=1785413010; x=1785499410; bh=LV
-	i5MyvnnsbST7Q6N/v17lYwTnAX+nuMLCRAZhu4Dp4=; b=jnh0GDZ9Xo0xFLSSuk
-	qS3a78AJCblT388y+QKPaaXJ7zbvOxW3r47Xig5E6ghZl8JYNxdbSXuSfx27fRtV
-	2DV46lMU6l2Dfbp8VdnCjGA10KmEMaBtM6pnwVTfZXwZz6sT8mAOnTEA1MTb8tY6
-	BQNoKsz8Y6inPX1psqZpOvC9Aom1xFhFyTs1IEg5LyqMxn2GtS535q1fX4q/NrLX
-	Ds/2f6n3iqVmL/EUvCCe1gZ/Q2vX11OHVR+V39bvteuWIZFNE3dNYjYlEw6600jl
-	ZhLbC9rT5quTW6yQHlIlvTnBQbU+K0u3GjR6GTGAJQwoMIAelG593vtvkSDDKaGI
-	VroQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1785413010; x=1785499410; bh=LVi5MyvnnsbST7Q6N/v17lYwTnAX
-	+nuMLCRAZhu4Dp4=; b=CG/eoxIFe4swMu+kRzm1shEa+n9V8B5DDBltrDdjXnID
-	IqDVGR0kf6ayANoh+dSIgI0J+L11S/rVpWX1auJbIYbPEzzJfxYrkqT8NiWFgwV0
-	IwY2mgMr/qMvCjhhiHcU7CHazYSwQ4ktw+P7Xfmd6xWe4Dnh6A7y5W6CXoD08ZQm
-	0RUKLPX5reqjbnfrPxJ1qMI8JVlTed57hGXkHWMI/gHWvjZwjNF01CDTrRFGoR8p
-	ur4mGtifz6RefyUeGYck62dr5eJic98MQk7HM4chI3ncGAGcNQYb4TXc2U1gzuOM
-	yE2FEepZqbvkIr1T6cvytnUGSdiJ5N/tZtcNsOj61A==
-X-ME-Sender: <xms:kj1ralgODCGWm75SjR2PQPFDs48n2bqnk7FO-QdRFkQhSVzh3iDYnBk>
-    <xme:kj1ragDLuEhKLDqNVtZwnDWoLHkN8OJHWwQ8LqK1mAgVak5Bh8FcjaTCbzI7Xgz0f
-    i7-Brfr3Fdb9qv14s3LYTY4_D2y9j_ahgGyYPgjOsJPngm_1kc-Yuc>
-X-ME-Received: <xmr:kj1raitlWVUhNuuaOqCKTnEXhTpGKTPqgaIuWYmfBLNe-YT-SM-LHksiWQZuDEve-cyI2272YkcWBanplJvzDnM7ZenfbHklpU5pGsAKR4s26mmMnoyoCgI>
-X-ME-Proxy-Cause: dmFkZTFyUsLnGaUruIGFOcWQKzKG7BOO922FDPj7VG4dY76XH5GcIDFaaP3q1iC5j/0Cq6
-    7tRjMxWU/nx0/2Ej/O/4wNZsFtaNJgVEiYNMTXsdF5nCRAAaka/wPaak60S3qc1JXTrB9J
-    cPq/JG2deVnqJ9lVGedYApUZ5S+tWQ1z+GwrvvHhqcrnzRmV4DzrbOAiXZ5zglo7yXXmyH
-    4OjH1szj47DyHywbClLg3WErDB2nBoXRLQkG3lJTRKF9JjfSA8YzvHp2IeWEMPA9ctfsOL
-    ilVqvLgyToY9N24BqycHokF9Gqp7DASImlQnIQxzFjTZE5hhNJchMojJTRr2fPHbd91FUi
-    5RUxqRsENcoBtEMFw++pDUvHoSWGr3WRZTupyqT80cNs3eWX+wnfeIQZqCOdSjuq2SG5TS
-    wzM3WmTnclABVfH4bKe63L2xwdVj2yxsePQH+pUp73VMaCbcBhPCt2+NnjzBh3WYPIROp+
-    9Px6/J5b4NmXTsRAdrk7tXxfyyf5gqncKda4Pi63b4tnNaQyqPzGix7UUY+hEY9B5ZqaYb
-    B/mhPIeb5ZlYyOUqbPB1bA8/cmgj4LBzUsTVJZpF/9G0nHxEJRQ8VUmJpCkJSq2242zM/N
-    z8o7Qr+gq9f3bBGOfU7VbKwmao1PGrSJrUfDgsSiQ9xnaLzimlDtQRo9gx4g
-X-ME-Proxy: <xmx:kj1ralb-cl1LqLIbv2nGTYGiodMrCDN-uOEq0WMRP_w1DmSHQS865w>
-    <xmx:kj1ralUMhg_Ws-cfihK4CFmT5iBQemnm6xiUgSy3xsFwvSrhPEddbw>
-    <xmx:kj1rap6JG72-Ba_TTwLbFYPZMmCSouQl_NRP0vI8riSSDBSgJTt4BQ>
-    <xmx:kj1ragg_mv9bdGqEz8zZ5KCbtiGAZptklN5jYdQBNa7Qu8ja04G4Uw>
-    <xmx:kj1rao4o__Vbk_mvnlmPRkMMgyAvE0Lk2fE_3sJ7cifLA2m1JKCtdpuc>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jul 2026 08:03:30 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] doc: format-rev: use [synopsis] on code block
-Date: Thu, 30 Jul 2026 14:02:55 +0200
-Message-ID: <synopsis_block.af9@msgid.xyz>
-X-Mailer: git-send-email 2.54.0.22.g9e26862b904
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="p3xtR37a"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1785415676;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HtyUXK0ErkqnZ2p5kwAB0D/FHo/RYE+GQcToynfwLNQ=;
+	b=p3xtR37a7VpGqZvRAqoU4aNwnyiUcERYH7V+Gc1/LSwYpaLUngDzMtdf9WMGgb9V08Ceyi
+	2HtIoWiczYmjwkti+HLvtBjyiozwi6yZ6AvmUqcsY1CuVAuWdxZUDkARuGXRwQhh4E7wY9
+	ZHWtowNB0E+EqiDczrxIP3Oqy22Q1xs=
+From: Toon Claes <toon@iotcl.com>
+To: Justin Tobler <jltobler@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/5] loose: load loose object map for the correct source
+In-Reply-To: <amkMipjGA_7cwpOR@denethor>
+References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
+ <20260724-pks-odb-create-on-disk-v1-1-3b3d265d979b@pks.im>
+ <amkMipjGA_7cwpOR@denethor>
+Date: Thu, 30 Jul 2026 14:47:50 +0200
+Message-ID: <87tspgd4p5.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Justin Tobler <jltobler@gmail.com> writes:
 
-This code block uses the placeholder `<subject>`. Let’s highlight this
-placeholder properly by using the `synopsis` block definition which was
-introduced in a34d1d53 (doc: convert git-show to synopsis style,
-2026-02-06).
+> On 26/07/24 05:48AM, Patrick Steinhardt wrote:
+>> When loading the loose object map via `load_one_loose_object_map()` we
+>> pass in both a repository and the corresponding source. We ultimately
+>> don't really respect the passed-in source though as we instead always
+>> load the map via the common directory. This doesn't make any sense
+>> though, as the function is called in a loop through all sources, and as
+>> such the expectation is that we'll load the map that belongs to the
+>> given source.
+>> 
+>> Fix this bug by instead loading the map via the loose source's path.
+>
+> IIUC the primary source is always being used, does this mean that
+> repositories using a compat hash and alternates are currently broken?
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+Yeah, the commit message seems to undersell this fix.
 
-Notes (series):
-    Topic name: kh/doc-format-rev-1
+I think it wouldn't hurt to add a small test for this:
 
- Documentation/git-format-rev.adoc | 1 +
- 1 file changed, 1 insertion(+)
+    test_expect_success 'rev-parse maps oid of object borrowed from alternate' '
+    	test_when_finished rm -rf alt borrow &&
+    
+    	git init --object-format=sha256 alt &&
+    	git -C alt config extensions.compatObjectFormat sha1 &&
+    	test_commit -C alt A &&
+    
+    	git init --object-format=sha256 borrow &&
+    	git -C borrow config extensions.compatObjectFormat sha1 &&
+    	echo "$PWD/alt/.git/objects" >borrow/.git/objects/info/alternates &&
+    
+    	oid=$(git -C alt rev-parse HEAD) &&
+    	git -C alt    rev-parse --output-object-format=sha1 "$oid" >expect &&
+    	git -C borrow rev-parse --output-object-format=sha1 "$oid" >actual &&
+    	test_cmp expect actual
+    '
 
-diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-format-rev.adoc
-index 505a52feccd..836ba4b0c24 100644
---- a/Documentation/git-format-rev.adoc
-+++ b/Documentation/git-format-rev.adoc
-@@ -96,6 +96,7 @@ The mode `--stdin-mode=text` replaces each object name with the
- formatted commit, i.e. the format `%s` would transform some commit
- object name to `<subject>` without any termination. Like this:
- 
-+[synopsis]
- ----
- Did we not fix this in "<subject>"?
- ----
-
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
 -- 
-2.54.0.22.g9e26862b904
-
+Cheers,
+Toon
