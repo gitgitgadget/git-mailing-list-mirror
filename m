@@ -1,70 +1,70 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA44D43B6C9
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 13:58:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C747643F08C
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 13:58:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785419921; cv=none; b=mwiYxosoUMuvf9H4CLsdC2gomT+xs9BM3b9+2zykF0N1bXWFAxF8eoKzR2loSumJS5q9eFM6cdpGahk24b4tlZV3QB5kMXPzaC76O2fBg/zCRgSp9qTd6UOzmAXydUl0Ov6ZDtfAsFiJ7gNjZoFP33ldySkay+c0yEmvt27pyLQ=
+	t=1785419922; cv=none; b=jJ2MTQCavuGGn7EQn/ErfJvHVquQnWsenXkf55oZTgtICNudNwpD7DunX22abHFFPDaMl3sG5APoyUmMoGdR3oWqfZBo/4HqKXnEmTOz7+3HyW+CoNZvC234pUDQKxVfTgB9H4nYg5Nv9bEVxlYFc9OC0dWeVV0EnC5zqu7ngJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785419921; c=relaxed/simple;
-	bh=5zljwzNb4B8o70MQrtq0GtryMrfQ+qTEzM/h/inwPXk=;
+	s=arc-20240116; t=1785419922; c=relaxed/simple;
+	bh=TrNo6oU/eDqM79PpPncgPOFK7QbAItjqVMOnrt/jFBs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=AMVkB0YCEWzEcxOWlXl1JTSM3CLex+SeywUm1xJPHD+cAPsnxgv1c76gSO4PmI+PBqBt8tcUBLfOh6uWVXmvVj2pLlOhwsFyu0HhC6U16ZQly+Djxd0Rd9RlKPMjfHxr4sk8vPR+RzZhwaNAvp8ok1Qt3FAczaf1lAoIJuCgedE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GUpx/wqm; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version:To:Cc; b=dIgzX+Etgzc+uRIq+NYDRU7FsMTHDk/TB359JXUqbo0ZJPGbDVHF+yrULhK4KXZsQBEQPp0iavZ7G5+bmvcbjM3Wn0FHmzyVmZkOd32wa99xBv2lZYG0JljbnbEPQwQpG6a1UkYTNQzhVfc9ZkK0jjz17LG2KKuvEDLadXRvsDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=esxYSL7r; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GUpx/wqm"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38e58034d05so2360242a91.2
-        for <git@vger.kernel.org>; Thu, 30 Jul 2026 06:58:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="esxYSL7r"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-84e84a6c4bfso757594b3a.1
+        for <git@vger.kernel.org>; Thu, 30 Jul 2026 06:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785419919; x=1786024719; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785419920; x=1786024720; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=SCFPUMmAT2iooz06HqpOjoKMRwTlKPaUyye2pyW2eA4=;
-        b=GUpx/wqmnLzd0+Slz6oNK73Pc63cWRMZcbj/Ghl/2dMhtXTXnElaB5Ze7CyKYNrnmQ
-         FrGvrI2aIv/2nPOjyZezH/H/jH12mt8nXvD11/nu1sjGNuGTzSuPUjCzXKWu+ECJxjKd
-         5V8TUeWy7Vv0nfwTL4pVR7jHuxDMmnmWzBDLdOrIiMDQrPG7t6kobuqLirPyyChRkNfj
-         6thejhcYjCgQJZOzkama15eHlJgQIVxA42MpnWEGiKCwbCslZdPBwlxb8bMh6NuS/oYu
-         UZqhy2iPAg99fEtjKIpJpgrSpUjlc0f6TjdnI1SgdoTmU9o9/ihGzVdm+qDLjmNA66IA
-         pySQ==
+        bh=sdaSypjsskN157SYYr5oaYvn5KtmMJqBKV0m/Lp7/LY=;
+        b=esxYSL7rEnIyIc8G6+vaHYUxYjNUP0cp4S2FvceYHh7vujzULefHGteMdTLcHumHmP
+         1nxITjLszXd6/8JQIMaRanX/V/53qt0UTLAAlLyake7sKT5sCZDjXdB6LtydQ7zH7Fo9
+         P0l88hdWVjEjf+OmoVnughYmzGC8WvOt7ZRNtIK7b0mZ0boQss3jX5DI105llZaC7Uz7
+         Hnd2BcHe75f3FhyiTwANnCXgISZ+/4jeoSo7smsnEcQTvoQWaWnb5NOEQ58uLsTyzgpK
+         Hriq9Hn3PU3DlE00VY5e3iWfvFyjToZytz5uv5lsSCResM9EPE56U0V4mLBcWY3e/vNn
+         +4Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785419919; x=1786024719;
+        d=1e100.net; s=20251104; t=1785419920; x=1786024720;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SCFPUMmAT2iooz06HqpOjoKMRwTlKPaUyye2pyW2eA4=;
-        b=AwnlzNN65PlEac680qLOTfW5jRG+O/BUO7qDidgX6HG/llIJ9y0Na1D33WozWK0d3b
-         51FAVzv0RHdnyKTKsHJ+7yqHxO95i3qnk/zukYQwxZnkGQbgqVVjiyn3EYs4czeprZJ1
-         4KDgqnGJiKuGjQhMLbkxuL1JA49LIt8+iOJEC0HLnzsHDqF7JXLNEmMvPyntUJEWQB05
-         IXvxZgK8/P7g9PbJEq2ufAu8Q/H2BnrRRhPxxy/QH/EgDidZCyRe9bGMHaieLh3KLkz5
-         BWJYXhS7+OH9PM60xU54+CUz6kTmJxGNX7xPwwUlyTPOYIYiFpfic3m4r7gagQ74NtaW
-         rT8w==
-X-Gm-Message-State: AOJu0Ywo3zfrUzVTDCTqqNL09lIFmAkIS/zuuexy4uD2MX0eFjz5cIYr
-	dGfB5v6aXG4V0wfoAsQuCGtzSv4kTOhdPophT3H8LQ7dQn3NaqMAnP7o+0p1ug==
-X-Gm-Gg: AR+sD10Et+OUFoNz8rI2S/T+2CiOOB8ayFuM4aNHMqd3rvv0WcSRBbImSwe0d7A8v96
-	c12PpmJZIT83tD015cSxQmDHTaQiAG4n1zdVncpk+kBMKVGa/XhzZuuwClrfbut5GQqxbMpLA2X
-	P7K2YnuhoTr0n/pPZs7gt6VWs7PEi9EXysOoKChdqdR7TPBNK2fvdkOcDhfSGjGSVZ7rl+VPoN1
-	t1V6TZuhYM/TJFDJ3jxuGNC5XLIWNoKWIpt2ZyncTWJ3zPwoietPbfqQT9NF9TcrL8CdH0LTBEi
-	asUG3XLW8rud2uXod8Ra5QV2TgjdltTWSfcnTIroMSxndPK6kyfdro0zGGlp4fEHSpS41SMNNow
-	9cb7im5JpFa527XgWet6tGok6Y6qUNOszWv9dlu678R5upNU8BUvfGb1I2fNjfSOYbU2w3zZIV2
-	QhiUeEJrM971MGKtT6lZODLBOEUtLyvAiHVIZCQvQkzOsD18/9LIX64qc87tb6Qx4B
-X-Received: by 2002:a17:90b:5403:b0:381:11eb:d78e with SMTP id 98e67ed59e1d1-38f9bdaf18cmr2383654a91.14.1785419918964;
-        Thu, 30 Jul 2026 06:58:38 -0700 (PDT)
+        bh=sdaSypjsskN157SYYr5oaYvn5KtmMJqBKV0m/Lp7/LY=;
+        b=SU2n8fDtswr4Pzifvd+r3ony0/vP0u3Kfro3PBAPQv94aJveyBdSwdYmE7Gv6Ax4bx
+         IctY97kWlYsYiuNBbnEaBp1DAcQn/B4LYPcQzMivJndOjkCN7OYXf/YBn6G/iPTr91rI
+         xyntQChwiUSjy96aE/L/7GASAf0f/HDfOHT9S17XSyvBxPVETTxOQyeJ1TdaWJBcKSDm
+         hxqRwFX4ackht0dGiC/ujRELR7STMAv6Kif7lkKgoSLHDjGvWjYhcTukYzKIDNc90iXN
+         t+h/P9OgnhAFalZ0Pe9lg6fM2jNSrQGk25FAcoz5KhXr5r2WLssC2+tm5ZIbb+8dDpyK
+         c3Hw==
+X-Gm-Message-State: AOJu0YyYFpvKtbTihryNGjAJ5g67WGa0Je9mNw5wt/G8rCi+mdtBLom7
+	svuJhgoz2KN/K1mpgQ+KyHTcmyJcxySBP7qXKJqBONhjNHmNWnQDPQSkVuPY1w==
+X-Gm-Gg: AR+sD13go3/PMFH1kwjV5NC6Vm8aj2nea+EApA8mZwAzq93+LGJQK/fjkBQGo2PTlpt
+	CQNup6e4paiilgFeBedry9A+TcfaePxgOEuPNBJcrXgg7X6jMsO7BkqoRwiU/l/OAGXYsfDZURj
+	kyT8nDTPeqnGVXqbJlJjYMYwPkSMbLItLUf/2VMonjvN0nKZr4vkAeTNJloIZ6GSo2dy5WfLKcW
+	MIBGWTqLtlU1LpbGmzKzzwRPDs/piD2HgedxuI1VCBwjuo3LT08bCFZDIJp4AeKm0ZIt4Br+R4C
+	jGo0F3qch9F+H0c6vDqPPccpB3wVvDg/Trl+AxT6NebB06Y3vGB4gQSPPzWWUdICIgd7qVbuGQZ
+	QfTYnwB9WQ6GXlkOxtRp0LlhuEKNgk72jB0g5e1dWK7Xrc+/uos4n5z6rsDKYmvGKOg7cJflrSo
+	wbbl1kG/Zrz6hlgbcmYB+8mb/iHMy+x4h930ee9aydH2Gro0rMo6z4p19IxZVNRPe8
+X-Received: by 2002:a05:6a00:12e9:b0:848:52bf:4296 with SMTP id d2e1a72fcca58-84ec9c6ac8dmr406414b3a.15.1785419920096;
+        Thu, 30 Jul 2026 06:58:40 -0700 (PDT)
 Received: from [127.0.0.1] ([20.120.230.195])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f8150241fsm1605143a91.4.2026.07.30.06.58.38
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84ea02f8461sm3144182b3a.28.2026.07.30.06.58.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2026 06:58:38 -0700 (PDT)
-Message-Id: <59157142b3b9f7fb5e04b07fcfd8e41283ec9473.1785419916.git.gitgitgadget@gmail.com>
+        Thu, 30 Jul 2026 06:58:39 -0700 (PDT)
+Message-Id: <5d310da9aab4c969a21c409ed35d9913fda78f5d.1785419916.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2285.v24.git.git.1785419916.gitgitgadget@gmail.com>
 References: <pull.2285.v23.git.git.1784979136.gitgitgadget@gmail.com>
 	<pull.2285.v24.git.git.1785419916.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 30 Jul 2026 13:58:30 +0000
-Subject: [PATCH v24 1/7] branch: add --forked filter for --list mode
+Date: Thu, 30 Jul 2026 13:58:31 +0000
+Subject: [PATCH v24 2/7] branch: convert delete_branches() to a flags argument
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,372 +83,145 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Add a --forked option to "git branch" list mode that lists only
-branches whose configured upstream matches <branch>. The argument
-can be a ref (e.g. "origin/main", "master"), a remote name like
-"origin" for the branch its origin/HEAD points at, or a shell glob
-(e.g. "origin/*"), and may be repeated to widen the filter.
+delete_branches() takes separate force and quiet parameters, while
+check_branch_commit() takes force. The next commits would grow this
+collection further. Replace them with a single unsigned flags argument
+and an enum.
 
-It is an ordinary list filter, so it combines with the others:
+Test the FORCE and QUIET bits directly from flags at each use site so
+that mutating or forwarding flags cannot leave cached values stale.
 
-    git branch --merged origin/main --forked 'origin/*'
-
-lists branches forked from origin that are already merged into
-origin/main, and --no-merged inverts the question.
-
-This is the building block for --delete-merged, which deletes the
-listed branches once they have landed on their upstream.
+No change in behavior.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/git-branch.adoc |  12 +++-
- builtin/branch.c              |  18 +++++-
- ref-filter.c                  |  70 +++++++++++++++++++++
- ref-filter.h                  |  10 +++
- t/t3200-branch.sh             | 115 ++++++++++++++++++++++++++++++++++
- 5 files changed, 222 insertions(+), 3 deletions(-)
+ builtin/branch.c | 40 ++++++++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index c0afddc424..b0d66a6deb 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -13,6 +13,7 @@ git branch [--color[=<when>] | --no-color] [--show-current]
- 	   [--column[=<options>] | --no-column] [--sort=<key>]
- 	   [--merged [<commit>]] [--no-merged [<commit>]]
- 	   [--contains [<commit>]] [--no-contains [<commit>]]
-+	   [(--forked <branch>)...]
- 	   [--points-at <object>] [--format=<format>]
- 	   [(-r|--remotes) | (-a|--all)]
- 	   [--list] [<pattern>...]
-@@ -51,7 +52,8 @@ merged into the named commit (i.e. the branches whose tip commits are
- reachable from the named commit) will be listed.  With `--no-merged` only
- branches not merged into the named commit will be listed.  If the _<commit>_
- argument is missing it defaults to `HEAD` (i.e. the tip of the current
--branch).
-+branch).  With `--forked`, only branches whose configured upstream matches
-+the given branch or pattern will be listed.
- 
- The command's second form creates a new branch head named _<branch-name>_
- which points to the current `HEAD`, or _<start-point>_ if given. As a
-@@ -311,6 +313,14 @@ superproject's "origin/main", but tracks the submodule's "origin/main".
- 	Only list branches whose tips are not reachable from
- 	_<commit>_ (`HEAD` if not specified). Implies `--list`.
- 
-+`--forked <branch>`::
-+	Only list branches whose configured upstream matches
-+	_<branch>_. The argument can be a ref (e.g. `origin/main`,
-+	`master`), a remote name like `origin` for the branch its
-+	`origin/HEAD` points at, or a shell-style glob (e.g.
-+	`'origin/*'`). The option can be repeated to widen the
-+	filter. Implies `--list`.
-+
- `--points-at <object>`::
- 	Only list branches of _<object>_.
- 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 031a4a9d05..1ab4356188 100644
+index 1ab4356188..db7cb01190 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -30,7 +30,7 @@
- #include "commit-reach.h"
- 
- static const char * const builtin_branch_usage[] = {
--	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
-+	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
- 	N_("git branch [<options>] [-f] [--recurse-submodules] <branch-name> [<start-point>]"),
- 	N_("git branch [<options>] [-l] [<pattern>...]"),
- 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
-@@ -674,6 +674,16 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 	free_worktrees(worktrees);
+@@ -189,16 +189,22 @@ static int branch_merged(int kind, const char *name,
+ 	return merged;
  }
  
-+static int parse_opt_forked(const struct option *opt, const char *arg, int unset)
-+{
-+	struct ref_filter *filter = opt->value;
++enum delete_branch_flags {
++	DELETE_BRANCH_FORCE = (1 << 0),
++	DELETE_BRANCH_QUIET = (1 << 1),
++};
 +
-+	BUG_ON_OPT_NEG(unset);
-+	if (ref_filter_forked_add(filter, arg) < 0)
-+		die(_("'%s' is not a valid branch or pattern"), arg);
-+	return 0;
-+}
-+
- static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
- 
- static int edit_branch_description(const char *branch_name)
-@@ -794,6 +804,9 @@ int cmd_branch(int argc,
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
- 		OPT_MERGED(&filter, N_("print only branches that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
-+		OPT_CALLBACK_F(0, "forked", &filter, N_("branch"),
-+			N_("print only branches whose upstream matches <branch> (repeatable)"),
-+			PARSE_OPT_NONEG, parse_opt_forked),
- 		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
- 		OPT_REF_SORT(&sorting_options),
- 		OPT_CALLBACK(0, "points-at", &filter.points_at, N_("object"),
-@@ -839,7 +852,8 @@ int cmd_branch(int argc,
- 		list = 1;
- 
- 	if (filter.with_commit || filter.no_commit ||
--	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
-+	    filter.reachable_from || filter.unreachable_from ||
-+	    filter.points_at.nr || filter.forked.nr)
- 		list = 1;
- 
- 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
-diff --git a/ref-filter.c b/ref-filter.c
-index 29aca08ce7..bdf54f6f59 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2744,6 +2744,72 @@ static int filter_exclude_match(struct ref_filter *filter, const char *refname)
- 	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
- }
- 
-+static const char *short_upstream_name(const char *full_ref)
-+{
-+	const char *short_name = full_ref;
-+
-+	if (!skip_prefix(short_name, "refs/heads/", &short_name))
-+		skip_prefix(short_name, "refs/remotes/", &short_name);
-+	return short_name;
-+}
-+
-+/*
-+ * Match the configured upstream of a branch against the registered
-+ * --forked patterns. Exact patterns are compared against the full
-+ * upstream refname so they are unambiguous; glob patterns are matched
-+ * against the abbreviated upstream so that a glob such as origin/...
-+ * works as typed.
-+ */
-+static int filter_forked_match(struct ref_filter *filter, const char *refname)
-+{
-+	const char *short_name;
-+	struct branch *branch;
-+	const char *upstream;
-+
-+	if (!skip_prefix(refname, "refs/heads/", &short_name))
-+		return 0;
-+	branch = branch_get(short_name);
-+	if (!branch)
-+		return 0;
-+	upstream = branch_get_upstream(branch, NULL);
-+	if (!upstream)
-+		return 0;
-+
-+	for (size_t i = 0; i < filter->forked.nr; i++) {
-+		const char *pattern = filter->forked.v[i];
-+		if (has_glob_specials(pattern)) {
-+			if (!wildmatch(pattern, short_upstream_name(upstream),
-+				       WM_PATHNAME))
-+				return 1;
-+		} else if (!strcmp(pattern, upstream)) {
-+			return 1;
-+		}
-+	}
-+	return 0;
-+}
-+
-+int ref_filter_forked_add(struct ref_filter *filter, const char *arg)
-+{
-+	struct object_id oid;
-+	char *full_ref = NULL;
-+
-+	if (has_glob_specials(arg)) {
-+		strvec_push(&filter->forked, arg);
-+		return 0;
-+	}
-+
-+	if (repo_dwim_ref(the_repository, arg, strlen(arg), &oid,
-+			  &full_ref, 0) == 1 &&
-+	    (starts_with(full_ref, "refs/heads/") ||
-+	     starts_with(full_ref, "refs/remotes/"))) {
-+		strvec_push(&filter->forked, full_ref);
-+		free(full_ref);
-+		return 0;
-+	}
-+	free(full_ref);
-+	return -1;
-+}
-+
- /*
-  * We need to seek to the reference right after a given marker but excluding any
-  * matching references. So we seek to the lexicographically next reference.
-@@ -2979,6 +3045,9 @@ static struct ref_array_item *apply_ref_filter(const struct reference *ref,
- 	if (filter->points_at.nr && !match_points_at(&filter->points_at, ref->oid, ref->name))
- 		return NULL;
- 
-+	if (filter->forked.nr && !filter_forked_match(filter, ref->name))
-+		return NULL;
-+
- 	/*
- 	 * A merge filter is applied on refs pointing to commits. Hence
- 	 * obtain the commit using the 'oid' available and discard all
-@@ -3764,6 +3833,7 @@ void ref_filter_init(struct ref_filter *filter)
- void ref_filter_clear(struct ref_filter *filter)
+ static int check_branch_commit(const char *branchname, const char *refname,
+ 			       const struct object_id *oid, struct commit *head_rev,
+-			       int kinds, int force)
++			       int kinds, unsigned int flags)
  {
- 	strvec_clear(&filter->exclude);
-+	strvec_clear(&filter->forked);
- 	oid_array_clear(&filter->points_at);
- 	commit_list_free(filter->with_commit);
- 	commit_list_free(filter->no_commit);
-diff --git a/ref-filter.h b/ref-filter.h
-index 120221b47f..9361296e2a 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -67,6 +67,7 @@ struct ref_filter {
- 	const char **name_patterns;
- 	const char *start_after;
- 	struct strvec exclude;
-+	struct strvec forked;
- 	struct oid_array points_at;
- 	struct commit_list *with_commit;
- 	struct commit_list *no_commit;
-@@ -110,6 +111,7 @@ struct ref_format {
- #define REF_FILTER_INIT { \
- 	.points_at = OID_ARRAY_INIT, \
- 	.exclude = STRVEC_INIT, \
-+	.forked = STRVEC_INIT, \
+ 	struct commit *rev = lookup_commit_reference(the_repository, oid);
+-	if (!force && !rev) {
++	if (!(flags & DELETE_BRANCH_FORCE) && !rev) {
+ 		error(_("couldn't look up commit object for '%s'"), refname);
+ 		return -1;
+ 	}
+-	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
++	if (!(flags & DELETE_BRANCH_FORCE) &&
++	    !branch_merged(kinds, branchname, rev, head_rev)) {
+ 		error(_("the branch '%s' is not fully merged"), branchname);
+ 		advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
+ 				  _("If you are sure you want to delete it, "
+@@ -217,8 +223,8 @@ static void delete_branch_config(const char *branchname)
+ 	strbuf_release(&buf);
  }
- #define REF_FORMAT_INIT {             \
- 	.use_color = GIT_COLOR_UNKNOWN, \
-@@ -172,6 +174,14 @@ void ref_sorting_release(struct ref_sorting *);
- struct ref_sorting *ref_sorting_options(struct string_list *);
- /*  Function to parse --merged and --no-merged options */
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
-+/*
-+ * Register a --forked <branch> pattern on the filter. The argument is
-+ * either a ref, which is resolved to its full refname, or a shell-style
-+ * glob. Branches are kept only when their configured upstream matches
-+ * one of the registered patterns. Returns -1 if the argument is not a
-+ * valid ref or pattern.
-+ */
-+int ref_filter_forked_add(struct ref_filter *filter, const char *arg);
- /*  Get the current HEAD's description */
- char *get_head_description(void);
- /*  Set up translated strings in the output. */
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 1ecbafbee1..eaadbdf549 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1755,4 +1755,119 @@ test_expect_success 'errors if given a bad branch name' '
- 	test_cmp expect actual
- '
  
-+test_expect_success '--forked: setup' '
-+	test_create_repo forked-upstream &&
-+	(
-+		cd forked-upstream &&
-+		test_commit base &&
-+		git branch one base &&
-+		git branch two base
-+	) &&
-+
-+	test_create_repo forked-other &&
-+	(
-+		cd forked-other &&
-+		test_commit other-base &&
-+		git branch foreign other-base
-+	) &&
-+
-+	git clone forked-upstream forked &&
-+	(
-+		cd forked &&
-+		git remote add -f other ../forked-other &&
-+		git branch local-base &&
-+		git branch --track local-one origin/one &&
-+		git branch --track local-two origin/two &&
-+		git branch --track local-foreign other/foreign &&
-+		git branch --track local-onbase local-base &&
-+
-+		git checkout local-one &&
-+		test_commit --no-tag local-one-work local-one.t &&
-+		git checkout local-foreign &&
-+		test_commit --no-tag local-foreign-work local-foreign.t
-+	)
-+'
-+
-+test_expect_success '--forked <upstream-tracking-branch> filters by upstream' '
-+	git -C forked branch --forked origin/one --format="%(refname:short)" >actual &&
-+	echo local-one >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked <glob> filters by wildmatch' '
-+	git -C forked branch --forked "origin/*" --format="%(refname:short)" >actual &&
-+	cat >expect <<-\EOF &&
-+	local-one
-+	local-two
-+	main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked <local-branch> matches branches with local upstream' '
-+	git -C forked branch --forked local-base --format="%(refname:short)" >actual &&
-+	echo local-onbase >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked can be repeated to widen the filter' '
-+	git -C forked branch --forked origin/one --forked other/foreign --format="%(refname:short)" >actual &&
-+	cat >expect <<-\EOF &&
-+	local-foreign
-+	local-one
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked combines literal and glob arguments' '
-+	git -C forked branch --forked local-base --forked "other/*" --format="%(refname:short)" >actual &&
-+	cat >expect <<-\EOF &&
-+	local-foreign
-+	local-onbase
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked "*/*" covers every remote-tracking upstream' '
-+	git -C forked branch --forked "*/*" --format="%(refname:short)" >actual &&
-+	cat >expect <<-\EOF &&
-+	local-foreign
-+	local-one
-+	local-two
-+	main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked composes with --no-merged' '
-+	git -C forked branch --forked "origin/*" --no-merged origin/one --format="%(refname:short)" >actual &&
-+	echo local-one >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked <remote> uses the branch <remote>/HEAD points at' '
-+	git -C forked branch --forked origin --format="%(refname:short)" >actual &&
-+	echo main >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked narrows a <pattern> argument' '
-+	git -C forked branch --forked "origin/*" "local-*" --format="%(refname:short)" >actual &&
-+	cat >expect <<-\EOF &&
-+	local-one
-+	local-two
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked rejects unknown branch/pattern' '
-+	test_must_fail git -C forked branch --forked nope 2>err &&
-+	test_grep "not a valid branch or pattern" err
-+'
-+
-+test_expect_success '--forked requires a value' '
-+	test_must_fail git -C forked branch --forked 2>err &&
-+	test_grep "requires a value" err
-+'
-+
- test_done
+-static int delete_branches(int argc, const char **argv, int force, int kinds,
+-			   int quiet)
++static int delete_branches(int argc, const char **argv, int kinds,
++			   unsigned int flags)
+ {
+ 	struct commit *head_rev = NULL;
+ 	struct object_id oid;
+@@ -241,7 +247,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		remote_branch = 1;
+ 		allowed_interpret = INTERPRET_BRANCH_REMOTE;
+ 
+-		force = 1;
++		flags |= DELETE_BRANCH_FORCE;
+ 		break;
+ 	case FILTER_REFS_BRANCHES:
+ 		fmt = "refs/heads/%s";
+@@ -252,12 +258,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	}
+ 	branch_name_pos = strcspn(fmt, "%");
+ 
+-	if (!force)
++	if (!(flags & DELETE_BRANCH_FORCE))
+ 		head_rev = lookup_commit_reference(the_repository, &head_oid);
+ 
+ 	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+ 		char *target = NULL;
+-		int flags = 0;
++		int ref_flags = 0;
+ 
+ 		copy_branchname(the_repository, &bname,
+ 				argv[i], allowed_interpret);
+@@ -280,7 +286,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					     RESOLVE_REF_READING
+ 					     | RESOLVE_REF_NO_RECURSE
+ 					     | RESOLVE_REF_ALLOW_BAD_NAME,
+-					     &oid, &flags);
++					     &oid, &ref_flags);
+ 		if (!target) {
+ 			if (remote_branch) {
+ 				error(_("remote-tracking branch '%s' not found"), bname.buf);
+@@ -292,7 +298,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 									   | RESOLVE_REF_NO_RECURSE
+ 									   | RESOLVE_REF_ALLOW_BAD_NAME,
+ 									   &oid,
+-									   &flags);
++									   &ref_flags);
+ 				FREE_AND_NULL(virtual_name);
+ 
+ 				if (virtual_target)
+@@ -307,16 +313,16 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 			continue;
+ 		}
+ 
+-		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
++		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+ 		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+-					force)) {
++					flags)) {
+ 			ret = 1;
+ 			goto next;
+ 		}
+ 
+ 		item = string_list_append(&refs_to_delete, name);
+-		item->util = xstrdup((flags & REF_ISBROKEN) ? "broken"
+-				    : (flags & REF_ISSYMREF) ? target
++		item->util = xstrdup((ref_flags & REF_ISBROKEN) ? "broken"
++				    : (ref_flags & REF_ISSYMREF) ? target
+ 				    : repo_find_unique_abbrev(the_repository, &oid, DEFAULT_ABBREV));
+ 
+ 	next:
+@@ -331,7 +337,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		char *name = item->string;
+ 		if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+ 			char *refname = name + branch_name_pos;
+-			if (!quiet)
++			if (!(flags & DELETE_BRANCH_QUIET))
+ 				printf(remote_branch
+ 					? _("Deleted remote-tracking branch %s (was %s).\n")
+ 					: _("Deleted branch %s (was %s).\n"),
+@@ -896,7 +902,9 @@ int cmd_branch(int argc,
+ 	if (delete) {
+ 		if (!argc)
+ 			die(_("branch name required"));
+-		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
++		ret = delete_branches(argc, argv, filter.kind,
++				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
++				      (quiet ? DELETE_BRANCH_QUIET : 0));
+ 		goto out;
+ 	} else if (show_current) {
+ 		print_current_branch_name();
 -- 
 gitgitgadget
 
