@@ -1,128 +1,109 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD1933D4E2
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 13:10:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4F641A79C
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 13:22:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785417037; cv=none; b=CZOlUAIJwBGU0E2y7hS1Lkgy1tgJwz5k9Vbr4azxFe+oqPZKn8qzrH4cypjuVLqS3dsgEQBKPiCYHEoV+Bk6Mso/IJDLCTaMYOAbOUj3AC+bbORNq9ksRa6cAIa88RxB0rEEA27rteh7x7KudT5wD3Ipb5jW4yPEEruwcLkvep0=
+	t=1785417778; cv=none; b=qm2Xbu12dURfnj6JuidytmOAyOb8AHUfDPdDG3Bs+ddXINdbtvquC7neDbR2NrBN/n4E/vMmcFMpl+qLeHrqcXS6aHw/SvXD0hInfg4KJfbmH291KMU2FJE5uWTNnWvnpf1D6HDudB0ecIb/ngTt9efWWsvEhaaDF6AtFKhVJhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785417037; c=relaxed/simple;
-	bh=2zit50e8vxrFMNCubRWHRWlR6F0ax/1GLTC6ZEJsN/M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NpbFajH6lkknzZT3/2TQ3MhdOwWG1HIwsyiYYb1WLj01EieCP0s4bAFZq6l3n/DCGrbMs+8FQ//MT1PCLuo6qrVnt26skxtZqgr0rUTjG+r9xxE4+eyVnNt8zkcZmaGXhITa1dUpZ+DFitQoLJJIHhPAsj4lulCyCWYNDVT3yQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XwT5kixF; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785417778; c=relaxed/simple;
+	bh=W97auX8dLYDAQdChwGnDva2GfHOXzWITXkL0UeHXWBY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=N1g6oyXPNXTsq4slLvYGFQxucPxdSm4w0FP2/YRPyqq06W5Xo4WOj4C6Tl+eyLqqe/JHVSLpXTrUf03gEcI0uqUvdzrFpYm+myOy8/AlEywz+2CfZ+TO7SWprD/zGdFoEElPu5Uz/AHd0AfJ2NL9wu8/vY4MTFy+coybNwIPDPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oMaP46BD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hAflvYIS; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XwT5kixF"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c1f7666a90bso295756666b.3
-        for <git@vger.kernel.org>; Thu, 30 Jul 2026 06:10:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785417034; x=1786021834; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=CTxzlgHHwnnZHEgi+NqS/Oa5N3N1qWn41PKqfkDiSVQ=;
-        b=XwT5kixFFivoWQgy8b5dvGHltJxJSa1JMIZceGgXvOvehxBIbKk7xjWTcpiGsCxzMa
-         HUD8M/QDar3zttSTRYsd3sb23fQnUQotYlbZUZeE+gJjjidkD0cZfhpgAIeJpXxE3bKh
-         30cgoXXsHpQ9y4O49mxXkD4/dUWp8JYcmQbK2feNvGrKVhXPaQd0grIJrNWG1Qh9T5Qd
-         q91GfRTOBH+lAuKcDAxqgT3D/dAuV2KGMh3eBJGydbBOZsWv1gffB3as38vrfTV+3uUj
-         hqPz1qRVK/ozlCsoVAKvgKPANyvabk71JTNoMPpdxtYqRn6NFhYW89hPNAuS5WWzj6Jo
-         p0Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785417034; x=1786021834;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CTxzlgHHwnnZHEgi+NqS/Oa5N3N1qWn41PKqfkDiSVQ=;
-        b=JJkDM1REDFDjNtm8cewBFn73eeSOvC74A1hlgCMUdOSSOhAPbOF8rGOIc6IoODTJDT
-         5p2BjELzcUaaF7CdqNMzsDo31u6WqRST9nOGCDYZtKeb5zwchOwUmA45m/gUo6lXMCU8
-         SnNricLtetcaVurPRGiHYDOcXX7fldriOwsQafd8De0hALhNn19MKx3m6YB9A9FEi28u
-         WPyxMpryaL47WNOlIxqc7JA82dWAIFlx+1nplzkNYx5Qd8XntwqEWPUTwUds85k5dzxE
-         oByzk+gJGQKcXBirFPQTZEQYo9xPT5ubsSixUyhUob6TP0zTX7NYtJLaYkGQFPzcEKIp
-         h0Sw==
-X-Forwarded-Encrypted: i=1; AHgh+RropSEP3EryC4jE7cGvM9OcA3pyLpsALS6QnpnoN4Qyxe1xTXwRqHkAl86YhSofCkGXSDE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWxIQ0EdvO6gMTkAw9uAgjiW4B0WthmVym/kJcZUUSuiFz7mj/
-	kycuR5QOHjrcVL25bvdxW3PngeEEDUTS2OfFgy9uYowzYYhrbqcGySQF
-X-Gm-Gg: AR+sD11aWkKI0b4RVc4U76AwPtJeHWV6hmpzvaznHvBNdx3OuD9rEPOiglw5ZaJIXvo
-	5BPN5uA/m5RioCiuNaFwuEfDvjPalsEsK5svNWHlrjAZWRCwVq3W1J6gZkn0aI6Gj6a7T9C2rJQ
-	O7YDVuoLiqFxZLenIcdSYkLuv27tpRBEMLGwFjn/jsAMB/db8QbESZKKVFAg/MrxEubWP58onzM
-	aqYIhY1jIH76nvgsz3h2BRYduub0qpwXxNMoqwHa2Ov4oyqwM6NveqKpc4fYxB+3V490/5PCTHE
-	P8iEnUSv+kp8pAQ1l9KGkgGMsJXDu4XHO8qsfYnwm3Aym1k6cFtJT23c2pG8+g2cBPGNe0ay+rF
-	/CVdWzz2lHw7gz/A3S/Z2RwEyd2j2jWROoxsWcd/a7TjZ8AsHtcd3gRva27LfecK7uiiEDM8c8o
-	edwHUj3tEosjG3rGQWJ5j7OcIB6M0Y+jeEF8Lw6VTWV/+yDF1doF7Y3EnIbAHSBlkIP3R5uMoft
-	twblAO+F9HBC+/1JSTNsCvzR1Mr10fk/aFhf5H5cd/tMrP9kw8=
-X-Received: by 2002:a17:906:1009:20b0:c0f:de3c:dce with SMTP id a640c23a62f3a-c1fa55cf9f6mr90540366b.41.1785417034023;
-        Thu, 30 Jul 2026 06:10:34 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:55d5:4403:6ca9:2c6b? ([2a0a:ef40:17bb:9901:55d5:4403:6ca9:2c6b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1fa8579b0asm64790766b.23.2026.07.30.06.10.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jul 2026 06:10:33 -0700 (PDT)
-Message-ID: <0844b4e0-679b-4c0a-bea1-5779b4d0489d@gmail.com>
-Date: Thu, 30 Jul 2026 14:10:31 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oMaP46BD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hAflvYIS"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 856FE7A003E;
+	Thu, 30 Jul 2026 09:22:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Thu, 30 Jul 2026 09:22:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1785417775;
+	 x=1785504175; bh=GFxOyWZkEh/b2ohjiKpxqfQxKaWhP7+4aTKG8wkZErk=; b=
+	oMaP46BDWE5bphVP3bMpBbC7CprT/gx0oOOZqIpyazoU7/8M46jNMA4s7ZWtvbFq
+	9/98QwQhyKhU1pZaI1Wvnne1XmT+WcdwrsIrbZHmVMU9dwWL3laaSukmNujonRev
+	VuI4yDZqxFX+MuDU7y+VCreahPJwc/vlA93lnI9jF1ues41kh+5C8xx9OisI+WcR
+	n6inOZNlP3uWs/JJxcg7QKhWPPYi0Ln9D1+bS6FJAZzCrfa3VoNUX0/5jfGv+auH
+	oFgD9R0oYE0RyJle6mkuA+ZY7+Jp/XKTkrZfWruxR16O+MlrP44fYavwxQJiJmHo
+	oBvKoOPK71Drwt+DLEXUqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785417775; x=
+	1785504175; bh=GFxOyWZkEh/b2ohjiKpxqfQxKaWhP7+4aTKG8wkZErk=; b=h
+	AflvYISDofGDHZ8Fg9Te4zgEtXwINDMoQxipWbKpkfkzSNm3lZiANjyfLjAhaB5E
+	suyYAUox7uqZ1wHG1KZkY7S90DAiU4XcxjTpQ6e1plgWD9I9w6BgXtvDu2tMrjAz
+	ekaOwwqL/ZZv35MexPGmfibSZ7znSTP34hFqtHl4C6h1KKK15wn0qkm6TyEGz/7N
+	CSA1MzCLjhlFSUA63pazQ/MiKagFcUZjajvuT2NviKedictSzwH0maTKAz0Qr8gf
+	SIRrNXjQz46tO5xRGWwnfOpNtwu0uGfVPmD10A0hNHcGK+0eScLMpkZK+F3Bfqsx
+	XQEl0ZtSGwtsp0cl+SKdw==
+X-ME-Sender: <xms:L1BragQz5zA_pXukJ5R5cxPH-GV0ld-XuEUPZbOnDiUtU82ZFswRMg>
+    <xme:L1BralNIyLu9uI68Q2HU9fROUqbilFogGTt2xQ_j1XJS631y2yOFgn3oKv76s-ik-
+    w0bxAFsCeMKnq6a4gb81MHC93x4bN8Sdo-x2LLFiGL5_J2klWpZO5A>
+X-ME-Received: <xmr:L1BrarNlQ8D6t4N7WxiycmcWFEelHT9oxaHOhHW4rRtiGgqiG-W3dTd-EBE>
+X-ME-Proxy-Cause: dmFkZTEL76ct5ctFc4iWUf23AMFAWfMFjHSOaXx3O+QWJHGRpbvnWh72UQYbwz4l/swJqO
+    1PMvzI558rLa0q+fWhkOYkbYpymZPylGOGbNP1sOAA8TksOe4+VY7zvZ83oC4mdD7weBJW
+    spZ8pqTPzXz4quuMw7wAY+WsDDQiGF3FdQgiwK3kr7vg/WJrlrYHHeDjL3PRfmRtISf8lu
+    kUgUgHRymAkQ3N3ObilGuVdjRp18qQTd7W8JjirSTDGdHl8RFwH8gx9t3qhBBvElV31e0F
+    JT9xq+hLrxDSI1bnZnIdsiARxBYvZw9Lp59FM1O8gj0Y+Y4PhPZTldG2U0AZSI4gDXaFgP
+    66KNBYsj2MpUSq70aAjmbZLpfySmjyGoAbIQ86NRxvjnxpDgYiQo2McVhxg0ZwyR5zWALt
+    2K7DpxNHn7M7K0/w1ZPSE4VSPAsHsVHuL5H2o2d/fhVdLwWXkRBxTDa6mG80WYRqBv+wo1
+    mZmtVTTe1juOgFRH7Xk5aWbN8BNY9c/m72bv9gTlEOUAy2lyHuOrpnPs6IFyFuKylo/nHe
+    JMM7zfjU0plsGPx/Z0P9FNWrFFXPYzNvZNnt4j8wEqn6RDarX423PkcSz42tMxBbJaUsfi
+    2DEHlx/vBM61XXKt7nHNoveCM4L4P4ux2MqEg26yAhjzGq3nVD3HVuW03WaQ
+X-ME-Proxy: <xmx:L1Bratui3006COxKvgm3FkIgb_qu6lH_Y8B4lw3JixwxoQbFjKR9kg>
+    <xmx:L1BratWUzopRbvdkjZ85Wrbuf6i_dkpVpgdt-EcgojVIzMCFmy3MAA>
+    <xmx:L1Brats9mqgt17x-RhMch4ZJQQqnPVOPolZQIyIyJ-jaeFpDjcp8uQ>
+    <xmx:L1BrahUi9rqYGNDoUlgyRss5iDS3GpotDnOCjGJUHREEQYLY90fMeA>
+    <xmx:L1BralN40b2xeNuXWTnXGtvClJENARW1RpsaupDsolhUqufhu_OeMxCY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jul 2026 09:22:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] stash: record positional index in 'struct stash_info'
+References: <20260730034108.765430-2-gitster@pobox.com>
+	<AA402B97-B3DC-4085-AF53-C6D80792C3DF@gmail.com>
+Date: Thu, 30 Jul 2026 06:22:51 -0700
+In-Reply-To: <AA402B97-B3DC-4085-AF53-C6D80792C3DF@gmail.com> (Ben Knoble's
+	message of "Thu, 30 Jul 2026 16:43:07 +0900")
+Message-ID: <87h5lgtxw4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] rebase: skip branch symref aliases
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Cc: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Son Luong Ngoc <sluongng@gmail.com>
-References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
- <pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
- <b9a01e9141d580606527cb1a658c7c72710fb013.1784708107.git.gitgitgadget@gmail.com>
- <5bece313-6ffb-450b-add1-29652b64de10@gmail.com>
- <00e529b6-7ae7-463f-a4b3-0991e9411aba@gmail.com> <xmqq7bmhycxq.fsf@gitster.g>
- <8631114b-aa6f-446e-9710-92c400320eac@gmail.com> <xmqqpl07fb1u.fsf@gitster.g>
- <61291144-60da-4e37-83ef-fe09e91c4f51@gmail.com> <xmqqwludan2m.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqwludan2m.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+Ben Knoble <ben.knoble@gmail.com> writes:
 
+>> +    if (at) {
+>> +        char *ep;
+>> +        unsigned long u = strtoul(at + 2, &ep, 10);
+>> +        if (ep > at + 2 && *ep == '}' && u < 100000000)
+>> +            info->stash_idx = (int)u;
+>
 
-On 29/07/2026 15:26, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->>> But that was about a low level mechanism that must be more lenient
->>> to be usable as repair tools to recover from such a broken state,
->>> no?
->>
->> It checks the new value of HEAD, not the old one so I don't think so.
->> The commit message talks about topgit using "git symbolic-ref" to set
->> head outside "refs/heads/" - peff had previously tried to tighten it to
->> reject non-branch refs but that broke topgit. I've just had a quick look
->> at the topgit code and still sets HEAD to point to "refs/top-bases/..."
->> by default[1], although there are plans to start using
->> "refs/heads/{top-bases}/..." instead.
-> 
-> Ah, that name vaguely rings a bell.  Is it still in use, and now
-> they prevent us from forbidding funny characters like {} in the
-> refname?  Sigh...
+> What’s the purpose of the 1e8 constant/comparison? I see we
+> truncate the unsigned long to an int, but even on 32-bit platforms
+> 1e8 is a small portion of the integer range, right? So my read is
+> that we are limiting the valid « n » in @{n}. I’m not totally
+> sure why, though, or if that matches with the rest of the stash
+> manipulation code.
 
-Yes, it still seems to be maintained, I guess they chose the funny 
-characters to try and avoid name collisions because no-one would want 
-them in a "normal" branch name.
-
-Thanks
-
-Phillip
-
->> ... It
->> appears topgit's rebase command is built around "git rebase"[2] so I
->> think we need to continue to support rebasing a non-branch HEAD.
-> 
-> Sigh, again, but OK.
-> 
-> Thanks.
-> 
+This mirrors what approxidate does.  An integer that is too big is
+taken as number-of-seconds-since-epoch.
 
