@@ -1,117 +1,131 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20923B19A5
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 20:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C4C38331B
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 21:18:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785443392; cv=none; b=V/41/CXkIyg6uovYx6nPzZ5H8CQUtp7viE+1dyJZIgn776gfkn3Ai0/zie+2LSfnoTJxGX8E3vMElb/mYJDLERbccwonFuvZ2iJWeWdAEu2+zI+nWlnzYQGqcLosF98C4Stq6fnIacbIugd5hYPW/skQHndp+WOrxp9sz+qxz0k=
+	t=1785446325; cv=none; b=tfL63K37yASzFPtIZOJXJs/ozUvN4BhCVgQBRKUuMREDA9Sy/vkl9MMUkuyYOdLH4k8uVd/6LTQoOG3/ie4Rz9ebog9WkeHOhDAF2KnngNmWB+jYNDTcPkyo8C2HFte06gEv9di5AhMED08gJ8OhDvWeX+0eShwpRNoLFNHvHB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785443392; c=relaxed/simple;
-	bh=18nmPTjST3nwwE7sA4r+WttglfCOW8eJklXBvq36xbU=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YA+qiCd/SHTElQXzrN6F6PxE8i7Tqtqi93RggqIt8ip4IR175DD6dkObfjFW2nNP0SKjkMEvjmr+WE6aMZm0O+BvBlc3xEz8ufl6xvaUCIgjwswn+WW2obGVc6Hglj5l94PGlzBCSbIaqPq+Dro1bthwNyrRZRI5NEzfGZ0GsME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hUwGo/MR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gUzj6+eR; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785446325; c=relaxed/simple;
+	bh=/u9hdz86PvXcsqHjEEKQNZH7Z86oI54qv/XjMYNunJk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q4Lq+yX/Z08Rkaynibvyl+dWRZ7vyMM1i2cmIVbLnX00udZppPfFjYYKpTdaFZAufPkMKHj18RmOAZcDQobktiY3I7Tz2f4QXNOXrioz1SpP+xrQByOdLOfOcdjeMyKgNpqsAXSaqmXhZkLqiaVK7TlYggVo3ul2FA6i3BJTChM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=0R1HW1tA; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hUwGo/MR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gUzj6+eR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 57F49EC0128;
-	Thu, 30 Jul 2026 16:29:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 30 Jul 2026 16:29:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785443381; x=1785529781; bh=suwG9oyPCa
-	rz1xQMEFwxHoa1RCsu/3Qrxyw9sf/6Ddc=; b=hUwGo/MR+KjEwJcPwfGNCc8yGs
-	fpEp7EkiQ6ogChHUavO4nxeawlXaywFtFlEBgi5aoHiYRN7J4JLkb6XiQpc7QISf
-	n+JlBeyqWVvBhUUVJLp1wFoSOVWmv66ZkKDgaBfrNCNBpDBQAzGxNK6wejCUJWAh
-	+wZZEh1xGwZNB1vDaKN98GvDyxfr2EhQW2oRuDTBL7YGIJ2gaIWKKPgzV9AFpWBf
-	j0vMOq7Z44uV6yXleEznR+H1Jb3HBTlISifdTZazK550iq4HKswk6jo39sXVTqIZ
-	izX6ipg/rANXSjslsoD++TDcRU4v5WfJXpxjRLlVuPYD8ucCmt8xnLvLKQqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785443381; x=1785529781; bh=suwG9oyPCarz1xQMEFwxHoa1RCsu/3Qrxyw
-	9sf/6Ddc=; b=gUzj6+eRYZWL6CntE7Up4VKMLfsr75H2pqrKN51qpRz8ANa6IAz
-	aNaGL6q3Y9uJ+TL2PWF+Tn/rFwCzyAMOJojOpOmirmzDa48uacIFRcd19coeke4x
-	ZJ1WDgSlTcUcMR1oWYL3+KbLQNbB4UP+mQVlLwUNI6j28M3+n6G3kG7JvFqYlK5t
-	WdySvmdLKZSNI3Kjk7H09Zl1yjBv0UQr/4pGx7AQgYxtMIozSawj2RJOT3n42gox
-	VlSKv48WRS8yLAtUek7vXY3y5F/HStE8VNGHG3+EEtGTzntIvNSGWLfQZ/HzUme9
-	Mhss1aGd6iVvPpHk9qNtDoHHNz6fwNTIj6g==
-X-ME-Sender: <xms:NbRraoj26YUM2KAoAiDDaUo8Kxo9QDf52n5Eob3tlhexLOJuZ2cmoA>
-    <xme:NbRranDHD0YgDGpChBxwQsAPvTchWfAQmHPlVTZ6LEvCcA2fNM16s9gXmnsEJBh8c
-    PTHBCcyWsvCW8wr--MQsoNUBKm-pussflJ_Q-HSjJCYDQXSHix7t48>
-X-ME-Received: <xmr:NbRratuAbzEKIODKo0b-v2d_G5mAp4Qsjlm4TcPtqqr9krJjT0uBg_EjuF8-6Wo_AZdk69p7lqgObTQw5rrvTsgYDeulJaD3eQ>
-X-ME-Proxy-Cause: dmFkZTFUOQR7PsZeXVMKlyvL+7LKC7VU2Fg7nAXLqpmBFM8mM2eLumzKHcrxDGXyCcJ4Wy
-    M71dlPw9ojbvZMrfO2A+bp19bh9q3ISTHdjJP3IVKg65vgl5kaB2ei1MruRnPRgJmGs96O
-    YtrDG8ER/px4NxYgK41Uch/xMvX8WkUTZjnLJpE5EGTm40EwMSkB5n96cVmKdhK+n4yWjc
-    UTYPPEdnPay6suX5p/4L6N7ZQoQGh2WrD35/jFhbsM0uRAiSTyDRsiRsETamCV2/lv6dVI
-    Zi0q9pSjLjcSvX+d+YXD8TeNrtloEL2VyR2YsvxhTtVczwTpxuCcytxstBvEbf4FADiYBw
-    mtkbttatvhzXYnNgN76q3rGsfW0aSN7unLfnuQXFE/ZP4O/L9JqnViI3WIcWdG67qYf5vP
-    MxIm/cU1PRRWqbyK7hMsLE0ancQqIQ0veqZ51cNWTjebYRZlL/nJVPHqtrqw/zKApxUojV
-    gB0JlAi06FtXRvbFFrB+t/KEkQmvT6KNmCo5YTRFdUE/Cxnxt9+RJGYZWyMAj+ebb/xWST
-    xkge0UY3cjyxdEo6x9243L2/Fm1W9utLXypdA2ikmGX4unoRGSrKdnwnBlkZ+c6aRLyJuW
-    VzDcmsxaSFrPpQPlahbNNzhOJ4S965FbxssO8AsnRHnQKi1Pt/K3T/lVkpyg
-X-ME-Proxy: <xmx:NbRrakbo_BXrxiEAZz_CRFTogToPvGkpNoCpuY5eH9T5DJ-E38tgIg>
-    <xmx:NbRraoVHrFOdJvdW5uKvI-ZkYe0sSkPDmb3manEmgaQKFP47qXIG4g>
-    <xmx:NbRrag7dz0rjwzLU_-R_GdgPJdapoRxMy4ZpWFIFbPvtULiL3-bqAQ>
-    <xmx:NbRrarhlmGPwHRYCRhui8B3teIYnHxsCfQlxS0sMr8KFGa2JZcxvwA>
-    <xmx:NbRrar7oZPTo_6A4_5CPmvp3szfci5HkPPuAR55xCAKUGTF8Q40EJFij>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jul 2026 16:29:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: Re: [PATCH 0/2] git stash drop stash@{2.days.ago}
-In-Reply-To: <20260730034108.765430-1-gitster@pobox.com> (Junio C. Hamano's
-	message of "Wed, 29 Jul 2026 20:41:06 -0700")
-References: <20260730034108.765430-1-gitster@pobox.com>
-Date: Thu, 30 Jul 2026 13:29:39 -0700
-Message-ID: <xmqqjyqcjk5o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0R1HW1tA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1785446321;
+	bh=/u9hdz86PvXcsqHjEEKQNZH7Z86oI54qv/XjMYNunJk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=0R1HW1tAdCHCuMqzOi5cW9eAWp0BVJf+3YXURr9+lwTVU//uI6K65GNhrbjrVOX00
+	 7CpKQwiOQ9iDOpXrBU1cUex8SyNiu1vBoBcQnzUBoqdCWrdKhmJPA30RyGtcHh8G+H
+	 NUhqJuVFFqZUi/5ItvR10TJ3DSJJ27SGgvigF6b0XrWnIgzoznWgnxrHECKj74YROf
+	 nAfCS3LwePOjchzocfytEMxX3AamzXl0u9JgJkoouhrQDfXhspI/9XhH1WNmmmzkQ/
+	 Kk7+pzqlcJdKtQnnwUzgRtqmT2ujWpieG3zy77mTnUsOjXBxdYic9PP7/JK4LxlgS2
+	 pIrtLkA97e9DpwLQjYWg/SpyEhnB5KKavD4Bw82qYRswUAatkI58IEQi+AuREyoeJN
+	 TvgsLHkL2gPlHHSzyTaau+Iv97ktZu1nnDbhcb6KOAZ8WtASeprb2acKo+Fc3nG5tB
+	 nlxIt/zAVlnhWetZ0FxOkpZ2jLvCyiJ5PZsix7HgfNfKxA7E1XM
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7c1c:a10f:6f51:3bb5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 90196200C4;
+	Thu, 30 Jul 2026 21:18:41 +0000 (UTC)
+Date: Thu, 30 Jul 2026 21:18:40 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/6] Git 3.0: restrict hex object IDs to lowercase
+ only
+Message-ID: <amu_rzanuYc_2lww@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
+ <xmqqjyqclwf9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="GfSBpcbbYH0TJC3D"
+Content-Disposition: inline
+In-Reply-To: <xmqqjyqclwf9.fsf@gitster.g>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Junio C Hamano <gitster@pobox.com> writes:
+--GfSBpcbbYH0TJC3D
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Because 'stash' is implemented in terms of the reflog, it can accept
-> not only a small integer index (such as 'stash@{4}') but also a
-> time-based reference.  This is not a good thing.
->
->  - 'git stash pop stash@{2.days.ago}' picks the first stash entry
->    that is no younger than the specified time and uses it to modify
->    the working tree and the index, but then removes all stash
->    entries that are no younger than that specified time.
->
->  - 'git stash drop stash@{2.days.ago}' does the same, except that
->    no entry is used to affect the working tree and the index.
->
-> These two patches forbid passing time-based stash references to the
-> 'git stash drop' and 'git stash pop' commands as minor safety
-> improvements.
->
->  1/2: stash: record positional index in 'struct stash_info'
->  2/2: stash: reject time-based selectors in drop and pop
->
->  Documentation/git-stash.adoc |  8 ++++++++
->  builtin/stash.c              | 18 ++++++++++++++++++
->  t/t3903-stash.sh             | 13 +++++++++++++
->  3 files changed, 39 insertions(+)
+On 2026-07-30 at 08:21:46, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > As far as I can tell, Git has always emitted hex object IDs in
+> > lowercase, but our object ID parser accepts both uppercase and
+> > lowercase.  This leads to much software relying on hex object IDs being
+> > broken because it doesn't handle uppercase object IDs and this can even
+> > lead to security problems when people assume that an object ID has a
+> > unique hex form.
+> >
+> > This series proposes to remove the ability to use uppercase hex in
+> > object IDs in Git 3.0.  It is RFC simply because it's not clear if
+> > there's the desire to do this, although the series should be fully
+> > functional.
+> >
+> > As further evidence of why we should do this, I'll note that there is
+> > exactly one testcase in our testsuite that fails due to this change
+> > (fixed in the last patch) and it's not clear that it fails
+> > intentionally.  If we decide not to adopt this series, it would probably
+> > be prudent to add some additional tests for the uppercase variant of hex
+> > object IDs.
+>=20
+> Before going there, we should hear a solid argument why doing this
+> might be beneficial longer term.  "Just because we might be able to
+> without harming too many users" is probably not good enough, when it
+> is not accompanied by "... the (low) risk may be worth taking because
+> we will gain such and such benefit".
 
-Sorry, it turns out that the collateral damange claim was completely
-bogus.  We do abuse the reflog expiration machinery but make sure we
-only remove a single entry, it seems, so only one entry is consumed
-and then removed.  Consider these patches retracted.
+While I can't speak about the details, I've actually seen multiple
+security vulnerabilities show up because people didn't realize that
+uppercase hex was a thing in Git object IDs and so filtering or other
+sanitizing was ineffective.  That's the real motivation behind this
+change.
 
-Thanks.
+Also, as patch 6 says, a large amount of Git-adjacent software,
+including common implementations such as Gitolite, don't accept them or
+don't handle them correctly.  A quick code search for `[0-9a-f]{40}` on
+GitHub shows a lot of these tools.  Our own hook examples even use a
+similar pattern, and although in that case they are accepting only Git's
+output, users see those as examples of how to parse object IDs.
+
+The situation is presently that Git will accept them and this leads to
+surprising behaviour, but almost all adjacent software rejects or
+mishandles them.  I'm arguing that we should stop accepting hex object
+ID formats that cannot be effectively used in the Git ecosystem but
+whose presence is effectively only ever the source of misbehaviour and
+security vulnerabilities.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--GfSBpcbbYH0TJC3D
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8Fgmprv68JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ2TdQOEh3beF3Wyw0vamTqNXRSGnuIzRmz1uvuuY9lSE
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAE1lAQCoGsZUabQQa1UOFjqc4ycFj5Sy
+wQ95tiIQjBxTIImkKgEAqsLs8eAs3HrZ9ZCUx69dX1YblRLOpJpCHiB8y8wc+w8=
+=XCLa
+-----END PGP SIGNATURE-----
+
+--GfSBpcbbYH0TJC3D--
