@@ -1,119 +1,207 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from ms-10.1blu.de (ms-10.1blu.de [178.254.4.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3BC3ABD88
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 19:38:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5E73AD531
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 19:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.254.4.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785440317; cv=none; b=eRoNbmHYV4mRaJ9YBNx1SPtLKqiHeaFYa4DVnHuVZqjWGjibK4fCffEw6eWfbGCsojDupoGYRSSOmA5gal/gwpo8KxD5ZlXY99CknZlS6Pk6PnP1eDTD4m7dmoxighqAFFm0h+/PN3FdL6rsJwI5diru83z9TaTWFqREcJ3s4eg=
+	t=1785440742; cv=none; b=TcjQ2q0k7WvhSL0sQg+fR4aaSa0ezYcuaf96iLG0ANKDw6rtKOTUK2LGe8rY+wuQmImsjJKk29NO+1UUTk8dehqeH2CNP2FnbIDe0LDE2ubYemCM17zIUWqI8HlEJyOg6t/nlyf79y6wPOB0wf0+tw85kX6EXGmpmuJXH2WQl0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785440317; c=relaxed/simple;
-	bh=P5Zymxlw8WC/Dz6QDSsWLb/bUQOqk/syCTgoJXA1NZ4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=usW8M2PZWxTWeLLkZ53Wgzz9x4lVvCa6h9+8Z+J36M7wX/MUpVpSJV8UDVO/oXdizP9slBoIhk9+6apxO/I8CdKjbzJ0x6/Q7Dtrjas2J0voG19YJJCS/k3UG3YqN9TPFtrSbLqPAska3D10NIw1XaFPhdtCQBznwmzG7asKlik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p0y/zo2X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H8Mlrhs5; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785440742; c=relaxed/simple;
+	bh=Iru+8ceh+JfENSsbi7WI0Wvv5HW8cr+N4BrLTqYKXbo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KGqhDqxlSHKjNr1csgFYGdWQ5dy0tWgS0ZsU0nqEpqHWXbQOQpzlOJtjdFTKp7w3cB3b9iTJbbDiN1Gj5HS4WpzDOxbtlAI+3+oEjiTRYyWkdgQgf1EvtHLgMhUDyEOJ7LcfNrgoZ460xSkZ4ykGBSebWURLf9Ual9EmQrJ+yz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fahldieck.de; spf=pass smtp.mailfrom=fahldieck.de; dkim=pass (2048-bit key) header.d=fahldieck.de header.i=@fahldieck.de header.b=LeX9Yedc; arc=none smtp.client-ip=178.254.4.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fahldieck.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fahldieck.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p0y/zo2X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H8Mlrhs5"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D60BE14000E2;
-	Thu, 30 Jul 2026 15:38:34 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 30 Jul 2026 15:38:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785440314; x=1785526714; bh=aO9eHozrLl
-	axitd+cbUVhMqBKRaMeUL7cRw1vvDl3Fw=; b=p0y/zo2XSVJz5FLiEN23USPE3R
-	NjEQumJK5F1eQXn7fxtLE1IukBupDZA7ZVA+zcC6lcLyWU+Ux2GKwtUEaSE1y6oi
-	fV/hoQRg7I4d3tm8wmsIsff4ihneN/WFmq5OKGYD7cZ6RA+3n40XbBDfKJC3RZhf
-	hIMREezUqktDsF6N941J0wflzjlNjWoLQm2szIYq9MCzYlaDU4SqOCxYOgLw63yj
-	o4Jkc8zoVCnGoGvDrWVXw0JoLMiD/FQv+8UoReQJbClydTHVAMu4auDW7jf2qxVT
-	avmZoBC83o6ggE1KR1L5rMx1Pn0rLn9VjciXwskf1Fyl0ZlvonCmQcI9ieqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785440314; x=1785526714; bh=aO9eHozrLlaxitd+cbUVhMqBKRaMeUL7cRw
-	1vvDl3Fw=; b=H8Mlrhs5zh1KA1LFjlpXINBARnqR63V+FzXcVl0e8bxpm006t1l
-	zXiPIefhT6ghkJxdI4VBkRnySlXbFmFoz0WLKsNI4h87AOF/0wRBOJVwIhVA+kuw
-	iL4ckK93CCtx3tWAoWvgSQb7/yS5EOpezaeuG6mXidtRh40gmS6mdhO8tVFY4u07
-	PiifSfxXpdwJ5y7Zxd+LR4A8B4wYZnkjK/+fPBX30LD4Bqe6iRi+ybEMMXskL6l7
-	YZgBhGtKYvk0rny2oA5BlEZeEOcM6nESUSSKXY3lqsdQHheAu3i9W3LKnY4+vF3s
-	/Ile+ApRFJwIsqhPiHGIjsCr8DDaxQjPltw==
-X-ME-Sender: <xms:OqhrajxhCIRicfr65R4pWSdPkmCzlZMpMfaEotUIGmGC6ROT05Ds-Q>
-    <xme:OqhraitGDxxMC-mTVaQDlp_sSwVgSh1GFSw8yJRi_ZUaXP61M647kZpc260mLsrYV
-    vBkG-Ccofjm4LTmpGFyR8hAXALP1Q0tihF_9ndk-oUCSNv9GnLx2qs>
-X-ME-Received: <xmr:OqhraquKrdlF-MUGZahPap8OT1aYHfhpcAOzXC-oNvusW79Y09JbkbY3ZKM4_ig--5eCfnM4XaYPkBWJY9vxHTPrTYdumWtFsQ>
-X-ME-Proxy-Cause: dmFkZTFRd3AfVofGcEf3iml3dNUtF5Hzj1txwLN3QdKc1yHpoiTX7ZJ7By+7tNd+TuzkqL
-    0M232C7nNS1/EpmrRVwbFY8hSHDN4TO8YztFr97K+All66QKgrr1G3CjqpRIxzb1/1g4ev
-    g89WE3uqwM3uMwgivzZpVgoFy6mrfaAKNzx5yq8ZwqDpOsGYGzV0QHrmy528dcL+UjUtwI
-    WlxMUWZbOSN6QXsxH3IT+/oXPfnhwP5GXSyTUEFlv7IeSTEjMemiTsxv/cZ6hV8EigEjrD
-    Q1E+5eyFnFbE6P1bwhmFiv0wjEjE4Fue4YPjtOTAd9mB597drS4M0HPkyVEOeDRJFmmBaT
-    h+As4vmny5CWj0R87UIjgy5xliuYubKY68ISr33B+Ytqj1ZiW9qcbw1+FuC6g2O0bN61Qj
-    DZZufma4GBgzPPIh9+brS/KdPc99Oa0+dXmIOPcVY5K4gNGCvCOIWXntZuZwIxobOXeuQ8
-    quo4+FuYVyFkk9n2ecBNgGN53T6NaaB4tqKDhkUCWmKm9gqPhmpG6lxZNlOlaOhq7+4O34
-    24w1lQqhVGYvz1TeX8PtQa6oCxIlnM58V90vIJUKKeQinziiiIzXqJBB/gKTGnToMFb6zM
-    tIbaT4xgrLj/rweIblUUZxRPYrir3daq9NLoK6TKts1D2rHZ3oWypmjs2kXw
-X-ME-Proxy: <xmx:OqhranMw6KFwVYmm4AL5SFlFbv7FuVL68XOYbZTT-AqL8uT9_Js1nw>
-    <xmx:Oqhrao1uyVn4rj7Q9hBtbtiozNnPKCL-eijArBeYsSjLSJ5aL86upg>
-    <xmx:OqhrajNBpG4nNtTZ1Al_NZ1Z4Q1vkTgzpWwjpdVQGNB2cwuCL3ft8Q>
-    <xmx:Oqhrao2eWnGQgGWi2BjwKgn9-2F-aZlkesF6JLSEdj3obOjs7Ral-A>
-    <xmx:Oqhrais0t0i4QawcTZWpwtr6YLc_e9pd4RmcA7knc_EpBA8OhpqUhjhq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jul 2026 15:38:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shlok Kulshreshtha <diy2903@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t: use commit_body to extract commit message bodies
-In-Reply-To: <20260730180207.83197-1-diy2903@gmail.com> (Shlok Kulshreshtha's
-	message of "Thu, 30 Jul 2026 23:32:07 +0530")
-References: <20260727095656.75496-3-diy2903@gmail.com>
-	<xmqqpl05o5n7.fsf@gitster.g>
-	<20260730180207.83197-1-diy2903@gmail.com>
-Date: Thu, 30 Jul 2026 12:38:22 -0700
-Message-ID: <xmqqy0esjmj5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fahldieck.de header.i=@fahldieck.de header.b="LeX9Yedc"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=fahldieck.de; s=blu9537877; h=Content-Type:To:Subject:Message-ID:Date:From:
+	MIME-Version:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=Jt07rn4RYVi0OpdfKeg4q839dTtAmEHwh+Z1oV4jpaY=; b=LeX9YedcXILM0iexK405ux7Laa
+	GZzQ/xszurk4xgjdfkh15SsYXH7R5UB1r9C7chDAJDCmGfVA9s3rMJUQEtyiU96zbDx30DgnjbleW
+	ckcydvM5F+O8RjKG9JD7oxhb1DbGzZxT3uX+WOGNrpN0iTCoGHvNdMKyURKB75ywiexhNv5T0loyc
+	0UdIlIZh4bzLxpUOAqE5JnVnqJr9QDoYYbA0CabzhKbJv5tGDFK4uY68FA5f4Ybxke1nMM7PdYg8D
+	pV5YHYNFcMNU2h+1Ebxp8oPSR+S3IjDviDBWuYCDp5lpUn56mo+XzpO92ooYjuiHcaDFND1vOwGqW
+	qwZsK8rw==;
+Received: from [209.85.128.175] (helo=mail-yw1-f175.google.com)
+	by ms-10.1blu.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <nils@fahldieck.de>)
+	id 1wpVLk-0026ke-U2
+	for git@vger.kernel.org;
+	Thu, 30 Jul 2026 20:19:20 +0200
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-81eaf3709b4so2290317b3.0
+        for <git@vger.kernel.org>; Thu, 30 Jul 2026 11:19:20 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxiGzT873bYa+6Fwni19yFDhSPtZEWrn+u7yav4MLStvUW2CKtm
+	B6VK/ijZ7Gf1abLHiWqVPqOoQ2ABkJu2myY/XzObXe688pdjgE1Iae0e8KSVHUhJesP3PaRelf/
+	LtKVbD+ZDty9AQ65GB942k750fMysc/E=
+X-Received: by 2002:a05:690c:48c3:b0:81e:f8ca:1115 with SMTP id
+ 00721157ae682-81fb8abb899mr28239317b3.41.1785435559464; Thu, 30 Jul 2026
+ 11:19:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Nils Fahldieck <nils@fahldieck.de>
+Date: Thu, 30 Jul 2026 20:18:43 +0200
+X-Gmail-Original-Message-ID: <CAAdFe9yhBk-WecVzCTsjQ-4Z3AZAbpP+w+B076ouM3qX6d1WAg@mail.gmail.com>
+X-Gm-Features: AUfX_mxDFfuih7gc9TemjBEaf-ye-UFMLH6xTvZIK_Kd2X-ewD_RUjMJq8VpD04
+Message-ID: <CAAdFe9yhBk-WecVzCTsjQ-4Z3AZAbpP+w+B076ouM3qX6d1WAg@mail.gmail.com>
+Subject: [BUG] git config --global: doc and behaviour disagree when
+ ~/.gitconfig and XDG config file coexist
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Con-Id: 301193
+X-Con-U: 0-nils
 
-Shlok Kulshreshtha <diy2903@gmail.com> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I would not claim to have checked all of these changes, but I did
->> spot check a handful and they all looked reasonable.
->>
->> Shall we mark the topic for 'next'?
->
-> Yes, please.
+I ran into a confusing discrepancy between what the git-config(1) man
+page promises for --global and what the code actually does when both
+~/.gitconfig and ~/.config/git/config exist.
 
-The qutestion was not quite for you, but for those other people who
-are reading the list from sidelines.  We all know that the original
-author of the patch wants their work in, so that does not work as a
-useful signal.
 
-> * t7600-merge.sh, "merge --no-ff --edit".  The test grepped the raw
->   commit object for a phrase and then stripped the header for the
->   comparison.  The phrase is in the body rather than the header, so the
->   grep now runs against the already-stripped body and both steps share
->   one commit_body call.
->
-> * t3900-i18n-commit.sh, in test_commit_autosquash_multi_encoding().
->   The stripped body was piped into "iconv".  Piping commit_body into
->   "iconv" would reintroduce the exit-code hole,
->   so the body is written to a file and "iconv"
->   reads the file.
+BACKGROUND
+----------
 
-These are as the log message describes ;-)  All looked good.
+Git recognises two "global" config files (described in the FILES
+section of git-config(1)):
 
-Thanks.
+  $XDG_CONFIG_HOME/git/config
+    (falls back to ~/.config/git/config when $XDG_CONFIG_HOME is unset)
+
+  ~/.gitconfig
+
+When --global is NOT passed, git config --get reads both files via
+do_git_config_sequence() in config.c.  The XDG file is processed first,
+~/.gitconfig second, so ~/.gitconfig takes precedence on any key that
+appears in both.  This is correct and consistent with the documentation.
+
+The bug is in what happens when --global IS explicitly passed.
+
+
+WHAT THE DOCS CLAIM
+-------------------
+
+From Documentation/git-config.adoc, the --global entry reads:
+
+  For writing options: write to global ~/.gitconfig file rather than
+  the repository .git/config, write to $XDG_CONFIG_HOME/git/config
+  file if this file exists and the ~/.gitconfig file doesn't.
+
+  For reading options: read only from global ~/.gitconfig and from
+  $XDG_CONFIG_HOME/git/config rather than from all available files.
+
+
+WHAT THE CODE ACTUALLY DOES
+----------------------------
+
+Both read and write with --global go through the same function,
+git_global_config() in config.c (around line 1505), which returns
+exactly ONE path.  That single path is then set as the only source
+file in builtin/config.c (around line 960).
+
+The selection logic in git_global_config() is:
+
+  /* access_or_warn returns non-zero on FAILURE, zero on success */
+  if (access_or_warn(user_config, R_OK, 0) && xdg_config &&
+      !access_or_warn(xdg_config, R_OK, 0)) {
+      return xdg_config;   /* ~/.gitconfig unreadable AND XDG readable */
+  } else {
+      return user_config;  /* otherwise always return ~/.gitconfig */
+  }
+
+This means:
+
+1. The writing claim is inaccurate.
+
+   The docs say XDG is used when ~/.gitconfig "doesn't exist".  The
+   code tests READABILITY (R_OK), not existence.  A zero-byte file
+   created by "touch ~/.gitconfig" is readable, so access_or_warn
+   returns 0 (success), the condition is false, and XDG is silently
+   ignored even though ~/.gitconfig is empty.
+
+   The condition should be described as "when ~/.gitconfig is not
+   readable", not "when it doesn't exist".
+
+2. The reading claim is outright wrong.
+
+   The docs say --global reads from BOTH files.  The code reads from
+   ONE.  git_global_config() selects a winner and frees the other
+   path.  There is no code path under --global that reads both files.
+
+
+REPRODUCER
+----------
+
+  # Setup: only the XDG file exists and contains user.name = "My Name"
+  $ ls ~/.config/git/config     # exists, has user.name
+  $ ls ~/.gitconfig             # does not exist
+
+  $ git config --get user.name
+  My Name
+  $ git config --global user.name
+  My Name
+
+  $ touch ~/.gitconfig          # create empty but readable ~/.gitconfig
+
+  $ git config --get user.name
+  My Name                       # correct: reads both, XDG value survives
+
+  $ git config --global user.name
+                                # BUG: empty output -- git_global_config()
+                                # returned ~/.gitconfig (readable but empty)
+                                # and silently discarded the XDG file
+
+  $ rm ~/.gitconfig
+
+  $ git config --global user.name
+  My Name                       # back to normal: ~/.gitconfig gone, XDG used
+
+Tested on macOS with git version 2.55.0 built and installed via Homebrew.
+
+
+THE FIX -- TWO OPTIONS
+----------------------
+
+Option A -- Fix the code to match the documented intent (preferred):
+
+  Make git config --global for reading behave like do_git_config_sequence():
+  read both global files when both are accessible and let later values
+  take precedence (i.e. ~/.gitconfig wins over XDG, same as normal reads).
+  This is what the documentation describes and what users expect.
+
+Option B -- Fix the docs to match the actual code:
+
+  Document the real rule: "--global selects a single file: ~/.gitconfig
+  if it is readable, otherwise the XDG file if it is readable."
+
+  Option B alone closes the documentation bug but leaves the underlying
+  asymmetry: "git config --get" and "git config --global" silently
+  disagree whenever both global files coexist.  That asymmetry is a
+  usability bug in its own right regardless of what the docs say.
+
+I prefer Option A.
+
+
+RELEVANT CODE LOCATIONS
+-----------------------
+
+  config.c ~1505-1523    git_global_config() -- picks one file
+  config.c ~1525-1537    git_global_config_paths() -- builds both paths
+  config.c ~1580-1586    do_git_config_sequence() -- reads both correctly
+  builtin/config.c ~960     --global wires git_global_config() as sole source
+  path.c ~1545-1560    xdg_config_home_for() -- XDG fallback to ~/.config/
+
+  Documentation/git-config.adoc ~147-154   the inaccurate --global entry
+
+I am interested in actually contributing a patch once we agreed on a fix. If the
+behaviour is intended, though, I am interested in the reasoning. Maybe it is
+also a translation issue since English is not my native language.
+
+Kind regards
+Nils
