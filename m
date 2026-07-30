@@ -1,103 +1,158 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64175367B92
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 10:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785405656; cv=none; b=c2oLLsKSi9WYl4aTFAryNSdOxO3RtrdHzRiUfpWFQ7O+mh7Sig4Wvw2mQXaPqNhvs71ZcfelPFgtXrMdwmFn+2r6ptou/KOyOyniOXa8MoezGkhoRFn6UoCktVc8mVKez4aFe1xszAo2fC80haoDamc3KO0eMgSfrH0hbLHaTMw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785405656; c=relaxed/simple;
-	bh=alDdLIxHJzrzmdulJjmGg3L+0ij0PnIraVHeoL8Ufd8=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=J/T8MlmQO8gV4hL/Rtj/+b18SIOq2LdFeQC458qi3hpfcBGGGCYiXASCZfZkhVMScIU5t7DUNjGDF2MRhuSeR9eW3GjOzGVItV3hfSvRGVSIxTkxRKoF/0BFIRSnjXEaQp3zwP/JslqBEgjCh0uyOnwZK9KiGKJG9fuY64nvCuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bct7EZiC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N580qlLn; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9999E3E7631
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 11:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785410606; cv=pass; b=Tn15HusB3ZvYkjWC5vIdPidBEPqaNvfOirDMCrf1mWp+JFD9GafzvQfC0UgI6ACNLv4PIdrUupCz/BtzzF7sJLFWn/urL/6JUhE4a7qafUgCUMlA5rnCqchT3ztbDnPWUswWXBn2+rcCccndVJR1HQoN0eUPV48qwguEkG02mHE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785410606; c=relaxed/simple;
+	bh=t5wVGl5Gwx4jaEteCzDne+rvX++N+vABn6IFQxobNec=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KCQdUV/nH55vnfzakebLoqD3DsLxnQxc24oeQJDjfJuMU3WRJh/Czyz3fCSLHP9VK5mi5teCLrno2JmCQr2kNDj8DvMMDTjE9lNAnykcMULEqcDW77mNx4XE/+1FvYmWqGdPeIC4gFZ4iZ/Eaau/T6X3v5+yiB9EHdAKANkQlFY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iRsQ+Kzc; arc=pass smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bct7EZiC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N580qlLn"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 92F2C7A01C7;
-	Thu, 30 Jul 2026 06:00:54 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 30 Jul 2026 06:00:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1785405654;
-	 x=1785492054; bh=uVeV/vmhrbJYh7rWPMEzBbaxFhL1YFR4qF1juZjx2qc=; b=
-	bct7EZiC0agsJZPBwp5nszfriXtPuknYW8YUv7xx/UUBf3AHS2KmCVoLzXMHiTvK
-	hmj5m9n3DjXzzfUKGhrpBEfRAY5hhvXvkgmzuFgzVFe/Fn5G6F+9STpgH3tBqc8Y
-	WqqCYmm9YUPppyT46ti9U9VhKv3MKALI9wmTTnoV+HMk5i1qbQo4YEjpCGI53e4k
-	UJGZ/JmLAhDyfWPRlpBjfbhXrUpJwH/B8bqWO8DxNLLfegvbrvYFPKoG6gvT8h39
-	Ns/b2G3UlDK46gD0Qgm2wk9yc9PZIWxv4GOnp/T393MvKTHIBRsE603hVVGdcgPz
-	nAe4Dbuf3N59EG+xSZtZkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1785405654; x=1785492054; bh=u
-	VeV/vmhrbJYh7rWPMEzBbaxFhL1YFR4qF1juZjx2qc=; b=N580qlLnesUivsjxs
-	X+0LKtKYw+GJtneAbF5Cl26SsYgpmA8pezg/jlpNSaKL1WU5SlMWIJN4nqgm0o5w
-	zf39GLd9ya96y5Fsi9IEEHmAxsj9wqNlhfZcN7H3dccjD1/8Alpuq2CCk7wrolS9
-	2CR1DOgOtCPIEMZ5r/CVKjBnsRh8QQlbtrdVL62OtQ+aeJ0wqFR6+pFkhB5R2UMV
-	JN39b+GGpdBlp7UU55C1qlkzsYJ/EPBYDpSgSr7O+DNPuV8wK/eu/2wBA85qDrM7
-	mNI6E+j8TONeiipI+9S/RXkwR75kPFQmjMeQHUopp4qjojBqu+1/xghwhb6Ik1Lu
-	yGYNg==
-X-ME-Sender: <xms:1iBraoPGcI36L0OUsnXalJVHsFDmBcjYddLk5FHcBEKXO4oiX3vktfY>
-    <xme:1iBrapwLsQF8vO35HI6APRCZz0_2yUA1nde0DJbuLqm2p88wbjYq8lI3qy5acTB04
-    G5w712Xgj9T4Hjq4S2-fEAx1Rnc7L0xZ4LJzAtUUe0W2UPWvsgT3w>
-X-ME-Proxy-Cause: dmFkZTEWxvFPhzPXL2UyhSceJk7eGpXrtsOaaq+NuGIMahzR1kskyfEMr/T0qsyxk9/Sou
-    uRv0qjre1N5Pqvi2FtYAePvOpLPzvGKA8j9VSfbORlUtay0dJC/hIkSWl2ix3UM7oI45n1
-    jt33y5prIlvHs5z7ri5TDkjJtTpkMeM4Mupbsu7HTBedDfjo//FIIUy4Xe3h35QT5eDhVM
-    epdHgpsoRBN8YqLStWMGmcSw8fCzrA1kVo2guQprGkRJr+ckV6Ge1Y9RR4VmfS4UEpgmvw
-    XD6ehkfwnwyRMn6186xTbplNelVOhzW/y0H6bHeMWvcSVg3nIZOkR/a9eqlDpt5/fduDFY
-    fUAhqo2Oxb5ivKcAlzcqW8/HJ5b/7r0/nDQmzzy0sO3kLKbYRjcag2RojSAj5SxaTDVYaj
-    A/A5ROwB2H4IfXV4byIw8Y+gRg0wLX+JYvhOKAfbO/mRkULAoSj0jpbWPcbUHRJFqaOmWN
-    sL2MVPwCKQjPhz5Pga14kTfW6KO+6anGDiaVZSL6GCH8xrA2468C7zoEo3itxx4EGb4Q9l
-    ix80f1wJAyXYM8Yf4qdGIWM5IdKVR+hl7xhF20S2JHsatUnelraKkt/aHHeHDeb9lnfnOp
-    nseXqgMEZ1DKusWYn0M5hfUbLiRdCqkx7e2FPBAfIS/6tEkOhcj36N5qwUgQ
-X-ME-Proxy: <xmx:1iBram7U1dnwG6xiojhZcbwIuKOByWJfeEBSrzJ93ewtzmnqZM5I0w>
-    <xmx:1iBrat2PKD4fk_EUicoj_wa0ynWJx0fPlm12dLzbwpTvdYetaECkVQ>
-    <xmx:1iBratBMCBgjajLrD5jxGQJnIR8378oPkh2lGydUSPozmq-_ChHcmA>
-    <xmx:1iBrav1_430xPtdj6nS-r5yNkcdG237n-qhJA-yBn-gC2wtWlvGRRQ>
-    <xmx:1iBrajiZDRR_DOWR5j5AUMifFr3I1Aq8R3QXDusS9dBKKM_PJJpNnAJP>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 515233020073; Thu, 30 Jul 2026 06:00:54 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iRsQ+Kzc"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69e2266b07fso2837188a12.2
+        for <git@vger.kernel.org>; Thu, 30 Jul 2026 04:23:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785410602; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GbjknuYaix/4SS99LF0h8epGqnHGvWkLcJcjX2nmZyWdgj178yt7nc1+Ch6yR6YMP3
+         GIwyEo+HqMibLdAwaOSySAxYfkP89dYgzhlpNMQREIg6Is5nmFnHM1bcG5LhweU0flKA
+         v+57ELOl+Wes2FMYdwr+ESc4/e/c51baxGaqou1Ddu7xWqWFGs6qT96djQNzk1FkeXGl
+         g5t7KStZo3zLIuQOA62M7OAK9oYvNXE3apEOBAY005eOzceFfyU+DPZm3cZ+32vR4p4p
+         /4yfMw8Yr0sQV3ebb3YDH7PyVouiBt/LAeJOm16lLBM3sTOOxjrvPTS0DM144MeNK2OV
+         eBlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=qpKvgKUsGhhlG6SaIjVx521IOaKzFx0U5/rjLTzsMfw=;
+        fh=GH8XPYWGLCUPyFTOuWQfl0Qw6x4ukAetJr+kdoc2S9U=;
+        b=WTv9BiiZOoodEO8yrhpZdjbmzKtIZiVAxREGcAcsPqs5P40tE/GEw0gI+flxYPdKeU
+         xLsWKROtzbO2SyJZMiLYBldSAvuZzENob1dN0gq9MMmm0RGvGpmyVulWOnUvmQ4a3S1t
+         J3NcOsiRDJvLO+Un4XrG+Y4wlJ3YkDTTzWxV0RLjp9bg2NSLRdFX+9jDp4xtkj2Ijj/6
+         WOmU+OZs8sBrqxW0V6fFl8Knt4crPJ+TKpcWEmmNSX4JosA2+uCDjIZYRM2aU9b8OSoL
+         Iikmr3Y5XnVT+uL6HyAKhCGuiAarKpy8/X5ThSUSYjH47MWndeyS2+pIXaov8s2vAZtn
+         bXOg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785410602; x=1786015402; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=qpKvgKUsGhhlG6SaIjVx521IOaKzFx0U5/rjLTzsMfw=;
+        b=iRsQ+KzcqH6GMubiCs2G8HZYe2l/QrWYalYpNvSSJXOue7tv6O2UvWfR/1hDz/JG8G
+         PBTgwVwksI0oC5IvgjOAfjrJHgPMNCyMAnUtV7+YAQ1LJWDw2tnywnvH8URaY5Jxz9C2
+         CxEjBICfmSeHYBB+l89RTzBTaOJzO4Kzbpb+5Y7ZdGGD+fAfT9nGWaO7R9KLlGk5x9JL
+         dSeeSTq/ZLkWUM9V5revQB20MvoSP1Br3gQNLc6cxkRGmhRvDyCzBfHNn/R5P067GRKD
+         yNQn36LVS9Ln2Leix1AIgtxZj7v+ctEvH+KUHhZOQyAU+2zUjP1Cb6Ta2pPckURD2wEv
+         3n4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785410602; x=1786015402;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qpKvgKUsGhhlG6SaIjVx521IOaKzFx0U5/rjLTzsMfw=;
+        b=RktGH277B1dGA9Nw9o94DV48R0RF3paRVSnB892tMtuBp03Mr2Ym5ZAobGibIyX3G+
+         PzS3FmqFnuJIxKWsksrGL3qxgPAa1JjpBRVMFnGJG5S71GeYrmjFm1zo24OsVdbNxsEG
+         e1X4nUdX/j244yspvrSY19atQx8qGuEd9vO9ArcH7ezuO/9hi/K3mQRCSHDD2IAmATxd
+         rSA86mW+ESQ+94Hj8Gbhop+jhJIL84GuytTQXcvJrlSNa7arT+HXdYH6jsvO0SSuij7j
+         i0WoQe4MGHCWqBFSSqSsdOPgAt8LPlhbD9NFxnWlOXlKcDgOFHGT73sA6Hz5kn0dr2Py
+         vmtg==
+X-Forwarded-Encrypted: i=1; AHgh+RrXOiWDYQEnlZ9SXut9sTAyO+8TjRHKdw0uhjthsSRol33ND3xXPq4hYSEcWmm0g9EXipA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxW0Ha2Wh3PbOuJAXJHCfiQMCqZFmJxSdF5yKer8g7+Fnwq27Re
+	ILhX8aAniELj8yYvfgjWPSY3JmDiZioDaFrQjjpO4ZwMgEYJ2uCu0AGJV3NJGjC8Ry4dHw0rNhU
+	Tz3ox9XnJsSvBQETbYNbDY+efWOKpomSLJ5twFsI=
+X-Gm-Gg: AR+sD11CPp02+n1mf8T2NZrS60nTeinvA78q6SGTUSp80s6Lz1VZQUp/s50NjRb3lzf
+	+z2wUPhk0pfqRVBHkwzZHxKrzt0u6070tTHs/Weq2EiyyTwlcbseDOI6tgTCGt2etbi87cmYLYE
+	AXBGSNm+2P+3Ztsze9ZBRTABWW8qNF1hB9RA081UXa/duRrnEwCzDoPMpP5xN1EnMlMDW4nU6Tg
+	BhNXhrCRVsul6coDCT2XrYVyj+IzHvrwpenFzNieCA2T/lqrHrAXzc8CT6mbYLlt3QngNxrK7MT
+	pADYiRlfHPrMV9HHLfTpXSLKnt1PYSUiplLresjdzH6gYxrPPOU8AsK8YHWv1FqdGvndkzFum8B
+	imw==
+X-Received: by 2002:a05:6402:26c1:b0:69c:7697:e8e6 with SMTP id
+ 4fb4d7f45d1cf-6a07b892dfcmr1102690a12.37.1785410602195; Thu, 30 Jul 2026
+ 04:23:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 30 Jul 2026 12:00:07 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Message-Id: <6659f0ee-386a-4aee-a888-b16d22559aec@app.fastmail.com>
-In-Reply-To: <xmqqzez9obr0.fsf@gitster.g>
-References: <xmqqzez9obr0.fsf@gitster.g>
-Subject: kh/doc-replay-config
-Content-Type: text/plain; charset=utf-8
+References: <pull.2356.v3.git.git.1784842831.gitgitgadget@gmail.com>
+ <pull.2356.v4.git.git.1785097071.gitgitgadget@gmail.com> <6b72efb4130d96947c7f90026042fa09a440d091.1785097071.git.gitgitgadget@gmail.com>
+ <xmqqbjbsgjfu.fsf@gitster.g>
+In-Reply-To: <xmqqbjbsgjfu.fsf@gitster.g>
+From: Lucas Zamboni Orioli <lucaszam0@gmail.com>
+Date: Thu, 30 Jul 2026 08:23:10 -0300
+X-Gm-Features: AUfX_mz5C7ejL9eTqh-20tpuLNiiJ5yIFKniMYq7ezUq-GB6znVK78eOYzXYUok
+Message-ID: <CAH01Q--Jeip3VvrYCOfM69ktvcR1gdeA6gVsQynd_xQ+cjsN8w@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] mv: reject a destination whose leading path is
+ missing or a symlink
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lucas Zamboni Orioli via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Ben Knoble <ben.knoble@gmail.com>, Pablo Sabater <pabloosabaterr@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 29, 2026, at 21:07, Junio C Hamano wrote:
-> * kh/doc-replay-config (2026-06-05) 4 commits
->  - doc: replay: move =E2=80=9Cdefault=E2=80=9D to the right-hand side
->  - doc: replay: use a nested description list
->  - doc: replay: improve config description
->  - doc: link to config for git-replay(1)
->
->  Documentation for 'git replay' has been updated to refer to its
->  configuration variables.
->
->  Will discard.
->  cf. <xmqqv7a5b6n7.fsf@gitster.g>
->  source: <V3_CV_doc_replay_config.780@msgid.xyz>
+Em seg., 27 de jul. de 2026 =C3=A0s 19:24, Junio C Hamano
+<gitster@pobox.com> escreveu:
 
-I have posted a new version now.
+> I cannot quite parse this.  Do you mean to say something like this?
+>
+>     When moving a file, if any leading directory in the destination
+>     path is missing or is not a real directory, the problem is detected
+>     only later when rename() is called.  Furthermore, if a leading
+>     directory component is a symbolic link, the issue is not detected
+>     at all.
+>
 
-<CV_doc_replay_config.709@msgid.xyz>
+Yes, that's what I mean. Your wording is clearer, so I'll use it for
+the opening of the commit message.
+
+> This small piece of logic is a duplicate of the next block that
+> actually performs the move.  I wonder if we can have a small helper
+> function that takes mode and dst_mode as parameters and returns this
+> value?
+
+Done. I added a helper:
+
++ static int needs_worktree_rename(enum update_mode mode,
++                                  enum update_mode dst_mode)
++ {
++         return !(mode & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
++                !(dst_mode & (SKIP_WORKTREE_DIR | SPARSE));
++ }
+
+I'm not attached to the name; happy to take a better one if the list
+has a preference.
+
+> Are the elements of the destinations.v[] array normalized so that
+> they are all full final pathnames?
+
+Yes. When the destination is an existing directory, the setup phase
+builds the destinations with DUP_BASENAME against dst_w_slash, which
+appends the source's basename, so "git mv file dir"  yields "dir/file"
+in destinations.v[] by the time this check runs. I added a test for
+that case which succeeds.
+
+> What do we do to elements in destinations.v[] that lacks a slash?
+
+A slash-less destination is a bare filename in the current directory
+("git mv file_a file_b"), which has no leading directory to check, it lands=
+ in
+the cwd, which always exists, so skipping the check when there is no
+slash is correct. I added a test for that too, moving into a bare
+filename in the cwd, which succeeds.
+
+> then you need to allocate only if you need a copy.  I do not know if
+> it matters, though.
+
+Applied, the xstrdup() now happens inside the "if (slash_)" arm, so a
+slash-less destination does not allocate.
+
+Thanks for the review.
