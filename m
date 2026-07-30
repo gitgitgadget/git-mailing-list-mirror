@@ -1,83 +1,81 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D02E37DEBB
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 02:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3726324E4B5
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 02:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785379827; cv=none; b=QX0UTbq/t1xrEaDMqa/DHSKxhdgTYEMHlbyDVtwctJMEhVujv9SxFKJccWOmSIVV4zrjQPYfweALrfzfQBMBOAXhLLBdHuU3TiVB2lb7qwqOQ99/xTcRrPGYF2+ICvjl5bFWE2WDgHF135uMcTgOfDsuua6hDzwbHlv7DcKyEHw=
+	t=1785380292; cv=none; b=LvkwaZVYq8eB3MHl9xUPe1C5hQIU/Bm1Wih1Yf8IvKJksPtLfUOpgASAMbiNK0XRp1HfuM7uGhSflkAQZXmugAUWm8v/oer4sG4vsUwIhkeAt7NX3mZhhoeBwgvHewmN/Sn6/kY2IsUCaXvy1hzf7Pg1Nu3T0aAkxg4b88csb00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785379827; c=relaxed/simple;
-	bh=4AGmdzQTJOz6dEsBuoYMIw7nIvtzYhOKy5jAdJo0Z0k=;
+	s=arc-20240116; t=1785380292; c=relaxed/simple;
+	bh=bi2Z/T3Q0Lj3ZDDeHrjODxGcfUzkSn/52/+3sNJ2q2k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dyfBvk0uFtZGznZSuCQt+RvG9ugZoParT5EBGKER6eKA5SqRaB21GDHKjMRALkOLMWn2O712xj1PRZxAFHNF3qkyPpB7jJ5BlZFqyojLzDzFug8HWT//sONGTKq7lBS6xt31yTr1Nqb0Se6DZuGUATwTA7GuM+k1iBy0fUsbrfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lmVOhuhj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZFrzAdYB; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=g0F2QV5c3U/2NO32j57zmRZAAXmiHcbfJ5bhK0WPeLyVgDfjt6xCL53qy5Txm0JmXHgoHIB2RSpkSvSf5oYjTyGnb2tATU3wKCpGH3qvDnNlQXmpSwE0sn3v/pX6IeHtzJLNTGPzujUSYeLFuxcoKjgnTiBm+ZZJCWDl2bwE+AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m+AhaogQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RgUAmWd/; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lmVOhuhj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZFrzAdYB"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6CB5F1400363;
-	Wed, 29 Jul 2026 22:50:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m+AhaogQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RgUAmWd/"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 470C11400364;
+	Wed, 29 Jul 2026 22:58:10 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 29 Jul 2026 22:50:24 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 29 Jul 2026 22:58:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1785379824;
-	 x=1785466224; bh=uSzoddczZSykUNm23DutrO15Q8EJMg0Uiu4wP6afWxs=; b=
-	lmVOhuhj0q48euXW1iNBPq7wEpn8X3xCCuFdL0ky4RFMEdtTzH55R7zTCi1ZDYUV
-	k3M7m8Be4LJnwFreyh4RSb9j3ODFozS7cTQCOCkxcnVuimrAxrjdV1s/WbqqGGB1
-	029x/LgUKGedybDkkh7Odhh+lMHij3rBw1xkmIJMYWC4djJvg/NN2Y+kuL5IHKHM
-	+mJ98rnS6miULzUmyp25qcXedg9/RHYgi4hvPOvx+xoHquAxlFqmxZKUIWPKUGVR
-	hR5Ob5oFR0JJSzH2ychVZS+Lhuq1IvGv6lhAUmyzpkqPNN8TmhZJONMmC01H69po
-	g9LeEwzGVonZVyg8Xy696w==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785380290; x=1785466690; bh=P/tnkOobD0
+	fFcGfJCgMnlcKdkgWsiTMAizgy7ooh4sg=; b=m+AhaogQASXPA8gMpUI0+cRdFI
+	8OO3emaZOugXjCTIjwnwof9t3cmJWnR4wGO+rKH0gaXoBQMBcsmdRfa0fFmpN/L4
+	dhxtN+4rpoUUBwcDcr5qlJOdtU1dSFeWUmy5zoQ6xqLgXkTIACXwT2Ey7oP1ninA
+	XMKwbozKooQxTcM165QqCRIbHpO4vsuKj5pBvTKMFmfiXxGf6pslMKB7nL9Wplz2
+	ulEY3Frq+q+fMCw/3TTh9nq2xjMz3E0r5D4ln+35t+5CToLR/7yCwPsstsdPrnNx
+	+Zi4DYTN3O8J2j2lSxjTO7cv6Me9NH6YH7LJlMnTFGw7105hD8a0xY9VzXwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785379824; x=
-	1785466224; bh=uSzoddczZSykUNm23DutrO15Q8EJMg0Uiu4wP6afWxs=; b=Z
-	FrzAdYBToE1qo+nuF0ECsymc6rfP3hxvljAqLKfvGkXWfJyDTFMux+Aa+50yV/OD
-	sbHe+wk7XYaiUyx7gYs5ayvhhJ/lchRywiPxX1VG3wTVVz48XEIy+W6nLGFRSeQm
-	QRhohTBmzejZsnXO/vjR0e/9R4icbfVJMTbJjzRQYJ5TlrOoC+orIkbyIWT9Ws0F
-	IFhefpbwP8OzbxXZF9BxqRuKOWgB6SHG6lrZArCMaf6ihmOhrHiaODwF/LwjvzRP
-	DOTL8WT2XQjytlbpYkDA8flsgm9/TGauE//2tDJqsQqdW/wEpdUYVV4W15r/wsLD
-	EvEdGQAF7vZ+qP2xCoOVg==
-X-ME-Sender: <xms:8Ltqai3b7smyqEzocQkP_0hTWRS_MBheYOp832X6lsuS1C-NBZanjw>
-    <xme:8Ltqasi361iMftr0gmwV9rKylRBoHrDnimSlGAL5F3WxkO7Bfy69_42qpiWsRbgg9
-    DWKZJC-GpNFgodm9ZBZJQcZttIO24jMCixxM6VueuFW0vBhTC40IA>
-X-ME-Received: <xmr:8LtqaoT4WLSR1Hwtf_FTge8QVjMP8sJ9dhK1EXKku9gWOoWJSF8u-BSGZilXjU4cV5dM0mLyUUyPZPXetptDX4XYqx5NepJ9Ag>
-X-ME-Proxy-Cause: dmFkZTF3pMkUZtRf7Gm3ogIeoiKltwXm/x9tgUtut0/J12XrNOTmG1BypGXSDa8X7PidPi
-    kTR6jLLOZ5eTYL2jMRgPh0cOISKqDbd9TZWXqSyt+EXWCxnb/y7Suu+ZsUhxAhFnjMk1t2
-    OWCD3CiMPlXhpJZHweknEJX0JZh00XFs+ZMgsjwIlmwr7W3YeGUi3pVC/+gmbs/vZ+np5+
-    4Q0bq6dzwIi2iAdo4jUSqkwKWHr/eKe8teO7lwxVkSanw+U1S361OQBTSIQ518SVstdlhc
-    whzecQKDvOsEZz9Y81sWB4MoEezIJawy6/fEMAwdaLhBNB3fZjJC0fdpl6s9K173R804HH
-    7Ydimkm0esyoAQt/+ZTZ/n8Rrq+MzQZYFTKJ2iXsz2Pj4W98jwbK3ijhpwRvNn/2pJzVpK
-    8k1LpcOwwCw4+Qq8Az3Zol4wOdTQxqTKtuf/L0htffLFMFVxdkeMBwNRNaflfgdbsGmo5l
-    XeqIQRlV9dcc9Zd4GHaO32qjlSV2o6+rsbU6oVIBmEBZ8PHTWHjwfgcSjDLqMG0iKG5iZx
-    mr2cJdXSn3BC0LfKtIsaLJ2tuvN2wtEFNDgspk5RsiW+KizRBVUZWPBUyTCHC2n+Uo6HmT
-    DyY+WuGB6SFC9gCXzuGIpemCir3btYKHmyOy/BpRzrUyWzWGfTVCEGUUTNCA
-X-ME-Proxy: <xmx:8LtqatjrojNgVWUwID_DWJBUGtUa-GcZ_lDMQ5e8H-RtvQLPYA7mGg>
-    <xmx:8Ltqao72w4FQL-TUEmjYgxvBlipC6GTdq3ThxyXzUSddLRtkbRwQFA>
-    <xmx:8LtqaqAPbckdsuR4zT7G6G-2fR_FsZpjl-us8tgVJlFtqBXOX9UV8Q>
-    <xmx:8LtqavZwzFSK3VTsPKkEfzdnvEDZVRqMF02OZHEwhecXa5ARQnDeqw>
-    <xmx:8Ltqakwm1xGPSpuVKwCXFPfkabqi1ZYVoRSB_dz0hTYUVniPzze1ptZB>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785380290; x=1785466690; bh=P/tnkOobD0fFcGfJCgMnlcKdkgWsiTMAizg
+	y7ooh4sg=; b=RgUAmWd/9KvBs0jyoy+IbU8fkNXZt2ky2OmoAflPY7xF3bAyemP
+	vhfTgi+KiX8lPP22yVqzIz09ezMBExF2dsqGNcnLBmDMmJ6w0qJhBaNQZqbSo+E1
+	rZJior2pGzuxTx83Y9xBX3hCvb4F59OV8m+H7LqXux0mO+8S267oRz7VHH7QR9Nu
+	xJQ6rwNc52WIcQzF81R8u2ZRADyla51HLEJdXTiiTBgTGCGPePGzxemRL6A6zSR2
+	R6Pe+TIf/YZeE+Pzi6hOtD5QOhPRDgWe/jM4ikHvYCJ8yft8y5ybxZeAkWZ5OaNN
+	rzrHrC4z1Do513sYvGx3q25V9K3yBKutIkw==
+X-ME-Sender: <xms:wr1qaoLEx6urj87rFCxVgJDkYgIDWSmr8nx6LTyvp1e_Db_brBej9g>
+    <xme:wr1qavBdoJ2ZTwb2sJjLdSdpXzqYG4P8KcHsCAOFJBiMkpJaSM77BeOcrTxRv2qCi
+    SoD6P4E_j_MncwQz6M4Neui0nl-NF6SHUK8c7PD1WfaI90VNviyQg>
+X-ME-Received: <xmr:wr1qahAyAI5MvxQRBRo4XHjN9tBil7DA2_6ocAX4V7yPooJ9FSkYJNadjodv8HP3mIS1WPaIH8sqW02eJDtcjP8sDv8EAWZ1kg>
+X-ME-Proxy-Cause: dmFkZTGmIQW1oKx4muOpeKYaw6epKCuMZyxWqDsdITeIopLoMFtuRJLRFM44yk4H7wl+P4
+    TKUj6THrffBmHHRjoZYppy8qPcDdDyZYKTDX78qAkVVDwHAwMqy00UuSFFzXX0Zla1sHc9
+    AHKBQ+T+aG2CcKs7NJt37P1G3wiEaT8DC3u6LHNN+KxLJL4bu8GCl5nVTghy79dRZ5EDhc
+    WTmaJJehFsn9Tv9SxhiSVH0zz2cwf6QgmHB3i3UAyrgOwQxk1koG9Txp275ch6qtKICfne
+    yP6iryi3bxOwdI7zXl19nH6s7kGA+lF3qjFy+81XurMst/jjhNz/aTJ5PD+bpvDrz94Wpm
+    U3elnFw4wSbQiHOVRuBEKw7oAT5aY8EKYiVCJAu8DryTDmRM1TbUaf/XyyMoWm07hnxAO9
+    3Xurg+fmpLhVdmcof3K393/MukTzWAlWt3LkWH6OLIodBAIPjZ1u0F2kpS0smgAx6oZaK2
+    bGxFNGtCn8OkT4ftbVwHAEzjqsQTub5rXxJibPD9JdWZbePAeWP0JQUtlU7avMh9Z4MX54
+    SSu3yIFLwRLQBJpVAPM1Z+tA8QqMUPepr/2vCjaii1KbQC4UobkK8FBI56KL5jzr+mpUrZ
+    wGrZzDPPW6SOy+Uc4/aIlGVwiIXIETt6LnNgvaHeO5hqfXwW9WptvwIbAj0g
+X-ME-Proxy: <xmx:wr1qahDbcC_KXKTf9ev2ISJ_Z6ao9cWVxcvt4t7ihfteG2NDjN_Q1Q>
+    <xmx:wr1qaspis58LQR60-B_4i7lbLtQ_pKzrVRa6Olt2ntJk68s39nc51g>
+    <xmx:wr1qarnlVmxeCKAYfq_a9xRIium0_nm2tWnODVXy7aLaRMxrz1ziAg>
+    <xmx:wr1qasxNKb5GRHHhT2G1MC0_PaB3dDCDqZ4hzGdv-7ZbuJamnp6cbg>
+    <xmx:wr1qatYqW8qL_LDWByKt6R9meR-ldr9zyy49uTiVVu5GHslT63VvgY4l>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jul 2026 22:50:23 -0400 (EDT)
+ 29 Jul 2026 22:58:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: a/an grammar fixes
-In-Reply-To: <20260729182323.1095474-1-ville.skytta@iki.fi> ("Ville
- =?utf-8?Q?Skytt=C3=A4=22's?=
-	message of "Wed, 29 Jul 2026 21:23:23 +0300")
-References: <20260729182323.1095474-1-ville.skytta@iki.fi>
-Date: Wed, 29 Jul 2026 19:50:22 -0700
-Message-ID: <xmqqtsphmbrl.fsf@gitster.g>
+To: David Lin <davidzylin@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  David Lin <davidlin@stripe.com>
+Subject: Re: [PATCH] builtin/maintenance: accept "none" as a maintenance
+ strategy
+In-Reply-To: <20260729194006.75317-1-davidlin@stripe.com> (David Lin's message
+	of "Wed, 29 Jul 2026 15:40:06 -0400")
+References: <20260729194006.75317-1-davidlin@stripe.com>
+Date: Wed, 29 Jul 2026 19:58:08 -0700
+Message-ID: <xmqqmrv9mben.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,64 +83,64 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Ville Skyttä <ville.skytta@iki.fi> writes:
+David Lin <davidzylin@gmail.com> writes:
 
-> This takes the stance that `*` is an asterisk rather than a star.
+The author identity uses an @gmail.com address, but the sign-off
+uses a different address.  Assuming the preferred address is the one
+used in the sign-off, you can 'lie' about the author identity by
+starting the body of the message with an 'in-body From:' line:
+
+    From: David Lin <davidlin@stripe.com>
+
+This must be written without indentation and followed by a blank line
+before the true first line of the message body.
+
+> Commit d465be2327 (builtin/maintenance: don't silently ignore invalid
+> strategy, 2025-10-24) changed scheduled maintenance to error on an
+> unknown maintenance strategy instead of silently defaulting to the
+> `none` strategy.
 >
-> Signed-off-by: Ville Skyttä <ville.skytta@iki.fi>
+> However, `parse_maintenance_strategy()` does not recognize `none`, so
+> Git rejects a valid and documented strategy that can be used to override
+> an existing strategy and disable maintenance tasks.
+>
+> Accept `none` as a valid maintenance strategy and add tests to ensure
+> it's accepted.
+>
+> Signed-off-by: David Lin <davidlin@stripe.com>
 > ---
-
-As long as the changes do not contain an incorrect rewrite, it is OK
-even if the patch is not exhausitive.  I went though the changes and
-did not spot anything questionable.
-
-But I think I can see a few more of the same kind.  I didn't try to
-bee exhaustive, either, though.
-
- Documentation/config/gpg.adoc | 6 +++---
- Documentation/git-push.adoc   | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git i/Documentation/config/gpg.adoc w/Documentation/config/gpg.adoc
-index 240e46c050..d4b8c1e570 100644
---- i/Documentation/config/gpg.adoc
-+++ w/Documentation/config/gpg.adoc
-@@ -38,7 +38,7 @@ gpg.minTrustLevel::
- * `ultimate`
- 
- gpg.ssh.defaultKeyCommand::
--	This command will be run when user.signingkey is not set and a ssh
-+	This command will be run when user.signingkey is not set and an ssh
- 	signature is requested. On successful exit a valid ssh public key
- 	prefixed with `key::` is expected in the first line of its output.
- 	This allows for a script doing a dynamic lookup of the correct public
-@@ -75,11 +75,11 @@ valid-before options. Git will mark signatures as valid if the signing key was
- valid at the time of the signature's creation. This allows users to change a
- signing key without invalidating all previously made signatures.
- +
--Using a SSH CA key with the cert-authority option
-+Using an SSH CA key with the cert-authority option
- (see ssh-keygen(1) "CERTIFICATES") is also valid.
- 
- gpg.ssh.revocationFile::
--	Either a SSH KRL or a list of revoked public keys (without the principal prefix).
-+	Either an SSH KRL or a list of revoked public keys (without the principal prefix).
- 	See ssh-keygen(1) for details.
- 	If a public key is found in this file then it will always be treated
- 	as having trust level "never" and signatures will show as invalid.
-diff --git i/Documentation/git-push.adoc w/Documentation/git-push.adoc
-index aa221c3909..d05e6020a5 100644
---- i/Documentation/git-push.adoc
-+++ w/Documentation/git-push.adoc
-@@ -105,7 +105,7 @@ as well as various other special refspec forms:
-     directs Git to push "matching" branches: for every branch that exists on
-     the local side, the remote side is updated if a branch of the same name
-     already exists on the remote side.
-- *  _<src>_ may contain a `*` to indicate a simple pattern match.
-+ *  _<src>_ may contain an `*` to indicate a simple pattern match.
-     This works like a glob that matches any ref matching the pattern.
-     There must be only one `*` in both the `<src>` and `<dst>`.
-     It will map refs to the destination by replacing the * with the
+>  builtin/gc.c           | 2 ++
+>  t/t7900-maintenance.sh | 3 +++
+>  2 files changed, 5 insertions(+)
+>
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 46999a99ab..3d1e39d46a 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1922,6 +1922,8 @@ static const struct maintenance_strategy geometric_strategy = {
+>  
+>  static struct maintenance_strategy parse_maintenance_strategy(const char *name)
+>  {
+> +	if (!strcasecmp(name, "none"))
+> +		return none_strategy;
+>  	if (!strcasecmp(name, "incremental"))
+>  		return incremental_strategy;
+>  	if (!strcasecmp(name, "gc"))
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index a8d691719d..130c971b15 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -1022,6 +1022,9 @@ test_expect_success 'maintenance.strategy is respected' '
+>  		test_must_fail git -c maintenance.strategy=unknown maintenance run 2>err &&
+>  		test_grep "unknown maintenance strategy: .unknown." err &&
+>  
+> +		test_strategy none </dev/null &&
+> +		test_strategy none --schedule=weekly </dev/null &&
+> +
+>  		test_strategy incremental <<-\EOF &&
+>  		git pack-refs --all --prune
+>  		git reflog expire --all
+>
+> base-commit: 13c7afec212fc97ce257d15601659314c6673d6c
