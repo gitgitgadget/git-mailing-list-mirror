@@ -1,113 +1,211 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0E38838B
-	for <git@vger.kernel.org>; Thu, 30 Jul 2026 06:12:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785391958; cv=pass; b=kalDHIH3gvnG0Zh3dbe/F5HxRJDOqogdHdOBXFf1ZwrNGBAh0yJBk+lf/TcNjut/uAsxGnnXe8pmO2NXbFldIOrUTzcNYFO/jth/hFpfbmJE9T5is+yGC1V0a5jiOCA1Xatx9Er4Gmcg1k6G7PVTKP4oQJssGFLbKCPgbdeA7os=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785391958; c=relaxed/simple;
-	bh=aWjFjfCgaKT/BFLt+z5LD6s6JrX0JFU4pVfvbnFUjSk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s2DNy/0iPX0qup8W8+ROQUNefImZccweOVwlUBiE4nAajfNTbcGucpZj9CT6Izi2xG3jm8TbFY0qZ7FOMC1Y2uI9QDcG/IsHrRDdc7111NS+dKpElN8X8Bxq+BwAm34nCbLjjnGRXOsLzX8b+HrprCZ2jC74HwKtqiB9nbbFjfo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kp7ivOFu; arc=pass smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943E6395AF0
+	for <git@vger.kernel.org>; Thu, 30 Jul 2026 06:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785392363; cv=none; b=WBJSXD+fa0fCZHfVrXxC1iTH9c5CSpgG0JznL83dDRM5yQ2NvTbXal04thi03w9rNOiW6PHbh/75gYIUxn9FN9LWtqrvIYQNPIpMsTBE5QaB1/U6sp6KnHFzfb9/D0zwHyYZxg5ecHTljgo9Czvz4y8/wvyF/D2XPweAtXP2ZCI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785392363; c=relaxed/simple;
+	bh=Rqb1uj4EstfGSz7A0DY0D3czXvdW4GJJbY8HymzknAw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=AmGzNLi0S3Ro7AzCFuT0fGD7gVHjF6X3Vsylo9Qxw1Wvf24mVKY8ZD027XP/I9FwAm3btOWsUqIMQHP6bnKtbq3vSlTbXqFR4PC01eDsYmRgngx9ntq2hPk42RGkXTTXFn3PUuZ2EY3GQK48+S0cIcYQBTiqunhnOvUGwyJwHhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jv9mrcyR; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kp7ivOFu"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c1c24ec9525so298298166b.1
-        for <git@vger.kernel.org>; Wed, 29 Jul 2026 23:12:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785391942; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Iuvm901Y89sGJsL+3hH3XEIFJY7+0oUDdwrCe/WQNbCmg9kD+rcTKdxTsLNHc7Xsmv
-         trYER1rsC9M+isJWqHyGVrvgyjpGJnnoh7IKL4YrQ++NfBMUvjI76quTgJSQF2JXSZwQ
-         9PE6At3HoDHLEIYXvSHYJbW+ZuKJH9eA1XAvbz7/jSD4WgSMrfTui+Lg/5fNmu2hurnm
-         JkHDVxW0HIbHKBh3m38zLWBbAFvWtbxQIrQQd24apo9nFQPegjzaACkbUyh2sjtryyGH
-         N/M8cUmWIjPFMF3GAoohnHGeUEBsiDcJupXix5GImZDWC/80j3Si0lc3BC/E3+/XVy1S
-         2dFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=aWjFjfCgaKT/BFLt+z5LD6s6JrX0JFU4pVfvbnFUjSk=;
-        fh=ca9VggR1vZgx8WR+2jWMeutKbt9P0l7KL0VRF2+Xd7o=;
-        b=fX6u3aThSWkrpXQ/874XpuozL/4Ciz8F6Aaq5uoImzpRLL2RiZYMMinotsprS0ZDKF
-         IOWnSy8grGZKBtXR8pbd7AxJRjEUgcxkMeJHqqpkK2lr5Ih5FzQrL1qGnOfAcVzZhhcn
-         brArsZTd1jWIBHcg4KR7RqInT97OAshMw4wfoGVruFaLCYGu1O/XcmCe3mtX3iO8Z4wB
-         EDRfqLqmxQHrZIqiT48hZp38v2Pk0ZJIz/j2QalDBp6fFxnYnpvlVBVnTMG5v8azIrPB
-         uiNtukc9ondS8+w7AH6mjy9w1r1eqQdfXlBhD9nCVtpcv6Ot8eiK7b7prbNFoWJv4kTf
-         ijNg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jv9mrcyR"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-38ea87caafeso1403325a91.3
+        for <git@vger.kernel.org>; Wed, 29 Jul 2026 23:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785391942; x=1785996742; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aWjFjfCgaKT/BFLt+z5LD6s6JrX0JFU4pVfvbnFUjSk=;
-        b=kp7ivOFu6fEzaLBSRcqxhgmAClD+1ndbUwfRH+4Z/dclsCMwWM9JVJgQYFUH3Zr1kR
-         I7LnTmjVf4naxLmwWa7Ihc9W6rzavvtS2oXRiTKCQAP7StC/tVJIKWvPHio1xI4nXlMj
-         xhdmvoZ63io6o7CU6cAS7uWaRH7aPvA1lK4g88tOGV2xRyzVXTtgb+kTaNnbQ5Ifv7it
-         Jny0v42Hulhqmb4gaVy8bu24LyKjQeu+dN9HGgLb6xl4blWEdSTkY4BUyHBIHNC1DCvJ
-         3p5iMJqMkugnwKK8YjrVbZ38M/yxZgOr9EnrG9fgZ0c5q+9X6i6p5XzEJgR13uOeybKz
-         sPaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785391942; x=1785996742;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1785392352; x=1785997152; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=aWjFjfCgaKT/BFLt+z5LD6s6JrX0JFU4pVfvbnFUjSk=;
-        b=BOGC6DjJe2Si7xDxD8t06RUqQLbvvgSfZqrea+WXN1OhRBYuMIOO8f3WIn3zmcXC6I
-         0KcKbYZP+byetkmoN/KckDIm6MrOIug/YxOe0HO0wmgPsjt44yg6EC8fXbx/e+wEvmfh
-         JsTL6FZPTN6O/5lwrJYdDzJ8MZlcF32+Ku8kBnOiEpPo3ke0u4g/k3IZNnFbgtTdcjL/
-         87SLIKfoCwNKBA5vHSTi2zfQrqgonIzQB0MySdCIBPG9hLlgI4EXaKxcqtX+RUA5J6mn
-         cZMRaVcVVKj9d/7W2IqY2LXgbCGm19J379vbbvfVaBAxoHNbb+Tk14Kt3pcilrRUFozl
-         i3Gg==
-X-Forwarded-Encrypted: i=1; AHgh+Ron3JqssXOyEJ60QcixSDUAqOQdKJkGOqbYsKoXOJmy5w8pUu3Hpkt+et06Iko4aEnWcWo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGg1GRUVcWbae8i3eNZK+5K5x9mdjeeJslIPGHXozKapc39qX8
-	lgyMylhgFl6QS12T/wimiindks0oxqMpnXtJxtrUA3SxCMdX67q0dDKYzjHlOJw+atlN0q1frZm
-	v2WIaVsH84WoUHXR93N0YrWbxynYuDKPVXk0ce2E=
-X-Gm-Gg: AR+sD11R/AvDdLL0qJWPxkqgafTAV21A+0Pu+H3ump2uDR3SDZiYH3u7Tnd3lmTepzt
-	/KbkrobZb356acvRalIwjkghF1CE5XKIVthT0j68IMXKTcW9KB2qnpWFJnnJyqs0ld1uaS/ZRiK
-	bk0j6arEV2WduRCe2T0pj7ZFmz3YwtDw0Ui/M159+Wn0wd2RsHMKNtYfbSixD1BQMz+JiCRTJAX
-	gHjNzsJdaMaPIA5jNDSN2xX/ZnLDtq0htlf3U09J8LGTE7apED6kkjTO1dQvHzvzPDgSiQU3VX6
-	2BP4Xh5CxNIAkI/Vhldp9qPkEYMXyEjSjlYuf8Bx3/kmwbnsBTw3qeiz
-X-Received: by 2002:a17:907:724f:b0:c15:f005:63fb with SMTP id
- a640c23a62f3a-c1fa554e611mr59230666b.3.1785391941853; Wed, 29 Jul 2026
- 23:12:21 -0700 (PDT)
+        bh=ZJhWirFYCf2tQfNLN/JFvoTf8m8a4nU69PkgNTEEfq8=;
+        b=jv9mrcyRAGtBcnFjVJ4yTLXMoH7plZerVeE3J4uKwJBbLhs1D5Y9OZMds6LQwZNzWg
+         ujxk/Wti6ZyFfYE7hvbBs8lzBEPe1NgBG6fYO6IgxmUIjRpKZuJMNX8YgFzpHJtRv1U6
+         PeytbNd6WwCCAuhwpppoI4aiov/ILhwdZBRvjS84ro4hZCfQM2Dv20o3SzvDOolIrkPh
+         6ibrJ0YXhK7lv6nHAC3UL3H4GbtpF4Bj9PKz66YHPO0oRObQ6WNzjSi+hD++4BrZvrY1
+         3sU329xYyiRbY2zA/bpBmwyGx7m/BIuEr140CX5aMA4l/V7AbTZYMbPrqA4pzh6OermT
+         c0lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785392352; x=1785997152;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZJhWirFYCf2tQfNLN/JFvoTf8m8a4nU69PkgNTEEfq8=;
+        b=MoxB/Hhb3wOshi/p/qj6YOXpNfxbVPUXGpIwmjYdKk67aTfM9a2gmqHvjoYyCfheAh
+         DgXXf2V/bXlBLnt22wHLE5QklCax8yh6gxMv6EF8hHV+QakURgrmkkjWBxp6M/vNAVbh
+         z9X9mcmqXNwK1T/BVuXyVmcBdZg1VG2skeem328hlA6yLZ0ZKrH5XPCivDYXGsXdZR3p
+         AQM2GfMO2qRr1/c3p4qO9SWKBBmjIq2LrLm+W6F8fW3CyE8IR8lBeDpO52cag2wBMYSq
+         QUZjefJiWejaENioTKrKXc5iO8qI8gceUAhYgv2PPj1uDYS551HWBecxrbtAVvMOttyE
+         IZ9g==
+X-Gm-Message-State: AOJu0Ywf9/+AWeGmH8gLsjAxWzG6xrGEmv3fd7nMwdnvOFnuPWQvgl8N
+	WqeFBDOsPerjPl85XQWoxsQTlJZodRgUf5cjLF1Fau+w2qDp3th1n3nYJsy5QA==
+X-Gm-Gg: AR+sD10PvKiXLIc6tpSwt/Mqw4s3HxPxrT29YQz9TBEK4WMEr5i1rGGLSqsQbJoCFY6
+	2QCyG3bTdkXcFPQkgkzeCjFyPwuQUkPInvV8qHqwHK55efEqees6dh2NGd1YhnrDnBouDheRnYg
+	jUjk5hgDLqv33gMQ09G5xoH4t8tTkJZ1t9ID9mSzypdi9giwkfO8SeCLj+ieMZVnJYOFUCALYJc
+	TvvVho7mhQnCPHS5tFhsK+tpIlE0O5oDaL8Jf4f5gotTe6kiS8EedcmhmfC28nkDAryJNj7ZBom
+	f0IlF4+ZBsdPN1FWTUeCEici9Yezmycb/viFTt+3IyOdnxQEXfM8p9bo8ntJAMdgyxdrxkoztj4
+	wnwnjxIV8lYk7QCZ9+96eg8v30cFYqHEUElpw88XvCMqm2Lb2Umc7JjLyq6BHKVnpl0guF688t2
+	mYvof7yCvhFHyoP0zuuZx8d6CK6RA7aWA6icerxNq22+nCEDICcYO5Trw0g0D6x16+
+X-Received: by 2002:a17:90b:3e87:b0:38f:1e1a:5164 with SMTP id 98e67ed59e1d1-38f9c0c8bc3mr1206800a91.37.1785392352232;
+        Wed, 29 Jul 2026 23:19:12 -0700 (PDT)
+Received: from [127.0.0.1] ([52.159.247.180])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f9babfcb1sm473211a91.16.2026.07.29.23.19.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2026 23:19:11 -0700 (PDT)
+Message-Id: <pull.2186.v2.git.1785392350660.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
+References: <pull.2186.git.1784998828879.gitgitgadget@gmail.com>
+From: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 30 Jul 2026 06:19:09 +0000
+Subject: [PATCH v2] merge-base: add tests for --is-ancestor
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqfr15ruw7.fsf@gitster.g> <f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
-In-Reply-To: <f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 30 Jul 2026 08:11:45 +0200
-X-Gm-Features: AUfX_mxLGLRAejvTmCl3Meo6QY_XFXYEuQC4mS6CuCWRpmgy3lJTKQo-GM4MWXY
-Message-ID: <CAHwyqnXYi76rMOWYEgJhoh2rXaTgLbze7mKd+WGoC9BbDFHXHA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2026, #12)
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Nikolaus Schuetz <nikolauspschuetz@gmail.com>,
+    Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 
-> Without "--reedit-message", it will happily discard "amend!" and
-> "squash!" commit messages even though the user creating them is a strong
-> signal that they intended to use them to reword the commit.
-> "--reedit-message" is a rather verbose option name which does not make
-> sense to me as we're creating a new commit with a new message so we're
-> not re-editing anything. I've commented elsewhere that I strongly
-> dislike reusing the rebase squash message template for this command
-> where we can squash fixups into multiple different commits at the same
-> time.
+From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 
-Should we always do "--reedit-message" then, i.e. remove the option
-and have it as the default? Do we need a "--no-edit" switch then
-instead? Maybe not, user will then always have the editor opened and
-they can save and quit if they don't care.
+`git merge-base --is-ancestor A B` is used a lot in scripts but has no
+tests. Add some to t6010 covering its exit codes: 0 when A is an
+ancestor of B, 1 when it is not, and 128 (not 1) when given a bad
+argument. Also check that --is-ancestor and --all can't be combined,
+and that the resulting error names both options.
 
-I'm not sure about changing the template.
+Signed-off-by: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+---
+    merge-base: add tests for --is-ancestor
+    
+    Changes since v1, per review:
+    
+     * Reuse the E---D---C---B---A history and the G/H merges from the "set
+       up G and H" test instead of creating a separate repository.
+     * Add a test that --is-ancestor requires exactly two commits: too few
+       is a usage error (exit 129), while more than two is rejected with
+       "--is-ancestor takes exactly two commits" (exit 128).
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2186%2Fnikolauspschuetz%2Ft6010-test-is-ancestor-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2186/nikolauspschuetz/t6010-test-is-ancestor-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2186
+
+Range-diff vs v1:
+
+ 1:  e512e35788 ! 1:  319bf89d25 merge-base: add tests for --is-ancestor
+     @@ t/t6010-merge-base.sh: test_expect_success 'merge-base --octopus --all for compl
+       	test_cmp expected actual
+       '
+       
+     -+test_expect_success 'setup --is-ancestor' '
+     -+	git init is-ancestor &&
+     -+	(
+     -+		cd is-ancestor &&
+     -+		test_commit one &&
+     -+		test_commit two &&
+     -+		git checkout -b side one &&
+     -+		test_commit three
+     -+	)
+     ++test_expect_success '--is-ancestor with an ancestor and a descendant' '
+     ++	git merge-base --is-ancestor $E $A &&
+     ++	test_expect_code 1 git merge-base --is-ancestor $A $E
+      +'
+      +
+     -+test_expect_success '--is-ancestor parent and child' '
+     -+	git -C is-ancestor merge-base --is-ancestor one two &&
+     -+	test_expect_code 1 git -C is-ancestor merge-base --is-ancestor two one
+     ++test_expect_success '--is-ancestor treats a commit as its own ancestor' '
+     ++	git merge-base --is-ancestor $A $A
+      +'
+      +
+     -+test_expect_success '--is-ancestor self' '
+     -+	git -C is-ancestor merge-base --is-ancestor two two
+     ++test_expect_success '--is-ancestor with diverged commits' '
+     ++	test_expect_code 1 git merge-base --is-ancestor $G $H &&
+     ++	test_expect_code 1 git merge-base --is-ancestor $H $G
+      +'
+      +
+     -+test_expect_success '--is-ancestor diverged commits' '
+     -+	test_expect_code 1 git -C is-ancestor merge-base --is-ancestor three two
+     ++test_expect_success '--is-ancestor exits 128 on a bad commit' '
+     ++	test_expect_code 128 git merge-base --is-ancestor $A no-such-commit &&
+     ++	test_expect_code 128 git merge-base --is-ancestor no-such-commit $A
+      +'
+      +
+     -+test_expect_success '--is-ancestor exit 128 non-existent commit' '
+     -+	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor one no-such-commit &&
+     -+	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor no-such-commit one
+     ++test_expect_success '--is-ancestor requires exactly two commits' '
+     ++	test_expect_code 129 git merge-base --is-ancestor &&
+     ++	test_expect_code 129 git merge-base --is-ancestor $A &&
+     ++	test_expect_code 128 git merge-base --is-ancestor $E $A $B 2>err &&
+     ++	test_grep ".--is-ancestor takes exactly two commits" err
+      +'
+      +
+      +test_expect_success '--is-ancestor and --all cannot be used together' '
+     -+	test_expect_code 128 git -C is-ancestor merge-base --is-ancestor --all one two 2>err &&
+     ++	test_expect_code 128 git merge-base --is-ancestor --all $E $A 2>err &&
+      +	test_grep "options .--is-ancestor. and .--all. cannot be used together" err
+      +'
+      +
 
 
-Harald
+ t/t6010-merge-base.sh | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+
+diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
+index 44c726ea39..21f09a678f 100755
+--- a/t/t6010-merge-base.sh
++++ b/t/t6010-merge-base.sh
+@@ -305,4 +305,35 @@ test_expect_success 'merge-base --octopus --all for complex tree' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success '--is-ancestor with an ancestor and a descendant' '
++	git merge-base --is-ancestor $E $A &&
++	test_expect_code 1 git merge-base --is-ancestor $A $E
++'
++
++test_expect_success '--is-ancestor treats a commit as its own ancestor' '
++	git merge-base --is-ancestor $A $A
++'
++
++test_expect_success '--is-ancestor with diverged commits' '
++	test_expect_code 1 git merge-base --is-ancestor $G $H &&
++	test_expect_code 1 git merge-base --is-ancestor $H $G
++'
++
++test_expect_success '--is-ancestor exits 128 on a bad commit' '
++	test_expect_code 128 git merge-base --is-ancestor $A no-such-commit &&
++	test_expect_code 128 git merge-base --is-ancestor no-such-commit $A
++'
++
++test_expect_success '--is-ancestor requires exactly two commits' '
++	test_expect_code 129 git merge-base --is-ancestor &&
++	test_expect_code 129 git merge-base --is-ancestor $A &&
++	test_expect_code 128 git merge-base --is-ancestor $E $A $B 2>err &&
++	test_grep ".--is-ancestor takes exactly two commits" err
++'
++
++test_expect_success '--is-ancestor and --all cannot be used together' '
++	test_expect_code 128 git merge-base --is-ancestor --all $E $A 2>err &&
++	test_grep "options .--is-ancestor. and .--all. cannot be used together" err
++'
++
+ test_done
+
+base-commit: f60db8d575adb79761d363e026fb49bddf330c73
+-- 
+gitgitgadget
