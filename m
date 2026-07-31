@@ -1,122 +1,285 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C8C37997A
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 03:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08367356747
+	for <git@vger.kernel.org>; Fri, 31 Jul 2026 05:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785468299; cv=none; b=AM/GJt/tTjrnweYWcdrLLz9/gNIdN3v9frY5U5v8Z9o3ZnUaqtFQ4gR6WxCmyAi/CX/TornXYyWmetHw9T3y3PQRUNQfAlPLQqiruDi8oiSi+hYxdo+HtJ9+xuMBrw9GNSuRhUYzX+oW0WTSr4qzHLGeC00MFbR9HwFz5uioP3w=
+	t=1785476783; cv=none; b=ZxzoEoB3tU5jPRBl4rh+3OqooLgrDzSg+CUCSxL69Nq/heXipiV7opLg67h4mtO7RiALakARHMZUEMN2wmus1jhDI60T9xAzTHVKj+7URFoXrBYDlyUz+w0HG5VodpEzAKi3QcYM/MEU5XCFNOZIthVRxbRGWE8qiEMDU7iCXJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785468299; c=relaxed/simple;
-	bh=k4ncaXsIhHP9JedfTC450bvJma6YV4nskyA5rOZDC8Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dEk/tjcKa0kl4+WXFOogYlBMp5+bzl29zaayRFudf1kl0TfVC++7UypFSprk5x/eJgQ4rgUdMr6t5jthk0MUsuSVLbJgAn0TTvA7H3kIC1lFNIoDzIeeTuGHhLDRZXmOrjvnlG65Qy+VL1Nf6k0DgpSzbyf6LTLTMgiHpRAxeAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nFCXS6eM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QxQDe+r7; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785476783; c=relaxed/simple;
+	bh=BgxhssbeQytbEvm2MHkHoZUJODSEtmY+wFRzm2aoUOs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZFzlYeoM5uNeYvCyT/d9WmpQjUHJDZIKKiyDcrRR26xd7rorRJeOlw8Y5Zyf7/YoFcpMWMgNBQFXE/dQ6nwDFT1+uR1HpxO5hKpw+wkRcilHC0A+35fIopMXGiWJHMbOX+e1J362N5t4vZSEdZAFDW5sIqSPy3awOMD7t4FPC8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=H67O3Amn; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nFCXS6eM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QxQDe+r7"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AD3A41400070;
-	Thu, 30 Jul 2026 23:24:55 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 30 Jul 2026 23:24:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785468295; x=1785554695; bh=bY0wU/U1a9
-	mRS1d+/1R5kivGgntAf/x/SucsSIK3BCo=; b=nFCXS6eMdbVR2jg6SJxOMHNbJ2
-	ETAyYEWQTplKtpj7IoEoBmg9Zbfve39px5XCmwJzBtUx13i8IB+n+2DF8PjBY6RZ
-	FhhawyFnMIKAD275hXWS//SUUf46m4dOv72Be+qNpW++qLY3ZIb+A+Fgrdc5RNxV
-	Gi9z8pfkx7aLZJo3u6ROYSq9/h6ttHMXQ9/jUB6EOWA28SNu2JH1P7GwKL7RSpjn
-	fZa77Cd6Nkm7ABFCIRLPwIAKp7ihds2GHUkSQTr/EiN7ahU7RzPy0kjWni8SbbN9
-	utZeedKu9fxiCOlqJQp2MqLYxI6XlXDj9+ZBZkyimZ1qLxhePnkLq7k3J87g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785468295; x=1785554695; bh=bY0wU/U1a9mRS1d+/1R5kivGgntAf/x/Suc
-	sSIK3BCo=; b=QxQDe+r71BRtjEP2XBJnYGC/Zs1+c25bdNaZGLeg+B/inyCTA4J
-	SD930X+AiqMBgD4Ix2sSDu4YrNHJzjvnlM/PFkH5FOlEBKtnfJRsUNWITYfD1/e/
-	jyDC908PiUnHTaEHBb/x4znB5zmT9nd2nOUXZX35qWaF+OCeCNd/37WGzhu0YAqa
-	eViYgsk+dX2W7d2maJAecYDFa20/C9TDhgoXTgEnG5RW7WDfqT/pkBbw/vRiRg+Q
-	hWI89nq7g01kXPVaT/Zmua1cdzV5PTWcfvR1RGOnuglePJn3wV/wL0tPELCVyeZJ
-	c/zHyOL9JTPjgkywVEjcIFExGHYrTfOtZrw==
-X-ME-Sender: <xms:hxVsahVNbMv-W1fKdZwRnsXMCJfVkIWShQ1iN03hxKbCs0Zu_T05ng>
-    <xme:hxVsapCni-GNsAKGbl5EmDDAP0cGPw3WRvWd1UWc2BTz7w4CnZ5Qd2IUwTMnMX52R
-    ZhfvirjsAG74BlfGMC4N7gpwkxqq_d7rU_OPu1RFzc5lQ5xGID6>
-X-ME-Received: <xmr:hxVsaqzAPw5BXlLaa0ikzFwGiy_8wD6H611QVOQ1xPt2B1fJIibzWKU8D44FazloV1b-PJWrlheH8OH11wRH_NsbA5sKJaSLJg>
-X-ME-Proxy-Cause: dmFkZTGhVCq57x6YpvS0qOwXZMuFHwPu8ACTLihxQJZsxvwXiA2Vf+kkIGOHYPSfiRcyev
-    0N4FkNOFndMeyo8hnqLTXXTyBoxbGEFoH4P/Hg126XUuyY7fAJ/1xsMWIUP2Sk4nFTsiE+
-    PkKZmOu/1LXOzhHlhHP1DhMxv0OfAJ5tmWTXXohf2PmiyD/WKSV5sjR3GJ91HKmJ10BS0+
-    qvFJ46FBu4fC3zRcR5WOutcYbPqT9pMvOsJpxxgrvShmi/VoiIQ2s1nhGdjblUT+GLhxos
-    D2cKA22VW6DEk5QKJUTnNL2C3/QH7mc2EU7IEsvZp3SIRLJTKv6LJZxFecDKBLd35MVSbR
-    b0FzAbhw+wvVwU8nGywLvkrD0Wj8eDD4jCr84K6vW5zs2mkCUma/xZ6CbxBjDftboRcENF
-    +Pozz0c0Lc2aNpfQyNYjgAj6eNMHK5icPzXGL9sD8LgA8UnresPxp+JWGnusE2fvw7TFav
-    xWhhf2/5VMKMuZPQYbSZi/ogBffauJDejnQpSDGQpY3OfnCGA0nAqzMZISAdHNpSe9G4TU
-    TtBo87ISVxSYnCj2SRdYewBQSQrNnoVpGGpPzpthdUG/xzHqmc4DgnoV+YOhs9B3uY1GXO
-    AJ7Go3+EXOS2kHhTYOhu392nbwnjs/mpLWEMke6W52mGFvw5hQ4rjRsUri+g
-X-ME-Proxy: <xmx:hxVsauAUmged99fMbiHnbUF3EUiq70nyQbjuPsbn9BpTQkXD266lcw>
-    <xmx:hxVsavaePZRLq_7FY2AB-8_QzUPsrAeIllSLWCnD6miFeduGTfjecw>
-    <xmx:hxVsaugzZ2Sx8kqLMkp03rxiKSdSS2FyP26i0UYHuSgTxqObBLJGEQ>
-    <xmx:hxVsap6TRvAFPUrlgVG7xZ__HjU4UHIJUbkA3tZOUuyO8-Ui8E5ZkA>
-    <xmx:hxVsassCjK25Y7yZjWlls5o1P-Mx3YiJuoGd2ptIzIxnjejA5YUObIec>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jul 2026 23:24:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 4/6] hex: label usages of hex parsing for object IDs
-In-Reply-To: <20260729233215.398654-5-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 29 Jul 2026 23:32:13 +0000")
-References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
-	<20260729233215.398654-5-sandals@crustytoothpaste.net>
-Date: Thu, 30 Jul 2026 20:24:54 -0700
-Message-ID: <xmqq1pcjkfi1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="H67O3Amn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1785476759; x=1786081559; i=l.s.r@web.de;
+	bh=tAbI+8DsXrA9bs7oui+mgD9WMHOtiLewCGYtlb0efgo=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=H67O3Amnv4uU61d2FocnXRwg9YRkc3P9qa+5a7iQ3OZN83jOUmFcfgEviuiREzH3
+	 oVgW9GDUMyFPwcP1IEXBqdgXds5+qxzOUsR95U/PAa07T0hXcoyg7la2+tCUVP0cr
+	 9OSXJvWJSWdh9DrrgaPpMd5YqkryVbqakQVIAHrp9ZGrOFdzQtCzg7PtDMirqf1Gk
+	 /epPWlmZ+nmSl+xIjJhEF4XBwxyTY1FYfr6/PtbTaEMbTB3Bp36ssmnZ+W6YeGgtj
+	 IjJcGlwo8IeV/3H2JmdzYQZB7Z8fcAQtvOR0QUU+W0/rZw2djvnW+zd4gdS4qxPyj
+	 fuLUneyxV8M4Bphpww==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MF2gM-1wj2Eg4APY-002aTF; Fri, 31
+ Jul 2026 07:45:59 +0200
+Message-ID: <535547d0-39fc-4c6a-a0bb-2a5f43f265ed@web.de>
+Date: Fri, 31 Jul 2026 07:45:58 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] worktree: don't read out of bounds
+To: Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Matthias_A=C3=9Fhauer_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
+ =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= <pclouds@gmail.com>,
+ Eric Sunshine <sunshine@sunshineco.com>, =?UTF-8?Q?Matthias_A=C3=9Fhauer?=
+ <mha1993@live.de>
+References: <pull.2187.git.1784978348.gitgitgadget@gmail.com>
+ <8bc69c6b80ed42888327331b1567cecf7225ea7e.1784978348.git.gitgitgadget@gmail.com>
+ <xmqqbjbvypv3.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqbjbvypv3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:6YV5kHWBO3cOVZMu12hajZR6czsYGDgep7yfJr7sxBh4gwbps6Y
+ sd3iKwtypUVfBM5CT8TXBMuLtl679/Fi/ewWsdvf9MR5Ln50QrfNH3O3ICoSeDjDnqujFTd
+ pdzlAwRUe4xnpz9LMRm3nxdcRuZwvSkNSY7aWEegPC2ang/0F+CtVQgG6fDgGjBGvmwu21x
+ j8cyO9x/mTGSaoc+aClSA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YBYnJJs9v5M=;AlJeAB+ShpFUTKw4p84T4w9R/fw
+ 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
+ TstK3BZOpEfKNdkY/O0VoZnPDOtO8+Zzyg==
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 7/25/26 6:51 PM, Junio C Hamano wrote:
+> "Matthias A=C3=9Fhauer via GitGitGadget" <gitgitgadget@gmail.com> writes=
+:
+>=20
+>> `worktree_basename` tries to read from memory before the passed `path`
+>> string, if `path` is empty (or only consists of directory separators).
+>> That results in unexpected nonsense data being returned to the caller,
+>> which can lead to issues, such as `git worktree add ""` recursively
+>> deleting the current working directory, including `.git`.
+>=20
+> OK, so you do want to handle a case where path is something silly
+> like "///".
+>=20
+>> Stop reading out of bounds in these cases to avoid that behaviour.
+>>
+>> This leads to `git worktree add ""` consistently exiting with the
+>> message `BUG: How come '' becomes empty after sanitization?`, which is
+>> still undesirable, but at least it doesn't result in data loss anymore.
+>=20
+> OK.
+>=20
+>> diff --git a/builtin/worktree.c b/builtin/worktree.c
+>> index 4bc7b4f6e7..d8188035db 100644
+>> --- a/builtin/worktree.c
+>> +++ b/builtin/worktree.c
+>> @@ -297,17 +297,21 @@ static void remove_junk_on_signal(int signo)
+>>  static const char *worktree_basename(const char *path, int *olen)
+>>  {
+>>  	const char *name;
+>> -	int len;
+>> +	int len, len2;
+>> =20
+>> -	len =3D strlen(path);
+>> +	len2 =3D len =3D strlen(path);
+>>  	while (len && is_dir_sep(path[len - 1]))
+>>  		len--;
+>=20
+> These two 'len' variables should have clear names to distinguish
+> what each length represents.  Rather than introducing a cryptic
+> 'len2', give it a more meaningful name, and rename 'len' as well if
+> necessary.
+>=20
+> I suspect that it is to remember the original length of the 'path'
+> before stripping the trailing directory separators?
+>=20
+>> -	for (name =3D path + len - 1; name > path; name--)
+>> -		if (is_dir_sep(*name)) {
+>> -			name++;
+>> -			break;
+>> -		}
+>=20
+> When 'len' is 0, the original code sets 'name' to '&path[-1]' and
+> does not enter the loop.  However, '*olen' is set to 0, and 'name',
+> pointing before the start of the string, is returned.  If left
+> unfixed, callers pass it to xstrndup(), strbuf_add(), and the like,
+> reading memory before the start of the string, which is horrible and
+> worth fixing.
+>=20
+>> +	if(len) {
+>> +		for (name =3D path + len - 1; name > path; name--)
+>> +			if (is_dir_sep(*name)) {
+>> +				name++;
+>> +				break;
+>> +			}
+>> +	}
+>> +	else
+>> +		name =3D path + len2;
+>=20
+> Style:
+>=20
+>  (1) Missing SP between 'if' and '(len'.
+>=20
+>  (2) 'else' sits on the same line as '}' that closes the 'if'
+>      clause.
+>=20
+>  (3) When any one branch of an 'if'...'else if'...'else' cascade
+>      needs a pair of braces to group multiple statements, all other
+>      branches must use braces as well.
+>=20
+> Taken together:
+>=20
+> 	if (len) {
+> 		...
+> 	} else {
+> 		...
+> 	}
+>=20
+> As for what the patch intends to do, setting 'name =3D path + len2'
+> when 'len' is 0 breaks when 'path' consists only of directory
+> separators (for example, "/" or "///"), no?
+>=20
+> In that case, 'len2' is positive (for example, 3) while 'len' is 0.
+> In add_worktree(), 'path + len - name' evaluates to (path + 0) -
+> (path + 3) =3D -3.  Passed as size_t to strbuf_add(), this wraps
+> around to SIZE_MAX - 2 (approx. 18 exabytes), leading to a buffer
+> allocation failure or a crash.
+>=20
+> Rather than calculating 'path - 1' out of bounds or introducing
+> 'len2', worktree_basename() can simply keep 'name =3D path' when 'len'
+> is 0.  Using an integer index loop 'for (int i =3D len - 1; 0 <=3D i;
+> i--)' avoids pointer arithmetic before the start of the buffer
+> entirely, I would think.  Or am I missing something?
+Interesting.  This function has two types of callers.  add_worktree()
+does:
 
-> In preparation for a future change, label the hex parsing we're doing
-> for object IDs by defining a constant called HEX_KIND_OID.  This is
-> currently the same as HEX_KIND_MIXED, so there is no functional change
-> here.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  diagnose.c    | 2 +-
->  hex-ll.h      | 2 ++
->  hex.c         | 2 +-
->  http-push.c   | 4 ++--
->  notes.c       | 2 +-
->  object-file.c | 2 +-
->  6 files changed, 8 insertions(+), 6 deletions(-)
+	name =3D worktree_basename(path, &len);
+	strbuf_add(&sb, name, path + len - name);
 
-OK.  It makes sense to say "we are reading object names", than "we
-are reading hex spelled in both cases".  Are we throwing the "not
-object names but derived from the same hash function" things like
-packname and rerere database key into the same category?
+While dwim_branch() and add() do basically:
 
-> diff --git a/diagnose.c b/diagnose.c
-> index fc11cea229..9c652d36a6 100644
-> --- a/diagnose.c
-> +++ b/diagnose.c
-> @@ -112,7 +112,7 @@ static void loose_objs_stats(struct strbuf *buf, const char *path)
->  	while ((e = readdir_skip_dot_and_dotdot(dir)) != NULL)
->  		if (get_dtype(e, &count_path, 0) == DT_DIR &&
->  		    strlen(e->d_name) == 2 &&
-> -		    !hex_to_bytes(&c, e->d_name, 1, HEX_KIND_MIXED)) {
-> +		    !hex_to_bytes(&c, e->d_name, 1, HEX_KIND_OID)) {
->  			strbuf_setlen(&count_path, base_path_len);
->  			strbuf_addf(&count_path, "%s/", e->d_name);
->  			total += (count = count_files(&count_path));
+	name =3D worktree_basename(path, &len);
+	copy =3D xstrndup(name, len);
+
+If path is empty or all separators, len is 0 and name invalid, as noted.
+add_worktree() breaks, the other callers are mostly fine because
+xstrndup() calls memchr(3) and memcpy(3) with a size of 0 internally
+and thus doesn't dereference the pointer in practice.  So patch 2 should
+suffice to prevent the out of bounds read.
+
+If path contains one component ("foo/"), add_worktree() adds "foo" to
+the strbuf and the others similarly duplicate "foo".  OK.
+
+If path contains more components ("foo/bar/"), add_worktree() adds
+"bar", while the others duplicate "bar/", because len is the length of
+path without any trailing separator (7 in this example).
+
+xstrndup("bar/", 7) could read out of bounds because it's calling
+memchr(3) internally, which doesn't have to stop at the found byte.  But
+more practically, do we really want to keep trailing separators?
+
+worktree_basename() would be harder to misuse if it gave the length of
+the basename instead.  Then add_worktree() wouldn't have to do any
+pointer arithmetic and the others wouldn't risk reading out of bounds.
+
+Ren=C3=A9
+
