@@ -1,65 +1,59 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A402741D101
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 10:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3643EC822
+	for <git@vger.kernel.org>; Fri, 31 Jul 2026 11:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785493490; cv=none; b=NpvbukKpZ+sYXDic5JzpTX3g+T4fE4EJI9cl4G5qy6hB+nMQQ/WHRB0llFFZlufuvf2ZgzJwNL4jnjdREyK4HWH5+T1+Gs/td6mFvEp19xmcHt037oicUUWKDnMNBVFQlLYznTsnoEBfXqP9azKc2qefsxqkJH1A1GAwjVv89Pw=
+	t=1785496147; cv=none; b=CImCrzCRZuTOlXHqw1AXqu6wfqVQroqp1TUDF0pv3ae07/ZZh5BQhaF6GfKIxiDHk1tbnngLuDxJjmXzKa9T1jbK+/V6Zl11Hvy/ZWRv6eNZwk3w9QzsbnQjObprCzUR7RLm6scn2+ZmM5U2Amwd9WLgPMC8sP7KeRKixjirBpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785493490; c=relaxed/simple;
-	bh=Hkxy+fNoLRacB0wLLUSueW0VxgQpcnnm69f6bkLQGj0=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=j+kWveoH84EOaIMjl4WBT06lNq/sKH67LNRiFseTkOnbZqZsH6nFp16xqEnoDpj4lvgystwbqZxsaeaW7y5xAos7YYyzmYknsxO0RlKyz5Xpe6yKUal7cdlgA1Dr996T1w7OEcgSzzvaG7dACySmepSB7oPkdoDvkpk6jPSrnB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=EiIyPSvg; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="EiIyPSvg"
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 7A3E94CB73
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 12:19:17 +0200 (CEST)
-Received: from cixi.localnet (unknown [IPv6:2a01:e0a:b3f:5350:b6e:bf81:919d:c0f3])
-	(Authenticated sender: tnemeth@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 413D413F89C
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 12:19:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1785493150;
-	bh=Hkxy+fNoLRacB0wLLUSueW0VxgQpcnnm69f6bkLQGj0=;
-	h=From:To:Subject:Date:From;
-	b=EiIyPSvgVzdFUqlxM3eP3yI7akHy35ZWfxOH5SgyusrsjOU5mppRY2XsWiMj7dG20
-	 bLOFPs2tHIpD7nvLuU9d8XAC+31SgWExGeaBur4Jmbl8A6H/JuuqPGnsPvty2uhIX+
-	 a4WiQVoVe+UogQTR6ZZHzF00yKrLIGZwIQ136w50INxbTT6sb8w22Rkgf18b19mVpq
-	 twiMg+vTxCVcD6WLyK+YWHy92g0Rvv6a64OQXVtHT80gvJOvSAAWGbyWQKNA9pQj8N
-	 knHi/YdP7nrcDDxaxbSylqT7Fm4H5ph/udKk8o5/seL4VuHmH0NyoN08KYTlX1swcJ
-	 yRw81N1PQvRTg==
-From: Thomas Nemeth <tnemeth@free.fr>
-To: git@vger.kernel.org
-Subject: Git trailing blank lines feature configuration
-Date: Fri, 31 Jul 2026 12:19:09 +0200
-Message-ID: <6022080.DvuYhMxLoT@cixi>
-Organization: =?UTF-8?B?ZMOpc29yZ2FuaXPDqWU=?=
+	s=arc-20240116; t=1785496147; c=relaxed/simple;
+	bh=GbgJQkXSVIfi+QUt6aDFYWWxpBWZD2L+Iyy4mZXbLpE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=QowYH+By4NEIV7wBwjMtYheT7xHaKvEpb7VbfpL5wsjroKwBZ0qJvthGBzmcnC0ZKnJ0o8e5FW0x9gLyAARLs2AXwvJe43E2Ahmu17QoAMQxX94wTj4LBeGYXlqwl/zyNcvTTZlKQrBEjBKy5fMgmBDcDuulSb3vFybcClcxuto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (213-225-9-246.nat.highway.a1.net [213.225.9.246])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4hBNc44FPNzRpKv;
+	Fri, 31 Jul 2026 13:08:52 +0200 (CEST)
+Message-ID: <d5ec69c8-e441-4134-a6bb-665fc06db187@kdbg.org>
+Date: Fri, 31 Jul 2026 13:08:49 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git trailing blank lines feature configuration
+To: Thomas Nemeth <tnemeth@free.fr>
+References: <6022080.DvuYhMxLoT@cixi>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <6022080.DvuYhMxLoT@cixi>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-    Hi !
+Am 31.07.26 um 12:19 schrieb Thomas Nemeth:
+>     I have the habit to keep 1 blank line at the end of my files. To me,
+>     it eases the EOF modifications (selecting code blocks, pasting them)
+>     in vim.
 
-    I have the habit to keep 1 blank line at the end of my files. To me,
-    it eases the EOF modifications (selecting code blocks, pasting them)
-    in vim.
+(Call this is [x].)
 
-    Note that I still want to remove blanks at EOL. But I'd like to keep
-    1 blank trailing line. I still can, of course, but the diff still
-    shows me a red "+"...
+>     Would it be possible to have a configuration option to avoid warnings
+>     (because I see that as a warning) about trailing blank lines ?
+Hearing the first time that an extra blank line at EOF is necessary or
+useful. Would the correct question then perhaps be: how do you all
+handle [x] without an extra blank line at EOF?
 
-    Would it be possible to have a configuration option to avoid warnings
-    (because I see that as a warning) about trailing blank lines ?
+That said, are you looking to disable blank-at-eof from core.whitespace?
+Collect all "enabled by default" except this one from [*].
 
-    Thanks
+[*]
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-corewhitespace
 
-Thomas.
-
+-- Hannes
 
