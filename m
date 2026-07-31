@@ -1,130 +1,122 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01211DED40
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 00:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C8C37997A
+	for <git@vger.kernel.org>; Fri, 31 Jul 2026 03:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785456862; cv=none; b=SxldBdaixKOLzne6r98eqtNu0m5Wuje8Cbjc1/CgT4289+Hohrf/frh9nAvklwy8sXVBFrrlkbkMvJe0QBcNrfX9mDAuClE2cK331uCjB2bB05U9Nim8jV0wLZ/gDEJfVVJoMCO2FvRYRZL/nfOsk3kb0ycKkpisnXuKOH18sIc=
+	t=1785468299; cv=none; b=AM/GJt/tTjrnweYWcdrLLz9/gNIdN3v9frY5U5v8Z9o3ZnUaqtFQ4gR6WxCmyAi/CX/TornXYyWmetHw9T3y3PQRUNQfAlPLQqiruDi8oiSi+hYxdo+HtJ9+xuMBrw9GNSuRhUYzX+oW0WTSr4qzHLGeC00MFbR9HwFz5uioP3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785456862; c=relaxed/simple;
-	bh=P+jMESMvN1H2rRZj2TqQsIB2jFO/ecC+EDyvBy2K+yU=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=XqYfcbgo8Y/d8zEPi4vL97eZYYlUu5RPJm6hhqVSzkETBjfB4xBoqIIlaAoQpqHfWLqvxpXdYlKIYPkTX0qDVdVpCyhu/3KpgUOpOMhNGFa+V4YbvBjr+9evncvAf4Y77a1SoGNkoVhF6aV5RTFEESEvHrj1uA/O2cTj1NKLtHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZC/YtVzs; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785468299; c=relaxed/simple;
+	bh=k4ncaXsIhHP9JedfTC450bvJma6YV4nskyA5rOZDC8Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dEk/tjcKa0kl4+WXFOogYlBMp5+bzl29zaayRFudf1kl0TfVC++7UypFSprk5x/eJgQ4rgUdMr6t5jthk0MUsuSVLbJgAn0TTvA7H3kIC1lFNIoDzIeeTuGHhLDRZXmOrjvnlG65Qy+VL1Nf6k0DgpSzbyf6LTLTMgiHpRAxeAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nFCXS6eM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QxQDe+r7; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZC/YtVzs"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cacb8416a1so4006785ad.1
-        for <git@vger.kernel.org>; Thu, 30 Jul 2026 17:14:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785456860; x=1786061660; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=nb0PY7gkexKptHqgWd9vaMJWuWXivl68du3MLdzhg7c=;
-        b=ZC/YtVzs9wgVRzxbWYJ4CIHyc4BLpjnKG3ohP++CJjb/bZqbYVxWKGPAFVJAT9Qxx7
-         1Ci4ydi2ljzcdkl8y7tdvjEakAh2AL3jKbOk5MpIA8C8E6+pkv4hnZ+xrzQP3t6PekKo
-         tASlZSeiuM+8oJTXgVbV2O1p31H3t8Hj+ezCmkIaiAU4EGgNfT18dz52THoI+CQAmdPf
-         XhaajY0mam5s2O7f6PiriRUiZqHFtcadYloZwBbEgJG0BDRuzBitQbAj6UhUEPjEAVUy
-         DpLvg9cICLLlJJcs1JgYSoGoZgqDWymjHRUK6USOxL4KRTg5FGgUTz4HCJtlYsDsRsdi
-         oRgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785456860; x=1786061660;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nb0PY7gkexKptHqgWd9vaMJWuWXivl68du3MLdzhg7c=;
-        b=g0Doj3qcLRnMkHO3UqRXAQrFLOsDUBlgUTfRqOPnhyDGGQXkED5fYl/OoyqGG48BKH
-         bZFo9hNJffD/HeMKQuFC9HhKK1ToqaLUntQATk4sNvpIJYVLE1yVl99TLu6hXs9Vd+M+
-         yhEZV0oN94UEyJDz6xZfk73vXOUZDSTvzw89GH+dG4ye6O44ZAzJSFk9r0k+ZdCLjx3q
-         tumEBA8dajhusmVDiBRyXx88enKEIknebQnsf+ICNSlB/O0deQbaa5iVHCvb2qczfIET
-         gbKL4U2qsINpZjbj51x928i1rhUZb5kr4m8HEqpsVd71AEB42pPNKEr4auJKUIUXoM/1
-         fciQ==
-X-Forwarded-Encrypted: i=1; AHgh+Row0J+ycyqn/kfy8gQJyCBlqhaTANlw92wRibi3A7ZTGzPjqLFQR5uoUfpiv8vsoFT82Sw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwiIQ/HncTVbXME8oNPPqruFztmf/uCN09izdDKASB0U0GvlQER
-	tYOtTnamsf+35Gg6xMYJOKc6triy10uCq6QZ5xWhY/lNOlDPz04dch/DQfqS19rb
-X-Gm-Gg: AR+sD11gFh+gM+NOmYiLxdAWylQqIgEQ8CvXphYgQwYxMzy7xUnz3gwGBAPvzpapuSj
-	YzT8del34BGXXgUDTw4cNkgPM1Qpy+u1/eJH+5k3Y+DVNDJEWuaic9YaKs8IL7Y3bexEq5y2IKM
-	oJnAA59iG4NAYrwCH7jEBGK9AVy1m9GNj6ssIR7MUcH4/s0LC6TsuE/tiI8ycpUF3S9KQO7ozK4
-	JQHJ1d/TeyH7I5fCboy9uXEt3eEaPqxwqhFgGEm3Zits/DC2qNsbGYyh/X8aFZexYBRImTWKydT
-	YXx8o9Rswd25pEcsOsG5VRzVafgsNhYitWV9iT9+qcNdcGT22qpxB4mf4Ci4IcedZaKeU0vxLou
-	FN5QyzVzTa4ROpo7oyGbcaavS0abiaFXhzPmKjA41N8Rr5UzwrPUjJj04OARx7lxwuGh8R0IuLV
-	ExacJCv+ycLrD6vI3vvlEYB6+RUgPXwEbtxJwl6UEN/rdio1guwOQTGZuzpGGAcjGCUXOSGz4bG
-	n2xwMut9BC9YrGglMZ64LEjFlmjr5lboGt0uXpna1aFGH5MXe7/jbus24sgn5HOpFJMO7OtKqId
-	VwQ+KDT6x8jTXbrcUhUVKru0oCSKRSqMGsYmCorRMA==
-X-Received: by 2002:a17:903:3c44:b0:2c9:f44e:9942 with SMTP id d9443c01a7336-2d046d90ed7mr693605ad.13.1785456860046;
-        Thu, 30 Jul 2026 17:14:20 -0700 (PDT)
-Received: from smtpclient.apple ([114.202.151.250])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022c2e5b2sm32901665ad.74.2026.07.30.17.14.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2026 17:14:19 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nFCXS6eM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QxQDe+r7"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AD3A41400070;
+	Thu, 30 Jul 2026 23:24:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 30 Jul 2026 23:24:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785468295; x=1785554695; bh=bY0wU/U1a9
+	mRS1d+/1R5kivGgntAf/x/SucsSIK3BCo=; b=nFCXS6eMdbVR2jg6SJxOMHNbJ2
+	ETAyYEWQTplKtpj7IoEoBmg9Zbfve39px5XCmwJzBtUx13i8IB+n+2DF8PjBY6RZ
+	FhhawyFnMIKAD275hXWS//SUUf46m4dOv72Be+qNpW++qLY3ZIb+A+Fgrdc5RNxV
+	Gi9z8pfkx7aLZJo3u6ROYSq9/h6ttHMXQ9/jUB6EOWA28SNu2JH1P7GwKL7RSpjn
+	fZa77Cd6Nkm7ABFCIRLPwIAKp7ihds2GHUkSQTr/EiN7ahU7RzPy0kjWni8SbbN9
+	utZeedKu9fxiCOlqJQp2MqLYxI6XlXDj9+ZBZkyimZ1qLxhePnkLq7k3J87g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785468295; x=1785554695; bh=bY0wU/U1a9mRS1d+/1R5kivGgntAf/x/Suc
+	sSIK3BCo=; b=QxQDe+r71BRtjEP2XBJnYGC/Zs1+c25bdNaZGLeg+B/inyCTA4J
+	SD930X+AiqMBgD4Ix2sSDu4YrNHJzjvnlM/PFkH5FOlEBKtnfJRsUNWITYfD1/e/
+	jyDC908PiUnHTaEHBb/x4znB5zmT9nd2nOUXZX35qWaF+OCeCNd/37WGzhu0YAqa
+	eViYgsk+dX2W7d2maJAecYDFa20/C9TDhgoXTgEnG5RW7WDfqT/pkBbw/vRiRg+Q
+	hWI89nq7g01kXPVaT/Zmua1cdzV5PTWcfvR1RGOnuglePJn3wV/wL0tPELCVyeZJ
+	c/zHyOL9JTPjgkywVEjcIFExGHYrTfOtZrw==
+X-ME-Sender: <xms:hxVsahVNbMv-W1fKdZwRnsXMCJfVkIWShQ1iN03hxKbCs0Zu_T05ng>
+    <xme:hxVsapCni-GNsAKGbl5EmDDAP0cGPw3WRvWd1UWc2BTz7w4CnZ5Qd2IUwTMnMX52R
+    ZhfvirjsAG74BlfGMC4N7gpwkxqq_d7rU_OPu1RFzc5lQ5xGID6>
+X-ME-Received: <xmr:hxVsaqzAPw5BXlLaa0ikzFwGiy_8wD6H611QVOQ1xPt2B1fJIibzWKU8D44FazloV1b-PJWrlheH8OH11wRH_NsbA5sKJaSLJg>
+X-ME-Proxy-Cause: dmFkZTGhVCq57x6YpvS0qOwXZMuFHwPu8ACTLihxQJZsxvwXiA2Vf+kkIGOHYPSfiRcyev
+    0N4FkNOFndMeyo8hnqLTXXTyBoxbGEFoH4P/Hg126XUuyY7fAJ/1xsMWIUP2Sk4nFTsiE+
+    PkKZmOu/1LXOzhHlhHP1DhMxv0OfAJ5tmWTXXohf2PmiyD/WKSV5sjR3GJ91HKmJ10BS0+
+    qvFJ46FBu4fC3zRcR5WOutcYbPqT9pMvOsJpxxgrvShmi/VoiIQ2s1nhGdjblUT+GLhxos
+    D2cKA22VW6DEk5QKJUTnNL2C3/QH7mc2EU7IEsvZp3SIRLJTKv6LJZxFecDKBLd35MVSbR
+    b0FzAbhw+wvVwU8nGywLvkrD0Wj8eDD4jCr84K6vW5zs2mkCUma/xZ6CbxBjDftboRcENF
+    +Pozz0c0Lc2aNpfQyNYjgAj6eNMHK5icPzXGL9sD8LgA8UnresPxp+JWGnusE2fvw7TFav
+    xWhhf2/5VMKMuZPQYbSZi/ogBffauJDejnQpSDGQpY3OfnCGA0nAqzMZISAdHNpSe9G4TU
+    TtBo87ISVxSYnCj2SRdYewBQSQrNnoVpGGpPzpthdUG/xzHqmc4DgnoV+YOhs9B3uY1GXO
+    AJ7Go3+EXOS2kHhTYOhu392nbwnjs/mpLWEMke6W52mGFvw5hQ4rjRsUri+g
+X-ME-Proxy: <xmx:hxVsauAUmged99fMbiHnbUF3EUiq70nyQbjuPsbn9BpTQkXD266lcw>
+    <xmx:hxVsavaePZRLq_7FY2AB-8_QzUPsrAeIllSLWCnD6miFeduGTfjecw>
+    <xmx:hxVsaugzZ2Sx8kqLMkp03rxiKSdSS2FyP26i0UYHuSgTxqObBLJGEQ>
+    <xmx:hxVsap6TRvAFPUrlgVG7xZ__HjU4UHIJUbkA3tZOUuyO8-Ui8E5ZkA>
+    <xmx:hxVsassCjK25Y7yZjWlls5o1P-Mx3YiJuoGd2ptIzIxnjejA5YUObIec>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jul 2026 23:24:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 4/6] hex: label usages of hex parsing for object IDs
+In-Reply-To: <20260729233215.398654-5-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 29 Jul 2026 23:32:13 +0000")
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
+	<20260729233215.398654-5-sandals@crustytoothpaste.net>
+Date: Thu, 30 Jul 2026 20:24:54 -0700
+Message-ID: <xmqq1pcjkfi1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [BUG] git config --global: doc and behaviour disagree when ~/.gitconfig and XDG config file coexist
-Date: Fri, 31 Jul 2026 09:14:07 +0900
-Message-Id: <336EEC18-98D3-4068-8C5C-476749959814@gmail.com>
-References: <xmqqo6fojkds.fsf@gitster.g>
-Cc: Nils Fahldieck <nils@fahldieck.de>, git@vger.kernel.org
-In-Reply-To: <xmqqo6fojkds.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Le 31 juil. 2026 =C3=A0 05:35, Junio C Hamano <gitster@pobox.com> a =C3=A9=
-crit :
->=20
-> =EF=BB=BFNils Fahldieck <nils@fahldieck.de> writes:
->=20
->> 1. The writing claim is inaccurate.
->>=20
->>   The docs say XDG is used when ~/.gitconfig "doesn't exist".  The
->>   code tests READABILITY (R_OK), not existence.  A zero-byte file
->>   created by "touch ~/.gitconfig" is readable, so access_or_warn
->>   returns 0 (success), the condition is false, and XDG is silently
->>   ignored even though ~/.gitconfig is empty.
->>=20
->>   The condition should be described as "when ~/.gitconfig is not
->>   readable", not "when it doesn't exist".
->=20
-> I do not understand this part.  If you have a file that is not even
-> readable by you, it is not very useful and no better than the case
-> the file did not exist.  Also, if the file exists and readable,
-> between a 0-byte and one liner ~/.gitconfig there shouldn't be any
-> difference in behaviour, no?
->=20
-> So, "when the file does not exist or even if the file exists is not
-> readble, then it is not used and the other file is used instead"
-> would probably be technically more correct, but I am not sure if
-> such a change has much value (unless you are trying to be very
-> pedantic).
+> In preparation for a future change, label the hex parsing we're doing
+> for object IDs by defining a constant called HEX_KIND_OID.  This is
+> currently the same as HEX_KIND_MIXED, so there is no functional change
+> here.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  diagnose.c    | 2 +-
+>  hex-ll.h      | 2 ++
+>  hex.c         | 2 +-
+>  http-push.c   | 4 ++--
+>  notes.c       | 2 +-
+>  object-file.c | 2 +-
+>  6 files changed, 8 insertions(+), 6 deletions(-)
 
-My thoughts as well. A readable 0-byte file is not a counterexample to the d=
-ocs; if such a file is readable then it exists, and is used as documented, n=
-o?
+OK.  It makes sense to say "we are reading object names", than "we
+are reading hex spelled in both cases".  Are we throwing the "not
+object names but derived from the same hash function" things like
+packname and rerere database key into the same category?
 
->> 2. The reading claim is outright wrong.
->>=20
->>   The docs say --global reads from BOTH files.  The code reads from
->>   ONE.  git_global_config() selects a winner and frees the other
->>   path.  There is no code path under --global that reads both files.
->=20
-> The documentation needs to be corrected, I think.
-
-Agreed based on recent thread <20260720113402.0dc16abe@frustcomp.hnjs.home.a=
-rpa> (subject =C2=AB git config: unintuitive behavior with - -global and - -=
-no-includes =C2=BB in case I have mis-transcribed the message ID, a necessit=
-y to maintain plain-text mail from my mobile phone, ahem).
-
-Best,
-Ben
-
+> diff --git a/diagnose.c b/diagnose.c
+> index fc11cea229..9c652d36a6 100644
+> --- a/diagnose.c
+> +++ b/diagnose.c
+> @@ -112,7 +112,7 @@ static void loose_objs_stats(struct strbuf *buf, const char *path)
+>  	while ((e = readdir_skip_dot_and_dotdot(dir)) != NULL)
+>  		if (get_dtype(e, &count_path, 0) == DT_DIR &&
+>  		    strlen(e->d_name) == 2 &&
+> -		    !hex_to_bytes(&c, e->d_name, 1, HEX_KIND_MIXED)) {
+> +		    !hex_to_bytes(&c, e->d_name, 1, HEX_KIND_OID)) {
+>  			strbuf_setlen(&count_path, base_path_len);
+>  			strbuf_addf(&count_path, "%s/", e->d_name);
+>  			total += (count = count_files(&count_path));
