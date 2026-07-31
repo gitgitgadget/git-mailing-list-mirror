@@ -1,118 +1,111 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ms-10.1blu.de (ms-10.1blu.de [178.254.4.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4258A412276
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 18:07:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785521256; cv=pass; b=NsbXMSp3hbOrLpOHivdfjhoLG8fCQCe9+ILCgmFSAjOq0Y5hMX5SOHbl45NtgZ39BzfL4TnKXzI6bRQb9TN98wYX2+WU7QqlIYK/k9QyCV4aWClZnNzLDJD5NEWxa6Q2TZXTUu2FSZLRxOe8z5aagommCPVAiQw5XqB6jngfuVs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785521256; c=relaxed/simple;
-	bh=SjeMvBCaplWybQldkTaaDRY9relPP3OjfR4QkpjQ+vU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=uozQZYZff0+IWJn38KcZuox0qryjeRxJ80BGglYBCXBd9gC4zCpr7uepnDriJJE0pcmTcangyaAZtlWZwMTYIGrKQKFfYB/hz54EA+iQJNpezKVYqSs+QQm4fjpFJqimGZcJswe+Dxr0D/W8NNJaAg6C645/XZnzvwQOZxKf+AM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgardening.info; spf=pass smtp.mailfrom=getgardening.info; dkim=pass (2048-bit key) header.d=getgardening-info.20251104.gappssmtp.com header.i=@getgardening-info.20251104.gappssmtp.com header.b=zClB6G0H; arc=pass smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgardening.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgardening.info
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3DA361651
+	for <git@vger.kernel.org>; Fri, 31 Jul 2026 18:19:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.254.4.101
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785521996; cv=none; b=iJWO003LtvB0wRkTO7UuKqHQJEbmPUwTwu82qQmCPRK+e9zZcqDLufGDtnFD1jErb+K2R73dlLvmeTmwNaFGqb1405B+w1MwluIS9+j+f4xoN6faTMEEwOvFoqBIrPCkIm4DvmKqPkzRS98yboc+uZRQQrkskivM65+zFqp+qh0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785521996; c=relaxed/simple;
+	bh=PKlbZiNSZ19WD2liOGgGBBl2JNalTwFjsuDrEt2MQD0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AsD+Vf8MUguASSOpcRBrzipzqyEZivQsHzue5qi4RRTV91W0u2A8D5sKvJ8EF8UabBgRyXNDhLht2NCzxowDcDnvo4imwRabKff0nJQfJDDd1/mIYd594ulbG8hwKf4w0G/+DIV1WcgyZWkdOov2+KCpxLc2SLo2dMGo+s26k78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fahldieck.de; spf=pass smtp.mailfrom=fahldieck.de; dkim=pass (2048-bit key) header.d=fahldieck.de header.i=@fahldieck.de header.b=UXAILevZ; arc=none smtp.client-ip=178.254.4.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fahldieck.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fahldieck.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=getgardening-info.20251104.gappssmtp.com header.i=@getgardening-info.20251104.gappssmtp.com header.b="zClB6G0H"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5aeb59d54b1so1276529e87.1
-        for <git@vger.kernel.org>; Fri, 31 Jul 2026 11:07:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785521253; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WAw20ddSU9AxgXAPktpMbwJ3m48zhMdP7FWhrL6rHOW91ZRAkKnAhfGADJmMnXNbWJ
-         iJ8c9CYPsFrebfyvRCtSEEkSwQcOSIWLSETF6wH1Flh0CiEHNbAWfcibUAYxlCD/ycF/
-         nbGtBpId5r62L4bl+mYjjG8gZWQO47z22VB8SwM2XiugBXAzEKwnfFyfXmSONtyVFYD1
-         bu9nYo5E+qbIf1oIza63+O5WELFM9CwXGlSTMYALkatFT5Z4S+cKMumyZQtDCucSmQ+J
-         0QazBkNQl+Z3cubiX4FFZWKj6KiJhGSDqeOtyJtuxs/m+3T3csPWGmtwwjqixgFZ8aX7
-         ViNw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=SjeMvBCaplWybQldkTaaDRY9relPP3OjfR4QkpjQ+vU=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=oKdWXtQyoqeTWmFjc4T6qHyTH0GPZFdWydJpRj8cTqU9FTfue4KZnPOfckwyaAYzRj
-         4I1v+vVIy1HiPsEcPuKhIb7JlLeaxnreQr0cnOzIefm5E36xx4+VzrD4Za/y+qXOM8Yh
-         w2m9i1/SyCcLDnFIPRYl/axiToCsO/Bjfsrc+ulvBgc+Qm/tULGRhw6blam/ZK39zbYX
-         oUeF6f3mR8E//iaN7sSlWFDqIXa8LNhxH3B0Pc750oKwQ+4XCjLWdixUQijg526FsPJq
-         mEluyWXARNMXw/Wl7B5Icw/v3Wo0+szXGc1SJd2CuG+aZASu4SghqmwQ/BgLKH5uAll6
-         /Tvg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=getgardening-info.20251104.gappssmtp.com; s=20251104; t=1785521253; x=1786126053; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=SjeMvBCaplWybQldkTaaDRY9relPP3OjfR4QkpjQ+vU=;
-        b=zClB6G0H5IzZERwHpR8uVQt32m9Ws30i9Hfu7fxHWvNCTpBSWYNuNO+AAGEd3KPEJl
-         iknZj4I3gYebGEfEyr4OFVIGK0Zxh++gIJd7fj9sX6pZ+BFTyOKkiTUg+sKJjv6NnCf4
-         5tiq0IgQwRcJmoN7McvxOYNxnrUfI0DnlwIA6q9iD2jZkMLZPjbedSEwQleSTB932B4G
-         3n/+at4jTxiXb2VwE8xHhNrnhoLTOqWRaslcl62P84jqNJMeUyfmjUzkJI9QhBXPxGix
-         3syR/3YZL/Ftfr3O1WX+Rs1n0kedWHj4bylEeY08Gld2mRqhdZ98Nq6JB/H6OdEPXGHr
-         5q9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785521253; x=1786126053;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=SjeMvBCaplWybQldkTaaDRY9relPP3OjfR4QkpjQ+vU=;
-        b=D8aMaH3F/GUG6vpmBgvKZlb5nOOJ5bsXwYXvYrQTLjfzcQKJGqhijV4hS6mZAwbwNp
-         xF3H06i+0Q2HI1IFRcDX0BTSdkWWCWp4RmzQuEiJlo+jEYZhMNL56VHn7GYwuvLakpK5
-         LAXL0WGBg7/+vKO2n5Cm1HW1kREAVuKqSnr6HPVD82yTxvTcVaU+OObRl9Iw0fnZWULf
-         tUADfJTBpgKCLI8suSjEyE4mt6MLuukmi6yx4PXgc1N9OjuWNV7yVWKhGexcFCmhV78F
-         EZ/eflRH7yUDCip+eyo5ipgVFjwSavjnnl9/KAlJyOHRvO/yE5acUYL1HIMhMpQGOPzC
-         3new==
-X-Gm-Message-State: AOJu0YyjB9vpnFLZZsOJNXK3zg+fKbKJFP/ud7ODatL5tx2bgDU3thoK
-	xaG2VKde+MGHdC+JjREKoYAnanAJhjkiunUSdFxlNB5z0kp2LUXLm/10AOkV+ugFgwyQcAEKQFb
-	jioH56qzgKRRK1lhfl2jzggMAW6TQf9UdELnm8TiL/tCfqLVtUhQ3
-X-Gm-Gg: AR+sD12URBLsPZU5ic2yDVrMadMA2fCS+Qu7jPl8IA58s1bZxT/6cSiXBUbRt5s120L
-	EyhB6AasFE1AdZWm+OVgiuz+7OACwn+je/B6U/mBr37+cEgh7uLfQalbhvxCev3k70ro+xhIf8J
-	+mLRFAdbg8B0NF8uMUyAlZByp9ZTOGMCzc5ggKeUqosH6iGEmlefPtFEeVPRMQ9oFrvToDrE0sx
-	INfnAdZZVsqhq4tObWamv2JfaZ5NwFZ6NrqRQhexiEsSY+CeihpQ/mKjjhNfKax6TUXoxhCrt+7
-	a5nEDqIWP/nD5gypwjZRP1tex4KwqNCKTBY1jXAeX7Q8HmuyIKjXajn1vujaNlXBEN+ynM8fcra
-	9s9NcZ7Vv
-X-Received: by 2002:a05:6512:6d1:b0:5ae:c43a:c18e with SMTP id
- 2adb3069b0e04-5b2e4f29809mr150278e87.23.1785521253260; Fri, 31 Jul 2026
- 11:07:33 -0700 (PDT)
-Received: from 713147890965 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 31 Jul 2026 14:07:31 -0400
-Received: from 713147890965 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 31 Jul 2026 14:07:31 -0400
+	dkim=pass (2048-bit key) header.d=fahldieck.de header.i=@fahldieck.de header.b="UXAILevZ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=fahldieck.de; s=blu9537877; h=Content-Transfer-Encoding:Content-Type:Cc:To:
+	Subject:Message-ID:Date:From:In-Reply-To:References:MIME-Version:Sender:
+	Reply-To:Content-ID:Content-Description;
+	bh=PKlbZiNSZ19WD2liOGgGBBl2JNalTwFjsuDrEt2MQD0=; b=UXAILevZbaEX3qBBHLJQ1tBjbP
+	sVbpipC6AkpyeOvGDgYgdUu2DTZLWc/wBJsv92/6nc0Q6LGN67NNBU2bcbE7Lm6wJ+z18n+0v88KH
+	UGTinEzSAx4LL2vTUkr4v+a5tjAPotjYsRb3qGoAQYh6bDRgmuc3edcrs7Dng34TbyXp0Xe9QkXSk
+	7gl1oKWcAx5OiA9+hoxL7Mm30ibjPDuPOo1ICG23T6qWxZh1x/8q723cuZd5DX5kOzAMx4KuMPic9
+	TcCie6qaKCkD9X976I5E0JOYkV6+QaxwtTZj8XVmH29iok3pQZ5xjdGdIBYhSAZqIfUk0WGpUg8BQ
+	tK7cuyrA==;
+Received: from [209.85.128.174] (helo=mail-yw1-f174.google.com)
+	by ms-10.1blu.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <nils@fahldieck.de>)
+	id 1wprpf-00EYBZ-Vm
+	for git@vger.kernel.org;
+	Fri, 31 Jul 2026 20:19:44 +0200
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-81ed000b507so12713137b3.0
+        for <git@vger.kernel.org>; Fri, 31 Jul 2026 11:19:43 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+Roy3rcUadJpEOOF0ooXKSpWdVzYnBHSrWmYCBgNrPjC5CyRpAArzNjG5OBNVydxtlcTzYw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyB7Hkp8KFNiXaBCfUrofpgd8BRf/4UpMnEhKLEyXgCFZ4VJ4Ow
+	AjgBP6VgebqKnwR8UZrGp83mprm24FeO8+b42+uEyuTWXk5wGqd5lIFxbRPgwQP5FnFSYxjHS6Z
+	2qVn4eu1NlgvYPbp0Svcnk1MXaZc9Z54=
+X-Received: by 2002:a05:690c:278a:b0:81c:b865:2231 with SMTP id
+ 00721157ae682-81fd4bf88ecmr11345357b3.33.1785521982656; Fri, 31 Jul 2026
+ 11:19:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Emma Croft <emmacroft@getgardening.info>
-Date: Fri, 31 Jul 2026 14:07:31 -0400
-X-Gm-Features: AUfX_my1pbemHtBDCSVT_XJAQ1Xk0yRTtlra83VpCoFNfguFx3XZpJxOvYWbqS0
-Message-ID: <CAKp8jRU1dGD7Q5T9vKmGubcst+pFu_Sj5ByyMvtRiuV-DZfhNA@mail.gmail.com>
-Subject: Is This Topic a Match for Your Audience?
-To: git@vger.kernel.org
+References: <xmqqo6fojkds.fsf@gitster.g> <336EEC18-98D3-4068-8C5C-476749959814@gmail.com>
+In-Reply-To: <336EEC18-98D3-4068-8C5C-476749959814@gmail.com>
+From: Nils Fahldieck <nils@fahldieck.de>
+Date: Fri, 31 Jul 2026 20:19:06 +0200
+X-Gmail-Original-Message-ID: <CAAdFe9z7hE1Av=d4u6vUmvJjaDD0JXJpHb9UVd7oEiMpFV0PQg@mail.gmail.com>
+X-Gm-Features: AUfX_mwPWqx_jWzCF4k69ctIxyPupLw9dmyLwPX4vA7I79P73lqQxBV2shShGxM
+Message-ID: <CAAdFe9z7hE1Av=d4u6vUmvJjaDD0JXJpHb9UVd7oEiMpFV0PQg@mail.gmail.com>
+Subject: Re: [BUG] git config --global: doc and behaviour disagree when
+ ~/.gitconfig and XDG config file coexist
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Nils Fahldieck <nils@fahldieck.de>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Con-Id: 301193
+X-Con-U: 0-nils
 
-Hello,
+Hey there!
 
-I=E2=80=99m interested in writing an article for your website on how to sta=
-rt
-and monetize a small farm. It will provide fairly comprehensive
-information and guidance on the whole process, from financing the
-farm's purchase to planning crop production to ways to make extra
-income, such as leasing land for a solar farm.
+> Agreed based on recent thread <20260720113402.0dc16abe@frustcomp.hnjs.hom=
+e.arpa> (subject =C2=AB git config: unintuitive behavior with - -global and=
+ - -no-includes =C2=BB in case I have mis-transcribed the message ID, a nec=
+essity to maintain plain-text mail from my mobile phone, ahem).
 
-Do you think your site visitors would find this information useful? If
-so, please let me know, and I=E2=80=99ll get started on the article.
+Thank you very much for the other thread, I have read and understand
+the origin of `--global` way better now. This understanding reinforced
+a PR that I raised for the git-get helper binary. The origin of my
+problem is git-get's configuration, which reads its config via `git
+config --global key` instead of `git config --get key`. This is the PR
+for reference: https://github.com/grdl/git-get/pull/45
 
-Best,
-Emma C of getgardening.info
+> > So, "when the file does not exist or even if the file exists is not
+> > readble, then it is not used and the other file is used instead"
+> > would probably be technically more correct, but I am not sure if
+> > such a change has much value (unless you are trying to be very
+> > pedantic).
+>
+> My thoughts as well. A readable 0-byte file is not a counterexample to th=
+e docs; if such a file is readable then it exists, and is used as documente=
+d, no?
 
+I agree and do not want to be pedantic about the implementation. I
+just tried to understand the code and added that to the report.
 
-=EF=BD=9EI like to think of my articles as friendly guides that work for bo=
-th
-people and search tools. If this topic doesn=E2=80=99t quite land, I=E2=80=
-=99d be
-happy to plant some new ideas that could grow better on your site. And
-if my emails aren=E2=80=99t your thing, just say so, I=E2=80=99ll understan=
-d.
+I still see a discrepancy between `git config --get` and `git config
+--global`, though. As a user it would make sense that if we have both
+`~/.gitconfig` and `~/.config/git/config` only one file is read and
+written in every case. Or in other words, with your explained expected
+behaviour, `git config --get` should not return a value. It is
+off-putting that some commands read both files where some do not. I am
+happy to understand the reasoning a little bit better, though. Maybe I
+have a missing connection in my head.
+
+Anyway, I still feel that the documentation must be updated (at least)
+since Git is executing differently to it. I am happy to provide a
+patch for it. I just need to read up about how I contribute it for Git
+itself and the git-scm.com website including all i18n versions. Any
+hints are appreciated, my starting point would be
+https://git-scm.com/community though.
+
+Best
+Nils
