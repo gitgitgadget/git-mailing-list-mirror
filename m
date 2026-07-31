@@ -1,84 +1,85 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8D942642D
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 15:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DD03FD15C
+	for <git@vger.kernel.org>; Fri, 31 Jul 2026 15:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785513410; cv=none; b=R7IoWIfXy8dDFiffl9NZeJvpnnH36lRSUFkq/kbTLODwuogvlcOsx13TOutI24bYxfyKeckqBzkf+31iPD9PWmRSGPMGIyrPdnOQ7FjaEEQZTNIAsJzKzxbbDzuDqYTrHc2yiMNA0A+HIPyICz5QoZY3ywmfxzPEC0pIfUXOGko=
+	t=1785513425; cv=none; b=G+Atk2lBnOwTPJ+/j5YxAxRfel1v4Ajf2NJDhIKQDALpNmDcQcjnKI2cTm/p84p/wgTvQhXHXiCWtgApfye8yfXlxbbuKjPHyQTjs7nodnp91XaJvdv5PYTB/3BaMQgA0FZzw28HkWdWSZYwKwuPCwMSDAckLf+zUq+/SDgt/28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785513410; c=relaxed/simple;
-	bh=GZrE8OIiE82CYYBB/YFtde3+4EhhtVHRAwlZz1U21Ds=;
+	s=arc-20240116; t=1785513425; c=relaxed/simple;
+	bh=hpRb9alUxuvc5oHeiV0Uo1MH3aHT2rHdpZxo+IobKj0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rr68TJ4TX8CPhxqoileADXBtnfyVCxov3mNbSD0thEYaqXbWsxKKyE7SeqXnyPz/L703OUAHljRVdxOc1mauOZw58wDw/yRgkmOk72Lqp4ExMw/LRQi5421F3uy1/dm50lZfwzpHZsJ8fMoJhp6nVns+ESljJVI/JrphjYbFNp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aEeJLWuE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lqP+tYJ/; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=YHzM6l2TCw3jLAutfBbanRen5wKW/QjnQeKXUOPDUXJApwvSbHqBQOlYsnWsYEyZ5w0whe03804McQO9d3VPp0b9IHIm4LbkX6p+Jofn7fBSd0KWce3fJU/zxzNkyjvlJGDTSkGuLX+XTYaj899/5ytbBIv27YhztIjoam9E3KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AJJuezq1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YeFtKLk0; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aEeJLWuE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lqP+tYJ/"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 49B86EC009E;
-	Fri, 31 Jul 2026 11:56:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 31 Jul 2026 11:56:48 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AJJuezq1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YeFtKLk0"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 869F7EC0120;
+	Fri, 31 Jul 2026 11:57:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 31 Jul 2026 11:57:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785513408; x=1785599808; bh=JVja704tbM
-	xd9STD0O2waBB4p1QunjqEGh6Y/ETj67I=; b=aEeJLWuENNFgFEHUTnwemTqd3i
-	X+5hiAbmBfxbyJuIkujblUiJ9W4FYMngNgVYhRjZ9FCYwVxDfGs5hCaNbZqwyA6a
-	oZhuXxOfzVV0OFLgnLlZKUYf6ApkiNG55nNCd6PAuS0LPzlTFb1jcOs55xYjn1C6
-	D1TIUgIzk9pfp2+aYsFSLODf/letlu01Y9cUSTAVngNd32587xc16m7J9cz0+xxh
-	QGEuCG0SEpLaIwDpJybfSpNnJiDqcPOdYcDBvR0Dtwx4tIRsMRLnPKdPwzsR+kMY
-	Qdyubg5mLuWABOuO+Ri9bTOUDk51vVwywZKp0QEfZXunrGngmJgDSSboOeGA==
+	:subject:to:to; s=fm1; t=1785513423; x=1785599823; bh=pNmqSkuJEj
+	W29cu5gg+vlaPuKCTTq+YbQIilzi9IF1g=; b=AJJuezq13+tA/FaX1YZikZ4sD6
+	4wM5X8RffoOBDIwlMpoeKieYuXuKCu1nUJjLc9deIeOXsgCEfoQbGZTSKJ2Q+Mn9
+	5UWMGo/MBShdX1AjFB8eymo6avCEDqWrD2wvIRSrj3/dDir9Jnk7RhC/5MczWO1B
+	Gt5ys/+2Cel1NdZsG4lI4w8Kr68EMzIwuUENniFXN1rNJo57zfHAxJ/tblazuz8y
+	CQlUHJY8P5eHonjqEJRDhononj6XiyG+XvVDO2zhyUsTJgfKW30PxPXSEBBrNKdw
+	IRb5Q3xUkH2zQgeEMSskPd4K5k8evOXDTka8+OsHlsgitfR4ZfLsq97cyJqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785513408; x=1785599808; bh=JVja704tbMxd9STD0O2waBB4p1QunjqEGh6
-	Y/ETj67I=; b=lqP+tYJ/i8Dlcshe2BjFu11M/3pO3svLdZQeghDeFZbG9753ydf
-	2DMhpy7Wln5/nlsuD1FPJLPlWQlBsEDp2DKnZWCDFqGewneeq69Jj+eU3Rztkr2b
-	rhta1BStanJRm5Cig+/HGOzIgxjl7lMZ929Sp8auNxqShYNdVZN6B0hlCQtVfN85
-	21wee1laMPPUKbKBAxCPGgsJSNm7KGt8FjLH/AYVdJMP7tMiTW6b4yi1LGSUvw8u
-	ySVuUqFziAAwK3oHK8CrJeitPXEvJCUein86O9RE94I5gLLSiOCegDHrkJWjoklr
-	1uJMtTow8V2ZlrNM88OYVKpRTQelgm4FG9g==
-X-ME-Sender: <xms:wMVsahZ0M9sGhCBV6X1Ad-ptF0Jm5acPFuhpB6dJwtNTOz8EMuYiKQ>
-    <xme:wMVsavbxqgqYO1l24B718LQahGTp8JPR76v0Uijsdfp8RWo13ZY8WXk_591gFJVRv
-    aRwlHJ_HA_8EsiWwyFJ2AmnaFIMwzLrglGUhtCGiQO6X1B8yl4hRA>
-X-ME-Received: <xmr:wMVsao8X3vA9zMZHl4mg1nIhTllmHdvgczjjkeO4afCgFnEGk33BC8g8NqnpCl7HhdJmhTRNZSbFODlRSVtOe4C5yywcMcvzmw>
-X-ME-Proxy-Cause: dmFkZTFZsxZNeQ2CQvsZLEjc1Zo0d0LSgFOzcoX4x7pXiT8s/vnxY/d5djPkMeGP/h+dtE
-    hNBR9QbO3Ej1MlJsFhQUgxEJrvaWtFd9jZ11HUmFCdMkcYVekmrzEshoazKOlXT3lzJdPn
-    oZ7gDA2OsVAZIOUwlrFd8laVjm7eGUSltHTHpcJoVSHFnPg8bk6znYfcNyCDKF1UCm8vsL
-    tIQKnJSLtzSrdCUzVx1cZUUziF1fur5k6Mi8GPsGUhZNvuBx6YHFDSqE/scwQHpXipASSP
-    Tdt6ICTOB95mQ0POQ2w8LQTO3szkTi61r2qQlHLOwJuxst3vpdLFr/VliSmOBNLYvDHVis
-    q2IfGYHdyqgEpISH5qa4cCdjUR4rqoFE8zaN2gEjRmYdAyBigO0JfxOMyMsNQUe0+85jEo
-    CALWoU3cMfsVNxpNgvXQY2WZoRGsXJP8h4k6pAnBeJONMjH+Izu4KBh9QpzTRGDtfz7m9+
-    Ix6um6+pIX4q5sO9J3KCUDGo5wRcEnDOZj7DmLR2q8zl+WyUmKEtZHqpIXS2cD9dnMMiep
-    QQxYfgHxKr34EJ0Grs3CLaVJ+0YGcTDnL7NkmUlVhOhaeRHyNysGlw1w7JvS5RL4awTTiR
-    BRBinvJtvZJ96eXSliwZQYFE4mFVwQcWzyJsj5EHJ7EwvwCh8peSPjodhIdw
-X-ME-Proxy: <xmx:wMVsauiPrqpoVSaAt_TtkntXvuXIyVelzi4u5xFzZSsZWeMng9_rgg>
-    <xmx:wMVsaofrvggqHlg7x6uNfRauYPvQPePZhyeu-ym_kGnc9SeZ0s98kw>
-    <xmx:wMVsalrg78GABYyJ5_yFJNx8no57U5C__TEm3ZFF1WPZYuLl1rDlZw>
-    <xmx:wMVsatB1ln2CkTPbnmIj1p5w_cFIUST7YEX9BydlfBK0LuC7_ssULQ>
-    <xmx:wMVsaoemRTYxJLsx8AphX7WGazt6POamSGCvurQJd0KFCT79bgOGvWiK>
+	1785513423; x=1785599823; bh=pNmqSkuJEjW29cu5gg+vlaPuKCTTq+YbQIi
+	lzi9IF1g=; b=YeFtKLk0Gvr83U2mzhpbKOGE4ZKnebxIKILlEZC4plWoY2AI02t
+	dGP+cthzanrBY1od+JM8B5I7QHimukN4BqKo/qsKfM4nJTg1JlneCNJ9JFf+J3gI
+	Gxvz+ybrctM3WegSCtfq139cTM/bLtjh1zHyJLjqUCbP2Ks48bGuUSIe9NO/oSoF
+	Jj6u1sQipvqZyo+YziYsEzU4h6OZrD1xtpRjFHyCvkaI7Aavm/3qdK/FmNPPmbxH
+	L92/dhRVaCZ5ECQ8kQfnZKotkLAzxxdHaukKat678AM1f1rQcF2A8ClBFPhxwfbh
+	qvU+Q70RuPzZG/Ww2xuq3Rtnz/CAtkKF2zA==
+X-ME-Sender: <xms:z8VsagLeJU9cK-1HGCcZV72T45iZeGwj2blTLoaTP1vuQfi-92puKA>
+    <xme:z8VsanA5mjkJDExbptvN7nXHlvwvv6VXeKa1SvX3NNSMMeEsORUNB_3tfckH-RHIv
+    SLlmqfVuvk7KCFkGx6aTtcoXVIgRbxgW_sFkQOCzwPtq8m5daOpMA>
+X-ME-Received: <xmr:z8VsapCnl8xSqlLnrqoJgh5pT0FnceUt87_XXHgraZKZI-zgYpIWWK2r8R_Dn1F5csgDUH1-V6jzbqkckOOoMvq77SQfFE09nQ>
+X-ME-Proxy-Cause: dmFkZTFt2p+sr/1KyDVC4FgDvOl7ndQmo51FJTNVZxXMxmqYIU8sOZjv7nVNbmF+fsiSVj
+    1ySaiMiiBFef6DukOe8rcNJOxULFdqM21uWX81J1hKJI2X0R7VJ75b0fHZuIy6S3exeI9r
+    VjwCZ4zuLvZlNMOuwQy8lu6L2aoLD1uLL7Ue0z2ffiksUSMmhTJjrcLxmVll6umNin/SxH
+    HSLMV9u/cZNcjYapLuJ3UaflUK2zCiro2RZG+R4/xjf+R+b1rNqC5ZnsJ2kzhHoOgJiSOp
+    w+jQ2IW4Hd8DRIhjABgxeLWtAcvyV46FkJjag/j3i2teObrcQh88WsZ6BAKdUjvQH9JEVz
+    3HIT/kuPvChkHwN7bFx4SXbn+lQFhsUUa1tp1XaTaFPpLoD1x2b/kwpUq4jTrNRD2VCrRA
+    vaMdfp/8JmCltQSpSQSJd4mR43kbm0HgfZQV6wyJ/lb0fxxPEGk9LbNGdcPISW24BygsVs
+    eaNDCg9cqMKRE2KC6HUkUWoXlr0lmHbvtzIN2tcH2DoJUWqsF08GtbW8/clILTEKg4TUYt
+    4Me1bN7n/vXaTUa/g+/AVDf1I9VvKXYfFrLSdt2NPNEhiXI5WvKkmcrFfG2mWHuiZOShg2
+    hpQ9puG3drbQUkgqI0eT49JaJu/5gX4YrLd8U+TUriR/WJc2zz18KJa8NUMQ
+X-ME-Proxy: <xmx:z8VsapDifjufgrxLTrzXZMh-evdoqABHEt0dRaLfgqyb20ZzHcOmvA>
+    <xmx:z8VsakqUaUbEa6anX_AdiquW0dbvpOqCrTijwYV8QX03pHamlIrosA>
+    <xmx:z8Vsajn5YrrKbktbMjKKgXWpEkpSG8O7SjvvZ6jo0tqkROjF7pZbKw>
+    <xmx:z8Vsakyb0syHMRhw8fc-dRZtp2vP6FZd8Yk38xzLJbPhArL32DdyPg>
+    <xmx:z8VsalhYwejrZyffCHJH2W9uJhAnAgQ4F2eu_6QQGSPa0linA-V-OhVv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jul 2026 11:56:47 -0400 (EDT)
+ 31 Jul 2026 11:57:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] sparse-index: avoid crash on intent-to-add entry
- outside the cone
-In-Reply-To: <e4cce4e2-4287-4e1a-8833-d37ee48ff7d6@gmail.com> (Derrick
-	Stolee's message of "Fri, 31 Jul 2026 09:23:41 -0400")
-References: <pull.2167.git.1783345853272.gitgitgadget@gmail.com>
-	<xmqq33x1o465.fsf@gitster.g>
-	<e4cce4e2-4287-4e1a-8833-d37ee48ff7d6@gmail.com>
-Date: Fri, 31 Jul 2026 08:56:46 -0700
-Message-ID: <xmqqtspfcfup.fsf@gitster.g>
+Cc: Taylor Blau <ttaylorr@openai.com>,  Derrick Stolee via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] trace2: tolerate failed timestamp formatting
+In-Reply-To: <fbb118df-7c82-49a5-90bb-4458b7e9a850@gmail.com> (Derrick
+	Stolee's message of "Fri, 31 Jul 2026 09:26:38 -0400")
+References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+	<alpXW5U6sndZtgqV@com-79390>
+	<c8d443a5-3cfb-4752-8716-cf0d8fadd9d3@gmail.com>
+	<xmqqzezlhgyo.fsf@gitster.g> <xmqqh5lho4xc.fsf@gitster.g>
+	<fbb118df-7c82-49a5-90bb-4458b7e9a850@gmail.com>
+Date: Fri, 31 Jul 2026 08:57:01 -0700
+Message-ID: <xmqqpl03cfua.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,10 +91,19 @@ Content-Type: text/plain
 
 Derrick Stolee <stolee@gmail.com> writes:
 
->> OK.  That is an easy and safe cop-out that is much better than segfaulting.
->> 
->> Shall we mark the topic for 'next'?
-> Thanks for taking a look. yes, this should be a pretty safe change that
-> can merge.
+> * Taylor's hunch that the memory allocation is more likely at fault
+>   is seeming more and more correct. When we fixed this issue, other
+>   issues around memory allocation came to light.
+>
+> * For that reason, I'll rework this patch to point at the allocation
+>   as the likely reason the parsing fails. Avoiding a die() in the
+>   tracing code is still critical.
+>
+> * Thus, I'll also replace the xstrdup() in the trace code to avoid a
+>   die() due to allocation problems.
+>
+> * I will take a deeper look at this wrapper change and how it might
+>   be done in a careful way, as Taylor says his patch was an example
+>   only and not the "right" way to do it.
 
 Thanks.
