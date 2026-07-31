@@ -1,146 +1,163 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFF8331A76
-	for <git@vger.kernel.org>; Fri, 31 Jul 2026 12:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59042427A10
+	for <git@vger.kernel.org>; Fri, 31 Jul 2026 12:56:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785501232; cv=none; b=sFpZvQdq72BZfGplJN0qypVrTGStwcBd/alBrpty8Rk6gtT42hk6WUbrQduylwQ4+f3cw6H4FWDgcJrIYN4Tz0Rz0lcEY8w4S2HpwJqMMMdnbjfwqeXt40BR7lE41t/vxFcahMYhNYHcbqqojMOtGwiHbxxSUpkDD5bCKDSEPm8=
+	t=1785502570; cv=none; b=pUpIdv2YdVpHdKquXOJuR6kUdDsH3mtWRDssVDIcK/CeWRYdOdjQCgiIKIXXwkOGQI2mhSDehQ/diC5sQ8W+qqqxlhgQOg65kbv2dLOtnN0DWeKZLHeVoqtiK3VYRKBjwxDTR864zwnfpPX99lN+K3gE4tm1z5iOV21qFC1M+pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785501232; c=relaxed/simple;
-	bh=kpDDuKFfWWwSHY3/w9ldwQuhjOBOpmEyyBkmR0kDIu4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=goCakeAkL0EcGkhRcp9dLFw8MJsB3hvske1MOfO+Cj7qxcpIx6+vF2RwEBZqYuxnO/xIJ9KwiyJHFV3tqUwNfJGYOkMZomjMD2vcbQbQQ2p2RWoPVk2XkBCQ1WGwm5s0F2l3kqcV9pV6tws42tPrPylsTMXkntAm8TLGOwZ8JHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ikj9025e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ThjbAlaQ; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1785502570; c=relaxed/simple;
+	bh=CvK6hg8Uy5APj/WlbOIUr8fRMB3ho3QK3PPcDxQ5Ch8=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rhLA/Wug04jeZFzbTcYmLu4vzO6Wgu642/EsHR0njZ0G0Dz8/L9B6fXQSg6Jp59CvaoIWrlrn1mqLIT6Ex2e0nOcovi1wPANeIZuIyg3kmoQWyWNXQYVFtD27D9EkwX0sx8dEZEQbOh3iG5i4cLR7PyJHj5zBa7ZMZCfVmza0+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uBlHRSOd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HiUXb0iH; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ikj9025e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ThjbAlaQ"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uBlHRSOd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HiUXb0iH"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E7A39EC006D;
-	Fri, 31 Jul 2026 08:33:49 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 7FB50EC0104;
+	Fri, 31 Jul 2026 08:56:07 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 31 Jul 2026 08:33:49 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 31 Jul 2026 08:56:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785501229; x=1785587629; bh=BfES9Qu2rQ
-	1vUd7uzKqChLdLy/u6ulM9gthP1gmq6do=; b=ikj9025eLPPRAzCrkxAiIl7xQE
-	2L42oGMb38cBT+hf1mf6XW6ACHiJAWFtA8BiGY0K6fqsh4U4tQE074RagzZCDNKj
-	BcZY52l5ZeV70Nd7zS85d7K77kcLd5iqRypmUFtbBmmQ9fHu1FSKihdCT5pShfPW
-	SO3XuzCgX9RXMafJPHhSxa9hh2GaCzUPeaW9QytSerySF1GGnwuGXYofn6QmDUbK
-	HJjPCCzKUMb2m6T4tAULABbzjWtxHBE13AU50hapYXsnKe9uAPLcRb2N0ypyM6kV
-	luQ9neyR9YAw0b0CnsIX19IPdjvcxh922b4ghZMVulq4lzdfal6YV8vJuHZg==
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1785502567; x=
+	1785588967; bh=TuZXnRQ+5dZK9V2s8PmtV6Oue9KWrVFWEcs18g706G4=; b=u
+	BlHRSOdZVGlDetBBJIN4UUIlSTCgBm0K/52Z5AKWSSf+pmcleCheS5YI3GDm9zxH
+	fJ/LEyYbeh2rbztQJ5u4w1HuqPLxc9jOlkpkbagLkllQ7bvYCN1/3NzC0MhpbS5/
+	bLthVROMi0I/3xBw+XvQLhVPGuH3Z8QccjJYxgDNZYXk4LxJhz/BBT8lG4Pk+fIw
+	Dk3PqDiPJTs2f5coGZsdMd3tH7yY7ZNBge7fBIG3yJXjWzmkExCQvGAXDhkT2C+E
+	rWrOTpMqUduuSMOXdftqCt+lC2aTJ1/9+NlOBsmCfCccu6IU2ioem2j3fCIDuIgn
+	i4zSSUk9w/0UTMKMGTAVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785501229; x=1785587629; bh=BfES9Qu2rQ1vUd7uzKqChLdLy/u6ulM9gth
-	P1gmq6do=; b=ThjbAlaQTXScqeBdcjEjV/md2Gak9GlbXfgQpvFjE47FqLBP3UP
-	xdPvKEPmlS0dpZLf9DTZnnXwFRnUneKa7c81bZrRgIbgsOUpJtEz/ulUgQEdUkbK
-	rX+SINq7Z68wycnC2HF5Fvexbp3epuHYubbzvvvGKgbBEj5iNFZ0xwengw6dlRoh
-	zPoSpuWY++81pmHVGvWsnirBbUsko58GFqfZS28SvBA/thEHDU+sQ1bwgbwUTtFh
-	IGYXCkYXNoCH7JEH5bZWUI5AcnYq2iPda463DAe/7DeExCbGHzQMWdFdukOUi6sy
-	03C1446YuOUVQJfp0n9mvyN9kbIF10zqjBw==
-X-ME-Sender: <xms:LZZsatj1PmZ89p5kTZEZQPszXT9SYzQM3rJUX34qkYKzcKnjjnzNVw>
-    <xme:LZZsape0oL6Wn7xLdbNOa-YmLcc_nH1xbzGavwMW1lmrLeW3PsGLbKqJe7VgMVTG2
-    09c8GYgvqh6J7ZmyNBErI67IrkupkIsGamFnn48mukdxVNdKEQ0Ow>
-X-ME-Received: <xmr:LZZsaqeWXi7KpOI0rhYYv1O19yAUNMhN3KOCeTeo6N9KhT8NLT_JUc1vG5V4VmBPen9P_i33InCFZ4ZrEEHH7WmtHo1-v6aOkA>
-X-ME-Proxy-Cause: dmFkZTERsDiAOW8GcvJzOGsolNaUARI2R/JiKlF6BsBiwpyKId5tTwlwVTCJOUXIn5yCOB
-    5UYcRDhsF/POE5uFxio3QHzbQ0ZaoxR2HoWKcALZsNdhp6k9dFaoorc49Qoky3WRXYMKgX
-    RIuMVEI7qjePwePVwtvE6gk5nrtMB4jlForgjaCFrzaByoQc6dRs9vEDHmjZHlNcdfCmBq
-    jWcqIL105AU+Ml31xjoT21R9Xn6eJ9WKrTEpsZQvaSD6XC+sHHZx9c4cdn0wTxWlXFGGOz
-    rwHO8ODF098IdCobpcnR1ehRwAYhuX9pxV6mWTRrIPOr+1wf3dS4oc4W1yi1HIjcdzYXAP
-    VH+buRsQwlC2ci9fDuHSvjYlrduseNMbMlFpDwaL9BkSPFly4UNaXS4jI5ul0hf2X1ne/E
-    LyTUNfEyRxqt1uOsCpswktJKdDSQRzBRzWkzz6HfL1I3l5AFYCLeNDnObuOvg1fU6olE/e
-    +bw3lsb3lpy18M6vSw0PFV5VRdeT3q0G49FBYb++4cHanDP2zQPdjQRd0vUWjqvkMvVt63
-    VriXGJ/rp4mWDTS/zrTKJ8NbnaeRUSvXWxwGr6KvpqGL6hDDbtSdbgH7KCjI5gxa0ZYlfG
-    2zBr9JvYMfSePEMu72XlqnIkhZSRvRTzO6/wuvNTIoZW5UO4hrjH1yCBTgvg
-X-ME-Proxy: <xmx:LZZsar-yXlbARlevVBZ_2rIDiImYw9q9yRfUWhr_f4Nk74qOLyZzzQ>
-    <xmx:LZZsaukwX698GkcrW7jEWW3mYWw2QwD6YAbVD17VrKKA-s5mnJmgeQ>
-    <xmx:LZZsal-q1mAJzXG0Ox1AAEPbeTlpxyTs4oH5_PgqzZ8nwOMm6q_uqw>
-    <xmx:LZZsaknu3vdXuyMh49oNKXoqdkcjBXrEes6ZXTtbg52GWK-hapalgg>
-    <xmx:LZZsahrTBS1pJAiveL_GlDeGCIOXZgNXIDDaC0Dsp4YFHwRCTaPxl_Ee>
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1785502567; x=1785588967; bh=TuZXnRQ+5dZK9V2s8PmtV6Oue9KW
+	rVFWEcs18g706G4=; b=HiUXb0iHv9Wr7xQfQJEGHiUX68iebKjnbgj+0jIa5/FW
+	sEobw39J/9cQfMib1PrejvnDWve1ZphJB/cYkKaElGABg7MnxZkVEw5YWZdeZ3DN
+	VinTjxLhZ9u13NZ3nfU+F+guTluXl6fqAjxNoBTPQ0m0OAkd813Vl72zmPVp/E5z
+	7WA+gVg+RHiMWKBhi047+01JhYc4TnTUDvhqpRf5vyL6GaEXhx1HTrT6V9/cd7Y6
+	8vhsYrc0dTKtnMj2mePI34r2zSEzO/R78fGWJnYG+0Pr+lI7lKDF4+j/frVBWmdU
+	7AFy9DkiZmSfLmGfnZoqa+bPPsGnaWYHHUu5xZkW/Q==
+X-ME-Sender: <xms:Z5tsao6GfkHdKTLl66uifHqpKx-1ThDSN_gwvgd32Y3GQgMX-9-1vw>
+    <xme:Z5tsav59PpetSDt_jRu5NbVYZnAyvSmI-Xge-oTRqaa9mCbwHjGXLHXIljKgGNReN
+    f_NYw_kdMFHDYcynPDXUZvIfYWCR4tZbd4d4qimET0VZgbdDMN10A>
+X-ME-Received: <xmr:Z5tsalHPPikY5OamPXHo3_u2PxMzTKHSUu69nuL_g18vP1mdnArq_GgMg3Aq7Tgu24wCf6fmeUEhffyMVgqMRbUpKDWTZ05Qlw>
+X-ME-Proxy-Cause: dmFkZTFMkCIVKemp9ObFYAYeHzMQWSWQ6kXXN4anz/jw6dSbJioQy6WW+BWqDGGC9mol+4
+    qqdND1kxjGR8WYds5iwSs+iyh6Eh/x2Mr6oMvWx2Exad7P1rfAo8i23v7vgbu4AaSqUv6m
+    E96nVBVGW9Lcx6GMxre067Opv7j9Bk+0zWqfwjy+9YBf+LTPeNlc2AvXC0LAE1QRTt/up7
+    d/TkjFIZ9T8zqyP12+07lPSNGK1zDOw2JWSyKITZtbcwM3PWQBL45gMM4IX/ezlFwNR3z3
+    FRum5d72uI7maMm8yXQ47ZWwjrAOSr5i9aUpbTwaU6dIPFKH5IveFVvxS0ZC3ZGIaqpjF4
+    sM8IPrxFXm7E+k41906bkwtXR7n+RHD5tWOJWY6utxe8w3aa3BKDvP4oYIvPLVIn4VI2Ce
+    1RhpzcHZBtARFVxPfj5DefxoVWys8c8gJAQgOeUyQUgb7FO4xr9nE289zinr75pfxlVe3B
+    CkcKFAFzzGXuunE3AlZxweY8NH4827EfBSgGXApt8y6OUhg/p111N+ua/VdBIghv501sOB
+    H3/5LCCBeimh7ekUnbm8bF9Q1fUR2sHKb0UvZmPr1EAbs5OaAk8Z7lN0natl4zNzK6qUGH
+    A7ZtjavTmb+SL9+ZjGZgu+sMQnjTnaClecARQqWLIwmBpNiqNfmyKHH62R3g
+X-ME-Proxy: <xmx:Z5tsaoRUh4LYZFodkAY8jgUrWt6RJCE_p4R82mRDsI2RJUWouUroIQ>
+    <xmx:Z5tsausRBHVWiK9Z6p79s9Yf7osTwFiCpR2UGaCwFvFHL_dEq4dIJA>
+    <xmx:Z5tsanyuEGdNO9GTejm2XNETXY5PFrLdH9Eu1rp9VUhwklsmkPza7Q>
+    <xmx:Z5tsao5lwhygJc7RYziwsi7FLweRZgA6a9xWGUWiaWMPIrlu9xW5HQ>
+    <xmx:Z5tsasTzDyeau9w8Ti4--GDywjP548h2aPWR_eGj_tQbwAHc1cX6UlLu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jul 2026 08:33:49 -0400 (EDT)
+ 31 Jul 2026 08:56:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 6/6] hex: allow only lowercase object IDs in
- breaking changes mode
-In-Reply-To: <xmqqv79vha69.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	31 Jul 2026 00:48:14 -0700")
-References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
-	<20260729233215.398654-7-sandals@crustytoothpaste.net>
-	<xmqqv79vha69.fsf@gitster.g>
-Date: Fri, 31 Jul 2026 05:33:47 -0700
-Message-ID: <xmqqtspffidw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: git@vger.kernel.org
+Subject: [PATCH v3 0/4] git add --resolved
+Date: Fri, 31 Jul 2026 05:56:01 -0700
+Message-ID: <20260731125605.3638938-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.55.0-599-g5cacd2ad51
+In-Reply-To: <20260728215219.753678-1-gitster@pobox.com>
+References: <20260728215219.753678-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+When you are the maintainer of a project and make many merges day
+in, day out, a lot of your time is spent resolving conflicts and
+adding the results to the index.  It is not unusual to have local
+changes in your working tree that are unrelated to any particular
+merge [*].  In such cases, 'git add -u', which adds all changes in
+the working tree to the index, does not help much.
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> Git has historically allowed either lowercase or uppercase hex for
->> object IDs, but it has always emitted only lowercase.  This has caused
->> people to expect only lowercase and not handle uppercase.
->
-> It is violation of Postel's Law by other people.  We do not
-> necessarily have to follow suit.
+Here is a new option for 'git add' that lets you add paths with
+resolved conflicts to the index, while keeping unrelated local
+changes out.
 
-Imagine we somehow misbehave badly when we have two loose object
-files storing the same object's contents.  Let us further imagine
-that we can download these individual loose object files from
-others, perhaps via the dumb HTTP transport.
+The first three patches perform preliminary refactorings.
 
-If we tried to be robust, we would be liberal in what we accept,
-even though we try to be strict in what we produce.  In this
-hypothetical scenario, if we talk to someone else over the dumb
-HTTP transport and find that they have an objects/AB/ directory, we
-may try to be liberal and say, "Ah, that is a fan-out directory
-housing all their loose objects whose names begin with 'ab'."
+ - [1/4] is a totally unrelated code cleanup that almost disappears
+   when viewed with 'git show -w', but it was an eyesore to have so
+   many lines with broken indentation while working in the vicinity.
 
-This is the right thing to do for those who liberally accept
-others' data.
+ - [2/4] consolidates a helper function to determine whether a line
+   is a conflict marker (replacing two slightly different
+   definitions).
 
-But we might further say, "Let us enumerate and download what we do
-not have locally.  They have a file 012345...EF (38 hex characters)
-in that directory, which stores the object AB012345...EF (40 hex
-characters) in loose object form," and then conclude, "and we do not
-have it," even when we actually have the file ab/012345...ef in
-all-lowercase form locally!
+ - [3/4] introduces a helper that makes registering path removals
+   from the index as easy as adding them, complete with automatic
+   '--dry-run' and '--verbose' support.
 
-However, liberally accepting AB/012345...EF and storing it verbatim
-in our own store will break things because, in this hypothetical
-scenario, we will misbehave when we have both ab/012345...ef (which
-we had from the start) and AB/012345...EF (which we just downloaded)
-at the same time.
+The fourth patch implements the new feature.
 
-The approach taken by this RFC series is to stop recognizing their
-objects/AB/ as a valid fan-out directory and their AB/012345...EF as
-a valid loose object file.  While I agree that this is certainly
-one way to avoid entering such a state and triggering bad behavior,
-I think the real solution that honors the robustness principle is to
-still recognize objects/AB/012345...EF as valid, recognize it as a
-loose object file for ab012345...ef, and notice that it represents
-the same object ab012345...ef we already have.  Then we can avoid
-misbehaving without being less liberal than we used to be.
+ 1/4: read-cache: reindent
+ 2/4: merge-ll: consolidate conflict marker scanning logic
+ 3/4: read-cache: add remove_file_from_index_with_flags()
+ 4/4: add: introduce '--resolved' option
 
-If the system had been case-sensitive from day one, and ignoring
-uppercase hex had been the norm from the beginning, I would not have
-found it so disturbing that we reject case-insensitive object names
-and being stricter than folks with those other systems may feel is
-necessary.
 
-Tightening the rule after twenty years is the part I am most
-hesitant to accept.  So, I dunno.
+The only change since v2 is to fix the test under BREAKING_CHANGES,
+where the tests are run with a future default initial branch name of
+'main'.  Instead of assuming that the initial branch is named
+'master' when returning, we instruct 'checkout' to return to the
+previous branch, i.e., '@{-1}'.
+
+
+[Footnote]
+
+ * This is not limited to my own workflow. An earlier message on
+   this topic worth mentioning is:
+
+   https://lore.kernel.org/git/CA+55aFxP8j7YbYaRXt-8Y0n8cHafB=FPKMy8gKFYH5QsKX4S=Q@mail.gmail.com/
+
+ Documentation/git-add.adoc |  10 +++-
+ builtin/add.c              |  92 ++++++++++++++++++++++++++++---
+ diff.c                     |  25 +--------
+ merge-ll.c                 |  56 +++++++++++++++++++
+ merge-ll.h                 |   2 +
+ read-cache-ll.h            |   3 ++
+ read-cache.c               |  89 +++++++++++++++++-------------
+ rerere.c                   |  38 +++----------
+ t/meson.build              |   1 +
+ t/t2207-add-resolved.sh    | 108 +++++++++++++++++++++++++++++++++++++
+ 10 files changed, 323 insertions(+), 101 deletions(-)
+ create mode 100755 t/t2207-add-resolved.sh
+
+Range-diff against v2:
+1:  b0643ed516 = 1:  414219a89a read-cache: reindent
+2:  4533fa4da1 = 2:  f64ad26d1f merge-ll: consolidate conflict marker scanning logic
+3:  dbf70c2d3a = 3:  1431d0bfdb read-cache: add remove_file_from_index_with_flags()
+4:  033a3d2526 ! 4:  42fb33200a add: introduce '--resolved' option
+    @@ t/t2207-add-resolved.sh (new)
+     +	echo "theirs 3" >file3.txt &&
+     +	git commit -a -m theirs &&
+     +
+    -+	git checkout master
+    ++	git checkout @{-1}
+     +'
+     +
+     +test_expect_success 'git add --resolved refuses files with conflict markers' '
+
+-- 
+2.55.0-599-g5cacd2ad51
+
