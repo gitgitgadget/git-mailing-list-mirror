@@ -1,142 +1,196 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6A32580F2
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 06:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785567110; cv=pass; b=suxpzl/ttrQZIOIOkUU54kiFhtfqPcV3iD75eD0gehUxPRpwMOIjYroCJ60U1ggrbzDdKN+CC0G8gT9AEI9wtSEv37ZGDpnRdllbzcFdhMp7N2Q9jJ21bUhIRBNRFlWjg3dnjlK41JEciGw24tgM09EGCZvVVOga0AWhseivHUg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785567110; c=relaxed/simple;
-	bh=AwvSx09vXKKqGK3lLoq3hDlF5/CuryJ8a66GzD+4fbU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l0ZkGgufvXf/I2kdo2SuGrrmLRrJEJoISSgdC/ojxTVfpDr9GvITdHTmUpXcg++L4VMTMdOSFmy/ky+4PkRVq9Lxh2eOcU557n/rtZYfQkM3UQkHqyEXQq+BWPnC5if8+dD7XsR3IKINwkT9YNbyH/Cre/grYvXMOlb8OvaDv8U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ge1Am9zv; arc=pass smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B2D352C51
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 06:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785567215; cv=none; b=DJ5qpIT2Re8/jp5Uha7Rq5qnacXk+IlUb4y8iF/wC8Ij9nWmW1EoHc7jZJK3LR0wc57DaDQgg9HfqGE37uQi1WwA64jP65YE82KMCBnJo9mayoGSXUg07qS3chd3dns9WYA4b86piwxwQqG3h/yX4yXssEpS/gO4wUUBmKp/AtM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785567215; c=relaxed/simple;
+	bh=6ezV2Y9KVfrWfrWMNXmk0soejo5gai8maYtuwQpbsRg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=J3/T6Kda2Z5jJOkX/Xi6YFaOTUigXZfY4cO7c4fxcuhMFbp4Dy+UxlM/rzFrI0hjwEEPC/PiOVWXQRyQ9GuxeAROTvkZXnZodGtzs09bvgdIeJhQcFUlXtmDvOgplYQhG3yPX2X/MWZ1otoU/eDdelCTyW9Qwxmvh7AzmRovAd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bi/sRZnf; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ge1Am9zv"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6a0a4a28cbdso1579085a12.3
-        for <git@vger.kernel.org>; Fri, 31 Jul 2026 23:51:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785567107; cv=none;
-        d=google.com; s=arc-20260327;
-        b=N4SjvheW1mKF1jEG6BbAWp6KAKh5KjgnWQSeAqSlaN30X/bChpmBOBH2DseFWpBOu6
-         F7EqoN56t02P0OZy3Rv/diVFD3wugeUW2euFbsOXNZ32nDB93R+pT4hwbYy0NrvoPhSo
-         ewAAV9ao3jk9V3xeU7rQ0lP549hdDp2GRuecvb18mN1JvPJmujcm2GZZglan4GIlzcLq
-         o0Si8+faHR5iLmu5PlHFiHZ35K74sfNTNIntSgd7X2mpY58d88S4d1VzKTYV7BoDM9Ep
-         xNR3gKRJC+EHVYcynKzg9uu5eMvtKFcEr7Dv75okbD1M+Z/GH9YW7DxA27+mHIqSAEh+
-         Zm4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=MtYD5hRHdXdiFVlBMos9IF/ppcAunh2SAbLlk+APR2s=;
-        fh=IXTb2LAiu+vDk1sz53Gu+uX4DWylB9uI4m3Oz8jYq8c=;
-        b=iYiSPKq+lh+8HrZsvp16zAzyBjuJYZD3zFAVZYS5ohWM5s/CKHkWYokekjeGltKKtQ
-         kkyG9e9PK3A52eMfg4fWsApWq2A0kTFvSGi5QFBy+5ZfVFmUHXEEQBa4HdpyG1FleX3f
-         MbNV2cx/NXWPCTo9oe0ZLJrZt3IpgD3QZLGS/opUdbDQxsRnU97pQNWMn8gdYb1pZ3Cr
-         E7ItvUXJmZtsP8lg8VSVyEs9UPX8JDzWf0NCRra3pR85s5nF+WWfzbb773VTMCNPZ0Gh
-         oVfmMEQaV0Un+YTHGFVMk7HSyzIOZG/34dk6z4xLw/G4IyRze/HhHpeE0xSFTbGGbbKx
-         QJ0A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bi/sRZnf"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-84830c774a0so1784174b3a.1
+        for <git@vger.kernel.org>; Fri, 31 Jul 2026 23:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785567107; x=1786171907; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MtYD5hRHdXdiFVlBMos9IF/ppcAunh2SAbLlk+APR2s=;
-        b=Ge1Am9zvzq6Y04BKHGh49MP3uzi2FnMDZlSZ9olT9cXstzQZoqJGleVT8cn+emTRC/
-         PpbDa0K0n+GZ+Mzjs+oXDpOvn/F/jyF/yT5Uej2xKSQdoj2Bi17qJfN4578+twKw6KEt
-         bF14kO1JgmWTNMsa1qFlYryvvzgokGn8R8qMLED0Lx6xd2AKomuLM4tyl91LfJR5P9jH
-         HCzzUo6Yyx2MQmcVHJfdze3unTVV8U9tcy3FOALtRdysLDBeBjqSW3zMVwrZRIbwvngZ
-         8PUVUTfp+pMwJNUf7SHIeJYjRtagOfjtWoc6C/ZGfuyYoMmDHDD0Tpo11QcQ6sq2cLwF
-         OmKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785567107; x=1786171907;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1785567213; x=1786172013; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=MtYD5hRHdXdiFVlBMos9IF/ppcAunh2SAbLlk+APR2s=;
-        b=pM0jFXIUinZUwFDosJsGI8DHutSOuhd2GaOoP25cfjxxOsPiu+AO7QgFVwu99emNPf
-         FAdwZOP+vgcB3sezqSSu8mz5Rv6KtuScli8CNoq93LJIeg5fZdYNEoI8OmbuH1f+aO9r
-         6zKYi128dVoXCmgiPXBh/o6eShdXK7xVYO9zIZSxGmnL71SrMMOA7NYkmXrTaRJrLBRG
-         XLuKF1U2389yp1UxXiSRbUl+GY8brdJQbAaro0kk13ZqPnxavS4rUIBs6B9aiGE4N+0M
-         POEeTBLrq7L3jCULJITff0vGNe78A5vM76pDFnarfbagLnb9qMxdGOqgxSh2QA7Q2PZr
-         q5Tg==
-X-Forwarded-Encrypted: i=1; AHgh+RrQkxUncc5Fn9lEkCEoOtx/JJMjbb2YKFmi779hc+zNhOlfObH+Ixx7NWZRLu32fAJmXHs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+iTBrvxF6trPzvQ8+VyQrSiJb4ufR2LXQTcsexwuLgykAxKiJ
-	ZkuRt0t4KL/7C34e7s3CENmy/eDUntLHMx3S8OYG+zgOj+n4FtrkujkytkHZofmOfD1WfRozhyV
-	LJ1iwDTij2DIUXX3X20sAPJZkGLMEA3hFRZ7g
-X-Gm-Gg: AR+sD12EilFN3GMzpN50YghsraMjlcLbd6Ay1ojIoCFr1yUksZPGr6kM2pU00Jdt41c
-	1nMRm/ssL5iosECWWZ3+NpXvEJNlGdo4Z0w/Ev/z8O3vN0dHAJAHLD029O8EVlAPP4dOclma/RS
-	q+jO8pOf56ZtAiJsxutAIgaOAIj6m0ERdEq9pQsQF5felD4ZCsHYLtdiP9sERPltMfWqb2grAkP
-	9U3bxayaJn9x+XthQilWEb1624BkL2m9TvUej3x308ndF9pP/hbQdBGan8l8z/wLxH+Yycq/rMz
-	Yr2/5GY3zIegXEklpSctqMPex+Q5rPElaOTI0N4O/gAc
-X-Received: by 2002:a05:6402:51c9:b0:698:3469:fa99 with SMTP id
- 4fb4d7f45d1cf-6a0a7bc2d53mr1296086a12.0.1785567107248; Fri, 31 Jul 2026
- 23:51:47 -0700 (PDT)
+        bh=THQiB1D+Og7JJANO9uEtf1HunTOUdg5NwhCEiTIBqWw=;
+        b=bi/sRZnfas4F+QYDkcss43Q5GdmsTXV+H/PTtT143ygc7NKVx/7oYuWJ9LI5Sa0vPi
+         d2ixyFJUiFvsdoG+xQa1ABq0FJJf91v1yvnSH5kSgSLcxz0/mZ/j09GXrzpdd6dXlPuq
+         +VwZWDk1awKrzVd+wfSBiFXUgG69Bzq0GZKZWL4Z/ilIywrTsnPF4zw8d5/0JUeisLro
+         4YkYP/WmoNxM9krApzeOLd6k47Ge2RuPr7dVHZDYaZL+BoIhGyS7J3ImFob+mHoDac2S
+         jqNNbLAsPkNfhIkGn8kyZ1SiSyrapM/OZU51cdSfFVa3lJzwP+hSx1V8EVbutlypXDdE
+         Ur8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785567213; x=1786172013;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=THQiB1D+Og7JJANO9uEtf1HunTOUdg5NwhCEiTIBqWw=;
+        b=gDsBeHLSnTB9oLZgB2i2+8a/cpK81aG8NgQ0Hk0HEoYM8Ccsj44y7fq9tSFzlZAgXc
+         8Lg05YDpEIfmqPbfi93+GTOR0RXVl/wHJZc7CRo3RHvjvL5VCT27EvecIOILCuAVXElz
+         kTlfwE12La5QBduWzlh4YLsPae1rk4KMp9nlWNMBGDFRRvxd8RIlG2lhhDVZP0WWUR9E
+         HSJNj7hmdbOdAn3Xep0ZLOMMPr4L0iTI2E2w55oiGKpn7Rig+mMYtatgcv8tureEHM0n
+         vwstAfdMzyB/xsueLeHYfSK/e+nD/bLYIOXiSvggqVxYsDlUFOupw+mlHJPR0F/EgPwH
+         2WEw==
+X-Gm-Message-State: AOJu0YxM/n836pM07PPz/hUMwtY7oUoO3mCWUfCMhff02RbrxFBrNeob
+	w2dAe+kPA4kLs0bLKgXZR3CkuSN+bJzV1gG7ZP3KG9BrnvwUimE+2JhV4iL5NFii
+X-Gm-Gg: AR+sD13w1NHDVdGqNJeRZ6wi9pQzfNUh1eBdmXHqYgwcNRyJFdopMgFJDzKOsX3bonZ
+	Jeu1hOsf6tHU1RBinwtBaAjuoj+FOKzRbUsAFMqG0SWzCSjHRGh5HhTErsRWHjs7GhQjsTHM9WA
+	GmZEBepeMI7AoIGi2w4J79RR9Q7tfUQ60hoY/pSggy+AlviDTBOvE3vd/NlYU5QtT2a/r5ndUT1
+	U6fHXTxRkv0qvBeuS47fetD0ccnt0K7oxbSXD9w6sfP6w9wevaK2issfdKyS5/Dh+qk9SAE/SjI
+	7dRlQLPkDOoxyOXugv/QAYoWE5Q50Ah/TZLprujmB5fNdumsls43GfhEUkpKnRusvbA+NdlENEF
+	D0BSVwYznXChZ/PhWNAeG90wqLnPz5t1YgYyCl+8kXSK5ul/WptL2rBUCRY7whJ12KVC6A/EKI5
+	n2IF+9wWzzzLw978YrPz7BVXUDE688kgU5EJArDpV6FU2xzu/HFxkFEHehZiHr6HY=
+X-Received: by 2002:a05:6a00:138e:b0:848:53c7:b927 with SMTP id d2e1a72fcca58-84ee494ddd1mr2101150b3a.76.1785567213144;
+        Fri, 31 Jul 2026 23:53:33 -0700 (PDT)
+Received: from [127.0.0.1] ([52.190.138.37])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84edc5221d8sm1336840b3a.53.2026.07.31.23.53.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2026 23:53:32 -0700 (PDT)
+Message-Id: <dd1deb5e5b52a1c585c3f96e6140cbb89fe8d8d8.1785567209.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2337.v11.git.git.1785567209.gitgitgadget@gmail.com>
+References: <pull.2337.v10.git.git.1784536024.gitgitgadget@gmail.com>
+	<pull.2337.v11.git.git.1785567209.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 01 Aug 2026 06:53:26 +0000
+Subject: [PATCH v11 1/4] history: extract helper for a commit's parent tree
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2335.v2.git.git.1784312854.gitgitgadget@gmail.com>
- <pull.2335.v3.git.git.1784538619.gitgitgadget@gmail.com> <542f4b2c8065818b887437add90130d2090fa0f2.1784538619.git.gitgitgadget@gmail.com>
- <faa22968-54ac-4e4f-8324-3326ffb00c5b@kdbg.org>
-In-Reply-To: <faa22968-54ac-4e4f-8324-3326ffb00c5b@kdbg.org>
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Matt Hunter <m@lfurio.us>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
+
 From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sat, 1 Aug 2026 08:51:10 +0200
-X-Gm-Features: AUfX_mwsTpNn-z3H3TtmAzDUJyhyGyYPhczqrs1bA9Krm5okzD0Fq2Hm4LfeqSM
-Message-ID: <CAHwyqnXxkqr6EeT-zpSo5KdJR8KsqDiLM1Jj_Q-G6wmVtsXDBw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] bisect: add --reset-when-found to leave when done
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-> Am 20.07.26 um 11:10 schrieb Harald Nordgren via GitGitGadget:
-> > @@ -784,6 +859,10 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
-> >                       break;
-> >               }
-> >       }
-> > +     if (reset_when_found != RESET_WHEN_FOUND_NONE && no_checkout) {
-> > +             res = error(_("'--reset-when-found' cannot be used with '--no-checkout'"));
->
-> We have a boilerplate text for this kind of error that saves a translation:
+Three places resolve the tree of a commit's first parent, falling back
+to the empty tree for a root commit, each repeating the same parse and
+oidcpy dance. Extract a first_parent_tree_oid() helper and route the
+existing callers through it.
 
-Good point, will fix both.
+No change in behavior.
 
-> > diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> > index 081116220a..7dfb871ab9 100755
-> > --- a/t/t6030-bisect-porcelain.sh
-> > +++ b/t/t6030-bisect-porcelain.sh
-> > @@ -43,6 +43,38 @@ test_bisect_usage () {
-> >       test_cmp expect actual
-> >  }
-> >
-> > +test_bisect_state_file () {
-> > +     test_path_is_file "$(git rev-parse --git-path "$1")"
-> > +}
-> > +
-> > +test_bisect_state_missing () {
-> > +     test_path_is_missing "$(git rev-parse --git-path "$1")"
-> > +}
->
-> These should not use `git` in a $( ) subshell to avoid a case of "ignore
-> failure in upstream of pipe". Note that
->
->         local file=$(git rev-parse ...) &&
->         test_path...
->
-> would be wrong, too, for the same reason. But
->
->         local file
->         file=$(git rev-parse ...) &&
->         test_path...
->
-> works as desired.
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ builtin/history.c | 58 +++++++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 32 deletions(-)
 
-Will update.
+diff --git a/builtin/history.c b/builtin/history.c
+index d28c1f08bb..673744a55a 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -164,6 +164,25 @@ out:
+ 	return ret;
+ }
+ 
++static int first_parent_tree_oid(struct repository *repo,
++				 struct commit *commit,
++				 struct object_id *out)
++{
++	struct commit *parent = commit->parents ? commit->parents->item : NULL;
++
++	if (!parent) {
++		oidcpy(out, repo->hash_algo->empty_tree);
++		return 0;
++	}
++
++	if (repo_parse_commit(repo, parent))
++		return error(_("unable to parse parent commit %s"),
++			     oid_to_hex(&parent->object.oid));
++
++	oidcpy(out, &repo_get_commit_tree(repo, parent)->object.oid);
++	return 0;
++}
++
+ static int commit_tree_with_edited_message(struct repository *repo,
+ 					   const char *action,
+ 					   struct commit *original,
+@@ -171,21 +190,11 @@ static int commit_tree_with_edited_message(struct repository *repo,
+ {
+ 	struct object_id parent_tree_oid;
+ 	const struct object_id *tree_oid;
+-	struct commit *parent;
+ 
+ 	tree_oid = &repo_get_commit_tree(repo, original)->object.oid;
+ 
+-	parent = original->parents ? original->parents->item : NULL;
+-	if (parent) {
+-		if (repo_parse_commit(repo, parent)) {
+-			return error(_("unable to parse parent commit %s"),
+-				     oid_to_hex(&parent->object.oid));
+-		}
+-
+-		parent_tree_oid = repo_get_commit_tree(repo, parent)->object.oid;
+-	} else {
+-		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
+-	}
++	if (first_parent_tree_oid(repo, original, &parent_tree_oid) < 0)
++		return -1;
+ 
+ 	return commit_tree_ext(repo, action, original, original->parents,
+ 			       &parent_tree_oid, tree_oid, out, COMMIT_TREE_EDIT_MESSAGE);
+@@ -475,18 +484,10 @@ static int commit_became_empty(struct repository *repo,
+ 			       struct commit *original,
+ 			       struct tree *result)
+ {
+-	struct commit *parent = original->parents ? original->parents->item : NULL;
+ 	struct object_id parent_tree_oid;
+ 
+-	if (parent) {
+-		if (repo_parse_commit(repo, parent))
+-			return error(_("unable to parse parent of %s"),
+-				     oid_to_hex(&original->object.oid));
+-
+-		parent_tree_oid = repo_get_commit_tree(repo, parent)->object.oid;
+-	} else {
+-		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
+-	}
++	if (first_parent_tree_oid(repo, original, &parent_tree_oid) < 0)
++		return -1;
+ 
+ 	return oideq(&result->object.oid, &parent_tree_oid);
+ }
+@@ -830,16 +831,9 @@ static int split_commit(struct repository *repo,
+ 	struct tree *split_tree;
+ 	int ret;
+ 
+-	if (original->parents) {
+-		if (repo_parse_commit(repo, original->parents->item)) {
+-			ret = error(_("unable to parse parent commit %s"),
+-				    oid_to_hex(&original->parents->item->object.oid));
+-			goto out;
+-		}
+-
+-		parent_tree_oid = *get_commit_tree_oid(original->parents->item);
+-	} else {
+-		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
++	if (first_parent_tree_oid(repo, original, &parent_tree_oid) < 0) {
++		ret = -1;
++		goto out;
+ 	}
+ 	original_commit_tree_oid = get_commit_tree_oid(original);
+ 
+-- 
+gitgitgadget
 
-
-Harald
