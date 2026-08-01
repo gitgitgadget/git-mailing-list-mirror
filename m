@@ -1,71 +1,71 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C25B3B7767
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 17:42:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394893B8D7E
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 17:42:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785606127; cv=none; b=SOHntJanMe3adJWe1SIjsYMS5Ul9La4f6UVDy8xWPjyEe0FwWOLhVeZVP+RfovgL6lwWQZT0cLRlij1ekSz/eC6iJY+kDUhcgpFN+1SnvY4NW46/PP9hN/bRnDCpwiBtLqQGRMqGt/TJ/g0vlo/1o/NY5KNJ6p/A7ANMqzyCcm8=
+	t=1785606127; cv=none; b=MJKgR3/D4wE3rILMpYHLB0KpdQdiosVcyuY4zsJTQELiMFPEdHlB0IGaj7PU6yJEezTY6vXrNXRAmHarwhUkLMuESKTnKIuzyZO8+tPqJLxrJtW2Jk6gI8pkfH/3kuL4iGasa5bVYSUQU/k+FQ9anWbjCuiGuw1Letx0f9Y+4Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785606127; c=relaxed/simple;
-	bh=BmOqBo42jFklb/aXGSwqiZW5lGVJCqzuceCQYktADCQ=;
+	bh=eJWV2ny+fsTRNj21uu1eKSfstJN+yluHSkZeHtUj6YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTiZAiSwqDwWI9FU6DWZFMxZ/9GL/3qb6fY9/b0TK8G1UEmGrijabW4wOmUYBVG1J0fyeH1UrcNdwdtywV+qlLFZ0HSuSKA3LCeFzZdb+KIOcXduAIQhr46dutj2fsx5yPtXY8vPs9hoqQjtSCQSq4LoSF9dWqzh2jrME2oI7I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mP3IYkHt; arc=none smtp.client-ip=209.85.216.54
+	 MIME-Version; b=NgXjxS/pAKdjmwqeD1X1mdmrjJla+nQ5cpgQrDR8EYpad47qdUty9aXqPuUClk3ZEiEnilHlCD7wRjCCbDOSRDBYKKB8qvpZbpVM08QkGRKU0M2esVN0RH8bWCn5TsmOhWVVnImQUiLnhWNNZ9rsOXTQdHrd+pOnxKfuEUu/G/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cdz0bbrc; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mP3IYkHt"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-38dcbade417so1957953a91.1
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 10:42:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cdz0bbrc"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cacb8416a1so20578335ad.1
+        for <git@vger.kernel.org>; Sat, 01 Aug 2026 10:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1785606123; x=1786210923; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ktuXZ0th2gGgTBFFZgIdyKIoy0IBSoRnylMYy+hxgow=;
-        b=mP3IYkHtOCMoYEfc8l5iuV/MhTSbX8EXscZwWSjf8JR/T4wrnCc0bKStnHVd0APUEd
-         4JxPkmcDgW+QdkA1sKwhkoqPy9E2Ji6UmulWByFC+NaXF88F0kBOZAYtjJmAoEzPS/wz
-         G1M0Wws4kQH2ATK8PDC6+zCb76NKbkFWoYBvpp6Cta45n4GzONEY1PYzP9OHnBYprqwS
-         vMw25CePkgEDcIndx2aekDkA5vZAuK2a2ghvpRgQ048tpARWnQrJ0wlThSpJUYrp3Y+0
-         1UPBVLqG5N8dFNHzLhi8++Vk+3VS5qRrInjxDdt5xvXYkFRpUV+x5GasY5lcWj56CxI8
-         q9gg==
+        bh=BRCBzjmvPRnDUkC7HTpk878PQl51o717vnLA93um28Q=;
+        b=Cdz0bbrcMDh8jPklOLQY+ljg06fJsGbcDGKZD2nIOKlaYd8tT7ulNlgW8IGrdmWwXU
+         7AjRud9TZz190P9Dw5CGCHMYVHvR9Q23OEH6+jbFapzMKKERdyGmf6AurIM3WsfHtN57
+         Ja3RU5QMTntJNyEmu+pNRV9HfALijXwbFc0zIb++4t7h5eNecHYUF2D9Te6JwHOLNh17
+         ciGEyKI5+l9hXkUF6PX5LlW5cAy5TLCrTEuJh8j/JQqtTbjB5w7+uqiq+U67O/GBEMe2
+         GJ/nxHm9DywMJqJTdA6Ulu3Tf5ePTV3sHtqCDbMnn6gVeURkSe5YEC6amHFZBLbVksjq
+         s18A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1785606123; x=1786210923;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ktuXZ0th2gGgTBFFZgIdyKIoy0IBSoRnylMYy+hxgow=;
-        b=s5I7W3C10OjoAe9uhDOjKqlEbbHC5TCxNRf2PD0s79VgK9o9dj1WrOSUVPekgZ6nYK
-         MRmbd+wlPTfuk4+LfYpsEPRtdFSj+MpiFGqb9FOfTvE97R3vANJBxUOGLC4dZSFbExFF
-         86KBrheH/CMmlycf88fU3ftJK6Ls0up9ZXVa140zadwandWEEd4FmkVADoGlqeEakZ/a
-         z6kaEkWn+3lioxaG6DM2x/E9BzTIWEZPV4qz4GViIjt+X//PyChxSwY0oeAbP+DREL+U
-         Y2uNYls0QxlHjWZBMwwC81ckTb+rSYIS36eJ2ydzW9bWsVfdEYyxczVdPT4pNA4k22Ys
-         7NDA==
-X-Gm-Message-State: AOJu0YzwVgJvhKAprFl/alIW1eohrPz6otPhcD4N92hSHbuZHr/0cbRq
-	UfKorvaGNgwqlkbkoEE+nOcRI3Qympex4Dvx0v3/H+6z7h6yZLCOrIgNaXc/bg==
-X-Gm-Gg: AR+sD12fpEiJUsWGOBJ86UgDM5RFyIkSHe2XW6NFz8o9iTKIRrUtswtok45NaJVl0FU
-	VxYyyk/Sjk03M9cWUE/r5A4rAOfMTT4LORgSGOkZ9aKY6PArmXz5girWfNYiWCGKzATeuuQevZF
-	YxP6EQlfxf/e9lpA0x8SPyZ13KyVVacGnmd6Q1WCAd6LYi5AL7lqFKg0Wc2pSboa6Sa3eu0Y9Md
-	IA8+XHtVJD8LiKcdFaQwXsrR8avujxLzFAbUA4qPE9mq03ujv0qISTNDVJQQ7e5LD+UKw02fVNs
-	6gFaJ/C2vjAuNZqDh2h2IR3tBgQcIRpwQL1YVcNwvbSf8hYBX2eWEOZh4/r3hq4WpJC/NpoSz0T
-	VAw0in3RkllfSk9EE6WITVXbCLyQWQjtk/rTIGzGUTu7qwbs/Jurog3K7yfzInfCiTYKuyJmqrj
-	uaftYQQ/5G8pyv0aDFYtNWHqHmhSB3K5ZuXbVwX9Jw4gLT3D7lx9vx8ugQKaM1Hsr4DwHnMmZ9D
-	gJF+ysfeJR6AFWc5S3mvYrDepb/eI5KsuupyickOVSONRUsAmSTPKsCH//s7CYqCZ6OVIBQGUyF
-	U37hmvG18Ealh5V/5tjDCAxijje5lpD+/FLkvn/zcvOvD7XpDz+K9xgJ
-X-Received: by 2002:a17:903:1a4d:b0:2cc:df15:91de with SMTP id d9443c01a7336-2d0524a2b59mr41031895ad.42.1785606121577;
-        Sat, 01 Aug 2026 10:42:01 -0700 (PDT)
+        bh=BRCBzjmvPRnDUkC7HTpk878PQl51o717vnLA93um28Q=;
+        b=d9+Ln/NdKIoGHZguH6oJml49kJx0zVYm2epTgIaOOBUlsnw93lnFfgEmrlZAdJgyQD
+         +e0uZ3lOXVwUt7DHh+pB8BniJ06s+wKzfnx/DOdox7nDGFm/4A5PxqqECRVLHAmh/VRu
+         3oxaD/nCb1L3t0Yr2bYJpUXMvlU2cqxdXmgkVW62nHiAy+8gWPWaNmhIVLB3TnVovomo
+         pDoQIJpMJqb5I9UKmodQE+cpoAhgilvOlP12fVrdY3WU4VZEcZsevVe4qwdTcxYADqFd
+         GnWiT6HSkyMX24bK8UoH5vvI0KdhVrYtSZYGtCE5NN2F02pG2yQqfHtqniiV3gRtCtSS
+         dZoA==
+X-Gm-Message-State: AOJu0Yytx8SdCcLUB2lNiRrVZVtoLqNWQKzsMWaSsn1ppmO66Huy8w+h
+	DKb95TnNCN49pQiujA9VhwkeBKh+hdCAElOx2+0e4iF4e7rXkdij4HD6J7KQ2w==
+X-Gm-Gg: AR+sD115AAdz4g75AFRPH4by/nNMB270p90bhoCpO1Zc69dVwvjYKyqFepVOdyf6EqY
+	vCUMZqThqhmOKDMrs5BzYblj2DJvUIrV9fJc83YsC6TL9A1MHzzilDKCaUs2BOXdxYfjGbNIrRT
+	BpLdR9WiS0awwivdnOs5GwetAXZps7JEZk9NYz3/12fHp720Fcbx1ZvrYb/uN3xgFcb5HjEmCaD
+	3QSu6DuDieqY715g49Gwfz9TEE7tnVE1ja+yjnoRSolphreIN2399BrlS35nRtg8sHUUyNQ8rqQ
+	rde/iOzUqCRw1Y9nvo+4YSff01y2nDtnGpAlQBH1qktwEy/lHLIsCOjYQAdPhtVjwW+fyloeyOz
+	4SK4JIj//YObDEeBlKfx5epgutWOVCt1P3qykGYvuCpQs+wK2snRcgPHWbTpG3spD8mVzI2ExZE
+	hXuD1m3S3ijVNh4eh9UrSZ6pXFh26kFUDWoJkWRx47Gri4cK0sV/jg6dPFvkDBmzlP4Ex8Vn6lJ
+	c8lqLta5Nj/KS1yI+Zjs8Lbf4Kvr8jF+PKWDRuwDmsM4fASI1VQajKsRAbk677odMcmLoR2MsAw
+	BLneo7o8YqHuyPBpPP0NFkHimVczTd8QIniHn92ErAx3GfY=
+X-Received: by 2002:a17:903:11c3:b0:2ca:b48f:3395 with SMTP id d9443c01a7336-2d0523bf980mr40400635ad.34.1785606122919;
+        Sat, 01 Aug 2026 10:42:02 -0700 (PDT)
 Received: from localhost (192-184-169-91.fiber.dynamic.sonic.net. [192.184.169.91])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153dd4e5b0sm17792849eec.1.2026.08.01.10.42.00
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153e04491dsm26940659eec.16.2026.08.01.10.42.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Aug 2026 10:42:00 -0700 (PDT)
+        Sat, 01 Aug 2026 10:42:02 -0700 (PDT)
 From: Michael Montalbo <mmontalbo@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [RFC PATCH v7 03/10] diff-hunks: add the store format, library, and command
-Date: Sat,  1 Aug 2026 10:41:46 -0700
-Message-ID: <20260801174156.2998808-4-mmontalbo@gmail.com>
+Subject: [RFC PATCH v7 04/10] diff: record precomputed hunks during stat output
+Date: Sat,  1 Aug 2026 10:41:47 -0700
+Message-ID: <20260801174156.2998808-5-mmontalbo@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260801174156.2998808-1-mmontalbo@gmail.com>
 References: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
@@ -78,1918 +78,1440 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Blame and "git log --stat" recover hunk coordinates by diffing blob
-pairs, and recompute them on every run.  Add a cache of those
-coordinates at $GIT_DIR/objects/info/diff-hunks, beside the
-commit-graph, so a later run can look them up instead of decompressing
-the blobs and running xdiff again.
+The diff-hunks store has a writer, but nothing fills it.  Teach
+builtin_diffstat() to do so: on a warming run (a writer is attached), a
+modified pair's stat is produced by collecting the pair's hunk
+coordinates instead of emitting text, the counts are summed from those
+hunks, and the pair is recorded.  A run without a writer is unchanged,
+and nothing reads the store yet; the read side arrives next.
 
-The store is a single chunk-format file (see gitformat-chunk(5)): an
-8-byte header, a DHIX index of fixed-size entries sorted by key, a DHDT
-segment of hunk records, and a trailing hash checksum.  An entry is
-keyed by the two blob object ids and the xdl_opts the pair was diffed
-under, so a stored result is served only where that exact key recurs,
-independent of path.  A zero-context diff trims unchanged lines from
-hunk edges and can pick a different but equally valid set of hunks than
-an untrimmed diff, so a recording caller stores a pair only when its
-trimmed and untrimmed diffs are identical; such an entry answers any
-consumer at any context, and the rare divergent pair is always
-computed.  Identical hunk blocks are interned once and shared across
-keys.
+The store records one context-free entry per pair, and only for a
+trim-stable pair: one whose zero-context trimmed diff (what blame will
+read) and untrimmed diff (whose counts a nonzero-context stat matches)
+are identical.  The warming path computes both and hands them to
+diff_hunks_writer_record_stable(), new here, which records only when
+they agree; a divergent pair is never recorded and every consumer
+computes it.  The warming run displays the counts it shows a store-less
+run: the trimmed ones, since xdi_diff trims at zero context, while the
+untrimmed counts serve only the stability comparison.
 
-The library provides a reader (repo_diff_hunks_store and _replay, gated
-by core.diffHunks), loaded once and cached on the object database as the
-commit-graph is, and a writer that accumulates entries and flushes them
-in one atomic pass.  An absent, corrupt, or disabled store reads as all
-misses.  A record with no hunks is invalid too: replaying it would claim
-the pair equivalent, which the store never asserts, so it reads as a
-miss.
+Not everything the stat path computes may be recorded.
+--ignore-blank-lines is part of the key, but it coalesces hunks
+differently between the text-emitting and coordinate-callback paths, so
+a recorded entry would not match a store-less run's --stat.  -I
+patterns, --anchored, and break detection (-B) shape the diff outside
+the key entirely; the guard for those three sits in this consumer for
+now and moves into the store's own provider when it registers, next.  A
+"log -L" range-scoped stat is not the whole-pair diff the key describes,
+so it does not record.  Recording also requires both sides to be valid
+regular files whose blobs the key can name: a working-tree side,
+textconv output, or a gitlink has no usable id.
 
-Ordinary reads are diagnostic-free.  Loading parses the chunk table
-through read_table_of_contents_quiet(), new in chunk-format, which
-prints nothing on a malformed table and takes the repository's hash
-algorithm rather than the_hash_algo, so the file is bounds-checked under
-the algorithm it is keyed by.
+"git diff", "git log", "git show", and "git diff-tree" with the --stat,
+--numstat, and --shortstat formats attach a writer when writing is
+enabled and flush it when the traversal finishes, so a warming run such
+as
 
-The flush closes the repository's mmapped store and forgets that loading
-was attempted before committing the lockfile.  A warming run that also
-reads may hold the file it is replacing mapped, and the rename must not
-land on a live mapping, which Windows refuses; a read after the flush
-then observes the committed file.  commit-graph closes its graph before
-committing for the same reason.
+        GIT_DIFF_HUNKS_WRITE=1 git log --all --stat >/dev/null
 
-Writing is off by default, enabled per run by GIT_DIFF_HUNKS_WRITE or
-persistently by diffHunks.write, the environment winning.  A writer
-seeds from the existing store, so a flush merges rather than replaces.
-The seed's checksum is verified first: a corrupt store is discarded, not
-rewritten with a fresh checksum verify could no longer catch.  An entry
-that fails the shared diff_provider_check_hunk() or names no blob is
-dropped with a warning, since it would only ever read as a miss.  A seed
-that discarded or dropped anything forces the flush even when the
-warming run computed nothing new.  The writer fsyncs through a new
-diff-hunks core.fsync component.
+fills the cache as a side effect of the diff work the command already
+does.  Writing is controlled by diffHunks.write and GIT_DIFF_HUNKS_WRITE.
 
-"git diff-hunks" inspects and manages the file: "verify" checks the
-checksum, chunk table, sort order, entry bounds, and every entry's hunk
-sequence against that shared check, so a store whose entries could only
-read as misses fails verify; "clear" removes the file.  Later patches
-wire the readers and the writer into the diff and blame paths.
+Add the write half of t4220:
+
+- ordinary commands never create the store, and creation is gated off
+  by default, the environment overriding the config;
+- a warming run builds a store that verifies, and a second refreshes it
+  in place;
+- a warming run displays parity at zero context on a trim-divergent
+  pair, committed as a fixture (small synthetic pairs cannot diverge:
+  minimal diffs add and delete equal counts, and trimming preserves
+  that);
+- binary and mode-only pairs do not break the writer;
+- a corrupt store is discarded at seed;
+- verify and clear run against the files a warming run builds.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- .gitignore                              |   1 +
- Documentation/Makefile                  |   1 +
- Documentation/config.adoc               |   2 +
- Documentation/config/core.adoc          |  10 +-
- Documentation/config/diff-hunks.adoc    |   8 +
- Documentation/git-diff-hunks.adoc       | 146 ++++
- Documentation/gitformat-diff-hunks.adoc | 129 ++++
- Documentation/meson.build               |   2 +
- Makefile                                |   2 +
- builtin.h                               |   1 +
- builtin/diff-hunks.c                    |  53 ++
- chunk-format.c                          |  62 +-
- chunk-format.h                          |  14 +
- command-list.txt                        |   2 +
- diff-hunks.c                            | 916 ++++++++++++++++++++++++
- diff-hunks.h                            | 117 +++
- environment.c                           |   1 +
- git.c                                   |   1 +
- meson.build                             |   2 +
- odb.c                                   |   2 +
- odb.h                                   |   4 +
- repo-settings.c                         |   1 +
- repo-settings.h                         |   1 +
- write-or-die.h                          |   7 +-
- 24 files changed, 1467 insertions(+), 18 deletions(-)
- create mode 100644 Documentation/config/diff-hunks.adoc
- create mode 100644 Documentation/git-diff-hunks.adoc
- create mode 100644 Documentation/gitformat-diff-hunks.adoc
- create mode 100644 builtin/diff-hunks.c
- create mode 100644 diff-hunks.c
- create mode 100644 diff-hunks.h
+ builtin/diff-tree.c        |   3 +
+ builtin/diff.c             |  10 ++
+ builtin/log.c              |   7 +
+ diff-hunks.c               |  32 ++++
+ diff-hunks.h               |  18 ++-
+ diff.c                     | 218 +++++++++++++++++++++----
+ diff.h                     |  17 ++
+ t/meson.build              |   1 +
+ t/t4220-diff-hunks.sh      | 184 +++++++++++++++++++++
+ t/t4220/README             |  55 +++++++
+ t/t4220/trim-divergent-new | 319 +++++++++++++++++++++++++++++++++++++
+ t/t4220/trim-divergent-old | 316 ++++++++++++++++++++++++++++++++++++
+ 12 files changed, 1150 insertions(+), 30 deletions(-)
+ create mode 100755 t/t4220-diff-hunks.sh
+ create mode 100644 t/t4220/README
+ create mode 100644 t/t4220/trim-divergent-new
+ create mode 100644 t/t4220/trim-divergent-old
 
-diff --git a/.gitignore b/.gitignore
-index 4da58c6754..4173111c01 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -56,6 +56,7 @@
- /git-diagnose
- /git-diff
- /git-diff-files
-+/git-diff-hunks
- /git-diff-index
- /git-diff-pairs
- /git-diff-tree
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 2699f0b24a..170fcee66e 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -33,6 +33,7 @@ MAN5_TXT += gitattributes.adoc
- MAN5_TXT += gitformat-bundle.adoc
- MAN5_TXT += gitformat-chunk.adoc
- MAN5_TXT += gitformat-commit-graph.adoc
-+MAN5_TXT += gitformat-diff-hunks.adoc
- MAN5_TXT += gitformat-index.adoc
- MAN5_TXT += gitformat-loose.adoc
- MAN5_TXT += gitformat-pack.adoc
-diff --git a/Documentation/config.adoc b/Documentation/config.adoc
-index 1ef72de62f..8a172d52f3 100644
---- a/Documentation/config.adoc
-+++ b/Documentation/config.adoc
-@@ -472,6 +472,8 @@ include::config/credential.adoc[]
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 8b8f8b54e4..296c6a137e 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -170,6 +170,8 @@ int cmd_diff_tree(int argc,
  
- include::config/diff.adoc[]
+ 	opt->diffopt.rotate_to_strict = 1;
  
-+include::config/diff-hunks.adoc[]
-+
- include::config/difftool.adoc[]
- 
- include::config/extensions.adoc[]
-diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-index a0ebf03e2e..9595619c61 100644
---- a/Documentation/config/core.adoc
-+++ b/Documentation/config/core.adoc
-@@ -670,12 +670,13 @@ but risks losing recent work in the event of an unclean system shutdown.
- * `pack` hardens objects added to the repo in packfile form.
- * `pack-metadata` hardens packfile bitmaps and indexes.
- * `commit-graph` hardens the commit-graph file.
-+* `diff-hunks` hardens the diff-hunks store.
- * `index` hardens the index when it is modified.
- * `objects` is an aggregate option that is equivalent to
-   `loose-object,pack`.
- * `reference` hardens references modified in the repo.
- * `derived-metadata` is an aggregate option that is equivalent to
--  `pack-metadata,commit-graph`.
-+  `pack-metadata,commit-graph,diff-hunks`.
- * `committed` is an aggregate option that is currently equivalent to
-   `objects`. This mode sacrifices some performance to ensure that work
-   that is committed to the repository with `git commit` or similar commands
-@@ -750,6 +751,13 @@ core.commitGraph::
- 	to parse the graph structure of commits. Defaults to true. See
- 	linkgit:git-commit-graph[1] for more information.
- 
-+core.diffHunks::
-+	If true, then Git will consult the diff-hunks store (if it
-+	exists) to skip recomputing diff hunk coordinates in commands
-+	such as `git log --stat` and linkgit:git-blame[1]. This controls
-+	only reading; writing the store is controlled by `diffHunks.write`.
-+	See linkgit:git-diff-hunks[1] for more information. Defaults to true.
-+
- core.useReplaceRefs::
- 	If set to `false`, behave as if the `--no-replace-objects`
- 	option was given on the command line. See linkgit:git[1] and
-diff --git a/Documentation/config/diff-hunks.adoc b/Documentation/config/diff-hunks.adoc
-new file mode 100644
-index 0000000000..ad76d1c6a9
---- /dev/null
-+++ b/Documentation/config/diff-hunks.adoc
-@@ -0,0 +1,8 @@
-+diffHunks.write::
-+	If true, diff-producing commands (`git diff`, `git log`,
-+	`git show`, or `git diff-tree` with a `--stat`, `--numstat`, or
-+	`--shortstat` format) write the hunks
-+	they compute to the diff-hunks store, filling it as a side effect.
-+	The `GIT_DIFF_HUNKS_WRITE` environment variable overrides this for
-+	a single invocation. Reading the store is controlled separately by
-+	`core.diffHunks`. See linkgit:git-diff-hunks[1]. Defaults to false.
-diff --git a/Documentation/git-diff-hunks.adoc b/Documentation/git-diff-hunks.adoc
-new file mode 100644
-index 0000000000..25cab2ea7d
---- /dev/null
-+++ b/Documentation/git-diff-hunks.adoc
-@@ -0,0 +1,146 @@
-+git-diff-hunks(1)
-+=================
-+
-+NAME
-+----
-+git-diff-hunks - Inspect and manage the diff-hunks store
-+
-+SYNOPSIS
-+--------
-+[synopsis]
-+git diff-hunks verify
-+git diff-hunks clear
-+
-+DESCRIPTION
-+-----------
-+
-+The diff-hunks store is a cache of diff hunk coordinates, the line
-+ranges that changed between two blobs, so that commands
-+which need them, such as linkgit:git-blame[1] and `git log` and `git diff`
-+with the `--stat`, `--numstat`, and `--shortstat` formats, can skip
-+running the diff algorithm, and blame can skip loading the blob
-+content. (The summary formats still test each pair for binariness,
-+which can load the blobs.)
-+
-+The store is a single file, `$GIT_DIR/objects/info/diff-hunks`. Reading is
-+enabled by default; writing is off by default. A `git diff`, `git log`,
-+`git show`, or `git diff-tree` that produces one of the stat formats
-+fills the store as a side effect, but only when writing is enabled for
-+that run (see "WARMING THE STORE" below), so ordinary reads never
-+modify the repository. When the store does not have the pair, holds a
-+different object hash, the file is unreadable, or an object replacement
-+redirects one of the blobs, the consumer falls back to computing the
-+diff. A store only speeds up these commands; it never changes their
-+output.
-+
-+`git diff-hunks` itself only inspects and manages the file. See
-+linkgit:gitformat-diff-hunks[5] for the file format.
-+
-+WARMING THE STORE
-+-----------------
-+
-+The store is filled by running ordinary commands with writing enabled.
-+Turn writing on for a single invocation with the `GIT_DIFF_HUNKS_WRITE`
-+environment variable, or persistently with the `diffHunks.write`
-+configuration; the environment variable takes precedence. A repository
-+owner warms the store by running the diff-producing commands they care
-+about with writing on, for example:
-+
-+	GIT_DIFF_HUNKS_WRITE=1 git log --all --stat >/dev/null
-+
-+A `--stat` walk records one entry per blob pair;
-+linkgit:git-blame[1] replays the coordinates and the summary formats
-+sum the counts, so a single warming walk serves both.
-+A warming run seeds from the existing store and rewrites the file
-+with the newly computed pairs merged in, so a later run adds to what
-+earlier runs recorded rather than discarding it.
-+
-+A walk records only the pairs it diffs. `git log --all --stat` diffs
-+each commit against its first parent, so a blame that follows a
-+merge's second parent computes those pairs itself: blame coverage is
-+partial on history with merges. Warming with a walk that also diffs
-+the other parents, for example `git log --all -m --stat`, raises
-+blame coverage at the cost of a larger store and a longer warming
-+run.
-+
-+COMMANDS
-+--------
-+
-+`verify`::
-+	Check the integrity of the store: the trailing hash checksum, the
-+	chunk table of contents, the sort order of the index, and the
-+	bounds of every entry. Exits with non-zero status if the store is
-+	corrupt. An absent store is valid.
-+
-+`clear`::
-+	Remove the store file.
-+
-+CORRECTNESS
-+-----------
-+
-+A stored result is interchangeable with a freshly computed one because an
-+entry is keyed by the inputs that determine the diff:
-+
-+* the object IDs of the old and new blob, so a result is used only for
-+  the exact contents it was computed from; and
-+* the diff algorithm and ignore flags (`xdl_opts`) the hunks were
-+  computed under. A lookup whose `xdl_opts` differ from a stored entry
-+  misses. This is why, for example, `blame -w` and
-+  `--diff-algorithm=<algorithm>` (including a per-path
-+  `diff.<driver>.algorithm`) do not reuse entries recorded under the
-+  default settings: they change `xdl_opts`.
-+
-+The context length is not part of the key because only trim-stable
-+pairs are recorded: pairs whose zero-context trimmed diff and untrimmed
-+diff are identical, so one entry answers blame (zero context) and the
-+summary formats (any context) alike. The rare pair where
-+the zero-context trimming optimization picks a different but
-+equally valid set of hunks is
-+never recorded and is always computed.
-+
-+Some options shape the hunks in ways the key does not express, so a
-+diff that uses them is excluded from the store in both directions:
-+break detection (`-B`), `--ignore-matching-lines` (`-I`), and
-+`--anchored`. `--ignore-blank-lines` is different: it is an ignore
-+flag and therefore part of the key, but the summary formats exclude
-+it anyway, because it coalesces hunks differently between the code
-+path that emits text and the one that replays coordinates, so a
-+served answer would not match a store-less run.
-+linkgit:git-blame[1] additionally does not
-+consult the store for reverse blame, ignored revisions, or paths with a
-+textconv driver.
-+
-+The store carries a trailing hash checksum, but readers do not
-+re-checksum it on every load. As with the commit-graph and
-+multi-pack-index, the writer fsyncs the file (honoring `core.fsync`) and
-+commits it atomically, so a committed store is intact; every offset and
-+count is still bounds-checked as it is read. The checksum is verified by
-+`git diff-hunks verify`, not on the read path, so structural corruption
-+that fails a bounds check is read as an absent entry, while a record
-+that stays within bounds but whose bytes were altered is served until
-+`verify` detects the mismatch.
-+
-+CONFIGURATION
-+-------------
-+
-+`core.diffHunks`::
-+	Whether commands read the store. Defaults to true. See
-+	linkgit:git-config[1].
-+
-+`diffHunks.write`::
-+	Whether diff-producing commands write to the store. Defaults to
-+	false. The `GIT_DIFF_HUNKS_WRITE` environment variable overrides it
-+	for a single invocation. See linkgit:git-config[1].
-+
-+Writing the store honors the `core.fsync` configuration through the
-+`diff-hunks` component; see linkgit:git-config[1].
-+
-+SEE ALSO
-+--------
-+linkgit:git-blame[1],
-+linkgit:git-log[1],
-+linkgit:gitformat-diff-hunks[5]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/gitformat-diff-hunks.adoc b/Documentation/gitformat-diff-hunks.adoc
-new file mode 100644
-index 0000000000..f75ab73dd9
---- /dev/null
-+++ b/Documentation/gitformat-diff-hunks.adoc
-@@ -0,0 +1,129 @@
-+gitformat-diff-hunks(5)
-+=======================
-+
-+NAME
-+----
-+gitformat-diff-hunks - Precomputed diff hunk store format
-+
-+SYNOPSIS
-+--------
-+[verse]
-+$GIT_DIR/objects/info/diff-hunks
-+
-+DESCRIPTION
-+-----------
-+
-+The diff-hunks store memoizes diff hunk coordinates so that commands
-+that need them, such as `git log --stat` and linkgit:git-blame[1], can
-+skip running the diff algorithm (and, for blame, loading the blob
-+content; the summary formats still test each pair for binariness,
-+which can load the blobs). See
-+linkgit:git-diff-hunks[1] for how the store is filled and managed and the
-+configuration that controls it.
-+
-+The store is a single file, `$GIT_DIR/objects/info/diff-hunks`, written
-+in one pass and replaced atomically, so a reader sees either the old
-+file or the complete new one.
-+
-+Entries are keyed by the object IDs of the blob pair that was diffed
-+and by the diff algorithm and ignore flags (`xdl_opts`) the pair was
-+diffed under. A blob pair fully determines the diff input, so an entry
-+is valid regardless of which commits, branches, or index states the
-+pair was encountered in, and identical diffs performed in different
-+contexts share one entry. A reader whose `xdl_opts` differ from an
-+entry does not match it and falls back to computing the diff.
-+
-+FILE FORMAT
-+-----------
-+
-+All multi-byte integers are stored in network byte order. The file is an
-+8-byte header, the chunk table of contents and chunk data described in
-+linkgit:gitformat-chunk[5], and a trailing checksum.
-+
-+HEADER
-+~~~~~~
-+
-+- 4-byte signature: `DHPF` (diff-hunks precomputed format)
-+- 1-byte version number: currently 1
-+- 1-byte hash version: 1 for SHA-1, 2 for SHA-256. A store whose hash
-+  function differs from the repository's is ignored.
-+- 1-byte number of chunks
-+- 1-byte reserved
-+
-+CHUNK LOOKUP
-+~~~~~~~~~~~~
-+
-+A table of contents in the format of linkgit:gitformat-chunk[5], listing
-+the offset of each chunk. Both chunks below are required; a file missing
-+either is treated as corrupt.
-+
-+CHUNK DATA
-+~~~~~~~~~~
-+
-+DHIX (index)::
-+	A sorted sequence of fixed-size entries. Each entry is the old
-+	blob object ID, the new blob object ID, a 4-byte `xdl_opts`
-+	value, and a 4-byte offset into the DHDT chunk. Entries are
-+	sorted by old object ID, then new object ID, then `xdl_opts`,
-+	so lookups can use binary search on the full key.
-+
-+DHDT (hunk data)::
-+	For each index entry, at its offset: a 4-byte hunk count followed
-+	by that many 16-byte hunk records. A hunk record is four 4-byte
-+	values: old start, old count, new start, new count.
-+	Starts are 0-based line numbers in the old and new blob; counts
-+	are numbers of lines. The hunk count is at least 1: a record with
-+	no hunks would claim the blob pair equivalent, which the store
-+	never records, so readers treat such a record as invalid.
-+	Identical hunk blocks are stored once:
-+	distinct index entries whose recorded hunks are byte-for-byte
-+	equal point at the same offset.
-+
-+TRAILER
-+~~~~~~~
-+
-+A checksum of all preceding bytes, computed with the repository hash
-+function.
-+
-+CORRECTNESS
-+-----------
-+
-+Serving hunks from a valid store produces the same output as recomputing
-+the diff. The diff of a blob pair is not unique: a zero context length
-+triggers xdiff's common-tail trimming, which can pick a different but
-+equally valid set of hunks than an untrimmed diff does. A pair is
-+therefore recorded only when its trimmed and untrimmed diffs are
-+identical, which is the common case. Such an entry answers any consumer
-+at any context: git-blame replays its coordinates directly (it diffs at
-+zero context), and diffstat sums its per-hunk line counts, which the
-+context length does not change. The rare pair whose two diffs differ is
-+never recorded, so every consumer computes it.
-+
-+A store that cannot be used is ignored, and the consumer falls back to
-+computing the diff. Every offset and count read from the file is
-+bounds-checked, so a store that is missing, truncated, of an unknown
-+version, or of a different object hash does not change the diff output
-+and does not produce a diagnostic; `git diff-hunks verify` is what
-+reports corruption.
-+
-+The store is not re-checksummed on the read path. The writer fsyncs the
-+file (honoring `core.fsync`) and commits it atomically, so a
-+committed store is intact, the same trust model the commit-graph and
-+multi-pack-index use. The trailing checksum is recomputed by
-+`git diff-hunks verify` to detect corruption.
-+
-+The checksum detects corruption but does not prove who wrote the file. A
-+reader trusts the coordinates in a store that passes its checks, so
-+anything able to write a checksum-valid file at the store path can
-+influence output, the same as it could by writing objects directly.
-+
-+LIMITATIONS
-+-----------
-+
-+- Hunk counts, offsets, and line coordinates are 32-bit, capping the
-+  hunk data at 4 GiB and a single entry at roughly 268 million hunks.
-+  A result whose coordinates cannot be represented is not recorded.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index f4854f802d..85f37da47e 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -41,6 +41,7 @@ manpages = {
-   'git-describe.adoc' : 1,
-   'git-diagnose.adoc' : 1,
-   'git-diff-files.adoc' : 1,
-+  'git-diff-hunks.adoc' : 1,
-   'git-diff-index.adoc' : 1,
-   'git-diff-pairs.adoc' : 1,
-   'git-difftool.adoc' : 1,
-@@ -175,6 +176,7 @@ manpages = {
-   'gitformat-bundle.adoc' : 5,
-   'gitformat-chunk.adoc' : 5,
-   'gitformat-commit-graph.adoc' : 5,
-+  'gitformat-diff-hunks.adoc' : 5,
-   'gitformat-index.adoc' : 5,
-   'gitformat-loose.adoc' : 5,
-   'gitformat-pack.adoc' : 5,
-diff --git a/Makefile b/Makefile
-index 50c96807d6..11a06934b3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1159,6 +1159,7 @@ LIB_OBJS += diffcore-order.o
- LIB_OBJS += diffcore-pickaxe.o
- LIB_OBJS += diffcore-rename.o
- LIB_OBJS += diffcore-rotate.o
-+LIB_OBJS += diff-hunks.o
- LIB_OBJS += dir-iterator.o
- LIB_OBJS += dir.o
- LIB_OBJS += editor.o
-@@ -1421,6 +1422,7 @@ BUILTIN_OBJS += builtin/credential.o
- BUILTIN_OBJS += builtin/describe.o
- BUILTIN_OBJS += builtin/diagnose.o
- BUILTIN_OBJS += builtin/diff-files.o
-+BUILTIN_OBJS += builtin/diff-hunks.o
- BUILTIN_OBJS += builtin/diff-index.o
- BUILTIN_OBJS += builtin/diff-pairs.o
- BUILTIN_OBJS += builtin/diff-tree.o
-diff --git a/builtin.h b/builtin.h
-index 4e47a4ebd3..7e64da9f43 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -175,6 +175,7 @@ int cmd_credential_store(int argc, const char **argv, const char *prefix, struct
- int cmd_describe(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_diagnose(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_diff_files(int argc, const char **argv, const char *prefix, struct repository *repo);
-+int cmd_diff_hunks(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_diff_index(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_diff(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_diff_pairs(int argc, const char **argv, const char *prefix, struct repository *repo);
-diff --git a/builtin/diff-hunks.c b/builtin/diff-hunks.c
-new file mode 100644
-index 0000000000..3aea2dad56
---- /dev/null
-+++ b/builtin/diff-hunks.c
-@@ -0,0 +1,53 @@
-+#include "builtin.h"
-+#include "config.h"
-+#include "diff-hunks.h"
-+#include "gettext.h"
-+#include "parse-options.h"
-+#include "repository.h"
-+
-+static const char * const diff_hunks_usage[] = {
-+	N_("git diff-hunks verify"),
-+	N_("git diff-hunks clear"),
-+	NULL
-+};
-+
-+static int cmd_diff_hunks_verify(int argc, const char **argv,
-+				 const char *prefix UNUSED,
-+				 struct repository *r)
-+{
-+	struct option options[] = { OPT_END() };
-+
-+	argc = parse_options(argc, argv, NULL, options, diff_hunks_usage, 0);
-+	if (argc)
-+		usage_with_options(diff_hunks_usage, options);
-+	return diff_hunks_verify(r) ? 1 : 0;
-+}
-+
-+static int cmd_diff_hunks_clear(int argc, const char **argv,
-+				const char *prefix UNUSED,
-+				struct repository *r)
-+{
-+	struct option options[] = { OPT_END() };
-+
-+	argc = parse_options(argc, argv, NULL, options, diff_hunks_usage, 0);
-+	if (argc)
-+		usage_with_options(diff_hunks_usage, options);
-+	return diff_hunks_clear(r) ? 1 : 0;
-+}
-+
-+int cmd_diff_hunks(int argc, const char **argv, const char *prefix,
-+		   struct repository *repo)
-+{
-+	parse_opt_subcommand_fn *fn = NULL;
-+	struct option options[] = {
-+		OPT_SUBCOMMAND("verify", &fn, cmd_diff_hunks_verify),
-+		OPT_SUBCOMMAND("clear", &fn, cmd_diff_hunks_clear),
-+		OPT_END()
-+	};
-+
-+	repo_config(repo, git_default_config, NULL);
-+
-+	argc = parse_options(argc, argv, prefix, options, diff_hunks_usage, 0);
-+
-+	return fn(argc, argv, prefix, repo);
-+}
-diff --git a/chunk-format.c b/chunk-format.c
-index 51b5a2c959..34ab2750f7 100644
---- a/chunk-format.c
-+++ b/chunk-format.c
-@@ -101,12 +101,14 @@ int write_chunkfile(struct chunkfile *cf, void *data)
- 	return result;
- }
- 
--int read_table_of_contents(struct chunkfile *cf,
--			   const unsigned char *mfile,
--			   size_t mfile_size,
--			   uint64_t toc_offset,
--			   int toc_length,
--			   unsigned expected_alignment)
-+static int read_table_of_contents_1(struct chunkfile *cf,
-+				    const unsigned char *mfile,
-+				    size_t mfile_size,
-+				    uint64_t toc_offset,
-+				    int toc_length,
-+				    unsigned expected_alignment,
-+				    const struct git_hash_algo *algo,
-+				    int quiet)
- {
- 	int i;
- 	uint32_t chunk_id;
-@@ -121,12 +123,14 @@ int read_table_of_contents(struct chunkfile *cf,
- 		chunk_offset = get_be64(table_of_contents + 4);
- 
- 		if (!chunk_id) {
--			error(_("terminating chunk id appears earlier than expected"));
-+			if (!quiet)
-+				error(_("terminating chunk id appears earlier than expected"));
- 			return 1;
- 		}
- 		if (chunk_offset % expected_alignment != 0) {
--			error(_("chunk id %"PRIx32" not %d-byte aligned"),
--			      chunk_id, expected_alignment);
-+			if (!quiet)
-+				error(_("chunk id %"PRIx32" not %d-byte aligned"),
-+				      chunk_id, expected_alignment);
- 			return 1;
- 		}
- 
-@@ -134,16 +138,18 @@ int read_table_of_contents(struct chunkfile *cf,
- 		next_chunk_offset = get_be64(table_of_contents + 4);
- 
- 		if (next_chunk_offset < chunk_offset ||
--		    next_chunk_offset > mfile_size - the_hash_algo->rawsz) {
--			error(_("improper chunk offset(s) %"PRIx64" and %"PRIx64""),
--			      chunk_offset, next_chunk_offset);
-+		    next_chunk_offset > mfile_size - algo->rawsz) {
-+			if (!quiet)
-+				error(_("improper chunk offset(s) %"PRIx64" and %"PRIx64""),
-+				      chunk_offset, next_chunk_offset);
- 			return -1;
- 		}
- 
- 		for (i = 0; i < cf->chunks_nr; i++) {
- 			if (cf->chunks[i].id == chunk_id) {
--				error(_("duplicate chunk ID %"PRIx32" found"),
--					chunk_id);
-+				if (!quiet)
-+					error(_("duplicate chunk ID %"PRIx32" found"),
-+					      chunk_id);
- 				return -1;
- 			}
- 		}
-@@ -156,13 +162,39 @@ int read_table_of_contents(struct chunkfile *cf,
- 
- 	chunk_id = get_be32(table_of_contents);
- 	if (chunk_id) {
--		error(_("final chunk has non-zero id %"PRIx32""), chunk_id);
-+		if (!quiet)
-+			error(_("final chunk has non-zero id %"PRIx32""), chunk_id);
- 		return -1;
- 	}
- 
- 	return 0;
- }
- 
-+int read_table_of_contents(struct chunkfile *cf,
-+			   const unsigned char *mfile,
-+			   size_t mfile_size,
-+			   uint64_t toc_offset,
-+			   int toc_length,
-+			   unsigned expected_alignment)
-+{
-+	return read_table_of_contents_1(cf, mfile, mfile_size, toc_offset,
-+					toc_length, expected_alignment,
-+					the_hash_algo, 0);
-+}
-+
-+int read_table_of_contents_quiet(struct chunkfile *cf,
-+				 const unsigned char *mfile,
-+				 size_t mfile_size,
-+				 uint64_t toc_offset,
-+				 int toc_length,
-+				 unsigned expected_alignment,
-+				 const struct git_hash_algo *algo)
-+{
-+	return read_table_of_contents_1(cf, mfile, mfile_size, toc_offset,
-+					toc_length, expected_alignment,
-+					algo, 1);
-+}
-+
- struct pair_chunk_data {
- 	const unsigned char **p;
- 	size_t *size;
-diff --git a/chunk-format.h b/chunk-format.h
-index 212a0a6af1..bc31302ed0 100644
---- a/chunk-format.h
-+++ b/chunk-format.h
-@@ -39,6 +39,20 @@ int read_table_of_contents(struct chunkfile *cf,
- 			   int toc_length,
- 			   unsigned expected_alignment);
- 
-+/*
-+ * Like read_table_of_contents(), for a reader that treats a malformed
-+ * table as an absent file rather than reporting it: nothing is printed
-+ * on failure, and the trailing-checksum bound is computed with the
-+ * given hash algorithm instead of the_hash_algo.
-+ */
-+int read_table_of_contents_quiet(struct chunkfile *cf,
-+				 const unsigned char *mfile,
-+				 size_t mfile_size,
-+				 uint64_t toc_offset,
-+				 int toc_length,
-+				 unsigned expected_alignment,
-+				 const struct git_hash_algo *algo);
-+
- #define CHUNK_NOT_FOUND (-2)
- 
- /*
-diff --git a/command-list.txt b/command-list.txt
-index 21b802c420..e7b241e6ad 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -95,6 +95,7 @@ git-describe                            mainporcelain
- git-diagnose                            ancillaryinterrogators
- git-diff                                mainporcelain           info
- git-diff-files                          plumbinginterrogators
-+git-diff-hunks                          plumbingmanipulators
- git-diff-index                          plumbinginterrogators
- git-diff-pairs                          plumbinginterrogators
- git-diff-tree                           plumbinginterrogators
-@@ -223,6 +224,7 @@ gitfaq                                  guide
- gitformat-bundle                        developerinterfaces
- gitformat-chunk                         developerinterfaces
- gitformat-commit-graph                  developerinterfaces
-+gitformat-diff-hunks                    developerinterfaces
- gitformat-index                         developerinterfaces
- gitformat-pack                          developerinterfaces
- gitformat-signature                     developerinterfaces
-diff --git a/diff-hunks.c b/diff-hunks.c
-new file mode 100644
-index 0000000000..eeaaa2466a
---- /dev/null
-+++ b/diff-hunks.c
-@@ -0,0 +1,916 @@
-+/*
-+ * Precomputed diff hunks, keyed by diff input.
-+ *
-+ * A single store at .git/objects/info/diff-hunks maps an (old blob,
-+ * new blob, xdl_opts) key to the hunk coordinates of diffing the pair.
-+ * The key determines the diff result (only trim-stable pairs are
-+ * recorded; see diff-hunks.h), so an entry is valid in any context it
-+ * recurs in, independent of path. Reading is on by default
-+ * (core.diffHunks); writing is off by default and enabled per run or
-+ * by configuration (see diff_hunks_write_enabled), so an ordinary
-+ * command populates the store only during a warming run the
-+ * repository owner opts into.
-+ *
-+ * File layout:
-+ *   Header:  "DHPF"(4) + version(1) + hash_version(1)
-+ *            + num_chunks(1) + reserved(1)
-+ *   Table of contents (chunk-format)
-+ *   DHIX chunk: sorted entries, each
-+ *       old_blob_oid, new_blob_oid, xdl_opts(4), hdat_offset(4)
-+ *   DHDT chunk: per entry, num_hunks(4) followed by that many 16-byte hunks
-+ *   Trailing hash checksum
-+ */
-+#include "git-compat-util.h"
-+#include "chunk-format.h"
-+#include "config.h"
-+#include "csum-file.h"
-+#include "diff-hunks.h"
-+#include "diff-provider-internal.h"
-+#include "gettext.h"
-+#include "hash.h"
-+#include "hashmap.h"
-+#include "lockfile.h"
-+#include "odb.h"
-+#include "path.h"
-+#include "repo-settings.h"
-+#include "repository.h"
-+#include "strbuf.h"
-+#include "wrapper.h"
-+
-+#define DIFF_HUNKS_SIGNATURE 0x44485046 /* "DHPF" */
-+/*
-+ * Bump when the on-disk format changes, or when xdiff's emitted hunk
-+ * coordinates change for a fixed (blobs, xdl_opts) key: an old store
-+ * would otherwise serve stale hunks and change command output.
-+ */
-+#define DIFF_HUNKS_VERSION 1
-+#define DIFF_HUNKS_HEADER_SIZE 8
-+
-+#define DIFF_HUNKS_CHUNKID_INDEX 0x44484958 /* "DHIX" */
-+#define DIFF_HUNKS_CHUNKID_DATA 0x44484454 /* "DHDT" */
-+
-+/*
-+ * Each hunk is 16 bytes on disk:
-+ * old_start(4) old_count(4) new_start(4) new_count(4)
-+ */
-+#define DIFF_HUNKS_HUNK_SIZE (4 * sizeof(uint32_t))
-+
-+/*
-+ * Result of a store lookup: num_hunks records encoded in the store's mmap,
-+ * valid until the store is freed. Read them with nth_precomputed_hunk().
-+ */
-+struct precomputed_entry {
-+	uint32_t num_hunks;
-+	const unsigned char *hunk_data;
-+};
-+
-+/* Decode a single hunk from the raw on-disk format. */
-+static inline void decode_precomputed_hunk(const unsigned char *data,
-+					   struct precomputed_hunk *h)
-+{
-+	h->old_start = get_be32(data);
-+	h->old_count = get_be32(data + 4);
-+	h->new_start = get_be32(data + 8);
-+	h->new_count = get_be32(data + 12);
-+}
-+
-+/* Decode the nth hunk of a lookup result into *h. */
-+static inline void nth_precomputed_hunk(const struct precomputed_entry *e,
-+					uint32_t n, struct precomputed_hunk *h)
-+{
-+	decode_precomputed_hunk(e->hunk_data + (size_t)n * DIFF_HUNKS_HUNK_SIZE, h);
-+}
-+
-+/* Byte length of the (old_oid, new_oid, xdl_opts) lookup key. */
-+static size_t store_index_key_size(const struct git_hash_algo *algo)
-+{
-+	return 2 * algo->rawsz + sizeof(uint32_t);
-+}
-+
-+/* Index entry: the lookup key followed by the 4-byte offset into DHDT. */
-+static size_t store_index_entry_size(const struct git_hash_algo *algo)
-+{
-+	return store_index_key_size(algo) + sizeof(uint32_t);
-+}
-+
-+/*
-+ * The smallest a valid store file can be: the header, a table of contents
-+ * with one entry per chunk plus a terminating entry, and the trailing
-+ * checksum.
-+ */
-+static size_t store_min_size(const struct git_hash_algo *algo,
-+			     uint8_t num_chunks)
-+{
-+	size_t toc_size = (num_chunks + 1) * CHUNK_TOC_ENTRY_SIZE;
-+
-+	return DIFF_HUNKS_HEADER_SIZE + toc_size + algo->rawsz;
-+}
-+
-+/*
-+ * Decode an index entry's key into pointers to the two oids and the
-+ * xdl_opts value (on-disk: old_oid, new_oid, then xdl_opts as a
-+ * big-endian uint32).
-+ */
-+static void decode_store_index_key(const unsigned char *entry, unsigned int rawsz,
-+			     const unsigned char **old_hash,
-+			     const unsigned char **new_hash,
-+			     uint32_t *xdl_opts)
-+{
-+	*old_hash = entry;
-+	*new_hash = entry + rawsz;
-+	*xdl_opts = get_be32(entry + 2 * rawsz);
-+}
-+
-+/* The DHDT offset stored in an index entry, in the field after its key. */
-+static uint32_t index_entry_hdat_offset(const unsigned char *entry, size_t keysz)
-+{
-+	return get_be32(entry + keysz);
-+}
-+
-+static char *diff_hunks_store_path(struct repository *r)
-+{
-+	return xstrfmt("%s/info/diff-hunks", repo_get_object_directory(r));
-+}
-+
-+struct diff_hunks_store {
-+	const unsigned char *data;
-+	size_t data_len;
-+	const struct git_hash_algo *hash_algo;
-+	const unsigned char *index;
-+	uint32_t num_entries;
-+	const unsigned char *hdat;
-+	size_t hdat_size;
-+};
-+
-+static void free_store(struct diff_hunks_store *s)
-+{
-+	if (!s)
-+		return;
-+	if (s->data)
-+		munmap((void *)s->data, s->data_len);
-+	free(s);
-+}
-+
-+/*
-+ * Open, mmap, and parse the store at fname. Returns the parsed store
-+ * or NULL on any error. The diff output is unaffected either way;
-+ * corruption is reported by verify, not treated as fatal here.
-+ */
-+static struct diff_hunks_store *load_store_at(
-+		const struct git_hash_algo *repo_algo, const char *fname)
-+{
-+	struct diff_hunks_store *s;
-+	struct chunkfile *cf;
-+	int fd;
-+	struct stat st;
-+	void *data;
-+	const unsigned char *p;
-+	uint8_t num_chunks;
-+	size_t index_size, entry_size, data_len;
-+
-+	fd = git_open(fname);
-+	if (fd < 0)
-+		return NULL;
-+	if (fstat(fd, &st) || st.st_size < DIFF_HUNKS_HEADER_SIZE) {
-+		close(fd);
-+		return NULL;
-+	}
-+	data_len = xsize_t(st.st_size);
-+	data = xmmap(NULL, data_len, PROT_READ, MAP_PRIVATE, fd, 0);
-+	close(fd);
-+	p = data;
-+
-+	num_chunks = p[6];
-+
-+	/*
-+	 * Reject a file that is not a readable store: wrong signature,
-+	 * version, or object hash, or too small to hold the table of
-+	 * contents that read_table_of_contents() walks (it dereferences
-+	 * each entry before range-checking its offset).
-+	 */
-+	if (get_be32(p) != DIFF_HUNKS_SIGNATURE ||
-+	    p[4] != DIFF_HUNKS_VERSION ||
-+	    p[5] != oid_version(repo_algo) ||
-+	    data_len < store_min_size(repo_algo, num_chunks)) {
-+		munmap(data, data_len);
-+		return NULL;
-+	}
-+
-+	/*
-+	 * The trailing checksum is not verified here: the writer fsyncs
-+	 * and commits atomically, so a committed file is intact, and
-+	 * every record is bounds-checked at read (see precomputed_entry_at).
-+	 * The checksum is checked separately, by diff_hunks_verify().
-+	 */
-+
-+	CALLOC_ARRAY(s, 1);
-+	s->data = data;
-+	s->data_len = data_len;
-+	s->hash_algo = repo_algo;
-+
-+	cf = init_chunkfile(NULL);
-+	if (read_table_of_contents_quiet(cf, p, data_len,
-+					 DIFF_HUNKS_HEADER_SIZE, num_chunks, 1,
-+					 repo_algo) ||
-+	    pair_chunk(cf, DIFF_HUNKS_CHUNKID_INDEX, &s->index, &index_size) ||
-+	    pair_chunk(cf, DIFF_HUNKS_CHUNKID_DATA, &s->hdat, &s->hdat_size)) {
-+		free_chunkfile(cf);
-+		goto corrupt;
-+	}
-+	free_chunkfile(cf);
-+
-+	entry_size = store_index_entry_size(s->hash_algo);
-+	if (index_size % entry_size)
-+		goto corrupt;
-+	s->num_entries = index_size / entry_size;
-+	return s;
-+
-+corrupt:
-+	free_store(s);
-+	return NULL;
-+}
-+
-+static struct diff_hunks_store *diff_hunks_store_load(struct repository *r)
-+{
-+	struct diff_hunks_store *s;
-+	char *fname;
-+
-+	prepare_repo_settings(r);
-+	if (!r->settings.core_diff_hunks)
-+		return NULL;
-+
-+	fname = diff_hunks_store_path(r);
-+	s = load_store_at(r->hash_algo, fname);
-+	free(fname);
-+	return s;
-+}
-+
-+struct diff_hunks_store *repo_diff_hunks_store(struct repository *r)
-+{
-+	if (!r->objects)
-+		return NULL;
-+	if (r->objects->diff_hunks_store_attempted)
-+		return r->objects->diff_hunks_store;
-+	r->objects->diff_hunks_store_attempted = 1;
-+	r->objects->diff_hunks_store = diff_hunks_store_load(r);
-+	return r->objects->diff_hunks_store;
-+}
-+
-+void close_diff_hunks_store(struct object_database *o)
-+{
-+	if (!o->diff_hunks_store)
-+		return;
-+	free_store(o->diff_hunks_store);
-+	o->diff_hunks_store = NULL;
-+}
-+
-+/*
-+ * Fill *out with the hunk record at offset in the data chunk, and return
-+ * 1 if the record is in bounds, 0 otherwise. The read path does not
-+ * re-verify the checksum, and a valid checksum would not bound the count
-+ * anyway, so a read must call this and use *out only when it returns
-+ * non-zero.
-+ *
-+ * A record is a be32 hunk count followed by that many DIFF_HUNKS_HUNK_SIZE
-+ * hunks. "remaining" tracks the bytes from offset to the end of the data
-+ * chunk: it must hold the count, and after the count is consumed it must
-+ * hold every hunk. The bounds are written as subtraction and division
-+ * (never addition or multiplication) so a crafted offset or count cannot
-+ * overflow them.
-+ */
-+static int precomputed_entry_at(const struct diff_hunks_store *s,
-+				uint32_t offset, struct precomputed_entry *out)
-+{
-+	size_t remaining;
-+	uint32_t num_hunks;
-+
-+	if (offset >= s->hdat_size)
-+		return 0;
-+	remaining = s->hdat_size - offset;
-+	if (remaining < sizeof(uint32_t))
-+		return 0;
-+
-+	num_hunks = get_be32(s->hdat + offset);
-+	remaining -= sizeof(uint32_t);
-+	if (num_hunks > remaining / DIFF_HUNKS_HUNK_SIZE)
-+		return 0;
-+
-+	out->num_hunks = num_hunks;
-+	out->hunk_data = s->hdat + offset + sizeof(uint32_t);
-+	return 1;
-+}
-+
-+struct lookup_key {
-+	const struct object_id *old_oid;
-+	const struct object_id *new_oid;
-+	int xdl_opts;
-+	unsigned int rawsz;
-+};
-+
-+/*
-+ * The store's total order over (old_oid, new_oid, xdl_opts), defined
-+ * once so the write-side sort (writer_entry_cmp) and the read-side
-+ * search (store_bsearch_cmp) order the keys identically.
-+ */
-+static int cmp_store_index_key(const unsigned char *old_a, const unsigned char *new_a,
-+			 uint32_t opts_a,
-+			 const unsigned char *old_b, const unsigned char *new_b,
-+			 uint32_t opts_b, unsigned int rawsz)
-+{
-+	int cmp = memcmp(old_a, old_b, rawsz);
-+	if (!cmp)
-+		cmp = memcmp(new_a, new_b, rawsz);
-+	if (!cmp)
-+		cmp = (opts_a > opts_b) - (opts_a < opts_b);
-+	return cmp;
-+}
-+
-+static int store_bsearch_cmp(const void *key, const void *entry_ptr)
-+{
-+	const struct lookup_key *k = key;
-+	const unsigned char *old_hash, *new_hash;
-+	uint32_t xdl_opts;
-+
-+	decode_store_index_key(entry_ptr, k->rawsz, &old_hash, &new_hash,
-+			 &xdl_opts);
-+	return cmp_store_index_key(k->old_oid->hash, k->new_oid->hash,
-+			     (uint32_t)k->xdl_opts,
-+			     old_hash, new_hash, xdl_opts, k->rawsz);
-+}
-+
-+static int store_get_one(struct diff_hunks_store *s, const struct lookup_key *key,
-+			 struct precomputed_entry *out)
-+{
-+	size_t entry_size = store_index_entry_size(s->hash_algo);
-+	const unsigned char *found;
-+
-+	found = bsearch(key, s->index, s->num_entries, entry_size,
-+			store_bsearch_cmp);
-+	if (!found)
-+		return 0;
-+	return precomputed_entry_at(s,
-+				    index_entry_hdat_offset(found, store_index_key_size(s->hash_algo)),
-+				    out);
-+}
-+
-+static int diff_hunks_store_get(struct diff_hunks_store *s,
-+			 const struct object_id *old_oid,
-+			 const struct object_id *new_oid,
-+			 int xdl_opts,
-+			 struct precomputed_entry *out)
-+{
-+	struct lookup_key key;
-+
-+	if (!s)
-+		return 0;
-+	/* The null OID names no blob and cannot key an entry. */
-+	if (is_null_oid(old_oid) || is_null_oid(new_oid))
-+		return 0;
-+
-+	key.old_oid = old_oid;
-+	key.new_oid = new_oid;
-+	key.xdl_opts = xdl_opts;
-+	key.rawsz = s->hash_algo->rawsz;
-+
-+	return store_get_one(s, &key, out);
-+}
-+
-+/*
-+ * A recorded hunk sequence must satisfy the provider interface's
-+ * shared check (diff_provider_check_hunk()) before it may be replayed:
-+ * coordinates decode from be32 into long, which is 32-bit on some
-+ * platforms, so a crafted value can decode negative or out of order.
-+ * An entry that fails reads as a miss, so the caller recomputes.
-+ */
-+static int replayable_hunks(const struct precomputed_entry *e)
-+{
-+	struct diff_provider_hunks_check c = { 0 };
-+	uint32_t i;
-+
-+	/*
-+	 * Replaying a record with no hunks would assert the blob pair
-+	 * equivalent, a claim the store must never make (the writer
-+	 * refuses to record one), so such a record is invalid.
-+	 */
-+	if (!e->num_hunks)
-+		return 0;
-+	for (i = 0; i < e->num_hunks; i++) {
-+		struct precomputed_hunk h;
-+		nth_precomputed_hunk(e, i, &h);
-+		if (diff_provider_check_hunk(&c, h.old_start, h.old_count,
-+					      h.new_start, h.new_count))
-+			return 0;
-+	}
-+	return 1;
-+}
-+
-+int diff_hunks_replay(struct diff_hunks_store *s,
-+		      const struct object_id *old_oid,
-+		      const struct object_id *new_oid,
-+		      int xdl_opts,
-+		      xdl_emit_hunk_consume_func_t hunk_func, void *cb_data)
-+{
-+	struct precomputed_entry e;
-+	uint32_t i;
-+
-+	if (!diff_hunks_store_get(s, old_oid, new_oid, xdl_opts, &e) ||
-+	    !replayable_hunks(&e))
-+		return 0;
-+	for (i = 0; i < e.num_hunks; i++) {
-+		struct precomputed_hunk h;
-+		nth_precomputed_hunk(&e, i, &h);
-+		hunk_func(h.old_start, h.old_count,
-+			  h.new_start, h.new_count, cb_data);
-+	}
-+	return 1;
-+}
-+
-+/* Validate one store file. Returns 0 if valid or absent, -1 on any error. */
-+static int verify_store_at(struct repository *r, const char *fname)
-+{
-+	struct diff_hunks_store *s;
-+	size_t entry_size;
-+	uint32_t i;
-+	int fd;
-+	int ret = 0;
-+
-+	/*
-+	 * A file that cannot be opened is not evidence of corruption:
-+	 * report the open error, and reserve the corruption diagnostics
-+	 * below for a file that was read and failed to parse.
-+	 */
-+	fd = git_open(fname);
-+	if (fd < 0) {
-+		if (errno == ENOENT)
-+			return 0; /* absent is valid */
-+		return error_errno(_("unable to open diff-hunks store %s"),
-+				   fname);
-+	}
-+	close(fd);
-+	s = load_store_at(r->hash_algo, fname);
-+	if (!s)
-+		return error(_("diff-hunks store failed to load (corrupt "
-+			       "header or hash mismatch): %s"), fname);
-+	if (!hashfile_checksum_valid(r->hash_algo, s->data, s->data_len)) {
-+		error(_("diff-hunks store has incorrect checksum and is "
-+			"likely corrupt: %s"), fname);
-+		free_store(s);
-+		return -1;
-+	}
-+
-+	entry_size = store_index_entry_size(s->hash_algo);
-+	for (i = 0; i < s->num_entries; i++) {
-+		const unsigned char *ep = s->index + st_mult(entry_size, i);
-+		size_t keysz = store_index_key_size(s->hash_algo);
-+		uint32_t offset = index_entry_hdat_offset(ep, keysz);
-+		struct precomputed_entry pe;
-+
-+		/*
-+		 * Keyed by (old_oid, new_oid, xdl_opts), increasing.  memcmp
-+		 * matches cmp_store_index_key's integer comparison of
-+		 * xdl_opts because it is non-negative, so its big-endian
-+		 * bytes order the same as its value.
-+		 */
-+		if (i > 0 && memcmp(ep - entry_size, ep, keysz) >= 0) {
-+			error(_("diff-hunks entry %u not in sorted order"), i);
-+			ret = -1;
-+		}
-+		if (!precomputed_entry_at(s, offset, &pe)) {
-+			error(_("diff-hunks entry %u has out-of-bounds hunk "
-+				"data"), i);
-+			ret = -1;
-+		} else if (!replayable_hunks(&pe)) {
-+			error(_("diff-hunks entry %u holds an invalid hunk "
-+				"sequence"), i);
-+			ret = -1;
-+		}
-+	}
-+
-+	free_store(s);
-+	return ret;
-+}
-+
-+int diff_hunks_verify(struct repository *r)
-+{
-+	char *fname = diff_hunks_store_path(r);
-+	int ret = 0;
-+
-+	if (verify_store_at(r, fname))
-+		ret = -1;
-+	free(fname);
-+	return ret;
-+}
-+
-+int diff_hunks_clear(struct repository *r)
-+{
-+	char *fname = diff_hunks_store_path(r);
-+	int ret = 0;
-+
-+	if (unlink(fname) && errno != ENOENT)
-+		ret = error_errno(_("unable to remove %s"), fname);
-+	free(fname);
-+	return ret;
-+}
-+
-+struct writer_entry {
-+	struct object_id old_oid;
-+	struct object_id new_oid;
-+	int xdl_opts;
-+	uint32_t hdat_offset;
-+};
-+
-+struct diff_hunks_writer {
-+	struct repository *r;
-+	struct writer_entry *entries;
-+	size_t nr, alloc;
-+	size_t seed_nr;		/* nr after seeding; finish skips a no-op flush */
-+	unsigned force_flush : 1;	/* seed pruned: rewrite even a no-op warm */
-+	struct strbuf hdat;
-+	struct hashmap dedup;	/* hunk block content -> offset in hdat */
-+};
-+
-+/* A record of one distinct hunk block already present in hdat. */
-+struct dedup_entry {
-+	struct hashmap_entry ent;
-+	uint32_t offset;
-+	uint32_t len;
-+};
-+
-+static int dedup_cmp(const void *cmp_data,
-+		     const struct hashmap_entry *a,
-+		     const struct hashmap_entry *b,
-+		     const void *keydata UNUSED)
-+{
-+	const struct diff_hunks_writer *writer = cmp_data;
-+	const struct dedup_entry *ea = container_of(a, const struct dedup_entry, ent);
-+	const struct dedup_entry *eb = container_of(b, const struct dedup_entry, ent);
-+
-+	if (ea->len != eb->len)
-+		return 1;
-+	return memcmp(writer->hdat.buf + ea->offset,
-+		      writer->hdat.buf + eb->offset, ea->len);
-+}
-+
-+static struct diff_hunks_writer *diff_hunks_writer_new(struct repository *r)
-+{
-+	struct diff_hunks_writer *w;
-+
-+	CALLOC_ARRAY(w, 1);
-+	w->r = r;
-+	strbuf_init(&w->hdat, 0);
-+	hashmap_init(&w->dedup, dedup_cmp, w, 0);
-+	return w;
-+}
-+
-+static void strbuf_put_be32(struct strbuf *sb, uint32_t val)
-+{
-+	unsigned char buf[4];
-+	put_be32(buf, val);
-+	strbuf_add(sb, buf, 4);
-+}
-+
-+/*
-+ * The hunk block just appended at `start` is deduplicated: if an
-+ * identical block is already in hdat, this copy is dropped and the
-+ * earlier offset returned; otherwise it is kept and remembered.
-+ * Distinct keys that diff to the same hunks then share one block.
-+ */
-+static uint32_t intern_block(struct diff_hunks_writer *w, size_t start)
-+{
-+	size_t len = w->hdat.len - start;
-+	struct dedup_entry key, *found, *added;
-+
-+	hashmap_entry_init(&key.ent, memhash(w->hdat.buf + start, len));
-+	key.offset = (uint32_t)start;
-+	key.len = (uint32_t)len;
-+
-+	found = hashmap_get_entry(&w->dedup, &key, ent, NULL);
-+	if (found) {
-+		strbuf_setlen(&w->hdat, start);
-+		return found->offset;
-+	}
-+
-+	added = xmalloc(sizeof(*added));
-+	hashmap_entry_init(&added->ent, key.ent.hash);
-+	added->offset = key.offset;
-+	added->len = key.len;
-+	hashmap_add(&w->dedup, &added->ent);
-+	return key.offset;
-+}
-+
-+int diff_hunks_writer_add(struct diff_hunks_writer *w,
-+			  const struct object_id *old_oid,
-+			  const struct object_id *new_oid,
-+			  int xdl_opts,
-+			  const struct precomputed_hunk *hunks,
-+			  size_t nr_hunks)
-+{
-+	struct writer_entry *e;
-+	size_t i, block_start;
-+
-+	if (!w)
-+		return 0;
-+	/*
-+	 * The block appended for this entry is sizeof(uint32_t) +
-+	 * nr_hunks * DIFF_HUNKS_HUNK_SIZE bytes. Bound nr_hunks so that
-+	 * length fits the uint32_t the dedup index records (and so the
-+	 * count itself fits the uint32_t written to the store).
-+	 */
-+	if (!nr_hunks ||
-+	    nr_hunks > (UINT32_MAX - sizeof(uint32_t)) / DIFF_HUNKS_HUNK_SIZE ||
-+	    is_null_oid(old_oid) || is_null_oid(new_oid))
-+		return 0;
-+	if (w->hdat.len > UINT32_MAX)
-+		return 0;
-+	/*
-+	 * Coordinates are stored as 32-bit values; a result that cannot
-+	 * round-trip is dropped rather than silently truncated.
-+	 */
-+	for (i = 0; i < nr_hunks; i++)
-+		if ((uintmax_t)hunks[i].old_start > (uintmax_t)INT32_MAX ||
-+		    (uintmax_t)hunks[i].old_count > (uintmax_t)INT32_MAX ||
-+		    (uintmax_t)hunks[i].new_start > (uintmax_t)INT32_MAX ||
-+		    (uintmax_t)hunks[i].new_count > (uintmax_t)INT32_MAX)
-+			return 0;
-+
-+	ALLOC_GROW(w->entries, w->nr + 1, w->alloc);
-+	e = &w->entries[w->nr++];
-+	oidcpy(&e->old_oid, old_oid);
-+	oidcpy(&e->new_oid, new_oid);
-+	e->xdl_opts = xdl_opts;
-+
-+	block_start = w->hdat.len;
-+	strbuf_put_be32(&w->hdat, (uint32_t)nr_hunks);
-+	for (i = 0; i < nr_hunks; i++) {
-+		strbuf_put_be32(&w->hdat, hunks[i].old_start);
-+		strbuf_put_be32(&w->hdat, hunks[i].old_count);
-+		strbuf_put_be32(&w->hdat, hunks[i].new_start);
-+		strbuf_put_be32(&w->hdat, hunks[i].new_count);
-+	}
-+	e->hdat_offset = intern_block(w, block_start);
-+	return 1;
-+}
-+
-+/*
-+ * Seed the writer with fname's entries so a rewrite preserves them,
-+ * setting *pruned when the rewrite will not carry the whole file
-+ * forward: the file failed its checksum and was discarded outright, or
-+ * individual entries were dropped because they failed the replayable
-+ * check or the writer refused them (a key naming no blob).  A
-+ * rewrite re-checksums, so corruption must not be carried forward:
-+ * that would launder it into a checksum-valid file that verify can no
-+ * longer catch.  This path already reads the whole file, so verify the
-+ * checksum here (the reader keeps trusting committed files, without
-+ * re-checksumming); an invalid
-+ * entry reads as a miss anyway, so dropping it heals the store rather
-+ * than losing anything a reader could use.
-+ */
-+static void diff_hunks_writer_seed(struct diff_hunks_writer *w,
-+				   const char *fname, int *pruned)
-+{
-+	struct diff_hunks_store *s = load_store_at(w->r->hash_algo, fname);
-+	unsigned int rawsz;
-+	size_t entry_size, keysz;
-+	struct precomputed_hunk *hunks = NULL;
-+	size_t hunks_alloc = 0;
-+	uint32_t i, dropped = 0;
-+
-+	if (!s)
-+		return;
-+	if (!hashfile_checksum_valid(w->r->hash_algo, s->data, s->data_len)) {
-+		warning(_("diff-hunks store %s failed its checksum; "
-+			  "discarding it"), fname);
-+		free_store(s);
-+		*pruned = 1;
-+		return;
-+	}
-+	rawsz = s->hash_algo->rawsz;
-+	entry_size = store_index_entry_size(s->hash_algo);
-+	keysz = store_index_key_size(s->hash_algo);
-+
-+	for (i = 0; i < s->num_entries; i++) {
-+		const unsigned char *ep = s->index + st_mult(entry_size, i);
-+		const unsigned char *old_hash, *new_hash;
-+		struct object_id old_oid, new_oid;
-+		uint32_t xdl_opts, j;
-+		struct precomputed_entry pe;
-+
-+		decode_store_index_key(ep, rawsz, &old_hash, &new_hash,
-+				 &xdl_opts);
-+		oidread(&old_oid, old_hash, s->hash_algo);
-+		oidread(&new_oid, new_hash, s->hash_algo);
-+		if (!precomputed_entry_at(s, index_entry_hdat_offset(ep, keysz), &pe) ||
-+		    !replayable_hunks(&pe)) {
-+			dropped++;
-+			continue;
-+		}
-+		ALLOC_GROW(hunks, pe.num_hunks, hunks_alloc);
-+		for (j = 0; j < pe.num_hunks; j++)
-+			nth_precomputed_hunk(&pe, j, &hunks[j]);
-+		if (!diff_hunks_writer_add(w, &old_oid, &new_oid,
-+					   (int)xdl_opts, hunks, pe.num_hunks))
-+			dropped++;
-+	}
-+	if (dropped) {
-+		warning(Q_("diff-hunks store %s: dropping %u invalid entry",
-+			   "diff-hunks store %s: dropping %u invalid entries",
-+			   dropped), fname, dropped);
-+		*pruned = 1;
-+	}
-+	free(hunks);
-+	free_store(s);
-+}
-+
-+/*
-+ * Writing is off by default. It is enabled per invocation by the
-+ * GIT_DIFF_HUNKS_WRITE environment variable, or persistently by the
-+ * diffHunks.write config, with the environment variable winning when
-+ * set. Only a warming run (a diff or log the repository owner chooses
-+ * to run with writing on) enables it, so ordinary reads never mutate
-+ * the store.
-+ */
-+static int diff_hunks_write_enabled(struct repository *r)
-+{
-+	const char *env = getenv("GIT_DIFF_HUNKS_WRITE");
-+	int val;
-+
-+	if (env) {
-+		/*
-+		 * This is a warming opt-in, so an unparseable value must not
-+		 * abort an ordinary read command: treat it as disabled.
-+		 */
-+		val = git_parse_maybe_bool(env);
-+		return val < 0 ? 0 : val;
-+	}
-+	if (!repo_config_get_bool(r, "diffhunks.write", &val))
-+		return val;
-+	return 0;
-+}
-+
-+struct diff_hunks_writer *diff_hunks_writer_maybe_new(struct repository *r)
-+{
-+	struct diff_hunks_writer *w;
-+	char *fname;
-+	int pruned;
-+
-+	if (!diff_hunks_write_enabled(r))
-+		return NULL;
-+	/*
-+	 * Seed from the existing store so a flush merges with it rather
-+	 * than replacing it: a later warm adds newly computed pairs
-+	 * without discarding what earlier warms recorded.
-+	 */
-+	w = diff_hunks_writer_new(r);
-+	fname = diff_hunks_store_path(r);
-+	pruned = 0;
-+	diff_hunks_writer_seed(w, fname, &pruned);
-+	free(fname);
-+	w->seed_nr = w->nr;
-+	/*
-+	 * A pruning seed means the file on disk holds material the
-+	 * rewrite must not preserve; flush even if this warm computes
-+	 * nothing new, so the store on disk is repaired rather than
-+	 * left serving what the seed refused.
-+	 */
-+	w->force_flush = !!pruned;
-+	return w;
-+}
-+
-+static int writer_entry_cmp(const void *va, const void *vb, void *ctx)
-+{
-+	const struct writer_entry *a = va, *b = vb;
-+	unsigned int rawsz = *(const unsigned int *)ctx;
-+	return cmp_store_index_key(a->old_oid.hash, a->new_oid.hash,
-+			     (uint32_t)a->xdl_opts,
-+			     b->old_oid.hash, b->new_oid.hash,
-+			     (uint32_t)b->xdl_opts,
-+			     rawsz);
-+}
-+
-+struct write_ctx {
-+	struct diff_hunks_writer *w;
-+	unsigned int rawsz;
-+};
-+
-+static int write_index_chunk(struct hashfile *f, void *data)
-+{
-+	struct write_ctx *ctx = data;
-+	size_t i;
-+
-+	for (i = 0; i < ctx->w->nr; i++) {
-+		hashwrite(f, ctx->w->entries[i].old_oid.hash, ctx->rawsz);
-+		hashwrite(f, ctx->w->entries[i].new_oid.hash, ctx->rawsz);
-+		hashwrite_be32(f, ctx->w->entries[i].xdl_opts);
-+		hashwrite_be32(f, ctx->w->entries[i].hdat_offset);
-+	}
-+	return 0;
-+}
-+
-+static int write_data_chunk(struct hashfile *f, void *data)
-+{
-+	struct write_ctx *ctx = data;
-+	hashwrite(f, ctx->w->hdat.buf, ctx->w->hdat.len);
-+	return 0;
-+}
-+
-+/* Sort, dedup, and write the accumulated entries to the file at fname. */
-+static int diff_hunks_writer_flush(struct diff_hunks_writer *w, char *fname)
-+{
-+	struct lock_file lk = LOCK_INIT;
-+	struct hashfile *f;
-+	struct chunkfile *cf;
-+	unsigned int rawsz = w->r->hash_algo->rawsz;
-+	struct write_ctx ctx = { w, rawsz };
-+	size_t entry_size;
-+
-+	QSORT_S(w->entries, w->nr, writer_entry_cmp, &rawsz);
-+
-+	/*
-+	 * The same blob pair recurs across history (reverts, cherry-
-+	 * picks); identical keys carry identical hunks, so keep one of
-+	 * each. The index must stay duplicate-free for binary search.
-+	 */
-+	if (w->nr > 1) {
-+		size_t kept = 1, i;
-+		for (i = 1; i < w->nr; i++)
-+			if (writer_entry_cmp(&w->entries[kept - 1],
-+					      &w->entries[i], &rawsz))
-+				w->entries[kept++] = w->entries[i];
-+		w->nr = kept;
-+	}
-+
-+	if (safe_create_leading_directories(w->r, fname)) {
-+		error(_("unable to create directory for %s"), fname);
-+		return -1;
-+	}
-+	if (hold_lock_file_for_update(&lk, fname, 0) < 0) {
-+		error_errno(_("unable to lock %s"), fname);
-+		return -1;
-+	}
-+	adjust_shared_perm(w->r, get_lock_file_path(&lk));
-+	f = hashfd(w->r->hash_algo, get_lock_file_fd(&lk),
-+		   get_lock_file_path(&lk));
-+
-+	entry_size = store_index_entry_size(w->r->hash_algo);
-+	cf = init_chunkfile(f);
-+	add_chunk(cf, DIFF_HUNKS_CHUNKID_INDEX, w->nr * entry_size,
-+		  write_index_chunk);
-+	add_chunk(cf, DIFF_HUNKS_CHUNKID_DATA, w->hdat.len, write_data_chunk);
-+
-+	hashwrite_be32(f, DIFF_HUNKS_SIGNATURE);
-+	hashwrite_u8(f, DIFF_HUNKS_VERSION);
-+	hashwrite_u8(f, oid_version(w->r->hash_algo));
-+	hashwrite_u8(f, get_num_chunks(cf));
-+	hashwrite_u8(f, 0); /* reserved */
-+
-+	write_chunkfile(cf, &ctx);
-+	free_chunkfile(cf);
-+
-+	/*
-+	 * fsync per the user's configuration (like commit-graph and the
-+	 * multi-pack-index), then commit atomically. Readers trust the
-+	 * committed file rather than re-checksumming it; diff_hunks_verify()
-+	 * checks the checksum separately.
-+	 */
-+	finalize_hashfile(f, NULL, FSYNC_COMPONENT_DIFF_HUNKS,
-+			  CSUM_HASH_IN_STREAM | CSUM_FSYNC);
-+	/*
-+	 * This same process may hold the current store mmapped (a warm
-+	 * that also reads); the commit below renames over it, which must
-+	 * never land on a live mapping (Windows refuses it).  Close the
-+	 * store and clear the load-attempted flag first, so the next
-+	 * read loads the committed file.
-+	 */
-+	if (w->r->objects) {
-+		close_diff_hunks_store(w->r->objects);
-+		w->r->objects->diff_hunks_store_attempted = 0;
-+	}
-+	if (commit_lock_file(&lk)) {
-+		error_errno(_("unable to write %s"), fname);
-+		return -1;
-+	}
-+	return 0;
-+}
-+
-+static void diff_hunks_writer_free(struct diff_hunks_writer *w)
-+{
-+	if (!w)
-+		return;
-+	hashmap_clear_and_free(&w->dedup, struct dedup_entry, ent);
-+	free(w->entries);
-+	strbuf_release(&w->hdat);
-+	free(w);
-+}
-+
-+void diff_hunks_writer_finish(struct diff_hunks_writer *w)
-+{
-+	if (!w)
-+		return;
-+	/* Skip the flush when the warm recorded nothing beyond its seed. */
-+	if (w->nr != w->seed_nr || w->force_flush) {
-+		char *fname = diff_hunks_store_path(w->r);
-+		diff_hunks_writer_flush(w, fname);
-+		free(fname);
-+	}
-+	diff_hunks_writer_free(w);
-+}
-diff --git a/diff-hunks.h b/diff-hunks.h
-new file mode 100644
-index 0000000000..ef9ee3f417
---- /dev/null
-+++ b/diff-hunks.h
-@@ -0,0 +1,117 @@
-+#ifndef DIFF_HUNKS_H
-+#define DIFF_HUNKS_H
-+
-+#include "hash.h"
-+#include "xdiff-interface.h"	/* xdl_emit_hunk_consume_func_t */
-+
-+struct object_id;
-+struct repository;
-+struct object_database;
-+
-+/*
-+ * A persistent store of precomputed diff hunk coordinates, at
-+ * .git/objects/info/diff-hunks. Entries are keyed by the two blobs diffed
-+ * and the xdl_opts they were diffed under, so a cached result is valid
-+ * in any context that key recurs in, independent of path. The xdl_opts
-+ * key component mirrors the (always non-negative) diff_options field it
-+ * projects from, and is serialized and compared as a 4-byte big-endian
-+ * integer.
-+ *
-+ * The hunks a pair produces are not unique. They vary with the xdiff
-+ * algorithm and ignore flags (xdl_opts, part of the key), and with
-+ * whether the diff was trimmed: a zero-context diff runs
-+ * trim_common_tail, which can pick a different but equally valid set of
-+ * hunks than an untrimmed diff. The store holds one entry per key, so a
-+ * pair is recorded only when its trimmed and untrimmed diffs are
-+ * identical (the recording caller checks); such an entry serves a
-+ * consumer at any context. The rare pair where the two diffs differ is
-+ * never recorded and is always computed.
-+ *
-+ * The store is a cache: ordinary commands read it and fall back to
-+ * computing the diff when it is absent, stale, or corrupt. It is filled
-+ * as a side effect of diff and log runs, but only when writing is
-+ * enabled (such a write-enabled run is a warming run); writing is off
-+ * by default, so an ordinary command reads the store without recording
-+ * into it.
-+ */
-+
-+/*
-+ * A hunk's coordinates. The type is long to match the xdiff emit
-+ * callback; the values are a diff's line numbers and counts, always
-+ * within the int32 range the on-disk format stores (see
-+ * diff_hunks_writer_add()).
-+ */
-+struct precomputed_hunk {
-+	long old_start;
-+	long old_count;
-+	long new_start;
-+	long new_count;
-+};
-+
-+/*
-+ * The repository's store, loaded once on first use and cached on the
-+ * object database. Returns NULL when reading is disabled
-+ * (core.diffHunks=false), the store is absent, or it fails to parse
-+ * (wrong signature, version, or object hash, or a corrupt structure).
-+ * The lookup functions below accept a NULL store and treat it as
-+ * empty (every lookup misses), so callers need not check for NULL.
-+ * The object database owns the store; callers must not free it.
-+ */
-+struct diff_hunks_store *repo_diff_hunks_store(struct repository *r);
-+
-+/* Free the repository's cached store, at object-database teardown. */
-+void close_diff_hunks_store(struct object_database *o);
-+
-+/*
-+ * Replay the recorded hunks of an (old blob, new blob) pair diffed
-+ * under xdl_opts through hunk_func. The sequence is validated before
-+ * any callback runs: on a hit (return 1) every hunk is emitted, on a
-+ * miss (return 0: absent pair, xdl_opts mismatch, or an entry that
-+ * fails validation) nothing is emitted, so a caller may accumulate
-+ * directly into its result.
-+ */
-+int diff_hunks_replay(struct diff_hunks_store *s,
-+		      const struct object_id *old_oid,
-+		      const struct object_id *new_oid,
-+		      int xdl_opts,
-+		      xdl_emit_hunk_consume_func_t hunk_func, void *cb_data);
-+
-+/*
-+ * A warming run's writer: it accumulates the hunks it computes in memory
-+ * and flushes them to the store in one pass at finish.
-+ */
-+struct diff_hunks_writer;
-+
-+/*
-+ * Return a writer for a warming run, or NULL when writing is disabled
-+ * (the default). diff_hunks_writer_add() tolerates a NULL writer, so a
-+ * caller may attach the result unconditionally. Pair with
-+ * diff_hunks_writer_finish().
-+ */
-+struct diff_hunks_writer *diff_hunks_writer_maybe_new(struct repository *r);
-+
-+/*
-+ * Record a blob pair's hunks as computed under xdl_opts; a later lookup
-+ * with a matching key is served these hunks. The caller must have
-+ * checked that the pair's trimmed and untrimmed diffs are identical
-+ * (see the top of this file), so the entry answers at any context.
-+ * NULL-safe. Returns 1 when the entry was recorded, 0 when the writer
-+ * refused it (no hunks, a null object id, or values the on-disk
-+ * 32-bit fields cannot hold).
-+ */
-+int diff_hunks_writer_add(struct diff_hunks_writer *w,
-+			  const struct object_id *old_oid,
-+			  const struct object_id *new_oid,
-+			  int xdl_opts,
-+			  const struct precomputed_hunk *hunks,
-+			  size_t nr_hunks);
-+
-+/* Flush the accumulated entries to the store and free the writer. NULL-safe. */
-+void diff_hunks_writer_finish(struct diff_hunks_writer *w);
-+
-+/* Remove the store file. Returns 0 (incl. absent) or -1. */
-+int diff_hunks_clear(struct repository *r);
-+/* Validate the store. Returns 0 if valid/absent, -1 if corrupt. */
-+int diff_hunks_verify(struct repository *r);
-+
-+#endif /* DIFF_HUNKS_H */
-diff --git a/environment.c b/environment.c
-index c663113e8a..a0e6d0b9b3 100644
---- a/environment.c
-+++ b/environment.c
-@@ -239,6 +239,7 @@ static const struct fsync_component_name {
- 	{ "pack", FSYNC_COMPONENT_PACK },
- 	{ "pack-metadata", FSYNC_COMPONENT_PACK_METADATA },
- 	{ "commit-graph", FSYNC_COMPONENT_COMMIT_GRAPH },
-+	{ "diff-hunks", FSYNC_COMPONENT_DIFF_HUNKS },
- 	{ "index", FSYNC_COMPONENT_INDEX },
- 	{ "objects", FSYNC_COMPONENTS_OBJECTS },
- 	{ "reference", FSYNC_COMPONENT_REFERENCE },
-diff --git a/git.c b/git.c
-index e5f1811b6b..cb149e4b4e 100644
---- a/git.c
-+++ b/git.c
-@@ -566,6 +566,7 @@ static struct cmd_struct commands[] = {
- 	{ "diagnose", cmd_diagnose, RUN_SETUP_GENTLY },
- 	{ "diff", cmd_diff, NO_PARSEOPT },
- 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
-+	{ "diff-hunks", cmd_diff_hunks, RUN_SETUP },
- 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
- 	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP | NO_PARSEOPT },
- 	{ "diff-tree", cmd_diff_tree, RUN_SETUP | NO_PARSEOPT },
-diff --git a/meson.build b/meson.build
-index 539a50f90e..391d9da93c 100644
---- a/meson.build
-+++ b/meson.build
-@@ -364,6 +364,7 @@ libgit_sources = [
-   'diffcore-pickaxe.c',
-   'diffcore-rename.c',
-   'diffcore-rotate.c',
-+  'diff-hunks.c',
-   'dir-iterator.c',
-   'dir.c',
-   'editor.c',
-@@ -633,6 +634,7 @@ builtin_sources = [
-   'builtin/describe.c',
-   'builtin/diagnose.c',
-   'builtin/diff-files.c',
-+  'builtin/diff-hunks.c',
-   'builtin/diff-index.c',
-   'builtin/diff-pairs.c',
-   'builtin/diff-tree.c',
-diff --git a/odb.c b/odb.c
-index cf6e7938c0..b300cd522d 100644
---- a/odb.c
-+++ b/odb.c
-@@ -2,6 +2,7 @@
- #include "abspath.h"
- #include "commit-graph.h"
- #include "config.h"
-+#include "diff-hunks.h"
- #include "dir.h"
- #include "environment.h"
- #include "gettext.h"
-@@ -1033,6 +1034,7 @@ void odb_close(struct object_database *o)
- 	for (source = o->sources; source; source = source->next)
- 		odb_source_close(source);
- 	close_commit_graph(o);
-+	close_diff_hunks_store(o);
- }
- 
- static void odb_free_sources(struct object_database *o)
-diff --git a/odb.h b/odb.h
-index 7995bed97b..949d55668f 100644
---- a/odb.h
-+++ b/odb.h
-@@ -8,6 +8,7 @@
- #include "thread-utils.h"
- 
- struct cached_object_entry;
-+struct diff_hunks_store;
- struct list_objects_filter_options;
- struct odb_source_inmemory;
- struct packed_git;
-@@ -76,6 +77,9 @@ struct object_database {
- 	struct commit_graph *commit_graph;
- 	unsigned commit_graph_attempted : 1; /* if loading has been attempted */
- 
-+	struct diff_hunks_store *diff_hunks_store;
-+	unsigned diff_hunks_store_attempted : 1; /* if loading has been attempted */
++	diff_hunks_attach(&opt->diffopt);
 +
  	/*
- 	 * This is meant to hold a *small* number of objects that you would
- 	 * want odb_read_object() to be able to return, but yet you do not want
-diff --git a/repo-settings.c b/repo-settings.c
-index f3be3b8c5a..c3015356ba 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -77,6 +77,7 @@ void prepare_repo_settings(struct repository *r)
- 	repo_cfg_bool(r, "pack.usesparse", &r->settings.pack_use_sparse, 1);
- 	repo_cfg_bool(r, "pack.usepathwalk", &r->settings.pack_use_path_walk, 0);
- 	repo_cfg_bool(r, "core.multipackindex", &r->settings.core_multi_pack_index, 1);
-+	repo_cfg_bool(r, "core.diffhunks", &r->settings.core_diff_hunks, 1);
- 	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0);
- 	repo_cfg_bool(r, "index.skiphash", &r->settings.index_skip_hash, r->settings.index_skip_hash);
- 	repo_cfg_bool(r, "pack.readreverseindex", &r->settings.pack_read_reverse_index, 1);
-diff --git a/repo-settings.h b/repo-settings.h
-index e5253ead02..615a55cac4 100644
---- a/repo-settings.h
-+++ b/repo-settings.h
-@@ -22,6 +22,7 @@ struct repo_settings {
- 	int core_commit_graph;
- 	int commit_graph_generation_version;
- 	int commit_graph_changed_paths_version;
-+	int core_diff_hunks;
- 	int gc_write_commit_graph;
- 	int fetch_write_commit_graph;
- 	int command_requires_full_index;
-diff --git a/write-or-die.h b/write-or-die.h
-index ff0408bd84..35ed324307 100644
---- a/write-or-die.h
-+++ b/write-or-die.h
-@@ -22,13 +22,15 @@ enum fsync_component {
- 	FSYNC_COMPONENT_INDEX			= 1 << 4,
- 	FSYNC_COMPONENT_REFERENCE		= 1 << 5,
- 	FSYNC_COMPONENT_OBJECT_MAP		= 1 << 6,
-+	FSYNC_COMPONENT_DIFF_HUNKS		= 1 << 7,
+ 	 * NOTE!  We expect "a..b" to expand to "^a b" but it is
+ 	 * perfectly valid for revision range parser to yield "b ^a",
+@@ -234,5 +236,6 @@ int cmd_diff_tree(int argc,
+ 		diff_free(&opt->diffopt);
+ 	}
+ 
++	diff_hunks_detach(&opt->diffopt);
+ 	return diff_result_code(opt);
+ }
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 18b1083e98..a2ad63ac8c 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -568,6 +568,15 @@ int cmd_diff(int argc,
+ 		}
+ 	}
+ 
++	/*
++	 * The hunk store is keyed by blob pair, so any diff whose
++	 * file pairs carry known blob object IDs (tree-to-tree,
++	 * index-to-tree) can consult the same entries that
++	 * "git log --stat" and "git blame" use; pairs without known
++	 * blobs bypass it at lookup time.
++	 */
++	diff_hunks_attach(&rev.diffopt);
++
+ 	symdiff_prepare(&rev, &sdiff);
+ 	for (i = 0; i < rev.pending.nr; i++) {
+ 		struct object_array_entry *entry = &rev.pending.objects[i];
+@@ -648,6 +657,7 @@ int cmd_diff(int argc,
+ 	result = diff_result_code(&rev);
+ 	if (1 < rev.diffopt.skip_stat_unmatch)
+ 		refresh_index_quietly();
++	diff_hunks_detach(&rev.diffopt);
+ 	release_revisions(&rev);
+ 	object_array_clear(&ent);
+ 	symdiff_release(&sdiff);
+diff --git a/builtin/log.c b/builtin/log.c
+index 350b35c556..6903bdd5ff 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -693,8 +693,11 @@ int cmd_show(int argc,
+ 	opt.tweak = show_setup_revisions_tweak;
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt, &cfg);
+ 
++	diff_hunks_attach(&rev.diffopt);
++
+ 	if (!rev.no_walk) {
+ 		ret = cmd_log_walk(&rev);
++		diff_hunks_detach(&rev.diffopt);
+ 		release_revisions(&rev);
+ 		log_config_release(&cfg);
+ 		return ret;
+@@ -767,6 +770,7 @@ int cmd_show(int argc,
+ 	}
+ 
+ 	rev.diffopt.no_free = 0;
++	diff_hunks_detach(&rev.diffopt);
+ 	diff_free(&rev.diffopt);
+ 	release_revisions(&rev);
+ 	log_config_release(&cfg);
+@@ -846,8 +850,11 @@ int cmd_log(int argc,
+ 	opt.tweak = log_setup_revisions_tweak;
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt, &cfg);
+ 
++	diff_hunks_attach(&rev.diffopt);
++
+ 	ret = cmd_log_walk(&rev);
+ 
++	diff_hunks_detach(&rev.diffopt);
+ 	release_revisions(&rev);
+ 	log_config_release(&cfg);
+ 	return ret;
+diff --git a/diff-hunks.c b/diff-hunks.c
+index eeaaa2466a..23cefe055b 100644
+--- a/diff-hunks.c
++++ b/diff-hunks.c
+@@ -651,6 +651,38 @@ int diff_hunks_writer_add(struct diff_hunks_writer *w,
+ 	return 1;
+ }
+ 
++void diff_hunks_writer_record_stable(struct diff_hunks_writer *w,
++				     const struct object_id *old_oid,
++				     const struct object_id *new_oid,
++				     int xdl_opts,
++				     const struct precomputed_hunk *trimmed,
++				     size_t nr_trimmed,
++				     const struct precomputed_hunk *full,
++				     size_t nr_full)
++{
++	size_t i;
++
++	if (!w)
++		return;
++	/*
++	 * Record only a trim-stable pair, one whose trimmed and
++	 * untrimmed diffs are identical, so the single entry answers
++	 * any consumer at any context (see the top of this file).  A
++	 * pair where the two diffs differ is never recorded and every
++	 * consumer computes it.
++	 */
++	if (nr_trimmed != nr_full)
++		return;
++	for (i = 0; i < nr_trimmed; i++)
++		if (trimmed[i].old_start != full[i].old_start ||
++		    trimmed[i].old_count != full[i].old_count ||
++		    trimmed[i].new_start != full[i].new_start ||
++		    trimmed[i].new_count != full[i].new_count)
++			return;
++	diff_hunks_writer_add(w, old_oid, new_oid, xdl_opts,
++			      trimmed, nr_trimmed);
++}
++
+ /*
+  * Seed the writer with fname's entries so a rewrite preserves them,
+  * setting *pruned when the rewrite will not carry the whole file
+diff --git a/diff-hunks.h b/diff-hunks.h
+index ef9ee3f417..89e56f4b1b 100644
+--- a/diff-hunks.h
++++ b/diff-hunks.h
+@@ -94,7 +94,8 @@ struct diff_hunks_writer *diff_hunks_writer_maybe_new(struct repository *r);
+  * Record a blob pair's hunks as computed under xdl_opts; a later lookup
+  * with a matching key is served these hunks. The caller must have
+  * checked that the pair's trimmed and untrimmed diffs are identical
+- * (see the top of this file), so the entry answers at any context.
++ * (see the top of this file), so the entry answers at any context;
++ * diff_hunks_writer_record_stable() below performs that check.
+  * NULL-safe. Returns 1 when the entry was recorded, 0 when the writer
+  * refused it (no hunks, a null object id, or values the on-disk
+  * 32-bit fields cannot hold).
+@@ -106,6 +107,21 @@ int diff_hunks_writer_add(struct diff_hunks_writer *w,
+ 			  const struct precomputed_hunk *hunks,
+ 			  size_t nr_hunks);
+ 
++/*
++ * Record the pair only if it is trim-stable: the recording caller
++ * hands over both the trimmed (xdi_diff) and untrimmed (xdl_diff)
++ * zero-context hunk sequences it computed, and the entry is added
++ * only when the two are identical. NULL-safe.
++ */
++void diff_hunks_writer_record_stable(struct diff_hunks_writer *w,
++				     const struct object_id *old_oid,
++				     const struct object_id *new_oid,
++				     int xdl_opts,
++				     const struct precomputed_hunk *trimmed,
++				     size_t nr_trimmed,
++				     const struct precomputed_hunk *full,
++				     size_t nr_full);
++
+ /* Flush the accumulated entries to the store and free the writer. NULL-safe. */
+ void diff_hunks_writer_finish(struct diff_hunks_writer *w);
+ 
+diff --git a/diff.c b/diff.c
+index 9ef4328afa..11ec88dc8c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -16,6 +16,7 @@
+ #include "revision.h"
+ #include "quote.h"
+ #include "diff.h"
++#include "diff-hunks.h"
+ #include "diffcore.h"
+ #include "delta.h"
+ #include "hex.h"
+@@ -2929,6 +2930,72 @@ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
+ 	return x;
+ }
+ 
++struct diffstat_hunk_cb_data {
++	struct precomputed_hunk **h;
++	size_t *nr, *alloc;
++};
++
++/*
++ * Hunk callback that appends each hunk's coordinates to a growable
++ * array, so one xdiff pass can both sum a diffstat and record hunks for
++ * the store.
++ */
++static int diffstat_hunk_cb(long start_a, long count_a,
++			    long start_b, long count_b,
++			    void *cb_data)
++{
++	struct diffstat_hunk_cb_data *d = cb_data;
++
++	ALLOC_GROW(*d->h, *d->nr + 1, *d->alloc);
++	(*d->h)[*d->nr].old_start = start_a;
++	(*d->h)[*d->nr].old_count = count_a;
++	(*d->h)[*d->nr].new_start = start_b;
++	(*d->h)[*d->nr].new_count = count_b;
++	(*d->nr)++;
++	return 0;
++}
++
++/*
++ * Collect the hunks of the two files at zero context. diff_fn chooses
++ * whether trimming runs: xdi_diff applies trim_common_tail, yielding the
++ * zero-context hunks blame reads; xdl_diff does not, yielding the
++ * untrimmed hunks. Both run at zero context, so the untrimmed hunks are
++ * not grouped the way a nonzero context would group them; diffstat only
++ * sums their counts, which grouping does not change. Sets *ph (caller
++ * frees) and *ph_nr.
++ */
++typedef int (*xdiff_fn)(mmfile_t *, mmfile_t *, xpparam_t const *,
++			xdemitconf_t const *, xdemitcb_t *);
++static int collect_hunks(xdiff_fn diff_fn, mmfile_t *mf1, mmfile_t *mf2,
++			       xpparam_t *xpp, struct precomputed_hunk **ph,
++			       size_t *ph_nr)
++{
++	size_t ph_alloc = 0;
++	xdemitcb_t ecb = { 0 };
++	xdemitconf_t xecfg = { 0 };
++	struct diffstat_hunk_cb_data cd = { ph, ph_nr, &ph_alloc };
++
++	*ph = NULL;
++	*ph_nr = 0;
++	xecfg.hunk_func = diffstat_hunk_cb;
++	ecb.priv = &cd;
++	return diff_fn(mf1, mf2, xpp, &xecfg, &ecb);
++}
++
++void diff_hunks_attach(struct diff_options *o)
++{
++	if (!(o->output_format &
++	      (DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SHORTSTAT | DIFF_FORMAT_NUMSTAT)))
++		return;
++	o->hunks_writer = diff_hunks_writer_maybe_new(o->repo);
++}
++
++void diff_hunks_detach(struct diff_options *o)
++{
++	diff_hunks_writer_finish(o->hunks_writer);
++	o->hunks_writer = NULL;
++}
++
+ static int diffstat_consume(void *priv, char *line, unsigned long len)
+ {
+ 	struct diffstat_t *diffstat = priv;
+@@ -4253,6 +4320,87 @@ static const char *get_compact_summary(const struct diff_filepair *p, int is_ren
+ 	return NULL;
+ }
+ 
++/*
++ * Fill data->added/deleted for a modified pair by collecting its hunk
++ * coordinates, and record them into the store. Runs only on a warming
++ * run; returns 1 when it produced the counts, 0 when the caller must
++ * compute the diffstat itself.
++ *
++ * --ignore-blank-lines is excluded: that flag is part of the store
++ * key, but it coalesces hunks differently between the emit and
++ * hunk-callback paths, so a recorded entry would not match a
++ * store-less run's --stat output. (--inter-hunk-context is not
++ * excluded: it only groups hunks, and diffstat sums their counts,
++ * which grouping does not change.) Recording requires both sides to
++ * be valid regular files whose blobs the key can name.
++ */
++static int diffstat_from_hunks(struct diff_options *o,
++			       struct diff_filespec *one,
++			       struct diff_filespec *two,
++			       struct diffstat_file *data)
++{
++	struct precomputed_hunk *ph_trim, *ph_full, *counts;
++	size_t n_trim, n_full, n_counts, k;
++	mmfile_t mf1, mf2;
++	xpparam_t xpp = { .flags = o->xdl_opts,
++			  .ignore_regex = o->ignore_regex,
++			  .ignore_regex_nr = o->ignore_regex_nr,
++			  .anchors = o->anchors,
++			  .anchors_nr = o->anchors_nr };
++
++	if (o->xdl_opts & XDF_IGNORE_BLANK_LINES)
++		return 0;
++
++	/* Not a warming run: the caller computes the diffstat. */
++	if (!o->hunks_writer)
++		return 0;
++	/*
++	 * -I patterns, --anchored anchors, and break detection (-B)
++	 * shape the diff outside the store key, so what they compute
++	 * must not be recorded under it.
++	 */
++	if (o->ignore_regex_nr || o->anchors_nr || o->break_opt != -1)
++		return 0;
++	/* Recording needs blobs the key can name, on both sides. */
++	if (!one->oid_valid || !two->oid_valid ||
++	    S_ISGITLINK(one->mode) || S_ISGITLINK(two->mode) ||
++	    !DIFF_FILE_VALID(one) || !DIFF_FILE_VALID(two) ||
++	    !S_ISREG(one->mode) || !S_ISREG(two->mode))
++		return 0;
++
++	if (fill_mmfile(o->repo, &mf1, one) < 0 ||
++	    fill_mmfile(o->repo, &mf2, two) < 0)
++		die("unable to read files to diff");
++
++	/*
++	 * Compute the zero-context trimmed diff (what blame reads) and the
++	 * untrimmed diff (whose counts a nonzero-context stat matches).
++	 * xdi_diff runs first: it enforces the size limit, so the xdl_diff
++	 * call is already bounded.
++	 */
++	if (collect_hunks(xdi_diff, &mf1, &mf2, &xpp, &ph_trim, &n_trim) ||
++	    collect_hunks(xdl_diff, &mf1, &mf2, &xpp, &ph_full, &n_full))
++		die("unable to generate diffstat for %s", one->path);
++
++	/*
++	 * Match a store-less run: at zero context xdi_diff trims, so sum the
++	 * trimmed diff; otherwise sum the untrimmed one.
++	 */
++	counts = o->context ? ph_full : ph_trim;
++	n_counts = o->context ? n_full : n_trim;
++	for (k = 0; k < n_counts; k++) {
++		data->added += counts[k].new_count;
++		data->deleted += counts[k].old_count;
++	}
++
++	diff_hunks_writer_record_stable(o->hunks_writer, &one->oid, &two->oid,
++					o->xdl_opts, ph_trim, n_trim,
++					ph_full, n_full);
++	free(ph_trim);
++	free(ph_full);
++	return 1;
++}
++
+ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 			     struct diff_filespec *one,
+ 			     struct diff_filespec *two,
+@@ -4304,38 +4452,50 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 	}
+ 
+ 	else if (may_differ) {
+-		/* Crazy xdl interfaces.. */
+-		xpparam_t xpp;
+-		xdemitconf_t xecfg;
+-
+-		if (fill_mmfile(o->repo, &mf1, one) < 0 ||
+-		    fill_mmfile(o->repo, &mf2, two) < 0)
+-			die("unable to read files to diff");
+-
+-		memset(&xpp, 0, sizeof(xpp));
+-		memset(&xecfg, 0, sizeof(xecfg));
+-		xpp.flags = o->xdl_opts;
+-		xpp.ignore_regex = o->ignore_regex;
+-		xpp.ignore_regex_nr = o->ignore_regex_nr;
+-		xpp.anchors = o->anchors;
+-		xpp.anchors_nr = o->anchors_nr;
+-		xecfg.ctxlen = o->context;
+-		xecfg.interhunkctxlen = o->interhunkcontext;
+-		xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
+-
+-		if (p->line_ranges) {
+-			struct line_range_filter lr_filter;
+-
+-			line_range_filter_init(&lr_filter, p->line_ranges,
+-					       diffstat_consume, diffstat);
++		/*
++		 * Record into the diff-hunks store on a warming run. A
++		 * "log -L" range-scoped stat is not the whole-pair diff
++		 * the store keys, so it does not record. Otherwise diff
++		 * normally.
++		 */
++		if (p->line_ranges || !diffstat_from_hunks(o, one, two, data)) {
++			/* Crazy xdl interfaces.. */
++			xpparam_t xpp;
++			xdemitconf_t xecfg;
++
++			if (fill_mmfile(o->repo, &mf1, one) < 0 ||
++			    fill_mmfile(o->repo, &mf2, two) < 0)
++				die("unable to read files to diff");
++
++			memset(&xpp, 0, sizeof(xpp));
++			memset(&xecfg, 0, sizeof(xecfg));
++			xpp.flags = o->xdl_opts;
++			xpp.ignore_regex = o->ignore_regex;
++			xpp.ignore_regex_nr = o->ignore_regex_nr;
++			xpp.anchors = o->anchors;
++			xpp.anchors_nr = o->anchors_nr;
++			xecfg.ctxlen = o->context;
++			xecfg.interhunkctxlen = o->interhunkcontext;
++			xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
+ 
+-			if (line_range_filter_diff(&lr_filter, &mf1, &mf2,
+-						   &xpp, &xecfg))
++			if (p->line_ranges) {
++				struct line_range_filter lr_filter;
++
++				line_range_filter_init(&lr_filter,
++						       p->line_ranges,
++						       diffstat_consume,
++						       diffstat);
++
++				if (line_range_filter_diff(&lr_filter, &mf1,
++							   &mf2, &xpp, &xecfg))
++					die("unable to generate diffstat for %s",
++					    one->path);
++			} else if (xdi_diff_outf(&mf1, &mf2, NULL,
++						 diffstat_consume, diffstat,
++						 &xpp, &xecfg))
+ 				die("unable to generate diffstat for %s",
+ 				    one->path);
+-		} else if (xdi_diff_outf(&mf1, &mf2, NULL,
+-				  diffstat_consume, diffstat, &xpp, &xecfg))
+-			die("unable to generate diffstat for %s", one->path);
++		}
+ 
+ 		if (DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two)) {
+ 			struct diffstat_file *file =
+diff --git a/diff.h b/diff.h
+index bb5cddaf34..3d44de39ff 100644
+--- a/diff.h
++++ b/diff.h
+@@ -420,6 +420,13 @@ struct diff_options {
+ 	 */
+ 	int max_depth;
+ 	int max_depth_valid;
++
++	/*
++	 * Precomputed diff hunks (see diff-hunks.h). When hunks_writer is
++	 * set (a warming run), diffstat records the hunks it computes;
++	 * the writer is attached only for the stat output formats.
++	 */
++	struct diff_hunks_writer *hunks_writer;
  };
  
- #define FSYNC_COMPONENTS_OBJECTS (FSYNC_COMPONENT_LOOSE_OBJECT | \
- 				  FSYNC_COMPONENT_PACK)
+ unsigned diff_filter_bit(char status);
+@@ -668,6 +675,16 @@ void diffcore_fix_diff_index(void);
+ int diff_queue_is_empty(struct diff_options *o);
+ void diff_flush(struct diff_options*);
+ void diff_free(struct diff_options*);
++
++/*
++ * Attach a diff-hunks writer to a diff producing a stat format, so a
++ * warming run records the hunks it computes; a no-op when writing is off
++ * or for other formats. Pair with diff_hunks_detach() once the diff is
++ * done.
++ */
++void diff_hunks_attach(struct diff_options *o);
++void diff_hunks_detach(struct diff_options *o);
++
+ void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc);
  
- #define FSYNC_COMPONENTS_DERIVED_METADATA (FSYNC_COMPONENT_PACK_METADATA | \
--					   FSYNC_COMPONENT_COMMIT_GRAPH)
-+					   FSYNC_COMPONENT_COMMIT_GRAPH | \
-+					   FSYNC_COMPONENT_DIFF_HUNKS)
- 
- #define FSYNC_COMPONENTS_DEFAULT ((FSYNC_COMPONENTS_OBJECTS | \
- 				   FSYNC_COMPONENTS_DERIVED_METADATA) & \
-@@ -46,7 +48,8 @@ enum fsync_component {
- 			      FSYNC_COMPONENT_COMMIT_GRAPH | \
- 			      FSYNC_COMPONENT_INDEX | \
- 			      FSYNC_COMPONENT_REFERENCE | \
--			      FSYNC_COMPONENT_OBJECT_MAP)
-+			      FSYNC_COMPONENT_OBJECT_MAP | \
-+			      FSYNC_COMPONENT_DIFF_HUNKS)
- 
- #ifndef FSYNC_COMPONENTS_PLATFORM_DEFAULT
- #define FSYNC_COMPONENTS_PLATFORM_DEFAULT FSYNC_COMPONENTS_DEFAULT
+ /* diff-raw status letters */
+diff --git a/t/meson.build b/t/meson.build
+index 8ae6ab6c5f..c63c30ba63 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -583,6 +583,7 @@ integration_tests = [
+   't4216-log-bloom.sh',
+   't4217-log-limit.sh',
+   't4219-log-follow-merge.sh',
++  't4220-diff-hunks.sh',
+   't4252-am-options.sh',
+   't4253-am-keep-cr-dos.sh',
+   't4254-am-corrupt.sh',
+diff --git a/t/t4220-diff-hunks.sh b/t/t4220-diff-hunks.sh
+new file mode 100755
+index 0000000000..c677831946
+--- /dev/null
++++ b/t/t4220-diff-hunks.sh
+@@ -0,0 +1,184 @@
++#!/bin/sh
++
++test_description='precomputed diff hunks store (git diff-hunks)
++
++The store maps an (old blob, new blob, diff settings) key to the hunks of
++diffing the pair. It is a cache: reading is on by default
++(core.diffHunks), while writing is
++off by default and enabled per run by GIT_DIFF_HUNKS_WRITE (or the
++diffHunks.write config), so a diff or log warms the store only when the
++owner opts in. These tests check that a warmed store never changes
++output, that lookups honor the diff settings, and that a corrupt store is
++read as absent while verify reports the corruption.'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++STORE=.git/objects/info/diff-hunks
++
++# Warm the store the way a repository owner would: a stat walk with
++# writing enabled. A --stat walk records one entry per trim-stable blob
++# pair, serving blame and the summary formats alike. Extra arguments
++# (e.g. -c options) are passed to git before "log".
++warm () {
++	GIT_DIFF_HUNKS_WRITE=1 git "$@" log --all --stat >/dev/null
++}
++
++# Run a command with the store disabled, for ground truth.
++no_store () {
++	git -c core.diffhunks=false "$@"
++}
++
++test_expect_success 'setup' '
++	test_commit initial file.txt "line 1" &&
++	test_commit second file.txt "line 1
++line 2" &&
++	test_commit third file.txt "line 1
++line 2
++line 3" &&
++	test_commit fourth file.txt "changed line 1
++line 2
++line 3
++line 4"
++'
++
++test_expect_success 'ordinary commands do not create the store' '
++	git log --stat >/dev/null &&
++	git blame file.txt >/dev/null &&
++	git diff --stat second third >/dev/null &&
++	test_path_is_missing $STORE
++'
++
++test_expect_success 'writing is gated by env and config, env wins' '
++	test_when_finished "git diff-hunks clear" &&
++	# The diffHunks.write config enables writing.
++	git -c diffHunks.write=true log --all --stat >/dev/null &&
++	test_path_is_file $STORE &&
++	git diff-hunks clear &&
++	# GIT_DIFF_HUNKS_WRITE overrides the config: 0 disables it.
++	GIT_DIFF_HUNKS_WRITE=0 git -c diffHunks.write=true log --all --stat >/dev/null &&
++	test_path_is_missing $STORE &&
++	# and enables it without any config.
++	GIT_DIFF_HUNKS_WRITE=1 git log --all --stat >/dev/null &&
++	test_path_is_file $STORE
++'
++
++test_expect_success 'a warm builds a store that verifies' '
++	warm &&
++	test_path_is_file $STORE &&
++	git diff-hunks verify
++'
++
++test_expect_success 'a second warming run refreshes the store in place' '
++	warm &&
++	test_commit fifth file.txt "brand new line" &&
++	warm &&
++	git diff-hunks verify &&
++	no_store log --stat >expect &&
++	git log --stat >actual &&
++	test_cmp expect actual
++'
++
++# A warming run displays the diffstat it computes. At zero context xdi_diff
++# trims, so the displayed counts must be the trimmed ones (what a store-less
++# run shows), not the untrimmed ones the writer compares against when it
++# decides whether the pair is stable enough to record.
++test_expect_success 'warming --stat at zero context matches a store-less run' '
++	git init -q warm-u0 &&
++	(
++		cd warm-u0 &&
++		cp "$TEST_DIRECTORY/t4220/trim-divergent-old" div.sh &&
++		git add div.sh && git commit -q -m old &&
++		cp "$TEST_DIRECTORY/t4220/trim-divergent-new" div.sh &&
++		git add div.sh && git commit -q -m new &&
++		git -c core.diffhunks=false log -1 --format= -U0 --stat -- div.sh >expect &&
++		GIT_DIFF_HUNKS_WRITE=1 git log -1 --format= -U0 --stat -- div.sh >got &&
++		test_cmp expect got
++	)
++'
++
++test_expect_success 'show and diff-tree --stat use the store' '
++	test_when_finished "git diff-hunks clear" &&
++	# diff_hunks_attach() runs for show and diff-tree: a write-enabled
++	# --stat records into the store (without the attach there is no
++	# writer, so nothing is written).
++	git diff-hunks clear &&
++	GIT_DIFF_HUNKS_WRITE=1 git show --stat fourth >/dev/null &&
++	test_path_is_file "$STORE" &&
++	git diff-hunks clear &&
++	GIT_DIFF_HUNKS_WRITE=1 git diff-tree --stat fourth >/dev/null &&
++	test_path_is_file "$STORE" &&
++	# Reading never changes their output.
++	git diff-hunks clear &&
++	no_store show --stat fourth >expect_show &&
++	no_store diff-tree --stat fourth >expect_dt &&
++	warm &&
++	git show --stat fourth >got_show &&
++	git diff-tree --stat fourth >got_dt &&
++	test_cmp expect_show got_show &&
++	test_cmp expect_dt got_dt
++'
++
++# Cover the pair shapes an object walk encounters: binary and
++# mode-only changes produce no text hunks to record.
++test_expect_success 'binary and mode-only changes do not break the writer' '
++	printf "\\000\\001\\002" >bin.dat &&
++	git add bin.dat &&
++	git commit -m binary-1 &&
++	printf "\\000\\001\\003\\004" >bin.dat &&
++	git add bin.dat &&
++	git commit -m binary-2 &&
++	echo "mode content" >mode.txt &&
++	git add mode.txt &&
++	git commit -m mode-1 &&
++	test_chmod +x mode.txt &&
++	git commit -m mode-2 &&
++	no_store log --stat >expect &&
++	warm &&
++	git log --stat >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'verify succeeds on a valid store and on an absent one' '
++	warm &&
++	git diff-hunks verify &&
++	git diff-hunks clear &&
++	test_path_is_missing $STORE &&
++	git diff-hunks verify
++'
++
++test_expect_success 'verify detects a checksum mismatch' '
++	test_when_finished "git diff-hunks clear" &&
++	warm &&
++	fsize=$(test_file_size $STORE) &&
++	mid=$((fsize / 2)) &&
++	printf "\\377" | dd of=$STORE bs=1 seek=$mid count=1 conv=notrunc 2>/dev/null &&
++	test_must_fail git diff-hunks verify
++'
++
++test_expect_success 'a warm discards a corrupt store rather than seeding from it' '
++	test_when_finished "git diff-hunks clear" &&
++	warm &&
++	# Corrupt the checksum: the next warm must not carry the corrupt
++	# entries forward into a fresh checksum-valid file; it discards
++	# them (with a warning) and rewrites a store that verifies.
++	fsize=$(test_file_size $STORE) &&
++	printf "\\377" | dd of=$STORE bs=1 seek=$((fsize / 2)) count=1 conv=notrunc 2>/dev/null &&
++	warm 2>err &&
++	test_grep "failed its checksum" err &&
++	git diff-hunks verify &&
++	no_store log --stat >expect &&
++	git log --stat >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff-hunks clear removes the store file' '
++	warm &&
++	test_path_is_file $STORE &&
++	git diff-hunks clear &&
++	test_path_is_missing $STORE
++'
++
++test_done
+diff --git a/t/t4220/README b/t/t4220/README
+new file mode 100644
+index 0000000000..b850fe7c61
+--- /dev/null
++++ b/t/t4220/README
+@@ -0,0 +1,55 @@
++t4220 diff-hunks test fixtures
++==============================
++
++trim-divergent-old, trim-divergent-new
++--------------------------------------
++
++Two revisions of a single real file, used by t4220-diff-hunks.sh to
++exercise a "trim-divergent" blob pair: one whose diff hunk counts change
++with the amount of context, so the trimmed and untrimmed results
++disagree.
++
++They are two versions of git's own t/t6002-rev-list-bisect.sh, taken from
++git.git history around:
++
++  090af9957c ("t6002: fix use of `expr` with `set -e`",
++  Patrick Steinhardt, 2026-04-21)
++
++which rewrites `$(expr ...)` arithmetic as `$((...))` and reformats a few
++test_expect_success blocks.
++
++  trim-divergent-old = 090af9957c^:t/t6002-rev-list-bisect.sh  (blob daa009c9a1)
++  trim-divergent-new = 090af9957c :t/t6002-rev-list-bisect.sh  (blob f2de40b5ed)
++
++To regenerate them from any git.git checkout:
++
++  git show 090af9957c^:t/t6002-rev-list-bisect.sh >trim-divergent-old
++  git show 090af9957c:t/t6002-rev-list-bisect.sh  >trim-divergent-new
++
++Why this pair
++-------------
++
++The diff-hunks store records only "trim-stable" pairs: those whose hunks
++are identical whether or not xdiff trims the common head and tail (which
++it does at zero context, in trim_common_tail).  This pair is deliberately
++NOT trim-stable:
++
++  diff -U0 reports  9 added / 6 deleted
++  diff -U3 reports 10 added / 7 deleted
++
++Because the counts diverge with context, the writer must refuse to record
++this pair and every command must recompute it from the blobs.  t4220 uses
++it to prove that the displayed counts stay correct at each context, and
++that a divergent pair is never served from the store.  See
++t4220-diff-hunks.sh ("a trim-divergent file is correct at each context"
++and the store-poison test).
++
++Why not a synthesized fixture
++-----------------------------
++
++The divergence needs real content that makes xdiff's common-tail trimming
++shift a hunk boundary while the added/deleted balance stays equal.  A
++minimal hand-written file that reliably triggers the -U0 vs -U3 count
++disagreement has not been found yet; until one is, this real pair is kept
++verbatim.  If you synthesize a smaller equivalent, replace these two files
++and delete this note.
+diff --git a/t/t4220/trim-divergent-new b/t/t4220/trim-divergent-new
+new file mode 100644
+index 0000000000..f2de40b5ed
+--- /dev/null
++++ b/t/t4220/trim-divergent-new
+@@ -0,0 +1,319 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Jon Seymour
++#
++test_description='Tests git rev-list --bisect functionality'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-t6000.sh # t6xxx specific functions
++
++# usage: test_bisection max-diff bisect-option head ^prune...
++#
++# e.g. test_bisection 1 --bisect l1 ^l0
++#
++test_bisection_diff()
++{
++	_max_diff=$1
++	_bisect_option=$2
++	shift 2
++	_bisection=$(git rev-list $_bisect_option "$@")
++	_list_size=$(git rev-list "$@" | wc -l)
++        _head=$1
++	shift 1
++	_bisection_size=$(git rev-list $_bisection "$@" | wc -l)
++	[ -n "$_list_size" -a -n "$_bisection_size" ] ||
++	error "test_bisection_diff failed"
++
++	# Test if bisection size is close to half of list size within
++	# tolerance.
++	#
++	_bisect_err=$(($_list_size - $_bisection_size * 2))
++	if test "$_bisect_err" -lt 0
++	then
++		_bisect_err=$((0 - $_bisect_err))
++	fi
++	_bisect_err=$(($_bisect_err / 2)) ; # floor
++
++	test_expect_success "bisection diff $_bisect_option $_head $* <= $_max_diff" '
++		test $_bisect_err -le $_max_diff
++	'
++}
++
++date >path0
++git update-index --add path0
++save_tag tree git write-tree
++on_committer_date "00:00" hide_error save_tag root unique_commit root tree
++on_committer_date "00:01" save_tag l0 unique_commit l0 tree -p root
++on_committer_date "00:02" save_tag l1 unique_commit l1 tree -p l0
++on_committer_date "00:03" save_tag l2 unique_commit l2 tree -p l1
++on_committer_date "00:04" save_tag a0 unique_commit a0 tree -p l2
++on_committer_date "00:05" save_tag a1 unique_commit a1 tree -p a0
++on_committer_date "00:06" save_tag b1 unique_commit b1 tree -p a0
++on_committer_date "00:07" save_tag c1 unique_commit c1 tree -p b1
++on_committer_date "00:08" save_tag b2 unique_commit b2 tree -p b1
++on_committer_date "00:09" save_tag b3 unique_commit b2 tree -p b2
++on_committer_date "00:10" save_tag c2 unique_commit c2 tree -p c1 -p b2
++on_committer_date "00:11" save_tag c3 unique_commit c3 tree -p c2
++on_committer_date "00:12" save_tag a2 unique_commit a2 tree -p a1
++on_committer_date "00:13" save_tag a3 unique_commit a3 tree -p a2
++on_committer_date "00:14" save_tag b4 unique_commit b4 tree -p b3 -p a3
++on_committer_date "00:15" save_tag a4 unique_commit a4 tree -p a3 -p b4 -p c3
++on_committer_date "00:16" save_tag l3 unique_commit l3 tree -p a4
++on_committer_date "00:17" save_tag l4 unique_commit l4 tree -p l3
++on_committer_date "00:18" save_tag l5 unique_commit l5 tree -p l4
++git update-ref HEAD $(tag l5)
++
++
++#     E
++#    / \
++#   e1  |
++#   |   |
++#   e2  |
++#   |   |
++#   e3  |
++#   |   |
++#   e4  |
++#   |   |
++#   |   f1
++#   |   |
++#   |   f2
++#   |   |
++#   |   f3
++#   |   |
++#   |   f4
++#   |   |
++#   e5  |
++#   |   |
++#   e6  |
++#   |   |
++#   e7  |
++#   |   |
++#   e8  |
++#    \ /
++#     F
++
++
++on_committer_date "00:00" hide_error save_tag F unique_commit F tree
++on_committer_date "00:01" save_tag e8 unique_commit e8 tree -p F
++on_committer_date "00:02" save_tag e7 unique_commit e7 tree -p e8
++on_committer_date "00:03" save_tag e6 unique_commit e6 tree -p e7
++on_committer_date "00:04" save_tag e5 unique_commit e5 tree -p e6
++on_committer_date "00:05" save_tag f4 unique_commit f4 tree -p F
++on_committer_date "00:06" save_tag f3 unique_commit f3 tree -p f4
++on_committer_date "00:07" save_tag f2 unique_commit f2 tree -p f3
++on_committer_date "00:08" save_tag f1 unique_commit f1 tree -p f2
++on_committer_date "00:09" save_tag e4 unique_commit e4 tree -p e5
++on_committer_date "00:10" save_tag e3 unique_commit e3 tree -p e4
++on_committer_date "00:11" save_tag e2 unique_commit e2 tree -p e3
++on_committer_date "00:12" save_tag e1 unique_commit e1 tree -p e2
++on_committer_date "00:13" save_tag E unique_commit E tree -p e1 -p f1
++
++on_committer_date "00:00" hide_error save_tag U unique_commit U tree
++on_committer_date "00:01" save_tag u0 unique_commit u0 tree -p U
++on_committer_date "00:01" save_tag u1 unique_commit u1 tree -p u0
++on_committer_date "00:02" save_tag u2 unique_commit u2 tree -p u0
++on_committer_date "00:03" save_tag u3 unique_commit u3 tree -p u0
++on_committer_date "00:04" save_tag u4 unique_commit u4 tree -p u0
++on_committer_date "00:05" save_tag u5 unique_commit u5 tree -p u0
++on_committer_date "00:06" save_tag V unique_commit V tree -p u1 -p u2 -p u3 -p u4 -p u5
++
++test_sequence()
++{
++	_bisect_option=$1
++
++	test_bisection_diff 0 $_bisect_option l0 ^root
++	test_bisection_diff 0 $_bisect_option l1 ^root
++	test_bisection_diff 0 $_bisect_option l2 ^root
++	test_bisection_diff 0 $_bisect_option a0 ^root
++	test_bisection_diff 0 $_bisect_option a1 ^root
++	test_bisection_diff 0 $_bisect_option a2 ^root
++	test_bisection_diff 0 $_bisect_option a3 ^root
++	test_bisection_diff 0 $_bisect_option b1 ^root
++	test_bisection_diff 0 $_bisect_option b2 ^root
++	test_bisection_diff 0 $_bisect_option b3 ^root
++	test_bisection_diff 0 $_bisect_option c1 ^root
++	test_bisection_diff 0 $_bisect_option c2 ^root
++	test_bisection_diff 0 $_bisect_option c3 ^root
++	test_bisection_diff 0 $_bisect_option E ^F
++	test_bisection_diff 0 $_bisect_option e1 ^F
++	test_bisection_diff 0 $_bisect_option e2 ^F
++	test_bisection_diff 0 $_bisect_option e3 ^F
++	test_bisection_diff 0 $_bisect_option e4 ^F
++	test_bisection_diff 0 $_bisect_option e5 ^F
++	test_bisection_diff 0 $_bisect_option e6 ^F
++	test_bisection_diff 0 $_bisect_option e7 ^F
++	test_bisection_diff 0 $_bisect_option f1 ^F
++	test_bisection_diff 0 $_bisect_option f2 ^F
++	test_bisection_diff 0 $_bisect_option f3 ^F
++	test_bisection_diff 0 $_bisect_option f4 ^F
++	test_bisection_diff 0 $_bisect_option E ^F
++
++	test_bisection_diff 1 $_bisect_option V ^U
++	test_bisection_diff 0 $_bisect_option V ^U ^u1 ^u2 ^u3
++	test_bisection_diff 0 $_bisect_option u1 ^U
++	test_bisection_diff 0 $_bisect_option u2 ^U
++	test_bisection_diff 0 $_bisect_option u3 ^U
++	test_bisection_diff 0 $_bisect_option u4 ^U
++	test_bisection_diff 0 $_bisect_option u5 ^U
++
++#
++# the following illustrates Linus' binary bug blatt idea.
++#
++# assume the bug is actually at l3, but you don't know that - all you know is that l3 is broken
++# and it wasn't broken before
++#
++# keep bisecting the list, advancing the "bad" head and accumulating "good" heads until
++# the bisection point is the head - this is the bad point.
++#
++
++test_output_expect_success "$_bisect_option l5 ^root" 'git rev-list $_bisect_option l5 ^root' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3" 'git rev-list $_bisect_option l5 ^root ^c3' <<EOF
++b4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3 ^b4" 'git rev-list $_bisect_option l5 ^c3 ^b4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^root ^c3 ^b4" 'git rev-list $_bisect_option l3 ^root ^c3 ^b4' <<EOF
++a4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^b3 ^a3 ^b4 ^a4" 'git rev-list $_bisect_option l3 ^b3 ^a3 ^a4' <<EOF
++l3
++EOF
++
++#
++# if l3 is bad, then l4 is bad too - so advance the bad pointer by making b4 the known bad head
++#
++
++test_output_expect_success "$_bisect_option l4 ^a2 ^a3 ^b ^a4" 'git rev-list $_bisect_option l4 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^a2 ^a3 ^b ^a4" 'git rev-list $_bisect_option l3 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++# found!
++
++#
++# as another example, let's consider a4 to be the bad head, in which case
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3' <<EOF
++a4
++EOF
++
++# found!
++
++#
++# or consider c3 to be the bad head
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option c3 ^a2 ^a3 ^b4 ^c2" 'git rev-list $_bisect_option c3 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++# found!
++
++}
++
++test_sequence "--bisect"
++
++#
++#
++
++test_expect_success 'set up fake --bisect refs' '
++	git update-ref refs/bisect/bad c3 &&
++	good=$(git rev-parse b1) &&
++	git update-ref refs/bisect/good-$good $good &&
++	good=$(git rev-parse c1) &&
++	git update-ref refs/bisect/good-$good $good
++'
++
++test_expect_success 'rev-list --bisect can default to good/bad refs' '
++	# the only thing between c3 and c1 is c2
++	git rev-parse c2 >expect &&
++	git rev-list --bisect >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-parse --bisect can default to good/bad refs' '
++	git rev-parse c3 ^b1 ^c1 >expect &&
++	git rev-parse --bisect >actual &&
++
++	# output order depends on the refnames, which in turn depends on
++	# the exact sha1s. We just want to make sure we have the same set
++	# of lines in any order.
++	sort <expect >expect.sorted &&
++	sort <actual >actual.sorted &&
++	test_cmp expect.sorted actual.sorted
++'
++
++test_output_expect_success '--bisect --first-parent' 'git rev-list --bisect --first-parent E ^F' <<EOF
++e4
++EOF
++
++test_output_expect_success '--first-parent' 'git rev-list --first-parent E ^F' <<EOF
++E
++e1
++e2
++e3
++e4
++e5
++e6
++e7
++e8
++EOF
++
++test_output_expect_success '--bisect-vars --first-parent' 'git rev-list --bisect-vars --first-parent E ^F' <<EOF
++bisect_rev='e5'
++bisect_nr=4
++bisect_good=4
++bisect_bad=3
++bisect_all=9
++bisect_steps=2
++EOF
++
++test_expect_success '--bisect-all --first-parent' '
++	cat >expect.unsorted <<-EOF &&
++	$(git rev-parse E) (tag: E, dist=0)
++	$(git rev-parse e1) (tag: e1, dist=1)
++	$(git rev-parse e2) (tag: e2, dist=2)
++	$(git rev-parse e3) (tag: e3, dist=3)
++	$(git rev-parse e4) (tag: e4, dist=4)
++	$(git rev-parse e5) (tag: e5, dist=4)
++	$(git rev-parse e6) (tag: e6, dist=3)
++	$(git rev-parse e7) (tag: e7, dist=2)
++	$(git rev-parse e8) (tag: e8, dist=1)
++	EOF
++
++	# expect results to be ordered by distance (descending),
++	# commit hash (ascending)
++	sort -k4,4r -k1,1 expect.unsorted >expect &&
++	git rev-list --bisect-all --first-parent E ^F >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--bisect without any revisions' '
++	git rev-list --bisect HEAD..HEAD >out &&
++	test_must_be_empty out
++'
++
++test_done
+diff --git a/t/t4220/trim-divergent-old b/t/t4220/trim-divergent-old
+new file mode 100644
+index 0000000000..daa009c9a1
+--- /dev/null
++++ b/t/t4220/trim-divergent-old
+@@ -0,0 +1,316 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Jon Seymour
++#
++test_description='Tests git rev-list --bisect functionality'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-t6000.sh # t6xxx specific functions
++
++# usage: test_bisection max-diff bisect-option head ^prune...
++#
++# e.g. test_bisection 1 --bisect l1 ^l0
++#
++test_bisection_diff()
++{
++	_max_diff=$1
++	_bisect_option=$2
++	shift 2
++	_bisection=$(git rev-list $_bisect_option "$@")
++	_list_size=$(git rev-list "$@" | wc -l)
++        _head=$1
++	shift 1
++	_bisection_size=$(git rev-list $_bisection "$@" | wc -l)
++	[ -n "$_list_size" -a -n "$_bisection_size" ] ||
++	error "test_bisection_diff failed"
++
++	# Test if bisection size is close to half of list size within
++	# tolerance.
++	#
++	_bisect_err=$(expr $_list_size - $_bisection_size \* 2)
++	test "$_bisect_err" -lt 0 && _bisect_err=$(expr 0 - $_bisect_err)
++	_bisect_err=$(expr $_bisect_err / 2) ; # floor
++
++	test_expect_success \
++	"bisection diff $_bisect_option $_head $* <= $_max_diff" \
++	'test $_bisect_err -le $_max_diff'
++}
++
++date >path0
++git update-index --add path0
++save_tag tree git write-tree
++on_committer_date "00:00" hide_error save_tag root unique_commit root tree
++on_committer_date "00:01" save_tag l0 unique_commit l0 tree -p root
++on_committer_date "00:02" save_tag l1 unique_commit l1 tree -p l0
++on_committer_date "00:03" save_tag l2 unique_commit l2 tree -p l1
++on_committer_date "00:04" save_tag a0 unique_commit a0 tree -p l2
++on_committer_date "00:05" save_tag a1 unique_commit a1 tree -p a0
++on_committer_date "00:06" save_tag b1 unique_commit b1 tree -p a0
++on_committer_date "00:07" save_tag c1 unique_commit c1 tree -p b1
++on_committer_date "00:08" save_tag b2 unique_commit b2 tree -p b1
++on_committer_date "00:09" save_tag b3 unique_commit b2 tree -p b2
++on_committer_date "00:10" save_tag c2 unique_commit c2 tree -p c1 -p b2
++on_committer_date "00:11" save_tag c3 unique_commit c3 tree -p c2
++on_committer_date "00:12" save_tag a2 unique_commit a2 tree -p a1
++on_committer_date "00:13" save_tag a3 unique_commit a3 tree -p a2
++on_committer_date "00:14" save_tag b4 unique_commit b4 tree -p b3 -p a3
++on_committer_date "00:15" save_tag a4 unique_commit a4 tree -p a3 -p b4 -p c3
++on_committer_date "00:16" save_tag l3 unique_commit l3 tree -p a4
++on_committer_date "00:17" save_tag l4 unique_commit l4 tree -p l3
++on_committer_date "00:18" save_tag l5 unique_commit l5 tree -p l4
++git update-ref HEAD $(tag l5)
++
++
++#     E
++#    / \
++#   e1  |
++#   |   |
++#   e2  |
++#   |   |
++#   e3  |
++#   |   |
++#   e4  |
++#   |   |
++#   |   f1
++#   |   |
++#   |   f2
++#   |   |
++#   |   f3
++#   |   |
++#   |   f4
++#   |   |
++#   e5  |
++#   |   |
++#   e6  |
++#   |   |
++#   e7  |
++#   |   |
++#   e8  |
++#    \ /
++#     F
++
++
++on_committer_date "00:00" hide_error save_tag F unique_commit F tree
++on_committer_date "00:01" save_tag e8 unique_commit e8 tree -p F
++on_committer_date "00:02" save_tag e7 unique_commit e7 tree -p e8
++on_committer_date "00:03" save_tag e6 unique_commit e6 tree -p e7
++on_committer_date "00:04" save_tag e5 unique_commit e5 tree -p e6
++on_committer_date "00:05" save_tag f4 unique_commit f4 tree -p F
++on_committer_date "00:06" save_tag f3 unique_commit f3 tree -p f4
++on_committer_date "00:07" save_tag f2 unique_commit f2 tree -p f3
++on_committer_date "00:08" save_tag f1 unique_commit f1 tree -p f2
++on_committer_date "00:09" save_tag e4 unique_commit e4 tree -p e5
++on_committer_date "00:10" save_tag e3 unique_commit e3 tree -p e4
++on_committer_date "00:11" save_tag e2 unique_commit e2 tree -p e3
++on_committer_date "00:12" save_tag e1 unique_commit e1 tree -p e2
++on_committer_date "00:13" save_tag E unique_commit E tree -p e1 -p f1
++
++on_committer_date "00:00" hide_error save_tag U unique_commit U tree
++on_committer_date "00:01" save_tag u0 unique_commit u0 tree -p U
++on_committer_date "00:01" save_tag u1 unique_commit u1 tree -p u0
++on_committer_date "00:02" save_tag u2 unique_commit u2 tree -p u0
++on_committer_date "00:03" save_tag u3 unique_commit u3 tree -p u0
++on_committer_date "00:04" save_tag u4 unique_commit u4 tree -p u0
++on_committer_date "00:05" save_tag u5 unique_commit u5 tree -p u0
++on_committer_date "00:06" save_tag V unique_commit V tree -p u1 -p u2 -p u3 -p u4 -p u5
++
++test_sequence()
++{
++	_bisect_option=$1
++
++	test_bisection_diff 0 $_bisect_option l0 ^root
++	test_bisection_diff 0 $_bisect_option l1 ^root
++	test_bisection_diff 0 $_bisect_option l2 ^root
++	test_bisection_diff 0 $_bisect_option a0 ^root
++	test_bisection_diff 0 $_bisect_option a1 ^root
++	test_bisection_diff 0 $_bisect_option a2 ^root
++	test_bisection_diff 0 $_bisect_option a3 ^root
++	test_bisection_diff 0 $_bisect_option b1 ^root
++	test_bisection_diff 0 $_bisect_option b2 ^root
++	test_bisection_diff 0 $_bisect_option b3 ^root
++	test_bisection_diff 0 $_bisect_option c1 ^root
++	test_bisection_diff 0 $_bisect_option c2 ^root
++	test_bisection_diff 0 $_bisect_option c3 ^root
++	test_bisection_diff 0 $_bisect_option E ^F
++	test_bisection_diff 0 $_bisect_option e1 ^F
++	test_bisection_diff 0 $_bisect_option e2 ^F
++	test_bisection_diff 0 $_bisect_option e3 ^F
++	test_bisection_diff 0 $_bisect_option e4 ^F
++	test_bisection_diff 0 $_bisect_option e5 ^F
++	test_bisection_diff 0 $_bisect_option e6 ^F
++	test_bisection_diff 0 $_bisect_option e7 ^F
++	test_bisection_diff 0 $_bisect_option f1 ^F
++	test_bisection_diff 0 $_bisect_option f2 ^F
++	test_bisection_diff 0 $_bisect_option f3 ^F
++	test_bisection_diff 0 $_bisect_option f4 ^F
++	test_bisection_diff 0 $_bisect_option E ^F
++
++	test_bisection_diff 1 $_bisect_option V ^U
++	test_bisection_diff 0 $_bisect_option V ^U ^u1 ^u2 ^u3
++	test_bisection_diff 0 $_bisect_option u1 ^U
++	test_bisection_diff 0 $_bisect_option u2 ^U
++	test_bisection_diff 0 $_bisect_option u3 ^U
++	test_bisection_diff 0 $_bisect_option u4 ^U
++	test_bisection_diff 0 $_bisect_option u5 ^U
++
++#
++# the following illustrates Linus' binary bug blatt idea.
++#
++# assume the bug is actually at l3, but you don't know that - all you know is that l3 is broken
++# and it wasn't broken before
++#
++# keep bisecting the list, advancing the "bad" head and accumulating "good" heads until
++# the bisection point is the head - this is the bad point.
++#
++
++test_output_expect_success "$_bisect_option l5 ^root" 'git rev-list $_bisect_option l5 ^root' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3" 'git rev-list $_bisect_option l5 ^root ^c3' <<EOF
++b4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3 ^b4" 'git rev-list $_bisect_option l5 ^c3 ^b4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^root ^c3 ^b4" 'git rev-list $_bisect_option l3 ^root ^c3 ^b4' <<EOF
++a4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^b3 ^a3 ^b4 ^a4" 'git rev-list $_bisect_option l3 ^b3 ^a3 ^a4' <<EOF
++l3
++EOF
++
++#
++# if l3 is bad, then l4 is bad too - so advance the bad pointer by making b4 the known bad head
++#
++
++test_output_expect_success "$_bisect_option l4 ^a2 ^a3 ^b ^a4" 'git rev-list $_bisect_option l4 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^a2 ^a3 ^b ^a4" 'git rev-list $_bisect_option l3 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++# found!
++
++#
++# as another example, let's consider a4 to be the bad head, in which case
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3' <<EOF
++a4
++EOF
++
++# found!
++
++#
++# or consider c3 to be the bad head
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option c3 ^a2 ^a3 ^b4 ^c2" 'git rev-list $_bisect_option c3 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++# found!
++
++}
++
++test_sequence "--bisect"
++
++#
++#
++
++test_expect_success 'set up fake --bisect refs' '
++	git update-ref refs/bisect/bad c3 &&
++	good=$(git rev-parse b1) &&
++	git update-ref refs/bisect/good-$good $good &&
++	good=$(git rev-parse c1) &&
++	git update-ref refs/bisect/good-$good $good
++'
++
++test_expect_success 'rev-list --bisect can default to good/bad refs' '
++	# the only thing between c3 and c1 is c2
++	git rev-parse c2 >expect &&
++	git rev-list --bisect >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-parse --bisect can default to good/bad refs' '
++	git rev-parse c3 ^b1 ^c1 >expect &&
++	git rev-parse --bisect >actual &&
++
++	# output order depends on the refnames, which in turn depends on
++	# the exact sha1s. We just want to make sure we have the same set
++	# of lines in any order.
++	sort <expect >expect.sorted &&
++	sort <actual >actual.sorted &&
++	test_cmp expect.sorted actual.sorted
++'
++
++test_output_expect_success '--bisect --first-parent' 'git rev-list --bisect --first-parent E ^F' <<EOF
++e4
++EOF
++
++test_output_expect_success '--first-parent' 'git rev-list --first-parent E ^F' <<EOF
++E
++e1
++e2
++e3
++e4
++e5
++e6
++e7
++e8
++EOF
++
++test_output_expect_success '--bisect-vars --first-parent' 'git rev-list --bisect-vars --first-parent E ^F' <<EOF
++bisect_rev='e5'
++bisect_nr=4
++bisect_good=4
++bisect_bad=3
++bisect_all=9
++bisect_steps=2
++EOF
++
++test_expect_success '--bisect-all --first-parent' '
++	cat >expect.unsorted <<-EOF &&
++	$(git rev-parse E) (tag: E, dist=0)
++	$(git rev-parse e1) (tag: e1, dist=1)
++	$(git rev-parse e2) (tag: e2, dist=2)
++	$(git rev-parse e3) (tag: e3, dist=3)
++	$(git rev-parse e4) (tag: e4, dist=4)
++	$(git rev-parse e5) (tag: e5, dist=4)
++	$(git rev-parse e6) (tag: e6, dist=3)
++	$(git rev-parse e7) (tag: e7, dist=2)
++	$(git rev-parse e8) (tag: e8, dist=1)
++	EOF
++
++	# expect results to be ordered by distance (descending),
++	# commit hash (ascending)
++	sort -k4,4r -k1,1 expect.unsorted >expect &&
++	git rev-list --bisect-all --first-parent E ^F >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--bisect without any revisions' '
++	git rev-list --bisect HEAD..HEAD >out &&
++	test_must_be_empty out
++'
++
++test_done
 -- 
 2.54.0
 
