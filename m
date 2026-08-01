@@ -1,108 +1,250 @@
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D88489893
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 08:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4F43BD657
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 09:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785574097; cv=none; b=lDaPLlNX4zqlz/E9y4YoiCBaqOQhu+m/UW7kBxQlbO0Qhfr6h3eWdMfkey0CKjQjJBgncuhEv4GSroCjl4A/3NYxsmgDYU71BMADqi442SDBf0IDq3RaOpyTLTZ0Vywp06cAsEsfWLxLUXjFvu49t72o84azi5nuuUsDUXsFOXs=
+	t=1785577453; cv=none; b=VtYLd5TbpW0l/pMyiOJCaw9tFXuLkVTf++b4bHo1cRebPzvogeGnGWHmsl0G8fWw4Xpudpz+LOmA967JEtO0nfu5vBQc9o+l8TbrA3IEVNXGbKFkZdPB5pCf1lfe/jEqoJp93jUkZ8QwoSvhi7rtnMexg8+nLt93EfqxKDkfJdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785574097; c=relaxed/simple;
-	bh=IoS/fEvD51WNrPlAJ+xSuNQJGpYECmis2hM+v5LnOv4=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tKAOV4TZskoX8zZCnlXChNPNBGoutbNV61I0U0c5oYdUMrZgz07t000hcrSqAVqRoepvVBiuva3ywYG+qyLZ8T7NFZCJH2C7fbtyiBduYeUN1FY4XAGlQ/TZD2/CTgTnzK7Szu94b6IbyMTQNrS6GrZtaegDH/onxTP+od7820k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=RanNcl5B; arc=none smtp.client-ip=212.27.42.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1785577453; c=relaxed/simple;
+	bh=IevVEQwVYFT2/nOqBFoXrL8s3/4M9cw1BVF5sCBp/Ns=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ZJfX6M1yi0AEFxdxWhtKDM/alzDH3uwBTPGJsraOC0te94nN5Pz/mYRuH/JnQMxhd6bvwnVz+iehOv82RZAopSAvZhTQ2F9Age+U3Vmwp4fvEqtc1MTSpcibLozy0sQVfjHpVb5Z+H8yuPgfeMAbe1ys3xQgIY9AgKMFodUGojw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mVYUr9RN; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="RanNcl5B"
-Received: from cixi.localnet (unknown [IPv6:2a01:e0a:b3f:5350:b6e:bf81:919d:c0f3])
-	(Authenticated sender: tnemeth@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 399D913F880;
-	Sat,  1 Aug 2026 10:48:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1785574093;
-	bh=IoS/fEvD51WNrPlAJ+xSuNQJGpYECmis2hM+v5LnOv4=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=RanNcl5BvchYNMsbIXxBqs2aAqDvimXFO06XEBxx/5Fxu2BJqP9HLudLK/h9wZ+i/
-	 RCCZ1qD3PU/dS0EMYzwqk6DbAlKZ+GaCyELUV/0Dco+1GQeolK6huT6JYA+JMmjj/x
-	 S6BIBAMG7rp8VLtdP36iGUFSnA2Mn6/T6/CoaMI50FhDofxFzLfWJmE+1lN9a98G6E
-	 1yls3qbMH7jLhZ+EUcntQeLcE3U7GscJTNuvEdeNrbVbGIdGJ1mJmvajoDpkLw6Yks
-	 yvlLuFvNTUv2BPjNXLEihaKXHCXdtCl+7V3vQm/SeN1X3I+of5wfjtog7bVHSEQWlj
-	 1Sw60cnsOAFlQ==
-From: Thomas Nemeth <tnemeth@free.fr>
-To: Ben Knoble <ben.knoble@gmail.com>, git@vger.kernel.org
-Subject: Re: Git trailing blank lines feature configuration
-Date: Sat, 01 Aug 2026 10:48:11 +0200
-Message-ID: <3433010.aeNJFYEL58@cixi>
-Organization: =?UTF-8?B?ZMOpc29yZ2FuaXPDqWU=?=
-In-Reply-To: <06230920-FCA6-495C-BFE5-04DF1CC2A426@gmail.com>
-References:
- <5097209.GXAFRqVoOG@cixi> <06230920-FCA6-495C-BFE5-04DF1CC2A426@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mVYUr9RN"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38e58034d05so1891721a91.2
+        for <git@vger.kernel.org>; Sat, 01 Aug 2026 02:44:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785577449; x=1786182249; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=BZ3uKEJqETKpamER61B7oB/o92woPnG6AlzzM1aDYxo=;
+        b=mVYUr9RNvcijYvIYeT4h7uLvy6kqX9+nk/SldeTegLF3GsZYJKPbYoGM8Y1xy/stNw
+         RjgtFoO5fPujgwa8a0Q1afJjCduz6XKK8dnlQ3nWKuTzJM4Q+F+VlSnLWVC3KFriPHu3
+         Es00RArNruW1u3pocE8iYUUopcmaTiildZblhKzx0R+xnGGYmpwTSfcOyaAMOnHv7rPS
+         F4RS9J85ditGXakMMqApRIa6YK0kH9ofgEnfuZFoW3UHTznOroTRAEGDH+tTXe9Kqua0
+         y1zDUlZJ5Q/5sIAWJf0M1YSx4wTtl3VpPtOy9jNRw9wFjjcQ5CQX9PEWLDIBHwHt2uJ/
+         urJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785577449; x=1786182249;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=BZ3uKEJqETKpamER61B7oB/o92woPnG6AlzzM1aDYxo=;
+        b=DkZNEDx2WhmEBaM1OogydUogiyTAV2uZG9gn+hnuP/YubcImteea6j26yJ1e6Xbt7p
+         q6wo+hqBQr/iJQanVghYaMLqFkaU1kjv7/hzpmznIRM02RGlPm9wpwWaojID+VTj5Dwc
+         joSx1LQ0m0ajX0xscB+bqVJlVpFoIwRZ6HQgZ02KZjzyK2CAK5pWqRcFWKELZuuOYMe8
+         ZsoZ/tlBd7AAqc1E33vss8mjp4EY4/wNpOesqA37udhI4ongEOZptMepVttidMDeXuKO
+         3PZNlRH9VNou0qzbXytX7zQZVxAtEuHoEUmHTMD+pfVpvFF8oxuX2SCUrHYKU7/hEGiZ
+         dlIg==
+X-Gm-Message-State: AOJu0YwEYyozH697oOWm978DGpccFI3yKIUkrXWhk0mLbWnAgvf7cBfB
+	Jyf2h7NsTxy0+paXqw0aqQTTUDSpEEnBAgZok4Glb9fSDpYxBXmk4g91fA3JeruY
+X-Gm-Gg: AR+sD11GQ1qlqugT8/F9kqoPewWAUhPmSPRSV8W6M9ln4fEQb/aWn1ociLJh0TGdCjp
+	INW8s42OWrxQFOJoRNrdYHP1V8yuMqdCGzdPqoxZnnifIiumU11CL+OYk4zTiXSplzeJe93xYXA
+	l/MkfFw4nCQMw7t8mEp7qt2UHfnEWEgIM7GVnZh9jI4Nmd9qwqK36y2sXY/tsLpx5WAa+anvAqx
+	ak78yY6vgy7EB30cbX4yA7Iq9RhOMRfb/tOyzBIaaeMzzLBls9WCgY+3KE5qv4fu2pfeR0UmpBX
+	t0cqWPHNQCxz/MtfsNqrU7QbNYysyKRfTxwRgZz1iaP2EJRaOhb/VjPRgjEJ0UPW8IYR/5GpJH/
+	Xy7m1yCxKioh+HRIWQbx9U7ZZcC+A0tHkzVr25843VxgTeZI1IDVVV7ClqLrCjGFdm8vueWSvQx
+	BbY5X+AWR168/+DO3Q8wUzAgRu3zYSOIbNu36Le636ZCkg86OOFLko6IsK4MY5jz8=
+X-Received: by 2002:a17:90b:5690:b0:368:9da3:c496 with SMTP id 98e67ed59e1d1-38fbc4d6169mr2600641a91.24.1785577448387;
+        Sat, 01 Aug 2026 02:44:08 -0700 (PDT)
+Received: from [127.0.0.1] ([52.238.26.244])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fb30dff2esm1790847a91.13.2026.08.01.02.44.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Aug 2026 02:44:06 -0700 (PDT)
+Message-Id: <pull.2335.v4.git.git.1785577445.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2335.v3.git.git.1784538619.gitgitgadget@gmail.com>
+References: <pull.2335.v3.git.git.1784538619.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 01 Aug 2026 09:44:03 +0000
+Subject: [PATCH v4 0/2] bisect: add --reset-when-found to leave when done
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Le samedi 1 ao=C3=BBt 2026, 02:05 Ben Knoble a =C3=A9crit :
-> > Le 31 juil. 2026 =C3=A0 20:55, Thomas Nemeth <tnemeth@free.fr> a =C3=A9=
-crit :
-> >=20
-> >    I wouldn't say necessary, of course. It's -- at least -- my
-> >    preference. For _my_ use case, it's useful. When I move code
-> >    around, and that code is at the end of the file or to be put
-> >    at the end of the file, I find it easier to already have a
-> >    blank line there. That is... Because that's how I use vim to
-> >    code.
->=20
-> I use Vim, too, and I=E2=80=99ve not personally encountered the desire for
-> keeping a blank line at EOF (though occasionally certain operations
-> benefit from placing one there first!).
->=20
-> I wonder if you could describe example workflows that lead to this
-> desire? I might learn something, and in exchange, if I see a way to
-> accomplish the same thing with less hassle, I=E2=80=99ll suggest it ;)
+Add a --reset-when-found option to git bisect that resets the bisect session
+when culprit is found.
 
-    It's hard to describe something like that :)
+Changes in v4:
 
-    Imagine you are editing a C file. It contains functions, code blocks
-    an so on. I usually organize my code as such :
+ * Simplify translation calls.
+ * Avoid git subshell calls in tests, that can bury errors.
 
-#includes
-[...]
-#defines
-[...]
-static variables
-[...]
-static functions()
-[...]
-public_functions()
-[...]
+Changes in v3:
+
+ * Rename --auto-reset to --reset-when-found, including internal names.
+ * Defer git bisect run cleanup until captured output is printed and
+   BISECT_RUN is closed. Drop the open-descriptor preparatory change,
+   retaining the existing filename-based output handling.
+
+Changes in v2:
+
+ * Add option --auto-reset[=<where>] with option to go to final commit as
+   well as original.
+ * Refactored tests.
+
+Harald Nordgren (2):
+  bisect: let bisect_reset() optionally check out quietly
+  bisect: add --reset-when-found to leave when done
+
+ Documentation/git-bisect.adoc |  14 +++-
+ bisect.c                      |   2 +
+ builtin/bisect.c              | 148 +++++++++++++++++++++++++++++-----
+ t/t6030-bisect-porcelain.sh   | 121 +++++++++++++++++++++++++++
+ 4 files changed, 264 insertions(+), 21 deletions(-)
 
 
-    Code reorganization happens quite some times during the development
-    process.
-    If I need to move a previously static function at the end of the
-    public functions section, I switch to VISUAL, select the function
-    to be moved with the blank lines above (I like having neatly spaced
-    code) _and_ including the eol of the function last line.
-    Then I delete it (d), I move to EOF (:$). As the line is blank I
-    just have to paste (p) it back there. The function is moved. The last
-    blank line is kept for other code movements.
+base-commit: a97fcc37c2bc6340a8d7ce78dedf227aac4e9aa7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2335%2FHaraldNordgren%2Fbisect-auto-reset-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2335/HaraldNordgren/bisect-auto-reset-v4
+Pull-Request: https://github.com/git/git/pull/2335
 
-    Conversely, I can select the last function to move it upper in the
-    file.
+Range-diff vs v3:
 
-    Adding new functions is also eased. It may be because I use only a
-    few vim commands (especially I rarely use the `o` command). But also
-    because I like spaced code :)
+ 1:  59920c51ae = 1:  e39670edf4 bisect: let bisect_reset() optionally check out quietly
+ 2:  542f4b2c80 ! 2:  f5f370df1b bisect: add --reset-when-found to leave when done
+     @@ builtin/bisect.c: static enum bisect_error bisect_start(struct bisect_terms *ter
+       		}
+       	}
+      +	if (reset_when_found != RESET_WHEN_FOUND_NONE && no_checkout) {
+     -+		res = error(_("'--reset-when-found' cannot be used with '--no-checkout'"));
+     ++		res = error(_("options '%s' and '%s' cannot be used together"),
+     ++			    "--reset-when-found", "--no-checkout");
+      +		goto finish;
+      +	}
+       	pathspec_pos = i;
+     @@ builtin/bisect.c: static int bisect_run(struct bisect_terms *terms, int argc, co
+      +
+      +	if (reset_when_found != RESET_WHEN_FOUND_NONE) {
+      +		if (refs_ref_exists(get_main_ref_store(the_repository), "BISECT_HEAD"))
+     -+			return error(_("'--reset-when-found' cannot be used with '--no-checkout'"));
+     ++			return error(_("options '%s' and '%s' cannot be used together"),
+     ++				     "--reset-when-found", "--no-checkout");
+      +		write_file(git_path_bisect_reset_when_found(), "%s\n",
+      +			   reset_when_found_mode_name(reset_when_found));
+      +		argc--;
+     @@ t/t6030-bisect-porcelain.sh: test_bisect_usage () {
+       }
+       
+      +test_bisect_state_file () {
+     -+	test_path_is_file "$(git rev-parse --git-path "$1")"
+     ++	local file &&
+     ++	file=$(git rev-parse --git-path "$1") &&
+     ++	test_path_is_file "$file"
+      +}
+      +
+      +test_bisect_state_missing () {
+     -+	test_path_is_missing "$(git rev-parse --git-path "$1")"
+     ++	local file &&
+     ++	file=$(git rev-parse --git-path "$1") &&
+     ++	test_path_is_missing "$file"
+      +}
+      +
+      +bisect_start_and_finish () {
+     @@ t/t6030-bisect-porcelain.sh: test_expect_success '"git bisect run" simple case'
+       '
+       
+      +test_expect_success '"git bisect start --reset-when-found" defaults to original' '
+     -+	test_when_finished "git bisect reset; git checkout main" &&
+     ++	test_when_finished "git bisect reset && git checkout main" &&
+      +	git checkout main &&
+      +	bisect_start_and_finish --reset-when-found &&
+     -+	test "$HASH4" = "$(git rev-parse HEAD)" &&
+     -+	test main = "$(git branch --show-current)" &&
+     ++	actual=$(git rev-parse HEAD) &&
+     ++	test "$HASH4" = "$actual" &&
+     ++	actual=$(git branch --show-current) &&
+     ++	test main = "$actual" &&
+      +	test_bisect_state_missing BISECT_START &&
+      +
+      +	bisect_start_and_finish --reset-when-found=original &&
+     -+	test "$HASH4" = "$(git rev-parse HEAD)" &&
+     -+	test main = "$(git branch --show-current)" &&
+     ++	actual=$(git rev-parse HEAD) &&
+     ++	test "$HASH4" = "$actual" &&
+     ++	actual=$(git branch --show-current) &&
+     ++	test main = "$actual" &&
+      +	test_bisect_state_missing BISECT_START
+      +'
+      +
+      +test_expect_success '"git bisect start --reset-when-found=found" leaves first bad checked out' '
+     -+	test_when_finished "git bisect reset; git checkout main" &&
+     ++	test_when_finished "git bisect reset && git checkout main" &&
+      +	bisect_start_and_finish --reset-when-found=found &&
+     -+	test "$HASH3" = "$(git rev-parse HEAD)" &&
+     ++	actual=$(git rev-parse HEAD) &&
+     ++	test "$HASH3" = "$actual" &&
+      +	test_bisect_state_missing BISECT_START
+      +'
+      +
+      +test_expect_success '"git bisect run --reset-when-found" defaults to original' '
+     -+	test_when_finished "git bisect reset; git checkout main" &&
+     ++	test_when_finished "git bisect reset && git checkout main" &&
+      +	bisect_run_reset_when_found --reset-when-found &&
+     -+	test "$HASH4" = "$(git rev-parse HEAD)" &&
+     -+	test main = "$(git branch --show-current)" &&
+     ++	actual=$(git rev-parse HEAD) &&
+     ++	test "$HASH4" = "$actual" &&
+     ++	actual=$(git branch --show-current) &&
+     ++	test main = "$actual" &&
+      +	test_bisect_state_missing BISECT_START
+      +'
+      +
+      +test_expect_success '"git bisect run --reset-when-found=found" leaves first bad checked out' '
+     -+	test_when_finished "git bisect reset; git checkout main" &&
+     ++	test_when_finished "git bisect reset && git checkout main" &&
+      +	bisect_run_reset_when_found --reset-when-found=found &&
+     -+	test "$HASH3" = "$(git rev-parse HEAD)" &&
+     ++	actual=$(git rev-parse HEAD) &&
+     ++	test "$HASH3" = "$actual" &&
+      +	test_bisect_state_missing BISECT_START
+      +'
+      +
+      +test_expect_success '--reset-when-found rejects an unknown reset target' '
+     -+	test_when_finished "git bisect reset; git checkout main" &&
+     ++	test_when_finished "git bisect reset && git checkout main" &&
+      +	test_reset_when_found_fails \
+      +		"invalid value for.*--reset-when-found.*unknown" BISECT_START \
+      +		git bisect start --reset-when-found=unknown $HASH4 $HASH2 &&
+     @@ t/t6030-bisect-porcelain.sh: test_expect_success '"git bisect run" simple case'
+      +test_expect_success '--reset-when-found cannot be used with --no-checkout' '
+      +	test_when_finished "git bisect reset" &&
+      +	test_reset_when_found_fails \
+     -+		"cannot be used with.*--no-checkout" BISECT_START \
+     ++		"options .*--reset-when-found.* and .*--no-checkout.* cannot be used together" BISECT_START \
+      +		git bisect start --reset-when-found=original --no-checkout $HASH4 $HASH2 &&
+      +
+      +	git bisect start --no-checkout $HASH4 $HASH2 &&
+      +	test_reset_when_found_fails \
+     -+		"cannot be used with.*--no-checkout" BISECT_RESET_WHEN_FOUND \
+     ++		"options .*--reset-when-found.* and .*--no-checkout.* cannot be used together" BISECT_RESET_WHEN_FOUND \
+      +		git bisect run --reset-when-found=found true
+      +'
+      +
+     @@ t/t6030-bisect-porcelain.sh: test_expect_success '"git bisect run" simple case'
+      +'
+      +
+      +test_expect_success '--reset-when-found does not leak into a later bisection' '
+     -+	test_when_finished "git bisect reset; git checkout main" &&
+     ++	test_when_finished "git bisect reset && git checkout main" &&
+      +	bisect_start_and_finish --reset-when-found &&
+      +
+      +	git bisect start $HASH4 $HASH2 &&
 
-
-=2D-=20
-Thomas.
-
-
+-- 
+gitgitgadget
