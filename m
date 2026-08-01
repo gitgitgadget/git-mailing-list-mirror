@@ -1,81 +1,81 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3181C1E9B1A
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 04:27:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E993D3B8405
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 04:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785558464; cv=none; b=prrJPNLgNbewKkh2+IecFwOLvJ1wwG373TWbFmY/p0s89c4En7OXoTn7ZUZYhjRms/j+1+Gq81B4eCoy/U4SrT0J3TzbnMU0AxSiJj1L4cOddpni01xlk6RtEZk543Aqe4NiuisppJJcdV9MInG7IrK6XWx/nmOOUI+Dk2oOcdU=
+	t=1785560147; cv=none; b=ipuqNhaRkoOX59GsmDLEuw09bGvDRrDGc76/yy0lwMMBr4tB0QjWtAhjbXB4l3z6+VwUE+8SRQmETAe4WyXnKdwD6/Wj73DLh0fOvcYOjPrOM2Gegh716tL3XETL5r8jHVyU3z45zrHJz1foQOSWSpjKbjd3JrcU4RlGYb2I6GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785558464; c=relaxed/simple;
-	bh=hU6xezQyMyFd/Nf3fpXdb7jyCsOP6Nc0aMFrw0uC/Dw=;
+	s=arc-20240116; t=1785560147; c=relaxed/simple;
+	bh=36mA8TRry4/lXOa/v2f3kX1gwlTGXQfY8E3I/Wao0EY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LhHbA6vWTtkDljWGaswJGstVcMufwNcVgFUx5HFgml1AM++zKcZT7DheGmuVkMEmQfOpVx/WZq/CrOx9OKOMB5kNBRTZbveh+duI1Vv0VpTIOKJ+9rmSDP32Wr9+6N45AQlmS42hm2i6iDSA3H8WL5IwGXGHRheWjKwoTTONCew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Riw+76o9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hCwy7IZs; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=ZbTDz0xhuhbioO9bSKfXEY9Ce+hci2WmBvXdaLHuTl+K52Xu0wdVf3hYl+qq9vF1e25Zg3xZrwhqe+1rbAdUgZjY9wtxbriH1jgr01wQMYJwcGbGUZMSIDrTRZ3e9bzELIUDh4YSNnaPF5MmKVXKVTkWrneMuvJTAQm5EXPiaAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y9vNXnGi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T2T34q5b; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Riw+76o9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hCwy7IZs"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 28FB77A00B2;
-	Sat,  1 Aug 2026 00:27:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 01 Aug 2026 00:27:41 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y9vNXnGi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T2T34q5b"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id E0D2C1D0006E;
+	Sat,  1 Aug 2026 00:55:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Sat, 01 Aug 2026 00:55:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785558461; x=1785644861; bh=vxL5IkFjYV
-	NB6/9ECKF/fgq8ACbl268qgV/9qC9YQNc=; b=Riw+76o9fg2p2EAcfeuoZ1vuxq
-	jPOh4lGutfD6WHYZpnI8OFfO+9zbwOUKDrEayauk83wndyPcvSKzo3EV5N3QbdkH
-	FydHk99Hr0IjfHZAdhfoCrROJXoFKFKew9QzoCZeQst79z/86mIN89m3h4AwF5tV
-	FEXkyx0zNkzEkUrb1MFl7lBvDSWKo3SaXcKxWo/GdnDCdOTcAQq+C55snbjzexac
-	QIFx3vPdDaMEUsrdekQkEN63e88TykWXvspCwdMz66fHEDzKTIh1gPefXpJJmS8R
-	IL8VXOZzdawGd2Wb4Ddr+UCmWYW4JTmtF/YaM/NMerVu6JNeILd7mghntmOw==
+	:subject:to:to; s=fm1; t=1785560143; x=1785646543; bh=6SX7AlJG1Q
+	xX0s0oxumJeu5jyAy/smvSP0ByllUGUvY=; b=Y9vNXnGiifUR3lS31hvQEBsXTT
+	F+w87kbD5KwV0eo5elyZmVl1aYyQ5bJH2SKkHOlydDw0HpgLyejsqDXGAGSK3jb+
+	fGc7D8/ILlm4GWeAcD33iQEr2dxwalV63cOaugOVRQ5GeCPcc/zAinI1UAiAq4UY
+	HshQ7l1EoDWGOJOW/qRoIZectEQBpyzRW5WdM0ktc1NWTZwlLGRj1gQrmEdnjxtg
+	kOka4o4Fl7CccqH/1hHkGbXwlSRj+ELauVSKqs5sQaUg/qgKrqC+cuGqARE+cOQz
+	/YfTSuzPlIglm8xF5+JS2j8NjmcutqLrt+/JEhN40cpdqkpJTO4SN9VORfxQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785558461; x=1785644861; bh=vxL5IkFjYVNB6/9ECKF/fgq8ACbl268qgV/
-	9qC9YQNc=; b=hCwy7IZsn7kWuwQyk4oXtb5H0Y/hQRXLfN1hJOmvfQLsg7KmYMw
-	1Vo5IXdrM/dSNK2jry1J8N4zFPh5hs85KDuaGx7rTh/58l1uIoFb8VDGSIA020Nh
-	U40IMjaB3Ay6ATadaS1ZpLN6dw6+pY8VDzI8OynFah906HdItxgo1fGHeSdccSoV
-	frm56H7uuQpm4nGoXKo8xAN1CUcq0T4u9K72mSIjPFY7R0OEhGwfwWTJIhPV4+uj
-	qng2CQqLWBTKkIKespUw7yBedjX2oxT7SBV/DBtpfspXwUO0G2dSFrWlYB8KGrrU
-	2FEW0D/lcB9493sidzcxUMy7A58rRgaUUew==
-X-ME-Sender: <xms:vHVtasIDybE4chKh1l2fP3JuxajlJNXqbtDmXB5Cg8uBhtFK8h8Tog>
-    <xme:vHVtajDM-xkX1WUO0SGNnswAdxlmwV515TTRYqH_t9dAnVmzlL3P-8UdsqPtYuX-a
-    cOR_SRiCGAWy-HUZ3eq8UwgEUNumlWd4jM7EdnznzPpgvNH-yoNWWg>
-X-ME-Received: <xmr:vHVtalCj-8jNMo8ZVin8dT4vHAf45X6rzs9UMDkMan3PI_6Z9WCPbBJtwq2esLA6crMvrZwHe3K8Q2aTTGY4Mb-mrew0yVr0JQ>
-X-ME-Proxy-Cause: dmFkZTEQIOgbElImS8POKwLpmldB3h1NAsbsiQVeqdIewBg1ppZkO7y6zZY88afeMCbbcY
-    6wC7fMhusMgbeWoQYbx5wdFmkzZBtlu5aLHi67D5NIip27+w5fxmUcc/PB8CPxkw03y+aV
-    W2Gd+EYKnI2oko+7Jcc4RCkMkFG8S5nMW3ZMLsu3yKxMrZ4Uie18t+h40BHD+N2Kunc8PJ
-    GlbEqxi5xXXIJSME4+cwU34M3hMCT5ZxfED+4mjRe+TZea+IsRe/Ku1myHXMNa9pJHfR3z
-    WV9PXGIlDevdOFN0tqtpn/nVcZUuho4k7x7UvWNAqHjI714SxqFbaj/IzrJ7nUSDhhthUi
-    3UV9iyh2Kwsu0VYrUjKa2wERKs7zxzZo75veLC/Ri9Hy1kWg1IUh+WybCf52EK75bKUakS
-    RrRa3oZlRnWNS2loDjuMnekmplRWH6iqJJ1VyaLL64ushNntWR6f3s10v1q34wfGtAzVLv
-    ttqvSVMlFSWgdXoGk/b2dU8sG1ZTmQpELnM6GM16zBbAHIEpdqFZlNNYCRNef/wy93YyJf
-    PFcmj1t+/Xapx/Ft1Au3EnFSuQvKfUucpEIxhOtuGhr6zvtYRKuxbIaqebo0mGtcjhVGwx
-    Qjy2itWwU3F/jwBVfAOjHlEOYiYHkl2WGZ8eP6TI8bnblemHnraB6QYJE9jA
-X-ME-Proxy: <xmx:vHVtalCTPxvZ64Xz3zoaviNlqpXcnQgveZM-F7_nliQUQwVu6XbCAg>
-    <xmx:vHVtagpWQRv3SvpbjqStJrRqcSa2DxWabWUlTpBtuAWT5O_t9uOUhg>
-    <xmx:vHVtavn3Uk98JlIJMH6mU3ZZrlOph28MtUbIx8GANSxNVxg1tVwdiQ>
-    <xmx:vHVtagyT4i7GeCf_hHTQSww87E1CRsXVN8Yr6_WRsK23A_jsbbUd-g>
-    <xmx:vXVtaoQ5CUVaUfs_LcYbFejZC1CRmRwmFRE5TYmCAipQfVvH2lXTmlw4>
+	1785560143; x=1785646543; bh=6SX7AlJG1QxX0s0oxumJeu5jyAy/smvSP0B
+	yllUGUvY=; b=T2T34q5b/ov/eV35BXH5hklAqa1QrzmnMCvQnJy3oWfzrZ24ZGo
+	N3dFeHJW+V+BY+VOQawAQbai30DJrkANR0Dstlz0giw+wJ+b7Cl6/e2Fug2E73cJ
+	D12JCjvKrsIRJDILYYrHBT3vl7bCZ+MMd1+XMhMrY3I27UThnYgMmmN0mSEN2pdg
+	uA4HIL3d1GayyvmQmKEUJm33NKW4QCBbsvMDa0wnyQ/26akUa27t6kWF8tMXZGxA
+	2bnIguHJ3zaQhhLCpPioZNA9oiGMSWqhM51OY1a7oArRo9AeEmD9zPruhao7bNev
+	4lMTh9hqh3+EMUra88yaXw8b4eklOSii//w==
+X-ME-Sender: <xms:T3xtah4CL_ZkYPFkQHgJNwL4y85A0B5bKplBWM6qkB1vrf8xIi-SQA>
+    <xme:T3xtalzBvyAPZgt0FYt24xRQDO_CS3z4ZIKRWitoHRb5r5_wd8iZp3x9r1g0FmfBx
+    9acTCRVa-WzOkRZY5C6lkxdUVz73LP7xN-XsZEGJC9wjnnhJx1XKw>
+X-ME-Received: <xmr:T3xtagyPQOV6rCBVRHx_eSuEYv29JFHWaZXjYZzsyhBeeqWXnOEyym-SO0vT4IOm5Yx6H17m03bX67Qo2jpykR3YZfzlnM8vNA>
+X-ME-Proxy-Cause: dmFkZTFqXd0aI6sXrnE1Pci4uiZUZ93XytGwPdg45iQZD2zLOqHeOZZpIPmU0H559yMY1i
+    qacrmtjXVozErUWJ3RgUmokTkKaCrUwCo0v7khpYbNsmCzpwaASXRZc2HKmFoSUlzT6ND9
+    eGvz6hEe+/69VVJPFAU3v0qOjR999MYDrnGanmFWVwISG3FGJlT5M4yirr6Kaendvhf+Ux
+    aew4zC2BFLDljhUXui0XlC8ezJLN/CCTRB8uoq6mhZyXkrA6rV+/6aAcQfuRYzQtL3zOUZ
+    m410+XPqB/BuAdUifMiHAb2SwvCPQQhINR2nDbIiBBCpGAPYliA6zU3Nxvskhr6fsJyKbb
+    X+jF2MZO5Z96DZrDXPyM4RQGZfxXBGd/zznLXoGob7JMzkN9raM+LGJVERjJeHT6e1QYYc
+    QF1zLftGw/vbOC17eZmfpUtA1oBzhG8AXJVMNk/WtDgMvQkOvoj1kORaZyRvHVrF2OEF+y
+    qw99ej4kxofEj79PX0wedW2u4gaEByAhoqqfnx3VCRim6DlhJHK/dFrI4lTldl5S03V5v2
+    qgGdhO70kbpMOL1ko0EWtMWzjBDs2jcTTlyjb96s7DErnDbA6Ph1SZlzviuRhUrzGo3LEq
+    Gr+zdjBRNi7YkIH3PCLQxUi20l4Hv0QQ02SUu8uRyhz9kapDiXpdzFwMbe0Q
+X-ME-Proxy: <xmx:T3xtalzasmmfrzdTIzMAZNF1Bn77nmt-yHzj9FhVoZUwDzfNR6UApA>
+    <xmx:T3xtaiZeO_vdSai8xwolDQtfBzAFZ-hQ6o_njG8bn9sEWuHvuHSTgw>
+    <xmx:T3xtauWT4RHloLmPU4_g8zx-vD6f4fswSkHi1e5Z1x7U7u0hTzzwDg>
+    <xmx:T3xtaoj-QIsxYlDSAV7vWLgH0rpTCJPNl9zMcV2cRGVjWQpxkyZtuA>
+    <xmx:T3xtapBHK6Oibw3qUX3kPQkmHgi5X-O8QmZokwPkl6eSAv3WqdhXijHH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 1 Aug 2026 00:27:40 -0400 (EDT)
+ 1 Aug 2026 00:55:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Pablo Sabater <pabloosabaterr@gmail.com>
 Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,  karthik.188@gmail.com
-Subject: Re: [PATCH GSoC v2 2/6] t5701: use the test_file_size() helper
-In-Reply-To: <20260731-objecttype-support-v2-2-af577461ed57@gmail.com> (Pablo
-	Sabater's message of "Fri, 31 Jul 2026 21:49:35 +0200")
+Subject: Re: [PATCH GSoC v2 3/6] protocol-caps: add type support to object-info
+In-Reply-To: <20260731-objecttype-support-v2-3-af577461ed57@gmail.com> (Pablo
+	Sabater's message of "Fri, 31 Jul 2026 21:49:36 +0200")
 References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
-	<20260731-objecttype-support-v2-2-af577461ed57@gmail.com>
-Date: Fri, 31 Jul 2026 21:27:39 -0700
-Message-ID: <xmqqqzkia2is.fsf@gitster.g>
+	<20260731-objecttype-support-v2-3-af577461ed57@gmail.com>
+Date: Fri, 31 Jul 2026 21:55:42 -0700
+Message-ID: <xmqqecgia181.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,52 +87,160 @@ Content-Type: text/plain
 
 Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> An object-info test uses 'wc -c <two.t | xargs' to get the file size.
-> Update it to use the test_file_size() helper instead.
-
-What is missing from this description is what is wrong with the use
-of that "wc -c | xargs" construct.  What benefit is this change
-supposed to gain?
-
+> Teach the server-side object-info handler to accept type as a requested
+> field. When the client includes type in its object-info request, the
+> server returns the requested object type.
+>
+> While touching send_info(), wrap an over-long line and fix the bit field
+> style of requested_info.size.
+>
 > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 > Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
 > Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 > ---
->  t/t5701-git-serve.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  protocol-caps.c      | 21 ++++++++++++++++++---
+>  t/t5701-git-serve.sh | 27 +++++++++++++++++++++++++++
+>  2 files changed, 45 insertions(+), 3 deletions(-)
 >
+> diff --git a/protocol-caps.c b/protocol-caps.c
+> index 02261be14d..27e0f85b10 100644
+> --- a/protocol-caps.c
+> +++ b/protocol-caps.c
+> @@ -11,7 +11,8 @@
+>  #include "strbuf.h"
+>  
+>  struct requested_info {
+> -	unsigned size : 1;
+> +	unsigned size:1;
+> +	unsigned type:1;
+>  };
+
+OK.  This matches this bit in our .clang-format file:
+
+    # Add no space around the bit field
+    # unsigned bf:2;
+    BitFieldColonSpacing: None
+
+> @@ -73,15 +74,20 @@ static void send_info(struct repository *r, struct packet_writer *writer,
+>  	if (info->size)
+>  		packet_writer_write(writer, "size");
+>  
+> +	if (info->type)
+> +		packet_writer_write(writer, "type");
+> +
+>  	for_each_string_list_item (item, oid_str_list) {
+>  		const char *oid_str = item->string;
+> +		enum object_type object_type;
+>  		struct object_id oid;
+>  		size_t object_size;
+>  
+>  		if (get_oid_hex_algop(oid_str, &oid, r->hash_algo) < 0) {
+>  			packet_writer_error(
+>  				writer,
+> -				"object-info: protocol error, expected to get oid, not '%s'",
+> +				"object-info: protocol error, expected to get "
+> +				"oid, not '%s'",
+>  				oid_str);
+>  			continue;
+>  		}
+> @@ -93,7 +99,8 @@ static void send_info(struct repository *r, struct packet_writer *writer,
+>  		 * If an object is not recognized by the server append SP to
+>  		 * the response.
+>  		 */
+> -		if (get_object_info(r->objects, &oid, &object_size) <= OBJ_NONE) {
+> +		object_type = get_object_info(r->objects, &oid, &object_size);
+> +		if (object_type <= OBJ_NONE) {
+>  			strbuf_addstr(&send_buffer, " ");
+>  			goto write;
+>  		}
+
+We were already learning the object type as part of the existence
+check anyway, so we will ...
+
+> @@ -103,6 +110,9 @@ static void send_info(struct repository *r, struct packet_writer *writer,
+>  				    (uintmax_t)object_size);
+>  		}
+>  
+> +		if (info->type)
+> +			strbuf_addf(&send_buffer, " %s", type_name(object_type));
+> +
+
+... add it to the payload.
+
+>  write:
+>  		packet_writer_write(writer, "%s", send_buffer.buf);
+>  		strbuf_reset(&send_buffer);
+
+ANd then the payload is sent in one go.
+
+> @@ -124,6 +134,11 @@ int cap_object_info(struct repository *r, struct packet_reader *request)
+>  			continue;
+>  		}
+>  
+> +		if (!strcmp("type", request->line)) {
+> +			info.type = 1;
+> +			continue;
+> +		}
+> +
+>  		if (parse_oid(request->line, &oid_str_list))
+>  			continue;
+>  
 > diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> index 9a575aa098..b4d6beef11 100755
+> index b4d6beef11..d7445571b1 100755
 > --- a/t/t5701-git-serve.sh
 > +++ b/t/t5701-git-serve.sh
-> @@ -356,8 +356,8 @@ test_expect_success 'basics of object-info' '
+> @@ -366,6 +366,33 @@ test_expect_success 'basics of object-info' '
+>  	test_cmp expect actual
+>  '
 >  
->  	cat >expect <<-EOF &&
->  	size
-> -	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-> -	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-> +	$(git rev-parse two:two.t) $(test_file_size two.t)
-> +	$(git rev-parse two:two.t) $(test_file_size two.t)
->  	0000
->  	EOF
+> +test_expect_success 'object-info supports type' '
+> +	test_config transfer.advertiseObjectInfo true &&
+> +
+> +	test-tool pkt-line pack >in <<-EOF &&
+> +	command=object-info
+> +	object-format=$(test_oid algo)
+> +	0001
+> +	size
+> +	type
+> +	oid $(git rev-parse two:two.t)
+> +	oid $(git rev-parse two:two.t)
+> +	0000
+> +	EOF
 
-It is not like we want to avoid piping wc -c into xargs and hide the
-exit status from "wc -c".  We are already losing the exit status of
-"git rev-parse" anyway.
+This is not something we can change in the middle of this topic, but
+the input format looks rather curious.  We tell the other side that
+we are going to ask about size and type but on two separate lines,
+and then throw each object one by one.
 
-If the test after the change were like this
+> +	cat >expect <<-EOF &&
+> +	size
+> +	type
+> +	$(git rev-parse two:two.t) $(test_file_size two.t) blob
+> +	$(git rev-parse two:two.t) $(test_file_size two.t) blob
+> +	0000
+> +	EOF
 
-	two_object=$(git rev-parse two:two.t) &&
-	two_size=$(test_file_size two.t) &&
-	cat >expect <<-EOF &&
-	size
-	$two_object $two_size
-	$two_object $two_size
-	0000
-	EOF
+And the output format is even more curious.  Again, we say size and
+type on two separate lines, but (object name, size, type) come on a
+single line.  I would probably have designed the "these are the
+fields" declaration at the beginning to also be on a single line,
+in both directions.  It is not like we are afraid that a line would
+grow too long.  If we were worried that placing these "size" and
+"type" labels on the same line would make the line too long, we
+would certainly be showing object name, size, and type on separate
+lines.
 
-you can sell it as "we do not want to lose exit status of 'git
-rev-parse'", "we do not need to run the same command twice", etc.
-But it is unclear what we gain by rewriting the wc-piped-to-xargs
-to test_file_size.
+Anyway, the code change looks like what anybody would expect to see
+in a change to add support of "type" to a codebase that supports
+"size".  As an incremental change, I didn't see anything wrong in
+it, even though the basic protocol design smelled a bit strange.
 
+Thanks.
+
+> +	test-tool serve-v2 --stateless-rpc <in >out &&
+> +	test-tool pkt-line unpack <out >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'bare OID request' '
+>  	test_config transfer.advertiseObjectInfo true &&
