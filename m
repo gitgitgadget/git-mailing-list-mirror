@@ -1,204 +1,121 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD66221F2F
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 18:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785608390; cv=pass; b=DBPhZDXL/LbEacj+cvlcNgYT1LwkQyBtex32pxHsr9JWSNGVE8T/Hg82qniZvrnLjcsLEBce3RV6NCQhXjbDMzdzpwU/aasWJTShm4NCnvyzx6xw8+lnWIf5GUipHn04Mgv2z9hLP00AxyPPEEHBjV13LSLwsHL6IG7BPu5VfYM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785608390; c=relaxed/simple;
-	bh=Sh0reZtr5HohfRfGfV/oj9uMZjKSGLEB0KYKzfW8DgA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TXnqA6m9+3sJ30yOON25igKt0nLy9lcUZPJRyVy0EzcNx9UoTL3lAvBGbOx27GHBdj21neuuyoA0WgZ2YGcsn6KegrtQud+FFkyP13g+f6cMggRGeXHQ/sU+0Jsto/iQlFAft4GI+sQsuGV3AANhHpXP3XKgTUJmI6TtmkRZx0M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PobpntIc; arc=pass smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C767A30566C
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 18:22:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785608573; cv=none; b=iEtE6NVTUhiY6tui/jRgkYWlUEyRXg4bzO71epWmBcUVNIkLUTE894tya1Y3bBeb/nxFe5tQQimEl19HmIEjNAPmukeyRxfpi1+dACmImCsD1Iqdw9dYy1dBEhkC3/Cz07rCYZuTN1wt5VXIXgzqcX7ruS4A9vxG4xau7uIitMI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785608573; c=relaxed/simple;
+	bh=pQ/8fcQl+rsy3bZuzti3Mf4s90XGUCYCPAQM4Jel3s0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tMsLwsHJmsqX+gKj5YNsFUpTTp2YTUkA93hHk+qfGG00v6A5zPTLeO3Kx9/GAxiBxPQpj4S6kyjhrnU06EiULC6/3SL7dDJvtCtUynBF4gx4JfTb2KRBZt0NnZoPLgoGI2auBBc2es2DFEXZbwbrryC2NfUJ/TN4FzXcqwgfQ60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i/6in/6n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ut09SrWE; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PobpntIc"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-84e507b079dso1480163b3a.0
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 11:19:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785608388; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MjkyS6V5dqXhKuUCKT5aoG0zTy6lLbS37G3pSFaleAbpvKhtKVrapN3kAjo8FySdYU
-         e6kM6lHQZGnoYRvdrRaaomqG9wd5LOIZWakt1pqsD4W5qEQCY3d+lb67sjB+Ri/vsarQ
-         Wt1ydmTBpLgYWvBCg5zFOJU9HMWRoxyaVNNf8JaYX721dwLkbstB7+LjZNGbVphYfD4E
-         phvkA5dyUcmrksmIdkhhUbGsL7M3l2eqnh4G08mFiVmvkeUX7Dpy4ETl71gJZdJThsEw
-         nYd7RhsGavTRFJanPbeGPooU8dQ5dY6njcvNEjBeK+R1GE7CZgQxw4iwsyzQU1r1WbRy
-         xN6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=uTzakTwHICEbk2q6mL3iL6sckMjOvriSAfN+wOI3VPs=;
-        fh=y3V5UwWFAgYBdUKU8pgEnWKwjLkDM8nFOqclYH//408=;
-        b=EQz7TRkN0E5umyyt/aJQDw/2qrbAndh1EJobsOpx5ZCnjGxUfiswqYExUwxIPOZJx9
-         yWY+/q0AckB2/TAe4Hxd7wmLzLYuQvM7bA/fGPCzE/ehNJpoMg0nRAxdtMgi/GW8mZHc
-         ss7hTVOmChNbCfnkeS2affQjCnkAdmDyudX3EbMVDghBgExPI4QJH9xOhV9VTGcUiM+u
-         Z1u7hO+pO1oPlS8hIN2uj7HOCc2hjG4d7yDjWDweUVnyE+vkFkopFix6acIE+gTwShv3
-         R8pK5Jbjaq+nrZb+Ct1SEjBXhe/zQ8jyO33y+R9tc/HwVMk8ei/EOY9LTX73rOg79Q1A
-         /kcA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785608388; x=1786213188; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uTzakTwHICEbk2q6mL3iL6sckMjOvriSAfN+wOI3VPs=;
-        b=PobpntIcfHnBjjnHgIADDeZWpdS3Y3Hkm5/yWuiDt7ufawssklzDuTDLC8N+tUfrZy
-         s6juNuN9n/bwuYFsqBaFXpGDF9aKH3+q64WoRnfSlcC5Khp2qwhraO+D0rpzN+7oHemH
-         HxZmymiIUtIuf5wAsABU1cDF/hAdtUfsxqMiNJqFUflVI/D9B1qrQCdkefCTY5RZNage
-         2iuuAdXJ99xUTKIHZfaNV2rantR8Tx5ZcqK760qbh1eoVxc7TtgiUHe+4YqtfhF+Xbu1
-         UoYxTkY1ECWR93/zVw/w2NQ5dF9rIjMVWNXktg0wd4d/jzlnsd+8NJaPtdq5ANBKoIud
-         xGWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785608388; x=1786213188;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=uTzakTwHICEbk2q6mL3iL6sckMjOvriSAfN+wOI3VPs=;
-        b=lwrz/dW64Elmd/0pxmoyxbQeOtUOXwTavbAXauYVZe9LkgDlrUA5grmyphd5a02dVl
-         Gqj/DaYeTgECg5X7rWgvJUkwffTv9TavhwqCkoxfRV1oN/OZlZcndDJ7pz0DvG/Yz5GI
-         z36bO1IRGbd5d+Q0axE990bAhPXK9FZCaT5h1MHtcmr60SBqrD9mSJyU0595AN32g2Rh
-         zh8Q1th5IW79pD1/GyBsyQCvxogQ68fab06T78vN4sdVq36i5WPRAiV5md3faegK3T5r
-         TqEZzj9Qb8dxZ6kMM21+M8OiEPnRj9Ddof+vV2m/zJoE98y/SvucAkrEB5Vk5lzdk7fC
-         TuxQ==
-X-Gm-Message-State: AOJu0YxaWJvvX/lp/XHmE4rFXkFoaUParGD9SvqG3835BqtLY53iB/Z6
-	3/AcOZdgWS4z8DY2PEePM34DAkOkYrR3UBz4QayLnkeyW60rt9jrjErqsf/tfjKWjJZLdG428o7
-	2kS4tmuR95Pmb5QUtteelD/qn0r7S3z4=
-X-Gm-Gg: AR+sD125WUSRb6otrTIfz9yQtb1sfwuU/GOadTWeZ843xbTkRsApCxHonqTYADq16jZ
-	JjfzWi0nfq2wPMKs8mG6MD30EojcAQHf9+Cl81+iWxRpjfEEbvXveg6C3kHCpscF9MVXDtdO/gW
-	A2Cz6gMt6pvx5C6TyTfDkYL6s+I45ZGYGFixHx3/TK1+BeUTd3+73NKYknKgRXBlrtJvN9WbFwu
-	FXAZy3nd4E2IDPTeEwqaqPvx5B96sD6n1E0kxBmt9EvJhjO/DOTRAnZ+u/HDUAoCzp0aD2LE0rV
-	ky8I10pd12Se29gSjZyXZIPPdRlrflC6+5LCnQdoywQ69ZrhDDuNX74wZ9o/Tdi7q1bYrR6kGkp
-	hRv4XX2hEscTYtgM+jM5MjkFQwj/ygQ==
-X-Received: by 2002:a05:6a00:8d1:b0:847:9c06:2bef with SMTP id
- d2e1a72fcca58-84ee47f2c8fmr3448357b3a.29.1785608388200; Sat, 01 Aug 2026
- 11:19:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i/6in/6n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ut09SrWE"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id DFEF5EC01CE;
+	Sat,  1 Aug 2026 14:22:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sat, 01 Aug 2026 14:22:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785608570; x=1785694970; bh=EtQZ01Qty2
+	Je4PFAkavNTsDVKW/Br80nM124TbwSLNM=; b=i/6in/6nTmbkdO6Oc7508dT/1K
+	vtgxNncR4e+cY75zd6lZ1ixEmjOAV+NDsO76TjLPcdU8yrEoo8ajrxO4PMhFGeBb
+	B4dkgc35VobiJPkqe5hiWIJhHrXmV4a0oM9JKBnR/B9m5rjxqnzkMDz7fdt4Vv6L
+	Nd+gwTdRugdOD7cxCAacPxqgTzTc44/0XkK6E+q5DURX8en/lyWgeaj8JR4t93y9
+	bjFk0a6Q8v5TBWFekzMHKO4Sus7wMomiL9eLMsP2UE1g6sabXOCgbUNqIikGMAzP
+	VwVhJVIO0DliwBlrD4Vg3OMnVSMwypU1aNWDclGCW0dpfmkF/4ZBWJmnyLFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785608570; x=1785694970; bh=EtQZ01Qty2Je4PFAkavNTsDVKW/Br80nM12
+	4TbwSLNM=; b=Ut09SrWE71Hq7vpitKehq4jERnnZn8cqF9o6YAH78hFOvhIiZ3U
+	KffkcLVhu/7as9Ek//4DjkpbkZOimTfjBGxBlAkTP2DzflesnHtqwPAHbL/oKxOJ
+	I0huA7WzsM/t44PKVk4NbKpa1aiXtGv+q2iweI55PP0VBkDwnAvMrk0Kqyt9g65B
+	4SvLsOBUlYvY6hULtGFQaY1t9RFo4p0XXBCLXAkRLfK29rTf49CnUOnGVzP4DR87
+	6K0rbrV3cWxB2EOxjTao2VPx+xDkq9Li8BIzsajkLCRyLCbwjGxhKLBEiOWPEjRA
+	1dmcNfDRVJtwLUhRNEYq+zrSFhA2F4I4Z7g==
+X-ME-Sender: <xms:ejluatnrZNcA5kT0gyaUwFOA3hgI39Sg1t81yEL6HPQzHiYmFnDb8Q>
+    <xme:ejluav0hGF90U_cDUlVuH473GEz0tAjoy1yEHTDMsfFrDjahAw8ySjZxFiRemT0ml
+    wnPg8MNTDas97AIhNg9MBJmz-2Wfr7QBjZL_NmDzO-c7gXR7Hs>
+X-ME-Received: <xmr:ejluaorU9VQvqqg0c7hlbnpMU6LjELe7QM1VIDnpqHc4hUOE2myZKOFqkPda7BIrE1a9G0HOvBxsecDRcRwqqJsvkfzX5lVt0w>
+X-ME-Proxy-Cause: dmFkZTGTndu+LuOBuZ0ldizrwUJQBMSG4s9mDPPPyM8FSjDMHfWvNw2SDfV2gAV7nR89xV
+    +ZUU3gboSrZ2qx89C4uQL6m07d6jtPzFzSnOIu1gvhvq5KQqPq1stLp5ZLXe3V0VWrUi6n
+    ZqYvQeH6z8w05hmU2z35e+YRxUB/b0iSxUIIYCvwu+66tD/FHi+hcN7e23xi8gfvnZ7mEb
+    zq5N1tPrK1LJ3NUujFP3dXK4T21KLymHg5qev2Ye5WYI3mIvEfSyEAxG60KCQKY/lNirF2
+    v5kVxhN1N7pohYJVKruN09qBz4SSoiHlls7HH3IKMLiQ0qSnUqB1foLdZswhenCX7mu8O2
+    kk/4Dc+zUu2cLUoNcl6MVuoacq8yFDPSHeQ8avx7kFO9PAIuK3J3bHQ4XpNuS/xInEZ3zw
+    R4CUiKT11BhF/4/v2obwjcYv1aFzuZYXZPc50xQ5BMv467Zg5mH5ZSbraCbO+9nThYDSsv
+    Gvq6mnEepNxTA4oZMxUsTZ1o/qMX91cqxAgOU4BGYYWFlf409zQ8hqcFLTI3Wogls499eg
+    YQu3UQVXA/FpYMnwDEVpAt18J4RpeY1w4ZK+awmnen78SvVJ53aatEMK64C+VY62Gt+0VE
+    ePtq2VxE5dxbtVNr9/D4PL3BmRKB91CNJaSrIRcEpHYsWHWV8xs8EafUzWFQ
+X-ME-Proxy: <xmx:ejluaseI933ik5xD5sIk9ATIoakLvksx7VmLhNENmNzDr5Wi9uvNjA>
+    <xmx:ejluano8_V3QviBJtrKf4mi-dexhCMuML6XeoVb5f0HKTrco1-2qCg>
+    <xmx:ejluatGpNmS5_Pw-MrC8QaTHw_ZJqoagkgkD_2la5sOgn3Zbe2vSNQ>
+    <xmx:ejluansnbxoJulGqzPqGiGowtwAA5TX6pgQWXl_0D1WQeJAPTjRWYA>
+    <xmx:ejluauoNEDmdq6ofvFcoWrcpeyloPp1tIe2uSes-y7prWaSXvU8d5Ibb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 1 Aug 2026 14:22:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/6] Git 3.0: restrict hex object IDs to lowercase only
+In-Reply-To: <20260801144527.GF2041176@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 1 Aug 2026 10:45:27 -0400")
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
+	<xmqqjyqclwf9.fsf@gitster.g>
+	<amu_rzanuYc_2lww@fruit.crustytoothpaste.net>
+	<20260801144527.GF2041176@coredump.intra.peff.net>
+Date: Sat, 01 Aug 2026 11:22:49 -0700
+Message-ID: <xmqqfr0x8zuu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
- <20260730174153.9949-1-r.siddharth.shrimali@gmail.com> <xmqqcxw3dvh5.fsf@gitster.g>
-In-Reply-To: <xmqqcxw3dvh5.fsf@gitster.g>
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Date: Sat, 1 Aug 2026 23:49:11 +0530
-X-Gm-Features: AUfX_mwjGUvqsqr0dIyBjZ-1dcsy2xNnmZ15dWkjrYhR1e-mycFNbNSm7EKHPdk
-Message-ID: <CAGWgyh8EPSufBZrk0xCqTr4gz6MtJHkfCy6JQKxCqKSPZ3gEgw@mail.gmail.com>
-Subject: Re: [GSoC PATCH v2 0/7] repack: add --drop-filtered to reclaim space
- in partial clones
-To: Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com, 
-	siddharthasthana31@gmail.com
-Cc: git@vger.kernel.org, me@ttaylorr.com, ps@pks.im, 
-	johannes.schindelin@gmx.de, l.s.r@web.de, ttaylorr@openai.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi,
-thanks for the review Junio!
+Jeff King <peff@peff.net> writes:
 
-On Fri, 31 Jul 2026 at 21:04, Junio C Hamano <gitster@pobox.com> wrote:
-> By 'by construction', do you mean 'It is guaranteed recoverable, as
-> long as ODB_FOR_EACH_OBJECT_PROMISOR_ONLY is working correctly'?
+> Now there's a parallel history of otherwise identical commits. I think
+> this is mostly "if it hurts don't do it", but we generally try to avoid
+> multiple representations of the same data within the object model.
 
-yes, that is what I meant. the object is recoverable because it came from a
-promisor pack (due to a .promisor file), so the remote has promised to
-give it back.
-"by construction" means "recoverable as long as the promisor-only walk correctly
-picks out promisor objects".
+True.  Already almost an empty rebase that delays the clock by 1
+seconds is a perfectly normal thing, and the way we treat such a
+parallel history with the original would be the same as such an
+uppercase parallel history, so I do not think it is a huge issue.
 
-> Since I do not use it, I do not personally trust promisor-based
-> traversal all that much, and it would be great if we could hear from
-> other practitioners that this really works well.
+A tree object hierarchy consists fully of binary links, so we are
+OK.  Only the top-level object name within a commit/tag may have
+multiple representation of the same tree objects.
 
-i'll also be glad to hear from people who actually use partial clone
-about whether
-leaning on the promisor-only walk here is a good idea for now, until the
-remote-object-info side of the cat-file protocol lands, which would let us
-verify against the remote directly.
+'git diff COMMIT-A COMMIT-B' would notice that they record the same
+tree without opening two tree objects, even if these two commits
+record a normal tree and uppercase equivalent tree, as diff_tree()
+layer will be called with the binary representation of the tree
+object names.
 
-> This is sensible, as long as this repacking is done only with
-> locally available data, without dynamically pulling in lazy objects
-> from the promisor (which would defeat the whole point ;-)).
+As Brian alluded to in his discussion starter message, we normalize
+the case by going binary in many places (we cannot unfortunately say
+"in strategic places"), and these are such cases.
 
-right, i made sure of that :)
-enumeration passes OBJECT_INFO_SKIP_FETCH_OBJECT on
-every object-info lookup, so it never triggers a lazy fetch.
-The rebuild is local too: it only repacks promisor objects that are
-already present.
-I confirmed this by tracing a real drop and by moving the promisor remote away
-entirely before a drop, it still completed, so it clearly did not need
-the remote
+> I think only commits and tags are subject to this (because the tree
+> hashes are binary). I don't know if you'd be able to stumble into this
+> accidentally with most Git commands. We don't intentionally normalize
+> case anywhere, but I think most code will round-trip through a binary
+> hash at some point (so "git commit-tree 1234ABCD" would incidentally
+> normalize the case).
 
-> Presumably, this rebuilding is done without an extra traversal,
-> driven instead by the list of enumerated promisor objects we
-> constructed above (excluding the unwanted ones)?
-
-not quite, there are two walks right now. First,
-enumerate_promisor_blobs() walks the
-promisor objects to figure out what to drop. Then
-repack_promisor_objects() does its own
-promisor-only walk to rebuild the pack, skipping anything in that drop set.
-so the rebuild does use the drop set, but through a second walk, not by directly
-reusing the first list.
-
-> I wonder whether size is the only criterion we would want to use
-> when choosing what to discard among objects we know the promisor can
-> give us on-demand.  It is, of course, perfectly fine to make it the
-> only condition in this first effort, but it would help to imagine
-> what other criteria we might want in the future and how they would
-> fit into the framework you establish with this series.  Ensuring
-> that the framework is easily extensible with a future set of rules
-> will keep us from painting ourselves into a corner.
-
-true, i agree..
-size (blob:limit) is the only rule for now, but its easy to imagine others:
-how old an object is or when it was last used, its path, its type, or whether
-its still reachable from the current branch. The design should handle
-those without
-much trouble. Enumeration builds a set of promisor objects, and then one step
-narrows that set down to what we actually drop.
-Right now that step is just the blob:limit filter. A new rule would
-plug in at the same spot,
-narrowing the same set, so the overall "list them, then pick what to drop" shape
-would not change
-
-> I assume you do not mean a race where an operation wants to write a
-> blob, finds that an identical one that came from the promisor remote
-> already exists locally, refrains from writing another copy, and the
-> drop-filtered operation removes the blob at the right moment.
-> Rather, you likely have in mind an operation that stops, gives
-> control back to the user, and, while the user ponders the situation,
-> the drop-filtered operation kicks in and removes the blobs involved
-> in the operation in progress.  Am I reading you correctly?
-
-um yes, the case i had in mind is the second one: an operation stops halfway,
-hands control back to the user, and drop-filtered runs in that gap and
-removes blobs the paused operation was using
-
-> Even in either of these situations, I do not quite see why the
-> safeguards are necessary.  The operation completes, or stays stopped
-> in the middle.  The user's next move (whether they issue a new
-> command after completion or resume the interrupted operation) will
-> automatically lazy-refetch what the drop-filtered operation
-> discarded as needed, will it not?
-
-yes, you got that right. Since the objects are promised, whatever gets dropped
-will just be  lazy-refetched when the user runs the next command or resumes the
-operation.
-the guards avoid immediately re-downloading something we just dropped,
-(which we can call as some wasted work : )), and a network fetch in
-the middle of,
-say, resolving a merge.
-The index guard is the same story- the blob it protects would just be
-re-fetched by
-the next command anyway.
-So they are a convenience to avoid pointless re-fetching, not a
-correctness measure.
-I am happy to drop them or keep them clearly documented as just that,
-whichever the list prefers.
-
-Thanks,
-Siddharth Shrimali
