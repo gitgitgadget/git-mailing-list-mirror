@@ -1,85 +1,84 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B53368D52
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 19:15:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A3A23BD1B
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 19:54:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785611750; cv=none; b=VfqrIp92Hlxm4M7cQggaWwIEXk050GUcbPtvxWmlSK6abCEEt4kDw5hMeJ9YHDZyYkcAzVIPvWQv3iiLem/n8soKo4Ju4yOt95NtJlbMXve1/oNLDATJHx70zCK3LF1G1NgEPzEaQC1+NkxgK8rp7sdTEZYHcIG1awl9Bl/bURE=
+	t=1785614075; cv=none; b=Vyf69rjK216ITzPsguGrsWfSEejHK4xoJgjgwKTJgSaHYDFIwtSbboHGZo9Y7OWKSW6OW7aiAms36k78A+uev8DFwoigo7u593lnbegZQExcAwiOUqsUK5NALAauDkFXr5lBnMTucm1UImone6h16ehCxeADMxsBKgUs3ef3RXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785611750; c=relaxed/simple;
-	bh=YXK5psGgBPROZsxQQ9axc5Hw3tHC+AoesWqQ9G+Sxbc=;
+	s=arc-20240116; t=1785614075; c=relaxed/simple;
+	bh=HnfNOmaDS8gYyMIM6BFgnnIuypltyXvZWImlBUM9Hic=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T3QEjqrj+j9shHOjeRzSAWp2SXcay8uRWWXExenhJym5LRbJbbRqgAj1b7tH1sm6TmhmM0JKB44ZDYBXz/5hY3G3Gg1aPE8D1HSoQW8MqTHy5lEjclj7wW+bmARvFZF8VOpF6VJidjCg0bmtbuRUGAleqNjTm329lyQJ2IUp5bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fk0lESgH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aBJlxsY4; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=rNXqNWTtFRLCy47PokAWlJqf0859hIgGj1j1szRvjUhnHtmBSmQUORM0uyWBeoCvRW7uZ1x+jIYCutAbMylpJRBNyZwglwZAVTamlurpuKxPT8KSL+B5XT8s8o4VveukQ5mJ6I9hF4Xgop4jI+9AY3rXqUoETughpYFsuT8lZlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kfogu11I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XJuqaA2B; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fk0lESgH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aBJlxsY4"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 904F91400143;
-	Sat,  1 Aug 2026 15:15:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Sat, 01 Aug 2026 15:15:47 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kfogu11I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XJuqaA2B"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ED5C9140019D;
+	Sat,  1 Aug 2026 15:54:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sat, 01 Aug 2026 15:54:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785611747; x=1785698147; bh=ZkXpeDceWn
-	1UN+gu0WGh+n9w8o+afbh5Z8JUv9+86qU=; b=Fk0lESgHJQQ60xcEiyvZ4gaQp2
-	UTH2L6xIpLkZ9BnA2X00vTEZlUXl29vGoTPQcx2lxYfDi9j+vhazHkue3Ay/m+NY
-	XkcF6aJ/pDuazpDTVjAoTizDWbKLEywBk5aJiGFbretTO2HZkFA9aksrBeSWvRch
-	RCj9Ic3HMhdQaGdHdmboft9/geOIYbTjUikhAftz3oTf+gjRLoGgdPCXNbZhhekN
-	V59apgDEswhgFcn76ntMJwLY5VPqxeL9NXw0uMh9/8gNztrXM12ePpapnzarGCfp
-	skim99EOeZ8PTy4kZsSFpT12ngSIKzhUQxzhZF4oFlwj0kPT9o68ZrKI7dzQ==
+	:subject:to:to; s=fm1; t=1785614072; x=1785700472; bh=kPosGQ24xI
+	2M9nTXHkAFRMnjBHELaOFAMuYatbhuZI4=; b=kfogu11IfTVv6+eFUzAKFkgK2L
+	742TiiBoB3fw9lYDRy8iIv4d6NNWtdRr8wVVuVgq5E+TrFC48XxasDRRXc2Im9SV
+	7T7JY7Au5LM8/r0iUWaZw3P/XiSCSCVJeyuHDObgZy/UPQD47yrEVXF3odVQyHtw
+	alztsxramLJxNdJLTlV9M/KJ+AB2n0fvZIGKs4nZb17pbmakEYQZITWmIxBadjob
+	2qPwi5Epx73GzHwOF4XBzp0kKoZIydfj74xK/SqrJwzF7SLgAfsYlTnOwMmXGdOM
+	OaTLrRmQJJ+Is0yz9etqWMRm4KQ28Jx3zEfEh0uLFp98RJbsc0t3n/0pEP6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785611747; x=1785698147; bh=ZkXpeDceWn1UN+gu0WGh+n9w8o+afbh5Z8J
-	Uv9+86qU=; b=aBJlxsY4CK12IWuzoVV/nGB3T2NHyLG7Z29jSiEAAtZyaDonGL2
-	OhLu83otAjbkYenMUv8RuauSEXz+U/1D7TfWVXNTsxw9PI+B9dtLvjubs/JLO76l
-	J2H6ncOxcpV6XVZjNHNPVdIfq22xzAYwo2xhhQaz3wAwhwy/A9bnfWZGbY5mRBDd
-	Iuo3w6qQYYcPU1ilInKD2dxG8v+lJR13pMTZs6Oe8qwZJ6DlE/ZtQlGgmRhxKgXA
-	1JtsgW5FiJ7SFc/yBrLDUY3GHlrAAPCLifewlIIfsrECstPB1y5u3abH5BiKBvLd
-	rwPu5wZkZkBW+VssWBEJ4DtuilocOd/nVgQ==
-X-ME-Sender: <xms:40VuaoA0rM_acfs1Yyoq1yPm-RXq7xFnQ902rerisDKBMD3SIicXrw>
-    <xme:40VuahZBqqTnKOs_jwM4msK7xmrkvst4vsgsnOoFPZl9BHppBHEGu8DJWL5CGqci6
-    WFwQ1CPHl68SyDcE69klDiarIwF8RY47A5HyDHyvGZQjdAB2gAX>
-X-ME-Received: <xmr:40Vuaj4NUsr33dpviujGTZkK4UfSBkEKQx6d_UuVtkXy-r9U1qEQkyDpGO7vCMvZqeVHjmz1REI7mYpKCLxRbaDYGQfwfYUcDg>
-X-ME-Proxy-Cause: dmFkZTE+T4bG6F7ks+vM3ZwtEkjjvDRiNaepWh8QGjERccjOtBShoGhhzMEFrLCDMAxxQ5
-    dkKhTjTvpM+xwBGMz12yo53ocuSXWAYfRStpxr//7LZ0n9qYrLUkkUo5cNQBgufTwaKnMg
-    cXe65Okc5KQ34zUfw0iZPzBZh5SQzvga+2nFI8RprPtUi71tzwZL0IgKh2JsQjKfCEiQ2A
-    dJLuXIV7keiMVWPCcR1JDEQSWd8IIUCGPbnTHneaSix09K6irN+dZkJxDBLxM+4rjBKHhS
-    O1HMUVwjewn1LplzcyWp3spnWCNdSCSeNYStcV5INOw2vDqi8njYAYdxXpguNgcqCpCqJ+
-    qptpfYfuUkINOpzywOQiseGdT0peHth3rtKfkZ59GiJ3E9yB8jCf03LYlQM+kgn28OF2Qy
-    N77/SEW5NCCP2aiFEI3R+P5uHTfqGMcKwLR61vKC66Zb8QBH1hGDiS+FaxrvLgiNi7r9Pm
-    r/Ew3de363SJvQxAXyuZop6zHI/HpLskm5cgLI5XA2604gM+J7/xb9OgVv2/0XgCblsOCo
-    xPGcIYjj/mDqLHZ/4A8TyKqD6ngUblaQoWDqU2vqf0yuO0hMDDTRGa3c8ZQBJ0IdfFZlWW
-    5E8VZevMcToX9Yy2a8uoPgO8WIM78eg3pNKZi8CMT8vxQqj5npuqgCr+KsiQ
-X-ME-Proxy: <xmx:40VuaqaBnltRYXoKEKW5wnwfrODVbUb9v6b2glIMOlyi3qfxCKNK6A>
-    <xmx:40VuaqgUFhk-2lR4ozjPYdnzMArrR3j-eDltytKBglEFfmHZ9VOFqA>
-    <xmx:40Vuaj8V0kOTrhGt8OVrH4AUmqtow3f7lge7L0dnrNLlewTj6XHrTw>
-    <xmx:40Vuatrt1i2QYE8yaGbY60ZCjXwnskrkR2cBULy1ccyppDTnyar-Lg>
-    <xmx:40Vuaor7S9y_1enV_7Tajv5qX2ZYVdBryICVErgM3p1U1gMThSn9Ez2g>
+	1785614072; x=1785700472; bh=kPosGQ24xI2M9nTXHkAFRMnjBHELaOFAMuY
+	atbhuZI4=; b=XJuqaA2BBWcalu9+Cw3hstliimBzLlP/RT+cnL4cIDWywHUPLIQ
+	GBfhMTAOVC7eTkPM7HhCXUCB/M8+pAE36Traaq1T617oi/qEnlG3Anu2jZ9b3uSJ
+	vH4AzMaDJOPXSB71zJOyeJuoaX6LfA5NRLeYvirGVE2lgdnvekmAmU0HU7KYA9Qd
+	jcbMtJ+FFahIrhzN/I2bV8Af6/GQxHxNfqarhAiUN3WZ+cvDmUgZZDSH1dFzU7DT
+	MHrk1q8WC+ripmW/4Pj/9Wx+MlxvNFkJwyextht0ec+7cuHwM//yqr+rDdveLVSi
+	/+4KC6gOuoJB4SDZsT1uMywVwHIvlrRiuhw==
+X-ME-Sender: <xms:-E5uasbqTRo7WvLpKEcVqNWsL-GejI8LK02z2vXXw6ag8qT2cjMVrQ>
+    <xme:-E5uauTAz3Gu9uipIifw1HIfajm3dBT5TCSChlHGUPXLUJH3xLGpMy9Uzl7FS3lBc
+    j2qavnjWGBT5jcvsBs2YjjBzZ9fPE3DDOuzS5nqi2m31lgnBzW_dQ>
+X-ME-Received: <xmr:-E5uavSLBEpmMXmsNd2dZqWMdK27uNs1x-_udnzqgCPvc_eSlcfRyCa2CeGY3BAq89y5Rouo7NG6p5SvdE7t2yryr2KJstaErQ>
+X-ME-Proxy-Cause: dmFkZTEPhuMlm9s+CM049SkxkXe1CznDb5yTHqKScbGXJbXJeor+j3g3OHU4ew5vkXnwIY
+    2xzsSNXxkzdWbjO/43rQ9Gy8pJozTVwh+adnPiavOfar/Avfdd5NsknxKsXWElaex+WOSc
+    DBsymjf0TehkqmDj2dXviqozbzjKaBOna1/FyIjRQySpnI7u2/2b/z/fdJKqREttwTPjHj
+    lHITn5ivZiD29OMfGhDLy+QK/DWu5iACROQj0QeuMzsSRuhpK933j3NqKI05zfLS0rq6OG
+    jl4/KvepJx0TIu+18Cb3vn2ntUZg5C0QfDM6/shjIBcAU2+AaU5Bo0nzR5A4huAj7rv5bv
+    SGqMKpcd4zPXc5INF9+Al67p6fo7iIDO8PDaeirNB4V5JmLNd80+nYTPcLCnnhFS5UZwKS
+    UoqdyREq5lyQI5TRG+lbLntrzR/NS0ECZ8cZI97ZYCa4kLyiUFLzpDDfyS+zwrI/+07778
+    7EXepyUko4yCnyP0is2rBSEmqZTgwvPD/oU5PyktVn2pT0kwvWHd6pmQ2njafoPMmy8oWt
+    kd8oDyEJsEMFv0Y2CBmDeBjU15NmS5uOTO1Q3bGPyMDE6COLiKyQBAPP5Y85QL9WBtQVTM
+    g3U3yjABy9YDtuoCR5qRa/rYmb3zKMhQOxUH4r+S2xmy7M1IC61oABPYpzhQ
+X-ME-Proxy: <xmx:-E5uaiT5Pbwu1vyY0cBWTtDgDgLUb8oAeE9ebSoDL5IeV_kgsJ7vgQ>
+    <xmx:-E5uak4pf-5oYNjcas9gvUIPvx0F8_T9MtENATqy-PoJPaBxFgd3aA>
+    <xmx:-E5uau0DJYdWHgZgHzRKSR_Rzwh53gC1_T2gqvvyi5abBVGz2SIcNg>
+    <xmx:-E5uavDh_kYQ6hQKNZyPPF8TUM4X9V8BYFiNuhFYPfE9NA6LPje--g>
+    <xmx:-E5uapgkX_KE4R3EVtq9_YFaRBjmDrnpxR9b6bVWSTQOJhqJsprijVI1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 1 Aug 2026 15:15:46 -0400 (EDT)
+ 1 Aug 2026 15:54:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Johannes Sixt <j6t@kdbg.org>,  Harald Nordgren
  <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4 1/2] bisect: let bisect_reset() optionally check out
- quietly
-In-Reply-To: <e39670edf4be8bc917a985666f200a88880212ce.1785577445.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v4 2/2] bisect: add --reset-when-found to leave when done
+In-Reply-To: <f5f370df1bab91872e32398386935d71d48a831b.1785577445.git.gitgitgadget@gmail.com>
 	(Harald Nordgren via GitGitGadget's message of "Sat, 01 Aug 2026
-	09:44:04 +0000")
+	09:44:05 +0000")
 References: <pull.2335.v3.git.git.1784538619.gitgitgadget@gmail.com>
 	<pull.2335.v4.git.git.1785577445.gitgitgadget@gmail.com>
-	<e39670edf4be8bc917a985666f200a88880212ce.1785577445.git.gitgitgadget@gmail.com>
-Date: Sat, 01 Aug 2026 12:15:45 -0700
-Message-ID: <xmqqa4r58xem.fsf@gitster.g>
+	<f5f370df1bab91872e32398386935d71d48a831b.1785577445.git.gitgitgadget@gmail.com>
+Date: Sat, 01 Aug 2026 12:54:31 -0700
+Message-ID: <xmqqwlu97h1k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,61 +90,136 @@ Content-Type: text/plain
 
 "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> Add a "quiet" parameter to bisect_reset() that passes "--quiet" to the
-> checkout restoring the original HEAD, suppressing its progress and
-> branch-status output.
->
-> No caller sets the flag yet, so behavior is unchanged.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->  builtin/bisect.c | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/bisect.c b/builtin/bisect.c
-> index 3264e2da54..1e0c043249 100644
-> --- a/builtin/bisect.c
-> +++ b/builtin/bisect.c
-> @@ -234,7 +234,7 @@ static int write_terms(const char *bad, const char *good)
->  	return res;
->  }
->  
-> -static int bisect_reset(const char *commit)
-> +static int bisect_reset(const char *commit, int quiet)
+> @@ -1211,6 +1212,7 @@ int bisect_clean_state(void)
+>  	unlink_or_warn(git_path_bisect_run());
+>  	unlink_or_warn(git_path_bisect_terms());
+>  	unlink_or_warn(git_path_bisect_first_parent());
+> +	unlink_or_warn(git_path_bisect_reset_when_found());
+>  	/*
+>  	 * Cleanup BISECT_START last to support the --no-checkout option
+>  	 * introduced in the commit 4796e823a.
 
-Not a huge deal but given that you are adding "bool defer_reset" in
-the next step, it may be more consistent to add this also as a bool?
+OK.  If we
 
-> @@ -255,8 +255,10 @@ static int bisect_reset(const char *commit)
->  		struct child_process cmd = CHILD_PROCESS_INIT;
+> +static int bisect_reset_when_found(struct bisect_terms *terms)
+> +{
+> +	struct strbuf value = STRBUF_INIT;
+> +	enum reset_when_found_mode mode;
+> +	char *commit = NULL;
+> +	int res;
+> +
+> +	if (strbuf_read_file(&value, git_path_bisect_reset_when_found(), 0) < 0) {
+> +		res = error_errno(_("could not read '%s'"),
+> +				  git_path_bisect_reset_when_found());
+> +		goto cleanup;
+> +	}
+
+We expect that the caller calls this function only when we are doing
+"--reset-when-found"; otherwise we would give an error message from
+here even though we do not cause any damage otherwise.
+
+We also expect that the callers refrain from calling this function
+when bisect_next() that they eventually reach would not want to
+immediately reset.
+
+The defer_reset arrangement looks somewhat ugly even though what it
+achieves may be a worthy thing to do.  Is the only code path that
+passes defer_reset==true down the call chain the bisect_run()
+codepath, to give that single caller a chance to close files that
+bisect_reset() would remove by calling bisect_clean_state()?
+
+I am wondering if the result of solving it slightly differently may
+give us cleaner and easier to follow code, namely, we stop calling
+bisect_clean_state() from bisect_reset().  Of course you would need
+to find different place to call bisect_clean_state() to compensate,
+if we go that route, but how many code paths do we have that depends
+on bisect_reset() calling biesct_clean_state()?
+
+Among existing callers of bisect_reset():
+
+ - Does replay have to call reset?  Just like start does, isn't it
+   sufficient to call clean_state?
+
+ - cmd_bisect__reset() calls reset and returns, but it can call
+   clean fater reset returns, if we need to make reset not to call
+   clean.
+
+> +	strbuf_trim(&value);
+> +	if (parse_reset_when_found(value.buf, &mode)) {
+> +		res = -1;
+> +		goto cleanup;
+> +	}
+> +
+> +	if (mode == RESET_WHEN_FOUND_TO_FOUND)
+> +		commit = xstrfmt("refs/bisect/%s", terms->term_bad);
+> +	res = bisect_reset(commit, 1);
+> +
+> +cleanup:
+> +	free(commit);
+> +	strbuf_release(&value);
+> +	return res;
+> +}
+
+OK, "commit" is NULL unless mode specifies TO_FOUND in which case we
+jump to the bad commit we found.  bisect_reset() knows that commit==NULL
+means we go back to where we started.  OK.
+
+> @@ -697,6 +760,9 @@ static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
 >  
->  		cmd.git_cmd = 1;
-> -		strvec_pushl(&cmd.args, "checkout", "--ignore-other-worktrees",
-> -				branch.buf, "--", NULL);
-> +		strvec_pushl(&cmd.args, "checkout", "--ignore-other-worktrees", NULL);
-> +		if (quiet)
-> +			strvec_push(&cmd.args, "--quiet");
-> +		strvec_pushl(&cmd.args, branch.buf, "--", NULL);
->  		if (run_command(&cmd)) {
->  			error(_("could not check out original"
->  				" HEAD '%s'. Try 'git bisect"
-> @@ -1096,7 +1098,7 @@ static enum bisect_error bisect_replay(struct bisect_terms *terms, const char *f
->  	if (is_empty_or_missing_file(filename))
->  		return error(_("cannot read file '%s' for replaying"), filename);
+>  	if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+>  		res = bisect_successful(terms);
+> +		if (!res && !defer_reset &&
+> +		    !is_empty_or_missing_file(git_path_bisect_reset_when_found()))
+> +			res = bisect_reset_when_found(terms);
+>  		return res ? res : BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
+>  	} else if (res == BISECT_ONLY_SKIPPED_LEFT) {
+>  		res = bisect_skipped_commits(terms);
+
+This is the first ugliness I mentioned earlier.
+
+> @@ -1311,7 +1415,7 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
+>  		saved_stdout = dup(1);
+>  		dup2(temporary_stdout_fd, 1);
 >  
-> -	if (bisect_reset(NULL))
-> +	if (bisect_reset(NULL, 0))
->  		return BISECT_FAILED;
+> -		res = bisect_state(terms, 1, &new_state);
+> +		res = bisect_state(terms, 1, &new_state, true);
 >  
->  	fp = fopen(filename, "r");
-> @@ -1345,7 +1347,7 @@ static int cmd_bisect__reset(int argc, const char **argv, const char *prefix UNU
->  	if (argc > 1)
->  		return error(_("'%s' requires either no argument or a commit"),
->  			     "git bisect reset");
-> -	return bisect_reset(argc ? argv[0] : NULL);
-> +	return bisect_reset(argc ? argv[0] : NULL, 0);
->  }
->  
->  static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNUSED,
+>  		fflush(stdout);
+>  		dup2(saved_stdout, 1);
+> @@ -1327,7 +1431,11 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
+>  			res = BISECT_OK;
+>  		} else if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+>  			printf(_("bisect found first '%s' commit\n"), terms->term_bad);
+> -			res = BISECT_OK;
+> +			if (!is_empty_or_missing_file(git_path_bisect_reset_when_found()) &&
+> +			    bisect_reset_when_found(terms))
+> +				res = BISECT_FAILED;
+> +			else
+> +				res = BISECT_OK;
+>  		} else if (res) {
+>  			error(_("bisect run failed: 'git bisect %s'"
+>  				" exited with error code %d"), new_state, res);
+
+And these are the second one, that made the first one needed.
+
+Another thing that I find a bit iffy is that earlier we said:
+
+    We expect that the caller calls this function only when we are doing
+    "--reset-when-found"; otherwise we would give an error message from
+    here even though we do not cause any damage otherwise.
+
+    We also expect that the callers refrain from calling this function
+    when bisect_next() that they eventually reach would not want to
+    immediately reset.
+
+but the way the callers see if "--reset-when-found" is in effect
+looks quite ad-hoc.  Instead of sprinkling "do we have that file in
+the filesystem and what does it say?" all over the place, I wonder
+if it is simpler to reason about if we do these checks upfront and
+store the parsed result in a variable, so that places that say
+!is_empty_or_missing_file(...) etc. do not have to?  After all, we
+do not keep calling get_terms() in the middle of operation, and
+instead use values from "struct bisect_terms" that somebody else
+prepared much earlier before terms->term_good and terms->term_bad
+are used, right?  Shouldn't it be handled pretty much the same way?
+
