@@ -1,138 +1,151 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE13377560
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 12:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785586393; cv=pass; b=kk7K5026lHxHNK91ZwvwK+I5Q+PBnFPJ1dh857bBPvIkDd/7FaU308hBojMVtjTVt5uYJGfNAX0SFHgQrX4fosADJRhEfc2tg3wkAa5zGElQicC23OJwoqufLVezayhsQWiv73ZPjXq9eQUkkShzjE2C/WKOv1CXyMQZKZKXOCU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785586393; c=relaxed/simple;
-	bh=l4REyxNFvufAeobQuGWUsptiSus4Snt6CDSFOv//7sY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Plf6HURaU63p54EDhEzVBh0qTOhTFkttJ+BgswZ4FDtjSCM3b91/+9iq7XrlWBrWayP0YX/DShjqyMUNJME7C31lVj3hvnlbBpgf2B2RUSw+Gw6tOxucCIM32sPE1DR0JCDAKpgA6BkKnTrBjXpnmVqWrAtkBCf9yJ+gB1dw3SM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EwjqEliF; arc=pass smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8A627E076
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 13:38:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785591523; cv=none; b=PdZoSMNz81Mz1IXsF/VtJAAWYH7LmuMaoUCxVzyQlAIEbIpOj/8LWNp07BZZA5nRzmY6ylS/1NXBJCb0PmTJjKieK7qGdFwYDYqWPaKwqzihb2n974/uKmYvgyT9vvv31LTgDnwWco6nY/INlCYaUcEaMSCJxrqLMkZGyq984VI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785591523; c=relaxed/simple;
+	bh=UeAtPi3DKSdscdZLAsXAeEt7/Up22QnlDVl7bHPeQcc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JUFhh3RZ3akhN1eSdvnEJCZ9Oz4bHqav3x82lkbEYMLEguX7KjNlm64ho7b6JNn4/jENtaMmAxlW1baII5IEQ2TOHyRwXZifM+ggJXN3m7JduHzeGlLyoWdCgN6YzOEH8b4DcaJepODnZWS50CFdToolqB/UiRL922emiOsH6yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i69L+a+w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JaUAWpAT; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EwjqEliF"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-697bd21fdc2so3221002a12.1
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 05:13:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785586390; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NWbjpY91tUg/RAsKTA91do20k/5pCzDH1Q/I/NnVQmEzX4g/e6ROhVdLzBVv5yq0Bk
-         ZyQYiT2oUbIyQYWR6/CndHnN1ssez6zbBfQPutYZPjCeHH/1276t2L01R2Ed4vUjEiKn
-         CvmPpUyyjn/o0xCi/OGhKphd5nGi6hAGOKu9iqOlWkLV/19DS1c4YEHQ1Xv0E+P4Vi7U
-         F+HTtraaOwWp3Qb+GXtkRlIwmkpmmzKfMupXpPP5j1Nfv81IQ5G2TBXDvbj4FXbjN8Zz
-         SuXz/fdHudpBl993P1moein0NBhaf5FAIbvD8Zt8qKjSzbPF2LKr3xNZ/jtHi8W3ZaV7
-         mqSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=oMVQJnDx0OJjNyD9XwdP2X7KT0Dky4dGrCo0B8Pv+ag=;
-        fh=2aAxuZ3FwNf3QcFlH2RvBEmGPgSA32B5xuUzbfpQbOg=;
-        b=r/6okQmzSP3m+pVYT9CClG7s8AYo7vbX+G23CYTksz9JENiXtF3Ymt8lkbBjvgfMDm
-         lwKc4FHwq6GxFWPr5NxzVRvLJuQSHfXr5nWaK4+F5yr9Q122/tlJ52Y+u/rnEr17/hx2
-         XUrixcHUwQSa2dmbQ6fwuboWauWPQ6BN/riMVR7oXZXx+bYrW6HvdOVJEQT4drJ1QodA
-         9FQY5znn8+7iy3U2Xjfz9Je8ePnBNZqNMuWF0U5GWafz3hD21FF+l9epyRM4fgSGB/4k
-         pMjXFSpz9wlMIp8nQLtkU21Fu+OBlOdPYt5G19tzro1mjkcW/vNtCovjwUYDU40nZIhI
-         KH8w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785586390; x=1786191190; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=oMVQJnDx0OJjNyD9XwdP2X7KT0Dky4dGrCo0B8Pv+ag=;
-        b=EwjqEliFlXEiTDTBFjAoR2rjd6KQ28//d8mja74ZDOgEAv1z3OikyGg7/nYgHTDKYv
-         QMAt8mNN7u2pWhrC/YuUsNRTNOf0liAn57Fgq+mdSLy5xccOl2XmsyM+JWRZdsFLLRRt
-         4ximZnDUHuqQ38HGcdnANjV1No6l4LLHMD79FXBbp3yMU79PVGZ0ezeufxLJ7ZYJCUYI
-         3+FMGUXhKC6BchRvm/SdzeTvvkvnF2OqcJLipgyKNbK0h6UtKxarP78RWlxvq0dhdTSS
-         mZz1Ei97CAiseMMj4jE8o3dhpHfE6e3FNXAWMqbWN11Y6O1+UnPXSjJ7hzYcc6BTYP6K
-         Z3LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785586390; x=1786191190;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=oMVQJnDx0OJjNyD9XwdP2X7KT0Dky4dGrCo0B8Pv+ag=;
-        b=N8yNk6wKVXN87/PsPyAyuHBmMOiVBtG6N4fiGTPnGnzfPtJqujLXBZZevZKym0iigo
-         jWBjJUSu3fF+lkdvUaSLPjoSlJOvo+m5zG2TUfCPBSSmZb+bA2RhNGdKulCW9t1c0Q9Y
-         6okStyV1J1s3VryiJqK7DXh8P7kKOLkTtdVdLor3LL5X7oxIgJuXDlNriZEr+fRpQNfh
-         S7SFgkDZ+x8Jk7i/ZFoWTEEi3/Wi0PSQ2Mnp5hZ/epVZWhNgTFnlXha4FWGhr4gsLdTY
-         OLhpC+axsPmT5ehXkgfGr2PyyPSsZrJkF2UEP8TbRzuroygM7xcIP9OFx65RZrrWNi5P
-         1mQg==
-X-Gm-Message-State: AOJu0YwnNOnuhLKInqqGyWBfftOG4gUD+iZBWR3q1jcrLQURFeuUDAfO
-	kLqFE1FDs5U7JVXP83PPsX/eSscWdqUiWrDrMwp0pHVa8YZA3hsd51VW47yeoNbbVOzSPtgsdzo
-	d0BxuI6ilbpLBg0uaU4ll4TwPkXgLRFo=
-X-Gm-Gg: AR+sD12v57qQZMLf9Y3l2f7RRoqv20360jbbVwQyWpQS4Dt96VE2IwlsppEH1JNC4C+
-	IfyDpLGq3+iQ+RF+QMz2KBVfWYnn7/zmrU/Cunf1DV5VRW86rPpqUVgQvKsz07BxxA1pfZ7HInX
-	tdMh/9yiyxFo3kalnLodUG7ACMYWyT0OT0ixuC/ENxYCpef94xgs5mHjrXme32oS7yQobd3XBgB
-	WfuZoYCup+ubPFxrDrxJMwIpFoh9XKOjToO8/s2gDub5oyLxZMH4Pi4q7v+bGBXEHqw1UCyKHDG
-	kLBv2LsOFDUp7wz3C4DNgEUfZLB0+nngpLfxDh706OEe/Q5v2r6l/gFUf9T2TaQqUpLUVEHWTvX
-	/l4Rsk7ygD8kLRZIxjPi6F+FhlWcAKpDYTOhx/fQM8xV6NM5eJ6Nu27dHPFo=
-X-Received: by 2002:a05:6402:2794:b0:6a0:6249:746e with SMTP id
- 4fb4d7f45d1cf-6a0a7ccbfeemr2094425a12.15.1785586390115; Sat, 01 Aug 2026
- 05:13:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i69L+a+w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JaUAWpAT"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 29294EC00DF;
+	Sat,  1 Aug 2026 09:38:40 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sat, 01 Aug 2026 09:38:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785591520; x=1785677920; bh=hHId1FA9r9
+	NjePoxU3LVKjcEyHw8wahbT6Got/R8L5U=; b=i69L+a+wGY89n60ynBaps6/Qmw
+	DAx6u87/J2CIht91Clka8Jicv2mdn2Kr4tOrxYUbV/ykrpeRWm0H3VwnB7/oUSp1
+	caoJ+XaXnFTaAp/3EVEbpTgvukLjVItqsd+4lXOtdpWCPh4jUWvdZZjVs1NcJ1yD
+	E4XRaFssOXmaySCHIsapokbt6+GRGqjD8abDGrR9sgkfKrQH+NS1BiDOc1PcqWvq
+	7Ozfw4VpmOOOTSSqiOOFtBYvcW8ti8QBfzvA3j0gVmESnARwBW0xOdw9egOZfl88
+	XzdmStFThcXsqSGnaTnx7zw2bytCeJ8i6MUQIQtyqdHPxuLOWXrkQYK7AK8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785591520; x=1785677920; bh=hHId1FA9r9NjePoxU3LVKjcEyHw8wahbT6G
+	ot/R8L5U=; b=JaUAWpAToFLhtNIubJClkJ4x+QkOW3DS9Lf+sKYdAfYZA+rLubR
+	3wbUWAel0FwwmTtKnTlFIIMtPKk0mQOzY1giKOrYmUydodgosF/Et9BumVeWnH6Z
+	XN+qk/yvCzS6+lz+nj/nLedR5ojqhn5aykrmLkwGMbQ0Hge2ijERr4KNb/HE7fjc
+	e0G87/dv8wq+83M/RVHBVwa+yAxIEWAzBjCTezbi+M2h3P2S0GDRqcZf0bzMTv9e
+	60FvKK4Qb1iIRxxRYiUza/UiCaYFxjlBT/ce4oTTyeM/QMTtg2h1hvFhpqHG1jZ6
+	nhkv2eGkur6g27nyQeZy1wa9N2IMgpe3ovw==
+X-ME-Sender: <xms:4PZtalmcME658C0f_V1yszEHxa6gqUppAmVzUsdwxHblGBPZcsk06g>
+    <xme:4PZtantuY2LHPaPmtfYI6c3rGzo_VaFXnB2QsmEchM7M4dS5bca9beROL8gWJi0aE
+    ezcTK1mKlRm9ePFoEr8VK6KaPS_BaJtRBEArYsb7MWwn3SFLkj3_w>
+X-ME-Received: <xmr:4PZtaj8fD2A1hbnPGo0oOzUjtFJxF89-aA8-XsyuMI0fwf9naIjNT1k9zOQxwa4rvaUn9kKEL9UYXjCRohRvo_9UhmiuakoWYw>
+X-ME-Proxy-Cause: dmFkZTFPky+/dftlyPyVgDUdB3yUndmvZ9Tbp05OjJEMRFDA9tM2UraHRAelSiEyNhoJtq
+    tCZfUE5PJgSoRzm/uQs7iWxOPD7MXoiquX8D7tggFOucWqXv7By3G9y3xzthmMld5h2FFc
+    FEaHbTrsxVIk6sCaNvz0QpWvKJXayt8pW+OPAnXOS0x/dAkassb3IjdLo9rk+grvmYskll
+    K/U315NyXuMeCVA7nJGp/hEYSSuIGnnIqco2VP/l25z8rNofhp0llh/D6EVT8oXPHLQ369
+    QDrtVnjgG5FNb2Q0HeZXnD2AvaCgw6TDL9bGpnn8AdXXzsz0HLxmxjBrdCCtC3PHxvYnfS
+    e/mrGq6RX3k4i9zmPnOdYdxt+33X1Ra1C/0ba7xo6fRB8EKVpUI9OW9hsX+d7vLrGGafo8
+    8Ab7anS8h09UkWAS0VV+QSJw/s1KPPxA44CK1/4qZ/yY7FO9hEaPITQv0GNeOoH/h9Iuab
+    GQfS3Mo6oHGqbMl4duE1d2VspmT167VjYlA9ZtLBbIQigLct/EnxJBrlLGK2Cbj7RhsV8I
+    0zewTAcAZvh0elvI/yMfSDPDeYeVmXRvixotek7egKHLv82+mLAIbFJQ+Di2gF9xUp4fS1
+    nEYqhRqJdTyx/CvFYOJesC1/nSBm6i1OoK/FZxNkSzUGHB+kg5MD3/9XBkng
+X-ME-Proxy: <xmx:4PZtahMSOHJZGwJ4tPY1R4k8DRtWdonPlwqddbWgPgYs5Bfn6Hp4FQ>
+    <xmx:4PZtahGBtlr0xGdyWYpH36uBabT7Eav7gsiRVMyGD8Lmw0eeIpQDMA>
+    <xmx:4PZtavSTUlWv38jYmAyWAfpK2Xuft9T6OvFpLvpCmY4h3tX6pfMNog>
+    <xmx:4PZtaut-P9iyI084gsEHuXuFxy10nE6YRcBSivredEabGQxa1CLDJA>
+    <xmx:4PZtageqZ3mtxBGaCUE_eeILuMQWPRg-YL5ekhIUIzSY-6U2lE-XJeK5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 1 Aug 2026 09:38:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,  karthik.188@gmail.com
+Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
+ response
+In-Reply-To: <xmqq7bmaa0sw.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	31 Jul 2026 22:04:47 -0700")
+References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
+	<20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
+	<xmqq7bmaa0sw.fsf@gitster.g>
+Date: Sat, 01 Aug 2026 06:38:38 -0700
+Message-ID: <xmqqzez67yg1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com> <20260731-objecttype-support-v2-5-af577461ed57@gmail.com>
-In-Reply-To: <20260731-objecttype-support-v2-5-af577461ed57@gmail.com>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Sat, 1 Aug 2026 17:42:44 +0530
-X-Gm-Features: AUfX_mxIpGHCdQbHJR7n6bRHPHGWxoWK4fHE2T8A2OB_g_q1Q2FmH6gNiS5aZeg
-Message-ID: <CA+J6zkQQsuB3LA=Zg_oEaX7Z-AMhyJf2=ZJYZER=XMPiqaea-w@mail.gmail.com>
-Subject: Re: [PATCH GSoC v2 5/6] serve: advertise type capability
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-[snip]
-> -# This tests depends on %(objecttype) not being supported yet, once supported
-> -# it needs to be updated.
-> -test_expect_success 'unsupported placeholder on remote returns empty string' '
-> +test_expect_success 'objecttype is supported by remote-object-info' '
->         (
->                 set_transport_variables "$daemon_parent" &&
->                 cd "$daemon_parent/daemon_client_empty" &&
->
-> -               echo "" >expect &&
-> +               echo $hello_type >expect &&
+Junio C Hamano <gitster@pobox.com> writes:
 
-Shouldn't this be echo "$hello_type" instead?
+>> +		} else if (!strcmp(reader->line, "type")) {
+>> +			type_index = (int)i;
+>> +			for (size_t j = 0; j < args->oids->nr; j++)
+>> +				object_info_data[j].typep =
+>> +					xcalloc(1, sizeof(*object_info_data[j].typep));
+>
+> Do object_info_data[j].typep and object_info_data[k].typep need to
+> be independently freeable?  Separate allocations by calling calloc
+> args->oids->nr times would allow that, but if there is no such need,
+> nr contiguous allocation of them,
 
->                 git cat-file --batch-command="%(objecttype)" >actual <<-EOF &&
->                 remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid
->                 EOF
-> @@ -271,6 +273,22 @@ test_expect_success 'unsupported placeholder on remote returns empty string' '
->         )
->  '
->
-> +test_expect_success 'unsupported placeholders on remote return empty string' '
-> +       (
-> +               set_transport_variables "$daemon_parent" &&
-> +               cd "$daemon_parent/daemon_client_empty" &&
-> +
-> +               fmt="%(objectmode) %(objectsize:disk) %(rest) %(deltabase)" &&
-> +
-> +               # The hardcoded SPs between the atoms are respected.
-> +               echo "   " >expect &&
-> +               git cat-file --batch-command="$fmt" >actual <<-EOF &&
-> +               remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid
-> +               EOF
-> +               test_cmp expect actual
-> +       )
-> +'
-> +
->  test_expect_success 'requesting only objectname echoes back' '
->         (
->                 set_transport_variables "$daemon_parent" &&
->
-> --
-> 2.54.0
->
+Stepping back a bit, the design of "odb.h:struct object_info" look
+rather curious.
+
+Why does the struct store scalar values like "enum object_type" and
+"size_t" as a pointer to elsewhere, and does not store the values
+right there in the structure itself?  By forcing the caller to
+allocate an "enum object_type" for each of these object_info[]
+elements, the design requires 8-byte for a pointer to the heap and
+malloc overhead, probably ~16 bytes or more, in addition to store a
+single "enum object_type" that can be stored in a single byte.
+
+We are probably using this pointer indirection to say "ah, typep is
+NULL so the caller did not ask for this information and the object
+layer does not have to provide one", plus "typep is NULL so the
+engine did not give this information for the object".  But we can do
+so with two bitfields "unsigned typep_asked:1, typep_valid:1;"
+instead of paying ~24-byte or more heap allocation overhead.
+
+Again, this is not something we can change in the middle of this
+topic, but since I noticed it and found iffy, I'll leave a note here
+to stir the pot anyway.
+
+Stepping back a bit, the design of odb.h:struct object_info looks
+rather curious.
+
+Why does the struct store scalar values like enum object_type and
+size_t as pointers to elsewhere, rather than storing the values
+right there in the structure itself?  By forcing the caller to
+allocate an enum object_type for each of these object_info[]
+elements, the design requires an 8-byte pointer to the heap and
+malloc overhead, probably ~16 bytes or more, to store a single
+enum object_type that could fit in a single byte.
+
+We are probably using this pointer indirection to say "ah, '.typep'
+is NULL so the caller did not ask for this information and the
+object layer does not have to provide it", plus "'.typep' is NULL
+so the engine did not give this information for the object".  But we
+can do so with two bitfields 
+
+    unsigned type_asked:1,
+             type_valid:1;
+
+instead of paying ~24 bytes or more of heap allocation overhead.
+
+Again, this is not something we can change in the middle of this
+topic, but since I noticed it and found it iffy, I'll leave a note
+here to stir the pot anyway.  It could be something we may want to
+clean-up much later after all the dust settles from this year's
+GSoC.  I dunno.
