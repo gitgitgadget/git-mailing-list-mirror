@@ -1,196 +1,156 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B8D221DB3
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 22:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0FD3B47CB
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 23:14:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785622833; cv=none; b=H3GGWVXrazQIRu37ZX5qLi5RFInMgqaF3/ttS/dVGEb+xjykksPjuZZhdYO+mWljkPtGHZ1gVkqDNo8G+6ThwVBXBqEPM5esal7o37ogyvUuzmIhBdnP/MEkrQEE4wfJx+4EpnGl/m+lph6FQGreVMwzOiiQbJcO/MO81IFXPMQ=
+	t=1785626082; cv=none; b=Eamx0flP62KtlGXXH4O7uD0BpWfuy5Xu9WRULkpqDOOI11rZOl8d//S4yN/CrP8tsOqVltED5ZupIqyYj/sPKPak/wjm9F5I/L9upZ8fLM1pqFevNnUUmvk3ayKt6Jz8AoJmF8fjx5W3BhOm0cluvon2Mf+rqLXw31weRcNfbnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785622833; c=relaxed/simple;
-	bh=3geYrsrbjeV0s8hCWzMXcL4mAJ5XJNQEMG+A4zqwfN0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=oy7/Jz1+ncbxbvjrE6Lv3p7LaLGNJbzY8Jq3K4aG2tyl6AbRJEeGkHa1ikT9kVcrVkbLgCgvajsd8nbfFANideRkLTI56UXHM+8EvMwWhsiIMGmI74i3vS6Y3QqTBOyX9mHWx5KuNNHkE0urjXhQAvM2f9chGZ6989i6HAX6yS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MbjNVTSN; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785626082; c=relaxed/simple;
+	bh=zVhWSYJJk+pWu+qJwOXF8YHUDMITaPdKWXk4cnJ94ec=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GF+MH6+Cun2TBWaR+G/nWwz0e5u/z5GmFfngb8BV4MYKbqo5M/AEEJwYQkSJehOZRhgetDZCJmhff1+/JPjoXVAo7hZmacKXGwoqJSfuoMlnroed23TyKo/P+lSZbCZ8tgJKeXhDOePTZlPXpbC0XZOPhqtNr6dSOS+peS8aQOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ejMp+8xD; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MbjNVTSN"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4954a9e8490so9539285e9.1
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 15:20:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785622830; x=1786227630; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=KpiN/DbQ8ItK+lLWEkdUdhZl6h4pC7IGE3YTKxkXcVI=;
-        b=MbjNVTSNI/dRSGMpN0Fuem+nsp0Mtvc8a9CjvdrKGFif/8LpAjvHMz8xJsD8n/DAm9
-         7w8sy0jhC8Ks9xezm8vBGLix/7MJ1h/c4PgYYvIBpvwV49XbQyxgT9/Zf/Uf1y66U+yy
-         ZK5GRkNbCDLJzmxTQrMtMVzn0vkEBZOOf70MXwDQw1jZfLRVf4Y2vOTFLfhxIMZ7z1QZ
-         RayQEWXbIZ6Ph3B+KWwBMjuuan8rNwgXRVd7WW6G2Ok3q591o1bJbuC9N2Hh1iPYAFSj
-         v6dwMtsLs1PIYQcZR3eieBpZBKHTasAKWJOGYIG2QBl69bTw/7bkxeRfVFmqA/SVJsDj
-         f2Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785622830; x=1786227630;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=KpiN/DbQ8ItK+lLWEkdUdhZl6h4pC7IGE3YTKxkXcVI=;
-        b=mLPv/rbUNO5AwsCH8qFr86KbveGU+ZmxVDU47GQvhKqdirujR7WkCjcjk1RRJ7fcTX
-         /yRlK4oSKipYICi3vlHaFR9Jlp7pswFFMQToQA0ig/ai3tm8kYJXMs2ydIdhT6D9JLdP
-         jpCKTfESUDhV3bR/2qUa6FOutu8Cc264skBgtJNTDwbWPhY4epyYuA+Q+3IxCLEOAPzT
-         x17QJgTzEO5w7VK75ckiXIPmUhi/1Eiyb92mWU1+5gvS5UcLAUTWq/LuxBLwDhNG2/9D
-         5gY2UnPmxrNx+71v+tGsks1aDbEoMoSUMiP46drqvYRKkGp42l/j1oVEWPW5KcTfGMnN
-         kcqw==
-X-Gm-Message-State: AOJu0YwPDlYVVXKE9rk9RrRybei1SSN+s7fegqhum2iPg1jvey1akJoH
-	9ocJyJIPYyUjiXO46+8Vj+YRwH203r89ucJIR99tJ0Wy8OMGwiDyUfVy
-X-Gm-Gg: AR+sD11dm+4xmvbvUmBcDptbaAt49beqUG/Ki261lS+QalYpcUvRh+20e+BVJP64W7i
-	yNQxLcrqbj7JOKqXudZTohD9crj7ecXrhErAJtyTFualqjBxWErVECIiJGSRmImPBj4ykOsxO9f
-	bGbsysk2zd1C8UInfBGbyQp1pj9X7A5TvK7Ayt11EudEi1ln7gOEwq7vLOd38oFsHx+Jym9LNOb
-	fxdtiH+aPuKPO2JP0zZFJE2OHtZX8BQYmfsD3MlJHDf3plz0zWwBATtNn39NkbQwiLxbD5g9jSM
-	s/MYnDsk7xrhKBEMl0KdIe7wq/dunQ3DaXoYCsa/vePW0h8rI6LKhSKWIWbCczJ1CtzDrii0s+g
-	ajXS6jUZRO82P4TCSOgchmJMV3xwjuaMA2WsWYDCGBM/knvmAMxQPpBo0WSZ9SH0enhjalrtTG/
-	3A9cxhOJjrmHorRguFCUgVKsXClhU4A+b1m6ms9qEmdK7u6bhBdOgmpyEMFmTPUWMBqPduzHJHp
-	SoEtrU3Rn8a5FnC9YBTNTTuZgp6zQ8ki3XdVHIS0AyHf1fA/twyTcmZ+jlplc47nVeKby/MxPN8
-	P1vVprZor+QWIsZn4Opw/yozwpITbrFO2r0j6wRYzWLOgrmfVFW/ZUw1YuY/2ouXexJt2yqxn9U
-	=
-X-Received: by 2002:a05:600c:3150:b0:495:3c6f:7c18 with SMTP id 5b1f17b1804b1-4980eb8c4c9mr62050375e9.3.1785622829500;
-        Sat, 01 Aug 2026 15:20:29 -0700 (PDT)
-Received: from localhost ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-498081a1006sm122213415e9.7.2026.08.01.15.20.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Aug 2026 15:20:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ejMp+8xD"
+Received: (qmail 14469 invoked by uid 106); 1 Aug 2026 23:14:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=zVhWSYJJk+pWu+qJwOXF8YHUDMITaPdKWXk4cnJ94ec=; b=ejMp+8xDHMsS3PKx3R3evXXvYrmPaP1Pt1bBzKfGbnAQ7Cq2/aJYhrTrEeUWee9JseJSnswdvgDM/PGLqfo4nUhQ0onBK4eVP6GdOIUGjCLNekCvlwLHneUv+xaBXXRXyPmgpfzJqDXsTo9OgY8T8+YkG5ux+ErbulgF2BJWFQS/EgPtym58Ylq/z6+50azpz+tdiZslPYMM1svtmGT5dlHMcjBlKVYmOqh+WRiTM/9seOXQefSOW8Y6oertJrZ4iwT4Leny2Um+Zx9FHoTVN0nqjXFMyQXaq218DbjbVpHXWDKKhzpGtcGvn9qppV9zWLL4r8CMc7VxOqPBKsqeVw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 Aug 2026 23:14:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22413 invoked by uid 111); 1 Aug 2026 23:14:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 Aug 2026 19:14:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 1 Aug 2026 19:14:37 -0400
+From: Jeff King <peff@peff.net>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	chandrapratap3519@gmail.com, karthik.188@gmail.com
+Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
+ response
+Message-ID: <20260801231437.GA2097059@coredump.intra.peff.net>
+References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
+ <20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
+ <xmqq7bmaa0sw.fsf@gitster.g>
+ <xmqqzez67yg1.fsf@gitster.g>
+ <DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 02 Aug 2026 00:20:28 +0200
-Message-Id: <DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
-Cc: <git@vger.kernel.org>, <chandrapratap3519@gmail.com>,
- <karthik.188@gmail.com>, <peff@peff.net>
-Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
- response
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
- <20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
- <xmqq7bmaa0sw.fsf@gitster.g> <xmqqzez67yg1.fsf@gitster.g>
-In-Reply-To: <xmqqzez67yg1.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
 
-On Sat Aug 1, 2026 at 3:38 PM CEST, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> +		} else if (!strcmp(reader->line, "type")) {
->>> +			type_index =3D (int)i;
->>> +			for (size_t j =3D 0; j < args->oids->nr; j++)
->>> +				object_info_data[j].typep =3D
->>> +					xcalloc(1, sizeof(*object_info_data[j].typep));
->>
->> Do object_info_data[j].typep and object_info_data[k].typep need to
->> be independently freeable?  Separate allocations by calling calloc
->> args->oids->nr times would allow that, but if there is no such need,
->> nr contiguous allocation of them,
->
-> Stepping back a bit, the design of "odb.h:struct object_info" look
-> rather curious.
->
-> Why does the struct store scalar values like "enum object_type" and
-> "size_t" as a pointer to elsewhere, and does not store the values
-> right there in the structure itself?  By forcing the caller to
-> allocate an "enum object_type" for each of these object_info[]
-> elements, the design requires 8-byte for a pointer to the heap and
-> malloc overhead, probably ~16 bytes or more, in addition to store a
-> single "enum object_type" that can be stored in a single byte.
->
-> We are probably using this pointer indirection to say "ah, typep is
-> NULL so the caller did not ask for this information and the object
-> layer does not have to provide one", plus "typep is NULL so the
-> engine did not give this information for the object".  But we can do
-> so with two bitfields "unsigned typep_asked:1, typep_valid:1;"
-> instead of paying ~24-byte or more heap allocation overhead.
->
-> Again, this is not something we can change in the middle of this
-> topic, but since I noticed it and found iffy, I'll leave a note here
-> to stir the pot anyway.
->
-> Stepping back a bit, the design of odb.h:struct object_info looks
-> rather curious.
->
-> Why does the struct store scalar values like enum object_type and
-> size_t as pointers to elsewhere, rather than storing the values
-> right there in the structure itself?  By forcing the caller to
-> allocate an enum object_type for each of these object_info[]
-> elements, the design requires an 8-byte pointer to the heap and
-> malloc overhead, probably ~16 bytes or more, to store a single
-> enum object_type that could fit in a single byte.
->
-> We are probably using this pointer indirection to say "ah, '.typep'
-> is NULL so the caller did not ask for this information and the
-> object layer does not have to provide it", plus "'.typep' is NULL
-> so the engine did not give this information for the object".  But we
-> can do so with two bitfields
->
->     unsigned type_asked:1,
->              type_valid:1;
->
-> instead of paying ~24 bytes or more of heap allocation overhead.
->
-> Again, this is not something we can change in the middle of this
-> topic, but since I noticed it and found it iffy, I'll leave a note
-> here to stir the pot anyway.  It could be something we may want to
-> clean-up much later after all the dust settles from this year's
-> GSoC.  I dunno.
+On Sun, Aug 02, 2026 at 12:20:28AM +0200, Pablo Sabater wrote:
 
-[CC'ing peff]
+> > We are probably using this pointer indirection to say "ah, '.typep'
+> > is NULL so the caller did not ask for this information and the
+> > object layer does not have to provide it", plus "'.typep' is NULL
+> > so the engine did not give this information for the object".  But we
+> > can do so with two bitfields
+> >
+> >     unsigned type_asked:1,
+> >              type_valid:1;
+> >
+> > instead of paying ~24 bytes or more of heap allocation overhead.
 
-Hi!
+Yes, this conditional loading is exactly how we use the pointers. I
+agree that a bool would be smaller, though I doubt it really matters in
+practice. You shouldn't have a large number of object_info structs. You
+should have one that you use over and over. And it does not point to a
+heap allocation, but usually to a stack variable in the caller.
 
-I haven't stopped to think about that but it does look strange.
+I don't think you'd need type_valid (at least not as the object_info
+code is written now). If you ask for it, then either the query is
+satisfied, or we return an error.
 
-This is related to what had to be done to fix a bug at "contents"
-commands a few days ago [1].
+I think the pointer system goes all the way back to 9a49059022
+(sha1_object_info_extended(): expose a bit more info, 2011-05-12). It is
+mostly just mirroring the pointers that would be passed directly to the
+function (but marshalling them in a struct so callers don't have to pass
+a zillion NULLs). So:
 
-In that patch it had to save the previous state of typep and then
-restore it, because other commands like "info" and this series one
-"remote-object-info" use this pointer for the "is this asked?" question.
+  read_object_info(oid, &size);
 
-If we take a look at expand_atom():
+became:
 
-	...
-	} else if (is_atom("objecttype", atom, len)) {
-		if (data->mark_query) {
-			data->info.typep =3D &data->type;
-		} else {
-			const char *t =3D type_name(data->type);
-			strbuf_addstr(sb, t ? t : "");
-		}
-	...
+  struct object_info query;
+  query.sizep = &size;
+  read_object_info(oid, &query);
 
-expand_atom() has two responsibilities, it is called at the start to map
-which atoms are asked (when data->mark_query), and a second to expand
-those atoms.
+One minor benefit the pointer system gets you is that the compiler can
+more easily tell what has been loaded. Imagine that we had a type_asked
+bool, but you forgot to set it. Now you look at oi.type, and it's
+garbage (or maybe some sentinel value). But the compiler has no clue
+without looking at the innards of the read_object_info() function.
 
-For example, typep being non-NULL does this effect on these commands:
+Whereas with the pointers, you do this:
 
-info: makes a type lookup, and fills type.
+  enum object_type type;
+  struct object_info oi = OBJECT_INFO_INIT;
 
-remote-object-info: typep is directly used to know whether a client has
-                    asked for %(objecttype).
+  oi.typep = &type; /* what if we forget this? */
 
-For both commands what we pay is extra work because at the end the data
-shown is the one expanded from the format.
+  read_object_info(oid, &oi);
+  do_something(type);
 
-It's out of scope for this series but I wanted to add what I know.
+If you forget the pointer assignment, the compiler will realize that
+"type" never got passed to anybody and complain.
 
-[1]: https://lore.kernel.org/git/20260728150031.GA41931@coredump.intra.peff=
-.net/
+I don't know how valuable that is in practice, though.
 
-Thanks,
-Pablo
+Anyway, that is the history.
+
+> This is related to what had to be done to fix a bug at "contents"
+> commands a few days ago [1].
+> 
+> In that patch it had to save the previous state of typep and then
+> restore it, because other commands like "info" and this series one
+> "remote-object-info" use this pointer for the "is this asked?" question.
+
+Yes, though you'd have the same thing with bools. You'd have to save
+type_asked, set it, and then restore it.
+
+> If we take a look at expand_atom():
+> 
+> 	...
+> 	} else if (is_atom("objecttype", atom, len)) {
+> 		if (data->mark_query) {
+> 			data->info.typep = &data->type;
+> 		} else {
+> 			const char *t = type_name(data->type);
+> 			strbuf_addstr(sb, t ? t : "");
+> 		}
+> 	...
+> 
+> expand_atom() has two responsibilities, it is called at the start to map
+> which atoms are asked (when data->mark_query), and a second to expand
+> those atoms.
+
+Yep. But again, you'd have to set the bools somewhere. And it would be
+here (in the mark_query half).
+
+> For example, typep being non-NULL does this effect on these commands:
+> 
+> info: makes a type lookup, and fills type.
+> 
+> remote-object-info: typep is directly used to know whether a client has
+>                     asked for %(objecttype).
+> 
+> For both commands what we pay is extra work because at the end the data
+> shown is the one expanded from the format.
+
+There should be no extra work. We do a single read_object_info() that
+grabs all of the data and writes it into expand_data. If we are getting
+data from elsewhere (say, a remote server) then we should not be using
+object_info at all! The concrete data goes into expand_data, which is a
+data structure specific to cat-file expansion.
+
+-Peff
