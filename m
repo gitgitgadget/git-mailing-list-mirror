@@ -1,71 +1,71 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E7B3BA222
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 17:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497593B9D9D
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 17:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785606130; cv=none; b=Gd5a8LQUsP9bmSx0LrwmfAlwv0qWzCYSeemvHmjvPUUh1LLsewmzWL8NqSW6WSRTNyFvR7OvFBRtJB+ZUA+T8JBX0tRIhEFpSc4lNn72WKadklI336j5315Cl4nHvFc+stEHeGMUqfUlIVE0Xw/cLcHk4V5RVEoObj0hItagNvM=
+	t=1785606132; cv=none; b=dbjhuTSUsEMDQx0bNbC+53MG/d6BrJxNS7AQZEZlbpvgc+H1Td9QW+JEQN2LJqsEi3DCYEc0pulRFpCFFFtnB/9l5IxgtZ9o3aa7MHgnj7JYQ6fdwtOUAAQDVnZlP2HQFLqLX4N/Fq9nchCu/TYlGrKB/1oJbFW/mF0GwrEHX38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785606130; c=relaxed/simple;
-	bh=nttdz337mO0GJ7sRBgXv6Icqs3nZrWguEel4JWgGKh8=;
+	s=arc-20240116; t=1785606132; c=relaxed/simple;
+	bh=qT9uZ9bIg2CvQ+iwyXGM70W5MJU6uZyEKYxMsRtBstE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNDKdaexmHmLd+qs9k/BjTqsEXoUakTFk0r7xGiyLeqml+fDBSee1XB8qkunqL8N1Jdl+hxdIEQ+AnYXlUPonXR7NlgoYbpZH+43NvKJvuU3ZL0HtSnQIk6sBXosRIlVvWRQ6Bl9KJeB8emBYSUaGoTu6xorLJbeqR+wysZKALg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=USiGy6hQ; arc=none smtp.client-ip=209.85.210.174
+	 MIME-Version; b=k6UythlmdajDu6Ps9XVVLeeL1CSZInCnnC7vmbGqeaWYU11CmvjKMG2/wyX1IxnsFxgoa9nFqftQYxzMrfGOTcogzjwxLC7z+ziqktar7b/DpjYcCGkkdxAG0pRe4Q4ClOCBgrQ8Z9YxCwfBYi76CqlbPhlJh5IIXBkRVyPY0IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G+m9bktp; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="USiGy6hQ"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8487214ad2bso3026672b3a.1
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 10:42:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G+m9bktp"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38dd55ad76cso1818684a91.1
+        for <git@vger.kernel.org>; Sat, 01 Aug 2026 10:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785606129; x=1786210929; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785606131; x=1786210931; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Lb6bB6YrMaxkB6No2H49f935QZ9BkVWLUq7NlgqlTiw=;
-        b=USiGy6hQ/oqv4oWkCsga3tj6c6oEQtRHcLbejFDfmd0V4eDttiX60tNdfcQDCreejv
-         vDqV1lQ8tcvLnQ3VrPIXyrwDiic/0vqo6ytI9IHGwHTQ5xKfKd29iFpX+lNElfY6dlkG
-         57ZQ/G1wHWXjXjL2ZbtLTvNd4uzJy6sFxLnd/gw9wtAWx25Bq8vZLRhCoy+zByJprJPA
-         L2nNF90fXcP/SQmCpCdrG+bdB/Ik4c5kUxzabFj7tH9oj2EPWf9dw4ozcxwfs/DUQH4E
-         aJuBDy5eo30fqWhx4oMEngdRgPxYylmAh31ylcBwXgHYH6dRzWo3lt4K6j5Xb2KMAph0
-         VTmQ==
+        bh=QcYJLAAB+eRQU9gsLZEC5WopdoQWDYVSBFp84QoAX6I=;
+        b=G+m9bktpXMDP8DTmNuYeL68C9CL5iba/eU2hiy3LURX0nksp3c7ixLup8i2/MSky1N
+         ELlW2oNgaACgg1Thue7SS/b0rQMGsooWxpJolOc0rzvnZ+DZ9zLEd/55oq2PxBmms+tE
+         QWrzv8u5VG3Gb+J120HlkkZY9awzOUnlK8rjb2gPYwuLx9mr+w5zZv7Y+uS64NAnpIuS
+         sebjMA5S3Itw97FknIW8aBHsrc6RmjIH4kERZGLbRSqqyPcbQDUIk+Z+D+FB63wMedbj
+         oAw63K9NAJAzx2Huq7/0JK8Jvm4SOZ0No0QQcUrXkoep/1ly/KXZkV1dI0j7xBSK9FzV
+         xsSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785606129; x=1786210929;
+        d=1e100.net; s=20251104; t=1785606131; x=1786210931;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Lb6bB6YrMaxkB6No2H49f935QZ9BkVWLUq7NlgqlTiw=;
-        b=HumwWz8K+XArlR6bTD61jO/ug48PMjyvimBmPlKelqJ9IJ7hExO3DBp01VaDFtkDeD
-         GVK5F8/SASS/8BgJns8Qguect46e41x0LaT7nl9VIg4prOtRqjeim851VhDoTyJvEbjG
-         HlkNYEHuwXRLy44FcshZwSpiy/0S86J0Szaz5d7Njw6xdiDsMGP1iwHM+uE0iVRi7CcY
-         Lf6KhlSagCs8x7P3aWZ9gAIMtbfr2TU+K8e6IYHLhB5h1Jyu7EEEnrAR4g6Zevnhivhw
-         crVrcAsvpNoniFIVWUKQmKlaw1x5B2sa6PWAMtpTyRltSO7gk70WhkWPsLDSZYXiTR0N
-         UcUw==
-X-Gm-Message-State: AOJu0Ywyc5rM2zQfOfdic2fyA6c/3Zi73syeEr3BgDeqt60/GlywL5nD
-	YPBrkUMfILNC0ya5BbhP+kXbXe/r+35yCR3HUgq3y9UUJX+EwfJYI3CvHwFZ3A==
-X-Gm-Gg: AR+sD11fNYjS+k1Hz3gMjkE/cxbXm4GAJ5/825XqMsePrPuCYBh52V1V2hXA7bPQ1Um
-	ZmQkCdsjSzsJQ1enGUEKl0H3sXcK6zcIrNYTvGHXVnbYRNRwLNHoKuHFoBMb6fvnRqOGjxNh5WM
-	32J9gSvYfSW0UgTrFqIVmK9RwS7s9me9ZOU0S5XFPU12aqzydI5GEuyrR5yK4jNXAwM/FJTURHI
-	wTx4lx4Ap4Zxs/ZyJwr+mR019XqFpR4TQ/PMPamcwhste3y9yRZ9ulW4U0dfUtM9CxvCwRN3GW7
-	XC3k/Yp97UkIEiQbLSqwJQEwuc+ZHsOsAUiPW2WvmEgjPxn+9mpi0kefvhPqcoXTejiikulAdye
-	KfkENjRw7Osoz6Dst7my5zG47ho33DgXNAJ+dCfrqnC3Ge1TnvO2dWkSv2lDWDplEOTL2yJ1AhC
-	5DCz9xng/5mnNQ1db7X4S3RGwhBjO7HlqkElzRGegds6xg3mqH8K/yomWX2dlVFfbm1+/lY0YZN
-	P+Y/9rhxCHDKcKbzF8k4E6RmTlffQkzyzpqnscO4ykFIKO4uu6INjKdQoSD6jvd3D/txK3ukCPC
-	e7wdzHL8PHJvcJXdV52U8YX++NjbKiQUhTlavirqQffiQQ==
-X-Received: by 2002:a05:6a20:d809:b0:3c4:2eb6:c3a0 with SMTP id adf61e73a8af0-3c92a63ad0bmr3940839637.30.1785606128777;
-        Sat, 01 Aug 2026 10:42:08 -0700 (PDT)
+        bh=QcYJLAAB+eRQU9gsLZEC5WopdoQWDYVSBFp84QoAX6I=;
+        b=R1mWusqxtic+8Ic+sywFL8C5OuRshiINitJJDwzkwH3sYZ0hZPkWy9RUE/B+/QGBcn
+         k/px+6Qiusy2fCzmDbG0oMBTF6kvVmwPo+lQcdPNQFFNDqQOrTb38SSACWamszuRpKHY
+         4QDSCa01HfCMYqHFz3VmwAEDON/ZKPptinUACY4D4zYhxN8nC47mWNU8XDFVlGigxzQb
+         Q58Q5o3aztungH7Ra6ftXVV8K1ZxOI3wn6kDnAgHBAs6mmCAB+rMSfi3hTvWo5ouMQi1
+         umKEExM/ceZ4/zsztI897BjEdWSnTalUmwRW1gX3jGTyrjlyq7kvc/Wc2GAXh0y4BV3P
+         KAyg==
+X-Gm-Message-State: AOJu0YwZkt7uOwOI9ChyQUY+A+9nDcaTSDMImLqE/sWAJriCcSFUX5NC
+	d+7yKE0yEXC8+gu+pWI4tKRBJsC9L9OQMIACzBFO+7gRjOHHZztDHRmCHfo+Cg==
+X-Gm-Gg: AR+sD12HbCL26viEDHTNK8KRnLvwu/IlQafhGpM86sFwBF/sbjiBX2S8YDa3UcoukY1
+	didyWbjcDP4R217DwofUS8coGCvN+kiEve5DTLomlsIgTsHsxC7Q1Ioj/lmm/HfFm7M37O+Vj9M
+	+rn7xei/fa75sRUURfFSMQMy1bNPBmuWIvh1yZVopcZXvhfftg4cAWXL7PilkX+3TTDrRY0Qkus
+	dkcRq1kjPVd1BgkBl4lKvgkdPSA2rzd19xlBpO8O2UGSQI05GblThEy/ma3BwcNt4TIMCmNsvzN
+	y8SRuoK0bbiTjHNttkfoORcXnNrVH1yfOskg7F+iZjKflmH5HJwH4dZ0r54oaj//ikRpFSNetGF
+	hKfhY6m1iNuQUj4fwQyADqn4fk0lKW7jALxEtlrnJ5I/ZNiagzyVlZoA65y0mh34QYBWVbR6HRw
+	r66UtBlIU1leDL96Mey8JZWHcpeiU3z4pzSv/ECRsqdsF5AAyUeWh7e9oeQ4bto/W6VCaT66It9
+	0dSFJTx43ZV+EaWkeEy+GuJZCw/ga1hGFaHigYVkEgiRpfg3psT7N7n72W/9VjV+bNFFoPb0lTS
+	eEUiE/Uw7j1mwK2FPWHMPwWUIQa8SQQqq9JVoihQtmoLKw==
+X-Received: by 2002:a17:90b:54c6:b0:38e:9784:dd47 with SMTP id 98e67ed59e1d1-38fb2409b72mr6412821a91.1.1785606130575;
+        Sat, 01 Aug 2026 10:42:10 -0700 (PDT)
 Received: from localhost (192-184-169-91.fiber.dynamic.sonic.net. [192.184.169.91])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fab4e506csm14886062c88.13.2026.08.01.10.42.07
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153e18e70esm34191280eec.29.2026.08.01.10.42.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Aug 2026 10:42:07 -0700 (PDT)
+        Sat, 01 Aug 2026 10:42:09 -0700 (PDT)
 From: Michael Montalbo <mmontalbo@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [RFC PATCH v7 08/10] sub-process: add a gentle status read
-Date: Sat,  1 Aug 2026 10:41:51 -0700
-Message-ID: <20260801174156.2998808-9-mmontalbo@gmail.com>
+Subject: [RFC PATCH v7 09/10] userdiff: add diff.<driver>.process config
+Date: Sat,  1 Aug 2026 10:41:52 -0700
+Message-ID: <20260801174156.2998808-10-mmontalbo@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260801174156.2998808-1-mmontalbo@gmail.com>
 References: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
@@ -78,91 +78,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-subprocess_read_status() reads "status=<key>" packets up to a flush with
-packet_read_line_gently(), which is gentle only about EOF.  A malformed
-length header still dies inside pkt-line, and an empty packet is
-indistinguishable from the flush that ends the section.  A protocol
-violation in a status section therefore either kills the whole command
-or silently truncates the section.  That posture fits the filter
-protocol's callers, which treat their process as required
-infrastructure; the diff process consult added later in this series
-treats its process as optional, and any protocol error must degrade to
-the builtin diff rather than abort the command.
+Add the process field to struct userdiff_driver and teach the
+config parser to populate it from diff.<driver>.process.
 
-Add subprocess_read_status_gently(): the same status loop, reading
-through packet_read_with_status() with the gentle options, returning
--1 on a truncated or malformed packet and on an empty packet where a
-status line or the terminating flush belongs.  subprocess_read_status()
-and its callers are unchanged.
-
-The handshake has its gentle counterpart in 061a68e443 (sub-process:
-use gentle handshake to avoid die() on startup failure, 2026-06-01),
-which turned truncated handshake reads into error returns for every
-caller.  This series' base includes that commit, so a process that
-dies during the handshake feeds the same non-fatal fallback as a
-status failure here, and an optional diff process degrades to the
-builtin diff on either kind of protocol error.
+The field names a long-running hunk provider process.  Nothing
+reads it yet: the consult, the protocol, and the documentation
+arrive with the next commit, which starts and pools processes keyed
+by this field's command string.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- sub-process.c | 24 ++++++++++++++++++++++++
- sub-process.h | 10 ++++++++++
- 2 files changed, 34 insertions(+)
+ userdiff.c | 7 +++++++
+ userdiff.h | 2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/sub-process.c b/sub-process.c
-index 3cef42b088..33bd789618 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -49,6 +49,30 @@ int subprocess_read_status(int fd, struct strbuf *status)
- 	return (len < 0) ? len : 0;
- }
- 
-+int subprocess_read_status_gently(int fd, struct strbuf *status)
-+{
-+	for (;;) {
-+		int pktlen = -1;
-+		enum packet_read_status rs;
-+		const char *value;
-+
-+		rs = packet_read_with_status(fd, NULL, NULL, packet_buffer,
-+					     sizeof(packet_buffer), &pktlen,
-+					     PACKET_READ_CHOMP_NEWLINE |
-+					     PACKET_READ_GENTLE_ON_EOF |
-+					     PACKET_READ_GENTLE_ON_READ_ERROR);
-+		if (rs == PACKET_READ_FLUSH)
-+			return 0;
-+		if (rs != PACKET_READ_NORMAL || !pktlen)
-+			return -1;
-+		if (skip_prefix(packet_buffer, "status=", &value)) {
-+			/* the last "status=<foo>" line wins */
-+			strbuf_reset(status);
-+			strbuf_addstr(status, value);
-+		}
+diff --git a/userdiff.c b/userdiff.c
+index b5412e6bc3..7547874aa2 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -509,6 +509,13 @@ int userdiff_config(const char *k, const char *v)
+ 		drv->algorithm = drv->algorithm_owned;
+ 		return ret;
+ 	}
++	if (!strcmp(type, "process")) {
++		int ret;
++		FREE_AND_NULL(drv->process_owned);
++		ret = git_config_string(&drv->process_owned, k, v);
++		drv->process = drv->process_owned;
++		return ret;
 +	}
-+}
-+
- void subprocess_stop_command(struct subprocess_entry *entry)
- {
- 	if (!entry)
-diff --git a/sub-process.h b/sub-process.h
-index 45f1b8e5e3..8655b38897 100644
---- a/sub-process.h
-+++ b/sub-process.h
-@@ -101,4 +101,14 @@ int subprocess_handshake(struct subprocess_entry *entry,
  
- int subprocess_read_status(int fd, struct strbuf *status);
- 
-+/*
-+ * Like subprocess_read_status(), but a malformed status section fails
-+ * instead of dying: a truncated or malformed packet, and an empty
-+ * packet where a status line or the terminating flush belongs, return
-+ * -1 and leave the stream unusable.  subprocess_read_status() cannot
-+ * tell an empty packet from the flush that ends the section, and dies
-+ * on a framing error inside packet_read_line_gently().
-+ */
-+int subprocess_read_status_gently(int fd, struct strbuf *status);
-+
- #endif
+ 	return 0;
+ }
+diff --git a/userdiff.h b/userdiff.h
+index 827361b0bc..51c26e0d41 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -31,6 +31,8 @@ struct userdiff_driver {
+ 	char *textconv_owned;
+ 	struct notes_cache *textconv_cache;
+ 	int textconv_want_cache;
++	const char *process;
++	char *process_owned;
+ };
+ enum userdiff_driver_type {
+ 	USERDIFF_DRIVER_TYPE_BUILTIN = 1<<0,
 -- 
 2.54.0
 
