@@ -1,66 +1,66 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F771EFFA1
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 20:49:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80E434252B
+	for <git@vger.kernel.org>; Sat,  1 Aug 2026 21:28:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785617363; cv=none; b=ojzqq7WBlG/Avn3tVSejbc6+9fG/pS9wYqRjBBzPLgBkh3LKcomA+Rp9DvkEHNxCl8d3ZM1z1QtoivyPC1xx6KB+FSjhDTROoRlHjhQeoLo4g2aHBjosZAl3cFj3zbvLEFRxqq3v0VJ3hcJBM80uYFAMQcJCXcDa+AcbIe6vKoU=
+	t=1785619702; cv=none; b=E1D+1tmjhxohCzaqpSFHzMgSKjbgkH2WtR75Ge//DB+MDnVQ5gXDa6YgDGGU1SPs6aEUfj0dYR4J6HVeP2F/ww5O0i8N8/SMMB+HoLda90WlkiGdj2UK6OOHAT84VNIhzhcdNYeAm3j8aOQjVrt8WzqyIQwnVZxhi5WsgLQjq6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785617363; c=relaxed/simple;
-	bh=CNVdApOzv8iC7L1DKiUNfErC6xedlWXQmhzoca33YFw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=PShfLzPc+bD2+YS0kSPjeJ9N7eqeLd7HTC1JV/x3Nk7QVMAW9B3iQgwbVcGC9FHrWqOnsMO5XAnG2W8rDsIJxjPE7ykVWKZy/+d5MA/KvmYK3heuL6v/NJ4No5NzKbYugOQZGC8qZh8VRLzGHqmqIm9gdqOhoJM4+ivBo//4v6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQ/vcGcQ; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1785619702; c=relaxed/simple;
+	bh=RuVw6iteASjziCNxyt9Zwl6Gk5FsvbCaWGLMK+V+gTI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=XFUxHfVwEsclRL2HrKJ6e41P2HYe9GFB/rt0spit7dHlbE62d9u3icwQMx3qMTyxdBxr31l++bRb39x48B8ZUwBbni+RpkEYnnQ7ltG+0CnnMhrX5embEuzn63P8+wiC6V1b/LMZzaoqDq5l+jSxzcbZkBkTT5Hkkrbb6dxCtcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zdm3gT7G; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQ/vcGcQ"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49557167508so7916655e9.1
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 13:49:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zdm3gT7G"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-47fdb6f7d72so214495f8f.0
+        for <git@vger.kernel.org>; Sat, 01 Aug 2026 14:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785617360; x=1786222160; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
+        d=gmail.com; s=20251104; t=1785619699; x=1786224499; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=KI0uRifdt03RqhcSTNMIWSOZzBjvOjB1hZVFQmex/YU=;
-        b=eQ/vcGcQv9s9HwSKDT8TbXUERTjB2iqPIGbboXdYDU1EI38hd8ahlL7tX6EsMXtoAx
-         ACh057BntxMwj1tfYwq9y8qp5xcZrcaHfsUMvpmSYVb+vSVhW3iP/DR3HeTiwS8osHRP
-         hqvUwJFAQB1JsAyZsUqZ99Z1amTuiKOg+mhO++0adMofHg/f9JlEiOX5DVFzHOIW9PeT
-         nUGDg2Tv5k6D/o+5TgYOtE/ZlJBtzyMKKf/7YzJizGezq3gGF5g+BaMFO+W3IpkJqJnD
-         kTVKrB5qgGYnSesZlEpGOEctcfIobxE8gXfxX7p7XMYfMZr7KVa3maKotTq/zXkQzjki
-         ydyA==
+        bh=aLxczdmAzh1VMDyL6T//htPLOjqMwgQ/Qp34qnJcgBA=;
+        b=Zdm3gT7GFHX6hfbKCBmI4P7XRaBVz0MZDMT3LgZl8I62Hi7GLCXKwizoeCEW0+Tgsu
+         MEmJ/OrD1UbphvmZLMMe1/ZA3dEl0Tr2hiKkv/FNf6qd7ZjUqYep+9Kjcf3K94/NkBUF
+         4X/4d1T6qyrK7hqGaAuBI7J6BYDokfS6aStVYlE39pQw652uMJafyXFLrdVvSbPXPbB8
+         KMsZR3td0n0rnpSvuoN0mSixoGPTO2eGnLukM5NAFYfveXC9J40alHPyU+u4IicnR557
+         AAN8lRWXGeiCMRoD36Zgdjs2JQ2eQQNgnjGq1g4kpmmzGDLkbZGG0aoPGVJh1b+BMZch
+         xp0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785617360; x=1786222160;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
+        d=1e100.net; s=20251104; t=1785619699; x=1786224499;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KI0uRifdt03RqhcSTNMIWSOZzBjvOjB1hZVFQmex/YU=;
-        b=QUnbDTBYUQIpIq3DWZqlJd8Zs2vCuIDQRUxbocVv/bVsw98nWSfyiAYB6PhqM1Ho4H
-         dWJddjhuO3Nuyk2Lpp5JBHfnI5+l36xHJZ3BYb/QFiwhxm1v8Nj2YzaKFFLuCJFMq2el
-         GhWAuY4P4OyS++XlorkYkUSJK25KxmbNr0+CG8tMPjKQUSFYyJDJP0rWGvxyyQ0TAjJI
-         shudIbvhfF3SASPgOI95qzjqRKf2rataiNaT7f25PanJyA4H+kBfyZ3/xwYir5iP1cSy
-         TM1SqGP9k00Hukd4he9Md4Uz2tVHh3/2gWQq8pI52Fy5rG1RVQhtTrxyRJJGA4sEiVvE
-         1+1A==
-X-Gm-Message-State: AOJu0Yx0qKPvCdcXme91WOrmvRwb+XMfSq7IpGNzpnzaUo0GzJrXKLJB
-	z5gsh+sz+GWhhEjm9o3lNDS1+ZtjgyzfZkue9Sjz7IKHwkbT6URKNKnlsZSAqyjO
-X-Gm-Gg: AR+sD11CvRXXiBmbiD5kmdaNOhCUcqnOsKTqxTQi/aDyfbNBSs/UB666EhdYvG3NPX4
-	7kmtx0Q70gQTpM3j+6eecMVI3kyXX3MLieKTqrbk4haOCiOSxKNxxPSgcmeCtRAlZkDMlLax5We
-	eEHAm7oxnsTPp/2+GZBSptIGl+qhbo8FFkL8ANlrQVVquHD6xkv0laNNW8a5oZNLaC3t64xhaTq
-	7BPtGcF02Yw9rvEBlITCNTDWrUs3ZkR8fMuTInoNRxzbRRNqEfwsma5MyCxTSszVsbVqewXdhp3
-	3K7FbtG+NaurNTktHgbzx7b5yI3eiUd7THejQPOkKykTOJ7Lb9in/t1Cv9dBczEVbUv38FNoSR+
-	XTO825ZwRHRSUpex9Xi+8v+QHTv1Yc6YV8XKhSkiUhnokm2CeTCx3JhLpN+oF074cSFCXfsVOSv
-	+hyEtXpSOqirkLhU5lg9hqDAb3uulP9d8BtK1LAV5xg5qd3ZocrH5lWfn4iSxFOKlK34tpcniF1
-	mRaNZSH/StGsGS6YEq5Y7+n3qqnaO6ufmmSuHaoOf3gAhl8ik0ZiiwX2a1xKo+gTrx8iVMGoYBw
-	JBOUrw+xeFDkC0OY4xtwAieCqdPvo0vPWY1q18gExhzcDzAYBVLxzzOBlpxZY1Q8LaUFZqOzyvM
-	=
-X-Received: by 2002:a05:600c:1393:b0:495:4fd4:619b with SMTP id 5b1f17b1804b1-4980c649c54mr86155555e9.1.1785617359981;
-        Sat, 01 Aug 2026 13:49:19 -0700 (PDT)
+        bh=aLxczdmAzh1VMDyL6T//htPLOjqMwgQ/Qp34qnJcgBA=;
+        b=siYgpSlgn2IR3d40NdiR4G7ARfKJiYTUz/Mtw7lOwyz9PSG1hpDdBzsKEHjJA9D0ZY
+         /sgxoVmodBFFLupVCNZ3n9GS3Yp2AcFgsTcTLv9+JJ+Q7J5QVkCI97ro7VZx+N7ojVUc
+         W/YWDlYJpkuimqPQvoVyDxcZgNf+rJVwfe8Xejj9qLmkvYO38i7XeKN78055bwtoAo2Y
+         26SZ8HnGWKu19dRUIaai1OC3CK4qoWR85yadLV/2YBxo5xgcg6SPCpG2/bwEYnUwbY5J
+         obOxpTwqseoF9SwtVnjBJv+KSrylVg36UkIFF4KWjGcgVgjAjx2iq71mylqSyUou9FrD
+         e6nw==
+X-Gm-Message-State: AOJu0Yxs6OZLvEbBBuNUgIfjQ4MhpIJ/JoDS8SviTS11S8vlsB4ZYNn6
+	wkI1J11nT8o7upD7osofOI9fS4QSomos6tzBqZRdR1rEYCviuWMbu38/KNzRwTXS
+X-Gm-Gg: AR+sD11nDfnO4xbwwMVvg0bCs2SNBSAfgVGDF/sTnAXJZF9POQ+UFrhDwgbPAKu9yQ+
+	9gQhtNGA1llPQ0tkL5hHE72WdYYzDZaYFExQk4fuFA2mnqHJin2NQtwhwRC/Mn0ebC6wwiRqlKZ
+	l7EleOGnVAC3JneeoQei4312k2It96UKIr/eEHhrjz4DI8koC4fwE82doQpmuEd3qHuJvlQviAP
+	cdUFRwEBXd3Fh+St7LRyZIvky63FItivorWA6kek+WbSUZrKETol5iyPMmPQTDS0cAFVIeGETTn
+	GIQBZH27IJmmRtQjPA5iqq/neaViP7BaEt9hfNXvrQqvO8FCFhClrtOgVcHlBWocOFOHDNTFWEz
+	aQSqFb/95FLq7/HxxQ43UvsdIsgvQYO26W9Xp4IWe4iS3hGAifD0f1nNTVtNOXJVSkL6bQafS79
+	HJ5upFS80rN0tpnKM+EPkd0Gb+TwOHwFknAyv36aN6eLENFl8fdnEUVmNiWkxJXf86B1/NzKfDF
+	aOiIV1jrsX7NfrJEXhoalSYmEV+jeCid4webv1zN1Vu4MDEuEsYMK9W5UIZFlP+KDSl0Sxmxa+L
+	6HN5hamFbQYlMyvbaI7NYpSCQBgyyygt26kAlxah1TxbwxMZIsUF6POeXQDzC4mTDgNIx2sUMn4
+	pzAgJ8uM/Ug==
+X-Received: by 2002:a05:6000:2087:b0:47d:ea8a:d211 with SMTP id ffacd0b85a97d-47fd9f93ed8mr7218205f8f.29.1785619698820;
+        Sat, 01 Aug 2026 14:28:18 -0700 (PDT)
 Received: from localhost ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-498081a1910sm37076355e9.4.2026.08.01.13.49.18
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd45895b6sm19006976f8f.26.2026.08.01.14.28.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Aug 2026 13:49:19 -0700 (PDT)
+        Sat, 01 Aug 2026 14:28:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,87 +69,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 01 Aug 2026 22:49:17 +0200
-Message-Id: <DKDWIXJQF4E8.1L2ZF7HSLKNAW@gmail.com>
+Date: Sat, 01 Aug 2026 23:28:15 +0200
+Message-Id: <DKDXCRLFABZK.2DP7XB6NXY9SA@gmail.com>
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
 To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
  <pabloosabaterr@gmail.com>
 Cc: <git@vger.kernel.org>, <chandrapratap3519@gmail.com>,
  <karthik.188@gmail.com>
-Subject: Re: [PATCH GSoC v2 2/6] t5701: use the test_file_size() helper
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
+ response
 X-Mailer: aerc 0.21.0
 References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
- <20260731-objecttype-support-v2-2-af577461ed57@gmail.com>
- <xmqqqzkia2is.fsf@gitster.g>
-In-Reply-To: <xmqqqzkia2is.fsf@gitster.g>
+ <20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
+ <xmqq7bmaa0sw.fsf@gitster.g>
+In-Reply-To: <xmqq7bmaa0sw.fsf@gitster.g>
 
-On Sat Aug 1, 2026 at 6:27 AM CEST, Junio C Hamano wrote:
+On Sat Aug 1, 2026 at 7:04 AM CEST, Junio C Hamano wrote:
 > Pablo Sabater <pabloosabaterr@gmail.com> writes:
 >
->> An object-info test uses 'wc -c <two.t | xargs' to get the file size.
->> Update it to use the test_file_size() helper instead.
+>> @@ -104,8 +105,13 @@ int fetch_object_info(const enum protocol_version v=
+ersion, struct object_info_ar
+>>  			for (size_t j =3D 0; j < args->oids->nr; j++)
+>>  				object_info_data[j].sizep =3D
+>>  					xcalloc(1, sizeof(*object_info_data[j].sizep));
+>> +		} else if (!strcmp(reader->line, "type")) {
+>> +			type_index =3D (int)i;
+>> +			for (size_t j =3D 0; j < args->oids->nr; j++)
+>> +				object_info_data[j].typep =3D
+>> +					xcalloc(1, sizeof(*object_info_data[j].typep));
 >
-> What is missing from this description is what is wrong with the use
-> of that "wc -c | xargs" construct.  What benefit is this change
-> supposed to gain?
+> Do object_info_data[j].typep and object_info_data[k].typep need to
+> be independently freeable?  Separate allocations by calling calloc
+> args->oids->nr times would allow that, but if there is no such need,
+> nr contiguous allocation of them,
+>
+> 		enum object_type *types;
+>
+> 		*types =3D xcalloc(args->oids->nr, sizeof(*types));
+> 		for (size_t j =3D 0; j < args->oids->nr; j++)
+> 			object_info_data[j].typep =3D &types[j];
+>
+> would be simpler to manage and easier to get rid of once you are
+> done.
 
-True, the patch was small and I did not write the commit message
-properly.
+Hmmmm, they don't need to be independently freeable but they are freed
+by free_object_info_contents() called at the end of
+parse_cmd_remote_object_info() at 'builtin/cat-file.c' in a loop:
 
-The xargs is there to strip the leading blanks that wc adds on some
-OS (I tested this on macOS).
-test_file_size() reports the size without any padding, so nothing needs
-to be stripped.
+	for (size_t i =3D 0; i < object_info_oids.nr; i++)
+		free_object_info_contents(&remote_object_info[i]);
 
-I'll write the log correctly next reroll.
+free_object_info_contents() is:
+
+	void free_object_info_contents(struct object_info *object_info)
+	{
+		if (!object_info)
+			return;
+		free(object_info->typep);
+		free(object_info->sizep);
+		free(object_info->disk_sizep);
+		free(object_info->delta_base_oid);
+	}
+
+This function was implemented by the series that introduced
+remote-object-info (the one that this series is based on) so
+parse_cmd_remote_object_info() is the only caller.
+
+Thinking about it, your suggestion can be done easily. To free types it
+is enough to do free(remote_object_info[0].typep); (same for sizep).
+
+I'll make it work as a prep patch for size and modify this one to do the
+same.
+free_object_info_contents() gets dropped in the prep patch because it
+would have no callers after it.
 
 >
->> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
->> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
->> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
->> ---
->>  t/t5701-git-serve.sh | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>  		} else {
+>> -			BUG("only size is supported");
+>> +			BUG("unexpected object-info option: %s", reader->line);
+>>  		}
+>>  	}
 >>
->> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
->> index 9a575aa098..b4d6beef11 100755
->> --- a/t/t5701-git-serve.sh
->> +++ b/t/t5701-git-serve.sh
->> @@ -356,8 +356,8 @@ test_expect_success 'basics of object-info' '
+>> @@ -151,6 +157,10 @@ int fetch_object_info(const enum protocol_version v=
+ersion, struct object_info_ar
+>>  			    object_info_values.items[0].string,
+>>  			    object_info_values.items[size_index + 1].string);
 >>
->>  	cat >expect <<-EOF &&
->>  	size
->> -	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
->> -	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
->> +	$(git rev-parse two:two.t) $(test_file_size two.t)
->> +	$(git rev-parse two:two.t) $(test_file_size two.t)
->>  	0000
->>  	EOF
->
-> It is not like we want to avoid piping wc -c into xargs and hide the
-> exit status from "wc -c".  We are already losing the exit status of
-> "git rev-parse" anyway.
->
-> If the test after the change were like this
->
-> 	two_object=3D$(git rev-parse two:two.t) &&
-> 	two_size=3D$(test_file_size two.t) &&
-> 	cat >expect <<-EOF &&
-> 	size
-> 	$two_object $two_size
-> 	$two_object $two_size
-> 	0000
-> 	EOF
->
-> you can sell it as "we do not want to lose exit status of 'git
-> rev-parse'", "we do not need to run the same command twice", etc.
-> But it is unclear what we gain by rewriting the wc-piped-to-xargs
-> to test_file_size.
-
-I will do that, I'll move the object name and size to variables so they
-are not recomputed.
+>> +		if (type_index >=3D 0)
+>> +			*object_info_data[i].typep =3D
+>> +				type_from_string(object_info_values.items[type_index + 1].string);
+>> +
+>>  		string_list_clear(&object_info_values, 0);
+>>  	}
+>>  	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter =
+expected");
 
 Thanks for the review,
 Pablo
-
-
