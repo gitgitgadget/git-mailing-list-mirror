@@ -1,113 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C5D23D7F4
-	for <git@vger.kernel.org>; Sat,  1 Aug 2026 23:29:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785626985; cv=none; b=NdDu51qR473V12ItT8MnF5y4ldOzK+HArVu8LAybItf8eqy7EYp9CB5yCLlPjE88niTy2ON3NlEDyqRu1wRHq5Pe4K+sA879VAKJZamm2UB1u9+DsegSlZBkjcbNuJaWCaQSoo2kaJQ66d/SZmgK/LAFH/FyApSKrQTx6iVZDCI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785626985; c=relaxed/simple;
-	bh=O5UdaFpKNmsO4J7wq+dx9cU/HK42R5dyC9+0D2TKxBw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Brt70QQqGSbHFA9B0g19TQSVMhdXmAkkATuH8ajxkHh0DIRAckpDI54UjLDgEwqEUKTJgyXkzL3tDMgvikH6x59AR2ATcWV6a7Vxac9/fWE2gR1ndzr/3kZLqj4kFE0OtFc7XuvSQi/63HFOZW5xPLBo1rXWPvx0+Nnbo+ttrcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TCtLCBAo; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E6C42A80
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 00:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785630179; cv=pass; b=C7dFeoWk9Ke4qNggMHznYuGcOhCdAnUbsvPMj4uX1SOHolgcM+dbp0hupMwkxOTnYMwuAUxFdJLlSDj0Fv6fZzpbBpm6Hm2ESruFLUaIAPM7MeT1pf4vou2Uwzpm410uwtDJRykNyF36E73JXExqm4VZwDLgaqcRANn/kzbT2Sk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785630179; c=relaxed/simple;
+	bh=REjrYV6zDryvkGXbYRHTMqrWt2IlhPNIfb1vZX93XFw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ihFrl65zXVXe3j7rp3GL5mhY8nAP3cGqQazEYWfeOrygipKOY9VXXqHZPMdsJ4NBGeYDzBiyjxA950HpAnF4xxRiFw8XSPM4TGVmU7CVSbyDPs/egHA9//G/hVgoLOFDPIuq1n5p8EdOl/yOWdjHLwCTURMlmvHm0ALJC4KbZzo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g1Ht8PT/; arc=pass smtp.client-ip=209.85.167.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TCtLCBAo"
-Received: (qmail 14716 invoked by uid 106); 1 Aug 2026 23:29:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=O5UdaFpKNmsO4J7wq+dx9cU/HK42R5dyC9+0D2TKxBw=; b=TCtLCBAohpIHgH6YPWw2sf2nFDKvh2vgaW6TxWFCjWVh0go3SjEgil7b8UpnS7aNUwgp/cSh3IStcQpDVq5gSUp7Cf0ou1udz6ieKO9pZlwYNzDq8PnzbaVy/E3XVFXBzTV0Bcl507IChtSKTiil+6+2bNIc943dm3oc3EabrCrtO+2p5VHclJhrlFgCZwh97OmfOxMr6JaYu5CsML6JdDkypA5xLjhiD7ASRWuKusDuZleVJ5m3E2Bqb/k3SGMZbWhu1qwqZ8EIelk193hGODIYlRKQuiTMkvNMSn91spia0ooD/+2OEn0qpKT1yxR+QHoG0GtsKmoeG3Zw+yPgZA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 Aug 2026 23:29:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22538 invoked by uid 111); 1 Aug 2026 23:29:42 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 Aug 2026 19:29:42 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 1 Aug 2026 19:29:41 -0400
-From: Jeff King <peff@peff.net>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	chandrapratap3519@gmail.com, karthik.188@gmail.com
-Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
- response
-Message-ID: <20260801232941.GA2097163@coredump.intra.peff.net>
-References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
- <20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
- <xmqq7bmaa0sw.fsf@gitster.g>
- <xmqqzez67yg1.fsf@gitster.g>
- <DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
- <20260801231437.GA2097059@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g1Ht8PT/"
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-4af7283bf83so115047b6e.3
+        for <git@vger.kernel.org>; Sat, 01 Aug 2026 17:22:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785630177; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ovo8gb0q9gKwfUpdsuehohC7PgLd0b1JuY8Jp5BiYdT4DGi7QFSAbRBNGys6Msoz8x
+         JVyFVfwS+CEsBtdoC+TV2eYPT0aDmwAovp2ceHRqQPMttTlUgSzRfbyqrmjP8rG06yiT
+         9Xypucx92XIzLRhBD2AsxUgJpYn+wIuYuCKfXDLtRclvkbLhV18SwWnaWyRfpwu91GPO
+         cxJgamZFlEgirA9GjNzH4O0lRmonIWagxvOLB+oDAjI3/fO/rLPy9+X6qsOCUMsbqt5e
+         9zlvTSILi7VlBtYVJyVgPrP6JtDLBCi3rj7ohvXNEWD0bfTds90bcSgO/zYhdEFoMo6r
+         wGlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=cgQbudsS9QZ5GE+13pqGsRXwCA67Csv2PlT35OJn+d8=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=Psdz2ME+OvvOV7x+XX1eECWryz+v8C+3sR8l2zoEnEbsamdURduUoakJyeRrA+T8LM
+         6lOi2QTFEI0KdJZBKKUOf2v3fw/RHCUrTzSjl2dfK7Ujf34Ek6oDzZk/pglbNo9T/wBH
+         gHzN+vnVpLCKSQrpCBBBC6ACezZm2xRHXW2CJDe1l6rDDEiTWGazDb5HxPp+drtthu93
+         rVh0uB3C1NFUlGhVaRdp/0z2YBYsVz7ZRxSZVAdVnvyhC/wdwalNb8+JurVh/QZK+V0C
+         TwBbUPf0ubsLX++tbulR5elzlQogwV6GZCrvC3PIc1fRjYG5bdufpxxNj/OxYjlZ3PtJ
+         UD/w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785630177; x=1786234977; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=cgQbudsS9QZ5GE+13pqGsRXwCA67Csv2PlT35OJn+d8=;
+        b=g1Ht8PT/iWogPEDsqUNqvTjsTbmONFC1Cky/+4uU2BNolPusu3E2AjNuQq0sxSWUdf
+         dVDVfD4m1oOA77DzIjEveJwzGnEitba8AXby195USc+zY5bOvLePeQ/nTzFYacHsBdTU
+         M1B8OcTcnuBCRwi3iNNVjG5NtTWsY/PyJ3Q3ONw65QHtKyBgBcYOAa3qLbah3+gG6I5r
+         98q+WXwgDJx2kZQKjc7k0O6ZyGblmzjoOkHhjHtviiOxRhsyr9igmn/OCyqGVlE5vdFC
+         SXY6RkKmnLnWj+RNu0bp7YuzcNfkiWHrOB5/LXUprD5qrdt+XYqeHltiMx2zslu/dgbi
+         V+wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785630177; x=1786234977;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cgQbudsS9QZ5GE+13pqGsRXwCA67Csv2PlT35OJn+d8=;
+        b=P5eTtvkvDHb2O8mn0rEG/gErtdiRHzbJChIXfrlie++aySwF0l4GT1kImITN1x1tPE
+         GJmEWlD2WXX3+IqrTzzMhY16trMMv2dyrAgh6qYWbqYiSl8gbebnv37V9Y9IJDb28F+t
+         z8c8QClJB3cAZxhHdjCk4fznUTkBEpj9TGNvl6uCtuWPeuyBolHirFXMLMp1euo28tmY
+         vRoxBstU/X+B/2EcJFIuE/5p8Dk97h73Tbv3yah3jp0M+vloZDkvBsM3gzpJ6AB7Vdmx
+         CjCZIEYOhttfSJHfyR8KtRPtD1kqG1X35v2OTWSaNyFxj5w528JokFX48PRSasoMSuXP
+         y8Yw==
+X-Gm-Message-State: AOJu0Yzd5hn0vMoKTTGSej9IWmXLoe555OsOcpipWpxIjX0KWoyKXkPb
+	s9kl0oEKXlQpZ4OSRcY2JSQugdxKQIfx+Xp8GbzYrKdlr+KYWIlbS9O3PoL/Ug0puKtbtd9wAZi
+	u6iScLa/Y08Ivha/1ScKnTFTDzWhdRjkurv8q
+X-Gm-Gg: AR+sD13gOsf/AULKJ/oHrLlNPzM/ek6VCkZU48U6ezfPV5/VxlOSIY2Hd377RqnnKcK
+	Ar6CNQZxHfelOmjxVYHnBOCZqagsr9UdZLfO/ul8DRNXomeZ0S/qdYH3YN7iPbGUHius+cTdARu
+	aEpU7f/jB3cRTJldplr4bdVYRZl95yyJ4s4SMBq6eAh0G94UkPdRlo7A6OZ2dT5omtLKHy4FDN5
+	/oj6epQqgQG70dn3gxswCuOW2Zjl7UObfaUTQeGuOf2Ph6a2ymaegElw0u0AOjKKZSxxRXlFGQF
+	meIJJX4xUaJVxYZ0CkyJzCO1dyqpKLvZhu+2L+mvPSU3+5994gS7bOzKusLnyuYMP4m4NuXssF7
+	V2rz9MMl59dKBKWoFH/2UniCwH7PeBldZTh8Mm5seRAK9yKdSEOM1GE16ZSYQaC8=
+X-Received: by 2002:a05:6808:124e:b0:495:f67c:d96a with SMTP id
+ 5614622812f47-4af5e1c80efmr8283276b6e.12.1785630176804; Sat, 01 Aug 2026
+ 17:22:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260801231437.GA2097059@coredump.intra.peff.net>
+References: <20260728215219.753678-1-gitster@pobox.com> <20260729172524.4022621-1-gitster@pobox.com>
+ <CAC2QwmKD1d=-mz4WrkA7CHwi-ko75MP2LDFPWx+1FGLQtf4QtA@mail.gmail.com> <xmqqfr10lvhx.fsf@gitster.g>
+In-Reply-To: <xmqqfr10lvhx.fsf@gitster.g>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sat, 1 Aug 2026 17:22:45 -0700
+X-Gm-Features: AUfX_mwyOhYhHp155ZVpA1T6Q_7DWZw0iwcQraRPxYKkhb49TxgMoJiAJ9rypV0
+Message-ID: <CAC2Qwm+6e8ZW36--iPmrCLT2tS7R4O_TDbx4S1MaSMb9bg=epg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] git add --resolved
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 01, 2026 at 07:14:37PM -0400, Jeff King wrote:
+On Thu, Jul 30, 2026 at 1:41=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Sure, but I do not think of a reason why the posted patches cannot
+> later be extended in that direction if somebody wanted to...
+>
 
-> Yes, this conditional loading is exactly how we use the pointers. I
-> agree that a bool would be smaller, though I doubt it really matters in
-> practice. You shouldn't have a large number of object_info structs. You
-> should have one that you use over and over. And it does not point to a
-> heap allocation, but usually to a stack variable in the caller.
-> 
-> I don't think you'd need type_valid (at least not as the object_info
-> code is written now). If you ask for it, then either the query is
-> satisfied, or we return an error.
-> 
-> I think the pointer system goes all the way back to 9a49059022
-> (sha1_object_info_extended(): expose a bit more info, 2011-05-12). It is
-> mostly just mirroring the pointers that would be passed directly to the
-> function (but marshalling them in a struct so callers don't have to pass
-> a zillion NULLs). So:
-> 
->   read_object_info(oid, &size);
-> 
-> became:
-> 
->   struct object_info query;
->   query.sizep = &size;
->   read_object_info(oid, &query);
+Yes, that is fair.
 
-OK, I tried to read through the patches here, not having looked at the
-topic previously. I think it doesn't make sent to use object_info here.
-It is about collecting the options to make the query for _one_ object,
-so it expects you to point to where it should write the results.
+> Have no idea how the user recovers after performing an operation
+> like that.
+>
 
-But what you want is to query N objects and get all of the results back.
-You _could_ do that with N object_info queries, one per object, like
-this:
+My thought was that a partial set of resolved files without markers
+would still be added and files with markers would be available for
+a subsequent add once they were resolved too. My understanding
+may be incorrect, though.
 
-   enum object_type types;
-   struct object_info queries;
+> The naming is very much deliberate.  "git am --resolved" tells the
+> command "I am done with them, so please continue".  It is not like I
+> want to add anything that are unmerged.  I dealt with unmerged stuff
+> and turned them into the resolved state, and the command is a request
+> to record that fact.  It is a regression to call it "--unmerged".
+>
 
-   ALLOC_ARRAY(types, nr);
-   CALLOC_ARRAY(queries, nr);
-
-   for (size_t i = 0; i < nr; i++)
-	queries[i].typep = &types[i];
-
-   /* you can imagine this is calling read_object_info() in a loop
-    * under the hood */
-   do_many_queries(&oids, nr, &queries);
-
-   /* now we have our answers */
-   for (size_t i = 0; i < nr; i++)
-	do_something(oids[i], types[i]);
-
-But it's kind of silly. Every query is the same, and you'd rather just
-pass _one_ query struct that says what you're interested in. But since
-you are not calling read_object_info() yourself here, why use its query
-struct? You can make your own using boolean flags or whatever.
-
-And I guess that's what started this conversation. The fundamental
-difference is asking about one object (and using pointers to tell where
-to put the answer) versus asking about N.
-
--Peff
+Thank you for the pointer to "git am --resolved", the context helps me
+see what you mean that the naming is a regression in the workflow. The
+name makes sense to me, especially in relation to the existing --resolved
+flag.
