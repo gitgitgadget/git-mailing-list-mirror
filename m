@@ -1,147 +1,113 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED5B3C2D
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:46:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785710771; cv=none; b=qesAZ+aDuYgFBnpsAZE9KL6L3U8xci+DsADVMLIzURuA+u1axARRdpKpe5683SzFjO+VnFC45k2+XqT2sDH81Nv2cYjbUdIcOwOoCg5Gox2rOa6zkIK1iASU44fKM7sn50MmlZkipIfpenOhuXHos1MeKMppIrEay2JKEE0Zo4E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785710771; c=relaxed/simple;
-	bh=VBgHq14MjmZWbrn4ZcHC0Rr4evI4OWd+KBpGs1vrOVg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wrmuh3Z4PODwhLEcjiVDvSHKedm2QBTNhUj/j4/Od9JaE05jKQ+VxrRotOVttgPOr4KIFtHYzro/vp9dGg+h/q4Fa2s5tOUqa34TiVZ8WW5JiecMHrEFewha02mTbJl1JUBP0ChqjLdA3/iQQN2cELAuHiNqG52EGeRYwZ3nyLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VRtI1B7c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lv7lEq09; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2B53346BE
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:52:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785711161; cv=pass; b=eInIs8RALXAS2PPpQuc1yGm2Ryhr+Hn+Fsqrb+oQiWKPZxvIEjddTWxvNuKRhnYuiJK4wyeuhc0MgpHX8FslYsjChVPLkZmtW/pADvyJJ9ATX7QIYGVWz65Ptf2Fcxw07lFyqisYagqzCHwW2s2KoY5J7imCmdDrXx9csfpFAyE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785711161; c=relaxed/simple;
+	bh=hRYIviGogxArk+ehJl8UHWqd+GQdW8G2+57B6eLdsvc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W8aH9sLnYmInwVAPGQamM1MCy5ry+yVLpRuQlIeSAr8CmInMLkoa44EVKNbuNgiewyZBQLPisFTnrM46sXzaDY5exHjlcdjZSNuqwfv9NIWLg9BYDL3zzCo/wQO7J7gZFgGz+7WwP0mgxrE23IlBVqhkg/HuALG/axBNbahSvpc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PoWvyw8O; arc=pass smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VRtI1B7c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lv7lEq09"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4D64F1D0006E;
-	Sun,  2 Aug 2026 18:46:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 02 Aug 2026 18:46:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1785710769;
-	 x=1785797169; bh=Vmo0K8WXZwRChch71VZv0ytvZfztEVChx9owme7S7xk=; b=
-	VRtI1B7cjUcSDlFK+yW1F4fyrMpfk71tenQM5cl5+ltbjmiQkAeXPXLDCs/9jFHL
-	a3eOejtO1Ouw718+5BJ3XIAJBtTcBuOQkKUIyXU45jfgYvw3zRkzFJ0oBDnihu2X
-	ZWpGvvkfDiaSTPpAE/kwW7V73iVjH7rhqBgP4f/EsDT8Bf6M2yQXXmoQFnqvcp4e
-	4JVFsD8hxXYMiP1L/Jupt/XGDjr8d/M2VM8+0NQWHBJVeDBDeumnAHChZKkgX5oi
-	F1yswYG6mUa+eiqa+CxxuZq6w3FEFHRg26ncpd9B/Zl3yO0BVGLLqvnE4VDnH0x2
-	d+a960XWhZZtYiyFdBeWPg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785710769; x=
-	1785797169; bh=Vmo0K8WXZwRChch71VZv0ytvZfztEVChx9owme7S7xk=; b=l
-	v7lEq09TeuIZN5p0Ak92xTyCXOmY+sxN10wXTRdJyXVjg9A6YP2NGgXIUU/Y4N2w
-	fYpT39JSwAN7UNET/0K+qtLRodCv5Y4JfHVHgYN9asbvsdOzpWlYjesA4ggysfIo
-	DIlj11jqEMl3FcjJWmh+bCM1KBKnxSeMUi0wQMfB0GX+ktARq6Ut3ZVaMTkSDjwO
-	Zbx6r6GjWqcGDV2iOUTCacWfoYoAtjkHofTNXsDHJGSJHmhgiwGRN/A/2IxW1U1f
-	gsefup6RuKi5ZeSzvMCwnkE8nQ1nU/94KQBf4AAjSDdOgLsVZc0fkxdiD3PA/RTE
-	Ij/KH9iEnVU+h3RcK3A0Q==
-X-ME-Sender: <xms:sMhvavNzJVi-MG3oYDc7-7NIDkZTwP87jkg99jOU_YO_23X0xRC0lw>
-    <xme:sMhvapCri1rgokPtUF_cVEcfpjH8Wrcj4jRm5b4gAo_GzDfc9qGMYicA9K98c-i92
-    gQHPDfvBuBOXIS5c3zEY6UUHZR67Aon-VgYoh7_WneAfNmNCcA>
-X-ME-Received: <xmr:sMhvakcq6KUbz6rhgO0NGzK24tHqx1b3LieLMla5lOehxH9t8QpgNeURIBwcB-68BtzfrdtdRgQwJbAH3Ltp7NXjH5TQsxQ7kw>
-X-ME-Proxy-Cause: dmFkZTE0/8N/RQApliEAOVqhVEPu8VKqI+/CfmtXV9pJkT1LyexMjJpTp+cGM7bIs3N5B5
-    eeQ8q0hatZ3LrnGFwl1YL3nv0zMJ06QtcTauWe6wOns0sz1oAi2JIW0DBgwRcD7JHCSGxs
-    tqCUMa1qDnOcK3TQLcTSOdtLBdsFPVG+QO4v1NRYQ0ufVBJ6LLxC8pMVvRgzBuucqag4vA
-    YMMb2R2VAvIO0PHJ1CN6WpQ3pWud5EHCbshCd1EKnD9w4Ki9pL/OQ8gNxuu2jMxkZTvHoF
-    UiARL6qD1+ciSCDn8irtkCZQgY67bzKMAJm43bygzFlWz326/JivmzMpEDoiXowk/e94mB
-    IFG4zFrPXU/Z0GDFhtD85KJuU/zjuMqxyOBvi3Zzg6UyC131VP0vLhs3Px4boFkKnCNuDR
-    ZXquYHzdTgRwYilqcXMl0ZEskAyZ4ugQB0G8klnVl/WlzimdP0h+0Pth2k9bybpQC0NbTE
-    GQS9SRLtye6sTUWtcE/k7sE5CkRnYRvpVlfvGz/qiG82UOvo5LKbaLDTwYAFR7mm+EIMEk
-    C6MKkxV4ddg8xHzLaK04oF5VPrghBOTIxhdOYOMSJVip95u9kGk8qcUo0odlNGuTpMVtIm
-    TvHIh4Xh9Yv9MMuBSj2LS9kPgy01XsePtepiiQRNd5XMGeb3YlMVj2Vjg9cQ
-X-ME-Proxy: <xmx:sMhvagPoMjov1hx_Cuu3YoOax2K5J8DTqsNf7Q_KmNV4J6ohn6CTSw>
-    <xmx:sMhvasIJIikvF3Kd4WwPxkkRQ73EeSUgNXTBmicaqn21YC2YHUVEbg>
-    <xmx:sMhvaoJx0jOEdfnJquMJUUR7PlgGY9Z7uwhC4RW7kkcBsTN31zWNrQ>
-    <xmx:sMhvau5wMAUTyUfJk6eykkaA1dbCVQ5WGCMJqz47srMoLHoohtJvRg>
-    <xmx:schvagLFvZeqx-4Bk0OiQdHv-lLhlSZf5_uxZYO13bqD9rtTOBwBuB2E>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Aug 2026 18:46:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jonathan Tan <jonathantanmy@fastmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Arijit Banerjee <arijit91@gmail.com>,  Arijit
- Banerjee <arijit@effectiveailabs.com>
-Subject: Re: [PATCH] index-pack: speed up promisor link recording
-In-Reply-To: <am-7_wSb-GNefKlB@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sun, 2 Aug 2026 21:51:59 +0000")
-References: <pull.2191.git.1785706396130.gitgitgadget@gmail.com>
-	<am-7_wSb-GNefKlB@fruit.crustytoothpaste.net>
-Date: Sun, 02 Aug 2026 15:46:07 -0700
-Message-ID: <xmqqcxw02lao.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PoWvyw8O"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7eb42a2f5feso1385940a34.1
+        for <git@vger.kernel.org>; Sun, 02 Aug 2026 15:52:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785711159; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Ttci3Zp+aUxmpgrPHr/9DPLCqNR8euUI3ULfexN2CREIHQX1Hzs0oXrnTEiWzK/BGV
+         ab0gTvzDbXsgkQWkJnKNTkgSXUFqs829y9jxzA5ZVF+eD8ZJIVNKWlWU+4OSE7l352rb
+         H0kF2alh4hWkOR/WxEMN3Vcp31BzX97h8AbJ8updyMxi6V40+8yCAWqNv6MBPQ8gUQe3
+         O/1DzkgisR8AE9qOkN1MveBKYcPhmIZ5bbhzgBqhs+HChkl8/l+iv4FS/HkBgKE1vUFO
+         dyq5FQSSmmzKjSV47zQxn9VnQahdfXG84wGCvEy7jZKDNx3tmSCKGRelesu8dXCx2gZG
+         E7TA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hRYIviGogxArk+ehJl8UHWqd+GQdW8G2+57B6eLdsvc=;
+        fh=lecRd5VlVnZlvufpm6uqs51mDbQjswE1S01372pJlIg=;
+        b=oQKNKyBnnGUkMAMVQ9K4RdbH4hAADbHjOkw2xHYxgrsEi10+XmueWlvXvhbrmQbWYs
+         TU14CYnFzS3nN0FgoBcVdhtx8nFi2/QQdqTyhepvuo70R1guBqEPQhmDnYFPJBMbgjpr
+         HiRZculzQWd0J6sA0GgJil7sMS3pP/XSOZ1DhPFHUU6OL2ic7mgV1ztF84APaDmjLkd1
+         nDul+j3kRDgrRH4NYZ7/my0iBiqt7PTutgQ7D2Dr+tJKua4w/Q6MpyegQsf7N5UE+K/9
+         JkYQawtdDD2bM0N2NXzVz9Cz/O5yKvlZg7th+/5fyqaJu9o3rRmfYYD7R7992xQPLhu2
+         6FPA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785711159; x=1786315959; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=hRYIviGogxArk+ehJl8UHWqd+GQdW8G2+57B6eLdsvc=;
+        b=PoWvyw8OkYhWW7TvipKxjCk6ax72xtOE02aUa9H8kpzTBrENomENqdHAPtAo2Do1z6
+         WN39HoIrzcOA+swhUxuI7nkiImP9DNDTG10pNQHCi5QeHsvHqc0Eqg5kKs3/n0XwoYhX
+         I6ImYplddbMnmYomR9FTsBC02lwCBku2pMQmn16HU5mlxNQ9GXv1wumvbotIKGHAO5rJ
+         LUFPmRjSQ+JgVnUmhdqC7RRllaWpj//yjcZnUG0jj5oKXO/SII1g6ZQXyfMN5tQfk6Du
+         W3i++C8kIoHQWzj/Nri8h24UewMLAqZSFaFFKPcxuwsAdfJpqGBnhjT0UDW6l0umFqee
+         JlvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785711159; x=1786315959;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hRYIviGogxArk+ehJl8UHWqd+GQdW8G2+57B6eLdsvc=;
+        b=Z+ad2dqi0mplKLOEcjn01IZEsiGTW+jP7WBqAMBved0ZF9Q8ALA9pAd/89eF/jZpAe
+         t+o4tH5q1Xe/5u6a7IZRK6X97++tctIN5hLyLa6mCbJ2/tke9K/24mNdbUQoJfUCU6uc
+         iOrpNVAwgFuYk0t+WPnPOIT8ur7woX73SHIvygAesnx7wXYZSIkW/puQZJdufGrVWj+r
+         L9iIesnp+Vq9WP32UyPDXngu868bsnCpGJLODrtUM/z/JwHkD9yuxm59pLMUc0I5fSMB
+         1SJnB7lWIVtEU3AwNqjwsm1URaoCVZmbPedWs8YTU8sU50XxjrR/AoZOah+d/k+VzoPm
+         YgiQ==
+X-Gm-Message-State: AOJu0YyXjJSfHdjLzBFXQpwgBlt6w1/Yc2fG8ps+dDSNuEsqMHK3rlfZ
+	aw6jDabQnxZ1U82Y+7sJvF9uFDUEd2toYC78XACs34EQTmDUngdryLB+pdm3yr9ZyMQaKYEqbrA
+	V9GzaAI3xF3jHXx3k38lB+PXTUMUSUX2bJb5O
+X-Gm-Gg: AR+sD11dJcMYfkxNU2n6rYkzSYN2f2Tl6TTBJ8nFJUUkQDLDrHfGT50VbWk0vQXgX6B
+	+36YCFI7Fj77ivOejhTCQjRKSa3qw+qXEhoLJv4fuj7r0Ly3dXGYzbToQ2dvSQduPmMzrjhPvv9
+	zqcq3cbi4VRoHtFUoTNjBVDRx7Mvezwyfka2C6QhK+r7/X4t2C0QsjBBYJ6JoUl1lA3JhExly4y
+	GXI9UQ5ekOccaP7qKSwBcUjZAFcSCS0yAaLMCG5Xuo30RMdsyQahFRTGsBqr7Y8LtDbQkw/qRdQ
+	FNDIsaNi2d+yGHGVaKvfaDeNGyFYMpJ0scvI2pVZlRB+GqFzjqMwrrR6aCLuNbZg0YR2tBl6X1Z
+	N+Bjx3nFraNrrZvWRJRMAFyPxqvinjRm878S/h8Wy7/bo6aJvTxyZ/l8RZCkQo4O8udenCHPyzw
+	==
+X-Received: by 2002:a05:6830:6019:b0:7e6:c9eb:535a with SMTP id
+ 46e09a7af769-7f196ca4168mr11743417a34.6.1785711158742; Sun, 02 Aug 2026
+ 15:52:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20260802032549.50389-1-eddinen77@gmail.com> <am9Vy9vMsixhaR9E@nixos>
+ <CAHiURhuC-dnUJ80T7f3ZynV_qj-b9_9Rs0YxyibCNDeNnuKEJA@mail.gmail.com>
+In-Reply-To: <CAHiURhuC-dnUJ80T7f3ZynV_qj-b9_9Rs0YxyibCNDeNnuKEJA@mail.gmail.com>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sun, 2 Aug 2026 15:52:27 -0700
+X-Gm-Features: AUfX_mwe84tz8fJ8sgDhS8yxSQGgVksd9IwdQrtrawr7TiahPBfpGwOJJ4IvRBM
+Message-ID: <CAC2Qwm+xySeQvjWStSvuz5Er0obFTjVEGrXtSmP=oy7nyH-vhg@mail.gmail.com>
+Subject: Re: [PATCH] interactive: add interactive command helper
+To: Salah Eddine HRIMECHE <eddinen77@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Cc'ing so reply is in thread. Generally, you should reply all so
+git@vger.kernel.org is included
+(coming from someone who is also acclimating to the list's email workflow :=
+).
 
->>     index-pack: speed up promisor link recording
->> 
->>     AI assistance: OpenAI Codex was used to identify the bottleneck and
->>     assist with the implementation, testing, and benchmark analysis. I
->>     reviewed the resulting change and take responsibility for this
->>     submission.
+On Sun, Aug 2, 2026 at 2:54=E2=80=AFPM Salah Eddine HRIMECHE
+<eddinen77@gmail.com> wrote:
 >
-> I don't think SubmittingPatches really allows more than trivial changes
-> written by AI:
+> i see the command "git add -i" that come with an interactive mode ,then i=
+ say with my self that you want to implement an interactive space for termi=
+nal i say with myself that going with a new command interactive is better t=
+han use it just like an option of add
 >
->     The Developer's Certificate of Origin requires contributors to certify
->     that they know the origin of their contributions to the project and
->     that they have the right to submit it under the project's license.
->     It's not yet clear that this can be legally satisfied when submitting
->     significant amount of content that has been generated by AI tools.
->
->     [...]
->
->     To avoid these issues, we will reject anything that looks AI
->     generated, that sounds overly formal or bloated, that looks like AI
->     slop, that looks good on the surface but makes no sense, or that
->     senders don’t understand or cannot explain.
->
-> This doesn't look like it's a trivial change, so I don't believe this
-> patch can be accepted.
 
-The project we borrowed DCO from has this to say on this topic:
-
- https://docs.kernel.org/process/coding-assistants.html
-
- * All contributions must comply with licensing reuqirements.
- * Only humans can attest DCO by Siging off their patches.
-
-   The human submitter is responsible for reviewing all AI generated
-   code, ensuring compliance with licensing requirements, certify
-   DCO with their sign-off, and taking full responsibility for the
-   contribution.
-
-Now we are *not* kernel, but I think there is a general concensus in
-the community that, while we do not want to outright ban machine
-assisted contributions, we generally want to tread very carefully,
-especially in the DCO area.
-
-It is very easy for anybody and their dog to say "I reviewed X" and
-it is very hard for others to assess how trustworthy such a
-statement is, so I am unsure how the kernel project is enforcing the
-"human submitter is responsible for these", and more importantly,
-even assuming that we would take a similar policy for ourselves, I
-am not sure what mechanism we can put in place to detect cases where
-these expectations are violated.
-
-So...
+I don't follow the reasoning here.
