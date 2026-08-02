@@ -1,645 +1,196 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE8839769E
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 09:31:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AB6340402
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 09:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785663084; cv=none; b=qhhtCNV0YHYFcyK+kghfpMONRcL1i0rQqplRoo/Q2f2yUB+BDo13x0nxureGVj1wrqOVPKr+GTepKLxYi7B2RVpU+lZRJTPBnDZXFHvu7Dc6C0H6xdSZMHIVWTLDWldW+bl7DdlHWoEwG9b5zvGifFuzB74q2mQTlmZOsl/BCRQ=
+	t=1785664696; cv=none; b=nHZRLKMrJOvE9iYhhZMonykvNSq9T+QAke073DvQGV4aCFrcr4N9YngRFxOwMtsMB+325Jn6c950zGZ6l/akie47dWW97RasiEccqAZXsSjCRMBoVVL5vjiV/yx+ZmQqmfG8WsBepx/NXZU7rWS9DgHZxVdqChr/3qGybc2CC2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785663084; c=relaxed/simple;
-	bh=r9jBzxcf5Phq54MVvmCRfB0pt8ias81/hM8n5IWbuUE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MyIzGs3HGWgKOV1S+GGbpxAMVsumfB8K1qG8auHnhjlzdocYRp8h73RSe3oSE3Q/e/y977EJhCWjLOwIU5Z2ZJeITWOTU6FUSQ+SY+DTMKNfaafn9fPoNT51BgmzR29KWte7Ljj2pUAnJVZYY/TvgtRfG1E1Z2NSsjTaDDrGJ5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=APAxwIxo; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785664696; c=relaxed/simple;
+	bh=XShd5g3EqFDnr3k62F95tS0rKztj9dpPfLoPx4U+0d0=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=slBP/DNhB8+8rFdcrDCmV3HGspEh8lp+A8MU4EYKnTCUKRnOECLgmvfv2yP2e+Y/GQPsW4F1jjx+H6HXyQS2NppgydoFBFRKMaLzoDwdWESa9TDQyTAwXpoi+I24l5l7IbOI4oQFtc0WyfRnS9ztHVN/q1Y0uRrbJ4lGw0uoMh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=gnM5afHX; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="APAxwIxo"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38ea87caafeso1804135a91.3
-        for <git@vger.kernel.org>; Sun, 02 Aug 2026 02:31:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785663082; x=1786267882; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=VsgLV1zICdxCpG2pO5fJYufCBPaj1aMW3G2RNHGomqM=;
-        b=APAxwIxothB00qbtKXLAz9vEtM05u5VRkvi/cmCh1ZsWdHYmc7Be/+b1YyJkeNbpKk
-         2+bpNEoPMJKeP7s221j6ggaQBVJwzrNLUEZd0gykzAZBdvPfWyLF8puTgbnXmIADYyP8
-         4Nd0BNQdlzPl/RGIkFZliwzgEXcZm7D3WPQI9CWb9c8we3poFiJqc6RoII6wMn1kFRL1
-         YPUWH0koO2kt11DKu+BidSLR5EuIQC/dboJNsNQ22iLisQYPEJG3+Re5FikXVxoVBuaE
-         SyWj2j3pD1EqXO4oei0arCpsoXXdIWIbNvkoV5lRjmjCoE8GShYZGc9vwZ0sF/FyOPwP
-         9WKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785663082; x=1786267882;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VsgLV1zICdxCpG2pO5fJYufCBPaj1aMW3G2RNHGomqM=;
-        b=Z4VqwnKQOpOOeYaOaOegXtpbJY4TWZYxpFUpv6vNzyMcaJCy3BTj9Wjnvj85cvOHVX
-         SH1O5zCDKJk+5wQVr/VhzF7tkmcgVWgNnjezx9PJzylmaJBcCHt5YBffRTKPFDaDWctI
-         dxKSCFFL/52nA571Tw+vUZDVmzCyESIpOGh5bDFAeqEUm77MuEzPrQU0fN0ldx9eyfex
-         KFzxBc2zuyQKPbY03U0eK3d6kGC4trS+HyFxJ9LRGlRNAQmVp5FRjuOF+3kD2u+iqOSj
-         AuMPV/YVVTNSZO++UR9GSdEiaRQKi82ztRZG7G0th1s/VNaFeT1EkZIfoXEsK0KehK86
-         u3Pw==
-X-Gm-Message-State: AOJu0YzYbq8yFDJjrIjLY1U+LvKK8+Nc2k6K/jReJHriYg7cwuDI/xU7
-	ZHlwPXgofKB4Nt7V5TsH1a/BiITwczZkHh742DpBOL/FdjpIW5bskU5OcdTbmA==
-X-Gm-Gg: AR+sD11BjxSPAozLwNc8+keaOZKdmPrD1qBf+yTFcVcSo5mkjII851hCEMXoi5X/hxP
-	cfuBWnNN6zp6cy2vGgGXkKhaWMFSwsCpj2BPijDYR3sKLx4XV67y49AZsAn4tH1yPCe9zzEJJ6k
-	KxNlE4ccqfwDquCEKVvZ6NtJwtnDadp3x24BtBJSUJ2yQ7N6/gahD6JS5Zi5xpiPtQYIqqn+R78
-	wrQV0xi7CdQ6SzWh9shHP081ilh6ztr//jEnGaDzyaHYvfDb+QrIL5Y7o1UvsfU0u9WSeMOD3l6
-	9m9gHTCengSKDieBtHEMcMfY3vzPfzwENjCzU7owSQgXqCorINleHKABVMi7Vz9Xg0ccmD5F6eS
-	wu5n3D900n0BkhpNPx8EL4fVwrjGY8XxNKJd/YRvTBoXK07OiBePhd2/CCSinEZy6jo2nS83a4I
-	8RNFNHAfdqk1hzdN16OxNlfMfJMl90b8ZNBxyUtOLrSXf3vrJSI0mCgkYrgr30SH2E
-X-Received: by 2002:a17:90b:280a:b0:37f:c28a:de61 with SMTP id 98e67ed59e1d1-38fbc45521dmr5351273a91.17.1785663081569;
-        Sun, 02 Aug 2026 02:31:21 -0700 (PDT)
-Received: from [127.0.0.1] ([57.154.167.113])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fab4cb51asm32017429c88.9.2026.08.02.02.31.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Aug 2026 02:31:20 -0700 (PDT)
-Message-Id: <ec362f3b82227de55375db8610536138a6e5cdbd.1785663075.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com>
-References: <pull.2335.v4.git.git.1785577445.gitgitgadget@gmail.com>
-	<pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 02 Aug 2026 09:31:15 +0000
-Subject: [PATCH v5 2/2] bisect: add --reset-when-found to leave when done
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="gnM5afHX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1785664686; x=1786269486; i=l.s.r@web.de;
+	bh=E1LwxJdeWqc7+VUMnfLVrguscPybDoc2ASigi0q5hoI=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=gnM5afHXJxhqtpRKsWnUPXbUjrRtdRhPri3WjcBaEYxdxsHOoA/D4CdyR8AXy3Bi
+	 /VCIreslwZJERWgxa9UixJQY9HVN0Ex/hU+miX+7xmgjV9n8Klz/GduptJMEnDnjr
+	 fSAKg2ZD5FnxCpRpggOjr6b1IqekmcDY0fGPV3mt9YUW6/+JYOpR9uLspgtWEKKyP
+	 IgGrrOQSazimpM6h4HMyQ7H4QPzgzCyI+pXueTPO1ICI0GMFq3AZGGJKMEfmqhnXc
+	 jyNu7MR8VzxgLrb93o0f2wS3JNAdWUhq6vyWt0GG6Ep+Ubfxydi8VbEQBeWY5tyHX
+	 yaG8tryz4GQkFTGkxg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MHVaf-1wloFj2397-00FATv; Sun, 02
+ Aug 2026 11:58:06 +0200
+Message-ID: <077f11be-489f-4174-adbc-82a610137a41@web.de>
+Date: Sun, 2 Aug 2026 11:58:05 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] worktree: reject empty string
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: =?UTF-8?Q?Matthias_A=C3=9Fhauer_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+ =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= <pclouds@gmail.com>,
+ Eric Sunshine <sunshine@sunshineco.com>, =?UTF-8?Q?Matthias_A=C3=9Fhauer?=
+ <mha1993@live.de>
+References: <pull.2187.git.1784978348.gitgitgadget@gmail.com>
+ <ec682d75f3a7848dc36f82cf36bbdff6fd283e2d.1784978348.git.gitgitgadget@gmail.com>
+ <f6b7af1a-29fd-4bec-b819-34b7962180fb@web.de>
+Content-Language: en-US
+In-Reply-To: <f6b7af1a-29fd-4bec-b819-34b7962180fb@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:63AVS0ujlOle56Sjm3L0H9X7kErEgCRJgV8J198Ej7Ei5QYymjV
+ HNao3LxAjIXvr1w2G8LVocug70dSOZVWJhUUbCtQlT46zB/++3o+aqCIblRyn+ybinTTh6c
+ S6sHdfLvWXkprken6aaWzf75xJhRYGnOl1R2x2NCavWF3m/AdZyYsqLs6DpuJdmaCSwyeHH
+ g9qSEhMj9iEX6A8KVI0VA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ngMsl5dAY+I=;X73YGN9xH0jSI1zFcVHXkCSf0qw
+ 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
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On 8/2/26 8:26 AM, Ren=C3=83=C2=A9 Scharfe wrote:
+> On 7/25/26 1:19 PM, Matthias A=C3=83hauer via GitGitGadget wrote:
+>> From: =3D?UTF-8?q?Matthias=3D20A=3DC3=3D9Fhauer?=3D <mha1993@live.de>
+>>
+>> `git worktree add ""` errors out with the message `BUG: How come ''
+>> becomes empty after sanitization?`, but not due to a bug in the
+>> sanitization code. An empty string should remain empty during
+>> sanitization. Instead reject the argument as invalid user input,
+>> if it's already empty before sanitization.
+>>
+>> Signed-off-by: Matthias A=C3=9Fhauer <mha1993@live.de>
+>> ---
+>>  builtin/worktree.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/builtin/worktree.c b/builtin/worktree.c
+>> index d8188035db..113dbf98d3 100644
+>> --- a/builtin/worktree.c
+>> +++ b/builtin/worktree.c
+>> @@ -496,6 +496,8 @@ static int add_worktree(const char *path, const cha=
+r *refname,
+>>  		die(_("invalid reference: %s"), refname);
+>> =20
+>>  	name =3D worktree_basename(path, &len);
+>> +	if (!len)
+>> +		die(_("the empty string is not a valid worktree"));
+>>  	strbuf_add(&sb, name, path + len - name);
+>>  	sanitize_refname_component(sb.buf, &sb_name);
+>>  	if (!sb_name.len)
+>=20
+> Hmm, on my machine, with or without this patch:
+>=20
+>    $ git worktree add ""
+>    Preparing worktree (new branch '')
+>    fatal: '' is not a valid branch name
+>    hint: See 'git help check-ref-format'
+>    hint: Disable this message with "git config set advice.refSyntax fals=
+e"
+This hits the BUG by passing the empty string directly to add_worktree():
 
-When a bisection finishes, "git bisect" reports the first bad commit
-but leaves the session active until "git bisect reset" is run by hand.
+   $ git worktree add "" HEAD
+   Preparing worktree (detached HEAD a97fcc37c2)
+   BUG: builtin/worktree.c:498: How come '' becomes empty after sanitizati=
+on?
 
-Add a "--reset-when-found[=<where>]" option, accepted by both "git
-bisect start" and "git bisect run", that resets as soon as the first
-bad commit is found. The "original" value returns to the commit checked
-out before "git bisect start", while "found" leaves the first bad commit
-checked out; omitting the value defaults to "original".
+Ren=C3=A9
 
-Persist the selected target in a BISECT_RESET_WHEN_FOUND state file
-and perform the reset quietly.
-
-Propagate the internal first-bad result and its commit to
-cmd_bisect(), which performs the reset after the subcommand has
-returned. For "git bisect run", this means BISECT_RUN has been printed
-and closed before cleanup, which also works on systems that cannot
-unlink an open file.
-
-Reject this option together with "--no-checkout", since that mode must
-not check out either target.
-
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-bisect.adoc |  14 ++-
- bisect.c                      |   6 +-
- bisect.h                      |   3 +-
- builtin/bisect.c              | 157 +++++++++++++++++++++++++++++++---
- t/t6030-bisect-porcelain.sh   | 121 ++++++++++++++++++++++++++
- 5 files changed, 287 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/git-bisect.adoc b/Documentation/git-bisect.adoc
-index d2115b2990..aabddd42ca 100644
---- a/Documentation/git-bisect.adoc
-+++ b/Documentation/git-bisect.adoc
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [synopsis]
- git bisect start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]
--		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
-+		 [--no-checkout] [--first-parent] [--reset-when-found[=<where>]] [<bad> [<good>...]] [--] [<pathspec>...]
- git bisect (bad|new|<term-new>) [<rev>]
- git bisect (good|old|<term-old>) [<rev>...]
- git bisect terms [--term-(good|old) | --term-(bad|new)]
-@@ -20,7 +20,7 @@ git bisect reset [<commit>]
- git bisect (visualize|view)
- git bisect replay <logfile>
- git bisect log
--git bisect run <cmd> [<arg>...]
-+git bisect run [--reset-when-found[=<where>]] <cmd> [<arg>...]
- git bisect help
- 
- DESCRIPTION
-@@ -385,6 +385,16 @@ ignored.
- This option is particularly useful in avoiding false positives when a merged
- branch contained broken or non-buildable commits, but the merge itself was OK.
- 
-+`--reset-when-found[=<where>]`::
-+	Once the first bad commit is found, report it and clean up the
-+	bisection state. `<where>` may be `original` to return to the commit
-+	checked out before `git bisect start`, or `found` to leave the first
-+	bad commit checked out. If `<where>` is omitted, it defaults to
-+	`original`.
-++
-+This option may be given to `git bisect start` or to `git bisect run`. It
-+cannot be used for a bisection started with `--no-checkout`.
-+
- EXAMPLES
- --------
- 
-diff --git a/bisect.c b/bisect.c
-index 94c7028d2a..a3cf1abc38 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -488,6 +488,7 @@ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
- static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
-+static GIT_PATH_FUNC(git_path_bisect_reset_when_found, "BISECT_RESET_WHEN_FOUND")
- 
- static void read_bisect_paths(struct strvec *array)
- {
-@@ -1041,7 +1042,8 @@ void read_bisect_terms(char **read_bad, char **read_good)
-  * the end of bisect_helper::cmd_bisect__helper() helps bypassing
-  * all the code related to finding a commit to test.
-  */
--enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
-+enum bisect_error bisect_next_all(struct repository *r, const char *prefix,
-+				  struct object_id *first_bad)
- {
- 	struct strvec rev_argv = STRVEC_INIT;
- 	struct rev_info revs = REV_INFO_INIT;
-@@ -1113,6 +1115,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- 		res = error_if_skipped_commits(tried, current_bad_oid);
- 		if (res)
- 			goto cleanup;
-+		oidcpy(first_bad, bisect_rev);
- 		printf("%s is the first '%s' commit\n", oid_to_hex(bisect_rev),
- 			term_bad);
- 
-@@ -1211,6 +1214,7 @@ int bisect_clean_state(void)
- 	unlink_or_warn(git_path_bisect_run());
- 	unlink_or_warn(git_path_bisect_terms());
- 	unlink_or_warn(git_path_bisect_first_parent());
-+	unlink_or_warn(git_path_bisect_reset_when_found());
- 	/*
- 	 * Cleanup BISECT_START last to support the --no-checkout option
- 	 * introduced in the commit 4796e823a.
-diff --git a/bisect.h b/bisect.h
-index 8621460f93..d1e3c9c721 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -63,7 +63,8 @@ struct bisect_state {
- 	unsigned int nr_bad;
- };
- 
--enum bisect_error bisect_next_all(struct repository *r, const char *prefix);
-+enum bisect_error bisect_next_all(struct repository *r, const char *prefix,
-+				  struct object_id *first_bad);
- 
- int estimate_bisect_steps(int all);
- 
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 5393690f6b..5217900976 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -24,11 +24,12 @@ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
- static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
-+static GIT_PATH_FUNC(git_path_bisect_reset_when_found, "BISECT_RESET_WHEN_FOUND")
- static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- 
- #define BUILTIN_GIT_BISECT_START_USAGE \
- 	N_("git bisect start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]\n" \
--	   "                 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]")
-+	   "                 [--no-checkout] [--first-parent] [--reset-when-found[=<where>]] [<bad> [<good>...]] [--] [<pathspec>...]")
- #define BUILTIN_GIT_BISECT_BAD_USAGE \
- 	N_("git bisect (bad|new|<term-new>) [<rev>]")
- #define BUILTIN_GIT_BISECT_GOOD_USAGE \
-@@ -48,7 +49,7 @@ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- #define BUILTIN_GIT_BISECT_LOG_USAGE \
- 	"git bisect log"
- #define BUILTIN_GIT_BISECT_RUN_USAGE \
--	N_("git bisect run <cmd> [<arg>...]")
-+	N_("git bisect run [--reset-when-found[=<where>]] <cmd> [<arg>...]")
- #define BUILTIN_GIT_BISECT_HELP_USAGE \
- 	"git bisect help"
- 
-@@ -68,6 +69,12 @@ static const char * const git_bisect_usage[] = {
- 	NULL
- };
- 
-+enum reset_when_found_mode {
-+	RESET_WHEN_FOUND_NONE,
-+	RESET_WHEN_FOUND_TO_ORIGINAL,
-+	RESET_WHEN_FOUND_TO_FOUND,
-+};
-+
- struct add_bisect_ref_data {
- 	struct rev_info *revs;
- 	unsigned int object_flags;
-@@ -78,6 +85,8 @@ struct bisect_terms {
- 	char *term_bad;
- };
- 
-+static struct object_id first_bad_oid;
-+
- static void free_terms(struct bisect_terms *terms)
- {
- 	FREE_AND_NULL(terms->term_good);
-@@ -269,7 +278,75 @@ static int bisect_reset(const char *commit, bool quiet)
- 	}
- 
- 	strbuf_release(&branch);
--	return bisect_clean_state();
-+	return 0;
-+}
-+
-+static int parse_reset_when_found(const char *value,
-+				  enum reset_when_found_mode *mode)
-+{
-+	if (!strcmp(value, "original"))
-+		*mode = RESET_WHEN_FOUND_TO_ORIGINAL;
-+	else if (!strcmp(value, "found"))
-+		*mode = RESET_WHEN_FOUND_TO_FOUND;
-+	else
-+		return error(_("invalid value for '--reset-when-found': '%s'"),
-+			     value);
-+
-+	return 0;
-+}
-+
-+static const char *reset_when_found_mode_name(enum reset_when_found_mode mode)
-+{
-+	switch (mode) {
-+	case RESET_WHEN_FOUND_TO_ORIGINAL:
-+		return "original";
-+	case RESET_WHEN_FOUND_TO_FOUND:
-+		return "found";
-+	case RESET_WHEN_FOUND_NONE:
-+		BUG("no name for unset reset-when-found mode");
-+	}
-+	BUG("unknown reset-when-found mode %d", mode);
-+}
-+
-+static int read_reset_when_found(enum reset_when_found_mode *mode)
-+{
-+	struct strbuf value = STRBUF_INIT;
-+	int res = 0;
-+
-+	*mode = RESET_WHEN_FOUND_NONE;
-+	if (is_empty_or_missing_file(git_path_bisect_reset_when_found()))
-+		return 0;
-+
-+	if (strbuf_read_file(&value, git_path_bisect_reset_when_found(), 0) < 0) {
-+		res = error_errno(_("could not read '%s'"),
-+				  git_path_bisect_reset_when_found());
-+		goto out;
-+	}
-+	strbuf_trim(&value);
-+	if (parse_reset_when_found(value.buf, mode))
-+		res = -1;
-+
-+out:
-+	strbuf_release(&value);
-+	return res;
-+}
-+
-+static int bisect_reset_when_found(enum reset_when_found_mode mode)
-+{
-+	char first_bad_hex[GIT_MAX_HEXSZ + 1];
-+	const char *commit = NULL;
-+	int res;
-+
-+	if (mode == RESET_WHEN_FOUND_TO_FOUND)
-+		commit = oid_to_hex_r(first_bad_hex, &first_bad_oid);
-+	else if (mode == RESET_WHEN_FOUND_NONE)
-+		BUG("automatic reset requested without a reset mode");
-+
-+	res = bisect_reset(commit, true);
-+	if (!res)
-+		res = bisect_clean_state();
-+
-+	return res;
- }
- 
- static void log_commit(FILE *fp,
-@@ -682,7 +759,8 @@ static int bisect_successful(struct bisect_terms *terms)
- 	return res;
- }
- 
--static enum bisect_error bisect_next(struct bisect_terms *terms, const char *prefix)
-+static enum bisect_error bisect_next(struct bisect_terms *terms,
-+				     const char *prefix)
- {
- 	enum bisect_error res;
- 
-@@ -693,7 +771,7 @@ static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
- 		return BISECT_FAILED;
- 
- 	/* Perform all bisection computation */
--	res = bisect_next_all(the_repository, prefix);
-+	res = bisect_next_all(the_repository, prefix, &first_bad_oid);
- 
- 	if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
- 		res = bisect_successful(terms);
-@@ -705,7 +783,8 @@ static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
- 	return res;
- }
- 
--static enum bisect_error bisect_auto_next(struct bisect_terms *terms, const char *prefix)
-+static enum bisect_error bisect_auto_next(struct bisect_terms *terms,
-+					  const char *prefix)
- {
- 	if (bisect_next_check(terms, NULL)) {
- 		bisect_print_status(terms);
-@@ -729,6 +808,7 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
- 	struct strbuf bisect_names = STRBUF_INIT;
- 	struct object_id head_oid;
- 	struct object_id oid;
-+	enum reset_when_found_mode reset_when_found = RESET_WHEN_FOUND_NONE;
- 	const char *head;
- 
- 	if (is_bare_repository(the_repository))
-@@ -752,6 +832,13 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
- 			no_checkout = 1;
- 		} else if (!strcmp(arg, "--first-parent")) {
- 			first_parent_only = 1;
-+		} else if (!strcmp(arg, "--reset-when-found")) {
-+			reset_when_found = RESET_WHEN_FOUND_TO_ORIGINAL;
-+		} else if (skip_prefix(arg, "--reset-when-found=", &arg)) {
-+			if (parse_reset_when_found(arg, &reset_when_found)) {
-+				res = BISECT_FAILED;
-+				goto finish;
-+			}
- 		} else if (!strcmp(arg, "--term-good") ||
- 			 !strcmp(arg, "--term-old")) {
- 			i++;
-@@ -789,6 +876,11 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
- 			break;
- 		}
- 	}
-+	if (reset_when_found != RESET_WHEN_FOUND_NONE && no_checkout) {
-+		res = error(_("options '%s' and '%s' cannot be used together"),
-+			    "--reset-when-found", "--no-checkout");
-+		goto finish;
-+	}
- 	pathspec_pos = i;
- 
- 	/*
-@@ -868,6 +960,10 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
- 	if (first_parent_only)
- 		write_file(git_path_bisect_first_parent(), "\n");
- 
-+	if (reset_when_found != RESET_WHEN_FOUND_NONE)
-+		write_file(git_path_bisect_reset_when_found(), "%s\n",
-+			   reset_when_found_mode_name(reset_when_found));
-+
- 	if (no_checkout) {
- 		if (repo_get_oid(the_repository, start_head.buf, &oid) < 0) {
- 			res = error(_("invalid ref: '%s'"), start_head.buf);
-@@ -1098,7 +1194,7 @@ static enum bisect_error bisect_replay(struct bisect_terms *terms, const char *f
- 	if (is_empty_or_missing_file(filename))
- 		return error(_("cannot read file '%s' for replaying"), filename);
- 
--	if (bisect_reset(NULL, false))
-+	if (bisect_clean_state())
- 		return BISECT_FAILED;
- 
- 	fp = fopen(filename, "r");
-@@ -1246,13 +1342,39 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
- {
- 	int res = BISECT_OK;
- 	struct strbuf command = STRBUF_INIT;
-+	const char *reset_when_found_arg;
- 	const char *new_state;
- 	int temporary_stdout_fd, saved_stdout;
- 	int is_first_run = 1;
-+	enum reset_when_found_mode reset_when_found = RESET_WHEN_FOUND_NONE;
-+	bool reset_when_found_arg_seen = false;
- 
- 	if (bisect_next_check(terms, NULL))
- 		return BISECT_FAILED;
- 
-+	if (argc && !strcmp(argv[0], "--reset-when-found")) {
-+		reset_when_found = RESET_WHEN_FOUND_TO_ORIGINAL;
-+		reset_when_found_arg_seen = true;
-+	} else if (argc && skip_prefix(argv[0], "--reset-when-found=",
-+				    &reset_when_found_arg)) {
-+		if (parse_reset_when_found(reset_when_found_arg,
-+					   &reset_when_found))
-+			return BISECT_FAILED;
-+		reset_when_found_arg_seen = true;
-+	}
-+
-+	if (reset_when_found != RESET_WHEN_FOUND_NONE &&
-+	    refs_ref_exists(get_main_ref_store(the_repository), "BISECT_HEAD"))
-+		return error(_("options '%s' and '%s' cannot be used together"),
-+			     "--reset-when-found", "--no-checkout");
-+
-+	if (reset_when_found_arg_seen) {
-+		write_file(git_path_bisect_reset_when_found(), "%s\n",
-+			   reset_when_found_mode_name(reset_when_found));
-+		argc--;
-+		argv++;
-+	}
-+
- 	if (!argc) {
- 		error(_("bisect run failed: no command provided."));
- 		return BISECT_FAILED;
-@@ -1327,7 +1449,6 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
- 			res = BISECT_OK;
- 		} else if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
- 			printf(_("bisect found first '%s' commit\n"), terms->term_bad);
--			res = BISECT_OK;
- 		} else if (res) {
- 			error(_("bisect run failed: 'git bisect %s'"
- 				" exited with error code %d"), new_state, res);
-@@ -1344,10 +1465,15 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
- static int cmd_bisect__reset(int argc, const char **argv, const char *prefix UNUSED,
- 			     struct repository *repo UNUSED)
- {
-+	int res;
-+
- 	if (argc > 1)
- 		return error(_("'%s' requires either no argument or a commit"),
- 			     "git bisect reset");
--	return bisect_reset(argc ? argv[0] : NULL, false);
-+	res = bisect_reset(argc ? argv[0] : NULL, false);
-+	if (res)
-+		return res;
-+	return bisect_clean_state();
- }
- 
- static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNUSED,
-@@ -1489,7 +1615,8 @@ int cmd_bisect(int argc,
- 		    !one_of(argv[0], terms.term_good, terms.term_bad, NULL))
- 			usage_msg_optf(_("unknown command: '%s'"), git_bisect_usage,
- 				       options, argv[0]);
--		res = bisect_state(&terms, argc, argv);
-+		else
-+			res = bisect_state(&terms, argc, argv);
- 		free_terms(&terms);
- 	} else {
- 		argc--;
-@@ -1497,5 +1624,15 @@ int cmd_bisect(int argc,
- 		res = fn(argc, argv, prefix, repo);
- 	}
- 
-+	if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
-+		enum reset_when_found_mode mode;
-+
-+		if (read_reset_when_found(&mode))
-+			res = BISECT_FAILED;
-+		else if (mode != RESET_WHEN_FOUND_NONE &&
-+			 bisect_reset_when_found(mode))
-+			res = BISECT_FAILED;
-+	}
-+
- 	return is_bisect_success(res) ? 0 : -res;
- }
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 338df4f886..a7588222a8 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -43,6 +43,42 @@ test_bisect_usage () {
- 	test_cmp expect actual
- }
- 
-+test_bisect_state_file () {
-+	local file &&
-+	file=$(git rev-parse --git-path "$1") &&
-+	test_path_is_file "$file"
-+}
-+
-+test_bisect_state_missing () {
-+	local file &&
-+	file=$(git rev-parse --git-path "$1") &&
-+	test_path_is_missing "$file"
-+}
-+
-+bisect_start_and_finish () {
-+	git bisect start "$1" $HASH4 $HASH2 &&
-+	git bisect bad
-+}
-+
-+bisect_run_reset_when_found () {
-+	write_script test_script.sh <<-\EOF &&
-+	! grep Another hello >/dev/null
-+	EOF
-+	git bisect start $HASH4 $HASH2 &&
-+	git bisect run "$1" ./test_script.sh >my_bisect_log.txt &&
-+	test_grep "$HASH3 is the first .bad. commit" my_bisect_log.txt &&
-+	test_bisect_state_missing BISECT_RUN
-+}
-+
-+test_reset_when_found_fails () {
-+	local pattern="$1" &&
-+	local state_file="$2" &&
-+	shift 2 &&
-+	test_must_fail "$@" 2>err &&
-+	test_grep -- "$pattern" err &&
-+	test_bisect_state_missing "$state_file"
-+}
-+
- test_expect_success 'bisect usage' "
- 	test_bisect_usage 1 git bisect reset extra1 extra2 <<-\EOF &&
- 	error: 'git bisect reset' requires either no argument or a commit
-@@ -453,6 +489,91 @@ test_expect_success '"git bisect run" simple case' '
- 	git bisect reset
- '
- 
-+test_expect_success '"git bisect start --reset-when-found" defaults to original' '
-+	test_when_finished "git bisect reset && git checkout main" &&
-+	git checkout main &&
-+	bisect_start_and_finish --reset-when-found &&
-+	actual=$(git rev-parse HEAD) &&
-+	test "$HASH4" = "$actual" &&
-+	actual=$(git branch --show-current) &&
-+	test main = "$actual" &&
-+	test_bisect_state_missing BISECT_START &&
-+
-+	bisect_start_and_finish --reset-when-found=original &&
-+	actual=$(git rev-parse HEAD) &&
-+	test "$HASH4" = "$actual" &&
-+	actual=$(git branch --show-current) &&
-+	test main = "$actual" &&
-+	test_bisect_state_missing BISECT_START
-+'
-+
-+test_expect_success '"git bisect start --reset-when-found=found" leaves first bad checked out' '
-+	test_when_finished "git bisect reset && git checkout main" &&
-+	bisect_start_and_finish --reset-when-found=found &&
-+	actual=$(git rev-parse HEAD) &&
-+	test "$HASH3" = "$actual" &&
-+	test_bisect_state_missing BISECT_START
-+'
-+
-+test_expect_success '"git bisect run --reset-when-found" defaults to original' '
-+	test_when_finished "git bisect reset && git checkout main" &&
-+	bisect_run_reset_when_found --reset-when-found &&
-+	actual=$(git rev-parse HEAD) &&
-+	test "$HASH4" = "$actual" &&
-+	actual=$(git branch --show-current) &&
-+	test main = "$actual" &&
-+	test_bisect_state_missing BISECT_START
-+'
-+
-+test_expect_success '"git bisect run --reset-when-found=found" leaves first bad checked out' '
-+	test_when_finished "git bisect reset && git checkout main" &&
-+	bisect_run_reset_when_found --reset-when-found=found &&
-+	actual=$(git rev-parse HEAD) &&
-+	test "$HASH3" = "$actual" &&
-+	test_bisect_state_missing BISECT_START
-+'
-+
-+test_expect_success '--reset-when-found rejects an unknown reset target' '
-+	test_when_finished "git bisect reset && git checkout main" &&
-+	test_reset_when_found_fails \
-+		"invalid value for.*--reset-when-found.*unknown" BISECT_START \
-+		git bisect start --reset-when-found=unknown $HASH4 $HASH2 &&
-+
-+	git bisect start $HASH4 $HASH2 &&
-+	test_reset_when_found_fails \
-+		"invalid value for.*--reset-when-found.*unknown" \
-+		BISECT_RESET_WHEN_FOUND \
-+		git bisect run --reset-when-found=unknown true
-+'
-+
-+test_expect_success '--reset-when-found cannot be used with --no-checkout' '
-+	test_when_finished "git bisect reset" &&
-+	test_reset_when_found_fails \
-+		"options .*--reset-when-found.* and .*--no-checkout.* cannot be used together" BISECT_START \
-+		git bisect start --reset-when-found=original --no-checkout $HASH4 $HASH2 &&
-+
-+	git bisect start --no-checkout $HASH4 $HASH2 &&
-+	test_reset_when_found_fails \
-+		"options .*--reset-when-found.* and .*--no-checkout.* cannot be used together" BISECT_RESET_WHEN_FOUND \
-+		git bisect run --reset-when-found=found true
-+'
-+
-+test_expect_success 'without --reset-when-found the bisection state is kept' '
-+	test_when_finished "git bisect reset" &&
-+	git bisect start $HASH4 $HASH2 &&
-+	git bisect bad &&
-+	test_bisect_state_file BISECT_START
-+'
-+
-+test_expect_success '--reset-when-found does not leak into a later bisection' '
-+	test_when_finished "git bisect reset && git checkout main" &&
-+	bisect_start_and_finish --reset-when-found &&
-+
-+	git bisect start $HASH4 $HASH2 &&
-+	git bisect bad &&
-+	test_bisect_state_file BISECT_START
-+'
-+
- # We want to automatically find the commit that
- # added "Ciao" into hello.
- test_expect_success '"git bisect run" with more complex "git bisect start"' '
--- 
-gitgitgadget
