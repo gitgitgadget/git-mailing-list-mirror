@@ -1,164 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71959299959
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 15:43:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED7A2F5A06
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 16:01:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785685400; cv=none; b=YLJnYdBMj9ftTSPhgzPGtzzqNBSLuiEOtS3e7YoGkSlYVmI8Rn1mLS+7mDpS9YMc0cZae3Y8hSQv3497dXU9RQWfxQc5hb2GgSvwvlCFlmwbP5SjMZv06FXj8ad/Be6DmxstTlP1KAN6OxXlDxmpyGXoIfdkcW3CQFCzqneCz9M=
+	t=1785686479; cv=none; b=ke+NQYVocO6L/yDzxdiB84if3xp+lLS7j5tsb/i967HdqI/6x02AhsW0btF3yC9gHam4hSGYvk8J10gZoNRTTHGtRdptelybrkIbBGnC2BO+T3k+mRqXgkGZdTMGzWuFeJneRCFGp4r5XAwNs2/9yHvUcqciV7AG5YvDM1zuurc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785685400; c=relaxed/simple;
-	bh=X89g41pMqqUniWTygUkLklyEgN94MmHacL/b+DFGDl0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QMI+qfLfgs8SPc7XbnvD8gAELfHy6VutiPGY5EnPsbfgi+vWqQTFI9QXb9lfQMdD23dU6zQqEEWLpN8eAgblQSgDpVxlHlMCSRhIqmJn1NvgXvTQ9WuPd5pyaVNuAPRdCyawXg1h/A1Yy5cbHl1jkYDv3VdSseQRZzN6L0lbweI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MbRg8Ja2; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1785686479; c=relaxed/simple;
+	bh=dFGqiQF6/n/xEAVRN1U8LKrhlt6z6BMEa/iE8tzIc00=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AIcuRPiPttmllfaNlMkI6lPf0nHvg1ProzWU7qNv65yfUHlWTiWFZT1bdwOt2ygQRXMSmu7MdBxmcNtfGMsVRTSkpCidYN+Kta+z3CAt4e8lygDbwQ/DFWXG3kvp/PBysXqTxPDfu+4IRU9SfLEEQ0/IjbLD9WjLf3EKgOLRnPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dh2mFeVZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MNjDI+qo; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MbRg8Ja2"
-Received: (qmail 23208 invoked by uid 106); 2 Aug 2026 15:43:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=X89g41pMqqUniWTygUkLklyEgN94MmHacL/b+DFGDl0=; b=MbRg8Ja2a4hq8p5xIdqbwpa6wZtasKZV+dbxs0oOxMremXYEtmpQ6nwvfmCKnN2BaU1DwcXSBJf8ADBSK9Zu3hj0HpHb/nufx8+r0oHENaEnog1g/IH73iI/1UOaGpcOZ9pmQr6C/5glZkvkuXpQQa5ljBQ8zOS4XvGszviywR1+t5wsoNbg7kCNeuYFptatq9oOTZPbsBHCSwjjQgRijI8ogDFTkXkmhLdNAQn4RGpVsXrWeldf4nNLfr8uKfVhTQAvXQjh7MOZDqHfWBoyXoLiaWXhWrS9o6chtW74h3iMmDHv3yRxpCChDXVQqErfyEwLYV6dDb5wLUUM2tfwhQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 02 Aug 2026 15:43:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 33394 invoked by uid 111); 2 Aug 2026 15:43:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 02 Aug 2026 11:43:10 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 2 Aug 2026 11:43:09 -0400
-From: Jeff King <peff@peff.net>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	chandrapratap3519@gmail.com, karthik.188@gmail.com
-Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
- response
-Message-ID: <20260802154309.GA17844@coredump.intra.peff.net>
-References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
- <20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
- <xmqq7bmaa0sw.fsf@gitster.g>
- <xmqqzez67yg1.fsf@gitster.g>
- <DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
- <20260801231437.GA2097059@coredump.intra.peff.net>
- <20260801232941.GA2097163@coredump.intra.peff.net>
- <xmqqpl015lfl.fsf@gitster.g>
- <DKEGM4BYZ4UW.UVJ1H8IGVF0Q@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dh2mFeVZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MNjDI+qo"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 13A2C1D00184;
+	Sun,  2 Aug 2026 12:01:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sun, 02 Aug 2026 12:01:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1785686475; x=1785772875; bh=XZ01aLZz/Q
+	qtmCOVtmf37sDpO4l4RQ8S6YAyqWIAY7g=; b=Dh2mFeVZTwYX/cSXeADRzO+8iP
+	j+9UaFb5//ZASdRe8xsaEYb8sWp3wIYmweivQVxMKxVrvaHAVUAF6W5jcDkiOpOV
+	PgsfujFrW3bfWh5ZRZqi5qvpqQ+aLKAIGydUVJ+0byvMj35VKzDPwbrW8jJrvC06
+	MEeKHJ01aEZrVKJCX/h1SrkeiKq2tBhpYfZ3RK6LbkR7nCxSFpMDeEqSc4Xeh+KR
+	n68zZW7E6JU/uJN2eZr9a6QGb5wycniu7pm8n4QSvEqR/pPzKqaXAHq0AkvSLSGI
+	JiPFLOv+tWPreqeM7kAAmD6M86iL59g99E8RCH66pvIs0DLdvDC9QzazY2Qg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785686475; x=1785772875; bh=XZ01aLZz/QqtmCOVtmf37sDpO4l4RQ8S6YA
+	yqWIAY7g=; b=MNjDI+qonjwevlzhUPC5NSBEowhbDK+gUc2OVD5qizl1cchYBRi
+	BH1Nmr45uF2mMNP+xAtC2rS/vSWuIC0KhXLrH9fLUtITcVm+qhkX6C6mdmZ8KhaX
+	0AAbr0NEjNmKsGNxub7RG7BIJvgxOjDUDo9SZXt8UBvIb3UwCnsZk5I15A8lYHVT
+	g7Yssm52kCAGUbXuE6OaiYZIOgYdK5/L5vh8oVWYM85rr2QAylqzlJkMtum/e28+
+	PKlvHnNNwDsHrLggn16YwQCFDONjPikF8YCpfusYk245mZcNBbrPUtaGOufBIqc9
+	mMJnlQ3PTLkgPOALBdKinOcfZQw5dl8HW0A==
+X-ME-Sender: <xms:y2lvajgGm6dlI5lSGfAzlYJHW-Iwk7y5q2P38VpdIX3Lk4CForu-Sw>
+    <xme:y2lvam7cZAuvVwRRUTqkVSMQIvAzW5hjYmk4LVFutSw6l2yz6HB144z-svbtEroXf
+    V2o8QBO3o3EBzE6ffzGGS7LZXrtNkG6MQ1K7BlJIH7ue8mgTZHzgw>
+X-ME-Received: <xmr:y2lvarZBd7QlQVVhjNBcUg6K38gLBk7L5Iml_131pVVJkcgIZ5BbX6dMAUR8po_4nNlw6bonBJfa_DVekXC-rf9lmxgYrWOhuQ>
+X-ME-Proxy-Cause: dmFkZTGOg8IxkixSqTKbSdvuCIMudBSG0Gk3HZQC/fdf+LyCLGGIeQWS2QIr/rsShfHNpf
+    9mqLweyilDbMf4yQ6vaXt3Cn0yx41UwwMIfRUowMurRbD4qzzPI3VCETnXkykS4Sflzxa2
+    Tj2/HZ/Cury9lSO3LBmpc14yqwVfM8x5mBBbEqQJLZkrr24n/Ha2Te5GoX1SRt1P9gToCl
+    0XiHlTvfZwORgxut4g1E5+m6VhKVlUPyDJGYGt3RI+WfjRZzkLq7sN/NLfYUu/G9qvYea1
+    SCLedLN1OCkpitgN8xL6L4nWqvwxEqFDCfAk1IeiLszb14jyaufVnDro7s+iGP6832hvn4
+    XLMXqoC5W5aPjDSFNSW+9Vhc14YeL4s1EaspTPDSc836ruH3e4P1Xf9oJJFu4rqEJZTUeD
+    WVeuIyf2kyJmIHw6wctFkWl7Q3xplzpdSVY6thaFa/uw4gcoozfI7dlFgjJjBEp15mj+Hs
+    ZSfxXBvcQZAJhyfsIOFWjTYceScpnE2W5chkdi8hbbL4pLY5Vh8pI0Eq4+mm4ua31cOw0U
+    Lt3rnZ87wV71LZ+kWVfP2Uy+w5vSsRhnmdVgSEFl7zjpSqm+7+8qUVTpw4uDyAXrodBdKJ
+    2SmRWWRS8WrXATCXoJfvnewPNxRSAvZHmp5VAPa2E+UpKHPmpJ2Q5SRCM1QA
+X-ME-Proxy: <xmx:y2lvar6oOekZuDqeH9bytG5Ye19gBR3xQHeH3FmCR1EPQ5qxo5Kyfw>
+    <xmx:y2lvauBJZaPouo1YPt8XYMAnh7KPP7QW6ZpVtSMxsMaxz81MusENOA>
+    <xmx:y2lvahcO_PCpC-eSiFmd7frM0cc6TPurXroUd6w1HUgd2WaqQ5DfMQ>
+    <xmx:y2lvatLxZ1XO1UXYbZynG0BbtFuABA9PS-GqEuoJQaA9buNqvOwQ6A>
+    <xmx:y2lvauIHvggcjIeoKdeP2BrjMbytBR5Ti6ejzxjdpl4doLvBSvlfp79_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 2 Aug 2026 12:01:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Sixt <j6t@kdbg.org>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v5 0/2] bisect: add --reset-when-found to leave when done
+In-Reply-To: <pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Sun, 02 Aug 2026 09:31:13
+	+0000")
+References: <pull.2335.v4.git.git.1785577445.gitgitgadget@gmail.com>
+	<pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com>
+Date: Sun, 02 Aug 2026 09:01:14 -0700
+Message-ID: <xmqqh5lc4ilx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DKEGM4BYZ4UW.UVJ1H8IGVF0Q@gmail.com>
+Content-Type: text/plain
 
-On Sun, Aug 02, 2026 at 02:33:49PM +0200, Pablo Sabater wrote:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> I have the doubt of whether this change is desired for this series as
-> prep or if I should keep on and later make a cleanup series as this
-> doesn't make a change for a user.
+> Add a --reset-when-found option to git bisect that resets the bisect session
+> when culprit is found.
+>
+> Changes in v5:
+>
+>  * Move automatic reset handling to cmd_bisect() after subcommand resources
+>    are closed.
+>  * Propagate the first-bad commit OID from bisect_next_all() and remove
+>    defer_reset plumbing.
+>  * Separate checkout from state cleanup in bisect_reset(), and use bool for
+>    its quiet flag.
 
-IMHO it is worth doing now. I've spent a bit of time looking through
-this code and I found it kind of confusing. In particular:
+I know I suggested the second one, but is it really needed?  The
+only reason the "first bad commit" is needed is because we may need
+to reset to it when --reset-when-done is in effect, but before that
+reset happens, we can look at refs/bisect/bad to find it out, and if
+that is the case, there is already a mechanism for the next-all to
+tell later code what that first bad commit is already.
 
-  - there are a lot of semi-opaque structs, like object_info_args. It
-    would seem simpler to me to pass those elements around independently
-    to the functions that need them. Likewise, we seem to stuff a lot of
-    data into the transport struct rather than passing it to the
-    relevant functions, even though many of those elements are really
-    just used for one function call, and aren't a property of the
-    transport at all.
+If it make the patch series a lot smaller to take advantage of that
+fact, that would be superb.
 
-  - it's hard to see who is ultimately responsible for deciding whether
-    a field is requested. I _think_ it comes down to sticking those
-    strings into the object_info_options struct (which I might have
-    called "attrs" or "atoms" or something; they are syntactically
-    "options" in the v2 protocol, but I think from the perspective of
-    this code that is not what they are).
-
-    One thing you could do is have the caller pass in pointers for
-    "types" and "sizes", and use their NULLness as an indication of what
-    they want.  That would be more like how object_info works, and then
-    it really becomes a low-level protocol details to form those into
-    the v2 protocol option strings.
-
-    But unlike local object_info, we sometimes find that the remote is
-    not willing or able to provide a particular type. So we have to
-    return a flag somehow for "I was / was not able to get types". You
-    could do that with a bool in the response struct.
-
-    Or you could flip it on its head. Have the caller provide a bool
-    saying "I want types", and then the low-level code is responsible
-    for allocating the "types" array, and leaves it NULL if types were
-    not available. That means the caller has to clean up the result, but
-    they'd have had to clean up their local arrays anyway.
-
-    I _think_ that's what you're getting at with your example below.
-
-  - the protocol makes this unnecessarily complex. In particular, if we
-    ask for "type size", the server is free to return them in an
-    arbitrary order, or even to omit one of them (even if it told us it
-    supported it!). So we have to map their returned ordering onto our
-    arrays. Gross. I guess we are stuck with it, though, as the server
-    side has been around for a while. And it does indeed choose its own
-    ordering independent of what the client sent.
-
-    I also find the framing needlessly restrictive. Rather than one
-    pkt-line per item, we get packets with space-separated values. What
-    happens when a future item value has spaces in it?
-
-    As a side note, I think this is a good reason not to ship half of a
-    protocol implementation. Without seeing both sides, you don't know
-    what gotchas are lurking. But once one side ships, then it's hard to
-    change the protocol later. This critique may all just me being
-    cranky, though. ;)
-
-> What I understood is that fetch_object_info shouldn't use object_info to
-> store the results, because it doesn't call read_object_info() like other
-> commands like 'info' do. Then, it should use its own data structure to
-> hold the results with flags like wants_size and wants_type. Something
-> like:
-> 
-> 	struct object_info_results {
-> 		enum object_type *types;
-> 		size_t *sizes;
-> 		unsigned *unrecognized;
-> 		size_t nr;
-> 		unsigned wants_size:1;
-> 		unsigned wants_type:1;
-> 	};
-> 
-> All three of the pointers are nr long.
-
-Yeah. At first I thought your wants_size is redundant, but I guess if
-the goal is for the low-level code to allocate the "sizes" array, then
-we cannot use it as a signal (i.e., this is the "flip it on its head"
-direction I gave above).
-
-I do think you want to be careful with how wants_size interacts with the
-"object_info_options" string list. IMHO it would make things easier if
-that string-ification happened deep down, probably in
-send_object_info_request(). And then the rest of the code can
-consistently use wants_size to see if we want sizes (and checking
-"sizes" for NULL to cover the case that the server did not support it).
-
-> This could be done in two patches, as I was going to do a prep to
-> prepare the current code (size only) and this patch would add type for
-> fetch_object_info().
-
-Yeah, that would make sense.
-
-> > It could be something we may want to
-> > clean-up much later after all the dust settles from this year's
-> > GSoC.  I dunno.
-> 
-> So I'm a bit lost about what to do, I'm happy to make that in this
-> series or as a cleanup series later after GSoC which ends in a couple
-> weeks.
-
-I think the "after the dust settles" suggestion was for changing the
-interface of "struct object_info". That all becomes moot if we stop
-using it here entirely. So I think you should proceed along the lines of
-the object_info_results you showed above.
-
--Peff
+I also do not understand exactly why we need both reset_when_found
+and reset_when_found_arg_seen.  If we initialize the former to a
+"not set" value that command line argument or the state file can
+never set to, then wouldn't it make the latter unnecessary?
