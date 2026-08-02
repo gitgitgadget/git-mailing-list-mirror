@@ -1,116 +1,100 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E0B2836E
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 02:23:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785637386; cv=none; b=URo5/iQ6BSfeiVqO4VEQwDgO5kSapSyMk51MfbFCzlNjoLlNWkgwkssHJrXlpXTAEdzjOBhqceh/Pwi7bvlTjCDVsa9kN6oW7YAaeaSs7imr2rwsLa4TF8eC6tT5119PxQ70CQDjTKLLUidJrx5jQ91I7PhUXJcyGjRaafDtez8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785637386; c=relaxed/simple;
-	bh=Z/r9vvvmR/+2YRHnRaXzRWOtU6oSvUuJjzTHPFxCsXM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dfxQ1uQqLav7WZPdyyry9ff7TDTQi7QoABWnDy3oEcn2t+8dtg8uZDEgrGgJgkC6wYbn8Xt8sdN6dNjqh/7qTiWp2fiflEXUXuz/NdVsiPEcrh+APa1sfLtaz60T5HlwLRyXnHX1PEsEYS3xp1Zq1lkVWNIl1QfSKnezx4xxxLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B58ig2fO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XEINIXjf; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F75548986E
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 03:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785639777; cv=pass; b=J7LyypDMj1mh/nJRB4PDBWDaqLkkr3RD3VMw+h0N8ad6nv+mQVXIWqKenK37WXWBWKyVp2T2IK3EgKgGV/lA7z4C5L+vIbybymg1esEBYg2DcS6Wi8hFIRndSO1kJzXqRUNk1Veq99X86KJOWZNSrhdyXUeyQt1qs6U4pBT24Nc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785639777; c=relaxed/simple;
+	bh=FcVEo6uw9zTY0u1tAqJl/JOcemRZuADoLsYnBvZOU4w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HXIDf2sW3LS5e0T3Ejl08noepWowscjMy3FdL7h307DWeUEDiZyLvzf2g7W0+FuueHHqR2kWGo+pvKAkOfVGC/N12UdrZ/xbft1sUqEmjmn2olwvxxFBf0OMw1/aZTjquhGGQ3hM20HwhJw3xRfEqQ4xPNLPFgOKWZEf9l2/d+Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dUJjTRcD; arc=pass smtp.client-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B58ig2fO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XEINIXjf"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2594FEC011D;
-	Sat,  1 Aug 2026 22:23:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 01 Aug 2026 22:23:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785637384; x=1785723784; bh=4MqVS464Tm
-	HgPYLOlFTP9CQ/1pCl6o8z7mFzNlpDtdM=; b=B58ig2fOVL1UgbDVq4Y9AqmZjM
-	H7D9ovXNQlQKyT/0QATfdOeQKdJJyeN4FJUflyWvu8BTE+9iIdnmojrOY2XdR+6X
-	6yMWkAk7S136zVqa0bexnwRfoA9H7WZZT/fvXgih4WgniZ0P4wfjHg1rEK4q68HJ
-	ElME8KguHUi1iIP2e0d7i+5bRUI85kkLOqBOzudtQQEamnsnFVfoqMrcGjBECRs5
-	HXQ5F+jtBX9xLV2z9t/l3bcf7c61q23e6lTz47KhdFZNVQ9/BKtk1LTCv7sWKDq/
-	rczx1wl/evv4MBfUNZDTfyzm/bqm/wXJC/0D68m8AghhViMZ40wZYTcwHVkw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1785637384; x=1785723784; bh=4MqVS464TmHgPYLOlFTP9CQ/1pCl6o8z7mF
-	zNlpDtdM=; b=XEINIXjftQlV+6CLDsvOyDZLj4kGd2PKHbgANg36lzU3bYI4zUs
-	PwxjPvPp2JdxZO/ZUZ3heMovXes6Fd+DDdogAbYPeF/mE3v3nkLMvlEtAtPzBGVr
-	5oHX/hflMvfS7AghhKngVWK86DCPX2Ft35FfJwYy7il7gZFQYdCTw86bQLyopkLa
-	MZRIff9GJ1mCXoqIA3y0EGhj1+xEKyVsfOKQQkdH8J5gRG6edpplmNYCxLnWNAuh
-	FfSTgs6z0iiVp6SXgu5zIYhbh0fS1Ya8Y1OzHNDusz5LipRD33Nf43J+Z6+YsOIV
-	CUUTxsJecneg1RINZHOvA8VMs9El4dsE77w==
-X-ME-Sender: <xms:CKpuatKL4aEdKN7093SJXRFRHdF0EQcYc20JyI0SS-WsZGXJ8wBsYw>
-    <xme:CKpuagksEUTz3pBKiI5V1AjgN-6uSZ9yOvzy8cQ9cNq2uPf3jero2ytKxbkWEAFYX
-    OAuj4SgAlIEOE6VpRx1_isq2Gv_E78I11v-IEF6eJr-wRBl3l2VFA>
-X-ME-Received: <xmr:CKpuajHeqQOeTDcpdkcjyh_8pkMPO0n6D4daOIyUfsgVhrzwEY8T7Uq36Bo--HX0CO-JB9tl1e2EX2oeD1mtvz31W0WZ90Y0Lg>
-X-ME-Proxy-Cause: dmFkZTEefD18Xcfar8XBm+guUHRD2PSSwq0ROw4V3mwOFFe/FIBzISQI2fkEdEjIDqU5jo
-    7ntafUeTgEReRJmT+K04pteobhik0jkFVaeGdPd70MIg/SJcK57hP71XEUC9dsZHrYWd26
-    XajrxcKrvwJWTpoIXHzf4kOb9gjv0/vt3A2Co/B7V3auRbEEAaBGjZtgJUGh28XFSNmdK1
-    2s+psFMVGVHSRgT51FW6fVPwvKOGFUY90LFAySDAYt0T/5zFI1WLJQCOZU9k8F1gnrLYUt
-    eNgrVMqdijO9TfABHZGyffzAskh3HKX9RTI3F5FpuVEWA+XgH/3qfItfAc3l9ScUSQwuTb
-    LzLh1NyfUnBbLzZi7ReS32ZClnFvUZwP67ElaYtp1VLtr1/9MNl3/sjiwDoUeCV46r0iQ4
-    bh6xrs2elI3B+6+ijLisxC3Jx0XbhzT7vL0JxiFS0GQtPSXJKIMfH6MSdO7sbpoSQ8r9BO
-    3ULVYrUGrUg8hUF1fG5L7Fp1CNeI+H9yUETBWDBfUR/Pc5Hvlz0+BRl9eLRvl9qgGadLPy
-    ll2x0rq0MnRX8DxQaU+7Vk7ni+Po2YyYk7owgispT2Qc/rPrhbhGV1n+h4Rn8052XQ89+i
-    f/D8IW0hUX14QvTFiX7YR5CYbGDSfG8a/DFvECVeQWsacK09uj+YCsHp0umw
-X-ME-Proxy: <xmx:CKpuaoEk6mjtBNEAnjEdXF-J9iAFOKCAyDi52olDuMmqsuFo7LDt5A>
-    <xmx:CKpuaoPsyveRp9cK3Zx7Zi1b4txDrcdvZ5_T9rB9oeK8kgCwmzOrCA>
-    <xmx:CKpuavHmOX-Z5kK7R4GVngBzxfLh6xPdTnqjoaCLJaNMVfF9S_p8AA>
-    <xmx:CKpuanPkIoNj9ULG3FyS2fs3MNweFOht0W1Du_Vs_9BCuqqbl2153A>
-    <xmx:CKpuaonbQUMCq2YKaOzSA4Wi7iPDO1V30DYMpFwIGfyHC-ljx8vCjqc5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 1 Aug 2026 22:23:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] add: introduce '--resolved' option
-In-Reply-To: <xmqq8q6tc3cy.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	29 Jul 2026 06:49:49 -0700")
-References: <20260728215219.753678-1-gitster@pobox.com>
-	<20260728215219.753678-4-gitster@pobox.com>
-	<CAC2Qwm+AmeDubDrkLmu8Rz9rtO3697gokwF2=2c5PgP--hZT2w@mail.gmail.com>
-	<xmqqcxw5c3na.fsf@gitster.g> <xmqq8q6tc3cy.fsf@gitster.g>
-Date: Sat, 01 Aug 2026 19:23:02 -0700
-Message-ID: <xmqq4ihd5khl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dUJjTRcD"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e9f1f24cbcso2258628a34.0
+        for <git@vger.kernel.org>; Sat, 01 Aug 2026 20:02:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785639775; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GXaQj9VbkoJd98xD74g9n2LNwTJ+dEv+lzhVO6lT3vKBqSiLQ/kmKRwBIwt9QqQWnk
+         HlyZs2xLGDS6FRuyfU3IhL7phUe11hXRrgbLI03+liJNb3+KGBa6B0ui1sLeW9HW1+Gy
+         XwuDgvd8DeVK1bJiaSImN/tK058uXcZ6aKsD55qBkdNDw4LDiMwMkBVrJ7eef82FYosi
+         lLjGqEAD4mqsnC56JYx8YAhdmzEFgiVA/wEzaiKUZlBopvTnHlvm2ObB0Z0RNLi9WSN6
+         YQSb5XjE55UGrEKqPIQdpw7uHxr0xkRVWvnA/SbhvkrENOntaf9Umr0A7m+OuOelkqhz
+         SQIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=FcVEo6uw9zTY0u1tAqJl/JOcemRZuADoLsYnBvZOU4w=;
+        fh=m1MofRN69pENEnPr5pDWRgu2WTNSavpM4K+NMxAO+tU=;
+        b=Vj0F88oDHwEQdiEP3JscoyafahQ5DBQ5XmeeF8wmUepF5kw77/O/ZHvTeHW4zG8xmU
+         uWJn9AUyS0YYeoflvmV/9EDWVwiAvocBqbgZX88aNYXpGSZjbLDfr1mhXl5u2UB2cX2H
+         A/tzjOULuSqgtZPMwMNICyu1QRj18JGHLNq7OXwUboKencnD1QLv0lBTJ3hyNxSrOPdV
+         KUXMEMgaIrh/M3iYKjglUbEYJRUgiISBD5z9LGv4uy1xZtPflB8QWyDr93VbYagnVez7
+         ZPYCd+5piPlNw30jF+1/iOv2cNpd9VYQpe0goOg46stu5k4v39Ysa+rnP7d3e4Id9v5V
+         9zRw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785639775; x=1786244575; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FcVEo6uw9zTY0u1tAqJl/JOcemRZuADoLsYnBvZOU4w=;
+        b=dUJjTRcDRClIahxiQQjEo5ihRvBiCiuePZsTa0xuFacbku45ARPjIa7ZbpCZQ8oBCQ
+         HzVNJ6RXTbaE+dcPE3Ziaea3AfUWU8xR0U9INXGK9u6/+VKcHFiQ2lCKNVp55lYBF0eK
+         rc4a3o7Two8+klICc7XjOs2V7h43NU3kXmdkZ6kOk5GVh5xvu5YzymUJx5xulxevl7F3
+         ctGlSON35yTVizXvnbTZ8FTohEsBfmwTXbs2eecaaj7ICD0Kqr6uXFZBiyzTJoVp7DMJ
+         0LKP2GhvQbytyGWc7YbDvrs+mrwdVLhz9Vx/TqlNe+DkhyAxyLWgcAAHjBdLGITCW3FR
+         tLqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785639775; x=1786244575;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=FcVEo6uw9zTY0u1tAqJl/JOcemRZuADoLsYnBvZOU4w=;
+        b=i2zxUsjvDfjdH3ciAXO2LW7hZDIqy+MMa0cajoUjJCPOCbthWOgmKDBFEVWZ1a7ma4
+         Jwg8ZS3SPBk3Aieyq2Z/dyipvMKJU7tl3vAQ530oQqTBcnrIsOZytLsDYqUsofw+QMfI
+         m0ADqiNsogzWbVTfLn+nDCzRwUJmwtcg3dXS/MiO5iLhXLu1ql/zMuoq1rbds3rQXoWU
+         kjsfSXUXcHsTioQ6PdM5qDfx2jU+FAQGGV8V3/8NGnRjrT4D8WVLZmExwHEKcoCEBaWJ
+         KzYCPZpYV4ig0sRa33yv2R9lIAI/p4nqOcs9d3EeNJVB0cMYWlDHl89pp1uTbJfq+tFV
+         qJcg==
+X-Gm-Message-State: AOJu0Yy2nQQYtcjKPvyjNgN9XPZEwD10cOqaUi5MpyzmE7Og1Dp2a4M6
+	MSajAc/59wGIOuYIjXkjSC5L/I8qcGgZOffZ6j1MjQR3cb5Gj6G+c4ZvIIa2Xmg6sOO62jT0amy
+	eO+3V9IS5O/34WlR2aKPmTh9NDhsk9aJ9C0Ez
+X-Gm-Gg: AR+sD10OUqjHB28BjHHBhSr/W00IDzgxCElyH3vRuefWsR44+M8xXqusNBtch6Zustx
+	ggGhk/u+xNCaP7+YqgZRvD7ibicxd7yHvu8RupaBpdQKX+lJxC1kYs/QUcE4WjDr4C0fPjebtQJ
+	JtOBUArdjoX+hpOukqwG9XMu2x8ysgNWrnkP7P+om37rTAMCznM2//Eh8cLE1u4lwQW0arQyZHC
+	tGCqvRDoaCx5XrJcYviiR3qzFYDFAmu/vkGoNyxQbyKg7ZdI8ZE4+/yfrJTS9HE5sK8/1VUOKum
+	egGKUfTDePWvX9wzXALxlZfJv+XCZLes0nCmCp5xmtsNuQ2DDNpdC6NFuIqwpKy6Q1L1/+wZ68c
+	hc0dF1vG8s0jpSHXOSV3B0eCGB4ASdY59ks8bAtf0wnIsfDZsT+CDnkK+Ebh6SU0=
+X-Received: by 2002:a9d:4c93:0:b0:7e9:df35:ff99 with SMTP id
+ 46e09a7af769-7f1894120d7mr3834010a34.16.1785639775250; Sat, 01 Aug 2026
+ 20:02:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2171.git.1783479584.gitgitgadget@gmail.com> <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sat, 1 Aug 2026 20:02:43 -0700
+X-Gm-Features: AUfX_mwKPgJsiMWFwmdK5VttyTxWekIN0wr08YurMV_NPa43X1-awjtti59evW4
+Message-ID: <CAC2QwmLWkk4JS2XKLdj4i4CAtr7zZo=9tV_=pPQ77zR+R=pGUw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] t/lib-httpd: make CGI test helpers concurrency-safe
+To: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Friendly ping. If it makes it any more enticing, I believe the flake fixed in
+this series is responsible for at least a couple CI failures[1][2] since the
+submission occurred.
 
->> I wonder if we should simply write 'addremove', as this part of the
->> change is about rewriting the open-coded die_for_incompatible_opt2()
->> in the original and using die_for_incompatible_opt3() to add a third
->> option.
->
-> Not really.  I forgot that addremove is futzed before this part when
-> add_resolved is present, so using addremove would mean both
-> addremove and add_resolved are on, mistakenly complaining about -A
-> that the user never gave us.
->
-> So "0 < addremove_explicit" that is.
-
-Well, this episode illustrates that the option parsing in "git add"
-is unnecessarily confusing, and I think the reason is because it
-conflates the presence of each command line option and the behaviour
-the program wants to exhibit into the same variable.  addremove for
-example is about "removals are also recorded in the index", and that
-becomes effective primarily when "-A" option is given, but "-A" is
-not the only thing to turn it on.
-
-Perhaps revamping the way the options are parsed so that the
-incompatible options are noticed upfront, and then deciding the
-behaviour based on the primary operating mode that was parsed by the
-ooption parser in a separate step might make things less confusing?
-
+[1] https://github.com/gitgitgadget/git/actions/runs/28983114431/job/86006743571
+[2] https://github.com/git/git/actions/runs/29063352938/job/86269734698
