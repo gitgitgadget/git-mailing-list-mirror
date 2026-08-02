@@ -1,128 +1,173 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA63118AE3
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 00:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785631794; cv=pass; b=Nb3ssSsOHfaqmtkGyKnqaWn5/G0PvwYWTALKWvm2Qr9QrR2nieKOK62K+k1shrLRje4BVsnc2/TI0smh1wrW6E7tBSIIJNgfZhk48igOX6Duwgib9Nixnp+DrwMUbsXE4FE+UVLzQBU1cPZP9atIOBX6/5yb4LeQraVD797uA+A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785631794; c=relaxed/simple;
-	bh=ib3okr9nW78wgySu1p+qWbdh8/0VeAJ8mhzU6JYsyhw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iuoCci986wGnGJTllcSQlTtYUIB69gwWKjdO5kTTpbsFJi0FBkRzB/gQyjJYEcR2uqzKdWjKneX7mwDzfopcK1hCukgfCEga4AGKkZvWW7sw7uFA2hf0Yhmp1nONPmHgzhhQCEUZvCrZ6Tf0IA1hSX/txsrLJ36bkUPiVQ7eVrA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SGL338wW; arc=pass smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720ED2BD11
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 02:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785636163; cv=none; b=HqwZOcfhauW/X7QPdZaKPDVQxYD/F980XjjiOvWweXr/bB4xD9AJwFMtQ5RpXOEOVNuw76fiAHx4UNVXs2nz29skCUWrIKZyD2EIKD1v1fB8AraPpmO5CnVKTGaA2F9cqJl/Qr/oK9N0SWLrZqA6xxz/1umTL119X8ZgtNBdtSo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785636163; c=relaxed/simple;
+	bh=s8evNl5+ATXrPTpyIRrUXwsrYeibTDzGyTpvv5YTp9g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=op1O6j93588vx66SJscUS6Cudeu81uQSFvZeFbbfD7nj7UnOWQY/whAJfcgvXLYE6p1LhKTEf574hs2wmFtKNtucT4ys86LhvmK+xGjMMdwxLO3Zyo0rkULoHaSrAF6PfZjx0pvlHvfJG214fHd5n4XttYJXWNs4MGN7fZfX1A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WPDVE+aW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bH/MLL41; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGL338wW"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4a427e628a9so845912b6e.0
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 17:49:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785631792; cv=none;
-        d=google.com; s=arc-20260327;
-        b=J0U9MvUJjUUVf13BtD8JSXb5SGNtTSvysKkZtnym9YTZO1cEzUYgxOlktBLmvBz5aT
-         FPb73gyNGi2wnjxndmocEmUxX2ZV4bWFvXNQs7Mwil8myKauViTf/TodlTxMCoc7kIfI
-         q6VL74GXphygV+8gp1nvHwmrunkl3em84thhWX+GyK2EWm76tD/vQjRo3WZyIELp0NEz
-         BTLQsp4QTSGDvB+bmVSKi8WnuriEreSTD1UXQOUBbhduP2aKtpl+G8NCEULdNAHTJsKq
-         7TjXNcybyAswUUzBI2lWuB64q/JsNBgQ6mqAbjlYfBvMRKc1QzZWu5P8AK/2VzRkzLd4
-         lfTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zKdy6WgfoI0ibkWzPZ/LYPjoy6tl5ilXPLrH70p+eTE=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=eBq17AjHUaBvfkKgE5Qi6R/B8zeAg6Ml/HjQMdmvvihmXRnx2ExMWYOlpT4LAgmOqN
-         MhRXXH8Ag1p5M5VA7L0x2eQ+cuyAj/maJuT99Z93sQGP1+ZGBrOIrFqS9yqOL0AfgMtU
-         ObkHXpvIFKt3gEsh5PLGJr/AYLujc++L2IQ0FwMTYDYEtdwjjYx6VO0u/hEchGnwEcLa
-         /Hcq61CI8BJa1Szq/OMe3c4dds2BF7y/KTRYMVndaIq2a6S+Au+xFQAwRJpfJjwEDopX
-         OgTQexP+QNDOSYkKcPdEN5UKyhG3kJwpfQlSUYcqgpO8i6hNh0Mc7zyn9IRVJmRC/LxV
-         sNkQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785631792; x=1786236592; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zKdy6WgfoI0ibkWzPZ/LYPjoy6tl5ilXPLrH70p+eTE=;
-        b=SGL338wWktO6eZQvJJKxqaYqc8KwVkUBtfVEJjSD25+1fMxYySmGYuSHQvuDnG/hAj
-         9i2Sbs3fPJyfQykoiUvdHJm2IxlbruZgEJ4pBQjPZ09lQ4Hz5MRL3qPmRjNEpWpf4Y/v
-         KzcAFxaQENbK6VfdvvrEStfc5EH9MuKW3/QsWsjwLsbvVkoyz2sXYw2eWUlKWd6AL++X
-         3I6ymuy5B5/pTXClgPb9VicOJZCZA/YPvzcUZhgAOu4obNZRftAYOU4we5t5DLC3k5cO
-         I9VLeeh7wHuweUhVgPssG/B9pysLKBIOmKfrD5ATcf1awFkq/C61EphMV6l0QlFs+oXt
-         o4Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785631792; x=1786236592;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zKdy6WgfoI0ibkWzPZ/LYPjoy6tl5ilXPLrH70p+eTE=;
-        b=Ksj/FGCpp+Yu5xPF57kZPjmv4Nf70vcPrOKhQ1Zcla+QoI4cChaaUyuEdut2NaN9iB
-         13tSA5rX2l+x56x3drPx5s06dYqUhp2uaJtwm+NcRJbhXQ+oG8OEM1Wd4TIZYhTlFnZP
-         A5FRr7KaZhDgW6P8J4BpwqaUwKidDPd498qqwIG3vbECzvBHY8DoK+hXxRVSG5mugo40
-         CFup4a/RsaVOqmaU7vrIGXY8YS8daWvbN6LaN5/dcMjluo5txlbJVmRFRANxYUHVrNT6
-         YnodIfS6Sa4phAxShlcQr8TtT+7TNg58sMWX+I9OjFK1fEHg6ttfeEtl07pd0F4Nzmeq
-         j0Hg==
-X-Gm-Message-State: AOJu0YwtsovumenOmOuDgsuGsaoMN4H2kZZNvLCeeLbhDBwrTqAOow3D
-	OR9hevnoN2ZIr/SfnTbIRYpWfWIyqPOoFiyc3YUyJjnx2PKM3bTspMkejlON5SZQ4MRNIrPbrcL
-	vAUp2OIcMDhkGAYuo+B7/dMKTCbauQkzgQg==
-X-Gm-Gg: AR+sD12RuGtvhURs/N8wmQu5vvqjBFt82em4aEXMo1xJV2yKJb2kSkcWl+aK/QXJ1XC
-	j5CKd9YuDZ6CqWYBTsR3QkZRMlp6YlPArAMMoBfftzzg8Gg83C/2M4ujVQpd7epGq+JY0s1n4iJ
-	EQbW9icqDQ9vyvw5q98IksgOgFVLuZNfijY1acKcHoiejOVZn/3dAmM5WeHikdERHz4CQCOgIkj
-	mSHAR/Df83WOwIgU7fl3S+kFa4/ZJ+fPPNZl1jBLQE32JMHlBpJq/9B+ELaCHXRgoaShn4tAYlM
-	knbFESN0B46UUlGXtZrAUoRwJfz8TgRhJ5WQvH4GqRRRF/FJjoMW8xh8WXm6TMm7Di0qFw2ELwb
-	5X6QrbHXwmDaMtxTKnaOzWQiXrrN0ESD5UERJlE299n/dRJVlAhw91AgPrqMn0wxw8D3p9Q8ieA
-	==
-X-Received: by 2002:a05:6808:2387:b0:4a4:856a:c622 with SMTP id
- 5614622812f47-4af5e3a6b63mr8614850b6e.20.1785631791808; Sat, 01 Aug 2026
- 17:49:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WPDVE+aW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bH/MLL41"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2A049EC016E;
+	Sat,  1 Aug 2026 22:02:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sat, 01 Aug 2026 22:02:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1785636160; x=1785722560; bh=4PrsOJGNcv
+	Pg5uzvoQ+OAZlSJHSVJ1pHJ7PpJ0Na2UE=; b=WPDVE+aWyO5ojgTipWlsuonzKG
+	ZgxQ/eJXh2zT51zNHNoTcuyOw07ZEHFJRjcldSFYC/OynFVcqdIvd8p+sOo4KUCL
+	swIS3KLcP+NrtJYXQhT7oAPYj/1T9SWRvY9jEZ9tMPrvMQYDUVDaqY8B/oP4pmqe
+	hm0ZKTFKk8L4TPzVs6Wm1Xz1F2flBB0fwq50GMhOiWppu75WXkNLSCkHo4O6lHHn
+	ry5nQexCO0l6mZG6N4W5xxO/PSN/5lp6Kb6HYGWd3f3kISRFw/4fAm2wrQsjTISk
+	6RPWSMNKG347vtuwQtIhXEI3NSRxUnf2+pxNEHXVV2FgIUOx3HMgukDYHVTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1785636160; x=1785722560; bh=4PrsOJGNcvPg5uzvoQ+OAZlSJHSVJ1pHJ7P
+	pJ0Na2UE=; b=bH/MLL41sV+IObCVgCQNcdCFi9No0IgfulB3KiGGgsPh1qEDJMI
+	NPyDIT4wDcw4/rTMEhPJNbwzHMhb5rH8USC20qwQsu7qpnnDaR88MHQ52Sr4ced6
+	BE1uU/K+Uah5tV1OcwFswgKKmxSfHHy2ZYAhRuOWlrIeflmwqsRF6uqzIlVt2yQB
+	F6iLdP2iEQ32nHSMIOHf7bTNq+hkBQeQh4ZmDQhOMeMJ0JR8mdSXbHys73eOyWFJ
+	hLFqwCMJ+jUM/7ESPSy2ARg1YiLLCpdJnXSY04muJQi2Bz3K0qvz/omdhQPf1IKq
+	Dd1y2Tnml29Z/ky45DY48la1Ay6dBDGFHBQ==
+X-ME-Sender: <xms:QKVuaq2eZ9y9C68kT7J2FtPYRSO5_nANcerYYbEG4wmp5j2yLj6NkA>
+    <xme:QKVuagw_mzWnxNr1O8GUtoQDzygBr3FTxDi2qltrOBbt6O8rGAiIksiEZqlFCgbaB
+    KRGCas_XFHzJgf_WdOGvXNNRxPfNJEvylUXXwCYktJ92tgVg88A>
+X-ME-Received: <xmr:QKVuasv6kR2Mg34B9D_pnLzIXqIKdQEsISR2_BYBNH0r5jq9mx0_WyVNzbTNeofj54O27y823peTJXe9ygPGQxF4TP7_Sl0exQ>
+X-ME-Proxy-Cause: dmFkZTE24SJ5KjKKFpS6DQoIEBhhfi7T+erjVrgmBeuMEr3kT5mcJq7biiLi57+fHxOHWN
+    04M2TJ0GXRo5q0irUBVtQ50i3EYtT9rkH5aCnLyG+aaioilAYW0b0M4RGpJpmRj4BzZgJg
+    bx18yU2lrQkz0NnW5gtuhI+hHXe+jbwy55+9jCDdNiQXiz/GjVEwp7561Z7ST/VJ7oY3Sy
+    wHcDAiNcjJhET52eDPNAoxG3vG0rVcGl+o5nC5tO0Kn7vUAzuGVOqEPzvGLv9AYeucrQcW
+    TW3LWkBW/gJGi/fAawcnlz5tzmJeDiDeXdDcuDVeGjqlC0e9m4sz2xkjsgEb9qgFkDs4tH
+    NFe3PQI0VlmEoFmufk3KVVP1DUCsEOVfBDYgzC4XvefXRpXh6TF3NzA3E+reYnyVJnvbKS
+    hOE3jNDXCsSap4AqHG1fv88yREmFZM9+wAX8QY2g0jIa+BRMAo1ITvTrickTpGlJHKn+R7
+    q2Bb0X9IMoWVYdxfB3+dH0zttj+iGii2YodfBHYIWs67FE0POcdSKzJWzNU76nZs800g0x
+    GEdW3A6HmbnWn+YvWhRRVtQHEmTBWbo5xNNysVcTvLygghwRMI2QalZbQzsMey+gC7r1lo
+    Qy+AA4xzcUz3g4Fc4pZp58dN9hxcCkzr9U8TsyXggPOMhY0OBNuV0Fw1wPlg
+X-ME-Proxy: <xmx:QKVuaiyai9-Zzvu0PiSyxKsXmRejPvQuGy01PQa-BQ1DIKISLZ4Rlw>
+    <xmx:QKVuavD7-UlElgr71jW1gLVZi9fDmRWE1kXjdF95cEaCnkASXPpoJw>
+    <xmx:QKVuagcEOggveEnuSTOHngSUlpccvzluGRMtsgakf1P3p1YkNk1G8A>
+    <xmx:QKVuapl3znbtHDWhpGTdzO67wjasO_kVNc7tG9i2d5ZKqj5Yx4ZUrQ>
+    <xmx:QKVuallq8MEfIqEZGHjsZ96TfCY0sK1_f9qKlpzV6V4mti_DChKPo6nO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 1 Aug 2026 22:02:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  git@vger.kernel.org,
+  chandrapratap3519@gmail.com,  karthik.188@gmail.com
+Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
+ response
+In-Reply-To: <20260801232941.GA2097163@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 1 Aug 2026 19:29:41 -0400")
+References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
+	<20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
+	<xmqq7bmaa0sw.fsf@gitster.g> <xmqqzez67yg1.fsf@gitster.g>
+	<DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
+	<20260801231437.GA2097059@coredump.intra.peff.net>
+	<20260801232941.GA2097163@coredump.intra.peff.net>
+Date: Sat, 01 Aug 2026 19:02:38 -0700
+Message-ID: <xmqqpl015lfl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260728215219.753678-1-gitster@pobox.com> <20260728215219.753678-4-gitster@pobox.com>
- <xmqqse51algy.fsf@gitster.g>
-In-Reply-To: <xmqqse51algy.fsf@gitster.g>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Sat, 1 Aug 2026 17:49:40 -0700
-X-Gm-Features: AUfX_mzBAghdOF4R1K2KHL1N9P8OGwL7U072Pt5IhF-GYM9Cbr4xv8jyTQ2g4XQ
-Message-ID: <CAC2QwmJeohdnWhUbcP6Pc5w1X8yZf3jXvpR8JC=Hb9gqkFF6ig@mail.gmail.com>
-Subject: Re: [PATCH 3/4] add: introduce '--resolved' option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Jul 29, 2026 at 8:17=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
->
-> Left unchecked, this loop may end up scanning a large binary file to
-> the end in vain.  We may squeeze in something like this to punt
-> early.
->
->  merge-ll.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/merge-ll.c b/merge-ll.c
-> index 5e5044b9e3..ef5287dee8 100644
-> --- a/merge-ll.c
-> +++ b/merge-ll.c
-> @@ -516,6 +516,9 @@ int has_conflict_markers(struct index_state *istate, =
-const char *path)
->                         has_markers =3D 1;
->                         break;
->                 }
-> +               if (buffer_is_binary(sb.buf,
-> +                                    ULONG_MAX <=3D sb.len ? ULONG_MAX : =
-sb.len))
-> +                       break;
->         }
+Jeff King <peff@peff.net> writes:
 
-Should this check be before the conflict marker line check in case the firs=
-t
-iteration accidentally matches for a binary file and breaks with
-has_markers =3D 1?
+> And I guess that's what started this conversation. The fundamental
+> difference is asking about one object (and using pointers to tell where
+> to put the answer) versus asking about N.
+
+Thanks for framing the trouble I had so cleanly.  Yes.
+
+The origin of the pointer pattern you mentioned, 9a49059022
+(sha1_object_info_extended(): expose a bit more info, 2011-05-12),
+designed the object_info structure to be passed as a set of extended
+parameters to sha1_object_info_extended().
+
+Instead of passing 'size_t *size_p' (which can be NULL) as a
+parameter to signal that (1) if NULL we are not interested in the
+value, and (2) if not NULL, that is where you are expected to write
+the answer, and having to keep adding such a pointer parameter
+every time we need to optionally ask the function for a different
+aspect of the object, it defined the function to take an object_info
+structure to allow us to add new members to the struct as the set
+of queries grows without having to change the function signature.
+
+As a set of extended parameters, of course, it was natural for the
+caller's variables that receive the answers to be pointed to by
+members in the struct.  So the pointers in the struct are
+justifiable, but strictly as parameters to the function.
+
+The troubling thing I saw in the patch (and I suspect it was not a
+problem introduced in this series, but by earlier changes that added
+other kinds of fields) is exactly as you identified.
+
+The pointers in this struct were meant to point at real variables or
+structure members that receive values from the function, and were
+never meant to be the final structure that receives and retains
+returned values.  If we need 5 calls to the function, we either:
+
+ (1) Have a single object_info, and a set of local variables that
+     are pointed at by the members of the object_info structure, and
+     have a loop that runs 5 times where each iteration calls the
+     function to store the returned values in local variables and
+     consumes them, i.e.
+
+        struct oid oid[5];
+        struct object_info oi;
+        for (int i = 0; i < 5; i++) {
+                size_t size;
+                enum object_type type;
+                oi.size_p = &size;
+                oi.type_p = &type;
+                object_info_extended(oid[i], &oi);
+                ... use 'size' and 'type' here ...
+        }
+
+     if you can consume and forget about the object in each
+     iteration, or
+
+ (2) Have a single object_info, and 5 sets of local variables.  A
+     loop runs 5 times; in the nth iteration of the loop,
+     object_info points at the nth set of local variables and the
+     function is called.  After the loop runs, we have 5 sets of
+     local variables populated and we use them, i.e.
+
+        struct oid oid[5];
+        struct { size_t size; enum object_type type; } trait[5];
+        struct object_info oi;
+        for (int i = 0; i < 5; i++) {
+                oi.size_p = &trait[i].size;
+                oi.type_p = &trait[i].type;
+                object_info_extended(oid[i], &oi);
+        }
+        ... now you have 'size' and 'type' for all these 5 objects ...
+
+     if you have to return all 5 results to your caller.
+
+In either case, you do not need more than one object_info
+structure.  Having an array of object_info structures was what
+looked so weird to me.
+
+
+Thanks.
