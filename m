@@ -1,137 +1,212 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B649F3803DC
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 11:29:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785670156; cv=pass; b=akaEMT/G5MVmjJwbGWznC0yBXIdBa+yqOQwJkPR2xMfKfkF//grsF+5M5xzwP4R9WpqvoFTUaTy9bKyf3A8aZ3SB8fpCkFaOwjAB9BTL1aqj5jL0NG3H92HOI2YkQw7bJyJW0DWfCVJPR2SjAJdlaeD1BpXPVBf19saTE48X9Kw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785670156; c=relaxed/simple;
-	bh=SJ57KHby0HOHtJWHT+WYxnpT+PX0JX65Iof+YHQZYJk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DGiKYRaJGDQUh4YTkvIpzyEdcReCHhuRaEsFXsDhrBSEitDaA1Xn/8HHPzUxfm4ElpxgqBybsd0pK34oVGCri+rBrg1Tw3I0KKEIi92wQUCql6Zl4/1jZFXhw5UVq+esj6bvORe+51pfFKSGIomhCY1BNoYKj62jOL8VusBbZD0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DW20KLkP; arc=pass smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E756171B1
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 12:33:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785674034; cv=none; b=lys6c/+8VP10IBR1u4ISUdbIl/711OmEfwE095OH5X9mSXthgVtQ+TDD39mUB9BjqQMDnnXB9HF8poDnSRTv1Vf9qQqpBAH4Nk856iVPyhs8/G5QBbLrBSFW8YURXOjwv0cA5WOvdmdDz0UbdGFjwTH2S9LcqQpSym7uX+L8qCY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785674034; c=relaxed/simple;
+	bh=GvEsNIEA7HgDt9ks9a8pbWTK2UUNbP8BdnUSb0HZyTg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=QlqTNzJfIs74ewO1HZsSUJsIQK30Avr/1ygnyrvMCKuzEs7CcYM9eGnaBGT+rfphPWK0nO2yvo9Vm70h1S7Kiokm17wglT8wqm71acU/zpsqbzD5sP0uhvn2jDc4mU+4gAhOHRzIhcbofeHdC8VeyHdwF3MEdGm3Vx4C2w8DVCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XKvTI0JV; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DW20KLkP"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-84847482584so1540711b3a.0
-        for <git@vger.kernel.org>; Sun, 02 Aug 2026 04:29:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785670154; cv=none;
-        d=google.com; s=arc-20260327;
-        b=SxvBcgB8Yv5XeLD3LXDzBHQL8LAfmcfSrBsdwiU61cqYlplSQuzUK/z6Q0hBWTyRu0
-         qNKXfGg4emolSaeZLatpK8Ah7PpJRVYdxzcbLax1aMn+WSDwgEMnGP4+r8zu0oqfEbGw
-         eL2j9z+Qb0Ne1mAd0HnxXHlwpOlPzz2nXV1dkaN3hfjTJvdVFsdMEc/VXQkGqMAFv3rI
-         WpAivuc/4DXlz7SScec5zGEtZaYICMpQ5kH8mLVXarTv0vw2qLC2WzCB167x1cQQRc63
-         Ka1Dzamp7IavZhXcpdD2H7MF9iwzrNB0JDFlAJcfjyZNgJvQ2zOGq1rZ9VqxqiNhkWFj
-         NJcA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=6m+wjABtwg5nwMAGxZxxulZLJfLSfEG6F4fx0CC+Y4g=;
-        fh=HHKzRUEEhCWVwkOWbqkww05igjo5i1Yfo3ZxdByB8iU=;
-        b=pLWJaOS9pX4PrYzcZeOrLVGPCmbQfsNhLKxYb8B0UVuaCp5gsDPsQFFe7sP/zm1RTV
-         yu2WtshalAY5dAftXM066KMTFDK6rbyTBBGOg+9Mx38b5D3f0180azJUzhUwQwszjK8C
-         +T8QxHPIbgD0/VIs/SaYRawYhowHCQkQxCuxGJkjiZrEyF9aFt2+cjzCKDvzuXLs3G/z
-         XT9JU374+UmLEuyLmatgJ58+erll3FMci1YNZhK7bHP8/T757wTTtKa3qwbdSQc7NXni
-         4KtBq3+z5TotHg1zmrOgoXY8OPAkDAZpeYsqNi2dg0B9dM6vrv7TtpJ7iaEQTbDX2ARU
-         BYLw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKvTI0JV"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-47f84023916so2543368f8f.3
+        for <git@vger.kernel.org>; Sun, 02 Aug 2026 05:33:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785670154; x=1786274954; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6m+wjABtwg5nwMAGxZxxulZLJfLSfEG6F4fx0CC+Y4g=;
-        b=DW20KLkPGzXksMMDqrlt3R6jnZfZ4HU/qBCykkkWcJlai02iBowSjIfLnDvagUm2+X
-         pg5eEauiF0eJOF0CMAaP60Tnwzat2+ZM3Xx84rFtQQqWwVy4jvmsqgZl3FnTsDKUxB18
-         aNhLw1p63xN99JwZKlXM3oTrWrnHffK74ZNhiXF++zoS+gwGSmE5ZUp82TzBECWkYJDP
-         D63VSTh1fRbVeUQpy56kK9S48hS2Q1zV72o1gQMIhg/4tVogAglUNoBaXe+WsjqEzy+Y
-         uB4SR6RvPVZENRrsUCJyN0EvMUeVIEB3KSNv4cgfy/rqWQ5d1Ug0ulM7p3QmwvpPV4U0
-         Q5bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785670154; x=1786274954;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1785674031; x=1786278831; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=6m+wjABtwg5nwMAGxZxxulZLJfLSfEG6F4fx0CC+Y4g=;
-        b=DbzsTKr/qv6SgXVvK4tB+aLvQ6tPaBD580sM6e2ER0sQ7amRnTzG3Do7MGh0ezHItV
-         Uwf34bgZLUVWaTT4cMwepw4UGPI9g5qX5kse/uMcj18Rw9yQD3HBPSZEqia20eJZu2Dz
-         FZ4y+UUdao2UOgRmYJ7yh8JjeVriwCKzerXIrvr8n+EtMHYbop1MCSdrp6THUtRaehf6
-         hX+v8jTlE2Bbo80AMNLaakxI9BRshSwH3s1hlejMvZ/xeGoyDrj0ThLd4yWt8h7G48a5
-         Ox1WnATjDL5G9iP1ANyRwrqaxtSqZ+Wa/nepmpr51otvyl116DuCI9aELmtqtKRmMsAO
-         6Fag==
-X-Forwarded-Encrypted: i=1; AHgh+RpLWY1zxouycJfnMo5XJ/vOQvk+eLNxRZaqf3hk66tY0o04mFnEtNybTFr0KYg+peEr45A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxqkqruMfGd+fYVQijstdz+YbZEvJnjQj7atMRlO67d734VM3O
-	rW0kPHAm/lXXit/Y6ZXB7e7X7R7cytTftvWjzvRYi8On4b9u3i0NUyZSeavqjrMFeWwMXHLLYy3
-	Hp+MNSnSAn5rNg04A0KTRSVVJdZRSZVp9a37i
-X-Gm-Gg: AR+sD10nmh4Abrp/VCmla9izUq5/WpU8zz0GEsYyxB3tHcRTwxFghv4Nlc2uxpAqwB1
-	04l3983Z9eNq2bfWaWMNL1Cdq55yhZeajWSTeRCIIcei1Cp6qsNxnvCqJ+X2/WcktSVslJiQ5zl
-	bNt/IhanXlI2CR6PqdrPbarfT4R20zpQssEQyCc6jizNnxfDMJg3UrOzat1WwYQ0vFMPh7/2H7o
-	p4jjUD2k4YtO9Q3OOThoslwLMrLu/9JAV0cV3n9+bxn+pEryhhvT9kXqODmdyWT6tFg4pl+gvmi
-	tf2KjuTvwIfgrlUj4JZj+HOQrjxOpWgWgHv2n9o5vni7CC2niEsQ+CZHFe3AQgLO8eTwYYi1+Xo
-	bSayKdkThCVyIDOFkYpynYlM56Vv+dwhSC7jbUVBwdtO3T5ViLE2BKgus0aXpi/ID
-X-Received: by 2002:a05:6a00:2ea6:b0:847:e2e4:a36b with SMTP id
- d2e1a72fcca58-84ee492fa1dmr5258782b3a.19.1785670153815; Sun, 02 Aug 2026
- 04:29:13 -0700 (PDT)
+        bh=3CCRst9saojP0YyUHn/KIj/YBmDvg3jtcC8WZm4apWU=;
+        b=XKvTI0JVhcYUINb8Zf1KkWzagOarCmEXXiCVgjVJxGvT2ehVyoejYzUNEMQiPgE9aS
+         1fqyfiKDPNNby2UCE+88hiSy8WtXCaQE04Rn3tLz7wU1a+iLZovCUVG3mWtynLfmlB9g
+         q44mTj1fgy+QrsvFmakV1x1y6H5LszQ2yw2YALoZWkGPpws3kkOLBfZkASPClaR4VjJC
+         Tn0I824HNzjD49XOFnYZF7VJ54Ys1KTB4H5tnPAXJpnd5BjhGKVtkUCZpH6pm8xYq82n
+         j/LkO4K0va1aos/DdeAeuROZ9JygWaIPkw7pf3e77/9ucb4qUc884VpdcFgBsGqlom1C
+         O2kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785674031; x=1786278831;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3CCRst9saojP0YyUHn/KIj/YBmDvg3jtcC8WZm4apWU=;
+        b=LaQMnhVayqn9Tv2cBizNblKv99k/iYdR11TKAFXjXGfNJlgugYJgza0n6iYMQitqCD
+         gDJ6JuIkrNK04gUXsua7LIeLkG/galdvIW7mDaRqlw1VLO8iEJAPip9oKNKNXflA1a7J
+         K3TUkcUAWuXWTOiA3qX21pOSObNU0LgzkxQCcq3kq/F+HDt5Cw7/ngNurmPVqBq0inhG
+         Jpnj1gh+42jPPRTIbBcGdS2YEqMegAmQAdpEKggHTPX/t1anXPB4laVlCj6DUgihMtmx
+         LI4Q2trWNeJmYtExR0xKutIRgLAS6MetCGp4QwpR5dSHCCvqS82Qsd6I5/YKj6yAKSiN
+         3dnw==
+X-Forwarded-Encrypted: i=1; AHgh+Rq3ZsdwdzZCqlyLlMjgJL6YOClgRpBBXZ1PkF7upZfZK/mEKDoFljXiOuHM+2s4ghzt1/E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9Kt6s2r+3GQNAuSci/iC4FXznJca6tf1uWpBtrK5N2JL01OBx
+	lxobJ6y/ppFJVjrbCY7pd+QfcZ0UbvZpblxpdQU3LEgF1ZfRGQwWfnDd
+X-Gm-Gg: AR+sD132oqJZYUQbRD7IGPsTTG+AEH4riQzYgV5I2kbm5D+NdGWw6tb/dOv6u/GjESK
+	qqXqhaUDkaoNqbvb1/bG+MLbctYRgXm+XYjnPGTAP3jcqmFfnbCpPH+oPga36HOghmRQJRH9w3u
+	NqjSRGKf8SHwOlWNy+osVaycE+fhVpahJIoksom3/kLJHf2LkuNluuddhkKFVkUzp0zl0nc+rY6
+	iuM1wTkq4bKvO9+BLmhVmebqezyHlHCstSnIdkO6Mt+yjwa9s4KhngyogQeluMqzhuUYW83DJ70
+	/UaMHrmP8SKzQ3wF9g258sOnZmogLtzjMixso/2sFQZdtEW4/130uPfvyY9+akAWwabx/K8qkgy
+	wcQzlxGW5IOfrJopne5jQ9ncpTCA+oQTctTvuertn6o7Vc5xTnCd+opoRoMYvaAQDtEaARzN0Vw
+	EpddHw+IN0HWXyrlXWugRwmhKHva3Pul2zB86dlOznyA4n6cU+gCmrAlYIfRhsUi4s54d9O9RbX
+	lr4fOJJJfpH99i4DAdw+3es/TJ9XvbTY+EMlh4gvCHycBStlO7vKpgl1+GjlnW1Zl7eJOV00efx
+	gN+TFKK+VCbwOEyarrQQ8glfvP7T+lFTNxvUAm3RRKiogkpW+pODur11uqR/Wm+hgNKFVALKQqo
+	=
+X-Received: by 2002:a05:6000:110d:b0:47f:9ac6:c9bc with SMTP id ffacd0b85a97d-47fd72bbfefmr13325679f8f.2.1785674031024;
+        Sun, 02 Aug 2026 05:33:51 -0700 (PDT)
+Received: from localhost ([47.58.8.78])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd41d0064sm22913397f8f.5.2026.08.02.05.33.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Aug 2026 05:33:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
- <20260730174153.9949-1-r.siddharth.shrimali@gmail.com> <xmqqcxw3dvh5.fsf@gitster.g>
- <CAGWgyh8EPSufBZrk0xCqTr4gz6MtJHkfCy6JQKxCqKSPZ3gEgw@mail.gmail.com> <xmqqa4r55kpl.fsf@gitster.g>
-In-Reply-To: <xmqqa4r55kpl.fsf@gitster.g>
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Date: Sun, 2 Aug 2026 16:58:37 +0530
-X-Gm-Features: AUfX_mzV833bNLUCThN98FTpYowf-0OblZXOILiGLcDdlSASQXqbgCfhCjyt2as
-Message-ID: <CAGWgyh91Bh-YOs9WVdbq7cEVkM0guu255GmXqJy2PhydQpNetg@mail.gmail.com>
-Subject: Re: [GSoC PATCH v2 0/7] repack: add --drop-filtered to reclaim space
- in partial clones
-To: Junio C Hamano <gitster@pobox.com>
-Cc: christian.couder@gmail.com, siddharthasthana31@gmail.com, 
-	git@vger.kernel.org, me@ttaylorr.com, ps@pks.im, johannes.schindelin@gmx.de, 
-	l.s.r@web.de, ttaylorr@openai.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 02 Aug 2026 14:33:49 +0200
+Message-Id: <DKEGM4BYZ4UW.UVJ1H8IGVF0Q@gmail.com>
+Cc: "Pablo Sabater" <pabloosabaterr@gmail.com>, <git@vger.kernel.org>,
+ <chandrapratap3519@gmail.com>, <karthik.188@gmail.com>
+Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
+ response
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+X-Mailer: aerc 0.21.0
+References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
+ <20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
+ <xmqq7bmaa0sw.fsf@gitster.g> <xmqqzez67yg1.fsf@gitster.g>
+ <DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
+ <20260801231437.GA2097059@coredump.intra.peff.net>
+ <20260801232941.GA2097163@coredump.intra.peff.net>
+ <xmqqpl015lfl.fsf@gitster.g>
+In-Reply-To: <xmqqpl015lfl.fsf@gitster.g>
 
-On Sun, 2 Aug 2026 at 07:48, Junio C Hamano <gitster@pobox.com> wrote:
+On Sun Aug 2, 2026 at 4:02 AM CEST, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> Siddharth Shrimali <r.siddharth.shrimali@gmail.com> writes:
-> Doesn't it suggest that the "cull anything refetchable" feature can
-> gain a bit more smart?  Given an object you know you fetched from a
-> promisor remote, are there cheap ways to determine how long you had
-> it in your repository?
+>> And I guess that's what started this conversation. The fundamental
+>> difference is asking about one object (and using pointers to tell where
+>> to put the answer) versus asking about N.
+>
+> Thanks for framing the trouble I had so cleanly.  Yes.
+>
+> The origin of the pointer pattern you mentioned, 9a49059022
+> (sha1_object_info_extended(): expose a bit more info, 2011-05-12),
+> designed the object_info structure to be passed as a set of extended
+> parameters to sha1_object_info_extended().
+>
+> Instead of passing 'size_t *size_p' (which can be NULL) as a
+> parameter to signal that (1) if NULL we are not interested in the
+> value, and (2) if not NULL, that is where you are expected to write
+> the answer, and having to keep adding such a pointer parameter
+> every time we need to optionally ask the function for a different
+> aspect of the object, it defined the function to take an object_info
+> structure to allow us to add new members to the struct as the set
+> of queries grows without having to change the function signature.
+>
+> As a set of extended parameters, of course, it was natural for the
+> caller's variables that receive the answers to be pointed to by
+> members in the struct.  So the pointers in the struct are
+> justifiable, but strictly as parameters to the function.
+>
+> The troubling thing I saw in the patch (and I suspect it was not a
+> problem introduced in this series, but by earlier changes that added
+> other kinds of fields) is exactly as you identified.
+>
+> The pointers in this struct were meant to point at real variables or
+> structure members that receive values from the function, and were
+> never meant to be the final structure that receives and retains
+> returned values.  If we need 5 calls to the function, we either:
+>
+>  (1) Have a single object_info, and a set of local variables that
+>      are pointed at by the members of the object_info structure, and
+>      have a loop that runs 5 times where each iteration calls the
+>      function to store the returned values in local variables and
+>      consumes them, i.e.
+>
+>         struct oid oid[5];
+>         struct object_info oi;
+>         for (int i =3D 0; i < 5; i++) {
+>                 size_t size;
+>                 enum object_type type;
+>                 oi.size_p =3D &size;
+>                 oi.type_p =3D &type;
+>                 object_info_extended(oid[i], &oi);
+>                 ... use 'size' and 'type' here ...
+>         }
+>
+>      if you can consume and forget about the object in each
+>      iteration, or
+>
+>  (2) Have a single object_info, and 5 sets of local variables.  A
+>      loop runs 5 times; in the nth iteration of the loop,
+>      object_info points at the nth set of local variables and the
+>      function is called.  After the loop runs, we have 5 sets of
+>      local variables populated and we use them, i.e.
+>
+>         struct oid oid[5];
+>         struct { size_t size; enum object_type type; } trait[5];
+>         struct object_info oi;
+>         for (int i =3D 0; i < 5; i++) {
+>                 oi.size_p =3D &trait[i].size;
+>                 oi.type_p =3D &trait[i].type;
+>                 object_info_extended(oid[i], &oi);
+>         }
+>         ... now you have 'size' and 'type' for all these 5 objects ...
+>
+>      if you have to return all 5 results to your caller.
+>
+> In either case, you do not need more than one object_info
+> structure.  Having an array of object_info structures was what
+> looked so weird to me.
+>
+>
+> Thanks.
 
-agreed,
-I like this a lot, recency is what the index guard was reaching for: dont
-drop something you are likely to want again right away.
+Thanks, I think I got it.
 
-the tricky part is that droppable objects are always in packs (a lazy fetch
-produces a promisor pack, never a loose object, in every config i
-tried), and packed objects dont carry a per-object timestamp on their
-own.
-The cheap signal available is the promisor packs own mtime: since
-each lazy fetch writes its own pack, early on that mtime is a decent
-proxy for "when did this object arrive". The catch is that once a repack
-consolidates packs, that per-fetch granularity is lost and you only know
-the age of the combined pack.
+I have the doubt of whether this change is desired for this series as
+prep or if I should keep on and later make a cleanup series as this
+doesn't make a change for a user.
 
-Git does already track per-object mtimes for cruft packs (via the
-.mtimes file used for --cruft-expiration), so there is precedent for
-age-based culling. whether something similar is worth doing for promisor
-objects, so age survives repacking, would be a larger discussion
+What I understood is that fetch_object_info shouldn't use object_info to
+store the results, because it doesn't call read_object_info() like other
+commands like 'info' do. Then, it should use its own data structure to
+hold the results with flags like wants_size and wants_type. Something
+like:
 
-either way a "dont cull objects younger than <time>" rule fits the same
-enumerate-then-select framework as just another predicate narrowing the
-candidate set, so I'll note it as a promising follow-up criterion
+	struct object_info_results {
+		enum object_type *types;
+		size_t *sizes;
+		unsigned *unrecognized;
+		size_t nr;
+		unsigned wants_size:1;
+		unsigned wants_type:1;
+	};
+
+All three of the pointers are nr long.
+This could be done in two patches, as I was going to do a prep to
+prepare the current code (size only) and this patch would add type for
+fetch_object_info().
+
+At the start I read this:
+
+> It could be something we may want to
+> clean-up much later after all the dust settles from this year's
+> GSoC.  I dunno.
+
+So I'm a bit lost about what to do, I'm happy to make that in this
+series or as a cleanup series later after GSoC which ends in a couple
+weeks.
+
+Whatever is preferred.
 
 Thanks,
-Siddharth Shrimali
-
-> "This large blob can be refetched if we
-> wanted to, but we downloaded it just 20 minutes ago, so let's not
-> cull it just yet", or something like that, perhaps?
+Pablo
