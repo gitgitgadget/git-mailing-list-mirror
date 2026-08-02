@@ -1,126 +1,128 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E6C42A80
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 00:22:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA63118AE3
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 00:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.171
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785630179; cv=pass; b=C7dFeoWk9Ke4qNggMHznYuGcOhCdAnUbsvPMj4uX1SOHolgcM+dbp0hupMwkxOTnYMwuAUxFdJLlSDj0Fv6fZzpbBpm6Hm2ESruFLUaIAPM7MeT1pf4vou2Uwzpm410uwtDJRykNyF36E73JXExqm4VZwDLgaqcRANn/kzbT2Sk=
+	t=1785631794; cv=pass; b=Nb3ssSsOHfaqmtkGyKnqaWn5/G0PvwYWTALKWvm2Qr9QrR2nieKOK62K+k1shrLRje4BVsnc2/TI0smh1wrW6E7tBSIIJNgfZhk48igOX6Duwgib9Nixnp+DrwMUbsXE4FE+UVLzQBU1cPZP9atIOBX6/5yb4LeQraVD797uA+A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785630179; c=relaxed/simple;
-	bh=REjrYV6zDryvkGXbYRHTMqrWt2IlhPNIfb1vZX93XFw=;
+	s=arc-20240116; t=1785631794; c=relaxed/simple;
+	bh=ib3okr9nW78wgySu1p+qWbdh8/0VeAJ8mhzU6JYsyhw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ihFrl65zXVXe3j7rp3GL5mhY8nAP3cGqQazEYWfeOrygipKOY9VXXqHZPMdsJ4NBGeYDzBiyjxA950HpAnF4xxRiFw8XSPM4TGVmU7CVSbyDPs/egHA9//G/hVgoLOFDPIuq1n5p8EdOl/yOWdjHLwCTURMlmvHm0ALJC4KbZzo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g1Ht8PT/; arc=pass smtp.client-ip=209.85.167.182
+	 To:Cc:Content-Type; b=iuoCci986wGnGJTllcSQlTtYUIB69gwWKjdO5kTTpbsFJi0FBkRzB/gQyjJYEcR2uqzKdWjKneX7mwDzfopcK1hCukgfCEga4AGKkZvWW7sw7uFA2hf0Yhmp1nONPmHgzhhQCEUZvCrZ6Tf0IA1hSX/txsrLJ36bkUPiVQ7eVrA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SGL338wW; arc=pass smtp.client-ip=209.85.167.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g1Ht8PT/"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-4af7283bf83so115047b6e.3
-        for <git@vger.kernel.org>; Sat, 01 Aug 2026 17:22:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785630177; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGL338wW"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4a427e628a9so845912b6e.0
+        for <git@vger.kernel.org>; Sat, 01 Aug 2026 17:49:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785631792; cv=none;
         d=google.com; s=arc-20260327;
-        b=ovo8gb0q9gKwfUpdsuehohC7PgLd0b1JuY8Jp5BiYdT4DGi7QFSAbRBNGys6Msoz8x
-         JVyFVfwS+CEsBtdoC+TV2eYPT0aDmwAovp2ceHRqQPMttTlUgSzRfbyqrmjP8rG06yiT
-         9Xypucx92XIzLRhBD2AsxUgJpYn+wIuYuCKfXDLtRclvkbLhV18SwWnaWyRfpwu91GPO
-         cxJgamZFlEgirA9GjNzH4O0lRmonIWagxvOLB+oDAjI3/fO/rLPy9+X6qsOCUMsbqt5e
-         9zlvTSILi7VlBtYVJyVgPrP6JtDLBCi3rj7ohvXNEWD0bfTds90bcSgO/zYhdEFoMo6r
-         wGlA==
+        b=J0U9MvUJjUUVf13BtD8JSXb5SGNtTSvysKkZtnym9YTZO1cEzUYgxOlktBLmvBz5aT
+         FPb73gyNGi2wnjxndmocEmUxX2ZV4bWFvXNQs7Mwil8myKauViTf/TodlTxMCoc7kIfI
+         q6VL74GXphygV+8gp1nvHwmrunkl3em84thhWX+GyK2EWm76tD/vQjRo3WZyIELp0NEz
+         BTLQsp4QTSGDvB+bmVSKi8WnuriEreSTD1UXQOUBbhduP2aKtpl+G8NCEULdNAHTJsKq
+         7TjXNcybyAswUUzBI2lWuB64q/JsNBgQ6mqAbjlYfBvMRKc1QzZWu5P8AK/2VzRkzLd4
+         lfTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=cgQbudsS9QZ5GE+13pqGsRXwCA67Csv2PlT35OJn+d8=;
+        bh=zKdy6WgfoI0ibkWzPZ/LYPjoy6tl5ilXPLrH70p+eTE=;
         fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=Psdz2ME+OvvOV7x+XX1eECWryz+v8C+3sR8l2zoEnEbsamdURduUoakJyeRrA+T8LM
-         6lOi2QTFEI0KdJZBKKUOf2v3fw/RHCUrTzSjl2dfK7Ujf34Ek6oDzZk/pglbNo9T/wBH
-         gHzN+vnVpLCKSQrpCBBBC6ACezZm2xRHXW2CJDe1l6rDDEiTWGazDb5HxPp+drtthu93
-         rVh0uB3C1NFUlGhVaRdp/0z2YBYsVz7ZRxSZVAdVnvyhC/wdwalNb8+JurVh/QZK+V0C
-         TwBbUPf0ubsLX++tbulR5elzlQogwV6GZCrvC3PIc1fRjYG5bdufpxxNj/OxYjlZ3PtJ
-         UD/w==;
+        b=eBq17AjHUaBvfkKgE5Qi6R/B8zeAg6Ml/HjQMdmvvihmXRnx2ExMWYOlpT4LAgmOqN
+         MhRXXH8Ag1p5M5VA7L0x2eQ+cuyAj/maJuT99Z93sQGP1+ZGBrOIrFqS9yqOL0AfgMtU
+         ObkHXpvIFKt3gEsh5PLGJr/AYLujc++L2IQ0FwMTYDYEtdwjjYx6VO0u/hEchGnwEcLa
+         /Hcq61CI8BJa1Szq/OMe3c4dds2BF7y/KTRYMVndaIq2a6S+Au+xFQAwRJpfJjwEDopX
+         OgTQexP+QNDOSYkKcPdEN5UKyhG3kJwpfQlSUYcqgpO8i6hNh0Mc7zyn9IRVJmRC/LxV
+         sNkQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785630177; x=1786234977; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785631792; x=1786236592; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=cgQbudsS9QZ5GE+13pqGsRXwCA67Csv2PlT35OJn+d8=;
-        b=g1Ht8PT/iWogPEDsqUNqvTjsTbmONFC1Cky/+4uU2BNolPusu3E2AjNuQq0sxSWUdf
-         dVDVfD4m1oOA77DzIjEveJwzGnEitba8AXby195USc+zY5bOvLePeQ/nTzFYacHsBdTU
-         M1B8OcTcnuBCRwi3iNNVjG5NtTWsY/PyJ3Q3ONw65QHtKyBgBcYOAa3qLbah3+gG6I5r
-         98q+WXwgDJx2kZQKjc7k0O6ZyGblmzjoOkHhjHtviiOxRhsyr9igmn/OCyqGVlE5vdFC
-         SXY6RkKmnLnWj+RNu0bp7YuzcNfkiWHrOB5/LXUprD5qrdt+XYqeHltiMx2zslu/dgbi
-         V+wg==
+        bh=zKdy6WgfoI0ibkWzPZ/LYPjoy6tl5ilXPLrH70p+eTE=;
+        b=SGL338wWktO6eZQvJJKxqaYqc8KwVkUBtfVEJjSD25+1fMxYySmGYuSHQvuDnG/hAj
+         9i2Sbs3fPJyfQykoiUvdHJm2IxlbruZgEJ4pBQjPZ09lQ4Hz5MRL3qPmRjNEpWpf4Y/v
+         KzcAFxaQENbK6VfdvvrEStfc5EH9MuKW3/QsWsjwLsbvVkoyz2sXYw2eWUlKWd6AL++X
+         3I6ymuy5B5/pTXClgPb9VicOJZCZA/YPvzcUZhgAOu4obNZRftAYOU4we5t5DLC3k5cO
+         I9VLeeh7wHuweUhVgPssG/B9pysLKBIOmKfrD5ATcf1awFkq/C61EphMV6l0QlFs+oXt
+         o4Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785630177; x=1786234977;
+        d=1e100.net; s=20251104; t=1785631792; x=1786236592;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cgQbudsS9QZ5GE+13pqGsRXwCA67Csv2PlT35OJn+d8=;
-        b=P5eTtvkvDHb2O8mn0rEG/gErtdiRHzbJChIXfrlie++aySwF0l4GT1kImITN1x1tPE
-         GJmEWlD2WXX3+IqrTzzMhY16trMMv2dyrAgh6qYWbqYiSl8gbebnv37V9Y9IJDb28F+t
-         z8c8QClJB3cAZxhHdjCk4fznUTkBEpj9TGNvl6uCtuWPeuyBolHirFXMLMp1euo28tmY
-         vRoxBstU/X+B/2EcJFIuE/5p8Dk97h73Tbv3yah3jp0M+vloZDkvBsM3gzpJ6AB7Vdmx
-         CjCZIEYOhttfSJHfyR8KtRPtD1kqG1X35v2OTWSaNyFxj5w528JokFX48PRSasoMSuXP
-         y8Yw==
-X-Gm-Message-State: AOJu0Yzd5hn0vMoKTTGSej9IWmXLoe555OsOcpipWpxIjX0KWoyKXkPb
-	s9kl0oEKXlQpZ4OSRcY2JSQugdxKQIfx+Xp8GbzYrKdlr+KYWIlbS9O3PoL/Ug0puKtbtd9wAZi
-	u6iScLa/Y08Ivha/1ScKnTFTDzWhdRjkurv8q
-X-Gm-Gg: AR+sD13gOsf/AULKJ/oHrLlNPzM/ek6VCkZU48U6ezfPV5/VxlOSIY2Hd377RqnnKcK
-	Ar6CNQZxHfelOmjxVYHnBOCZqagsr9UdZLfO/ul8DRNXomeZ0S/qdYH3YN7iPbGUHius+cTdARu
-	aEpU7f/jB3cRTJldplr4bdVYRZl95yyJ4s4SMBq6eAh0G94UkPdRlo7A6OZ2dT5omtLKHy4FDN5
-	/oj6epQqgQG70dn3gxswCuOW2Zjl7UObfaUTQeGuOf2Ph6a2ymaegElw0u0AOjKKZSxxRXlFGQF
-	meIJJX4xUaJVxYZ0CkyJzCO1dyqpKLvZhu+2L+mvPSU3+5994gS7bOzKusLnyuYMP4m4NuXssF7
-	V2rz9MMl59dKBKWoFH/2UniCwH7PeBldZTh8Mm5seRAK9yKdSEOM1GE16ZSYQaC8=
-X-Received: by 2002:a05:6808:124e:b0:495:f67c:d96a with SMTP id
- 5614622812f47-4af5e1c80efmr8283276b6e.12.1785630176804; Sat, 01 Aug 2026
- 17:22:56 -0700 (PDT)
+        bh=zKdy6WgfoI0ibkWzPZ/LYPjoy6tl5ilXPLrH70p+eTE=;
+        b=Ksj/FGCpp+Yu5xPF57kZPjmv4Nf70vcPrOKhQ1Zcla+QoI4cChaaUyuEdut2NaN9iB
+         13tSA5rX2l+x56x3drPx5s06dYqUhp2uaJtwm+NcRJbhXQ+oG8OEM1Wd4TIZYhTlFnZP
+         A5FRr7KaZhDgW6P8J4BpwqaUwKidDPd498qqwIG3vbECzvBHY8DoK+hXxRVSG5mugo40
+         CFup4a/RsaVOqmaU7vrIGXY8YS8daWvbN6LaN5/dcMjluo5txlbJVmRFRANxYUHVrNT6
+         YnodIfS6Sa4phAxShlcQr8TtT+7TNg58sMWX+I9OjFK1fEHg6ttfeEtl07pd0F4Nzmeq
+         j0Hg==
+X-Gm-Message-State: AOJu0YwtsovumenOmOuDgsuGsaoMN4H2kZZNvLCeeLbhDBwrTqAOow3D
+	OR9hevnoN2ZIr/SfnTbIRYpWfWIyqPOoFiyc3YUyJjnx2PKM3bTspMkejlON5SZQ4MRNIrPbrcL
+	vAUp2OIcMDhkGAYuo+B7/dMKTCbauQkzgQg==
+X-Gm-Gg: AR+sD12RuGtvhURs/N8wmQu5vvqjBFt82em4aEXMo1xJV2yKJb2kSkcWl+aK/QXJ1XC
+	j5CKd9YuDZ6CqWYBTsR3QkZRMlp6YlPArAMMoBfftzzg8Gg83C/2M4ujVQpd7epGq+JY0s1n4iJ
+	EQbW9icqDQ9vyvw5q98IksgOgFVLuZNfijY1acKcHoiejOVZn/3dAmM5WeHikdERHz4CQCOgIkj
+	mSHAR/Df83WOwIgU7fl3S+kFa4/ZJ+fPPNZl1jBLQE32JMHlBpJq/9B+ELaCHXRgoaShn4tAYlM
+	knbFESN0B46UUlGXtZrAUoRwJfz8TgRhJ5WQvH4GqRRRF/FJjoMW8xh8WXm6TMm7Di0qFw2ELwb
+	5X6QrbHXwmDaMtxTKnaOzWQiXrrN0ESD5UERJlE299n/dRJVlAhw91AgPrqMn0wxw8D3p9Q8ieA
+	==
+X-Received: by 2002:a05:6808:2387:b0:4a4:856a:c622 with SMTP id
+ 5614622812f47-4af5e3a6b63mr8614850b6e.20.1785631791808; Sat, 01 Aug 2026
+ 17:49:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260728215219.753678-1-gitster@pobox.com> <20260729172524.4022621-1-gitster@pobox.com>
- <CAC2QwmKD1d=-mz4WrkA7CHwi-ko75MP2LDFPWx+1FGLQtf4QtA@mail.gmail.com> <xmqqfr10lvhx.fsf@gitster.g>
-In-Reply-To: <xmqqfr10lvhx.fsf@gitster.g>
+References: <20260728215219.753678-1-gitster@pobox.com> <20260728215219.753678-4-gitster@pobox.com>
+ <xmqqse51algy.fsf@gitster.g>
+In-Reply-To: <xmqqse51algy.fsf@gitster.g>
 From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Sat, 1 Aug 2026 17:22:45 -0700
-X-Gm-Features: AUfX_mwyOhYhHp155ZVpA1T6Q_7DWZw0iwcQraRPxYKkhb49TxgMoJiAJ9rypV0
-Message-ID: <CAC2Qwm+6e8ZW36--iPmrCLT2tS7R4O_TDbx4S1MaSMb9bg=epg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] git add --resolved
+Date: Sat, 1 Aug 2026 17:49:40 -0700
+X-Gm-Features: AUfX_mzBAghdOF4R1K2KHL1N9P8OGwL7U072Pt5IhF-GYM9Cbr4xv8jyTQ2g4XQ
+Message-ID: <CAC2QwmJeohdnWhUbcP6Pc5w1X8yZf3jXvpR8JC=Hb9gqkFF6ig@mail.gmail.com>
+Subject: Re: [PATCH 3/4] add: introduce '--resolved' option
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 30, 2026 at 1:41=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+On Wed, Jul 29, 2026 at 8:17=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
-> Sure, but I do not think of a reason why the posted patches cannot
-> later be extended in that direction if somebody wanted to...
 >
-
-Yes, that is fair.
-
-> Have no idea how the user recovers after performing an operation
-> like that.
+> Left unchecked, this loop may end up scanning a large binary file to
+> the end in vain.  We may squeeze in something like this to punt
+> early.
 >
-
-My thought was that a partial set of resolved files without markers
-would still be added and files with markers would be available for
-a subsequent add once they were resolved too. My understanding
-may be incorrect, though.
-
-> The naming is very much deliberate.  "git am --resolved" tells the
-> command "I am done with them, so please continue".  It is not like I
-> want to add anything that are unmerged.  I dealt with unmerged stuff
-> and turned them into the resolved state, and the command is a request
-> to record that fact.  It is a regression to call it "--unmerged".
+>  merge-ll.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
+> diff --git a/merge-ll.c b/merge-ll.c
+> index 5e5044b9e3..ef5287dee8 100644
+> --- a/merge-ll.c
+> +++ b/merge-ll.c
+> @@ -516,6 +516,9 @@ int has_conflict_markers(struct index_state *istate, =
+const char *path)
+>                         has_markers =3D 1;
+>                         break;
+>                 }
+> +               if (buffer_is_binary(sb.buf,
+> +                                    ULONG_MAX <=3D sb.len ? ULONG_MAX : =
+sb.len))
+> +                       break;
+>         }
 
-Thank you for the pointer to "git am --resolved", the context helps me
-see what you mean that the naming is a regression in the workflow. The
-name makes sense to me, especially in relation to the existing --resolved
-flag.
+Should this check be before the conflict marker line check in case the firs=
+t
+iteration accidentally matches for a binary file and breaks with
+has_markers =3D 1?
