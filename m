@@ -1,108 +1,137 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2B0382397
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780D523C503
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:32:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785709449; cv=none; b=XJiYQLgjVUD+SCNP+etPwUzqqA5PgnlMwlttzwLO7SvXYPJJ/1O/moyixkpJbUeb0iU70rOufmMJ2poH+uKkGu6wAxN1coVMY9oAN8MBYXZXyfI+0dpJZknGsdkph5ez6Ie7kHjmNzriDASnVOSjJ09qmkuydzkJgLt9zRyRGuw=
+	t=1785709940; cv=none; b=WfxzrBquNtT91FOOGCqO8URzLqPYg0fg0a5SZkV5h4l/a6niAfKhXeJUVOrKMW1o1suKThF6IwLX3SC5T1ALodXG0lxvLkY9igMHneMFx1BhTVO2JVTT5+jN98L73thAKIKIKBCuraAWJnCtbXoonnv9memYacnVDLoAjoyCtGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785709449; c=relaxed/simple;
-	bh=pngLfPyM1IRXr0iQHODz7BEKw0AsUXV2RpqOhf2LgTM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B9PaH1eOx5dUCUqoqRHprOH2sMDfLYq0SqpHuNFurVnCyXaAxcp9RwGdraNUmDUyadjmrW78n2WXShIza2eHxjVupgp3a+7UHzJwYrEhVpAUBpcvxdK8u0E+0T1OSLDQpu+Qw3Rj+krxhVJb202jcmkyNtx238cQ0cE7dwss/OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GPsKP1+N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xcww6dSW; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785709940; c=relaxed/simple;
+	bh=rTUFEsiVN/vLko/7EMBuA2flQRswyqIDKLtBYGheReo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eaLmwpX24Dc5v85shgnw/1tjOdRh5JcLhVFngTH6haEidkuR/xCc7is+N4Ue2Y7kuC/2up7tByZvSB1qpmQovpM/FX3AGm09fKnM9BFI8MrgyrrA2/iaXin7H8yknwsVo8VAfo72nBdpwWvs7ukoV/FCBZx1cNSvNUEhYgeiyeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=SympUtdK; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GPsKP1+N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xcww6dSW"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C738E7A007C;
-	Sun,  2 Aug 2026 18:24:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Sun, 02 Aug 2026 18:24:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785709445; x=1785795845; bh=pngLfPyM1I
-	RXr0iQHODz7BEKw0AsUXV2RpqOhf2LgTM=; b=GPsKP1+Nz8OIjhl7VcSa455fOW
-	4OURFBB499EGLyoTZAf9PHOalOneE9Z2w7XsJi1O+a1Cy/Yc8mNDgj5Z5UE1GEPK
-	78Q/7ytkH0xHXaTu2N/3Zgt93T3xtVEUjSUlS0e8LUnHlTj91yS5B54t3onZ+oz8
-	RiWVdtGUNThfKizEpi7VxmjktziSavfc4E8ABWzEEVZd2jTAoAihPdQcTr+51tdQ
-	LGxsGgrFpcMgvMEDg0B5mJfQf2l54bUfyt5mGkGO6jKtojhKPbi1YQpSCyjkn7l8
-	v1oWrP8k9fb1U06dc5TUd1mWTdKJ56GEpqYrtCXuEuIZqYtuWJGWoBIR5q5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785709445; x=1785795845; bh=pngLfPyM1IRXr0iQHODz7BEKw0AsUXV2Rpq
-	Ohf2LgTM=; b=Xcww6dSWJ4TnNf+4L27YRV4Qc40tjJyCDdCzsI5VFl77Q6cWV39
-	8txEpIIfbue0pDut6dylR15zPLkA32cKzSve0JiO3X5+4ny1NzO6RN3md8mEQ5XA
-	tH78q2QTpQ5onYYh/7OVEfG1l4YwxJ0iGCJ43X5IpTwOz1S575IPhdQQIH8SzR+8
-	DcC0UIdargAmuAmJ6ZpKLoI0ZZpGKwg535xq7L2kX9sofGwgKvPWGMGKuLSe2LGl
-	zdbVG9/Pne+PrBAR4PekYwt0qO1z1Jf6EFYcHJXffP+pVvqwA1yHPU13Gnwnkl6l
-	vPoPnb2fsjl36d518/0QAy6mqqV25GTBhCw==
-X-ME-Sender: <xms:hcNvahB3q4qvuLEnEaOEPfKNg93B0d3-v2qEs-vNXdym3NYr-97NrQ>
-    <xme:hcNvajNTK7JzNpEDsib6EXZJRjknzfDdXiTlXJ9P3vu4B96U7jeuYoQ7brZhEQGjA
-    bCPWucGa2GW93EnMHb8g-zCXxR94_xeSb_SVivGuFw01OVGzALd1w>
-X-ME-Received: <xmr:hcNvamaZ-f6ewi0GiY-wkT1gMHHUq1sieMTobYEzoQtsDb7qM9s1jrZaDRHnkdeMu7DY62RAN9ZFjCc-mNfWTLnf1gDwjNegZQ>
-X-ME-Proxy-Cause: dmFkZTFb/EDG4MrwAOp8cQ/d+q8NPNzJJCdWJ6bOoMQFKdzVNb/IbRl8iPl6ht8j9gDddW
-    caWbsQf4L77NHXjBKkuewXZZLaksSK6fE0cAdcFduHYJssgmQfoydjOWJZFIaolCT6CTmo
-    DwoDF68TTBsLMgsMGGwbqyS5C3XHizQsLoSZR7Uvhm/V0zhTq4QMcCO1UXatUqxHEuAO6/
-    d36QVIu9YcF19HlHZkN7Zxuqivrj5IO+/wJ8LRrFG69oZFyQugCcgfOsNQd+8Fi4hxL10P
-    YkA+/8MIuUk86wRwxWAWecj+RSpBzMb8E1vzY3umDFNa4aMsHv/5LXEa42wWPyvTTlZYiI
-    78Usfsf8nH6u3KBzWUp/aRnInlWhbJUz4uesH65/JQUeyRaIgBj+ooP45BwXXy3gPWGyeY
-    fFnVo5ulR2ZQ96I8eIek3UNODo6bvDrCBs961fn3Yz8dUnMRZmbsELnpHYBlbsA88OVLGl
-    Vwr0DvLLOrNcCSMHU/1zxb8FK/cKnxOzGrvhjaqnxiuW81sfmxcHSoYaGfu+sbOCxHpPfx
-    8Ne6GHlrlTbHpitvHptdt/3VCejc9htjc/3WXVQrYCeJBqTpDAzE4wU3K24BMsZektTXh1
-    SL5ox9mg3C+Z08jwk2/xUfblWtFr7oP9hNLq3nU26B9zXXV8Y4YwRo48Gvnw
-X-ME-Proxy: <xmx:hcNvaitkDZLWrCAROhr-dtJLeUkPvbkwy-WkgtFdyzDjUBZ8Sho59Q>
-    <xmx:hcNvaoMXzD9v_n5lhGB9MQTRDiH2lzxYuCCPv2U50_VXQ9XdThDLog>
-    <xmx:hcNvap7T-VxHHzr6dUqTGT8BYqVkxtEzC31S23RBBwxYc8ghuCpHjQ>
-    <xmx:hcNvauSELzLg895RArgeymDFSXc1t_Ms8_zlj2vXTqkCsfgvSZsdJQ>
-    <xmx:hcNvagxTFtLqgsl3IzZkWbYFShqft8CAR7Mgujv7su97YaFwtANJrW4N>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Aug 2026 18:24:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  git@vger.kernel.org,
-  chandrapratap3519@gmail.com,  karthik.188@gmail.com
-Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
- response
-In-Reply-To: <20260802163806.GA21296@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 2 Aug 2026 12:38:06 -0400")
-References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
-	<20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
-	<xmqq7bmaa0sw.fsf@gitster.g> <xmqqzez67yg1.fsf@gitster.g>
-	<DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
-	<20260801231437.GA2097059@coredump.intra.peff.net>
-	<20260801232941.GA2097163@coredump.intra.peff.net>
-	<xmqqpl015lfl.fsf@gitster.g> <DKEGM4BYZ4UW.UVJ1H8IGVF0Q@gmail.com>
-	<xmqqcxw04hjm.fsf@gitster.g>
-	<20260802163806.GA21296@coredump.intra.peff.net>
-Date: Sun, 02 Aug 2026 15:24:03 -0700
-Message-ID: <xmqq33ww40vw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SympUtdK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1785709937;
+	bh=rTUFEsiVN/vLko/7EMBuA2flQRswyqIDKLtBYGheReo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=SympUtdKzYr6YATMapFTw5RqYDUX5K6zrj+T0OTkcRSgR25JsPrni0zQ/xVBirQZO
+	 qH/owlqcs8aT4PGY9Wlb4wYlcczeBcErEd92jVVeI94UPF6wbeESuUsOXQ+dGTVz/g
+	 Jcx/J/bLIPapAeeocI/qXln4jyoUHlhGyL0NKvt3MRbnscCopw8MeQVgM+1Cqs/UTb
+	 3bxZG7ePVweOLLwabuZq7qLGLh9wn2iQSybpgO3rn5l7WFeoI0XnpyPJYTsz5U6tzA
+	 HDUbfIYu/Af7VwYvjK4W+E/poF2MU86mViNO5hBgIjpLhWK0HjNWhd9+Hshqm5G6ch
+	 19KbElILyL7h/ZBuQNiIVsqqf7Xk4hiND1HO8rnQl5k+jfKOAE+98/3Q0lKtmlL+nm
+	 OB1Uf8Zpq/CjeXKA6OiFTkbYUpeaKh2Aw5C4lqTHUc7Tp5MyKMPV0P77M/f1sPzd/i
+	 kjvuPExe7cSuKSMAheZkQ7UiZ5J/qI+PdRMVUwZg5eQOQgwgXZ7
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:117f:c26e:50ca:6746])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3C27F200C4;
+	Sun,  2 Aug 2026 22:32:17 +0000 (UTC)
+Date: Sun, 2 Aug 2026 22:32:16 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Arijit Banerjee <arijit@effectiveailabs.com>
+Cc: Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Jonathan Tan <jonathantanmy@fastmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	Arijit Banerjee <arijit91@gmail.com>, ttaylorr@openai.com
+Subject: Re: [PATCH] index-pack: speed up promisor link recording
+Message-ID: <am_Fb79hCnwmRzjL@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Arijit Banerjee <arijit@effectiveailabs.com>,
+	Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Jonathan Tan <jonathantanmy@fastmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	Arijit Banerjee <arijit91@gmail.com>, ttaylorr@openai.com
+References: <pull.2191.git.1785706396130.gitgitgadget@gmail.com>
+ <am-7_wSb-GNefKlB@fruit.crustytoothpaste.net>
+ <CAFwoC-7wUzce_XvuviXZe=5eTxJ5yyCpz=vsOheWKPCnz9Kr4A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6mp01P19UApuZmTM"
+Content-Disposition: inline
+In-Reply-To: <CAFwoC-7wUzce_XvuviXZe=5eTxJ5yyCpz=vsOheWKPCnz9Kr4A@mail.gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Jeff King <peff@peff.net> writes:
+--6mp01P19UApuZmTM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> So for unknown objects, I think a separate bit is less awkward.
+On 2026-08-02 at 22:12:16, Arijit Banerjee wrote:
+> Thanks, Brian. I am not trying to bypass the project's policy.
+>=20
+> The investigation is in the same general spirit as the Git performance wo=
+rk
+> being tracked here:
+> https://openai-git-upstream.openai.chatgpt.site/
+>=20
+> I do not claim to be an expert on this topic, but Codex appears to have f=
+ound
+> a material performance improvement of about 15% on end-to-end blobless cl=
+one
+> times.
+>=20
+> Would it be appropriate to treat the current submission as an RFC? It see=
+ms
+> worth trying to preserve the technical result.
 
-OK.
+I don't think the project's policy prevents you from doing analysis and
+investigation with an LLM, although it does require you to verify the
+correctness of the results and be accountable for them.  If, based on
+the analysis of the performance impact, you write some code without the
+use of an LLM that improves things, I think that would be allowed and
+probably welcome, assuming it is otherwise acceptable.  Some
+contributors will be willing to review such a contribution and others
+will not, but it is not outside of the policy.
 
-> For signaling "the server refused to tell us this item" we could use
-> sentinel types like OBJ_NONE. But I don't think that extends to other
-> fields (e.g., there is no useful sentinel value for "size").
+However, writing substantial code with an LLM doesn't appear to be
+allowed.  The kinds of trivial changes that I think would be allowed to
+be generated would be things like fixing spelling errors or adding
+include guards to header files that lack them.  Of course, these are
+also the kinds of things you could mostly fix with a small script, which
+is why they are generally considered so trivial as to be
+uncopyrightable.
 
-True, unless we abuse things like ((size_t)-1), which I think I saw
-somewhere in recently posted patches.
+So I think to have a patch accepted in this case, you would need to
+totally discard the existing patch and rewrite it by hand without
+recourse to the generated code.
+
+I understand that the SubmittingPatches documentation is a bit long, but
+I do suggest giving it at least a glance so you know what to expect.  I
+think reading this sort of contributing documentation is more important
+than ever since, in the era of LLMs, projects tend to have strong
+opinions on what is and is not acceptable, not only just in terms of LLM
+usage, but in how code and documentation are to be written and
+formatted.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--6mp01P19UApuZmTM
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmpvxW8JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ6NHStjjiegAfhzFFedCOZvYjlnYSFbVlAkxPryCN19W
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAADqoAQDeMeIAyGbySniO7vl8ACc+GncL
+jAAnzrJJgNGrYPIdVgEAyDoJblhfAzqAC9A5+xRurjB5zTQmqerftSzaZyTFCwQ=
+=i5Wp
+-----END PGP SIGNATURE-----
+
+--6mp01P19UApuZmTM--
