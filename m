@@ -1,137 +1,150 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780D523C503
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:32:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4815B3346BE
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:36:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785709940; cv=none; b=WfxzrBquNtT91FOOGCqO8URzLqPYg0fg0a5SZkV5h4l/a6niAfKhXeJUVOrKMW1o1suKThF6IwLX3SC5T1ALodXG0lxvLkY9igMHneMFx1BhTVO2JVTT5+jN98L73thAKIKIKBCuraAWJnCtbXoonnv9memYacnVDLoAjoyCtGI=
+	t=1785710168; cv=none; b=cEPc4NkRQ9rsWh8e/0/sq8LxZgKeSD3WujxAYQRCzVA1nVijAJCvPgBSYSya8iQF/3Bz296RO/qh/JJCF/1L7m9CeUw6GHPu0DK/eyOuRAppBcb411y2mxuryDIxKDfXhy5l1sf45nggfRQh+4Wi0Mb9ZyTQfWxdn6AfKIQ5X68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785709940; c=relaxed/simple;
-	bh=rTUFEsiVN/vLko/7EMBuA2flQRswyqIDKLtBYGheReo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eaLmwpX24Dc5v85shgnw/1tjOdRh5JcLhVFngTH6haEidkuR/xCc7is+N4Ue2Y7kuC/2up7tByZvSB1qpmQovpM/FX3AGm09fKnM9BFI8MrgyrrA2/iaXin7H8yknwsVo8VAfo72nBdpwWvs7ukoV/FCBZx1cNSvNUEhYgeiyeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=SympUtdK; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1785710168; c=relaxed/simple;
+	bh=o0ThFZCggaRj+jTd3lfEgRIJ4NNN0Xw5qd0HArSZyPg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MGjz8l3Wp8B9cyP0J7HPP4zMjfp/1GRMvVApEtRJF1KIbmqnt9XW+k/S5RiQ3X43eH1CiAl35ceGuvb2llLMxbVP8DalbS5gq1tyjCkYkR221pGNql3m/qmBGmHGS60KQemaDd1UUOGs3Y7gHAC9Cv0EGaev+Az9QrvrXY4EdO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sd/4wcbC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bdzkrNsS; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SympUtdK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1785709937;
-	bh=rTUFEsiVN/vLko/7EMBuA2flQRswyqIDKLtBYGheReo=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=SympUtdKzYr6YATMapFTw5RqYDUX5K6zrj+T0OTkcRSgR25JsPrni0zQ/xVBirQZO
-	 qH/owlqcs8aT4PGY9Wlb4wYlcczeBcErEd92jVVeI94UPF6wbeESuUsOXQ+dGTVz/g
-	 Jcx/J/bLIPapAeeocI/qXln4jyoUHlhGyL0NKvt3MRbnscCopw8MeQVgM+1Cqs/UTb
-	 3bxZG7ePVweOLLwabuZq7qLGLh9wn2iQSybpgO3rn5l7WFeoI0XnpyPJYTsz5U6tzA
-	 HDUbfIYu/Af7VwYvjK4W+E/poF2MU86mViNO5hBgIjpLhWK0HjNWhd9+Hshqm5G6ch
-	 19KbElILyL7h/ZBuQNiIVsqqf7Xk4hiND1HO8rnQl5k+jfKOAE+98/3Q0lKtmlL+nm
-	 OB1Uf8Zpq/CjeXKA6OiFTkbYUpeaKh2Aw5C4lqTHUc7Tp5MyKMPV0P77M/f1sPzd/i
-	 kjvuPExe7cSuKSMAheZkQ7UiZ5J/qI+PdRMVUwZg5eQOQgwgXZ7
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:117f:c26e:50ca:6746])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3C27F200C4;
-	Sun,  2 Aug 2026 22:32:17 +0000 (UTC)
-Date: Sun, 2 Aug 2026 22:32:16 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Arijit Banerjee <arijit@effectiveailabs.com>
-Cc: Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Jonathan Tan <jonathantanmy@fastmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	Arijit Banerjee <arijit91@gmail.com>, ttaylorr@openai.com
-Subject: Re: [PATCH] index-pack: speed up promisor link recording
-Message-ID: <am_Fb79hCnwmRzjL@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Arijit Banerjee <arijit@effectiveailabs.com>,
-	Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Jonathan Tan <jonathantanmy@fastmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	Arijit Banerjee <arijit91@gmail.com>, ttaylorr@openai.com
-References: <pull.2191.git.1785706396130.gitgitgadget@gmail.com>
- <am-7_wSb-GNefKlB@fruit.crustytoothpaste.net>
- <CAFwoC-7wUzce_XvuviXZe=5eTxJ5yyCpz=vsOheWKPCnz9Kr4A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sd/4wcbC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bdzkrNsS"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7579D7A0078;
+	Sun,  2 Aug 2026 18:36:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sun, 02 Aug 2026 18:36:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1785710165;
+	 x=1785796565; bh=M7Dc8GujBj85PtZxuWEvMQc7vLRrqPMy/ifrnTckJGU=; b=
+	sd/4wcbCgqmh9RVnZvs+ctQGCMP8BCO9Eb0GSjQKbcwpceUQpkxQYV4VDcM8qHvI
+	nNr3LwWV/vwVSQiwQ/9iApabJRvN5zVNFdh//6+ShCscpnJn1JmY3zBEdgo+k5Mc
+	yh55Rw0xUR/Oq7WGTHQOHewnFZdI7+P4c2ys2iYvh0idXMadO/4HspKlpFCuiwZz
+	KRWEksXrLAUJmdR5euRqTCcyuQH3Shk+T3QKr/QWbJzx/X/HYnn2D59pUGNdi3K6
+	XKHPNkXWlQNNvQZGPXGho1Wa/x5UWqEf+pQDnll+6WMFtfRwTQ7Z52qvExZ7FxiR
+	5JVu2kulZhsa+7RWU1we6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785710165; x=
+	1785796565; bh=M7Dc8GujBj85PtZxuWEvMQc7vLRrqPMy/ifrnTckJGU=; b=b
+	dzkrNsSGoyNnuQKY3KZ/s2/sP8RMSot90v5baib8bOqHeaX1uwYSZpfDEvSZ9Yzs
+	eRc24xZdeVMqtSvVmSr6dkIXXGnh0MB7j2ardd0qn5rlxIZUhmHoS4+PmAimSjy0
+	jGVq+eFggKlBxpIvHUO8NEPrcIe2qHRro7aOy6V785MFS5PwkghTmH0pA0dMTreI
+	a0Nhswbq8FbxE4EEL7qYyGLD/u2JMbDXi+4iEgBpN64ZqvUKvM8mWe5gFdMuMVZW
+	vV9MKPIGs7Sb92Wbrs3XBGPtJCs/q/1UaF3OzyBgpaSvgY/O/nVFw0Fa8Ag5afRb
+	yO4inungnhzPF/ja2JSMA==
+X-ME-Sender: <xms:VcZvaldhsmae91A4E9y4C1ndjvay5J5dVfGlRI8Tc_Btjfv9ecCPpg>
+    <xme:VcZvaqGCyEbDvbVG9HFARD8OQmKBFH1_HhMwcTlm5xOlARsZqe66p6sca4GpKMEiH
+    k0lHxDMJXUQD4VMo0NVokvkm5ijl5-4XXrtiJNrCww63P-5ZcXtQs8>
+X-ME-Received: <xmr:VcZvam3XOvYGWh0DBG48bm8bXmoMtveKGAZEXDBvbaMMslNpwUgeQ8HHnD-RvR9CPKAU3o9wLIZw7iRoDhnQx_AP2oZLy1wXNQ>
+X-ME-Proxy-Cause: dmFkZTGliHuygxotQP9M269HzEINuBao3VBijk06do7QARTwMcZ/rbzh4EsH6d+fZmUdnT
+    kn3EMQ33B8SzWhXpcOcB2g0jD8eKJAViJikE+NQbQB8MpT96w9HSe/PXC7QT1Mblk5fbi/
+    R7RltpfA6Ia4NuOZXpB5gWLkozJzTiSa6UsRV4pH7v6DRN2zA+roU619WzemGW9j+pVtZ9
+    3bcTtVAPdE6zk/2GHQQVQHbGocz91qGB0dZuryPcU9AXSdJe0ksiMkG0gxMito4B4KlB4c
+    Z7bwJsX/bt3UytDJCMyttlNpsy6SUdBDupBL1VOXCIMyGmt//t49Coa+rOf6CPFESb/aaO
+    y1/ICe+bujjQ96jhLC1o+L/InouIFfhy3WkNSF/y9v5R2sAXNHOYZyZDifGJ76H9zRSwyp
+    QzMuvIeLmcRTFj6iG2ZlsL8PE8IWTHKN4+/IIp0Hf+lMQIN6FV5ToqftUFqB5PRV27qVVx
+    ukBNV7O9KkMUpUTHS6NQFogLi8XFQh/g8Z5Y4o8UZGnWF5JtFWvswMOTnGhURz1hDzaGbz
+    xMuud1HjRF6C1SmaK9JwyqOc/MIl+5N0XIqeDICw7pdaeHscyCIHPKrbprzktheYaq4dv+
+    UNIzv2FcRbRKoz8N/ZJPN17pgiH2yt0p9LZp0q3JNeeJZ2bPKEGlk6yjdQ+g
+X-ME-Proxy: <xmx:VcZvaqnRtljF-RXEx6JbMEEhUmUDEYiy2sJV6Jymcp9FRRAULhbbkw>
+    <xmx:VcZvau_XFhEKxyFcDNlBGsejC_SeoifuWkm9udlDKvfeViq6hWxEMw>
+    <xmx:VcZvanoECyPZy5C9hLMWRsCikUInk9RgCRcwb_d2kcmCbSt2tdq-2w>
+    <xmx:VcZvavnLZxTsBCsxRNq_FHBNQnvOJ5s87aHGt2e1UudWQPSX-vRSyw>
+    <xmx:VcZvapPnFbKIMiGl5l3d4QtxhPItIlzQXmv2gcTbjZZAH9JLIddLoi7A>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 2 Aug 2026 18:36:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH] trailers: stop recognizing URLs as trailers
+In-Reply-To: <URLs_not_trailers.b13@msgid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Sun, 2 Aug 2026
+	21:57:17 +0200")
+References: <20260609004340.GF358144@coredump.intra.peff.net>
+	<URLs_not_trailers.b13@msgid.xyz>
+Date: Sun, 02 Aug 2026 15:36:03 -0700
+Message-ID: <xmqqmrv42lrg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6mp01P19UApuZmTM"
-Content-Disposition: inline
-In-Reply-To: <CAFwoC-7wUzce_XvuviXZe=5eTxJ5yyCpz=vsOheWKPCnz9Kr4A@mail.gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-
---6mp01P19UApuZmTM
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 2026-08-02 at 22:12:16, Arijit Banerjee wrote:
-> Thanks, Brian. I am not trying to bypass the project's policy.
->=20
-> The investigation is in the same general spirit as the Git performance wo=
-rk
-> being tracked here:
-> https://openai-git-upstream.openai.chatgpt.site/
->=20
-> I do not claim to be an expert on this topic, but Codex appears to have f=
-ound
-> a material performance improvement of about 15% on end-to-end blobless cl=
-one
-> times.
->=20
-> Would it be appropriate to treat the current submission as an RFC? It see=
-ms
-> worth trying to preserve the technical result.
+kristofferhaugsbakk@fastmail.com writes:
 
-I don't think the project's policy prevents you from doing analysis and
-investigation with an LLM, although it does require you to verify the
-correctness of the results and be accountable for them.  If, based on
-the analysis of the performance impact, you write some code without the
-use of an LLM that improves things, I think that would be allowed and
-probably welcome, assuming it is otherwise acceptable.  Some
-contributors will be willing to review such a contribution and others
-will not, but it is not outside of the policy.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> An HTTPS URL starts with an alphanumeric scheme followed by a colon.
+> That means that they will be recognized as trailers in a trailer block.
+> That turns out to be a problem in practice. Let’s stop recognizing these
+> as trailers by failing the trailer parsing when we:
+>
+> 1. find the separator;
+> 2. the separator and the next two characters form `://`; and
+> 3. we haven’t parsed any whitespace yet.
 
-However, writing substantial code with an LLM doesn't appear to be
-allowed.  The kinds of trivial changes that I think would be allowed to
-be generated would be things like fixing spelling errors or adding
-include guards to header files that lack them.  Of course, these are
-also the kinds of things you could mostly fix with a small script, which
-is why they are generally considered so trivial as to be
-uncopyrightable.
+When I read the problem description, I would have expected you to
+say "If we find <token>: at the beginning of the line, check <token>
+against known URL schemes like https, ftp, etc. and declare that the
+line is not a trailer, if it matches".  Checking against "://" is
+much more robust, as it is less likely to happen in random text, and
+we avoid maintaining a whitelist of scheme names.  You are certainly
+smarter than I am ;-).
 
-So I think to have a patch accepted in this case, you would need to
-totally discard the existing patch and rewrite it by hand without
-recourse to the generated code.
+Shouldn't we restrict the token preceding "://" more strictly than
+simply prohibiting whitespace?
 
-I understand that the SubmittingPatches documentation is a bit long, but
-I do suggest giving it at least a glance so you know what to expect.  I
-think reading this sort of contributing documentation is more important
-than ever since, in the era of LLMs, projects tend to have strong
-opinions on what is and is not acceptable, not only just in terms of LLM
-usage, but in how code and documentation are to be written and
-formatted.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
 
---6mp01P19UApuZmTM
-Content-Type: application/pgp-signature; name=signature.asc
+> diff --git a/trailer.c b/trailer.c
+> index 6d8ec7fa8d8..971ae459596 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -635,8 +635,13 @@ static ssize_t find_separator(const char *line, const char *separators)
+>  	int whitespace_found = 0;
+>  	const char *c;
+>  	for (c = line; *c; c++) {
+> -		if (strchr(separators, *c))
+> +		if (strchr(separators, *c)) {
+> +			/* avoid accidental URL matches (://) */
+> +			if (*c == ':' && c[1] == '/' && c[2] == '/' &&
 
------BEGIN PGP SIGNATURE-----
+How do we know the references to c[1] and c[2] do not access an
+unmapped piece of memory?  The answer is that line[] is NUL
+terminated, so c[0] == ':' guarantees that c[1] is safe to read and
+unless it is NUL (and c[1] =='/' certainly means it is not NUL),
+c[2] is safe to read.
 
-wr0EABYKAG8FgmpvxW8JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ6NHStjjiegAfhzFFedCOZvYjlnYSFbVlAkxPryCN19W
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAADqoAQDeMeIAyGbySniO7vl8ACc+GncL
-jAAnzrJJgNGrYPIdVgEAyDoJblhfAzqAC9A5+xRurjB5zTQmqerftSzaZyTFCwQ=
-=i5Wp
------END PGP SIGNATURE-----
+OK.  Makes sense to me.
 
---6mp01P19UApuZmTM--
+Thanks.
+
+> +			    !whitespace_found)
+> +				return -1;
+>  			return c - line;
+> +		}
+>  		if (!whitespace_found && (isalnum(*c) || *c == '-'))
+>  			continue;
+>  		if (c != line && (*c == ' ' || *c == '\t')) {
