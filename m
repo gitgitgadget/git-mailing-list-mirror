@@ -1,112 +1,144 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763002931E4
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 16:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACBE2D061D
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 16:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785688555; cv=none; b=AcgD/VTLUUBai4mPvG9+Pwr/vVORLkv9AWrv0GsEd6v0R7WxCLaGj07ii5BPaIMFBRIj+MHaUSmEBTfWaVYaRcJow6tI3435RioO5KuB+V94aoXZbXvKytlQ8XO4u6HCAlR1AIq6fTmT/aE1hH0botescfhE2OGiuK/7d6uPQ00=
+	t=1785688690; cv=none; b=l88yp5O0UBoPC4otlllbci2D1IHytkpugGCXFVqTWCus4YFZUeniw3ECN2IMLyLTqZiV1h07L1WWNnkCj/yN0L2Ige0xjbSgNqpRXNYQ2DDGfpGPMlBq7DDvw7GsLCBmw76JGacPbb690M9M7a1rOjE7/uEFrGuCKdopD0yf8ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785688555; c=relaxed/simple;
-	bh=0p5cW+aPrdrYrq8K9PHYHB3mRsYTDCCaSuzWNvxQwWA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uFBkDKFDFC5TwV50kcT8UkO0Jr2r0OoCgYC/ihy08MExnQLVzql1ahwRXhzJO78s691GJF8vr98YELxqZsYN80r0bdiq+/gpB8R7ihdpY7nXaovDD1f0yb8B1iN1wIewrpjzu5wAEqZ3T0zZeB1TV+nGbkeOFANOo0vhYP/ZrWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YsDljz/Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z6cj6DNm; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785688690; c=relaxed/simple;
+	bh=f375oGMxOxJACyH6piYidWXdYJVPGiit63ln9fdJHF4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XQ4Iv2LMho88T1tXmHFn3fBMZdnrLf3H4Fa2XWE8BKY+c1gZPB8ZHxeC+3D6ijknFGk6BxZJq60lRPB1O+54MeoaCzdTLQOc5p9vvh9XBoL9paTKm03evmZBNf+X1P0tdNZrWdKvQRby7gXMZ4HhpNf4MBVX3kLq41s1qXcxhm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Fm/k5cds; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YsDljz/Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z6cj6DNm"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A405D7A00E6;
-	Sun,  2 Aug 2026 12:35:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Sun, 02 Aug 2026 12:35:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785688553; x=1785774953; bh=0p5cW+aPrd
-	rYrq8K9PHYHB3mRsYTDCCaSuzWNvxQwWA=; b=YsDljz/YAouwsLsKq54rAk4KjA
-	W3BdDWVFglFXx6KmPoHCn+CDoc0nW7NIStumTBflv5M+Pdaz0i1UVhBORe31dX0D
-	4HjdixNLO3nh61NwpORjamSRBGMqV/0xUB2zbCHwtxx0KjjNjktgA2nzWYzG72lZ
-	Nee2P7t2FSfLtou6dcq6zJR9qLZCiYg/Mns20+t7a5ZqCEM4yQq7l0LU3nJFdHip
-	ifi2+ThyWLlhNuy3YmV0YALbBsFG5z/md0r6PlHhhQVfoIshT2393mGl5FFCCcGW
-	tZozWW33lLU6IEpFItD1ASjfeZZhf3uaw+Gridf3w4hg6epAD+3JsQmxPd+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785688553; x=1785774953; bh=0p5cW+aPrdrYrq8K9PHYHB3mRsYTDCCaSuz
-	WNvxQwWA=; b=Z6cj6DNmrQOQoLw1F0qN3BircL2ZzMn3ToD/7/EPoDW+MVb9hjF
-	grdGVEhT6YoGcjnUg7A9L7sj+sgtratsjgIzDq2OsczIbboUzIrVl116KHkqxyHp
-	v1Or2Nv0mY9t4Y0JCf+Uq7a7QP8o2/47RDFYGYhOEDj3sIqd3RDt1K5ks95hohHR
-	KMjo5Lc/gONOAmd0VygtsqPDoZDrU5hHqA1jLHoPm0//gLyQRNb3y/EMWeObXqJO
-	SUpAZF5U6PnseITLMJymukvA3eWx36mDU6akRoXkHXNVMLby6LLHPv2LJ/YdNibm
-	jrYUEngRL9aeALUye8nGBwPCz7UhM0xkQhA==
-X-ME-Sender: <xms:6XFvatS3BjDpC6KzCxPRmV_B8x_V0tjSJr5iP_cENXg0QIm9AQXSNg>
-    <xme:6XFvaqf-5cKCRjd-nh_js0AvSgG0O9LvS4NgNCxsu9tp_JME-WHdYGYzZ0bm7nv-U
-    YMhZvmzThe-sOUOQaIY7Hqot1ZZSVREbA5wZ-c_n5Zbrp_YQFUT5jE>
-X-ME-Received: <xmr:6XFvasrRbnsPLxZNb0GyiBDsRfl6biTZYwUGZBdQ_i_PPjKHo886QIufIV0sh-aCLBU7CqslAKISLocJXWvxKIGFOP6mK0oovw>
-X-ME-Proxy-Cause: dmFkZTGK/aYvaRhMK4ISXIL3+RzZWP+v37bSjv7X+gedSJlFBJU1OL57GHnVmxUj0WX7tf
-    SknXbpCwPyvFr7fnGEUTTs/ArhCS/p2IgmMhyzzJ9nl9w0MsaiQhEjNApZSbBu0X6aPU0z
-    lbyxKmHmJkvU3VB3cuz8Q9GCH3SnoNwZKTj7qHFrpY730RPV3DW5XprlY1bs4n/PlG7Wm/
-    BZjFaEnqZ4NsyHi0ICiW3i/klUC0b/ibv9O+FB/F5aL5vGKBZDSqAbgwuqctfyqBdsAidN
-    meEn3MyEaNdAwj4kXAqQB+k1QS8PDgElS0hWl4jWMtai+4M4uS6xPeA5/C1zsS3GVc3vO7
-    WWnJyFdEaIDkmzcOuwEfFeJEVW4mPWmhUHG7GbE0WFw3v3V33rv49i+ix0nHZNklhGfxX/
-    y+q3a5uAEU1nD/fyiWYxwW+lBUG+qgTMheVK06nVUh+7HDa466yBGB3rtmt1W3BvmxYjfG
-    NFLPBobkzeokDF67ArvUeYIJQjXQGCQmCH2HZmDJ0vk763W1OO40PHVyPZD2AsbKJv4/ds
-    72eKlpbsVfw+s5cZi/jhtrG9tL/keqJuB8LWdRunroguTtgsCcCF8Kh3TmwfsClHNPuDQy
-    lqawaEBlZyFYea2F6NrfrxncxYJeDyLChZa6zwFC4/C/VSt3TNqka/eDVbsg
-X-ME-Proxy: <xmx:6XFvar8-0JRXYE2-rby7w2uRZu3Gu0NM6b-HvfZAxaI502G49Xz9xA>
-    <xmx:6XFvaocglFXJl9oCEyzYnj8aW3o8rWQnQfRfIXvxMnB5qHtU6SvVEg>
-    <xmx:6XFvalJC7yJIrRfu8dz6OdiPGyW0UWjIpBtHHNYiEGLHBEd9leI9ZQ>
-    <xmx:6XFvaohfFSOYsHwRQcMo1fQwcNNWquQ6mZiPmKnAJBVS6hD9v_EPEQ>
-    <xmx:6XFvapCFvaBS-dlWtHdQPl0_KkGKVvXdYA2xdBI-0fkvTooizGZ8Sl-I>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Aug 2026 12:35:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  git@vger.kernel.org,
-  chandrapratap3519@gmail.com,  karthik.188@gmail.com
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Fm/k5cds"
+Received: (qmail 23802 invoked by uid 106); 2 Aug 2026 16:38:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=f375oGMxOxJACyH6piYidWXdYJVPGiit63ln9fdJHF4=; b=Fm/k5cdsGP0ejECv1s47/6bRir/GTo72+ODsZupv87PvriI5VuWbIoQbJUc7+TkSAOtkfUfwe3hwWVTv4OeGozY3NLyymd6pL47nLYfRvIXAQOdTfcpwZEOG+fvc6bYW/RSi/A23/WNkQzcPWoc5C6vvX8jXc6qimXBBp/wFRUYi9gJRDmYBSugEQon6n8oXNejg7kfEULBa2cZx4LZX2MDosKhW4eVTlwNt9AARg0j8bvi0MNkyq9bQAB0z+tUtgCaZ9Z2Z0Rp8kgAr3mmyJfRvoAJcDcBXWO9dIy73KCwn9+bjQ+A7tLrY7/1ATaXnNzSIlipU1Lg8mWOYM8xyFQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 02 Aug 2026 16:38:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 33837 invoked by uid 111); 2 Aug 2026 16:38:07 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 02 Aug 2026 12:38:07 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 2 Aug 2026 12:38:06 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org,
+	chandrapratap3519@gmail.com, karthik.188@gmail.com
 Subject: Re: [PATCH GSoC v2 4/6] fetch-object-info: parse type from server
  response
-In-Reply-To: <20260802154309.GA17844@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 2 Aug 2026 11:43:09 -0400")
+Message-ID: <20260802163806.GA21296@coredump.intra.peff.net>
 References: <20260731-objecttype-support-v2-0-af577461ed57@gmail.com>
-	<20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
-	<xmqq7bmaa0sw.fsf@gitster.g> <xmqqzez67yg1.fsf@gitster.g>
-	<DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
-	<20260801231437.GA2097059@coredump.intra.peff.net>
-	<20260801232941.GA2097163@coredump.intra.peff.net>
-	<xmqqpl015lfl.fsf@gitster.g> <DKEGM4BYZ4UW.UVJ1H8IGVF0Q@gmail.com>
-	<20260802154309.GA17844@coredump.intra.peff.net>
-Date: Sun, 02 Aug 2026 09:35:50 -0700
-Message-ID: <xmqq8q6o4h09.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20260731-objecttype-support-v2-4-af577461ed57@gmail.com>
+ <xmqq7bmaa0sw.fsf@gitster.g>
+ <xmqqzez67yg1.fsf@gitster.g>
+ <DKDYGQRTSF2W.25OU81K306HJN@gmail.com>
+ <20260801231437.GA2097059@coredump.intra.peff.net>
+ <20260801232941.GA2097163@coredump.intra.peff.net>
+ <xmqqpl015lfl.fsf@gitster.g>
+ <DKEGM4BYZ4UW.UVJ1H8IGVF0Q@gmail.com>
+ <xmqqcxw04hjm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqcxw04hjm.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Sun, Aug 02, 2026 at 09:24:13AM -0700, Junio C Hamano wrote:
 
-> I think the "after the dust settles" suggestion was for changing the
-> interface of "struct object_info". That all becomes moot if we stop
-> using it here entirely. So I think you should proceed along the lines of
-> the object_info_results you showed above.
+> "Pablo Sabater" <pabloosabaterr@gmail.com> writes:
+> 
+> > What I understood is that fetch_object_info shouldn't use object_info to
+> > store the results, because it doesn't call read_object_info() like other
+> > commands like 'info' do. Then, it should use its own data structure to
+> > hold the results with flags like wants_size and wants_type. Something
+> > like:
+> >
+> > 	struct object_info_results {
+> > 		enum object_type *types;
+> > 		size_t *sizes;
+> > 		unsigned *unrecognized;
+> > 		size_t nr;
+> > 		unsigned wants_size:1;
+> > 		unsigned wants_type:1;
+> > 	};
+> 
+> I would have expected this to be an array of struct, i.e.
+> 
+> 	struct {
+> 		struct oid *oid;
+> 		enum object_type type;
+> 		size_t size;
+> 	} *result;
+> 	size_t result_nr, result_alloc;
+> 
+> if you do not have the number of things you query upfront, or it may
+> be an array of fixed size (i.e. no nr/alloc, just nr).
 
-OK, if we are not using object_info structure at all, then I do not
-think it matters all that much if it is a struct of arrays or an
-array of structs (even though I suspect the latter would be
-cleaner).
+I think that could work, but two gotchas:
 
-But I'd rather see it named differently, leaving no room to be
-confused with the existing object_info structure.
+  - an array-of-struct allocates each item for every object. So if we
+    are only asking about type, we have to allocate nr * size_t space to
+    hold "size" fields nobody cares about.
 
-Thanks.
+    This is true of object_info, too, but there we don't care about
+    memory cost because we're only using one at a time. Whereas here the
+    intent is to hold many results at once.
 
+  - you do need to signal somewhere whether "type" is valid (i.e.,
+    whether the remote side supported it). You can put that flag into
+    the result struct, but it is a little wasteful. It is really a
+    property of the whole query, not of each individual object. So you'd
+    have to carry extra flags around (one per type). Whereas NULL-ness
+    of the array can signal that same information.
+
+> If you'll be making the same query for many different objects, you
+> know if you are asking for type for all of them or for none of them,
+> so depending on how the caller uses it, you may not need the valid
+> bit.  Or type==OBJ_NONE could signal "we have no info".
+
+Yeah, we sometimes use OBJ_NONE or OBJ_BAD as a sentinel value for type.
+But if we're not asking for a type field at all, I think that gets
+awkward.
+
+So for unknown objects, I think a separate bit is less awkward.
+
+For signaling "the server refused to tell us this item" we could use
+sentinel types like OBJ_NONE. But I don't think that extends to other
+fields (e.g., there is no useful sentinel value for "size").
+
+> And you'd be using the second pattern I outlined, i.e.
+> 
+> 	for (size_t it = 0; it < result_nr; it++) {
+>         	/*
+> 		 * you may selectively populate the oi to signal
+> 		 * you do not need some values, but you get the
+>         	 * idea.
+> 		 */
+> 		struct object_info oi = {
+> 			type_p = &result[it].type,
+> 			size_p = &result[it].size,
+> 			...
+> 		};
+> 		... ask about result[it].oid using &oi ...
+> 	}
+> 
+> to populate the result[] array with values, I would imagine.
+
+I think that is a perfectly reasonable direction for asking many
+responses from read_object_info(). But ultimately this is all getting
+shipped to the remote over the object-info protocol. So we never need an
+object_info at all, and even if we used one, we really would need N of
+them, because we're going to fill N requests at once (to reduce server
+round-trips).
+
+-Peff
