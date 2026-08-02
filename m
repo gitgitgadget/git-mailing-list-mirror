@@ -1,85 +1,86 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38C722ACFA
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED5B3C2D
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 22:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785710299; cv=none; b=qeBmlPdj1ump6aIhDTMw7D9KnRQHnJS9vpQOzW9EQjsqzJaS+qB9j1C9ELabTj1FlIkKrP9viDxdog08OIbdD+ee449SITuYBv0h2odVCbuQtJKi2wYFr7F88Q85X1wqrk1fJETPzvEnQkVaaKI7RLUwBb4KkK2HgzyaNE+Y1jc=
+	t=1785710771; cv=none; b=qesAZ+aDuYgFBnpsAZE9KL6L3U8xci+DsADVMLIzURuA+u1axARRdpKpe5683SzFjO+VnFC45k2+XqT2sDH81Nv2cYjbUdIcOwOoCg5Gox2rOa6zkIK1iASU44fKM7sn50MmlZkipIfpenOhuXHos1MeKMppIrEay2JKEE0Zo4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785710299; c=relaxed/simple;
-	bh=+7wM6Mm4bYlczk53Pi8+Ye/wdbYN/jN1PsrYZS4Mv+c=;
+	s=arc-20240116; t=1785710771; c=relaxed/simple;
+	bh=VBgHq14MjmZWbrn4ZcHC0Rr4evI4OWd+KBpGs1vrOVg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dLeon164SxugZ32xZh7Xku0DUlo6EoouDhiUcdzV7u8atxc18jJbdVUbV729XNUEvbiBJu72NFwhaPXgNjpEgjdB9H1Y/tQg5jx7YkJM+VcKKdcdzkdW6B20atsXz2DoO3CH97vIYAhrPVUtbgm5nksOBAW89ZJDrNYcqxzWKcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PK/aM53X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UzmKYm0o; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=Wrmuh3Z4PODwhLEcjiVDvSHKedm2QBTNhUj/j4/Od9JaE05jKQ+VxrRotOVttgPOr4KIFtHYzro/vp9dGg+h/q4Fa2s5tOUqa34TiVZ8WW5JiecMHrEFewha02mTbJl1JUBP0ChqjLdA3/iQQN2cELAuHiNqG52EGeRYwZ3nyLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VRtI1B7c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lv7lEq09; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PK/aM53X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UzmKYm0o"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9B7401D00071;
-	Sun,  2 Aug 2026 18:38:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Sun, 02 Aug 2026 18:38:16 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VRtI1B7c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lv7lEq09"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4D64F1D0006E;
+	Sun,  2 Aug 2026 18:46:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sun, 02 Aug 2026 18:46:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1785710296;
-	 x=1785796696; bh=YvGD1bmx69jRW5SYeLlNOB05OtgXcjHx7YtkRv0KFLA=; b=
-	PK/aM53XV8OYI92fmIMTWlavhkNOpfqVoHxhNZb4AbOxiYJG0kPkEYGLVLhsOJZ/
-	clJR3ReGlSUtUWVVg0Ty0DhsoVoVErH7QnIhPtVLDi7BLihQ5GSOoPtWDbUMKRtI
-	lFe91n+woY0Y140w4KgM1RYpt92tpG9xhmUxG7Ivwet/A7YJkNeSKQI/Yp4xAmXm
-	Ff/7RA82v4FgF0PRwOe1VZNwvpUZjn8G5CFpl92/ToeTMqER5LGrHWeduGtsbEi+
-	aca58/Q1mhl0xzThjQAZZrtVTcrWS2QN3SmeuJ+OfdCexmP6umDCgzyfRyynCEw2
-	hSKjq2T4+5Pax4U3hkLVjg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1785710769;
+	 x=1785797169; bh=Vmo0K8WXZwRChch71VZv0ytvZfztEVChx9owme7S7xk=; b=
+	VRtI1B7cjUcSDlFK+yW1F4fyrMpfk71tenQM5cl5+ltbjmiQkAeXPXLDCs/9jFHL
+	a3eOejtO1Ouw718+5BJ3XIAJBtTcBuOQkKUIyXU45jfgYvw3zRkzFJ0oBDnihu2X
+	ZWpGvvkfDiaSTPpAE/kwW7V73iVjH7rhqBgP4f/EsDT8Bf6M2yQXXmoQFnqvcp4e
+	4JVFsD8hxXYMiP1L/Jupt/XGDjr8d/M2VM8+0NQWHBJVeDBDeumnAHChZKkgX5oi
+	F1yswYG6mUa+eiqa+CxxuZq6w3FEFHRg26ncpd9B/Zl3yO0BVGLLqvnE4VDnH0x2
+	d+a960XWhZZtYiyFdBeWPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785710296; x=
-	1785796696; bh=YvGD1bmx69jRW5SYeLlNOB05OtgXcjHx7YtkRv0KFLA=; b=U
-	zmKYm0on5z5Zv42ri3GqxrSWwydNWykgehLHGy2BLVBmqYF55D5HD+CpdM4eRvLg
-	wcQuwzbpb9i1B9LbvpaSHoKzEETp7FiZ9vBvOwhe+PipOhjgtQ+xy9tjMm3a21X+
-	cUOhNKHaouZCMhp9TG6wgqHwtgzMRY9sq3NFWEIJlrWl07lr/5WkASrwRDdLZGPM
-	8E9CGih2iolvyC2co/mnrsK8LRqFuo58DeR/r+cTNf5hbjm/T67Mr7yIjh2BxbOo
-	JHmbJMzBfJUEaUaqgpfXhUTB0LQ0QzYZgXiGNgulF8Ja8gZ54K4XEuHisRHZ1yZw
-	CY/zfdpl/KbtP6GIdHifg==
-X-ME-Sender: <xms:2MZvah3_4DnJmgp42tvnh8hkYV2KwQovJN2Bj8rox9nTuliWaddnfQ>
-    <xme:2MZvavikjtApOoNcnnGzUpQchhFUQyxFiYH7xI8E_K5YHczPZvpXVMLVNMfwYa0wd
-    gPXgq0GBtrdyjcAFw8grUOybvZ-xgTtiljN85JlsfznQbU2pYck3Js>
-X-ME-Received: <xmr:2MZvavQVEU5IjXZjwGy2LSxqPR9tFe4qdY22NQScwhGDdI5mbmACN85PmMFy8dD05cJ5NsVNgU6bnCnDDv_zKIba3S7nxawesA>
-X-ME-Proxy-Cause: dmFkZTGs6XUhd7BpfLGfypPAMeE9GQe9vtA9N0x6RFnVbfVii10ECCSP2YuvpVNrZPTIIw
-    woKr5LdQrNSSKybDIwxIyAvt3F9drSxO4p5OcqrEB2fvoA3Zi+WMa6qnGxs4ypO+O6L1IS
-    o50lLyNiwvIO+/s9ydfmGnYDyNLuRZka3uHC79gqZBAxdkkK0qwbHiZcn9e48YT1VB+wgM
-    EDwvCSB3T7T0NxCtOCNPGgvxVmWtW4xSO5EsHD6cjtSOMZtpChSRW2l5lBrnHUAvJpDkVC
-    5ZZ8ggxkqi1xutJvakh67ekQW+EExtNfcaDiAdqAoHheDYzUt3NS4uoMXZLp1pTsGZiwpF
-    dGW5jNSAiVnnqeqaZ8vXHtXH8MgMcmDcqyb6LflNa/tQo7pS4C5E0FXdZ+7YoONWTiYX/q
-    vOMVjWxC7CiwhSALt5TM7Gzk0v5J9nR9VRtLpXSqUm0ctWHwsuy0g/e5cQK3r355br7z3/
-    eWn297/SgCPYZy4lWlObroQ2u273Aslxva1ymE51ky15GB6ZKRS3cy1eBKnC1kPUO2phq4
-    q0ItENGwQqG+NYfp6x3xNDUFaW5GW1jOb+qHZkJN/BAivrI+q3lKFG4oUeL76WWaTHzdMj
-    0PVcHtw0/dOPnZmR7wbXnCDLEZD0yNcRW4LxeADBuAz8wRuGFVePK0lYe4Ow
-X-ME-Proxy: <xmx:2MZvaogUulQujjZrL23s7Yd44jmCFf2Yx-WlbBVso4xEbXFrqevyGg>
-    <xmx:2MZvan5pbols8tkcvlltbF6G0WpDzq5R2wgWdutA3wLVsiwdipUEiw>
-    <xmx:2MZvatCfg0WiGx4cyhp8lm7ieP03D-7re5KTTCV3KhgSuCFuuL24oA>
-    <xmx:2MZvamb1MvxrFh0FnjD8jdKPLjmUkDZmkhe7FzVD-bYJx-kCpndSNg>
-    <xmx:2MZvajg1p7nDP7stWYZd2OrcnpE4Z5SukLsEE3JVeN7EAGUBHG9TS_nM>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785710769; x=
+	1785797169; bh=Vmo0K8WXZwRChch71VZv0ytvZfztEVChx9owme7S7xk=; b=l
+	v7lEq09TeuIZN5p0Ak92xTyCXOmY+sxN10wXTRdJyXVjg9A6YP2NGgXIUU/Y4N2w
+	fYpT39JSwAN7UNET/0K+qtLRodCv5Y4JfHVHgYN9asbvsdOzpWlYjesA4ggysfIo
+	DIlj11jqEMl3FcjJWmh+bCM1KBKnxSeMUi0wQMfB0GX+ktARq6Ut3ZVaMTkSDjwO
+	Zbx6r6GjWqcGDV2iOUTCacWfoYoAtjkHofTNXsDHJGSJHmhgiwGRN/A/2IxW1U1f
+	gsefup6RuKi5ZeSzvMCwnkE8nQ1nU/94KQBf4AAjSDdOgLsVZc0fkxdiD3PA/RTE
+	Ij/KH9iEnVU+h3RcK3A0Q==
+X-ME-Sender: <xms:sMhvavNzJVi-MG3oYDc7-7NIDkZTwP87jkg99jOU_YO_23X0xRC0lw>
+    <xme:sMhvapCri1rgokPtUF_cVEcfpjH8Wrcj4jRm5b4gAo_GzDfc9qGMYicA9K98c-i92
+    gQHPDfvBuBOXIS5c3zEY6UUHZR67Aon-VgYoh7_WneAfNmNCcA>
+X-ME-Received: <xmr:sMhvakcq6KUbz6rhgO0NGzK24tHqx1b3LieLMla5lOehxH9t8QpgNeURIBwcB-68BtzfrdtdRgQwJbAH3Ltp7NXjH5TQsxQ7kw>
+X-ME-Proxy-Cause: dmFkZTE0/8N/RQApliEAOVqhVEPu8VKqI+/CfmtXV9pJkT1LyexMjJpTp+cGM7bIs3N5B5
+    eeQ8q0hatZ3LrnGFwl1YL3nv0zMJ06QtcTauWe6wOns0sz1oAi2JIW0DBgwRcD7JHCSGxs
+    tqCUMa1qDnOcK3TQLcTSOdtLBdsFPVG+QO4v1NRYQ0ufVBJ6LLxC8pMVvRgzBuucqag4vA
+    YMMb2R2VAvIO0PHJ1CN6WpQ3pWud5EHCbshCd1EKnD9w4Ki9pL/OQ8gNxuu2jMxkZTvHoF
+    UiARL6qD1+ciSCDn8irtkCZQgY67bzKMAJm43bygzFlWz326/JivmzMpEDoiXowk/e94mB
+    IFG4zFrPXU/Z0GDFhtD85KJuU/zjuMqxyOBvi3Zzg6UyC131VP0vLhs3Px4boFkKnCNuDR
+    ZXquYHzdTgRwYilqcXMl0ZEskAyZ4ugQB0G8klnVl/WlzimdP0h+0Pth2k9bybpQC0NbTE
+    GQS9SRLtye6sTUWtcE/k7sE5CkRnYRvpVlfvGz/qiG82UOvo5LKbaLDTwYAFR7mm+EIMEk
+    C6MKkxV4ddg8xHzLaK04oF5VPrghBOTIxhdOYOMSJVip95u9kGk8qcUo0odlNGuTpMVtIm
+    TvHIh4Xh9Yv9MMuBSj2LS9kPgy01XsePtepiiQRNd5XMGeb3YlMVj2Vjg9cQ
+X-ME-Proxy: <xmx:sMhvagPoMjov1hx_Cuu3YoOax2K5J8DTqsNf7Q_KmNV4J6ohn6CTSw>
+    <xmx:sMhvasIJIikvF3Kd4WwPxkkRQ73EeSUgNXTBmicaqn21YC2YHUVEbg>
+    <xmx:sMhvaoJx0jOEdfnJquMJUUR7PlgGY9Z7uwhC4RW7kkcBsTN31zWNrQ>
+    <xmx:sMhvau5wMAUTyUfJk6eykkaA1dbCVQ5WGCMJqz47srMoLHoohtJvRg>
+    <xmx:schvagLFvZeqx-4Bk0OiQdHv-lLhlSZf5_uxZYO13bqD9rtTOBwBuB2E>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Aug 2026 18:38:15 -0400 (EDT)
+ 2 Aug 2026 18:46:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] add: introduce '--resolved' option
-In-Reply-To: <CAC2QwmJeohdnWhUbcP6Pc5w1X8yZf3jXvpR8JC=Hb9gqkFF6ig@mail.gmail.com>
-	(Michael Montalbo's message of "Sat, 1 Aug 2026 17:49:40 -0700")
-References: <20260728215219.753678-1-gitster@pobox.com>
-	<20260728215219.753678-4-gitster@pobox.com>
-	<xmqqse51algy.fsf@gitster.g>
-	<CAC2QwmJeohdnWhUbcP6Pc5w1X8yZf3jXvpR8JC=Hb9gqkFF6ig@mail.gmail.com>
-Date: Sun, 02 Aug 2026 15:38:14 -0700
-Message-ID: <xmqqfr0w2lnt.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Jonathan Tan <jonathantanmy@fastmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Arijit Banerjee <arijit91@gmail.com>,  Arijit
+ Banerjee <arijit@effectiveailabs.com>
+Subject: Re: [PATCH] index-pack: speed up promisor link recording
+In-Reply-To: <am-7_wSb-GNefKlB@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Sun, 2 Aug 2026 21:51:59 +0000")
+References: <pull.2191.git.1785706396130.gitgitgadget@gmail.com>
+	<am-7_wSb-GNefKlB@fruit.crustytoothpaste.net>
+Date: Sun, 02 Aug 2026 15:46:07 -0700
+Message-ID: <xmqqcxw02lao.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,46 +91,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Michael Montalbo <mmontalbo@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On Wed, Jul 29, 2026 at 8:17 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->>
->> Left unchecked, this loop may end up scanning a large binary file to
->> the end in vain.  We may squeeze in something like this to punt
->> early.
->>
->>  merge-ll.c | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/merge-ll.c b/merge-ll.c
->> index 5e5044b9e3..ef5287dee8 100644
->> --- a/merge-ll.c
->> +++ b/merge-ll.c
->> @@ -516,6 +516,9 @@ int has_conflict_markers(struct index_state *istate, const char *path)
->>                         has_markers = 1;
->>                         break;
->>                 }
->> +               if (buffer_is_binary(sb.buf,
->> +                                    ULONG_MAX <= sb.len ? ULONG_MAX : sb.len))
->> +                       break;
->>         }
+>>     index-pack: speed up promisor link recording
+>> 
+>>     AI assistance: OpenAI Codex was used to identify the bottleneck and
+>>     assist with the implementation, testing, and benchmark analysis. I
+>>     reviewed the resulting change and take responsibility for this
+>>     submission.
 >
-> Should this check be before the conflict marker line check in case the first
-> iteration accidentally matches for a binary file and breaks with
-> has_markers = 1?
+> I don't think SubmittingPatches really allows more than trivial changes
+> written by AI:
+>
+>     The Developer's Certificate of Origin requires contributors to certify
+>     that they know the origin of their contributions to the project and
+>     that they have the right to submit it under the project's license.
+>     It's not yet clear that this can be legally satisfied when submitting
+>     significant amount of content that has been generated by AI tools.
+>
+>     [...]
+>
+>     To avoid these issues, we will reject anything that looks AI
+>     generated, that sounds overly formal or bloated, that looks like AI
+>     slop, that looks good on the surface but makes no sense, or that
+>     senders don’t understand or cannot explain.
+>
+> This doesn't look like it's a trivial change, so I don't believe this
+> patch can be accepted.
 
-If we misidentify early, that is a desirable outcome, isn't it?
+The project we borrowed DCO from has this to say on this topic:
 
-We did not have to scan much and we gave control back to the user as
-soon as we saw "<<<<<<", telling them that we refused to add the path
-to the index, so that the user can inspect the situation more
-deeply.  In this application, false positives are much better than
-false negatives, and failing early is better than failing late.
+ https://docs.kernel.org/process/coding-assistants.html
 
-So, no, I do not think so, even though in practice I do not think it
-would matter either way.
+ * All contributions must comply with licensing reuqirements.
+ * Only humans can attest DCO by Siging off their patches.
 
-A question that may have much more impact is whether the attribute
-system should have any say in this code path.  I am somewhat torn on
-this.
+   The human submitter is responsible for reviewing all AI generated
+   code, ensuring compliance with licensing requirements, certify
+   DCO with their sign-off, and taking full responsibility for the
+   contribution.
+
+Now we are *not* kernel, but I think there is a general concensus in
+the community that, while we do not want to outright ban machine
+assisted contributions, we generally want to tread very carefully,
+especially in the DCO area.
+
+It is very easy for anybody and their dog to say "I reviewed X" and
+it is very hard for others to assess how trustworthy such a
+statement is, so I am unsure how the kernel project is enforcing the
+"human submitter is responsible for these", and more importantly,
+even assuming that we would take a similar policy for ourselves, I
+am not sure what mechanism we can put in place to detect cases where
+these expectations are violated.
+
+So...
