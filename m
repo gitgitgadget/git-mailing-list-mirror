@@ -1,343 +1,291 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE4126A0B9
-	for <git@vger.kernel.org>; Sun,  2 Aug 2026 19:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D611D3D3CE5
+	for <git@vger.kernel.org>; Sun,  2 Aug 2026 21:24:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785700679; cv=none; b=QxDVqroBtdVbzCc5EtP6IVGfIcueiSO3bPogyxaUw0NtTF8+hekrmxMwIcGeD2ZmrsTMbAWcX6s7uewYAYd/51fSepEUigjkVzScVccR5WOzF7XKv7G8S/t9/0pAB/BXRXB+w6zyX/dlHX/Ak5OvxxfkiygDOri5NVQGArULqwk=
+	t=1785705867; cv=none; b=MfKyioIZGbiQmG/5XB/rN6F1DgFZBocfXA+KTZ/V4LWBYKK0B53/P4ILgadhtkxMhjaEQgiC6pAcPcjC4/jfxS0mSBs3VMPC4AQVJkDqE6DjZWF4OAX8CTABfb7M99eNMsvI3VekTdOcxoTd+OFQfc7U6Ymni9acpt1xpxNSh9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785700679; c=relaxed/simple;
-	bh=q4IwiguMsHrC8UgDtwQbQNBsajaK4lWEo0/bVaM6LeM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ESORTz+4Ixnf0m7sQOhAr8iJARmT5CwwIBVMLSXvc0SIMvaRFeO3xPD9dJzjXrsQvyQRT8HD6pMeJAkmuuikZUlNUTs4kBpBQeXgfbHj61t1FH9nxumQ4khK9Te4YB+SMf4EjeTP38m5pjsFLGvbUIwQ72Ayr6wgQh0ohrR6R5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lfLD6hX1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T1a1qLB3; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1785705867; c=relaxed/simple;
+	bh=ufGLXhaP7z3T5+2Jxx0KOZtCp61w7r3TduaNG0g6NoU=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=egBJuM6/HTPps+vq8COitgCFBPUYEOgVFlfGNMQYaQ1/89yA6TJJcwg8Tv65IeLJ7om//NX5INhoVMzcp7CQeGELfZPWDCzoCVDkBNp3IQPSehfY+uRNw1k2Kyymiuq3WJl9JRxy5NU7o1JHKAvxuPija3N1fAVUALeQxI3R+l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OFNCxwsQ; arc=none smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lfLD6hX1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T1a1qLB3"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id BB7821D000B3;
-	Sun,  2 Aug 2026 15:57:56 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Sun, 02 Aug 2026 15:57:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785700676;
-	 x=1785787076; bh=3tgC9uw8jJ5Pwx76whWrG9b/fgs9AhNOEvBSji9M8Zs=; b=
-	lfLD6hX1m72tBLQx72Te8lOoHhSil9FIkzOtkF/kgdDgLFxxjsB0rJB4Xi+h0BTC
-	WTbqPuju4QphxNs0bDG1g86phvPPx5DtA9MttdrV0Wi5S8WsKsqlGkHWfYAmvjga
-	i/izlhJoesFS5z5BqSoeVKnOGViZCOKblqeatZp+jUz6KaiNBiLF9pyLO60wFjpm
-	NSkkbnnEr/hqoJWSTOM16ZrB/ioCcOygf7IKAtJhSARLn9ZYLMMAC21RyAfKHuca
-	f9PDzmLzTBHCPT0G0IQnytqG8L29e5OyjvheaDXgSKCwsk33rlpJOp9ClAeRErq5
-	uWrR9izF7S0kBideAAaRBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785700676; x=
-	1785787076; bh=3tgC9uw8jJ5Pwx76whWrG9b/fgs9AhNOEvBSji9M8Zs=; b=T
-	1a1qLB3sYH6hJrf3or+kNsiHLVXssPIi+FS4fCSDKJ2MZvr4MrtlQlZOXfQZnckN
-	l/ZoVO+IDQ5AQiu4mRKJLjx9WE6szeeMTdZAozYrX2cyJdbaFr/zTseZmOry3RWz
-	uXWoRGWP8yhrIGWp2oE9K54WGwYCWv1IqZ/lFJ9ek0EMg1oo08mzjnoRqEnbkjuu
-	R7K0ACtt/3yglRC0DmVwL1bZ+E16V+/SK12ESOVu+Lp3wxBhAqU0BLo03nX/dzsf
-	+unGE9HeZJLl3DgZj+0gCTAoXUmid1dtNWSQdXwmOrt0k5iTYsYkxqOjO5prd9vE
-	k+OS/4HUKCV9ZQJ55b/XA==
-X-ME-Sender: <xms:RKFvannyGx-d05pHDorfjrr7YaPnotDb-p5IHNUdfBwWRT8YyObZ1vw>
-    <xme:RKFvaiTrHIKGpKRD03epzPvrTKaS1TLtEVcqAt4dvADSsesnrOIU0srDq6Idvvgos
-    PP_WQYZ87HfwaRLsO0kuRvfThc9tkXDxwGf-oaoC_M4UP8_49qcyg>
-X-ME-Received: <xmr:RKFvarB-QJNcUJ7wLoTb75SuAGa5fXQm35I4T-PFPmXGP3EI8pgHxqLR6ShBoIFFwhKJvKm_hcw5qVCtPwfaS2kYagYwgkJMZPSOUv0JqBXHcTJi8vjytxg>
-X-ME-Proxy-Cause: dmFkZTF2eu+QHoCmoKLOQKbaZWue9jCyIduUf1IKhll9/bCu5fTgIvrnQ4Z6pLVe49Gen1
-    Cn2QXNWVdV3kDxxX5GjBWLwsKlwbrgkPoi23kswgilUba9fTy0Ek4Mr2FClQC/0Iqeg3AD
-    V9mB/J1O/cbqFOl9ReLp2+6rNlN++DGucD4EGfy7zB/X/2mtMU2oJ5YK6wTfo05mi9X/Kk
-    6ZCu+sEs8/43iWTeCEbVqkn6rciXdpEkp32Yp2wiQT00t94oaL+LaepaaqKkla0QQ842xF
-    TwnWtvkXwQtU+63ylQdIkcUTJt0OSQp9YiJtH4cvTqPr/7la9b0y71X80xq6+bOfXPubds
-    /+Oa4V0vSDTDGyiSgLRwfZihZvyogvLfjs2AJ11fkwKFvpAsIdkmW+fmVlqvNs9H9GOj38
-    U5jlD+3uvuYVZcY5WwIGH7ZZ+qSLIY7WWHqpWMPtD8dQgdq14GLxgezAzqhrh+2BWgcZ7w
-    Jc+EFC26tsZPP+PKFKiYO3kLbB7fAzY62rOQJS1nWuCqMqVRiEU+WB5RPrmvmAd86uvuum
-    T6MHI7YTnfIKkLLLDcapNEhLAkHCzKdDS1SKCCh789Vwk7H2CvECADLMptsCjym3s8t0TA
-    D9a2QfyMtoP/D/B1gm4I+PwOkTwpyR43J+j6nRnxyHz/IKm+vQPTlR/K9yaw
-X-ME-Proxy: <xmx:RKFvapSUUvdV00WA9E98KEFLBapp2mjVFClMkw1G58QQOxeY9JKXKw>
-    <xmx:RKFvapq2dzrQ1k-0NL4X8f-_osEmdMW2k239dRT_IN9aV3bDli5ZAQ>
-    <xmx:RKFvaryckF8JXzwkFE4lFXsueSOUB0nKhzNSYvrGBVGXH9gAUR5u8A>
-    <xmx:RKFvauKthpCYZ8MTn3fvqoohc74YS-Zf3uMMzTk91QoJgePMuHRwRw>
-    <xmx:RKFvavANA0E3NgjopFQ0VnLcQdqdCAS_ys7Eu0IXmRRVWugNxtzbugDU>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Aug 2026 15:57:55 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH] trailers: stop recognizing URLs as trailers
-Date: Sun,  2 Aug 2026 21:57:17 +0200
-Message-ID: <URLs_not_trailers.b13@msgid.xyz>
-X-Mailer: git-send-email 2.54.0.22.g9e26862b904
-In-Reply-To: <20260609004340.GF358144@coredump.intra.peff.net>
-References: <20260609004340.GF358144@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OFNCxwsQ"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-92e53581361so136582685a.1
+        for <git@vger.kernel.org>; Sun, 02 Aug 2026 14:24:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785705863; x=1786310663; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Lhs6DTwAg1sVReyLqmtp/LQJpsJa6FbkJFvBiiEYUjo=;
+        b=OFNCxwsQbMaT8UAepxKyNG3LthY/J4n3SM0fjTuPieGV7vzLfau/3KKof0wqWRvqpN
+         Z3lTV+UsqL6A5fNB8ZbpLK5QAuMlDfgs8FRRPx3KwHZvRzwD/Cw4w4dnUXGR83K7zCsT
+         IsgMvQL76tr0890ulogCPpWglS8yaTZKjgG62OhsHzwLdVU7/qAXs3nLV3CotwAPs9ax
+         b6RA6Fy3xP285xcT5dDTe8fAn+55bpTezHa7LF+eORtUVoNCo+Rc/SP+Hw29NT8Kmhe7
+         daxv+ksOb1gXpVh/fgyM9C2iJFv8fDUQAUyPStcdQDLT+uvCHudYxeS8WsB8NDIf9o44
+         Ec5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785705863; x=1786310663;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Lhs6DTwAg1sVReyLqmtp/LQJpsJa6FbkJFvBiiEYUjo=;
+        b=jWhiuhBY2tYaXXwlb0hbv0kRMSDeS5bm8SRBtEGxCDVsou068GAl+vU1CT8MbfLwPq
+         fSHusb0XjEFsEoHY/fvb/BL/R9XfaANa398XzByDK4/dvVoLKaP1YVlBkSDXBmw86pR2
+         sB6OIPX68EZokEvemscArTNP7C3nVgSVSGP7L3fx8cX1phKRVQwq/FM0jIy6K5+IiRex
+         e+smZD7irOopf3k80o1D5rYYBULzye0dxdc5kvh2xbsPOgUSqvlQTRT4yD0muA+dxf0n
+         eVjy4LbhkCTeOXqwKr5Q72W8JU7N3KSy1YMBGRsAwnJWk3ix/CLar2Dun1yzcpU1QPo6
+         n/UQ==
+X-Gm-Message-State: AOJu0Ywb7IFzNBLKc8RK8TI/p9TMtT1UXbRxbzXRCo8ErYWOiZeqm9g1
+	ouBRTPR1zHssPqUK2kJxbKrFeHeAS0L5QOhcujLFP6DmG+DyoMQ/7Jx8Z/7NWw==
+X-Gm-Gg: AR+sD13XhtZUaLsBfqupokmz6cbfZkpJ0QTEy3lTdW1uZY+o2FEk195alYyTD7QgeuD
+	H02U7wYuMb7Jlrl8lRh4Vm+9behuy8Q39VwKhQlYpzDf7vdfeZgaq8bCvAAOGrpgKAjLppiRlv3
+	y81/fg76hEUZQs/AnHmNBBIGCraYahaEHdbH5RHfnbn+Ml3VQ6PLZiPjutqMa0sUGbLWr7jpACS
+	UB9w9lkVcVSu2/I9JRTVpQT8lFuZUIr6wJSn1xQESMBnrL8JiMY09+pRng1JBRZVaQj9YnyK3uh
+	mCjip3XHgpWfnSfyIhZOi4dakYBRsiZqsMUsQpyQ1WqOVLiuhepARhdnfiK7OEg+4nVOgLvApqc
+	hCd0Y+/YGjltPL3fdl2Mz8oa+270F5jC1TUy7f+TfdihRKZ1cFp8qcbM/a2e2PFxwDTRs+dFeAG
+	HEkcBrLYqadcpEbODYi1mdaJ23WAvNMCLPW2TiAmqRnhrWHM30bb4F04S2GiPYZeM=
+X-Received: by 2002:a05:620a:8010:b0:92b:4ce5:6390 with SMTP id af79cd13be357-934a0939829mr1574904885a.25.1785705863012;
+        Sun, 02 Aug 2026 14:24:23 -0700 (PDT)
+Received: from [127.0.0.1] ([172.214.44.49])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-908435b6086sm60569806d6.29.2026.08.02.14.24.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Aug 2026 14:24:21 -0700 (PDT)
+Message-Id: <pull.2335.v6.git.git.1785705860.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com>
+References: <pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 02 Aug 2026 21:24:18 +0000
+Subject: [PATCH v6 0/2] bisect: add --reset-when-found to leave when done
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Add a --reset-when-found option to git bisect that resets the bisect session
+when culprit is found.
 
-An HTTPS URL starts with an alphanumeric scheme followed by a colon.
-That means that they will be recognized as trailers in a trailer block.
-That turns out to be a problem in practice. Let’s stop recognizing these
-as trailers by failing the trailer parsing when we:
+Changes in v6:
 
-1. find the separator;
-2. the separator and the next two characters form `://`; and
-3. we haven’t parsed any whitespace yet.
+ * Reuse the existing bad bisect ref instead of propagating the culprit OID
+   through bisect_next_all().
+ * Remove the redundant reset_when_found_arg_seen flag and use
+   RESET_WHEN_FOUND_NONE to detect whether the option was given.
 
-The simplest example of how this can be a problem is for people who do
-not use trailers but may leave URLs at the end of the commit message.
-Now, while these authors might not use trailers themselves, other
-authors may have used trailers and this metadata confusion can become a
-problem once someone tries to extract that metadata (and non-metadata).
+Changes in v5:
 
-Let’s now look at some examples in the Linux Kernel[1] to see how this
-is a problem in practice.
+ * Move automatic reset handling to cmd_bisect() after subcommand resources
+   are closed.
+ * Propagate the first-bad commit OID from bisect_next_all() and remove
+   defer_reset plumbing.
+ * Separate checkout from state cleanup in bisect_reset(), and use bool for
+   its quiet flag.
 
-There are commits which contain intended non-trailer lines which start
-with URLs. These are comments. Example with just the trailers:[2]
+Changes in v4:
 
-    Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-    [bhelgaas: squash fixes:
-    https://lore.kernel.org/r/20260108013956.14351-2-bagasdotme@gmail.com
-    https://lore.kernel.org/r/20260108013956.14351-3-bagasdotme@gmail.com]
-    Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-    Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-    Link: https://patch.msgid.link/20251210132907.58799-4-xueshuai@linux.alibaba.com
+ * Simplify translation calls.
+ * Avoid git subshell calls in tests, that can bury errors.
 
-Those `[]` pairs delimit the “squash fixes” comment.
+Changes in v3:
 
-Now, any of these two commands:
+ * Rename --auto-reset to --reset-when-found, including internal names.
+ * Defer git bisect run cleanup until captured output is printed and
+   BISECT_RUN is closed. Drop the open-descriptor preparatory change,
+   retaining the existing filename-based output handling.
 
-     git log --format='%(trailers:only)' -1 <commit>
-     git log -1 --format=%B <commit> |
-         git interpret-trailers --only-trailers
+Changes in v2:
 
-Will both wrongly (according to the surmised user intent) include these
-two URL lines as trailers and also mangle the URLs, e.g.:
+ * Add option --auto-reset[=<where>] with option to go to final commit as
+   well as original.
+ * Refactored tests.
 
-    https: //lore.kernel.org/r/20260108013956.14351-2-bagasdotme@gmail.com
+Harald Nordgren (2):
+  bisect: let bisect_reset() optionally check out quietly
+  bisect: add --reset-when-found to leave when done
 
-Because the `--only-trailers` mode (or `only` for the git-log(1) format)
-normalizes the output to a colon and a space.
+ Documentation/git-bisect.adoc |  14 ++-
+ bisect.c                      |   2 +
+ builtin/bisect.c              | 162 +++++++++++++++++++++++++++++++---
+ t/t6030-bisect-porcelain.sh   | 121 +++++++++++++++++++++++++
+ 4 files changed, 285 insertions(+), 14 deletions(-)
 
-Another example is linewrapping mistakes; a `Link` trailer with a
-URL where the URL ended up on the next line, presumably because the
-user’s editor linewrapped the “too long” line. Example with just the
-trailers:[3]
 
-    Link: https://patch.msgid.link/20260216-work-xattr-socket-v1-4-c2efa4f74cb7@kernel.org
-    Link:
-    https://lore.kernel.org/3cnmtqmakpbb2uwhenrj7kdqu3uefykiykjllgfbtpkiwhaa4s@sghkevv7jned [1]
-    Acked-by: Darrick J. Wong <djwong@kernel.org>
-    Reviewed-by: Jan Kara <jack@suse.cz>
-    Signed-off-by: Christian Brauner <brauner@kernel.org>
+base-commit: a97fcc37c2bc6340a8d7ce78dedf227aac4e9aa7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2335%2FHaraldNordgren%2Fbisect-auto-reset-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2335/HaraldNordgren/bisect-auto-reset-v6
+Pull-Request: https://github.com/git/git/pull/2335
 
-Now, this intended trailer is already ruined, but interpreting the URL
-as a standalone trailer only compounds the mistake.
+Range-diff vs v5:
 
-Yet another example is the trailer machinery normalizing the trailer
-block before application, resulting in a `https` trailer key in the
-commit message itself. Example with just the trailers:[4]
+ 1:  b6ab87fd29 = 1:  b6ab87fd29 bisect: let bisect_reset() optionally check out quietly
+ 2:  ec362f3b82 ! 2:  97a4da5537 bisect: add --reset-when-found to leave when done
+     @@ Commit message
+          Persist the selected target in a BISECT_RESET_WHEN_FOUND state file
+          and perform the reset quietly.
+      
+     -    Propagate the internal first-bad result and its commit to
+     -    cmd_bisect(), which performs the reset after the subcommand has
+     -    returned. For "git bisect run", this means BISECT_RUN has been printed
+     -    and closed before cleanup, which also works on systems that cannot
+     -    unlink an open file.
+     +    Let the internal first-bad result propagate to cmd_bisect(), which
+     +    performs the reset using the existing bad bisect ref after the
+     +    subcommand has returned. For "git bisect run", this means BISECT_RUN
+     +    has been printed and closed before cleanup, which also works on systems
+     +    that cannot unlink an open file.
+      
+          Reject this option together with "--no-checkout", since that mode must
+          not check out either target.
+     @@ bisect.c: static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+       
+       static void read_bisect_paths(struct strvec *array)
+       {
+     -@@ bisect.c: void read_bisect_terms(char **read_bad, char **read_good)
+     -  * the end of bisect_helper::cmd_bisect__helper() helps bypassing
+     -  * all the code related to finding a commit to test.
+     -  */
+     --enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+     -+enum bisect_error bisect_next_all(struct repository *r, const char *prefix,
+     -+				  struct object_id *first_bad)
+     - {
+     - 	struct strvec rev_argv = STRVEC_INIT;
+     - 	struct rev_info revs = REV_INFO_INIT;
+     -@@ bisect.c: enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+     - 		res = error_if_skipped_commits(tried, current_bad_oid);
+     - 		if (res)
+     - 			goto cleanup;
+     -+		oidcpy(first_bad, bisect_rev);
+     - 		printf("%s is the first '%s' commit\n", oid_to_hex(bisect_rev),
+     - 			term_bad);
+     - 
+      @@ bisect.c: int bisect_clean_state(void)
+       	unlink_or_warn(git_path_bisect_run());
+       	unlink_or_warn(git_path_bisect_terms());
+     @@ bisect.c: int bisect_clean_state(void)
+       	 * Cleanup BISECT_START last to support the --no-checkout option
+       	 * introduced in the commit 4796e823a.
+      
+     - ## bisect.h ##
+     -@@ bisect.h: struct bisect_state {
+     - 	unsigned int nr_bad;
+     - };
+     - 
+     --enum bisect_error bisect_next_all(struct repository *r, const char *prefix);
+     -+enum bisect_error bisect_next_all(struct repository *r, const char *prefix,
+     -+				  struct object_id *first_bad);
+     - 
+     - int estimate_bisect_steps(int all);
+     - 
+     -
+       ## builtin/bisect.c ##
+      @@ builtin/bisect.c: static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+       static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+     @@ builtin/bisect.c: static const char * const git_bisect_usage[] = {
+       struct add_bisect_ref_data {
+       	struct rev_info *revs;
+       	unsigned int object_flags;
+     -@@ builtin/bisect.c: struct bisect_terms {
+     - 	char *term_bad;
+     - };
+     - 
+     -+static struct object_id first_bad_oid;
+     -+
+     - static void free_terms(struct bisect_terms *terms)
+     - {
+     - 	FREE_AND_NULL(terms->term_good);
+      @@ builtin/bisect.c: static int bisect_reset(const char *commit, bool quiet)
+       	}
+       
+     @@ builtin/bisect.c: static int bisect_reset(const char *commit, bool quiet)
+      +
+      +static int bisect_reset_when_found(enum reset_when_found_mode mode)
+      +{
+     -+	char first_bad_hex[GIT_MAX_HEXSZ + 1];
+     -+	const char *commit = NULL;
+     ++	struct bisect_terms terms = { 0 };
+     ++	char *commit = NULL;
+      +	int res;
+      +
+     -+	if (mode == RESET_WHEN_FOUND_TO_FOUND)
+     -+		commit = oid_to_hex_r(first_bad_hex, &first_bad_oid);
+     -+	else if (mode == RESET_WHEN_FOUND_NONE)
+     ++	if (mode == RESET_WHEN_FOUND_TO_FOUND) {
+     ++		read_bisect_terms(&terms.term_bad, &terms.term_good);
+     ++		commit = xstrfmt("refs/bisect/%s", terms.term_bad);
+     ++	} else if (mode == RESET_WHEN_FOUND_NONE) {
+      +		BUG("automatic reset requested without a reset mode");
+     ++	}
+      +
+      +	res = bisect_reset(commit, true);
+      +	if (!res)
+      +		res = bisect_clean_state();
+      +
+     ++	free(commit);
+     ++	free_terms(&terms);
+      +	return res;
+       }
+       
+     @@ builtin/bisect.c: static int bisect_successful(struct bisect_terms *terms)
+       {
+       	enum bisect_error res;
+       
+     -@@ builtin/bisect.c: static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
+     - 		return BISECT_FAILED;
+     - 
+     - 	/* Perform all bisection computation */
+     --	res = bisect_next_all(the_repository, prefix);
+     -+	res = bisect_next_all(the_repository, prefix, &first_bad_oid);
+     - 
+     - 	if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+     - 		res = bisect_successful(terms);
+      @@ builtin/bisect.c: static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
+       	return res;
+       }
+     @@ builtin/bisect.c: static int bisect_run(struct bisect_terms *terms, int argc, co
+       	int temporary_stdout_fd, saved_stdout;
+       	int is_first_run = 1;
+      +	enum reset_when_found_mode reset_when_found = RESET_WHEN_FOUND_NONE;
+     -+	bool reset_when_found_arg_seen = false;
+       
+       	if (bisect_next_check(terms, NULL))
+       		return BISECT_FAILED;
+       
+      +	if (argc && !strcmp(argv[0], "--reset-when-found")) {
+      +		reset_when_found = RESET_WHEN_FOUND_TO_ORIGINAL;
+     -+		reset_when_found_arg_seen = true;
+      +	} else if (argc && skip_prefix(argv[0], "--reset-when-found=",
+      +				    &reset_when_found_arg)) {
+      +		if (parse_reset_when_found(reset_when_found_arg,
+      +					   &reset_when_found))
+      +			return BISECT_FAILED;
+     -+		reset_when_found_arg_seen = true;
+      +	}
+      +
+      +	if (reset_when_found != RESET_WHEN_FOUND_NONE &&
+     @@ builtin/bisect.c: static int bisect_run(struct bisect_terms *terms, int argc, co
+      +		return error(_("options '%s' and '%s' cannot be used together"),
+      +			     "--reset-when-found", "--no-checkout");
+      +
+     -+	if (reset_when_found_arg_seen) {
+     ++	if (reset_when_found != RESET_WHEN_FOUND_NONE) {
+      +		write_file(git_path_bisect_reset_when_found(), "%s\n",
+      +			   reset_when_found_mode_name(reset_when_found));
+      +		argc--;
 
-    https: //sashiko.dev/#/patchset/20260429114208.941011-1-holger.brunck%40hitachienergy.com
-    Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
-    Signed-off-by: Holger Brunck <holger.brunck@hitachienergy.com>
-    Link: https://patch.msgid.link/20260507155332.3452319-1-holger.brunck@hitachienergy.com
-    Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-We have a helpful `Link` that points to the original patch.[5] Following
-it we can see that that `https` trailer was indeed a URL
-originally (again just the trailer block here):
-
-    https://sashiko.dev/#/patchset/20260429114208.941011-1-holger.brunck%40hitachienergy.com
-    Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
-    Signed-off-by: Holger Brunck <holger.brunck@hitachienergy.com>
-
-So how did it end up as a `https` trailer? My theory is that the trailer
-block was normalized on patch application, causing a URL comment to be
-wrongly normalized and cemented in the commit message as a trailer.[6]
-
-† 1: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/
-† 2: commit 8236fc613d44e59f6736d6c3e9efffaf26ab7f00
-† 3: commit 5bd97f5c5f241a5610c4412d1b93995a26241f81
-† 4: commit 496c0c4c53bbe1bad97e82cd12103df61a6e459d
-† 5: https://patch.msgid.link/20260507155332.3452319-1-holger.brunck@hitachienergy.com
-† 6: There are only four commits in the Linux Kernel of this kind, and
-     three of them have the same recurring person in the signoff chain.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    Topic name: trailers-no-urls
-    
-    Topic summary: Stop recognizing URLs in trailer blocks as trailers.
-    
-    Note to the maintainer: this is based on `master` with topic
-    kh/doc-trailers merged into it.
-    
-    I used Peff’s suggestion from the previous email. I just shortened the
-    comment, added the parentheses (://) and added the condition that
-    whitespace has not been found for the case I discussed of someone writing
-    out `<key>: //` (note the space). (Or for that matter: `<key> ://`.) I
-    can’t imagine that that is a likely case, but I just want to avoid matching
-    URLs, so we don’t have to reject this case.
-    
-    t/u-trailer.c: `expected_contents[]` is not formatted like the other ones
-    in this file. But this is what clang-format(1) gave me.
-
- Documentation/git-interpret-trailers.adoc | 13 ++++--
- t/t7513-interpret-trailers.sh             | 19 +++++++++
- t/unit-tests/u-trailer.c                  | 52 +++++++++++++++++++++++
- trailer.c                                 |  7 ++-
- 4 files changed, 87 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index b4988d39eab..903d598dcb0 100644
---- a/Documentation/git-interpret-trailers.adoc
-+++ b/Documentation/git-interpret-trailers.adoc
-@@ -123,9 +123,16 @@ OTHER RULES
- What was covered in the previous section are the rules that are relevant
- for regular use. The following points are included for completeness.
- 
--This command ignores comment lines (see `core.commentString` in
--linkgit:git-config[1]). This is for use with the `prepare-commit-msg`
--and `commit-msg` hooks.
-+--
-+* This command ignores comment lines (see `core.commentString` in
-+  linkgit:git-config[1]). This is for use with the `prepare-commit-msg`
-+  and `commit-msg` hooks.
-+
-+* Candidate trailer lines that have `:` as the separator, that have no
-+  whitespace before the value part, and that start with `//` are not
-+  recognized as trailers. This is to avoid accidentally interpreting
-+  URLs as trailers (e.g. lines that start with `https://`).
-+--
- 
- OPTIONS
- -------
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 818a8dafbd2..e3555b6d51d 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -1989,4 +1989,23 @@ test_expect_success 'handling of --- lines in conjunction with cut-lines' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'URLs and lines that are not quite URLs' '
-+	cat >expect <<-\EOF &&
-+	https: //www.a-trailer.org
-+	https: //www.another-trailer.org
-+	Signed-off-by: somebody <somebody@somewhere>
-+	EOF
-+	git interpret-trailers --only-trailers >actual <<-\EOF &&
-+	subject
-+
-+	body
-+
-+	https://www.not-a-trailer.org
-+	https ://www.a-trailer.org
-+	https: //www.another-trailer.org
-+	Signed-off-by: somebody <somebody@somewhere>
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/unit-tests/u-trailer.c b/t/unit-tests/u-trailer.c
-index 3d60ea1603d..7404b165fac 100644
---- a/t/unit-tests/u-trailer.c
-+++ b/t/unit-tests/u-trailer.c
-@@ -318,3 +318,55 @@ void test_trailer__one_non_trailer_no_git_trailers(void)
- 			   0,
- 			   expected_contents);
- }
-+
-+void test_trailer__URL(void)
-+{
-+	struct contents expected_contents[] = { 0 };
-+
-+	t_trailer_iterator("Subject: foo bar\n"
-+			   "\n"
-+			   /*
-+			    * We do not want to match URLs as trailers.
-+			    */
-+			   "https://www.example.org\n",
-+			   0,
-+			   expected_contents);
-+}
-+
-+void test_trailer__not_a_URL_space_after_separator(void)
-+{
-+	struct contents expected_contents[] = {
-+		{ .raw = "https: //www.example.org\n",
-+		  .key = "https",
-+		  .val = "//www.example.org" },
-+		{ 0 },
-+	};
-+
-+	t_trailer_iterator("Subject: foo bar\n"
-+			   "\n"
-+			   /*
-+			    * This has a space after ':' so it's not a URL.
-+			    */
-+			   "https: //www.example.org\n",
-+			   1,
-+			   expected_contents);
-+}
-+
-+void test_trailer__not_a_URL_space_before_separator(void)
-+{
-+	struct contents expected_contents[] = {
-+		{ .raw = "https ://www.example.org\n",
-+		  .key = "https",
-+		  .val = "//www.example.org" },
-+		{ 0 },
-+	};
-+
-+	t_trailer_iterator("Subject: foo bar\n"
-+			   "\n"
-+			   /*
-+			    * This has a space before ':' so it's not a URL.
-+			    */
-+			   "https ://www.example.org\n",
-+			   1,
-+			   expected_contents);
-+}
-diff --git a/trailer.c b/trailer.c
-index 6d8ec7fa8d8..971ae459596 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -635,8 +635,13 @@ static ssize_t find_separator(const char *line, const char *separators)
- 	int whitespace_found = 0;
- 	const char *c;
- 	for (c = line; *c; c++) {
--		if (strchr(separators, *c))
-+		if (strchr(separators, *c)) {
-+			/* avoid accidental URL matches (://) */
-+			if (*c == ':' && c[1] == '/' && c[2] == '/' &&
-+			    !whitespace_found)
-+				return -1;
- 			return c - line;
-+		}
- 		if (!whitespace_found && (isalnum(*c) || *c == '-'))
- 			continue;
- 		if (c != line && (*c == ' ' || *c == '\t')) {
 -- 
-2.54.0.22.g9e26862b904
-
+gitgitgadget
