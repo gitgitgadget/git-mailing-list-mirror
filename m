@@ -1,144 +1,143 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD76426694
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 17:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785777716; cv=none; b=BIC/gMiGeqwPKP0CUVWWalyt9FjUS33oH1XvR1LKzJRSzmkHZminc34iD6xNBsWUN3RYZMc9H3+kec12XtAtEZwF62Euxo1DBM51pPovqVS3HGnHU0PsJIKf/xnPGwjFGD1PFcf9AtlUaoDy+Gh785Wya2kp69PBZwfA0+HnUSc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785777716; c=relaxed/simple;
-	bh=9FioILSdKij3sml3Li4oqtFlFdsv0AH4TUwVrA4WZHs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VxvaDnuoFgmsYQkjP65u41Y5FKQjJA8CAPWq8Z+n3AH5Q+ujoEJEiLIthlsmR5i9Lj3TI9ixebU1z4vWSvU0u8mL71ZsIKTv6Tvosh+jmGaAGJ3znvGjeZgNknDB0PjvUcs2QIJSxcqWBeCfg9zZetWD9/drtRI8WPjKKFdLJc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=boMPHbUU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z6AOO3Ss; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842BC3B52E2
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 17:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785777826; cv=pass; b=qBPvw3av5IaR40Sb+i8O303WKSM/Sx4/6T87smM1yiy/JJI7KRbgK7e4cPVII4q/G/AS00eQjTMfUPC4QM5OJYIr+AEqD8hhyVXeb7BnCe9eIg+kXFsTXCpTZuOKIDqUAb06kj5+jTid35txQB/pnX8744HZS0YQ9MEvlfDSRAA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785777826; c=relaxed/simple;
+	bh=cKuTBNKHexONpziNpSWuOx11To2R+K6c9rJ7FgHZdJA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uwMyw+MW3+2rSleroXci0huwh9IHHIh0oCWBFjV5w+CIl0rNc+VRQpB+gKYNqE+toFpHCbas18GgIVwtFyjaFO5/PM3AAsLu2PbBVfCjeBPMYx3EtJ+/4wfMiavxkT7oFUlasxSCCrzwkSPVn8DmYwmrUrZqG5Q/D7hvXcTm/sk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cOHScj3t; arc=pass smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="boMPHbUU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z6AOO3Ss"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3EF701D000C9;
-	Mon,  3 Aug 2026 13:21:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 03 Aug 2026 13:21:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785777713; x=1785864113; bh=5Pq/e046Rx
-	n9ehW64/orB2quTA7xqgDrgb6xva36S3E=; b=boMPHbUUhwMQW0FHyk6Yk9FO+l
-	RHDJ1bPKWmh64HrA/KF5fy4YLE6d9Im9tzWMvs7h5rX6I9fV6Ywc/x9wK4lBPJBJ
-	iVnxNAFngenGmbai+UIzvuZXrxdW2QO8tDVAR+Nzc/LKJcYFHpO5SLbIDDOyz27R
-	d4ZqU/SLgdIjU5sBnykyWVhBOr+438h8YE5zTGQcQg33F5TXfjiXQFtUDevZwQrp
-	9sbhMfOukmTIcUiXee4AGApYl1ePrUZfv8anaRQQbqejo3oOPlInG7Ddsf6opBjh
-	09FGtQ5iPBD/X8HcRmLnrS5kAXRuhR05nBNhJFWdtPlAKj1Mx6b4DkDod7+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785777713; x=1785864113; bh=5Pq/e046Rxn9ehW64/orB2quTA7xqgDrgb6
-	xva36S3E=; b=Z6AOO3SsI+RduBUt7BDuz1D0Zm2RfXxrcdi69idDFBI++7DWRQh
-	KOLy+E+t5ppEJ5dzDlfKP6UigfJN3E20KXoKfnXU7pjsNv1QYK/xoozrKxl6t/3j
-	RnrMPrG9psNgdJheJmNtwqEH/dGilqHEZePIu8W4LfzqNQ3D7GiKGDZyn/IYCgBP
-	1BFh5CqpsqaAurlG7nHk59LaDuZSGw8LCFK5bF19akPhDMUKuF8yoyGeo+DnV9VX
-	KI/AX2mjG2HaOiHq3VyhE5vuD56Ps0X55x9+jn4G5MmMEcEmC9StE1QNJIB1ZF53
-	zW4u/ITd0P4TlQRDWQ2+xBOAS8taP80IMAw==
-X-ME-Sender: <xms:MM5waufr0g0qb72zsfQXQgmslFDn7Zhs_tqkiM65KOcE2i4tyvLWoQ>
-    <xme:MM5war48JSU9lTZNTzU87bnPiolEfUTosvVO1KsFmB4Y76MCZoo8q-Mtff1KM4onc
-    PoFvKiJx1HHIhtKFh62AdkY1z8asG7myYNB_UUVmWpeY67AqBUE_3w>
-X-ME-Received: <xmr:MM5wapXrWFHya1GdQxZH-reeMGwEDwMsvo-UriK9evgmmcSNh2qJG74Wz1UGlpqyuku-v1q0HaC0Dwval6eM5e0w261a5DX0Yw>
-X-ME-Proxy-Cause: dmFkZTG2Y6jpkvmRNwhRMM8ZzAY9D6uHcCHFt60WyuUIb6/xpo93vcayoeugOf0TECPpwJ
-    +oaAhLWd5wekCxqXMgi7MzjuXxrY6lIJSulia3P/L8TbJm3UVXF58PlNeFUMGm321MS+/S
-    YjXMLfVzziBmpHWC6m+W7A+S/xakwMxWwT4LbWdcdby7g6AYPBsJlPDt9Pe9SYqCBN2Wk+
-    BHeUCxj2yLvLK+VApK/0rYQGL3ec0sv937Dg44I9CGH7HV5NxOUEZFbm8xYeZkeVOx6dQV
-    UdA8jKklz35i6rNwBQBb8GvLFj5qSdHm0YXFmSwlkkxHqhEBbJTfCyfadJLb9Gy2eU0Jsm
-    rTQO/VyGTPi7o6R3wxPDQg0SCBV0DU+Z305GftF8yEj1Hmho0vmXPNECHYrR6jzhoBWKSX
-    10iVP5qcl/b30E5eFN8qYzkCfYaKJn152Exhx5BKIrYo6tOykJxq7zGvIiB7xZJ+o+PVIV
-    1TBCinYr347PPYcd0J68Jkm8PV5aeyT1L58BCQKyNGH9IvCQbZYDiHsTgSk1cZYofll0lH
-    cyg3AFrA19o8S5ZHWQjTmzUSSfJRRQcb+MZeij1woKYxMkQgd8sZkvh2AmgWtBUfDNEAfA
-    oq22EMtWj2APw9JRxbqKI7VoTzsyPvLclEeHsZK8n2BgYnUuxB0ieUr8HhTw
-X-ME-Proxy: <xmx:MM5wai6czc2oXvhZqktA5JICm1VjlFnnGWKhl2qyOm9HwLoy60ZkzQ>
-    <xmx:MM5wasqiup8KavjL_7z5P1RH7R7FEseY4Ruc4dRqsJ8m_XXiJjzE2w>
-    <xmx:MM5watnqIH50iGH-XLnFfoG4SUWWp9a3Z5Bvyedq1czNV5PomdRNsg>
-    <xmx:MM5wagNrFwPeyW8ORA5rdwLQ-eBf5RfQJBFgkv-h8DaGNvOP-1-rEQ>
-    <xmx:Mc5wavO2uKc18vYhQ2tOqQfHe2umUivn6krGUI53peg27AA3Xp3wCTud>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 13:21:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,
-  karthik.188@gmail.com,  peff@peff.net
-Subject: Re: [PATCH GSoC v3 1/8] t5701: use test_file_size() to get the size
- of a file
-In-Reply-To: <20260803-objecttype-support-v3-1-7176fecf7950@gmail.com> (Pablo
-	Sabater's message of "Mon, 03 Aug 2026 16:39:28 +0200")
-References: <20260803-objecttype-support-v3-0-7176fecf7950@gmail.com>
-	<20260803-objecttype-support-v3-1-7176fecf7950@gmail.com>
-Date: Mon, 03 Aug 2026 10:21:51 -0700
-Message-ID: <xmqqbjbjyv9s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cOHScj3t"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-381b831d535so4127782a91.0
+        for <git@vger.kernel.org>; Mon, 03 Aug 2026 10:23:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785777824; cv=none;
+        d=google.com; s=arc-20260327;
+        b=sUXEQGbAQlRtcwJJ6G+awQ4DN5Oxgdh8miiwBjKd+jWnKiU+CfnNUHqNrE4+TemxH+
+         7+PDSdCkaf01aXQX+MUYSbPgFA+WDz7gA0OCXHtQ7ySUgoea6TtnnmAPcAF6a1RWLbTc
+         uxxj8hsoLv+DTseGxiaVIaC65FHv8UWzvfaYbLDRw4f7geiO6NXHWMIoy9fGg+NjPk8R
+         xwkTMAXAI+AhxpUgQIAwz7oReA2XOPh+1WEIKEhDw0TBOWkb4AzlKkzHh35Vcu4EciHp
+         lLycbamZ6y/LFkLTtSfyOtT+uYHWfb5cVvNO69W8eIBfEhAnKzghhsQfzorz3lKE8yC3
+         tT6w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=J4XeNmfh5G35EeDCpNcXBoMz6emUBIDIa1v517JRXNg=;
+        fh=xj50WnDjhkMZcgqGEX8buhQcZkZs0GQjw8JpZg3oSSs=;
+        b=h0tlSbs3iQ6NwIPHGX0dQ8QOMnseAT45H22fM9az8ZbehjaNBzj/J/tRloGDLGtuC/
+         bkGMY2jedE2XTYlEVqAT+DDOxiPcB+jlabdBwFCDBp1oQ2VbhNjRWxCIN/b1fMTOpICD
+         eTj+k/Cf2o3Sy4K6oB8O3ZkmqMMCSz3SWOf+UJhpUbLlQT4g0X5+aWdk5RIwTV5/nsul
+         WgiL/dMY4+U0cgVhqr1k6GP8VqGckO8C57suFr1pDzarmCmvSrpA8F/DDUavjSVPytkz
+         VMgTXFV46rbtWZDXpZ1DwnEyLD1zuMTlf7fI//YdZTleFL/YWVFOQ5RLjz+dlMQFNgbr
+         IKDQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785777824; x=1786382624; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=J4XeNmfh5G35EeDCpNcXBoMz6emUBIDIa1v517JRXNg=;
+        b=cOHScj3tmUSOIV3zOdaJ+19sbUJV2aBUEP+T1eOGJ1uviauZO1xWi7PYGnosPOIuzc
+         ejfH9Lj9Lf6BGN4L/EGPqhgtICvIBkMuLX69dmDe+N09/5mAF8TV7LARn7lZfNNMC5mw
+         jzlHdEovfa5hIL4kiYx0ykFqWigoPQzA/Y9JoXODEb7/p8A2pTe3Lqm1BDqaj+dpURpM
+         aZNYVzVRXhUHfnjvlo+zlaS8h4NewopHt9qJhMBRqfSWfHuBY2LKCRwwT7k+4HD/wmkt
+         LJWMbKI+Rt+URweCip3Cps8rbVxtRDYT9DJrylw0oxJzZihkidvkF3Au4dmP4/aWcm1Y
+         9AoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785777824; x=1786382624;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=J4XeNmfh5G35EeDCpNcXBoMz6emUBIDIa1v517JRXNg=;
+        b=cZeCdiT3FnmTfSqCqiQSPv4/0wG1ATV+Ptq1xJ//A5lr/OZYPFW7IdKR9957RbNph0
+         va90Z5KPmrxKXmwKqTWRyITWsKzPZ+caQvWdoTIJtLuVmQ7b1PJx6zpWkfUkeRE+cps1
+         mJBpC6SwUjKEVrKWuwM0HTop5iQrvgRQ0jWu1Iz2aBTJDrpOwisoWFMoCjSp12MctbAn
+         xRMJULEk2f2PmX+cYLJLdMIsPGVOrIQoAoOgI7jm5D93p9u418AlelSY/RNdUHkNVorq
+         td2JZp6SV+nIn5aU7UkGw75MYSOeBR48AlcSt4Z9mGrv+2m4AVkfIl0FzRYVOn5yvRyu
+         PgXA==
+X-Gm-Message-State: AOJu0YwNKi2ej6qbfREv736uHrg01hq33DRSNdUPfroCmdWKRaJadJkA
+	LR/GAEkywsDo3mWNXM1X2Z+XPlwXzJM3hYHKi9BwoAUTe/yQUEv0zyKhNEC1lfDfwyCh75MEeov
+	9mENpa/YPd9ARfkDYIo+Y939NSfmOZWI=
+X-Gm-Gg: AR+sD12UoW+357b2JxrT73QXTgb7GBxZV1ImchF2w6foGWEKtHorJc2ljgvfbHRMkfz
+	mll5IPspfXzzj9DSfdreYIaZTeJk1GYvKPV1KoNv3U+tgkg4ZqnKDOC3Ss9ngR1ulepllWe1RqQ
+	Zt/RIVHGrLylkMfyb18Vhm3zvHfFuocG73xSVoU1iFdLbcoZVsIiKs1Z/kqf91RQHlC7CSQC4wM
+	547+M3Dfu6cOUDk5b54mWRZY2mdVltDRj22sVjwvOdcZEqAmdxXPsUuaBRiU/lnn7EFz4Pkvnu2
+	sJ1bdlgC38N42OpiV/9wPSvgG5hJtsMnumIM48bQWwIwMpyQfcn1Qc0ltFFsx472Jx2CR3hT2RA
+	6LTYwiHMdRqv5LdDtp4luOjB7SoOljZpB6qfmadV/
+X-Received: by 2002:a05:6a20:2583:b0:3b2:924c:567d with SMTP id
+ adf61e73a8af0-3c92a864f82mr10208589637.46.1785777823757; Mon, 03 Aug 2026
+ 10:23:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260716165517.433849-1-christian.couder@gmail.com>
+ <20260716165517.433849-8-christian.couder@gmail.com> <xmqq4ihyehyb.fsf@gitster.g>
+In-Reply-To: <xmqq4ihyehyb.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 3 Aug 2026 19:23:31 +0200
+X-Gm-Features: AUfX_mzEEzBnvua_t8SbX963JLN5hCQ_Bf7-uVcG6Wym_3nzRbsiA3Y5wAzri1E
+Message-ID: <CAP8UFD34vCini03OokPT-arcfZRE1KLocb5fVtB3zsHePT2O7Q@mail.gmail.com>
+Subject: Re: [PATCH 7/7] fast-import: use struct option for usage string
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Justin Tobler <jltobler@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+On Thu, Jul 16, 2026 at 11:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 
-> The 'basics of object-info' test runs 'wc -c | xargs' twice to get the
-> size of two.t. The pipe to xargs is only there to strip the blanks
-> that some platforms pad the output of wc with.
+> OK, I am a bit torn on this.  On one hand:
 >
-> Use the test_file_size() helper, which outputs the size directly, and
-> store the result in a variable. Because 'git rev-parse two:two.t' is
-> also run twice, store its output in a variable as well.
-
-It also has the benefit of retaining the exit status from commands
-run inside a $( ... ) construct placed within a HERE-document.
-Earlier, if your "git rev-parse" failed, you would not have noticed
-it directly (though you would probably have seen the "expect" file
-containing unexpected content).  Now your assignment fails when you
-compute two_oid, if your "git rev-parse" segfaults.
-
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
->  t/t5701-git-serve.sh | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
+>  (1) I do agree that it would be nice to eventually have
+>      fast_import_state_init() (or some other helper that groks
+>      argc/argv) use this options array to parse the command line
+>      arguments.
 >
-> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> index 9a575aa098..51d5dd1ae6 100755
-> --- a/t/t5701-git-serve.sh
-> +++ b/t/t5701-git-serve.sh
-> @@ -344,20 +344,23 @@ test_expect_success 'unexpected lines are not allowed in fetch request' '
->  test_expect_success 'basics of object-info' '
->  	test_config transfer.advertiseObjectInfo true &&
->  
-> +	two_oid=$(git rev-parse two:two.t) &&
-> +	two_size=$(test_file_size two.t) &&
-> +
->  	test-tool pkt-line pack >in <<-EOF &&
->  	command=object-info
->  	object-format=$(test_oid algo)
->  	0001
->  	size
-> -	oid $(git rev-parse two:two.t)
-> -	oid $(git rev-parse two:two.t)
-> +	oid $two_oid
-> +	oid $two_oid
->  	0000
->  	EOF
->  
->  	cat >expect <<-EOF &&
->  	size
-> -	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-> -	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-> +	$two_oid $two_size
-> +	$two_oid $two_size
->  	0000
->  	EOF
+>  (2) I am sympathetic to the position that doing so is a bit
+>      outside the scope of this series, whose focus is strictly on
+>      "git fast-import -h" and nothing else.
+>
+>  (3) I suspect that when fast_import_state_init() does start using
+>      the options array to initialize the state, the parsed results
+>      will not be stored in the variables this caller currently holds,
+>      but will instead live inside the fast_import_state structure.
+>
+> So in that sense, the huge list of unused function-local variables
+> above are merely throw-away placeholders.  When the real code is
+> written, they will disappear, and the references to them in the
+> fast_import_options[] array will have to be updated to point to
+> members of the structure (or global variables).
+>
+> Still, seeing all of those variables left uninitialized leaves a
+> slightly sour taste.  And because of (3), it would be a clear waste
+> of time to go through the motions of initializing these throw-away
+> locals.
+>
+> Perhaps we would end up in a better position if we bent (2) a bit.
+> After all, my hesitation likely stems from the feeling that this
+> series stops short at a slightly awkward spot, having already
+> completed 90% of the journey.
+>
+> For example, instead of inventing a local, throw-away
+> "pack_size_limit" variable, wouldn't it make more sense to refer to
+> the existing global "max_packsize" variable from the options[]
+> array below?
+
+Yeah, this can work for some variables. But anyway I have tried to
+fully move to using the parse-option API to actually parse the command
+line options, and I hope to send the result in a v2 soon.
