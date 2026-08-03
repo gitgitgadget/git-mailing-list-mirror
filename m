@@ -1,83 +1,83 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328DF40DFD5
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 18:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F140D421251
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 18:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785781086; cv=none; b=c2NQQSzni6eV6QIJ/peeeKAn41dBW4tE6IcuY7QT479N0WD4H571HVVHO/Wz2z1QbFGzskTW0oVwvJ00isemBwkyI2Nzfy0b1wowa1h31acnPf7pP+A+0tiU+sdKMqOxAmhvcFt/MFGimow0LUPXg6clOQaxusSYaq7ESt7solg=
+	t=1785781441; cv=none; b=jn7WddMeM4dpQgiBVMkFu63vZet2UblcNEv4rpD1lsPA5dACuf7uRnsaXd1dyAsusCvAJUNUap2bo+WfJ9zsHTocmVz26lBBrz6kxZQEeG4UvWs8pJB2+0+iZGrbdOSvci/ev5Ct5ZhUvh29RWEiVyNAH9NcoE5KBPeOw9EWT1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785781086; c=relaxed/simple;
-	bh=BYvII2ciZmXfw63JEcbFf3u3XF/4obWAwuA9Sita13o=;
+	s=arc-20240116; t=1785781441; c=relaxed/simple;
+	bh=EpX8X5gnHCNzVN784sibW53I3uItzrvBd+ZrI0oJAt0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hZCr0i2lz2PYXpnMRElbgUniROT4Dode1xwIhDI+KxOaUREPc2HJjVs5Ie4NF/DsqYCdi5/bqukORwtVE6AjrJnwwgDGR1eLdvQB2BDqqd4/njHplivUBwoWXY9uJJXiw16b3eFnCTtmSogMNx8g45RoVRv2IXBd6jrdz5bLQOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J1Dk7ST+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+7dXSgC; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=WPl5U6h+cWw1naEqjes3J0gnZCoy/96oAtg4tdXe6pECvEaLvuv1H/FEhON38gnDLzx1WJLi/dPGnNn2WYm2KfLDdYEIeh4StV8i2gyMzTyqgRdQ5c63yVILwyjy2kFIjwITHA2BLRSIzJZMOpL1O48EVf0P6bmI/OxyWolEzk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=If2FT8P6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ljXko5kD; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J1Dk7ST+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+7dXSgC"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3810EEC0197;
-	Mon,  3 Aug 2026 14:18:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 03 Aug 2026 14:18:03 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="If2FT8P6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ljXko5kD"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 101EE1400132;
+	Mon,  3 Aug 2026 14:23:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Mon, 03 Aug 2026 14:23:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785781083; x=1785867483; bh=mDF+2TlTym
-	692+Be8LDH/8ntdFE9PQ+HQwkDI4DLYXY=; b=J1Dk7ST+UKYml2/vWDXPEFMzTS
-	OGHjA3dFtTldQNCsvLhbPW2aubSc1YBF3lSyfgSpH5/cEEIJ5eNTq8crMfTdWJOz
-	YtwRGuilN6bacW7+Zv420nkE9hWOeE4Kzom7iMnXPMSUqABvYA0qxYv2hi+zvQdA
-	9h0ZOUBGIoSDwOnFrFkSk22hZNK0x7UwjIKaexp9EVii4crfq8gTB7jHhAJjG+iF
-	P0Hw/Z2lXwkHz96jOv70dRcHHiZyxjArQ9A2YsWW+Ke/MhlQLkdySmZlSrOxmkoS
-	oqvJIh5Cw9ccgDlfQIHXOdHIIca33Vbpg2mSFI+6+4VRO2QDqHVfOSSIOlFw==
+	:subject:to:to; s=fm2; t=1785781439; x=1785867839; bh=LSo2N8b2Oi
+	7rHA5io1aWkM5EqrKTj59S+2kMU9Nu+bU=; b=If2FT8P6T60UWwFKh9Z36GvK5d
+	UF6rCdYdqnJjnMy4CXoz025suIajqB+j/SJrTyD+NQO+Dz7YA2RaehJ3deDHGafb
+	Fd8e84dQObBrWwyoFaSMOGCp4ASWyA/oYs3gX2ejtnZAticHjg2AyYG+JzU1ogtD
+	Orom2/40ei54u/ult4d6EL1QXbUYfFFy01X6abPVqn37M/301PZ6NHbHp8ey1S5R
+	akjo/rXYrGlM9LjKsRdTTwCIqX2f9h9jsO14RlVIfEwYFEhOvB6GGaNG2fS+5Av5
+	GRGzyKcc0w6N8m0TYqpnDFWOE3ymc53wNquh6P3fSqLuUzx28mIgjGHVLcaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785781083; x=1785867483; bh=mDF+2TlTym692+Be8LDH/8ntdFE9PQ+HQwk
-	DI4DLYXY=; b=W+7dXSgCtLPmWVCV6oz7+A/hexOf5KOoJP72ENI0xqI4sZruldM
-	H4KOD4SvnTyxyPidNy03O4vh+8XUrit8q5F0K0sEglunMQEahF8ZhFVqAz/QWf//
-	oizSY8ryOzSxStEJm/LczagwXY7JlWQ4lx9nxE0KhJhIQaxtI+mF34w+wQZPSskz
-	hsUtiEyxCy5msC9N7yRbIc78p9zePVe155JMYLhuWNkB+7ihEegGQB37dcMBzfX5
-	P7I72VVyE7pBUfwmjzfXT1GjJELB8L5HzEFpY0fNoorbr4OVcCYGAdl/reKWD8/P
-	bc9NBEocTBT9hy2eqGUN4nOzl460Ua/Z7Xw==
-X-ME-Sender: <xms:W9twap42gOGoPFaHf0o5kdz6jE-ly0TMMk2Q_nOCkT4JuAZHZEJjcw>
-    <xme:W9twaql2wom41av9jDkAUE8de35hI0WM9jayUfbrb8j2rEugzWVaVbMiZ3dAZ0z25
-    cJCdml9b1F1eVzViZLoFT38EeMzdBP9Ebn9xsyNo3tq-5_ipr_bFQ>
-X-ME-Received: <xmr:W9twaqS295jbull3jR_W35jbzrgJNksxdq1DgfMS2YKpwQnTSsoVIZMO6gF2IVb7dpyq_VjAcdGs9qxliCOiW57CAhM6l_87TQ>
-X-ME-Proxy-Cause: dmFkZTEfaDvmq6dhdjcxODd7c8BtO6UGmSvMifmgCfj0y3DRtN0IcPieJeLZidCxFZqgjR
-    L+KVb04CgzGMHuBpVoC9k2oSvJLe30ljyZ8ZSWPAlCEWkXnuzjRmu0oVP349iFq49YZen0
-    Sfp7BRBFsKtkoHTUGyiOj2hC6Z9pOKPTP/Ycws6Icr/5RFz3/40POgAcSTUATjEzNi3jXT
-    DUFphtGkE5WL0sb9GeMn3VBoRVelnCAfqoQQiqHIthSJ61lnUF1kTjQMqCbXbe+Kyvqg3D
-    /Rv8cvskFvvgQOuuYDnOL/LDnJFJCa1+T8RiJUrhPHtXytzfmo6l+x9EHt4OKYx1UkBORT
-    9QVrkfY8Y0GoYhccy3n3tayLxfIkYUpsyr9cu1yF1Q3FbtCheTKvYWO0/PMo0kl+H9xOTX
-    MwfvFxs1Xhi38/iue6bAgxx113VrmEtjDSTRx2sL8NQ18BtTpUeWgfaezV0I1DyYRWCKyy
-    CjvhZ4TThaNR2vRLfEpgieHNb5P4L0VXwtcwq9T7cEftjXWNGDRpEeSST4V4VfzfCkawjL
-    14nrjgvjc/GCPaZejWAhTU1jDT4Axg1v9WvRyyKTTd+BXI4hD2T2PZxcEiHqkV02FmoyTf
-    0MwvgQpr+i/I3lsaYDru0PO5+PVCXK1y+djHFUoobqzB3N77JhsLx0M/lohQ
-X-ME-Proxy: <xmx:W9twapGLrSrSPQE3Pv0EBw7QDFtGPoMgNwNWe068oKzml9dpuyxsuw>
-    <xmx:W9twavGBauVDddGo1EDIUPFN0h-MxA4Qs_9o6qvxGQP5rn1AN_LFBQ>
-    <xmx:W9twanT4c7bRekWNNs9rU0BHeOH6zdKhM667-yGOIVj8P_ObDBspnw>
-    <xmx:W9twagJ4kZG9a9S9Jppw4PyH4hKsY7NG7KRqU5g-LhKOkITOayDGqQ>
-    <xmx:W9twarqiNbwjVo52H4y6TBadPQ-pzpZ6XwWyWUp0qonL2MVhf6vNghcC>
+	1785781439; x=1785867839; bh=LSo2N8b2Oi7rHA5io1aWkM5EqrKTj59S+2k
+	MU9Nu+bU=; b=ljXko5kDlZGIZaQRMBYncqZEzreZcGkE/Bu0u1Z8lRnABEbjXeB
+	DXKfHjMm4dnegbmjGuZhV1hY46sxgatlr9cS2MMNDXeAuV7Vc+epPiExTAESib0G
+	/rfsZGosVpTxe51d5hBLt70qIFTeGi2jvLhCR6hEEuh/4pIa4+vGTFSO8dkxUeyA
+	RrtorFgUMk2ANXtefhqriSc4+MzmtEvW1m8k36nJS0HPQxj6VHGb03qGpcioi5DD
+	BbkWGJTnn8B1Nt2LvwMMeaPM/k+BGnn8rVxRtEIcEsLmNXYnddztzvPjjpSo/TYj
+	bPaXBxUmRYWfIpmnEFLbWDvALBbKTSQVutA==
+X-ME-Sender: <xms:vtxwaj2S84BbvQ4nJCz4xp6wuUt2XjB3hEQ3nxIr6BfwqGA0tzVGVQ>
+    <xme:vtxwalxTxWqLCpVvK6mkg4vQKCrq74r8Dg4ghuRQYCfIyPLFfsIw86lDNCwJZG86V
+    4S7gsm-FaVJSmavvoXrzzHjJHl3cd-DCbVRK9ZnrkqY08M30dagSA>
+X-ME-Received: <xmr:vtxwatuAfKjxifcu6O2eTHIHH_2jZwgM875cpBTLecQWYlV-K-gnwfVPzPNraF7pzAcNnV8QZPIWCWQBUWYP4B2RRHKWC_yyDw>
+X-ME-Proxy-Cause: dmFkZTEM96j25qluJ8mqAsuNvJnEAlpIVU9PGfOXWv7w0PUoHTag8KnYY6qIy8p0qKhos9
+    TM0glv5xZxf8hD+Wle6JEL5uelFzDArjpVfrs5+PbciHIS2BB6jJ73QSv6V+YVGwHTsHge
+    f/dYITPkGS821prwA/fYVVdVsJ17CG/CKcvTfO8IEJh8v23YND+48e7tW2PPH7bnYxtfJ0
+    90XT/Kohu2V2e2a9rykMyV42jXAbtR0uBQgElLQ6GwN69XHBdQU5NwfMxhpEhpqb4dJSKY
+    vEaNzHxmd5fYMteeXhCv2DulVXFiCV6lM3Wc7NCl1PIO7QFRs42N95EvwIPlN/oiaLhNGM
+    YAz4rso4lzCcBfdeP3ZSCohSNi8j6ywkqzcEzAPTD/GqQI/98Q+ncilLCkPW85/qYL6IWv
+    9gFyXV5P8uyvDa/3bIvTQhGfHbcM7tS8/yd0nSjzpBARFNHJDTPF+2n/TztvA9KpIER0VB
+    VmTPu24NEhC3ap+JaKnZymgvfSLktKN+t197y7n0kpbsvZ3QUEzlkDo75l/QZSPAhJdJ5i
+    VemREaqEyA+yER8OiTQxtcRzh8N8Mg8EtEenkpFSkL8ZbTXoOy53C0mXKrzMUhWAFOavqN
+    LFWGhDT2WaX53m45Nt4a+k987ZhZeF0L3Mrr5aaJK9njL/uGOqqiaQLdPlUg
+X-ME-Proxy: <xmx:vtxwavwOmTDEWWDhYtJrS8_U7l2TvJULtSaSHG7Sy_RfXG_0w-U0fA>
+    <xmx:vtxwaoCYZ_NxDCxS91G3lrQbVJQ7TZTxNSU8Jr1Tl2VzqNVewN3LOw>
+    <xmx:vtxwalcNT9s3wK6zoWTXHpB-M9bZNCTDf3XCxNQa-rWK_S6P7VYnFw>
+    <xmx:vtxwaqlO4TJTNfGF4tM88QBymDbUjMXcAsgjVIL--Qkv8ZF-PpYFqQ>
+    <xmx:v9xwaunckHZvb5YvJXRFRkkLKEpq8WkVOhVbKlkzH7Lm4ItzSsNJfVLL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 14:18:02 -0400 (EDT)
+ 3 Aug 2026 14:23:58 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Pablo Sabater <pabloosabaterr@gmail.com>
 Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,
   karthik.188@gmail.com,  peff@peff.net
-Subject: Re: [PATCH GSoC v3 2/8] fetch-object-info: detect truncated server
- responses
-In-Reply-To: <20260803-objecttype-support-v3-2-7176fecf7950@gmail.com> (Pablo
-	Sabater's message of "Mon, 03 Aug 2026 16:39:29 +0200")
+Subject: Re: [PATCH GSoC v3 3/8] fetch-object-info: pass arguments directly
+ instead of a struct
+In-Reply-To: <20260803-objecttype-support-v3-3-7176fecf7950@gmail.com> (Pablo
+	Sabater's message of "Mon, 03 Aug 2026 16:39:30 +0200")
 References: <20260803-objecttype-support-v3-0-7176fecf7950@gmail.com>
-	<20260803-objecttype-support-v3-2-7176fecf7950@gmail.com>
-Date: Mon, 03 Aug 2026 11:18:01 -0700
-Message-ID: <xmqq7bm7yso6.fsf@gitster.g>
+	<20260803-objecttype-support-v3-3-7176fecf7950@gmail.com>
+Date: Mon, 03 Aug 2026 11:23:56 -0700
+Message-ID: <xmqq33wvyseb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,61 +89,28 @@ Content-Type: text/plain
 
 Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> The loop reading the object-info response stops as soon as the reader
-> returns something other than PACKET_READ_NORMAL. A server that somehow
-> answers with fewer objects leaves the end of the result arrays empty.
+> struct object_info_args groups three pointers that already live in the
+> transport and are given to fetch_object_info().
+> Grouping them into a struct reduces the number of parameters, but it
+> suggests that fetch_object_info() uses all three of them.
 >
-> The caller trusts that every requested object will be filled in.
+> Drop the struct and pass those parameters directly to
+> fetch_object_info() and send_object_info_request(). This should have no
+> change in behavior.
 >
-> die() if the loop doesn't reach the number of oids expected.
+> Helped-by: Jeff King <peff@peff.net>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+>  fetch-object-info.c | 53 +++++++++++++++++++++++++++++++----------------------
+>  fetch-object-info.h | 17 ++++++++---------
+>  transport.c         | 11 +++++------
+>  3 files changed, 44 insertions(+), 37 deletions(-)
 
-This tightening is obviously a good thing to do.
+This has lots of changes but quite straight-forward.  We lose the
+intermediate wrapper "object_info_args" and the uses of the members
+of that wrapper structure are updated with direct reference to a
+variable.
 
-The above description makes me wonder what happens if the other side
-sends responses for more objects than we requested.  We allocate for
-N objects and loop for up to N iterations, so we will not read more
-than N.  But do we detect that we are out of sync when we read the
-response to our next request, or before we shut down the connection
-if we do not have any further requests?
-
-> @@ -49,6 +49,7 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
->  		      struct packet_reader *reader, struct object_info *object_info_data,
->  		      const int stateless_rpc, const int fd_out)
->  {
-> +	size_t i;
->  	int size_index = -1;
->  
->  	switch (version) {
-> @@ -82,7 +83,7 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
->  		BUG("unknown protocol version");
->  	}
->  
-> -	for (size_t i = 0; i < args->object_info_options->nr; i++) {
-> +	for (i = 0; i < args->object_info_options->nr; i++) {
->  		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
->  			check_stateless_delimiter(stateless_rpc, reader,
->  						  "stateless delimiter expected");
-> @@ -106,7 +107,7 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
->  		}
->  	}
->  
-> -	for (size_t i = 0;
-> +	for (i = 0;
->  	     packet_reader_read(reader) == PACKET_READ_NORMAL &&
->  	     i < args->oids->nr;
->  	     i++) {
-> @@ -150,6 +151,11 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
->  
->  		string_list_clear(&object_info_values, 0);
->  	}
-> +
-> +	if (i != args->oids->nr)
-> +		die(_("object-info: expected %" PRIuMAX " objects, got %" PRIuMAX),
-> +		    (uintmax_t)args->oids->nr, (uintmax_t)i);
-
-OK.  We give 'i' a bit longer lifetime so that we can do this
-comparison, which is inevitable.
-
->  	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
->  
->  	return 0;
