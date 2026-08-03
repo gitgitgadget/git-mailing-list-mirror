@@ -1,159 +1,102 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from smtp-1a.his.com (dc-17.his.net [108.56.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA64B1F1537
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 00:31:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD7627707
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 00:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=108.56.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785717088; cv=none; b=szEdiv5JbkYO+nx9LBN4zPhAuhruVU4h2mu9yodJHL9/8s+oP95VgC3aNgN0M7JVTFe26OUNroNNCrPqINnrWD4lHqmaORO8KASy038CnOxA/Pf8OkhaIuTFJyqALxjQHdjT3hRAdDJo68oy0FH40WnwLVlEDK1mwLtHrSTS+lI=
+	t=1785718201; cv=none; b=Ski5Mo0fAHNQW/1H5VgA30HUasu1erwxpSiRzIgr6ZChoKXwB1yatCiXWyBGuFOcu2h8Bc1R5XI3nYgdkfcsrisSRz66UUxpo/OHrPTpe1gzpT+POiEg93fUDdUje2HBFj7l4KOY1Wrq3jL+WVXRRggZBI4nO+YbIubh3JPwGRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785717088; c=relaxed/simple;
-	bh=XGSQv03GeuiQo+jhTHETjXycNajXPy4bol2ffjCDUP0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lbQWnzLRj8bbevXugN8y5XcTXFoqESS1hcGSG1wbfkxjX6OTtATVt7gKVxRJH5Kago2FaeF6/XpLTZGpLGYUWeV3nBF5U7lexWAjXPHhEXi0Zrq02bpTqwp5C7QPwi5FjyATYls9M0ouqSHjqoEeKaVAimHwHUDiqSAIHGSPHFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uZoMWEnH; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uZoMWEnH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1785717084;
-	bh=XGSQv03GeuiQo+jhTHETjXycNajXPy4bol2ffjCDUP0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=uZoMWEnHyKq4Im1d/J96MiwpJ1yskWHvnkKAuqWxkFN7Exaiit3e8RsLrRqTZWbo7
-	 usZmdlS7s9vAtBl1bUJAs/y8u7xlsq4Mo5okcEA4vY9a0zl5JzpPByi2k/mM/s5Mcz
-	 vZ80CrK8wBXAZyu3/pxOHWEQm0HRQB8OYsfBUL+KvbWy8iI59jdOVWqGOvLnYM+Thl
-	 CVpTi7y2jCibWesw3q/tNRuVSf4KW1KeHV89rlcMoTnybs5+0Tdk+P8ygBsVdlIjWn
-	 LrWfWridMg9XF1FwnruYvy54eZIe7PQAtLTSETRNKg+sz8goU3cVrKvwXMoX7IWwii
-	 1i+vo4rTHgdgPMocxgvCxoKdI8nMNn5nLmWON+Vy1Xg1j1gSjN6pl9B4dPxJU995U6
-	 7v+rG5RlZwwN48Oq2kt+TKHvqWG1HD2aoL7Fmc2PKZkN1nSu3kVr/kBDknki9tgj/o
-	 SEWRKxnUnKE9BN1YKPEl3xFuLJDWnPvkIoRpstCOSnql/Rqpjbx
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:117f:c26e:50ca:6746])
+	s=arc-20240116; t=1785718201; c=relaxed/simple;
+	bh=FP2BamldoU87S/eUs1t4vXvBCn7cl6gu2JbMiCrAXWg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E2+ekL4I/yXdWKQrFAlk/A+Ow+HtVVQsSyoD0jbQZ3VLtBq4hZkE57tXqI9aKOQ6aLGeGWSrjnw8c8L6GZq2DGPr6LJVBpQaqn1bZDgF4GylM+cavK166w/U0kUGxXpk87LRb73pO/n6ueZqEMtQJ1qTJ+Q2MCfXPn9i8fcAhb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=his.com; spf=pass smtp.mailfrom=his.com; arc=none smtp.client-ip=108.56.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=his.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=his.com
+Received: from proxmail101.his.com (pgh-217.his.com [75.149.19.217])
+	by smtp-1a.his.com (Postfix) with ESMTPS id 4602B186;
+	Sun,  2 Aug 2026 20:41:18 -0400 (EDT)
+Received: from proxmail101.his.com (localhost.localdomain [127.0.0.1])
+	by proxmail101.his.com (Proxmox) with ESMTP id CB6BABC0DBE;
+	Sun,  2 Aug 2026 20:41:17 -0400 (EDT)
+Received: from smtp-4a.his.com (dc-25.his.net [108.56.65.25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 88B10200C4;
-	Mon,  3 Aug 2026 00:31:24 +0000 (UTC)
-Date: Mon, 3 Aug 2026 00:31:23 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Arijit Banerjee <arijit@effectiveailabs.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Jonathan Tan <jonathantanmy@fastmail.com>,
+	by proxmail101.his.com (Proxmox) with ESMTPS id 40718BC0BD1;
+	Sun,  2 Aug 2026 20:41:17 -0400 (EDT)
+Received: from mail1.his.com (ec2-3-148-140-11.us-east-2.compute.amazonaws.com [3.148.140.11])
+	by smtp-4a.his.com (Postfix) with ESMTPS id CFE4F62;
+	Sun,  2 Aug 2026 20:41:16 -0400 (EDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail1.his.com (Postfix) with ESMTP id AA66621306;
+	Mon,  3 Aug 2026 00:41:16 +0000 (UTC)
+Received: from mail1.his.com ([127.0.0.1])
+ by localhost (mail1.his.com [127.0.0.1]) (amavis, port 10032) with ESMTP
+ id q7JK_Ze_MzI5; Mon,  3 Aug 2026 00:41:16 +0000 (UTC)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail1.his.com (Postfix) with ESMTP id 6A21D2130D;
+	Mon,  3 Aug 2026 00:41:16 +0000 (UTC)
+X-Virus-Scanned: amavis at his.com
+Received: from mail1.his.com ([127.0.0.1])
+ by localhost (mail1.his.com [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id 2i7Fdk76B9TL; Mon,  3 Aug 2026 00:41:16 +0000 (UTC)
+Received: from wings.localdomain (unknown [69.53.104.42])
+	by mail1.his.com (Postfix) with ESMTPSA id 02BCD21306;
+	Mon,  3 Aug 2026 00:41:15 +0000 (UTC)
+From: Kenneth Lorber <keni@his.com>
+To: git@vger.kernel.org
+Cc: Kenneth Lorber <keni@his.com>,
+	redoste <redoste@redoste.xyz>,
+	Fabian Stelzer <fs@gigacodes.de>,
 	Patrick Steinhardt <ps@pks.im>,
-	Arijit Banerjee <arijit91@gmail.com>
-Subject: Re: [PATCH] index-pack: speed up promisor link recording
-Message-ID: <am_hWvag32v8yuNM@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Arijit Banerjee <arijit@effectiveailabs.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Jonathan Tan <jonathantanmy@fastmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Arijit Banerjee <arijit91@gmail.com>
-References: <pull.2191.git.1785706396130.gitgitgadget@gmail.com>
- <am-7_wSb-GNefKlB@fruit.crustytoothpaste.net>
- <xmqqcxw02lao.fsf@gitster.g>
- <CAFwoC-6EvoD-u7oceETi90MJ-FQA2zihdkn1i1wckKfoYRTKOw@mail.gmail.com>
+	Xi Ruoyao <xry111@xry111.site>
+Subject: [PATCH 0/1] t7528: fix failure under csh
+Date: Sun,  2 Aug 2026 20:41:02 -0400
+Message-ID: <20260803004105.36913-1-keni@his.com>
+X-Mailer: git-send-email 2.55.GIT
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eqBhlv20JJinRjet"
-Content-Disposition: inline
-In-Reply-To: <CAFwoC-6EvoD-u7oceETi90MJ-FQA2zihdkn1i1wckKfoYRTKOw@mail.gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-
---eqBhlv20JJinRjet
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+X-SPAM-LEVEL: Spam detection results:  0
+	AWL                     0.130 Adjusted score from AWL reputation of From: address
+	BAYES_00                 -1.9 Bayes spam probability is 0 to 1%
+	DMARC_PASS               -0.1 DMARC pass policy
+	KAM_DMARC_STATUS         0.01 Test Rule for DKIM or SPF Failure with Strict Alignment
+	SPF_HELO_NONE           0.001 SPF: HELO does not publish an SPF Record
+	SPF_PASS               -0.001 SPF: sender matches SPF record
+	URIBL_DBL_BLOCKED_OPENDNS  0.001 ADMINISTRATOR NOTICE: The query to dbl.spamhaus.org was blocked due to usage of an open resolver. See https://www.spamhaus.org/returnc/pub/ [test-lib.sh,t7528-signed-commit-ssh.sh]
 
-[please avoid top-posting]
+The test suite fails at t7528 when run in an account with tcsh as
+the login shell due to $SHELL being "/bin/tcsh"; similar behaviour
+is expected under other csh-like shells.
 
-On 2026-08-02 at 22:54:27, Arijit Banerjee wrote:
-> Maybe software can ship experimental versions which is more indulging
-> towards AI generated patches? Brave users get to try the features and they
-> can baked into stable releases once there's enough soak time.
->=20
-> I have been holding onto my patch around hardware acceleration for SHA1-DC
-> :)
+From ssh-agent(1):
+-s      Generate Bourne shell commands on stdout.  This is the  default
+               if SHELL does not look like it's a csh style of shell.
 
-The rationale, as Junio said, is based on the Developer's Certificate of
-Origin.  That is a legal statement that a person has the legal right to
-contribute those changes under the license and if they make a false or
-misleading statement to that effect, they are responsible=E2=80=94legally a=
-nd
-otherwise=E2=80=94for it.
+This patch explicitly tells ssh-agent to use Bourne shell syntax, thus
+removing a spurious test failure for users with csh style shells.
 
-Considering the extensive litigation over LLM output at the moment, I
-don't think anyone can clearly make that assertion.  Most of the
-arguments I've heard are that it's fair use, which is a U.S. legal
-concept.  That does not exist in Canada or the U.K., where there is fair
-dealing, which is much more restricted.
+An alternative change would be to have test-lib.sh clear $SHELL; this
+was rejected as potentially hiding additional similar errors.  There
+are no such additional errors evident currently.
 
-If Company X includes LLM-generated code in their proprietary product
-and it's found to be infringing in say, Germany, then they can simply
-not distribute their code in Germany.  Git cannot do that: it's
-distributed in Linux distributions around the planet, even in countries
-subject to sanctions, such as Russia[0].  We must comply with the
-license and the law everywhere in every country or we risk liability for
-our contributors and distributors.  I, for one, am not willing to be
-sued over this project and the project does not have the financial means
-to deal with extensive litigation.
+No additional tests are added as the error is in the setup for
+testing, not an error in git itself.
 
-There are also concerns about the quality of the code and whether
-submitters adequately understand the code well enough to have evaluated
-and reviewed it thoroughly.  It's well known that when creating code
-becomes cheap, the burden shifts to review and review becomes extremely
-important.  That has been seen in lots of places, but we are an open
-source project and we can't force contributors to do review like a
-company can.  As Junio says, we already have trouble getting reviews
-through and we don't want to make the problem worse.
+Kenneth Lorber (1):
+  t7528: fix failure under csh
 
-LLM-generated content also has a negative quality reputation (see the
-reaction to AI content in video games and books for an example) and
-while all software has bugs, I appreciate the reputation that Git has
-for quality and wish to retain that.
+ t/t7528-signed-commit-ssh.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Those alone are reason enough for the policy, but there are other
-concerns about the environmental impact, the impact on electricity and
-hardware prices, the ethics of incorporating open source code without so
-much as a credit[1], and a lot more.
-
-So I don't think it's likely we're going to accept nontrivial
-LLM-generated content in any capacity anytime soon and I don't think
-trying to argue this or persuade us to accept it is going to be
-productive or well received.  Of course, anyone can distribute their own
-fork of Git with additional patches if they prefer, but we won't include
-them.
-
-[0] Debian, which distributes Git, has mirrors in Russia and Belarus:
-https://www.debian.org/mirror/list
-[1] For instance, as a member of ACM, I have to follow =C2=A7 1.5 (Respect
-the work required to produce new ideas, inventions, creative works, and
-computing artifacts) of the Code of Ethics:
-https://www.acm.org/code-of-ethics.
 --=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+2.43.0
 
---eqBhlv20JJinRjet
-Content-Type: application/pgp-signature; name=signature.asc
 
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8Fgmpv4VoJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ1/7wDmaGuYSFcfBMc50yEuNphv/oNGBauD3mBKhcw+e
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAJBkAP9LwfBWlzaSdmv1k1vKoo98RX0J
-OHRodUyRPB24Uz5vgwD/Xatcm08/dxS8MKvhTNMaHd6a4fqDGWQOB6JBLXGhGgs=
-=VvRm
------END PGP SIGNATURE-----
-
---eqBhlv20JJinRjet--
