@@ -1,107 +1,121 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE56338AC7E
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 17:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785777022; cv=none; b=bE44MwCSnABMHixAwi26BR3eNz+qMEmaKXT5c8OZug9fpgSaCamo/DmTbt7UTPmKPzIYlF1s+kedaK16WY4YEXIY9WCjWOpezE3t2YbUSvluY4EhIc+LfDR6mserpHogWUGblqP0YBQui7JZ2kbwwX5SntgPLmGxiBCgfwsRz4U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785777022; c=relaxed/simple;
-	bh=J+7q5flpfXMF7AjJ4Y2qaWAVka7L2gnoJOhESFEc/W4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LxgIe4pe/rEdzU1RlsHSpKICorKyDXNg7/7Oc4gdmQlQA/z+YJDrYwVZmqZKBaEgdlB3F/HRlOUQbhMun4TPskyLES21GHCb41SDXA6UgI1uxeYEJ8BLgn8VwmJxwPDK8GizjVCkZSQJIW8jV5R0fYBT8Ta1uCB+Cz5UId5ehK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rPtwCBR+; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD6641A506
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 17:19:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785777555; cv=pass; b=XNkj2Zk5oYl4O3pW+cC3cXYHrEz04vfZpu+i4JvnzmyamVavoCQkquVgSQxnzYjOpnzPrMon+mxnDvV9YjswQ8imHcOcbLlvV5gOpfoLDWb0LDD1/mD8cKQOblso6XaaDmQe3Red8meEIs83umMOzB7rhwDAH0TCch07Aniui98=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785777555; c=relaxed/simple;
+	bh=doUqj0uEsuwJuyF8+n7VpOija3hCP12UMFfwp/lCj6s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KiGRq84Qb7tAWAKfEEJA1qEU0k7CWIHZdkIDqlQEbIROHnKzUUDNsg+M7JhxspK3h+PEB7qaKPJedUb6U45ekPcHARbDrrHlEkls04XBOcY1lztc0vLBoYFPncUofzjV8+5U60eiH0Vg1lSg7DdiHg9VeGDzi13TlZl3FAwCs3o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cFp6hwu8; arc=pass smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rPtwCBR+"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-47c2b362ee2so3215308f8f.1
-        for <git@vger.kernel.org>; Mon, 03 Aug 2026 10:10:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cFp6hwu8"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c9b373d5af0so2822313a12.2
+        for <git@vger.kernel.org>; Mon, 03 Aug 2026 10:19:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785777553; cv=none;
+        d=google.com; s=arc-20260327;
+        b=exexuhzFn4HX27yvpqCOy5+rLbkQtnXlIyZWipQ6Go0DHRRQRW1WD83zFciVc1//Ca
+         JaI/ujEsmCn4mWWXCcjJimEntEFam2usIrZr1PqXOr9K34a5HtgDwhHJ1+AQdxeFSIFK
+         CChP4jn/6Oou4zADIw6y3uT1vnAIIvt/iVmnxROVn0YBH0ZLK77hrS0A6hlU4qo+JenV
+         AGOnoe9t0hr7VsmCbMjR1btCTzrV2ubc3B9gn7DL/yaq1Rw8vOhH+8NfH39CWXdsVpjQ
+         3rzw0EAexviTUa3IYVz2xQaeSNI70jzvgV5KZ4nR2q1eozMT1itFxb/lSWcM8lg71DAq
+         ELIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Tc/Lhgnre0tHt2NZDDRLF5KZSsgsXTr3ZQktVsR46g4=;
+        fh=xj50WnDjhkMZcgqGEX8buhQcZkZs0GQjw8JpZg3oSSs=;
+        b=eK2Gk18rRR37sImQUY1k6ErgkY7KwssUtLtY03z6p7O/255lua/tn6miKTCyOmerbl
+         G7/hznZg7lLJ+pHv39oHxMrRdm5HJqP6w8S6K9bPIhfNMVfmeq7hAjR1mev92VfmRbUd
+         sK9R5IPHTaG/D9TswKSyyYDN2x5zqYfHa9ayKcH3KPNk+5KKoVuufrihCQa4WwBO6Bcf
+         Cc9bEMawA+SUMxYJcmfVomD9fjEtnI31BVUzw0bRQd0Khn+wUW4iFTM3ojD4+lP/jqId
+         TaWDlNsHr3UGStnuHqTfjuW/4GmpooolUZIza4Mnehy6kCswZiBE/lNdTaryGPQu63m7
+         xoIg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785777019; x=1786381819; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=99OKhszIvQqhT9oqeKEHYoC5TGTPtmN6ndBplWCfpfw=;
-        b=rPtwCBR+KdqlGHMXieNyWBEgYzwAuyGhdbtUU8VGZSoaDcdGYK4L61v0sn/5YF6+u0
-         5vOLUv5pTnm+TV6y+cdPpZFM06S3ycxpqCzriSwWeVHyhxHnT0QvYe2ECDDuTYg9uAgg
-         5VBRLGrhpI0j2L/KOz5nMjNGkf7eXKsLF6sHPCKcdiEnsvadPcola9XCrjTeF8G+p1XT
-         PofriZXsuEtR8DBbY4zyC2glrCfziXQoojh0JBqb9A2YrzeXieI5GlxjewRVDMxlaOy2
-         kiWoIIjMGtXKD3CD4aAZzBeuftcVPLU4/n69XWgPC82sk4BmPnFdV2rX0mvJKB/tlQvS
-         h0+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785777019; x=1786381819;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1785777553; x=1786382353; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=99OKhszIvQqhT9oqeKEHYoC5TGTPtmN6ndBplWCfpfw=;
-        b=kCYfWsgY3aD6SmSbp9fugzxrn40aZhJ89hmAJjan73cRmRdczbyL8+W8F1CxIga5lm
-         brCV/PFy85iOQzs8ANAo/H0thZjpD446L2kllWyjcY9coaGHPMnkco0T7WKw0L9/R2vV
-         6HL0OH0SmX42QV0WLnkeqXLHKGGvdKqS0scIsplXozgEfROmk5E2MJc8TACgH3Ho6f9U
-         5mo0b7ZwLPD64cdE/CCaVvaPTbLo8thYgecDZfV7hO9DdkEODfps2z37Ax8kMXQQha+9
-         OIvtTfDHZptFhmwuPo7KdHUU5fjr2L7L9bRGh1jENVpNNATm2LE1qWmdKOeeqnsTpNsq
-         yLPA==
-X-Gm-Message-State: AOJu0YxK7D/0MGZi0iDUyuZqrGETvipOy4Oy80jCEAVNDjyyDDkqIgZd
-	WvaTA4xRcgFtjaFsevkl/Ey+zB3GMyC+DBDGekJE19kNq9ootmf2LEpPYAcmYg==
-X-Gm-Gg: AR+sD11HmEn/dxVaz+7trWb6me/c1FsnbvDEyjrPEOQ5h2Mu35DWUUAc5RmUh20kRV1
-	xr+SS56hoVC9Xxcy3PgLm/McaAAAmmB49BnjCM+RroGppI72gz6xO0cVYtDU8fhHJP+kmi0JBW7
-	eKSu/WzSiNH+xdn4PKF/VFpFb0j5ElRwV/PVt7KJBVe4uJOl8qGEWDxtgyODxHJdvZS3MtISS3/
-	4kKQMbn3f1l4teQRhC4qXBWmWW6ApHfGfJyh1Sp0DCAwJo5wqNwwSlcwaJqoeyhI9A7+inrdWSl
-	FSo/X2+WL2x/1Zm6sfHYscvjuOVOjwSkCGL2IyHy4tCV1ukbbi8aDOEOOTvC0HxMOi9nyjMf9aY
-	QtcQ7mzEDV59GFZhZN44mrH/9yf4Ggap7jlHCLk6EUlArIQNzHV11eG8oaC15jUjeBTTQrVeuxc
-	rfDdQfiaOp2IYSddhKkqIfYzX6d/+rMRqq7dEltM5VMwQApaJEvR3+QnKUTe+0svVf9X1dIhOOh
-	Ib293v7egDyKhd//7shfaaXzSveAz5k8R5BsMqR9DdCsEE/Rh4UM+ExLzTE0LwPJ03Um4YN53zZ
-X-Received: by 2002:a05:6000:2489:b0:47f:96e3:5309 with SMTP id ffacd0b85a97d-47fd729e7dfmr27157609f8f.9.1785777019008;
-        Mon, 03 Aug 2026 10:10:19 -0700 (PDT)
-Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd456a5a4sm35218439f8f.20.2026.08.03.10.10.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 10:10:18 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"D . Ben Knoble" <ben.knoble@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] mailmap: change primary address for Christian Couder
-Date: Mon,  3 Aug 2026 19:09:52 +0200
-Message-ID: <20260803170956.1162626-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.55.0.492.g44bba30fd7.dirty
+        bh=Tc/Lhgnre0tHt2NZDDRLF5KZSsgsXTr3ZQktVsR46g4=;
+        b=cFp6hwu8BNjXGAuhHBLVIPojCazeVtzqMHpta2heSra5e+90LecYKUn88c5W8nGv2K
+         N9PpAj8L/CBHT80EIrUDhe5UnJf9Gy2SMvWgNWiEdCETJMHaO61hFrCop3JVWhxl4wi3
+         4bH+w1AEONuLoGpHXv4febHpaBichazAZUNJsH5RfzXgB1yiWUPGjc3AXrQHf/Oa+Bl1
+         iIsnl/uj9MtG+at0z/Ti6txD20Bh/q8LaYRk+gR4f5UNNli8YUY8G9nIF6jJ9RsW8Wio
+         lWpihmyXPyOcbjYhPpHAWYAnJDr7+QHBE++AcivlcFdoRcMWIUlulbBoc6hNt1+TS5Jm
+         5QDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785777553; x=1786382353;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Tc/Lhgnre0tHt2NZDDRLF5KZSsgsXTr3ZQktVsR46g4=;
+        b=q2KKs8oist5OiFUvFs2C5Df0k/m30QPkWOlCABcyUjHg67aaVWJvjpaCqic6vUT+xC
+         5lRhPmHJntDFEs7drebIFJCnvu2rlM9ku5H2iecLhUDKpkQt/2eHst5srHCWyK6MLa5s
+         ZR1YmCvyV0A2+tNwJwH+7qpSwLKoQXOvkbcD01FQ3NmWmcrwwbxsoNFpo336A9gXOFEx
+         j5x/lqb59JrzYBhNq25T5p5gn6B5+Gv1VC9pMfJLrrft02h4h3Ew0qhEoyuATr5AAz/K
+         BlU6ooBiHBpVQFZeSOAxSZkEFfNGpywXipMtsyCptkXFqihs/6g926Ig6sAlrM/qlWsf
+         v0LA==
+X-Gm-Message-State: AOJu0YzOkldCdEIbBQye96y+jzLCQ9oV9GbZGxiEnsUrnfBAmvE+PIrz
+	nZFh0D/BCkEKiKDVbLn0OIcG8KBmU27f6Rz1XuU6G/qRHRcz+CpzDS2e1kHnV5PrnqYdaxLHIal
+	b2xEyFFjlh/H6asHVvINlc4JU7yFwVv0=
+X-Gm-Gg: AR+sD13SxrhyDZEdaQGHnKNnUKg/qn+BFv8J2+XkGKAh6csgvT5qXUgcu9q6CGcZcrf
+	C/IfrsMdXVlfydt06CvDtmn6oppiX7yg6AvFbz8y9esqVHUQVqzfDcNKEj16I/Ngz2fAIH4uHuw
+	Kw5NXwaFFtcxcypdjzn4iUdaPqd8snkxPklEuXF4nSeNpE2+VxY+E5GnD8k1IVW1ReCgtBHPmIz
+	HEv/G33FrpynJFbmZ6IJzobqBkMciG66Jg20c77887jUlKaMRmCUySOjjXDaA1aNQDvR1/+PdYg
+	vS8BJ6zyi7qzILgoPXTicnIYts9NG8r4QidUfUvA7wDbDXgT/8x8hG3ZKRPT7CwCN1KyvBWaWpC
+	hK/+AO0es0vkJzteakig/pdvd9CLRw9dWSfmzIX4R
+X-Received: by 2002:a05:6a21:e081:b0:3b4:75c0:3ec0 with SMTP id
+ adf61e73a8af0-3c92a75521amr9923858637.30.1785777553216; Mon, 03 Aug 2026
+ 10:19:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260716165517.433849-1-christian.couder@gmail.com>
+ <20260716165517.433849-2-christian.couder@gmail.com> <xmqqcxwmeiwq.fsf@gitster.g>
+In-Reply-To: <xmqqcxwmeiwq.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 3 Aug 2026 19:19:00 +0200
+X-Gm-Features: AUfX_myyOsaop0B1LQqh2j8UwJBhjFMd6AxZoIiUb-zlXlmKRkeBgV04cpmDm-g
+Message-ID: <CAP8UFD3hnJLy=pE-K0yy+FisPdLQxAk6457Kur--gv+k4bB6ig@mail.gmail.com>
+Subject: Re: [PATCH 1/7] parse-options: introduce OPT_HIDDEN_GROUP
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Justin Tobler <jltobler@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The `chriscool@tuxfamily.org` address is an old one that I don't use
-anymore, while `christian.couder@gmail.com` is the address I have been
-sending patches from for a long time.
+On Thu, Jul 16, 2026 at 11:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 
-Let's swap the two addresses in the existing entry, so that the Gmail
-address becomes the primary one and the old tuxfamily.org address is
-mapped to it. This way both addresses still resolve to the same person,
-and the address I actually use is the canonical one.
+> We have been doing this for quite some time, but I just noticed
+> that the 'From' address your MUA uses ("Christian Couder
+> <christian.couder@gmail.com>") does not match your Sign-off.  Could
+> you add an in-body 'From:' line if you plan to keep sending your
+> patches from the Gmail address?
+>
+> I suppose nobody has noticed it so far because .mailmap hides the
+> discrepancy once the commit lands.
 
-Signed-off-by: Christian Couder <christian.couder@gmail.com>
----
- .mailmap | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I hope that this can be resolved by changing my primary email address
+to the gmail one in the .mailmap file as I just requested in this
+patch:
 
-diff --git a/.mailmap b/.mailmap
-index f8ede075ea..d518b388fe 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -39,7 +39,7 @@ Chris Shoemaker <c.shoemaker@cox.net>
- Chris Wright <chrisw@sous-sol.org> <chrisw@osdl.org>
- Christian Ludwig <chrissicool@gmail.com> <chrissicool@googlemail.com>
- Cord Seele <cowose@gmail.com> <cowose@googlemail.com>
--Christian Couder <chriscool@tuxfamily.org> <christian.couder@gmail.com>
-+Christian Couder <christian.couder@gmail.com> <chriscool@tuxfamily.org>
- Christian Stimming <stimming@tuhh.de> <chs@ckiste.goetheallee>
- Christopher Díaz Riveros <chrisadr@gentoo.org> Christopher Diaz Riveros
- Clemens Buchacher <drizzd@gmx.net> <drizzd@aon.at>
--- 
-2.55.0.492.g44bba30fd7.dirty
+https://lore.kernel.org/git/20260803170956.1162626-1-christian.couder@gmail=
+.com/
 
+I will then use "Signed-off-by: Christian Couder
+<christian.couder@gmail.com>" and I think everything should work fine.
