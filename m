@@ -1,66 +1,66 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2C029BDAA
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 21:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932FA347512
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 21:30:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785791571; cv=none; b=SfVtWNMOcg4rtii+0dsuAjHzksvlzWmwoBBHDb2jtsVrfI27x9cmxiAmdIFRh8Nq3jCMp79W773V5rOfSivzQsJvBm4Fh2lXElx5gchaK28av7mccouut8p1t7wTQUYKVXfGykDtGPVkd2ASR2PSHyBmnWTHBPWuvxp+kjU4y9E=
+	t=1785792636; cv=none; b=MYAmWdfeXo0v4tfKsb1zJ1o975vpUXCqNHtxeDbhHvazRYgj2/r4YRhEv771Z7efn0tmu8gXiF4M6VsAAvJRu2HJDAsQnGHhQ/yZty5prNjaiJFPXV8I3nTVBrjuUQPM8yY2JJO3J5VbkXeNzCp806Mja2raUn3WhsI0PSw/GEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785791571; c=relaxed/simple;
-	bh=HdAa/TEObEvohWSWggM6E+4f6AcEFE+DHLESnLsCzio=;
+	s=arc-20240116; t=1785792636; c=relaxed/simple;
+	bh=ecq55b03bGL3u97WOEOds3SQ4DbBvIoF6v8KctHiSVs=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=UXPq9masknuWGmyS+nMG2ThkEJ/vhvZj1WqsMtx1GOPWZeXPy9ytCPV1josu9byYl8MfbA5Cf54KsNkD9R4vKGdyAAh/sGsqJ7TZ7Hx4s2fs80fKRn7DvdsVgIc0yp0AF0YjbJoG0x4ymVHOmsp3qsR1H7UResu7DCg1PvPSptQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SW9T0SqS; arc=none smtp.client-ip=209.85.128.51
+	 References:In-Reply-To; b=fkzRsHxQw3Z3JsmIlwVeQefMTkwjByi0JBwfGJczCgxujUQuLi8nG8IZUMERzDnLFN3fSWUwfDCxyybm3lyJ69pE23gIcv0pV/02O4MnNHskYjxX1fv6OfiAallY+AKJ72qYinRkEesuCgvtst28RVCjapIGLfzhclEwL8DPh1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n+lkM6Br; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SW9T0SqS"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-495590dde14so25876475e9.0
-        for <git@vger.kernel.org>; Mon, 03 Aug 2026 14:12:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n+lkM6Br"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-49800c6a846so22942905e9.3
+        for <git@vger.kernel.org>; Mon, 03 Aug 2026 14:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785791568; x=1786396368; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785792633; x=1786397433; darn=vger.kernel.org;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=+3hr08J4R7gjHmuroIrL+nRf/yKUDT5zIGRQe0Pyn/4=;
-        b=SW9T0SqSIWHUuDqV32wIg0AtHi8/THiLTWpWcQ939cZIr/eKrzMnA8Z9lmsCuqPS0e
-         kTSa3oZPcLnIdEB+duhqduvgaX/mEWARy2as22QH7t8nxJ8TFo/tSyzP4XRNYBXKnAoI
-         hZgfMiyKfhNj6ZG8Jwd+VFJkveQ8TYP+u6zi01adx/orLe+Jf4GaRBjKo8et9btd/bSJ
-         v7n/6NhkuQkU/xXxdPvZnVweQCiSsyeHZa68vGm/xAgZiUwY1ZpXx76rtUdy73SOEZQ0
-         0NFKdqTQWsXK8bmsyyPADoxEjuMcCHCTfam4Qb9M3c2nA/+OvNjmtXRfiWKe0/Wc2uI6
-         MSSw==
+        bh=2orodzBrQmPJSe5NB560Tk0J5An7EMXd5a37So0iTc0=;
+        b=n+lkM6Br9W81/6Ka2829xU+WVfP0nB2AK93RWJ91wiMf/K78MpXZIN2ml9jzx80OGE
+         slG0XdTsMVrM/vMmzHBl8aPF+IETXGQdxXRPXtaKd1OHzBIsXIbGjcBa+dNaVv3c3uv+
+         ytbDJA82V/7nm055hKkLtBlSqpFmfN/CEDDVPvPSrkV0E5+Lt0hb94pvELv+a5wsibny
+         3gkDmO/uKQfF0JjZ1FSjwSnJsgIs/VfmwTKaQcI6a1tahWuKV7StuCmY9o2grF4O6RZw
+         j+A5PgG+UMLPRWfXweHXe/KdQq9YC7DW56Q996JFm2M3B2cbaxXHcLLJbqNB84laJ5Gh
+         EJPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785791568; x=1786396368;
+        d=1e100.net; s=20251104; t=1785792633; x=1786397433;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+3hr08J4R7gjHmuroIrL+nRf/yKUDT5zIGRQe0Pyn/4=;
-        b=DBegejOCX47c1xN2Fqo2OAX5E/Vj855+PRW76FrjljX9b/JOVPhyj8EQOwLx4/skBz
-         Orxcwl6SV4rk5FJDevrH4uhGPctk0pXksHkMZbpzAmwuibgFodG84fVoSEDxSM6OXA56
-         ejivfw2QqFFfh5A5eXxK4IWdoTaneXV3zW6JelqjP7q+N8PoYGLNxbmo2UEILfnxWuym
-         PeawnnD34sufMBku3l+TDIXrvBwrjqbYR6nELUh1y1StwyLm5+TUBilw9cY7xFc1hvqj
-         LmW6YQfvBt639E3CWNy6OgmXudT8QAfVqdb03WX4V4Vb7mKoq+snactiGAn5RM5Ge3is
-         pTgg==
-X-Gm-Message-State: AOJu0YxR8kKVNK+W1E0LNkhdfLDc+NdA23c5SqBb6d8pUvt1K6Tf4c9C
-	A8rJixgledGAxytjAgFLMjiRWKXOAGYAJTzJ7zlLpqZmkBGs3jTxKYsfd2ugWxmw
-X-Gm-Gg: AR+sD123BCKeAINKb4+ZBS64cjBdzzVU2L5tnhtgOEAS9QuOU2dz4+cB0O8VxOMAq9k
-	tT4et5a2LWft/RFS/oObNt4u9muF4W8m6iM0oERQjA2BJcsrqXsZ/6233l2YxZsQ5kR3AO63pr5
-	0rpqYqTsLlV2JmedpKJ6id2ncfZUOK5a9uQTkiAHz8IT+5/n2RCuHp+XwJ2DJn+Rg2cSvUjxrsT
-	H+YqvGdN+BWVI7lCjHnz6dyy3IhmHCrmauVu9lQK2Wltd3k5ZUp0IKBetX7oETNOZRIBUlDuFCm
-	9Yrmpy6AODGIwMs3ckgyFfNeRMGOq0+iIXSbbyd4qkB/h24Yed/4hvN728QW+OLG2g1byZpQAxa
-	YhyZJXAPvdr+r3noUXhW8TUyAKT1ar9SZlKdmCwFUQ8pel5gBxAtFMND2D2HU+OWlr3q2CjlxXW
-	u/sq/ERr0UVYPCVditC+uPDGttWtNxcQ9eDl/bMF9s/4oyQVP6xgpZMZGFQmSNYGUmIRpJzR3uv
-	VN3sx6p7JsDNpTKRw961UTx7/lU9HwsbTfw/pWos4IBh+PWsFjFK+rGQjSP5cBotCZc7AlsGjGF
-	rpZic9y4R9b9ED5b/K2nGbJihHDFQv5Dwib5qNQ2faN05itI1jyOurZxSR3b4NN/4HArAOTv+8A
+        bh=2orodzBrQmPJSe5NB560Tk0J5An7EMXd5a37So0iTc0=;
+        b=pgqqOovhhKmYNn5CAXqMXkcVLvy3ymB0d7OLmL3xK/gdjQBkD91FzykWxqWIkDtS3j
+         wYrban2lpUjXEgpI/S1uUFlGshZDrcK+msJ5MLojumKd2GDqsSmx1j/1HQ6cJt8t5wnW
+         mai389pbBwvHuqdEQl9jXN4bGW0/mrhdZki7tTNT/8dPWCC7mVM7dhPNnHg8wBQ0dYwd
+         hwpgyCbwSw+XRlB5mgd5apjtyDhDnmYecNWcvEZTyC1M76ETKfH7C0Vc2hBK72j5TGcn
+         0hN3ZdGqY9Qi+cNHUwpvFlfiShUafLuH4V7jOPuk/5iihsn0krOubMHWyeC1VxQk/zOp
+         II6A==
+X-Gm-Message-State: AOJu0YysA6N0capEyQyh+H8EQWA/+FFGFZfGxhGHapnETvhfpSQ61Aei
+	6aq+VqF9e4hRvJr87/xbDkJ6cOQMM2CXuYESbA/5o/9+sRlYWdHPbEYOJnp4cQqM
+X-Gm-Gg: AR+sD10NX+bdZLMJMYZ3byqR7z8LH9et22lWBYzFnbWFALqBgNIP6dFxYF582uGBzN8
+	Qn73pX47zACLSFlJ2gHpnq0/B2+M3PmjnNyYckxawCEEYYv/vAiUsOKZYJhPC+CQief0BTNdpQi
+	Vg/iCYvncpD7OsIdtnHZTVTBGkL8aexxuOw1/HD2V4KBD1rQh3Z3jGMFSkZQl6xtXjWSyswtpUK
+	6oYYoUbpJDdKDEG5a5e2ttB0UKMEojuE4ygkpNJAcbIJfGF9NAW6dT7lCyLNLOOJWDZra6+uf3u
+	o3/nMUZohpAJC+EYOrqem3ET3aWnChXdOuRCTgrQiV8nqpx6hC3vkk6Aim09r8mufQTgvzY6KFc
+	BBUn4DTG0s6tGFmRFwHooe2nSr+LFHhHbA4fyzrteM9L/L/B29GOxCios6VAkdNJLm++/Eiy3iE
+	n5cGyt9qIZmvtsQXbux2ZVwa4evFR4ICVj41IF3WJovr14QBYPW7kOWsVnEa8yL3vmoTz36XB98
+	deblSoCNnb/412RQS+eoh256gE5fw4UHjXc2kw9ZvahHYs4Ztu498tO8DivTaASb52YssWvt1QP
+	xr/Hl6UezdVkcypNsgWBYYGhEky9Fa9PdpFOirTM1YyxxSnyIS+/uVqOVcwYDPPrPNpw8WFJy0Q
 	=
-X-Received: by 2002:a05:600c:a45:b0:492:45a0:dcef with SMTP id 5b1f17b1804b1-4980c66d8a5mr224359465e9.5.1785791567805;
-        Mon, 03 Aug 2026 14:12:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:524a:b0:498:28b:1025 with SMTP id 5b1f17b1804b1-4980c66c838mr244533685e9.5.1785792632702;
+        Mon, 03 Aug 2026 14:30:32 -0700 (PDT)
 Received: from localhost ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49807b4d8absm116561695e9.0.2026.08.03.14.12.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fd4c33sm22244065e9.8.2026.08.03.14.30.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Aug 2026 14:12:47 -0700 (PDT)
+        Mon, 03 Aug 2026 14:30:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,40 +69,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 03 Aug 2026 23:12:46 +0200
-Message-Id: <DKFM9ZZWDV6O.3GFN589ORNUZ0@gmail.com>
+Date: Mon, 03 Aug 2026 23:30:31 +0200
+Message-Id: <DKFMNL9K3H7K.1G0N5EDW71VHQ@gmail.com>
 Cc: <git@vger.kernel.org>, <chandrapratap3519@gmail.com>,
  <karthik.188@gmail.com>, <peff@peff.net>
-Subject: Re: [PATCH GSoC v3 1/8] t5701: use test_file_size() to get the size
- of a file
+Subject: Re: [PATCH GSoC v3 2/8] fetch-object-info: detect truncated server
+ responses
 From: "Pablo Sabater" <pabloosabaterr@gmail.com>
 To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
  <pabloosabaterr@gmail.com>
 X-Mailer: aerc 0.21.0
 References: <20260803-objecttype-support-v3-0-7176fecf7950@gmail.com>
- <20260803-objecttype-support-v3-1-7176fecf7950@gmail.com>
- <xmqqbjbjyv9s.fsf@gitster.g>
-In-Reply-To: <xmqqbjbjyv9s.fsf@gitster.g>
+ <20260803-objecttype-support-v3-2-7176fecf7950@gmail.com>
+ <xmqq7bm7yso6.fsf@gitster.g>
+In-Reply-To: <xmqq7bm7yso6.fsf@gitster.g>
 
-On Mon Aug 3, 2026 at 7:21 PM CEST, Junio C Hamano wrote:
+On Mon Aug 3, 2026 at 8:18 PM CEST, Junio C Hamano wrote:
 > Pablo Sabater <pabloosabaterr@gmail.com> writes:
 >
->> The 'basics of object-info' test runs 'wc -c | xargs' twice to get the
->> size of two.t. The pipe to xargs is only there to strip the blanks
->> that some platforms pad the output of wc with.
+>> The loop reading the object-info response stops as soon as the reader
+>> returns something other than PACKET_READ_NORMAL. A server that somehow
+>> answers with fewer objects leaves the end of the result arrays empty.
 >>
->> Use the test_file_size() helper, which outputs the size directly, and
->> store the result in a variable. Because 'git rev-parse two:two.t' is
->> also run twice, store its output in a variable as well.
+>> The caller trusts that every requested object will be filled in.
+>>
+>> die() if the loop doesn't reach the number of oids expected.
 >
-> It also has the benefit of retaining the exit status from commands
-> run inside a $( ... ) construct placed within a HERE-document.
-> Earlier, if your "git rev-parse" failed, you would not have noticed
-> it directly (though you would probably have seen the "expect" file
-> containing unexpected content).  Now your assignment fails when you
-> compute two_oid, if your "git rev-parse" segfaults.
+> This tightening is obviously a good thing to do.
+>
+> The above description makes me wonder what happens if the other side
+> sends responses for more objects than we requested.  We allocate for
+> N objects and loop for up to N iterations, so we will not read more
+> than N.  But do we detect that we are out of sync when we read the
+> response to our next request, or before we shut down the connection
+> if we do not have any further requests?
 
-I will add that next reroll.
+As it is now we would only notice in the stateless case. The loop will
+only go for N lines and then leave the rest unread, then
+check_stateless_delimiter() reads the next packet and dies because it is
+a normal packet. If it isn't stateless it will early return and we
+won't notice.
+
+There is nothing to get out of sync though. The connection is started
+and finished for each remote-object-info command line. So a later
+remote-object-info starts fresh.
+
+But even if it is harmless (I think) it's not ideal and I didn't think
+about this case. The fix should be easy, check the next packet for a
+flush after iterating, otherwise die().
+
+[snip]
 
 Thanks,
 Pablo
