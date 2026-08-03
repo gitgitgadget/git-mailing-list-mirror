@@ -1,109 +1,107 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C582738399C
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 16:36:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785774964; cv=pass; b=L/+WfP+9XsZi+oTk8GBNRS1RbOWDfiunk1TKMfH9wRdj0vtu5NaSwhGP5KBewlczpe1/tCtzLECHuHGieGTkzJtYyVWRH4YjXGdnt8K7nhKXPmOZrERBU71T9CLfbHwJp1coMvbLjKDOzItZIMVE3XYqiiKBM/bpVSaDXfrS/kM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785774964; c=relaxed/simple;
-	bh=zgQhBDf52tsQmQUBW8ruHVUXt6HsYd7ZuOdVnJ2+3Kg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Da2EWVJRK3KSx10G7rZ08Kc6hIfwhqPPFPi9lJ7ajHmQ2loiGWv+nvXh978hRYi0BXLxISQlARDsPw1R8xofN6PH9BULhGHV4Cu5VBuOGsQd/b3OA+CJlm5IL6tACn99S3Ho1trAFUmrolUqfMQeUan+Gc86ThU7uBIkO+rBWgM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LGkzSuF+; arc=pass smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE56338AC7E
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 17:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785777022; cv=none; b=bE44MwCSnABMHixAwi26BR3eNz+qMEmaKXT5c8OZug9fpgSaCamo/DmTbt7UTPmKPzIYlF1s+kedaK16WY4YEXIY9WCjWOpezE3t2YbUSvluY4EhIc+LfDR6mserpHogWUGblqP0YBQui7JZ2kbwwX5SntgPLmGxiBCgfwsRz4U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785777022; c=relaxed/simple;
+	bh=J+7q5flpfXMF7AjJ4Y2qaWAVka7L2gnoJOhESFEc/W4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LxgIe4pe/rEdzU1RlsHSpKICorKyDXNg7/7Oc4gdmQlQA/z+YJDrYwVZmqZKBaEgdlB3F/HRlOUQbhMun4TPskyLES21GHCb41SDXA6UgI1uxeYEJ8BLgn8VwmJxwPDK8GizjVCkZSQJIW8jV5R0fYBT8Ta1uCB+Cz5UId5ehK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rPtwCBR+; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LGkzSuF+"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c1c50c1e29bso510192066b.3
-        for <git@vger.kernel.org>; Mon, 03 Aug 2026 09:36:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785774960; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NcCn3iiViMf37NJaE35g66q1hxuNkFrNChsVKPxSzMCjKGn+cznjP1I0KQacm/JgvW
-         cxi+5bF/0iv9Vd9so7hZMwdQ2GIqxkUdUwDl3NXBgfojAnCHmyf4NpJ0BB7/nV1W0BWI
-         wbdzw3iQx7QDYc1z1qWHKLtql1yr9q+ndfPx7Ou74nOLWhqHKBbyvXPq6j6s+iXFM+9o
-         XZ85qRypdqKUMegRjmJKN1jN6n8orYRLQ3PsVBz9+r9jIHc1Asg2sJ+tQ7fLZNskGN7e
-         uxD0FHFcBDOGqaYsE7TXY1VaXDL7SUGSb/CjWG4m0ScgxeAHENXB9Jrb4sGWs51Wmd1e
-         0Ipw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=5tfI1SPMbP5YB4sM0QDpi0sA+xE7pbvIylxxbHBW7xU=;
-        fh=no65VhfDbqrRdoG2wIk4QjWRml4Jff0y50NtjxbYdBc=;
-        b=J4Tc+wKgjIBsoJ7lUHtiTdKeC3H/c2SctxDTedcnKSZrnKlVXqGNFFfRX3WC4fzzWi
-         gvp5KKdjGLHa48/n37qQl9pdQONe7SLxQSnvuUv4geN6yW5QkmoMIFFP3ACaC5Mv4ePT
-         rHlWR8PCv3g9ziQDBLxCiTwPl/o9PRAyRwiZCZLYRXOs9yozmmaQR4MTsbRnf2QfXRck
-         Qsju9UbPUkt4WKewHVYeGkgO87AIwWqWpvd6tt+ODnrSENgQVpymgGsyRuhv6sHvLxgq
-         +TeGVZN4lRTNw6Nza6JEz14CxpkQsQuvuu/mZlOlGhzoBvlPbmq0ptFzmrq56g2/EP6m
-         3XVg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rPtwCBR+"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-47c2b362ee2so3215308f8f.1
+        for <git@vger.kernel.org>; Mon, 03 Aug 2026 10:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785774960; x=1786379760; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1785777019; x=1786381819; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5tfI1SPMbP5YB4sM0QDpi0sA+xE7pbvIylxxbHBW7xU=;
-        b=LGkzSuF+thn2XPDgNBQNab4czQhk+4L4eqXAGrJaiRPin8591PeiUinRJstmDuoCf1
-         ai56yxPUybM/hSs1LNndptOCa7jW/Dqm22zZaTLmqpPhYpSqLgfKeXwnOUk74OMAOSGO
-         AtZigmZz1EwV06Rrz0wHa5dYcWBSdfTR1HOlWJVfJC1J/ZA/qJjJwE4Z5GuejV/wgSQz
-         1EOuq0OZnj90h9bN0eNNpod8llmJoqM+8kiImi7F13CGiw8qg9XyhW4YGaVSndiuv4pQ
-         YWhD+KQNj9qNl0NmwprA4+yqaSa1hc1eVWZ/Q1D0jB4OvDMkBqf8IZCfQHO68kRDgFAq
-         Youg==
+        bh=99OKhszIvQqhT9oqeKEHYoC5TGTPtmN6ndBplWCfpfw=;
+        b=rPtwCBR+KdqlGHMXieNyWBEgYzwAuyGhdbtUU8VGZSoaDcdGYK4L61v0sn/5YF6+u0
+         5vOLUv5pTnm+TV6y+cdPpZFM06S3ycxpqCzriSwWeVHyhxHnT0QvYe2ECDDuTYg9uAgg
+         5VBRLGrhpI0j2L/KOz5nMjNGkf7eXKsLF6sHPCKcdiEnsvadPcola9XCrjTeF8G+p1XT
+         PofriZXsuEtR8DBbY4zyC2glrCfziXQoojh0JBqb9A2YrzeXieI5GlxjewRVDMxlaOy2
+         kiWoIIjMGtXKD3CD4aAZzBeuftcVPLU4/n69XWgPC82sk4BmPnFdV2rX0mvJKB/tlQvS
+         h0+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785774960; x=1786379760;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=5tfI1SPMbP5YB4sM0QDpi0sA+xE7pbvIylxxbHBW7xU=;
-        b=SNb2xw5SmuJdKZigXYAp/SdgpeRcqd6DqIbZa8VDY0lxsFg10ebyaxVqqZ6706bQBU
-         wyf1X72E7X7LYKaR6IWDHH0Fp3uRLkZdEg3lJzr1j2SdiwrUKILur8uLbigRVQyBU2CU
-         tgMIlEEUU9swl61DaizuLo/lCeANag5c2uqCAvGuXk79X5GYZiXNrOWWeH1dg/zL/ROD
-         YsJZgMItsuCipK2YnjsyFbBQ2x2W+WtxCMKdvpG5phSdQEC0vm0ZHXJ67ec05e3RoC2i
-         uGugmXGSs5bboSsY8tEW9Ts7UjiOxCIIUtT5OGGcf4txqGpfzLsLA/V33bM2lQn2LCsw
-         ALNg==
-X-Gm-Message-State: AOJu0YxxJ1oKmso9yyIsFLHUSVEPZ8A8np5nsx004/EWOM0j8P+3snx6
-	4hBWa0lsi732IUFazbKTUocUMKG6WaYEGcsgoQHBGmWPg3MUr/z21CNI0ypB0f5CX1Jw+fCXJSf
-	dPFPPa0tvA7TOKmRCNQPwJsXf+msjoos=
-X-Gm-Gg: AR+sD12UDijgRVsyBMM6ZtR0kCwwgQtjE5lzBb2BFD9KNgQnqem9nAaK2s9jw1+jSi8
-	AgJmM9GUQe5CsqHLZB4Ny7PeSIgkFV+XhPXDWY0iz/tH4406aI62yUP+FdsYpl0HzviaFDok0Dw
-	7M2Cgq2fCwlrxkDvBnKu9zbiq3ILzCFTcAbnXaW5l2aCOYa11RGJpcNyxvk6A7FPYkDqXeyAzs4
-	gVMVIy2FadEXXXa/rHEAXedlv26W3bfWsL/tyeXaOqYfbn/5rdeYy5V3vOrPHCcea3OeKB+OZo3
-	3n/ImdJS6scLsJBY9q4QbhFZR4bEdkKblDC7PcocXiV/Kn79e+RBXWY=
-X-Received: by 2002:a17:907:9610:b0:c1c:5c90:1bad with SMTP id
- a640c23a62f3a-c1fe7f9ec95mr932128566b.14.1785774959791; Mon, 03 Aug 2026
- 09:35:59 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785777019; x=1786381819;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=99OKhszIvQqhT9oqeKEHYoC5TGTPtmN6ndBplWCfpfw=;
+        b=kCYfWsgY3aD6SmSbp9fugzxrn40aZhJ89hmAJjan73cRmRdczbyL8+W8F1CxIga5lm
+         brCV/PFy85iOQzs8ANAo/H0thZjpD446L2kllWyjcY9coaGHPMnkco0T7WKw0L9/R2vV
+         6HL0OH0SmX42QV0WLnkeqXLHKGGvdKqS0scIsplXozgEfROmk5E2MJc8TACgH3Ho6f9U
+         5mo0b7ZwLPD64cdE/CCaVvaPTbLo8thYgecDZfV7hO9DdkEODfps2z37Ax8kMXQQha+9
+         OIvtTfDHZptFhmwuPo7KdHUU5fjr2L7L9bRGh1jENVpNNATm2LE1qWmdKOeeqnsTpNsq
+         yLPA==
+X-Gm-Message-State: AOJu0YxK7D/0MGZi0iDUyuZqrGETvipOy4Oy80jCEAVNDjyyDDkqIgZd
+	WvaTA4xRcgFtjaFsevkl/Ey+zB3GMyC+DBDGekJE19kNq9ootmf2LEpPYAcmYg==
+X-Gm-Gg: AR+sD11HmEn/dxVaz+7trWb6me/c1FsnbvDEyjrPEOQ5h2Mu35DWUUAc5RmUh20kRV1
+	xr+SS56hoVC9Xxcy3PgLm/McaAAAmmB49BnjCM+RroGppI72gz6xO0cVYtDU8fhHJP+kmi0JBW7
+	eKSu/WzSiNH+xdn4PKF/VFpFb0j5ElRwV/PVt7KJBVe4uJOl8qGEWDxtgyODxHJdvZS3MtISS3/
+	4kKQMbn3f1l4teQRhC4qXBWmWW6ApHfGfJyh1Sp0DCAwJo5wqNwwSlcwaJqoeyhI9A7+inrdWSl
+	FSo/X2+WL2x/1Zm6sfHYscvjuOVOjwSkCGL2IyHy4tCV1ukbbi8aDOEOOTvC0HxMOi9nyjMf9aY
+	QtcQ7mzEDV59GFZhZN44mrH/9yf4Ggap7jlHCLk6EUlArIQNzHV11eG8oaC15jUjeBTTQrVeuxc
+	rfDdQfiaOp2IYSddhKkqIfYzX6d/+rMRqq7dEltM5VMwQApaJEvR3+QnKUTe+0svVf9X1dIhOOh
+	Ib293v7egDyKhd//7shfaaXzSveAz5k8R5BsMqR9DdCsEE/Rh4UM+ExLzTE0LwPJ03Um4YN53zZ
+X-Received: by 2002:a05:6000:2489:b0:47f:96e3:5309 with SMTP id ffacd0b85a97d-47fd729e7dfmr27157609f8f.9.1785777019008;
+        Mon, 03 Aug 2026 10:10:19 -0700 (PDT)
+Received: from christian--20230123--2G7D3 ([62.35.114.108])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47fd456a5a4sm35218439f8f.20.2026.08.03.10.10.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Aug 2026 10:10:18 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"D . Ben Knoble" <ben.knoble@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH] mailmap: change primary address for Christian Couder
+Date: Mon,  3 Aug 2026 19:09:52 +0200
+Message-ID: <20260803170956.1162626-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.55.0.492.g44bba30fd7.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
- <cover.1785750108.git.phillip.wood@dunelm.org.uk>
-In-Reply-To: <cover.1785750108.git.phillip.wood@dunelm.org.uk>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 3 Aug 2026 18:35:22 +0200
-X-Gm-Features: AUfX_mzT_1MQaG8iDAYXa427tMYPk5H5qiLjkDV4rjCASV39dvqcFx1Xh8_sGWE
-Message-ID: <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
-Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a range
-To: Phillip Wood <phillip.wood@dunlem.org.uk>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Matt Hunter <m@lfurio.us>, Patrick Steinhardt <ps@pks.im>, "D . Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> These patches can be fetched with
->
->   git fetch https://github.com/phillipwood/git wip/hn/history-squash/v10-early-part
->
-> note that they do not support editing the commit message of the
-> squashed commit.
+The `chriscool@tuxfamily.org` address is an old one that I don't use
+anymore, while `christian.couder@gmail.com` is the address I have been
+sending patches from for a long time.
 
-Thanks, what should I do with it?
+Let's swap the two addresses in the existing entry, so that the Gmail
+address becomes the primary one and the old tuxfamily.org address is
+mapped to it. This way both addresses still resolve to the same person,
+and the address I actually use is the canonical one.
 
-Is it a replacement for my branch, or should it apply them as fixups
-(if so how do we handle the lack of re-edit support)?
+Signed-off-by: Christian Couder <christian.couder@gmail.com>
+---
+ .mailmap | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/.mailmap b/.mailmap
+index f8ede075ea..d518b388fe 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -39,7 +39,7 @@ Chris Shoemaker <c.shoemaker@cox.net>
+ Chris Wright <chrisw@sous-sol.org> <chrisw@osdl.org>
+ Christian Ludwig <chrissicool@gmail.com> <chrissicool@googlemail.com>
+ Cord Seele <cowose@gmail.com> <cowose@googlemail.com>
+-Christian Couder <chriscool@tuxfamily.org> <christian.couder@gmail.com>
++Christian Couder <christian.couder@gmail.com> <chriscool@tuxfamily.org>
+ Christian Stimming <stimming@tuhh.de> <chs@ckiste.goetheallee>
+ Christopher Díaz Riveros <chrisadr@gentoo.org> Christopher Diaz Riveros
+ Clemens Buchacher <drizzd@gmx.net> <drizzd@aon.at>
+-- 
+2.55.0.492.g44bba30fd7.dirty
 
-Harald
