@@ -1,69 +1,70 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF69E415F06
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 14:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C9B415F30
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 14:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785768017; cv=none; b=n8py3V2EHWirY5C/P21yv04aZaGO4ZNkL1F0pZubvBFSVfMTWSX3zhStiXO/TCwOqu7Yya4iS0+NVsbnAn06X1xgBc+FGgn/X8NwnNWFdob4uIyxXDJTUyGvPwVJAvFw3PsNO3gEjrkuW0+ZMmFruer0+rv0cFvvL0DCcedMLgo=
+	t=1785768018; cv=none; b=qd4us1vNOYzqVwHQoiF/+VnpV4dSzt9vQjKk+rwalQ2Nh6i0SLw1mBjcrvBA6ZjSfVWUKvPkIEaofAvLhIE3vaER5v16jeRT8oCFiIck3O0NrfG4Om+KTXNndowTaNUHSyDj+6Xt5Z7gerKRxzms3VCpZfKIw+jT2DJCRPtTOeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785768017; c=relaxed/simple;
-	bh=Ex+rLTpY7CXjJ5yWusH9htAYp0wqCOqzVhSGUQWpvJE=;
+	s=arc-20240116; t=1785768018; c=relaxed/simple;
+	bh=IDC+CnSEWPGsqda6q4SEeBCHXxO/iE4qfGHq7MgrBrc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aUpfyd3vDnbuPrpp3ApYDHVDIv6rJt6GKyVX6HEl2c3aqM8bER6hncvYTepJAaoVLupJ90Zku9uWyLIPA8pNW6oGZjc1DnVSklQd/ZkFj9pzobj2WqsHKQWjYZAfFX5cXItCBenVbkGXvpwVeEzQSg8xQMjl3pSSeVyYaFub0XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NbddrXBm; arc=none smtp.client-ip=209.85.128.46
+	 In-Reply-To:To:Cc; b=VXjycFHT3/oxEmb42QZYmnHdox1kRvrFdnUxd6rw4m3RkS6osEkCMDY7V42wqhklLynUPwabsApjyutlxRwmJpMB1bYPjZha4tqyhrAYcNeeNmBk1sh57F1U/8cX+E2IUATv3i6/g2E3jQWsm1NbBkrbTJvuh4Mxn+9yy53MvrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gLxIO15L; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NbddrXBm"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-496bb7cdf51so22617335e9.2
-        for <git@vger.kernel.org>; Mon, 03 Aug 2026 07:40:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLxIO15L"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-498028b3d5eso24299645e9.1
+        for <git@vger.kernel.org>; Mon, 03 Aug 2026 07:40:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785768014; x=1786372814; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785768015; x=1786372815; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=v57lCHwquE5GVjnhPQrgTNxMHKbOfRMWPcfKwp23G98=;
-        b=NbddrXBmdRB+0UQtd96vr/SKLj8s+31GobvZ7dajfXbY9G/jrNGDmYI8tkKmyIPrbq
-         HTzfgYbAxX8S/QUBLp1iWftirwJhLfzJ3IF9+GVF/KUHNhRxUt2V76kTDgKU3MCkVtzP
-         AtIAXyY0Lm1hq9u93arRQvg2DUiaoTyT/I/Yx2ZadV1od1pHliY3wLOuDB+USnnaT0Z1
-         Y2iMGrNWWuIudqedxTnVifDs0RRR/tYsyrfW7Z87i71bzEkafSOAX/rL030hKl+1ridL
-         swkXmEpxjictV8FskOLsI8phj9soJvDfNMayO4kmlKkmc9qbynkRnOlp+Oyo8JSMC7ht
-         nEpw==
+        bh=VIWvddlcxb1/wIHtEkely5k+lWRtaSt/6hfezCNZMP8=;
+        b=gLxIO15LduoiF3+gvwi3A54CiOtv3cuKF37rGYYjkq7z7ih6uDvgAdtFNaefXNPl9/
+         bey5baIE5VhQEpx+oCkh0I38w522wMWRoUu6WTtqyWYLNJOj19epFfyBqK0LnIsrInuC
+         sM7CllgBjv5gXKwnZcMEC/QVVRHGTHMc5Jyjwknd6hL22fs3JGMQ53EEBnMJQMnUVN2n
+         NyNO6DgTS8vdbC4tTtjsie2VUL+5olwJG+v2aSCcmDZLoGgJDhAPcgLCY7hgO2wrndhm
+         xCNK2u88yjZPSpbd/a6SsTwfZxDhaS1JxMXe9JBL121bmQ5raHfckFLdWX6OSPo2w/ii
+         oTcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785768014; x=1786372814;
+        d=1e100.net; s=20251104; t=1785768015; x=1786372815;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=v57lCHwquE5GVjnhPQrgTNxMHKbOfRMWPcfKwp23G98=;
-        b=di+xaPaySE/09d3YxikVXEvTU9Bs2bx38M7CVewQE4N38fVrR81qu9EJ/Cu8fHZEj0
-         u8dPgegYZ18ZDpe+lJI11+ZWc3lzThhX4slOMZdI5I0JNvP3lZgrbUqPRHZYeUKNM14X
-         YkwbP63RDZqPhOz9ANEuZuVaqlu6YYBgaypNMSOxy+A6feb8+kMmU0ZXE4vkyfgdrA/L
-         nLMXq+X4ScKw0jmer1n8Zf2LREw88muLcsg1X9E6TGNnUy5uhJCuNQ9Ay8l3gZCks3/1
-         XgF7Ai50kNDlHpOKySKwzD37Kw59CRsGLJQp0dA3sZSJEHwJQ0h9vCW2U14fyD3YzbzZ
-         j1XQ==
-X-Gm-Message-State: AOJu0YzhGIRr1G+rbkcz42BgTz+nCuoKpurceb0ZPF7XPV+hvQecsaVq
-	bQXh560+aMkT2F1LG5wEwehx9JuQpKSrzSrBaGx4d76+3oeKJZ5ki7fS
-X-Gm-Gg: AR+sD13i8eK1T1hGTjPO1Q5Oiic0RyPa+dqHEpLDyCdIHTPO78lIWvTo+YUAsV/VOaF
-	/Ekipf+IaCOiSq89wLao24WoK26zO6IRWWXdgI/cH5CxSSTU51CzwlZxhlwYW2U9LwYz2/gsv3I
-	yOaf+XJdWkZAbRxm3N500+86NI8PsrQ6WCyizRyCAtiC7xdjMVj5CPwPO5C3SZqQE1vqm0382Xp
-	AcE1dz1pf9Wj5lMf4eMz94Sjh1xLpAAo+QZ6iJpWyLhLgNEtp7bjtK+8CbBuR81UXsudXC/35Tu
-	7FDxg6ZSQA1trWVQBRqBpbKj430OF1BnPlL+CAjx6i5l6kwsV3F7eBZLv6SY0T9yxZJQm/pFANJ
-	gUiNNEw3VHLfKP8eDEapmoWpN46AnwkEd2EhOQTECR06m2sd9dCCywydWkTmdPV6aPN106+o02W
-	rY2SFsPd1xd70A7y2VKXIVBwfvVWZ7rqYcebZV2pi+hyNwycq2sJlIVig4CHPGekAFsLgXtXOTn
-	0VPOt6OQod+f2yH9q4JFAhdLL240DTt8SEzPmPoTnZVxfdeYJ1Kg+jCPs03EfZanbICzANQMhdA
-	zZ9jlbyexRsWvGRIvDDAxXqmY9m6viGISKfMf5+Zg8R4jQgnSS3Eikk5W+Y1XtDibUAMrLTR/g7
-	i5cEbCT1paC4QgZSl
-X-Received: by 2002:a05:600c:1c25:b0:499:48be:3189 with SMTP id 5b1f17b1804b1-49948be327bmr30033075e9.0.1785768013760;
-        Mon, 03 Aug 2026 07:40:13 -0700 (PDT)
+        bh=VIWvddlcxb1/wIHtEkely5k+lWRtaSt/6hfezCNZMP8=;
+        b=nkk3EJD9RUnKpe4EbGTn+006qjAIZEoPF7oVPbUVX3P33fzpTo6tUxEo5lKKl9aqH7
+         ZTwc4jXHxME4dY9to0WYd5fJANeIf77bGqrjs3EDPpu7ap+ETlJ0z85v+N7FjPkjffLN
+         YDqU+nQVynmbBcDjTlFVfNFf+9os9t60naWFdWWttSqoae6ErmoVlcyBtU9N6iOKMVn3
+         wiR+kGITWCGwgGW5a/gGT3B/gksPMehtlu4cmrIdAM33fg23ftvW5yCEpROgLciKZab6
+         LAtiq5DPFX9CiKxxGHLlFenG/NI/eNVMQQfED0rmg6+u4cquUNJWdqqgVHZ6tF6G1chT
+         klxg==
+X-Gm-Message-State: AOJu0YyQ8kgxHkJOUTjJlSOK6WzzCRZyiJ0v7Puw9rUisoGRsFUqT/FM
+	8gsloI4HQbaNi5ap7FUl/lUxhFS/59+agi7pS3jA+Fsyo5yAMonRfBew
+X-Gm-Gg: AR+sD12OPDjMx7z3yTZalu7rQNrUG22V4whZkH04UnH2aWsqfip1uyQbO0VNQWF+QOa
+	eadDuvYhPvV5B5+0X4wF5E8otIg1efwqmYIqS3Tly3x6p6QEW9BKq9T/8nZpp9lxJ6BMx+W7cHu
+	wfgar+Atz0LH9kNqVVbder8hmX+R37+uK4SrqSzvJRaHVQhPVZlVwk7Fc9tFLxLyn+FKq3d9uXI
+	jt6UqVHjgr4125HIY0r3CN9QysfeAiLAHuIvUSVqBaIp8X4KzLcT5TOfS2Pa2ope5uBjS6A7f0D
+	p0ok1VPP6fM+++OaTBhj0mDCqMBB/R5gwO/hT+Mg13Ygj/CEn98DHA2/BRuQ4rh/kdK2fSrtTKR
+	6bx1aEFPXH3RIwY6z7PeCcb/86CZKTj0WzjvnOCA5QvxD8dJ6d5fIG3ikYqaYkrHgverxX20BKo
+	Xfqu6YFMRDrHbw6D9TVCEKXW2MVJciFXtBkIvxjmggb0tp9iu6M5R1DjTRVRixJd7fkxjy149oW
+	QD9CHdzJX6Geaf4M2UkoelNhmmZsUMaBTzL5DUux2tpV8qP+wCArTKRRshcidR/VYZwEPeAtX45
+	I5cWtJ9dr+qYwuowZME0X2j1Y6eIm6JKaFtchiFOyuBareHiMddq4hIAEbN4zOtss0n8Oxrcyni
+	cBKQj6KlU90hP8qzH
+X-Received: by 2002:a05:600c:8b14:b0:495:4cb8:42b9 with SMTP id 5b1f17b1804b1-4980c66d8cemr250146685e9.4.1785768014936;
+        Mon, 03 Aug 2026 07:40:14 -0700 (PDT)
 Received: from 1.0.0.127.in-addr.arpa ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49807b86d66sm106482575e9.1.2026.08.03.07.40.12
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49807b86d66sm106482575e9.1.2026.08.03.07.40.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 07:40:13 -0700 (PDT)
+        Mon, 03 Aug 2026 07:40:14 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Mon, 03 Aug 2026 16:39:32 +0200
-Subject: [PATCH GSoC v3 5/8] protocol-caps: add type support to object-info
+Date: Mon, 03 Aug 2026 16:39:33 +0200
+Subject: [PATCH GSoC v3 6/8] fetch-object-info: parse type from server
+ response
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,7 +73,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260803-objecttype-support-v3-5-7176fecf7950@gmail.com>
+Message-Id: <20260803-objecttype-support-v3-6-7176fecf7950@gmail.com>
 References: <20260803-objecttype-support-v3-0-7176fecf7950@gmail.com>
 In-Reply-To: <20260803-objecttype-support-v3-0-7176fecf7950@gmail.com>
 To: git@vger.kernel.org
@@ -80,130 +81,124 @@ Cc: chandrapratap3519@gmail.com, karthik.188@gmail.com, gitster@pobox.com,
  peff@peff.net, Pablo Sabater <pabloosabaterr@gmail.com>
 X-Mailer: b4 0.15.2
 
-Teach the server-side object-info handler to accept type as a requested
-field. When the client includes type in its object-info request, the
-server returns the requested object type.
-
-While touching send_info(), wrap an over-long line and fix the bit field
-style of requested_info.size.
+The server can handle type requests but does not advertise the
+capability yet. Prepare the client to know how to parse the server
+response once the server advertises the capability.
 
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- protocol-caps.c      | 21 ++++++++++++++++++---
- t/t5701-git-serve.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 3 deletions(-)
+ builtin/cat-file.c  |  5 +++++
+ fetch-object-info.c | 24 +++++++++++++++++++++++-
+ fetch-object-info.h |  2 ++
+ 3 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/protocol-caps.c b/protocol-caps.c
-index 02261be14d..27e0f85b10 100644
---- a/protocol-caps.c
-+++ b/protocol-caps.c
-@@ -11,7 +11,8 @@
- #include "strbuf.h"
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index c2b88c47f3..7a3ae11a70 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -854,6 +854,8 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
+ 	string_list_append(&data->remote_allowed_atoms, "objectname");
+ 	if (results.sizes)
+ 		string_list_append(&data->remote_allowed_atoms, "objectsize");
++	if (results.types)
++		string_list_append(&data->remote_allowed_atoms, "objecttype");
  
- struct requested_info {
--	unsigned size : 1;
-+	unsigned size:1;
-+	unsigned type:1;
- };
+ 	data->skip_object_info = 1;
+ 	for (size_t i = 0; i < results.nr; i++) {
+@@ -872,6 +874,9 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
+ 		if (results.sizes)
+ 			data->size = results.sizes[i];
  
- /*
-@@ -73,15 +74,20 @@ static void send_info(struct repository *r, struct packet_writer *writer,
- 	if (info->size)
- 		packet_writer_write(writer, "size");
- 
-+	if (info->type)
-+		packet_writer_write(writer, "type");
++		if (results.types)
++			data->type = results.types[i];
 +
- 	for_each_string_list_item (item, oid_str_list) {
- 		const char *oid_str = item->string;
-+		enum object_type object_type;
- 		struct object_id oid;
- 		size_t object_size;
+ 		opt->batch_mode = BATCH_MODE_INFO;
+ 		data->is_remote = 1;
+ 		batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
+diff --git a/fetch-object-info.c b/fetch-object-info.c
+index ed02c42f6b..2a67a669f6 100644
+--- a/fetch-object-info.c
++++ b/fetch-object-info.c
+@@ -1,6 +1,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "hex.h"
++#include "object.h"
+ #include "pkt-line.h"
+ #include "connect.h"
+ #include "oid-array.h"
+@@ -62,6 +63,7 @@ int fetch_object_info(const enum protocol_version version,
+ 	unsigned ask_size = 0;
+ 	unsigned ask_type = 0;
+ 	int size_index = -1;
++	int type_index = -1;
+ 	size_t wanted;
+ 	size_t i;
  
- 		if (get_oid_hex_algop(oid_str, &oid, r->hash_algo) < 0) {
- 			packet_writer_error(
- 				writer,
--				"object-info: protocol error, expected to get oid, not '%s'",
-+				"object-info: protocol error, expected to get "
-+				"oid, not '%s'",
- 				oid_str);
- 			continue;
+@@ -110,8 +112,15 @@ int fetch_object_info(const enum protocol_version version,
+ 				die(_("object-info: duplicate 'size' attribute"));
+ 			size_index = (int)i;
+ 			CALLOC_ARRAY(results->sizes, results->nr);
++		} else if (!strcmp(reader->line, "type")) {
++			if (!ask_type)
++				die(_("object-info: unrequested 'type' attribute"));
++			if (results->types)
++				die(_("object-info: duplicate 'type' attribute"));
++			type_index = (int)i;
++			CALLOC_ARRAY(results->types, results->nr);
+ 		} else {
+-			BUG("only size is supported");
++			BUG("unexpected object-info option: %s", reader->line);
  		}
-@@ -93,7 +99,8 @@ static void send_info(struct repository *r, struct packet_writer *writer,
- 		 * If an object is not recognized by the server append SP to
- 		 * the response.
- 		 */
--		if (get_object_info(r->objects, &oid, &object_size) <= OBJ_NONE) {
-+		object_type = get_object_info(r->objects, &oid, &object_size);
-+		if (object_type <= OBJ_NONE) {
- 			strbuf_addstr(&send_buffer, " ");
- 			goto write;
- 		}
-@@ -103,6 +110,9 @@ static void send_info(struct repository *r, struct packet_writer *writer,
- 				    (uintmax_t)object_size);
- 		}
+ 	}
  
-+		if (info->type)
-+			strbuf_addf(&send_buffer, " %s", type_name(object_type));
+@@ -157,6 +166,18 @@ int fetch_object_info(const enum protocol_version version,
+ 			    object_info_values.items[0].string,
+ 			    object_info_values.items[size_index + 1].string);
+ 
++		if (results->types) {
++			const char *type_str =
++				object_info_values.items[type_index + 1].string;
++			int type = type_from_string_gently(type_str, -1, 1);
 +
- write:
- 		packet_writer_write(writer, "%s", send_buffer.buf);
- 		strbuf_reset(&send_buffer);
-@@ -124,6 +134,11 @@ int cap_object_info(struct repository *r, struct packet_reader *request)
- 			continue;
- 		}
- 
-+		if (!strcmp("type", request->line)) {
-+			info.type = 1;
-+			continue;
++			if (type < 0)
++				die(_("object-info: object %s has invalid type '%s'"),
++				    object_info_values.items[0].string, type_str);
++
++			results->types[i] = type;
 +		}
 +
- 		if (parse_oid(request->line, &oid_str_list))
- 			continue;
+ 		string_list_clear(&object_info_values, 0);
+ 	}
  
-diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index 51d5dd1ae6..f57e36a88d 100755
---- a/t/t5701-git-serve.sh
-+++ b/t/t5701-git-serve.sh
-@@ -369,6 +369,36 @@ test_expect_success 'basics of object-info' '
- 	test_cmp expect actual
- '
+@@ -172,6 +193,7 @@ int fetch_object_info(const enum protocol_version version,
+ void free_fetch_object_info_results(struct fetch_object_info_results *results)
+ {
+ 	free(results->sizes);
++	free(results->types);
+ 	free(results->unrecognized);
+ 	memset(results, 0, sizeof(*results));
+ }
+diff --git a/fetch-object-info.h b/fetch-object-info.h
+index c472c14d7e..310325cd98 100644
+--- a/fetch-object-info.h
++++ b/fetch-object-info.h
+@@ -1,11 +1,13 @@
+ #ifndef FETCH_OBJECT_INFO_H
+ #define FETCH_OBJECT_INFO_H
  
-+test_expect_success 'object-info supports type' '
-+	test_config transfer.advertiseObjectInfo true &&
-+
-+	two_oid=$(git rev-parse two:two.t) &&
-+	two_size=$(test_file_size two.t) &&
-+
-+	test-tool pkt-line pack >in <<-EOF &&
-+	command=object-info
-+	object-format=$(test_oid algo)
-+	0001
-+	size
-+	type
-+	oid $two_oid
-+	oid $two_oid
-+	0000
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	size
-+	type
-+	$two_oid $two_size blob
-+	$two_oid $two_size blob
-+	0000
-+	EOF
-+
-+	test-tool serve-v2 --stateless-rpc <in >out &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'bare OID request' '
- 	test_config transfer.advertiseObjectInfo true &&
++#include "object.h"
+ #include "pkt-line.h"
+ #include "protocol.h"
  
+ struct fetch_object_info_results {
+ 	size_t *sizes;
++	enum object_type *types;
+ 	uint8_t *unrecognized;
+ 	size_t nr;
+ 	unsigned wants_size:1;
 
 -- 
 2.54.0
