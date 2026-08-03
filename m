@@ -1,87 +1,80 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2FA3009D6
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 15:45:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81359257824
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 15:51:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785771943; cv=none; b=WHQZlz0mmarPwYpqzks8f/Pl9vFLAYNz/tch9l3W/TkpS+2Gz53HBN//S8mYo0y5NAQxVxagZqAJTGlNHUZ84dXzKIlPWeUG22BE8JYpPZNUe2ZKTurC6l3MIa29p+f8yqgAEEmEeQpgbybr1aoxDq2uXK3pnK4R1WmyIQ+nLOk=
+	t=1785772265; cv=none; b=eEr7fNC1AtGIAW/x2UAF2kt1eUMJXIhRXgwL2tUqqBOOyBWksL7vY9L3tSxKxN1Mq7NbeMJF1hTHwbbuu6kxVX5Qw0U76Ogojzz/a8ovpSd1xq5JyBY+zVRTPsDBOpLQ8KSMIF//z+KAZXBWUmJ1Zb9v1N+WC9VHSzXzKhVXNOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785771943; c=relaxed/simple;
-	bh=i0GuTPCfr10ZGtGItPks+L2HJGqRdcbji4I9mSXyldY=;
+	s=arc-20240116; t=1785772265; c=relaxed/simple;
+	bh=9xKfu7QGlvf2z+eBtxjXnajMG/D3NpggOwpE6N0OX68=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LTucX2yPDN74GA92UtEcYagG6yxWweIa8c+BbG3sDvsQct6/406mkHAH3XDeGE3ZgbzOAmTErR/ZNjtxFIwqQiuwNc9xGsGA9ZJ0IuTXF9i6pcaFiSnWovuRzd4eKLZ2ULm73DAmVr2p//1Tj569u73eXZ1iRE8DttAdKloLlyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c3ioGCn9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TO69WlOV; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=Kh7KtNiKu7ti3c21PqxtODOQGYk6EPUJPfg6d2cUzSiePVQ2xv33BX4lq44LzycYNlIVa2hokmIowltNI/d6wFFoZMAF8+s+dkRyl5IMSBqSM+HPbak3m6g4AOEgIGt9Wp6x4snj/N4uWUkcEBcvgSRgq+IDcPzz1PzBL/3Nhao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e0Jcr5wD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DvoQcw6n; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c3ioGCn9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TO69WlOV"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e0Jcr5wD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DvoQcw6n"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id EDE631D00115;
-	Mon,  3 Aug 2026 11:45:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 03 Aug 2026 11:45:41 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A068F7A002D;
+	Mon,  3 Aug 2026 11:51:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 03 Aug 2026 11:51:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1785771940;
-	 x=1785858340; bh=BF7iAWgxJGcriW5TxiQUfj6cANrTwZmAXPDvH6oa1WI=; b=
-	c3ioGCn9LT9kCAaRGSjFKsQYbQ0O0AUGoZRrTtBl/vUnwQBZwyUZ7KzpbrHIR556
-	oYvyUsaeqr9hu0rXqrPV4Y5UQG+EY7kS9f/hkehWO169sTARXTZFWAKRxUiCEGOb
-	CuE6YODu5+oPwverOKBBtgcb+ThM80Rc6odr9bBO3/QPJT9o2Os6H8UiSrvjrzgH
-	PA/WzUTfMLy8juOCp3clHGdieWLOTmbVCVOg9oL83Rmz9irw8tkb99qoOW9r62PL
-	PS1zmCO7e54FOPsVJ3AnCZO4PAFsL5UocvKXLA+hv47nk4QOFF23F9PB6IbXfM4h
-	59Otb+Is8YZfTS5vcSnzHA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1785772263; x=1785858663; bh=9xKfu7QGlv
+	f2z+eBtxjXnajMG/D3NpggOwpE6N0OX68=; b=e0Jcr5wDl83XWjFclskvjk4xLb
+	T9Lp3IgU3XCpXrPhptd6JxjCcbsqVI1/HsYkIueFjfmUuLABFKoztsUsP7kAvy/g
+	oDpNQV7VxrqM/2kSRu7jruS3xmtrqzk5Bz6lQScGUFPoogtC6k9Rmzh/Koyhf9hk
+	s9bP7RnALYU7R/j3f/TABwwFNm7ePAf+xWt1oYem6arx2lIBL+aeJD9TSMXoZZXA
+	hhK0I1nWVGKNEGBbPHBgANdtigwLOqWEq+t9ONNpKfiFoi/NeG+Wh2SSpPvVUVfi
+	MuouRrfrbsNKUsXkVyyKxObooEPIqu47Khqf1dbN9BuZOnei3YRwMk2K+42A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785771940; x=
-	1785858340; bh=BF7iAWgxJGcriW5TxiQUfj6cANrTwZmAXPDvH6oa1WI=; b=T
-	O69WlOVXaRf5WqzUQqVOX8IP30da6yzVqCN3pxqXcMPLa9bndQzy+cs6LCWX6dZB
-	AQPjlKpull6Hqpe4gjwx8G64tAcjFh1NslsYaYzTgrkacRNpzdUv4ELWIWh/J77Y
-	MaN2FU1Ah6SBuEITMdURCpGMrNwBXXOMHeSXNBMD7ljSgjEuasvGM9++Z1/5zvgf
-	AGKCDBYP98g/W93Iuo0kh78hTXxuiXSyT/4wJAQu6os/7CM4jmY81yuLedKjDLiB
-	Hdg2SAyQoNNQXWv/Ox8+653qPFY+cjCLWLA6Xz6QznxKi3pHnswTOg1gN1dVcZXi
-	ErSMBVUfWojk6qqFJ2dbQ==
-X-ME-Sender: <xms:pLdwatO5t_ihF9jnh-qM4UPgyT-UIH-0R0ndHwVWrJoyfKeK5uFNyw>
-    <xme:pLdwavCrGs4NZcxTPza_SWtIJFlxs_6LfIP-G-r9U6jI-3UXnI58IWF4C96u05VUD
-    MBkfWXguw9-bJSlZGq0q3K3tWu5vz06VvRaYzOclFKMroVUrjQ8>
-X-ME-Received: <xmr:pLdwaieToeza4LcLe6vxRK5D7N9I3rEgfmGIvnKlt1Sob48-frbjTkw_IywqiSIOpZuGUcfTEf4vcRx0kai1qOdVbQZ7Dd4-rw>
-X-ME-Proxy-Cause: dmFkZTGHUhKOhPc3pDudwFtGYucpeFjbrXLz3xBn5IZVvjWTxpt7atNoMkemhydzqXBA1F
-    xjlSyS2Y3PdLKQP7ZhYWbLRHlUYhCMmH4sEThCyAGrHGN02oWnnA9PVWhxOorDOpvwpnzR
-    /kpUfsGI7PcFj0NaBiO3Bl+aB1sqNYnmcj1WbD32Ns5Uu2m64yCipsFfqEP2Eczgl9neCu
-    9DF+kxOL0ZL4AcP4Ag1MyOavkBIrpHgNmlkovIAvbXqPfe12ukAiB1KcmrTCQHwFaEmUCo
-    WitiN3mFf3sh6s4PVslsItiCwwQPWUOT+jdajP1kw5c8qOl/8liQtYyavoRPDJcr63aksN
-    xYxDLq/dorjNPxlRClqaMk6X9zve9KU8A50ftVBdtJjWLrP7xTJ74LxiKD6t7F9SJOFGha
-    VdLrETbGx+bePVsS2ukvBSkJtIcq9n3pvWB9xZeTvjKs/NyStN723pVYa1rEmp9z1G1G3Q
-    x7hM+QbnxhK9lMr7qmndN1sbCwOJiW/mJZAIPPOU3FIDze20pNYiJiHhTknS95uXcr+3tC
-    owiTPw0iux3I2indQg9ebDcSMRYoAHkjIdeeBY8C6ELeMLKxMhHO8Q2tXqOWguFO8BwVZ0
-    VBw2nebWgBdWdB2JJ5agN/3GJVp5QYJH106xfstrjVz9entn7teW/uct+ZCg
-X-ME-Proxy: <xmx:pLdwamPP3dm9MqVQDjnOgAJMkMWiXDtZIodgCv_SdhtqBp4674Jchg>
-    <xmx:pLdwaqLNRj2yvqhQtEJfyzOQCICQfpGi1zcgMobGCMu-OcV09aA9jQ>
-    <xmx:pLdwauIX9aEwVp0Ev1AJX_2Oa40KWatorJ7mjXSNFNn6thtyj0gNnQ>
-    <xmx:pLdwas6H66uWSq-5q5kph3--4AZN8kOyo3LXvbuuSz1Gcj7hV-EC1Q>
-    <xmx:pLdwasv738sKsdCVDR0agYADf6UQIwExbEyQ99IDA56XQXhQWl5MwOEg>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785772263; x=1785858663; bh=9xKfu7QGlvf2z+eBtxjXnajMG/D3NpggOwp
+	E6N0OX68=; b=DvoQcw6nBeeTDTXB7q1V8VaR3ak+BsdTba4ECm1PUtMVyeVupdR
+	kusX24oceNbYCf/c46FRqFXeQWFNEv2bcld4+h2ZJUNHMBGm+i62ONx91oeoN3oI
+	9Cnouv5VbeySD4aGG3UdOqkwK4AbOlzvjAyl07i6ZlCtbDcGSPsMgvdD19D8sznw
+	1H6MiRutoNigHsCAfNQmRM8M/xSJVq+8nwOc/qdq0lP/CCadi8k5lSDDeYwctIT5
+	sh8yBf3wl0EfrDv+KhVaYvSRLeTwmJ7cGJvy7rhP/3IUnu8SO91zpOCTqxhN0r7N
+	3weciinI6ppxs0MaQQFN4SNQl6GHhNc7buw==
+X-ME-Sender: <xms:57hwav0DC5PwUZ1jwgsOjtAmEiWJIn8nwoMDeGrDZkzYDiuyA16DIw>
+    <xme:57hwalj4U0YK-FU8Ruazpu8ofvbRzGF3b3ZMBmsgPvGfaPUUF3b2IgfKZggbZikoY
+    HIXY5JdfGLmqKxZriRWeZAoFNz16nKX_WAx7vVdaUw2ykiHT1-E>
+X-ME-Received: <xmr:57hwatTVfdhILkH5XVBD-ZVW8xV31J1aVftLFusDog38xRcFZfwDZEHDhonx80PNMn0R2n-qV1ks5RjFXJb8hEtD4htv5sIKmA>
+X-ME-Proxy-Cause: dmFkZTEv+9RefPqFS0m4TumsN2436haFohDISPdMKMsvxZj2atMIWrmIUkxm0pQOo/1MWR
+    qc9We4e6fNwRGPXWnCcRTWDp3FRNyP7XxZkIhq5gowoz00G306NVu/t/OgnzADuvllKTZp
+    GZbTwrRZSo6BwwB5kV/XrzOc20o5TQR/spIL8injmD9s1dnoWYrj1Tr9E3ibGV4qHUeSAu
+    aPGTj+RoOXWpNnDdBlHlXkjxNKjX+fJc3ocyoRRS9j3sPZlDq4CTPresRCUilIY5prrWz+
+    +2yFDxCeBI2jAzWP++W/PL5VsTMYWiF9s9Nd5mws25A4kTKuClBMSTTIEFhPmy3bAbvBij
+    fnN3EnhlVAHa8V/xTk57JM8Kvok82be4WCXu0yEIvXwGvWQqScTRvA59Gb27jBJTDtO2X7
+    SmeSD7Nvb8vPkNTw46zIjkW3Cn0IZCmAEOSMPwTx6yBkFBGWWeh/XdWNRh7xMIMWMkhvYE
+    ds2Zu+vsrvYrXvM++WYaEKINJV0uBWLH0YDtbKw++k9HpM8pb5XBbcEoubwqPAwg5VzJGa
+    EusFAsxE/GnBJhXY5G0Jrd8zWrTu5HyDy55VooWfPNtKsPHpqKjYnaBEcdGQ9w+EyI9wHi
+    M9YHknZR6v8uHPsGe2jwU7mBOfIRGGxcEPk5jN4LQBwzzRX7X0BPRzCZZKew
+X-ME-Proxy: <xmx:57hwaugG6xvytH2XjxB9pmY4_cJxoN8GtbFwzKdT6Wr3KuhU5sGZSQ>
+    <xmx:57hwal7chwMUqzIV-UB9t5BSJzTihrT2MjRRRZjAKapGQHcl-1abCA>
+    <xmx:57hwajDJDkZgbqpIhH0Hucql0Umgte-q_c4trWL21vR32rzLZk1ZLA>
+    <xmx:57hwakbTH6OZwHO9PEI9F_T8KZoWWuwliIQdPddyrJFwpNqNHhiCeA>
+    <xmx:57hwalpyav03MqL8ZEP1oU_71qEfgqH4c_WddpqQRFQ8CSo6gJVi4Uf->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 11:45:40 -0400 (EDT)
+ 3 Aug 2026 11:51:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org,  Philippe Blain <levraiphilippeblain@gmail.com>,
-  Britton Leo Kerin <britton.kerin@gmail.com>,  Elijah Newren
- <newren@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH] completion: complete tracked paths for 'git diff'
-In-Reply-To: <xmqq33wv1fts.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	03 Aug 2026 06:41:51 -0700")
-References: <xmqqcxw010me.fsf@gitster.g> <anAqfqcEueSKmAH+@szeder.dev>
-	<xmqq33wv1fts.fsf@gitster.g>
-Date: Mon, 03 Aug 2026 08:45:39 -0700
-Message-ID: <xmqqpkzzyzq4.fsf@gitster.g>
+To: "Hugo Osvaldo Barrera" <hugo@whynothugo.nl>
+Cc: git@vger.kernel.org
+Subject: Re: Git trims the last character of content from remotes
+In-Reply-To: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com> (Hugo
+	Osvaldo Barrera's message of "Mon, 04 May 2026 19:01:50 +0200")
+References: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
+Date: Mon, 03 Aug 2026 08:51:01 -0700
+Message-ID: <xmqqldanyzh6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,58 +82,18 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Hugo Osvaldo Barrera" <hugo@whynothugo.nl> writes:
 
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> When piping to cat or to a file, this sequence is not printed, so the output is
+> fine.
 >
->> I think we should check whether the '--no-index' option is present on
->> the command line, and simply not call __git_complete_index_file() if
->> it is, to let Bash list all paths; i.e. each of those calls should be
->> protected by an additional 'if test -z "$(__git_find_on_cmdline
->> "--no-index")' condition, perhaps.
->
->
-> Ah, I did not think of the "we made 'git diff' work without Git"
-> mode at all.
->
-> But I would avoid scanning the command line for '--no-index' for two
-> reasons:
->
->  (1) "git diff -S --no-index maint master" would not give you the
->      '--no-index' mode.
->
->  (2) When run outside the working tree of a repository, you do not
->      have to say '--no-index'.
->
-> These make detecting the "'git diff' but not Git" mode tedious and
-> error-prone.
->
-> I have not tried this, but if we arranged the code to fall back
-> further to Bash-native "paths in $PWD" after the completion code in
-> the posted patch found nothing, would it be sufficient?
+> Is this a bug?
 
-Eh, isn't the code already arranged to do so?  With the posted
-completion script loaded, I do
+Please tell us more, if you are running Git 2.55 (or newer) and
+seeing the above behaviour.
 
-	$ cd $HOME
-	$ git diff [--no-index] w/git.git/C<TAB>
-
-where (1) my $HOME is not under version control (dotfiles are
-installed after getting built from their sources that are version
-controlled elsewhere), and (2) ~/w/git.git/ is the primary working
-tree I work in.  I see
-
-	Cargo.toml  CODE_OF_CONDUCT.md  COPYING
-
-offered as choices.  As there is no index or rev when I am in my
-$HOME directory, naturally the only completion that kicks in is the
-bash native "paths we see".
-
-So I think I do not need anything special to "arrange" the fallback.
-
-Thanks.
-
-
+It updated in 31e8fcabd8 (sideband: clear full line when printing
+remote messages, 2026-05-10) and was shipped in Git 2.55 on
+2026-06-29.
