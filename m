@@ -1,134 +1,109 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D40313547
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 02:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785723241; cv=none; b=T6RqwQGlzNtP3INo+LeOqA1Eox59QrdCEfyfjylUIpfY9eIu9t6bwEvYda53719DM1zfEKtrqYJJg4LP57fdmEO8DVNjhZ4J4/AXW+Wf4vKkCxrwbClXMGSCVB9YSQmdo2O4U0OsKh9chlCPsE6RSvhjvawLnEBPLKwDUKfSZyA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785723241; c=relaxed/simple;
-	bh=/k12Dl3CoUbxEThZzxb2H6A+2pe1HdVv0Xr4JTLRPWs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UIQ10X4Fu/HtO/1ZQ5B+0LwF04dHI/7niegWtlT8RhRBfPgk3k6JDPi97xPgQZ+FPACqBV1EEjnp8EzzYTzs7LKNrgZWub9m5kejhUMzCa6T7fFSPa1pJzmZPGUgYEmPUkMXTp86ArNkjz0wyfN3u0RPPBW8zalLmkBG9jB98mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DtnaZ80x; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8473A2931D0
+	for <git@vger.kernel.org>; Mon,  3 Aug 2026 05:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785735371; cv=pass; b=U84cM9QGakrRs4q8ZuHWpHTlRLTEAWGlY+6xQ+lfyFph0O4e38uor62tsXrxVbvTDe1VIbDKFAAmv0zoUm/JHBxY7m2flbUh1AoNZl0sDkSQ3GqGY0wV7oS9OvwHfAli2W6rRtvOmexgnk9xXu56UVwpdnxaVH3W3jI3+11t1BY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785735371; c=relaxed/simple;
+	bh=mmwRH+YZRIJAdgdIBILvQJASlcCNrdQgaY4Y3CCt9/w=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=ByvdZZKX0rT5sYjzqqHQJwcNE5GPcrHk3q4QknwoKhc5QtLP6/XcOPReKAs3lb9kRUhxpcg0InrESgCqr2hAGMyTCI9IP2sXqY8VMaQfpDK1i2hsftwg1wu63vd9ORMv0txYTS1b0jbe02jjI3Q56MgS1odbPZgcjpOtNNYUvSM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lxpVcLhL; arc=pass smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DtnaZ80x"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1785723237;
-	bh=/k12Dl3CoUbxEThZzxb2H6A+2pe1HdVv0Xr4JTLRPWs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=DtnaZ80xt+pO3HMg9aRnuYTvvBFwctu+JYUHCQ7aVfDvKzlIBKQit7WDn4Wsw65W4
-	 39vaa5ggXRSla89Fb6fNu67ulmLtnA4Mpuol9J6Dv1yTbEXINY9r0DJx2RYnhXsS8w
-	 p/LtVZdrb8VNC7/gkjLyxnJMjDj7ivEzFqO4zUKf94Dov6TXw6r57jXLzqVyRsmRJg
-	 lNx/t2EP1fi2/ZRI4jCGZFQRdJdv4ptysRY8JaWd3IEG3lspVCmPUNm4bJOAy7Qr0s
-	 Z0vrqJoofe8GHOrb/8z9dPl4YoiCS9GyK52JiU+QFFnmPpUuiNAGqpUunzJg5dfrlL
-	 AA6WVzwZVGtLO2TdLnkpIS/f0XggCsIlKc/KCA9h1gbrmOGfIs88fikozG6w9fq3T/
-	 QPbuBU9hH6GR8Eey1C9cc+dAy08rUxCcL3zyY5towzttZ20egJ2zcNJIutar/QUfSf
-	 EebALXgx7tIe7seoERC+VBK+2fszwgeJ4E5CETdJtVac5vA1R8N
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:117f:c26e:50ca:6746])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8B4F1200C4;
-	Mon,  3 Aug 2026 02:13:57 +0000 (UTC)
-Date: Mon, 3 Aug 2026 02:13:56 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Kenneth Lorber <keni@his.com>
-Cc: git@vger.kernel.org, redoste <redoste@redoste.xyz>,
-	Fabian Stelzer <fs@gigacodes.de>, Xi Ruoyao <xry111@xry111.site>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] t7528: fix failure under csh
-Message-ID: <am_5YymI-UnCT_s1@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Kenneth Lorber <keni@his.com>, git@vger.kernel.org,
-	redoste <redoste@redoste.xyz>, Fabian Stelzer <fs@gigacodes.de>,
-	Xi Ruoyao <xry111@xry111.site>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-References: <20260803004105.36913-1-keni@his.com>
- <20260803004105.36913-2-keni@his.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lxpVcLhL"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-cbb8b54fcf8so2653500a12.0
+        for <git@vger.kernel.org>; Sun, 02 Aug 2026 22:36:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785735370; cv=none;
+        d=google.com; s=arc-20260327;
+        b=bn9LD1WOF2MwQVMNQ2r2qHdRGly3y7TC9rs76iPJPoiPY8SgjLtAOwPQo8cIHq5cY4
+         I4fkgz6VJ5G5xdpVeXc/mNebCUFZlJUK+EbrixIT8FlGV5v+JvlijiGfOvmVijyA3lm8
+         CFe8t5sespMbNC9f6WGhmR1psr2KTw8RhiC0ruEwk/XDa7tp04WhqlTZS7dyCWas/zOl
+         mX8s3K0ziBmphJVd4ctHKDtByUEFH4pRjksbA5Ss3amZ7sH98HR8p8pJM0a4RCJ1Jp6R
+         3gO6JE+WCbVVLMzGJEAcOxRFJIGb/8DRzNtJmPRAeyNmh3LUoEz2yCQfZMhSDiFVQjln
+         a29w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=Wk7IJS+4lOKdcwGvJxA7Mbnw3M9fzJ7OVWyDBaAs0Y0=;
+        fh=uj3hgKb4TAgx4sCrmGNog0/CK864RvhBgwmK7GAyT5E=;
+        b=GxrA+bMEMnFzus7Q7fQyR5AXGVKYjfO2Y1PCog6PP/RWjThZe8edlZ0RTOkk1msTzy
+         Jj6EHFDk4CKyn3JKGHnmLb87SAygIEzLzvb/DdVh/+JeN1IMtKoHEQxCTkYblfjxP0fg
+         korfNtxz9CzVIfZJFdhtu4wMfnRNLJaeNarOVIMRTzTQy29bXPEQiGK/0jLL5LpjD/0t
+         XCMEfSuitOnrEb5Y8UhnDMMO0rYxsZ5MyyRIPmhujEcy1iP6xN6gZATqkStMdW1nUNuV
+         ixhjOgSkvbCQILwR/c9T0umgTySm2/R4sDQ6DDpNCLzoS1WL/7AZQHuOg5nLbdO0jWbP
+         qMhg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785735370; x=1786340170; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Wk7IJS+4lOKdcwGvJxA7Mbnw3M9fzJ7OVWyDBaAs0Y0=;
+        b=lxpVcLhL9Yt0xVWkWyyAQ5u/b32+wanIz6X/2a1siw5XvRrK4dAQEi4Bp6JBrkOr8k
+         q248xj+VPrNBW/uuEa71dRgDNfpc86DfFebX3MZ4+OUrJG+2NdRFsmHHmM4UhAQkjHFM
+         MQPrtiLtAS9dyNX43m9su/YM0c8h3+st4Buq/OhIFY2JZg+lH18cNOBd5kUGdsAK9+fS
+         sP5HKh4Uo5C7b2W2TTO9QQUntr+DZUF4PYaFoA0OAJ6WfcEhVNzuiLftVcZJYM2rpH1r
+         AmtLFJ+mH3Aqz1qLUQRxsiT1mrv1fX8fD9AokwL3dcEx2sA9wg95D9r8GOKayqlFAFCM
+         gvWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785735370; x=1786340170;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Wk7IJS+4lOKdcwGvJxA7Mbnw3M9fzJ7OVWyDBaAs0Y0=;
+        b=Lqkh3ranWrHy2uZqYZR0xht9xWgbnUYQI/BwPtzGAQH1BuhZ+RWQFef4B0Ge+xW4xn
+         X8AR2jeB0HP6joRocZojZQhYdauSjc/88vUdsypaPTV0kCqqPypcKoL0+saHGsOktXFF
+         kTFFvFAjnPrfRFjjoJupt9pUtORA/bqkHW6veJhBhQPOOIbdAZUEL2VFO/PG9mWKqNLc
+         3kTwuls0/GuZFy9M17S2Qy6dlH/UU585bxeTh0zH3CkhJ/3jRC2ODUW9FVNLWmv38zhx
+         V3MmO2vsmfCWCBzPq1fg5LVqnbUL5Bu7w/BHxV4AwtFxuDP0AnyAuOLRlc6MIXT6ckLK
+         Iw8Q==
+X-Gm-Message-State: AOJu0YyCflxUMnlo/KgdKu8T7jO5X9zDPQ5HN6+69R7lWbLx1w5E/1qT
+	A+7ZZ/V8T+bZuIod2SWK8TSt0+L9+SlpIm9D8v/F/g5Gt7CTDbaEeqjVUKneZ2em/chUOTXqmCH
+	ZnrBnec4gBhCJbOcKc08z1FL9fmB4E5iwfYWl
+X-Gm-Gg: AR+sD10pGUnaqbe3S5HmryIsOi2X8lJ1oNT46euFsYmxV+hVPfcJZ5WOUHkgBWgvpzw
+	zpZ5qLB8rTs7nYS9GJmfcRSNJpV/MVRo2Pg5ZnD9vWAdAYmZrIKK7YqtdU06AfvMqmcJmYlUgEd
+	subCruguXl6mbFhLkSjVv3bwStBkTBIWti47gFUUEI2f23IoNjP/yQLDeykAIRusmVkpbLe0G8I
+	jdO7l/d12oynWCg1EP2uCB0qtg26LVURj384qr+Aq9MPSi+1NLr0vhXvMwt3QOkufOy3J3+qint
+	4ieqqQ2DG2QMb2ECt3xeiCLjl+Ip7ahqtM62Rizx9Q5akIYXWBFRMWC5lsqQq/xdcxNEGu9GLFc
+	jcuD5ZvpC4LN1cVIQ5PPuVb2+uREYIQ==
+X-Received: by 2002:a05:6a21:2c15:b0:3bf:bfd0:2a11 with SMTP id
+ adf61e73a8af0-3c92a8a5adcmr9107911637.43.1785735369795; Sun, 02 Aug 2026
+ 22:36:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3ozne4nWJMCq+E81"
-Content-Disposition: inline
-In-Reply-To: <20260803004105.36913-2-keni@his.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 3 Aug 2026 07:35:58 +0200
+X-Gm-Features: AUfX_mzyXtUwmYd2GdZNtl__b3skMmNF-wUUi_OT8_WgkOB-BpO7OHKa59jwrKI
+Message-ID: <CAP8UFD3huzOo76ZyJesf3=AcbwW=pJKpQQUZSD_Tohhd4vFV2g@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 137
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Bruno Brito <bruno@git-tower.com>, Patrick Steinhardt <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>, lwn@lwn.net
+Content-Type: text/plain; charset="UTF-8"
 
---3ozne4nWJMCq+E81
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi everyone,
 
-On 2026-08-03 at 00:41:03, Kenneth Lorber wrote:
-> Explicitly set sh mode for ssh-agent (ssh-agent -s) to prevent
-> failure when user's login shell is csh-like.  The failure is
-> caused by propagation of the $SHELL value from the user's original
-> shell despite the test and test harness explictly using sh, which
-> makes ssh-agent emit initialization code for the wrong shell:
->=20
-> > cd t
-> > echo $SHELL
-> /bin/tcsh
-> > ./t7528-signed-commit-ssh.sh --verbose --debug
-> [...]
-> expecting success of 7528.2 'sign commits using literal public keys with =
-ssh-agent':
-> [...]
-> ./t7528-signed-commit-ssh.sh: 1: eval: setenv: not found
-> ./t7528-signed-commit-ssh.sh: 1: eval: setenv: not found
-> [...]
->=20
-> Signed-off-by: Kenneth Lorber <keni@his.com>
-> ---
->  t/t7528-signed-commit-ssh.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
-> index b50306b9b3..7bf4a40de2 100755
-> --- a/t/t7528-signed-commit-ssh.sh
-> +++ b/t/t7528-signed-commit-ssh.sh
-> @@ -82,7 +82,7 @@ test_expect_success GPGSSH 'create signed commits' '
->  test_expect_success GPGSSH 'sign commits using literal public keys with =
-ssh-agent' '
->  	test_when_finished "test_unconfig commit.gpgsign" &&
->  	test_config gpg.format ssh &&
-> -	eval $(ssh-agent -T || ssh-agent) &&
-> +	eval $(ssh-agent -T -s || ssh-agent -s) &&
->  	test_when_finished "kill ${SSH_AGENT_PID}" &&
->  	test_when_finished "test_unconfig user.signingkey" &&
->  	mkdir tmpdir &&
+The 137th edition of Git Rev News is now published:
 
-This seems reasonable.  SHELL is defined by POSIX as "a pathname of the
-user's preferred command language interpreter."  When we're running the
-testsuite, we don't care what that is and always want a POSIX
-sh-compatible output, so using `-s` is the right thing.
+  https://git.github.io/rev_news/2026/07/31/edition-137/
 
-I also don't see any other instances of `ssh-agent` in the codebase, so
-this looks like the only place we need to fix.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Thanks a lot to Bruno Brito who helped this month!
 
---3ozne4nWJMCq+E81
-Content-Type: application/pgp-signature; name=signature.asc
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
------BEGIN PGP SIGNATURE-----
+PS: An issue for the next edition is already opened and contributions
+are welcome:
 
-wr0EABYKAG8Fgmpv+WMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ5L1P3IX9PrmAMv70kaZfd5UKE1iVnbJfVsGBygNKpID
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAACDlAQCdJV1nXwwb2TOhTblz85MvFRLo
-NqkKTkR4BKeK/VMLvQD/VRy6xl8AMWC9Ir6Xg/or/2Skt/CAo2fcleKH9tXqiQ8=
-=oAPc
------END PGP SIGNATURE-----
-
---3ozne4nWJMCq+E81--
+  https://github.com/git/git.github.io/issues/856
