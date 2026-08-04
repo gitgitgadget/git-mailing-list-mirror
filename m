@@ -1,49 +1,49 @@
-Received: from mta201a-ord.mtasv.net (mta201a-ord.mtasv.net [104.245.209.201])
+Received: from mta206-ab1.mtasv.net (mta206-ab1.mtasv.net [50.31.205.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6425380FEA
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 18:17:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.245.209.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10FB3EFFD7
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 18:17:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=50.31.205.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785867435; cv=none; b=SJoibnIMuSaGjfoLu/kNKT/J3a8/tnZicPvigyvEYdGp9ydFVwTYspGbiqzg85dpJU19qJ+q92tZXQSPNQBBQSU8fLM/pAGxGz//A7O1puDmtTZfD5puwQJVzvzyaNDRnG+7LU5JGhJYK0/40sFp0B38/rYDnH7RwfsfSKrDTCY=
+	t=1785867440; cv=none; b=oK+kf5YRzmALV8BNb/tt17mas+s6iWrJVMLiYzj+fM8qlk7eUhtoqzkHNcfl+cw7ClcPA45INDc9Fjw32J543kJhZnBA1OC8fSdO2e9YAcBNGO4tKuYQXfu77YQjupZCRcWJ6PAXNUblxt4ab5ivApWMOyTb83Q/KAyaz1wRt4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785867435; c=relaxed/simple;
-	bh=g6BGoN9eBIjHDbbiedHpWHQBYKcDU0awDOV/S0i/ILs=;
+	s=arc-20240116; t=1785867440; c=relaxed/simple;
+	bh=lhjlkOn5qBJ5RMeFZtZiHcqYWq1awgPwX+23byl5SjY=;
 	h=From:Date:Subject:Message-Id:To:Cc:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sRxdu4bwhcDi4nYhTRtoy9f2elkqNQiQmsexAzuFKxbNWp/guv+P70nsmutPO8l9fJzg4l9jpG/sEOQw1LtHdOcE1lbt2x1YUaduUtsRD3q+K2rxHhSzRfETp8njsh0FUVSScEmYbLD+7KgcT9methw5PHFqPbwjkJ6ly08kOSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cachix.org; spf=pass smtp.mailfrom=pm-bounces.cachix.org; dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b=c+b/tA8N; dkim=pass (1024-bit key) header.d=cachix.org header.i=domen@cachix.org header.b=Ab6SNYt+; arc=none smtp.client-ip=104.245.209.201
+	 MIME-Version:Content-Type; b=GpfrXI4aiNiWmMvgfL4a7ZwKtjOKz3Gbd+48Sccid8cOZkvqabvQeGYfODR2vsenXMc8PWVO0EqCV2jv60pDJhPuT/5+LZzveBnX/WIK5WE91Hqm7VyjJfQAeS1NaUC3E8zrflml0SvQ8IpuQ4XBKo75H25CAg6ZGBbiwrufKGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cachix.org; spf=pass smtp.mailfrom=pm-bounces.cachix.org; dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b=k/mu96mn; dkim=pass (1024-bit key) header.d=cachix.org header.i=domen@cachix.org header.b=gAIpWU78; arc=none smtp.client-ip=50.31.205.206
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cachix.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm-bounces.cachix.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b="c+b/tA8N";
-	dkim=pass (1024-bit key) header.d=cachix.org header.i=domen@cachix.org header.b="Ab6SNYt+"
+	dkim=pass (2048-bit key) header.d=pm.mtasv.net header.i=@pm.mtasv.net header.b="k/mu96mn";
+	dkim=pass (1024-bit key) header.d=cachix.org header.i=domen@cachix.org header.b="gAIpWU78"
 X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoiZ2l0QHZnZXIua2VybmVsLm9yZyJ9
 DKIM-Signature: v=1; a=rsa-sha256; d=pm.mtasv.net; s=pm20250806; c=relaxed/relaxed;
-	bh=4OcpjqX82gV4aPofIRpzd4YemdkoxYonicw4bJuXjL8=;
+	bh=6If8wsEC/v//S7s9Y3kBZg+jVKJp+lxmG4W5TziXbd4=;
 	h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id;
-	t=1785867240; x=1786472040;
-	b=c+b/tA8Nc8CnjLCavuYmRo8UY/U96jtppCHa1nvoj2jTGzyv2FzYvl3TGQy2y2R7odNjPNCIC
-	jKVTad/0iXhhGYokIN0Y4dlt2QbM97+G++Ycsewslz1lxV+pJXuxioCRIzxK+dmlgWtfN+/gnD1
-	VtmP1J1FE4NsoQzI+PiT62+IA+d18u9yl8yvepH/YRPI/D4tTeQxXL0AXxsezwzdWx0o/itujBx
-	9NoO+xKJ/rCW7YrUsDD0qxYWue4Wu7MdqUQ0HxxtgCZoowq6vamOPTdfM3E5Qw5Ih+/q8IvgcIb
-	Ih+m8Q3BYjuZwTU46Af1ho0MAW7snUZTnigXFNldtU8Q==;
-Received: from ip-172-26-23-40.us-east-2.compute.internal (172.26.23.40)
-  by production-pmta-useast2.internal.postmarkapp.com (KumoMTA 10.97.241.11) 
-  with ESMTP id 4482ca09903011f19905021c3a1e5f81 for <git@vger.kernel.org>;
-  Tue, 4 Aug 2026 18:14:00 +0000
+	t=1785867243; x=1786472043;
+	b=k/mu96mnCOmeh9UdNHQ6vUinQ//p5cxpw+zjpbLA1ovPheJf14wtS5JI27v2XfZp32qMAAg9w
+	V8qVToTw57YveS38KRnKA4ny8FZtVdY5OLgpsrAZIUmy6rrwmU766ru8X7XQ6ryrQqyacyk83ZN
+	x6YWb9M1MwqeR+ItrgCx15y9WbN+jJ578US8qxhzTcRgvxca1/wsXB212cwTa/V6NYLp9B552hM
+	U40o1Z9WOsQUcsdPb9qW99DQNtRLiRjkCbpIj55ANUYsla1d7WdYjyUcVzAe9I8fiNrfUITzh8m
+	ShEQ4YITLbRsfZgg7tsuOpfZDNi8Y57La27At9P//XQQ==;
+Received: from ip-172-26-33-169.us-east-2.compute.internal (172.26.33.169)
+  by production-pmta-useast2.internal.postmarkapp.com (KumoMTA 10.97.241.71) 
+  with ESMTP id 46389639903011f1bf100242f0c6b017 for <git@vger.kernel.org>;
+  Tue, 4 Aug 2026 18:14:03 +0000
 DKIM-Signature: v=1; a=rsa-sha256; d=cachix.org; s=20250802170654pm;
-	c=relaxed/relaxed; i=domen@cachix.org; t=1785867240; x=1786040040;
+	c=relaxed/relaxed; i=domen@cachix.org; t=1785867243; x=1786040043;
 	h=date:date:from:from:message-id:reply-to:reply-to:sender:subject:subject:to:
 	to:cc:in-reply-to:references:feedback-id:mime-version:content-type:
 	content-transfer-encoding;
-	bh=4OcpjqX82gV4aPofIRpzd4YemdkoxYonicw4bJuXjL8=;
-	b=Ab6SNYt+hq0KGgHsabkBwi5tTN7yYCqfXfJHeUfyd24zF53waKKAL9Wu6Y+7taBgPNnjO6md+FJ
-	0QZ9iDzEjFH/vpDFsvTkrS3Nm35N+osKHAek2vY36QVV12+8c/0WD1ZM9CXV+7lcMvqrxwjdlkwa4
-	28dPaE3qU8X/TvtMCyE=
+	bh=6If8wsEC/v//S7s9Y3kBZg+jVKJp+lxmG4W5TziXbd4=;
+	b=gAIpWU78asOZzwzkzwd4RX94zubB7qG1NGEBuIG6tJXLaR77aom+Pmg5USiNsuO3u2/tnwcVMo3
+	U/MaTkj9NIhHNtVbtIlF84NKGVRD7zpX2F/2EcpX24nbiXNciUsx4GB+afD64IpG3agmj2u7oWZ7u
+	rglL1EHD89COZMXjub0=
 From: Domen =?utf-8?b?S2/FvmFy?= <domen@cachix.org>
-Date: Tue, 04 Aug 2026 18:14:00 +0000
-Subject: [PATCH v2 0/4] worktree: add lifecycle hooks
-Message-Id: <371a01cf-2765-4cf5-b1fd-414d1b55a325@mtasv.net>
+Date: Tue, 04 Aug 2026 18:14:03 +0000
+Subject: [PATCH v2 3/4] worktree: run post-worktree-remove hook when pruning
+Message-Id: <6d4b2080-d7d9-4a87-a295-9c001d8a0290@mtasv.net>
 Reply-To: domen@cachix.org
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>, Eric Sunshine
@@ -52,371 +52,340 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>, Eric Sunshine
  Caleb White <cdwhite3@pm.me>, Junio C Hamano <gitster@pobox.com>,
  Domen =?utf-8?b?S2/FvmFy?= <domen@cachix.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net>
-References: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net>
+In-Reply-To: <20260804181358.532970-1-domen@cachix.org>
+References: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net> <20260804181358.532970-1-domen@cachix.org>
 Feedback-ID: s19907644-_:s19907644:a442084:postmark
 X-Complaints-To: abuse@postmarkapp.com
 X-Job: 442084_19907644
-X-PM-Message-Id: 371a01cf-2765-4cf5-b1fd-414d1b55a325
+X-PM-Message-Id: 6d4b2080-d7d9-4a87-a295-9c001d8a0290
 X-PM-RCPT: |bTF8NDQyMDg0fDE5OTA3NjQ0fGdpdEB2Z2VyLmtlcm5lbC5vcmc=|
-X-PM-Message-Options: v1;1.4JqwwWA6fJBWVU7XfhssgA.57BRY58rJoaQQpa7soNRJ80YYjnlSDq1wBk9hENL_k5UNHieq3EYoSwQ1uT6ayuUXvDgqaE4fhbB_NnLtcN7qdFKDgKV6UhwUF_gU8ObKgCDqDj6ejDa1ZMGgn5YhN5uzskZ-XR90YvyYujc6to1JgRfxClxFqO254Q0XaGyM_wjZBStXT92a6qHht4IkKGL
+X-PM-Message-Options: v1;1.GKNHnz1G98lKNxmiLdxyZA.EQj7M0UBNjWR4XR-uQz0dlRakvpeUre55WIwa3y4Y1Mxp5NV5oZTW1dOSST7ZF72kqFEA08xfXfUKALTx8Bt6pGB5BArgDuvEeI0GPKm0h6wAGFivsoSs1INxtEjVYzxfs-tqPGoWHu3WgfhNzTgDSO0NrxTJwPJHl3o5th3to8r9_gLeB8aADtvIUp-mT1S
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-virtual-MTA: ord-104-245-209-201
+X-virtual-MTA: mta206-ab1
 X-PM-MTA-Pool: transactional-3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi everyone,
+A working tree can also disappear via "git worktree prune", e.g.
+after the user deleted the working tree directory manually. Tooling
+that tears down per-worktree state wants to observe those deletions
+the same way as an explicit "git worktree remove".
 
-First, apologies that my earlier reply reached the list as a separate
-message rather than as part of this thread. This is my first patch series
-submitted by email, and I am still getting the threading details right. I
-have made sure this reroll is plain text and correctly threaded.
+Run the post-worktree-remove hook once for each administrative entry
+that "git worktree prune" removes, including duplicate entries pruned
+during deduplication. The hook is not run with --dry-run, and a
+failing hook is reflected in the exit status of the command.
 
-I maintain devenv, a developer environment manager, and lately the
-workflow we see most is people letting AI coding agents loose on a
-repository, one linked worktree per task, created and discarded at a
-pace no human would type. Each of those worktrees expects a working
-environment: processes, sockets, and stateful services such as a
-database seeded from a dump.
+should_prune_worktree() so far returned the path of the worktree's
+.git file only for entries that are kept. Also return it when pruning
+an entry whose gitdir file points to a location that no longer
+exists, which is the common case of a manually deleted working tree,
+so that the hook can be given the path. For entries whose path cannot
+be determined at all (missing or corrupt gitdir file), the hook
+receives an empty string instead. The one other caller of
+should_prune_worktree() already frees the path unconditionally.
 
-Today there is no reliable trigger to set that up when a worktree
-appears: post-checkout does not fire for --no-checkout or --orphan
-and cannot be told apart from a plain checkout. Nothing fires when a
-worktree is moved or removed, so external registrations become stale
-and databases and services can pile up after "git worktree remove" or
-a manual rm followed by "git worktree prune". Wrapping the worktree
-commands only helps when every tool, human or agent, uses the wrapper.
+Signed-off-by: Domen Ko=C5=BEar <domen@cachix.org>
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+---
+ Documentation/githooks.adoc | 23 +++++-----
+ builtin/worktree.c          | 48 ++++++++++++++------
+ t/t2401-worktree-prune.sh   | 88 +++++++++++++++++++++++++++++++++++++
+ worktree.c                  |  1 -
+ worktree.h                  |  6 +--
+ 5 files changed, 139 insertions(+), 27 deletions(-)
 
-Patch 1 adds a post-worktree-add hook that fires after the working
-tree is fully set up. Patch 2 adds post-worktree-remove for "git
-worktree remove". Patch 3 extends the remove hook to "git worktree
-prune" so that manually deleted worktrees are also observed. Patch 4
-adds post-worktree-move so tools can update their path mapping.
-
-Changes since v1:
-
- * Run post-worktree-add after post-checkout even if post-checkout
-   fails, because the populated worktree remains present.
-
- * Make post-worktree-add take no arguments. Its working directory is
-   the new worktree, so its path and identifier can be queried with
-   git. This also lets a configured command shared across the hooks
-   distinguish add, move, and remove by their argument counts.
-
- * Add post-worktree-move. It runs in the new location and receives
-   the old absolute path as its sole argument.
-
- * Document the new hooks among those that always run serially.
-
-Thanks to Phillip Wood for the review that prompted these changes.
-
-Thanks,
-Domen
-
-Domen Ko=C5=BEar (4):
-  worktree: add post-worktree-add hook
-  worktree: add post-worktree-remove hook
-  worktree: run post-worktree-remove hook when pruning
-  worktree: add post-worktree-move hook
-
- Documentation/config/hook.adoc |   3 +
- Documentation/githooks.adoc    |  56 +++++++++++++++
- builtin/worktree.c             | 123 +++++++++++++++++++++++++--------
- t/t2400-worktree-add.sh        | 111 +++++++++++++++++++++++++++++
- t/t2401-worktree-prune.sh      |  88 +++++++++++++++++++++++
- t/t2403-worktree-move.sh       |  73 +++++++++++++++++++
- worktree.c                     |   1 -
- worktree.h                     |   6 +-
- 8 files changed, 428 insertions(+), 33 deletions(-)
-
-Range-diff against v1:
-1:  98f06e55c8 ! 1:  73e36c179e worktree: add post-worktree-add hook
-    @@ Commit message
-         Introduce a post-worktree-add hook that runs after the working tre=
-e
-         has been fully set up, including with --no-checkout and --orphan. =
-The
-         hook runs inside the new working tree with GIT_DIR and GIT_WORK_TR=
-EE
-    -    cleared, mirroring the existing post-checkout invocation, and is g=
-iven
-    -    the absolute path of the new working tree and its identifier as
-    -    arguments. Anything else, such as the checked-out branch, can be
-    -    queried by running git from the hook's working directory.
-    +    cleared, mirroring the existing post-checkout invocation, and take=
-s no
-    +    arguments. Details such as the absolute path, worktree identifier,=
- and
-    +    checked-out branch can be queried by running git from the hook's w=
-orking
-    +    directory. Taking no arguments also lets a configured command shar=
-ed
-    +    with post-worktree-remove distinguish the events by argument count=
-.
-    =20
-         Like post-checkout, the hook cannot affect the outcome of the comm=
-and:
-         a failing hook does not delete the already-created working tree, b=
-ut
-         its exit status becomes the exit status of "git worktree add". The
-    -    hook runs after post-checkout and is skipped if that hook fails.
-    +    hook runs after post-checkout, even when post-checkout fails, beca=
-use
-    +    the worktree has still been populated and remains present.
-    =20
-         Documenting the new hook in githooks(5) also registers its name in=
- the
-         generated hook-list.h, so "git hook run" and hook.*.event recogniz=
-e it
-    @@ Commit message
-         Signed-off-by: Domen Ko=C5=BEar <domen@cachix.org>
-         Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
-    =20
-    + ## Documentation/config/hook.adoc ##
-    +@@ Documentation/config/hook.adoc: hook.jobs::
-    + 	Receive a commit message file and may rewrite it in place.
-    + `pre-commit`;;
-    + `post-checkout`;;
-    ++`post-worktree-add`;;
-    + `push-to-checkout`;;
-    + `post-commit`;;
-    + 	Access the working tree, index, or repository state.
-    +
-      ## Documentation/githooks.adoc ##
-     @@ Documentation/githooks.adoc: This hook can be used to perform repos=
-itory validity checks, auto-display
-      differences from the previous HEAD if different, or set working dir m=
-etadata
-    @@ Documentation/githooks.adoc: This hook can be used to perform reposi=
-tory validit
-     +~~~~~~~~~~~~~~~~~
-     +
-     +This hook is invoked by linkgit:git-worktree[1] after `git worktree a=
-dd`
-    -+has created and set up a new working tree. The hook is given two
-    -+parameters: the absolute path of the new working tree and its identif=
-ier
-    -+(the name of its administrative directory in `$GIT_DIR/worktrees/`).
-    ++has created and set up a new working tree. It takes no parameters.
-     +
-    -+The hook runs inside the new working tree, so further details, such a=
-s
-    -+the checked-out branch, can be queried by running `git` from the hook=
-'s
-    -+current directory. Unlike the `post-checkout` hook, it is also run wh=
-en
-    -+`--no-checkout` or `--orphan` is used.
-    ++The hook's current working directory is the new working tree, so furt=
-her
-    ++details, such as its absolute path, identifier, and checked-out branc=
-h,
-    ++can be queried by running `git`. Unlike the `post-checkout` hook, it =
-is
-    ++also run when `--no-checkout` or `--orphan` is used.
-     +
-     +This hook cannot affect the outcome of `git worktree add`, other than
-     +that the hook's exit status becomes the exit status of the command. I=
-t
-    -+runs after the `post-checkout` hook, and is skipped if that hook fail=
-s.
-    ++runs after the `post-checkout` hook, even if that hook fails.
-     +
-     +This hook can be used to set up per-worktree development environments
-     +or to register the new working tree with external tools.
-    @@ Documentation/githooks.adoc: This hook can be used to perform reposi=
-tory validit
-     =20
-    =20
-      ## builtin/worktree.c ##
-    +@@ builtin/worktree.c: static void delete_worktrees_dir_if_empty(void)
-    + 	free(path);
-    + }
-    +=20
-    ++static int run_post_worktree_add_hook(const char *path)
-    ++{
-    ++	struct run_hooks_opt hook_opt =3D RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
-    ++
-    ++	strvec_pushl(&hook_opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
-    ++	hook_opt.dir =3D path;
-    ++	return run_hooks_opt(the_repository, "post-worktree-add", &hook_opt)=
+diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+index 9573b8c1f5..fdf697b12f 100644
+--- a/Documentation/githooks.adoc
++++ b/Documentation/githooks.adoc
+@@ -237,16 +237,19 @@ post-worktree-remove
+ ~~~~~~~~~~~~~~~~~~~~
+=20
+ This hook is invoked by linkgit:git-worktree[1] after a working tree
+-has been deleted by `git worktree remove`. The hook is given two
+-parameters: the absolute path of the removed working tree and its
+-identifier (the name of its former administrative directory in
+-`$GIT_DIR/worktrees/`).
+-
+-The working tree no longer exists when the hook runs.
+-
+-This hook cannot affect the outcome of `git worktree remove`, other
+-than that the hook's exit status becomes the exit status of the
+-command.
++has been deleted by `git worktree remove`, and once for each working
++tree pruned by `git worktree prune`. The hook is given two parameters:
++the absolute path of the removed working tree and its identifier (the
++name of its former administrative directory in `$GIT_DIR/worktrees/`).
++
++The working tree no longer exists when the hook runs. For working
++trees pruned by `git worktree prune`, the first parameter may be the
++empty string if the path could not be determined from the leftover
++administrative files.
++
++This hook cannot affect the outcome of `git worktree remove` or
++`git worktree prune`, other than that the hook's exit status becomes
++the exit status of the command.
+=20
+ This hook can be used to tear down per-worktree development
+ environments or to unregister the working tree from external tools.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index dc456fcac7..e0c37039ac 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -185,12 +185,27 @@ static int run_post_worktree_remove_hook(const char *=
+path, const char *id)
+ 	return run_hooks_opt(the_repository, "post-worktree-remove", &hook_opt);
+ }
+=20
+-static void prune_worktree(const char *id, const char *reason)
++static int prune_worktree(const char *id, const char *dotgit,
++			  const char *reason)
+ {
++	struct strbuf path =3D STRBUF_INIT;
++	int ret;
++
+ 	if (show_only || verbose)
+ 		fprintf_ln(stderr, _("Removing %s/%s: %s"), "worktrees", id, reason);
+-	if (!show_only)
+-		delete_git_dir(id);
++	if (show_only)
++		return 0;
++
++	delete_git_dir(id);
++
++	/* path stays empty when the worktree path cannot be determined */
++	if (dotgit) {
++		strbuf_addstr(&path, dotgit);
++		strbuf_strip_suffix(&path, "/.git");
++	}
++	ret =3D run_post_worktree_remove_hook(path.buf, id);
++	strbuf_release(&path);
++	return ret;
+ }
+=20
+ static int prune_cmp(const void *a, const void *b)
+@@ -215,18 +230,22 @@ static int prune_cmp(const void *a, const void *b)
+ 	return strcmp(x->util, y->util);
+ }
+=20
+-static void prune_dups(struct string_list *l)
++static int prune_dups(struct string_list *l)
+ {
+ 	int i;
++	int ret =3D 0;
+=20
+ 	QSORT(l->items, l->nr, prune_cmp);
+ 	for (i =3D 1; i < l->nr; i++) {
+ 		if (!fspathcmp(l->items[i].string, l->items[i - 1].string))
+-			prune_worktree(l->items[i].util, "duplicate entry");
++			ret |=3D prune_worktree(l->items[i].util,
++					      l->items[i].string,
++					      "duplicate entry");
+ 	}
++	return ret;
+ }
+=20
+-static void prune_worktrees(void)
++static int prune_worktrees(void)
+ {
+ 	struct strbuf reason =3D STRBUF_INIT;
+ 	struct strbuf main_path =3D STRBUF_INIT;
+@@ -234,19 +253,22 @@ static void prune_worktrees(void)
+ 	char *path;
+ 	DIR *dir;
+ 	struct dirent *d;
++	int ret =3D 0;
+=20
+ 	path =3D repo_git_path(the_repository, "worktrees");
+ 	dir =3D opendir(path);
+ 	free(path);
+ 	if (!dir)
+-		return;
++		return 0;
+ 	while ((d =3D readdir_skip_dot_and_dotdot(dir)) !=3D NULL) {
+ 		char *path;
+ 		strbuf_reset(&reason);
+-		if (should_prune_worktree(d->d_name, &reason, &path, expire))
+-			prune_worktree(d->d_name, reason.buf);
+-		else if (path)
++		if (should_prune_worktree(d->d_name, &reason, &path, expire)) {
++			ret |=3D prune_worktree(d->d_name, path, reason.buf);
++			free(path);
++		} else if (path) {
+ 			string_list_append_nodup(&kept, path)->util =3D xstrdup(d->d_name);
++		}
+ 	}
+ 	closedir(dir);
+=20
+@@ -254,12 +276,13 @@ static void prune_worktrees(void)
+ 	/* massage main worktree absolute path to match 'gitdir' content */
+ 	strbuf_strip_suffix(&main_path, "/.");
+ 	string_list_append_nodup(&kept, strbuf_detach(&main_path, NULL));
+-	prune_dups(&kept);
++	ret |=3D prune_dups(&kept);
+ 	string_list_clear(&kept, 1);
+=20
+ 	if (!show_only)
+ 		delete_worktrees_dir_if_empty();
+ 	strbuf_release(&reason);
++	return ret;
+ }
+=20
+ static int prune(int ac, const char **av, const char *prefix,
+@@ -278,8 +301,7 @@ static int prune(int ac, const char **av, const char *p=
+refix,
+ 			   0);
+ 	if (ac)
+ 		usage_with_options(git_worktree_prune_usage, options);
+-	prune_worktrees();
+-	return 0;
++	return prune_worktrees();
+ }
+=20
+ static char *junk_work_tree;
+diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
+index f8f28c76ee..74a80c1a8d 100755
+--- a/t/t2401-worktree-prune.sh
++++ b/t/t2401-worktree-prune.sh
+@@ -119,6 +119,94 @@ test_expect_success 'prune duplicate (main/linked)' '
+ 	test_path_is_missing .git/worktrees/wt
+ '
+=20
++test_expect_success 'prune invokes post-worktree-remove hook' '
++	test_hook post-worktree-remove <<-\EOF &&
++	echo $* >hook.actual
++	EOF
++	git worktree add --detach flushed &&
++	rm -rf flushed &&
++	git worktree prune &&
++	echo $(pwd)/flushed flushed >hook.expect &&
++	test_cmp hook.expect hook.actual
++'
++
++test_expect_success 'prune invokes post-worktree-remove hook once per work=
+tree' '
++	test_hook post-worktree-remove <<-\EOF &&
++	echo $* >>hook.actual
++	EOF
++	git worktree add --detach first &&
++	git worktree add --detach second &&
++	rm -rf first second hook.actual &&
++	git worktree prune &&
++	{
++		echo $(pwd)/first first &&
++		echo $(pwd)/second second
++	} >hook.expect &&
++	sort hook.actual >hook.sorted &&
++	test_cmp hook.expect hook.sorted
++'
++
++test_expect_success 'prune --dry-run does not invoke post-worktree-remove =
+hook' '
++	git worktree add --detach dry &&
++	rm -rf dry &&
++	test_when_finished "git worktree prune" &&
++	test_hook post-worktree-remove <<-\EOF &&
++	>hook.ran
++	EOF
++	git worktree prune --dry-run &&
++	test_path_is_missing hook.ran
++'
++
++test_expect_success 'pruned entry with unknown path gives empty hook argum=
+ent' '
++	test_hook post-worktree-remove <<-\EOF &&
++	echo "[$1][$2]" >hook.actual
++	EOF
++	mkdir -p .git/worktrees/broken &&
++	: >.git/worktrees/broken/gitdir &&
++	git worktree prune &&
++	echo "[][broken]" >hook.expect &&
++	test_cmp hook.expect hook.actual
++'
++
++test_expect_success 'failing post-worktree-remove hook fails prune' '
++	test_hook post-worktree-remove <<-\EOF &&
++	exit 1
++	EOF
++	git worktree add --detach doomed &&
++	rm -rf doomed &&
++	test_must_fail git worktree prune &&
++	test_path_is_missing .git/worktrees/doomed
++'
++
++test_expect_success 'prune duplicate invokes post-worktree-remove hook' '
++	test_when_finished rm -fr .git/worktrees w1 w2 &&
++	test_hook post-worktree-remove <<-\EOF &&
++	echo $* >>hook.actual
++	EOF
++	rm -f hook.actual &&
++	git worktree add --detach w1 &&
++	git worktree add --detach w2 &&
++	sed "s/w2/w1/" .git/worktrees/w2/gitdir >.git/worktrees/w2/gitdir.new &&
++	mv .git/worktrees/w2/gitdir.new .git/worktrees/w2/gitdir &&
++	git worktree prune &&
++	echo $(pwd)/w1 w2 >hook.expect &&
++	test_cmp hook.expect hook.actual
++'
++
++test_expect_success 'post-worktree-remove hook gets absolute path with rel=
+ative worktrees' '
++	test_when_finished "rm -rf relhook" &&
++	git init relhook &&
++	test_commit -C relhook base &&
++	test_hook -C relhook post-worktree-remove <<-\EOF &&
++	echo $* >hook.actual
++	EOF
++	git -C relhook worktree add --relative-paths --detach wt &&
++	rm -rf relhook/wt &&
++	git -C relhook worktree prune &&
++	echo $(pwd)/relhook/wt wt >hook.expect &&
++	test_cmp hook.expect relhook/hook.actual
++'
++
+ test_expect_success 'not prune proper worktrees inside linked worktree wit=
+h relative paths' '
+ 	test_when_finished rm -rf repo wt_ext &&
+ 	git init repo &&
+diff --git a/worktree.c b/worktree.c
+index 30125827fd..6a9d943874 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -1004,7 +1004,6 @@ int should_prune_worktree(const char *id, struct strb=
+uf *reason, char **wtpath,
+ 		if (stat(file.buf, &st) || st.st_mtime <=3D expire) {
+ 			strbuf_addstr(reason, _("gitdir file points to non-existent location"))=
 ;
-    ++}
-    ++
-    + static void prune_worktree(const char *id, const char *reason)
-    + {
-    + 	if (show_only || verbose)
-     @@ builtin/worktree.c: static int add_worktree(const char *path, const=
- char *refname,
-      	}
-     =20
-    @@ builtin/worktree.c: static int add_worktree(const char *path, const =
-char *refnam
-     +	 * is_junk is cleared, but do return appropriate code when a hook
-     +	 * fails.
-      	 */
-    - 	if (!ret && opts->checkout && !opts->orphan) {
-    - 		struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
-    -@@ builtin/worktree.c: static int add_worktree(const char *path, const=
- char *refname,
-    - 		ret =3D run_hooks_opt(the_repository, "post-checkout", &opt);
-    - 	}
-    -=20
-    +-	if (!ret && opts->checkout && !opts->orphan) {
-    +-		struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
-    +-
-    +-		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
-    +-		strvec_pushl(&opt.args,
-    +-			     oid_to_hex(null_oid(the_hash_algo)),
-    +-			     oid_to_hex(&commit->object.oid),
-    +-			     "1",
-    +-			     NULL);
-    +-		opt.dir =3D path;
-    +-
-    +-		ret =3D run_hooks_opt(the_repository, "post-checkout", &opt);
-     +	if (!ret) {
-    -+		struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
-    ++		int hook_ret;
-    ++
-    ++		if (opts->checkout && !opts->orphan) {
-    ++			struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
-     +
-    -+		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
-    -+		strvec_pushl(&opt.args, wt->path, wt->id, NULL);
-    -+		opt.dir =3D path;
-    ++			strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
-    ++			strvec_pushl(&opt.args,
-    ++				     oid_to_hex(null_oid(the_hash_algo)),
-    ++				     oid_to_hex(&commit->object.oid),
-    ++				     "1",
-    ++				     NULL);
-    ++			opt.dir =3D path;
-     +
-    -+		ret =3D run_hooks_opt(the_repository, "post-worktree-add", &opt);
-    -+	}
-    ++			ret =3D run_hooks_opt(the_repository, "post-checkout", &opt);
-    ++		}
-     +
-    ++		hook_ret =3D run_post_worktree_add_hook(wt->path);
-    ++		if (!ret)
-    ++			ret =3D hook_ret;
-    + 	}
-    +=20
-      	strvec_clear(&child_env);
-    - 	strbuf_release(&sb);
-    - 	strbuf_release(&symref);
-    =20
-      ## t/t2400-worktree-add.sh ##
-     @@ t/t2400-worktree-add.sh: test_expect_success '"add" in bare repo in=
-vokes post-checkout hook' '
-    @@ t/t2400-worktree-add.sh: test_expect_success '"add" in bare repo inv=
-okes post-ch
-     +	test_when_finished "rm -rf .git/hooks" &&
-     +	mkdir .git/hooks &&
-     +	test_hook -C "$2" post-worktree-add <<-\EOF &&
-    -+	{
-    -+		echo $*
-    -+		git rev-parse --git-dir --show-toplevel
-    -+	} >hook.actual
-    ++	test "$#" =3D 0 &&
-    ++	git rev-parse --git-dir --show-toplevel >hook.actual
-     +	EOF
-     +	{
-    -+		echo $(pwd)/$1 $1 &&
-     +		echo $(pwd)/${2:-.git}/worktrees/$1 &&
-     +		echo $(pwd)/$1
-     +	} >hook.expect
-    @@ t/t2400-worktree-add.sh: test_expect_success '"add" in bare repo inv=
-okes post-ch
-     +	test_cmp hooks.expect wobble/hooks.actual
-     +'
-     +
-    -+test_expect_success 'failing post-checkout hook suppresses post-workt=
-ree-add hook' '
-    ++test_expect_success 'failing post-checkout hook does not suppress pos=
-t-worktree-add hook' '
-     +	test_when_finished "rm -rf .git/hooks" &&
-     +	mkdir .git/hooks &&
-     +	test_hook post-checkout <<-\EOF &&
-    @@ t/t2400-worktree-add.sh: test_expect_success '"add" in bare repo inv=
-okes post-ch
-     +	>post-worktree-add.ran
-     +	EOF
-     +	test_must_fail git worktree add wozzle &&
-    -+	test_path_is_missing wozzle/post-worktree-add.ran
-    ++	test_path_is_file wozzle/post-worktree-add.ran
-     +'
-     +
-     +test_expect_success 'failing post-worktree-add hook leaves worktree i=
-n place' '
-    @@ t/t2400-worktree-add.sh: test_expect_success '"add" in bare repo inv=
-okes post-ch
-     +	test_path_is_missing hook.ran
-     +'
-     +
-    -+test_expect_success 'post-worktree-add hook gets absolute path with r=
-elative worktrees' '
-    ++test_expect_success 'post-worktree-add hook can derive path with rela=
-tive worktrees' '
-     +	test_when_finished "rm -rf relhook" &&
-     +	git init relhook &&
-     +	test_commit -C relhook base &&
-     +	test_hook -C relhook post-worktree-add <<-\EOF &&
-    -+	echo $* >hook.actual
-    ++	test "$#" =3D 0 &&
-    ++	git rev-parse --show-toplevel >hook.actual
-     +	EOF
-     +	git -C relhook worktree add --relative-paths --detach wt &&
-    -+	echo $(pwd)/relhook/wt wt >hook.expect &&
-    ++	echo $(pwd)/relhook/wt >hook.expect &&
-     +	test_cmp hook.expect relhook/wt/hook.actual
-     +'
-     +
-2:  7e109ece23 ! 2:  3de87064c0 worktree: add post-worktree-remove hook
-    @@ Commit message
-         Signed-off-by: Domen Ko=C5=BEar <domen@cachix.org>
-         Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
-    =20
-    + ## Documentation/config/hook.adoc ##
-    +@@ Documentation/config/hook.adoc: hook.jobs::
-    + `pre-commit`;;
-    + `post-checkout`;;
-    + `post-worktree-add`;;
-    ++`post-worktree-remove`;;
-    + `push-to-checkout`;;
-    + `post-commit`;;
-    + 	Access the working tree, index, or repository state.
-    +
-      ## Documentation/githooks.adoc ##
-    -@@ Documentation/githooks.adoc: runs after the `post-checkout` hook, a=
-nd is skipped if that hook fails.
-    +@@ Documentation/githooks.adoc: runs after the `post-checkout` hook, e=
-ven if that hook fails.
-      This hook can be used to set up per-worktree development environments
-      or to register the new working tree with external tools.
-     =20
-    @@ Documentation/githooks.adoc: runs after the `post-checkout` hook, an=
-d is skipped
-     =20
-    =20
-      ## builtin/worktree.c ##
-    -@@ builtin/worktree.c: static void delete_worktrees_dir_if_empty(void)
-    - 	free(path);
-    +@@ builtin/worktree.c: static int run_post_worktree_add_hook(const cha=
-r *path)
-    + 	return run_hooks_opt(the_repository, "post-worktree-add", &hook_opt)=
-;
-      }
-     =20
-     +static int run_post_worktree_remove_hook(const char *path, const char=
- *id)
-3:  143da548e4 =3D 3:  7989a1d6a2 worktree: run post-worktree-remove hook w=
-hen pruning
--:  ---------- > 4:  95ab61e377 worktree: add post-worktree-move hook
+ 			rc =3D 1;
+-			goto done;
+ 		}
+ 	}
+ 	*wtpath =3D strbuf_detach(&dotgit, NULL);
+diff --git a/worktree.h b/worktree.h
+index 1075409f9a..dde8fc2be4 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -105,9 +105,9 @@ const char *worktree_prune_reason(struct worktree *wt, =
+timestamp_t expire);
+=20
+ /*
+  * Return true if worktree entry should be pruned, along with the reason f=
+or
+- * pruning. Otherwise, return false and the worktree's path in `wtpath`, o=
+r
+- * NULL if it cannot be determined. Caller is responsible for freeing
+- * returned path.
++ * pruning. Otherwise, return false. In both cases the path of the
++ * worktree's `.git` file is returned in `wtpath`, or NULL if it cannot
++ * be determined. Caller is responsible for freeing returned path.
+  *
+  * `expire` defines a grace period to prune the worktree when its path
+  * does not exist.
 --=20
 2.54.0
