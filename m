@@ -1,151 +1,388 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A7848875F
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 21:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4E948381D
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 21:44:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785879730; cv=none; b=Ccd0W6JOFSUUC+Kb+PkuOmZOHxxCqV4H6yrPj1XdKEQk9HMdADZZBE8+v7L8D2MZR9Lcca8lsygEYAg+ka9B4LMX4x1xz6IiU7foMxIGkbgTLeuhJGp8TyQvUCvYGI5g9CWHnbP+qYkWunV0ZejNath9U+uYwzeY1P03CDrpfc8=
+	t=1785879843; cv=none; b=rfihTEC0k1gvixxtbRZSlVXLr95efT+m+wC15G7Pm6IXlI/Q0MmK1IwdG74sBKhqadogtGakzd96ZrIBHtdYWAfHEKrkrL1JeyYSz3zWriD496F56kKzTFo4gf3qsejXpPc37/5WsDBs6Khwcq63fcZYWkDJafdZo6d1XBWa1qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785879730; c=relaxed/simple;
-	bh=wU5q8ySqe1/Zxv//nwHiFRkkTQmf5xRWNfdmxr5HwgA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=qMEkkyya0AOJZoCpl3k4eKlBJ1E4WEHyH5Q7WH1h1zsIVEu6QliffkWhesCgbk6plUXpoQV0UDKdVS6LWSx2895mSzHyA6/ppNCVjLx5aqMJqV4zLBDKZ/p0/aWngXELBrt6lokU3Osc8IwdWmVgQLsUNYBk5DX3oEFOHPTBqiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PNffZmGw; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1785879843; c=relaxed/simple;
+	bh=QryyLyyqnYGJDmGEk7AUOo5gmFo9WXPPcW7o0AByQfk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=B6nin3N/smnLQ/D2EZeNs4gg5XkPjQIGPpl1uL5yUtvu6Yy+8VbNv/Ph3GfFeTLAP8jpKQtDFmg/GzN49jqTtUDmTbq7OF2QorpU2WwCqQC+36wtI7ME7uuosTgdgxZHlyAz024gu0AnlymssNzOF+Od2d3g9YsY9xXuhhWQZLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ol1nkeMS; arc=none smtp.client-ip=209.85.215.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNffZmGw"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-498028b3d5eso2438545e9.1
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 14:42:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ol1nkeMS"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-c9aea40d799so141921a12.0
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 14:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785879727; x=1786484527; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=z2xakS9Uc9TcH1RDDsecsjiy6LRM9oWJEAqhe1GDVfI=;
-        b=PNffZmGwiY+l+YIn3QV5Mip1YTsqWD6grahySgj3KoOKLW0tohFuFFbHpkXmbCkQG4
-         YzZ04KkP/eMhnRDPIlTVGJd4ZOXryFCJl7MKQ6xRjzE3zhvt4iZbayCJ18usCuWsqnVD
-         al89VL1iuvjC/8tpp3SaLGdt0WJLVRLERvT0aqxlzfL4O//aItNG4DMgdSEVr25TTdeC
-         XWSDUsZtz4hwSNR2oLu409pwqRWKA9/lq2hAKmTTvG3pkPDZ5ONV5cl4dlJ/HltWfmBo
-         shrWvC/zP2l/t6+ML6z7tWOnD36iBQ0vIs30G1/MWsmsNtUDIDdgomPoGwuGCiijiway
-         mSKg==
+        d=gmail.com; s=20251104; t=1785879841; x=1786484641; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=mINZ4PGivT8/fQbj2tmmt6yPraW8hSBcqPWYbhhftC0=;
+        b=ol1nkeMSe4Y/aW50XUIyH/wGYZ1CI5HGbsRQUJH/a5Gr/8WKL52lpXGXK4VpoAHWLD
+         j9Ezhzo2wTIMxwDh1pIXeWWH3tlqO43Nl0Hb6inFnXAfYAlVbXahoyu1HxKdiO3c9QD8
+         VJPBLhqXvmAy5tKIh84KXkq8BO5RvTFbGNkgpabM8/oYNQmMiNECCO6eXJqcckt5p1A1
+         c1snG4HFBz9351sn+36gsDg0msKUyhN44e85K/LaFCDGLYxpuBnsQcHicBAQtZFD1cKR
+         UR1TAM6OoruFQiapLuVF3cq6yYp9LXy7xLSNB5eliXQoFe7s0+AbfZbkiwiINMBgBciz
+         brng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785879727; x=1786484527;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=z2xakS9Uc9TcH1RDDsecsjiy6LRM9oWJEAqhe1GDVfI=;
-        b=YDZ7v9w8VkM8BW9YVVl5zoKyJWbf+4rK4K+P18csCxssW0CUhyW3MfuskGhx+x4dKh
-         XYaSdGdQH/Zvdv49/rPr3eooebqj5FL3whxnVUcEGgbFEVe2P5hp5ZyDPr4txJA9elr7
-         EO9Pcnhhci/pFERWgKBJFQ/qDGi77q1ZNkDQG7OiT7n09HB1BRHnduXQKAUQY+iDJu3Z
-         33B5euaYnBUbW09WZqphurjmfMxYi1Hlt4E6bycSKWlyoB0HCUwJHlg1Jx3eeYoFPUew
-         M0lrhJlRKmf46W5z8A8WirE7Jlsedq/JUxsgbKwOcpjFTS+7l/8oDakUb4hhj6pIZeEK
-         NMsw==
-X-Gm-Message-State: AOJu0YyW3Z1H58xAsuiU3+lY35LWvOFb0317IRU8u4TrxF4I03OOZWVL
-	B7kiZWSdV4nnE5pvIsISwhesEndS+6ceDPFHrUgh7T9TsAUJC2by8Kmf
-X-Gm-Gg: AR+sD11CSzAUVOASawGtNVheSbv7YGpRkl1HMZyNFgVbQWQwEOT7v2mSoO3qDSQJgBM
-	DhpWU9oGJjXoeXmAwwo6krZwfPz2dIkMeHlGuCeEgMbb8ZjfpIDrFxDqmTSiScObbPfp8sPVrxZ
-	7qhJh5ArIp+UdGfmnPo5DjdZvSsQaf1Rx/pKJ9+nfdyOxR9IpFiclALqANXCInMjiF/Ji/zHfAQ
-	qNNA1p4CgpwtSgaGDNHHBCWo0L6Ym5gy7jZlbcPIdiaSyn5YqAVz3okDl6DwyLNQUhEuVAqRP76
-	jvuOUukmzwXVVJkqznTwneQ4VFsJz9HYg1nQiU85VVTzg7poJHydl9wv7D853MBJnAXLJTpZqDO
-	wbRAIfSc03zgMgq1SUVqK4oakwXLvu+gYpMK5NDKdjAWQrdnTiEPildE0MvxGIbFA94VmuOJyB4
-	ey6TAzWQ8MLXOwkmtSmaFCt2UTvryqacwdCVHlopv2RZSNapF3v8esMbE4dhGuEz0Aw88G3VVK2
-	glCSXTmAWqsm+QRc/81VrNqI+J6gnLMnnP0g1sK/ugU4q0Q1R0wY/OERlcOsZPfh95MCHtbdWj4
-	ObXy+HjDR7EuRT6NgCl23y8s52M0MEU5xPWmU+83/9kiP6LX4SGIgigxLWYL1SjPLN84CUbYYw8
-	/sX9hSniTaEI=
-X-Received: by 2002:a05:600c:3b0a:b0:493:c47f:3c55 with SMTP id 5b1f17b1804b1-4994e71d7b0mr14694905e9.5.1785879726519;
-        Tue, 04 Aug 2026 14:42:06 -0700 (PDT)
-Received: from localhost ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4994e03589asm28421625e9.9.2026.08.04.14.42.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Aug 2026 14:42:05 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785879841; x=1786484641;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mINZ4PGivT8/fQbj2tmmt6yPraW8hSBcqPWYbhhftC0=;
+        b=QHvGk+qbOGiFrKMhwlXODovwGJdbA9ge3o5D5hQOnPD4a4BKUDtYM6DLB/+qeMQwZg
+         YA/ILYdBEUY5Hkb9sE2z2519jEdNnsSW2UauJHg7/mxZ5isJhaRr1qxv4+58OZ6tNdAP
+         v0Ijk9bcUatEo+jTzNyMN6lobulWLxxUtkvqFPvA9YdP2gZWMpDpCqFynNVV6Fa7T6Fr
+         BC+3tYX8SZxDcGAXN1tM5HqSjCq2Tqxc4k6Ro6qlgsegMK5m6ld8ZjQoJai+SqhhTBr5
+         KnTk7LR6apRcFv6WXy/mno52BsoJ6coZmzxdJJyckt//ajfCQh4cFRq/FuiQIsaE27kA
+         Wk5w==
+X-Gm-Message-State: AOJu0YzQWRT420K80DoZDRywHDbjBwUQ7Jw48g3B+p6darqYk1OMZBxU
+	cImxVeJ0EJx1fn2fZ19K0JqhuOuFZ5W1CEZYTZroP8XPot80BgKtal+3IkiWCw==
+X-Gm-Gg: AR+sD111xPt82wIpOrzGChGFILODb5ACQoMHKk2KK7sbc2POFZ5phCwQJiy1BDEjMwC
+	g7xJgAmUo6x2/dTISCAZ80Luhmjp3hDURcSP/daBvm8zoN3icVc5Rfx/JC/yO6IYFLSH32gD3HW
+	MyvYFDFW7FbVTMAA2+rh8ilrxdHtxsTPlM8ZBKctapPi2tT0fQWWPTuz0c3djqbQTDLhxe6kn3w
+	Rthm/U9i4QfHGrRMBDb1mQxYQoEf1hgaQ0gSZdNkterFrssoUs2pcrnmtNkLODIJIA8AoJBbMAC
+	ApaNeNMFBBLos9kraflPwdEAcAxLEJk+ZL8fSsfTbvWgGiB5uYDX3F7WbFe2u0DT2a0v3aGrj9V
+	585BUfgPh93GASEc+qvmpfWo7+fsj92abIEvoS50UCTkZGRPRe2EkZRudwhsj9f2UMUjv9+iGM+
+	3HASFNdUfMTumHbXZL/xwqLT+H3Tg4pTWBc+t9siFgAnAcdRJJz8I4SRfiJ7CrCVd7
+X-Received: by 2002:a05:6a20:4309:b0:3be:b0b3:3962 with SMTP id adf61e73a8af0-3cb85dee5ecmr1628325637.9.1785879841267;
+        Tue, 04 Aug 2026 14:44:01 -0700 (PDT)
+Received: from [127.0.0.1] ([40.75.133.106])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fca660e66sm6559550c88.8.2026.08.04.14.44.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Aug 2026 14:44:00 -0700 (PDT)
+Message-Id: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
+From: "Tim Wiederhake via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 04 Aug 2026 21:43:59 +0000
+Subject: [PATCH] gitk: add user-defined custom commands
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 04 Aug 2026 23:42:04 +0200
-Message-Id: <DKGHIZDB5W00.QN7C3PZ77K7B@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Pablo Sabater"
- <pabloosabaterr@gmail.com>
-Cc: <git@vger.kernel.org>, <chandrapratap3519@gmail.com>,
- <karthik.188@gmail.com>, <peff@peff.net>
-Subject: Re: [PATCH GSoC v4 4/9] fetch-object-info: use dedicated struct for
- the results
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260804-objecttype-support-v4-0-31511b0231be@gmail.com>
- <20260804-objecttype-support-v4-4-31511b0231be@gmail.com>
- <xmqqh5l9txg6.fsf@gitster.g>
-In-Reply-To: <xmqqh5l9txg6.fsf@gitster.g>
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Tim Wiederhake <twied@gmx.net>,
+    Tim Wiederhake <twied@gmx.net>
 
-On Tue Aug 4, 2026 at 10:58 PM CEST, Junio C Hamano wrote:
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
->>  builtin/cat-file.c  | 59 +++++++++-----------------------------
->>  fetch-object-info.c | 81 ++++++++++++++++++++++++++--------------------=
--------
->>  fetch-object-info.h | 27 +++++++++++++-----
->>  object-file.c       | 10 -------
->>  odb.h               |  3 --
->>  transport.c         |  3 +-
->>  transport.h         |  5 ++--
->>  7 files changed, 77 insertions(+), 111 deletions(-)
->
-> We lost ~30 lines mostly thanks to losing an intermediate structure
-> and need to flip pointer members in it to point at heap allocated
-> locations?
+From: Tim Wiederhake <twied@gmx.net>
 
-Yes, also contributes that the logic that filtered the allow-list is
-dropped, and compared to the previous version, no type logic is in
-this patch.
+Allow users to define up to three custom commands each for the commit
+list and the diff display area.  Commands are configured in a new
+"Commands" tab in the preferences dialog, with a name and a command
+template per slot.  Non-empty slots appear in the right-click context
+menu of the respective area.
 
->
->> -struct protocol_placeholder_entry {
->> -	const char *option;
->> -	const char *atom;
->> -};
->> -
->> -static const struct protocol_placeholder_entry remote_atom_map[] =3D {
->> -	{"size", "objectsize"},
->> -	{"type", "objecttype"},
->> -	/*
->> -	 * Add new protocol options here. Even if the server doesn't support
->> -	 * them the allow_list will drop them if the server doesn't advertise
->> -	 * them.
->> -	 */
->> -};
->
-> Hmph, it would not make any difference in the final result, as we
-> are losing protocol_placeholder_entry and this list of atoms, but
-> I am somewhat confused.   Why we already had "type" here, even
-> though we are adding support for it much later in the series (and
-> unlike the previous iteration, this iteration did not do the
-> ask/want_type thing in the previous step)?
+Command templates support placeholder substitution (commit id, commit
+title, author name, author date, etc.) and are executed via "sh -c"
+to allow for background execution by appending "&", and pipeing.  If
+a command terminates with exit code 42, its output is displayed;
+otherwise only non-zero exit codes are reported.
 
-The list was designed so even if new placeholder were added, it would be
-idemp. because nothing would happen until a server did advertise that
-attribute; that's why there's no change in behavior.
+Signed-off-by: Tim Wiederhake <twied@gmx.net>
+Assisted-by: Claude Opus 4.6
+---
+    gitk: add user-defined custom commands
 
-It was there because it was interesting for the tests. A known
-placeholder but unsupported in the server still outputs an empty string
-(this would be the case of: new client vs old server).
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2371%2Ftwied%2Fcustom_commands-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2371/twied/custom_commands-v1
+Pull-Request: https://github.com/git/git/pull/2371
 
-This way we had tested:
+ gitk-git/gitk | 220 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 217 insertions(+), 3 deletions(-)
 
-  unknown + unsupported as %(deltabase) is.
-  known + unsupported as %(objecttype) was. (that's why it's on the list)
-  knwon + supported as %(objectsize) is.
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 0f3571050b..af9cfd9eec 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -3696,9 +3696,11 @@ proc find_ctext_fileinfo {line} {
+ }
+ 
+ proc pop_diff_menu {w X Y x y} {
+-    global ctext diff_menu flist_menu_file
+-    global diff_menu_txtpos diff_menu_line
+-    global diff_menu_filebase
++    global ctext diff_menu flist_menu_file currentid
++    global diff_menu_txtpos diff_menu_line diff_menu_filebase
++    global usercmd_dd_name1 usercmd_dd_body1
++    global usercmd_dd_name2 usercmd_dd_body2
++    global usercmd_dd_name3 usercmd_dd_body3
+ 
+     set diff_menu_txtpos [split [$w index "@$x,$y"] "."]
+     set diff_menu_line [lindex $diff_menu_txtpos 0]
+@@ -3711,6 +3713,10 @@ proc pop_diff_menu {w X Y x y} {
+     if {$f eq {}} return
+     set flist_menu_file [lindex $f 0]
+     set diff_menu_filebase [lindex $f 1]
++    update_menu_custom_cmds $diff_menu $currentid \
++        [list $usercmd_dd_name1 $usercmd_dd_body1 \
++              $usercmd_dd_name2 $usercmd_dd_body2 \
++              $usercmd_dd_name3 $usercmd_dd_body3]
+     tk_popup $diff_menu $X $Y
+ }
+ 
+@@ -9148,9 +9154,134 @@ proc mstime {} {
+     return [format "%.3f" [expr {([clock click -milliseconds] - $startmstime) / 1000.0}]]
+ }
+ 
++proc update_menu_custom_cmds {menu id cmds} {
++    if {![info exists ::usercmd_menu_count($menu)]} {
++        set ::usercmd_menu_count($menu) 0
++    }
++
++    for {set j 0} {$j < $::usercmd_menu_count($menu)} {incr j} {
++        $menu delete end
++    }
++
++    set ::usercmd_menu_count($menu) 0
++    foreach {name cmd_template} $cmds {
++        if {$name ne "" && $cmd_template ne ""} {
++            if {$::usercmd_menu_count($menu) == 0} {
++                $menu add separator
++                incr ::usercmd_menu_count($menu)
++            }
++            $menu add command -label $name \
++                -command [list exec_custom_cmd $cmd_template $id]
++            incr ::usercmd_menu_count($menu)
++        }
++    }
++}
++
++proc get_blame_origin {} {
++    global diff_menu_filebase diff_menu_line flist_menu_file
++    global currentid cmitmode parents curview cdup
++
++    set blame_id ""
++    set blame_line ""
++    catch {
++        if {$cmitmode eq "tree"} {
++            set line [expr {$diff_menu_line - $diff_menu_filebase}]
++            set blamefile [file join $cdup $flist_menu_file]
++            set blame_out [exec git blame -p -L$line,+1 $currentid -- $blamefile]
++            set first [lindex [split $blame_out "\n"] 0]
++            set blame_id [lindex $first 0]
++            set blame_line [lindex $first 1]
++        } else {
++            set h [find_hunk_blamespec $diff_menu_filebase $diff_menu_line]
++            if {$h ne {}} {
++                set pi [lindex $h 0]
++                if {$pi > 0} {
++                    incr pi -1
++                    set blame_parent [lindex $parents($curview,$currentid) $pi]
++                    set line [lindex $h 1]
++                    set blamefile [file join $cdup $flist_menu_file]
++                    set blame_out [exec git blame -p -L$line,+1 $blame_parent -- $blamefile]
++                    set first [lindex [split $blame_out "\n"] 0]
++                    set blame_id [lindex $first 0]
++                    set blame_line [lindex $first 1]
++                }
++            }
++        }
++    }
++    return [list $blame_id $blame_line]
++}
++
++proc get_diff_file {} {
++    global flist_menu_file
++    if {[info exists flist_menu_file]} {
++        return $flist_menu_file
++    }
++    return ""
++}
++
++proc exec_custom_cmd {cmd_template id} {
++    global commitinfo markedid
++
++    getcommit $id
++
++    set blame_computed 0
++    set blame_id ""
++    set blame_line ""
++
++    set cmd ""
++    set len [string length $cmd_template]
++    for {set i 0} {$i < $len} {incr i} {
++        if {[string index $cmd_template $i] eq "%" && $i + 1 < $len} {
++            set next [string index $cmd_template [expr {$i + 1}]]
++            if {!$blame_computed && ($next eq "b" || $next eq "l")} {
++                set blame [get_blame_origin]
++                set blame_id [lindex $blame 0]
++                set blame_line [lindex $blame 1]
++                set blame_computed 1
++            }
++            switch -- $next {
++                "%" { append cmd "%" }
++                "i" { append cmd $id }
++                "t" { append cmd [lindex $commitinfo($id) 0] }
++                "a" { append cmd [lindex $commitinfo($id) 1] }
++                "d" { append cmd [lindex $commitinfo($id) 2] }
++                "c" { append cmd [lindex $commitinfo($id) 3] }
++                "D" { append cmd [lindex $commitinfo($id) 4] }
++                "m" { append cmd [lindex $commitinfo($id) 5] }
++                "M" { if {[info exists markedid]} { append cmd $markedid } }
++                "b" { append cmd $blame_id }
++                "f" { append cmd [get_diff_file] }
++                "l" { append cmd $blame_line }
++                default { append cmd "%" $next }
++            }
++            incr i
++        } else {
++            append cmd [string index $cmd_template $i]
++        }
++    }
++
++    if {[catch {exec sh -c $cmd 2>@1} output]} {
++        set exitcode 1
++        if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
++            set exitcode [lindex $::errorCode 2]
++        }
++        if {$exitcode == 42} {
++            tk_messageBox -type ok -icon info \
++                -title [mc "Command output"] -message $output
++        } else {
++            tk_messageBox -type ok -icon error \
++                -title [mc "Command failed"] \
++                -message [mc "Exit code %d:\n%s" $exitcode $output]
++        }
++    }
++}
++
+ proc rowmenu {x y id} {
+     global rowctxmenu selectedline rowmenuid curview
+     global nullid nullid2 fakerowmenu mainhead markedid
++    global usercmd_cl_name1 usercmd_cl_body1
++    global usercmd_cl_name2 usercmd_cl_body2
++    global usercmd_cl_name3 usercmd_cl_body3
+ 
+     stopfinding
+     set rowmenuid $id
+@@ -9182,6 +9313,10 @@ proc rowmenu {x y id} {
+     $menu entryconfigure [mca "Make patch"] -state $state
+     $menu entryconfigure [mca "Diff this -> marked commit"] -state $mstate
+     $menu entryconfigure [mca "Diff marked commit -> this"] -state $mstate
++    update_menu_custom_cmds $menu $id \
++        [list $usercmd_cl_name1 $usercmd_cl_body1 \
++              $usercmd_cl_name2 $usercmd_cl_body2 \
++              $usercmd_cl_name3 $usercmd_cl_body3]
+     tk_popup $menu $x $y
+ }
+ 
+@@ -11916,6 +12051,60 @@ proc prefspage_fonts {notebook} {
+     return $page
+ }
+ 
++proc prefspage_commands {notebook} {
++    global {*}$::config_variables
++
++    set page [create_prefs_page $notebook.commands]
++
++    ttk::label $page.cl_header -text [mc "Commit list"] -font mainfontbold
++    grid $page.cl_header - - -sticky w -pady 10
++
++    ttk::label $page.cl_namelbl -text [mc "Name"]
++    ttk::label $page.cl_cmdlbl -text [mc "Command"]
++    grid x $page.cl_namelbl $page.cl_cmdlbl -sticky w
++
++    foreach i {1 2 3} {
++        ttk::label $page.cl_row${i}lbl -text "${i}."
++        ttk::entry $page.cl_name${i} -textvariable usercmd_cl_name${i} -width 20
++        ttk::entry $page.cl_body${i} -textvariable usercmd_cl_body${i} -width 40
++        grid $page.cl_row${i}lbl $page.cl_name${i} $page.cl_body${i} -sticky ew -padx 2
++    }
++
++    ttk::label $page.dd_header -text [mc "Diff display"] -font mainfontbold
++    grid $page.dd_header - - -sticky w -pady 10
++
++    ttk::label $page.dd_namelbl -text [mc "Name"]
++    ttk::label $page.dd_cmdlbl -text [mc "Command"]
++    grid x $page.dd_namelbl $page.dd_cmdlbl -sticky w
++
++    foreach i {1 2 3} {
++        ttk::label $page.dd_row${i}lbl -text "${i}."
++        ttk::entry $page.dd_name${i} -textvariable usercmd_dd_name${i} -width 20
++        ttk::entry $page.dd_body${i} -textvariable usercmd_dd_body${i} -width 40
++        grid $page.dd_row${i}lbl $page.dd_name${i} $page.dd_body${i} -sticky ew -padx 2
++    }
++
++    set explain "Commands with both name and command filled in will "
++    append explain "appear in the context menu (right-click) of the "
++    append explain "respective area. "
++    append explain "Substitution: %% = literal %, %i = commit id, "
++    append explain "%t = title, %m = message, %a = author, "
++    append explain "%d = author date, %c = committer, "
++    append explain "%D = committer date, %M = marked commit id, "
++    append explain "%f = file path (diff only), "
++    append explain "%b = blame origin id (diff only), "
++    append explain "%l = blame origin line number (diff only). "
++    append explain "Exit code 0 = silent; 42 = show output; "
++    append explain "other = show error. "
++    append explain "Append \"&\" to run asynchronously."
++    ttk::label $page.explain -text $explain -wraplength 500 -justify left
++    grid $page.explain - - -sticky w -pady 10 -padx 5
++
++    grid columnconfigure $page 2 -weight 1
++
++    return $page
++}
++
+ proc doprefs {} {
+     global oldprefs prefstop
+     global {*}$::config_variables
+@@ -11938,6 +12127,7 @@ proc doprefs {} {
+     lappend pages [prefspage_general $notebook] [mc "General"]
+     lappend pages [prefspage_colors $notebook] [mc "Colors"]
+     lappend pages [prefspage_fonts $notebook] [mc "Fonts"]
++    lappend pages [prefspage_commands $notebook] [mc "Commands"]
+     set col 0
+     foreach {page title} $pages {
+         $notebook add $page -text $title
+@@ -12659,6 +12849,18 @@ set autocopy 0
+ set autoselect 1
+ set autosellen $hashlength
+ set perfile_attrs 0
++set usercmd_cl_name1 ""
++set usercmd_cl_body1 ""
++set usercmd_cl_name2 ""
++set usercmd_cl_body2 ""
++set usercmd_cl_name3 ""
++set usercmd_cl_body3 ""
++set usercmd_dd_name1 ""
++set usercmd_dd_body1 ""
++set usercmd_dd_name2 ""
++set usercmd_dd_body2 ""
++set usercmd_dd_name3 ""
++set usercmd_dd_body3 ""
+ 
+ if {[tk windowingsystem] eq "aqua"} {
+     set extdifftool "opendiff"
+@@ -12807,6 +13009,18 @@ set config_variables {
+     uifgcolor
+     uifgdisabledcolor
+     uifont
++    usercmd_cl_body1
++    usercmd_cl_body2
++    usercmd_cl_body3
++    usercmd_cl_name1
++    usercmd_cl_name2
++    usercmd_cl_name3
++    usercmd_dd_body1
++    usercmd_dd_body2
++    usercmd_dd_body3
++    usercmd_dd_name1
++    usercmd_dd_name2
++    usercmd_dd_name3
+     visiblerefs
+     web_browser
+     workingfilescirclecolor
 
-Using object_info and the list made sense because object_info already had
-a type field, so listing type cost nothing. Now that we have to dedicate
-an array per attribute it would mean carrying a types array that nobody
-fills, so I preferred to drop it here and implement type fully later.
-
-Hope this makes sense,
-Pablo
+base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
+-- 
+gitgitgadget
