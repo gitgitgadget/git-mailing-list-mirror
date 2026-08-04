@@ -1,80 +1,79 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5BB2E7623
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 08:30:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5F7381E9D
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 08:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785832212; cv=none; b=Mjfb/GqMVSt/tH9bU7Pg5GYFNW3sUlxWQiwkTBgf0KlZIx3+BkHksAEJYuXKcY8mlx6Lp7oSXO3EWKR824C6T/fmdu9DRRo2DzBcwBjNjMi3VTw4zHImYLLW/Qpzd0qiH9AUGCG/l2UxkZ2pRohk+Oj3+R+43R6tlrhOKkr3OT4=
+	t=1785832216; cv=none; b=FfzniyuXYn/ITeEGYD02y8GjNl73ZKiKTsg7aMnz1Z+57unXwSngpJT+dODG+SsfrvwENKVi2ri5VsmyMi9G2qAo/ER9u2OYRQlb9lxOKvNtlEFVrdDyLLI26FNoOzzFTZUnugrihM96f5CmvUj2PoSbWq2vWAwE6P1JuwZ3+TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785832212; c=relaxed/simple;
-	bh=qEMyA97QN80BJQZbvp8T92nhqr7SEs+qbflmgdfEoE4=;
+	s=arc-20240116; t=1785832216; c=relaxed/simple;
+	bh=DJiF8C/5VMV/HexFvLMNKpoIu/PlplkuqFSw8m6XGsY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HCyDU2sahueORA50CB8nEBQ+//Ii9dCX2DN3iIdJkJU//Yz2q1aXOmx2jfdN5L08BW5QR/3PFmGH+n9Nu1v757J611gkuHyuT+2Y4WBMLMBbCHzz2jJFHt6ek1YEhNvTIsByJH075aoQfyz+vG5nNS/tRD9oCZ2I1qqgfeSn8vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZlZWNinE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ai/DyoBt; arc=none smtp.client-ip=202.12.124.157
+	 In-Reply-To:To:Cc; b=RLrEQwKA9oc2QA/h6C3H4FMI4qYZgBsbD3K4W3kDvdJEh7qf4inB2N2m2FZDNOh2QOrVDWStvn8TwEdgwTW42wGYmEatWEGFTies+DUg6lw/KPRH6JL0UDsE3QPT88idzNFBn/bnUyiNdU/n+EBaku7oySUwMz7QKNKDCc0gIWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aDue5+LK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RCdZNlOT; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZlZWNinE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ai/DyoBt"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 30C4D7A0155;
-	Tue,  4 Aug 2026 04:30:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aDue5+LK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RCdZNlOT"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 170091D0016E;
+	Tue,  4 Aug 2026 04:30:14 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 04 Aug 2026 04:30:10 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 04 Aug 2026 04:30:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785832210;
-	 x=1785918610; bh=pTAr58wGrCKh5H1Da5ffVwMx0AjfhYJ10pjz06p0144=; b=
-	ZlZWNinEVfaFjR8bD1l41etLfyjElUauFjXsCcpeyGyK97eCGPGKH3A803X1VAjc
-	NweCqXBL9IT9jOVBc4dhz4cpG2K5ULUQZoz9otgTuKm/8cUAQwn1W6jisYs8bQjw
-	jn1bzodET5NJxfhSIKE/thgm+slOwrbuiiYwryDzgiwZAX0PH4116jrTqkYnPv9/
-	eybTIeCpXHlRhGRARaNEkUlmhpbN6ob+ZQTUwhiO6kjoYx3RceHZv2ebra+OMJRs
-	9TUaUwLlOA2udicOFNFAHSVjPjOUuf8+3XnRkraOn9w23LrayiSN8Zc+CfmpWnXm
-	KGP2ly7zXX7IOpaPaJDuNQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785832213;
+	 x=1785918613; bh=6K/nZzmDY6gL1F+qNPkT364QWMW2vTyK+UBd7ciGuxA=; b=
+	aDue5+LKOQlIBpSa/RX1ZzBhYYWmXKRa0MfmJF6K5PhxVcRlS9AB2m+VZAOHiNNv
+	Giyhvk1TCTShDqBuv7f7CErKI9XHwgF34wmOfKlLn8obzJ09q2YndCXgrZd2kqJS
+	kHRjw0A5lfdK3t+fHcbrOjcmIkgPyZbTSYZFpyGb0A9SPsSORhHJmr8W3Ru3pvcQ
+	HhmJSRr7rxi19Ek/bZpuhnyP7JPHNxRzguGD0EuilybbbM96prjmqTe6oXjPmjdx
+	GzeMueoIS88IcdIrkT3JgdzgLlEgPvaFStGhLWV2y3XGCAj5IhRtW7ngQZSW2c3b
+	S//cnemaP86td4AGVWMaeg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785832210; x=
-	1785918610; bh=pTAr58wGrCKh5H1Da5ffVwMx0AjfhYJ10pjz06p0144=; b=A
-	i/DyoBtCu8D90j8GvRaxUFen6T3KQpVbEiAeGB1Kbn0sJxfHf6i/myQsba0a4oTm
-	mXAos6PQfozeE3G5SuarhCyxJKdZ4cyzTtLkixC9Ve6i1b9D56+WvdF9rxsZMYhv
-	lU4kqMTOVu19I/oe/YQT/P7o/l8eY/LkJUyF5dexgbBV/KKvHmxEkWlnU+AAFNqp
-	CHoaWNnG1j8dW9wopAplUPP1xriO54nF7NRZBZ6/XApBdNN2vGFcmGsMSufLkqDo
-	gLEjqdO1h34CjVUHGYpxkImlAL8Up4EDTEXUvFWDyG/IYLsT7XS34mkF9bKIDNZq
-	8kHHYqkizUz3rFY42+KJw==
-X-ME-Sender: <xms:EaNxaswNJBdv752v-bPkVI2BbUUzv38PKTSCzgC0Vjh2DAvM7TsjBA>
-    <xme:EaNxanTo_UGQZYOgGXkLf0E9eMAAxRW50Lx0EU60gJQda-Js7CkysakDg2cEGLhwa
-    AI-jOJNpX--hAlFvr1R7QQz4jDDSZNG01t06HwZrbB2Tf-z7QH8P5E>
-X-ME-Received: <xmr:EaNxajU_zogPkcXpqTMeWqsyPlU9VzuLst-I544RVT2JPscS0NeBSXrlpvjQ54IfjxSoZdMKS0bpz7S1cc4hprCkXH6e6dui_VPjByki>
-X-ME-Proxy-Cause: dmFkZTEbgtzG3LVU36iLnTJFOTKaJnVb3Xpa8gL5U4HxfIGy3b8t4xIrlpDR2DpqRIZvzf
-    n1NI56hVabElJrPx6MSMtz1cn1wl+/2e6XDDCQz5bBcc7tZPYbMw6N04VMFOLBi2SKlZCi
-    bIg2EyW+/zEy6CTrZbhGwQc/+oDHdUmiW5xr3HKqR+v9ls9TXLukerfdzTR0S7RkaDq84C
-    Pr7XwrqTs0UBCsvWclzxevhVY9QLcuIyCKGZfoFXEvWt3uFBZ852qzUxPP9qmgChakaEfl
-    TykiJDiQj60J06EdA2jtQ7uStMrFkhicj42WfaCa9v3sW7CnzNa4vaxT9e6yFwS4In4JF1
-    V1JYfTxax3+NDYSUjumSyJ431ldnbzFZ4e/WKP/OfJaGMF1zMmYIoFtw+9KcknojTiXsEt
-    O129HtjcLT8HmTg3IPaSDpHkyBAAjyoBpYatPqRleayf6KFAhLFy0zO2k60LwjyCGt6ty0
-    s51VBDk2abPju9FzsIrQFtjaXjP0ZGId0r1RYJZZJtz7aGCPQU0yh4IVww3sJak3IYU0Ph
-    XBEDp/Dq1ck1Nowratw2pY7oO6PEzbbldSgoBtMEYmTLGLFfmH5fHBkKXfTp+JEprEym9z
-    AoC622lgycSaTbVDcq7PbdPLmAaCS9AkLjyS7Eq5Q+DbsB0RMPo3fn/ezmVg
-X-ME-Proxy: <xmx:EaNxapaVlqChSLqUnsWR8o1lPhrHQoQQZQX2-lxqWzuRb2dThXPn5w>
-    <xmx:EqNxap2qC1JU2o6uo8E4JVYQMA0nvO67tkHCfca-YX-LeoIaLfzHjQ>
-    <xmx:EqNxargAkyc6ce918BbDEpnq2ckAX-V8Tau1XpM8a0QEHfSDfIx9PQ>
-    <xmx:EqNxataxx62_oTt9cfqVqcs_UZkWuFCRYK3m2bmrSixyC2p8_44Gwg>
-    <xmx:EqNxaiXQoE1WZ04DmjS47w0uMCM0Au6BrYjPcTGrkWdEM2CwXg4Ygry6>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785832213; x=
+	1785918613; bh=6K/nZzmDY6gL1F+qNPkT364QWMW2vTyK+UBd7ciGuxA=; b=R
+	CdZNlOTsfZsgWqW6DblWK+amZuXvX6THFIQzecyPyE+BxohDwStuVrKOKdEXtNCx
+	lnTi+cyt9wKPMiGZZ0WNe4BUjx1UEpEpXmNZpkOIV9OZ0DMzZHY8B4p1/xw8/d3l
+	nei0I4BvmFiMTxuxPxfIIzKrJ6zh7VazaOW4fNm7HpVjZ4WU1aedtDiL17pY4A2s
+	I+VpPYCWh5aoiQrRTFTjjIr0RDOYA8cI5g9nGR/5uFgzmo9zbiwwifYNtZQ9fTny
+	asLL+UWK/ipi7P0bkDA6um2icv8zqZ5IJMGAtJMUpcxEPWGp97+8/0ejiZMVRG5a
+	aox/TQEdchI1SYioNjQ+g==
+X-ME-Sender: <xms:FaNxarQ-fwTdxDScXfiwv-0lexebZF9ESbBfUp6dilIJUX7oxvQ9cA>
+    <xme:FaNxajwrooVgEcIVtSY6lGa81ETOyxBTFlM-EyDB-VJpEuQEmwQ5vCIcaEQK4vipL
+    YbnpLLT-oGD7tSuoSPJBoXez1-0njFbETk5GU2qv_CTt5Z6zlJQf6I>
+X-ME-Received: <xmr:FaNxal1eHuoaUYulORqwec3bfiZ6melW8ht1MXr8P9fOTCsP9NlLw6AycgB22bLuKUicjeQLNqapUHrFVbpwlzkntlZuPc-KkC92PRsE>
+X-ME-Proxy-Cause: dmFkZTEUFTUpa27s20+FEluJpTteW72nBUuZKu8o+qytp6CyGkdYLrEZod0abY/0bdD9wT
+    dNJEGprhGegPdUzzhs90OWTp/MQgV+2T2WoeUBgnG75toDgIdlrZz2h/pSyNEJ6y+J9qsL
+    RESyvNhmCZrCht2gUwqhmXCPhNknquTKGZtaw76Fnl2LK/YLQTCUhJ4RM6zOqEqGOZJI63
+    NJlhXwwBeUjKd8tJsl0ga5dmCm6dRHo3YYzarO1y+LZCf8n4lsVhmaADN3URHboDAfnt3L
+    JhLznMSPRpMD78g6Qd8RZ2jpTMP3jqMsuYbcBpNipFVIUtRCd9hmXGJo5V0RjFnblghaZk
+    rHJ1PRSKHdU92ZBNN1OKSCe6UubrpqfB6hp4gcoxX5saYzVfhaVSUxEwz24mqkKCqx9PBo
+    b5wYNzyLkKP8JlMF08mWNpL52Krs9jXeRYDFIhmMMjReRvb3aEWZdJBU7P+wggnv3Dsmmg
+    i1Ji9WMLPBickHN9ZGJlPKT9Gnv6FPWxOiQWXvHfkdDTNkXKwN5MbGtdDoxkFrzdscgjen
+    6QbnKFeGIVeE6GZhX1c2ZdpQoqMn+6MbvPCcTTbA49K67ucpkqYxEhbUkkFOPrJy1F7kop
+    DTjiko/TDfDemHpjY4TdHce6QryJ4QpBpSBjLEUQ10jGQNHoPvAEW3fu3FiQ
+X-ME-Proxy: <xmx:FaNxap7JkXTlTGUwtjvYjniARr-MzbXzZojiDlXidN7hQTj6llrfFA>
+    <xmx:FaNxagUCICyMBqaa3qb8w5vAVYY4d2CmyQ8-QEdkJXNruUwju53HAA>
+    <xmx:FaNxagCoowwRrXJllPjD0u2E1Dvpy4QVAIeOpjWBsRoLteAU-LK_jw>
+    <xmx:FaNxan6bidJxPBOSekcG5yR7oL5F5I5FEdcHzZPPOZkEW8JnmWykCg>
+    <xmx:FaNxas0olzwvvCeNibtsMSVXbY6R8b42QJ4WqsK2LvNZjVTMojI8zvHY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 04:30:08 -0400 (EDT)
+ 4 Aug 2026 04:30:12 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 21a41086 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Aug 2026 08:30:07 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 06992921 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Aug 2026 08:30:11 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 04 Aug 2026 10:29:09 +0200
-Subject: [PATCH v2 4/5] odb/source: introduce function to map source type
- to name
+Date: Tue, 04 Aug 2026 10:29:10 +0200
+Subject: [PATCH v2 5/5] odb: make creation of on-disk structures pluggable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260804-pks-odb-create-on-disk-v2-4-ddf8b59bd207@pks.im>
+Message-Id: <20260804-pks-odb-create-on-disk-v2-5-ddf8b59bd207@pks.im>
 References: <20260804-pks-odb-create-on-disk-v2-0-ddf8b59bd207@pks.im>
 In-Reply-To: <20260804-pks-odb-create-on-disk-v2-0-ddf8b59bd207@pks.im>
 To: git@vger.kernel.org
@@ -91,127 +90,165 @@ Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.15.2
 
-Introduce a new function that maps an object source's type to a
-human-readable name. Use the function to provide better human-readable
-error messages for the downcasting functions.
+When creating a new "files" object database source we have to create a
+couple of directories. These directories are of course specific to this
+particular backend, and a different backend may require a setup that is
+completely different.
+
+Make the creation of on-disk structures pluggable to accommodate for
+this.
+
+Note that there is one exception though: the "objects" directory must
+exist in a repository regardless of which backend is in use. If it
+doesn't exist then the repository is not treated as a Git repository at
+all. Consequently, we create this directory regardless of the backend.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-files.h    |  4 +++-
- odb/source-inmemory.h |  4 +++-
- odb/source-loose.h    |  4 +++-
- odb/source-packed.h   |  4 +++-
- odb/source.c          | 19 +++++++++++++++++++
- odb/source.h          |  6 ++++++
- 6 files changed, 37 insertions(+), 4 deletions(-)
+ odb/source-files.c | 19 +++++++++++++++++++
+ odb/source.h       | 23 +++++++++++++++++++++++
+ setup.c            | 35 ++++++++++++++++++++---------------
+ 3 files changed, 62 insertions(+), 15 deletions(-)
 
-diff --git a/odb/source-files.h b/odb/source-files.h
-index d7ac3c1c81..6a803afdda 100644
---- a/odb/source-files.h
-+++ b/odb/source-files.h
-@@ -28,7 +28,9 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
- static inline struct odb_source_files *odb_source_files_downcast(struct odb_source *source)
- {
- 	if (source->type != ODB_SOURCE_FILES)
--		BUG("trying to downcast source of type '%d' to files", source->type);
-+		BUG("trying to downcast source of type '%s' to '%s'",
-+		    odb_source_type_to_name(source->type),
-+		    odb_source_type_to_name(ODB_SOURCE_FILES));
- 	return container_of(source, struct odb_source_files, base);
- }
- 
-diff --git a/odb/source-inmemory.h b/odb/source-inmemory.h
-index a88fc2e320..adbad23e8b 100644
---- a/odb/source-inmemory.h
-+++ b/odb/source-inmemory.h
-@@ -26,7 +26,9 @@ struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
- static inline struct odb_source_inmemory *odb_source_inmemory_downcast(struct odb_source *source)
- {
- 	if (source->type != ODB_SOURCE_INMEMORY)
--		BUG("trying to downcast source of type '%d' to in-memory", source->type);
-+		BUG("trying to downcast source of type '%s' to '%s'",
-+		    odb_source_type_to_name(source->type),
-+		    odb_source_type_to_name(ODB_SOURCE_INMEMORY));
- 	return container_of(source, struct odb_source_inmemory, base);
- }
- 
-diff --git a/odb/source-loose.h b/odb/source-loose.h
-index 6070aaf3ce..3cf2e1f8f1 100644
---- a/odb/source-loose.h
-+++ b/odb/source-loose.h
-@@ -41,7 +41,9 @@ struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
- static inline struct odb_source_loose *odb_source_loose_downcast(struct odb_source *source)
- {
- 	if (source->type != ODB_SOURCE_LOOSE)
--		BUG("trying to downcast source of type '%d' to loose", source->type);
-+		BUG("trying to downcast source of type '%s' to '%s'",
-+		    odb_source_type_to_name(source->type),
-+		    odb_source_type_to_name(ODB_SOURCE_LOOSE));
- 	return container_of(source, struct odb_source_loose, base);
- }
- 
-diff --git a/odb/source-packed.h b/odb/source-packed.h
-index 77309ddd09..a0f6b5096d 100644
---- a/odb/source-packed.h
-+++ b/odb/source-packed.h
-@@ -78,7 +78,9 @@ struct odb_source_packed *odb_source_packed_new(struct object_database *odb,
- static inline struct odb_source_packed *odb_source_packed_downcast(struct odb_source *source)
- {
- 	if (source->type != ODB_SOURCE_PACKED)
--		BUG("trying to downcast source of type '%d' to packed", source->type);
-+		BUG("trying to downcast source of type '%s' to '%s'",
-+		    odb_source_type_to_name(source->type),
-+		    odb_source_type_to_name(ODB_SOURCE_PACKED));
- 	return container_of(source, struct odb_source_packed, base);
- }
- 
-diff --git a/odb/source.c b/odb/source.c
-index 7993dcbd65..30188b806d 100644
---- a/odb/source.c
-+++ b/odb/source.c
-@@ -4,6 +4,25 @@
- #include "odb/source.h"
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 4138758511..0db6e681fe 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -9,6 +9,7 @@
+ #include "odb/source-files.h"
+ #include "odb/source-loose.h"
  #include "packfile.h"
++#include "path.h"
+ #include "strbuf.h"
+ #include "write-or-die.h"
  
-+static const char * const odb_source_names_by_type[] = {
-+	[ODB_SOURCE_UNKNOWN] = "unknown",
-+	[ODB_SOURCE_FILES] = "files",
-+	[ODB_SOURCE_LOOSE] = "loose",
-+	[ODB_SOURCE_PACKED] = "packed",
-+	[ODB_SOURCE_INMEMORY] = "in-memory",
-+};
-+
-+const char *odb_source_type_to_name(enum odb_source_type type)
+@@ -41,6 +42,23 @@ static void odb_source_files_close(struct odb_source *source)
+ 	odb_source_close(&files->packed->base);
+ }
+ 
++static int odb_source_files_create_on_disk(struct odb_source *source)
 +{
-+	const char *name;
-+	if (type < 0 || type >= ARRAY_SIZE(odb_source_names_by_type))
-+		type = ODB_SOURCE_UNKNOWN;
-+	name = odb_source_names_by_type[type];
-+	if (!name)
-+		BUG("name missing in `odb_source_names_by_type` for '%d'", type);
-+	return name;
++	struct strbuf path = STRBUF_INIT;
++
++	safe_create_dir(source->odb->repo, source->path, 1);
++
++	strbuf_addf(&path, "%s/pack", source->path);
++	safe_create_dir(source->odb->repo, path.buf, 1);
++
++	strbuf_reset(&path);
++	strbuf_addf(&path, "%s/info", source->path);
++	safe_create_dir(source->odb->repo, path.buf, 1);
++
++	strbuf_release(&path);
++	return 0;
 +}
 +
- struct odb_source *odb_source_new(struct object_database *odb,
- 				  const char *path,
- 				  bool local)
+ static void odb_source_files_prepare(struct odb_source *source,
+ 				     enum odb_prepare_flags flags)
+ {
+@@ -271,6 +289,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+ 
+ 	files->base.free = odb_source_files_free;
+ 	files->base.close = odb_source_files_close;
++	files->base.create_on_disk = odb_source_files_create_on_disk;
+ 	files->base.prepare = odb_source_files_prepare;
+ 	files->base.read_object_info = odb_source_files_read_object_info;
+ 	files->base.read_object_stream = odb_source_files_read_object_stream;
 diff --git a/odb/source.h b/odb/source.h
-index cd63dba91f..ab16d152f4 100644
+index ab16d152f4..4abc418bdd 100644
 --- a/odb/source.h
 +++ b/odb/source.h
-@@ -25,6 +25,12 @@ enum odb_source_type {
- 	ODB_SOURCE_INMEMORY,
- };
+@@ -89,6 +89,18 @@ struct odb_source {
+ 	 */
+ 	void (*close)(struct odb_source *source);
+ 
++	/*
++	 * This callback is expected to create on-disk data structures that are
++	 * required for this source to operate.
++	 *
++	 * The callback is expected to return 0 on success, a negative error
++	 * code otherwise.
++	 *
++	 * This callback may be NULL in case the source does not need any
++	 * on-disk setup.
++	 */
++	int (*create_on_disk)(struct odb_source *source);
++
+ 	/*
+ 	 * This callback is expected to prepare the source so that it becomes
+ 	 * ready for use. It optionally clears underlying caches of the object
+@@ -316,6 +328,17 @@ static inline void odb_source_close(struct odb_source *source)
+ 	source->close(source);
+ }
  
 +/*
-+ * Convert between the enum and its name. Returns the equivalent of "unknown"
-+ * for unknown types.
++ * Create on-disk data structures that are required for this source to operate
++ * correctly. Returns 0 on success, a negative error code otherwise.
 + */
-+const char *odb_source_type_to_name(enum odb_source_type type);
++static inline int odb_source_create_on_disk(struct odb_source *source)
++{
++	if (!source->create_on_disk)
++		return 0;
++	return source->create_on_disk(source);
++}
 +
- struct object_id;
- struct odb_read_stream;
- struct strvec;
+ /*
+  * Prepare the object database source and clear any caches. Depending on the
+  * backend used this may have the effect that concurrently-written objects
+diff --git a/setup.c b/setup.c
+index a7b1b9eaef..14ef119cb7 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2666,29 +2666,34 @@ static int create_default_files(struct repository *repo,
+ static void create_object_database(struct repository *repo)
+ {
+ 	char *object_directory, *alternate_object_directories;
+-	struct strbuf path = STRBUF_INIT;
+-	size_t baselen;
+ 
+ 	get_object_directories(&object_directory, &alternate_object_directories);
+-	repo->objects = odb_new(repo, object_directory,
+-				alternate_object_directories);
+ 
+-	strbuf_addstr(&path, repo_get_object_directory(repo));
+-	baselen = path.len;
+-
+-	safe_create_dir(repo, path.buf, 1);
++	/*
++	 * Create the "objects" directory in the common directory. This is done
++	 * so that the repository can be discovered regardless of the backend
++	 * used.
++	 *
++	 * Note that we only do this in case the object directory wasn't
++	 * overwritten via an environment variable. If it _is_ being overridden
++	 * then we skip this step, as the repository won't be discoverable
++	 * anyway without the environment variable.
++	 */
++	if (!object_directory) {
++		struct strbuf objects_dir = STRBUF_INIT;
++		repo_common_path_append(repo, &objects_dir, "objects");
++		safe_create_dir(repo, objects_dir.buf, 1);
++		strbuf_release(&objects_dir);
++	}
+ 
+-	strbuf_setlen(&path, baselen);
+-	strbuf_addstr(&path, "/pack");
+-	safe_create_dir(repo, path.buf, 1);
++	repo->objects = odb_new(repo, object_directory,
++				alternate_object_directories);
+ 
+-	strbuf_setlen(&path, baselen);
+-	strbuf_addstr(&path, "/info");
+-	safe_create_dir(repo, path.buf, 1);
++	if (odb_source_create_on_disk(repo->objects->sources) < 0)
++		die("failed creating object database");
+ 
+ 	free(alternate_object_directories);
+ 	free(object_directory);
+-	strbuf_release(&path);
+ }
+ 
+ static void separate_git_dir(const char *git_dir, const char *git_link)
 
 -- 
 2.55.0.679.g6767b8d81c.dirty
